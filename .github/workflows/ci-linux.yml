@@ -27,6 +27,5 @@ jobs:
         working-directory: ${{runner.workspace}}/mogan/build
         run: cmake ${{runner.workspace}}/mogan -DBUILD_TESTS=on && make -j8
       - name: Test
-        working-directory: ${{github.workspace}}/mogan/build
-        run: ctest
+        run: ctest --build-run-dir ${{github.workspace}}/mogan/build
 
