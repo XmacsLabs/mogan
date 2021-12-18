@@ -22,11 +22,10 @@ jobs:
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y cmake qtbase5-dev libqt5svg5-dev libfreetype6-dev libsqlite3-dev libjpeg-dev
       - name: Create Build Dir
-        run: mkdir build
-        working-directory: ${{runner.workspace}}
+        run: mkdir -p ${{runner.workspace}}/build
       - name: Build using CMake
-        run: cmake .. -DBUILD_TESTS=on && make -j8
         working-directory: ${{runner.workspace}}/build
+        run: cmake .. -DBUILD_TESTS=on && make -j8
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: ctest
