@@ -22,10 +22,10 @@ jobs:
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y cmake qtbase5-dev libqt5svg5-dev libfreetype6-dev libsqlite3-dev libjpeg-dev
       - name: Create Build Dir
-        run: mkdir -p ${{runner.workspace}}/mogan/build
+        run: mkdir -p ${{github.workspace}}/build
       - name: Build using CMake
-        working-directory: ${{runner.workspace}}/mogan/build
-        run: cmake ${{runner.workspace}}/mogan -DBUILD_TESTS=on && make -j8
+        working-directory: ${{github.workspace}}/build
+        run: cmake ${{runner.workspace}} -DBUILD_TESTS=on && make -j8
       - name: Test
-        run: ctest --build-run-dir ${{github.workspace}}/mogan/build
+        run: ctest --build-run-dir ${{github.workspace}}/build
 
