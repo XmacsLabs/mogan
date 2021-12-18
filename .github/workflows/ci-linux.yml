@@ -27,7 +27,7 @@ jobs:
         run: mkdir -p ${{github.workspace}}/build
       - name: Build using CMake
         working-directory: ${{github.workspace}}/build
-        run: cmake ${{runner.workspace}} -DBUILD_TESTS=on && make -j8
+        run: cmake ${{github.workspace}} -DBUILD_TESTS=on && make -j8
       - name: Test
         run: ctest --build-run-dir ${{github.workspace}}/build
 
