@@ -1,0 +1,53 @@
+
+(virtual-font
+  (rubber-lparenthesis-#
+    (glue-above #239D
+      (glue-above (ver-take #239C 0.5 # 0.25)
+        #239B)))
+  (rubber-rparenthesis-#
+    (glue-above #23A0
+      (glue-above (ver-take #239F 0.5 # 0.25)
+        #239E)))
+  (rubber-lbracket-#
+    (glue-above #23A3
+      (glue-above (ver-take #23A2 0.5 # 0.25)
+        #23A1)))
+  (rubber-rbracket-#
+    (glue-above #23A6
+      (glue-above (ver-take #23A5 0.5 # 0.25)
+        #23A4)))
+  (rubber-lcurly-#
+    (glue-above #23A9
+      (glue-above (ver-take #23AA 0.5 # 0.125)
+        (glue-above #23A8
+          (glue-above (ver-take #23AA 0.5 # 0.125)
+            #23A7)))))
+  (rubber-rcurly-#
+    (glue-above #23AD
+      (glue-above (ver-take #23AA 0.5 # 0.125)
+        (glue-above #23AC
+          (glue-above (ver-take #23AA 0.5 # 0.125)
+            #23AB)))))
+  (rubber-lfloor-#
+    (glue-above #23A3
+      (ver-take #23A2 0.5 # 0.25)))
+  (rubber-lceil-#
+    (glue-above (ver-take #23A2 0.5 # 0.25)
+      #23A1))
+  (rubber-rfloor-#
+    (glue-above #23A6
+      (ver-take #23A5 0.5 # 0.25)))
+  (rubber-rceil-#
+    (glue-above (ver-take #23A5 0.5 # 0.25)
+      #23A4))
+  (rubber-nosymbol-#
+    (ver-take nosymbol 0.5 # 0.25))
+  (rubber-bar-#
+    (ver-take | 0.5 # 0.25))
+  (rubber-parallel-#
+    (ver-take || 0.5 # 0.25))
+  (rubber-interleave-#
+    (ver-take interleave 0.5 # 0.25))
+  (rubber-sqrt-#
+    (glue-above #23B7
+      (ver-take (clip #23B7 0.45 * * *) 0.8 # 0.1))))

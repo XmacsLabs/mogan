@@ -1,0 +1,38 @@
+#!/bin/sh
+
+prefix="@prefix@"
+exec_prefix="@exec_prefix@"
+datarootdir="@datarootdir@"
+datadir="@datadir@"
+
+if [ -z "$TEXMACS_PATH" ] ; then
+  TEXMACS_PATH=@tmdata@
+  export TEXMACS_PATH
+  if [ -z "$TEXMACS_BIN_PATH" ] ; then
+    TEXMACS_BIN_PATH=@tmbin@
+    export TEXMACS_BIN_PATH
+  fi
+else
+  TEXMACS_BIN_PATH="$TEXMACS_PATH"
+  export TEXMACS_BIN_PATH
+fi
+
+if [ -f "/usr/bin/cygwin1.dll" ] ; then
+  # For coexistence with WinTeXmacs
+  export TEXMACS_PATH=@tmdata@
+  export TEXMACS_BIN_PATH=@tmbin@
+  unset GUILE_LOAD_PATH
+  # For auxiliary file creation by subprograms like ps2pdf under cygwin
+  export TEMP=/tmp
+fi
+
+DISTRIBUTOR_ID=`lsb_release -a 2>/dev/null |grep "Distributor ID"`
+if [ ! "${DISTRIBUTOR_ID#*Ubuntu}" = "$DISTRIBUTOR_ID" ] ; then
+  export QT_X11_NO_NATIVE_MENUBAR=1
+fi
+
+PATH="$TEXMACS_BIN_PATH/bin:$PATH"
+@CONFIG_LIB_PATH@="$TEXMACS_BIN_PATH/lib${@CONFIG_LIB_PATH@+":$@CONFIG_LIB_PATH@"}"
+export PATH @CONFIG_LIB_PATH@
+
+exec texmacs.bin "$@" < /dev/null

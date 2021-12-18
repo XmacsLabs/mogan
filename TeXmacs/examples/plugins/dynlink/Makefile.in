@@ -1,0 +1,24 @@
+
+###############################################################################
+# MODULE     : Make file for plugin example with dynamic links
+# COPYRIGHT  : (C) 1999-2008  Joris van der Hoeven
+###############################################################################
+# This software falls under the GNU general public license version 3 or later.
+# It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+# in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+###############################################################################
+
+tmsrc = @tmsrc@
+CXX = g++
+LD  = g++
+RM  = rm -f
+
+lib/libtmdynlink.so: src/dynlink.cpp
+	$(CXX) -I$(tmsrc)/include -c src/dynlink.cpp -o src/dynlink.o
+	$(LD) -shared -o lib/libtmdynlink.so src/dynlink.o
+
+clean:
+	$(RM) *~
+	$(RM) */*~
+	$(RM) */*.o
+	$(RM) lib/*

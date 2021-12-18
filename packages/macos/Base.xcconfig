@@ -1,0 +1,61 @@
+// TeXmacs private settings
+
+TM_CXXWARNING = -Wall -Wno-return-type
+TM_CXXTEMPLATE = 
+TM_CXXOPTIMIZE = -O3 -fexpensive-optimizations -fno-rtti
+TM_CXXDEBUG = 
+TM_CXXPROFILE = 
+TM_CFLAGS = 
+TM_CXXFLAGS = $(TM_CXXWARNING) $(TM_CXXTEMPLATE) $(TM_CXXOPTIMIZE) $(TM_CXXDEBUG) $(TM_CXXPROFILE)   -fno-rtti
+TM_CPPFLAGS =  -I/home/magix/DEV/SDK/include -include config.h -DQT_NO_DEBUG -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I/home/magix/DEV/SDK/mkspecs/linux-g++ -I. -I/home/magix/DEV/SDK/include/QtCore -I/home/magix/DEV/SDK/include/QtGui -I/home/magix/DEV/SDK/include/QtSvg -I/home/magix/DEV/SDK/include -D_REENTRANT
+TM_QTCPPFLAGS = -DQT_NO_DEBUG -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I/home/magix/DEV/SDK/mkspecs/linux-g++ -I. -I/home/magix/DEV/SDK/include/QtCore -I/home/magix/DEV/SDK/include/QtGui -I/home/magix/DEV/SDK/include/QtSvg -I/home/magix/DEV/SDK/include -D_REENTRANT
+TM_CXXX11 = 
+TM_CXXCOCOA = 
+TM_CXXQT = -pipe -O2 -Wall -W -pthread
+TM_CXXGUI = $(TM_CXXQT)
+TM_CXXAXEL = 
+TM_CXXCAIRO = 
+TM_CXXIMLIB2 = 
+TM_CXXSQLITE3 = 
+TM_CXXFREETYPE =   -I/home/magix/DEV/SDK/include/freetype2
+TM_CXXICONV = 
+TM_CXXGUILE =  -pthread  -I/home/magix/DEV/SDK/include -I/home/magix/DEV/SDK/include/guile
+TM_CXXSPARKLE =   
+TM_CXXPDF =  
+
+TM_LD = g++
+TM_LDFLAGS =   -L/home/magix/DEV/SDK/lib -L/home/magix/DEV/SDK/lib64 -Wl,-rpath,/home/magix/DEV/SDK/lib -Wl,-O1 -Wl,-rpath,/home/magix/DEV/SDK/lib -L/usr/X11R6/lib   $(TM_CXXPROFILE)
+TM_LIBS =    -lQtSvg -lQtGui -lgobject-2.0 -lffi -lXrender -lXext -lX11 -lQtCore -lgthread-2.0 -lglib-2.0 -lpcre -lrt -lpthread -lfreetype -lpng -lz -liconv -lguile -lgmp -lcrypt -lm -lltdl -ldl
+TM_LDRT = 
+TM_LDSTATIC = -lxcb -lexpat -lXdmcp -lXau -lXrender
+TM_LDSHARED = -dynamic
+TM_LDPATH = -Wl,-rpath,
+TM_LDX11 =
+TM_LDCOCOA = 
+TM_LDQT = -Wl,-O1 -Wl,-rpath,/home/magix/DEV/SDK/lib -L/home/magix/DEV/SDK/lib -L/home/magix/DEV/SDK/lib64 -L/usr/X11R6/lib -lQtSvg -lQtGui -lpng -lfreetype -lgobject-2.0 -lffi -lXrender -lXext -lX11 -lQtCore -lz -lm -ldl -lgthread-2.0 -lglib-2.0 -lpcre -lrt -lpthread
+TM_LDGUI = $(TM_LDQT)
+
+TM_MOC = /home/magix/DEV/SDK/bin/moc
+TM_MOCFLAGS = -DQT_NO_DEBUG -DQT_SVG_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I/home/magix/DEV/SDK/mkspecs/linux-g++ -I. -I/home/magix/DEV/SDK/include/QtCore -I/home/magix/DEV/SDK/include/QtGui -I/home/magix/DEV/SDK/include/QtSvg -I/home/magix/DEV/SDK/include -D_REENTRANT
+
+TM_BASE = $(SRCROOT)/../..
+TM_HEADER_SEARCH_PATHS = $(TM_BASE)/src/System $(TM_BASE)/src/System/Boot $(TM_BASE)/src/System/Classes $(TM_BASE)/src/System/Files $(TM_BASE)/src/System/Link $(TM_BASE)/src/System/Misc $(TM_BASE)/src/System/Language $(TM_BASE)/src/Kernel/Abstractions $(TM_BASE)/src/Kernel/Containers $(TM_BASE)/src/Kernel/Types $(TM_BASE)/src/Data/Convert $(TM_BASE)/src/Data/Drd $(TM_BASE)/src/Data/History $(TM_BASE)/src/Data/Observers $(TM_BASE)/src/Data/String $(TM_BASE)/src/Data/Tmfs $(TM_BASE)/src/Data/Tree $(TM_BASE)/src/Scheme $(TM_BASE)/src/Graphics/Bitmap_fonts $(TM_BASE)/src/Graphics/Fonts $(TM_BASE)/src/Graphics/Gui $(TM_BASE)/src/Graphics/Mathematics $(TM_BASE)/src/Graphics/Renderer $(TM_BASE)/src/Plugins $(TM_BASE)/src/Edit $(TM_BASE)/src/Typeset $(TM_BASE)/src/Typeset/Bridge $(TM_BASE)/src/Typeset/Concat $(TM_BASE)/src/Typeset/Page $(TM_BASE)/src/Style/Memorizer $(TM_BASE)/src/Style/Environment $(TM_BASE)/src/Style/Evaluate $(TM_BASE)/TeXmacs/include $(TM_BASE)/src
+
+TM_QT_FRAMEWORKS_PATH = /home/magix/DEV/SDK/lib
+
+// Disable universal binaries
+//ARCHS = $(NATIVE_ARCH)
+//ARCHS = $(NATIVE_ARCH)
+ONLY_ACTIVE_ARCH = YES
+//MACOSX_DEPLOYMENT_TARGET=@MACOSX_DEPLOYMENT_TARGET@
+
+// Basic settings
+
+//FRAMEWORK_SEARCH_PATHS = 
+//LIBRARY_SEARCH_PATHS =
+HEADER_SEARCH_PATHS =  $(TM_HEADER_SEARCH_PATHS)
+INFOPLIST_FILE = $(TM_BASE)/packages/macos/Info-Xcode.plist
+INFOPLIST_PREPROCESS = YES
+INFOPLIST_EXPAND_BUILD_SETTINGS = YES
+GCC_PRECOMPILE_PREFIX_HEADER = NO
+
