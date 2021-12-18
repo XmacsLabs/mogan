@@ -2,14 +2,14 @@ name: CI-Linux
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build-linux:
     name: Build On Ubuntu
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     timeout-minutes: 120
 
     steps:
@@ -17,16 +17,17 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1
       - name: Install Dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y cmake qtbase5-dev libqt5svg5-dev libfreetype-dev libsqlite-dev libjpeg-dev
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y cmake qtbase5-dev libqt5svg5-dev libfreetype6-dev libsqlite3-dev libjpeg-dev
       - name: Create Build Dir
-        run: mkdir build
-        working-directory: ${{runner.workspace}}
+        run: mkdir -p ${{github.workspace}}/build
       - name: Build using CMake
-        run: cmake --build ${{github.workspace}}/build -DBUILD_TESTS=on
-      - name: Test
         working-directory: ${{github.workspace}}/build
-        run: ctest
+        run: cmake ${{github.workspace}} -DBUILD_TESTS=on && make -j8
+      - name: Test
+        run: cd ${{github.workspace}}/build && QT_QPA_PLATFORM=offscreen ctest -V
 
