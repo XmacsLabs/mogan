@@ -29,5 +29,5 @@ jobs:
         working-directory: ${{github.workspace}}/build
         run: cmake ${{github.workspace}} -DBUILD_TESTS=on && make -j8
       - name: Test
-        run: cd ${{github.workspace}}/build && ctest -V
+        run: cd ${{github.workspace}}/build && QT_QPA_PLATFORM=offscreen ctest -V
 
