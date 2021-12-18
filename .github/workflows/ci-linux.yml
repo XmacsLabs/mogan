@@ -28,6 +28,9 @@ jobs:
       - name: Build using CMake
         working-directory: ${{github.workspace}}/build
         run: cmake ${{github.workspace}} -DBUILD_TESTS=on && make -j8
-      - name: Test
-        run: cd ${{github.workspace}}/build && ctest
+      - name: Run unit tests
+        uses: HorstBaerbel/action-ctest@1.1
+        with:
+          sourcedir: '${{github.workspace}}'
+          builddir: 'build'
 
