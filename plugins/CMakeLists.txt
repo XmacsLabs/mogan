@@ -8,9 +8,7 @@
 ###############################################################################
 
 if (NOT WIN32)
-  add_subdirectory (axiom)
   add_subdirectory (coq)
-  add_subdirectory (maple)
   add_subdirectory (r)
   add_subdirectory (shell)
 endif (NOT WIN32)
