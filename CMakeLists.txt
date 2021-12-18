@@ -285,7 +285,7 @@ find_package (JPEG)
 ### --------------------------------------------------------------------
 
 # Allow for selection of Scheme implementation
-set(SCHEME_IMPL "default" CACHE STRING "Implementation of Scheme to compile for.")
+set(SCHEME_IMPL "s7" CACHE STRING "Implementation of Scheme to compile for.")
 set_property(CACHE SCHEME_IMPL PROPERTY STRINGS default guile-1.8 guile-2.0 guile-2.2 guile-3.0 chez s7)
 message(STATUS "Looking for Scheme implementation: " ${SCHEME_IMPL})
 
