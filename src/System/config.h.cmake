@@ -166,6 +166,8 @@
 
 #cmakedefine USE_STACK_TRACE 1
 
+#cmakedefine USE_JEAIII 1
+
 /* Define to 1 if the X Window System is missing or not being used. */
 #cmakedefine X_DISPLAY_MISSING 1
 

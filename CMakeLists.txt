@@ -363,6 +363,8 @@ else (WIN32)
   option (USE_STACK_TRACE "Use stack trace" ON)
 endif (WIN32)
 
+option (USE_JEAIII "Use JEAIII itoa" ON)
+
 set (CONFIG_STD_SETENV "#define STD_SETENV")
 set (tm_orig ${TEXMACS_SOURCE_DIR})
 set (CONFIG_HOST_OS "linux-gnu") # TODO: should not be hard-coded
@@ -483,6 +485,7 @@ file (GLOB_RECURSE TeXmacs_Std_Plugins_SRCS
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Cairo/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Database/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Freetype/*.cpp"
+  "${TEXMACS_SOURCE_DIR}/src/Plugins/Jeaiii/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Pdf/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Pdf/*.c"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Ghostscript/*.cpp"
