@@ -15,6 +15,10 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifdef USE_JEAIII
+#include "Jeaiii/itoa_jeaiii.hpp"
+#endif
+
 /******************************************************************************
 * Low level routines and constructors
 ******************************************************************************/
@@ -286,7 +290,11 @@ as_string_bool (bool f) {
 string
 as_string (int i) {
   char buf[64];
+#ifdef USE_JEAIII
+  i32toa_jeaiii (i, buf);
+#else
   sprintf (buf, "%i", i);
+#endif
   // sprintf (buf, "%i\0", i);
   return string (buf);
 }
@@ -294,7 +302,11 @@ as_string (int i) {
 string
 as_string (unsigned int i) {
   char buf[64];
+#ifdef USE_JEAIII
+  u32toa_jeaiii (i, buf);
+#else
   sprintf (buf, "%u", i);
+#endif
   // sprintf (buf, "%u\0", i);
   return string (buf);
 }
@@ -302,7 +314,11 @@ as_string (unsigned int i) {
 string
 as_string (long int i) {
   char buf[64];
+#ifdef USE_JEAIII
+  i64toa_jeaiii (i, buf);
+#else
   sprintf (buf, "%li", i);
+#endif
   // sprintf (buf, "%li\0", i);
   return string (buf);
 }
@@ -322,7 +338,11 @@ as_string (long long int i) {
 string
 as_string (unsigned long int i) {
   char buf[64];
+#ifdef USE_JEAIII
+  u64toa_jeaiii (i, buf);
+#else
   sprintf (buf, "%lu", i);
+#endif
   // sprintf (buf, "%lu\0", i);
   return string (buf);
 }
