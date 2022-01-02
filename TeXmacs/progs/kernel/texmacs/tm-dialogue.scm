@@ -172,7 +172,7 @@
 (define-public (procedure-symbol-name fun)
   (cond ((symbol? fun) fun)
         ((string? fun) (string->symbol fun))
-        ((and (procedure? fun) (procedure-name fun)) => identity)
+        ((procedure? fun) (string->symbol (object->string fun)))
         (else #f)))
 
 (define-public (procedure-string-name fun)
@@ -245,7 +245,7 @@
             (compute-interactive-arg-list fun (cdr l)))))
 
 (tm-define (compute-interactive-args fun)
-  (with args (property fun :arguments)
+  (with args (property (procedure-symbol-name fun) :arguments)
     (if (not args)
         (compute-interactive-args-try-hard fun)
         (compute-interactive-arg-list fun args))))
