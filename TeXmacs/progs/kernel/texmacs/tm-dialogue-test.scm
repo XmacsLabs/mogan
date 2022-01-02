@@ -11,19 +11,17 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (kernel texmacs tm-define-test)
-  (:use (kernel texmacs tm-define)))
+(texmacs-module (kernel texmacs tm-dialogue-test)
+  (:use (kernel texmacs tm-dialogue)))
 
-(define (regtest-procedure-name)
+(define (regtest-procedure-symbol-name)
   (regression-test-group
-   "procedure" "procedure"
-   procedure-name :none
-   (test "procedures defined via define-public" string->float string->float)
-   (test "procedures defined via glue symbols" utf8->cork utf8->cork)
-   (test "procedures defined via tm-define" regtest-tm-define regtest-tm-define)
-   (test "invalid input" 1 #f)))
+   "procedure" "symbol"
+   procedure-symbol-name :none
+   (test "glue procedure" system 'system)))
 
-(tm-define (regtest-tm-define)
-  (let ((n (+ (regtest-procedure-name))))
+(tm-define (regtest-tm-dialogue)
+  (let ((n (+ (regtest-procedure-symbol-name))))
     (display* "Total: " (object->string n) " tests.\n")
-    (display "Test suite of tm-define: ok\n")))
+    (display "Test suite of tm-dialogue: ok\n")))
+
