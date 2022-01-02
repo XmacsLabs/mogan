@@ -1,9 +1,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : tm-define-test.scm
-;; DESCRIPTION : Test suite for tm-define
-;; COPYRIGHT   : (C) 2021  Darcy Shen
+;; MODULE      : tm-dialogue-test.scm
+;; DESCRIPTION : Test suite for tm-dialogue
+;; COPYRIGHT   : (C) 2022  Darcy Shen
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
 ;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
