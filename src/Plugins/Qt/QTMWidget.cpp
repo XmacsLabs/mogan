@@ -498,32 +498,6 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
   
   if (!commit_string.isEmpty()) {
     bool done= false;
-#ifdef OS_MACOS
-#if (QT_VERSION < 0x050000)
-    // NOTE: this hack is only needed for Qt4 under MacOS,
-    // but it only works for standard US keyboards
-    done= true;
-    string s= from_qstring (commit_string);
-    Qt::KeyboardModifiers SA= Qt::ShiftModifier | Qt::AltModifier;
-    if (s == "\17") kbdEvent (36, Qt::AltModifier, commit_string);
-    else if (s == "<ddagger>") kbdEvent (38, Qt::AltModifier, commit_string);
-    else if (s == "<leq>") kbdEvent (44, Qt::AltModifier, commit_string);
-    else if (s == "<geq>") kbdEvent (46, Qt::AltModifier, commit_string);
-    else if (s == "<trademark>") kbdEvent (50, Qt::AltModifier, commit_string);
-    else if (s == "<infty>") kbdEvent (53, Qt::AltModifier, commit_string);
-    else if (s == "<ldots>") kbdEvent (59, Qt::AltModifier, commit_string);
-    else if (s == "<#20AC>") kbdEvent (64, Qt::AltModifier, commit_string);
-    else if (s == "<partial>") kbdEvent (68, Qt::AltModifier, commit_string);
-    else if (s == "<#192>") kbdEvent (70, Qt::AltModifier, commit_string);
-    else if (s == "<dagger>") kbdEvent (84, Qt::AltModifier, commit_string);
-    else if (s == "<sqrt>") kbdEvent (86, Qt::AltModifier, commit_string);
-    else if (s == "\35") kbdEvent (94, Qt::AltModifier, commit_string);
-    else if (s == "\31") kbdEvent (66, SA, commit_string);
-    else if (s == "<lozenge>") kbdEvent (89, SA, commit_string);
-    else done= false;
-#endif
-#endif
-    
     if (!done) {
       if (DEBUG_QT)
         debug_qt << "IM committing: " << commit_string.toUtf8().data() << LF;
