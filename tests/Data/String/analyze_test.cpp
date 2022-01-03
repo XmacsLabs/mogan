@@ -30,6 +30,7 @@ private slots:
   void test_starts ();
   void test_ends ();
   void test_read_word ();
+  void test_is_cjk_unified_ideographs ();
 };
 
 void
@@ -49,6 +50,11 @@ TestAnalyze::test_locase_all () {
   QVERIFY (locase_all (string ("TRue")) == string ("true"));
   QVERIFY (locase_all (string ("TRUE")) == string ("true"));
   QVERIFY (locase_all (string ("123TRUE")) == string ("123true"));
+}
+
+void
+TestAnalyze::test_is_cjk_unified_ideographs () {
+  QVERIFY (is_cjk_unified_ideographs ("<#4E2D>"));
 }
 
 void
