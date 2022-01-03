@@ -281,58 +281,7 @@ find_package (JPEG)
 ### --------------------------------------------------------------------
 
 # Allow for selection of Scheme implementation
-set(SCHEME_IMPL "s7" CACHE STRING "Implementation of Scheme to compile for.")
-set_property(CACHE SCHEME_IMPL PROPERTY STRINGS default guile-1.8 guile-2.0 guile-2.2 guile-3.0 chez s7)
-message(STATUS "Looking for Scheme implementation: " ${SCHEME_IMPL})
-
-if (${SCHEME_IMPL} STREQUAL "default")
-  # Find Guile and determine which version we are using.
-  # Look for guile versions in this order: 1.8 > 3.0 > 2.2 > 2.0
-  pkg_search_module (Guile REQUIRED guile-1.8 guile-3.0 guile-2.2 guile-2.0)
-  if (NOT Guile_FOUND)
-    message(FATAL_ERROR "Guile not installed or pkg-config cannot detect it.")
-  endif ()
-elseif ( (${SCHEME_IMPL} STREQUAL "guile-1.8")
-         OR (${SCHEME_IMPL} STREQUAL "guile-2.0")
-         OR (${SCHEME_IMPL} STREQUAL "guile-2.2")
-         OR (${SCHEME_IMPL} STREQUAL "guile-3.0") )
-  pkg_check_modules (Guile REQUIRED ${SCHEME_IMPL})
-elseif ((${SCHEME_IMPL} STREQUAL "chez") OR (${SCHEME_IMPL} STREQUAL "s7"))
-else ()
-  message(FATAL_ERROR "Incorrect scheme implementation selected.")
-endif()
-
-if (Guile_VERSION VERSION_LESS 2.0)
-  set (CONFIG_GUILE_SERIAL "C")
-  option (GUILE_C "Using Guile 1.8.x" ON)
-  message (STATUS "Using GUILE_C: " ${Guile_VERSION})
-else ()
-  set (CONFIG_GUILE_SERIAL "D")
-  option (GUILE_D "Using Guile 2.x or 3.x" ON)
-  set (SCM_SIZET size_t)
-  message (STATUS "Using GUILE_D: " ${Guile_VERSION})
-endif ()
-
-set (CMAKE_REQUIRED_FLAGS "-Werror ${Guile_CFLAGS}")
-set (CMAKE_REQUIRED_INCLUDES ${Guile_INCLUDE_DIRS})
-set (guile_str_size_t size_t)
-
-message (STATUS "Checking whether ... arguments behave correctly")
-
-check_c_source_compiles ("
-#include <guile/gh.h>
-#include <libguile.h>
-typedef SCM (*FN)(...);
-static SCM identity (SCM x) { return x; }
-void declare () { gh_new_procedure (\"identity\", (FN) identity, 1, 0, 0); }
-int main() { return 0; }
-" _guile_dots_test)
-
-if (_guile_dots_test)
-  set (DOTS_OK 1)
-else (_guile_dots_test)
-  set (DOTS_OK)
-endif (_guile_dots_test)
+set (SCHEME_IMPL "s7" CACHE STRING "Implementation of Scheme to compile for.")
 
 ### --------------------------------------------------------------------
 ### Generate configure headers
