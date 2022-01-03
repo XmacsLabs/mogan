@@ -77,7 +77,6 @@ mac_fix_paths () {
            stringByAppendingString:@":/usr/texbin"]
           cStringUsingEncoding:NSUTF8StringEncoding],
          1); 
-  setenv("GUILE_LOAD_PATH","/opt/local/share/guile/1.8",1);
   system("printenv");
   [pool release];  
 }
