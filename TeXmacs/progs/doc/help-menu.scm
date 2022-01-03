@@ -31,7 +31,7 @@
 
 (menu-bind help-menu
   (when (url-exists-in-help? "about/xmacs/welcome.zh.tm")
-        ("Xmacs" (load-help-buffer "about/xmacs/welcome"))
+        ("Mogan" (load-help-buffer "about/xmacs/welcome"))
         ---)
   (when (url-exists-in-help? "about/welcome/new-welcome.en.tm")
 	("Welcome" (load-help-article "about/welcome/new-welcome"))
