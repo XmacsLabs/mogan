@@ -26,7 +26,7 @@
       </dict>
     </array>
     <key>CFBundleExecutable</key>
-    <string>Xmacs</string>
+    <string>Mogan</string>
     <key>CFBundleIconFile</key>
     <string>Xmacs</string>
     <key>CFBundleIdentifier</key>
@@ -34,7 +34,7 @@
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>Xmacs</string>
+    <string>Mogan</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
