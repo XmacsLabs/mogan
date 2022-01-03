@@ -489,8 +489,6 @@
 "upgrade-tmml"
 "upgrade-mathml"
 "retrieve-mathjax"
-"vernac->texmacs"
-"vernac-document->texmacs"
 "compute-keys-string"
 "compute-keys-tree"
 "compute-keys-url"
