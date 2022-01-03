@@ -194,11 +194,9 @@ QTMScrollView::viewportEvent(QEvent *e)
     case QEvent::MouseButtonPress:
     case QEvent::MouseButtonRelease:
     case QEvent::MouseButtonDblClick:
-#if QT_VERSION >= 0x040600
     case QEvent::TouchBegin:
     case QEvent::TouchUpdate:
     case QEvent::TouchEnd:
-#endif
     case QEvent::MouseMove:
     case QEvent::ContextMenu:
     case QEvent::Wheel:
@@ -209,12 +207,10 @@ QTMScrollView::viewportEvent(QEvent *e)
         //      return QFrame::event(e);
       return false; // let the viewport widget handle the event
     case QEvent::LayoutRequest:
-#if QT_VERSION >= 0x040600
 #ifndef QT_NO_GESTURES
     case QEvent::Gesture:
     case QEvent::GestureOverride:
       return event(e);
-#endif
 #endif
     default:
       break;
@@ -231,11 +227,9 @@ QTMScrollView::surfaceEvent(QEvent *e)
     case QEvent::MouseButtonPress:
     case QEvent::MouseButtonRelease:
     case QEvent::MouseButtonDblClick:
-#if QT_VERSION >= 0x040600
     case QEvent::TouchBegin:
     case QEvent::TouchUpdate:
     case QEvent::TouchEnd:
-#endif
     case QEvent::MouseMove:
     case QEvent::ContextMenu:
     case QEvent::Wheel:
@@ -245,12 +239,10 @@ QTMScrollView::surfaceEvent(QEvent *e)
     case QEvent::DragLeave:
       return QFrame::event(e);
     case QEvent::LayoutRequest:
-#if QT_VERSION >= 0x040600
 #ifndef QT_NO_GESTURES
     case QEvent::Gesture:
     case QEvent::GestureOverride:
       return event(e);
-#endif
 #endif
     default:
       break;

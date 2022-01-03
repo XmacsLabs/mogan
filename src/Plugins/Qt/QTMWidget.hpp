@@ -60,9 +60,7 @@ protected:
   virtual void mousePressEvent (QMouseEvent* event);
   virtual void mouseReleaseEvent (QMouseEvent* event);
   virtual void mouseMoveEvent (QMouseEvent* event);
-#if (QT_VERSION >= 0x050000)
   virtual void tabletEvent (QTabletEvent* event);
-#endif
   virtual void resizeEvent (QResizeEvent *event);
   virtual void resizeEventBis (QResizeEvent *e);
   virtual void dragEnterEvent(QDragEnterEvent *event);

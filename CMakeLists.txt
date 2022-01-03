@@ -593,12 +593,7 @@ set (GUI_TYPE) # nothing or WIN32, MACOSX bundles are treated independetly
 if (TEXMACS_GUI MATCHES "Qt.*")
 
   if (TEXMACS_GUI STREQUAL "Qt4")
-    find_package (Qt4 REQUIRED)
-    set (TeXmacs_Include_Dirs
-      ${TeXmacs_Include_Dirs}
-      ${QT_INCLUDE_DIR}
-    )
-    include (${QT_USE_FILE})
+    message (FATAL_ERROR "Qt 4.x is not supported")
   else (TEXMACS_GUI STREQUAL "Qt4")
     # Homebrew installs Qt5 in /usr/local/opt/qt5
     if (APPLE AND EXISTS /usr/local/opt/qt5)
