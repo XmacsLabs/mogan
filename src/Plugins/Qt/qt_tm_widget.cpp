@@ -693,9 +693,7 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
       check_type<string>(val, s);
       string file = open_box<string> (val);
       if (DEBUG_QT_WIDGETS) debug_widgets << "\tFile: " << file << LF;
-#if (QT_VERSION >= 0x040400)
       mainwindow()->setWindowFilePath (utf8_to_qstring (file));
-#endif
     }
       break;
     case SLOT_POSITION:
@@ -911,7 +909,6 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       check_type_void (index, s);
     {
       bool can_update = true;
-#if (QT_VERSION >= 0x050000)
       // BUG:
       // there is a problem with updateActions  which apparently
       // reset a running input method in Qt5.
@@ -924,7 +921,6 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       // This seems enough since the other toolbars are not usually updated
       // while performing an input method keyboard sequence
       if (canvas()) can_update = !canvas()->isPreediting();
-#endif
       if (can_update) {
         focus_icons_widget = concrete (w);
         QList<QAction*>* list = focus_icons_widget->get_qactionlist();

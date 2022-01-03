@@ -56,7 +56,6 @@
 #include "MacOS/mac_utilities.h"
 #endif
 
-#if (QT_VERSION >= 0x050000)
 #include <QtPlugin>
 #ifdef qt_static_plugin_qjpeg
 Q_IMPORT_PLUGIN(qjpeg)
@@ -76,7 +75,6 @@ Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
 #endif
 #ifdef QT_MAC_USE_COCOA
 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
-#endif
 #endif
 
 qt_gui_rep* the_gui = NULL;

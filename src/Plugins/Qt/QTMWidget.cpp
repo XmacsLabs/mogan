@@ -605,7 +605,6 @@ QTMWidget::mouseMoveEvent (QMouseEvent* event) {
   event->accept();
 }
 
-#if (QT_VERSION >= 0x050000)
 static unsigned int
 tablet_state (QTabletEvent* event, bool flag) {
   unsigned int i= 0;
@@ -659,7 +658,6 @@ QTMWidget::tabletEvent (QTabletEvent* event) {
   */
   event->accept();
 }
-#endif
 
 bool
 QTMWidget::event (QEvent* event) {
@@ -752,9 +750,7 @@ QTMWidget::dropEvent (QDropEvent *event) {
 #endif
       string extension = suffix (name);
       if ((extension == "eps") || (extension == "ps")   ||
-#if (QT_VERSION >= 0x050000)
           (extension == "svg") ||
-#endif
           (extension == "pdf") || (extension == "png")  ||
           (extension == "jpg") || (extension == "jpeg")) {
         string w, h;
