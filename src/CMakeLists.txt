@@ -3,7 +3,7 @@
 ### --------------------------------------------------------------------
 
 if (APPLE)
-  set (TeXmacs_binary_name "Xmacs")
+  set (TeXmacs_binary_name "Mogan")
 elseif (WIN32)
   set (TeXmacs_binary_name "xmacs")
 else (APPLE)
