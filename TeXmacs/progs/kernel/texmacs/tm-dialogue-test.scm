@@ -14,14 +14,15 @@
 (texmacs-module (kernel texmacs tm-dialogue-test)
   (:use (kernel texmacs tm-dialogue)))
 
-(define (regtest-procedure-symbol-name)
+(define (regtest-compute-interactive-args)
   (regression-test-group
-   "procedure" "symbol"
-   procedure-symbol-name :none
-   (test "glue procedure" system 'system)))
+   "procedure" "interactive args"
+   compute-interactive-args :none
+   (test "glue procedure" system '(("System command" "string")))
+   (test "tm-defined" detect-remote-plugins '(("Remote server" "string")))))
 
 (tm-define (regtest-tm-dialogue)
-  (let ((n (+ (regtest-procedure-symbol-name))))
+  (let ((n (+ (regtest-compute-interactive-args))))
     (display* "Total: " (object->string n) " tests.\n")
     (display "Test suite of tm-dialogue: ok\n")))
 
