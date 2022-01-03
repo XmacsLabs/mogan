@@ -247,62 +247,6 @@ release_boot_lock () {
   remove (lock_file);
 }
 
-/******************************************************************************
-* Detection of guile
-******************************************************************************/
-
-static void
-init_guile () {
-  url guile_path= "$TEXMACS_PATH/progs:$GUILE_LOAD_PATH";
-  if (!exists (guile_path * "init-texmacs.scm")) {
-    boot_error << "\n";
-    boot_error << "Installation problem: please send a bug report.\n";
-    boot_error << "The initialization file init-texmacs.scm"
-               << " could not be found.\n";
-    boot_error << "Please check the values of the environment variables\n";
-    boot_error << "TEXMACS_PATH and GUILE_LOAD_PATH."
-               << " init-texmacs.scm should\n";
-    boot_error << "be readable and in the directory $TEXMACS_PATH/progs\n";
-    boot_error << "or in the directory $GUILE_LOAD_PATH\n";
-    boot_error << "\n";
-    FAILED ("guile could not be found");
-  }
-
-  /*
-  if (!exists ("$GUILE_LOAD_PATH/ice-9/boot-9.scm")) {
-    int i;
-    string guile_data    = var_eval_system ("guile-config info datadir");
-    string guile_version = var_eval_system ("guile --version");
-    for (i=0; i<N(guile_version); i++)
-      if (guile_version[i] == '\n') break;
-    guile_version= guile_version (0, i);
-    for (i=N(guile_version); i>0; i--)
-      if (guile_version[i-1] == ' ') break;
-    guile_version= guile_version (i, N (guile_version));
-    if (guile_version == "") {
-      var_eval_system ("guile-config info top_srcdir");
-      for (i=N(guile_version); i>0; i--)
-        if (guile_version[i-1] == '-') break;
-      guile_version= guile_version (i, N (guile_version));
-      for (i=0; i<N(guile_version); i++)
-        if ((guile_version[i] == '/') || (guile_version[i] == '\\')) {
-          guile_version= guile_version (0, i);
-          break;
-        }
-    }
-    url guile_dir= url_system (guile_data) * url ("guile", guile_version);
-    guile_path= guile_path | guile_dir;
-    set_env_path ("GUILE_LOAD_PATH", guile_path);
-    if (!exists ("$GUILE_LOAD_PATH/ice-9/boot-9.scm")) {
-      failed_error << "\nGUILE_LOAD_PATH=" << guile_path << "\n";
-      FAILED ("guile seems not to be installed on your system");
-    }
-  }
-  */
-
-  guile_path= guile_path | "$TEXMACS_HOME_PATH/progs" | plugin_path ("progs");
-  set_env_path ("GUILE_LOAD_PATH", guile_path);
-}
 
 /******************************************************************************
 * Set additional environment variables
@@ -522,8 +466,6 @@ init_texmacs () {
   init_std_drd ();
   //cout << "Initialize -- User preferences\n";
   load_user_preferences ();
-  //cout << "Initialize -- Guile\n";
-  init_guile ();
   //cout << "Initialize -- Environment variables\n";
   init_env_vars ();
   //cout << "Initialize -- Miscellaneous\n";
