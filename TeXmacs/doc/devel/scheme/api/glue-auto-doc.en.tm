@@ -3715,22 +3715,6 @@ source code.
   </explain>
 
   <\explain>
-    <scm|(vernac-\<gtr\>texmacs <scm-arg|string>)>
-<explain-synopsis|no synopsis>
-  <|explain>
-    Calls the <c++> function <cpp|vernac_to_tree> which returns
-    <scm|tree>.
-  </explain>
-
-  <\explain>
-    <scm|(vernac-document-\<gtr\>texmacs <scm-arg|string>)>
-<explain-synopsis|no synopsis>
-  <|explain>
-    Calls the <c++> function <cpp|vernac_document_to_tree> which returns
-    <scm|tree>.
-  </explain>
-
-  <\explain>
     <scm|(compute-keys-string <scm-arg|string> <scm-arg|string>)>
 <explain-synopsis|no synopsis>
   <|explain>
