@@ -571,12 +571,12 @@ immediate_options (int argc, char** argv) {
   {
     if (get_env ("HOME") == "")
         set_env ("HOME", get_env("USERPROFILE"));
-    set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\TeXmacs");
+    set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\Xmacs");
 	}
 #elif defined(OS_HAIKU)
-    set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/config/settings/TeXmacs");
+    set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/config/settings/Xmacs");
 #else
-    set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/.TeXmacs");
+    set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/.Xmacs");
 #endif
   if (get_env ("TEXMACS_HOME_PATH") == "") return;
   for (int i=1; i<argc; i++) {
