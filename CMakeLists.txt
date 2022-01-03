@@ -721,14 +721,14 @@ add_subdirectory (TeXmacs)
 ### --------------------------------------------------------------------
 
 if (APPLE)
-  install (FILES packages/macos/TeXmacs.icns DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install (FILES packages/macos/Xmacs.icns DESTINATION ${CMAKE_INSTALL_PREFIX})
   install (FILES packages/macos/TeXmacs-document.icns DESTINATION ${CMAKE_INSTALL_PREFIX})
   install (DIRECTORY src/Plugins/Cocoa/English.lproj DESTINATION ${CMAKE_INSTALL_PREFIX})
   install (DIRECTORY src/Plugins/Cocoa/zh_CN.lproj DESTINATION ${CMAKE_INSTALL_PREFIX})
 endif (APPLE)
 
 if (NOT WIN32)
-  install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/texmacs
+  install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/xmacs
                  ${TEXMACS_BINARY_DIR}/misc/scripts/fig2ps
                  misc/scripts/tm_gs
           DESTINATION bin
