@@ -247,6 +247,16 @@ release_boot_lock () {
   remove (lock_file);
 }
 
+/******************************************************************************
+* Detection of scheme code
+******************************************************************************/
+
+static void
+init_scheme() {
+  url guile_path= "$TEXMACS_PATH/progs:$GUILE_LOAD_PATH";
+  guile_path= guile_path | "$TEXMACS_HOME_PATH/progs" | plugin_path ("progs");
+  set_env_path ("GUILE_LOAD_PATH", guile_path);
+}
 
 /******************************************************************************
 * Set additional environment variables
@@ -466,6 +476,8 @@ init_texmacs () {
   init_std_drd ();
   //cout << "Initialize -- User preferences\n";
   load_user_preferences ();
+  //cout << "Initialize -- Guile\n";
+  init_scheme ();
   //cout << "Initialize -- Environment variables\n";
   init_env_vars ();
   //cout << "Initialize -- Miscellaneous\n";
