@@ -695,7 +695,7 @@ main (int argc, char** argv) {
 #endif
   TeXmacs_init_paths (argc, argv);
 #ifdef QTTEXMACS
-  qtmapp->set_window_icon("/misc/images/texmacs-512.png");
+  qtmapp->set_window_icon("/misc/images/xmacs-512.png");
 #endif
   //cout << "Bench  ] Started TeXmacs\n";
   the_et     = tuple ();
