@@ -1,7 +1,7 @@
-# Mogan Editor / 墨干编辑器
+# Mogan Editor / [墨干编辑器](README_ZH.md)
 Mogan Editor is a structured editor based on GNU TeXmacs.
 
-Mogan is named after [Mount Mogan](https://en.wikipedia.org/wiki/Mount_Mogan), a famous attraction in my hometown. The word 墨干 (Mogan) means ink dried literally while the word 莫干 (Mogan) is actually a concatenation of Mo (莫邪) and Gan (干将).
+Mogan is named after Mount Mogan[^1], a famous attraction in my hometown. The word 墨干 (Mogan) means ink dried literally while the word 莫干 (Mogan) is actually a concatenation of Mo (莫邪) and Gan (干将)[^2].
 
 GNU TeXmacs is for Scientists, Mogan is for Writers.
 
@@ -17,3 +17,6 @@ Mogan v1.x will always be compatible with GNU TeXmacs 2.1.1.
 + Join us on [Discussions](https://github.com/XmacsLabs/mogan/discussions)
 + Report bugs or wishes to [Issues](https://github.com/XmacsLabs/mogan/issues)
 + Show me your code at [Pull Requests](https://github.com/XmacsLabs/mogan/pulls)
+
+[^1]: https://en.wikipedia.org/wiki/Mount_Mogan
+[^2]: https://en.wikipedia.org/wiki/Gan_Jiang_and_Mo_Ye
