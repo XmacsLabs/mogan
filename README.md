@@ -13,7 +13,7 @@ Mogan v1.0 (based on GNU TeXmacs 2.1.1) will be a baseline release with the foll
 
 Mogan v1.x will always be compatible with GNU TeXmacs 2.1.1.
 
-## How to Get Involed
+## How to Get Involved
 + Join us on [Discussions](https://github.com/XmacsLabs/mogan/discussions)
 + Report bugs or wishes to [Issues](https://github.com/XmacsLabs/mogan/issues)
 + Show me your code at [Pull Requests](https://github.com/XmacsLabs/mogan/pulls)
