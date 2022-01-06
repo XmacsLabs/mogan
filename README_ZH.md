@@ -11,7 +11,6 @@
 墨干V1.x将始终和GNU TeXmacs 2.1.1保持兼容。
 
 ## 如何参与
-## 如何参与
 + [加入](https://github.com/XmacsLabs/mogan/discussions)讨论
 + [报告](https://github.com/XmacsLabs/mogan/issues)错误或者改进
 + [贡献](https://github.com/XmacsLabs/mogan/pulls)你的代码
