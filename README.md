@@ -6,7 +6,7 @@ Mogan is named after [Mount Mogan](https://en.wikipedia.org/wiki/Mount_Mogan), a
 GNU TeXmacs is for Scientists, Mogan is for Writers.
 
 ## Plans
-Mogan v1.0 (based on GNU TeXmacs 2.1.1) is a baseline release with the following three major changes:
+Mogan v1.0 (based on GNU TeXmacs 2.1.1) will be a baseline release with the following three major changes:
 + Switch from GNU Guile 1.8 to S7
 + Switch from Qt 4.x to Qt 5.x
 + Change some of the default settings
