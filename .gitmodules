@@ -7,3 +7,6 @@
 [submodule "plugins/pyenv"]
 	path = plugins/pyenv
 	url = https://github.com/XmacsLabs/pyenv.git
+[submodule "plugins/maxima"]
+	path = plugins/maxima
+	url = https://github.com/texmacs/maxima.git
