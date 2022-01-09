@@ -2,13 +2,7 @@
 ### Set the executable target name and other stuff
 ### --------------------------------------------------------------------
 
-if (APPLE)
-  set (TeXmacs_binary_name "Mogan")
-elseif (WIN32)
-  set (TeXmacs_binary_name "xmacs")
-else (APPLE)
-  set (TeXmacs_binary_name "xmacs.bin")
-endif (APPLE)
+set (TeXmacs_binary_name "Mogan")
 
 add_library(texmacs_body STATIC ${TeXmacs_All_SRCS})
 

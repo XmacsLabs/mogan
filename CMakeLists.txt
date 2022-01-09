@@ -4,7 +4,7 @@
 # MODULE      : CMakeLists.txt
 # DESCRIPTION : CMake file for TeXmacs
 # COPYRIGHT   : (C) 2008-2009  Massimiliano Gubinelli
-#               (C) 2017-2020  Darcy Shen
+#               (C) 2017-2022  Darcy Shen
 #
 # This software falls under the GNU general public license version 3 or later.
 # It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -723,7 +723,7 @@ if (APPLE)
 endif (APPLE)
 
 if (NOT WIN32)
-  install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/xmacs
+  install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/mogan
                  ${TEXMACS_BINARY_DIR}/misc/scripts/fig2ps
                  misc/scripts/tm_gs
           DESTINATION bin
@@ -758,10 +758,18 @@ install (FILES TeXmacs/misc/images/text-x-texmacs.svg
 install (FILES TeXmacs/misc/mime/texmacs.xml DESTINATION share/mime/packages)
 install (FILES TeXmacs/misc/pixmaps/TeXmacs.xpm DESTINATION share/pixmaps)
 foreach (size IN ITEMS 16 22 24 32 48 64 128 256 512)
-  message (STATUS ${size})
   install (FILES TeXmacs/misc/images/texmacs-${size}.png RENAME TeXmacs.png
     DESTINATION share/icons/hicolor/${size}x${size}/apps/)
 endforeach ()
+
+if (WIN32)
+  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs-large.bmp DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs-small.bmp DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/xmacs-64.ico DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs.ico DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/Xmacs.iss DESTINATION ${CMAKE_INSTALL_PREFIX})
+endif (WIN32)
+
 
 ### --------------------------------------------------------------------
 ### Testing

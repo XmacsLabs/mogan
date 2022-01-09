@@ -1,23 +1,20 @@
-; -- TeXmacs.iss --
-; Inno Setup configuration file for the compilation of the 
-; Windows TeXmacs installer
+; -- Xmacs.iss --
 
 [Setup]
-AppName=@PACKAGE@
-AppVerName=Texmacs
-DefaultDirName={commonpf32}\TeXmacs
-DefaultGroupName=TeXmacs
-;denis begin
-VersionInfoTextVersion=@DEVEL_VERSION@
-AppPublisher=MAGIX
-AppPublisherURL=https://www.texmacs.org/
-AppVersion=@DEVEL_VERSION@
-LicenseFile=..\..\..\distr\TeXmacs-Windows\LICENSE
-;denis end
+AppName=Mogan
+AppVerName=Mogan
+DefaultDirName={commonpf64}\Mogan
+DefaultGroupName=Mogan
+
+VersionInfoTextVersion=v1.0-alpha4
+AppPublisher=XmacsLabs
+AppPublisherURL=http://github.com/XmacsLabs/mogan
+AppVersion=1.0-alpha4
+LicenseFile=LICENSE
 
 UninstallDisplayIcon={app}\TeXmacs.ico
-OutputDir=..\..\..\distr\windows
-OutputBaseFilename=@tm_devel@-installer
+OutputDir=..
+OutputBaseFilename=Xmacs-v1.0-alpha4-installer
 ; SourceDir=../..
 ChangesAssociations=yes
 
@@ -33,23 +30,22 @@ CloseApplications=yes
 Root: HKCR; Subkey: ".tm"; ValueType: string; ValueName: ""; ValueData: "tmfile"; Flags: uninsdeletevalue
 Root: HKCR; Subkey: "tmfile"; ValueType: string; ValueName: ""; ValueData: "text/tm"; Flags: uninsdeletekey
 Root: HKCR; Subkey: "tmfile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\TeXmacs.ico"
-Root: HKCR; Subkey: "tmfile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\texmacs.exe"" ""%1""" 
+Root: HKCR; Subkey: "tmfile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\Mogan.exe"" ""%1"""
 
 [Files]
-Source: ..\..\..\distr\TeXmacs-Windows\*; DestDir: {app}; Flags: recursesubdirs createallsubdirs ignoreversion
-Source: TeXmacs.ico; DestDir: {app}
+Source: *; Excludes: "Xmacs.iss"; DestDir: {app}; Flags: recursesubdirs createallsubdirs ignoreversion
+Source: "C:\Program Files (x86)\TeXmacs\bin\gs.exe"; DestDir: {app}/bin/;
 
 [Icons]
-Name: "{group}\TeXmacs"; Filename: "{app}\bin\texmacs.exe"; IconFilename: "{app}\TeXmacs.ico"
-Name: "{group}\Uninstall TeXmacs"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\TeXmacs"; Filename: "{app}\bin\texmacs.exe"; IconFilename: "{app}\TeXmacs.ico"
+Name: "{group}\Mogan"; Filename: "{app}\bin\Mogan.exe"; IconFilename: "{app}\xmacs-64.ico"
+Name: "{group}\Uninstall Mogan"; Filename: "{uninstallexe}"
+Name: "{commondesktop}\Mogan"; Filename: "{app}\bin\Mogan.exe"; IconFilename: "{app}\xmacs-64.ico"
 
 [UninstallDelete]
 Type: files; Name: "{app}\*"
 Type: dirifempty; Name: "{app}"
 
 [Code]
-
 procedure UninstallTeXmacs();
 var
   FindRec: TFindRec;
@@ -75,7 +71,6 @@ begin
     not FindNext(FindRec);
   FindClose(FindRec);
 end;
-
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if (CurStep = ssInstall) then
