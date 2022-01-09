@@ -35,6 +35,11 @@ Root: HKCR; Subkey: "tmfile\shell\open\command"; ValueType: string; ValueName: "
 [Files]
 Source: *; Excludes: "Xmacs.iss"; DestDir: {app}; Flags: recursesubdirs createallsubdirs ignoreversion
 Source: "C:\Program Files (x86)\TeXmacs\bin\gs.exe"; DestDir: {app}/bin/;
+Source: "C:\Program Files (x86)\TeXmacs\plugins\aspell\bin\*"; DestDir: {app}/plugins/aspell/bin; Flags: recursesubdirs createallsubdirs ignoreversion
+Source: "C:\Program Files (x86)\TeXmacs\plugins\aspell\data\en*"; DestDir: {app}/plugins/aspell/data; Flags: recursesubdirs createallsubdirs ignoreversion
+Source: "C:\Program Files (x86)\TeXmacs\plugins\aspell\data\iso*"; DestDir: {app}/plugins/aspell/data; Flags: recursesubdirs createallsubdirs ignoreversion
+Source: "C:\Program Files (x86)\TeXmacs\plugins\aspell\data\standard*"; DestDir: {app}/plugins/aspell/data; Flags: recursesubdirs createallsubdirs ignoreversion
+Source: "C:\Program Files (x86)\TeXmacs\plugins\aspell\dict\en*"; DestDir: {app}/plugins/aspell/dict; Flags: recursesubdirs createallsubdirs ignoreversion
 
 [Icons]
 Name: "{group}\Mogan"; Filename: "{app}\bin\Mogan.exe"; IconFilename: "{app}\xmacs-64.ico"
