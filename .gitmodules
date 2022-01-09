@@ -1,0 +1,3 @@
+[submodule "plugins/octave"]
+	path = plugins/octave
+	url = https://github.com/texmacs/octave.git
