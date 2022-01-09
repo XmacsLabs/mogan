@@ -14,7 +14,7 @@ LicenseFile=LICENSE
 
 UninstallDisplayIcon={app}\TeXmacs.ico
 OutputDir=..
-OutputBaseFilename=Xmacs-v1.0-alpha4-installer
+OutputBaseFilename=Mogan-v1.0-alpha4-installer
 ; SourceDir=../..
 ChangesAssociations=yes
 
