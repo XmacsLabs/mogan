@@ -4,7 +4,7 @@
 # MODULE      : CMakeLists.txt
 # DESCRIPTION : CMake file for TeXmacs
 # COPYRIGHT   : (C) 2008-2009  Massimiliano Gubinelli
-#               (C) 2017-2020  Darcy Shen
+#               (C) 2017-2022  Darcy Shen
 #
 # This software falls under the GNU general public license version 3 or later.
 # It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -713,7 +713,7 @@ if (APPLE)
 endif (APPLE)
 
 if (NOT WIN32)
-  install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/xmacs
+  install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/mogan
                  ${TEXMACS_BINARY_DIR}/misc/scripts/fig2ps
                  misc/scripts/tm_gs
           DESTINATION bin
