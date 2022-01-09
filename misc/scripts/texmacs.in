@@ -35,4 +35,4 @@ PATH="$TEXMACS_BIN_PATH/bin:$PATH"
 @CONFIG_LIB_PATH@="$TEXMACS_BIN_PATH/lib${@CONFIG_LIB_PATH@+":$@CONFIG_LIB_PATH@"}"
 export PATH @CONFIG_LIB_PATH@
 
-exec xmacs.bin "$@" < /dev/null
+exec Mogan "$@" < /dev/null
