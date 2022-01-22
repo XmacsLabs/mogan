@@ -9,16 +9,15 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    height="16"
-   id="svg2544"
+   id="svg2"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    inkscape:version="0.48.0 r9654"
-   sodipodi:docname="tm_taiwanese.svg"
+   sodipodi:docname="tm_chinese.svg"
    sodipodi:version="0.32"
    version="1.0"
-   viewBox="-60 -40 15 10"
    width="16">
   <metadata
-     id="metadata35571">
+     id="metadata9540">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -56,13 +55,13 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs2560">
+     id="defs16">
     <inkscape:perspective
-       id="perspective2564"
-       inkscape:persp3d-origin="450 : 200 : 1"
-       inkscape:vp_x="0 : 300 : 1"
+       id="perspective20"
+       inkscape:persp3d-origin="1500 : 666.66667 : 1"
+       inkscape:vp_x="0 : 1000 : 1"
        inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="900 : 300 : 1"
+       inkscape:vp_z="3000 : 1000 : 1"
        sodipodi:type="inkscape:persp3d" />
   </defs>
   <sodipodi:namedview
@@ -71,88 +70,75 @@
      gridtolerance="10.0"
      guidetolerance="10.0"
      id="base"
-     inkscape:current-layer="svg2544"
-     inkscape:cx="13.527488"
-     inkscape:cy="7.5529118"
+     inkscape:current-layer="svg2"
+     inkscape:cx="9.9947208"
+     inkscape:cy="9.5878116"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:window-height="1152"
      inkscape:window-width="1920"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:zoom="39.751111"
+     inkscape:zoom="47.701332"
      objecttolerance="10.0"
      pagecolor="#ffffff"
      showgrid="true"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
-       id="grid35611"
+       id="grid9578"
        empspacing="5"
        visible="true"
        enabled="true"
        snapvisiblegridlinesonly="true" />
   </sodipodi:namedview>
   <g
-     id="g35602"
-     transform="matrix(0.0625,0,0,0.05859375,-56.25,-37.34375)"
+     id="g9570"
+     transform="matrix(0.0625,0,0,0.05859363,0,0.51955681)"
      style="opacity:0.75">
     <rect
-       y="-40"
-       x="-60"
-       width="240"
-       style="fill:#fe0000"
-       id="rect2546"
-       height="160" />
-    <rect
-       y="-40"
-       x="-60"
-       width="120"
-       style="fill:#000095"
-       id="rect2548"
-       height="80" />
+       y="42.333"
+       x="0"
+       width="256"
+       style="fill:#de2910"
+       id="rect4"
+       height="170.66701" />
     <path
-       style="fill:#ffffff"
-       id="four_rays"
-       d="M 8,0 0,30 -8,0 0,-30 M 0,8 30,0 0,-8 -30,0"
+       style="fill:#ffde00"
+       id="star"
+       d="m 27.690213,105.63795 5.674025,-17.645436 -14.910905,-10.939121 18.46692,-0.0344 5.753705,-17.619334 5.739158,17.624134 18.466884,0.0498 -14.919927,10.926721 5.659465,17.650136 -14.960179,-10.871123 -14.969146,10.858623 0,0 z"
        inkscape:connector-curvature="0" />
     <use
        y="0"
-       xlink:href="#four_rays"
+       xlink:href="#star"
        x="0"
-       width="240"
-       transform="matrix(0.8660254,0.5,-0.5,0.8660254,0,0)"
-       id="use2551"
-       height="160" />
+       width="3000"
+       transform="matrix(0.3128368,0.1151017,-0.1151013,0.3128368,81.815407,87.649317)"
+       id="use7"
+       height="2000" />
     <use
        y="0"
-       xlink:href="#four_rays"
+       xlink:href="#star"
        x="0"
-       width="240"
-       transform="matrix(0.5,0.8660254,-0.8660254,0.5,0,0)"
-       id="use2553"
-       height="160" />
-    <circle
-       style="fill:#000095"
-       sodipodi:ry="17"
-       sodipodi:rx="17"
-       sodipodi:cy="0"
-       sodipodi:cx="0"
-       r="17"
-       id="circle2555"
-       cy="0"
-       cx="0"
-       d="M 17,0 C 17,9.3888407 9.3888407,17 0,17 -9.3888407,17 -17,9.3888407 -17,0 c 0,-9.3888407 7.6111593,-17 17,-17 9.3888407,0 17,7.6111593 17,17 z" />
-    <circle
-       style="fill:#ffffff"
-       sodipodi:ry="15"
-       sodipodi:rx="15"
-       sodipodi:cy="0"
-       sodipodi:cx="0"
-       r="15"
-       id="circle2557"
-       cy="0"
-       cx="0"
-       d="M 15,0 C 15,8.2842712 8.2842712,15 0,15 -8.2842712,15 -15,8.2842712 -15,0 c 0,-8.2842712 6.7157288,-15 15,-15 8.2842712,0 15,6.7157288 15,15 z" />
+       width="3000"
+       transform="matrix(0.3330938,-0.0127962,0.01279615,0.3330938,87.130954,74.29826)"
+       id="use9"
+       height="2000" />
+    <use
+       y="0"
+       xlink:href="#star"
+       x="0"
+       width="3000"
+       transform="matrix(0.2988346,-0.1476936,0.147693,0.2988346,77.058704,57.361021)"
+       id="use11"
+       height="2000" />
+    <use
+       y="0"
+       xlink:href="#star"
+       x="0"
+       width="3000"
+       transform="matrix(0.3070677,0.1297109,-0.1297105,0.3070677,83.21088,27.749418)"
+       id="use13"
+       height="2000" />
   </g>
 </svg>
