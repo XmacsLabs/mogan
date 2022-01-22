@@ -126,6 +126,7 @@ qt_tm_widget_rep::qt_tm_widget_rep(int mask, command _quit)
     mw->setStyle (qtmstyle ());
     mw->menuBar()->setStyle (qtmstyle ());
   }
+  mw->setWindowState(Qt::WindowMaximized);
 
 #ifdef Q_OS_MAC
   if (!use_native_menubar) {
