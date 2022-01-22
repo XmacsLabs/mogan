@@ -37,7 +37,8 @@
   (-> "Macros"
       (link source-macros-menu))
   (-> "Keyboard"
-      ("Edit keyboard shortcuts" (open-shortcuts-editor "" "")))
+      ("Edit keyboard shortcuts" (open-shortcuts-editor "" ""))
+      ("Show key presses" (toggle-show-kbd)))
   ---
   (-> "Update"
       ("Inclusions" (inclusions-gc))
@@ -75,7 +76,6 @@
   (-> "Miscellaneous"
       ("Clear undo history" (clear-undo-history))
       ("Save auxiliary data" (toggle-save-aux))
-      ("Show key presses" (toggle-show-kbd))
       ---
       (-> "Import selections as"
           (link clipboard-import-preference-menu))
