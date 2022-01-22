@@ -18,8 +18,7 @@
 ;; Preferences
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (get-default-interactive-questions)
-  (if (or (like-gnome?) (like-macos?) (like-windows?)) "popup" "footer"))
+(define (get-default-interactive-questions) "popup")
 
 (define (get-default-buffer-management) "shared")
 
