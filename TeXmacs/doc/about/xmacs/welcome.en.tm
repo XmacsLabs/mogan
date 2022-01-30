@@ -4,7 +4,7 @@
 
 <\body>
   <\hide-preamble>
-    <assign|xmacs-version|v1.0-beta>
+    <assign|xmacs-version|v1.0.0>
   </hide-preamble>
 
   <tmdoc-title|Welcome to <name|Mogan Editor> <value|xmacs-version>>
