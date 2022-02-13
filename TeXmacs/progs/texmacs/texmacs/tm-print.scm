@@ -15,11 +15,7 @@
   (:use (texmacs texmacs tm-files)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Try to obtain the papersize in this order from
-;; - the environment variable PAPERSIZE
-;; - the contents of the file specified by the PAPERCONF environment variable
-;; - the contents of the file "/etc/papersize"
-;; or else default to "a4"
+;; papersize defaults to "a4"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define supported-sizes
@@ -54,8 +50,7 @@
 (tm-define (standard-paper-size s)
   (if (and (string? s) (in? s standard-sizes)) s "user"))
 
-(tm-define (get-default-paper-size)
-  (correct-paper-size (get-default-paper-size-bis)))
+(tm-define (get-default-paper-size) "a4")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Printing preferences
