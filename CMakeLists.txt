@@ -755,7 +755,7 @@ else (WIN32)
     PATTERN ".gitignore" EXCLUDE)
 endif (WIN32)
 
-install (FILES TeXmacs/misc/mime/texmacs.desktop DESTINATION share/applications)
+install (FILES TeXmacs/misc/mime/mogan.desktop DESTINATION share/applications)
 install (FILES TeXmacs/misc/images/texmacs.svg RENAME TeXmacs.svg
   DESTINATION share/icons/hicolor/scalable/apps)
 install (FILES TeXmacs/misc/images/text-x-texmacs.svg
@@ -763,8 +763,7 @@ install (FILES TeXmacs/misc/images/text-x-texmacs.svg
 install (FILES TeXmacs/misc/mime/texmacs.xml DESTINATION share/mime/packages)
 install (FILES TeXmacs/misc/pixmaps/TeXmacs.xpm DESTINATION share/pixmaps)
 foreach (size IN ITEMS 16 22 24 32 48 64 128 256 512)
-  message (STATUS ${size})
-  install (FILES TeXmacs/misc/images/texmacs-${size}.png RENAME TeXmacs.png
+  install (FILES TeXmacs/misc/images/xmacs-${size}.png RENAME Xmacs.png
     DESTINATION share/icons/hicolor/${size}x${size}/apps/)
 endforeach ()
 
