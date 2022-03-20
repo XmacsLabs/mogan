@@ -3,7 +3,7 @@ Mogan Editor is a structured editor based on GNU TeXmacs.
 
 Mogan is named after Mount Mogan[^1], a famous attraction in my hometown. 墨干(Mogan) literally means "dried ink". The word is derived from 莫干(Mogan) which is a combination of 莫(Mo) and 干(Gan)[^2].
 
-GNU TeXmacs is for Scientists, Mogan is for Writers.
+GNU TeXmacs is for Scientists, Mogan is for human beings.
 
 ## Plans
 Mogan v1.0 (based on GNU TeXmacs 2.1.1) will be a baseline release with the following three major changes:
