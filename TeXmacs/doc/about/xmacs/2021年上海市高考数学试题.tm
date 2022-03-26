@@ -22,7 +22,7 @@
 
     <item>\<#5DF2\>\<#77E5\>\<#4E8C\>\<#9879\>\<#5F0F\><math|<around*|(|x+a|)><rsup|5>>\<#5C55\>\<#5F00\>\<#5F0F\>\<#4E2D\>\<#FF0C\><math|x<rsup|2>>\<#7684\>\<#7CFB\>\<#6570\>\<#4E3A\>80\<#FF0C\>\<#5219\><math|a=><underline|<space|3em>>.
 
-    <item>\<#5DF2\>\<#77E5\><math|<choice|<tformat|<table|<row|<cell|x\<leqslant\>3>>|<row|<cell|2*x-y-2\<geqslant\>0>>|<row|<cell|3*x+y-8\<geqslant\>0>>>>>>\<#FF0C\><math|z=x-y>\<#FF0C\>\<#5219\><math|z>\<#7684\>\<#6700\>\<#5927\>\<#503C\>\<#4E3A\><underline|<space|3em>>.
+    <item>\<#5DF2\>\<#77E5\><choice|<tformat|<table|<row|<cell|x\<leqslant\>3>>|<row|<cell|2*x-y-2\<geqslant\>0>>|<row|<cell|3*x+y-8\<geqslant\>0>>>>>\<#FF0C\><math|z=x-y>\<#FF0C\>\<#5219\><math|z>\<#7684\>\<#6700\>\<#5927\>\<#503C\>\<#4E3A\><underline|<space|3em>>.
 
     <item>\<#5DF2\>\<#77E5\><math|<around*|{|a<rsub|n>|}>>\<#4E3A\>\<#65E0\>\<#7A77\>\<#7B49\>\<#6BD4\>\<#6570\>\<#5217\>\<#FF0C\><math|a<rsub|1>=3>\<#FF0C\><math|a<rsub|n>>\<#7684\>\<#5404\>\<#9879\>\<#548C\>\<#4E3A\>9\<#FF0C\><math|b<rsub|n>=a<rsub|2n>>\<#FF0C\>\<#5219\>\<#6570\>\<#5217\><math|<around*|{|b<rsub|n>|}>>\<#7684\>\<#5404\>\<#9879\>\<#548C\>\<#4E3A\><underline|<space|3em>>.
 
@@ -52,7 +52,7 @@
       </cell>>>>
     </wide-tabular>
 
-    <item>\<#5DF2\>\<#77E5\>\<#53C2\>\<#6570\>\<#65B9\>\<#7A0B\><math|<choice|<tformat|<table|<row|<cell|x=3*t-4*t<rsup|3>>>|<row|<cell|y=2*t*<sqrt|1-t<rsup|2>>>>>>>,t\<in\><around*|[|-1,1|]>>\<#FF0C\>\<#4E0B\>\<#5217\>\<#9009\>\<#9879\>\<#7684\>\<#56FE\>\<#4E2D\>\<#FF0C\>\<#7B26\>\<#5408\>\<#8BE5\>\<#65B9\>\<#7A0B\>\<#7684\>\<#662F\><underline|<space|3em>>
+    <item>\<#5DF2\>\<#77E5\>\<#53C2\>\<#6570\>\<#65B9\>\<#7A0B\><choice|<tformat|<table|<row|<cell|x=3*t-4*t<rsup|3>>>|<row|<cell|y=2*t*<sqrt|1-t<rsup|2>>>>>>><math|,t\<in\><around*|[|-1,1|]>>\<#FF0C\>\<#4E0B\>\<#5217\>\<#9009\>\<#9879\>\<#7684\>\<#56FE\>\<#4E2D\>\<#FF0C\>\<#7B26\>\<#5408\>\<#8BE5\>\<#65B9\>\<#7A0B\>\<#7684\>\<#662F\><underline|<space|3em>>
 
     <\wide-tabular>
       <tformat|<cwith|1|1|1|1|cell-hyphen|n>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|1|1|cell-valign|c>|<cwith|1|1|1|1|cell-halign|c>|<table|<row|<\cell>

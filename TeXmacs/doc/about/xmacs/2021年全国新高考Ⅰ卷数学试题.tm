@@ -330,9 +330,9 @@
   17<with|font|Hiragino Kaku Gothic ProN|\<#FF0E\>><with|font|Songti
   SC|\<#5DF2\>\<#77E5\>\<#6570\>\<#5217\>><math|<around*|{|a<rsub|n>|}>><with|font|Songti
   SC|\<#6EE1\>\<#8DB3\>><math|a<rsub|1>=1><with|font|Hiragino Kaku Gothic
-  ProN|\<#FF0C\>><math|a<rsub|n+1>=<around*|{|<tabular*|<tformat|<table|<row|<cell|a<rsub|n>+1,n<with|font|Songti
-  SC|\<#4E3A\>*\<#5947\>*\<#6570\>>,>>|<row|<cell|a<rsub|n>+2,n<with|font|Songti
-  SC|\<#4E3A\>*\<#5076\>*\<#6570\>>.>>>>>|\<nobracket\>>>
+  ProN|\<#FF0C\>><math|a<rsub|n+1>=><choice|<tformat|<table|<row|<cell|a<rsub|n>+1,n<with|font|Songti
+  SC|\<#4E3A\>\<#5947\>\<#6570\>>,>>|<row|<cell|a<rsub|n>+2,n<with|font|Songti
+  SC|\<#4E3A\>\<#5076\>\<#6570\>>.>>>>>
 
   <with|font|Hiragino Kaku Gothic ProN|\<#FF08\>>1<with|font|Hiragino Kaku
   Gothic ProN|\<#FF09\>><with|font|Songti

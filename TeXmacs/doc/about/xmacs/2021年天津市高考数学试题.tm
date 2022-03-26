@@ -3,8 +3,7 @@
 <style|<tuple|generic|chinese>>
 
 <\body>
-  <doc-data|<doc-title|2021<with|font|Songti
-  SC|\<#5E74\>\<#5929\>\<#6D25\>\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>>>>
+  <doc-data|<doc-title|2021\<#5E74\>\<#5929\>\<#6D25\>\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>>>
 
   <with|font-series|bold|<with|font|Songti
   SC|\<#4E00\>>\<#3001\><with|font|Songti SC|\<#5355\>\<#9009\>\<#9898\>>>
@@ -135,8 +134,8 @@
 
   9<with|font|Hiragino Kaku Gothic ProN|\<#FF0E\>><with|font|Songti
   SC|\<#8BBE\>><math|a\<in\><math-bf|R>><with|font|Hiragino Kaku Gothic
-  ProN|\<#FF0C\>><with|font|Songti SC|\<#51FD\>\<#6570\>><math|f<around|(|x|)>=<around*|{|<tabular*|<tformat|<table|<row|<cell|cos
-  <around|(|2*\<pi\>*x-2*\<pi\>*a|)>.>|<cell|x\<less\>a>>|<row|<cell|x<rsup|2>-2*<around|(|a+1|)>*x+a<rsup|2>+5,>|<cell|x\<geq\>a>>>>>|\<nobracket\>>><with|font|Hiragino
+  ProN|\<#FF0C\>><with|font|Songti SC|\<#51FD\>\<#6570\>><math|f<around*|(|x|)>=><choice|<tformat|<table|<row|<cell|<math|cos
+  <around|(|2*\<pi\>*x-2*\<pi\>*a|)>.>>|<cell|<math|x\<less\>a>>>|<row|<cell|<math|x<rsup|2>-2*<around|(|a+1|)>*x+a<rsup|2>+5,>>|<cell|<math|x\<geqslant\>a>>>>>><with|font|Hiragino
   Kaku Gothic ProN|\<#FF0C\>><with|font|Songti
   SC|\<#82E5\>><math|f<around|(|x|)>><with|font|Songti
   SC|\<#5728\>\<#533A\>\<#95F4\>><math|<around|(|0,+\<infty\>|)>><with|font|Songti
@@ -146,11 +145,19 @@
   SC|\<#7684\>\<#53D6\>\<#503C\>\<#8303\>\<#56F4\>\<#662F\>><with|font|Hiragino
   Kaku Gothic ProN|\<#FF08\> \<#FF09\>>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|A<with|font|Hiragino
-  Kaku Gothic ProN|\<#FF0E\>><math|<around*|\<nobracket\>|<around*|(|2,<frac|9|4>|\<nobracket\>>|]>\<cup\><around*|\<nobracket\>|<around*|(|<frac|5|2>,<frac|11|4>|]>|\<nobracket\>>>>|<cell|B<with|font|Hiragino
-  Kaku Gothic ProN|\<#FF0E\>><math|<around*|(|<frac|7|4>,2|)>\<cup\><around*|(|<frac|5|2>,<frac|11|4>|)>>>>|<row|<cell|C<with|font|Hiragino
-  Kaku Gothic ProN|\<#FF0E\>><math|<around*|\<nobracket\>|<around*|(|2,<frac|9|4>|\<nobracket\>>|]>\<cup\><around*|\<nobracket\>|<around*|[|<frac|11|4>,3|)>|\<nobracket\>>>>|<cell|D<with|font|Hiragino
-  Kaku Gothic ProN|\<#FF0E\>><math|<around*|(|<frac|7|4>,2|)>\<cup\><around*|\<nobracket\>|<around*|[|<frac|11|4>,3|)>|\<nobracket\>>>>>>>>\ 
+  <\wide-tabular>
+    <tformat|<table|<row|<\cell>
+      A. <math|<around*|(|2,<frac|9|4>|]>\<cup\><around*|(|<frac|5|2>,<frac|11|4>|]>>
+    </cell>|<\cell>
+      B. <math|<around*|(|<frac|7|4>,2|)>\<cup\><around*|(|<frac|5|2>,<frac|11|4>|]>>
+    </cell>|<\cell>
+      C. <math|<around*|(|2,<frac|9|4>|]>\<cup\><around*|[|<frac|11|4>,3|)>>
+    </cell>|<\cell>
+      D. <math|<around*|(|<frac|7|4>,2|)>\<cup\><around*|[|<frac|11|4>,3|)>>
+    </cell>>>>
+  </wide-tabular>
+
+  \ 
 
   <with|font-series|bold|<with|font|Songti
   SC|\<#4E8C\>>\<#3001\><with|font|Songti SC|\<#586B\>\<#7A7A\>\<#9898\>>>
