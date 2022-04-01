@@ -21,7 +21,7 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
       - name: Install Dependencies
         run: |
-          brew install freetype libjpeg qt@5 cmake ccache
+          brew install freetype libjpeg qt@5 cmake ccache curl
           brew link qt@5
       - name: Create Build Dir
         run: mkdir -p ${{github.workspace}}/build
