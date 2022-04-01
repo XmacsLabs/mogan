@@ -427,6 +427,11 @@ qt_native_image_size (url image, int& w, int& h) {
 
 void
 qt_pretty_image_size (int ww, int hh, string& w, string& h) {
+  if (get_preference("target device") == "screen") {
+    w = as_string(ww / retina_factor) * "px";
+    h = as_string(hh / retina_factor) * "px";
+    return;
+  }
   SI pt = get_current_editor()->as_length ("1pt");
   SI par= get_current_editor()->as_length ("1par");
   if (ww <= 0 || hh <= 0 || ww * pt > par) {
