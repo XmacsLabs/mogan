@@ -79,10 +79,8 @@ get_from_web (url name) {
 
   url tmp= url_temp ();
   string tmp_s= escape_sh (concretize (tmp));
-  string cmd= "";
   
-  
-  curl_download(
+  curl_download (
     escape_sh (web_encode (as_string (name))),
     tmp_s,
     string("TeXmacs-") * TEXMACS_VERSION);

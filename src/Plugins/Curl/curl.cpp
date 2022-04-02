@@ -9,11 +9,11 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "curl.hpp"
+#include "Curl/curl.hpp"
 #include <curl/curl.h>
 
 static size_t write_data (void *ptr, size_t size, size_t nmemb, FILE *stream) {
-    size_t written = fwrite(ptr, size, nmemb, stream);
+    size_t written= fwrite (ptr, size, nmemb, stream);
     return written;
 }
 
