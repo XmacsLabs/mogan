@@ -1,30 +1,13 @@
 ### --------------------------------------------------------------------
 ### Set the executable target name and other stuff
 ### --------------------------------------------------------------------
-
 set (TeXmacs_binary_name "Mogan")
-
-add_library(texmacs_body STATIC ${TeXmacs_All_SRCS})
+add_executable (${TeXmacs_binary_name} Texmacs/Texmacs/texmacs.cpp)
+target_link_libraries (${TeXmacs_binary_name} PRIVATE texmacs_body)
 
 if (WIN32)
-  add_executable (${TeXmacs_binary_name} WIN32
-    ./Texmacs/Texmacs/texmacs.cpp
-  )
-  target_link_libraries (${TeXmacs_binary_name}
-    texmacs_body
-    ${TeXmacs_Libraries}
-    ${CMAKE_DL_LIBS}
-    -lsecur32
-  )
-else (WIN32)
-  add_executable (${TeXmacs_binary_name}
-    ./Texmacs/Texmacs/texmacs.cpp
-  )
-  target_link_libraries (${TeXmacs_binary_name}
-    texmacs_body
-    ${TeXmacs_Libraries}
-    ${CMAKE_DL_LIBS}
-  )
+  set_target_properties(${TeXmacs_binary_name} PROPERTIES WIN32_EXECUTABLE TRUE)
+  target_link_libraries (${TeXmacs_binary_name} PRIVATE secur32)
 endif (WIN32)
 
 if (APPLE)

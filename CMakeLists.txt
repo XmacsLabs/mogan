@@ -20,9 +20,9 @@
 ### Basic settings (project independent)
 ### --------------------------------------------------------------------
 
-cmake_minimum_required (VERSION 3.13)
+cmake_minimum_required (VERSION 3.15)
 
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_AUTOMOC ON)
 set (CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -31,8 +31,6 @@ if (NOT CMAKE_BUILD_TYPE)
     "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
     FORCE)
 endif (NOT CMAKE_BUILD_TYPE)
-
-#INCLUDE(CMakeDetermineSystem)
 
 # Configure CCache if available
 find_program (CCACHE_FOUND ccache)
@@ -46,20 +44,27 @@ endif (CCACHE_FOUND)
 ### Project name 
 ### --------------------------------------------------------------------
 
-project (TEXMACS CXX C) # check for C/C++ compiler
+project (TEXMACS
+        VERSION 2.1.1
+        DESCRIPTION "GNU TeXmacs is a free scientific editing platform designed to create beautiful technical documents using a wysiwyg interface."
+        HOMEPAGE_URL "http://texmacs.org"
+        LANGUAGES CXX C
+        )
+
+add_library(texmacs_body STATIC)
 
 set (PACKAGE TeXmacs)
 set (CMAKE_MODULE_PATH ${TEXMACS_SOURCE_DIR}/cmake)
 
-set (VERSION_MAJOR "2")
-set (VERSION_MINOR "1")
-set (VERSION_BUILD "1")
+set (VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set (VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set (VERSION_BUILD ${PROJECT_VERSION_PATCH})
 set (TEXMACS_VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD})
 
 set (DEVEL_VERSION ${TEXMACS_VERSION})
-set (DEVEL_RELEASE "1")
+set (DEVEL_RELEASE ${PROJECT_VERSION_MINOR})
 set (STABLE_VERSION ${TEXMACS_VERSION})
-set (STABLE_RELEASE "1")
+set (STABLE_RELEASE ${PROJECT_VERSION_PATCH})
 set (TEXMACS_REVISION ${TEXMACS_VERSION})
 
 
@@ -74,14 +79,14 @@ option (QTPIPES "use Qt pipes" ON)
 
 option (USE_SQLITE3 "Use SQLite3" ON)
 if (USE_SQLITE3)
-  find_package (SQLite3)
-  option (LINKED_SQLITE3 "Use Linked SQLite3" ON)
+  find_package (SQLite3 REQUIRED)
+  target_link_libraries(texmacs_body PUBLIC SQLite::SQLite3)
 endif (USE_SQLITE3)
 
 option (USE_FREETYPE "use Freetype" ON)
 if (USE_FREETYPE)
-  find_package (Freetype)
-  option (LINKED_FREETYPE "linked Freetype" ON)
+  find_package (Freetype REQUIRED)
+  target_link_libraries(texmacs_body PUBLIC Freetype::Freetype)
 endif (USE_FREETYPE)
 
 option (USE_CAIRO "use Cairo" OFF)
@@ -99,8 +104,11 @@ endif (USE_IMLIB2)
 option (USE_SPARKLE "use Sparkle" OFF)
 
 option (PDFHUMMUS_NO_TIFF "Disable TIFF in PDF Hummus" ON)
+if (PDFHUMMUS_NO_TIFF)
+  target_compile_definitions(texmacs_body PUBLIC PDFHUMMUS_NO_TIFF)
+endif ()
 
-option (USE_GMP "use GMP" ON)
+option (USE_GMP "use GMP" OFF)
 if (USE_GMP)
   find_package (GMP)
 endif (USE_GMP)
@@ -269,11 +277,13 @@ set (PACKAGE_VERSION 1)
 ###  Test for Libraries
 ### --------------------------------------------------------------------
 
-find_package (PNG)
-find_package (Iconv)
-find_package (ZLIB)
-find_package (JPEG)
+find_package (PNG REQUIRED)
+find_package (Iconv REQUIRED)
+find_package (ZLIB REQUIRED)
+find_package(JPEG REQUIRED)
 find_package (CURL REQUIRED)
+target_link_libraries(texmacs_body PUBLIC
+        PNG::PNG ZLIB::ZLIB Iconv::Iconv JPEG::JPEG CURL::libcurl)
 #FIND_PACKAGE(Axel)
 
 # Allow for selection of Scheme implementation
@@ -285,6 +295,7 @@ set (SCHEME_IMPL "s7" CACHE STRING "Implementation of Scheme to compile for.")
 set (DEBUG_ASSERT 1)
 
 set (USE_GS 1)
+target_compile_definitions(texmacs_body PUBLIC USE_GS)
 if (WIN32)
   set (GS_EXE bin/gs.exe)
 else (WIN32)
@@ -385,20 +396,14 @@ set (TeXmacs_Include_Dirs
   ${TEXMACS_SOURCE_DIR}/TeXmacs/include 
   ${TEXMACS_BINARY_DIR}/src/System/ 
 )
-
+target_include_directories(texmacs_body PUBLIC ${TeXmacs_Include_Dirs})
 if (WIN32)
-  set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs}
-    ${TEXMACS_SOURCE_DIR}/src/Plugins/Windows
-    ${TEXMACS_SOURCE_DIR}/src/Plugins/Windows/nowide
-  )
-else (WIN32)
+  target_include_directories(texmacs_body PUBLIC
+          src/Plugins/Windows
+          src/Plugins/Windows/nowide
+          )
 endif (WIN32)
 
-set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs}
-  ${FREETYPE_INCLUDE_DIRS} ${Cairo_INCLUDE_DIRS}
-  ${IMLIB2_INCLUDE_DIR} ${GMP_INCLUDES}
-  ${CURL_INCLUDE_DIRS}
-)
 
 ### --------------------------------------------------------------------
 ### the main sources
@@ -417,7 +422,7 @@ file (GLOB_RECURSE TeXmacs_Base_SRCS
   "${TEXMACS_SOURCE_DIR}/src/Texmacs/Window/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Typeset/*.cpp"
 )
-
+target_sources(texmacs_body PUBLIC ${TeXmacs_Base_SRCS})
 file (GLOB_RECURSE TeXmacs_Std_Plugins_SRCS
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Axel/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Bibtex/*.cpp"
@@ -438,12 +443,12 @@ file (GLOB_RECURSE TeXmacs_Std_Plugins_SRCS
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Updater/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Curl/*.cpp"
 )
+target_sources(texmacs_body PUBLIC ${TeXmacs_Std_Plugins_SRCS})
 
 file (GLOB_RECURSE TeXmacs_Style_SRCS
   "${TEXMACS_SOURCE_DIR}/src/Style/*.cpp"
 )
 
-set (TeXmacs_All_SRCS ${TeXmacs_Base_SRCS}  ${TeXmacs_Std_Plugins_SRCS})
 
 ### --------------------------------------------------------------------
 ### GUI Interfaces
@@ -452,24 +457,6 @@ set (TeXmacs_All_SRCS ${TeXmacs_Base_SRCS}  ${TeXmacs_Std_Plugins_SRCS})
 file (GLOB_RECURSE TeXmacs_Widkit_SRCS "${TEXMACS_SOURCE_DIR}/src/Plugins/Widkit/*.cpp")
 file (GLOB_RECURSE TeXmacs_X11_SRCS "${TEXMACS_SOURCE_DIR}/src/Plugins/X11/*.cpp")
 file (GLOB_RECURSE TeXmacs_Qt_SRCS "${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/*.cpp")
-
-set (TeXmacs_Qt_Moc_HDRS
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMApplication.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMFileDialog.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMGuiHelper.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMInteractiveInputHelper.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMInteractivePrompt.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMMenuHelper.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMPipeLink.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMPrintDialog.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMPrinterSettings.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMScrollView.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMSockets.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMStyle.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMTreeModel.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMWidget.hpp
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Qt/QTMWindow.hpp
-)
 
 set (TeXmacs_Cocoa_SRCS
   ${TEXMACS_SOURCE_DIR}/src/Plugins/Cocoa/aqua_dialogues.mm
@@ -493,42 +480,20 @@ set (TeXmacs_MacOS_SRCS
 ### --------------------------------------------------------------------
 ### Determine TeXmacs_Libraries
 ### --------------------------------------------------------------------
-set (TeXmacs_Libraries
-  ${ZLIB_LIBRARIES}
-  ${JPEG_LIBRARIES}
-  ${PNG_LIBRARIES}
-  ${CURL_LIBRARIES}
-  -lpthread
-)
-
+find_package(Threads REQUIRED)
+target_link_libraries(texmacs_body PUBLIC Threads::Threads)
 if (WIN32)
 # explore this
 # CMAKE_INSTALL_UCRT_LIBRARIES
 # I only to manage to get it working for msys2-ucrt.
-set (TeXmacs_Libraries
-  ${TeXmacs_Libraries}
-  wsock32 ws2_32
-)
+target_link_libraries(texmacs_body PUBLIC wsock32 ws2_32)
 endif (WIN32)
-
-if (LINKED_CAIRO)
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} ${CAIRO_LIBRARIES})
-endif (LINKED_CAIRO)
-
-if (LINKED_SQLITE3)
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} ${SQLITE3_LIBRARIES})
-endif (LINKED_SQLITE3)
-
-if (LINKED_FREETYPE)
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} ${FREETYPE_LIBRARIES})
-endif (LINKED_FREETYPE)
-
 
 ### --------------------------------------------------------------------
 ### GUI selection
 ### --------------------------------------------------------------------
 
-set (GUI_TYPE) # nothing or WIN32, MACOSX bundles are treated independetly
+set (GUI_TYPE) # nothing or WIN32, MACOSX bundles are treated independently
 
 if (TEXMACS_GUI MATCHES "Qt.*")
 
@@ -539,62 +504,27 @@ if (TEXMACS_GUI MATCHES "Qt.*")
     if (APPLE AND EXISTS /usr/local/opt/qt5)
       list (APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
     endif ()
-
-    if (WIN32 AND EXISTS ${QT_CMAKE_DIR})
-      set (Qt5Core_DIR "${QT_CMAKE_DIR}/Qt5Core")
-      set (Qt5Gui_DIR "${QT_CMAKE_DIR}/Qt5Gui")
-      set (Qt5EventDispatcherSupport_DIR "${QT_CMAKE_DIR}/Qt5EventDispatcherSupport")
-      set (Qt5FontDatabaseSupport_DIR "${QT_CMAKE_DIR}/Qt5FontDatabaseSupport")
-      set (Qt5Svg_DIR "${QT_CMAKE_DIR}/Qt5Svg")
-      set (Qt5Widgets_DIR "${QT_CMAKE_DIR}/Qt5Widgets")
-      set (Qt5Network_DIR "${QT_CMAKE_DIR}/Qt5Network")
-      set (Qt5ThemeSupport_DIR "${QT_CMAKE_DIR}/Qt5ThemeSupport")
-      set (Qt5AccessibilitySupport_DIR "${QT_CMAKE_DIR}/Qt5AccessibilitySupport")
-      set (Qt5WindowsUIAutomationSupport_DIR "${QT_CMAKE_DIR}/Qt5WindowsUIAutomationSupport")
-      set (Qt5PrintSupport_DIR "${QT_CMAKE_DIR}/Qt5PrintSupport")
+    # compat with Qt6
+    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg REQUIRED)
+    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets PrintSupport Svg REQUIRED)
+    target_link_libraries(texmacs_body PUBLIC
+            Qt${QT_VERSION_MAJOR}::Widgets
+            Qt${QT_VERSION_MAJOR}::PrintSupport
+            Qt${QT_VERSION_MAJOR}::Svg
+            )
+    if (APPLE)
+      find_package (Qt5 COMPONENTS MacExtras REQUIRED)
+      target_link_libraries(texmacs_body PUBLIC Qt5::MacExtras)
+      target_compile_definitions(texmacs_body PUBLIC Q_WS_MAC)
     endif ()
-
-    if (APPLE)
-      find_package (Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg MacExtras REQUIRED)
-    else (APPLE)
-      find_package (Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg REQUIRED)
-    endif ()
-    
-    if (APPLE)
-      set (QT_LIBRARIES Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::MacExtras)
-    else (APPLE)
-      set (QT_LIBRARIES Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg)
-    endif (APPLE)
-
-    set (TeXmacs_Include_Dirs
-      ${TeXmacs_Include_Dirs}
-      ${Qt5Core_INCLUDE_DIRS}
-      ${Qt5Gui_INCLUDE_DIRS}
-      ${Qt5Widgets_INCLUDE_DIRS}
-      ${Qt5PrintSupport_INCLUDE_DIRS}
-      ${Qt5Svg_INCLUDE_DIRS}
-      ${Qt5MacExtras_INCLUDE_DIRS}
-    )
-
-    if (Qt5_POSITION_INDEPENDENT_CODE)
-      set (CMAKE_POSITION_INDEPENDENT_CODE ON)
-    endif (Qt5_POSITION_INDEPENDENT_CODE)
-
-    if (APPLE)
-      add_definitions ("-DQ_WS_MAC")
-    endif (APPLE)
   endif (TEXMACS_GUI STREQUAL "Qt4")
-
-  add_definitions (${QT_DEFINITIONS})
-  add_definitions ("-DQTTEXMACS")
+  target_compile_definitions(texmacs_body PUBLIC QTTEXMACS)
 
   if (CMAKE_BUILD_TYPE STREQUAL "Release")
-    add_definitions ("-DQT_NO_DEBUG")
+    target_compile_definitions(texmacs_body PUBLIC QT_NO_DEBUG)
   endif (CMAKE_BUILD_TYPE STREQUAL "Release")
 
-  set (TeXmacs_All_SRCS ${TeXmacs_All_SRCS} ${TeXmacs_Qt_SRCS} ${TeXmacs_Qt_Moc_HDRS})
-  set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs} ${QT_INCLUDES})
-  set (TeXmacs_Libraries ${TeXmacs_Libraries}  ${QT_LIBRARIES})
+  target_sources(texmacs_body PUBLIC ${TeXmacs_Qt_SRCS})
 
   if (WIN32)
     set (GUI_TYPE WIN32)
@@ -607,26 +537,18 @@ if (TEXMACS_GUI MATCHES "Qt.*")
 elseif (TEXMACS_GUI STREQUAL "Aqua")
   find_library (COCOA_LIBRARY Cocoa)
   find_path (COCOA_INCLUDE_DIR Cocoa/Cocoa.h)
-  set (TeXmacs_Include_Dirs
-    ${TeXmacs_Include_Dirs}
-    ${COCOA_INCLUDE_DIR}
-  )
-  set (TeXmacs_All_SRCS ${TeXmacs_All_SRCS} ${TeXmacs_Cocoa_SRCS})
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} ${COCOA_LIBRARY})
+  target_include_directories(texmacs_body PUBLIC ${COCOA_INCLUDE_DIR})
+  target_sources(texmacs_body PUBLIC ${TeXmacs_Cocoa_SRCS})
+  target_link_libraries(texmacs_body PUBLIC ${COCOA_LIBRARY})
 
   mark_as_advanced(COCOA_LIBRARY)
   mark_as_advanced(COCOA_INCLUDE_DIR)
 else (TEXMACS_GUI STREQUAL "Qt")
   find_package (X11)
-
-  set (TeXmacs_Include_Dirs
-    ${TeXmacs_Include_Dirs}
-    ${X11_INCLUDE_DIR}
-  )
-  set (TeXmacs_All_SRCS ${TeXmacs_All_SRCS} ${TeXmacs_Widkit_SRCS} ${TeXmacs_X11_SRCS})
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} ${X11_LIBRARIES})
-
-  add_definitions ("-DX11TEXMACS")
+  target_include_directories(texmacs_body PUBLIC ${X11_INCLUDE_DIR})
+  target_sources(texmacs_body PUBLIC ${TeXmacs_Widkit_SRCS} ${TeXmacs_X11_SRCS})
+  target_link_libraries(texmacs_body PUBLIC ${X11_LIBRARIES})
+  target_compile_definitions(texmacs_body PUBLIC X11TEXMACS)
   set (X11TEXMACS 1)
 
   set (CONFIG_X11 "X11 Widkit Ghostscript")
@@ -636,17 +558,11 @@ else (TEXMACS_GUI STREQUAL "Qt")
 endif (TEXMACS_GUI MATCHES "Qt.*")
 
 if (APPLE AND TEXMACS_GUI STREQUAL "X11")
-  set (TeXmacs_MacOS_SRCS
-    ${TeXmacs_MacOS_SRCS}
-    ${TEXMACS_SOURCE_DIR}/src/Plugins/MacOS/mac_app.mm
-  )
+  target_sources(texmacs_body PUBLIC src/Plugins/MacOS/mac_app.mm)
 endif (APPLE AND TEXMACS_GUI STREQUAL "X11")
 
 if (APPLE AND USE_SPARKLE)
-  set (TeXmacs_MacOS_SRCS
-    ${TeXmacs_MacOS_SRCS}
-    ${TEXMACS_SOURCE_DIR}/src/Plugins/Updater/tm_sparkle.mm
-  )
+  target_sources(texmacs_body PUBLIC src/Plugins/Updater/tm_sparkle.mm)
 endif (APPLE AND USE_SPARKLE)
 
 ### --------------------------------------------------------------------
@@ -658,12 +574,10 @@ if (WIN32)
 else (WIN32)
   file (GLOB_RECURSE TeXmacs_System_SRCS "${TEXMACS_SOURCE_DIR}/src/Plugins/Unix/*.cpp")
 endif (WIN32)
-
-set (TeXmacs_All_SRCS ${TeXmacs_All_SRCS} ${TeXmacs_System_SRCS})
+target_sources(texmacs_body PUBLIC ${TeXmacs_System_SRCS})
 
 if (APPLE)
-  set (TeXmacs_Libraries
-    ${TeXmacs_Libraries}
+  set (TeXmacs_MacOS_Libraries
     "-framework ApplicationServices"
     "-framework CoreFoundation"
     "-framework Security"
@@ -677,7 +591,8 @@ if (APPLE)
     "-framework Foundation"
     "-framework ImageIO"
   )
-  set (TeXmacs_All_SRCS ${TeXmacs_All_SRCS} ${TeXmacs_MacOS_SRCS})
+  target_sources(texmacs_body PUBLIC ${TeXmacs_MacOS_SRCS})
+  target_link_libraries(texmacs_body PUBLIC ${TeXmacs_MacOS_Libraries})
 
   set (GUI_TYPE MACOSX_BUNDLE)
   set (NO_FAST_ALLOC 1)
@@ -688,10 +603,8 @@ if (APPLE)
   set (CONFIG_COCOA "Cocoa")
 
   message (STATUS "Enabling experimental Cocoa port")
-else (APPLE)
 endif (APPLE)
 
-include_directories (${TeXmacs_Include_Dirs})
 
 ### --------------------------------------------------------------------
 ### Debugging options
@@ -783,7 +696,9 @@ option (BUILD_TESTS "Build unit tests" OFF)
 
 if (BUILD_TESTS)
   include (CTest)
-  find_package(Qt5Test REQUIRED)
+  # compat with Qt6
+  find_package(QT NAMES Qt6 Qt5 COMPONENTS Test REQUIRED)
+  find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Test REQUIRED)
   enable_testing ()
   add_subdirectory (tests)
   # add_subdirectory (misc/benchmark)
@@ -801,4 +716,3 @@ configure_file (${TEXMACS_SOURCE_DIR}/misc/vscode/c_cpp_properties.json.in
   @ONLY
 )
 
-message (STATUS "TeXmacs_Libraries" ${TeXmacs_Libraries})
