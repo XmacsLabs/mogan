@@ -278,6 +278,7 @@ find_package (PNG)
 find_package (Iconv)
 find_package (ZLIB)
 find_package (JPEG)
+find_package (CURL REQUIRED)
 #FIND_PACKAGE(Axel)
 
 # Allow for selection of Scheme implementation
@@ -401,6 +402,7 @@ endif (WIN32)
 set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs}
   ${FREETYPE_INCLUDE_DIRS} ${Cairo_INCLUDE_DIRS}
   ${IMLIB2_INCLUDE_DIR} ${GMP_INCLUDES}
+  ${CURL_INCLUDE_DIRS}
 )
 
 ### --------------------------------------------------------------------
@@ -439,6 +441,7 @@ file (GLOB_RECURSE TeXmacs_Std_Plugins_SRCS
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Openssl/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Sqlite3/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Updater/*.cpp"
+  "${TEXMACS_SOURCE_DIR}/src/Plugins/Curl/*.cpp"
 )
 
 file (GLOB_RECURSE TeXmacs_Style_SRCS
@@ -499,6 +502,7 @@ set (TeXmacs_Libraries
   ${ZLIB_LIBRARIES}
   ${JPEG_LIBRARIES}
   ${PNG_LIBRARIES}
+  ${CURL_LIBRARIES}
   -lpthread
 )
 
