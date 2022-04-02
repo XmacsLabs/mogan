@@ -12,12 +12,12 @@
 #include "curl.hpp"
 #include <curl/curl.h>
 
-static size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
+static size_t write_data (void *ptr, size_t size, size_t nmemb, FILE *stream) {
     size_t written = fwrite(ptr, size, nmemb, stream);
     return written;
 }
 
-void curl_download(string source, string target, string user_agent) {
+void curl_download (string source, string target, string user_agent) {
   debug_io << "curl --user-agent " << user_agent << " "
            << source << " --output " << target << LF;
   CURL *curl= curl_easy_init ();
@@ -28,9 +28,11 @@ void curl_download(string source, string target, string user_agent) {
     curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_data);
     curl_easy_setopt (curl, CURLOPT_WRITEDATA, fp);
     curl_easy_setopt (curl, CURLOPT_USERAGENT, as_charp (user_agent));
-    CURLcode res = curl_easy_perform (curl);
+    CURLcode res= curl_easy_perform (curl);
 
-    curl_easy_cleanup(curl);
-    fclose(fp);
+    curl_easy_cleanup (curl);
+    fclose (fp);
+  } else {
+    debug_io << "Failed to init the easy curl client" << LF;
   }
 }

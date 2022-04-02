@@ -87,10 +87,6 @@ get_from_web (url name) {
     tmp_s,
     string("TeXmacs-") * TEXMACS_VERSION);
 
-  //cout << cmd << LF;
-  system (cmd);
-  //cout << "got " << name << " as " << tmp << LF;
-
   if (var_eval_system ("cat " * tmp_s * " 2> /dev/null") == "") {
     remove (tmp);
     return url_none ();

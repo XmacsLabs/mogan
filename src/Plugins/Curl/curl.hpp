@@ -14,6 +14,6 @@
 
 #include <string.hpp>
 
-void curl_download(string source, string target, string user_agent);
+void curl_download (string source, string target, string user_agent);
 
 #endif

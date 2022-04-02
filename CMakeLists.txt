@@ -273,7 +273,7 @@ find_package (PNG)
 find_package (Iconv)
 find_package (ZLIB)
 find_package (JPEG)
-find_package (CURL)
+find_package (CURL REQUIRED)
 #FIND_PACKAGE(Axel)
 
 # Allow for selection of Scheme implementation
