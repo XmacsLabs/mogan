@@ -427,15 +427,19 @@ qt_native_image_size (url image, int& w, int& h) {
 
 void
 qt_pretty_image_size (int ww, int hh, string& w, string& h) {
-  SI pt = get_current_editor()->as_length ("1pt");
+  string unit= "pt";
+  if (get_preference("target device") == "screen") {
+    unit= "px";
+  }
+  SI unit_len= get_current_editor()->as_length ("1" * unit);
   SI par= get_current_editor()->as_length ("1par");
-  if (ww <= 0 || hh <= 0 || ww * pt > par) {
+  if (ww <= 0 || hh <= 0 || ww * unit_len > par) {
     w= "1par";
     h= "";
   }
   else {
-    w= as_string (ww) * "pt";
-    h= as_string (hh) * "pt";
+    w= as_string (ww) * unit;
+    h= as_string (hh) * unit;
   }
 }
 
