@@ -305,6 +305,10 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
     tree t (IMAGE);
     QSize size= qvariant_cast<QImage>(md->imageData()).size ();
     int ww= size.width (), hh= size.height ();
+#ifdef OS_MACOS
+    ww /= retina_factor;
+    hh /= retina_factor;
+#endif
     string w, h;
     qt_pretty_image_size (ww, hh, w, h);
     t << tuple (tree (RAW_DATA, s), "png") << w << h << "" << "";
