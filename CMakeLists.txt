@@ -516,7 +516,7 @@ if (LINKED_CAIRO)
 endif (LINKED_CAIRO)
 
 if (LINKED_SQLITE3)
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} ${SQLITE3_LIBRARIES})
+  set (TeXmacs_Libraries ${TeXmacs_Libraries} SQLite::SQLite3)
 endif (LINKED_SQLITE3)
 
 if (LINKED_FREETYPE)
