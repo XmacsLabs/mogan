@@ -269,10 +269,10 @@ set (PACKAGE_VERSION 1)
 ###  Test for Libraries
 ### --------------------------------------------------------------------
 
-find_package (PNG)
-find_package (Iconv)
-find_package (ZLIB)
-find_package (JPEG)
+find_package (PNG REQUIRED)
+find_package (Iconv REQUIRED)
+find_package (ZLIB REQUIRED)
+find_package (JPEG REQUIRED)
 find_package (CURL REQUIRED)
 #FIND_PACKAGE(Axel)
 
@@ -494,10 +494,7 @@ set (TeXmacs_MacOS_SRCS
 ### Determine TeXmacs_Libraries
 ### --------------------------------------------------------------------
 set (TeXmacs_Libraries
-  ${ZLIB_LIBRARIES}
-  ${JPEG_LIBRARIES}
-  ${PNG_LIBRARIES}
-  ${CURL_LIBRARIES}
+  PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl
   -lpthread
 )
 
