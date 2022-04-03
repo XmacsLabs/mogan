@@ -163,33 +163,7 @@ check_function_exists (gettimeofday HAVE_GETTIMEOFDAY)
 ### Check for dl library
 ### --------------------------------------------------------------------
 
-check_function_exists (dlopen HAVE_DLOPEN)
-
-if (NOT ${HAVE_DLOPEN})
-  check_library_exists (dl dlopen "" HAVE_DLOPEN)
-  if (${HAVE_DLOPEN})
-    set (CONFIG_BDL "-ldl")
-  endif (${HAVE_DLOPEN})
-endif (NOT ${HAVE_DLOPEN})
-
-if (NOT ${HAVE_DLOPEN})
-  check_library_exists (dld dld_link "" HAVE_DLOPEN)
-  if (${HAVE_DLOPEN})
-    set (CONFIG_BDL "-ldl")
-  endif (${HAVE_DLOPEN})
-endif (NOT ${HAVE_DLOPEN})
-
-if (NOT ${HAVE_DLOPEN})
-  check_function_exists (shl_load HAVE_DLOPEN)
-  if (${HAVE_DLOPEN})
-    set (CONFIG_BDL "-ldl")
-  endif (${HAVE_DLOPEN})
-endif (NOT ${HAVE_DLOPEN})
-
-
-if (${HAVE_DLOPEN})
-  #SET(TM_DYNAMIC_LINKING 1) # dynamic linking works
-endif (${HAVE_DLOPEN})
+target_link_libraries(texmacs_body PUBLIC ${CMAKE_DL_LIBS})
 
 ### --------------------------------------------------------------------
 ### Handle different systems case by case
