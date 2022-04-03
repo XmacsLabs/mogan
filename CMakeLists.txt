@@ -520,7 +520,7 @@ if (LINKED_SQLITE3)
 endif (LINKED_SQLITE3)
 
 if (LINKED_FREETYPE)
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} ${FREETYPE_LIBRARIES})
+  set (TeXmacs_Libraries ${TeXmacs_Libraries} Freetype::Freetype)
 endif (LINKED_FREETYPE)
 
 
