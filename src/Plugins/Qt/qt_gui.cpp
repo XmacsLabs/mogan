@@ -305,7 +305,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   }
   if (input_format == "picture") {
     tree t (IMAGE);
-    auto img = qvariant_cast<QImage>(md->imageData());
+    QImage img = qvariant_cast<QImage>(md->imageData());
     QSize size= img.size ();
     int ww= size.width (), hh= size.height ();
 #ifdef OS_MACOS
