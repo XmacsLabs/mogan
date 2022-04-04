@@ -274,10 +274,10 @@ set (PACKAGE_VERSION 1)
 ###  Test for Libraries
 ### --------------------------------------------------------------------
 
-find_package (PNG)
-find_package (Iconv)
-find_package (ZLIB)
-find_package (JPEG)
+find_package (PNG REQUIRED)
+find_package (Iconv REQUIRED)
+find_package (ZLIB REQUIRED)
+find_package (JPEG REQUIRED)
 find_package (CURL REQUIRED)
 #FIND_PACKAGE(Axel)
 
@@ -499,10 +499,7 @@ set (TeXmacs_MacOS_SRCS
 ### Determine TeXmacs_Libraries
 ### --------------------------------------------------------------------
 set (TeXmacs_Libraries
-  ${ZLIB_LIBRARIES}
-  ${JPEG_LIBRARIES}
-  ${PNG_LIBRARIES}
-  ${CURL_LIBRARIES}
+  PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl
   -lpthread
 )
 
@@ -521,11 +518,11 @@ if (LINKED_CAIRO)
 endif (LINKED_CAIRO)
 
 if (LINKED_SQLITE3)
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} ${SQLITE3_LIBRARIES})
+  set (TeXmacs_Libraries ${TeXmacs_Libraries} SQLite::SQLite3)
 endif (LINKED_SQLITE3)
 
 if (LINKED_FREETYPE)
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} ${FREETYPE_LIBRARIES})
+  set (TeXmacs_Libraries ${TeXmacs_Libraries} Freetype::Freetype)
 endif (LINKED_FREETYPE)
 
 
@@ -544,42 +541,20 @@ if (TEXMACS_GUI MATCHES "Qt.*")
     if (APPLE AND EXISTS /usr/local/opt/qt5)
       list (APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
     endif ()
-
-    if (WIN32 AND EXISTS ${QT_CMAKE_DIR})
-      set (Qt5Core_DIR "${QT_CMAKE_DIR}/Qt5Core")
-      set (Qt5Gui_DIR "${QT_CMAKE_DIR}/Qt5Gui")
-      set (Qt5EventDispatcherSupport_DIR "${QT_CMAKE_DIR}/Qt5EventDispatcherSupport")
-      set (Qt5FontDatabaseSupport_DIR "${QT_CMAKE_DIR}/Qt5FontDatabaseSupport")
-      set (Qt5Svg_DIR "${QT_CMAKE_DIR}/Qt5Svg")
-      set (Qt5Widgets_DIR "${QT_CMAKE_DIR}/Qt5Widgets")
-      set (Qt5Network_DIR "${QT_CMAKE_DIR}/Qt5Network")
-      set (Qt5ThemeSupport_DIR "${QT_CMAKE_DIR}/Qt5ThemeSupport")
-      set (Qt5AccessibilitySupport_DIR "${QT_CMAKE_DIR}/Qt5AccessibilitySupport")
-      set (Qt5WindowsUIAutomationSupport_DIR "${QT_CMAKE_DIR}/Qt5WindowsUIAutomationSupport")
-      set (Qt5PrintSupport_DIR "${QT_CMAKE_DIR}/Qt5PrintSupport")
-    endif ()
-
+    # compat with Qt6
+    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg REQUIRED)
+    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets PrintSupport Svg REQUIRED)
+    set (QT_LIBRARIES
+            Qt${QT_VERSION_MAJOR}::Core
+            Qt${QT_VERSION_MAJOR}::Gui
+            Qt${QT_VERSION_MAJOR}::Widgets
+            Qt${QT_VERSION_MAJOR}::PrintSupport
+            Qt${QT_VERSION_MAJOR}::Svg
+            )
     if (APPLE)
-      find_package (Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg MacExtras REQUIRED)
-    else (APPLE)
-      find_package (Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg REQUIRED)
+      find_package (Qt5 COMPONENTS MacExtras REQUIRED)
+      set (QT_LIBRARIES ${QT_LIBRARIES} Qt5::MacExtras)
     endif ()
-    
-    if (APPLE)
-      set (QT_LIBRARIES Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::MacExtras)
-    else (APPLE)
-      set (QT_LIBRARIES Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg)
-    endif (APPLE)
-
-    set (TeXmacs_Include_Dirs
-      ${TeXmacs_Include_Dirs}
-      ${Qt5Core_INCLUDE_DIRS}
-      ${Qt5Gui_INCLUDE_DIRS}
-      ${Qt5Widgets_INCLUDE_DIRS}
-      ${Qt5PrintSupport_INCLUDE_DIRS}
-      ${Qt5Svg_INCLUDE_DIRS}
-      ${Qt5MacExtras_INCLUDE_DIRS}
-    )
 
     if (Qt5_POSITION_INDEPENDENT_CODE)
       set (CMAKE_POSITION_INDEPENDENT_CODE ON)
