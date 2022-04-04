@@ -323,10 +323,12 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       QString tmp_image_path= QString ("%1/%2").arg (tmp_image_dir)
                                    .arg (tmp_image_name);
       bool ok= img.save (tmp_image_path);
+      debug_io << "save tmp image to: " << from_qstring(tmp_image_path) << LF;
       if (ok) {
         t= tree (IMAGE, from_qstring (tmp_image_name), w, h, "", "");
       } else {
         // insert raw data if fail
+        debug_io << "save tmp image fail, insert raw data" << LF;
         t << tuple (tree (RAW_DATA, s), "png") << w << h << "" << "";
       }
     } else {
