@@ -316,8 +316,8 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
     qt_pretty_image_size (ww, hh, w, h);
     if (get_preference("copy image to current folder") == "on") {
       string doc_path = as_string(get_current_buffer());
-      // e.g. 20220402114852693Sat
-      QString cur_time_str = QDateTime::currentDateTime().toString("yyyyMMddhhmmsszzzddd");
+      // e.g. 20220402114852693
+      QString cur_time_str = QDateTime::currentDateTime().toString("yyyyMMddhhmmsszzz");
       QString tmp_image_name = QString("img_%1.png").arg(cur_time_str);
       QString tmp_image_dir = QFileInfo(to_qstring(doc_path)).absolutePath();
       QString tmp_image_path = QString("%1/%2").arg(tmp_image_dir).arg(tmp_image_name);
