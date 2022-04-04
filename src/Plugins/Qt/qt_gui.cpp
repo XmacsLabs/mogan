@@ -314,8 +314,15 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
 #endif
     string w, h;
     qt_pretty_image_size (ww, hh, w, h);
-    if (get_preference("copy image to current folder") == "on") {
-      string doc_path= as_string (get_current_buffer ());
+    bool need_save_img= (get_preference("copy image to current folder") == "on");
+    string doc_path= as_string (get_current_buffer ());
+    // only local document save image
+    if (starts (doc_path, "tmfs://")
+        || starts (doc_path, "http://")
+        || starts (doc_path, "https://")) {
+      need_save_img= false;
+    }
+    if (need_save_img) {
       // e.g. 20220402114852693
       QString cur_time_str= QDateTime::currentDateTime().toString ("yyyyMMddhhmmsszzz");
       QString tmp_image_name= QString ("img_%1.png").arg (cur_time_str);
