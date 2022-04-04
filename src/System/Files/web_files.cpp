@@ -85,7 +85,7 @@ get_from_web (url name) {
     tmp_s,
     string("TeXmacs-") * TEXMACS_VERSION);
 
-  if (var_eval_system ("cat " * tmp_s * " 2> /dev/null") == "") {
+  if (file_size (url_system (tmp_s)) <= 0) {
     remove (tmp);
     return url_none ();
   }
