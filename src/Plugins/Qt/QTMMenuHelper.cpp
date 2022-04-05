@@ -806,7 +806,10 @@ QTMRefreshWidget::QTMRefreshWidget (qt_widget _tmwid, string _strwid, string _ki
                    this, SLOT (doRefresh (string)));
   QVBoxLayout* l = new QVBoxLayout (this);
   l->setContentsMargins (0, 0, 0, 0);
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+  // https://doc.qt.io/qt-5/qlayout-obsolete.html#setMargin
   l->setMargin (0);
+#endif
   setLayout (l);
   
   doRefresh ("init");
@@ -894,7 +897,9 @@ QTMRefreshableWidget::QTMRefreshableWidget (qt_widget _tmwid, object _prom, stri
                    this, SLOT (doRefresh (string)));
   QVBoxLayout* l = new QVBoxLayout (this);
   l->setContentsMargins (0, 0, 0, 0);
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   l->setMargin (0);
+#endif
   setLayout (l);
   
   doRefresh ("init");
