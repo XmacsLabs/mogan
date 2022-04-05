@@ -191,11 +191,7 @@ qt_gui_rep::get_extents (SI& width, SI& height) {
   // see https://doc.qt.io/qt-5/qapplication-obsolete.html#desktop
   coord2 size = from_qsize (QApplication::desktop()->size());
 #else
-  QList<QScreen*> screens= QApplication::screens();
-  coord2 size(0, 0);
-  if (!screens.empty()) {
-    size= from_qsize(screens[0]->size());
-  }
+  coord2 size= from_qsize(QApplication::primaryScreen()->availableSize());
 #endif
   width  = size.x1;
   height = size.x2;
