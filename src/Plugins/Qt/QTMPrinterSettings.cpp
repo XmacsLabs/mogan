@@ -153,19 +153,19 @@ QTMPrinterSettings::getChoices(DriverChoices _which, int& _default) {
   QStringList _ret;
   switch (_which) {
     case PageSize:
-      _ret = printerOptions["PageSize"].split(" ", Qt::SkipEmptyParts);
+      _ret = printerOptions["PageSize"].split(" ", QString::SkipEmptyParts);
       break;
     case Resolution:
-      _ret = printerOptions["Resolution"].split(" ", Qt::SkipEmptyParts);
+      _ret = printerOptions["Resolution"].split(" ", QString::SkipEmptyParts);
       break;
     case Duplex:
-      _ret = printerOptions["Duplex"].split(" ", Qt::SkipEmptyParts);
+      _ret = printerOptions["Duplex"].split(" ", QString::SkipEmptyParts);
       break;
     case ColorModel:
-      _ret = printerOptions["ColorModel"].split(" ", Qt::SkipEmptyParts);
+      _ret = printerOptions["ColorModel"].split(" ", QString::SkipEmptyParts);
       break;
     case Collate:
-      _ret = printerOptions["Collate"].split(" ", Qt::SkipEmptyParts);
+      _ret = printerOptions["Collate"].split(" ", QString::SkipEmptyParts);
       break;
   }
   
