@@ -651,8 +651,8 @@
   (when (or (selection-active-any?)
   	    (and (in-graphics?)
   		 (graphics-selection-active?)))
-  ("Copy" (kbd-copy))
-  ("Cut" (kbd-cut)))
+    ("Copy" (kbd-copy))
+    ("Cut" (kbd-cut)))
   ("Paste" (kbd-paste))
   (when (selection-active-any?)
       (=> "Export selection as image"
