@@ -106,7 +106,7 @@ mac_handler_body (NSEvent *event) {
       unichar key = [nss characterAtIndex:0];
       if ((key == NSTabCharacter) || (key == NSBackTabCharacter) ) {
         NSUInteger nsmods = [event modifierFlags];
-        Qt::KeyboardModifiers modifs = 0;
+        Qt::KeyboardModifiers modifs = Qt::NoModifier;
         if (key == NSBackTabCharacter) modifs |= Qt::ShiftModifier;
         if (nsmods &  NSControlKeyMask) modifs |= Qt::MetaModifier;
         if (nsmods &  NSAlternateKeyMask) modifs |= Qt::AltModifier;
