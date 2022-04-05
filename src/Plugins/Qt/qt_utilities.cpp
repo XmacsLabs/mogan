@@ -836,8 +836,13 @@ qt_print (bool& to_file, bool& landscape, string& pname, url& filename,
     to_file = !(qprinter->outputFileName().isNull());
     pname = from_qstring( qprinter->printerName() );
     filename = from_qstring( qprinter->outputFileName() );
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
     landscape = (qprinter->orientation() == QPrinter::Landscape);
     paper_type = qt_papersize_to_string(qprinter->paperSize());
+#else
+    landscape = (qprinter->pageLayout().orientation() == QPageLayout::Landscape);
+    paper_type = qt_papersize_to_string(qprinter->pageLayout().pageSize().id());
+#endif
     if (qprinter->printRange() == QPrinter::PageRange) {
       first = qprinter->fromPage(); 
       last = qprinter->toPage(); 
