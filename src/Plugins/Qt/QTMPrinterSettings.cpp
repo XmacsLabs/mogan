@@ -151,21 +151,27 @@ QTMPrinterSettings::qStringToQtPaperSize(const QString& _size) {
 QStringList
 QTMPrinterSettings::getChoices(DriverChoices _which, int& _default) {
   QStringList _ret;
+
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+  QString::SplitBehavior behavior = QString::SkipEmptyParts;
+#else
+  Qt::SplitBehavior behavior = Qt::SkipEmptyParts;
+#endif
   switch (_which) {
     case PageSize:
-      _ret = printerOptions["PageSize"].split(" ", QString::SkipEmptyParts);
+      _ret = printerOptions["PageSize"].split(" ", behavior);
       break;
     case Resolution:
-      _ret = printerOptions["Resolution"].split(" ", QString::SkipEmptyParts);
+      _ret = printerOptions["Resolution"].split(" ", behavior);
       break;
     case Duplex:
-      _ret = printerOptions["Duplex"].split(" ", QString::SkipEmptyParts);
+      _ret = printerOptions["Duplex"].split(" ", behavior);
       break;
     case ColorModel:
-      _ret = printerOptions["ColorModel"].split(" ", QString::SkipEmptyParts);
+      _ret = printerOptions["ColorModel"].split(" ", behavior);
       break;
     case Collate:
-      _ret = printerOptions["Collate"].split(" ", QString::SkipEmptyParts);
+      _ret = printerOptions["Collate"].split(" ", behavior);
       break;
   }
   
