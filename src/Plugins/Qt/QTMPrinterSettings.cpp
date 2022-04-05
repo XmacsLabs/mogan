@@ -42,9 +42,16 @@ void
 QTMPrinterSettings::getFromQPrinter(const QPrinter& from) {
   printerName   = from.printerName ();
   fileName      = from.outputFileName ();
+
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   orientation   = (from.orientation() == QPrinter::Landscape) 
                   ? Landscape : Portrait;
   paperSize     = qtPaperSizeToQString(from.paperSize());
+#else
+  orientation   = (from.pageLayout().orientation() == QPageLayout::Landscape)
+                  ? Landscape : Portrait;
+  paperSize     = qtPaperSizeToQString(from.pageLayout().pageSize().id());
+#endif
   dpi           = from.resolution ();
   firstPage     = from.fromPage ();
   lastPage      = from.toPage ();
@@ -61,11 +68,19 @@ QTMPrinterSettings::getFromQPrinter(const QPrinter& from) {
 void
 QTMPrinterSettings::setToQPrinter(QPrinter& to) const {
   to.setResolution(dpi);
-  to.setFromTo(firstPage, lastPage);  
+  to.setFromTo(firstPage, lastPage);
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   to.setOrientation((orientation == Landscape) ?
                     QPrinter::Landscape : QPrinter::Portrait);
-  to.setOutputFileName(fileName);
   to.setPaperSize(qStringToQtPaperSize(paperSize));
+#else
+  QPageLayout pageLayout= to.pageLayout();
+  pageLayout.setOrientation((orientation == Landscape) ?
+                            QPageLayout::Landscape : QPageLayout::Portrait);
+  pageLayout.setPageSize(qStringToQtPaperSize(paperSize));
+  to.setPageLayout(pageLayout);
+#endif
+  to.setOutputFileName(fileName);
   to.setCopyCount(copyCount);
   to.setCollateCopies(collateCopies);
   to.setColorMode(blackWhite ? QPrinter::Color : QPrinter::GrayScale);
@@ -76,9 +91,13 @@ QTMPrinterSettings::setToQPrinter(QPrinter& to) const {
  * representation. Massimiliano's code.
  */
 QString
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 QTMPrinterSettings::qtPaperSizeToQString(const QPrinter::PaperSize _size) {
-  
 #define PAPER(fmt)  case QPrinter::fmt : return "fmt"
+#else
+QTMPrinterSettings::qtPaperSizeToQString(const QPageSize::PageSizeId _size) {
+#define PAPER(fmt)  case QPageSize::fmt : return "fmt"
+#endif
   switch (_size) {
       PAPER (A0) ; PAPER (A1) ; PAPER (A2) ; PAPER (A3) ; PAPER (A4) ;
       PAPER (A5) ; PAPER (A6) ; PAPER (A7) ; PAPER (A8) ; PAPER (A9) ;
@@ -93,16 +112,27 @@ QTMPrinterSettings::qtPaperSizeToQString(const QPrinter::PaperSize _size) {
 /*!
  * Just for internal use, converts a string to QPrinter::PaperSize.
  */
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 QPrinter::PaperSize
+#else
+QPageSize::PageSizeId
+#endif
 QTMPrinterSettings::qStringToQtPaperSize(const QString& _size) {
-  
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 #define PAPER(fmt)  if(_size == "fmt") return QPrinter::fmt
+#else
+#define PAPER(fmt)  if(_size == "fmt") return QPageSize::PageSizeId::fmt
+#endif
   PAPER (A0) ; PAPER (A1) ; PAPER (A2) ; PAPER (A3) ; PAPER (A4) ;
   PAPER (A5) ; PAPER (A6) ; PAPER (A7) ; PAPER (A8) ; PAPER (A9) ;
   PAPER (B0) ; PAPER (B1) ; PAPER (B2) ; PAPER (B3) ; PAPER (B4) ;
   PAPER (B5) ; PAPER (B6) ; PAPER (B7) ; PAPER (B8) ; PAPER (B9) ;
   PAPER (B10) ;  PAPER (Letter) ;
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   return QPrinter::A4;  // Default
+#else
+  return QPageSize::PageSizeId::A4;  // Default
+#endif
 #undef PAPER
 }
 
