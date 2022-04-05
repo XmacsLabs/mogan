@@ -481,7 +481,11 @@ qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
 // or the actual dpi will be lower  
   if (DEBUG_CONVERT) debug_convert << "qt_image_to_eps_or_pdf " << image << " -> "<<outfile<<LF;
   QPrinter printer;
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   printer.setOrientation(QPrinter::Portrait);
+#else
+  printer.setPageOrientation(QPageLayout::Portrait);
+#endif
   if (suffix(outfile)=="eps") {
     //note that PostScriptFormat is gone in Qt5. a substitute?: http://soft.proindependent.com/eps/
     cout << "TeXmacs] warning: PostScript format no longer supported in Qt5\n";
