@@ -16,8 +16,11 @@
 #include <QPrinter>
 #include <QPrinterInfo>
 #include <QProcess>
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 #include <QRegExp>
-
+#else
+#include <QRegularExpression>
+#endif
 /*!
  *
  */
@@ -231,16 +234,26 @@ CupsQTMPrinterSettings::systemCommandFinished(int exitCode,
     emit doneReading();
     return;
   }
-    
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   QRegExp rx("^(\\w+)/(.+):(.*)$"); // Param/Param desc: val1 val2 *default val4
   rx.setMinimal(true);              // Non-greedy matching
-  
+#else
+  QRegularExpression rx ("^(\\w+)/(.+):(.*)$");
+  rx.setPatternOptions (QRegularExpression::InvertedGreedinessOption);
+#endif
   QList<QByteArray> _lines = configProgram->readAllStandardOutput().split('\n');
   foreach (QString _line, _lines) {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
     if(rx.indexIn(_line) == -1)      // No matches?
       continue;
     // Store for further parsing later, see QTMPrinterSettings::getChoices()
-    printerOptions[rx.cap(1)] = rx.cap(3);   
+    printerOptions[rx.cap(1)] = rx.cap(3);
+#else
+    QRegularExpressionMatch match = rx.match (_line);
+    if (!match.hasMatch ())
+      continue;
+    printerOptions[match.captured(1)] = match.captured(3);
+#endif
   }
   emit doneReading();
 }
@@ -335,13 +348,25 @@ CupsQTMPrinterSettings::availablePrinters() {
   stat.start("lpstat -a");
   if(! stat.waitForFinished(2000)) // 2 sec.
     return _ret;
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   QRegExp rx("^(\\S+) +.*$");
   rx.setMinimal(true);
+#else
+  QRegularExpression rx("^(\\S+) +.*$");
+  rx.setPatternOptions(QRegularExpression::InvertedGreedinessOption);
+#endif
   QList<QByteArray> _lines = stat.readAllStandardOutput().split('\n');
   foreach (QString _line, _lines) {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
     if(rx.indexIn(_line) == -1)      // No matches?
       continue;
     _ret << QPair<QString,QString>(rx.cap(1),rx.cap(1));
+#else
+  QRegularExpressionMatch match = rx.match (_line);
+  if (!match.hasMatch ())
+    continue;
+  _ret << QPair<QString, QString>(match.captured(1), match.captured(1));
+#endif
   }
   return _ret;
 }
