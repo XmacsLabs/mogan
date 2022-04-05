@@ -319,7 +319,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
     if ((get_preference ("copy image to current folder") == "on")
         && !is_rooted_web (doc_url)
         && !is_rooted_tmfs (doc_url)
-        && descends (doc_url, url_system ("$TEXMACS_PATH"))) {
+        && !descends (doc_url, url_system ("$TEXMACS_PATH"))) {
       // e.g. 20220402114852693
       QString cur_time_str= QDateTime::currentDateTime().toString ("yyyyMMddhhmmsszzz");
       QString tmp_image_name= QString ("img_%1.png").arg (cur_time_str);
