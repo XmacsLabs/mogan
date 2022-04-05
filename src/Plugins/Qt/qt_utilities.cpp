@@ -774,7 +774,11 @@ qt_get_date (string lan, string fm) {
 
 string
 qt_pretty_time (int t) {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   QDateTime dt= QDateTime::fromTime_t (t);
+#else
+  QDateTime dt= QDateTime::fromSecsSinceEpoch(t);
+#endif
   QString s= dt.toString ();
   return from_qstring (s);
 }
