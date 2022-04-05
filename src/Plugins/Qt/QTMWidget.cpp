@@ -424,7 +424,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
 #if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
               ((mods & (Qt::MetaModifier + Qt::ControlModifier)) == 0)) {
 #else
-              ((mods & (int(Qt::MetaModifier) + int(Qt::ControlModifier))) == 0)) {
+              ((mods & (Qt::MetaModifier | Qt::ControlModifier)) == 0)) {
 #endif
             if ((mods & Qt::ShiftModifier) == 0 && key >= 65 && key <= 90)
               key += 32;
