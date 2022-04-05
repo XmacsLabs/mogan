@@ -29,7 +29,6 @@ private slots:
   // predicates
   void test_is_rooted_tmfs ();
   void test_is_rooted_web ();
-  void test_is_path ();
 
   // operations
   void test_descends();
@@ -69,14 +68,6 @@ void TestURL::test_is_rooted_web () {
   QVERIFY (is_rooted_web (https_1));
   QVERIFY (!is_rooted_web (root_tmp));
   QVERIFY (!is_rooted_web (tmfs_1));
-}
-
-void TestURL::test_is_path () {
-  // TODO: is_path is confusing, should be removed?
-  QVERIFY (!is_path (root_tmp));
-  QVERIFY (!is_path (http_1));
-  QVERIFY (!is_path (https_1));
-  QVERIFY (!is_path (tmfs_1));
 }
 
 
