@@ -400,9 +400,8 @@ else (WIN32)
 endif (WIN32)
 
 set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs}
-  ${FREETYPE_INCLUDE_DIRS} ${Cairo_INCLUDE_DIRS}
+  ${Cairo_INCLUDE_DIRS}
   ${IMLIB2_INCLUDE_DIR} ${GMP_INCLUDES}
-  ${CURL_INCLUDE_DIRS}
 )
 
 ### --------------------------------------------------------------------
