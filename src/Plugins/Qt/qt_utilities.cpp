@@ -19,7 +19,9 @@
 #include <QCoreApplication>
 #include <QLocale>
 #include <QDateTime>
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 #include <QTextCodec>
+#endif
 #include <QHash>
 #include <QStringList>
 #include <QKeySequence>
