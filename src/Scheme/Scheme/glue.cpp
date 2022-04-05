@@ -1208,6 +1208,9 @@ tmscm_to_list_tree (tmscm p) {
 #include "../Glue/glue_editor.cpp"
 #include "../Glue/glue_server.cpp"
 
+#ifdef QTTEXMACS
+#include "../Glue/glue_qt.cpp"
+#endif
 void
 initialize_glue () {
   tmscm_install_procedure ("tree?", treeP, 1, 0, 0);
@@ -1221,4 +1224,7 @@ initialize_glue () {
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();
+#ifdef QTTEXMACS
+  initialize_glue_qt ();
+#endif
 }
