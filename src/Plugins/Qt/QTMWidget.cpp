@@ -573,7 +573,12 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
 QVariant 
 QTMWidget::inputMethodQuery (Qt::InputMethodQuery query) const {
   switch (query) {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+    // This query is obsolete. Use ImCursorRectangle instead.
     case Qt::ImMicroFocus : {
+#else
+    case Qt::ImCursorRectangle : {
+#endif
       const QPoint &topleft= cursor_pos - tm_widget()->backing_pos + surface()->geometry().topLeft();
       return QVariant (QRect (topleft, QSize (5, 5)));
     }
