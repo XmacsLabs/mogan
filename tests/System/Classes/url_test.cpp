@@ -72,11 +72,11 @@ void TestURL::test_is_rooted_web () {
 }
 
 void TestURL::test_is_path () {
-  // TODO: is_path(url("/tmp")) failed
+  // TODO: is_path is confusing, should be removed?
   QVERIFY (!is_path (root_tmp));
-  QVERIFY (is_path (http_1));
-  QVERIFY (is_path (https_1));
-  QVERIFY (is_path (tmfs_1));
+  QVERIFY (!is_path (http_1));
+  QVERIFY (!is_path (https_1));
+  QVERIFY (!is_path (tmfs_1));
 }
 
 
