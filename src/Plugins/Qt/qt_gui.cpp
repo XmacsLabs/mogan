@@ -28,8 +28,10 @@
 #include "qt_renderer.hpp" // for the_qt_renderer
 #include "qt_simple_widget.hpp"
 #include "qt_window_widget.hpp"
-
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+// see https://doc.qt.io/qt-6/widgets-changes-qt6.html
 #include <QDesktopWidget>
+#endif
 #include <QClipboard>
 #include <QBuffer>
 #include <QFileOpenEvent>
@@ -45,7 +47,9 @@
 #include <QLibraryInfo>
 #include <QImage>
 #include <QUrl>
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
+#endif
 #include <QApplication>
 
 #include "QTMGuiHelper.hpp"
