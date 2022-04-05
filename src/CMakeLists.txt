@@ -5,7 +5,7 @@
 set (TeXmacs_binary_name "Mogan")
 
 add_library(texmacs_body STATIC ${TeXmacs_All_SRCS})
-
+target_link_libraries(texmacs_body PUBLIC ${TeXmacs_Libraries})
 if (WIN32)
   add_executable (${TeXmacs_binary_name} WIN32
     ./Texmacs/Texmacs/texmacs.cpp
