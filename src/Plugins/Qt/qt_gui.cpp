@@ -187,7 +187,16 @@ needing_update (false)
 /* important routines */
 void
 qt_gui_rep::get_extents (SI& width, SI& height) {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+  // see https://doc.qt.io/qt-5/qapplication-obsolete.html#desktop
   coord2 size = from_qsize (QApplication::desktop()->size());
+#else
+  QList<QScreen*> screens= QApplication::screens();
+  coord2 size(0, 0);
+  if (!screens.empty()) {
+    size= from_qsize(screens[0]->size());
+  }
+#endif
   width  = size.x1;
   height = size.x2;
 }
