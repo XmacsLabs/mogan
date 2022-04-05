@@ -784,10 +784,17 @@ qt_pretty_time (int t) {
 }
 
 #ifndef _MBD_EXPERIMENTAL_PRINTER_WIDGET  // this is in qt_printer_widget
-
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 #define PAPER(fmt)  case QPrinter::fmt : return "fmt"
-static string 
+#else
+#define PAPER(fmt)  case QPageSize::fmt : return "fmt"
+#endif
+static string
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 qt_papersize_to_string (QPrinter::PaperSize sz) {
+#else
+qt_papersize_to_string (QPageSize::PageSizeId sz) {
+#endif
   switch (sz) {
       PAPER (A0) ;
       PAPER (A1) ;
