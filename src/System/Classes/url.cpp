@@ -478,13 +478,6 @@ is_name_in_path (url u) {
 }
 
 bool
-is_path (url u) {
-  if (is_atomic (u)) return true;
-  if ((!is_or (u)) && (!is_concat (u))) return false;
-  return is_path (u[1]) && is_path (u[2]);
-}
-
-bool
 is_ramdisc (url u) {
   return is_concat (u) && is_root (u[1], "ramdisc");
 }
