@@ -116,7 +116,6 @@ bool is_rooted_blank (url u);
 bool is_name (url u);
 bool is_rooted_name (url u);
 bool is_path (url u);
-bool is_rooted_path (url u);
 bool is_ramdisc (url u);
 
 /******************************************************************************
