@@ -314,19 +314,16 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
 #endif
     string w, h;
     qt_pretty_image_size (ww, hh, w, h);
-    bool need_save_img= (get_preference("copy image to current folder") == "on");
-    string doc_path= as_string (get_current_buffer ());
+    url doc_url= get_current_buffer ();
     // only local document save image
-    if (starts (doc_path, "tmfs://")
-        || starts (doc_path, "http://")
-        || starts (doc_path, "https://")) {
-      need_save_img= false;
-    }
-    if (need_save_img) {
+    if ((get_preference ("copy image to current folder") == "on")
+        && !is_rooted_web (doc_url)
+        && !is_rooted_tmfs (doc_url)
+        && descends (doc_url, url_system ("$TEXMACS_PATH"))) {
       // e.g. 20220402114852693
       QString cur_time_str= QDateTime::currentDateTime().toString ("yyyyMMddhhmmsszzz");
       QString tmp_image_name= QString ("img_%1.png").arg (cur_time_str);
-      QString tmp_image_dir= QFileInfo (to_qstring (doc_path)).absolutePath ();
+      QString tmp_image_dir= QFileInfo (to_qstring (as_string (doc_url))).absolutePath ();
       QString tmp_image_path= QString ("%1/%2").arg (tmp_image_dir)
                                    .arg (tmp_image_name);
       bool ok= img.save (tmp_image_path);
