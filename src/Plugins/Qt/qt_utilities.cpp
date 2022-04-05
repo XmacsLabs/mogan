@@ -508,8 +508,12 @@ qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
   << "dpi set: " << printer.resolution() <<LF;
 */
     if (dpi > 0 && w_pt > 0 && h_pt > 0) {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 	    printer.setPaperSize(QSizeF(w_pt, h_pt), QPrinter::Point); // in points
-
+#else
+      // see https://doc.qt.io/qt-5/qprinter-obsolete.html#setPaperSize
+      printer.setPageSize(QPageSize(QSizeF(w_pt, h_pt), QPageSize::Point));
+#endif
       // w_pt and h_pt are dimensions in points (and there are 72 points per inch)
       int ww = w_pt * dpi / 72;
       int hh = h_pt * dpi / 72;
@@ -519,7 +523,12 @@ qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
         printer.setResolution((int) (dpi*im.width())/(double)ww);
       if (DEBUG_CONVERT) debug_convert << "dpi asked: "<< dpi <<" ; actual dpi set: " << printer.resolution() <<LF;
 	  }
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 	  else printer.setPaperSize(QSizeF(im.width (), im.height ()), QPrinter::DevicePixel);
+#else
+          // FIXME: how to set the unit QPrinter::DevicePixel
+          else printer.setPageSize(QPageSize(QSizeF(im.width(), im.height()), QPageSize::Point));
+#endif
     QPainter p;
     p.begin(&printer);
     p.drawImage(0, 0, im);
