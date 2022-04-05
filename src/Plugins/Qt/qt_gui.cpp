@@ -483,8 +483,12 @@ qt_gui_rep::show_wait_indicator (widget w, string message, string arg)  {
     waitWindow->close();
   }
   qApp->processEvents();
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+  // see https://doc.qt.io/qt-5/qcoreapplication-obsolete.html#flush
   QApplication::flush();
-  
+#else
+
+#endif
   wid->qwid->activateWindow ();
   send_keyboard_focus (wid);
     // next time we do update the dialog will disappear
