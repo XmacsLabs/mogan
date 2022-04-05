@@ -10,7 +10,7 @@ foreach (_test_file ${TEST_SRC_FILES})
     texmacs_body
     ${TeXmacs_Libraries}
     ${CMAKE_DL_LIBS}
-    Qt5::Test
+    Qt${QT_VERSION_MAJOR}::Test
   )
   add_test (${_test_name} ${_test_name})
   set_tests_properties (${_test_name} PROPERTIES TIMEOUT 5)
