@@ -485,11 +485,6 @@ is_path (url u) {
 }
 
 bool
-is_rooted_path (url u) {
-  return is_rooted (u) && is_path (u);
-}
-
-bool
 is_ramdisc (url u) {
   return is_concat (u) && is_root (u[1], "ramdisc");
 }
