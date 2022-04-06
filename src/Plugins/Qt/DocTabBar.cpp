@@ -1,0 +1,41 @@
+//
+// Created by PikachuHy on 2022/4/6.
+//
+
+#include "DocTabBar.h"
+#include "new_buffer.hpp"
+#include "new_view.hpp"
+#include "new_window.hpp"
+#include "qt_utilities.hpp"
+#include "scheme.hpp"
+
+DocTabBar::DocTabBar (QWidget *parent) : QTabBar (parent) {
+  setDocumentMode (true);
+  setDrawBase (true);
+  setTabsClosable (true);
+  setElideMode (Qt::ElideLeft);
+  connect (this, &DocTabBar::tabBarClicked, this,
+           &DocTabBar::handleTabBarClicked);
+  connect (this, &DocTabBar::tabCloseRequested, this,
+           &DocTabBar::handleTabCloseRequested);
+}
+void DocTabBar::updateTabs (const url &cur_buffer) {
+  for (int i= 0; i < m_buffers.size (); ++i) {
+    if (m_buffers[i] == cur_buffer) {
+      setCurrentIndex (i);
+      return;
+    }
+  }
+  m_buffers.push_back (cur_buffer);
+  auto title= get_title_buffer (cur_buffer);
+  addTab (to_qstring (title));
+  setCurrentIndex (m_buffers.size () - 1);
+}
+void DocTabBar::handleTabBarClicked (int index) {
+  call ("switch-to-buffer*", object (m_buffers[index]));
+}
+void DocTabBar::handleTabCloseRequested (int index) {
+  kill_buffer (m_buffers[index]);
+  m_buffers.removeAt (index);
+  removeTab (index);
+}
