@@ -39,6 +39,8 @@
 #include "QTMInteractivePrompt.hpp"
 #include "QTMInteractiveInputHelper.hpp"
 
+#include "QTMDocTabBar.h"
+
 int menu_count = 0;  // zero if no menu is currently being displayed
 list<qt_tm_widget_rep*> waiting_widgets;
 
@@ -188,7 +190,7 @@ qt_tm_widget_rep::qt_tm_widget_rep(int mask, command _quit)
   modeToolBar   = new QToolBar ("mode toolbar", mw);
   focusToolBar  = new QToolBar ("focus toolbar", mw);
   userToolBar   = new QToolBar ("user toolbar", mw);
-  
+  docTabBar     = new QTMDocTabBar ();
   bottomTools   = new QDockWidget ("bottom tools", mw);
   sideTools     = new QDockWidget ("side tools", 0);
     // HACK: Wrap the dock in a "fake" window widget (last parameter = true) to
@@ -263,6 +265,7 @@ qt_tm_widget_rep::qt_tm_widget_rep(int mask, command _quit)
   cw->setLayout (bl);
   QWidget* q = main_widget->as_qwidget(); // force creation of QWidget
   q->setParent (qwid); // q->layout()->removeWidget(q) will reset the parent to this
+  bl->addWidget(docTabBar);
   bl->addWidget (q);
   
   mw->setCentralWidget (cw);
@@ -271,6 +274,7 @@ qt_tm_widget_rep::qt_tm_widget_rep(int mask, command _quit)
   modeToolBar->setObjectName ("modeToolBar");
   focusToolBar->setObjectName ("focusToolBar");
   userToolBar->setObjectName ("userToolBar");
+  docTabBar->setObjectName ("docTabBar");
   bottomTools->setObjectName ("bottomTools");
   sideTools->setObjectName ("sideTools");
 
@@ -694,6 +698,7 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
       string file = open_box<string> (val);
       if (DEBUG_QT_WIDGETS) debug_widgets << "\tFile: " << file << LF;
       mainwindow()->setWindowFilePath (utf8_to_qstring (file));
+       docTabBar->updateTabs(file);
     }
       break;
     case SLOT_POSITION:
