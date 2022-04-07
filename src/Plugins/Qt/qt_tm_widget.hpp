@@ -28,7 +28,6 @@
 
 class QLabel; 
 class QToolBar;
-class QTMDocTabBar;
 class QTMInteractivePrompt;
 
 /*! Models one main window with toolbars, an associated view, etc.
@@ -57,7 +56,6 @@ class qt_tm_widget_rep: public qt_window_widget_rep {
   QToolBar*    modeToolBar;
   QToolBar*   focusToolBar;
   QToolBar*    userToolBar;
-  QTMDocTabBar  *     docTabBar;
   QDockWidget*   sideTools;
   QDockWidget* bottomTools;
 
