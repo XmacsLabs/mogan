@@ -8,15 +8,15 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#ifndef TEXMACS_DOCTABBAR_H
-#define TEXMACS_DOCTABBAR_H
+#ifndef TEXMACS_QTMDOCTABBAR_H
+#define TEXMACS_QTMDOCTABBAR_H
 #include "url.hpp"
 #include <QList>
 #include <QTabBar>
-class DocTabBar : public QTabBar {
+class QTMDocTabBar : public QTabBar {
   Q_OBJECT
 public:
-  explicit DocTabBar (QWidget *parent= nullptr);
+  explicit QTMDocTabBar (QWidget *parent= nullptr);
   void updateTabs (const url &cur_buffer= url ());
 
 private slots:
@@ -27,4 +27,4 @@ private:
   QList<url> m_buffers;
 };
 
-#endif // TEXMACS_DOCTABBAR_H
+#endif // TEXMACS_QTMDOCTABBAR_H

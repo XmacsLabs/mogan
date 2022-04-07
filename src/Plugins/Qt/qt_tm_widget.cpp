@@ -39,7 +39,7 @@
 #include "QTMInteractivePrompt.hpp"
 #include "QTMInteractiveInputHelper.hpp"
 
-#include "DocTabBar.h"
+#include "QTMDocTabBar.h"
 
 int menu_count = 0;  // zero if no menu is currently being displayed
 list<qt_tm_widget_rep*> waiting_widgets;
@@ -190,7 +190,7 @@ qt_tm_widget_rep::qt_tm_widget_rep(int mask, command _quit)
   modeToolBar   = new QToolBar ("mode toolbar", mw);
   focusToolBar  = new QToolBar ("focus toolbar", mw);
   userToolBar   = new QToolBar ("user toolbar", mw);
-  docTabBar     = new DocTabBar ();
+  docTabBar     = new QTMDocTabBar ();
   bottomTools   = new QDockWidget ("bottom tools", mw);
   sideTools     = new QDockWidget ("side tools", 0);
     // HACK: Wrap the dock in a "fake" window widget (last parameter = true) to

@@ -8,25 +8,25 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "DocTabBar.h"
+#include "QTMDocTabBar.h"
 #include "new_buffer.hpp"
 #include "new_view.hpp"
 #include "new_window.hpp"
 #include "qt_utilities.hpp"
 #include "scheme.hpp"
 
-DocTabBar::DocTabBar (QWidget *parent) : QTabBar (parent) {
+QTMDocTabBar::QTMDocTabBar (QWidget *parent) : QTabBar (parent) {
   setDocumentMode (true);
   setDrawBase (true);
   setTabsClosable (true);
   setElideMode (Qt::ElideLeft);
-  connect (this, &DocTabBar::tabBarClicked, this,
-           &DocTabBar::handleTabBarClicked);
-  connect (this, &DocTabBar::tabCloseRequested, this,
-           &DocTabBar::handleTabCloseRequested);
+  connect (this, &QTMDocTabBar::tabBarClicked, this,
+           &QTMDocTabBar::handleTabBarClicked);
+  connect (this, &QTMDocTabBar::tabCloseRequested, this,
+           &QTMDocTabBar::handleTabCloseRequested);
 }
 void
-DocTabBar::updateTabs (const url &cur_buffer) {
+QTMDocTabBar::updateTabs (const url &cur_buffer) {
   for (int i= 0; i < m_buffers.size (); ++i) {
     if (m_buffers[i] == cur_buffer) {
       setCurrentIndex (i);
@@ -39,11 +39,11 @@ DocTabBar::updateTabs (const url &cur_buffer) {
   setCurrentIndex (m_buffers.size () - 1);
 }
 void
-DocTabBar::handleTabBarClicked (int index) {
+QTMDocTabBar::handleTabBarClicked (int index) {
   call ("switch-to-buffer*", object (m_buffers[index]));
 }
 void
-DocTabBar::handleTabCloseRequested (int index) {
+QTMDocTabBar::handleTabCloseRequested (int index) {
   kill_buffer (m_buffers[index]);
   m_buffers.removeAt (index);
   removeTab (index);
