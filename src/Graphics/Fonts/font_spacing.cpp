@@ -167,6 +167,7 @@ font_rep::get_spacing_entry (int mode, tree t, int i) {
   default:
     FAILED ("unimplemented type of space");
   }
+  return space ();
 }
 
 space
