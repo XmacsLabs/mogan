@@ -4,7 +4,7 @@
 
 <\body>
   <\hide-preamble>
-    <assign|xmacs-version|v1.0.1>
+    <assign|xmacs-version|v1.0.2-alpha>
   </hide-preamble>
 
   <tmdoc-title|\<#6B22\>\<#8FCE\>\<#4F7F\>\<#7528\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\><value|xmacs-version>>
