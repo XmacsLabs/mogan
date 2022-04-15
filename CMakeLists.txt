@@ -550,7 +550,7 @@ if (TEXMACS_GUI MATCHES "Qt.*")
             Qt${QT_VERSION_MAJOR}::PrintSupport
             Qt${QT_VERSION_MAJOR}::Svg
             )
-    if (APPLE)
+    if (APPLE AND ${QT_VERSION_MAJOR} LESS_EQUAL 5)
       find_package (Qt5 COMPONENTS MacExtras REQUIRED)
       set (QT_LIBRARIES ${QT_LIBRARIES} Qt5::MacExtras)
     endif ()
@@ -753,7 +753,8 @@ option (BUILD_TESTS "Build unit tests" OFF)
 
 if (BUILD_TESTS)
   include (CTest)
-  find_package(Qt5Test REQUIRED)
+  find_package(QT NAMES Qt6 Qt5 COMPONENTS Test REQUIRED)
+  find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Test REQUIRED)
   enable_testing ()
   add_subdirectory (tests)
   # add_subdirectory (misc/benchmark)

@@ -28,8 +28,10 @@
 #include "qt_renderer.hpp" // for the_qt_renderer
 #include "qt_simple_widget.hpp"
 #include "qt_window_widget.hpp"
-
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+// see https://doc.qt.io/qt-6/widgets-changes-qt6.html
 #include <QDesktopWidget>
+#endif
 #include <QClipboard>
 #include <QBuffer>
 #include <QFileOpenEvent>
@@ -45,7 +47,9 @@
 #include <QLibraryInfo>
 #include <QImage>
 #include <QUrl>
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
+#endif
 #include <QApplication>
 #include <QDateTime>
 #include <QFileInfo>
@@ -185,7 +189,12 @@ needing_update (false)
 /* important routines */
 void
 qt_gui_rep::get_extents (SI& width, SI& height) {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+  // see https://doc.qt.io/qt-5/qapplication-obsolete.html#desktop
   coord2 size = from_qsize (QApplication::desktop()->size());
+#else
+  coord2 size= from_qsize(QApplication::primaryScreen()->availableSize());
+#endif
   width  = size.x1;
   height = size.x2;
 }
@@ -363,7 +372,7 @@ qt_gui_rep::set_selection (string key, tree t,
   cb->clear (mode);
   
   c_string selection (s);
-  cb->setText (QString::fromLatin1 (selection), mode);
+  cb->setText (QString::fromLatin1 (selection, -1), mode);
   QMimeData *md = new QMimeData;
   
   if (format == "verbatim" || format == "default") {
@@ -387,21 +396,21 @@ qt_gui_rep::set_selection (string key, tree t,
       enc = get_locale_charset ();
     
     if (enc == "utf-8" || enc == "UTF-8")
-      md->setText (QString::fromUtf8 (selection));
+      md->setText (QString::fromUtf8 (selection, -1));
     else if (enc == "iso-8859-1" || enc == "ISO-8859-1")
-      md->setText (QString::fromLatin1 (selection));
+      md->setText (QString::fromLatin1 (selection, -1));
     else
-      md->setText (QString::fromLatin1 (selection));
+      md->setText (QString::fromLatin1 (selection, -1));
   }
   else if (format == "latex") {
     string enc = get_preference ("texmacs->latex:encoding"); 
     if (enc == "utf-8" || enc == "UTF-8" || enc == "cork")
       md->setText (to_qstring (string (selection)));
     else
-      md->setText (QString::fromLatin1 (selection));
+      md->setText (QString::fromLatin1 (selection, -1));
   }
   else
-    md->setText (QString::fromLatin1 (selection));
+    md->setText (QString::fromLatin1 (selection, -1));
   cb->setMimeData (md, mode);
     // according to the docs, ownership of mimedata is transferred to clipboard
     // so no memory leak here
@@ -505,8 +514,12 @@ qt_gui_rep::show_wait_indicator (widget w, string message, string arg)  {
     waitWindow->close();
   }
   qApp->processEvents();
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+  // see https://doc.qt.io/qt-5/qcoreapplication-obsolete.html#flush
   QApplication::flush();
-  
+#else
+
+#endif
   wid->qwid->activateWindow ();
   send_keyboard_focus (wid);
     // next time we do update the dialog will disappear

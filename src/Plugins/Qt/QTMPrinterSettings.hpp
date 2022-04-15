@@ -98,10 +98,13 @@ public:
    *  second the queue name.
    */
   virtual QList<QPair<QString,QString> > availablePrinters() = 0;
-  
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   static QString qtPaperSizeToQString(const QPrinter::PaperSize);
   static QPrinter::PaperSize qStringToQtPaperSize(const QString&);
-
+#else
+  static QString qtPaperSizeToQString(const QPageSize::PageSizeId);
+  static QPageSize::PageSizeId qStringToQtPaperSize(const QString&);
+#endif
 signals:
   void doneReading();
 
