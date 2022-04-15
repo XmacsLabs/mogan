@@ -24,7 +24,7 @@ void init_style_sheet (QApplication* app);
 void set_standard_style_sheet (QWidget *w);
 
 #ifdef Q_OS_MAC
-
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 #include <QMacPasteboardMime>
 
 // On MacOS we have to register appropriate mime types for PDF files
@@ -79,6 +79,7 @@ public:
   }
 };
 #endif
+#endif
 
 
 /*
@@ -108,7 +109,9 @@ class QTMApplication: public QApplication {
   Q_OBJECT
   
 #ifdef Q_OS_MAC
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   QMacPasteboardMimePDF mac_pasteboard_mime_pdf;
+#endif
 #endif
   
 public:

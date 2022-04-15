@@ -60,11 +60,20 @@ qt_window_widget_rep::qt_window_widget_rep (QWidget* _wid, string name,
 
   if (tm_style_sheet == "") {
     QPalette pal;
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+    // QPalette::Background. This value is obsolete. Use Window instead.
     QColor winbg= pal.color (QPalette::Background);
     if (winbg.red() + winbg.green() + winbg.blue () < 255)
       pal.setColor (QPalette::Background, QColor (240, 240, 240));
     _wid->setPalette (pal);
   }
+#else
+    QColor winbg= pal.color (QPalette::Window);
+    if (winbg.red() + winbg.green() + winbg.blue () < 255)
+      pal.setColor (QPalette::Window, QColor (240, 240, 240));
+    _wid->setPalette (pal);
+  }
+#endif
 }
 
 /*!
