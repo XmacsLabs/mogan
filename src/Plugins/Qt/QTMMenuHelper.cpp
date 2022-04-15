@@ -809,7 +809,10 @@ QTMRefreshWidget::QTMRefreshWidget (qt_widget _tmwid, string _strwid, string _ki
                    this, SLOT (doRefresh (string)));
   QVBoxLayout* l = new QVBoxLayout (this);
   l->setContentsMargins (0, 0, 0, 0);
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+  // https://doc.qt.io/qt-5/qlayout-obsolete.html#setMargin
   l->setMargin (0);
+#endif
   setLayout (l);
   
   doRefresh ("init");
@@ -897,7 +900,9 @@ QTMRefreshableWidget::QTMRefreshableWidget (qt_widget _tmwid, object _prom, stri
                    this, SLOT (doRefresh (string)));
   QVBoxLayout* l = new QVBoxLayout (this);
   l->setContentsMargins (0, 0, 0, 0);
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   l->setMargin (0);
+#endif
   setLayout (l);
   
   doRefresh ("init");
@@ -998,7 +1003,12 @@ QTMComboBox::addItemsAndResize (const QStringList& texts, string ww, string hh) 
   QComboBox::addItems (texts);
   
     ///// Calculate the minimal contents size:
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   calcSize = QApplication::globalStrut ();
+#else
+  // see https://doc.qt.io/qt-5/qapplication-obsolete.html#globalStrut-prop
+  // no replacement of QApplication::globalStrut
+#endif
   const QFontMetrics& fm = fontMetrics ();
   
   for (int i = 0; i < count(); ++i) {

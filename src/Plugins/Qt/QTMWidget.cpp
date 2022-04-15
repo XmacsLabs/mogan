@@ -249,9 +249,14 @@ QTMWidget::resizeEventBis (QResizeEvent *event) {
 void
 QTMWidget::paintEvent (QPaintEvent* event) {
   QPainter p (surface());
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   QVector<QRect> rects = event->region().rects();
   for (int i = 0; i < rects.count(); ++i) {
     QRect qr = rects.at (i);
+#else
+  for (const QRect* it = event->region().begin(); it != event->region().end(); it++) {
+    QRect qr = *it;
+#endif
     p.drawPixmap (QRect (qr.x(), qr.y(), qr.width(), qr.height()),
                   *(tm_widget()->backingPixmap),
                   QRect (retina_factor * qr.x(),
@@ -419,7 +424,11 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
                ((int) (unsigned char) r[0]) < 32 ||
                ((int) (unsigned char) r[0]) >= 128) &&
               key >= 32 && key < 128 &&
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
               ((mods & (Qt::MetaModifier + Qt::ControlModifier)) == 0)) {
+#else
+              ((mods & (Qt::MetaModifier | Qt::ControlModifier)) == 0)) {
+#endif
             if ((mods & Qt::ShiftModifier) == 0 && key >= 65 && key <= 90)
               key += 32;
             qtcomposemap (key)= r;
@@ -456,7 +465,11 @@ mouse_state (QMouseEvent* event, bool flag) {
   Qt::KeyboardModifiers kstate= event->modifiers ();
   if (flag) bstate= bstate | tstate;
   if ((bstate & Qt::LeftButton     ) != 0) i += 1;
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   if ((bstate & Qt::MidButton      ) != 0) i += 2;
+#else
+  if ((bstate & Qt::MiddleButton   ) != 0) i += 2;
+#endif
   if ((bstate & Qt::RightButton    ) != 0) i += 4;
   if ((bstate & Qt::XButton1       ) != 0) i += 8;
   if ((bstate & Qt::XButton2       ) != 0) i += 16;
@@ -563,7 +576,12 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
 QVariant 
 QTMWidget::inputMethodQuery (Qt::InputMethodQuery query) const {
   switch (query) {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+    // This query is obsolete. Use ImCursorRectangle instead.
     case Qt::ImMicroFocus : {
+#else
+    case Qt::ImCursorRectangle : {
+#endif
       const QPoint &topleft= cursor_pos - tm_widget()->backing_pos + surface()->geometry().topLeft();
       return QVariant (QRect (topleft, QSize (5, 5)));
     }
@@ -615,7 +633,11 @@ tablet_state (QTabletEvent* event, bool flag) {
   Qt::MouseButton  tstate= event->button ();
   if (flag) bstate= bstate | tstate;
   if ((bstate & Qt::LeftButton     ) != 0) i += 1;
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   if ((bstate & Qt::MidButton      ) != 0) i += 2;
+#else
+  if ((bstate & Qt::MiddleButton   ) != 0) i += 2;
+#endif
   if ((bstate & Qt::RightButton    ) != 0) i += 4;
   if ((bstate & Qt::XButton1       ) != 0) i += 8;
   if ((bstate & Qt::XButton2       ) != 0) i += 16;
