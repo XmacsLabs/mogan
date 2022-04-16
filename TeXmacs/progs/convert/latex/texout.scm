@@ -113,9 +113,9 @@
           (with main-lang (cAr lan)
             (cond ((== main-lang "korean")
                    (output-verbatim "\\usepackage{hangul}\n"))
-                  ((in? main-lang '("chinese" "taiwanese" "japanese"))
+                  ((in? main-lang '("chinese" "chineset" "japanese"))
                    (with opt (cond ((== main-lang "japanese")  "{min}")
-                                   ((== main-lang "taiwanese") "{bsmi}")
+                                   ((== main-lang "chineset") "{bsmi}")
                                    ((== main-lang "chinese")   "{gbsn}"))
                      (set! post-begin
                        (string-append "\\begin{CJK*}{UTF8}" opt "\n"))

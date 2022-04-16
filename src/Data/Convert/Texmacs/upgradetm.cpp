@@ -3812,7 +3812,7 @@ upgrade_doc_language (tree t) {
       if (init[i][1] == "cyrillic" &&
           (lan == "bulgarian" || lan == "russian" || lan == "ukrainian"));
       else if ((init[i][1] == "sys-chinese" || init[i][1] == "fireflysung") &&
-               (lan == "chinese" || lan == "taiwanese"));
+               (lan == "chinese" || lan == "chineset"));
       else if ((init[i][1] == "sys-japanese" || init[i][1] == "ipa") &&
                lan == "japanese");
       else if ((init[i][1] == "sys-korean" || init[i][1] == "unbatang") &&
@@ -3928,7 +3928,7 @@ is_std_textual_env (string s) {
       << "french" << "german" << "greek" << "hungarian" << "italian"
       << "japanese" << "korean" << "polish" << "portuguese" << "romanian"
       << "russian" << "slovak" << "slovene" << "spanish" << "swedish"
-      << "taiwanese" << "ukrainian"
+      << "chineset" << "ukrainian"
       << "switch" << "screens" << "tiny-switch"
       << "shown" << "hidden" << "shown*" << "hidden*"
       << "unroll" << "unroll-compressed" << "unroll-phantoms" << "unroll-greyed"

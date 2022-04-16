@@ -2,6 +2,7 @@
 ("align table at the horizontal center" "align table at the horizontal centre")
 ("authorize" "authorise")
 ("background color" "background colour")
+("chineset" "Traditional Chinese")
 ("cell background color" "cell background colour")
 ("center" "centre")
 ("center text" "centre text")

@@ -193,7 +193,7 @@
 
   <assign|swedish|<macro|body|<with|language|swedish|<arg|body>>>>
 
-  <assign|taiwanese|<macro|body|<with|language|taiwanese|<arg|body>>>>
+  <assign|chineset|<macro|body|<with|language|chineset|<arg|body>>>>
 
   <assign|ukrainian|<macro|body|<with|language|ukrainian|<arg|body>>>>
 
