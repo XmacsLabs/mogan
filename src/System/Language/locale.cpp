@@ -51,7 +51,7 @@ windows_locale_to_language () {
     switch(PRIMARYLANGID(lid)) {
     case LANG_BULGARIAN:  language= "bulgarian"; break;
     case LANG_CHINESE:	  language= "chinese"; break;
-    case LANG_CHINESE_TRADITIONAL: language= "taiwanese"; break;
+    case LANG_CHINESE_TRADITIONAL: language= "chineset"; break;
     case LANG_CROATIAN:   language= "croatian"; break;
     case LANG_CZECH:      language= "czech"; break;
     case LANG_DANISH:     language= "danish"; break;
@@ -101,7 +101,7 @@ string
 locale_to_language (string s) {
   if (N(s) > 5) s= s (0, 5);
   if (s == "en_GB") return "british";
-  if (s == "zh_TW") return "taiwanese";
+  if (s == "zh_TW") return "chineset";
   if (N(s) > 2) s= s (0, 2);
   if (s == "bg") return "bulgarian";
   if (s == "zh") return "chinese";
@@ -159,7 +159,7 @@ language_to_locale (string s) {
   if (s == "slovene")    return "sl_SI";
   if (s == "spanish")    return "es_ES";
   if (s == "swedish")    return "sv_SV";
-  if (s == "taiwanese")  return "zh_TW";
+  if (s == "chineset")  return "zh_TW";
   if (s == "ukrainian")  return "uk_UA";
   return "en_US";
 }
@@ -179,7 +179,7 @@ language_to_local_ISO_charset (string s) {
   if (s == "russian")    return "ISO-8859-5";
   if (s == "slovak")     return "ISO-8859-2";
   if (s == "slovene")    return "ISO-8859-2";
-  if (s == "taiwanese")  return "";
+  if (s == "chineset")  return "";
   if (s == "ukrainian")  return "ISO-8859-5";
   return "ISO-8859-1";
 }
@@ -271,7 +271,7 @@ get_date (string lan, string fm) {
     else if (lan == "german")
       fm= "%d. %B %Y";
     else if (lan == "chinese" || lan == "japanese" ||
-	     lan == "korean" || lan == "taiwanese")
+	     lan == "korean" || lan == "chineset")
       {
         string y= simplify_date (var_eval_system ("date +\"%Y\""));
         string m= simplify_date (var_eval_system ("date +\"%m\""));

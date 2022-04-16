@@ -447,7 +447,7 @@ get_supported_languages () {
     << string ("slovene")
     << string ("spanish")
     << string ("swedish")
-    << string ("taiwanese")
+    << string ("chineset")
     << string ("ukrainian");
   return r;
 }
@@ -503,7 +503,7 @@ text_language (string s) {
   if (s == "slovene")    return make_text_language (s, "slovene");
   if (s == "spanish")    return make_text_language (s, "spanish");
   if (s == "swedish")    return make_text_language (s, "swedish");
-  if (s == "taiwanese")  return make_oriental_language (s);
+  if (s == "chineset")  return make_oriental_language (s);
   if (s == "ukrainian")  return make_ucs_text_language (s, "ukrainian");
   if (s == "verbatim")   return tm_new<verb_language_rep> ("verbatim");
   failed_error << "The language was " << s << "\n";

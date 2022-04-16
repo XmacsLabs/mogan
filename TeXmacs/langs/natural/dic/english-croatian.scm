@@ -2823,7 +2823,6 @@
 ("tabular" "tabelarni")
 ("tabular material" "tabelarni materijal")
 ("tags with special rendering" "okruºenja s posebnim renderiranjem")
-("taiwanese" "tajvanski")
 ("tangent" "tangenta")
 ("target" "odredi²te")
 ("techreport" "tehni£ki izvje²taj")

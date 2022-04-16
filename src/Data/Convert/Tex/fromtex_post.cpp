@@ -2428,7 +2428,7 @@ latex_to_tree (tree t0) {
   if (lan == "chinese") name= "fireflysung";
   // if (lan == "japanese") name= "ipa";
   // if (lan == "korean") name= "unbatang";
-  if (lan == "taiwanese") name= "fireflysung";
+  if (lan == "chineset") name= "fireflysung";
   if (lan == "russian") name= "cyrillic";
   if (name != "") {
     textm_unicode = true;

@@ -3158,7 +3158,7 @@
   ((:or british bulgarian chinese croatian czech danish dutch english
 	esperanto finnish french german greek hungarian italian japanese
 	korean polish portuguese romanian russian slovak slovene spanish
-	swedish taiwanese ukrainian)
+	swedish chineset ukrainian)
    (,tmtex-specific-language 1))
 
   (math (,tmtex-math 1))
@@ -3497,7 +3497,7 @@
              (doc (list '!file body style lan init att
                         (url->string (get-texmacs-path)))))
         (set! tmtex-cjk-document?
-              (in? lan '("chinese" "taiwanese" "japanese" "korean")))
+              (in? lan '("chinese" "chineset" "japanese" "korean")))
         (latex-set-style main-style)
         (latex-set-packages '())
         (latex-set-extra '())

@@ -4,10 +4,10 @@
 
 <\body>
   <active*|<\src-title>
-    <src-package|taiwanese|1.0>
+    <src-package|chineset|1.0>
 
     <\src-purpose>
-      A style package for taiwanese language support
+      A style package for traditional Chinese language support
     </src-purpose>
 
     <src-copyright|2013|Joris van der Hoeven>
@@ -20,7 +20,7 @@
     </src-license>
   </src-title>>
 
-  <assign|language|taiwanese>
+  <assign|language|chineset>
 
   <assign|font|sys-chinese>
 
