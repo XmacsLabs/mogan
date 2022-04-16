@@ -1361,14 +1361,14 @@ recompose (array<string> a, string sep) {
 string
 drop_left (string s, int n) {
   if (n <= 0) return s;
-  else if (n < N(s)) return s(n, N(s)-1);
+  else if (n < N(s)) return s(n, N(s));
   else return string("");
 }
 
 string
 drop_right (string s, int n) {
   if (n <= 0) return s;
-  else if (n < N(s)) return s(0, N(s)-1-n);
+  else if (n < N(s)) return s(0, N(s)-n);
   else return string("");
 }
 
