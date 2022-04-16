@@ -30,6 +30,7 @@ private slots:
   void test_starts ();
   void test_ends ();
   void test_read_word ();
+  void test_drop ();
   void test_is_cjk_unified_ideographs ();
 };
 
@@ -128,6 +129,20 @@ TestAnalyze::test_ends () {
   QVERIFY (ends ("abc_def", "def"));
   QVERIFY (ends ("abc_def", ""));
   QVERIFY (!ends ("abc_def", "de"));
+}
+
+void
+TestAnalyze::test_drop () {
+  QVERIFY (drop_left ("TeXmacs", 2) == string("Xmacs"));
+  QVERIFY (drop_right ("TeXmacs", 4) == string("TeX"));
+  QVERIFY (drop_left ("TeXmacs", 0) == string("TeXmacs"));
+  QVERIFY (drop_left ("TeXmacs", -1) == string("TeXmacs"));
+  QVERIFY (drop_right ("TeXmacs", 0) == string("TeXmacs"));
+  QVERIFY (drop_right ("TeXmacs", -1) == string("TeXmacs"));
+  QVERIFY (drop_left ("TeXmacs", 7) == string(""));
+  QVERIFY (drop_left ("TeXmacs", 8) == string(""));
+  QVERIFY (drop_right ("TeXmacs", 7) == string(""));
+  QVERIFY (drop_right ("TeXmacs", 8) == string(""));
 }
 
 void
