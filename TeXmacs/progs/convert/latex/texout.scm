@@ -328,7 +328,7 @@
 	((not (string-index x #\!)) (output-verb "\\verb!" x "!"))
 	((not (string-index x #\9)) (output-verb "\\verb9" x "9"))
 	((not (string-index x #\X)) (output-verb "\\verbX" x "X"))
-	(else (output-verb "\\verbï¿½" x "ï¿½"))))
+	(else (output-verb "\\verb¤" x "¤"))))
 
 (define (texout-verbatim x)
   (output-lf-verbatim "\\begin{alltt}\n" x "\n\\end{alltt}"))
