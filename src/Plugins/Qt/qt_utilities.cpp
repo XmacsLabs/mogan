@@ -749,7 +749,7 @@ qt_get_date (string lan, string fm) {
     else if (lan == "german")
       fm = "d. MMMM yyyy";
     else if (lan == "chinese" || lan == "japanese" ||
-             lan == "korean" || lan == "chineset")
+             lan == "korean")
     {
       string y = as_string(localtime.date().year());
       string m = as_string(localtime.date().month());

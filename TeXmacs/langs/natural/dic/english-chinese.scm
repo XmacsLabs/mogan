@@ -1729,7 +1729,6 @@
 ("tables" "")
 ("tabular" "无框表格")
 ("tabular material" "表格处理")
-("chineset" "繁體中文")
 ("teXmacs as an interface" "TeXmacs 的交互式界面")
 ("teXmacs extensions to scheme and utilities" "对 Scheme 的扩展和实用工具")
 ("teXmacs fonts" "TeXmacs 字体")

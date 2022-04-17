@@ -1851,7 +1851,7 @@ get_latex_language (string s) {
         << "greek" << "hungarian" << "italian" << "japanese" << "korean"
         << "polish" << "portuguese" << "romanian" << "russian"
         << "slovak" << "slovene" << "spanish" << "swedish"
-        << "chineset" << "ukrainian";
+        << "ukrainian";
 
   for (int i = 0 ; i < N(langs) ; i++)
     if (test (r, 0, as_string (langs[i])))

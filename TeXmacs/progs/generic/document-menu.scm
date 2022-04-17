@@ -423,9 +423,6 @@
   (if (and (supports-korean?) (== (get-init "language") "korean"))
       ---
       (link document-short-korean-font-menu))
-  (if (and (supports-chinese?) (== (get-init "language") "chineset"))
-      ---
-      (link document-short-chinese-font-menu))
   ---
   (if (and (new-fonts?) (use-popups?))
       ("Other" (open-document-font-selector)))

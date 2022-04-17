@@ -191,21 +191,20 @@
     "danish" "dutch" "english" "esperanto" "finnish" "french" "german" "greek"
     "hungarian" "italian" "japanese" "korean" "polish"
     "portuguese" "romanian" "russian" "slovak" "slovene" "spanish"
-    "swedish" "chineset" "ukrainian"))
+    "swedish" "ukrainian"))
 
 (define-public (supported-language? lan)
   (and (in? lan supported-languages)
        (cond ((== lan "chinese") (supports-chinese?))
              ((== lan "japanese") (supports-japanese?))
              ((== lan "korean") (supports-korean?))
-             ((== lan "chineset") (supports-chinese?))
              (else #t))))
 
 (texmacs-modes
   (in-cyrillic% (in? (get-env "language")
                      '("bulgarian" "russian" "ukrainian")) in-text%)
   (in-oriental% (in? (get-env "language")
-                     '("chinese" "japanese" "korean" "chineset")) in-text%)
+                     '("chinese" "japanese" "korean")) in-text%)
   (in-english% (in? (get-env "language")
                     '("british" "english")) in-text%)
   (in-american% (== (get-env "language") "english") in-text%)
@@ -233,7 +232,6 @@
   (in-slovene% (== (get-env "language") "slovene") in-text%)
   (in-spanish% (== (get-env "language") "spanish") in-text%)
   (in-swedish% (== (get-env "language") "swedish") in-text%)
-  (in-chineset% (== (get-env "language") "chineset") in-oriental%)
   (in-ukrainian% (== (get-env "language") "ukrainian") in-cyrillic%)
 
   (in-math-english% (in? (get-env "language")

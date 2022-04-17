@@ -444,8 +444,7 @@ tree
 set_special_fonts (tree t, string lan) {
   // Unfortunatelly there is now way to distinguish if it is Chinese, Japanese,
   // Korean.
-  if (lan == "chinese"  || lan == "chineset" || lan == "japanese")
-    lan= "cjk";
+  if (lan == "chinese"  || lan == "japanese") lan= "cjk";
   string current_lang= lan;
   return set_special_fonts (t, lan, current_lang);
 }

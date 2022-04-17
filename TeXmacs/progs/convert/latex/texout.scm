@@ -113,9 +113,8 @@
           (with main-lang (cAr lan)
             (cond ((== main-lang "korean")
                    (output-verbatim "\\usepackage{hangul}\n"))
-                  ((in? main-lang '("chinese" "chineset" "japanese"))
+                  ((in? main-lang '("chinese" "japanese"))
                    (with opt (cond ((== main-lang "japanese")  "{min}")
-                                   ((== main-lang "chineset") "{bsmi}")
                                    ((== main-lang "chinese")   "{gbsn}"))
                      (set! post-begin
                        (string-append "\\begin{CJK*}{UTF8}" opt "\n"))
@@ -328,7 +327,7 @@
 	((not (string-index x #\!)) (output-verb "\\verb!" x "!"))
 	((not (string-index x #\9)) (output-verb "\\verb9" x "9"))
 	((not (string-index x #\X)) (output-verb "\\verbX" x "X"))
-	(else (output-verb "\\verb¤" x "¤"))))
+	(else (output-verb "\\verbï¿½" x "ï¿½"))))
 
 (define (texout-verbatim x)
   (output-lf-verbatim "\\begin{alltt}\n" x "\n\\end{alltt}"))
