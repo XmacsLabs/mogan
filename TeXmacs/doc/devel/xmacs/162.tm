@@ -63,6 +63,16 @@
 
   Finally, I removed <scm|gr-edit-grid-old> and <scm|gr-grid-old> and created
   the pull request.
+
+  <section|How it was tested>
+
+  Tested locally:
+
+  <\itemize>
+    <item>By default, the inserted graphics tool shows grid
+
+    <item>Toggling <code*|Show grid> works fine
+  </itemize>
 </body>
 
 <\initial>
