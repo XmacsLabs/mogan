@@ -308,7 +308,7 @@ option (USE_JEAIII "Use JEAIII itoa" ON)
 
 set (CONFIG_STD_SETENV "#define STD_SETENV")
 set (tm_orig ${TEXMACS_SOURCE_DIR})
-set (CONFIG_HOST_OS "linux-gnu") # TODO: should not be hard-coded
+set (CONFIG_HOST_OS ${CMAKE_HOST_SYSTEM_NAME})
 set (CONFIG_HOST_VENDOR "pc") # TODO: should not be hard-coded
 set (CONFIG_HOST_CPU ${CMAKE_SYSTEM_PROCESSOR})
 set (CONFIG_USER $ENV{USER})
