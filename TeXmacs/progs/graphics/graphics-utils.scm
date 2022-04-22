@@ -320,7 +320,12 @@
     (set! init `("gr-mode" "point"
                  "gr-frame" (tuple "scale" ,(graphics-default-unit)
                                    (tuple "0.5gw" "0.5gh"))
-                 "gr-geometry" (tuple "geometry" "1par" "0.6par"))))
+                 "gr-geometry" (tuple "geometry" "1par" "0.6par")
+                 "gr-grid" (tuple "cartesian" (point "0" "0") "1")
+                 "gr-edit-grid-aspect" (tuple (tuple "axes" "none")
+                                              (tuple "1" "none")
+                                              (tuple "10" "none"))
+                 "gr-edit-grid" (tuple "cartesian" (point "0" "0") "1"))))
   (graphics-reset-context 'begin)
   (insert-raw-go-to `(with ,@init (graphics "")) `(,(length init) 1)))
 
