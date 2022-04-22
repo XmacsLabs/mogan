@@ -30,9 +30,7 @@
        (load-help-article (string-append name))))))
 
 (menu-bind help-menu
-  (when (url-exists-in-help? "about/xmacs/welcome.zh.tm")
-        ("Mogan" (load-help-buffer "about/xmacs/welcome"))
-        ---)
+  ("Mogan" (load-buffer "https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/mogan.zh.tm"))
   (when (url-exists-in-help? "about/welcome/new-welcome.en.tm")
 	("Welcome" (load-help-article "about/welcome/new-welcome"))
 	("Getting started" (load-help-article "about/welcome/start"))
