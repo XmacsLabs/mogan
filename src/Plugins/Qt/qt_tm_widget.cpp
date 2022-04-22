@@ -234,21 +234,17 @@ qt_tm_widget_rep::qt_tm_widget_rep(int mask, command _quit)
 #if defined (Q_OS_MAC) || defined (Q_OS_WIN)
   int toolbarHeight= 30 * retina_icons;
   mainToolBar->setFixedHeight (toolbarHeight + 8 * retina_icons);
-  modeToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
   focusToolBar->setFixedHeight (toolbarHeight);
 #else
   int toolbarHeight= 30;
   mainToolBar->setFixedHeight (toolbarHeight + 8);
-  modeToolBar->setFixedHeight (toolbarHeight + 4);
   focusToolBar->setFixedHeight (toolbarHeight);
 #endif
   if (tm_style_sheet != "") {
     double scale= retina_scale;
     int h1= (int) floor (38 * scale + 0.5);
-    int h2= (int) floor (34 * scale + 0.5);
     int h3= (int) floor (30 * scale + 0.5);
     mainToolBar->setFixedHeight (h1);
-    modeToolBar->setFixedHeight (h2);
     focusToolBar->setFixedHeight (h3);
   }
   
@@ -324,23 +320,21 @@ qt_tm_widget_rep::qt_tm_widget_rep(int mask, command _quit)
   else {
     mw->addToolBar (mainToolBar);
     mw->addToolBarBreak ();
-    mw->addToolBar (modeToolBar);
-    mw->addToolBarBreak ();
     mw->addToolBar (focusToolBar);
     mw->addToolBarBreak ();
     mw->addToolBar (userToolBar);
     mw->addToolBarBreak ();
+    mw->addToolBar (Qt::LeftToolBarArea, modeToolBar);
   }
 
 #else
   mw->addToolBar (mainToolBar);
   mw->addToolBarBreak ();
-  mw->addToolBar (modeToolBar);
-  mw->addToolBarBreak ();
   mw->addToolBar (focusToolBar);
   mw->addToolBarBreak ();
   mw->addToolBar (userToolBar);
   mw->addToolBarBreak ();
+  mw->addToolBar (Qt::LeftToolBarArea, modeToolBar);
 #endif
 
   sideTools->setAllowedAreas (Qt::AllDockWidgetAreas);
