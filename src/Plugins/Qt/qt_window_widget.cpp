@@ -206,7 +206,24 @@ qt_window_widget_rep::send (slot s, blackbox val) {
     {
       check_type<bool> (val, s);
       bool flag = open_box<bool> (val);
-      if (qwid) qwid->setWindowModified (flag);
+      if (qwid) {
+        qwid->setWindowModified (flag);
+#ifdef OS_MACOS
+        if (flag) {
+          auto name= from_qstring (qwid->windowTitle());
+          if (!ends (name, "*[*]")) {
+            auto new_name= drop_right (name, 3) * "*[*]";
+            qwid->setWindowTitle (to_qstring (new_name));
+          }
+        } else {
+          auto name= from_qstring (qwid->windowTitle());
+          if (ends (name, "*[*]")) {
+            auto new_name= drop_right (name, 4) * "[*]";
+            qwid->setWindowTitle (to_qstring (new_name));
+          }
+        }
+#endif
+      }
     }
       break;
     case SLOT_REFRESH:

@@ -157,6 +157,8 @@ string replace (string s, string what, string by);
 bool   match_wildcard (string s, string w);
 int    find_non_alpha (string s, int pos, bool forward);
 array<string> tokenize (string s, string sep);
+string drop_left (string s, int n);
+string drop_right (string s, int n);
 string recompose (array<string> a, string sep);
 string trim_spaces_left (string s);
 tree   trim_spaces_left (tree t);
