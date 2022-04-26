@@ -331,7 +331,9 @@ set (tmbin ${exec_prefix}/lib/texmacs/TeXmacs)
 
 configure_file (${TEXMACS_SOURCE_DIR}/src/System/config.h.cmake ${TEXMACS_BINARY_DIR}/src/System/config.h)
 configure_file (${TEXMACS_SOURCE_DIR}/src/System/tm_configure.hpp.cmake ${TEXMACS_BINARY_DIR}/src/System/tm_configure.hpp)
-configure_file (${TEXMACS_SOURCE_DIR}/packages/windows/Xmacs.iss.in ${CMAKE_INSTALL_PREFIX}/Xmacs.iss)
+if (WIN32)
+  configure_file (${TEXMACS_SOURCE_DIR}/packages/windows/Xmacs.iss.in ${TEXMACS_BINARY_DIR}/Xmacs.iss)
+endif (WIN32)
 
 set (CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -include ${TEXMACS_BINARY_DIR}/src/System/config.h")
 if (WIN32)
@@ -753,6 +755,7 @@ if (WIN32)
   install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs-small.bmp DESTINATION ${CMAKE_INSTALL_PREFIX})
   install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/xmacs-64.ico DESTINATION ${CMAKE_INSTALL_PREFIX})
   install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs.ico DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install (FILES ${TEXMACS_BINARY_DIR}/Xmacs.iss DESTINATION ${CMAKE_INSTALL_PREFIX})
 endif (WIN32)
 
 
