@@ -3,7 +3,7 @@
 [Setup]
 AppName=Mogan
 AppVerName=Mogan
-DefaultDirName={commonpf64}\Mogan
+DefaultDirName={commonpf@WIN_BIT_SIZE@}\Mogan
 DefaultGroupName=Mogan
 
 VersionInfoTextVersion=v1.0.1
@@ -14,7 +14,7 @@ LicenseFile=LICENSE
 
 UninstallDisplayIcon={app}\TeXmacs.ico
 OutputDir=..
-OutputBaseFilename=Mogan-v1.0.1-installer
+OutputBaseFilename=Mogan-v1.0.1-@WIN_BIT_SIZE@bit-installer
 ; SourceDir=../..
 ChangesAssociations=yes
 

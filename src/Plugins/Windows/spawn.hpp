@@ -15,8 +15,6 @@
 #include <string>
 //#include "string.hpp"
 
-using namespace std;
-
 __stdcall unsigned bkgread(void *);
 
 class Channel {
