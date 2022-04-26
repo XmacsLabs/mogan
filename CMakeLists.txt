@@ -105,7 +105,11 @@ option (USE_SPARKLE "use Sparkle" OFF)
 
 option (PDFHUMMUS_NO_TIFF "Disable TIFF in PDF Hummus" ON)
 
-option (USE_GMP "use GMP" ON)
+if (WIN32)
+  option (USE_GMP "use GMP" ON)
+else (WIN32)
+  option (USE_GMP "use GMP" OFF)
+endif (WIN32)
 if (USE_GMP)
   find_package (GMP)
 endif (USE_GMP)
@@ -329,8 +333,14 @@ set (tmbin ${exec_prefix}/lib/texmacs/TeXmacs)
 
 configure_file (${TEXMACS_SOURCE_DIR}/src/System/config.h.cmake ${TEXMACS_BINARY_DIR}/src/System/config.h)
 configure_file (${TEXMACS_SOURCE_DIR}/src/System/tm_configure.hpp.cmake ${TEXMACS_BINARY_DIR}/src/System/tm_configure.hpp)
+if (WIN32)
+  configure_file (${TEXMACS_SOURCE_DIR}/packages/windows/Xmacs.iss.in ${TEXMACS_BINARY_DIR}/Xmacs.iss)
+endif (WIN32)
 
 set (CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -include ${TEXMACS_BINARY_DIR}/src/System/config.h")
+if (WIN32)
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCURL_STATICLIB")
+endif (WIN32)
 
 ### --------------------------------------------------------------------
 ### the include dirs
@@ -394,11 +404,11 @@ if (WIN32)
     ${TEXMACS_SOURCE_DIR}/src/Plugins/Windows/nowide
   )
 else (WIN32)
+  set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs} ${GMP_INCLUDES})
 endif (WIN32)
 
 set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs}
-  ${Cairo_INCLUDE_DIRS}
-  ${IMLIB2_INCLUDE_DIR} ${GMP_INCLUDES}
+  ${Cairo_INCLUDE_DIRS} ${IMLIB2_INCLUDE_DIR}
 )
 
 ### --------------------------------------------------------------------
@@ -741,6 +751,14 @@ foreach (size IN ITEMS 32 48 64 128 256 512)
   install (FILES TeXmacs/misc/images/xmacs-${size}.png RENAME Xmacs.png
     DESTINATION share/icons/hicolor/${size}x${size}/apps/)
 endforeach ()
+
+if (WIN32)
+  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs-large.bmp DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs-small.bmp DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/Xmacs.ico DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs.ico DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install (FILES ${TEXMACS_BINARY_DIR}/Xmacs.iss DESTINATION ${CMAKE_INSTALL_PREFIX})
+endif (WIN32)
 
 ### --------------------------------------------------------------------
 ### Testing
