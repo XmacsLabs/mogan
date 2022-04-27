@@ -74,22 +74,24 @@ web_encode (string s) {
 url
 get_from_web (url name) {
   if (!is_rooted_web (name)) return url_none ();
+
   url res= get_cache (name);
   if (!is_none (res)) return res;
 
-  url tmp= url_temp ();
-  string tmp_s= escape_sh (concretize (tmp));
-  
-  curl_download (
+  string suf= suffix (name);
+  if (!is_empty (suf)) suf= string(".") * suf;
+
+  url tmp= url_temp (suf);
+  string content= curl_get (
     escape_sh (web_encode (as_string (name))),
-    tmp_s,
     string("TeXmacs-") * TEXMACS_VERSION);
 
-  if (file_size (url_system (tmp_s)) <= 0) {
-    remove (tmp);
-    return url_none ();
+  if (is_empty (content)) return url_none ();
+  else {
+    save_string (tmp, content);
+    set_cache (name, tmp);
+    return tmp;
   }
-  else return set_cache (name, tmp);
 }
 
 /******************************************************************************

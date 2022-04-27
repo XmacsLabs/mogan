@@ -11,34 +11,44 @@
 
 #include "Curl/curl.hpp"
 #include <curl/curl.h>
+#include <string>
+
+static std::string readBuffer;
 
 static size_t
-write_data (void *ptr, size_t size, size_t nmemb, FILE *stream) {
-  size_t written= fwrite (ptr, size, nmemb, stream);
-  return written;
+write_data (void *contents, size_t size, size_t nmemb, void *userp) {
+  ((std::string *) userp)->append ((char *) contents, size * nmemb);
+  return size * nmemb;
 }
 
-void
-curl_download (string source, string target, string user_agent) {
-  debug_io << "curl --user-agent " << user_agent << " " << source
-           << " --output " << target << LF;
-  CURL *curl= curl_easy_init ();
-  if (curl) {
-    FILE *fp= fopen (as_charp (target), "wb");
+string
+curl_get (string source, string user_agent) {
+  std::string readBuffer;
+  CURL       *curl= curl_easy_init ();
 
-    curl_easy_setopt (curl, CURLOPT_URL, as_charp (source));
+  if (curl) {
+    string url;
+    if (is_quoted (source)) url= source (1, N (source) - 1);
+    else url= source;
+
+    curl_easy_setopt (curl, CURLOPT_URL, as_charp (url));
     curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_data);
-    curl_easy_setopt (curl, CURLOPT_WRITEDATA, fp);
+    curl_easy_setopt (curl, CURLOPT_WRITEDATA, &readBuffer);
     curl_easy_setopt (curl, CURLOPT_USERAGENT, as_charp (user_agent));
     curl_easy_setopt (curl, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt (curl, CURLOPT_REDIR_PROTOCOLS,
                       CURLPROTO_HTTP | CURLPROTO_HTTPS);
     CURLcode res= curl_easy_perform (curl);
 
+    if (!res == CURLE_OK) {
+      debug_io << "curl failed with CURLcode " << res << LF << url << LF;
+    }
+
     curl_easy_cleanup (curl);
-    fclose (fp);
+    return string (readBuffer.c_str ());
   }
   else {
     debug_io << "Failed to init the easy curl client" << LF;
+    return string ();
   }
 }
