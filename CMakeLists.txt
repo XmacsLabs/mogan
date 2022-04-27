@@ -508,7 +508,7 @@ if (WIN32)
 # I only to manage to get it working for msys2-ucrt.
 set (TeXmacs_Libraries
   ${TeXmacs_Libraries}
-  wsock32 ws2_32
+  wsock32 ws2_32 crypt32
 )
 endif (WIN32)
 
