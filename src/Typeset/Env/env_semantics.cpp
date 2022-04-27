@@ -560,7 +560,7 @@ edit_env_rep::update_font () {
   case 2:
     fn= smart_font (get_string (MATH_FONT), get_string (MATH_FONT_FAMILY),
                     get_string (MATH_FONT_SERIES), get_string (MATH_FONT_SHAPE),
-                    get_string (FONT), get_string (FONT_FAMILY),
+                    get_string (MATH_FONT), get_string (FONT_FAMILY),
                     get_string (FONT_SERIES), "mathitalic",
                     get_script_size (fn_size, index_level), (int) (magn*dpi));
     break;
