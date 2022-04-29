@@ -3,11 +3,11 @@
 <style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <\hide-preamble>
-    <assign|xmacs-version|v1.0.2-alpha2>
-  </hide-preamble>
+  <\tmdoc-underline>
+    <tmdoc-title-font|\<#6B22\>\<#8FCE\>\<#4F7F\>\<#7528\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>>
+  </tmdoc-underline>
 
-  <tmdoc-title|\<#6B22\>\<#8FCE\>\<#4F7F\>\<#7528\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\><value|xmacs-version>>
+  \;
 
   \<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>\<#884D\>\<#751F\>\<#81EA\>GNU
   <TeXmacs>\<#3002\>\<#4E0E\><TeXmacs>\<#7684\>\<#4E3B\>\<#8981\>\<#533A\>\<#522B\>\<#662F\>\<#FF1A\>
