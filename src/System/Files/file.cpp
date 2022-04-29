@@ -40,6 +40,10 @@
 #include "MacOS/mac_images.h"
 #endif
 
+#ifdef QTTEXMACS
+#include "Qt/qt_file.hpp"
+#endif
+
 /******************************************************************************
 * New style loading and saving
 ******************************************************************************/
@@ -527,27 +531,13 @@ read_directory (url u, bool& error_flag) {
   bench_start ("read directory");
   // End caching
 
-  DIR* dp;
-  c_string temp (name);
-  dp= opendir (temp);
-  error_flag= (dp==NULL);
-  if (error_flag) return array<string> ();
-
   array<string> dir;
-  #ifdef OS_MINGW
-  while (true) {
-    const char* nextname =  nowide::readir_entry (dp);
-    if (nextname==NULL) break;
-    dir << string (nextname);
-  #else
-  struct dirent* ep;
-  while (true) {
-    ep= readdir (dp);
-    if (ep==NULL) break;
-    dir << string (ep->d_name);
-  #endif
-  }
-  (void) closedir (dp);
+#ifdef QTTEXMACS
+  dir= qt_read_directory(name, error_flag);
+#else
+  FAILED("Implementation of list directories is not provided");
+#endif
+
   merge_sort (dir);
 
   // Caching of directory contents
