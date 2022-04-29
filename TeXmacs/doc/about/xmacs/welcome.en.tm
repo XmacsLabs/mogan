@@ -3,11 +3,11 @@
 <style|<tuple|tmdoc|old-spacing|old-dots|old-lengths|british>>
 
 <\body>
-  <\hide-preamble>
-    <assign|xmacs-version|v1.0.2-alpha2>
-  </hide-preamble>
+  <\tmdoc-underline>
+    <tmdoc-title-font|Welcome to Mogan Editor>
+  </tmdoc-underline>
 
-  <tmdoc-title|Welcome to <name|Mogan Editor> <value|xmacs-version>>
+  \;
 
   Mogan Editor is a fork of GNU <TeXmacs>. Its major differences with
   <TeXmacs> are
@@ -18,9 +18,8 @@
     <item>Switch from GNU Guile 1.8 to S7
   </itemize>
 
-  Mogan <value|xmacs-version> is based on GNU <TeXmacs> 2.1.1 with the same
-  functionalities. Mogan v1.0.x focuses on bug fixes, usabilities and
-  performance.
+  Mogan v1.x is based on GNU <TeXmacs> 2.1.1 with the same functionalities.
+  Mogan v1.0.x focuses on bug fixes, usabilities and performance.
 
   <section|Feature Overview>
 
