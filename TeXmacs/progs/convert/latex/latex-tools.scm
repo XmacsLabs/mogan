@@ -574,7 +574,7 @@
            (pre-catcode  (latex-catcode-defs Text))
            (pre-uses     (latex-use-package-command Text))
            (pre-extra    (latex-extra-preamble)))
-      (values
+      (list
         (cond ((and (in? "amsthm" latex-all-packages)
                     (== style "amsart")) "[amsthm]")
               ((list? style) (latex-make-option (cDr style)))
