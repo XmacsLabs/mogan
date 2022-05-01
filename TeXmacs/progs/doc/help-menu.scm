@@ -29,13 +29,21 @@
       ((eval menu-name)
        (load-help-article (string-append name))))))
 
-(define (get-remote-welcome)
+(define (get-remote-welcome-url)
   (if (== (get-output-language) "chinese")
-      (load-buffer "https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/welcome.zh.tm")
-      (load-buffer "https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/welcome.en.tm")))
+      "https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/welcome.zh.tm"
+	  "https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/welcome.en.tm"))
+
+(define (get-remote-welcome)
+  (load-buffer (get-remote-welcome-url)))
+
+(define (mogan-welcome)
+  (if (url-exists? (get-remote-welcome-url))
+      (get-remote-welcome)
+      (load-help-article "about/mogan")))
 
 (menu-bind help-menu
-  ("Mogan" (get-remote-welcome))
+  ("Mogan" (mogan-welcome))
   ---
   (when (url-exists-in-help? "about/welcome/new-welcome.en.tm")
 	("Welcome" (load-help-article "about/welcome/new-welcome"))
