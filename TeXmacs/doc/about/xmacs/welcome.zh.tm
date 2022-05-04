@@ -1,13 +1,9 @@
 <TeXmacs|2.1.1>
 
-<style|<tuple|generic|chinese|old-spacing|old-dots|old-lengths|doc>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <\tmdoc-underline>
-    <tmdoc-title-font|\<#6B22\>\<#8FCE\>\<#4F7F\>\<#7528\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>>
-  </tmdoc-underline>
-
-  \;
+  <tmdoc-title|\<#6B22\>\<#8FCE\>\<#4F7F\>\<#7528\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>>
 
   \<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>\<#662F\>\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>\<#65D7\>\<#4E0B\>\<#7ED3\>\<#6784\>\<#5316\>\<#7F16\>\<#8F91\>\<#5668\>\<#FF0C\>\<#884D\>\<#751F\>\<#81EA\>GNU
   <TeXmacs>\<#3002\>
@@ -22,7 +18,7 @@
 
   <section*|\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>>
 
-  \<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>\<#5173\>\<#6CE8\>\<#79D1\>\<#6280\>\<#53D1\>\<#5C55\>\<#FF0C\>\<#4EE5\><hlink|\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>|https://gitee.com/XmacsLabs/mogan>\<#548C\><hlink|\<#58A8\>\<#8005\>\<#767E\>\<#79D1\>|https://gitee.com/XmacsLabs/tmmlwiki>\<#4E3A\>\<#8F7D\>\<#4F53\>\<#FF0C\>\<#666E\>\<#53CA\>\<#79D1\>\<#6280\>\<#77E5\>\<#8BC6\>\<#3002\>
+  \<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>\<#662F\>\<#975E\>\<#8425\>\<#5229\>\<#7684\>\<#FF0C\>\<#5173\>\<#6CE8\>\<#79D1\>\<#6280\>\<#53D1\>\<#5C55\>\<#7684\>\<#5B9E\>\<#9A8C\>\<#5BA4\>\<#3002\>\<#6211\>\<#4EEC\>\<#4EE5\><hlink|\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>|https://gitee.com/XmacsLabs/mogan>\<#548C\><hlink|\<#58A8\>\<#8005\>\<#767E\>\<#79D1\>|https://gitee.com/XmacsLabs/tmmlwiki>\<#4E3A\>\<#8F7D\>\<#4F53\>\<#FF0C\>\<#666E\>\<#53CA\>\<#79D1\>\<#6280\>\<#77E5\>\<#8BC6\>\<#3002\>
 
   \<#6240\>\<#6709\>\<#4F7F\>\<#7528\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>\<#7684\>\<#7528\>\<#6237\>\<#90FD\>\<#662F\>\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>\<#7684\>\<#8D21\>\<#732E\>\<#8005\>\<#FF0C\>\<#79F0\>\<#4E4B\>\<#4E3A\><strong|\<#58A8\>\<#5BA2\>>\<#3002\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>\<#7684\>\<#5F00\>\<#53D1\>\<#8005\>\<#548C\>\<#58A8\>\<#8005\>\<#767E\>\<#79D1\>\<#7684\>\<#7F16\>\<#8F91\>\<#8005\>\<#FF0C\>\<#79F0\>\<#4E4B\>\<#4E3A\><strong|\<#58A8\>\<#8005\>>\<#3002\>
 
@@ -83,43 +79,14 @@
   </with>
 
   <tmdoc-copyright|2020-2022|\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>>
+
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this
+  document under the terms of the GNU Free Documentation License, Version 1.1
+  or any later version published by the Free Software Foundation; with no
+  Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+  Texts. A copy of the license is included in the section entitled "GNU Free
+  Documentation License".>
 </body>
 
 <initial|<\collection>
 </collection>>
-
-<\references>
-  <\collection>
-    <associate|auto-1|<tuple|?|?>>
-    <associate|auto-2|<tuple|?|?>>
-    <associate|auto-3|<tuple|<with|mode|<quote|math>|\<bullet\>>|?>>
-    <associate|auto-4|<tuple|<with|mode|<quote|math>|\<bullet\>>|?>>
-    <associate|auto-5|<tuple|<with|mode|<quote|math>|\<bullet\>>|?>>
-  </collection>
-</references>
-
-<\auxiliary>
-  <\collection>
-    <\associate|toc>
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>>
-      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-1><vspace|0.5fn>
-
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|\<#58A8\>\<#5BA2\>\<#661F\>\<#7403\>>
-      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-2><vspace|0.5fn>
-
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|\<#58A8\>\<#8005\>\<#767E\>\<#79D1\>>
-      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-3><vspace|0.5fn>
-
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|\<#4E2D\>\<#5B66\>\<#6559\>\<#80B2\>>
-      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-4><vspace|0.5fn>
-
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|\<#8054\>\<#7CFB\>\<#6211\>\<#4EEC\>>
-      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-5><vspace|0.5fn>
-    </associate>
-  </collection>
-</auxiliary>
