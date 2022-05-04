@@ -6,15 +6,15 @@ AppVerName=Mogan
 DefaultDirName={commonpf@WIN_BIT_SIZE@}\Mogan
 DefaultGroupName=Mogan
 
-VersionInfoTextVersion=v1.0.2-beta
+VersionInfoTextVersion=v1.0.2
 AppPublisher=XmacsLabs
 AppPublisherURL=http://github.com/XmacsLabs/mogan
-AppVersion=1.0.2-beta
+AppVersion=1.0.2
 LicenseFile=LICENSE
 
 UninstallDisplayIcon={app}\TeXmacs.ico
 OutputDir=..
-OutputBaseFilename=Mogan-v1.0.2-beta-@WIN_BIT_SIZE@bit-installer
+OutputBaseFilename=Mogan-v1.0.2-@WIN_BIT_SIZE@bit-installer
 ; SourceDir=../..
 ChangesAssociations=yes
 
@@ -42,9 +42,9 @@ Source: "C:\Program Files (x86)\TeXmacs\plugins\aspell\data\standard*"; DestDir:
 Source: "C:\Program Files (x86)\TeXmacs\plugins\aspell\dict\en*"; DestDir: {app}/plugins/aspell/dict; Flags: recursesubdirs createallsubdirs ignoreversion
 
 [Icons]
-Name: "{group}\Mogan"; Filename: "{app}\bin\Mogan.exe"; IconFilename: "{app}\xmacs-64.ico"
+Name: "{group}\Mogan"; Filename: "{app}\bin\Mogan.exe"; IconFilename: "{app}\Xmacs.ico"
 Name: "{group}\Uninstall Mogan"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\Mogan"; Filename: "{app}\bin\Mogan.exe"; IconFilename: "{app}\xmacs-64.ico"
+Name: "{commondesktop}\Mogan"; Filename: "{app}\bin\Mogan.exe"; IconFilename: "{app}\Xmacs.ico"
 
 [UninstallDelete]
 Type: files; Name: "{app}\*"
