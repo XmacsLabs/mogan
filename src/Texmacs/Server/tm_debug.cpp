@@ -32,11 +32,9 @@ get_system_information () {
   r << "  Building date    : "
     << BUILD_DATE << "\n";
   r << "  Operating system : "
-    << HOST_OS << "\n";
-  r << "  Vendor           : "
-    << HOST_VENDOR << "\n";
+    << get_pretty_os_name () << "\n";
   r << "  Processor        : "
-    << HOST_CPU << "\n";
+    << get_current_cpu_arch () << "\n";
   r << "  Crash date       : "
     << var_eval_system ("date") << "\n";
   return r;
