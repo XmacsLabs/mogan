@@ -17,6 +17,16 @@
 
   \<#613F\>\<#529B\>\<#91CF\>\<#4E0E\>\<#4F60\>\<#540C\>\<#5728\>\<#3002\>
 
+  <hrule>
+
+  2022\<#5E74\>\<#4E94\>\<#6708\>\<#5341\>\<#4E09\>\<#65E5\>\<#FF0C\>\<#7EC8\>\<#4E8E\>\<#4E0A\>\<#4F20\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>V1.0.2\<#7684\>\<#53D1\>\<#5E03\>\<#4F1A\>\<#89C6\>\<#9891\>\<#FF1A\>
+
+  <\itemize>
+    <item><slink|https://www.bilibili.com/video/BV1PR4y1P7wi>
+
+    <item><slink|https://www.zhihu.com/zvideo/1508550458033098753>
+  </itemize>
+
   <tmdoc-copyright|2022|\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
