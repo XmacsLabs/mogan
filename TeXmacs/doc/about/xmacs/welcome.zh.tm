@@ -8,13 +8,21 @@
   \<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>\<#662F\>\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>\<#65D7\>\<#4E0B\>\<#7ED3\>\<#6784\>\<#5316\>\<#7F16\>\<#8F91\>\<#5668\>\<#FF0C\>\<#884D\>\<#751F\>\<#81EA\>GNU
   <TeXmacs>\<#3002\>
 
-  \<#5F53\>\<#524D\>\<#6700\>\<#65B0\>\<#7248\>\<#672C\>\<#7684\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>\<#662F\>\<#58A8\>\<#5E72\>V1.0.2\<#FF1A\>
+  \<#5F53\>\<#524D\>\<#6700\>\<#65B0\>\<#7248\>\<#672C\>\<#7684\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>\<#662F\>\<#58A8\>\<#5E72\>V1.0.3\<#FF1A\>
 
   <\itemize>
     <math|\<Longrightarrow\>> \<#67E5\>\<#770B\><hlink|\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>\<#6240\>\<#6709\>\<#7248\>\<#672C\>|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/mogan_index.zh.tm>
 
     <math|\<Longrightarrow\>> \<#67E5\>\<#770B\><hlink|<samp|\<#5F53\>\<#524D\>>\<#7248\>\<#672C\>\<#7684\>\<#66F4\>\<#65B0\>\<#8BB0\>\<#5F55\>|tmfs://help/article/tm/doc/about/mogan.zh.tm>
   </itemize>
+
+  <section*|\<#8054\>\<#7CFB\>\<#6211\>\<#4EEC\>>
+
+  <\with|par-mode|center>
+    <tabular|<tformat|<cwith|1|1|1|-1|cell-background|#ffa>|<cwith|2|-1|1|-1|cell-halign|c>|<cwith|1|1|1|-1|cell-halign|c>|<table|<row|<cell|\<#6E20\>\<#9053\>>|<cell|\<#5907\>\<#6CE8\>>>|<row|<cell|Bilibili>|<cell|<hlink|\<#6C88\>\<#6D6A\>\<#718A\>\<#732B\>\<#513F\>|https://space.bilibili.com/28058658>>>|<row|<cell|\<#5FAE\>\<#4FE1\>\<#516C\>\<#4F17\>\<#53F7\>>|<cell|\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>>>|<row|<cell|\<#77E5\>\<#4E4E\>>|<cell|<hlink|\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>|https://www.zhihu.com/people/xmacs>>>|<row|<cell|\<#5FAE\>\<#4FE1\>\<#53F7\>>|<cell|XmacsLabs>>|<row|<cell|\<#62A5\>\<#544A\>\<#9519\>\<#8BEF\>>|<cell|<hlink|Gitee\<#5DE5\>\<#5355\>|https://gitee.com/XmacsLabs/mogan/issues>>>>>>
+  </with>
+
+  <with|font|TeX Gyre Pagella|font-base-size|20|<with|color|red|\<#9A6C\>\<#4E0A\>\<#89C2\>\<#770B\>>><hlink|Bilibili|https://www.bilibili.com/video/BV1PR4y1P7wi>\<#6216\>\<#8005\><hlink|Zhihu|https://www.zhihu.com/zvideo/1508550458033098753>\<#7684\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>V1.0.2\<#7684\>\<#53D1\>\<#5E03\>\<#4F1A\>\<#89C6\>\<#9891\>\<#FF0C\>\<#4EE5\>\<#4E86\>\<#89E3\>\<#672C\>\<#6587\>\<#6863\>\<#540E\>\<#9762\>\<#7684\>\<#5185\>\<#5BB9\>\<#3002\>
 
   <section*|\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>>
 
@@ -52,12 +60,6 @@
 
     <item><hlink|\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>|https://gitee.com/XmacsLabs/planet/raw/main/%E9%AB%98%E8%80%83%E6%95%B0%E5%AD%A6/index.tm>
   </itemize>
-
-  <section*|\<#8054\>\<#7CFB\>\<#6211\>\<#4EEC\>>
-
-  <\with|par-mode|center>
-    <tabular|<tformat|<cwith|1|1|1|-1|cell-background|#ffa>|<cwith|2|-1|1|-1|cell-halign|c>|<cwith|1|1|1|-1|cell-halign|c>|<table|<row|<cell|\<#6E20\>\<#9053\>>|<cell|\<#5907\>\<#6CE8\>>>|<row|<cell|\<#5FAE\>\<#4FE1\>\<#516C\>\<#4F17\>\<#53F7\>>|<cell|\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>>>|<row|<cell|\<#77E5\>\<#4E4E\>>|<cell|<hlink|\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>|https://www.zhihu.com/people/xmacs>>>|<row|<cell|\<#5FAE\>\<#4FE1\>\<#53F7\>>|<cell|XmacsLabs>>|<row|<cell|\<#62A5\>\<#544A\>\<#9519\>\<#8BEF\>>|<cell|<hlink|Gitee\<#5DE5\>\<#5355\>|https://gitee.com/XmacsLabs/mogan/issues>>>>>>
-  </with>
 
   <tmdoc-copyright|2020-2022|\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>>
 
