@@ -8,7 +8,7 @@
   Mogan Editor is a structure editor forked from GNU <TeXmacs>. It is a Xmacs
   Labs product.
 
-  The latest version of Mogan Editor is V1.0.2:
+  The latest version of Mogan Editor is V1.0.3:
 
   <\itemize>
     <math|\<Longrightarrow\>> <hlink|All versions of the Mogan
@@ -17,6 +17,21 @@
     <math|\<Longrightarrow\>> <hlink|ChangeLog of the current
     version|tmfs://help/article/tm/doc/about/mogan.en.tm>
   </itemize>
+
+  <section*|Contact us>
+
+  <\with|par-mode|center>
+    <tabular|<tformat|<cwith|1|1|1|-1|cell-background|#ffa>|<cwith|2|-1|1|-1|cell-halign|c>|<cwith|1|1|1|-1|cell-halign|c>|<table|<row|<cell|Where>|<cell|What>>|<row|<cell|Bilibili>|<cell|<hlink|\<#6C88\>\<#6D6A\>\<#718A\>\<#732B\>\<#513F\>|https://space.bilibili.com/28058658>>>|<row|<cell|Public
+    Wechat Account>|<cell|\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>>>|<row|<cell|Zhihu>|<cell|<hlink|\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>|https://www.zhihu.com/people/xmacs>>>|<row|<cell|Wechat
+    Account>|<cell|XmacsLabs>>|<row|<cell|Bug Tracker>|<cell|<hlink|Github
+    Issues|https://github.com/XmacsLabs/mogan/issues>>>>>>
+  </with>
+
+  Release video of Mogan Editor v1.0.2 explaines the rest of this document.
+
+  <with|font|TeX Gyre Pagella|font-base-size|20|<with|color|red|Watch now>>
+  on <hlink|Bilibili|https://www.bilibili.com/video/BV1PR4y1P7wi> or
+  <hlink|Zhihu|https://www.zhihu.com/zvideo/1508550458033098753>.
 
   <section*|Xmacs Labs>
 
@@ -56,15 +71,6 @@
 
     <item><hlink|\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>|https://gitee.com/XmacsLabs/planet/raw/main/%E9%AB%98%E8%80%83%E6%95%B0%E5%AD%A6/index.tm>
   </itemize>
-
-  <section*|Contact us>
-
-  <\with|par-mode|center>
-    <tabular|<tformat|<cwith|1|1|1|-1|cell-background|#ffa>|<cwith|2|-1|1|-1|cell-halign|c>|<cwith|1|1|1|-1|cell-halign|c>|<table|<row|<cell|Where>|<cell|What>>|<row|<cell|Public
-    Wechat Account>|<cell|\<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\>>>|<row|<cell|Zhihu>|<cell|<hlink|\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>|https://www.zhihu.com/people/xmacs>>>|<row|<cell|Wechat
-    Account>|<cell|XmacsLabs>>|<row|<cell|Bug Tracker>|<cell|<hlink|Github
-    Issues|https://github.com/XmacsLabs/mogan/issues>>>>>>
-  </with>
 
   \;
 
