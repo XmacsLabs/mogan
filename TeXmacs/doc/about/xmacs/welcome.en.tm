@@ -11,8 +11,8 @@
   The latest version of Mogan Editor is V1.0.2:
 
   <\itemize>
-    <math|\<Longrightarrow\>> <hlink|ChangeLog of the latest
-    version|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/mogan_v1.0.2.en.tm>
+    <math|\<Longrightarrow\>> <hlink|ChangeLog of the latest version or
+    future plan|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/mogan_v1.0.3.en.tm>
 
     <math|\<Longrightarrow\>> <hlink|ChangeLog of the current
     version|tmfs://help/article/tm/doc/about/mogan.en.tm>
@@ -52,28 +52,9 @@
 
     <item><hlink|\<#300A\>\<#8BD7\>\<#516B\>\<#7AE0\>\<#300B\>|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/\<#8BD7\>\<#516B\>\<#7AE0\>.tm>
 
-    <item>2019\<#5E74\>\<#5168\>\<#56FD\>\<#9AD8\>\<#4E2D\>\<#6570\>\<#5B66\>\<#8054\>\<#5408\>\<#7ADE\>\<#8D5B\>\<#4E00\>\<#8BD5\>\<#8BD5\>\<#9898\>A\<#5377\>
-    \<#FF08\><hlink|Latest|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2019\<#5E74\>\<#5168\>\<#56FD\>\<#9AD8\>\<#4E2D\>\<#6570\>\<#5B66\>\<#8054\>\<#5408\>\<#7ADE\>\<#8D5B\>\<#4E00\>\<#8BD5\>\<#8BD5\>\<#9898\>A\<#5377\>.tm>\<#FF09\>
+    <item><hlink|2019\<#5E74\>\<#5168\>\<#56FD\>\<#9AD8\>\<#4E2D\>\<#6570\>\<#5B66\>\<#8054\>\<#5408\>\<#7ADE\>\<#8D5B\>\<#4E00\>\<#8BD5\>\<#8BD5\>\<#9898\>A\<#5377\>|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2019\<#5E74\>\<#5168\>\<#56FD\>\<#9AD8\>\<#4E2D\>\<#6570\>\<#5B66\>\<#8054\>\<#5408\>\<#7ADE\>\<#8D5B\>\<#4E00\>\<#8BD5\>\<#8BD5\>\<#9898\>A\<#5377\>.tm>
 
-    <item>2021\<#5E74\>\<#9AD8\>\<#8003\>\<#5168\>\<#56FD\>\<#7532\>\<#5377\>\<#6570\>\<#5B66\>\<#6587\>\<#79D1\>\<#8BD5\>\<#9898\>\<#FF08\><hlink|Latest|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2021\<#5E74\>\<#5168\>\<#56FD\>\<#9AD8\>\<#8003\>\<#7532\>\<#5377\>\<#6570\>\<#5B66\>\<#6587\>\<#79D1\>\<#8BD5\>\<#9898\>.tm>\<#FF09\>
-
-    <item>2021\<#5E74\>\<#9AD8\>\<#8003\>\<#5168\>\<#56FD\>\<#4E59\>\<#5377\>\<#6570\>\<#5B66\>\<#6587\>\<#79D1\>\<#8BD5\>\<#9898\>\<#FF08\><hlink|Latest|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2021\<#5E74\>\<#5168\>\<#56FD\>\<#9AD8\>\<#8003\>\<#4E59\>\<#5377\>\<#6570\>\<#5B66\>\<#6587\>\<#79D1\>\<#8BD5\>\<#9898\>.tm>\<#FF09\>
-
-    <item>2021\<#5E74\>\<#9AD8\>\<#8003\>\<#5168\>\<#56FD\>\<#7532\>\<#5377\>\<#6570\>\<#5B66\>\<#7406\>\<#79D1\>\<#8BD5\>\<#9898\>\<#FF08\><hlink|Latest|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2021\<#5E74\>\<#5168\>\<#56FD\>\<#9AD8\>\<#8003\>\<#7532\>\<#5377\>\<#6570\>\<#5B66\>\<#7406\>\<#79D1\>\<#8BD5\>\<#9898\>.tm>\<#FF09\>
-
-    <item>2021\<#5E74\>\<#9AD8\>\<#8003\>\<#5168\>\<#56FD\>\<#4E59\>\<#5377\>\<#6570\>\<#5B66\>\<#7406\>\<#79D1\>\<#8BD5\>\<#9898\>\<#FF08\><hlink|Latest|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2021\<#5E74\>\<#5168\>\<#56FD\>\<#9AD8\>\<#8003\>\<#4E59\>\<#5377\>\<#6570\>\<#5B66\>\<#7406\>\<#79D1\>\<#8BD5\>\<#9898\>.tm>\<#FF09\>
-
-    <item>2021\<#5E74\>\<#5168\>\<#56FD\>\<#65B0\>\<#9AD8\>\<#8003\>\<#2160\>\<#5377\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>\<#FF08\><hlink|Latest|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2021\<#5E74\>\<#5168\>\<#56FD\>\<#65B0\>\<#9AD8\>\<#8003\>\<#2160\>\<#5377\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>.tm>\<#FF09\>
-
-    <item>2021\<#5E74\>\<#5168\>\<#56FD\>\<#65B0\>\<#9AD8\>\<#8003\>II\<#5377\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>\<#FF08\><hlink|Latest|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2021\<#5E74\>\<#5168\>\<#56FD\>\<#65B0\>\<#9AD8\>\<#8003\>II\<#5377\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>.tm>\<#FF09\>
-
-    <item>2021\<#5E74\>\<#5317\>\<#4EAC\>\<#5E02\>\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>\<#FF08\><hlink|Latest|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2021\<#5E74\>\<#5317\>\<#4EAC\>\<#5E02\>\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>.tm>\<#FF09\>
-
-    <item>2021\<#5E74\>\<#4E0A\>\<#6D77\>\<#5E02\>\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>\<#FF08\><hlink|Latest|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2021\<#5E74\>\<#4E0A\>\<#6D77\>\<#5E02\>\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>.tm>\<#FF09\>
-
-    <item>2021\<#5E74\>\<#5929\>\<#6D25\>\<#5E02\>\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>\<#FF08\><hlink|Latest|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2021\<#5E74\>\<#5929\>\<#6D25\>\<#5E02\>\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>.tm>\<#FF09\>
-
-    <item>2021\<#5E74\>\<#6D59\>\<#6C5F\>\<#7701\>\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>\<#FF08\><hlink|Latest|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/2021\<#5E74\>\<#6D59\>\<#6C5F\>\<#7701\>\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>\<#8BD5\>\<#9898\>.tm>\<#FF09\>
+    <item><hlink|\<#9AD8\>\<#8003\>\<#6570\>\<#5B66\>|https://gitee.com/XmacsLabs/planet/raw/main/%E9%AB%98%E8%80%83%E6%95%B0%E5%AD%A6/index.tm>
   </itemize>
 
   <section*|Contact us>

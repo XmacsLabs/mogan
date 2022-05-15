@@ -24,6 +24,16 @@
 
   May the force be with YOU!
 
+  <hrule>
+
+  2022/05/13, we finally upload the release video:
+
+  <\itemize>
+    <item><slink|https://www.bilibili.com/video/BV1PR4y1P7wi>
+
+    <item><slink|https://www.zhihu.com/zvideo/1508550458033098753>
+  </itemize>
+
   <tmdoc-copyright|2022|XmacsLabs>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
