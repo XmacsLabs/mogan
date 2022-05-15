@@ -8,7 +8,8 @@
   Mogan Editor is a structure editor forked from GNU <TeXmacs>. It is a Xmacs
   Labs product.
 
-  The latest version of Mogan Editor is V1.0.3:
+  The latest version of Mogan Editor is <strong|<hlink|Mogan Editor
+  v1.0.3|https://github.com/XmacsLabs/mogan/releases>>:
 
   <\itemize>
     <math|\<Longrightarrow\>> <hlink|All versions of the Mogan
