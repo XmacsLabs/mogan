@@ -548,8 +548,10 @@ edit_env_rep::get_script_size (int sz, int level) {
 
 void
 edit_env_rep::update_font () {
+  string font_name= get_string (FONT);
   fn_size= (int) (((double) get_int (FONT_BASE_SIZE)) *
 		  get_double (FONT_SIZE) + 0.5);
+
   switch (mode) {
   case 0:
   case 1:
@@ -558,9 +560,14 @@ edit_env_rep::update_font () {
                     get_script_size (fn_size, index_level), (int) (magn*dpi));
     break;
   case 2:
+    if (font_name == "sys-chinese" ||
+        font_name == "sys-japanese" ||
+        font_name == "sys-korean") {
+      font_name= "roman";
+    }
     fn= smart_font (get_string (MATH_FONT), get_string (MATH_FONT_FAMILY),
                     get_string (MATH_FONT_SERIES), get_string (MATH_FONT_SHAPE),
-                    get_string (FONT), get_string (FONT_FAMILY),
+                    font_name, get_string (FONT_FAMILY),
                     get_string (FONT_SERIES), "mathitalic",
                     get_script_size (fn_size, index_level), (int) (magn*dpi));
     break;
