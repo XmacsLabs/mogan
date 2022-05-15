@@ -11,7 +11,7 @@
   \<#5F53\>\<#524D\>\<#6700\>\<#65B0\>\<#7248\>\<#672C\>\<#7684\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>\<#662F\>\<#58A8\>\<#5E72\>V1.0.2\<#FF1A\>
 
   <\itemize>
-    <math|\<Longrightarrow\>> \<#67E5\>\<#770B\><hlink|<samp|\<#6700\>\<#65B0\>>\<#7248\>\<#672C\>\<#7684\>\<#66F4\>\<#65B0\>\<#8BB0\>\<#5F55\>\<#6216\>\<#8005\>\<#5F00\>\<#53D1\>\<#8BA1\>\<#5212\>|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/mogan_v1.0.3.zh.tm>
+    <math|\<Longrightarrow\>> \<#67E5\>\<#770B\><hlink|\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>\<#6240\>\<#6709\>\<#7248\>\<#672C\>|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/mogan_index.zh.tm>
 
     <math|\<Longrightarrow\>> \<#67E5\>\<#770B\><hlink|<samp|\<#5F53\>\<#524D\>>\<#7248\>\<#672C\>\<#7684\>\<#66F4\>\<#65B0\>\<#8BB0\>\<#5F55\>|tmfs://help/article/tm/doc/about/mogan.zh.tm>
   </itemize>

@@ -11,8 +11,8 @@
   The latest version of Mogan Editor is V1.0.2:
 
   <\itemize>
-    <math|\<Longrightarrow\>> <hlink|ChangeLog of the latest version or
-    future plan|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/mogan_v1.0.3.en.tm>
+    <math|\<Longrightarrow\>> <hlink|All versions of the Mogan
+    Editor|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/mogan_index.en.tm>
 
     <math|\<Longrightarrow\>> <hlink|ChangeLog of the current
     version|tmfs://help/article/tm/doc/about/mogan.en.tm>
