@@ -1,12 +1,13 @@
 # 墨干编辑器 / [Mogan Editor](README.md)
 墨干编辑器是[墨者实验室](https://gitee.com/XmacsLabs)旗下的结构化编辑器。
 
-墨干编辑器基于[GNU TeXmacs](http://www.texmacs.org/tmweb/home/welcome.en.html)研发定制的**自由软件**。
+墨干编辑器是基于[GNU TeXmacs](http://www.texmacs.org/tmweb/home/welcome.en.html)研发定制的**自由软件**，和GNU TeXmacs的显著差别在于：
++ 使用S7 Scheme替代了GNU Guile 1.8
++ 从Qt 4.8.x升级到了Qt 5.15.x
++ 通过`帮助->墨干`，以[墨客星球](https://gitee.com/XmacsLabs/planet)和[墨者百科](https://gitee.com/XmacsLabs/tmmlwiki)两种方式提供大量在线TeXmacs文档
 
-## 为什么
-定制是为了让所有人都可以畅快地使用GNU TeXmacs!
-
-研发是为了以墨干编辑器为载体，让所有人畅快地学习既有的科学与技术，创造全新的科学与技术。
+## 目标
+**让所有人畅快地学习既有的科学与技术，创造全新的科学与技术**。
 
 ## 名
 沈浪熊猫儿：

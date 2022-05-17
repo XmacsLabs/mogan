@@ -1,10 +1,13 @@
 # Mogan Editor / [墨干编辑器](README_ZH.md)
 Mogan Editor is a structure editor delivered by the [Xmacs Labs](https://github.com/XmacsLabs).
 
-Mogan Editor is a **libre software** forked from [GNU TeXmacs](http://www.texmacs.org/tmweb/home/welcome.en.html).
+Mogan Editor is a **libre software** forked from [GNU TeXmacs](http://www.texmacs.org/tmweb/home/welcome.en.html), the major differences are:
++ Switched from GNU Guile 1.8.x to S7 Scheme
++ Upgraded from Qt 4.8.x to Qt 5.15.x
++ Via `Help->Mogan`, massive online TeXmacs documents provided by [Xmacs Planet](https://github.com/XmacsLabs/planet) and [TMML wiki](https://github.com/XmacsLabs/tmmlwiki)
 
-## Why
-We customize GNU TeXmacs for everyone to enjoy it fluently and develop new features for everyone to learn and create science and technology.
+## Goal
+**We create Mogan Editor for everyone to learn and create science and technology.**
 
 ## 名
 Darcy:
