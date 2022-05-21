@@ -63,9 +63,9 @@ TestList::test_access () {
 
   QCOMPARE (the_atom_list[0], 1L);
 
-  QCOMPARE (normal[0], 1);
-  QCOMPARE (normal[1], 2);
-  QCOMPARE (normal[2], 3);
+  QCOMPARE (normal[0], 1L);
+  QCOMPARE (normal[1], 2L);
+  QCOMPARE (normal[2], 3L);
 }
 
 /******************************************************************************
@@ -83,14 +83,14 @@ TestList::operate_on_the_last () {
   QCOMPARE (the_atom_list_copy, list<long>(2L));
   suppress_last (the_atom_list_copy);
   QCOMPARE (the_atom_list_copy, list<long>());
-  QCOMPARE (last_item(the_atom_list), 1);
+  QCOMPARE (last_item(the_atom_list), 1L);
 
   auto normal_copy = copy(normal);
   access_last (normal_copy) = 4;
   QCOMPARE (normal_copy, list<long>(1, 2, 4, list<long>()));
   suppress_last (normal_copy);
   QCOMPARE (normal_copy, list<long>(1, 2, list<long>()));
-  QCOMPARE (last_item(normal), 3);
+  QCOMPARE (last_item(normal), 3L);
 }
 
 /******************************************************************************
