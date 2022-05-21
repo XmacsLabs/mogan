@@ -1,4 +1,4 @@
-name: CI-Linux
+name: Test on Ubuntu 18.04
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y cmake qtbase5-dev libqt5svg5-dev libfreetype6-dev libsqlite3-dev libjpeg-dev libcurl4-openssl-dev
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y cmake qtbase5-dev libqt5test5 libqt5svg5-dev libfreetype6-dev libsqlite3-dev libjpeg-dev libcurl4-openssl-dev
       - name: Create Build Dir
         run: mkdir -p ${{github.workspace}}/build
       - name: Build using CMake
