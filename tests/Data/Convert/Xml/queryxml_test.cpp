@@ -12,6 +12,7 @@
 
 #include "convert.hpp"
 #include "drd_std.hpp"
+#include "base.hpp"
 
 class TestQueryXML: public QObject {
   Q_OBJECT
@@ -33,8 +34,8 @@ class=\"railroad-diagram\" width=\"521\" height=\"110\" viewBox=\"0 0 521 110\">
   // print_tree (result);
   string width= get_attr_from_element (result, "width", "");
   string height= get_attr_from_element (result, "height", "");
-  QCOMPARE (width, "521");
-  QCOMPARE (height, "110");
+  qcompare (width, "521");
+  qcompare (height, "110");
 }
 
 void
