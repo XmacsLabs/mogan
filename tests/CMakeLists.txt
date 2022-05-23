@@ -1,10 +1,12 @@
-file (GLOB_RECURSE TEST_SRC_FILES "*.cpp")
+include_directories(Base)
+file (GLOB_RECURSE TEST_SRC_FILES "*_test.cpp")
 
 # from list of files we'll create tests test_name.cpp -> test_name
 foreach (_test_file ${TEST_SRC_FILES})
   get_filename_component (_test_name ${_test_file} NAME_WE)
   add_executable (${_test_name}
     ${_test_file}
+    Base/base.cpp
   )
   target_link_libraries (${_test_name}
     texmacs_body
