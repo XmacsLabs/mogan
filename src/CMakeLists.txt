@@ -17,14 +17,18 @@ endif (WIN32)
 
 if (APPLE)
   set(MACOSX_BUNDLE_DISPLAY_NAME TeXmacs)
-  set_target_properties (${TeXmacs_binary_name}
-    PROPERTIES
-    MACOSX_BUNDLE TRUE
-    MACOSX_BUNDLE_INFO_PLIST ${TEXMACS_SOURCE_DIR}/packages/macos/Info.plist.in
-    DEBUG_OUTPUT_NAME ${TeXmacs_binary_name}${EXE_DEBUG_EXTENSION}
-    RELEASE_OUTPUT_NAME ${TeXmacs_binary_name}
-    RUNTIME_OUTPUT_DIRECTORY ${TEXMACS_BINARY_DIR}
-  )
+  if (${CMAKE_BUILD_TYPE} STREQUAL "Release")
+    set_target_properties (${TeXmacs_binary_name}
+      PROPERTIES
+      MACOSX_BUNDLE TRUE
+      MACOSX_BUNDLE_INFO_PLIST ${TEXMACS_SOURCE_DIR}/packages/macos/Info.plist.in
+      DEBUG_OUTPUT_NAME ${TeXmacs_binary_name}${EXE_DEBUG_EXTENSION}
+      RELEASE_OUTPUT_NAME ${TeXmacs_binary_name}
+      RUNTIME_OUTPUT_DIRECTORY ${TEXMACS_BINARY_DIR}
+    )
+  else ()
+    install (TARGETS ${TeXmacs_binary_name} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+  endif ()
 elseif (WIN32)
   install (TARGETS ${TeXmacs_binary_name} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
 else (APPLE)
