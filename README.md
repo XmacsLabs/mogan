@@ -17,7 +17,7 @@ https://user-images.githubusercontent.com/1267865/166646231-9eda740f-d413-4c1e-9
 ### Contributors and Developers of Mogan Editor
 > **No Contributors and Developers, no Mogan Editor!**
 
-The happiness of people who maintain and improve the Mogan Editor should be the highest priority. It is a non-profit project, any of us should not get upset by the project itself.
+The happiness of people who maintain and improve the Mogan Editor should be the highest priority. It is a non-profit project, none of us should get upset by the project itself.
 
 ### High School First
 We would like to spend more time on bugs, features and plugins for high school education. For plugins, Maxima, Gnuplot and [Eukleides](http://www.eukleides.org/overview.html) are the most important which can be adopted in high school education.
