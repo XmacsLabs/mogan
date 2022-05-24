@@ -84,7 +84,7 @@ get_from_web (url name) {
   url tmp= url_temp (suf);
   string content= curl_get (
     escape_sh (web_encode (as_string (name))),
-    string("TeXmacs-") * TEXMACS_VERSION);
+    string("Mogan-") * XMACS_VERSION * " on " * get_pretty_os_name());
 
   if (is_empty (content)) return url_none ();
   else {
