@@ -1,4 +1,8 @@
-configure_file(scripts/mogan.sh.in ${TEXMACS_BINARY_DIR}/misc/scripts/mogan.sh @ONLY)
+if (UNIX)
+  configure_file(scripts/mogan.sh.in ${TEXMACS_BINARY_DIR}/misc/scripts/mogan @ONLY)
+else (UNIX)
+  configure_file(scripts/mogan.sh.in ${TEXMACS_BINARY_DIR}/misc/scripts/mogan.sh @ONLY)
+endif (UNIX)
 configure_file(scripts/fig2ps.in ${TEXMACS_BINARY_DIR}/misc/scripts/fig2ps @ONLY)
 configure_file(man/texmacs.1.in ${TEXMACS_SOURCE_DIR}/misc/man/texmacs.1 @ONLY)
 
