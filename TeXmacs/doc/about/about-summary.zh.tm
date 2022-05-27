@@ -1,9 +1,12 @@
-<TeXmacs|1.99.18>
+<TeXmacs|2.1.1>
 
 <style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|\<#6982\>\<#8981\>>
+
+  \<#5F53\>\<#524D\>\<#60A8\>\<#6240\>\<#4F7F\>\<#7528\>\<#7684\>\<#662F\>GNU
+  <TeXmacs>\<#7684\>\<#53D1\>\<#884C\>\<#7248\>\<#FF1A\>\<#58A8\>\<#5E72\>\<#7F16\>\<#8F91\>\<#5668\>V1.0.4.
 
   <big-table|<descriptive-table|<tformat|<cwith|1|1|1|1|cell-row-span|1>|<cwith|1|1|1|1|cell-col-span|2>|<cwith|1|1|1|1|cell-halign|c>|<table|<row|<cell|GNU
   <TeXmacs>>|<cell|>>|<row|<cell|\<#5F53\>\<#524D\>\<#7248\>\<#672C\>>|<cell|<TeXmacs-version>>>|<row|<cell|SVN\<#7248\>\<#672C\>\<#53F7\>>|<cell|<TeXmacs-version-release|revision>>>|<row|<cell|\<#652F\>\<#6301\>\<#7684\>\<#7CFB\>\<#7EDF\>>|<cell|\<#5927\>\<#90E8\>\<#5206\>GNU/<name|Linux>\<#7CFB\>\<#7EDF\>>>|<row|<cell|\<#7248\>\<#6743\>>|<cell|<copyright>

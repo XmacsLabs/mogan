@@ -3,22 +3,23 @@
 <style|<tuple|tmdoc|old-spacing|old-dots|old-lengths|british>>
 
 <\body>
-  <tmdoc-title|Welcome to Mogan Editor>
+  <\tmdoc-title>
+    Welcome to Mogan Editor
+  </tmdoc-title>
+
+  <section*|You are using Mogan Editor \<less\>= v1.0.3, please download a
+  new version after 2022/05/29>
+
+  Download the latest: https://gitee.com/XmacsLabs/mogan/releases
+
+  <hrule>
 
   Mogan Editor is a structure editor forked from GNU <TeXmacs>. It is a Xmacs
   Labs product.
 
-  The latest version of Mogan Editor is <strong|Mogan Editor
-  v1.0.3><\footnote>
-    https://gitee.com/XmacsLabs/mogan/releases
-  </footnote>:
-
   <\itemize>
     <math|\<Longrightarrow\>> <hlink|All versions of the Mogan
-    Editor|https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/xmacs/mogan_index.en.tm>
-
-    <math|\<Longrightarrow\>> <hlink|ChangeLog of the current
-    version|tmfs://help/article/tm/doc/about/mogan.en.tm>
+    Editor|http://git.tmml.wiki/XmacsLabs/planet/raw/main/doc/mogan_index.en.tm>
   </itemize>
 
   <section*|Contact us>
@@ -49,6 +50,8 @@
   </footnote> or Zhihu<\footnote>
     https://www.zhihu.com/zvideo/1508550458033098753
   </footnote>.
+
+  <hrule>
 
   <section*|Xmacs Labs>
 

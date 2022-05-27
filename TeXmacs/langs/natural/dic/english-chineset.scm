@@ -1,3 +1,5 @@
+("editor" "墨幹編輯器")
+("planet" "墨客星球")
 ("a modifier" "")
 ("a series" "")
 ("abbreviation" "簡寫")

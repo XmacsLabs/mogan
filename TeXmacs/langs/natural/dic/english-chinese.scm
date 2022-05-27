@@ -1,3 +1,5 @@
+("mogan" "墨干编辑器")
+("planet" "墨客星球")
 ("a modifier" "")
 ("a series" "A 系列")
 ("abbreviation" "缩写")
@@ -1088,7 +1090,6 @@
 ("modify cell size" "改变单元格大小")
 ("modify table border" "")
 ("modify table padding" "")
-("mogan" "墨干")
 ("mongolian" "")
 ("more information about GNU TeXmacs can be found in the Help" "更多关于 GNU TeXmacs 的信息可查看帮助")
 ("mosaic" "")

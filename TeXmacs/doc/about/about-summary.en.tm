@@ -1,9 +1,12 @@
-<TeXmacs|1.99.18>
+<TeXmacs|2.1.1>
 
 <style|<tuple|tmdoc|english|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|Summary>
+
+  The current distribution (what you are using NOW) of GNU <TeXmacs> is Mogan
+  Editor v1.0.4.
 
   <big-table|<descriptive-table|<tformat|<cwith|1|1|1|1|cell-row-span|1>|<cwith|1|1|1|1|cell-col-span|2>|<cwith|1|1|1|1|cell-halign|c>|<table|<row|<cell|GNU
   <TeXmacs>>|<cell|>>|<row|<cell|Installed
