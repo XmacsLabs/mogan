@@ -29,8 +29,34 @@
       ((eval menu-name)
        (load-help-article (string-append name))))))
 
+(define (get-remote-welcome-url)
+  (if (== (get-output-language) "chinese")
+      "http://git.tmml.wiki/XmacsLabs/planet/raw/main/doc/welcome.zh.tm"
+	  "http://git.tmml.wiki/XmacsLabs/planet/raw/main/doc/welcome.en.tm"))
+
+(define (get-remote-welcome)
+  (load-buffer (get-remote-welcome-url)))
+
+(define (get-remote-planet-url)
+  "http://git.tmml.wiki/XmacsLabs/planet/raw/main/index.tm")
+
+(define (get-remote-planet)
+  (load-buffer (get-remote-planet-url)))
+
+(define (mogan-welcome)
+  (if (url-exists? (get-remote-welcome-url))
+      (get-remote-welcome)
+      (load-help-article "about/welcome/new-welcome")))
+
+(define (xmacs-planet)
+  (if (url-exists? (get-remote-planet-url))
+      (get-remote-planet)
+      (load-help-article "about/welcome/new-welcome")))
+
 (menu-bind help-menu
-  ("Mogan" (load-buffer "https://gitee.com/XmacsLabs/mogan/raw/main/TeXmacs/doc/about/mogan.zh.tm"))
+  ("Mogan" (mogan-welcome))
+  ("Planet" (xmacs-planet))
+  ---
   (when (url-exists-in-help? "about/welcome/new-welcome.en.tm")
 	("Welcome" (load-help-article "about/welcome/new-welcome"))
 	("Getting started" (load-help-article "about/welcome/start"))
