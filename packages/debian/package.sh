@@ -6,11 +6,11 @@ else
   FWDIR=$(dirname "${BASH_SOURCE-$0}")
 fi
 
-APP_HOME="$(cd "${FWDIR}/.."; pwd)"
+APP_HOME="$(cd "${FWDIR}/../.."; pwd)"
 
 VERSION_MAJOR="1"
 VERSION_MINOR="0"
-VERSION_BUILD="1"
+VERSION_BUILD="4"
 if [ -n "$VERSION_BUILD" ]; then
   VERSION=${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}
 else
@@ -35,3 +35,4 @@ $APP_HOME/debian/rules clean
 rm $APP_HOME/debian/changelog
 rm $APP_HOME/debian/control
 unlink $APP_HOME/debian
+
