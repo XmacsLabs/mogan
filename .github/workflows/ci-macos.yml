@@ -1,0 +1,32 @@
+name: CI-macOS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  mac-build:
+    name: Build On macOS
+    runs-on: macos-11
+    timeout-minutes: 120
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Install Dependencies
+        run: |
+          brew install freetype libjpeg qt@5 cmake ccache curl
+          brew link qt@5
+      - name: Create Build Dir
+        run: mkdir -p ${{github.workspace}}/build
+      - name: Build using CMake
+        working-directory: ${{github.workspace}}/build
+        run: cmake ${{github.workspace}} -DBUILD_TESTS=on && make -j8
+      - name: Test
+        run: cd ${{github.workspace}}/build && QT_QPA_PLATFORM=offscreen ctest -V
