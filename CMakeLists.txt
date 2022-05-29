@@ -68,11 +68,7 @@ set (TEXMACS_REVISION ${TEXMACS_VERSION})
 ### Options
 ### --------------------------------------------------------------------
 if (NOT TEXMACS_GUI)
-  if (APPLE)
-    set (TEXMACS_GUI "Qt4" CACHE STRING "TeXmacs Gui (Qt, X11, Aqua)")
-  else (APPLE)
-    set (TEXMACS_GUI "Qt" CACHE STRING "TeXmacs Gui (Qt, X11, Aqua)")
-  endif (APPLE)
+  set (TEXMACS_GUI "Qt" CACHE STRING "TeXmacs Gui (Qt, X11, Aqua)")
 endif (NOT TEXMACS_GUI)
 
 option (QTPIPES "use Qt pipes" ON)
