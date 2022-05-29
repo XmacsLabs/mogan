@@ -1,6 +1,6 @@
 :
 #!/bin/bash -- # -*- perl -*-
-# $Id: tm_mupad 2463 2008-12-14 21:03:24Z vdhoeven $
+# $Id$
 #
 # MuPAD <-> TeXmacs communication link.
 # Copyright (c) MuPAD research group and SciFace Software GmbH 2003
