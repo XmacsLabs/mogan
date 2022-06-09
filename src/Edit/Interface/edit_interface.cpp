@@ -711,10 +711,10 @@ edit_interface_rep::apply_changes () {
 
   // cout << "Applying changes " << env_change << " to " << get_name() << "\n";
   // time_t t1= texmacs_time ();
-  if (!(env_change & THE_FREEZE)) {
+  if (got_focus) {
     update_focus_toolbar ();
   }
-  if (env_change & THE_TREE) {
+  if (got_focus && (env_change & THE_TREE)) {
     update_title ();
   }
   
