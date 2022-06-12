@@ -151,8 +151,15 @@
 (define (buffer-notify-recent name)
   (learn-interactive 'recent-buffer (list (cons "0" (url->unix name)))))
 
+;; TODO automatically check using info from define-format
 (define (has-faithful-format? name)
-  (in? (url-suffix name) '("tm" "ts" "tp" "stm" "tmml" "scm" "")))
+  (in? (url-suffix name)
+       '("tm" "ts" "tp" "stm" "tmml"
+         "scm"                ;; Scheme
+         "cpp" "c" "hpp" "h"  ;; C/C++
+         "java"               ;; Java
+         "scala" "sc" "sbt"   ;; Scala
+         "py")))              ;; Python
 
 (define (save-buffer-post name opts)
   ;;(display* "save-buffer-post " name "\n")
