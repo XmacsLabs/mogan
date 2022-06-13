@@ -7,7 +7,7 @@
 + 通过`帮助->墨干`，以[墨客星球](https://gitee.com/XmacsLabs/planet)和[墨者百科](https://gitee.com/XmacsLabs/tmmlwiki)两种方式提供大量在线TeXmacs文档
 
 ## 什么是GNU TeXmacs
-[A Quick Tour of GNU TeXmacs](https://www.zhihu.com/zvideo/1399501992717332480)
+[![](https://bb-embed.herokuapp.com/embed?v=BV1bo4y1D7wN)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
 
 ## 优先级
 ### 开发者和贡献者
