@@ -8,7 +8,7 @@ Mogan Editor is a **libre software** forked from [GNU TeXmacs](http://www.texmac
 
 ## What is GNU TeXmacs
 
-https://user-images.githubusercontent.com/1267865/166646231-9eda740f-d413-4c1e-9be8-d42689fdbce0.mp4
+[![](https://bb-embed.herokuapp.com/embed?v=BV1bo4y1D7wN)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
 
 ## Goal
 **We create Mogan Editor for everyone to learn and create science and technology.**
