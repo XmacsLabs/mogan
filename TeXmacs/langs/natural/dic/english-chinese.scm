@@ -142,7 +142,7 @@
 ("basic data types" "基本数据类型")
 ("basic types" "基本型态")
 ("be useful" "有用")
-("beamer" "演示")
+("beamer" "幻灯片")
 ("become a TeXmacs developer" "成为 TeXmacs 的开发者")
 ("before" "之前")
 ("begin" "开始")
