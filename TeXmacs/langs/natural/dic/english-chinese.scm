@@ -1549,7 +1549,7 @@
 ("selected region" "")
 ("selection" "选择")
 ("selections" "选择")
-("seminar" "会议")
+("seminar" "研讨会")
 ("semantics" "语义")
 ("semantic correctness" "语义正确性")
 ("semantic editing" "语义编辑")
