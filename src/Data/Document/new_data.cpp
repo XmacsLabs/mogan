@@ -54,12 +54,15 @@ attach_data (tree body, new_data data, bool no_aux) {
 tree
 detach_data (tree doc, new_data& data) {
   data->project= extract (doc, "project");
-  data->style  = extract (doc, "style");
   data->init   = hashmap<string,tree> (UNINIT, extract (doc, "initial"));
   data->fin    = hashmap<string,tree> (UNINIT, extract (doc, "final"));
   data->ref    = hashmap<string,tree> (UNINIT, extract (doc, "references"));
   data->aux    = hashmap<string,tree> (UNINIT, extract (doc, "auxiliary"));
   data->att    = hashmap<string,tree> (UNINIT, extract (doc, "attachments"));
+  data->style  = extract (doc, "style");
+  if (data->init["mode"] == tree ("prog")) {
+    data->style  = tree (TUPLE, "code");
+  }
   //tree links= extract (doc, "links");
   //if (N (links) != 0)
   //  (void) call ("register-link-locations", object (u), object (links));
