@@ -707,23 +707,14 @@ if (APPLE)
   install (DIRECTORY src/Plugins/Cocoa/zh_CN.lproj DESTINATION ${CMAKE_INSTALL_PREFIX})
 endif (APPLE)
 
-if (UNIX)
-  install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/mogan
-                 ${TEXMACS_BINARY_DIR}/misc/scripts/fig2ps
-                 misc/scripts/tm_gs
-          DESTINATION bin
-          PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
-                      GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
-elseif (APPLE)
+if (NOT WIN32)
   install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/mogan.sh
                  ${TEXMACS_BINARY_DIR}/misc/scripts/fig2ps
                  misc/scripts/tm_gs
           DESTINATION bin
           PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
                       GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
-else (UNIX)
-  message (STATUS "Scripts launcher are not required on Windows")
-endif (UNIX)
+endif (NOT WIN32)
 
 ### include/
 install (DIRECTORY TeXmacs/include DESTINATION ${CMAKE_INSTALL_PREFIX}
