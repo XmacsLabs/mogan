@@ -327,6 +327,11 @@ from_qstring_utf8 (const QString &s) {
   return string ((char*) cstr);
 }
 
+QUrl
+to_qurl (const url &u) {
+  return QUrl (to_qstring (as_string (u)));
+}
+
 // This should provide better lookup times
 static QHash<QString, QColor> _NamedColors;
 
@@ -386,10 +391,10 @@ bool
 qt_supports (url u) {
   static QList<QByteArray> formats= QImageReader::supportedImageFormats();
 /*  if (DEBUG_CONVERT) {
-	  debug_convert <<"QT valid formats:";
-	  foreach (QString _format, formats) debug_convert <<", "<< from_qstring(_format);
-	  debug_convert <<LF;
-  }	*/  
+          debug_convert <<"QT valid formats:";
+          foreach (QString _format, formats) debug_convert <<", "<< from_qstring(_format);
+          debug_convert <<LF;
+  }     */  
   string suf=suffix (u);
   bool ans= (bool) formats.contains((QByteArray) as_charp(suf));
   //if (DEBUG_CONVERT) {debug_convert <<"QT valid format:"<<((ans)?"yes":"no")<<LF;}
@@ -509,7 +514,7 @@ qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
 */
     if (dpi > 0 && w_pt > 0 && h_pt > 0) {
 #if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
-	    printer.setPaperSize(QSizeF(w_pt, h_pt), QPrinter::Point); // in points
+            printer.setPaperSize(QSizeF(w_pt, h_pt), QPrinter::Point); // in points
 #else
       // see https://doc.qt.io/qt-5/qprinter-obsolete.html#setPaperSize
       printer.setPageSize(QPageSize(QSizeF(w_pt, h_pt), QPageSize::Point));
@@ -518,13 +523,13 @@ qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
       int ww = w_pt * dpi / 72;
       int hh = h_pt * dpi / 72;
       if ((ww < im.width ()) ||( hh < im.height ())) //downsample if possible to reduce file size
-	      im= im.scaled (ww, hh, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-  	  else // image was too small, reduce dpi accordingly to fill page
+              im= im.scaled (ww, hh, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+          else // image was too small, reduce dpi accordingly to fill page
         printer.setResolution((int) (dpi*im.width())/(double)ww);
       if (DEBUG_CONVERT) debug_convert << "dpi asked: "<< dpi <<" ; actual dpi set: " << printer.resolution() <<LF;
-	  }
+          }
 #if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
-	  else printer.setPaperSize(QSizeF(im.width (), im.height ()), QPrinter::DevicePixel);
+          else printer.setPaperSize(QSizeF(im.width (), im.height ()), QPrinter::DevicePixel);
 #else
           // FIXME: how to set the unit QPrinter::DevicePixel
           else printer.setPageSize(QPageSize(QSizeF(im.width(), im.height()), QPageSize::Point));

@@ -57,6 +57,7 @@
   (get-texmacs-home-path get_texmacs_home_path (url))
   (get-user-login get_user_login (string))
   (get-user-name get_user_name (string))
+  (mimetype-for-url mimetype_for_url (string url))
   (plugin-list plugin_list (scheme_tree))
   (set-fast-environments set_fast_environments (void bool))
   (font-exists-in-tt? tt_font_exists (bool string))

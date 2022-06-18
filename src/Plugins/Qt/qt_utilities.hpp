@@ -70,6 +70,8 @@ QString   utf8_to_qstring (const string& s);
 QString latin1_to_qstring (const string& s);
 string  from_qstring_utf8 (const QString & s);
 
+QUrl to_qurl (const url& u);
+
 /*! Returns a QString with the translation of the argument to the current
  language.
  

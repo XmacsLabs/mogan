@@ -339,6 +339,14 @@ source code.
   </explain>
 
   <\explain>
+    <scm|(mimetype-for-url <scm-arg|url>)>
+<explain-synopsis|no synopsis>
+  <|explain>
+    Calls the <c++> function <cpp|mimetype_for_url> which returns
+    <scm|string>.
+  </explain>
+
+  <\explain>
     <scm|(plugin-list)>
 <explain-synopsis|no synopsis>
   <|explain>
