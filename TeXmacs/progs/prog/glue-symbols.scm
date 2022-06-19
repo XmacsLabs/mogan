@@ -67,6 +67,7 @@
 "get-texmacs-home-path"
 "get-user-login"
 "get-user-name"
+"mimetype-for-url"
 "plugin-list"
 "set-fast-environments"
 "font-exists-in-tt?"

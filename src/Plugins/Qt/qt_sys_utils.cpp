@@ -17,6 +17,7 @@
 #include <QProcess>
 #include <QString>
 #include <QSysInfo>
+#include <QMimeDatabase>
 
 
 string qt_get_current_cpu_arch () {
@@ -25,6 +26,12 @@ string qt_get_current_cpu_arch () {
 
 string qt_get_pretty_os_name () {
   return from_qstring (QSysInfo::prettyProductName ());
+}
+
+string qt_mimetype_for_url (url u) {
+  QMimeDatabase db;
+  QMimeType mime= db.mimeTypeForUrl (to_qurl (u));
+  return from_qstring(mime.name ());
 }
 
 static void
@@ -80,7 +87,7 @@ qt_system (string cmd, string& cmdout, string& cmderr) {
 int
 qt_system (string cmd, string& result) {
   QProcess proc;
-  string dummy;	
+  string dummy; 
   proc.setProcessChannelMode (QProcess::MergedChannels);
   return qt_system (proc, cmd, result, dummy);
 }

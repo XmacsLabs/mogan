@@ -414,6 +414,19 @@ tmg_get_user_name () {
 }
 
 tmscm
+tmg_mimetype_for_url (tmscm arg1) {
+  TMSCM_ASSERT_URL (arg1, TMSCM_ARG1, "mimetype-for-url");
+
+  url in1= tmscm_to_url (arg1);
+
+  // TMSCM_DEFER_INTS;
+  string out= mimetype_for_url (in1);
+  // TMSCM_ALLOW_INTS;
+
+  return string_to_tmscm (out);
+}
+
+tmscm
 tmg_plugin_list () {
   // TMSCM_DEFER_INTS;
   scheme_tree out= plugin_list ();
@@ -10106,6 +10119,7 @@ initialize_glue_basic () {
   tmscm_install_procedure ("get-texmacs-home-path",  tmg_get_texmacs_home_path, 0, 0, 0);
   tmscm_install_procedure ("get-user-login",  tmg_get_user_login, 0, 0, 0);
   tmscm_install_procedure ("get-user-name",  tmg_get_user_name, 0, 0, 0);
+  tmscm_install_procedure ("mimetype-for-url",  tmg_mimetype_for_url, 1, 0, 0);
   tmscm_install_procedure ("plugin-list",  tmg_plugin_list, 0, 0, 0);
   tmscm_install_procedure ("set-fast-environments",  tmg_set_fast_environments, 1, 0, 0);
   tmscm_install_procedure ("font-exists-in-tt?",  tmg_font_exists_in_ttP, 1, 0, 0);

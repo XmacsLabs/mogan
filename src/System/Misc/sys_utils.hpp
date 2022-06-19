@@ -33,8 +33,8 @@ url get_texmacs_path ();
 url get_texmacs_home_path ();
 
 array<string> evaluate_system (array<string> arg,
-			       array<int> fd_in, array<string> in,
-			       array<int> fd_out);
+                               array<int> fd_in, array<string> in,
+                               array<int> fd_out);
 
 string get_printing_default ();
 bool has_printing_cmd (void);
@@ -43,5 +43,7 @@ void set_printing_cmd (string cmd);
 
 string get_user_login ();
 string get_user_name ();
+
+string mimetype_for_url (url u);
 
 #endif // defined SYS_UTILS_H

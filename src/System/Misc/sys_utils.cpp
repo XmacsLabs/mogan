@@ -147,8 +147,8 @@ get_texmacs_home_path () {
 
 array<string>
 evaluate_system (array<string> arg,
-		 array<int> fd_in, array<string> in,
-		 array<int> fd_out) {
+                 array<int> fd_in, array<string> in,
+                 array<int> fd_out) {
   array<string> out (N(fd_out));
   array<string*> ptr (N(fd_out));
   for (int i= 0; i < N(fd_out); i++) ptr[i]= &(out[i]);
@@ -177,7 +177,7 @@ class PrintCap {
 private:
   string prt_cmd;
   bool blank;
-public:	
+public: 
   PrintCap (): blank (true) {};
   friend string get_printing_cmd ();
   friend void set_printing_cmd (string);
@@ -217,5 +217,13 @@ string get_user_name () {
   return sys_utils::mingw_get_username ();
 #else // Linux and macOS
   return unix_get_username ();
+#endif
+}
+
+string mimetype_for_url (url u) {
+#ifdef QTTEXMACS
+  return qt_mimetype_for_url (u);
+#else
+  FAILED("mimetype_for_url is not available");
 #endif
 }

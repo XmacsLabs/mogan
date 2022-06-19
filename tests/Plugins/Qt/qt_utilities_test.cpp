@@ -1,7 +1,7 @@
 
 /******************************************************************************
 * MODULE     : qt_utilities_test.cpp
-* COPYRIGHT  : (C) 2019  Darcy Shen
+* COPYRIGHT  : (C) 2019-2022  Darcy Shen
 *******************************************************************************
 * This software falls under the GNU general public license version 3 or later.
 * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -9,6 +9,7 @@
 ******************************************************************************/
 
 #include <QtTest/QtTest>
+#include <QUrl>
 #include "Qt/qt_utilities.hpp"
 
 
@@ -17,12 +18,19 @@ class TestQtUtilities: public QObject {
 
 private slots:
   void test_qt_supports();
+  void test_to_qurl();
 };
 
 void TestQtUtilities::test_qt_supports () {
 #ifdef QTTEXMACS
   QVERIFY (qt_supports (url ("x.svg")));
   QVERIFY (qt_supports (url ("x.png")));
+#endif
+}
+
+void TestQtUtilities::test_to_qurl () {
+#ifdef QTTEXMACS
+  QVERIFY (QUrl("x.svg") == to_qurl("x.svg"));
 #endif
 }
 

@@ -13,7 +13,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (check check-master)
-  (:use (kernel texmacs tm-define-test)
+  (:use (check system-test)
+        (kernel texmacs tm-define-test)
         (kernel texmacs tm-dialogue-test)
         (kernel texmacs tm-convert-test)
         (convert html htmltm-test)
@@ -83,6 +84,7 @@
   (check-latex-export "$TEXMACS_CHECKS/latex-export"))
 
 (tm-define (run-all-tests)
+  (regtest-src-system)
   (regtest-htmltm)
   (regtest-xmltm)
   (regtest-tmlength)

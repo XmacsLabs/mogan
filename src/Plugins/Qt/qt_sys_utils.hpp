@@ -13,10 +13,12 @@
 #define QT_SYS_UTILS_H
 
 #include "string.hpp"
+#include "url.hpp"
 
 
 string qt_get_current_cpu_arch ();
 string qt_get_pretty_os_name ();
+string qt_mimetype_for_url (url u);
 
 /* exitcode= qt_system (command, result);
  *
