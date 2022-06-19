@@ -427,16 +427,12 @@ attach_subformat (tree t, url u, string fm) {
       fm != "mathemagix" &&
       fm != "scilab" &&
       fm != "verbatim") return t;
+
   string s= suffix (u);
-  if (s == "scm") fm= "scheme";
-  if (s == "java") fm= "java";
-  if (s == "scala") fm= "scala";
-  if (s == "py")  fm= "python";
-  if (s == "jl")  fm= "julia";
-  if (s == "cpp" || s == "hpp" || s == "cc" || s == "hh") fm= "cpp";
-  if (s == "mmx" || s == "mmh") fm= "mathemagix";
-  if (s == "sce" || s == "sci") fm= "scilab";
+  string inferred_fm= suffix_to_format (s);
+  if (!is_empty (inferred_fm)) fm= inferred_fm;
   if (fm == "verbatim") return t;
+  
   hashmap<string,tree> h (UNINIT, extract (t, "initial"));
   h (MODE)= "prog";
   h (PROG_LANGUAGE)= fm;
