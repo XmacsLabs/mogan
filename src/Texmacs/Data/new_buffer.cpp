@@ -2,7 +2,7 @@
 /******************************************************************************
 * MODULE     : new_buffer.cpp
 * DESCRIPTION: Buffer management
-* COPYRIGHT  : (C) 1999-2012  Joris van der Hoeven
+* COPYRIGHT  : (C) 1999-2022  Joris van der Hoeven
 *******************************************************************************
 * This software falls under the GNU general public license version 3 or later.
 * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -531,8 +531,8 @@ export_tree (tree doc, url u, string fm) {
   if (fm == "texmacs")
     for (int i=0; i<N(init); i++)
       if (is_func (init[i], ASSOCIATE, 2) && init[i][0] == "encryption") {
-	aux= as_tree (call ("tree-export-encrypted", u, aux));
-	break;
+        aux= as_tree (call ("tree-export-encrypted", u, aux));
+        break;
       }
   // END hook
   if (fm == "generic") fm= "verbatim";
