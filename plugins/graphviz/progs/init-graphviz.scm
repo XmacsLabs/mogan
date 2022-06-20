@@ -13,6 +13,36 @@
 
 (use-modules (dynamic session-edit) (dynamic program-edit))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; C++ source files
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-format dot
+  (:name "DOT Source Code")
+  (:suffix "gv"))
+
+(define (texmacs->dot x . opts)
+  (texmacs->verbatim x (acons "texmacs->verbatim:encoding" "SourceCode" '())))
+
+(define (dot->texmacs x . opts)
+  (code->texmacs x))
+
+(define (dot-snippet->texmacs x . opts)
+  (code-snippet->texmacs x))
+
+(converter texmacs-tree dot-document
+  (:function texmacs->dot))
+
+(converter dot-document texmacs-tree
+  (:function dot->texmacs))
+  
+(converter texmacs-tree dot-snippet
+  (:function texmacs->dot))
+
+(converter dot-snippet texmacs-tree
+  (:function dot-snippet->texmacs))
+
+
 (define (graphviz-serialize lan t)
     (with u (pre-serialize lan t)
       (with s (texmacs->code (stree->tree u) "SourceCode")
