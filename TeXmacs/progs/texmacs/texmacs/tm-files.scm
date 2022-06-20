@@ -3,7 +3,7 @@
 ;;
 ;; MODULE      : files.scm
 ;; DESCRIPTION : file handling
-;; COPYRIGHT   : (C) 2001-2021  Joris van der Hoeven
+;; COPYRIGHT   : (C) 2001-2022  Joris van der Hoeven
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
 ;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -151,15 +151,9 @@
 (define (buffer-notify-recent name)
   (learn-interactive 'recent-buffer (list (cons "0" (url->unix name)))))
 
-;; TODO automatically check using info from define-format
+
 (define (has-faithful-format? name)
-  (in? (url-suffix name)
-       '("tm" "ts" "tp" "stm" "tmml"
-         "scm"                ;; Scheme
-         "cpp" "c" "hpp" "h"  ;; C/C++
-         "java"               ;; Java
-         "scala" "sc" "sbt"   ;; Scala
-         "py")))              ;; Python
+  (!= (format-from-suffix (url-suffix name)) "generic"))
 
 (define (save-buffer-post name opts)
   ;;(display* "save-buffer-post " name "\n")
