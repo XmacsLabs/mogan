@@ -35,8 +35,19 @@
   (regression-test-group
    "format-from-suffix" "string"
    format-from-suffix :none
+   (test "scheme format" "scm" "scheme")
    (test "python format" "py" "python")
+   (test "java format" "java" "java")
    (test "scala format" "scala" "scala")
+   (test "julia format" "jl" "julia")
+   (test "cpp format" "cpp" "cpp")
+   (test "cpp format" "hpp" "cpp")
+   (test "cpp format" "cc" "cpp")
+   (test "cpp format" "hh" "cpp")
+   (test "mathemagix format" "mmx" "mathemagix")
+   (test "mathemagix format" "mmh" "mathemagix")
+   (test "scilab format" "sci" "scilab")
+   (test "scilab format" "sce" "scilab")
    (test "texmacs format" "tm" "texmacs")
    (test "texmacs format" "ts" "texmacs")
    (test "texmacs format" "tmml" "tmml")
