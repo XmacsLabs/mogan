@@ -423,7 +423,7 @@ attach_subformat (tree t, url u, string fm) {
 
   string s= suffix (u);
   string inferred_fm= suffix_to_format (s);
-  if (!is_empty (inferred_fm)) fm= inferred_fm;
+  if (!is_empty (inferred_fm) && inferred_fm != "generic") fm= inferred_fm;
   if (fm == "verbatim") return t;
   
   hashmap<string,tree> h (UNINIT, extract (t, "initial"));
