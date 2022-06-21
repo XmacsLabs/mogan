@@ -148,3 +148,32 @@
 (converter json-snippet texmacs-tree
   (:function json-snippet->texmacs))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CSV source files
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-format csv
+  (:name "CSV")
+  (:suffix "csv"))
+
+(define (texmacs->csv x . opts)
+  (texmacs->verbatim x (acons "texmacs->verbatim:encoding" "SourceCode" '())))
+
+(define (csv->texmacs x . opts)
+  (code->texmacs x))
+
+(define (csv-snippet->texmacs x . opts)
+  (code-snippet->texmacs x))
+
+(converter texmacs-tree csv-document
+  (:function texmacs->csv))
+
+(converter csv-document texmacs-tree
+  (:function csv->texmacs))
+  
+(converter texmacs-tree csv-snippet
+  (:function texmacs->csv))
+
+(converter csv-snippet texmacs-tree
+  (:function csv-snippet->texmacs))
