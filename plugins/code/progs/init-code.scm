@@ -118,3 +118,33 @@
 (converter scala-snippet texmacs-tree
   (:function scala-snippet->texmacs))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; JSON source files
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-format json
+  (:name "JSON")
+  (:suffix "json"))
+
+(define (texmacs->json x . opts)
+  (texmacs->verbatim x (acons "texmacs->verbatim:encoding" "SourceCode" '())))
+
+(define (json->texmacs x . opts)
+  (code->texmacs x))
+
+(define (json-snippet->texmacs x . opts)
+  (code-snippet->texmacs x))
+
+(converter texmacs-tree json-document
+  (:function texmacs->json))
+
+(converter json-document texmacs-tree
+  (:function json->texmacs))
+  
+(converter texmacs-tree json-snippet
+  (:function texmacs->json))
+
+(converter json-snippet texmacs-tree
+  (:function json-snippet->texmacs))
+
