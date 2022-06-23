@@ -95,7 +95,7 @@
 
 (define-format scala
   (:name "Scala Source Code")
-  (:suffix "scala"))
+  (:suffix "scala" "sc" "sbt"))
 
 (define (texmacs->scala x . opts)
   (texmacs->verbatim x (acons "texmacs->verbatim:encoding" "SourceCode" '())))
