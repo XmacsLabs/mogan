@@ -710,14 +710,12 @@ endif (APPLE)
 
 if (APPLE)
   install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/mogan.sh
-                 ${TEXMACS_BINARY_DIR}/misc/scripts/fig2ps
                  misc/scripts/tm_gs
           DESTINATION bin
           PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
                       GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
 elseif (UNIX)
   install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/mogan
-                 ${TEXMACS_BINARY_DIR}/misc/scripts/fig2ps
                  misc/scripts/tm_gs
           DESTINATION bin
           PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ

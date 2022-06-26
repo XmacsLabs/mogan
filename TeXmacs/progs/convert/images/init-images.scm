@@ -52,7 +52,7 @@
   (let* ((dest (assoc-ref opts 'dest))
          (fm (url-format (url-concretize dest)))
          (res (get-raster-resolution opts))
-	 (cmd (get-shell-command "rsvg-convert")))
+         (cmd (get-shell-command "rsvg-convert")))
     (system-2 (string-append cmd " -f " fm " -d " res " -o ") dest x)
     (if (url-exists? dest) dest #f)))
 
@@ -64,10 +64,10 @@
          (suffix (url-suffix fullname))
          (name (string-drop-right fullname (+ 1 (string-length suffix))))
          (res (get-raster-resolution opts))
-	 (cmd (get-shell-command "pdftocairo")))
+         (cmd (get-shell-command "pdftocairo")))
     ;;(display (string-append cmd " -singlefile " transp "-" fm " -r " res " " x " "  name))
     (system-2 (string-append cmd " -singlefile " transp "-" fm " -r " res)
-	      x name)
+              x name)
     (if (url-exists? dest) dest #f)))
 
 (tm-define (pdf-file->imagemagick-raster x opts)
@@ -85,7 +85,7 @@
   ;; many options for pdf->ps/eps see http://tex.stackexchange.com/a/20884
   ;; this one does a better rendering than pdf2ps (also based on gs):
   (let* ((dest (assoc-ref opts 'dest))
-	 (gs (gs-binary)))
+         (gs (gs-binary)))
     (system-2 (string-append gs " -q -dNOCACHE -dUseCropBox -dNOPAUSE -dBATCH -dSAFER -sDEVICE=eps2write -sOutputFile=") dest x))
   ;; problem: 
   ;; eps2write available starting with gs  9.14 (2014-03-26)
@@ -95,7 +95,7 @@
 (tm-define (pdf-file->gs-raster x opts)
   (let* ((dest (assoc-ref opts 'dest))
          (res (get-raster-resolution opts))
-	 (gs (gs-binary)))
+         (gs (gs-binary)))
     (evaluate-system (list gs "-dBATCH" "-dNOPAUSE" "-dQUIET" "-dSAFER"
                            "-dNOPROMPT" "-sDEVICE=pngalpha"
                            (string-append "-r" res)
@@ -127,13 +127,6 @@
 (converter postscript-file pdf-file
   (:require (url-exists-in-path? "ps2pdf"))
   (:shell "ps2pdf" from to))
-
-(define-format xfig
-  (:name "Xfig")
-  (:suffix "fig"))
-
-(converter xfig-file postscript-file
-  (:shell "fig2ps" from to))
 
 (define-format xmgrace
   (:name "Xmgrace")
