@@ -3,11 +3,10 @@ if (APPLE)
 else (APPLE)
   configure_file(scripts/mogan.sh.in ${TEXMACS_BINARY_DIR}/misc/scripts/mogan @ONLY)
 endif (APPLE)
-configure_file(scripts/fig2ps.in ${TEXMACS_BINARY_DIR}/misc/scripts/fig2ps @ONLY)
 configure_file(man/texmacs.1.in ${TEXMACS_SOURCE_DIR}/misc/man/texmacs.1 @ONLY)
 
 ### share/man
-set(TOOLS "texmacs" "fig2ps")
+set(TOOLS "texmacs")
 set(MAN_SECTION "1")
 foreach(TOOL ${TOOLS})
   set(TOOL_MANFILE ${CMAKE_CURRENT_SOURCE_DIR}/man/${TOOL}.${MAN_SECTION})
