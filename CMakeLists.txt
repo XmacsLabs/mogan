@@ -324,8 +324,8 @@ set (prefix ${CMAKE_INSTALL_PREFIX})
 set (exec_prefix ${prefix})
 set (datarootdir ${prefix}/share)
 set (datadir ${datarootdir})
-set (tmdata ${datarootdir}/TeXmacs)
-set (tmbin ${exec_prefix}/lib/texmacs/TeXmacs)
+set (tmdata ${datarootdir}/Xmacs)
+set (tmbin ${exec_prefix}/lib/xmacs/Xmacs)
 
 configure_file (${TEXMACS_SOURCE_DIR}/src/System/config.h.cmake ${TEXMACS_BINARY_DIR}/src/System/config.h)
 configure_file (${TEXMACS_SOURCE_DIR}/src/System/tm_configure.hpp.cmake ${TEXMACS_BINARY_DIR}/src/System/tm_configure.hpp)
@@ -732,7 +732,7 @@ if (WIN32)
     PATTERN "CMakeLists.txt" EXCLUDE
     PATTERN ".gitignore" EXCLUDE)
 else (WIN32)
-  install (DIRECTORY plugins DESTINATION share/TeXmacs
+  install (DIRECTORY plugins DESTINATION share/Xmacs
     FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
     PATTERN "bin" EXCLUDE
     PATTERN "CMakeLists.txt" EXCLUDE

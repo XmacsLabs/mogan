@@ -6,7 +6,7 @@ if (WIN32)
     PATTERN "doc/devel/xmacs" EXCLUDE
     PATTERN "CMakeLists.txt" EXCLUDE)
 else (WIN32)
-  install(DIRECTORY . DESTINATION share/TeXmacs
+  install(DIRECTORY . DESTINATION share/Xmacs
     FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
     PATTERN "include" EXCLUDE
     PATTERN "doc/about/xmacs" EXCLUDE
