@@ -1,11 +1,13 @@
-.TH texmacs 1 "12Sep2005" @PACKAGE@-@DEVEL_VERSION@
+.TH mogan 1 "01Jul2022" Mogan-@XMACS_VERSION@
 .SH NAME
-GNU TeXmacs - a WYSIWYG mathematical text editor
+Mogan Editor - a WYSIWYG mathematical text editor
 .PP
 .SH SYNOPSIS
-texmacs [\fIOPTION\fR]... [\fISOURCE\fR]...
+mogan [\fIOPTION\fR]... [\fISOURCE\fR]...
 .PP
 .SH INTRODUCTION
+Mogan Editor is a fork of GNU TeXmacs.
+.PP
 GNU TeXmacs is a free scientific text editor, which was both inspired
 by TeX and GNU Emacs. The editor allows you to write structured documents
 via a wysiwyg (what-you-see-is-what-you-get) and user friendly interface.
@@ -131,17 +133,17 @@ If you specify several -x options, then the corresponding
 scheme commands are executed in the same order.
 .PP
 .SH AUTHOR
-Written by Joris van der Hoeven
+Written by Darcy Shen
 .SH "REPORTING BUGS"
-Report bugs to <bugs@texmacs.org>.
+Report bugs to <https://github.com/XmacsLabs/mogan/issues>.
 .SH COPYRIGHT
-Copyright \(co 1999-2005 Joris van der Hoeven
+Copyright \(co 2022 Darcy Shen
 .br
 This is free software; see the source for copying conditions.
-GNU TeXmacs comes with NO WARRANTY WHATSOEVER;
+Mogan Editor comes with NO WARRANTY WHATSOEVER;
 not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 .SH "SEE ALSO"
-The full documentation for GNU TeXmacs can be accessed through the help menu
+The full documentation for Mogan Editor can be accessed through the help menu
 when starting up the editor. You may also access the online documentation
 from inside the editor. The TeXmacs website at <https://www.texmacs.org>
 can be consulted for additional information. The TeXmacs web pages are
