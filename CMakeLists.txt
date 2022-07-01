@@ -724,10 +724,6 @@ else (APPLE)
   message (STATUS "Scripts launcher are not required on Windows")
 endif (APPLE)
 
-### include/
-install (DIRECTORY TeXmacs/include DESTINATION ${CMAKE_INSTALL_PREFIX}
-  FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ)
-
 ### share/
 if (WIN32)
   install (DIRECTORY plugins DESTINATION ${CMAKE_INSTALL_PREFIX}
