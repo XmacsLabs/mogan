@@ -48,8 +48,8 @@
 			<match type="string" value="TeXmacs" offset="1:7"/>
 		</magic>
 		<glob weight="90" pattern="*.ts"/>
-  	<icon name="text-x-texmacs"/>
-  	<generic-icon name="text-x-texmacs"/>
+  	<icon name="text-x-mogan"/>
+  	<generic-icon name="text-x-mogan"/>
 	</mime-type>
 	<mime-type type="text/x-texmacs.doc">
 		<comment>TeXmacs document</comment>
@@ -94,7 +94,7 @@
 			<match type="string" value="TeXmacs" offset="1:7"/>
 		</magic> 
 		<glob weight="90" pattern="*.tm"/>
-	  <icon name="text-x-texmacs"/>
-  	<generic-icon name="text-x-texmacs"/>
+	  <icon name="text-x-mogan"/>
+  	<generic-icon name="text-x-mogan"/>
 	</mime-type>
 </mime-info>

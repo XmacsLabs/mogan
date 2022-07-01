@@ -740,11 +740,11 @@ else (WIN32)
 endif (WIN32)
 
 install (FILES TeXmacs/misc/mime/mogan.desktop DESTINATION share/applications)
-install (FILES TeXmacs/misc/images/texmacs.svg RENAME TeXmacs.svg
+install (FILES TeXmacs/misc/images/texmacs.svg RENAME Mogan.svg
   DESTINATION share/icons/hicolor/scalable/apps)
-install (FILES TeXmacs/misc/images/text-x-texmacs.svg
+install (FILES TeXmacs/misc/images/text-x-mogan.svg
   DESTINATION share/icons/hicolor/scalable/mimetypes)
-install (FILES TeXmacs/misc/mime/texmacs.xml DESTINATION share/mime/packages)
+install (FILES TeXmacs/misc/mime/mogan.xml DESTINATION share/mime/packages)
 install (FILES TeXmacs/misc/pixmaps/TeXmacs.xpm DESTINATION share/pixmaps)
 foreach (size IN ITEMS 32 48 64 128 256 512)
   install (FILES TeXmacs/misc/images/xmacs-${size}.png RENAME Xmacs.png
