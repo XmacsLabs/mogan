@@ -710,19 +710,18 @@ endif (APPLE)
 
 if (APPLE)
   install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/mogan.sh
-                 misc/scripts/tm_gs
           DESTINATION bin
           PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
                       GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
 elseif (UNIX)
   install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/mogan
-                 misc/scripts/tm_gs
           DESTINATION bin
           PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
                       GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
 else (APPLE)
   message (STATUS "Scripts launcher are not required on Windows")
 endif (APPLE)
+
 
 ### share/
 if (WIN32)
@@ -738,6 +737,11 @@ else (WIN32)
     PATTERN "CMakeLists.txt" EXCLUDE
     PATTERN ".gitignore" EXCLUDE)
 endif (WIN32)
+
+install (FILES misc/scripts/tm_gs
+         DESTINATION share/Xmacs/bin
+         PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
+                     GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
 
 install (FILES TeXmacs/misc/mime/mogan.desktop DESTINATION share/applications)
 install (FILES TeXmacs/misc/images/texmacs.svg RENAME Mogan.svg
