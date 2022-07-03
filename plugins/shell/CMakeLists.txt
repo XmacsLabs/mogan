@@ -6,4 +6,4 @@ add_executable (tm_shell ${shell_SRCS})
 
 target_link_libraries(tm_shell -lutil)
 
-install(TARGETS tm_shell DESTINATION share/TeXmacs/plugins/shell/bin)
+install(TARGETS tm_shell DESTINATION share/Xmacs/plugins/shell/bin)
