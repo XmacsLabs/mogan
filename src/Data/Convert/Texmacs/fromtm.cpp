@@ -14,7 +14,9 @@
 #include "path.hpp"
 #include "vars.hpp"
 #include "drd_std.hpp"
+#ifdef QTTEXMACS
 #include "Qt/qt_utilities.hpp"
+#endif
 
 /******************************************************************************
 * Conversion of TeXmacs strings of the present format to TeXmacs trees
@@ -95,16 +97,21 @@ tm_reader::read_char () {
   }
   if (pos >= N(buf)) return "";
 
-  string guess_unicode= buf(pos, pos+4);
-  QChar qch= utf8_to_qstring (guess_unicode).front();
-  int size = QString(qch).toUtf8().length();
+#ifdef QTTEXMACS
+  string guess_unicode= buf (pos, pos+4);
+  QChar qch= utf8_to_qstring (guess_unicode).front ();
+  int size= QString(qch).toUtf8().length();
   if (size > 1) {
     pos+= size;
-    return from_qstring(QString(qch));
+    return from_qstring (QString(qch));
   } else {
-    pos+= 1;
-    return buf(pos-1, pos);
+    pos++;
+    return buf (pos-1, pos);
   }
+#else
+  pos+= 1;
+  return buf(pos-1, pos);
+#endif
 }
 
 string
