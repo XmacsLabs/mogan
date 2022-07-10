@@ -11,12 +11,10 @@
 ******************************************************************************/
 
 #include "convert.hpp"
+#include "converter.hpp"
 #include "path.hpp"
 #include "vars.hpp"
 #include "drd_std.hpp"
-#ifdef QTTEXMACS
-#include "Qt/qt_utilities.hpp"
-#endif
 
 /******************************************************************************
 * Conversion of TeXmacs strings of the present format to TeXmacs trees
@@ -97,21 +95,13 @@ tm_reader::read_char () {
   }
   if (pos >= N(buf)) return "";
 
-#ifdef QTTEXMACS
-  string guess_unicode= buf (pos, pos+4);
-  QChar qch= utf8_to_qstring (guess_unicode).at (0);
-  int size= QString(qch).toUtf8().length();
-  if (size > 1) {
-    pos+= size;
-    return from_qstring (QString(qch));
+  int old_pos= pos;
+  unsigned int code= decode_from_utf8 (buf, pos);
+  if (pos-old_pos!=1) {
+    return "\\<#" * as_hexadecimal (code) * "\\>";
   } else {
-    pos++;
     return buf (pos-1, pos);
   }
-#else
-  pos+= 1;
-  return buf(pos-1, pos);
-#endif
 }
 
 string
@@ -119,7 +109,7 @@ tm_reader::read_next () {
   int old_pos= pos;
   string c= read_char ();
   if (c == "") return c;
-  if (N(c) > 1) return "\\<" * c(1, N(c)-1) * "\\>";
+  if (N(c) == 9) return c; // \<#FFFF\>
 
   switch (c[0]) {
   case '\t':
