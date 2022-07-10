@@ -109,7 +109,7 @@ tm_reader::read_next () {
   int old_pos= pos;
   string c= read_char ();
   if (c == "") return c;
-  if (N(c) == 9) return c; // \<#FFFF\>
+  if (N(c) == 9) return c; // c is like \<#FFFF\>
 
   switch (c[0]) {
   case '\t':
