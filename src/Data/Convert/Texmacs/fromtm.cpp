@@ -99,7 +99,7 @@ tm_reader::read_char () {
 
 #ifdef QTTEXMACS
   string guess_unicode= buf (pos, pos+4);
-  QChar qch= utf8_to_qstring (guess_unicode).front ();
+  QChar qch= utf8_to_qstring (guess_unicode).at (0);
   int size= QString(qch).toUtf8().length();
   if (size > 1) {
     pos+= size;
