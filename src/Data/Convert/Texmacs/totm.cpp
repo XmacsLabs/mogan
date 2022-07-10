@@ -144,6 +144,12 @@ tm_writer::write (string s, bool flag, bool encode_space) {
     for (i=0; i<n; i++) {
       char c= s[i];
       if ((c == ' ') && (!encode_space)) write_space ();
+      else if (c == '<' && i+6 < n && s[i+1] == '#' && s[i+6] == '>') {
+        tmp << cork_to_utf8 (s(i, i+6));
+        i+= 6;
+        spc_flag= false;
+        ret_flag= false;
+      }
       else {
         if (c == ' ') tmp << "\\ ";
         else if (c == '\n') tmp << "\\n";
