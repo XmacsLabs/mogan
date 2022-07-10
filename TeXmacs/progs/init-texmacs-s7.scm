@@ -503,7 +503,7 @@
   (display "------------------------------------------------------\n")
 )
 
-(delayed (:idle 1000) (benchmark-menu-expand))
+;; (delayed (:idle 1000) (benchmark-menu-expand))
 
 ;; you can run
 ;;   texmacs.bin -x "(benchmark-manual)"
