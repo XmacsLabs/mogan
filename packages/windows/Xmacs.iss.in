@@ -6,15 +6,15 @@ AppVerName=Mogan
 DefaultDirName={commonpf@WIN_BIT_SIZE@}\Mogan
 DefaultGroupName=Mogan
 
-VersionInfoTextVersion=v1.0.4
+VersionInfoTextVersion=v1.1.0
 AppPublisher=XmacsLabs
 AppPublisherURL=http://github.com/XmacsLabs/mogan
-AppVersion=1.0.4
+AppVersion=v1.1.0
 LicenseFile=LICENSE
 
 UninstallDisplayIcon={app}\TeXmacs.ico
 OutputDir=..
-OutputBaseFilename=Mogan-v1.0.4-@WIN_BIT_SIZE@bit-installer
+OutputBaseFilename=Mogan-v1.1.0-beta-@WIN_BIT_SIZE@bit-installer
 ; SourceDir=../..
 ChangesAssociations=yes
 
