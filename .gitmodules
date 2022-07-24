@@ -3,4 +3,4 @@
 	url = https://gitee.com/XmacsLabs/pyenv.git
 [submodule "quiver"]
 	path = plugins/quiver
-	url = git@gitee.com:XmacsLabs/quiver.git
+	url = https://gitee.com/XmacsLabs/quiver.git
