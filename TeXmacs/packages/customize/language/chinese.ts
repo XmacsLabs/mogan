@@ -1,4 +1,4 @@
-<TeXmacs|2.1>
+<TeXmacs|2.1.3>
 
 <style|source>
 
@@ -79,6 +79,8 @@
   </active*>
 
   <assign|render-keyword|<macro|name|<with|font-series|bold|<arg|name>>>>
+
+  <assign|dfn|<macro|body|<with|font-series|bold|math-font-series|bold|<arg|body>>>>
 </body>
 
 <initial|<\collection>
