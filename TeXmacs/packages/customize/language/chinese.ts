@@ -98,6 +98,8 @@
 
   <assign|dfn|<macro|body|<with|font-series|bold|math-font-series|bold|<arg|body>>>>
 
+  <assign|cite*|<macro|body|<arg|body>>>
+
   <assign|render-theorem|<\macro|which|body>
     <render-enunciation|<theorem-name|<arg|which><theorem-sep>>|<arg|body>>
   </macro>>
