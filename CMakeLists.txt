@@ -62,7 +62,7 @@ set (STABLE_VERSION ${TEXMACS_VERSION})
 set (STABLE_RELEASE "1")
 set (TEXMACS_REVISION ${TEXMACS_VERSION})
 
-set (XMACS_VERSION "1.1.0-beta")
+set (XMACS_VERSION "1.1.0-beta2")
 
 ### --------------------------------------------------------------------
 ### Options
@@ -320,6 +320,9 @@ set (tm_stable TeXmacs-${STABLE_VERSION})
 set (tm_devel_release ${tm_devel}-${DEVEL_RELEASE})
 set (tm_stable_release ${tm_stable}-${STABLE_RELEASE})
 
+if (WIN32)
+  set (CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/${XMACS_VERSION})
+endif (WIN32)
 set (prefix ${CMAKE_INSTALL_PREFIX})
 set (exec_prefix ${prefix})
 set (datarootdir ${prefix}/share)
