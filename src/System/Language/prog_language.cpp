@@ -273,10 +273,7 @@ prog_language_rep::get_color (tree t, int start, int end) {
   return decode_color (lan_name, encode_color (type));
 }
 
-/******************************************************************************
-* Interface
-******************************************************************************/
-static bool prog_lang_exists (string s) {
+bool prog_lang_exists (string s) {
   return exists (url_system ("$TEXMACS_PATH/progs/prog/" * s * "-lang.scm"))
    || exists (url_system ("$TEXMACS_PATH/plugins/" * s * "/progs/" * s * "-lang.scm"))
    || exists (url_system ("$TEXMACS_PATH/plugins/code/progs/" * s * "-lang.scm"))
@@ -285,6 +282,9 @@ static bool prog_lang_exists (string s) {
    ;
 }
 
+/******************************************************************************
+* Interface
+******************************************************************************/
 language
 prog_language (string s) {
   if (language::instances -> contains (s)) return language (s);
