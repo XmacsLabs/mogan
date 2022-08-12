@@ -71,7 +71,7 @@
 ("alt key" "alt 键")
 ("alternative specification" "替代规格")
 ("always" "总是")
-("american" "美国英语")
+("american" "美式英语")
 ("animation" "动画")
 ("animation toolbar" "动画工具栏")
 ("answer" "答案")
