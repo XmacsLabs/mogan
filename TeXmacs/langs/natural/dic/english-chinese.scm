@@ -1542,6 +1542,7 @@
 ("search words in my documents" "")
 ("search words in the documentation" "在文档中搜索")
 ("search words in the source code" "在源代码中搜索")
+("search in database" "在数据库中搜索")
 ("searching" "")
 ("secondary" "")
 ("section" "节")
