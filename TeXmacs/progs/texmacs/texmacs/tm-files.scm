@@ -153,7 +153,9 @@
 
 
 (define (has-faithful-format? name)
-  (!= (format-from-suffix (url-suffix name)) "generic"))
+  (cond ((url-rooted-tmfs? name)
+         (list-any (lambda (x) (== x "database-bib")) (get-style-list)))
+        (else (!= (format-from-suffix (url-suffix name)) "generic"))))
 
 (define (save-buffer-post name opts)
   ;;(display* "save-buffer-post " name "\n")
