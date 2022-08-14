@@ -62,7 +62,7 @@ set (STABLE_VERSION ${TEXMACS_VERSION})
 set (STABLE_RELEASE "1")
 set (TEXMACS_REVISION ${TEXMACS_VERSION})
 
-set (XMACS_VERSION "1.1.0-beta3")
+set (XMACS_VERSION "1.1.0-beta4")
 
 ### --------------------------------------------------------------------
 ### Options
@@ -344,12 +344,12 @@ endif (WIN32)
 if (APPLE)
   set (CMAKE_C_FLAGS_DEBUG          "-g")
   set (CMAKE_C_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
-  set (CMAKE_C_FLAGS_RELEASE        "-O4 -DNDEBUG")
+  set (CMAKE_C_FLAGS_RELEASE        "-O3 -DNDEBUG")
   set (CMAKE_C_FLAGS_RELWITHDEBINFO "-O2 -g")
   
   set (CMAKE_CXX_FLAGS_DEBUG          "-g")
   set (CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
-  set (CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG")
+  set (CMAKE_CXX_FLAGS_RELEASE        "-O3 -DNDEBUG")
   set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 endif (APPLE)
 
