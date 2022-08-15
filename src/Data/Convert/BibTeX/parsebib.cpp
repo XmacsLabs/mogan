@@ -15,6 +15,8 @@
 #include "list.hpp"
 #include "tree_traverse.hpp"
 #include "Bibtex/bibtex_functions.hpp"
+#include "tm_timer.hpp"
+
 
 static string bib_current_tag= "";
 
@@ -414,6 +416,7 @@ bib_list (string s, int& pos, tree& t) {
 
 tree
 parse_bib (string s) {
+  bench_start ("parse_bib");
   int pos= 0;
   tree r (DOCUMENT);
   bib_current_tag= "";
@@ -423,5 +426,6 @@ parse_bib (string s) {
     convert_error << "Failed to load BibTeX file.\n";
     return tree ();
   }
+  bench_end ("parse_bib");
   return r;
 }

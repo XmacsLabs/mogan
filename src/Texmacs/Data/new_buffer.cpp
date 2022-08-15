@@ -18,6 +18,7 @@
 #include "dictionary.hpp"
 #include "new_document.hpp"
 #include "merge_sort.hpp"
+#include "tm_timer.hpp"
 
 array<tm_buffer> bufs;
 
@@ -445,7 +446,9 @@ import_loaded_tree (string s, url u, string fm) {
   if (fm == "generic") fm= get_format (s, suffix (u));
   if (fm == "texmacs" && starts (s, "(document (TeXmacs")) fm= "stm";
   if (fm == "verbatim" && starts (s, "(document (TeXmacs")) fm= "stm";
+  bench_start ("import_tree:" * fm);
   tree t= generic_to_tree (s, fm * "-document");
+  bench_end ("import_tree:" * fm);
   tree links= extract (t, "links");
   if (N (links) != 0)
     (void) call ("register-link-locations", object (u), object (links));
