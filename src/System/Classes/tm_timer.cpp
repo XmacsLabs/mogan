@@ -96,7 +96,7 @@ bench_print (string task) {
   // print timing for a given type of task
   if (DEBUG_BENCH) {
     int nr= timing_nr [task];
-    std_bench << "Task '" << task << "' took "
+    std_bench << texmacs_time() << " Task '" << task << "' took "
               << timing_cumul [task] << " ms";
     if (nr > 1) std_bench << " (" << nr << " invocations)";
     std_bench << "\n";
