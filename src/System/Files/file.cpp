@@ -524,29 +524,12 @@ read_directory (url u, bool& error_flag) {
   u= resolve (u, "dr");
   if (is_none (u)) return array<string> ();
   string name= concretize (u);
-
-  // Directory contents in cache?
-  if (is_cached ("dir_cache.scm", name) && is_up_to_date (u))
-    return cache_dir_get (name);
-  bench_start ("read directory");
-  // End caching
-
-  array<string> dir;
 #ifdef QTTEXMACS
-  dir= qt_read_directory(name, error_flag);
+  return qt_read_directory (name, error_flag);
 #else
   FAILED("Implementation of list directories is not provided");
+  return array<string> ();
 #endif
-
-  merge_sort (dir);
-
-  // Caching of directory contents
-  bench_cumul ("read directory");
-  if (do_cache_dir (name))
-    cache_dir_set (name, dir);
-  // End caching
-
-  return dir;
 }
 
 /******************************************************************************

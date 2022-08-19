@@ -119,7 +119,9 @@ bool
 do_cache_dir (string name) {
   return
     starts (name, texmacs_path_string) ||
-    starts (name, texmacs_doc_path_string);
+    starts (name, texmacs_doc_path_string) ||
+    starts (name, "/usr/share/fonts") ||
+    starts (name, "/usr/share/texmf");
 }
 
 bool
