@@ -626,6 +626,7 @@ default_korean_font_name () {
   // see: https://developer.apple.com/fonts/system-fonts/
 #ifdef OS_MACOS
   if (tt_font_exists ("AppleSDGothicNeo")) return "Apple SD Gothic Neo";
+  if (tt_font_exists ("AppleGothic")) return "apple-gothic";
 #endif
 
 #ifdef OS_MINGW
@@ -634,7 +635,6 @@ default_korean_font_name () {
 
   if (tt_font_exists ("unbatang")) return (new_fonts? "UnBatang": "modern");
   if (tt_font_exists ("UnBatang")) return (new_fonts? "UnBatang": "modern");
-  if (tt_font_exists ("AppleGothic")) return "apple-gothic";
   if (tt_font_exists ("Gulim")) return "gulim";
   return "roman";
 }
