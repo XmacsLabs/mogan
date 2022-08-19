@@ -168,7 +168,9 @@ tt_font_find (string name) {
     cache_reset ("font_cache.scm", s);
   }
 
+  bench_start ("tt_font_find_sub " * name);
   url r= tt_font_find_sub (name);
+  bench_end ("tt_font_find_sub " * name);
   if (is_none (r)) cache_set ("font_cache.scm", s, "");
   else cache_set ("font_cache.scm", s, as_string (r));
   return r;
