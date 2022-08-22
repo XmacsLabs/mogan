@@ -500,7 +500,7 @@ is_ramdisc (url u) {
 ******************************************************************************/
 
 string
-as_string (url u, int type) {
+as_string (url u, int type, bool reserve_texmacs_path) {
   // This routine pritty prints an url as a string.
   // FIXME: the current algorithm is quadratic in time.
   if (is_none (u)) return "{}";
@@ -538,7 +538,19 @@ as_string (url u, int type) {
       }
     }
 #endif
-    return s1 * sep * s2;
+    string result= s1 * sep * s2;
+    if (reserve_texmacs_path) {
+      string texmacs_path= get_env("TEXMACS_PATH");
+      int t_size= N(texmacs_path);
+      int r_size= N(result);
+      if (r_size > t_size && starts (result, texmacs_path)) {
+        return "$TEXMACS_PATH" * result(t_size, r_size);
+      } else {
+        return result;
+      }
+    } else {
+      return result;
+    }
   }
   if (is_or (u)) {
     string s1= as_string (u[1], type);

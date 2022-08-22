@@ -199,7 +199,7 @@ cache_init (string buffer) {
       url u= as_url (t[1]);
       cache_set (buffer,
         tree ("ttf:" * as_system_string (basename (u))),
-        tree (as_system_string (u)));
+        tree (as_string (u, URL_SYSTEM, true)));
       t= t[2];
     } while (is_tuple (t, "or", 2));
   }

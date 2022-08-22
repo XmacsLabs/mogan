@@ -172,7 +172,7 @@ tt_font_find (string name) {
   url r= tt_font_find_sub (name);
   bench_end ("tt_font_find_sub " * name);
   if (is_none (r)) cache_set ("font_cache.scm", s, "");
-  else cache_set ("font_cache.scm", s, as_string (r));
+  else cache_set ("font_cache.scm", s, as_string (r, URL_SYSTEM, true));
   return r;
 }
 

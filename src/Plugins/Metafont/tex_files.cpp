@@ -107,7 +107,7 @@ resolve_tex (url name) {
   if (ends (s, "pfb")) u= resolve_pfb (name);
   bench_cumul ("resolve tex");
 
-  if (!is_none (u)) cache_set ("font_cache.scm", s, as_string (u));
+  if (!is_none (u)) cache_set ("font_cache.scm", s, as_string (u, URL_SYSTEM, true));
   //cout << "Resolve " << name << " -> " << u << "\n";
   return u;
 }
