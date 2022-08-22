@@ -192,16 +192,13 @@ cache_save (string buffer) {
 static void
 cache_init (string buffer) {
   if (buffer == "font_cache.scm") {
-    url base= "$TEXMACS_PATH/fonts/truetype";
-    url search= base * url_wildcard("*") * url_wildcard ("*.otf");
-    tree t= as_tree (expand (complete (search)));
-    do {
-      url u= as_url (t[1]);
-      cache_set (buffer,
-        tree ("ttf:" * as_system_string (basename (u))),
-        tree (as_string (u, URL_SYSTEM, true)));
-      t= t[2];
-    } while (is_tuple (t, "or", 2));
+    url cache_file = url ("$TEXMACS_PATH/fonts/font_cache.scm");
+    string cached;
+    if (!load_string (cache_file, cached, false)) {
+      tree t= scheme_to_tree (cached);
+      for (int i=0; i<N(t)-1; i+=2)
+        cache_data (tuple (buffer, t[i]))= t[i+1];
+    }
   }
 }
 
