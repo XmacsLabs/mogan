@@ -491,7 +491,7 @@ TeXmacs_main (int argc, char **argv) {
     }
     if (install_status == 1) {
       if (DEBUG_STD) debug_boot << "Loading welcome message...\n";
-      string cmd= "(load-help-article \"about/welcome/new-welcome\")";
+      string cmd= "(mogan-welcome)";
       // FIXME: force to load welcome message into new window
       exec_delayed (scheme_cmd (cmd));
     }

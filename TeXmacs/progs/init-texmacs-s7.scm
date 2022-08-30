@@ -308,7 +308,7 @@
 (lazy-menu (doc help-menu) help-menu)
 (lazy-define (doc tmdoc) tmdoc-expand-help tmdoc-expand-help-manual
              tmdoc-expand-this tmdoc-include)
-(use-modules (doc docgrep))
+(use-modules (doc docgrep) (doc help-funcs))
 (lazy-define (doc tmdoc-search) tmdoc-search-style tmdoc-search-tag
              tmdoc-search-parameter tmdoc-search-scheme)
 (lazy-define (doc tmweb) youtube-select

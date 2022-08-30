@@ -81,3 +81,27 @@
 
 (tm-define (update-help-online)
   (system "cd $TEXMACS_HOME_PATH; wget ftp://ftp.texmacs.org/pub/TeXmacs/doc/TeXmacs-doc.tar.gz -O TeXmacs-doc.tar.gz; gunzip TeXmacs-doc.tar.gz; tar -xvf TeXmacs-doc.tar; rm -f TeXmacs-doc.tar"))
+
+(define (get-remote-welcome-url)
+  (if (== (get-output-language) "chinese")
+      "http://git.tmml.wiki/XmacsLabs/planet/raw/main/doc/welcome.zh.tm"
+	  "http://git.tmml.wiki/XmacsLabs/planet/raw/main/doc/welcome.en.tm"))
+
+(define (load-remote-welcome)
+  (load-buffer (get-remote-welcome-url)))
+
+(define (get-remote-planet-url)
+  "http://git.tmml.wiki/XmacsLabs/planet/raw/main/index.tm")
+
+(define (load-remote-planet)
+  (load-buffer (get-remote-planet-url)))
+
+(tm-define (mogan-welcome)
+  (if (url-exists? (get-remote-welcome-url))
+      (load-remote-welcome)
+      (load-help-article "about/welcome/new-welcome")))
+
+(tm-define (xmacs-planet)
+  (if (url-exists? (get-remote-planet-url))
+      (load-remote-planet)
+      (load-help-article "about/welcome/new-welcome")))
