@@ -1,0 +1,11 @@
+convert -resize 32x32 TeXmacs/misc/images/mogan.png TeXmacs/misc/images/xmacs-32.png                                                   
+convert -resize 64x64 TeXmacs/misc/images/mogan.png TeXmacs/misc/images/xmacs-64.png 
+convert -resize 40x40 TeXmacs/misc/images/mogan.png TeXmacs/misc/images/xmacs-40.png           
+convert -resize 48x48 TeXmacs/misc/images/mogan.png TeXmacs/misc/images/xmacs-48.png
+convert -resize 72x72 TeXmacs/misc/images/mogan.png TeXmacs/misc/images/xmacs-72.png
+convert -resize 96x96 TeXmacs/misc/images/mogan.png TeXmacs/misc/images/xmacs-96.png
+convert -resize 128x128 TeXmacs/misc/images/mogan.png TeXmacs/misc/images/xmacs-128.png
+convert -resize 192x192 TeXmacs/misc/images/mogan.png TeXmacs/misc/images/xmacs-192.png
+convert -resize 256x256 TeXmacs/misc/images/mogan.png TeXmacs/misc/images/xmacs-256.png
+convert -resize 512x512 TeXmacs/misc/images/mogan.png TeXmacs/misc/images/xmacs-512.png
+convert -resize 1280x1280 TeXmacs/misc/images/mogan.png TeXmacs/misc/images/xmacs-1280.png
