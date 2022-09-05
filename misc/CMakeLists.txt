@@ -13,7 +13,7 @@ foreach (TOOL ${TOOLS})
   set (TOOL_MANFILE_GZ ${CMAKE_CURRENT_BINARY_DIR}/${TOOL}.${MAN_SECTION}.gz)
   add_custom_command (
     OUTPUT ${TOOL_MANFILE_GZ}
-    COMMAND gzip -c ${TOOL_MANFILE} > ${TOOL_MANFILE_GZ}
+    COMMAND gzip -n -c ${TOOL_MANFILE} > ${TOOL_MANFILE_GZ}
     MAIN_DEPENDENCY ${TOOL_MANFILE}
     COMMENT "Building ${TOOL} man page"
     VERBATIM
