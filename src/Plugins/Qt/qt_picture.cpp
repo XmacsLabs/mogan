@@ -21,6 +21,10 @@
 #include "iterator.hpp"
 #include "language.hpp"
 
+#ifdef USE_GS
+#include "Ghostscript/gs_utilities.hpp"
+#endif
+
 #include <QObject>
 #include <QWidget>
 #include <QPainter>
@@ -231,13 +235,19 @@ may_transform (url file_name, const QImage& pm) {
 QImage*
 get_image_for_real (url u, int w, int h, tree eff, SI pixel) {
   QImage *pm = NULL;
+  string url_suffix= suffix (u);
 
-  if (suffix (u) == "svg") {
+  if (url_suffix == "svg") {
     QSvgRenderer renderer (utf8_to_qstring (concretize (u)));
     pm= new QImage (w, h, QImage::Format_ARGB32);
     pm->fill (Qt::transparent);
     QPainter painter (pm);
     renderer.render (&painter);
+  } else if (url_suffix == "pdf") {
+    url temp= url_temp (".png");
+    gs_to_png (u, temp, w, h);
+    pm= new QImage (utf8_to_qstring (as_string (temp)));
+    remove (temp);
   } else if (qt_supports (u)) {
     pm= new QImage (utf8_to_qstring (concretize (u)));
   } else {
