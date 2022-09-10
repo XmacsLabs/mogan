@@ -22,7 +22,7 @@
 
 (define-format python
   (:name "Python Source Code")
-  (:suffix "py"))
+  (:suffix "py" "pants"))
 
 (define (texmacs->python x . opts)
   (texmacs->verbatim x (acons "texmacs->verbatim:encoding" "SourceCode" '())))
