@@ -1,8 +1,8 @@
-if (APPLE)
+if (WIN32)
+  message (STATUS "Scripts launcher is not needed on Windows")
+else (WIN32)
   configure_file(scripts/mogan.sh.in ${TEXMACS_BINARY_DIR}/misc/scripts/mogan.sh @ONLY)
-else (APPLE)
-  configure_file(scripts/mogan.sh.in ${TEXMACS_BINARY_DIR}/misc/scripts/mogan @ONLY)
-endif (APPLE)
+endif (WIN32)
 configure_file (man/mogan.1.in ${TEXMACS_SOURCE_DIR}/misc/man/mogan.1 @ONLY)
 
 ### share/man

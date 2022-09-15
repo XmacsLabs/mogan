@@ -723,20 +723,14 @@ if (APPLE)
   install (DIRECTORY src/Plugins/Cocoa/zh_CN.lproj DESTINATION ${CMAKE_INSTALL_PREFIX})
 endif (APPLE)
 
-if (APPLE)
+if (WIN32)
+  message (STATUS "Scripts launcher is not needed on Windows")
+else (WIN32)
   install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/mogan.sh
           DESTINATION bin
           PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
                       GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
-elseif (UNIX)
-  install (FILES ${TEXMACS_BINARY_DIR}/misc/scripts/mogan
-          DESTINATION bin
-          PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
-                      GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
-else (APPLE)
-  message (STATUS "Scripts launcher are not required on Windows")
-endif (APPLE)
-
+endif (WIN32)
 
 ### share/
 if (WIN32)
