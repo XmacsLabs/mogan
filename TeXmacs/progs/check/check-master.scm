@@ -24,7 +24,8 @@
         (convert tools environment-test)
         (convert mathml mathtm-test)
         (convert tmml tmmltm-test)
-        (prog prog-format-test)))
+        (prog prog-format-test)
+        (generic generic-test)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Test LaTeX export
@@ -96,4 +97,5 @@
   (regtest-tm-define)
   (regtest-tm-dialogue)
   (regtest-tm-convert)
+  (regtest-generic)
 )
