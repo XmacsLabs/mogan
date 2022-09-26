@@ -20,20 +20,21 @@
   `(,(string->symbol key)
     (constant
       "false" "true" "cout" "cin" "cerr"
-      "null" "NULL")
+      "null" "nullptr" "nullptr_t" "NULL")
     (constant_type
-      "bool" "char" "double" "float" "int" "long"
-      "short" "signed" "unsigned" "void" "wchar_t")
+      "bool" "byte" "char" "char16_t" "char32_t" "char8_t" "double" "float"
+      "int" "int16_t" "int32_t" "int8_t" "long" "short" "signed" "uint16_t"
+      "uint32_t" "uint8_t" "unsigned" "void" "wchar_t")
     (declare_type "class" "interface" "enum")
     (declare_module "namespace" "using")
     (keyword
-      "asm" "auto" "calloc" "class" "concrete" "constant"
-      "const" "const_cast" "default" "delete" "dynamic_cast"
-      "free" "enum" "extern" "explicit" "export"  "friend"
-      "inline" "malloc" "mutable" "new" "operator" "private"
-      "protected" "public" "realloc" "register" "reinterpret_cast" "sizeof"
-      "static" "static_cast" "struct" "template" "this" "to"
-      "typedef" "typeid" "typename" "union" "virtual" "volatile")
+      "asm" "auto" "calloc" "class" "concept" "concrete" "const"
+      "const_cast" "constant" "constexpr" "default" "delete" "dynamic_cast"
+      "enum" "explicit" "export" "extern" "free" "friend" "inline" "malloc"
+      "mutable" "new" "operator" "private" "protected" "public" "realloc"
+      "register" "reinterpret_cast" "sizeof" "static" "static_cast"
+      "struct" "template" "this" "to" "typedef" "typeid" "typename" "union"
+      "virtual" "volatile")
     (keyword_conditional
       "break" "continue" "do" "else" "for" "if"
       "while" "goto" "switch" "case")
