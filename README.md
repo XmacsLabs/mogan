@@ -30,9 +30,12 @@ Darcy:
 
 > Mogan is named after Mount Mogan[^1], a famous attraction in my hometown. 墨干(Mogan) literally means "dried ink". The word is derived from 莫干(Mogan) which is a combination of 莫(Mo) and 干(Gan)[^2].
 
-
-
-
+## Installation
+### Install via AUR (experimental)
+Mogan can be installed from the community repository, available on the [AUR (en) - mogan](https://aur.archlinux.org/packages/mogan)
+```shell
+yay -S mogan
+```
 
 ## How to Get Involved
 + Join us on [Discussions](https://github.com/XmacsLabs/mogan/discussions)
