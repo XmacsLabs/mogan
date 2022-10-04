@@ -547,7 +547,7 @@ endif (LINKED_FREETYPE)
 ### GUI selection
 ### --------------------------------------------------------------------
 
-set (GUI_TYPE) # nothing or WIN32, MACOSX bundles are treated independetly
+set (GUI_TYPE) # nothing or WIN32, MACOSX bundles are treated independently
 
 if (TEXMACS_GUI MATCHES "Qt.*")
 
@@ -559,7 +559,12 @@ if (TEXMACS_GUI MATCHES "Qt.*")
       list (APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
     endif ()
     # compat with Qt6
-    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg REQUIRED)
+    if (TEXMACS_GUI STREQUAL "Qt6")
+      find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg REQUIRED)
+    else(TEXMACS_GUI STREQUAL "Qt6")
+      find_package(QT NAMES Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg REQUIRED)
+    endif()
+    message(STATUS "Found Qt: ${QT_VERSION_MAJOR}")
     find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets PrintSupport Svg REQUIRED)
     set (QT_LIBRARIES
             Qt${QT_VERSION_MAJOR}::Core
