@@ -1,4 +1,4 @@
-name: Test on Ubuntu 20.04
+name: Test on Ubuntu 20.04 for Qt 5
 
 on:
   push:
