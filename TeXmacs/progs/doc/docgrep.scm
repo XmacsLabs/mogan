@@ -61,7 +61,7 @@
               ($ismall
                 ($verbatim
                   (string-append " ("
-                                 (cAr (string-tokenize-by-char (car x) #\/)))
+                                 (utf8->cork (cAr (string-tokenize-by-char (car x) #\/))))
                                  ")" )))))))))
 
 (define (build-doc-link-page keyword file-list)
