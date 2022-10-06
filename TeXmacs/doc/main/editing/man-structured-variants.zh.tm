@@ -1,40 +1,36 @@
-<TeXmacs|1.99.13>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|chinese|old-spacing|old-dots>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|\<#7ED3\>\<#6784\>\<#5316\>\<#53D8\>\<#5143\>>
+  <tmdoc-title|结构化变元>
 
-  \<#5728\>\<#521B\>\<#5EFA\>\<#5B9A\>\<#7406\>\<#FF0C\>\<#516C\>\<#5F0F\>\<#6216\>\<#8005\>\<#5217\>\<#8868\>\<#8FD9\>\<#4E9B\>\<#73AF\>\<#5883\>\<#7684\>\<#65F6\>\<#5019\>\<#FF0C\>\<#6211\>\<#4EEC\>\<#7ECF\>\<#5E38\>\<#9700\>\<#8981\>\<#5728\>\<#4E8B\>\<#540E\>\<#66F4\>\<#6539\>\<#73AF\>\<#5883\>\<#3002\>\<#60A8\>\<#53EF\>\<#4EE5\>\<#4F7F\>\<#7528\><shortcut|(variant-circulate
-  (focus-tree) #t)>\<#6216\>\<#8005\><shortcut|(variant-circulate
-  (focus-tree) #f)>\<#5FAA\>\<#73AF\>\<#9009\>\<#62E9\>\<#6700\>\<#6DF1\>\<#5904\>\<#6807\>\<#8BB0\>\<#7684\><em|\<#7ED3\>\<#6784\>\<#5316\>\<#53D8\>\<#5143\>>\<#3002\>\<#524D\>\<#8005\>\<#987A\>\<#5E8F\>\<#FF0C\>\<#540E\>\<#8005\>\<#9006\>\<#5E8F\>\<#3002\>
+  在创建定理，公式或者列表这些环境的时候，我们经常需要在事后更改环境。您可以使用<shortcut|(variant-circulate
+  (focus-tree) #t)>或者<shortcut|(variant-circulate (focus-tree)
+  #f)>循环选择最深处标记的<em|结构化变元>。前者顺序，后者逆序。
 
-  \<#5047\>\<#5B9A\>\<#60A8\>\<#7684\>\<#5149\>\<#6807\>\<#5728\>\<#5B9A\>\<#7406\>\<#4E2D\>\<#FF0C\>\<#90A3\>\<#4E48\>\<#4E0D\>\<#65AD\>\<#6309\>\<#4E0B\><shortcut|(variant-circulate
-  (focus-tree) #t)>\<#4F1A\>\<#5728\>\<#547D\>\<#9898\>\<#FF0C\>\<#5F15\>\<#7406\>\<#FF0C\>\<#63A8\>\<#8BBA\>\<#FF0C\>\<#8BC1\>\<#660E\>\<#FF0C\>\<#5B9A\>\<#7406\>\<#95F4\>\<#8F6E\>\<#6362\>\<#3002\>\<#800C\>\<#4E0D\>\<#65AD\>\<#6309\>\<#4E0B\>\<#5FEB\>\<#6377\>\<#952E\><shortcut|(variant-circulate
-  (focus-tree) #f)>\<#5219\>\<#662F\>\<#9006\>\<#5411\>\<#8F6E\>\<#6362\>:\<#5B9A\>\<#7406\>
-  <math|\<rightarrow\>> \<#8BC1\>\<#660E\> <math|\<rightarrow\>>
-  \<#63A8\>\<#8BBA\> <math|\<rightarrow\>> \<#5F15\>\<#7406\>
-  <math|\<rightarrow\>> \<#547D\>\<#9898\> <math|\<rightarrow\>>
-  \<#8BC1\>\<#660E\>\<#3002\>
+  假定您的光标在定理中，那么不断按下<shortcut|(variant-circulate
+  (focus-tree) #t)>会在命题，引理，推论，证明，定理间轮换。而不断按下快捷键<shortcut|(variant-circulate
+  (focus-tree) #f)>则是逆向轮换:定理 <math|\<rightarrow\>> 证明
+  <math|\<rightarrow\>> 推论 <math|\<rightarrow\>> 引理
+  <math|\<rightarrow\>> 命题 <math|\<rightarrow\>> 证明。
 
-  \<#5728\>\<#6570\>\<#5B66\>\<#516C\>\<#5F0F\>\<#8FD9\>\<#4E2A\>\<#4F8B\>\<#5B50\>\<#4E2D\>\<#FF0C\>
-  <shortcut|(variant-circulate (focus-tree)
-  #t)>\<#7528\>\<#4E8E\>\<#5C06\>\<#884C\>\<#5185\>\<#516C\>\<#5F0F\>
-  <math|a<rsup|2>+b<rsup|2>=c<rsup|2>> \<#8F6C\>\<#5316\>\<#4E3A\>\<#5355\>\<#884C\>\<#516C\>\<#5F0F\>\<#FF1A\>
+  在数学公式这个例子中， <shortcut|(variant-circulate (focus-tree)
+  #t)>用于将行内公式 <math|a<rsup|2>+b<rsup|2>=c<rsup|2>>
+  转化为单行公式：
 
   <\equation*>
     a<rsup|2>+b<rsup|2>=c<rsup|2>
   </equation*>
 
-  \<#540C\>\<#65F6\>\<#987E\>\<#53CA\>\<#5C3E\>\<#968F\>\<#7A7A\>\<#683C\>(trailing
-  space)\<#548C\>\<#6807\>\<#70B9\>\<#7B26\>\<#53F7\>\<#7684\>\<#5904\>\<#7406\>\<#3002\>
+  同时顾及尾随空格(trailing space)和标点符号的处理。
 
-  <TeXmacs>\<#8FD8\>\<#63D0\>\<#4F9B\>\<#4E86\><shortcut|(numbered-toggle
-  (focus-tree))>\<#5FEB\>\<#6377\>\<#952E\>\<#4EE5\>\<#4F9B\>\<#60A8\>\<#5728\>\<#7F16\>\<#53F7\>\<#6A21\>\<#5F0F\>\<#548C\>\<#666E\>\<#901A\>\<#6A21\>\<#5F0F\>\<#95F4\>\<#5207\>\<#6362\>\<#3002\>\<#6B64\>\<#5FEB\>\<#6377\>\<#952E\>\<#5728\>\<#5B9A\>\<#7406\>\<#FF0C\>\<#6CE8\>\<#610F\>\<#FF0C\>\<#8868\>\<#683C\>\<#FF0C\>\<#516C\>\<#5F0F\>\<#7B49\>\<#73AF\>\<#5883\>\<#9002\>\<#7528\>\<#3002\>\<#6CE8\>\<#610F\><shortcut|(numbered-toggle
-  (focus-tree))>\<#548C\><shortcut|(variant-circulate (focus-tree)
-  #t)>\<#7684\>\<#533A\>\<#522B\>\<#FF0C\>\<#524D\>\<#8005\>\<#663E\>\<#793A\>\<#548C\>\<#9690\>\<#85CF\>\<#7F16\>\<#53F7\>\<#FF0C\>\<#800C\>\<#540E\>\<#8005\>\<#662F\>\<#5728\>\<#4E00\>\<#7EC4\>\<#53EF\>\<#7528\>\<#73AF\>\<#5883\>\<#5982\>\<#5217\>\<#8868\>\<#9879\>\<#76EE\>(\<#5706\>\<#70B9\>\<#FF0C\>\<#77ED\>\<#7EBF\>\<#FF0C\>\<#7BAD\>\<#5934\>\<#7B49\>)\<#95F4\>\<#8F6E\>\<#6362\>\<#3002\>
+  <TeXmacs>还提供了<shortcut|(numbered-toggle
+  (focus-tree))>快捷键以供您在编号模式和普通模式间切换。此快捷键在定理，注意，表格，公式等环境适用。注意<shortcut|(numbered-toggle
+  (focus-tree))>和<shortcut|(variant-circulate (focus-tree)
+  #t)>的区别，前者显示和隐藏编号，而后者是在一组可用环境如列表项目(圆点，短线，箭头等)间轮换。
 
-  <tmdoc-copyright|1998\U2020|Joris van der Hoeven|\<#6C88\>\<#8FBE\>>
+  <tmdoc-copyright|1998\U2020|Joris van der Hoeven|沈达>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -43,6 +39,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>

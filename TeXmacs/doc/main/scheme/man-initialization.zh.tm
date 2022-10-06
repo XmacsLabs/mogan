@@ -1,27 +1,27 @@
-<TeXmacs|1.99.10>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|chinese|old-spacing>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|\<#64B0\>\<#5199\>\<#521D\>\<#59CB\>\<#5316\>\<#914D\>\<#7F6E\>\<#6587\>\<#4EF6\>>
+  <tmdoc-title|撰写初始化配置文件>
 
-  \<#542F\>\<#52A8\>\<#7A0B\>\<#5E8F\>\<#65F6\>\<#FF0C\><with|font|roman|<TeXmacs>>\<#5C06\>\<#8BFB\>\<#53D6\>\<#5E76\>\<#6267\>\<#884C\>\<#8FD9\>\<#4E2A\>\<#6587\>\<#4EF6\>\<#FF1A\>
+  启动程序时，<with|font|roman|<TeXmacs>>将读取并执行这个文件：
 
   <with|font|roman|<verbatim| \ \ \ $TEXMACS_PATH/progs/init-texmacs.scm>>
 
-  \<#4EE5\>\<#53CA\>\<#7528\>\<#6237\>\<#81EA\>\<#5DF1\>\<#7684\>\<#914D\>\<#7F6E\>\<#6587\>\<#4EF6\>\<#FF08\>\<#5982\>\<#679C\>\<#5B58\>\<#5728\>\<#7684\>\<#8BDD\>\<#FF09\>\<#FF1A\><em|>
+  以及用户自己的配置文件（如果存在的话）：<em|>
 
   <with|font|roman|<verbatim| \ \ \ $TEXMACS_HOME_PATH/progs/my-init-texmacs.scm>>
 
-  <verbatim|$TEXMACS_HOME_PATH>\<#7684\>\<#9ED8\>\<#8BA4\>\<#503C\>\<#5728\><name|Windows>\<#4E0A\>\<#662F\><verbatim|%appdata%\\TeXmacs>\<#FF0C\>\<#5728\><name|GNU>/<name|Linux>\<#548C\><name|macOS>\<#4E0A\>\<#5219\>\<#662F\><verbatim|$HOME/.TeXmacs>\<#3002\>\<#7C7B\>\<#4F3C\>\<#5730\>\<#FF0C\>\<#6BCF\>\<#6B21\>\<#4F60\>\<#65B0\>\<#5EFA\>\<#4E00\>\<#4E2A\>buffer\<#FF0C\>\<#7A0B\>\<#5E8F\>\<#5C06\>\<#6267\>\<#884C\>:
+  <verbatim|$TEXMACS_HOME_PATH>的默认值在<name|Windows>上是<verbatim|%appdata%\\TeXmacs>，在<name|GNU>/<name|Linux>和<name|macOS>上则是<verbatim|$HOME/.TeXmacs>。类似地，每次你新建一个buffer，程序将执行:
 
   <with|font|roman|<verbatim| \ \ \ $TEXMACS_PATH/progs/init-buffer.scm>>
 
-  \<#4EE5\>\<#53CA\>\<#FF08\>\<#5982\>\<#679C\>\<#5B58\>\<#5728\>\<#7684\>\<#8BDD\>\<#FF09\>
+  以及（如果存在的话）
 
   <with|font|roman|<verbatim| \ \ \ $TEXMACS_HOME_PATH/progs/my-init-buffer.scm>>
 
-  <tmdoc-copyright|2013--2019|Joris van der Hoeven|\<#6C88\>\<#8FBE\>>
+  <tmdoc-copyright|2013\U2019|Joris van der Hoeven|沈达>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -30,6 +30,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>

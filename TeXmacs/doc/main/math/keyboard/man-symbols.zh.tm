@@ -1,75 +1,70 @@
-<TeXmacs|1.99.12>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|chinese|old-spacing|old-dots>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|\<#8F93\>\<#5165\>\<#6570\>\<#5B66\>\<#7B26\>\<#53F7\>>
+  <tmdoc-title|输入数学符号>
 
-  \<#4F7F\>\<#7528\><prefix|math:greek>\<#8F93\>\<#5165\>\<#5E0C\>\<#814A\>\<#5B57\>\<#6BCD\>\<#FF0C\>\<#6BD4\>\<#5982\>\<#FF0C\><key|math:greek
-  a>\<#8F93\>\<#5165\><math|\<alpha\>>\<#FF0C\><key|math:greek
-  G>\<#8F93\>\<#5165\><math|\<Gamma\>>\<#3002\>\<#7C7B\>\<#4F3C\>\<#5730\>\<#FF0C\><prefix|math:bold>\<#FF0C\>
-  <prefix|math:cal>\<#FF0C\> <prefix|math:frak> \<#548C\>
-  <prefix|math:bbb>\<#53EF\>\<#7528\>\<#6765\>\<#8F93\>\<#5165\>\<#7C97\>\<#4F53\>\<#FF0C\>\<#624B\>\<#5199\>\<#4F53\>\<#FF0C\>\<#5FB7\>\<#6587\>\<#9ED1\>\<#4F53\>\<#548C\>\<#9ED1\>\<#677F\>\<#7C97\>\<#4F53\>\<#3002\>\<#4F8B\>\<#5982\>\<#FF0C\><shortcut|\<frak-m\>>
-  \<#5F97\>\<#5230\><math|\<frak-m\>>\<#FF0C\> <key|S-F6
-  R>\<#5F97\>\<#5230\><math|\<bbb-R\>>\<#4EE5\>\<#53CA\><shortcut|\<b-cal-Z\>>\<#5F97\>\<#5230\>\<#3002\>
+  使用<prefix|math:greek>输入希腊字母，比如，<key|math:greek
+  a>输入<math|\<alpha\>>，<key|math:greek
+  G>输入<math|\<Gamma\>>。类似地，<prefix|math:bold>，
+  <prefix|math:cal>， <prefix|math:frak> 和
+  <prefix|math:bbb>可用来输入粗体，手写体，德文黑体和黑板粗体。例如，<shortcut|\<frak-m\>>
+  得到<math|\<frak-m\>>， <key|S-F6 R>得到<math|\<bbb-R\>>以及<shortcut|\<b-cal-Z\>>得到。
 
-  \<#4F7F\>\<#7528\><key|var>\<#8FD8\>\<#53EF\>\<#4EE5\>\<#4ECE\>\<#62C9\>\<#4E01\>\<#5B57\>\<#7B26\>\<#5F97\>\<#5230\>\<#5E0C\>\<#814A\>\<#5B57\>\<#6BCD\>\<#3002\>\<#6BD4\>\<#5982\>\<#FF0C\><key|p
-  var>\<#5F97\>\<#5230\><math|\<pi\>>\<#3002\><key|var>\<#952E\>\<#8FD8\>\<#53EF\>\<#4EE5\>\<#5728\>\<#5E0C\>\<#814A\>\<#5B57\>\<#6BCD\>\<#95F4\>\<#53D8\>\<#6362\>\<#FF0C\>\<#6BD4\>\<#5982\>\<#FF0C\><key|math:greek
-  p var> \<#548C\><key|p var var>\<#90FD\>\<#53EF\>\<#4EE5\>\<#5F97\>\<#5230\><math|\<varpi\>>\<#3002\>\<#8F93\>\<#5165\>\<#9ED1\>\<#677F\>\<#7C97\>\<#4F53\>\<#7684\>\<#53E6\>\<#5916\>\<#4E00\>\<#79CD\>\<#65B9\>\<#6CD5\>\<#662F\>\<#8F93\>\<#5165\>\<#8BE5\>\<#5927\>\<#5199\>\<#5B57\>\<#6BCD\>\<#4E24\>\<#6B21\>\<#3002\>\<#6BD4\>\<#5982\>\<#FF0C\><key|Z
-  Z>\<#5F97\>\<#5230\><math|\<bbb-Z\>>\<#3002\>
+  使用<key|var>还可以从拉丁字符得到希腊字母。比如，<key|p
+  var>得到<math|\<pi\>>。<key|var>键还可以在希腊字母间变换，比如，<key|math:greek
+  p var> 和<key|p var var>都可以得到<math|\<varpi\>>。输入黑板粗体的另外一种方法是输入该大写字母两次。比如，<key|Z
+  Z>得到<math|\<bbb-Z\>>。
 
-  \<#4E00\>\<#4E9B\>\<#7B26\>\<#53F7\>\<#4E2D\>\<#5305\>\<#542B\>\<#4E86\>\<#8BF8\>\<#591A\>\<#53D8\>\<#5143\>\<#3002\>\<#6BD4\>\<#5982\><key|\<less\>>\<#5F97\>\<#5230\><math|\<less\>>\<#FF0C\><key|\<less\>
-  var>\<#5F97\>\<#5230\><math|\<in\>>\<#FF0C\><key|\<less\> var
-  var>\<#5F97\>\<#5230\><math|\<subset\>>\<#FF0C\> <key|\<less\> var var
-  var>\<#5F97\>\<#5230\><math|\<prec\>>\<#7B49\>\<#7B49\>\<#3002\>\<#53CD\>\<#5411\>\<#8F6E\>\<#6362\>\<#53EF\>\<#7528\><key|S-var>\<#3002\>\<#5373\>\<#FF0C\><key|\<less\>
-  var var S-var>\<#7B49\>\<#4EF7\>\<#4E8E\> <key|\<less\> var>\<#3002\>
+  一些符号中包含了诸多变元。比如<key|\<less\>>得到<math|\<less\>>，<key|\<less\>
+  var>得到<math|\<in\>>，<key|\<less\> var var>得到<math|\<subset\>>，
+  <key|\<less\> var var var>得到<math|\<prec\>>等等。反向轮换可用<key|S-var>。即，<key|\<less\>
+  var var S-var>等价于 <key|\<less\> var>。
 
-  \<#5176\>\<#5B83\>\<#6570\>\<#5B66\>\<#7B26\>\<#53F7\>\<#53EF\>\<#901A\>\<#8FC7\>\<#81EA\>\<#7136\>\<#7684\>\<#952E\>\<#7EC4\>\<#5408\>\<#5F97\>\<#5230\>\<#3002\>\<#6BD4\>\<#5982\><key|-
-  \<gtr\>>\<#5F97\>\<#5230\><math|<op|\<rightarrow\>>>\<#FF0C\><key|- -
-  \<gtr\>>\<#5F97\>\<#5230\><math|<op|\<longrightarrow\>>>\<#548C\><key|\<gtr\>
-  =>\<#5F97\>\<#5230\><math|<op|\<geqslant\>>>\<#3002\>\<#7C7B\>\<#4F3C\>\<#5730\>\<#FF0C\><key|\|
-  var ->\<#5F97\>\<#5230\><math|<op|\<vdash\>>>\<#FF0C\> <key|\| -
-  \<gtr\>>\<#5F97\>\<#5230\><math|<op|\<mapsto\>>>\<#4EE5\>\<#53CA\><key|-
-  \<gtr\> \<less\> ->\<#5F97\>\<#5230\><math|<op|\<rightleftarrows\>>>\<#3002\>\<#4E00\>\<#822C\>\<#5730\>\<#FF0C\>\<#5728\>\<#6570\>\<#5B66\>\<#7B26\>\<#53F7\>\<#7684\>\<#8F93\>\<#5165\>\<#8FC7\>\<#7A0B\>\<#4E2D\>\<#6709\>\<#5982\>\<#4E0B\>\<#89C4\>\<#5219\>:
+  其它数学符号可通过自然的键组合得到。比如<key|-
+  \<gtr\>>得到<math|<op|\<rightarrow\>>>，<key|- -
+  \<gtr\>>得到<math|<op|\<longrightarrow\>>>和<key|\<gtr\>
+  =>得到<math|<op|\<geqslant\>>>。类似地，<key|\| var
+  ->得到<math|<op|\<vdash\>>>， <key|\| -
+  \<gtr\>>得到<math|<op|\<mapsto\>>>以及<key|- \<gtr\> \<less\>
+  ->得到<math|<op|\<rightleftarrows\>>>。一般地，在数学符号的输入过程中有如下规则:
 
   <\description>
-    <item*|<key|tab>>\<#5728\>\<#53D8\>\<#5143\>\<#95F4\>\<#8F6E\>\<#6362\>\<#7684\>\<#952E\>\<#3002\>\<#6BD4\>\<#5982\>\<#FF0C\><key|\<gtr\>
-    =>\<#5F97\>\<#5230\><math|<op|\<geqslant\>>>\<#FF0C\>\<#800C\><key|\<gtr\>
-    = var>\<#5F97\>\<#5230\><math|<op|\<geq\>>>\<#3002\>\<#7C7B\>\<#4F3C\>\<#5730\>\<#FF0C\><key|\<less\>
-    var var>\<#5F97\>\<#5230\><math|<op|\<subset\>>>\<#FF0C\> <key|\<less\>
-    var var =>\<#5F97\>\<#5230\><math|<op|\<subseteq\>>>\<#4EE5\>\<#53CA\><key|\<less\>
-    var var = var>\<#5F97\>\<#5230\><math|<op|\<subseteqq\>>>\<#3002\><key|P
-    var>\<#5F97\>\<#5230\><math|\<wp\>>\<#4EE5\>\<#53CA\><key|e
-    var>\<#5F97\>\<#5230\>\<#5E38\>\<#91CF\><math|\<mathe\>=exp<around|(|1|)>>\<#3002\>
+    <item*|<key|tab>>在变元间轮换的键。比如，<key|\<gtr\>
+    =>得到<math|<op|\<geqslant\>>>，而<key|\<gtr\> =
+    var>得到<math|<op|\<geq\>>>。类似地，<key|\<less\> var
+    var>得到<math|<op|\<subset\>>>， <key|\<less\> var var
+    =>得到<math|<op|\<subseteq\>>>以及<key|\<less\> var var =
+    var>得到<math|<op|\<subseteqq\>>>。<key|P
+    var>得到<math|\<wp\>>以及<key|e var>得到常量<math|\<mathe\>=exp<around|(|1|)>>。
 
-    <item*|<key|@>>\<#7528\>\<#6765\>\<#5C06\>\<#7B26\>\<#53F7\>\<#5D4C\>\<#5165\>\<#5708\>\<#6216\>\<#8005\>\<#6846\>\<#4E2D\>\<#3002\>\<#6BD4\>\<#5982\><key|@
-    +>\<#5F97\>\<#5230\><math|<op|\<oplus\>>>\<#4EE5\>\<#53CA\><key|@
-    x>\<#5F97\>\<#5230\><math|<op|\<otimes\>>>\<#3002\>\<#7C7B\>\<#4F3C\>\<#5730\>\<#FF0C\><key|@
-    var +>\<#5F97\>\<#5230\><math|<op|\<boxplus\>>>\<#3002\>
+    <item*|<key|@>>用来将符号嵌入圈或者框中。比如<key|@
+    +>得到<math|<op|\<oplus\>>>以及<key|@
+    x>得到<math|<op|\<otimes\>>>。类似地，<key|@ var
+    +>得到<math|<op|\<boxplus\>>>。
 
-    <item*|<key|/>>\<#7528\>\<#4E8E\>\<#5426\>\<#5B9A\>\<#3002\>\<#4F8B\>\<#5982\>\<#FF0C\><key|=
-    />\<#5F97\>\<#5230\><math|<op|\<neq\>>>\<#4EE5\>\<#53CA\><key|\<less\> =
-    />\<#5F97\>\<#5230\><math|<neg|\<leqslant\>>>\<#3002\>\<#6CE8\>\<#610F\><key|\<less\>
-    = var var />\<#5F97\>\<#5230\><math|<op|\<nleqq\>>>\<#FF0C\>\<#800C\>
-    <key|\<less\> = var var / var>\<#5F97\>\<#5230\><math|<op|\<lneqq\>>>\<#3002\>
+    <item*|<key|/>>用于否定。例如，<key|=
+    />得到<math|<op|\<neq\>>>以及<key|\<less\> =
+    />得到<math|<neg|\<leqslant\>>>。注意<key|\<less\> = var var
+    />得到<math|<op|\<nleqq\>>>，而 <key|\<less\> = var var /
+    var>得到<math|<op|\<lneqq\>>>。
 
-    <item*|<key|!>>\<#7528\>\<#4E8E\>\<#5F3A\>\<#5236\>\<#4F7F\>\<#5F97\>\<#7BAD\>\<#5934\>\<#7684\>\<#4E0A\>\<#6807\>\<#6216\>\<#4E0B\>\<#6807\>\<#7F6E\>\<#4E8E\>\<#7BAD\>\<#5934\>\<#7684\>\<#7AD6\>\<#76F4\>\<#65B9\>\<#5411\>\<#4E0A\>\<#3002\>\<#6BD4\>\<#5982\>\<#FF0C\><key|-
-    - \<gtr\> ^ x>\<#5F97\>\<#5230\><math|<op|\<longrightarrow\><rsup|x>
-    >>\<#FF0C\>\<#800C\><key|- - \<gtr\> ! ^
-    x>\<#5F97\>\<#5230\><math|\<longrightarrowlim\><rsup|x>>\<#3002\>
+    <item*|<key|!>>用于强制使得箭头的上标或下标置于箭头的竖直方向上。比如，<key|-
+    - \<gtr\> ^ x>得到<math|<op|\<longrightarrow\><rsup|x> >>，而<key|- -
+    \<gtr\> ! ^ x>得到<math|\<longrightarrowlim\><rsup|x>>。
   </description>
 
-  \<#903B\>\<#8F91\>\<#5173\>\<#7CFB\><math|\<wedge\>>\<#548C\><math|\<vee\>>\<#901A\>\<#8FC7\><key|&>\<#548C\><key|%>\<#5F97\>\<#5230\>\<#3002\>\<#64CD\>\<#4F5C\>\<#7B26\><math|\<cap\>>\<#548C\><math|\<cup\>>\<#662F\>\<#5176\>\<#81EA\>\<#7136\>\<#800C\>\<#7136\>\<#7684\>\<#53D8\>\<#5143\>\<#FF0C\>\<#53EF\>\<#7528\><key|&
-  var>\<#548C\><key|% var>\<#5F97\>\<#5230\>\<#3002\>\<#8BB8\>\<#591A\>\<#6742\>\<#4E03\>\<#6742\>\<#516B\>\<#7684\>\<#7B26\>\<#53F7\>\<#53EF\>\<#901A\>\<#8FC7\><prefix|math:symbol>\<#5F97\>\<#5230\>\<#3002\>
+  逻辑关系<math|\<wedge\>>和<math|\<vee\>>通过<key|&>和<key|%>得到。操作符<math|\<cap\>>和<math|\<cup\>>是其自然而然的变元，可用<key|&
+  var>和<key|% var>得到。许多杂七杂八的符号可通过<prefix|math:symbol>得到。
 
-  \<#6CE8\>\<#610F\>\<#5230\>\<#67D0\>\<#4E9B\>\<#7B26\>\<#53F7\>\<#7684\>\<#6570\>\<#5B66\>\<#610F\>\<#4E49\>\<#4E0D\>\<#4E00\>\<#6837\>\<#FF0C\>\<#7136\>\<#800C\>\<#957F\>\<#5F97\>\<#5F88\>\<#662F\>\<#76F8\>\<#4F3C\>;\<#8FD9\>\<#7C7B\>\<#7B26\>\<#53F7\>\<#88AB\>\<#79F0\>\<#4E3A\>homoglyphs\<#3002\>\<#6BD4\>\<#5982\>\<#7AD6\>\<#76F4\>\<#6761\>\|\<#53EF\>\<#4EE5\>\<#662F\>\<#96C6\>\<#5408\>\<#5B9A\>\<#4E49\>\<#4E2D\>\<#7684\>\<#5206\>\<#9694\>\<#7B26\>\<#FF0C\>\<#5982\><math|R<rsup|\<gtr\>>=<around*|{|x\<in\>R\|x\<gtr\>0|}>>\<#FF0C\>\<#4E5F\>\<#53EF\>\<#4EE5\>\<#662F\>\<#4E8C\>\<#5143\>\<#5173\>\<#7CFB\>\<#6574\>\<#9664\>\<#FF0C\>\<#5982\><math|11\<divides\>1001>\<#3002\>\<#5F80\>\<#5F80\>\<#FF0C\>homoglyphs\<#4E4B\>\<#95F4\>\<#7684\>\<#7A7A\>\<#767D\>\<#662F\>\<#4E0D\>\<#540C\>\<#3002\>\<#6700\>\<#607C\>\<#4EBA\>\<#7684\>\<#591A\>\<#610F\>\<#6027\>\<#53EF\>\<#4EE5\>\<#4EE5\>\<#7A7A\>\<#767D\>\<#4E3A\>\<#4F8B\>\<#FF0C\>\<#5982\>\<#4E0D\>\<#53EF\>\<#89C1\>\<#7684\>\<#4E58\>\<#6CD5\>\<#7A7A\>\<#767D\>
-  <math|x*y> \<#548C\>\<#51FD\>\<#6570\>\<#7A7A\>\<#767D\> <math|sin
-  x>\<#FF0C\>\<#4E24\>\<#8005\>\<#5206\>\<#522B\>\<#662F\>\<#4F7F\>\<#7528\><key|*>
-  \<#548C\><key|space>\<#8F93\>\<#5165\>\<#7684\>\<#3002\>
+  注意到某些符号的数学意义不一样，然而长得很是相似;这类符号被称为homoglyphs。比如竖直条\|可以是集合定义中的分隔符，如<math|R<rsup|\<gtr\>>=<around*|{|x\<in\>R\|x\<gtr\>0|}>>，也可以是二元关系整除，如<math|11\<divides\>1001>。往往，homoglyphs之间的空白是不同。最恼人的多意性可以以空白为例，如不可见的乘法空白
+  <math|x*y> 和函数空白 <math|sin x>，两者分别是使用<key|*>
+  和<key|space>输入的。
 
-  \<#4E3A\>\<#4E86\>\<#65B9\>\<#4FBF\><TeXmacs>\<#81EA\>\<#52A8\>\<#5904\>\<#7406\>\<#4F60\>\<#7684\>\<#6587\>\<#6863\>\<#4EE5\>\<#65B9\>\<#4FBF\>\<#6570\>\<#5B66\>\<#516C\>\<#5F0F\>\<#7684\>\<#8BED\>\<#6CD5\>\<#68C0\>\<#67E5\>\<#7B49\>\<#FF0C\>\<#6211\>\<#4EEC\>\<#9F13\>\<#52B1\>\<#7528\>\<#6237\>\<#5728\>\<#8F93\>\<#5165\>\<#516C\>\<#5F0F\>\<#65F6\>\<#6CE8\>\<#610F\>\<#5230\>homoglyph\<#7684\>\<#95EE\>\<#9898\>\<#3002\>\<#66F4\>\<#591A\>\<#4FE1\>\<#606F\>\<#FF0C\>\<#53EF\>\<#53C2\>\<#89C1\><hlink|\<#6570\>\<#5B66\>\<#7B26\>\<#53F7\>\<#7684\>\<#8BED\>\<#4E49\>|../semantics/man-semantics-symbols.zh.tm>\<#3002\>
+  为了方便<TeXmacs>自动处理你的文档以方便数学公式的语法检查等，我们鼓励用户在输入公式时注意到homoglyph的问题。更多信息，可参见<hlink|数学符号的语义|../semantics/man-semantics-symbols.zh.tm>。
 
-  <tmdoc-copyright|1998\U2020|Joris van der Hoeven|\<#6C88\>\<#8FBE\>>
+  <tmdoc-copyright|1998\U2020|Joris van der Hoeven|沈达>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -78,6 +73,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>

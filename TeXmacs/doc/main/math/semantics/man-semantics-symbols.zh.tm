@@ -1,57 +1,56 @@
-<TeXmacs|1.99.12>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|old-spacing|chinese|old-dots>>
+<style|<tuple|tmdoc|old-spacing|chinese|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|\<#6570\>\<#5B66\>\<#7B26\>\<#53F7\>\<#7684\>\<#8BED\>\<#4E49\>>
+  <tmdoc-title|数学符号的语义>
 
-  <TeXmacs>\<#4E2D\>\<#7684\>\<#6570\>\<#5B66\>\<#7B26\>\<#53F7\>\<#90FD\>\<#6709\>\<#4E00\>\<#4E9B\>\<#5C5E\>\<#6027\>\<#FF0C\>\<#8FD9\>\<#4E9B\>\<#5C5E\>\<#6027\>\<#5BF9\>\<#5E94\>\<#4E8E\>\<#4ED6\>\<#4EEC\>\<#60F3\>\<#8981\>\<#8868\>\<#793A\>\<#7684\>\<#542B\>\<#4E49\>\<#3002\>\<#4F8B\>\<#5982\>\<#FF0C\>
-  <TeXmacs>\<#80FD\>\<#591F\>\<#77E5\>\<#9053\><math|<op|+>>\<#662F\>\<#4E00\>\<#4E2A\>\<#4E2D\>\<#7F00\>\<#8FD0\>\<#7B97\>\<#7B26\>\<#FF0C\>!\<#662F\>\<#4E00\>\<#4E2A\>\<#540E\>\<#7F00\>\<#FF0C\>\<#4EE5\>\<#53CA\>\<#5206\>\<#9694\>\<#7B26\>\<#3002\>
+  <TeXmacs>中的数学符号都有一些属性，这些属性对应于他们想要表示的含义。例如，
+  <TeXmacs>能够知道<math|<op|+>>是一个中缀运算符，!是一个后缀，以及分隔符。
 
-  \<#91CD\>\<#8981\>\<#7684\>\<#6570\>\<#5B66\>\<#5E38\>\<#91CF\><math|\<mathe\>=2.71828\<cdots\>>,
-  <math|\<mathpi\>=3.14159\<cdots\>>\<#548C\><math|\<mathi\>>\<#5728\><TeXmacs>\<#4E2D\>\<#662F\>\<#7528\>\<#7279\>\<#6B8A\>\<#7684\>\<#7B26\>\<#53F7\>\<#8868\>\<#793A\>\<#7684\>\<#3002\>\<#8FD9\>\<#4E9B\>\<#7B26\>\<#53F7\>\<#548C\>\<#7EAF\>\<#7CB9\>\<#7684\>\<#5B57\>\<#7B26\><math|e>,
-  <math|\<pi\>>\<#548C\><math|i>\<#6709\>\<#7740\>\<#4E0D\>\<#540C\>\<#7684\>\<#5B57\>\<#5F62\>\<#FF0C\>\<#53EF\>\<#4EE5\>\<#901A\>\<#8FC7\>\<#5FEB\>\<#6377\>\<#952E\><shortcut|\<mathe\>>,
-  <shortcut|\<mathpi\>>\<#548C\><shortcut|\<mathi\>>\<#6765\>\<#8F93\>\<#5165\>\<#3002\>\<#6211\>\<#4EEC\>\<#5EFA\>\<#8BAE\>\<#7CFB\>\<#7EDF\>\<#6027\>\<#5730\>\<#4F7F\>\<#7528\>\<#8FD9\>\<#4E9B\>\<#5FEB\>\<#6377\>\<#952E\>\<#3002\>
+  重要的数学常量<math|\<mathe\>=2.71828\<cdots\>>,
+  <math|\<mathpi\>=3.14159\<cdots\>>和<math|\<mathi\>>在<TeXmacs>中是用特殊的符号表示的。这些符号和纯粹的字符<math|e>,
+  <math|\<pi\>>和<math|i>有着不同的字形，可以通过快捷键<shortcut|\<mathe\>>,
+  <shortcut|\<mathpi\>>和<shortcut|\<mathi\>>来输入。我们建议系统性地使用这些快捷键。
 
-  \<#76F8\>\<#53CD\>\<#FF0C\>\<#8BED\>\<#4E49\>\<#4E0A\>\<#4E0D\>\<#540C\>\<#7684\>\<#7B26\>\<#53F7\>\<#53EF\>\<#80FD\>\<#5728\>\<#5B57\>\<#5F62\>\<#4E0A\>\<#5F88\>\<#76F8\>\<#50CF\>\<#3002\>\<#6BD4\>\<#5982\><math|f<around|(|x,y|)>>\<#4E2D\>\<#7684\>\<#9017\>\<#53F7\>\<#5206\>\<#9694\>\<#7B26\>\<#FF0C\>\<#4E0E\><math|3\<comma\>14159\<cdots\>>\<#4E2D\>\<#7684\>\<#5C0F\>\<#6570\>\<#9017\>\<#53F7\>\<#610F\>\<#4E49\>\<#5B8C\>\<#5168\>\<#4E0D\>\<#540C\>\<#3002\>\<#8BF7\>\<#6CE8\>\<#610F\>\<#FF0C\>\<#8FD9\>\<#4E24\>\<#4E2A\>\<#7B26\>\<#53F7\>\<#7684\>\<#95F4\>\<#8DDD\>\<#89C4\>\<#5219\>\<#662F\>\<#4E0D\>\<#4E00\>\<#6837\>\<#7684\>\<#3002\>\<#8BED\>\<#4E49\>\<#4E0D\>\<#540C\>\<#4F46\>\<#5B57\>\<#5F62\>\<#76F8\>\<#540C\>\<#7684\>\<#7B26\>\<#53F7\>\<#79F0\>\<#4F5C\><em|\<#540C\>\<#5F62\>\<#5B57\>\<#7B26\>>\<#3002\>
-  \<#6CE8\>\<#610F\>\<#6211\>\<#4EEC\>\<#7684\>\<#8BED\>\<#4E49\>\<#662F\>\<#7EAF\>\<#8BED\>\<#6CD5\>\<#7684\>\<#FF1A\>\<#4F8B\>\<#5982\>\<#FF0C\><math|+>\<#4E2D\>\<#7F00\>\<#901A\>\<#5E38\>\<#7528\>\<#4E8E\>\<#52A0\>\<#6CD5\>\<#FF0C\>\<#4F46\>\<#6709\>\<#65F6\>\<#4E5F\>\<#7528\>\<#6765\>\<#8FDE\>\<#63A5\>\<#5B57\>\<#7B26\>\<#4E32\>\<#3002\>\<#7136\>\<#800C\>\<#FF0C\>\<#8FD9\>\<#4E24\>\<#79CD\>\<#7528\>\<#6CD5\>\<#5728\>\<#8BED\>\<#6CD5\>\<#4E0A\>\<#6CA1\>\<#6709\>\<#533A\>\<#522B\>\<#FF0C\>\<#56E0\>\<#4E3A\><math|+>\<#7B26\>\<#53F7\>\<#4ECD\>\<#7136\>\<#662F\>\<#4E00\>\<#4E2A\>\<#4E8C\>\<#5143\>\<#4E2D\>\<#7F00\>\<#FF0C\>\<#5728\>\<#4E0E\>\<#5176\>\<#4ED6\>\<#7B26\>\<#53F7\>\<#7684\>\<#4F18\>\<#5148\>\<#7EA7\>\<#4E0A\>\<#FF0C\>\<#4E24\>\<#8005\>\<#4E5F\>\<#662F\>\<#4E00\>\<#81F4\>\<#7684\>\<#3002\>
+  相反，语义上不同的符号可能在字形上很相像。比如<math|f<around|(|x,y|)>>中的逗号分隔符，与<math|3\<comma\>14159\<cdots\>>中的小数逗号意义完全不同。请注意，这两个符号的间距规则是不一样的。语义不同但字形相同的符号称作<em|同形字符>。
+  注意我们的语义是纯语法的：例如，<math|+>中缀通常用于加法，但有时也用来连接字符串。然而，这两种用法在语法上没有区别，因为<math|+>符号仍然是一个二元中缀，在与其他符号的优先级上，两者也是一致的。
 
-  \<#6700\>\<#5BB9\>\<#6613\>\<#6DF7\>\<#6DC6\>\<#7684\>\<#540C\>\<#5F62\>\<#5B57\>\<#7B26\>\<#662F\><TeXmacs>\<#652F\>\<#6301\>\<#7684\>\<#975E\>\<#53EF\>\<#89C1\>\<#5B57\>\<#7B26\>:
+  最容易混淆的同形字符是<TeXmacs>支持的非可见字符:
 
   <\itemize>
-    <item>\<#4E58\>\<#79EF\>\<#FF0C\>\<#8F93\>\<#5165\><key|*>\<#3002\>\<#4F8B\>\<#5982\>\<#FF1A\><math|a*b>\<#3002\>
+    <item>乘积，输入<key|*>。例如：<math|a*b>。
 
-    <item>\<#51FD\>\<#6570\>\<#FF0C\>\<#8F93\>\<#5165\><key|space>\<#3002\>\<#4F8B\>\<#5982\>\<#FF1A\><math|sin
-    x>\<#3002\>
+    <item>函数，输入<key|space>。例如：<math|sin x>。
 
-    <item>\<#975E\>\<#53EF\>\<#89C1\>\<#5206\>\<#9694\>\<#7B26\>\<#FF0C\>\<#8F93\>\<#5165\><shortcut|\<nocomma\>>\<#3002\>\<#4F8B\>\<#5982\>\<#FF1A\>\<#77E9\>\<#9635\><math|A=<around|(|a<rsub|i\<nocomma\>j>|)>>\<#3002\>
+    <item>非可见分隔符，输入<shortcut|\<nocomma\>>。例如：矩阵<math|A=<around|(|a<rsub|i\<nocomma\>j>|)>>。
 
-    <item>\<#975E\>\<#53EF\>\<#89C1\>\<#52A0\>\<#6CD5\>\<#FF0C\>\<#8F93\>\<#5165\><shortcut|\<noplus\>>\<#3002\>\<#4F8B\>\<#5982\>\<#FF1A\><math|17\<noplus\><frac*|3|8>>\<#3002\>
+    <item>非可见加法，输入<shortcut|\<noplus\>>。例如：<math|17\<noplus\><frac*|3|8>>。
 
-    <item>\<#975E\>\<#53EF\>\<#89C1\>\<#7B26\>\<#53F7\>\<#FF0C\>\<#8F93\>\<#5165\><shortcut|\<nosymbol\>>\<#3002\>\<#4F8B\>\<#5982\>\<#FF1A\>\<#9012\>\<#589E\>
-    <math|\<nosymbol\>+1>\<#3002\>
+    <item>非可见符号，输入<shortcut|\<nosymbol\>>。例如：递增
+    <math|\<nosymbol\>+1>。
 
-    <item><label|nobracket>\<#975E\>\<#53EF\>\<#89C1\>\<#62EC\>\<#53F7\>\<#FF08\>\<#4E3B\>\<#8981\>\<#7528\>\<#4E8E\>\<#5185\>\<#90E8\>\<#60C5\>\<#51B5\>\<#FF09\>\<#3002\>\<#4E00\>\<#7EC4\>\<#5339\>\<#914D\>\<#7684\>\<#975E\>\<#53EF\>\<#89C1\>\<#62EC\>\<#53F7\>\<#7528\><key|(
-    var>\<#8F93\>\<#5165\>\<#3002\>
+    <item><label|nobracket>非可见括号（主要用于内部情况）。一组匹配的非可见括号用<key|(
+    var>输入。
   </itemize>
 
-  \<#518D\>\<#4E00\>\<#6B21\>\<#5EFA\>\<#8BAE\>\<#5927\>\<#5BB6\>\<#8F93\>\<#5165\>\<#8FD9\>\<#4E9B\>\<#975E\>\<#53EF\>\<#89C1\>\<#7B26\>\<#53F7\>\<#7684\>\<#65F6\>\<#5019\>\<#683C\>\<#5916\>\<#5C0F\>\<#5FC3\>\<#3002\>\<#5C24\>\<#5176\>\<#662F\>\<#533A\>\<#5206\>\<#4E58\>\<#6CD5\>\<#548C\>\<#51FD\>\<#6570\>\<#7684\>\<#65F6\>\<#5019\>\<#8981\>\<#6CE8\>\<#610F\>\<#FF0C\>\<#56E0\>\<#4E3A\>\<#6CA1\>\<#6709\>100%\<#51C6\>\<#786E\>\<#7684\>\<#65B9\>\<#6CD5\>\<#6765\>\<#533A\>\<#5206\>\<#8FD9\>\<#4E8C\>\<#8005\>\<#FF08\>\<#6211\>\<#4EEC\>\<#524D\>\<#9762\>\<#5DF2\>\<#7ECF\>\<#63D0\>\<#5230\>\<#4E86\><math|a<around|(|b+c|)>>\<#548C\><math|f<around|(|x+y|)>>\<#FF09\>\<#3002\>
+  再一次建议大家输入这些非可见符号的时候格外小心。尤其是区分乘法和函数的时候要注意，因为没有100%准确的方法来区分这二者（我们前面已经提到了<math|a<around|(|b+c|)>>和<math|f<around|(|x+y|)>>）。
 
-  <TeXmacs>\<#652F\>\<#6301\>\<#4E24\>\<#79CD\>\<#975E\>\<#5E38\>\<#901A\>\<#7528\>\<#7684\>\<#8F93\>\<#5165\>\<#540C\>\<#5F62\>\<#5B57\>\<#7B26\>\<#7684\>\<#65B9\>\<#5F0F\>\<#3002\>\<#4E00\>\<#65B9\>\<#9762\>\<#FF0C\>\<#6211\>\<#4EEC\>\<#4F9D\>\<#8D56\>\<#4E8E\>\<#6807\>\<#51C6\>\<#53D8\>\<#4F53\>\<#7CFB\>\<#7EDF\>\<#3002\>\<#4F8B\>\<#5982\>\<#FF0C\><math|\<times\>>\<#548C\><math|\<ast\>>\<#5206\>\<#522B\>\<#901A\>\<#8FC7\><shortcut|\<times\>>\<#548C\><shortcut|\<ast\>>\<#6765\>\<#5F97\>\<#5230\>\<#3002\>\<#5728\>\<#8868\><nbsp><reference|homoglyph-table>\<#4E2D\>\<#6211\>\<#4EEC\>\<#7ED9\>\<#51FA\>\<#4E86\><TeXmacs>\<#652F\>\<#6301\>\<#7684\>\<#540C\>\<#5F62\>\<#5B57\>\<#7B26\>\<#7684\>\<#5B8C\>\<#6574\>\<#5217\>\<#8868\>\<#3002\>
+  <TeXmacs>支持两种非常通用的输入同形字符的方式。一方面，我们依赖于标准变体系统。例如，<math|\<times\>>和<math|\<ast\>>分别通过<shortcut|\<times\>>和<shortcut|\<ast\>>来得到。在表<nbsp><reference|homoglyph-table>中我们给出了<TeXmacs>支持的同形字符的完整列表。
 
-  <big-table|<block|<tformat|<table|<row|<cell|\<#5FEB\>\<#6377\>\<#952E\>>|<cell|\<#5B57\>\<#5F62\>>|<cell|\<#4F8B\>\<#5B50\>>|<cell|\<#8BED\>\<#4E49\>>>|<row|<cell|<key|*>>|<cell|>|<cell|<math|a*b>>|<cell|\<#4E58\>\<#6CD5\>>>|<row|<cell|<key|space>>|<cell|>|<cell|<math|sin
-  x>>|<cell|\<#51FD\>\<#6570\>>>|<row|<cell|<shortcut|\<nocomma\>>>|<cell|>|<cell|<math|a<rsub|i\<nocomma\>j>=a<rsub|j\<nocomma\>i>>>|<cell|\<#4E0D\>\<#53EF\>\<#89C1\>\<#5206\>\<#9694\>\<#7B26\>>>|<row|<cell|<shortcut|\<noplus\>>>|<cell|>|<cell|<with|mode|math|17\<noplus\><frac*|3|8>>>|<cell|\<#4E0D\>\<#53EF\>\<#89C1\>\<#52A0\>\<#6CD5\>>>|<row|<cell|<shortcut|\<nosymbol\>>>|<cell|>|<cell|<math|\<nosymbol\>+1>>|<cell|\<#4E0D\>\<#53EF\>\<#89C1\>\<#7B26\>\<#53F7\>>>|<row|<cell|<key|(
-  var>>|<cell|>|<cell|<math|\<Phi\>\<equiv\><around*|\<nobracket\>|\<forall\>x,P<around*|(|x|)>|\<nobracket\>>>>|<cell|\<#4E0D\>\<#53EF\>\<#89C1\>\<#62EC\>\<#53F7\>>>|<row|<cell|<key|\|>>|<cell|<math|\|>>|<cell|<math|<around*|\||-x|\|>=<around*|\||x|\|>>>|<cell|\<#7EDD\>\<#5BF9\>\<#503C\>>>|<row|<cell|<key|\|
-  var>>|<cell|<math|\|>>|<cell|<math|<around*|{|x\<in\>\<bbb-R\>\|x\<gtr\>0|}>>>|<cell|\<#5206\>\<#9694\>\<#7AD6\>\<#7EBF\>>>|<row|<cell|<key|\|
-  var var>>|<cell|<math|\|>>|<cell|<math|<around*|\<langle\>|a<rsub|i><rsup|2><mid|\|>a<rsub|j><rsup|2>|\<rangle\>>>>|<cell|\<#53EF\>\<#62C9\>\<#4F38\>\<#7684\>\<#4E2D\>\<#95F4\>\<#7AD6\>\<#7EBF\>>>|<row|<cell|<key|\|
-  var var var var>>|<cell|<math|\|>>|<cell|<math|11\<divides\>1001>>|<cell|\<#6574\>\<#9664\>\<#5173\>\<#7CFB\>>>|<row|<cell|<key|,>>|<cell|,>|<cell|<math|f<around*|(|x,y|)>>>|<cell|\<#9017\>\<#53F7\>\<#5206\>\<#9694\>\<#7B26\>>>|<row|<cell|<key|,
-  var>>|<cell|,>|<cell|<math|123\<comma\>456>>|<cell|\<#5341\>\<#8FDB\>\<#5236\>\<#6570\>\<#5B57\>\<#9017\>\<#53F7\>>>|<row|<cell|<key|.>>|<cell|.>|<cell|<math|123.456>>|<cell|\<#5341\>\<#8FDB\>\<#5236\>\<#6570\>\<#5B57\>\<#5C0F\>\<#6570\>\<#70B9\>>>|<row|<cell|<key|.
-  var>>|<cell|.>|<cell|<math|\<mathlambda\>x\<point\>x<rsup|2>>>|<cell|\<#70B9\>\<#53F7\>\<#8FDE\>\<#63A5\>\<#7B26\>>>|<row|<cell|<key|*
-  var var var>>|<cell|<math|\<cdot\>>>|<cell|<math|\<b-v\>\<cdot\>\<b-w\>>>|<cell|\<#70B9\>\<#4E58\>>>|<row|<cell|<key|.
-  var var>>|<cell|<math|\<cdummy\>>>|<cell|<math|\<cdummy\>+1>>|<cell|Dummy\<#901A\>\<#914D\>\<#7B26\>>>|<row|<cell|<key|:>>|<cell|<math|:>>|<cell|<math|<around*|{|x\<in\>E:P<around*|(|x|)>|}>>>|<cell|\<#5206\>\<#9694\>\<#7B26\>>>|<row|<cell|<shortcut|\<of\>>>|<cell|<math|\<of\>>>|<cell|<math|x\<of\><math-ss|Int>>>|<cell|\<#7C7B\>\<#578B\>\<#6EE1\>\<#8DB3\>>>|<row|<cell|<shortcut|\<over\>>>|<cell|<math|\<over\>>>|<cell|<math|121\<over\>11=11>>|<cell|\<#9664\>\<#6CD5\>>>|<row|<cell|<key|\\
-  var>>|<cell|<math|\\>>|<cell|<math|\\x>>|<cell|\<#53CD\>\<#659C\>\<#6760\>>>|<row|<cell|<key|\\
-  var var>>|<cell|<math|\\>>|<cell|<math|\<bbb-N\><rsup|\<gtr\>>=\<bbb-N\>\<setminus\><around*|{|0|}>>>|<cell|\<#96C6\>\<#5408\>\<#51CF\>\<#6CD5\>>>|<row|<cell|<key|&>>|<cell|<math|\<wedge\>>>|<cell|<math|1=1\<wedge\>2=2>>|<cell|\<#903B\>\<#8F91\>\<#4E0E\>>>|<row|<cell|<key|*
-  &>>|<cell|<math|\<exterior\>>>|<cell|<math|\<mathd\>x\<exterior\>\<mathd\>y>>|<cell|\<#6954\>\<#79EF\>>>>>>|<label|homoglyph-table><TeXmacs>\<#652F\>\<#6301\>\<#7684\>\<#540C\>\<#5F62\>\<#5F02\>\<#4E49\>\<#5B57\>\<#7B26\>.>
+  <big-table|<block|<tformat|<table|<row|<cell|快捷键>|<cell|字形>|<cell|例子>|<cell|语义>>|<row|<cell|<key|*>>|<cell|>|<cell|<math|a*b>>|<cell|乘法>>|<row|<cell|<key|space>>|<cell|>|<cell|<math|sin
+  x>>|<cell|函数>>|<row|<cell|<shortcut|\<nocomma\>>>|<cell|>|<cell|<math|a<rsub|i\<nocomma\>j>=a<rsub|j\<nocomma\>i>>>|<cell|不可见分隔符>>|<row|<cell|<shortcut|\<noplus\>>>|<cell|>|<cell|<with|mode|math|17\<noplus\><frac*|3|8>>>|<cell|不可见加法>>|<row|<cell|<shortcut|\<nosymbol\>>>|<cell|>|<cell|<math|\<nosymbol\>+1>>|<cell|不可见符号>>|<row|<cell|<key|(
+  var>>|<cell|>|<cell|<math|\<Phi\>\<equiv\><around*|\<nobracket\>|\<forall\>x,P<around*|(|x|)>|\<nobracket\>>>>|<cell|不可见括号>>|<row|<cell|<key|\|>>|<cell|<math|\|>>|<cell|<math|<around*|\||-x|\|>=<around*|\||x|\|>>>|<cell|绝对值>>|<row|<cell|<key|\|
+  var>>|<cell|<math|\|>>|<cell|<math|<around*|{|x\<in\>\<bbb-R\>\|x\<gtr\>0|}>>>|<cell|分隔竖线>>|<row|<cell|<key|\|
+  var var>>|<cell|<math|\|>>|<cell|<math|<around*|\<langle\>|a<rsub|i><rsup|2><mid|\|>a<rsub|j><rsup|2>|\<rangle\>>>>|<cell|可拉伸的中间竖线>>|<row|<cell|<key|\|
+  var var var var>>|<cell|<math|\|>>|<cell|<math|11\<divides\>1001>>|<cell|整除关系>>|<row|<cell|<key|,>>|<cell|,>|<cell|<math|f<around*|(|x,y|)>>>|<cell|逗号分隔符>>|<row|<cell|<key|,
+  var>>|<cell|,>|<cell|<math|123\<comma\>456>>|<cell|十进制数字逗号>>|<row|<cell|<key|.>>|<cell|.>|<cell|<math|123.456>>|<cell|十进制数字小数点>>|<row|<cell|<key|.
+  var>>|<cell|.>|<cell|<math|\<mathlambda\>x\<point\>x<rsup|2>>>|<cell|点号连接符>>|<row|<cell|<key|*
+  var var var>>|<cell|<math|\<cdot\>>>|<cell|<math|\<b-v\>\<cdot\>\<b-w\>>>|<cell|点乘>>|<row|<cell|<key|.
+  var var>>|<cell|<math|\<cdummy\>>>|<cell|<math|\<cdummy\>+1>>|<cell|Dummy通配符>>|<row|<cell|<key|:>>|<cell|<math|:>>|<cell|<math|<around*|{|x\<in\>E:P<around*|(|x|)>|}>>>|<cell|分隔符>>|<row|<cell|<shortcut|\<of\>>>|<cell|<math|\<of\>>>|<cell|<math|x\<of\><math-ss|Int>>>|<cell|类型满足>>|<row|<cell|<shortcut|\<over\>>>|<cell|<math|\<over\>>>|<cell|<math|121\<over\>11=11>>|<cell|除法>>|<row|<cell|<key|\\
+  var>>|<cell|<math|\\>>|<cell|<math|\\x>>|<cell|反斜杠>>|<row|<cell|<key|\\
+  var var>>|<cell|<math|\\>>|<cell|<math|\<bbb-N\><rsup|\<gtr\>>=\<bbb-N\>\<setminus\><around*|{|0|}>>>|<cell|集合减法>>|<row|<cell|<key|&>>|<cell|<math|\<wedge\>>>|<cell|<math|1=1\<wedge\>2=2>>|<cell|逻辑与>>|<row|<cell|<key|*
+  &>>|<cell|<math|\<exterior\>>>|<cell|<math|\<mathd\>x\<exterior\>\<mathd\>y>>|<cell|楔积>>>>>|<label|homoglyph-table><TeXmacs>支持的同形异义字符.>
 
   <tmdoc-copyright|2018|Joris van der Hoeven|Alexander Misel>
 
@@ -62,6 +61,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>

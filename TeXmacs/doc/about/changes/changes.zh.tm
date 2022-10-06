@@ -1,17 +1,17 @@
-<TeXmacs|1.99.2>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|chinese>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|<TeXmacs>\<#7684\>\<#66F4\>\<#65B0\>>
+  <tmdoc-title|<TeXmacs>的更新>
 
   <\traverse>
-    <branch|\<#91CD\>\<#8981\>\<#66F4\>\<#65B0\>|changes-main.en.tm>
+    <branch|重要更新|changes-main.en.tm>
 
-    <branch|\<#66F4\>\<#65B0\>\<#8BB0\>\<#5F55\>|change-log.en.tm>
+    <branch|更新记录|change-log.en.tm>
   </traverse>
 
-  <tmdoc-copyright|1998--2002|Joris van der Hoeven>
+  <tmdoc-copyright|1998\U2002|Joris van der Hoeven>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -20,6 +20,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>

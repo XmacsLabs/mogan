@@ -1,30 +1,27 @@
-<TeXmacs|1.99.13>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|chinese|old-spacing|old-dots>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|\<#5B57\>\<#4F53\>\<#9009\>\<#62E9\>\<#7CFB\>\<#7EDF\>>
+  <tmdoc-title|字体选择系统>
 
-  \<#5728\><TeXmacs>\<#4E2D\>\<#FF0C\>\<#5B57\>\<#4F53\>\<#6709\>\<#4EE5\>\<#4E0B\>\<#4E94\>\<#79CD\>\<#4E3B\>\<#8981\>\<#5C5E\>\<#6027\>\<#FF1A\>
+  在<TeXmacs>中，字体有以下五种主要属性：
 
   <\itemize>
-    <item>\<#540D\>\<#79F0\> (roman, pandora, concrete\<#7B49\>\<#7B49\>)
+    <item>名称 (roman, pandora, concrete等等)
 
-    <item>\<#5B57\>\<#65CF\> (roman, typewriter\<#6216\>\<#8005\>sans serif)
+    <item>字族 (roman, typewriter或者sans serif)
 
-    <item>\<#5927\>\<#5C0F\> (\<#57FA\>\<#51C6\>\<#5927\>\<#5C0F\>\<#548C\>\<#76F8\>\<#5BF9\>\<#5927\>\<#5C0F\>
-    )
+    <item>大小 (基准大小和相对大小 )
 
-    <item>\<#5B57\>\<#578B\> (\<#7C97\>\<#9ED1\>\<#FF0C\>\<#9002\>\<#4E2D\>
-    \<#6216\>\<#8005\> \<#7EC6\>\<#9ED1\>)
+    <item>字型 (粗黑，适中 或者 细黑)
 
-    <item>\<#5B57\>\<#5F62\> (\<#503E\>\<#659C\>\<#FF0C\>\<#659C\>\<#4F53\>\<#FF0C\>\<#5C0F\>\<#4F53\>\<#5927\>\<#5199\>\<#7B49\>\<#7B49\>)
+    <item>字形 (倾斜，斜体，小体大写等等)
   </itemize>
 
-  \<#6CE8\>\<#610F\>\<#FF0C\>\<#5728\><LaTeX>
-  <math|2\<varepsilon\>>\<#7684\>\<#5B57\>\<#4F53\>\<#9009\>\<#62E9\>\<#7CFB\>\<#7EDF\>\<#4E2D\>\<#FF0C\>\<#6CA1\>\<#6709\>\<#7EC6\>\<#5206\>\<#5B57\>\<#4F53\>\<#540D\>\<#79F0\>\<#548C\>\<#5B57\>\<#65CF\>\<#3002\>\<#6CE8\>\<#610F\>\<#FF0C\>\<#57FA\>\<#51C6\>\<#5B57\>\<#4F53\>\<#5927\>\<#5C0F\>\<#662F\>\<#6574\>\<#4E2A\>\<#6587\>\<#6863\>\<#7684\>\<#5C5E\>\<#6027\>\<#FF0C\>\<#5728\><menu|Document|Font|Size>\<#4E2D\>\<#6307\>\<#5B9A\>\<#3002\>
+  注意，在<LaTeX> <math|2\<varepsilon\>>的字体选择系统中，没有细分字体名称和字族。注意，基准字体大小是整个文档的属性，在<menu|Document|Font|Size>中指定。
 
-  <tmdoc-copyright|1998\U2020|Joris van der Hoeven|\<#6C88\>\<#8FBE\>>
+  <tmdoc-copyright|1998\U2020|Joris van der Hoeven|沈达>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1

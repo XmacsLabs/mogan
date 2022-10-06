@@ -1,17 +1,17 @@
-<TeXmacs|1.99.18>
+<TeXmacs|2.1.3>
 
 <style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|<TeXmacs>\<#54F2\>\<#5B66\>>
+  <tmdoc-title|<TeXmacs>哲学>
 
   <\traverse>
-    <branch|\<#7B80\>\<#8FF0\>|description.zh.tm>
+    <branch|简述|description.zh.tm>
 
-    <branch|\<#79D1\>\<#5B66\>\<#7684\>\<#81EA\>\<#7531\>|freedom.zh.tm>
+    <branch|科学的自由|freedom.zh.tm>
   </traverse>
 
-  <tmdoc-copyright|1998\U2021|Joris van der Hoeven|\<#6C88\>\<#8FBE\>>
+  <tmdoc-copyright|1998\U2021|Joris van der Hoeven|沈达>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -20,6 +20,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>

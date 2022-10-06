@@ -1,30 +1,29 @@
-<TeXmacs|1.99.2>
+<TeXmacs|2.1.3>
 
-<style|tmdoc>
+<style|<tuple|tmdoc|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|\<#5E03\>\<#5C14\>\<#8FD0\>\<#7B97\>>
+  <tmdoc-title|布尔运算>
 
   <\explain>
     <explain-macro|or|expr-1|<math|\<cdots\>>|expr-n>
 
     <explain-macro|and|expr-1|<math|\<cdots\>>|expr-n>
   <|explain>
-    \<#8FD4\>\<#56DE\>\<#591A\>\<#4E2A\>\<#8868\>\<#8FBE\>\<#5F0F\>\<#7684\>\<#6216\>\<#548C\>\<#4E0E\>.\<#4F8B\>\<#5982\>\<#FF0C\><inactive*|<or|false|<equal|1|1>|false>>
+    返回多个表达式的或和与.例如，<inactive*|<or|false|<equal|1|1>|false>>
     = <or|false|<equal|1|1>|false>.
   </explain>
 
   <\explain>
     <explain-macro|xor|expr-1|expr-2>
   <|explain>
-    \<#8FD4\>\<#56DE\>\<#4E24\>\<#4E2A\>\<#8868\>\<#8FBE\>\<#5F0F\>\<#7684\>\<#5F02\>\<#6216\>,
-    <abbr|i.e.><inactive*|<xor|true|true>>\<#5F97\>\<#5230\><xor|true|true>.
+    返回两个表达式的异或, <abbr|i.e.><inactive*|<xor|true|true>>得到<xor|true|true>.
   </explain>
 
   <\explain>
     <explain-macro|not|expr>
   <|explain>
-    \<#8FD4\>\<#56DE\>\<#8868\>\<#8FBE\>\<#5F0F\><src-arg|expr>\<#7684\>\<#5426\>\<#5B9A\>.
+    返回表达式<src-arg|expr>的否定.
   </explain>
 
   <tmdoc-copyright|2004|Joris van der Hoeven>
@@ -36,6 +35,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>

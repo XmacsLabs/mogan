@@ -1,55 +1,55 @@
-<TeXmacs|1.99.9>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|old-spacing|chinese>>
+<style|<tuple|tmdoc|old-spacing|chinese|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|GNU <TeXmacs> \<#7528\>\<#6237\>\<#624B\>\<#518C\>>
+  <tmdoc-title|GNU <TeXmacs> 用户手册>
 
   <\traverse>
-    <branch|\<#5F00\>\<#59CB\>\<#4F7F\>\<#7528\>|start/man-getting-started.zh.tmml>
+    <branch|开始使用|start/man-getting-started.zh.tmml>
 
-    <branch|\<#64B0\>\<#5199\>\<#7B80\>\<#5355\>\<#7684\>\<#6587\>\<#6863\>|text/man-text.zh.tm>
+    <branch|撰写简单的文档|text/man-text.zh.tm>
 
-    <branch|\<#6570\>\<#5B66\>\<#516C\>\<#5F0F\>|math/man-math.zh.tm>
+    <branch|数学公式|math/man-math.zh.tm>
 
-    <branch|\<#8868\>\<#683C\>\<#5904\>\<#7406\>|table/man-table.zh.tmml>
+    <branch|表格处理|table/man-table.zh.tmml>
 
-    <branch|\<#94FE\>\<#63A5\>\<#548C\>\<#5185\>\<#5BB9\>\<#81EA\>\<#52A8\>\<#751F\>\<#6210\>|links/man-links.zh.tm>
+    <branch|链接和内容自动生成|links/man-links.zh.tm>
 
-    <branch|\<#5185\>\<#7F6E\>\<#4F5C\>\<#56FE\>\<#5DE5\>\<#5177\>|graphics/man-graphics.zh.tm>
+    <branch|内置作图工具|graphics/man-graphics.zh.tm>
 
-    <branch|\<#8FDB\>\<#9636\>\<#5E03\>\<#5C40\>\<#7279\>\<#6027\>|layout/man-layout.zh.tm>
+    <branch|进阶布局特性|layout/man-layout.zh.tm>
 
-    <branch|\<#7F16\>\<#8F91\>\<#5DE5\>\<#5177\>|editing/man-editing-tools.zh.tm>
+    <branch|编辑工具|editing/man-editing-tools.zh.tm>
 
-    <branch|\<#5E7B\>\<#706F\>\<#7247\>|beamer/man-beamer.en.tm>
+    <branch|幻灯片|beamer/man-beamer.en.tm>
 
-    <branch|<TeXmacs>\<#7684\>\<#4EA4\>\<#4E92\>\<#5F0F\>\<#754C\>\<#9762\>|interface/man-itf.en.tm>
+    <branch|<TeXmacs>的交互式界面|interface/man-itf.en.tm>
 
-    <branch|\<#64B0\>\<#5199\>\<#6837\>\<#5F0F\>|../devel/style/style.en.tm>
+    <branch|撰写样式|../devel/style/style.en.tm>
 
-    <branch|\<#5B9A\>\<#5236\> <TeXmacs>|scheme/man-scheme.zh.tm>
+    <branch|定制 <TeXmacs>|scheme/man-scheme.zh.tm>
 
-    <branch|<TeXmacs>\<#7684\>\<#63D2\>\<#4EF6\>\<#7CFB\>\<#7EDF\>|../devel/plugin/plugins.en.tm>
+    <branch|<TeXmacs>的插件系统|../devel/plugin/plugins.en.tm>
 
-    <branch|<TeXmacs>\<#7684\>\<#683C\>\<#5F0F\>|../devel/format/basics/basics.en.tm>
+    <branch|<TeXmacs>的格式|../devel/format/basics/basics.en.tm>
 
-    <branch|\<#6807\>\<#51C6\>\<#7684\>\<#73AF\>\<#5883\>\<#53D8\>\<#91CF\>|../devel/format/environment/environment.en.tm>
+    <branch|标准的环境变量|../devel/format/environment/environment.en.tm>
 
-    <branch|<TeXmacs>\<#7684\>\<#539F\>\<#8BED\>|../devel/format/regular/regular.en.tm>
+    <branch|<TeXmacs>的原语|../devel/format/regular/regular.en.tm>
 
-    <branch|\<#6837\>\<#5F0F\>\<#6587\>\<#4EF6\>\<#7684\>\<#8BED\>\<#8A00\>|../devel/format/stylesheet/stylesheet.en.tm>
+    <branch|样式文件的语言|../devel/format/stylesheet/stylesheet.en.tm>
 
-    <branch|<TeXmacs>\<#7684\>\<#6807\>\<#51C6\>\<#6837\>\<#5F0F\>|styles/styles.en.tm>
+    <branch|<TeXmacs>的标准样式|styles/styles.en.tm>
 
-    <branch|\<#4E0E\>\<#5176\>\<#5B83\>\<#683C\>\<#5F0F\>\<#7684\>\<#517C\>\<#5BB9\>|convert/man-convert.en.tm>
+    <branch|与其它格式的兼容|convert/man-convert.en.tm>
 
-    <extra-branch|\<#914D\>\<#7F6E\><TeXmacs>|config/man-configuration.zh.tm>
+    <extra-branch|配置<TeXmacs>|config/man-configuration.zh.tm>
 
-    <extra-branch|\<#5173\>\<#4E8E\>GNU <TeXmacs>|../about/about.zh.tm>
+    <extra-branch|关于GNU <TeXmacs>|../about/about.zh.tm>
   </traverse>
 
-  <tmdoc-copyright|1998--2019|Joris van der Hoeven|\<#6C88\>\<#8FBE\>>
+  <tmdoc-copyright|1998\U2019|Joris van der Hoeven|沈达>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -58,6 +58,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>
