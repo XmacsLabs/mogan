@@ -44,7 +44,7 @@ edit_replace_rep::inside (tree_label l) {
 path
 edit_replace_rep::search_upwards (tree_label l) {
   path p= path_up (tp, 2);
-  while (!is_func (subtree (et, p), l)) {
+  while (!is_nil (p) && !is_func (subtree (et, p), l)) {
     if (p == rp) return path ();
     p= path_up (p);
   }
