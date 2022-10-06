@@ -1,53 +1,52 @@
-<TeXmacs|1.99.13>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|chinese|old-spacing|old-dots>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|<TeXmacs>\<#7684\>\<#6587\>\<#6863\>>
+  <tmdoc-title|<TeXmacs>的文档>
 
-  <TeXmacs>\<#7684\>\<#6587\>\<#6863\>\<#7247\>\<#6BB5\>\<#53EF\>\<#770B\>\<#4F5C\>\<#662F\><TeXmacs>\<#6811\>\<#FF0C\>\<#800C\><TeXmacs>\<#6587\>\<#6863\>\<#5219\>\<#662F\>\<#4E00\>\<#68F5\>\<#7279\>\<#6B8A\>\<#5F62\>\<#5F0F\>\<#7684\>\<#6811\>\<#3002\>\<#4E0B\>\<#9762\>\<#6211\>\<#4EEC\>\<#5C31\>\<#5C06\>\<#5177\>\<#4F53\>\<#63CF\>\<#7ED8\>\<#8FD9\>\<#68F5\>\<#6811\>\<#3002\><TeXmacs>\<#6587\>\<#6863\>\<#6811\>\<#7684\>\<#6839\>\<#8282\>\<#70B9\>\<#5FC5\>\<#987B\>\<#662F\><markup|document>\<#6807\>\<#8BB0\>\<#FF0C\>\<#800C\>\<#5176\>\<#5B50\>\<#8282\>\<#70B9\>\<#5FC5\>\<#987B\>\<#662F\>\<#4EE5\>\<#4E0B\>\<#5F62\>\<#5F0F\>\<#4E4B\>\<#4E00\>\<#FF1A\>
+  <TeXmacs>的文档片段可看作是<TeXmacs>树，而<TeXmacs>文档则是一棵特殊形式的树。下面我们就将具体描绘这棵树。<TeXmacs>文档树的根节点必须是<markup|document>标记，而其子节点必须是以下形式之一：
 
-  <\explain|<explain-macro|TeXmacs|version><explain-synopsis|<TeXmacs>\<#7684\>\<#7248\>\<#672C\>>>
-    \<#8FD9\>\<#4E2A\>\<#547D\>\<#4EE4\>\<#6807\>\<#8BB0\>\<#6307\>\<#5B9A\>\<#4E86\>\<#8BE5\>\<#6587\>\<#6863\>\<#7684\><TeXmacs>\<#7684\>\<#7248\>\<#672C\>\<#3002\>
+  <\explain|<explain-macro|TeXmacs|version><explain-synopsis|<TeXmacs>的版本>>
+    这个命令标记指定了该文档的<TeXmacs>的版本。
   </explain>
 
-  <\explain|<explain-macro|project|ref><explain-synopsis|\<#5DE5\>\<#7A0B\>>>
-    \<#6587\>\<#6863\>\<#6240\>\<#5C5E\>\<#7684\>\<#5DE5\>\<#7A0B\>\<#FF0C\>\<#53EF\>\<#6709\>\<#53EF\>\<#65E0\>\<#3002\>
+  <\explain|<explain-macro|project|ref><explain-synopsis|工程>>
+    文档所属的工程，可有可无。
   </explain>
 
   <\explain>
     <explain-macro|style|version>
 
-    <explain-macro|style|<with|font-shape|right|<explain-macro|tuple|style|pack-1|<math|\<cdots\>>|pack-n>>><explain-synopsis|\<#6837\>\<#5F0F\>\<#548C\>\<#5B8F\>\<#5305\>>
+    <explain-macro|style|<with|font-shape|right|<explain-macro|tuple|style|pack-1|<math|\<cdots\>>|pack-n>>><explain-synopsis|样式和宏包>
   <|explain>
-    \<#6587\>\<#6863\>\<#7684\>\<#6837\>\<#5F0F\>\<#548C\>\<#989D\>\<#5916\>\<#7684\>\<#5B8F\>\<#5305\>\<#FF0C\>\<#53EF\>\<#6709\>\<#53EF\>\<#65E0\>\<#3002\>
+    文档的样式和额外的宏包，可有可无。
   </explain>
 
-  <\explain|<explain-macro|body|content><explain-synopsis|\<#6587\>\<#6863\>\<#7684\>\<#4E3B\>\<#4F53\>>>
-    \<#8FD9\>\<#4E2A\>\<#547D\>\<#4EE4\>\<#6807\>\<#8BB0\>\<#6307\>\<#5B9A\>\<#4E86\>\<#6587\>\<#6863\>\<#7684\>\<#4E3B\>\<#4F53\>\<#3002\>
+  <\explain|<explain-macro|body|content><explain-synopsis|文档的主体>>
+    这个命令标记指定了文档的主体。
   </explain>
 
-  <\explain|<label|initial-env><explain-macro|initial|table><explain-synopsis|\<#521D\>\<#59CB\>\<#5316\>\<#73AF\>\<#5883\>>>
-    \<#6587\>\<#6863\>\<#7684\>\<#521D\>\<#59CB\>\<#5316\>\<#73AF\>\<#5883\>\<#FF0C\>\<#5982\>\<#9875\>\<#9762\>\<#5927\>\<#5C0F\>\<#3001\>\<#8865\>\<#767D\>\<#7B49\>\<#4FE1\>\<#606F\>\<#FF0C\>\<#53EF\>\<#9009\>\<#3002\><inactive|<arg|table>>\<#7684\>\<#5F62\>\<#5F0F\>\<#662F\><explain-macro|collection|binding-1|<math|\<cdots\>>|binding-n>\<#3002\>\<#5176\>\<#4E2D\>\<#6BCF\>\<#4E00\>\<#4E2A\><src-arg|binding-<no-break>i>\<#7684\>\<#5F62\>\<#5F0F\>\<#90FD\>\<#662F\><explain-macro|associate|var-i|val-i>\<#FF0C\>\<#610F\>\<#601D\>\<#662F\>\<#5C06\>\<#521D\>\<#59CB\>\<#503C\><inactive|<arg|val-i>>\<#5173\>\<#8054\>\<#5230\>\<#73AF\>\<#5883\>\<#53D8\>\<#91CF\><inactive|<arg|var-i>>\<#4E0A\>\<#3002\>\<#6CA1\>\<#6709\>\<#51FA\>\<#73B0\>\<#5728\><inactive|<arg|table>>\<#91CC\>\<#9762\>\<#7684\>\<#73AF\>\<#5883\>\<#53D8\>\<#91CF\>\<#7684\>\<#521D\>\<#59CB\>\<#503C\>\<#7531\>\<#6837\>\<#5F0F\>\<#6587\>\<#4EF6\>\<#548C\>\<#5B8F\>\<#5305\>\<#51B3\>\<#5B9A\>\<#3002\>
+  <\explain|<label|initial-env><explain-macro|initial|table><explain-synopsis|初始化环境>>
+    文档的初始化环境，如页面大小、补白等信息，可选。<inactive|<arg|table>>的形式是<explain-macro|collection|binding-1|<math|\<cdots\>>|binding-n>。其中每一个<src-arg|binding-<no-break>i>的形式都是<explain-macro|associate|var-i|val-i>，意思是将初始值<inactive|<arg|val-i>>关联到环境变量<inactive|<arg|var-i>>上。没有出现在<inactive|<arg|table>>里面的环境变量的初始值由样式文件和宏包决定。
   </explain>
 
-  <\explain|<explain-macro|references|table><explain-synopsis|\<#5F15\>\<#7528\>>>
-    \<#6587\>\<#6863\>\<#4E2D\>\<#6240\>\<#6709\>\<#6709\>\<#6548\>\<#5F15\>\<#7528\>\<#7684\>\<#5217\>\<#8868\>\<#FF0C\>\<#53EF\>\<#9009\>\<#3002\>\<#5176\>\<#5B9E\>\<#8FD9\>\<#4E9B\>\<#4FE1\>\<#606F\>\<#662F\>\<#53EF\>\<#4EE5\>\<#81EA\>\<#52A8\>\<#751F\>\<#6210\>\<#7684\>\<#FF0C\>\<#4F46\>\<#9700\>\<#8981\>\<#591A\>\<#6B21\>\<#626B\>\<#63CF\>\<#5168\>\<#6587\>\<#3002\>\<#4E3A\>\<#4E86\>\<#4F7F\>\<#7F16\>\<#8F91\>\<#5668\>\<#5728\>\<#6253\>\<#5F00\>\<#6587\>\<#6863\>\<#7684\>\<#65F6\>\<#5019\>\<#66F4\>\<#5FEB\>\<#FF0C\>\<#5C31\>\<#628A\>\<#5F15\>\<#7528\>\<#76F4\>\<#63A5\>\<#2018\>\<#2018\>\<#7F13\>\<#5B58\>\<#2019\>'\<#5728\>\<#6587\>\<#6863\>\<#4E2D\>\<#4E86\>\<#3002\>
+  <\explain|<explain-macro|references|table><explain-synopsis|引用>>
+    文档中所有有效引用的列表，可选。其实这些信息是可以自动生成的，但需要多次扫描全文。为了使编辑器在打开文档的时候更快，就把引用直接‘‘缓存’'在文档中了。
 
-    <inactive|<arg|table>>\<#548C\><markup|initial>\<#7684\>\<#7C7B\>\<#4F3C\>\<#3002\>\<#4E0D\>\<#540C\>\<#4E4B\>\<#5904\>\<#5728\>\<#4E8E\>\<#8FD9\>\<#91CC\>\<#5C06\>\<#5143\>\<#7EC4\>\<#548C\>\<#6807\>\<#7B7E\>\<#5173\>\<#8054\>\<#5728\>\<#4E86\>\<#4E00\>\<#8D77\>\<#3002\>\<#5143\>\<#7EC4\>\<#53EF\>\<#4E3A\><explain-macro|tuple|content|page-nr>\<#6216\>\<#4E3A\><explain-macro|tuple|content|page-nr|file>\<#3002\><inactive|<arg|content>>\<#662F\>\<#6307\>\<#5411\>\<#6807\>\<#7B7E\>\<#6240\>\<#663E\>\<#793A\>\<#7684\>\<#6587\>\<#672C\>\<#FF0C\><inactive|<arg|page-nr>>\<#662F\>\<#76F8\>\<#5E94\>\<#7684\>\<#9875\>\<#53F7\>\<#FF0C\>\<#5176\>\<#4E2D\>\<#53EF\>\<#6709\>\<#53EF\>\<#65E0\>\<#7684\><inactive|<arg|file>>\<#8868\>\<#793A\>\<#6807\>\<#7B7E\>\<#6240\>\<#5B9A\>\<#4E49\>\<#7684\>\<#6587\>\<#6863\>\<#FF08\>\<#8FD9\>\<#53EA\>\<#6709\>\<#5728\>\<#8BE5\>\<#6587\>\<#6863\>\<#5C5E\>\<#4E8E\>\<#540C\>\<#4E00\>\<#5DE5\>\<#7A0B\>\<#65F6\>\<#4F7F\>\<#7528\>\<#FF09\>\<#3002\>
+    <inactive|<arg|table>>和<markup|initial>的类似。不同之处在于这里将元组和标签关联在了一起。元组可为<explain-macro|tuple|content|page-nr>或为<explain-macro|tuple|content|page-nr|file>。<inactive|<arg|content>>是指向标签所显示的文本，<inactive|<arg|page-nr>>是相应的页号，其中可有可无的<inactive|<arg|file>>表示标签所定义的文档（这只有在该文档属于同一工程时使用）。
   </explain>
 
-  <\explain|<explain-macro|auxiliary|table><explain-synopsis|\<#6587\>\<#6863\>\<#7684\>\<#9644\>\<#52A0\>\<#6570\>\<#636E\>>>
-    \<#8FD9\>\<#4E2A\>\<#6807\>\<#8BB0\>\<#4E2D\>\<#4E3B\>\<#8981\>\<#653E\>\<#4E00\>\<#4E9B\>\<#6587\>\<#6863\>\<#7684\>\<#9644\>\<#52A0\>\<#6570\>\<#636E\>\<#FF0C\>\<#53EF\>\<#6709\>\<#53EF\>\<#65E0\>\<#3002\>\<#901A\>\<#5E38\>\<#FF0C\>\<#8FD9\>\<#4E9B\>\<#9644\>\<#52A0\>\<#6570\>\<#636E\>\<#662F\>\<#53EF\>\<#4EE5\>\<#4ECE\>\<#6587\>\<#6863\>\<#6B63\>\<#6587\>\<#6B63\>\<#6587\>\<#4E2D\>\<#63D0\>\<#53D6\>\<#51FA\>\<#6765\>\<#7684\>\<#3002\>\<#56E0\>\<#4E3A\>\<#63D0\>\<#53D6\>\<#8FD9\>\<#4E9B\>\<#6570\>\<#636E\>\<#5F80\>\<#5F80\>\<#9700\>\<#8981\>\<#4E00\>\<#5B9A\>\<#65F6\>\<#95F4\>\<#548C\>\<#989D\>\<#5916\>\<#7684\>\<#5DE5\>\<#5177\>\<#FF0C\>\<#800C\>\<#4E14\>\<#4F60\>\<#7684\>\<#7CFB\>\<#7EDF\>\<#4E0A\>\<#4E0D\>\<#4E00\>\<#5B9A\>\<#6709\>\<#8FD9\>\<#4E9B\>\<#5DE5\>\<#5177\>\<#3002\>\<#6240\>\<#4EE5\>\<#5B58\>\<#50A8\>\<#8FD9\>\<#4E9B\>\<#6570\>\<#636E\>\<#8FD8\>\<#662F\>\<#975E\>\<#5E38\>\<#6709\>\<#5FC5\>\<#8981\>\<#7684\>\<#3002\><inactive|<arg|table>>\<#7684\>\<#683C\>\<#5F0F\>\<#548C\><markup|initial>\<#4E0E\><markup|references>\<#4E2D\><inactive|<arg|table>>\<#7684\>\<#683C\>\<#5F0F\>\<#7C7B\>\<#4F3C\>\<#FF0C\>\<#5C06\>\<#9644\>\<#52A0\>\<#5185\>\<#5BB9\>\<#548C\>\<#4E00\>\<#4E9B\>\<#952E\>\<#5173\>\<#8054\>\<#8D77\>\<#6765\>\<#3002\>\<#6807\>\<#51C6\>\<#7684\>\<#952E\>\<#4E3B\>\<#8981\>\<#6709\><verbatim|bib>,
-    <verbatim|toc>, <verbatim|idx>, <verbatim|gly>\<#7B49\>\<#7B49\>\<#3002\>
+  <\explain|<explain-macro|auxiliary|table><explain-synopsis|文档的附加数据>>
+    这个标记中主要放一些文档的附加数据，可有可无。通常，这些附加数据是可以从文档正文正文中提取出来的。因为提取这些数据往往需要一定时间和额外的工具，而且你的系统上不一定有这些工具。所以存储这些数据还是非常有必要的。<inactive|<arg|table>>的格式和<markup|initial>与<markup|references>中<inactive|<arg|table>>的格式类似，将附加内容和一些键关联起来。标准的键主要有<verbatim|bib>,
+    <verbatim|toc>, <verbatim|idx>, <verbatim|gly>等等。
   </explain>
 
   <\example>
-    \<#4E00\>\<#7BC7\>\<#5185\>\<#5BB9\>\<#4E3A\>\P\<#4F60\>\<#597D\>\<#FF0C\>\<#4E16\>\<#754C\>\<#FF01\>
-    \Q\<#7684\>\<#6587\>\<#7AE0\>\<#8868\>\<#793A\>\<#4E3A\>\<#FF1A\>
+    一篇内容为\P你好，世界！ \Q的文章表示为：
 
     <\equation*>
-      <tree|<text|<markup|document>>|<tree|<text|<markup|TeXmacs>>|<text|<TeXmacs-version>>>|<tree|<text|<markup|style>>|article>|<tree|<text|<markup|body>>|<tree|<text|<markup|document>>|\<#4F60\>\<#597D\>\<#FF0C\>\<#4E16\>\<#754C\>\<#FF01\>>>>
+      <tree|<text|<markup|document>>|<tree|<text|<markup|TeXmacs>>|<text|<TeXmacs-version>>>|<tree|<text|<markup|style>>|article>|<tree|<text|<markup|body>>|<tree|<text|<markup|document>>|你好，世界！>>>
     </equation*>
   </example>
 
@@ -60,6 +59,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>

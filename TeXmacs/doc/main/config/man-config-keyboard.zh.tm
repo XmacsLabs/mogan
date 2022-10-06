@@ -1,45 +1,45 @@
-<TeXmacs|1.99.4>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|chinese>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <\tmdoc-title>
-    \<#952E\>\<#76D8\>\<#914D\>\<#7F6E\>
+    键盘配置
   </tmdoc-title>
 
-  <TeXmacs>\<#952E\>\<#76D8\>\<#7684\>\<#884C\>\<#4E3A\>\<#6A21\>\<#5F0F\>\<#7531\><menu|Edit|Preferences>\<#4E2D\>\<#7684\>\<#4E00\>\<#4E9B\>\<#7528\>\<#6237\>\<#9009\>\<#9879\>\<#6307\>\<#5B9A\>\<#FF1A\>
+  <TeXmacs>键盘的行为模式由<menu|Edit|Preferences>中的一些用户选项指定：
 
   <\itemize>
-    <item><hlink|<menu|Look and feel>|man-preferences.en.tm#preferences:look-and-feel>\<#65E8\>\<#5728\>\<#63D0\>\<#4F9B\>\<#548C\>\<#5176\>\<#4ED6\>\<#5E73\>\<#53F0\>\<#7C7B\>\<#4F3C\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>\<#4E0E\>\<#52A8\>\<#4F5C\>\<#7ED1\>\<#5B9A\>\<#7684\>\<#89C4\>\<#5219\>\<#3002\>
+    <item><hlink|<menu|Look and feel>|man-preferences.en.tm#preferences:look-and-feel>旨在提供和其他平台类似的快捷键与动作绑定的规则。
 
-    <item>\<#7EC6\>\<#5FAE\>\<#7684\>\<#8C03\>\<#6574\>\<#53EF\>\<#5728\><hlink|<menu|Edit|Preferences|Keyboard>|man-preferences.en.tm#preferences:keyboard>\<#4E2D\>\<#89E3\>\<#51B3\>\<#3002\>
+    <item>细微的调整可在<hlink|<menu|Edit|Preferences|Keyboard>|man-preferences.en.tm#preferences:keyboard>中解决。
   </itemize>
 
-  \<#4E0B\>\<#9762\>\<#8981\>\<#8BA8\>\<#8BBA\>\<#7684\>\<#662F\>\<#5728\>\<#4E0D\>\<#540C\>\<#7CFB\>\<#7EDF\>\<#4E0A\>\<#7684\>\<#952E\>\<#76D8\>\<#914D\>\<#7F6E\>\<#95EE\>\<#9898\>\<#3002\>
+  下面要讨论的是在不同系统上的键盘配置问题。
 
-  \<#5173\>\<#4E8E\>\<#5FEB\>\<#6377\>\<#952E\>\<#5728\>\<#6587\>\<#6863\>\<#4E2D\>\<#7684\>\<#663E\>\<#793A\>\<#FF0C\>\<#8BF7\>\<#9605\>\<#8BFB\><hlink|\<#60EF\>\<#4F8B\>|../start/man-conventions.zh.tm>\<#3002\>\<#53E6\>\<#5916\>\<#FF0C\>\<#952E\>\<#76D8\>\<#5FEB\>\<#6377\>\<#952E\>\<#7684\>\<#76F8\>\<#5173\>\<#7EC6\>\<#8282\>\<#FF0C\>\<#8BF7\>\<#53C2\>\<#8003\><hlink|\<#7CBE\>\<#901A\>\<#952E\>\<#76D8\>|../text/keyboard/man-keyboard.zh.tm>\<#8FD9\>\<#4E00\>\<#8282\>\<#3002\>
+  关于快捷键在文档中的显示，请阅读<hlink|惯例|../start/man-conventions.zh.tm>。另外，键盘快捷键的相关细节，请参考<hlink|精通键盘|../text/keyboard/man-keyboard.zh.tm>这一节。
 
-  <paragraph*|\<#4E00\>\<#81F4\>\<#7684\>\<#6807\>\<#51C6\>\<#952E\>\<#4F4D\>>
+  <paragraph*|一致的标准键位>
 
-  <TeXmacs>\<#5DF2\>\<#7ECF\>\<#5C3D\>\<#91CF\>\<#4F7F\>\<#5FEB\>\<#6377\>\<#952E\>\<#548C\>\<#5176\>\<#5B83\>\<#5E73\>\<#53F0\>\<#4E00\>\<#81F4\>\<#3002\>\<#7136\>\<#800C\>\<#4E3A\>\<#4E86\>\<#65B9\>\<#4FBF\>\<#7528\>\<#6237\>\<#FF0C\><TeXmacs>\<#4FDD\>\<#7559\>\<#4E00\>\<#4E9B\>\<#901A\>\<#7528\>\<#7684\>\<#952E\>\<#76D8\>\<#5FEB\>\<#6377\>\<#952E\>\<#FF1A\>
+  <TeXmacs>已经尽量使快捷键和其它平台一致。然而为了方便用户，<TeXmacs>保留一些通用的键盘快捷键：
 
   <\itemize>
-    <item><key|F5>\U<key|F12> \<#4FDD\>\<#7559\>\<#7528\>\<#4F5C\>\<#7279\>\<#6B8A\>\<#7528\>\<#9014\>
+    <item><key|F5>\U<key|F12> 保留用作特殊用途
 
-    <item><prefix|std>\<#3001\><key|Win+>\<#548C\><prefix|A->\<#7528\>\<#4F5C\>\<#4FEE\>\<#9970\>\<#952E\>
+    <item><prefix|std>、<key|Win+>和<prefix|A->用作修饰键
 
-    <item><TeXmacs>\<#81EA\>\<#5E26\>\<#5927\>\<#91CF\>\<#4E00\>\<#4E2A\>\<#6216\>\<#591A\>\<#4E2A\>\<#4FEE\>\<#9970\>\<#952E\>\<#8F85\>\<#4EE5\><key|left>,
+    <item><TeXmacs>自带大量一个或多个修饰键辅以<key|left>,
     <key|right>, <key|up>, <key|down>, <key|home>, <key|end>, <key|pageup>,
     <key|pagedown>, <key|backspace>, <key|delete>, <key|space>,
-    <key|tab>\<#6216\><key|return>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>\<#3002\>
+    <key|tab>或<key|return>的快捷键。
   </itemize>
 
-  <paragraph*|\<#6F5C\>\<#5728\>\<#7684\>\<#51B2\>\<#7A81\>>
+  <paragraph*|潜在的冲突>
 
-  <TeXmacs>\<#4E13\>\<#7528\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>\<#57FA\>\<#672C\>\<#4E0D\>\<#4F1A\>\<#548C\>\<#60EF\>\<#4F8B\>\<#51B2\>\<#7A81\>\<#3002\>\<#7136\>\<#800C\>\<#FF0C\>\<#5728\>\<#8868\>\<#683C\><nbsp><reference|kbd-conflict-table>\<#4E2D\>\<#FF0C\>\<#6211\>\<#4EEC\>\<#8FD8\>\<#662F\>\<#53EF\>\<#4EE5\>\<#5217\>\<#51FA\>\<#4E00\>\<#4E9B\>\<#6807\>\<#51C6\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>\<#3002\>\<#8FD9\>\<#4E9B\>\<#5FEB\>\<#6377\>\<#952E\>\<#5728\>\<#5176\>\<#4ED6\>\<#5E94\>\<#7528\>\<#7A0B\>\<#5E8F\>\<#4E2D\>\<#53EF\>\<#4EE5\>\<#5DE5\>\<#4F5C\>\<#FF0C\>\<#4F46\>\<#662F\>\<#5728\><TeXmacs>\<#4E2D\>\<#4E0D\>\<#594F\>\<#6548\>\<#3002\>\<#FF08\>\<#6CE8\>\<#FF1A\>\<#8868\>\<#683C\>\<#4E2D\>\<#5217\>\<#51FA\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>\<#5E76\>\<#4E0D\>\<#5B8C\>\<#5168\>\<#7B26\>\<#5408\>\<#3002\>\<#FF09\>
+  <TeXmacs>专用的快捷键基本不会和惯例冲突。然而，在表格<nbsp><reference|kbd-conflict-table>中，我们还是可以列出一些标准的快捷键。这些快捷键在其他应用程序中可以工作，但是在<TeXmacs>中不奏效。（注：表格中列出的快捷键并不完全符合。）
 
-  <\big-table|<descriptive-table|<tformat|<cwith|1|-1|1|-1|cell-halign|l>|<cwith|24|24|1|4|cell-halign|l>|<cwith|27|27|1|4|cell-halign|l>|<cwith|6|6|1|4|cell-halign|l>|<cwith|8|8|1|4|cell-halign|l>|<cwith|7|7|3|4|cell-halign|l>|<cwith|7|7|3|4|cell-halign|l>|<cwith|8|8|3|4|cell-halign|l>|<cwith|8|8|3|4|cell-halign|l>|<cwith|11|11|1|4|cell-halign|l>|<table|<row|<cell|\<#5FEB\>\<#6377\>\<#952E\>\<#98CE\>\<#683C\>>|<cell|\<#5FEB\>\<#6377\>\<#952E\>>|<cell|\<#5907\>\<#9009\>>|<cell|\<#4F5C\>\<#7528\>>>|<row|<cell|Emacs>|<cell|<key|F10>>|<cell|>|<cell|\<#5728\>\<#7A97\>\<#53E3\>\<#4E2D\>\<#663E\>\<#793A\>\<#83DC\>\<#5355\>\<#680F\>>>|<row|<cell|Emacs>|<cell|<key|M-!>>|<cell|>|<cell|Shell\<#547D\>\<#4EE4\>>>|<row|<cell|Emacs>|<cell|<key|M-'>/<key|M-`>/<key|M-^>>|<cell|>|<cell|Needed
-  for <TeXmacs> accents>>|<row|<cell|Emacs>|<cell|<key|M-/>/<key|M-\\>/<key|M-:>/<key|M-;>>|<cell|>|<cell|>>|<row|<cell|Emacs>|<cell|<key|C-left>/<key|C-right>>|<cell|<key|M-left>/<key|M-right>>|<cell|\<#4EE5\>\<#5355\>\<#8BCD\>\<#4E3A\>\<#5355\>\<#4F4D\>\<#524D\>\<#8FDB\>/\<#540E\>\<#9000\>>>|<row|<cell|Emacs>|<cell|<key|C-up>/<key|C-down>>|<cell|>|<cell|\<#4EE5\>\<#6BB5\>\<#843D\>\<#4E3A\>\<#5355\>\<#4F4D\>\<#524D\>\<#8FDB\>/\<#540E\>\<#9000\>>>|<row|<cell|Emacs>|<cell|<key|M-b>/<key|M-f>>|<cell|>|<cell|\<#4EE5\>\<#5B57\>\<#7B26\>\<#4E3A\>\<#5355\>\<#4F4D\>\<#524D\>\<#8FDB\>/\<#540E\>\<#9000\>>>|<row|<cell|Emacs>|<cell|<key|M-l>/<key|M-t>>|<cell|>|<cell|Locase/transpose
+  <\big-table|<descriptive-table|<tformat|<cwith|1|-1|1|-1|cell-halign|l>|<cwith|24|24|1|4|cell-halign|l>|<cwith|27|27|1|4|cell-halign|l>|<cwith|6|6|1|4|cell-halign|l>|<cwith|8|8|1|4|cell-halign|l>|<cwith|7|7|3|4|cell-halign|l>|<cwith|7|7|3|4|cell-halign|l>|<cwith|8|8|3|4|cell-halign|l>|<cwith|8|8|3|4|cell-halign|l>|<cwith|11|11|1|4|cell-halign|l>|<table|<row|<cell|快捷键风格>|<cell|快捷键>|<cell|备选>|<cell|作用>>|<row|<cell|Emacs>|<cell|<key|F10>>|<cell|>|<cell|在窗口中显示菜单栏>>|<row|<cell|Emacs>|<cell|<key|M-!>>|<cell|>|<cell|Shell命令>>|<row|<cell|Emacs>|<cell|<key|M-'>/<key|M-`>/<key|M-^>>|<cell|>|<cell|Needed
+  for <TeXmacs> accents>>|<row|<cell|Emacs>|<cell|<key|M-/>/<key|M-\\>/<key|M-:>/<key|M-;>>|<cell|>|<cell|>>|<row|<cell|Emacs>|<cell|<key|C-left>/<key|C-right>>|<cell|<key|M-left>/<key|M-right>>|<cell|以单词为单位前进/后退>>|<row|<cell|Emacs>|<cell|<key|C-up>/<key|C-down>>|<cell|>|<cell|以段落为单位前进/后退>>|<row|<cell|Emacs>|<cell|<key|M-b>/<key|M-f>>|<cell|>|<cell|以字符为单位前进/后退>>|<row|<cell|Emacs>|<cell|<key|M-l>/<key|M-t>>|<cell|>|<cell|Locase/transpose
   words (not impl.)>>|<row|<cell|Windows>|<cell|<key|F5>>|<cell|>|<cell|Refresh/Switch
   to next pane>>|<row|<cell|Windows>|<cell|<key|F6>/<key|C-F6>/<key|C-S-F6>>|<cell|>|<cell|Switch
   to next/previous pane/tab>>|<row|<cell|Windows>|<cell|<key|C-space>>|<cell|>|<cell|Remove
@@ -66,36 +66,36 @@
   <key|C-pagedown>>|<cell|<key|pagedown>>|<cell|Page down>>|<row|<cell|Mac
   OS>|<cell|<key|C-a>/<key|C-e>>|<cell|<key|A-up>/<key|A-down>>|<cell|Move to
   start/end of block>>>>>>
-    <label|kbd-conflict-table>\<#4E00\>\<#4E9B\>\<#5728\>\<#5176\>\<#4ED6\>\<#8F6F\>\<#4EF6\>\<#4E2D\>\<#53EF\>\<#7528\>\<#3001\>\<#5728\><TeXmacs>\<#4E0D\>\<#53EF\>\<#7528\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>
+    <label|kbd-conflict-table>一些在其他软件中可用、在<TeXmacs>不可用的快捷键
   </big-table>
 
-  <paragraph*|\<#4F18\>\<#5148\>\<#7684\>\<#7CFB\>\<#7EDF\>\<#5168\>\<#5C40\>\<#5FEB\>\<#6377\>\<#952E\>>
+  <paragraph*|优先的系统全局快捷键>
 
-  \<#9664\>\<#4E86\>\<#4E0A\>\<#8FF0\>\<#6807\>\<#51C6\>\<#5FEB\>\<#6377\>\<#952E\>\<#FF0C\>\<#7CFB\>\<#7EDF\>\<#7684\>\<#5168\>\<#5C40\>\<#5E94\>\<#7528\>\<#4F1A\>\<#5B9A\>\<#4E49\>\<#4E00\>\<#4E9B\>\<#989D\>\<#5916\>\<#7684\>\<#5168\>\<#5C40\>\<#5FEB\>\<#6377\>\<#952E\>\<#FF0C\>\<#8FD9\>\<#4E9B\>\<#5FEB\>\<#6377\>\<#952E\>\<#4F1A\>\<#8986\>\<#76D6\>\<#6389\><TeXmacs>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>\<#3002\>\<#6BD4\>\<#5982\>\<#FF0C\><name|Mac
-  OS X>\<#4E2D\><name|Spaces>\<#8FD9\>\<#4E2A\>\<#5E94\>\<#7528\>\<#4F1A\>\<#7528\><key|C-left>,
-  <key|C-right>, <key|C-up>, <key|C-down>, <key|C-1>, <key|C-2>,
-  <key|C-3>\<#548C\><key|C-4>\<#5728\>\<#591A\>\<#4E2A\>\<#5C4F\>\<#5E55\>\<#4E2D\>\<#5207\>\<#6362\>\<#3002\>
+  除了上述标准快捷键，系统的全局应用会定义一些额外的全局快捷键，这些快捷键会覆盖掉<TeXmacs>的快捷键。比如，<name|Mac
+  OS X>中<name|Spaces>这个应用会用<key|C-left>, <key|C-right>,
+  <key|C-up>, <key|C-down>, <key|C-1>, <key|C-2>,
+  <key|C-3>和<key|C-4>在多个屏幕中切换。
 
-  \<#8FD9\>\<#4E2A\>\<#95EE\>\<#9898\>\<#7684\>\<#4E00\>\<#79CD\>\<#89E3\>\<#51B3\>\<#65B9\>\<#6848\>\<#662F\>\<#5728\>\<#76F8\>\<#5E94\>\<#7684\>\<#5E94\>\<#7528\>\<#4E2D\>\<#6539\>\<#53D8\>\<#51FA\>\<#95EE\>\<#9898\>\<#7684\>\<#5168\>\<#5C40\>\<#5FEB\>\<#6377\>\<#952E\>\<#3002\>\<#6BD4\>\<#5982\>\<#FF0C\><name|Spaces>\<#53EF\>\<#4EE5\>\<#628A\>\<#524D\>\<#7F00\><prefix|C->\<#6539\>\<#4E3A\><prefix|M-A-C->\<#3002\>\<#53E6\>\<#5916\>\<#FF0C\><TeXmacs>\<#6CA1\>\<#6709\>\<#4F7F\>\<#7528\><prefix|fn>\<#8FD9\>\<#4E2A\>\<#952E\>\<#3002\>
+  这个问题的一种解决方案是在相应的应用中改变出问题的全局快捷键。比如，<name|Spaces>可以把前缀<prefix|C->改为<prefix|M-A-C->。另外，<TeXmacs>没有使用<prefix|fn>这个键。
 
-  \<#5982\>\<#679C\>\<#4F60\>\<#4E0D\>\<#80FD\>\<#6216\>\<#4E0D\>\<#60F3\>\<#6539\>\<#53D8\>\<#5168\>\<#5C40\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>\<#FF0C\>\<#4F60\>\<#53EF\>\<#4EE5\>\<#7528\><rigid|<key*|escape>>\<#6765\>\<#4EA7\>\<#751F\>\<#548C\><prefix|M->,
-  <prefix|A->\<#4E0E\><prefix|C->\<#7B49\>\<#4EF7\>\<#7684\>\<#4FEE\>\<#9970\>\<#952E\>\<#3002\>\<#6240\>\<#4EE5\>\<#FF0C\>\<#4F60\>\<#53EF\>\<#4EE5\>\<#8F93\>\<#5165\><key*|escape
-  escape right>\<#4EE5\>\<#5728\><TeXmacs>\<#4EA7\>\<#751F\><key|C-right>\<#7684\>\<#6548\>\<#679C\>\<#3002\>\<#8868\>\<#683C\><nbsp><reference|kbd-escape-table>\<#6240\>\<#793A\>\<#5373\>\<#53EF\>\<#4EE5\>\<#7528\><key*|escape>\<#5F97\>\<#5230\>\<#7684\>\<#4FEE\>\<#9970\>\<#952E\>\<#53CA\>\<#7EC4\>\<#5408\>\<#3002\>
+  如果你不能或不想改变全局的快捷键，你可以用<rigid|<key*|escape>>来产生和<prefix|M->,
+  <prefix|A->与<prefix|C->等价的修饰键。所以，你可以输入<key*|escape
+  escape right>以在<TeXmacs>产生<key|C-right>的效果。表格<nbsp><reference|kbd-escape-table>所示即可以用<key*|escape>得到的修饰键及组合。
 
-  <\big-table|<descriptive-table|<tformat|<table|<row|<cell|\<#5FEB\>\<#6377\>\<#952E\>>|<cell|\<#4FEE\>\<#9970\>\<#952E\>>>|<row|<cell|<key*|escape>>|<cell|<key|escape>>>|<row|<cell|<key*|escape
+  <\big-table|<descriptive-table|<tformat|<table|<row|<cell|快捷键>|<cell|修饰键>>|<row|<cell|<key*|escape>>|<cell|<key|escape>>>|<row|<cell|<key*|escape
   escape>>|<cell|<key|escape escape>>>|<row|<cell|<key*|escape escape
   escape>>|<cell|<key|escape escape escape>>>|<row|<cell|<key*|S-escape>>|<cell|<key|S-escape>>>|<row|<cell|<key*|S-escape
   S-escape><space|1em>>|<cell|<key|S-escape
   S-escape>>>|<row|<cell|<key*|S-escape S-escape
   S-escape>>|<cell|<key|S-escape S-escape S-escape>>>>>>>
-    <label|kbd-escape-table>\<#5FEB\>\<#6377\>\<#952E\>\<#548C\>\<#5BF9\>\<#5E94\>\<#4FEE\>\<#9970\>\<#952E\>\<#6216\>\<#4FEE\>\<#9970\>\<#952E\>\<#7EC4\>\<#5408\>
+    <label|kbd-escape-table>快捷键和对应修饰键或修饰键组合
   </big-table>
 
-  <paragraph*|\<#7528\>\<#6237\>\<#81EA\>\<#5B9A\>\<#4E49\>\<#5FEB\>\<#6377\>\<#952E\>>
+  <paragraph*|用户自定义快捷键>
 
-  <TeXmacs>\<#9ED8\>\<#8BA4\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>\<#4E0D\>\<#5408\>\<#4F60\>\<#7684\>\<#5FC3\>\<#610F\>\<#65F6\>\<#FF0C\>\<#4F60\>\<#8FD8\>\<#53EF\>\<#4EE5\><hlink|\<#914D\>\<#7F6E\>\<#4F60\>\<#81EA\>\<#5DF1\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>|../scheme/man-keyboard.zh.tm>.
+  <TeXmacs>默认的快捷键不合你的心意时，你还可以<hlink|配置你自己的快捷键|../scheme/man-keyboard.zh.tm>.
 
-  <tmdoc-copyright|1998--2002|Joris van der Hoeven>
+  <tmdoc-copyright|1998\U2002|Joris van der Hoeven>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -104,6 +104,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>

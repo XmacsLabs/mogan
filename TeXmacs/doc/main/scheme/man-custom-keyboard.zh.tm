@@ -1,24 +1,24 @@
-<TeXmacs|1.99.10>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|chinese|old-spacing>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|\<#5B9A\>\<#5236\>\<#5FEB\>\<#6377\>\<#952E\>>
+  <tmdoc-title|定制快捷键>
 
-  \<#4E0B\>\<#9762\>\<#8FD9\>\<#884C\>\<#4EE3\>\<#7801\>\<#7528\>\<#6765\>\<#6307\>\<#5B9A\>\<#952E\>\<#76D8\>\<#5E03\>\<#5C40\>
+  下面这行代码用来指定键盘布局
 
   <\scm-code>
     (kbd-map . <scm-arg|keymaps>)
   </scm-code>
 
-  \<#4F7F\>\<#7528\><scm|:mode>\<#9009\>\<#9879\>\<#FF0C\>\<#4F60\>\<#53EF\>\<#4EE5\>\<#6307\>\<#5B9A\>\<#4F7F\>\<#952E\>\<#76D8\>\<#5E03\>\<#5C40\>\<#751F\>\<#6548\>\<#7684\>\<#6761\>\<#4EF6\>\<#3002\>\<#6BD4\>\<#5982\>\<#FF0C\>\<#8FD9\>\<#884C\>\<#4EE3\>\<#7801\>\<#FF1A\>
+  使用<scm|:mode>选项，你可以指定使键盘布局生效的条件。比如，这行代码：
 
   <\scm-code>
     (kbd-map (:mode in-math?) . <scm-arg|keymaps>)
   </scm-code>
 
-  \<#6307\>\<#5B9A\>\<#4E86\>\<#53EA\>\<#5728\>\<#6570\>\<#5B66\>\<#6A21\>\<#5F0F\>\<#4E0B\>\<#751F\>\<#6548\>\<#7684\>\<#952E\>\<#76D8\>\<#5E03\>\<#5C40\>\<#3002\><scm-arg|keymaps>
-  \<#8FD9\>\<#4E2A\>\<#5217\>\<#8868\>\<#4E2D\>\<#7684\>\<#5143\>\<#7D20\>\<#6709\>\<#4E0B\>\<#9762\>\<#4E09\>\<#79CD\>\<#5F62\>\<#5F0F\>\<#FF1A\>
+  指定了只在数学模式下生效的键盘布局。<scm-arg|keymaps>
+  这个列表中的元素有下面三种形式：
 
   <\scm-code>
     (<em|key-combination> <scm-arg|action_1> ... <scm-arg|action_n>)
@@ -28,11 +28,11 @@
     (<em|key-combination> <scm-arg|result> <scm-arg|help-message>)
   </scm-code>
 
-  \<#7B2C\>\<#4E00\>\<#884C\>\<#4E2D\>\<#FF0C\><scm-arg|action_i>\<#662F\>\<#548C\><scm-arg|key-combination>\<#76F8\>\<#5173\>\<#7684\>Scheme\<#4EE3\>\<#7801\>\<#3002\>\<#7B2C\>\<#4E8C\>\<#884C\>\<#548C\>\<#7B2C\>\<#4E09\>\<#884C\>\<#4E2D\>\<#7684\>
-  <scm-arg|result>\<#662F\><scm-arg|key-combination>\<#7ED3\>\<#675F\>\<#4E4B\>\<#540E\>\<#63D2\>\<#5165\>\<#7684\>\<#5B57\>\<#7B26\>\<#4E32\>\<#3002\>\<#7B2C\>\<#4E09\>\<#884C\>\<#4E2D\>\<#FF0C\><scm-arg|key-combination>
-  \<#7ED3\>\<#675F\>\<#4E4B\>\<#540E\>\<#FF0C\>\<#5C06\>\<#4F1A\>\<#663E\>\<#793A\><scm-arg|help-message>\<#3002\>
+  第一行中，<scm-arg|action_i>是和<scm-arg|key-combination>相关的Scheme代码。第二行和第三行中的
+  <scm-arg|result>是<scm-arg|key-combination>结束之后插入的字符串。第三行中，<scm-arg|key-combination>
+  结束之后，将会显示<scm-arg|help-message>。
 
-  <tmdoc-copyright|2013--2019|Joris van der Hoeven|\<#6C88\>\<#8FBE\>>
+  <tmdoc-copyright|2013\U2019|Joris van der Hoeven|沈达>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -41,6 +41,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>

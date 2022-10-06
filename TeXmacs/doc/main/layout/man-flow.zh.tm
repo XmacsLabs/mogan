@@ -1,17 +1,16 @@
-<TeXmacs|1.99.2>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|chinese>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|\<#6587\>\<#6863\>\<#6D41\>>
+  <tmdoc-title|文档流>
 
-  \<#590D\>\<#6742\>\<#7684\>\<#6587\>\<#6863\>\<#901A\>\<#5E38\>\<#5305\>\<#542B\>\<#811A\>\<#6CE8\>\<#53CA\>\<#6D6E\>\<#52A8\>\<#5BF9\>\<#8C61\>\<#FF08\>\<#6307\>\<#533A\>\<#522B\>\<#4E8E\>\<#6B63\>\<#6587\>\<#6587\>\<#672C\>\<#7684\>\<#5BF9\>\<#8C61\>)\<#3002\>\<#5B9E\>\<#9645\>\<#4E0A\>\<#FF0C\>\<#90A3\>\<#4E9B\>\<#590D\>\<#6742\>\<#6587\>\<#6863\>\<#662F\>\<#5206\>\<#6D41\>\<#5904\>\<#7406\>\<#7684\>\<#FF0C\>\<#5176\>\<#4E00\>\<#4E3A\>\<#6B63\>\<#6587\>\<#6587\>\<#672C\>\<#FF0C\>\<#5176\>\<#4E8C\>\<#4E3A\>\<#811A\>\<#6CE8\>\<#FF0C\>\<#5176\>\<#4E09\>\<#4E3A\>\<#6D6E\>\<#52A8\>\<#5BF9\>\<#8C61\>\<#FF0C\>\<#5176\>\<#56DB\>\<#662F\>\<#4E24\>\<#680F\>\<#6587\>\<#672C\>\<#3002\>\<#4E0D\>\<#540C\>\<#7684\>\<#6587\>\<#6863\>\<#6D41\>\<#FF0C\>\<#5176\>\<#5206\>\<#9875\>\<#7279\>\<#5F81\>\<#5404\>\<#4E0D\>\<#76F8\>\<#540C\>\<#3002\>
+  复杂的文档通常包含脚注及浮动对象（指区别于正文文本的对象)。实际上，那些复杂文档是分流处理的，其一为正文文本，其二为脚注，其三为浮动对象，其四是两栏文本。不同的文档流，其分页特征各不相同。
 
-  \<#4F7F\>\<#7528\><menu|Format|Page insertion|Footnote>\<#63D2\>\<#5165\>\<#811A\>\<#6CE8\>\<#3002\>
-  \<#4F7F\>\<#7528\><menu|Paragraph|Number of
-  columns>\<#66F4\>\<#6539\>\<#6587\>\<#672C\>\<#7684\>\<#680F\>\<#6570\>\<#3002\>
+  使用<menu|Format|Page insertion|Footnote>插入脚注。
+  使用<menu|Paragraph|Number of columns>更改文本的栏数。
 
-  <tmdoc-copyright|1998--2002|Joris van der Hoeven>
+  <tmdoc-copyright|1998\U2002|Joris van der Hoeven>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -20,6 +19,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>

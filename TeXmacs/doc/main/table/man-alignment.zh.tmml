@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<TeXmacs version="2.1">
+<TeXmacs version="2.1.3">
   <style><tuple><tm-arg>tmdoc</tm-arg><tm-arg>chinese</tm-arg><tm-arg>old-spacing</tm-arg><tm-arg>old-dots</tm-arg><tm-arg>old-lengths</tm-arg></tuple></style>
   
   <body>
@@ -47,8 +47,4 @@
       section entitled "GNU Free Documentation License".</tmdoc-license>
     </tm-par>
   </body>
-  
-  <initial>
-    <collection/>
-  </initial>
 </TeXmacs>

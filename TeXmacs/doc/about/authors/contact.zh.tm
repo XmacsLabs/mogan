@@ -1,26 +1,26 @@
-<TeXmacs|1.99.1>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|chinese>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|\<#8054\>\<#7CFB\>\<#6211\>\<#4EEC\>>
+  <tmdoc-title|联系我们>
 
-  \<#4F60\>\<#53EF\>\<#4EE5\>\<#7528\>\<#7535\>\<#5B50\>\<#90AE\>\<#4EF6\>\<#8054\>\<#7CFB\>\<#6211\>\<#4EEC\>\<#FF0C\>\<#5730\>\<#5740\>\<#4E3A\>
+  你可以用电子邮件联系我们，地址为
 
   <with|font|roman|<verbatim| \ \ \ contact@texmacs.org>>
 
-  \<#6216\>\<#8005\>\<#90AE\>\<#4EF6\>\<#8054\>\<#7CFB\>
+  或者邮件联系
 
   <with|font|roman|<verbatim| \ \ \ Joris van der Hoeven<next-line>
-  \ \ \ LIX, �cole polytechnique<next-line> \ \ \ 91128 Palaiseau
+  \ \ \ LIX, cole polytechnique<next-line> \ \ \ 91128 Palaiseau
   Cedex<next-line> \ \ \ France>>
 
-  \<#53E6\>\<#5916\>\<#8FD8\>\<#6709\>\<#4E00\>\<#4E9B\><TeXmacs>\<#76F8\>\<#5173\>\<#7684\>\<#90AE\>\<#4EF6\>\<#5217\>\<#8868\>\<#FF1A\>
+  另外还有一些<TeXmacs>相关的邮件列表：
 
   <with|font|roman|<verbatim| \ \ \ texmacs-users@texmacs.org<next-line>
   \ \ \ texmacs-info@texmacs.org<next-line> \ \ \ texmacs-dev@gnu.org>>
 
-  <tmdoc-copyright|1998--2012|Joris van der Hoeven>
+  <tmdoc-copyright|1998\U2012|Joris van der Hoeven>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1

@@ -1,34 +1,34 @@
-<TeXmacs|1.99.13>
+<TeXmacs|2.1.3>
 
-<style|<tuple|tmdoc|chinese|old-spacing|old-dots>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
-  <tmdoc-title|\<#7F16\>\<#8F91\>\<#5DE5\>\<#5177\>>
+  <tmdoc-title|编辑工具>
 
-  \<#672C\>\<#7AE0\>\<#6211\>\<#4EEC\>\<#8BA8\>\<#8BBA\><TeXmacs>\<#4E2D\>\<#7684\>\<#901A\>\<#7528\>\<#7F16\>\<#8F91\>\<#65B9\>\<#6CD5\>\<#3002\>\<#9664\>\<#4E86\>\<#7ECF\>\<#5178\>\<#7684\>\<#7279\>\<#6027\>\<#FF0C\>\<#5982\>\<#526A\>\<#5207\>\<#548C\>\<#7C98\>\<#8D34\>\<#FF0C\>\<#641C\>\<#7D22\>\<#548C\>\<#66FF\>\<#6362\>\<#7B49\>\<#FF0C\>
-  <TeXmacs>\<#8FD8\>\<#5145\>\<#5206\>\<#6316\>\<#6398\>\<#6587\>\<#6863\>\<#7684\>\<#7ED3\>\<#6784\>\<#6027\>\<#4EE5\>\<#63D0\>\<#4F9B\>\<#989D\>\<#5916\>\<#7684\>\<#4F18\>\<#79C0\>\<#529F\>\<#80FD\>\<#3002\>\<#8FD9\>\<#4E9B\>\<#529F\>\<#80FD\>\<#7684\>\<#4EE3\>\<#8868\>\<#662F\>\<#7ED3\>\<#6784\>\<#5316\>\<#5149\>\<#6807\>\<#79FB\>\<#52A8\>\<#548C\>\<#7ED3\>\<#6784\>\<#5316\>\<#53D8\>\<#5143\>\<#3002\>\<#6211\>\<#4EEC\>\<#4E5F\>\<#5728\>\<#4F20\>\<#7EDF\>\<#7684\>\<#529F\>\<#80FD\>\<#5982\>\<#641C\>\<#7D22\>\<#548C\>\<#66FF\>\<#6362\>\<#4E2D\>\<#5BFB\>\<#6C42\>\<#7ED3\>\<#6784\>\<#5316\>\<#7684\>\<#7F8E\>\<#611F\>\<#3002\>\<#4F8B\>\<#5982\>\<#FF0C\>\<#5F53\>\<#60A8\>\<#641C\>\<#7D22\>\<#6570\>\<#5B66\>\<#6A21\>\<#5F0F\>\<#4E2D\>\<#7684\><math|x>\<#FF0C\>\<#7ED3\>\<#679C\>\<#53EA\>\<#4F1A\>\<#5339\>\<#914D\>\<#540C\>\<#6837\>\<#662F\>\<#6570\>\<#5B66\>\<#6A21\>\<#5F0F\>\<#4E2D\>\<#7684\><math|x>\<#3002\>
+  本章我们讨论<TeXmacs>中的通用编辑方法。除了经典的特性，如剪切和粘贴，搜索和替换等，
+  <TeXmacs>还充分挖掘文档的结构性以提供额外的优秀功能。这些功能的代表是结构化光标移动和结构化变元。我们也在传统的功能如搜索和替换中寻求结构化的美感。例如，当您搜索数学模式中的<math|x>，结果只会匹配同样是数学模式中的<math|x>。
 
   <\traverse>
-    <branch|\<#526A\>\<#5207\>\<#548C\>\<#7C98\>\<#8D34\>|man-cut-and-paste.zh.tm>
+    <branch|剪切和粘贴|man-cut-and-paste.zh.tm>
 
-    <branch|\<#67E5\>\<#627E\>\<#548C\>\<#66FF\>\<#6362\>|man-search-and-replace.zh.tm>
+    <branch|查找和替换|man-search-and-replace.zh.tm>
 
-    <branch|\<#62FC\>\<#5199\>\<#68C0\>\<#67E5\>|man-spell-checking.zh.tm>
+    <branch|拼写检查|man-spell-checking.zh.tm>
 
-    <branch|\<#64A4\>\<#9500\>\<#548C\>\<#6062\>\<#590D\>|man-undo-and-redo.zh.tm>
+    <branch|撤销和恢复|man-undo-and-redo.zh.tm>
 
-    <branch|\<#7ED3\>\<#6784\>\<#5316\>\<#7F16\>\<#8F91\>|man-structured-editing.zh.tm>
+    <branch|结构化编辑|man-structured-editing.zh.tm>
 
-    <branch|\<#7ED3\>\<#6784\>\<#5316\>\<#5149\>\<#6807\>\<#79FB\>\<#52A8\>|man-structured-move.zh.tm>
+    <branch|结构化光标移动|man-structured-move.zh.tm>
 
-    <branch|\<#7ED3\>\<#6784\>\<#5316\>\<#53D8\>\<#5143\>|man-structured-variants.zh.tm>
+    <branch|结构化变元|man-structured-variants.zh.tm>
 
-    <branch|\<#79FB\>\<#52A8\>\<#548C\>\<#7F29\>\<#653E\>\<#5BF9\>\<#8C61\>|man-structured-geometry.zh.tm>
+    <branch|移动和缩放对象|man-structured-geometry.zh.tm>
 
-    <branch|\<#7248\>\<#672C\>\<#63A7\>\<#5236\>|man-versioning.zh.tm>
+    <branch|版本控制|man-versioning.zh.tm>
   </traverse>
 
-  <tmdoc-copyright|1998\U2020|Joris van der Hoeven|\<#6C88\>\<#8FBE\>>
+  <tmdoc-copyright|1998\U2020|Joris van der Hoeven|沈达>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -37,6 +37,3 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
-
-<initial|<\collection>
-</collection>>
