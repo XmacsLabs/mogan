@@ -501,6 +501,7 @@ correct_adjacent (rectangles& rs1, rectangles& rs2) {
 void
 edit_interface_rep::compute_env_rects (path p, rectangles& rs, bool recurse) {
   if (p == rp) return;
+  if (is_nil (p)) return;
   tree pt= subtree (et, path_up (p));
   tree st= subtree (et, p);
   if ((is_func (st, TABLE) || is_func (st, SUBTABLE)) &&
