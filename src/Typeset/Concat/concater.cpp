@@ -105,7 +105,9 @@ concater_rep::flag_ok (string s, path ip, color col) {
     int sz= env->get_script_size (env->fn_size, env->index_level+2);
     font gfn;
     if (is_cjk_unified_ideographs (s)) {
-      gfn= env->fn;
+      gfn= smart_font (env->get_string (FONT), env->get_string (FONT_FAMILY),
+                       env->get_string (FONT_SERIES), env->get_string (FONT_SHAPE),
+                       sz, (int) (env->magn*env->dpi));
     } else {
       gfn= tex_font ("ecrm", sz, (int) (env->magn*env->dpi));
     }
