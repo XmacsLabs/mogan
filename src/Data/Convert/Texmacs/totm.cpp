@@ -166,7 +166,6 @@ tm_writer::write (string s, bool flag, bool encode_space) {
         else if (((unsigned char) c) < ' ') tmp << '\\' << (c+'@');
         else if (((unsigned char) c) >= 0x80) {
           if (get_preference ("tm format with utf8", "on") == "on") {
-            cout << c << " " << encode_iso_8859_as_utf8((unsigned int) c) << LF;
             tmp << encode_iso_8859_as_utf8 ((unsigned char) c);
           }
           else tmp << c;
