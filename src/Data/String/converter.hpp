@@ -116,6 +116,7 @@ void hashtree_from_dictionary (
 
 int hex_digit_to_int (unsigned char c);
 string encode_as_utf8 (unsigned int code);
+string encode_iso_8859_as_utf8 (unsigned char c);
 unsigned int decode_from_utf8 (string s, int& i);
 string convert_escapes (string in, bool utf8);
 string convert_char_entities (string s);

@@ -808,6 +808,16 @@ encode_as_utf8 (unsigned int code) {
   else return "";
 }
 
+string encode_iso_8859_as_utf8 (unsigned char c) {
+  if (c < 0x80) return string(c);
+  else {
+    string str(2);
+    str[0] = 0xc0 | (c >> 6);
+    str[1] = 0x80 | (c & 0x3f);
+    return str;
+  }
+}
+
 unsigned int
 decode_from_utf8 (string s, int& i) {
   unsigned char c = s[i];
