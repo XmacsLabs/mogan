@@ -10,7 +10,6 @@
 ******************************************************************************/
 
 #include "convert.hpp"
-#include "converter.hpp"
 #include "drd_std.hpp"
 #include "scheme.hpp"
 
@@ -164,11 +163,7 @@ tm_writer::write (string s, bool flag, bool encode_space) {
         else if (c == '>') tmp << "\\>";
         else if (c == '\34') tmp << c;
         else if (((unsigned char) c) < ' ') tmp << '\\' << (c+'@');
-        else {
-          if (get_preference ("tm format with utf8", "on") == "on")
-            tmp << encode_as_utf8 ((unsigned int) c);
-          else tmp << c;
-        }
+        else tmp << c;
         spc_flag= false;
         ret_flag= false;
       }

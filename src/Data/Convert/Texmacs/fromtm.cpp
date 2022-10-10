@@ -97,12 +97,10 @@ tm_reader::read_char () {
 
   int old_pos= pos;
   unsigned int code= decode_from_utf8 (buf, pos);
-  if (pos-old_pos == 1) {
-    return buf (pos-1, pos);
-  } else if (pos-old_pos == 2) {
-    return "\\<#00" * as_hexadecimal (code) * "\\>";
-  } else {
+  if (pos-old_pos!=1) {
     return "\\<#" * as_hexadecimal (code) * "\\>";
+  } else {
+    return buf (pos-1, pos);
   }
 }
 
