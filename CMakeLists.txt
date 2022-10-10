@@ -73,6 +73,11 @@ endif (NOT TEXMACS_GUI)
 
 option (QTPIPES "use Qt pipes" ON)
 
+option (USE_ICONV "Use Iconv" ON)
+if (USE_ICONV)
+  find_package(Iconv)
+endif (USE_ICONV)
+
 option (USE_SQLITE3 "Use SQLite3" ON)
 if (USE_SQLITE3)
   find_package (SQLite3)
