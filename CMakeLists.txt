@@ -521,7 +521,7 @@ set (TeXmacs_MacOS_SRCS
 ### Determine TeXmacs_Libraries
 ### --------------------------------------------------------------------
 set (TeXmacs_Libraries
-  PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl
+  PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl Iconv::Iconv
   -lpthread
 )
 
