@@ -291,7 +291,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
     if (DEBUG_QT && DEBUG_KEYBOARD) {
       debug_qt << "key  : " << key << LF;
       debug_qt << "text : " << event->text().toLatin1().data() << LF;
-      debug_qt << "count: " << event->text().count() << LF;
+      debug_qt << "count: " << event->text().size() << LF;
       debug_qt << "unic : " << event->text().data()[0].unicode() << LF;
 
 #ifdef OS_MINGW
@@ -544,7 +544,7 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
     // find selection in the preedit string
     int sel_start = 0;
     int sel_length = 0;
-    if (pos <  preedit_string.count()) {
+    if (pos <  preedit_string.size()) {
       for (int i=0; i< attrs.count(); i++) 
         if ((attrs[i].type == QInputMethodEvent::TextFormat) &&
             (attrs[i].start <= pos) &&
