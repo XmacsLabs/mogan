@@ -651,7 +651,11 @@ QTMWidget::tabletEvent (QTabletEvent* event) {
     else s= "press-" * mouse_decode (mstate);
   }
   if ((mstate & 4) == 0 || s == "press-right") {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
     QPoint point = event->pos() + origin() - surface()->pos();
+#else
+    QPoint point = event->position().toPoint() + origin() - surface()->pos();
+#endif
     double x= point.x() + event->hiResGlobalX() - event->globalX();
     double y= point.y() + event->hiResGlobalY() - event->globalY();
     coord2 pt= coord2 ((SI) (x * PIXEL), (SI) (-y * PIXEL));
