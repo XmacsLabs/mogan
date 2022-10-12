@@ -40,7 +40,7 @@ curl_get (string source, string user_agent) {
                       CURLPROTO_HTTP | CURLPROTO_HTTPS);
     CURLcode res= curl_easy_perform (curl);
 
-    if (!res == CURLE_OK) {
+    if (res != CURLE_OK) {
       debug_io << "curl failed with CURLcode " << res << LF << url << LF;
     }
 
