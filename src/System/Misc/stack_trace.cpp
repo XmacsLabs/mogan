@@ -11,8 +11,20 @@
 ******************************************************************************/
 
 #include "sys_utils.hpp"
-
+#include <qsystemdetection.h>
 #ifdef USE_STACK_TRACE
+#ifdef Q_OS_MAC
+#include <ust/ust.hpp>
+string
+get_stacktrace (unsigned int max_frames) {
+  string r;
+  r << "Backtrace of C++ stack:\n";
+  std::stringstream ss;
+  ss << ust::generate();
+  r << ss.str().c_str();
+  return r;
+}
+#else
 #include <stdio.h>
 #include <stdlib.h>
 #include <execinfo.h>
@@ -123,7 +135,7 @@ get_stacktrace (unsigned int max_frames) {
   free (symbollist);
   return r;
 }
-
+#endif
 #else
 
 string

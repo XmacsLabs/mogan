@@ -391,6 +391,7 @@ set (TeXmacs_Include_Dirs
   ${TEXMACS_SOURCE_DIR}/src/Kernel/Types
   ${TEXMACS_SOURCE_DIR}/src/Plugins
   ${TEXMACS_SOURCE_DIR}/src/Plugins/Pdf/LibAesgm
+  ${TEXMACS_SOURCE_DIR}/src/Plugins/UniversalStacktrace
   ${TEXMACS_SOURCE_DIR}/src/Scheme
   ${TEXMACS_SOURCE_DIR}/src/Scheme/S7
   ${TEXMACS_SOURCE_DIR}/src/Scheme/Scheme
