@@ -23,7 +23,7 @@
     <linearGradient
        id="linearGradient6140">
       <stop
-         style="stop-color:#808080;stop-opacity:1;"
+         style="stop-color:#232629;stop-opacity:1;"
          offset="0"
          id="stop6142" />
       <stop
@@ -169,18 +169,18 @@
          x="6.0259871"
          y="13.020233" /></text>
     <path
-       style="fill:none;stroke:#a08080;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       style="fill:none;stroke:#804040;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        d="m 6,4.5415318 2,1.5 2,-1.5"
        id="path4155"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccc" />
     <path
-       style="fill:none;stroke:#808080;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
+       style="fill:none;stroke:#232629;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
        d="m 1.5,7.5 0,1 13,0 0,-1 z"
        id="path4161"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#a08080;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       style="fill:none;stroke:#804040;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        d="M 8,6.0415318 C 8.0866771,5.1108735 8.1193235,4.2261841 7.8725808,3.1052414 7.6528766,2.2623731 7.4146188,1.2305379 7.0193539,0.53185481"
        id="path4970"
        inkscape:connector-curvature="0"
@@ -190,12 +190,12 @@
        inkscape:connector-curvature="0"
        id="path5480"
        d="m 6.0318548,11.492733 2,-1.4999998 2.0000002,1.4999998"
-       style="fill:none;stroke:#a08080;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
+       style="fill:none;stroke:#804040;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
     <path
        sodipodi:nodetypes="ccc"
        inkscape:connector-curvature="0"
        id="path5482"
        d="M 8.0318548,9.9927332 C 8.1185318,10.923391 8.1193234,12.413322 7.9044356,13.183862 7.7165863,14.122294 7.382764,14.899291 6.9237895,15.56612"
-       style="fill:none;stroke:#a08080;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
+       style="fill:none;stroke:#804040;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
   </g>
 </svg>
