@@ -23,7 +23,7 @@
     <linearGradient
        id="linearGradient6140">
       <stop
-         style="stop-color:#808080;stop-opacity:1;"
+         style="stop-color:#232629;stop-opacity:1;"
          offset="0"
          id="stop6142" />
       <stop
@@ -193,7 +193,7 @@
          x="6.0259871"
          y="13.020233" /></text>
     <path
-       style="fill:#808080;fill-opacity:1;stroke:#808080;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter8219)"
+       style="fill:#232629;fill-opacity:1;stroke:#232629;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter8219)"
        d="M 3,11 13,11 8,5 z"
        id="path6257"
        inkscape:connector-curvature="0"
@@ -201,7 +201,7 @@
        transform="matrix(0.0019754,-0.99999805,-0.99999805,-0.0019754,14.043984,16.009861)"
        inkscape:transform-center-x="1.9750342" />
     <path
-       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#808080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter8275);enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#232629;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter8275);enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
        d="M 3,0 C 2.4764012,0.024544 1.9754563,0.976401 2,1.5 2.024544,2.023599 2.4764012,3.024544 3,3 L 13,3 C 13.528313,3.0075 14,2.028365 14,1.5 14,0.971635 13.528313,-0.007472 13,0 L 3,0 C 2.968773,-0.0015 3.031227,-0.0015 3,0 z"
        id="path6464"
        inkscape:connector-curvature="0"

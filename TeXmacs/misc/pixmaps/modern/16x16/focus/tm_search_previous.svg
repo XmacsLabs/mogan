@@ -23,7 +23,7 @@
     <linearGradient
        id="linearGradient6140">
       <stop
-         style="stop-color:#808080;stop-opacity:1;"
+         style="stop-color:#232629;stop-opacity:1;"
          offset="0"
          id="stop6142" />
       <stop
@@ -181,7 +181,7 @@
          x="6.0259871"
          y="13.020233" /></text>
     <path
-       style="fill:#808080;fill-opacity:1;stroke:#808080;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter8219)"
+       style="fill:#232629;fill-opacity:1;stroke:#232629;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter8219)"
        d="M 3,11 13,11 8,5 z"
        id="path6257"
        inkscape:connector-curvature="0"
