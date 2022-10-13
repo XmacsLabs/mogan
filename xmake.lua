@@ -34,7 +34,7 @@ target("mogan")
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
-    add_rules("qt.static")
+    add_rules("qt.shared")
     add_frameworks("QtGui","QtWidgets","QtCore","QtPrintSupport","QtSvg")
     add_packages("freetype")
     add_packages("libcurl")
