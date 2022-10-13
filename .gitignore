@@ -63,5 +63,8 @@ src/makefile
 packages/macos/TeXmacs.xcodeproj/project.xcworkspace
 packages/macos/TeXmacs.xcodeproj/xcuserdata
 config.status
+#xmake cache
+.xmake/
+
 
 workspace.tm
