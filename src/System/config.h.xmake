@@ -3,8 +3,10 @@
 /* check assertions in code */
 #define DEBUG_ASSERT 1
 
+${define QTTEXMACS}
+
 /* Enable experimental style rewriting code */
-#define EXPERIMENTAL 1
+${define EXPERIMENTAL}
 
 /* gs path relative to TEXMACS_PATH */
 #define GS_EXE "${GS_EXE}"

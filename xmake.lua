@@ -17,6 +17,7 @@ includes("check_csnippets.lua")
 add_rules("mode.debug", "mode.release")
 
 set_project("TEXMACS")
+
 add_requires("libpng")
 add_requires("libiconv")
 add_requires("zlib")
@@ -36,10 +37,14 @@ target("mogan")
     set_policy("check.auto_ignore_flags", false)
     add_rules("qt.shared")
     add_frameworks("QtGui","QtWidgets","QtCore","QtPrintSupport","QtSvg")
-    add_packages("freetype")
-    add_packages("libcurl")
-    add_packages("libjpeg")
+    set_configvar("QTTEXMACS", 1)
+
     add_packages("libpng")
+    add_packages("libiconv")
+    add_packages("zlib")
+    add_packages("libjpeg")
+    add_packages("libcurl")
+    add_packages("freetype")
 
     ---------------------------------------------------------------------------
     -- generate config files. see also:
@@ -141,6 +146,7 @@ target("mogan")
     add_includedirs("src/Plugins/Pdf")
     add_includedirs("src/Plugins/Pdf/PDFWriter")
     add_includedirs("src/Plugins/Pdf/LibAesgm")
+    add_includedirs("src/Plugins/Qt")
     add_includedirs("src/Scheme")
     add_includedirs("src/Scheme/S7")
     add_includedirs("src/Scheme/Scheme")
@@ -161,6 +167,9 @@ target("mogan")
     add_includedirs("src/Typeset/Concat")
     add_includedirs("src/Typeset/Page")
     add_includedirs("TeXmacs/include")
+    if is_plat("macosx") then
+        add_includedirs("src/Plugins/MacOS")
+    end
 
     add_files("src/Data/**.cpp")
     add_files("src/Edit/**.cpp")
@@ -180,6 +189,7 @@ target("mogan")
     add_files("src/Plugins/Database/**.cpp")
     add_files("src/Plugins/Freetype/**.cpp")
     add_files("src/Plugins/Jeaiii/**.cpp")
+    add_files("src/Plugins/Pdf/**.c")
     add_files("src/Plugins/Pdf/**.cpp")
     add_files("src/Plugins/Ghostscript/**.cpp")
     add_files("src/Plugins/Imlib2/**.cpp")
@@ -196,4 +206,15 @@ target("mogan")
     else
         add_files("src/Plugins/Unix/**.cpp")
     end
+    if is_plat("macosx") then
+        add_files("src/Plugins/MacOS/HIDRemote.m")
+        add_files("src/Plugins/MacOS/mac_images.mm")
+        add_files("src/Plugins/MacOS/mac_spellservice.mm")
+        add_files("src/Plugins/MacOS/mac_utilities.mm")
+        add_files("src/Plugins/MacOS/mac_app.mm")
+    end
     add_files("src/Plugins/Qt/**.cpp")
+    add_files("src/Plugins/Qt/**.hpp")
+
+    add_mxflags("-fno-objc-arc")
+    add_cxxflags("-include src/System/config.h")

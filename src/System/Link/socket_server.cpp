@@ -58,6 +58,11 @@ make_socket_server (int port) {
   return tm_new<socket_server_rep> (port);
 }
 
+int
+number_of_servers () {
+  return N (socket_server_set);
+}
+
 void
 close_all_servers () {
 iterator<pointer> it= iterate (socket_server_set);
