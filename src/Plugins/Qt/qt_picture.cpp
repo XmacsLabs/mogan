@@ -1,4 +1,4 @@
-
+ 
 /******************************************************************************
 * MODULE     : qt_picture.cpp
 * DESCRIPTION: QT pictures
@@ -81,6 +81,25 @@ xpm_image (url file_name) {
   picture p= load_xpm (file_name);
   qt_picture_rep* rep= (qt_picture_rep*) p->get_handle ();
   return &(rep->pict);
+}
+
+QIcon
+qt_load_icon (url file_name) {
+  string base_name;
+  if (ends (as_string (file_name), ".xpm")) {
+    base_name= replace (as_string (file_name), ".xpm", "");
+  } else {
+    base_name= as_string (file_name);
+  }
+  url svg= resolve("$TEXMACS_PIXMAP_PATH" * url_system(base_name * ".svg"));
+  url png= resolve("$TEXMACS_PIXMAP_PATH" * url_system(base_name * ".png"));
+  if (exists (png)) {
+    return QIcon (as_pixmap (*xpm_image (file_name)));
+  } else if (exists (svg)) {
+    return QIcon (to_qstring (as_string (svg)));
+  } else {
+    return QIcon (as_pixmap (*xpm_image (file_name)));
+  }
 }
 
 picture
