@@ -392,6 +392,11 @@ qt_load_svg_icon (url file_name) {
   QPainter painter (pm);
   renderer.render (&painter);
 
+  if (occurs ("dark", tm_style_sheet) && may_transform (file_name, *pm)) {
+    invert_colors (*pm);
+    saturate (*pm);
+  }
+
   QPixmap icon (pm->size ());
   icon.convertFromImage (*pm);
   return icon;
