@@ -1076,7 +1076,7 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
     }
     if (fam == mfam && !is_italic_font (mfam)) {
       array<string> emu_names= emu_font_names ();
-      for (int i=0; i<N(emu_names); i++) {
+      for (int i=0; i<N(emu_names); i++)
         if (virtually_defined (c, emu_names[i])) {
           tree key= tuple ("emulate", emu_names[i]);
           int nr= sm->add_font (key, REWRITE_NONE);
@@ -1084,7 +1084,6 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
           if (fn[nr]->supports (c))
             return sm->add_char (key, c);
         }
-      }
     }
   }
 
