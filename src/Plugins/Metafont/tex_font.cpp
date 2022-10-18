@@ -23,6 +23,7 @@
 #define TEX_CM 4
 #define TEX_ADOBE 5
 
+int         get_utf8_code (string c);
 static void special_initialize ();
 font_metric tfm_font_metric (tex_font_metric tfm, font_glyphs pk, double unit);
 
@@ -594,6 +595,10 @@ tex_font_rep::supports (string s) {
     if (s == "<less>") return raw_supports ('<');
     else if (s == "<gtr>") return raw_supports ('>');
     else if (N (s) == 1) return raw_supports (s[0]);
+    else if (starts (s, "<#") && N (s) == 7) {
+      int code= get_utf8_code (s);
+      return (code > 0) && (code < 256) && raw_supports ((unsigned char) code);
+    }
     else return false;
   case TEX_EC:
   case TEX_LA:
@@ -613,6 +618,11 @@ tex_font_rep::supports (string s) {
 
 void
 tex_font_rep::get_extents (string s, metric& ex) {
+  if (starts (s, "<#") && N (s) == 7) {
+    int code= get_utf8_code (s);
+    get_extents (string ((char) code), ex);
+    return;
+  }
   int i;
   switch (status) {
   case TEX_ANY:
@@ -739,6 +749,16 @@ tex_font_rep::get_xpositions (string s, SI* xpos, bool ligf) {
     break;
   }
 
+  if (starts (s, "<#") && N (s) == 7) {
+    int code= get_utf8_code (s);
+    STACK_NEW_ARRAY (s_copy, int, 1);
+    s_copy[0]= (QN) code;
+    tfm->get_xpositions (s_copy, 1, unit, xpos, ligf);
+    STACK_DELETE_ARRAY (s_copy);
+    xpos[7]= xpos[1];
+    return;
+  }
+
   STACK_NEW_ARRAY (s_copy, int, n);
   for (i= 0; i < n; i++)
     s_copy[i]= ((QN) s[i]);
@@ -753,6 +773,12 @@ tex_font_rep::get_xpositions (string s, SI* xpos) {
 
 void
 tex_font_rep::draw_fixed (renderer ren, string s, SI ox, SI y) {
+  if (starts (s, "<#") && N (s) == 7) {
+    int   code= get_utf8_code (s);
+    glyph gl  = pk->get (code);
+    ren->draw (code, pk, ox, y);
+    return;
+  }
   int i;
   switch (status) {
   case TEX_ANY:
