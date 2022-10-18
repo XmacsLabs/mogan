@@ -99,7 +99,11 @@ qt_load_icon (url file_name) {
 #ifdef OS_MINGW
     return QIcon (qt_load_svg_icon (svg));
 #else
-   return QIcon (to_qstring (as_string (svg)));
+  if (occurs ("dark", tm_style_sheet)) {
+    return QIcon (qt_load_svg_icon (svg));
+  } else {
+    return QIcon (to_qstring (as_string (svg)));
+  }
 #endif
   } else {
     return QIcon (as_pixmap (*xpm_image (file_name)));
