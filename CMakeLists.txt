@@ -775,7 +775,7 @@ install (FILES TeXmacs/misc/images/texmacs.svg RENAME Mogan.svg
 install (FILES TeXmacs/misc/images/text-x-mogan.svg
   DESTINATION share/icons/hicolor/scalable/mimetypes)
 install (FILES TeXmacs/misc/mime/mogan.xml DESTINATION share/mime/packages)
-install (FILES TeXmacs/misc/pixmaps/TeXmacs.xpm DESTINATION share/pixmaps)
+install (FILES TeXmacs/misc/pixmaps/Xmacs.xpm DESTINATION share/pixmaps)
 foreach (size IN ITEMS 32 48 64 128 256 512)
   install (FILES TeXmacs/misc/images/xmacs-${size}.png RENAME Xmacs.png
     DESTINATION share/icons/hicolor/${size}x${size}/apps/)
