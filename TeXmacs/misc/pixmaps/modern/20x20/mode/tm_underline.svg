@@ -8,7 +8,7 @@
   </defs>
  <path 
     style="fill:currentColor;fill-opacity:1;stroke:none" 
-    d="M 3 3 L 3 5 L 8 5 L 8 3 L 3 3 z M 10 3 L 10 4 L 19 4 L 19 3 L 10 3 z M 5 6 L 5 7 L 19 7 L 19 6 L 5 6 z M 3 9 L 3 11 L 8 11 L 8 9 L 3 9 z M 10 9 L 10 10 L 19 10 L 19 9 L 10 9 z M 5 12 L 5 13 L 19 13 L 19 12 L 5 12 z M 5 15 L 5 16 L 19 16 L 19 15 L 5 15 z M 17 18 L 17 19 L 19 19 L 19 18 L 17 18 z "
+    d="M 6 3 L 6 10 C 6 12.77 8.23 15 11 15 C 13.77 15 16 12.77 16 10 L 16 3 L 14 3 L 14 11 C 14 12.108 13.108 13 12 13 C 10.892 13 10 12.108 10 11 L 10 3 L 6 3 z M 4 18 L 4 19 L 18 19 L 18 18 L 4 18 z "
     class="ColorScheme-Text"
     />  
 </svg>
