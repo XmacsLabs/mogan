@@ -1,4 +1,4 @@
-<TeXmacs|1.99.21>
+<TeXmacs|2.1.2>
 
 <style|<tuple|tmdoc|english|old-spacing|old-dots|old-lengths>>
 
@@ -32,8 +32,8 @@
       <hlink|tutorials|https://www.texmacs.org/tmweb/help/tutorial.en.html>.
     </cell>>|<row|<cell|<image|../../../misc/images/welcome-help.png||2.2em||>>|<\cell>
       You may use <shortcut|(interactive docgrep-in-doc)> to search for words
-      in the integrated documentation. The <icon|tm_focus_help_x4.png> icon
-      on the third toolbar can be used to obtain contextual help.
+      in the integrated documentation. The <icon|tm_focus_help.svg> icon on
+      the third toolbar can be used to obtain contextual help.
     </cell>>|<row|<\cell>
       <image|../../../misc/images/welcome-email.png||2.2em||>
     </cell>|<\cell>
@@ -46,8 +46,8 @@
     </cell>>|<row|<cell|<image|../../../misc/images/welcome-promote.png||2.2em||>
     >|<\cell>
       If you like the program, then you can also help us! Please cite
-      <TeXmacs> in your work using the <icon|tm_like_x4.png> icon on the
-      third toolbar. You may also <hlink|donate|https://www.texmacs.org/tmweb/contribute/donations.en.html>
+      <TeXmacs> in your work using the <icon|tm_like.svg> icon on the third
+      toolbar. You may also <hlink|donate|https://www.texmacs.org/tmweb/contribute/donations.en.html>
       money or <hlink|join|https://www.texmacs.org/tmweb/contribute/contribute.en.html>
       the team of developers.
     </cell>>>>

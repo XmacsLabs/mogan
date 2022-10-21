@@ -1,6 +1,6 @@
-<TeXmacs|1.99.8>
+<TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|english|old-spacing>>
+<style|<tuple|tmdoc|english|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|Notes for users of oriental languages>
@@ -33,7 +33,7 @@
     texmacs --delete-font-cache
   </shell-code>
 
-  and select <menu|Japanese> from the <icon|tm_language.xpm> icon on the
+  and select <menu|Japanese> from the <icon|tm_language.svg> icon on the
   first icon bar. If everything went allright, the menus should now show up
   in Japanese and the current document is also in Japanese. Notice that you
   may also select Japanese as your default language in
@@ -49,7 +49,7 @@
   <TeXmacs> window. Pressing <key|S-space> once again returns to the
   classical <TeXmacs> input method.
 
-  <tmdoc-copyright|1998--2002|Joris van der Hoeven>
+  <tmdoc-copyright|1998\U2002|Joris van der Hoeven>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
