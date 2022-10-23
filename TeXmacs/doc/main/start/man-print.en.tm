@@ -1,4 +1,4 @@
-<TeXmacs|1.99.21>
+<TeXmacs|2.1.2>
 
 <style|<tuple|tmdoc|english|old-spacing|old-dots|old-lengths>>
 
@@ -6,11 +6,11 @@
   <tmdoc-title|Printing documents>
 
   You can print the current file using <menu|File|Print|Print buffer> or
-  <menu|<icon|tm_print_x2.png>|Print buffer>. Before printing, it is possible
-  to preview your document first, using <menu|File|Preview> or
-  <menu|<icon|tm_print_x2.png>|Preview>. By default, <TeXmacs> assumes that
-  you have a 600dpi printer for a4 paper. These default settings can be
-  changed in <menu|File|Page setup> .
+  <menu|<icon|tm_print.svg>|Print buffer>. Before printing, it is possible to
+  preview your document first, using <menu|File|Preview> or
+  <menu|<icon|tm_print.svg>|Preview>. By default, <TeXmacs> assumes that you
+  have a 600dpi printer for a4 paper. These default settings can be changed
+  in <menu|File|Page setup> .
 
   You can also print to a postscript file using <menu|File|Print|Print buffer
   to file> (in which case the default printer settings are used for creating

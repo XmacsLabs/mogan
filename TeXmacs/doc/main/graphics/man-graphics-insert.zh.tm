@@ -1,27 +1,27 @@
-<TeXmacs|2.1.3>
+<TeXmacs|2.1.2>
 
 <style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|插入图形对象>
 
-  插入新图片或点击进入已有图片后，依赖于模式的第二行工具栏会显示一系列图形模式的图标。特别地，其中的第二组图标<icon|tm_point_mode.xpm>，
-  <icon|tm_line_mode.xpm>， <icon|tm_cline_mode.xpm>，
-  <icon|tm_spline_mode.xpm>， <icon|tm_cspline_mode.xpm>，
-  <icon|tm_arc_mode.xpm>， <icon|tm_carc_mode.xpm>，
-  <icon|tm_textat_mode.xpm>， <icon|tm_math.xpm>是一系列可以点击并插入图片的图形对象。<TeXmacs>当前支持下列这些原生的图形对象：
+  插入新图片或点击进入已有图片后，依赖于模式的第二行工具栏会显示一系列图形模式的图标。特别地，其中的第二组图标<icon|tm_point_mode.svg>，
+  <icon|tm_line_mode.svg>， <icon|tm_cline_mode.svg>，
+  <icon|tm_spline_mode.svg>， <icon|tm_cspline_mode.svg>，
+  <icon|tm_arc_mode.svg>， <icon|tm_carc_mode.svg>，
+  <icon|tm_textat_mode.svg>， <icon|tm_math.svg>是一系列可以点击并插入图片的图形对象。<TeXmacs>当前支持下列这些原生的图形对象：
 
   <\description>
-    <item*|点>点击<icon|tm_point_mode.xpm>或者<menu|Insert|Point>，你就能在图片上通过鼠标左键插入点。
+    <item*|点>点击<icon|tm_point_mode.svg>或者<menu|Insert|Point>，你就能在图片上通过鼠标左键插入点。
 
-    <item*|线和多边形>点击<icon|tm_line_mode.xpm>或者<menu|Insert|Line>后，每一次左击都将插入一个虚拟的点，直线将顺次连接这些点，双击可以插入最后一个点，并结束本次绘制。点击<icon|tm_cline_mode.xpm>或者<menu|Insert|Polygon>后，行为与插入直线类似，只是最后一个点插入后，将有一条额外的直线使之与第一个点相连。
+    <item*|线和多边形>点击<icon|tm_line_mode.svg>或者<menu|Insert|Line>后，每一次左击都将插入一个虚拟的点，直线将顺次连接这些点，双击可以插入最后一个点，并结束本次绘制。点击<icon|tm_cline_mode.svg>或者<menu|Insert|Polygon>后，行为与插入直线类似，只是最后一个点插入后，将有一条额外的直线使之与第一个点相连。
 
-    <item*|样条曲线和闭合样条曲线><icon|tm_spline_mode.xpm>即<menu|Insert|Spline>，<icon|tm_cspline_mode.xpm>即<menu|Insert|Closed
+    <item*|样条曲线和闭合样条曲线><icon|tm_spline_mode.svg>即<menu|Insert|Spline>，<icon|tm_cspline_mode.svg>即<menu|Insert|Closed
     spline>。插入曲线的操作方式与插入直线的方式一模一样，不同之处在于，连接这些点的是样条曲线。
 
-    <item*|圆弧和圆圈><icon|tm_arc_mode.xpm>即<menu|Insert|Arc>，<icon|tm_carc_mode.xpm>即<menu|Insert|Circle>。平面上不在同一直线上的三点可以确定一个圆。所以指定该对象后，只需要左击插入三个点即可。
+    <item*|圆弧和圆圈><icon|tm_arc_mode.svg>即<menu|Insert|Arc>，<icon|tm_carc_mode.svg>即<menu|Insert|Circle>。平面上不在同一直线上的三点可以确定一个圆。所以指定该对象后，只需要左击插入三个点即可。
 
-    <item*|文本和数学><icon|tm_textat_mode.xpm>即<menu|Insert|Text>，<icon|tm_math.xpm>即<menu|Insert|Mathematics>。指定该对象后，在图片上左击选中插入的位置，再编辑即可。值得注意的是，这里的文本其实不限定于纯粹的文本，其本质是一个容器，大部分<TeXmacs>内容都可以栖身其中。
+    <item*|文本和数学><icon|tm_textat_mode.svg>即<menu|Insert|Text>，<icon|tm_math.svg>即<menu|Insert|Mathematics>。指定该对象后，在图片上左击选中插入的位置，再编辑即可。值得注意的是，这里的文本其实不限定于纯粹的文本，其本质是一个容器，大部分<TeXmacs>内容都可以栖身其中。
   </description>
 
   这些基本对象的典型例子如下图所示：
@@ -40,7 +40,7 @@
 
   <htab|5mm>
 
-  <tmdoc-copyright|2012|Joris van der Hoeven>
+  <tmdoc-copyright|2012|Joris van der Hoeven|沈达>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -49,3 +49,6 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
+
+<initial|<\collection>
+</collection>>

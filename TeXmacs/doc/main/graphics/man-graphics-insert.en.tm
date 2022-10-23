@@ -8,42 +8,42 @@
   After insertion of a new picture or clicking inside an existing picture,
   the second mode dependent toolbar shows a<nbsp>list of icons which are
   useful in graphics mode. In particular, the second group of icons
-  <icon|tm_point_mode.xpm>, <icon|tm_line_mode.xpm>,
-  <icon|tm_cline_mode.xpm>, <icon|tm_spline_mode.xpm>,
-  <icon|tm_cspline_mode.xpm>, <icon|tm_arc_mode.xpm>,
-  <icon|tm_carc_mode.xpm>, <icon|tm_textat_mode.xpm>, <icon|tm_math.xpm> on
+  <icon|tm_point_mode.svg>, <icon|tm_line_mode.svg>,
+  <icon|tm_cline_mode.svg>, <icon|tm_spline_mode.svg>,
+  <icon|tm_cspline_mode.svg>, <icon|tm_arc_mode.svg>,
+  <icon|tm_carc_mode.svg>, <icon|tm_textat_mode.svg>, <icon|tm_math.svg> on
   this toolbar allows you to select the kind of objects that you want to
   insert. <TeXmacs> currently implements the following primitive graphical
   objects:
 
   <\description>
-    <item*|Points>When selecting point mode using <icon|tm_point_mode.xpm> or
+    <item*|Points>When selecting point mode using <icon|tm_point_mode.svg> or
     <menu|Insert|Point>, you may insert simple points with the left mouse
     button.
 
     <item*|Lines and polygons>When selecting line mode using
-    <icon|tm_line_mode.xpm> or <menu|Insert|Line>, you may insert a new
+    <icon|tm_line_mode.svg> or <menu|Insert|Line>, you may insert a new
     broken line with the left mouse button: at every new click a new point is
     inserted and the last point is inserted using a double click. Polygon
-    mode (<icon|tm_cline_mode.xpm> or <menu|Insert|Polygon>) is a variant of
+    mode (<icon|tm_cline_mode.svg> or <menu|Insert|Polygon>) is a variant of
     line mode, with this difference that an additional segment is inserted
     between the first and the last points.
 
     <item*|Splines and closed splines>Spline mode is selected using
-    <icon|tm_spline_mode.xpm> or <menu|Insert|Spline>. This mode is similar
+    <icon|tm_spline_mode.svg> or <menu|Insert|Spline>. This mode is similar
     to line mode, except that we now draw a smooth curve through the
     specified points. Again, this mode admits a closed variant
-    (<icon|tm_cspline_mode.xpm> or <menu|Insert|Closed spline>).
+    (<icon|tm_cspline_mode.svg> or <menu|Insert|Closed spline>).
 
-    <item*|Arcs and circles>Arc mode is selected using <icon|tm_arc_mode.xpm>
+    <item*|Arcs and circles>Arc mode is selected using <icon|tm_arc_mode.svg>
     or <menu|Insert|Arc>. In this mode, you may insert arcs going through
     three points specified through left mouse clicks. Similarly, you may use
-    circle mode (<icon|tm_carc_mode.xpm> or <menu|Insert|Circle>) for drawing
+    circle mode (<icon|tm_carc_mode.svg> or <menu|Insert|Circle>) for drawing
     circles.
 
     <item*|Text and mathematics>When selecting text mode
-    (<icon|tm_textat_mode.xpm> or <menu|Insert|Text>) or mathematics mode
-    (<icon|tm_math.xpm> or <menu|Insert|Mathematics>), you may enter text (or
+    (<icon|tm_textat_mode.svg> or <menu|Insert|Text>) or mathematics mode
+    (<icon|tm_math.svg> or <menu|Insert|Mathematics>), you may enter text (or
     mathematics) at an arbitrary position in the picture, again using the
     left mouse button.
   </description>

@@ -1,6 +1,6 @@
-<TeXmacs|1.99.5>
+<TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|english>>
+<style|<tuple|tmdoc|english|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|Search and replace>
@@ -41,7 +41,7 @@
 
   The search and replace toolbars are quite rudimentary in the sense that
   they only allow for searching and replacing plain text. By pressing the
-  <icon|tm_expand_tool.xpm> icon on either of these toolbars, you may expand
+  <icon|tm_expand_tool.svg> icon on either of these toolbars, you may expand
   the toolbar into a full blown widget with larger search and replace fields
   that may contain arbitrary markup. Searching and replacing can be done
   using more or less the same keyboard shortcuts as in the case of the
@@ -80,9 +80,9 @@
   of the toolbars, this will be remembered as a user preference: any
   subsequent searches or replacements will again use the widgets. In order to
   switch back to the less intrusive toolbar methods for searching and
-  replacing, you should press the <icon|tm_compress_tool.xpm> icon.
+  replacing, you should press the <icon|tm_compress_tool.svg> icon.
 
-  <tmdoc-copyright|1998--2002|Joris van der Hoeven>
+  <tmdoc-copyright|1998\U2002|Joris van der Hoeven>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1

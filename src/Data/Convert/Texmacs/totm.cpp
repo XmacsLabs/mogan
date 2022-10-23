@@ -145,7 +145,7 @@ tm_writer::write (string s, bool flag, bool encode_space) {
     for (i=0; i<n; i++) {
       char c= s[i];
       if ((c == ' ') && (!encode_space)) write_space ();
-      else if (get_preference ("tm format with utf8", "on") == "on" &&
+      else if (get_preference ("tm format with utf8", "off") == "on" &&
                (c == '<' && i+6 < n && s[i+1] == '#' && s[i+6] == '>')) {
         tmp << cork_to_utf8 (s(i, i+6));
         i+= 6;

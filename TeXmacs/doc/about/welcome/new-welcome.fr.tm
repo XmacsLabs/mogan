@@ -1,6 +1,6 @@
-<TeXmacs|1.99.12>
+<TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|old-spacing|old-dots|french>>
+<style|<tuple|tmdoc|old-spacing|old-dots|french|old-lengths>>
 
 <\body>
   <tmdoc-title|Bienvenue sur GNU <TeXmacs> <TeXmacs-version>>
@@ -24,8 +24,8 @@
     </cell>>|<row|<cell|<image|../../../misc/images/welcome-help.png||2.2em||>>|<\cell>
       La touche <shortcut|(interactive docgrep-in-doc)> permet de chercher
       des mots clefs dans la documentation intégrée.
-      L'icône<nbsp><icon|tm_focus_help_x4.png> sur la troisième barre
-      d'outils sert à obtenir de l'aide contextuelle.
+      L'icône<nbsp><icon|tm_focus_help.svg> sur la troisième barre d'outils
+      sert à obtenir de l'aide contextuelle.
     </cell>>|<row|<\cell>
       <image|../../../misc/images/welcome-email.png||2.2em||>
     </cell>|<\cell>
@@ -39,7 +39,7 @@
     >|<\cell>
       Si vous aimez le programme, alors vous pouvez nous aider ! Merci de
       toujours citer <TeXmacs> dans vos travaux utilisant l'icône
-      <icon|tm_like_x4.png> sur la troisième barre d'outils. Il est aussi
+      <icon|tm_like.svg> sur la troisième barre d'outils. Il est aussi
       possible de nous faire des <hlink|donations|https://www.texmacs.org/tmweb/contribute/donations.en.html>
       ou de <hlink|joindre|https://www.texmacs.org/tmweb/contribute/contribute.en.html>
       l'équipe des développeurs.

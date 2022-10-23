@@ -1,4 +1,4 @@
-<TeXmacs|1.99.21>
+<TeXmacs|2.1.2>
 
 <style|<tuple|tmdoc|old-dots|old-lengths>>
 
@@ -90,36 +90,32 @@
   Roughly speaking, the three toolbars serve the following purposes:
 
   <paragraph|Main toolbar>The first toolbar contains context-independent
-  icons for common operations on files (<icon|tm_new_x2.png>, <text-dots>,
-  <icon|tm_cancel_x2.png>), common editing operations (<icon|tm_cut_x2.png>,
-  <text-dots>, <icon|tm_redo_x2.png>) and
-  browsing<nbsp>(<icon|tm_back_x2.png>, <text-dots>,
-  <icon|tm_forward_x2.png>).
+  icons for common operations on files (<icon|tm_new.svg>, <text-dots>,
+  <icon|tm_cancel.svg>), common editing operations (<icon|tm_cut.svg>,
+  <text-dots>, <icon|tm_redo.svg>) and browsing<nbsp>(<icon|tm_back.svg>,
+  <text-dots>, <icon|tm_forward.svg>).
 
   <paragraph|Mode-dependent toolbar>The icons on the second toolbar only
   depend on the main editing mode (text, mathematics, graphics, etc.). Inside
   ordinary text, the toolbar is subdivided into the following four groups:
 
   <\itemize>
-    <item>the icons <icon|tm_section_x2.png>, <text-dots>,
-    <icon|tm_index_x2.png> are used for the insertion of \Plarge
-    environments\Q that structure your document, like sections, theorems,
-    item lists, etc.
+    <item>the icons <icon|tm_section.svg>, <text-dots>, <icon|tm_index.svg>
+    are used for the insertion of \Plarge environments\Q that structure your
+    document, like sections, theorems, item lists, etc.
 
-    <item>the icons <icon|tm_emphasize_x2.png>, <text-dots>,
-    <icon|tm_color_x2.png> are for common textual markup (emphasis, verbatim,
-    color).
+    <item>the icons <icon|tm_emphasize.svg>, <text-dots>, <icon|tm_color.svg>
+    are for common textual markup (emphasis, verbatim, color).
 
-    <item>the icons <icon|tm_traverse_x2.png>, <text-dots>,
-    <icon|tm_tmdoc_annotate_x2.png> are specific to the <tmstyle|tmdoc> style
+    <item>the icons <icon|tm_traverse.svg>, <text-dots>,
+    <icon|tm_tmdoc_annotate.svg> are specific to the <tmstyle|tmdoc> style
     used by this particular document (they provide acccess to some macros
     that are useful when writing <TeXmacs> documentation, and you can ignore
     them for the moment).
 
-    <item>the icons <icon|tm_math_x2.png>, <text-dots>,
-    <icon|tm_shell_x2.png> are for the insertion of special types of markup,
-    such as equations, tables, images, hyperlinks, animations, or interactive
-    sessions.
+    <item>the icons <icon|tm_math.svg>, <text-dots>, <icon|tm_shell.svg> are
+    for the insertion of special types of markup, such as equations, tables,
+    images, hyperlinks, animations, or interactive sessions.
   </itemize>
 
   <paragraph|Focus toolbar>The icons on the third and smallest toolbar are
@@ -128,10 +124,10 @@
   environment, which is indicated by the cyan box).
 
   Observe how the focus bar changes when the cursor is moved; try clicking on
-  the <icon|tm_numbered_x2.png> icon when the focus is on the above bullet
-  list (but not immediately after a bullet) and observe what happens. The
-  same mechanism allows displayed formulas to be numbered: go ahead and try
-  it with the ones in this document!
+  the <icon|tm_numbered.svg> icon when the focus is on the above bullet list
+  (but not immediately after a bullet) and observe what happens. The same
+  mechanism allows displayed formulas to be numbered: go ahead and try it
+  with the ones in this document!
 
   <section|Mathematical formulas>
 
@@ -145,22 +141,22 @@
   example):
 
   <\itemize>
-    <item>Click on the <icon|tm_math_x2.png> icon in the mode-dependent icon
+    <item>Click on the <icon|tm_math.svg> icon in the mode-dependent icon
     toolbar to insert a <em|displayed formula> (<abbr|i.e.> a<nbsp>large
     centered formula).
 
-    <item>The integral sign can be found under the <icon|tm_bigop_x2.png>
-    icon, available when the cursor is inside a<nbsp>formula. When hovering
-    the mouse over the button with <math|<op|<big|int>>>, a help balloon
-    allows you to discover the corresponding keyboard
+    <item>The integral sign can be found under the <icon|tm_bigop.svg> icon,
+    available when the cursor is inside a<nbsp>formula. When hovering the
+    mouse over the button with <math|<op|<big|int>>>, a help balloon allows
+    you to discover the corresponding keyboard
     shortcut<nbsp><shortcut|(math-big-operator "int")>. If you know <LaTeX>,
     then you may also use the <LaTeX> command <key|\\ i n t> followed by
     <key|return>.
 
     <item>The subscripts and superscripts can be obtained using the
-    <icon|tm_subsup_x2.png> icon in the toolbar, or using the keys <key|^>
-    and <key|_>. Make sure you exit the subscript environment before creating
-    a superscript, otherwise you will be creating a superscript inside the
+    <icon|tm_subsup.svg> icon in the toolbar, or using the keys <key|^> and
+    <key|_>. Make sure you exit the subscript environment before creating a
+    superscript, otherwise you will be creating a superscript inside the
     subscript: remember that the cyan box is here to help you figure out the
     exact cursor position.
 
@@ -222,7 +218,7 @@
   <math|\<Leftrightarrow\>>.
 
   Don't forget entering <em|math mode> before trying to insert mathematical
-  symbols or markup. New formulas can be inserted using <icon|tm_math_x2.png>
+  symbols or markup. New formulas can be inserted using <icon|tm_math.svg>
   icon on the mode-dependent icon toolbar or using the keyboard shortcuts
   <key|$> (inline formula) or <shortcut|(make-equation*)> (displayed
   equation).

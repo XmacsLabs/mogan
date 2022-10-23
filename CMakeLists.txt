@@ -53,7 +53,7 @@ set (CMAKE_MODULE_PATH ${TEXMACS_SOURCE_DIR}/cmake)
 
 set (VERSION_MAJOR "2")
 set (VERSION_MINOR "1")
-set (VERSION_BUILD "3")
+set (VERSION_BUILD "2")
 set (TEXMACS_VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD})
 
 set (DEVEL_VERSION ${TEXMACS_VERSION})
@@ -62,7 +62,7 @@ set (STABLE_VERSION ${TEXMACS_VERSION})
 set (STABLE_RELEASE "1")
 set (TEXMACS_REVISION ${TEXMACS_VERSION})
 
-set (XMACS_VERSION "1.1.1-rc3")
+set (XMACS_VERSION "1.1.1")
 
 ### --------------------------------------------------------------------
 ### Options
@@ -775,7 +775,7 @@ install (FILES TeXmacs/misc/images/texmacs.svg RENAME Mogan.svg
 install (FILES TeXmacs/misc/images/text-x-mogan.svg
   DESTINATION share/icons/hicolor/scalable/mimetypes)
 install (FILES TeXmacs/misc/mime/mogan.xml DESTINATION share/mime/packages)
-install (FILES TeXmacs/misc/pixmaps/TeXmacs.xpm DESTINATION share/pixmaps)
+install (FILES TeXmacs/misc/pixmaps/Xmacs.xpm DESTINATION share/pixmaps)
 foreach (size IN ITEMS 32 48 64 128 256 512)
   install (FILES TeXmacs/misc/images/xmacs-${size}.png RENAME Xmacs.png
     DESTINATION share/icons/hicolor/${size}x${size}/apps/)

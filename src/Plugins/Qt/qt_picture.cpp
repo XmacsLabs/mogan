@@ -362,7 +362,7 @@ new_qt_load_xpm (url file_name) {
   }
   if (sss == "") {
     f= scale;
-    load_string ("$TEXMACS_PATH/misc/pixmaps/TeXmacs.xpm", sss, true);
+    load_string ("$TEXMACS_PATH/misc/pixmaps/Xmacs.xpm", sss, true);
   }
   c_string buf (sss);
   QImage pm;
@@ -426,7 +426,7 @@ qt_load_xpm (url file_name) {
   if (sss == "")
     load_string ("$TEXMACS_PIXMAP_PATH" * file_name, sss, false);
   if (sss == "")
-    load_string ("$TEXMACS_PATH/misc/pixmaps/TeXmacs.xpm", sss, true);
+    load_string ("$TEXMACS_PATH/misc/pixmaps/Xmacs.xpm", sss, true);
   c_string buf (sss);
   QImage pm;
   pm.loadFromData ((uchar*) (char*) buf, N(sss));

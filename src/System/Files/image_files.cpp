@@ -69,7 +69,7 @@ tree
 xpm_load (url u) {
   string s;
   load_string ("$TEXMACS_PIXMAP_PATH" * u, s, false);
-  if (s == "") load_string ("$TEXMACS_PATH/misc/pixmaps/TeXmacs.xpm", s, true);
+  if (s == "") load_string ("$TEXMACS_PATH/misc/pixmaps/Xmacs.xpm", s, true);
 
   int i, j;
   tree t (TUPLE);
@@ -80,7 +80,7 @@ xpm_load (url u) {
       while ((i<N(s)) && (s[i]!='\x22')) i++;
       t << s (j, i);
     }
-  if (N(t)==0) return xpm_load ("$TEXMACS_PATH/misc/pixmaps/TeXmacs.xpm");
+  if (N(t)==0) return xpm_load ("$TEXMACS_PATH/misc/pixmaps/Xmacs.xpm");
   return t;
 }
 
@@ -282,8 +282,10 @@ image_size (url image, int& w, int& h) {
     w=h=0;
     image_size_sub (image, w, h);
     if ((w <= 0) || (h <= 0)) {
-      convert_error << "bad image size for '" << image << "'"
-        << " setting 35x35 " << LF;
+      if (suffix (image) != "svg") {
+        convert_error << "bad image size for '" << image << "'"
+                      << " setting 35x35 " << LF;
+      }
       w= 35; h= 35;
     }
     // for ps and eps images the imgbox should have been cached
