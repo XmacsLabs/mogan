@@ -140,7 +140,7 @@
         ---
         ("Other"        (graphics-interactive-set-grid-center #t)))
     (-> "Unit length"
-        ("Default"      (graphics-set-grid-step "1" #t))
+        ("Default"      (graphics-set-grid-step "2" #t))
         ---
         ("0.1"          (graphics-set-grid-step "0.1" #t))
         ("0.2"          (graphics-set-grid-step "0.2" #t))
