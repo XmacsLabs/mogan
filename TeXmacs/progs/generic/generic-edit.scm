@@ -862,7 +862,14 @@
         (with selection (selection-tree)
           (clipboard-cut "graphics background")
           (insert-go-to `(draw-over ,selection ,g "2cm") '(1 2 1))))
-      (with g `(with "gr-mode" (tuple "hand-edit" "penscript") (graphics))
+      (with g `(with
+                "gr-mode" (tuple "hand-edit" "penscript")
+                "gr-grid" (tuple "cartesian" (point "0" "0") "2")
+                "gr-edit-grid-aspect" (tuple (tuple "axes" "none")
+                                              (tuple "1" "none")
+                                              (tuple "10" "none"))
+                "gr-edit-grid" (tuple "cartesian" (point "0" "0") "1")
+                (graphics))
         (insert-go-to `(draw-over "" ,g "2cm") '(1 2 1)))))
 
 (tm-define (make-anim l)
