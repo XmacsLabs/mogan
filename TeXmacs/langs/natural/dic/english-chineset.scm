@@ -1893,3 +1893,5 @@ TeXmacs 的資料可參考 Help 說明")
 ("zoom in" "放大")
 ("zoom out" "縮小")
 ("(re)build autocompletion index" "(重新) 製作完整索引")
+; Plugin Outline
+("Toggle Outline Toolbar" "顯示/隱藏Outline工具欄")
