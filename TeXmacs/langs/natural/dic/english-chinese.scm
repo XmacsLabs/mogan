@@ -1985,3 +1985,5 @@
 ("zoom in" "放大")
 ("zoom out" "缩小")
 ("(re)build autocompletion index" "构建/重建自动补全索引")
+; Plugin Outline  
+("Toggle Outline Toolbar" "显示/隐藏Outline工具栏")

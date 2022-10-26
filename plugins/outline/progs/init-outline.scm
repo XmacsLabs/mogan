@@ -27,5 +27,5 @@
   (tm-menu (tools-menu)
   (former)
   ---
-      ("Toggle outline Toolbar" (toggle-outline-toolbar))))
+      ("Toggle Outline Toolbar" (toggle-outline-toolbar))))
 )
