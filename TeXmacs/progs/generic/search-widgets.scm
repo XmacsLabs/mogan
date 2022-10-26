@@ -499,7 +499,7 @@
       ((balloon (icon "tm_search_last.xpm") "Last occurrence")
        (search-extreme-match #t))
       >>>
-      (=> (balloon (icon "tm_preferences.xpm") "Search preferences")
+      (=> (balloon (icon "tm_preferences.svg") "Search preferences")
           (link search-preferences-menu))
       ((check (balloon (icon "tm_filter.xpm") "Only show paragraphs with hits")
               "v" (search-filter-enabled?))
