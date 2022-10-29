@@ -7,7 +7,9 @@ GNU TeXmacs 是法国 CNRS 的数学家 [Joris van der Hoeven](http://www.texmac
 
 ## 什么是GNU TeXmacs
 强烈推荐观看 GNU TeXmacs 2.1 的视频简介
+
 [![](https://bb-embed.herokuapp.com/embed?v=BV1bo4y1D7wN)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
+
 - GNU TeXmacs 是一个免费的科技编辑器平台，提供了“所见即所得”的用户界面，可用于创建漂亮的技术文档。
 - GNU TeXmacs 为不同类型的结构化文档内容（文本、数学公式、图像、交互式内容、幻灯片）提供了一致且优化的编辑体验。
 - GNU TeXmacs 可用作各种系统的图形化前端，比如计算机代数系统、数值分析系统、统计分析系统
