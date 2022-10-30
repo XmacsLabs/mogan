@@ -26,7 +26,7 @@ Mogan inherits all the above features from GNU TeXmacs (see [the homepage of GNU
 **We create Mogan Editor for everyone to learn and create science and technology.**
 
 ## Contact Us
-You are welcome to contact us via the following ways to share your experience, provide suggestions or report issues on Mogan Editor. Interested developers and volunteer contributors are also most welcome to join Xmacs Labs.
+You are sincerely welcome to contact us via the following ways to share your experience, provide suggestions or report issues on Mogan Editor. Interested developers and volunteer contributors are also warmly welcome to join Xmacs Labs.
 - Bilibili：[沈浪熊猫儿](https://space.bilibili.com/28058658) 
 - Gitee：[墨者实验室](https://gitee.com/XmacsLabs/) 
 - GitHub: [XmacsLabs](https://github.com/XmacsLabs)
