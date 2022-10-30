@@ -26,7 +26,7 @@ GNU TeXmacs 是法国 CNRS 的数学家 [Joris van der Hoeven](http://www.texmac
 **让所有人畅快地学习既有的科学与技术，创造全新的科学与技术**。
 
 ## 联系我们
-欢迎大家通过以下方式联系我们，交流经验、提供建议或报告问题。也欢迎感兴趣的开发者和志愿贡献者加入墨者实验室。
+衷心欢迎大家通过以下方式联系我们，交流经验、提供建议或报告问题。也热情欢迎感兴趣的开发者和志愿贡献者加入墨者实验室。
 - Bilibili：[沈浪熊猫儿](https://space.bilibili.com/28058658) 
 - Gitee：[墨者实验室](https://gitee.com/XmacsLabs/) 
 - GitHub: [XmacsLabs](https://github.com/XmacsLabs)
