@@ -8,7 +8,7 @@ GNU TeXmacs is a structured editor developed by [Joris van der Hoeven](http://ww
 ## What is GNU TeXmacs
 Highly recommended to watch the official demo of TeXmacs 2.1
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/H46ON2FB30U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://youtu.be/H46ON2FB30U)
 
 - GNU TeXmacs is a free scientific editing platform designed to create beautiful technical documents using a wysiwyg interface.
 - It provides a unified and user friendly framework for editing structured documents with different types of content: text, mathematics, graphics, interactive content, slides, etc.
