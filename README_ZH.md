@@ -39,10 +39,10 @@ GNU TeXmacs 是法国 CNRS 的数学家 [Joris van der Hoeven](http://www.texmac
 
 使用时遇到问题也欢迎咨询 TeXmacs 社区，特别是官方论坛。
 - 官方论坛: [The GNU TeXmacs forum](http://forum.texmacs.cn) 
+- YouTube: [TeXmacs Videos](https://www.youtube.com/channel/UCLaZZkOj3GPYFu9pVsEbthg)
 - GitHub: [GNU TeXmacs](https://github.com/texmacs) 
 - Twitter: [GNU TeXmacs](https://twitter.com/gnu_texmacs) 
 - Gitter: [texmacs/Lobby](https://gitter.im/texmacs/Lobby) 
-- YouTube: [TeXmacs Videos](https://www.youtube.com/channel/UCLaZZkOj3GPYFu9pVsEbthg)
 - 邮件列表: [Mailing lists for TeXmacs](https://www.texmacs.org/tmweb/home/ml.en.html) 
 
 ## 关于名字“墨干”

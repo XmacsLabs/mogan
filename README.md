@@ -39,10 +39,10 @@ You are sincerely welcome to contact us via the following ways to share your exp
 
 You are also welcome to consult the TeXmacs community, especially the official forum, if you encounter problems while using Mogan.
 - Official Forum: [The GNU TeXmacs forum](http://forum.texmacs.cn) 
+- YouTube: [TeXmacs Videos](https://www.youtube.com/channel/UCLaZZkOj3GPYFu9pVsEbthg)
 - GitHub: [GNU TeXmacs](https://github.com/texmacs) 
 - Twitter: [GNU TeXmacs](https://twitter.com/gnu_texmacs) 
 - Gitter: [texmacs/Lobby](https://gitter.im/texmacs/Lobby) 
-- YouTube: [TeXmacs Videos](https://www.youtube.com/channel/UCLaZZkOj3GPYFu9pVsEbthg)
 - [Mailing lists for TeXmacs](https://www.texmacs.org/tmweb/home/ml.en.html) 
 
 
