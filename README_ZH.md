@@ -18,8 +18,10 @@ GNU TeXmacs 是法国 CNRS 的数学家 [Joris van der Hoeven](http://www.texmac
 - 用户可以自定义排版样式，也可以使用 Scheme 扩展语言为编辑器添加新功能。
 - 可以在所有主流 Unix 平台、macOS 和 Windows 上运行。
 
-墨干继承了 GNU TeXmacs 以上所有特性（请参考 [GNU TeXmacs 主页](https://www.texmacs.org))，所也可作为理工科学生、中小学教师和研究人员学习工作的利器，可为创作高质量的作业文档、高水准的报告幻灯片和LaTeX水准的论文提供便利。
- 
+墨干继承了 GNU TeXmacs 以上所有特性（请参考 [GNU TeXmacs 主页](https://www.texmacs.org))，所也可作为理工科学生、中小学教师和研究人员学习工作的利器，可为创作高质量的作业文档、高水准的报告幻灯片和LaTeX水准的论文提供便利。基于 GNU TeXmacs，墨干改正了许多bugs，优化了性能，并美化了界面。
+
+![搭配 KDE Brezze 图标的墨干 v1.1.1](https://user-images.githubusercontent.com/32867606/198898710-6c16bfb2-1107-4cb0-8cb7-14606b31a315.png)
+
 ## 目标
 **让所有人畅快地学习既有的科学与技术，创造全新的科学与技术**。
 
