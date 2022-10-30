@@ -1,7 +1,7 @@
 # Mogan Editor / [墨干编辑器](README_ZH.md)
-Mogan Editor is a structure editor delivered by the [Xmacs Labs](https://github.com/XmacsLabs), which is a fork of [GNU TeXmacs](https://www.texmacs.org).
+Mogan Editor is a structure editor delivered by [Xmacs Labs](https://github.com/XmacsLabs), which is a fork of [GNU TeXmacs](https://www.texmacs.org).
 
-GNU TeXmacs is a structured editor developed by [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html), a mathematician at CNRS in France, since the late 1990s. It is designed to write high-quality technical documents using an intuitive and easy-to-use graphical interface, and can achieve the same level of results as LaTeX. Main users are currently primary and secondary school teachers (mostly in France) and university researchers.
+GNU TeXmacs is a structured editor developed since the late 1990s by [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html), a mathematician at CNRS in France. It is designed to write high-quality technical documents using an intuitive and easy-to-use graphical interface, and able to achieve the same level of results as LaTeX. Its main users are currently primary and secondary school teachers (mostly in France) and university researchers.
 
 [Darcy Shen](https://github.com/darcy-shen) released Mogan v1.0.0 on January 30, 2022, and created Xmacs Labs, a non-profit organization that aims to popularize GNU TeXmacs and make it available to all to enjoy the excellent software developed by Joris van der Hoeven.
 
@@ -26,7 +26,7 @@ Mogan inherits all the above features from GNU TeXmacs (see [the homepage of GNU
 **We create Mogan Editor for everyone to learn and create science and technology.**
 
 ## Contact Us
-You are welcome to contact us via the following ways to share your experience, provide suggestions or report issues on Mogan Editor. Interested developers and volunteer contributors are also most welcome to join XmacsLabs.
+You are welcome to contact us via the following ways to share your experience, provide suggestions or report issues on Mogan Editor. Interested developers and volunteer contributors are also most welcome to join Xmacs Labs.
 - Bilibili：[沈浪熊猫儿](https://space.bilibili.com/28058658) 
 - Gitee：[墨者实验室](https://gitee.com/XmacsLabs/) 
 - GitHub: [XmacsLabs](https://github.com/XmacsLabs)
