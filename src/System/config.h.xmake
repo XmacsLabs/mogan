@@ -80,7 +80,7 @@ ${define HAVE_X11_XUTIL_H}
 
 #define LINKED_SQLITE3 1
 
-#define MACOSX_EXTENSIONS 1
+${define MACOSX_EXTENSIONS}
 
 ${define OS_MACOS}
 

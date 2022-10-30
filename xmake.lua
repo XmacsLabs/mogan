@@ -9,7 +9,7 @@
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
-includes("check_ctypes.lua")
+includes("check_cxxtypes.lua")
 includes("check_cincludes.lua")
 includes("check_cxxfuncs.lua")
 includes("check_csnippets.lua")
@@ -17,6 +17,17 @@ includes("check_csnippets.lua")
 add_rules("mode.debug", "mode.release")
 
 set_project("TEXMACS")
+
+-- because this cpp project use variant length arrays which is not supported by
+-- msvc, this project will not support windows env.
+-- because some package is not ported to cygwin env, this project will not
+-- support cygwin env.
+set_allowedplats(
+    -- these plat should be guaranteed
+    "linux", "macosx", "mingw",
+    --this plat is not maintained
+    "android", "appletvos", "bsd", "cross", "iphoneos", "msys", "wasm", "watchos"
+) 
 
 add_requires("libpng")
 add_requires("libiconv")
@@ -35,7 +46,7 @@ target("mogan")
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
-    add_rules("qt.shared")
+    add_rules("qt.widgetapp_static")
     add_frameworks("QtGui","QtWidgets","QtCore","QtPrintSupport","QtSvg")
     set_configvar("QTTEXMACS", 1)
 
@@ -46,6 +57,10 @@ target("mogan")
     add_packages("libcurl")
     add_packages("freetype")
 
+    if is_plat("mingw") then
+        add_syslinks("wsock32", "ws2_32", "crypt32","secur32")
+    end
+
     ---------------------------------------------------------------------------
     -- generate config files. see also:
     --    * https://github.com/xmake-io/xmake/issues/320
@@ -53,21 +68,21 @@ target("mogan")
     ---------------------------------------------------------------------------
     set_configdir("src/System")
     -- check for dl library
-    configvar_check_cxxfuncs("dlopen","TM_DYNAMIC_LINKING")
-    configvar_check_ctypes("HAVE_INTPTR_T","intptr_t")
+    configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
+    configvar_check_cxxtypes("HAVE_INTPTR_T","intptr_t",{includes = {"memory"}})
     configvar_check_cincludes("HAVE_INTTYPES_H","inttypes.h")
     configvar_check_cincludes("HAVE_PTY_H","pty.h")
     configvar_check_cincludes("HAVE_STDINT_H","stdint.h")
     configvar_check_cincludes("HAVE_SYS_STAT_H","sys/stat.h")
     configvar_check_cincludes("HAVE_SYS_TYPES_H","sys/types.h")
-    configvar_check_ctypes("HAVE_TIME_T","time_t")
+    configvar_check_cxxtypes("HAVE_TIME_T","time_t",{includes = {"memory"}})
     configvar_check_cincludes("HAVE_UTIL_H","util.h")
-    if is_plat("windows") then
+    if is_plat("mingw") then
         set_configvar("GS_EXE", "bin/gs.exe")
     else
         set_configvar("GS_EXE", "/usr/bin/gs")
     end
-    if is_plat("windows") then
+    if is_plat("mingw") then
     else if is_plat("macosx") then
         set_configvar("USE_STACK_TRACE",true)
         set_configvar("NO_FAST_ALLOC",true)
@@ -81,9 +96,10 @@ target("mogan")
                 GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
                 GS_LIB = "../share/ghostscript/9.06/lib:",
                 OS_MACOS = is_plat("macosx"),
-                OS_MINGW = is_plat("windows"),
+                OS_MINGW = is_plat("mingw"),
                 SIZEOF_VOID_P = 8,
                 USE_JEAIII = true,
+                USE_STACK_TRACE = not is_plat("mingw")
                 }})
     if is_plat("linux") then 
         set_configvar("CONFIG_OS", "GNU_LINUX")
@@ -169,6 +185,11 @@ target("mogan")
     add_includedirs("TeXmacs/include")
     if is_plat("macosx") then
         add_includedirs("src/Plugins/MacOS")
+    elseif is_plat("mingw") then
+        add_includedirs("src/Plugins/Windows")
+        add_includedirs("src/Plugins/Windows/nowide")
+    else
+        add_includedirs("src/Plugins/Unix")
     end
 
     add_files("src/Data/**.cpp")
@@ -201,7 +222,7 @@ target("mogan")
     add_files("src/Plugins/Sqlite3/**.cpp")
     add_files("src/Plugins/Updater/**.cpp")
     add_files("src/Plugins/Curl/**.cpp")
-    if is_plat("windows") then
+    if is_plat("mingw") then
         add_files("src/Plugins/Windows/**.cpp")
     else
         add_files("src/Plugins/Unix/**.cpp")
@@ -215,6 +236,7 @@ target("mogan")
     end
     add_files("src/Plugins/Qt/**.cpp")
     add_files("src/Plugins/Qt/**.hpp")
+    add_files("src/Texmacs/Texmacs/texmacs.cpp")
 
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include src/System/config.h")
