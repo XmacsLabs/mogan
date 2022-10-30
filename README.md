@@ -3,7 +3,7 @@ Mogan Editor is a structure editor delivered by the [Xmacs Labs](https://github.
 
 GNU TeXmacs is a structured editor developed by [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html), a mathematician at CNRS in France, since the late 1990s. It is designed to write high-quality technical documents using an intuitive and easy-to-use graphical interface, and can achieve the same level of results as LaTeX. Main users are currently primary and secondary school teachers (mostly in France) and university researchers.
 
-[Darcy Shen](https://github.com/darcy-shen) released Mogan v1.0.0 on January 30, 2022, and created [XmacsLabs](https://gitee.com/XmacsLabs), a non-profit organization that aims to popularize GNU TeXmacs and make it available to all to enjoy the excellent software developed by Joris van der Hoeven.
+[Darcy Shen](https://github.com/darcy-shen) released Mogan v1.0.0 on January 30, 2022, and created Xmacs Labs, a non-profit organization that aims to popularize GNU TeXmacs and make it available to all to enjoy the excellent software developed by Joris van der Hoeven.
 
 ## What is GNU TeXmacs
 Highly recommended to watch the official demo of TeXmacs 2.1
