@@ -18,7 +18,9 @@ Highly recommended to watch the official demo of TeXmacs 2.1
 - New styles can be written by the user and new features can be added to the editor using the Scheme extension language.
 - Runs on all major Unix platforms, MacOS, and Windows.
 
-Mogan inherits all the above features from GNU TeXmacs (see [the homepage of GNU TeXmacs](https://www.texmacs.org)), so it can also be used as a efficient study tool for students, teachers, and researchers in science and technology, and suitable to create high-quality assignment documents, report slides, and LaTeX-level papers.
+Mogan inherits all the above features from GNU TeXmacs (see [the homepage of GNU TeXmacs](https://www.texmacs.org)), so it can also be used as a efficient study tool for students, teachers, and researchers in science and technology, and suitable to create high-quality assignment documents, report slides, and LaTeX-level papers. Based on GNU TeXmacs, Mogan has more bugs fixed, performance-optimized, and the interface beautified.
+
+![SCR-20221030-sve](https://user-images.githubusercontent.com/32867606/198899063-e8a4aab4-176f-4e2c-94e3-20656984f39b.png)
 
 ## Goal
 **We create Mogan Editor for everyone to learn and create science and technology.**
