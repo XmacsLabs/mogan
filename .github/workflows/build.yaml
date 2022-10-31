@@ -9,7 +9,7 @@ jobs:
       run:
         shell: msys2 {0}
     env:
-      MSYS2_PATH_TYPE: inherit
+      PATH: /mingw64/bin:$PATH
     steps:
       - name: Install msys and xmake
         uses: msys2/setup-msys2@v2
@@ -17,14 +17,14 @@ jobs:
           msystem: MSYS
           install:  mingw-w64-x86_64-xmake mingw-w64-x86_64-make
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
           version: 5.15.2
           arch: win64_mingw81
           host: 'windows'
           target: 'desktop'
           cached: 'false'
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
       - name: Build by mingw
@@ -47,7 +47,7 @@ jobs:
         run: |
           sudo add-apt-repository ppa:xmake-io/xmake
           sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
       - name: Build by gcc
