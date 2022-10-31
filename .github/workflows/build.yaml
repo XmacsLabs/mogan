@@ -23,7 +23,7 @@ jobs:
           cached: 'false'
       - name: Install xmake
         run: |
-          pacman -S mingw-w64-x86_64-xmake mingw-w64-x86_64-gcc mingw-w64-x86_64-make
+          pacman -S --yes mingw-w64-x86_64-xmake mingw-w64-x86_64-gcc mingw-w64-x86_64-make
       - name: Build by mingw
         id: build
         run: |
@@ -41,7 +41,7 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          apt install qtbase5-dev libqt5svg5-dev
+          sudo apt install --yes qtbase5-dev libqt5svg5-dev
       - name: Build by gcc
         id: build
         run: |
