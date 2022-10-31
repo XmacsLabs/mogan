@@ -1,0 +1,57 @@
+name: build windows
+on: push
+
+jobs:
+  windowsbuild:
+    runs-on: windows-latest
+    if: always()
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: Install msys
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MSYS
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: 5.15.2
+          arch: win64_mingw81
+          host: 'windows'
+          target: 'desktop'
+          cached: 'false'
+      - name: Install xmake
+        run: |
+          pacman -S mingw-w64-x86_64-xmake mingw-w64-x86_64-gcc mingw-w64-x86_64-make
+      - name: Build by mingw
+        id: build
+        run: |
+          xmake config --yes --mingw=/c/Qt/Tools/mingw810_64/
+          xmake build --yes
+      - name: Upload 
+        uses: actions/upload-artifact@v2
+        with:
+          name: mogan-windows-dev.exe
+          path: |
+            build\mingw\x86_64\release\mogan.exe
+  linuxbuild:
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Install dependencies
+        run: |
+          apt install qtbase5-dev libqt5svg5-dev
+      - name: Build by gcc
+        id: build
+        run: |
+          xmake config --yes
+          xmake build --yes
+      - name: Upload 
+        uses: actions/upload-artifact@v2
+        with:
+          name: mogan-windows-dev.exe
+          path: |
+            build\linux\x86_64\release\mogan
+  
+          
