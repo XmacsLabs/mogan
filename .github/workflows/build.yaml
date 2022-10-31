@@ -14,6 +14,7 @@ jobs:
             mingw-w64-x86_64-xmake 
             mingw-w64-x86_64-make 
             p7zip 
+            git 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
