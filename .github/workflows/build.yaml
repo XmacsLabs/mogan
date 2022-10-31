@@ -9,7 +9,7 @@ jobs:
       run:
         shell: msys2 {0}
     env:
-      PATH: C:\mingw64\bin;C:\Windows\System32;$PATH
+      PATH: C:\mingw64\bin;C:\Windows\System32;C:\Windows\System32\WindowsPowerShell\v1.0;$PATH
     steps:
       - name: Install msys and xmake
         uses: msys2/setup-msys2@v2
@@ -47,6 +47,7 @@ jobs:
         run: |
           sudo add-apt-repository ppa:xmake-io/xmake
           sudo apt update
+          sudo apt upgrade gcc
           sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake
       - uses: actions/checkout@v3
         with:
