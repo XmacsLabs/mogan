@@ -5,9 +5,6 @@ jobs:
   windowsbuild:
     runs-on: windows-latest
     if: always()
-    defaults:
-      run:
-        shell: msys2 {0}
     steps:
       - name: Install msys and xmake
         uses: msys2/setup-msys2@v2
@@ -28,6 +25,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Build by mingw
+        shell: msys2 {0}
         id: build
         run: |
           xrepo update-repo
