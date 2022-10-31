@@ -16,7 +16,7 @@ jobs:
             p7zip 
             git 
       - name: Set up MinGW
-        uses: egor-tensin/setup-mingw@v2
+        uses: coffeebe4code/setup-mingw@v1-beta-2
         with:
           platform: x64
           version: 8.1.0
@@ -37,7 +37,7 @@ jobs:
         run: |
           ls ${Qt5_Dir}/../../
           /mingw64/bin/xrepo update-repo
-          /mingw64/bin/xmake config --yes --plat=mingw
+          /mingw64/bin/xmake config --yes --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install
           /mingw64/bin/xmake build --yes
       - name: Upload 
         uses: actions/upload-artifact@v2
