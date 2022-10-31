@@ -24,6 +24,9 @@ jobs:
       - name: Install xmake
         run: |
           pacman --sync --noconfirm mingw-w64-x86_64-xmake mingw-w64-x86_64-gcc mingw-w64-x86_64-make
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
       - name: Build by mingw
         id: build
         run: |
@@ -43,6 +46,9 @@ jobs:
         run: |
           sudo add-apt-repository ppa:xmake-io/xmake
           sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
       - name: Build by gcc
         id: build
         run: |
