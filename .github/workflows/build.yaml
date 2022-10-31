@@ -8,9 +8,6 @@ jobs:
     defaults:
       run:
         shell: msys2 {0}
-    env:
-      PATH: C:\mingw64\bin;C:\Windows\System32;C:\Windows\System32\WindowsPowerShell\v1.0;$PATH
-      MSYS2_PATH_TYPE: inherit
     steps:
       - name: Install msys and xmake
         uses: msys2/setup-msys2@v2
@@ -66,6 +63,6 @@ jobs:
         with:
           name: mogan-windows-dev.exe
           path: |
-            build\linux\x86_64\release\mogan
+            .\build\linux\x86_64\release\mogan
   
           
