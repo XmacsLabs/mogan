@@ -68,7 +68,8 @@ target("mogan")
     ---------------------------------------------------------------------------
     set_configdir("src/System")
     -- check for dl library
-    configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
+    -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
+    add_options("libdl")
     configvar_check_cxxtypes("HAVE_INTPTR_T","intptr_t",{includes = {"memory"}})
     configvar_check_cincludes("HAVE_INTTYPES_H","inttypes.h")
     configvar_check_cincludes("HAVE_PTY_H","pty.h")
@@ -240,3 +241,9 @@ target("mogan")
 
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include src/System/config.h")
+target_end()
+
+option("libdl")
+    set_default(false)
+    add_links("dl")
+    
