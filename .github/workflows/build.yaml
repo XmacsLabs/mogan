@@ -30,13 +30,14 @@ jobs:
         shell: msys2 {0}
         id: build
         run: |
+          ls ${Qt5_Dir}/../../
           /mingw64/bin/xrepo update-repo
-          /mingw64/bin/xmake config --yes --plat=mingw --mingw=${Qt5_Dir}../../Tools/mingw810_64/
+          /mingw64/bin/xmake config --yes --plat=mingw --mingw=${Qt5_Dir}/../../Tools/mingw810_64/
           /mingw64/bin/xmake build --yes
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
-          name: mogan-windows-dev.exe
+          name: mogan-windows-dev
           path: |
             build\mingw\x86_64\release\mogan.exe
   linuxbuild:
@@ -61,8 +62,8 @@ jobs:
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
-          name: mogan-windows-dev.exe
+          name: mogan-linux-dev
           path: |
-            .\build\linux\**
+            build/linux/**
   
           
