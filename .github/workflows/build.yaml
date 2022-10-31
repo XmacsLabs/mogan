@@ -31,7 +31,7 @@ jobs:
         id: build
         run: |
           /mingw64/bin/xrepo update-repo
-          /mingw64/bin/xmake config --yes --mingw=/c/Qt/Tools/mingw810_64/
+          /mingw64/bin/xmake config --yes --plat=mingw --mingw=/c/Qt/Tools/mingw810_64/
           /mingw64/bin/xmake build --yes
       - name: Upload 
         uses: actions/upload-artifact@v2
