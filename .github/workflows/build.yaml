@@ -8,11 +8,14 @@ jobs:
     defaults:
       run:
         shell: msys2 {0}
+    env:
+      MSYS2_PATH_TYPE: inherit
     steps:
-      - name: Install msys
+      - name: Install msys and xmake
         uses: msys2/setup-msys2@v2
         with:
           msystem: MSYS
+          install:  mingw-w64-x86_64-xmake mingw-w64-x86_64-make
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
@@ -21,15 +24,13 @@ jobs:
           host: 'windows'
           target: 'desktop'
           cached: 'false'
-      - name: Install xmake
-        run: |
-          pacman --sync --noconfirm mingw-w64-x86_64-xmake mingw-w64-x86_64-gcc mingw-w64-x86_64-make
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: Build by mingw
         id: build
         run: |
+          xrepo update-repo
           xmake config --yes --mingw=/c/Qt/Tools/mingw810_64/
           xmake build --yes
       - name: Upload 
@@ -52,6 +53,7 @@ jobs:
       - name: Build by gcc
         id: build
         run: |
+          xrepo update-repo
           xmake config --yes
           xmake build --yes
       - name: Upload 

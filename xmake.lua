@@ -29,12 +29,12 @@ set_allowedplats(
     "android", "appletvos", "bsd", "cross", "iphoneos", "msys", "wasm", "watchos"
 ) 
 
-add_requires("libpng",{system="false"})
-add_requires("libiconv",{system="false"})
-add_requires("zlib",{system="false"})
-add_requires("libjpeg",{system="false"})
-add_requires("libcurl",{system="false"})
-add_requires("freetype",{system="false"})
+add_requires("libpng",{system=false})
+add_requires("libiconv",{system=false})
+add_requires("zlib",{system=false})
+add_requires("libjpeg",{system=false})
+add_requires("libcurl",{system=false})
+add_requires("freetype",{system=false})
 
 target("mogan")
     local TEXMACS_VERSION = "2.1.3"
