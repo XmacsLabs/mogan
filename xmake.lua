@@ -244,6 +244,6 @@ target("mogan")
 target_end()
 
 option("libdl")
-    set_default(false)
     add_links("dl")
+    add_linkdirs("/usr/lib/x86_64-linux-gnu")
     
