@@ -35,7 +35,7 @@ jobs:
         shell: msys2 {0}
         id: build
         run: |
-          ls ${Qt5_Dir}/../../
+          ls -R /c/ProgramData/chocolatey/lib/mingw
           /mingw64/bin/xrepo update-repo
           /mingw64/bin/xmake config --yes --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install
           /mingw64/bin/xmake build --yes
