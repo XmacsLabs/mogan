@@ -34,7 +34,6 @@ You are sincerely welcome to contact us via the following ways to share your exp
 - Zhihu：[墨干编辑器](https://www.zhihu.com/people/xmacs)
 - WeChat Official Account：墨者实验室（xmacs2020）
 - WeChat Group：墨客社区（Join via account XmacsLabs）
-- WeChat Group：墨干编辑器（Join via account XmacsLabs）
 - QQ Group：GNU TeXmacs中文社区（934456971）
 
 You are also welcome to consult the TeXmacs community, especially the official forum, if you encounter problems while using Mogan.
