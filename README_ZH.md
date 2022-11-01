@@ -34,7 +34,6 @@ GNU TeXmacs 是法国 CNRS 的数学家 [Joris van der Hoeven](http://www.texmac
 - 知乎：[墨干编辑器](https://www.zhihu.com/people/xmacs)
 - 微信公众号：墨者实验室（xmacs2020）
 - 微信群：墨客社区（通过账户XmacsLabs加入）
-- 微信群：墨干编辑器（通过账户XmacsLabs加入）
 - QQ群：GNU TeXmacs中文社区（934456971）
 
 使用时遇到问题也欢迎咨询 TeXmacs 社区，特别是官方论坛。
