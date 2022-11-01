@@ -35,9 +35,10 @@ jobs:
         shell: msys2 {0}
         id: build
         run: |
-          /mingw64/bin/xrepo update-repo
-          /mingw64/bin/xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/
-          /mingw64/bin/xmake build --yes --verbose --diagnosis
+          export PATH=/mingw64/bin/:${PATH}
+          xrepo update-repo
+          xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/
+          xmake build --yes --verbose --diagnosis
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
