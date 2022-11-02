@@ -1,4 +1,4 @@
-name: build windows
+name: Build via xmake
 on: push
 
 jobs:
