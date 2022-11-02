@@ -15,6 +15,7 @@ jobs:
             mingw-w64-x86_64-make 
             p7zip 
             git 
+            make 
       - name: Set up MinGW
         uses: coffeebe4code/setup-mingw@v1-beta-2
         with:
@@ -35,7 +36,8 @@ jobs:
         shell: msys2 {0}
         id: build
         run: |
-          export PATH=C:\msys64\mingw64\bin\;${PATH}
+          echo $PATH
+          export PATH=/mingw64/bin/;${PATH}
           xrepo update-repo
           xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/
           xmake build --yes --verbose --diagnosis
