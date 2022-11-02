@@ -22,8 +22,11 @@ jobs:
       - name: Run Package Script
         working-directory: ${{github.workspace}}
         run: bash packages/macos/package.sh
+      - name: Compress
+        working-directory: ${{github.workspace}}/build
+        run: tar -czf Mogan.app.tar.gz Mogan.app
       - name: Upload Mogan.app
         uses: actions/upload-artifact@v3
         with:
-          name: Mogan.app
+          name: Mogan.app.tar.gz
           path: ${{ github.workspace }}/build/Mogan.app
