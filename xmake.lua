@@ -29,12 +29,12 @@ set_allowedplats(
     "android", "appletvos", "bsd", "cross", "iphoneos", "msys", "wasm", "watchos"
 ) 
 
-add_requires("libpng")
-add_requires("libiconv")
-add_requires("zlib")
-add_requires("libjpeg")
-add_requires("libcurl")
-add_requires("freetype")
+add_requires("libpng",{system=false})
+add_requires("libiconv",{system=false})
+add_requires("zlib",{system=false})
+add_requires("libjpeg",{system=false})
+add_requires("libcurl",{system=false})
+add_requires("freetype",{system=false})
 
 target("mogan")
     local TEXMACS_VERSION = "2.1.3"
@@ -68,7 +68,8 @@ target("mogan")
     ---------------------------------------------------------------------------
     set_configdir("src/System")
     -- check for dl library
-    configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
+    -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
+    add_options("libdl")
     configvar_check_cxxtypes("HAVE_INTPTR_T","intptr_t",{includes = {"memory"}})
     configvar_check_cincludes("HAVE_INTTYPES_H","inttypes.h")
     configvar_check_cincludes("HAVE_PTY_H","pty.h")
@@ -240,3 +241,9 @@ target("mogan")
 
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include src/System/config.h")
+target_end()
+
+option("libdl")
+    add_links("dl")
+    add_linkdirs("/usr/lib/x86_64-linux-gnu")
+    
