@@ -35,7 +35,7 @@ jobs:
         shell: msys2 {0}
         id: build
         run: |
-          export PATH=/mingw64/bin/:${PATH}
+          export PATH=C:\msys64\mingw64\bin\;${PATH}
           xrepo update-repo
           xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/
           xmake build --yes --verbose --diagnosis
