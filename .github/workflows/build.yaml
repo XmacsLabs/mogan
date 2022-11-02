@@ -37,7 +37,7 @@ jobs:
         id: build
         run: |
           echo $PATH
-          export PATH=/mingw64/bin/;${PATH}
+          export PATH=/mingw64/bin/:${PATH}
           xrepo update-repo
           xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/
           xmake build --yes --verbose --diagnosis
