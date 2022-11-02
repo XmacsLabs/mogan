@@ -1,46 +1,51 @@
 # Mogan Editor / [墨干编辑器](README_ZH.md)
-Mogan Editor is a structure editor delivered by the [Xmacs Labs](https://github.com/XmacsLabs).
+Mogan Editor is a structure editor delivered by [Xmacs Labs](https://github.com/XmacsLabs), which is a fork of [GNU TeXmacs](https://www.texmacs.org).
 
-Mogan Editor is a **libre software** forked from [GNU TeXmacs](http://www.texmacs.org/tmweb/home/welcome.en.html), the major differences are:
-+ Switched from GNU Guile 1.8.x to S7 Scheme
-+ Upgraded from Qt 4.8.x to Qt 5.15.x
-+ Via `Help->Mogan`, massive online TeXmacs documents provided by [Xmacs Planet](https://github.com/XmacsLabs/planet) and [TMML wiki](https://github.com/XmacsLabs/tmmlwiki)
+GNU TeXmacs is a structured editor developed since the late 1990s by [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html), a mathematician at CNRS in France. It is designed to write high-quality technical documents using an intuitive and easy-to-use graphical interface, and able to achieve the same level of results as LaTeX. Its main users are currently primary and secondary school teachers (mostly in France) and university researchers.
+
+[Darcy Shen](https://github.com/darcy-shen) released Mogan v1.0.0 on January 30, 2022, and created Xmacs Labs, a non-profit organization that aims to popularize GNU TeXmacs and make it available to all to enjoy the excellent software developed by Joris van der Hoeven.
 
 ## What is GNU TeXmacs
+Highly recommended to watch the official demo of TeXmacs 2.1
 
-[![](https://bb-embed.herokuapp.com/embed?v=BV1bo4y1D7wN)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
+[![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://youtu.be/H46ON2FB30U)
+
+- GNU TeXmacs is a free scientific editing platform designed to create beautiful technical documents using a wysiwyg interface.
+- It provides a unified and user friendly framework for editing structured documents with different types of content: text, mathematics, graphics, interactive content, slides, etc.
+- TeXmacs can be used as a graphical front-end for many systems in computer algebra, numerical analysis, statistics, etc.
+- Documents can be saved in TeXmacs, Xml or Scheme format and printed as Pdf or Postscript files. Converters exist for TeX/LaTeX and Html/Mathml. Notice that TeXmacs is not based on TeX/LaTeX.
+- Its rendering engine uses high-quality typesetting algorithms so as to produce professionally looking documents, which can either be printed out or presented from a laptop.
+- New styles can be written by the user and new features can be added to the editor using the Scheme extension language.
+- Runs on all major Unix platforms, MacOS, and Windows.
+
+Mogan inherits all the above features from GNU TeXmacs (see [the homepage of GNU TeXmacs](https://www.texmacs.org)), so it can also be used as a efficient study tool for students, teachers, and researchers in science and technology, and suitable to create high-quality assignment documents, report slides, and LaTeX-level papers. Based on GNU TeXmacs, Mogan has more bugs fixed, performance-optimized, and the interface beautified.
+
+![SCR-20221030-sve](https://user-images.githubusercontent.com/32867606/198899063-e8a4aab4-176f-4e2c-94e3-20656984f39b.png)
 
 ## Goal
 **We create Mogan Editor for everyone to learn and create science and technology.**
 
-## Priorities
-### Contributors and Developers of Mogan Editor
-> **No Contributors and Developers, no Mogan Editor!**
+## Contact Us
+You are sincerely welcome to contact us via the following ways to share your experience, provide suggestions or report issues on Mogan Editor. Interested developers and volunteer contributors are also warmly welcome to join Xmacs Labs.
+- Bilibili：[沈浪熊猫儿](https://space.bilibili.com/28058658) 
+- Gitee：[墨者实验室](https://gitee.com/XmacsLabs/) 
+- GitHub: [XmacsLabs](https://github.com/XmacsLabs)
+- Douban Group：[GNU TeXmacs](https://www.douban.com/group/texmacs/)
+- Zhihu：[墨干编辑器](https://www.zhihu.com/people/xmacs)
+- WeChat Official Account：墨者实验室（xmacs2020）
+- WeChat Group：墨客社区（Join via account XmacsLabs）
+- QQ Group：GNU TeXmacs中文社区（934456971）
 
-The happiness of people who maintain and improve the Mogan Editor should be the highest priority. It is a non-profit project, none of us should get upset by the project itself.
+You are also welcome to consult the TeXmacs community, especially the official forum, if you encounter problems while using Mogan.
+- Official Forum: [The GNU TeXmacs forum](http://forum.texmacs.cn) 
+- YouTube: [TeXmacs Videos](https://www.youtube.com/channel/UCLaZZkOj3GPYFu9pVsEbthg)
+- GitHub: [GNU TeXmacs](https://github.com/texmacs) 
+- Twitter: [GNU TeXmacs](https://twitter.com/gnu_texmacs) 
+- Gitter: [texmacs/Lobby](https://gitter.im/texmacs/Lobby) 
+- [Mailing lists for TeXmacs](https://www.texmacs.org/tmweb/home/ml.en.html) 
 
-### High School First
-We would like to spend more time on bugs, features and plugins for high school education. For plugins, Maxima, Gnuplot and [Eukleides](http://www.eukleides.org/overview.html) are the most important which can be adopted in high school education.
 
-### College, University and Research Institute
-We expect that the users in college, university and research institute are potential contributors of Mogan Editor. We will select the most important feature requests by those users to implement.
-
-## 名
+## The Name "Mogan"
 Darcy:
+> Mogan is named after [Mount Mogan](https://en.wikipedia.org/wiki/Mount_Mogan), a famous attraction in my hometown. 墨干(Mogan) literally means "dried ink". The word is derived from 莫干(Mogan) which is a combination of [莫(Mo) and 干(Gan)](https://en.wikipedia.org/wiki/Gan_Jiang_and_Mo_Ye).
 
-> Mogan is named after Mount Mogan[^1], a famous attraction in my hometown. 墨干(Mogan) literally means "dried ink". The word is derived from 莫干(Mogan) which is a combination of 莫(Mo) and 干(Gan)[^2].
-
-## Installation
-### Install via AUR (experimental)
-Mogan can be installed from the community repository, available on the [AUR (en) - mogan](https://aur.archlinux.org/packages/mogan)
-```shell
-yay -S mogan
-```
-
-## How to Get Involved
-+ Join us on [Discussions](https://github.com/XmacsLabs/mogan/discussions)
-+ Report bugs or wishes to [Issues](https://github.com/XmacsLabs/mogan/issues)
-+ Show me your code at [Pull Requests](https://github.com/XmacsLabs/mogan/pulls)
-
-[^1]: https://en.wikipedia.org/wiki/Mount_Mogan
-[^2]: https://en.wikipedia.org/wiki/Gan_Jiang_and_Mo_Ye
