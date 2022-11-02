@@ -1,0 +1,29 @@
+name: Package-macOS
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  mac-package:
+    name: Package On macOS
+    runs-on: macos-12
+    timeout-minutes: 120
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Install Dependencies
+        run: |
+          brew install freetype libjpeg qt@5 cmake ccache curl
+          brew link qt@5
+      - name: Run Package Script
+        working-directory: ${{github.workspace}}
+        run: bash packages/macos/package.sh
+      - name: Upload Mogan.app
+        uses: actions/upload-artifact@v3
+        with:
+          name: Mogan.app
+          path: ${{ github.workspace }}/build/Mogan.app
