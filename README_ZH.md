@@ -18,13 +18,15 @@ GNU TeXmacs 是法国 CNRS 的数学家 [Joris van der Hoeven](http://www.texmac
 - 用户可以自定义排版样式，也可以使用 Scheme 扩展语言为编辑器添加新功能。
 - 可以在所有主流 Unix 平台、macOS 和 Windows 上运行。
 
-墨干继承了 GNU TeXmacs 以上所有特性（请参考 [GNU TeXmacs 主页](https://www.texmacs.org))，所也可作为理工科学生、中小学教师和研究人员学习工作的利器，可为创作高质量的作业文档、高水准的报告幻灯片和LaTeX水准的论文提供便利。
- 
+墨干继承了 GNU TeXmacs 以上所有特性（请参考 [GNU TeXmacs 主页](https://www.texmacs.org))，所也可作为理工科学生、中小学教师和研究人员学习工作的利器，可为创作高质量的作业文档、高水准的报告幻灯片和LaTeX水准的论文提供便利。基于 GNU TeXmacs，墨干改正了许多bugs，优化了性能，并美化了界面。
+
+![搭配 KDE Brezze 图标的墨干 v1.1.1](https://user-images.githubusercontent.com/32867606/198898710-6c16bfb2-1107-4cb0-8cb7-14606b31a315.png)
+
 ## 目标
 **让所有人畅快地学习既有的科学与技术，创造全新的科学与技术**。
 
 ## 联系我们
-欢迎大家通过以下方式联系我们，交流经验、提供建议或报告问题。也欢迎感兴趣的开发者和志愿贡献者加入墨者实验室。
+衷心欢迎大家通过以下方式联系我们，交流经验、提供建议或报告问题。也热情欢迎感兴趣的开发者和志愿贡献者加入墨者实验室。
 - Bilibili：[沈浪熊猫儿](https://space.bilibili.com/28058658) 
 - Gitee：[墨者实验室](https://gitee.com/XmacsLabs/) 
 - GitHub: [XmacsLabs](https://github.com/XmacsLabs)
@@ -32,17 +34,16 @@ GNU TeXmacs 是法国 CNRS 的数学家 [Joris van der Hoeven](http://www.texmac
 - 知乎：[墨干编辑器](https://www.zhihu.com/people/xmacs)
 - 微信公众号：墨者实验室（xmacs2020）
 - 微信群：墨客社区（通过账户XmacsLabs加入）
-- 微信群：墨干编辑器（通过账户XmacsLabs加入）
 - QQ群：GNU TeXmacs中文社区（934456971）
 
 使用时遇到问题也欢迎咨询 TeXmacs 社区，特别是官方论坛。
 - 官方论坛: [The GNU TeXmacs forum](http://forum.texmacs.cn) 
+- YouTube: [TeXmacs Videos](https://www.youtube.com/channel/UCLaZZkOj3GPYFu9pVsEbthg)
 - GitHub: [GNU TeXmacs](https://github.com/texmacs) 
 - Twitter: [GNU TeXmacs](https://twitter.com/gnu_texmacs) 
 - Gitter: [texmacs/Lobby](https://gitter.im/texmacs/Lobby) 
-- YouTube: [TeXmacs Videos](https://www.youtube.com/channel/UCLaZZkOj3GPYFu9pVsEbthg)
 - 邮件列表: [Mailing lists for TeXmacs](https://www.texmacs.org/tmweb/home/ml.en.html) 
 
 ## 关于名字“墨干”
 沈浪熊猫儿：
-> 墨干得名于家乡的避暑胜地——莫干山。犹忆青春年少时，在高中同桌老家，靠近莫干山的一个小山村里面，住过一晚上。傍晚，我们就在屋后小溪里面洗澡。清晨，我们跟着他在山上兜兜转转挖笋。中午，一起吃刚挖好的笋。溪水潺潺，篁竹幽幽，炊烟袅袅……
+> 墨干得名于家乡的避暑胜地——[莫干山](https://cn.wikipedia.org/wiki/Mount_Mogan)。犹忆青春年少时，在高中同桌老家，靠近莫干山的一个小山村里面，住过一晚上。傍晚，我们就在屋后小溪里面洗澡。清晨，我们跟着他在山上兜兜转转挖笋。中午，一起吃刚挖好的笋。溪水潺潺，篁竹幽幽，炊烟袅袅……
