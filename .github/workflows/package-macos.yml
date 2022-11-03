@@ -25,8 +25,8 @@ jobs:
       - name: Compress
         working-directory: ${{github.workspace}}/build
         run: tar -czf Mogan.app.tar.gz Mogan.app
-      - name: Upload Mogan.app
+      - name: Upload Mogan.dmg
         uses: actions/upload-artifact@v3
         with:
-          name: Mogan.app.tar.gz
-          path: ${{ github.workspace }}/build/Mogan.app.tar.gz
+          name: Mogan.dmg
+          path: ${{ github.workspace }}/build/Mogan.dmg
