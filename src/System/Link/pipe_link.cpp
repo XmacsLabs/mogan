@@ -8,10 +8,9 @@
 * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
-
 #include "basic.hpp"
 
-#if !(defined (QTTEXMACS) && (defined (OS_MINGW) || defined (QTPIPES)))
+#if !(defined (QTTEXMACS) && (defined (OS_MINGW) || defined (QTPIPES) || defined(OS_WASM)))
 
 #include "tm_link.hpp"
 #include "socket_notifier.hpp"
@@ -375,4 +374,12 @@ void pipe_callback (void *obj, void *info) {
 #endif
 }
 
-#endif // !(defined (QTTEXMACS) && defined (OS_MINGW))
+#endif // !(defined (QTTEXMACS) && (defined (OS_MINGW) || defined (OS_WASM)))
+
+#ifdef OS_WASM
+#include "tm_link.hpp"
+tm_link make_pipe_link (string cmd) { return tm_link(); }
+
+void close_all_pipes () {}
+void process_all_pipes () {}
+#endif

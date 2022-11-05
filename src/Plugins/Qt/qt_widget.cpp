@@ -533,9 +533,15 @@ widget color_picker_widget (command call_back, bool bg, array<tree> proposals) {
 widget file_chooser_widget (command cmd, string type, string prompt) {
   return tm_new<qt_chooser_widget_rep> (cmd, type, prompt);
 }
+#ifdef OS_WASM
+widget printer_widget (command cmd, url ps_pdf_file){
+    return widget();
+}
+#else
 widget printer_widget (command cmd, url ps_pdf_file) {
   return tm_new<qt_printer_widget_rep> (cmd, ps_pdf_file);
 }
+#endif
 widget texmacs_widget (int mask, command quit) {
   if (mask) return tm_new<qt_tm_widget_rep> (mask, quit);
   else      return tm_new<qt_tm_embedded_widget_rep> (quit);

@@ -8,7 +8,7 @@
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
-
+#ifndef OS_WASM
 #include "Curl/curl.hpp"
 #include <curl/curl.h>
 #include <string>
@@ -52,3 +52,4 @@ curl_get (string source, string user_agent) {
     return string ();
   }
 }
+#endif // OS_WASM

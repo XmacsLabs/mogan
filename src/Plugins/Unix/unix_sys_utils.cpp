@@ -21,6 +21,30 @@
 #include <pthread.h>
 #include <pwd.h>
 
+#if defined(OS_WASM)
+int unix_system (string s) {
+  cout << "SYSTEM CALL 1:" << s << LF;
+  return 0;
+}
+
+int unix_system (string s, string& out) {
+  cout << "SYSTEM CALL 2:" << s << LF;
+  out = ""; return 0;
+};
+
+int unix_system (string s, string& out, string& err) {
+  cout << "SYSTEM CALL 3:" << s << LF;
+  out = "";  err= ""; return 0;
+}
+
+int unix_system (array<string> arg,
+         array<int> fd_in, array<string> str_in,
+         array<int> fd_out, array<string*> str_out) { return 0; }
+
+string unix_get_login () { return "emscripten";  }
+string unix_get_username () { return "emscripten-user";  }
+#else
+
 int
 unix_system (string s) {
   c_string _s (s * " > /dev/null 2>&1");
@@ -353,3 +377,4 @@ string unix_get_username () {
   struct passwd* pwd= getpwuid (uid);
   return tokenize (string (pwd->pw_gecos), string(","))[0];
 }
+#endif //OS_WASM

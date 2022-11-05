@@ -99,6 +99,8 @@
 
 #cmakedefine OS_MACOS 1
 
+#cmakedefine OS_WASM 1
+
 #cmakedefine MACOS_QT_MENU 1
 
 #cmakedefine OS_MINGW 1
@@ -133,6 +135,8 @@
 #cmakedefine QTTEXMACS 1
 
 #cmakedefine QTPIPES 1
+
+#cmakedefine QTPRINTER 1
 
 #cmakedefine SIZEOF_VOID_P @SIZEOF_VOID_P@ 
 

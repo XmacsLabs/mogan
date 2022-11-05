@@ -8,7 +8,6 @@
 * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
-
 #include "file.hpp"
 #include "web_files.hpp"
 #include "sys_utils.hpp"
@@ -73,6 +72,9 @@ web_encode (string s) {
 
 url
 get_from_web (url name) {
+#if defined(OS_WASM)
+    return url_none();
+#else
   if (!is_rooted_web (name)) return url_none ();
 
   url res= get_cache (name);
@@ -92,6 +94,7 @@ get_from_web (url name) {
     set_cache (name, tmp);
     return tmp;
   }
+#endif
 }
 
 /******************************************************************************
@@ -143,3 +146,5 @@ get_from_ramdisc (url u) {
   save_string (tmp, u[1][2]->t->label);
   return set_cache (u, tmp);
 }
+
+
