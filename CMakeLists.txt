@@ -49,7 +49,7 @@ endif (CCACHE_FOUND)
 project (TEXMACS CXX C) # check for C/C++ compiler
 
 set (PACKAGE TeXmacs)
-set (CMAKE_MODULE_PATH ${TEXMACS_SOURCE_DIR}/cmake)
+list (APPEND CMAKE_MODULE_PATH "${TEXMACS_SOURCE_DIR}/cmake")
 
 set (VERSION_MAJOR "2")
 set (VERSION_MINOR "1")
@@ -71,24 +71,35 @@ if (NOT TEXMACS_GUI)
   set (TEXMACS_GUI "Qt" CACHE STRING "TeXmacs Gui (Qt, X11, Aqua)")
 endif (NOT TEXMACS_GUI)
 
-option (QTPIPES "use Qt pipes" ON)
-
 option (USE_ICONV "Use Iconv" ON)
 if (USE_ICONV)
   find_package(Iconv)
 endif (USE_ICONV)
 
-option (USE_SQLITE3 "Use SQLite3" ON)
-if (USE_SQLITE3)
-  find_package (SQLite3)
-  option (LINKED_SQLITE3 "Use Linked SQLite3" ON)
-endif (USE_SQLITE3)
 
 option (USE_FREETYPE "use Freetype" ON)
 if (USE_FREETYPE)
   find_package (Freetype)
   option (LINKED_FREETYPE "linked Freetype" ON)
 endif (USE_FREETYPE)
+
+option (PDFHUMMUS_NO_TIFF "Disable TIFF in PDF Hummus" ON)
+
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+    set(OS_WASM 1)
+    add_definitions("-DOS_WASM")
+    set (TEXMACS_GUI "Qt6")
+    option (QTPIPES "use Qt pipes" OFF)
+    option (USE_SQLITE3 "Use SQLite3" OFF)
+else()
+option (QTPIPES "use Qt pipes" ON)
+
+option (USE_SQLITE3 "Use SQLite3" ON)
+if (USE_SQLITE3)
+  find_package (SQLite3)
+  option (LINKED_SQLITE3 "Use Linked SQLite3" ON)
+endif (USE_SQLITE3)
+endif()
 
 option (USE_CAIRO "use Cairo" OFF)
 if (USE_CAIRO)
@@ -104,7 +115,6 @@ endif (USE_IMLIB2)
 
 option (USE_SPARKLE "use Sparkle" OFF)
 
-option (PDFHUMMUS_NO_TIFF "Disable TIFF in PDF Hummus" ON)
 
 if (WIN32)
   option (USE_GMP "use GMP" ON)
@@ -249,6 +259,15 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "CYGWIN_NT-5.1")
   set (CONFIG_BFLAGS "-Wl,-stack,8388608")
 endif (${CMAKE_SYSTEM_NAME} STREQUAL "CYGWIN_NT-5.1")
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
+    message (STATUS "final adjustments for wasm host")
+    set (CONFIG_OS "WASM")
+    set (CONFIG_OS_SUFFIX "wasm")
+    set (CONFIG_HOST_OS "wasm-emscripten")
+    set (CONFIG_HOST_VENDOR "pc")
+    set (CONFIG_HOST_CPU ${CMAKE_SYSTEM_PROCESSOR})
+endif(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
+
 ### --------------------------------------------------------------------
 ### Package Data
 ### --------------------------------------------------------------------
@@ -279,12 +298,19 @@ set (PACKAGE_VERSION 1)
 ###  Test for Libraries
 ### --------------------------------------------------------------------
 
-find_package (PNG REQUIRED)
+
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+        set(USE_LIB_FLAGS "-s USE_FREETYPE=1")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${USE_LIB_FLAGS}")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${USE_LIB_FLAGS}")
+else()
+	find_package (PNG REQUIRED)
+	find_package (ZLIB REQUIRED)
+	find_package (JPEG REQUIRED)
+	find_package (CURL REQUIRED)
+endif()
+
 find_package (Iconv REQUIRED)
-find_package (ZLIB REQUIRED)
-find_package (JPEG REQUIRED)
-find_package (CURL REQUIRED)
-#FIND_PACKAGE(Axel)
 
 # Allow for selection of Scheme implementation
 set (SCHEME_IMPL "s7" CACHE STRING "Implementation of Scheme to compile for.")
@@ -294,7 +320,6 @@ set (SCHEME_IMPL "s7" CACHE STRING "Implementation of Scheme to compile for.")
 ### --------------------------------------------------------------------
 set (DEBUG_ASSERT 1)
 
-set (USE_GS 1)
 if (WIN32)
   set (GS_EXE bin/gs.exe)
 else (WIN32)
@@ -304,15 +329,20 @@ set (GS_FONTS ../share/ghostscript/fonts:/usr/share/fonts:)
 set (GS_LIB ../share/ghostscript/9.06/lib:)
 
 set (GUILE_NUM 1)
+if (OS_WASM)
+    option(PDF_RENDERER "use the PDF renderer" OFF) # not supported yet for wasm
+else()
 set (PDF_RENDERER 1)
-set (SIZEOF_VOID_P 8)
+set (USE_GS 1)
+endif()
+set (SIZEOF_VOID_P ${SIZE_OF_VOIDP})
 set (STDC_HEADERS 1)
 
-if (WIN32)
+if (WIN32 OR OS_WASM)
   option (USE_STACK_TRACE "Use stack trace" OFF)
 else (WIN32)
   option (USE_STACK_TRACE "Use stack trace" ON)
-endif (WIN32)
+endif (WIN32 OR OS_WASM)
 
 option (USE_JEAIII "Use JEAIII itoa" ON)
 
@@ -390,7 +420,6 @@ set (TeXmacs_Include_Dirs
   ${TEXMACS_SOURCE_DIR}/src/Kernel/Containers
   ${TEXMACS_SOURCE_DIR}/src/Kernel/Types
   ${TEXMACS_SOURCE_DIR}/src/Plugins
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/Pdf/LibAesgm
   ${TEXMACS_SOURCE_DIR}/src/Plugins/UniversalStacktrace
   ${TEXMACS_SOURCE_DIR}/src/Scheme
   ${TEXMACS_SOURCE_DIR}/src/Scheme/S7
@@ -414,6 +443,9 @@ set (TeXmacs_Include_Dirs
   ${TEXMACS_SOURCE_DIR}/TeXmacs/include 
   ${TEXMACS_BINARY_DIR}/src/System/ 
 )
+if (NOT OS_WASM)
+    set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs} ${TEXMACS_SOURCE_DIR}/src/Plugins/Pdf/LibAesgm)
+endif()
 
 if (WIN32)
   set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs}
@@ -449,21 +481,24 @@ file (GLOB_RECURSE TeXmacs_Base_SRCS
 file (GLOB_RECURSE TeXmacs_Std_Plugins_SRCS
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Axel/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Bibtex/*.cpp"
-  "${TEXMACS_SOURCE_DIR}/src/Plugins/Cairo/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Database/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Freetype/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Jeaiii/*.cpp"
+  "${TEXMACS_SOURCE_DIR}/src/Plugins/Ispell/*.cpp"
+  "${TEXMACS_SOURCE_DIR}/src/Plugins/Metafont/*.cpp"
+  "${TEXMACS_SOURCE_DIR}/src/Plugins/LaTeX_Preview/*.cpp"
+  "${TEXMACS_SOURCE_DIR}/src/Plugins/Openssl/*.cpp"
+  "${TEXMACS_SOURCE_DIR}/src/Plugins/Sqlite3/*.cpp"
+  "${TEXMACS_SOURCE_DIR}/src/Plugins/Updater/*.cpp"
+)
+
+file (GLOB_RECURSE TeXmacs_Wasm_Excluded_SRCS
+  "${TEXMACS_SOURCE_DIR}/src/Plugins/Cairo/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Pdf/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Pdf/*.c"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Ghostscript/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Imlib2/*.cpp"
-  "${TEXMACS_SOURCE_DIR}/src/Plugins/Ispell/*.cpp"
-  "${TEXMACS_SOURCE_DIR}/src/Plugins/Metafont/*.cpp"
-  "${TEXMACS_SOURCE_DIR}/src/Plugins/LaTeX_Preview/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Mplayer/*.cpp"
-  "${TEXMACS_SOURCE_DIR}/src/Plugins/Openssl/*.cpp"
-  "${TEXMACS_SOURCE_DIR}/src/Plugins/Sqlite3/*.cpp"
-  "${TEXMACS_SOURCE_DIR}/src/Plugins/Updater/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Curl/*.cpp"
 )
 
@@ -471,7 +506,11 @@ file (GLOB_RECURSE TeXmacs_Style_SRCS
   "${TEXMACS_SOURCE_DIR}/src/Style/*.cpp"
 )
 
-set (TeXmacs_All_SRCS ${TeXmacs_Base_SRCS}  ${TeXmacs_Std_Plugins_SRCS})
+if (OS_WASM)
+    set (TeXmacs_All_SRCS ${TeXmacs_Base_SRCS}  ${TeXmacs_Std_Plugins_SRCS})
+else()
+    set (TeXmacs_All_SRCS ${TeXmacs_Base_SRCS}  ${TeXmacs_Std_Plugins_SRCS} ${TeXmacs_Wasm_Excluded_SRCS})
+endif()
 
 ### --------------------------------------------------------------------
 ### GUI Interfaces
@@ -521,10 +560,24 @@ set (TeXmacs_MacOS_SRCS
 ### --------------------------------------------------------------------
 ### Determine TeXmacs_Libraries
 ### --------------------------------------------------------------------
-set (TeXmacs_Libraries
-  PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl Iconv::Iconv
-  -lpthread
-)
+if(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+  set (TeXmacs_Libraries
+    PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl Iconv::Iconv
+    -lpthread
+  )
+  if (LINKED_CAIRO)
+    set (TeXmacs_Libraries ${TeXmacs_Libraries} ${CAIRO_LIBRARIES})
+  endif (LINKED_CAIRO)
+
+  if (LINKED_SQLITE3)
+    set (TeXmacs_Libraries ${TeXmacs_Libraries} SQLite::SQLite3)
+  endif (LINKED_SQLITE3)
+
+  if (LINKED_FREETYPE)
+    set (TeXmacs_Libraries ${TeXmacs_Libraries} Freetype::Freetype)
+  endif (LINKED_FREETYPE)
+else()
+endif()
 
 if (WIN32)
 # explore this
@@ -535,18 +588,6 @@ set (TeXmacs_Libraries
   wsock32 ws2_32 crypt32
 )
 endif (WIN32)
-
-if (LINKED_CAIRO)
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} ${CAIRO_LIBRARIES})
-endif (LINKED_CAIRO)
-
-if (LINKED_SQLITE3)
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} SQLite::SQLite3)
-endif (LINKED_SQLITE3)
-
-if (LINKED_FREETYPE)
-  set (TeXmacs_Libraries ${TeXmacs_Libraries} Freetype::Freetype)
-endif (LINKED_FREETYPE)
 
 
 ### --------------------------------------------------------------------
@@ -717,16 +758,26 @@ include_directories (${TeXmacs_Include_Dirs})
 ### --------------------------------------------------------------------
 ### Compile sources
 ### --------------------------------------------------------------------
-
+if (OS_WASM)
+    add_compile_options ("-Wall" "-Wextra")
+    add_link_options("SHELL:--preload-file ${TEXMACS_SOURCE_DIR}/TeXmacs@TeXmacs") #preload files under TeXmacs/, @ symbol is used for mapping path
+    set (TeXmacs_binary_name "Mogan")
+    qt_add_executable(${TeXmacs_binary_name} ${TeXmacs_All_SRCS} ${TEXMACS_SOURCE_DIR}/src/Texmacs/Texmacs/texmacs.cpp)
+    target_link_libraries(${TeXmacs_binary_name} PRIVATE ${QT_LIBRARIES})
+    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+        add_compile_options("SHELL:-s ASSERTIONS=1" "SHELL:-s DEMANGLE_SUPPORT=1" "-g3")
+        add_link_options("SHELL:-s ASSERTIONS=1" "SHELL:-s DEMANGLE_SUPPORT=1"  "-g3" "-gsource-map")
+    endif()
+else (OS_WASM)
 add_subdirectory (src)
 add_subdirectory (plugins)
 add_subdirectory (misc)
 add_subdirectory (TeXmacs)
-
+endif(OS_WASM)
 ### --------------------------------------------------------------------
 ### Installation
 ### --------------------------------------------------------------------
-
+if (NOT OS_WASM)
 if (APPLE)
   install (FILES packages/macos/Xmacs.icns DESTINATION ${CMAKE_INSTALL_PREFIX})
   install (FILES packages/macos/TeXmacs-document.icns DESTINATION ${CMAKE_INSTALL_PREFIX})
@@ -747,9 +798,11 @@ elseif (UNIX)
 else (APPLE)
   message (STATUS "Scripts launcher are not required on Windows")
 endif (APPLE)
-
+endif (NOT OS_WASM)
 
 ### share/
+
+if (NOT OS_WASM)
 if (WIN32)
   install (DIRECTORY plugins DESTINATION ${CMAKE_INSTALL_PREFIX}
     FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
@@ -788,7 +841,7 @@ if (WIN32)
   install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs.ico DESTINATION ${CMAKE_INSTALL_PREFIX})
   install (FILES ${TEXMACS_BINARY_DIR}/Xmacs.iss DESTINATION ${CMAKE_INSTALL_PREFIX})
 endif (WIN32)
-
+endif (NOT OS_WASM)
 ### --------------------------------------------------------------------
 ### Testing
 ### --------------------------------------------------------------------

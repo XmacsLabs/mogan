@@ -322,7 +322,7 @@
   (url->unix u))
 
 (define-public (first-in-path . l)
-  (cond ((null? l) "")
+  (cond ((null? l) #f)
         ((url-exists-in-path? (car l)) (car l))
         (else (apply first-in-path (cdr l)))))
 

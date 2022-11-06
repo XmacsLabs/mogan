@@ -8,7 +8,7 @@
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
-#ifdef QTPRINTER
+#ifndef OS_WASM
 #include "QTMPrinterSettings.hpp"
 #include "qt_utilities.hpp"
 #include "sys_utils.hpp"
@@ -572,4 +572,4 @@ WinQTMPrinterSettings::availablePrinters() {
 
 #endif
 
-#endif // QTPRINTER
+#endif // NO OS_WASM
