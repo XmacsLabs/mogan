@@ -10,7 +10,7 @@
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
-#ifndef OS_WASM
+#ifdef USE_QT_PRINTER
 #include "qt_printer_widget.hpp"
 #include "qt_utilities.hpp"      // check_type<T>
 #include "message.hpp"           // slot definitions
@@ -99,4 +99,4 @@ qt_printer_widget_rep::showDialog () {
     commandAfterExecution ();
 }
 
-#endif // NOT OS_WASM
+#endif // USE_QT_PRINTER

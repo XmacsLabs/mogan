@@ -34,7 +34,7 @@ string qt_mimetype_for_url (url u) {
   return from_qstring(mime.name ());
 }
 
-#ifdef QTPIPES
+#if !defined (OS_WASM)
 static void
 ReadOutputs(QProcess& p, string& o, string& e) {
   if (p.processChannelMode() == QProcess::MergedChannels)
@@ -92,4 +92,4 @@ qt_system (string cmd, string& result) {
   proc.setProcessChannelMode (QProcess::MergedChannels);
   return qt_system (proc, cmd, result, dummy);
 }
-#endif // QTPIPES
+#endif // !defined (OS_WASM)

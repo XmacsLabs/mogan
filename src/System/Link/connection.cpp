@@ -222,6 +222,7 @@ connection_handlers (string name) {
 /******************************************************************************
 * First part of interface (using a specific connection)
 ******************************************************************************/
+
 string
 connection_start (string name, string session, bool again) {
   // cout << "Start " << name << ", " << session << "\n";

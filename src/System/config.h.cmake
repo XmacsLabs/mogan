@@ -136,6 +136,10 @@
 
 #cmakedefine QTPIPES 1
 
+#cmakedefine USE_QT_PRINTER 1
+
+#cmakedefine USE_CURL 1
+
 #cmakedefine SIZEOF_VOID_P @SIZEOF_VOID_P@ 
 
 /* Define to 1 if you have the ANSI C header files. */

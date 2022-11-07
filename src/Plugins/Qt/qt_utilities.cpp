@@ -26,7 +26,7 @@
 #include <QStringList>
 #include <QKeySequence>
 
-#ifndef OS_WASM
+#if defined (USE_QT_PRINTER)
 #include <QPrinter>
 #include <QPrintDialog>
 #endif
@@ -486,7 +486,7 @@ qt_convert_image (url image, url dest, int w, int h) {// w, h in pixels
   }
 }
 
-#if !defined(OS_WASM)
+#if defined(USE_QT_PRINTER)
 void
 qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
 // use a QPrinter to output raster images to eps or pdf
@@ -553,7 +553,7 @@ void
 qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi){
     if (DEBUG_CONVERT) debug_convert << "NOT SUPPORTED: qt_image_to_eps_or_pdf " << image << " -> "<<outfile<<LF;
 }
-#endif // !defined(OS_WASM)
+#endif // defined(USE_QT_PRINTER)
 
 void qt_image_to_eps(url image, url outfile, int w_pt, int h_pt, int dpi) {
   qt_image_to_pdf(image, outfile, w_pt, h_pt, dpi);};
@@ -802,8 +802,7 @@ qt_pretty_time (int t) {
   return from_qstring (s);
 }
 
-#if !defined(OS_WASM)
-
+#if defined(USE_QT_PRINTER)
 #ifndef _MBD_EXPERIMENTAL_PRINTER_WIDGET  // this is in qt_printer_widget
 #if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 #define PAPER(fmt)  case QPrinter::fmt : return "fmt"
@@ -811,7 +810,6 @@ qt_pretty_time (int t) {
 #define PAPER(fmt)  case QPageSize::fmt : return "fmt"
 #endif
 static string
-
 #if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
 qt_papersize_to_string (QPrinter::PaperSize sz) {
 #else
@@ -883,7 +881,7 @@ qt_print (bool& to_file, bool& landscape, string& pname, url& filename,
           string& first, string& last, string& paper_type) {
   return false;
 }
-#endif // !defined(OS_WASM)
+#endif // defined(USE_QT_PRINTER)
 
 #ifdef OS_MACOS
 

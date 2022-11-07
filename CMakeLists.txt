@@ -90,9 +90,18 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
     add_definitions("-DOS_WASM")
     set (TEXMACS_GUI "Qt6")
     option (QTPIPES "use Qt pipes" OFF)
+    option (USE_QT_PRINTER "use Qt printer" OFF)
+    option (USE_CURL "use curl library" OFF)
     option (USE_SQLITE3 "Use SQLite3" OFF)
 else()
+
 option (QTPIPES "use Qt pipes" ON)
+add_definitions("-DQTPIPES") # used by qt moc
+
+option (USE_QT_PRINTER "use Qt printer" ON)
+add_definitions("-DUSE_QT_PRINTER") # used by qt moc
+
+option (USE_CURL "use curl library" ON)
 
 option (USE_SQLITE3 "Use SQLite3" ON)
 if (USE_SQLITE3)
@@ -490,6 +499,7 @@ file (GLOB_RECURSE TeXmacs_Std_Plugins_SRCS
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Openssl/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Sqlite3/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Updater/*.cpp"
+  "${TEXMACS_SOURCE_DIR}/src/Plugins/Curl/*.cpp"
 )
 
 file (GLOB_RECURSE TeXmacs_Wasm_Excluded_SRCS
@@ -499,7 +509,6 @@ file (GLOB_RECURSE TeXmacs_Wasm_Excluded_SRCS
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Ghostscript/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Imlib2/*.cpp"
   "${TEXMACS_SOURCE_DIR}/src/Plugins/Mplayer/*.cpp"
-  "${TEXMACS_SOURCE_DIR}/src/Plugins/Curl/*.cpp"
 )
 
 file (GLOB_RECURSE TeXmacs_Style_SRCS
@@ -704,6 +713,8 @@ endif (APPLE AND USE_SPARKLE)
 
 if (WIN32)
   file (GLOB_RECURSE TeXmacs_System_SRCS "${TEXMACS_SOURCE_DIR}/src/Plugins/Windows/*.cpp")
+elseif (OS_WASM)
+  file (GLOB_RECURSE TeXmacs_System_SRCS "${TEXMACS_SOURCE_DIR}/src/Plugins/Wasm/*.cpp")
 else (WIN32)
   file (GLOB_RECURSE TeXmacs_System_SRCS "${TEXMACS_SOURCE_DIR}/src/Plugins/Unix/*.cpp")
 endif (WIN32)

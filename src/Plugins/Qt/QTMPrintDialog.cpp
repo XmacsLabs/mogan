@@ -7,7 +7,7 @@
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
-#ifndef OS_WASM
+#ifdef USE_QT_PRINTER
 #include "QTMPrintDialog.hpp"
 
 /*!
@@ -206,4 +206,4 @@ void QTMPrintDialog::on_oddPagesCheck_stateChanged(int state) {
 void QTMPrintDialog::on_evenPagesCheck_stateChanged(int state) {
   oddPagesCheck->setEnabled(state == Qt::Checked);
 }
-#endif //NOT OS_WASM
+#endif // USE_QT_PRINTER

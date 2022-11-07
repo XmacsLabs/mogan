@@ -201,6 +201,12 @@
 /* Enabling Qt pipes */
 #undef QTPIPES
 
+/* Enable Qt printer */
+#undef USE_QT_PRINTER
+
+/* Enable curl library */
+#undef USE_CURL
+
 /* Enable experimental Qt port */
 #undef QTTEXMACS
 

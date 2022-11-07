@@ -533,7 +533,7 @@ widget color_picker_widget (command call_back, bool bg, array<tree> proposals) {
 widget file_chooser_widget (command cmd, string type, string prompt) {
   return tm_new<qt_chooser_widget_rep> (cmd, type, prompt);
 }
-#ifdef OS_WASM
+#if !defined (USE_QT_PRINTER)
 widget printer_widget (command cmd, url ps_pdf_file){
     return widget();
 }

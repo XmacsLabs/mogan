@@ -597,7 +597,7 @@ immediate_options (int argc, char **argv) {
 #elif defined(OS_HAIKU)
     set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/config/settings/Xmacs");
 #elif defined(OS_WASM)
-      set_env ("TEXMACS_HOME_PATH", "/.TeXmacs");
+      set_env ("TEXMACS_HOME_PATH", "/.Xmacs");
 #else
     set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/.Xmacs");
 #endif

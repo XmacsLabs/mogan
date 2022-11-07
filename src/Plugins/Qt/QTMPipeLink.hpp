@@ -8,7 +8,7 @@
 * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
-#ifndef OS_WASM
+#ifdef QTPIPES
 
 #ifndef QTM_PIPE_LINK_H
 #define QTM_PIPE_LINK_H
@@ -45,4 +45,4 @@ public:
 };
 
 #endif // QTM_PIPE_LINK
-#endif // NOT OS_WASM
+#endif // QTPIPES
