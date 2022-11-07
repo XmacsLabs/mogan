@@ -147,5 +147,3 @@ get_from_ramdisc (url u) {
   save_string (tmp, u[1][2]->t->label);
   return set_cache (u, tmp);
 }
-
-
