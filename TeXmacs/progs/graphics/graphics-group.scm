@@ -37,7 +37,7 @@
   (define (store-points)
     (lambda (o)
        (if (match? o '(point :%2))
-	   (set! so-points (cons o so-points)))
+           (set! so-points (cons o so-points)))
        o))
   (set! group-bary-x #f)
   (set! group-bary-y #f)
@@ -57,7 +57,7 @@
   (set! group-first-x (s2f current-x))
   (set! group-first-y (s2f current-y))
   (> (point-norm (sub-point `(,group-first-x ,group-first-y)
-			    `(,group-bary-x ,group-bary-y))) 1e-3))
+                            `(,group-bary-x ,group-bary-y))) 1e-3))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Transformations
@@ -69,7 +69,7 @@
 
 (define (point-norm p)
   (sqrt (+ (* (car p) (car p))
-	   (* (cadr p) (cadr p)))))
+           (* (cadr p) (cadr p)))))
 
 (define (traverse-transform o opn)
   (define (traverse o)
@@ -79,7 +79,7 @@
 (define (translate-point x y)
   (lambda (o)
     (if (match? o '(point :%2))
-	`(point ,(f2s (+ x (s2f (cadr o)))) ,(f2s (+ y (s2f (caddr o)))))
+        `(point ,(f2s (+ x (s2f (cadr o)))) ,(f2s (+ y (s2f (caddr o)))))
         o)))
 
 (define (group-translate x y)
@@ -97,15 +97,15 @@
 
 (define (group-zoom x y)
   (with h (/ (point-norm (sub-point `(,x ,y)
-				    `(,group-bary-x ,group-bary-y)))
-	     (point-norm (sub-point `(,group-first-x ,group-first-y)
-				    `(,group-bary-x ,group-bary-y))))
+                                    `(,group-bary-x ,group-bary-y)))
+             (point-norm (sub-point `(,group-first-x ,group-first-y)
+                                    `(,group-bary-x ,group-bary-y))))
     (lambda (o)
       (let* ((res (traverse-transform
                    o (zoom-point group-bary-x group-bary-y h)))
              (curmag #f))
-	(if (eq? (car res) 'with)
-	    (with curmag (s2f (find-prop res "magnify" "1.0"))
+        (if (eq? (car res) 'with)
+            (with curmag (s2f (find-prop res "magnify" "1.0"))
               (list-find&set-prop
                res "magnify" (f2s (* curmag h))))
             `(with "magnify" ,(f2s h) ,res))))))
@@ -121,9 +121,9 @@
 
 (define (group-rotate x y)
   (let* ((b (make-rectangular group-bary-x group-bary-y))
-	 (f (make-rectangular group-first-x group-first-y))
-	 (p (make-rectangular x y))
-	 (alpha (- (angle (- p b)) (angle (- f b)))))
+         (f (make-rectangular group-first-x group-first-y))
+         (p (make-rectangular x y))
+         (alpha (- (angle (- p b)) (angle (- f b)))))
     (lambda (o)
       (traverse-transform o (rotate-point group-bary-x group-bary-y alpha)))))
 
@@ -146,8 +146,8 @@
 
 (tm-define (ungroup-current-object)
   (if (and (not sticky-point)
-	   (== (length (sketch-get)) 1)
-	   (== (tree-label (car (sketch-get))) 'gr-group))
+           (== (length (sketch-get)) 1)
+           (== (tree-label (car (sketch-get))) 'gr-group))
       ;; TODO: Add support for ungrouping <with|...props...|<gr-group|...>>
       (with obj (car (sketch-get))
         (graphics-store-state 'ungroup-selected-objects)
@@ -493,7 +493,7 @@
       (display* "Uncaptured graphical move " mode ", " x ", " y "\n")
       (begin
         (set! current-point-no #f)
-	(graphics-decorations-update))))
+        (graphics-decorations-update))))
 
 (tm-define (edit_left-button mode x y)
   (:require (eq? mode 'group-edit))
@@ -522,8 +522,8 @@
   (:state graphics-state)
   (if (!= (logand (get-keyboard-modifiers) ShiftMask) 0)
       (if (null? (sketch-get))
-	  (graphics-delete)
-	  (remove-selected-objects))
+          (graphics-delete)
+          (remove-selected-objects))
       (unselect-all current-path current-obj)))
 
 (tm-define (edit_tab-key mode inc)
@@ -596,9 +596,9 @@
   (:state graphics-state)
   ;;(display* "sel=" sel "\n")
   (if (and (== (car (graphics-mode)) 'group-edit)
-	   (tree-compound? sel)
-	   (== (tree-label sel) 'graphics)
-	   (> (tree-arity sel) 0))
+           (tree-compound? sel)
+           (== (tree-label sel) 'graphics)
+           (> (tree-arity sel) 0))
       (begin
         (sketch-reset)
         (sketch-checkout)

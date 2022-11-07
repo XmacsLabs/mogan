@@ -1,0 +1,81 @@
+name: Build via xmake
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  windowsbuild:
+    runs-on: windows-latest
+    if: always()
+    steps:
+      - name: Install msys and xmake
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MSYS
+          install:  >-
+            mingw-w64-x86_64-xmake 
+            mingw-w64-x86_64-make 
+            p7zip 
+            git 
+            make 
+      - name: Set up MinGW
+        uses: coffeebe4code/setup-mingw@v1-beta-2
+        with:
+          platform: x64
+          version: 8.1.0
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 5.15.2
+          arch: win64_mingw81
+          host: 'windows'
+          target: 'desktop'
+          cache: 'false'
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Build by mingw
+        shell: msys2 {0}
+        id: build
+        run: |
+          ls /
+          export PATH=/mingw64/bin/:${PATH}
+          xrepo update-repo
+          xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
+          xmake build --yes --verbose --diagnosis
+      - name: Upload 
+        uses: actions/upload-artifact@v2
+        with:
+          name: mogan-windows-dev
+          path: |
+            build\mingw\x86_64\release\mogan.exe
+  linuxbuild:
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo add-apt-repository ppa:xmake-io/xmake
+          sudo apt update
+          sudo apt upgrade --yes gcc
+          sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Build by gcc
+        id: build
+        run: |
+          xrepo update-repo
+          xmake config --yes
+          xmake build --yes
+      - name: Upload 
+        uses: actions/upload-artifact@v2
+        with:
+          name: mogan-linux-dev
+          path: |
+            build/linux/**
+  
+          
