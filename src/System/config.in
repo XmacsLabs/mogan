@@ -168,6 +168,9 @@
 /* OS type */
 #undef OS_SUN
 
+/* OS type */
+#undef OS_WASM
+
 /* Define to the address where bug reports for this package should be sent. */
 #undef PACKAGE_BUGREPORT
 
@@ -197,6 +200,12 @@
 
 /* Enabling Qt pipes */
 #undef QTPIPES
+
+/* Enable Qt printer */
+#undef USE_QT_PRINTER
+
+/* Enable curl library */
+#undef USE_CURL
 
 /* Enable experimental Qt port */
 #undef QTTEXMACS

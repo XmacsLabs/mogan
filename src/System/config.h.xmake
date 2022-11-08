@@ -114,6 +114,10 @@ ${define PDFHUMMUS_NO_TIFF}
 
 #define QTPIPES 1
 
+#define USE_QT_PRINTER 1
+
+#define USE_CURL 1
+
 #define SIZEOF_VOID_P ${SIZEOF_VOID_P} 
 
 #define TEXMACS_REVISION "${VERSION}"

@@ -73,6 +73,9 @@ web_encode (string s) {
 
 url
 get_from_web (url name) {
+#if !defined(USE_CURL)
+    return url_none();
+#else
   if (!is_rooted_web (name)) return url_none ();
 
   url res= get_cache (name);
@@ -92,6 +95,7 @@ get_from_web (url name) {
     set_cache (name, tmp);
     return tmp;
   }
+#endif
 }
 
 /******************************************************************************

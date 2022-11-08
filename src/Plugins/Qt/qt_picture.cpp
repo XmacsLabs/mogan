@@ -270,12 +270,16 @@ get_image_for_real (url u, int w, int h, tree eff, SI pixel) {
     pm->fill (Qt::transparent);
     QPainter painter (pm);
     renderer.render (&painter);
-  } else if (url_suffix == "pdf") {
+  }
+#ifdef USE_GS
+  else if (url_suffix == "pdf") {
     url temp= url_temp (".png");
     gs_to_png (u, temp, w, h);
     pm= new QImage (utf8_to_qstring (as_string (temp)));
     remove (temp);
-  } else if (qt_supports (u)) {
+  }
+#endif
+  else if (qt_supports (u)) {
     pm= new QImage (utf8_to_qstring (concretize (u)));
   } else {
     url temp= url_temp (".png");
