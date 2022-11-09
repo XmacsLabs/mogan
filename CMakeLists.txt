@@ -85,29 +85,28 @@ endif (USE_FREETYPE)
 
 option (PDFHUMMUS_NO_TIFF "Disable TIFF in PDF Hummus" ON)
 
-if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
-    set(OS_WASM 1)
-    add_definitions("-DOS_WASM")
-    set (TEXMACS_GUI "Qt6")
-    option (QTPIPES "use Qt pipes" OFF)
-    option (USE_QT_PRINTER "use Qt printer" OFF)
-    option (USE_CURL "use curl library" OFF)
-    option (USE_SQLITE3 "Use SQLite3" OFF)
+if (${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+  set(OS_WASM 1)
+  add_definitions("-DOS_WASM")
+  set (TEXMACS_GUI "Qt6")
+  option (QTPIPES "use Qt pipes" OFF)
+  option (USE_QT_PRINTER "use Qt printer" OFF)
+  option (USE_CURL "use curl library" OFF)
+  option (USE_SQLITE3 "Use SQLite3" OFF)
 else()
-
-option (QTPIPES "use Qt pipes" ON)
-add_definitions("-DQTPIPES") # used by qt moc
-
-option (USE_QT_PRINTER "use Qt printer" ON)
-add_definitions("-DUSE_QT_PRINTER") # used by qt moc
-
-option (USE_CURL "use curl library" ON)
-
-option (USE_SQLITE3 "Use SQLite3" ON)
-if (USE_SQLITE3)
-  find_package (SQLite3)
-  option (LINKED_SQLITE3 "Use Linked SQLite3" ON)
-endif (USE_SQLITE3)
+  option (QTPIPES "use Qt pipes" ON)
+  add_definitions("-DQTPIPES") # used by qt moc
+  
+  option (USE_QT_PRINTER "use Qt printer" ON)
+  add_definitions("-DUSE_QT_PRINTER") # used by qt moc
+  
+  option (USE_CURL "use curl library" ON)
+  
+  option (USE_SQLITE3 "Use SQLite3" ON)
+  if (USE_SQLITE3)
+    find_package (SQLite3)
+    option (LINKED_SQLITE3 "Use Linked SQLite3" ON)
+  endif (USE_SQLITE3)
 endif()
 
 option (USE_CAIRO "use Cairo" OFF)
@@ -130,6 +129,7 @@ if (WIN32)
 else (WIN32)
   option (USE_GMP "use GMP" OFF)
 endif (WIN32)
+
 if (USE_GMP)
   find_package (GMP)
 endif (USE_GMP)
@@ -269,12 +269,12 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "CYGWIN_NT-5.1")
 endif (${CMAKE_SYSTEM_NAME} STREQUAL "CYGWIN_NT-5.1")
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
-    message (STATUS "final adjustments for wasm host")
-    set (CONFIG_OS "WASM")
-    set (CONFIG_OS_SUFFIX "wasm")
-    set (CONFIG_HOST_OS "wasm-emscripten")
-    set (CONFIG_HOST_VENDOR "pc")
-    set (CONFIG_HOST_CPU ${CMAKE_SYSTEM_PROCESSOR})
+  message (STATUS "final adjustments for wasm host")
+  set (CONFIG_OS "WASM")
+  set (CONFIG_OS_SUFFIX "wasm")
+  set (CONFIG_HOST_OS "wasm-emscripten")
+  set (CONFIG_HOST_VENDOR "pc")
+  set (CONFIG_HOST_CPU ${CMAKE_SYSTEM_PROCESSOR})
 endif(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
 
 ### --------------------------------------------------------------------
@@ -308,8 +308,8 @@ set (PACKAGE_VERSION 1)
 ### --------------------------------------------------------------------
 
 
-if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
-        set(USE_LIB_FLAGS "-s USE_FREETYPE=1")
+if (${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+  set(USE_LIB_FLAGS "-s USE_FREETYPE=1")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${USE_LIB_FLAGS}")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${USE_LIB_FLAGS}")
 else()
@@ -453,7 +453,7 @@ set (TeXmacs_Include_Dirs
   ${TEXMACS_BINARY_DIR}/src/System/ 
 )
 if (NOT OS_WASM)
-    set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs} ${TEXMACS_SOURCE_DIR}/src/Plugins/Pdf/LibAesgm)
+  set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs} ${TEXMACS_SOURCE_DIR}/src/Plugins/Pdf/LibAesgm)
 endif()
 
 if (WIN32)
@@ -516,9 +516,9 @@ file (GLOB_RECURSE TeXmacs_Style_SRCS
 )
 
 if (OS_WASM)
-    set (TeXmacs_All_SRCS ${TeXmacs_Base_SRCS}  ${TeXmacs_Std_Plugins_SRCS})
+  set (TeXmacs_All_SRCS ${TeXmacs_Base_SRCS}  ${TeXmacs_Std_Plugins_SRCS})
 else()
-    set (TeXmacs_All_SRCS ${TeXmacs_Base_SRCS}  ${TeXmacs_Std_Plugins_SRCS} ${TeXmacs_Wasm_Excluded_SRCS})
+  set (TeXmacs_All_SRCS ${TeXmacs_Base_SRCS}  ${TeXmacs_Std_Plugins_SRCS} ${TeXmacs_Wasm_Excluded_SRCS})
 endif()
 
 ### --------------------------------------------------------------------
@@ -770,21 +770,22 @@ include_directories (${TeXmacs_Include_Dirs})
 ### Compile sources
 ### --------------------------------------------------------------------
 if (OS_WASM)
-    add_compile_options ("-Wall" "-Wextra")
-    add_link_options("SHELL:--preload-file ${TEXMACS_SOURCE_DIR}/TeXmacs@TeXmacs") #preload files under TeXmacs/, @ symbol is used for mapping path
-    set (TeXmacs_binary_name "Mogan")
-    qt_add_executable(${TeXmacs_binary_name} ${TeXmacs_All_SRCS} ${TEXMACS_SOURCE_DIR}/src/Texmacs/Texmacs/texmacs.cpp)
-    target_link_libraries(${TeXmacs_binary_name} PRIVATE ${QT_LIBRARIES})
-    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-        add_compile_options("SHELL:-s ASSERTIONS=1" "SHELL:-s DEMANGLE_SUPPORT=1" "-g3")
-        add_link_options("SHELL:-s ASSERTIONS=1" "SHELL:-s DEMANGLE_SUPPORT=1"  "-g3" "-gsource-map")
-    endif()
+  add_compile_options ("-Wall" "-Wextra")
+  add_link_options("SHELL:--preload-file ${TEXMACS_SOURCE_DIR}/TeXmacs@TeXmacs") #preload files under TeXmacs/, @ symbol is used for mapping path
+  set (TeXmacs_binary_name "Mogan")
+  qt_add_executable(${TeXmacs_binary_name} ${TeXmacs_All_SRCS} ${TEXMACS_SOURCE_DIR}/src/Texmacs/Texmacs/texmacs.cpp)
+  target_link_libraries(${TeXmacs_binary_name} PRIVATE ${QT_LIBRARIES})
+  if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_compile_options("SHELL:-s ASSERTIONS=1" "SHELL:-s DEMANGLE_SUPPORT=1" "-g3")
+    add_link_options("SHELL:-s ASSERTIONS=1" "SHELL:-s DEMANGLE_SUPPORT=1"  "-g3" "-gsource-map")
+  endif()
 else (OS_WASM)
-add_subdirectory (src)
-add_subdirectory (plugins)
-add_subdirectory (misc)
-add_subdirectory (TeXmacs)
+  add_subdirectory (src)
+  add_subdirectory (plugins)
+  add_subdirectory (misc)
+  add_subdirectory (TeXmacs)
 endif(OS_WASM)
+
 ### --------------------------------------------------------------------
 ### Installation
 ### --------------------------------------------------------------------
@@ -814,44 +815,44 @@ endif (NOT OS_WASM)
 ### share/
 
 if (NOT OS_WASM)
-if (WIN32)
-  install (DIRECTORY plugins DESTINATION ${CMAKE_INSTALL_PREFIX}
-    FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
-    PATTERN "bin" EXCLUDE
-    PATTERN "CMakeLists.txt" EXCLUDE
-    PATTERN ".gitignore" EXCLUDE)
-else (WIN32)
-  install (DIRECTORY plugins DESTINATION share/Xmacs
-    FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
-    PATTERN "bin" EXCLUDE
-    PATTERN "CMakeLists.txt" EXCLUDE
-    PATTERN ".gitignore" EXCLUDE)
-endif (WIN32)
-
-install (FILES misc/scripts/tm_gs
-         DESTINATION share/Xmacs/bin
-         PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
-                     GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
-
-install (FILES TeXmacs/misc/mime/mogan.desktop DESTINATION share/applications)
-install (FILES TeXmacs/misc/images/texmacs.svg RENAME Mogan.svg
-  DESTINATION share/icons/hicolor/scalable/apps)
-install (FILES TeXmacs/misc/images/text-x-mogan.svg
-  DESTINATION share/icons/hicolor/scalable/mimetypes)
-install (FILES TeXmacs/misc/mime/mogan.xml DESTINATION share/mime/packages)
-install (FILES TeXmacs/misc/pixmaps/Xmacs.xpm DESTINATION share/pixmaps)
-foreach (size IN ITEMS 32 48 64 128 256 512)
-  install (FILES TeXmacs/misc/images/xmacs-${size}.png RENAME Xmacs.png
-    DESTINATION share/icons/hicolor/${size}x${size}/apps/)
-endforeach ()
-
-if (WIN32)
-  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs-large.bmp DESTINATION ${CMAKE_INSTALL_PREFIX})
-  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs-small.bmp DESTINATION ${CMAKE_INSTALL_PREFIX})
-  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/Xmacs.ico DESTINATION ${CMAKE_INSTALL_PREFIX})
-  install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs.ico DESTINATION ${CMAKE_INSTALL_PREFIX})
-  install (FILES ${TEXMACS_BINARY_DIR}/Xmacs.iss DESTINATION ${CMAKE_INSTALL_PREFIX})
-endif (WIN32)
+  if (WIN32)
+    install (DIRECTORY plugins DESTINATION ${CMAKE_INSTALL_PREFIX}
+      FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
+      PATTERN "bin" EXCLUDE
+      PATTERN "CMakeLists.txt" EXCLUDE
+      PATTERN ".gitignore" EXCLUDE)
+  else (WIN32)
+    install (DIRECTORY plugins DESTINATION share/Xmacs
+      FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
+      PATTERN "bin" EXCLUDE
+      PATTERN "CMakeLists.txt" EXCLUDE
+      PATTERN ".gitignore" EXCLUDE)
+  endif (WIN32)
+  
+  install (FILES misc/scripts/tm_gs
+           DESTINATION share/Xmacs/bin
+           PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
+                       GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
+  
+  install (FILES TeXmacs/misc/mime/mogan.desktop DESTINATION share/applications)
+  install (FILES TeXmacs/misc/images/texmacs.svg RENAME Mogan.svg
+    DESTINATION share/icons/hicolor/scalable/apps)
+  install (FILES TeXmacs/misc/images/text-x-mogan.svg
+    DESTINATION share/icons/hicolor/scalable/mimetypes)
+  install (FILES TeXmacs/misc/mime/mogan.xml DESTINATION share/mime/packages)
+  install (FILES TeXmacs/misc/pixmaps/Xmacs.xpm DESTINATION share/pixmaps)
+  foreach (size IN ITEMS 32 48 64 128 256 512)
+    install (FILES TeXmacs/misc/images/xmacs-${size}.png RENAME Xmacs.png
+      DESTINATION share/icons/hicolor/${size}x${size}/apps/)
+  endforeach ()
+  
+  if (WIN32)
+    install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs-large.bmp DESTINATION ${CMAKE_INSTALL_PREFIX})
+    install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs-small.bmp DESTINATION ${CMAKE_INSTALL_PREFIX})
+    install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/Xmacs.ico DESTINATION ${CMAKE_INSTALL_PREFIX})
+    install (FILES ${TEXMACS_SOURCE_DIR}/packages/windows/TeXmacs.ico DESTINATION ${CMAKE_INSTALL_PREFIX})
+    install (FILES ${TEXMACS_BINARY_DIR}/Xmacs.iss DESTINATION ${CMAKE_INSTALL_PREFIX})
+  endif (WIN32)
 endif (NOT OS_WASM)
 ### --------------------------------------------------------------------
 ### Testing
