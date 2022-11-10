@@ -12,7 +12,7 @@
 includes("check_cxxtypes.lua")
 includes("check_cxxincludes.lua")
 includes("check_cxxfuncs.lua")
-includes("check_csnippets.lua")
+includes("check_cxxsnippets.lua")
 -- add debug and release modes
 add_rules("mode.debug", "mode.release")
 
@@ -117,7 +117,7 @@ target("mogan-lib") do
     else 
         set_configvar("CONFIG_OS", "")
     end
-    check_csnippets(
+    configvar_check_cxxsnippets(
         "CONFIG_LARGE_POINTER", [[
             #include <stdlib.h>
             static_assert(sizeof(void*) == 8, "");]])
