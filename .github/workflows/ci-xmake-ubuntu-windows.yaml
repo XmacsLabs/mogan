@@ -56,6 +56,7 @@ jobs:
       - name: Test
         shell: msys2 {0}
         run: |
+          export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
           xmake run --yes --verbose --diagnosis --group=tests
         env:
           TEXMACS_PATH: .\src\Texmacs
@@ -86,7 +87,6 @@ jobs:
           path: |
             build/linux/**
       - name: Test
-        shell: msys2 {0}
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
         env:
