@@ -10,7 +10,7 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 includes("check_cxxtypes.lua")
-includes("check_cincludes.lua")
+includes("check_cxxincludes.lua")
 includes("check_cxxfuncs.lua")
 includes("check_csnippets.lua")
 -- add debug and release modes
@@ -76,13 +76,15 @@ target("mogan-lib") do
     -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
     add_options("libdl")
     configvar_check_cxxtypes("HAVE_INTPTR_T","intptr_t",{includes = {"memory"}})
-    configvar_check_cincludes("HAVE_INTTYPES_H","inttypes.h")
-    configvar_check_cincludes("HAVE_PTY_H","pty.h")
-    configvar_check_cincludes("HAVE_STDINT_H","stdint.h")
-    configvar_check_cincludes("HAVE_SYS_STAT_H","sys/stat.h")
-    configvar_check_cincludes("HAVE_SYS_TYPES_H","sys/types.h")
+    configvar_check_cxxincludes("HAVE_INTTYPES_H","inttypes.h")
+    configvar_check_cxxincludes("HAVE_MEMORY_H","memory.h")
+    configvar_check_cxxincludes("HAVE_PTY_H","pty.h")
+    configvar_check_cxxincludes("HAVE_STDINT_H","stdint.h")
+    configvar_check_cxxincludes("HAVE_SYS_STAT_H","sys/stat.h")
+    configvar_check_cxxincludes("HAVE_SYS_TYPES_H","sys/types.h")
     configvar_check_cxxtypes("HAVE_TIME_T","time_t",{includes = {"memory"}})
-    configvar_check_cincludes("HAVE_UTIL_H","util.h")
+    configvar_check_cxxincludes("HAVE_UTIL_H","util.h")
+    configvar_check_cxxfuncs("HAVE_GETTIMEOFDAY","gettimeofday",{includes={"sys/time.h"}})
     if is_plat("mingw") then
         set_configvar("GS_EXE", "bin/gs.exe")
     else
@@ -95,6 +97,7 @@ target("mogan-lib") do
     end
         set_configvar("USE_STACK_TRACE",true)
     end
+    set_configvar("PDFHUMMUS_NO_TIFF",true)
     add_configfiles(
         "src/System/config.h.xmake", {
             filename = "config.h",
@@ -132,116 +135,122 @@ target("mogan-lib") do
                 tm_stable = "Texmacs-" .. STABLE_VERSION,
                 tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
                 }})
-    add_defines("PDFHUMMUS_NO_TIFF", {public = true})
 
     ---------------------------------------------------------------------------
     -- add source and header files
     ---------------------------------------------------------------------------
-    add_includedirs("src/Data/Convert", {public = true})
-    add_includedirs("src/Data/Document", {public = true})
-    add_includedirs("src/Data/Drd", {public = true})
-    add_includedirs("src/Data/History", {public = true})
-    add_includedirs("src/Data/Observers", {public = true})
-    add_includedirs("src/Data/Parser", {public = true})
-    add_includedirs("src/Data/String", {public = true})
-    add_includedirs("src/Data/Tree", {public = true})
-    add_includedirs("src/Edit", {public = true})
-    add_includedirs("src/Edit/Editor", {public = true})
-    add_includedirs("src/Edit/Interface", {public = true})
-    add_includedirs("src/Edit/Modify", {public = true})
-    add_includedirs({"src/Edit/Process"}, {public = true})
-    add_includedirs("src/Edit/Replace", {public = true})
-    add_includedirs("src/Graphics/Bitmap_fonts", {public = true})
-    add_includedirs("src/Graphics/Colors", {public = true})
-    add_includedirs("src/Graphics/Fonts", {public = true})
-    add_includedirs("src/Graphics/Gui", {public = true})
-    add_includedirs("src/Graphics/Handwriting", {public = true})
-    add_includedirs("src/Graphics/Mathematics", {public = true})
-    add_includedirs("src/Graphics/Pictures", {public = true})
-    add_includedirs("src/Graphics/Renderer", {public = true})
-    add_includedirs("src/Graphics/Spacial", {public = true})
-    add_includedirs("src/Graphics/Types", {public = true})
-    add_includedirs("src/Kernel/Abstractions", {public = true})
-    add_includedirs("src/Kernel/Containers", {public = true})
-    add_includedirs("src/Kernel/Types", {public = true})
-    add_includedirs("src/Plugins", {public = true})
-    add_includedirs("src/Plugins/Pdf", {public = true})
-    add_includedirs("src/Plugins/Pdf/PDFWriter", {public = true})
-    add_includedirs("src/Plugins/Pdf/LibAesgm", {public = true})
-    add_includedirs("src/Plugins/Qt", {public = true})
-    add_includedirs("src/Scheme", {public = true})
-    add_includedirs("src/Scheme/S7", {public = true})
-    add_includedirs("src/Scheme/Scheme", {public = true})
-    add_includedirs("src/Style/Environment", {public = true})
-    add_includedirs("src/Style/Evaluate", {public = true})
-    add_includedirs("src/Style/Memorizer", {public = true})
-    add_includedirs("src/System", {public = true})
-    add_includedirs("src/System/Boot", {public = true})
-    add_includedirs("src/System/Classes", {public = true})
-    add_includedirs("src/System/Files", {public = true})
-    add_includedirs("src/System/Language", {public = true})
-    add_includedirs("src/System/Link", {public = true})
-    add_includedirs("src/System/Misc", {public = true})
-    add_includedirs("src/Texmacs", {public = true})
-    add_includedirs("src/Texmacs/Data", {public = true})
-    add_includedirs("src/Typeset", {public = true})
-    add_includedirs("src/Typeset/Bridge", {public = true})
-    add_includedirs("src/Typeset/Concat", {public = true})
-    add_includedirs("src/Typeset/Page", {public = true})
-    add_includedirs("TeXmacs/include", {public = true})
+    add_includedirs({
+            "src/Data/Convert",
+            "src/Data/Document",
+            "src/Data/Drd",
+            "src/Data/History",
+            "src/Data/Observers",
+            "src/Data/Parser",
+            "src/Data/String",
+            "src/Data/Tree",
+            "src/Edit",
+            "src/Edit/Editor",
+            "src/Edit/Interface",
+            "src/Edit/Modify",
+            "src/Edit/Process",
+            "src/Edit/Replace",
+            "src/Graphics/Bitmap_fonts",
+            "src/Graphics/Colors",
+            "src/Graphics/Fonts",
+            "src/Graphics/Gui",
+            "src/Graphics/Handwriting",
+            "src/Graphics/Mathematics",
+            "src/Graphics/Pictures",
+            "src/Graphics/Renderer",
+            "src/Graphics/Spacial",
+            "src/Graphics/Types",
+            "src/Kernel/Abstractions",
+            "src/Kernel/Containers",
+            "src/Kernel/Types",
+            "src/Plugins",
+            "src/Plugins/Pdf",
+            "src/Plugins/Pdf/PDFWriter",
+            "src/Plugins/Pdf/LibAesgm",
+            "src/Plugins/Qt",
+            "src/Scheme",
+            "src/Scheme/S7",
+            "src/Scheme/Scheme",
+            "src/Style/Environment",
+            "src/Style/Evaluate",
+            "src/Style/Memorizer",
+            "src/System",
+            "src/System/Boot",
+            "src/System/Classes",
+            "src/System/Files",
+            "src/System/Language",
+            "src/System/Link",
+            "src/System/Misc",
+            "src/Texmacs",
+            "src/Texmacs/Data",
+            "src/Typeset",
+            "src/Typeset/Bridge",
+            "src/Typeset/Concat",
+            "src/Typeset/Page",
+            "TeXmacs/include"
+        }, {public = true})
     if is_plat("macosx") then
         add_includedirs("src/Plugins/MacOS", {public = true})
     elseif is_plat("mingw") then
-        add_includedirs("src/Plugins/Windows", {public = true})
-        add_includedirs("src/Plugins/Windows/nowide", {public = true})
+        add_includedirs({
+                "src/Plugins/Windows", 
+                "src/Plugins/Windows/nowide"
+            }, {public = true})
     else
         add_includedirs("src/Plugins/Unix", {public = true})
     end
 
-    add_files("src/Data/**.cpp")
-    add_files("src/Edit/**.cpp")
-    add_files("src/Graphics/**.cpp")
-    add_files("src/Kernel/**.cpp")
-    add_files("src/Scheme/Scheme/**.cpp")
-    add_files("src/Scheme/S7/**.cpp")
-    add_files("src/Scheme/S7/*.c")
-    add_files("src/System/**.cpp")
-    add_files("src/Texmacs/Data/**.cpp")
-    add_files("src/Texmacs/Server/**.cpp")
-    add_files("src/Texmacs/Window/**.cpp")
-    add_files("src/Typeset/**.cpp")
-    add_files("src/Plugins/Axel/**.cpp")
-    add_files("src/Plugins/Bibtex/**.cpp")
-    add_files("src/Plugins/Cairo/**.cpp")
-    add_files("src/Plugins/Database/**.cpp")
-    add_files("src/Plugins/Freetype/**.cpp")
-    add_files("src/Plugins/Jeaiii/**.cpp")
-    add_files("src/Plugins/Pdf/**.c")
-    add_files("src/Plugins/Pdf/**.cpp")
-    add_files("src/Plugins/Ghostscript/**.cpp")
-    add_files("src/Plugins/Imlib2/**.cpp")
-    add_files("src/Plugins/Ispell/**.cpp")
-    add_files("src/Plugins/Metafont/**.cpp")
-    add_files("src/Plugins/LaTeX_Preview/**.cpp")
-    add_files("src/Plugins/Mplayer/**.cpp")
-    add_files("src/Plugins/Openssl/**.cpp")
-    add_files("src/Plugins/Sqlite3/**.cpp")
-    add_files("src/Plugins/Updater/**.cpp")
-    add_files("src/Plugins/Curl/**.cpp")
+    add_files({
+            "src/Data/**.cpp",
+            "src/Edit/**.cpp",
+            "src/Graphics/**.cpp",
+            "src/Kernel/**.cpp",
+            "src/Scheme/Scheme/**.cpp",
+            "src/Scheme/S7/**.cpp",
+            "src/Scheme/S7/*.c",
+            "src/System/**.cpp",
+            "src/Texmacs/Data/**.cpp",
+            "src/Texmacs/Server/**.cpp",
+            "src/Texmacs/Window/**.cpp",
+            "src/Typeset/**.cpp",
+            "src/Plugins/Axel/**.cpp",
+            "src/Plugins/Bibtex/**.cpp",
+            "src/Plugins/Cairo/**.cpp",
+            "src/Plugins/Database/**.cpp",
+            "src/Plugins/Freetype/**.cpp",
+            "src/Plugins/Jeaiii/**.cpp",
+            "src/Plugins/Pdf/**.c",
+            "src/Plugins/Pdf/**.cpp",
+            "src/Plugins/Ghostscript/**.cpp",
+            "src/Plugins/Imlib2/**.cpp",
+            "src/Plugins/Ispell/**.cpp",
+            "src/Plugins/Metafont/**.cpp",
+            "src/Plugins/LaTeX_Preview/**.cpp",
+            "src/Plugins/Mplayer/**.cpp",
+            "src/Plugins/Openssl/**.cpp",
+            "src/Plugins/Sqlite3/**.cpp",
+            "src/Plugins/Updater/**.cpp",
+            "src/Plugins/Curl/**.cpp"})
     if is_plat("mingw") then
         add_files("src/Plugins/Windows/**.cpp")
     else
         add_files("src/Plugins/Unix/**.cpp")
     end
     if is_plat("macosx") then
-        add_files("src/Plugins/MacOS/HIDRemote.m")
-        add_files("src/Plugins/MacOS/mac_images.mm")
-        add_files("src/Plugins/MacOS/mac_spellservice.mm")
-        add_files("src/Plugins/MacOS/mac_utilities.mm")
-        add_files("src/Plugins/MacOS/mac_app.mm")
+        add_files({
+                "src/Plugins/MacOS/HIDRemote.m",
+                "src/Plugins/MacOS/mac_images.mm",
+                "src/Plugins/MacOS/mac_spellservice.mm",
+                "src/Plugins/MacOS/mac_utilities.mm",
+                "src/Plugins/MacOS/mac_app.mm"})
     end
-    add_files("src/Plugins/Qt/**.cpp")
-    add_files("src/Plugins/Qt/**.hpp")
+    add_files({
+        "src/Plugins/Qt/**.cpp",
+        "src/Plugins/Qt/**.hpp"})
 
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include src/System/config.h")
