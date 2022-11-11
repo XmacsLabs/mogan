@@ -69,7 +69,7 @@ jobs:
           sudo add-apt-repository ppa:xmake-io/xmake
           sudo apt update
           sudo apt upgrade --yes gcc
-          sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake libgl1-mesa-dev
+          sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -91,5 +91,6 @@ jobs:
           xmake run --yes --verbose --diagnosis --group=tests
         env:
           TEXMACS_PATH: .\src\Texmacs
+          QT_QPA_PLATFORM: offscreen
   
           
