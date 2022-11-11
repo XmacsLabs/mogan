@@ -59,7 +59,7 @@ jobs:
           export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
           xmake run --yes --verbose --diagnosis --group=tests
         env:
-          TEXMACS_PATH: .\src\Texmacs
+          TEXMACS_PATH: .\Texmacs
   linuxbuild:
     runs-on: ubuntu-latest
     if: always()
@@ -90,7 +90,7 @@ jobs:
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
         env:
-          TEXMACS_PATH: .\src\Texmacs
+          TEXMACS_PATH: .\Texmacs
           QT_QPA_PLATFORM: offscreen
   
           
