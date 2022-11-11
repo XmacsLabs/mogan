@@ -44,8 +44,8 @@ jobs:
           export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
           xrepo update-repo
           xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
-          xmake build --yes --verbose --diagnosis mogan
-          xmake build --yes --verbose --diagnosis --group=tests
+          xmake build --yes --verbose --diagnosis mogan --jobs=8
+          xmake build --yes --verbose --diagnosis --group=tests --jobs=8
           windeployqt ./build/mingw/x86_64/release/
       - name: Upload 
         uses: actions/upload-artifact@v2
@@ -78,8 +78,8 @@ jobs:
         run: |
           xrepo update-repo
           xmake config --yes
-          xmake build --yes --verbose --diagnosis mogan
-          xmake build --yes --verbose --diagnosis --group=tests
+          xmake build --yes --verbose --diagnosis mogan --jobs=8
+          xmake build --yes --verbose --diagnosis --group=tests --jobs=8
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
