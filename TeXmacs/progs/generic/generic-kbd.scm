@@ -302,6 +302,8 @@
   ("emacs:meta >" (go-end))
   ("emacs:meta $" (interactive-spell))
   ("emacs:meta %" (interactive-replace))
+  ("emacs:meta backspace" (backward-kill-word))
+  ("emacs:meta delete" (kill-word))
 
   ("emacs:prefix b" (interactive go-to-buffer))
   ("emacs:prefix h" (select-all))
