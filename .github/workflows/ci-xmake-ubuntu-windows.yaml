@@ -69,7 +69,7 @@ jobs:
           sudo add-apt-repository ppa:xmake-io/xmake
           sudo apt update
           sudo apt upgrade --yes gcc
-          sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake
+          sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake libgl1-mesa-dev
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
