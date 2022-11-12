@@ -78,12 +78,6 @@ jobs:
           xrepo update-repo
           xmake config --yes
           xmake build --yes --verbose --diagnosis --jobs=8 --all
-      - name: Upload 
-        uses: actions/upload-artifact@v2
-        with:
-          name: mogan-linux-dev
-          path: |
-            build/linux/**
       - name: Test
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
