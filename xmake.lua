@@ -37,7 +37,7 @@ add_requires("libcurl",{system=false})
 add_requires("freetype",{system=false})
 
 target("mogan-lib") do
-    local TEXMACS_VERSION = "2.1.3"
+    local TEXMACS_VERSION = "2.1.2"
     local DEVEL_VERSION = TEXMACS_VERSION
     local DEVEL_RELEASE = 1
     local STABLE_VERSION = TEXMACS_VERSION
