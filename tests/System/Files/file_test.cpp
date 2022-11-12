@@ -20,7 +20,7 @@ private slots:
 };
 
 void TestFile::test_read_directory () {
-  auto misc= url ("$TEXMACS_PATH/styles/");
+  auto misc= url_system("$TEXMACS_PATH/styles");
   bool err= false;
   auto dirs= read_directory(misc, err);
   QCOMPARE (N(dirs), 17);
