@@ -3,8 +3,6 @@
 /* check assertions in code */
 #define DEBUG_ASSERT 1
 
-${define QTTEXMACS}
-
 /* Enable experimental style rewriting code */
 ${define EXPERIMENTAL}
 
@@ -110,7 +108,7 @@ ${define PDFHUMMUS_NO_TIFF}
 
 #define PDF_RENDERER 1
 
-#define QTTEXMACS 1
+${define QTTEXMACS}
 
 #define QTPIPES 1
 

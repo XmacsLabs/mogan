@@ -41,17 +41,24 @@ jobs:
         shell: msys2 {0}
         id: build
         run: |
-          ls /
-          export PATH=/mingw64/bin/:${PATH}
+          export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
           xrepo update-repo
           xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
-          xmake build --yes --verbose --diagnosis
+          xmake build --yes --verbose --diagnosis --jobs=8 --all
+          windeployqt ./build/mingw/x86_64/release/
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
           name: mogan-windows-dev
           path: |
-            build\mingw\x86_64\release\mogan.exe
+            build\mingw\**
+      - name: Test
+        shell: msys2 {0}
+        run: |
+          export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
+          xmake run --yes --verbose --diagnosis --group=tests
+        env:
+          TEXMACS_PATH: .\TeXmacs
   linuxbuild:
     runs-on: ubuntu-latest
     if: always()
@@ -70,12 +77,12 @@ jobs:
         run: |
           xrepo update-repo
           xmake config --yes
-          xmake build --yes
-      - name: Upload 
-        uses: actions/upload-artifact@v2
-        with:
-          name: mogan-linux-dev
-          path: |
-            build/linux/**
+          xmake build --yes --verbose --diagnosis --jobs=8 --all
+      - name: Test
+        run: |
+          xmake run --yes --verbose --diagnosis --group=tests
+        env:
+          TEXMACS_PATH: ./TeXmacs
+          QT_QPA_PLATFORM: offscreen
   
           

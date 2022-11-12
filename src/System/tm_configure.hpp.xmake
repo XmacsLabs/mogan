@@ -19,6 +19,8 @@
 #define TEXMACS_SOURCES ""
 #define OS_@CONFIG_OS@
 
+@define CONFIG_LARGE_POINTER@
+
 #ifdef CONFIG_LARGE_POINTER
 #define WORD_LENGTH 8
 #define WORD_LENGTH_INC 7
