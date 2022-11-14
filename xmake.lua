@@ -13,8 +13,6 @@ includes("check_cxxtypes.lua")
 includes("check_cxxincludes.lua")
 includes("check_cxxfuncs.lua")
 includes("check_cxxsnippets.lua")
--- add debug and release modes
-add_rules("mode.debug", "mode.release")
 
 set_project("TEXMACS")
 
@@ -29,12 +27,25 @@ set_allowedplats(
     "android", "appletvos", "bsd", "cross", "iphoneos", "msys", "wasm", "watchos"
 ) 
 
+-- add releasedbg, debug and release modes for different platforms.
+-- debug mode cannot run on mingw with qt precompiled binary
+if is_plat("mingw") then
+    set_allowedmodes("releasedbg","release")
+    add_rules("mode.releasedbg", "mode.release")
+    
+else 
+    set_allowedmodes("releasedbg","release", "debug")
+    add_rules("mode.releasedbg", "mode.release", "mode.debug")
+end
+
 add_requires("libpng",{system=false})
 add_requires("libiconv",{system=false})
 add_requires("zlib",{system=false})
 add_requires("libjpeg",{system=false})
 add_requires("libcurl",{system=false})
 add_requires("freetype",{system=false})
+
+local XMACS_VERSION="1.1.1"
 
 target("mogan-lib") do
     local TEXMACS_VERSION = "2.1.3"
@@ -126,7 +137,7 @@ target("mogan-lib") do
             filename = "tm_configure.hpp",
             pattern = "@(.-)@",
             variables = {
-                XMACS_VERSION = "1.1.1-rc1",
+                XMACS_VERSION = XMACS_VERSION,
                 CONFIG_USER = os.getenv("USER") or "unknown",
                 CONFIG_DATE = os.time(),
                 CONFIG_STD_SETENV = "#define STD_SETENV",
@@ -266,6 +277,100 @@ target("mogan") do
     add_frameworks("QtGui","QtWidgets","QtCore","QtPrintSupport","QtSvg")
     add_deps("mogan-lib")
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
+end 
+
+target("mogan_install") do
+    add_deps("mogan")
+    set_kind("phony")
+    set_configvar("XMACS_VERSION", XMACS_VERSION)
+    set_configvar("WIN_BIT_SIZE", "64")
+    set_configdir(".")
+    add_configfiles(
+        "(packages/windows/Xmacs.iss.in)",{
+            filename = "Xmacs.iss",
+            pattern = "@(.-)@",
+        }
+    )
+    if is_plat("macosx") then
+        add_configfiles(
+            "(misc/scripts/mogan.sh.in)",{
+                filename = "mogan.sh",
+                pattern = "@(.-)@",
+            }
+        )
+    elseif is_plat("linux") then
+        add_configfiles(
+            "(misc/scripts/mogan.sh.in)",{
+                filename = "mogan",
+                pattern = "@(.-)@",
+            }
+        )
+    else
+    end
+    add_configfiles(
+        "(misc/man/mogan.1.in)",{
+            filename = "mogan.1",
+            pattern = "@([^\n]-)@",
+        }
+    )
+    
+    set_installdir("build/package")
+    if is_plat("macosx") then
+        add_installfiles({
+            "packages/macos/Xmacs.icns",
+            "packages/macos/TeXmacs-document.icns",
+            "src/Plugins/Cocoa/(English.lproj/**)",
+            "src/Plugins/Cocoa/(zh_CN.lproj/**)",
+        })
+        add_installfiles({
+            "misc/scripts/mogan.sh"
+        })
+    elseif is_plat("linux") then
+        add_installfiles({
+            "misc/scripts/mogan"
+        })
+    end
+
+    
+    -- share/
+
+    if is_plat("mingw") then
+        add_installfiles("(plugins/**)")
+    else 
+        add_installfiles("(plugins/**)",{prefixdir="share/Xmacs"})
+        
+    end
+
+    -- install (DIRECTORY plugins DESTINATION ${CMAKE_INSTALL_PREFIX}
+    --   FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
+    --   PATTERN "bin" EXCLUDE
+    --   PATTERN "CMakeLists.txt" EXCLUDE
+    --   PATTERN ".gitignore" EXCLUDE)
+  
+    add_installfiles("misc/scripts/tm_gs",{prefixdir="share/Xmacs/bin"})
+  
+    add_installfiles("TeXmacs/misc/mime/mogan.desktop",{prefixdir="share/applications"})
+    add_installfiles("TeXmacs/misc/images/texmacs.svg",{prefixdir="share/icons/hicolor/scalable/apps"})
+    add_installfiles("TeXmacs/misc/images/text-x-mogan.svg",{prefixdir="share/icons/hicolor/scalable/mimetypes"})
+    add_installfiles("TeXmacs/misc/mime/mogan.xml",{prefixdir="share/mime/packages"})
+    add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm",{prefixdir="share/pixmaps"})
+        --   install (FILES TeXmacs/misc/images/texmacs.svg RENAME Mogan.svg
+        --     DESTINATION share/icons/hicolor/scalable/apps)
+    for _,size in ipairs({32,48,64,128,256,512}) do
+        add_installfiles (
+            "TeXmacs/misc/images/xmacs-"..size..".png", 
+            {prefixdir="share/icons/hicolor/"..size .."x"..size.."/apps/"}) 
+        -- install (FILES TeXmacs/misc/images/xmacs-${size}.png RENAME Xmacs.png
+        --   DESTINATION share/icons/hicolor/${size}x${size}/apps/)
+    end
+  
+    if is_plat("mingw") then
+        add_installfiles("packages/windows/TeXmacs-large.bmp")
+        add_installfiles("packages/windows/TeXmacs-small.bmp")
+        add_installfiles("packages/windows/Xmacs.ico")
+        add_installfiles("packages/windows/TeXmacs.ico")
+        add_installfiles("packages/windows/Xmacs.iss")
+    end
 end
 
 for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
