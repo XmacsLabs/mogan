@@ -350,19 +350,9 @@ target("mogan_install") do
     add_installfiles("misc/scripts/tm_gs",{prefixdir="share/Xmacs/bin"})
   
     add_installfiles("TeXmacs/misc/mime/mogan.desktop",{prefixdir="share/applications"})
-    add_installfiles("TeXmacs/misc/images/texmacs.svg",{prefixdir="share/icons/hicolor/scalable/apps"})
     add_installfiles("TeXmacs/misc/images/text-x-mogan.svg",{prefixdir="share/icons/hicolor/scalable/mimetypes"})
     add_installfiles("TeXmacs/misc/mime/mogan.xml",{prefixdir="share/mime/packages"})
     add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm",{prefixdir="share/pixmaps"})
-        --   install (FILES TeXmacs/misc/images/texmacs.svg RENAME Mogan.svg
-        --     DESTINATION share/icons/hicolor/scalable/apps)
-    for _,size in ipairs({32,48,64,128,256,512}) do
-        add_installfiles (
-            "TeXmacs/misc/images/xmacs-"..size..".png", 
-            {prefixdir="share/icons/hicolor/"..size .."x"..size.."/apps/"}) 
-        -- install (FILES TeXmacs/misc/images/xmacs-${size}.png RENAME Xmacs.png
-        --   DESTINATION share/icons/hicolor/${size}x${size}/apps/)
-    end
   
     if is_plat("mingw") then
         add_installfiles("packages/windows/TeXmacs-large.bmp")
@@ -371,6 +361,18 @@ target("mogan_install") do
         add_installfiles("packages/windows/TeXmacs.ico")
         add_installfiles("packages/windows/Xmacs.iss")
     end
+
+    after_install(
+        function (target)
+            os.cp (
+                "TeXmacs/misc/images/texmacs.svg", 
+                path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
+            for _,size in ipairs({32,48,64,128,256,512}) do
+                os.cp (
+                    "TeXmacs/misc/images/xmacs-"..size..".png", 
+                    path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
+            end
+        end)
 end
 
 for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
