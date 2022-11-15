@@ -296,6 +296,13 @@ target("mogan_install") do
             pattern = "@(.-)@",
         }
     )
+    set_configvar("prefix",INSTALL_DIR)
+    set_configvar("exec_prefix",INSTALL_DIR)
+    set_configvar("datarootdir",INSTALL_DIR.."/share")
+    set_configvar("datadir",INSTALL_DIR.."/share")
+    set_configvar("tmdata",INSTALL_DIR.."/Xmacs")
+    set_configvar("tmbin",INSTALL_DIR.."/lib/xmacs/Xmacs")
+    set_configvar("CONFIG_LIB_PATH","LD_LIBRARY_PATH")
     if is_plat("macosx") then
         add_configfiles(
             "(misc/scripts/mogan.sh.in)",{
