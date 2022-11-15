@@ -46,6 +46,7 @@ add_requires("libcurl",{system=false})
 add_requires("freetype",{system=false})
 
 local XMACS_VERSION="1.1.1"
+local INSTALL_DIR="build/package"
 
 target("mogan-lib") do
     local TEXMACS_VERSION = "2.1.3"
@@ -277,6 +278,10 @@ target("mogan") do
     add_frameworks("QtGui","QtWidgets","QtCore","QtPrintSupport","QtSvg")
     add_deps("mogan-lib")
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
+    set_installdir(INSTALL_DIR)
+    after_install(function(target)
+        os.cp(target:targetfile(), path.join(target:installdir(),"/bin/"))
+    end)
 end 
 
 target("mogan_install") do
@@ -314,7 +319,7 @@ target("mogan_install") do
         }
     )
     
-    set_installdir("build/package")
+    set_installdir(INSTALL_DIR)
     if is_plat("macosx") then
         add_installfiles({
             "packages/macos/Xmacs.icns",
@@ -329,6 +334,12 @@ target("mogan_install") do
         add_installfiles({
             "misc/scripts/mogan"
         })
+    elseif is_plat("mingw") then
+        add_installfiles("packages/windows/TeXmacs-large.bmp")
+        add_installfiles("packages/windows/TeXmacs-small.bmp")
+        add_installfiles("packages/windows/Xmacs.ico")
+        add_installfiles("packages/windows/TeXmacs.ico")
+        add_installfiles("packages/windows/Xmacs.iss")
     end
 
     
@@ -349,17 +360,29 @@ target("mogan_install") do
   
     add_installfiles("misc/scripts/tm_gs",{prefixdir="share/Xmacs/bin"})
   
-    add_installfiles("TeXmacs/misc/mime/mogan.desktop",{prefixdir="share/applications"})
     add_installfiles("TeXmacs/misc/images/text-x-mogan.svg",{prefixdir="share/icons/hicolor/scalable/mimetypes"})
+    add_installfiles("TeXmacs/misc/mime/mogan.desktop",{prefixdir="share/applications"})
     add_installfiles("TeXmacs/misc/mime/mogan.xml",{prefixdir="share/mime/packages"})
     add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm",{prefixdir="share/pixmaps"})
   
+
     if is_plat("mingw") then
-        add_installfiles("packages/windows/TeXmacs-large.bmp")
-        add_installfiles("packages/windows/TeXmacs-small.bmp")
-        add_installfiles("packages/windows/Xmacs.ico")
-        add_installfiles("packages/windows/TeXmacs.ico")
-        add_installfiles("packages/windows/Xmacs.iss")
+        add_installfiles({
+            "TeXmacs(/doc/main/**)",
+            "TeXmacs(/examples/**)",
+            "TeXmacs(/fonts/**)",
+            "TeXmacs(/langs/**)",
+            "TeXmacs(/misc/**)",
+            "TeXmacs(/packages/**)",
+            "TeXmacs(/progs/**)",
+            "TeXmacs(/styles/**)",
+            "TeXmacs(/texts/**)",
+            "TeXmacs/COPYING", -- copying files are different
+            "TeXmacs/INSTALL",
+            "LICENSE", -- license files are same
+            "TeXmacs/README",
+            "TeXmacs/TEX_FONTS",
+        })
     end
 
     after_install(
