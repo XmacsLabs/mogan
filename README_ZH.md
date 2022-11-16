@@ -6,7 +6,7 @@ GNU TeXmacs 是法国 CNRS 的数学家 [Joris van der Hoeven](http://www.texmac
 [沈浪熊猫儿](https://github.com/darcy-shen)于2022年1月30号发布了墨干 v1.0.0，并创建了[墨者实验室](https://gitee.com/XmacsLabs)这样一个非盈利组织，旨在普及 GNU TeXmacs，让所有人都能享用 Joris van der Hoeven 开发的优秀软件。
 
 ## 什么是GNU TeXmacs
-强烈推荐新用户观看 GNU TeXmacs 2.1 的视频简介，概览它的诸多特色功能
+强烈推荐观看 GNU TeXmacs 2.1 的视频简介了解它的诸多特色功能
 
 [![](https://bb-embed.herokuapp.com/embed?v=BV1bo4y1D7wN)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
 
@@ -25,7 +25,7 @@ GNU TeXmacs 是法国 CNRS 的数学家 [Joris van der Hoeven](http://www.texmac
 ## 如何入门
 
 推荐新用户观看播放列表 [**GNU TeXmacs for scientists（英语）**](https://youtube.com/playlist?list=PLjlnuLy3KEpYmUQvFIFSFgeYQjVYO2gxi)
-作为入门教程（无法浏览 YouTube 的用户可以观看 Bilibili 备份 [TeXmacs 入门](https://www.bilibili.com/medialist/play/617908?from=space&business=space_series&business_id=2765862&desc=1&spm_id_from=333.999.0.0) 或知乎备份 [TeXmacs 入门](https://www.zhihu.com/collection/844048143)）。
+（或 Bilibili 备份 [TeXmacs 入门](https://www.bilibili.com/medialist/play/617908?from=space&business=space_series&business_id=2765862&desc=1&spm_id_from=333.999.0.0) 或知乎备份 [TeXmacs 入门](https://www.zhihu.com/collection/844048143)）作为入门教程。
 进一步学习可以参考以下资源：
 - GNU TeXmacs 的官方文档. 在帮助菜单下可以直接浏览。需要注意的一点是，如果界面语言是中文，那么已经完成翻译的帮助文档也是中文文档；如果界面语言是英文，那么帮助文档是英文的。
 - 墨客星球. 简称星球，通过 `帮助→墨客星球` 可以直接访问。
