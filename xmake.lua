@@ -396,6 +396,23 @@ target("mogan_install") do
             "TeXmacs/README",
             "TeXmacs/TEX_FONTS",
         })
+    else
+        add_installfiles({
+            "TeXmacs(/doc/**)",
+            "TeXmacs(/examples/**)",
+            "TeXmacs(/fonts/**)",
+            "TeXmacs(/langs/**)",
+            "TeXmacs(/misc/**)",
+            "TeXmacs(/packages/**)",
+            "TeXmacs(/progs/**)",
+            "TeXmacs(/styles/**)",
+            "TeXmacs(/texts/**)",
+            "TeXmacs/COPYING", -- copying files are different
+            "TeXmacs/INSTALL",
+            "LICENSE", -- license files are same
+            "TeXmacs/README",
+            "TeXmacs/TEX_FONTS",
+        }, {prefixdir="share/Xmacs"})
     end
 
     after_install(
