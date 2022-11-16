@@ -24,8 +24,8 @@ GNU TeXmacs 是法国 CNRS 的数学家 [Joris van der Hoeven](http://www.texmac
 
 ## 如何入门
 
-推荐新用户观看播放列表 [**GNU TeXmacs for scientists（英语）**](https://youtube.com/playlist?list=PLjlnuLy3KEpYmUQvFIFSFgeYQjVYO2gxi)
-（或 Bilibili 备份 [TeXmacs 入门](https://www.bilibili.com/medialist/play/617908?from=space&business=space_series&business_id=2765862&desc=1&spm_id_from=333.999.0.0) 或知乎备份 [TeXmacs 入门](https://www.zhihu.com/collection/844048143)）作为入门教程。
+推荐新用户观看播放列表 [**GNU TeXmacs for scientists**（YouTube）](https://youtube.com/playlist?list=PLjlnuLy3KEpYmUQvFIFSFgeYQjVYO2gxi)
+ / [TeXmacs 入门（Bilibili）](https://www.bilibili.com/medialist/play/617908?from=space&business=space_series&business_id=2765862&desc=1) / [TeXmacs 入门（知乎）](https://www.zhihu.com/collection/844048143)）作为入门教程。
 进一步学习可以参考以下资源：
 - GNU TeXmacs 的官方文档. 在帮助菜单下可以直接浏览。需要注意的一点是，如果界面语言是中文，那么已经完成翻译的帮助文档也是中文文档；如果界面语言是英文，那么帮助文档是英文的。
 - 墨客星球. 简称星球，通过 `帮助→墨客星球` 可以直接访问。
