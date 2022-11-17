@@ -60,6 +60,9 @@ target("mogan-lib") do
     set_policy("check.auto_ignore_flags", false)
     add_rules("qt.static")
     add_frameworks("QtGui","QtWidgets","QtCore","QtPrintSupport","QtSvg")
+    if is_plat("macosx") then
+        add_frameworks("QtMacExtras")
+    end
     set_configvar("QTTEXMACS", 1)
     set_configvar("QTPIPES", 1)
     add_defines("QTPIPES")
@@ -117,6 +120,7 @@ target("mogan-lib") do
                 GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
                 GS_LIB = "../share/ghostscript/9.06/lib:",
                 OS_MACOS = is_plat("macosx"),
+                MACOSX_EXTENSIONS = is_plat("macosx"),
                 OS_MINGW = is_plat("mingw"),
                 SIZEOF_VOID_P = 8,
                 USE_JEAIII = true,
@@ -184,6 +188,7 @@ target("mogan-lib") do
             "src/Plugins/Pdf/PDFWriter",
             "src/Plugins/Pdf/LibAesgm",
             "src/Plugins/Qt",
+            "src/Plugins/UniversalStacktrace",
             "src/Scheme",
             "src/Scheme/S7",
             "src/Scheme/Scheme",
@@ -205,6 +210,7 @@ target("mogan-lib") do
             "src/Typeset/Page",
             "TeXmacs/include"
         }, {public = true})
+
     if is_plat("macosx") then
         add_includedirs("src/Plugins/MacOS", {public = true})
     elseif is_plat("mingw") then
@@ -270,12 +276,21 @@ end
 
 option("libdl") do
     add_links("dl")
-    add_linkdirs("/usr/lib/x86_64-linux-gnu")
+    if is_plat("linux") then
+        add_linkdirs("/usr/lib/x86_64-linux-gnu")
+    end
 end
 
 target("mogan") do 
-    add_rules("qt.widgetapp_static")
+    if is_plat("macosx") then
+        add_rules("qt.widgetapp")
+    else
+        add_rules("qt.widgetapp_static")
+    end
     add_frameworks("QtGui","QtWidgets","QtCore","QtPrintSupport","QtSvg")
+    if is_plat("macosx") then
+        add_frameworks("QtMacExtras")
+    end
     add_deps("mogan-lib")
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
     set_installdir(INSTALL_DIR)
@@ -296,12 +311,14 @@ target("mogan_install") do
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_configvar("WIN_BIT_SIZE", "64")
     set_configdir(".")
-    add_configfiles(
-        "(packages/windows/Xmacs.iss.in)",{
-            filename = "Xmacs.iss",
-            pattern = "@(.-)@",
-        }
-    )
+    if is_plat("mingw") then
+        add_configfiles(
+            "(packages/windows/Xmacs.iss.in)",{
+                filename = "Xmacs.iss",
+                pattern = "@(.-)@",
+            }
+        )
+    end
     set_configvar("prefix",INSTALL_DIR)
     set_configvar("exec_prefix",INSTALL_DIR)
     set_configvar("datarootdir",INSTALL_DIR.."/share")
@@ -309,22 +326,22 @@ target("mogan_install") do
     set_configvar("tmdata",INSTALL_DIR.."/Xmacs")
     set_configvar("tmbin",INSTALL_DIR.."/lib/xmacs/Xmacs")
     set_configvar("CONFIG_LIB_PATH","LD_LIBRARY_PATH")
-    if is_plat("macosx") then
-        add_configfiles(
-            "(misc/scripts/mogan.sh.in)",{
-                filename = "mogan.sh",
-                pattern = "@(.-)@",
-            }
-        )
-    elseif is_plat("linux") then
-        add_configfiles(
-            "(misc/scripts/mogan.sh.in)",{
-                filename = "mogan",
-                pattern = "@(.-)@",
-            }
-        )
-    else
-    end
+    -- if is_plat("macosx") then
+    --     add_configfiles(
+    --         "(misc/scripts/mogan.sh.in)",{
+    --             filename = "mogan.sh",
+    --             pattern = "@(.-)@",
+    --         }
+    --     )
+    -- elseif is_plat("linux") then
+    --     add_configfiles(
+    --         "(misc/scripts/mogan.sh.in)",{
+    --             filename = "mogan",
+    --             pattern = "@(.-)@",
+    --         }
+    --     )
+    -- else
+    -- end
     add_configfiles(
         "(misc/man/mogan.1.in)",{
             filename = "mogan.1",
@@ -435,8 +452,8 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
         add_deps("mogan-lib")
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
-        add_rules("qt.widgetapp_static")
-        add_frameworks("QtPrintSupport","QtSvg","QtTest")
+        add_rules("qt.console")
+        add_frameworks("QtGui","QtWidgets","QtCore","QtPrintSupport","QtSvg", "QtTest")
 
         add_includedirs("tests/Base")
         add_files("tests/Base/base.cpp")
