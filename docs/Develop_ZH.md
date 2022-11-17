@@ -17,15 +17,16 @@ xmake
 TEXMACS_PATH=./TeXmacs xmake run --yes --verbose --diagnosis --group=tests
 ```
 
-### 第四步: 安装到`$HOME/software`
+### 第四步: 安装到`build/package`
 ```
-xmake install -o $HOME/software mogan_install
+xmake install -o build/package mogan_install
 ```
 
 ### 第五步：启动墨干编辑器
 ```
-TEXMACS_PATH=$HOME/software/share/Xmacs $HOME/software/bin/mogan
+TEXMACS_PATH=$PWD/build/package/share/Xmacs build/package/bin/mogan
 ```
+
 ## 使用cmake在macOS或者GNU/Linux上开发
 假定你已经在mogan的源代码目录：
 ``` bash

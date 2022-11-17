@@ -16,14 +16,14 @@ xmake
 TEXMACS_PATH=./TeXmacs xmake run --yes --verbose --diagnosis --group=tests
 ```
 
-### Step 4: Install to `$HOME/software`
+### Step 4: Install to `build/package`
 ```
-xmake install -o $HOME/software mogan_install
+xmake install -o build/package mogan_install
 ```
 
 ### Step 5: Launch Mogan Editor
 ```
-TEXMACS_PATH=$HOME/software/share/Xmacs $HOME/software/bin/mogan
+TEXMACS_PATH=$PWD/build/package/share/Xmacs build/package/bin/mogan
 ```
 
 ## Developing on macOS or GNU/Linux using CMake
