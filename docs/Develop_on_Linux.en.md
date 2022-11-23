@@ -1,32 +1,32 @@
-# Developers' Guide
-## Developing on GNU/Linux using xmake
+# Developing on GNU/Linux
+## Using xmake
 ### Step 1: Install xmake and xrepo
 Sometimes, we need the latest xrepo:
-```
+``` bash
 xrepo update-repo
 ```
 
 ### Step 2: Compile
-```
+``` bash
 xmake
 ```
 
 ### Step 3: Run unit test
-```
+``` bash
 TEXMACS_PATH=$PWD/TeXmacs xmake run --yes --verbose --diagnosis --group=tests
 ```
 
 ### Step 4: Install to `build/package`
-```
+``` bash
 xmake install -o build/package mogan_install
 ```
 
 ### Step 5: Launch Mogan Editor
-```
+``` bash
 TEXMACS_PATH=$PWD/build/package/share/Xmacs build/package/bin/mogan
 ```
 
-## Developing on macOS or GNU/Linux using CMake
+## Using cmake
 Assuming you are in the project root of mogan:
 ``` bash
 mkdir build && cd build
@@ -40,17 +40,4 @@ $HOME/software/bin/mogan.sh
 ```
 
 Using `make install` and developing in a separated folder could help you setup a clean environment. If you are familiar with the source code, you can change the TEXMACS_PATH to develop on the Scheme part without having to build the C++ part.
-
-## Developing for Windows using CMake
-We need to install WSL Ubuntu 20.04 on Windows or install a Windows virtualbox on Ubuntu 20.04. Because building is done on Ubuntu and testing is done on Windows.
-
-First of all, we need to download MXE and install all the related dependencies (step 1 and step 2):
-https://texmacs.github.io/notes/docs/build-using-cmake-and-mxe-on-wsl.html
-
-Assuming you are in the project root of mogan:
-```
-rm -rf build/
-./packages/windows/package.sh
-```
-After the packaging, we need to share or copy the directory between the host system and the guest system, and then test Mogan in Windows.
 

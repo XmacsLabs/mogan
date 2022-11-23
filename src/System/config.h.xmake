@@ -65,16 +65,16 @@ ${define HAVE_X11_XLIB_H}
 ${define HAVE_X11_XUTIL_H}
 
 /* Link axel library with TeXmacs */
-#define LINKED_AXEL 1
+${define LINKED_AXEL}
 
 /* Link cairo library with TeXmacs */
-#define LINKED_CAIRO 1
+${define LINKED_CAIRO}
 
 /* Link freetype library with TeXmacs */
 #define LINKED_FREETYPE 1
 
 /* Link imlib2 library with TeXmacs */
-#define LINKED_IMLIB2 1
+${define LINKED_IMLIB2}
 
 #define LINKED_SQLITE3 1
 
@@ -83,6 +83,8 @@ ${define MACOSX_EXTENSIONS}
 ${define OS_MACOS}
 
 ${define OS_MINGW}
+
+${define PDFHUMMUS_NO_TIFF}
 
 /* Disable fast memory allocator */
 ${define NO_FAST_ALLOC}
@@ -104,8 +106,6 @@ ${define NO_FAST_ALLOC}
 /* Define to the version of this package. */
 #define PACKAGE_VERSION ""
 
-${define PDFHUMMUS_NO_TIFF}
-
 #define PDF_RENDERER 1
 
 ${define QTTEXMACS}
@@ -117,6 +117,9 @@ ${define QTTEXMACS}
 #define USE_CURL 1
 
 #define SIZEOF_VOID_P ${SIZEOF_VOID_P} 
+
+/* Define to 1 if you have the ANSI C header files. */
+${define STDC_HEADERS}
 
 #define TEXMACS_REVISION "${VERSION}"
 
@@ -139,10 +142,10 @@ ${define USE_CAIRO}
 /* Use imlib2 library */
 ${define USE_IMLIB2}
 
-${define USE_JEAIII}
-
 ${define USE_SPARKLE}
 
 ${define USE_SQLITE3}
 
 ${define USE_STACK_TRACE}
+
+${define USE_JEAIII}
