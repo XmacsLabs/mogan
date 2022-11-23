@@ -7,6 +7,35 @@ on:
     branches: [ main ]
 
 jobs:
+  macosbuild:
+    runs-on: macos-11
+    if: always()
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Install Dependencies
+        run: |
+          brew install qt@5 ccache
+          brew link qt@5
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.7.3
+      - name: Build by gcc
+        id: build
+        run: |
+          xrepo update-repo
+          xmake config --yes
+          xmake build --yes --verbose --diagnosis --jobs=8 --all
+      - name: Test
+        run: |
+          xmake run --yes --verbose --diagnosis --group=tests
+        env:
+          TEXMACS_PATH: ${{github.workspace}}/TeXmacs
+          QT_QPA_PLATFORM: offscreen
   windowsbuild:
     runs-on: windows-latest
     if: always()
@@ -46,12 +75,13 @@ jobs:
           xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
           xmake build --yes --verbose --diagnosis --jobs=8 --all
           windeployqt ./build/mingw/x86_64/release/
+          xmake install mogan_install
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
           name: mogan-windows-dev
           path: |
-            build\mingw\**
+            build\package\**
       - name: Test
         shell: msys2 {0}
         run: |
@@ -82,7 +112,7 @@ jobs:
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
         env:
-          TEXMACS_PATH: ./TeXmacs
+          TEXMACS_PATH: ${{github.workspace}}/TeXmacs
           QT_QPA_PLATFORM: offscreen
   
           
