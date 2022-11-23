@@ -14,7 +14,7 @@ xmake
 
 ### 第三步：运行单元测试
 ```
-TEXMACS_PATH=./TeXmacs xmake run --yes --verbose --diagnosis --group=tests
+TEXMACS_PATH=$PWD/TeXmacs xmake run --yes --verbose --diagnosis --group=tests
 ```
 
 ### 第四步: 安装到`build/package`

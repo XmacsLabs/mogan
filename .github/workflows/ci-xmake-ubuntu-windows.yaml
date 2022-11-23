@@ -112,7 +112,7 @@ jobs:
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
         env:
-          TEXMACS_PATH: ./TeXmacs
+          TEXMACS_PATH: ${{github.workspace}}/TeXmacs
           QT_QPA_PLATFORM: offscreen
   
           
