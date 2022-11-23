@@ -14,7 +14,7 @@ includes("check_cxxincludes.lua")
 includes("check_cxxfuncs.lua")
 includes("check_cxxsnippets.lua")
 
-set_project("TEXMACS")
+set_project("Mogan Editor")
 
 -- because this cpp project use variant length arrays which is not supported by
 -- msvc, this project will not support windows env.
@@ -30,25 +30,24 @@ set_allowedplats(
 -- add releasedbg, debug and release modes for different platforms.
 -- debug mode cannot run on mingw with qt precompiled binary
 if is_plat("mingw") then
-    set_allowedmodes("releasedbg","release")
+    set_allowedmodes("releasedbg", "release")
     add_rules("mode.releasedbg", "mode.release")
-    
 else 
-    set_allowedmodes("releasedbg","release", "debug")
+    set_allowedmodes("releasedbg", "release", "debug")
     add_rules("mode.releasedbg", "mode.release", "mode.debug")
 end
 
-add_requires("libpng",{system=false})
-add_requires("libiconv",{system=false})
-add_requires("zlib",{system=false})
-add_requires("libjpeg",{system=false})
-add_requires("libcurl",{system=false})
-add_requires("freetype",{system=false})
+add_requires("libpng", {system=false})
+add_requires("libiconv", {system=false})
+add_requires("zlib", {system=false})
+add_requires("libjpeg", {system=false})
+add_requires("libcurl", {system=false})
+add_requires("freetype", {system=false})
 
 local XMACS_VERSION="1.1.1"
 local INSTALL_DIR="build/package"
 
-target("mogan-lib") do
+target("libmogan") do
     local TEXMACS_VERSION = "2.1.2"
     local DEVEL_VERSION = TEXMACS_VERSION
     local DEVEL_RELEASE = 1
@@ -59,7 +58,7 @@ target("mogan-lib") do
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
     add_rules("qt.static")
-    add_frameworks("QtGui","QtWidgets","QtCore","QtPrintSupport","QtSvg")
+    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     if is_plat("macosx") then
         add_frameworks("QtMacExtras")
     end
@@ -90,29 +89,32 @@ target("mogan-lib") do
     -- check for dl library
     -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
     add_options("libdl")
-    configvar_check_cxxtypes("HAVE_INTPTR_T","intptr_t",{includes = {"memory"}})
-    configvar_check_cxxincludes("HAVE_INTTYPES_H","inttypes.h")
-    configvar_check_cxxincludes("HAVE_MEMORY_H","memory.h")
-    configvar_check_cxxincludes("HAVE_PTY_H","pty.h")
-    configvar_check_cxxincludes("HAVE_STDINT_H","stdint.h")
-    configvar_check_cxxincludes("HAVE_SYS_STAT_H","sys/stat.h")
-    configvar_check_cxxincludes("HAVE_SYS_TYPES_H","sys/types.h")
-    configvar_check_cxxtypes("HAVE_TIME_T","time_t",{includes = {"memory"}})
-    configvar_check_cxxincludes("HAVE_UTIL_H","util.h")
-    configvar_check_cxxfuncs("HAVE_GETTIMEOFDAY","gettimeofday",{includes={"sys/time.h"}})
+    configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
+    configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
+    configvar_check_cxxincludes("HAVE_MEMORY_H", "memory.h")
+    configvar_check_cxxincludes("HAVE_PTY_H", "pty.h")
+    configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
+    configvar_check_cxxincludes("HAVE_SYS_STAT_H", "sys/stat.h")
+    configvar_check_cxxincludes("HAVE_SYS_TYPES_H", "sys/types.h")
+    configvar_check_cxxtypes("HAVE_TIME_T", "time_t", {includes = {"memory"}})
+    configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
+    configvar_check_cxxfuncs("HAVE_GETTIMEOFDAY", "gettimeofday", {includes={"sys/time.h"}})
+
     if is_plat("mingw") then
         set_configvar("GS_EXE", "bin/gs.exe")
     else
         set_configvar("GS_EXE", "/usr/bin/gs")
     end
+
     if is_plat("mingw") then
     else if is_plat("macosx") then
-        set_configvar("USE_STACK_TRACE",true)
-        set_configvar("NO_FAST_ALLOC",true)
+        set_configvar("USE_STACK_TRACE", true)
+        set_configvar("NO_FAST_ALLOC", true)
     end
-        set_configvar("USE_STACK_TRACE",true)
+        set_configvar("USE_STACK_TRACE", true)
     end
-    set_configvar("PDFHUMMUS_NO_TIFF",true)
+
+    set_configvar("PDFHUMMUS_NO_TIFF", true)
     add_configfiles(
         "src/System/config.h.xmake", {
             filename = "config.h",
@@ -126,6 +128,7 @@ target("mogan-lib") do
                 USE_JEAIII = true,
                 USE_STACK_TRACE = not is_plat("mingw")
                 }})
+
     if is_plat("linux") then 
         set_configvar("CONFIG_OS", "GNU_LINUX")
     elseif is_subhost("cygwin") then
@@ -133,6 +136,7 @@ target("mogan-lib") do
     else 
         set_configvar("CONFIG_OS", "")
     end
+
     configvar_check_cxxsnippets(
         "CONFIG_LARGE_POINTER", [[
             #include <stdlib.h>
@@ -217,7 +221,7 @@ target("mogan-lib") do
         add_includedirs({
                 "src/Plugins/Windows", 
                 "src/Plugins/Windows/nowide"
-            }, {public = true})
+        }, {public = true})
     else
         add_includedirs("src/Plugins/Unix", {public = true})
     end
@@ -253,11 +257,13 @@ target("mogan-lib") do
             "src/Plugins/Sqlite3/**.cpp",
             "src/Plugins/Updater/**.cpp",
             "src/Plugins/Curl/**.cpp"})
+
     if is_plat("mingw") then
         add_files("src/Plugins/Windows/**.cpp")
     else
         add_files("src/Plugins/Unix/**.cpp")
     end
+
     if is_plat("macosx") then
         add_files({
                 "src/Plugins/MacOS/HIDRemote.m",
@@ -266,6 +272,7 @@ target("mogan-lib") do
                 "src/Plugins/MacOS/mac_utilities.mm",
                 "src/Plugins/MacOS/mac_app.mm"})
     end
+
     add_files({
         "src/Plugins/Qt/**.cpp",
         "src/Plugins/Qt/**.hpp"})
@@ -287,20 +294,20 @@ target("mogan") do
     else
         add_rules("qt.widgetapp_static")
     end
-    add_frameworks("QtGui","QtWidgets","QtCore","QtPrintSupport","QtSvg")
+    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     if is_plat("macosx") then
         add_frameworks("QtMacExtras")
     end
-    add_deps("mogan-lib")
+    add_deps("libmogan")
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
     set_installdir(INSTALL_DIR)
     after_install(function(target)
-        local install_dir = path.join(target:installdir(),"/bin/")
+        local install_dir = path.join(target:installdir(), "/bin/")
         os.cp(target:targetfile(), install_dir)
         local bin_dir = path.directory(target:targetfile())
         os.cp(
             path.join(bin_dir,"**.dll"),
-            install_dir,{rootdir=bin_dir}
+            install_dir, {rootdir=bin_dir}
         )
     end)
 end 
@@ -311,6 +318,7 @@ target("mogan_install") do
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_configvar("WIN_BIT_SIZE", "64")
     set_configdir(".")
+
     if is_plat("mingw") then
         add_configfiles(
             "(packages/windows/Xmacs.iss.in)",{
@@ -319,29 +327,15 @@ target("mogan_install") do
             }
         )
     end
-    set_configvar("prefix",INSTALL_DIR)
-    set_configvar("exec_prefix",INSTALL_DIR)
-    set_configvar("datarootdir",INSTALL_DIR.."/share")
-    set_configvar("datadir",INSTALL_DIR.."/share")
-    set_configvar("tmdata",INSTALL_DIR.."/Xmacs")
-    set_configvar("tmbin",INSTALL_DIR.."/lib/xmacs/Xmacs")
-    set_configvar("CONFIG_LIB_PATH","LD_LIBRARY_PATH")
-    -- if is_plat("macosx") then
-    --     add_configfiles(
-    --         "(misc/scripts/mogan.sh.in)",{
-    --             filename = "mogan.sh",
-    --             pattern = "@(.-)@",
-    --         }
-    --     )
-    -- elseif is_plat("linux") then
-    --     add_configfiles(
-    --         "(misc/scripts/mogan.sh.in)",{
-    --             filename = "mogan",
-    --             pattern = "@(.-)@",
-    --         }
-    --     )
-    -- else
-    -- end
+
+    set_configvar("prefix", INSTALL_DIR)
+    set_configvar("exec_prefix", INSTALL_DIR)
+    set_configvar("datarootdir", INSTALL_DIR.."/share")
+    set_configvar("datadir", INSTALL_DIR.."/share")
+    set_configvar("tmdata", INSTALL_DIR.."/Xmacs")
+    set_configvar("tmbin", INSTALL_DIR.."/lib/xmacs/Xmacs")
+    set_configvar("CONFIG_LIB_PATH", "LD_LIBRARY_PATH")
+
     add_configfiles(
         "(misc/man/mogan.1.in)",{
             filename = "mogan.1",
@@ -378,22 +372,15 @@ target("mogan_install") do
     if is_plat("mingw") then
         add_installfiles("(plugins/**)")
     else 
-        add_installfiles("(plugins/**)",{prefixdir="share/Xmacs"})
-        
+        add_installfiles("(plugins/**)", {prefixdir="share/Xmacs"})
     end
 
-    -- install (DIRECTORY plugins DESTINATION ${CMAKE_INSTALL_PREFIX}
-    --   FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
-    --   PATTERN "bin" EXCLUDE
-    --   PATTERN "CMakeLists.txt" EXCLUDE
-    --   PATTERN ".gitignore" EXCLUDE)
+    add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
   
-    add_installfiles("misc/scripts/tm_gs",{prefixdir="share/Xmacs/bin"})
-  
-    add_installfiles("TeXmacs/misc/images/text-x-mogan.svg",{prefixdir="share/icons/hicolor/scalable/mimetypes"})
-    add_installfiles("TeXmacs/misc/mime/mogan.desktop",{prefixdir="share/applications"})
-    add_installfiles("TeXmacs/misc/mime/mogan.xml",{prefixdir="share/mime/packages"})
-    add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm",{prefixdir="share/pixmaps"})
+    add_installfiles("TeXmacs/misc/images/text-x-mogan.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
+    add_installfiles("TeXmacs/misc/mime/mogan.desktop", {prefixdir="share/applications"})
+    add_installfiles("TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
+    add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm", {prefixdir="share/pixmaps"})
   
 
     if is_plat("mingw") then
@@ -437,7 +424,7 @@ target("mogan_install") do
             os.cp (
                 "TeXmacs/misc/images/texmacs.svg", 
                 path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
-            for _,size in ipairs({32,48,64,128,256,512}) do
+            for _,size in ipairs({32, 48, 64, 128, 256, 512}) do
                 os.cp (
                     "TeXmacs/misc/images/xmacs-"..size..".png", 
                     path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
@@ -449,11 +436,11 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
     local testname = path.basename(filepath) 
     target(testname) do 
         set_group("tests")
-        add_deps("mogan-lib")
+        add_deps("libmogan")
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
         add_rules("qt.console")
-        add_frameworks("QtGui","QtWidgets","QtCore","QtPrintSupport","QtSvg", "QtTest")
+        add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
 
         add_includedirs("tests/Base")
         add_files("tests/Base/base.cpp")
