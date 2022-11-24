@@ -6,7 +6,7 @@
 Mogan Editor is a structure editor delivered by [Xmacs Labs](https://github.com/XmacsLabs). We are dedicated to make Mogan Editor the most user-friendly distribution of [GNU TeXmacs](https://www.texmacs.org).
 
 ## How to install?
-We provide installers for Windows and macOS via [Github](https://github.com/XmacsLabs/mogan/releases). Read [docs/Install.en.md] to learn the detailed steps to install from a installer and how to install on other OS like GNU/Linux.
+We provide installers for Windows and macOS via [Github](https://github.com/XmacsLabs/mogan/releases). Read [Installation Guide](docs/Install.en.md) to learn the detailed steps to install from a installer and how to install on other OS like GNU/Linux.
 
 ## What is GNU TeXmacs and Mogan Editor
 

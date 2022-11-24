@@ -1,4 +1,4 @@
-# How to install
+# Installation Guide
 ## Windows
 Download the exe installer from [Github](https://github.com/XmacsLabs/mogan/releases) and then double click.
 
