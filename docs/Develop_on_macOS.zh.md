@@ -2,6 +2,12 @@
 
 ## 使用xmake
 ### 第一步：安装xmake和xrepo
+对于Homebrew:
+```
+brew install xmake qt@5 ccache
+brew link qt@5
+```
+
 有时候需要保持xrepo是最新的，以保证使用最新的依赖的构建定义
 ```
 xrepo update-repo

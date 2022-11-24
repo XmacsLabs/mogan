@@ -5,6 +5,9 @@
 
 墨干编辑器是[墨者实验室](https://gitee.com/XmacsLabs)旗下的结构化编辑器。我们致力于将墨干编辑器打造成最易用的[GNU TeXmacs](https://www.texmacs.org)发行版。
 
+## 如何安装
+我们在[Gitee](https://gitee.com/XmacsLabs/mogan/releases)提供Windows和macOS这两大平台的安装包。阅读[如何安装](docs/Install.zh.md)可以了解下载安装包之后的详细安装步骤，以及其它平台比如GNU/Linux的安装方法.
+
 ## 什么是GNU TeXmacs以及墨干编辑器
 GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html) 从上世纪九十年代末开始研发的一款结构化编辑器，旨在利用直观易用的图形界面编写高质量的技术文档，效果可达到与 LaTeX 相同的水准。目前它的主要用户集中于中小学教师（多数在法国）及高校科研人员。
 
@@ -12,7 +15,7 @@ GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](
 
 强烈推荐观看 GNU TeXmacs 2.1 的视频简介了解它的诸多特色功能
 
-[![](https://bb-embed.herokuapp.com/embed?v=BV1bo4y1D7wN)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
+[![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
 
 - GNU TeXmacs 是一个免费的科技编辑器平台，提供了“所见即所得”的用户界面，可用于创建漂亮的技术文档。
 - GNU TeXmacs 为不同类型的结构化文档内容（文本、数学公式、图像、交互式内容、幻灯片）提供了一致且优化的编辑体验。
@@ -57,3 +60,6 @@ GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](
 ## 关于名字“墨干”
 沈浪熊猫儿：
 > 墨干得名于家乡的避暑胜地——[莫干山](https://cn.wikipedia.org/wiki/Mount_Mogan)。犹忆青春年少时，在高中同桌老家，靠近莫干山的一个小山村里面，住过一晚上。傍晚，我们就在屋后小溪里面洗澡。清晨，我们跟着他在山上兜兜转转挖笋。中午，一起吃刚挖好的笋。溪水潺潺，篁竹幽幽，炊烟袅袅……
+
+## 如何贡献
+请仔细阅读[贡献指南](CONTRIBUTING.md)，以了解如何开始为墨干编辑器做贡献。

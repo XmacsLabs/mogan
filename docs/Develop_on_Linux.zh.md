@@ -1,7 +1,15 @@
 # 在GNU/Linux上开发
 
 ## 使用xmake
-### 第一步：安装xmake和xrepo
+### 第一步：安装xmake和Qt 5
+以Debian及衍生版为例：
+```
+sudo add-apt-repository ppa:xmake-io/xmake
+sudo apt update
+sudo apt upgrade --yes gcc
+sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake
+```
+
 有时候需要保持xrepo是最新的，以保证使用最新的依赖的构建定义
 ```
 xrepo update-repo

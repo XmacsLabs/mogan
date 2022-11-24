@@ -1,6 +1,6 @@
 # Contributing
 ## For Users
-+ Reporting bugs to [Github in English](https://github.com/XmacsLabs/mogan/issues)/[Gitee in Chinese](https://gitee.com/XmacsLabs/mogan/issues)
++ Reporting bugs to [Github in English](https://github.com/XmacsLabs/mogan/issues) or [Gitee in Chinese](https://gitee.com/XmacsLabs/mogan/issues)
 
 ## For Developers
 Here are developing guides on Windows/macOS/Linux:
