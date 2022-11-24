@@ -7,7 +7,7 @@
 ## 什么是GNU TeXmacs以及墨干编辑器
 GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html) 从上世纪九十年代末开始研发的一款结构化编辑器，旨在利用直观易用的图形界面编写高质量的技术文档，效果可达到与 LaTeX 相同的水准。目前它的主要用户集中于中小学教师（多数在法国）及高校科研人员。
 
-[沈浪熊猫儿](https://github.com/darcy-shen)于2022年1月30号发布了[墨干编辑器v1.0.0](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.0.0)，并创建了[墨者实验室](https://gitee.com/XmacsLabs)这样一个非盈利组织，旨在普及GNU TeXmacs，让所有人都能够通过Joris van der Hoeven创造的软件享受探索科学与技术。
+[沈浪熊猫儿](http://texmacs.org/tmweb/contribute/team-sadhen.en.html)于2022年1月30号，在[Massimiliano Gubinelli](http://texmacs.org/tmweb/contribute/team-massimiliano.en.html)的S7 Scheme分支的基础上，发布了[墨干编辑器v1.0.0](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.0.0)，并创建了[墨者实验室](https://gitee.com/XmacsLabs)这样一个非盈利组织，旨在普及GNU TeXmacs，让所有人都能够通过Joris van der Hoeven创造的软件享受探索科学与技术的乐趣。
 
 强烈推荐观看 GNU TeXmacs 2.1 的视频简介了解它的诸多特色功能
 
