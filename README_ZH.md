@@ -53,6 +53,7 @@ GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](
 - 官方论坛: [The GNU TeXmacs forum](http://forum.texmacs.cn) 
 - YouTube: [TeXmacs Videos](https://www.youtube.com/channel/UCLaZZkOj3GPYFu9pVsEbthg)
 - GitHub: [GNU TeXmacs](https://github.com/texmacs) 
+- Mastodon: [GNU TeXmacs](https://mathstodon.xyz/@gnu_texmacs)
 - Twitter: [GNU TeXmacs](https://twitter.com/gnu_texmacs) 
 - Gitter: [texmacs/Lobby](https://gitter.im/texmacs/Lobby) 
 - 邮件列表: [Mailing lists for TeXmacs](https://www.texmacs.org/tmweb/home/ml.en.html) 
