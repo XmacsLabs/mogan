@@ -1,5 +1,5 @@
 # 墨干编辑器 / [Mogan Editor](README.md)
-墨干编辑器是[墨者实验室](https://gitee.com/XmacsLabs)旗下的结构化编辑器。我们致力于将墨干编辑器打造最易用的[GNU TeXmacs](https://www.texmacs.org)发行版。
+墨干编辑器是[墨者实验室](https://gitee.com/XmacsLabs)旗下的结构化编辑器。我们致力于将墨干编辑器打造成最易用的[GNU TeXmacs](https://www.texmacs.org)发行版。
 
 ## 目标
 **让我们享受探索科学与技术的乐趣！**。
