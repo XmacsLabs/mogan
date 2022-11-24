@@ -17,14 +17,30 @@ xmake
 TEXMACS_PATH=$PWD/TeXmacs xmake run --yes --verbose --diagnosis --group=tests
 ```
 
-### 第四步: 安装到`build/macosx/x86_64/release/Mogan.app/`
+### 第四步: 安装到`build/macosx/{arch}/release/Mogan.app/`
+
 ``` bash
+# x86_64
 xmake install -o build/macosx/x86_64/release/Mogan.app/Contents/Resources/ mogan_install
+
+# arm64
+xmake install -o build/macosx/arm64/release/Mogan.app/Contents/Resources/ mogan_install
 ```
 
+
 ### 第五步：启动墨干编辑器
+对于需要Codesign的macOS版本（比如macOS M1），需要先签名：
 ``` bash
+codesign --force --deep --sign - ./build/macosx/arm64/release/Mogan.app
+```
+
+然后再启动：
+``` bash
+# x86_64
 ./build/macosx/x86_64/release/Mogan.app/Contents/MacOS/Mogan
+
+# arm64
+./build/macosx/arm64/release/Mogan.app/Contents/MacOS/Mogan
 ```
 
 ## 使用cmake
