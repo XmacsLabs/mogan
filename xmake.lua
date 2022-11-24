@@ -48,6 +48,7 @@ local XMACS_VERSION="1.1.1"
 local INSTALL_DIR="build/package"
 
 target("libmogan") do
+    set_basename("mogan")
     local TEXMACS_VERSION = "2.1.2"
     local DEVEL_VERSION = TEXMACS_VERSION
     local DEVEL_RELEASE = 1
@@ -63,11 +64,17 @@ target("libmogan") do
         add_frameworks("QtMacExtras")
     end
     set_configvar("QTTEXMACS", 1)
+    add_defines("QTTEXMACS")
     set_configvar("QTPIPES", 1)
     add_defines("QTPIPES")
     set_configvar("USE_QT_PRINTER", 1)
     add_defines("USE_QT_PRINTER")
     set_configvar("USE_CURL", 1)
+    -- set_configvar("USE_SQLITE3", 1)
+
+    set_configvar("LINKED_AXEL", false)
+    set_configvar("LINKED_CAIRO", false)
+    set_configvar("LINKED_IMLIB2", false)
 
     add_packages("libpng")
     add_packages("libiconv")
@@ -89,6 +96,10 @@ target("libmogan") do
     -- check for dl library
     -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
     add_options("libdl")
+    configvar_check_cxxincludes("HAVE_STDLIB_H", "stdlib.h")
+    configvar_check_cxxincludes("HAVE_STRINGS_H", "strings.h")
+    configvar_check_cxxincludes("HAVE_STRING_H", "string.h")
+    configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
     configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
     configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
     configvar_check_cxxincludes("HAVE_MEMORY_H", "memory.h")
@@ -100,6 +111,8 @@ target("libmogan") do
     configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
     configvar_check_cxxfuncs("HAVE_GETTIMEOFDAY", "gettimeofday", {includes={"sys/time.h"}})
 
+    set_configvar("STDC_HEADERS", true)
+
     if is_plat("mingw") then
         set_configvar("GS_EXE", "bin/gs.exe")
     else
@@ -109,7 +122,7 @@ target("libmogan") do
     if is_plat("mingw") then
     else if is_plat("macosx") then
         set_configvar("USE_STACK_TRACE", true)
-        set_configvar("NO_FAST_ALLOC", true)
+        set_configvar("AQUATEXMACS", true)
     end
         set_configvar("USE_STACK_TRACE", true)
     end
@@ -289,6 +302,10 @@ option("libdl") do
 end
 
 target("mogan") do 
+    if is_plat("macosx") then
+        set_filename("Mogan")
+    end
+
     if is_plat("macosx") then
         add_rules("qt.widgetapp")
     else
