@@ -1,6 +1,14 @@
 # Developing on GNU/Linux
 ## Using xmake
-### Step 1: Install xmake and xrepo
+### Step 1: Install xmake and Qt 5
+On Debian or Debian derivatives:
+```
+sudo add-apt-repository ppa:xmake-io/xmake
+sudo apt update
+sudo apt upgrade --yes gcc
+sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake
+```
+
 Sometimes, we need the latest xrepo:
 ``` bash
 xrepo update-repo

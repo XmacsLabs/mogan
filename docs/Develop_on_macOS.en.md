@@ -1,6 +1,12 @@
 # Developing on macOS
 ## Using xmake
 ### Step 1: Install xmake and xrepo
+For Homebrew:
+```
+brew install xmake qt@5 ccache
+brew link qt@5
+```
+
 Sometimes, we need the latest xrepo:
 ``` bash
 xrepo update-repo
@@ -54,5 +60,3 @@ $HOME/software/bin/mogan.sh
 ```
 
 Using `make install` and developing in a separated folder could help you setup a clean environment. If you are familiar with the source code, you can change the TEXMACS_PATH to develop on the Scheme part without having to build the C++ part.
-
-
