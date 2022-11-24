@@ -1,11 +1,16 @@
 # Mogan Editor / [墨干编辑器](README_ZH.md)
-Mogan Editor is a structure editor delivered by [Xmacs Labs](https://github.com/XmacsLabs), which is a fork of [GNU TeXmacs](https://www.texmacs.org).
+![GPL v3](http://www.gnu.org/graphics/gplv3-127x51.png)
+
+> **Let us enjoy exploring science and technology!**
+
+Mogan Editor is a structure editor delivered by [Xmacs Labs](https://github.com/XmacsLabs). We are dedicated to make Mogan Editor the most user-friendly distribution of [GNU TeXmacs](https://www.texmacs.org).
+
+## What is GNU TeXmacs and Mogan Editor
 
 GNU TeXmacs is a structured editor developed since the late 1990s by [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html), a mathematician at CNRS in France. It is designed to write high-quality technical documents using an intuitive and easy-to-use graphical interface, and able to achieve the same level of results as LaTeX. Its main users are currently primary and secondary school teachers (mostly in France) and university researchers.
 
-[Darcy Shen](https://github.com/darcy-shen) released Mogan v1.0.0 on January 30, 2022, and created Xmacs Labs, a non-profit organization that aims to popularize GNU TeXmacs and make it available to all to enjoy the excellent software developed by Joris van der Hoeven.
+[Darcy Shen](http://texmacs.org/tmweb/contribute/team-sadhen.en.html) released [Mogan Editor v1.0.0](https://github.com/XmacsLabs/mogan/releases/tag/v1.0.0) on January 30, 2022, based on [Massimiliano Gubinelli](http://texmacs.org/tmweb/contribute/team-massimiliano.en.html)'s [S7 Scheme port](https://lists.gnu.org/archive/html/texmacs-dev/2021-01/msg00009.html) and created Xmacs Labs, a non-profit organization that aims to popularize GNU TeXmacs and make it available for everyone to enjoy exploring science and technology via the excellent software developed by Joris van der Hoeven.
 
-## What is GNU TeXmacs
 Highly recommended to watch the official demo of TeXmacs 2.1
 
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://youtu.be/H46ON2FB30U)
@@ -21,9 +26,6 @@ Highly recommended to watch the official demo of TeXmacs 2.1
 Mogan inherits all the above features from GNU TeXmacs (see [the homepage of GNU TeXmacs](https://www.texmacs.org)), so it can also be used as a efficient study tool for students, teachers, and researchers in science and technology, and suitable to create high-quality assignment documents, report slides, and LaTeX-level papers. Based on GNU TeXmacs, Mogan has more bugs fixed, performance-optimized, and the interface beautified.
 
 ![SCR-20221030-sve](https://user-images.githubusercontent.com/32867606/198899063-e8a4aab4-176f-4e2c-94e3-20656984f39b.png)
-
-## Goal
-**We create Mogan Editor for everyone to learn and create science and technology.**
 
 ## Contact Us
 You are sincerely welcome to contact us via the following ways to share your experience, provide suggestions or report issues on Mogan Editor. Interested developers and volunteer contributors are also warmly welcome to join Xmacs Labs.
