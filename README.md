@@ -1,8 +1,9 @@
 # Mogan Editor / [墨干编辑器](README_ZH.md)
-Mogan Editor is a structure editor delivered by [Xmacs Labs](https://github.com/XmacsLabs). We are dedicated to make Mogan Editor the most user-friendly distribution of [GNU TeXmacs](https://www.texmacs.org).
+![GPL v3](http://www.gnu.org/graphics/gplv3-127x51.png)
 
-## Goal
-**Let us enjoy exploring science and technology!**
+> **Let us enjoy exploring science and technology!**
+
+Mogan Editor is a structure editor delivered by [Xmacs Labs](https://github.com/XmacsLabs). We are dedicated to make Mogan Editor the most user-friendly distribution of [GNU TeXmacs](https://www.texmacs.org).
 
 ## What is GNU TeXmacs and Mogan Editor
 

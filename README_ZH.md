@@ -1,8 +1,9 @@
 # 墨干编辑器 / [Mogan Editor](README.md)
-墨干编辑器是[墨者实验室](https://gitee.com/XmacsLabs)旗下的结构化编辑器。我们致力于将墨干编辑器打造成最易用的[GNU TeXmacs](https://www.texmacs.org)发行版。
+![GPL v3](http://www.gnu.org/graphics/gplv3-127x51.png)
 
-## 目标
-**让我们享受探索科学与技术的乐趣！**。
+> **让我们享受探索科学与技术的乐趣！**
+
+墨干编辑器是[墨者实验室](https://gitee.com/XmacsLabs)旗下的结构化编辑器。我们致力于将墨干编辑器打造成最易用的[GNU TeXmacs](https://www.texmacs.org)发行版。
 
 ## 什么是GNU TeXmacs以及墨干编辑器
 GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html) 从上世纪九十年代末开始研发的一款结构化编辑器，旨在利用直观易用的图形界面编写高质量的技术文档，效果可达到与 LaTeX 相同的水准。目前它的主要用户集中于中小学教师（多数在法国）及高校科研人员。
