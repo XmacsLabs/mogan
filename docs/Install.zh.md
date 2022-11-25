@@ -14,12 +14,22 @@ yay -S mogan
 ```
 更多信息：https://aur.archlinux.org/packages/mogan
 
-### OpenSUSE
+### openSUSE (OBS)
+
+使用系统默认的软件包管理器`zypper`：
+
 ```bash
 zypper addrepo https://download.opensuse.org/repositories/home:iphelf/openSUSE_Tumbleweed/home:iphelf.repo
 zypper refresh
 zypper install Mogan
 ```
+
+或者，使用OBS软件包安装器[`opi`](https://software.opensuse.org/package/opi)：
+
+```bash
+opi Mogan
+```
+
 更多信息：https://software.opensuse.org/download/package?package=Mogan&project=home%3Aiphelf
 
 
