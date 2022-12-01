@@ -113,6 +113,7 @@ configvar_check_cxxsnippets(
 
 target("libkernel") do
     set_kind("static")
+    set_group("kernel")
     set_basename("kernel")
     set_version(TEXMACS_VERSION)
 
@@ -154,6 +155,32 @@ target("libkernel") do
         "src/System/IO/**.cpp",
         "src/System/Memory/**.cpp"
     })
+end
+
+for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
+    local testname = path.basename(filepath) 
+    target(testname) do 
+        set_group("kernel_tests")
+        add_deps("libkernel")
+        set_languages("c++17")
+        set_policy("check.auto_ignore_flags", false)
+        add_rules("qt.console")
+        add_frameworks("QtTest")
+
+        add_includedirs("tests/Base")
+        add_includedirs(
+            "src/Plugins",
+            "src/System",
+            "src/System/Memory",
+            "src/System/IO",
+            "src/Kernel/Abstractions",
+            "src/Kernel/Containers",
+            "src/Kernel/Types"
+        )
+        add_files("tests/Base/base.cpp")
+        add_files(filepath) 
+        add_files(filepath, {rules = "qt.moc"})
+    end
 end
 
 target("libmogan") do
@@ -501,20 +528,23 @@ target("mogan_install") do
         end)
 end
 
-for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
-    local testname = path.basename(filepath) 
-    target(testname) do 
-        set_group("tests")
-        add_deps("libmogan")
-        set_languages("c++17")
-        set_policy("check.auto_ignore_flags", false)
-        add_rules("qt.console")
-        add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
 
-        add_includedirs("tests/Base")
-        add_files("tests/Base/base.cpp")
-        add_files(filepath) 
-        add_files(filepath, {rules = "qt.moc"})
+for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
+    if string.sub(filepath, 1, string.len("tests/Kernel")) ~= "tests/Kernel" then
+        local testname = path.basename(filepath) 
+        target(testname) do 
+            set_group("tests")
+            add_deps("libmogan")
+            set_languages("c++17")
+            set_policy("check.auto_ignore_flags", false)
+            add_rules("qt.console")
+            add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
+
+            add_includedirs("tests/Base")
+            add_files("tests/Base/base.cpp")
+            add_files(filepath) 
+            add_files(filepath, {rules = "qt.moc"})
+        end
     end
 end
     
