@@ -437,6 +437,8 @@ set (TeXmacs_Include_Dirs
   ${TEXMACS_SOURCE_DIR}/src/Style/Evaluate
   ${TEXMACS_SOURCE_DIR}/src/Style/Memorizer
   ${TEXMACS_SOURCE_DIR}/src/System
+  ${TEXMACS_SOURCE_DIR}/src/System/IO
+  ${TEXMACS_SOURCE_DIR}/src/System/Memory
   ${TEXMACS_SOURCE_DIR}/src/System/Boot
   ${TEXMACS_SOURCE_DIR}/src/System/Classes
   ${TEXMACS_SOURCE_DIR}/src/System/Files
