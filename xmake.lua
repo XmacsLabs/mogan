@@ -48,13 +48,116 @@ add_requires("sqlite3", {system=false})
 local XMACS_VERSION="1.1.1"
 local INSTALL_DIR="build/package"
 
+local TEXMACS_VERSION = "2.1.2"
+local DEVEL_VERSION = TEXMACS_VERSION
+local DEVEL_RELEASE = 1
+local STABLE_VERSION = TEXMACS_VERSION
+local STABLE_RELEASE = 1
+
+if is_plat("linux") then 
+    set_configvar("CONFIG_OS", "GNU_LINUX")
+elseif is_subhost("cygwin") then
+    set_configvar("CONFIG_OS", "CYGWIN")
+else 
+    set_configvar("CONFIG_OS", "")
+end
+
+set_configvar("QTTEXMACS", 1)
+add_defines("QTTEXMACS")
+set_configvar("QTPIPES", 1)
+add_defines("QTPIPES")
+set_configvar("USE_QT_PRINTER", 1)
+add_defines("USE_QT_PRINTER")
+
+set_configvar("USE_CURL", 1)
+set_configvar("USE_SQLITE3", 1)
+set_configvar("LINKED_AXEL", false)
+set_configvar("LINKED_CAIRO", false)
+set_configvar("LINKED_IMLIB2", false)
+set_configvar("PDFHUMMUS_NO_TIFF", true)
+
+if is_plat("mingw") then
+    set_configvar("GS_EXE", "bin/gs.exe")
+else
+    set_configvar("GS_EXE", "/usr/bin/gs")
+end
+
+if is_plat("mingw") then
+else if is_plat("macosx") then
+    set_configvar("USE_STACK_TRACE", true)
+    set_configvar("AQUATEXMACS", true)
+end
+    set_configvar("USE_STACK_TRACE", true)
+end
+
+set_configvar("STDC_HEADERS", true)
+configvar_check_cxxincludes("HAVE_STDLIB_H", "stdlib.h")
+configvar_check_cxxincludes("HAVE_STRINGS_H", "strings.h")
+configvar_check_cxxincludes("HAVE_STRING_H", "string.h")
+configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
+configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
+configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
+configvar_check_cxxincludes("HAVE_MEMORY_H", "memory.h")
+configvar_check_cxxincludes("HAVE_PTY_H", "pty.h")
+configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
+configvar_check_cxxincludes("HAVE_SYS_STAT_H", "sys/stat.h")
+configvar_check_cxxincludes("HAVE_SYS_TYPES_H", "sys/types.h")
+configvar_check_cxxtypes("HAVE_TIME_T", "time_t", {includes = {"memory"}})
+configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
+configvar_check_cxxfuncs("HAVE_GETTIMEOFDAY", "gettimeofday", {includes={"sys/time.h"}})
+configvar_check_cxxsnippets(
+    "CONFIG_LARGE_POINTER", [[
+        #include <stdlib.h>
+        static_assert(sizeof(void*) == 8, "");]])
+
+
+target("libkernel") do
+    set_kind("static")
+    set_basename("kernel")
+    set_version(TEXMACS_VERSION)
+
+    set_policy("check.auto_ignore_flags", false)
+    set_languages("c++17")
+
+    set_configdir("src/System")
+    add_configfiles(
+        "src/System/config.h.xmake", {
+            filename = "config.h",
+            variables = {
+                GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
+                GS_LIB = "../share/ghostscript/9.06/lib:",
+                OS_MACOS = is_plat("macosx"),
+                MACOSX_EXTENSIONS = is_plat("macosx"),
+                OS_MINGW = is_plat("mingw"),
+                SIZEOF_VOID_P = 8,
+                USE_JEAIII = true,
+                USE_STACK_TRACE = not is_plat("mingw")
+                }})
+
+    add_includedirs({
+        "src/System",
+        "src/System/Memory",
+        "src/System/IO",
+        "src/Plugins",
+        "src/Kernel/Abstractions",
+        "src/Kernel/Containers",
+        "src/Kernel/Types",
+        "src/Data/Drd",
+    })
+
+    add_files({
+        "src/Plugins/Jeaiii/**.cpp",
+        "src/Kernel/Abstractions/basic.cpp",
+        "src/Kernel/Containers/**.cpp",
+        "src/Kernel/Types/**.cpp",
+        "src/Data/Drd/**.cpp",
+        "src/System/IO/**.cpp",
+        "src/System/Memory/**.cpp"
+    })
+end
+
 target("libmogan") do
     set_basename("mogan")
-    local TEXMACS_VERSION = "2.1.2"
-    local DEVEL_VERSION = TEXMACS_VERSION
-    local DEVEL_RELEASE = 1
-    local STABLE_VERSION = TEXMACS_VERSION
-    local STABLE_RELEASE = 1
     set_version(TEXMACS_VERSION)
     
     set_languages("c++17")
@@ -64,18 +167,6 @@ target("libmogan") do
     if is_plat("macosx") then
         add_frameworks("QtMacExtras")
     end
-    set_configvar("QTTEXMACS", 1)
-    add_defines("QTTEXMACS")
-    set_configvar("QTPIPES", 1)
-    add_defines("QTPIPES")
-    set_configvar("USE_QT_PRINTER", 1)
-    add_defines("USE_QT_PRINTER")
-    set_configvar("USE_CURL", 1)
-    set_configvar("USE_SQLITE3", 1)
-
-    set_configvar("LINKED_AXEL", false)
-    set_configvar("LINKED_CAIRO", false)
-    set_configvar("LINKED_IMLIB2", false)
 
     add_packages("libpng")
     add_packages("libiconv")
@@ -98,38 +189,6 @@ target("libmogan") do
     -- check for dl library
     -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
     add_options("libdl")
-    configvar_check_cxxincludes("HAVE_STDLIB_H", "stdlib.h")
-    configvar_check_cxxincludes("HAVE_STRINGS_H", "strings.h")
-    configvar_check_cxxincludes("HAVE_STRING_H", "string.h")
-    configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
-    configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
-    configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
-    configvar_check_cxxincludes("HAVE_MEMORY_H", "memory.h")
-    configvar_check_cxxincludes("HAVE_PTY_H", "pty.h")
-    configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
-    configvar_check_cxxincludes("HAVE_SYS_STAT_H", "sys/stat.h")
-    configvar_check_cxxincludes("HAVE_SYS_TYPES_H", "sys/types.h")
-    configvar_check_cxxtypes("HAVE_TIME_T", "time_t", {includes = {"memory"}})
-    configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
-    configvar_check_cxxfuncs("HAVE_GETTIMEOFDAY", "gettimeofday", {includes={"sys/time.h"}})
-
-    set_configvar("STDC_HEADERS", true)
-
-    if is_plat("mingw") then
-        set_configvar("GS_EXE", "bin/gs.exe")
-    else
-        set_configvar("GS_EXE", "/usr/bin/gs")
-    end
-
-    if is_plat("mingw") then
-    else if is_plat("macosx") then
-        set_configvar("USE_STACK_TRACE", true)
-        set_configvar("AQUATEXMACS", true)
-    end
-        set_configvar("USE_STACK_TRACE", true)
-    end
-
-    set_configvar("PDFHUMMUS_NO_TIFF", true)
     add_configfiles(
         "src/System/config.h.xmake", {
             filename = "config.h",
@@ -144,18 +203,7 @@ target("libmogan") do
                 USE_STACK_TRACE = not is_plat("mingw")
                 }})
 
-    if is_plat("linux") then 
-        set_configvar("CONFIG_OS", "GNU_LINUX")
-    elseif is_subhost("cygwin") then
-        set_configvar("CONFIG_OS", "CYGWIN")
-    else 
-        set_configvar("CONFIG_OS", "")
-    end
 
-    configvar_check_cxxsnippets(
-        "CONFIG_LARGE_POINTER", [[
-            #include <stdlib.h>
-            static_assert(sizeof(void*) == 8, "");]])
     add_configfiles(
         "src/System/tm_configure.hpp.xmake", {
             filename = "tm_configure.hpp",
@@ -215,6 +263,8 @@ target("libmogan") do
             "src/Style/Evaluate",
             "src/Style/Memorizer",
             "src/System",
+            "src/System/Memory",
+            "src/System/IO",
             "src/System/Boot",
             "src/System/Classes",
             "src/System/Files",

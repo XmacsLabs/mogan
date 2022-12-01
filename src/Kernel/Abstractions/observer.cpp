@@ -13,6 +13,7 @@
 #include "analyze.hpp"
 #include "hashmap.hpp"
 #include "blackbox.hpp"
+#include "tm_debug.hpp"
 
 #define DETACHED (-5)
 

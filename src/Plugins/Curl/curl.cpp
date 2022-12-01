@@ -12,6 +12,7 @@
 #include "Curl/curl.hpp"
 #include <curl/curl.h>
 #include <string>
+#include "tm_debug.hpp"
 
 static std::string readBuffer;
 
