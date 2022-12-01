@@ -43,6 +43,7 @@ add_requires("zlib", {system=false})
 add_requires("libjpeg", {system=false})
 add_requires("libcurl", {system=false})
 add_requires("freetype", {system=false})
+add_requires("sqlite3", {system=false})
 
 local XMACS_VERSION="1.1.1"
 local INSTALL_DIR="build/package"
@@ -70,7 +71,7 @@ target("libmogan") do
     set_configvar("USE_QT_PRINTER", 1)
     add_defines("USE_QT_PRINTER")
     set_configvar("USE_CURL", 1)
-    -- set_configvar("USE_SQLITE3", 1)
+    set_configvar("USE_SQLITE3", 1)
 
     set_configvar("LINKED_AXEL", false)
     set_configvar("LINKED_CAIRO", false)
@@ -82,6 +83,7 @@ target("libmogan") do
     add_packages("libjpeg")
     add_packages("libcurl")
     add_packages("freetype")
+    add_packages("sqlite3")
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
