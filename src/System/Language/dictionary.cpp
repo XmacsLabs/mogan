@@ -16,6 +16,7 @@
 #include "universal.hpp"
 #include "drd_std.hpp"
 #include "scheme.hpp"
+#include "font.hpp"
 
 RESOURCE_CODE(dictionary);
 

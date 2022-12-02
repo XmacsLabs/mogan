@@ -24,6 +24,7 @@ jobs:
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.3
+          actions-cache-folder: '.xmake-cache'
       - name: Build by gcc
         id: build
         run: |
@@ -95,13 +96,16 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          sudo add-apt-repository ppa:xmake-io/xmake
           sudo apt update
           sudo apt upgrade --yes gcc
-          sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake
+          sudo apt install --yes qtbase5-dev libqt5svg5-dev
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.7.3
+          actions-cache-folder: '.xmake-cache'
       - name: Build by gcc
         id: build
         run: |
