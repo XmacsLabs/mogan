@@ -18,7 +18,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ${{github.workspace}}/global
+            ${{github.workspace}}/build/.build_cache
           key: ${{ runner.os }}-x-${{ hashFiles('**/xmake.lua') }}
       - name: Set up Homebrew
         id: set-up-homebrew
@@ -37,13 +37,10 @@ jobs:
           xrepo update-repo
           xmake config --yes
           xmake build --yes --verbose --diagnosis --jobs=8 --all
-        env:
-          XMAKE_GLOBALDIR: ${{github.workspace}}/global
       - name: Test
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
         env:
-          XMAKE_GLOBALDIR: ${{github.workspace}}/global
           TEXMACS_PATH: ${{github.workspace}}/TeXmacs
           QT_QPA_PLATFORM: offscreen
   windowsbuild:
@@ -80,7 +77,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ${{github.workspace}}/global
+            ${{github.workspace}}/build/.build_cache
           key: ${{ runner.os }}-x-${{ hashFiles('**/xmake.lua') }}
       - name: Build by mingw
         shell: msys2 {0}
@@ -92,8 +89,6 @@ jobs:
           xmake build --yes --verbose --diagnosis --jobs=8 --all
           windeployqt ./build/mingw/x86_64/release/
           xmake install mogan_install
-        env:
-          XMAKE_GLOBALDIR: ${{github.workspace}}/global
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
@@ -106,7 +101,6 @@ jobs:
           export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
           xmake run --yes --verbose --diagnosis --group=tests
         env:
-          XMAKE_GLOBALDIR: ${{github.workspace}}/global
           TEXMACS_PATH: .\TeXmacs
   linuxbuild:
     runs-on: ubuntu-latest
@@ -124,7 +118,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ${{github.workspace}}/global
+            ${{github.workspace}}/build/.build_cache
           key: ${{ runner.os }}-x-${{ hashFiles('**/xmake.lua') }}
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
@@ -136,13 +130,10 @@ jobs:
           xrepo update-repo
           xmake config --yes
           xmake build --yes --verbose --diagnosis --jobs=8 --all
-        env:
-          XMAKE_GLOBALDIR: ${{github.workspace}}/global
       - name: Test
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
         env:
-          XMAKE_GLOBALDIR: ${{github.workspace}}/global
           TEXMACS_PATH: ${{github.workspace}}/TeXmacs
           QT_QPA_PLATFORM: offscreen
   
