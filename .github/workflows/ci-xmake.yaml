@@ -24,6 +24,12 @@ jobs:
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.3
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.xmake
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - name: Build by gcc
         id: build
         run: |
@@ -102,6 +108,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.xmake
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - name: Build by gcc
         id: build
         run: |
