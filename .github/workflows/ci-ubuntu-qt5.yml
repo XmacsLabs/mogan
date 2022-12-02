@@ -2,9 +2,9 @@ name: Test on Ubuntu 20.04 for Qt 5
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    tags:
+      - 'v*'
+  workflow_dispatch:
 
 jobs:
   build-linux:
