@@ -16,6 +16,8 @@
 #include "iterator.hpp"
 #include "file.hpp"
 #include "convert.hpp"
+#include "scheme.hpp"
+#include "dictionary.hpp"
 
 RESOURCE_CODE(font);
 
