@@ -155,6 +155,15 @@ target("libkernel") do
         "src/System/IO/**.cpp",
         "src/System/Memory/**.cpp"
     })
+
+    if is_plat("mingw") then
+        add_includedirs({
+            "src/Plugins/Windows"
+        })
+        add_files({
+            "src/Plugins/Windows/*.cpp"
+        })
+    end
 end
 
 for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
