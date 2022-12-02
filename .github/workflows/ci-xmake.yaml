@@ -19,6 +19,7 @@ jobs:
         with:
           path: |
             ${{github.workspace}}/build/.build_cache
+            /Users/runner/.xmake
           key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - name: Set up Homebrew
         id: set-up-homebrew
@@ -78,6 +79,7 @@ jobs:
         with:
           path: |
             ${{github.workspace}}/build/.build_cache
+            C:\Users\runneradmin\AppData\Local\.xmake
           key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - name: Build by mingw
         shell: msys2 {0}
@@ -119,6 +121,7 @@ jobs:
         with:
           path: |
             ${{github.workspace}}/build/.build_cache
+            /home/runner/.config/.xmake
           key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
