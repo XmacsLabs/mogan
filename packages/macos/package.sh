@@ -47,5 +47,10 @@ deploy_app() {
 }
 
 build_mogan_base
-copy_assets
+
+# “Copy Assets” is a optional step, and should not break
+# the subsequent commands. `|| true` indicates `bash` to
+# not stop at this command.
+copy_assets || true
+
 deploy_app
