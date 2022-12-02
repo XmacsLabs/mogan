@@ -187,7 +187,9 @@ edit_interface_rep::mouse_adjust (SI x, SI y, int mods) {
     set_position (popup_win, wx+ ox+ x, wy+ oy+ y);
     set_visibility (popup_win, true);
     send_keyboard_focus (this);
+#if !defined (OS_WASM)
     send_mouse_grab (popup_wid, true);
+#endif
   }
 }
 
