@@ -26,7 +26,7 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
       - name: Install Dependencies
         run: |
-          brew install qt@5 ccache
+          brew install qt@5
           brew link qt@5
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
@@ -110,9 +110,8 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          sudo apt update
-          sudo apt upgrade --yes gcc
-          sudo apt install --yes qtbase5-dev libqt5svg5-dev
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev libqt5svg5-dev
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
