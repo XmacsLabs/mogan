@@ -14,12 +14,19 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{github.workspace}}/build/.build_cache
+            /Users/runner/.xmake
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
       - name: Install Dependencies
         run: |
-          brew install qt@5 ccache
+          brew install qt@5
           brew link qt@5
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
@@ -67,6 +74,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{github.workspace}}/build/.build_cache
+            C:\Users\runneradmin\AppData\Local\.xmake
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - name: Build by mingw
         shell: msys2 {0}
         id: build
@@ -96,12 +110,18 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          sudo apt update
-          sudo apt upgrade --yes gcc
-          sudo apt install --yes qtbase5-dev libqt5svg5-dev
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev libqt5svg5-dev
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{github.workspace}}/build/.build_cache
+            /home/runner/.config/.xmake
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.3
