@@ -161,7 +161,7 @@ target("libkernel") do
             "src/Plugins/Windows"
         })
         add_files({
-            "src/Plugins/Windows/*.cpp"
+            "src/Plugins/Windows/iostream.cpp"
         })
     end
 end
