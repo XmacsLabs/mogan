@@ -19,7 +19,7 @@ jobs:
         with:
           path: |
             ${{github.workspace}}/build/.build_cache
-          key: ${{ runner.os }}-x-${{ hashFiles('**/xmake.lua') }}
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
@@ -78,7 +78,7 @@ jobs:
         with:
           path: |
             ${{github.workspace}}/build/.build_cache
-          key: ${{ runner.os }}-x-${{ hashFiles('**/xmake.lua') }}
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - name: Build by mingw
         shell: msys2 {0}
         id: build
@@ -119,7 +119,7 @@ jobs:
         with:
           path: |
             ${{github.workspace}}/build/.build_cache
-          key: ${{ runner.os }}-x-${{ hashFiles('**/xmake.lua') }}
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.3
