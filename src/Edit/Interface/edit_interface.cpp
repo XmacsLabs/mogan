@@ -614,19 +614,6 @@ edit_interface_rep::update_menus () {
   }
   SERVER (bottom_tools (0, "(vertical (link texmacs-bottom-tools))"));
   set_footer ();
-  if (!gui_interrupted ()) drd_update ();
-  cache_memorize ();
-  last_update= last_change;
-  save_user_preferences ();
-}
-
-void
-edit_interface_rep::update_focus_toolbar () {
-  SERVER (menu_icons (2, "(horizontal (link texmacs-focus-icons))"));
-}
-
-void
-edit_interface_rep::update_title () {
   if (has_current_window ()) {
     array<url> ws= buffer_to_windows (
                      window_to_buffer (
@@ -636,6 +623,15 @@ edit_interface_rep::update_title () {
     for (int i=0; i<n; i++)
       concrete_window (ws[i])->set_modified (ns);
   }
+  if (!gui_interrupted ()) drd_update ();
+  cache_memorize ();
+  last_update= last_change;
+  save_user_preferences ();
+}
+
+void
+edit_interface_rep::update_focus_toolbar () {
+  SERVER (menu_icons (2, "(horizontal (link texmacs-focus-icons))"));
 }
 
 int
@@ -715,9 +711,6 @@ edit_interface_rep::apply_changes () {
   if (env_change & (THE_TREE+THE_ENVIRONMENT+THE_EXTENTS+
                     THE_CURSOR+THE_SELECTION+THE_FOCUS)) {
     update_focus_toolbar ();
-  }
-  if (env_change & THE_TREE) {
-    update_title ();
   }
   
   // cout << "Handling automatic resizing\n";
