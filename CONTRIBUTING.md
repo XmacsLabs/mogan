@@ -3,6 +3,9 @@
 + Reporting bugs to [Github in English](https://github.com/XmacsLabs/mogan/issues) or [Gitee in Chinese](https://gitee.com/XmacsLabs/mogan/issues)
 
 ## For Developers
+Using xmake is encouraged, we will finally deprecate the CMake support!
+
+
 For the kernel part, here is how to build and run unit tests:
 ```
 xmake build --group=kernel_tests

@@ -32,7 +32,7 @@ xmake install -o build/package mogan_install
 
 ### 第五步：启动墨干编辑器
 ``` bash
-TEXMACS_PATH=$PWD/build/package/share/Xmacs build/package/bin/mogan
+build/package/bin/mogan
 ```
 
 ## 使用cmake
