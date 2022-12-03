@@ -605,6 +605,7 @@ edit_interface_rep::update_menus () {
   SERVER (menu_main ("(horizontal (link texmacs-menu))"));
   SERVER (menu_icons (0, "(horizontal (link texmacs-main-icons))"));
   SERVER (menu_icons (1, "(horizontal (link texmacs-mode-icons))"));
+  SERVER (menu_icons (2, "(horizontal (link texmacs-focus-icons))"));
   SERVER (menu_icons (3, "(horizontal (link texmacs-extra-icons))"));
   array<url> a= buffer_to_windows (buf->buf->name);
   if (N(a) > 0) {
@@ -627,11 +628,6 @@ edit_interface_rep::update_menus () {
   cache_memorize ();
   last_update= last_change;
   save_user_preferences ();
-}
-
-void
-edit_interface_rep::update_focus_toolbar () {
-  SERVER (menu_icons (2, "(horizontal (link texmacs-focus-icons))"));
 }
 
 int
@@ -708,10 +704,6 @@ edit_interface_rep::apply_changes () {
 
   // cout << "Applying changes " << env_change << " to " << get_name() << "\n";
   // time_t t1= texmacs_time ();
-  if (env_change & (THE_TREE+THE_ENVIRONMENT+THE_EXTENTS+
-                    THE_CURSOR+THE_SELECTION+THE_FOCUS)) {
-    update_focus_toolbar ();
-  }
   
   // cout << "Handling automatic resizing\n";
   int sb= 1;
