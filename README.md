@@ -32,6 +32,7 @@ Mogan inherits all the above features from GNU TeXmacs (see [the homepage of GNU
 
 ## Contact Us
 You are sincerely welcome to contact us via the following ways to share your experience, provide suggestions or report issues on Mogan Editor. Interested developers and volunteer contributors are also warmly welcome to join Xmacs Labs.
+- Official Website of Mogan: [mogan.app](https://mogan.app)
 - Bilibili：[沈浪熊猫儿](https://space.bilibili.com/28058658) 
 - Gitee：[墨者实验室](https://gitee.com/XmacsLabs/) 
 - GitHub: [XmacsLabs](https://github.com/XmacsLabs)
@@ -42,6 +43,7 @@ You are sincerely welcome to contact us via the following ways to share your exp
 - QQ Group：GNU TeXmacs中文社区（934456971）
 
 You are also welcome to consult the TeXmacs community, especially the official forum, if you encounter problems while using Mogan.
+- Official Website of GNU TeXmacs: [texmacs.org](http://www.texmacs.org)
 - Official Forum: [The GNU TeXmacs forum](http://forum.texmacs.cn) 
 - YouTube: [TeXmacs Videos](https://www.youtube.com/channel/UCLaZZkOj3GPYFu9pVsEbthg)
 - GitHub: [GNU TeXmacs](https://github.com/texmacs) 
