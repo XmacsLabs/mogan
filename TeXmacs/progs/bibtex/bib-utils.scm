@@ -107,7 +107,7 @@
     ((tm-func? x 'with) (bib-null? (tm-ref x :last)))
     ((list? x) (equal? x `()))
     ((string? x) (equal? x ""))
-    ((symbol? x) (equal? x '#{}#))
+    ((symbol? x) (equal? (symbol->string x) ""))
     (else #f)))
 
 (tm-define (bib-simplify x)
