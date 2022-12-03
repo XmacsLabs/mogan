@@ -172,7 +172,7 @@
 
 (tm-define (bib-translate s) `(localize ,s))
 
-(tm-define bib-range-symbol "–")
+(tm-define bib-range-symbol "-")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Sample function
