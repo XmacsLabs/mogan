@@ -40,6 +40,7 @@ GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](
 
 ## 联系我们
 衷心欢迎大家通过以下方式联系我们，交流经验、提供建议或报告问题。也热情欢迎感兴趣的开发者和志愿贡献者加入墨者实验室。
+- 墨干官网：[mogan.app](https://mogan.app)
 - Bilibili：[沈浪熊猫儿](https://space.bilibili.com/28058658) 
 - Gitee：[墨者实验室](https://gitee.com/XmacsLabs/) 
 - GitHub: [XmacsLabs](https://github.com/XmacsLabs)
@@ -50,6 +51,7 @@ GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](
 - QQ群：GNU TeXmacs中文社区（934456971）
 
 使用时遇到问题也欢迎咨询 TeXmacs 社区，特别是官方论坛。
+- GNU TeXmacs 官网：[texmacs.org](http://www.texmacs.org)
 - 官方论坛: [The GNU TeXmacs forum](http://forum.texmacs.cn) 
 - YouTube: [TeXmacs Videos](https://www.youtube.com/channel/UCLaZZkOj3GPYFu9pVsEbthg)
 - GitHub: [GNU TeXmacs](https://github.com/texmacs) 
