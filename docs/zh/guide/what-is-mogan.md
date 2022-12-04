@@ -1,4 +1,4 @@
-# 墨干编辑器 / [Mogan Editor](README.md)
+# 墨干编辑器 / [Mogan Editor](https://mogan.app/guide/what-is-mogan.html)
 ![GPL v3](http://www.gnu.org/graphics/gplv3-127x51.png)
 
 > **让我们享受探索科学与技术的乐趣！**
@@ -65,4 +65,4 @@ GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](
 > 墨干得名于家乡的避暑胜地——[莫干山](https://cn.wikipedia.org/wiki/Mount_Mogan)。犹忆青春年少时，在高中同桌老家，靠近莫干山的一个小山村里面，住过一晚上。傍晚，我们就在屋后小溪里面洗澡。清晨，我们跟着他在山上兜兜转转挖笋。中午，一起吃刚挖好的笋。溪水潺潺，篁竹幽幽，炊烟袅袅……
 
 ## 如何贡献
-请仔细阅读[贡献指南](CONTRIBUTING.md)，以了解如何开始为墨干编辑器做贡献。
+请仔细阅读[贡献指南](https://mogan.app/zh/guide/CONTRIBUTING.html)，以了解如何开始为墨干编辑器做贡献。
