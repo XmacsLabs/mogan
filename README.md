@@ -8,7 +8,7 @@ Mogan Editor is a structure editor delivered by [Xmacs Labs](https://github.com/
 ## How to install?
 We provide installers for Windows and macOS via [Github](https://github.com/XmacsLabs/mogan/releases). Read [Installation Guide](https://mogan.app/guide/Install.html) to learn the detailed steps to install from a installer and how to install on other OS like GNU/Linux.
 
-## What is GNU TeXmacs and Mogan Editor
+## What are GNU TeXmacs and Mogan Editor
 
 GNU TeXmacs is a structured editor developed since the late 1990s by [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html), a mathematician at CNRS in France. It is designed to write high-quality technical documents using an intuitive and easy-to-use graphical interface, and able to achieve the same level of results as LaTeX. Its main users are currently primary and secondary school teachers (mostly in France) and university researchers.
 
