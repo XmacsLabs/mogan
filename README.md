@@ -1,4 +1,4 @@
-# Mogan Editor / [墨干编辑器](README_ZH.md)
+# Mogan Editor / [墨干编辑器](https://mogan.app/zh/guide/what-is-mogan.html)
 ![GPL v3](http://www.gnu.org/graphics/gplv3-127x51.png)
 
 > **Let us enjoy exploring science and technology!**
@@ -6,7 +6,7 @@
 Mogan Editor is a structure editor delivered by [Xmacs Labs](https://github.com/XmacsLabs). We are dedicated to make Mogan Editor the most user-friendly distribution of [GNU TeXmacs](https://www.texmacs.org).
 
 ## How to install?
-We provide installers for Windows and macOS via [Github](https://github.com/XmacsLabs/mogan/releases). Read [Installation Guide](docs/Install.en.md) to learn the detailed steps to install from a installer and how to install on other OS like GNU/Linux.
+We provide installers for Windows and macOS via [Github](https://github.com/XmacsLabs/mogan/releases). Read [Installation Guide](https://mogan.app/guide/Install.html) to learn the detailed steps to install from a installer and how to install on other OS like GNU/Linux.
 
 ## What is GNU TeXmacs and Mogan Editor
 
@@ -58,5 +58,5 @@ Darcy:
 > Mogan is named after [Mount Mogan](https://en.wikipedia.org/wiki/Mount_Mogan), a famous attraction in my hometown. 墨干(Mogan) literally means "dried ink". The word is derived from 莫干(Mogan) which is a combination of [莫(Mo) and 干(Gan)](https://en.wikipedia.org/wiki/Gan_Jiang_and_Mo_Ye).
 
 ## Contributing as User or Developer
-Please review the [Contribution guide](CONTRIBUTING.md) for information on how to get started contributing to Mogan Editor.
+Please review the [Contribution guide](https://mogan.app/guide/CONTRIBUTING.html) for information on how to get started contributing to Mogan Editor.
 
