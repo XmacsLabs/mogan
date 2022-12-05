@@ -1,6 +1,14 @@
 # Installation Guide
 ## Windows
+### Manually
 Download the exe installer from [Github](https://github.com/XmacsLabs/mogan/releases) and then double click.
+
+### winget
+```
+winget install -e --id XmacsLabs.Mogan
+```
+More info on winget: https://learn.microsoft.com/en-us/windows/package-manager/winget/
+
 
 ## macOS
 Download the dmg installer from [Github](https://github.com/XmacsLabs/mogan/releases) and then install it like other dmg installer.
