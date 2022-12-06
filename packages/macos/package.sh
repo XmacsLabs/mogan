@@ -44,6 +44,7 @@ copy_assets() (
 
 deploy_app() {
     macdeployqt Mogan.app -verbose=1 -dmg
+    codesign --force --sign - --deep Mogan.app
 }
 
 build_mogan_base
