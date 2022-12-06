@@ -612,9 +612,14 @@ if (TEXMACS_GUI MATCHES "Qt.*")
   if (TEXMACS_GUI STREQUAL "Qt4")
     message (FATAL_ERROR "Qt 4.x is not supported")
   else (TEXMACS_GUI STREQUAL "Qt4")
-    # Homebrew installs Qt5 in /usr/local/opt/qt5
-    if (APPLE AND EXISTS /usr/local/opt/qt5)
-      list (APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
+    if (APPLE)
+      if (EXISTS /usr/local/opt/qt@5)
+        # Homebrew installs Qt 5 in /usr/local/opt/qt@5 in x86-64 macOS
+        list (APPEND CMAKE_PREFIX_PATH "/usr/local/opt/qt@5")
+        # Homebrew installs Qt 5 in /opt/homebrew/opt/qt@5 in macOS on M1
+      elseif (EXISTS /opt/homebrew/opt/qt@5)
+        list (APPEND CMAKE_PREFIX_PATH "/opt/homebrew/opt/qt@5")
+      endif ()
     endif ()
     # compat with Qt6
     if (TEXMACS_GUI STREQUAL "Qt6")
