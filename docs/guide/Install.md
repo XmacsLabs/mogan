@@ -22,7 +22,6 @@ More info on winget: https://learn.microsoft.com/en-us/windows/package-manager/w
 Download the dmg installer from [Github](https://github.com/XmacsLabs/mogan/releases) and then install it like other dmg installer.
 
 ## GNU/Linux
-
 ### Arch Linux (AUR)
 ```bash
 yay -S mogan

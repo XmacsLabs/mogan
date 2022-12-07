@@ -26,7 +26,6 @@ winget install -e --id XmacsLabs.Mogan
 在[Gitee](https://gitee.com/XmacsLabs/mogan/releases)下载安装包，然后按照macOS平台通用的步骤安装即可。因为我们没有购买苹果的开发者认证，所以需要在苹果系统的安全设置中选择仍然打开。
 
 ## GNU/Linux
-
 ### Arch Linux (AUR)
 ```bash
 yay -S mogan
