@@ -1,4 +1,12 @@
 # How to install
+## GNU Guix
+```
+guix install mogan
+```
+更多信息：https://packages.guix.gnu.org/packages/mogan/
+
+> 注意：可能会遇到中文菜单无法正常显示的问题，这并不是墨干编辑器本身的问题，您可能需要花一些时间学习如何配置Guix的中文支持。
+
 ## Windows
 
 > 说明：GNU TeXmacs是独立于LaTeX/TeX实现的，不需要再安装TeXLive。

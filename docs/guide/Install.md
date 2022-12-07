@@ -1,4 +1,12 @@
 # Installation Guide
+## GNU Guix
+```
+guix install mogan
+```
+More info：https://packages.guix.gnu.org/packages/mogan/
+
+> Note: CJK characters in the menu might be displayed improperly, please learn how to configure a Guix OS.
+
 ## Windows
 ### Manually
 Download the exe installer from [Github](https://github.com/XmacsLabs/mogan/releases) and then double click.
