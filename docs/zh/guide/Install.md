@@ -18,6 +18,14 @@ winget install -e --id XmacsLabs.Mogan
 在[Gitee](https://gitee.com/XmacsLabs/mogan/releases)下载安装包，然后按照macOS平台通用的步骤安装即可。因为我们没有购买苹果的开发者认证，所以需要在苹果系统的安全设置中选择仍然打开。
 
 ## GNU/Linux
+### Guix
+```
+guix install mogan
+```
+更多信息：https://packages.guix.gnu.org/packages/mogan/
+
+> 注意：可能会遇到中文菜单无法正常显示的问题，这并不是墨干本身的问题，你需要花一些时间学习如何配置Guix的中文支持。
+
 ### Arch Linux (AUR)
 ```bash
 yay -S mogan

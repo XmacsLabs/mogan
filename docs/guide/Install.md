@@ -14,6 +14,14 @@ More info on winget: https://learn.microsoft.com/en-us/windows/package-manager/w
 Download the dmg installer from [Github](https://github.com/XmacsLabs/mogan/releases) and then install it like other dmg installer.
 
 ## GNU/Linux
+### Guix
+```
+guix install mogan
+```
+More info：https://packages.guix.gnu.org/packages/mogan/
+
+> Note: CJK characters in the menu might be displayed improperly, please learn how to configure a Guix OS.
+
 ### Arch Linux (AUR)
 ```bash
 yay -S mogan
