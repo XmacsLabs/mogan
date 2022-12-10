@@ -124,7 +124,6 @@ jobs:
         run: |
           ./inno-setup.exe /VERYSILENT /SP- /CURRENTUSER
           iscc .\package\Xmacs.iss
-            - name: Release
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
