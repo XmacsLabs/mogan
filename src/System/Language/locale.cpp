@@ -188,6 +188,8 @@ string
 get_locale_language () {
 #if OS_MINGW
   return windows_locale_to_language ();
+#elif defined(OS_WASM)
+    return "english";
 #else
   string env_lan= get_env ("LC_ALL");
   if (env_lan != "") return locale_to_language (env_lan);
