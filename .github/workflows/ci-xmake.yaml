@@ -70,7 +70,7 @@ jobs:
           arch: win64_mingw81
           host: 'windows'
           target: 'desktop'
-          cache: 'false'
+          cache: 'true'
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -91,6 +91,7 @@ jobs:
           xmake build --yes --verbose --diagnosis --jobs=8 --all
           windeployqt ./build/mingw/x86_64/release/
           xmake install mogan_install
+          windeployqt ./build/package/bin/
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
@@ -104,6 +105,29 @@ jobs:
           xmake run --yes --verbose --diagnosis --group=tests
         env:
           TEXMACS_PATH: .\TeXmacs
+  windowspackage:
+    runs-on: windows-latest
+    if: ${{ github.ref_type == 'tag' }}
+    steps:
+      - name: Download mogan binary
+        uses: actions/download-artifact@v3
+        with:
+          name: my-artifact
+          path: main
+      - name: Download binaries
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          repository: 'XmacsLabs/mogan-dependencies'
+          path: binary
+      - name: Generate Installer
+        run: |
+          ./inno-setup.exe /VERYSILENT /SP- /CURRENTUSER
+          iscc .\package\Xmacs.iss
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Mogan-v*
   linuxbuild:
     runs-on: ubuntu-latest
     if: always()

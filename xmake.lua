@@ -409,11 +409,6 @@ target("mogan") do
     after_install(function(target)
         local install_dir = path.join(target:installdir(), "/bin/")
         os.cp(target:targetfile(), install_dir)
-        local bin_dir = path.directory(target:targetfile())
-        os.cp(
-            path.join(bin_dir,"**.dll"),
-            install_dir, {rootdir=bin_dir}
-        )
     end)
 end 
 
