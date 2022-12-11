@@ -66,4 +66,4 @@ jobs:
         with:
           name: windows-installer
           path: |
-            Mogan-v*
+            build/Mogan-v*
