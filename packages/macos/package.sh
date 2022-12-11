@@ -14,12 +14,14 @@
 #                to exit with a non-zero status, or zero if all commands in the pipeline exit successfully.
 set -euxo pipefail
 
+MOGAN_APP=build/macosx/`arch`/release/Mogan.app
+
 # Pick the max processors count from sysctl.
 nproc() {
     sysctl -n hw.physicalcpu
 }
 
-build_mogan_base() {
+build_mogan_cmake() {
     # Clean up the build directory first.
     rm -rf build
     mkdir build && cd build
@@ -28,14 +30,41 @@ build_mogan_base() {
     make -j"$(nproc)" install
 }
 
-copy_assets() (
+build_mogan_xmake() {
+    xmake config --yes
+    xmake show
+    xmake build --yes --verbose --diagnosis --jobs="$(nproc)" --all
+    xmake install -o ${MOGAN_APP}/Contents/Resources/ mogan_install
+}
+
+prepare_assets() (
     # Code here are not critical.
     set +e
 
-    mv Mogan.app/Contents/Resources/bin Mogan.app/Contents/Resources/share/Xmacs/
-    cp /Applications/TeXmacs.app/Contents/Resources/share/TeXmacs/bin/gs Mogan.app/Contents/Resources/share/Xmacs/bin/
-    mkdir -p Mogan.app/Contents/Resources/share/Xmacs/plugins/eukleides/bin
-    cp /Applications/Mogan.app/Contents/Resources/share/Xmacs/plugins/eukleides/bin/eukleides Mogan.app/Contents/Resources/share/Xmacs/plugins/eukleides/bin
+    # Cleaning
+    rm -rf ${MOGAN_APP}/Contents/Resources/bin
+    rm -rf ${MOGAN_APP}/Contents/Resources/lib
+    rm -rf ${MOGAN_APP}/Contents/Resources/include
+    rm -rf ${MOGAN_APP}/Contents/Frameworks/QtQmlModels.framework
+    rm -rf ${MOGAN_APP}/Contents/Frameworks/QtQml.framework
+    rm -rf ${MOGAN_APP}/Contents/Frameworks/QtQuick.framework
+    find ${MOGAN_APP} | grep ".DS_Store" | xargs -I% rm -rf %
+    find ${MOGAN_APP} | grep "CMakeLists.txt" | xargs -I% rm -rf %
+
+    # Plugins
+    mkdir -p ${MOGAN_APP}/Contents/Resources/share/Xmacs/plugins/eukleides/bin
+    cp /Applications/Mogan.app/Contents/Resources/share/Xmacs/plugins/eukleides/bin/eukleides \
+       ${MOGAN_APP}/Contents/Resources/share/Xmacs/plugins/eukleides/bin
+
+    mkdir -p ${MOGAN_APP}/Contents/Resources/share/Xmacs/plugins/shell/bin
+    cp /Applications/Mogan.app/Contents/Resources/share/Xmacs/plugins/shell/bin/tm_shell \
+       ${MOGAN_APP}/Contents/Resources/share/Xmacs/plugins/shell/bin
+
+    # GS
+    cp /Applications/TeXmacs.app/Contents/Resources/share/TeXmacs/bin/gs \
+       ${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/
+
+    codesign --force --deep --sign - ${MOGAN_APP}
 
     # We opened a subshell `()` here; therefore,
     # we don't need to `set -e` as every
@@ -43,14 +72,14 @@ copy_assets() (
 )
 
 deploy_app() {
-    macdeployqt Mogan.app -verbose=1 -dmg
+    hdiutil create Mogan.dmg -fs HFS+ -srcfolder ${MOGAN_APP}
 }
 
-build_mogan_base
+build_mogan_xmake
 
 # “Copy Assets” is a optional step, and should not break
 # the subsequent commands. `|| true` indicates `bash` to
 # not stop at this command.
-copy_assets || true
+prepare_assets || true
 
 deploy_app
