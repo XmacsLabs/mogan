@@ -353,7 +353,6 @@ target("libmogan") do
             "src/Plugins/Ispell/**.cpp",
             "src/Plugins/Metafont/**.cpp",
             "src/Plugins/LaTeX_Preview/**.cpp",
-            "src/Plugins/Mplayer/**.cpp",
             "src/Plugins/Openssl/**.cpp",
             "src/Plugins/Sqlite3/**.cpp",
             "src/Plugins/Updater/**.cpp",
