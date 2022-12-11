@@ -1,0 +1,30 @@
+name: Package for Windows 
+
+on:
+  workflow_dispatch:
+
+jobs:
+  win-package:
+    runs-on: windows-latest
+    steps:
+      - name: Download mogan binary
+        uses: actions/download-artifact@v3
+        with:
+          name: my-artifact
+          path: main
+      - name: Download binaries
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          repository: 'XmacsLabs/mogan-dependencies'
+          path: binary
+      - name: Generate Installer
+        run: |
+          ./inno-setup.exe /VERYSILENT /SP- /CURRENTUSER
+          iscc .\package\Xmacs.iss
+      - name: Upload 
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-installer
+          path: |
+            Mogan-v*
