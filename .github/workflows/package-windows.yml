@@ -59,7 +59,7 @@ jobs:
           path: binary
       - name: Generate Installer
         run: |
-          inno-setup.exe /VERYSILENT /SP- /CURRENTUSER
+          binary/inno-setup.exe /VERYSILENT /SP- /CURRENTUSER
           iscc .\build\package\Xmacs.iss
       - name: Upload 
         uses: actions/upload-artifact@v2
