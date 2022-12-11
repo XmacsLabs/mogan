@@ -56,10 +56,10 @@ jobs:
         with:
           fetch-depth: 1
           repository: 'XmacsLabs/mogan-dependencies'
-          path: binary
+          path: build/binary
       - name: Generate Installer
         run: |
-          binary/inno-setup.exe /VERYSILENT /SP- /CURRENTUSER
+          build/binary/inno-setup.exe /VERYSILENT /SP- /CURRENTUSER
           iscc .\build\package\Xmacs.iss
       - name: Upload 
         uses: actions/upload-artifact@v2
