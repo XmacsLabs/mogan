@@ -7,11 +7,50 @@ jobs:
   win-package:
     runs-on: windows-latest
     steps:
-      - name: Download mogan binary
-        uses: actions/download-artifact@v3
+      - name: Install msys and xmake
+        uses: msys2/setup-msys2@v2
         with:
-          name: my-artifact
-          path: main
+          msystem: MSYS
+          install:  >-
+            mingw-w64-x86_64-xmake 
+            mingw-w64-x86_64-make 
+            p7zip 
+            git 
+            make 
+      - name: Set up MinGW
+        uses: coffeebe4code/setup-mingw@v1-beta-2
+        with:
+          platform: x64
+          version: 8.1.0
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 5.15.2
+          arch: win64_mingw81
+          host: 'windows'
+          target: 'desktop'
+          cache: 'true'
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{github.workspace}}/build/.build_cache
+            C:\Users\runneradmin\AppData\Local\.xmake
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
+      - name: Build by mingw
+        shell: msys2 {0}
+        id: build
+        run: |
+          export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
+          xrepo update-repo
+          xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
+          xmake build --yes --verbose --diagnosis --jobs=8 --all
+          windeployqt ./build/mingw/x86_64/release/
+          xmake install mogan_install
+          windeployqt ./build/package/bin/
       - name: Download binaries
         uses: actions/checkout@v3
         with:
@@ -21,7 +60,7 @@ jobs:
       - name: Generate Installer
         run: |
           ./inno-setup.exe /VERYSILENT /SP- /CURRENTUSER
-          iscc .\package\Xmacs.iss
+          iscc .\build\package\Xmacs.iss
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
