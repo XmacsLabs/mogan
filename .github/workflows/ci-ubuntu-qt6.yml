@@ -1,4 +1,4 @@
-name: Test on Ubuntu 22.04 for Qt 6
+name: CMake and Qt 6 on Ubuntu 22.04
 
 on:
   push:

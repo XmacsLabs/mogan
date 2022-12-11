@@ -1,9 +1,6 @@
-name: Package-macOS
+name: Package for macOS
 
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 jobs:
