@@ -69,6 +69,7 @@ add_defines("QTPIPES")
 set_configvar("USE_QT_PRINTER", 1)
 add_defines("USE_QT_PRINTER")
 
+set_configvar("USE_ICONV", 1)
 set_configvar("USE_CURL", 1)
 set_configvar("USE_SQLITE3", 1)
 set_configvar("LINKED_AXEL", false)
