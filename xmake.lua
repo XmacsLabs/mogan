@@ -111,30 +111,45 @@ configvar_check_cxxsnippets(
         #include <stdlib.h>
         static_assert(sizeof(void*) == 8, "");]])
 
+set_version(TEXMACS_VERSION)
+set_configdir("src/System")
+add_configfiles(
+    "src/System/config.h.xmake", {
+        filename = "config.h",
+        variables = {
+            GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
+            GS_LIB = "../share/ghostscript/9.06/lib:",
+            OS_MACOS = is_plat("macosx"),
+            MACOSX_EXTENSIONS = is_plat("macosx"),
+            OS_MINGW = is_plat("mingw"),
+            SIZEOF_VOID_P = 8,
+            USE_JEAIII = true,
+            USE_STACK_TRACE = not is_plat("mingw")
+            }})
+
+target("tm_shell") do
+    if is_plat("macosx") and is_plat("linux") then
+        set_default(true)
+    else
+        set_default(false)
+    end
+
+    set_kind("binary")
+
+    set_languages("c++17")
+
+    add_includedirs("src/System")
+    add_files("plugins/shell/src/tm_shell.cpp")
+    add_links("util")
+end
 
 target("libkernel") do
     set_kind("static")
     set_group("kernel")
     set_basename("kernel")
-    set_version(TEXMACS_VERSION)
 
     set_policy("check.auto_ignore_flags", false)
     set_languages("c++17")
-
-    set_configdir("src/System")
-    add_configfiles(
-        "src/System/config.h.xmake", {
-            filename = "config.h",
-            variables = {
-                GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
-                GS_LIB = "../share/ghostscript/9.06/lib:",
-                OS_MACOS = is_plat("macosx"),
-                MACOSX_EXTENSIONS = is_plat("macosx"),
-                OS_MINGW = is_plat("mingw"),
-                SIZEOF_VOID_P = 8,
-                USE_JEAIII = true,
-                USE_STACK_TRACE = not is_plat("mingw")
-                }})
 
     add_includedirs({
         "src/System",
@@ -413,6 +428,7 @@ target("mogan") do
 end 
 
 target("mogan_install") do
+    add_deps("tm_shell")
     add_deps("mogan")
     set_kind("phony")
     set_configvar("XMACS_VERSION", XMACS_VERSION)
@@ -542,6 +558,10 @@ target("mogan_install") do
             end
             if is_plat("macosx") then
                 os.cp ("packages/macos/Info.plist", path.join(target:installdir(), "../Info.plist"))
+                os.mkdir (path.join(target:installdir(), "share/Xmacs/plugins/shell/bin"))
+                os.mv (path.join(target:installdir(), "bin/tm_shell"),
+                       path.join(target:installdir(), "share/Xmacs/plugins/shell/bin"))
+                os.rm (path.join(target:installdir(), "bin"))
             end
         end)
 end
