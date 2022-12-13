@@ -17,6 +17,7 @@ class TestMacImages: public QObject {
 
 private:
   url jpg_file= url ("$TEXMACS_PATH/misc/patterns/wall/solid.jpg");
+  url webp_file= url ("$TEXMACS_PATH/misc/image/texmacs-64.webp");
   int jpg_file_width= 500;
   int jpg_file_height= 500;
 
@@ -29,6 +30,7 @@ void
 TestMacImages::test_mac_supports () {
 #ifdef MACOSX_EXTENSIONS 
   QVERIFY (!mac_supports (url ("$TEXMACS_PATH/misc/images/fancy-c.svg")));
+  QVERIFY (!mac_supports (webp_file));
   QVERIFY (mac_supports (url ("$TEXMACS_PATH/misc/images/fancy-c.png")));
   QVERIFY (mac_supports (jpg_file));
 #endif

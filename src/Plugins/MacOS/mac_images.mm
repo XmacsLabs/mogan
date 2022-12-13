@@ -46,7 +46,7 @@ void mac_image_to_png (url img_file, url png_file, int w, int h) {
 bool mac_image_size (url img_file, int& w, int& h) 
 {
   string suf= suffix (img_file);
-  if (suf == "ps" || suf == "eps" || suf == "pdf") return false;
+  if (suf == "ps" || suf == "eps" || suf == "pdf" || suf == "webp") return false;
 
   bool res = false; 
   // we need to be sure that the Cocoa application infrastructure is initialized 

@@ -19,6 +19,9 @@
 
   <section|Description>
 
+  The <verbatim|webp> image format is supported via Qt. We manually disable
+  it in macOS related code.
+
   \;
 </body>
 
