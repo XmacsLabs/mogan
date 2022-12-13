@@ -42,7 +42,6 @@ prepare_assets() (
     set +e
 
     # Cleaning
-    rm -rf ${MOGAN_APP}/Contents/Resources/bin
     rm -rf ${MOGAN_APP}/Contents/Resources/lib
     rm -rf ${MOGAN_APP}/Contents/Resources/include
     rm -rf ${MOGAN_APP}/Contents/Frameworks/QtQmlModels.framework
@@ -55,10 +54,6 @@ prepare_assets() (
     mkdir -p ${MOGAN_APP}/Contents/Resources/share/Xmacs/plugins/eukleides/bin
     cp /Applications/Mogan.app/Contents/Resources/share/Xmacs/plugins/eukleides/bin/eukleides \
        ${MOGAN_APP}/Contents/Resources/share/Xmacs/plugins/eukleides/bin
-
-    mkdir -p ${MOGAN_APP}/Contents/Resources/share/Xmacs/plugins/shell/bin
-    cp /Applications/Mogan.app/Contents/Resources/share/Xmacs/plugins/shell/bin/tm_shell \
-       ${MOGAN_APP}/Contents/Resources/share/Xmacs/plugins/shell/bin
 
     # GS
     cp /Applications/TeXmacs.app/Contents/Resources/share/TeXmacs/bin/gs \

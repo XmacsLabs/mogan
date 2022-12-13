@@ -37,6 +37,7 @@ src/Deps
 src/Objects
 TeXmacs/plugins/
 src/System/config.h
+config.h
 src/System/tm_configure.hpp
 misc/man/texmacs.1
 misc/admin/admin.makefile
