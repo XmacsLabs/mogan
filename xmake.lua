@@ -185,6 +185,7 @@ end
 for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
     local testname = path.basename(filepath) 
     target(testname) do 
+        add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
         set_group("kernel_tests")
         add_deps("libkernel")
         set_languages("c++17")
@@ -575,6 +576,7 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
     if string.sub(filepath, 1, string.len("tests/Kernel")) ~= "tests/Kernel" then
         local testname = path.basename(filepath) 
         target(testname) do 
+            add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
             set_group("tests")
             add_deps("libmogan")
             set_languages("c++17")

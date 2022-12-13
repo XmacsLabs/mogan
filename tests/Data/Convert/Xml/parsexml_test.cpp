@@ -24,7 +24,7 @@ private slots:
 
 void TestParseXML::expand_xml_default_entity () {
   // init_std_drd ();
-  // print_tree (parse_xml ("&quot;"));
+  // print_tree (parse_xml ("&amp;"));
   QVERIFY (parse_xml ("&amp;") == tuple(tree("*TOP*"), tree("\"&\"")));
   QVERIFY (parse_xml ("&lt;") == tuple(tree("*TOP*"), tree("\"<\"")));
   QVERIFY (parse_xml ("&gt;") == tuple(tree("*TOP*"), tree("\">\"")));
