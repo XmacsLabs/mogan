@@ -21,7 +21,7 @@ xmake
 
 ### Step 3: Run unit test
 ``` bash
-TEXMACS_PATH=$PWD/TeXmacs xmake run --yes --verbose --diagnosis --group=tests
+xmake run --yes --verbose --diagnosis --group=tests
 ```
 
 ### Step 4: Install to `build/package`

@@ -5,10 +5,12 @@ on:
     branches: [ main ]
     paths:
     - 'src'
+    - 'tests'
   pull_request:
     branches: [ main ]
     paths:
     - 'src'
+    - 'tests'
 
 jobs:
   macosbuild:
@@ -46,7 +48,6 @@ jobs:
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
         env:
-          TEXMACS_PATH: ${{github.workspace}}/TeXmacs
           QT_QPA_PLATFORM: offscreen
   windowsbuild:
     runs-on: windows-latest
@@ -107,8 +108,6 @@ jobs:
         run: |
           export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
           xmake run --yes --verbose --diagnosis --group=tests
-        env:
-          TEXMACS_PATH: .\TeXmacs
   linuxbuild:
     runs-on: ubuntu-latest
     if: always()
@@ -141,7 +140,6 @@ jobs:
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
         env:
-          TEXMACS_PATH: ${{github.workspace}}/TeXmacs
           QT_QPA_PLATFORM: offscreen
   
           
