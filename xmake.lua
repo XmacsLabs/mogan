@@ -128,10 +128,10 @@ add_configfiles(
             }})
 
 target("tm_shell") do
-    if is_plat("macosx") and is_plat("linux") then
-        set_default(true)
+    if is_plat("macosx") or is_plat("linux") then
+        set_enabled(true)
     else
-        set_default(false)
+        set_enabled(false)
     end
 
     set_kind("binary")
@@ -428,7 +428,9 @@ target("mogan") do
 end 
 
 target("mogan_install") do
-    add_deps("tm_shell")
+    if is_plat("macosx") or is_plat("linux") then
+        add_deps("tm_shell")
+    end
     add_deps("mogan")
     set_kind("phony")
     set_configvar("XMACS_VERSION", XMACS_VERSION)
@@ -556,11 +558,13 @@ target("mogan_install") do
                     "TeXmacs/misc/images/xmacs-"..size..".png", 
                     path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
             end
-            if is_plat("macosx") then
-                os.cp ("packages/macos/Info.plist", path.join(target:installdir(), "../Info.plist"))
+            if is_plat("macosx") or is_plat("linux")  then
                 os.mkdir (path.join(target:installdir(), "share/Xmacs/plugins/shell/bin"))
                 os.mv (path.join(target:installdir(), "bin/tm_shell"),
                        path.join(target:installdir(), "share/Xmacs/plugins/shell/bin"))
+            end
+            if is_plat("macosx") then
+                os.cp ("packages/macos/Info.plist", path.join(target:installdir(), "../Info.plist"))
                 os.rm (path.join(target:installdir(), "bin"))
             end
         end)
