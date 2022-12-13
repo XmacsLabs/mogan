@@ -4,13 +4,13 @@ on:
   push:
     branches: [ main ]
     paths:
-    - 'src'
-    - 'tests'
+      - 'src/**'
+      - 'tests/**'
   pull_request:
     branches: [ main ]
     paths:
-    - 'src'
-    - 'tests'
+      - 'src/**'
+      - 'tests/**'
 
 jobs:
   build-linux:
