@@ -64,8 +64,10 @@ end
 
 set_configvar("QTTEXMACS", 1)
 add_defines("QTTEXMACS")
+
 set_configvar("QTPIPES", 1)
 add_defines("QTPIPES")
+
 set_configvar("USE_QT_PRINTER", 1)
 add_defines("USE_QT_PRINTER")
 
@@ -74,7 +76,12 @@ set_configvar("USE_CURL", 1)
 set_configvar("USE_SQLITE3", 1)
 set_configvar("LINKED_AXEL", false)
 set_configvar("LINKED_CAIRO", false)
+set_configvar("LINKED_SQLITE3", 1)
+set_configvar("USE_FREETYPE", 1)
+set_configvar("USE_GS", 1)
+set_configvar("USE_ICONV", 1)
 set_configvar("LINKED_IMLIB2", false)
+set_configvar("PDF_RENDERER", 1)
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 
 if is_plat("mingw") then

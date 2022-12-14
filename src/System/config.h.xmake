@@ -76,7 +76,7 @@ ${define LINKED_CAIRO}
 /* Link imlib2 library with TeXmacs */
 ${define LINKED_IMLIB2}
 
-#define LINKED_SQLITE3 1
+${define LINKED_SQLITE3}
 
 ${define MACOSX_EXTENSIONS}
 
@@ -106,15 +106,15 @@ ${define NO_FAST_ALLOC}
 /* Define to the version of this package. */
 #define PACKAGE_VERSION ""
 
-#define PDF_RENDERER 1
+${define PDF_RENDERER}
 
 ${define QTTEXMACS}
 
-#define QTPIPES 1
+${define QTPIPES}
 
-#define USE_QT_PRINTER 1
+${define USE_QT_PRINTER}
 
-#define USE_CURL 1
+${define USE_CURL}
 
 #define SIZEOF_VOID_P ${SIZEOF_VOID_P} 
 
@@ -132,12 +132,12 @@ ${define USE_AXEL}
 ${define USE_CAIRO}
 
 /* Use freetype library */
-#define USE_FREETYPE 1
+${define USE_FREETYPE}
 
-#define USE_GS 1
+${define USE_GS}
 
 /* Use iconv library */
-#define USE_ICONV 1
+${define USE_ICONV}
 
 /* Use imlib2 library */
 ${define USE_IMLIB2}
