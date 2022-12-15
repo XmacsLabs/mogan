@@ -10,14 +10,19 @@
   <\itemize>
     <item>Reporter: jingkaimori on <hlink|Gitee|https://gitee.com/XmacsLabs/mogan/issues/I5E7YD>
 
-    <item>Owner: JK
+    <item>Owner: Darcy Shen
 
     <item>Tester: Darcy Shen
   </itemize>
 
-  <image|../../TeXmacs/misc/images/texmacs-64.webp|64pt|64pt||>
-
   <section|Description>
+
+  Using the WEBP format, the size of the image could be smaller than PNG.
+
+  <\big-figure|<tabular*|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|2|1|1|cell-valign|c>|<cwith|4|4|1|1|cell-valign|c>|<table|<row|<cell|Actual
+  Size>|<cell|WEBP>|<cell|PNG>>|<row|<cell|64x64>|<cell|<image|../../TeXmacs/misc/images/texmacs-64.webp|64pt|64pt||>>|<cell|<image|../../TeXmacs/misc/images/texmacs-64.png|64pt|64pt||>>>|<row|<cell|>|<cell|1.6K>|<cell|5.9k>>|<row|<cell|128x128>|<cell|<image|../../TeXmacs/misc/images/texmacs-128.webp|64pt|64pt||>>|<cell|<image|../../TeXmacs/misc/images/texmacs-128.png|64pt|64pt||>>>|<row|<cell|>|<cell|3.5K>|<cell|13K>>>>>>
+    A Comparison between <name|WebP> and <name|PNG>
+  </big-figure>
 
   The <verbatim|webp> image format is supported via Qt. We manually disable
   it in macOS related code.
