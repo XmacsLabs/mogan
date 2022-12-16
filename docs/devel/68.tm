@@ -27,6 +27,36 @@
   The <verbatim|webp> image format is supported via Qt. We manually disable
   it in macOS related code.
 
+  On Ubuntu, <verbatim|qt5-image-formats-plugins> or
+  <verbatim|qt6-image-formats-plugins> is required to support the
+  <verbatim|webp> image format.
+
+  <section|How to test>
+
+  <subsection|Scheme Unit Test>
+
+  <\session|scheme|default>
+    <\input|Scheme] >
+      (regtest-tm-convert)
+    </input>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
+  <subsection|C++ Unit Test>
+
+  <\shell-code>
+    xmake build qt_utilities_test && xmake run qt_utilities_test
+  </shell-code>
+
+  <subsection|PDF Export>
+
+  Export this file to PDF and then check the exported PDF file.
+
+  \;
+
   \;
 </body>
 
