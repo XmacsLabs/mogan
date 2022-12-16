@@ -25,6 +25,7 @@ void TestQtUtilities::test_qt_supports () {
 #ifdef QTTEXMACS
   QVERIFY (qt_supports (url ("x.svg")));
   QVERIFY (qt_supports (url ("x.png")));
+  QVERIFY (qt_supports (url ("x.webp")));
 #endif
 }
 
