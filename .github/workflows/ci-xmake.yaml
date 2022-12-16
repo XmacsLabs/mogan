@@ -109,13 +109,13 @@ jobs:
           export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
           xmake run --yes --verbose --diagnosis --group=tests
   linuxbuild:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: always()
     steps:
       - name: Install dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev libqt5svg5-dev
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev libqt5svg5-dev qt5-image-formats-plugins
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1

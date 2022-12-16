@@ -27,6 +27,10 @@
   The <verbatim|webp> image format is supported via Qt. We manually disable
   it in macOS related code.
 
+  On Ubuntu, <verbatim|qt5-image-formats-plugins> or
+  <verbatim|qt6-image-formats-plugins> is required to support the
+  <verbatim|webp> image format.
+
   <section|How to test>
 
   <subsection|Scheme Unit Test>
