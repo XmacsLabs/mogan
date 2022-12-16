@@ -51,10 +51,6 @@
 
   Export this file to PDF and then check the exported PDF file.
 
-  <subsection|PS Export>
-
-  Export this file to PS and then check the exported PS file.
-
   \;
 
   \;
