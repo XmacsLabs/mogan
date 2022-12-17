@@ -37,13 +37,13 @@ else
     add_rules("mode.releasedbg", "mode.release", "mode.debug")
 end
 
-add_requires("libpng", {system=false})
-add_requires("libiconv", {system=false})
-add_requires("zlib", {system=false})
-add_requires("libjpeg", {system=false})
-add_requires("libcurl", {system=false})
-add_requires("freetype", {system=false})
-add_requires("sqlite3", {system=false})
+add_requires("libpng 1.6.37", {system=false})
+add_requires("libiconv 1.17", {system=false})
+add_requires("zlib 1.2.12", {system=false})
+add_requires("libjpeg v9e", {system=false})
+add_requires("libcurl 7.84.0", {system=false})
+add_requires("freetype 2.12.1", {system=false})
+add_requires("sqlite3 3.39.0+200", {system=false})
 
 local XMACS_VERSION="1.1.2-alpha1"
 local INSTALL_DIR="build/package"
