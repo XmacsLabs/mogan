@@ -6,11 +6,13 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+      - 'xmake.lua'
   pull_request:
     branches: [ main ]
     paths:
       - 'src/**'
       - 'tests/**'
+      - 'xmake.lua'
 
 jobs:
   macosbuild:
