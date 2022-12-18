@@ -14,7 +14,11 @@
 #                to exit with a non-zero status, or zero if all commands in the pipeline exit successfully.
 set -euxo pipefail
 
-MOGAN_APP=build/macosx/`arch`/release/Mogan.app
+if [[ "$(arch)" == "arm64" ]];then
+    MOGAN_APP=build/macosx/arm64/release/Mogan.app
+else
+    MOGAN_APP=build/macosx/x86_64/release/Mogan.app
+fi
 
 # Pick the max processors count from sysctl.
 nproc() {
