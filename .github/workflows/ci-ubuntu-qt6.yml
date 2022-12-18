@@ -28,7 +28,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y cmake qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins libfreetype6-dev libsqlite3-dev libjpeg-dev libcurl4-openssl-dev libgl-dev
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y cmake qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins libfreetype6-dev libsqlite3-dev libjpeg-dev libcurl4-openssl-dev libgl-dev fonts-noto-cjk
       - name: Create Build Dir
         run: mkdir -p ${{github.workspace}}/build
       - name: Build using CMake

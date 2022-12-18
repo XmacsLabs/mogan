@@ -23,6 +23,10 @@ void TestFont::test_default_chinese_font_name() {
 #ifdef OS_MACOS
   QCOMPARE (default_chinese_font_name (), string ("Songti SC"));
 #endif
+
+#ifdef Q_OS_LINUX
+  QCOMPARE (default_chinese_font_name (), string ("Noto Serif CJK SC"));
+#endif
 }
 
 QTEST_MAIN(TestFont)
