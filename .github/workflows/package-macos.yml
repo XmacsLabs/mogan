@@ -15,7 +15,7 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
       - name: Install Dependencies
         run: |
-          brew install qt@5
+          brew install qt@5 wget
           brew link qt@5
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
