@@ -6,21 +6,39 @@ on:
 jobs:
   mac-package:
     name: Package On macOS
-    runs-on: macos-12
-    timeout-minutes: 120
+    runs-on: macos-10.15
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          submodules: true
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
       - name: Install Dependencies
         run: |
-          brew install freetype libjpeg qt@5 cmake ccache curl
+          brew install qt@5 wget
           brew link qt@5
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.7.3
+          actions-cache-folder: '.xmake-cache'
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{github.workspace}}/build/.build_cache
+            /Users/runner/.xmake
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
+      - name: xmake build and install
+        run: |
+            xmake config --yes
+            xmake build --yes --verbose --diagnosis --jobs=8 --all
+            xmake install -o build/macosx/x86_64/release/Mogan.app/Contents/Resources/ mogan_install
       - name: Run Package Script
         working-directory: ${{github.workspace}}
-        run: bash packages/macos/package.sh
+        run: ./packages/macos/package.sh
       - name: Upload Mogan.dmg
         uses: actions/upload-artifact@v3
         with:

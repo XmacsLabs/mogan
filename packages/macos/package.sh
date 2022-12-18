@@ -14,7 +14,13 @@
 #                to exit with a non-zero status, or zero if all commands in the pipeline exit successfully.
 set -euxo pipefail
 
-MOGAN_APP=build/macosx/`arch`/release/Mogan.app
+if [[ "$(arch)" == "arm64" ]];then
+    MOGAN_APP=build/macosx/arm64/release/Mogan.app
+    MOGAN_GS=${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/gs
+else
+    MOGAN_APP=build/macosx/x86_64/release/Mogan.app
+    MOGAN_GS=${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/gs
+fi
 
 # Pick the max processors count from sysctl.
 nproc() {
@@ -56,8 +62,22 @@ prepare_assets() (
        ${MOGAN_APP}/Contents/Resources/share/Xmacs/plugins/eukleides/bin
 
     # GS
-    cp /Applications/TeXmacs.app/Contents/Resources/share/TeXmacs/bin/gs \
-       ${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/
+    if [[ "$(arch)" == "arm64" ]];then
+        wget https://github.com/XmacsLabs/mogan/releases/download/v1.1.1/gs_arm64 -O ${MOGAN_GS}
+        if [[ $(md5 -q ${MOGAN_GS}) == 'e9324b8b1bc973f8bc0bcaf9ace33405' ]];then
+            echo "GS Binary checked"
+        else
+            exit -1
+        fi
+    else
+        wget https://github.com/XmacsLabs/mogan/releases/download/v1.1.1/gs -O ${MOGAN_GS}
+        if [[ $(md5 -q ${MOGAN_GS}) == 'ffe615a200fdcebbee19845754856732' ]];then
+            echo "GS Binary checked"
+        else
+            exit -1
+        fi
+    fi
+    chmod +x ${MOGAN_GS}
 
     codesign --force --deep --sign - ${MOGAN_APP}
 
@@ -67,14 +87,13 @@ prepare_assets() (
 )
 
 deploy_app() {
-    hdiutil create Mogan.dmg -fs HFS+ -srcfolder ${MOGAN_APP}
+    hdiutil create build/Mogan.dmg -fs HFS+ -srcfolder ${MOGAN_APP}
 }
 
-build_mogan_xmake
+if [[ "$(arch)" == "arm64" ]];then
+    build_mogan_xmake
+fi
 
-# “Copy Assets” is a optional step, and should not break
-# the subsequent commands. `|| true` indicates `bash` to
-# not stop at this command.
-prepare_assets || true
+prepare_assets
 
 deploy_app

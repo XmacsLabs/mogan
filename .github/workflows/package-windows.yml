@@ -7,6 +7,10 @@ jobs:
   win-package:
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          submodules: true
       - name: Install msys and xmake
         uses: msys2/setup-msys2@v2
         with:
@@ -30,9 +34,6 @@ jobs:
           host: 'windows'
           target: 'desktop'
           cache: 'true'
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
       - name: cache xmake
         uses: actions/cache@v2
         with:
