@@ -32,7 +32,7 @@ jobs:
         run: |
             xrepo update-repo
             xmake config --yes
-            xmake build --yes --verbose --diagnosis --jobs="$(nproc)" --all
+            xmake build --yes --verbose --diagnosis --jobs=8 --all
             xmake install -o build/macosx/x86_64/release/Mogan.app/Contents/Resources/ mogan_install
       - uses: actions/checkout@v3
         with:
