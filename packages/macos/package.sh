@@ -67,7 +67,7 @@ prepare_assets() (
 )
 
 deploy_app() {
-    hdiutil create Mogan.dmg -fs HFS+ -srcfolder ${MOGAN_APP}
+    hdiutil create build/Mogan.dmg -fs HFS+ -srcfolder ${MOGAN_APP}
 }
 
 build_mogan_xmake
