@@ -19,6 +19,7 @@ if [[ "$(arch)" == "arm64" ]];then
     MOGAN_GS=${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/gs
 else
     MOGAN_APP=build/macosx/x86_64/release/Mogan.app
+    MOGAN_GS=${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/gs
 fi
 
 # Pick the max processors count from sysctl.
