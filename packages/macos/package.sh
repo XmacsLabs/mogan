@@ -64,15 +64,19 @@ prepare_assets() (
     if [[ "$(arch)" == "arm64" ]];then
         wget https://github.com/XmacsLabs/mogan/releases/download/v1.1.1/gs_arm64 -O ${MOGAN_GS}
         if [[ $(md5 -q ${MOGAN_GS}) == 'e9324b8b1bc973f8bc0bcaf9ace33405' ]];then
+            echo "GS Binary checked"
+        else
             exit -1
         fi
     else
         wget https://github.com/XmacsLabs/mogan/releases/download/v1.1.1/gs -O ${MOGAN_GS}
         if [[ $(md5 -q ${MOGAN_GS}) == 'ffe615a200fdcebbee19845754856732' ]];then
+            echo "GS Binary checked"
+        else
             exit -1
         fi
     fi
-    chmod +x ${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/gs
+    chmod +x ${MOGAN_GS}
 
     codesign --force --deep --sign - ${MOGAN_APP}
 
@@ -89,9 +93,6 @@ if [[ "$(arch)" == "arm64" ]];then
     build_mogan_xmake
 fi
 
-# “Copy Assets” is a optional step, and should not break
-# the subsequent commands. `|| true` indicates `bash` to
-# not stop at this command.
-prepare_assets || true
+prepare_assets
 
 deploy_app
