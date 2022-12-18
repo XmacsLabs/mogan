@@ -60,8 +60,13 @@ prepare_assets() (
        ${MOGAN_APP}/Contents/Resources/share/Xmacs/plugins/eukleides/bin
 
     # GS
-    cp /Applications/TeXmacs.app/Contents/Resources/share/TeXmacs/bin/gs \
-       ${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/
+    if [[ "$(arch)" == "arm64" ]];then
+       wget https://github.com/XmacsLabs/mogan/releases/download/v1.1.1/gs_arm64 -O \
+       ${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/gs
+    else
+       wget https://github.com/XmacsLabs/mogan/releases/download/v1.1.1/gs -O \
+       ${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/gs
+    fi
 
     codesign --force --deep --sign - ${MOGAN_APP}
 
