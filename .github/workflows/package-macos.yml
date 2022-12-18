@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-          submodules: recursive
+          submodules: true
       - name: Run Package Script
         working-directory: ${{github.workspace}}
         run: ./packages/macos/package.sh
