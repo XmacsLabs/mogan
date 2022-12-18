@@ -33,7 +33,6 @@ jobs:
           submodules: true
       - name: xmake build and install
         run: |
-            xrepo update-repo
             xmake config --yes
             xmake build --yes --verbose --diagnosis --jobs=8 --all
             xmake install -o build/macosx/x86_64/release/Mogan.app/Contents/Resources/ mogan_install

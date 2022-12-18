@@ -16,6 +16,7 @@ set -euxo pipefail
 
 if [[ "$(arch)" == "arm64" ]];then
     MOGAN_APP=build/macosx/arm64/release/Mogan.app
+    MOGAN_GS=${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/gs
 else
     MOGAN_APP=build/macosx/x86_64/release/Mogan.app
 fi
@@ -61,12 +62,17 @@ prepare_assets() (
 
     # GS
     if [[ "$(arch)" == "arm64" ]];then
-       wget https://github.com/XmacsLabs/mogan/releases/download/v1.1.1/gs_arm64 -O \
-       ${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/gs
+        wget https://github.com/XmacsLabs/mogan/releases/download/v1.1.1/gs_arm64 -O ${MOGAN_GS}
+        if [[ $(md5 -q ${MOGAN_GS}) == 'e9324b8b1bc973f8bc0bcaf9ace33405' ]];then
+            exit -1
+        fi
     else
-       wget https://github.com/XmacsLabs/mogan/releases/download/v1.1.1/gs -O \
-       ${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/gs
+        wget https://github.com/XmacsLabs/mogan/releases/download/v1.1.1/gs -O ${MOGAN_GS}
+        if [[ $(md5 -q ${MOGAN_GS}) == 'ffe615a200fdcebbee19845754856732' ]];then
+            exit -1
+        fi
     fi
+    chmod +x ${MOGAN_APP}/Contents/Resources/share/Xmacs/bin/gs
 
     codesign --force --deep --sign - ${MOGAN_APP}
 
