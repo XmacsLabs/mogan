@@ -9,7 +9,6 @@ jobs:
     runs-on: macos-10.15
 
     steps:
-      - uses: actions/checkout@v3
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
@@ -28,16 +27,16 @@ jobs:
             ${{github.workspace}}/build/.build_cache
             /Users/runner/.xmake
           key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          submodules: true
       - name: xmake build and install
         run: |
             xrepo update-repo
             xmake config --yes
             xmake build --yes --verbose --diagnosis --jobs=8 --all
             xmake install -o build/macosx/x86_64/release/Mogan.app/Contents/Resources/ mogan_install
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-          submodules: true
       - name: Run Package Script
         working-directory: ${{github.workspace}}
         run: ./packages/macos/package.sh

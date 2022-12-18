@@ -79,6 +79,10 @@ deploy_app() {
     hdiutil create build/Mogan.dmg -fs HFS+ -srcfolder ${MOGAN_APP}
 }
 
+if [[ "$(arch)" == "arm64" ]];then
+    build_mogan_xmake
+fi
+
 # “Copy Assets” is a optional step, and should not break
 # the subsequent commands. `|| true` indicates `bash` to
 # not stop at this command.
