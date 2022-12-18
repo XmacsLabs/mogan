@@ -117,7 +117,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev libqt5svg5-dev qt5-image-formats-plugins
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev libqt5svg5-dev qt5-image-formats-plugins fonts-noto-cjk
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
