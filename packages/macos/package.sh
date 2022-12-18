@@ -70,8 +70,6 @@ deploy_app() {
     hdiutil create build/Mogan.dmg -fs HFS+ -srcfolder ${MOGAN_APP}
 }
 
-build_mogan_xmake
-
 # “Copy Assets” is a optional step, and should not break
 # the subsequent commands. `|| true` indicates `bash` to
 # not stop at this command.
