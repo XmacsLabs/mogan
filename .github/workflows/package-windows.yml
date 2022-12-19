@@ -47,11 +47,10 @@ jobs:
         run: |
           export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
           xrepo update-repo
-          xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
-          xmake build --yes --verbose --diagnosis --jobs=8 --all
-          windeployqt ./build/mingw/x86_64/release/
+          xmake config --yes --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
+          xmake build --yes --jobs=8 mogan_install
           xmake install mogan_install
-          windeployqt ./build/package/bin/
+          windeployqt --compiler-runtime ./build/package/bin/ -printsupport
       - name: Download binaries
         uses: actions/checkout@v3
         with:
