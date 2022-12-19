@@ -24,15 +24,13 @@
 ;; Emacs prefixes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(when (and (like-emacs?) (os-mingw?))
-(kbd-wildcards pre
-  ("emacs:meta" "A-" #t))
-)
+(when (and (like-emacs?) (not (os-macos?)))
+  (kbd-wildcards pre
+    ("emacs:meta" "A-" #t)))
 
-(when (and (like-emacs?) (not (os-mingw?)))
-(kbd-wildcards pre
-  ("emacs:meta" "M-" #t))
-)
+(when (and (like-emacs?) (os-macos?))
+  (kbd-wildcards pre
+    ("emacs:meta" "M-" #t)))
 
 (when (like-emacs?)
 
