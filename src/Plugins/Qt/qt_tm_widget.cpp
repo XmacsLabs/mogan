@@ -57,7 +57,15 @@ replaceActions (QWidget* dest,  QList<QAction*>* src) {
   }
   for (int i = 0; i < src->count(); i++) {
     QAction* a = (*src)[i];
+#if (defined(OS_WASM))
+    if(! a->menu()){
+        //QToolButton::showMenu() cause WASM to freeze, so we don't show those buttons until QT fixes this problem
+        //A walkaround is to subclass QToolButton and override showMenu to use popup() instead of exec()
+        dest->addAction(a);
+    }
+#else
     dest->addAction(a);
+#endif
   }
   dest->setUpdatesEnabled (true);
 }
