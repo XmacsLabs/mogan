@@ -593,7 +593,7 @@ default_chinese_font_name () {
   if (tt_font_exists ("Songti")) return "Songti SC";
 #endif
 
-  if (tt_font_exists ("NotoSerifCJK-Regular")) return "Noto Serif CJK SC";
+  if (tt_font_exists ("NotoSerifCJK-Regular")) return "Noto CJK SC";
   return "roman";
 }
 

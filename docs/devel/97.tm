@@ -12,6 +12,35 @@
   CJK SC. Because Noto Serif CJK SC is the default Chinese font for
   LibreOffice Writer on Debian.
 
+  <section|Font Family and Font Master>
+
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (default-chinese-font)
+    <|unfolded-io>
+      "Noto CJK SC"
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (font-family-\<gtr\>master "Noto Serif CJK SC")
+    <|unfolded-io>
+      "Noto CJK SC"
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (font-master-\<gtr\>families "Noto CJK SC")
+    <|unfolded-io>
+      ("Noto Sans CJK SC" "Noto Sans CJK SC DemiLight" "Noto Sans CJK SC
+      Thin" "Noto Sans Mono CJK SC" "Noto Serif CJK SC")
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
+  The default Chinese font should be a font master but not a font family.
+
   <section|How to test>
 
   <subsection|Unit test>
@@ -25,11 +54,13 @@
   <subsection|Scheme Session>
 
   <\session|scheme|default>
-    <\unfolded-io|Scheme] >
-      (default-chinese-font)
-    <|unfolded-io>
-      "Noto Serif CJK SC"
-    </unfolded-io>
+    <\input|Scheme] >
+      (regtest-fonts)
+    </input>
+
+    <\input|Scheme] >
+      (run-all-tests)
+    </input>
 
     <\input|Scheme] >
       \;
