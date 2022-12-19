@@ -2,7 +2,7 @@
 ## Using xmake on Windows
 墨干的代码使用变长数组，因此不能用msvc来编译开发。推荐使用mingw编译器来开发。
 
-### Step 1: Install xmake and Qt 5
+### 第一步：安装xmake、mingw、msys以及Qt
 开发者需要安装下列工具：
 
 * [Qt](https://www.qt.io/download)
@@ -21,21 +21,21 @@
 xrepo update-repo
 ```
 
-### Step 2: Compile
+### 第二步：编译
 在msys命令行下运行这两条命令
 ``` bash
 xmake config --qt=<newly installed qt address>/5.x.x/mingw81_64
 xmake build --jobs=<numbers of processes your computer can support, same as make>
 ```
 
-### Step 3: Run unit test
+### 第三步：运行单元测试
 ``` bash
 windeployqt --compiler-runtime ./build/mingw/x86_64/release/ -printsupport
 xmake run --yes --verbose --diagnosis --group=tests
 xmake run --yes --verbose --diagnosis --group=keneral_tests
 ```
 
-### Step 4: Install to `build/package`
+### 第四步：安装到`build/package`目录
 ``` bash
 xmake install -o build/package mogan_install
 windeployqt --compiler-runtime ./build/package/bin/ -printsupport
@@ -43,12 +43,12 @@ windeployqt --compiler-runtime ./build/package/bin/ -printsupport
 
 墨干编辑器的某些功能需要其他程序来配合。这些程序在[xmacslabs/mogan-dependencies](https://github.com/XmacsLabs/mogan-dependencies)仓库下。
 
-### Step 5: Launch Mogan Editor
+### 第五步：启动墨干编辑器
 ``` bash
 build/package/bin/mogan.exe
 ```
 
-### Optional: Vscode support
+### 在VSCode下开发（可选）
 如果用VSCode来开发，xmake可以生成`compile_command.json`文件。如果提供这份文件，VSCode的C++插件会根据这个文件来识别项目结构，提供正确的语义高亮等语义提示。
 ```bash
 xmake project --kind=compile_commands ./.vscode
@@ -71,7 +71,7 @@ xmake project --kind=compile_commands ./.vscode
 }
 ```
 
-##  在Linux或WSL环境下使用Cmake开发
+##  在Linux或WSL环境下使用CMake开发
 我们需要在Windows上使用WSL里面的Ubuntu 20.04或者在Ubuntu 20.04上启动Windows的虚拟机。因为构建是在Ubuntu上面完成，而测试是在Windows上完成。
 
 首先，我们需要完成MXE的下载和相关依赖的安装，可以参考这个文档：
