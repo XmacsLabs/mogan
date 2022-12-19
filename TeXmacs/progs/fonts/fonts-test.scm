@@ -15,6 +15,23 @@
 (texmacs-module (fonts fonts-test)
   (:use (kernel texmacs tm-define)))
 
+(define (regtest-default-chinese-font)
+  (cond ((os-macos?)
+         (regression-test-group
+          "fun" "result"
+          (default-chinese-font) :none
+          (test "macOS" :none "Singti SC")))
+        ((os-mingw?)
+         (regression-test-group
+          "fun" "result"
+          (default-chinese-font) :none
+          (test "Windows" :none "simsun")))
+        (else
+         (regression-test-group
+          "fun" "result"
+          (default-chinese-font) :none
+          (test "GNU Linux" :none "Noto CJK SC")))))
+
 (define (regtest-family-and-master)
   (+ (if (font-exists-in-tt? "NotoSerifCJK-Regular")
       (regression-test-group
