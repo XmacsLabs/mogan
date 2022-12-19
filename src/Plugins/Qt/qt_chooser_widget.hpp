@@ -34,6 +34,7 @@ protected:
 
   QString nameFilter;    //!< For use in QFileDialog::setNameFilter()
   QString defaultSuffix; //!< For use in QFileDialog::setDefaultSuffix()
+  void open_dialog();
 
 public:
   qt_chooser_widget_rep (command, string, string);
