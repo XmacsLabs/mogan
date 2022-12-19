@@ -197,7 +197,81 @@ qt_chooser_widget_rep::set_type (const string& _type)
   return true;
 }
 
+/*!
+ *  WASM build freezes when calling QDialog::exec(), so instead to use QDialog::open()
+*/
+void
+qt_chooser_widget_rep::open_dialog (){
+    QString caption = to_qstring (win_title);
+    c_string tmp (directory * "/" * file);
+    QString path = QString::fromUtf8 (tmp, -1);
+    QTMFileDialog*  dialog;
+    QTMImageDialog* imgdialog = 0; // to avoid a dynamic_cast
 
+    if (type == "image")
+      dialog = imgdialog = new QTMImageDialog (NULL, caption, path);
+    else
+      dialog = new QTMFileDialog (NULL, caption, path);
+    dialog->setViewMode (QFileDialog::Detail);
+    if (type == "directory")
+      dialog->setFileMode (QFileDialog::Directory);
+    else if (type == "image" && prompt == "")
+      // check non saving mode just in case we support it
+      dialog->setFileMode (QFileDialog::ExistingFile);
+    else
+      dialog->setFileMode (QFileDialog::AnyFile);
+    if (prompt != "") {
+      string text= prompt;
+      if (ends (text, ":")) text= text (0, N(text) - 1);
+      if (ends (text, " as")) text= text (0, N(text) - 3);
+      dialog->setDefaultSuffix (defaultSuffix);
+      dialog->setAcceptMode (QFileDialog::AcceptSave);
+      dialog->setLabelText (QFileDialog::Accept, to_qstring (translate (text)));
+    }
+
+    if (type != "directory") {
+      QStringList filters;
+      if (nameFilter != "")
+        filters << nameFilter;
+      filters << to_qstring (translate ("All files (*)"));
+      dialog->setNameFilters (filters);
+    }
+
+    dialog->updateGeometry();
+    QSize   sz = dialog->sizeHint();
+    QPoint pos = to_qpoint (position);
+    QRect r;
+
+    r.setSize (sz);
+    r.moveCenter (pos);
+    dialog->setGeometry (r);
+
+    file = "#f";
+    dialog->open();
+    QObject::connect(
+            dialog, &QDialog::finished,
+            [dialog, imgdialog, this]( int result ) {
+                if ( result ) {
+                    QStringList fileNames = dialog->selectedFiles();
+                    if (fileNames.count() > 0) {
+                      QString imqstring = fileNames.first();
+                      // QTBUG-59401: QFileDialog::setDefaultSuffix doesn't work when file path contains a dot
+                      if (!defaultSuffix.isEmpty() && imqstring.contains(QLatin1Char('/'))
+                          && !imqstring.endsWith(QLatin1Char('/'))
+                          && imqstring.indexOf(QLatin1Char('.'), imqstring.lastIndexOf(QLatin1Char('/'))) == -1) {
+                            imqstring = imqstring + QLatin1Char('.') + defaultSuffix;
+                          }
+                      string imname    = from_qstring_utf8 (imqstring);
+                      file = "(system->url " * scm_quote (imname) * ")";
+                      if (type == "image") {
+                        file = "(list " * file * imgdialog->getParamsAsString () * ")"; //set image size from preview
+                }
+                dialog->deleteLater();
+                cmd ();
+                if (!is_nil (quit)) quit ();
+            }}}
+        );
+}
 
 /*! Actually displays the dialog with all the options set.
  * Uses a native dialog on Mac/Win and opens a custom dialog with image preview
@@ -205,6 +279,9 @@ qt_chooser_widget_rep::set_type (const string& _type)
  */
 void
 qt_chooser_widget_rep::perform_dialog () {
+#if (defined(OS_WASM))
+    open_dialog();
+#else
   QString caption = to_qstring (win_title);
   c_string tmp (directory * "/" * file);
   QString path = QString::fromUtf8 (tmp, -1);
@@ -321,4 +398,5 @@ qt_chooser_widget_rep::perform_dialog () {
   
   cmd ();
   if (!is_nil (quit)) quit ();
+#endif
 }
