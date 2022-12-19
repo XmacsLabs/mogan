@@ -25,7 +25,8 @@
         (convert mathml mathtm-test)
         (convert tmml tmmltm-test)
         (prog prog-format-test)
-        (generic generic-test)))
+        (generic generic-test)
+        (fonts fonts-test)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Test LaTeX export
@@ -98,4 +99,5 @@
   (regtest-tm-dialogue)
   (regtest-tm-convert)
   (regtest-generic)
+  (regtest-fonts)
 )
