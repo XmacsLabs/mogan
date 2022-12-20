@@ -58,6 +58,7 @@ packages/centos/TeXmacs.spec
 packages/fedora/TeXmacs.spec
 packages/windows/resource.rc
 packages/windows/TeXmacs.iss
+packages/windows/Xmacs.iss
 packages/redhat/TeXmacs.spec
 Makefile
 src/makefile
