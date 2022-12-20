@@ -45,9 +45,7 @@ jobs:
         shell: msys2 {0}
         id: build
         run: |
-          echo "/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/" >> $GITHUB_PATH
-          echo "${Qt5_Dir}/bin/" >> $GITHUB_PATH
-          export PATH=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/:/mingw64/bin/:${PATH}
+          export PATH=${Qt5_Dir}/bin/:/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/:/mingw64/bin/:${PATH}
           xrepo update-repo
           xmake config --yes --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
           xmake build --yes --jobs=8 mogan_install
