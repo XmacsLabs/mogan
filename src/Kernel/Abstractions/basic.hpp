@@ -27,7 +27,6 @@ typedef long intptr_t;
 
 #define LESSGTR <>
 
-#define TM_DEBUG(x)
 typedef int SI;
 typedef unsigned int SN;
 typedef short HI;
@@ -42,17 +41,29 @@ typedef unsigned int color;
 #define MIN_SI 0x80000000
 
 /******************************************************************************
-* debugging
-******************************************************************************/
-
-#if (defined __SUNPRO_CC || defined __clang__)
-#define STACK_NEW_ARRAY(name,T,size) T* name= tm_new_array<T> (size)
-#define STACK_DELETE_ARRAY(name) tm_delete_array (name)
+ * Variable length array
+ ******************************************************************************/
+#define TM_DEBUG(x)
+#if (defined __SUNPRO_CC || defined __clang__ || defined _MSC_VER)
+#define STACK_NEW_ARRAY(name,T,size) \
+T* name= tm_new_array<T> (size); \
+try {
+#define STACK_DELETE_ARRAY(name) \
+tm_delete_array (name);\
+}\
+catch (const string err &) {\
+    tm_delete_array (name);\
+    throw err;\
+}
 #else
 #define STACK_NEW_ARRAY(name,T,size) T name[size]
 #define STACK_DELETE_ARRAY(name)
 #endif
 
+/******************************************************************************
+ * debugging
+ ******************************************************************************/
+#define TM_DEBUG(x)
 enum { DEBUG_FLAG_AUTO, DEBUG_FLAG_VERBOSE, DEBUG_FLAG_EVENTS,
        DEBUG_FLAG_STD, DEBUG_FLAG_IO, DEBUG_FLAG_BENCH,
        DEBUG_FLAG_HISTORY, DEBUG_FLAG_QT, DEBUG_FLAG_QT_WIDGETS,
