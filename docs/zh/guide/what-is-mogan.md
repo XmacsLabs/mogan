@@ -13,7 +13,7 @@ GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](
 
 [沈浪熊猫儿](http://texmacs.org/tmweb/contribute/team-sadhen.en.html)于2022年1月30号，在[Massimiliano Gubinelli](http://texmacs.org/tmweb/contribute/team-massimiliano.en.html)的S7 Scheme分支的基础上，发布了[墨干编辑器v1.0.0](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.0.0)，并创建了[墨者实验室](https://gitee.com/XmacsLabs)这样一个非盈利组织，旨在普及GNU TeXmacs，让所有人都能够通过Joris van der Hoeven创造的软件享受探索科学与技术的乐趣。
 
-强烈推荐观看 GNU TeXmacs 2.1 的视频简介了解它的诸多特色功能
+特色功能一览：
 
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
 
@@ -31,11 +31,14 @@ GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](
 
 ## 如何入门
 
-推荐新用户观看播放列表 [**GNU TeXmacs for scientists**（YouTube）](https://youtube.com/playlist?list=PLjlnuLy3KEpYmUQvFIFSFgeYQjVYO2gxi)
- [GNU TeXmacs for scientists (Bilibili)](https://www.bilibili.com/video/BV1h4411w7xy/?p=6&share_source=copy_web&vd_source=cefcc4e4f9525bd49d9448f1df367da1) / [TeXmacs 入门（Bilibili）](https://www.bilibili.com/medialist/play/617908?from=space&business=space_series&business_id=2765862&desc=1) / [TeXmacs 入门（知乎）](https://www.zhihu.com/collection/844048143)）作为入门教程。
-进一步学习可以参考以下资源：
+- 入门视频教程：[**GNU TeXmacs for scientists**（YouTube）](https://youtube.com/playlist?list=PLjlnuLy3KEpYmUQvFIFSFgeYQjVYO2gxi)
+ [GNU TeXmacs for scientists (Bilibili)](https://www.bilibili.com/video/BV1h4411w7xy/) / [TeXmacs 入门（Bilibili）](https://www.bilibili.com/medialist/play/617908?from=space&business=space_series&business_id=2765862&desc=1) / [TeXmacs 入门（知乎）](https://www.zhihu.com/collection/844048143)）作为入门教程。
+
+- [**The Jolly Writer**](https://www.scypress.com/The-Jolly-Writer.pdf) 是目前唯一的系统且详细的 TeXmacs 官方教材。请在[此处](https://www.scypress.com/book_download.html)免费下载或捐赠。
+
+其他资料：
 - GNU TeXmacs 的官方文档. 在帮助菜单下可以直接浏览。需要注意的一点是，如果界面语言是中文，那么已经完成翻译的帮助文档也是中文文档；如果界面语言是英文，那么帮助文档是英文的。
-- 墨客星球. 简称星球，通过 `帮助→墨客星球` 可以直接访问。
+- 墨客星球. 简称星球，通过 `帮助 → 墨客星球` 可以直接访问。
 - 视频资源. `视频集锦` 是星球中的文档，收录了大量的教学视频。
 
 ## 联系我们
