@@ -9,7 +9,7 @@
 我们在 [Gitee](https://gitee.com/XmacsLabs/mogan/releases) 提供 Windows 和 macOS 这两大平台的安装包。阅读[安装指南](docs/Install.zh.md)可以了解下载安装包之后的详细安装步骤，以及其它平台比如GNU/Linux的安装方法.
 
 ## 什么是 GNU TeXmacs 以及墨干编辑器
-GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html) 从上世纪九十年代末开始研发的一款结构化编辑器，旨在利用直观易用的图形界面编写高质量的技术文档，效果可达到与 LaTeX 相同的水准。目前它的主要用户集中于中小学教师（多数在法国）及高校科研人员。
+GNU TeXmacs 是法国国家科学研究中心的数学家 [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html) 从上世纪九十年代末开始研发的一款结构化编辑器，旨在利用直观易用的图形界面编写高质量的技术文档，效果可达到与 LaTeX 相同的水准。目前它的主要用户集中于中小学教师（多数在法国）及高校科研人员。
 
 [沈浪熊猫儿](http://texmacs.org/tmweb/contribute/team-sadhen.en.html)于2022年1月30号，在 [Massimiliano Gubinelli](http://texmacs.org/tmweb/contribute/team-massimiliano.en.html) 的S7 Scheme分支的基础上，发布了[墨干编辑器v1.0.0](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.0.0)，并创建了[墨者实验室](https://gitee.com/XmacsLabs)这样一个非盈利组织，旨在普及GNU TeXmacs，让所有人都能够通过Joris van der Hoeven创造的软件享受探索科学与技术的乐趣。
 
@@ -25,7 +25,7 @@ GNU TeXmacs是法国国家科学研究中心的数学家 [Joris van der Hoeven](
 - 用户可以自定义排版样式，也可以使用 Scheme 扩展语言为编辑器添加新功能。
 - 可以在所有主流 Unix 平台、macOS 和 Windows 上运行。
 
-墨干继承了 GNU TeXmacs 以上所有特性（请参考 [GNU TeXmacs 主页](https://www.texmacs.org))，所也可作为理工科学生、中小学教师和研究人员学习工作的利器，可为创作高质量的作业文档、高水准的报告幻灯片和LaTeX水准的论文提供便利。基于 GNU TeXmacs，墨干改正了许多bugs，优化了性能，并美化了界面。
+墨干继承了 GNU TeXmacs 以上所有特性（请参考 [GNU TeXmacs 主页](https://www.texmacs.org))，所也可作为理工科学生、中小学教师和研究人员学习工作的利器，可为创作高质量的作业文档、高水准的报告幻灯片和 LaTeX 水准的论文提供便利。基于 GNU TeXmacs，墨干改正了许多错误，优化了性能，并美化了界面。
 
 ![搭配 KDE Brezze 图标的墨干 v1.1.1](https://user-images.githubusercontent.com/32867606/198898710-6c16bfb2-1107-4cb0-8cb7-14606b31a315.png)
 
@@ -53,7 +53,7 @@ GitHub|[XmacsLabs](https://github.com/XmacsLabs)
 豆瓣小组|[GNU TeXmacs](https://www.douban.com/group/texmacs/)
 知乎|[墨干编辑器](https://www.zhihu.com/people/xmacs)
 微信公众号|墨者实验室（xmacs2020）
-微信群|墨客社区（通过账户XmacsLabs加入）
+微信群|墨客社区（通过账户 XmacsLabs 加入）
 QQ群|GNU TeXmacs中文社区（934456971）
 
 使用时遇到问题也欢迎咨询 TeXmacs 社区，特别是官方论坛。
