@@ -168,7 +168,7 @@ bool imlib2_supports (url u) { (void) u; return false; }
 void
 imlib2_image_size (url u, int& w, int& h) {
   (void) u; (void) w; (void) h;
-  FAILED ("imlib2 is not present");
+  FAIL_WITH_MSG ("imlib2 is not present");
 }
 
 #ifdef X11TEXMACS
@@ -176,7 +176,7 @@ void
 imlib2_display (Display* dpy, Pixmap pm, url u, SI w, SI h) {
   (void) dpy; (void) pm;
   (void) u; (void) w; (void) h;
-  FAILED ("imlib2 is not present");
+  FAIL_WITH_MSG ("imlib2 is not present");
 }
 #endif
 

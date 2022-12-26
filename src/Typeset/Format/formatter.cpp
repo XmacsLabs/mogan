@@ -75,7 +75,7 @@ lazy_rep::produce (lazy_type request, format fm) {
 
   failed_error << "The lazy structure was " << ((tree) (*this)) << "\n";
   failed_error << "The format was " << ((tree) fm) << "\n";
-  FAILED ("invalid production");
+  FAIL_WITH_MSG ("invalid production");
   return lazy ();
 }
 
@@ -84,7 +84,7 @@ lazy_rep::query (lazy_type request, format fm) {
   (void) request;
   failed_error << "The lazy structure was " << ((tree) (*this)) << "\n";
   failed_error << "The format was " << ((tree) fm) << "\n";
-  FAILED ("invalid query");
+  FAIL_WITH_MSG ("invalid query");
   return format ();
 }
 
@@ -96,7 +96,7 @@ void
 lazy_rep::append (lazy lz) {
   (void) lz;
   failed_error << "The lazy structure was " << ((tree) (*this)) << "\n";
-  FAILED ("lazy structure is not a stream");
+  FAIL_WITH_MSG ("lazy structure is not a stream");
 }
 
 struct lazy_box_rep: public lazy_rep {

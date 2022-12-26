@@ -131,7 +131,7 @@ load_string (url u, string& s, bool fatal) {
     string err_msg = string("Failed to load file: ") * as_string (u);
     if (fatal) {
       failed_error << err_msg << LF;
-      FAILED ("file not readable");
+      FAIL_WITH_MSG ("file not readable");
     }
     //else debug_io << err_msg << LF;
   }
@@ -144,7 +144,7 @@ save_string (url u, string s, bool fatal) {
     bool err= save_to_server (u, s);
     if (err && fatal) {
       failed_error << "File name= " << as_string (u) << "\n";
-      FAILED ("file not writeable");
+      FAIL_WITH_MSG ("file not writeable");
     }
     return err;
   }
@@ -202,14 +202,14 @@ save_string (url u, string s, bool fatal) {
 
   if (err && fatal) {
     failed_error << "File name= " << as_string (u) << "\n";
-    FAILED ("file not writeable");
+    FAIL_WITH_MSG ("file not writeable");
   }
   return err;
 }
 
 bool
 append_string (url u, string s, bool fatal) {
-  if (is_rooted_tmfs (u)) FAILED ("file not appendable");
+  if (is_rooted_tmfs (u)) FAIL_WITH_MSG ("file not appendable");
 
   // cout << "Save " << u << LF;
   url r= u;
@@ -255,7 +255,7 @@ append_string (url u, string s, bool fatal) {
 
   if (err && fatal) {
     failed_error << "File name= " << as_string (u) << "\n";
-    FAILED ("file not appendable");
+    FAIL_WITH_MSG ("file not appendable");
   }
   return err;
 }
@@ -527,7 +527,7 @@ read_directory (url u, bool& error_flag) {
 #ifdef QTTEXMACS
   return qt_read_directory (name, error_flag);
 #else
-  FAILED("Implementation of list directories is not provided");
+  FAIL_WITH_MSG("Implementation of list directories is not provided");
   return array<string> ();
 #endif
 }

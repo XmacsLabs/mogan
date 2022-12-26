@@ -426,7 +426,7 @@ static string pfb_to_pfa (url file) {
     parse (pfb, pos, magic);
     //cout << "magic:" << as_hexadecimal(magic,2) << LF ;
     if (magic != 128) {
-      FAILED ("Not a pfb file");
+      FAIL_WITH_MSG ("Not a pfb file");
     }
     parse (pfb, pos, type);
     //cout << "type:" << as_hexadecimal(type,2) << LF;
@@ -464,7 +464,7 @@ static string pfb_to_pfa (url file) {
         break;
         
       default : 
-        FAILED ("Unknown field type while reading PFB file");
+        FAIL_WITH_MSG ("Unknown field type while reading PFB file");
         break;
         
     }

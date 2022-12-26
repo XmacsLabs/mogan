@@ -32,7 +32,7 @@ string as_math_string (tree t);
 template<typename T> void
 parse (tree t, T& result) {
   (void) t; (void) result;
-  FAILED ("unsupported type");
+  FAIL_WITH_MSG ("unsupported type");
 }
 
 inline void

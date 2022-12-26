@@ -392,7 +392,7 @@ apply (tree& ref, modification mod) {
   if (!is_applicable (ref, mod)) {
     failed_error << "mod= " << mod << "\n";
     failed_error << "ref= " << ref << "\n";
-    FAILED ("invalid modification");
+    FAIL_WITH_MSG ("invalid modification");
   }
   path ip= obtain_ip (ref);
   path rp= reverse (ip);

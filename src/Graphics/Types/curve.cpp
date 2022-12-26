@@ -502,7 +502,7 @@ spline_rep::S (
   else if (u<U[i+1]) return p1[i](u);
   else if (u<U[i+2]) return p2[i](u);
   else if (u<U[i+3]) return p3[i](u);
-  else FAILED ("we should **never** go here");
+  else FAIL_WITH_MSG ("we should **never** go here");
   return 0.0;
 }
 
@@ -659,7 +659,7 @@ spline_rep::get_control_points (
     for (i=0; i<=(close ? n-2 : n); i++)
       p[i]= evaluate (u[i]);
   }
-  else FAILED ("not yet implemented");
+  else FAIL_WITH_MSG ("not yet implemented");
   abs = u;
   pts = p;
   rcip= cip;
@@ -1092,7 +1092,7 @@ struct compound_curve_rep: public curve_rep {
 curve
 compound (array<curve> a) {
   // FIXME: we might want to test for continuity at the junctions
-  if (N(a) == 0) FAILED ("at least one curve expected");
+  if (N(a) == 0) FAIL_WITH_MSG ("at least one curve expected");
   if (N(a) == 1) return a[0];
   return tm_new<compound_curve_rep> (a);
 }
@@ -1161,7 +1161,7 @@ struct transformed_curve_rep: public curve_rep {
   point grad (double t, bool& error);
   double curvature (double t1, double t2) {
     (void) t1; (void) t2;
-    FAILED ("not yet implemented");
+    FAIL_WITH_MSG ("not yet implemented");
     return 0.0;
   }
   int get_control_points (
@@ -1176,7 +1176,7 @@ transformed_curve_rep::rectify_cumul (array<point>& a, double eps) {
     int i, k= N(b);
     for (i=0; i<k; i++) a << f(b[i]);
   }
-  else FAILED ("not yet implemented");
+  else FAIL_WITH_MSG ("not yet implemented");
 }
 
 point

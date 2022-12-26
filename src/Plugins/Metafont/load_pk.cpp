@@ -41,7 +41,7 @@ HI
 pk_loader::pkbyte () {
   if (input_pos == N(input_s)) {
     failed_error << "pk file= " << file_name << "\n";
-    FAILED ("unexpected eof in pk file");
+    FAIL_WITH_MSG ("unexpected eof in pk file");
   }
   return (HI) ((QN) input_s [input_pos++]);
 }
@@ -147,7 +147,7 @@ pk_loader::rest () {
     return i;
   }
   failed_error << "pk file= " << file_name << "\n";
-  FAILED ("unexpected situation");
+  FAIL_WITH_MSG ("unexpected situation");
   return 0;
 }
 
@@ -263,7 +263,7 @@ pk_loader::unpack (glyph& gl) {
     }
     if ((rowsleft != 0) || (hbit != gl->width)) {
       failed_error << "pk file= " << file_name << "\n";
-      FAILED ("more bits than required while unpacking");
+      FAIL_WITH_MSG ("more bits than required while unpacking");
     }
   }
 }
@@ -298,11 +298,11 @@ pk_loader::load_pk () {
   // Preamble
   if (pkbyte ()!=247) {
     failed_error << "pk file= " << file_name << "\n";
-    FAILED ("bad pk file");
+    FAIL_WITH_MSG ("bad pk file");
   }
   if (pkbyte ()!=89) {
     failed_error << "pk file= " << file_name << "\n";
-    FAILED ("bad version of pk file");
+    FAIL_WITH_MSG ("bad version of pk file");
   }
   for(i=pkbyte (); i>0; i--) (void) pkbyte (); /* creator of pkfile */
   (void) pkquad (); /* design size */
@@ -336,12 +336,12 @@ pk_loader::load_pk () {
       case 5:
 	failed_error << "pk file= " << file_name << "\n";
 	failed_error << "last charcode= " << charcode << "\n";
-	FAILED ("lost sync in pk file (character too big / status = 5)");
+	FAIL_WITH_MSG ("lost sync in pk file (character too big / status = 5)");
 	break;
       case 6:
 	failed_error << "pk file= " << file_name << "\n";
 	failed_error << "last charcode= " << charcode << "\n";
-	FAILED ("lost sync in pk file (character too big / status = 6)");
+	FAIL_WITH_MSG ("lost sync in pk file (character too big / status = 6)");
 	break;
       case 7:
 	length = pkquad ();
@@ -412,7 +412,7 @@ pk_loader::load_pk () {
 	failed_error << "pk file= " << file_name << "\n";
 	failed_error << "last charcode= " << charcode << "\n";
 	failed_error << "flagbyte= " << flagbyte << "\n";
-	FAILED ("lost sync in pk file");
+	FAIL_WITH_MSG ("lost sync in pk file");
       }
     }
   }

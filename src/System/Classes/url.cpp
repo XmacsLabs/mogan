@@ -578,7 +578,7 @@ as_string (url u, int type, bool reserve_texmacs_path) {
   if (is_root (u)) return u[1]->t->label * ":/";
   if (is_wildcard (u, 0)) return "**";
   if (is_wildcard (u, 1)) return u->t[1]->label;
-  FAILED ("bad url");
+  FAIL_WITH_MSG ("bad url");
   return "";
 }
 
@@ -646,7 +646,7 @@ glue (url u, string s) {
   if (is_none (u)) return u;
   failed_error << "u= " << u << "\n";
   failed_error << "s= " << s << "\n";
-  FAILED ("can't glue string to url");
+  FAIL_WITH_MSG ("can't glue string to url");
   return u;
 }
 
@@ -659,7 +659,7 @@ unglue (url u, int nr) {
   if (is_none (u)) return u;
   failed_error << "u = " << u << "\n";
   failed_error << "nr= " << nr << "\n";
-  FAILED ("can't unglue from url");
+  FAIL_WITH_MSG ("can't unglue from url");
   return u;
 }
 
@@ -861,7 +861,7 @@ complete (url base, url u, string filter, bool flag) {
        failed_error << "base  = " << base << LF;
        failed_error << "u     = " << u << LF;
        failed_error << "filter= " << filter << LF;
-       FAILED ("invalid base url");
+       FAIL_WITH_MSG ("invalid base url");
      }
   }
   if (is_name (u) || (is_concat (u) && is_root (u[1]) && is_name (u[2]))) {
@@ -878,7 +878,7 @@ complete (url base, url u, string filter, bool flag) {
     failed_error << "u     = " << u << LF;
     failed_error << "filter= " << filter << LF;
     ASSERT (is_rooted (comp), "unrooted url");
-    FAILED ("bad protocol in url");
+    FAIL_WITH_MSG ("bad protocol in url");
   }
   if (is_root (u)) {
     // FIXME: test filter flags here
@@ -890,7 +890,7 @@ complete (url base, url u, string filter, bool flag) {
       failed_error << "base  = " << base << LF;
       failed_error << "u     = " << u << LF;
       failed_error << "filter= " << filter << LF;
-      FAILED ("wildcards only implemented for files");
+      FAIL_WITH_MSG ("wildcards only implemented for files");
     }
     url ret= url_none ();
     bool error_flag;
@@ -925,7 +925,7 @@ complete (url base, url u, string filter, bool flag) {
       failed_error << "base  = " << base << LF;
       failed_error << "u     = " << u << LF;
       failed_error << "filter= " << filter << LF;
-      FAILED ("wildcards only implemented for files");
+      FAIL_WITH_MSG ("wildcards only implemented for files");
     }
     url ret= url_none ();
     if (is_wildcard (u, 0) && is_of_type (base, filter)) ret= url_here ();
@@ -947,7 +947,7 @@ complete (url base, url u, string filter, bool flag) {
     return ret;
   }
   failed_error << "url= " << u << LF;
-  FAILED ("bad url");
+  FAIL_WITH_MSG ("bad url");
   return u;
 }
 
@@ -1080,7 +1080,7 @@ concretize (url u) {
   if (is_wildcard (u, 1)) return u->t[1]->label;
   std_warning << "Couldn't concretize " << u->t << LF;
   // failed_error << "u= " << u << LF;
-  // FAILED ("url has no root");
+  // FAIL_WITH_MSG ("url has no root");
   return "xxx";
 }
 
@@ -1090,7 +1090,7 @@ materialize (url u, string filter) {
   url r= resolve (u, filter);
   if (!(is_rooted (r) || is_here (r) || is_parent (r))) {
     failed_error << "u= " << u << LF;
-    FAILED ("url could not be resolved");
+    FAIL_WITH_MSG ("url could not be resolved");
   }
   return concretize (r);
 }

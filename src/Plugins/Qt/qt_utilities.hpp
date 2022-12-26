@@ -119,7 +119,7 @@ inline void
 check_type_void (blackbox bb, slot s) {
   if (!is_nil (bb)) {
     failed_error << "slot type= " << as_string(s) << LF;
-    FAILED ("type mismatch");
+    FAIL_WITH_MSG ("type mismatch");
   }
 }
 
@@ -127,7 +127,7 @@ template<class T> inline void
 check_type_id (int type_id, slot s) {
   if (type_id != type_helper<T>::id) {
     failed_error << "slot type= " << as_string(s) << LF;
-    FAILED ("type mismatch");
+    FAIL_WITH_MSG ("type mismatch");
   }
 }
 
@@ -135,7 +135,7 @@ template<class T> void
 check_type (blackbox bb, slot s) {
   if (type_box (bb) != type_helper<T>::id) {
     failed_error << "slot type= " << as_string(s) << LF;
-    FAILED ("type mismatch");
+    FAIL_WITH_MSG ("type mismatch");
   }
 }
 

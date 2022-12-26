@@ -88,7 +88,7 @@ edit_math_rep::make_script (bool sup, bool right) {
     bool   flag;
 
     if (is_format (p))
-      FAILED ("bad cursor position");
+      FAIL_WITH_MSG ("bad cursor position");
     if (is_script (t, flag) && (flag==right) && (L(t)==s)) {
       go_to_end (p * 0);
       return;

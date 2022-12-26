@@ -240,6 +240,6 @@ string mimetype_for_url (url u) {
 #ifdef QTTEXMACS
   return qt_mimetype_for_url (u);
 #else
-  FAILED("mimetype_for_url is not available");
+  FAIL_WITH_MSG("mimetype_for_url is not available");
 #endif
 }

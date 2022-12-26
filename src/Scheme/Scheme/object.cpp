@@ -58,7 +58,7 @@ operator << (tm_ostream& out, object obj) {
   out.flush ();
   if (out == cout) call ("write", obj);
   else if (out == cerr) call ("write-err", obj);
-  else FAILED ("not yet implemented");
+  else FAIL_WITH_MSG ("not yet implemented");
   call ("force-output");
   return out;
 }
@@ -352,7 +352,7 @@ public:
     tmscm result= call_scheme (object_to_tmscm (obj));
     if (tmscm_is_widget (result)) return tmscm_to_widget (result);
     else {
-      FAILED ("widget expected");
+      FAIL_WITH_MSG ("widget expected");
       return glue_widget ();
     }
   }

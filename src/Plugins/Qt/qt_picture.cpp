@@ -395,7 +395,7 @@ qt_load_svg_icon (url file_name) {
   } else if (sizeX == "24x24") {
     size= QSize(int(24*scale), int(24*scale));
   } else {
-    FAILED("not a icon");
+    FAIL_WITH_MSG("not a icon");
   }
 
   QSvgRenderer renderer (to_qstring(as_string (file_name)));

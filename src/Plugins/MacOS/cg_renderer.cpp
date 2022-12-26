@@ -482,7 +482,7 @@ xpm_init (url file_name) {
   ok= read_int (s, i, b) && ok;
   if ((!ok) || (N(t)<(c+1)) || (c<=0)) {
     failed_error << "File name= " << file_name << "\n";
-    FAILED ("invalid xpm");
+    FAIL_WITH_MSG ("invalid xpm");
   }
 	
   // setup colors

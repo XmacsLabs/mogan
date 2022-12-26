@@ -130,7 +130,7 @@ path
 operator / (path p, path q) {
   if (is_nil (q)) return p;
   else if (is_nil (p) || (p->item != q->item)) {
-    FAILED ("path did not start with required path"); }
+    FAIL_WITH_MSG ("path did not start with required path"); }
   else return p->next / q->next;
   return path (); // NOT REACHED
 }

@@ -16,7 +16,7 @@
 #include "hashset.hpp"
 #include "iterator.hpp"
 
-#undef FAILED // redefined by CARBON
+#undef FAIL_WITH_MSG // redefined by CARBON
 #define extend CARBON_extends // avoid name collision
 #include "Cocoa/mac_cocoa.h"
 #include <Carbon/Carbon.h>
@@ -24,14 +24,14 @@
 #include "HIDRemote.h"
 #undef extend
 
-#undef FAILED // restore TeXmacs definition
+#undef FAIL_WITH_MSG // restore TeXmacs definition
 #ifdef USE_EXCEPTIONS
-#define FAILED(msg) { tm_throw (msg); }
+#define FAIL_WITH_MSG(msg) { tm_throw (msg); }
 #else
 #ifdef DEBUG_ASSERT
-#define FAILED(msg) { tm_failure (msg); assert (false); }
+#define FAIL_WITH_MSG(msg) { tm_failure (msg); assert (false); }
 #else
-#define FAILED(msg) { tm_failure (msg); }
+#define FAIL_WITH_MSG(msg) { tm_failure (msg); }
 #endif
 #endif
 

@@ -14,7 +14,7 @@
 #include <signal.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <unistd.h>
+//#include <unistd.h>
 #ifdef STACK_SIZE
 #include <sys/resource.h>
 #endif
@@ -93,7 +93,7 @@ test_routines () {
 void
 clean_exit_on_segfault (int sig_num) {
   (void) sig_num;
-  FAILED ("segmentation fault");
+  FAIL_WITH_MSG ("segmentation fault");
 }
 
 /******************************************************************************

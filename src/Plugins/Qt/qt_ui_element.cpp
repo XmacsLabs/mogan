@@ -362,7 +362,7 @@ qt_ui_element_rep::as_qaction () {
       array<widget> lhs = x.x1;
       array<widget> rhs = x.x2;
 
-      if (N(lhs) != N(rhs)) FAILED("aligned_widget: N(lhs) != N(rhs) ");
+      if (N(lhs) != N(rhs)) FAIL_WITH_MSG("aligned_widget: N(lhs) != N(rhs) ");
       
       array<widget> wids(N(lhs)*3);
       for (int i=0; i < N(lhs); ++i) {
@@ -539,7 +539,7 @@ qt_ui_element_rep::as_qaction () {
       break;
 
     default:
-      FAILED (c_string ("qt_ui_element: unknown type for as_qaction, "
+      FAIL_WITH_MSG (c_string ("qt_ui_element: unknown type for as_qaction, "
                         * type_as_string()));
   }
 
@@ -628,7 +628,7 @@ qt_ui_element_rep::as_qlayoutitem () {
       }
       (void) lpad; (void) rpad;
      
-      if (N(lhs) != N(rhs)) FAILED("aligned_widget: N(lhs) != N(rhs) ");
+      if (N(lhs) != N(rhs)) FAIL_WITH_MSG("aligned_widget: N(lhs) != N(rhs) ");
       
         /* FIXME? From the docs:
          If the QGridLayout is not the top-level layout (i.e. does not manage 

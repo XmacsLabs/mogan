@@ -139,7 +139,7 @@ database_rep::replay (string s) {
         break;
       }
     default:
-      FAILED ("corrupted TeXmacs database");
+      FAIL_WITH_MSG ("corrupted TeXmacs database");
       break;
     }
   }
