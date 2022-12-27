@@ -34,7 +34,7 @@ Mogan inherits all the above features from GNU TeXmacs (see [the homepage of GNU
 
 ## Getting Started
 - Video tutorials: [**GNU TeXmacs for scientists**（YouTube）](https://youtube.com/playlist?list=PLjlnuLy3KEpYmUQvFIFSFgeYQjVYO2gxi)
-- [**The Jolly Writer**](https://www.scypress.com/The-Jolly-Writer.pdf) is the only systematic and detailed official TeXmacs textbook available. Please [click here](https://www.scypress.com/book_download.html) to download for free or make a donation.
+- [**The Jolly Writer**](https://www.scypress.com/book_info.html) is the only systematic and detailed official TeXmacs textbook available. Please [click here](https://www.scypress.com/book_download.html) to download for free or make a donation.
 
 ## Contact Us
 You are sincerely welcome to contact us via the following ways to share your experience, provide suggestions or report issues on Mogan Editor. Interested developers and volunteer contributors are also warmly welcome to join Xmacs Labs.
@@ -49,7 +49,7 @@ Douban Group|[GNU TeXmacs](https://www.douban.com/group/texmacs/)
 Zhihu|[墨干编辑器](https://www.zhihu.com/people/xmacs)
 WeChat Official Account|墨者实验室（xmacs2020）
 WeChat Group|墨客社区（Join via account XmacsLabs）
-QQ Group|GNU TeXmacs中文社区（934456971）
+QQ Group|GNU TeXmacs 中文社区（934456971）
 
 You are also welcome to consult the TeXmacs community, especially the official forum, if you encounter problems while using Mogan.
 

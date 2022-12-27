@@ -38,7 +38,7 @@ GNU TeXmacs 是法国国家科学研究中心的数学家 [Joris van der Hoeven]
 - 入门视频教程：[**GNU TeXmacs for scientists**（YouTube）](https://youtube.com/playlist?list=PLjlnuLy3KEpYmUQvFIFSFgeYQjVYO2gxi)
  [GNU TeXmacs for scientists (Bilibili)](https://www.bilibili.com/video/BV1h4411w7xy/) / [TeXmacs 入门（Bilibili）](https://www.bilibili.com/medialist/play/617908?from=space&business=space_series&business_id=2765862&desc=1) / [TeXmacs 入门（知乎）](https://www.zhihu.com/collection/844048143)）作为入门教程。
 
-- [**The Jolly Writer**](https://www.scypress.com/The-Jolly-Writer.pdf) 是目前唯一的系统且详细的 TeXmacs 官方教材。请[点击此处](https://www.scypress.com/book_download.html)免费下载或捐赠。
+- [**The Jolly Writer**](https://www.scypress.com/book_info.html) 是目前唯一的系统且详细的 TeXmacs 官方教材。请[点击此处](https://www.scypress.com/book_download.html)免费下载或捐赠。
 
 其他资料：
 - GNU TeXmacs 的官方文档. 在帮助菜单下可以直接浏览。需要注意的一点是，如果界面语言是中文，那么已经完成翻译的帮助文档也是中文文档；如果界面语言是英文，那么帮助文档是英文的。
@@ -58,7 +58,7 @@ GitHub|[XmacsLabs](https://github.com/XmacsLabs)
 知乎|[墨干编辑器](https://www.zhihu.com/people/xmacs)
 微信公众号|墨者实验室（xmacs2020）
 微信群|墨客社区（通过账户 XmacsLabs 加入）
-QQ群|GNU TeXmacs中文社区（934456971）
+QQ群|GNU TeXmacs 中文社区（934456971）
 
 使用时遇到问题也欢迎咨询 TeXmacs 社区，特别是官方论坛。
 
