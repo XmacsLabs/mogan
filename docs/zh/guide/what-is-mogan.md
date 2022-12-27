@@ -27,7 +27,7 @@ GNU TeXmacs 是法国国家科学研究中心的数学家 [Joris van der Hoeven]
 - 其文档以 GNU TeXmacs 的 tm 格式存储，可以导出为 PDF 或 Postscript 文档，内置 TeX/LaTeX 和 Html/Mathml 转换器。注意 TeXmacs 并不基于 TeX/LaTeX。
 - 其渲染引擎高质量的排版算法可输出专业水准的文档，既可用于打印，也可用于在电脑屏幕上展示。
 - 用户可以自定义排版样式，也可以使用 Scheme 扩展语言为编辑器添加新功能。
-- 可以在所有主流 Unix 平台、MacOS 和 Windows 上运行。
+- 可以在所有主流 Unix 平台、macOS 和 Windows 上运行。
 
 墨干继承了 GNU TeXmacs 以上所有特性（请参考 [GNU TeXmacs 主页](https://www.texmacs.org))，是理工科学生、中小学教师和研究人员学习工作的利器，可为创作高质量的作业文档、高水准的报告幻灯片和 LaTeX 水准的论文提供便利。基于 GNU TeXmacs，墨干改正了许多错误，优化了性能，并美化了界面。
 
@@ -74,6 +74,9 @@ Mastodon|[GNU TeXmacs](https://mathstodon.xyz/@gnu_texmacs)
 Twitter|[GNU TeXmacs](https://twitter.com/gnu_texmacs) 
 Gitter|[texmacs/Lobby](https://gitter.im/texmacs/Lobby) 
 邮件列表|[Mailing lists for TeXmacs](https://www.texmacs.org/tmweb/home/ml.en.html) 
+
+## 墨客星球 
+墨客星球是一个由墨干编辑器用户提交的 TeXmacs 文件的汇总，通过 `帮助 → 墨客星球` 可以直接访问。墨客星球的主题专注科学和技术。
 
 ## 关于名字“墨干”
 [沈浪熊猫儿](http://texmacs.org/tmweb/contribute/team-sadhen.en.html)：

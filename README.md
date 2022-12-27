@@ -28,7 +28,7 @@ GNU TeXmacs is a structured editor developed since the late 1990s by [Joris van 
 - Documents can be saved in TeXmacs, Xml or Scheme format and printed as Pdf or Postscript files. Converters exist for TeX/LaTeX and Html/Mathml. Notice that TeXmacs is not based on TeX/LaTeX.
 - Its rendering engine uses high-quality typesetting algorithms so as to produce professionally looking documents, which can either be printed out or presented from a laptop.
 - New styles can be written by the user and new features can be added to the editor using the Scheme extension language.
-- Runs on all major Unix platforms, MacOS, and Windows.
+- Runs on all major Unix platforms, macOS, and Windows.
 
 Mogan inherits all the above features from GNU TeXmacs (see [the homepage of GNU TeXmacs](https://www.texmacs.org)), so it can also be used as a efficient study tool for students, teachers, and researchers in science and technology, and suitable to create high-quality assignment documents, report slides, and LaTeX-level papers. Based on GNU TeXmacs, Mogan has more bugs fixed, performance-optimized, and the interface beautified.
 
@@ -70,6 +70,8 @@ Twitter|[GNU TeXmacs](https://twitter.com/gnu_texmacs)
 Gitter|[texmacs/Lobby](https://gitter.im/texmacs/Lobby) 
 Mailing Lists|[Mailing lists for TeXmacs](https://www.texmacs.org/tmweb/home/ml.en.html) 
 
+## Xmacs Planet 
+Xmacs Planet is an aggregation of TeXmacs documents submitted by Mogan Editor users, and it can be accessed through `Help → Planet`. The topic of Xmacs Planet focuses on Science and Technology.
 
 ## The Name "Mogan"
 [Darcy Shen](http://texmacs.org/tmweb/contribute/team-sadhen.en.html):
