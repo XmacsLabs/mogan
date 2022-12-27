@@ -18,6 +18,8 @@ GNU TeXmacs is a structured editor developed since the late 1990s by [Joris van 
 
 [Darcy Shen](http://texmacs.org/tmweb/contribute/team-sadhen.en.html) released [Mogan Editor v1.0.0](https://github.com/XmacsLabs/mogan/releases/tag/v1.0.0) on January 30, 2022, based on [Massimiliano Gubinelli](http://texmacs.org/tmweb/contribute/team-massimiliano.en.html)'s [S7 Scheme port](https://lists.gnu.org/archive/html/texmacs-dev/2021-01/msg00009.html), and created Xmacs Labs, a non-profit organization that aims to popularize GNU TeXmacs and make it available for everyone to enjoy exploring science and technology via the excellent software developed by Joris van der Hoeven.
 
+### Features at a Glance
+
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://youtu.be/H46ON2FB30U)
 
 - GNU TeXmacs is a free scientific editing platform designed to create beautiful technical documents using a wysiwyg interface.
@@ -33,8 +35,12 @@ Mogan inherits all the above features from GNU TeXmacs (see [the homepage of GNU
 ![SCR-20221030-sve](https://user-images.githubusercontent.com/32867606/198899063-e8a4aab4-176f-4e2c-94e3-20656984f39b.png)
 
 ## Getting Started
-- Video tutorials: [**GNU TeXmacs for scientists**（YouTube）](https://youtube.com/playlist?list=PLjlnuLy3KEpYmUQvFIFSFgeYQjVYO2gxi)
-- [**The Jolly Writer**](https://www.scypress.com/book_info.html) is the only systematic and detailed official TeXmacs textbook available. Please [click here](https://www.scypress.com/book_download.html) to download for free or make a donation.
+
+### Video tutorials
+[**GNU TeXmacs for scientists**（YouTube）](https://youtube.com/playlist?list=PLjlnuLy3KEpYmUQvFIFSFgeYQjVYO2gxi)
+
+### User's Guide
+[**The Jolly Writer**](https://www.scypress.com/book_info.html) is the only systematic and detailed official TeXmacs textbook available. Please [click here](https://www.scypress.com/book_download.html) to download for free or make a donation.
 
 ## Contact Us
 You are sincerely welcome to contact us via the following ways to share your experience, provide suggestions or report issues on Mogan Editor. Interested developers and volunteer contributors are also warmly welcome to join Xmacs Labs.
