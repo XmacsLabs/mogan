@@ -36,7 +36,7 @@ Mogan inherits all the above features from GNU TeXmacs (see [the homepage of GNU
 
 ## Getting Started
 
-### Video tutorials
+### Video Tutorials
 [**GNU TeXmacs for scientists**（YouTube）](https://youtube.com/playlist?list=PLjlnuLy3KEpYmUQvFIFSFgeYQjVYO2gxi)
 
 ### User's Guide
