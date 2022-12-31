@@ -2,6 +2,9 @@ name: Package for Windows
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - '*'
 
 jobs:
   win-package:
@@ -63,7 +66,14 @@ jobs:
           iscc .\build\package\Xmacs.iss
       - name: Upload 
         uses: actions/upload-artifact@v2
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
           name: windows-installer
           path: |
+            build/Mogan-v*
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
             build/Mogan-v*

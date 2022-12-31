@@ -2,6 +2,9 @@ name: Package for macOS
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - '*'
 
 jobs:
   mac-package:
@@ -44,6 +47,12 @@ jobs:
         run: ./packages/macos/package.sh
       - name: Upload Mogan.dmg
         uses: actions/upload-artifact@v3
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
           name: Mogan.dmg
           path: ${{ github.workspace }}/build/Mogan.dmg
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ${{ github.workspace }}/build/Mogan.dmg
