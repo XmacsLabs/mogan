@@ -7,12 +7,14 @@ on:
       - 'src/**'
       - 'tests/**'
       - 'xmake.lua'
+      - '.github/workflows/ci-xmake.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'src/**'
       - 'tests/**'
       - 'xmake.lua'
+      - '.github/workflows/ci-xmake.yml'
 
 jobs:
   macosbuild:
