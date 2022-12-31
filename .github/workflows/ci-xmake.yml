@@ -31,16 +31,12 @@ jobs:
             ${{github.workspace}}/build/.build_cache
             /Users/runner/.xmake
           key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
-      - name: Set up Homebrew
-        id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-      - name: Install Dependencies
-        run: |
-          brew install qt@5
-          brew link qt@5
-        env:
-          HOMEBREW_NO_AUTO_UPDATE: 1
-          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 5.15.2
+          target: 'desktop'
+          cache: 'true'
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.3
