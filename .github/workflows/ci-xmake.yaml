@@ -96,9 +96,9 @@ jobs:
           xrepo update-repo
           xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
           xmake build --yes --verbose --diagnosis --jobs=8 --all
-          windeployqt ./build/mingw/x86_64/release/
+          windeployqt --compiler-runtime ./build/mingw/x86_64/release/ -printsupport
           xmake install mogan_install
-          windeployqt ./build/package/bin/
+          windeployqt --compiler-runtime ./build/package/bin/ -printsupport
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
