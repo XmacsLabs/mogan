@@ -20,6 +20,9 @@ jobs:
         run: |
           brew install qt@5 wget
           brew link qt@5
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: 1
+          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.3
