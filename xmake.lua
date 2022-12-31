@@ -45,7 +45,7 @@ add_requires("libcurl 7.84.0", {system=false})
 add_requires("freetype 2.12.1", {system=false})
 add_requires("sqlite3 3.39.0+200", {system=false})
 
-local XMACS_VERSION="1.1.2-alpha2"
+local XMACS_VERSION="1.1.2-alpha4"
 local INSTALL_DIR="build/package"
 
 local TEXMACS_VERSION = "2.1.2"
