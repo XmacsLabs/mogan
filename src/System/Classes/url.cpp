@@ -1078,7 +1078,7 @@ concretize (url u) {
   url c= concretize_url (u);
   if (!is_none (c)) return as_string (c);
   if (is_wildcard (u, 1)) return u->t[1]->label;
-  std_warning << "Couldn't concretize " << u->t << LF;
+    std_warning << "Couldn't concretize " << u->t << LF;
   // failed_error << "u= " << u << LF;
   // FAILED ("url has no root");
   return "xxx";

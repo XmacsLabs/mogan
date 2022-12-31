@@ -11,6 +11,7 @@
 
 #include "../S7/s7.h"
 #include "Qt/qt_utilities.hpp"
+#include "Wasm/wasm_local_file.hpp"
 
 #include <QApplication>
 #include <QLibraryInfo>
@@ -39,10 +40,24 @@ tmg_s7_version () {
   return string_to_tmscm (out);
 }
 
+tmscm 
+tmg_wasm_load_local_file () {
+  bool out = buffer_load_from_local ();
+  return bool_to_tmscm (out);
+}
+
+tmscm 
+tmg_wasm_save_local_file () {
+  bool out = buffer_save_to_local ();
+  return bool_to_tmscm (out);
+}
+
 void
 initialize_glue_xmacs () {
   tmscm_install_procedure ("show-about-qt", tmg_show_about_qt, 0, 0, 0);
   tmscm_install_procedure ("xmacs-version", tmg_xmacs_version, 0, 0, 0);
   tmscm_install_procedure ("s7-version", tmg_s7_version, 0, 0, 0);
   tmscm_install_procedure ("qt-version", tmg_qt_version, 0, 0, 0);
+  tmscm_install_procedure ("wasm-load-local-file", tmg_wasm_load_local_file, 0, 0, 0);
+  tmscm_install_procedure ("wasm-save-local-file", tmg_wasm_save_local_file, 0, 0, 0);
 }
