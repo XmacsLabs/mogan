@@ -7,7 +7,7 @@ I've tested with Qt6.4 with it's corresponding emsdk (Emscripten 3.1.14), see in
 
 ## Instruction
 
-2. Copy the file packages/wasm/tm-server.scm to override TeXmacs/progs/texmacs/texmacs/tm-server.scm
+2. Copy the files in packages/wasm/progs to override corresponding files in TeXmacs/progs/
 3. Use Qt Creator to configure and build. You may also use command line tool emcmake and emmake which ship with emsdk, but I haven't tried.
 4. After build, you will see following files: Mogan.data, Mogan.wasm, Mogan.js, Mogan.html, qtloader.js, qtlogo.svg. Put them in a folder and run following command to start a local server:
 ```shell
