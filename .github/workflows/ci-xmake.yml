@@ -118,7 +118,10 @@ jobs:
       - name: Install dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev libqt5svg5-dev qt5-image-formats-plugins fonts-noto-cjk
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev \
+              libqt5svg5-dev qt5-image-formats-plugins fonts-noto-cjk \
+              libpng-dev zlib1g-dev libjpeg62-turbo-dev libcurl4-openssl-dev \
+              libfreetype-dev libsqlite3-dev
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -136,7 +139,6 @@ jobs:
       - name: Build by gcc
         id: build
         run: |
-          xrepo update-repo
           xmake config --yes
           xmake build --yes --verbose --diagnosis --jobs=8 --all
       - name: Test
