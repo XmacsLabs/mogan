@@ -37,13 +37,22 @@ else
     add_rules("mode.releasedbg", "mode.release", "mode.debug")
 end
 
-add_requires("libpng 1.6.37", {system=false})
-add_requires("libiconv 1.17", {system=false})
-add_requires("zlib 1.2.12", {system=false})
-add_requires("libjpeg v9e", {system=false})
-add_requires("libcurl 7.84.0", {system=false})
-add_requires("freetype 2.12.1", {system=false})
-add_requires("sqlite3 3.39.0+200", {system=false})
+if is_plat("linux") and linuxos.name() == "debian" then
+    add_requires("apt::libpng-dev", {alias="libpng"})
+    add_requires("apt::zlib1g-dev", {alias="zlib"})
+    add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
+    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+    add_requires("apt::libfreetype-dev", {alias="freetype"})
+    add_requires("apt::libsqlite3-dev", {alias="sqlite3"})
+else
+    add_requires("libpng 1.6.37", {system=false})
+    add_requires("libiconv 1.17", {system=false})
+    add_requires("zlib 1.2.12", {system=false})
+    add_requires("libjpeg v9e", {system=false})
+    add_requires("libcurl 7.84.0", {system=false})
+    add_requires("freetype 2.12.1", {system=false})
+    add_requires("sqlite3 3.39.0+200", {system=false})
+end
 
 local XMACS_VERSION="1.1.2-alpha4"
 local INSTALL_DIR="build/package"
