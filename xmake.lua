@@ -40,7 +40,11 @@ end
 if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu") then
     add_requires("apt::libpng-dev", {alias="libpng"})
     add_requires("apt::zlib1g-dev", {alias="zlib"})
-    add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
+    if linuxos.name() == "debian" then
+        add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
+    elseif linuxos.name() == "ubuntu" then
+        add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
+    end
     add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
     add_requires("apt::libfreetype-dev", {alias="freetype"})
     add_requires("apt::libsqlite3-dev", {alias="sqlite3"})
