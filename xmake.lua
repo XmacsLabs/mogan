@@ -37,7 +37,7 @@ else
     add_rules("mode.releasedbg", "mode.release", "mode.debug")
 end
 
-if is_plat("linux") and linuxos.name() == "debian" then
+if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu") then
     add_requires("apt::libpng-dev", {alias="libpng"})
     add_requires("apt::zlib1g-dev", {alias="zlib"})
     add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
