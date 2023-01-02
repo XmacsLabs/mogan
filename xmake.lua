@@ -235,7 +235,7 @@ target("libmogan") do
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
-    if is_plat("linux") then
+    if is_plat("linux") and is_mode("release") then
         add_rules("qt.shared")
     else
         add_rules("qt.static")
