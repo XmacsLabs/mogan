@@ -31,6 +31,7 @@ private slots:
   void test_starts ();
   void test_ends ();
   void test_read_word ();
+  void test_cjk_unified_ideographs ();
 };
 
 void
@@ -53,6 +54,17 @@ TestAnalyze::test_locase_all () {
 }
 
 void
+<<<<<<< HEAD
+=======
+TestAnalyze::test_cjk_unified_ideographs () {
+  QVERIFY (is_cjk_unified_ideographs ("<#4E2D>"));
+  QVERIFY (has_cjk_unified_ideographs ("<#4E2D>"));
+  QVERIFY (has_cjk_unified_ideographs ("bib-<#4E2D>"));
+  QVERIFY (!is_cjk_unified_ideographs ("bib-<#4E2D>"));
+}
+
+void
+>>>>>>> ed4b407b9 ([129] Fix label display for CJK 45m)
 TestAnalyze::test_upcase_all () {
   QVERIFY (upcase_all (string ("true")) == string ("TRUE"));
   QVERIFY (upcase_all (string ("TRue")) == string ("TRUE"));
