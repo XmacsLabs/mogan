@@ -104,7 +104,7 @@ concater_rep::flag_ok (string s, path ip, color col) {
   else if (info == INFO_DETAILED || info == INFO_PAPER) {
     int sz= env->get_script_size (env->fn_size, env->index_level+2);
     font gfn;
-    if (is_cjk_unified_ideographs (s)) {
+    if (has_cjk_unified_ideographs (s)) {
       gfn= smart_font (env->get_string (FONT), env->get_string (FONT_FAMILY),
                        env->get_string (FONT_SERIES), env->get_string (FONT_SHAPE),
                        sz, (int) (env->magn*env->dpi));
