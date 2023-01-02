@@ -13,7 +13,7 @@ export DH_VERBOSE=1
 	dh --parallel $@ 
 
 override_dh_auto_configure:
-	xmake config --yes --root
+	xmake config -m release --yes --root
 
 override_dh_auto_build:
 	xmake build --yes --verbose --diagnosis --jobs=8 --all --root

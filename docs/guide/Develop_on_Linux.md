@@ -16,7 +16,7 @@ xrepo update-repo
 
 ### Step 2: Compile
 ``` bash
-xmake config --yes
+xmake config -m debug --yes
 xmake build --yes --verbose --diagnosis --jobs=8 --all
 ```
 

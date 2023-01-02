@@ -17,7 +17,7 @@ xrepo update-repo
 
 ### 第二步：编译
 ```
-xmake config --yes
+xmake config -m debug --yes
 xmake build --yes --verbose --diagnosis --jobs=8 --all
 ```
 
