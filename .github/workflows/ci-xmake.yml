@@ -64,7 +64,9 @@ jobs:
       matrix:
         include:
           - qt_ver: 5.15.2
+            qt_arch: win64_mingw81
           - qt_ver: 6.4.1
+            qt_arch: win64_mingw
     steps:
       - name: Install msys and xmake
         uses: msys2/setup-msys2@v2
@@ -154,7 +156,7 @@ jobs:
       - name: Build by gcc
         id: build
         run: |
-          xmake config --yes
+          xmake config --yes --qt=/usr
           xmake build --yes --verbose --diagnosis --jobs=8 --all
       - name: Test
         run: |
