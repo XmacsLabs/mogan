@@ -13,7 +13,7 @@
 #include "analyze.hpp"
 #include "tm_timer.hpp"
 #include "spawn.hpp"
-#include "Windows/win-utf8-compat.hpp"
+#include "nowide/convert.hpp"
 
 
 static void

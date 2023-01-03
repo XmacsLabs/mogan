@@ -24,16 +24,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <sys/stat.h>
 #include <sys/file.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <string.h>  // strerror
+#include "nowide/cstdio.hpp"
+#include "nowide/stackstring.hpp"
+#include "nowide/stat.hpp"
 #if defined (OS_MINGW)
-#include "Windows/win-utf8-compat.hpp"
-#else
-#include <dirent.h>
-#define struct_stat struct stat
+#ifndef S_ISLNK
+#define S_ISLNK(x) 0
+#endif
 #endif
 
 #ifdef MACOSX_EXTENSIONS
@@ -265,7 +266,7 @@ append_string (url u, string s, bool fatal) {
 ******************************************************************************/
 
 static bool
-get_attributes (url name, struct_stat* buf,
+get_attributes (url name, nowide::stat_t* buf,
                 bool link_flag=false, bool cache_flag= true)
 {
   // cout << "Stat " << name << LF;
@@ -298,7 +299,7 @@ get_attributes (url name, struct_stat* buf,
   bench_start ("stat");
   bool flag;
   c_string temp (name_s);
-  flag= stat (temp, buf);
+  flag= nowide::stat (temp, buf);
   (void) link_flag;
   // FIXME: configure should test whether lstat works
   // flag= (link_flag? lstat (temp, buf): stat (temp, buf));
@@ -382,7 +383,7 @@ is_of_type (url name, string filter) {
   bool preserve_links= false;
   for (i=0; i<n; i++)
     preserve_links= preserve_links || (filter[i] == 'l');
-  struct_stat buf;
+  nowide::stat_t buf;
   bool err= get_attributes (name, &buf, preserve_links);
   for (i=0; i<n; i++)
     switch (filter[i]) {
@@ -423,7 +424,7 @@ int
 file_size (url u) {
   if (is_rooted_web (u)) return -1;
   if (is_rooted_tmfs (u)) return -1;
-  struct_stat u_stat;
+  nowide::stat_t u_stat;
   if (get_attributes (u, &u_stat, true)) return -1;
   return u_stat.st_size;
 }
@@ -434,7 +435,7 @@ last_modified (url u, bool cache_flag) {
     return - (int) (((unsigned int) (-1)) >> 1);
   if (is_rooted_tmfs (u))
     return - (int) (((unsigned int) (-1)) >> 1);
-  struct_stat u_stat;
+  nowide::stat_t u_stat;
   if (get_attributes (u, &u_stat, true, cache_flag))
     return - (int) (((unsigned int) (-1)) >> 1);
   return u_stat.st_mtime;
@@ -442,8 +443,8 @@ last_modified (url u, bool cache_flag) {
 
 bool
 is_newer (url which, url than) {
-  struct_stat which_stat;
-  struct_stat than_stat;
+  nowide::stat_t which_stat;
+  nowide::stat_t than_stat;
   // FIXME: why was this? 
   if (is_cached ("stat_cache.scm", concretize (which))) return false;
   if (is_cached ("stat_cache.scm", concretize (than))) return false;
@@ -588,13 +589,25 @@ rmdir (url u) {
   remove_sub (expand (complete (u, "dr")));
 }
 
+#ifdef OS_MINGW
+inline int mkdir(char const *name, int const mode)
+{
+    nowide::basic_stackstring<> wname;
+    if(wname.convert(name) == nullptr ) {
+        errno = EINVAL;
+        return -1;
+    }
+    return _wmkdir (wname.get());
+}
+#endif
+
 void
 mkdir (url u) {
 #if defined (HAVE_SYS_TYPES_H) && defined (HAVE_SYS_STAT_H)
   if (!exists (u)) {
     if (!is_atomic (u) && !is_root (u)) mkdir (head (u));
     c_string _u (concretize (u));
-    (void) ::mkdir (_u, S_IRWXU + S_IRGRP + S_IROTH);
+    (void) mkdir (_u, S_IRWXU + S_IRGRP + S_IROTH);
   }
 #else
 #ifdef OS_MINGW
