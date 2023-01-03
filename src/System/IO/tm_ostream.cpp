@@ -12,6 +12,7 @@
 #include "tm_ostream.hpp"
 #include "tree.hpp"
 #ifdef OS_MINGW
+#include <string.h>
 #include "nowide/iostream.hpp"
 FILE* fstdout;
 FILE* fstderr; 
