@@ -20,7 +20,10 @@
 #include <sqlite3.h>
 #include <stdio.h>
 #include <string.h>
+#if !(defined OS_WIN32)
 #include <unistd.h>
+#endif // !(defined OS_WIN32)
+
 
 /******************************************************************************
 * Routines used from Sqlite3
@@ -146,7 +149,9 @@ sql_exec (url db_name, string cmd) {
   while (status != SQLITE_OK &&
          string (err) == string ("database is locked") &&
          attempt < 100) {
+#if !(defined OS_WIN32)
     usleep (100000);
+#endif // !(defined OS_WIN32)
     attempt++;
     status= SQLITE3_get_table (db, _cmd, &tab, &rows, &cols, &err);
   }

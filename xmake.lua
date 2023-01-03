@@ -22,14 +22,14 @@ set_project("Mogan Editor")
 -- support cygwin env.
 set_allowedplats(
     -- these plat should be guaranteed
-    "linux", "macosx", "mingw",
+    "linux", "macosx", "mingw", "windows", 
     --this plat is not maintained
     "android", "appletvos", "bsd", "cross", "iphoneos", "msys", "wasm", "watchos"
 ) 
 
 -- add releasedbg, debug and release modes for different platforms.
 -- debug mode cannot run on mingw with qt precompiled binary
-if is_plat("mingw") then
+if is_plat("mingw", "windows") then
     set_allowedmodes("releasedbg", "release")
     add_rules("mode.releasedbg", "mode.release")
 else 
@@ -81,16 +81,20 @@ set_configvar("USE_FREETYPE", 1)
 set_configvar("USE_GS", 1)
 set_configvar("USE_ICONV", 1)
 set_configvar("LINKED_IMLIB2", false)
-set_configvar("PDF_RENDERER", 1)
+if is_plat("windows") then
+    set_configvar("PDF_RENDERER", 0)
+else
+    set_configvar("PDF_RENDERER", 1)
+end
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 
-if is_plat("mingw") then
+if is_plat("mingw", "windows") then
     set_configvar("GS_EXE", "bin/gs.exe")
 else
     set_configvar("GS_EXE", "/usr/bin/gs")
 end
 
-if is_plat("mingw") then
+if is_plat("mingw", "windows") then
 else if is_plat("macosx") then
     set_configvar("USE_STACK_TRACE", true)
     set_configvar("AQUATEXMACS", true)
@@ -129,13 +133,14 @@ add_configfiles(
             OS_MACOS = is_plat("macosx"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
             OS_MINGW = is_plat("mingw"),
+            OS_WIN32 = is_plat("windows"),
             SIZEOF_VOID_P = 8,
             USE_JEAIII = true,
-            USE_STACK_TRACE = not is_plat("mingw")
+            USE_STACK_TRACE = not is_plat("mingw") and not is_plat(("windows"))
             }})
 
 target("tm_shell") do
-    if is_plat("macosx") or is_plat("linux") then
+    if is_plat("macosx", "linux") then
         set_enabled(true)
     else
         set_enabled(false)
@@ -179,7 +184,7 @@ target("libkernel") do
         "src/System/Memory/**.cpp"
     })
 
-    if is_plat("mingw") then
+    if is_plat("mingw", "windows")then
         add_includedirs({
             "src/Plugins/Windows"
         })
@@ -236,7 +241,7 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("sqlite3")
 
-    if is_plat("mingw") then
+    if is_plat("mingw", "windows")then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
     end
 
@@ -258,9 +263,10 @@ target("libmogan") do
                 OS_MACOS = is_plat("macosx"),
                 MACOSX_EXTENSIONS = is_plat("macosx"),
                 OS_MINGW = is_plat("mingw"),
+                OS_WIN32 = is_plat("windows"),
                 SIZEOF_VOID_P = 8,
                 USE_JEAIII = true,
-                USE_STACK_TRACE = not is_plat("mingw")
+                USE_STACK_TRACE = not is_plat("mingw") and not is_plat(("windows"))
                 }})
 
 
@@ -311,9 +317,6 @@ target("libmogan") do
             "src/Kernel/Containers",
             "src/Kernel/Types",
             "src/Plugins",
-            "src/Plugins/Pdf",
-            "src/Plugins/Pdf/PDFWriter",
-            "src/Plugins/Pdf/LibAesgm",
             "src/Plugins/Qt",
             "src/Plugins/UniversalStacktrace",
             "src/Scheme",
@@ -342,13 +345,23 @@ target("libmogan") do
 
     if is_plat("macosx") then
         add_includedirs("src/Plugins/MacOS", {public = true})
-    elseif is_plat("mingw") then
+        add_includedirs({
+            "src/Plugins/Pdf",
+            "src/Plugins/Pdf/PDFWriter",
+            "src/Plugins/Pdf/LibAesgm"
+        })
+    elseif is_plat("mingw", "windows")then
         add_includedirs({
                 "src/Plugins/Windows", 
                 "src/Plugins/Windows/nowide"
         }, {public = true})
     else
         add_includedirs("src/Plugins/Unix", {public = true})
+        add_includedirs({
+            "src/Plugins/Pdf",
+            "src/Plugins/Pdf/PDFWriter",
+            "src/Plugins/Pdf/LibAesgm"
+        })
     end
 
     add_files({
@@ -358,7 +371,6 @@ target("libmogan") do
             "src/Kernel/**.cpp",
             "src/Scheme/Scheme/**.cpp",
             "src/Scheme/S7/**.cpp",
-            "src/Scheme/S7/*.c",
             "src/System/**.cpp",
             "src/Texmacs/Data/**.cpp",
             "src/Texmacs/Server/**.cpp",
@@ -370,8 +382,6 @@ target("libmogan") do
             "src/Plugins/Database/**.cpp",
             "src/Plugins/Freetype/**.cpp",
             "src/Plugins/Jeaiii/**.cpp",
-            "src/Plugins/Pdf/**.c",
-            "src/Plugins/Pdf/**.cpp",
             "src/Plugins/Ghostscript/**.cpp",
             "src/Plugins/Imlib2/**.cpp",
             "src/Plugins/Ispell/**.cpp",
@@ -381,10 +391,17 @@ target("libmogan") do
             "src/Plugins/Sqlite3/**.cpp",
             "src/Plugins/Updater/**.cpp",
             "src/Plugins/Curl/**.cpp"})
+    add_files(
+        "src/Scheme/S7/*.c",
+        {
+            languages = "c17"})
 
-    if is_plat("mingw") then
+    if is_plat("mingw", "windows")then
         add_files("src/Plugins/Windows/**.cpp")
     else
+        add_files({
+            "src/Plugins/Pdf/**.c",
+            "src/Plugins/Pdf/**.cpp"})
         add_files("src/Plugins/Unix/**.cpp")
     end
 
@@ -402,7 +419,9 @@ target("libmogan") do
         "src/Plugins/Qt/**.hpp"})
 
     add_mxflags("-fno-objc-arc")
-    add_cxxflags("-include src/System/config.h")
+    if not is_plat("windows") then
+        add_cxxflags("-include src/System/config.h")
+    end
 end 
 
 option("libdl") do
@@ -436,7 +455,7 @@ target("mogan") do
 end 
 
 target("mogan_install") do
-    if is_plat("macosx") or is_plat("linux") then
+    if is_plat("macosx", "linux") then
         add_deps("tm_shell")
     end
     add_deps("mogan")
@@ -445,7 +464,7 @@ target("mogan_install") do
     set_configvar("WIN_BIT_SIZE", "64")
     set_configdir(".")
 
-    if is_plat("mingw") then
+    if is_plat("mingw", "windows")then
         add_configfiles(
             "(packages/windows/Xmacs.iss.in)",{
                 filename = "Xmacs.iss",
@@ -495,7 +514,7 @@ target("mogan_install") do
         add_installfiles({
             "misc/scripts/mogan"
         })
-    elseif is_plat("mingw") then
+    elseif is_plat("mingw", "windows")then
         add_installfiles("packages/windows/TeXmacs-large.bmp")
         add_installfiles("packages/windows/TeXmacs-small.bmp")
         add_installfiles("packages/windows/Xmacs.ico")
@@ -506,7 +525,7 @@ target("mogan_install") do
     
     -- share/
 
-    if is_plat("mingw") then
+    if is_plat("mingw", "windows")then
         add_installfiles("(plugins/**)")
     else 
         add_installfiles("(plugins/**)", {prefixdir="share/Xmacs"})
@@ -520,7 +539,7 @@ target("mogan_install") do
     add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm", {prefixdir="share/pixmaps"})
   
 
-    if is_plat("mingw") then
+    if is_plat("mingw", "windows")then
         add_installfiles({
             "TeXmacs(/doc/main/**)",
             "TeXmacs(/examples/**)",
@@ -566,7 +585,7 @@ target("mogan_install") do
                     "TeXmacs/misc/images/xmacs-"..size..".png", 
                     path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
             end
-            if is_plat("macosx") or is_plat("linux")  then
+            if is_plat("macosx", "linux")  then
                 os.mkdir (path.join(target:installdir(), "share/Xmacs/plugins/shell/bin"))
                 os.mv (path.join(target:installdir(), "bin/tm_shell"),
                        path.join(target:installdir(), "share/Xmacs/plugins/shell/bin"))

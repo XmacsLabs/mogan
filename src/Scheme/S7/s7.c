@@ -4058,6 +4058,7 @@ static char *pos_int_to_str_direct_1(s7_scheme *sc, s7_int num)
     #define lookup_checked(Sc, Sym) ({s7_pointer _x_; _x_ = lookup(Sc, Sym); ((_x_) ? _x_ : unbound_variable(Sc, Sym));})
   #endif
 #else
+  static inline s7_pointer lookup(s7_scheme *sc, const s7_pointer symbol);
   #define lookup_unexamined(Sc, Sym) s7_symbol_value(Sc, Sym)  /* changed 3-Nov-22 -- we're using lookup_unexamined below to avoid the unbound_variable check */
   #define lookup_checked(Sc, Sym) lookup(Sc, Sym)
 #endif

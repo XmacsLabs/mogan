@@ -46,15 +46,9 @@ typedef unsigned int color;
 #define TM_DEBUG(x)
 #if (defined __SUNPRO_CC || defined __clang__ || defined _MSC_VER)
 #define STACK_NEW_ARRAY(name,T,size) \
-T* name= tm_new_array<T> (size); \
-try {
+T* name= tm_new_array<T> (size);
 #define STACK_DELETE_ARRAY(name) \
-tm_delete_array (name);\
-}\
-catch (const string err &) {\
-    tm_delete_array (name);\
-    throw err;\
-}
+tm_delete_array (name);
 #else
 #define STACK_NEW_ARRAY(name,T,size) T name[size]
 #define STACK_DELETE_ARRAY(name)
@@ -119,6 +113,7 @@ void handle_exceptions ();
 * miscellaneous routines
 ******************************************************************************/
 
+#define NOMINMAX
 inline SI min (SI i, SI j) { if (i<j) return i; else return j; }
 inline SI max (SI i, SI j) { if (i>j) return i; else return j; }
 inline DI min (DI i, DI j) { if (i<j) return i; else return j; }

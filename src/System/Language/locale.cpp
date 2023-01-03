@@ -11,12 +11,13 @@
 
 #include "locale.hpp"
 
-#ifndef OS_MINGW
+#if !((defined OS_MINGW) || (defined OS_WIN32))
 #include <langinfo.h>
 #ifndef X11TEXMACS
 #include <locale>
 #endif
 #else
+#define _AMD64_
 #include <winnls.h>
 #endif
 
@@ -213,6 +214,8 @@ get_locale_charset () {
   // return language_to_local_ISO_charset (get_locale_language ());
   return "UTF-8"; // do not change this!
   // otherwise there is a weird problem with page width shrinking on screen
+#elif defined OS_WIN32
+  return "UTF-8";
 #elif OS_MACOS
   return "UTF-8";
 #elif X11TEXMACS

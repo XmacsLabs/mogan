@@ -21,7 +21,7 @@
 
 #include <sys/types.h>
 #include <signal.h>
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
 #else
 #  include <sys/wait.h>
 #endif

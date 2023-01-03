@@ -13,9 +13,8 @@
 #include "blackbox.hpp"
 #include "file.hpp"
 #include "../Scheme/glue.hpp"
+#include "qt_utilities.hpp"
 #include "convert.hpp" // tree_to_texmacs (should not belong here)
-
-#include <unistd.h> // for getpid
 
 /******************************************************************************
  * Initialization of s7
@@ -297,7 +296,7 @@ static s7_pointer g_getpid (s7_scheme *sc, s7_pointer args)
 //FIXME: we really have to use QCoreApplication::applicationPid()
 //for cross-platform support
   
-  return(s7_make_integer(sc, (s7_int)getpid()));
+  return s7_make_integer(sc, (s7_int)qt_application_pid());
 }
 
 void

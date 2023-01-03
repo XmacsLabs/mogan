@@ -15,7 +15,12 @@
 #include <string>
 //#include "string.hpp"
 
-__stdcall unsigned bkgread(void *);
+#ifdef OS_WIN32
+unsigned __stdcall bkgread (void *);
+#else
+__stdcall unsigned bkgread (void *);
+#endif // OS_WIN32
+
 
 class Channel {
 public:

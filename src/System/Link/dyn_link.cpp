@@ -12,7 +12,7 @@
 #include "dyn_link.hpp"
 #include "url.hpp"
 #include "hashmap.hpp"
-#ifndef OS_MINGW
+#if !(defined OS_MINGW || defined OS_WIN32)
 #include <dlfcn.h>
 #endif
 #include <TeXmacs.h>

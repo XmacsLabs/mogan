@@ -12,7 +12,7 @@
 #ifndef POINT_H
 #define POINT_H
 #include "tree.hpp"
-
+;
 typedef array<double> point;
 
 point operator -  (point p);

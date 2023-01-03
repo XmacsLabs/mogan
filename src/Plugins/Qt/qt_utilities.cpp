@@ -759,6 +759,16 @@ qt_application_directory () {
   // return from_qstring (QCoreApplication::applicationDirPath ());
 }
 
+int64_t
+qt_application_directory () {
+  return QCoreApplication::applicationPid();
+  // This is used to set $TEXMACS_PATH
+  // in Windows TeXmacs cannot run if this path contains unicode characters
+  // apparently because Guile uses standard narrow char api to load its modules
+  // => patch Guile?. return from_qstring (QCoreApplication::applicationDirPath
+  // ());
+}
+
 string
 qt_get_date (string lan, string fm) {
   QDateTime localtime = QDateTime::currentDateTime();

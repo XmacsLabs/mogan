@@ -124,7 +124,7 @@ get_env (string var) {
 
 void
 set_env (string var, string with) {
-#if defined(STD_SETENV) && !defined(OS_MINGW)
+#if defined(STD_SETENV) && !(defined(OS_MINGW) || defined(OS_WIN32))
   c_string _var  (var);
   c_string _with (with);
   setenv (_var, _with, 1);

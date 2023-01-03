@@ -104,6 +104,7 @@ string qt_image_to_eps (url image, int w_pt =0, int h_pt =0, int dpi= 0);
 void qt_image_to_pdf (url image, url pdf, int w_pt =0, int h_pt =0, int dpi =0);
 
 string qt_application_directory ();
+int64_t qt_application_pid ();
 string qt_get_date (string lan, string fm);
 string qt_pretty_time (int t);
 

@@ -17,7 +17,10 @@
 #include "merge_sort.hpp"
 #include "drd_std.hpp"
 #include "language.hpp"
+#include "qt_utilities.hpp"
+#ifndef OS_WIN32
 #include <unistd.h>
+#endif // !OS_WIN32
 #ifdef OS_MINGW
 #include <time.h>
 #include <direct.h>
@@ -124,7 +127,7 @@ url_temp_dir_sub () {
     url_system (main_tmp_dir) * url_system (as_string (time (NULL)));
 #else
   static url tmp_dir=
-    url_system (main_tmp_dir) * url_system (as_string ((int) getpid ()));
+    url_system (main_tmp_dir) * url_system (as_string ((int) qt_application_pid ()));
 #endif
   return (tmp_dir);
 }
@@ -154,7 +157,7 @@ clean_temp_dirs () {
   for (int i=0; i<N(a); i++)
     if (is_int (a[i]))
       if (!process_running (as_int (a[i])))
-        if (a[i] != as_string ((int) getpid ()))
+        if (a[i] != as_string ((int) qt_application_pid ()))
           system ("rm -rf", url (main_tmp_dir) * url (a[i]));
 #else
   /* delete the directories after 7 days */

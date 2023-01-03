@@ -19,18 +19,7 @@
 #include "string.hpp"
 #include "tm_link.hpp"
 
-#ifndef OS_MINGW
-
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-
-#define SOCKADDR_IN sockaddr_in
-#define SOCKADDR_IN6 sockaddr_in6
-#define SOCKADDR sockaddr
-#define SOCKADDR_STORAGE sockaddr_storage
-
-#else
+#if (defined OS_MINGW || defined OS_WIN32)
 
 namespace wsoc {
 #include <winsock2.h>
@@ -43,6 +32,16 @@ typedef int socklen_t;
 #define SOCKADDR wsoc::sockaddr
 #define SOCKADDR_STORAGE wsoc::sockaddr_storage
 
+#else
+
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+
+#define SOCKADDR_IN sockaddr_in
+#define SOCKADDR_IN6 sockaddr_in6
+#define SOCKADDR sockaddr
+#define SOCKADDR_STORAGE sockaddr_storage
 #endif
 
 // Common structures fors sockets

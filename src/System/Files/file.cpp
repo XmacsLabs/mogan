@@ -25,11 +25,13 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/stat.h>
+#ifndef OS_WIN32
 #include <sys/file.h>
 #include <unistd.h>
+#endif // !OS_WIN32
 #include <sys/types.h>
 #include <string.h>  // strerror
-#if defined (OS_MINGW)
+#if (defined(OS_MINGW) || defined (OS_WIN32))
 #include "Windows/win-utf8-compat.hpp"
 #else
 #include <dirent.h>
@@ -73,7 +75,7 @@ load_string (url u, string& s, bool fatal) {
     bench_start ("load file");
     c_string _name (name);
     // cout << "OPEN :" << _name << LF;
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
     FILE* fin= fopen (_name, "rb");
 #else
     FILE* fin= fopen (_name, "r");
@@ -101,7 +103,7 @@ load_string (url u, string& s, bool fatal) {
       }
       if (err) {
         std_warning << "Seek failed for " << as_string (u) << "\n";
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
 #else
         flock (fd, LOCK_UN);
 #endif
@@ -113,7 +115,7 @@ load_string (url u, string& s, bool fatal) {
       s->resize (size);
       int read= fread (&(s[0]), 1, size, fin);
       if (read < size) s->resize (read);
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
 #else
       flock (fd, LOCK_UN);
 #endif
@@ -157,7 +159,7 @@ save_string (url u, string s, bool fatal) {
     string name= concretize (r);
     {
       c_string _name (name);
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
       FILE* fout= fopen (_name, "wb");
 #else
       FILE* fout= fopen (_name, "r+");
@@ -182,7 +184,7 @@ save_string (url u, string s, bool fatal) {
         int i, n= N(s);
         for (i=0; i<n; i++)
           fputc (s[i], fout);
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
 #else
         flock (fd, LOCK_UN);
 #endif
@@ -219,7 +221,7 @@ append_string (url u, string s, bool fatal) {
     string name= concretize (r);
     {
       c_string _name (name);
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
       FILE* fout= fopen (_name, "ab");
 #else
       FILE* fout= fopen (_name, "a");
@@ -241,7 +243,7 @@ append_string (url u, string s, bool fatal) {
         int i, n= N(s);
         for (i=0; i<n; i++)
           fputc (s[i], fout);
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
 #else
         flock (fd, LOCK_UN);
 #endif
@@ -369,7 +371,7 @@ is_of_type (url name, string filter) {
     return true;
 
   // Normal files
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
   string suf;
   if (filter == "x") {
     suf= suffix(name);
@@ -406,7 +408,7 @@ is_of_type (url name, string filter) {
       break;
     case 'x':
       if (err) return false;
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
       if (((suf == "exe") || (suf == "com") || (suf == "bat")) && (buf.st_mode & S_IRUSR)) return true;
 #endif
       if ((buf.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)) == 0) return false;
@@ -455,7 +457,7 @@ is_newer (url which, url than) {
 
 url
 url_temp (string suffix) {
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
   unsigned int rnd= raw_time ();
 #else
   static bool initialized= false;
@@ -559,7 +561,7 @@ remove_sub (url u) {
   }
   else {
     c_string _u (concretize (u));
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
     if (nowide::remove (_u) && DEBUG_AUTO) {
 #else
     if (::remove (_u) && DEBUG_AUTO) {
@@ -590,14 +592,14 @@ rmdir (url u) {
 
 void
 mkdir (url u) {
-#if defined (HAVE_SYS_TYPES_H) && defined (HAVE_SYS_STAT_H)
+#if defined(HAVE_SYS_TYPES_H) && defined(HAVE_SYS_STAT_H) && !(defined OS_WIN32)
   if (!exists (u)) {
     if (!is_atomic (u) && !is_root (u)) mkdir (head (u));
     c_string _u (concretize (u));
     (void) ::mkdir (_u, S_IRWXU + S_IRGRP + S_IROTH);
   }
 #else
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
   system ("mkdir", u);
 #else
   system ("mkdir -p", u);
@@ -607,7 +609,7 @@ mkdir (url u) {
 
 void
 change_mode (url u, int mode) {
-#if defined (HAVE_SYS_TYPES_H) && defined (HAVE_SYS_STAT_H)
+#if defined(HAVE_SYS_TYPES_H) && defined(HAVE_SYS_STAT_H) && !(defined OS_WIN32)
   c_string _u (concretize (u));
   (void) ::chmod (_u, mode);
 #else
