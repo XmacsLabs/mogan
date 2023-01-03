@@ -72,6 +72,8 @@ then modify `.vscode/c_cpp_properties.json` to tell C++ lsp configs of this proj
 ```
 
 ##  Using CMake on Linux or WSL environment to cross-compile
+> NOTE: since the nowide change, it might be challenging for you to build Mogan using cmake and MXE. We suggest that you should use xmake.
+
 We need to install WSL Ubuntu 20.04 on Windows or install a Windows virtualbox on Ubuntu 20.04. Because building is done on Ubuntu and testing is done on Windows.
 
 First of all, we need to download MXE and install all the related dependencies (step 1 and step 2):

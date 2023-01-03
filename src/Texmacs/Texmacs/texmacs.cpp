@@ -12,7 +12,7 @@
 #include <fcntl.h>
 #include <locale.h> // for setlocale
 #include <signal.h>
-#include "nowide/stat.hpp"
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 #ifdef STACK_SIZE
