@@ -13,8 +13,6 @@
 #include "tree.hpp"
 #ifdef OS_MINGW
 #include "nowide/iostream.hpp"
-#include "nowide/convert.hpp"
-#include "nowide/stat.hpp"
 FILE* fstdout;
 FILE* fstderr; 
 #endif
