@@ -589,6 +589,7 @@ rmdir (url u) {
   remove_sub (expand (complete (u, "dr")));
 }
 
+#ifdef OS_MINGW
 inline int mkdir(char const *name, int const mode)
 {
     nowide::basic_stackstring<> wname;
@@ -598,6 +599,7 @@ inline int mkdir(char const *name, int const mode)
     }
     return _wmkdir (wname.get());
 }
+#endif
 
 void
 mkdir (url u) {
