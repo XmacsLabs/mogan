@@ -128,7 +128,7 @@ jobs:
       matrix:
         include:
           - qt_pkg: qtbase5-dev libqt5svg5-dev qt5-image-formats-plugins
-          - qt_pkg: qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins
+          - qt_pkg: qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins libgl-dev
     steps:
       - name: Install dependencies
         run: |
