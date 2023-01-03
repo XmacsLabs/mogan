@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#if !defined OS_WIN32
 #include <sys/file.h>
 #include <unistd.h>
 #endif // !OS_WIN32
@@ -32,6 +33,33 @@
 #include "nowide/cstdio.hpp"
 #include "nowide/stackstring.hpp"
 #include "nowide/stat.hpp"
+
+/**
+ * add missing macros in msvc stat.h
+ */
+#ifdef OS_WIN32
+#define S_ISDIR(m) (((m) &S_IFMT) == S_IFDIR)
+#define S_ISFIFO(m) (((m) &S_IFMT) == S_IFIFO)
+#define S_ISCHR(m) (((m) &S_IFMT) == S_IFCHR)
+#define S_ISBLK(m) (((m) &S_IFMT) == S_IFBLK)
+#define S_ISREG(m) (((m) &S_IFMT) == S_IFREG)
+#define S_IROTH (S_IRGRP >> 3)
+#define S_IWOTH (S_IWGRP >> 3)
+#define S_IXOTH (S_IXGRP >> 3)
+#define S_IRGRP (S_IRUSR >> 3)
+#define S_IWGRP (S_IWUSR >> 3)
+#define S_IXGRP (S_IXUSR >> 3)
+#define S_IXUSR _S_IXUSR
+#define S_IWUSR _S_IWUSR
+#define S_IRUSR _S_IRUSR
+#define _S_IRWXU (_S_IREAD | _S_IWRITE | _S_IEXEC)
+#define _S_IXUSR _S_IEXEC
+#define _S_IWUSR _S_IWRITE
+
+#define S_IRWXU _S_IRWXU
+#define _S_IRUSR _S_IREAD
+#endif // OS_WIN32
+
 #if (defined (OS_MINGW) || defined (OS_WIN32))
 #ifndef S_ISLNK
 #define S_ISLNK(x) 0

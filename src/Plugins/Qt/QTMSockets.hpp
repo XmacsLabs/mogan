@@ -72,7 +72,7 @@ protected:
   enum state st;
 private:
   static int count;
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
   static wsoc::WSADATA wsadata;
 #endif
 };

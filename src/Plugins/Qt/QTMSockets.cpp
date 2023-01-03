@@ -14,7 +14,7 @@
 #include "iterator.hpp"
 #include "analyze.hpp"
 
-#ifndef OS_MINGW
+#if !(defined OS_MINGW || defined OS_WIN32)
 
 #include <errno.h>
 #include <unistd.h>
@@ -66,7 +66,7 @@ unsigned qtmsocket_debug_count;
 
 int socket_basic::count= 0;
 
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
 wsoc::WSADATA socket_basic::wsadata;
 #endif
 
@@ -74,7 +74,7 @@ static string
 string_from_socket_address (SOCKADDR_STORAGE* sock) {
   static char tmp[128];
   if (sock->ss_family == AF_INET) {
-#ifdef OS_MINGW
+#if (defined OS_MINGW|| defined OS_WIN32)
     return wsoc::inet_ntoa (((SOCKADDR_IN*) sock)->sin_addr);
 #else
     if (inet_ntop (AF_INET, &(((sockaddr_in*) sock)->sin_addr),
@@ -84,7 +84,7 @@ string_from_socket_address (SOCKADDR_STORAGE* sock) {
 #endif
   }
   if (sock->ss_family == AF_INET6) {
-#if !defined (OS_MINGW) || (_WIN32_WINNT >= 0x0600)
+#if !(defined OS_MINGW || defined OS_WIN32) || (_WIN32_WINNT >= 0x0600)
     if (INET_NTOP (AF_INET6, &(((SOCKADDR_IN6*) sock)->sin6_addr),
 		   tmp, sizeof(tmp)) == NULL)
       return "";
@@ -96,8 +96,8 @@ string_from_socket_address (SOCKADDR_STORAGE* sock) {
   return "";
 }
 
-socket_basic::socket_basic (): st (ST_VOID) {
-#ifdef OS_MINGW
+socket_basic::socket_basic () : st (ST_VOID) {
+#if (defined OS_MINGW || defined OS_WIN32)
   if (!count) {
     using namespace wsoc;
     err= WSAStartup (MAKEWORD (2,0), &wsadata);
@@ -109,7 +109,7 @@ socket_basic::socket_basic (): st (ST_VOID) {
 
 socket_basic::~socket_basic () {
   if (count > 0) --count;
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
   if (!count) wsoc::WSACleanup ();
 #endif
 };
@@ -160,7 +160,7 @@ socket_link::socket_link (string host, unsigned short port) {
   }
   if (rp == NULL) { err= ERRNO; st= ST_CONNECTION; return; }
   FREEADDRINFO (result);
-#ifndef OS_MINGW
+#if !(defined OS_MINGW || defined OS_WIN32)
   if (fcntl (sock, F_SETFL, O_NONBLOCK) == -1) {
     err= errno; st= ST_FCNTL; return; }
 #else
@@ -270,7 +270,7 @@ socket_link::data_set_ready (int s) {
 
 void
 socket_link::ready_to_send (int s) {
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
   using namespace wsoc;
 #endif
   qsnw->setEnabled (false);
@@ -294,7 +294,7 @@ socket_link::ready_to_send (int s) {
 
 void
 socket_link::listen (int msecs) {
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
   using namespace wsoc;
 #endif
   if (!alive ()) return;
@@ -346,8 +346,8 @@ socket_server::socket_server (string host, unsigned short port) {
 	    string_from_socket_address ((SOCKADDR_STORAGE*) rp->ai_addr));
     sock= SOCKET (rp->ai_family, rp->ai_socktype, rp->ai_protocol);
     if (sock < 0)
-      continue;
-#ifndef OS_MINGW
+        continue;
+#if !(defined OS_MINGW || defined OS_WIN32)
     if (fcntl (sock, F_SETFL, O_NONBLOCK) == -1) 
       continue;
 #else 

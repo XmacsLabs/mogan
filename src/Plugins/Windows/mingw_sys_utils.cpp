@@ -15,6 +15,10 @@
 #include "spawn.hpp"
 #include "nowide/convert.hpp"
 
+#ifdef OS_WIN32
+typedef int pid_t;
+#endif // OS_WIN32
+
 
 static void
 _unix_system_warn (pid_t pid, ::string which, ::string msg) {
@@ -118,8 +122,8 @@ namespace sys_utils {
 #endif
 #include <basetsd.h>
 #include <wtypesbase.h>
+#include <Security.h>
 #include <ntsecapi.h>
-#include <secext.h>
 
   ::string mingw_get_username () {
     const int MAX_LEN= 100;

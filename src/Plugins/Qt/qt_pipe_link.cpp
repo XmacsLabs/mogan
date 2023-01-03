@@ -143,7 +143,7 @@ qt_pipe_link_rep::is_readable (int channel) {
 void
 qt_pipe_link_rep::interrupt () {
   if (!alive) return;
-#ifdef OS_MINGW
+#if (defined OS_MINGW || defined OS_WIN32)
   // Not implemented
   qt_error << "SIGINT not implemented on Windows\n";
 #else

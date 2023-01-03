@@ -534,7 +534,7 @@ call_scm_converter(url image, url dest) {
 
 bool
 has_image_magick (){
-#ifdef OS_MINGW
+#if (defined(OS_MINGW) || defined(OS_WIN32))
 	// Qt is used for converion on Windows
   static bool has_imagemagick = false;
 #else
@@ -545,8 +545,8 @@ has_image_magick (){
 
 string
 imagemagick_cmd () {
-  if (has_image_magick()) {
-#ifdef OS_MINGW
+  if (has_image_magick ()) {
+#if (defined(OS_MINGW) || defined(OS_WIN32))
     static string image_magick_cmd=
       sys_concretize (resolve_in_path ("convert"));
 #else
@@ -582,7 +582,7 @@ imagemagick_image_size(url image, int& w, int& h, bool pt_units) {
   if (!has_image_magick()) return false;
   else {		
     string cmd= "identify"; //ImageMagick utility
-#ifdef OS_MINGW
+#if (defined(OS_MINGW) || defined(OS_WIN32))
     cmd = sys_concretize(resolve_in_path(cmd));
 #endif
     cmd << " -ping -format \"%w %h %x\\n%y\""; 

@@ -175,7 +175,7 @@ edit_main_rep::get_metadata (string kind) {
   val= search_metadata (subtree (et, rp), kind);
   if (val != "") return val;
   if (kind == "title") return as_string (tail (get_name ()));
-#ifndef OS_MINGW
+#if !(defined(OS_WIN32) || defined(OS_WIN32))
   if (kind == "author" &&
       !is_none (resolve_in_path ("finger")) &&
       !is_none (resolve_in_path ("sed"))) {
@@ -332,7 +332,7 @@ edit_main_rep::print_to_file (url name, string first, string last) {
 void
 edit_main_rep::print_buffer (string first, string last) {
   url target;
-#ifdef OS_MINGW
+#if (defined(OS_WIN32) || defined(OS_WIN32))
   target= use_pdf ()? url_temp (".pdf"): url_temp (".ps");
 #else
   target= url_temp (".ps");

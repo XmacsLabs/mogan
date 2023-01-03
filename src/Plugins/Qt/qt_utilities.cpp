@@ -760,7 +760,7 @@ qt_application_directory () {
 }
 
 int64_t
-qt_application_directory () {
+qt_application_pid () {
   return QCoreApplication::applicationPid();
   // This is used to set $TEXMACS_PATH
   // in Windows TeXmacs cannot run if this path contains unicode characters

@@ -14,7 +14,7 @@
 #include "tree.hpp"
 #include "parse_string.hpp"
 
-#if defined (OS_MINGW)
+#if (defined OS_MINGW || defined OS_WIN32)
 #include "Windows/mingw_sys_utils.hpp"
 #elif defined (OS_WASM)
 #include "Wasm/wasm_sys_utils.hpp"
@@ -50,8 +50,8 @@ string get_pretty_os_name () {
 ******************************************************************************/
 
 int
-system (string s, string& result, string& error) {
-#if defined (OS_MINGW)
+system (string s, string &result, string &error) {
+#if (defined OS_MINGW || defined OS_WIN32)
   int r= qt_system (s, result, error);
 #elif defined (OS_WASM)
   int r=wasm_system(s, result, error);
@@ -62,8 +62,8 @@ system (string s, string& result, string& error) {
 }
 
 int
-system (string s, string& result) {
-#if defined (OS_MINGW)
+system (string s, string &result) {
+#if (defined OS_MINGW || defined OS_WIN32)
   int r= qt_system (s, result);
 #elif defined (OS_WASM)
   int r=wasm_system(s, result);
@@ -83,7 +83,7 @@ system (string s) {
     return r;
   }
   else {
-#if defined (OS_MINGW)
+#if (defined OS_MINGW || defined OS_WIN32)
     // if (starts (s, "convert ")) return 1;
     return qt_system (s);
 #elif defined (OS_WASM)
@@ -158,8 +158,9 @@ evaluate_system (array<string> arg,
                  array<int> fd_out) {
   array<string> out (N(fd_out));
   array<string*> ptr (N(fd_out));
-  for (int i= 0; i < N(fd_out); i++) ptr[i]= &(out[i]);
-#if defined (OS_MINGW)
+  for (int i= 0; i < N (fd_out); i++)
+    ptr[i]= &(out[i]);
+#if (defined OS_MINGW || defined OS_WIN32)
   int ret= mingw_system (arg, fd_in, in, fd_out, ptr);
 #elif defined (OS_WASM)
   int ret= wasm_system(arg, fd_in, in, fd_out, ptr);
@@ -172,7 +173,7 @@ evaluate_system (array<string> arg,
 
 string 
 get_printing_default () {
-#if defined (OS_MINGW)
+#if (defined OS_MINGW || defined OS_WIN32)
   url embedded ("$TEXMACS_PATH/bin/SumatraPDF.exe");
   if (exists (embedded))
     return sys_concretize (embedded) * " -print-dialog -exit-when-done";
@@ -215,8 +216,9 @@ has_printing_cmd () {
   return has;
 }
 
-string get_user_login () {
-#if OS_MINGW
+string
+get_user_login () {
+#if (defined OS_MINGW || defined OS_WIN32)
   return getenv ("USERNAME");
 #elif defined(OS_WASM)
   return wasm_get_login();
@@ -225,8 +227,9 @@ string get_user_login () {
 #endif
 }
 
-string get_user_name () {
-#if OS_MINGW
+string
+get_user_name () {
+#if (defined OS_MINGW || defined OS_WIN32)
   return sys_utils::mingw_get_username ();
 #elif defined(OS_WASM)
   return wasm_get_username();

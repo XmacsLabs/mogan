@@ -329,6 +329,8 @@ target("libmogan") do
             "src/Kernel/Containers",
             "src/Kernel/Types",
             "src/Plugins",
+            "src/Plugins/Curl",
+            "src/Plugins/Ghostscript",
             "src/Plugins/Qt",
             "src/Plugins/UniversalStacktrace",
             "src/Scheme",
@@ -447,7 +449,7 @@ target("mogan") do
         set_filename("Mogan")
     end
 
-    if is_plat("macosx") or is_plat("linux") then
+    if is_plat("macosx", "linux", "windows") then
         add_rules("qt.widgetapp")
     else
         add_rules("qt.widgetapp_static")

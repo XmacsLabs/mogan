@@ -37,7 +37,7 @@ mac_fix_paths ();
 #include <QDir>
 #endif
 
-#ifdef OS_MINGW
+#if (defined(OS_MINGW) || defined(OS_WIN32))
 #include "nowide/args.hpp"
 #endif
 
@@ -172,7 +172,7 @@ TeXmacs_init_paths (int &argc, char **argv) {
   // system("set");
 #endif
 
-#ifdef OS_MINGW
+#if (defined(OS_MINGW) || defined(OS_WIN32))
   // Win bundle environment initialization
   // TEXMACS_PATH is set by assuming that the executable is in TeXmacs/bin/
   // HOME is set to USERPROFILE
@@ -595,7 +595,7 @@ boot_hacks () {
 void
 immediate_options (int argc, char **argv) {
   if (get_env ("TEXMACS_HOME_PATH") == "")
-#ifdef OS_MINGW
+#if (defined OS_MINGW|| defined OS_WIN32)
   {
     if (get_env ("HOME") == "") set_env ("HOME", get_env ("USERPROFILE"));
     set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\Xmacs");
@@ -681,7 +681,7 @@ main (int argc, char **argv) {
   else cerr << "Cannot get stack value\n";
 #endif
 
-#ifdef OS_MINGW
+#if (defined(OS_MINGW)||defined(OS_WIN32))
   nowide::args a (argc, argv); // Fix arguments - make them UTF-8
 #endif
 
@@ -701,7 +701,7 @@ main (int argc, char **argv) {
   else if (theme == "dark")
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-dark.css";
   else if (theme != "") tm_style_sheet= theme;
-#ifndef OS_MINGW
+#if !(defined(OS_MINGW) || defined(OS_WIN32))
   set_env ("LC_NUMERIC", "POSIX");
 #ifndef OS_MACOS
 #ifndef OS_WASM
