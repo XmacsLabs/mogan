@@ -17,16 +17,9 @@
 ******************************************************************************/
 
 #include "nowide/args.hpp"
-#include <sys/stat.h>
-
-#ifdef __MINGW64__
-typedef struct _stat64 struct_stat;
-#else
-typedef struct _stat32 struct_stat;
-#endif
-
+#include "nowide/stat.hpp"
 #include "nowide/cstdio.hpp"
-#include "nowide/cenv.hpp"
+#include "nowide/stackstring.hpp"
 
 
 #ifndef S_ISLNK
@@ -52,16 +45,11 @@ typedef struct _stat32 struct_stat;
 //typedef _WDIR DIR;
 #define DIR _WDIR
  
+#define struct_stat nowide::stat_t 
 #ifdef stat
  #undef stat
 #endif
-#define stat(a,b) nowide::stat(a,b)
-//#define struct_stat GStatBuf
-//#define struct_stat _stat32 
-//#ifdef remove
-// #undef remove
-//#endif
-// #define ::remove nowide::remove
+  #define stat(a,b) nowide::stat(a,b)
 
 #ifdef rename
  #undef rename
