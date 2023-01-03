@@ -16,9 +16,9 @@
 * See http://cppcms.com/files/nowide/html/index.html
 ******************************************************************************/
 
-#include "nowide/args.hpp"
-#include "nowide/stat.hpp"
 #include "nowide/cstdio.hpp"
+#include "nowide/cstdlib.hpp"
+#include "nowide/stat.hpp"
 #include "nowide/stackstring.hpp"
 
 
@@ -26,41 +26,27 @@
 #define S_ISLNK(x) 0
 #endif
 
+// nowide/cstdio.hpp
 #ifdef fopen
  #undef fopen
 #endif
  #define fopen(a,b) nowide::fopen(a,b)
-
-
-#ifdef opendir
- #undef opendir
-#endif
- #define opendir(a) nowide::opendir(a)
- 
-#ifdef closedir
- #undef closedir
-#endif
-#define closedir _wclosedir
-
-//typedef _WDIR DIR;
-#define DIR _WDIR
- 
-#define struct_stat nowide::stat_t 
-#ifdef stat
- #undef stat
-#endif
-  #define stat(a,b) nowide::stat(a,b)
 
 #ifdef rename
  #undef rename
 #endif
  #define rename nowide::rename
  
-#ifdef chmod
- #undef chmod
-#endif
- #define chmod nowide::chmod
 
+// nowide/stat.hpp
+#define struct_stat nowide::stat_t 
+#ifdef stat
+ #undef stat
+#endif
+  #define stat(a,b) nowide::stat(a,b)
+
+
+// nowide/cstdlib.hpp
 #ifdef getenv
  #undef getenv
 #endif
