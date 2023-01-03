@@ -20,6 +20,11 @@ jobs:
   macosbuild:
     runs-on: macos-11
     if: always()
+    strategy:
+      matrix:
+        include:
+          - qt_ver: 5.15.2
+          - qt_ver: 6.4.1
     steps:
       - uses: actions/checkout@v2
         with:
@@ -34,7 +39,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: 5.15.2
+          version: ${{ matrix.qt_ver }}
           target: 'desktop'
           cache: 'true'
       - uses: xmake-io/github-action-setup-xmake@v1
@@ -55,6 +60,11 @@ jobs:
   windowsbuild:
     runs-on: windows-latest
     if: always()
+    strategy:
+      matrix:
+        include:
+          - qt_ver: 5.15.2
+          - qt_ver: 6.4.1
     steps:
       - name: Install msys and xmake
         uses: msys2/setup-msys2@v2
@@ -74,7 +84,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: 5.15.2
+          version: ${{ matrix.qt_ver }}
           arch: win64_mingw81
           host: 'windows'
           target: 'desktop'
@@ -114,14 +124,19 @@ jobs:
   linuxbuild:
     runs-on: ubuntu-22.04
     if: always()
+    strategy:
+      matrix:
+        include:
+          - qt_pkg: qtbase5-dev libqt5svg5-dev qt5-image-formats-plugins
+          - qt_pkg: qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins
     steps:
       - name: Install dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev \
-              libqt5svg5-dev qt5-image-formats-plugins fonts-noto-cjk \
-              libpng-dev zlib1g-dev libjpeg-turbo8-dev libcurl4-openssl-dev \
-              libfreetype-dev libsqlite3-dev
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc \
+              fonts-noto-cjk libpng-dev zlib1g-dev libjpeg-turbo8-dev \
+              libcurl4-openssl-dev libfreetype-dev libsqlite3-dev \
+              ${{matrix.qt_pkg}}
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
