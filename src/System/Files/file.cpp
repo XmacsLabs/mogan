@@ -31,10 +31,7 @@
 #include <string.h>  // strerror
 
 #if defined (OS_MINGW)
-#include "nowide/cstdio.hpp"
-#include "nowide/stackstring.hpp"
-#include "nowide/stat.hpp"
-#define struct_stat nowide::stat_t
+#include "Windows/win-utf8-compat.hpp"
 #else
 #include <dirent.h>
 #define struct_stat struct stat
