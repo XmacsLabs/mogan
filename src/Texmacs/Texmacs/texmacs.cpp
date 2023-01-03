@@ -12,7 +12,7 @@
 #include <fcntl.h>
 #include <locale.h> // for setlocale
 #include <signal.h>
-#include <sys/stat.h>
+#include "nowide/stat.hpp"
 #include <sys/types.h>
 //#include <unistd.h>
 #ifdef STACK_SIZE
@@ -38,7 +38,7 @@ mac_fix_paths ();
 #endif
 
 #ifdef OS_MINGW
-#include "Windows/win-utf8-compat.hpp"
+#include "nowide/args.hpp"
 #endif
 
 #ifdef MACOSX_EXTENSIONS

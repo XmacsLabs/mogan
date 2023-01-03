@@ -2,6 +2,9 @@ name: Package for macOS
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - '*'
 
 jobs:
   mac-package:
@@ -13,13 +16,12 @@ jobs:
         with:
           fetch-depth: 1
           submodules: true
-      - name: Set up Homebrew
-        id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-      - name: Install Dependencies
-        run: |
-          brew install qt@5 wget
-          brew link qt@5
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 5.15.2
+          target: 'desktop'
+          cache: 'true'
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.3
@@ -41,6 +43,13 @@ jobs:
         run: ./packages/macos/package.sh
       - name: Upload Mogan.dmg
         uses: actions/upload-artifact@v3
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
           name: Mogan.dmg
           path: ${{ github.workspace }}/build/Mogan.dmg
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          prerelease: true
+          files: ${{ github.workspace }}/build/Mogan.dmg

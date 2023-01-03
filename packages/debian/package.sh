@@ -10,7 +10,7 @@ APP_HOME="$(cd "${FWDIR}/../.."; pwd)"
 
 VERSION_MAJOR="1"
 VERSION_MINOR="1"
-VERSION_BUILD="1"
+VERSION_BUILD="2"
 if [ -n "$VERSION_BUILD" ]; then
   VERSION=${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}
 else
@@ -18,11 +18,6 @@ else
 fi
 
 ln -s $APP_HOME/packages/debian $APP_HOME/debian
-rm $APP_HOME/configure
-rm $APP_HOME/configure.in
-rm $APP_HOME/config.sub
-rm $APP_HOME/config.guess
-rm $APP_HOME/Makefile.in
 cp $APP_HOME/debian/control.in $APP_HOME/debian/control
 sed -e "s/@DEVEL_VERSION@/$VERSION/" -e "s/@DEVEL_RELEASE@/1/" \
   $APP_HOME/debian/changelog.in \

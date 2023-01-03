@@ -37,15 +37,29 @@ else
     add_rules("mode.releasedbg", "mode.release", "mode.debug")
 end
 
-add_requires("libpng 1.6.37", {system=false})
-add_requires("libiconv 1.17", {system=false})
-add_requires("zlib 1.2.12", {system=false})
-add_requires("libjpeg v9e", {system=false})
-add_requires("libcurl 7.84.0", {system=false})
-add_requires("freetype 2.12.1", {system=false})
-add_requires("sqlite3 3.39.0+200", {system=false})
+if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu") then
+    add_requires("apt::libpng-dev", {alias="libpng"})
+    add_requires("apt::zlib1g-dev", {alias="zlib"})
+    if linuxos.name() == "debian" then
+        add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
+    elseif linuxos.name() == "ubuntu" then
+        add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
+    end
+    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+    add_requires("apt::libfreetype-dev", {alias="freetype"})
+    add_requires("apt::libsqlite3-dev", {alias="sqlite3"})
+else
+    add_requires("libpng 1.6.37", {system=false})
+    add_requires("libiconv 1.17", {system=false})
+    add_requires("zlib 1.2.12", {system=false})
+    add_requires("libjpeg v9e", {system=false})
+    add_requires("libcurl 7.84.0", {system=false})
+    add_requires("freetype 2.12.1", {system=false})
+    add_requires("sqlite3 3.39.0+200", {system=false})
+end
+add_requires("nowide_standalone 11.2.0", {system=false})
 
-local XMACS_VERSION="1.1.2-alpha2"
+local XMACS_VERSION="1.1.2-alpha4"
 local INSTALL_DIR="build/package"
 
 local TEXMACS_VERSION = "2.1.2"
@@ -163,6 +177,8 @@ target("libkernel") do
     set_policy("check.auto_ignore_flags", false)
     set_languages("c++17")
 
+    add_packages("nowide_standalone")
+
     add_includedirs({
         "src/System",
         "src/System/Memory",
@@ -183,15 +199,6 @@ target("libkernel") do
         "src/System/IO/**.cpp",
         "src/System/Memory/**.cpp"
     })
-
-    if is_plat("mingw", "windows")then
-        add_includedirs({
-            "src/Plugins/Windows"
-        })
-        add_files({
-            "src/Plugins/Windows/iostream.cpp"
-        })
-    end
 end
 
 for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
@@ -227,7 +234,11 @@ target("libmogan") do
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
-    add_rules("qt.static")
+    if is_plat("linux") and is_mode("release") then
+        add_rules("qt.shared")
+    else
+        add_rules("qt.static")
+    end
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     if is_plat("macosx") then
         add_frameworks("QtMacExtras")
@@ -240,6 +251,7 @@ target("libmogan") do
     add_packages("libcurl")
     add_packages("freetype")
     add_packages("sqlite3")
+    add_packages("nowide_standalone")
 
     if is_plat("mingw", "windows")then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
@@ -352,8 +364,7 @@ target("libmogan") do
         })
     elseif is_plat("mingw", "windows")then
         add_includedirs({
-                "src/Plugins/Windows", 
-                "src/Plugins/Windows/nowide"
+                "src/Plugins/Windows"
         }, {public = true})
     else
         add_includedirs("src/Plugins/Unix", {public = true})
@@ -436,7 +447,7 @@ target("mogan") do
         set_filename("Mogan")
     end
 
-    if is_plat("macosx") then
+    if is_plat("macosx") or is_plat("linux") then
         add_rules("qt.widgetapp")
     else
         add_rules("qt.widgetapp_static")
@@ -446,6 +457,8 @@ target("mogan") do
         add_frameworks("QtMacExtras")
     end
     add_deps("libmogan")
+    add_packages("nowide_standalone")
+
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
     set_installdir(INSTALL_DIR)
     after_install(function(target)

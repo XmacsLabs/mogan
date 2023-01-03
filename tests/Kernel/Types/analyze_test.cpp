@@ -31,7 +31,7 @@ private slots:
   void test_starts ();
   void test_ends ();
   void test_read_word ();
-  void test_is_cjk_unified_ideographs ();
+  void test_cjk_unified_ideographs ();
 };
 
 void
@@ -54,8 +54,11 @@ TestAnalyze::test_locase_all () {
 }
 
 void
-TestAnalyze::test_is_cjk_unified_ideographs () {
+TestAnalyze::test_cjk_unified_ideographs () {
   QVERIFY (is_cjk_unified_ideographs ("<#4E2D>"));
+  QVERIFY (has_cjk_unified_ideographs ("<#4E2D>"));
+  QVERIFY (has_cjk_unified_ideographs ("bib-<#4E2D>"));
+  QVERIFY (!is_cjk_unified_ideographs ("bib-<#4E2D>"));
 }
 
 void

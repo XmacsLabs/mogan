@@ -7,12 +7,14 @@ on:
       - 'src/**'
       - 'tests/**'
       - 'xmake.lua'
+      - '.github/workflows/ci-xmake.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'src/**'
       - 'tests/**'
       - 'xmake.lua'
+      - '.github/workflows/ci-xmake.yml'
 
 jobs:
   macosbuild:
@@ -29,13 +31,12 @@ jobs:
             ${{github.workspace}}/build/.build_cache
             /Users/runner/.xmake
           key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
-      - name: Set up Homebrew
-        id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-      - name: Install Dependencies
-        run: |
-          brew install qt@5
-          brew link qt@5
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 5.15.2
+          target: 'desktop'
+          cache: 'true'
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.3
@@ -96,9 +97,9 @@ jobs:
           xrepo update-repo
           xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
           xmake build --yes --verbose --diagnosis --jobs=8 --all
-          windeployqt ./build/mingw/x86_64/release/
+          windeployqt --compiler-runtime ./build/mingw/x86_64/release/ -printsupport
           xmake install mogan_install
-          windeployqt ./build/package/bin/
+          windeployqt --compiler-runtime ./build/package/bin/ -printsupport
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
@@ -117,7 +118,10 @@ jobs:
       - name: Install dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev libqt5svg5-dev qt5-image-formats-plugins fonts-noto-cjk
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev \
+              libqt5svg5-dev qt5-image-formats-plugins fonts-noto-cjk \
+              libpng-dev zlib1g-dev libjpeg-turbo8-dev libcurl4-openssl-dev \
+              libfreetype-dev libsqlite3-dev
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -135,7 +139,6 @@ jobs:
       - name: Build by gcc
         id: build
         run: |
-          xrepo update-repo
           xmake config --yes
           xmake build --yes --verbose --diagnosis --jobs=8 --all
       - name: Test

@@ -6,11 +6,13 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+      - '.github/workflows/ci-ubuntu-qt6.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'src/**'
       - 'tests/**'
+      - '.github/workflows/ci-ubuntu-qt6.yml'
 
 jobs:
   build-linux:

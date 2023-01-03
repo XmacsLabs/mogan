@@ -12,9 +12,9 @@
 #include "tm_ostream.hpp"
 #include "tree.hpp"
 #ifdef OS_MINGW
-#include "Windows/win-utf8-compat.hpp"
-#include "Windows/nowide/iostream.hpp"
-#include "Windows/nowide/convert.hpp"
+#include "nowide/iostream.hpp"
+#include "nowide/convert.hpp"
+#include "nowide/stat.hpp"
 FILE* fstdout;
 FILE* fstderr; 
 #endif
