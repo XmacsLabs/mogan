@@ -1,0 +1,5 @@
+.github/CODEOWNERS @darcy-shen
+xmake.lua @darcy-shen @jingkaimori
+src/Kernel/* @darcy-shen
+src/Plugins/Wasm/* @Yufeng-shen
+src/Plugins/UniversalStacktrace/* @PikachuHy
