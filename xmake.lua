@@ -230,13 +230,9 @@ target("libmogan") do
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
     if is_plat("linux") and is_mode("release") then
-        add_rules("qt.shared")
+        add_rules("qt.shared","texmacs_qt")
     else
-        add_rules("qt.static")
-    end
-    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
-    if is_plat("macosx") then
-        add_frameworks("QtMacExtras")
+        add_rules("qt.static","texmacs_qt")
     end
 
     add_packages("libpng")
@@ -429,13 +425,9 @@ target("mogan") do
     end
 
     if is_plat("macosx") or is_plat("linux") then
-        add_rules("qt.widgetapp")
+        add_rules("qt.widgetapp","texmacs_qt")
     else
-        add_rules("qt.widgetapp_static")
-    end
-    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
-    if is_plat("macosx") then
-        add_frameworks("QtMacExtras")
+        add_rules("qt.widgetapp_static","texmacs_qt")
     end
     add_deps("libmogan")
     add_packages("nowide_standalone")
@@ -601,8 +593,8 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_deps("libmogan")
             set_languages("c++17")
             set_policy("check.auto_ignore_flags", false)
-            add_rules("qt.console")
-            add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
+            add_rules("qt.console","texmacs_qt")
+            add_frameworks("QtTest")
 
             add_includedirs("tests/Base")
             add_files("tests/Base/base.cpp")
@@ -611,4 +603,21 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
         end
     end
 end
-    
+
+rule("texmacs_qt") do
+    on_load(function(target)
+        local toolchains = target:data("qt")
+        print(target:basename())
+        print(toolchains)
+        if toolchains and toolchains.sdkver then
+            import("core.base.semver")
+            local qt_sdkver = semver.new(toolchains.sdkver)
+            if (not (qt_sdkver and qt_sdkver:ge("6.0.0"))) and target:is_plat("macosx") then
+                target:add("frameworks", {"QtMacExtras"})
+            end
+            target:add("frameworks", {"QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg"})
+        else
+            raise("Qt SDK version not found, please run `xmake f --qt_sdkver=xxx` to set it.")
+        end
+    end)
+end

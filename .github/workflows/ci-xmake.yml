@@ -24,7 +24,7 @@ jobs:
       matrix:
         include:
           - qt_ver: 5.15.2
-          # - qt_ver: 6.4.1 change xmake.lua to supress macExtra
+          - qt_ver: 6.4.1
     steps:
       - uses: actions/checkout@v2
         with:
@@ -67,8 +67,10 @@ jobs:
         include:
           - qt_ver: 5.15.2
             qt_arch: win64_mingw81
+            qt_mingw_ver: 8.1.0
           - qt_ver: 6.4.1
             qt_arch: win64_mingw
+            qt_mingw_ver: 11.2.0
     steps:
       - name: Install msys and xmake
         uses: msys2/setup-msys2@v2
@@ -84,7 +86,7 @@ jobs:
         uses: coffeebe4code/setup-mingw@v1-beta-2
         with:
           platform: x64
-          version: 8.1.0
+          version: ${{ matrix.qt_mingw_ver }}
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
