@@ -605,7 +605,7 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
 end
 
 rule("texmacs_qt") do
-    on_load(function(target)
+    on_config(function(target)
         local toolchains = target:data("qt")
         print(target:basename())
         print(toolchains)
