@@ -25,13 +25,13 @@
 
   \;
 
-  Case study 1:
+  <paragraph|Case Study 1>
 
   <\itemize>
     <item>set the width of table to 500 px
   </itemize>
 
-  Typesetting result: It works fine.
+  1-1:
 
   <block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<twith|table-width|500px>|<twith|table-hmode|exact>|<table|<row|<cell|cell
   1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 1,2>|<cell|cell 2,2
@@ -40,13 +40,12 @@
 
   \;
 
-  Case study 2:
+  1-2: setting the width of the subtable to 500px
 
-  <\itemize>
-    <item>set the width of table to 500px
-
-    <item>set the width of the subtable to 500px
-  </itemize>
+  <block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<cwith|1|-1|1|-1|cell-width|>|<cwith|1|-1|1|-1|cell-hmode|auto>|<twith|table-width|500px>|<twith|table-hmode|exact>|<table|<row|<cell|cell
+  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 1,2>|<cell|cell 2,2
+  >>|<row|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|0ln>|<cwith|1|1|1|-1|cell-lborder|1ln>|<cwith|1|1|1|-1|cell-rborder|1ln>|<twith|table-width|500px>|<twith|table-hmode|exact>|<table|<row|<cell|subtable
+  cell 1,1>|<cell|st cell 1,2>>>>>>|<cell|>>>>>
 
   Typesetting result:
 
@@ -60,20 +59,13 @@
   subtable in the joined cell, it seems that the subtable is created in the
   original cell 1,3.
 
-  <block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<cwith|1|-1|1|-1|cell-width|>|<cwith|1|-1|1|-1|cell-hmode|auto>|<twith|table-width|500px>|<twith|table-hmode|exact>|<table|<row|<cell|cell
-  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 1,2>|<cell|cell 2,2
-  >>|<row|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|0ln>|<cwith|1|1|1|-1|cell-lborder|1ln>|<cwith|1|1|1|-1|cell-rborder|1ln>|<twith|table-width|500px>|<twith|table-hmode|exact>|<table|<row|<cell|subtable
-  cell 1,1>|<cell|st cell 1,2>>>>>>|<cell|>>>>>
-
-  \;
-
-  Case study 3:
+  <paragraph|Case Study 2>
 
   <\itemize>
     <item>Remove the subtable
   </itemize>
 
-  3-1: setting the width of the joined cell to 500px
+  2-1: setting the width of the joined cell to 500px
 
   <block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<cwith|3|3|1|1|cell-width|500px>|<cwith|3|3|1|1|cell-hmode|exact>|<table|<row|<cell|cell
   1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 1,2>|<cell|cell 2,2
@@ -81,11 +73,15 @@
 
   \;
 
-  3-2: setting the width of the whole table to 500px
+  2-2: setting the width of the whole table to 500px
 
   <block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<cwith|3|3|1|1|cell-width|>|<cwith|3|3|1|1|cell-hmode|auto>|<twith|table-width|500px>|<twith|table-hmode|exact>|<table|<row|<cell|cell
   1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 1,2>|<cell|cell 2,2
   >>|<row|<cell|the joined cell>|<cell|>>>>>
+
+  Typesetting result:
+
+  Setting the width of the joined cell is buggy.
 
   <\tmdoc-copyright|2023>
     Darcy Shen
