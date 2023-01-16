@@ -15,12 +15,12 @@
 
   <section|Description>
 
-  In order to adjust the separator position between cell (1,3) and cell
-  (2,3), we joined the cell (1,3) and cell (2,3), and insert a subtable
+  In order to adjust the separator position between cell (3,1) and cell
+  (3,2), we joined the cell (3,1) and cell (3,2), and insert a subtable
   there.
 
   <\big-table|<block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<table|<row|<cell|cell
-  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 1,2>|<cell|cell 2,2
+  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 2,1>|<cell|cell 2,2
   >>|<row|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|0ln>|<cwith|1|1|1|-1|cell-lborder|1ln>|<cwith|1|1|1|-1|cell-rborder|1ln>|<table|<row|<cell|subtable
   cell 1,1>|<cell|st cell 1,2>>>>>>|<cell|>>>>>>
     the width of the subtable should be the same as the joined cell 1,3.
@@ -32,14 +32,14 @@
   or the subtable.
 
   <\big-table|<block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<twith|table-width|500px>|<twith|table-hmode|exact>|<table|<row|<cell|cell
-  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 1,2>|<cell|cell 2,2
+  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 2,1>|<cell|cell 2,2
   >>|<row|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|0ln>|<cwith|1|1|1|-1|cell-lborder|1ln>|<cwith|1|1|1|-1|cell-rborder|1ln>|<table|<row|<cell|subtable
   cell 1,1>|<cell|st cell 1,2>>>>>>|<cell|>>>>>>
     set the width of Table 1 to 500px.
   </big-table>
 
   <\big-table|<block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<cwith|1|-1|1|-1|cell-width|>|<cwith|1|-1|1|-1|cell-hmode|auto>|<twith|table-width|500px>|<twith|table-hmode|exact>|<table|<row|<cell|cell
-  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 1,2>|<cell|cell 2,2
+  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 2,1>|<cell|cell 2,2
   >>|<row|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|0ln>|<cwith|1|1|1|-1|cell-lborder|1ln>|<cwith|1|1|1|-1|cell-rborder|1ln>|<twith|table-width|500px>|<twith|table-hmode|exact>|<table|<row|<cell|subtable
   cell 1,1>|<cell|st cell 1,2>>>>>>|<cell|>>>>>>
     set the width of the subtable of Table 1 to 500px
@@ -58,19 +58,19 @@
   <subsection|Case study 2: the width of the joined cell>
 
   <\big-table|<block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<table|<row|<cell|cell
-  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 1,2>|<cell|cell 2,2
+  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 2,1>|<cell|cell 2,2
   >>|<row|<cell|the joined cell>|<cell|>>>>>>
     remove the subtable in Table 1
   </big-table>
 
   <\big-table|<block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<cwith|3|3|1|1|cell-width|500px>|<cwith|3|3|1|1|cell-hmode|exact>|<table|<row|<cell|cell
-  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 1,2>|<cell|cell 2,2
+  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 2,1>|<cell|cell 2,2
   >>|<row|<cell|the joined cell>|<cell|>>>>>>
     set the width of the joined cell of Table 4 to 500px
   </big-table>
 
   <\big-table|<block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<cwith|3|3|1|1|cell-width|>|<cwith|3|3|1|1|cell-hmode|auto>|<twith|table-width|500px>|<twith|table-hmode|exact>|<table|<row|<cell|cell
-  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 1,2>|<cell|cell 2,2
+  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 2,1>|<cell|cell 2,2
   >>|<row|<cell|the joined cell>|<cell|>>>>>>
     set the width of the whole table of Table 4 to 500px
   </big-table>
@@ -81,6 +81,12 @@
     <item><math|width<around*|(|column 1 of Table
     5|)>\<neq\>width<around*|(|column 1 of Table 6|)>>
   </itemize>
+
+  <section|How to fix it>
+
+  Evaluate <scm|(cell-get-format "cell-width")> when the cursor is put in a
+  cell and we can get the width of the cell. The glue <scm|cell-get-format>
+  is the entrance for us to find the root cause of this bug.
 
   <\tmdoc-copyright|2023>
     Darcy Shen
