@@ -17,7 +17,7 @@ xrepo update-repo
 ### Step 2: Compile
 ``` bash
 xmake config -m debug --yes
-xmake build --yes --verbose --diagnosis --jobs=8 --all
+xmake build --yes --verbose --jobs=8 --all
 ```
 
 ### Step 3: Run unit test
