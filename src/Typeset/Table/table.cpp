@@ -441,36 +441,58 @@ blow_up (SI* w, SI* l, SI* r, SI* W, SI* L, SI* R,
 ******************************************************************************/
 
 void
-table_rep::compute_widths (SI* Mw, SI* Lw, SI* Rw, bool large) {
+table_rep::compute_widths_by_column (SI* Mw, SI* Lw, SI* Rw, bool large) {
   int i, j;
   for (j=0; j<nr_cols; j++)
     Mw[j]= Lw[j]= Rw[j]= 0;
 
-  for (j=0; j<nr_cols; j++)
+  // Compute width for the normal cells
+  for (j=0; j<nr_cols; j++) {
     for (i=0; i<nr_rows; i++) {
       cell C= T[i][j];
       if ((!is_nil (C)) && (C->col_span == 1)) {
         SI cmw, clw, crw;
         C->compute_width (cmw, clw, crw, large);
-        //cout << i << ", " << j << ": "
-        //<< (cmw>>8) << "; " << (clw>>8) << ", " << (crw>>8) << "\n";
         Mw[j]= max (Mw[j], cmw);
         Lw[j]= max (Lw[j], clw);
         Rw[j]= max (Rw[j], crw);
         Mw[j]= max (Mw[j], Lw[j] + Rw[j]);
+        //cout << "[normal cell] (" << i+1 << "," << j+1 << ") : "
+        //     << (cmw>>8) << "; " << (clw>>8) << ", " << (crw>>8) << LF;
       }
     }
+    //cout << "[normal cell] col(" << j+1 << "): " << (Mw[j]>>8) << LF;
+  }
+}
 
-  for (j=0; j<nr_cols; j++)
-    for (i=0; i<nr_rows; i++) {
+void
+table_rep::compute_width_by_row (SI& row_width, bool large) {
+  int i, j;
+
+  row_width= 0;
+  for (i=0; i<nr_rows; i++) {
+    SI row_mw=0;
+
+    bool joined_flag= false;
+    for (j=0; j<nr_cols; j++) {
       cell C= T[i][j];
-      if ((!is_nil (C)) && (C->col_span != 1)) {
-        SI cmw, clw, crw;
-        C->compute_width (cmw, clw, crw, large);
-        SI tot= sum (Mw+j, C->col_span);
-        if (cmw > tot) Mw[j] += cmw - tot;
+      if ((!is_nil (C)) && C->col_span > 1) {
+        joined_flag= true;
+        break;
       }
     }
+    if (joined_flag) {
+      for (j=0; j<nr_cols; j++) {
+        cell C= T[i][j];
+        if ((!is_nil (C))) {
+          SI cmw, clw, crw;
+          C->compute_width (cmw, clw, crw, large);
+          row_mw+= cmw;
+        }
+      }
+    }
+    row_width= max(row_width, row_mw);
+  }
 }
 
 void
@@ -489,12 +511,25 @@ void
 table_rep::position_columns () {
   //cout << "-------------------------------------\n";
   //cout << "Position columns " << (width >> 8) << "\n";
-  compute_widths (mw, lw, rw, hmode == "auto");
+  compute_widths_by_column (mw, lw, rw, hmode == "auto");
+
+  // compute table width by summing col widths
+  SI w_by_cols=0;
+  w_by_cols+= sum(mw, nr_cols);
+  // compute table width by row which contains the joined cell
+  SI w_by_rows=0;
+  compute_width_by_row (w_by_rows, true);
+
+  if (hmode == "auto" && w_by_rows > w_by_cols) {
+    // if the width of the joined row is bigger than the width of the other row
+    width= w_by_rows;
+  }
+
   //for (int i=0; i<nr_cols; i++)
   //cout << "Column " << i << ": " << (mw[i]>>8) << "; "
   //<< (lw[i]>>8) << ", " << (rw[i]>>8) << "\n";
-  if (hmode != "auto") {
-    SI min_width= sum (mw, nr_cols);
+  if (hmode != "auto" || (w_by_rows > w_by_cols)) {
+    SI min_width= w_by_cols;
     SI hextra= width - min_width;
     //cout << "Extra horizontal " << (hextra >> 8) << "\n";
     if (hextra > 0) {
@@ -503,7 +538,7 @@ table_rep::position_columns () {
       STACK_NEW_ARRAY (Lw, SI, nr_cols);
       STACK_NEW_ARRAY (Rw, SI, nr_cols);
       compute_horizontal_parts (part);
-      compute_widths (Mw, Lw, Rw, true);
+      compute_widths_by_column (Mw, Lw, Rw, true);
       SI max_width= sum (Mw, nr_cols);
       SI computed_width= width;
       if (hmode == "min") computed_width= min (width, max_width);
@@ -557,7 +592,7 @@ table_rep::position_columns () {
   else xoff= -sum (mw, j0) - lw[j0];
 
   x1= xoff- lborder- lsep;
-  for (j=0; j<nr_cols; j++) xoff += mw[j];
+  xoff+= width;
   x2= xoff+ rborder+ rsep;
 }
 
@@ -720,12 +755,16 @@ table_rep::finish_horizontal () {
     for (i=0; i<nr_rows; i++) {
       cell C= T[i][j];
       if (!is_nil (C)) {
-        if (C->col_span > 1)
+        if (C->col_span > 1) {
+          // if it is a joined cell
           C->width += sum (mw+j+1, C->col_span-1);
-        if (!is_nil (C->T))
+        }
+        if (!is_nil (C->T)) {
+          // if there is a subtable in this cell
           C->T->finish_horizontal ();
-        else if (C->hyphen != "n")
+        } else if (C->hyphen != "n") {
           C->finish_horizontal ();
+        }
         SI tot= sum (mw+j, C->col_span);
         C->position_horizontally (xoff, tot, lw[j], rw[j+C->col_span-1]);
       }

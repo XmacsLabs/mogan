@@ -20,8 +20,8 @@
   there.
 
   <\big-table|<block|<tformat|<cwith|3|3|1|1|cell-row-span|1>|<cwith|3|3|1|1|cell-col-span|2>|<table|<row|<cell|cell
-  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 2,1>|<cell|cell 2,2
-  >>|<row|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|0ln>|<cwith|1|1|1|-1|cell-lborder|1ln>|<cwith|1|1|1|-1|cell-rborder|1ln>|<table|<row|<cell|subtable
+  1,1>|<cell|cell 1,2 long description >>|<row|<cell|cell 2,1>|<cell|cell
+  2,2>>|<row|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|0ln>|<cwith|1|1|1|-1|cell-lborder|1ln>|<cwith|1|1|1|-1|cell-rborder|1ln>|<table|<row|<cell|subtable
   cell 1,1>|<cell|st cell 1,2>>>>>>|<cell|>>>>>>
     the width of the subtable should be the same as the joined cell 1,3.
   </big-table>
@@ -45,7 +45,7 @@
     set the width of the subtable of Table 1 to 500px
   </big-table>
 
-  Comparing the Table 2 and Table 3:
+  Comparing the Table 2 and Table 3 (in Mogan v1.1.1):
 
   <\itemize>
     <item><math|width<around*|(|column 1 of Table
@@ -75,18 +75,12 @@
     set the width of the whole table of Table 4 to 500px
   </big-table>
 
-  Comparing Table 5 and Table 6:
+  Comparing Table 5 and Table 6 (in Mogan v1.1.1):
 
   <\itemize>
     <item><math|width<around*|(|column 1 of Table
     5|)>\<neq\>width<around*|(|column 1 of Table 6|)>>
   </itemize>
-
-  <section|How to fix it>
-
-  Evaluate <scm|(cell-get-format "cell-width")> when the cursor is put in a
-  cell and we can get the width of the cell. The glue <scm|cell-get-format>
-  is the entrance for us to find the root cause of this bug.
 
   <\tmdoc-copyright|2023>
     Darcy Shen
