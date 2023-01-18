@@ -520,9 +520,9 @@ table_rep::position_columns () {
   SI w_by_rows=0;
   compute_width_by_row (w_by_rows, true);
 
-  if (hmode == "auto" && w_by_rows > w_by_cols) {
+  if (hmode == "auto") {
     // if the width of the joined row is bigger than the width of the other row
-    width= w_by_rows;
+    width= max(width, max(w_by_rows, w_by_cols));
   }
 
   //for (int i=0; i<nr_cols; i++)
