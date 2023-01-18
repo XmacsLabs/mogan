@@ -280,6 +280,7 @@ cell_rep::compute_width (SI& mw, SI& lw, SI& rw, bool large) {
   }
   else {
     //cout << "  b= " << b << "\n";
+    //cout << "box width: " << (b->w()>>8)<< LF;
     lw= rw= mw= 0;
     if (lr_flag) {
       if (N (halign) == 1) {

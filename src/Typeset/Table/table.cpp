@@ -509,8 +509,7 @@ table_rep::compute_horizontal_parts (double* part) {
 
 void
 table_rep::position_columns () {
-  //cout << "-------------------------------------\n";
-  //cout << "Position columns " << (width >> 8) << "\n";
+  //cout << "start position col: " << (width >> 8) << INDENT << LF ;
   compute_widths_by_column (mw, lw, rw, hmode == "auto");
 
   // compute table width by summing col widths
@@ -521,6 +520,8 @@ table_rep::position_columns () {
   compute_width_by_row (w_by_rows, true);
 
   if (hmode == "auto") {
+    //cout << "w: " << width << ", " << "w_by_r: " << w_by_rows << ", "
+    //     << "w_by_c: " << w_by_cols << LF;
     // if the width of the joined row is bigger than the width of the other row
     width= max(width, max(w_by_rows, w_by_cols));
   }
@@ -564,9 +565,16 @@ table_rep::position_columns () {
       cell C= T[i][j];
       if (!is_nil (C)) {
         if (!is_nil (C->T)) {
-          C->T->width= mw[j]- C->lborder- C->rborder;
-          C->T->hmode= "exact";
-          C->T->position_columns ();
+          if (C->T->hmode == "auto") {
+            if (C->col_span==1) {
+              C->T->width= mw[j]- C->lborder- C->rborder;
+            } else {
+              SI joined_cell_width= sum (mw+j, C->col_span);
+              C->T->width= joined_cell_width - C->lborder- C->rborder;
+            }
+            C->T->hmode= "exact";
+            C->T->position_columns ();
+          }
         }
         else if (C->hyphen != "n")
           C->width= mw[j];
@@ -594,6 +602,7 @@ table_rep::position_columns () {
   x1= xoff- lborder- lsep;
   xoff+= width;
   x2= xoff+ rborder+ rsep;
+  //cout << UNINDENT << "end postion col: " << (width >> 8) << LF;
 }
 
 void
