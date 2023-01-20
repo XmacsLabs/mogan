@@ -507,7 +507,7 @@ target("mogan_install") do
     set_installdir(INSTALL_DIR)
     if is_plat("macosx") then
         add_installfiles({
-            "packages/macos/Xmacs.icns",
+            "packages/macos/new-mogan.icns",
             "packages/macos/TeXmacs-document.icns",
             "src/Plugins/Cocoa/(English.lproj/**)",
             "src/Plugins/Cocoa/(zh_CN.lproj/**)",
