@@ -726,7 +726,7 @@ main (int argc, char **argv) {
 #endif
   TeXmacs_init_paths (argc, argv);
 #ifdef QTTEXMACS
-  qtmapp->set_window_icon ("/misc/images/xmacs-512.png");
+  qtmapp->set_window_icon ("/misc/images/new-mogan-512.png"); // it this really necessary? Should be set in the metadata.
 #endif
   // cout << "Bench  ] Started TeXmacs\n";
   the_et     = tuple ();
