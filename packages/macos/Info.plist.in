@@ -28,7 +28,7 @@
     <key>CFBundleExecutable</key>
     <string>Mogan</string>
     <key>CFBundleIconFile</key>
-    <string>Xmacs</string>
+    <string>new-mogan</string>
     <key>CFBundleIdentifier</key>
     <string>net.xmacs.Xmacs</string>
     <key>CFBundleInfoDictionaryVersion</key>
