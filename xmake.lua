@@ -582,13 +582,12 @@ target("mogan_install") do
 
     after_install(
         function (target)
-            os.cp (
-                "TeXmacs/misc/images/texmacs.svg", 
-                path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
-            for _,size in ipairs({32, 48, 64, 128, 256, 512}) do
-                os.cp (
-                    "TeXmacs/misc/images/xmacs-"..size..".png", 
-                    path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
+            if is_plat("linux") then
+                for _,size in ipairs({16, 32, 128, 512}) do
+                    os.cp (
+                        "TeXmacs/misc/images/new-mogan-"..size..".png", 
+                        path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
+                end
             end
             if is_plat("macosx") or is_plat("linux")  then
                 os.mkdir (path.join(target:installdir(), "share/Xmacs/plugins/shell/bin"))
