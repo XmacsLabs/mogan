@@ -464,10 +464,6 @@ chinese_language_rep::advance (tree t, int& pos) {
     return &tp_space_rep;
   }
 
-  if (do_not_start->contains (s[pos]) {
-    return &tp_cjk_period_rep;
-  }
-
   if (s[pos] == '<' && !test (s, pos, "<#")) {
     while ((pos<N(s)) && (s[pos]!='>')) pos++;
     if (pos<N(s)) pos++;
@@ -483,9 +479,10 @@ chinese_language_rep::advance (tree t, int& pos) {
   int start= pos;
   tm_char_forwards (s, pos);
   string c= s (start, pos);
-  int next= pos;
-  tm_char_forwards (s, next);
-  string x= s (pos, next);
+
+  if (do_not_start->contains (c)) {
+    return &tp_cjk_period_rep;
+  }
 
   return &tp_cjk_normal_rep;
 }
