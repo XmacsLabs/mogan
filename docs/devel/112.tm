@@ -88,13 +88,11 @@
 
   \;
 
-  <tabular|<tformat|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|2|2|cell-width|50pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|4|4|cell-width|50pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|50pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|5|5|cell-hyphen|t>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|6|6|cell-width|50pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|5|5|cell-width|50pt>|<cwith|1|1|5|5|cell-hmode|exact>|<cwith|1|1|4|4|cell-background|pastel
+  <tabular|<tformat|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|2|2|cell-width|50pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|3|3|cell-width|50pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|5|5|cell-hyphen|t>|<cwith|1|1|5|5|cell-width|50pt>|<cwith|1|1|5|5|cell-hmode|exact>|<cwith|1|1|4|4|cell-width|50pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|3|3|cell-background|pastel
   green>|<table|<row|<\cell>
     我能吞下/玻璃而不伤身体。
   </cell>|<\cell>
     列奥纳多\<centerdot\>达\<centerdot\>芬奇
-  </cell>|<\cell>
-    我能吞下/玻璃而不伤身体。
   </cell>|<\cell>
     我能吞下～玻璃而不伤身体。
   </cell>|<\cell>

@@ -432,7 +432,8 @@ chinese_language_rep::chinese_language_rep (string lan_name):
   language_rep (lan_name), punct (false)
 {
   // punct is for symbols which should not be the line start
-  list<string> half_width = list(".", ",", ":", ";", "!", "?")
+  auto half_width = array<string>() * string(".") * string(",") * string(":")
+                                    * string(";") * string("!") * string("?");
   for (int i=0; i<N(half_width); i++) {
     punct (half_width[i])= true;
   }
