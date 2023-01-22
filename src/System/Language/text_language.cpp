@@ -420,8 +420,8 @@ oriental_language_rep::hyphenate (
 ******************************************************************************/
 
 struct chinese_language_rep: language_rep {
-  hashmap<string,bool> punct;
-  hashmap<string,bool> wide_punct;
+  hashmap<string,bool> do_not_start; 
+  hashmap<string,bool> do_not_end;
   chinese_language_rep (string lan_name);
   text_property advance (tree t, int& pos);
   array<int> get_hyphens (string s);
@@ -429,30 +429,29 @@ struct chinese_language_rep: language_rep {
 };
 
 chinese_language_rep::chinese_language_rep (string lan_name):
-  language_rep (lan_name), punct (false)
+  language_rep (lan_name), do_not_start (false), do_not_end (false)
 {
-  // punct is for symbols which should not be the line start
   auto half_width= list<string>()
     * string(".") * string(",") * string(":") * string(";") * string("!")
     * string("?") * string("/") * string("-");
   for (int i=0; i<N(half_width); i++) {
-    punct (half_width[i])= true;
+    do_not_start (half_width[i])= true;
   }
 
-  auto full_width= list<string>()
+  auto full_width_do_not_start= list<string>()
     * string(u8"。") * string(u8"，") * string(u8"：") * string(u8"；")
     * string(u8"！") * string(u8"？") * string(u8"、") * string(u8"～")
     * string(u8"』") * string(u8"」") * string(u8"）") * string(u8"】")
     * string(u8"》") * string(u8"〉");
-  for (int i=0; i<N(full_width); i++) {
-    punct (utf8_to_cork(full_width[i]))= true;
+  for (int i=0; i<N(full_width_do_not_start); i++) {
+    do_not_start (utf8_to_cork(full_width_do_not_start[i]))= true;
   }
 
   // special full width characters
-  punct ("<#201D>")= true;  // ”
-  punct ("<#2014>")= true;  // —
+  do_not_start ("<#201D>")= true;  // ”
+  do_not_start ("<#2014>")= true;  // —
+  do_not_start ("<#2019>")= true;  // ’
   // punct ("<#2018>")= true;  // ‘
-  punct ("<#2019>")= true;  // ’
 }
 
 text_property
@@ -463,6 +462,10 @@ chinese_language_rep::advance (tree t, int& pos) {
   if (s[pos] == ' ') {
     pos++;
     return &tp_space_rep;
+  }
+
+  if (do_not_start->contains (s[pos]) {
+    return &tp_cjk_period_rep;
   }
 
   if (s[pos] == '<' && !test (s, pos, "<#")) {
@@ -484,18 +487,7 @@ chinese_language_rep::advance (tree t, int& pos) {
   tm_char_forwards (s, next);
   string x= s (pos, next);
 
-  if (punct->contains (c)) {
-    if (punct->contains (x) || pos == N(s))
-      return &tp_cjk_no_break_period_rep;
-    else if (wide_punct->contains (c))
-      return &tp_cjk_wide_period_rep;
-    else return &tp_cjk_period_rep;
-  }
-  else {
-    if (punct->contains (x) || pos == N(s))
-      return &tp_cjk_no_break_rep;
-    else return &tp_cjk_normal_rep;
-  }
+  return &tp_cjk_normal_rep;
 }
 
 array<int>
