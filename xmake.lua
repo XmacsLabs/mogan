@@ -62,7 +62,7 @@ if is_plat("mingw") then
     add_requires("nowide_standalone 11.2.0", {system=false})
 end
 
-local XMACS_VERSION="1.1.2-alpha4"
+local XMACS_VERSION="1.1.2-beta1"
 local INSTALL_DIR="build/package"
 
 local TEXMACS_VERSION = "2.1.2"
