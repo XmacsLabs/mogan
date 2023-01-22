@@ -451,6 +451,7 @@ chinese_language_rep::chinese_language_rep (string lan_name):
   do_not_start ("<#201D>")= true;  // ”
   do_not_start ("<#2014>")= true;  // —
   do_not_start ("<#2019>")= true;  // ’
+  do_not_start ("<centerdot>")= true;
   // punct ("<#2018>")= true;  // ‘
 }
 
@@ -464,10 +465,23 @@ chinese_language_rep::advance (tree t, int& pos) {
     return &tp_space_rep;
   }
 
+  if (s[pos] != '<') {
+    if (do_not_start->contains (s[pos])) {
+      pos++;
+      return &tp_cjk_period_rep;
+    }
+  }
+
+  // <centerdot>, <alpha>
   if (s[pos] == '<' && !test (s, pos, "<#")) {
-    while ((pos<N(s)) && (s[pos]!='>')) pos++;
-    if (pos<N(s)) pos++;
-    return &tp_normal_rep;
+    int start=pos;
+    tm_char_forwards (s, pos);
+    string c= s (start, pos);
+    if (do_not_start->contains (c)) {
+      return &tp_cjk_period_rep;
+    } else {
+      return &tp_normal_rep;
+    }
   }
 
   if (pos < N(s) && !test (s, pos, "<#")) {
