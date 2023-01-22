@@ -438,15 +438,21 @@ chinese_language_rep::chinese_language_rep (string lan_name):
   for (int i=0; i<N(half_width); i++) {
     punct (half_width[i])= true;
   }
+
   auto full_width= list<string>()
     * string(u8"。") * string(u8"，") * string(u8"：") * string(u8"；")
     * string(u8"！") * string(u8"？") * string(u8"、") * string(u8"～")
     * string(u8"』") * string(u8"」") * string(u8"）") * string(u8"】")
     * string(u8"》") * string(u8"〉");
   for (int i=0; i<N(full_width); i++) {
-    cout << utf8_to_cork(full_width[i]) << LF;
     punct (utf8_to_cork(full_width[i]))= true;
   }
+
+  // special full width characters
+  punct ("<#201D>")= true;  // ”
+  punct ("<#2014>")= true;  // —
+  // punct ("<#2018>")= true;  // ‘
+  punct ("<#2019>")= true;  // ’
 }
 
 text_property
