@@ -450,8 +450,9 @@ chinese_language_rep::chinese_language_rep (string lan_name):
   // special full width characters
   do_not_start ("<#201D>")= true;  // ”
   do_not_start ("<#2014>")= true;  // —
-  do_not_start ("<#2019>")= true;  // ’
+  do_not_start ("'")= true;  // ’ <#2019>
   do_not_start ("<centerdot>")= true;
+ 
   // punct ("<#2018>")= true;  // ‘
 }
 

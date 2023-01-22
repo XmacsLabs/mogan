@@ -69,22 +69,25 @@
 
   <paragraph|For line start>
 
+  \| could be at the line start.
+
   <with|language|chinese|<tabular|<tformat|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|2|2|cell-background|pastel
   green>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|4|4|cell-width|50pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|50pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|5|5|cell-hyphen|t>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|6|6|cell-width|50pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|5|5|cell-width|50pt>|<cwith|1|1|5|5|cell-hmode|exact>|<cwith|1|1|7|7|cell-hyphen|t>|<cwith|1|1|7|7|cell-width|50pt>|<cwith|1|1|7|7|cell-hmode|exact>|<cwith|1|1|2|7|cell-background|pastel
-  green>|<cwith|1|1|2|2|cell-width|50pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|1|1|cell-hyphen|t>|<table|<row|<\cell>
-    我\|能\|吞\|下玻璃而不伤身体。
+  green>|<cwith|1|1|2|2|cell-width|50pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|1|1|cell-background|pastel
+  green>|<table|<row|<\cell>
+    我能吞下\|玻璃而不伤身体。
   </cell>|<\cell>
-    我\|能\|吞,下玻璃而不伤身体。
+    我能吞下,玻璃而不伤身体。
   </cell>|<\cell>
-    我\|能\|吞.下玻璃而不伤身体。
+    我能吞下.玻璃而不伤身体。
   </cell>|<\cell>
-    我\|能\|吞:下玻璃而不伤身体。
+    我能吞下:玻璃而不伤身体。
   </cell>|<\cell>
-    我\|能\|吞;下玻璃而不伤身体。
+    我能吞下;玻璃而不伤身体。
   </cell>|<\cell>
-    我\|能\|吞!下玻璃而不伤身体。
+    我能吞下!玻璃而不伤身体。
   </cell>|<\cell>
-    我\|能\|吞?下玻璃而不伤身体。
+    我能吞下?玻璃而不伤身体。
   </cell>>>>>>
 
   \;
