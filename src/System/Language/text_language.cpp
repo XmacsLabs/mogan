@@ -432,18 +432,17 @@ chinese_language_rep::chinese_language_rep (string lan_name):
   language_rep (lan_name), punct (false)
 {
   // punct is for symbols which should not be the line start
-  auto half_width= array<string>()
+  auto half_width= list<string>()
     * string(".") * string(",") * string(":") * string(";") * string("!")
     * string("?") * string("/") * string("-");
   for (int i=0; i<N(half_width); i++) {
     punct (half_width[i])= true;
   }
-  auto full_width= array<string>()
+  auto full_width= list<string>()
     * string(u8"。") * string(u8"，") * string(u8"：") * string(u8"；")
     * string(u8"！") * string(u8"？") * string(u8"、") * string(u8"～")
-    * string(u8"”") * string(u8"‘") * string(u8"』") * string(u8"」")
-    * string(u8"）") * string(u8"】") * string(u8"》") * string(u8"〉")
-    * string(u8"—") * string(u8"·");
+    * string(u8"』") * string(u8"」") * string(u8"）") * string(u8"】")
+    * string(u8"》") * string(u8"〉");
   for (int i=0; i<N(full_width); i++) {
     cout << utf8_to_cork(full_width[i]) << LF;
     punct (utf8_to_cork(full_width[i]))= true;
