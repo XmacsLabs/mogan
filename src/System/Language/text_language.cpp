@@ -447,13 +447,21 @@ chinese_language_rep::chinese_language_rep (string lan_name):
     do_not_start (utf8_to_cork(full_width_do_not_start[i]))= true;
   }
 
+  auto full_width_do_not_end = list<string>()
+    * string(u8"『") * string(u8"「") * string(u8"（") * string(u8"【")
+    * string(u8"《") * string(u8"〈");
+  for (int i=0; i<N(full_width_do_not_end); i++) {
+    do_not_end (utf8_to_cork(full_width_do_not_end[i]))= true;
+  }
+
   // special full width characters
   do_not_start ("<#201D>")= true;  // ”
   do_not_start ("<#2014>")= true;  // —
   do_not_start ("'")= true;  // ’ <#2019>
   do_not_start ("<centerdot>")= true;
  
-  // punct ("<#2018>")= true;  // ‘
+  do_not_end ("<#201C>")= true; // “
+  do_not_end ("<#2018>")= true; // ‘
 }
 
 text_property
@@ -495,6 +503,9 @@ chinese_language_rep::advance (tree t, int& pos) {
 
   if (do_not_start->contains (c)) {
     return &tp_cjk_period_rep;
+  }
+  if (do_not_end->contains (c)) {
+    return &tp_cjk_no_break_rep;
   }
 
   return &tp_cjk_normal_rep;
