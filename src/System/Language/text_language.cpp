@@ -469,6 +469,10 @@ chinese_language_rep::advance (tree t, int& pos) {
     if (do_not_start->contains (s[pos])) {
       pos++;
       return &tp_cjk_period_rep;
+    } else {
+      while (pos < N(s) && s[pos] != ' ' && s[pos] != '<' && !do_not_start->contains(s[pos]))
+        tm_char_forwards (s, pos);
+      return &tp_cjk_no_break_rep;
     }
   }
 
@@ -482,12 +486,6 @@ chinese_language_rep::advance (tree t, int& pos) {
     } else {
       return &tp_normal_rep;
     }
-  }
-
-  if (pos < N(s) && !test (s, pos, "<#")) {
-    while (pos < N(s) && s[pos] != ' ' && s[pos] != '<')
-      tm_char_forwards (s, pos);
-    return &tp_cjk_no_break_rep;
   }
 
   int start= pos;
