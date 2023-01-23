@@ -18,6 +18,9 @@ hero:
       text: Download from GitHub
       link: https://github.com/XmacsLabs/mogan/releases
     - theme: alt
+      text: Download from Gitee
+      link: https://gitee.com/XmacsLabs/mogan/releases
+    - theme: alt
       text: Try Online (Experimental)
       link: https://mogan.app/wasm/Mogan.html
 

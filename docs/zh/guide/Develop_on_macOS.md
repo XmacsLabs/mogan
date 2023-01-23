@@ -1,4 +1,4 @@
-# 在GNU/Linux上开发
+# 在macOS上开发
 
 ## 使用xmake
 ### 第一步：安装xmake和xrepo
