@@ -79,18 +79,18 @@ protected:
 
   void handle_decoration (int& i, int& j, SI& xoff, box& b, SI& b_sp);
   void handle_decorations (int& i, int& j, SI& xoff,
-			   array<box>& bs, array<SI>& bs_sp);
+                           array<box>& bs, array<SI>& bs_sp);
   void handle_decorations ();
 
   void line_start ();
   bool non_trailing_tabs ();
   void make_unit (string mode, SI the_width, bool break_flag);
   void line_unit (path start, path end, bool break_flag,
-		  string mode, SI the_left, SI the_right);
+                  string mode, SI the_left, SI the_right);
   void line_end (space spc, int penalty);
   void line_units (int start, int end, bool is_start, bool is_end,
-		   string mode, string hyphen,
-		   SI the_left, SI the_right, SI the_first, SI the_last);
+                   string mode, string hyphen,
+                   SI the_left, SI the_right, SI the_first, SI the_last);
 
   void format_paragraph_unit (int start, int end);
 
