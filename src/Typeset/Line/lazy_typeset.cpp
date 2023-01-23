@@ -50,7 +50,7 @@ lazy_document_rep::query (lazy_type request, format fm) {
     for (i=0; i<n; i++) {
       format tmp_fm= make_query_vstream_width (
         i==0  ? before: array<line_item> (),
-	i==n-1? after : array<line_item> ());
+        i==n-1? after : array<line_item> ());
       format ret_fm= par[i]->query (request, tmp_fm);
       format_width fmw= (format_width) ret_fm;
       w= max (w, fmw->width);
@@ -79,13 +79,13 @@ lazy_document_rep::produce (lazy_type request, format fm) {
     for (i=0; i<n; i++) {
       format tmp_fm= make_format_vstream (width,
         i==0  ? before: array<line_item> (),
-	i==n-1? after : array<line_item> ());
+        i==n-1? after : array<line_item> ());
       if (i > 0) par[i]->propagate ();
       lazy tmp= par[i]->produce (request, tmp_fm);
       lazy_vstream tmp_vs= (lazy_vstream) tmp;
       if (i == 0) {
-	l = tmp_vs->l ;
-	sb= tmp_vs->sb;
+        l = tmp_vs->l ;
+        sb= tmp_vs->sb;
       }
       else merge_stack (l, sb, tmp_vs->l, tmp_vs->sb);
     }
@@ -270,17 +270,17 @@ make_lazy_compound (edit_env env, tree t, path ip) {
       hashmap<string,path> (path (DECORATION)), env->macro_src);
     if (L(f) == XMACRO) {
       if (is_atomic (f[0])) {
-	string var= f[0]->label;
-	env->macro_arg->item (var)= t;
-	env->macro_src->item (var)= ip;
+        string var= f[0]->label;
+        env->macro_arg->item (var)= t;
+        env->macro_src->item (var)= ip;
       }
     }
     else for (i=0; i<n; i++)
       if (is_atomic (f[i])) {
-	string var= f[i]->label;
-	env->macro_arg->item (var)=
-	  i<m? t[i+d]: attach_dip (tree (UNINIT), decorate_right(ip));
-	env->macro_src->item (var)= i<m? descend (ip,i+d): decorate_right(ip);
+        string var= f[i]->label;
+        env->macro_arg->item (var)=
+          i<m? t[i+d]: attach_dip (tree (UNINIT), decorate_right(ip));
+        env->macro_src->item (var)= i<m? descend (ip,i+d): decorate_right(ip);
       }
     if (is_decoration (ip)) par= make_lazy (env, attach_here (f[n], ip));
     else par= make_lazy (env, attach_right (f[n], ip));
@@ -371,8 +371,8 @@ make_lazy_argument (edit_env env, tree t, path ip) {
     if ((!is_nil (env->macro_arg)) && env->macro_arg->item->contains (r->label)) {
       value= env->macro_arg->item [name];
       if (!is_func (value, BACKUP)) {
-	path new_valip= env->macro_src->item [name];
-	if (is_accessible (new_valip)) valip= new_valip;
+        path new_valip= env->macro_src->item [name];
+        if (is_accessible (new_valip)) valip= new_valip;
       }
     }
     else value= compound ("src-unknown", name);
@@ -430,24 +430,24 @@ make_lazy_mark (edit_env env, tree t, path ip) {
       tree   value= env->macro_arg->item [name];
       path   valip= decorate_right (ip);
       if (!is_func (value, BACKUP)) {
-	path new_valip= env->macro_src->item [name];
-	if (is_accessible (new_valip)) valip= new_valip;
+        path new_valip= env->macro_src->item [name];
+        if (is_accessible (new_valip)) valip= new_valip;
       }
 
       if (N(t[0]) > 1) {
-	int i, n= N(t[0]);
-	for (i=1; i<n; i++) {
-	  tree r= env->exec (t[0][i]);
-	  if (!is_int (r)) break;
-	  int nr= as_int (r);
-	  if ((!is_compound (value)) || (nr<0) || (nr>=N(value))) break;
-	  value= value[nr];
-	  valip= descend (valip, nr);
-	}
+        int i, n= N(t[0]);
+        for (i=1; i<n; i++) {
+          tree r= env->exec (t[0][i]);
+          if (!is_int (r)) break;
+          int nr= as_int (r);
+          if ((!is_compound (value)) || (nr<0) || (nr>=N(value))) break;
+          value= value[nr];
+          valip= descend (valip, nr);
+        }
       }
       if (is_compound (value)) {
-	a= typeset_marker (env, descend (valip, 0));
-	b= typeset_marker (env, descend (valip, 1));
+        a= typeset_marker (env, descend (valip, 0));
+        b= typeset_marker (env, descend (valip, 1));
       }
     }
 

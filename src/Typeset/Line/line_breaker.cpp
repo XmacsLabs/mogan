@@ -30,15 +30,15 @@ struct lb_info {
   lb_info () { rep= tm_new<lb_info_rep> (); }
   operator tree () {
     return tuple ((tree) rep->prev,
-		  as_string (rep->pen),
-		  as_string ((double) rep->pen_spc)); }
+                  as_string (rep->pen),
+                  as_string ((double) rep->pen_spc)); }
 };
 CONCRETE_CODE(lb_info);
 
 tm_ostream&
 operator << (tm_ostream& out, lb_info hi) {
   return out << "[ " << hi->prev << ", "
-	     << hi->pen << ", " << hi->pen_spc << " ]";
+             << hi->pen << ", " << hi->pen_spc << " ]";
 }
 
 // FIXME: explicit instantiation for broken g++
@@ -61,7 +61,7 @@ struct line_breaker_rep {
   hashmap<path,lb_info> best;
 
   line_breaker_rep (array<line_item> a, int start, int end,
-		    SI line_width, SI large_width, SI first_spc, SI last_spc);
+                    SI line_width, SI large_width, SI first_spc, SI last_spc);
 
   void empty_line_fix (line_item& first, path& pos, int& cur_nr);
   path next_ragged_break (path pos);
@@ -128,11 +128,11 @@ hyphenate (line_item item, int pos, line_item& item1, line_item& item2) {
   int  x2= is_accessible (ip)? x1 + real_pos: 0;
   
   item1= line_item (STRING_ITEM, OP_SKIP,
-		    shorter_box (ip, text_box (ip, x1, s1, fn, pen), real_pos),
-		    hp[pos], item->lan);
+                    shorter_box (ip, text_box (ip, x1, s1, fn, pen), real_pos),
+                    hp[pos], item->lan);
   item2= line_item (STRING_ITEM, item->op_type,
                     text_box (ip, x2, s2, fn, pen),
-		    item->penalty, item->lan);
+                    item->penalty, item->lan);
   item2->spc= item->spc;
   // cout << s << " ---> " << s1 << " " << s2 << "\n";
 }
@@ -151,8 +151,8 @@ line_breaker_rep::empty_line_fix (line_item& first, path& pos, int& cur_nr) {
     tot_spc += cur_item->b->w() + cur_item->spc->def;
     if (tot_spc != 0) {
       if (i == cur_nr) {
-	if (cur_item->spc->def != 0) return;
-	i++;
+        if (cur_item->spc->def != 0) return;
+        i++;
       }
       else i= cur_nr;
       break;
@@ -202,21 +202,21 @@ line_breaker_rep::next_ragged_break (path pos) {
     if (cur_nr<end) {
       cur_spc -= cur_item->b->w();
       if ((cur_spc <= line_width) &&
-	  (cur_item->type==STRING_ITEM)) {
-	string s= cur_item->b->get_leaf_string ();
-	if (N(s)>4) {
-	  array<int> hp= cur_item->lan->get_hyphens (s);
-	  int i= get_position (cur_item->b->get_leaf_font (),
-			       s, line_width- cur_spc);
-	  for (i= min (i+1, N(hp)-1); i>=0; i--)
-	    if (hp[i] < HYPH_INVALID) {
-	      line_item item1, item2;
-	      hyphenate (cur_item, i, item1, item2);
-	      if (cur_spc+item1->b->w() <= line_width)
-		return (cur_nr>pos->item)?
-		  path (cur_nr, i): pos * i;
-	    }
-	}
+          (cur_item->type==STRING_ITEM)) {
+        string s= cur_item->b->get_leaf_string ();
+        if (N(s)>4) {
+          array<int> hp= cur_item->lan->get_hyphens (s);
+          int i= get_position (cur_item->b->get_leaf_font (),
+                               s, line_width- cur_spc);
+          for (i= min (i+1, N(hp)-1); i>=0; i--)
+            if (hp[i] < HYPH_INVALID) {
+              line_item item1, item2;
+              hyphenate (cur_item, i, item1, item2);
+              if (cur_spc+item1->b->w() <= line_width)
+                return (cur_nr>pos->item)?
+                  path (cur_nr, i): pos * i;
+            }
+        }
       }
     }
     if ((--cur_nr)<pos->item) {
@@ -229,7 +229,7 @@ line_breaker_rep::next_ragged_break (path pos) {
     cur_item = (cur_nr==pos->item? first: a[cur_nr]);
     cur_spc -= cur_item->spc->def;
     if ((cur_spc <= line_width) &&
-	((cur_item->penalty < HYPH_INVALID) || (cur_nr==end-1))) {
+        ((cur_item->penalty < HYPH_INVALID) || (cur_nr==end-1))) {
       cur_nr++;
       empty_line_fix (first, pos, cur_nr);
       return path (cur_nr);
@@ -259,7 +259,7 @@ line_breaker_rep::compute_ragged_breaks () {
 
 void
 line_breaker_rep::test_better (path new_pos, path old_pos,
-			       int pen, PEN pen_spc)
+                               int pen, PEN pen_spc)
 {
   if (!best->contains (new_pos)) best (new_pos)= lb_info ();
   lb_info cur= best [new_pos];
@@ -279,7 +279,7 @@ inline PEN square (PEN i) { return i*i; }
 
 bool
 line_breaker_rep::propose_break (path new_pos, path old_pos,
-				 int pen, space spc)
+                                 int pen, space spc)
 {
   lb_info cur= best[old_pos];
 
@@ -288,27 +288,27 @@ line_breaker_rep::propose_break (path new_pos, path old_pos,
     SI d= max (line_width- spc->def, spc->def- line_width);
     if (new_pos->item==end) d=0;
     test_better (new_pos, old_pos, min (HYPH_INVALID, cur->pen + pen),
-		 cur->pen_spc + (cur->pen == HYPH_INVALID?
+                 cur->pen_spc + (cur->pen == HYPH_INVALID?
                                  ((PEN) 0): square ((PEN) (d / PIXEL))));
   }
 
   if (pass==2) {
     if (spc->max < line_width)
       test_better (new_pos, old_pos, HYPH_INVALID,
-		   (cur->pen == HYPH_INVALID? cur->pen_spc: ((PEN) 0)) +
-		   square ((PEN) ((line_width - spc->max)/PIXEL)) +
-		   (new_pos->item==old_pos->item?
-		    square ((PEN) (line_width / PIXEL)): ((PEN) 0)));
+                   (cur->pen == HYPH_INVALID? cur->pen_spc: ((PEN) 0)) +
+                   square ((PEN) ((line_width - spc->max)/PIXEL)) +
+                   (new_pos->item==old_pos->item?
+                    square ((PEN) (line_width / PIXEL)): ((PEN) 0)));
     else if (spc->min > large_width)
       test_better (new_pos, old_pos, HYPH_INVALID,
-		   (cur->pen == HYPH_INVALID? cur->pen_spc: ((PEN) 0)) +
-		   square ((PEN) ((spc->min - line_width) / PIXEL)) +
-		   square ((PEN) (4*line_width / PIXEL)));
+                   (cur->pen == HYPH_INVALID? cur->pen_spc: ((PEN) 0)) +
+                   square ((PEN) ((spc->min - line_width) / PIXEL)) +
+                   square ((PEN) (4*line_width / PIXEL)));
     else if (spc->min > line_width)
       test_better (new_pos, old_pos, HYPH_INVALID,
-		   (cur->pen == HYPH_INVALID? cur->pen_spc: ((PEN) 0)) +
-		   square ((PEN) ((spc->min - line_width) / PIXEL)) +
-		   (new_pos->item==old_pos->item?
+                   (cur->pen == HYPH_INVALID? cur->pen_spc: ((PEN) 0)) +
+                   square ((PEN) ((spc->min - line_width) / PIXEL)) +
+                   (new_pos->item==old_pos->item?
                     square ((PEN) (line_width / PIXEL)): ((PEN) 0)));
   }
 
@@ -329,24 +329,24 @@ line_breaker_rep::break_string (line_item item, path pos, int i, space spc) {
     j= get_position (item->b->get_leaf_font (), item_s, line_width- spc->def);
     for (j= min (j+2, N(hp)-1); j>=0; j--)
       if (hp[j] < HYPH_INVALID) {
-	line_item item1, item2;
-	hyphenate (item, j, item1, item2);
-	path next= (i==pos->item)? pos * j: path (i, j);
-	space spc_hyph= spc+ space (item1->b->w());
-	if (spc_hyph->min <= line_width) {
-	  propose_break (next, pos, hp[j], spc_hyph->min);
-	  break;
-	}
+        line_item item1, item2;
+        hyphenate (item, j, item1, item2);
+        path next= (i==pos->item)? pos * j: path (i, j);
+        space spc_hyph= spc+ space (item1->b->w());
+        if (spc_hyph->min <= line_width) {
+          propose_break (next, pos, hp[j], spc_hyph->min);
+          break;
+        }
       }
   }
   else {
     for (j=0; j<N(hp); j++)
       if (hp[j] < HYPH_INVALID) {
-	line_item item1, item2;
-	hyphenate (item, j, item1, item2);
-	path next= (i==pos->item)? pos * j: path (i, j);
-	space spc_hyph= spc+ space (item1->b->w());
-	(void) propose_break (next, pos, hp[j], spc_hyph);
+        line_item item1, item2;
+        hyphenate (item, j, item1, item2);
+        path next= (i==pos->item)? pos * j: path (i, j);
+        space spc_hyph= spc+ space (item1->b->w());
+        (void) propose_break (next, pos, hp[j], spc_hyph);
       }
   }
 }
@@ -377,17 +377,17 @@ line_breaker_rep::process (path pos) {
       if (i == pos->item) item= first;
       else spc= spc+ a[i-1]->spc+ space (item->b->w());
       if ((spc->max > line_width) &&
-	  (item->type == STRING_ITEM) &&
-	  (N(item->b->get_leaf_string ())>4))
-	break_string (item, pos, i, spc+ space (-item->b->w()));
+          (item->type == STRING_ITEM) &&
+          (N(item->b->get_leaf_string ())>4))
+        break_string (item, pos, i, spc+ space (-item->b->w()));
       if (item->penalty < HYPH_INVALID)
-	if (propose_break (path (i+1), pos, item->penalty, spc))
-	  break;
+        if (propose_break (path (i+1), pos, item->penalty, spc))
+          break;
       if ((item->type == CONTROL_ITEM) &&
-	  (item->t == LINE_BREAK) &&
-	  (spc->min < line_width))
-	if (propose_break (path (i+1), pos, 0, space (line_width)))
-	  break;
+          (item->t == LINE_BREAK) &&
+          (spc->min < line_width))
+        if (propose_break (path (i+1), pos, 0, space (line_width)))
+          break;
     }
     if (i==end) {
       line_width -= last_spc;
@@ -401,8 +401,8 @@ line_breaker_rep::process (path pos) {
     int n= N(first_s);
     if (n>4)
       for (i=0; i<n-1; i++)
-	if (best-> contains (pos * i))
-	  process (pos * i);
+        if (best-> contains (pos * i))
+          process (pos * i);
   }
 }
 
@@ -460,7 +460,7 @@ line_breaker_rep::compute_breaks () {
 
 array<path>
 line_breaks (array<line_item> a, int start, int end,
-	     SI line_width, SI large_width,
+             SI line_width, SI large_width,
              SI first_spc, SI last_spc, bool ragged)
 {
   int tol= 5;         // extra tolerance of 5tmpt avoid rounding errors when

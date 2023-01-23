@@ -49,7 +49,7 @@ struct lazy_surround {
   inline lazy_surround (edit_env env, tree t, path ip):
     rep (tm_new<lazy_surround_rep> (env, t, ip)) { rep->ref_count= 1; }
   inline lazy_surround (array<line_item> a, array<line_item> b,
-			lazy par, path ip):
+                        lazy par, path ip):
     rep (tm_new<lazy_surround_rep> (a, b, par, ip)) { rep->ref_count= 1; }
 };
 EXTEND_NULL_CODE(lazy,lazy_surround);

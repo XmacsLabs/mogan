@@ -21,7 +21,7 @@ array<line_item> typeset_concat (edit_env env, tree t, path ip);
 void hyphenate (line_item item, int pos, line_item& item1, line_item& item2);
 array<path>
 line_breaks (array<line_item> a, int start, int end,
-	     SI line_width, SI large_width,
+             SI line_width, SI large_width,
              SI first_spc, SI last_spc, bool ragged);
 
 /******************************************************************************
@@ -161,9 +161,9 @@ lazy_paragraph_rep::line_print (line_item item) {
     else if (item->t == NO_BREAK_END) {
       sss->no_break_end (); min_pen= 0; }
     else if (is_tuple (item->t, "env_page") ||
-	     (item->t == PAGE_BREAK) ||
-	     (item->t == NEW_PAGE) ||
-	     (item->t == NEW_DPAGE))
+             (item->t == PAGE_BREAK) ||
+             (item->t == NEW_PAGE) ||
+             (item->t == NEW_DPAGE))
       sss->print (item->t, nr_cols);
     else if (item->t == VAR_PAGE_BREAK)
       sss->print (PAGE_BREAK, nr_cols, true);
@@ -196,8 +196,8 @@ lazy_paragraph_rep::line_print (line_item item, path left, path right) {
     line_item item1, item2;
     hyphenate (item, is_nil (left)? right->item: left->item, item1, item2);
     line_print (is_nil (left) ? item1: item2,
-		is_nil (left) ? left : left->next,
-		is_nil (right)? right: right->next);
+                is_nil (left) ? left : left->next,
+                is_nil (right)? right: right->next);
   }
 }
 
@@ -561,20 +561,20 @@ lazy_paragraph_rep::handle_decorations (
     if ((j < N (decs)) && (as_int (decs[j][0]) == i)) {
       tree t= decs[j][1];
       if (t == tree (DATOMS)) {
-	xoff += items_sp[i] + items [i]->x2;
-	new_items    << items [i];
-	new_items_sp << items_sp [i];
-	i++; j++;
-	return;
+        xoff += items_sp[i] + items [i]->x2;
+        new_items    << items [i];
+        new_items_sp << items_sp [i];
+        i++; j++;
+        return;
       }
       else {
-	box b;
-	SI  b_sp;
-	// cout << "Handling decoration " << t << LF << INDENT;
-	handle_decoration (i, j, xoff, b, b_sp);
-	// cout << UNINDENT << "Handled " << t << LF;
-	new_items    << b;
-	new_items_sp << b_sp;
+        box b;
+        SI  b_sp;
+        // cout << "Handling decoration " << t << LF << INDENT;
+        handle_decoration (i, j, xoff, b, b_sp);
+        // cout << UNINDENT << "Handled " << t << LF;
+        new_items    << b;
+        new_items_sp << b_sp;
       }
     }
     else {
@@ -627,7 +627,7 @@ lazy_paragraph_rep::line_start () {
 
 void
 lazy_paragraph_rep::line_unit (path start, path end, bool break_flag,
-			       string mode, SI the_left, SI the_right)
+                               string mode, SI the_left, SI the_right)
 {
   tabs = array<tab> ();
   cur_w= space (0);
@@ -691,12 +691,12 @@ lazy_paragraph_rep::line_units (
   // enough so as to compensate for content that cannot be contracted
   // on the line such as whitespace, images, and other miscellaneous objects.
   array<path> hyphs= line_breaks (a, start, end, line_width, large_width,
-				  the_first, the_last, ragged);
+                                  the_first, the_last, ragged);
   for (i=0; i<N(hyphs)-1; i++) {
     if (i>0) line_start ();
     line_unit (hyphs[i], hyphs[i+1], i==N(hyphs)-2, mode,
-	       the_left+ (is_start&&(i==0)? the_first: 0),
-	       the_right- (is_end&&(i==N(hyphs)-2)? the_last: 0));
+               the_left+ (is_start&&(i==0)? the_first: 0),
+               the_right- (is_end&&(i==N(hyphs)-2)? the_last: 0));
     if (i<N(hyphs)-2) line_end (line_sep, 1);
   }
   // cout << "    Done!\n";
@@ -712,15 +712,15 @@ lazy_paragraph_rep::format_paragraph_unit (int the_start, int the_end) {
   int i, start= the_start, end= the_start;
   for (i=the_start; i<=the_end; i++)
     if ((i==the_end) ||
-	((a[i]->type == CONTROL_ITEM) &&
-	 (a[i]->t == NEXT_LINE)))
+        ((a[i]->type == CONTROL_ITEM) &&
+         (a[i]->t == NEXT_LINE)))
     {
       start= end;
       end  = i;
       line_start ();
       line_units (start, end, start==the_start, end==the_end,
-		  mode, hyphen,
-		  left, width, first, 0);
+                  mode, hyphen,
+                  left, width, first, 0);
       if (end<the_end) line_end (line_sep, 1);
       else return;
     }
@@ -813,7 +813,7 @@ typeset_concat_or_table (edit_env env, tree t, path ip) {
 
 array<page_item>
 typeset_stack (edit_env env, tree t, path ip,
-	       array<line_item> a, array<line_item> b, stack_border& sb)
+               array<line_item> a, array<line_item> b, stack_border& sb)
 {
   // cout << "Typeset stack " << t << "\n";
   lazy_paragraph par (env, ip);

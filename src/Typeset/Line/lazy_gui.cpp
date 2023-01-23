@@ -69,7 +69,7 @@ lazy_canvas_rep::query (lazy_type request, format fm) {
       SI pad = props->bar_padding;
       SI bor = props->border;
       if (ends (type, "w") || ends (type, "e"))
-	delta= max (0, w + pad);
+        delta= max (0, w + pad);
       delta += 2 * bor + 2 * hpad;
     }
     return make_format_width (x2 - x1 + delta);
@@ -89,7 +89,7 @@ lazy_canvas_rep::produce (lazy_type request, format fm) {
       SI pad = props->bar_padding;
       SI bor = props->border;
       if (ends (type, "w") || ends (type, "e"))
-	delta= max (0, w + pad);
+        delta= max (0, w + pad);
       delta += 2 * bor + 2 * hpad;
     }
     format bfm= fm;
@@ -147,7 +147,7 @@ struct lazy_ornament_rep: public lazy_rep {
   box xb;                   // extra box
   ornament_parameters ps;   // parameters for the ornament
   lazy_ornament_rep (edit_env env2, lazy par2, box xb2, path ip,
-		     ornament_parameters ps2):
+                     ornament_parameters ps2):
     lazy_rep (LAZY_ORNAMENT, ip), env (env2), par (par2),
     xb (xb2), ps (ps2) {}  
   inline operator tree () { return "Ornament"; }
@@ -158,7 +158,7 @@ struct lazy_ornament_rep: public lazy_rep {
 struct lazy_ornament {
 EXTEND_NULL(lazy,lazy_ornament);
   lazy_ornament (edit_env env, lazy par, box xb, path ip,
-		 ornament_parameters ps):
+                 ornament_parameters ps):
     rep (tm_new<lazy_ornament_rep> (env, par, xb, ip, ps)) {
     rep->ref_count= 1; }
 };
