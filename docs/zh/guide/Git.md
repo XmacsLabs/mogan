@@ -10,6 +10,8 @@ Git是一个开源的**分布式**版本控制系统。
 | Gitee | https://gitee.com/XmacsLabs/mogan           | 深圳市奥思网络科技有限公司    | 中国 |
 | Github | https://github.com/XmacsLabs/mogan          | Github, Inc.             | 美国 |
 
+我们在上述多个平台都会接受用户创建Issues和Pull Requests。
+
 如果你希望在更多平台可以下载到墨干的源代码，请通过以上平台联系我们。
 + 对于商业公司，我们希望在一个国家只选择其中一个最为流行的平台。
 + 对于学术机构自建的Git托管服务，我们希望越多越好。这样学术机构的雇员和学生不需要泄露任何个人隐私给商业公司，在机构自建的Git托管服务直接参与开发即可。
@@ -17,7 +19,7 @@ Git是一个开源的**分布式**版本控制系统。
 不同托管服务的Git工作流略有不同，罗列如下：
 
 ### Gitee的工作流
-初次: 首先[生成/添加SSH公钥](https://gitee.com/help/articles/4181)。
+初次: 首先[生成/添加SSH公钥](https://gitee.com/help/articles/4181)（注意：这个操作是针对Gitee用户，而不是Gitee代码仓库的）。
 
 一次：下载并添加Gitee这个远程仓库。
 ```
@@ -60,3 +62,11 @@ git checkout -b [branch-name]
 git push github [branch-name]
 # manually create the github pull request
 ```
+
+### 为什么使用多个Git代码托管平台？
+**因为我们不想**只用某一个Git代码托管平台。而且我们希望获得来自用户和开发者的更多反馈和贡献。
+
+然后，墨干是一个**自由软件**。我们愿意付出额外的努力，让**地球上的所有人**(或许50年之后需要加上火星？)轻松获得墨干的源代码。
+
+### 如何在多个Git代码托管平台之间同步代码?
+目前，Mogan的管理员会手动同步。

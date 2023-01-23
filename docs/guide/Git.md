@@ -3,12 +3,19 @@ Git is a **distributed** version control system.
 
 ## Hosting Services
 Mogan is available on:
-+ https://git.lug.ustc.edu.cn/XmacsLabs/mogan by USTC LUG
-+ https://gitee.com/XmacsLabs/mogan by 深圳市奥思网络科技有限公司
-+ https://github.com/XmacsLabs/mogan by Github, Inc.
-+ (please tell us via issues from one of the hosting services)
 
-We receives issues and pull requests from various git hosting services.
+| Platform | Link | Organization or Company | Location |
+|-----|-----|------------|-----|
+| Gitlab | https://git.lug.ustc.edu.cn/XmacsLabs/mogan | USTC LUG | China |
+| Gitee | https://gitee.com/XmacsLabs/mogan           | 深圳市奥思网络科技有限公司    | China |
+| Github | https://github.com/XmacsLabs/mogan          | Github, Inc.            | US    |
+
+We receives issues and pull requests from the git hosting services listed above.
+
+If you hope to add your favorite Git hosting service, please contact us:
++ For hosting services owned by commercial company, we hope to choose the most popular one for each country
++ For hosting services owned by organization like university, the more the better. We hope the employees or students of those oganizations can comtribute to Mogan without leaking their own privacy to commercial companies.
+
 
 The Git workflow for different hosting services is different. There are described below.
 
@@ -29,7 +36,7 @@ git push gitee [branch-name]:main
 ```
 Just push to the main branch, and the pull request will be created automatically.
 
-### Workflow on Github
+### Workflow on Github and GitLab
 Add the Github remote:
 ```
 git remote add github git@github.com:XmacsLabs/mogan.git
@@ -42,3 +49,11 @@ git checkout -b [branch-name]
 git push github [branch-name]
 # manually create the github pull request
 ```
+
+### Why are you using multiple Git hosting services?
+Because **we do not want to** stick to one Git hosting service. And we hope to receive more feedbacks and contributions from users and developers.
+
+And Mogan is a **libre software**. We are willing to pay extra efforts to deliver the source code of Mogan to **everyone on Earth** (also on Mars in 50 years?).
+
+### How to sync between multiple Git hosting services?
+Currently, the admins of the Mogan project will sync manually.
