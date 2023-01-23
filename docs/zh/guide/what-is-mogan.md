@@ -84,3 +84,27 @@ Gitter|[texmacs/Lobby](https://gitter.im/texmacs/Lobby)
 
 ## 如何贡献
 请仔细阅读[贡献指南](https://mogan.app/zh/guide/CONTRIBUTING.html)，以了解如何开始为墨干编辑器做贡献。
+
+## 贡献者
+<table>
+  <tr>
+    <td align="center"><a href="http://texmacs.org/tmweb/contribute/team-massimiliano.en.html"><img src="https://avatars.githubusercontent.com/u/3253062?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Massimiliano Gubinelli</b></sub></a><br />💻</td>
+    <td align="center"><a href="http://texmacs.org/tmweb/contribute/team-sadhen.en.html"><img src="https://avatars.githubusercontent.com/u/1267865?v=4?s=50" width="50px;" alt=""/><br /><sub><b>DarcyShen</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/YiqiXu"><img src="https://avatars.githubusercontent.com/u/32867606?v=4?s=50" width="50px;" alt=""/><br /><sub><b>YiqiXu</b></sub></a><br />📖</td>
+    <td align="center"><a href="https://github.com/PikachuHy"><img src="https://avatars.githubusercontent.com/u/18223871?v=4?s=50" width="50px;" alt=""/><br /><sub><b>PikachuHy</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/jingkaimori"><img src="https://avatars.githubusercontent.com/u/36156959?v=4?s=50" width="50px;" alt=""/><br /><sub><b>jinkaimori</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/Yufeng-shen"><img src="https://avatars.githubusercontent.com/u/17488004?v=4?s=50" width="50px;" alt=""/><br /><sub><b>YufengShen</b></sub></a><br />💻</td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/KingJadeLight"><img src="https://avatars.githubusercontent.com/u/106169959?v=4?s=50" width="50px;" alt=""/><br /><sub><b>KingJadeLight</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/luozhiya"><img src="https://avatars.githubusercontent.com/u/90168447?v=4?s=50" width="50px;" alt=""/><br /><sub><b>luozhiya</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/pan93412"><img src="https://avatars.githubusercontent.com/u/28441561?v=4?s=50" width="50px;" alt=""/><br /><sub><b>pan93412</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/SpecterShell"><img src="https://avatars.githubusercontent.com/u/56779163?v=4?s=50" width="50px;" alt=""/><br /><sub><b>SpecterShell</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/iphelf"><img src="https://avatars.githubusercontent.com/u/17234854?v=4?s=50" width="50px;" alt=""/><br /><sub><b>LingfengFu</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/ice1000"><img src="https://avatars.githubusercontent.com/u/16398479?v=4?s=50" width="50px;" alt=""/><br /><sub><b>TeslaZhang</b></sub></a><br />💻</td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/cqyisbug"><img src="https://avatars.githubusercontent.com/u/25382172?v=4?s=50" width="50px;" alt=""/><br /><sub><b>QiyuanCai</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/cireu"><img src="https://avatars.githubusercontent.com/u/18224684?v=4?s=50" width="50px;" alt=""/><br /><sub><b>ZihaoZhu</b></sub></a><br />💻</td>
+  </tr>
+</table>
