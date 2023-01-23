@@ -15,6 +15,10 @@
 
   <section|Description>
 
+  <subsection|Insufficient punctuation rules for CJK><\footnote>
+    See <slink|https://github.com/XmacsLabs/mogan/issues/397>
+  </footnote>
+
   <with|language|chinese|<tabular|<tformat|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|1|1|cell-width|60pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|60pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|2|2|cell-width|55pt>|<cwith|1|1|2|2|cell-hmode|exact>|<table|<row|<\cell>
     我能吞下（玻璃）而不伤身体。
   </cell>|<\cell>
@@ -34,6 +38,31 @@
     <item>Punctuations like \Q, ） and 】 should not be allowed at the
     beginning of a line.
   </itemize>
+
+  <subsection|Line break is prohibited between CJK if either is enclosed in
+  an environment><\footnote>
+    See <slink|https://github.com/XmacsLabs/mogan/issues/398>
+  </footnote>
+
+  <tabular|<tformat|<cwith|2|2|1|1|cell-hyphen|t>|<cwith|2|2|1|1|cell-width|70pt>|<cwith|2|2|1|1|cell-hmode|exact>|<cwith|2|2|2|2|cell-hyphen|t>|<cwith|1|-1|2|2|cell-width|75pt>|<cwith|1|-1|2|2|cell-hmode|exact>|<cwith|2|2|3|3|cell-hyphen|t>|<cwith|1|-1|3|3|cell-width|80pt>|<cwith|1|-1|3|3|cell-hmode|exact>|<table|<row|<cell|70pt>|<cell|75pt>|<cell|80pt>>|<row|<\cell>
+    我能吞下玻璃而不伤身体。
+
+    我能吞下玻璃而<with|font-series|bold|不伤>身体。
+
+    我能吞下玻璃而<line-break><with|font-series|bold|不伤>身体。
+  </cell>|<\cell>
+    我能吞下玻璃而不伤身体。
+
+    我能吞下玻璃而<with|font-series|bold|不伤>身体。
+
+    我能吞下玻璃而<line-break><with|font-series|bold|不伤>身体。
+  </cell>|<\cell>
+    我能吞下玻璃而不伤身体。
+
+    我能吞下玻璃而<with|font-series|bold|不伤>身体。
+
+    我能吞下玻璃而<line-break><with|font-series|bold|不伤>身体。
+  </cell>>>>>
 
   <section|Prohibition Rules for Line Start and Line End>
 
@@ -65,7 +94,14 @@
 
   <section|More cases for the bug>
 
-  The green part is ok.
+  <\note>
+    The green part is ok.
+  </note>
+
+  <\note>
+    It is reproducible on GNU Linux with Noto as the default Chinese font
+    using Mogan v1.1.2 beta1.
+  </note>
 
   <paragraph|For line start>
 
@@ -130,7 +166,7 @@
 
   <tabular|<tformat|<cwith|1|1|2|2|cell-width|60pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|2|2|cell-width|50pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|4|4|cell-width|60pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|4|4|cell-width|50pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|50pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|6|6|cell-width|60pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|5|5|cell-hyphen|t>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|6|6|cell-width|50pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|5|5|cell-width|50pt>|<cwith|1|1|5|5|cell-hmode|exact>|<cwith|1|1|8|8|cell-width|60pt>|<cwith|1|1|8|8|cell-hmode|exact>|<cwith|1|1|8|8|cell-hyphen|t>|<cwith|1|1|7|7|cell-hyphen|t>|<cwith|1|1|8|8|cell-hyphen|t>|<cwith|1|1|8|8|cell-width|50pt>|<cwith|1|1|8|8|cell-hmode|exact>|<cwith|1|1|7|7|cell-width|50pt>|<cwith|1|1|7|7|cell-hmode|exact>|<cwith|1|1|3|8|cell-background|pastel
   green>|<table|<row|<\cell>
-    我能吞下”玻璃而不伤身体。
+    我能吞下玻”璃而不伤身体。
   </cell>|<\cell>
     我能吞下'玻璃而不伤身体。
   </cell>|<\cell>
@@ -150,21 +186,21 @@
   <paragraph|For line end>
 
   <tabular|<tformat|<cwith|1|1|2|2|cell-width|60pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|2|2|cell-width|50pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|4|4|cell-width|60pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|4|4|cell-width|50pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|50pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|6|6|cell-width|60pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|5|5|cell-hyphen|t>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|6|6|cell-width|50pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|5|5|cell-width|50pt>|<cwith|1|1|5|5|cell-hmode|exact>|<cwith|1|1|8|8|cell-width|60pt>|<cwith|1|1|8|8|cell-hmode|exact>|<cwith|1|1|8|8|cell-hyphen|t>|<cwith|1|1|7|7|cell-hyphen|t>|<cwith|1|1|8|8|cell-hyphen|t>|<cwith|1|1|8|8|cell-width|50pt>|<cwith|1|1|8|8|cell-hmode|exact>|<cwith|1|1|7|7|cell-width|50pt>|<cwith|1|1|7|7|cell-hmode|exact>|<table|<row|<\cell>
-    我能吞下“”玻璃而不伤身体。
+    我能吞下“玻璃”而不伤身体。
   </cell>|<\cell>
     我能吞下` '玻璃而不伤身体。
   </cell>|<\cell>
-    我能吞『下玻璃而不伤身体。
+    我能吞下『玻璃而不伤身体。
   </cell>|<\cell>
-    我能吞「下玻璃而不伤身体。
+    我能吞下「玻璃而不伤身体。
   </cell>|<\cell>
-    我能吞（（下玻璃而不伤身体。
+    我能吞下（玻璃而不伤身体。
   </cell>|<\cell>
-    我能吞【【下玻璃而不伤身体。
+    我能吞下【下玻璃而不伤身体。
   </cell>|<\cell>
-    我能吞《下玻璃而不伤身体。
+    我能吞下《玻璃而不伤身体。
   </cell>|<\cell>
-    我能吞〈下玻璃而不伤身体。
+    我能吞下〈玻璃而不伤身体。
   </cell>>>>>
 
   <tmdoc-copyright|2022|Rui Zhang|Darcy Shen>
