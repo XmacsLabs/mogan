@@ -11,13 +11,11 @@
     <item>Reporter: Rui Zhang
 
     <item>Mogan Editor Version: v1.1.1
+
+    <item>Issue: <slink|https://github.com/XmacsLabs/mogan/issues/397>
   </itemize>
 
   <section|Description>
-
-  <subsection|Insufficient punctuation rules for CJK><\footnote>
-    See <slink|https://github.com/XmacsLabs/mogan/issues/397>
-  </footnote>
 
   <with|language|chinese|<tabular|<tformat|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|1|1|cell-width|60pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|60pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|2|2|cell-width|55pt>|<cwith|1|1|2|2|cell-hmode|exact>|<table|<row|<\cell>
     我能吞下（玻璃）而不伤身体。
