@@ -13,8 +13,11 @@ We receives issues and pull requests from various git hosting services.
 The Git workflow for different hosting services is different. There are described below.
 
 ### Workflow on Gitee
-Add the Gitee remote:
+Clone and add the Gitee remote:
 ```
+git clone git@gitee.com:XmacsLabs/mogan.git
+cd mogan
+
 git remote add gitee git@gitee.com:XmacsLabs/mogan.git
 ```
 

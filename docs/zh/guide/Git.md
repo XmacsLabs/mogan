@@ -17,18 +17,25 @@ Git是一个开源的**分布式**版本控制系统。
 不同托管服务的Git工作流略有不同，罗列如下：
 
 ### Gitee的工作流
-首先需要添加Gitee这个远程仓库：
+初次: 首先[生成/添加SSH公钥](https://gitee.com/help/articles/4181)。
+
+一次：下载并添加Gitee这个远程仓库。
 ```
+# 从Gitee克隆这个代码仓库，并进入刚刚下载的代码仓库目录
+git clone git@gitee.com:XmacsLabs/mogan.git
+cd mogan
+
+# 我们这里使用gitee而不是origin作为远程仓库的名字，这和常见的帮助文档略有不同
 git remote add gitee git@gitee.com:XmacsLabs/mogan.git
 ```
 
-创建Pull Request，可参考[Gitee官方文档](https://gitee.com/help/articles/4346):
+多次：创建代码合并请求，可参考[Gitee官方文档](https://gitee.com/help/articles/4346):
 ```
 git checkout -b [branch-name]
 # coding and `git commit`
 git push gitee [branch-name]:main
 ```
-按照如上流程，将你的分支push到Gitee的main分支，Gitee会自动创建Pull Request。
+按照如上流程，将你的分支推送到Gitee的main分支，Gitee会自动创建代码合并请求。
 
 一个例子：
 ```
@@ -36,7 +43,7 @@ git checkout -b da/gitee_workflow
 # 开始写文档并提交代码
 git push gitee da/gitee_workflow:main
 ```
-这就是自动生成的Pull Request: https://gitee.com/XmacsLabs/mogan/pulls/45
+这就是自动生成的代码合并请求: https://gitee.com/XmacsLabs/mogan/pulls/45
 
 ### Github和Gitlab的工作流
 > 以Github为例。
@@ -46,7 +53,7 @@ git push gitee da/gitee_workflow:main
 git remote add github git@github.com:XmacsLabs/mogan.git
 ```
 
-创建Pull Request，可参考[Github的官方文档](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/working-with-your-remote-repository-on-github-or-github-enterprise/creating-an-issue-or-pull-request#creating-a-pull-request): 
+创建代码合并请求，可参考[Github的官方文档](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/working-with-your-remote-repository-on-github-or-github-enterprise/creating-an-issue-or-pull-request#creating-a-pull-request): 
 ```
 git checkout -b [branch-name]
 # coding and `git commit`
