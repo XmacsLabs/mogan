@@ -11,6 +11,7 @@
 #include <QtTest/QtTest>
 #include "array.hpp"
 #include "string.hpp"
+#include <string>
 
 static array<int> gen_array(int n) {
   auto normal= array<int>();
@@ -40,6 +41,7 @@ private slots:
   void test_append ();
   void test_reverse ();
   void test_contains ();
+  void test_array_of_string ();
 };
 
 void
@@ -133,6 +135,15 @@ TestArray::test_contains() {
   QCOMPARE (contains (1, five_elem), true);
   QCOMPARE (contains (2, five_elem), true);
   QCOMPARE (contains (3, five_elem), true);
+}
+
+void
+TestArray::test_array_of_string() {
+  auto arr= array<string>();
+  arr << "Hello" << "1" << "2" << "3";
+  QCOMPARE (contains (string ("Hello"), arr), true);
+  arr << string(u8"】");
+  QCOMPARE (contains (string(u8"】"), arr), true);
 }
 
 QTEST_MAIN(TestArray)

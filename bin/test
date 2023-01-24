@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ -z $1 ];then
+    xmake --help
+    echo "----------"
+    echo "bin/test target-name"
+    exit 0
+fi
+
+if [[ "--help" == "$1" ]];then
+    xmake --help
+    echo "----------"
+    echo "bin/test target-name"
+    exit 0
+fi
+
+xmake build $1 && xmake run $1
+
