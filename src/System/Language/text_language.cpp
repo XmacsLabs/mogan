@@ -432,8 +432,8 @@ oriental_language_rep::hyphenate (
 ******************************************************************************/
 
 struct chinese_language_rep: language_rep {
-  hashmap<string,bool> do_not_start; 
-  hashmap<string,bool> do_not_end;
+  hashset<string> do_not_start; 
+  hashset<string> do_not_end;
   chinese_language_rep (string lan_name);
   text_property advance (tree t, int& pos);
   array<int> get_hyphens (string s);
@@ -441,39 +441,37 @@ struct chinese_language_rep: language_rep {
 };
 
 chinese_language_rep::chinese_language_rep (string lan_name):
-  language_rep (lan_name), do_not_start (false), do_not_end (false)
+  language_rep (lan_name), do_not_start (), do_not_end ()
 {
-  auto half_width= list<string>()
-    * string(".") * string(",") * string(":") * string(";") * string("!")
-    * string("?") * string("/") * string("-");
-  for (int i=0; i<N(half_width); i++) {
-    do_not_start (half_width[i])= true;
-  }
+  // half width
+  do_not_start << "." << "," << ":" << ";" << "!" << "?" << "/" << "-";
 
-  auto full_width_do_not_start= list<string>()
-    * string(u8"。") * string(u8"，") * string(u8"：") * string(u8"；")
-    * string(u8"！") * string(u8"？") * string(u8"、") * string(u8"～")
-    * string(u8"』") * string(u8"」") * string(u8"）") * string(u8"】")
-    * string(u8"》") * string(u8"〉");
+  auto full_width_do_not_start= array<string>();
+  full_width_do_not_start
+    << string(u8"。") << string(u8"，") << string(u8"：") << string(u8"；")
+    << string(u8"！") << string(u8"？") << string(u8"、") << string(u8"～")
+    << string(u8"』") << string(u8"」") << string(u8"）") << string(u8"】")
+    << string(u8"》") << string(u8"〉");
+  auto full_width_do_not_end = array<string>();
+  full_width_do_not_end
+    << string(u8"『") << string(u8"「") << string(u8"（") << string(u8"【")
+    << string(u8"《") << string(u8"〈");
+
   for (int i=0; i<N(full_width_do_not_start); i++) {
-    do_not_start (utf8_to_cork(full_width_do_not_start[i]))= true;
+    do_not_start << utf8_to_cork(full_width_do_not_start[i]);
   }
-
-  auto full_width_do_not_end = list<string>()
-    * string(u8"『") * string(u8"「") * string(u8"（") * string(u8"【")
-    * string(u8"《") * string(u8"〈");
   for (int i=0; i<N(full_width_do_not_end); i++) {
-    do_not_end (utf8_to_cork(full_width_do_not_end[i]))= true;
+    do_not_end << utf8_to_cork(full_width_do_not_end[i]);
   }
 
   // special full width characters
-  do_not_start ("<#201D>")= true;  // ”
-  do_not_start ("<#2014>")= true;  // —
-  do_not_start ("'")= true;  // ’ <#2019>
-  do_not_start ("<centerdot>")= true;
+  do_not_start << "<#201D>";  // ”
+  do_not_start << "<#2014>";  // —
+  do_not_start << "'";  // ’ <#2019>
+  do_not_start << "<centerdot>";
  
-  do_not_end ("<#201C>")= true; // “
-  do_not_end ("<#2018>")= true; // ‘
+  do_not_end << "<#201C>"; // “
+  do_not_end << "<#2018>"; // ‘
 }
 
 text_property
@@ -547,34 +545,34 @@ chinese_language_rep::hyphenate (
 array<string>
 get_supported_languages () {
   array<string> r;
-  r << string ("american")
-    << string ("british")
-    << string ("bulgarian")
-    << string ("chinese")
-    << string ("croatian")
-    << string ("czech")
-    << string ("danish")
-    << string ("dutch")
-    << string ("english")
-    << string ("esperanto")
-    << string ("finnish")
-    << string ("french")
-    << string ("german")
-    << string ("greek")
-    << string ("hungarian")
-    << string ("italian")
-    << string ("japanese")
-    << string ("korean")
-    << string ("polish")
-    << string ("portuguese")
-    << string ("romanian")
-    << string ("russian")
-    << string ("slovak")
-    << string ("slovene")
-    << string ("spanish")
-    << string ("swedish")
-    << string ("taiwanese")
-    << string ("ukrainian");
+  r << "american"
+    << "british"
+    << "bulgarian"
+    << "chinese"
+    << "croatian"
+    << "czech"
+    << "danish"
+    << "dutch"
+    << "english"
+    << "esperanto"
+    << "finnish"
+    << "french"
+    << "german"
+    << "greek"
+    << "hungarian"
+    << "italian"
+    << "japanese"
+    << "korean"
+    << "polish"
+    << "portuguese"
+    << "romanian"
+    << "russian"
+    << "slovak"
+    << "slovene"
+    << "spanish"
+    << "swedish"
+    << "taiwanese"
+    << "ukrainian";
   return r;
 }
 
