@@ -1,0 +1,6 @@
+#!/bin/bash
+
+git push gitee main
+git push github main
+git push ustc main
+
