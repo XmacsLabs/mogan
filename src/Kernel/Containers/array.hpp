@@ -13,6 +13,7 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 #include "basic.hpp"
+#include "string.hpp"
 
 class tree;
 template<class T> class array;
