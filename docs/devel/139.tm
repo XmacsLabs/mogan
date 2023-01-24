@@ -123,43 +123,61 @@
 
   <subsection|Same hard-coded spaces and different font size>
 
-  <tabular|<tformat|<cwith|2|7|3|3|cell-hyphen|t>|<cwith|1|7|3|3|cell-width|50pt>|<cwith|1|7|3|3|cell-hmode|exact>|<cwith|2|7|4|4|cell-hyphen|t>|<cwith|1|-1|4|4|cell-width|55pt>|<cwith|1|-1|4|4|cell-hmode|exact>|<cwith|2|6|3|3|cell-hyphen|t>|<cwith|1|6|3|3|cell-width|50pt>|<cwith|1|6|3|3|cell-hmode|exact>|<cwith|2|6|2|2|cell-hyphen|t>|<cwith|1|-1|2|2|cell-width|80pt>|<cwith|1|-1|2|2|cell-hmode|exact>|<cwith|2|2|2|-1|font|Noto
+  <tabular|<tformat|<cwith|2|5|3|3|cell-hyphen|t>|<cwith|1|5|3|3|cell-width|50pt>|<cwith|1|5|3|3|cell-hmode|exact>|<cwith|2|5|4|4|cell-hyphen|t>|<cwith|1|-1|4|4|cell-width|55pt>|<cwith|1|-1|4|4|cell-hmode|exact>|<cwith|2|4|3|3|cell-hyphen|t>|<cwith|1|4|3|3|cell-width|50pt>|<cwith|1|4|3|3|cell-hmode|exact>|<cwith|2|4|2|2|cell-hyphen|t>|<cwith|1|-1|2|2|cell-width|80pt>|<cwith|1|-1|2|2|cell-hmode|exact>|<cwith|2|2|2|-1|font|Noto
   CJK SC>|<cwith|2|2|4|4|font-base-size|8>|<cwith|3|3|2|-1|font|Noto CJK
-  SC>|<cwith|3|3|4|4|font-base-size|9>|<cwith|4|4|2|-1|font|Noto CJK
-  SC>|<cwith|5|5|2|-1|font|Noto CJK SC>|<cwith|5|5|4|4|font-base-size|11>|<cwith|6|6|2|-1|font|Noto
-  CJK SC>|<cwith|6|6|4|4|font-base-size|12>|<table|<row|<cell|>|<cell|0.2spc>|<cell|0.2spc>|<cell|1spc>>|<row|<cell|8pt>|<\cell>
-    <with|font|Noto CJK SC|font-base-size|8|中文和<space|0.2spc>ABC<space|0.2spc>的间隔>
+  SC>|<cwith|4|4|2|-1|font|Noto CJK SC>|<cwith|4|4|4|4|font-base-size|12>|<table|<row|<cell|>|<cell|0.5spc>|<cell|0.5spc>|<cell|1spc>>|<row|<cell|8pt>|<\cell>
+    <with|font|Noto CJK SC|font-base-size|8|中文和<space|0.5spc>ABC<space|0.5spc>的间隔>
   </cell>|<\cell>
-    <with|font|Noto CJK SC|font-base-size|8|中文和<space|0.2spc>ABC<space|0.2spc>的间隔>
-  </cell>|<\cell>
-    中文和 ABC 的间隔
-  </cell>>|<row|<cell|9pt>|<\cell>
-    <with|font|Noto CJK SC|font-base-size|9|中文和<space|0.2spc>ABC<space|0.2spc>的间隔>
-  </cell>|<\cell>
-    <with|font|Noto CJK SC|font-base-size|9|中文和<space|0.2spc>ABC<space|0.2spc>的间隔>
+    <with|font|Noto CJK SC|font-base-size|8|中文和<space|0.5spc>ABC<space|0.5spc>的间隔>
   </cell>|<\cell>
     中文和 ABC 的间隔
   </cell>>|<row|<cell|10pt>|<\cell>
-    <with|font|Noto CJK SC|中文和<space|0.2spc>ABC<space|0.2spc>的间隔>
+    <with|font|Noto CJK SC|中文和<space|0.5spc>ABC<space|0.5spc>的间隔>
   </cell>|<\cell>
-    <with|font|Noto CJK SC|中文和<space|0.2spc>ABC<space|0.2spc>的间隔>
-  </cell>|<\cell>
-    中文和 ABC 的间隔
-  </cell>>|<row|<cell|11pt>|<\cell>
-    <with|font|Noto CJK SC|font-base-size|11|中文和<space|0.2spc>ABC<space|0.2spc>的间隔>
-  </cell>|<\cell>
-    <with|font|Noto CJK SC|font-base-size|11|中文和<space|0.2spc>ABC<space|0.2spc>的间隔>
+    <with|font|Noto CJK SC|中文和<space|0.5spc>ABC<space|0.5spc>的间隔>
   </cell>|<\cell>
     中文和 ABC 的间隔
   </cell>>|<row|<cell|12pt>|<\cell>
-    <with|font|Noto CJK SC|font-base-size|12|中文和<space|0.2spc>ABC<space|0.2spc>的间隔>
+    <with|font|Noto CJK SC|font-base-size|12|中文和<space|0.5spc>ABC<space|0.5spc>的间隔>
   </cell>|<\cell>
-    <with|font|Noto CJK SC|font-base-size|12|中文和<space|0.2spc>ABC<space|0.2spc>的间隔>
+    <with|font|Noto CJK SC|font-base-size|12|中文和<space|0.5spc>ABC<space|0.5spc>的间隔>
   </cell>|<\cell>
     中文和 ABC 的间隔
   </cell>>>>>
 
-  \;
+  <subsection|Why <verbatim|0.5spc> is a good value?>
+
+  For CJK fonts, the <math|font width> is around <math|0.7\<times\>font
+  height>. And<\footnote>
+    See <slink|https://www.w3.org/International/clreq/#mixed_text_composition_in_horizontal_writing_mode>
+  </footnote>:
+
+  <\quote-env>
+    In horizontal writing mode, the basic approach uses proportional fonts to
+    represent Western text and uses proportional or monospace fonts for
+    <hlink|European numerals|https://www.w3.org/International/clreq/#term.european-numerals>.
+    In principle, there is tracking or spacing between an adjacent Han
+    character and a Western character of up to 1/4<nbsp>em, except at the
+    line start or end.
+  </quote-env>
+
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (* 0.25 (* 0.7 (length-decode "10pt")))
+    <|unfolded-io>
+      3719.2750000000005
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (length-decode "0.5spc")
+    <|unfolded-io>
+      3554
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
 
   <tmdoc-copyright|2023|Jade|Darcy Shen>
 
