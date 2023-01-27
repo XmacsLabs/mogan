@@ -145,7 +145,9 @@
     中文和 ABC 的间隔
   </cell>>>>>
 
-  <subsection|Why <verbatim|0.5spc> is a good value?>
+  <unfolded-comment|+2Q749q3u2JHiP5rq|+2Q749q3u2JHiP5rr|comment|Darcy
+  Shen|1674782608||The width of space between Chinese text and upcased ABC
+  \ should be less than 0.5spc.>
 
   For CJK fonts, the <math|font width> is around <math|0.7\<times\>font
   height>. And<\footnote>
@@ -179,6 +181,32 @@
     </input>
   </session>
 
+  <subsection|Lower-cased alphabet, number and inline math>
+
+  <unfolded-comment|+2Q749q3u2JHiP5rs|+2Q749q3u2JHiP5rt|comment|Jade|1674784722||0.2spc
+  seems to be a better value.>
+
+  <unfolded-comment|+2Q749q3u2JHiP5ru|+2Q749q3u2JHiP5rv|comment|Yiqi
+  Xu|1674784753||0.2spc seems to be a better value.>
+
+  <paragraph|Normal Font>
+
+  <with|font-base-size|15|<tabular|<tformat|<cwith|1|1|7|7|cell-valign|b>|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|0.2spc>|<cell|>|<cell|中文和<space|0.2spc>ABC<space|0.2spc>的间隔>|<cell|>|<cell|0.4spc>|<cell|>|<cell|中文和<space|0.4spc>ABC<space|0.4spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和ABC的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和ABC的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|中文和<space|0.2spc>abc<space|0.2spc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<space|0.4spc>abc<space|0.4spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和abc的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和abc的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|中文和<space|0.2spc>123<space|0.2spc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<space|0.4spc>123<space|0.4spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和123的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和123的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|0.3spc>|<cell|>|<cell|中文和<space|0.3spc>ABC<space|0.3spc>的间隔>|<cell|>|<cell|0.5spc>|<cell|>|<cell|中文和<space|0.5spc>ABC<space|0.5spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和ABC的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和ABC的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|中文和<space|0.3spc>abc<space|0.3spc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<space|0.5spc>abc<space|0.5spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和abc的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和abc的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|中文和<space|0.3spc>123<space|0.3spc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<space|0.5spc>123<space|0.5spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和123的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和123的间隔>>>>>>
+
+  <paragraph|With the <markup|strong> content tag>
+
+  \;
+
+  <with|font-base-size|15|<tabular|<tformat|<cwith|1|1|7|7|cell-valign|b>|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|0.2spc>|<cell|>|<cell|中文和<space|0.2spc><strong|ABC><space|0.2spc>的间隔>|<cell|>|<cell|0.4spc>|<cell|>|<cell|中文和<space|0.4spc><strong|ABC><space|0.4spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和<strong|ABC>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<strong|ABC>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和ABC的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和ABC的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|中文和<space|0.2spc><strong|abc><space|0.2spc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<space|0.4spc><strong|abc><space|0.4spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和<strong|abc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<strong|abc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和abc的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和abc的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|0.3spc>|<cell|>|<cell|中文和<space|0.3spc><strong|ABC><space|0.3spc>的间隔>|<cell|>|<cell|0.5spc>|<cell|>|<cell|中文和<space|0.5spc><strong|ABC><space|0.5spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和<strong|ABC>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<strong|ABC>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和ABC的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和ABC的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|中文和<space|0.3spc><strong|abc><space|0.3spc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<space|0.5spc><strong|abc><space|0.5spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和<strong|abc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<strong|abc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和abc的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和abc的间隔>>>>>>
+
+  <paragraph|With the <markup|em> content tag>
+
+  <with|font-base-size|15|<tabular|<tformat|<cwith|1|1|7|7|cell-valign|b>|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|0.2spc>|<cell|>|<cell|中文和<space|0.2spc><em|ABC><space|0.2spc>的间隔>|<cell|>|<cell|0.4spc>|<cell|>|<cell|中文和<space|0.4spc><em|ABC><space|0.4spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和<em|ABC>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<em|ABC>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和ABC的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和ABC的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|中文和<space|0.2spc><em|yef><space|0.2spc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<space|0.4spc><em|yef><space|0.4spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和<em|yef>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<em|yef>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和yef的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和yef的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|0.3spc>|<cell|>|<cell|中文和<space|0.3spc><em|ABC><space|0.3spc>的间隔>|<cell|>|<cell|0.5spc>|<cell|>|<cell|中文和<space|0.5spc><em|ABC><space|0.5spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和<em|ABC>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<em|ABC>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和ABC的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和ABC的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|中文和<space|0.3spc><em|yef><space|0.3spc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<space|0.5spc><em|yef><space|0.5spc>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和<em|yef>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<em|yef>的间隔>>|<row|<cell|>|<cell|>|<cell|中文和yef的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和yef的间隔>>>>>>
+
+  <paragraph|With math mode>
+
+  <with|font-base-size|15|<tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|0.2spc>|<cell|中文和<space|0.2spc><math|\<Pi\>><space|0.2spc>的间隔>|<cell|>|<cell|0.4spc>|<cell|>|<cell|中文和<space|0.4spc><math|\<Pi\>><space|0.4spc>的间隔>>|<row|<cell|>|<cell|中文和<math|\<Pi\>>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<math|\<Pi\>>的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|中文和<space|0.2spc><math|\<beta\>><space|0.2spc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<space|0.4spc><math|\<beta\>><space|0.4spc>的间隔>>|<row|<cell|>|<cell|中文和<math|\<beta\>>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<math|\<beta\>>的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|0.3spc>|<cell|中文和<space|0.3spc><math|\<Pi\>><space|0.3spc>的间隔>|<cell|>|<cell|0.5spc>|<cell|>|<cell|中文和<space|0.5spc><math|\<Pi\>><space|0.5spc>的间隔>>|<row|<cell|>|<cell|中文和<math|\<Pi\>>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<math|\<Pi\>>的间隔>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|中文和<space|0.3spc><math|\<beta\>><space|0.3spc>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<space|0.5spc><math|\<beta\>><space|0.5spc>的间隔>>|<row|<cell|>|<cell|中文和<math|\<beta\>>的间隔>|<cell|>|<cell|>|<cell|>|<cell|中文和<math|\<beta\>>的间隔>>>>>>
+
   <tmdoc-copyright|2023|Jade|Darcy Shen>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
@@ -191,6 +219,8 @@
 
 <\initial>
   <\collection>
+    <associate|font|Songti SC>
+    <associate|font-base-size|10>
     <associate|page-medium|papyrus>
     <associate|preamble|false>
   </collection>
