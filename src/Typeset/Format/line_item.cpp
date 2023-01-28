@@ -45,13 +45,13 @@ operator << (tm_ostream& out, line_item item) {
   case OBSOLETE_ITEM: return out << "obsolete";
   case STD_ITEM: return out << "std";
   case MARKER_ITEM: return out << "marker";
-  case STRING_ITEM: return out << item->b->get_leaf_string ();
+  case STRING_ITEM: return out << cork_to_utf8 (item->b->get_leaf_string ());
   case LEFT_BRACKET_ITEM:
-    return out << "left" << item->b->get_leaf_string ();
+    return out << "left" << cork_to_utf8 (item->b->get_leaf_string ());
   case MIDDLE_BRACKET_ITEM:
-    return out << "middle" << item->b->get_leaf_string ();
+    return out << "middle" << cork_to_utf8 (item->b->get_leaf_string ());
   case RIGHT_BRACKET_ITEM:
-    return out << "right" << item->b->get_leaf_string ();
+    return out << "right" << cork_to_utf8 (item->b->get_leaf_string ());
   case CONTROL_ITEM: return out << "control (" << item->t << ")";
   case FLOAT_ITEM:
     return out << "float (" << item->b->get_leaf_lazy () << ")";
