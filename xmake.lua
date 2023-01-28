@@ -58,7 +58,7 @@ else
     add_requires("sqlite3 3.39.0+200", {system=false})
 end
 
-local XMACS_VERSION="1.1.2-beta2"
+local XMACS_VERSION="1.1.2-rc1"
 local INSTALL_DIR="build/package"
 
 local TEXMACS_VERSION = "2.1.2"
