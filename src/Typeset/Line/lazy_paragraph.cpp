@@ -151,6 +151,12 @@ is_cjk_text (line_item i) {
   return is_cjk_unified_ideographs (text) && (text != "<#3000>");
 }
 
+static bool
+is_cjk_language (language lan) {
+  return lan->lan_name == "chinese" || lan->lan_name == "korean"
+    || lan->lan_name == "japanese" || lan->lan_name == "chineset";
+}
+
 void
 lazy_paragraph_rep::line_print (line_item item) {
   // cout << "Printing: " << item << "\n";
@@ -202,8 +208,10 @@ lazy_paragraph_rep::line_print (line_item item) {
   if (N(spcs)>0) cur_w = cur_w + spcs[N(spcs)-1];
   items << item->b;
   spcs  << item->spc;
-  items_box << is_not_skip (item);
-  items_cjk_text << is_cjk_text (item);
+  if (is_cjk_language (env->lan)) {
+    items_box << is_not_skip (item);
+    items_cjk_text << is_cjk_text (item);
+  }
   item->b->x0= cur_w->def;
   item->b->y0= 0;
   cur_w =  cur_w + space (item->b->x2);
@@ -536,7 +544,9 @@ lazy_paragraph_rep::make_unit (string mode, SI the_width, bool break_flag) {
   if (protrusion != 0)
     protrude (protrude_left, protrude_right);
 
-  cjk_auto_spacing();
+  if (is_cjk_language (env->lan)) {
+    cjk_auto_spacing();
+  }
 
   // stretching case
   if (mode == "justify" &&
