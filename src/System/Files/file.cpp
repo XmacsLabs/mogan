@@ -29,7 +29,6 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <string.h>  // strerror
-
 #if defined (OS_MINGW)
 #include "Windows/win-utf8-compat.hpp"
 #else
@@ -589,25 +588,13 @@ rmdir (url u) {
   remove_sub (expand (complete (u, "dr")));
 }
 
-#ifdef OS_MINGW
-inline int mkdir(char const *name, int const mode)
-{
-    nowide::basic_stackstring<> wname;
-    if(wname.convert(name) == nullptr ) {
-        errno = EINVAL;
-        return -1;
-    }
-    return _wmkdir (wname.get());
-}
-#endif
-
 void
 mkdir (url u) {
 #if defined (HAVE_SYS_TYPES_H) && defined (HAVE_SYS_STAT_H)
   if (!exists (u)) {
     if (!is_atomic (u) && !is_root (u)) mkdir (head (u));
     c_string _u (concretize (u));
-    (void) mkdir (_u, S_IRWXU + S_IRGRP + S_IROTH);
+    (void) ::mkdir (_u, S_IRWXU + S_IRGRP + S_IROTH);
   }
 #else
 #ifdef OS_MINGW

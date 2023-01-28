@@ -14,39 +14,78 @@
 * making porting from *nix to windows UTF-16 unicode API mostly transparent
 *
 * See http://cppcms.com/files/nowide/html/index.html
+*
+* Texmacs specific changes to the original Boost.Nowide standalone files dated 
+* 2017-Jun-10 are indicated in nowide/texmacs_modifications.patch
+* ****************************************************************************** 
+* LICENCE :
+* Boost.Nowide is released under Boost Software License - Version 1.0.
+* see https://www.boost.org/users/license.html
 ******************************************************************************/
 
+#include "nowide/args.hpp"
+#include <sys/stat.h>
+
+#ifdef __MINGW64__
+typedef struct _stat64 struct_stat;
+#else
+typedef struct _stat32 struct_stat;
+#endif
+
 #include "nowide/cstdio.hpp"
-#include "nowide/cstdlib.hpp"
-#include "nowide/stat.hpp"
-#include "nowide/stackstring.hpp"
+#include "nowide/cenv.hpp"
 
 
 #ifndef S_ISLNK
 #define S_ISLNK(x) 0
 #endif
 
-// nowide/cstdio.hpp
 #ifdef fopen
  #undef fopen
 #endif
  #define fopen(a,b) nowide::fopen(a,b)
+
+
+//do not redefine mkdir with single argument (url)
+//if two args point to nowide::mkdir
+#define GET_MACRO(_1,_2,NAME,...) NAME
+#define mkdir(...) GET_MACRO(__VA_ARGS__, nowide::mkdir, mkdir)(__VA_ARGS__)
+
+
+#ifdef opendir
+ #undef opendir
+#endif
+ #define opendir(a) nowide::opendir(a)
+ 
+#ifdef closedir
+ #undef closedir
+#endif
+#define closedir _wclosedir
+
+//typedef _WDIR DIR;
+#define DIR _WDIR
+ 
+#ifdef stat
+ #undef stat
+#endif
+#define stat(a,b) nowide::stat(a,b)
+//#define struct_stat GStatBuf
+//#define struct_stat _stat32 
+//#ifdef remove
+// #undef remove
+//#endif
+// #define ::remove nowide::remove
 
 #ifdef rename
  #undef rename
 #endif
  #define rename nowide::rename
  
-
-// nowide/stat.hpp
-#define struct_stat nowide::stat_t 
-#ifdef stat
- #undef stat
+#ifdef chmod
+ #undef chmod
 #endif
-  #define stat(a,b) nowide::stat(a,b)
+ #define chmod nowide::chmod
 
-
-// nowide/cstdlib.hpp
 #ifdef getenv
  #undef getenv
 #endif

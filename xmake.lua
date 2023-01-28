@@ -58,10 +58,6 @@ else
     add_requires("sqlite3 3.39.0+200", {system=false})
 end
 
-if is_plat("mingw") then
-    add_requires("nowide_standalone 11.2.0", {system=false})
-end
-
 local XMACS_VERSION="1.1.2-beta2"
 local INSTALL_DIR="build/package"
 
@@ -175,10 +171,6 @@ target("libkernel") do
     set_policy("check.auto_ignore_flags", false)
     set_languages("c++17")
 
-    if is_plat("mingw") then
-        add_packages("nowide_standalone")
-    end
-
     add_includedirs({
         "src/System",
         "src/System/Memory",
@@ -199,6 +191,15 @@ target("libkernel") do
         "src/System/IO/**.cpp",
         "src/System/Memory/**.cpp"
     })
+
+    if is_plat("mingw") then
+        add_includedirs({
+            "src/Plugins/Windows"
+        })
+        add_files({
+            "src/Plugins/Windows/iostream.cpp"
+        })
+    end
 end
 
 for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
@@ -251,10 +252,6 @@ target("libmogan") do
     add_packages("libcurl")
     add_packages("freetype")
     add_packages("sqlite3")
-
-    if is_plat("mingw") then
-        add_packages("nowide_standalone")
-    end
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
@@ -364,7 +361,8 @@ target("libmogan") do
         add_includedirs("src/Plugins/MacOS", {public = true})
     elseif is_plat("mingw") then
         add_includedirs({
-                "src/Plugins/Windows"
+                "src/Plugins/Windows", 
+                "src/Plugins/Windows/nowide"
         }, {public = true})
     else
         add_includedirs("src/Plugins/Unix", {public = true})
@@ -446,11 +444,6 @@ target("mogan") do
         add_frameworks("QtMacExtras")
     end
     add_deps("libmogan")
-
-    if is_plat("mingw") then
-        add_packages("nowide_standalone")
-    end
-
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
     set_installdir(INSTALL_DIR)
     after_install(function(target)
