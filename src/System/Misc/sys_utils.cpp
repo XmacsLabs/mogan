@@ -16,7 +16,6 @@
 
 #if defined (OS_MINGW)
 #include "Windows/mingw_sys_utils.hpp"
-#include "Windows/win-utf8-compat.hpp"
 #elif defined (OS_WASM)
 #include "Wasm/wasm_sys_utils.hpp"
 #else

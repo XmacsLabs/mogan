@@ -72,8 +72,6 @@ xmake project --kind=compile_commands ./.vscode
 ```
 
 ##  在Linux或WSL环境下使用CMake开发
-> 注意: 由于移除了nowide的源代码而依赖于nowide的库，使用cmake和mxe可能会比较麻烦，我们推荐使用xmake。
-
 我们需要在Windows上使用WSL里面的Ubuntu 20.04或者在Ubuntu 20.04上启动Windows的虚拟机。因为构建是在Ubuntu上面完成，而测试是在Windows上完成。
 
 首先，我们需要完成MXE的下载和相关依赖的安装，可以参考这个文档：

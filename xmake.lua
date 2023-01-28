@@ -57,10 +57,7 @@ else
     add_requires("freetype 2.12.1", {system=false})
     add_requires("sqlite3 3.39.0+200", {system=false})
 end
-
-if is_plat("mingw") then
-    add_requires("nowide_standalone 11.2.0", {system=false})
-end
+add_requires("nowide_standalone 11.2.0", {system=false})
 
 local XMACS_VERSION="1.1.2-beta2"
 local INSTALL_DIR="build/package"
@@ -175,9 +172,7 @@ target("libkernel") do
     set_policy("check.auto_ignore_flags", false)
     set_languages("c++17")
 
-    if is_plat("mingw") then
-        add_packages("nowide_standalone")
-    end
+    add_packages("nowide_standalone")
 
     add_includedirs({
         "src/System",
@@ -251,10 +246,7 @@ target("libmogan") do
     add_packages("libcurl")
     add_packages("freetype")
     add_packages("sqlite3")
-
-    if is_plat("mingw") then
-        add_packages("nowide_standalone")
-    end
+    add_packages("nowide_standalone")
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
@@ -446,10 +438,7 @@ target("mogan") do
         add_frameworks("QtMacExtras")
     end
     add_deps("libmogan")
-
-    if is_plat("mingw") then
-        add_packages("nowide_standalone")
-    end
+    add_packages("nowide_standalone")
 
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
     set_installdir(INSTALL_DIR)
