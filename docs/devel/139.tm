@@ -219,7 +219,6 @@
 
 <\initial>
   <\collection>
-    <associate|font|Songti SC>
     <associate|font-base-size|10>
     <associate|page-medium|papyrus>
     <associate|preamble|false>
