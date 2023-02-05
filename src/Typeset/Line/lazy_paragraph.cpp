@@ -209,6 +209,7 @@ lazy_paragraph_rep::line_print (line_item item) {
   items << item->b;
   spcs  << item->spc;
   if (is_cjk_language (env->lan)) {
+    // cout << "line item: " << item << LF;
     items_box << is_not_skip (item);
     items_cjk_text << is_cjk_text (item);
   }
@@ -282,7 +283,7 @@ lazy_paragraph_rep::protrude (bool lf, bool rf) {
 }
 
 void
-lazy_paragraph_rep::cjk_auto_spacing() {
+lazy_paragraph_rep::cjk_auto_spacing () {
   int prev= -1;
   int now= -1;
   for (int i=cur_start; i<N(items); i++) {
@@ -311,6 +312,13 @@ lazy_paragraph_rep::cjk_auto_spacing() {
     items_right << tmp[i];
   }
 
+  ASSERT (N(items) == N(items_box)
+    && N(items) == N(items_left)
+    && N(items) == N(items_right)
+    && N(items) == N(items_cjk_text),
+    "length of items must match"
+  )
+
   bool no_cjk_flag= true;
   for (int i=cur_start; i<N(items); i++) {
     if (items_cjk_text[i]) {
@@ -325,10 +333,10 @@ lazy_paragraph_rep::cjk_auto_spacing() {
 
   for (int i=cur_start; i+1<N(items); i++) {
     if (i != last
-        && items_cjk_text[i]
-        && items_right[i]!=-1
-        && is_text(a[items_right[i]])
-        && !items_cjk_text[items_right[i]]) {
+        && items_cjk_text[i]                    // test if the current item is a cjk text box
+        && items_right[i]!=-1                   // test if the right item is not empty
+        && is_text (a[items_right[i]])          // test if the right item is a text box
+        && !items_cjk_text[items_right[i]]) {   // test if the right item is not a cjk text box
       box b= items[i];
       SI auto_space_size= b->get_leaf_font()->spc->def * 0.2;
       box nb= b->right_auto_spacing (auto_space_size);
@@ -339,10 +347,10 @@ lazy_paragraph_rep::cjk_auto_spacing() {
 
   for (int i=cur_start+1; i<N(items); i++) {
     if (i != first
-        && items_cjk_text[i]
-        && items_left[i]!=-1
-        && is_text(a[items_left[i]])
-        && !items_cjk_text[items_left[i]]) {
+        && items_cjk_text[i]                    // test if the current item is a cjk text box
+        && items_left[i]!=-1                    // test if the left item is not empty
+        && is_text(a[items_left[i]])            // test if the left item is a text box
+        && !items_cjk_text[items_left[i]]) {    // test if the left item is not a cjk text box
       box b= items[i];
       SI auto_space_size= b->get_leaf_font()->spc->def * 0.2;
       box nb= b->left_auto_spacing (auto_space_size);
@@ -545,7 +553,7 @@ lazy_paragraph_rep::make_unit (string mode, SI the_width, bool break_flag) {
     protrude (protrude_left, protrude_right);
 
   if (is_cjk_language (env->lan)) {
-    cjk_auto_spacing();
+    cjk_auto_spacing ();
   }
 
   // stretching case
@@ -721,6 +729,7 @@ lazy_paragraph_rep::line_start () {
   items   = array<box> ();
   items_sp= array<SI> ();
   items_box= array<bool> ();
+  items_cjk_text= array<bool> ();
   items_left = array<int> ();
   items_right = array<int> ();
   spcs    = array<space> ();
