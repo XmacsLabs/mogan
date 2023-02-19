@@ -162,10 +162,10 @@ qt_chooser_widget_rep::plain_window_widget (string s, command q, int b) {
 bool
 qt_chooser_widget_rep::set_type (const string& _type)
 {
-  if (_type == "directory") {
+  if (_type == "directory"_sv) {
     type = _type;
     return true;
-  } else if (_type == "generic") {
+  } else if (_type == "generic"_sv) {
     nameFilter = "";
     type = _type;
     return true;
@@ -175,7 +175,7 @@ qt_chooser_widget_rep::set_type (const string& _type)
     nameFilter = to_qstring (translate
                              (as_string (call ("format-get-name", _type))
                               * " file"));
-  } else if (_type == "image") {
+  } else if (_type == "image"_sv) {
     nameFilter = to_qstring (translate ("Image file"));
   } else {
     if (DEBUG_STD)

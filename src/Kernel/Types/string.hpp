@@ -38,6 +38,7 @@ class string {
   string (const char *s);
   string (const char *s, int n);
   inline char& operator [] (int i) { return rep->a[i]; }
+  inline char operator [] (int i) const { return rep->a[i]; }
   bool operator == (const char* s);
   bool operator != (const char* s);
   bool operator == (string s);
@@ -116,4 +117,31 @@ public:
 };
 CONCRETE_CODE(c_string);
 
+class string_view {
+public:
+  string_view(const char* data, int len): n(len), a(data) {}
+  inline char operator [] (int i) const { return a[i]; }
+private:
+  friend inline int N (string_view s);
+  int n;
+  const char* a;
+};
+inline string_view operator""_sv(const char* data, std::size_t len) {
+  return string_view(data, len);
+}
+extern int N (string_view s) {
+  return s.n;
+}
+inline bool operator==(const string& s1, string_view s2) {
+  if (N(s1) != N(s2)) {
+    return false;
+  }
+  int i, n= N(s1);
+  for (i=0; i<n; i++) {
+    if (s1[i]!=s2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
 #endif // defined STRING_H
