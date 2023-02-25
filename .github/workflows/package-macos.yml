@@ -24,7 +24,7 @@ jobs:
           cache: 'true'
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.7.3
+          xmake-version: v2.7.7
           actions-cache-folder: '.xmake-cache'
       - name: cache xmake
         uses: actions/cache@v2
