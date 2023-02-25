@@ -448,14 +448,14 @@ chinese_language_rep::chinese_language_rep (string lan_name):
 
   auto full_width_do_not_start= array<string>();
   full_width_do_not_start
-    << string(u8"。") << string(u8"，") << string(u8"：") << string(u8"；")
-    << string(u8"！") << string(u8"？") << string(u8"、") << string(u8"～")
-    << string(u8"』") << string(u8"」") << string(u8"）") << string(u8"】")
-    << string(u8"》") << string(u8"〉");
+    << string("。") << string("，") << string("：") << string("；")
+    << string("！") << string("？") << string("、") << string("～")
+    << string("』") << string("」") << string("）") << string("】")
+    << string("》") << string("〉");
   auto full_width_do_not_end = array<string>();
   full_width_do_not_end
-    << string(u8"『") << string(u8"「") << string(u8"（") << string(u8"【")
-    << string(u8"《") << string(u8"〈");
+    << string("『") << string("「") << string("（") << string("【")
+    << string("《") << string("〈");
 
   for (int i=0; i<N(full_width_do_not_start); i++) {
     do_not_start << utf8_to_cork(full_width_do_not_start[i]);
