@@ -7,6 +7,7 @@ Mogan is available on:
 | Platform | Link | Organization or Company | Location |
 |-----|-----|------------|-----|
 | Gitlab | https://git.lug.ustc.edu.cn/XmacsLabs/mogan | USTC LUG | China |
+| Codeberg | https://codeberg.org/XmacsLabs/mogan | Codeberg e.V. | Germany |
 | Gitee | https://gitee.com/XmacsLabs/mogan           | 深圳市奥思网络科技有限公司    | China |
 | Github | https://github.com/XmacsLabs/mogan          | Github, Inc.            | US    |
 
@@ -36,7 +37,7 @@ git push gitee [branch-name]:main
 ```
 Just push to the main branch, and the pull request will be created automatically.
 
-### Workflow on Github and GitLab
+### Workflow on Github/GitLab/Gitea
 Add the Github remote:
 ```
 git remote add github git@github.com:XmacsLabs/mogan.git

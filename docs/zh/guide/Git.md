@@ -7,6 +7,7 @@ Git是一个开源的**分布式**版本控制系统。
 | 平台 | 链接 | 机构或者公司 | 地址 |
 |-----|-----|------------|-----|
 | Gitlab | https://git.lug.ustc.edu.cn/XmacsLabs/mogan | 中国科学技术大学Linux用户协会 | 中国 |
+| Codeberg | https://codeberg.org/XmacsLabs/mogan | Codeberg e.V. | 德国 |
 | Gitee | https://gitee.com/XmacsLabs/mogan           | 深圳市奥思网络科技有限公司    | 中国 |
 | Github | https://github.com/XmacsLabs/mogan          | Github, Inc.             | 美国 |
 
@@ -47,7 +48,7 @@ git push gitee da/gitee_workflow:main
 ```
 这就是自动生成的代码合并请求: https://gitee.com/XmacsLabs/mogan/pulls/45
 
-### Github和Gitlab的工作流
+### Github、Gitlab和Gitee的工作流
 > 以Github为例。
 
 首先需要添加github这个remote仓库：
