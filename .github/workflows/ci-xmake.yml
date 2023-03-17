@@ -162,7 +162,7 @@ jobs:
       - name: Build by gcc
         id: build
         run: |
-          xmake config --yes --qt=/usr
+          xmake config --yes
           xmake build --yes --verbose --diagnosis --jobs=8 --all
       - name: Test
         run: |
