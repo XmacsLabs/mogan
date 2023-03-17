@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|chinese>>
+<style|<tuple|tmdoc|british>>
 
 <\body>
   <\tmdoc-title>

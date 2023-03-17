@@ -31,6 +31,10 @@ struct lazy_paragraph_rep: public lazy_rep {
 protected:
   array<box>    items;       // the boxes on the line in order
   array<SI>     items_sp;    // the final spaces between boxes in lines
+  array<int>    items_left;  // the index of the previous non-empty text box item
+  array<int>    items_right; // the index of the next non-empty text box item
+  array<bool>   items_box;  // is non-empty text box item: true / false
+  array<bool>   items_cjk_text;  // is non-empty text box item: true / false
   array<space>  spcs;        // the spacing between the boxes of items
   array<lazy>   fl;          // floating insertions
   array<line_item> notes;    // line notes
@@ -71,6 +75,7 @@ protected:
 
   void find_first_last_text (int& first, int& last);
   void protrude (bool lf, bool rf);
+  void cjk_auto_spacing ();
   array<box> adjusted (double factor, int first, int last);
   void increase_kerning (SI dw, SI the_width);
   void decrease_kerning (SI dw, SI the_width);
@@ -79,18 +84,18 @@ protected:
 
   void handle_decoration (int& i, int& j, SI& xoff, box& b, SI& b_sp);
   void handle_decorations (int& i, int& j, SI& xoff,
-			   array<box>& bs, array<SI>& bs_sp);
+                           array<box>& bs, array<SI>& bs_sp);
   void handle_decorations ();
 
   void line_start ();
   bool non_trailing_tabs ();
   void make_unit (string mode, SI the_width, bool break_flag);
   void line_unit (path start, path end, bool break_flag,
-		  string mode, SI the_left, SI the_right);
+                  string mode, SI the_left, SI the_right);
   void line_end (space spc, int penalty);
   void line_units (int start, int end, bool is_start, bool is_end,
-		   string mode, string hyphen,
-		   SI the_left, SI the_right, SI the_first, SI the_last);
+                   string mode, string hyphen,
+                   SI the_left, SI the_right, SI the_first, SI the_last);
 
   void format_paragraph_unit (int start, int end);
 

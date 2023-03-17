@@ -63,7 +63,7 @@ prepare_assets() (
 
     # GS
     if [[ "$(arch)" == "arm64" ]];then
-        wget https://github.com/XmacsLabs/mogan/releases/download/v1.1.1/gs_arm64 -O ${MOGAN_GS}
+        wget https://git.lug.ustc.edu.cn/XmacsLabs/mogan/uploads/9d9b1590f25ea9ebe6961ea10f32ee31/gs_arm64 -O ${MOGAN_GS}
         if [[ $(md5 -q ${MOGAN_GS}) == 'e9324b8b1bc973f8bc0bcaf9ace33405' ]];then
             echo "GS Binary checked"
         else

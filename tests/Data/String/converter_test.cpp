@@ -12,6 +12,7 @@
 
 #include "converter.hpp"
 #include "base.hpp"
+#include "Qt/qt_utilities.hpp"
 
 class TestConverter: public QObject {
   Q_OBJECT
@@ -24,6 +25,18 @@ void TestConverter::test_utf8_to_cork() {
   qcompare (utf8_to_cork ("中"), "<#4E2D>");
   qcompare (utf8_to_cork ("“"), "\x10");
   qcompare (utf8_to_cork("”"), "\x11");
+
+  qDebug() << "test_utf8_to_cork" << "\n";
+
+  auto full_width= list<string>()
+    * string(u8"。") * string(u8"，") * string(u8"：") * string(u8"；")
+    * string(u8"！") * string(u8"？") * string(u8"、") * string(u8"～")
+    * string(u8"”") * string(u8"‘") * string(u8"』") * string(u8"」")
+    * string(u8"）") * string(u8"】") * string(u8"》") * string(u8"〉")
+    * string(u8"—") * string(u8"·");
+  for (int i=0; i<N(full_width); i++) {
+    qDebug() << utf8_to_qstring(utf8_to_cork(full_width[i])) << "\n";
+  }
 }
 
 QTEST_MAIN(TestConverter)

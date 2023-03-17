@@ -35,7 +35,7 @@ TestHashset::test_contains () {
 void
 TestHashset::test_init () {
   auto set= hashset<string>();
-  set << string("hello") << string("world");
+  set << "hello" << "world";
   QCOMPARE (set->contains("hello"), true);
   QCOMPARE (set->contains("world"), true);
   QCOMPARE (N(set), 2);

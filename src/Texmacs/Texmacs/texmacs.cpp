@@ -12,7 +12,7 @@
 #include <fcntl.h>
 #include <locale.h> // for setlocale
 #include <signal.h>
-#include "nowide/stat.hpp"
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 #ifdef STACK_SIZE
@@ -38,7 +38,7 @@ mac_fix_paths ();
 #endif
 
 #ifdef OS_MINGW
-#include "nowide/args.hpp"
+#include "Windows/win-utf8-compat.hpp"
 #endif
 
 #ifdef MACOSX_EXTENSIONS
@@ -726,7 +726,7 @@ main (int argc, char **argv) {
 #endif
   TeXmacs_init_paths (argc, argv);
 #ifdef QTTEXMACS
-  qtmapp->set_window_icon ("/misc/images/xmacs-512.png");
+  qtmapp->set_window_icon ("/misc/images/new-mogan-512.png"); // it this really necessary? Should be set in the metadata.
 #endif
   // cout << "Bench  ] Started TeXmacs\n";
   the_et     = tuple ();

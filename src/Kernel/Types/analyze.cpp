@@ -86,6 +86,8 @@ is_numeric (string s) {
 bool
 is_cjk_unified_ideographs (string s) {
   int n= N(s);
+  if (n == 0) return false;
+
   for (int i=0; i<n; i++)
     if (s[i] == '<' && i+1<n && s[i+1] == '#') {
       int start= i+2;

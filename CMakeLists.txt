@@ -62,7 +62,7 @@ set (STABLE_VERSION ${TEXMACS_VERSION})
 set (STABLE_RELEASE "1")
 set (TEXMACS_REVISION ${TEXMACS_VERSION})
 
-set (XMACS_VERSION "1.1.2-alpha4")
+set (XMACS_VERSION "1.1.2-rc2")
 
 ### --------------------------------------------------------------------
 ### Options
@@ -837,14 +837,12 @@ if (NOT OS_WASM)
                        GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
   
   install (FILES TeXmacs/misc/mime/mogan.desktop DESTINATION share/applications)
-  install (FILES TeXmacs/misc/images/texmacs.svg RENAME Mogan.svg
-    DESTINATION share/icons/hicolor/scalable/apps)
   install (FILES TeXmacs/misc/images/text-x-mogan.svg
     DESTINATION share/icons/hicolor/scalable/mimetypes)
   install (FILES TeXmacs/misc/mime/mogan.xml DESTINATION share/mime/packages)
   install (FILES TeXmacs/misc/pixmaps/Xmacs.xpm DESTINATION share/pixmaps)
-  foreach (size IN ITEMS 32 48 64 128 256 512)
-    install (FILES TeXmacs/misc/images/xmacs-${size}.png RENAME Xmacs.png
+  foreach (size IN ITEMS 16 32 128 512)
+    install (FILES TeXmacs/misc/images/new-mogan-${size}.png RENAME Xmacs.png
       DESTINATION share/icons/hicolor/${size}x${size}/apps/)
   endforeach ()
   

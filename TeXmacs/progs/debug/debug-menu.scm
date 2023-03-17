@@ -50,8 +50,8 @@
   (xxx))
 
 (menu-bind debug-menu
-  (-> "Guile"
-      ("Backtrace errors" (debug-toggle-backtrace-errors)))
+  ;; (-> "Guile"
+  ;;     ("Backtrace errors" (debug-toggle-backtrace-errors)))
   (-> "Execute"
       ("Execute system command" (interactive system))
       ("Evaluate scheme expression" (interactive footer-eval)))

@@ -21,7 +21,7 @@ array<line_item> typeset_concat (edit_env env, tree t, path ip);
 void hyphenate (line_item item, int pos, line_item& item1, line_item& item2);
 array<path>
 line_breaks (array<line_item> a, int start, int end,
-	     SI line_width, SI large_width,
+             SI line_width, SI large_width,
              SI first_spc, SI last_spc, bool ragged);
 
 /******************************************************************************
@@ -133,6 +133,30 @@ lazy_paragraph_rep::operator tree () {
 * Filling lines of paragraphs
 ******************************************************************************/
 
+static bool
+is_not_skip (line_item i) {
+  return i->op_type != OP_SKIP;
+}
+
+static bool
+is_text (line_item i) {
+  box b= i->b;
+  return i->type == STRING_ITEM && b->get_type () == TEXT_BOX;
+}
+
+static bool
+is_cjk_text (line_item i) {
+  if (!is_text (i)) return false;
+  string text = i->b->get_leaf_string ();
+  return is_cjk_unified_ideographs (text) && (text != "<#3000>");
+}
+
+static bool
+is_cjk_language (language lan) {
+  return lan->lan_name == "chinese" || lan->lan_name == "korean"
+    || lan->lan_name == "japanese" || lan->lan_name == "chineset";
+}
+
 void
 lazy_paragraph_rep::line_print (line_item item) {
   // cout << "Printing: " << item << "\n";
@@ -161,9 +185,9 @@ lazy_paragraph_rep::line_print (line_item item) {
     else if (item->t == NO_BREAK_END) {
       sss->no_break_end (); min_pen= 0; }
     else if (is_tuple (item->t, "env_page") ||
-	     (item->t == PAGE_BREAK) ||
-	     (item->t == NEW_PAGE) ||
-	     (item->t == NEW_DPAGE))
+             (item->t == PAGE_BREAK) ||
+             (item->t == NEW_PAGE) ||
+             (item->t == NEW_DPAGE))
       sss->print (item->t, nr_cols);
     else if (item->t == VAR_PAGE_BREAK)
       sss->print (PAGE_BREAK, nr_cols, true);
@@ -184,6 +208,11 @@ lazy_paragraph_rep::line_print (line_item item) {
   if (N(spcs)>0) cur_w = cur_w + spcs[N(spcs)-1];
   items << item->b;
   spcs  << item->spc;
+  if (is_cjk_language (env->lan)) {
+    // cout << "line item: " << item << LF;
+    items_box << is_not_skip (item);
+    items_cjk_text << is_cjk_text (item);
+  }
   item->b->x0= cur_w->def;
   item->b->y0= 0;
   cur_w =  cur_w + space (item->b->x2);
@@ -196,8 +225,8 @@ lazy_paragraph_rep::line_print (line_item item, path left, path right) {
     line_item item1, item2;
     hyphenate (item, is_nil (left)? right->item: left->item, item1, item2);
     line_print (is_nil (left) ? item1: item2,
-		is_nil (left) ? left : left->next,
-		is_nil (right)? right: right->next);
+                is_nil (left) ? left : left->next,
+                is_nil (right)? right: right->next);
   }
 }
 
@@ -249,6 +278,84 @@ lazy_paragraph_rep::protrude (bool lf, bool rf) {
       box pro= items[i]->adjust_kerning (mode, 0.0);
       cur_w += pro->w() - items[i]->w();
       items[i]= pro;
+    }
+  }
+}
+
+void
+lazy_paragraph_rep::cjk_auto_spacing () {
+  int prev= -1;
+  int now= -1;
+  for (int i=cur_start; i<N(items); i++) {
+    if (items_box[i]) {
+      prev= now;
+      now= i;
+      items_left << prev;
+    } else {
+      items_left << -1;
+    }
+  }
+
+  prev= -1;
+  now= -1;
+  array<int> tmp= array<int>();
+  for (int i=N(items)-1; i>=cur_start; i--) {
+    if (items_box[i]) {
+      prev= now;
+      now= i;
+      tmp << prev;
+    } else {
+      tmp << -1;
+    }
+  }
+  for (int i=N(tmp)-1; i>=0; i--) {
+    items_right << tmp[i];
+  }
+
+  ASSERT (N(items) == N(items_box)
+    && N(items) == N(items_left)
+    && N(items) == N(items_right)
+    && N(items) == N(items_cjk_text),
+    "length of items must match"
+  )
+
+  bool no_cjk_flag= true;
+  for (int i=cur_start; i<N(items); i++) {
+    if (items_cjk_text[i]) {
+      no_cjk_flag= false;
+      break;
+    }
+  }
+  if (no_cjk_flag) return ;
+  
+  int first, last;
+  find_first_last_text (first, last);
+
+  for (int i=cur_start; i+1<N(items); i++) {
+    if (i != last
+        && items_cjk_text[i]                    // test if the current item is a cjk text box
+        && items_right[i]!=-1                   // test if the right item is not empty
+        && is_text (a[items_right[i]])          // test if the right item is a text box
+        && !items_cjk_text[items_right[i]]) {   // test if the right item is not a cjk text box
+      box b= items[i];
+      SI auto_space_size= b->get_leaf_font()->spc->def * 0.2;
+      box nb= b->right_auto_spacing (auto_space_size);
+      cur_w += nb->w() - items[i]->w();
+      items[i]= nb;
+    }
+  }
+
+  for (int i=cur_start+1; i<N(items); i++) {
+    if (i != first
+        && items_cjk_text[i]                    // test if the current item is a cjk text box
+        && items_left[i]!=-1                    // test if the left item is not empty
+        && is_text(a[items_left[i]])            // test if the left item is a text box
+        && !items_cjk_text[items_left[i]]) {    // test if the left item is not a cjk text box
+      box b= items[i];
+      SI auto_space_size= b->get_leaf_font()->spc->def * 0.2;
+      box nb= b->left_auto_spacing (auto_space_size);
+      cur_w += nb->w() - items[i]->w();
+      items[i]= nb;
     }
   }
 }
@@ -445,6 +552,10 @@ lazy_paragraph_rep::make_unit (string mode, SI the_width, bool break_flag) {
   if (protrusion != 0)
     protrude (protrude_left, protrude_right);
 
+  if (is_cjk_language (env->lan)) {
+    cjk_auto_spacing ();
+  }
+
   // stretching case
   if (mode == "justify" &&
       cur_w->def < the_width &&
@@ -561,20 +672,20 @@ lazy_paragraph_rep::handle_decorations (
     if ((j < N (decs)) && (as_int (decs[j][0]) == i)) {
       tree t= decs[j][1];
       if (t == tree (DATOMS)) {
-	xoff += items_sp[i] + items [i]->x2;
-	new_items    << items [i];
-	new_items_sp << items_sp [i];
-	i++; j++;
-	return;
+        xoff += items_sp[i] + items [i]->x2;
+        new_items    << items [i];
+        new_items_sp << items_sp [i];
+        i++; j++;
+        return;
       }
       else {
-	box b;
-	SI  b_sp;
-	// cout << "Handling decoration " << t << LF << INDENT;
-	handle_decoration (i, j, xoff, b, b_sp);
-	// cout << UNINDENT << "Handled " << t << LF;
-	new_items    << b;
-	new_items_sp << b_sp;
+        box b;
+        SI  b_sp;
+        // cout << "Handling decoration " << t << LF << INDENT;
+        handle_decoration (i, j, xoff, b, b_sp);
+        // cout << UNINDENT << "Handled " << t << LF;
+        new_items    << b;
+        new_items_sp << b_sp;
       }
     }
     else {
@@ -617,6 +728,10 @@ void
 lazy_paragraph_rep::line_start () {
   items   = array<box> ();
   items_sp= array<SI> ();
+  items_box= array<bool> ();
+  items_cjk_text= array<bool> ();
+  items_left = array<int> ();
+  items_right = array<int> ();
   spcs    = array<space> ();
   fl      = array<lazy> ();
   notes   = array<line_item> ();
@@ -627,7 +742,7 @@ lazy_paragraph_rep::line_start () {
 
 void
 lazy_paragraph_rep::line_unit (path start, path end, bool break_flag,
-			       string mode, SI the_left, SI the_right)
+                               string mode, SI the_left, SI the_right)
 {
   tabs = array<tab> ();
   cur_w= space (0);
@@ -691,12 +806,12 @@ lazy_paragraph_rep::line_units (
   // enough so as to compensate for content that cannot be contracted
   // on the line such as whitespace, images, and other miscellaneous objects.
   array<path> hyphs= line_breaks (a, start, end, line_width, large_width,
-				  the_first, the_last, ragged);
+                                  the_first, the_last, ragged);
   for (i=0; i<N(hyphs)-1; i++) {
     if (i>0) line_start ();
     line_unit (hyphs[i], hyphs[i+1], i==N(hyphs)-2, mode,
-	       the_left+ (is_start&&(i==0)? the_first: 0),
-	       the_right- (is_end&&(i==N(hyphs)-2)? the_last: 0));
+               the_left+ (is_start&&(i==0)? the_first: 0),
+               the_right- (is_end&&(i==N(hyphs)-2)? the_last: 0));
     if (i<N(hyphs)-2) line_end (line_sep, 1);
   }
   // cout << "    Done!\n";
@@ -712,15 +827,15 @@ lazy_paragraph_rep::format_paragraph_unit (int the_start, int the_end) {
   int i, start= the_start, end= the_start;
   for (i=the_start; i<=the_end; i++)
     if ((i==the_end) ||
-	((a[i]->type == CONTROL_ITEM) &&
-	 (a[i]->t == NEXT_LINE)))
+        ((a[i]->type == CONTROL_ITEM) &&
+         (a[i]->t == NEXT_LINE)))
     {
       start= end;
       end  = i;
       line_start ();
       line_units (start, end, start==the_start, end==the_end,
-		  mode, hyphen,
-		  left, width, first, 0);
+                  mode, hyphen,
+                  left, width, first, 0);
       if (end<the_end) line_end (line_sep, 1);
       else return;
     }
@@ -813,7 +928,7 @@ typeset_concat_or_table (edit_env env, tree t, path ip) {
 
 array<page_item>
 typeset_stack (edit_env env, tree t, path ip,
-	       array<line_item> a, array<line_item> b, stack_border& sb)
+               array<line_item> a, array<line_item> b, stack_border& sb)
 {
   // cout << "Typeset stack " << t << "\n";
   lazy_paragraph par (env, ip);

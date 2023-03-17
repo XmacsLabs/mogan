@@ -150,7 +150,7 @@ concater_rep::typeset_math_string (tree t, path ip, int pos, int end) {
         box   rb= resize_box (decorate (ip), mb, 0, tb->y1, 0, tb->y2);
         a << line_item (STD_ITEM, OP_SKIP, rb, HYPH_INVALID);
       }
-      if (tp->macro == 0 || env->read (as_string (tp->macro)) == UNINIT)
+      if (tp->macro == tree_label::STRING || env->read (as_string (tp->macro)) == UNINIT)
         typeset_math_substring (s (start, pos), ip, start, tp->op_type);
       else
         typeset_math_macro (s, tp->macro, ip, start, pos, tp->op_type);

@@ -44,7 +44,7 @@ jobs:
           cache: 'true'
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.7.3
+          xmake-version: v2.7.7
           actions-cache-folder: '.xmake-cache'
       - name: Build by gcc
         id: build
@@ -83,7 +83,7 @@ jobs:
             git 
             make 
       - name: Set up MinGW
-        uses: coffeebe4code/setup-mingw@v1-beta-2
+        uses: egor-tensin/setup-mingw@v2
         with:
           platform: x64
           version: ${{ matrix.qt_mingw_ver }}
@@ -157,7 +157,7 @@ jobs:
           key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.7.3
+          xmake-version: v2.7.7
           actions-cache-folder: '.xmake-cache'
       - name: Build by gcc
         id: build

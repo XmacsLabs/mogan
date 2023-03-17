@@ -9,6 +9,8 @@
 
   <\itemize>
     <item>Reporter: Rui Zhang
+
+    <item>Issue: <slink|https://github.com/XmacsLabs/mogan/issues/396>
   </itemize>
 
   <section|Reproducer>
@@ -22,13 +24,12 @@
     <underline|<space|10pt>><underline|<space|10pt>><underline|<space|10pt>><underline|<space|10pt>><underline|<space|10pt>><underline|<space|10pt>><underline|<space|10pt>><underline|<space|10pt>><underline|<space|10pt>><underline|<space|10pt>><underline|<space|10pt>>
     10pt each.
 
-    <with|font|SimSun|\<#6211\>\<#80FD\>\<#541E\>\<#4E0B\>\<#73BB\>\<#7483\>\<#800C\>\<#4E0D\>\<#4F24\>\<#8EAB\>\<#4F53\>\<#3002\>>I
-    can eat glass, it does not hurt me.
+    <with|font|SimSun|我能吞下玻璃而不伤身体。>I can eat glass,
+    it does not hurt me.
 
     <item>Using <samp|Roman> produces smaller font:
 
-    \<#6211\>\<#80FD\>\<#541E\>\<#4E0B\>\<#73BB\>\<#7483\>\<#800C\>\<#4E0D\>\<#4F24\>\<#8EAB\>\<#4F53\>\<#3002\>I
-    can eat glass, it does not hurt me.
+    我能吞下玻璃而不伤身体。I can eat glass, it does not hurt me.
 
     <item>Using <samp|sys-chinese> produces slightly smaller font:
 
@@ -36,8 +37,8 @@
     10pt each.
 
     <\with|font|sys-chinese>
-      \<#6211\>\<#80FD\>\<#541E\>\<#4E0B\>\<#73BB\>\<#7483\>\<#800C\>\<#4E0D\>\<#4F24\>\<#8EAB\>\<#4F53\>\<#3002\>I
-      can eat glass, it does not hurt me.
+      我能吞下玻璃而不伤身体。I can eat glass, it does not hurt
+      me.
     </with>
   </itemize-dot>
 

@@ -5,7 +5,7 @@
 <\body>
   <tmdoc-title|Failed to Display CJK Labels>
 
-  <paragraph|Bug Metadata>
+  <section|Bug Metadata>
 
   <\itemize>
     <item>Reporter: Darcy Shen
@@ -13,7 +13,7 @@
     <item>Mogan Editor Version: v1.1.1
   </itemize>
 
-  <paragraph|Description>
+  <section|Description>
 
   <paragraph|All of the characters are CJK>
 
