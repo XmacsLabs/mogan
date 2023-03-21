@@ -430,9 +430,6 @@ end
 
 option("libdl") do
     add_links("dl")
-    if is_plat("linux") then
-        add_linkdirs("/usr/lib/x86_64-linux-gnu")
-    end
 end
 
 target("mogan") do 
@@ -445,12 +442,17 @@ target("mogan") do
     else
         add_rules("qt.widgetapp_static")
     end
+
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     if is_plat("macosx") then
         add_frameworks("QtMacExtras")
     end
+
     add_deps("libmogan")
+    add_syslinks("pthread")
+
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
+
     set_installdir(INSTALL_DIR)
     after_install(function(target)
         local install_dir = path.join(target:installdir(), "/bin/")
@@ -612,6 +614,7 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             set_policy("check.auto_ignore_flags", false)
             add_rules("qt.console")
             add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
+            add_syslinks("pthread")
 
             add_includedirs("tests/Base")
             add_files("tests/Base/base.cpp")
@@ -620,4 +623,4 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
         end
     end
 end
-    
+
