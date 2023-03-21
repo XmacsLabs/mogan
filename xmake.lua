@@ -37,17 +37,23 @@ else
     add_rules("mode.releasedbg", "mode.release", "mode.debug")
 end
 
-if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu") then
+if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
+    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+    add_requires("apt::libsqlite3-dev", {alias="sqlite3"})
     add_requires("apt::libpng-dev", {alias="libpng"})
     add_requires("apt::zlib1g-dev", {alias="zlib"})
-    if linuxos.name() == "debian" then
-        add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
-    elseif linuxos.name() == "ubuntu" then
+    -- config package name for libjpeg on Ubuntu
+    if linuxos.name() == "ubuntu" then
         add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
+    else
+        add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
     end
-    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-    add_requires("apt::libfreetype-dev", {alias="freetype"})
-    add_requires("apt::libsqlite3-dev", {alias="sqlite3"})
+    -- config package name for freetype on UOS
+    if linuxos.name() == "uos" then
+    	add_requires("apt::libfreetype6-dev", {alias="freetype"})
+    else
+        add_requires("apt::libfreetype-dev", {alias="freetype"})
+    end
 else
     add_requires("libpng 1.6.37", {system=false})
     add_requires("libiconv 1.17", {system=false})
