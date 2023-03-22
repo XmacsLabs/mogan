@@ -1,4 +1,4 @@
-<TeXmacs|2.1.3>
+<TeXmacs|2.1.2>
 
 <style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
@@ -93,7 +93,7 @@
 
   <paragraph*|用户自定义快捷键>
 
-  <TeXmacs>默认的快捷键不合你的心意时，你还可以<hlink|配置你自己的快捷键|../scheme/man-keyboard.zh.tm>.
+  当<TeXmacs>默认的快捷键不合你心意时，你还可以<hlink|配置你自己的快捷键|../text/keyboard/man-keyboard.zh.tm>。
 
   <tmdoc-copyright|1998\U2002|Joris van der Hoeven>
 
@@ -104,3 +104,6 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
+
+<initial|<\collection>
+</collection>>

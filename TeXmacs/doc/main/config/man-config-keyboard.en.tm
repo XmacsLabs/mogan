@@ -1,6 +1,6 @@
-<TeXmacs|1.0.7.17>
+<TeXmacs|2.1.2>
 
-<style|tmdoc>
+<style|<tuple|tmdoc|english|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|Keyboard configuration>
@@ -34,10 +34,10 @@
   reserves some keyboard shortcuts for the sake of user-friendliness:
 
   <\itemize>
-    <item>The function keys <key|F5>--<key|F12> are reserved for special
+    <item>The function keys <key|F5>\U<key|F12> are reserved for special
     actions.
 
-    <item>Most standards admit a ``principal modifier key'' for forming
+    <item>Most standards admit a \Pprincipal modifier key\Q for forming
     keyboard shortcuts (<prefix|std><nbsp>for your look and feel) and
     sometimes another modifier key for other shortcuts (<abbr|e.g.> the
     <key|windows> key under <name|Windows> and <prefix|A-> under <name|Mac
@@ -109,7 +109,7 @@
   One solution to the above problems is to change the problematic global
   shortcuts in the responsible applications. For instance, <name|Spaces> can
   be configured to use <prefix|M-A-C-> as a prefix instead of <prefix|C->
-  (click on the popup menu behind ``To switch between spaces'' and
+  (click on the popup menu behind \PTo switch between spaces\Q and
   simultaneously press <prefix|M->, <prefix|A-> and <prefix|C->). Notice that
   <prefix|fn> is another key which is not used by <TeXmacs>.
 
@@ -137,9 +137,9 @@
 
   If, for some reason, the standard <TeXmacs> shortcuts are not sufficient or
   suitable for you, then you may <hlink|define your own
-  shortcuts|../scheme/man-keyboard.en.tm>.
+  shortcuts|../text/keyboard/man-keyboard.en.tm>.
 
-  <tmdoc-copyright|1998--2002|Joris van der Hoeven>
+  <tmdoc-copyright|1998\U2002|Joris van der Hoeven>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -149,8 +149,5 @@
   Documentation License".>
 </body>
 
-<\initial>
-  <\collection>
-    <associate|language|english>
-  </collection>
-</initial>
+<initial|<\collection>
+</collection>>
