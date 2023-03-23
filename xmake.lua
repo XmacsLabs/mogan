@@ -37,6 +37,24 @@ else
     add_rules("mode.releasedbg", "mode.release", "mode.debug")
 end
 
+
+function texmacs_qt(target)
+    import("detect.sdks.find_qt") 
+    local toolchains = find_qt(nil, {verbose = true})
+    print(target:basename())
+    print(toolchains)
+    if toolchains and toolchains.sdkver then
+        import("core.base.semver")
+        local qt_sdkver = semver.new(toolchains.sdkver)
+        if (not (qt_sdkver and qt_sdkver:ge("6.0.0"))) and target:is_plat("macosx") then
+            target:add("frameworks", {"QtMacExtras"})
+        end
+        target:add("frameworks", {"QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg"})
+    else
+        raise("Qt SDK version not found, please run `xmake f --qt_sdkver=xxx` to set it.")
+    end
+end
+
 if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
     add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
     add_requires("apt::libsqlite3-dev", {alias="sqlite3"})
@@ -241,10 +259,12 @@ target("libmogan") do
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
+
+    on_load(texmacs_qt)
     if is_plat("linux") and is_mode("release") then
-        add_rules("qt.shared","texmacs_qt")
+        add_rules("qt.shared")
     else
-        add_rules("qt.static","texmacs_qt")
+        add_rules("qt.static")
     end
 
     add_packages("libpng")
@@ -433,10 +453,11 @@ target("mogan") do
         set_filename("Mogan")
     end
 
+    on_load(texmacs_qt)
     if is_plat("macosx") or is_plat("linux") then
-        add_rules("qt.widgetapp","texmacs_qt")
+        add_rules("qt.widgetapp")
     else
-        add_rules("qt.widgetapp_static","texmacs_qt")
+        add_rules("qt.widgetapp_static")
     end
 
     add_deps("libmogan")
@@ -603,8 +624,9 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_deps("libmogan")
             set_languages("c++17")
             set_policy("check.auto_ignore_flags", false)
-            add_rules("qt.console","texmacs_qt")
+            on_load(texmacs_qt)
             add_frameworks("QtTest")
+            add_rules("qt.console")
             add_syslinks("pthread")
 
             add_includedirs("tests/Base")
@@ -615,20 +637,3 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
     end
 end
 
-rule("texmacs_qt") do
-    on_config(function(target)
-        local toolchains = target:data("qt")
-        print(target:basename())
-        print(toolchains)
-        if toolchains and toolchains.sdkver then
-            import("core.base.semver")
-            local qt_sdkver = semver.new(toolchains.sdkver)
-            if (not (qt_sdkver and qt_sdkver:ge("6.0.0"))) and target:is_plat("macosx") then
-                target:add("frameworks", {"QtMacExtras"})
-            end
-            target:add("frameworks", {"QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg"})
-        else
-            raise("Qt SDK version not found, please run `xmake f --qt_sdkver=xxx` to set it.")
-        end
-    end)
-end
