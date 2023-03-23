@@ -109,7 +109,7 @@ jobs:
         shell: msys2 {0}
         id: build
         run: |
-          export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
+          export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/:${PATH}
           xrepo update-repo
           xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
           xmake build --yes --verbose --diagnosis --jobs=8 --all
