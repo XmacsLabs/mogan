@@ -50,7 +50,7 @@
       (vertical
         (aligned
           (item (text "Shortcut")
-            (resize "350px" "30px"
+            (resize "350px" "45px"
               (texmacs-input `(document (preview-shortcut ,cur-sh))
                              `(style (tuple "generic" "shortcut-editor")) u)))
           (item (text "Command")
