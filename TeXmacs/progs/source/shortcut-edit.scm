@@ -54,7 +54,7 @@
   (string<=? (shortcut-rewrite s1) (shortcut-rewrite s2)))
 
 (tm-define (user-shortcuts-list)
-  (sort (map car current-user-shortcuts) shortcut<=?))
+  (list-sort (map car current-user-shortcuts) shortcut<=?))
 
 (tm-define (set-user-shortcut sh cmd)
   (set! current-user-shortcuts
