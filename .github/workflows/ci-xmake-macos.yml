@@ -1,0 +1,56 @@
+name: Build via xmake
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - '.github/workflows/ci-xmake-macos.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - '.github/workflows/ci-xmake-macos.yml'
+
+jobs:
+  macosbuild:
+    runs-on: macos-11
+    if: always()
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{github.workspace}}/build/.build_cache
+            /Users/runner/.xmake
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 5.15.2
+          target: 'desktop'
+          cache: 'true'
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.7.7
+          actions-cache-folder: '.xmake-cache'
+      - name: Build by gcc
+        id: build
+        run: |
+          xrepo update-repo
+          xmake config --yes
+          xmake build --yes --verbose --diagnosis --jobs=8 --all
+      - name: Test
+        run: |
+          xmake run --yes --verbose --diagnosis --group=tests
+        env:
+          QT_QPA_PLATFORM: offscreen
