@@ -36,10 +36,6 @@
 #include "scheme.hpp"
 #include "Imlib2/imlib2.hpp"
 
-#ifdef MACOSX_EXTENSIONS
-#include "MacOS/mac_images.h"
-#endif
-
 #ifdef QTTEXMACS
 #include "Qt/qt_utilities.hpp"
 #endif
