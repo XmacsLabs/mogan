@@ -63,6 +63,7 @@ else
     add_requires("freetype 2.12.1", {system=false})
     add_requires("sqlite3 3.39.0+200", {system=false})
 end
+add_requires("pdfhummus 4.1",{system=false,configs={libpng=true,libjpeg=true}})
 
 local XMACS_VERSION="1.1.2-rc3"
 local INSTALL_DIR="build/package"
@@ -258,6 +259,7 @@ target("libmogan") do
     add_packages("libcurl")
     add_packages("freetype")
     add_packages("sqlite3")
+    add_packages("pdfhummus")
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
@@ -335,8 +337,6 @@ target("libmogan") do
             "src/Kernel/Types",
             "src/Plugins",
             "src/Plugins/Pdf",
-            "src/Plugins/Pdf/PDFWriter",
-            "src/Plugins/Pdf/LibAesgm",
             "src/Plugins/Qt",
             "src/Plugins/UniversalStacktrace",
             "src/Scheme",
@@ -393,7 +393,6 @@ target("libmogan") do
             "src/Plugins/Database/**.cpp",
             "src/Plugins/Freetype/**.cpp",
             "src/Plugins/Jeaiii/**.cpp",
-            "src/Plugins/Pdf/**.c",
             "src/Plugins/Pdf/**.cpp",
             "src/Plugins/Ghostscript/**.cpp",
             "src/Plugins/Imlib2/**.cpp",
