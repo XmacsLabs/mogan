@@ -381,7 +381,6 @@ target("libmogan") do
     if is_plat("macosx") then
         add_files({
                 "src/Plugins/MacOS/HIDRemote.m",
-                "src/Plugins/MacOS/mac_images.mm",
                 "src/Plugins/MacOS/mac_spellservice.mm",
                 "src/Plugins/MacOS/mac_utilities.mm",
                 "src/Plugins/MacOS/mac_app.mm"})
@@ -574,4 +573,3 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
         end
     end
 end
-
