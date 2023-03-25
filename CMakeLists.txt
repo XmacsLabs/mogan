@@ -563,7 +563,6 @@ set (TeXmacs_Cocoa_SRCS
 
 set (TeXmacs_MacOS_SRCS
   ${TEXMACS_SOURCE_DIR}/src/Plugins/MacOS/HIDRemote.m
-  ${TEXMACS_SOURCE_DIR}/src/Plugins/MacOS/mac_images.mm
   ${TEXMACS_SOURCE_DIR}/src/Plugins/MacOS/mac_spellservice.mm
   ${TEXMACS_SOURCE_DIR}/src/Plugins/MacOS/mac_utilities.mm
 )
