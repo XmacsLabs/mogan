@@ -63,7 +63,9 @@ else
     add_requires("freetype 2.12.1", {system=false})
     add_requires("sqlite3 3.39.0+200", {system=false})
 end
-add_requires("pdfhummus 4.1",{system=false,configs={libpng=true,libjpeg=true}})
+
+local PDFHUMMUS_VERSION = "4.1"
+add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
 
 local XMACS_VERSION="1.1.2-rc3"
 local INSTALL_DIR="build/package"
@@ -103,6 +105,7 @@ set_configvar("USE_ICONV", 1)
 set_configvar("LINKED_IMLIB2", false)
 set_configvar("PDF_RENDERER", 1)
 set_configvar("PDFHUMMUS_NO_TIFF", true)
+set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
 
 if is_plat("mingw") then
     set_configvar("GS_EXE", "bin/gs.exe")
