@@ -393,7 +393,7 @@ target("libmogan") do
             "src/Plugins/Database/**.cpp",
             "src/Plugins/Freetype/**.cpp",
             "src/Plugins/Jeaiii/**.cpp",
-            "src/Plugins/Pdf/**.cpp",
+            "src/Plugins/Pdf/*.cpp",
             "src/Plugins/Ghostscript/**.cpp",
             "src/Plugins/Imlib2/**.cpp",
             "src/Plugins/Ispell/**.cpp",
