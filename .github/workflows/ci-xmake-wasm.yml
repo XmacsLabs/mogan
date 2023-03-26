@@ -10,7 +10,7 @@ on:
       - '!src/Plugins/Unix/**'
       - 'tests/**'
       - 'xmake.lua'
-      - '.github/workflows/ci-xmake-linux.yml'
+      - '.github/workflows/ci-xmake-wasm.yml'
   pull_request:
     branches: [ main ]
     paths:
@@ -20,18 +20,25 @@ on:
       - '!src/Plugins/Unix/**'
       - 'tests/**'
       - 'xmake.lua'
-      - '.github/workflows/ci-xmake-linux.yml'
+      - '.github/workflows/ci-xmake-wasm.yml'
 
 jobs:
-  linuxbuild:
+  wasmbuild:
     runs-on: ubuntu-22.04
     if: always()
     steps:
       - name: Install dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev \
-              libqt5svg5-dev qt5-image-formats-plugins fonts-noto-cjk
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc fonts-noto-cjk
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 5.15.2
+          arch: wasm_32
+          host: 'linux'
+          target: 'desktop'
+          cache: 'true'
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
