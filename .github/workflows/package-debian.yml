@@ -1,4 +1,4 @@
-name: Package for Debian
+name: Package for Ubuntu
 
 on:
   workflow_dispatch:
@@ -8,7 +8,12 @@ on:
 
 jobs:
   linuxbuild:
-    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        include:
+          - ubuntu_ver: 22.04
+          - ubuntu_ver: 20.04
+    runs-on: ubuntu-${{ matrix.ubuntu_ver }}
     if: always()
     steps:
       - name: Install dependencies
