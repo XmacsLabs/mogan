@@ -45,5 +45,6 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
+          name: mogan-debian-${{ matrix.ubuntu_ver }}.deb
           path: |
             mogan-installer-${{ matrix.ubuntu_ver }}.deb
