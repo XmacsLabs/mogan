@@ -46,4 +46,4 @@ jobs:
         with:
           name: debian-installer-${{ matrix.ubuntu_ver }}.deb
           path: |
-            ../mogan*.deb
+            ${{github.workspace}}/../mogan*.deb
