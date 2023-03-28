@@ -36,7 +36,7 @@ jobs:
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.7
-          actions-cache-folder: '.xmake-cache'
+          actions-cache-folder: ${{ matrix.ubuntu_ver }}-.xmake-cache
       - name: Generate Installer
         run: |
           packages/debian/package.sh
@@ -44,6 +44,6 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
-          name: debian-installer
+          name: debian-installer-${{ matrix.ubuntu_ver }}.deb
           path: |
             ../mogan*.deb
