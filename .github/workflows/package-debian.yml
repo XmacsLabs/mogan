@@ -1,0 +1,49 @@
+name: Package for Ubuntu
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  linuxbuild:
+    strategy:
+      matrix:
+        include:
+          - ubuntu_ver: 22.04
+          - ubuntu_ver: 20.04
+    runs-on: ubuntu-${{ matrix.ubuntu_ver }}
+    if: always()
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev \
+              libqt5svg5-dev qt5-image-formats-plugins fonts-noto-cjk \
+              libpng-dev zlib1g-dev libjpeg-turbo8-dev libcurl4-openssl-dev \
+              libfreetype-dev libsqlite3-dev fakeroot debhelper
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{github.workspace}}/build/.build_cache
+            /home/runner/.config/.xmake
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.7.7
+          actions-cache-folder: '.xmake-cache'
+      - name: Generate Installer
+        run: |
+          packages/debian/package.sh
+      - name: Upload 
+        uses: actions/upload-artifact@v2
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        with:
+          name: debian-installer
+          path: |
+            ../mogan*.deb
