@@ -65,11 +65,13 @@ else
     add_requires("freetype 2.12.1", {system=false})
     add_requires("sqlite3 3.39.0+200", {system=false})
 end
+
+local PDFHUMMUS_VERSION = "4.1"
 if not is_plat("wasm") then
-    add_requires("pdfhummus 4.1",{system=false,configs={libpng=true,libjpeg=true}})
+    add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
 end
 
-local XMACS_VERSION="1.1.2-rc3"
+local XMACS_VERSION="1.1.2-rc4"
 local INSTALL_DIR="build/package"
 
 local TEXMACS_VERSION = "2.1.2"
@@ -115,6 +117,11 @@ set_configvar("USE_GS", 1)
 set_configvar("LINKED_IMLIB2", false)
 set_configvar("PDF_RENDERER", not is_plat("wasm"))
 set_configvar("PDFHUMMUS_NO_TIFF", true)
+if is_plat("wasm") then
+    set_configvar("PDFHUMMUS_VERSION", "not supported")
+else
+    set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
+end
 
 local USE_STACK_TRACE = not (is_plat("mingw") or is_plat("wasm"))
 set_configvar("USE_STACK_TRACE", USE_STACK_TRACE)

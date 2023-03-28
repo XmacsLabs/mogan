@@ -51,6 +51,7 @@
 
 (plugin-add-macos-path "Maxima*" "Contents/Resources/maxima/bin" #t)
 (plugin-add-macos-path "Maxima*" "Contents/Resources/opt/bin" #t)
+(plugin-add-macos-path "/opt/homebrew/opt" "maxima/bin" #t)
 (plugin-add-windows-path "Maxima*" "bin" #t)
 (plugin-add-windows-path "maxima*" "bin" #t)
 
