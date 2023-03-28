@@ -31,11 +31,19 @@ jobs:
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc fonts-noto-cjk
-      - name: Install Qt
+      - name: Install Qt wasm
         uses: jurplel/install-qt-action@v3
         with:
           version: 6.4.3
           arch: wasm_32
+          host: 'linux'
+          target: 'desktop'
+          cache: 'true'
+      - name: Install qmake
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.4.3
+          arch: gcc_64
           host: 'linux'
           target: 'desktop'
           cache: 'true'
