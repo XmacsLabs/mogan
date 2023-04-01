@@ -39,14 +39,10 @@ jobs:
           host: 'linux'
           target: 'desktop'
           cache: 'true'
-      - name: Install qmake
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: 6.4.3
-          arch: gcc_64
-          host: 'linux'
-          target: 'desktop'
-          cache: 'true'
+          # workarounds in https://github.com/jurplel/install-qt-action/issues/181
+          aqtversion: '3.1.*'
+          py7zrversion: '0.20.*'
+          extra: '--autodesktop'
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -59,7 +55,7 @@ jobs:
           key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.7.7
+          xmake-version: dev
           actions-cache-folder: '.xmake-cache'
 
       - name: Prepare

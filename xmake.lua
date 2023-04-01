@@ -106,14 +106,14 @@ else
     add_defines("USE_QT_PRINTER")
 end
 
-set_configvar("USE_ICONV", not is_plat("wasm"))
 set_configvar("USE_CURL", not is_plat("wasm"))
+set_configvar("USE_GS", not is_plat("wasm"))
+set_configvar("USE_ICONV", not is_plat("wasm"))
 set_configvar("USE_SQLITE3", not is_plat("wasm"))
 set_configvar("LINKED_AXEL", false)
 set_configvar("LINKED_CAIRO", false)
 set_configvar("LINKED_SQLITE3", 1)
 set_configvar("USE_FREETYPE", 1)
-set_configvar("USE_GS", 1)
 set_configvar("LINKED_IMLIB2", false)
 set_configvar("PDF_RENDERER", not is_plat("wasm"))
 set_configvar("PDFHUMMUS_NO_TIFF", true)
