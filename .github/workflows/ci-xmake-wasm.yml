@@ -55,7 +55,7 @@ jobs:
           key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: dev
+          xmake-version: branch@dev
           actions-cache-folder: '.xmake-cache'
 
       - name: Prepare
