@@ -208,6 +208,8 @@
   (clipboard-cut "primary"))
 (tm-define (kbd-paste)
   (clipboard-paste "primary"))
+(tm-define (kbd-paste-verbatim)
+  (clipboard-paste-import "verbatim" "primary"))
 (tm-define (kbd-cancel)
   (clipboard-clear "primary"))
 
