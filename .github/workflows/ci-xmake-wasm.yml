@@ -83,4 +83,4 @@ jobs:
         with:
           name: mogan-wasm-dev
           path: |
-            build\wasm\**
+            build/wasm/**
