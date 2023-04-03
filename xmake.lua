@@ -270,9 +270,9 @@ target("libmogan") do
     add_packages("libjpeg")
     add_packages("freetype")
     add_packages("sqlite3")
-    add_packages("pdfhummus")
 
     if not is_plat("wasm") then
+        add_packages("pdfhummus")
         add_packages("libiconv")
         add_packages("libcurl")
     end
