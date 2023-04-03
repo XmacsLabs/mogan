@@ -10,7 +10,7 @@
 - 激进的技术选型. 比如墨干编辑器将 GUI 框架从 Qt 4.8.x 切换到了 Qt 5.15.x，将脚本执行引擎从 Guile 1.8.x 切换到了 S7 Scheme，在享受新技术带来的优势的同时，也会有不少不稳定的因素。
 
 ## 如何安装
-我们在 [Gitee](https://gitee.com/XmacsLabs/mogan/releases) 提供 Windows 和 macOS 这两大平台的安装包。阅读[安装指南](docs/Install.zh.md)可以了解下载安装包之后的详细安装步骤，以及其它平台比如 GNU/Linux 的安装方法.
+我们在 [Gitee](https://gitee.com/XmacsLabs/mogan/releases) 提供 Windows 和 macOS 这两大平台的安装包。阅读[安装指南](Install.md)可以了解下载安装包之后的详细安装步骤，以及其它平台比如 GNU/Linux 的安装方法.
 
 ## 什么是 GNU TeXmacs 以及墨干编辑器
 GNU TeXmacs 是法国国家科学研究中心的数学家 [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html) 从上世纪九十年代末开始研发的一款结构化编辑器，旨在利用直观易用的图形界面编写高质量的技术文档，效果可达到与 LaTeX 相同的水准。目前它的主要用户集中于中小学教师及高校科研人员。
