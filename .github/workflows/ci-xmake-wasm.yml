@@ -72,8 +72,15 @@ jobs:
         run: |
           xmake config --yes --plat=wasm --qt=${Qt6_DIR}
           xmake build --yes --verbose --diagnosis --jobs=8 --all
-      - name: Test
-        run: |
-          xmake run --yes --verbose --diagnosis --group=tests
-        env:
-          QT_QPA_PLATFORM: offscreen
+      # a browser is needed to run tests, and xmake cannot run these test directly.
+      # - name: Test
+      #   run: |
+      #     xmake run --yes --verbose --diagnosis --group=tests
+      #   env:
+      #     QT_QPA_PLATFORM: offscreen
+      - name: Upload 
+        uses: actions/upload-artifact@v2
+        with:
+          name: mogan-wasm-dev
+          path: |
+            build\wasm\**
