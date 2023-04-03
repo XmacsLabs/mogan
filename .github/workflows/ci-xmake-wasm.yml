@@ -1,0 +1,86 @@
+name: Build by WASM
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - '!src/Plugins/Unix/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - '.github/workflows/ci-xmake-wasm.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - '!src/Plugins/Unix/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - '.github/workflows/ci-xmake-wasm.yml'
+
+jobs:
+  wasmbuild:
+    runs-on: ubuntu-22.04
+    if: always()
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc fonts-noto-cjk
+      - name: Install Qt wasm
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.4.3
+          arch: wasm_32
+          host: 'linux'
+          target: 'desktop'
+          cache: 'true'
+          # workarounds in https://github.com/jurplel/install-qt-action/issues/181
+          aqtversion: '==3.1.*'
+          py7zrversion: '==0.20.*'
+          extra: '--autodesktop'
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{github.workspace}}/build/.build_cache
+            /home/runner/.config/.xmake
+          key: ${{ runner.os }}(wasm)-xmake-${{ hashFiles('**/xmake.lua') }}
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: branch@dev
+          actions-cache-folder: '.xmake-cache'
+
+      - name: Prepare
+        uses: mymindstorm/setup-emsdk@v11
+        with:
+          # Make sure to set a version number!
+          version: 3.1.34
+          # This is the name of the cache folder.
+          # The cache folder will be placed in the build directory,
+          #  so make sure it doesn't conflict with anything!
+          actions-cache-folder: emsdk-cache-${{ matrix.kind }}
+      - name: Build by gcc
+        id: build
+        run: |
+          xmake config --yes --plat=wasm --qt=${Qt6_DIR}
+          xmake build --yes --verbose --diagnosis --jobs=8 --all
+      # a browser is needed to run tests, and xmake cannot run these test directly.
+      # - name: Test
+      #   run: |
+      #     xmake run --yes --verbose --diagnosis --group=tests
+      #   env:
+      #     QT_QPA_PLATFORM: offscreen
+      - name: Upload 
+        uses: actions/upload-artifact@v2
+        with:
+          name: mogan-wasm-dev
+          path: |
+            build/wasm/**

@@ -22,9 +22,9 @@ set_project("Mogan Editor")
 -- support cygwin env.
 set_allowedplats(
     -- these plat should be guaranteed
-    "linux", "macosx", "mingw",
+    "linux", "macosx", "mingw", "wasm",
     --this plat is not maintained
-    "android", "appletvos", "bsd", "cross", "iphoneos", "msys", "wasm", "watchos"
+    "android", "appletvos", "bsd", "cross", "iphoneos", "msys", "watchos"
 ) 
 
 -- add releasedbg, debug and release modes for different platforms.
@@ -55,17 +55,21 @@ if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu
         add_requires("apt::libfreetype-dev", {alias="freetype"})
     end
 else
+    if not is_plat("wasm") then
+        add_requires("libiconv 1.17", {system=false})
+        add_requires("libcurl 7.84.0", {system=false})
+    end
     add_requires("libpng 1.6.37", {system=false})
-    add_requires("libiconv 1.17", {system=false})
     add_requires("zlib 1.2.12", {system=false})
     add_requires("libjpeg v9e", {system=false})
-    add_requires("libcurl 7.84.0", {system=false})
     add_requires("freetype 2.12.1", {system=false})
     add_requires("sqlite3 3.39.0+200", {system=false})
 end
 
 local PDFHUMMUS_VERSION = "4.1"
-add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+if not is_plat("wasm") then
+    add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+end
 
 local XMACS_VERSION="1.1.2-rc4"
 local INSTALL_DIR="build/package"
@@ -80,45 +84,52 @@ if is_plat("linux") then
     set_configvar("CONFIG_OS", "GNU_LINUX")
 elseif is_subhost("cygwin") then
     set_configvar("CONFIG_OS", "CYGWIN")
+elseif is_plat("wasm") then
+    set_configvar("CONFIG_OS", "WASM")
 else 
     set_configvar("CONFIG_OS", "")
 end
 
+set_configvar("AQUATEXMACS", is_plat("macosx"))
+
 set_configvar("QTTEXMACS", 1)
 add_defines("QTTEXMACS")
 
-set_configvar("QTPIPES", 1)
-add_defines("QTPIPES")
+if is_plat("wasm") then
+    set_configvar("QTPIPES", false)
+    set_configvar("USE_QT_PRINTER", false)
+else
+    set_configvar("QTPIPES", true)
+    add_defines("QTPIPES")
 
-set_configvar("USE_QT_PRINTER", 1)
-add_defines("USE_QT_PRINTER")
+    set_configvar("USE_QT_PRINTER", true)
+    add_defines("USE_QT_PRINTER")
+end
 
-set_configvar("USE_ICONV", 1)
-set_configvar("USE_CURL", 1)
-set_configvar("USE_SQLITE3", 1)
+set_configvar("USE_CURL", not is_plat("wasm"))
+set_configvar("USE_GS", not is_plat("wasm"))
+set_configvar("USE_ICONV", not is_plat("wasm"))
+set_configvar("USE_SQLITE3", not is_plat("wasm"))
 set_configvar("LINKED_AXEL", false)
 set_configvar("LINKED_CAIRO", false)
 set_configvar("LINKED_SQLITE3", 1)
 set_configvar("USE_FREETYPE", 1)
-set_configvar("USE_GS", 1)
-set_configvar("USE_ICONV", 1)
 set_configvar("LINKED_IMLIB2", false)
-set_configvar("PDF_RENDERER", 1)
+set_configvar("PDF_RENDERER", not is_plat("wasm"))
 set_configvar("PDFHUMMUS_NO_TIFF", true)
-set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
+if is_plat("wasm") then
+    set_configvar("PDFHUMMUS_VERSION", "not supported")
+else
+    set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
+end
+
+local USE_STACK_TRACE = not (is_plat("mingw") or is_plat("wasm"))
+set_configvar("USE_STACK_TRACE", USE_STACK_TRACE)
 
 if is_plat("mingw") then
     set_configvar("GS_EXE", "bin/gs.exe")
 else
     set_configvar("GS_EXE", "/usr/bin/gs")
-end
-
-if is_plat("mingw") then
-else if is_plat("macosx") then
-    set_configvar("USE_STACK_TRACE", true)
-    set_configvar("AQUATEXMACS", true)
-end
-    set_configvar("USE_STACK_TRACE", true)
 end
 
 set_configvar("STDC_HEADERS", true)
@@ -153,8 +164,7 @@ add_configfiles(
             MACOSX_EXTENSIONS = is_plat("macosx"),
             OS_MINGW = is_plat("mingw"),
             SIZEOF_VOID_P = 8,
-            USE_JEAIII = true,
-            USE_STACK_TRACE = not is_plat("mingw")
+            USE_JEAIII = true
             }})
 
 target("tm_shell") do
@@ -256,13 +266,16 @@ target("libmogan") do
     end
 
     add_packages("libpng")
-    add_packages("libiconv")
     add_packages("zlib")
     add_packages("libjpeg")
-    add_packages("libcurl")
     add_packages("freetype")
     add_packages("sqlite3")
-    add_packages("pdfhummus")
+
+    if not is_plat("wasm") then
+        add_packages("pdfhummus")
+        add_packages("libiconv")
+        add_packages("libcurl")
+    end
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
@@ -287,8 +300,7 @@ target("libmogan") do
                 MACOSX_EXTENSIONS = is_plat("macosx"),
                 OS_MINGW = is_plat("mingw"),
                 SIZEOF_VOID_P = 8,
-                USE_JEAIII = true,
-                USE_STACK_TRACE = not is_plat("mingw")
+                USE_JEAIII = true
                 }})
 
 
@@ -392,13 +404,9 @@ target("libmogan") do
             "src/Typeset/**.cpp",
             "src/Plugins/Axel/**.cpp",
             "src/Plugins/Bibtex/**.cpp",
-            "src/Plugins/Cairo/**.cpp",
             "src/Plugins/Database/**.cpp",
             "src/Plugins/Freetype/**.cpp",
             "src/Plugins/Jeaiii/**.cpp",
-            "src/Plugins/Pdf/*.cpp",
-            "src/Plugins/Ghostscript/**.cpp",
-            "src/Plugins/Imlib2/**.cpp",
             "src/Plugins/Ispell/**.cpp",
             "src/Plugins/Metafont/**.cpp",
             "src/Plugins/LaTeX_Preview/**.cpp",
@@ -406,9 +414,19 @@ target("libmogan") do
             "src/Plugins/Sqlite3/**.cpp",
             "src/Plugins/Updater/**.cpp",
             "src/Plugins/Curl/**.cpp"})
+            
+    if not is_plat("wasm") then
+        add_files({
+                "src/Plugins/Cairo/**.cpp",
+                "src/Plugins/Imlib2/**.cpp",
+                "src/Plugins/Pdf/**.cpp",
+                "src/Plugins/Ghostscript/**.cpp"})
+    end
 
     if is_plat("mingw") then
         add_files("src/Plugins/Windows/**.cpp")
+    elseif is_plat("wasm") then
+        add_files("src/Plugins/Wasm/**.cpp")
     else
         add_files("src/Plugins/Unix/**.cpp")
     end
@@ -425,6 +443,10 @@ target("libmogan") do
         "src/Plugins/Qt/**.cpp",
         "src/Plugins/Qt/**.hpp"})
 
+    if is_plat("wasm") then
+        add_cxxflags({"-Wall","-Wextra"})
+        add_ldflags({"SHELL:--preload-file ${TEXMACS_SOURCE_DIR}/TeXmacs@TeXmacs","-qt-harfbuzz"})
+    end
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include src/System/config.h")
 end 
