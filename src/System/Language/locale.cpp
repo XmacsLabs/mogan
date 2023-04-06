@@ -206,23 +206,7 @@ get_locale_language () {
 
 string
 get_locale_charset () {
-#ifdef OS_MINGW
-  // in principle for now we use 8-bit codepage stuff in windows (at least for filenames);
-  // return language_to_local_ISO_charset (get_locale_language ());
-  return "UTF-8"; // do not change this!
-  // otherwise there is a weird problem with page width shrinking on screen
-#elif OS_MACOS
   return "UTF-8";
-#elif X11TEXMACS
-  return "UTF-8";
-#elif OS_HAIKU
-  return "UTF-8";
-#else
-  std::locale previous= std::locale::global (std::locale(""));
-  string charset= string (nl_langinfo (CODESET));
-  std::locale::global (previous);
-  return charset;
-#endif
 }
 
 /******************************************************************************
