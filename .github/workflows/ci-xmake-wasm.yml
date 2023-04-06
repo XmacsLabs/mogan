@@ -55,7 +55,7 @@ jobs:
           key: ${{ runner.os }}(wasm)-xmake-${{ hashFiles('**/xmake.lua') }}
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: branch@dev
+          xmake-version: 2.7.8
           actions-cache-folder: '.xmake-cache'
 
       - name: Prepare
