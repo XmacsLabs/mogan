@@ -38,18 +38,26 @@ jobs:
             xmake config --yes
             xmake build --yes --verbose --diagnosis --jobs=8 --all
             xmake install -o build/macosx/x86_64/release/Mogan.app/Contents/Resources/ mogan_install
+      - name: Write release version
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          VERSION=${VERSION//\//}
+          echo Version: $VERSION
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Run Package Script
         working-directory: ${{github.workspace}}
-        run: ./packages/macos/package.sh
+        run: |
+          packages/macos/package.sh
+          mv ${{ github.workspace }}/build/Mogan.dmg ${{ github.workspace }}/Mogan_v${VERSION}.dmg
       - name: Upload Mogan.dmg
         uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
           name: Mogan.dmg
-          path: ${{ github.workspace }}/build/Mogan.dmg
+          path: ${{ github.workspace }}/Mogan_*.dmg
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           prerelease: true
-          files: ${{ github.workspace }}/build/Mogan.dmg
+          files: ${{ github.workspace }}/Mogan_*.dmg
