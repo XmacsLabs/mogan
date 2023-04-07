@@ -96,7 +96,8 @@
         ((string? fun) (string->symbol fun))
         ((and (procedure? fun) (ahash-ref tm-defined-name fun))
          (ahash-ref tm-defined-name fun))
-        ((and (procedure? fun) (string-alpha? (object->string fun)))
+        ((and (procedure? fun)
+              (string-alpha? (string-take (object->string fun) 1)))
          (string->symbol (object->string fun)))
         (else #f)))
 
