@@ -28,6 +28,7 @@
    "procedure" "symbol"
    procedure-symbol-name :none
    (test "glue procedure" system 'system)
+   (test "glue procedure make-space" make-space 'make-space)
    (test "tm-defined" exec-interactive-command
                       'exec-interactive-command)
    (test "anonymous function" (lambda (x) (+ x 1)) #f)
