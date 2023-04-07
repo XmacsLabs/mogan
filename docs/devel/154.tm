@@ -44,7 +44,64 @@
 
   <section|Description>
 
+  <subsection|The root cause>
+
   It is related to the migration from GNU Guile to S7 Scheme.
+
+  The root cause of this bug is that the result of <scm|(procedure-name
+  make-space)> is <scm|#f>.
+
+  Here is the expected result
+
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (procedure-name make-space)
+    <|unfolded-io>
+      make-space
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
+  <subsection|How to fix it>
+
+  Based on the fact that, for all glued symbols, it must starts with alpha:
+
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (filter\ 
+
+      \ (lambda (x) (not x))
+
+      \ (map
+
+      \ \ (lambda (x) (string-alpha? (string-take x 1)))
+
+      \ \ (all-glued-symbols)))
+    <|unfolded-io>
+      ()
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
+  That's the reason why I made this fix.
+
+  <subsection|How to test it>
+
+  <\session|scheme|default>
+    <\input|Scheme] >
+      (regtest-tm-define)
+    </input>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
 
   <tmdoc-copyright|2023|Darcy Shen>
 
