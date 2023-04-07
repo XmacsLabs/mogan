@@ -570,7 +570,7 @@ target("mogan_install") do
 
     if is_plat("mingw") then
         add_installfiles({
-            "TeXmacs(/doc/main/**)",
+            "TeXmacs(/doc/**)",
             "TeXmacs(/examples/**)",
             "TeXmacs(/fonts/**)",
             "TeXmacs(/langs/**)",
