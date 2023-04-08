@@ -1,4 +1,4 @@
-name: Build via xmake
+name: Build and Test on Windows
 
 on:
   push:
