@@ -71,7 +71,7 @@ if not is_plat("wasm") then
     add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
 end
 
-local XMACS_VERSION="1.1.2-rc5"
+local XMACS_VERSION="1.1.2"
 local INSTALL_DIR="build/package"
 
 local TEXMACS_VERSION = "2.1.2"
