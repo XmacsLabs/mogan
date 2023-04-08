@@ -60,6 +60,15 @@
   Enable <menu|Debug|convert> and click <menu|Help|Plug-ins|Python> after the
   fix.
 
+  To test it on macOS, here is the command line to launch Mogan (because gs
+  binary is only available in the Mogan.dmg, but it is not available when we
+  are developing)
+
+  <\shell-code>
+    TEXMACS_PATH=/Applications/Mogan.app/Contents/Resources/share/Xmacs
+    ./build/macosx/arm64/release/Mogan.app/Contents/MacOS/Mogan
+  </shell-code>
+
   Here the result on macOS:
 
   <\shell-code>
