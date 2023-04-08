@@ -128,8 +128,8 @@ set_configvar("USE_STACK_TRACE", USE_STACK_TRACE)
 
 if is_plat("mingw") then
     set_configvar("GS_EXE", "bin/gs.exe")
-else
-    set_configvar("GS_EXE", "/usr/bin/gs")
+elseif is_plat("macosx") then
+    set_configvar("GS_EXE", "bin/gs")
 end
 
 set_configvar("STDC_HEADERS", true)
