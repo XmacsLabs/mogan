@@ -58,7 +58,9 @@
   <section|How to test it>
 
   Enable <menu|Debug|convert> and click <menu|Help|Plug-ins|Python> after the
-  fix:
+  fix.
+
+  Here the result on macOS:
 
   <\shell-code>
     TeXmacs] debug-convert, "/Applications/Mogan.app/Contents/Resources/share/Xmacs/bin/gs"
@@ -66,6 +68,16 @@
     -dTextAlphaBits=4 -g1196x896 -sOutputFile=/Users/da/.Xmacs/system/tmp/32841/tmp_1611070864.png
     -r186x186 -c " -75 -223 translate gsave " \ -f
     /Users/da/.Xmacs/system/tmp/32841/tmp_1269862822.ps -c " grestore "
+  </shell-code>
+
+  Here is the result on GNU/Linux:
+
+  <\shell-code>
+    TeXmacs] debug-convert, "gs" -dQUIET -dNOPAUSE -dBATCH -dSAFER
+    -sDEVICE=pngalpha -dGraphicsAlphaBits=4 -dTextAlphaBits=4 -g674x505
+    -sOutputFile=/home/sadhen/.Xmacs/system/tmp/1816835/tmp_1797103931.png
+    -r105x105 -c " -75 -223 translate gsave " \ -f
+    /home/sadhen/.Xmacs/system/tmp/1816835/tmp_2042949476.ps -c " grestore "
   </shell-code>
 
   <tmdoc-copyright|2023|Darcy Shen>
