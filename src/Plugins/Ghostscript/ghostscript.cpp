@@ -37,8 +37,8 @@ ghostscript_bugged () {
     string gs_version= var_eval_system ("gs --version");
     gs_type= 0;
     if ((gs_version == "6.50") ||
-	(gs_version == "6.51") ||
-	(gs_version == "6.52"))
+        (gs_version == "6.51") ||
+        (gs_version == "6.52"))
       gs_type= 1;
   }
   return (gs_type == 1);
