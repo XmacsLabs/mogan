@@ -1,22 +1,25 @@
-# Mogan Editor / [墨干编辑器](https://mogan.app/zh/guide/what-is-mogan.html)
+# Mogan Editor / [墨干编辑器](README_ZH.md)
 ![GPL v3](http://www.gnu.org/graphics/gplv3-127x51.png)
 
 > **Let us enjoy exploring science and technology!**
 
 Mogan Editor is a structure editor delivered by [Xmacs Labs](https://github.com/XmacsLabs). We are dedicated to make Mogan Editor the most user-friendly distribution of [GNU TeXmacs](https://www.texmacs.org).
 
+## How to install
+Windows, macOS and Ubuntu installers are officially provided. Packages for other OS (eg. Arch Linux, OpenSUSE, GNU Guix) are maintained by the community.
+
++ Download now via [Installation Guide](docs/guide/Install.md)
++ Try online via the [Experimental WASM port](https://mogan.app/wasm/Mogan.html)
+
+## What are GNU TeXmacs and Mogan Editor
+GNU TeXmacs is a structured editor developed since the late 1990s by [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html), a mathematician at CNRS in France. It is designed to write high-quality technical documents using an intuitive and easy-to-use graphical interface, and able to achieve the same level of results as LaTeX. Its main users are currently primary and secondary school teachers and university researchers.
+
+[Darcy Shen](http://texmacs.org/tmweb/contribute/team-sadhen.en.html) released [Mogan Editor v1.0.0](https://github.com/XmacsLabs/mogan/releases/tag/v1.0.0) on January 30, 2022, based on [Massimiliano Gubinelli](http://texmacs.org/tmweb/contribute/team-massimiliano.en.html)'s [S7 Scheme port](https://lists.gnu.org/archive/html/texmacs-dev/2021-01/msg00009.html), and created Xmacs Labs, a non-profit organization that aims to popularize GNU TeXmacs and make it available for everyone to enjoy exploring science and technology via the excellent software developed by Joris van der Hoeven.
+
 The main differences from GUN TeXmacs:
 - Reasonable configuration tuning.  For example, the default shortcut style in Mogan Editor is Emacs style, so that the shortcut keys are consistent across platforms. If you want to switch back to the Ctrl-C or Cmd-C shortcut style which varies with the system, you can change it back in Edit→Preferences→General→Look and feel.
 - Radical technical options. For example, Mogan Editor switched the GUI framework from Qt 4.8.x to Qt 5.15.x, and switched the script execution engine from Guile 1.8.x to S7 Scheme, which can be quite unstable while enjoying the advantages of new technology.
 
-## How to install?
-We provide installers for Windows and macOS via [Github](https://github.com/XmacsLabs/mogan/releases). Read [Installation Guide](https://mogan.app/guide/Install.html) to learn the detailed steps to install from a installer and how to install on other OS like GNU/Linux.
-
-## What are GNU TeXmacs and Mogan Editor
-
-GNU TeXmacs is a structured editor developed since the late 1990s by [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html), a mathematician at CNRS in France. It is designed to write high-quality technical documents using an intuitive and easy-to-use graphical interface, and able to achieve the same level of results as LaTeX. Its main users are currently primary and secondary school teachers and university researchers.
-
-[Darcy Shen](http://texmacs.org/tmweb/contribute/team-sadhen.en.html) released [Mogan Editor v1.0.0](https://github.com/XmacsLabs/mogan/releases/tag/v1.0.0) on January 30, 2022, based on [Massimiliano Gubinelli](http://texmacs.org/tmweb/contribute/team-massimiliano.en.html)'s [S7 Scheme port](https://lists.gnu.org/archive/html/texmacs-dev/2021-01/msg00009.html), and created Xmacs Labs, a non-profit organization that aims to popularize GNU TeXmacs and make it available for everyone to enjoy exploring science and technology via the excellent software developed by Joris van der Hoeven.
 
 ### Features at a Glance
 

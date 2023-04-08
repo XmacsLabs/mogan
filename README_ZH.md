@@ -1,21 +1,24 @@
-# 墨干编辑器 / [Mogan Editor](https://mogan.app/guide/what-is-mogan.html)
+# 墨干编辑器 / [Mogan Editor](README.md)
 ![GPL v3](http://www.gnu.org/graphics/gplv3-127x51.png)
 
 > **让我们享受探索科学与技术的乐趣！**
 
-墨干编辑器是[墨者实验室](https://gitee.com/XmacsLabs)旗下的结构化编辑器。我们致力于将墨干编辑器打造成最易用的 [GNU TeXmacs](https://www.texmacs.org) 发行版。
-
-两者有如下主要区别：
-- 合理的配置调优. 比如在墨干编辑器中默认的快捷键风格是 Emacs 风格，这样在不同平台快捷键是一致的。如果你想切换回 Ctrl-C 或者 Command-C 这种随系统不同变化的快捷键风格，可以在 编辑→首选项→通用→快捷键风格 中改回来。
-- 激进的技术选型. 比如墨干编辑器将 GUI 框架从 Qt 4.8.x 切换到了 Qt 5.15.x，将脚本执行引擎从 Guile 1.8.x 切换到了 S7 Scheme，在享受新技术带来的优势的同时，也会有不少不稳定的因素。
+墨干编辑器是[墨客实验室](https://gitee.com/XmacsLabs)旗下的结构化编辑器。我们致力于将墨干编辑器打造成最易用的 [GNU TeXmacs](https://www.texmacs.org) 发行版。
 
 ## 如何安装
-我们在 [Gitee](https://gitee.com/XmacsLabs/mogan/releases) 提供 Windows 和 macOS 这两大平台的安装包。阅读[安装指南](Install.md)可以了解下载安装包之后的详细安装步骤，以及其它平台比如 GNU/Linux 的安装方法.
+Windows、macOS和Ubuntu这三大平台的安装包是由墨客实验室官方提供的。其他操作系统（比如Arch Linux, OpenSUSE, GNU Guix）的安装包由墨客社区维护。
+
++ 马上下载：[安装指南](docs/zh/guide/Install.md)
++ 在线试用：[实验性的WASM移植版](https://mogan.app/wasm/Mogan.html)
 
 ## 什么是 GNU TeXmacs 以及墨干编辑器
 GNU TeXmacs 是法国国家科学研究中心的数学家 [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html) 从上世纪九十年代末开始研发的一款结构化编辑器，旨在利用直观易用的图形界面编写高质量的技术文档，效果可达到与 LaTeX 相同的水准。目前它的主要用户集中于中小学教师及高校科研人员。
 
-[沈浪熊猫儿](http://texmacs.org/tmweb/contribute/team-sadhen.en.html)于2022年1月30号，在 [Massimiliano Gubinelli](http://texmacs.org/tmweb/contribute/team-massimiliano.en.html) 的 S7 Scheme 分支的基础上，发布了[墨干编辑器v1.0.0](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.0.0)，并创建了[墨者实验室](https://gitee.com/XmacsLabs)这样一个非盈利组织，旨在普及GNU TeXmacs，让所有人都能够通过 Joris van der Hoeven 创造的软件享受探索科学与技术的乐趣。
+[沈浪熊猫儿](http://texmacs.org/tmweb/contribute/team-sadhen.en.html)于2022年1月30号，在 [Massimiliano Gubinelli](http://texmacs.org/tmweb/contribute/team-massimiliano.en.html) 的 S7 Scheme 分支的基础上，发布了[墨干编辑器v1.0.0](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.0.0)，并创建了[墨客实验室](https://gitee.com/XmacsLabs)这样一个非盈利组织，旨在普及GNU TeXmacs，让所有人都能够通过 Joris van der Hoeven 创造的软件享受探索科学与技术的乐趣。
+
+两者有如下主要区别：
+- 合理的配置调优. 比如在墨干编辑器中默认的快捷键风格是 Emacs 风格，这样在不同平台快捷键是一致的。如果你想切换回 Ctrl-C 或者 Command-C 这种随系统不同变化的快捷键风格，可以在 编辑→首选项→通用→快捷键风格 中改回来。
+- 激进的技术选型. 比如墨干编辑器将 GUI 框架从 Qt 4.8.x 切换到了 Qt 5.15.x，将脚本执行引擎从 Guile 1.8.x 切换到了 S7 Scheme，在享受新技术带来的优势的同时，也会有不少不稳定的因素。
 
 ### 特色功能一览：
 

@@ -1,5 +1,8 @@
 # Installation Guide
-## GNU Guix
+## Packages provided by the Xmacs Labs
+Old releases：[v1.1.1](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.1) / [v1.1.0](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.0)
+## Packages provided by the community
+### GNU Guix
 ```
 guix install mogan
 ```
@@ -7,21 +10,12 @@ More info：https://packages.guix.gnu.org/packages/mogan/
 
 > Note: CJK characters in the menu might be displayed improperly, please learn how to configure a Guix OS.
 
-## Windows
-### Manually
-Download the exe installer from [Github](https://github.com/XmacsLabs/mogan/releases) and then double click.
-
-### winget
+### Windows
 ```
 winget install -e --id XmacsLabs.Mogan
 ```
 More info on winget: https://learn.microsoft.com/en-us/windows/package-manager/winget/
 
-
-## macOS
-Download the dmg installer from [Github](https://github.com/XmacsLabs/mogan/releases) and then install it like other dmg installer.
-
-## GNU/Linux
 ### Arch Linux (AUR)
 ```bash
 yay -S mogan
@@ -45,4 +39,3 @@ opi Mogan
 ```
 
 More info：https://software.opensuse.org/download/package?package=Mogan&project=home%3Aiphelf
-

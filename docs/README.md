@@ -6,6 +6,7 @@ assume cwd is MOGAN_ROOT
 - before build
 ```shell
 cp README.md docs/guide/what-is-mogan.md
+cp README_ZH.md docs/zh/guide/what-is-mogan.md
 ```
 - build webiste
 ```shell
