@@ -20,7 +20,7 @@
 
 bool ghostscript_bugged ();
 void ghostscript_run (Display* dpy, Window gs_win, Pixmap pm,
-		      url image, SI w, SI h);
+                      url image, SI w, SI h);
 
 #endif // X11TEXMACS
 
