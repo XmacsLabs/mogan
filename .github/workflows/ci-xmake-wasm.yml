@@ -1,4 +1,4 @@
-name: Build by WASM
+name: Build and Test by WASM
 
 on:
   push:
