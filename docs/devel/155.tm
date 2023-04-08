@@ -55,9 +55,18 @@
   It indicates that we are using the system gs. And the embedded gs should be
   the preferred one to avoid security issues or bugs in the system one.
 
-  <section|Description>
+  <section|How to test it>
 
-  \;
+  Enable <menu|Debug|convert> and click <menu|Help|Plug-ins|Python> after the
+  fix:
+
+  <\shell-code>
+    TeXmacs] debug-convert, "/Applications/Mogan.app/Contents/Resources/share/Xmacs/bin/gs"
+    -dQUIET -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pngalpha -dGraphicsAlphaBits=4
+    -dTextAlphaBits=4 -g1196x896 -sOutputFile=/Users/da/.Xmacs/system/tmp/32841/tmp_1611070864.png
+    -r186x186 -c " -75 -223 translate gsave " \ -f
+    /Users/da/.Xmacs/system/tmp/32841/tmp_1269862822.ps -c " grestore "
+  </shell-code>
 
   <tmdoc-copyright|2023|Darcy Shen>
 
