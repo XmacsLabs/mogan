@@ -34,7 +34,7 @@ jobs:
       - name: Install Qt wasm
         uses: jurplel/install-qt-action@v3
         with:
-          version: 6.4.3
+          version: 6.5.2
           arch: wasm_32
           host: 'linux'
           target: 'desktop'
@@ -62,7 +62,7 @@ jobs:
         uses: mymindstorm/setup-emsdk@v11
         with:
           # Make sure to set a version number!
-          version: 3.1.34
+          version: 3.1.25
           # This is the name of the cache folder.
           # The cache folder will be placed in the build directory,
           #  so make sure it doesn't conflict with anything!
