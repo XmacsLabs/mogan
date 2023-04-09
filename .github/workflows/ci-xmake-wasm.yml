@@ -35,7 +35,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: 6.5.0
-          arch: wasm_32
+          arch: wasm_singlethread
           host: 'linux'
           target: 'desktop'
           cache: 'true'
