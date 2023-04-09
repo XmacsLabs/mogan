@@ -1,6 +1,17 @@
 # Installation Guide
 ## Packages provided by the Xmacs Labs
-Old releases：[v1.1.1](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.1) / [v1.1.0](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.0)
+| Operating System | Download | MD5 Checksum|
+|-------|-----|--------|
+| Windows (>=10)| [Gitee](https://gitee.com/XmacsLabs/mogan/attach_files/1370402/download)/[Github](https://github.com/XmacsLabs/mogan/releases/download/v1.1.2/Mogan-v1.1.2-64bit-installer.exe) | a3ad8bccb60e161bb733b125949eeadd |
+| macOS (>=10.15) | [Gitee](https://gitee.com/XmacsLabs/mogan/attach_files/1370400/download)/[Github](https://github.com/XmacsLabs/mogan/releases/download/v1.1.2/Mogan_v1.1.2.dmg) | 70a5e1107445fed61543c01bce053224 |
+| macOS arm (>=12.6) | [Gitee](https://gitee.com/XmacsLabs/mogan/attach_files/1370409/download)/[Github](https://github.com/XmacsLabs/mogan/releases/download/v1.1.2/Mogan_arm_v1.1.2.dmg) | b5d56e8faef9d94867624c7f0f196c32 |
+| Ubuntu 20.04 | [Gitee](https://gitee.com/XmacsLabs/mogan/attach_files/1370401/download)/[Github](https://github.com/XmacsLabs/mogan/releases/download/v1.1.2/mogan-v1.1.2-ubuntu20.04.deb) | 1c8e3664deb0606766310ec323b3777e |
+| Ubuntu 22.04 | [Gitee](https://gitee.com/XmacsLabs/mogan/attach_files/1370403/download)/[Github](https://github.com/XmacsLabs/mogan/releases/download/v1.1.2/mogan-v1.1.2-ubuntu22.04.deb) | acadc8feec924238a4faafbdac9f5f51 |
+
+Old releases:
++ [v1.1.1 (2022/10/29)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.1)
++ [v1.1.0 (2022/08/31)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.0)
+
 ## Packages provided by the community
 ### GNU Guix
 ```

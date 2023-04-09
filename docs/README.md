@@ -5,13 +5,16 @@ assume cwd is MOGAN_ROOT
 
 - before build
 ```shell
-cp README.md docs/guide/what-is-mogan.md
-cp README_ZH.md docs/zh/guide/what-is-mogan.md
+yarn install
 ```
 - build webiste
 ```shell
-yarn install
-yarn docs:build
+bin/build_website
+```
+
+- preview website
+```
+bin/preview_website
 ```
 
 - after build

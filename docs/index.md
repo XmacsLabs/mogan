@@ -12,14 +12,8 @@ hero:
       text: Get Started
       link: /guide/what-is-mogan
     - theme: alt
-      text: View on GitHub
-      link: https://github.com/XmacsLabs/mogan
-    - theme: alt
-      text: Download from GitHub
-      link: https://github.com/XmacsLabs/mogan/releases
-    - theme: alt
-      text: Download from Gitee
-      link: https://gitee.com/XmacsLabs/mogan/releases
+      text: Download Now
+      link: /guide/Install
     - theme: alt
       text: Try Online (Experimental)
       link: https://mogan.app/wasm/Mogan.html
