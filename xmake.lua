@@ -447,7 +447,7 @@ target("libmogan") do
 
     if is_plat("wasm") then
         add_cxxflags({"-Wall","-Wextra"})
-        add_ldflags({"SHELL:--preload-file ${TEXMACS_SOURCE_DIR}/TeXmacs@TeXmacs","-qt-harfbuzz"})
+        add_ldflags({"SHELL:--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
     end
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include src/System/config.h")
