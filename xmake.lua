@@ -41,7 +41,6 @@ if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu
     add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
     add_requires("apt::libsqlite3-dev", {alias="sqlite3"})
     add_requires("apt::libpng-dev", {alias="libpng"})
-    add_requires("apt::zlib1g-dev", {alias="zlib"})
     -- config package name for libjpeg on Ubuntu
     if linuxos.name() == "ubuntu" then
         add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
@@ -60,7 +59,6 @@ else
         add_requires("libcurl 7.84.0", {system=false})
     end
     add_requires("libpng 1.6.37", {system=false})
-    add_requires("zlib 1.2.12", {system=false})
     add_requires("libjpeg v9e", {system=false})
     add_requires("freetype 2.12.1", {system=false})
     add_requires("sqlite3 3.39.0+200", {system=false})
@@ -269,7 +267,6 @@ target("libmogan") do
     end
 
     add_packages("libpng")
-    add_packages("zlib")
     add_packages("libjpeg")
     add_packages("freetype")
     add_packages("sqlite3")
