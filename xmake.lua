@@ -447,7 +447,6 @@ target("libmogan") do
 
     if is_plat("wasm") then
         add_cxxflags({"-Wall","-Wextra"})
-        add_ldflags({"--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
     end
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include src/System/config.h")
@@ -478,6 +477,10 @@ target("mogan") do
 
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
 
+    if is_plat("wasm") then
+        add_cxxflags({"-Wall","-Wextra"})
+        add_ldflags({"--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
+    end
     set_installdir(INSTALL_DIR)
     after_install(function(target)
         local install_dir = path.join(target:installdir(), "/bin/")
@@ -645,6 +648,11 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_files("tests/Base/base.cpp")
             add_files(filepath) 
             add_files(filepath, {rules = "qt.moc"})
+
+            if is_plat("wasm") then
+                add_cxxflags({"-Wall","-Wextra"})
+                add_ldflags({"--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
+            end
         end
     end
 end
