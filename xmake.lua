@@ -41,7 +41,6 @@ if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu
     add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
     add_requires("apt::libsqlite3-dev", {alias="sqlite3"})
     add_requires("apt::libpng-dev", {alias="libpng"})
-    add_requires("apt::zlib1g-dev", {alias="zlib"})
     -- config package name for libjpeg on Ubuntu
     if linuxos.name() == "ubuntu" then
         add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
@@ -60,7 +59,6 @@ else
         add_requires("libcurl 7.84.0", {system=false})
     end
     add_requires("libpng 1.6.37", {system=false})
-    add_requires("zlib 1.2.12", {system=false})
     add_requires("libjpeg v9e", {system=false})
     add_requires("freetype 2.12.1", {system=false})
     add_requires("sqlite3 3.39.0+200", {system=false})
@@ -165,6 +163,7 @@ add_configfiles(
             OS_MACOS = is_plat("macosx"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
             OS_MINGW = is_plat("mingw"),
+            OS_WASM = is_plat("wasm"),
             SIZEOF_VOID_P = 8,
             USE_JEAIII = true
             }})
@@ -268,7 +267,6 @@ target("libmogan") do
     end
 
     add_packages("libpng")
-    add_packages("zlib")
     add_packages("libjpeg")
     add_packages("freetype")
     add_packages("sqlite3")
@@ -447,7 +445,6 @@ target("libmogan") do
 
     if is_plat("wasm") then
         add_cxxflags({"-Wall","-Wextra"})
-        add_ldflags({"SHELL:--preload-file ${TEXMACS_SOURCE_DIR}/TeXmacs@TeXmacs","-qt-harfbuzz"})
     end
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include src/System/config.h")
@@ -478,6 +475,10 @@ target("mogan") do
 
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
 
+    if is_plat("wasm") then
+        add_cxxflags({"-Wall","-Wextra"})
+        add_ldflags({"--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
+    end
     set_installdir(INSTALL_DIR)
     after_install(function(target)
         local install_dir = path.join(target:installdir(), "/bin/")
@@ -645,6 +646,11 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_files("tests/Base/base.cpp")
             add_files(filepath) 
             add_files(filepath, {rules = "qt.moc"})
+
+            if is_plat("wasm") then
+                add_cxxflags({"-Wall","-Wextra"})
+                add_ldflags({"--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
+            end
         end
     end
 end
