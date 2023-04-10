@@ -84,6 +84,8 @@ ${define OS_MACOS}
 
 ${define OS_MINGW}
 
+${define OS_WASM}
+
 ${define PDFHUMMUS_NO_TIFF}
 
 /* Disable fast memory allocator */

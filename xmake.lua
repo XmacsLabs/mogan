@@ -165,6 +165,7 @@ add_configfiles(
             OS_MACOS = is_plat("macosx"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
             OS_MINGW = is_plat("mingw"),
+            OS_WASM = is_plat("wasm"),
             SIZEOF_VOID_P = 8,
             USE_JEAIII = true
             }})
