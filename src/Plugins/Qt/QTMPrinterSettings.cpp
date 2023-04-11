@@ -508,15 +508,11 @@ WinQTMPrinterSettings::systemCommandFinished(int exitCode,
     if (resolutionsCounter > 0) {
       --resolutionsCounter;
     #if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
-      rx2.setMinimal(true);
       QRegExp rx2("^.*x=(\\d)+.*y=(\\d)+.*$"); // Param/Param desc: val1 val2 *default val4
-      if (rx2.indexIn(_line) > -1)
       rx2.setMinimal(true);               // Non-greedy matching
 
       if (rx2.indexIn(_line) > -1){       // Has matches?
         printerOptions["Resolution"] += QString("%1x%2dpi ").
-        printerOptions["Resolution"] += QString("%1x%2dpi ").
-                                                arg(rx2.cap(1)).arg(rx2.cap(2));
                                                 arg(rx2.cap(1)).arg(rx2.cap(2));
       }
       continue;
@@ -528,7 +524,6 @@ WinQTMPrinterSettings::systemCommandFinished(int exitCode,
         printerOptions["Resolution"] += QString("%1x%2dpi ").
                                                 arg(match.captured(1)).arg(match.captured(2));
       }
-      continue;
       continue;
     #endif
     }
