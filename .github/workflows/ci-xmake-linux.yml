@@ -24,14 +24,23 @@ jobs:
   linuxbuild:
     runs-on: ubuntu-22.04
     if: always()
+    continue-on-error: true
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+        - qt_pkg: qtbase5-dev qmake6 libqt5svg5-dev qt5-image-formats-plugins
+          qt_ver: 5
+        - qt_pkg: qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins libgl-dev
+          qt_ver: 6
     steps:
       - name: Install dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev \
-              libqt5svg5-dev qt5-image-formats-plugins fonts-noto-cjk \
-              libpng-dev zlib1g-dev libjpeg-turbo8-dev libcurl4-openssl-dev \
-              libfreetype-dev libsqlite3-dev
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc \
+              fonts-noto-cjk libpng-dev zlib1g-dev libjpeg-turbo8-dev \
+              libcurl4-openssl-dev libfreetype-dev libsqlite3-dev \
+              ${{matrix.qt_pkg}}
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -41,7 +50,7 @@ jobs:
           path: |
             ${{github.workspace}}/build/.build_cache
             /home/runner/.config/.xmake
-          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
+          key: ${{ runner.os }}-qt${{ matrix.qt_ver }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.8
