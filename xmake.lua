@@ -419,7 +419,7 @@ target("libmogan") do
         add_files({
                 "src/Plugins/Cairo/**.cpp",
                 "src/Plugins/Imlib2/**.cpp",
-                "src/Plugins/Pdf/**.cpp",
+                "src/Plugins/Pdf/pdf_hummus_renderer.cpp",
                 "src/Plugins/Ghostscript/**.cpp"})
     end
 
