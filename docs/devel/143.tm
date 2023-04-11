@@ -34,6 +34,9 @@
   Developers of Qt6 is refactoring <verbatim|qtloader.js>, so running with
   qt6 failed.
 
+  xmake will treat qt test as normal wasm webpage, hence missing
+  corresponding glue files.
+
   <tmdoc-copyright|2023|jingkaimori>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
