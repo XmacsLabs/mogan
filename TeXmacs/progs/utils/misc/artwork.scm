@@ -3,6 +3,7 @@
 ;;
 ;; MODULE      : artwork.scm
 ;; DESCRIPTION : automatically obtain artwork from the web or a local thumbnail
+;;               tmfs://artwork is obsoleted and will be removed at fulture.
 ;; COPYRIGHT   : (C) 2018  Joris van der Hoeven
 ;;
 ;; This software falls under the GNU general public license version 3 or later.

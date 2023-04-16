@@ -31,7 +31,7 @@
 
   <copy-theme|rough-shadow|shadow>
 
-  <assign|rough-shadow-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/thumbnail-drop-shadow.png>
+  <assign|rough-shadow-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/drop-shadow.png>
 
   <assign|rough-shadow|<macro|body|<with-rough-shadow|<art-shadow|<arg|body>>>>>
 
