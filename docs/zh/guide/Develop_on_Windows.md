@@ -38,7 +38,7 @@ xrepo update-repo
 xmake config --yes --verbose --diagnosis --plat=mingw --mingw=<newly installed qt address>/Tools/mingw810_64 --qt=<newly installed qt address>/5.x.x/mingw81_64
 ```
 
-以上示例为qt安装程序安装的8.1.0Mingw
+以上示例为qt安装程序安装的Mingw 8.1.0
 
 ``` bash
 xmake build --jobs=<numbers of processes your computer can support, same as make>
