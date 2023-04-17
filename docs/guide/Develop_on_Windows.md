@@ -6,13 +6,23 @@ This project uses variant length array, so cannot be compiled by msvs. It is rec
 Developers should install such tools:
 
 * [Qt](https://www.qt.io/download)
-    * only qt library for mingw 8.1.0 is needed, it is ok to use install qt5 and qt6. Other qt framework like qt script is not needed.
-    * recommand to install mingw 8.1.0, which can be found in tools.
+    * only qt library for mingw 8.1.0 is needed, it is ok to use install qt5 and qt6(Version 5.15.2 is a good choice and can be adapted to mingw 8.1.0). Other qt framework like qt script is not needed.
 * [msys environment](https://github.com/msys2/msys2-installer/releases)
 * mingw 8.1.0 compiler (see below).
+    * recommand to install mingw 8.1.0, which can be found in tools.
 * xmake (see below).
 
 Xmake can be installed either from msys pacman, or from standalone installer for windows.
+
+It is recommended to use pacman, and other packages need to be installed by the way
+
+```
+pacman -Sy xmake
+pacman -Sy cmake
+pacman -Sy make
+pacman -Sy git
+pacman -Sy mingw-w64-x86_64-7zip
+```
 
 **CAUTIONS**: Mingw in msys pacman is too new thus imconpatible for this project. Please install mingw 8.1.0 for this project, from either Qt installer or from chocolate.
 
@@ -23,8 +33,14 @@ xrepo update-repo
 
 ### Step 2: Compile
 Run these command in msys environment.
+
+```
+xmake config --yes --verbose --diagnosis --plat=mingw --mingw=<newly installed qt address>/Tools/mingw810_64 --qt=<newly installed qt address>/5.x.x/mingw81_64
+```
+
+The above example is 8.1.0Mingw installed by the qt installer
+
 ``` bash
-xmake config --qt=<newly installed qt address>/5.x.x/mingw81_64
 xmake build --jobs=<numbers of processes your computer can support, same as make>
 ```
 
