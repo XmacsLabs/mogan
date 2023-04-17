@@ -6,7 +6,7 @@ This project uses variant length array, so cannot be compiled by msvs. It is rec
 Developers should install such tools:
 
 * [Qt](https://www.qt.io/download)
-    * only qt library for mingw 8.1.0 is needed, it is ok to use install qt5 and qt6(Version 5.15.2 is a good choice and can be adapted to mingw 8.1.0). Other qt framework like qt script is not needed.
+    * only Qt library for mingw 8.1.0 is needed, it is ok to use install Qt 5 and Qt 6 (Qt 5.15.2 is a good choice and can be adapted to mingw 8.1.0). Other Qt framework like Qt script is not needed.
 * [msys environment](https://github.com/msys2/msys2-installer/releases)
 * mingw 8.1.0 compiler (see below).
     * recommand to install mingw 8.1.0, which can be found in Qt tools.
@@ -38,7 +38,7 @@ Run these command in msys environment.
 xmake config --yes --verbose --diagnosis --plat=mingw --mingw=<newly installed qt address>/Tools/mingw810_64 --qt=<newly installed qt address>/5.x.x/mingw81_64
 ```
 
-The above example is Mingw 8.1.0 installed by the qt installer
+The above example is using mingw 8.1.0 installed by the Qt installer
 
 ``` bash
 xmake build --jobs=<numbers of processes your computer can support, same as make>
