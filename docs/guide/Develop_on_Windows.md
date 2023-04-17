@@ -1,15 +1,15 @@
 # Developing for Windows
 ## Using xmake on Windows
-This project uses variant length array, so cannot be compiled by msvs. It is recommand to use mingw as compiler.
+This project uses variant length array, so cannot be compiled by msvs. It is recommand to use MinGW as compiler.
 
 ### Step 1: Install xmake and Qt 5
 Developers should install such tools:
 
 * [Qt](https://www.qt.io/download)
-    * only Qt library for mingw 8.1.0 is needed, it is ok to use install Qt 5 and Qt 6 (Qt 5.15.2 is a good choice and can be adapted to mingw 8.1.0). Other Qt framework like Qt script is not needed.
+    * only Qt library for MinGW 8.1.0 is needed, it is ok to use install Qt 5 and Qt 6 (Qt 5.15.2 is a good choice and can be adapted to MinGW 8.1.0). Other Qt framework like Qt script is not needed.
 * [msys environment](https://github.com/msys2/msys2-installer/releases)
-* mingw 8.1.0 compiler (see below).
-    * It is recommended to to install mingw 8.1.0, which can be found in Qt Tools.
+* MinGW 8.1.0 compiler (see below).
+    * It is recommended to to install MinGW 8.1.0, which can be found in Qt Tools.
 * xmake (see below).
 
 Xmake can be installed either from msys pacman, or from standalone installer for windows.
@@ -24,7 +24,7 @@ pacman -Sy git
 pacman -Sy mingw-w64-x86_64-7zip
 ```
 
-**CAUTIONS**: Mingw in msys pacman is too new thus imconpatible for this project. Please install mingw 8.1.0 for this project, from either Qt installer or from chocolate.
+**CAUTIONS**: MinGW in msys pacman is too new thus imconpatible for this project. Please install MinGW 8.1.0 for this project, from either Qt installer or from chocolate.
 
 Sometimes, we need the latest xrepo:
 ``` pwsh
@@ -38,7 +38,7 @@ Run these command in msys environment.
 xmake config --yes --verbose --diagnosis --plat=mingw --mingw=<newly installed qt address>/Tools/mingw810_64 --qt=<newly installed qt address>/5.x.x/mingw81_64
 ```
 
-The above example is using mingw 8.1.0 installed by the Qt installer
+The above example is using MinGW 8.1.0 installed by the Qt installer
 
 ``` bash
 xmake build --jobs=<numbers of processes your computer can support, same as make>
