@@ -18,7 +18,6 @@
 
 ```
 pacman -Sy xmake
-pacman -Sy cmake
 pacman -Sy make
 pacman -Sy git
 pacman -Sy mingw-w64-x86_64-7zip
