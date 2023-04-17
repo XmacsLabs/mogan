@@ -1,15 +1,15 @@
 # Developing for Windows
 ## Using xmake on Windows
-This project uses variant length array, so cannot be compiled by msvs. It is recommand to use MinGW as compiler.
+This project uses variant length array, so cannot be compiled by msvs. It is recommended to use MinGW as compiler.
 
 ### Step 1: Install xmake and Qt 5
 Developers should install such tools:
 
 * [Qt](https://www.qt.io/download)
-    * only Qt library for MinGW 8.1.0 is needed, it is ok to use install Qt 5 and Qt 6 (Qt 5.15.2 is a good choice and can be adapted to MinGW 8.1.0). Other Qt framework like Qt script is not needed.
+    * only Qt library for MinGW 8.1.0 is needed, it is ok to use Qt 5 or Qt 6 (Qt 5.15.2 is a good choice and can be adapted to MinGW 8.1.0). Other Qt framework like Qt script is not needed.
 * [msys environment](https://github.com/msys2/msys2-installer/releases)
 * MinGW 8.1.0 compiler (see below).
-    * It is recommended to to install MinGW 8.1.0, which can be found in Qt Tools.
+    * It is recommended to install MinGW 8.1.0, which can be found in Qt Tools.
 * xmake (see below).
 
 Xmake can be installed either from msys pacman, or from standalone installer for windows.
@@ -18,7 +18,6 @@ It is recommended to use pacman, and other packages need to be installed in this
 
 ```
 pacman -Sy xmake
-pacman -Sy cmake
 pacman -Sy make
 pacman -Sy git
 pacman -Sy mingw-w64-x86_64-7zip
