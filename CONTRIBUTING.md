@@ -5,6 +5,7 @@
 ## For Developers
 Using xmake is encouraged, we will finally deprecate the CMake support!
 
+> WARNING: CMake build is broken because of [PDFWriter and LibAesgm deprecation](https://github.com/XmacsLabs/mogan/pull/574).
 
 For the kernel part, here is how to build and run unit tests:
 ```
