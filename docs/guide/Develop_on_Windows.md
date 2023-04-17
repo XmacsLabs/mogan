@@ -9,7 +9,7 @@ Developers should install such tools:
     * only Qt library for mingw 8.1.0 is needed, it is ok to use install Qt 5 and Qt 6 (Qt 5.15.2 is a good choice and can be adapted to mingw 8.1.0). Other Qt framework like Qt script is not needed.
 * [msys environment](https://github.com/msys2/msys2-installer/releases)
 * mingw 8.1.0 compiler (see below).
-    * recommand to install mingw 8.1.0, which can be found in Qt tools.
+    * It is recommended to to install mingw 8.1.0, which can be found in Qt Tools.
 * xmake (see below).
 
 Xmake can be installed either from msys pacman, or from standalone installer for windows.

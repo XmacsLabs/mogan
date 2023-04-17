@@ -9,7 +9,7 @@
     * 只需要安装适配mingw 8.1.0的Qt库。Qt 5 和Qt 6 都可以安装（Qt 5.15.2是一个很好的选择,可以适配mingw 8.1.0）。不需要安装Qt script等其他框架。
 * [msys environment](https://github.com/msys2/msys2-installer/releases)
 * mingw 8.1.0编译器（见下文）。
-    * 推荐安装Qt提供的mingw 8.1.0编译器，这个编译器在tools子菜单下。
+    * 推荐安装Qt提供的mingw 8.1.0编译器，这个编译器在Tools子目录下。
 * xmake（见下文）。
 
 既可以用msys2的pacman安装xmake，也可以用xmake的安装包来安装。
