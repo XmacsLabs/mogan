@@ -68,6 +68,7 @@ local PDFHUMMUS_VERSION = "4.1"
 if not is_plat("wasm") then
     add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
 end
+add_requires("nowide_standalone 11.2.0", {system=false})
 
 local XMACS_VERSION="1.1.2"
 local INSTALL_DIR="build/package"
@@ -192,6 +193,8 @@ target("libkernel") do
     set_policy("check.auto_ignore_flags", false)
     set_languages("c++17")
 
+    add_packages("nowide_standalone")
+
     add_includedirs({
         "src/System",
         "src/System/Memory",
@@ -217,9 +220,6 @@ target("libkernel") do
         add_includedirs({
             "src/Plugins/Windows"
         })
-        add_files({
-            "src/Plugins/Windows/iostream.cpp"
-        })
     end
 end
 
@@ -234,6 +234,7 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
         add_rules("qt.console")
         add_frameworks("QtTest")
 
+        add_packages("nowide_standalone")
         add_includedirs("tests/Base")
         add_includedirs(
             "src/Plugins",
@@ -270,6 +271,7 @@ target("libmogan") do
     add_packages("libjpeg")
     add_packages("freetype")
     add_packages("sqlite3")
+    add_packages("nowide_standalone")
 
     if not is_plat("wasm") then
         add_packages("pdfhummus")
@@ -380,11 +382,6 @@ target("libmogan") do
 
     if is_plat("macosx") then
         add_includedirs("src/Plugins/MacOS", {public = true})
-    elseif is_plat("mingw") then
-        add_includedirs({
-                "src/Plugins/Windows", 
-                "src/Plugins/Windows/nowide"
-        }, {public = true})
     else
         add_includedirs("src/Plugins/Unix", {public = true})
     end
@@ -472,6 +469,7 @@ target("mogan") do
 
     add_deps("libmogan")
     add_syslinks("pthread")
+    add_packages("nowide_standalone")
 
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
 
@@ -636,6 +634,7 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
             set_group("tests")
             add_deps("libmogan")
+            add_packages("nowide_standalone")
             set_languages("c++17")
             set_policy("check.auto_ignore_flags", false)
             add_rules("qt.console")
