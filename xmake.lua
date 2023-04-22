@@ -193,7 +193,9 @@ target("libkernel") do
     set_policy("check.auto_ignore_flags", false)
     set_languages("c++17")
 
-    add_packages("nowide_standalone")
+    if is_plat("mingw") then
+        add_packages("nowide_standalone")
+    end
 
     add_includedirs({
         "src/System",
@@ -234,7 +236,9 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
         add_rules("qt.console")
         add_frameworks("QtTest")
 
-        add_packages("nowide_standalone")
+        if is_plat("mingw") then
+            add_packages("nowide_standalone")
+        end
         add_includedirs("tests/Base")
         add_includedirs(
             "src/Plugins",
@@ -271,9 +275,9 @@ target("libmogan") do
     add_packages("libjpeg")
     add_packages("freetype")
     add_packages("sqlite3")
-    add_packages("nowide_standalone")
 
     if not is_plat("wasm") then
+        add_packages("nowide_standalone")
         add_packages("pdfhummus")
         add_packages("libiconv")
         add_packages("libcurl")
@@ -469,11 +473,11 @@ target("mogan") do
 
     add_deps("libmogan")
     add_syslinks("pthread")
-    add_packages("nowide_standalone")
 
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
 
     if is_plat("wasm") then
+        add_packages("nowide_standalone")
         add_cxxflags({"-Wall","-Wextra"})
         add_ldflags({"--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
     end
@@ -634,7 +638,6 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
             set_group("tests")
             add_deps("libmogan")
-            add_packages("nowide_standalone")
             set_languages("c++17")
             set_policy("check.auto_ignore_flags", false)
             add_rules("qt.console")
@@ -647,6 +650,7 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_files(filepath, {rules = "qt.moc"})
 
             if is_plat("wasm") then
+                add_packages("nowide_standalone")
                 add_cxxflags({"-Wall","-Wextra"})
                 add_ldflags({"--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
             end
