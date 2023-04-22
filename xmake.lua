@@ -477,9 +477,10 @@ target("mogan") do
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
 
     if is_plat("wasm") then
-        add_packages("nowide_standalone")
         add_cxxflags({"-Wall","-Wextra"})
         add_ldflags({"--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
+    elseif is_plat("mingw") then
+        add_packages("nowide_standalone")
     end
     set_installdir(INSTALL_DIR)
     after_install(function(target)
@@ -650,9 +651,10 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_files(filepath, {rules = "qt.moc"})
 
             if is_plat("wasm") then
-                add_packages("nowide_standalone")
                 add_cxxflags({"-Wall","-Wextra"})
                 add_ldflags({"--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
+            elseif is_plat("mingw") then
+                add_packages("nowide_standalone")
             end
         end
     end

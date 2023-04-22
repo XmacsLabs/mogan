@@ -584,7 +584,7 @@ set (TeXmacs_MacOS_SRCS
 ### --------------------------------------------------------------------
 if(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
   set (TeXmacs_Libraries
-    PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl Iconv::Iconv PDFHummus::PDFWriter Boost::nowide
+    PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl Iconv::Iconv PDFHummus::PDFWriter nowide_standalone::nowide
     -lpthread
   )
   if (LINKED_CAIRO)
