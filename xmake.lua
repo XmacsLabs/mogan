@@ -67,6 +67,7 @@ end
 local PDFHUMMUS_VERSION = "4.1"
 if not is_plat("wasm") then
     add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+    add_requires("nowide_standalone 11.2.0", {system=false})
 end
 
 local XMACS_VERSION="1.1.2"
@@ -192,6 +193,10 @@ target("libkernel") do
     set_policy("check.auto_ignore_flags", false)
     set_languages("c++17")
 
+    if is_plat("mingw") then
+        add_packages("nowide_standalone")
+    end
+
     add_includedirs({
         "src/System",
         "src/System/Memory",
@@ -217,9 +222,6 @@ target("libkernel") do
         add_includedirs({
             "src/Plugins/Windows"
         })
-        add_files({
-            "src/Plugins/Windows/iostream.cpp"
-        })
     end
 end
 
@@ -234,6 +236,9 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
         add_rules("qt.console")
         add_frameworks("QtTest")
 
+        if is_plat("mingw") then
+            add_packages("nowide_standalone")
+        end
         add_includedirs("tests/Base")
         add_includedirs(
             "src/Plugins",
@@ -272,6 +277,7 @@ target("libmogan") do
     add_packages("sqlite3")
 
     if not is_plat("wasm") then
+        add_packages("nowide_standalone")
         add_packages("pdfhummus")
         add_packages("libiconv")
         add_packages("libcurl")
@@ -380,11 +386,6 @@ target("libmogan") do
 
     if is_plat("macosx") then
         add_includedirs("src/Plugins/MacOS", {public = true})
-    elseif is_plat("mingw") then
-        add_includedirs({
-                "src/Plugins/Windows", 
-                "src/Plugins/Windows/nowide"
-        }, {public = true})
     else
         add_includedirs("src/Plugins/Unix", {public = true})
     end
@@ -478,6 +479,8 @@ target("mogan") do
     if is_plat("wasm") then
         add_cxxflags({"-Wall","-Wextra"})
         add_ldflags({"--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
+    elseif is_plat("mingw") then
+        add_packages("nowide_standalone")
     end
     set_installdir(INSTALL_DIR)
     after_install(function(target)
@@ -650,6 +653,8 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             if is_plat("wasm") then
                 add_cxxflags({"-Wall","-Wextra"})
                 add_ldflags({"--preload-file $(scriptdir)/TeXmacs@TeXmacs"})
+            elseif is_plat("mingw") then
+                add_packages("nowide_standalone")
             end
         end
     end
