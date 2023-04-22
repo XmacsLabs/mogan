@@ -159,6 +159,14 @@ include (FindPkgConfig)
 include (CheckCSourceCompiles)
 include (FindX11)
 
+include(FetchContent)
+
+FetchContent_Declare(
+  PDFHummus
+  URL https://github.com/galkahana/PDF-Writer/archive/refs/tags/v4.5.6.tar.gz
+)
+FetchContent_MakeAvailable(PDFHummus)
+
 
 ### --------------------------------------------------------------------
 ### Check for standard functionalities
@@ -455,7 +463,7 @@ set (TeXmacs_Include_Dirs
   ${TEXMACS_BINARY_DIR}/src/System/ 
 )
 if (NOT OS_WASM)
-  set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs} ${TEXMACS_SOURCE_DIR}/src/Plugins/Pdf/LibAesgm)
+  set (TeXmacs_Include_Dirs ${TeXmacs_Include_Dirs} ${TEXMACS_SOURCE_DIR}/src/Plugins/Pdf/LibAesgm ${pdfhummus_SOURCE_DIR})
 endif()
 
 if (WIN32)
@@ -572,7 +580,7 @@ set (TeXmacs_MacOS_SRCS
 ### --------------------------------------------------------------------
 if(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
   set (TeXmacs_Libraries
-    PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl Iconv::Iconv
+    PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl Iconv::Iconv PDFHummus::PDFWriter
     -lpthread
   )
   if (LINKED_CAIRO)
