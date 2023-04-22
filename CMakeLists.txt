@@ -162,10 +162,10 @@ include (FindX11)
 include(FetchContent)
 
 FetchContent_Declare(
-  nowide_standalone
+  Boost COMPONENTS nowide
   URL https://github.com/boostorg/nowide/releases/download/v11.2.0/nowide_standalone_v11.2.0.tar.gz
 )
-FetchContent_MakeAvailable(nowide_standalone)
+FetchContent_MakeAvailable(Boost)
 FetchContent_Declare(
   PDFHummus
   URL https://github.com/galkahana/PDF-Writer/archive/refs/tags/v4.5.6.tar.gz
@@ -585,7 +585,7 @@ set (TeXmacs_MacOS_SRCS
 ### --------------------------------------------------------------------
 if(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
   set (TeXmacs_Libraries
-    PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl Iconv::Iconv PDFHummus::PDFWriter nowide_standalone::nowide
+    PNG::PNG ZLIB::ZLIB JPEG::JPEG CURL::libcurl Iconv::Iconv PDFHummus::PDFWriter Boost::nowide
     -lpthread
   )
   if (LINKED_CAIRO)
