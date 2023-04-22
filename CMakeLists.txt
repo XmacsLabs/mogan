@@ -165,6 +165,7 @@ FetchContent_Declare(
   nowide_standalone
   URL https://github.com/boostorg/nowide/releases/download/v11.2.0/nowide_standalone_v11.2.0.tar.gz
 )
+FetchContent_MakeAvailable(nowide_standalone)
 FetchContent_Declare(
   PDFHummus
   URL https://github.com/galkahana/PDF-Writer/archive/refs/tags/v4.5.6.tar.gz

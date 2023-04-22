@@ -67,8 +67,8 @@ end
 local PDFHUMMUS_VERSION = "4.1"
 if not is_plat("wasm") then
     add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+    add_requires("nowide_standalone 11.2.0", {system=false})
 end
-add_requires("nowide_standalone 11.2.0", {system=false})
 
 local XMACS_VERSION="1.1.2"
 local INSTALL_DIR="build/package"
