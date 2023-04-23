@@ -80,6 +80,20 @@ plugin_list () {
   return t;
 }
 
+url
+cache_path () {
+#ifdef OS_GNU_LINUX
+  string env_cache_home= get_env ("XDG_CACHE_HOME");
+  if (is_empty (env_cache_home)) {
+    return url_system ("$HOME/.cache/app.mogan.editor");
+  } else {
+    return url_system ("$XDG_CACHE_HOME/app.mogan.editor");
+  }
+#endif
+
+  return url_system ("$TEXMACS_HOME_PATH/system/cache");
+}
+
 /******************************************************************************
 * Initialize main paths
 ******************************************************************************/
@@ -210,7 +224,7 @@ init_user_dirs () {
   make_dir ("$TEXMACS_HOME_PATH/styles");
   make_dir ("$TEXMACS_HOME_PATH/system");
   make_dir ("$TEXMACS_HOME_PATH/system/bib");
-  make_dir ("$TEXMACS_HOME_PATH/system/cache");
+  make_dir (cache_path ());
   make_dir ("$TEXMACS_HOME_PATH/system/database");
   make_dir ("$TEXMACS_HOME_PATH/system/database/bib");
   make_dir ("$TEXMACS_HOME_PATH/system/make");
@@ -234,7 +248,7 @@ acquire_boot_lock () {
   if (exists (lock_file)) {
     remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
     remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-    remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
+    remove (cache_path () * url_wildcard ("*"));
     remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));    
   }
   else save_string (lock_file, "", false);
@@ -437,6 +451,8 @@ setup_texmacs () {
 
 void
 init_texmacs () {
+  //cout << "Initialize -- Environment variables\n";
+  init_env_vars ();
   //cout << "Initialize -- Main paths\n";
   init_main_paths ();
   //cout << "Initialize -- User dirs\n";
@@ -451,8 +467,6 @@ init_texmacs () {
   load_user_preferences ();
   //cout << "Initialize -- Guile\n";
   init_scheme ();
-  //cout << "Initialize -- Environment variables\n";
-  init_env_vars ();
   //cout << "Initialize -- Miscellaneous\n";
   init_misc ();
   //cout << "Initialize -- Deprecated\n";

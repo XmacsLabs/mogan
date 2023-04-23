@@ -97,6 +97,8 @@
 
 #cmakedefine MACOSX_EXTENSIONS 1
 
+#cmakedefine OS_GNU_LINUX 1
+
 #cmakedefine OS_MACOS 1
 
 #cmakedefine OS_WASM 1
