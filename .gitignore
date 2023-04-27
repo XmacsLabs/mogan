@@ -42,6 +42,7 @@ misc/man/texmacs.1
 misc/admin/admin.makefile
 misc/scripts/texmacs
 misc/doxygen/Doxyfile
+doxyfile
 misc/vscode/c_cpp_properties.json
 misc/autotroll/test.sh
 cmake/CreateBundle.sh

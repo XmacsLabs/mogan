@@ -79,6 +79,8 @@ local DEVEL_RELEASE = 1
 local STABLE_VERSION = TEXMACS_VERSION
 local STABLE_RELEASE = 1
 
+set_configvar("DEVEL_VERSION", DEVEL_VERSION)
+
 if is_plat("linux") then 
     set_configvar("CONFIG_OS", "GNU_LINUX")
 elseif is_subhost("cygwin") then
@@ -154,6 +156,15 @@ configvar_check_cxxsnippets(
         static_assert(sizeof(void*) == 8, "");]])
 
 set_version(TEXMACS_VERSION)
+
+add_configfiles(
+    "misc/doxygen/Doxyfile.in", {
+        filename = "doxyfile",
+        pattern = "@(.-)@",
+        variables = {
+            PACKAGE = "Mogan Editor",
+            DOXYGEN_DIR = get_config("buildir")
+            }})
 set_configdir("src/System")
 add_configfiles(
     "src/System/config.h.xmake", {
