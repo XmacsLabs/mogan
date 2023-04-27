@@ -27,6 +27,7 @@ void   init_plugins ();
 void   setup_texmacs ();
 void   release_boot_lock ();
 
+array<string> get_array_of_plugin_list ();
 scheme_tree plugin_list ();
 
 bool   has_user_preference (string var);

@@ -10,6 +10,7 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 ******************************************************************************/
 
+#include "boot.hpp"
 #include "analyze.hpp"
 #include "convert.hpp"
 #include "impl_language.hpp"
@@ -277,8 +278,8 @@ bool prog_lang_exists (string s) {
   return exists (url_system ("$TEXMACS_PATH/progs/prog/" * s * "-lang.scm"))
    || exists (url_system ("$TEXMACS_PATH/plugins/" * s * "/progs/" * s * "-lang.scm"))
    || exists (url_system ("$TEXMACS_PATH/plugins/code/progs/" * s * "-lang.scm"))
-   || exists (url_system ("$TEXMACS_HOME_PATH/plugins/" * s * "/progs/" * s * "-lang.scm"))
-   || exists (url_system ("$TEXMACS_HOME_PATH/plugins/code/progs/" * s * "-lang.scm"))
+   || exists (data_path () * url_system ("plugins/" * s * "/progs/" * s * "-lang.scm"))
+   || exists (data_path () * url_system ("plugins/code/progs/" * s * "-lang.scm"))
    ;
 }
 

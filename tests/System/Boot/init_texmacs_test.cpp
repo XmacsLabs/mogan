@@ -10,6 +10,7 @@
 
 #include "boot.hpp"
 #include "url.hpp"
+#include "sys_utils.hpp"
 
 #include <QtTest/QtTest>
 
@@ -20,6 +21,7 @@ private slots:
   void test_cache_path ();
   void test_data_path ();
   void test_config_path ();
+  void test_plugin_list ();
 };
 
 void TestInitTeXmacs::test_cache_path () {
@@ -41,6 +43,14 @@ void TestInitTeXmacs::test_config_path () {
 #ifdef OS_GNU_LINUX
   QVERIFY (as_system_string (config_url) == as_system_string (url_system ("$HOME/.config/app.mogan.editor")));
 #endif
+}
+
+void TestInitTeXmacs::test_plugin_list () {
+  cout << "TEXMACS_PATH: " << get_env ("TEXMACS_PATH") << LF;
+  array<string> arr= get_array_of_plugin_list ();
+  for (int i=0; i<N(arr); i++) {
+    cout << arr[i] << LF;
+  }
 }
 
 QTEST_MAIN(TestInitTeXmacs)

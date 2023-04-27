@@ -59,22 +59,26 @@ get_env_path (string which, url def) {
 
 static url
 plugin_path (string which) {
-  url base= "$TEXMACS_HOME_PATH:/etc/TeXmacs:$TEXMACS_PATH:/usr/share/Xmacs";
+  url base= "$TEXMACS_HOME_PATH:$TEXMACS_PATH";
   url search= base * "plugins" * url_wildcard ("*") * which;
   return expand (complete (search, "r"));
 }
 
+array<string>
+get_array_of_plugin_list () {
+  bool flag= false;
+  array<string> a= read_directory ("$TEXMACS_PATH/plugins", flag);
+  a << read_directory (data_path () * "plugins", flag);
+  merge_sort (a);
+  return a;
+}
+
 scheme_tree
 plugin_list () {
-  bool flag;
-  array<string> a= read_directory ("$TEXMACS_PATH/plugins", flag);
-  a << read_directory ("/etc/TeXmacs/plugins", flag);
-  a << read_directory ("$TEXMACS_HOME_PATH/plugins", flag);
-  a << read_directory ("/usr/share/Xmacs/plugins", flag);
-  merge_sort (a);
-  int i, n= N(a);
+  array<string> a= get_array_of_plugin_list ();
+  int n= N(a);
   tree t (TUPLE);
-  for (i=0; i<n; i++)
+  for (int i=0; i<n; i++)
     if ((a[i] != ".") && (a[i] != "..") && ((i==0) || (a[i] != a[i-1])))
       t << a[i];
   return t;
@@ -223,6 +227,7 @@ init_user_dirs () {
   make_dir (cache_path ());
   make_dir (data_path ());
   make_dir (config_path ());
+  make_dir (data_path () * "plugins");
   make_dir ("$TEXMACS_HOME_PATH");
   make_dir ("$TEXMACS_HOME_PATH/bin");
   make_dir ("$TEXMACS_HOME_PATH/doc");
@@ -249,7 +254,6 @@ init_user_dirs () {
   make_dir ("$TEXMACS_HOME_PATH/misc/pixmaps");
   make_dir ("$TEXMACS_HOME_PATH/misc/themes");
   make_dir ("$TEXMACS_HOME_PATH/packages");
-  make_dir ("$TEXMACS_HOME_PATH/plugins");
   make_dir ("$TEXMACS_HOME_PATH/progs");
   make_dir ("$TEXMACS_HOME_PATH/server");
   make_dir ("$TEXMACS_HOME_PATH/styles");
