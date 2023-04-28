@@ -27,15 +27,6 @@ nproc() {
     sysctl -n hw.physicalcpu
 }
 
-build_mogan_cmake() {
-    # Clean up the build directory first.
-    rm -rf build
-    mkdir build && cd build
-
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./Mogan.app/Contents/Resources ..
-    make -j"$(nproc)" install
-}
-
 build_mogan_xmake() {
     xmake config --yes
     xmake show
