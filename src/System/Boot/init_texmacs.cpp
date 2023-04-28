@@ -59,7 +59,7 @@ get_env_path (string which, url def) {
 
 static url
 plugin_path (string which) {
-  url base= "$TEXMACS_HOME_PATH:$TEXMACS_PATH";
+  url base= url_system ("$TEXMACS_PATH") | data_path ();
   url search= base * "plugins" * url_wildcard ("*") * which;
   return expand (complete (search, "r"));
 }
