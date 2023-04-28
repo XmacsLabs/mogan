@@ -26,8 +26,6 @@ SVNREV
 Testing
 mogan.1
 tests/gtest
-cmake-build-debug
-CMakeLists.txt.user
 misc/benchmark/gbench
 
 TeXmacs/progs/ice-9
@@ -45,8 +43,6 @@ misc/doxygen/Doxyfile
 doxyfile
 misc/vscode/c_cpp_properties.json
 misc/autotroll/test.sh
-cmake/CreateBundle.sh
-cmake/CompleteBundle.cmake
 TeXmacs/examples/plugins/dynlink/Makefile
 packages/macos/Info-Xcode.plist
 packages/macos/Base.xcconfig
