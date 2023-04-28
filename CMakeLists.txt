@@ -795,7 +795,6 @@ if (OS_WASM)
   endif()
 else (OS_WASM)
   add_subdirectory (src)
-  add_subdirectory (plugins)
   add_subdirectory (misc)
   add_subdirectory (TeXmacs)
 endif(OS_WASM)
@@ -830,13 +829,13 @@ endif (NOT OS_WASM)
 
 if (NOT OS_WASM)
   if (WIN32)
-    install (DIRECTORY plugins DESTINATION ${CMAKE_INSTALL_PREFIX}
+    install (DIRECTORY TeXmacs/plugins DESTINATION ${CMAKE_INSTALL_PREFIX}
       FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
       PATTERN "bin" EXCLUDE
       PATTERN "CMakeLists.txt" EXCLUDE
       PATTERN ".gitignore" EXCLUDE)
   else (WIN32)
-    install (DIRECTORY plugins DESTINATION share/Xmacs
+    install (DIRECTORY TeXmacs/plugins DESTINATION share/Xmacs
       FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
       PATTERN "bin" EXCLUDE
       PATTERN "CMakeLists.txt" EXCLUDE
