@@ -4,12 +4,14 @@ on:
   push:
     branches: [ main ]
     paths:
+      - '**/CMakeLists.txt'
       - 'src/**'
       - 'tests/**'
       - '.github/workflows/ci-ubuntu-qt6.yml'
   pull_request:
     branches: [ main ]
     paths:
+      - '**/CMakeLists.txt'
       - 'src/**'
       - 'tests/**'
       - '.github/workflows/ci-ubuntu-qt6.yml'
