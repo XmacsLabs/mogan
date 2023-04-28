@@ -70,7 +70,22 @@ get_array_of_plugin_list () {
   array<string> a= read_directory ("$TEXMACS_PATH/plugins", flag);
   a << read_directory (data_path () * "plugins", flag);
   merge_sort (a);
-  return a;
+
+  array<string> ret= array<string>();
+  for (int i=0; i<N(a); i++) {
+    string plugin= a[i];
+    if (plugin == "." || plugin == ".." || plugin == "tmpy") continue;
+    if (is_directory (url_system ("$TEXMACS_PATH/plugins") * plugin)) {
+      ret << plugin;
+      continue;
+    }
+    if (is_directory (data_path() * "plugins" * plugin)) {
+      ret << plugin;
+      continue;
+    }
+  }
+
+  return ret;
 }
 
 scheme_tree

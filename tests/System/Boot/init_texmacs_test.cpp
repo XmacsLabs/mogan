@@ -46,11 +46,21 @@ void TestInitTeXmacs::test_config_path () {
 }
 
 void TestInitTeXmacs::test_plugin_list () {
-  cout << "TEXMACS_PATH: " << get_env ("TEXMACS_PATH") << LF;
-  array<string> arr= get_array_of_plugin_list ();
-  for (int i=0; i<N(arr); i++) {
-    cout << arr[i] << LF;
+  array<string> plugin_arr= get_array_of_plugin_list ();
+  array<string> builtin_plugins= array<string>();
+  builtin_plugins
+    << "asymptote" << "code" << "dratex" << "eukleides" << "feynmf"
+    << "fricas" << "gnuplot" << "graph" << "graphviz" << "gtybalt"
+    << "maxima" << "mupad" << "mycas" << "octave" << "plantuml"
+    << "pyenv" << "python" << "quiver" << "sage" << "shell"
+    << "sympy" << "tikz" << "xypic";
+  for (int i=0; i<N(builtin_plugins); i++) {
+    QVERIFY (contains (builtin_plugins[i], plugin_arr));
   }
+  QVERIFY (!contains (string("README.md"), plugin_arr));
+  QVERIFY (!contains (string("tmpy"), plugin_arr));
+  QVERIFY (!contains (string("."), plugin_arr));
+  QVERIFY (!contains (string(".."), plugin_arr));
 }
 
 QTEST_MAIN(TestInitTeXmacs)
