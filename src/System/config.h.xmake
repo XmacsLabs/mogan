@@ -1,0 +1,149 @@
+/* src/System/config.h.cmake */
+
+/* check assertions in code */
+#define DEBUG_ASSERT 1
+
+/* Enable experimental style rewriting code */
+${define EXPERIMENTAL}
+
+/* gs path relative to TEXMACS_PATH */
+#define GS_EXE "${GS_EXE}"
+
+/* gs fonts */
+#define GS_FONTS "${GS_FONTS}"
+
+/* gs lib */
+#define GS_LIB "${GS_LIB}"
+
+/* Define to 1 if the system has the type `FILE'. */
+${define HAVE_FILE}
+
+/* Define to 1 if you have the `gettimeofday' function. */
+${define HAVE_GETTIMEOFDAY}
+
+/* Define to 1 if the system has the type `intptr_t'. */
+${define HAVE_INTPTR_T}
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+${define HAVE_INTTYPES_H}
+
+/* Define to 1 if you have the <memory.h> header file. */
+${define HAVE_MEMORY_H}
+
+/* Define to 1 if you have the <pty.h> header file. */
+${define HAVE_PTY_H}
+
+/* Define to 1 if you have the <stdint.h> header file. */
+${define HAVE_STDINT_H}
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+${define HAVE_STDLIB_H}
+
+/* Define to 1 if you have the <strings.h> header file. */
+${define HAVE_STRINGS_H}
+
+/* Define to 1 if you have the <string.h> header file. */
+${define HAVE_STRING_H}
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+${define HAVE_SYS_STAT_H}
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+${define HAVE_SYS_TYPES_H}
+
+/* Define to 1 if the system has the type `time_t'. */
+${define HAVE_TIME_T}
+
+/* Define to 1 if you have the <unistd.h> header file. */
+${define HAVE_UNISTD_H}
+
+/* Define to 1 if you have the <util.h> header file. */
+${define HAVE_UTIL_H}
+
+${define HAVE_X11_XLIB_H}
+
+${define HAVE_X11_XUTIL_H}
+
+/* Link axel library with TeXmacs */
+${define LINKED_AXEL}
+
+/* Link cairo library with TeXmacs */
+${define LINKED_CAIRO}
+
+/* Link freetype library with TeXmacs */
+#define LINKED_FREETYPE 1
+
+/* Link imlib2 library with TeXmacs */
+${define LINKED_IMLIB2}
+
+${define LINKED_SQLITE3}
+
+${define MACOSX_EXTENSIONS}
+
+${define OS_MACOS}
+
+${define OS_MINGW}
+
+${define PDFHUMMUS_NO_TIFF}
+
+/* Disable fast memory allocator */
+${define NO_FAST_ALLOC}
+
+/* Define to the address where bug reports for this package should be sent. */
+#define PACKAGE_BUGREPORT ""
+
+/* Define to the full name of this package. */
+#define PACKAGE_NAME ""
+
+/* Define to the full name and version of this package. */
+#define PACKAGE_STRING ""
+
+/* Define to the one symbol short name of this package. */
+#define PACKAGE_TARNAME ""
+
+#define PACKAGE_URL ""
+
+/* Define to the version of this package. */
+#define PACKAGE_VERSION ""
+
+${define PDF_RENDERER}
+
+${define QTTEXMACS}
+
+${define QTPIPES}
+
+${define USE_QT_PRINTER}
+
+${define USE_CURL}
+
+#define SIZEOF_VOID_P ${SIZEOF_VOID_P} 
+
+/* Define to 1 if you have the ANSI C header files. */
+${define STDC_HEADERS}
+
+#define TEXMACS_REVISION "${VERSION}"
+
+${define TM_DYNAMIC_LINKING}
+
+/* Use axel library */
+${define USE_AXEL}
+
+/* Use cairo library */
+${define USE_CAIRO}
+
+/* Use freetype library */
+${define USE_FREETYPE}
+
+${define USE_GS}
+
+/* Use iconv library */
+${define USE_ICONV}
+
+/* Use imlib2 library */
+${define USE_IMLIB2}
+
+${define USE_SPARKLE}
+
+${define USE_SQLITE3}
+
+${define USE_STACK_TRACE}

@@ -31,12 +31,12 @@ get_system_information () {
     << BUILD_USER << "\n";
   r << "  Building date    : "
     << BUILD_DATE << "\n";
-  r << "  Operating system : "
-    << HOST_OS << "\n";
-  r << "  Vendor           : "
-    << HOST_VENDOR << "\n";
-  r << "  Processor        : "
-    << HOST_CPU << "\n";
+  // r << "  Operating system : "
+  //   << HOST_OS << "\n";
+  // r << "  Vendor           : "
+  //   << HOST_VENDOR << "\n";
+  // r << "  Processor        : "
+  //   << HOST_CPU << "\n";
   r << "  Crash date       : "
     << var_eval_system ("date") << "\n";
   return r;
