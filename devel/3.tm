@@ -11,22 +11,33 @@
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
-      <todo|3_1>
+      Chore
+    </cell>|<\cell>
+      3_1
     </cell>|<\cell>
       Remove the included C++ source code of PDF Hummus
     </cell>>|<row|<\cell>
-      <todo|3_2>
+      Feature
     </cell>|<\cell>
-      Import the xmake related stuff from Mogan Editor v1.1.2
+      <hlink|3_2|3_2.tm>
+    </cell>|<\cell>
+      Import xmake build definition before the kernel decouple from branch
+      1.1
     </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
       <todo|3_3>
     </cell>|<\cell>
       Github Action to build and test on Ubuntu
     </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
       <todo|3_4>
     </cell>|<\cell>
       Github Action to build and test on macOS
     </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
       <todo|3_5>
     </cell>|<\cell>
       Github Action to build and test on Windows
