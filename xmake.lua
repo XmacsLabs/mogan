@@ -142,7 +142,8 @@ target("libmogan") do
                 MACOSX_EXTENSIONS = is_plat("macosx"),
                 OS_MINGW = is_plat("mingw"),
                 SIZEOF_VOID_P = 8,
-                USE_STACK_TRACE = not is_plat("mingw")
+                USE_STACK_TRACE = not is_plat("mingw"),
+                USE_GS = true,
                 }})
 
     if is_plat("linux") then 
