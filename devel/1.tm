@@ -22,6 +22,8 @@
     </itemize>
 
     <item>UI frameworks: focus on the Qt framework
+
+    <item>Packager Scripts: focus on Debian, macOS and Windows
   </itemize>
 
   <section|Tasks>
@@ -67,6 +69,10 @@
       <todo|1_10>
     </cell>|<\cell>
       Remove the plugins implemented in Python
+    </cell>>|<row|<\cell>
+      <todo|1_11>
+    </cell>|<\cell>
+      Remove packager scripts for un-supported OS\ 
     </cell>>>>
   </wide-tabular>
 
