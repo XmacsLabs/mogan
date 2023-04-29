@@ -3,9 +3,9 @@
 <style|tmdoc>
 
 <\body>
-  <tmdoc-title|Cleaning for Mogan Editor 1.2.x>
+  <tmdoc-title|Cleaning for Mogan Editor 1.2.0>
 
-  Mogan Editor 1.2.x is forked from GNU <TeXmacs> 2.1.2. The first project of
+  Mogan Editor 1.2.0 is forked from GNU <TeXmacs> 2.1.2. The first project of
   Mogan Editor is removing the un-used code in GNU <TeXmacs>:
 
   <\itemize>
@@ -38,15 +38,15 @@
     </cell>|<\cell>
       Remove the support of CMake
     </cell>>|<row|<\cell>
-      <todo|1_3>
+      1_3
     </cell>|<\cell>
       Remove the Cocoa integration
     </cell>>|<row|<\cell>
-      <todo|1_4>
+      1_4
     </cell>|<\cell>
       Remove the Widkit integration
     </cell>>|<row|<\cell>
-      <todo|1_5>
+      1_5
     </cell>|<\cell>
       Remove the X11 integration
     </cell>>|<row|<\cell>
@@ -54,29 +54,27 @@
     </cell>|<\cell>
       Remove the Matlab plugin
     </cell>>|<row|<\cell>
-      <todo|1_7>
+      1_7
     </cell>|<\cell>
       Remove the Mathematica plugin
     </cell>>|<row|<\cell>
-      <todo|1_8>
+      1_8
     </cell>|<\cell>
       Remove the Coq plugin
     </cell>>|<row|<\cell>
-      <todo|1_9>
+      1_9
     </cell>|<\cell>
       Remove the Maple plugin
     </cell>>|<row|<\cell>
-      <todo|1_10>
+      1_10
     </cell>|<\cell>
       Remove the plugins implemented in Python
     </cell>>|<row|<\cell>
-      <todo|1_11>
+      1_11
     </cell>|<\cell>
       Remove packager scripts for un-supported OS\ 
     </cell>>>>
   </wide-tabular>
-
-  \;
 
   \;
 
