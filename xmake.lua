@@ -44,6 +44,7 @@ add_requires("libjpeg", {system=false})
 add_requires("libcurl", {system=false})
 add_requires("freetype", {system=false})
 add_requires("sqlite3", {system=false})
+add_requires("pdfhummus 4.1",{system=false,configs={libpng=true,libjpeg=true}})
 
 local XMACS_VERSION="1.1.1"
 local INSTALL_DIR="build/package"
@@ -84,6 +85,7 @@ target("libmogan") do
     add_packages("libcurl")
     add_packages("freetype")
     add_packages("sqlite3")
+    add_packages("pdfhummus")
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
@@ -140,7 +142,6 @@ target("libmogan") do
                 MACOSX_EXTENSIONS = is_plat("macosx"),
                 OS_MINGW = is_plat("mingw"),
                 SIZEOF_VOID_P = 8,
-                USE_JEAIII = true,
                 USE_STACK_TRACE = not is_plat("mingw")
                 }})
 
@@ -204,8 +205,6 @@ target("libmogan") do
             "src/Kernel/Types",
             "src/Plugins",
             "src/Plugins/Pdf",
-            "src/Plugins/Pdf/PDFWriter",
-            "src/Plugins/Pdf/LibAesgm",
             "src/Plugins/Qt",
             "src/Plugins/UniversalStacktrace",
             "src/Scheme",
@@ -259,8 +258,6 @@ target("libmogan") do
             "src/Plugins/Cairo/**.cpp",
             "src/Plugins/Database/**.cpp",
             "src/Plugins/Freetype/**.cpp",
-            "src/Plugins/Jeaiii/**.cpp",
-            "src/Plugins/Pdf/**.c",
             "src/Plugins/Pdf/**.cpp",
             "src/Plugins/Ghostscript/**.cpp",
             "src/Plugins/Imlib2/**.cpp",
@@ -270,8 +267,7 @@ target("libmogan") do
             "src/Plugins/Mplayer/**.cpp",
             "src/Plugins/Openssl/**.cpp",
             "src/Plugins/Sqlite3/**.cpp",
-            "src/Plugins/Updater/**.cpp",
-            "src/Plugins/Curl/**.cpp"})
+            "src/Plugins/Updater/**.cpp"})
 
     if is_plat("mingw") then
         add_files("src/Plugins/Windows/**.cpp")
@@ -461,8 +457,6 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
         add_rules("qt.console")
         add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
 
-        add_includedirs("tests/Base")
-        add_files("tests/Base/base.cpp")
         add_files(filepath) 
         add_files(filepath, {rules = "qt.moc"})
     end
