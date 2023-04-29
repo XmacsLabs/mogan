@@ -9,22 +9,30 @@
   Mogan Editor is removing the un-used code in GNU <TeXmacs>:
 
   <\itemize>
-    <item>Build Tools
+    <item>Build Tools: we will focus on the xmake build tools
 
     <item>Plugins
 
-    <item>UI frameworks
+    <\itemize>
+      <item>Plugins for non-free software will be removed
+
+      <item>Unmaintained plugins will be removed
+
+      <item>Python-implemented plugins will be removed
+    </itemize>
+
+    <item>UI frameworks: focus on the Qt framework
   </itemize>
 
   <section|Tasks>
 
   <\wide-tabular>
     <tformat|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|0ln>|<cwith|2|2|1|-1|cell-tborder|0ln>|<cwith|1|1|1|1|cell-lborder|0ln>|<cwith|1|1|2|2|cell-rborder|0ln>|<table|<row|<\cell>
-      <todo|1_1>
+      1_1
     </cell>|<\cell>
       Remove the support of Autotools
     </cell>>|<row|<\cell>
-      <todo|1_2>
+      1_2
     </cell>|<\cell>
       Remove the support of CMake
     </cell>>|<row|<\cell>
@@ -40,17 +48,25 @@
     </cell>|<\cell>
       Remove the X11 integration
     </cell>>|<row|<\cell>
-      <todo|1_6>
+      1_6
     </cell>|<\cell>
-      Remove the Matlab plugin, because it is not a libre software
+      Remove the Matlab plugin
     </cell>>|<row|<\cell>
       <todo|1_7>
     </cell>|<\cell>
-      Remove the Mathematica plugin, because it is not a libre software
+      Remove the Mathematica plugin
     </cell>>|<row|<\cell>
       <todo|1_8>
     </cell>|<\cell>
-      Remove the Coq plugin, because it is poorly maintained
+      Remove the Coq plugin
+    </cell>>|<row|<\cell>
+      <todo|1_9>
+    </cell>|<\cell>
+      Remove the Maple plugin
+    </cell>>|<row|<\cell>
+      <todo|1_10>
+    </cell>|<\cell>
+      Remove the plugins implemented in Python
     </cell>>>>
   </wide-tabular>
 
