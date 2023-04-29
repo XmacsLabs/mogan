@@ -1,8 +1,0 @@
-
-
-#include "Base"
-
-OTHER_CFLAGS =  -DAQUATEXMACS $(TM_CPPFLAGS) $(TM_CXXFREETYPE) $(TM_CXXGUILE)  $(TM_CXXSPARKLE) $(TM_CXXPDF) -framework Cocoa -framework IOKit  
-OTHER_CPLUSPLUSFLAGS = $(OTHER_CFLAGS)
-OTHER_LDFLAGS = $(TM_LDFLAGS)  -framework Cocoa -framework IOKit  $(TM_LIBS)
-PRODUCT_NAME = TeXmacsCocoa
