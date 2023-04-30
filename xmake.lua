@@ -133,7 +133,8 @@ target("libkernel") do
                 OS_MINGW = is_plat("mingw"),
                 SIZEOF_VOID_P = 8,
                 USE_JEAIII = true,
-                USE_STACK_TRACE = not is_plat("mingw")
+                USE_STACK_TRACE = not is_plat("mingw"),
+                USE_GS = true,
                 }})
 
     add_includedirs({
