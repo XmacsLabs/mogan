@@ -26,6 +26,8 @@
     <item>Packager Scripts: focus on Debian, macOS and Windows
 
     <item>Fonts: should not be shipped with the software
+
+    <item>Examples: example texts and plugins should be removed
   </itemize>
 
   <section|Tasks>
@@ -76,29 +78,35 @@
     </cell>|<\cell>
       Remove packager scripts for un-supported OS\ 
     </cell>>|<row|<\cell>
-      <todo|1_12>
+      1_12
     </cell>|<\cell>
       Remove the lush plugin
     </cell>>|<row|<\cell>
-      <todo|1_13>
+      1_13
     </cell>|<\cell>
       Remove the equation_editor plugin
     </cell>>|<row|<\cell>
-      <todo|1_14>
+      1_14
     </cell>|<\cell>
       Remove the R plugin
     </cell>>|<row|<\cell>
-      <todo|1_15>
+      1_15
     </cell>|<\cell>
       Remove the Axiom plugin
     </cell>>|<row|<\cell>
-      <todo|1_16>
+      1_16
     </cell>|<\cell>
       Remove the Libertine font
+    </cell>>|<row|<\cell>
+      1_17
+    </cell>|<\cell>
+      Remove the python-implemented example plugins
+    </cell>>|<row|<\cell>
+      1_18
+    </cell>|<\cell>
+      Remove the example texts
     </cell>>>>
   </wide-tabular>
-
-  \;
 
   <tmdoc-copyright|2023|Darcy Shen>
 
