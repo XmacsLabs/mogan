@@ -24,6 +24,8 @@
     <item>UI frameworks: focus on the Qt framework
 
     <item>Packager Scripts: focus on Debian, macOS and Windows
+
+    <item>Fonts: should not be shipped with the software
   </itemize>
 
   <section|Tasks>
@@ -89,6 +91,10 @@
       <todo|1_15>
     </cell>|<\cell>
       Remove the Axiom plugin
+    </cell>>|<row|<\cell>
+      <todo|1_16>
+    </cell>|<\cell>
+      Remove the Libertine font
     </cell>>>>
   </wide-tabular>
 
