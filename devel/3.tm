@@ -28,7 +28,7 @@
       Import xmake build definition before the kernel decouple from branch
       1.1
     </cell>>|<row|<\cell>
-      \;
+      Chore
     </cell>|<\cell>
       <todo|3_3>
     </cell>|<\cell>
@@ -36,7 +36,7 @@
     </cell>|<\cell>
       Github Action to build and test on Ubuntu
     </cell>>|<row|<\cell>
-      \;
+      Chore
     </cell>|<\cell>
       <todo|3_4>
     </cell>|<\cell>
@@ -44,7 +44,7 @@
     </cell>|<\cell>
       Github Action to build and test on macOS
     </cell>>|<row|<\cell>
-      \;
+      Chore
     </cell>|<\cell>
       <todo|3_5>
     </cell>|<\cell>
@@ -54,7 +54,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      3_6
+      <hlink|3_6|3_6.tm>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -74,11 +74,11 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Use JEAIII itoa to avoid cherry-pick conflicts on xmake.lua
+      Build definition for the shell plugin
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_9>
+      3_9
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -92,9 +92,9 @@
     </cell>|<\cell>
       Improve config.h.xmake
     </cell>>|<row|<\cell>
-      Chore
+      Feature
     </cell>|<\cell>
-      <todo|3_11>
+      <hlink|3_11|3_11.tm>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -106,11 +106,27 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      packaging on debian
+      use packages provided by apt on Debian and Ubuntu
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      <todo|3_13>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      use packages provided by apt on Deepin and UOS
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <todo|3_13>
+      <todo|3_14>
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Remove the bundled nowide
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <todo|3_15>
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
