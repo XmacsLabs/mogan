@@ -48,9 +48,7 @@ QTMPrinterSettings::getFromQPrinter(const QPrinter& from) {
   dpi           = from.resolution ();
   firstPage     = from.fromPage ();
   lastPage      = from.toPage ();
-#if (QT_VERSION >= 0x040700)
   copyCount     = from.copyCount ();
-#endif
   collateCopies = from.collateCopies();
   blackWhite    = (from.colorMode () == QPrinter::Color);
   printProgram  = from.printProgram();
@@ -68,9 +66,7 @@ QTMPrinterSettings::setToQPrinter(QPrinter& to) const {
                     QPrinter::Landscape : QPrinter::Portrait);
   to.setOutputFileName(fileName);
   to.setPaperSize(qStringToQtPaperSize(paperSize));
-#if (QT_VERSION >= 0x040700)
   to.setCopyCount(copyCount);
-#endif  
   to.setCollateCopies(collateCopies);
   to.setColorMode(blackWhite ? QPrinter::Color : QPrinter::GrayScale);
 }

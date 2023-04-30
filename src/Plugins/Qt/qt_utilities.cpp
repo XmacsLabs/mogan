@@ -80,9 +80,7 @@ to_qfont (int style, QFont font) {
   }
   if (style & WIDGET_STYLE_MONOSPACED) {  // Use monospaced font
     font.setFixedPitch (true);        //FIXME: ignored for fonts in QActions
-#if (QT_VERSION >= 0x040800)
     font.setStyleHint (QFont::Monospace);
-#endif
   }
   if (style & WIDGET_STYLE_GREY)      // use grey text font
     font.setWeight (QFont::Light);    // FIXME: this is only an approximation
@@ -99,9 +97,6 @@ to_qfont (int style, QFont font) {
 
 double
 em_factor () {
-#if (QT_VERSION < 0x050000)
-  if (tm_style_sheet == "") return 1.0 / 1.4;
-#endif
   return 1.0;
 }
 
@@ -482,13 +477,9 @@ qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
   QPrinter printer;
   printer.setOrientation(QPrinter::Portrait);
   if (suffix(outfile)=="eps") {
-#if (QT_VERSION >= 0x050000)
     //note that PostScriptFormat is gone in Qt5. a substitute?: http://soft.proindependent.com/eps/
     cout << "TeXmacs] warning: PostScript format no longer supported in Qt5\n";
     printer.setOutputFormat(QPrinter::PdfFormat);
-#else    
-    printer.setOutputFormat(QPrinter::PostScriptFormat);
-#endif
   }
   else printer.setOutputFormat(QPrinter::PdfFormat);
   printer.setFullPage(true);
@@ -643,11 +634,7 @@ qt_image_to_eps (url image, int w_pt, int h_pt, int dpi) {
 QPixmap
 as_pixmap (const QImage& im) {
   QPixmap pm (im.size ());
-#if (QT_VERSION >= 0x040700)
   pm.convertFromImage (im);
-#else
-  pm.fromImage (im);
-#endif
   return pm;
 }
 
@@ -762,11 +749,7 @@ qt_get_date (string lan, string fm) {
     return buf;
   }
   QLocale loc = QLocale (to_qstring (language_to_locale(lan)));
-#if (QT_VERSION >= 0x040400)
   QString date = loc.toString (localtime, to_qstring (fm));
-#else
-  QString date = localtime.toString (to_qstring (fm));
-#endif
   return from_qstring (date);
 }
 
@@ -981,9 +964,6 @@ init_style_sheet (QApplication* app) {
     ss= replace (ss, "\n", " ");
     ss= replace (ss, "\t", " ");
     ss= replace (ss, "$TEXMACS_PATH", p);
-#if (QT_VERSION < 0x050000)
-    ss= replace (ss, "Qt4", "");
-#endif
 #ifdef OS_MACOS
     ss= replace (ss, "Macos", "");
 #else

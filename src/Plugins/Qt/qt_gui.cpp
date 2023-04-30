@@ -56,7 +56,6 @@
 #include "MacOS/mac_utilities.h"
 #endif
 
-#if (QT_VERSION >= 0x050000)
 #include <QtPlugin>
 #ifdef qt_static_plugin_qjpeg
 Q_IMPORT_PLUGIN(qjpeg)
@@ -76,7 +75,6 @@ Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
 #endif
 #ifdef QT_MAC_USE_COCOA
 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
-#endif
 #endif
 
 qt_gui_rep* the_gui = NULL;
@@ -155,19 +153,7 @@ needing_update (false)
           
     if (mac_hidpi == 2) {
       if (DEBUG_STD) debug_boot << "Setting up HiDPI mode\n";
-#if (QT_VERSION < 0x050000)
-      retina_factor= 2;
-      if (tm_style_sheet == "") retina_scale = 1.4;
-      else retina_scale = 1.0;
-      if (!retina_iman) {
-        retina_iman  = true;
-        retina_icons = 2;
-        // retina_icons = 1;
-        // retina_icons = 2;  // FIXME: why is this not better?
-      }
-#else
       retina_factor= 2;      
-#endif
     }
 #else
     SI w, h;
