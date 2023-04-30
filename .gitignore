@@ -33,5 +33,3 @@ misc/benchmark/gbench
 TeXmacs/progs/ice-9
 
 .xmake/
-src/System/config.h
-src/System/tm_configure.hpp
