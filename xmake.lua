@@ -112,34 +112,47 @@ configvar_check_cxxsnippets(
         #include <stdlib.h>
         static_assert(sizeof(void*) == 8, "");]])
 
+set_version(TEXMACS_VERSION)
+add_configfiles(
+    "src/System/config.h.xmake", {
+        filename = "config.h",
+        variables = {
+            GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
+            GS_LIB = "../share/ghostscript/9.06/lib:",
+            OS_MACOS = is_plat("macosx"),
+            MACOSX_EXTENSIONS = is_plat("macosx"),
+            OS_MINGW = is_plat("mingw"),
+            SIZEOF_VOID_P = 8,
+            USE_STACK_TRACE = not is_plat("mingw"),
+            USE_GS = true,
+            }})
+
+target("tm_shell") do
+    if is_plat("macosx") or is_plat("linux") then
+        set_enabled(true)
+    else
+        set_enabled(false)
+    end
+
+    set_kind("binary")
+
+    set_languages("c++17")
+
+    add_includedirs("build")
+    add_files("plugins/shell/src/tm_shell.cpp")
+    add_links("util")
+end
 
 target("libkernel") do
     set_kind("static")
     set_group("kernel")
     set_basename("kernel")
-    set_version(TEXMACS_VERSION)
 
     set_policy("check.auto_ignore_flags", false)
     set_languages("c++17")
 
-    set_configdir("src/System")
-    add_configfiles(
-        "src/System/config.h.xmake", {
-            filename = "config.h",
-            variables = {
-                GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
-                GS_LIB = "../share/ghostscript/9.06/lib:",
-                OS_MACOS = is_plat("macosx"),
-                MACOSX_EXTENSIONS = is_plat("macosx"),
-                OS_MINGW = is_plat("mingw"),
-                SIZEOF_VOID_P = 8,
-                USE_JEAIII = true,
-                USE_STACK_TRACE = not is_plat("mingw"),
-                USE_GS = true,
-                }})
-
     add_includedirs({
-        "src/System",
+        "build",
         "src/System/Memory",
         "src/System/IO",
         "src/Plugins",
@@ -180,6 +193,7 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
 
         add_includedirs("tests/Base")
         add_includedirs(
+            "build",
             "src/Plugins",
             "src/System",
             "src/System/Memory",
@@ -224,24 +238,9 @@ target("libmogan") do
     --    * https://github.com/xmake-io/xmake/issues/320
     --    * https://github.com/xmake-io/xmake/issues/342
     ---------------------------------------------------------------------------
-    set_configdir("src/System")
     -- check for dl library
     -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
     add_options("libdl")
-    add_configfiles(
-        "src/System/config.h.xmake", {
-            filename = "config.h",
-            variables = {
-                GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
-                GS_LIB = "../share/ghostscript/9.06/lib:",
-                OS_MACOS = is_plat("macosx"),
-                MACOSX_EXTENSIONS = is_plat("macosx"),
-                OS_MINGW = is_plat("mingw"),
-                SIZEOF_VOID_P = 8,
-                USE_STACK_TRACE = not is_plat("mingw"),
-                USE_GS = true,
-                }})
-
 
     add_configfiles(
         "src/System/tm_configure.hpp.xmake", {
@@ -313,6 +312,7 @@ target("libmogan") do
             "src/Typeset/Bridge",
             "src/Typeset/Concat",
             "src/Typeset/Page",
+            "build",
             "TeXmacs/include"
         }, {public = true})
 
@@ -376,7 +376,7 @@ target("libmogan") do
         "src/Plugins/Qt/**.hpp"})
 
     add_mxflags("-fno-objc-arc")
-    add_cxxflags("-include src/System/config.h")
+    add_cxxflags("-include build/config.h")
 end 
 
 option("libdl") do
@@ -415,11 +415,13 @@ target("mogan") do
 end 
 
 target("mogan_install") do
+    if is_plat("macosx") or is_plat("linux") then
+        add_deps("tm_shell")
+    end
     add_deps("mogan")
     set_kind("phony")
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_configvar("WIN_BIT_SIZE", "64")
-    set_configdir(".")
 
     if is_plat("mingw") then
         add_configfiles(
@@ -547,7 +549,7 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_rules("qt.console")
             add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
 
-            add_includedirs("tests/Base")
+            add_includedirs({"build", "tests/Base"})
             add_files("tests/Base/base.cpp")
             add_files(filepath) 
             add_files(filepath, {rules = "qt.moc"})
