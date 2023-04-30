@@ -148,7 +148,6 @@ target("libkernel") do
     })
 
     add_files({
-        "src/Plugins/Jeaiii/**.cpp",
         "src/Kernel/Abstractions/basic.cpp",
         "src/Kernel/Containers/**.cpp",
         "src/Kernel/Types/**.cpp",
