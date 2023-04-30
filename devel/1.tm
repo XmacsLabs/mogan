@@ -73,6 +73,22 @@
       1_11
     </cell>|<\cell>
       Remove packager scripts for un-supported OS\ 
+    </cell>>|<row|<\cell>
+      <todo|1_12>
+    </cell>|<\cell>
+      Remove the lush plugin
+    </cell>>|<row|<\cell>
+      <todo|1_13>
+    </cell>|<\cell>
+      Remove the equation_editor plugin
+    </cell>>|<row|<\cell>
+      <todo|1_14>
+    </cell>|<\cell>
+      Remove the R plugin
+    </cell>>|<row|<\cell>
+      <todo|1_15>
+    </cell>|<\cell>
+      Remove the Axiom plugin
     </cell>>>>
   </wide-tabular>
 
