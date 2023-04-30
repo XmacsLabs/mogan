@@ -62,9 +62,9 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <todo|3_7>
+      <hlink|3_7|3_7.tm>
     </cell>|<\cell>
-      \;
+      Darcy
     </cell>|<\cell>
       Scripts to run all C++ tests and run only the target test
     </cell>>|<row|<\cell>
@@ -72,9 +72,49 @@
     </cell>|<\cell>
       <todo|3_8>
     </cell>|<\cell>
-      \;
+      Darcy
     </cell>|<\cell>
       Use JEAIII itoa to avoid cherry-pick conflicts on xmake.lua
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      <todo|3_9>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Enable Iconv
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      <todo|3_10>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Improve config.h.xmake
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      <todo|3_11>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      pin dependencies for reproducible build
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      <todo|3_12>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      packaging on debian
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <todo|3_13>
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      doxygen file generation
     </cell>>>>
   </wide-tabular>
 
