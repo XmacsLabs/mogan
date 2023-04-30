@@ -291,7 +291,6 @@ target("libmogan") do
             "src/Plugins",
             "src/Plugins/Pdf",
             "src/Plugins/Qt",
-            "src/Plugins/UniversalStacktrace",
             "src/Scheme",
             "src/Scheme/S7",
             "src/Scheme/Scheme",
@@ -539,6 +538,7 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
     if string.sub(filepath, 1, string.len("tests/Kernel")) ~= "tests/Kernel" then
         local testname = path.basename(filepath) 
         target(testname) do 
+            add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
             set_group("tests")
             add_deps("libmogan")
             set_languages("c++17")
