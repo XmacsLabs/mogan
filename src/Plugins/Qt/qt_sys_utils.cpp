@@ -12,6 +12,7 @@
 #include "qt_sys_utils.hpp"
 #include "basic.hpp"
 #include "string.hpp"
+#include "tm_debug.hpp"
 
 #include <QProcess>
 #include <QString>

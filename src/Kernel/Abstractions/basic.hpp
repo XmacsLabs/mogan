@@ -104,13 +104,6 @@ void handle_exceptions ();
 #endif
 #endif
 
-class tree;
-void debug_message (string channel, string msg);
-void debug_formatted (string channel, tree msg);
-tree get_debug_messages (string kind, int max_number);
-void clear_debug_messages ();
-void clear_debug_messages (string channel);
-
 /******************************************************************************
 * miscellaneous routines
 ******************************************************************************/
@@ -147,7 +140,6 @@ bool gui_is_qt ();
 bool os_win32 ();
 bool os_mingw ();
 bool os_macos ();
-bool use_macos_fonts ();
 const char* default_look_and_feel ();
 
 template<typename T>
