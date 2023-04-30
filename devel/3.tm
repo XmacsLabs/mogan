@@ -70,7 +70,7 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_8>
+      3_8
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -86,7 +86,7 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_10>
+      3_10
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -102,7 +102,7 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_12>
+      3_12
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -110,11 +110,11 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_13>
+      3_13
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      use packages provided by apt on Deepin and UOS
+      use packages provided by apt on UOS
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
