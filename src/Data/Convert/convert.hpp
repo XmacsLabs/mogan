@@ -11,10 +11,12 @@
 
 #ifndef CONVERT_H
 #define CONVERT_H
+
 #include "analyze.hpp"
 #include "hashmap.hpp"
+#include "url.hpp"
+
 typedef tree scheme_tree;
-class url;
 class object;
 
 /*** Miscellaneous ***/

@@ -292,7 +292,7 @@ bool
 valid_cursor (tree t, path p, bool start_flag) {
   if ((!is_nil (p)) && (!is_atom (p)) &&
       ((p->item < 0) || (p->item >= arity (t)))) {
-    failed_error << "Testing valid cursor " << p << " in " << t << "\n";
+    cerr << "Testing valid cursor " << p << " in " << t << "\n";
     FAILED ("bad path");
   }
 
@@ -333,11 +333,11 @@ pre_correct (tree t, path p) {
   //cout << "Precorrect " << p << " in " << t << "\n";
   if ((!is_nil (p)) && (!is_atom (p)) && ((p->item < 0) || (p->item >= arity (t)))) {
     if (is_func (t, GRAPHICS)) {
-      std_warning << "Precorrecting " << p << " in " << t << "\n";
+      cout << "WARN: Precorrecting " << p << " in " << t << "\n";
       p= path (1);
     }
     else {
-      failed_error << "Precorrecting " << p << " in " << t << "\n";
+      cerr << "Precorrecting " << p << " in " << t << "\n";
       FAILED ("bad path");
     }
   }
@@ -358,7 +358,7 @@ pre_correct (tree t, path p) {
       FAILED ("nullary tree with no border");
     }
     if (is_atomic (t) && (p->item < 0 || p->item > N(t->label))) {
-      std_warning << "Precorrecting " << p << " in " << t << "\n";
+      cout << "WARN: Precorrecting " << p << " in " << t << "\n";
       FAILED ("bad path");
     }
     return p;
@@ -400,7 +400,7 @@ static bool
 left_most (tree t, path p) {
   if (is_nil (p)) FAILED ("invalid nil path");
   if ((!is_atom (p)) && ((p->item < 0) || (p->item >= arity (t)))) {
-    failed_error << "Left most " << p << " in " << t << "\n";
+    cerr << "Left most " << p << " in " << t << "\n";
     FAILED ("bad path");
   }
 
@@ -415,12 +415,12 @@ left_correct (tree t, path p) {
   //cout << "Left correct " << p << " in " << t << "\n";
   if (is_nil (p)) FAILED ("invalid nil path");
   if ((!is_atom (p)) && ((p->item < 0) || (p->item >= arity (t)))) {
-    failed_error << "Left correcting " << p << " in " << t << "\n";
+    cerr << "Left correcting " << p << " in " << t << "\n";
     FAILED ("bad path");
   }
   if (is_atom (p) && is_atomic (t) &&
       (p->item < 0 || p->item > N(t->label))) {
-    failed_error << "Left correcting " << p << " in " << t << "\n";
+    cerr << "Left correcting " << p << " in " << t << "\n";
     FAILED ("bad path");
   }
 
@@ -436,7 +436,7 @@ static bool
 right_most (tree t, path p) {
   if (is_nil (p)) FAILED ("invalid nil path");
   if ((!is_atom (p)) && ((p->item < 0) || (p->item >= arity (t)))) {
-    failed_error << "Right most " << p << " in " << t << "\n";
+    cerr << "Right most " << p << " in " << t << "\n";
     FAILED ("bad path");
   }
 
@@ -450,12 +450,12 @@ static path
 right_correct (tree t, path p) {
   if (is_nil (p)) FAILED ("invalid nil path");
   if ((!is_atom (p)) && ((p->item < 0) || (p->item >= arity (t)))) {
-    failed_error << "Right correcting " << p << " in " << t << "\n";
+    cerr << "Right correcting " << p << " in " << t << "\n";
     FAILED ("bad path");
   }
   if (is_atom (p) && is_atomic (t) &&
       (p->item < 0 || p->item > N(t->label))) {
-    failed_error << "Right correcting " << p << " in " << t << "\n";
+    cerr << "Right correcting " << p << " in " << t << "\n";
     FAILED ("bad path");
   }
 
