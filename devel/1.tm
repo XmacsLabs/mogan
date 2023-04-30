@@ -24,6 +24,8 @@
     <item>UI frameworks: focus on the Qt framework
 
     <item>Packager Scripts: focus on Debian, macOS and Windows
+
+    <item>Fonts: should not be shipped with the software
   </itemize>
 
   <section|Tasks>
@@ -73,6 +75,26 @@
       1_11
     </cell>|<\cell>
       Remove packager scripts for un-supported OS\ 
+    </cell>>|<row|<\cell>
+      <todo|1_12>
+    </cell>|<\cell>
+      Remove the lush plugin
+    </cell>>|<row|<\cell>
+      <todo|1_13>
+    </cell>|<\cell>
+      Remove the equation_editor plugin
+    </cell>>|<row|<\cell>
+      <todo|1_14>
+    </cell>|<\cell>
+      Remove the R plugin
+    </cell>>|<row|<\cell>
+      <todo|1_15>
+    </cell>|<\cell>
+      Remove the Axiom plugin
+    </cell>>|<row|<\cell>
+      <todo|1_16>
+    </cell>|<\cell>
+      Remove the Libertine font
     </cell>>>>
   </wide-tabular>
 
