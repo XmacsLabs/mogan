@@ -12,6 +12,7 @@
 #include <QtTest/QtTest>
 #include "base.hpp"
 
+bool headless_mode= false;
 
 void
 qcompare (string actual, string expected) {
