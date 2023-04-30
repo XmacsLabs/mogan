@@ -41,6 +41,12 @@
       <todo|3_5>
     </cell>|<\cell>
       Github Action to build and test on Windows
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <todo|3_6>
+    </cell>|<\cell>
+      Decouple the kernel part of GNU <TeXmacs>
     </cell>>>>
   </wide-tabular>
 
