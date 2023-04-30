@@ -208,18 +208,7 @@ static const char*
 default_look_and_feel_impl () {
   if (os_mingw () || os_win32 ()) return "windows";
   if (os_macos ()) return "macos";
-  string session= get_env ("DESKTOP_SESSION");
-  if (session == "") session= get_env ("XDG_CURRENT_DESKTOP");
-  session= locase_all (session);
-  if (occurs ("gnome", session))    return "gnome";
-  if (occurs ("cinnamon", session)) return "gnome";
-  if (occurs ("mate", session))     return "gnome";
-  //if (occurs ("ubuntu", session))   return "unity";
-  if (occurs ("kde", session))      return "kde";
-  //if (occurs ("xfce", session))     return "xfce";
-  //if (occurs ("lxde", session))     return "lxde";
-  //return "emacs";
-  return "gnome"; // default UI (much more "standard" than emacs) 
+  return "emacs";
 }
 
 const char*
