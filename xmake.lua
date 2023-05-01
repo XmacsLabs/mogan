@@ -67,7 +67,7 @@ end
 add_requires("pdfhummus 4.1",{system=false,configs={libpng=true,libjpeg=true}})
 
 local XMACS_VERSION="1.1.1"
-local INSTALL_DIR="build/package"
+local INSTALL_DIR="$(buildir)/package"
 
 local TEXMACS_VERSION = "2.1.2"
 local DEVEL_VERSION = TEXMACS_VERSION
