@@ -51,6 +51,9 @@ jobs:
             ${{github.workspace}}/build/.build_cache
             /home/runner/.xmake/cache
           key: ${{ runner.os }}-qt${{ matrix.qt_ver }}-xmake-${{ hashFiles('**/xmake.lua') }}
+      - name: ls build_cache
+        run: |
+            ls -l ${{github.workspace}}/build/.build_cache
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.8
