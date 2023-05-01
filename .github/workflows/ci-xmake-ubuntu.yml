@@ -62,6 +62,9 @@ jobs:
         id: build
         run: |
           xmake build --yes --verbose --diagnosis --jobs=8 --all
+      - name: ls build_cache
+        run: |
+            ls -l ${{github.workspace}}/build/.build_cache
       - name: test
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
