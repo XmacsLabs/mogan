@@ -67,7 +67,7 @@ end
 add_requires("pdfhummus 4.1",{system=false,configs={libpng=true,libjpeg=true}})
 
 local XMACS_VERSION="1.1.1"
-local INSTALL_DIR="build/package"
+local INSTALL_DIR="$(buildir)/package"
 
 local TEXMACS_VERSION = "2.1.2"
 local DEVEL_VERSION = TEXMACS_VERSION
@@ -164,7 +164,7 @@ target("tm_shell") do
 
     set_languages("c++17")
 
-    add_includedirs("build")
+    add_includedirs("$(buildir)")
     add_files("plugins/shell/src/tm_shell.cpp")
     add_links("util")
 end
@@ -178,7 +178,7 @@ target("libkernel") do
     set_languages("c++17")
 
     add_includedirs({
-        "build",
+        "$(buildir)",
         "src/System/Memory",
         "src/System/IO",
         "src/Plugins",
@@ -219,7 +219,7 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
 
         add_includedirs("tests/Base")
         add_includedirs(
-            "build",
+            "$(buildir)",
             "src/Plugins",
             "src/System",
             "src/System/Memory",
@@ -338,7 +338,7 @@ target("libmogan") do
             "src/Typeset/Bridge",
             "src/Typeset/Concat",
             "src/Typeset/Page",
-            "build",
+            "$(buildir)",
             "TeXmacs/include"
         }, {public = true})
 
@@ -402,7 +402,7 @@ target("libmogan") do
         "src/Plugins/Qt/**.hpp"})
 
     add_mxflags("-fno-objc-arc")
-    add_cxxflags("-include build/config.h")
+    add_cxxflags("-include $(buildir)/config.h")
 end 
 
 option("libdl") do
@@ -578,7 +578,7 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
             add_syslinks("pthread")
 
-            add_includedirs({"build", "tests/Base"})
+            add_includedirs({"$(buildir)", "tests/Base"})
             add_files("tests/Base/base.cpp")
             add_files(filepath) 
             add_files(filepath, {rules = "qt.moc"})
