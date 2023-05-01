@@ -60,18 +60,18 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ${{ env.XMAKE_GLOBALDIR }}/.xmake/cache
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
             ${{ runner.workspace }}/build/.build_cache
-          key: xmake-${{ runner.os }}-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
+          key: ${{ runner.os }}-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
 
 
       - name: config
         run: xmake config -o ${{ runner.workspace }}/build --yes
-      - name: ls
-        run: ls -la ${{ runner.workspace }}/build
       - name: build
         id: build
         run: xmake build --yes --verbose --diagnosis --all
+      - name: ls
+        run: ls -la ${{ runner.workspace }}/build
       - name: test
         run: xmake run --yes --verbose --diagnosis --group=tests
         env:
