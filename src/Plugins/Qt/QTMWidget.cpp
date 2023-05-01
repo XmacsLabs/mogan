@@ -999,7 +999,13 @@ QTMWidget::wheelEvent(QWheelEvent *event) {
                               mstate, texmacs_time (), data);
   }
   else if (QApplication::keyboardModifiers() == Qt::ControlModifier) {
-    if (event->inverted())
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+    // see https://doc.qt.io/qt-5/qwheelevent-obsolete.html#delta
+    if (event->delta() > 0)
+#else
+    QPoint numDegrees = event->angleDelta() / 8;
+    if (numDegrees.y() > 0)
+#endif
       call ("zoom-in", object (sqrt (sqrt (2.0))));
     else
       call ("zoom-out", object (sqrt (sqrt (2.0))));
