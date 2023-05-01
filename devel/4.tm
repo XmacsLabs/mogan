@@ -14,7 +14,7 @@
     <tformat|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|4_1>
+      4_1
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -22,7 +22,7 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|4_2>
+      4_2
     </cell>|<\cell>
       PikachuHy
     </cell>|<\cell>
@@ -30,11 +30,19 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|4_3>
+      4_3
     </cell>|<\cell>
       PikachuHy
     </cell>|<\cell>
       eliminate Qt6 warning
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      4_4
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Obsolete Qt::WA_MacNoClickThrough
     </cell>>>>
   </wide-tabular>
 
