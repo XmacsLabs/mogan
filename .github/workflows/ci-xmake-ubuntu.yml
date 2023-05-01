@@ -44,25 +44,40 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - name: cache xmake
-        uses: actions/cache@v2
-        with:
-          path: |
-            ${{github.workspace}}/build/.build_cache
-            /home/runner/.config/.xmake
-          key: ${{ runner.os }}-qt${{ matrix.qt_ver }}-xmake-${{ hashFiles('**/xmake.lua') }}
+
+      # Force xmake to a specific folder (for cache)
+      - name: Set xmake env
+        run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
+
+      # Install xmake
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.8
           actions-cache-folder: '.xmake-cache'
-      - name: Build by gcc
+
+      # Update xmake repository (in order to have the file that will be cached)
+      - name: Update xmake repository
+        run: xmake repo --update
+
+      # Fetch xmake dephash
+      - name: Retrieve dependencies hash
+        id: dep_hash
+        run: echo "hash=$(xmake l utils.ci.packageskey)" >> $GITHUB_OUTPUT
+
+      # Cache xmake dependencies
+      - name: Retrieve cached xmake dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+          key: ${{ runner.os }}-qt${{ matrix.qt_ver }}-deps-${{ steps.dep_hash.outputs.hash }}
+
+      - name: config
+        run: xmake config --yes
+      - name: build
         id: build
-        run: |
-          xmake config --yes
-          xmake build --yes --verbose --diagnosis --jobs=8 --all
-      - name: Test
-        run: |
-          xmake run --yes --verbose --diagnosis --group=tests
+        run: xmake build --yes --verbose --diagnosis --all
+      - name: test
+        run: xmake run --yes --verbose --diagnosis --group=tests
         env:
           QT_QPA_PLATFORM: offscreen
 
