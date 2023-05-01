@@ -49,17 +49,20 @@ jobs:
         with:
           path: |
             ${{github.workspace}}/build/.build_cache
+            /home/runner/.xmake/cache
           key: ${{ runner.os }}-qt${{ matrix.qt_ver }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.8
           actions-cache-folder: '.xmake-cache'
-      - name: Build by gcc
-        id: build
+      - name: config
         run: |
           xmake config --yes
+      - name: build
+        id: build
+        run: |
           xmake build --yes --verbose --diagnosis --jobs=8 --all
-      - name: Test
+      - name: test
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
         env:
