@@ -999,7 +999,7 @@ QTMWidget::wheelEvent(QWheelEvent *event) {
                               mstate, texmacs_time (), data);
   }
   else if (QApplication::keyboardModifiers() == Qt::ControlModifier) {
-    if (event->delta() > 0)
+    if (event->inverted())
       call ("zoom-in", object (sqrt (sqrt (2.0))));
     else
       call ("zoom-out", object (sqrt (sqrt (2.0))));
