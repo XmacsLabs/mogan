@@ -9,7 +9,7 @@ on:
       - '!src/Plugins/Windows/**'
       - 'tests/**'
       - 'xmake.lua'
-      - '.github/workflows/ci-xmake-linux.yml'
+      - '.github/workflows/ci-xmake-ubuntu.yml'
   pull_request:
     branches: [ branch-1.2 ]
     paths:
@@ -18,7 +18,7 @@ on:
       - '!src/Plugins/Windows/**'
       - 'tests/**'
       - 'xmake.lua'
-      - '.github/workflows/ci-xmake-linux.yml'
+      - '.github/workflows/ci-xmake-ubuntu.yml'
 
 jobs:
   linuxbuild:
