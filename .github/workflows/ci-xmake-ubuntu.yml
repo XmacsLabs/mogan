@@ -45,18 +45,15 @@ jobs:
         with:
           fetch-depth: 1
 
-      # Force xmake to a specific folder (for cache)
-      - name: Set xmake env
+      - name: set XMAKE_GLOBALDIR
         run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
 
-      # Install xmake
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.8
           actions-cache-folder: '.xmake-cache'
 
-      # Update xmake repository (in order to have the file that will be cached)
-      - name: Update xmake repository
+      - name: xmake repo --update
         run: xmake repo --update
 
       - name: cache
@@ -76,4 +73,3 @@ jobs:
         run: xmake run --yes --verbose --diagnosis --group=tests
         env:
           QT_QPA_PLATFORM: offscreen
-
