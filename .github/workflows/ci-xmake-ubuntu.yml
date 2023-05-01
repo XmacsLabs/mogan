@@ -61,8 +61,12 @@ jobs:
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/cache
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
             ${{ runner.workspace }}/build/.build_cache
           key: xmake-${{ runner.os }}-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
+
+      - name: ls
+        run: ls ${{ runner.workspace }}/build/.build_cache
 
       - name: config
         run: xmake config -o ${{ runner.workspace }}/build --yes
