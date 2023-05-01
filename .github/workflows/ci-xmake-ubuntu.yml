@@ -59,20 +59,16 @@ jobs:
       - name: Update xmake repository
         run: xmake repo --update
 
-      # Fetch xmake dephash
-      - name: Retrieve dependencies hash
-        id: dep_hash
-        run: echo "hash=$(xmake l utils.ci.packageskey)" >> $GITHUB_OUTPUT
-
-      # Cache xmake dependencies
-      - name: Retrieve cached xmake dependencies
+      - name: cache
         uses: actions/cache@v3
         with:
-          path: ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
-          key: ${{ runner.os }}-qt${{ matrix.qt_ver }}-deps-${{ steps.dep_hash.outputs.hash }}
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/cache
+            ${{ runner.workspace }}/build/.build_cache
+          key: xmake-${{ runner.os }}-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
 
       - name: config
-        run: xmake config --yes
+        run: xmake config -o ${{ runner.workspace }}/build --yes
       - name: build
         id: build
         run: xmake build --yes --verbose --diagnosis --all
