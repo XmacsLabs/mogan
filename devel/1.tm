@@ -3,9 +3,9 @@
 <style|tmdoc>
 
 <\body>
-  <tmdoc-title|Cleaning for Mogan Editor 1.2.0>
+  <tmdoc-title|Cleaning for Mogan Editor 1.2.x>
 
-  Mogan Editor 1.2.0 is forked from GNU <TeXmacs> 2.1.2. The first project of
+  Mogan Editor 1.2.x is forked from GNU <TeXmacs> 2.1.2. The first project of
   Mogan Editor is removing the un-used code in GNU <TeXmacs>:
 
   <\itemize>
@@ -31,6 +31,11 @@
   </itemize>
 
   <section|Tasks>
+
+  Tasks in this project must be completed via pull requests which only
+  contains file deletion commits. For Mogan Editor v1.3.x, we will fork the
+  latest codebase of GNU <TeXmacs> again. And the first project of Mogan
+  Editor v1.3.x will be cleaning for Mogan Editor 1.3.x.
 
   <\wide-tabular>
     <tformat|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|0ln>|<cwith|2|2|1|-1|cell-tborder|0ln>|<cwith|1|1|1|1|cell-lborder|0ln>|<cwith|1|1|2|2|cell-rborder|0ln>|<table|<row|<\cell>
@@ -105,6 +110,38 @@
       1_18
     </cell>|<\cell>
       Remove the example texts
+    </cell>>|<row|<\cell>
+      1_19
+    </cell>|<\cell>
+      Remove the feynmf plugin
+    </cell>>|<row|<\cell>
+      1_20
+    </cell>|<\cell>
+      Remove the Scilab plugin
+    </cell>>|<row|<\cell>
+      1_21
+    </cell>|<\cell>
+      Remove the texgraph plugin
+    </cell>>|<row|<\cell>
+      1_22
+    </cell>|<\cell>
+      Remove the lisp plugin
+    </cell>>|<row|<\cell>
+      1_23
+    </cell>|<\cell>
+      Remove the reduce plugin
+    </cell>>|<row|<\cell>
+      1_24
+    </cell>|<\cell>
+      Remove the mupad plugin
+    </cell>>|<row|<\cell>
+      1_25
+    </cell>|<\cell>
+      Remove the cococa5 plugin
+    </cell>>|<row|<\cell>
+      1_26
+    </cell>|<\cell>
+      Remove the yacas plugin
     </cell>>>>
   </wide-tabular>
 
@@ -120,6 +157,6 @@
 
 <\initial>
   <\collection>
-    <associate|page-medium|paper>
+    <associate|page-medium|papyrus>
   </collection>
 </initial>
