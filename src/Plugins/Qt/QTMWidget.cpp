@@ -980,8 +980,7 @@ QTMWidget::wheelEvent(QWheelEvent *event) {
   if (is_nil (tmwid)) return; 
   if (as_bool (call ("wheel-capture?"))) {
 #if (QT_VERSION >= 0x060000)
-    QPointF pos  = event->position();
-    QPoint  point= QPointF (pos.x(), pos.y()) + origin();
+    QPoint  point= (event->position()).toPoint() + origin();
 #else
     QPoint  point= event->pos() + origin();
 #endif
