@@ -12,9 +12,29 @@
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
+      Chore
+    </cell>|<\cell>
       2_1
     </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
       Initial import of Massimiliano Gubinelli's work on S7 Scheme
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      2_2
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Deprecate Tiny Scheme integration
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      2_3
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Deprecate GNU Guile integration
     </cell>>>>
   </wide-tabular>
 
