@@ -164,7 +164,7 @@ target("tm_shell") do
 
     set_languages("c++17")
 
-    add_includedirs("${BUILDIR}")
+    add_includedirs("$(buildir)")
     add_files("plugins/shell/src/tm_shell.cpp")
     add_links("util")
 end
@@ -178,7 +178,7 @@ target("libkernel") do
     set_languages("c++17")
 
     add_includedirs({
-        "${BUILDIR}",
+        "$(buildir)",
         "src/System/Memory",
         "src/System/IO",
         "src/Plugins",
@@ -219,7 +219,7 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
 
         add_includedirs("tests/Base")
         add_includedirs(
-            "${BUILDIR}",
+            "$(buildir)",
             "src/Plugins",
             "src/System",
             "src/System/Memory",
@@ -338,7 +338,7 @@ target("libmogan") do
             "src/Typeset/Bridge",
             "src/Typeset/Concat",
             "src/Typeset/Page",
-            "${BUILDIR}",
+            "$(buildir)",
             "TeXmacs/include"
         }, {public = true})
 
@@ -402,7 +402,7 @@ target("libmogan") do
         "src/Plugins/Qt/**.hpp"})
 
     add_mxflags("-fno-objc-arc")
-    add_cxxflags("-include ${BUILDIR}/config.h")
+    add_cxxflags("-include $(buildir)/config.h")
 end 
 
 option("libdl") do
@@ -578,7 +578,7 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
             add_syslinks("pthread")
 
-            add_includedirs({"${BUILDIR}", "tests/Base"})
+            add_includedirs({"$(buildir)", "tests/Base"})
             add_files("tests/Base/base.cpp")
             add_files(filepath) 
             add_files(filepath, {rules = "qt.moc"})
