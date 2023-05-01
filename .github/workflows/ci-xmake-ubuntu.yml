@@ -49,7 +49,6 @@ jobs:
         with:
           path: |
             ${{github.workspace}}/build/.build_cache
-            /home/runner/.config/.xmake
           key: ${{ runner.os }}-qt${{ matrix.qt_ver }}-xmake-${{ hashFiles('**/xmake.lua') }}
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
