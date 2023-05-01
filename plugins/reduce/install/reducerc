@@ -1,2 +1,0 @@
-lisp << if getenv("TEXMACS_REDUCE_PATH") then load tmprint >>$
-end$
