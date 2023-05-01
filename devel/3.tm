@@ -3,9 +3,12 @@
 <style|tmdoc>
 
 <\body>
-  <tmdoc-title|xmake Integration>
+  <tmdoc-title|xmake Integration on Ubuntu>
 
-  For Mogan Editor 1.2.x, we will use xmake as the build tool.
+  For Mogan Editor 1.2.x, we will use xmake as the build tool. This is the
+  third project. It depends on the initial task of the second project (S7
+  Scheme integration). In this project, we will complete the initial xmake
+  support on Ubuntu from building to packaging.
 
   <section|Tasks>
 
@@ -30,27 +33,27 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_3>
+      3_3
     </cell>|<\cell>
-      \;
+      Darcy
     </cell>|<\cell>
       Github Action to build and test on Ubuntu
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_4>
+      3_4
     </cell>|<\cell>
-      \;
+      Darcy
     </cell>|<\cell>
-      Github Action to build and test on macOS
+      setup Github Action cache on Ubuntu
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_5>
+      3_5
     </cell>|<\cell>
-      \;
+      Darcy
     </cell>|<\cell>
-      Github Action to build and test on Windows
+      Github Action to package on Ubuntu
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
@@ -115,22 +118,6 @@
       Darcy
     </cell>|<\cell>
       use packages provided by apt on UOS
-    </cell>>|<row|<\cell>
-      Feature
-    </cell>|<\cell>
-      <todo|3_14>
-    </cell>|<\cell>
-      jingkaimori
-    </cell>|<\cell>
-      Remove the bundled nowide
-    </cell>>|<row|<\cell>
-      Feature
-    </cell>|<\cell>
-      <todo|3_15>
-    </cell>|<\cell>
-      jingkaimori
-    </cell>|<\cell>
-      doxygen file generation
     </cell>>>>
   </wide-tabular>
 
