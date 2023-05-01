@@ -951,7 +951,11 @@ wheel_state (QWheelEvent* event) {
   Qt::MouseButtons bstate= event->buttons ();
   Qt::KeyboardModifiers kstate= event->modifiers ();
   if ((bstate & Qt::LeftButton     ) != 0) i += 1;
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
   if ((bstate & Qt::MidButton      ) != 0) i += 2;
+#else
+  if ((bstate & Qt::MiddleButton      ) != 0) i += 2;
+#endif
   if ((bstate & Qt::RightButton    ) != 0) i += 4;
   if ((bstate & Qt::XButton1       ) != 0) i += 8;
   if ((bstate & Qt::XButton2       ) != 0) i += 16;
@@ -976,8 +980,7 @@ QTMWidget::wheelEvent(QWheelEvent *event) {
   if (is_nil (tmwid)) return; 
   if (as_bool (call ("wheel-capture?"))) {
 #if (QT_VERSION >= 0x060000)
-    QPointF pos  = event->position();
-    QPoint  point= QPointF (pos.x(), pos.y()) + origin();
+    QPoint  point= (event->position()).toPoint() + origin();
 #else
     QPoint  point= event->pos() + origin();
 #endif
@@ -996,7 +999,13 @@ QTMWidget::wheelEvent(QWheelEvent *event) {
                               mstate, texmacs_time (), data);
   }
   else if (QApplication::keyboardModifiers() == Qt::ControlModifier) {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+    // see https://doc.qt.io/qt-5/qwheelevent-obsolete.html#delta
     if (event->delta() > 0)
+#else
+    QPoint numDegrees = event->angleDelta() / 8;
+    if (numDegrees.y() > 0)
+#endif
       call ("zoom-in", object (sqrt (sqrt (2.0))));
     else
       call ("zoom-out", object (sqrt (sqrt (2.0))));
