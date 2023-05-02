@@ -53,7 +53,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Github Action to package on Ubuntu
+      script to package on Debian
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
@@ -118,6 +118,14 @@
       Darcy
     </cell>|<\cell>
       use packages provided by apt on UOS
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      3_14
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Github Action to package on Ubuntu
     </cell>>>>
   </wide-tabular>
 
