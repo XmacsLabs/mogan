@@ -66,7 +66,7 @@ jobs:
       - name: update repo
         run: |
           xrepo update-repo
-          echo $PATH
+          echo $env:PATH
       - name: Build by mingw
         shell: msys2 {0}
         id: build
