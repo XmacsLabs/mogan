@@ -34,6 +34,12 @@ jobs:
             p7zip 
             git 
             make 
+      # Force xmake to a specific folder (for cache)
+      - name: Set xmake global dir and PATH
+        run: |
+          echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/.xmake-global" >> $GITHUB_ENV
+          echo "${Qt5_Dir}/bin/" >> $GITHUB_PATH
+          echo "${GITHUB_WORKSPACE}/.xmake-cache" >> $GITHUB_PATH
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.8
@@ -60,9 +66,8 @@ jobs:
         shell: msys2 {0}
         id: build
         run: |
-          export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
           xrepo update-repo
-          xmake config --yes --verbose --diagnosis --plat=mingw --mingw=/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/ --qt=${Qt5_Dir}
+          xmake config --yes --verbose --diagnosis --plat=mingw --qt=${Qt5_Dir}
           xmake build --yes --verbose --diagnosis --jobs=8 --all
           windeployqt --compiler-runtime ./build/mingw/x86_64/release/ -printsupport
           xmake install mogan_install
@@ -76,5 +81,4 @@ jobs:
       - name: Test
         shell: msys2 {0}
         run: |
-          export PATH=/mingw64/bin/:${Qt5_Dir}/bin/:${PATH}
           xmake run --yes --verbose --diagnosis --group=tests
