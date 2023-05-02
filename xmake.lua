@@ -558,7 +558,7 @@ target("mogan_install") do
                 path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
             for _,size in ipairs({32, 48, 64, 128, 256, 512}) do
                 os.cp (
-                    "TeXmacs/misc/images/xmacs-"..size..".png", 
+                    "TeXmacs/misc/images/texmacs-"..size..".png",
                     path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
             end
         end)
