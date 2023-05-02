@@ -370,7 +370,6 @@ target("libmogan") do
             "src/Plugins/Freetype/**.cpp",
             "src/Plugins/Pdf/**.cpp",
             "src/Plugins/Ghostscript/**.cpp",
-            "src/Plugins/Imlib2/**.cpp",
             "src/Plugins/Ispell/**.cpp",
             "src/Plugins/Metafont/**.cpp",
             "src/Plugins/LaTeX_Preview/**.cpp",
