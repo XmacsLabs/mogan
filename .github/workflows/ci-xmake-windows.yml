@@ -66,8 +66,7 @@ jobs:
       - name: update repo
         run: |
           xrepo update-repo
-          echo ${{ github.path }}
-          echo $GITHUB_PATH
+          Get-Content ${{ github.path }}
       - name: Build by mingw
         shell: msys2 {0}
         id: build
