@@ -43,6 +43,79 @@
       Darcy
     </cell>|<\cell>
       S7: procedure-symbol-name
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      2_5
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7: disable benchmark-menu-expend
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      2_6
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7: fix with-global by mgubi
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      2_7
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7: Fix hang of shortcut editor
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      2_8
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7: activate keyboard in chinese doc
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      2_9
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7: Fix Bibtex related S7 Scheme bugs
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      2_10
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7: implement iota
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      2_11
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7: adopt hex character literal
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      2_12
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7: compute-interactive-args failed for lazy-define, just use-modules
+      to fix doc search
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      2_13
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7: upgrade from 9.12 to 10.5
     </cell>>>>
   </wide-tabular>
 
