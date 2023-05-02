@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|tmdoc>
+<style|<tuple|tmdoc|devel>>
 
 <\body>
   <tmdoc-title|xmake Integration on Ubuntu>
@@ -24,7 +24,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <hlink|3_2|3_2.tm>
+      <dlink|3_2>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -57,7 +57,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <hlink|3_6|3_6.tm>
+      <dlink|3_6>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -65,7 +65,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <hlink|3_7|3_7.tm>
+      <dlink|3_7>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -97,7 +97,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <hlink|3_11|3_11.tm>
+      <dlink|3_11>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
