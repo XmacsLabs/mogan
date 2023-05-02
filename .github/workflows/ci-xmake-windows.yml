@@ -41,7 +41,6 @@ jobs:
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.8
-          actions-cache-folder: '.xmake-cache'
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -64,9 +63,11 @@ jobs:
       - name: Set PATH
         run: |
           echo "${{ env.Qt5_Dir }}\bin\" >> "${{ github.path }}"
-          echo "${{ github.workspace }}\.xmake-cache" >> "${{ github.path }}"
       - name: update repo
-        run: xrepo update-repo
+        run: |
+          xrepo update-repo
+          echo ${{ github.path }}
+          echo $GITHUB_PATH
       - name: Build by mingw
         shell: msys2 {0}
         id: build
