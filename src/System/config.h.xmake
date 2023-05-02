@@ -73,9 +73,6 @@ ${define LINKED_CAIRO}
 /* Link freetype library with TeXmacs */
 #define LINKED_FREETYPE 1
 
-/* Link imlib2 library with TeXmacs */
-${define LINKED_IMLIB2}
-
 ${define LINKED_SQLITE3}
 
 ${define MACOSX_EXTENSIONS}
@@ -138,9 +135,6 @@ ${define USE_GS}
 
 /* Use iconv library */
 ${define USE_ICONV}
-
-/* Use imlib2 library */
-${define USE_IMLIB2}
 
 ${define USE_SPARKLE}
 
