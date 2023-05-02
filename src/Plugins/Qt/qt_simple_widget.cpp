@@ -25,20 +25,6 @@
 #endif
 
 
-#ifdef USE_CAIRO
-#include "Cairo/cairo_renderer.hpp"
-#include "Cairo/tm_cairo.hpp"
-
-#if defined (Q_OS_LINUX)
-#include <QX11Info>
-extern Drawable qt_x11Handle (const QPaintDevice *pd);
-extern const QX11Info *qt_x11Info (const QPaintDevice *pd);
-#undef KeyPress  // conflict between QEvent::KeyPress and X11 defintion
-#endif // Q_WS_X11
-#endif // USE_CAIRO
-
-
-
 qt_simple_widget_rep::qt_simple_widget_rep ()
   : qt_widget_rep (simple_widget),  sequencer (0) {
   backingPixmap= headless_mode ? NULL : new QPixmap ();
@@ -449,32 +435,8 @@ basic_renderer
 qt_simple_widget_rep::get_renderer() {
   ASSERT (backingPixmap != NULL,
 	  "internal error in qt_simple_widget_rep::get_renderer");
-#ifdef USE_CAIRO
-  cairo_renderer_rep *ren = the_cairo_renderer ();
-  cairo_surface_t *surf;
-#ifdef Q_OS_LINUX
-  //const QX11Info & info = x11Info();//qt_x11Info (this);
-  //    Display *dpy = x11Info().display();
-  //*backingPixmap = QPixmap (width(),height());
-  //cout << backingPixmap->width() << LF;
-  Display *dpy = QX11Info::display();
-  Drawable drawable = backingPixmap->handle();
-  Visual *visual = (Visual*)(backingPixmap->x11Info().visual());
-  surf = tm_cairo_xlib_surface_create (dpy, drawable, visual,
-                                       backingPixmap->width (),
-				       backingPixmap->height ());
-#elif defined (Q_OS_MAC)
-  surf = tm_cairo_quartz_surface_create_for_cg_context
-    ((CGContextRef)(this->macCGHandle()), width(), height());
-#endif
-  cairo_t *ct = tm_cairo_create (surf);
-  ren->begin (ct);
-  tm_cairo_surface_destroy (surf);
-  tm_cairo_destroy (ct);
-#else
   qt_renderer_rep * ren = the_qt_renderer();
   ren->begin ((void*) backingPixmap);
-#endif
   return ren;
 }
 
