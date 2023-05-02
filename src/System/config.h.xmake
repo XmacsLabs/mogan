@@ -64,9 +64,6 @@ ${define HAVE_X11_XLIB_H}
 
 ${define HAVE_X11_XUTIL_H}
 
-/* Link cairo library with TeXmacs */
-${define LINKED_CAIRO}
-
 /* Link freetype library with TeXmacs */
 #define LINKED_FREETYPE 1
 
@@ -118,9 +115,6 @@ ${define STDC_HEADERS}
 #define TEXMACS_REVISION "${VERSION}"
 
 ${define TM_DYNAMIC_LINKING}
-
-/* Use cairo library */
-${define USE_CAIRO}
 
 /* Use freetype library */
 ${define USE_FREETYPE}
