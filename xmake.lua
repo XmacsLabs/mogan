@@ -100,7 +100,6 @@ set_configvar("LINKED_CAIRO", false)
 set_configvar("LINKED_SQLITE3", 1)
 set_configvar("USE_FREETYPE", 1)
 set_configvar("USE_GS", 1)
-set_configvar("LINKED_IMLIB2", false)
 set_configvar("PDF_RENDERER", 1)
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 
