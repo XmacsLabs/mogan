@@ -1,10 +1,10 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|british>>
+<style|<tuple|tmdoc|british|devel>>
 
 <\body>
   <\hide-preamble>
-    <assign|dlink|<macro|name|<hlink|[<arg|name>]|<merge|<arg|name>|.tm>>>>
+    \;
   </hide-preamble>
 
   <tmdoc-title|Mogan Editor 1.2.0>
