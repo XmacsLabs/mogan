@@ -63,13 +63,14 @@ jobs:
       # Force xmake to a specific folder (for cache)
       - name: Set PATH
         run: |
-          echo "${Qt5_Dir}\bin\" >> "${{ github.path }}"
+          echo "${{ env.Qt5_Dir }}\bin\" >> "${{ github.path }}"
           echo "${{ github.workspace }}\.xmake-cache" >> "${{ github.path }}"
+      - name: update repo
+        run: xrepo update-repo
       - name: Build by mingw
         shell: msys2 {0}
         id: build
         run: |
-          xrepo update-repo
           xmake config --yes --verbose --diagnosis --plat=mingw --qt=${Qt5_Dir}
           xmake build --yes --verbose --diagnosis --jobs=8 --all
           windeployqt --compiler-runtime ./build/mingw/x86_64/release/ -printsupport
