@@ -142,6 +142,22 @@
       1_26
     </cell>|<\cell>
       Remove the yacas plugin
+    </cell>>|<row|<\cell>
+      1_27
+    </cell>|<\cell>
+      Remove mathemagix related plugins
+    </cell>>|<row|<\cell>
+      1_28
+    </cell>|<\cell>
+      Remove the mycas plugin
+    </cell>>|<row|<\cell>
+      1_29
+    </cell>|<\cell>
+      Remove the qcl plugin
+    </cell>>|<row|<\cell>
+      1_30
+    </cell>|<\cell>
+      Remove the macaulay2 plugin
     </cell>>>>
   </wide-tabular>
 
