@@ -126,6 +126,62 @@
       Darcy
     </cell>|<\cell>
       Github Action to package on Ubuntu
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      3_15
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Support mingw/msys building process
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      3_16
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Github Action to build and test on msys environment
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      3_17
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Github Action to package on msys environment
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      3_18
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Support wasm building process
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      3_19
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Github Action to build for wasm
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <todo|3_20>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      Github Action to test for wasm
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <todo|3_21>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      Github Action to deploy for wasm
     </cell>>>>
   </wide-tabular>
 
