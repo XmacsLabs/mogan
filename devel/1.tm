@@ -178,6 +178,10 @@
       1_35
     </cell>|<\cell>
       Remove the Updater C++ plugin
+    </cell>>|<row|<\cell>
+      1_36
+    </cell>|<\cell>
+      Remove the Mplayer C++ plugin
     </cell>>>>
   </wide-tabular>
 
