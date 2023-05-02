@@ -1,4 +1,4 @@
-<TeXmacs|1.99.11>
+<TeXmacs|2.1.1>
 
 <style|source>
 
@@ -30,7 +30,7 @@
 
   <copy-theme|carved-wood|frame>
 
-  <assign|carved-wood-frame-picture|tmfs://artwork/pictures/frames/carved-wood-frame.jpg>
+  <assign|carved-wood-frame-picture|$TEXMACS_PATH/misc/pictures/frames/carved-wood-frame.jpg>
 
   <assign|carved-wood-frame-effect|<eff-make-transparent|0|white>>
 
@@ -60,7 +60,7 @@
 
   <copy-theme|decorated-wood|frame>
 
-  <assign|decorated-wood-frame-picture|tmfs://artwork/pictures/frames/decorated-wood-frame.jpg>
+  <assign|decorated-wood-frame-picture|$TEXMACS_PATH/misc/pictures/frames/decorated-wood-frame.jpg>
 
   <assign|decorated-wood-frame-effect|<eff-make-transparent|0|white>>
 
@@ -90,7 +90,7 @@
 
   <copy-theme|black-floral1|frame>
 
-  <assign|black-floral1-frame-picture|tmfs://artwork/pictures/frames/black-floral1-frame.png>
+  <assign|black-floral1-frame-picture|$TEXMACS_PATH/misc/pictures/frames/black-floral1-frame.png>
 
   <assign|black-floral1-frame-effect|<eff-make-transparent|0|white>>
 
@@ -136,7 +136,7 @@
 
   <copy-theme|black-floral2|frame>
 
-  <assign|black-floral2-frame-picture|tmfs://artwork/pictures/frames/black-floral2-frame.png>
+  <assign|black-floral2-frame-picture|$TEXMACS_PATH/misc/pictures/frames/black-floral2-frame.png>
 
   <assign|black-floral2-frame-effect|<eff-make-transparent|0|white>>
 

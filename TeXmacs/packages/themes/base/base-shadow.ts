@@ -1,4 +1,4 @@
-<TeXmacs|1.99.11>
+<TeXmacs|2.1.1>
 
 <style|source>
 
@@ -38,7 +38,7 @@
     </src-comment>
   </active*>
 
-  <assign|shadow-picture|tmfs://artwork/pictures/shadows/drop-shadow.png>
+  <assign|shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/drop-shadow.png>
 
   <assign|shadow-effect|0>
 

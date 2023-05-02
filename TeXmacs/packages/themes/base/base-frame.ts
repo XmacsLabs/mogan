@@ -1,4 +1,4 @@
-<TeXmacs|1.99.11>
+<TeXmacs|2.1.1>
 
 <style|source>
 
@@ -40,7 +40,7 @@
     </src-comment>
   </active*>
 
-  <assign|frame-picture|tmfs://artwork/pictures/frames/carved-wood-frame.jpg>
+  <assign|frame-picture|$TEXMACS_PATH/misc/pictures/frames/carved-wood-frame.jpg>
 
   <assign|frame-effect|<eff-make-transparent|0|white>>
 

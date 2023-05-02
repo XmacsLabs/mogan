@@ -1,4 +1,4 @@
-<TeXmacs|1.99.11>
+<TeXmacs|2.1.1>
 
 <style|source>
 
@@ -55,7 +55,7 @@
 
   <copy-theme|bend-in-contour|drop-contour>
 
-  <assign|bend-in-contour-shadow-picture|tmfs://artwork/pictures/shadows/bend-in-shadow.png>
+  <assign|bend-in-contour-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/bend-in-shadow.png>
 
   <assign|bend-in-contour-shadow-lcrop|0.05>
 
@@ -83,7 +83,7 @@
 
   <copy-theme|bend-out-contour|bend-in-contour>
 
-  <assign|bend-out-contour-shadow-picture|tmfs://artwork/pictures/shadows/bend-out-shadow.png>
+  <assign|bend-out-contour-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/bend-out-shadow.png>
 
   <assign|bend-out-contour|<macro|body|<with-bend-out-contour|<art-shadow|<arg|body>>>>>
 
@@ -95,7 +95,7 @@
 
   <copy-theme|diagonal-bend-in-contour|bend-in-contour>
 
-  <assign|diagonal-bend-in-contour-shadow-picture|tmfs://artwork/pictures/shadows/bend-diag-in-shadow.png>
+  <assign|diagonal-bend-in-contour-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/bend-diag-in-shadow.png>
 
   <assign|diagonal-bend-in-contour-shadow-lcrop|0.04>
 
@@ -117,7 +117,7 @@
 
   <copy-theme|drop-shadow|shadow>
 
-  <assign|drop-shadow-shadow-picture|tmfs://artwork/pictures/shadows/drop-shadow.png>
+  <assign|drop-shadow-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/drop-shadow.png>
 
   <assign|drop-shadow-shadow-align|south east>
 
@@ -133,7 +133,7 @@
 
   <copy-theme|bend-in-shadow|drop-shadow>
 
-  <assign|bend-in-shadow-shadow-picture|tmfs://artwork/pictures/shadows/bend-in-shadow.png>
+  <assign|bend-in-shadow-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/bend-in-shadow.png>
 
   <assign|bend-in-shadow-shadow-lcrop|0.05>
 
@@ -197,7 +197,7 @@
 
   <copy-theme|bend-out-shadow|bend-in-shadow>
 
-  <assign|bend-out-shadow-shadow-picture|tmfs://artwork/pictures/shadows/bend-out-shadow.png>
+  <assign|bend-out-shadow-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/bend-out-shadow.png>
 
   <assign|bend-out-shadow|<macro|body|<with-bend-out-shadow|<art-shadow|<arg|body>>>>>
 
@@ -233,7 +233,7 @@
 
   <copy-theme|half-bend-in-down|drop-down>
 
-  <assign|half-bend-in-down-shadow-picture|tmfs://artwork/pictures/shadows/bend-in-shadow.png>
+  <assign|half-bend-in-down-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/bend-in-shadow.png>
 
   <assign|half-bend-in-down-shadow-bcrop|0.05>
 
@@ -253,7 +253,7 @@
 
   <copy-theme|classic-shadow|shadow>
 
-  <assign|classic-shadow-shadow-picture|tmfs://artwork/pictures/shadows/drop-shadow.png>
+  <assign|classic-shadow-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/drop-shadow.png>
 
   <assign|classic-shadow|<macro|body|<with-classic-shadow|<deco-shadow|<arg|body>>>>>
 
@@ -265,7 +265,7 @@
 
   <copy-theme|rounded-shadow|shadow>
 
-  <assign|rounded-shadow-shadow-picture|tmfs://artwork/pictures/shadows/round-shadow.png>
+  <assign|rounded-shadow-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/round-shadow.png>
 
   <assign|rounded-shadow|<macro|body|<with-rounded-shadow|<deco-shadow|<arg|body>>>>>
 
@@ -277,7 +277,7 @@
 
   <copy-theme|angular-shadow|shadow>
 
-  <assign|angular-shadow-shadow-picture|tmfs://artwork/pictures/shadows/angular-shadow.png>
+  <assign|angular-shadow-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/angular-shadow.png>
 
   <assign|angular-shadow|<macro|body|<with-angular-shadow|<deco-shadow|<arg|body>>>>>
 
@@ -289,7 +289,7 @@
 
   <copy-theme|cartoon-shadow|shadow>
 
-  <assign|cartoon-shadow-shadow-picture|tmfs://artwork/pictures/shadows/cartoon-shadow.png>
+  <assign|cartoon-shadow-shadow-picture|$TEXMACS_PATH/misc/pictures/shadows/cartoon-shadow.png>
 
   <assign|cartoon-shadow|<macro|body|<with-cartoon-shadow|<deco-shadow|<arg|body>>>>>
 
