@@ -40,6 +40,12 @@
       Darcy
     </cell>|<\cell>
       Upgrade Qt
+    </cell>>|<row|<\cell>
+      <dlink|6>
+    </cell>|<\cell>
+      jinkaimori
+    </cell>|<\cell>
+      Avoid retrieving large pictures from texmacs website
     </cell>>>>
   </wide-tabular>
 
