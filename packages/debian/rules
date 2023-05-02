@@ -10,4 +10,13 @@
 export DH_VERBOSE=1
 
 %:
-	dh --parallel $@ 
+	dh $@ --parallel
+
+override_dh_auto_configure:
+	xmake config -m release --yes --root
+
+override_dh_auto_build:
+	xmake build --yes --verbose --diagnosis --jobs=8 --all --root
+
+override_dh_auto_install:
+	xmake install --root -o debian/mogan/usr mogan_install
