@@ -23,18 +23,6 @@
     (stree->tree a)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Guile
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(define (debug-backtrace-errors?) (in? 'backtrace (debug-options)))
-(tm-define (debug-toggle-backtrace-errors)
-  (:synopsis "Toggle scheme backtracing of errors.")
-  (:check-mark "v" debug-backtrace-errors?)
-  (if (debug-backtrace-errors?)
-      (debug-disable 'backtrace 'debug)
-      (debug-enable 'backtrace 'debug)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; General debugging options
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -50,8 +38,6 @@
   (xxx))
 
 (menu-bind debug-menu
-  (-> "Guile"
-      ("Backtrace errors" (debug-toggle-backtrace-errors)))
   (-> "Execute"
       ("Execute system command" (interactive system))
       ("Evaluate scheme expression" (interactive footer-eval)))
