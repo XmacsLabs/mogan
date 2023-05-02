@@ -95,7 +95,6 @@ add_defines("USE_QT_PRINTER")
 set_configvar("USE_ICONV", 1)
 set_configvar("USE_CURL", 1)
 set_configvar("USE_SQLITE3", 1)
-set_configvar("LINKED_CAIRO", false)
 set_configvar("LINKED_SQLITE3", 1)
 set_configvar("USE_FREETYPE", 1)
 set_configvar("USE_GS", 1)
@@ -365,7 +364,6 @@ target("libmogan") do
             "src/Texmacs/Window/**.cpp",
             "src/Typeset/**.cpp",
             "src/Plugins/Bibtex/**.cpp",
-            "src/Plugins/Cairo/**.cpp",
             "src/Plugins/Database/**.cpp",
             "src/Plugins/Freetype/**.cpp",
             "src/Plugins/Pdf/**.cpp",
