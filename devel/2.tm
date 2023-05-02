@@ -35,6 +35,14 @@
       Darcy
     </cell>|<\cell>
       Deprecate GNU Guile integration
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <hlink|2_4|2_4.tm>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7: procedure-symbol-name
     </cell>>>>
   </wide-tabular>
 
