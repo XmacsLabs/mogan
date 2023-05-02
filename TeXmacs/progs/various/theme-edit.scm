@@ -20,7 +20,7 @@
 
 (tm-define (basic-themes)
   (list "blackboard" "bluish" "boring-white" "dark-vador" "granite"
-        "ice" "manila-paper" "metal" "pale-blue" "parchment"
+        "ice" "manila-paper" "metal" "pale-blue"
         "pine" "reddish" "ridged-paper" "rough-paper"
         "xperiment"))
 
