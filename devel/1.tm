@@ -165,23 +165,23 @@
     </cell>>|<row|<\cell>
       1_32
     </cell>|<\cell>
-      Remove the Axel C++ plugin
+      Remove the Axel C++ interface
     </cell>>|<row|<\cell>
       1_33
     </cell>|<\cell>
-      Remove the Cairo C++ plugin
+      Remove the Cairo C++ interface
     </cell>>|<row|<\cell>
       1_34
     </cell>|<\cell>
-      Remove the Imlib2 C++ plugin
+      Remove the Imlib2 C++ interface
     </cell>>|<row|<\cell>
       1_35
     </cell>|<\cell>
-      Remove the Updater C++ plugin
+      Remove the Fira fonts
     </cell>>|<row|<\cell>
       1_36
     </cell>|<\cell>
-      Remove the Mplayer C++ plugin
+      Remove the Mplayer C++ interface
     </cell>>>>
   </wide-tabular>
 
