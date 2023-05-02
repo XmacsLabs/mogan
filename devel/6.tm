@@ -37,6 +37,22 @@
       jingkaimori
     </cell>|<\cell>
       Remove definition of <slink|tmfs://artworks/>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      6_4
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Remove the parchment theme to reduce the size
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      6_5
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Remove un-used pictures
     </cell>>>>
   </wide-tabular>
 
