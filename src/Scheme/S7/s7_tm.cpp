@@ -357,11 +357,4 @@ initialize_scheme () {
   initialize_smobs ();
   initialize_glue ();
   object_stack= s7_name_to_value (tm_s7, "object-stack");
-  
-    // uncomment to have a guile repl available at startup	
-    //	gh_repl(guile_argc, guile_argv);
-    //scm_shell (guile_argc, guile_argv);
-  
-  
 }
-
