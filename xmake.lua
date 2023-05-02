@@ -364,7 +364,6 @@ target("libmogan") do
             "src/Texmacs/Server/**.cpp",
             "src/Texmacs/Window/**.cpp",
             "src/Typeset/**.cpp",
-            "src/Plugins/Axel/**.cpp",
             "src/Plugins/Bibtex/**.cpp",
             "src/Plugins/Cairo/**.cpp",
             "src/Plugins/Database/**.cpp",
