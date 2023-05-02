@@ -158,6 +158,26 @@
       1_30
     </cell>|<\cell>
       Remove the macaulay2 plugin
+    </cell>>|<row|<\cell>
+      1_31
+    </cell>|<\cell>
+      Remove the gtybalt plugin
+    </cell>>|<row|<\cell>
+      1_32
+    </cell>|<\cell>
+      Remove the Axel C++ plugin
+    </cell>>|<row|<\cell>
+      1_33
+    </cell>|<\cell>
+      Remove the Cairo C++ plugin
+    </cell>>|<row|<\cell>
+      1_34
+    </cell>|<\cell>
+      Remove the Imlib2 C++ plugin
+    </cell>>|<row|<\cell>
+      1_35
+    </cell>|<\cell>
+      Remove the Updater C++ plugin
     </cell>>>>
   </wide-tabular>
 
