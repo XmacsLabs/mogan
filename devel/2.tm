@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|tmdoc>
+<style|<tuple|tmdoc|devel>>
 
 <\body>
   <tmdoc-title|S7 Integration>
@@ -38,7 +38,7 @@
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
-      <hlink|2_4|2_4.tm>
+      <dlink|2_4>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -111,7 +111,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      2_13
+      <dlink|2_13>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
