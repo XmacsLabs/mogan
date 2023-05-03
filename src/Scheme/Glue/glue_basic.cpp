@@ -10675,9 +10675,6 @@ initialize_glue_basic () {
   tmscm_install_procedure ("tmdb-inspect-history",  tmg_tmdb_inspect_history, 2, 0, 0);
   tmscm_install_procedure ("tmdb-get-completions",  tmg_tmdb_get_completions, 2, 0, 0);
   tmscm_install_procedure ("tmdb-get-name-completions",  tmg_tmdb_get_name_completions, 2, 0, 0);
-  tmscm_install_procedure ("supports-sql?",  tmg_supports_sqlP, 0, 0, 0);
-  tmscm_install_procedure ("sql-exec",  tmg_sql_exec, 2, 0, 0);
-  tmscm_install_procedure ("sql-quote",  tmg_sql_quote, 1, 0, 0);
   tmscm_install_procedure ("server-start",  tmg_server_start, 0, 0, 0);
   tmscm_install_procedure ("server-stop",  tmg_server_stop, 0, 0, 0);
   tmscm_install_procedure ("server-read",  tmg_server_read, 1, 0, 0);
