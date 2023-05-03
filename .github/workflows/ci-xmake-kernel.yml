@@ -1,0 +1,66 @@
+name: Build and Test for the Kernel
+
+on:
+  push:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/System/Memory/**'
+      - 'src/System/IO/**'
+      - 'src/Kernel/Abstractions/**'
+      - 'src/Kernel/Containers/**'
+      - 'src/Kernel/Types/**'
+      - 'src/Data/Drd/**'
+      - 'tests/Kernel/**'
+      - '.github/workflows/ci-xmake-kernel.yml'
+  pull_request:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/System/Memory/**'
+      - 'src/System/IO/**'
+      - 'src/Kernel/Abstractions/**'
+      - 'src/Kernel/Containers/**'
+      - 'src/Kernel/Types/**'
+      - 'src/Data/Drd/**'
+      - 'tests/Kernel/**'
+      - '.github/workflows/ci-xmake-kernel.yml'
+
+jobs:
+  linuxbuild:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc \
+              libpng-dev zlib1g-dev libjpeg-turbo8-dev \
+              libfreetype-dev libsqlite3-dev
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: set XMAKE_GLOBALDIR
+        run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
+
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.7.8
+          actions-cache-folder: '.xmake-cache'
+
+      - name: xmake repo --update
+        run: xmake repo --update
+
+      - name: cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+            ${{ runner.workspace }}/build/.build_cache
+          key: ${{ runner.os }}-kernel-${{ hashFiles('**/xmake.lua') }}
+
+      - name: config
+        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build --yes
+      - name: build
+        id: build
+        run: xmake build libkernel --yes --verbose --diagnosis --all
+      - name: test
+        run: xmake run --yes --verbose --diagnosis --group=kernel_tests
