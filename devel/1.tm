@@ -33,9 +33,11 @@
   <section|Tasks>
 
   Tasks in this project must be completed via pull requests which only
-  contains file deletion commits. For Mogan Editor v1.3.x, we will fork the
-  latest codebase of GNU <TeXmacs> again. And the first project of Mogan
-  Editor v1.3.x will be cleaning for Mogan Editor 1.3.x.
+  contains file deletion commits. (If it does not only contains file
+  deletions, please separate it in several pull requests.) For Mogan Editor
+  v1.3.x, we will fork the latest codebase of GNU <TeXmacs> again. And the
+  first project of Mogan Editor v1.3.x will be cleaning for Mogan Editor
+  1.3.x.
 
   <\wide-tabular>
     <tformat|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|0ln>|<cwith|2|2|1|-1|cell-tborder|0ln>|<cwith|1|1|1|1|cell-lborder|0ln>|<cwith|1|1|2|2|cell-rborder|0ln>|<table|<row|<\cell>
@@ -182,6 +184,18 @@
       1_36
     </cell>|<\cell>
       Remove the Mplayer C++ interface
+    </cell>>|<row|<\cell>
+      1_37
+    </cell>|<\cell>
+      Remove docs in plain text for GNU <TeXmacs>
+    </cell>>|<row|<\cell>
+      1_38
+    </cell>|<\cell>
+      Remove the texgyre fonts
+    </cell>>|<row|<\cell>
+      1_39
+    </cell>|<\cell>
+      Remove the Stix fonts
     </cell>>>>
   </wide-tabular>
 
