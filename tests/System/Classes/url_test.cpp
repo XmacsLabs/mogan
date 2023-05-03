@@ -19,7 +19,11 @@ public:
   url tmfs_1= url_system ("tmfs://git/help");
   url http_1= url_system ("http://texmacs.org");
   url https_1= url_system ("https://ustc.edu.cn");
+  #ifdef OS_MINGW
+  url root_tmp= url ("$TEMP");
+  #else
   url root_tmp= url ("/tmp");
+  #endif
   url root_no_such_tmp= url ("/no_such_tmp");
 
 private slots:
@@ -36,7 +40,6 @@ private slots:
 
 void TestURL::test_exists () {
   // two cases: root directory
-  // TODO: Windows compatibility
   QVERIFY (exists (root_tmp));
   QVERIFY (!exists (root_no_such_tmp));
 }
@@ -72,7 +75,11 @@ void TestURL::test_is_rooted_web () {
 
 
 void TestURL::test_descends () {
+  #ifdef OS_MINGW
+  QVERIFY (descends (url_system ("$TEMP/a.txt"), root_tmp));
+  #else
   QVERIFY (descends (url_system ("/tmp/a.txt"), root_tmp));
+  #endif
   QVERIFY (descends (url_system ("$TEXMACS_PATH/doc/main/man-manual.en.tm"),
                      url_system ("$TEXMACS_PATH")));
   QVERIFY (!descends (root_no_such_tmp, root_tmp));
