@@ -61,6 +61,6 @@ jobs:
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build --yes
       - name: build
         id: build
-        run: xmake build --yes --verbose --diagnosis --all libkernel
+        run: xmake --yes --verbose --diagnosis --all --group=kernel_tests build
       - name: test
-        run: xmake run --yes --verbose --diagnosis --group=kernel_tests
+        run: bin/test_kernel
