@@ -52,12 +52,6 @@ tmg_get_texmacs_data_path () {
   return url_to_tmscm (out);
 }
 
-tmscm
-tmg_get_texmacs_config_path () {
-  url out= config_path ();
-  return url_to_tmscm (out);
-}
-
 void
 initialize_glue_xmacs () {
   tmscm_install_procedure ("show-about-qt", tmg_show_about_qt, 0, 0, 0);
@@ -66,5 +60,4 @@ initialize_glue_xmacs () {
   tmscm_install_procedure ("qt-version", tmg_qt_version, 0, 0, 0);
   tmscm_install_procedure ("get-texmacs-cache-path",  tmg_get_texmacs_cache_path, 0, 0, 0);
   tmscm_install_procedure ("get-texmacs-data-path",  tmg_get_texmacs_data_path, 0, 0, 0);
-  tmscm_install_procedure ("get-texmacs-config-path",  tmg_get_texmacs_config_path, 0, 0, 0);
 }

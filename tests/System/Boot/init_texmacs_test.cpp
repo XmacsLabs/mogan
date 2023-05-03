@@ -19,7 +19,6 @@ class TestInitTeXmacs: public QObject {
 private slots:
   void test_cache_path ();
   void test_data_path ();
-  void test_config_path ();
 };
 
 void TestInitTeXmacs::test_cache_path () {
@@ -33,13 +32,6 @@ void TestInitTeXmacs::test_data_path () {
   url data_url= data_path ();
 #ifdef OS_GNU_LINUX
   QVERIFY (as_system_string (data_url) == as_system_string (url_system ("$HOME/.local/share/app.mogan.editor")));
-#endif
-}
-
-void TestInitTeXmacs::test_config_path () {
-  url config_url= config_path ();
-#ifdef OS_GNU_LINUX
-  QVERIFY (as_system_string (config_url) == as_system_string (url_system ("$HOME/.config/app.mogan.editor")));
 #endif
 }
 

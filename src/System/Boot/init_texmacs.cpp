@@ -108,20 +108,6 @@ data_path () {
   return url_system ("$TEXMACS_HOME_PATH");
 }
 
-url
-config_path () {
-#ifdef OS_GNU_LINUX
-  string env_config_home= get_env ("XDG_CONFIG_HOME");
-  if (is_empty (env_config_home)) {
-    return url_system ("$HOME/.config/app.mogan.editor");
-  } else {
-    return url_system ("$XDG_CONFIG_HOME/app.mogan.editor");
-  }
-#endif
-
-  return url_system ("$TEXMACS_HOME_PATH");
-}
-
 /******************************************************************************
 * Initialize main paths
 ******************************************************************************/
@@ -222,7 +208,6 @@ static void
 init_user_dirs () {
   make_dir (cache_path ());
   make_dir (data_path ());
-  make_dir (config_path ());
   make_dir ("$TEXMACS_HOME_PATH");
   make_dir ("$TEXMACS_HOME_PATH/bin");
   make_dir ("$TEXMACS_HOME_PATH/doc");
