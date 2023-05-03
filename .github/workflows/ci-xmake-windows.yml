@@ -81,6 +81,10 @@ jobs:
           windeployqt --compiler-runtime ./build/mingw/x86_64/release/ -printsupport
           xmake install mogan_install
           windeployqt --compiler-runtime ./build/package/bin/ -printsupport
+      - name: test
+        shell: msys2 {0}
+        run: |
+          xmake run --yes --verbose --diagnosis --group=tests
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
