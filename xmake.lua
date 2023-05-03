@@ -64,6 +64,7 @@ end
 
 local PDFHUMMUS_VERSION = "4.1"
 add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+add_requires("nowide_standalone 11.2.0", {system=false})
 
 local XMACS_VERSION="1.1.1"
 local INSTALL_DIR="$(buildir)/package"
@@ -172,6 +173,10 @@ target("libkernel") do
     set_policy("check.auto_ignore_flags", false)
     set_languages("c++17")
 
+    if is_plat("mingw") then
+        add_packages("nowide_standalone")
+    end
+
     add_includedirs({
         "$(buildir)",
         "src/System/Memory",
@@ -196,9 +201,6 @@ target("libkernel") do
         add_includedirs({
             "src/Plugins/Windows"
         })
-        add_files({
-            "src/Plugins/Windows/iostream.cpp"
-        })
     end
 end
 
@@ -212,6 +214,9 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
         add_rules("qt.console")
         add_frameworks("QtTest")
 
+        if is_plat("mingw") then
+            add_packages("nowide_standalone")
+        end
         add_includedirs("tests/Base")
         add_includedirs(
             "$(buildir)",
@@ -248,6 +253,7 @@ target("libmogan") do
     add_packages("libcurl")
     add_packages("freetype")
     add_packages("pdfhummus")
+    add_packages("nowide_standalone")
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
@@ -338,11 +344,6 @@ target("libmogan") do
 
     if is_plat("macosx") then
         add_includedirs("src/Plugins/MacOS", {public = true})
-    elseif is_plat("mingw") then
-        add_includedirs({
-                "src/Plugins/Windows", 
-                "src/Plugins/Windows/nowide"
-        }, {public = true})
     else
         add_includedirs("src/Plugins/Unix", {public = true})
     end
@@ -414,6 +415,9 @@ target("mogan") do
         add_frameworks("QtMacExtras")
     end
 
+    if is_plat("mingw") then
+        add_packages("nowide_standalone")
+    end
     add_deps("libmogan")
     add_syslinks("pthread")
 

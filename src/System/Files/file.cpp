@@ -534,18 +534,11 @@ read_directory (url u, bool& error_flag) {
   if (error_flag) return array<string> ();
 
   array<string> dir;
-  #ifdef OS_MINGW
-  while (true) {
-    const char* nextname =  nowide::readir_entry (dp);
-    if (nextname==NULL) break;
-    dir << string (nextname);
-  #else
   struct dirent* ep;
   while (true) {
     ep= readdir (dp);
     if (ep==NULL) break;
     dir << string (ep->d_name);
-  #endif
   }
   (void) closedir (dp);
   merge_sort (dir);
