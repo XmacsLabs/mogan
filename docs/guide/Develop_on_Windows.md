@@ -23,7 +23,7 @@ pacman -Sy git
 pacman -Sy mingw-w64-x86_64-7zip
 ```
 
-**CAUTIONS**: MinGW in msys pacman is too new thus imconpatible for this project. Please install MinGW 8.1.0 for this project, from either Qt installer or from chocolate.
+**CAUTIONS**: MinGW in msys pacman is too new thus incompatible for this project. Please install MinGW 8.1.0 for this project, from either Qt installer or from chocolate.
 
 Sometimes, we need the latest xrepo:
 ``` pwsh
