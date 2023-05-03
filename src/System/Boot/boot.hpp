@@ -37,6 +37,5 @@ void   load_user_preferences ();
 void   save_user_preferences ();
 
 url cache_path ();
-url data_path ();
 
 #endif // defined BOOT_H
