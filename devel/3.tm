@@ -188,7 +188,7 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_22>
+      3_22
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
