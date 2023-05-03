@@ -1,20 +1,29 @@
 # Developing for Windows
 ## Using xmake on Windows
-This project uses variant length array, so cannot be compiled by msvs. It is recommand to use mingw as compiler.
+This project uses variant length array, so cannot be compiled by msvs. It is recommended to use MinGW as compiler.
 
 ### Step 1: Install xmake and Qt 5
 Developers should install such tools:
 
 * [Qt](https://www.qt.io/download)
-    * only qt library for mingw 8.1.0 is needed, it is ok to use install qt5 and qt6. Other qt framework like qt script is not needed.
-    * recommand to install mingw 8.1.0, which can be found in tools.
+    * only Qt library for MinGW 8.1.0 is needed, it is ok to use Qt 5 or Qt 6 (Qt 5.15.2 is a good choice and can be adapted to MinGW 8.1.0). Other Qt framework like Qt script is not needed.
 * [msys environment](https://github.com/msys2/msys2-installer/releases)
-* mingw 8.1.0 compiler (see below).
+* MinGW 8.1.0 compiler (see below).
+    * It is recommended to install MinGW 8.1.0, which can be found in Qt Tools.
 * xmake (see below).
 
 Xmake can be installed either from msys pacman, or from standalone installer for windows.
 
-**CAUTIONS**: Mingw in msys pacman is too new thus imconpatible for this project. Please install mingw 8.1.0 for this project, from either Qt installer or from chocolate.
+It is recommended to use pacman, and other packages need to be installed in this way
+
+```
+pacman -Sy xmake
+pacman -Sy make
+pacman -Sy git
+pacman -Sy mingw-w64-x86_64-7zip
+```
+
+**CAUTIONS**: MinGW in msys pacman is too new thus incompatible for this project. Please install MinGW 8.1.0 for this project, from either Qt installer or from chocolate.
 
 Sometimes, we need the latest xrepo:
 ``` pwsh
@@ -23,8 +32,14 @@ xrepo update-repo
 
 ### Step 2: Compile
 Run these command in msys environment.
+
+```
+xmake config --yes --verbose --diagnosis --plat=mingw --mingw=<newly installed qt address>/Tools/mingw810_64 --qt=<newly installed qt address>/5.x.x/mingw81_64
+```
+
+The above example is using MinGW 8.1.0 installed by the Qt installer
+
 ``` bash
-xmake config --qt=<newly installed qt address>/5.x.x/mingw81_64
 xmake build --jobs=<numbers of processes your computer can support, same as make>
 ```
 

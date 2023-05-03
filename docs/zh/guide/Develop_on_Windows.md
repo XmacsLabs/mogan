@@ -1,20 +1,29 @@
 # 开发者文档
 ## Using xmake on Windows
-墨干的代码使用变长数组，因此不能用msvc来编译开发。推荐使用mingw编译器来开发。
+墨干的代码使用变长数组，因此不能用msvc来编译开发。推荐使用MinGW编译器来开发。
 
-### 第一步：安装xmake、mingw、msys以及Qt
+### 第一步：安装xmake、MinGW、msys以及Qt
 开发者需要安装下列工具：
 
 * [Qt](https://www.qt.io/download)
-    * 只需要安装适配mingw 8.1.0的qt库。Qt5和Qt6都可以安装。不需要安装Qt script等其他框架。
-    * 推荐安装Qt提供的mingw 8.1.0编译器，这个编译器在tools子菜单下。
+    * 只需要安装适配MinGW 8.1.0的Qt库。Qt 5 和Qt 6 都可以安装（Qt 5.15.2是一个很好的选择,可以适配MinGW 8.1.0）。不需要安装Qt script等其他框架。
 * [msys environment](https://github.com/msys2/msys2-installer/releases)
-* mingw 8.1.0编译器（见下文）。
+* MinGW 8.1.0编译器（见下文）。
+    * 推荐安装Qt提供的MinGW 8.1.0编译器，这个编译器在Tools子目录下。
 * xmake（见下文）。
 
 既可以用msys2的pacman安装xmake，也可以用xmake的安装包来安装。
 
-**注意**: msys提供的Mingw版本很高，与墨干的代码不兼容。请通过qt安装程序或者chocolate安装8.1.0版本的Mingw。
+建议使用pacman, 同时还需要安装其他的包：
+
+```
+pacman -Sy xmake
+pacman -Sy make
+pacman -Sy git
+pacman -Sy mingw-w64-x86_64-7zip
+```
+
+**注意**: msys提供的MinGW版本很高，与墨干的代码不兼容。请通过Qt安装程序或者chocolate安装8.1.0版本的MinGW。
 
 有时，开发者要更新xmake的包数据：
 ``` pwsh
@@ -22,13 +31,22 @@ xrepo update-repo
 ```
 
 ### 第二步：编译
-在msys命令行下运行这两条命令
+在msys命令行下运行这两条命令。
+
+```
+xmake config --yes --verbose --diagnosis --plat=mingw --mingw=<newly installed qt address>/Tools/mingw810_64 --qt=<newly installed qt address>/5.x.x/mingw81_64
+```
+
+上面的命令行会选择Qt安装程序安装的MinGW 8.1.0。
+
 ``` bash
-xmake config --qt=<newly installed qt address>/5.x.x/mingw81_64
 xmake build --jobs=<numbers of processes your computer can support, same as make>
 ```
 
 ### 第三步：运行单元测试
+
+运行命令`windeployqt`前需要将`<newly installed qt address>/5.15.2/mingw81_64/bin`添加到`PATH`环境变量。
+
 ``` bash
 windeployqt --compiler-runtime ./build/mingw/x86_64/release/ -printsupport
 xmake run --yes --verbose --diagnosis --group=tests
