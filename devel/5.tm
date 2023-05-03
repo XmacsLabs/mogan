@@ -20,7 +20,7 @@
     <tformat|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|5_1>
+      5_1
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -28,11 +28,11 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|5_2>
+      5_2
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Remove outdated Markdown doc
+      build and preview website via vitepress
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
