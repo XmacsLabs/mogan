@@ -9,6 +9,46 @@
 
   <tmdoc-title|Mogan Editor 1.2.0>
 
+  <section|v1.2.0-alpha2>
+
+  The goal of alpha2 is to setup the Continuous Integration for building,
+  testing and packaging on Ubuntu/Windows/macOS. Documentation for
+  contributors will also be prepared.
+
+  <\wide-tabular>
+    <tformat|<cwith|3|3|1|1|cell-valign|b>|<cwith|4|4|3|3|cell-valign|b>|<table|<row|<\cell>
+      <dlink|1>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      More Cleaning for Mogan Editor 1.2.x
+    </cell>>|<row|<\cell>
+      <dlink|3>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake integration for building and testing
+    </cell>>|<row|<\cell>
+      <dlink|5>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Documentation in markdown format for users and developers
+    </cell>>|<row|<\cell>
+      <dlink|7>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Stability Issues
+    </cell>>|<row|<\cell>
+      <dlink|8>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake integration for packaging on Ubuntu/Windows/macOS
+    </cell>>>>
+  </wide-tabular>
+
   <section|v1.2.0-alpha1>
 
   Mogan Editor v1.2.0-alpha1 is the baseline release of Mogan Editor v1.2.x.
