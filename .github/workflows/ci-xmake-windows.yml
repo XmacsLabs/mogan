@@ -22,10 +22,11 @@ on:
 
 jobs:
   windowsbuild:
-    runs-on: windows-latest
+    # mingw-w64 8.1.0 is installed on windows-2019
+    runs-on: windows-2019
     if: always()
     steps:
-      - name: Install msys and xmake
+      - name: Install msys
         uses: msys2/setup-msys2@v2
         with:
           msystem: MSYS
@@ -36,12 +37,15 @@ jobs:
             git 
             make 
       # Force xmake to a specific folder (for cache)
-      - name: Set xmake global dir and PATH
+      - name: Set xmake global dir
         run: |
           echo "XMAKE_GLOBALDIR=${{ runner.workspace }}\.xmake-global" >> "${{ github.env }}"
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.7.8
+      - name: update repo
+        run: |
+          xrepo update-repo
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -64,15 +68,10 @@ jobs:
       - name: Set PATH
         run: |
           echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin\" >> "${{ github.path }}"
-      - name: update repo
-        run: |
-          xrepo update-repo
-          echo $env:PATH
       - name: Build by mingw
         shell: msys2 {0}
         id: build
         run: |
-          echo $PATH
           xmake config --yes --verbose --diagnosis --plat=mingw
           xmake build --yes --verbose --diagnosis --jobs=8 --all
           windeployqt --compiler-runtime ./build/mingw/x86_64/release/ -printsupport
