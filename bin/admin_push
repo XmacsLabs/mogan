@@ -1,0 +1,6 @@
+#!/bin/bash
+
+git push gitee branch-1.2
+git push github branch-1.2
+git push codeberg branch-1.2
+
