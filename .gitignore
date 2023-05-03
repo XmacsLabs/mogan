@@ -33,3 +33,5 @@ misc/benchmark/gbench
 TeXmacs/progs/ice-9
 
 .xmake/
+node_modules/
+website/

@@ -1,0 +1,17 @@
+{
+  "name": "mogan.app",
+  "version": "1.0.0",
+  "description": "the most user-friendly distribution of GNU TeXmacs.",
+  "main": "index.js",
+  "repository": "https://github.com/XmacsLabs/mogan.app.git",
+  "author": "XmacsLabs",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.0.0-alpha.75",
+    "vue": "^3.2.45"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs"
+  }
+}
