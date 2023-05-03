@@ -9,7 +9,7 @@ on:
       - 'tests/**'
       - '.github/workflows/ci-ubuntu-qt6.yml'
   pull_request:
-    branches: [ main ]
+    branches: [ branch-1.2 ]
     paths:
       - '**/CMakeLists.txt'
       - 'src/**'
