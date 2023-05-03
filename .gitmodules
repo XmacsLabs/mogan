@@ -1,6 +1,6 @@
 [submodule "pyenv"]
-	path = TeXmacs/plugins/pyenv
+	path = plugins/pyenv
 	url = https://gitee.com/XmacsLabs/pyenv.git
 [submodule "quiver"]
-	path = TeXmacs/plugins/quiver
+	path = plugins/quiver
 	url = https://gitee.com/XmacsLabs/quiver.git

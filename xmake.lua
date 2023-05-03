@@ -192,7 +192,7 @@ target("tm_shell") do
     set_languages("c++17")
 
     add_includedirs("src/System")
-    add_files("TeXmacs/plugins/shell/src/tm_shell.cpp")
+    add_files("plugins/shell/src/tm_shell.cpp")
     add_links("util")
 end
 
@@ -573,9 +573,9 @@ target("mogan_install") do
     -- share/
 
     if is_plat("mingw") then
-        add_installfiles("TeXmacs(/plugins/**)")
+        add_installfiles("(plugins/**)")
     else 
-        add_installfiles("TeXmacs(/plugins/**)", {prefixdir="share/Xmacs"})
+        add_installfiles("(plugins/**)", {prefixdir="share/Xmacs"})
     end
 
     add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
