@@ -68,12 +68,16 @@ jobs:
       - name: Set PATH
         run: |
           echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin\" >> "${{ github.path }}"
-      - name: Build by mingw
+      - name: config
+        shell: msys2 {0}
+        run: xmake config --yes --verbose --diagnosis --plat=mingw
+      - name: build
         shell: msys2 {0}
         id: build
+        run: xmake build --yes --verbose --diagnosis --all
+      - name: install
+        shell: msys2 {0}
         run: |
-          xmake config --yes --verbose --diagnosis --plat=mingw
-          xmake build --yes --verbose --diagnosis --jobs=8 --all
           windeployqt --compiler-runtime ./build/mingw/x86_64/release/ -printsupport
           xmake install mogan_install
           windeployqt --compiler-runtime ./build/package/bin/ -printsupport
