@@ -182,6 +182,38 @@
       \;
     </cell>|<\cell>
       Github Action to deploy for wasm
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      3_22
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Adjust version information of PDF Hummus
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      3_23
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Remove the included C++ source code of nowide
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      3_24
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Config and use doxygen to generate doxyfile
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      3_25
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Adjust <verbatim|url_test.cpp> for mingw build
     </cell>>>>
   </wide-tabular>
 
