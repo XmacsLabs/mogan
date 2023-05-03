@@ -2,7 +2,7 @@ name: Build and Test on macOS
 
 on:
   push:
-    branches: [ main ]
+    branches: [ branch-1.1 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Windows/**'
@@ -10,7 +10,7 @@ on:
       - 'xmake.lua'
       - '.github/workflows/ci-xmake-macos.yml'
   pull_request:
-    branches: [ main ]
+    branches: [ branch-1.1 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Windows/**'

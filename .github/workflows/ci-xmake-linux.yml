@@ -2,7 +2,7 @@ name: Build and Test on Ubuntu
 
 on:
   push:
-    branches: [ main ]
+    branches: [ branch-1.1 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Macos/**'
@@ -11,7 +11,7 @@ on:
       - 'xmake.lua'
       - '.github/workflows/ci-xmake-linux.yml'
   pull_request:
-    branches: [ main ]
+    branches: [ branch-1.1 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Macos/**'
