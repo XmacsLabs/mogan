@@ -39,7 +39,6 @@ end
 
 if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
     add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-    add_requires("apt::libsqlite3-dev", {alias="sqlite3"})
     add_requires("apt::libpng-dev", {alias="libpng"})
     add_requires("apt::zlib1g-dev", {alias="zlib"})
     -- config package name for libjpeg on Ubuntu
@@ -61,7 +60,6 @@ else
     add_requires("libjpeg v9e", {system=false})
     add_requires("libcurl 7.84.0", {system=false})
     add_requires("freetype 2.12.1", {system=false})
-    add_requires("sqlite3 3.39.0+200", {system=false})
 end
 
 add_requires("pdfhummus 4.1",{system=false,configs={libpng=true,libjpeg=true}})
@@ -94,8 +92,6 @@ add_defines("USE_QT_PRINTER")
 
 set_configvar("USE_ICONV", 1)
 set_configvar("USE_CURL", 1)
-set_configvar("USE_SQLITE3", 1)
-set_configvar("LINKED_SQLITE3", 1)
 set_configvar("USE_FREETYPE", 1)
 set_configvar("USE_GS", 1)
 set_configvar("PDF_RENDERER", 1)
@@ -249,7 +245,6 @@ target("libmogan") do
     add_packages("libjpeg")
     add_packages("libcurl")
     add_packages("freetype")
-    add_packages("sqlite3")
     add_packages("pdfhummus")
 
     if is_plat("mingw") then
@@ -372,7 +367,6 @@ target("libmogan") do
             "src/Plugins/Metafont/**.cpp",
             "src/Plugins/LaTeX_Preview/**.cpp",
             "src/Plugins/Openssl/**.cpp",
-            "src/Plugins/Sqlite3/**.cpp",
             "src/Plugins/Updater/**.cpp"})
 
     if is_plat("mingw") then

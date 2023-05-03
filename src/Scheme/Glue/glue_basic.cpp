@@ -7799,43 +7799,6 @@ tmg_tmdb_get_name_completions (tmscm arg1, tmscm arg2) {
 }
 
 tmscm
-tmg_supports_sqlP () {
-  // TMSCM_DEFER_INTS;
-  bool out= sqlite3_present ();
-  // TMSCM_ALLOW_INTS;
-
-  return bool_to_tmscm (out);
-}
-
-tmscm
-tmg_sql_exec (tmscm arg1, tmscm arg2) {
-  TMSCM_ASSERT_URL (arg1, TMSCM_ARG1, "sql-exec");
-  TMSCM_ASSERT_STRING (arg2, TMSCM_ARG2, "sql-exec");
-
-  url in1= tmscm_to_url (arg1);
-  string in2= tmscm_to_string (arg2);
-
-  // TMSCM_DEFER_INTS;
-  scheme_tree out= sql_exec (in1, in2);
-  // TMSCM_ALLOW_INTS;
-
-  return scheme_tree_to_tmscm (out);
-}
-
-tmscm
-tmg_sql_quote (tmscm arg1) {
-  TMSCM_ASSERT_STRING (arg1, TMSCM_ARG1, "sql-quote");
-
-  string in1= tmscm_to_string (arg1);
-
-  // TMSCM_DEFER_INTS;
-  string out= sql_quote (in1);
-  // TMSCM_ALLOW_INTS;
-
-  return string_to_tmscm (out);
-}
-
-tmscm
 tmg_server_start () {
   // TMSCM_DEFER_INTS;
   server_start ();
