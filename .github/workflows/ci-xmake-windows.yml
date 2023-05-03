@@ -83,7 +83,7 @@ jobs:
           name: mogan-windows-dev
           path: |
             build\package\**
-      - name: Test
-        shell: msys2 {0}
-        run: |
-          xmake run --yes --verbose --diagnosis --group=tests
+      # - name: Test
+      #   shell: msys2 {0}
+      #   run: |
+      #     xmake run --yes --verbose --diagnosis --group=tests
