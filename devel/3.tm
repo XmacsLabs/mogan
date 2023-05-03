@@ -3,17 +3,20 @@
 <style|<tuple|tmdoc|devel>>
 
 <\body>
-  <tmdoc-title|xmake Integration on Ubuntu>
+  <tmdoc-title|Initial xmake Integration>
 
   For Mogan Editor 1.2.x, we will use xmake as the build tool. This is the
   third project. It depends on the initial task of the second project (S7
   Scheme integration). In this project, we will complete the initial xmake
-  support on Ubuntu from building to packaging.
+  support on Ubuntu/Windows/macOS for building and testing.
+
+  A basic debian packager for ubuntu is completed in this project because
+  this project is part of the <dlink|release_1.2.0> alpha1.
 
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<table|<row|<\cell>
+    <tformat|<cwith|25|25|3|3|cell-valign|b>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       3_1
@@ -29,7 +32,7 @@
       Darcy
     </cell>|<\cell>
       Import xmake build definition before the kernel decouple from branch
-      1.1
+      1.1 (coauthored by Darcy and jinkaimori)
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
@@ -133,9 +136,9 @@
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
-      Support mingw/msys building process
+      Build and test on Windows
     </cell>>|<row|<\cell>
-      Feature
+      Chore
     </cell>|<\cell>
       3_16
     </cell>|<\cell>
@@ -145,47 +148,47 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      3_17
+      <todo|3_17>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Build and test on macOS
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <todo|3_18>
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
-      Github Action to package on msys environment
-    </cell>>|<row|<\cell>
-      Feature
-    </cell>|<\cell>
-      3_18
-    </cell>|<\cell>
-      jingkaimori
-    </cell>|<\cell>
-      Support wasm building process
-    </cell>>|<row|<\cell>
-      Feature
-    </cell>|<\cell>
-      3_19
-    </cell>|<\cell>
-      jingkaimori
-    </cell>|<\cell>
-      Github Action to build for wasm
-    </cell>>|<row|<\cell>
-      Feature
-    </cell>|<\cell>
-      <todo|3_20>
-    </cell>|<\cell>
-      \;
-    </cell>|<\cell>
-      Github Action to test for wasm
-    </cell>>|<row|<\cell>
-      Feature
-    </cell>|<\cell>
-      <todo|3_21>
-    </cell>|<\cell>
-      \;
-    </cell>|<\cell>
-      Github Action to deploy for wasm
+      Build and test on WASM
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      3_22
+      <todo|3_19>
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Github Action to build and test on wasm
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      <todo|3_20>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Github Action to build and test on macOS
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      <todo|3_21>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Github Action to build and test the kernel
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      <todo|3_22>
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
@@ -193,7 +196,7 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      3_23
+      <todo|3_23>
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
@@ -201,7 +204,7 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      3_24
+      <todo|3_24>
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
