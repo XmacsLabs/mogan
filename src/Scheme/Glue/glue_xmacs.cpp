@@ -9,7 +9,6 @@
  *
  ******************************************************************************/
 
-#include "boot.hpp"
 #include "../S7/s7.h"
 #include "Qt/qt_utilities.hpp"
 
@@ -40,17 +39,10 @@ tmg_s7_version () {
   return string_to_tmscm (out);
 }
 
-tmscm
-tmg_get_texmacs_cache_path () {
-  url out= cache_path ();
-  return url_to_tmscm (out);
-}
-
 void
 initialize_glue_xmacs () {
   tmscm_install_procedure ("show-about-qt", tmg_show_about_qt, 0, 0, 0);
   tmscm_install_procedure ("xmacs-version", tmg_xmacs_version, 0, 0, 0);
   tmscm_install_procedure ("s7-version", tmg_s7_version, 0, 0, 0);
   tmscm_install_procedure ("qt-version", tmg_qt_version, 0, 0, 0);
-  tmscm_install_procedure ("get-texmacs-cache-path",  tmg_get_texmacs_cache_path, 0, 0, 0);
 }

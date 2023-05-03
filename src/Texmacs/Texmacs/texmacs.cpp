@@ -603,51 +603,47 @@ immediate_options (int argc, char **argv) {
 #elif defined(OS_HAIKU)
     set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/config/settings/Xmacs");
 #elif defined(OS_WASM)
-    set_env ("TEXMACS_HOME_PATH", "/.Xmacs");
+      set_env ("TEXMACS_HOME_PATH", "/.Xmacs");
 #else
     set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/.Xmacs");
 #endif
-
   if (get_env ("TEXMACS_HOME_PATH") == "") return;
-
-
-  url app_cache_path= cache_path ();
   for (int i= 1; i < argc; i++) {
     string s= argv[i];
     if ((N (s) >= 2) && (s (0, 2) == "--")) s= s (1, N (s));
     if ((s == "-S") || (s == "-setup")) {
       remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
       remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-      remove (app_cache_path * url_wildcard ("*"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-database.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-features.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-characteristics.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
     }
     else if (s == "-delete-cache")
-      remove (app_cache_path * url_wildcard ("*"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
     else if (s == "-delete-style-cache")
-      remove (app_cache_path * url_wildcard ("__*"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("__*"));
     else if (s == "-delete-font-cache") {
-      remove (app_cache_path * url ("font_cache.scm"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache/font_cache.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-database.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-features.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-characteristics.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
     }
     else if (s == "-delete-doc-cache") {
-      remove (app_cache_path * url ("doc_cache"));
-      remove (app_cache_path * url ("dir_cache.scm"));
-      remove (app_cache_path * url ("stat_cache.scm"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache/doc_cache"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache/dir_cache.scm"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache/stat_cache.scm"));
     }
     else if (s == "-delete-file-cache") {
-      remove (app_cache_path * url ("doc_cache"));
-      remove (app_cache_path * url ("file_cache"));
-      remove (app_cache_path * url ("dir_cache.scm"));
-      remove (app_cache_path * url ("stat_cache.scm"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache/doc_cache"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache/file_cache"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache/dir_cache.scm"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache/stat_cache.scm"));
     }
     else if (s == "-delete-plugin-cache")
-      remove (app_cache_path * url ("plugin_cache.scm"));
+      remove (url ("$TEXMACS_HOME_PATH/system/cache/plugin_cache.scm"));
     else if (s == "-delete-server-data")
       system ("rm -rf", url ("$TEXMACS_HOME_PATH/server"));
     else if (s == "-delete-databases") {
@@ -693,6 +689,18 @@ main (int argc, char **argv) {
   boot_hacks ();
   windows_delayed_refresh (1000000000);
   immediate_options (argc, argv);
+  load_user_preferences ();
+  string theme= get_user_preference ("gui theme", "default");
+#if defined(OS_MACOS) && !defined(__arm64__)
+  if (theme == "default") theme= "";  
+#else
+  if (theme == "default") theme= "light";
+#endif
+  if (theme == "light")
+    tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-light.css";
+  else if (theme == "dark")
+    tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-dark.css";
+  else if (theme != "") tm_style_sheet= theme;
 #ifndef OS_MINGW
   set_env ("LC_NUMERIC", "POSIX");
 #ifndef OS_MACOS
@@ -708,7 +716,7 @@ main (int argc, char **argv) {
     cout << "TeXmacs] Performing setup (Alt on startup)" << LF;
     remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
     remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-    remove (cache_path () * url_wildcard ("*"));
+    remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
     remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
   }
 #endif
@@ -716,29 +724,14 @@ main (int argc, char **argv) {
   // initialize the Qt application infrastructure
   qtmapp= new QTMApplication (argc, argv);
 #endif
-
   TeXmacs_init_paths (argc, argv);
-  cache_initialize ();
-
-  load_user_preferences ();
-  string theme= get_user_preference ("gui theme", "default");
-#if defined(OS_MACOS) && !defined(__arm64__)
-  if (theme == "default") theme= "";
-#else
-  if (theme == "default") theme= "light";
-#endif
-  if (theme == "light")
-    tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-light.css";
-  else if (theme == "dark")
-    tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-dark.css";
-  else if (theme != "") tm_style_sheet= theme;
-
 #ifdef QTTEXMACS
   qtmapp->set_window_icon ("/misc/images/new-mogan-512.png"); // it this really necessary? Should be set in the metadata.
 #endif
   // cout << "Bench  ] Started TeXmacs\n";
   the_et     = tuple ();
   the_et->obs= ip_observer (path ());
+  cache_initialize ();
   bench_start ("initialize texmacs");
   init_texmacs ();
   bench_cumul ("initialize texmacs");

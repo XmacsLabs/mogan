@@ -1089,7 +1089,7 @@ materialize (url u, string filter) {
   // Combines resolve and concretize
   url r= resolve (u, filter);
   if (!(is_rooted (r) || is_here (r) || is_parent (r))) {
-    failed_error << "filter=" << filter << " u= " << u << LF;
+    failed_error << "u= " << u << LF;
     FAILED ("url could not be resolved");
   }
   return concretize (r);

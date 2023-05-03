@@ -149,13 +149,12 @@ init_upgrade () {
   init_upgrade_scheme ();
   init_upgrade_doc (install_version);
 
-  url app_cache_path= cache_path ();
   remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-  remove (app_cache_path * url_wildcard ("__*"));
-  remove (app_cache_path * url ("dir_cache.scm"));
-  remove (app_cache_path * url ("doc_cache"));
-  remove (app_cache_path * url ("file_cache"));
-  remove (app_cache_path * url ("stat_cache.scm"));
+  remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("__*"));
+  remove (url ("$TEXMACS_HOME_PATH/system/cache/dir_cache.scm"));
+  remove (url ("$TEXMACS_HOME_PATH/system/cache/doc_cache"));
+  remove (url ("$TEXMACS_HOME_PATH/system/cache/file_cache"));
+  remove (url ("$TEXMACS_HOME_PATH/system/cache/stat_cache.scm"));
   remove (url ("$TEXMACS_HOME_PATH/fonts/font-database.scm"));
   remove (url ("$TEXMACS_HOME_PATH/fonts/font-features.scm"));
   remove (url ("$TEXMACS_HOME_PATH/fonts/font-characteristics.scm"));

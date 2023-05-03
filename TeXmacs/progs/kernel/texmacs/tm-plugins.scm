@@ -333,7 +333,7 @@
 
 (define-public reconfigure-flag? #t)
 (define plugin-loaded-setup? #f)
-(define plugin-cache (url->system (url-append (get-texmacs-cache-path) "plugin_cache.scm")))
+(define plugin-cache "$TEXMACS_HOME_PATH/system/cache/plugin_cache.scm")
 
 (define plugin-check-path "")
 (define check-dir-table (make-ahash-table))

@@ -70,7 +70,7 @@
   (:synopsis "Clear font cache under TEXMACS_HOME_PATH.")
   (map system-remove
     (list
-      (url->system (url-append (get-texmacs-cache-path) "font_cache.scm"))
+      "$TEXMACS_HOME_PATH/system/cache/font_cache.scm"
       "$TEXMACS_HOME_PATH/fonts/font-database.scm"
       "$TEXMACS_HOME_PATH/fonts/font-features.scm"
       "$TEXMACS_HOME_PATH/fonts/font-characteristics.scm")))

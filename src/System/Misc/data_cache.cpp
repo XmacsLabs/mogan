@@ -9,7 +9,6 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "boot.hpp"
 #include "data_cache.hpp"
 #include "file.hpp"
 #include "convert.hpp"
@@ -151,11 +150,7 @@ do_cache_file (string name) {
 
 bool
 do_cache_doc (string name) {
-  if (is_empty (texmacs_doc_path_string)) {
-    return false;
-  } else {
-    return starts (name, texmacs_doc_path_string);
-  }
+  return starts (name, texmacs_doc_path_string);
 }
 
 /******************************************************************************
@@ -165,7 +160,7 @@ do_cache_doc (string name) {
 void
 cache_save (string buffer) {
   if (cache_changed->contains (buffer)) {
-    url cache_file= cache_path () * url (buffer);
+    url cache_file= texmacs_home_path * url ("system/cache/" * buffer);
     string cached;
     iterator<tree> it= iterate (cache_data);
     if (buffer == "file_cache" || buffer == "doc_cache") {
@@ -210,7 +205,7 @@ cache_init (string buffer) {
 void
 cache_load (string buffer) {
   if (!cache_loaded->contains (buffer)) {
-    url cache_file = cache_path () * url (buffer);
+    url cache_file = texmacs_home_path * url ("system/cache/" * buffer);
     //cout << "cache_file "<< cache_file << LF;
     string cached;
     if (!load_string (cache_file, cached, false)) {

@@ -9,7 +9,6 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "boot.hpp"
 #include "new_style.hpp"
 #include "file.hpp"
 #include "data_cache.hpp"
@@ -108,7 +107,7 @@ style_invalidate_cache () {
     sd= NULL;
   }
   init_style_data ();
-  remove (cache_path () * url_wildcard ("__*"));
+  remove ("$TEXMACS_HOME_PATH/system/cache" * url_wildcard ("__*"));
 }
 
 void
@@ -117,7 +116,7 @@ style_set_cache (tree style, hashmap<string,tree> H, tree t) {
   // cout << "set cache " << style << LF;
   sd->style_cache (copy (style))= H;
   sd->style_drd   (copy (style))= t;
-  url name= cache_path () * url (cache_file_name (style));
+  url name ("$TEXMACS_HOME_PATH/system/cache", cache_file_name (style));
   if (!exists (name)) {
     save_string (name, tree_to_scheme (tuple ((tree) H, t)));
     // cout << "saved " << name << LF;
@@ -136,7 +135,7 @@ style_get_cache (tree style, hashmap<string,tree>& H, tree& t, bool& f) {
   }
   else {
     string s;
-    url name= cache_path () * url (cache_file_name (style));
+    url name ("$TEXMACS_HOME_PATH/system/cache", cache_file_name (style));
     if (exists (name) && (!load_string (name, s, false))) {
       //cout << "loaded " << name << LF;
       tree p= scheme_to_tree (s);
