@@ -2,7 +2,7 @@ name: CMake and Qt 6 on Ubuntu 22.04
 
 on:
   push:
-    branches: [ main ]
+    branches: [ branch-1.2 ]
     paths:
       - '**/CMakeLists.txt'
       - 'src/**'
