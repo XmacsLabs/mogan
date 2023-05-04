@@ -36,10 +36,6 @@
 #define struct_stat struct stat
 #endif
 
-#ifdef MACOSX_EXTENSIONS
-#include "MacOS/mac_images.h"
-#endif
-
 /******************************************************************************
 * New style loading and saving
 ******************************************************************************/

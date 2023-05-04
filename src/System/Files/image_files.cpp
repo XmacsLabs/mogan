@@ -35,10 +35,6 @@
 #include "hashmap.hpp"
 #include "scheme.hpp"
 
-#ifdef MACOSX_EXTENSIONS
-#include "MacOS/mac_images.h"
-#endif
-
 #ifdef QTTEXMACS
 #include "Qt/qt_utilities.hpp"
 #endif
@@ -321,12 +317,6 @@ image_size_sub (url image, int& w, int& h) { // returns w,h in units of pt (1/72
       return;
     }
   }
-#ifdef MACOSX_EXTENSIONS
-  if (mac_image_size (image, w, h) ) {
-    if (DEBUG_CONVERT) debug_convert << "image_size  mac  : " << w << " x " << h << "\n";
-    return;
-  }
-#endif
 #ifdef QTTEXMACS
   if (qt_supports (image)) { // native support by Qt : most bitmaps & svg
     qt_image_size (image, w, h);
@@ -483,14 +473,6 @@ image_to_png (url image, url png, int w, int h) {// IN PIXEL UNITS!
      std_warning << concretize (png) << " has no .png suffix\n";
      }
   */
-#ifdef MACOSX_EXTENSIONS
-  //cout << "mac convert " << image << ", " << png << "\n";
-  if (mac_supports (image)) {
-    if (DEBUG_CONVERT) debug_convert << " using mac_os "<<LF;
-    mac_image_to_png (image, png, w, h);
-    return;
-  }
-#endif
 #ifdef QTTEXMACS
   if (qt_supports (image)) {
     if (DEBUG_CONVERT) debug_convert << " using qt "<<LF;
