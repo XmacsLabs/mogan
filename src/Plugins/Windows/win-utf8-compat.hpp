@@ -25,6 +25,7 @@
 
 #include "nowide/args.hpp"
 #include <sys/stat.h>
+#include <dirent.h>
 
 #ifdef __MINGW64__
 typedef struct _stat64 struct_stat;
@@ -33,7 +34,8 @@ typedef struct _stat32 struct_stat;
 #endif
 
 #include "nowide/cstdio.hpp"
-#include "nowide/cenv.hpp"
+#include "nowide/cstdlib.hpp"
+#include "nowide/stat.hpp"
 
 
 #ifndef S_ISLNK
@@ -46,24 +48,16 @@ typedef struct _stat32 struct_stat;
  #define fopen(a,b) nowide::fopen(a,b)
 
 
-//do not redefine mkdir with single argument (url)
-//if two args point to nowide::mkdir
-#define GET_MACRO(_1,_2,NAME,...) NAME
-#define mkdir(...) GET_MACRO(__VA_ARGS__, nowide::mkdir, mkdir)(__VA_ARGS__)
+inline int mkdir(char const *name, int const mode)
+{
+    nowide::basic_stackstring<> wname;
+    if(wname.convert(name) == nullptr ) {
+        errno = EINVAL;
+        return -1;
+    }
+    return _wmkdir (wname.get());
+}
 
-
-#ifdef opendir
- #undef opendir
-#endif
- #define opendir(a) nowide::opendir(a)
- 
-#ifdef closedir
- #undef closedir
-#endif
-#define closedir _wclosedir
-
-//typedef _WDIR DIR;
-#define DIR _WDIR
  
 #ifdef stat
  #undef stat
@@ -81,10 +75,15 @@ typedef struct _stat32 struct_stat;
 #endif
  #define rename nowide::rename
  
-#ifdef chmod
- #undef chmod
-#endif
- #define chmod nowide::chmod
+inline int chmod(char const *name, int const mode)
+{
+    nowide::basic_stackstring<> wname;
+    if(!wname.convert(name) ) {
+        errno = EINVAL;
+        return -1;
+    }
+    return _wchmod (wname.get(), mode);
+}
 
 #ifdef getenv
  #undef getenv
