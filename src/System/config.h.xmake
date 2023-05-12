@@ -71,6 +71,8 @@ ${define LINKED_SQLITE3}
 
 ${define MACOSX_EXTENSIONS}
 
+${define OS_GNU_LINUX}
+
 ${define OS_MACOS}
 
 ${define OS_MINGW}
