@@ -2,17 +2,38 @@
 --
 -- MODULE      : xmake.lua
 -- DESCRIPTION : Xmake config file for TeXmacs
--- COPYRIGHT   : (C) 2022  jingkaimori
---                   2022  Darcy Shen
+-- COPYRIGHT   : (C) 2022       jingkaimori
+--                   2022-2023  Darcy Shen
 --
 -- This software falls under the GNU general public license version 3 or later.
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
+-- Check CXX Types/Includes/Funcs/Snippets
 includes("check_cxxtypes.lua")
 includes("check_cxxincludes.lua")
 includes("check_cxxfuncs.lua")
 includes("check_cxxsnippets.lua")
+
+configvar_check_cxxincludes("HAVE_STDLIB_H", "stdlib.h")
+configvar_check_cxxincludes("HAVE_STRINGS_H", "strings.h")
+configvar_check_cxxincludes("HAVE_STRING_H", "string.h")
+configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
+configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
+configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
+configvar_check_cxxincludes("HAVE_MEMORY_H", "memory.h")
+configvar_check_cxxincludes("HAVE_PTY_H", "pty.h")
+configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
+configvar_check_cxxincludes("HAVE_SYS_STAT_H", "sys/stat.h")
+configvar_check_cxxincludes("HAVE_SYS_TYPES_H", "sys/types.h")
+configvar_check_cxxtypes("HAVE_TIME_T", "time_t", {includes = {"memory"}})
+configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
+configvar_check_cxxfuncs("HAVE_GETTIMEOFDAY", "gettimeofday", {includes={"sys/time.h"}})
+configvar_check_cxxsnippets(
+    "CONFIG_LARGE_POINTER", [[
+        #include <stdlib.h>
+        static_assert(sizeof(void*) == 8, "");]])
+
 
 set_project("Mogan Editor")
 
@@ -115,24 +136,6 @@ end
 end
 
 set_configvar("STDC_HEADERS", true)
-configvar_check_cxxincludes("HAVE_STDLIB_H", "stdlib.h")
-configvar_check_cxxincludes("HAVE_STRINGS_H", "strings.h")
-configvar_check_cxxincludes("HAVE_STRING_H", "string.h")
-configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
-configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
-configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
-configvar_check_cxxincludes("HAVE_MEMORY_H", "memory.h")
-configvar_check_cxxincludes("HAVE_PTY_H", "pty.h")
-configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
-configvar_check_cxxincludes("HAVE_SYS_STAT_H", "sys/stat.h")
-configvar_check_cxxincludes("HAVE_SYS_TYPES_H", "sys/types.h")
-configvar_check_cxxtypes("HAVE_TIME_T", "time_t", {includes = {"memory"}})
-configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
-configvar_check_cxxfuncs("HAVE_GETTIMEOFDAY", "gettimeofday", {includes={"sys/time.h"}})
-configvar_check_cxxsnippets(
-    "CONFIG_LARGE_POINTER", [[
-        #include <stdlib.h>
-        static_assert(sizeof(void*) == 8, "");]])
 
 set_version(TEXMACS_VERSION)
 
