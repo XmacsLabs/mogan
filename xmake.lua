@@ -200,22 +200,133 @@ end
 
 
 
+--
+-- Library: L2 Kernel
+--
+if is_plat("linux") then
+    set_configvar("CONFIG_OS", "GNU_LINUX")
+elseif is_subhost("cygwin") then
+    set_configvar("CONFIG_OS", "CYGWIN")
+else
+    set_configvar("CONFIG_OS", "")
+end
+local CONFIG_USER = "MOGAN_DEVELOPERS"
+local CONFIG_DATE = "1970-01-01"
+local TEXMACS_VERSION = "2.1.2"
+
+target("libkernel_l2") do
+    set_languages("c++17")
+    set_policy("check.auto_ignore_flags", false)
+
+    set_kind("static")
+    set_group("kernel_l2")
+    set_basename("kernel_l2")
+
+    if is_plat("mingw") then
+        add_packages("nowide_standalone")
+    end
+
+    add_configfiles(
+        "src/System/config_l2.h.xmake", {
+            filename = "L2/config.h",
+            variables = {
+                OS_MINGW = is_plat("mingw")
+            }
+        }
+    )
+    add_configfiles(
+        "src/System/tm_configure_l2.hpp.xmake", {
+            filename = "L2/tm_configure.hpp",
+            pattern = "@(.-)@",
+            variables = {
+                CONFIG_USER = CONFIG_USER,
+                CONFIG_DATE = CONFIG_DATE,
+                VERSION = TEXMACS_VERSION,
+            }
+        }
+    )
+
+    add_includedirs({
+        "$(buildir)/L2",
+        -- L1 Headers
+        "src/System/Memory",
+        "src/System/IO",
+        "src/Plugins",
+        "src/Kernel/Abstractions",
+        "src/Kernel/Containers",
+        "src/Kernel/Types",
+        "src/Data/Drd",
+        -- L2 Headers
+        "src/Kernel/Algorithms",
+        "src/Texmacs",
+    })
+
+    add_headerfiles({
+        "src/System/Classes/tm_timer.hpp",
+        "src/Texmacs/tm_debug.hpp",
+    })
+
+    add_files({
+        -- L1 Sources
+        "src/Kernel/Abstractions/basic.cpp",
+        "src/Kernel/Containers/**.cpp",
+        "src/Kernel/Types/**.cpp",
+        "src/Data/Drd/**.cpp",
+        "src/System/IO/**.cpp",
+        "src/System/Memory/**.cpp",
+        -- L2 Sources
+        "src/System/Classes/tm_timer.cpp",
+        "src/Texmacs/Server/tm_debug.cpp",
+    })
+
+    if is_plat("mingw") then
+        add_includedirs({
+            "src/Plugins/Windows"
+        })
+    end
+end
+
+for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
+    local testname = path.basename(filepath)
+    target(testname) do
+        set_languages("c++17")
+        set_policy("check.auto_ignore_flags", false)
+
+        set_group("kernel_l2_tests")
+        add_deps("libkernel_l2")
+        add_rules("qt.console")
+        add_frameworks("QtTest")
+
+        if is_plat("mingw") then
+            add_packages("nowide_standalone")
+        end
+        add_includedirs("tests/Base")
+        add_includedirs(
+            "$(buildir)/L2",
+            "src/Plugins",
+            "src/System",
+            "src/System/Memory",
+            "src/System/IO",
+            "src/Kernel/Abstractions",
+            "src/Kernel/Containers",
+            "src/Kernel/Types"
+        )
+        add_files("tests/Base/base.cpp")
+        add_files(filepath)
+        add_files(filepath, {rules = "qt.moc"})
+    end
+end
+
+
+
 local XMACS_VERSION="1.1.1"
 local INSTALL_DIR="$(buildir)/package"
 
-local TEXMACS_VERSION = "2.1.2"
 local DEVEL_VERSION = TEXMACS_VERSION
 local DEVEL_RELEASE = 1
 local STABLE_VERSION = TEXMACS_VERSION
 local STABLE_RELEASE = 1
 
-if is_plat("linux") then 
-    set_configvar("CONFIG_OS", "GNU_LINUX")
-elseif is_subhost("cygwin") then
-    set_configvar("CONFIG_OS", "CYGWIN")
-else 
-    set_configvar("CONFIG_OS", "")
-end
 
 set_configvar("QTPIPES", 1)
 add_defines("QTPIPES")

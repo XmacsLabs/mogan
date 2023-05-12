@@ -10,10 +10,19 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "config.h"
+
+#include "string.hpp"
+#include "tree_label.hpp"
+#include "analyze.hpp"
+
+#ifndef KERNEL_L2
 #include "tm_server.hpp"
 #include "file.hpp"
 #include "tm_link.hpp"
 #include "sys_utils.hpp"
+#endif
+
 
 bool rescue_mode= false;
 
@@ -37,11 +46,14 @@ get_system_information () {
   //   << HOST_VENDOR << "\n";
   // r << "  Processor        : "
   //   << HOST_CPU << "\n";
+#ifndef KERNEL_L2
   r << "  Crash date       : "
     << var_eval_system ("date") << "\n";
+#endif
   return r;
 }
 
+#ifndef KERNEL_L2
 string
 path_as_string (path p) {
   if (is_nil (p)) return "[]";
@@ -119,6 +131,7 @@ tree_report (tree t, path p) {
   tree_report (s, t, p, 0);
   return s;
 }
+#endif
 
 /******************************************************************************
 * Crash management
@@ -128,9 +141,12 @@ string
 get_crash_report (const char* msg) {
   string r;
   r << "Error message:\n  " << msg << "\n"
-    << "\n" << get_system_information ()
+#ifdef KERNEL_L2
+    << "\n" << get_system_information ();
+#else
     << "\n" << get_editor_status_report ()
     << "\n" << get_stacktrace ();
+#endif
   return r;
 }
 
@@ -148,6 +164,10 @@ tm_failure (const char* msg) {
 
   //cerr << "Saving crash report...\n";
   string report= get_crash_report (msg);
+#ifdef KERNEL_L2
+  cerr << "TeXmacs] Dumping report below\n\n"
+       << report << "\n";
+#else
   url dir ("$TEXMACS_HOME_PATH/system/crash");
   url err= url_numbered (dir, "crash_report_", "");
   if (!save_string (err, report))
@@ -178,6 +198,7 @@ tm_failure (const char* msg) {
   call ("quit-TeXmacs-scheme");
   clear_pending_commands ();
   //exit (1);
+#endif
 }
 
 
@@ -185,6 +206,7 @@ tm_failure (const char* msg) {
 * debugging messages
 ******************************************************************************/
 
+#ifndef KERNEL_L2
 tree debug_messages (TUPLE);
 bool debug_lf_flag= false;
 extern bool texmacs_started;
@@ -271,6 +293,7 @@ clear_debug_messages () {
   debug_messages= tree (TUPLE);
   debug_lf_flag = false;
 }
+#endif
 
 /******************************************************************************
 * Streams for debugging purposes
@@ -300,17 +323,23 @@ debug_ostream_rep::is_writable () const {
 
 void
 debug_ostream_rep::clear () {
+#ifndef KERNEL_L2
   clear_debug_messages (channel);
+#endif
 }
 
 void
 debug_ostream_rep::write (const char* s) {
+#ifndef KERNEL_L2
   debug_message (channel, s);
+#endif
 }
 
 void
 debug_ostream_rep::write (tree t) {
+#ifndef KERNEL_L2
   debug_formatted (channel, t);
+#endif
 }
 
 tm_ostream
