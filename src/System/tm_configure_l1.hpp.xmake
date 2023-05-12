@@ -1,5 +1,3 @@
-#define KERNEL_L1
-
 @define CONFIG_LARGE_POINTER@
 
 #ifdef CONFIG_LARGE_POINTER

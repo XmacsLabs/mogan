@@ -175,10 +175,7 @@ target("libkernel_l1") do
     add_configfiles(
         "src/System/tm_configure_l1.hpp.xmake", {
             filename = "L1/tm_configure.hpp",
-            pattern = "@(.-)@",
-            variables = {
-                XMACS_VERSION = XMACS_VERSION
-            }
+            pattern = "@(.-)@"
         }
     )
 
