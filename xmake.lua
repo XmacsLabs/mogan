@@ -139,21 +139,6 @@ set_configvar("STDC_HEADERS", true)
 
 set_version(TEXMACS_VERSION)
 
-target("tm_shell") do
-    if is_plat("macosx") or is_plat("linux") then
-        set_enabled(true)
-    else
-        set_enabled(false)
-    end
-
-    set_kind("binary")
-
-    set_languages("c++17")
-
-    add_includedirs("$(buildir)")
-    add_files("plugins/shell/src/tm_shell.cpp")
-    add_links("util")
-end
 
 target("libkernel_l1") do
     set_kind("static")
@@ -592,4 +577,20 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_files(filepath, {rules = "qt.moc"})
         end
     end
+end
+
+target("tm_shell") do
+    if is_plat("macosx") or is_plat("linux") then
+        set_enabled(true)
+    else
+        set_enabled(false)
+    end
+
+    set_kind("binary")
+
+    set_languages("c++17")
+
+    add_includedirs("$(buildir)")
+    add_files("plugins/shell/src/tm_shell.cpp")
+    add_links("util")
 end
