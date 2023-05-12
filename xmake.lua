@@ -35,6 +35,7 @@ configvar_check_cxxsnippets(
         static_assert(sizeof(void*) == 8, "");]])
 
 
+
 ---
 --- Project: Mogan Editor
 ---
@@ -62,15 +63,56 @@ else
 end
 
 
+
+--
+-- Dependencies: Platform|Package Manager
+--
+
+-- GNU/Linux variants
+-- [x] APT powered
+-- [ ] pacman powered
+-- [ ] portage powered
+-- ...
+if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
+    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+    add_requires("apt::libpng-dev", {alias="libpng"})
+    add_requires("apt::zlib1g-dev", {alias="zlib"})
+    -- config package name for libjpeg on Ubuntu
+    if linuxos.name() == "ubuntu" then
+        add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
+    else
+        add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
+    end
+    -- config package name for freetype on UOS
+    if linuxos.name() == "uos" then
+    	add_requires("apt::libfreetype6-dev", {alias="freetype"})
+    else
+        add_requires("apt::libfreetype-dev", {alias="freetype"})
+    end
+else
+-- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
+    add_requires("libpng 1.6.37", {system=false})
+    add_requires("libiconv 1.17", {system=false})
+    add_requires("zlib 1.2.12", {system=false})
+    add_requires("libjpeg v9e", {system=false})
+    add_requires("libcurl 7.84.0", {system=false})
+    add_requires("freetype 2.12.1", {system=false})
+end
+
+if is_plat("mingw") then
+    add_requires("nowide_standalone 11.2.0", {system=false})
+end
+
+local PDFHUMMUS_VERSION = "4.1"
+add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+
+
+
 --
 -- Library: L1 Kernel
 --
 set_configvar("QTTEXMACS", 1)
 add_defines("QTTEXMACS")
-if is_plat("mingw") then
-    add_requires("nowide_standalone 11.2.0", {system=false})
-end
-
 target("libkernel_l1") do
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
@@ -157,33 +199,6 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
 end
 
 
-if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
-    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-    add_requires("apt::libpng-dev", {alias="libpng"})
-    add_requires("apt::zlib1g-dev", {alias="zlib"})
-    -- config package name for libjpeg on Ubuntu
-    if linuxos.name() == "ubuntu" then
-        add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
-    else
-        add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
-    end
-    -- config package name for freetype on UOS
-    if linuxos.name() == "uos" then
-    	add_requires("apt::libfreetype6-dev", {alias="freetype"})
-    else
-        add_requires("apt::libfreetype-dev", {alias="freetype"})
-    end
-else
-    add_requires("libpng 1.6.37", {system=false})
-    add_requires("libiconv 1.17", {system=false})
-    add_requires("zlib 1.2.12", {system=false})
-    add_requires("libjpeg v9e", {system=false})
-    add_requires("libcurl 7.84.0", {system=false})
-    add_requires("freetype 2.12.1", {system=false})
-end
-
-local PDFHUMMUS_VERSION = "4.1"
-add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
 
 local XMACS_VERSION="1.1.1"
 local INSTALL_DIR="$(buildir)/package"
@@ -235,6 +250,37 @@ set_configvar("STDC_HEADERS", true)
 set_version(TEXMACS_VERSION)
 
 
+add_configfiles(
+    "src/System/config.h.xmake", {
+        filename = "config.h",
+        variables = {
+            GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
+            GS_LIB = "../share/ghostscript/9.06/lib:",
+            OS_GNU_LINUX = is_plat("linux"),
+            OS_MACOS = is_plat("macosx"),
+            MACOSX_EXTENSIONS = is_plat("macosx"),
+            OS_MINGW = is_plat("mingw"),
+            SIZEOF_VOID_P = 8,
+            USE_STACK_TRACE = not is_plat("mingw"),
+            USE_GS = true,
+            }})
+
+add_configfiles(
+    "src/System/tm_configure.hpp.xmake", {
+        filename = "tm_configure.hpp",
+        pattern = "@(.-)@",
+        variables = {
+            XMACS_VERSION = XMACS_VERSION,
+            CONFIG_USER = os.getenv("USER") or "unknown",
+            CONFIG_DATE = os.time(),
+            CONFIG_STD_SETENV = "#define STD_SETENV",
+            tm_devel = "Texmacs-" .. DEVEL_VERSION,
+            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
+            tm_stable = "Texmacs-" .. STABLE_VERSION,
+            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
+            }})
+
+
 
 target("libmogan") do
     set_basename("mogan")
@@ -269,36 +315,6 @@ target("libmogan") do
     -- check for dl library
     -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
     add_options("libdl")
-
-    add_configfiles(
-        "src/System/config.h.xmake", {
-            filename = "config.h",
-            variables = {
-                GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
-                GS_LIB = "../share/ghostscript/9.06/lib:",
-                OS_GNU_LINUX = is_plat("linux"),
-                OS_MACOS = is_plat("macosx"),
-                MACOSX_EXTENSIONS = is_plat("macosx"),
-                OS_MINGW = is_plat("mingw"),
-                SIZEOF_VOID_P = 8,
-                USE_STACK_TRACE = not is_plat("mingw"),
-                USE_GS = true,
-                }})
-
-    add_configfiles(
-        "src/System/tm_configure.hpp.xmake", {
-            filename = "tm_configure.hpp",
-            pattern = "@(.-)@",
-            variables = {
-                XMACS_VERSION = XMACS_VERSION,
-                CONFIG_USER = os.getenv("USER") or "unknown",
-                CONFIG_DATE = os.time(),
-                CONFIG_STD_SETENV = "#define STD_SETENV",
-                tm_devel = "Texmacs-" .. DEVEL_VERSION,
-                tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
-                tm_stable = "Texmacs-" .. STABLE_VERSION,
-                tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
-                }})
 
     ---------------------------------------------------------------------------
     -- add source and header files
