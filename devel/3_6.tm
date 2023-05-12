@@ -3,7 +3,7 @@
 <style|<tuple|tmdoc|british>>
 
 <\body>
-  <tmdoc-title|Decouple the kernel part of GNU <TeXmacs>>
+  <tmdoc-title|Decouple the L1 kernel part of GNU <TeXmacs>>
 
   <section|Feature metadata>
 
@@ -16,7 +16,7 @@
   <subsection|What>
 
   Darcy tried to separate the kernel part of GNU <TeXmacs> for students who
-  are interested in GSOC 2019:
+  are interested in GSoC 2019:
 
   <slink|https://github.com/texmacs/kernel>
 
@@ -25,6 +25,9 @@
   v1.1.x:
 
   <slink|https://github.com/XmacsLabs/mogan/pull/400>
+
+  The L1 Kernel is smaller than the GNU TeXmacs kernel prepared for GSoC
+  students.
 
   <subsection|Why>
 
@@ -41,10 +44,12 @@
 
   <subsection|How>
 
-  Provide the following script to build and test the <TeXmacs> kernel:
+  Provide the following script to build and test the <TeXmacs> L1 kernel:
 
   <\shell-code>
-    bin/test_kernel
+    bin/build_kernel_l1
+
+    bin/test_kernel_l1
   </shell-code>
 </body>
 
