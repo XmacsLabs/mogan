@@ -408,6 +408,7 @@ target("libmogan") do
         "src/Plugins/Qt/**.hpp"})
 
     add_mxflags("-fno-objc-arc")
+    add_cxxflags("-include $(buildir)/config.h")
 end 
 
 option("libdl") do
