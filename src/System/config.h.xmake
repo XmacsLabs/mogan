@@ -1,4 +1,8 @@
-/* src/System/config.h.cmake */
+/* L1 Kernel */
+${define QTTEXMACS}
+${define SANITY_CHECKS}
+${define OS_MINGW}
+
 
 /* check assertions in code */
 #define DEBUG_ASSERT 1
@@ -75,8 +79,6 @@ ${define OS_GNU_LINUX}
 
 ${define OS_MACOS}
 
-${define OS_MINGW}
-
 ${define PDFHUMMUS_NO_TIFF}
 
 /* Disable fast memory allocator */
@@ -100,8 +102,6 @@ ${define NO_FAST_ALLOC}
 #define PACKAGE_VERSION ""
 
 ${define PDF_RENDERER}
-
-${define QTTEXMACS}
 
 ${define QTPIPES}
 
