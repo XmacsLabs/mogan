@@ -217,6 +217,14 @@
       jingkaimori
     </cell>|<\cell>
       Adjust <verbatim|url_test.cpp> for mingw build
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      3_26
+    </cell>|<\cell>
+      woutersj
+    </cell>|<\cell>
+      error while loading shared library libmogan.so
     </cell>>>>
   </wide-tabular>
 
