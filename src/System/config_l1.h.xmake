@@ -1,0 +1,7 @@
+#define KERNEL_L1
+
+${define OS_MINGW}
+
+${define QTTEXMACS}
+
+${define SANITY_CHECKS}
