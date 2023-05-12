@@ -35,17 +35,20 @@ configvar_check_cxxsnippets(
         static_assert(sizeof(void*) == 8, "");]])
 
 
+---
+--- Project: Mogan Editor
+---
 set_project("Mogan Editor")
 
--- because this cpp project use variant length arrays which is not supported by
--- msvc, this project will not support windows env.
--- because some package is not ported to cygwin env, this project will not
--- support cygwin env.
 set_allowedplats(
     -- these plat should be guaranteed
     "linux", "macosx", "mingw",
     --this plat is not maintained
     "android", "appletvos", "bsd", "cross", "iphoneos", "msys", "wasm", "watchos"
+    -- because this cpp project use variant length arrays which is not supported by
+    -- msvc, this project will not support windows env.
+    -- because some package is not ported to cygwin env, this project will not
+    -- support cygwin env.
 ) 
 
 -- add releasedbg, debug and release modes for different platforms.
@@ -58,95 +61,23 @@ else
     add_rules("mode.releasedbg", "mode.release", "mode.debug")
 end
 
-if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
-    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-    add_requires("apt::libpng-dev", {alias="libpng"})
-    add_requires("apt::zlib1g-dev", {alias="zlib"})
-    -- config package name for libjpeg on Ubuntu
-    if linuxos.name() == "ubuntu" then
-        add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
-    else
-        add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
-    end
-    -- config package name for freetype on UOS
-    if linuxos.name() == "uos" then
-    	add_requires("apt::libfreetype6-dev", {alias="freetype"})
-    else
-        add_requires("apt::libfreetype-dev", {alias="freetype"})
-    end
-else
-    add_requires("libpng 1.6.37", {system=false})
-    add_requires("libiconv 1.17", {system=false})
-    add_requires("zlib 1.2.12", {system=false})
-    add_requires("libjpeg v9e", {system=false})
-    add_requires("libcurl 7.84.0", {system=false})
-    add_requires("freetype 2.12.1", {system=false})
-end
 
-local PDFHUMMUS_VERSION = "4.1"
-add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
-add_requires("nowide_standalone 11.2.0", {system=false})
-
-local XMACS_VERSION="1.1.1"
-local INSTALL_DIR="$(buildir)/package"
-
-local TEXMACS_VERSION = "2.1.2"
-local DEVEL_VERSION = TEXMACS_VERSION
-local DEVEL_RELEASE = 1
-local STABLE_VERSION = TEXMACS_VERSION
-local STABLE_RELEASE = 1
-
-if is_plat("linux") then 
-    set_configvar("CONFIG_OS", "GNU_LINUX")
-elseif is_subhost("cygwin") then
-    set_configvar("CONFIG_OS", "CYGWIN")
-else 
-    set_configvar("CONFIG_OS", "")
-end
-
+--
+-- Library: L1 Kernel
+--
 set_configvar("QTTEXMACS", 1)
 add_defines("QTTEXMACS")
-
-set_configvar("QTPIPES", 1)
-add_defines("QTPIPES")
-
-set_configvar("USE_QT_PRINTER", 1)
-add_defines("USE_QT_PRINTER")
-
-set_configvar("USE_ICONV", 1)
-set_configvar("USE_CURL", 1)
-set_configvar("USE_FREETYPE", 1)
-set_configvar("USE_GS", 1)
-set_configvar("PDF_RENDERER", 1)
-set_configvar("PDFHUMMUS_NO_TIFF", true)
-set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
-
 if is_plat("mingw") then
-    set_configvar("GS_EXE", "bin/gs.exe")
-else
-    set_configvar("GS_EXE", "/usr/bin/gs")
+    add_requires("nowide_standalone 11.2.0", {system=false})
 end
-
-if is_plat("mingw") then
-else if is_plat("macosx") then
-    set_configvar("USE_STACK_TRACE", true)
-    set_configvar("AQUATEXMACS", true)
-end
-    set_configvar("USE_STACK_TRACE", true)
-end
-
-set_configvar("STDC_HEADERS", true)
-
-set_version(TEXMACS_VERSION)
-
 
 target("libkernel_l1") do
+    set_languages("c++17")
+    set_policy("check.auto_ignore_flags", false)
+
     set_kind("static")
     set_group("kernel_l1")
     set_basename("kernel_l1")
-
-    set_policy("check.auto_ignore_flags", false)
-    set_languages("c++17")
 
     if is_plat("mingw") then
         add_packages("nowide_standalone")
@@ -195,12 +126,13 @@ target("libkernel_l1") do
 end
 
 for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
-    local testname = path.basename(filepath) 
-    target(testname) do 
-        set_group("kernel_l1_tests")
-        add_deps("libkernel_l1")
+    local testname = path.basename(filepath)
+    target(testname) do
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
+
+        set_group("kernel_l1_tests")
+        add_deps("libkernel_l1")
         add_rules("qt.console")
         add_frameworks("QtTest")
 
@@ -219,10 +151,90 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
             "src/Kernel/Types"
         )
         add_files("tests/Base/base.cpp")
-        add_files(filepath) 
+        add_files(filepath)
         add_files(filepath, {rules = "qt.moc"})
     end
 end
+
+
+if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
+    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+    add_requires("apt::libpng-dev", {alias="libpng"})
+    add_requires("apt::zlib1g-dev", {alias="zlib"})
+    -- config package name for libjpeg on Ubuntu
+    if linuxos.name() == "ubuntu" then
+        add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
+    else
+        add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
+    end
+    -- config package name for freetype on UOS
+    if linuxos.name() == "uos" then
+    	add_requires("apt::libfreetype6-dev", {alias="freetype"})
+    else
+        add_requires("apt::libfreetype-dev", {alias="freetype"})
+    end
+else
+    add_requires("libpng 1.6.37", {system=false})
+    add_requires("libiconv 1.17", {system=false})
+    add_requires("zlib 1.2.12", {system=false})
+    add_requires("libjpeg v9e", {system=false})
+    add_requires("libcurl 7.84.0", {system=false})
+    add_requires("freetype 2.12.1", {system=false})
+end
+
+local PDFHUMMUS_VERSION = "4.1"
+add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+
+local XMACS_VERSION="1.1.1"
+local INSTALL_DIR="$(buildir)/package"
+
+local TEXMACS_VERSION = "2.1.2"
+local DEVEL_VERSION = TEXMACS_VERSION
+local DEVEL_RELEASE = 1
+local STABLE_VERSION = TEXMACS_VERSION
+local STABLE_RELEASE = 1
+
+if is_plat("linux") then 
+    set_configvar("CONFIG_OS", "GNU_LINUX")
+elseif is_subhost("cygwin") then
+    set_configvar("CONFIG_OS", "CYGWIN")
+else 
+    set_configvar("CONFIG_OS", "")
+end
+
+set_configvar("QTPIPES", 1)
+add_defines("QTPIPES")
+
+set_configvar("USE_QT_PRINTER", 1)
+add_defines("USE_QT_PRINTER")
+
+set_configvar("USE_ICONV", 1)
+set_configvar("USE_CURL", 1)
+set_configvar("USE_FREETYPE", 1)
+set_configvar("USE_GS", 1)
+set_configvar("PDF_RENDERER", 1)
+set_configvar("PDFHUMMUS_NO_TIFF", true)
+set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
+
+if is_plat("mingw") then
+    set_configvar("GS_EXE", "bin/gs.exe")
+else
+    set_configvar("GS_EXE", "/usr/bin/gs")
+end
+
+if is_plat("mingw") then
+else if is_plat("macosx") then
+    set_configvar("USE_STACK_TRACE", true)
+    set_configvar("AQUATEXMACS", true)
+end
+    set_configvar("USE_STACK_TRACE", true)
+end
+
+set_configvar("STDC_HEADERS", true)
+
+set_version(TEXMACS_VERSION)
+
+
 
 target("libmogan") do
     set_basename("mogan")
