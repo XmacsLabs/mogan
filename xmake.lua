@@ -141,6 +141,7 @@ add_configfiles(
         variables = {
             GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
             GS_LIB = "../share/ghostscript/9.06/lib:",
+            OS_GNU_LINUX = is_plat("linux"),
             OS_MACOS = is_plat("macosx"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
             OS_MINGW = is_plat("mingw"),
