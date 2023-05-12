@@ -135,20 +135,6 @@ configvar_check_cxxsnippets(
         static_assert(sizeof(void*) == 8, "");]])
 
 set_version(TEXMACS_VERSION)
-add_configfiles(
-    "src/System/config.h.xmake", {
-        filename = "config.h",
-        variables = {
-            GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
-            GS_LIB = "../share/ghostscript/9.06/lib:",
-            OS_GNU_LINUX = is_plat("linux"),
-            OS_MACOS = is_plat("macosx"),
-            MACOSX_EXTENSIONS = is_plat("macosx"),
-            OS_MINGW = is_plat("mingw"),
-            SIZEOF_VOID_P = 8,
-            USE_STACK_TRACE = not is_plat("mingw"),
-            USE_GS = true,
-            }})
 
 target("tm_shell") do
     if is_plat("macosx") or is_plat("linux") then
@@ -178,8 +164,23 @@ target("libkernel_l1") do
         add_packages("nowide_standalone")
     end
 
+    add_configfiles(
+        "src/System/config_l1.h.xmake", {
+            filename = "L1/config.h",
+            variables = {
+                OS_MINGW = is_plat("mingw")
+            }
+        }
+    )
+    add_configfiles(
+        "src/System/tm_configure_l1.hpp.xmake", {
+            filename = "L1/tm_configure.hpp",
+            pattern = "@(.-)@"
+        }
+    )
+
     add_includedirs({
-        "$(buildir)",
+        "$(buildir)/L1",
         "src/System/Memory",
         "src/System/IO",
         "src/Plugins",
@@ -220,7 +221,7 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
         end
         add_includedirs("tests/Base")
         add_includedirs(
-            "$(buildir)",
+            "$(buildir)/L1",
             "src/Plugins",
             "src/System",
             "src/System/Memory",
@@ -268,6 +269,21 @@ target("libmogan") do
     -- check for dl library
     -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
     add_options("libdl")
+
+    add_configfiles(
+        "src/System/config.h.xmake", {
+            filename = "config.h",
+            variables = {
+                GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
+                GS_LIB = "../share/ghostscript/9.06/lib:",
+                OS_GNU_LINUX = is_plat("linux"),
+                OS_MACOS = is_plat("macosx"),
+                MACOSX_EXTENSIONS = is_plat("macosx"),
+                OS_MINGW = is_plat("mingw"),
+                SIZEOF_VOID_P = 8,
+                USE_STACK_TRACE = not is_plat("mingw"),
+                USE_GS = true,
+                }})
 
     add_configfiles(
         "src/System/tm_configure.hpp.xmake", {

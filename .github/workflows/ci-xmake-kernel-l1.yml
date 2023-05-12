@@ -12,6 +12,7 @@ on:
       - 'src/Data/Drd/**'
       - 'tests/Kernel/**'
       - '.github/workflows/ci-xmake-kernel-l1.yml'
+      - 'xmake.lua'
   pull_request:
     branches: [ branch-1.2 ]
     paths:
@@ -23,6 +24,7 @@ on:
       - 'src/Data/Drd/**'
       - 'tests/Kernel/**'
       - '.github/workflows/ci-xmake-kernel-l1.yml'
+      - 'xmake.lua'
 
 jobs:
   linuxbuild:
