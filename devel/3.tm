@@ -64,7 +64,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Decouple the kernel part of GNU <TeXmacs>
+      Decouple the L1 kernel part of GNU <TeXmacs>
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
@@ -225,6 +225,14 @@
       woutersj
     </cell>|<\cell>
       error while loading shared library libmogan.so
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <dlink|3_27>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Decouple the L2 kernel part of GNU <TeXmacs>
     </cell>>>>
   </wide-tabular>
 
