@@ -229,7 +229,8 @@ target("libkernel_l2") do
         "src/System/config_l2.h.xmake", {
             filename = "L2/config.h",
             variables = {
-                OS_MINGW = is_plat("mingw")
+                OS_MINGW = is_plat("mingw"),
+                QTTEXMACS = false,
             }
         }
     )
@@ -257,6 +258,9 @@ target("libkernel_l2") do
         "src/Data/Drd",
         -- L2 Headers
         "src/Kernel/Algorithms",
+        "src/System/Files",
+        "src/System/Classes",
+        "src/System/Misc",
         "src/Texmacs",
     })
 
@@ -274,7 +278,9 @@ target("libkernel_l2") do
         "src/System/IO/**.cpp",
         "src/System/Memory/**.cpp",
         -- L2 Sources
-        "src/System/Classes/tm_timer.cpp",
+        "src/System/Classes/**.cpp",
+        "src/System/Files/**.cpp",
+        "src/System/Misc/**.cpp",
         "src/Texmacs/Server/tm_debug.cpp",
     })
 

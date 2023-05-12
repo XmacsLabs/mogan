@@ -17,8 +17,11 @@
 #include "merge_sort.hpp"
 #include "data_cache.hpp"
 #include "web_files.hpp"
+
+#ifndef KERNEL_L2
 #include "scheme.hpp"
 #include "convert.hpp"
+#endif
 
 #include <stddef.h>
 #include <stdio.h>
@@ -344,11 +347,15 @@ is_of_type (url name, string filter) {
       case 'd': return false;
       case 'l': return false;
       case 'r':
+#ifndef KERNEL_L2
         if (!as_bool (call ("tmfs-permission?", name, "read")))
+#endif
           return false;
         break;
       case 'w':
+#ifndef KERNEL_L2
         if (!as_bool (call ("tmfs-permission?", name, "write")))
+#endif
           return false;
         break;
       case 'x': return false;
@@ -486,9 +493,15 @@ is_scratch (url u) {
 
 string
 file_format (url u) {
-  if (is_rooted_tmfs (u))
+#ifdef KERNEL_L2
+  return "texmacs-file";
+#else
+  if (is_rooted_tmfs (u)) {
+    return false;
     return as_string (call ("tmfs-format", object (u)));
+  }
   else return suffix_to_format (suffix (u));
+#endif
 }
 
 /******************************************************************************

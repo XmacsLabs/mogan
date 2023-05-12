@@ -14,7 +14,10 @@
 #include "sys_utils.hpp"
 #include "analyze.hpp"
 #include "hashmap.hpp"
+
+#ifndef KERNEL_L2
 #include "scheme.hpp"
+#endif
 
 #define MAX_CACHED 25
 static int web_nr=0;
@@ -130,9 +133,16 @@ get_from_server (url u) {
   string name= as_string (u);
   if (ends (name, "~") || ends (name, "#")) {
     if (!is_rooted_tmfs (name)) return url_none ();
+#ifdef KERNEL_L2
+      tm_failure("Unsupported code path in Kernel Level 2");
+#else
     if (!as_bool (call ("tmfs-can-autosave?", unglue (u, 1))))
       return url_none ();
+#endif
   }
+#ifdef KERNEL_L2
+      tm_failure("Unsupported code path in Kernel Level 2");
+#else
   string r= as_string (call ("tmfs-load", object (name)));
   if (r == "") return url_none ();
   url tmp= url_temp (string (".") * suffix (name));
@@ -143,13 +153,18 @@ get_from_server (url u) {
   // FIXME: certain files could be cached, but others not
   // for instance, files which are loaded in a delayed fashion
   // would always be cached as empty files, which is erroneous.
+#endif
 }
 
 bool
 save_to_server (url u, string s) {
   if (!is_rooted_tmfs (u)) return true;
   string name= as_string (u);
+#ifdef KERNEL_L2
+      tm_failure("Unsupported code path in Kernel Level 2");
+#else
   (void) call ("tmfs-save", object (name), object (s));
+#endif
   return false;
 }
 
