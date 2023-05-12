@@ -166,10 +166,10 @@ target("tm_shell") do
     add_links("util")
 end
 
-target("libkernel") do
+target("libkernel_l1") do
     set_kind("static")
-    set_group("kernel")
-    set_basename("kernel")
+    set_group("kernel_l1")
+    set_basename("kernel_l1")
 
     set_policy("check.auto_ignore_flags", false)
     set_languages("c++17")
@@ -208,8 +208,8 @@ end
 for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
     local testname = path.basename(filepath) 
     target(testname) do 
-        set_group("kernel_tests")
-        add_deps("libkernel")
+        set_group("kernel_l1_tests")
+        add_deps("libkernel_l1")
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
         add_rules("qt.console")
