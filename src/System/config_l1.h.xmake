@@ -3,3 +3,5 @@
 ${define QTTEXMACS}
 ${define SANITY_CHECKS}
 ${define OS_MINGW}
+${define HAVE_INTPTR_T}
+${define HAVE_STDINT_H}
