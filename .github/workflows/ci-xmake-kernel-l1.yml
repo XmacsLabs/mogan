@@ -1,4 +1,4 @@
-name: Build and Test for the Kernel
+name: Build and Test for the L1 Kernel
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - 'src/Kernel/Types/**'
       - 'src/Data/Drd/**'
       - 'tests/Kernel/**'
-      - '.github/workflows/ci-xmake-kernel.yml'
+      - '.github/workflows/ci-xmake-kernel-l1.yml'
   pull_request:
     branches: [ branch-1.2 ]
     paths:
@@ -22,7 +22,7 @@ on:
       - 'src/Kernel/Types/**'
       - 'src/Data/Drd/**'
       - 'tests/Kernel/**'
-      - '.github/workflows/ci-xmake-kernel.yml'
+      - '.github/workflows/ci-xmake-kernel-l1.yml'
 
 jobs:
   linuxbuild:
@@ -59,8 +59,7 @@ jobs:
 
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build --yes
-      - name: build
-        id: build
-        run: xmake --yes --verbose --diagnosis --all --group=kernel_tests build
-      - name: test
-        run: bin/test_kernel
+      - name: Build the L1 Kernel
+        run: bin/build_kernel_l1
+      - name: Test the L1 Kernel
+        run: bin/test_kernel_l1
