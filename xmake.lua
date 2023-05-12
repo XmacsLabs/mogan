@@ -35,17 +35,21 @@ configvar_check_cxxsnippets(
         static_assert(sizeof(void*) == 8, "");]])
 
 
+
+---
+--- Project: Mogan Editor
+---
 set_project("Mogan Editor")
 
--- because this cpp project use variant length arrays which is not supported by
--- msvc, this project will not support windows env.
--- because some package is not ported to cygwin env, this project will not
--- support cygwin env.
 set_allowedplats(
     -- these plat should be guaranteed
     "linux", "macosx", "mingw",
     --this plat is not maintained
     "android", "appletvos", "bsd", "cross", "iphoneos", "msys", "wasm", "watchos"
+    -- because this cpp project use variant length arrays which is not supported by
+    -- msvc, this project will not support windows env.
+    -- because some package is not ported to cygwin env, this project will not
+    -- support cygwin env.
 ) 
 
 -- add releasedbg, debug and release modes for different platforms.
@@ -58,6 +62,17 @@ else
     add_rules("mode.releasedbg", "mode.release", "mode.debug")
 end
 
+
+
+--
+-- Dependencies: Platform|Package Manager
+--
+
+-- GNU/Linux variants
+-- [x] APT powered
+-- [ ] pacman powered
+-- [ ] portage powered
+-- ...
 if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
     add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
     add_requires("apt::libpng-dev", {alias="libpng"})
@@ -75,6 +90,7 @@ if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu
         add_requires("apt::libfreetype-dev", {alias="freetype"})
     end
 else
+-- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
     add_requires("libpng 1.6.37", {system=false})
     add_requires("libiconv 1.17", {system=false})
     add_requires("zlib 1.2.12", {system=false})
@@ -83,70 +99,27 @@ else
     add_requires("freetype 2.12.1", {system=false})
 end
 
+if is_plat("mingw") then
+    add_requires("nowide_standalone 11.2.0", {system=false})
+end
+
 local PDFHUMMUS_VERSION = "4.1"
 add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
-add_requires("nowide_standalone 11.2.0", {system=false})
 
-local XMACS_VERSION="1.1.1"
-local INSTALL_DIR="$(buildir)/package"
 
-local TEXMACS_VERSION = "2.1.2"
-local DEVEL_VERSION = TEXMACS_VERSION
-local DEVEL_RELEASE = 1
-local STABLE_VERSION = TEXMACS_VERSION
-local STABLE_RELEASE = 1
 
-if is_plat("linux") then 
-    set_configvar("CONFIG_OS", "GNU_LINUX")
-elseif is_subhost("cygwin") then
-    set_configvar("CONFIG_OS", "CYGWIN")
-else 
-    set_configvar("CONFIG_OS", "")
-end
-
+--
+-- Library: L1 Kernel
+--
 set_configvar("QTTEXMACS", 1)
 add_defines("QTTEXMACS")
-
-set_configvar("QTPIPES", 1)
-add_defines("QTPIPES")
-
-set_configvar("USE_QT_PRINTER", 1)
-add_defines("USE_QT_PRINTER")
-
-set_configvar("USE_ICONV", 1)
-set_configvar("USE_CURL", 1)
-set_configvar("USE_FREETYPE", 1)
-set_configvar("USE_GS", 1)
-set_configvar("PDF_RENDERER", 1)
-set_configvar("PDFHUMMUS_NO_TIFF", true)
-set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
-
-if is_plat("mingw") then
-    set_configvar("GS_EXE", "bin/gs.exe")
-else
-    set_configvar("GS_EXE", "/usr/bin/gs")
-end
-
-if is_plat("mingw") then
-else if is_plat("macosx") then
-    set_configvar("USE_STACK_TRACE", true)
-    set_configvar("AQUATEXMACS", true)
-end
-    set_configvar("USE_STACK_TRACE", true)
-end
-
-set_configvar("STDC_HEADERS", true)
-
-set_version(TEXMACS_VERSION)
-
-
 target("libkernel_l1") do
+    set_languages("c++17")
+    set_policy("check.auto_ignore_flags", false)
+
     set_kind("static")
     set_group("kernel_l1")
     set_basename("kernel_l1")
-
-    set_policy("check.auto_ignore_flags", false)
-    set_languages("c++17")
 
     if is_plat("mingw") then
         add_packages("nowide_standalone")
@@ -195,12 +168,13 @@ target("libkernel_l1") do
 end
 
 for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
-    local testname = path.basename(filepath) 
-    target(testname) do 
-        set_group("kernel_l1_tests")
-        add_deps("libkernel_l1")
+    local testname = path.basename(filepath)
+    target(testname) do
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
+
+        set_group("kernel_l1_tests")
+        add_deps("libkernel_l1")
         add_rules("qt.console")
         add_frameworks("QtTest")
 
@@ -219,10 +193,94 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
             "src/Kernel/Types"
         )
         add_files("tests/Base/base.cpp")
-        add_files(filepath) 
+        add_files(filepath)
         add_files(filepath, {rules = "qt.moc"})
     end
 end
+
+
+
+local XMACS_VERSION="1.1.1"
+local INSTALL_DIR="$(buildir)/package"
+
+local TEXMACS_VERSION = "2.1.2"
+local DEVEL_VERSION = TEXMACS_VERSION
+local DEVEL_RELEASE = 1
+local STABLE_VERSION = TEXMACS_VERSION
+local STABLE_RELEASE = 1
+
+if is_plat("linux") then 
+    set_configvar("CONFIG_OS", "GNU_LINUX")
+elseif is_subhost("cygwin") then
+    set_configvar("CONFIG_OS", "CYGWIN")
+else 
+    set_configvar("CONFIG_OS", "")
+end
+
+set_configvar("QTPIPES", 1)
+add_defines("QTPIPES")
+
+set_configvar("USE_QT_PRINTER", 1)
+add_defines("USE_QT_PRINTER")
+
+set_configvar("USE_ICONV", 1)
+set_configvar("USE_CURL", 1)
+set_configvar("USE_FREETYPE", 1)
+set_configvar("USE_GS", 1)
+set_configvar("PDF_RENDERER", 1)
+set_configvar("PDFHUMMUS_NO_TIFF", true)
+set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
+
+if is_plat("mingw") then
+    set_configvar("GS_EXE", "bin/gs.exe")
+else
+    set_configvar("GS_EXE", "/usr/bin/gs")
+end
+
+if is_plat("mingw") then
+else if is_plat("macosx") then
+    set_configvar("USE_STACK_TRACE", true)
+    set_configvar("AQUATEXMACS", true)
+end
+    set_configvar("USE_STACK_TRACE", true)
+end
+
+set_configvar("STDC_HEADERS", true)
+
+set_version(TEXMACS_VERSION)
+
+
+add_configfiles(
+    "src/System/config.h.xmake", {
+        filename = "config.h",
+        variables = {
+            GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
+            GS_LIB = "../share/ghostscript/9.06/lib:",
+            OS_GNU_LINUX = is_plat("linux"),
+            OS_MACOS = is_plat("macosx"),
+            MACOSX_EXTENSIONS = is_plat("macosx"),
+            OS_MINGW = is_plat("mingw"),
+            SIZEOF_VOID_P = 8,
+            USE_STACK_TRACE = not is_plat("mingw"),
+            USE_GS = true,
+            }})
+
+add_configfiles(
+    "src/System/tm_configure.hpp.xmake", {
+        filename = "tm_configure.hpp",
+        pattern = "@(.-)@",
+        variables = {
+            XMACS_VERSION = XMACS_VERSION,
+            CONFIG_USER = os.getenv("USER") or "unknown",
+            CONFIG_DATE = os.time(),
+            CONFIG_STD_SETENV = "#define STD_SETENV",
+            tm_devel = "Texmacs-" .. DEVEL_VERSION,
+            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
+            tm_stable = "Texmacs-" .. STABLE_VERSION,
+            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
+            }})
+
+
 
 target("libmogan") do
     set_basename("mogan")
@@ -257,36 +315,6 @@ target("libmogan") do
     -- check for dl library
     -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
     add_options("libdl")
-
-    add_configfiles(
-        "src/System/config.h.xmake", {
-            filename = "config.h",
-            variables = {
-                GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
-                GS_LIB = "../share/ghostscript/9.06/lib:",
-                OS_GNU_LINUX = is_plat("linux"),
-                OS_MACOS = is_plat("macosx"),
-                MACOSX_EXTENSIONS = is_plat("macosx"),
-                OS_MINGW = is_plat("mingw"),
-                SIZEOF_VOID_P = 8,
-                USE_STACK_TRACE = not is_plat("mingw"),
-                USE_GS = true,
-                }})
-
-    add_configfiles(
-        "src/System/tm_configure.hpp.xmake", {
-            filename = "tm_configure.hpp",
-            pattern = "@(.-)@",
-            variables = {
-                XMACS_VERSION = XMACS_VERSION,
-                CONFIG_USER = os.getenv("USER") or "unknown",
-                CONFIG_DATE = os.time(),
-                CONFIG_STD_SETENV = "#define STD_SETENV",
-                tm_devel = "Texmacs-" .. DEVEL_VERSION,
-                tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
-                tm_stable = "Texmacs-" .. STABLE_VERSION,
-                tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
-                }})
 
     ---------------------------------------------------------------------------
     -- add source and header files
