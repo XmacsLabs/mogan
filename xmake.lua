@@ -202,13 +202,6 @@ end
 --
 -- Library: L2 Kernel
 --
-if is_plat("linux") then
-    set_configvar("CONFIG_OS", "GNU_LINUX")
-elseif is_subhost("cygwin") then
-    set_configvar("CONFIG_OS", "CYGWIN")
-else
-    set_configvar("CONFIG_OS", "")
-end
 local CONFIG_USER = "MOGAN_DEVELOPERS"
 local CONFIG_DATE = "1970-01-01"
 local TEXMACS_VERSION = "2.1.2"
@@ -229,7 +222,8 @@ target("libkernel_l2") do
         "src/System/config_l2.h.xmake", {
             filename = "L2/config.h",
             variables = {
-                OS_MINGW = is_plat("mingw")
+                OS_MINGW = is_plat("mingw"),
+                QTTEXMACS = false,
             }
         }
     )
@@ -240,6 +234,7 @@ target("libkernel_l2") do
             variables = {
                 CONFIG_USER = CONFIG_USER,
                 CONFIG_DATE = CONFIG_DATE,
+                CONFIG_OS = CONFIG_OS,
                 VERSION = TEXMACS_VERSION,
             }
         }
@@ -257,6 +252,9 @@ target("libkernel_l2") do
         "src/Data/Drd",
         -- L2 Headers
         "src/Kernel/Algorithms",
+        "src/System/Files",
+        "src/System/Classes",
+        "src/System/Misc",
         "src/Texmacs",
     })
 
@@ -274,18 +272,24 @@ target("libkernel_l2") do
         "src/System/IO/**.cpp",
         "src/System/Memory/**.cpp",
         -- L2 Sources
-        "src/System/Classes/tm_timer.cpp",
+        "src/System/Classes/**.cpp",
+        "src/System/Files/**.cpp",
+        "src/System/Misc/**.cpp",
         "src/Texmacs/Server/tm_debug.cpp",
     })
 
+    if is_plat("linux") then
+        add_includedirs("src/Plugins/Unix")
+        add_files("src/Plugins/Unix/**.cpp")
+    end
+
     if is_plat("mingw") then
-        add_includedirs({
-            "src/Plugins/Windows"
-        })
+        add_includedirs("src/Plugins/Windows")
+        add_files("src/Plugins/Windows/**.cpp")
     end
 end
 
-for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
+for _, filepath in ipairs(os.files("tests/System/**_test.cpp")) do
     local testname = path.basename(filepath)
     target(testname) do
         set_languages("c++17")
@@ -302,13 +306,20 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
         add_includedirs("tests/Base")
         add_includedirs(
             "$(buildir)/L2",
+            -- L1 Headers
             "src/Plugins",
             "src/System",
             "src/System/Memory",
             "src/System/IO",
             "src/Kernel/Abstractions",
             "src/Kernel/Containers",
-            "src/Kernel/Types"
+            "src/Kernel/Types",
+            -- L2 Headers
+            "src/Kernel/Algorithms",
+            "src/System/Files",
+            "src/System/Classes",
+            "src/System/Misc",
+            "src/Texmacs"
         )
         add_files("tests/Base/base.cpp")
         add_files(filepath)
@@ -698,7 +709,8 @@ end
 
 
 for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
-    if string.sub(filepath, 1, string.len("tests/Kernel")) ~= "tests/Kernel" then
+    if string.sub(filepath, 1, string.len("tests/Kernel")) ~= "tests/Kernel"
+       and string.sub(filepath, 1, string.len("tests/System")) ~= "tests/System" then
         local testname = path.basename(filepath) 
         target(testname) do 
             add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
