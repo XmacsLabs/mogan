@@ -472,7 +472,7 @@ url_temp (string suffix) {
   return u;
 }
 
-static url
+url
 url_temp_dir_sub () {
 #ifdef OS_MINGW
   static url tmp_dir=
