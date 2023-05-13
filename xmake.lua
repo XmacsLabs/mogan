@@ -112,7 +112,6 @@ add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true
 -- Library: L1 Kernel
 --
 set_configvar("QTTEXMACS", 1)
-add_defines("QTTEXMACS")
 target("libkernel_l1") do
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
