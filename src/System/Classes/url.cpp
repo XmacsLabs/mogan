@@ -59,9 +59,6 @@
 ******************************************************************************/
 
 #include "config.h"
-#ifndef KERNEL_L2
-#include "boot.hpp"
-#endif
 
 #include "url.hpp"
 #include "sys_utils.hpp"

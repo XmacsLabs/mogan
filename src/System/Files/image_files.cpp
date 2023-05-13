@@ -495,17 +495,19 @@ image_to_png (url image, url png, int w, int h) {// IN PIXEL UNITS!
 
 bool
 call_scm_converter(url image, url dest) {
-  // if (DEBUG_CONVERT) debug_convert << " using scm" <<LF;
-  // if (as_bool (call ("file-converter-exists?",
-  //                    "x." * suffix (image),
-  //                    "x." * suffix (dest)))) {
-  //   call ("file-convert", object (image), object (dest));
-  //   bool success= exists (dest);
-  //   if (success && DEBUG_CONVERT)
-  //     debug_convert << "scm file-convert " << concretize (image)
-  //                   << " -> " << concretize (dest) << LF;
-  //   return success;
-  // }
+#ifndef KERNEL_L2
+  if (DEBUG_CONVERT) debug_convert << " using scm" <<LF;
+  if (as_bool (call ("file-converter-exists?",
+                     "x." * suffix (image),
+                     "x." * suffix (dest)))) {
+    call ("file-convert", object (image), object (dest));
+    bool success= exists (dest);
+    if (success && DEBUG_CONVERT)
+      debug_convert << "scm file-convert " << concretize (image)
+                    << " -> " << concretize (dest) << LF;
+    return success;
+  }
+#endif
   return false;
 }
 
