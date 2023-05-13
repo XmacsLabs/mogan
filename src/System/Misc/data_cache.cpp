@@ -223,7 +223,7 @@ cache_load (string buffer) {
 #ifndef KERNEL_L2
         tree t= scheme_to_tree (cached);
         for (int i=0; i<N(t)-1; i+=2)
-           cache_data (tuple (buffer, t[i]))= t[i+1];
+          cache_data (tuple (buffer, t[i]))= t[i+1];
 #endif
       }
     }
