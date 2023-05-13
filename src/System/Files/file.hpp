@@ -63,11 +63,14 @@ void copy (url from, url to);
 void remove (url what);
 void append_to (url what, url to);
 void mkdir (url dir);
+void make_dir (url which);
 void rmdir (url what);
 void change_mode (url u, int mode);
 void ps2pdf (url u1, url u2);
 
+#ifndef KERNEL_L2
 int search_score (url u, array<string> a);
+#endif
 
 url search_sub_dirs (url root);
 array<string> file_completions (url search, url dir);

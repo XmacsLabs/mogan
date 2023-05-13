@@ -58,7 +58,8 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "boot.hpp"
+#include "config.h"
+
 #include "url.hpp"
 #include "sys_utils.hpp"
 #include "web_files.hpp"
@@ -970,17 +971,6 @@ resolve (url u, string filter) {
 
 url
 resolve_in_path (url u) {
-  if (use_which) {
-    string name = escape_sh (as_string (u));
-    string which= var_eval_system ("which " * name * " 2> /dev/null");
-    if (ends (which, name))
-      return which;
-    else if ((which != "") &&
-             (!occurs ("bin/which: ", which)) &&
-             (!starts (which, "which: ")) &&
-             (!starts (which, "no ")))
-      cout << "TeXmacs] " << which << "\n";
-  }
 #ifdef OS_MINGW
   return resolve ((url_path ("$TEXMACS_PATH/bin") | url_path ("$PATH")) * u, "x");
 #else
