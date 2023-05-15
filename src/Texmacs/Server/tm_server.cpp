@@ -26,6 +26,7 @@
 
 server* the_server= NULL;
 bool texmacs_started= false;
+bool headless_mode= false;
 url tm_init_file= url_none ();
 url my_init_file= url_none ();
 string my_init_cmds= "";
