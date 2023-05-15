@@ -576,6 +576,10 @@ target("mogan") do
     if is_plat("mingw") then
         add_packages("nowide_standalone")
     end
+
+    if is_plat("linux") then
+        add_rpathdirs("@executable_path/../lib")
+    end
     add_deps("libmogan")
     add_syslinks("pthread")
 
