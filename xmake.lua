@@ -482,6 +482,9 @@ target("mogan") do
         add_frameworks("QtMacExtras")
     end
 
+    if is_plat("linux") then
+        add_rpathdirs("@executable_path/../lib")
+    end
     add_deps("libmogan")
     add_syslinks("pthread")
 
