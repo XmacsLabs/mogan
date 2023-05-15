@@ -60,10 +60,10 @@ extern int geometry_x, geometry_y;
 
 extern tree the_et;
 extern bool texmacs_started;
+extern bool headless_mode;
 
 bool disable_error_recovery= false;
 bool start_server_flag= false;
-bool headless_mode= false;
 string extra_init_cmd;
 void server_start ();
 
