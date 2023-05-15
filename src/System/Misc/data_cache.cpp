@@ -175,18 +175,19 @@ cache_save (string buffer) {
       }
     }
     else {
+#ifdef KERNEL_L2
       tm_failure("Unsupported code path in Kernel Level 2");
+#else
       cached << "(tuple\n";
       while (it->busy ()) {
         tree ckey= it->next ();
         if (ckey[0] == buffer) {
-#ifndef KERNEL_L2
           cached << tree_to_scheme (ckey[1]) << " ";
           cached << tree_to_scheme (cache_data [ckey]) << "\n";
-#endif
         }
       }
       cached << ")";
+#endif
     }
     (void) save_string (cache_file, cached);
     cache_changed->remove (buffer);
@@ -219,8 +220,9 @@ cache_load (string buffer) {
         }
       }
       else {
+#ifdef KERNEL_L2
         tm_failure("Unsupported code path in Kernel Level 2");
-#ifndef KERNEL_L2
+#else
         tree t= scheme_to_tree (cached);
         for (int i=0; i<N(t)-1; i+=2)
           cache_data (tuple (buffer, t[i]))= t[i+1];
