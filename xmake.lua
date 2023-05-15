@@ -409,7 +409,11 @@ target("libmogan") do
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
-    add_rules("qt.static")
+    if is_plat("linux") then
+        add_rules("qt.shared")
+    else
+        add_rules("qt.static")
+    end
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     if is_plat("macosx") then
         add_frameworks("QtMacExtras")
@@ -558,7 +562,7 @@ target("mogan") do
         set_filename("Mogan")
     end
 
-    if is_plat("macosx") then
+    if is_plat("macosx") or is_plat("linux") then
         add_rules("qt.widgetapp")
     else
         add_rules("qt.widgetapp_static")
