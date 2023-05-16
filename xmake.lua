@@ -702,6 +702,11 @@ target("mogan_install") do
         }, {prefixdir="share/Xmacs"})
     end
 
+    -- install tm files for testing purpose
+    add_installfiles({
+        "TeXmacs(/tests/*.tm)",
+    }, {prefixdir="share/Xmacs"})
+
     after_install(
         function (target)
             os.cp (
