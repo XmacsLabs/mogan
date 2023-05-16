@@ -170,19 +170,11 @@ edit_main_rep::notify_page_change () {
 string
 edit_main_rep::get_metadata (string kind) {
   string var= "global-" * kind;
-  string val= get_init_string (var);
+  string val= cork_to_utf8 (get_init_string (var));
   if (val != "") return val;
-  val= search_metadata (subtree (et, rp), kind);
+  val= cork_to_utf8 (search_metadata (subtree (et, rp), kind));
   if (val != "") return val;
   if (kind == "title") return as_string (tail (get_name ()));
-#ifndef OS_MINGW
-  if (kind == "author" &&
-      !is_none (resolve_in_path ("finger")) &&
-      !is_none (resolve_in_path ("sed"))) {
-    string val= var_eval_system ("finger `whoami` | sed -e '/Name/!d' -e 's/.*Name: //'");
-    if (N(val) > 1) return utf8_to_cork (val);
-  }
-#endif
   return "";
 }
 

@@ -35,3 +35,7 @@ TeXmacs/progs/ice-9
 .xmake/
 node_modules/
 website/
+
+TeXmacs/tests/*.ps
+TeXmacs/tests/*.pdf
+
