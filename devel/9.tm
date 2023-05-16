@@ -28,6 +28,14 @@
       jingkaimori
     </cell>|<\cell>
       Fix corrupted title in Html export
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      9_3
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Renderer: Use UTF8 for href and anchor
     </cell>>>>
   </wide-tabular>
 
