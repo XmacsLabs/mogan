@@ -24,6 +24,7 @@ sed -e "s/@DEVEL_VERSION@/$VERSION/" -e "s/@DEVEL_RELEASE@/1/" \
   > $APP_HOME/debian/changelog
 
 cd $APP_HOME
+rm -rf $APP_HOME/TeXmacs/docs/tests
 dpkg-buildpackage -us -uc -b
 
 $APP_HOME/debian/rules clean

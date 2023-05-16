@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ -e TeXmacs/tests/$1.scm  ]];then
+  ./build/package/bin/mogan -headless -b TeXmacs/tests/$1.scm -x "(test_$1)" -q
+else
+  echo "No such file: TeXmacs/tests/$1.scm"
+fi
+
