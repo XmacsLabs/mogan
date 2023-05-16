@@ -19,7 +19,7 @@
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
-      Fix corrupted title in PDF export
+      Fix corrupted metadata in PDF export
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
