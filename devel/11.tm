@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|british>>
+<style|<tuple|tmdoc|british|devel>>
 
 <\body>
   <tmdoc-title|Font tuning>
@@ -37,7 +37,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      11_4
+      <dlink|11_4>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -50,6 +50,14 @@
       woutersj
     </cell>|<\cell>
       Use fontconfig on Linux to detect font paths
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_6
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Detect font paths properly on Debian
     </cell>>>>
   </wide-tabular>
 
