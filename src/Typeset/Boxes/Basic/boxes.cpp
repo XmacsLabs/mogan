@@ -836,7 +836,7 @@ box_rep::display_links (renderer ren) {
                 lns[j][0] == "hyperlink" &&
                 is_compound (lns[j][3], "url", 1) &&
                 is_atomic (lns[j][3][0])) {
-              string dest= lns[j][3][0]->label;
+              string dest= cork_to_utf8 (lns[j][3][0]->label);
               ren->href (dest, x1, y1, x2, y2);
             }
         }

@@ -2224,17 +2224,6 @@ utf8_as_hummus_string (string s) {
   return r.FromUTF8 (stds);
 }
 
-static PDFTextString
-as_hummus_string (string s) {
-  return utf8_as_hummus_string(cork_to_utf8 (s));
-}
-
-static string
-prepare_text (string s) {
-  std::string r= as_hummus_string(s).ToString();
-  return std_string_to_string (r);
-}
-
 /******************************************************************************
  * hyperlinks
  ******************************************************************************/
@@ -2272,8 +2261,7 @@ void
 pdf_hummus_renderer_rep::anchor (string label, SI x1, SI y1, SI x2, SI y2)
 {
   (void) x2; (void) y1;
-  string l = prepare_text (label);
-  dests << dest_data(l, page_num, to_x(x1), to_y(y2+20*pixel));
+  dests << dest_data(label, page_num, to_x(x1), to_y(y2+20*pixel));
 }
 
 void
@@ -2294,10 +2282,10 @@ pdf_hummus_renderer_rep::href (string label, SI x1, SI y1, SI x2, SI y2)
   dict << as_string(((double)default_dpi / dpi)*to_x(x2 + 5*pixel)) << " ";
   dict << as_string(((double)default_dpi / dpi)*to_y(y2 + 10*pixel)) << "]\r\n";
   if (starts (label, "#")) {
-    dict << "\t/Dest /label" << as_string(get_label_id(prepare_text (label))) << "\r\n";
+    dict << "\t/Dest /label" << as_string(get_label_id(label)) << "\r\n";
   }
   else {
-    dict << "/A << /S /URI /URI (" << prepare_text (label) << ") >>\r\n";
+    dict << "/A << /S /URI /URI (" << label << ") >>\r\n";
   }
   dict << ">>\r\n";
   annot_list (annotId) = dict;
