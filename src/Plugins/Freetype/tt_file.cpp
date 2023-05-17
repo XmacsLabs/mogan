@@ -92,12 +92,8 @@ tt_font_path () {
     search_sub_dirs ("/usr/share/fonts/truetype") |
     search_sub_dirs ("/usr/local/share/fonts/opentype") |
     search_sub_dirs ("/usr/local/share/fonts/truetype") |
-    search_sub_dirs ("/usr/local/texlive/2020/texmf-dist/fonts/opentype") |
-    search_sub_dirs ("/usr/local/texlive/2020/texmf-dist/fonts/truetype") |
-    search_sub_dirs ("/usr/local/texlive/2021/texmf-dist/fonts/opentype") |
-    search_sub_dirs ("/usr/local/texlive/2021/texmf-dist/fonts/truetype") |
-    search_sub_dirs ("/usr/local/texlive/2022/texmf-dist/fonts/opentype") |
-    search_sub_dirs ("/usr/local/texlive/2022/texmf-dist/fonts/truetype");
+    search_sub_dirs ("/usr/share/texlive/texmf-dist/fonts/opentype") |
+    search_sub_dirs ("/usr/share/texlive/texmf-dist/fonts/truetype");
 #endif
 }
 
