@@ -21,8 +21,7 @@
 (define (get-default-interactive-questions)
   (if (or (like-gnome?) (like-macos?) (like-windows?)) "popup" "footer"))
 
-(define (get-default-buffer-management)
-  (if (or (like-macos?) (like-windows?)) "separate" "shared"))
+(define (get-default-buffer-management) "shared")
 
 (define (notify-buffer-management var val)
   (when (== val (get-default-buffer-management))
