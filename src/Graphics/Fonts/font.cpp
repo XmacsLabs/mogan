@@ -594,10 +594,6 @@ default_chinese_font_name () {
 #endif
 
   if (tt_font_exists ("FandolSong-Regular")) return "FandolSong";
-  if (tt_font_exists ("fireflysung")) return "fireflysung";
-  if (tt_font_exists ("uming")) return "uming";
-  if (tt_font_exists ("儷黑 Pro")) return "lihei";
-  if (tt_font_exists ("SimSun")) return "apple-simsun";
   return "roman";
 }
 
