@@ -36,6 +36,14 @@
       Darcy
     </cell>|<\cell>
       Renderer: Use UTF8 for href and anchor
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|9_4>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Fix label display for Chinese
     </cell>>>>
   </wide-tabular>
 
