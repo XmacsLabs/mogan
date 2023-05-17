@@ -17,11 +17,11 @@
 
   <paragraph|All of the characters are CJK>
 
-  <label|中文标签>
+  <label|\<#4E2D\>\<#6587\>\<#6807\>\<#7B7E\>>
 
   <paragraph|Not all of the characters are CJK>
 
-  <label|bib-诗经>
+  <label|bib-\<#8BD7\>\<#7ECF\>>
 
   <section|How to fix?>
 
