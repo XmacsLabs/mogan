@@ -302,6 +302,7 @@ for _, filepath in ipairs(os.files("tests/System/**_test.cpp")) do
 
         set_group("kernel_l2_tests")
         add_deps("libkernel_l2")
+        add_syslinks("pthread")
         add_rules("qt.console")
         add_frameworks("QtTest")
 
