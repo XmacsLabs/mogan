@@ -30,7 +30,7 @@
     </cell>|<\cell>
       Show grid for the graphics tool
     </cell>|<\cell>
-      <hlink|commit|431380feb7e6c02fee1a784d494e5a745540b677<next-line>>
+      <hlink|commit|https://gitee.com/XmacsLabs/mogan/commit/431380feb7e6c02fee1a784d494e5a745540b677>
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
@@ -40,7 +40,7 @@
     </cell>|<\cell>
       Document updates should run three times
     </cell>|<\cell>
-      <hlink|commit|0b399c2ef272ef13f1b55f9f4784b0b490453090<next-line>>
+      <hlink|commit|https://gitee.com/XmacsLabs/mogan/commit/0b399c2ef272ef13f1b55f9f4784b0b490453090>
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
@@ -50,7 +50,7 @@
     </cell>|<\cell>
       Default to pretty style in bib db
     </cell>|<\cell>
-      <hlink|commit|6441670a442becce18cfa1e441276dff338f60d5<next-line>>
+      <hlink|commit|https://gitee.com/XmacsLabs/mogan/commit/6441670a442becce18cfa1e441276dff338f60d5>
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
@@ -60,7 +60,27 @@
     </cell>|<\cell>
       Default to show 20 bibdb entries
     </cell>|<\cell>
-      <hlink|commit|f5f35054e206ef1b93eb1997014fc32f5e126c9e<next-line>>
+      <hlink|commit|https://gitee.com/XmacsLabs/mogan/commit/f5f35054e206ef1b93eb1997014fc32f5e126c9e>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      10_6
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Default to shared buffer
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      10_7
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Default to pop-up interactive questions
+    </cell>|<\cell>
+      \;
     </cell>>>>
   </wide-tabular>
 
