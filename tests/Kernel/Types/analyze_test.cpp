@@ -54,8 +54,6 @@ TestAnalyze::test_locase_all () {
 }
 
 void
-<<<<<<< HEAD
-=======
 TestAnalyze::test_cjk_unified_ideographs () {
   QVERIFY (is_cjk_unified_ideographs ("<#4E2D>"));
   QVERIFY (has_cjk_unified_ideographs ("<#4E2D>"));
@@ -64,7 +62,6 @@ TestAnalyze::test_cjk_unified_ideographs () {
 }
 
 void
->>>>>>> ed4b407b9 ([129] Fix label display for CJK 45m)
 TestAnalyze::test_upcase_all () {
   QVERIFY (upcase_all (string ("true")) == string ("TRUE"));
   QVERIFY (upcase_all (string ("TRue")) == string ("TRUE"));
