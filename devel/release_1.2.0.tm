@@ -9,7 +9,7 @@
 
   <tmdoc-title|Mogan Editor 1.2.0>
 
-  <section|v1.2.0-alpha3>
+  <section|v1.2.0-alpha4>
 
   <\wide-tabular>
     <tformat|<cwith|2|2|1|1|cell-valign|b>|<table|<row|<\cell>
@@ -42,6 +42,30 @@
       Darcy
     </cell>|<\cell>
       Tuning default settings
+    </cell>>|<row|<\cell>
+      <dlink|11>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Font tuning
+    </cell>>>>
+  </wide-tabular>
+
+  <section|v1.2.0-alpha3>
+
+  <\wide-tabular>
+    <tformat|<table|<row|<\cell>
+      <dlink|3>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake integration for building and testing
+    </cell>>|<row|<\cell>
+      <dlink|11>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Font tuning
     </cell>>>>
   </wide-tabular>
 
