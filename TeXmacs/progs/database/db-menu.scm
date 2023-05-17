@@ -47,7 +47,7 @@
   (revert-buffer-revert))
 
 (define (db-toolbar-current-limit)
-  (db-get-query-preference (current-buffer) "limit" "10"))
+  (db-get-query-preference (current-buffer) "limit" "20"))
 
 (define (db-toolbar-limit limit)
   (db-set-query-preference (current-buffer) "limit" limit)

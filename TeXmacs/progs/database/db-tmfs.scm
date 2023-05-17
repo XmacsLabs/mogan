@@ -34,7 +34,7 @@
   (list (cons "search" (db-get-query-preference file "search" ""))
         (cons "order" (db-get-query-preference file "order" "name"))
         (cons "direction" (db-get-query-preference file "direction" "ascend"))
-        (cons "limit" (db-get-query-preference file "limit" "10"))
+        (cons "limit" (db-get-query-preference file "limit" "20"))
         (cons "present" (db-get-query-preference file "present" "pretty"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
