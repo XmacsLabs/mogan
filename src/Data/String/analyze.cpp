@@ -86,6 +86,40 @@ is_numeric (string s) {
   return true;
 }
 
+bool
+is_cjk_unified_ideographs (string s) {
+  int n= N(s);
+  for (int i=0; i<n; i++)
+    if (s[i] == '<' && i+1<n && s[i+1] == '#') {
+      int start= i+2;
+      i= i+2;
+      while (i<n && s[i] != '>') i++;
+      string r= s(start, i);
+      if ("4E00" <= r && r <= "9FBF") continue;
+      else                            return false;
+    } else {
+      return false;
+    }
+  return true;
+}
+
+bool
+has_cjk_unified_ideographs (string s) {
+  int n= N(s);
+  for (int i=0; i<n; i++)
+    if (s[i] == '<' && i+1<n && s[i+1] == '#') {
+      int start= i+2;
+      i= i+2;
+      while (i<n && s[i] != '>') i++;
+      string r= s(start, i);
+      if ("4E00" <= r && r <= "9FBF") return true;
+      else                            continue;
+    } else {
+      continue;
+    }
+  return false;
+}
+
 /******************************************************************************
 * Changing cases
 ******************************************************************************/
