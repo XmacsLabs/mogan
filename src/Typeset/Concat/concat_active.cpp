@@ -138,12 +138,12 @@ build_locus (edit_env env, tree t, list<string>& ids, string& col, string &ref, 
         env->link_env->insert_link (arg);
         for (j=2; j<N(arg); j++) {
           if (is_compound (arg[j], "id", 1) && is_atomic (arg[j][0])) {
-            visited= visited || has_been_visited ("id:" * arg[j][0]->label);
-            anchor = arg[j][0]->label;
+            anchor = cork_to_utf8 (arg[j][0]->label);
+            visited= visited || has_been_visited ("id:" * anchor);
           }
           if (is_compound (arg[j], "url", 1) && is_atomic (arg[j][0])) {
-            visited= visited || has_been_visited ("url:" * arg[j][0]->label);
-            ref = arg[j][0]->label;
+            ref = cork_to_utf8 (arg[j][0]->label);
+            visited= visited || has_been_visited ("url:" * ref);
           }
         }
       }
