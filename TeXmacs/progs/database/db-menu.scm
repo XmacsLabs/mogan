@@ -54,7 +54,7 @@
   (revert-buffer-revert))
 
 (define (db-toolbar-current-present)
-  (with p (db-get-query-preference (current-buffer) "present" "detailed")
+  (with p (db-get-query-preference (current-buffer) "present" "pretty")
     (upcase-first p)))
 
 (define (db-toolbar-present present)
