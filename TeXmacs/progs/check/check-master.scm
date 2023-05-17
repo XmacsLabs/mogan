@@ -22,7 +22,8 @@
         (convert tools environment-test)
         (convert mathml mathtm-test)
         (convert tmml tmmltm-test)
-        (prog prog-format-test)))
+        (prog prog-format-test)
+        (fonts fonts-test)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Test LaTeX export
@@ -92,4 +93,5 @@
   (regtest-prog-format)
   (regtest-tm-define)
   (regtest-tm-dialogue)
+  (regtest-fonts)
 )
