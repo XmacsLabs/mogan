@@ -124,6 +124,8 @@ ${define TM_DYNAMIC_LINKING}
 /* Use freetype library */
 ${define USE_FREETYPE}
 
+${define USE_FONTCONFIG}
+
 ${define USE_GS}
 
 /* Use iconv library */

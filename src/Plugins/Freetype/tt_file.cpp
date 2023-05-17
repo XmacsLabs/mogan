@@ -20,6 +20,10 @@
 #include "data_cache.hpp"
 #include "scheme.hpp"
 
+#ifdef USE_FONTCONFIG
+#include <fontconfig/fontconfig.h>
+#endif
+
 static hashmap<string,string> tt_fonts ("no");
 
 url
@@ -49,6 +53,16 @@ tt_font_path () {
   if (xtt != "") xu= search_sub_dirs (xtt);
   string ximp= get_preference ("imported fonts", "");
   if (ximp != "") xu= xu | search_sub_dirs (url_unix (ximp));
+#ifdef _FONTCONFIG_H_
+  FcConfig* config = FcInitLoadConfig();
+  FcStrList * fontdirs = FcConfigGetFontDirs(config);
+  FcChar8 *fontdir = NULL;
+
+  FcStrListFirst(fontdirs);
+  while(fontdir = FcStrListNext(fontdirs)) {
+    xu = xu | search_sub_dirs ((char*)fontdir);
+  }
+#endif
   return
     xu |
     search_sub_dirs ("$TEXMACS_HOME_PATH/fonts/truetype") |
