@@ -103,6 +103,11 @@ if is_plat("mingw") then
     add_requires("nowide_standalone 11.2.0", {system=false})
 end
 
+if is_plat("linux") then
+    add_requires("fontconfig", {system = true})
+end
+set_configvar("USE_FONTCONFIG", is_plat("linux"))
+
 local PDFHUMMUS_VERSION = "4.1"
 add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
 
@@ -430,6 +435,10 @@ target("libmogan") do
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
+    end
+    
+    if is_plat("linux") then
+        add_packages("fontconfig")
     end
 
     ---------------------------------------------------------------------------
