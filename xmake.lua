@@ -735,3 +735,17 @@ target("tm_shell") do
     add_files("plugins/shell/src/tm_shell.cpp")
     add_links("util")
 end
+
+
+-- xmake plugins
+add_configfiles(
+    "misc/doxygen/Doxyfile.in", {
+        filename = "doxyfile",
+        pattern = "@(.-)@",
+        variables = {
+            PACKAGE = "Mogan Editor",
+            DOXYGEN_DIR = get_config("buildir"),
+            DEVEL_VERSION = DEVEL_VERSION,
+        }
+    }
+)

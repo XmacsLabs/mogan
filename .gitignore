@@ -39,3 +39,4 @@ website/
 TeXmacs/tests/*.ps
 TeXmacs/tests/*.pdf
 
+doxyfile
