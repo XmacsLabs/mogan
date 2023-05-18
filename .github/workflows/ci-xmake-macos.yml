@@ -1,0 +1,70 @@
+name: Build and Test on macOS
+
+on:
+  push:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - '.github/workflows/ci-xmake-macos.yml'
+  pull_request:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - '.github/workflows/ci-xmake-macos.yml'
+
+jobs:
+  macosbuild:
+    runs-on: macos-11
+    if: always()
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{github.workspace}}/build/.build_cache
+            /Users/runner/.xmake
+          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 5.15.2
+          target: 'desktop'
+          cache: 'true'
+
+      - name: set XMAKE_GLOBALDIR
+        run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
+
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.7.9
+          actions-cache-folder: '.xmake-cache'
+
+      - name: xmake repo --update
+        run: xmake repo --update
+
+      - name: cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+            ${{ runner.workspace }}/build/.build_cache
+          key: ${{ runner.os }}-xmake-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
+
+      - name: config
+        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build --yes
+      - name: build
+        id: build
+        run: xmake build --yes --verbose --diagnosis --all
+      - name: test
+        run: xmake run --yes --verbose --diagnosis --group=tests
+        env:
+          QT_QPA_PLATFORM: offscreen
