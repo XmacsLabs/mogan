@@ -3,14 +3,14 @@
 if [ -z $1 ];then
     xmake --help
     echo "----------"
-    echo "bin/test target-name"
+    echo "bin/test_only target-name"
     exit 0
 fi
 
 if [[ "--help" == "$1" ]];then
     xmake --help
     echo "----------"
-    echo "bin/test target-name"
+    echo "bin/test_only target-name"
     exit 0
 fi
 
