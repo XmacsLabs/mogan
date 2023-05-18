@@ -81,6 +81,26 @@
       Default to pop-up interactive questions
     </cell>|<\cell>
       \;
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      10_8
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Move show key presses to Tools-\<gtr\>Keyboard
+    </cell>|<\cell>
+      <hlink|commit|https://gitee.com/XmacsLabs/mogan/commit/c89b1bab5731420b71c0b4dc962ae47f0d307d37>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      10_9
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Windows: using Alt instead of Meta
+    </cell>|<\cell>
+      \;
     </cell>>>>
   </wide-tabular>
 
