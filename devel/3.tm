@@ -148,7 +148,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <todo|3_17>
+      3_17
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -156,7 +156,7 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_18>
+      3_18
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -164,7 +164,7 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_19>
+      3_19
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -172,7 +172,7 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_20>
+      3_20
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -202,9 +202,9 @@
     </cell>|<\cell>
       Remove the included C++ source code of nowide
     </cell>>|<row|<\cell>
-      Chore
+      Feature
     </cell>|<\cell>
-      <todo|3_24>
+      <dlink|3_24>
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
