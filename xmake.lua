@@ -115,6 +115,8 @@ add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true
 --
 -- Library: L1 Kernel
 --
+set_configvar("QTTEXMACS", 1)
+
 local l1_files = {
     "src/Kernel/Abstractions/basic.cpp",
     "src/Kernel/Containers/**.cpp",
@@ -123,7 +125,6 @@ local l1_files = {
     "src/System/IO/**.cpp",
     "src/System/Memory/**.cpp"
 }
-
 local l1_includedirs = {
     "src/System/Memory",
     "src/System/IO",
@@ -134,7 +135,6 @@ local l1_includedirs = {
     "src/Data/Drd"
 }
 
-set_configvar("QTTEXMACS", 1)
 target("libkernel_l1") do
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
