@@ -576,7 +576,7 @@
     (set! doc-update-times (min (max 1 n) 5)))) ; Just in case
 
 (define-preferences 
-  ("document update times" "1" notify-doc-update-times))
+  ("document update times" "3" notify-doc-update-times))
 
 (define (wait-update-current-buffer)
   (system-wait "Updating current buffer, " "please wait")
