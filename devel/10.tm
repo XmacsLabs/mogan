@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|british>>
+<style|<tuple|tmdoc|british|devel>>
 
 <\body>
   <tmdoc-title|Tuning default settings>
@@ -24,7 +24,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      10_2
+      <dlink|10_2>
     </cell>|<\cell>
       pokyux
     </cell>|<\cell>
