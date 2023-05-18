@@ -282,7 +282,7 @@ target("libkernel_l2") do
         "src/Texmacs/Server/tm_debug.cpp",
     })
 
-    if is_plat("linux") then
+    if is_plat("linux") or is_plat("macosx") then
         add_includedirs("src/Plugins/Unix")
         add_files("src/Plugins/Unix/**.cpp")
     end
