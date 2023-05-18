@@ -682,6 +682,7 @@ target("mogan_install") do
     -- install tm files for testing purpose
     add_installfiles({
         "TeXmacs(/tests/*.tm)",
+        "TeXmacs(/tests/*.bib)",
     }, {prefixdir="share/Xmacs"})
 
     after_install(
