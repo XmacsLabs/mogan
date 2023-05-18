@@ -24,13 +24,20 @@
 ;; Emacs prefixes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(when (and (like-emacs?) (not (os-macos?)))
+  (kbd-wildcards pre
+    ("emacs:meta" "A-" #t)))
+
+(when (and (like-emacs?) (os-macos?))
+  (kbd-wildcards pre
+    ("emacs:meta" "M-" #t)))
+
 (when (like-emacs?)
 
 (kbd-wildcards pre
   ("emacs" "C-" #t)
   ("emacs:contextual" "emacs c")
   ("emacs:prefix" "emacs x")
-  ("emacs:meta" "M-" #t)
   ("std" "C-" #t)
   ("cmd" "A-")
   ("altcmd" "M-")
