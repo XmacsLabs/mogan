@@ -154,21 +154,21 @@
     </cell>|<\cell>
       Build and test on macOS
     </cell>>|<row|<\cell>
-      Feature
+      Chore
     </cell>|<\cell>
       <todo|3_18>
     </cell>|<\cell>
-      jingkaimori
+      Darcy
     </cell>|<\cell>
-      Build and test on WASM
+      Upgrade to xmake 2.7.9
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
       <todo|3_19>
     </cell>|<\cell>
-      jingkaimori
+      Darcy
     </cell>|<\cell>
-      Github Action to build and test on wasm
+      Use lua feature to simply L1/L2 Kernel build definition
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
@@ -180,15 +180,15 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_21>
+      3_21
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Github Action to build and test the kernel
+      Github Action to build and test the L1 kernel
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_22>
+      3_22
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
@@ -196,7 +196,7 @@
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
-      <todo|3_23>
+      3_23
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
