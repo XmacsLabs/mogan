@@ -115,6 +115,25 @@ add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true
 --
 -- Library: L1 Kernel
 --
+local l1_files = {
+    "src/Kernel/Abstractions/basic.cpp",
+    "src/Kernel/Containers/**.cpp",
+    "src/Kernel/Types/**.cpp",
+    "src/Data/Drd/**.cpp",
+    "src/System/IO/**.cpp",
+    "src/System/Memory/**.cpp"
+}
+
+local l1_includedirs = {
+    "src/System/Memory",
+    "src/System/IO",
+    "src/Plugins",
+    "src/Kernel/Abstractions",
+    "src/Kernel/Containers",
+    "src/Kernel/Types",
+    "src/Data/Drd"
+}
+
 set_configvar("QTTEXMACS", 1)
 target("libkernel_l1") do
     set_languages("c++17")
@@ -143,25 +162,9 @@ target("libkernel_l1") do
         }
     )
 
-    add_includedirs({
-        "$(buildir)/L1",
-        "src/System/Memory",
-        "src/System/IO",
-        "src/Plugins",
-        "src/Kernel/Abstractions",
-        "src/Kernel/Containers",
-        "src/Kernel/Types",
-        "src/Data/Drd",
-    })
-
-    add_files({
-        "src/Kernel/Abstractions/basic.cpp",
-        "src/Kernel/Containers/**.cpp",
-        "src/Kernel/Types/**.cpp",
-        "src/Data/Drd/**.cpp",
-        "src/System/IO/**.cpp",
-        "src/System/Memory/**.cpp"
-    })
+    add_includedirs("$(buildir)/L1")
+    add_includedirs(l1_includedirs)
+    add_files(l1_files)
 
     if is_plat("mingw") then
         add_includedirs({
@@ -185,16 +188,8 @@ for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
             add_packages("nowide_standalone")
         end
         add_includedirs("tests/Base")
-        add_includedirs(
-            "$(buildir)/L1",
-            "src/Plugins",
-            "src/System",
-            "src/System/Memory",
-            "src/System/IO",
-            "src/Kernel/Abstractions",
-            "src/Kernel/Containers",
-            "src/Kernel/Types"
-        )
+        add_includedirs("$(buildir)/L1")
+        add_includedirs(l1_includedirs)
         add_files("tests/Base/base.cpp")
         add_files(filepath)
         add_files(filepath, {rules = "qt.moc"})
@@ -209,6 +204,20 @@ end
 local CONFIG_USER = "MOGAN_DEVELOPERS"
 local CONFIG_DATE = "1970-01-01"
 local TEXMACS_VERSION = "2.1.2"
+
+local l2_files = {
+    "src/System/Classes/**.cpp",
+    "src/System/Files/**.cpp",
+    "src/System/Misc/**.cpp",
+    "src/Texmacs/Server/tm_debug.cpp",
+}
+local l2_includedirs = {
+    "src/Kernel/Algorithms",
+    "src/System/Files",
+    "src/System/Classes",
+    "src/System/Misc",
+    "src/Texmacs",
+}
 
 target("libkernel_l2") do
     set_languages("c++17")
@@ -244,43 +253,15 @@ target("libkernel_l2") do
         }
     )
 
-    add_includedirs({
-        "$(buildir)/L2",
-        -- L1 Headers
-        "src/System/Memory",
-        "src/System/IO",
-        "src/Plugins",
-        "src/Kernel/Abstractions",
-        "src/Kernel/Containers",
-        "src/Kernel/Types",
-        "src/Data/Drd",
-        -- L2 Headers
-        "src/Kernel/Algorithms",
-        "src/System/Files",
-        "src/System/Classes",
-        "src/System/Misc",
-        "src/Texmacs",
-    })
-
     add_headerfiles({
         "src/System/Classes/tm_timer.hpp",
         "src/Texmacs/tm_debug.hpp",
     })
-
-    add_files({
-        -- L1 Sources
-        "src/Kernel/Abstractions/basic.cpp",
-        "src/Kernel/Containers/**.cpp",
-        "src/Kernel/Types/**.cpp",
-        "src/Data/Drd/**.cpp",
-        "src/System/IO/**.cpp",
-        "src/System/Memory/**.cpp",
-        -- L2 Sources
-        "src/System/Classes/**.cpp",
-        "src/System/Files/**.cpp",
-        "src/System/Misc/**.cpp",
-        "src/Texmacs/Server/tm_debug.cpp",
-    })
+    add_includedirs("$(buildir)/L2")
+    add_includedirs(l1_includedirs)
+    add_includedirs(l2_includedirs)
+    add_files(l1_files)
+    add_files(l2_files)
 
     if is_plat("linux") or is_plat("macosx") then
         add_includedirs("src/Plugins/Unix")
@@ -309,23 +290,9 @@ for _, filepath in ipairs(os.files("tests/System/**_test.cpp")) do
             add_packages("nowide_standalone")
         end
         add_includedirs("tests/Base")
-        add_includedirs(
-            "$(buildir)/L2",
-            -- L1 Headers
-            "src/Plugins",
-            "src/System",
-            "src/System/Memory",
-            "src/System/IO",
-            "src/Kernel/Abstractions",
-            "src/Kernel/Containers",
-            "src/Kernel/Types",
-            -- L2 Headers
-            "src/Kernel/Algorithms",
-            "src/System/Files",
-            "src/System/Classes",
-            "src/System/Misc",
-            "src/Texmacs"
-        )
+        add_includedirs("$(buildir)/L2")
+        add_includedirs(l1_includedirs)
+        add_includedirs(l2_includedirs)
         add_files("tests/Base/base.cpp")
         add_files(filepath)
         add_files(filepath, {rules = "qt.moc"})
