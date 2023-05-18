@@ -106,7 +106,6 @@ end
 if is_plat("linux") then
     add_requires("fontconfig", {system = true})
 end
-set_configvar("USE_FONTCONFIG", is_plat("linux"))
 
 local PDFHUMMUS_VERSION = "4.1"
 add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
@@ -388,6 +387,7 @@ add_configfiles(
             MACOSX_EXTENSIONS = is_plat("macosx"),
             OS_MINGW = is_plat("mingw"),
             SIZEOF_VOID_P = 8,
+            USE_FONTCONFIG = is_plat("linux"),
             USE_STACK_TRACE = not is_plat("mingw"),
             USE_GS = true,
             }})
