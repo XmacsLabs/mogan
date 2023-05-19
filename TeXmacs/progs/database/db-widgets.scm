@@ -70,7 +70,7 @@
           (when (and src obj)
             (ahash-set! cache src obj)))))
     (with cv (lambda (x) (with y (ahash-ref cache x) (or y x)))
-      (sort (map cv l)
+      (list-sort (map cv l)
             (lambda (p1 p2)
               (let* ((n1 (get-name p1))
                      (n2 (get-name p2)))
