@@ -9,16 +9,10 @@
 
   <tmdoc-title|Mogan Editor 1.2.0>
 
-  <section|v1.2.0-alpha5>
+  <section|v1.2.0-beta1>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|1|1|cell-valign|b>|<table|<row|<\cell>
-      <dlink|5>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Documentation in markdown format for users and developers
-    </cell>>|<row|<\cell>
+    <tformat|<table|<row|<\cell>
       <dlink|8>
     </cell>|<\cell>
       Darcy
@@ -36,7 +30,37 @@
       Darcy
     </cell>|<\cell>
       Font tuning
+    </cell>>>>
+  </wide-tabular>
+
+  <section|v1.2.0-alpha6>
+
+  <\wide-tabular>
+    <tformat|<cwith|1|1|1|1|cell-valign|b>|<table|<row|<\cell>
+      <dlink|5>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Documentation in markdown format for users and developers
     </cell>>|<row|<\cell>
+      <dlink|13>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Libcurl integration
+    </cell>>|<row|<\cell>
+      <dlink|14>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Unit Tests on L1 Kernel for OSPP Students
+    </cell>>>>
+  </wide-tabular>
+
+  <section|v1.2.0-alpha5>
+
+  <\wide-tabular>
+    <tformat|<table|<row|<\cell>
       <dlink|12>
     </cell>|<\cell>
       Darcy
