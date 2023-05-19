@@ -3,7 +3,7 @@
 <style|<tuple|tmdoc|british>>
 
 <\body>
-  <tmdoc-title|BibTeX parser: encoding of tag name>
+  <tmdoc-title|BibTeX import: encoding of tag name>
 
   <section|Bug Metadata>
 
