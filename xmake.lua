@@ -209,6 +209,7 @@ local l2_files = {
     "src/System/Classes/**.cpp",
     "src/System/Files/**.cpp",
     "src/System/Misc/**.cpp",
+    "src/Plugins/Curl/**.cpp",
     "src/Texmacs/Server/tm_debug.cpp",
 }
 local l2_includedirs = {
@@ -216,6 +217,7 @@ local l2_includedirs = {
     "src/System/Files",
     "src/System/Classes",
     "src/System/Misc",
+    "src/Plugins",
     "src/Texmacs",
 }
 
@@ -227,6 +229,7 @@ target("libkernel_l2") do
     set_group("kernel_l2")
     set_basename("kernel_l2")
 
+    add_packages("libcurl")
     if is_plat("mingw") then
         add_packages("nowide_standalone")
     end
@@ -286,6 +289,7 @@ for _, filepath in ipairs(os.files("tests/System/**_test.cpp")) do
         add_rules("qt.console")
         add_frameworks("QtTest")
 
+        add_packages("libcurl")
         if is_plat("mingw") then
             add_packages("nowide_standalone")
         end

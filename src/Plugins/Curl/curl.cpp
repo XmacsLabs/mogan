@@ -9,9 +9,12 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "Curl/curl.hpp"
 #include <curl/curl.h>
 #include <string>
+
+#include "Curl/curl.hpp"
+#include "tm_debug.hpp"
+
 
 static std::string readBuffer;
 
