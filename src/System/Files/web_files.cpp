@@ -18,6 +18,7 @@
 #ifndef KERNEL_L2
 #include "scheme.hpp"
 #endif
+#include "Curl/curl.hpp"
 
 #define MAX_CACHED 25
 static int web_nr=0;
@@ -73,51 +74,27 @@ web_encode (string s) {
   return tm_decode (s);
 }
 
-static string
-fetch_tool () {
-  static bool done= false;
-  static string tool= "";
-  if (done) return tool;
-  if (tool == "" && exists_in_path ("wget")) tool= "wget";
-  if (tool == "" && exists_in_path ("curl")) tool= "curl";
-  done= true;
-  return tool;
-}
-
 url
 get_from_web (url name) {
   if (!is_rooted_web (name)) return url_none ();
+
   url res= get_cache (name);
   if (!is_none (res)) return res;
 
-  string tool= fetch_tool ();
-  if (tool == "") return url_none ();
-  
-  url tmp= url_temp ();
-  string tmp_s= escape_sh (concretize (tmp));
-  string cmd= "";
-  
-  if (tool == "wget") {
-    cmd= "wget --header='User-Agent: TeXmacs-" TEXMACS_VERSION "' -q";
-    cmd << " --no-check-certificate --tries=1";
-    cmd << " -O " << tmp_s << " " << escape_sh (web_encode (as_string (name)));
-  }
-  
-  if (tool == "curl") {
-    cmd= "curl --user-agent TeXmacs-" TEXMACS_VERSION;
-    cmd << " " << escape_sh (web_encode (as_string (name)));
-    cmd << " --output " << tmp_s;
-  }
+  string suf= suffix (name);
+  if (!is_empty (suf)) suf= string(".") * suf;
 
-  //cout << cmd << LF;
-  system (cmd);
-  //cout << "got " << name << " as " << tmp << LF;
+  url tmp= url_temp (suf);
+  string content= curl_get (
+    escape_sh (web_encode (as_string (name))),
+    string("TeXmacs-") * TEXMACS_VERSION);
 
-  if (file_size (url_system (tmp_s)) <= 0) {
-    remove (tmp);
-    return url_none ();
+  if (is_empty (content)) return url_none ();
+  else {
+    save_string (tmp, content);
+    set_cache (name, tmp);
+    return tmp;
   }
-  else return set_cache (name, tmp);
 }
 
 /******************************************************************************
