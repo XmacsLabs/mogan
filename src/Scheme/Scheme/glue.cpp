@@ -10,6 +10,8 @@
 ******************************************************************************/
 
 #include "glue.hpp"
+#include "glue_l1.hpp"
+#include "glue_l2.hpp"
 
 #include "promise.hpp"
 #include "tree.hpp"
@@ -209,29 +211,6 @@ tree_label
 tmscm_to_tree_label (tmscm p) {
   string s= tmscm_to_symbol (p);
   return make_tree_label (s);
-}
-
-/******************************************************************************
-* Trees
-******************************************************************************/
-
-#define TMSCM_ASSERT_TREE(t,arg,rout) TMSCM_ASSERT (tmscm_is_tree (t), t, arg, rout)
-
-
-bool
-tmscm_is_tree (tmscm u) {
-  return (tmscm_is_blackbox (u) && 
-         (type_box (tmscm_to_blackbox(u)) == type_helper<tree>::id));
-}
-
-tmscm 
-tree_to_tmscm (tree o) {
-  return blackbox_to_tmscm (close_box<tree> (o));
-}
-
-tree
-tmscm_to_tree (tmscm obj) {
-  return open_box<tree>(tmscm_to_blackbox (obj));
 }
 
 tmscm 
@@ -491,31 +470,6 @@ contentP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
-/******************************************************************************
-* Paths
-******************************************************************************/
-
-bool
-tmscm_is_path (tmscm p) {
-  if (tmscm_is_null (p)) return true;
-  else return tmscm_is_int (tmscm_car (p)) && tmscm_is_path (tmscm_cdr (p));
-}
-
-#define TMSCM_ASSERT_PATH(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_path (p), p, arg, rout)
-
-tmscm 
-path_to_tmscm (path p) {
-  if (is_nil (p)) return tmscm_null ();
-  else return tmscm_cons (int_to_tmscm (p->item), path_to_tmscm (p->next));
-}
-
-path
-tmscm_to_path (tmscm p) {
-  if (tmscm_is_null (p)) return path ();
-  else return path ((int) tmscm_to_int (tmscm_car (p)), 
-                          tmscm_to_path (tmscm_cdr (p)));
-}
 
 
 /******************************************************************************
@@ -622,32 +576,6 @@ tmscm_to_promise_widget (tmscm o) {
   return open_box<promise_widget> (tmscm_to_blackbox (o));
 }
 
-/******************************************************************************
-* Urls
-******************************************************************************/
-
-bool
-tmscm_is_url (tmscm u) {
-  return (tmscm_is_blackbox (u)
-              && (type_box (tmscm_to_blackbox(u)) == type_helper<url>::id))
-         || (tmscm_is_string(u));
-}
-
-tmscm 
-url_to_tmscm (url u) {
-  return blackbox_to_tmscm (close_box<url> (u));
-}
-
-url
-tmscm_to_url (tmscm obj) {
-  if (tmscm_is_string (obj))
-#ifdef OS_MINGW
-    return url_system (tmscm_to_string (obj));
-#else
-  return tmscm_to_string (obj);
-#endif
-  return open_box<url> (tmscm_to_blackbox (obj));
-}
 
 tmscm 
 urlP (tmscm t) {
@@ -663,26 +591,6 @@ string string_load (url u) {
 void string_append_to_file (string s, url u) { (void) append_string (u, s); }
 url url_ref (url u, int i) { return u[i]; }
 
-/******************************************************************************
-* Modification
-******************************************************************************/
-
-bool
-tmscm_is_modification (tmscm m) {
-  return (tmscm_is_blackbox (m) &&
-	  (type_box (tmscm_to_blackbox(m)) == type_helper<modification>::id))
-    || (tmscm_is_string (m));
-}
-
-tmscm 
-modification_to_tmscm (modification m) {
-  return blackbox_to_tmscm (close_box<modification> (m));
-}
-
-modification
-tmscm_to_modification (tmscm obj) {
-  return open_box<modification> (tmscm_to_blackbox (obj));
-}
 
 tmscm 
 modificationP (tmscm t) {
@@ -1108,63 +1016,15 @@ tmscm_to_array_path (tmscm p) {
   return a;
 }
 
-/******************************************************************************
-* List types
-******************************************************************************/
-
-typedef list<string> list_string;
-
-bool
-tmscm_is_list_string (tmscm p) {
-  if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) &&
-    tmscm_is_string (tmscm_car (p)) &&
-    tmscm_is_list_string (tmscm_cdr (p));
-}
 
 #define TMSCM_ASSERT_LIST_STRING(p,arg,rout) \
 TMSCM_ASSERT (tmscm_is_list_string (p), p, arg, rout)
 
-tmscm 
-list_string_to_tmscm (list_string l) {
-  if (is_nil (l)) return tmscm_null ();
-  return tmscm_cons (string_to_tmscm (l->item),
-           list_string_to_tmscm (l->next));
-}
 
-list_string
-tmscm_to_list_string (tmscm p) {
-  if (tmscm_is_null (p)) return list_string ();
-  return list_string (tmscm_to_string (tmscm_car (p)),
-            tmscm_to_list_string (tmscm_cdr (p)));
-}
-
-typedef list<tree> list_tree;
-
-bool
-tmscm_is_list_tree (tmscm p) {
-  if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) &&
-    tmscm_is_tree (tmscm_car (p)) &&
-    tmscm_is_list_tree (tmscm_cdr (p));
-}
 
 #define TMSCM_ASSERT_LIST_TREE(p,arg,rout) \
 TMSCM_ASSERT (tmscm_is_list_tree (p), p, arg, rout)
 
-tmscm 
-list_tree_to_tmscm (list_tree l) {
-  if (is_nil (l)) return tmscm_null ();
-  return tmscm_cons (tree_to_tmscm (l->item),
-           list_tree_to_tmscm (l->next));
-}
-
-list_tree
-tmscm_to_list_tree (tmscm p) {
-  if (tmscm_is_null (p)) return list_tree ();
-  return list_tree (tmscm_to_tree (tmscm_car (p)),
-            tmscm_to_list_tree (tmscm_cdr (p)));
-}
 
 /******************************************************************************
 * Gluing
