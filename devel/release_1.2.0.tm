@@ -54,6 +54,12 @@
       Darcy
     </cell>|<\cell>
       Unit Tests on L1 Kernel for OSPP Students
+    </cell>>|<row|<\cell>
+      <dlink|15>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      L3 Kernel
     </cell>>>>
   </wide-tabular>
 
