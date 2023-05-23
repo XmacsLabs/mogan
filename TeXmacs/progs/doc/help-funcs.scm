@@ -78,6 +78,3 @@
 
 (tm-define (load-help-online s)
   (load-help-buffer (url-append "https://www.texmacs.org/tmbrowse" s)))
-
-(tm-define (update-help-online)
-  (system "cd $TEXMACS_HOME_PATH; wget ftp://ftp.texmacs.org/pub/TeXmacs/doc/TeXmacs-doc.tar.gz -O TeXmacs-doc.tar.gz; gunzip TeXmacs-doc.tar.gz; tar -xvf TeXmacs-doc.tar; rm -f TeXmacs-doc.tar"))
