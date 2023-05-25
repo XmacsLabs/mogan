@@ -2,17 +2,17 @@
 #include "object.hpp"
 
 /******************************************************************************
-* Urls
-******************************************************************************/
+ * Urls
+ ******************************************************************************/
 
 bool
 tmscm_is_url (tmscm u) {
-  return (tmscm_is_blackbox (u)
-              && (type_box (tmscm_to_blackbox(u)) == type_helper<url>::id))
-         || (tmscm_is_string(u));
+  return (tmscm_is_blackbox (u) &&
+          (type_box (tmscm_to_blackbox (u)) == type_helper<url>::id)) ||
+         (tmscm_is_string (u));
 }
 
-tmscm 
+tmscm
 url_to_tmscm (url u) {
   return blackbox_to_tmscm (close_box<url> (u));
 }
@@ -23,7 +23,7 @@ tmscm_to_url (tmscm obj) {
 #ifdef OS_MINGW
     return url_system (tmscm_to_string (obj));
 #else
-  return tmscm_to_string (obj);
+    return tmscm_to_string (obj);
 #endif
   return open_box<url> (tmscm_to_blackbox (obj));
 }
@@ -35,4 +35,7 @@ as_url (object obj) {
   return tmscm_to_url (t);
 }
 
-bool is_url (object obj) { return tmscm_is_url (object_to_tmscm (obj)); }
+bool
+is_url (object obj) {
+  return tmscm_is_url (object_to_tmscm (obj));
+}
