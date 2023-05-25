@@ -329,54 +329,6 @@ tree_remove_node (tree r, int pos) {
 }
 
 /******************************************************************************
-* Scheme trees
-******************************************************************************/
-
-#define TMSCM_ASSERT_SCHEME_TREE(p,arg,rout)
-
-tmscm 
-scheme_tree_to_tmscm (scheme_tree t) {
-  if (is_atomic (t)) {
-    string s= t->label;
-    if (s == "#t") return tmscm_true ();
-    if (s == "#f") return tmscm_false ();
-    if (is_int (s)) return int_to_tmscm (as_int (s));
-    if (is_quoted (s))
-      return string_to_tmscm (scm_unquote (s));
-    //if ((N(s)>=2) && (s[0]=='\42') && (s[N(s)-1]=='\42'))
-    //return string_to_tmscm (s (1, N(s)-1));
-    if (N(s) >= 1 && s[0] == '\'') return symbol_to_tmscm (s (1, N(s)));
-    return symbol_to_tmscm (s);
-  }
-  else {
-    int i;
-    tmscm p= tmscm_null ();
-    for (i=N(t)-1; i>=0; i--)
-      p= tmscm_cons (scheme_tree_to_tmscm (t[i]), p);
-    return p;
-  }
-}
-
-scheme_tree
-tmscm_to_scheme_tree (tmscm p) {
-  if (tmscm_is_list (p)) {
-    tree t (TUPLE);
-    while (!tmscm_is_null (p)) {
-      t << tmscm_to_scheme_tree (tmscm_car (p));
-      p= tmscm_cdr (p);
-    }
-    return t;
-  }
-  if (tmscm_is_symbol (p)) return tmscm_to_symbol (p);
-  if (tmscm_is_string (p)) return scm_quote (tmscm_to_string (p));
-  //if (tmscm_is_string (p)) return "\"" * tmscm_to_string (p) * "\"";
-  if (tmscm_is_int (p)) return as_string ((int) tmscm_to_int (p));
-  if (tmscm_is_bool (p)) return (tmscm_to_bool (p)? string ("#t"): string ("#f"));
-  if (tmscm_is_tree (p)) return tree_to_scheme_tree (tmscm_to_tree (p));
-  return "?";
-}
-
-/******************************************************************************
 * Content
 ******************************************************************************/
 
