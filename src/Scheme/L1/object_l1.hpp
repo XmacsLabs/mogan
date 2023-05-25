@@ -32,19 +32,19 @@ TMSCM_ASSERT (tmscm_is_blackbox (t), t, arg, rout)
 #define TMSCM_ASSERT_OBJECT(a,b,c)
 // no check
 
-
 typedef list<string> list_string;
 typedef list<tree> list_tree;
 
+tmscm   tree_to_tmscm (tree t);
+tmscm   tree_label_to_tmscm (tree_label l);
+tmscm scheme_tree_to_tmscm (scheme_tree t);
+
+tree    tmscm_to_tree (tmscm obj);
+tree_label tmscm_to_tree_label (tmscm p);
+scheme_tree tmscm_to_scheme_tree (tmscm p);
 
 bool    tmscm_is_tree (tmscm obj);
 bool tmscm_is_content (tmscm p);
-tmscm   tree_to_tmscm (tree t);
-tree    tmscm_to_tree (tmscm obj);
-tmscm   tree_label_to_tmscm (tree_label l);
-tree_label tmscm_to_tree_label (tmscm p);
-tmscm scheme_tree_to_tmscm (scheme_tree t);
-scheme_tree tmscm_to_scheme_tree (tmscm p);
 
 #define TMSCM_ASSERT_TREE(t,arg,rout) \
 TMSCM_ASSERT (tmscm_is_tree (t), t, arg, rout)
@@ -56,29 +56,26 @@ TMSCM_ASSERT_SYMBOL(p,arg,rout)
 #define content_to_tmscm tree_to_tmscm
 
 
-bool tmscm_is_command (tmscm u);
 tmscm command_to_tmscm (command o);
-command tmscm_to_command (tmscm o);
-
-bool tmscm_is_observer (tmscm o);
 tmscm observer_to_tmscm (observer o);
-observer tmscm_to_observer (tmscm obj);
-
-bool    tmscm_is_list_string (tmscm obj);
 tmscm   list_string_to_tmscm (list<string> l);
-list<string> tmscm_to_list_string (tmscm obj);
-
-bool    tmscm_is_list_tree (tmscm obj);
 tmscm   list_tree_to_tmscm (list<tree> l);
-list<tree> tmscm_to_list_tree (tmscm obj);
-
-bool    tmscm_is_path (tmscm obj);
 tmscm   path_to_tmscm (path p);
-path    tmscm_to_path (tmscm obj);
-
-bool    tmscm_is_modification (tmscm obj);
 tmscm   modification_to_tmscm (modification m);
+
+command tmscm_to_command (tmscm o);
+observer tmscm_to_observer (tmscm obj);
+list<string> tmscm_to_list_string (tmscm obj);
+list<tree> tmscm_to_list_tree (tmscm obj);
+path    tmscm_to_path (tmscm obj);
 modification tmscm_to_modification (tmscm obj);
+
+bool tmscm_is_command (tmscm u);
+bool tmscm_is_observer (tmscm o);
+bool    tmscm_is_list_string (tmscm obj);
+bool    tmscm_is_list_tree (tmscm obj);
+bool    tmscm_is_path (tmscm obj);
+bool    tmscm_is_modification (tmscm obj);
 
 #define TMSCM_ASSERT_COMMAND(o,arg,rout) \
 TMSCM_ASSERT (tmscm_is_command (o), o, arg, rout)
