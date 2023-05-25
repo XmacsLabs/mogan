@@ -13,6 +13,8 @@ typedef list<tree> list_tree;
 bool    tmscm_is_tree (tmscm obj);
 tmscm   tree_to_tmscm (tree t);
 tree    tmscm_to_tree (tmscm obj);
+tmscm   tree_label_to_tmscm (tree_label l);
+tree_label tmscm_to_tree_label (tmscm p);
 
 bool    tmscm_is_list_string (tmscm obj);
 tmscm   list_string_to_tmscm (list<string> l);

@@ -22,6 +22,18 @@ tmscm_to_tree (tmscm obj) {
   return open_box<tree> (tmscm_to_blackbox (obj));
 }
 
+tmscm
+tree_label_to_tmscm (tree_label l) {
+  string s= as_string (l);
+  return symbol_to_tmscm (s);
+}
+
+tree_label
+tmscm_to_tree_label (tmscm p) {
+  string s= tmscm_to_symbol (p);
+  return make_tree_label (s);
+}
+
 bool
 is_tree (object obj) {
   return tmscm_is_tree (object_to_tmscm (obj));
