@@ -109,17 +109,25 @@ tmscm array_int_to_tmscm (array<int> a);
 tmscm array_double_to_tmscm (array<double> a);
 tmscm array_array_double_to_tmscm (array<array_double> a);
 tmscm array_array_array_double_to_tmscm (array<array_array_double> a);
+tmscm array_string_to_tmscm (array<string> a);
+tmscm array_tree_to_tmscm (array<tree> a);
+tmscm  array_path_to_tmscm (array<path> a);
 
 array<int> tmscm_to_array_int (tmscm p);
 array<double> tmscm_to_array_double (tmscm p);
 array<array_double> tmscm_to_array_array_double (tmscm p);
 array<array_array_double> tmscm_to_array_array_array_double (tmscm p);
+array<string> tmscm_to_array_string (tmscm p);
+array<tree> tmscm_to_array_tree (tmscm p);
+array<path> tmscm_to_array_path (tmscm p);
 
 bool tmscm_is_array_int (tmscm p);
-bool tmscm_is_array_string (tmscm p);
 bool tmscm_is_array_double (tmscm p);
 bool tmscm_is_array_array_double (tmscm p);
 bool tmscm_is_array_array_array_double (tmscm p);
+bool tmscm_is_array_string (tmscm p);
+bool tmscm_is_array_tree (tmscm p);
+bool tmscm_is_array_path (tmscm p);
 
 #define TMSCM_ASSERT_ARRAY_INT(p, arg, rout)                                   \
   TMSCM_ASSERT (tmscm_is_array_int (p), p, arg, rout)
@@ -129,5 +137,11 @@ bool tmscm_is_array_array_array_double (tmscm p);
   TMSCM_ASSERT (tmscm_is_array_array_double (p), p, arg, rout)
 #define TMSCM_ASSERT_ARRAY_ARRAY_ARRAY_DOUBLE(p, arg, rout)                    \
   TMSCM_ASSERT (tmscm_is_array_array_array_double (p), p, arg, rout)
+#define TMSCM_ASSERT_ARRAY_STRING(p,arg,rout) \
+  TMSCM_ASSERT (tmscm_is_array_string (p), p, arg, rout)
+#define TMSCM_ASSERT_ARRAY_TREE(p,arg,rout) \
+  TMSCM_ASSERT (tmscm_is_array_tree (p), p, arg, rout)
+#define TMSCM_ASSERT_ARRAY_PATH(p,arg,rout) \
+  TMSCM_ASSERT (tmscm_is_array_path (p), p, arg, rout)
 
 #endif

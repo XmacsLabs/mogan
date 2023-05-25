@@ -376,3 +376,76 @@ tmscm_to_array_array_array_double (tmscm p) {
   }
   return a;
 }
+
+tmscm
+array_string_to_tmscm (array<string> a) {
+  int   i, n= N (a);
+  tmscm p= tmscm_null ();
+  for (i= n - 1; i >= 0; i--)
+    p= tmscm_cons (string_to_tmscm (a[i]), p);
+  return p;
+}
+
+array<string>
+tmscm_to_array_string (tmscm p) {
+  array<string> a;
+  while (!tmscm_is_null (p)) {
+    a << tmscm_to_string (tmscm_car (p));
+    p= tmscm_cdr (p);
+  }
+  return a;
+}
+
+bool
+tmscm_is_array_tree (tmscm p) {
+  if (tmscm_is_null (p)) return true;
+  else
+    return tmscm_is_pair (p) && tmscm_is_tree (tmscm_car (p)) &&
+           tmscm_is_array_tree (tmscm_cdr (p));
+}
+
+tmscm
+array_tree_to_tmscm (array<tree> a) {
+  int   i, n= N (a);
+  tmscm p= tmscm_null ();
+  for (i= n - 1; i >= 0; i--)
+    p= tmscm_cons (tree_to_tmscm (a[i]), p);
+  return p;
+}
+
+array<tree>
+tmscm_to_array_tree (tmscm p) {
+  array<tree> a;
+  while (!tmscm_is_null (p)) {
+    a << tmscm_to_tree (tmscm_car (p));
+    p= tmscm_cdr (p);
+  }
+  return a;
+}
+
+bool
+tmscm_is_array_path (tmscm p) {
+  if (tmscm_is_null (p)) return true;
+  else
+    return tmscm_is_pair (p) && tmscm_is_path (tmscm_car (p)) &&
+           tmscm_is_array_path (tmscm_cdr (p));
+}
+
+tmscm
+array_path_to_tmscm (array<path> a) {
+  int   i, n= N (a);
+  tmscm p= tmscm_null ();
+  for (i= n - 1; i >= 0; i--)
+    p= tmscm_cons (path_to_tmscm (a[i]), p);
+  return p;
+}
+
+array<path>
+tmscm_to_array_path (tmscm p) {
+  array<path> a;
+  while (!tmscm_is_null (p)) {
+    a << tmscm_to_path (tmscm_car (p));
+    p= tmscm_cdr (p);
+  }
+  return a;
+}
