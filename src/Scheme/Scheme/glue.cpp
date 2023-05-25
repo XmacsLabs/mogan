@@ -12,6 +12,7 @@
 #include "glue.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
+#include "glue_l1.hpp"
 #include "glue_l2.hpp"
 
 #include "promise.hpp"
@@ -201,13 +202,6 @@ TMSCM_ASSERT (tmscm_is_blackbox (t), t, arg, rout)
 ******************************************************************************/
 
 #define TMSCM_ASSERT_TREE_LABEL(p,arg,rout) TMSCM_ASSERT_SYMBOL(p,arg,rout)
-
-tmscm 
-treeP (tmscm t) {
-  bool b= tmscm_is_blackbox (t) && 
-          (type_box (tmscm_to_blackbox(t)) == type_helper<tree>::id);
-  return bool_to_tmscm (b);
-}
 
 tree
 coerce_string_tree (string s) {
@@ -1028,13 +1022,13 @@ TMSCM_ASSERT (tmscm_is_list_tree (p), p, arg, rout)
 
 void
 initialize_glue () {
-  tmscm_install_procedure ("tree?", treeP, 1, 0, 0);
   tmscm_install_procedure ("tm?", contentP, 1, 0, 0);
   tmscm_install_procedure ("observer?", observerP, 1, 0, 0);
   tmscm_install_procedure ("modification?", modificationP, 1, 0, 0);
   tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
   tmscm_install_procedure ("blackbox?", blackboxP, 1, 0, 0);
   
+  initialize_glue_l1 ();
   initialize_glue_l2 ();
   initialize_glue_basic ();
   initialize_glue_editor ();
