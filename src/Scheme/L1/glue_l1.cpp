@@ -16,8 +16,15 @@ observerP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
+tmscm
+modificationP (tmscm t) {
+  bool b= tmscm_is_modification (t);
+  return bool_to_tmscm (b);
+}
+
 void
 initialize_glue_l1 () {
   tmscm_install_procedure ("tree?", treeP, 1, 0, 0);
   tmscm_install_procedure ("observer?", observerP, 1, 0, 0);
+  tmscm_install_procedure ("modification?", modificationP, 1, 0, 0);
 }

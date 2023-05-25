@@ -39,3 +39,30 @@ bool
 is_url (object obj) {
   return tmscm_is_url (object_to_tmscm (obj));
 }
+
+bool
+tmscm_is_array_url (tmscm p) {
+  if (tmscm_is_null (p)) return true;
+  else
+    return tmscm_is_pair (p) && tmscm_is_url (tmscm_car (p)) &&
+           tmscm_is_array_url (tmscm_cdr (p));
+}
+
+tmscm
+array_url_to_tmscm (array<url> a) {
+  int   i, n= N (a);
+  tmscm p= tmscm_null ();
+  for (i= n - 1; i >= 0; i--)
+    p= tmscm_cons (url_to_tmscm (a[i]), p);
+  return p;
+}
+
+array<url>
+tmscm_to_array_url (tmscm p) {
+  array<url> a;
+  while (!tmscm_is_null (p)) {
+    a << tmscm_to_url (tmscm_car (p));
+    p= tmscm_cdr (p);
+  }
+  return a;
+}

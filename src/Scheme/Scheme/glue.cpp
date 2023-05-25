@@ -169,36 +169,6 @@ cout_unbuffer () {
   return cout.unbuffer ();
 }
 
-/******************************************************************************
-* Basic assertions
-******************************************************************************/
-
-#define TMSCM_ASSERT_STRING(s,arg,rout) \
-TMSCM_ASSERT (tmscm_is_string (s), s, arg, rout)
-#define TMSCM_ASSERT_BOOL(flag,arg,rout) \
-TMSCM_ASSERT (tmscm_is_bool (flag), flag, arg, rout)
-#define TMSCM_ASSERT_INT(i,arg,rout) \
-TMSCM_ASSERT (tmscm_is_int (i), i, arg, rout);
-#define TMSCM_ASSERT_DOUBLE(i,arg,rout) \
-  TMSCM_ASSERT (tmscm_is_double (i), i, arg, rout);
-//TMSCM_ASSERT (SCM_REALP (i), i, arg, rout);
-#define TMSCM_ASSERT_MODIFICATION(m,arg,rout) \
-TMSCM_ASSERT (tmscm_is_modification (m), m, arg, rout)
-#define TMSCM_ASSERT_PATCH(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_patch (p), p, arg, rout)
-#define TMSCM_ASSERT_BLACKBOX(t,arg,rout) \
-TMSCM_ASSERT (tmscm_is_blackbox (t), t, arg, rout)
-#define TMSCM_ASSERT_SYMBOL(s,arg,rout) \
-  TMSCM_ASSERT (tmscm_is_symbol (s), s, arg, rout)
-//TMSCM_ASSERT (SCM_NFALSEP (tmscm_symbol_p (s)), s, arg, rout)
-
-#define TMSCM_ASSERT_OBJECT(a,b,c)
-// no check
-
-/******************************************************************************
-* Tree labels
-******************************************************************************/
-
 tree
 coerce_string_tree (string s) {
   return s;
@@ -511,12 +481,6 @@ string string_load (url u) {
 void string_append_to_file (string s, url u) { (void) append_string (u, s); }
 url url_ref (url u, int i) { return u[i]; }
 
-
-tmscm 
-modificationP (tmscm t) {
-  bool b= tmscm_is_modification (t);
-  return bool_to_tmscm (b);
-}
 
 tree
 var_apply (tree& t, modification m) {
@@ -847,35 +811,7 @@ tmscm_to_array_widget (tmscm p) {
   return a;
 }
 
-static bool
-tmscm_is_array_url (tmscm p) {
-  if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) &&
-    tmscm_is_url (tmscm_car (p)) &&
-    tmscm_is_array_url (tmscm_cdr (p));
-}
 
-
-#define TMSCM_ASSERT_ARRAY_URL(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_array_url (p), p, arg, rout)
-
-/* static */ tmscm 
-array_url_to_tmscm (array<url> a) {
-  int i, n= N(a);
-  tmscm p= tmscm_null ();
-  for (i=n-1; i>=0; i--) p= tmscm_cons (url_to_tmscm (a[i]), p);
-  return p;
-}
-
-/* static */ array<url>
-tmscm_to_array_url (tmscm p) {
-  array<url> a;
-  while (!tmscm_is_null (p)) {
-    a << tmscm_to_url (tmscm_car (p));
-    p= tmscm_cdr (p);
-  }
-  return a;
-}
 
 static bool
 tmscm_is_array_patch (tmscm p) {
@@ -937,13 +873,7 @@ tmscm_to_array_path (tmscm p) {
 }
 
 
-#define TMSCM_ASSERT_LIST_STRING(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_list_string (p), p, arg, rout)
 
-
-
-#define TMSCM_ASSERT_LIST_TREE(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_list_tree (p), p, arg, rout)
 
 
 /******************************************************************************
@@ -991,7 +921,6 @@ TMSCM_ASSERT (tmscm_is_list_tree (p), p, arg, rout)
 void
 initialize_glue () {
   tmscm_install_procedure ("tm?", contentP, 1, 0, 0);
-  tmscm_install_procedure ("modification?", modificationP, 1, 0, 0);
   tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
   tmscm_install_procedure ("blackbox?", blackboxP, 1, 0, 0);
   
