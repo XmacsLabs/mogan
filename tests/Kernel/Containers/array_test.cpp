@@ -1,33 +1,34 @@
 /******************************************************************************
-* MODULE     : array_test.cpp
-* DESCRIPTION: test on array
-* COPYRIGHT  : (C) 2019-2021  Yuhui Liu, Darcy Shen
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : array_test.cpp
+ * DESCRIPTION: test on array
+ * COPYRIGHT  : (C) 2019-2021  Yuhui Liu, Darcy Shen
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include <QtTest/QtTest>
 #include "array.hpp"
 #include "string.hpp"
+#include <QtTest/QtTest>
 
-static array<int> gen_array(int n) {
-  auto normal= array<int>();
-  for (auto i=1;i<=n;i++) {
+static array<int>
+gen_array (int n) {
+  auto normal= array<int> ();
+  for (auto i= 1; i <= n; i++) {
     normal << i;
   }
   return normal;
 }
 
-auto zero_elem= array<int> ();
-auto one_elem= append(1, zero_elem);
-auto two_elem= array<int> (1,2);
-auto three_elem= array<int> (1,2,3);
-auto four_elem= array<int> (1,2,3,4);
-auto five_elem= array<int> (1,2,3,4,5);
+auto zero_elem = array<int> ();
+auto one_elem  = append (1, zero_elem);
+auto two_elem  = array<int> (1, 2);
+auto three_elem= array<int> (1, 2, 3);
+auto four_elem = array<int> (1, 2, 3, 4);
+auto five_elem = array<int> (1, 2, 3, 4, 5);
 
-class TestArray: public QObject {
+class TestArray : public QObject {
   Q_OBJECT
 
 private slots:
@@ -55,8 +56,8 @@ TestArray::test_access () {
 void
 TestArray::test_multiply () {
   auto mulu4= array<int> ();
-  for (auto i=1; i<6; i++){
-      mulu4 << (i * 4);
+  for (auto i= 1; i < 6; i++) {
+    mulu4 << (i * 4);
   }
   QCOMPARE (mulu4, five_elem * 4);
 }
@@ -64,7 +65,7 @@ TestArray::test_multiply () {
 void
 TestArray::test_divide () {
   auto mulu4= array<int> ();
-  for (auto i=1; i<6; i++){
+  for (auto i= 1; i < 6; i++) {
     mulu4 << (i * 4);
   }
   QCOMPARE (mulu4 / 4, five_elem);
@@ -84,9 +85,9 @@ TestArray::test_size () {
   QCOMPARE (N (three_elem), 3);
   QCOMPARE (N (four_elem), 4);
   QCOMPARE (N (five_elem), 5);
-  for (auto i=6; i<200; i++){
+  for (auto i= 6; i < 200; i++) {
     auto array_test= gen_array (i);
-    QCOMPARE ( N (array_test), i);
+    QCOMPARE (N (array_test), i);
   }
 }
 
@@ -110,9 +111,9 @@ TestArray::test_append () {
   QCOMPARE (three_appended, four_elem);
 
   auto one2ten= gen_array (10);
-  auto six2ten= array<int> (6,7,8,9,10);
-  for (auto i=1; i<=10; i++){
-    QCOMPARE (one2ten[i-1], i);
+  auto six2ten= array<int> (6, 7, 8, 9, 10);
+  for (auto i= 1; i <= 10; i++) {
+    QCOMPARE (one2ten[i - 1], i);
   }
   QCOMPARE (one2ten, append (five_elem, six2ten));
 }
@@ -121,12 +122,12 @@ void
 TestArray::test_reverse () {
   QCOMPARE (reverse (zero_elem), zero_elem);
   QCOMPARE (reverse (one_elem), one_elem);
-  auto rev_five= array<int> (5,4,3,2,1);
+  auto rev_five= array<int> (5, 4, 3, 2, 1);
   QCOMPARE (reverse (five_elem), rev_five);
 }
 
 void
-TestArray::test_contains() {
+TestArray::test_contains () {
   QCOMPARE (contains (1, zero_elem), false);
   QCOMPARE (contains (1, one_elem), true);
   QCOMPARE (contains (3, two_elem), false);
@@ -135,5 +136,5 @@ TestArray::test_contains() {
   QCOMPARE (contains (3, five_elem), true);
 }
 
-QTEST_MAIN(TestArray)
+QTEST_MAIN (TestArray)
 #include "array_test.moc"

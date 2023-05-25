@@ -1,20 +1,19 @@
 
 /******************************************************************************
-* MODULE     : analyze_test.cpp
-* DESCRIPTION: Properties of characters and strings
-* COPYRIGHT  : (C) 2019-2021  Darcy Shen
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : analyze_test.cpp
+ * DESCRIPTION: Properties of characters and strings
+ * COPYRIGHT  : (C) 2019-2021  Darcy Shen
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-
-#include <QtTest/QtTest>
 #include "analyze.hpp"
 #include "base.hpp"
+#include <QtTest/QtTest>
 
-class TestAnalyze: public QObject {
+class TestAnalyze : public QObject {
   Q_OBJECT
 
 private slots:
@@ -32,17 +31,18 @@ private slots:
   void test_ends ();
   void test_read_word ();
   void test_cjk_unified_ideographs ();
-  void test_is_digit();
-  void test_is_space();
-  void test_is_binary_digit();
+  void test_is_digit ();
+  void test_is_space ();
+  void test_is_binary_digit ();
 };
 
 void
 TestAnalyze::test_is_alpha () {
-  for (unsigned char c=0; c<255; c++) {
-    if ((c>=65 && c<=90) || (c>=97 && c<=122)) {
+  for (unsigned char c= 0; c < 255; c++) {
+    if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) {
       QVERIFY (is_alpha (c));
-    } else {
+    }
+    else {
       QVERIFY (!is_alpha (c));
     }
   }
@@ -81,8 +81,8 @@ TestAnalyze::test_string_minus () {
 
 void
 TestAnalyze::test_string_union () {
-  QVERIFY (string_union ("abc", "") == string("abc"));
-  QVERIFY (string_union ("", "abc") == string("abc"));
+  QVERIFY (string_union ("abc", "") == string ("abc"));
+  QVERIFY (string_union ("", "abc") == string ("abc"));
   QVERIFY (string_union ("Hello World", "eo") == string ("Hll Wrldeo"));
 }
 
@@ -94,12 +94,12 @@ TestAnalyze::test_scm_quote () {
 }
 
 void
-TestAnalyze::test_scm_unquote() {
-  qcompare (scm_unquote("\"\""), "");
-  qcompare (scm_unquote("\"abc\""), "abc");
-  qcompare (scm_unquote("abc"), "abc");
-  qcompare (scm_unquote(""), "");
-  qcompare (scm_unquote("\"\\\\\""), "\\");
+TestAnalyze::test_scm_unquote () {
+  qcompare (scm_unquote ("\"\""), "");
+  qcompare (scm_unquote ("\"abc\""), "abc");
+  qcompare (scm_unquote ("abc"), "abc");
+  qcompare (scm_unquote (""), "");
+  qcompare (scm_unquote ("\"\\\\\""), "\\");
 }
 
 void
@@ -140,12 +140,12 @@ TestAnalyze::test_ends () {
 void
 TestAnalyze::test_read_word () {
   string word;
-  int i=0;
+  int    i= 0;
   QVERIFY (read_word ("hello123", i, word));
   qcompare (word, "hello");
   QCOMPARE (i, 5);
 
-  i=0;
+  i   = 0;
   word= "";
   QVERIFY (!read_word ("123", i, word));
   QVERIFY (is_empty (word));
@@ -153,40 +153,39 @@ TestAnalyze::test_read_word () {
 }
 
 void
-TestAnalyze::test_is_digit()
-{
-    for (unsigned char c=0; c<255; c++) {
-        if (c>=48 && c<=57) {
-        QVERIFY (is_digit (c));
-        } else {
-        QVERIFY (!is_digit (c));
-        }
+TestAnalyze::test_is_digit () {
+  for (unsigned char c= 0; c < 255; c++) {
+    if (c >= 48 && c <= 57) {
+      QVERIFY (is_digit (c));
     }
+    else {
+      QVERIFY (!is_digit (c));
+    }
+  }
 }
 
 void
-TestAnalyze::test_is_space()
-{
-    for (unsigned char c=0; c<255; c++) {
-        if ((c == 9)||(c == 10)||(c == 13)||(c == 32)) {
-        QVERIFY (is_space (c));
-        } else {
-        QVERIFY (!is_space (c));
-        }
+TestAnalyze::test_is_space () {
+  for (unsigned char c= 0; c < 255; c++) {
+    if ((c == 9) || (c == 10) || (c == 13) || (c == 32)) {
+      QVERIFY (is_space (c));
     }
+    else {
+      QVERIFY (!is_space (c));
+    }
+  }
 }
 
 void
-TestAnalyze::test_is_binary_digit()
-{
-    for (unsigned char c=0; c<255; c++) {
-        if ((c == '0')||(c == '1')) {
-        QVERIFY (is_binary_digit (c));
-        } else {
-        QVERIFY (!is_binary_digit (c));
-        }
+TestAnalyze::test_is_binary_digit () {
+  for (unsigned char c= 0; c < 255; c++) {
+    if ((c == '0') || (c == '1')) {
+      QVERIFY (is_binary_digit (c));
     }
-
+    else {
+      QVERIFY (!is_binary_digit (c));
+    }
+  }
 }
-QTEST_MAIN(TestAnalyze)
+QTEST_MAIN (TestAnalyze)
 #include "analyze_test.moc"

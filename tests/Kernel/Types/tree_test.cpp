@@ -1,19 +1,18 @@
 
 /******************************************************************************
-* MODULE     : tree_test.cpp
-* DESCRIPTION: Tests on tree
-* COPYRIGHT  : (C) 2019-2021  Darcy Shen
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : tree_test.cpp
+ * DESCRIPTION: Tests on tree
+ * COPYRIGHT  : (C) 2019-2021  Darcy Shen
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-
-#include <QtTest/QtTest>
 #include "tree.hpp"
+#include <QtTest/QtTest>
 
-class TestTree: public QObject {
+class TestTree : public QObject {
   Q_OBJECT
 
 private slots:
@@ -22,14 +21,13 @@ private slots:
   void test_is_concat ();
 };
 
-
 void
-TestTree::test_is_atomic() {
+TestTree::test_is_atomic () {
   QVERIFY (is_atomic (tree ()));
 }
 
 void
-TestTree::test_is_tuple() {
+TestTree::test_is_tuple () {
   QVERIFY (is_tuple (tuple ()));
   QVERIFY (is_tuple (tuple (tree ())));
   QVERIFY (is_tuple (tuple (tree (), tree ())));
@@ -39,7 +37,7 @@ TestTree::test_is_tuple() {
 }
 
 void
-TestTree::test_is_concat() {
+TestTree::test_is_concat () {
   QVERIFY (is_concat (concat ()));
   QVERIFY (is_concat (concat (tree ())));
   QVERIFY (is_concat (concat (tree (), tree ())));
@@ -48,5 +46,5 @@ TestTree::test_is_concat() {
   QVERIFY (is_concat (concat (tree (), tree (), tree (), tree (), tree ())));
 }
 
-QTEST_MAIN(TestTree)
+QTEST_MAIN (TestTree)
 #include "tree_test.moc"
