@@ -542,12 +542,6 @@ tmscm_to_promise_widget (tmscm o) {
 }
 
 
-tmscm 
-urlP (tmscm t) {
-  bool b= tmscm_is_url (t);
-  return bool_to_tmscm (b);
-}
-
 void string_save (string s, url u) { (void) save_string (u, s); }
 string string_load (url u) {
   string s; (void) load_string (u, s, false); return s; }
@@ -1036,7 +1030,6 @@ initialize_glue () {
   tmscm_install_procedure ("tree?", treeP, 1, 0, 0);
   tmscm_install_procedure ("tm?", contentP, 1, 0, 0);
   tmscm_install_procedure ("observer?", observerP, 1, 0, 0);
-  tmscm_install_procedure ("url?", urlP, 1, 0, 0);
   tmscm_install_procedure ("modification?", modificationP, 1, 0, 0);
   tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
   tmscm_install_procedure ("blackbox?", blackboxP, 1, 0, 0);

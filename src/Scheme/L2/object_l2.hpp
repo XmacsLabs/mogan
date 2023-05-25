@@ -1,5 +1,5 @@
-#ifndef GLUE_L2_HPP
-#define GLUE_L2_HPP
+#ifndef OBJECT_L2_HPP
+#define OBJECT_L2_HPP
 
 #include "s7_tm.hpp"
 #include "url.hpp"

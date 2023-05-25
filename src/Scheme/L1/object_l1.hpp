@@ -1,5 +1,5 @@
-#ifndef GLUE_L1_HPP
-#define GLUE_L1_HPP
+#ifndef OBJECT_L1_HPP
+#define OBJECT_L1_HPP
 
 #include "tree.hpp"
 #include "path.hpp"
