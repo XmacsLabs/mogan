@@ -32,6 +32,9 @@ private slots:
   void test_ends ();
   void test_read_word ();
   void test_cjk_unified_ideographs ();
+  void test_is_digit();
+  void test_is_space();
+  void test_is_binary_digit();
 };
 
 void
@@ -149,5 +152,41 @@ TestAnalyze::test_read_word () {
   QCOMPARE (i, 0);
 }
 
+void
+TestAnalyze::test_is_digit()
+{
+    for (unsigned char c=0; c<255; c++) {
+        if (c>=48 && c<=57) {
+        QVERIFY (is_digit (c));
+        } else {
+        QVERIFY (!is_digit (c));
+        }
+    }
+}
+
+void
+TestAnalyze::test_is_space()
+{
+    for (unsigned char c=0; c<255; c++) {
+        if ((c == 9)||(c == 10)||(c == 13)||(c == 32)) {
+        QVERIFY (is_space (c));
+        } else {
+        QVERIFY (!is_space (c));
+        }
+    }
+}
+
+void
+TestAnalyze::test_is_binary_digit()
+{
+    for (unsigned char c=0; c<255; c++) {
+        if ((c == '0')||(c == '1')) {
+        QVERIFY (is_binary_digit (c));
+        } else {
+        QVERIFY (!is_binary_digit (c));
+        }
+    }
+
+}
 QTEST_MAIN(TestAnalyze)
 #include "analyze_test.moc"
