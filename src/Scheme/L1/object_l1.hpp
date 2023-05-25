@@ -12,21 +12,34 @@ typedef list<tree> list_tree;
 
 
 bool    tmscm_is_tree (tmscm obj);
+tmscm   tree_to_tmscm (tree t);
+tree    tmscm_to_tree (tmscm obj);
+
 #define TMSCM_ASSERT_TREE(t,arg,rout) \
 TMSCM_ASSERT (tmscm_is_tree (t), t, arg, rout)
 
-tmscm   tree_to_tmscm (tree t);
-tree    tmscm_to_tree (tmscm obj);
+
 tmscm   tree_label_to_tmscm (tree_label l);
 tree_label tmscm_to_tree_label (tmscm p);
 
+#define TMSCM_ASSERT_TREE_LABEL(p,arg,rout) \
+TMSCM_ASSERT_SYMBOL(p,arg,rout)
+
 
 bool tmscm_is_command (tmscm u);
+tmscm command_to_tmscm (command o);
+command tmscm_to_command (tmscm o);
+
 #define TMSCM_ASSERT_COMMAND(o,arg,rout) \
 TMSCM_ASSERT (tmscm_is_command (o), o, arg, rout)
 
-tmscm command_to_tmscm (command o);
-command tmscm_to_command (tmscm o);
+
+bool tmscm_is_observer (tmscm o);
+tmscm observer_to_tmscm (observer o);
+observer tmscm_to_observer (tmscm obj);
+
+#define TMSCM_ASSERT_OBSERVER(o,arg,rout) \
+TMSCM_ASSERT (tmscm_is_observer (o), o, arg, rout)
 
 
 bool    tmscm_is_list_string (tmscm obj);
@@ -48,6 +61,5 @@ path    tmscm_to_path (tmscm obj);
 bool    tmscm_is_modification (tmscm obj);
 tmscm   modification_to_tmscm (modification m);
 modification tmscm_to_modification (tmscm obj);
-
 
 #endif

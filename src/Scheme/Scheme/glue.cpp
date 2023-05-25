@@ -182,8 +182,6 @@ TMSCM_ASSERT (tmscm_is_int (i), i, arg, rout);
 #define TMSCM_ASSERT_DOUBLE(i,arg,rout) \
   TMSCM_ASSERT (tmscm_is_double (i), i, arg, rout);
 //TMSCM_ASSERT (SCM_REALP (i), i, arg, rout);
-#define TMSCM_ASSERT_URL(u,arg,rout) \
-TMSCM_ASSERT (tmscm_is_url (u) || tmscm_is_string (u), u, arg, rout)
 #define TMSCM_ASSERT_MODIFICATION(m,arg,rout) \
 TMSCM_ASSERT (tmscm_is_modification (m), m, arg, rout)
 #define TMSCM_ASSERT_PATCH(p,arg,rout) \
@@ -200,8 +198,6 @@ TMSCM_ASSERT (tmscm_is_blackbox (t), t, arg, rout)
 /******************************************************************************
 * Tree labels
 ******************************************************************************/
-
-#define TMSCM_ASSERT_TREE_LABEL(p,arg,rout) TMSCM_ASSERT_SYMBOL(p,arg,rout)
 
 tree
 coerce_string_tree (string s) {
@@ -455,29 +451,8 @@ contentP (tmscm t) {
 
 
 
-/******************************************************************************
-* Observers
-******************************************************************************/
-
-#define TMSCM_ASSERT_OBSERVER(o,arg,rout) \
-TMSCM_ASSERT (tmscm_is_observer (o), o, arg, rout)
 
 
-bool
-tmscm_is_observer (tmscm o) {
-  return (tmscm_is_blackbox (o) &&
-         (type_box (tmscm_to_blackbox(o)) == type_helper<observer>::id));
-}
-
-tmscm 
-observer_to_tmscm (observer o) {
-  return blackbox_to_tmscm (close_box<observer> (o));
-}
-
-static observer
-tmscm_to_observer (tmscm obj) {
-  return open_box<observer>(tmscm_to_blackbox (obj));
-}
 
 tmscm 
 observerP (tmscm t) {
