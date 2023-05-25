@@ -1,4 +1,6 @@
 #include "object_l1.hpp"
+#include "analyze.hpp"
+#include "convert.hpp"
 #include "object.hpp"
 #include "scheme.hpp"
 
@@ -90,6 +92,38 @@ tmscm_to_scheme_tree (tmscm p) {
     return (tmscm_to_bool (p) ? string ("#t") : string ("#f"));
   if (tmscm_is_tree (p)) return tree_to_scheme_tree (tmscm_to_tree (p));
   return "?";
+}
+
+/******************************************************************************
+ * Content
+ ******************************************************************************/
+
+tree
+tmscm_to_content (tmscm p) {
+  if (tmscm_is_string (p)) return tmscm_to_string (p);
+  if (tmscm_is_tree (p)) return tmscm_to_tree (p);
+  if (tmscm_is_pair (p)) {
+    if (!tmscm_is_symbol (tmscm_car (p))) return "?";
+    tree t (make_tree_label (tmscm_to_symbol (tmscm_car (p))));
+    p= tmscm_cdr (p);
+    while (!tmscm_is_null (p)) {
+      t << tmscm_to_content (tmscm_car (p));
+      p= tmscm_cdr (p);
+    }
+    return t;
+  }
+  return "?";
+}
+
+bool
+tmscm_is_content (tmscm p) {
+  if (tmscm_is_string (p) || tmscm_is_tree (p)) return true;
+  else if (!tmscm_is_pair (p) || !tmscm_is_symbol (tmscm_car (p))) return false;
+  else {
+    for (p= tmscm_cdr (p); !tmscm_is_null (p); p= tmscm_cdr (p))
+      if (!tmscm_is_pair (p) || !tmscm_is_content (tmscm_car (p))) return false;
+    return true;
+  }
 }
 
 /******************************************************************************
@@ -221,4 +255,124 @@ modification_to_tmscm (modification m) {
 modification
 tmscm_to_modification (tmscm obj) {
   return open_box<modification> (tmscm_to_blackbox (obj));
+}
+
+/******************************************************************************
+ * Several array types
+ ******************************************************************************/
+
+bool
+tmscm_is_array_int (tmscm p) {
+  if (tmscm_is_null (p)) return true;
+  else
+    return tmscm_is_pair (p) && tmscm_is_int (tmscm_car (p)) &&
+           tmscm_is_array_int (tmscm_cdr (p));
+}
+
+tmscm
+array_int_to_tmscm (array<int> a) {
+  int   i, n= N (a);
+  tmscm p= tmscm_null ();
+  for (i= n - 1; i >= 0; i--)
+    p= tmscm_cons (int_to_tmscm (a[i]), p);
+  return p;
+}
+
+array<int>
+tmscm_to_array_int (tmscm p) {
+  array<int> a;
+  while (!tmscm_is_null (p)) {
+    a << ((int) tmscm_to_int (tmscm_car (p)));
+    p= tmscm_cdr (p);
+  }
+  return a;
+}
+
+bool
+tmscm_is_array_string (tmscm p) {
+  if (tmscm_is_null (p)) return true;
+  else
+    return tmscm_is_pair (p) && tmscm_is_string (tmscm_car (p)) &&
+           tmscm_is_array_string (tmscm_cdr (p));
+}
+
+bool
+tmscm_is_array_double (tmscm p) {
+  if (tmscm_is_null (p)) return true;
+  else
+    return tmscm_is_pair (p) && tmscm_is_double (tmscm_car (p)) &&
+           tmscm_is_array_double (tmscm_cdr (p));
+}
+
+tmscm
+array_double_to_tmscm (array<double> a) {
+  int   i, n= N (a);
+  tmscm p= tmscm_null ();
+  for (i= n - 1; i >= 0; i--)
+    p= tmscm_cons (double_to_tmscm (a[i]), p);
+  return p;
+}
+
+array<double>
+tmscm_to_array_double (tmscm p) {
+  array<double> a;
+  while (!tmscm_is_null (p)) {
+    a << ((double) tmscm_to_double (tmscm_car (p)));
+    p= tmscm_cdr (p);
+  }
+  return a;
+}
+
+bool
+tmscm_is_array_array_double (tmscm p) {
+  if (tmscm_is_null (p)) return true;
+  else
+    return tmscm_is_pair (p) && tmscm_is_array_double (tmscm_car (p)) &&
+           tmscm_is_array_array_double (tmscm_cdr (p));
+}
+
+/* static */ tmscm
+array_array_double_to_tmscm (array<array_double> a) {
+  int   i, n= N (a);
+  tmscm p= tmscm_null ();
+  for (i= n - 1; i >= 0; i--)
+    p= tmscm_cons (array_double_to_tmscm (a[i]), p);
+  return p;
+}
+
+/* static */ array<array_double>
+tmscm_to_array_array_double (tmscm p) {
+  array<array_double> a;
+  while (!tmscm_is_null (p)) {
+    a << ((array_double) tmscm_to_array_double (tmscm_car (p)));
+    p= tmscm_cdr (p);
+  }
+  return a;
+}
+
+bool
+tmscm_is_array_array_array_double (tmscm p) {
+  if (tmscm_is_null (p)) return true;
+  else
+    return tmscm_is_pair (p) && tmscm_is_array_array_double (tmscm_car (p)) &&
+           tmscm_is_array_array_array_double (tmscm_cdr (p));
+}
+
+/* static */ tmscm
+array_array_array_double_to_tmscm (array<array_array_double> a) {
+  int   i, n= N (a);
+  tmscm p= tmscm_null ();
+  for (i= n - 1; i >= 0; i--)
+    p= tmscm_cons (array_array_double_to_tmscm (a[i]), p);
+  return p;
+}
+
+/* static */ array<array_array_double>
+tmscm_to_array_array_array_double (tmscm p) {
+  array<array_array_double> a;
+  while (!tmscm_is_null (p)) {
+    a << ((array_array_double) tmscm_to_array_array_double (tmscm_car (p)));
+    p= tmscm_cdr (p);
+  }
+  return a;
 }

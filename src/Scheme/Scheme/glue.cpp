@@ -484,144 +484,69 @@ TMSCM_ASSERT (tmscm_is_solution(p), p, arg, rout)
 #define solution_to_tmscm table_string_string_to_tmscm
 #define tmscm_to_solution tmscm_to_table_string_string
 
-/******************************************************************************
-* Several array types
-******************************************************************************/
-
-typedef array<int> array_int;
-typedef array<string> array_string;
-typedef array<tree> array_tree;
 typedef array<patch> array_patch;
-typedef array<path> array_path;
 typedef array<widget> array_widget;
-typedef array<double> array_double;
-typedef array<array<double> > array_array_double;
-typedef array<array<array<double> > > array_array_array_double;
 
 static bool
-tmscm_is_array_int (tmscm p) {
+tmscm_is_array_widget (tmscm p) {
   if (tmscm_is_null (p)) return true;
   else return tmscm_is_pair (p) &&
-    tmscm_is_int (tmscm_car (p)) &&
-    tmscm_is_array_int (tmscm_cdr (p));
+    tmscm_is_widget (tmscm_car (p)) &&
+    tmscm_is_array_widget (tmscm_cdr (p));
 }
 
-#define TMSCM_ASSERT_ARRAY_INT(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_array_int (p), p, arg, rout)
+#define TMSCM_ASSERT_ARRAY_WIDGET(p,arg,rout) \
+TMSCM_ASSERT (tmscm_is_array_widget (p), p, arg, rout)
 
 /* static */ tmscm 
-array_int_to_tmscm (array<int> a) {
+array_widget_to_tmscm (array<widget> a) {
   int i, n= N(a);
   tmscm p= tmscm_null ();
-  for (i=n-1; i>=0; i--) p= tmscm_cons (int_to_tmscm (a[i]), p);
+  for (i=n-1; i>=0; i--) p= tmscm_cons (widget_to_tmscm (a[i]), p);
   return p;
 }
 
-/* static */ array<int>
-tmscm_to_array_int (tmscm p) {
-  array<int> a;
+/* static */ array<widget>
+tmscm_to_array_widget (tmscm p) {
+  array<widget> a;
   while (!tmscm_is_null (p)) {
-    a << ((int) tmscm_to_int (tmscm_car (p)));
+    a << tmscm_to_widget (tmscm_car (p));
     p= tmscm_cdr (p);
   }
   return a;
 }
 
 static bool
-tmscm_is_array_string (tmscm p) {
-  if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) && 
-    tmscm_is_string (tmscm_car (p)) &&
-    tmscm_is_array_string (tmscm_cdr (p));
-}
-
-
-/* static */ bool
-tmscm_is_array_double (tmscm p) {
+tmscm_is_array_patch (tmscm p) {
   if (tmscm_is_null (p)) return true;
   else return tmscm_is_pair (p) &&
-    tmscm_is_double (tmscm_car (p)) &&
-    tmscm_is_array_double (tmscm_cdr (p));
+    tmscm_is_patch (tmscm_car (p)) &&
+    tmscm_is_array_patch (tmscm_cdr (p));
 }
 
-#define TMSCM_ASSERT_ARRAY_DOUBLE(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_array_double (p), p, arg, rout)
+
+#define TMSCM_ASSERT_ARRAY_PATCH(p,arg,rout) \
+TMSCM_ASSERT (tmscm_is_array_patch (p), p, arg, rout)
 
 /* static */ tmscm 
-array_double_to_tmscm (array<double> a) {
-  int i, n= N(a);
-  tmscm p= tmscm_null();
-  for (i=n-1; i>=0; i--) p= tmscm_cons (double_to_tmscm (a[i]), p);
-  return p;
-}
-
-/* static */ array<double>
-tmscm_to_array_double (tmscm p) {
-  array<double> a;
-  while (!tmscm_is_null (p)) {
-    a << ((double) tmscm_to_double (tmscm_car (p)));
-    p= tmscm_cdr (p);
-  }
-  return a;
-}
-
-static bool
-tmscm_is_array_array_double (tmscm p) {
-  if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) &&
-    tmscm_is_array_double (tmscm_car (p)) &&
-    tmscm_is_array_array_double (tmscm_cdr (p));
-}
-
-#define TMSCM_ASSERT_ARRAY_ARRAY_DOUBLE(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_array_array_double (p), p, arg, rout)
-
-/* static */ tmscm 
-array_array_double_to_tmscm (array<array_double> a) {
+array_patch_to_tmscm (array<patch> a) {
   int i, n= N(a);
   tmscm p= tmscm_null ();
-  for (i=n-1; i>=0; i--) p= tmscm_cons (array_double_to_tmscm (a[i]), p);
+  for (i=n-1; i>=0; i--) p= tmscm_cons (patch_to_tmscm (a[i]), p);
   return p;
 }
 
-/* static */ array<array_double>
-tmscm_to_array_array_double (tmscm p) {
-  array<array_double> a;
+/* static */ array<patch>
+tmscm_to_array_patch (tmscm p) {
+  array<patch> a;
   while (!tmscm_is_null (p)) {
-    a << ((array_double) tmscm_to_array_double (tmscm_car (p)));
+    a << tmscm_to_patch (tmscm_car (p));
     p= tmscm_cdr (p);
   }
   return a;
 }
 
-static bool
-tmscm_is_array_array_array_double (tmscm p) {
-  if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) &&
-    tmscm_is_array_array_double (tmscm_car (p)) &&
-    tmscm_is_array_array_array_double (tmscm_cdr (p));
-}
 
-#define TMSCM_ASSERT_ARRAY_ARRAY_ARRAY_DOUBLE(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_array_array_array_double (p), p, arg, rout)
-
-/* static */ tmscm 
-array_array_array_double_to_tmscm (array<array_array_double> a) {
-  int i, n= N(a);
-  tmscm p= tmscm_null ();
-  for (i=n-1; i>=0; i--) p= tmscm_cons (array_array_double_to_tmscm (a[i]), p);
-  return p;
-}
-
-/* static */ array<array_array_double>
-tmscm_to_array_array_array_double (tmscm p) {
-  array<array_array_double> a;
-  while (!tmscm_is_null (p)) {
-    a << ((array_array_double) tmscm_to_array_array_double (tmscm_car (p)));
-    p= tmscm_cdr (p);
-  }
-  return a;
-}
 
 void register_glyph (string s, array_array_array_double gl);
 string recognize_glyph (array_array_array_double gl);
@@ -678,66 +603,6 @@ tmscm_to_array_tree (tmscm p) {
   return a;
 }
 
-static bool
-tmscm_is_array_widget (tmscm p) {
-  if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) &&
-    tmscm_is_widget (tmscm_car (p)) &&
-    tmscm_is_array_widget (tmscm_cdr (p));
-}
-
-#define TMSCM_ASSERT_ARRAY_WIDGET(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_array_widget (p), p, arg, rout)
-
-/* static */ tmscm 
-array_widget_to_tmscm (array<widget> a) {
-  int i, n= N(a);
-  tmscm p= tmscm_null ();
-  for (i=n-1; i>=0; i--) p= tmscm_cons (widget_to_tmscm (a[i]), p);
-  return p;
-}
-
-/* static */ array<widget>
-tmscm_to_array_widget (tmscm p) {
-  array<widget> a;
-  while (!tmscm_is_null (p)) {
-    a << tmscm_to_widget (tmscm_car (p));
-    p= tmscm_cdr (p);
-  }
-  return a;
-}
-
-
-
-static bool
-tmscm_is_array_patch (tmscm p) {
-  if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) &&
-    tmscm_is_patch (tmscm_car (p)) &&
-    tmscm_is_array_patch (tmscm_cdr (p));
-}
-
-
-#define TMSCM_ASSERT_ARRAY_PATCH(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_array_patch (p), p, arg, rout)
-
-/* static */ tmscm 
-array_patch_to_tmscm (array<patch> a) {
-  int i, n= N(a);
-  tmscm p= tmscm_null ();
-  for (i=n-1; i>=0; i--) p= tmscm_cons (patch_to_tmscm (a[i]), p);
-  return p;
-}
-
-/* static */ array<patch>
-tmscm_to_array_patch (tmscm p) {
-  array<patch> a;
-  while (!tmscm_is_null (p)) {
-    a << tmscm_to_patch (tmscm_car (p));
-    p= tmscm_cdr (p);
-  }
-  return a;
-}
 
 static bool
 tmscm_is_array_path (tmscm p) {

@@ -50,6 +50,10 @@ TMSCM_ASSERT (tmscm_is_tree (t), t, arg, rout)
 #define TMSCM_ASSERT_SCHEME_TREE(p,arg,rout)
 #define TMSCM_ASSERT_TREE_LABEL(p,arg,rout) \
 TMSCM_ASSERT_SYMBOL(p,arg,rout)
+#define content tree
+#define TMSCM_ASSERT_CONTENT(p, arg, rout)                                     \
+  TMSCM_ASSERT (tmscm_is_content (p), p, arg, rout)
+#define content_to_tmscm tree_to_tmscm
 
 
 bool tmscm_is_command (tmscm u);
@@ -88,5 +92,31 @@ TMSCM_ASSERT (tmscm_is_list_tree (p), p, arg, rout)
 TMSCM_ASSERT (tmscm_is_path (p), p, arg, rout)
 #define TMSCM_ASSERT_MODIFICATION(m,arg,rout) \
 TMSCM_ASSERT (tmscm_is_modification (m), m, arg, rout)
+
+typedef array<int> array_int;
+typedef array<string> array_string;
+typedef array<tree> array_tree;
+typedef array<path> array_path;
+typedef array<double> array_double;
+typedef array<array<double> > array_array_double;
+typedef array<array<array<double> > > array_array_array_double;
+
+tmscm array_int_to_tmscm (array<int> a);
+array<int> tmscm_to_array_int (tmscm p);
+
+bool tmscm_is_array_int (tmscm p);
+bool tmscm_is_array_string (tmscm p);
+bool tmscm_is_array_double (tmscm p);
+bool tmscm_is_array_array_double (tmscm p);
+bool tmscm_is_array_array_array_double (tmscm p);
+
+#define TMSCM_ASSERT_ARRAY_INT(p, arg, rout)                                   \
+  TMSCM_ASSERT (tmscm_is_array_int (p), p, arg, rout)
+#define TMSCM_ASSERT_ARRAY_DOUBLE(p, arg, rout)                                \
+  TMSCM_ASSERT (tmscm_is_array_double (p), p, arg, rout)
+#define TMSCM_ASSERT_ARRAY_ARRAY_DOUBLE(p, arg, rout)                          \
+  TMSCM_ASSERT (tmscm_is_array_array_double (p), p, arg, rout)
+#define TMSCM_ASSERT_ARRAY_ARRAY_ARRAY_DOUBLE(p, arg, rout)                    \
+  TMSCM_ASSERT (tmscm_is_array_array_array_double (p), p, arg, rout)
 
 #endif
