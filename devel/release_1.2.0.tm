@@ -60,6 +60,12 @@
       Darcy
     </cell>|<\cell>
       L3 Kernel
+    </cell>>|<row|<\cell>
+      <dlink|16>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Code formatting and static checking
     </cell>>>>
   </wide-tabular>
 
