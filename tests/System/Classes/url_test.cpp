@@ -1,29 +1,29 @@
 
 /******************************************************************************
-* MODULE     : url_test.cpp
-* COPYRIGHT  : (C) 2019-2021  Darcy Shen
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : url_test.cpp
+ * COPYRIGHT  : (C) 2019-2021  Darcy Shen
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "file.hpp"
 
 #include <QtTest/QtTest>
 
-class TestURL: public QObject {
+class TestURL : public QObject {
   Q_OBJECT
 
 public:
-  url tmfs_1= url_system ("tmfs://git/help");
-  url http_1= url_system ("http://texmacs.org");
+  url tmfs_1 = url_system ("tmfs://git/help");
+  url http_1 = url_system ("http://texmacs.org");
   url https_1= url_system ("https://ustc.edu.cn");
-  #ifdef OS_MINGW
+#ifdef OS_MINGW
   url root_tmp= url ("$TEMP");
-  #else
+#else
   url root_tmp= url ("/tmp");
-  #endif
+#endif
   url root_no_such_tmp= url ("/no_such_tmp");
 
 private slots:
@@ -35,16 +35,18 @@ private slots:
   void test_is_rooted_web ();
 
   // operations
-  void test_descends();
+  void test_descends ();
 };
 
-void TestURL::test_exists () {
+void
+TestURL::test_exists () {
   // two cases: root directory
   QVERIFY (exists (root_tmp));
   QVERIFY (!exists (root_no_such_tmp));
 }
 
-void TestURL::test_suffix () {
+void
+TestURL::test_suffix () {
   // empty suffix should work
   url no_suffix= url ("/a/b/c/d/no_suffix");
   QCOMPARE (suffix (no_suffix), string (""));
@@ -58,32 +60,33 @@ void TestURL::test_suffix () {
   QCOMPARE (suffix (png2), string ("png"));
 }
 
-
-void TestURL::test_is_rooted_tmfs () {
+void
+TestURL::test_is_rooted_tmfs () {
   QVERIFY (is_rooted_tmfs (tmfs_1));
   QVERIFY (!is_rooted_tmfs (http_1));
   QVERIFY (!is_rooted_tmfs (https_1));
   QVERIFY (!is_rooted_tmfs (root_tmp));
 }
 
-void TestURL::test_is_rooted_web () {
+void
+TestURL::test_is_rooted_web () {
   QVERIFY (is_rooted_web (http_1));
   QVERIFY (is_rooted_web (https_1));
   QVERIFY (!is_rooted_web (root_tmp));
   QVERIFY (!is_rooted_web (tmfs_1));
 }
 
-
-void TestURL::test_descends () {
-  #ifdef OS_MINGW
+void
+TestURL::test_descends () {
+#ifdef OS_MINGW
   QVERIFY (descends (url_system ("$TEMP/a.txt"), root_tmp));
-  #else
+#else
   QVERIFY (descends (url_system ("/tmp/a.txt"), root_tmp));
-  #endif
+#endif
   QVERIFY (descends (url_system ("$TEXMACS_PATH/doc/main/man-manual.en.tm"),
                      url_system ("$TEXMACS_PATH")));
   QVERIFY (!descends (root_no_such_tmp, root_tmp));
 }
 
-QTEST_MAIN(TestURL)
+QTEST_MAIN (TestURL)
 #include "url_test.moc"
