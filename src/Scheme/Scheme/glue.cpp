@@ -12,6 +12,7 @@
 #include "glue.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
+#include "glue_l2.hpp"
 
 #include "promise.hpp"
 #include "tree.hpp"
@@ -1034,6 +1035,7 @@ initialize_glue () {
   tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
   tmscm_install_procedure ("blackbox?", blackboxP, 1, 0, 0);
   
+  initialize_glue_l2 ();
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();
