@@ -394,6 +394,11 @@ operator * (url u1, string name) {
 }
 
 url
+url_concat (url u1, url u2) {
+  return u1 * u2;
+}
+
+url
 operator | (url u1, url u2) {
   if (is_none (u1)) return u2;
   if (is_none (u2)) return u1;
@@ -401,6 +406,11 @@ operator | (url u1, url u2) {
   if (u1 == u2) return u2;
   if (is_or (u2) && (u1 == u2[1])) return u2;
   return as_url (tuple ("or", u1->t, u2->t));
+}
+
+url
+url_or (url u1, url u2) {
+  return u1 | u2;
 }
 
 url
