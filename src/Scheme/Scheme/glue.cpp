@@ -546,7 +546,6 @@ TMSCM_ASSERT (tmscm_is_solution(p), p, arg, rout)
 typedef array<int> array_int;
 typedef array<string> array_string;
 typedef array<tree> array_tree;
-typedef array<url> array_url;
 typedef array<patch> array_patch;
 typedef array<path> array_path;
 typedef array<widget> array_widget;

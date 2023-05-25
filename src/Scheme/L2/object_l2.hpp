@@ -4,6 +4,8 @@
 #include "s7_tm.hpp"
 #include "url.hpp"
 
+typedef array<url> array_url;
+
 bool    tmscm_is_url (tmscm obj);
 #define TMSCM_ASSERT_URL(u,arg,rout) \
 TMSCM_ASSERT (tmscm_is_url (u) || tmscm_is_string (u), u, arg, rout)
