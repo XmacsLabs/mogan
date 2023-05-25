@@ -454,13 +454,6 @@ contentP (tmscm t) {
 
 
 
-tmscm 
-observerP (tmscm t) {
-  bool b= tmscm_is_blackbox (t) && 
-  (type_box (tmscm_to_blackbox(t)) == type_helper<observer>::id);
-  return bool_to_tmscm (b);
-}
-
 
 /******************************************************************************
 * Widgets
@@ -998,7 +991,6 @@ TMSCM_ASSERT (tmscm_is_list_tree (p), p, arg, rout)
 void
 initialize_glue () {
   tmscm_install_procedure ("tm?", contentP, 1, 0, 0);
-  tmscm_install_procedure ("observer?", observerP, 1, 0, 0);
   tmscm_install_procedure ("modification?", modificationP, 1, 0, 0);
   tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
   tmscm_install_procedure ("blackbox?", blackboxP, 1, 0, 0);

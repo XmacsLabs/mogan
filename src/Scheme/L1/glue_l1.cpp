@@ -9,7 +9,15 @@ treeP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
+tmscm
+observerP (tmscm t) {
+  bool b= tmscm_is_blackbox (t) &&
+          (type_box (tmscm_to_blackbox (t)) == type_helper<observer>::id);
+  return bool_to_tmscm (b);
+}
+
 void
 initialize_glue_l1 () {
   tmscm_install_procedure ("tree?", treeP, 1, 0, 0);
+  tmscm_install_procedure ("observer?", observerP, 1, 0, 0);
 }
