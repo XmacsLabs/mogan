@@ -33,6 +33,8 @@
 #include "Database/database.hpp"
 #include "Updater/tm_updater.hpp"
 
+#define content tree
+
 #if 0
 template<class T> tmscm box_to_tmscm (T o) {
   return blackbox_to_tmscm (close_box<T> (o)); }

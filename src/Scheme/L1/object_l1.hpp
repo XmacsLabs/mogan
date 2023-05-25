@@ -38,6 +38,7 @@ typedef list<tree> list_tree;
 
 
 bool    tmscm_is_tree (tmscm obj);
+bool tmscm_is_content (tmscm p);
 tmscm   tree_to_tmscm (tree t);
 tree    tmscm_to_tree (tmscm obj);
 tmscm   tree_label_to_tmscm (tree_label l);
@@ -50,8 +51,7 @@ TMSCM_ASSERT (tmscm_is_tree (t), t, arg, rout)
 #define TMSCM_ASSERT_SCHEME_TREE(p,arg,rout)
 #define TMSCM_ASSERT_TREE_LABEL(p,arg,rout) \
 TMSCM_ASSERT_SYMBOL(p,arg,rout)
-#define content tree
-#define TMSCM_ASSERT_CONTENT(p, arg, rout)                                     \
+#define TMSCM_ASSERT_CONTENT(p, arg, rout) \
   TMSCM_ASSERT (tmscm_is_content (p), p, arg, rout)
 #define content_to_tmscm tree_to_tmscm
 
@@ -102,7 +102,14 @@ typedef array<array<double> > array_array_double;
 typedef array<array<array<double> > > array_array_array_double;
 
 tmscm array_int_to_tmscm (array<int> a);
+tmscm array_double_to_tmscm (array<double> a);
+tmscm array_array_double_to_tmscm (array<array_double> a);
+tmscm array_array_array_double_to_tmscm (array<array_array_double> a);
+
 array<int> tmscm_to_array_int (tmscm p);
+array<double> tmscm_to_array_double (tmscm p);
+array<array_double> tmscm_to_array_array_double (tmscm p);
+array<array_array_double> tmscm_to_array_array_array_double (tmscm p);
 
 bool tmscm_is_array_int (tmscm p);
 bool tmscm_is_array_string (tmscm p);

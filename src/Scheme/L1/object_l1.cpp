@@ -331,7 +331,7 @@ tmscm_is_array_array_double (tmscm p) {
            tmscm_is_array_array_double (tmscm_cdr (p));
 }
 
-/* static */ tmscm
+tmscm
 array_array_double_to_tmscm (array<array_double> a) {
   int   i, n= N (a);
   tmscm p= tmscm_null ();
@@ -340,7 +340,7 @@ array_array_double_to_tmscm (array<array_double> a) {
   return p;
 }
 
-/* static */ array<array_double>
+array<array_double>
 tmscm_to_array_array_double (tmscm p) {
   array<array_double> a;
   while (!tmscm_is_null (p)) {
@@ -358,7 +358,7 @@ tmscm_is_array_array_array_double (tmscm p) {
            tmscm_is_array_array_array_double (tmscm_cdr (p));
 }
 
-/* static */ tmscm
+tmscm
 array_array_array_double_to_tmscm (array<array_array_double> a) {
   int   i, n= N (a);
   tmscm p= tmscm_null ();
@@ -367,7 +367,7 @@ array_array_array_double_to_tmscm (array<array_array_double> a) {
   return p;
 }
 
-/* static */ array<array_array_double>
+array<array_array_double>
 tmscm_to_array_array_array_double (tmscm p) {
   array<array_array_double> a;
   while (!tmscm_is_null (p)) {
