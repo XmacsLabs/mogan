@@ -47,6 +47,26 @@ as_tree (object obj) {
 }
 
 /******************************************************************************
+ * Commands
+ ******************************************************************************/
+
+bool
+tmscm_is_command (tmscm u) {
+  return (tmscm_is_blackbox (u) &&
+          (type_box (tmscm_to_blackbox (u)) == type_helper<command>::id));
+}
+
+tmscm
+command_to_tmscm (command o) {
+  return blackbox_to_tmscm (close_box<command> (o));
+}
+
+command
+tmscm_to_command (tmscm o) {
+  return open_box<command> (tmscm_to_blackbox (o));
+}
+
+/******************************************************************************
  * List types
  ******************************************************************************/
 

@@ -517,29 +517,6 @@ tmscm_to_widget (tmscm o) {
 }
 
 /******************************************************************************
-* Commands
-******************************************************************************/
-
-#define TMSCM_ASSERT_COMMAND(o,arg,rout) \
-TMSCM_ASSERT (tmscm_is_command (o), o, arg, rout)
-
-bool
-tmscm_is_command (tmscm u) {
-  return (tmscm_is_blackbox (u) && 
-      (type_box (tmscm_to_blackbox(u)) == type_helper<command>::id));
-}
-
-static tmscm 
-command_to_tmscm (command o) {
-  return blackbox_to_tmscm (close_box<command> (o));
-}
-
-static command
-tmscm_to_command (tmscm o) {
-  return open_box<command> (tmscm_to_blackbox (o));
-}
-
-/******************************************************************************
 *  Widget Factory
 ******************************************************************************/
 
