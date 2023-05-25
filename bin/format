@@ -5,4 +5,4 @@ set -x
 xmake format -f "tests/**.cpp"
 xmake format -f "src/Scheme/L1/**.cpp"
 xmake format -f "src/Scheme/L2/**.cpp"
-
+xmake format -f "src/Plugins/Curl/**.cpp"

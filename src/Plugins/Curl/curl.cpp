@@ -15,7 +15,6 @@
 #include "Curl/curl.hpp"
 #include "tm_debug.hpp"
 
-
 static std::string readBuffer;
 
 static size_t
