@@ -548,8 +548,6 @@ urlP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
-url url_concat (url u1, url u2) { return u1 * u2; }
-url url_or (url u1, url u2) { return u1 | u2; }
 void string_save (string s, url u) { (void) save_string (u, s); }
 string string_load (url u) {
   string s; (void) load_string (u, s, false); return s; }
