@@ -32,8 +32,6 @@ TMSCM_ASSERT (tmscm_is_blackbox (t), t, arg, rout)
 #define TMSCM_ASSERT_OBJECT(a,b,c)
 // no check
 
-typedef list<string> list_string;
-typedef list<tree> list_tree;
 
 tmscm   tree_to_tmscm (tree t);
 tmscm   tree_label_to_tmscm (tree_label l);
@@ -56,39 +54,48 @@ TMSCM_ASSERT_SYMBOL(p,arg,rout)
 #define content_to_tmscm tree_to_tmscm
 
 
+typedef list<string> list_string;
+typedef list<tree> list_tree;
+
+tmscm list_string_to_tmscm (list<string> l);
+tmscm list_tree_to_tmscm (list<tree> l);
+
+list<string> tmscm_to_list_string (tmscm obj);
+list<tree> tmscm_to_list_tree (tmscm obj);
+
+bool tmscm_is_list_string (tmscm obj);
+bool tmscm_is_list_tree (tmscm obj);
+
+#define TMSCM_ASSERT_LIST_STRING(p,arg,rout) \
+TMSCM_ASSERT (tmscm_is_list_string (p), p, arg, rout)
+#define TMSCM_ASSERT_LIST_TREE(p,arg,rout) \
+TMSCM_ASSERT (tmscm_is_list_tree (p), p, arg, rout)
+
+
 tmscm command_to_tmscm (command o);
 tmscm observer_to_tmscm (observer o);
-tmscm   list_string_to_tmscm (list<string> l);
-tmscm   list_tree_to_tmscm (list<tree> l);
-tmscm   path_to_tmscm (path p);
-tmscm   modification_to_tmscm (modification m);
+tmscm path_to_tmscm (path p);
+tmscm modification_to_tmscm (modification m);
 
 command tmscm_to_command (tmscm o);
 observer tmscm_to_observer (tmscm obj);
-list<string> tmscm_to_list_string (tmscm obj);
-list<tree> tmscm_to_list_tree (tmscm obj);
 path    tmscm_to_path (tmscm obj);
 modification tmscm_to_modification (tmscm obj);
 
 bool tmscm_is_command (tmscm u);
 bool tmscm_is_observer (tmscm o);
-bool    tmscm_is_list_string (tmscm obj);
-bool    tmscm_is_list_tree (tmscm obj);
-bool    tmscm_is_path (tmscm obj);
-bool    tmscm_is_modification (tmscm obj);
+bool tmscm_is_path (tmscm obj);
+bool tmscm_is_modification (tmscm obj);
 
 #define TMSCM_ASSERT_COMMAND(o,arg,rout) \
 TMSCM_ASSERT (tmscm_is_command (o), o, arg, rout)
 #define TMSCM_ASSERT_OBSERVER(o,arg,rout) \
 TMSCM_ASSERT (tmscm_is_observer (o), o, arg, rout)
-#define TMSCM_ASSERT_LIST_STRING(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_list_string (p), p, arg, rout)
-#define TMSCM_ASSERT_LIST_TREE(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_list_tree (p), p, arg, rout)
 #define TMSCM_ASSERT_PATH(p,arg,rout) \
 TMSCM_ASSERT (tmscm_is_path (p), p, arg, rout)
 #define TMSCM_ASSERT_MODIFICATION(m,arg,rout) \
 TMSCM_ASSERT (tmscm_is_modification (m), m, arg, rout)
+
 
 typedef array<int> array_int;
 typedef array<string> array_string;
