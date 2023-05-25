@@ -3,6 +3,7 @@
 
 #include "tree.hpp"
 #include "path.hpp"
+#include "command.hpp"
 #include "modification.hpp"
 #include "s7_tm.hpp"
 

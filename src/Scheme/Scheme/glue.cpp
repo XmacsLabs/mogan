@@ -10,8 +10,8 @@
 ******************************************************************************/
 
 #include "glue.hpp"
-#include "glue_l1.hpp"
-#include "glue_l2.hpp"
+#include "object_l1.hpp"
+#include "object_l2.hpp"
 
 #include "promise.hpp"
 #include "tree.hpp"
