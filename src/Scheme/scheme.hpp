@@ -12,6 +12,8 @@
 #ifndef SCHEME_HH
 #define SCHEME_HH
 
+#include "object_l1.hpp"
+#include "object_l2.hpp"
 #include "tree.hpp"
 #include "path.hpp"
 #include "command.hpp"

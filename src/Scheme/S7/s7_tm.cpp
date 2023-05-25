@@ -12,6 +12,8 @@
 #include "s7_tm.hpp"
 #include "blackbox.hpp"
 #include "file.hpp"
+#include "object_l1.hpp"
+#include "object_l2.hpp"
 #include "../Scheme/glue.hpp"
 #include "convert.hpp" // tree_to_texmacs (should not belong here)
 
