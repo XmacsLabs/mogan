@@ -9,6 +9,8 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "object_l1.hpp"
+#include "object_l2.hpp"
 #include "object.hpp"
 #include "glue.hpp"
 
