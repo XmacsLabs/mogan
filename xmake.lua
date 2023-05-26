@@ -562,7 +562,6 @@ target("mogan") do
     if is_plat("mingw") then
         add_packages("nowide_standalone")
     end
-    add_packages("s7")
 
     if is_plat("linux") then
         add_rpathdirs("@executable_path/../lib")
@@ -722,7 +721,6 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_rules("qt.console")
             add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
             add_syslinks("pthread")
-            add_packages("s7")
 
             add_includedirs({"$(buildir)", "tests/Base"})
             add_files("tests/Base/base.cpp")
