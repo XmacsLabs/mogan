@@ -12,13 +12,13 @@
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
-      Feature
+      Chore
     </cell>|<\cell>
       15_1
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Initial L3 Kernel
+      Separate L1 and L2 glue and object
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
@@ -27,6 +27,30 @@
       Darcy
     </cell>|<\cell>
       Use xmake to manage the S7 Scheme package
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      15_3
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Initial L3 Kernel
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      15_4
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Unit tests for url in Scheme
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      15_5
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Unit tests for tree in Scheme
     </cell>>>>
   </wide-tabular>
 
