@@ -63,8 +63,4 @@ tree   verbatim_to_tree (string s, bool wrap= false, string enc= "default");
 tree   verbatim_document_to_tree (string s, bool w= false, string e= "default");
 bool   is_verbatim (tree t);
 
-/*** Coq ***/
-tree vernac_to_tree (string s);
-tree vernac_document_to_tree (string s);
-
 #endif // defined CONVERT_H

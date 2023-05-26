@@ -529,8 +529,6 @@
   (upgrade-tmml tmml_upgrade (tree scheme_tree))
   (upgrade-mathml upgrade_mathml (tree content))
   (retrieve-mathjax retrieve_mathjax (tree int))
-  (vernac->texmacs vernac_to_tree (tree string))
-  (vernac-document->texmacs vernac_document_to_tree (tree string))
   (compute-keys-string compute_keys (array_string string string))
   (compute-keys-tree compute_keys (array_string content string))
   (compute-keys-url compute_keys (array_string url))
