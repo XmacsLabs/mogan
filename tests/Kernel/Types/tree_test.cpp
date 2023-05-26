@@ -19,6 +19,9 @@ private slots:
   void test_is_atomic ();
   void test_is_tuple ();
   void test_is_concat ();
+  void test_is_compound ();
+  void test_is_bool ();
+  void test_is_int ();
 };
 
 void
@@ -44,6 +47,28 @@ TestTree::test_is_concat () {
   QVERIFY (is_concat (concat (tree (), tree (), tree ())));
   QVERIFY (is_concat (concat (tree (), tree (), tree (), tree ())));
   QVERIFY (is_concat (concat (tree (), tree (), tree (), tree (), tree ())));
+}
+
+void
+TestTree::test_is_compound () {
+  QVERIFY (is_compound (tree (FRAC, 3)));
+  QVERIFY (!is_compound (tree ()));
+}
+
+void
+TestTree::test_is_bool () {
+  QVERIFY (is_bool (tree ("true")));
+  QVERIFY (is_bool (tree ("false")));
+  QVERIFY (!is_bool (tree ("other")));
+}
+
+void
+TestTree::test_is_int () {
+  QVERIFY (!is_int (tree ()));
+  QVERIFY (is_int (tree ("+12")));
+  QVERIFY (is_int (tree ("-12")));
+  QVERIFY (!is_int (tree ("-+12")));
+  QVERIFY (!is_int (tree ("one")));
 }
 
 QTEST_MAIN (TestTree)
