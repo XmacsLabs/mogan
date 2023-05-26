@@ -109,7 +109,7 @@ end
 
 local PDFHUMMUS_VERSION = "4.1"
 add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
-
+add_requires("s7 2023.04.13", {system=false})
 
 
 --
@@ -404,6 +404,7 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("pdfhummus")
     add_packages("nowide_standalone")
+    add_packages("s7")
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
@@ -497,7 +498,6 @@ target("libmogan") do
             "src/Kernel/**.cpp",
             "src/Scheme/Scheme/**.cpp",
             "src/Scheme/S7/**.cpp",
-            "src/Scheme/S7/*.c",
             "src/Scheme/L1/**.cpp",
             "src/Scheme/L2/**.cpp",
             "src/System/**.cpp",
