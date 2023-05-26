@@ -36,7 +36,13 @@
   <section|v1.2.0-alpha6>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|1|1|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|2|2|1|1|cell-valign|b>|<table|<row|<\cell>
+      <dlink|1>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Cleaning for Mogan Editor 1.2.x
+    </cell>>|<row|<\cell>
       <dlink|5>
     </cell>|<\cell>
       Darcy
