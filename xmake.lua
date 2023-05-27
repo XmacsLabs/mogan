@@ -730,22 +730,6 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
     end
 end
 
-target("tm_shell") do
-    if is_plat("macosx") or is_plat("linux") then
-        set_enabled(true)
-    else
-        set_enabled(false)
-    end
-
-    set_kind("binary")
-
-    set_languages("c++17")
-
-    add_includedirs("$(buildir)")
-    add_files("plugins/shell/src/tm_shell.cpp")
-    add_links("util")
-end
-
 
 -- xmake plugins
 add_configfiles(
