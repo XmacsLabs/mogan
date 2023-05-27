@@ -580,9 +580,6 @@ target("mogan") do
 end 
 
 target("mogan_install") do
-    if is_plat("macosx") or is_plat("linux") then
-        add_deps("tm_shell")
-    end
     add_deps("mogan")
     set_kind("phony")
     set_configvar("XMACS_VERSION", XMACS_VERSION)
