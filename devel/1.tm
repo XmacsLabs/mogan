@@ -292,6 +292,12 @@
       alpha2
     </cell>|<\cell>
       Remove the GNU <TeXmacs> packager for Windows
+    </cell>>|<row|<\cell>
+      1_43
+    </cell>|<\cell>
+      alpha6
+    </cell>|<\cell>
+      Remove the shell plugin
     </cell>>>>
   </wide-tabular>
 
