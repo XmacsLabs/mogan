@@ -14,7 +14,8 @@ xrepo update-repo
 
 ### Step 2: Compile
 ``` bash
-xmake build --yes --verbose --jobs=8 --all
+xmake config --yes
+xmake build --yes --verbose --all
 ```
 
 ### Step 3: Run unit test

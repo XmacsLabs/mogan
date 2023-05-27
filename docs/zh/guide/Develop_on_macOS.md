@@ -15,7 +15,8 @@ xrepo update-repo
 
 ### 第二步：编译
 ```
-xmake
+xmake config --yes
+xmake build --yes --verbose --all
 ```
 
 ### 第三步：运行单元测试

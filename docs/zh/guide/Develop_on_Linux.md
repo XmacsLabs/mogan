@@ -17,8 +17,8 @@ xrepo update-repo
 
 ### 第二步：编译
 ```
-xmake config -m debug --yes
-xmake build --yes --verbose --diagnosis --jobs=8 --all
+xmake config --yes
+xmake build --yes --verbose --all
 ```
 
 ### 第三步：运行单元测试
