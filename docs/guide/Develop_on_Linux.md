@@ -4,9 +4,10 @@
 On Debian or Debian derivatives:
 ```
 sudo add-apt-repository ppa:xmake-io/xmake
+sudo apt install xmake
+
 sudo apt update
-sudo apt upgrade --yes gcc
-sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake
+sudo apt install --yes build-essential libfontconfig1-dev qtbase5-dev libqt5svg5-dev
 ```
 
 Sometimes, we need the latest xrepo:
@@ -18,6 +19,15 @@ xrepo update-repo
 ``` bash
 xmake config --yes
 xmake build --yes --verbose --all
+```
+
+If Qt SDK is not found, we can config it manually:
+```
+xmake config --qt=/usr/lib/`arch`-linux-gnu/qt5/
+```
+To switch to Qt 6, just:
+```
+xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
 ```
 
 ### Step 3: Run unit test
