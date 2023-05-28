@@ -5,9 +5,10 @@
 以Debian及衍生版为例：
 ```
 sudo add-apt-repository ppa:xmake-io/xmake
+sudo apt install xmake
+
 sudo apt update
-sudo apt upgrade --yes gcc
-sudo apt install --yes qtbase5-dev libqt5svg5-dev xmake
+sudo apt install --yes build-essential libfontconfig1-dev qtbase5-dev libqt5svg5-dev
 ```
 
 有时候需要保持xrepo是最新的，以保证使用最新的依赖的构建定义
@@ -19,6 +20,15 @@ xrepo update-repo
 ```
 xmake config --yes
 xmake build --yes --verbose --all
+```
+
+如果找不到Qt，那么在config的时候，可以手动指定，比如：
+```
+xmake config --qt=/usr/lib/`arch`-linux-gnu/qt5/
+```
+切换到Qt 6，也只需要：
+```
+xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
 ```
 
 ### 第三步：运行单元测试
