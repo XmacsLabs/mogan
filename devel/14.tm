@@ -36,7 +36,7 @@
     </cell>|<\cell>
       14_2
     </cell>|<\cell>
-      Edmond
+      \;
     </cell>|<\cell>
       several (\<gtr\>3) unit tests for <cpp|rectangle>
     </cell>>|<row|<\cell>
@@ -47,6 +47,46 @@
       tangdouer
     </cell>|<\cell>
       several (\<gtr\>3) unit tests for <cpp|analyze>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      14_4
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      several (\<gtr\>3) unit tests for <cpp|point>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      14_5
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      several (\<gtr\>3) unit tests for <cpp|curve>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      14_6
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      several (\<gtr\>3) unit tests for <cpp|color>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      14_7
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      several (\<gtr\>3) unit tests for <cpp|grid>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      14_8
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      several (\<gtr\>3) unit tests for <cpp|equations>
     </cell>>>>
   </wide-tabular>
 
