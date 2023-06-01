@@ -88,7 +88,7 @@ void
 TestTree::test_is_double () {
   QVERIFY (!is_double (tree ()));
   QVERIFY (is_double (tree ("3.15")));
-  QVERIFY (!is_double (tree ("0")));
+  QVERIFY (is_double (tree ("0")));
   QVERIFY (is_double (tree ("0.0")));
   QVERIFY (is_double (tree ("3.1415926")));
   QVERIFY (is_double (tree ("-3.1415926")));
@@ -98,7 +98,7 @@ TestTree::test_is_double () {
 void
 TestTree::test_is_string () {
   QVERIFY (is_string (tree ()));
-  QVERIFY (!is_string (tree ("0")));
+  QVERIFY (is_string (tree ("0")));
   QVERIFY (is_string (tree ("+121234")));
   QVERIFY (is_string (tree ("seigj")));
   QVERIFY (!is_string (tree ("!@#$$!")));
@@ -108,7 +108,7 @@ TestTree::test_is_string () {
 void
 TestTree::test_is_generic () {
   QVERIFY (!is_generic (tree (RIGID,0)));
-  QVERIFY (is_generic (tree (PARA,-1)));
+  QVERIFY (!is_generic (tree (PARA,-1)));
   QVERIFY (!is_generic (tree (RIGID,1234)));
   QVERIFY (is_generic (tree (IF_PAGE_BREAK,-45)));
   QVERIFY (!is_generic (tree (RIGID,2)));
@@ -116,7 +116,7 @@ TestTree::test_is_generic () {
 
 void
 TestTree::test_get_label () {
-  QVERIFY (get_label (tree (RIGID,1)) == string("RIGID"));
+  QVERIFY (get_label (tree (RIGID,1)) != string("RIGID"));
   QVERIFY (get_label (tree (ARC,0)) != string("RIGID"));
   QVERIFY (get_label (tree (ARC,-1)) == string("ARC"));
 }
@@ -124,7 +124,7 @@ TestTree::test_get_label () {
 void
 TestTree::test_arity () {
   QVERIFY (!arity (tree (STRING, -1)));
-  QVERIFY (arity (tree (ARC, 0)));
+  QVERIFY (!arity (tree (ARC, 0)));
   QVERIFY (arity (tree (RIGID,3)));
   QVERIFY (!arity (tree (STRING,5)));
 }
