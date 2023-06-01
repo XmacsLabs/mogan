@@ -2,7 +2,7 @@
 /******************************************************************************
  * MODULE     : tree_test.cpp
  * DESCRIPTION: Tests on tree
- * COPYRIGHT  : (C) 2019-2021  Darcy Shen
+ * COPYRIGHT  : (C) 2019-2021  Darcy Shen 2023 Origin-yy
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
