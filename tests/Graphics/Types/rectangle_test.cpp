@@ -1,7 +1,7 @@
 
 /******************************************************************************
- * MODULE     : tree_test.cpp
- * DESCRIPTION: Tests on tree
+ * MODULE     : rectangle_test.cpp
+ * DESCRIPTION: Tests on rectangle
  * COPYRIGHT  : (C) 2019-2021  Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
@@ -9,7 +9,6 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "qtestcase.h"
 #include "rectangles.hpp"
 #include <QtTest/QtTest>
 
