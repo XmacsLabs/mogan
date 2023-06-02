@@ -101,7 +101,7 @@ TestTree::test_is_string () {
   QVERIFY (is_string (tree ("0")));
   QVERIFY (is_string (tree ("+121234")));
   QVERIFY (is_string (tree ("seigj")));
-  QVERIFY (!is_string (tree ("!@#$$!")));
+  QVERIFY (is_string (tree ("!@#$$!")));
   QVERIFY (!is_string (tree (FRAC, 3)));
 }
 
