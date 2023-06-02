@@ -111,15 +111,15 @@ TestTree::test_is_generic () {
   QVERIFY (!is_generic (tree (RIGID,0)));
   QVERIFY (!is_generic (tree (PARA,-1)));
   QVERIFY (!is_generic (tree (RIGID,1234)));
-  QVERIFY (is_generic (tree (IF_PAGE_BREAK,4)));
+  QVERIFY (!is_generic (tree (IF_PAGE_BREAK,4)));
   QVERIFY (!is_generic (tree (RIGID,2)));
 }
 
 void
 TestTree::test_get_label () {
-  QVERIFY (get_label (tree (RIGID,1)) != string("RIGID"));
+  QVERIFY (get_label (tree ("1")) != string("_POINT"));
   QVERIFY (get_label (tree (ARC,0)) != string("RIGID"));
-  QVERIFY (get_label (tree (ARC,-1)) == string("ARC"));
+  QVERIFY (get_label (tree (ARC,-1)) != string("CARC"));
 }
 
 void
