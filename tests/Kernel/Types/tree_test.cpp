@@ -2,7 +2,8 @@
 /******************************************************************************
  * MODULE     : tree_test.cpp
  * DESCRIPTION: Tests on tree
- * COPYRIGHT  : (C) 2019-2021  Darcy Shen 2023 Origin-yy
+ * COPYRIGHT  : (C) 2019-2021  Darcy Shen 
+ *                  2023       Origin-yy
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -110,7 +111,7 @@ TestTree::test_is_generic () {
   QVERIFY (!is_generic (tree (RIGID,0)));
   QVERIFY (!is_generic (tree (PARA,-1)));
   QVERIFY (!is_generic (tree (RIGID,1234)));
-  QVERIFY (is_generic (tree (IF_PAGE_BREAK,-45)));
+  QVERIFY (is_generic (tree (IF_PAGE_BREAK,4)));
   QVERIFY (!is_generic (tree (RIGID,2)));
 }
 
