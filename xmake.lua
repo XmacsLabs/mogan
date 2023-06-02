@@ -73,7 +73,7 @@ end
 -- [ ] pacman powered
 -- [ ] portage powered
 -- ...
-if is_plat("linux") and (linuxos.name() == "debian" or linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
+if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
     add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
     add_requires("apt::libpng-dev", {alias="libpng"})
     add_requires("apt::zlib1g-dev", {alias="zlib"})
