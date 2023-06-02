@@ -15,13 +15,13 @@ class TestPoint : public QObject {
   Q_OBJECT
 
 private slots:
-  void test_operator();
+  void test_operator ();
   // void test_is_point();
   void test_inner ();
 };
 
 void
-TestPoint::test_operator() {
+TestPoint::test_operator () {
   QCOMPARE (point (2, 3) + point (2, 4) == point (4, 7), true);
   QCOMPARE (point (4, 5) - point (2, 3) == point (2, 2), true);
   QCOMPARE (point (2, 3) * 2.0 == point (4, 6), true);
