@@ -727,6 +727,12 @@
 (tm-define-macro ($carc . l)
   `(cons 'carc ($list ,@l)))
 
+(tm-define-macro ($arc_cp . l)
+  `(cons 'arc_cp ($list ,@l)))
+
+(tm-define-macro ($carc_cp . l)
+  `(cons 'carc_cp ($list ,@l)))
+
 (tm-define-macro ($text-at p . l)
   ($quote `(text-at ($unquote ($inline ,@l)) ($unquote ($inline ,p)))))
 

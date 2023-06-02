@@ -3068,7 +3068,7 @@
   (graphics tmtex-graphics)
   (superpose tmtex-noop)
   ((:or gr-group gr-transform
-        text-at cline arc carc spline spine* cspline fill) tmtex-noop)
+        text-at cline arc carc arc_cp carc_cp spline spine* cspline fill) tmtex-noop)
   (image tmtex-image)
   ((:or box-info frame-direct frame-inverse) tmtex-noop)
 

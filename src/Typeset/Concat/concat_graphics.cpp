@@ -479,6 +479,71 @@ BEGIN_MAGNIFY
 END_MAGNIFY
 }
 
+array<point>
+gen_arc_points (array<point> a) {
+  int n= N(a);
+  if(n < 2)
+    return a;
+  point center= a[0];
+  point start= a[1];
+  point vec_s= start-center;
+  double r1= norm(vec_s);
+  if (r1 <= 1e-6) {
+    array<point> a_ (1);
+    a_[0]= center;
+    return a_;
+  }
+  if(n == 2) {
+    array<point> a_ (3);
+    a_[0]= point(center[0]-vec_s[1], center[1]+vec_s[0]);
+    a_[1]= start;
+    a_[2]= center-vec_s;
+    return a_;
+  }
+  point end= a[2];
+  point vec_e= end-center;
+  vec_e= vec_e*(r1/norm(vec_e));
+  end= center+vec_e;
+  array<point> a_ (3);
+  a_[0]= start;
+  {
+    point v0= vec_s+vec_e;
+    v0= v0*(r1/norm(v0));
+    a_[1]= (vec_s[0]*vec_e[1]>vec_e[0]*vec_s[1] ? center+v0 : center-v0);
+  }
+  a_[2]= end;
+  return a_;
+}
+
+void
+concater_rep::typeset_arc_cp (tree t, path ip, bool close) {
+BEGIN_MAGNIFY
+  int i, n= N(t);
+  array<point> a(n);
+  for (i=0; i<n; i++)
+    a[i]= env->as_point (env->exec (t[i]));
+  array<path> cip(n);
+  for (i=0; i<n; i++)
+    cip[i]= descend (ip, i);
+  if (N(a) == 0 || N(a[0]) == 0) typeset_error (t, ip);
+  else {
+    if (close) {
+      if (n != 2)
+        typeset_line (t, ip, close);
+      else 
+        typeset_arc (as_tree (gen_arc_points (a)), ip, close);
+    } else {
+      if (n != 3 || linearly_dependent (a[0], a[1], a[2]) ||
+          (N (intersection (midperp (a[0], a[1], a[2]),
+                            midperp (a[1], a[2], a[0]))) == 0))
+        typeset_line (t, ip, close);
+      else
+        typeset_arc (as_tree (gen_arc_points (a)), ip, close);
+    }
+  }
+END_MAGNIFY
+}
+
 void
 concater_rep::typeset_spline (tree t, path ip, bool close) {
 BEGIN_MAGNIFY

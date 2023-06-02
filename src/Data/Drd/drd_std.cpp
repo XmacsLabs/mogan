@@ -697,6 +697,10 @@ init_std_drd () {
         fixed (3) -> returns_graphical () -> point_type (0));
   init (CARC, "carc",
         fixed (3) -> returns_graphical () -> point_type (0));
+  init (ARC_CP, "arc_cp",
+        fixed (3) -> returns_graphical () -> point_type (0));
+  init (CARC_CP, "carc_cp",
+        fixed (2) -> returns_graphical () -> point_type (0));
   init (SPLINE, "spline",
         repeat (2, 1) -> returns_graphical () -> point_type (0));
   init (VAR_SPLINE, "spline*",
