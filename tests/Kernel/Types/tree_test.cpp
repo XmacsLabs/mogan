@@ -2,7 +2,7 @@
 /******************************************************************************
  * MODULE     : tree_test.cpp
  * DESCRIPTION: Tests on tree
- * COPYRIGHT  : (C) 2019-2021  Darcy Shen 
+ * COPYRIGHT  : (C) 2019-2021  Darcy Shen
  *                  2023       Origin-yy
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
@@ -80,9 +80,9 @@ TestTree::test_is_int () {
 
 void
 TestTree::test_is_func () {
-  QVERIFY (!is_func (tree (FRAC, 3),tree_label(DOCUMENT)));
-  QVERIFY (!is_func (tree (),tree_label()));
-  QVERIFY (is_func (tree (LSUP,4),tree_label(LSUP)));
+  QVERIFY (!is_func (tree (FRAC, 3), tree_label (DOCUMENT)));
+  QVERIFY (!is_func (tree (), tree_label ()));
+  QVERIFY (is_func (tree (LSUP, 4), tree_label (LSUP)));
 }
 
 void
@@ -108,26 +108,26 @@ TestTree::test_is_string () {
 
 void
 TestTree::test_is_generic () {
-  QVERIFY (!is_generic (tree (RIGID,0)));
-  QVERIFY (!is_generic (tree (PARA,-1)));
-  QVERIFY (!is_generic (tree (RIGID,1234)));
-  QVERIFY (!is_generic (tree (IF_PAGE_BREAK,4)));
-  QVERIFY (!is_generic (tree (RIGID,2)));
+  QVERIFY (!is_generic (tree (RIGID, 0)));
+  QVERIFY (!is_generic (tree (PARA, -1)));
+  QVERIFY (!is_generic (tree (RIGID, 1234)));
+  QVERIFY (!is_generic (tree (IF_PAGE_BREAK, 4)));
+  QVERIFY (!is_generic (tree (RIGID, 2)));
 }
 
 void
 TestTree::test_get_label () {
-  QVERIFY (get_label (tree ("1")) != string("_POINT"));
-  QVERIFY (get_label (tree (ARC,0)) != string("RIGID"));
-  QVERIFY (get_label (tree (ARC,-1)) != string("CARC"));
+  QVERIFY (get_label (tree ("1")) != string ("_POINT"));
+  QVERIFY (get_label (tree (ARC, 0)) != string ("RIGID"));
+  QVERIFY (get_label (tree (ARC, -1)) != string ("CARC"));
 }
 
 void
 TestTree::test_arity () {
   QVERIFY (!arity (tree (STRING, -1)));
   QVERIFY (!arity (tree (ARC, 0)));
-  QVERIFY (arity (tree (RIGID,3)));
-  QVERIFY (!arity (tree (STRING,5)));
+  QVERIFY (arity (tree (RIGID, 3)));
+  QVERIFY (!arity (tree (STRING, 5)));
 }
 
 QTEST_MAIN (TestTree)
