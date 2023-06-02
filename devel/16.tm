@@ -8,7 +8,7 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<table|<row|<\cell>
+    <tformat|<cwith|2|2|4|4|cell-valign|b>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       16_1
@@ -24,6 +24,14 @@
       Darcy
     </cell>|<\cell>
       pin clang-format to 15.x
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      16_3
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Code Formatting for OSPP Students
     </cell>>>>
   </wide-tabular>
 
