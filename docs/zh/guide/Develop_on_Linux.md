@@ -31,10 +31,8 @@ xmake config --qt=/usr/lib/`arch`-linux-gnu/qt5/
 xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
 ```
 
-### 第三步：运行单元测试
-``` bash
-TEXMACS_PATH=$PWD/TeXmacs xmake run --yes --verbose --diagnosis --group=tests
-```
+### 第三步：测试
+见[如何测试](Test.md)。
 
 ### 第四步: 安装到`build/package`
 ``` bash

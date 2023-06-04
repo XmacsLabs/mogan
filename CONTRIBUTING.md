@@ -1,18 +1,13 @@
 # Contributing
 ## For Users
-+ Reporting bugs to [Github in English](https://github.com/XmacsLabs/mogan/issues) or [Gitee in Chinese](https://gitee.com/XmacsLabs/mogan/issues)
+Reporting bugs to [Github](https://github.com/XmacsLabs/mogan/issues)/[Gitee](https://gitee.com/XmacsLabs/mogan/issues)/[Codeberg](https://codeberg.org/XmacsLabs/mogan/issues) in English/Chinese.
 
+Why English or Chinese? Because currently, the developers only know these two human languages. 
+
+Welcome to joining us as a developer!!!
 ## For Developers
-For the kernel part, here is how to build and run unit tests:
-```
-xmake build --group=kernel_tests
-xmake run --group=kernel_tests
-```
-
-Here are developing guides on Windows/macOS/Linux:
-+ Developing on Windows ([English](https://mogan.app/guide/Develop_on_Windows.html)/[中文](https://mogan.app/zh/guide/Develop_on_Windows.html))
-+ Developing on macOS ([English](https://mogan.app/guide/Develop_on_macOS.html)/[中文](https://mogan.app/zh/guide/Develop_on_macOS.html))
-+ Developing on Linux ([English](https://mogan.app/guide/Develop_on_Linux.html)/[中文](https://mogan.app/zh/guide/Develop_on_Linux.html))
-
-### Using cmake
-CMake support is deprecated since Mogan Editor v1.1.3, the related code is maintained at https://github.com/XmacsLabs/mogan/pull/589.
+| Documentation | Platform | Links |
+|----------------|---------|----------|
+| How to develop | Windows | [English](docs/guide/Develop_on_Windows.md)/[中文](docs/zh/guide/Develop_on_Windows.md) |
+| How to develop | macOS | [English](docs/guide/Develop_on_macOS.md)/[中文](docs/zh/guide/Develop_on_macOS.md) |
+| How to develop | Linux | [English](docs/guide/Develop_on_Linux.md)/[中文](docs/zh/guide/Develop_on_Linux.md) |
