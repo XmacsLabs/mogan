@@ -30,10 +30,8 @@ To switch to Qt 6, just:
 xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
 ```
 
-### Step 3: Run unit test
-``` bash
-TEXMACS_PATH=$PWD/TeXmacs xmake run --yes --verbose --diagnosis --group=tests
-```
+### Step 3: Run tests
+See [How to test](Test.md)。
 
 ### Step 4: Install to `build/package`
 ``` bash
