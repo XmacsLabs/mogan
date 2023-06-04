@@ -744,6 +744,7 @@ end
 for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
     local testname = path.basename(filepath)
     target(testname) do
+        set_kind("phony")
         set_group("doc_tests")
         on_run(function (target)
             name = target:name()
