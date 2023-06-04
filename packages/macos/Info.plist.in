@@ -38,9 +38,9 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>@DEVEL_VERSION@</string>
+    <string>@XMACS_VERSION@</string>
     <key>CFBundleVersion</key>
-    <string>@DEVEL_VERSION@</string>
+    <string>@XMACS_VERSION@</string>
     <key>SUFeedURL</key>
     <string>@APPCAST@</string>
     <key>SUEnableAutomaticChecks</key>
