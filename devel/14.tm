@@ -3,7 +3,7 @@
 <style|<tuple|tmdoc|british|devel>>
 
 <\body>
-  <tmdoc-title|Unit Tests on L1 Kernel for OSPP Students>
+  <tmdoc-title|Unit Tests for OSPP Students in 2023>
 
   For analyze_test and tree_test, there are existing unit tests. Here are the
   command line to build and test:
@@ -13,8 +13,6 @@
 
     bin/test_only analyze_test
   </shell-code>
-
-  For the <cpp|rectangle> class, Edmond needs to create a new unit test.
 
   <cpp|tree> and <cpp|rectangle> are two important C++ class for the Mogan
   Draw OSPP project. The functions in <shell|analyze.cpp> are widely used for
@@ -28,7 +26,7 @@
     </cell>|<\cell>
       14_1
     </cell>|<\cell>
-      pokyux
+      pokyux, \<#5C18\>
     </cell>|<\cell>
       several (\<gtr\>3) unit tests for <cpp|tree>
     </cell>>|<row|<\cell>
@@ -36,7 +34,7 @@
     </cell>|<\cell>
       14_2
     </cell>|<\cell>
-      \;
+      Oyyko
     </cell>|<\cell>
       several (\<gtr\>3) unit tests for <cpp|rectangle>
     </cell>>|<row|<\cell>
@@ -52,7 +50,7 @@
     </cell>|<\cell>
       14_4
     </cell>|<\cell>
-      \;
+      \<#53F6\>\<#7530\>\<#946B\>
     </cell>|<\cell>
       several (\<gtr\>3) unit tests for <cpp|point>
     </cell>>|<row|<\cell>
@@ -68,25 +66,9 @@
     </cell>|<\cell>
       14_6
     </cell>|<\cell>
-      \;
+      xcz_physics
     </cell>|<\cell>
       several (\<gtr\>3) unit tests for <cpp|color>
-    </cell>>|<row|<\cell>
-      Chore
-    </cell>|<\cell>
-      14_7
-    </cell>|<\cell>
-      \;
-    </cell>|<\cell>
-      several (\<gtr\>3) unit tests for <cpp|grid>
-    </cell>>|<row|<\cell>
-      Chore
-    </cell>|<\cell>
-      14_8
-    </cell>|<\cell>
-      \;
-    </cell>|<\cell>
-      several (\<gtr\>3) unit tests for <cpp|equations>
     </cell>>>>
   </wide-tabular>
 
