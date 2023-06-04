@@ -20,6 +20,15 @@
       jingkaimori
     </cell>|<\cell>
       Fix incorrect word count for cjk content
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      <dlink|17_2>
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      <menu|Tools|Statistics|Count Words> should be disabled for CJK
+      documents
     </cell>>>>
   </wide-tabular>
 
