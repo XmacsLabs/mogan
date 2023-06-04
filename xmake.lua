@@ -741,6 +741,21 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
     end
 end
 
+for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
+    local testname = path.basename(filepath)
+    target(testname) do
+        set_group("doc_tests")
+        on_run(function (target)
+            name = target:name()
+            params = {"-headless", "-b", "TeXmacs/tests/"..name..".scm", "-x", "(test_"..name..")", "-q"}
+            if is_plat("macosx") then
+                os.execv("$(buildir)/macosx/$(arch)/release/Mogan.app/Contents/MacOS/Mogan", params)
+            else
+                os.execv("$(buildir)/package/bin/mogan", params)
+            end
+        end)
+    end
+end
 
 -- xmake plugins
 add_configfiles(
