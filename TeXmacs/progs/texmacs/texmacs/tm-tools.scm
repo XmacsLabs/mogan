@@ -17,9 +17,22 @@
 ;; Document statistics
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; TODO: if string in scheme represent unicode codepoint with single character 
+;;   rather than utf-8 encoding, replace this function with string-length
+(tm-define (utf8-string-length s)
+  (let ((lth-s (string-length s)))
+    (if (== lth-s 0)
+      0
+      (let* ((s-first (char->integer (string-ref s 0)))
+             (s-rest (substring s 1 lth-s))
+             (lth-rest (utf8-string-length s-rest)))
+        (cond
+          ((== (logand s-first #xc0) #x80) lth-rest)
+          (else (+ lth-rest 1)))))))
+
 (tm-define (count-characters doc)
   (with s (convert doc "texmacs-tree" "verbatim-snippet")
-    (string-length s)))
+    (utf8-string-length s)))
 
 (define (compress-spaces s)
   (let* ((s1 (string-replace s "\n" " "))

@@ -94,4 +94,5 @@
   (regtest-tm-define)
   (regtest-tm-dialogue)
   (regtest-fonts)
+  (regtest-tm-tools)
 )
