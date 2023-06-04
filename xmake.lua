@@ -715,6 +715,9 @@ target("mogan_install") do
             if is_plat("macosx") then
                 os.cp ("$(buildir)/packages/macos/Info.plist", path.join(target:installdir(), "../Info.plist"))
             end
+            if is_plat("macosx") and is_arch("arm64") then
+                os.execv("codesign", {"--force", "--deep", "--sign", "-", target:installdir().."../.."})
+            end
         end)
 end
 
