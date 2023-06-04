@@ -305,7 +305,7 @@ end
 
 
 
-local XMACS_VERSION="1.1.1"
+local XMACS_VERSION="1.2.0"
 local INSTALL_DIR="$(buildir)/package"
 
 local DEVEL_VERSION = TEXMACS_VERSION
@@ -594,6 +594,17 @@ target("mogan_install") do
         )
     end
 
+    if is_plat("macosx") then
+        set_configvar("APPCAST", "")
+        set_configvar("OSXVERMIN", "")
+        add_configfiles(
+            "(packages/macos/Info.plist.in)",{
+                filename = "Info.plist",
+                pattern = "@(.-)@",
+            }
+        )
+    end
+
     set_configvar("prefix", INSTALL_DIR)
     set_configvar("exec_prefix", INSTALL_DIR)
     set_configvar("datarootdir", INSTALL_DIR.."/share")
@@ -700,6 +711,9 @@ target("mogan_install") do
                 os.cp (
                     "TeXmacs/misc/images/texmacs-"..size..".png",
                     path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
+            end
+            if is_plat("macosx") then
+                os.cp ("$(buildir)/packages/macos/Info.plist", path.join(target:installdir(), "../Info.plist"))
             end
         end)
 end
