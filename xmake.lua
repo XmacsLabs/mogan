@@ -163,7 +163,7 @@ target("libkernel_l1") do
     )
 
     add_includedirs("$(buildir)/L1")
-    add_includedirs(l1_includedirs)
+    add_includedirs(l1_includedirs, {public = true})
     add_files(l1_files)
 
     if is_plat("mingw") then
@@ -233,6 +233,7 @@ target("libkernel_l2") do
     if is_plat("mingw") then
         add_packages("nowide_standalone")
     end
+    add_deps("libkernel_l1")
 
     add_configfiles(
         "src/System/config_l2.h.xmake", {
@@ -261,9 +262,7 @@ target("libkernel_l2") do
         "src/Texmacs/tm_debug.hpp",
     })
     add_includedirs("$(buildir)/L2")
-    add_includedirs(l1_includedirs)
-    add_includedirs(l2_includedirs)
-    add_files(l1_files)
+    add_includedirs(l2_includedirs, {public = true})
     add_files(l2_files)
 
     if is_plat("linux") or is_plat("macosx") then
