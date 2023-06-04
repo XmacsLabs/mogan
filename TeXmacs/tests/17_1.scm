@@ -1,3 +1,5 @@
+(inherit-modules (texmacs texmacs tm-tools))
+
 (define (test-count-characters)
   (load-buffer "$TEXMACS_PATH/tests/17_1.tm")
   (regression-test-group
@@ -5,8 +7,8 @@
    count-characters :none
    (test "character count" (buffer-tree) 41)))
 
-(tm-define (test_9_1)
-  (let ((n (+ (test-no-title)
+(tm-define (test_17_1)
+  (let ((n (+ (test-count-characters)
               0)))
     (display* "Total: " (object->string n) " tests.\n")
-    (display "Test suite of 9_1: ok\n")))
+    (display "Test suite of 17_1: ok\n")))
