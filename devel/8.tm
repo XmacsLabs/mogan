@@ -40,6 +40,14 @@
       Darcy
     </cell>|<\cell>
       Github Action to package on macOS
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      8_5
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Script to run integration tests
     </cell>>>>
   </wide-tabular>
 
