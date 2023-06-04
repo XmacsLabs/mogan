@@ -13,12 +13,6 @@
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
-      <dlink|8>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for packaging on Ubuntu/Windows/macOS
-    </cell>>|<row|<\cell>
       <dlink|11>
     </cell>|<\cell>
       Darcy
@@ -27,10 +21,46 @@
     </cell>>>>
   </wide-tabular>
 
+  <section|v1.2.0-alpha8>
+
+  <\wide-tabular>
+    <tformat|<cwith|2|2|1|1|cell-valign|c>|<cwith|1|1|1|1|cell-valign|B>|<table|<row|<\cell>
+      <dlink|5>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Documentation in markdown format for users and developers
+    </cell>>|<row|<\cell>
+      <dlink|8>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake integration for packaging on Ubuntu/Windows/macOS
+    </cell>>|<row|<\cell>
+      <dlink|15>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      L3 Kernel
+    </cell>>|<row|<\cell>
+      <dlink|17>
+    </cell>|<\cell>
+      jinkaimori
+    </cell>|<\cell>
+      Unicode related issues
+    </cell>>>>
+  </wide-tabular>
+
   <section|v1.2.0-alpha7>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|1|1|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|2|2|1|1|cell-valign|B>|<cwith|4|4|1|1|cell-valign|b>|<table|<row|<\cell>
+      <dlink|3>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake integration for building and testing
+    </cell>>|<row|<\cell>
       <dlink|5>
     </cell>|<\cell>
       Darcy
@@ -39,15 +69,9 @@
     </cell>>|<row|<\cell>
       <dlink|14>
     </cell>|<\cell>
-      Darcy
+      OSPP Students
     </cell>|<\cell>
       Unit Tests for OSPP Students
-    </cell>>|<row|<\cell>
-      <dlink|15>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      L3 Kernel
     </cell>>|<row|<\cell>
       <dlink|16>
     </cell>|<\cell>
