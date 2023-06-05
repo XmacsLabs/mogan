@@ -29,12 +29,6 @@
          (a* (url-append (unix->url a) "dummy")))
     (cond ((string-starts? name p)
            (url->unix (url-delta p* (unix->url name))))
-          ((and (string-starts? name a)
-                (string-starts? t "thumbnail-"))
-           (let* ((t* (string-drop t 10))
-                  (d (url-delta a* (unix->url name)))
-                  (d* (url-relative d (unix->url t*))))
-             (url->unix (url-append "tmfs://artwork" d*))))
           (else u))))
 
 (define (decode-pattern-name key s)
@@ -45,12 +39,6 @@
          (artw "$TEXMACS_PATH/misc/dummy"))
     (cond ((not (url-rooted? name))
            (url-relative base name))
-          ((and (string? s) (string-starts? s "tmfs://artwork/"))
-           (let* ((u (url->unix (string-drop s 15)))
-                  (dir (url-head u))
-                  (tn (string-append "thumbnail-" (url->unix (url-tail u))))
-                  (file (url-append dir (unix->url tn))))
-             (url-relative artw file)))
           (else name))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

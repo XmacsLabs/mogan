@@ -98,7 +98,6 @@
 (use-modules (utils library smart-table))
 (use-modules (utils plugins plugin-convert))
 (use-modules (utils misc markup-funcs))
-(use-modules (utils misc artwork))
 (use-modules (utils handwriting handwriting))
 (lazy-tmfs-handler (utils automate auto-tmfs) automate)
 (lazy-define (utils automate auto-tmfs) auto-load-help)
