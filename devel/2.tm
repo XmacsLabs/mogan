@@ -116,6 +116,24 @@
       Darcy
     </cell>|<\cell>
       S7: upgrade from 9.12 to 10.5
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <\dlink>
+        2_14
+      </dlink>
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Use lua to generate s7 glue
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <todo|2_15>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      Optimize generated s7 glue
     </cell>>>>
   </wide-tabular>
 
