@@ -70,7 +70,7 @@ if not is_plat("wasm") then
     add_requires("nowide_standalone 11.2.0", {system=false})
 end
 
-local XMACS_VERSION="1.1.3-rc1"
+local XMACS_VERSION="1.1.3"
 local INSTALL_DIR="build/package"
 
 local TEXMACS_VERSION = "2.1.2"
