@@ -32,6 +32,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; The Tools menu
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define (need-word-count)
+    (let ((lang (get-document-language)))
+        (and 
+            (!= lang "chinese")
+            (!= lang "korean")
+            (!= lang "japanese"))))
 
 (menu-bind tools-menu
   (-> "Macros"
@@ -60,7 +66,8 @@
       (link project-manage-menu))
   (-> "Statistics"
       ("Count characters" (show-character-count))
-      ("Count words" (show-word-count))
+      (when (need-word-count)
+        ("Count words" (show-word-count)))
       ("Count lines" (show-line-count)))
   ---
   ("Create web site" (open-website-builder))

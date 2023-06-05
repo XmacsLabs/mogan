@@ -100,4 +100,5 @@
   (regtest-tm-convert)
   (regtest-generic)
   (regtest-fonts)
+  (regtest-tm-tools)
 )
