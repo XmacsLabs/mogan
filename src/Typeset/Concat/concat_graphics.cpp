@@ -500,6 +500,9 @@ gen_arc_points (array<point> a) {
     a_[2]= center-vec_s;
     return a_;
   }
+  start= a[0];
+  center= a[1];
+  vec_s= start-center;
   point end= a[2];
   point vec_e= end-center;
   vec_e= vec_e*(r1/norm(vec_e));
