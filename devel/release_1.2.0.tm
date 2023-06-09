@@ -21,10 +21,16 @@
     </cell>>>>
   </wide-tabular>
 
-  <section|v1.2.0-alpha8>
+  <section|v1.2.0-alpha9>
 
   <\wide-tabular>
-    <tformat|<cwith|2|2|1|1|cell-valign|c>|<cwith|1|1|1|1|cell-valign|B>|<table|<row|<\cell>
+    <tformat|<cwith|2|2|1|1|cell-valign|B>|<table|<row|<\cell>
+      <dlink|2>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7 Scheme Integration
+    </cell>>|<row|<\cell>
       <dlink|5>
     </cell>|<\cell>
       Darcy
@@ -42,6 +48,42 @@
       Darcy
     </cell>|<\cell>
       L3 Kernel
+    </cell>>>>
+  </wide-tabular>
+
+  <section|v1.2.0-alpha8>
+
+  <\wide-tabular>
+    <tformat|<cwith|3|3|1|1|cell-valign|B>|<cwith|4|4|1|1|cell-valign|B>|<table|<row|<\cell>
+      <dlink|3>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake integration for building and testing
+    </cell>>|<row|<\cell>
+      <dlink|6>
+    </cell>|<\cell>
+      jinkaimori
+    </cell>|<\cell>
+      Avoid retrieving large pictures from texmacs website
+    </cell>>|<row|<\cell>
+      <dlink|5>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Documentation in markdown format for users and developers
+    </cell>>|<row|<\cell>
+      <dlink|8>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake integration for packaging on Ubuntu/Windows/macOS
+    </cell>>|<row|<\cell>
+      <dlink|14>
+    </cell>|<\cell>
+      OSPP Students
+    </cell>|<\cell>
+      Unit Tests for OSPP Students
     </cell>>|<row|<\cell>
       <dlink|17>
     </cell>|<\cell>
