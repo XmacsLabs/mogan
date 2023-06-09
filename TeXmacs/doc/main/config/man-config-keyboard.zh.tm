@@ -1,6 +1,6 @@
-<TeXmacs|1.99.4>
+<TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|chinese>>
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <\tmdoc-title>
@@ -93,9 +93,9 @@
 
   <paragraph*|\<#7528\>\<#6237\>\<#81EA\>\<#5B9A\>\<#4E49\>\<#5FEB\>\<#6377\>\<#952E\>>
 
-  <TeXmacs>\<#9ED8\>\<#8BA4\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>\<#4E0D\>\<#5408\>\<#4F60\>\<#7684\>\<#5FC3\>\<#610F\>\<#65F6\>\<#FF0C\>\<#4F60\>\<#8FD8\>\<#53EF\>\<#4EE5\><hlink|\<#914D\>\<#7F6E\>\<#4F60\>\<#81EA\>\<#5DF1\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>|../scheme/man-keyboard.zh.tm>.
+  <TeXmacs>\<#9ED8\>\<#8BA4\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>\<#4E0D\>\<#5408\>\<#4F60\>\<#7684\>\<#5FC3\>\<#610F\>\<#65F6\>\<#FF0C\>\<#4F60\>\<#8FD8\>\<#53EF\>\<#4EE5\><hlink|\<#914D\>\<#7F6E\>\<#4F60\>\<#81EA\>\<#5DF1\>\<#7684\>\<#5FEB\>\<#6377\>\<#952E\>|../scheme/man-custom-keyboard.zh.tm>.
 
-  <tmdoc-copyright|1998--2002|Joris van der Hoeven>
+  <tmdoc-copyright|1998\U2023|Joris van der Hoeven|\<#6C88\>\<#8FBE\>>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
