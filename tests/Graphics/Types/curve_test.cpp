@@ -40,17 +40,17 @@ TestCurve::test_segment () {
 
 /**
  * nr_components(): Returns the number n of line segments in the curve.
- * evaluate(): returns the point coordinates on the curve whose parameter value is t. 
- *          Among them, according to the value of t, 
- *          find the corresponding line segment on the curve, 
- *          and calculate the corresponding point coordinates on the line segment.
- * rectify_cumul(): Decompose the curve into segments and add the end point of 
- *           each segment to the point array cum.
- * bound(): Calculates the distance of the closest point on the curve to a point with parameter value t.
- * curvature(): Calculates the curvature on the curve from a point 
- *          with parameter value t1 to a point with parameter value t2. 
- *          In this class, this function is implemented to return positive infinity.
-*/
+ * evaluate(): returns the point coordinates on the curve whose parameter value
+ * is t. Among them, according to the value of t, find the corresponding line
+ * segment on the curve, and calculate the corresponding point coordinates on
+ * the line segment. rectify_cumul(): Decompose the curve into segments and add
+ * the end point of each segment to the point array cum. bound(): Calculates the
+ * distance of the closest point on the curve to a point with parameter value t.
+ * curvature(): Calculates the curvature on the curve from a point
+ *          with parameter value t1 to a point with parameter value t2.
+ *          In this class, this function is implemented to return positive
+ * infinity.
+ */
 void
 TestCurve::test_poly_segment () {
   array<point> a (point (1, 1), point (2, 2), point (3, 3));
@@ -63,9 +63,9 @@ TestCurve::test_poly_segment () {
   for (int i= 0; i < 2; i++) {
     QVERIFY (norm (cum[i] - point (i + 2, i + 2)) < 1e-6);
   }
-  bool _d;
+  bool  _d;
   point d= b->grad (1.5, _d);
-  QVERIFY(norm(d-point(2,2)) < 1e-6);
+  QVERIFY (norm (d - point (2, 2)) < 1e-6);
 }
 
 QTEST_MAIN (TestCurve)
