@@ -35,7 +35,7 @@
     </cell>|<\cell>
       dic entries as part of the natural language plugin
     </cell>>|<row|<\cell>
-      19_4
+      <dlink|19_4>
     </cell>|<\cell>
       Bug
     </cell>|<\cell>
