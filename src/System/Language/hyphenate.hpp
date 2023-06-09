@@ -26,4 +26,6 @@ void std_hyphenate (string s, int after, string& left, string& right, int pen);
 void std_hyphenate (string s, int after, string& left, string& right, int pen,
                     bool utf8);
 
+void goto_next_char (string s, int &i, bool utf8);
+
 #endif // defined HYPHENATE_H
