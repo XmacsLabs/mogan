@@ -24,7 +24,7 @@
   <section|v1.2.0-alpha9>
 
   <\wide-tabular>
-    <tformat|<cwith|2|2|1|1|cell-valign|B>|<table|<row|<\cell>
+    <tformat|<cwith|2|2|1|1|cell-valign|B>|<cwith|2|2|2|2|cell-valign|b>|<table|<row|<\cell>
       <dlink|2>
     </cell>|<\cell>
       Darcy
@@ -37,6 +37,12 @@
     </cell>|<\cell>
       Documentation in markdown format for users and developers
     </cell>>|<row|<\cell>
+      <dlink|6>
+    </cell>|<\cell>
+      jinkaimori
+    </cell>|<\cell>
+      Avoid retrieving large pictures from texmacs website
+    </cell>>|<row|<\cell>
       <dlink|8>
     </cell>|<\cell>
       Darcy
@@ -48,6 +54,18 @@
       Darcy
     </cell>|<\cell>
       L3 Kernel
+    </cell>>|<row|<\cell>
+      <dlink|19>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Natual language related issues
+    </cell>>|<row|<\cell>
+      <dlink|20>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Editor related issues
     </cell>>>>
   </wide-tabular>
 
