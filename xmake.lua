@@ -722,8 +722,8 @@ end
 
 
 for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
-    if string.sub(filepath, 1, string.len("tests/Kernel")) ~= "tests/Kernel"
-       and string.sub(filepath, 1, string.len("tests/System")) ~= "tests/System" then
+    srcdir = path.join("src", table.unpack(path.split(path.directory(filepath)),2))
+    if (l1_includedirs[srcdir] == nil) and (l2_includedirs[srcdir] == nil) then
         local testname = path.basename(filepath) 
         target(testname) do 
             add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
