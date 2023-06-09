@@ -88,11 +88,18 @@ text_language_rep::advance (tree t, int& pos) {
     return &tp_normal_rep;
   }
 
-  if (s[pos] == '<') {
+  if (s[pos] == '<' && !test (s, pos, "<#")) {
     while ((pos < N (s)) && (s[pos] != '>'))
       pos++;
     if (pos < N (s)) pos++;
     return &tp_normal_rep;
+  }
+
+  if (s[pos] == '<' && test (s, pos, "<#")) {
+    int start= pos;
+    tm_char_forwards (s, pos);
+    string c= s (start, pos);
+    return &tp_cjk_normal_rep;
   }
 
   pos++;
