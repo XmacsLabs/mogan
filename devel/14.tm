@@ -58,7 +58,7 @@
     </cell>|<\cell>
       14_5
     </cell>|<\cell>
-      \;
+      \<#53F6\>\<#7530\>\<#946B\>
     </cell>|<\cell>
       several (\<gtr\>3) unit tests for <cpp|curve>
     </cell>>|<row|<\cell>
