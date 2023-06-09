@@ -66,15 +66,12 @@
                         (remove-user-shortcut sh)
                         (refresh-now "shortcuts-list")))
             // //
-            ("Apply" (and-with sh (get-shortcut u)
+            ("Add" (and-with sh (get-shortcut u)
                        (set! cur-sh sh)
                        (set-user-shortcut sh cur-cmd)
                        (refresh-now "shortcuts-list")))
             // //
-            ("Ok" (begin
-                    (and-with sh (get-shortcut u)
-                      (set-user-shortcut sh cur-cmd))
-                    (quit)))))))))
+            ("Quit" (begin (quit)))))))))
 
 (tm-define (open-shortcuts-editor . opt)
   (:interactive #t)
