@@ -48,6 +48,14 @@
       Darcy
     </cell>|<\cell>
       Script to run integration tests
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      8_6
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      get OS and CPU info via Qt
     </cell>>>>
   </wide-tabular>
 
