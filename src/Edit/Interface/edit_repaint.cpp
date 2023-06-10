@@ -202,11 +202,54 @@ edit_interface_rep::draw_graphics (renderer ren) {
   }
 }
 
+void draw_keys_cjk (renderer ren, rectangle r, string ch,int &base_x, int &base_y) {
+  // Only support Chinese for now
+  tree t= tuple (default_chinese_font_name(), "rm", "medium", "right");
+  t << tree ("14") << tree ("600");
+  font fn= find_font (t);
+
+  fn->draw (ren, ch, r->x1 + base_x, r->y1 + base_y);
+
+  metric ex;
+  fn->get_extents (ch, ex);
+  base_x= base_x + ex->x2 - ex->x1;
+}
+
+void draw_keys_sub (renderer ren, rectangle r, string ns, int &base_x, int &base_y) {
+  // Find the right font to use
+  tree t;
+  if (use_macos_fonts ()) {
+    t= tuple ("apple-lucida", "ss", "medium", "right");
+  }
+  else {
+    t= tuple ("pagella", "rm", "medium", "right");
+  }
+  t << tree ("14") << tree ("600");
+  font fn= find_font (t);
+
+  // SI dp= 25 * pixel;
+  // if ((ex->x2 - ex->x1 + dp) > (r->x2 - r->x1))
+  //   dx= r->x2 - r->x1 + ex->x1 - ex->x2 - dp;
+  fn->draw (ren, ns, r->x1 + base_x, r->y1 + base_y);
+
+  metric ex;
+  fn->get_extents (ns, ex);
+  base_x= base_x + ex->x2 - ex->x1;
+}
+
 void
 edit_interface_rep::draw_keys (renderer ren) {
-  if (kbd_show_keys && got_focus && N(kbd_shown_keys) > 0 &&
+  if (kbd_show_keys &&
+      got_focus &&
+      N(kbd_shown_keys) > 0 &&
       !is_nil (keys_rects) &&
       vy2 - vy1 > 3 * (keys_rects->item->y2 - keys_rects->item->y1)) {
+    // Init renderer and rectangle
+    ren->set_background (rgb_color (240, 224, 208));
+    rectangle r= keys_rects->item;
+    ren->clear (r->x1, r->y1, r->x2, r->y2);
+    ren->set_pencil (pencil (rgb_color (0, 0, 64)));
+
     string s;
     for (int i=0; i<N(kbd_shown_keys); i++) {
       if (i>0) s << " ";
@@ -214,6 +257,10 @@ edit_interface_rep::draw_keys (renderer ren) {
     }
     tree rew= get_server () -> kbd_system_rewrite (s);
     if (!is_concat (rew)) rew= tree (CONCAT, rew);
+
+    int base_x= (r->x2 - r->x1) / 3;
+    int base_y= (r->y2 - r->y1) / 3;
+
     string ns;
     for (int i=0; i<N(rew); i++) {
       tree t= rew[i];
@@ -221,32 +268,19 @@ edit_interface_rep::draw_keys (renderer ren) {
         t= t[N(t)-1];
       if (is_atomic (t)) {
         if (N(ns) != 0) ns << "  ";
-        ns << t->label;
+        if (is_cjk_unified_ideographs(t->label)) {
+          draw_keys_sub (ren, r, ns, base_x, base_y);
+          // Clear it after the drawing
+          ns= "";
+          draw_keys_cjk (ren, r, t->label, base_x, base_y);
+        } else {
+          ns << t->label;
+        }
       }
     }
-    ren->set_background (rgb_color (240, 224, 208));
-    rectangle r= keys_rects->item;
-    ren->clear (r->x1, r->y1, r->x2, r->y2);
-    font fn;
-    if (use_macos_fonts ()) {
-      tree t= tuple ("apple-lucida", "ss", "medium", "right");
-      t << tree ("14") << tree ("600");
-      fn= find_font (t);
+    if (!is_empty(ns)) {
+      draw_keys_sub (ren, r, ns, base_x, base_y);
     }
-    else {
-      tree t= tuple ("pagella", "rm", "medium", "right");
-      t << tree ("14") << tree ("600");
-      fn= find_font (t);
-    }
-    metric ex;
-    fn->get_extents (ns, ex);
-    SI dx= (r->x2 - r->x1 + ex->x1 - ex->x2) >> 1;
-    SI dy= (r->y2 - r->y1) / 3;
-    SI dp= 25 * pixel;
-    if ((ex->x2 - ex->x1 + dp) > (r->x2 - r->x1))
-      dx= r->x2 - r->x1 + ex->x1 - ex->x2 - dp;
-    ren->set_pencil (pencil (rgb_color (0, 0, 64)));
-    fn->draw (ren, ns, r->x1 + dx, r->y1 + dy);
   }
 }
 
