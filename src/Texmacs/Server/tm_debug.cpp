@@ -40,13 +40,11 @@ get_system_information () {
     << BUILD_USER << "\n";
   r << "  Building date    : "
     << BUILD_DATE << "\n";
-  // r << "  Operating system : "
-  //   << HOST_OS << "\n";
-  // r << "  Vendor           : "
-  //   << HOST_VENDOR << "\n";
-  // r << "  Processor        : "
-  //   << HOST_CPU << "\n";
 #ifndef KERNEL_L2
+  r << "  Operating system : "
+    << get_pretty_os_name () << "\n";
+  r << "  Processor        : "
+    << get_current_cpu_arch () << "\n";
   r << "  Crash date       : "
     << var_eval_system ("date") << "\n";
 #endif
@@ -144,6 +142,7 @@ get_crash_report (const char* msg) {
 #ifdef KERNEL_L2
     << "\n" << get_system_information ();
 #else
+    << "\n" << get_system_information ()
     << "\n" << get_editor_status_report ()
     << "\n" << get_stacktrace ();
 #endif
