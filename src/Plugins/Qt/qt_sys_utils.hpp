@@ -14,6 +14,10 @@
 
 #include "string.hpp"
 
+
+string qt_get_current_cpu_arch ();
+string qt_get_pretty_os_name ();
+
 /* exitcode= qt_system (command, result);
  *
  * Execute /command/ in the local command interpreter. Return all

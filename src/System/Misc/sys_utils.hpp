@@ -17,6 +17,9 @@
 
 extern int script_status; // 0: never accept, 1: prompt, 2: always accept
 
+string get_current_cpu_arch ();
+string get_pretty_os_name ();
+
 int    system (string s);
 int    system (string s, string &r);
 int    system (string s, string &r, string& e);
@@ -29,7 +32,6 @@ array<string> evaluate_system (array<string> arg,
 
 string get_env (string var);
 void   set_env (string var, string with);
-int    os_version ();
 string get_stacktrace (unsigned int max_frames= 127);
 
 url get_texmacs_path ();

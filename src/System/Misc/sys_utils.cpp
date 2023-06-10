@@ -9,20 +9,41 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "config.h"
 #include "sys_utils.hpp"
 #include "file.hpp"
 #include "tree.hpp"
 #include "parse_string.hpp"
 
 #ifdef OS_MINGW
-#include "Qt/qt_sys_utils.hpp"
 #include "Windows/mingw_sys_utils.hpp"
 #include "Windows/win-utf8-compat.hpp"
 #else
 #include "Unix/unix_sys_utils.hpp"
 #endif
 
+#ifdef QTTEXMACS
+#include "Qt/qt_sys_utils.hpp"
+#endif
+
 int script_status = 1;
+
+
+string get_current_cpu_arch () {
+#ifdef QTTEXMACS
+  return qt_get_current_cpu_arch ();
+#else
+  return "unknown";
+#endif
+}
+
+string get_pretty_os_name () {
+#ifdef QTTEXMACS
+  return qt_get_pretty_os_name ();
+#else
+  return "unknown";
+#endif
+}
 
 /******************************************************************************
 * System functions
@@ -31,21 +52,27 @@ int script_status = 1;
 int
 system (string s, string& result, string& error) {
 #if defined (OS_MINGW)
-  int r= qt_system (s, result, error);
+#ifndef KERNEL_L2
+  return qt_system (s, result, error);
 #else
-  int r= unix_system (s, result, error);
+  return -1;
 #endif
-  return r;
+#else
+  return unix_system (s, result, error);
+#endif
 }
 
 int
 system (string s, string& result) {
 #if defined (OS_MINGW)
-  int r= qt_system (s, result);
+#ifndef KERNEL_L2
+  return qt_system (s, result);
 #else
-  int r= unix_system (s, result);
+  return -1;
 #endif
-  return r;
+#else
+  return unix_system (s, result);
+#endif
 }
 
 int
@@ -59,8 +86,11 @@ system (string s) {
   }
   else {
 #if defined (OS_MINGW)
-    // if (starts (s, "convert ")) return 1;
-    return qt_system (s);
+#ifndef KERNEL_L2
+  return qt_system (s);
+#else
+  return -1;
+#endif
 #else
     return unix_system (s);
 #endif

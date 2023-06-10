@@ -10,12 +10,23 @@
 ******************************************************************************/
 
 #include "qt_sys_utils.hpp"
+#include "qt_utilities.hpp"
 #include "basic.hpp"
 #include "string.hpp"
 #include "tm_debug.hpp"
 
 #include <QProcess>
 #include <QString>
+#include <QSysInfo>
+
+
+string qt_get_current_cpu_arch () {
+  return from_qstring (QSysInfo::currentCpuArchitecture ());
+}
+
+string qt_get_pretty_os_name () {
+  return from_qstring (QSysInfo::prettyProductName ());
+}
 
 static void
 ReadOutputs(QProcess& p, string& o, string& e) {
