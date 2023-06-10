@@ -52,7 +52,11 @@ string get_pretty_os_name () {
 int
 system (string s, string& result, string& error) {
 #if defined (OS_MINGW)
+#ifndef KERNEL_L2
   int r= qt_system (s, result, error);
+#else
+  return -1;
+#endif
 #else
   int r= unix_system (s, result, error);
 #endif
@@ -62,7 +66,11 @@ system (string s, string& result, string& error) {
 int
 system (string s, string& result) {
 #if defined (OS_MINGW)
+#ifndef KERNEL_L2
   int r= qt_system (s, result);
+#else
+  return -1;
+#endif
 #else
   int r= unix_system (s, result);
 #endif
@@ -80,8 +88,11 @@ system (string s) {
   }
   else {
 #if defined (OS_MINGW)
-    // if (starts (s, "convert ")) return 1;
-    return qt_system (s);
+#ifndef KERNEL_L2
+  return qt_system (s);
+#else
+  return -1;
+#endif
 #else
     return unix_system (s);
 #endif
