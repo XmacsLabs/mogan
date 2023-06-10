@@ -53,28 +53,26 @@ int
 system (string s, string& result, string& error) {
 #if defined (OS_MINGW)
 #ifndef KERNEL_L2
-  int r= qt_system (s, result, error);
+  return qt_system (s, result, error);
 #else
   return -1;
 #endif
 #else
-  int r= unix_system (s, result, error);
+  return unix_system (s, result, error);
 #endif
-  return r;
 }
 
 int
 system (string s, string& result) {
 #if defined (OS_MINGW)
 #ifndef KERNEL_L2
-  int r= qt_system (s, result);
+  return qt_system (s, result);
 #else
   return -1;
 #endif
 #else
-  int r= unix_system (s, result);
+  return unix_system (s, result);
 #endif
-  return r;
 }
 
 int
