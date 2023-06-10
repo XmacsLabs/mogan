@@ -16,6 +16,7 @@ function main()
         binding_object = "",
         initializer_name = "initialize_gen_l1",
         glues = {
+            -- src/Kernel/Types/string.hpp
             {
                 scm_name = "cpp-string-number?",
                 cpp_name = "is_double",
@@ -24,6 +25,7 @@ function main()
                     "string"
                 }
             },
+            -- src/Kernel/Types/analyze.hpp
             {
                 scm_name = "string-occurs?",
                 cpp_name = "occurs",

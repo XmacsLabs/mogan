@@ -1200,22 +1200,6 @@ function main()
                 }
             },
             {
-                scm_name = "tree-atomic?",
-                cpp_name = "is_atomic",
-                ret_type = "bool",
-                arg_list = {
-                    "tree"
-                }
-            },
-            {
-                scm_name = "tree-compound?",
-                cpp_name = "is_compound",
-                ret_type = "bool",
-                arg_list = {
-                    "tree"
-                }
-            },
-            {
                 scm_name = "tree-label",
                 cpp_name = "L",
                 ret_type = "tree_label",
@@ -1373,14 +1357,6 @@ function main()
                 scm_name = "tree-multi-paragraph?",
                 cpp_name = "is_multi_paragraph",
                 ret_type = "bool",
-                arg_list = {
-                    "tree"
-                }
-            },
-            {
-                scm_name = "tree-simplify",
-                cpp_name = "simplify_correct",
-                ret_type = "tree",
                 arg_list = {
                     "tree"
                 }
@@ -1551,14 +1527,6 @@ function main()
                 ret_type = "tree",
                 arg_list = {
                     "url"
-                }
-            },
-            {
-                scm_name = "tree-as-string",
-                cpp_name = "tree_as_string",
-                ret_type = "string",
-                arg_list = {
-                    "content"
                 }
             },
             {
