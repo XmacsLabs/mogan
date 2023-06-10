@@ -589,6 +589,7 @@ string recognize_glyph (array_array_array_double gl);
 #include "new_style.hpp"
 #include "persistent.hpp"
 
+#include "gen_l1.cpp"
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
 #include "glue_server.cpp"
@@ -599,6 +600,7 @@ initialize_glue () {
   
   initialize_glue_l1 ();
   initialize_glue_l2 ();
+  initialize_gen_l1 ();
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();
