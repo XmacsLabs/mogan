@@ -96,12 +96,17 @@ debug_get (string s) {
 #ifdef USE_EXCEPTIONS
 string the_exception;
 string the_report;
-// string get_crash_report (const char* msg);
+
+#ifndef KERNEL_L1
+string get_crash_report (const char* msg);
+#endif
 
 void
 tm_throw (const char* msg) {
   the_exception= msg;
-  // the_report   = get_crash_report (msg);
+#ifndef KERNEL_L1
+  the_report   = get_crash_report (msg);
+#endif
   cout << "Throwing " << msg << LF;
   cout << "-------------------------------------------------\n";
   cout << the_report << LF;
