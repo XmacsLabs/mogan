@@ -15,14 +15,34 @@
 #include "parse_string.hpp"
 
 #ifdef OS_MINGW
-#include "Qt/qt_sys_utils.hpp"
 #include "Windows/mingw_sys_utils.hpp"
 #include "Windows/win-utf8-compat.hpp"
 #else
 #include "Unix/unix_sys_utils.hpp"
 #endif
 
+#ifdef QTTEXMACS
+#include "Qt/qt_sys_utils.hpp"
+#endif
+
 int script_status = 1;
+
+
+string get_current_cpu_arch () {
+#ifdef QTTEXMACS
+  return qt_get_current_cpu_arch ();
+#else
+  return "unknown";
+#endif
+}
+
+string get_pretty_os_name () {
+#ifdef QTTEXMACS
+  return qt_get_pretty_os_name ();
+#else
+  return "unknown";
+#endif
+}
 
 /******************************************************************************
 * System functions
