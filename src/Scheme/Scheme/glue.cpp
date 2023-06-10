@@ -589,9 +589,9 @@ string recognize_glyph (array_array_array_double gl);
 #include "new_style.hpp"
 #include "persistent.hpp"
 
-#include "../Glue/glue_basic.cpp"
-#include "../Glue/glue_editor.cpp"
-#include "../Glue/glue_server.cpp"
+#include "glue_basic.cpp"
+#include "glue_editor.cpp"
+#include "glue_server.cpp"
 
 void
 initialize_glue () {
