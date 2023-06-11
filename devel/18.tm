@@ -15,7 +15,7 @@
     <tformat|<cwith|1|1|4|4|cell-valign|b>|<table|<row|<\cell>
       Doc
     </cell>|<\cell>
-      18_1
+      <dlink|18_1>
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>

@@ -1,33 +1,33 @@
-<TeXmacs|1.0.4.5>
+<TeXmacs|2.1.2>
 
-<style|tmdoc>
+<style|<tuple|tmdoc|german|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|Bewegliche Objekte>
 
-  Bewegliche Objekte dürfen auf der Seite unabhängig vom Haupt-Text
+  Bewegliche Objekte dï¿½rfen auf der Seite unabhï¿½ngig vom Haupt-Text
   positioniert werden. Normalerweise enthalten sie Abbildungen oder Tabellen,
-  die zu groÿ sind, um leicht in den Haupt-Text zu passen. Ein solches Objekt
-  wird mit <menu|Format|Page insertion|Floating object> erzeugt.
+  die zu groï¿½ sind, um leicht in den Haupt-Text zu passen. Ein solches Objekt
+  wird mit <menu|Insert|Note|Floating object> erzeugt.
 
-  Sie können aber auch ein bewegliches Objekt, erstellen, das eine Abbildung
-  oder eine Tabelle, enthält. Dazu dienen die Befehle <menu|Format|Page
-  insertion|Floating figure> bzw. <menu|Format|Page insertion|Floating
-  table>. Manchmal will man aber mehrere kleine Abbildungen oder Tabellen in
-  einem beweglichen Objekt unterbringen. Man kann dies mit den Befehlen
+  Sie kï¿½nnen aber auch ein bewegliches Objekt, erstellen, das eine Abbildung
+  oder eine Tabelle, enthï¿½lt. Dazu dienen die Befehle
+  <menu|Insert|Note|Floating figure> bzw. <menu|Insert|Note|Floating table>.
+  Manchmal will man aber mehrere kleine Abbildungen oder Tabellen in einem
+  beweglichen Objekt unterbringen. Man kann dies mit den Befehlen
   <menu|Insert|Image|Small figure> bzw. <menu|Insert|Table|Small table>.
 
-  Nachdem Sie ein bewegliches Objekt erzeugt haben, können Sie im gewissen
-  Umfang steuern, wo dieses Objekt eingefügt werden soll. Dazu dient das Menü
-  \ <menu|Format|Page insertion|Position float>. Dazu müssen Sie sich aber
-  innerhalb des beweglichen Objektes befinden. Sie können festlegen, dass das
-  bewegliche Objekt \R<localize|top>`` auf der Seite, \R<localize|bottom>``,
-  \ \R<localize|here>`` oder auf \R<localize|other pages>`` erscheint. Die
-  Voreinstellung ist überall. Ein bewegliches Objekt wird, sofern es nicht
+  Nachdem Sie ein bewegliches Objekt erzeugt haben, kï¿½nnen Sie im gewissen
+  Umfang steuern, wo dieses Objekt eingefï¿½gt werden soll. Dazu dient das Menï¿½
+  \ <menu|Focus|Allowed positions>. Dazu mï¿½ssen Sie sich aber innerhalb des
+  beweglichen Objektes befinden. Sie kï¿½nnen festlegen, dass das bewegliche
+  Objekt \R<localize|top>\P auf der Seite, \R<localize|bottom>\P,
+  \ \R<localize|here>\P oder auf \R<localize|other pages>\P erscheint. Die
+  Voreinstellung ist ï¿½berall. Ein bewegliches Objekt wird, sofern es nicht
   alleine auf einer Seite steht, nie weniger als drei Zeilen von der oberen
   oder der unteren Seitengrenze entfernt sein.
 
-  <tmdoc-copyright|1998--2002|Joris van der Hoeven>
+  <tmdoc-copyright|1998\U2002|Joris van der Hoeven>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -37,8 +37,5 @@
   Documentation License".>
 </body>
 
-<\initial>
-  <\collection>
-    <associate|language|german>
-  </collection>
-</initial>
+<initial|<\collection>
+</collection>>
