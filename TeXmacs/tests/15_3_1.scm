@@ -9,4 +9,4 @@
 (tm-define (test_15_3_1)
   (let ((n (+ (test-cpp-string-number?))))
     (display* "Total: " (object->string n) " tests.\n")
-    (display "Test suite of 12_1: ok\n")))
+    (display "Test suite of 15_3_1: ok\n")))
