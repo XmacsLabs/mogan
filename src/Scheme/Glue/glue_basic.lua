@@ -2805,14 +2805,6 @@ function main()
             
               -- routines for strings
             {
-                scm_name = "cpp-string-number?",
-                cpp_name = "is_double",
-                ret_type = "bool",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
                 scm_name = "string-occurs?",
                 cpp_name = "occurs",
                 ret_type = "bool",

@@ -36,6 +36,30 @@
     </cell>|<\cell>
       Initial L3 Kernel
     </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_1
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_string
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_2
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_tree
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_3
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_analyze
+    </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
       15_4
