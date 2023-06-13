@@ -573,7 +573,7 @@ target("mogan") do
     on_config(function (target) 
         local glue_path = path.join("src","Scheme","Glue")
         local known_glue_list = {
-            "glue_string", "glue_analyze", "glue_url",
+            "glue_string", "glue_analyze", "glue_url", "glue_tree",
             "glue_basic", "glue_editor", "glue_server"
         }
         local build_glue = import("build_glue", {rootdir = glue_path})
