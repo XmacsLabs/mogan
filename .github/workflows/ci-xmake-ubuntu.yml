@@ -74,7 +74,7 @@ jobs:
         env:
           QT_QPA_PLATFORM: offscreen
       - name: install
-        run: xmake install -o build/package mogan_install
+        run: xmake install -o /home/runner/work/mogan/build/package mogan_install
       - name: integration test
         run: bin/test_all_integrated
         env:
