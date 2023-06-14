@@ -26,7 +26,6 @@
 #include "editor.hpp"
 #include "universal.hpp"
 #include "convert.hpp"
-#include "file.hpp"
 #include "locale.hpp"
 #include "iterator.hpp"
 #include "Freetype/tt_tools.hpp"
@@ -374,10 +373,6 @@ tmscm_to_promise_widget (tmscm o) {
 }
 
 
-void string_save (string s, url u) { (void) save_string (u, s); }
-string string_load (url u) {
-  string s; (void) load_string (u, s, false); return s; }
-void string_append_to_file (string s, url u) { (void) append_string (u, s); }
 url url_ref (url u, int i) { return u[i]; }
 
 
@@ -594,10 +589,13 @@ string recognize_glyph (array_array_array_double gl);
 #include "analyze.hpp"
 #include "glue_analyze.cpp"
 
+#include "glue_tree.cpp"
+
 #include "url.hpp"
 #include "glue_url.cpp"
 
-#include "glue_tree.cpp"
+#include "file.hpp"
+#include "glue_file.cpp"
 
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
@@ -611,8 +609,9 @@ initialize_glue () {
   initialize_glue_l2 ();
   initialize_glue_string ();
   initialize_glue_analyze ();
-  initialize_glue_url ();
   initialize_glue_tree ();
+  initialize_glue_url ();
+  initialize_glue_file ();
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();
