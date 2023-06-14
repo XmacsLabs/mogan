@@ -571,13 +571,10 @@ target("mogan") do
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
 
     on_config(function (target) 
-        local glue_path = path.join("src","Scheme","Glue")
-        local known_glue_list = {
-            "glue_string", "glue_analyze", "glue_url", "glue_tree",
-            "glue_basic", "glue_editor", "glue_server"
-        }
+        local glue_path = path.join("src", "Scheme", "Glue")
         local build_glue = import("build_glue", {rootdir = glue_path})
-        for _,glue_name in ipairs(known_glue_list) do
+        for _, filepath in ipairs(os.files("$(projectdir)/src/Scheme/Glue/glue_*.lua")) do
+            glue_name = path.basename(filepath)
             local glue_table = import(glue_name, {rootdir = glue_path})()
             io.writefile(
                 path.join("$(buildir)", glue_name .. ".cpp"),
