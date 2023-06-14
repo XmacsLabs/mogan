@@ -66,7 +66,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      glue_xml
+      glue_path
     </cell>>|<row|<\cell>
       \;
     </cell>|<\cell>
@@ -82,23 +82,15 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      glue_path
+      glue_sys
     </cell>>|<row|<\cell>
-      Chore
+      \;
     </cell>|<\cell>
-      15_4
+      15_3_7
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Unit tests for url in Scheme
-    </cell>>|<row|<\cell>
-      Chore
-    </cell>|<\cell>
-      15_5
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Unit tests for tree in Scheme
+      glue_file
     </cell>>>>
   </wide-tabular>
 
