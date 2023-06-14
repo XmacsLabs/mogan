@@ -22,8 +22,14 @@
  * @return If there are errors, return true, else, return false
  */
 bool load_string (url file_name, string& s, bool fatal);
+string string_load (url u) {
+  string s; (void) load_string (u, s, false); return s; }
+
 bool save_string (url file_name, string s, bool fatal=false);
+void string_save (string s, url u) { (void) save_string (u, s); }
+
 bool append_string (url u, string s, bool fatal= false);
+void string_append_to_file (string s, url u) { (void) append_string (u, s); }
 
 bool is_of_type (url name, string filter);
 bool is_regular (url name);
