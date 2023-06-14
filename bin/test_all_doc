@@ -1,3 +1,0 @@
-#!/bin/bash
-
-xmake run --yes --verbose --diagnosis --group=doc_tests
