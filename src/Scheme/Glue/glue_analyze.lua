@@ -223,6 +223,48 @@ function main()
                 }
             },
             {
+                scm_name = "cpp-string-tokenize",
+                cpp_name = "tokenize",
+                ret_type = "array_string",
+                arg_list = {
+                    "string",
+                    "string"
+                }
+            },
+            {
+                scm_name = "cpp-string-recompose",
+                cpp_name = "recompose",
+                ret_type = "string",
+                arg_list = {
+                    "array_string",
+                    "string"
+                }
+            },
+            {
+                scm_name = "string-trim-spaces-left",
+                cpp_name = "trim_spaces_left",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "string-trim-spaces-right",
+                cpp_name = "trim_spaces_right",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "string-trim-spaces",
+                cpp_name = "trim_spaces",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
                 scm_name = "string-differences",
                 cpp_name = "differences",
                 ret_type = "array_int",

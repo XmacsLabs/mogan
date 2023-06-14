@@ -1671,14 +1671,6 @@ function main()
                 }
             },
             {
-                scm_name = "string-trim-spaces",
-                cpp_name = "trim_spaces",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
                 scm_name = "downgrade-math-letters",
                 cpp_name = "downgrade_math_letters",
                 ret_type = "string",
@@ -1824,24 +1816,6 @@ function main()
                     "string",
                     "bool",
                     "bool"
-                }
-            },
-            {
-                scm_name = "cpp-string-tokenize",
-                cpp_name = "tokenize",
-                ret_type = "array_string",
-                arg_list = {
-                    "string",
-                    "string"
-                }
-            },
-            {
-                scm_name = "cpp-string-recompose",
-                cpp_name = "recompose",
-                ret_type = "string",
-                arg_list = {
-                    "array_string",
-                    "string"
                 }
             },
               
