@@ -558,7 +558,6 @@ string recognize_glyph (array_array_array_double gl);
 #include "file.hpp"
 #include "image_files.hpp"
 #include "web_files.hpp"
-#include "sys_utils.hpp"
 #include "client_server.hpp"
 #include "wencoding.hpp"
 #include "base64.hpp"
@@ -581,7 +580,6 @@ string recognize_glyph (array_array_array_double gl);
 #include "patch.hpp"
 #include "packrat.hpp"
 #include "new_style.hpp"
-#include "persistent.hpp"
 
 #include "string.hpp"
 #include "glue_string.cpp"
@@ -596,6 +594,10 @@ string recognize_glyph (array_array_array_double gl);
 
 #include "file.hpp"
 #include "glue_file.cpp"
+
+#include "persistent.hpp"
+#include "sys_utils.hpp"
+#include "glue_misc.cpp"
 
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
@@ -612,6 +614,7 @@ initialize_glue () {
   initialize_glue_tree ();
   initialize_glue_url ();
   initialize_glue_file ();
+  initialize_glue_misc ();
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();
