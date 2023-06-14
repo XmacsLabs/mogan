@@ -34,6 +34,15 @@ function main()
                 }
             },
             {
+                scm_name = "string-append-to-file",
+                cpp_name = "string_append_to_file",
+                ret_type = "void",
+                arg_list = {
+                    "string",
+                    "url"
+                }
+            },
+            {
                 scm_name = "url-test?",
                 cpp_name = "is_of_type",
                 ret_type = "bool",
@@ -188,6 +197,16 @@ function main()
                 arg_list = {
                     "string",
                     "url"
+                }
+            },
+            {
+                scm_name = "url-search-upwards",
+                cpp_name = "search_file_upwards",
+                ret_type = "url",
+                arg_list = {
+                    "url",
+                    "string",
+                    "array_string"
                 }
             },
         }
