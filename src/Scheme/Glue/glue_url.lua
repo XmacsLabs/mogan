@@ -264,14 +264,6 @@ function main()
                 }
             },
             {
-                scm_name = "url-format",
-                cpp_name = "file_format",
-                ret_type = "string",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
                 scm_name = "url-suffix",
                 cpp_name = "suffix",
                 ret_type = "string",
@@ -446,87 +438,6 @@ function main()
                 arg_list = {
                     "url",
                     "string"
-                }
-            },
-            {
-                scm_name = "url-test?",
-                cpp_name = "is_of_type",
-                ret_type = "bool",
-                arg_list = {
-                    "url",
-                    "string"
-                }
-            },
-            {
-                scm_name = "url-regular?",
-                cpp_name = "is_regular",
-                ret_type = "bool",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
-                scm_name = "url-directory?",
-                cpp_name = "is_directory",
-                ret_type = "bool",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
-                scm_name = "url-link?",
-                cpp_name = "is_symbolic_link",
-                ret_type = "bool",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
-                scm_name = "url-newer?",
-                cpp_name = "is_newer",
-                ret_type = "bool",
-                arg_list = {
-                    "url",
-                    "url"
-                }
-            },
-            {
-                scm_name = "url-size",
-                cpp_name = "file_size",
-                ret_type = "int",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
-                scm_name = "url-last-modified",
-                cpp_name = "last_modified",
-                ret_type = "int",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
-                scm_name = "url-temp",
-                cpp_name = "url_temp",
-                ret_type = "url"
-            },
-            {
-                scm_name = "url-scratch",
-                cpp_name = "url_scratch",
-                ret_type = "url",
-                arg_list = {
-                    "string",
-                    "string",
-                    "int"
-                }
-            },
-            {
-                scm_name = "url-scratch?",
-                cpp_name = "is_scratch",
-                ret_type = "bool",
-                arg_list = {
-                    "url"
                 }
             },
         }

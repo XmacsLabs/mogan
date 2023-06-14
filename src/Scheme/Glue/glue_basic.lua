@@ -3072,63 +3072,12 @@ function main()
                 }
             },
             {
-                scm_name = "system-move",
-                cpp_name = "move",
-                ret_type = "void",
-                arg_list = {
-                    "url",
-                    "url"
-                }
-            },
-            {
-                scm_name = "system-copy",
-                cpp_name = "copy",
-                ret_type = "void",
-                arg_list = {
-                    "url",
-                    "url"
-                }
-            },
-            {
-                scm_name = "system-remove",
-                cpp_name = "remove",
-                ret_type = "void",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
-                scm_name = "system-mkdir",
-                cpp_name = "mkdir",
-                ret_type = "void",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
-                scm_name = "system-rmdir",
-                cpp_name = "rmdir",
-                ret_type = "void",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
                 scm_name = "system-setenv",
                 cpp_name = "set_env",
                 ret_type = "void",
                 arg_list = {
                     "string",
                     "string"
-                }
-            },
-            {
-                scm_name = "system-search-score",
-                cpp_name = "search_score",
-                ret_type = "int",
-                arg_list = {
-                    "url",
-                    "array_string"
                 }
             },
             {
@@ -3147,23 +3096,6 @@ function main()
                 arg_list = {
                     "string",
                     "url",
-                    "url"
-                }
-            },
-            {
-                scm_name = "system-url->string",
-                cpp_name = "sys_concretize",
-                ret_type = "string",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
-                scm_name = "url-grep",
-                cpp_name = "grep",
-                ret_type = "url",
-                arg_list = {
-                    "string",
                     "url"
                 }
             },

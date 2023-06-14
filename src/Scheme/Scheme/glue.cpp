@@ -26,7 +26,6 @@
 #include "editor.hpp"
 #include "universal.hpp"
 #include "convert.hpp"
-#include "file.hpp"
 #include "locale.hpp"
 #include "iterator.hpp"
 #include "Freetype/tt_tools.hpp"
@@ -594,10 +593,13 @@ string recognize_glyph (array_array_array_double gl);
 #include "analyze.hpp"
 #include "glue_analyze.cpp"
 
+#include "glue_tree.cpp"
+
 #include "url.hpp"
 #include "glue_url.cpp"
 
-#include "glue_tree.cpp"
+#include "file.hpp"
+#include "glue_file.cpp"
 
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
