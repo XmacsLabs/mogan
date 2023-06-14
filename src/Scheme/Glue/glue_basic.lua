@@ -1671,54 +1671,6 @@ function main()
                 }
             },
             {
-                scm_name = "unescape-guile",
-                cpp_name = "unescape_guile",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "string-quote",
-                cpp_name = "scm_quote",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "string-unquote",
-                cpp_name = "scm_unquote",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "string-trim-spaces-left",
-                cpp_name = "trim_spaces_left",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "string-trim-spaces-right",
-                cpp_name = "trim_spaces_right",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "string-trim-spaces",
-                cpp_name = "trim_spaces",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
                 scm_name = "downgrade-math-letters",
                 cpp_name = "downgrade_math_letters",
                 ret_type = "string",
@@ -1763,38 +1715,6 @@ function main()
             {
                 scm_name = "cork->sourcecode",
                 cpp_name = "cork_to_sourcecode",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "utf8->cork",
-                cpp_name = "utf8_to_cork",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "cork->utf8",
-                cpp_name = "cork_to_utf8",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "utf8->t2a",
-                cpp_name = "utf8_to_t2a",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "t2a->utf8",
-                cpp_name = "t2a_to_utf8",
                 ret_type = "string",
                 arg_list = {
                     "string"
@@ -1866,67 +1786,6 @@ function main()
                     "bool"
                 }
             },
-            {
-                scm_name = "integer->hexadecimal",
-                cpp_name = "as_hexadecimal",
-                ret_type = "string",
-                arg_list = {
-                    "int"
-                }
-            },
-            {
-                scm_name = "integer->padded-hexadecimal",
-                cpp_name = "as_hexadecimal",
-                ret_type = "string",
-                arg_list = {
-                    "int",
-                    "int"
-                }
-            },
-            {
-                scm_name = "hexadecimal->integer",
-                cpp_name = "from_hexadecimal",
-                ret_type = "int",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "cpp-string-tokenize",
-                cpp_name = "tokenize",
-                ret_type = "array_string",
-                arg_list = {
-                    "string",
-                    "string"
-                }
-            },
-            {
-                scm_name = "cpp-string-recompose",
-                cpp_name = "recompose",
-                ret_type = "string",
-                arg_list = {
-                    "array_string",
-                    "string"
-                }
-            },
-            {
-                scm_name = "string-differences",
-                cpp_name = "differences",
-                ret_type = "array_int",
-                arg_list = {
-                    "string",
-                    "string"
-                }
-            },
-            {
-                scm_name = "string-distance",
-                cpp_name = "distance",
-                ret_type = "int",
-                arg_list = {
-                    "string",
-                    "string"
-                }
-            },
               
             -- Program bracket matching
             {
@@ -1946,92 +1805,6 @@ function main()
                 arg_list = {
                     "path",
                     "string",
-                    "string"
-                }
-            },
-            
-              -- routines for strings in the TeXmacs encoding
-            {
-                scm_name = "string->tmstring",
-                cpp_name = "tm_encode",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "tmstring->string",
-                cpp_name = "tm_decode",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "tmstring-length",
-                cpp_name = "tm_string_length",
-                ret_type = "int",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "tmstring-ref",
-                cpp_name = "tm_forward_access",
-                ret_type = "string",
-                arg_list = {
-                    "string",
-                    "int"
-                }
-            },
-            {
-                scm_name = "tmstring-reverse-ref",
-                cpp_name = "tm_backward_access",
-                ret_type = "string",
-                arg_list = {
-                    "string",
-                    "int"
-                }
-            },
-            {
-                scm_name = "tmstring->list",
-                cpp_name = "tm_tokenize",
-                ret_type = "array_string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "list->tmstring",
-                cpp_name = "tm_recompose",
-                ret_type = "string",
-                arg_list = {
-                    "array_string"
-                }
-            },
-            {
-                scm_name = "string-next",
-                cpp_name = "tm_char_next",
-                ret_type = "int",
-                arg_list = {
-                    "string",
-                    "int"
-                }
-            },
-            {
-                scm_name = "string-previous",
-                cpp_name = "tm_char_previous",
-                ret_type = "int",
-                arg_list = {
-                    "string",
-                    "int"
-                }
-            },
-            {
-                scm_name = "tmstring-split",
-                cpp_name = "tm_string_split",
-                ret_type = "array_string",
-                arg_list = {
                     "string"
                 }
             },
