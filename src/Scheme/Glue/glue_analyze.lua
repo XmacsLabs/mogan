@@ -33,6 +33,31 @@ function main()
                 }
             },
             {
+                scm_name = "integer->hexadecimal",
+                cpp_name = "as_hexadecimal",
+                ret_type = "string",
+                arg_list = {
+                    "int"
+                }
+            },
+            {
+                scm_name = "integer->padded-hexadecimal",
+                cpp_name = "as_hexadecimal",
+                ret_type = "string",
+                arg_list = {
+                    "int",
+                    "int"
+                }
+            },
+            {
+                scm_name = "hexadecimal->integer",
+                cpp_name = "from_hexadecimal",
+                ret_type = "int",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
                 scm_name = "string-occurs?",
                 cpp_name = "occurs",
                 ret_type = "bool",
@@ -67,6 +92,22 @@ function main()
                 arg_list = {
                     "string",
                     "int",
+                    "string"
+                }
+            },
+            {
+                scm_name = "string-quote",
+                cpp_name = "scm_quote",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "string-unquote",
+                cpp_name = "scm_unquote",
+                ret_type = "string",
+                arg_list = {
                     "string"
                 }
             },
@@ -170,6 +211,32 @@ function main()
                 cpp_name = "escape_sh",
                 ret_type = "string",
                 arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "unescape-guile",
+                cpp_name = "unescape_guile",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "string-differences",
+                cpp_name = "differences",
+                ret_type = "array_int",
+                arg_list = {
+                    "string",
+                    "string"
+                }
+            },
+            {
+                scm_name = "string-distance",
+                cpp_name = "distance",
+                ret_type = "int",
+                arg_list = {
+                    "string",
                     "string"
                 }
             },
