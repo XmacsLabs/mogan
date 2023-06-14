@@ -609,8 +609,9 @@ initialize_glue () {
   initialize_glue_l2 ();
   initialize_glue_string ();
   initialize_glue_analyze ();
-  initialize_glue_url ();
   initialize_glue_tree ();
+  initialize_glue_url ();
+  initialize_glue_file ();
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();
