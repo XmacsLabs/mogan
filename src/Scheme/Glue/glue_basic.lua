@@ -227,26 +227,6 @@ function main()
                 ret_type = "string"
             },
             {
-                scm_name = "get-texmacs-path",
-                cpp_name = "get_texmacs_path",
-                ret_type = "url"
-            },
-            {
-                scm_name = "get-texmacs-home-path",
-                cpp_name = "get_texmacs_home_path",
-                ret_type = "url"
-            },
-            {
-                scm_name = "get-user-login",
-                cpp_name = "get_user_login",
-                ret_type = "string"
-            },
-            {
-                scm_name = "get-user-name",
-                cpp_name = "get_user_name",
-                ret_type = "string"
-            },
-            {
                 scm_name = "plugin-list",
                 cpp_name = "plugin_list",
                 ret_type = "scheme_tree"
@@ -265,33 +245,6 @@ function main()
                 ret_type = "bool",
                 arg_list = {
                     "string"
-                }
-            },
-            {
-                scm_name = "eval-system",
-                cpp_name = "eval_system",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "var-eval-system",
-                cpp_name = "var_eval_system",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "evaluate-system",
-                cpp_name = "evaluate_system",
-                ret_type = "array_string",
-                arg_list = {
-                    "array_string",
-                    "array_int",
-                    "array_string",
-                    "array_int"
                 }
             },
             {
@@ -3046,34 +2999,6 @@ function main()
                 }
             },
             {
-                scm_name = "system-setenv",
-                cpp_name = "set_env",
-                ret_type = "void",
-                arg_list = {
-                    "string",
-                    "string"
-                }
-            },
-            {
-                scm_name = "system-1",
-                cpp_name = "system",
-                ret_type = "void",
-                arg_list = {
-                    "string",
-                    "url"
-                }
-            },
-            {
-                scm_name = "system-2",
-                cpp_name = "system",
-                ret_type = "void",
-                arg_list = {
-                    "string",
-                    "url",
-                    "url"
-                }
-            },
-            {
                 scm_name = "picture-cache-reset",
                 cpp_name = "picture_cache_reset",
                 ret_type = "void"
@@ -3090,54 +3015,6 @@ function main()
                 scm_name = "get-file-focus",
                 cpp_name = "get_file_focus",
                 ret_type = "url"
-            },
-            
-              -- Persistent data
-            {
-                scm_name = "persistent-set",
-                cpp_name = "persistent_set",
-                ret_type = "void",
-                arg_list = {
-                    "url",
-                    "string",
-                    "string"
-                }
-            },
-            {
-                scm_name = "persistent-remove",
-                cpp_name = "persistent_reset",
-                ret_type = "void",
-                arg_list = {
-                    "url",
-                    "string"
-                }
-            },
-            {
-                scm_name = "persistent-has?",
-                cpp_name = "persistent_contains",
-                ret_type = "bool",
-                arg_list = {
-                    "url",
-                    "string"
-                }
-            },
-            {
-                scm_name = "persistent-get",
-                cpp_name = "persistent_get",
-                ret_type = "string",
-                arg_list = {
-                    "url",
-                    "string"
-                }
-            },
-            {
-                scm_name = "persistent-file-name",
-                cpp_name = "persistent_file_name",
-                ret_type = "url",
-                arg_list = {
-                    "url",
-                    "string"
-                }
             },
             
               -- native TeXmacs databases
