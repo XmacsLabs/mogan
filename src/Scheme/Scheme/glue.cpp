@@ -17,6 +17,7 @@
 
 #include "promise.hpp"
 #include "tree.hpp"
+#include "path.hpp"
 #include "drd_mode.hpp"
 #include "tree_search.hpp"
 #include "modification.hpp"
@@ -588,6 +589,7 @@ string recognize_glyph (array_array_array_double gl);
 #include "glue_analyze.cpp"
 
 #include "glue_tree.cpp"
+#include "glue_path.cpp"
 
 #include "url.hpp"
 #include "glue_url.cpp"
@@ -612,6 +614,7 @@ initialize_glue () {
   initialize_glue_string ();
   initialize_glue_analyze ();
   initialize_glue_tree ();
+  initialize_glue_path ();
   initialize_glue_url ();
   initialize_glue_file ();
   initialize_glue_misc ();
