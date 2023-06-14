@@ -62,7 +62,7 @@ jobs:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
             ${{ runner.workspace }}/build/.build_cache
-          key: ${{ runner.os }}-xmake-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua', '**/glue_file.lua') }}
+          key: ${{ runner.os }}-xmake-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
 
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build --yes
