@@ -242,7 +242,8 @@
       (if (detailed-menus?)
           ("Source code" (interactive docgrep-in-src)))
       ;;("My documents" (interactive docgrep-in-texts))
-      ("Recent documents" (interactive docgrep-in-recent)))
+      ("Recent documents" (interactive docgrep-in-recent))
+      ("Documents in folder" (interactive docgrep-in-dir)))
   (if (detailed-menus?)
       (-> "Full manuals"
           (when (url-exists-in-help? "main/man-user-manual.en.tm")
