@@ -48,6 +48,14 @@
       Darcy
     </cell>|<\cell>
       Doc: fix broken link in main/config/man-config-keyboard
+    </cell>>|<row|<\cell>
+      <dlink|20_6>
+    </cell>|<\cell>
+      Feature
+    </cell>|<\cell>
+      woutersj
+    </cell>|<\cell>
+      Search <TeXmacs> docs in a folder
     </cell>>>>
   </wide-tabular>
 
