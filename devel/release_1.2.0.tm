@@ -21,21 +21,45 @@
     </cell>>>>
   </wide-tabular>
 
+  <section|v1.2.0-alpha10>
+
+  <\wide-tabular>
+    <tformat|<cwith|1|1|1|1|cell-valign|B>|<table|<row|<\cell>
+      <dlink|5>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Documentation in markdown format for users and developers
+    </cell>>|<row|<\cell>
+      <dlink|15>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      L3 Kernel
+    </cell>>|<row|<\cell>
+      <dlink|20>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Editor related issues
+    </cell>>>>
+  </wide-tabular>
+
   <section|v1.2.0-alpha9>
 
   <\wide-tabular>
-    <tformat|<cwith|2|2|1|1|cell-valign|B>|<cwith|2|2|2|2|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<table|<row|<\cell>
       <dlink|2>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       S7 Scheme Integration
     </cell>>|<row|<\cell>
-      <dlink|5>
+      <dlink|3>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Documentation in markdown format for users and developers
+      xmake integration for building and testing
     </cell>>|<row|<\cell>
       <dlink|6>
     </cell>|<\cell>
@@ -54,6 +78,12 @@
       Darcy
     </cell>|<\cell>
       L3 Kernel
+    </cell>>|<row|<\cell>
+      <dlink|18>
+    </cell>|<\cell>
+      jinkaimori
+    </cell>|<\cell>
+      Embedded documentation issues
     </cell>>|<row|<\cell>
       <dlink|19>
     </cell>|<\cell>
