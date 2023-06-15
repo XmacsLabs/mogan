@@ -11,7 +11,6 @@
 
 function main()
     return {
-        group_name = "glue_editor",
         binding_object = "get_current_editor()->",
         initializer_name = "initialize_glue_editor",
         glues = {
