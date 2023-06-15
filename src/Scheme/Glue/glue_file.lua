@@ -12,7 +12,6 @@
 
 function main()
     return {
-        group_name = "glue_file",
         binding_object = "",
         initializer_name = "initialize_glue_file",
         glues = {

@@ -11,7 +11,6 @@
 
 function main()
     return {
-        group_name = "glue_server",
         binding_object = "get_server()->",
         initializer_name = "initialize_glue_server",
         glues = {
