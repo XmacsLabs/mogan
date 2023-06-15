@@ -545,7 +545,6 @@ file_format (url u) {
   return "texmacs-file";
 #else
   if (is_rooted_tmfs (u)) {
-    return false;
     return as_string (call ("tmfs-format", object (u)));
   }
   else return suffix_to_format (suffix (u));
