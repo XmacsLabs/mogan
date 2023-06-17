@@ -229,3 +229,30 @@ string get_user_name () {
   return unix_get_username ();
 #endif
 }
+
+bool
+os_win32 () {
+#if defined (OS_WIN32)
+  return true;
+#else
+  return false;
+#endif
+}
+
+bool
+os_mingw () {
+#ifdef OS_MINGW
+  return true;
+#else
+  return false;
+#endif
+}
+
+bool
+os_macos () {
+#if defined (OS_MACOS)
+  return true;
+#else
+  return false;
+#endif
+}

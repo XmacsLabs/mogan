@@ -70,21 +70,6 @@ function main()
                 ret_type = "string"
             },
             {
-                scm_name = "os-win32?",
-                cpp_name = "os_win32",
-                ret_type = "bool"
-            },
-            {
-                scm_name = "os-mingw?",
-                cpp_name = "os_mingw",
-                ret_type = "bool"
-            },
-            {
-                scm_name = "os-macos?",
-                cpp_name = "os_macos",
-                ret_type = "bool"
-            },
-            {
                 scm_name = "has-printing-cmd?",
                 cpp_name = "has_printing_cmd",
                 ret_type = "bool"

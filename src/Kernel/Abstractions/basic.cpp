@@ -182,33 +182,6 @@ gui_is_qt () {
 #endif
 }
 
-bool
-os_win32 () {
-#if defined (OS_WIN32)
-  return true;
-#else
-  return false;
-#endif
-}
-
-bool
-os_mingw () {
-#ifdef OS_MINGW
-  return true;
-#else
-  return false;
-#endif
-}
-
-bool
-os_macos () {
-#if defined (OS_MACOS)
-  return true;
-#else
-  return false;
-#endif
-}
-
 static const char*
 default_look_and_feel_impl () {
   if (os_mingw () || os_win32 ()) return "windows";

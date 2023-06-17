@@ -45,4 +45,8 @@ void set_printing_cmd (string cmd);
 string get_user_login ();
 string get_user_name ();
 
+bool os_win32 ();
+bool os_mingw ();
+bool os_macos ();
+
 #endif // defined SYS_UTILS_H
