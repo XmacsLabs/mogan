@@ -573,8 +573,6 @@ string recognize_glyph (array_array_array_double gl);
 #include "Metafont/tex_files.hpp"
 #include "Freetype/tt_file.hpp"
 #include "LaTeX_Preview/latex_preview.hpp"
-#include "Bibtex/bibtex.hpp"
-#include "Bibtex/bibtex_functions.hpp"
 #include "link.hpp"
 #include "dictionary.hpp"
 #include "patch.hpp"
@@ -601,8 +599,13 @@ string recognize_glyph (array_array_array_double gl);
 #include "sys_utils.hpp"
 #include "glue_misc.cpp"
 
+// Plugins
 #include "Updater/tm_updater.hpp"
 #include "glue_updater.cpp"
+
+#include "Bibtex/bibtex.hpp"
+#include "Bibtex/bibtex_functions.hpp"
+#include "glue_bibtex.cpp"
 
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
@@ -623,6 +626,7 @@ initialize_glue () {
   initialize_glue_file ();
   initialize_glue_misc ();
   initialize_glue_updater ();
+  initialize_glue_bibtex ();
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();
