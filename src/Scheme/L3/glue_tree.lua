@@ -658,6 +658,179 @@ function main()
                     "tree"
                 }
             },
+            {
+                scm_name = "concat-tokenize-math",
+                cpp_name = "concat_tokenize",
+                ret_type = "array_tree",
+                arg_list = {
+                    "content"
+                }
+            },
+            {
+                scm_name = "concat-decompose",
+                cpp_name = "concat_decompose",
+                ret_type = "array_tree",
+                arg_list = {
+                    "content"
+                }
+            },
+            {
+                scm_name = "concat-recompose",
+                cpp_name = "concat_recompose",
+                ret_type = "tree",
+                arg_list = {
+                    "array_tree"
+                }
+            },
+            {
+                scm_name = "with-like?",
+                cpp_name = "is_with_like",
+                ret_type = "bool",
+                arg_list = {
+                    "content"
+                }
+            },
+            {
+                scm_name = "with-same-type?",
+                cpp_name = "with_same_type",
+                ret_type = "bool",
+                arg_list = {
+                    "content",
+                    "content"
+                }
+            },
+            {
+                scm_name = "with-similar-type?",
+                cpp_name = "with_similar_type",
+                ret_type = "bool",
+                arg_list = {
+                    "content",
+                    "content"
+                }
+            },
+            {
+                scm_name = "with-correct",
+                cpp_name = "with_correct",
+                ret_type = "tree",
+                arg_list = {
+                    "content"
+                }
+            },
+            {
+                scm_name = "with-correct-superfluous",
+                cpp_name = "superfluous_with_correct",
+                ret_type = "tree",
+                arg_list = {
+                    "content"
+                }
+            },
+            {
+                scm_name = "invisible-correct-superfluous",
+                cpp_name = "superfluous_invisible_correct",
+                ret_type = "tree",
+                arg_list = {
+                    "content"
+                }
+            },
+            {
+                scm_name = "invisible-correct-missing",
+                cpp_name = "missing_invisible_correct",
+                ret_type = "tree",
+                arg_list = {
+                    "content",
+                    "int"
+                }
+            },
+            {
+                scm_name = "automatic-correct",
+                cpp_name = "automatic_correct",
+                ret_type = "tree",
+                arg_list = {
+                    "content",
+                    "string"
+                }
+            },
+            {
+                scm_name = "manual-correct",
+                cpp_name = "manual_correct",
+                ret_type = "tree",
+                arg_list = {
+                    "content"
+                }
+            },
+            {
+                scm_name = "tree-upgrade-brackets",
+                cpp_name = "upgrade_brackets",
+                ret_type = "tree",
+                arg_list = {
+                    "content",
+                    "string"
+                }
+            },
+            {
+                scm_name = "tree-upgrade-big",
+                cpp_name = "upgrade_big",
+                ret_type = "tree",
+                arg_list = {
+                    "content"
+                }
+            },
+            {
+                scm_name = "tree-downgrade-brackets",
+                cpp_name = "downgrade_brackets",
+                ret_type = "tree",
+                arg_list = {
+                    "content",
+                    "bool",
+                    "bool"
+                }
+            },
+            {
+                scm_name = "tree-downgrade-big",
+                cpp_name = "downgrade_big",
+                ret_type = "tree",
+                arg_list = {
+                    "content"
+                }
+            },
+            {
+                scm_name = "math-status-print",
+                cpp_name = "math_status_print",
+                ret_type = "void"
+            },
+            {
+                scm_name = "math-status-reset",
+                cpp_name = "math_status_reset",
+                ret_type = "void"
+            },
+            {
+                scm_name = "math-stats-compile",
+                cpp_name = "compile_stats",
+                ret_type = "void",
+                arg_list = {
+                    "string",
+                    "content",
+                    "string"
+                }
+            },
+            {
+                scm_name = "math-stats-occurrences",
+                cpp_name = "number_occurrences",
+                ret_type = "int",
+                arg_list = {
+                    "string",
+                    "content"
+                }
+            },
+            {
+                scm_name = "math-stats-number-in-role",
+                cpp_name = "number_in_role",
+                ret_type = "int",
+                arg_list = {
+                    "string",
+                    "content"
+                }
+            },
         }
     }
 end
