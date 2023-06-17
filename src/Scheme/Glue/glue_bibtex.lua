@@ -44,6 +44,14 @@ function main()
                 }
             },
             {
+                scm_name = "set-bibtex-command",
+                cpp_name = "set_bibtex_command",
+                ret_type = "void",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
                 scm_name = "supports-bibtex?",
                 cpp_name = "bibtex_present",
                 ret_type = "bool"
@@ -57,6 +65,81 @@ function main()
                     "string",
                     "url",
                     "array_string"
+                }
+            },
+            {
+                scm_name = "bib-purify",
+                cpp_name = "bib_purify",
+                ret_type = "string",
+                arg_list = {
+                    "scheme_tree"
+                }
+            },
+            {
+                scm_name = "bib-prefix",
+                cpp_name = "bib_prefix",
+                ret_type = "string",
+                arg_list = {
+                    "scheme_tree",
+                    "int"
+                }
+            },
+            {
+                scm_name = "bib-locase",
+                cpp_name = "bib_locase",
+                ret_type = "scheme_tree",
+                arg_list = {
+                    "scheme_tree"
+                }
+            },
+            {
+                scm_name = "bib-upcase",
+                cpp_name = "bib_upcase",
+                ret_type = "scheme_tree",
+                arg_list = {
+                    "scheme_tree"
+                }
+            },
+            {
+                scm_name = "bib-default-upcase-first",
+                cpp_name = "bib_default_upcase_first",
+                ret_type = "scheme_tree",
+                arg_list = {
+                    "scheme_tree"
+                }
+            },
+            {
+                scm_name = "bib-default-preserve-case",
+                cpp_name = "bib_default_preserve_case",
+                ret_type = "scheme_tree",
+                arg_list = {
+                    "scheme_tree"
+                }
+            },
+            {
+                scm_name = "bib-text-length",
+                cpp_name = "bib_text_length",
+                ret_type = "int",
+                arg_list = {
+                    "scheme_tree"
+                }
+            },
+            {
+                scm_name = "bib-empty?",
+                cpp_name = "bib_empty",
+                ret_type = "bool",
+                arg_list = {
+                    "scheme_tree",
+                    "string"
+                }
+            },
+            {
+                scm_name = "bib-field",
+                cpp_name = "bib_field",
+                ret_type = "scheme_tree",
+                arg_list = {
+                    "scheme_tree",
+                    "string"
                 }
             },
             {
@@ -84,81 +167,6 @@ function main()
                 }
             },
             {
-                scm_name = "bib-locase",
-                cpp_name = "bib_locase",
-                ret_type = "scheme_tree",
-                arg_list = {
-                    "scheme_tree"
-                }
-            },
-            {
-                scm_name = "bib-upcase",
-                cpp_name = "bib_upcase",
-                ret_type = "scheme_tree",
-                arg_list = {
-                    "scheme_tree"
-                }
-            },
-            {
-                scm_name = "bib-default-preserve-case",
-                cpp_name = "bib_default_preserve_case",
-                ret_type = "scheme_tree",
-                arg_list = {
-                    "scheme_tree"
-                }
-            },
-            {
-                scm_name = "bib-default-upcase-first",
-                cpp_name = "bib_default_upcase_first",
-                ret_type = "scheme_tree",
-                arg_list = {
-                    "scheme_tree"
-                }
-            },
-            {
-                scm_name = "bib-purify",
-                cpp_name = "bib_purify",
-                ret_type = "string",
-                arg_list = {
-                    "scheme_tree"
-                }
-            },
-            {
-                scm_name = "bib-text-length",
-                cpp_name = "bib_text_length",
-                ret_type = "int",
-                arg_list = {
-                    "scheme_tree"
-                }
-            },
-            {
-                scm_name = "bib-prefix",
-                cpp_name = "bib_prefix",
-                ret_type = "string",
-                arg_list = {
-                    "scheme_tree",
-                    "int"
-                }
-            },
-            {
-                scm_name = "bib-empty?",
-                cpp_name = "bib_empty",
-                ret_type = "bool",
-                arg_list = {
-                    "scheme_tree",
-                    "string"
-                }
-            },
-            {
-                scm_name = "bib-field",
-                cpp_name = "bib_field",
-                ret_type = "scheme_tree",
-                arg_list = {
-                    "scheme_tree",
-                    "string"
-                }
-            },
-            {
                 scm_name = "bib-abbreviate",
                 cpp_name = "bib_abbreviate",
                 ret_type = "scheme_tree",
@@ -166,14 +174,6 @@ function main()
                     "scheme_tree",
                     "scheme_tree",
                     "scheme_tree"
-                }
-            },
-            {
-                scm_name = "set-bibtex-command",
-                cpp_name = "set_bibtex_command",
-                ret_type = "void",
-                arg_list = {
-                    "string"
                 }
             },
         }
