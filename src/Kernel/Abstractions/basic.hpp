@@ -137,7 +137,6 @@ tm_ostream& operator << (tm_ostream& out, display_control ctrl);
 
 bool gui_is_x ();
 bool gui_is_qt ();
-const char* default_look_and_feel ();
 
 template<typename T>
 struct type_helper {

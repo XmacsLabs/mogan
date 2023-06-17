@@ -256,3 +256,16 @@ os_macos () {
   return false;
 #endif
 }
+
+static const char*
+default_look_and_feel_impl () {
+  if (os_mingw () || os_win32 ()) return "windows";
+  if (os_macos ()) return "macos";
+  return "emacs";
+}
+
+const char*
+default_look_and_feel () {
+  static const char* ret= default_look_and_feel_impl ();
+  return ret;
+}
