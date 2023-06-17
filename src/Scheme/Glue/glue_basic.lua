@@ -153,6 +153,11 @@ function main()
                 ret_type = "bool"
             },
             {
+                scm_name = "scheme-dialect",
+                cpp_name = "scheme_dialect",
+                ret_type = "string"
+            },
+            {
                 scm_name = "plugin-list",
                 cpp_name = "plugin_list",
                 ret_type = "scheme_tree"
@@ -1607,6 +1612,22 @@ function main()
                 ret_type = "tree",
                 arg_list = {
                     "string"
+                }
+            },
+            {
+                scm_name = "tree->stree",
+                cpp_name = "tree_to_scheme_tree",
+                ret_type = "scheme_tree",
+                arg_list = {
+                    "tree"
+                }
+            },
+            {
+                scm_name = "stree->tree",
+                cpp_name = "scheme_tree_to_tree",
+                ret_type = "tree",
+                arg_list = {
+                    "scheme_tree"
                 }
             },
             {

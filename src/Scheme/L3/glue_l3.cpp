@@ -14,7 +14,6 @@
 #include "object_l2.hpp"
 #include "s7_tm.hpp"
 
-#include "convert.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
 #include "path.hpp"
@@ -200,7 +199,6 @@ var_clean_apply (tree &t, modification m) {
 
 #include "glue_modification.cpp"
 #include "glue_path.cpp"
-#include "glue_scheme.cpp"
 #include "glue_tree.cpp"
 
 void
@@ -208,5 +206,4 @@ initialize_glue_l3 () {
   initialize_glue_tree ();
   initialize_glue_path ();
   initialize_glue_modification ();
-  initialize_glue_scheme ();
 }
