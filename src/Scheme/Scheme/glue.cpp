@@ -212,7 +212,6 @@ tmscm_to_promise_widget (tmscm o) {
 }
 
 
-url url_ref (url u, int i) { return u[i]; }
 
 
 /******************************************************************************
@@ -405,12 +404,6 @@ string recognize_glyph (array_array_array_double gl);
 #include "packrat.hpp"
 #include "new_style.hpp"
 
-#include "url.hpp"
-#include "glue_url.cpp"
-
-#include "file.hpp"
-#include "glue_file.cpp"
-
 #include "persistent.hpp"
 #include "sys_utils.hpp"
 #include "glue_misc.cpp"
@@ -442,8 +435,6 @@ initialize_glue () {
   initialize_glue_l1 ();
   initialize_glue_l2 ();
   initialize_glue_l3 ();
-  initialize_glue_url ();
-  initialize_glue_file ();
   initialize_glue_misc ();
   initialize_glue_font ();
   initialize_glue_updater ();

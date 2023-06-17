@@ -10,8 +10,17 @@
  ******************************************************************************/
 
 #include "glue_l2.hpp"
+#include "object_l1.hpp"
 #include "object_l2.hpp"
 #include "s7_tm.hpp"
+
+#include "url.hpp"
+#include "file.hpp"
+
+url url_ref (url u, int i) { return u[i]; }
+
+#include "glue_url.cpp"
+#include "glue_file.cpp"
 
 tmscm
 urlP (tmscm t) {
@@ -22,4 +31,6 @@ urlP (tmscm t) {
 void
 initialize_glue_l2 () {
   tmscm_install_procedure ("url?", urlP, 1, 0, 0);
+  initialize_glue_url ();
+  initialize_glue_file ();
 }

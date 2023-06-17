@@ -1197,6 +1197,14 @@ function main()
                     "content"
                 }
             },
+            {
+                scm_name = "url-resolve-pattern",
+                cpp_name = "resolve_pattern",
+                ret_type = "url",
+                arg_list = {
+                    "url"
+                }
+            },
             
               -- routines for strings
             {
