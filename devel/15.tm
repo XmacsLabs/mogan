@@ -82,7 +82,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      glue_sys
+      glue_misc
     </cell>>|<row|<\cell>
       \;
     </cell>|<\cell>
@@ -91,6 +91,54 @@
       Darcy
     </cell>|<\cell>
       glue_file
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_8
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_modification
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_9
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_updater
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_10
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_font
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_11
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_bibtex
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_12
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_tmdb
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_13
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_widget
     </cell>>>>
   </wide-tabular>
 
