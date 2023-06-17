@@ -21,6 +21,7 @@
 #include "tree_modify.hpp"
 #include "tree_search.hpp"
 #include "tree_traverse.hpp"
+#include "convert.hpp"
 
 #include "drd_mode.hpp"
 #include "env.hpp"
@@ -200,10 +201,12 @@ var_clean_apply (tree &t, modification m) {
 #include "glue_modification.cpp"
 #include "glue_path.cpp"
 #include "glue_tree.cpp"
+#include "glue_scheme.cpp"
 
 void
 initialize_glue_l3 () {
   initialize_glue_tree ();
   initialize_glue_path ();
   initialize_glue_modification ();
+  initialize_glue_scheme ();
 }

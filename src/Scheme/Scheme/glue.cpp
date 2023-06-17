@@ -415,8 +415,6 @@ string recognize_glyph (array_array_array_double gl);
 #include "sys_utils.hpp"
 #include "glue_misc.cpp"
 
-#include "glue_scheme.cpp"
-
 #include "font.hpp"
 #include "Freetype/tt_file.hpp"
 #include "Metafont/tex_files.hpp"
@@ -444,7 +442,6 @@ initialize_glue () {
   initialize_glue_l1 ();
   initialize_glue_l2 ();
   initialize_glue_l3 ();
-  initialize_glue_scheme ();
   initialize_glue_url ();
   initialize_glue_file ();
   initialize_glue_misc ();
