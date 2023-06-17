@@ -136,6 +136,26 @@ function main()
                 cpp_name = "get_user_name",
                 ret_type = "string"
             },
+            {
+                scm_name = "os-win32?",
+                cpp_name = "os_win32",
+                ret_type = "bool"
+            },
+            {
+                scm_name = "os-mingw?",
+                cpp_name = "os_mingw",
+                ret_type = "bool"
+            },
+            {
+                scm_name = "os-macos?",
+                cpp_name = "os_macos",
+                ret_type = "bool"
+            },
+            {
+                scm_name = "default-look-and-feel",
+                cpp_name = "default_look_and_feel",
+                ret_type = "string"
+            },
         }
     }
 end
