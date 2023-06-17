@@ -1197,6 +1197,14 @@ function main()
                     "content"
                 }
             },
+            {
+                scm_name = "url-resolve-pattern",
+                cpp_name = "resolve_pattern",
+                ret_type = "url",
+                arg_list = {
+                    "url"
+                }
+            },
             
               -- routines for strings
             {
@@ -1612,6 +1620,22 @@ function main()
                 ret_type = "tree",
                 arg_list = {
                     "string"
+                }
+            },
+            {
+                scm_name = "tree->stree",
+                cpp_name = "tree_to_scheme_tree",
+                ret_type = "scheme_tree",
+                arg_list = {
+                    "tree"
+                }
+            },
+            {
+                scm_name = "stree->tree",
+                cpp_name = "scheme_tree_to_tree",
+                ret_type = "tree",
+                arg_list = {
+                    "scheme_tree"
                 }
             },
             {

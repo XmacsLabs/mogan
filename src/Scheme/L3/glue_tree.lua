@@ -16,22 +16,6 @@ function main()
         initializer_name = "initialize_glue_tree",
         glues = {
             {
-                scm_name = "tree->stree",
-                cpp_name = "tree_to_scheme_tree",
-                ret_type = "scheme_tree",
-                arg_list = {
-                    "tree"
-                }
-            },
-            {
-                scm_name = "stree->tree",
-                cpp_name = "scheme_tree_to_tree",
-                ret_type = "tree",
-                arg_list = {
-                    "scheme_tree"
-                }
-            },
-            {
                 scm_name = "tree->string",
                 cpp_name = "coerce_tree_string",
                 ret_type = "string",
@@ -571,19 +555,6 @@ function main()
                     "tree_label",
                     "int"
                 }
-            },
-            {
-                scm_name = "set-access-mode",
-                cpp_name = "set_access_mode",
-                ret_type = "int",
-                arg_list = {
-                    "int"
-                }
-            },
-            {
-                scm_name = "get-access-mode",
-                cpp_name = "get_access_mode",
-                ret_type = "int"
             },
             
             {

@@ -9,9 +9,13 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "glue_l1.hpp"
+#include "init_glue_l1.hpp"
 #include "object_l1.hpp"
 #include "s7_tm.hpp"
+
+#include "analyze.hpp"
+#include "string.hpp"
+#include "drd_mode.hpp"
 
 tmscm
 blackboxP (tmscm t) {
@@ -45,6 +49,10 @@ contentP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
+#include "glue_analyze.cpp"
+#include "glue_string.cpp"
+#include "glue_drd.cpp"
+
 void
 initialize_glue_l1 () {
   tmscm_install_procedure ("blackbox?", blackboxP, 1, 0, 0);
@@ -52,4 +60,8 @@ initialize_glue_l1 () {
   tmscm_install_procedure ("tree?", treeP, 1, 0, 0);
   tmscm_install_procedure ("observer?", observerP, 1, 0, 0);
   tmscm_install_procedure ("modification?", modificationP, 1, 0, 0);
+
+  initialize_glue_string ();
+  initialize_glue_analyze ();
+  initialize_glue_drd ();
 }
