@@ -31,7 +31,6 @@
 #include "iterator.hpp"
 #include "Freetype/tt_tools.hpp"
 #include "Database/database.hpp"
-#include "Updater/tm_updater.hpp"
 
 #define content tree
 
@@ -602,6 +601,9 @@ string recognize_glyph (array_array_array_double gl);
 #include "sys_utils.hpp"
 #include "glue_misc.cpp"
 
+#include "Updater/tm_updater.hpp"
+#include "glue_updater.cpp"
+
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
 #include "glue_server.cpp"
@@ -620,6 +622,7 @@ initialize_glue () {
   initialize_glue_url ();
   initialize_glue_file ();
   initialize_glue_misc ();
+  initialize_glue_updater ();
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();

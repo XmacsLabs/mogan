@@ -32,39 +32,6 @@ function main()
                 }
             },
             {
-                scm_name = "updater-supported?",
-                cpp_name = "updater_supported",
-                ret_type = "bool"
-            },
-            {
-                scm_name = "updater-running?",
-                cpp_name = "updater_is_running",
-                ret_type = "bool"
-            },
-            {
-                scm_name = "updater-check-background",
-                cpp_name = "updater_check_background",
-                ret_type = "bool"
-            },
-            {
-                scm_name = "updater-check-foreground",
-                cpp_name = "updater_check_foreground",
-                ret_type = "bool"
-            },
-            {
-                scm_name = "updater-last-check",
-                cpp_name = "updater_last_check",
-                ret_type = "long"
-            },
-            {
-                scm_name = "updater-set-interval",
-                cpp_name = "updater_set_interval",
-                ret_type = "bool",
-                arg_list = {
-                    "int"
-                }
-            },
-            {
                 scm_name = "get-original-path",
                 cpp_name = "get_original_path",
                 ret_type = "string"
