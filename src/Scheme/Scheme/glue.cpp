@@ -569,7 +569,6 @@ string recognize_glyph (array_array_array_double gl);
 #include "Concat/concater.hpp"
 #include "converter.hpp"
 #include "tm_timer.hpp"
-#include "Metafont/tex_files.hpp"
 #include "LaTeX_Preview/latex_preview.hpp"
 #include "link.hpp"
 #include "dictionary.hpp"
@@ -599,6 +598,7 @@ string recognize_glyph (array_array_array_double gl);
 
 #include "font.hpp"
 #include "Freetype/tt_file.hpp"
+#include "Metafont/tex_files.hpp"
 #include "glue_font.cpp"
 
 // Plugins

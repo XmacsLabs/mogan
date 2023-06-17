@@ -416,6 +416,15 @@ function main()
                     "string"
                 }
             },
+            -- src/Plugins/Metafont/tex_files.hpp
+            {
+                scm_name = "url-exists-in-tex?",
+                cpp_name = "exists_in_tex",
+                ret_type = "bool",
+                arg_list = {
+                    "url"
+                }
+            },
         }
     }
 end
