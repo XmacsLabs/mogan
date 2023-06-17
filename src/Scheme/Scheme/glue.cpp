@@ -215,17 +215,6 @@ tmscm_to_promise_widget (tmscm o) {
 url url_ref (url u, int i) { return u[i]; }
 
 
-tree
-var_apply (tree& t, modification m) {
-  apply (t, copy (m));
-  return t;
-}
-
-tree
-var_clean_apply (tree& t, modification m) {
-  return clean_apply (t, copy (m));
-}
-
 /******************************************************************************
 * Patch
 ******************************************************************************/

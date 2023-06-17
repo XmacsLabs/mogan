@@ -185,6 +185,17 @@ tree_remove_node (tree r, int pos) {
   }
 }
 
+tree
+var_apply (tree& t, modification m) {
+  apply (t, copy (m));
+  return t;
+}
+
+tree
+var_clean_apply (tree& t, modification m) {
+  return clean_apply (t, copy (m));
+}
+
 #include "glue_tree.cpp"
 #include "glue_path.cpp"
 #include "glue_modification.cpp"

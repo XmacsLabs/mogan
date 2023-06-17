@@ -461,6 +461,7 @@ target("libmogan") do
             "src/Scheme/S7",
             "src/Scheme/L1",
             "src/Scheme/L2",
+            "src/Scheme/L3",
             "src/Scheme/Scheme",
             "src/Style/Environment",
             "src/Style/Evaluate",
