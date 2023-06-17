@@ -56,6 +56,14 @@
       woutersj
     </cell>|<\cell>
       Search <TeXmacs> docs in a folder
+    </cell>>|<row|<\cell>
+      20_7
+    </cell>|<\cell>
+      Bug
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      CJK encoding of the buffer in <verbatim|tmfs://grep>
     </cell>>>>
   </wide-tabular>
 
