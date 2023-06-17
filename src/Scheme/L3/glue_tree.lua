@@ -556,19 +556,6 @@ function main()
                     "int"
                 }
             },
-            {
-                scm_name = "set-access-mode",
-                cpp_name = "set_access_mode",
-                ret_type = "int",
-                arg_list = {
-                    "int"
-                }
-            },
-            {
-                scm_name = "get-access-mode",
-                cpp_name = "get_access_mode",
-                ret_type = "int"
-            },
             
             {
                 scm_name = "tree-assign",

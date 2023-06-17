@@ -15,6 +15,7 @@
 
 #include "analyze.hpp"
 #include "string.hpp"
+#include "drd_mode.hpp"
 
 tmscm
 blackboxP (tmscm t) {
@@ -50,6 +51,7 @@ contentP (tmscm t) {
 
 #include "glue_analyze.cpp"
 #include "glue_string.cpp"
+#include "glue_drd.cpp"
 
 void
 initialize_glue_l1 () {
@@ -61,4 +63,5 @@ initialize_glue_l1 () {
 
   initialize_glue_string ();
   initialize_glue_analyze ();
+  initialize_glue_drd ();
 }
