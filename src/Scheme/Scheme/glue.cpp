@@ -15,6 +15,7 @@
 #include "init_glue_l1.hpp"
 #include "init_glue_l2.hpp"
 #include "init_glue_l3.hpp"
+#include "init_glue_plugins.hpp"
 
 #include "promise.hpp"
 #include "tree.hpp"
@@ -424,4 +425,5 @@ initialize_glue () {
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();
+  initialize_glue_plugins ();
 }
