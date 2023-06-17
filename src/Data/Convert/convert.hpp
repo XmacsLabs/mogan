@@ -116,11 +116,6 @@ tree   find_first_element_by_name (tree t, string name);
 string get_attr_from_element (tree t, string name, string default_value);
 int    parse_xml_length (string length);
 
-/*** BibTeX ***/
-tree   parse_bib (string s);
-tree   conservative_bib_import (string olds, tree oldt, string news);
-string conservative_bib_export (tree oldt, string olds, tree newt);
-
 /*** Post corrections ***/
 bool   seems_buggy_html_paste (string s);
 string correct_buggy_html_paste (string s);

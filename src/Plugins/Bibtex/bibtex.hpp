@@ -11,7 +11,12 @@
 
 #ifndef BIBTEX_H
 #define BIBTEX_H
+
 #include "url.hpp"
+
+tree   parse_bib (string s);
+tree   conservative_bib_import (string olds, tree oldt, string news);
+string conservative_bib_export (tree oldt, string olds, tree newt);
 
 void set_bibtex_command (string cmd);
 bool bibtex_present ();
