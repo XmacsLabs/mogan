@@ -15,6 +15,7 @@
 #include "init_glue_l1.hpp"
 #include "init_glue_l2.hpp"
 #include "init_glue_l3.hpp"
+#include "init_glue_plugins.hpp"
 
 #include "promise.hpp"
 #include "tree.hpp"
@@ -409,17 +410,6 @@ string recognize_glyph (array_array_array_double gl);
 #include "Metafont/tex_files.hpp"
 #include "glue_font.cpp"
 
-// Plugins
-#include "Updater/tm_updater.hpp"
-#include "glue_updater.cpp"
-
-#include "Bibtex/bibtex.hpp"
-#include "Bibtex/bibtex_functions.hpp"
-#include "glue_bibtex.cpp"
-
-#include "Database/database.hpp"
-#include "glue_tmdb.cpp"
-
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
 #include "glue_server.cpp"
@@ -432,9 +422,8 @@ initialize_glue () {
   initialize_glue_l2 ();
   initialize_glue_l3 ();
   initialize_glue_font ();
-  initialize_glue_updater ();
-  initialize_glue_bibtex ();
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();
+  initialize_glue_plugins ();
 }
