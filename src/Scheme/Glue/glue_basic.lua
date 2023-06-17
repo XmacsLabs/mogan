@@ -90,11 +90,6 @@ function main()
                 ret_type = "string"
             },
             {
-                scm_name = "default-look-and-feel",
-                cpp_name = "default_look_and_feel",
-                ret_type = "string"
-            },
-            {
                 scm_name = "default-chinese-font",
                 cpp_name = "default_chinese_font_name",
                 ret_type = "string"
