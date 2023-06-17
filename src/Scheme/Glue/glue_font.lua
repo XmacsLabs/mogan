@@ -150,48 +150,6 @@ function main()
                     "string"
                 }
             },
-            -- src/Plugins/Freetype/tt_file.hpp
-            {
-                scm_name = "tt-exists?",
-                cpp_name = "tt_font_exists",
-                ret_type = "bool",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "font-exists-in-tt?",
-                cpp_name = "tt_font_exists",
-                ret_type = "bool",
-                arg_list = {
-                    "string"
-                }
-            },
-            -- src/Plugins/Freetype/tt_tools.hpp
-            {
-                scm_name = "tt-dump",
-                cpp_name = "tt_dump",
-                ret_type = "void",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
-                scm_name = "tt-font-name",
-                cpp_name = "tt_font_name",
-                ret_type = "scheme_tree",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
-                scm_name = "tt-analyze",
-                cpp_name = "tt_analyze",
-                ret_type = "array_string",
-                arg_list = {
-                    "string"
-                }
-            },
             {
                 scm_name = "font-family->master",
                 cpp_name = "family_to_master",
@@ -412,6 +370,48 @@ function main()
                 scm_name = "font-family-main",
                 cpp_name = "main_family",
                 ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            -- src/Plugins/Freetype/tt_file.hpp
+            {
+                scm_name = "tt-exists?",
+                cpp_name = "tt_font_exists",
+                ret_type = "bool",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "font-exists-in-tt?",
+                cpp_name = "tt_font_exists",
+                ret_type = "bool",
+                arg_list = {
+                    "string"
+                }
+            },
+            -- src/Plugins/Freetype/tt_tools.hpp
+            {
+                scm_name = "tt-dump",
+                cpp_name = "tt_dump",
+                ret_type = "void",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "tt-font-name",
+                cpp_name = "tt_font_name",
+                ret_type = "scheme_tree",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "tt-analyze",
+                cpp_name = "tt_analyze",
+                ret_type = "array_string",
                 arg_list = {
                     "string"
                 }
