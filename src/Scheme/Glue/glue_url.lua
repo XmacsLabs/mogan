@@ -399,14 +399,6 @@ function main()
                 }
             },
             {
-                scm_name = "url-exists-in-tex?",
-                cpp_name = "exists_in_tex",
-                ret_type = "bool",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
                 scm_name = "url-concretize*",
                 cpp_name = "concretize_url",
                 ret_type = "url",
