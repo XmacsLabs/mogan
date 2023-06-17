@@ -13,6 +13,16 @@
 #include "object_l1.hpp"
 #include "s7_tm.hpp"
 
+#include "string.hpp"
+#include "analyze.hpp"
+
+#include "glue_string.cpp"
+#include "glue_analyze.cpp"
+#include "glue_tree.cpp"
+#include "glue_path.cpp"
+#include "glue_modification.cpp"
+
+
 tmscm
 blackboxP (tmscm t) {
   bool b= tmscm_is_blackbox (t);
@@ -52,4 +62,10 @@ initialize_glue_l1 () {
   tmscm_install_procedure ("tree?", treeP, 1, 0, 0);
   tmscm_install_procedure ("observer?", observerP, 1, 0, 0);
   tmscm_install_procedure ("modification?", modificationP, 1, 0, 0);
+
+  initialize_glue_string ();
+  initialize_glue_analyze ();
+  initialize_glue_tree ();
+  initialize_glue_path ();
+  initialize_glue_modification ();
 }
