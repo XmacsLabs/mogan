@@ -9,22 +9,21 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "glue_l3.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
-#include "glue_l3.hpp"
 #include "s7_tm.hpp"
 
-#include "tree.hpp"
-#include "tree_traverse.hpp"
-#include "tree_search.hpp"
-#include "tree_modify.hpp"
-#include "patch.hpp"
 #include "modification.hpp"
+#include "patch.hpp"
 #include "path.hpp"
+#include "tree.hpp"
+#include "tree_modify.hpp"
+#include "tree_search.hpp"
+#include "tree_traverse.hpp"
 
 #include "drd_mode.hpp"
 #include "env.hpp"
-
 
 tree
 coerce_string_tree (string s) {
@@ -49,7 +48,7 @@ tree_set (tree t, int i, tree u) {
 
 tree
 tree_range (tree t, int i, int j) {
-  return t(i,j);
+  return t (i, j);
 }
 
 tree
@@ -65,19 +64,21 @@ tree_active (tree t) {
 
 tree
 tree_child_insert (tree t, int pos, tree x) {
-  //cout << "t= " << t << "\n";
-  //cout << "x= " << x << "\n";
-  int i, n= N(t);
-  tree r (t, n+1);
-  for (i=0; i<pos; i++) r[i]= t[i];
+  // cout << "t= " << t << "\n";
+  // cout << "x= " << x << "\n";
+  int  i, n= N (t);
+  tree r (t, n + 1);
+  for (i= 0; i < pos; i++)
+    r[i]= t[i];
   r[pos]= x;
-  for (i=pos; i<n; i++) r[i+1]= t[i];
+  for (i= pos; i < n; i++)
+    r[i + 1]= t[i];
   return r;
 }
 
 /******************************************************************************
-* Document modification routines
-******************************************************************************/
+ * Document modification routines
+ ******************************************************************************/
 
 extern tree the_et;
 
@@ -186,19 +187,19 @@ tree_remove_node (tree r, int pos) {
 }
 
 tree
-var_apply (tree& t, modification m) {
+var_apply (tree &t, modification m) {
   apply (t, copy (m));
   return t;
 }
 
 tree
-var_clean_apply (tree& t, modification m) {
+var_clean_apply (tree &t, modification m) {
   return clean_apply (t, copy (m));
 }
 
-#include "glue_tree.cpp"
-#include "glue_path.cpp"
 #include "glue_modification.cpp"
+#include "glue_path.cpp"
+#include "glue_tree.cpp"
 
 void
 initialize_glue_l3 () {

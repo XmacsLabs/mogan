@@ -13,9 +13,8 @@
 #include "object_l1.hpp"
 #include "s7_tm.hpp"
 
-#include "string.hpp"
 #include "analyze.hpp"
-
+#include "string.hpp"
 
 tmscm
 blackboxP (tmscm t) {
@@ -49,11 +48,8 @@ contentP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
-
-
-#include "glue_string.cpp"
 #include "glue_analyze.cpp"
-
+#include "glue_string.cpp"
 
 void
 initialize_glue_l1 () {
