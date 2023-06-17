@@ -14,16 +14,19 @@
 #include "object_l2.hpp"
 #include "s7_tm.hpp"
 
-#include "url.hpp"
 #include "file.hpp"
 #include "persistent.hpp"
 #include "sys_utils.hpp"
+#include "url.hpp"
 
-url url_ref (url u, int i) { return u[i]; }
+url
+url_ref (url u, int i) {
+  return u[i];
+}
 
-#include "glue_url.cpp"
 #include "glue_file.cpp"
 #include "glue_misc.cpp"
+#include "glue_url.cpp"
 
 tmscm
 urlP (tmscm t) {

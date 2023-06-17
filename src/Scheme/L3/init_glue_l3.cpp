@@ -1,6 +1,6 @@
 
 /******************************************************************************
- * MODULE     : glue_l3.cpp
+ * MODULE     : init_glue_l3.cpp
  * DESCRIPTION: L3 Glue for linking TeXmacs commands to scheme
  * COPYRIGHT  : (C) 1999-2011  Joris van der Hoeven and Massimiliano Gubinelli
  *******************************************************************************
@@ -18,6 +18,9 @@
 #include "patch.hpp"
 #include "path.hpp"
 #include "tree.hpp"
+#include "tree_analyze.hpp"
+#include "tree_correct.hpp"
+#include "tree_math_stats.hpp"
 #include "tree_modify.hpp"
 #include "tree_search.hpp"
 #include "tree_traverse.hpp"

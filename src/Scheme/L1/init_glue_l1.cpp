@@ -1,6 +1,6 @@
 
 /******************************************************************************
- * MODULE     : glue_l1.cpp
+ * MODULE     : init_glue_l1.cpp
  * DESCRIPTION: L1 Glue for linking TeXmacs commands to scheme
  * COPYRIGHT  : (C) 1999-2011  Joris van der Hoeven and Massimiliano Gubinelli
  *******************************************************************************
@@ -14,8 +14,8 @@
 #include "s7_tm.hpp"
 
 #include "analyze.hpp"
-#include "string.hpp"
 #include "drd_mode.hpp"
+#include "string.hpp"
 
 tmscm
 blackboxP (tmscm t) {
@@ -50,8 +50,8 @@ contentP (tmscm t) {
 }
 
 #include "glue_analyze.cpp"
-#include "glue_string.cpp"
 #include "glue_drd.cpp"
+#include "glue_string.cpp"
 
 void
 initialize_glue_l1 () {
