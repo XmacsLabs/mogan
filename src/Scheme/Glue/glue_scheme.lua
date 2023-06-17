@@ -31,6 +31,11 @@ function main()
                     "scheme_tree"
                 }
             },
+            {
+                scm_name = "scheme-dialect",
+                cpp_name = "scheme_dialect",
+                ret_type = "string"
+            },
         }
     }
 end
