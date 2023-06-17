@@ -30,7 +30,6 @@
 #include "locale.hpp"
 #include "iterator.hpp"
 #include "Freetype/tt_tools.hpp"
-#include "Database/database.hpp"
 
 #define content tree
 
@@ -606,6 +605,9 @@ string recognize_glyph (array_array_array_double gl);
 #include "Bibtex/bibtex.hpp"
 #include "Bibtex/bibtex_functions.hpp"
 #include "glue_bibtex.cpp"
+
+#include "Database/database.hpp"
+#include "glue_tmdb.cpp"
 
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
