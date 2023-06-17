@@ -208,6 +208,11 @@ tmscm_to_promise_widget (tmscm o) {
 }
 
 
+bool
+tree_active (tree t) {
+  path ip= obtain_ip (t);
+  return is_nil (ip) || last_item (ip) != DETACHED;
+}
 
 
 /******************************************************************************

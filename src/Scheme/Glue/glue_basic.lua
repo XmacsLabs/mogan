@@ -648,6 +648,30 @@ function main()
                 }
             },
             
+            {
+                scm_name = "tree-extents",
+                cpp_name = "tree_extents",
+                ret_type = "tree",
+                arg_list = {
+                    "content"
+                }
+            },
+            {
+                scm_name = "tree-active?",
+                cpp_name = "tree_active",
+                ret_type = "bool",
+                arg_list = {
+                    "tree"
+                }
+            },
+            {
+                scm_name = "tree-load-inclusion",
+                cpp_name = "load_inclusion",
+                ret_type = "tree",
+                arg_list = {
+                    "url"
+                }
+            },
             
               -- patches
             {

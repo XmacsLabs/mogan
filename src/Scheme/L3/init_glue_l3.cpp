@@ -25,8 +25,6 @@
 #include "tree_search.hpp"
 #include "tree_traverse.hpp"
 
-#include "drd_mode.hpp"
-#include "env.hpp"
 
 tree
 coerce_string_tree (string s) {
@@ -57,12 +55,6 @@ tree_range (tree t, int i, int j) {
 tree
 tree_append (tree t1, tree t2) {
   return t1 * t2;
-}
-
-bool
-tree_active (tree t) {
-  path ip= obtain_ip (t);
-  return is_nil (ip) || last_item (ip) != DETACHED;
 }
 
 tree
