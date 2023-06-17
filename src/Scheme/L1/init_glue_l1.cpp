@@ -9,7 +9,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "glue_l1.hpp"
+#include "init_glue_l1.hpp"
 #include "object_l1.hpp"
 #include "s7_tm.hpp"
 
