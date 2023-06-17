@@ -375,14 +375,6 @@ function main()
                 }
             },
             {
-                scm_name = "url-resolve-pattern",
-                cpp_name = "resolve_pattern",
-                ret_type = "url",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
                 scm_name = "url-exists?",
                 cpp_name = "exists",
                 ret_type = "bool",

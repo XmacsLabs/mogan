@@ -40,7 +40,6 @@ int tmscm_to_int (tmscm obj);
 double tmscm_to_double (tmscm  i);
 string tmscm_to_string (tmscm obj);
 string tmscm_to_symbol (tmscm obj);
-tree tmscm_to_content (tmscm obj);
 array<double> tmscm_to_array_double (tmscm obj);
 patch tmscm_to_patch (tmscm obj);
 scheme_tree tmscm_to_scheme_tree (tmscm obj);
