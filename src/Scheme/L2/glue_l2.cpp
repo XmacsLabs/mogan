@@ -16,11 +16,14 @@
 
 #include "url.hpp"
 #include "file.hpp"
+#include "persistent.hpp"
+#include "sys_utils.hpp"
 
 url url_ref (url u, int i) { return u[i]; }
 
 #include "glue_url.cpp"
 #include "glue_file.cpp"
+#include "glue_misc.cpp"
 
 tmscm
 urlP (tmscm t) {
@@ -33,4 +36,5 @@ initialize_glue_l2 () {
   tmscm_install_procedure ("url?", urlP, 1, 0, 0);
   initialize_glue_url ();
   initialize_glue_file ();
+  initialize_glue_misc ();
 }
