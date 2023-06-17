@@ -499,6 +499,7 @@ target("libmogan") do
             "src/Scheme/S7/**.cpp",
             "src/Scheme/L1/**.cpp",
             "src/Scheme/L2/**.cpp",
+            "src/Scheme/L3/**.cpp",
             "src/System/**.cpp",
             "src/Texmacs/Data/**.cpp",
             "src/Texmacs/Server/**.cpp",

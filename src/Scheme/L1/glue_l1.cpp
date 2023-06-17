@@ -16,12 +16,6 @@
 #include "string.hpp"
 #include "analyze.hpp"
 
-#include "glue_string.cpp"
-#include "glue_analyze.cpp"
-#include "glue_tree.cpp"
-#include "glue_path.cpp"
-#include "glue_modification.cpp"
-
 
 tmscm
 blackboxP (tmscm t) {
@@ -55,6 +49,12 @@ contentP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
+
+
+#include "glue_string.cpp"
+#include "glue_analyze.cpp"
+
+
 void
 initialize_glue_l1 () {
   tmscm_install_procedure ("blackbox?", blackboxP, 1, 0, 0);
@@ -65,7 +65,4 @@ initialize_glue_l1 () {
 
   initialize_glue_string ();
   initialize_glue_analyze ();
-  initialize_glue_tree ();
-  initialize_glue_path ();
-  initialize_glue_modification ();
 }

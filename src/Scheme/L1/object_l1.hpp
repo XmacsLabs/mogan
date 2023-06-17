@@ -18,6 +18,7 @@
 #include "modification.hpp"
 #include "s7_tm.hpp"
 
+#define content tree
 
 /******************************************************************************
 * Basic assertions
@@ -49,6 +50,7 @@ tmscm   tree_label_to_tmscm (tree_label l);
 tmscm scheme_tree_to_tmscm (scheme_tree t);
 
 tree    tmscm_to_tree (tmscm obj);
+content tmscm_to_content (tmscm obj);
 tree_label tmscm_to_tree_label (tmscm p);
 scheme_tree tmscm_to_scheme_tree (tmscm p);
 
