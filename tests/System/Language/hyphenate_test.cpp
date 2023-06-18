@@ -106,7 +106,7 @@ TestHyphens::french () {
 void
 TestHyphens::chinese () {
   language lan= text_language ("chinese");
-  //汉语族为分析语的一支家族
+  // 汉语族为分析语的一支家族
   test_hyphens (lan,
                 "<#6C49><#8BED><#65CF><#4E3A><#5206><#6790><#8BED><#7684><#"
                 "4E00><#652F><#5BB6><#65CF>",

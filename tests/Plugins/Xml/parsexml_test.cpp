@@ -11,9 +11,9 @@
 
 #include <QtTest/QtTest>
 
+#include "Xml/xml.hpp"
 #include "convert.hpp"
 #include "drd_std.hpp"
-#include "Xml/xml.hpp"
 
 class TestParseXML : public QObject {
   Q_OBJECT
