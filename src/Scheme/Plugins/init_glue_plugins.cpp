@@ -18,6 +18,9 @@
 #include "Updater/tm_updater.hpp"
 #include "glue_updater.cpp"
 
+#include "Tex/tex.hpp"
+#include "glue_tex.cpp"
+
 #include "Bibtex/bibtex.hpp"
 #include "Bibtex/bibtex_functions.hpp"
 #include "glue_bibtex.cpp"
