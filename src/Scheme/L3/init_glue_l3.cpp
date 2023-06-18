@@ -25,7 +25,6 @@
 #include "tree_search.hpp"
 #include "tree_traverse.hpp"
 
-
 tree
 coerce_string_tree (string s) {
   return s;
