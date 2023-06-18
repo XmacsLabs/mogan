@@ -308,6 +308,18 @@ end
 --
 -- Library: L3 Kernel
 --
+local l3_files = {
+    "src/Data/Convert/**.cpp",
+    "src/Scheme/L1/**.cpp",
+    "src/Scheme/L2/**.cpp",
+    "src/Scheme/L3/**.cpp",
+    "src/Scheme/Scheme/object.cpp",
+}
+local l3_includedirs = {
+    "src/Scheme",
+    "src/Scheme/Scheme",
+    "src/Data/Convert",
+}
 target("libkernel_l3") do
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
@@ -317,6 +329,7 @@ target("libkernel_l3") do
     set_basename("kernel_l3")
 
     add_packages("libcurl")
+    add_packages("s7")
     if is_plat("mingw") then
         add_packages("nowide_standalone")
     end
@@ -350,7 +363,9 @@ target("libkernel_l3") do
     })
     add_includedirs("$(buildir)/L3")
     add_includedirs(l2_includedirs, {public = true})
+    add_includedirs(l3_includedirs, {public = true})
     add_files(l2_files)
+    add_files(l3_files)
 
     if is_plat("linux") or is_plat("macosx") then
         add_includedirs("src/Plugins/Unix")
