@@ -18,7 +18,7 @@
 typedef array<patch> array_patch;
 
 bool    tmscm_is_patch (tmscm obj);
-url     tmscm_to_patch (tmscm obj);
+patch   tmscm_to_patch (tmscm obj);
 tmscm   patch_to_tmscm (patch p);
 
 bool            tmscm_is_array_patch (tmscm p);

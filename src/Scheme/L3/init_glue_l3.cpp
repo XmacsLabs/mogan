@@ -12,6 +12,7 @@
 #include "init_glue_l3.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
+#include "object_l3.hpp"
 #include "s7_tm.hpp"
 
 #include "modification.hpp"
@@ -191,12 +192,37 @@ var_clean_apply (tree &t, modification m) {
   return clean_apply (t, copy (m));
 }
 
+patch
+branch_patch (array<patch> a) {
+  return patch (true, a);
+}
+
+tree
+var_clean_apply (tree t, patch p) {
+  return clean_apply (copy (p), t);
+}
+
+tree
+var_apply (tree &t, patch p) {
+  apply (copy (p), t);
+  return t;
+}
+
+tmscm
+patchP (tmscm t) {
+  bool b= tmscm_is_patch (t);
+  return bool_to_tmscm (b);
+}
+
 #include "glue_modification.cpp"
+#include "glue_patch.cpp"
 #include "glue_path.cpp"
 #include "glue_tree.cpp"
 
 void
 initialize_glue_l3 () {
+  tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
+
   initialize_glue_tree ();
   initialize_glue_path ();
   initialize_glue_modification ();

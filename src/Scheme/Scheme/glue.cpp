@@ -196,28 +196,6 @@ tree_active (tree t) {
 }
 
 
-tmscm 
-patchP (tmscm t) {
-  bool b= tmscm_is_patch (t);
-  return bool_to_tmscm (b);
-}
-
-patch
-branch_patch (array<patch> a) {
-  return patch (true, a);
-}
-
-tree
-var_clean_apply (tree t, patch p) {
-  return clean_apply (copy (p), t);
-}
-
-tree
-var_apply (tree& t, patch p) {
-  apply (copy (p), t);
-  return t;
-}
-
 /******************************************************************************
 * Table types
 ******************************************************************************/
@@ -325,7 +303,6 @@ string recognize_glyph (array_array_array_double gl);
 #include "LaTeX_Preview/latex_preview.hpp"
 #include "link.hpp"
 #include "dictionary.hpp"
-#include "patch.hpp"
 #include "packrat.hpp"
 #include "new_style.hpp"
 
@@ -340,8 +317,6 @@ string recognize_glyph (array_array_array_double gl);
 
 void
 initialize_glue () {
-  tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
-  
   initialize_glue_l1 ();
   initialize_glue_l2 ();
   initialize_glue_l3 ();

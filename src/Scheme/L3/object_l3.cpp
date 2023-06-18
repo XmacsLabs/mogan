@@ -12,15 +12,14 @@
 #include "object_l3.hpp"
 #include "object.hpp"
 
-
 bool
 tmscm_is_patch (tmscm p) {
   return (tmscm_is_blackbox (p) &&
-	  (type_box (tmscm_to_blackbox(p)) == type_helper<patch>::id))
-    || (tmscm_is_string (p));
+          (type_box (tmscm_to_blackbox (p)) == type_helper<patch>::id)) ||
+         (tmscm_is_string (p));
 }
 
-tmscm 
+tmscm
 patch_to_tmscm (patch p) {
   return blackbox_to_tmscm (close_box<patch> (p));
 }
@@ -33,17 +32,17 @@ tmscm_to_patch (tmscm obj) {
 bool
 tmscm_is_array_patch (tmscm p) {
   if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) &&
-    tmscm_is_patch (tmscm_car (p)) &&
-    tmscm_is_array_patch (tmscm_cdr (p));
+  else
+    return tmscm_is_pair (p) && tmscm_is_patch (tmscm_car (p)) &&
+           tmscm_is_array_patch (tmscm_cdr (p));
 }
 
-
-tmscm 
+tmscm
 array_patch_to_tmscm (array<patch> a) {
-  int i, n= N(a);
+  int   i, n= N (a);
   tmscm p= tmscm_null ();
-  for (i=n-1; i>=0; i--) p= tmscm_cons (patch_to_tmscm (a[i]), p);
+  for (i= n - 1; i >= 0; i--)
+    p= tmscm_cons (patch_to_tmscm (a[i]), p);
   return p;
 }
 
