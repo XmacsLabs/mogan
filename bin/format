@@ -5,9 +5,9 @@ echo "Please use clang-format >= 15.0.0"
 set -x
 
 xmake format -f "tests/**.cpp"
-xmake format -f "src/Scheme/L1/**.cpp"
-xmake format -f "src/Scheme/L2/**.cpp"
-xmake format -f "src/Scheme/L3/**.cpp"
+xmake format -f "src/Scheme/L1/**.[hc]pp"
+xmake format -f "src/Scheme/L2/**.[hc]pp"
+xmake format -f "src/Scheme/L3/**.[hc]pp"
 xmake format -f "src/Plugins/Curl/**.cpp"
 xmake format -f "src/Graphics/Types/**.cpp"
 xmake format -f "src/Typeset/Boxes/Graphics/**.cpp"
