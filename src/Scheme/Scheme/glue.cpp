@@ -113,15 +113,6 @@ get_bounding_rectangle (tree t) {
 }
 
 bool
-supports_native_pdf () {
-#ifdef PDF_RENDERER
-  return true;
-#else
-  return false;
-#endif
-}
-
-bool
 supports_ghostscript () {
 #ifdef USE_GS
   return true;
