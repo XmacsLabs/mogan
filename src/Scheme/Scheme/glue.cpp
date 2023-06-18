@@ -18,7 +18,6 @@
 #include "init_glue_plugins.hpp"
 
 #include "promise.hpp"
-#include "patch.hpp"
 
 #include "boxes.hpp"
 #include "editor.hpp"
@@ -198,49 +197,6 @@ tree_active (tree t) {
 
 
 /******************************************************************************
-* Patch
-******************************************************************************/
-
-bool
-tmscm_is_patch (tmscm p) {
-  return (tmscm_is_blackbox (p) &&
-	  (type_box (tmscm_to_blackbox(p)) == type_helper<patch>::id))
-    || (tmscm_is_string (p));
-}
-
-tmscm 
-patch_to_tmscm (patch p) {
-  return blackbox_to_tmscm (close_box<patch> (p));
-}
-
-patch
-tmscm_to_patch (tmscm obj) {
-  return open_box<patch> (tmscm_to_blackbox (obj));
-}
-
-tmscm 
-patchP (tmscm t) {
-  bool b= tmscm_is_patch (t);
-  return bool_to_tmscm (b);
-}
-
-patch
-branch_patch (array<patch> a) {
-  return patch (true, a);
-}
-
-tree
-var_clean_apply (tree t, patch p) {
-  return clean_apply (copy (p), t);
-}
-
-tree
-var_apply (tree& t, patch p) {
-  apply (copy (p), t);
-  return t;
-}
-
-/******************************************************************************
 * Table types
 ******************************************************************************/
 
@@ -291,7 +247,6 @@ TMSCM_ASSERT (tmscm_is_solution(p), p, arg, rout)
 #define solution_to_tmscm table_string_string_to_tmscm
 #define tmscm_to_solution tmscm_to_table_string_string
 
-typedef array<patch> array_patch;
 typedef array<widget> array_widget;
 
 static bool
@@ -323,35 +278,6 @@ tmscm_to_array_widget (tmscm p) {
   return a;
 }
 
-static bool
-tmscm_is_array_patch (tmscm p) {
-  if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) &&
-    tmscm_is_patch (tmscm_car (p)) &&
-    tmscm_is_array_patch (tmscm_cdr (p));
-}
-
-
-#define TMSCM_ASSERT_ARRAY_PATCH(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_array_patch (p), p, arg, rout)
-
-/* static */ tmscm 
-array_patch_to_tmscm (array<patch> a) {
-  int i, n= N(a);
-  tmscm p= tmscm_null ();
-  for (i=n-1; i>=0; i--) p= tmscm_cons (patch_to_tmscm (a[i]), p);
-  return p;
-}
-
-/* static */ array<patch>
-tmscm_to_array_patch (tmscm p) {
-  array<patch> a;
-  while (!tmscm_is_null (p)) {
-    a << tmscm_to_patch (tmscm_car (p));
-    p= tmscm_cdr (p);
-  }
-  return a;
-}
 
 void register_glyph (string s, array_array_array_double gl);
 string recognize_glyph (array_array_array_double gl);
@@ -377,7 +303,6 @@ string recognize_glyph (array_array_array_double gl);
 #include "LaTeX_Preview/latex_preview.hpp"
 #include "link.hpp"
 #include "dictionary.hpp"
-#include "patch.hpp"
 #include "packrat.hpp"
 #include "new_style.hpp"
 
@@ -392,8 +317,6 @@ string recognize_glyph (array_array_array_double gl);
 
 void
 initialize_glue () {
-  tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
-  
   initialize_glue_l1 ();
   initialize_glue_l2 ();
   initialize_glue_l3 ();
