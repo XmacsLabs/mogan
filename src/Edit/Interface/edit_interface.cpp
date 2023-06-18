@@ -20,7 +20,7 @@
 #include "drd_mode.hpp"
 #include "message.hpp"
 #include "tree_traverse.hpp"
-#include "boot.hpp"
+#include "preferences.hpp"
 #ifdef EXPERIMENTAL
 #include "../../Style/Evaluate/evaluate_main.hpp"
 #endif

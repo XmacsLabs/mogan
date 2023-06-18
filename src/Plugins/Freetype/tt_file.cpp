@@ -13,6 +13,7 @@
 #include "tt_tools.hpp"
 #include "file.hpp"
 #include "boot.hpp"
+#include "preferences.hpp"
 #include "analyze.hpp"
 #include "hashmap.hpp"
 #include "Metafont/tex_files.hpp"

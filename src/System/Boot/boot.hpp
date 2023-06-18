@@ -19,9 +19,6 @@ extern bool use_which;
 extern bool use_locate;
 extern bool headless_mode;
 
-string get_setting (string var, string def= "");
-void   set_setting (string var, string val);
-void   get_old_settings (string s);
 void   init_upgrade ();
 void   init_texmacs ();
 void   init_plugins ();
@@ -29,12 +26,5 @@ void   setup_texmacs ();
 void   release_boot_lock ();
 
 scheme_tree plugin_list ();
-
-bool   has_user_preference (string var);
-string get_user_preference (string var, string def= "");
-void   set_user_preference (string var, string val);
-void   reset_user_preference (string var);
-void   load_user_preferences ();
-void   save_user_preferences ();
 
 #endif // defined BOOT_H

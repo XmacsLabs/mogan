@@ -10,6 +10,8 @@
 ******************************************************************************/
 
 #include "analyze.hpp"
+#include "preferences.hpp"
+#include "object_l5.hpp"
 
 #include "qt_gui.hpp"
 #include "qt_utilities.hpp"

@@ -11,39 +11,11 @@
 ******************************************************************************/
 
 #include "boot.hpp"
+#include "preferences.hpp"
 #include "file.hpp"
 #include "path.hpp"
 #include "sys_utils.hpp"
 #include "data_cache.hpp"
-
-/******************************************************************************
-* Old style settings files
-******************************************************************************/
-
-static string
-line_read (string s, int& i) {
-  int start= i, n= N(s);
-  for (start=i; i<n; i++)
-    if (s[i]=='\n') break;
-  string r= s (start, i);
-  if (i<n) i++;
-  return r;
-}
-
-void
-get_old_settings (string s) {
-  int i= 0, j;
-  while (i<N(s)) {
-    string l= line_read (s, i);
-    for (j=0; j<N(l); j++)
-      if (l[j] == '=') {
-	string left = l (0, j);
-	while ((j<N(l)) && ((l[j]=='=') || (l[j]==' '))) j++;
-	string right= l (j, N(l));
-	set_setting (left, right);
-      }
-  }
-}
 
 /******************************************************************************
 * Check for old Init.scm and Init-buffer.scm files

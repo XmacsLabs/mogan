@@ -1,0 +1,12 @@
+#define KERNEL_L3
+
+/* L1 Kernel */
+${define HAVE_INTPTR_T}
+${define HAVE_STDINT_H}
+${define QTTEXMACS}
+${define SANITY_CHECKS}
+${define OS_MINGW}
+
+/* L2 Kernel */
+${define HAVE_TIME_T}
+${define HAVE_GETTIMEOFDAY}
