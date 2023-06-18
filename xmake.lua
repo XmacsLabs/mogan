@@ -122,17 +122,20 @@ local l1_files = {
     "src/Kernel/Containers/**.cpp",
     "src/Kernel/Types/**.cpp",
     "src/Data/Drd/**.cpp",
+    "src/Data/String/base64.cpp",
+    "src/Data/String/fast_search.cpp",
     "src/System/IO/**.cpp",
     "src/System/Memory/**.cpp"
 }
 local l1_includedirs = {
-    "src/System/Memory",
-    "src/System/IO",
-    "src/Plugins",
     "src/Kernel/Abstractions",
     "src/Kernel/Containers",
     "src/Kernel/Types",
-    "src/Data/Drd"
+    "src/Data/Drd",
+    "src/Data/String",
+    "src/System/IO",
+    "src/System/Memory",
+    "src/Plugins"
 }
 
 target("libkernel_l1") do
