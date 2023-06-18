@@ -106,11 +106,11 @@ function main()
                 }
             },
             {
-                scm_name = "utf8->html",
-                cpp_name = "utf8_to_html",
-                ret_type = "string",
+                scm_name = "retrieve-mathjax",
+                cpp_name = "retrieve_mathjax",
+                ret_type = "tree",
                 arg_list = {
-                    "string"
+                    "int"
                 }
             },
         }

@@ -279,7 +279,7 @@ target("libkernel_l2") do
     end
 end
 
-for _, filepath in ipairs(os.files("tests/System/**_test.cpp")) do
+for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
     local testname = path.basename(filepath)
     target(testname) do
         set_languages("c++17")
@@ -521,7 +521,8 @@ target("libmogan") do
             "src/Plugins/Metafont/**.cpp",
             "src/Plugins/LaTeX_Preview/**.cpp",
             "src/Plugins/Openssl/**.cpp",
-            "src/Plugins/Updater/**.cpp"})
+            "src/Plugins/Updater/**.cpp",
+            "src/Plugins/Xml/**.cpp"})
 
     if is_plat("mingw") then
         add_files("src/Plugins/Windows/**.cpp")
@@ -745,9 +746,9 @@ end
 
 
 for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
-    srcdir = path.join("src", table.unpack(path.split(path.directory(filepath)),2))
-    if (l1_includedirs[srcdir] == nil) and (l2_includedirs[srcdir] == nil) then
-        local testname = path.basename(filepath) 
+    if string.sub(filepath, 1, string.len("tests/Kernel")) ~= "tests/Kernel"
+       and string.sub(filepath, 1, string.len("tests/System/Classes")) ~= "tests/System/Classes" then
+        local testname = path.basename(filepath)
         target(testname) do 
             add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
             set_group("tests")
@@ -757,6 +758,7 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_rules("qt.console")
             add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
             add_syslinks("pthread")
+            add_packages("s7")
 
             add_includedirs({"$(buildir)", "tests/Base"})
             add_files("tests/Base/base.cpp")

@@ -96,31 +96,5 @@ tree   get_latex_errors (url log);
 int    number_latex_pages (url log);
 tree   postprocess_metadata (tree t);
 
-/*** Xml / Html / Mathml ***/
-string old_tm_to_xml_cdata (string s);
-object tm_to_xml_cdata (string s);
-string old_xml_cdata_to_tm (string s);
-string tm_to_xml_name (string s);
-string xml_name_to_tm (string s);
-string xml_unspace (string s, bool first, bool last);
-
-tree   parse_xml (string s);
-tree   parse_plain_html (string s);
-tree   parse_html (string s);
-tree   clean_html (tree t);
-tree   tmml_upgrade (scheme_tree t);
-tree   upgrade_mathml (tree t);
-tree   retrieve_mathjax (int id);
-
-tree   find_first_element_by_name (tree t, string name);
-string get_attr_from_element (tree t, string name, string default_value);
-int    parse_xml_length (string length);
-
-/*** Post corrections ***/
-bool   seems_buggy_html_paste (string s);
-string correct_buggy_html_paste (string s);
-bool   seems_buggy_paste (string s);
-string correct_buggy_paste (string s);
-tree   default_with_simplify (tree t);
 
 #endif // defined CONVERT_H
