@@ -13,17 +13,16 @@
 #include "object.hpp"
 
 /******************************************************************************
-* Widgets
-******************************************************************************/
+ * Widgets
+ ******************************************************************************/
 
 bool
 tmscm_is_widget (tmscm u) {
   return (tmscm_is_blackbox (u) &&
-         (type_box (tmscm_to_blackbox(u)) == type_helper<widget>::id));
+          (type_box (tmscm_to_blackbox (u)) == type_helper<widget>::id));
 }
 
-
-tmscm 
+tmscm
 widget_to_tmscm (widget o) {
   return blackbox_to_tmscm (close_box<widget> (o));
 }
@@ -40,18 +39,17 @@ as_widget (object obj) {
   return tmscm_to_widget (w);
 }
 
-
 /******************************************************************************
-*  Widget Factory
-******************************************************************************/
+ *  Widget Factory
+ ******************************************************************************/
 
 bool
 tmscm_is_promise_widget (tmscm u) {
-  return (tmscm_is_blackbox (u) && 
-         (type_box (tmscm_to_blackbox(u)) == type_helper<promise_widget>::id));
+  return (tmscm_is_blackbox (u) && (type_box (tmscm_to_blackbox (u)) ==
+                                    type_helper<promise_widget>::id));
 }
 
-tmscm 
+tmscm
 promise_widget_to_tmscm (promise_widget o) {
   return blackbox_to_tmscm (close_box<promise_widget> (o));
 }
@@ -61,12 +59,13 @@ tmscm_to_promise_widget (tmscm o) {
   return open_box<promise_widget> (tmscm_to_blackbox (o));
 }
 
-class object_promise_widget_rep: public promise_rep<widget> {
+class object_promise_widget_rep : public promise_rep<widget> {
   object obj;
+
 public:
-  object_promise_widget_rep (object obj2): obj (obj2) {}
-  tm_ostream& print (tm_ostream& out) { return out << obj; }
-  widget eval () {
+  object_promise_widget_rep (object obj2) : obj (obj2) {}
+  tm_ostream &print (tm_ostream &out) { return out << obj; }
+  widget      eval () {
     tmscm result= call_scheme (object_to_tmscm (obj));
     if (tmscm_is_widget (result)) return tmscm_to_widget (result);
     else {

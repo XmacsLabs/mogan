@@ -12,26 +12,33 @@
 #ifndef OBJECT_L5_HPP
 #define OBJECT_L5_HPP
 
+#include "promise.hpp"
 #include "s7_tm.hpp"
 #include "widget.hpp"
-#include "promise.hpp"
 
 typedef promise<widget> promise_widget;
 
-bool tmscm_is_widget (tmscm obj);
-tmscm widget_to_tmscm (widget o);
-widget tmscm_to_widget (tmscm o);
-widget as_widget (object obj);
+bool
+tmscm_is_widget (tmscm obj);
+tmscm
+widget_to_tmscm (widget o);
+widget
+tmscm_to_widget (tmscm o);
+widget
+as_widget (object obj);
 
-bool tmscm_is_promise_widget (tmscm u);
-tmscm promise_widget_to_tmscm (promise_widget o);
-promise_widget tmscm_to_promise_widget (tmscm o);
-promise<widget> as_promise_widget (object obj);
+bool
+tmscm_is_promise_widget (tmscm u);
+tmscm
+promise_widget_to_tmscm (promise_widget o);
+promise_widget
+tmscm_to_promise_widget (tmscm o);
+promise<widget>
+as_promise_widget (object obj);
 
-#define TMSCM_ASSERT_WIDGET(o,arg,rout) \
-TMSCM_ASSERT (tmscm_is_widget (o), o, arg, rout)
-#define TMSCM_ASSERT_PROMISE_WIDGET(o,arg,rout) \
-TMSCM_ASSERT (tmscm_is_promise_widget (o), o, arg, rout)
-
+#define TMSCM_ASSERT_WIDGET(o, arg, rout)                                      \
+  TMSCM_ASSERT (tmscm_is_widget (o), o, arg, rout)
+#define TMSCM_ASSERT_PROMISE_WIDGET(o, arg, rout)                              \
+  TMSCM_ASSERT (tmscm_is_promise_widget (o), o, arg, rout)
 
 #endif

@@ -16,4 +16,3 @@ void
 initialize_glue_l4 ();
 
 #endif
-

@@ -12,5 +12,4 @@
 #include "init_glue_l4.hpp"
 
 void
-initialize_glue_l4 () {
-}
+initialize_glue_l4 () {}

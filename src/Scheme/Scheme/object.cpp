@@ -1,13 +1,13 @@
 
 /******************************************************************************
-* MODULE     : object.cpp
-* DESCRIPTION: Implementation of scheme objects
-* COPYRIGHT  : (C) 1999-2011 Joris van der Hoeven and Massimiliano Gubinelli
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : object.cpp
+ * DESCRIPTION: Implementation of scheme objects
+ * COPYRIGHT  : (C) 1999-2011 Joris van der Hoeven and Massimiliano Gubinelli
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "object_l1.hpp"
 #include "object_l2.hpp"
@@ -15,56 +15,57 @@
 #ifndef KERNEL_L3
 #include "object_l5.hpp"
 #endif
-#include "object.hpp"
 #include "glue.hpp"
+#include "object.hpp"
 
+#include "array.hpp"
 #include "config.h"
 #include "list.hpp"
-#include "array.hpp"
 #include "promise.hpp"
 #ifndef KERNEL_L3
-#include "widget.hpp"
 #include "boot.hpp"
 #include "editor.hpp"
+#include "widget.hpp"
 #endif
-#include "tm_timer.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
 #include "preferences.hpp"
+#include "tm_timer.hpp"
 
 /******************************************************************************
-* The object representation class
-******************************************************************************/
+ * The object representation class
+ ******************************************************************************/
 
-static list<tmscm > destroy_list;
-extern tmscm object_stack;
+static list<tmscm> destroy_list;
+extern tmscm       object_stack;
 
 tmscm_object_rep::tmscm_object_rep (tmscm obj) {
   while (!is_nil (destroy_list)) {
     tmscm handle= destroy_list->item;
-    
+
     tmscm_set_car (handle, tmscm_null ());
-    while (tmscm_is_pair (tmscm_cdr (handle)) && tmscm_is_null (tmscm_cadr (handle)))
-      tmscm_set_cdr (handle, tmscm_cddr( (handle)) );
+    while (tmscm_is_pair (tmscm_cdr (handle)) &&
+           tmscm_is_null (tmscm_cadr (handle)))
+      tmscm_set_cdr (handle, tmscm_cddr ((handle)));
     destroy_list= destroy_list->next;
   }
-  handle = tmscm_cons ( tmscm_cons (obj, tmscm_null ()), tmscm_car (object_stack) );
+  handle=
+      tmscm_cons (tmscm_cons (obj, tmscm_null ()), tmscm_car (object_stack));
   tmscm_set_car (object_stack, handle);
 }
 
 tmscm_object_rep::~tmscm_object_rep () {
-    // Be careful: can't call Scheme code from this destructor,
-    // because the destructor can be called during garbage collection.
-  destroy_list= list<tmscm > ( handle, destroy_list);
+  // Be careful: can't call Scheme code from this destructor,
+  // because the destructor can be called during garbage collection.
+  destroy_list= list<tmscm> (handle, destroy_list);
 }
 
-
 /******************************************************************************
-* Routines on objects
-******************************************************************************/
+ * Routines on objects
+ ******************************************************************************/
 
-tm_ostream&
-operator << (tm_ostream& out, object obj) {
+tm_ostream &
+operator<< (tm_ostream &out, object obj) {
   out.flush ();
   if (out == cout) call ("write", obj);
   else if (out == cerr) call ("write-err", obj);
@@ -74,13 +75,13 @@ operator << (tm_ostream& out, object obj) {
 }
 
 bool
-operator == (object obj1, object obj2) {
+operator== (object obj1, object obj2) {
   tmscm o1= object_to_tmscm (obj1), o2= object_to_tmscm (obj2);
   return tmscm_is_equal (o1, o2);
 }
 
 bool
-operator != (object obj1, object obj2) {
+operator!= (object obj1, object obj2) {
   return !(obj1 == obj2);
 }
 
@@ -89,90 +90,150 @@ hash (object obj) {
   return as_int (call ("hash", obj, object (1234567)));
 }
 
+/******************************************************************************
+ * Utilities
+ ******************************************************************************/
+
+object
+null_object () {
+  return tmscm_to_object (tmscm_null ());
+}
+object
+cons (object obj1, object obj2) {
+  return tmscm_to_object (
+      tmscm_cons (object_to_tmscm (obj1), object_to_tmscm (obj2)));
+}
+object
+list_object (object obj1) {
+  return cons (obj1, null_object ());
+}
+object
+list_object (object obj1, object obj2) {
+  return cons (obj1, cons (obj2, null_object ()));
+}
+object
+list_object (object obj1, object obj2, object obj3) {
+  return cons (obj1, cons (obj2, cons (obj3, null_object ())));
+}
+object
+symbol_object (string s) {
+  return tmscm_to_object (symbol_to_tmscm (s));
+}
+object
+car (object obj) {
+  return tmscm_to_object (tmscm_car (object_to_tmscm (obj)));
+}
+object
+cdr (object obj) {
+  return tmscm_to_object (tmscm_cdr (object_to_tmscm (obj)));
+}
+object
+caar (object obj) {
+  return tmscm_to_object (tmscm_caar (object_to_tmscm (obj)));
+}
+object
+cdar (object obj) {
+  return tmscm_to_object (tmscm_cdar (object_to_tmscm (obj)));
+}
+object
+cadr (object obj) {
+  return tmscm_to_object (tmscm_cadr (object_to_tmscm (obj)));
+}
+object
+cddr (object obj) {
+  return tmscm_to_object (tmscm_cddr (object_to_tmscm (obj)));
+}
+object
+caddr (object obj) {
+  return tmscm_to_object (tmscm_caddr (object_to_tmscm (obj)));
+}
+object
+cadddr (object obj) {
+  return tmscm_to_object (tmscm_cadddr (object_to_tmscm (obj)));
+}
 
 /******************************************************************************
-* Utilities
-******************************************************************************/
+ * Predicates
+ ******************************************************************************/
 
-object null_object () {
-  return tmscm_to_object (tmscm_null ()); }
-object cons (object obj1, object obj2) {
-  return tmscm_to_object (tmscm_cons (object_to_tmscm (obj1), object_to_tmscm (obj2))); }
-object list_object (object obj1) {
-  return cons (obj1, null_object ()); }
-object list_object (object obj1, object obj2) {
-  return cons (obj1, cons (obj2, null_object ())); }
-object list_object (object obj1, object obj2, object obj3) {
-  return cons (obj1, cons (obj2, cons (obj3, null_object ()))); }
-object symbol_object (string s) {
-  return tmscm_to_object ( symbol_to_tmscm (s) ); }
-object car (object obj) {
-  return tmscm_to_object (tmscm_car (object_to_tmscm (obj))); }
-object cdr (object obj) {
-  return tmscm_to_object (tmscm_cdr (object_to_tmscm (obj))); }
-object caar (object obj) {
-  return tmscm_to_object (tmscm_caar (object_to_tmscm (obj))); }
-object cdar (object obj) {
-  return tmscm_to_object (tmscm_cdar (object_to_tmscm (obj))); }
-object cadr (object obj) {
-  return tmscm_to_object (tmscm_cadr (object_to_tmscm (obj))); }
-object cddr (object obj) {
-  return tmscm_to_object (tmscm_cddr (object_to_tmscm (obj))); }
-object caddr (object obj) {
-  return tmscm_to_object (tmscm_caddr (object_to_tmscm (obj))); }
-object cadddr (object obj) {
-  return tmscm_to_object (tmscm_cadddr (object_to_tmscm (obj))); }
-
-
-/******************************************************************************
-* Predicates
-******************************************************************************/
-
-bool is_null (object obj) { return tmscm_is_null (object_to_tmscm (obj)); }
-bool is_list (object obj) { return tmscm_is_list (object_to_tmscm (obj)); }
-bool is_bool (object obj) { return tmscm_is_bool (object_to_tmscm (obj)); }
-bool is_int (object obj) { return tmscm_is_int (object_to_tmscm (obj)); }
-bool is_double (object obj) { return tmscm_is_double (object_to_tmscm (obj)); }
-bool is_string (object obj) { return tmscm_is_string (object_to_tmscm (obj)); }
-bool is_symbol (object obj) { return tmscm_is_symbol (object_to_tmscm (obj)); }
-bool is_path (object obj) { return tmscm_is_path (object_to_tmscm (obj)); }
-bool is_array_double (object obj) {
-  return tmscm_is_array_double (object_to_tmscm (obj)); }
+bool
+is_null (object obj) {
+  return tmscm_is_null (object_to_tmscm (obj));
+}
+bool
+is_list (object obj) {
+  return tmscm_is_list (object_to_tmscm (obj));
+}
+bool
+is_bool (object obj) {
+  return tmscm_is_bool (object_to_tmscm (obj));
+}
+bool
+is_int (object obj) {
+  return tmscm_is_int (object_to_tmscm (obj));
+}
+bool
+is_double (object obj) {
+  return tmscm_is_double (object_to_tmscm (obj));
+}
+bool
+is_string (object obj) {
+  return tmscm_is_string (object_to_tmscm (obj));
+}
+bool
+is_symbol (object obj) {
+  return tmscm_is_symbol (object_to_tmscm (obj));
+}
+bool
+is_path (object obj) {
+  return tmscm_is_path (object_to_tmscm (obj));
+}
+bool
+is_array_double (object obj) {
+  return tmscm_is_array_double (object_to_tmscm (obj));
+}
 #ifndef KERNEL_L3
-bool is_widget (object obj) { return tmscm_is_widget (object_to_tmscm (obj)); }
+bool
+is_widget (object obj) {
+  return tmscm_is_widget (object_to_tmscm (obj));
+}
 #endif
-bool is_patch (object obj) { return tmscm_is_patch (object_to_tmscm (obj)); }
-bool is_modification (object obj) {
-  return tmscm_is_modification (object_to_tmscm (obj)); }
+bool
+is_patch (object obj) {
+  return tmscm_is_patch (object_to_tmscm (obj));
+}
+bool
+is_modification (object obj) {
+  return tmscm_is_modification (object_to_tmscm (obj));
+}
 
 /******************************************************************************
-* Basic conversions
-******************************************************************************/
+ * Basic conversions
+ ******************************************************************************/
 
-object::object (tmscm_object_rep* o): rep (static_cast<object_rep*>(o)) {}
-object::object (): rep (tm_new<tmscm_object_rep> (tmscm_null ())) {}
-object::object (bool b): rep (tm_new<tmscm_object_rep> (bool_to_tmscm (b))) {}
-object::object (int i): rep (tm_new<tmscm_object_rep> (int_to_tmscm (i))) {}
-object::object (double x):
-  rep (tm_new<tmscm_object_rep> (double_to_tmscm (x))) {}
-object::object (const char* s):
-  rep (tm_new<tmscm_object_rep> (string_to_tmscm (string (s)))) {}
-object::object (string s):
-  rep (tm_new<tmscm_object_rep> (string_to_tmscm (s))) {}
-object::object (tree t):
-  rep (tm_new<tmscm_object_rep> (tree_to_tmscm (t))) {}
-object::object (list<string> l):
-  rep (tm_new<tmscm_object_rep> (list_string_to_tmscm (l))) {}
-object::object (list<tree> l):
-  rep (tm_new<tmscm_object_rep> (list_tree_to_tmscm (l))) {}
-object::object (path p): rep (tm_new<tmscm_object_rep> (path_to_tmscm (p))) {}
-object::object (url u): rep (tm_new<tmscm_object_rep> (url_to_tmscm (u))) {}
-object::object (array<double> a):
-  rep (tm_new<tmscm_object_rep> (array_double_to_tmscm (a))) {}
-object::object (patch m):
-  rep (tm_new<tmscm_object_rep> (patch_to_tmscm (m))) {}
-object::object (modification m):
-  rep (tm_new<tmscm_object_rep> (modification_to_tmscm (m))) {}
+object::object (tmscm_object_rep *o) : rep (static_cast<object_rep *> (o)) {}
+object::object () : rep (tm_new<tmscm_object_rep> (tmscm_null ())) {}
+object::object (bool b) : rep (tm_new<tmscm_object_rep> (bool_to_tmscm (b))) {}
+object::object (int i) : rep (tm_new<tmscm_object_rep> (int_to_tmscm (i))) {}
+object::object (double x)
+    : rep (tm_new<tmscm_object_rep> (double_to_tmscm (x))) {}
+object::object (const char *s)
+    : rep (tm_new<tmscm_object_rep> (string_to_tmscm (string (s)))) {}
+object::object (string s)
+    : rep (tm_new<tmscm_object_rep> (string_to_tmscm (s))) {}
+object::object (tree t) : rep (tm_new<tmscm_object_rep> (tree_to_tmscm (t))) {}
+object::object (list<string> l)
+    : rep (tm_new<tmscm_object_rep> (list_string_to_tmscm (l))) {}
+object::object (list<tree> l)
+    : rep (tm_new<tmscm_object_rep> (list_tree_to_tmscm (l))) {}
+object::object (path p) : rep (tm_new<tmscm_object_rep> (path_to_tmscm (p))) {}
+object::object (url u) : rep (tm_new<tmscm_object_rep> (url_to_tmscm (u))) {}
+object::object (array<double> a)
+    : rep (tm_new<tmscm_object_rep> (array_double_to_tmscm (a))) {}
+object::object (patch m)
+    : rep (tm_new<tmscm_object_rep> (patch_to_tmscm (m))) {}
+object::object (modification m)
+    : rep (tm_new<tmscm_object_rep> (modification_to_tmscm (m))) {}
 
 bool
 as_bool (object obj) {
@@ -208,7 +269,6 @@ as_symbol (object obj) {
   if (!tmscm_is_symbol (s)) return "";
   return tmscm_to_symbol (s);
 }
-
 
 scheme_tree
 as_tmscm_tree (object obj) {
@@ -258,16 +318,14 @@ as_array_double (object obj) {
 modification
 as_modification (object obj) {
   tmscm m= object_to_tmscm (obj);
-  if (!tmscm_is_modification (m))
-    return mod_assign (path (), "");
+  if (!tmscm_is_modification (m)) return mod_assign (path (), "");
   return tmscm_to_modification (m);
 }
 
 patch
 as_patch (object obj) {
   tmscm p= object_to_tmscm (obj);
-  if (!tmscm_is_patch (p))
-    return patch (array<patch> ());
+  if (!tmscm_is_patch (p)) return patch (array<patch> ());
   return tmscm_to_patch (p);
 }
 
@@ -284,7 +342,7 @@ stree_to_tree (object obj) {
 tree
 content_to_tree (object obj) {
   return tmscm_to_content (object_to_tmscm (obj));
-    // return as_tree (call ("content->tree", obj));
+  // return as_tree (call ("content->tree", obj));
 }
 
 object
@@ -298,7 +356,7 @@ object_to_string (object obj) {
 }
 
 object
-scheme_cmd (const char* s) {
+scheme_cmd (const char *s) {
   return eval ("(lambda () " * string (s) * ")");
 }
 
@@ -316,27 +374,30 @@ scheme_cmd (object cmd) {
 }
 
 /******************************************************************************
-* Conversions to functional objects
-******************************************************************************/
+ * Conversions to functional objects
+ ******************************************************************************/
 
-static inline array<tmscm >
+static inline array<tmscm>
 array_lookup (array<object> a) {
-  const int n=N(a);
-  array<tmscm > tmscm (n);
-  int i;
-  for (i=0; i<n; i++) tmscm [i]= object_to_tmscm (a[i]);
-  return tmscm ;
+  const int    n= N (a);
+  array<tmscm> tmscm (n);
+  int          i;
+  for (i= 0; i < n; i++)
+    tmscm[i]= object_to_tmscm (a[i]);
+  return tmscm;
 }
 
-class object_command_rep: public command_rep {
+class object_command_rep : public command_rep {
   object obj;
+
 public:
-  object_command_rep (object obj2): obj (obj2) {}
+  object_command_rep (object obj2) : obj (obj2) {}
   void apply () { (void) call_scheme (object_to_tmscm (obj)); }
   void apply (object args) {
     (void) call_scheme (object_to_tmscm (obj),
-                        array_lookup (as_array_object (args))); }
-  tm_ostream& print (tm_ostream& out) { return out << obj; }
+                        array_lookup (as_array_object (args)));
+  }
+  tm_ostream &print (tm_ostream &out) { return out << obj; }
 };
 
 command
@@ -344,73 +405,133 @@ as_command (object obj) {
   return tm_new<object_command_rep> (obj);
 }
 
-
 /******************************************************************************
-* Evaluation and function calls
-******************************************************************************/
+ * Evaluation and function calls
+ ******************************************************************************/
 
-object eval (const char* expr) {
-  return tmscm_to_object (eval_scheme (expr)); }
-object eval (string expr) {
-  return tmscm_to_object (eval_scheme (expr)); }
-object eval (object expr) {
-  return call ("tm-eval", expr); }
-object eval_secure (string expr) {
-  return eval ("(wrap-eval-secure " * expr * ")"); }
-object eval_file (string name) {
-  return tmscm_to_object (eval_scheme_file (name)); }
-bool exec_file (url u) {
+object
+eval (const char *expr) {
+  return tmscm_to_object (eval_scheme (expr));
+}
+object
+eval (string expr) {
+  return tmscm_to_object (eval_scheme (expr));
+}
+object
+eval (object expr) {
+  return call ("tm-eval", expr);
+}
+object
+eval_secure (string expr) {
+  return eval ("(wrap-eval-secure " * expr * ")");
+}
+object
+eval_file (string name) {
+  return tmscm_to_object (eval_scheme_file (name));
+}
+bool
+exec_file (url u) {
   object ret= eval_file (materialize (u));
-  return ret != object ("#<unspecified>"); }
+  return ret != object ("#<unspecified>");
+}
 
-object call (const char* fun) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun))); }
-object call (const char* fun, object a1) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun), object_to_tmscm (a1))); }
-object call (const char* fun, object a1, object a2) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun), object_to_tmscm (a1), object_to_tmscm (a2))); }
-object call (const char* fun, object a1, object a2, object a3) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun), object_to_tmscm (a1),
-                                       object_to_tmscm (a2), object_to_tmscm (a3))); }
-object call (const char* fun, object a1, object a2, object a3, object a4) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun), object_to_tmscm (a1),
-                                       object_to_tmscm (a2), object_to_tmscm (a3), object_to_tmscm (a4))); }
-object call (const char* fun, array<object> a) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun), array_lookup(a))); }
+object
+call (const char *fun) {
+  return tmscm_to_object (call_scheme (eval_scheme (fun)));
+}
+object
+call (const char *fun, object a1) {
+  return tmscm_to_object (
+      call_scheme (eval_scheme (fun), object_to_tmscm (a1)));
+}
+object
+call (const char *fun, object a1, object a2) {
+  return tmscm_to_object (call_scheme (eval_scheme (fun), object_to_tmscm (a1),
+                                       object_to_tmscm (a2)));
+}
+object
+call (const char *fun, object a1, object a2, object a3) {
+  return tmscm_to_object (call_scheme (eval_scheme (fun), object_to_tmscm (a1),
+                                       object_to_tmscm (a2),
+                                       object_to_tmscm (a3)));
+}
+object
+call (const char *fun, object a1, object a2, object a3, object a4) {
+  return tmscm_to_object (call_scheme (
+      eval_scheme (fun), object_to_tmscm (a1), object_to_tmscm (a2),
+      object_to_tmscm (a3), object_to_tmscm (a4)));
+}
+object
+call (const char *fun, array<object> a) {
+  return tmscm_to_object (call_scheme (eval_scheme (fun), array_lookup (a)));
+}
 
-object call (string fun) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun))); }
-object call (string fun, object a1) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun), object_to_tmscm (a1))); }
-object call (string fun, object a1, object a2) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun), object_to_tmscm (a1), object_to_tmscm (a2))); }
-object call (string fun, object a1, object a2, object a3) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun), object_to_tmscm (a1),
-                                       object_to_tmscm (a2), object_to_tmscm (a3))); }
-object call (string fun, object a1, object a2, object a3, object a4) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun), object_to_tmscm (a1),
-                                       object_to_tmscm (a2), object_to_tmscm (a3), object_to_tmscm (a4))); }
-object call (string fun, array<object> a) {
-  return tmscm_to_object (call_scheme (eval_scheme(fun), array_lookup(a))); }
+object
+call (string fun) {
+  return tmscm_to_object (call_scheme (eval_scheme (fun)));
+}
+object
+call (string fun, object a1) {
+  return tmscm_to_object (
+      call_scheme (eval_scheme (fun), object_to_tmscm (a1)));
+}
+object
+call (string fun, object a1, object a2) {
+  return tmscm_to_object (call_scheme (eval_scheme (fun), object_to_tmscm (a1),
+                                       object_to_tmscm (a2)));
+}
+object
+call (string fun, object a1, object a2, object a3) {
+  return tmscm_to_object (call_scheme (eval_scheme (fun), object_to_tmscm (a1),
+                                       object_to_tmscm (a2),
+                                       object_to_tmscm (a3)));
+}
+object
+call (string fun, object a1, object a2, object a3, object a4) {
+  return tmscm_to_object (call_scheme (
+      eval_scheme (fun), object_to_tmscm (a1), object_to_tmscm (a2),
+      object_to_tmscm (a3), object_to_tmscm (a4)));
+}
+object
+call (string fun, array<object> a) {
+  return tmscm_to_object (call_scheme (eval_scheme (fun), array_lookup (a)));
+}
 
-object call (object fun) {
-  return tmscm_to_object (call_scheme (object_to_tmscm (fun))); }
-object call (object fun, object a1) {
-  return tmscm_to_object (call_scheme (object_to_tmscm (fun), object_to_tmscm (a1))); }
-object call (object fun, object a1, object a2) {
-  return tmscm_to_object (call_scheme (object_to_tmscm (fun), object_to_tmscm (a1), object_to_tmscm (a2))); }
-object call (object fun, object a1, object a2, object a3) {
-  return tmscm_to_object (call_scheme (object_to_tmscm (fun), object_to_tmscm (a1),
-                                       object_to_tmscm (a2), object_to_tmscm (a3))); }
-object call (object fun, object a1, object a2, object a3, object a4) {
-  return tmscm_to_object (call_scheme (object_to_tmscm (fun), object_to_tmscm (a1),
-                                       object_to_tmscm (a2), object_to_tmscm (a3), object_to_tmscm (a4))); }
-object call (object fun, array<object> a) {
-  return tmscm_to_object (call_scheme (object_to_tmscm (fun), array_lookup(a))); }
+object
+call (object fun) {
+  return tmscm_to_object (call_scheme (object_to_tmscm (fun)));
+}
+object
+call (object fun, object a1) {
+  return tmscm_to_object (
+      call_scheme (object_to_tmscm (fun), object_to_tmscm (a1)));
+}
+object
+call (object fun, object a1, object a2) {
+  return tmscm_to_object (call_scheme (
+      object_to_tmscm (fun), object_to_tmscm (a1), object_to_tmscm (a2)));
+}
+object
+call (object fun, object a1, object a2, object a3) {
+  return tmscm_to_object (
+      call_scheme (object_to_tmscm (fun), object_to_tmscm (a1),
+                   object_to_tmscm (a2), object_to_tmscm (a3)));
+}
+object
+call (object fun, object a1, object a2, object a3, object a4) {
+  return tmscm_to_object (call_scheme (
+      object_to_tmscm (fun), object_to_tmscm (a1), object_to_tmscm (a2),
+      object_to_tmscm (a3), object_to_tmscm (a4)));
+}
+object
+call (object fun, array<object> a) {
+  return tmscm_to_object (
+      call_scheme (object_to_tmscm (fun), array_lookup (a)));
+}
 
 /******************************************************************************
-* User preferences
-******************************************************************************/
+ * User preferences
+ ******************************************************************************/
 
 static bool preferences_ok= false;
 
@@ -432,17 +553,17 @@ notify_preference (string var) {
 
 string
 get_preference (string var, string def) {
-  if (!preferences_ok)
-    return get_user_preference (var, def);
+  if (!preferences_ok) return get_user_preference (var, def);
   else {
     string pref= as_string (call ("get-preference", var));
-    if (pref == "default") return def; else return pref;
+    if (pref == "default") return def;
+    else return pref;
   }
 }
 
 /******************************************************************************
-* Delayed evaluation
-******************************************************************************/
+ * Delayed evaluation
+ ******************************************************************************/
 
 #ifndef QTTEXMACS
 static array<object> delayed_queue;
@@ -464,15 +585,15 @@ void
 exec_pending_commands () {
   array<object> a= delayed_queue;
   array<time_t> b= start_queue;
-  delayed_queue= array<object> (0);
-  start_queue  = array<time_t> (0);
-  int i, n= N(a);
-  for (i=0; i<n; i++) {
+  delayed_queue  = array<object> (0);
+  start_queue    = array<time_t> (0);
+  int i, n= N (a);
+  for (i= 0; i < n; i++) {
     time_t now= (time_t) texmacs_time ();
     if ((now - b[i]) >= 0) {
       object obj= call (a[i]);
       if (is_int (obj) && (now - b[i] < 1000000000)) {
-          //cout << "pause= " << obj << "\n";
+        // cout << "pause= " << obj << "\n";
         delayed_queue << a[i];
         start_queue << (now + as_int (obj));
       }
@@ -492,8 +613,8 @@ clear_pending_commands () {
 #endif // QTTEXMACS
 
 /******************************************************************************
-* Protected evaluation
-******************************************************************************/
+ * Protected evaluation
+ ******************************************************************************/
 
 void
 protected_call (object cmd) {
@@ -501,17 +622,16 @@ protected_call (object cmd) {
   try {
 #endif
 #ifndef KERNEL_L3
-    get_current_editor()->before_menu_action ();
+    get_current_editor ()->before_menu_action ();
 #endif
     call (cmd);
 #ifndef KERNEL_L3
-    get_current_editor()->after_menu_action ();
+    get_current_editor ()->after_menu_action ();
 #endif
 #ifdef USE_EXCEPTIONS
-  }
-  catch (string s) {
+  } catch (string s) {
 #ifndef KERNEL_L3
-    get_current_editor()->cancel_menu_action ();
+    get_current_editor ()->cancel_menu_action ();
 #endif
   }
   handle_exceptions ();

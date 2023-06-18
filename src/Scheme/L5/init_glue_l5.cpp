@@ -17,14 +17,14 @@
 #include "object_l3.hpp"
 #include "object_l5.hpp"
 
-#include "preferences.hpp"
-#include "promise.hpp"
+#include "Freetype/tt_tools.hpp"
 #include "boxes.hpp"
 #include "editor.hpp"
-#include "universal.hpp"
-#include "locale.hpp"
 #include "iterator.hpp"
-#include "Freetype/tt_tools.hpp"
+#include "locale.hpp"
+#include "preferences.hpp"
+#include "promise.hpp"
+#include "universal.hpp"
 #include "widget.hpp"
 
 #if 0
@@ -42,8 +42,8 @@ template<class T> tmscm boxP (tmscm t) {
 #endif
 
 /******************************************************************************
-* Miscellaneous routines for use by glue only
-******************************************************************************/
+ * Miscellaneous routines for use by glue only
+ ******************************************************************************/
 
 string original_path;
 
@@ -91,23 +91,23 @@ tm_errput (string s) {
 
 void
 cpp_error () {
-  //char *np= 0; *np= 1;
+  // char *np= 0; *np= 1;
   FAILED ("an error occurred");
 }
 
 array<int>
 get_bounding_rectangle (tree t) {
-  editor ed= get_current_editor ();
-  rectangle wr= ed -> get_window_extents ();
-  path p= reverse (obtain_ip (t));
-  selection sel= ed->search_selection (p * start (t), p * end (t));
-  SI sz= ed->get_pixel_size ();
-  double sf= ((double) sz) / 256.0;
-  rectangle selr= least_upper_bound (sel->rs) / sf;
-  rectangle r= translate (selr, wr->x1, wr->y2);
+  editor     ed  = get_current_editor ();
+  rectangle  wr  = ed->get_window_extents ();
+  path       p   = reverse (obtain_ip (t));
+  selection  sel = ed->search_selection (p * start (t), p * end (t));
+  SI         sz  = ed->get_pixel_size ();
+  double     sf  = ((double) sz) / 256.0;
+  rectangle  selr= least_upper_bound (sel->rs) / sf;
+  rectangle  r   = translate (selr, wr->x1, wr->y2);
   array<int> ret;
   ret << (r->x1) << (r->y1) << (r->x2) << (r->y2);
-  //ret << (r->x1/PIXEL) << (r->y1/PIXEL) << (r->x2/PIXEL) << (r->y2/PIXEL);
+  // ret << (r->x1/PIXEL) << (r->y1/PIXEL) << (r->x2/PIXEL) << (r->y2/PIXEL);
   return ret;
 }
 
@@ -119,15 +119,15 @@ is_busy_versioning () {
 array<SI>
 get_screen_size () {
   array<SI> r;
-  SI w, h;
+  SI        w, h;
   gui_root_extents (w, h);
   r << w << h;
   return r;
 }
 
 /******************************************************************************
-* Redirections
-******************************************************************************/
+ * Redirections
+ ******************************************************************************/
 
 void
 cout_buffer () {
@@ -139,21 +139,17 @@ cout_unbuffer () {
   return cout.unbuffer ();
 }
 
-
-
-
 bool
 tree_active (tree t) {
   path ip= obtain_ip (t);
   return is_nil (ip) || last_item (ip) != DETACHED;
 }
 
-
 /******************************************************************************
-* Table types
-******************************************************************************/
+ * Table types
+ ******************************************************************************/
 
-typedef hashmap<string,string> table_string_string;
+typedef hashmap<string, string> table_string_string;
 
 bool
 tmscm_is_table_string_string (tmscm p) {
@@ -161,42 +157,41 @@ tmscm_is_table_string_string (tmscm p) {
   else if (!tmscm_is_pair (p)) return false;
   else {
     tmscm f= tmscm_car (p);
-    return tmscm_is_pair (f) &&
-    tmscm_is_string (tmscm_car (f)) &&
-    tmscm_is_string (tmscm_cdr (f)) &&
-    tmscm_is_table_string_string (tmscm_cdr (p));
+    return tmscm_is_pair (f) && tmscm_is_string (tmscm_car (f)) &&
+           tmscm_is_string (tmscm_cdr (f)) &&
+           tmscm_is_table_string_string (tmscm_cdr (p));
   }
 }
 
-#define TMSCM_ASSERT_TABLE_STRING_STRING(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_table_string_string (p), p, arg, rout)
+#define TMSCM_ASSERT_TABLE_STRING_STRING(p, arg, rout)                         \
+  TMSCM_ASSERT (tmscm_is_table_string_string (p), p, arg, rout)
 
-tmscm 
-table_string_string_to_tmscm (hashmap<string,string> t) {
-  tmscm p= tmscm_null ();
+tmscm
+table_string_string_to_tmscm (hashmap<string, string> t) {
+  tmscm            p = tmscm_null ();
   iterator<string> it= iterate (t);
   while (it->busy ()) {
     string s= it->next ();
-    tmscm n= tmscm_cons (string_to_tmscm (s), string_to_tmscm (t[s]));
-    p= tmscm_cons (n, p);
+    tmscm  n= tmscm_cons (string_to_tmscm (s), string_to_tmscm (t[s]));
+    p       = tmscm_cons (n, p);
   }
   return p;
 }
 
-hashmap<string,string>
+hashmap<string, string>
 tmscm_to_table_string_string (tmscm p) {
-  hashmap<string,string> t;
+  hashmap<string, string> t;
   while (!tmscm_is_null (p)) {
-    tmscm n= tmscm_car (p);
+    tmscm n                            = tmscm_car (p);
     t (tmscm_to_string (tmscm_car (n)))= tmscm_to_string (tmscm_cdr (n));
-    p= tmscm_cdr (p);
+    p                                  = tmscm_cdr (p);
   }
   return t;
 }
 
 #define tmscm_is_solution tmscm_is_table_string_string
-#define TMSCM_ASSERT_SOLUTION(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_solution(p), p, arg, rout)
+#define TMSCM_ASSERT_SOLUTION(p, arg, rout)                                    \
+  TMSCM_ASSERT (tmscm_is_solution (p), p, arg, rout)
 #define solution_to_tmscm table_string_string_to_tmscm
 #define tmscm_to_solution tmscm_to_table_string_string
 
@@ -205,19 +200,20 @@ typedef array<widget> array_widget;
 static bool
 tmscm_is_array_widget (tmscm p) {
   if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) &&
-    tmscm_is_widget (tmscm_car (p)) &&
-    tmscm_is_array_widget (tmscm_cdr (p));
+  else
+    return tmscm_is_pair (p) && tmscm_is_widget (tmscm_car (p)) &&
+           tmscm_is_array_widget (tmscm_cdr (p));
 }
 
-#define TMSCM_ASSERT_ARRAY_WIDGET(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_array_widget (p), p, arg, rout)
+#define TMSCM_ASSERT_ARRAY_WIDGET(p, arg, rout)                                \
+  TMSCM_ASSERT (tmscm_is_array_widget (p), p, arg, rout)
 
-/* static */ tmscm 
+/* static */ tmscm
 array_widget_to_tmscm (array<widget> a) {
-  int i, n= N(a);
+  int   i, n= N (a);
   tmscm p= tmscm_null ();
-  for (i=n-1; i>=0; i--) p= tmscm_cons (widget_to_tmscm (a[i]), p);
+  for (i= n - 1; i >= 0; i--)
+    p= tmscm_cons (widget_to_tmscm (a[i]), p);
   return p;
 }
 
@@ -231,41 +227,42 @@ tmscm_to_array_widget (tmscm p) {
   return a;
 }
 
-
-void register_glyph (string s, array_array_array_double gl);
-string recognize_glyph (array_array_array_double gl);
+void
+register_glyph (string s, array_array_array_double gl);
+string
+recognize_glyph (array_array_array_double gl);
 
 /******************************************************************************
-* Gluing
-******************************************************************************/
+ * Gluing
+ ******************************************************************************/
 
-#include "server.hpp"
-#include "tm_window.hpp"
+#include "Concat/concater.hpp"
 #include "boot.hpp"
+#include "client_server.hpp"
 #include "connect.hpp"
 #include "convert.hpp"
-#include "image_files.hpp"
-#include "web_files.hpp"
-#include "client_server.hpp"
-#include "wencoding.hpp"
-#include "tm_frame.hpp"
-#include "Concat/concater.hpp"
 #include "converter.hpp"
-#include "tm_timer.hpp"
-#include "link.hpp"
 #include "dictionary.hpp"
-#include "packrat.hpp"
+#include "image_files.hpp"
+#include "link.hpp"
 #include "new_style.hpp"
+#include "packrat.hpp"
+#include "server.hpp"
+#include "tm_frame.hpp"
+#include "tm_timer.hpp"
+#include "tm_window.hpp"
+#include "web_files.hpp"
+#include "wencoding.hpp"
 
-#include "font.hpp"
 #include "Freetype/tt_file.hpp"
 #include "Metafont/tex_files.hpp"
+#include "font.hpp"
 
-#include "glue_font.cpp"
-#include "glue_widget.cpp"
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
+#include "glue_font.cpp"
 #include "glue_server.cpp"
+#include "glue_widget.cpp"
 
 void
 initialize_glue_l5 () {
