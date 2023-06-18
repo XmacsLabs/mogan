@@ -84,7 +84,9 @@ bool is_url (object obj);
 bool is_array_double (object obj);
 bool is_modification (object obj);
 bool is_patch (object obj);
+#ifndef KERNEL_L3
 bool is_widget (object obj);
+#endif
 
 bool as_bool (object obj);
 int as_int (object obj);

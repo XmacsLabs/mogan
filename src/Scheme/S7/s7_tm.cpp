@@ -16,6 +16,9 @@
 #include "object_l2.hpp"
 #include "../Scheme/glue.hpp"
 #include "convert.hpp" // tree_to_texmacs (should not belong here)
+#ifdef HAVE_GETTIMEOFDAY
+#include <sys/time.h>
+#endif
 
 #include <unistd.h> // for getpid
 
@@ -207,12 +210,14 @@ static tmscm blackbox_to_string (s7_scheme *sc, tmscm args)
   else if (type_ == type_helper<observer>::id) {
     s= "<observer>";
   }
+#ifndef KERNEL_L3
   else if (type_ == type_helper<widget>::id) {
     s= "<widget>";
   }
   else if (type_ == type_helper<promise<widget> >::id) {
     s= "<promise-widget>";
   }
+#endif
   else if (type_ == type_helper<command>::id) {
     s= "<command>";
   }

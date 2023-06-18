@@ -10,4 +10,3 @@ ${define OS_MINGW}
 /* L2 Kernel */
 ${define HAVE_TIME_T}
 ${define HAVE_GETTIMEOFDAY}
-

@@ -11,6 +11,7 @@
 
 #include "object_l1.hpp"
 #include "object_l2.hpp"
+#include "object_l3.hpp"
 #include "object.hpp"
 #include "glue.hpp"
 
@@ -18,11 +19,14 @@
 #include "list.hpp"
 #include "array.hpp"
 #include "promise.hpp"
+#ifndef KERNEL_L3
 #include "widget.hpp"
 #include "boot.hpp"
 #include "editor.hpp"
+#endif
 #include "modification.hpp"
 #include "patch.hpp"
+#include "preferences.hpp"
 
 /******************************************************************************
 * The object representation class
@@ -130,7 +134,9 @@ bool is_symbol (object obj) { return tmscm_is_symbol (object_to_tmscm (obj)); }
 bool is_path (object obj) { return tmscm_is_path (object_to_tmscm (obj)); }
 bool is_array_double (object obj) {
   return tmscm_is_array_double (object_to_tmscm (obj)); }
+#ifndef KERNEL_L3
 bool is_widget (object obj) { return tmscm_is_widget (object_to_tmscm (obj)); }
+#endif
 bool is_patch (object obj) { return tmscm_is_patch (object_to_tmscm (obj)); }
 bool is_modification (object obj) {
   return tmscm_is_modification (object_to_tmscm (obj)); }
@@ -261,12 +267,14 @@ as_patch (object obj) {
   return tmscm_to_patch (p);
 }
 
+#ifndef KERNEL_L3
 widget
 as_widget (object obj) {
   tmscm w= object_to_tmscm (obj);
   if (!tmscm_is_widget (w)) return widget ();
   return tmscm_to_widget (w);
 }
+#endif
 
 object
 tree_to_stree (scheme_tree t) {
@@ -341,6 +349,7 @@ as_command (object obj) {
   return tm_new<object_command_rep> (obj);
 }
 
+#ifndef KERNEL_L3
 class object_promise_widget_rep: public promise_rep<widget> {
   object obj;
 public:
@@ -360,6 +369,7 @@ promise<widget>
 as_promise_widget (object obj) {
   return tm_new<object_promise_widget_rep> (obj);
 }
+#endif
 
 /******************************************************************************
 * Evaluation and function calls

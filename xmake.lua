@@ -313,17 +313,24 @@ local l3_files = {
     "src/Data/Convert/Texmacs/**.cpp",
     "src/Data/Convert/Verbatim/**.cpp",
     "src/Data/Tree/**.cpp",
+    "src/Data/History/**.cpp",
     "src/Scheme/L1/**.cpp",
     "src/Scheme/L2/**.cpp",
     "src/Scheme/L3/**.cpp",
+    "src/Scheme/S7/**.cpp",
     "src/Scheme/Scheme/object.cpp",
     "src/System/Language/locale.cpp",
 }
 local l3_includedirs = {
     "src/Scheme",
     "src/Scheme/Scheme",
+    "src/Scheme/S7",
+    "src/Scheme/L1",
+    "src/Scheme/L2",
+    "src/Scheme/L3",
     "src/Data/Convert",
     "src/Data/Tree",
+    "src/Data/History",
     "src/System/Language",
 }
 target("libkernel_l3") do
@@ -368,6 +375,7 @@ target("libkernel_l3") do
         "src/Texmacs/tm_debug.hpp",
     })
     add_includedirs("$(buildir)/L3")
+    add_includedirs("$(buildir)")
     add_includedirs(l2_includedirs, {public = true})
     add_includedirs(l3_includedirs, {public = true})
     add_files(l2_files)
@@ -543,6 +551,8 @@ target("libmogan") do
             "src/Scheme/L1",
             "src/Scheme/L2",
             "src/Scheme/L3",
+            "src/Scheme/L4",
+            "src/Scheme/L5",
             "src/Scheme/Plugins",
             "src/Scheme/Scheme",
             "src/Style/Environment",
@@ -583,6 +593,8 @@ target("libmogan") do
             "src/Scheme/L1/**.cpp",
             "src/Scheme/L2/**.cpp",
             "src/Scheme/L3/**.cpp",
+            "src/Scheme/L4/**.cpp",
+            "src/Scheme/L5/**.cpp",
             "src/Scheme/Plugins/**.cpp",
             "src/System/**.cpp",
             "src/Texmacs/Data/**.cpp",

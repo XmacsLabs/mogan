@@ -14,7 +14,6 @@
 
 #include "tree.hpp"
 #include "url.hpp"
-#include "widget.hpp"
 #include "patch.hpp"
 //#include "promise.hpp"
 
@@ -23,8 +22,6 @@
 void initialize_glue ();
 
 bool tmscm_is_array_double (tmscm obj);
-bool tmscm_is_patch (tmscm obj);
-bool tmscm_is_widget (tmscm obj);
 
 tmscm  bool_to_tmscm (bool b);
 tmscm  int_to_tmscm (int i);
@@ -41,9 +38,5 @@ double tmscm_to_double (tmscm  i);
 string tmscm_to_string (tmscm obj);
 string tmscm_to_symbol (tmscm obj);
 array<double> tmscm_to_array_double (tmscm obj);
-patch tmscm_to_patch (tmscm obj);
-scheme_tree tmscm_to_scheme_tree (tmscm obj);
-widget tmscm_to_widget (tmscm  widget_smob);
 
 #endif // defined GLUE_H
-
