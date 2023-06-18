@@ -9,7 +9,7 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "convert.hpp"
+#include "xml.hpp"
 #include "analyze.hpp"
 
 /******************************************************************************

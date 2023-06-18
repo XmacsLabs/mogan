@@ -9,6 +9,7 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "xml.hpp"
 #include "convert.hpp"
 #include "hashset.hpp"
 #include "converter.hpp"

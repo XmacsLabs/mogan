@@ -521,7 +521,8 @@ target("libmogan") do
             "src/Plugins/Metafont/**.cpp",
             "src/Plugins/LaTeX_Preview/**.cpp",
             "src/Plugins/Openssl/**.cpp",
-            "src/Plugins/Updater/**.cpp"})
+            "src/Plugins/Updater/**.cpp",
+            "src/Plugins/Xml/**.cpp"})
 
     if is_plat("mingw") then
         add_files("src/Plugins/Windows/**.cpp")

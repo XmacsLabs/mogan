@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "convert.hpp"
+#include "xml.hpp"
 
 tree
 tmml_upgrade (tree doc) {
