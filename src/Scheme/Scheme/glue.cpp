@@ -13,17 +13,19 @@
 #include "init_glue_l1.hpp"
 #include "init_glue_l2.hpp"
 #include "init_glue_l3.hpp"
+
+#ifndef KERNEL_L3
 #include "init_glue_l4.hpp"
 #include "init_glue_l5.hpp"
 #include "init_glue_plugins.hpp"
+#endif
 
 void
 initialize_glue () {
   initialize_glue_l1 ();
   initialize_glue_l2 ();
-#ifdef KERNEL_L3
   initialize_glue_l3 ();
-#else
+#ifndef KERNEL_L3
   initialize_glue_l4 ();
   initialize_glue_l5 ();
   initialize_glue_plugins ();
