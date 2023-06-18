@@ -226,4 +226,5 @@ initialize_glue_l3 () {
   initialize_glue_tree ();
   initialize_glue_path ();
   initialize_glue_modification ();
+  initialize_glue_patch ();
 }
