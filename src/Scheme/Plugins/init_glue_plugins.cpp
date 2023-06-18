@@ -18,6 +18,10 @@
 #include "Updater/tm_updater.hpp"
 #include "glue_updater.cpp"
 
+#include "Tex/tex.hpp"
+#include "LaTeX_Preview/latex_preview.hpp"
+#include "glue_tex.cpp"
+
 #include "Bibtex/bibtex.hpp"
 #include "Bibtex/bibtex_functions.hpp"
 #include "glue_bibtex.cpp"
@@ -57,6 +61,7 @@ initialize_glue_plugins () {
   initialize_glue_bibtex ();
   initialize_glue_ghostscript ();
   initialize_glue_pdf ();
+  initialize_glue_tex ();
   initialize_glue_tmdb ();
   initialize_glue_updater ();
   initialize_glue_xml ();
