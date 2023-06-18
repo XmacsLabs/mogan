@@ -21,7 +21,7 @@
 #include "qt_color_picker_widget.hpp"
 #include "qt_printer_widget.hpp"
 
-#include "boot.hpp"
+#include "preferences.hpp"
 #include "window.hpp"
 
 #include <QWidget>

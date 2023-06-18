@@ -12,6 +12,7 @@
 #include "tm_frame.hpp"
 #include "tm_window.hpp"
 #include "message.hpp"
+#include "object_l5.hpp"
 
 /******************************************************************************
 * Constructor and destructor

@@ -11,7 +11,7 @@
 
 #include "tree_search.hpp"
 #include "analyze.hpp"
-#include "boot.hpp"
+#include "preferences.hpp"
 #include "drd_mode.hpp"
 #include "drd_std.hpp"
 #include "language.hpp"

@@ -305,6 +305,94 @@ for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
     end
 end
 
+--
+-- Library: L3 Kernel
+--
+local l3_files = {
+    "src/Data/Convert/Scheme/**.cpp",
+    "src/Data/Convert/Texmacs/**.cpp",
+    "src/Data/Convert/Verbatim/**.cpp",
+    "src/Data/Tree/**.cpp",
+    "src/Data/History/**.cpp",
+    "src/Scheme/L1/**.cpp",
+    "src/Scheme/L2/**.cpp",
+    "src/Scheme/L3/**.cpp",
+    "src/Scheme/S7/**.cpp",
+    "src/Scheme/Scheme/object.cpp",
+    "src/System/Config/**.cpp",
+    "src/System/Language/locale.cpp",
+}
+local l3_includedirs = {
+    "src/Scheme",
+    "src/Scheme/Scheme",
+    "src/Scheme/S7",
+    "src/Scheme/L1",
+    "src/Scheme/L2",
+    "src/Scheme/L3",
+    "src/Data/Convert",
+    "src/Data/Tree",
+    "src/Data/History",
+    "src/System/Config",
+    "src/System/Language",
+}
+target("libkernel_l3") do
+    set_languages("c++17")
+    set_policy("check.auto_ignore_flags", false)
+
+    set_kind("static")
+    set_group("kernel_l3")
+    set_basename("kernel_l3")
+
+    add_packages("libcurl")
+    add_packages("s7")
+    if is_plat("mingw") then
+        add_packages("nowide_standalone")
+    end
+    add_deps("libkernel_l1")
+
+    add_configfiles(
+        "src/System/config_l3.h.xmake", {
+            filename = "L3/config.h",
+            variables = {
+                OS_MINGW = is_plat("mingw"),
+                QTTEXMACS = false,
+            }
+        }
+    )
+    add_configfiles(
+        "src/System/tm_configure_l3.hpp.xmake", {
+            filename = "L3/tm_configure.hpp",
+            pattern = "@(.-)@",
+            variables = {
+                CONFIG_USER = CONFIG_USER,
+                CONFIG_DATE = CONFIG_DATE,
+                CONFIG_OS = CONFIG_OS,
+                VERSION = TEXMACS_VERSION,
+            }
+        }
+    )
+
+    add_headerfiles({
+        "src/System/Classes/tm_timer.hpp",
+        "src/Texmacs/tm_debug.hpp",
+    })
+    add_includedirs("$(buildir)/L3")
+    add_includedirs("$(buildir)")
+    add_includedirs(l2_includedirs, {public = true})
+    add_includedirs(l3_includedirs, {public = true})
+    add_files(l2_files)
+    add_files(l3_files)
+
+    if is_plat("linux") or is_plat("macosx") then
+        add_includedirs("src/Plugins/Unix")
+        add_files("src/Plugins/Unix/**.cpp")
+    end
+
+    if is_plat("mingw") then
+        add_includedirs("src/Plugins/Windows")
+        add_files("src/Plugins/Windows/**.cpp")
+    end
+end
 
 
 local XMACS_VERSION="1.2.0"
@@ -465,6 +553,8 @@ target("libmogan") do
             "src/Scheme/L1",
             "src/Scheme/L2",
             "src/Scheme/L3",
+            "src/Scheme/L4",
+            "src/Scheme/L5",
             "src/Scheme/Plugins",
             "src/Scheme/Scheme",
             "src/Style/Environment",
@@ -475,6 +565,7 @@ target("libmogan") do
             "src/System/IO",
             "src/System/Boot",
             "src/System/Classes",
+            "src/System/Config",
             "src/System/Files",
             "src/System/Language",
             "src/System/Link",
@@ -505,6 +596,8 @@ target("libmogan") do
             "src/Scheme/L1/**.cpp",
             "src/Scheme/L2/**.cpp",
             "src/Scheme/L3/**.cpp",
+            "src/Scheme/L4/**.cpp",
+            "src/Scheme/L5/**.cpp",
             "src/Scheme/Plugins/**.cpp",
             "src/System/**.cpp",
             "src/Texmacs/Data/**.cpp",

@@ -18,9 +18,11 @@
 #include "sys_utils.hpp"
 
 #ifndef KERNEL_L2
+#ifndef KERNEL_L3
 #include "tm_server.hpp"
-#include "file.hpp"
 #include "tm_link.hpp"
+#endif
+#include "file.hpp"
 #endif
 
 
@@ -49,7 +51,7 @@ get_system_information () {
   return r;
 }
 
-#ifndef KERNEL_L2
+#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
 string
 path_as_string (path p) {
   if (is_nil (p)) return "[]";
@@ -137,7 +139,7 @@ string
 get_crash_report (const char* msg) {
   string r;
   r << "Error message:\n  " << msg << "\n"
-#ifdef KERNEL_L2
+#if defined(KERNEL_L2) || defined(KERNEL_L3)
     << "\n" << get_system_information ();
 #else
     << "\n" << get_system_information ()
@@ -161,7 +163,7 @@ tm_failure (const char* msg) {
 
   //cerr << "Saving crash report...\n";
   string report= get_crash_report (msg);
-#ifdef KERNEL_L2
+#if defined(KERNEL_L2) || defined(KERNEL_L3)
   cerr << "TeXmacs] Dumping report below\n\n"
        << report << "\n";
 #else
@@ -203,7 +205,7 @@ tm_failure (const char* msg) {
 * debugging messages
 ******************************************************************************/
 
-#ifndef KERNEL_L2
+#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
 tree debug_messages (TUPLE);
 bool debug_lf_flag= false;
 extern bool texmacs_started;
@@ -320,21 +322,21 @@ debug_ostream_rep::is_writable () const {
 
 void
 debug_ostream_rep::clear () {
-#ifndef KERNEL_L2
+#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
   clear_debug_messages (channel);
 #endif
 }
 
 void
 debug_ostream_rep::write (const char* s) {
-#ifndef KERNEL_L2
+#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
   debug_message (channel, s);
 #endif
 }
 
 void
 debug_ostream_rep::write (tree t) {
-#ifndef KERNEL_L2
+#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
   debug_formatted (channel, t);
 #endif
 }
