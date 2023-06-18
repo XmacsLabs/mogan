@@ -34,12 +34,24 @@ supports_native_pdf () {
 #endif
 }
 
+bool
+supports_ghostscript () {
+#ifdef USE_GS
+  return true;
+#else
+  return false;
+#endif
+}
+
+
 #include "glue_pdf.cpp"
+#include "glue_ghostscript.cpp"
 
 
 void
 initialize_glue_plugins () {
   initialize_glue_bibtex ();
+  initialize_glue_ghostscript ();
   initialize_glue_pdf ();
   initialize_glue_tmdb ();
   initialize_glue_updater ();

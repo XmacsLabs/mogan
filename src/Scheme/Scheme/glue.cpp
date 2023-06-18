@@ -113,15 +113,6 @@ get_bounding_rectangle (tree t) {
 }
 
 bool
-supports_ghostscript () {
-#ifdef USE_GS
-  return true;
-#else
-  return false;
-#endif
-}
-
-bool
 is_busy_versioning () {
   return busy_versioning;
 }

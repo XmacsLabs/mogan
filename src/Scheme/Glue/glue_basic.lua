@@ -138,11 +138,6 @@ function main()
                 ret_type = "void"
             },
             {
-                scm_name = "supports-ghostscript?",
-                cpp_name = "supports_ghostscript",
-                ret_type = "bool"
-            },
-            {
                 scm_name = "rescue-mode?",
                 cpp_name = "in_rescue_mode",
                 ret_type = "bool"
