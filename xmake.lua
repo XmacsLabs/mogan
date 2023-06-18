@@ -521,6 +521,7 @@ target("libmogan") do
             "src/Plugins/Metafont/**.cpp",
             "src/Plugins/LaTeX_Preview/**.cpp",
             "src/Plugins/Openssl/**.cpp",
+            "src/Plugins/Tex/**.cpp",
             "src/Plugins/Updater/**.cpp",
             "src/Plugins/Xml/**.cpp"})
 

@@ -1,4 +1,3 @@
-
 /******************************************************************************
 * MODULE     : convert.hpp
 * DESCRIPTION: various conversion routines
@@ -70,31 +69,6 @@ tree   scheme_document_to_tree (string s);
 string tree_to_verbatim (tree t, bool wrap= false, string enc= "default");
 tree   verbatim_to_tree (string s, bool wrap= false, string enc= "default");
 tree   verbatim_document_to_tree (string s, bool w= false, string e= "default");
-
-/*** Latex ***/
-tree   parse_latex (string s, bool change= false, bool as_pic= false);
-tree   parse_latex_document (string s, bool change= false, bool as_pic= false);
-tree   latex_to_tree (tree t);
-tree   latex_document_to_tree (string s, bool as_pic= false);
-tree   latex_class_document_to_tree (string s);
-string latex_verbarg_to_string (tree t);
-string get_latex_style (tree t);
-string string_arg (tree t, bool u= false);
-array<tree> tokenize_concat (tree t, array<tree> a, bool keep= false);
 bool   is_verbatim (tree t);
-int    latex_search_forwards (string s, int pos, string in);
-int    latex_search_forwards (string s, string in);
-tree   tracked_latex_to_texmacs (string s, bool as_pic);
-string conservative_texmacs_to_latex (tree doc, object opts);
-string tracked_texmacs_to_latex (tree doc, object opts);
-tree   conservative_latex_to_texmacs (string s, bool as_pic);
-int    get_line_number (string s, int pos);
-int    get_column_number (string s, int pos);
-tree   try_latex_export (tree doc, object opts, url src, url dest);
-int    number_latex_errors (url log);
-tree   get_latex_errors (url log);
-int    number_latex_pages (url log);
-tree   postprocess_metadata (tree t);
-
 
 #endif // defined CONVERT_H
