@@ -11,10 +11,14 @@
 
 #include "init_glue_l5.hpp"
 
+#include "object.hpp"
+#include "object_l1.hpp"
+#include "object_l2.hpp"
 #include "object_l3.hpp"
+#include "object_l5.hpp"
 
+#include "preferences.hpp"
 #include "promise.hpp"
-
 #include "boxes.hpp"
 #include "editor.hpp"
 #include "universal.hpp"

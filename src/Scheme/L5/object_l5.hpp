@@ -13,6 +13,7 @@
 #define OBJECT_L5_HPP
 
 #include "s7_tm.hpp"
+#include "widget.hpp"
 
 bool tmscm_is_widget (tmscm obj);
 tmscm widget_to_tmscm (widget o);

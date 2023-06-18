@@ -12,7 +12,7 @@
 #include "concater.hpp"
 #include "formatter.hpp"
 #include "analyze.hpp"
-#include "boot.hpp"
+#include "preferences.hpp"
 
 lazy make_lazy_vstream (edit_env env, tree t, path ip, tree channel);
 

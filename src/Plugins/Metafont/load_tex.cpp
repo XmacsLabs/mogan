@@ -13,7 +13,7 @@
 #include "config.h"
 #include "load_tex.hpp"
 #include "path.hpp"
-#include "boot.hpp"
+#include "preferences.hpp"
 #include "Freetype/tt_file.hpp"
 #include "tm_timer.hpp"
 #include "data_cache.hpp"

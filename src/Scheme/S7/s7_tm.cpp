@@ -16,6 +16,9 @@
 #include "object_l2.hpp"
 #include "../Scheme/glue.hpp"
 #include "convert.hpp" // tree_to_texmacs (should not belong here)
+#ifndef KERNEL_L3
+#include "widget.hpp"
+#endif
 #ifdef HAVE_GETTIMEOFDAY
 #include <sys/time.h>
 #endif

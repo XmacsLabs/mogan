@@ -12,6 +12,9 @@
 #include "object_l1.hpp"
 #include "object_l2.hpp"
 #include "object_l3.hpp"
+#ifndef KERNEL_L3
+#include "object_l5.hpp"
+#endif
 #include "object.hpp"
 #include "glue.hpp"
 
