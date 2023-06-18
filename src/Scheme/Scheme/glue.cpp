@@ -295,7 +295,6 @@ string recognize_glyph (array_array_array_double gl);
 #include "web_files.hpp"
 #include "client_server.hpp"
 #include "wencoding.hpp"
-#include "base64.hpp"
 #include "tm_frame.hpp"
 #include "Concat/concater.hpp"
 #include "converter.hpp"
@@ -312,6 +311,7 @@ string recognize_glyph (array_array_array_double gl);
 #include "glue_font.cpp"
 
 #include "glue_xml.cpp"
+#include "glue_widget.cpp"
 
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
@@ -324,6 +324,7 @@ initialize_glue () {
   initialize_glue_l3 ();
   initialize_glue_font ();
   initialize_glue_xml ();
+  initialize_glue_widget ();
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();
