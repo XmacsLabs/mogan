@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "LaTeX_Preview/latex_preview.hpp"
+#include "Tex/tex.hpp"
 #include "Tex/convert_tex.hpp"
 #include "Bibtex/bibtex.hpp"
 #include "metadata.hpp"

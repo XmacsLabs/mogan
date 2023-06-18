@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "LaTeX_Preview/latex_preview.hpp"
+#include "Tex/tex.hpp"
 #include "Tex/convert_tex.hpp"
 #include "Bibtex/bibtex.hpp"
 #include "metadata.hpp"
@@ -1909,16 +1910,6 @@ downgrade_newlines (tree t) {
         r[i]= " ";
   }
   return r;
-}
-
-bool
-is_verbatim (tree t) {
-  return is_compound (t, "cpp-code") || is_compound (t, "mmx-code")   ||
-         is_compound (t, "scm-code") || is_compound (t, "shell-code") ||
-         is_compound (t, "code")     || is_compound (t, "verbatim")   ||
-         is_compound (t, "scilab-code") || is_compound (t, "scala-code") ||
-         is_compound (t, "java-code") || is_compound (t, "latex_preview") ||
-         is_compound (t, "picture-mixed");
 }
 
 static tree
