@@ -319,6 +319,7 @@ local l3_files = {
     "src/Scheme/L3/**.cpp",
     "src/Scheme/S7/**.cpp",
     "src/Scheme/Scheme/object.cpp",
+    "src/System/Config/**.cpp",
     "src/System/Language/locale.cpp",
 }
 local l3_includedirs = {
@@ -331,6 +332,7 @@ local l3_includedirs = {
     "src/Data/Convert",
     "src/Data/Tree",
     "src/Data/History",
+    "src/System/Config",
     "src/System/Language",
 }
 target("libkernel_l3") do
@@ -563,6 +565,7 @@ target("libmogan") do
             "src/System/IO",
             "src/System/Boot",
             "src/System/Classes",
+            "src/System/Config",
             "src/System/Files",
             "src/System/Language",
             "src/System/Link",

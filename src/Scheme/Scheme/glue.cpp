@@ -28,5 +28,5 @@ initialize_glue () {
   initialize_glue_l4 ();
   initialize_glue_l5 ();
   initialize_glue_plugins ();
-#else
+#endif
 }
