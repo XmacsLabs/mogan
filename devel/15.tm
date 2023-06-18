@@ -139,6 +139,70 @@
       Darcy
     </cell>|<\cell>
       glue_widget
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_14
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Move glues to L1/L2/L3
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_15
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Move glues to src/Scheme/Plugins
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_16
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_ghostscript
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_17
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_pdf
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_18
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_patch
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_19
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_convert
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_20
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_xml
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_21
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      glue_tex
     </cell>>>>
   </wide-tabular>
 
