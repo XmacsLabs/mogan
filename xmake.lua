@@ -305,6 +305,63 @@ for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
     end
 end
 
+--
+-- Library: L3 Kernel
+--
+target("libkernel_l3") do
+    set_languages("c++17")
+    set_policy("check.auto_ignore_flags", false)
+
+    set_kind("static")
+    set_group("kernel_l3")
+    set_basename("kernel_l3")
+
+    add_packages("libcurl")
+    if is_plat("mingw") then
+        add_packages("nowide_standalone")
+    end
+    add_deps("libkernel_l1")
+
+    add_configfiles(
+        "src/System/config_l3.h.xmake", {
+            filename = "L3/config.h",
+            variables = {
+                OS_MINGW = is_plat("mingw"),
+                QTTEXMACS = false,
+            }
+        }
+    )
+    add_configfiles(
+        "src/System/tm_configure_l3.hpp.xmake", {
+            filename = "L3/tm_configure.hpp",
+            pattern = "@(.-)@",
+            variables = {
+                CONFIG_USER = CONFIG_USER,
+                CONFIG_DATE = CONFIG_DATE,
+                CONFIG_OS = CONFIG_OS,
+                VERSION = TEXMACS_VERSION,
+            }
+        }
+    )
+
+    add_headerfiles({
+        "src/System/Classes/tm_timer.hpp",
+        "src/Texmacs/tm_debug.hpp",
+    })
+    add_includedirs("$(buildir)/L3")
+    add_includedirs(l2_includedirs, {public = true})
+    add_files(l2_files)
+
+    if is_plat("linux") or is_plat("macosx") then
+        add_includedirs("src/Plugins/Unix")
+        add_files("src/Plugins/Unix/**.cpp")
+    end
+
+    if is_plat("mingw") then
+        add_includedirs("src/Plugins/Windows")
+        add_files("src/Plugins/Windows/**.cpp")
+    end
+end
 
 
 local XMACS_VERSION="1.2.0"
