@@ -12,6 +12,7 @@
 #include "init_glue_plugins.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
+#include "object.hpp"
 #include "s7_tm.hpp"
 
 #include "Updater/tm_updater.hpp"
@@ -23,6 +24,9 @@
 
 #include "Database/database.hpp"
 #include "glue_tmdb.cpp"
+
+#include "Xml/xml.hpp"
+#include "glue_xml.cpp"
 
 
 bool
@@ -55,5 +59,6 @@ initialize_glue_plugins () {
   initialize_glue_pdf ();
   initialize_glue_tmdb ();
   initialize_glue_updater ();
+  initialize_glue_xml ();
 }
 

@@ -11,6 +11,7 @@
 
 #include <QtTest/QtTest>
 
+#include "Xml/xml.hpp"
 #include "convert.hpp"
 #include "drd_std.hpp"
 

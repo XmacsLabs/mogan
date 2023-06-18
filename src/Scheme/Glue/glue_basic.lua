@@ -801,6 +801,14 @@ function main()
             
               -- routines for strings
             {
+                scm_name = "utf8->html",
+                cpp_name = "utf8_to_html",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
                 scm_name = "escape-to-ascii",
                 cpp_name = "cork_to_ascii",
                 ret_type = "string",
@@ -1291,14 +1299,6 @@ function main()
                     "object",
                     "url",
                     "url"
-                }
-            },
-            {
-                scm_name = "retrieve-mathjax",
-                cpp_name = "retrieve_mathjax",
-                ret_type = "tree",
-                arg_list = {
-                    "int"
                 }
             },
             {
