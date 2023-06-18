@@ -34,7 +34,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Initial L3 Kernel
+      Separate glues for L1/L2/L3 and Plugins
     </cell>>|<row|<\cell>
       \;
     </cell>|<\cell>
@@ -203,6 +203,22 @@
       Darcy
     </cell>|<\cell>
       glue_tex
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      15_3_22
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      format hpp code for glues
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      15_4
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Initial L3 Kernel
     </cell>>>>
   </wide-tabular>
 
