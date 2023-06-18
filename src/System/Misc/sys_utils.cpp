@@ -52,7 +52,7 @@ string get_pretty_os_name () {
 int
 system (string s, string& result, string& error) {
 #if defined (OS_MINGW)
-#ifndef KERNEL_L2
+#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
   return qt_system (s, result, error);
 #else
   return -1;
