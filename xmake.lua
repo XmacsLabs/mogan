@@ -309,16 +309,22 @@ end
 -- Library: L3 Kernel
 --
 local l3_files = {
-    "src/Data/Convert/**.cpp",
+    "src/Data/Convert/Scheme/**.cpp",
+    "src/Data/Convert/Texmacs/**.cpp",
+    "src/Data/Convert/Verbatim/**.cpp",
+    "src/Data/Tree/**.cpp",
     "src/Scheme/L1/**.cpp",
     "src/Scheme/L2/**.cpp",
     "src/Scheme/L3/**.cpp",
     "src/Scheme/Scheme/object.cpp",
+    "src/System/Language/locale.cpp",
 }
 local l3_includedirs = {
     "src/Scheme",
     "src/Scheme/Scheme",
     "src/Data/Convert",
+    "src/Data/Tree",
+    "src/System/Language",
 }
 target("libkernel_l3") do
     set_languages("c++17")

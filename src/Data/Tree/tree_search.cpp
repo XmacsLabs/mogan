@@ -11,7 +11,9 @@
 
 #include "tree_search.hpp"
 #include "analyze.hpp"
+#ifndef KERNEL_L3
 #include "boot.hpp"
+#endif
 #include "drd_mode.hpp"
 
 int  search_max_hits= 1000000;
