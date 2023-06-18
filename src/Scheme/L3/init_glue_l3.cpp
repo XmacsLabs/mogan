@@ -26,6 +26,7 @@
 #include "tree_modify.hpp"
 #include "tree_search.hpp"
 #include "tree_traverse.hpp"
+#include "convert.hpp"
 
 tree
 coerce_string_tree (string s) {
@@ -220,6 +221,7 @@ patchP (tmscm t) {
 #include "glue_patch.cpp"
 #include "glue_path.cpp"
 #include "glue_tree.cpp"
+#include "glue_convert.cpp"
 
 void
 initialize_glue_l3 () {
