@@ -22,7 +22,6 @@
 #include "boxes.hpp"
 #include "editor.hpp"
 #include "universal.hpp"
-#include "convert.hpp"
 #include "locale.hpp"
 #include "iterator.hpp"
 #include "Freetype/tt_tools.hpp"

@@ -15,6 +15,7 @@
 #include "object_l3.hpp"
 #include "s7_tm.hpp"
 
+#include "convert.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
 #include "path.hpp"
@@ -214,6 +215,7 @@ patchP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
+#include "glue_convert.cpp"
 #include "glue_modification.cpp"
 #include "glue_patch.cpp"
 #include "glue_path.cpp"
@@ -227,4 +229,5 @@ initialize_glue_l3 () {
   initialize_glue_path ();
   initialize_glue_modification ();
   initialize_glue_patch ();
+  initialize_glue_convert ();
 }
