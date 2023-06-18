@@ -23,6 +23,22 @@ function main()
                     "string"
                 }
             },
+            {
+                scm_name = "encode-base64",
+                cpp_name = "encode_base64",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "decode-base64",
+                cpp_name = "decode_base64",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
         }
     }
 end
