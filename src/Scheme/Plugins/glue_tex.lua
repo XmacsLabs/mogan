@@ -127,6 +127,24 @@ function main()
                     "url"
                 }
             },
+            {
+                scm_name = "get-line-number",
+                cpp_name = "get_line_number",
+                ret_type = "int",
+                arg_list = {
+                    "string",
+                    "int"
+                }
+            },
+            {
+                scm_name = "get-column-number",
+                cpp_name = "get_column_number",
+                ret_type = "int",
+                arg_list = {
+                    "string",
+                    "int"
+                }
+            },
         }
     }
 end

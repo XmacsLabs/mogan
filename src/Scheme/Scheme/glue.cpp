@@ -299,8 +299,6 @@ string recognize_glyph (array_array_array_double gl);
 #include "Concat/concater.hpp"
 #include "converter.hpp"
 #include "tm_timer.hpp"
-#include "LaTeX_Preview/latex_preview.hpp"
-#include "Tex/tex.hpp"
 #include "link.hpp"
 #include "dictionary.hpp"
 #include "packrat.hpp"
