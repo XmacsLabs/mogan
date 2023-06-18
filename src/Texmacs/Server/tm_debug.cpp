@@ -15,12 +15,12 @@
 #include "string.hpp"
 #include "tree_label.hpp"
 #include "analyze.hpp"
+#include "sys_utils.hpp"
 
 #ifndef KERNEL_L2
 #include "tm_server.hpp"
 #include "file.hpp"
 #include "tm_link.hpp"
-#include "sys_utils.hpp"
 #endif
 
 
@@ -40,14 +40,12 @@ get_system_information () {
     << BUILD_USER << "\n";
   r << "  Building date    : "
     << BUILD_DATE << "\n";
-#ifndef KERNEL_L2
   r << "  Operating system : "
     << get_pretty_os_name () << "\n";
   r << "  Processor        : "
     << get_current_cpu_arch () << "\n";
   r << "  Crash date       : "
     << var_eval_system ("date") << "\n";
-#endif
   return r;
 }
 
