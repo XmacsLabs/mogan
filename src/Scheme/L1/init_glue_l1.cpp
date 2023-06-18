@@ -14,6 +14,7 @@
 #include "s7_tm.hpp"
 
 #include "analyze.hpp"
+#include "base64.hpp"
 #include "drd_mode.hpp"
 #include "string.hpp"
 
