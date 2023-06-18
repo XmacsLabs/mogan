@@ -25,6 +25,7 @@
 #include "locale.hpp"
 #include "iterator.hpp"
 #include "Freetype/tt_tools.hpp"
+#include "widget.hpp"
 
 #if 0
 template<class T> tmscm box_to_tmscm (T o) {
@@ -139,30 +140,6 @@ cout_unbuffer () {
 }
 
 
-/******************************************************************************
-*  Widget Factory
-******************************************************************************/
-
-typedef promise<widget> promise_widget;
-
-#define TMSCM_ASSERT_PROMISE_WIDGET(o,arg,rout) \
-TMSCM_ASSERT (tmscm_is_promise_widget (o), o, arg, rout)
-
-bool
-tmscm_is_promise_widget (tmscm u) {
-  return (tmscm_is_blackbox (u) && 
-         (type_box (tmscm_to_blackbox(u)) == type_helper<promise_widget>::id));
-}
-
-static tmscm 
-promise_widget_to_tmscm (promise_widget o) {
-  return blackbox_to_tmscm (close_box<promise_widget> (o));
-}
-
-static promise_widget
-tmscm_to_promise_widget (tmscm o) {
-  return open_box<promise_widget> (tmscm_to_blackbox (o));
-}
 
 
 bool
@@ -283,10 +260,9 @@ string recognize_glyph (array_array_array_double gl);
 #include "font.hpp"
 #include "Freetype/tt_file.hpp"
 #include "Metafont/tex_files.hpp"
+
 #include "glue_font.cpp"
-
 #include "glue_widget.cpp"
-
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
 #include "glue_server.cpp"

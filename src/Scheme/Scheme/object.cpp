@@ -271,15 +271,6 @@ as_patch (object obj) {
   return tmscm_to_patch (p);
 }
 
-#ifndef KERNEL_L3
-widget
-as_widget (object obj) {
-  tmscm w= object_to_tmscm (obj);
-  if (!tmscm_is_widget (w)) return widget ();
-  return tmscm_to_widget (w);
-}
-#endif
-
 object
 tree_to_stree (scheme_tree t) {
   return call ("tree->stree", t);
@@ -353,27 +344,6 @@ as_command (object obj) {
   return tm_new<object_command_rep> (obj);
 }
 
-#ifndef KERNEL_L3
-class object_promise_widget_rep: public promise_rep<widget> {
-  object obj;
-public:
-  object_promise_widget_rep (object obj2): obj (obj2) {}
-  tm_ostream& print (tm_ostream& out) { return out << obj; }
-  widget eval () {
-    tmscm result= call_scheme (object_to_tmscm (obj));
-    if (tmscm_is_widget (result)) return tmscm_to_widget (result);
-    else {
-      FAILED ("widget expected");
-      return glue_widget ();
-    }
-  }
-};
-
-promise<widget>
-as_promise_widget (object obj) {
-  return tm_new<object_promise_widget_rep> (obj);
-}
-#endif
 
 /******************************************************************************
 * Evaluation and function calls

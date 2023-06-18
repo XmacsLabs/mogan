@@ -19,9 +19,6 @@ extern bool use_which;
 extern bool use_locate;
 extern bool headless_mode;
 
-string get_setting (string var, string def= "");
-void   set_setting (string var, string val);
-void   get_old_settings (string s);
 void   init_upgrade ();
 void   init_texmacs ();
 void   init_plugins ();

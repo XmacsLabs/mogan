@@ -105,8 +105,6 @@ modification as_modification (object obj);
 patch as_patch (object obj);
 command as_command (object obj);
 #ifdef WIDGET_H // FIXME: dirty hack
-widget as_widget (object obj);
-promise<widget> as_promise_widget (object obj);
 #endif
 
 object tree_to_stree (tree t);

@@ -14,6 +14,10 @@
 
 #include "string.hpp"
 
+string get_setting (string var, string def= "");
+void   set_setting (string var, string val);
+void   get_old_settings (string s);
+
 bool   has_user_preference (string var);
 string get_user_preference (string var, string def= "");
 void   set_user_preference (string var, string val);

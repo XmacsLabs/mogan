@@ -12,6 +12,7 @@
 #ifndef QTMPIXMAPORIMAGE_HPP
 #define QTMPIXMAPORIMAGE_HPP
 
+#include "boot.hpp"
 #include <QPixmap>
 #include <QImage>
 
