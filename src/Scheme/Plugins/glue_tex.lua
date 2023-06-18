@@ -92,6 +92,41 @@ function main()
                     "bool"
                 }
             },
+            {
+                scm_name = "set-latex-command",
+                cpp_name = "set_latex_command",
+                ret_type = "void",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "number-latex-errors",
+                cpp_name = "number_latex_errors",
+                ret_type = "int",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "number-latex-pages",
+                cpp_name = "number_latex_pages",
+                ret_type = "int",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "try-latex-export",
+                cpp_name = "try_latex_export",
+                ret_type = "tree",
+                arg_list = {
+                    "content",
+                    "object",
+                    "url",
+                    "url"
+                }
+            },
         }
     }
 end
