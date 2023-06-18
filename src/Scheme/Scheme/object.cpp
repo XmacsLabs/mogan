@@ -24,6 +24,7 @@
 #include "boot.hpp"
 #include "editor.hpp"
 #endif
+#include "tm_timer.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
 #include "preferences.hpp"
@@ -526,13 +527,19 @@ protected_call (object cmd) {
 #ifdef USE_EXCEPTIONS
   try {
 #endif
+#ifndef KERNEL_L3
     get_current_editor()->before_menu_action ();
+#endif
     call (cmd);
+#ifndef KERNEL_L3
     get_current_editor()->after_menu_action ();
+#endif
 #ifdef USE_EXCEPTIONS
   }
   catch (string s) {
+#ifndef KERNEL_L3
     get_current_editor()->cancel_menu_action ();
+#endif
   }
   handle_exceptions ();
 #endif
