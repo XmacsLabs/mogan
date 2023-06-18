@@ -138,11 +138,6 @@ function main()
                 ret_type = "void"
             },
             {
-                scm_name = "supports-native-pdf?",
-                cpp_name = "supports_native_pdf",
-                ret_type = "bool"
-            },
-            {
                 scm_name = "supports-ghostscript?",
                 cpp_name = "supports_ghostscript",
                 ret_type = "bool"

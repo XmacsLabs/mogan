@@ -24,10 +24,24 @@
 #include "Database/database.hpp"
 #include "glue_tmdb.cpp"
 
+
+bool
+supports_native_pdf () {
+#ifdef PDF_RENDERER
+  return true;
+#else
+  return false;
+#endif
+}
+
+#include "glue_pdf.cpp"
+
+
 void
 initialize_glue_plugins () {
-  initialize_glue_updater ();
   initialize_glue_bibtex ();
+  initialize_glue_pdf ();
   initialize_glue_tmdb ();
+  initialize_glue_updater ();
 }
 
