@@ -15,6 +15,7 @@
 #include "object_l3.hpp"
 #include "s7_tm.hpp"
 
+#include "base64.hpp"
 #include "convert.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
@@ -219,12 +220,14 @@ patchP (tmscm t) {
 #include "glue_modification.cpp"
 #include "glue_patch.cpp"
 #include "glue_path.cpp"
+#include "glue_string.cpp"
 #include "glue_tree.cpp"
 
 void
 initialize_glue_l3 () {
   tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
 
+  initialize_glue_string ();
   initialize_glue_tree ();
   initialize_glue_path ();
   initialize_glue_modification ();
