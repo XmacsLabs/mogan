@@ -14,6 +14,7 @@
 #include "Ghostscript/gs_utilities.hpp" // for gs_prefix
 #include "Metafont/tex_files.hpp"
 #include "analyze.hpp"
+#include "block.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
 #include "file.hpp"

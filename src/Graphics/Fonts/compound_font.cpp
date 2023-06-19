@@ -12,6 +12,7 @@
 #include "font.hpp"
 #include "charmap.hpp"
 #include "convert.hpp"
+#include "block.hpp"
 
 /******************************************************************************
 * The compound font class

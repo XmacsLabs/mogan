@@ -82,24 +82,19 @@ bool tmscm_is_list_tree (tmscm obj);
   TMSCM_ASSERT (tmscm_is_list_tree (p), p, arg, rout)
 
 tmscm command_to_tmscm (command o);
-tmscm observer_to_tmscm (observer o);
 tmscm path_to_tmscm (path p);
 tmscm modification_to_tmscm (modification m);
 
 command      tmscm_to_command (tmscm o);
-observer     tmscm_to_observer (tmscm obj);
 path         tmscm_to_path (tmscm obj);
 modification tmscm_to_modification (tmscm obj);
 
 bool tmscm_is_command (tmscm u);
-bool tmscm_is_observer (tmscm o);
 bool tmscm_is_path (tmscm obj);
 bool tmscm_is_modification (tmscm obj);
 
 #define TMSCM_ASSERT_COMMAND(o, arg, rout)                                     \
   TMSCM_ASSERT (tmscm_is_command (o), o, arg, rout)
-#define TMSCM_ASSERT_OBSERVER(o, arg, rout)                                    \
-  TMSCM_ASSERT (tmscm_is_observer (o), o, arg, rout)
 #define TMSCM_ASSERT_PATH(p, arg, rout)                                        \
   TMSCM_ASSERT (tmscm_is_path (p), p, arg, rout)
 #define TMSCM_ASSERT_MODIFICATION(m, arg, rout)                                \
