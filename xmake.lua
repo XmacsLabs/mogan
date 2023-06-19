@@ -122,8 +122,6 @@ local l1_files = {
     "src/Kernel/Containers/**.cpp",
     "src/Kernel/Types/**.cpp",
     "src/Data/Drd/**.cpp",
-    "src/Data/String/base64.cpp",
-    "src/Data/String/fast_search.cpp",
     "src/System/IO/**.cpp",
     "src/System/Memory/**.cpp"
 }
@@ -279,32 +277,6 @@ target("libkernel_l2") do
     end
 end
 
-for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
-    local testname = path.basename(filepath)
-    target(testname) do
-        set_languages("c++17")
-        set_policy("check.auto_ignore_flags", false)
-
-        set_group("kernel_l2_tests")
-        add_deps("libkernel_l2")
-        add_syslinks("pthread")
-        add_rules("qt.console")
-        add_frameworks("QtTest")
-
-        add_packages("libcurl")
-        if is_plat("mingw") then
-            add_packages("nowide_standalone")
-        end
-        add_includedirs("tests/Base")
-        add_includedirs("$(buildir)/L2")
-        add_includedirs(l1_includedirs)
-        add_includedirs(l2_includedirs)
-        add_files("tests/Base/base.cpp")
-        add_files(filepath)
-        add_files(filepath, {rules = "qt.moc"})
-    end
-end
-
 --
 -- Library: L3 Kernel
 --
@@ -314,9 +286,7 @@ local l3_files = {
     "src/Data/Convert/Verbatim/**.cpp",
     "src/Data/Tree/**.cpp",
     "src/Data/History/**.cpp",
-    "src/Data/String/converter.cpp",
-    "src/Data/String/universal.cpp",
-    "src/Data/String/wencoding.cpp",
+    "src/Data/String/**.cpp",
     "src/Kernel/Abstractions/command.cpp",
     "src/Kernel/Abstractions/observer.cpp",
     "src/Kernel/Abstractions/player.cpp",
@@ -404,6 +374,32 @@ target("libkernel_l3") do
     if is_plat("mingw") then
         add_includedirs("src/Plugins/Windows")
         add_files("src/Plugins/Windows/**.cpp")
+    end
+end
+
+for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
+    local testname = path.basename(filepath)
+    target(testname) do
+        set_languages("c++17")
+        set_policy("check.auto_ignore_flags", false)
+
+        set_group("kernel_l3_tests")
+        add_deps("libkernel_l3")
+        add_syslinks("pthread")
+        add_rules("qt.console")
+        add_frameworks("QtTest")
+
+        add_packages("libcurl")
+        if is_plat("mingw") then
+            add_packages("nowide_standalone")
+        end
+        add_includedirs("tests/Base")
+        add_includedirs("$(buildir)/L3")
+        add_includedirs(l1_includedirs)
+        add_includedirs(l3_includedirs)
+        add_files("tests/Base/base.cpp")
+        add_files(filepath)
+        add_files(filepath, {rules = "qt.moc"})
     end
 end
 

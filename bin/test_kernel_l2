@@ -1,4 +1,0 @@
-#!/bin/bash
-
-xmake run --yes --verbose --diagnosis --group=kernel_l2_tests
-
