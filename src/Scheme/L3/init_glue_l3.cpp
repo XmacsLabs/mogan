@@ -56,8 +56,8 @@ patchP (tmscm t) {
 
 #include "glue_modification.cpp"
 #include "glue_patch.cpp"
-#include "glue_string.cpp"
 #include "glue_path.cpp"
+#include "glue_string.cpp"
 
 void
 initialize_glue_l3 () {
