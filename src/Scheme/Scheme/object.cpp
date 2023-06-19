@@ -12,9 +12,6 @@
 #include "object_l1.hpp"
 #include "object_l2.hpp"
 #include "object_l3.hpp"
-#ifndef KERNEL_L3
-#include "object_l5.hpp"
-#endif
 #include "glue.hpp"
 #include "object.hpp"
 
@@ -22,11 +19,6 @@
 #include "config.h"
 #include "list.hpp"
 #include "promise.hpp"
-#ifndef KERNEL_L3
-#include "boot.hpp"
-#include "editor.hpp"
-#include "widget.hpp"
-#endif
 #include "modification.hpp"
 #include "patch.hpp"
 #include "preferences.hpp"
@@ -605,29 +597,3 @@ clear_pending_commands () {
   start_queue  = array<time_t> (0);
 }
 #endif // QTTEXMACS
-
-/******************************************************************************
- * Protected evaluation
- ******************************************************************************/
-
-void
-protected_call (object cmd) {
-#ifdef USE_EXCEPTIONS
-  try {
-#endif
-#ifndef KERNEL_L3
-    get_current_editor ()->before_menu_action ();
-#endif
-    call (cmd);
-#ifndef KERNEL_L3
-    get_current_editor ()->after_menu_action ();
-#endif
-#ifdef USE_EXCEPTIONS
-  } catch (string s) {
-#ifndef KERNEL_L3
-    get_current_editor ()->cancel_menu_action ();
-#endif
-  }
-  handle_exceptions ();
-#endif
-}
