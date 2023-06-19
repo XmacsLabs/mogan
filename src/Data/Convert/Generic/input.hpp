@@ -11,7 +11,9 @@
 
 #ifndef INPUT_H
 #define INPUT_H
+
 #include "path.hpp"
+#include "hashmap.hpp"
 
 
 #define DATA_ABORT   ((char) 1)
