@@ -219,6 +219,22 @@
       Darcy
     </cell>|<\cell>
       Initial L3 Kernel
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      15_5
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Re-org on L1/L2/L3 Kernel
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      15_6
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Reduce usage of KERNEL_L3
     </cell>>>>
   </wide-tabular>
 
