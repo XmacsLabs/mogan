@@ -118,7 +118,7 @@ add_requires("s7 2023.04.13", {system=false})
 set_configvar("QTTEXMACS", 1)
 
 local l1_files = {
-    "src/Kernel/Abstractions/basic.cpp",
+    "src/Kernel/Basic/**.cpp",
     "src/Kernel/Containers/**.cpp",
     "src/Kernel/Types/**.cpp",
     "src/Data/Drd/**.cpp",
@@ -126,6 +126,7 @@ local l1_files = {
     "src/System/Memory/**.cpp"
 }
 local l1_includedirs = {
+    "src/Kernel/Basic",
     "src/Kernel/Abstractions",
     "src/Kernel/Containers",
     "src/Kernel/Types",
@@ -281,15 +282,13 @@ end
 -- Library: L3 Kernel
 --
 local l3_files = {
+    "src/Kernel/Abstractions/**.cpp",
     "src/Data/Convert/Scheme/**.cpp",
     "src/Data/Convert/Texmacs/**.cpp",
     "src/Data/Convert/Verbatim/**.cpp",
     "src/Data/Tree/**.cpp",
     "src/Data/History/**.cpp",
     "src/Data/String/**.cpp",
-    "src/Kernel/Abstractions/command.cpp",
-    "src/Kernel/Abstractions/observer.cpp",
-    "src/Kernel/Abstractions/player.cpp",
     "src/Scheme/L1/**.cpp",
     "src/Scheme/L2/**.cpp",
     "src/Scheme/L3/**.cpp",
@@ -552,6 +551,7 @@ target("libmogan") do
             "src/Graphics/Types",
             "src/Kernel/Abstractions",
             "src/Kernel/Algorithms",
+            "src/Kernel/Basic",
             "src/Kernel/Containers",
             "src/Kernel/Types",
             "src/Plugins",
