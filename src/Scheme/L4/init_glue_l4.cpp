@@ -179,12 +179,10 @@ tree_remove_node (tree r, int pos) {
 }
 
 #include "glue_convert.cpp"
-#include "glue_path.cpp"
 #include "glue_tree.cpp"
 
 void
 initialize_glue_l4 () {
-  initialize_glue_path ();
   initialize_glue_tree ();
   initialize_glue_convert ();
 }
