@@ -17,19 +17,13 @@
 
 typedef array<patch> array_patch;
 
-bool
-tmscm_is_patch (tmscm obj);
-patch
-tmscm_to_patch (tmscm obj);
-tmscm
-patch_to_tmscm (patch p);
+bool  tmscm_is_patch (tmscm obj);
+patch tmscm_to_patch (tmscm obj);
+tmscm patch_to_tmscm (patch p);
 
-bool
-tmscm_is_array_patch (tmscm p);
-array<patch>
-tmscm_to_array_patch (tmscm p);
-tmscm
-array_patch_to_tmscm (array<patch> a);
+bool         tmscm_is_array_patch (tmscm p);
+array<patch> tmscm_to_array_patch (tmscm p);
+tmscm        array_patch_to_tmscm (array<patch> a);
 
 #define TMSCM_ASSERT_ARRAY_PATCH(p, arg, rout)                                 \
   TMSCM_ASSERT (tmscm_is_array_patch (p), p, arg, rout)

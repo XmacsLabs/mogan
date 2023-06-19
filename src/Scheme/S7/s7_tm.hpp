@@ -24,12 +24,9 @@ typedef s7_pointer tmscm;
 // the global scheme interpreter state
 extern s7_scheme *tm_s7;
 
-bool
-tmscm_is_blackbox (tmscm obj);
-tmscm
-blackbox_to_tmscm (blackbox b);
-blackbox
-tmscm_to_blackbox (tmscm obj);
+bool     tmscm_is_blackbox (tmscm obj);
+tmscm    blackbox_to_tmscm (blackbox b);
+blackbox tmscm_to_blackbox (tmscm obj);
 
 inline tmscm
 tmscm_null () {
@@ -143,10 +140,8 @@ inline tmscm
 double_to_tmscm (double r) {
   return s7_make_real (tm_s7, r);
 }
-tmscm
-string_to_tmscm (string s);
-tmscm
-symbol_to_tmscm (string s);
+tmscm string_to_tmscm (string s);
+tmscm symbol_to_tmscm (string s);
 
 inline bool
 tmscm_to_bool (tmscm obj) {
@@ -160,27 +155,17 @@ inline double
 tmscm_to_double (tmscm obj) {
   return s7_real (obj);
 }
-string
-tmscm_to_string (tmscm obj);
-string
-tmscm_to_symbol (tmscm obj);
+string tmscm_to_string (tmscm obj);
+string tmscm_to_symbol (tmscm obj);
 
-tmscm
-eval_scheme_file (string name);
-tmscm
-eval_scheme (string s);
-tmscm
-call_scheme (tmscm fun);
-tmscm
-call_scheme (tmscm fun, tmscm a1);
-tmscm
-call_scheme (tmscm fun, tmscm a1, tmscm a2);
-tmscm
-call_scheme (tmscm fun, tmscm a1, tmscm a2, tmscm a3);
-tmscm
-call_scheme (tmscm fun, tmscm a1, tmscm a2, tmscm a3, tmscm a4);
-tmscm
-call_scheme (tmscm fun, array<tmscm> a);
+tmscm eval_scheme_file (string name);
+tmscm eval_scheme (string s);
+tmscm call_scheme (tmscm fun);
+tmscm call_scheme (tmscm fun, tmscm a1);
+tmscm call_scheme (tmscm fun, tmscm a1, tmscm a2);
+tmscm call_scheme (tmscm fun, tmscm a1, tmscm a2, tmscm a3);
+tmscm call_scheme (tmscm fun, tmscm a1, tmscm a2, tmscm a3, tmscm a4);
+tmscm call_scheme (tmscm fun, array<tmscm> a);
 
 /******************************************************************************
  * Gluing
@@ -406,7 +391,6 @@ proc (s7_scheme *, tmscm args) {
 
 #define TMSCM_UNSPECIFIED (s7_unspecified (tm_s7))
 
-string
-scheme_dialect ();
+string scheme_dialect ();
 
 #endif // defined S7_TM_H

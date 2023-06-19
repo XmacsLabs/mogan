@@ -1,6 +1,6 @@
 SpaceBeforeAssignmentOperators: false
 SpaceBeforeParens: Always
-AlwaysBreakAfterReturnType: TopLevel
+AlwaysBreakAfterReturnType: TopLevelDefinitions
 AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 AlignConsecutiveAssignments: Consecutive
 AlignConsecutiveDeclarations: Consecutive

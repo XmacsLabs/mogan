@@ -19,39 +19,24 @@
 
 #include "object.hpp"
 
-void
-initialize_glue ();
+void initialize_glue ();
 
-bool
-tmscm_is_array_double (tmscm obj);
+bool tmscm_is_array_double (tmscm obj);
 
-tmscm
-bool_to_tmscm (bool b);
-tmscm
-int_to_tmscm (int i);
-tmscm
-double_to_tmscm (double i);
-tmscm
-string_to_tmscm (string s);
-tmscm
-symbol_to_tmscm (string s);
-tmscm
-array_double_to_tmscm (array<double> a);
-tmscm
-patch_to_tmscm (patch p);
-tmscm
-scheme_tree_to_tmscm (scheme_tree t);
+tmscm bool_to_tmscm (bool b);
+tmscm int_to_tmscm (int i);
+tmscm double_to_tmscm (double i);
+tmscm string_to_tmscm (string s);
+tmscm symbol_to_tmscm (string s);
+tmscm array_double_to_tmscm (array<double> a);
+tmscm patch_to_tmscm (patch p);
+tmscm scheme_tree_to_tmscm (scheme_tree t);
 
 // int tmscm_to_bool (tmscm obj);
-int
-tmscm_to_int (tmscm obj);
-double
-tmscm_to_double (tmscm i);
-string
-tmscm_to_string (tmscm obj);
-string
-tmscm_to_symbol (tmscm obj);
-array<double>
-tmscm_to_array_double (tmscm obj);
+int           tmscm_to_int (tmscm obj);
+double        tmscm_to_double (tmscm i);
+string        tmscm_to_string (tmscm obj);
+string        tmscm_to_symbol (tmscm obj);
+array<double> tmscm_to_array_double (tmscm obj);
 
 #endif // defined GLUE_H
