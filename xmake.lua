@@ -524,6 +524,7 @@ target("libmogan") do
     ---------------------------------------------------------------------------
     add_includedirs({
             "src/Data/Convert",
+            "src/Data/Convert/Generic",
             "src/Data/Document",
             "src/Data/Drd",
             "src/Data/History",
