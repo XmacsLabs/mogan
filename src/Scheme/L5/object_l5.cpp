@@ -39,6 +39,11 @@ as_widget (object obj) {
   return tmscm_to_widget (w);
 }
 
+bool
+is_widget (object obj) {
+  return tmscm_is_widget (object_to_tmscm (obj));
+}
+
 /******************************************************************************
  *  Widget Factory
  ******************************************************************************/

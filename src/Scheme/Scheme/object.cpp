@@ -192,12 +192,6 @@ bool
 is_array_double (object obj) {
   return tmscm_is_array_double (object_to_tmscm (obj));
 }
-#ifndef KERNEL_L3
-bool
-is_widget (object obj) {
-  return tmscm_is_widget (object_to_tmscm (obj));
-}
-#endif
 bool
 is_patch (object obj) {
   return tmscm_is_patch (object_to_tmscm (obj));
