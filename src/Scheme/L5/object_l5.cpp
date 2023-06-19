@@ -84,24 +84,3 @@ promise<widget>
 as_promise_widget (object obj) {
   return tm_new<object_promise_widget_rep> (obj);
 }
-
-/******************************************************************************
- * Observers
- ******************************************************************************/
-
-bool
-tmscm_is_observer (tmscm o) {
-  return (tmscm_is_blackbox (o) &&
-          (type_box (tmscm_to_blackbox (o)) == type_helper<observer>::id));
-}
-
-tmscm
-observer_to_tmscm (observer o) {
-  return blackbox_to_tmscm (close_box<observer> (o));
-}
-
-observer
-tmscm_to_observer (tmscm obj) {
-  return open_box<observer> (tmscm_to_blackbox (obj));
-}
-

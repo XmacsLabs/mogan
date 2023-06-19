@@ -29,12 +29,6 @@ tmscm           promise_widget_to_tmscm (promise_widget o);
 promise_widget  tmscm_to_promise_widget (tmscm o);
 promise<widget> as_promise_widget (object obj);
 
-tmscm observer_to_tmscm (observer o);
-observer     tmscm_to_observer (tmscm obj);
-bool tmscm_is_observer (tmscm o);
-#define TMSCM_ASSERT_OBSERVER(o, arg, rout)                                    \
-  TMSCM_ASSERT (tmscm_is_observer (o), o, arg, rout)
-
 #define TMSCM_ASSERT_WIDGET(o, arg, rout)                                      \
   TMSCM_ASSERT (tmscm_is_widget (o), o, arg, rout)
 #define TMSCM_ASSERT_PROMISE_WIDGET(o, arg, rout)                              \
