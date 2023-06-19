@@ -314,6 +314,12 @@ local l3_files = {
     "src/Data/Convert/Verbatim/**.cpp",
     "src/Data/Tree/**.cpp",
     "src/Data/History/**.cpp",
+    "src/Data/String/converter.cpp",
+    "src/Data/String/universal.cpp",
+    "src/Data/String/wencoding.cpp",
+    "src/Kernel/Abstractions/command.cpp",
+    "src/Kernel/Abstractions/observer.cpp",
+    "src/Kernel/Abstractions/player.cpp",
     "src/Scheme/L1/**.cpp",
     "src/Scheme/L2/**.cpp",
     "src/Scheme/L3/**.cpp",
@@ -321,19 +327,32 @@ local l3_files = {
     "src/Scheme/Scheme/object.cpp",
     "src/System/Config/**.cpp",
     "src/System/Language/locale.cpp",
+    "src/System/Classes/**.cpp",
+    "src/System/Files/**.cpp",
+    "src/System/Misc/**.cpp",
+    "src/Plugins/Curl/**.cpp",
+    "src/Texmacs/Server/tm_debug.cpp",
 }
 local l3_includedirs = {
+    "src/Data/Convert",
+    "src/Data/Tree",
+    "src/Data/History",
+    "src/Data/String",
+    "src/Kernel/Abstractions",
+    "src/Kernel/Algorithms",
     "src/Scheme",
     "src/Scheme/Scheme",
     "src/Scheme/S7",
     "src/Scheme/L1",
     "src/Scheme/L2",
     "src/Scheme/L3",
-    "src/Data/Convert",
-    "src/Data/Tree",
-    "src/Data/History",
     "src/System/Config",
     "src/System/Language",
+    "src/System/Files",
+    "src/System/Classes",
+    "src/System/Misc",
+    "src/Plugins",
+    "src/Texmacs",
 }
 target("libkernel_l3") do
     set_languages("c++17")
@@ -372,15 +391,9 @@ target("libkernel_l3") do
         }
     )
 
-    add_headerfiles({
-        "src/System/Classes/tm_timer.hpp",
-        "src/Texmacs/tm_debug.hpp",
-    })
     add_includedirs("$(buildir)/L3")
     add_includedirs("$(buildir)")
-    add_includedirs(l2_includedirs, {public = true})
     add_includedirs(l3_includedirs, {public = true})
-    add_files(l2_files)
     add_files(l3_files)
 
     if is_plat("linux") or is_plat("macosx") then
