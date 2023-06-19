@@ -15,6 +15,7 @@
 #include "connect.hpp"
 #include "dictionary.hpp"
 #include "merge_sort.hpp"
+#include "observer_utils.hpp"
 
 /******************************************************************************
 * Finding completions in text

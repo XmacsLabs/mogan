@@ -11,6 +11,7 @@
 
 #include "edit_math.hpp"
 #include "analyze.hpp"
+#include "observer_utils.hpp"
 
 /******************************************************************************
 * Constructors and destructors

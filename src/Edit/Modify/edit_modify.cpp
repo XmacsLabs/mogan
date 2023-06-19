@@ -15,6 +15,7 @@
 #ifdef EXPERIMENTAL
 #include "../../Style/Memorizer/clean_copy.hpp"
 #endif
+#include "observer_utils.hpp"
 
 /******************************************************************************
 * Constructors and destructors

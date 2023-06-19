@@ -13,6 +13,7 @@
 ******************************************************************************/
 
 #include "modification.hpp"
+#include "observer_utils.hpp"
 
 /******************************************************************************
 * Definition of the highlight_observer_rep class

@@ -18,6 +18,7 @@
 #include "dictionary.hpp"
 #include "new_document.hpp"
 #include "merge_sort.hpp"
+#include "observer_utils.hpp"
 
 array<tm_buffer> bufs;
 

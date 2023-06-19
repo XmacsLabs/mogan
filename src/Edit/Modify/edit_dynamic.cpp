@@ -11,6 +11,7 @@
 
 #include "edit_dynamic.hpp"
 #include "tree_analyze.hpp"
+#include "observer_utils.hpp"
 
 /******************************************************************************
 * Constructors and destructors

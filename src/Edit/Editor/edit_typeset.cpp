@@ -23,6 +23,7 @@
 #ifdef EXPERIMENTAL
 #include "../../Style/Environment/std_environment.hpp"
 #endif // EXPERIMENTAL
+#include "observer_utils.hpp"
 
 //box empty_box (path ip, int x1=0, int y1=0, int x2=0, int y2=0);
 bool enable_fastenv= false;

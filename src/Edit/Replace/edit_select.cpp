@@ -15,6 +15,7 @@
 #include "packrat.hpp"
 #include "tree_select.hpp"
 #include "drd_mode.hpp"
+#include "observer_utils.hpp"
 
 /******************************************************************************
 * Internationalization

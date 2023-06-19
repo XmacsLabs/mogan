@@ -13,6 +13,7 @@
 #include "file.hpp"
 #include "analyze.hpp"
 #include "scheme.hpp"
+#include "observer_utils.hpp"
 
 /******************************************************************************
 * Constructors and destructors

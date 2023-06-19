@@ -18,6 +18,7 @@
 #include "file.hpp"
 #include "convert.hpp"
 #include "scheme.hpp"
+#include "observer_utils.hpp"
 
 /******************************************************************************
 * Constructors and destructors

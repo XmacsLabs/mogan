@@ -23,6 +23,7 @@
 #include "tree_modify.hpp"
 #include "tree_search.hpp"
 #include "tree_traverse.hpp"
+#include "observer_utils.hpp"
 
 tree
 coerce_string_tree (string s) {
