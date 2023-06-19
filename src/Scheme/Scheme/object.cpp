@@ -9,27 +9,19 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "object.hpp"
+#include "glue.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
 #include "object_l3.hpp"
-#ifndef KERNEL_L3
-#include "object_l5.hpp"
-#endif
-#include "glue.hpp"
-#include "object.hpp"
 
 #include "array.hpp"
 #include "config.h"
 #include "list.hpp"
-#include "promise.hpp"
-#ifndef KERNEL_L3
-#include "boot.hpp"
-#include "editor.hpp"
-#include "widget.hpp"
-#endif
 #include "modification.hpp"
 #include "patch.hpp"
 #include "preferences.hpp"
+#include "promise.hpp"
 #include "tm_timer.hpp"
 
 /******************************************************************************
@@ -192,12 +184,6 @@ bool
 is_array_double (object obj) {
   return tmscm_is_array_double (object_to_tmscm (obj));
 }
-#ifndef KERNEL_L3
-bool
-is_widget (object obj) {
-  return tmscm_is_widget (object_to_tmscm (obj));
-}
-#endif
 bool
 is_patch (object obj) {
   return tmscm_is_patch (object_to_tmscm (obj));
@@ -611,29 +597,3 @@ clear_pending_commands () {
   start_queue  = array<time_t> (0);
 }
 #endif // QTTEXMACS
-
-/******************************************************************************
- * Protected evaluation
- ******************************************************************************/
-
-void
-protected_call (object cmd) {
-#ifdef USE_EXCEPTIONS
-  try {
-#endif
-#ifndef KERNEL_L3
-    get_current_editor ()->before_menu_action ();
-#endif
-    call (cmd);
-#ifndef KERNEL_L3
-    get_current_editor ()->after_menu_action ();
-#endif
-#ifdef USE_EXCEPTIONS
-  } catch (string s) {
-#ifndef KERNEL_L3
-    get_current_editor ()->cancel_menu_action ();
-#endif
-  }
-  handle_exceptions ();
-#endif
-}
