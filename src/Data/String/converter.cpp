@@ -11,7 +11,6 @@
 
 #include "block.hpp"
 #include "converter.hpp"
-#include "convert.hpp"
 #ifdef USE_ICONV
 #include <iconv.h>
 #endif
