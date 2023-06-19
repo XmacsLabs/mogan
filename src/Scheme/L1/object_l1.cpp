@@ -10,8 +10,8 @@
  ******************************************************************************/
 
 #include "object_l1.hpp"
-#include "block.hpp"
 #include "analyze.hpp"
+#include "block.hpp"
 #include "object.hpp"
 #include "scheme.hpp"
 

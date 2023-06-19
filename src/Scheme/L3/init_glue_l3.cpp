@@ -21,7 +21,6 @@
 #include "path.hpp"
 #include "tree.hpp"
 
-
 tree
 var_apply (tree &t, modification m) {
   apply (t, copy (m));

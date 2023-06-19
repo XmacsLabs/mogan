@@ -217,7 +217,7 @@ blackbox_to_string (s7_scheme *sc, tmscm args) {
   if (type_ == type_helper<tree>::id) {
     tree t= tmscm_to_tree (blackbox_smob);
 #ifndef KERNEL_L3
-    s     = "<tree " * tree_to_texmacs (t) * ">";
+    s= "<tree " * tree_to_texmacs (t) * ">";
 #endif
   }
   else if (type_ == type_helper<observer>::id) {
