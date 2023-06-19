@@ -282,8 +282,11 @@ end
 -- Library: L3 Kernel
 --
 local l3_files = {
+    "src/Kernel/Abstractions/**.cpp",
     "src/Data/History/**.cpp",
+    "src/Data/Observers/**.cpp",
     "src/Data/Scheme/**.cpp",
+    "src/Data/Document/new_document.cpp",
     "src/Scheme/L1/**.cpp",
     "src/Scheme/L2/**.cpp",
     "src/Scheme/L3/**.cpp",
@@ -298,7 +301,10 @@ local l3_files = {
     "src/Texmacs/Server/tm_debug.cpp",
 }
 local l3_includedirs = {
+    "src/Kernel/Abstractions",
+    "src/Data/Document",
     "src/Data/History",
+    "src/Data/Observers",
     "src/Data/Scheme",
     "src/Kernel/Abstractions",
     "src/Kernel/Algorithms",
