@@ -12,7 +12,6 @@
 #ifndef INIT_GLUE_L1_HPP
 #define INIT_GLUE_L1_HPP
 
-void
-initialize_glue_l1 ();
+void initialize_glue_l1 ();
 
 #endif

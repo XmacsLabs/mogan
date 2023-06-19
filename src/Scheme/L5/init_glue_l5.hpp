@@ -12,7 +12,6 @@
 #ifndef INIT_GLUE_L5_HPP
 #define INIT_GLUE_L5_HPP
 
-void
-initialize_glue_l5 ();
+void initialize_glue_l5 ();
 
 #endif
