@@ -13,6 +13,14 @@
 #define INPUT_H
 #include "path.hpp"
 
+
+#define DATA_ABORT   ((char) 1)
+#define DATA_BEGIN   ((char) 2)
+#define DATA_END     ((char) 5)
+#define DATA_COMMAND ((char) 16)
+#define DATA_ESCAPE  ((char) 27)
+
+
 class texmacs_input;
 struct texmacs_input_rep: concrete_struct {
   string type;                  // default value for channel below

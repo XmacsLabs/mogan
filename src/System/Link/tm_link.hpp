@@ -19,12 +19,6 @@
 #define WAITING_FOR_INPUT  2
 #define WAITING_FOR_OUTPUT 3
 
-#define DATA_ABORT   ((char) 1)
-#define DATA_BEGIN   ((char) 2)
-#define DATA_END     ((char) 5)
-#define DATA_COMMAND ((char) 16)
-#define DATA_ESCAPE  ((char) 27)
-
 #define LINK_IN   0
 #define LINK_OUT  0
 #define LINK_ERR  1

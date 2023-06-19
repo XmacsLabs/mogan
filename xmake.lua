@@ -283,9 +283,7 @@ end
 --
 local l3_files = {
     "src/Kernel/Abstractions/**.cpp",
-    "src/Data/Convert/Scheme/**.cpp",
-    "src/Data/Convert/Texmacs/**.cpp",
-    "src/Data/Convert/Verbatim/**.cpp",
+    "src/Data/Convert/**.cpp",
     "src/Data/Tree/**.cpp",
     "src/Data/History/**.cpp",
     "src/Data/String/**.cpp",
