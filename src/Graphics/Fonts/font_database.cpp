@@ -13,6 +13,7 @@
 #include "iterator.hpp"
 #include "file.hpp"
 #include "convert.hpp"
+#include "block.hpp"
 #include "merge_sort.hpp"
 #include "Freetype/tt_file.hpp"
 #include "Freetype/tt_tools.hpp"

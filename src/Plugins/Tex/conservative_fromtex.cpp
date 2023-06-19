@@ -18,6 +18,7 @@
 #include "iterator.hpp"
 #include "fast_search.hpp"
 #include "merge_sort.hpp"
+#include "block.hpp"
 
 /******************************************************************************
 * Get correspondence between subtrees when upgrading texmacs documents

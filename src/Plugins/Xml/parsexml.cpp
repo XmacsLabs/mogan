@@ -11,6 +11,7 @@
 
 #include "xml.hpp"
 #include "convert.hpp"
+#include "block.hpp"
 #include "hashset.hpp"
 #include "converter.hpp"
 #include "parse_string.hpp"
