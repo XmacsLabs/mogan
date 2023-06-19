@@ -22,7 +22,7 @@ bool   tmscm_is_widget (tmscm obj);
 tmscm  widget_to_tmscm (widget o);
 widget tmscm_to_widget (tmscm o);
 widget as_widget (object obj);
-bool is_widget (object obj);
+bool   is_widget (object obj);
 
 bool            tmscm_is_promise_widget (tmscm u);
 tmscm           promise_widget_to_tmscm (promise_widget o);

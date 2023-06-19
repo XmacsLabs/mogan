@@ -9,19 +9,19 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "object.hpp"
+#include "glue.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
 #include "object_l3.hpp"
-#include "glue.hpp"
-#include "object.hpp"
 
 #include "array.hpp"
 #include "config.h"
 #include "list.hpp"
-#include "promise.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
 #include "preferences.hpp"
+#include "promise.hpp"
 #include "tm_timer.hpp"
 
 /******************************************************************************
