@@ -5,6 +5,7 @@ echo "Please use clang-format >= 15.0.0"
 set -x
 
 xmake format -f "tests/**.cpp"
+xmake format -f "src/Data/Observers/observer_utils.[hc]pp"
 xmake format -f "src/Data/Scheme/**.[hc]pp"
 xmake format -f "src/Scheme/**.[hc]pp"
 xmake format -f "src/Plugins/Curl/**.cpp"

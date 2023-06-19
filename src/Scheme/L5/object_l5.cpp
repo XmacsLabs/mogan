@@ -104,4 +104,3 @@ observer
 tmscm_to_observer (tmscm obj) {
   return open_box<observer> (tmscm_to_blackbox (obj));
 }
-

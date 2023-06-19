@@ -16,6 +16,7 @@
 #include "convert.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
+#include "observer_utils.hpp"
 #include "s7_tm.hpp"
 #include "tree_analyze.hpp"
 #include "tree_correct.hpp"
@@ -23,7 +24,6 @@
 #include "tree_modify.hpp"
 #include "tree_search.hpp"
 #include "tree_traverse.hpp"
-#include "observer_utils.hpp"
 
 tree
 coerce_string_tree (string s) {
