@@ -19,7 +19,6 @@
 
 observer nil_observer;
 extern tree the_et;
-extern bool packrat_invalid_colors;
 
 /******************************************************************************
 * Debugging facilities
@@ -360,7 +359,6 @@ raw_apply (tree& t, modification mod) {
     raw_set_cursor (subtree (t, root (mod)), index (mod), mod->t);
     break;
   }
-  packrat_invalid_colors= true;
 }
 
 /******************************************************************************
