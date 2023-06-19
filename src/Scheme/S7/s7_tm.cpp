@@ -372,6 +372,8 @@ initialize_scheme () {
   s7_eval_c_string (tm_s7, init_prg);
   initialize_compat ();
   initialize_smobs ();
+#ifndef KERNEL_L3
   initialize_glue ();
+#endif
   object_stack= s7_name_to_value (tm_s7, "object-stack");
 }
