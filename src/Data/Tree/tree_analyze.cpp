@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "tree_analyze.hpp"
+#include "convert.hpp"
 
 drd_info get_style_drd (tree style);
 
