@@ -282,13 +282,7 @@ end
 -- Library: L3 Kernel
 --
 local l3_files = {
-    "src/Kernel/Abstractions/**.cpp",
-    "src/Data/Convert/Scheme/**.cpp",
-    "src/Data/Convert/Texmacs/**.cpp",
-    "src/Data/Convert/Verbatim/**.cpp",
-    "src/Data/Tree/**.cpp",
     "src/Data/History/**.cpp",
-    "src/Data/String/**.cpp",
     "src/Scheme/L1/**.cpp",
     "src/Scheme/L2/**.cpp",
     "src/Scheme/L3/**.cpp",
@@ -303,10 +297,7 @@ local l3_files = {
     "src/Texmacs/Server/tm_debug.cpp",
 }
 local l3_includedirs = {
-    "src/Data/Convert",
-    "src/Data/Tree",
     "src/Data/History",
-    "src/Data/String",
     "src/Kernel/Abstractions",
     "src/Kernel/Algorithms",
     "src/Scheme",
