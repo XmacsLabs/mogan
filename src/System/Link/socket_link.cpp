@@ -11,6 +11,7 @@
 ******************************************************************************/
 #ifndef QTTEXMACS
 
+#include "input.hpp"
 #include "socket_link.hpp"
 #include "sys_utils.hpp"
 #include "hashset.hpp"
