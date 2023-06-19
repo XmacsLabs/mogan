@@ -21,7 +21,7 @@
     </cell>>>>
   </wide-tabular>
 
-  <section|v1.2.0-alpha10>
+  <section|v1.2.0-alpha11>
 
   <\wide-tabular>
     <tformat|<cwith|1|1|1|1|cell-valign|B>|<table|<row|<\cell>
@@ -30,6 +30,24 @@
       Darcy
     </cell>|<\cell>
       Documentation in markdown format for users and developers
+    </cell>>|<row|<\cell>
+      <dlink|8>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake integration for packaging on Ubuntu/Windows/macOS
+    </cell>>>>
+  </wide-tabular>
+
+  <section|v1.2.0-alpha10>
+
+  <\wide-tabular>
+    <tformat|<table|<row|<\cell>
+      <dlink|3>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake integration for building and testing
     </cell>>|<row|<\cell>
       <dlink|15>
     </cell>|<\cell>
