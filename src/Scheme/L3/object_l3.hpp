@@ -25,6 +25,12 @@ bool         tmscm_is_array_patch (tmscm p);
 array<patch> tmscm_to_array_patch (tmscm p);
 tmscm        array_patch_to_tmscm (array<patch> a);
 
+tmscm    observer_to_tmscm (observer o);
+observer tmscm_to_observer (tmscm obj);
+bool     tmscm_is_observer (tmscm o);
+
+#define TMSCM_ASSERT_OBSERVER(o, arg, rout)                                    \
+  TMSCM_ASSERT (tmscm_is_observer (o), o, arg, rout)
 #define TMSCM_ASSERT_ARRAY_PATCH(p, arg, rout)                                 \
   TMSCM_ASSERT (tmscm_is_array_patch (p), p, arg, rout)
 
