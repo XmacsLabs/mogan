@@ -118,16 +118,15 @@ add_requires("s7 2023.04.13", {system=false})
 set_configvar("QTTEXMACS", 1)
 
 local l1_files = {
-    "src/Kernel/Abstractions/basic.cpp",
+    "src/Kernel/Basic/**.cpp",
     "src/Kernel/Containers/**.cpp",
     "src/Kernel/Types/**.cpp",
     "src/Data/Drd/**.cpp",
-    "src/Data/String/base64.cpp",
-    "src/Data/String/fast_search.cpp",
     "src/System/IO/**.cpp",
     "src/System/Memory/**.cpp"
 }
 local l1_includedirs = {
+    "src/Kernel/Basic",
     "src/Kernel/Abstractions",
     "src/Kernel/Containers",
     "src/Kernel/Types",
@@ -279,41 +278,17 @@ target("libkernel_l2") do
     end
 end
 
-for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
-    local testname = path.basename(filepath)
-    target(testname) do
-        set_languages("c++17")
-        set_policy("check.auto_ignore_flags", false)
-
-        set_group("kernel_l2_tests")
-        add_deps("libkernel_l2")
-        add_syslinks("pthread")
-        add_rules("qt.console")
-        add_frameworks("QtTest")
-
-        add_packages("libcurl")
-        if is_plat("mingw") then
-            add_packages("nowide_standalone")
-        end
-        add_includedirs("tests/Base")
-        add_includedirs("$(buildir)/L2")
-        add_includedirs(l1_includedirs)
-        add_includedirs(l2_includedirs)
-        add_files("tests/Base/base.cpp")
-        add_files(filepath)
-        add_files(filepath, {rules = "qt.moc"})
-    end
-end
-
 --
 -- Library: L3 Kernel
 --
 local l3_files = {
+    "src/Kernel/Abstractions/**.cpp",
     "src/Data/Convert/Scheme/**.cpp",
     "src/Data/Convert/Texmacs/**.cpp",
     "src/Data/Convert/Verbatim/**.cpp",
     "src/Data/Tree/**.cpp",
     "src/Data/History/**.cpp",
+    "src/Data/String/**.cpp",
     "src/Scheme/L1/**.cpp",
     "src/Scheme/L2/**.cpp",
     "src/Scheme/L3/**.cpp",
@@ -321,19 +296,32 @@ local l3_files = {
     "src/Scheme/Scheme/object.cpp",
     "src/System/Config/**.cpp",
     "src/System/Language/locale.cpp",
+    "src/System/Classes/**.cpp",
+    "src/System/Files/**.cpp",
+    "src/System/Misc/**.cpp",
+    "src/Plugins/Curl/**.cpp",
+    "src/Texmacs/Server/tm_debug.cpp",
 }
 local l3_includedirs = {
+    "src/Data/Convert",
+    "src/Data/Tree",
+    "src/Data/History",
+    "src/Data/String",
+    "src/Kernel/Abstractions",
+    "src/Kernel/Algorithms",
     "src/Scheme",
     "src/Scheme/Scheme",
     "src/Scheme/S7",
     "src/Scheme/L1",
     "src/Scheme/L2",
     "src/Scheme/L3",
-    "src/Data/Convert",
-    "src/Data/Tree",
-    "src/Data/History",
     "src/System/Config",
     "src/System/Language",
+    "src/System/Files",
+    "src/System/Classes",
+    "src/System/Misc",
+    "src/Plugins",
+    "src/Texmacs",
 }
 target("libkernel_l3") do
     set_languages("c++17")
@@ -372,15 +360,9 @@ target("libkernel_l3") do
         }
     )
 
-    add_headerfiles({
-        "src/System/Classes/tm_timer.hpp",
-        "src/Texmacs/tm_debug.hpp",
-    })
     add_includedirs("$(buildir)/L3")
     add_includedirs("$(buildir)")
-    add_includedirs(l2_includedirs, {public = true})
     add_includedirs(l3_includedirs, {public = true})
-    add_files(l2_files)
     add_files(l3_files)
 
     if is_plat("linux") or is_plat("macosx") then
@@ -391,6 +373,32 @@ target("libkernel_l3") do
     if is_plat("mingw") then
         add_includedirs("src/Plugins/Windows")
         add_files("src/Plugins/Windows/**.cpp")
+    end
+end
+
+for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
+    local testname = path.basename(filepath)
+    target(testname) do
+        set_languages("c++17")
+        set_policy("check.auto_ignore_flags", false)
+
+        set_group("kernel_l3_tests")
+        add_deps("libkernel_l3")
+        add_syslinks("pthread")
+        add_rules("qt.console")
+        add_frameworks("QtTest")
+
+        add_packages("libcurl")
+        if is_plat("mingw") then
+            add_packages("nowide_standalone")
+        end
+        add_includedirs("tests/Base")
+        add_includedirs("$(buildir)/L3")
+        add_includedirs(l1_includedirs)
+        add_includedirs(l3_includedirs)
+        add_files("tests/Base/base.cpp")
+        add_files(filepath)
+        add_files(filepath, {rules = "qt.moc"})
     end
 end
 
@@ -543,6 +551,7 @@ target("libmogan") do
             "src/Graphics/Types",
             "src/Kernel/Abstractions",
             "src/Kernel/Algorithms",
+            "src/Kernel/Basic",
             "src/Kernel/Containers",
             "src/Kernel/Types",
             "src/Plugins",

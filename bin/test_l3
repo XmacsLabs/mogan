@@ -1,0 +1,4 @@
+#!/bin/bash
+
+xmake run --yes --verbose --diagnosis --group=kernel_l3_tests
+

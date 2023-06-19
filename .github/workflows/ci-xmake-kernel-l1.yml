@@ -62,6 +62,6 @@ jobs:
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build --yes
       - name: Build the L1 Kernel
-        run: bin/build_kernel_l1
+        run: bin/build_l1
       - name: Test the L1 Kernel
-        run: bin/test_kernel_l1
+        run: bin/test_l1
