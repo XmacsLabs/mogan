@@ -279,9 +279,8 @@ write_indirect_obj (ObjectsContext &objectsContext, ObjectIDType destId,
   objectsContext.EndIndirectObject ();
 }
 
-void
-pdf_image_info (url image, int &w, int &h, PDFRectangle &cropBox,
-                double (&tMat)[6], PDFPageInput &pageInput);
+void pdf_image_info (url image, int &w, int &h, PDFRectangle &cropBox,
+                     double (&tMat)[6], PDFPageInput &pageInput);
 
 /******************************************************************************
  * constructors and destructors

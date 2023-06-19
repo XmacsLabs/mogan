@@ -233,8 +233,7 @@ alt_bezier_fit (array<point> a, int pack_size) {
  * Yet another Bezier fitting algorithm
  ******************************************************************************/
 
-array<point>
-bezier_fit_sub (array<point> a, double eps);
+array<point> bezier_fit_sub (array<point> a, double eps);
 
 static point
 eval_bezier (array<point> bez, double t) {

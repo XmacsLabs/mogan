@@ -12,7 +12,6 @@
 #ifndef INIT_GLUE_PLUGINS_HPP
 #define INIT_GLUE_PLUGINS_HPP
 
-void
-initialize_glue_plugins ();
+void initialize_glue_plugins ();
 
 #endif
