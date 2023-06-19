@@ -9,6 +9,7 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "input.hpp"
 #include "tm_link.hpp"
 #include "qt_utilities.hpp"
 #include "qt_gui.hpp"
