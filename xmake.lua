@@ -283,6 +283,7 @@ end
 --
 local l3_files = {
     "src/Data/History/**.cpp",
+    "src/Data/Scheme/**.cpp",
     "src/Scheme/L1/**.cpp",
     "src/Scheme/L2/**.cpp",
     "src/Scheme/L3/**.cpp",
@@ -298,6 +299,7 @@ local l3_files = {
 }
 local l3_includedirs = {
     "src/Data/History",
+    "src/Data/Scheme",
     "src/Kernel/Abstractions",
     "src/Kernel/Algorithms",
     "src/Scheme",
@@ -522,6 +524,7 @@ target("libmogan") do
             "src/Data/History",
             "src/Data/Observers",
             "src/Data/Parser",
+            "src/Data/Scheme",
             "src/Data/String",
             "src/Data/Tree",
             "src/Edit",

@@ -14,7 +14,7 @@
 #include "iterator.hpp"
 
 #ifndef KERNEL_L2
-#include "convert.hpp"
+#include "block.hpp"
 #endif
 
 /******************************************************************************

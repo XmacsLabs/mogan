@@ -12,11 +12,11 @@
 #include "s7_tm.hpp"
 #include "../Scheme/glue.hpp"
 #include "blackbox.hpp"
-#include "convert.hpp" // tree_to_texmacs (should not belong here)
 #include "file.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
 #ifndef KERNEL_L3
+#include "convert.hpp" // tree_to_texmacs (should not belong here)
 #include "widget.hpp"
 #endif
 #ifdef HAVE_GETTIMEOFDAY
@@ -216,7 +216,9 @@ blackbox_to_string (s7_scheme *sc, tmscm args) {
   int    type_= type_box (tmscm_to_blackbox (blackbox_smob));
   if (type_ == type_helper<tree>::id) {
     tree t= tmscm_to_tree (blackbox_smob);
+#ifndef KERNEL_L3
     s     = "<tree " * tree_to_texmacs (t) * ">";
+#endif
   }
   else if (type_ == type_helper<observer>::id) {
     s= "<observer>";
