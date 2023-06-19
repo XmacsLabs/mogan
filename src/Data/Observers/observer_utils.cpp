@@ -19,6 +19,32 @@ extern tree the_et;
 extern bool packrat_invalid_colors;
 
 /******************************************************************************
+ * Debugging facilities
+ ******************************************************************************/
+
+static void
+consistency_check (tree t, path ip) {
+  if (obtain_ip (t) != ip)
+    cout << "Wrong ip] " << t << " " << obtain_ip (t) << " instead of " << ip
+         << "\n";
+  if (is_compound (t)) {
+    int i, n= N (t);
+    for (i= 0; i < n; i++) {
+      // if (!strong_equal (ip, obtain_ip (t[i])->next))
+      if (obtain_ip (t) != obtain_ip (t[i])->next)
+        cout << "Bad node] " << t << " " << obtain_ip (t) << " #" << i << "\n";
+      consistency_check (t[i], path (i, ip));
+    }
+  }
+}
+
+void
+consistency_check () {
+  consistency_check (the_et, path ());
+  cout << HRULE;
+}
+
+/******************************************************************************
  * Routines for modifying trees
  *******************************************************************************
  * 1) The "inserting modifications" (insert, split and insert_node) invoke
