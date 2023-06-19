@@ -12,6 +12,7 @@
 #include "tm_frame.hpp"
 #include "tm_window.hpp"
 #include "convert.hpp"
+#include "block.hpp"
 #include "file.hpp"
 #include "analyze.hpp"
 #include "message.hpp"

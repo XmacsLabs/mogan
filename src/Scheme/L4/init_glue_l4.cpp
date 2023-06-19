@@ -11,7 +11,12 @@
 
 #include "init_glue_l4.hpp"
 
+#include "base64.hpp"
+#include "block.hpp"
 #include "convert.hpp"
+#include "object_l1.hpp"
+#include "object_l2.hpp"
+#include "s7_tm.hpp"
 #include "tree_analyze.hpp"
 #include "tree_correct.hpp"
 #include "tree_math_stats.hpp"

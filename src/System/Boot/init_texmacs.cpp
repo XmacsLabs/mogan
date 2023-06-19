@@ -15,6 +15,7 @@
 #include "sys_utils.hpp"
 #include "analyze.hpp"
 #include "convert.hpp"
+#include "block.hpp"
 #include "merge_sort.hpp"
 #include "drd_std.hpp"
 #include "language.hpp"

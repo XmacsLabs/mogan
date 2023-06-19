@@ -13,6 +13,7 @@
 #ifndef BLOCK_HPP
 #define BLOCK_HPP
 
+#include "hashmap.hpp"
 #include "tree.hpp"
 
 scheme_tree string_to_scheme_tree (string s);
@@ -23,5 +24,6 @@ tree        scheme_tree_to_tree (scheme_tree t);
 tree        scheme_to_tree (string s);
 scheme_tree tree_to_scheme_tree (tree t);
 string      tree_to_scheme (tree t);
+tree scheme_tree_to_tree (scheme_tree t, hashmap<string, int> codes, bool flag);
 
 #endif

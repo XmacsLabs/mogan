@@ -15,7 +15,6 @@
 #include "object_l3.hpp"
 #include "s7_tm.hpp"
 
-#include "base64.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
 #include "path.hpp"
