@@ -2,13 +2,21 @@
 ## Official Packages
 | Operating System | Download | MD5 Checksum|
 |-------|-----|--------|
-| Windows (>=10)| [Gitee](https://gitee.com/XmacsLabs/mogan/attach_files/1370402/download)/[Github](https://github.com/XmacsLabs/mogan/releases/download/v1.1.2/Mogan-v1.1.2-64bit-installer.exe) | a3ad8bccb60e161bb733b125949eeadd |
-| macOS (>=10.15) | [Gitee](https://gitee.com/XmacsLabs/mogan/attach_files/1370400/download)/[Github](https://github.com/XmacsLabs/mogan/releases/download/v1.1.2/Mogan_v1.1.2.dmg) | 70a5e1107445fed61543c01bce053224 |
-| macOS arm (>=12.6) | [Gitee](https://gitee.com/XmacsLabs/mogan/attach_files/1370409/download)/[Github](https://github.com/XmacsLabs/mogan/releases/download/v1.1.2/Mogan_arm_v1.1.2.dmg) | b5d56e8faef9d94867624c7f0f196c32 |
-| Ubuntu 20.04 | [Gitee](https://gitee.com/XmacsLabs/mogan/attach_files/1370401/download)/[Github](https://github.com/XmacsLabs/mogan/releases/download/v1.1.2/mogan-v1.1.2-ubuntu20.04.deb) | 1c8e3664deb0606766310ec323b3777e |
-| Ubuntu 22.04 | [Gitee](https://gitee.com/XmacsLabs/mogan/attach_files/1370403/download)/[Github](https://github.com/XmacsLabs/mogan/releases/download/v1.1.2/mogan-v1.1.2-ubuntu22.04.deb) | acadc8feec924238a4faafbdac9f5f51 |
+| Windows (>=10)| [⏬ Download](http://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/Mogan-v1.1.3-64bit-installer.exe) | f6d46f104156f83f72e9e93122b17797 |
+| macOS (>=10.15) | [⏬ Download](http://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/Mogan_v1.1.3.dmg) | 51ab76ba5ade77d604b6956131f4d489 |
+| macOS arm (>=12.6) | [⏬ Download](http://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/Mogan_arm_v1.1.3.dmg) | af6a5ee2b9237891feaf698148a7bca0 |
+| Ubuntu 20.04 | [⏬ Download](http://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/mogan-v1.1.3-ubuntu20.04.deb) | 1aa101ff1c5ba74212a5d81d0c647a2e |
+| Ubuntu 22.04 | [⏬ Download](http://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/mogan-v1.1.3-ubuntu22.04.deb) | 6e29e788f24b57cb742c5b0ec1cef0c8 |
+| UOS amd64 | [⏬ Download](http://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/mogan_1.1.3-uos-amd64.deb) | ea09c29cfbc3d81ebb9156855e89fa1c |
+| UOS loongarch | [⏬ Download](mogan_1.1.3-uos-loongarch64.deb) | 8837ce391de7558cfb387db74ff9edb2 |
+
+Other sites to download：
++ https://codeberg.org/XmacsLabs/mogan/releases
++ https://gitee.com/XmacsLabs/mogan/releases
++ https://github.com/XmacsLabs/mogan/releases
 
 Old releases:
++ [v1.1.2 (2023/04/09)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.2)
 + [v1.1.1 (2022/10/29)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.1)
 + [v1.1.0 (2022/08/31)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.0)
 
