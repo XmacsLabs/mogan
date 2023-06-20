@@ -71,6 +71,7 @@ function sidebarGuide() {
             collapsible: true,
             items: [
                 {text: 'What is Mogan?', link: '/guide/what-is-mogan'},
+                {text: 'Major Features', link: '/guide/Feature'},
                 {text: 'The Name', link: '/guide/Name'},
             ]
         },
@@ -104,6 +105,7 @@ function sidebarGuideZh() {
             collapsible: true,
             items: [
                 {text: '墨干编辑器', link: '/zh/guide/what-is-mogan'},
+                {text: '主要功能', link: '/guide/Feature'},
                 {text: '命名', link: '/zh/guide/Name'},
             ]
         },
