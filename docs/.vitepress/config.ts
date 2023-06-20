@@ -37,15 +37,23 @@ export default {
         ],
 
         footer: {
-            message: 'This website is released under the MIT License.',
-            copyright: 'Copyright © 2022 XmacsLabs contributors'
+            message: 'Let us enjoy exploring science and technology!',
+            copyright: 'Copyright © 2022-2023 contributors of Mogan Editor'
         },
     }
 }
 
 function nav() {
     return [
-        {text: 'Guide', link: '/guide/what-is-mogan', activeMatch: '/guide/'},
+        {
+            text: 'Guide',
+            link: '/guide/what-is-mogan',
+            activeMatch: '/guide/'
+        },
+        {
+            text: 'Forum',
+            link: 'http://forum.texmacs.cn/'
+        },
         {
             text: 'Language',
             items: [
@@ -53,28 +61,6 @@ function nav() {
                 {text: 'English', link: '/guide/what-is-mogan'},
             ]
         },
-        {
-            text: 'Github Issues',
-            link: 'https://github.com/XmacsLabs/mogan/issues'
-        },
-        {
-            text: 'Community',
-            link: 'https://github.com/XmacsLabs/mogan/discussions'
-        }
-    ]
-}
-
-function navZh() {
-    return [
-        {text: 'Guide', link: '/zh/guide/what-is-mogan', activeMatch: '/zh/guide/'},
-        {
-            text: 'Gitee Issues',
-            link: 'https://gitee.com/XmacsLabs/mogan/issues'
-        },
-        {
-            text: 'Community',
-            link: 'https://github.com/XmacsLabs/mogan/discussions'
-        }
     ]
 }
 
@@ -85,10 +71,11 @@ function sidebarGuide() {
             collapsible: true,
             items: [
                 {text: 'What is Mogan?', link: '/guide/what-is-mogan'},
+                {text: 'The Name', link: '/guide/Name'},
             ]
         },
         {
-            text: 'Install',
+            text: 'Getting Started',
             collapsible: true,
             items: [
                 {
@@ -98,15 +85,15 @@ function sidebarGuide() {
             ]
         },
         {
-            text: 'Development',
+            text: 'Community',
             collapsible: true,
             items: [
-                {text: 'Contributing', link: '/guide/CONTRIBUTING'},
-                {text: 'Linux', link: '/guide/Develop_on_Linux'},
-                {text: 'macOS', link: '/guide/Develop_on_macOS'},
-                {text: 'Windows', link: '/guide/Develop_on_Windows'},
+                {
+                    text: 'Contact us',
+                    link: '/guide/Contact'
+                },
             ]
-        }
+        },
     ]
 }
 
@@ -117,10 +104,11 @@ function sidebarGuideZh() {
             collapsible: true,
             items: [
                 {text: '墨干编辑器', link: '/zh/guide/what-is-mogan'},
+                {text: '命名', link: '/zh/guide/Name'},
             ]
         },
         {
-            text: '安装',
+            text: '如何入门',
             collapsible: true,
             items: [
                 {
@@ -130,14 +118,14 @@ function sidebarGuideZh() {
             ]
         },
         {
-            text: '参与开发',
+            text: '社区',
             collapsible: true,
             items: [
-                {text: '如何参与？', link: '/zh/guide/CONTRIBUTING'},
-                {text: 'Linux', link: '/zh/guide/Develop_on_Linux'},
-                {text: 'macOS', link: '/zh/guide/Develop_on_macOS'},
-                {text: 'Windows', link: '/zh/guide/Develop_on_Windows'},
+                {
+                    text: '联系我们',
+                    link: '/zh/guide/Contact'
+                },
             ]
-        }
+        },
     ]
 }
