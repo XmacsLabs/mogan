@@ -5,6 +5,7 @@
 
 GNU TeXmacs 是法国国家科学研究中心的数学家 [Joris van der Hoeven](http://www.texmacs.org/joris/main/joris.html) 从上世纪九十年代末开始研发的一款结构化编辑器，旨在利用直观易用的图形界面编写高质量的技术文档，效果可达到与 LaTeX 相同的水准。目前它的主要用户集中于中小学教师及高校科研人员。
 
+## 视频: A quick tour of GNU TeXmacs
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
 
 ## 墨干编辑器的诞生
