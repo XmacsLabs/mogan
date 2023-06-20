@@ -13,8 +13,7 @@
 + [v1.1.0 (2022/08/31)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.0)
 
 
-## 社区提供的安装包
-### GNU Guix
+## GNU Guix
 ```
 guix install mogan
 ```
@@ -22,7 +21,7 @@ guix install mogan
 
 > 注意：可能会遇到中文菜单无法正常显示的问题，这并不是墨干编辑器本身的问题，您可能需要花一些时间学习如何配置Guix的中文支持。
 
-### Windows
+## Windows
 ```
 winget install -e --id XmacsLabs.Mogan
 ```
@@ -30,13 +29,13 @@ winget install -e --id XmacsLabs.Mogan
 
 > 注意，winget会从Github下载安装包，如果网络有问题，还是建议手动下载安装。
 
-### Arch Linux (AUR)
+## Arch Linux (AUR)
 ```bash
 yay -S mogan
 ```
 更多信息：https://aur.archlinux.org/packages/mogan
 
-### openSUSE (OBS)
+## openSUSE (OBS)
 
 使用系统默认的软件包管理器`zypper`：
 

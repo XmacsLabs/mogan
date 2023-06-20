@@ -1,5 +1,5 @@
 # Installation Guide
-## Packages provided by the Xmacs Labs
+## Official Packages
 | Operating System | Download | MD5 Checksum|
 |-------|-----|--------|
 | Windows (>=10)| [Gitee](https://gitee.com/XmacsLabs/mogan/attach_files/1370402/download)/[Github](https://github.com/XmacsLabs/mogan/releases/download/v1.1.2/Mogan-v1.1.2-64bit-installer.exe) | a3ad8bccb60e161bb733b125949eeadd |
@@ -12,8 +12,7 @@ Old releases:
 + [v1.1.1 (2022/10/29)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.1)
 + [v1.1.0 (2022/08/31)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.0)
 
-## Packages provided by the community
-### GNU Guix
+## GNU Guix
 ```
 guix install mogan
 ```
@@ -21,19 +20,19 @@ More info：https://packages.guix.gnu.org/packages/mogan/
 
 > Note: CJK characters in the menu might be displayed improperly, please learn how to configure a Guix OS.
 
-### Windows
+## Windows
 ```
 winget install -e --id XmacsLabs.Mogan
 ```
 More info on winget: https://learn.microsoft.com/en-us/windows/package-manager/winget/
 
-### Arch Linux (AUR)
+## Arch Linux (AUR)
 ```bash
 yay -S mogan
 ```
 More info：https://aur.archlinux.org/packages/mogan
 
-### openSUSE (OBS)
+## openSUSE (OBS)
 
 Use the default package management tool `zypper`:
 
