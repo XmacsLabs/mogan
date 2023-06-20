@@ -20,7 +20,7 @@ Windows, macOS, Ubuntu and UOS installers are officially provided. Packages for 
 ### Book: The Jolly Writer
 [**The Jolly Writer**](https://www.scypress.com/book_info.html) is the only systematic and detailed official TeXmacs textbook available. Please [click here](https://www.scypress.com/book_download.html) to download for free or make a donation.
 
-## Video: A quick tour of GNU TeXmacs
+### Video: A quick tour of GNU TeXmacs
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://youtu.be/H46ON2FB30U)
 
 ## Contributing as User or Developer
