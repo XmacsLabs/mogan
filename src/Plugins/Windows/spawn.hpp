@@ -9,13 +9,13 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "array.hpp"
+
 #include <fcntl.h>
 #include <io.h>
 #include <process.h>
 #include <string>
-//#include "string.hpp"
 
-using namespace std;
 
 __stdcall unsigned bkgread(void *);
 
