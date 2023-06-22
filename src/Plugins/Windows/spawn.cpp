@@ -94,7 +94,7 @@ bkgread (void *thatv) {
   Channel *that= (Channel *)thatv;
   do {
     cnt= _read (that->fd, buf, sizeof(buf));
-    if (cnt > 0) *(that->str)+= basic_string<char> (buf, cnt);
+    if (cnt > 0) *(that->str)+= std::basic_string<char> (buf, cnt);
     else if (cnt == 0) that->close ();
   } while (cnt > 0);
   return (cnt);
