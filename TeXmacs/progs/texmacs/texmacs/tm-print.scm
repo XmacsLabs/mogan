@@ -39,14 +39,12 @@
     "ledger" "legal" "letter" "folio"))
 
 (define (get-default-paper-size-bis)
-  (with psize (getenv "PAPERSIZE")
-    (if (and psize (!= psize "")) psize
-        (with papersizefile (or (getenv "PAPERCONF") "/etc/papersize")
-          (and (url-test? papersizefile "r")
-               (with pps-port (open-input-file papersizefile)
-                 (with size (read-line pps-port)
-                   (close-input-port pps-port)
-                   size)))))))
+  (with papersizefile "/etc/papersize"
+   (and (url-exists? papersizefile)
+        (with pps-port (open-input-file papersizefile)
+         (with size (read-line pps-port)
+          (close-input-port pps-port)
+          size)))))
 
 (tm-define (correct-paper-size s)
   (if (and (string? s) (in? s supported-sizes)) s "a4"))
