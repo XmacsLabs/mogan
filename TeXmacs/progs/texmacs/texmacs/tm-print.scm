@@ -198,13 +198,12 @@
                  "preview")))))
 
 (tm-define (preview-buffer)
-  (with file (cond ((os-mingw?)
-                    (let* ((p (getenv "TEXMACS_HOME_PATH"))
-                           (f (string-append p "\\system\\tmp\\preview.pdf")))
-                      (system->url f)))
-                   ((or (os-macos?) (get-boolean-preference "native pdf"))
-                    "$TEXMACS_HOME_PATH/system/tmp/preview.pdf")
-                   (else "$TEXMACS_HOME_PATH/system/tmp/preview.ps"))
+  (with file (system->url
+              (cond ((os-mingw?)
+                     "$TEXMACS_HOME_PATH/system/tmp/preview.pdf")
+                    ((or (os-macos?) (get-boolean-preference "native pdf"))
+                     "$TEXMACS_HOME_PATH/system/tmp/preview.pdf")
+                    (else "$TEXMACS_HOME_PATH/system/tmp/preview.ps")))
     (print-to-file file)
     (preview-file file)))
 
