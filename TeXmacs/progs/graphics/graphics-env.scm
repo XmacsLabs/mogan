@@ -388,8 +388,7 @@
 
 ;; Graphics context [reset]
 (define current-cursor #f)
-(define TM_PATH (getenv "TEXMACS_PATH"))
-(define (tm_xpm name) (string-append TM_PATH "/misc/pixmaps/traditional/--x17/" name))
+(define (tm_xpm name) (string-append (url->system (get-texmacs-path)) "/misc/pixmaps/traditional/--x17/" name))
 
 (tm-define (graphics-reset-context cmd)
 ;;FIXME: Should be called only once, when we move out of a <graphics>.
