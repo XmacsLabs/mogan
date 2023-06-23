@@ -14,9 +14,14 @@
 (define (maxima-serialize lan t)
   (with s (string-drop-right (verbatim-serialize lan t) 1)
     (cond ((== s "") "0;\n")
-	  ((in? (string-ref s (- (string-length s) 1)) '(#\; #\$))
-	   (string-append s "\n"))
-	  (else (string-append s ";\n")))))
+          ((in? (string-ref s (- (string-length s) 1)) '(#\; #\$))
+           (string-append s "\n"))
+          (else (string-append s ";\n")))))
+
+(define (maxima-entry)
+  (if (url-exists? "$TEXMACS_HOME_PATH/plugins/maxima")
+      (system-url->string "$TEXMACS_HOME_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")
+      (system-url->string "$TEXMACS_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")))
 
 (define (maxima-versions)
   (map (lambda (x)
@@ -26,15 +31,10 @@
 
 (define (maxima-launchers) ;; returns list of launchers for each version
   (if (os-mingw?)
-      (if (url-exists? "$TEXMACS_HOME_PATH\\plugins\\maxima")
-          `((:launch
-            ,(string-append "maxima.bat -p \"" (getenv "TEXMACS_HOME_PATH")
-                            "\\plugins\\maxima\\lisp\\texmacs-maxima.lisp\"")))
-          `((:launch
-            ,(string-append "maxima.bat -p \"" (getenv "TEXMACS_PATH")
-                            "\\plugins\\maxima\\lisp\\texmacs-maxima.lisp\""))))
-      (with version-list
-          (if reconfigure-flag? (maxima-versions) (plugin-versions "maxima"))
+      `((:launch ,(string-append "maxima.bat -p " (maxima-entry))))
+      (with version-list (if reconfigure-flag?
+                             (maxima-versions)
+                             (plugin-versions "maxima"))
         (if (and version-list (list? version-list) (nnull? version-list))
             (let* ((default (car version-list))
                    (rest (cdr version-list))
