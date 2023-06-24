@@ -16,14 +16,13 @@
       (with s (texmacs->code (stree->tree u) "SourceCode")
         (string-append s "\n<EOF>\n"))))
 
-(define (xypic-launcher)
+(define (xypic-entry)
   (if (url-exists? "$TEXMACS_HOME_PATH/plugins/tmpy")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_HOME_PATH")
-                     "/plugins/tmpy/session/tm_xypic.py\"")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_PATH")
-                     "/plugins/tmpy/session/tm_xypic.py\"")))
+      (system-url->string "$TEXMACS_HOME_PATH/plugins/tmpy/session/tm_xypic.py")
+      (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_xypic.py")))
+
+(define (xypic-launcher)
+  (string-append (python-command) " " (xypic-entry)))
 
 (define (xypic-exists?)
   (and (url-exists-in-path? "latex")

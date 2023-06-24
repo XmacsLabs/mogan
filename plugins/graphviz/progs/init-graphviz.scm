@@ -48,14 +48,13 @@
       (with s (texmacs->code (stree->tree u) "SourceCode")
         (string-append s "\n<EOF>\n"))))
 
-(define (graphviz-launcher)
+(define (graphviz-entry)
   (if (url-exists? "$TEXMACS_HOME_PATH/plugins/tmpy")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_HOME_PATH")
-                     "/plugins/tmpy/session/tm_graphviz.py\"")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_PATH")
-                     "/plugins/tmpy/session/tm_graphviz.py\"")))
+      (system-url->string "$TEXMACS_HOME_PATH/plugins/tmpy/session/tm_graphviz.py")
+      (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_graphviz.py")))
+
+(define (graphviz-launcher)
+  (string-append (python-command) " " (graphviz-entry)))
 
 (plugin-configure dot 
   (:winpath "Graphviz" "bin")

@@ -18,14 +18,13 @@
       (with s (texmacs->code (stree->tree u) "SourceCode")
         (string-append s "\n<EOF>\n"))))
 
-(define (plantuml-launcher)
+(define (plantuml-entry)
   (if (url-exists? "$TEXMACS_HOME_PATH/plugins/tmpy")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_HOME_PATH")
-                     "/plugins/tmpy/session/tm_plantuml.py\"")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_PATH")
-                     "/plugins/tmpy/session/tm_plantuml.py\"")))
+      (system-url->string "$TEXMACS_HOME_PATH/plugins/tmpy/session/tm_plantuml.py")
+      (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_plantuml.py")))
+
+(define (plantuml-launcher)
+  (string-append (python-command) " " (plantuml-entry)))
 
 (plugin-configure plantuml
   (:require (url-exists-in-path? "plantuml"))
@@ -33,4 +32,3 @@
   (:launch ,(plantuml-launcher))
   (:serializer ,plantuml-serialize)
   (:session "PlantUML"))
-

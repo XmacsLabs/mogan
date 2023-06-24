@@ -16,14 +16,13 @@
       (with s (texmacs->code (stree->tree u) "SourceCode")
         (string-append s "\n<EOF>\n"))))
 
-(define (tikz-launcher)
+(define (tikz-entry)
   (if (url-exists? "$TEXMACS_HOME_PATH/plugins/tmpy")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_HOME_PATH")
-                     "/plugins/tmpy/session/tm_tikz.py\"")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_PATH")
-                     "/plugins/tmpy/session/tm_tikz.py\"")))
+      (system-url->string "$TEXMACS_HOME_PATH/plugins/tmpy/session/tm_tikz.py")
+      (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_tikz.py")))
+
+(define (tikz-launcher)
+  (string-append (python-command) " " (tikz-entry)))
 
 (plugin-configure tikz
   (:require (python-command))

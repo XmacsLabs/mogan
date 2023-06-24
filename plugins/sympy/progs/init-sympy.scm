@@ -16,14 +16,13 @@
       (with s (texmacs->code (stree->tree u) "SourceCode")
         (string-append s "\n<EOF>\n"))))
 
-(define (sympy-launcher)
+(define (sympy-entry)
   (if (url-exists? "$TEXMACS_HOME_PATH/plugins/tmpy")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_HOME_PATH")
-                     "/plugins/tmpy/session/tm_sympy.py\"")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_PATH")
-                     "/plugins/tmpy/session/tm_sympy.py\"")))
+      (system-url->string "$TEXMACS_HOME_PATH/plugins/tmpy/session/tm_sympy.py")
+      (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_sympy.py")))
+
+(define (sympy-launcher)
+  (string-append (python-command) " " (sympy-entry)))
 
 (plugin-configure sympy
   (:require (python-command))
