@@ -16,14 +16,13 @@
       (with s (texmacs->code (stree->tree u) "SourceCode")
         (string-append s "\n<EOF>\n"))))
 
-(define (asy-launcher)
+(define (asy-entry)
   (if (url-exists? "$TEXMACS_HOME_PATH/plugins/tmpy")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_HOME_PATH")
-                     "/plugins/tmpy/session/tm_asy.py\"")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_PATH")
-                     "/plugins/tmpy/session/tm_asy.py\"")))
+      (system-url->string "$TEXMACS_HOME_PATH/plugins/tmpy/session/tm_asy.py")
+      (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_asy.py")))
+
+(define (asy-launcher)
+  (string-append (python-utf8-command) (python-entry)))
 
 (plugin-configure asymptote
   (:winpath "Asymptote" ".")

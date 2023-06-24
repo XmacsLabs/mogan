@@ -15,14 +15,13 @@
       (with s (texmacs->code (stree->tree u) "SourceCode")
         (string-append  s  "\n<EOF>\n"))))
 
-(define (graph-launcher)
+(define (graph-entry)
   (if (url-exists? "$TEXMACS_HOME_PATH/plugins/tmpy")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_HOME_PATH")
-                     "/plugins/tmpy/session/tm_graph.py\"")
-      (string-append (python-command) " \""
-                     (getenv "TEXMACS_PATH")
-                     "/plugins/tmpy/session/tm_graph.py\"")))
+      (system-url->string "$TEXMACS_HOME_PATH/plugins/tmpy/session/tm_graph.py")
+      (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_graph.py")))
+
+(define (graph-launcher)
+  (string-append (python-utf8-command) (dratex-entry)))
 
 (plugin-configure graph
   (:require (python-command))

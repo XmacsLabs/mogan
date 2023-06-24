@@ -41,7 +41,7 @@
        (string-replace
         (string-replace
          (string-replace
-          (string-replace (getenv "TEXMACS_HOME_PATH")
+          (string-replace (url->system (get-texmacs-home-path))
            "C:" "/cygdrive/c")
           "\\" "/")
          " " "\\ ")
@@ -51,7 +51,7 @@
        (string-replace
         (string-replace
          (string-replace
-          (string-replace (getenv "TEXMACS_PATH")
+          (string-replace (url->system (get-texmacs-path))
            "C:" "/cygdrive/c")
           "\\" "/")
          " " "\\ ")
