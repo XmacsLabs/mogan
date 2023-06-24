@@ -24,7 +24,7 @@
       (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_plantuml.py")))
 
 (define (plantuml-launcher)
-  (string-append (python-utf8-command) (plantuml-entry)))
+  (string-append (python-command) (plantuml-entry)))
 
 (plugin-configure plantuml
   (:require (url-exists-in-path? "plantuml"))
