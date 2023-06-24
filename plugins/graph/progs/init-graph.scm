@@ -21,7 +21,7 @@
       (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_graph.py")))
 
 (define (graph-launcher)
-  (string-append (python-command) (dratex-entry)))
+  (string-append (python-command) " " (graph-entry)))
 
 (plugin-configure graph
   (:require (python-command))

@@ -22,7 +22,7 @@
       (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_xypic.py")))
 
 (define (xypic-launcher)
-  (string-append (python-command) (xypic-entry)))
+  (string-append (python-command) " " (xypic-entry)))
 
 (define (xypic-exists?)
   (and (url-exists-in-path? "latex")
