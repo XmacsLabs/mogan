@@ -22,7 +22,7 @@
       (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_tikz.py")))
 
 (define (tikz-launcher)
-  (string-append (python-utf8-command) (tikz-entry)))
+  (string-append (python-command) (tikz-entry)))
 
 (plugin-configure tikz
   (:require (python-command))

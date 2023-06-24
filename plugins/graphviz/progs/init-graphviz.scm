@@ -54,7 +54,7 @@
       (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_graphviz.py")))
 
 (define (graphviz-launcher)
-  (string-append (python-utf8-command) (graphviz-entry)))
+  (string-append (python-command) (graphviz-entry)))
 
 (plugin-configure dot 
   (:winpath "Graphviz" "bin")

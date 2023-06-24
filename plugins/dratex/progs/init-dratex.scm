@@ -23,7 +23,7 @@
       (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_dratex.py")))
 
 (define (dratex-launcher)
-  (string-append (python-utf8-command) (dratex-entry)))
+  (string-append (python-command) (dratex-entry)))
 
 (plugin-configure dratex
   (:require (python-command))

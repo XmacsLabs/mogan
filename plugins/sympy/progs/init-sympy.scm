@@ -22,7 +22,7 @@
       (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_sympy.py")))
 
 (define (sympy-launcher)
-  (string-append (python-utf8-command) (sympy-entry)))
+  (string-append (python-command) (sympy-entry)))
 
 (plugin-configure sympy
   (:require (python-command))

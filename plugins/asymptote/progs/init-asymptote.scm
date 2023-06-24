@@ -22,7 +22,7 @@
       (system-url->string "$TEXMACS_PATH/plugins/tmpy/session/tm_asy.py")))
 
 (define (asy-launcher)
-  (string-append (python-utf8-command) (python-entry)))
+  (string-append (python-command) (python-entry)))
 
 (plugin-configure asymptote
   (:winpath "Asymptote" ".")
