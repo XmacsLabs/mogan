@@ -1,9 +1,10 @@
 export default {
+    title: 'Mogan Editor',
     outDir: "../website",
     locales: {
         "/": {
             lang: 'en-US',
-            title: 'Mogan.app',
+            title: 'Mogan Editor',
             description: 'the most user-friendly distribution of GNU TeXmacs.',
         },
         "/zh/": {
@@ -18,6 +19,7 @@ export default {
     head: [],
 
     themeConfig: {
+        siteTitle: 'Mogan Editor',
         locales: {
             '/': {
                 selectLanguageName: 'English',

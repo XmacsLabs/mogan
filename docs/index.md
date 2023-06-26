@@ -1,11 +1,11 @@
 ---
 layout: home
 
-title: Mogan.app
+title: Mogan Editor
 titleTemplate: the most user-friendly distribution of GNU TeXmacs.
 
 hero:
-  name: Mogan
+  name: Mogan Editor
   text: the most user-friendly distribution of GNU TeXmacs.
   actions:
     - theme: brand
