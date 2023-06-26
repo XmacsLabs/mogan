@@ -1,5 +1,7 @@
 # 如何安装
 ## 官方提供的安装包
+> 警告：由于墨干编辑器V1.1.3，Windows版引入了一个严重的[导致插件和绘图工具无法使用的bug](https://github.com/XmacsLabs/mogan/issues/701)，这里提供墨干编辑器V1.1.4 RC1的[Windows安装包下载地址](https://gitee.com/XmacsLabs/mogan/attach_files/1447179/download)。墨干编辑器V1.1.4将于七月初发布。
+
 | 操作系统 | 马上下载 | MD5校验 |
 |-------|-----|--------|
 | Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/Mogan-v1.1.3-64bit-installer.exe) | f6d46f104156f83f72e9e93122b17797 |

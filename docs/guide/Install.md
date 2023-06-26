@@ -1,5 +1,7 @@
 # Installation Guide
 ## Official Packages
+> WARNING: There is [a severe bug](https://github.com/XmacsLabs/mogan/issues/701) in Mogan Editor v1.1.3 for Windows. We have released Mogan Editor v1.1.4 RC1 and here is the [download link](https://github.com/XmacsLabs/mogan/releases/download/v1.1.4-rc1/Mogan-v1.1.4-rc1-64bit-installer.exe) for Windows. We will release Mogan Editor v1.1.4 in early July.
+
 | Operating System | Download | MD5 Checksum|
 |-------|-----|--------|
 | Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/Mogan-v1.1.3-64bit-installer.exe) | f6d46f104156f83f72e9e93122b17797 |
