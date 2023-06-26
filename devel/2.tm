@@ -119,9 +119,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <\dlink>
-        2_14
-      </dlink>
+      <dlink|2_14>
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
@@ -134,6 +132,15 @@
       \;
     </cell>|<\cell>
       Optimize generated s7 glue
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|2_16>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      Use procedures defined in S7 to look up metadata instead of procedures
+      defined in Guile.
     </cell>>>>
   </wide-tabular>
 
