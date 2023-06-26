@@ -36,19 +36,19 @@
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
-      <todo|5_3>
+      5_3
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Doc on in-repo project management
+      Installer for Mogan Editor v1.1.3
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
-      <todo|5_4>
+      5_4
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Doc on commit messages rule
+      Doc on the videos on Bilibili and Youtube
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
@@ -56,7 +56,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Doc on pull requests and branch
+      Doc on pull requests, branch, commit message and project management
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
@@ -65,14 +65,6 @@
       Darcy
     </cell>|<\cell>
       Doc on how to run C++ unit tests
-    </cell>>|<row|<\cell>
-      Doc
-    </cell>|<\cell>
-      <todo|5_7>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Doc on the videos on Bilibili and Youtube
     </cell>>>>
   </wide-tabular>
 
