@@ -141,6 +141,22 @@
     </cell>|<\cell>
       Use procedures defined in S7 to look up metadata instead of procedures
       defined in Guile.
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <todo|2_17>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      Generate document, texmacs definition and properties for glue
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      2_18
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      Remove legacy glue generator based on guile
     </cell>>>>
   </wide-tabular>
 
