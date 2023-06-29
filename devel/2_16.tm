@@ -23,6 +23,35 @@
       <errput|unbound variable procedure-documentation in
       (procedure-documentation about)>
     </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (procedure-sources car)
+    <|unfolded-io>
+      (())
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (procedure-sources detect-remote-plugins)
+    <|unfolded-io>
+      ((lambda (where) (load-remote-plugins) (ahash-set! remote-plugins-table
+      where (get-remote-plugin-info where)) (update-remote-tables)
+      (save-remote-plugins)))
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (set-trace-level! car)
+    <|unfolded-io>
+      <errput|unbound variable procedure-property in (procedure-property car
+      'trace-wrapped)>
+    </unfolded-io>
+
+    <\input|Scheme] >
+      (texmacs-mode-mode in-prog?) ;this will hang the whole editor
+    </input>
+
+    <\input|Scheme] >
+      \;
+    </input>
   </session>
 
   <section|Description>
@@ -33,13 +62,14 @@
   <hlink|Guile manual|https://www.gnu.org/software/guile/manual/guile.html#index-procedure_002ddocumentation>:
 
   <\itemize>
-    <item><scm|procedure-source>
+    <item><scm|procedure-source>, which has the same usage as S7
 
     <item><scm|procedure-documentation>
 
     <item><scm|procedure-name> (handled in <dlink|2_4> partly)
 
-    <item><verbatim|procedure-property>
+    <item><verbatim|procedure-property>, which affects behavior of
+    <scm|set-trace-level!>.
   </itemize>
 
   <tmdoc-copyright|2023|jingkaimori>
