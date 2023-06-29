@@ -720,6 +720,7 @@ target("mogan_install") do
     set_configdir(INSTALL_DIR)
     set_configvar("DEVEL_VERSION", DEVEL_VERSION)
     set_configvar("PACKAGE", "Mogan Editor")
+    set_configvar("XMACS_VERSION", XMACS_VERSION)
 
     -- install man.1 manual file
     add_configfiles(
