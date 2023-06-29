@@ -127,7 +127,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <todo|2_15>
+      <dlink|2_15>
     </cell>|<\cell>
       \;
     </cell>|<\cell>
