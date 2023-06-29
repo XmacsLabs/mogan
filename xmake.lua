@@ -405,7 +405,8 @@ end
 
 
 local XMACS_VERSION="1.2.0"
-local INSTALL_DIR="$(buildir)/package"
+local INSTALL_RELATIVE_DIR="packages/org.xmacslabs.mogan/data/"
+local INSTALL_DIR=path.join("$(buildir)", INSTALL_RELATIVE_DIR)
 
 local DEVEL_VERSION = TEXMACS_VERSION
 local DEVEL_RELEASE = 1
@@ -656,6 +657,7 @@ option("libdl") do
 end
 
 target("mogan") do 
+    set_version(XMACS_VERSION)
     if is_plat("macosx") then
         set_filename("Mogan")
     end
@@ -682,6 +684,15 @@ target("mogan") do
     add_syslinks("pthread")
 
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
+    if is_plat("mingw") then
+        add_configfiles("packages/windows/resource.rc.in", {
+            filename = "resource.rc"
+        })
+        add_configfiles("packages/windows/TeXmacs.ico", {
+            onlycopy = true
+        })
+        add_files("$(buildir)/resource.rc")
+    end
 
     on_config(function (target) 
         -- use relative path here to avoid import failure on windows
@@ -700,28 +711,25 @@ target("mogan") do
     end)
 
     set_installdir(INSTALL_DIR)
-    after_install(function(target)
-        local install_dir = path.join(target:installdir(), "/bin/")
-        os.cp(target:targetfile(), install_dir)
-        local bin_dir = path.directory(target:targetfile())
-    end)
 end 
 
 target("mogan_install") do
     add_deps("mogan")
     set_kind("phony")
-    set_configvar("XMACS_VERSION", XMACS_VERSION)
-    set_configvar("WIN_BIT_SIZE", "64")
+    set_installdir(INSTALL_DIR)
+    set_configdir(INSTALL_DIR)
+    set_configvar("DEVEL_VERSION", DEVEL_VERSION)
+    set_configvar("PACKAGE", "Mogan Editor")
 
-    if is_plat("mingw") then
-        add_configfiles(
-            "(packages/windows/Xmacs.iss.in)",{
-                filename = "Xmacs.iss",
-                pattern = "@(.-)@",
-            }
-        )
-    end
+    -- install man.1 manual file
+    add_configfiles(
+        "(misc/man/texmacs.1.in)",{
+            filename = "texmacs.1",
+            pattern = "@([^\n]-)@",
+        }
+    )
 
+    -- package metadata
     if is_plat("macosx") then
         set_configvar("APPCAST", "")
         set_configvar("OSXVERMIN", "")
@@ -731,98 +739,49 @@ target("mogan_install") do
                 pattern = "@(.-)@",
             }
         )
-    end
-
-    set_configvar("prefix", INSTALL_DIR)
-    set_configvar("exec_prefix", INSTALL_DIR)
-    set_configvar("datarootdir", INSTALL_DIR.."/share")
-    set_configvar("datadir", INSTALL_DIR.."/share")
-    set_configvar("tmdata", INSTALL_DIR.."/Xmacs")
-    set_configvar("tmbin", INSTALL_DIR.."/lib/xmacs/Xmacs")
-    set_configvar("CONFIG_LIB_PATH", "LD_LIBRARY_PATH")
-
-    add_configfiles(
-        "(misc/man/mogan.1.in)",{
-            filename = "mogan.1",
-            pattern = "@([^\n]-)@",
-        }
-    )
-    
-    set_installdir(INSTALL_DIR)
-    if is_plat("macosx") then
         add_installfiles({
             "packages/macos/Xmacs.icns",
             "packages/macos/TeXmacs-document.icns",
             "src/Plugins/Cocoa/(English.lproj/**)",
             "src/Plugins/Cocoa/(zh_CN.lproj/**)",
-        })
-        add_installfiles({
             "misc/scripts/mogan.sh"
         })
     elseif is_plat("linux") then
         add_installfiles({
             "misc/scripts/mogan"
         })
-    elseif is_plat("mingw") then
-        add_installfiles("packages/windows/TeXmacs-large.bmp")
-        add_installfiles("packages/windows/TeXmacs-small.bmp")
-        add_installfiles("packages/windows/Xmacs.ico")
-        add_installfiles("packages/windows/TeXmacs.ico")
-        add_installfiles("packages/windows/Xmacs.iss")
     end
-
-    
-    -- share/
-
-    if is_plat("mingw") then
-        add_installfiles("(plugins/**)")
-    else 
-        add_installfiles("(plugins/**)", {prefixdir="share/Xmacs"})
-    end
-
-    add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
   
+    -- install icons
     add_installfiles("TeXmacs/misc/images/text-x-mogan.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
     add_installfiles("TeXmacs/misc/mime/mogan.desktop", {prefixdir="share/applications"})
     add_installfiles("TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
     add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm", {prefixdir="share/pixmaps"})
   
-
+    -- install texmacs runtime files
+    local TeXmacs_files = {
+        "TeXmacs(/doc/**)",
+        "TeXmacs(/examples/**)",
+        "TeXmacs(/fonts/**)",
+        "TeXmacs(/langs/**)",
+        "TeXmacs(/misc/**)",
+        "TeXmacs(/packages/**)",
+        "TeXmacs(/progs/**)",
+        "TeXmacs(/styles/**)",
+        "TeXmacs(/texts/**)",
+        "TeXmacs/COPYING", -- copying files are different
+        "TeXmacs/INSTALL",
+        "LICENSE", -- license files are same
+        "TeXmacs/README",
+        "TeXmacs/TEX_FONTS",
+        "(plugins/**)" -- plugin files
+    }
     if is_plat("mingw") then
-        add_installfiles({
-            "TeXmacs(/doc/main/**)",
-            "TeXmacs(/examples/**)",
-            "TeXmacs(/fonts/**)",
-            "TeXmacs(/langs/**)",
-            "TeXmacs(/misc/**)",
-            "TeXmacs(/packages/**)",
-            "TeXmacs(/progs/**)",
-            "TeXmacs(/styles/**)",
-            "TeXmacs(/texts/**)",
-            "TeXmacs/COPYING", -- copying files are different
-            "TeXmacs/INSTALL",
-            "LICENSE", -- license files are same
-            "TeXmacs/README",
-            "TeXmacs/TEX_FONTS",
-        })
+        add_installfiles(TeXmacs_files)
     else
-        add_installfiles({
-            "TeXmacs(/doc/**)",
-            "TeXmacs(/examples/**)",
-            "TeXmacs(/fonts/**)",
-            "TeXmacs(/langs/**)",
-            "TeXmacs(/misc/**)",
-            "TeXmacs(/packages/**)",
-            "TeXmacs(/progs/**)",
-            "TeXmacs(/styles/**)",
-            "TeXmacs(/texts/**)",
-            "TeXmacs/COPYING", -- copying files are different
-            "TeXmacs/INSTALL",
-            "LICENSE", -- license files are same
-            "TeXmacs/README",
-            "TeXmacs/TEX_FONTS",
-        }, {prefixdir="share/Xmacs"})
+        add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
     end
+    add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
 
     -- install tm files for testing purpose
     add_installfiles({
@@ -846,9 +805,83 @@ target("mogan_install") do
             if is_plat("macosx") and is_arch("arm64") then
                 os.execv("codesign", {"--force", "--deep", "--sign", "-", target:installdir().."../.."})
             end
+
+            if is_plat("mingw") then
+                import("detect.sdks.find_qt")
+                import("core.base.option")
+                import("core.project.config")
+
+                -- get qt sdk
+                local qt = assert(find_qt(), "Qt SDK not found!")
+
+                -- get windeployqt
+                local windeployqt = path.join(qt.bindir, "windeployqt.exe")
+                assert(os.isexec(windeployqt), "windeployqt.exe not found!\n if you are using msys, package mingw-w64-<arch>-qt5-translations and mingw-w64-<arch>-qt5-tools is needed!")
+                
+                -- deploy necessary dll
+                local buildir = config.buildir()
+                local deploy_argv = {"--compiler-runtime", "-printsupport"}
+                if option.get("diagnosis") then
+                    table.insert(deploy_argv, "--verbose=2")
+                elseif option.get("verbose") then
+                    table.insert(deploy_argv, "--verbose=1")
+                else
+                    table.insert(deploy_argv, "--verbose=0")
+                end
+                local install_file = path.join(buildir, INSTALL_RELATIVE_DIR, "bin")
+                table.insert(deploy_argv, install_file)
+                os.iorunv(windeployqt, deploy_argv)
+            end
         end)
 end
 
+target("windows_installer") do
+    set_kind("phony")
+    set_enabled(is_plat("mingw"))
+    add_deps("mogan_install")
+    set_configvar("PACKAGE_DATE", os.date("%Y-%m-%d"))
+    set_configvar("XMACS_VERSION", XMACS_VERSION)
+    set_installdir("$(buildir)")
+    add_configfiles(
+        "packages/windows/(config/config.in.xml)",{
+            filename = "config.xml",
+        }
+    )
+    add_installfiles({
+        "packages/windows/config/TeXmacs-small.png",
+        "packages/windows/config/TeXmacs-large.png",
+        "packages/windows/TeXmacs.ico",
+    }, {prefixdir = "config/"})
+    add_configfiles(
+        "packages/windows/(packages/org.xmacslabs.mogan/meta/package.in.xml)",{
+            filename = "package.xml",
+        }
+    )
+    add_installfiles({
+        "packages/windows/packages/org.xmacslabs.mogan/meta/installscript.qs",
+        "LICENSE"}, {prefixdir = "packages/org.xmacslabs.mogan/meta/"})
+    after_install(function (target, opt)
+        import("detect.sdks.find_qt")
+        import("core.base.option")
+        import("core.project.config")
+
+        -- get qt sdk
+        local qt = assert(find_qt(), "Qt SDK not found!")
+
+        -- get binarycreater
+        local binarycreator = path.join(qt.bindir, "binarycreator.exe")
+        assert(os.isexec(binarycreator), "binarycreator.exe not found!\n if you are using msys, package mingw-w64-<arch>-qt-installer-framework is needed!")
+
+        -- generate windows package
+        local buildir = config.buildir()
+        local package_argv = {
+            "--config", path.join(buildir, "config/config.xml"),
+            "--packages", path.join(buildir, "packages"),
+            path.join(buildir, "Mogan-v"..XMACS_VERSION.."-64bit-installer.exe")
+        }
+        os.iorunv(binarycreator, package_argv)
+    end)
+end
 
 for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
     if string.sub(filepath, 1, string.len("tests/Kernel")) ~= "tests/Kernel"
