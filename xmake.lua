@@ -869,9 +869,19 @@ target("windows_installer") do
         -- get qt sdk
         local qt = assert(find_qt(), "Qt SDK not found!")
 
-        -- get binarycreater
-        local binarycreator = path.join(qt.bindir, "binarycreator.exe")
-        assert(os.isexec(binarycreator), "binarycreator.exe not found!\n if you are using msys, package mingw-w64-<arch>-qt-installer-framework is needed!")
+        -- get binarycreator
+        local binarycreator_missing_prompt = [[
+binarycreator.exe not found!
+if you are using msys, package mingw-w64-<arch>-qt-installer-framework is needed!"
+]]
+        local binarycreator =find_tool("binarycreator", {
+            version = true,
+            pathes = {
+                qt.bindir,
+                path.join(qt.sdkdir, "Tools", "QtInstallerFramework", "4.6"),
+                "$(env PATH)"}})
+        assert(binarycreator, binarycreator_missing_prompt)
+        local binarycreator_path = assert(binarycreator.program, binarycreator_missing_prompt)
 
         -- generate windows package
         local buildir = config.buildir()
@@ -880,7 +890,7 @@ target("windows_installer") do
             "--packages", path.join(buildir, "packages"),
             path.join(buildir, "Mogan-v"..XMACS_VERSION.."-64bit-installer.exe")
         }
-        os.iorunv(binarycreator, package_argv)
+        os.iorunv(binarycreator_path, package_argv)
     end)
 end
 
