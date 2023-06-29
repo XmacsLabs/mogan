@@ -862,9 +862,10 @@ target("windows_installer") do
         "packages/windows/packages/org.xmacslabs.mogan/meta/installscript.qs",
         "LICENSE"}, {prefixdir = "packages/org.xmacslabs.mogan/meta/"})
     after_install(function (target, opt)
-        import("detect.sdks.find_qt")
         import("core.base.option")
         import("core.project.config")
+        import("detect.sdks.find_qt")
+        import("lib.detect.find_tool")
 
         -- get qt sdk
         local qt = assert(find_qt(), "Qt SDK not found!")
@@ -874,7 +875,7 @@ target("windows_installer") do
 binarycreator.exe not found!
 if you are using msys, package mingw-w64-<arch>-qt-installer-framework is needed!"
 ]]
-        local binarycreator =find_tool("binarycreator", {
+        local binarycreator = find_tool("binarycreator", {
             version = true,
             pathes = {
                 qt.bindir,
