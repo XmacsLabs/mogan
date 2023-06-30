@@ -40,3 +40,6 @@ TeXmacs/tests/*.ps
 TeXmacs/tests/*.pdf
 
 doxyfile
+
+.cache/
+compile_commands.json
