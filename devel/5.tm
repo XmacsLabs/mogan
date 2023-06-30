@@ -65,6 +65,14 @@
       Darcy
     </cell>|<\cell>
       Doc on how to run C++ unit tests
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_7
+    </cell>|<\cell>
+      Oyyko
+    </cell>|<\cell>
+      Doc on using VSCode to help develop
     </cell>>>>
   </wide-tabular>
 
