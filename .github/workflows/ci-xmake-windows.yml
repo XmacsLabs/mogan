@@ -77,7 +77,7 @@ jobs:
       - name: config
         shell: msys2 {0}
         run: |
-          ls -R D:\a\mogan\Qt\Tools\
+          ls -R /d/a/mogan/Qt/Tools
           xmake config --policies=build.ccache --yes --verbose --diagnosis --plat=mingw
       - name: build
         shell: msys2 {0}
