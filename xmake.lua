@@ -881,7 +881,7 @@ if you are using msys, package mingw-w64-<arch>-qt-installer-framework is needed
                 qt.bindir,
                 "$(env IQTA_TOOLS)/QtInstallerFramework/4.6/bin",
                 "$(env PATH)"}})
-        print(path.normalize("$(env IQTA_TOOLS)/QtInstallerFramework/4.6/bin")
+        print(path.normalize("$(env IQTA_TOOLS)/QtInstallerFramework/4.6/bin"))
         print("$(env IQTA_TOOLS)/QtInstallerFramework/4.6/bin"))
         assert(binarycreator, binarycreator_missing_prompt)
         local binarycreator_path = assert(binarycreator.program, binarycreator_missing_prompt)
