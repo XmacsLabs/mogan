@@ -875,14 +875,13 @@ target("windows_installer") do
 binarycreator.exe not found!
 if you are using msys, package mingw-w64-<arch>-qt-installer-framework is needed!"
 ]]
-        local binarycreator = find_program("binarycreator", {
+        local binarycreator_path = find_program("binarycreator", {
             paths = {
                 qt.bindir,
                 path.cygwin_path(path.join(os.getenv("IQTA_TOOLS"), "/QtInstallerFramework/4.6/bin")),
                 "$(env PATH)"}})
         print(path.cygwin_path(path.join(os.getenv("IQTA_TOOLS"), "/QtInstallerFramework/4.6/bin")))
-        assert(binarycreator, binarycreator_missing_prompt)
-        local binarycreator_path = assert(binarycreator.program, binarycreator_missing_prompt)
+        assert(binarycreator_path, binarycreator_missing_prompt)
 
         -- generate windows package
         local buildir = config.buildir()
