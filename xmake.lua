@@ -865,7 +865,7 @@ target("windows_installer") do
         import("core.base.option")
         import("core.project.config")
         import("detect.sdks.find_qt")
-        import("lib.detect.find_tool")
+        import("lib.detect.find_program")
 
         -- get qt sdk
         local qt = assert(find_qt(), "Qt SDK not found!")
@@ -875,8 +875,7 @@ target("windows_installer") do
 binarycreator.exe not found!
 if you are using msys, package mingw-w64-<arch>-qt-installer-framework is needed!"
 ]]
-        local binarycreator = find_tool("binarycreator", {
-            version = true,
+        local binarycreator = find_program("binarycreator", {
             paths = {
                 qt.bindir,
                 path.cygwin_path(path.join(os.getenv("IQTA_TOOLS"), "/QtInstallerFramework/4.6/bin")),
