@@ -780,9 +780,9 @@ target("mogan_install") do
     if is_plat("mingw") then
         add_installfiles(TeXmacs_files)
     else
+        add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
         add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
     end
-    add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
 
     -- install tm files for testing purpose
     add_installfiles({
