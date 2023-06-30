@@ -43,3 +43,11 @@ xmake install -o build/package mogan_install
 ``` bash
 build/package/bin/mogan
 ```
+
+### 使用VSCode帮助代码补全
+安装VSCode，Clangd以及VSCode的Clangd插件。
+之后在mogan文件夹执行
+```
+xmake project -k compile_commands
+```
+这个命令会在mogan文件夹下生成一个compile_commands.json文件，Clangd会读取它以理解项目的组织结构，从而避免找不到头文件的错误。
