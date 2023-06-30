@@ -47,6 +47,6 @@ build/package/bin/mogan
 Install VSCode, Clangd and the Clangd plugin for VSCode.
 Then execute in the mogan folder
 ````
-xmake project -k compile command
+xmake project -k compile_commands
 ````
 This will generate a compile_commands.json file under the mogan folder, and Clangd will read it to understand the organizational structure of the project, so as to avoid the error that the header file cannot be found.
