@@ -95,7 +95,7 @@ jobs:
         with:
           name: mogan-windows-dev
           path: |
-            build\packages\org.xmacslabs.mogan\data\**
+            build\packages\app.mogan\data\**
       - name: Generate Installer
         if: ${{ env.is-package }}
         shell: msys2 {0}

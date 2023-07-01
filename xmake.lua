@@ -405,7 +405,7 @@ end
 
 
 local XMACS_VERSION="1.2.0"
-local INSTALL_RELATIVE_DIR="packages/org.xmacslabs.mogan/data/"
+local INSTALL_RELATIVE_DIR="packages/app.mogan/data/"
 local INSTALL_DIR=path.join("$(buildir)", INSTALL_RELATIVE_DIR)
 
 local DEVEL_VERSION = TEXMACS_VERSION
@@ -854,13 +854,13 @@ target("windows_installer") do
         "packages/windows/TeXmacs.ico",
     }, {prefixdir = "config/"})
     add_configfiles(
-        "packages/windows/(packages/org.xmacslabs.mogan/meta/package.in.xml)",{
+        "packages/windows/(packages/app.mogan/meta/package.in.xml)",{
             filename = "package.xml",
         }
     )
     add_installfiles({
-        "packages/windows/packages/org.xmacslabs.mogan/meta/installscript.qs",
-        "LICENSE"}, {prefixdir = "packages/org.xmacslabs.mogan/meta/"})
+        "packages/windows/packages/app.mogan/meta/installscript.qs",
+        "LICENSE"}, {prefixdir = "packages/app.mogan/meta/"})
     after_install(function (target, opt)
         import("core.base.option")
         import("core.project.config")
