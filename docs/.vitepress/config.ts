@@ -153,6 +153,10 @@ function sidebarGuideZh() {
                     text: 'v1.1.2 (2023/04/09)',
                     link: '/zh/guide/ChangeLog_v1.1.2.md'
                 },
+                {
+                    text: 'v1.1.1 (2022/10/31)',
+                    link: '/zh/guide/ChangeLog_v1.1.1.md'
+                },
             ]
         },
     ]
