@@ -73,6 +73,30 @@
       Oyyko
     </cell>|<\cell>
       Doc on using VSCode to help develop
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_8
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      ChangeLog for old Mogan Editor releases
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_9
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Roadmap for Mogan Editor v1.2.x
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_10
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      OSPP 2023 Info
     </cell>>>>
   </wide-tabular>
 
