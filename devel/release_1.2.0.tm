@@ -21,6 +21,42 @@
     </cell>>>>
   </wide-tabular>
 
+  <section|v1.2.0-alpha12>
+
+  <\wide-tabular>
+    <tformat|<cwith|1|1|1|1|cell-valign|B>|<table|<row|<\cell>
+      <dlink|5>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Documentation in markdown format for users and developers
+    </cell>>|<row|<\cell>
+      <dlink|8>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake integration for packaging on Ubuntu/Windows/macOS
+    </cell>>|<row|<\cell>
+      <dlink|20>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Editor related issues
+    </cell>>|<row|<\cell>
+      <dlink|22>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Chinese Dictionary
+    </cell>>|<row|<\cell>
+      <dlink|23>
+    </cell>|<\cell>
+      Oyyko
+    </cell>|<\cell>
+      Mogan Draw optimization \ (OSPP)
+    </cell>>>>
+  </wide-tabular>
+
   <section|v1.2.0-alpha11>
 
   <\wide-tabular>
@@ -36,6 +72,18 @@
       Darcy
     </cell>|<\cell>
       xmake integration for packaging on Ubuntu/Windows/macOS
+    </cell>>|<row|<\cell>
+      <dlink|21>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Deprecate getenv in Scheme
+    </cell>>|<row|<\cell>
+      <dlink|22>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Chinese Dictionary
     </cell>>>>
   </wide-tabular>
 
