@@ -878,11 +878,12 @@ if you are using msys, package mingw-w64-<arch>-qt-installer-framework is needed
         local binarycreator_path = find_program("binarycreator", {
             check = "--help",
             paths = {
-                qt.bindir,
                 path.join(os.getenv("IQTA_TOOLS"), "/QtInstallerFramework/4.6/bin"),
                 "$(env PATH)"}})
-        print(path.join(os.getenv("IQTA_TOOLS"), "/QtInstallerFramework/4.6/bin"))
-        print(os.isexec(path.join(os.getenv("IQTA_TOOLS"), "/QtInstallerFramework/4.6/bin/binarycreator.exe")))
+        if not binarycreator_path then
+            binarycreator_path = path.translate(path.join(qt.bindir, "binarycreator.exe"))
+            assert(os.isexec(binarycreator_path), binarycreator_missing_prompt)
+        end
         assert(binarycreator_path, binarycreator_missing_prompt)
 
         -- generate windows package

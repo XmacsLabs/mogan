@@ -76,9 +76,7 @@ jobs:
           echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin\" >> "${{ github.path }}"
       - name: config
         shell: msys2 {0}
-        run: |
-          ls -R /d/a/mogan/Qt/Tools
-          xmake config --policies=build.ccache --yes --verbose --diagnosis --plat=mingw
+        run: xmake config --policies=build.ccache --yes --verbose --diagnosis --plat=mingw
       - name: build
         shell: msys2 {0}
         id: build
@@ -107,6 +105,6 @@ jobs:
         if: ${{ env.is-package }}
         uses: actions/upload-artifact@v2
         with:
-          name: mogan-windows-dev
+          name: mogan-windows-nightly-installer.exe
           path: |
             build\*.exe
