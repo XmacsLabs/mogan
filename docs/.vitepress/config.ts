@@ -97,6 +97,16 @@ function sidebarGuide() {
                 },
             ]
         },
+        // {
+        //     text: 'ChangeLog',
+        //     collapsible: false,
+        //     items: [
+        //         {
+        //             text: 'v1.1.3',
+        //             link: '/guide/ChangeLog_v1.1.3.md'
+        //         },
+        //     ]
+        // },
     ]
 }
 
@@ -128,6 +138,16 @@ function sidebarGuideZh() {
                 {
                     text: '联系我们',
                     link: '/zh/guide/Contact'
+                },
+            ]
+        },
+        {
+            text: 'ChangeLog',
+            collapsible: false,
+            items: [
+                {
+                    text: 'v1.1.3',
+                    link: '/zh/guide/ChangeLog_v1.1.3.md'
                 },
             ]
         },
