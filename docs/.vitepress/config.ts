@@ -142,12 +142,16 @@ function sidebarGuideZh() {
             ]
         },
         {
-            text: 'ChangeLog',
-            collapsible: false,
+            text: '变更记录',
+            collapsible: true,
             items: [
                 {
-                    text: 'v1.1.3',
+                    text: 'v1.1.3 (2023/06/05)',
                     link: '/zh/guide/ChangeLog_v1.1.3.md'
+                },
+                {
+                    text: 'v1.1.2 (2023/04/09)',
+                    link: '/zh/guide/ChangeLog_v1.1.2.md'
                 },
             ]
         },
