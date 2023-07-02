@@ -162,8 +162,24 @@ function sidebarGuideZh() {
                     link: '/zh/guide/ChangeLog_v1.1.0.md'
                 },
                 {
-                    text: 'v1.0.4 (2023/05/28)',
+                    text: 'v1.0.4 (2022/05/28)',
                     link: '/zh/guide/ChangeLog_v1.0.4.md'
+                },
+                {
+                    text: 'v1.0.3 (2022/05/15)',
+                    link: '/zh/guide/ChangeLog_v1.0.3.md'
+                },
+                {
+                    text: 'v1.0.2 (2022/05/04)',
+                    link: '/zh/guide/ChangeLog_v1.0.2.md'
+                },
+                {
+                    text: 'v1.0.1 (2022/03/26)',
+                    link: '/zh/guide/ChangeLog_v1.0.1.md'
+                },
+                {
+                    text: 'v1.0.0 (2022/01/31)',
+                    link: '/zh/guide/ChangeLog_v1.0.0.md'
                 },
             ]
         },
