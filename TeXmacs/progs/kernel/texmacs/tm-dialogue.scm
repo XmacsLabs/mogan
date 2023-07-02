@@ -235,11 +235,10 @@
             (compute-interactive-arg-list fun (cdr l)))))
 
 (tm-define (compute-interactive-args fun)
-  (with s-fun (procedure-symbol-name fun)
-    (with args (property s-fun :arguments)
-      (if (not args)
-        (compute-interactive-args-try-hard s-fun)
-        (compute-interactive-arg-list s-fun args)))))
+  (with args (property fun :arguments)
+    (if (not args)
+      (compute-interactive-args-try-hard fun)
+      (compute-interactive-arg-list fun args))))
 
 (define (build-interactive-arg s)
   (cond ((string-ends? s ":") s)
