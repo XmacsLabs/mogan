@@ -161,6 +161,10 @@ function sidebarGuideZh() {
                     text: 'v1.1.0 (2022/08/31)',
                     link: '/zh/guide/ChangeLog_v1.1.0.md'
                 },
+                {
+                    text: 'v1.0.4 (2023/05/28)',
+                    link: '/zh/guide/ChangeLog_v1.0.4.md'
+                },
             ]
         },
     ]
