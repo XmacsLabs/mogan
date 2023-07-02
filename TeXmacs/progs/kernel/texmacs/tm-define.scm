@@ -88,10 +88,7 @@
 (define (begin* conds)
   (if (list-1? conds) (car conds) `(begin ,@conds)))
 
-(define-public (procedure-name fun) 
-  (if (procedure? fun) fun #f))
-
-(define-public (procedure-symbol-name fun)
+(define-public (procedure-name fun)
   (cond ((symbol? fun) fun)
         ((string? fun) (string->symbol fun))
         ((and (procedure? fun) (ahash-ref tm-defined-name fun))
@@ -100,6 +97,9 @@
               (string-alpha? (string-take (object->string fun) 1)))
          (string->symbol (object->string fun)))
         (else #f)))
+
+(define-public (procedure-symbol-name fun)
+  (procedure-name fun))
 
 (define-public (procedure-string-name fun)
   (and-with name (procedure-symbol-name fun)
@@ -227,8 +227,8 @@
   ;; very provisional
   (cond ((property about :synopsis)
          (property about :synopsis))
-        ((procedure-documentation about)
-         (procedure-documentation about))
+        ((documentation about)
+         (documentation about))
         (else #f)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -14,19 +14,50 @@
 (texmacs-module (kernel texmacs tm-define-test)
   (:use (kernel texmacs tm-define)))
 
-(define (regtest-procedure-name)
+(define s7-style1
+  (let ((documentation (lambda (f) "documentation in documentation variable")))
+    (lambda () #f)))
+
+(define s7-style2
+  (let ((+documentation+ "documentation in +documentation+ variable"))
+    (lambda () #f)))
+
+(define (s7-style3)
+  "Documentation in first line"
+  #f)
+
+(tm-define (tm-style1)
+  (:synopsis "Documentation in :synopsis tab")
+  #f)
+
+(define (regtest-help)
   (regression-test-group
-   "procedure" "procedure"
-   procedure-name :none
-   (test "procedures defined via define-public" string->float string->float)
-   (test "procedures defined via glue symbols" utf8->cork utf8->cork)
-   (test "procedures defined via tm-define" regtest-tm-define regtest-tm-define)
-   (test "invalid input" 1 #f)))
+   "procedure, help" "help"
+   help :none
+   (test "documentation in documentation variable" s7-style1
+                      "documentation in documentation variable")
+   (test "documentation in +documentation+ variable" s7-style2
+                      "documentation in +documentation+ variable")
+   (test "Documentation in first line" s7-style3
+                      "Documentation in first line")
+   (test "Documentation in :synopsis tab" tm-style1
+                      `("Documentation in :synopsis tab"))))
 
 (define (regtest-procedure-symbol-name)
   (regression-test-group
-   "procedure" "symbol"
+   "procedure, procedure-symbol-name" "symbol"
    procedure-symbol-name :none
+   (test "glue procedure" system 'system)
+   (test "glue procedure make-space" make-space 'make-space)
+   (test "tm-defined" exec-interactive-command
+                      'exec-interactive-command)
+   (test "anonymous function" (lambda (x) (+ x 1)) #f)
+   (test "invalid input" 1 #f)))
+
+(define (regtest-procedure-name)
+  (regression-test-group
+   "procedure, procedure-name" "procedure"
+   procedure-name :none
    (test "glue procedure" system 'system)
    (test "glue procedure make-space" make-space 'make-space)
    (test "tm-defined" exec-interactive-command
@@ -37,6 +68,7 @@
 
 (tm-define (regtest-tm-define)
   (let ((n (+ (regtest-procedure-name)
-              (regtest-procedure-symbol-name))))
+              (regtest-procedure-symbol-name)
+              (regtest-help))))
     (display* "Total: " (object->string n) " tests.\n")
     (display "Test suite of tm-define: ok\n")))

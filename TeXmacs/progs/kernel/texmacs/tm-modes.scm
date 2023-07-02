@@ -60,15 +60,15 @@
     (if proc (proc)
         (catch #t (lambda () (eval (list mode))) (lambda err #f)))))
 
+;; currently not possible to retrieve name from function body in s7
 (define-public (texmacs-mode-mode pred)
-  "Get drd predicate name associated to scheme predicate or symbol"
-  (if (procedure? pred)
-      (with name (procedure-name pred)
-        (if name (texmacs-mode-mode name) 'unknown%))
+  "Get drd predicate name associated to scheme symbol"
+  (if (symbol? pred)
       (let* ((pred-str (symbol->string pred))
              (pred-root (substring pred-str 0 (- (string-length pred-str) 1)))
              (mode-str (string-append pred-root "%")))
-        (string->symbol mode-str))))
+        (string->symbol mode-str))
+      'unknown%))
 
 (define texmacs-submode-table (make-ahash-table))
 
