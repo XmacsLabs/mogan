@@ -85,7 +85,7 @@ jobs:
         shell: msys2 {0}
         run: |
           windeployqt --compiler-runtime ./build/mingw/x86_64/release/ -printsupport
-          xmake install mogan_install
+          xmake install mogan
       - name: test
         shell: msys2 {0}
         run: |

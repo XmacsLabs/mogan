@@ -691,7 +691,6 @@ target("mogan") do
         add_configfiles("packages/windows/TeXmacs.ico", {
             onlycopy = true
         })
-        add_files("$(buildir)/resource.rc")
     end
 
     on_config(function (target) 
@@ -710,12 +709,6 @@ target("mogan") do
         end
     end)
 
-    set_installdir(INSTALL_DIR)
-end 
-
-target("mogan_install") do
-    add_deps("mogan")
-    set_kind("phony")
     set_installdir(INSTALL_DIR)
     set_configdir(INSTALL_DIR)
     set_configvar("DEVEL_VERSION", DEVEL_VERSION)
@@ -839,7 +832,7 @@ end
 target("windows_installer") do
     set_kind("phony")
     set_enabled(is_plat("mingw"))
-    add_deps("mogan_install")
+    add_deps("mogan")
     set_configvar("PACKAGE_DATE", os.date("%Y-%m-%d"))
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_installdir("$(buildir)")
