@@ -107,7 +107,7 @@ if is_plat("linux") then
     add_requires("fontconfig", {system = true})
 end
 
-local PDFHUMMUS_VERSION = "4.1"
+local PDFHUMMUS_VERSION = "4.5.6"
 add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
 add_requires("s7 2023.04.13", {system=false})
 
