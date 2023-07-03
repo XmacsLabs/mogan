@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <InstallerApplicationIcon>TeXmacs</InstallerApplicationIcon>
+    <InstallerWindowIcon>TeXmacs-small.png</InstallerWindowIcon>
+    <Logo>TeXmacs-large.png</Logo>
+    <Name>Mogan</Name>
+    <ProductUrl>https://mogan.app/</ProductUrl>
+    <Publisher>Xmacslabs</Publisher>
+    <StartMenuDir>Mogan</StartMenuDir>
+    <TargetDir>@HomeDir@/InstallationDirectory</TargetDir>
+    <Title>Mogan installer</Title>
+    <Version>${XMACS_VERSION}</Version>
+</Installer>
