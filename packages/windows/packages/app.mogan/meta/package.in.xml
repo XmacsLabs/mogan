@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>Mogan Editor</DisplayName>
+    <Description>The most user-friendly distribution of GNU TeXmacs.</Description>
+    <Version>${XMACS_VERSION}</Version>
+    <ReleaseDate>${PACKAGE_DATE}</ReleaseDate>
+    <Licenses>
+        <License name="GNU General Public License" file="LICENSE" />
+    </Licenses>
+    <Default>true</Default>
+    <Script>installscript.qs</Script>
+    <Operations>
+        <Operation name="RegisterFileType">
+            <Argument>tm</Argument>
+            <Argument>@TargetDir@/bin/mogan.exe "%1"</Argument>
+            <Argument>texmacs document style</Argument>
+            <Argument>text/plain</Argument>
+            <Argument>@TargetDir@/bin/mogan.exe,8</Argument>
+        </Operation>
+    </Operations>
+</Package>
