@@ -514,12 +514,12 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
     if (!done) {
       if (DEBUG_QT)
         debug_qt << "IM committing: " << commit_string.toUtf8().data() << LF;
-      if (preediting && get_preference ("speech", "off") == "off")
-        for (int i = 0; i < commit_string.size(); ++i)
-          kbdEvent (0, Qt::NoModifier, commit_string[i]);
-      else {
+      if (get_preference ("speech", "off") == "on") {
         string s= "speech:" * from_qstring (commit_string);
         kbdEvent (0, Qt::NoModifier, to_qstring (s));
+      } else {
+        for (int i = 0; i < commit_string.size(); ++i)
+          kbdEvent (0, Qt::NoModifier, commit_string[i]);
       }
     }
   }
