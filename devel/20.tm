@@ -64,6 +64,14 @@
       Darcy
     </cell>|<\cell>
       CJK encoding of the buffer in <verbatim|tmfs://grep>
+    </cell>>|<row|<\cell>
+      <dlink|20_8>
+    </cell>|<\cell>
+      Bug
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Failed to insert full-width punctuation via input method
     </cell>>>>
   </wide-tabular>
 
