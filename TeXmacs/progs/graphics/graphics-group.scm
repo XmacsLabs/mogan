@@ -592,36 +592,77 @@
         res)
       (stree->tree "")))
 
+(define paste-offset-constant 0.3)
+
+(define (list-size o)
+    (if (list? o)
+        (cond ((null? o) 0)
+            (else (+ 1 (list-size (cdr o)))))
+        -1)
+    )
+
+(define (get-points-number o)
+    ; (display* o "\n")
+    (if (symbol? o)
+        0   
+        (if (null? o)
+        0
+                (if (pair? o)
+                    (if (match? o '(point :%2))
+                        1
+                        (+ (get-points-number (car o))(get-points-number (cdr o))))
+                    0))))
+
+(define (get-x pt)
+    (s2f (cadr pt)))
+
+(define (get-y pt)
+    (s2f (caddr pt)))
+
+(define (add-two-points p1 p2)
+    `(point ,(f2s(+ (get-x p1)(get-x p2)))
+            ,(f2s(+ (get-y p1)(get-y p2)))))
+
+(define (div-point-number pt num)
+    `(point ,(f2s(/ (get-x pt) num))
+            ,(f2s(/ (get-y pt) num))))
+
+(define (get-sum-point obj)
+            (if (symbol? obj)
+                '(point "0" "0")
+                (if (null? obj)
+                    '(point "0" "0")
+                    (if (pair? obj)
+                        (if (match? obj '(point :%2))
+                            obj
+                            (add-two-points (get-sum-point (car obj))(get-sum-point (cdr obj))))
+                        '(point "0" "0")))))
+
+
+(define (get-center-of-gravity o)
+    (define p-num (get-points-number o))
+    (if (> p-num 0)
+        (div-point-number
+            (get-sum-point o)
+            p-num)
+        '(point "0" "0")))
+
+(define (get-paste-offset-by-pos obj)
+    (define spt (get-sum-point obj))
+    (cond ((and (> (get-x obj) 0)(> (get-y obj) 0)) (group-translate (- paste-offset-constant) (- paste-offset-constant)))
+          ((and (> (get-x obj) 0)(< (get-y obj) 0)) (group-translate (- paste-offset-constant) paste-offset-constant))
+          ((and (< (get-x obj) 0)(> (get-y obj) 0)) (group-translate paste-offset-constant (- paste-offset-constant)))
+          ((and (< (get-x obj) 0)(< (get-y obj) 0)) (group-translate paste-offset-constant paste-offset-constant))
+          ))
+   
+
 (tm-define (graphics-paste sel)
   (:state graphics-state)
-  (display* "sel=" sel "\n")
-  (display* "sel=" (tree-ref (tree-ref sel 0) 0) "\n")
-  (display* "sel=" (tree-ref sel 1) "\n")
-  (display* "sel=" (tree-ref sel 2) "\n")
-;   (set! sel (stree->tree '(graphics (carc (point 1 1)(point 0 0)(point 0 1)))))
-  (define x1 (string->number(tree->stree(tree-ref (tree-ref (tree-ref sel 0) 0) 0))))
-  (define y1 (string->number(tree->stree(tree-ref (tree-ref (tree-ref sel 0) 0) 1))))
-  (define x2 (string->number(tree->stree(tree-ref (tree-ref (tree-ref sel 0) 1) 0))))
-  (define y2 (string->number(tree->stree(tree-ref (tree-ref (tree-ref sel 0) 1) 1))))
-  (define x3 (string->number(tree->stree(tree-ref (tree-ref (tree-ref sel 0) 2) 0))))
-  (define y3 (string->number(tree->stree(tree-ref (tree-ref (tree-ref sel 0) 2) 1))))
-  (define new-x1 (inexact->exact(+ 1 x1)))
-  (define new-y1 (inexact->exact(+ 1 y1)))
-  (define new-x2 (inexact->exact(+ 1 x2)))
-  (define new-y2 (inexact->exact(+ 1 y2)))
-  (define new-x3 (inexact->exact(+ 1 x3)))
-  (define new-y3 (inexact->exact(+ 1 y3)))
-  (display* new-x1 "\n")
-  (display* new-y1 "\n")
-  (display* new-x2 "\n")
-  (display* new-y2 "\n")
-  (display* new-x3 "\n")
-  (display* new-y3 "\n")
-  ;; 这个不能正常工作
-  (set! sel (stree->tree '(graphics (carc (point new-x1 new-y1)(point  new-x2 new-y2)(point new-x3 new-y3)))))
-  ;; 这个可以正常工作，让粘贴的圆形变为(carc (point 2 2)(point 0 0)(point 0 1))
-  (set! sel (stree->tree '(graphics (carc (point 2 2)(point 0 0)(point 0 1)))))
-  (display* sel "\n")
+  (set! sel (tree->stree sel))
+  (set! sel
+        (stree->tree (
+            (get-paste-offset-by-pos (get-sum-point sel))
+            sel)))
   (if (and (== (car (graphics-mode)) 'group-edit)
 	   (tree-compound? sel)
 	   (== (tree-label sel) 'graphics)
@@ -632,5 +673,4 @@
         (foreach-number (i 0 < (tree-arity sel))
                         (sketch-toggle (tree-ref sel i)))
         (sketch-commit)
-        (display* "AAAAAB")
         (graphics-group-start))))
