@@ -36,7 +36,7 @@ xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
 
 ### 第四步: 安装到`build/package`
 ``` bash
-xmake install -o build/package mogan_install
+xmake install -o build/package mogan
 ```
 
 ### 第五步：启动墨干编辑器
