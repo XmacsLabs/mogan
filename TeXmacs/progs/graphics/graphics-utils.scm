@@ -102,8 +102,8 @@
 (define-export-macro (remove-eq? x l)
   (if (symbol? l)
      `(begin
-	 (set! ,l (remove-eq0? ,x ,l))
-	,l)
+         (set! ,l (remove-eq0? ,x ,l))
+        ,l)
      `(remove-eq0? ,x ,l)))
 
 ;; Iterators
@@ -117,18 +117,18 @@
          ;;(foreach-number (i i0 [< <= > >=] iN) body[i])
            (if (in? (caddr what) '(< <=))
               `(for (,(car what)
-		   ,(cadr what) ,(cadddr what) 1 ,(caddr what)) ,@body)
+                   ,(cadr what) ,(cadddr what) 1 ,(caddr what)) ,@body)
               `(for (,(car what)
-		   ,(cadr what) ,(cadddr what) -1 ,(caddr what)) ,@body)))
+                   ,(cadr what) ,(cadddr what) -1 ,(caddr what)) ,@body)))
           ((== n 5)
          ;;(foreach-number (i i0 [< <= > >=] iN step) body[i])
            (if (in? (caddr what) '(< <=))
               `(for (,(car what)
-		     ,(cadr what) ,(cadddr what)
-		     ,(car (cddddr what)) ,(caddr what)) ,@body)
+                     ,(cadr what) ,(cadddr what)
+                     ,(car (cddddr what)) ,(caddr what)) ,@body)
               `(for (,(car what)
-		     ,(cadr what) ,(cadddr what)
-		     ,(- 0 (car (cddddr what))) ,(caddr what)) ,@body)))
+                     ,(cadr what) ,(cadddr what)
+                     ,(- 0 (car (cddddr what))) ,(caddr what)) ,@body)))
           (else '(noop)))))
 
 (tm-define-macro (foreach-cons i . b)
@@ -157,8 +157,8 @@
 (tm-define (string-number=? s1 s2)
   (and (string? s1) (string? s2)
        (let* ((i1 (string->float s1))
-	      (i2 (string->float s2)))
-	 (and i1 i2 (== i1 i2)))))
+              (i2 (string->float s2)))
+         (and i1 i2 (== i1 i2)))))
 
 (tm-define (string-symbol=? s1 s2)
   (if (symbol? s1)
@@ -188,10 +188,10 @@
   (if (in? (tree-label (path->tree p)) tags)
       p
       (if (in? (tree-label (path->tree p)) nottags)
-	  #f
-	  (if (> (length p) 2)
-	      (tm-upwards-path (cDr p) tags nottags)
-	      #f))))
+          #f
+          (if (> (length p) 2)
+              (tm-upwards-path (cDr p) tags nottags)
+              #f))))
 ;; TODO: Put this one in kernel/library/tree.scm
 
 ;;NOTE: This section is OK.
@@ -200,14 +200,14 @@
 (tm-define (list-find-prop l var)
   (define (find l)
      (if (or (null? l) (null? (cdr l)))
-	 nothing
-	 (if (== (car l) var)
-	     (begin
-		(set! list-find-prop-cons (cdr l))
-		(cadr l))
-	     (if (null? (cdr l))
-		 nothing
-		 (find (cddr l)))))
+         nothing
+         (if (== (car l) var)
+             (begin
+                (set! list-find-prop-cons (cdr l))
+                (cadr l))
+             (if (null? (cdr l))
+                 nothing
+                 (find (cddr l)))))
   )
   (set! list-find-prop-cons #f)
   (if (null? l)
@@ -218,7 +218,7 @@
   (list-find-prop l var)
   (if list-find-prop-cons
       (begin
-	 (set-car! list-find-prop-cons val)
+         (set-car! list-find-prop-cons val)
          l)
      `(with ,var ,val . ,(if (eq? (car l) 'with) (cdr l) l))))
 
@@ -228,17 +228,17 @@
   (if (null? p)
       nothing
       (let* ((t (if (tree? p) p (path->tree p)))
-	     (n (tree-arity t))
-	 )
-	 (if (> n 2)
-	     (with res nothing
-		(foreach-number (i 0 < (- (/ n 2) 1))
-		   (if (== (tm->stree (tree-ref t (* 2 i))) var)
-		       (set! res (tree-ref t (+ (* 2 i) 1))))
-		)
-		res
-	     )
-	     nothing))))
+             (n (tree-arity t))
+         )
+         (if (> n 2)
+             (with res nothing
+                (foreach-number (i 0 < (- (/ n 2) 1))
+                   (if (== (tm->stree (tree-ref t (* 2 i))) var)
+                       (set! res (tree-ref t (+ (* 2 i) 1))))
+                )
+                res
+             )
+             nothing))))
 
 (tm-define (find-prop l var . default)
 ;;(find-prop '(with "a" 1) "a")             -> 1
@@ -247,20 +247,20 @@
   (set! default (if (pair? default) (car default) #f))
   (with val ((if (tree? l) tm-find-prop list-find-prop) l var)
      (if (== val nothing)
-	 default
-	 (if (tree? val) (tm->stree val) val))))
+         default
+         (if (tree? val) (tm->stree val) val))))
 ;; TODO : Put this in utils/library/tree.scm
 
 (tm-define (get-upwards-tree-property p var)
   (if (null? p)
       nothing
       (with q (tm-upwards-path p '(with) '())
-	 (if (not q)
-	     nothing
-	     (with val (tm-find-prop q var)
-		(if (== val nothing)
-		    (get-upwards-property (cDr q) var)
-		    val))))))
+         (if (not q)
+             nothing
+             (with val (tm-find-prop q var)
+                (if (== val nothing)
+                    (get-upwards-property (cDr q) var)
+                    val))))))
 
 (tm-define (get-upwards-property p var)
   (t2o (get-upwards-tree-property p var)))
@@ -269,9 +269,9 @@
   (if (null? p)
       nothing
       (with q (tm-upwards-path p '(with) '())
-	 (if (equal? q (cDr p))
-	     (get-upwards-property p var)
-	     nothing))))
+         (if (equal? q (cDr p))
+             (get-upwards-property p var)
+             nothing))))
 ;; TODO : Put this in utils/library/tree.scm
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -285,24 +285,24 @@
 (tm-define (graphics-graphics-path)
   ;; path to innermost graphics tag
   (let* ((p (cDr (cursor-path)))
-	 (t (path->tree p)))
+         (t (path->tree p)))
     (if (eq? (tree-label t) 'graphics) p
-	(with u (tree-innermost 'graphics)
-	  (and u (tree->path u))))))
+        (with u (tree-innermost 'graphics)
+          (and u (tree->path u))))))
 
 (tm-define (graphics-path path)
   (if (or (null? path) (null? (cdr path)))
       #f
       (with p (cDr path)
-	 (with o (path->tree p)
-	    (if (and (tree? o) ;; (in? (tree-label o) gr-tags-all)
-		     (not (eq? (tree-label o) 'string))
-		     (tm-upwards-path (cDr p) '(graphics)
+         (with o (path->tree p)
+            (if (and (tree? o) ;; (in? (tree-label o) gr-tags-all)
+                     (not (eq? (tree-label o) 'string))
+                     (tm-upwards-path (cDr p) '(graphics)
                                       (graphical-text-tag-list)))
-		(begin
-		  ;;(display* "gp=" (path->tree (cDr path)) "\n")
-		  (if (eq? (tree-label o) 'graphics) #f p))
-		(graphics-path (cDr path)))))))
+                (begin
+                  ;;(display* "gp=" (path->tree (cDr path)) "\n")
+                  (if (eq? (tree-label o) 'graphics) #f p))
+                (graphics-path (cDr path)))))))
 
 (tm-define (graphics-active-path)
   ;; path to active tag
@@ -337,10 +337,10 @@
 (define (graphics-get-raw-property var)
   (with val (get-upwards-tree-property (graphics-graphics-path) var)
     (if (eq? val nothing)
-	(get-default-tree-val var)
-	(if (eq? (tm-car val) 'quote)
-	    (tree-ref val 0)
-	    val))))
+        (get-default-tree-val var)
+        (if (eq? (tm-car val) 'quote)
+            (tree-ref val 0)
+            val))))
 
 (tm-define (graphics-get-property var)
   (with val (graphics-get-raw-property var)
@@ -392,13 +392,13 @@
 (tm-define (graphics-enrich-filter t l)
   (if (null? l) l
       (let* ((head (car l))
-	     (tail (graphics-enrich-filter t (cdr l))))
-	(if (or (not (cadr head))
+             (tail (graphics-enrich-filter t (cdr l))))
+        (if (or (not (cadr head))
                 (== (cadr head) "default")
-		(== (cadr head) (get-default-val (car head)))
-		(not (graphics-attribute? t (car head))))
-	    tail
-	    (cons* (car head) (cadr head) tail)))))
+                (== (cadr head) (get-default-val (car head)))
+                (not (graphics-attribute? t (car head))))
+            tail
+            (cons* (car head) (cadr head) tail)))))
 
 (tm-define (graphics-enrich-sub t l)
   (with f (graphics-enrich-filter (car t) l)
@@ -428,27 +428,27 @@
 (tm-define (graphics-group-insert-bis t go-into)
  ;(display* "t=" t "\n")
   (let* ((p (graphics-group-path))
-	 (p2 #f))
+         (p2 #f))
     (if (null? layer-of-last-removed-object)
-	(set! layer-of-last-removed-object #f))
+        (set! layer-of-last-removed-object #f))
     (if p (with n (if layer-of-last-removed-object
-		      (if (pair? layer-of-last-removed-object)
-			  (with val (car layer-of-last-removed-object)
-			     (set! layer-of-last-removed-object
-				   (cdr layer-of-last-removed-object))
+                      (if (pair? layer-of-last-removed-object)
+                          (with val (car layer-of-last-removed-object)
+                             (set! layer-of-last-removed-object
+                                   (cdr layer-of-last-removed-object))
                              val)
-			  layer-of-last-removed-object)
+                          layer-of-last-removed-object)
                       (tree-arity (path->tree p)))
-	    (tree-insert (path->tree p) n (list t))
-	    (if (func? t 'with)
-		(if (and go-into (graphical-text-context? (cAr t)))
-		    (set! p2 (append p (list n (- (length t) 2) 0 0)))
-		    (set! p2 (append p (list n (- (length t) 2) 1))))
-		(if (and go-into (graphical-text-context? t))
-		    (set! p2 (append p (list n 0 0)))
-		    (set! p2 (append p (list n 0)))))
-	    (go-to p2)
-	    (graphics-path p2))
+            (tree-insert (path->tree p) n (list t))
+            (if (func? t 'with)
+                (if (and go-into (graphical-text-context? (cAr t)))
+                    (set! p2 (append p (list n (- (length t) 2) 0 0)))
+                    (set! p2 (append p (list n (- (length t) 2) 1))))
+                (if (and go-into (graphical-text-context? t))
+                    (set! p2 (append p (list n 0 0)))
+                    (set! p2 (append p (list n 0)))))
+            (go-to p2)
+            (graphics-path p2))
         #f)))
 
 (tm-define (graphics-group-insert t)
@@ -505,7 +505,7 @@
 
 ;;(tm-define (graphics-object-root-path p)
 ;;  (let* ((q (tm-upwards-path p '(with) '()))
-;;	   (path (if (and q (== (+ (length q) 1) (length p))) q p)))
+;;         (path (if (and q (== (+ (length q) 1) (length p))) q p)))
 ;;    path))
 
 (tm-define (graphics-object-root-path p)
@@ -548,9 +548,9 @@
 
 (tm-define (interval-intersects i1 i2)
   (let* ((i1a (car i1))
-	 (i1b (cadr i1))
-	 (i2a (car i2))
-	 (i2b (cadr i2)))
+         (i1b (cadr i1))
+         (i2a (car i2))
+         (i2b (cadr i2)))
     (or (and (<= i1a i2a) (>= i1b i2b))
         (and (<= i2a i1a) (>= i2b i1b))
         (and (>= i1a i2a) (<= i1a i2b))
@@ -567,11 +567,11 @@
         ,(max (caddr bx1) (caddr bx2))
         ,(max (cadddr bx1) (cadddr bx2)))))
   (let* ((box1 (max-box t1))
-	 (box2 (max-box t2)))
+         (box2 (max-box t2)))
     (and (interval-intersects `(,(car box1) ,(caddr box1))
-			      `(,(car box2) ,(caddr box2)))
-	 (interval-intersects `(,(cadr box1) ,(cadddr box1))
-			      `(,(cadr box2) ,(cadddr box2))))))
+                              `(,(car box2) ,(caddr box2)))
+         (interval-intersects `(,(cadr box1) ,(cadddr box1))
+                              `(,(cadr box2) ,(cadddr box2))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Enhanced trees
@@ -613,9 +613,9 @@
                      ,(graphics-re-enhance obj (tm-ref compl 1) #t)
                      ,@(cddr (tm-children compl))))
         ((and (tm-is? compl 'with)
-	      (or anim? (tm-is? (tm-ref compl :last) 'anim-edit)))
+              (or anim? (tm-is? (tm-ref compl :last) 'anim-edit)))
          `(with ,@(cDr (tm-children compl))
-	      ,(graphics-re-enhance obj (tm-ref compl :last) anim?)))
+              ,(graphics-re-enhance obj (tm-ref compl :last) anim?)))
         (else obj)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
