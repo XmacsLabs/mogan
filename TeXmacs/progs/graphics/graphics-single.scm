@@ -42,12 +42,12 @@
   (if sticky-point
       (sketch-set! `(,o))
       (if (in? 'checkout opt)
-	  (begin
-	     (sketch-set! `(,o))
-	     (sketch-checkout))
-	  (if (in? 'new opt)
-	      (graphics-group-enrich-insert o)
-	      (graphics-assign current-path o)))))
+          (begin
+             (sketch-set! `(,o))
+             (sketch-checkout))
+          (if (in? 'new opt)
+              (graphics-group-enrich-insert o)
+              (graphics-assign current-path o)))))
 
 ;; Basic operations (create)
 (define (sketch-get1)
@@ -83,8 +83,8 @@
   (cond ((== (car obj) 'with)
          (set-point-sub (cAr obj) no x y))
         ((== (car obj) 'point)
-	 (set-car! (cdr obj) x)
-	 (set-car! (cddr obj) y))
+         (set-car! (cdr obj) x)
+         (set-car! (cddr obj) y))
         ((and (not (not no)) (list? obj) (> (length obj) (+ no 1)))
          (set-point-sub (list-ref obj (+ no 1)) #f x y))
         (else #f)))
@@ -99,29 +99,29 @@
   (define obj (stree-radical (car (sketch-get1))))
   (if (not (graphics-complete? obj))
       (with l (list-tail (cdr obj) no)
-  	(graphics-store-state #f)
- 	(if dirn
- 	    (begin
- 	      (set-cdr! l (cons `(point ,x ,y) (cdr l)))
- 	      (if (and xcur ycur)
- 		  (set-car! l `(point ,xcur ,ycur)))
- 	      (set! current-point-no (+ no 1)))
-  	    (begin
-  	      (set-cdr! l (cons (car l) (cdr l)))
-  	      (set-car! l `(point ,x ,y))
- 	      (if (and xcur ycur)
- 		  (set-car! (cdr l) `(point ,xcur ,ycur)))
- 	      (set! current-point-no no))
+        (graphics-store-state #f)
+        (if dirn
+            (begin
+              (set-cdr! l (cons `(point ,x ,y) (cdr l)))
+              (if (and xcur ycur)
+                  (set-car! l `(point ,xcur ,ycur)))
+              (set! current-point-no (+ no 1)))
+            (begin
+              (set-cdr! l (cons (car l) (cdr l)))
+              (set-car! l `(point ,x ,y))
+              (if (and xcur ycur)
+                  (set-car! (cdr l) `(point ,xcur ,ycur)))
+              (set! current-point-no no))
         )
-	(object-set! (car (sketch-get)))
-  	(set! current-edge-sel? #t))))
+        (object-set! (car (sketch-get)))
+        (set! current-edge-sel? #t))))
 
 ;; Basic operations (remove)
 (define (object_remove-point no)
 ;; FIXME: should read the radical & memoize it
   (with l (if (<= no 0)
-	      current-obj
-	      (list-tail (cdr current-obj) (- no 1)))
+              current-obj
+              (list-tail (cdr current-obj) (- no 1)))
     (set-cdr! l (cddr l))
     (set! current-point-no #f)
     (object-set! current-obj)))
@@ -247,8 +247,8 @@
   (set! leftclick-waiting #f)
   (if (and edge (not (graphics-complete? current-obj)))
       (begin
-	 (object_add-point current-point-no #f #f current-x current-y #t)
-	 (graphics-decorations-update)))
+         (object_add-point current-point-no #f #f current-x current-y #t)
+         (graphics-decorations-update)))
   (graphics-store-state #f))
 
 (define (move-point)
@@ -292,8 +292,8 @@
 
 (define (remove-point)
   (if (or (graphics-minimal? current-obj)
-	  (not (current-in? gr-tags-all))
-	  (!= (logand (get-keyboard-modifiers) ShiftMask) 0))
+          (not (current-in? gr-tags-all))
+          (!= (logand (get-keyboard-modifiers) ShiftMask) 0))
       (begin
         (object_remove)
         (graphics-decorations-reset)
@@ -369,7 +369,7 @@
   (and-with l (select-first (s2f current-x) (s2f current-y))
     (and-with p (and (nnull? l) (car l))
       (and-with t (path->tree (cDr p))
-	(not (tree-in? t '(text-at math-at document-at)))))))
+        (not (tree-in? t '(text-at math-at document-at)))))))
 
 (tm-define (edit_left-button mode x y)
   (:require (== mode 'edit))
@@ -383,11 +383,11 @@
               (== (car (graphics-mode)) 'edit)
               (graphical-contains-text-tag? (cadr (graphics-mode)))
               (not (graphical-contains-curve-tag? (cadr (graphics-mode))))
-	      (pointer-inside-graphical-text?))
+              (pointer-inside-graphical-text?))
          (set-texmacs-pointer 'text-arrow)
          (go-to (car (select-first (s2f current-x) (s2f current-y)))))
         (else
-	 (edit-insert x y)))
+         (edit-insert x y)))
   (set! previous-leftclick `(point ,current-x ,current-y)))
 
 (tm-define (edit_middle-button mode x y)
@@ -463,8 +463,8 @@
   (set-texmacs-pointer 'graphics-cross)
   (edit-clean-up)
   (object-set! `(with "point style" "disk"
-		      "point-size" ,(graphics-get-property "line-width")
-		  (point ,x ,y)) 'new))
+                      "point-size" ,(graphics-get-property "line-width")
+                  (point ,x ,y)) 'new))
 
 (tm-define (edit_start-drag mode x y t* p*)
   (:require (== mode 'hand-edit))

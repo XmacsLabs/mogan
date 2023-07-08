@@ -214,13 +214,13 @@
 
 (define (directional-halign u)
   (cond ((> (real-part u) (*  0.333 (abs (imag-part u)))) "left")
-	((< (real-part u) (* -0.333 (abs (imag-part u)))) "right")
-	(else "center")))
+        ((< (real-part u) (* -0.333 (abs (imag-part u)))) "right")
+        (else "center")))
 
 (define (directional-valign u)
   (cond ((> (imag-part u) (*  0.666 (abs (real-part u)))) "bottom")
-	((< (imag-part u) (* -0.666 (abs (real-part u)))) "top")
-	(else "center")))
+        ((< (imag-part u) (* -0.666 (abs (real-part u)))) "top")
+        (else "center")))
 
 (define (arrow-with-text-sub P1 P2 T dir)
   ;;(display* "awt " P1 ", " P2 ", " T "\n")
@@ -229,13 +229,13 @@
          (t  (if (tm-is? T 'math-at) T '(math-at "x")))
          (z1 (point->complex p1))
          (z2 (point->complex p2))
-	 (m  (/ (+ z1 z2) 2))
-	 (a  (magnitude (- z2 z1)))
-	 (u  (if (= a 0) a (/ (- z2 z1) a)))
-	 (n  (* u (make-rectangular 0.0 (* 0.1 dir))))
-	 (c  (+ m n))
-	 (ha (directional-halign n))
-	 (va (directional-valign n)))
+         (m  (/ (+ z1 z2) 2))
+         (a  (magnitude (- z2 z1)))
+         (u  (if (= a 0) a (/ (- z2 z1) a)))
+         (n  (* u (make-rectangular 0.0 (* 0.1 dir))))
+         (c  (+ m n))
+         (ha (directional-halign n))
+         (va (directional-valign n)))
     `(superpose
        (line ,p1 ,p2)
        (with "text-at-halign" ,ha "text-at-valign" ,va
