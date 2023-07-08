@@ -656,6 +656,19 @@ option("libdl") do
     add_links("dl")
 end
 
+target("windows_icon") do
+    set_enabled(is_plat("mingw"))
+    set_version(XMACS_VERSION)
+    set_kind("object")
+    add_configfiles("packages/windows/resource.rc.in", {
+        filename = "resource.rc"
+    })
+    add_configfiles("packages/windows/TeXmacs.ico", {
+        onlycopy = true
+    })
+    add_files("$(buildir)/resource.rc")
+end
+
 target("mogan") do 
     set_version(XMACS_VERSION)
     if is_plat("macosx") then
@@ -685,12 +698,7 @@ target("mogan") do
 
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
     if is_plat("mingw") then
-        add_configfiles("packages/windows/resource.rc.in", {
-            filename = "resource.rc"
-        })
-        add_configfiles("packages/windows/TeXmacs.ico", {
-            onlycopy = true
-        })
+        add_deps("windows_icon")
     end
 
     on_config(function (target) 
