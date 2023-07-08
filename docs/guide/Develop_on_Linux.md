@@ -35,7 +35,7 @@ See [How to test](Test.md)。
 
 ### Step 4: Install to `build/package`
 ``` bash
-xmake install -o build/package mogan_install
+xmake install -o build/package mogan
 ```
 
 ### Step 5: Launch Mogan Editor

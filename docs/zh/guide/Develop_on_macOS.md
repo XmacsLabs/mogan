@@ -24,7 +24,7 @@ xmake build --yes --verbose --all
 
 ### 第四步: 安装到`build/macosx/{arch}/release/Mogan.app/`
 ``` bash
-xmake install -o build/macosx/`arch`/release/Mogan.app/Contents/Resources/ mogan_install
+xmake install -o build/macosx/`arch`/release/Mogan.app/Contents/Resources/ mogan
 ```
 
 ### 第五步：启动墨干编辑器
