@@ -12,7 +12,7 @@ sudo apt install --yes build-essential libfontconfig1-dev qtbase5-dev libqt5svg5
 
 Sometimes, we need the latest xrepo:
 ``` bash
-xrepo update-repoz
+xrepo update-repo
 ```
 
 ### Step 2: Compile
