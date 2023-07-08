@@ -55,7 +55,7 @@ xmake run --yes --verbose --diagnosis --group=keneral_tests
 
 ### 第四步：安装到`build/package`目录
 ``` bash
-xmake install -o build/package mogan_install
+xmake install -o build/package mogan
 windeployqt --compiler-runtime ./build/package/bin/ -printsupport
 ```
 

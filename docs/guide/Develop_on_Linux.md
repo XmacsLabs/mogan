@@ -12,7 +12,7 @@ sudo apt install --yes build-essential libfontconfig1-dev qtbase5-dev libqt5svg5
 
 Sometimes, we need the latest xrepo:
 ``` bash
-xrepo update-repo
+xrepo update-repoz
 ```
 
 ### Step 2: Compile
@@ -35,7 +35,7 @@ See [How to test](Test.md)。
 
 ### Step 4: Install to `build/package`
 ``` bash
-xmake install -o build/package mogan_install
+xmake install -o build/package mogan
 ```
 
 ### Step 5: Launch Mogan Editor
