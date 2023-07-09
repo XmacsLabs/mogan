@@ -691,6 +691,11 @@ target("mogan") do
         add_packages("nowide_standalone")
     end
 
+    if is_plat("mingw") and is_mode("releasedbg") then
+        set_policy("check.auto_ignore_flags", false)
+        add_ldflags("-mconsole")
+    end
+
     if is_plat("linux") then
         add_rpathdirs("@executable_path/../lib")
     end
