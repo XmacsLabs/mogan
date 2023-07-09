@@ -728,3 +728,30 @@
         ((tm-compound? t)
          (graphical-relevant-attributes (tm-car t)))
         (else (graphics-attributes t))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Useful routines for processing points
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (get-x-from-point pt)
+  (s2f (cadr pt)))
+
+(tm-define (get-y-from-point pt)
+  (s2f (caddr pt)))
+
+; add points (x1,y1) and (x2,y2) to return (x1+x2,y1+y2)
+(tm-define (add-two-points pt1 pt2)
+  `(point ,(f2s (+ (get-x-from-point pt1)(get-x-from-point pt2)))
+          ,(f2s (+ (get-y-from-point pt1)(get-y-from-point pt2)))))
+
+; get the sum point from an graphics object. The sum point of an object is 
+; the sum of all points as parameters of this object. For example, the sum 
+; point of a circle is the sum of the three points that are used 
+; to constuct this circle, not the center of circle.
+(tm-define (get-sum-point obj)
+  (if (pair? obj)
+    (if (match? obj '(point :%2))
+        obj
+        (add-two-points (get-sum-point (car obj))
+                        (get-sum-point (cdr obj))))
+    '(point "0" "0")))
