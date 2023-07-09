@@ -36,3 +36,4 @@ stages:
         notify: []
         strategy:
           retry: '0'
+          stepTimeout: 30
