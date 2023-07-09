@@ -698,7 +698,7 @@ target("mogan") do
     add_syslinks("pthread")
 
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
-    if is_plat("mingw") then
+    if is_plat("mingw") and is_mode("release") then
         add_deps("windows_icon")
     end
 
