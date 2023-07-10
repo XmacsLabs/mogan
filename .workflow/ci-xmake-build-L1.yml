@@ -5,8 +5,22 @@ triggers:
   trigger: auto
   pr:
     branches:
-      prefix:
-        - ''
+      precise:
+        - branch-1.2
+    paths:
+      include:
+        - src/System/Memory/*
+        - src/System/IO/*
+        - src/Kernel/Abstractions/*
+        - src/Kernel/Containers/*
+        - src/Kernel/Types/*
+        - src/Data/Drd/*
+        - tests/Kernel/*
+        - .workflow/ci-xmake-kernel-l1.yml
+        - xmake.lua
+
+variables:
+  XMAKE_MAIN_REPO: 'https://gitee.com/XmacsLabs/xmake-repo.git'
 
 stages:
   - name: xmake
@@ -25,8 +39,6 @@ stages:
           - /usr/bin/add-apt-repository ppa:xmake-io/xmake
           - apt-get update
           - apt-get install xmake
-          - export XMAKE_MAIN_REPO=https://gitee.com/XmacsLabs/xmake-repo.git
-          - export XMAKE_BINARY_REPO=https://gitee.com/xmake-mirror/build-artifacts.git
           - xmake repo -u --root
           - xmake config --yes --root
           - xmake build --root libkernel_l1
