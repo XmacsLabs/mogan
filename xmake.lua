@@ -827,8 +827,11 @@ target("mogan") do
                 assert(os.isexec(windeployqt), "windeployqt.exe not found!\n if you are using msys, package mingw-w64-<arch>-qt5-translations and mingw-w64-<arch>-qt5-tools is needed!")
                 
                 -- deploy necessary dll
+                -- since version of mingw used to build mogan may differs from
+                --   version of Qt, tell windeployqt to use lib from mingw may
+                --   break ABI compability.
                 local buildir = config.buildir()
-                local deploy_argv = {"--compiler-runtime", "-printsupport"}
+                local deploy_argv = {"--no-compiler-runtime", "-printsupport"}
                 if option.get("diagnosis") then
                     table.insert(deploy_argv, "--verbose=2")
                 elseif option.get("verbose") then
@@ -839,6 +842,12 @@ target("mogan") do
                 local install_file = path.join(buildir, INSTALL_RELATIVE_DIR, "bin")
                 table.insert(deploy_argv, install_file)
                 os.iorunv(windeployqt, deploy_argv)
+
+                os.iorunv(windeployqt, deploy_argv, {envs = {PATH = qt.bindir}})
+                local install_bindir = path.join(target:installdir(), "bin")
+                os.cp(path.join(qt.bindir, "libstdc++*.dll"), install_bindir)
+                os.cp(path.join(qt.bindir, "libgcc*.dll"), install_bindir)
+                os.cp(path.join(qt.bindir, "libwinpthread*.dll"), install_bindir)
             end
         end)
 end
