@@ -9,4 +9,4 @@ if $platform:is-windows {
 
 rm -rf .xmake
 rm -rf build
-xmake config --yes --verbose --diagnosis --mode=releasedbg --plat=mingw --mingw=C:/Qt/Tools/mingw810_64 --qt=C:\Qt\5.15.2\mingw81_64
+xmake config --yes -vD --plat=mingw --mode=releasedbg --mingw=C:/Qt/Tools/mingw810_64 --qt=C:\Qt\5.15.2\mingw81_64

@@ -60,7 +60,7 @@ There are other binary used by mogan as optional dependencies, you can found the
 
 ### Step 5: Launch Mogan Editor
 ``` bash
-build/package/bin/mogan.exe
+xmake run mogan
 ```
 
 ### Optional: Vscode support
