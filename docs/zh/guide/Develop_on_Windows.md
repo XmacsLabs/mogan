@@ -63,7 +63,7 @@ windeployqt --compiler-runtime ./build/package/bin/ -printsupport
 
 ### 第五步：启动墨干编辑器
 ``` bash
-build/package/bin/mogan.exe
+xmake run mogan
 ```
 
 ### 在VSCode下开发（可选）

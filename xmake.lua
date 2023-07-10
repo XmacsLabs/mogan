@@ -850,6 +850,13 @@ target("mogan") do
                 os.cp(path.join(qt.bindir, "libwinpthread*.dll"), install_bindir)
             end
         end)
+
+        on_run(function (target)
+            name = target:name()
+            if is_plat("mingw") then
+                os.execv(INSTALL_DIR.."/bin/mogan.exe")
+            end
+        end)
 end
 
 target("windows_installer") do
