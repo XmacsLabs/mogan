@@ -233,6 +233,14 @@
       Darcy
     </cell>|<\cell>
       Decouple the L2 kernel part of GNU <TeXmacs>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      3_28
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      pin XMAKE_MAIN_REPO and set proxy_pac
     </cell>>>>
   </wide-tabular>
 
