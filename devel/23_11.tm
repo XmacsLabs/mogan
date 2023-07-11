@@ -32,6 +32,11 @@
 
   When pasting in place is detected, a small offset is performed.
 
+  For the offset direction, the algorithm is: detect the relative position of
+  the graphic in the entire canvas, if it is in the upper left corner, then
+  the pasted graphic will be offset to the lower right corner. Vice versa is
+  the same.
+
   <tmdoc-copyright|2023|Oyyko>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
@@ -44,6 +49,6 @@
 
 <\initial>
   <\collection>
-    <associate|page-medium|paper>
+    <associate|page-medium|papyrus>
   </collection>
 </initial>
