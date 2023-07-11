@@ -36,9 +36,21 @@
     (test "Coordinate Origin" 
       (get-paste-offset-by-pos '(carc (point "-2" "0") (point "-1" "2") (point "3" "-2")))
       (list (- paste-offset-constant) (- paste-offset-constant)))   
+    (test "X-axis positive semi-axis" 
+      (get-paste-offset-by-pos '(point "1" "0"))
+      (list (- paste-offset-constant) (- paste-offset-constant))) 
+    (test "Y-axis positive semi-axis" 
+      (get-paste-offset-by-pos '(point "0" "1"))
+      (list (- paste-offset-constant) (- paste-offset-constant))) 
+    (test "X-axis negative semi-axis" 
+      (get-paste-offset-by-pos '(point "-1" "0"))
+      (list (+ paste-offset-constant) (- paste-offset-constant))) 
+    (test "Y-axis negative semi-axis" 
+      (get-paste-offset-by-pos '(point "0" "-1"))
+      (list (- paste-offset-constant) (+ paste-offset-constant))) 
       ))
 
 (tm-define (regtest-graphics-group)
   (let ((n (regtest-get-paste-offset-by-pos)))
-    (display* "Total: " (number->string n) "tests.\n")
+    (display* "Total: " (number->string n) " tests.\n")
     (display "Test suite of regtest-graphics-group: ok\n")))
