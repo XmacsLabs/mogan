@@ -24,7 +24,8 @@
         (convert mathml mathtm-test)
         (convert tmml tmmltm-test)
         (prog prog-format-test)
-        (fonts fonts-test)))
+        (fonts fonts-test)
+        (graphics graphics-group-test)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Test LaTeX export
@@ -97,4 +98,5 @@
   (regtest-tm-dialogue)
   (regtest-fonts)
   (regtest-tm-tools)
+  (regtest-graphics-group)
 )

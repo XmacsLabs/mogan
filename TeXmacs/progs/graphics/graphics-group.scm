@@ -32,6 +32,7 @@
 (define group-bary-x #f)
 (define group-bary-y #f)
 (define group-first-go #f)
+(define paste-times 0)
 
 (define (store-important-points)
   (define so-points '())
@@ -83,7 +84,7 @@
         `(point ,(f2s (+ x (s2f (cadr o)))) ,(f2s (+ y (s2f (caddr o)))))
         o)))
 
-(define (group-translate x y)
+(tm-define (group-translate x y)
   (lambda (o)
     (traverse-transform o (translate-point x y))))
 
@@ -572,6 +573,7 @@
 
 (tm-define (graphics-copy)
   (:state graphics-state)
+  (set! paste-times 0)
   (if (== (car (graphics-mode)) 'group-edit)
       (with copied-objects (list-copy (sketch-get))
         (any_unselect-all #f #f)
@@ -583,6 +585,7 @@
 
 (tm-define (graphics-cut)
   (:state graphics-state)
+  (set! paste-times 0)
   (if (== (car (graphics-mode)) 'group-edit)
       (let* ((l (list-copy (sketch-get)))
              (res (graphics-copy)))
@@ -593,23 +596,28 @@
         res)
       (stree->tree "")))
 
+
+(tm-define paste-offset-constant 0.3)
+
+(tm-define (get-paste-offset-by-pos obj)
+    (define spt (points-sum obj))
+    (cond ((and (>= (point-get-x spt) 0)(>= (point-get-y spt) 0)) 
+            (list (- paste-offset-constant) (- paste-offset-constant)))
+          ((and (>= (point-get-x spt) 0)(< (point-get-y spt) 0)) 
+            (list (- paste-offset-constant) paste-offset-constant))
+          ((and (< (point-get-x spt) 0)(>= (point-get-y spt) 0)) 
+            (list paste-offset-constant (- paste-offset-constant)))
+          ((and (< (point-get-x spt) 0)(< (point-get-y spt) 0)) 
+            (list paste-offset-constant paste-offset-constant))))
+
 (tm-define (graphics-paste sel)
   (:state graphics-state)
-  (define paste-offset-constant 0.3)
-  (define (get-paste-offset-by-pos obj)
-    (define spt (get-sum-point obj))
-    (cond ((and (> (get-x-from-point spt) 0)(> (get-y-from-point spt) 0)) 
-            (group-translate (- paste-offset-constant) (- paste-offset-constant)))
-          ((and (> (get-x-from-point spt) 0)(< (get-y-from-point spt) 0)) 
-            (group-translate (- paste-offset-constant) paste-offset-constant))
-          ((and (< (get-x-from-point spt) 0)(> (get-y-from-point spt) 0)) 
-            (group-translate paste-offset-constant (- paste-offset-constant)))
-          ((and (< (get-x-from-point spt) 0)(< (get-y-from-point spt) 0)) 
-            (group-translate paste-offset-constant paste-offset-constant))))
   (define new-sel
     (let ((tmp (tree->stree sel)))
       (stree->tree
-        ((get-paste-offset-by-pos tmp) tmp))))
+        ((apply group-translate 
+          (map (lambda (x) (* (+ paste-times 1) x))
+               (get-paste-offset-by-pos tmp))) tmp))))
   (if (and (== (car (graphics-mode)) 'group-edit)
            (tree-compound? new-sel)
            (== (tree-label new-sel) 'graphics)
@@ -620,4 +628,6 @@
         (foreach-number (i 0 < (tree-arity new-sel))
                         (sketch-toggle (tree-ref new-sel i)))
         (sketch-commit)
-        (graphics-group-start))))
+        (graphics-group-start)))
+  (set! paste-times (+ 1 paste-times)))
+
