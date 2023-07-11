@@ -960,7 +960,7 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
             if is_plat("macosx") then
                 os.execv("$(buildir)/macosx/$(arch)/release/Mogan.app/Contents/MacOS/Mogan", params)
             else
-                os.execv("$(buildir)/package/bin/mogan", params)
+                os.execv(INSTALL_DIR.."/bin/mogan", params)
             end
         end)
     end
