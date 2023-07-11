@@ -483,6 +483,7 @@ add_configfiles(
 target("libmogan") do
     set_basename("mogan")
     set_version(TEXMACS_VERSION)
+    set_installdir(INSTALL_DIR)
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
@@ -672,6 +673,8 @@ end
 
 target("mogan") do 
     set_version(XMACS_VERSION)
+    set_installdir(INSTALL_DIR)
+
     if is_plat("macosx") then
         set_filename("Mogan")
     end
@@ -723,7 +726,6 @@ target("mogan") do
         end
     end)
 
-    set_installdir(INSTALL_DIR)
     set_configdir(INSTALL_DIR)
     set_configvar("DEVEL_VERSION", DEVEL_VERSION)
     set_configvar("PACKAGE", "Mogan Editor")
@@ -855,6 +857,10 @@ target("mogan") do
             name = target:name()
             if is_plat("mingw") then
                 os.execv(INSTALL_DIR.."/bin/mogan.exe")
+            elseif is_plat("linux") then
+                os.execv(INSTALL_DIR.."/bin/mogan")
+            else
+                print("Not supported")
             end
         end)
 end
@@ -954,7 +960,7 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
             if is_plat("macosx") then
                 os.execv("$(buildir)/macosx/$(arch)/release/Mogan.app/Contents/MacOS/Mogan", params)
             else
-                os.execv("$(buildir)/package/bin/mogan", params)
+                os.execv(INSTALL_DIR.."/bin/mogan", params)
             end
         end)
     end
