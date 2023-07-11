@@ -794,10 +794,19 @@ target("mogan") do
     end
 
     -- install tm files for testing purpose
-    add_installfiles({
-        "TeXmacs(/tests/*.tm)",
-        "TeXmacs(/tests/*.bib)",
-    }, {prefixdir="share/Xmacs"})
+    if is_mode("releasedbg") then
+        if is_plat("mingw") then
+            add_installfiles({
+                "TeXmacs(/tests/*.tm)",
+                "TeXmacs(/tests/*.bib)",
+            })
+        else
+            add_installfiles({
+                "TeXmacs(/tests/*.tm)",
+                "TeXmacs(/tests/*.bib)",
+            }, {prefixdir="share/Xmacs"})
+        end
+    end
 
     after_install(
         function (target)
@@ -959,6 +968,8 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
             params = {"-headless", "-b", "TeXmacs/tests/"..name..".scm", "-x", "(test_"..name..")", "-q"}
             if is_plat("macosx") then
                 os.execv("$(buildir)/macosx/$(arch)/release/Mogan.app/Contents/MacOS/Mogan", params)
+            elseif is_plat("mingw") then
+                os.execv(INSTALL_DIR.."/bin/mogan.exe", params)
             else
                 os.execv(INSTALL_DIR.."/bin/mogan", params)
             end
