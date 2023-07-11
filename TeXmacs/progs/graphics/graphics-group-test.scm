@@ -18,7 +18,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (regtest-get-paste-offset-by-pos)
-  (regression-test-group
+  (let* ((paste-offset-constant-property (get-preference "paste-offset-constant"))
+         (paste-offset-constant 
+           (if (== paste-offset-constant-property "default")
+             0.3
+             (string->float paste-offset-constant-property))))
+    (regression-test-group
     "graphics group" "get-paste-offset-by-pos"
     values values
     (test "Left Up" 
@@ -47,8 +52,7 @@
       (list (+ paste-offset-constant) (- paste-offset-constant))) 
     (test "Y-axis negative semi-axis" 
       (get-paste-offset-by-pos '(point "0" "-1"))
-      (list (- paste-offset-constant) (+ paste-offset-constant))) 
-      ))
+      (list (- paste-offset-constant) (+ paste-offset-constant))))))
 
 (tm-define (regtest-graphics-group)
   (let ((n (regtest-get-paste-offset-by-pos)))

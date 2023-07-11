@@ -84,7 +84,7 @@
         `(point ,(f2s (+ x (s2f (cadr o)))) ,(f2s (+ y (s2f (caddr o)))))
         o)))
 
-(tm-define (group-translate x y)
+(define (group-translate x y)
   (lambda (o)
     (traverse-transform o (translate-point x y))))
 
@@ -597,10 +597,13 @@
       (stree->tree "")))
 
 
-(tm-define paste-offset-constant 0.3)
-
 (tm-define (get-paste-offset-by-pos obj)
-    (define spt (points-sum obj))
+  (let* ((spt (points-sum obj))
+         (paste-offset-constant-property (get-preference "paste-offset-constant"))
+         (paste-offset-constant 
+           (if (== paste-offset-constant-property "default")
+             0.3
+             (string->float paste-offset-constant-property))))
     (cond ((and (>= (point-get-x spt) 0)(>= (point-get-y spt) 0)) 
             (list (- paste-offset-constant) (- paste-offset-constant)))
           ((and (>= (point-get-x spt) 0)(< (point-get-y spt) 0)) 
@@ -608,7 +611,8 @@
           ((and (< (point-get-x spt) 0)(>= (point-get-y spt) 0)) 
             (list paste-offset-constant (- paste-offset-constant)))
           ((and (< (point-get-x spt) 0)(< (point-get-y spt) 0)) 
-            (list paste-offset-constant paste-offset-constant))))
+            (list paste-offset-constant paste-offset-constant)))))
+
 
 (tm-define (graphics-paste sel)
   (:state graphics-state)
