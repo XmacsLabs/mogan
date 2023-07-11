@@ -26,7 +26,8 @@
         (convert tmml tmmltm-test)
         (prog prog-format-test)
         (generic generic-test)
-        (fonts fonts-test)))
+        (fonts fonts-test)
+        (graphics graphics-group-test)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Test LaTeX export
@@ -101,4 +102,5 @@
   (regtest-generic)
   (regtest-fonts)
   (regtest-tm-tools)
+  (regtest-graphics-group)
 )
