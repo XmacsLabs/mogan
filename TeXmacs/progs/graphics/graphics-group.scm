@@ -16,6 +16,7 @@
 (texmacs-module (graphics graphics-group)
   (:use (graphics graphics-env)
         (graphics graphics-single)
+        (graphics graphics-utils)
         (kernel gui kbd-handlers)
         (dynamic animate-edit)))
 
@@ -31,6 +32,7 @@
 (define group-bary-x #f)
 (define group-bary-y #f)
 (define group-first-go #f)
+(define paste-times 0)
 
 (define (store-important-points)
   (define so-points '())
@@ -571,6 +573,7 @@
 
 (tm-define (graphics-copy)
   (:state graphics-state)
+  (set! paste-times 0)
   (if (== (car (graphics-mode)) 'group-edit)
       (with copied-objects (list-copy (sketch-get))
         (any_unselect-all #f #f)
@@ -582,6 +585,7 @@
 
 (tm-define (graphics-cut)
   (:state graphics-state)
+  (set! paste-times 0)
   (if (== (car (graphics-mode)) 'group-edit)
       (let* ((l (list-copy (sketch-get)))
              (res (graphics-copy)))
@@ -592,17 +596,42 @@
         res)
       (stree->tree "")))
 
+
+(tm-define (get-paste-offset-by-pos obj)
+  (let* ((spt (points-sum obj))
+         (paste-offset-constant-property (get-preference "paste-offset-constant"))
+         (paste-offset-constant 
+           (if (== paste-offset-constant-property "default")
+             0.3
+             (string->float paste-offset-constant-property))))
+    (cond ((and (>= (point-get-x spt) 0)(>= (point-get-y spt) 0)) 
+            (list (- paste-offset-constant) (- paste-offset-constant)))
+          ((and (>= (point-get-x spt) 0)(< (point-get-y spt) 0)) 
+            (list (- paste-offset-constant) paste-offset-constant))
+          ((and (< (point-get-x spt) 0)(>= (point-get-y spt) 0)) 
+            (list paste-offset-constant (- paste-offset-constant)))
+          ((and (< (point-get-x spt) 0)(< (point-get-y spt) 0)) 
+            (list paste-offset-constant paste-offset-constant)))))
+
+
 (tm-define (graphics-paste sel)
   (:state graphics-state)
-  ;;(display* "sel=" sel "\n")
+  (define new-sel
+    (let ((tmp (tree->stree sel)))
+      (stree->tree
+        ((apply group-translate 
+          (map (lambda (x) (* (+ paste-times 1) x))
+               (get-paste-offset-by-pos tmp))) tmp))))
   (if (and (== (car (graphics-mode)) 'group-edit)
-           (tree-compound? sel)
-           (== (tree-label sel) 'graphics)
-           (> (tree-arity sel) 0))
+           (tree-compound? new-sel)
+           (== (tree-label new-sel) 'graphics)
+           (> (tree-arity new-sel) 0))
       (begin
         (sketch-reset)
         (sketch-checkout)
-        (foreach-number (i 0 < (tree-arity sel))
-                        (sketch-toggle (tree-ref sel i)))
+        (foreach-number (i 0 < (tree-arity new-sel))
+                        (sketch-toggle (tree-ref new-sel i)))
         (sketch-commit)
-        (graphics-group-start))))
+        (graphics-group-start)))
+  (set! paste-times (+ 1 paste-times)))
+
