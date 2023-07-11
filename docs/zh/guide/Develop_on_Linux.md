@@ -34,14 +34,14 @@ xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
 ### 第三步：测试
 见[如何测试](Test.md)。
 
-### 第四步: 安装到`build/package`
+### 第四步: 安装到`build/packages/app.mogan`
 ``` bash
-xmake install -o build/package mogan
+xmake install mogan
 ```
 
 ### 第五步：启动墨干编辑器
 ``` bash
-build/package/bin/mogan
+xmake run mogan
 ```
 
 ### 使用VSCode帮助代码补全
