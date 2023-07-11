@@ -56,6 +56,22 @@
       Darcy
     </cell>|<\cell>
       get OS and CPU info via Qt
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      8_7
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Upgrade xmake to 2.8.1
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      8_8
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake run on macOS and Linux
     </cell>>>>
   </wide-tabular>
 
