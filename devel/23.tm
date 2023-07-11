@@ -150,7 +150,7 @@
       After selecting an object, using the cursor should not move the
       background, but the object. <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGQ7>
     </cell>>|<row|<\cell>
-      Bug
+      Feature
     </cell>|<\cell>
       23_14
     </cell>|<\cell>
@@ -159,7 +159,7 @@
       After entering the function of moving, the cursor should become a small
       hand. <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGM7>
     </cell>>|<row|<\cell>
-      Bug
+      Feature
     </cell>|<\cell>
       23_15
     </cell>|<\cell>
@@ -203,6 +203,6 @@
 
 <\initial>
   <\collection>
-    <associate|page-medium|paper>
+    <associate|page-medium|papyrus>
   </collection>
 </initial>
