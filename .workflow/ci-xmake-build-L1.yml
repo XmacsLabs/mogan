@@ -7,11 +7,9 @@ triggers:
     branches:
       precise:
         - branch-1.2
-    paths:
-      precise:
-        - src/Kernel/Abstractions/
-        - src/Kernel/Containers/
-        - src/Kernel/Types/
+    comments:
+      include:
+        - '.*L1.*'
 
 variables:
   XMAKE_MAIN_REPO: 'https://gitee.com/XmacsLabs/xmake-repo.git'
