@@ -8,16 +8,10 @@ triggers:
       precise:
         - branch-1.2
     paths:
-      include:
-        - src/System/Memory/*
-        - src/System/IO/*
-        - src/Kernel/Abstractions/*
-        - src/Kernel/Containers/*
-        - src/Kernel/Types/*
-        - src/Data/Drd/*
-        - tests/Kernel/*
-        - .workflow/ci-xmake-kernel-l1.yml
-        - xmake.lua
+      precise:
+        - src/Kernel/Abstractions/
+        - src/Kernel/Containers/
+        - src/Kernel/Types/
 
 variables:
   XMAKE_MAIN_REPO: 'https://gitee.com/XmacsLabs/xmake-repo.git'
