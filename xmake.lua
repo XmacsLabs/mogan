@@ -405,8 +405,15 @@ end
 
 
 local XMACS_VERSION="1.2.0"
-local INSTALL_RELATIVE_DIR="packages/app.mogan/data/"
-local INSTALL_DIR=path.join("$(buildir)", INSTALL_RELATIVE_DIR)
+
+local INSTALL_DIR = "$(buildir)"
+if is_plat("mingw") then 
+    INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/data/")
+elseif is_plat("macosx") then 
+    INSTALL_DIR = path.join("$(buildir)", "macosx/$(arch)/$(mode)/Mogan.app/Contents/Resources/")
+else 
+    INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/")
+end
 
 local DEVEL_VERSION = TEXMACS_VERSION
 local DEVEL_RELEASE = 1
@@ -818,11 +825,8 @@ target("mogan") do
                     "TeXmacs/misc/images/texmacs-"..size..".png",
                     path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
             end
-            if is_plat("macosx") then
-                os.cp ("$(buildir)/packages/macos/Info.plist", path.join(target:installdir(), "../Info.plist"))
-            end
             if is_plat("macosx") and is_arch("arm64") then
-                os.execv("codesign", {"--force", "--deep", "--sign", "-", target:installdir().."../.."})
+                os.execv("codesign", {"--force", "--deep", "--sign", "-", target:installdir().."/../.."})
             end
 
             if is_plat("mingw") then
@@ -869,7 +873,7 @@ target("mogan") do
             elseif is_plat("linux") then
                 os.execv(INSTALL_DIR.."/bin/mogan")
             else
-                print("Not supported")
+                os.execv(INSTALL_DIR.."/../MacOS/Mogan")
             end
         end)
 end
@@ -881,24 +885,28 @@ target("windows_installer") do
     set_configvar("PACKAGE_DATE", os.date("%Y-%m-%d"))
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_installdir("$(buildir)")
-    add_configfiles(
-        "packages/windows/(config/config.in.xml)",{
-            filename = "config.xml",
-        }
-    )
-    add_installfiles({
-        "packages/windows/config/TeXmacs-small.png",
-        "packages/windows/config/TeXmacs-large.png",
-        "packages/windows/TeXmacs.ico",
-    }, {prefixdir = "config/"})
-    add_configfiles(
-        "packages/windows/(packages/app.mogan/meta/package.in.xml)",{
-            filename = "package.xml",
-        }
-    )
-    add_installfiles({
-        "packages/windows/packages/app.mogan/meta/installscript.qs",
-        "LICENSE"}, {prefixdir = "packages/app.mogan/meta/"})
+
+    if is_plat("mingw") then
+        add_configfiles(
+            "packages/windows/(config/config.in.xml)",{
+                filename = "config.xml",
+            }
+        )
+        add_configfiles(
+            "packages/windows/(packages/app.mogan/meta/package.in.xml)",{
+                filename = "package.xml",
+            }
+        )
+        add_installfiles({
+            "packages/windows/packages/app.mogan/meta/installscript.qs",
+            "LICENSE"}, {prefixdir = "packages/app.mogan/meta/"})
+        add_installfiles({
+            "packages/windows/config/TeXmacs-small.png",
+            "packages/windows/config/TeXmacs-large.png",
+            "packages/windows/TeXmacs.ico",
+        }, {prefixdir = "config/"})
+    end
+
     after_install(function (target, opt)
         import("core.base.option")
         import("core.project.config")
@@ -967,7 +975,7 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
             name = target:name()
             params = {"-headless", "-b", "TeXmacs/tests/"..name..".scm", "-x", "(test_"..name..")", "-q"}
             if is_plat("macosx") then
-                os.execv("$(buildir)/macosx/$(arch)/release/Mogan.app/Contents/MacOS/Mogan", params)
+                os.execv(INSTALL_DIR.."/../MacOS/Mogan", params)
             elseif is_plat("mingw") then
                 os.execv(INSTALL_DIR.."/bin/mogan.exe", params)
             else

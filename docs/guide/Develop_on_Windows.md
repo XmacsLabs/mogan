@@ -50,10 +50,9 @@ xmake run --yes --verbose --diagnosis --group=tests
 xmake run --yes --verbose --diagnosis --group=keneral_tests
 ```
 
-### Step 4: Install to `build/package`
+### Step 4: Install to `build/packages`
 ``` bash
-xmake install -o build/package mogan
-windeployqt --compiler-runtime ./build/package/bin/ -printsupport
+xmake install mogan
 ```
 
 There are other binary used by mogan as optional dependencies, you can found them at [xmacslabs/mogan-dependencies](https://github.com/XmacsLabs/mogan-dependencies).

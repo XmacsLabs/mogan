@@ -53,10 +53,9 @@ xmake run --yes --verbose --diagnosis --group=tests
 xmake run --yes --verbose --diagnosis --group=keneral_tests
 ```
 
-### 第四步：安装到`build/package`目录
+### 第四步：安装到`build/packages`目录
 ``` bash
-xmake install -o build/package mogan
-windeployqt --compiler-runtime ./build/package/bin/ -printsupport
+xmake install mogan
 ```
 
 墨干编辑器的某些功能需要其他程序来配合。这些程序在[xmacslabs/mogan-dependencies](https://github.com/XmacsLabs/mogan-dependencies)仓库下。
