@@ -23,10 +23,10 @@ See [How to test](Test.md)。
 
 ### Step 4: Install to `build/macosx/{arch}/release/Mogan.app/`
 ``` bash
-xmake install -o build/macosx/`arch`/release/Mogan.app/Contents/Resources/ mogan
+xmake install mogan
 ```
 
 ### Step 5: Launch Mogan Editor
 ``` bash
-./build/macosx/`arch`/release/Mogan.app/Contents/MacOS/Mogan
+xmake run mogan
 ```
