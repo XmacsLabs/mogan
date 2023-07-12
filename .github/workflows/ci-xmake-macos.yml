@@ -60,11 +60,16 @@ jobs:
           key: ${{ runner.os }}-xmake-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
 
       - name: config
-        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build --yes
+        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
       - name: build
-        id: build
         run: xmake build --yes --verbose --diagnosis --all
       - name: test
         run: bin/test_all
+        env:
+          QT_QPA_PLATFORM: offscreen
+      - name: install
+        run: xmake install mogan
+      - name: integration test
+        run: xmake run --yes -vD --group=integration_tests
         env:
           QT_QPA_PLATFORM: offscreen
