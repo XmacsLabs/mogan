@@ -75,7 +75,7 @@ jobs:
           echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin\" >> "${{ github.path }}"
       - name: config
         shell: msys2 {0}
-        run: xmake config --policies=build.ccache --yes --verbose --diagnosis --plat=mingw
+        run: xmake config --policies=build.ccache --yes --verbose --diagnosis -m releasedbg --plat=mingw
       - name: build
         shell: msys2 {0}
         id: build
