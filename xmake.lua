@@ -817,14 +817,16 @@ target("mogan") do
 
     after_install(
         function (target)
-            os.cp (
-                "TeXmacs/misc/images/texmacs.svg", 
+            print("after_install of target mogan")
+
+            os.cp ("TeXmacs/misc/images/texmacs.svg", 
                 path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
             for _,size in ipairs({32, 48, 64, 128, 256, 512}) do
                 os.cp (
                     "TeXmacs/misc/images/texmacs-"..size..".png",
                     path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
             end
+
             if is_plat("macosx") and is_arch("arm64") then
                 os.execv("codesign", {"--force", "--deep", "--sign", "-", target:installdir().."/../.."})
             end
@@ -845,7 +847,6 @@ target("mogan") do
                 -- since version of mingw used to build mogan may differs from
                 --   version of Qt, tell windeployqt to use lib from mingw may
                 --   break ABI compability.
-                local buildir = config.buildir()
                 local deploy_argv = {"--no-compiler-runtime", "-printsupport"}
                 if option.get("diagnosis") then
                     table.insert(deploy_argv, "--verbose=2")
@@ -854,12 +855,9 @@ target("mogan") do
                 else
                     table.insert(deploy_argv, "--verbose=0")
                 end
-                local install_file = path.join(buildir, INSTALL_RELATIVE_DIR, "bin")
-                table.insert(deploy_argv, install_file)
-                os.iorunv(windeployqt, deploy_argv)
-
-                os.iorunv(windeployqt, deploy_argv, {envs = {PATH = qt.bindir}})
                 local install_bindir = path.join(target:installdir(), "bin")
+                table.insert(deploy_argv, install_bindir)
+                os.iorunv(windeployqt, deploy_argv, {envs = {PATH = qt.bindir}})
                 os.cp(path.join(qt.bindir, "libstdc++*.dll"), install_bindir)
                 os.cp(path.join(qt.bindir, "libgcc*.dll"), install_bindir)
                 os.cp(path.join(qt.bindir, "libwinpthread*.dll"), install_bindir)
