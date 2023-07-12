@@ -83,12 +83,15 @@ jobs:
       - name: install
         shell: msys2 {0}
         run: |
-          windeployqt --compiler-runtime ./build/mingw/x86_64/release/ -printsupport
           xmake install mogan
       - name: test
         shell: msys2 {0}
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
+      - name: integration test in scheme
+        run: xmake run --yes -vD --group=integration_tests
+        env:
+          QT_QPA_PLATFORM: offscreen
       - name: Upload 
         uses: actions/upload-artifact@v2
         with:
