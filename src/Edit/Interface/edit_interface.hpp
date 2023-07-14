@@ -21,6 +21,16 @@
 #define INPUT_SPELL       3
 #define INPUT_COMPLETE    4
 
+// Different Mods
+#define ShiftMask     256
+#define LockMask      512
+#define ControlMask  1024
+#define Mod1Mask     2048
+#define Mod2Mask     4096
+#define Mod3Mask     8192
+#define Mod4Mask    16384
+#define Mod5Mask    32768
+
 string MODE_LANGUAGE (string mode);
 
 class edit_interface_rep: virtual public editor_rep {

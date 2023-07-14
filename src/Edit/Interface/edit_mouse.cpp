@@ -18,15 +18,6 @@
 #include "message.hpp"
 #include "window.hpp"
 
-  // These are tm-defined in graphics-utils.scm (looks like they shouldn't)
-#define ShiftMask     256
-#define LockMask      512
-#define ControlMask  1024
-#define Mod1Mask     2048
-#define Mod2Mask     4096
-#define Mod3Mask     8192
-#define Mod4Mask    16384
-#define Mod5Mask    32768
 
 void disable_double_clicks ();
 
