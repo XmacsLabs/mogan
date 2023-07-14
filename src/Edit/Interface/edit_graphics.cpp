@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "Interface/edit_graphics.hpp"
+#include "edit_interface.hpp"
 #include "server.hpp"
 #include "scheme.hpp"
 #include "curve.hpp"
@@ -493,9 +494,12 @@ edit_graphics_rep::mouse_graphics (string type, SI x, SI y, int m, time_t t) {
     string sx= as_string (p[0]);
     string sy= as_string (p[1]);
     invalidate_graphical_object ();
-    call ("set-keyboard-modifiers", object (m));
+    call ("set-keyboard-modifiers", object (mods));
     if (type == "move")
       call ("graphics-move", sx, sy);
+    // Press Shift+LeftMouse is equal to Press RightMouse
+    else if(type=="release-left" && ((mods&ShiftMask)!=0))
+      call ("graphics-release-right", sx, sy);
     else if (type == "release-left" || type == "double-left")
       call ("graphics-release-left", sx, sy);
     else if (type == "release-middle")
