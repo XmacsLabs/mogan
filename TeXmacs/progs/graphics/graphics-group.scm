@@ -478,7 +478,7 @@
         (else
           (cond (current-path
                  (set-message (string-append "Left click: operate; "
-                                             "Right click: select/unselect")
+                                             "Shift+Left click or Right click: select/unselect")
                               "Group of objects"))
                 ((nnull? (sketch-get))
                  (set-message "Left click: operate"

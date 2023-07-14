@@ -214,7 +214,7 @@
 (define (move-over)
   (set-message (string-append "Left click: new object; "
                               "Drag: edit object; "
-                              "Right click: remove; "
+                              "Shift+Left click or Right click: remove; "
                               "Return: apply properties; "
                               "S-Return: fetch properties")
                "Mouse over object")
@@ -262,9 +262,9 @@
          (== (logand (get-keyboard-modifiers) ShiftMask) 0)))
       (begin
         (if leftclick-waiting
-            (set-message "Left click: finish; Right click: undo"
+            (set-message "Left click: finish; Shift+Left click or Right click: undo"
                          "Inserting control points")
-            (set-message "Left click: add point; Right click: undo"
+            (set-message "Left click: add point; Shift+Left click or Right click: undo"
                          "Inserting control points"))
         (object_set-point current-point-no current-x current-y)))
   (graphics-decorations-update))
@@ -275,7 +275,7 @@
 
 (define (next-point)
   (cond ((not (hardly-moved?))
-         (set-message "Left click: finish; Right click: undo"
+         (set-message "Left click: finish; Shift+Left click or Right click: undo"
                       "Inserting control points")
          (set! leftclick-waiting #t))
         (leftclick-waiting
@@ -284,7 +284,7 @@
          (undo 0)
          (set! leftclick-waiting #f))
         (else
-          (set-message "Left click: finish; Right click: undo"
+          (set-message "Left click: finish; Shift+Left click or Right click: undo"
                        "Inserting control points")
          (graphics-back-state #f)
          (graphics-move current-x current-y)
