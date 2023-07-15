@@ -6,6 +6,7 @@
 ```
 brew install xmake qt@5 ccache
 brew link qt@5
+brew install pkg-config
 ```
 
 有时候需要保持xrepo是最新的，以保证使用最新的依赖的构建定义
