@@ -5,6 +5,7 @@ For Homebrew:
 ```
 brew install xmake qt@5 ccache
 brew link qt@5
+brew install pkg-config
 ```
 
 Sometimes, we need the latest xrepo:
