@@ -8,7 +8,9 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|4|4|cell-valign|b>|<cwith|2|2|4|4|cell-valign|b>|<cwith|3|3|4|4|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|1|1|4|4|cell-valign|b>|<cwith|2|2|4|4|cell-valign|b>|<cwith|3|3|4|4|cell-valign|b>|<cwith|7|7|2|2|cell-background|pastel
+    green>|<cwith|8|8|2|2|cell-background|pastel
+    green>|<cwith|5|5|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Feature
     </cell>|<\cell>
       <todo|8_1>
@@ -63,7 +65,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Upgrade xmake to 2.8.1
+      Upgrade pdfhummus from 4.2 to 4.5.6
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
@@ -72,6 +74,14 @@
       Darcy
     </cell>|<\cell>
       xmake run on macOS and Linux
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      8_9
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Upgrade to xmake 2.8.1
     </cell>>>>
   </wide-tabular>
 
