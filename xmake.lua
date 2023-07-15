@@ -412,7 +412,7 @@ if is_plat("mingw") then
 elseif is_plat("macosx") then 
     INSTALL_DIR = path.join("$(buildir)", "macosx/$(arch)/$(mode)/Mogan.app/Contents/Resources/")
 else 
-    INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/")
+    INSTALL_DIR = os.getenv("INSTALL_DIR", path.join("$(buildir)", "packages/app.mogan/"))
 end
 
 local DEVEL_VERSION = TEXMACS_VERSION
@@ -867,11 +867,11 @@ target("mogan") do
         on_run(function (target)
             name = target:name()
             if is_plat("mingw") then
-                os.execv(INSTALL_DIR.."/bin/mogan.exe")
+                os.execv(target:installdir().."/bin/mogan.exe")
             elseif is_plat("linux") then
-                os.execv(INSTALL_DIR.."/bin/mogan")
+                os.execv(target:installdir().."/bin/mogan")
             else
-                os.execv(INSTALL_DIR.."/../MacOS/Mogan")
+                os.execv(target:installdir().."/../MacOS/Mogan")
             end
         end)
 end
