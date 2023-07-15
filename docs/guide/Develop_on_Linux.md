@@ -33,14 +33,14 @@ xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
 ### Step 3: Run tests
 See [How to test](Test.md)。
 
-### Step 4: Install to `build/package`
+### Step 4: Install to `build/packages/app.mogan`
 ``` bash
-xmake install -o build/package mogan
+xmake install mogan
 ```
 
 ### Step 5: Launch Mogan Editor
 ``` bash
-build/package/bin/mogan
+xmake run mogan
 ```
 
 ### Use VSCode to help code completion
