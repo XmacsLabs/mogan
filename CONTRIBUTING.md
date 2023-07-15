@@ -6,6 +6,8 @@ Why English or Chinese? Because currently, the developers only know these two hu
 
 Welcome to joining us as a developer!!!
 ## For Developers
+We are using [xmake](https://xmake.io), please always use the xmake version specified in Github Action.
+
 | Documentation | Platform | Links |
 |----------------|---------|----------|
 | How to develop | Windows | [English](docs/guide/Develop_on_Windows.md)/[中文](docs/zh/guide/Develop_on_Windows.md) |

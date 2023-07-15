@@ -46,7 +46,7 @@ jobs:
           echo "XMAKE_GLOBALDIR=${{ runner.workspace }}\.xmake-global" >> "${{ github.env }}"
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.7.9
+          xmake-version: v2.8.1
       - name: update repo
         run: |
           xrepo update-repo
