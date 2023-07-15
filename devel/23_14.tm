@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|chinese>>
+<style|<tuple|tmdoc|chinese|devel>>
 
 <\body>
   <tmdoc-title|After entering the function of moving, the cursor should
