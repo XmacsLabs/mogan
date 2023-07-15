@@ -96,13 +96,13 @@ class pdf_hummus_renderer_rep : public renderer_rep {
   brush  bgb, fgb;
 
   string       cfn;
-  PDFUsedFont *cfid;
+  PDFUsedFont* cfid;
   double       fsize;
   double       prev_text_x, prev_text_y;
 
   double width, height;
 
-  hashmap<string, PDFUsedFont *>       native_fonts;
+  hashmap<string, PDFUsedFont*>        native_fonts;
   hashset<string>                      not_native_fonts;
   hashset<string>                      EuropeanComputerModern_fonts;
   hashmap<string, pdf_raw_image>       pdf_glyphs;
@@ -130,8 +130,8 @@ class pdf_hummus_renderer_rep : public renderer_rep {
   list<outline_data> outlines;
 
   PDFWriter           pdfWriter;
-  PDFPage            *page;
-  PageContentContext *contentContext;
+  PDFPage*            page;
+  PageContentContext* contentContext;
 
   // geometry
 
@@ -177,7 +177,7 @@ class pdf_hummus_renderer_rep : public renderer_rep {
   void             flush_dests ();
   void             flush_outlines ();
   void             flush_fonts ();
-  PDFImageXObject *create_pdf_image_raw (string raw_data, SI width, SI height,
+  PDFImageXObject* create_pdf_image_raw (string raw_data, SI width, SI height,
                                          ObjectIDType imageXObjectID);
   void             make_pdf_font (string fontname);
   void             draw_bitmap_glyph (int ch, font_glyphs fn, SI x, SI y);
@@ -189,18 +189,18 @@ class pdf_hummus_renderer_rep : public renderer_rep {
   // hooks for the Hummus library
 
   class DestinationsWriter : public DocumentContextExtenderAdapter {
-    pdf_hummus_renderer_rep *ren;
+    pdf_hummus_renderer_rep* ren;
 
   public:
-    DestinationsWriter (pdf_hummus_renderer_rep *_ren) : ren (_ren) {}
+    DestinationsWriter (pdf_hummus_renderer_rep* _ren) : ren (_ren) {}
     virtual ~DestinationsWriter () {}
 
     // IDocumentContextExtender implementation
     virtual PDFHummus::EStatusCode
-    OnCatalogWrite (CatalogInformation         *inCatalogInformation,
-                    DictionaryContext          *inCatalogDictionaryContext,
-                    ObjectsContext             *inPDFWriterObjectContext,
-                    PDFHummus::DocumentContext *inDocumentContext) {
+    OnCatalogWrite (CatalogInformation*         inCatalogInformation,
+                    DictionaryContext*          inCatalogDictionaryContext,
+                    ObjectsContext*             inPDFWriterObjectContext,
+                    PDFHummus::DocumentContext* inDocumentContext) {
       ren->on_catalog_write (inCatalogInformation, inCatalogDictionaryContext,
                              inPDFWriterObjectContext, inDocumentContext);
       return eSuccess;
@@ -208,14 +208,14 @@ class pdf_hummus_renderer_rep : public renderer_rep {
   };
 
   PDFHummus::EStatusCode
-  on_catalog_write (CatalogInformation         *inCatalogInformation,
-                    DictionaryContext          *inCatalogDictionaryContext,
-                    ObjectsContext             *inPDFWriterObjectContext,
-                    PDFHummus::DocumentContext *inDocumentContext);
+  on_catalog_write (CatalogInformation*         inCatalogInformation,
+                    DictionaryContext*          inCatalogDictionaryContext,
+                    ObjectsContext*             inPDFWriterObjectContext,
+                    PDFHummus::DocumentContext* inDocumentContext);
 
-  void recurse (ObjectsContext &objectsContext, int parent_ls,
-                list<outline_data> &it, ObjectIDType parentId,
-                ObjectIDType &firstId, ObjectIDType &lastId, int &count);
+  void recurse (ObjectsContext& objectsContext, int parent_ls,
+                list<outline_data>& it, ObjectIDType parentId,
+                ObjectIDType& firstId, ObjectIDType& lastId, int& count);
 
 public:
   pdf_hummus_renderer_rep (url pdf_file_name, int dpi, int nr_pages,
@@ -248,10 +248,10 @@ public:
 
   void     draw_picture (picture p, SI x, SI y, int alpha);
   void     draw_scalable (scalable im, SI x, SI y, int alpha);
-  renderer shadow (picture &pic, SI x1, SI y1, SI x2, SI y2);
+  renderer shadow (picture& pic, SI x1, SI y1, SI x2, SI y2);
   void     fetch (SI x1, SI y1, SI x2, SI y2, renderer ren, SI x, SI y);
-  void     new_shadow (renderer &ren);
-  void     delete_shadow (renderer &ren);
+  void     new_shadow (renderer& ren);
+  void     delete_shadow (renderer& ren);
   void     get_shadow (renderer ren, SI x1, SI y1, SI x2, SI y2);
   void     put_shadow (renderer ren, SI x1, SI y1, SI x2, SI y2);
   void     apply_shadow (SI x1, SI y1, SI x2, SI y2);
@@ -270,18 +270,18 @@ public:
  ******************************************************************************/
 
 static void
-write_indirect_obj (ObjectsContext &objectsContext, ObjectIDType destId,
+write_indirect_obj (ObjectsContext& objectsContext, ObjectIDType destId,
                     string payload) {
   objectsContext.StartNewIndirectObject (destId);
   c_string buf (payload);
-  objectsContext.StartFreeContext ()->Write ((unsigned char *) (char *) buf,
+  objectsContext.StartFreeContext ()->Write ((unsigned char*) (char*) buf,
                                              N (payload));
   objectsContext.EndFreeContext ();
   objectsContext.EndIndirectObject ();
 }
 
-void pdf_image_info (url image, int &w, int &h, PDFRectangle &cropBox,
-                     double (&tMat)[6], PDFPageInput &pageInput);
+void pdf_image_info (url image, int& w, int& h, PDFRectangle& cropBox,
+                     double (&tMat)[6], PDFPageInput& pageInput);
 
 /******************************************************************************
  * constructors and destructors
@@ -327,7 +327,7 @@ pdf_hummus_renderer_rep::pdf_hummus_renderer_rep (
     initial_GState_id= pdfWriter.GetObjectsContext ()
                            .GetInDirectObjectsRegistry ()
                            .AllocateNewObjectID ();
-    ObjectsContext &objectsContext= pdfWriter.GetObjectsContext ();
+    ObjectsContext& objectsContext= pdfWriter.GetObjectsContext ();
     objectsContext.StartNewIndirectObject (initial_GState_id);
     std::stringstream buf;
     buf << "<< /Type /ExtGState\r\n";
@@ -349,7 +349,7 @@ pdf_hummus_renderer_rep::pdf_hummus_renderer_rep (
     buf << "/TK true\r\n";
     buf << ">>\r\n";
     objectsContext.StartFreeContext ()->Write (
-        (const IOBasicTypes::Byte *) (buf.str ().c_str ()), buf.str ().size ());
+        (const IOBasicTypes::Byte*) (buf.str ().c_str ()), buf.str ().size ());
     objectsContext.EndFreeContext ();
     objectsContext.EndIndirectObject ();
 
@@ -373,7 +373,7 @@ pdf_hummus_renderer_rep::~pdf_hummus_renderer_rep () {
   {
     // flush alphas
     iterator<int>   it            = iterate (alpha_id);
-    ObjectsContext &objectsContext= pdfWriter.GetObjectsContext ();
+    ObjectsContext& objectsContext= pdfWriter.GetObjectsContext ();
     while (it->busy ()) {
       int    a = it->next ();
       double da= ((double) a) / 1000.0;
@@ -382,7 +382,7 @@ pdf_hummus_renderer_rep::~pdf_hummus_renderer_rep () {
         std::stringstream buf;
         buf << "<< /Type /ExtGState /CA " << da << "  /ca " << da << " >>\r\n";
         objectsContext.StartFreeContext ()->Write (
-            (const IOBasicTypes::Byte *) (buf.str ().c_str ()),
+            (const IOBasicTypes::Byte*) (buf.str ().c_str ()),
             buf.str ().size ());
         objectsContext.EndFreeContext ();
       }
@@ -393,7 +393,7 @@ pdf_hummus_renderer_rep::~pdf_hummus_renderer_rep () {
   {
     // flush annotations
     iterator<ObjectIDType> it            = iterate (annot_list);
-    ObjectsContext        &objectsContext= pdfWriter.GetObjectsContext ();
+    ObjectsContext&        objectsContext= pdfWriter.GetObjectsContext ();
     while (it->busy ()) {
       ObjectIDType id= it->next ();
       write_indirect_obj (objectsContext, id, annot_list (id));
@@ -596,13 +596,13 @@ public:
   }
   ~pdf_image_rep () {}
 
-  bool flush_jpg (PDFWriter &pdfw, url image);
+  bool flush_jpg (PDFWriter& pdfw, url image);
 #ifndef PDFHUMMUS_NO_PNG
-  bool flush_png (PDFWriter &pdfw, url image);
+  bool flush_png (PDFWriter& pdfw, url image);
 #endif
-  void flush (PDFWriter &pdfw);
+  void flush (PDFWriter& pdfw);
 
-  bool flush_for_pattern (PDFWriter &pdfw);
+  bool flush_for_pattern (PDFWriter& pdfw);
 }; // class pdf_image_ref
 
 class pdf_image {
@@ -630,17 +630,17 @@ public:
         scale_y (_scale_y), id (_id) {}
   ~pdf_pattern_rep () {}
 
-  void flush (PDFWriter &pdfw) {
+  void flush (PDFWriter& pdfw) {
     const double matrix[]= {scale_x, 0, 0, scale_y, (double) sx, (double) sy};
-    DocumentContext &documentContext= pdfw.GetDocumentContext ();
-    PDFTiledPattern *tiledPattern=
+    DocumentContext& documentContext= pdfw.GetDocumentContext ();
+    PDFTiledPattern* tiledPattern=
         documentContext.StartTiledPattern (1, // int inPaintType,
                                            2, // int inTilingType,
                                            PDFRectangle (0, 0, w, h),
                                            w, // double inXStep,
                                            h, // double inYStep,
                                            id, matrix);
-    TiledPatternContentContext *tiledPatternContentContext=
+    TiledPatternContentContext* tiledPatternContentContext=
         tiledPattern->GetContentContext ();
     std::string imageName=
         tiledPattern->GetResourcesDictionary ().AddImageXObjectMapping (im->id);
@@ -687,7 +687,7 @@ pdf_hummus_renderer_rep::register_pattern_image (brush br, SI pixel) {
   if (pattern_image_pool->contains (key)) image_pdf= pattern_image_pool[key];
   else {
     // debug_convert << "Insert pattern image\n";
-    QImage *pim= get_image (u, w, h, eff, pixel);
+    QImage* pim= get_image (u, w, h, eff, pixel);
     if (pim == NULL) {
       convert_error << "Cannot read image file '" << u << "'"
                     << " with get_image" << LF;
@@ -785,7 +785,7 @@ pdf_hummus_renderer_rep::select_stroke_pattern (brush br) {
   std::string patternName=
       page->GetResourcesDictionary ().AddPatternMapping (p->id);
   contentContext->CS ("Pattern");
-  contentContext->SCN ((double *) NULL, 0, patternName);
+  contentContext->SCN ((double*) NULL, 0, patternName);
 }
 
 void
@@ -802,7 +802,7 @@ pdf_hummus_renderer_rep::select_fill_pattern (brush br) {
   std::string patternName=
       page->GetResourcesDictionary ().AddPatternMapping (p->id);
   contentContext->cs ("Pattern");
-  contentContext->scn ((double *) NULL, 0, patternName);
+  contentContext->scn ((double*) NULL, 0, patternName);
   select_alpha ((1000 * br->get_alpha ()) / 255);
 }
 
@@ -922,18 +922,18 @@ static const std::string scDCTDecode       = "DCTDecode";
 static const std::string scLength          = "Length";
 
 static void
-create_pdf_image_raw (PDFWriter &pdfw, string raw_data, SI width, SI height,
+create_pdf_image_raw (PDFWriter& pdfw, string raw_data, SI width, SI height,
                       ObjectIDType imageXObjectID) {
 
-  PDFImageXObject *imageXObject= NULL;
+  PDFImageXObject* imageXObject= NULL;
   // EStatusCode status = PDFHummus::eSuccess;
 
-  ObjectsContext &objectsContext= pdfw.GetObjectsContext ();
+  ObjectsContext& objectsContext= pdfw.GetObjectsContext ();
   objectsContext.StartNewIndirectObject (imageXObjectID);
   do {
     {
       // write stream dictionary
-      DictionaryContext *imageContext= objectsContext.StartDictionary ();
+      DictionaryContext* imageContext= objectsContext.StartDictionary ();
       // type
       imageContext->WriteKey (scType);
       imageContext->WriteNameValue (scXObject);
@@ -962,8 +962,8 @@ create_pdf_image_raw (PDFWriter &pdfw, string raw_data, SI width, SI height,
       objectsContext.WriteKeyword ("stream");
       {
         c_string buf (raw_data);
-        objectsContext.StartFreeContext ()->Write (
-            (unsigned char *) (char *) buf, N (raw_data));
+        objectsContext.StartFreeContext ()->Write ((unsigned char*) (char*) buf,
+                                                   N (raw_data));
         objectsContext.EndFreeContext ();
       }
       objectsContext.EndLine ();
@@ -988,7 +988,7 @@ public:
       : data (_data), w (_w), h (_h), id (_id) {}
   pdf_raw_image_rep () {}
 
-  void flush (PDFWriter &pdfw) {
+  void flush (PDFWriter& pdfw) {
     // debug_convert << "flushing :" << id << LF;
     create_pdf_image_raw (pdfw, data, w, h, id);
   }
@@ -1071,14 +1071,14 @@ public:
   font_glyphs       fn;
   int               font_chunk;
   ObjectIDType      fontId;
-  ObjectsContext   &objectsContext;
+  ObjectsContext&   objectsContext;
   hashmap<int, int> used_chars;
   int               firstchar;
   int               lastchar;
   int               b0, b1, b2, b3; // glyph bounding box
   bool              first_glyph;
 
-  t3font_rep (font_glyphs _fn, int _font_chunk, ObjectsContext &_objectsContext)
+  t3font_rep (font_glyphs _fn, int _font_chunk, ObjectsContext& _objectsContext)
       : fn (_fn), font_chunk (_font_chunk), objectsContext (_objectsContext),
         first_glyph (true) {
     fontId= objectsContext.GetInDirectObjectsRegistry ().AllocateNewObjectID ();
@@ -1086,12 +1086,12 @@ public:
   void update_bbox (int llx, int lly, int urx, int ury);
   void add_glyph (int ch) { used_chars (ch)= 1; }
   void write_char (glyph gl, ObjectIDType inCharID);
-  void write_definition (int &registry_id);
+  void write_definition (int& registry_id);
 };
 
 class t3font {
   CONCRETE_NULL (t3font);
-  t3font (font_glyphs _fn, int _font_chunk, ObjectsContext &_objectsContext)
+  t3font (font_glyphs _fn, int _font_chunk, ObjectsContext& _objectsContext)
       : rep (tm_new<t3font_rep> (_fn, _font_chunk, _objectsContext)){};
 };
 
@@ -1127,7 +1127,7 @@ t3font_rep::write_char (glyph gl, ObjectIDType inCharID) {
 
   objectsContext.StartNewIndirectObject (inCharID);
   // write char stream
-  PDFStream *charStream= objectsContext.StartPDFStream (NULL, true);
+  PDFStream* charStream= objectsContext.StartPDFStream (NULL, true);
   string     data;
   if (is_nil (gl)) {
     // write d0 command
@@ -1145,7 +1145,7 @@ t3font_rep::write_char (glyph gl, ObjectIDType inCharID) {
     data << "BI\r\n/W " << as_string (cwidth) << "\r\n/H "
          << as_string (cheight) << "\r\n";
     data << "/CS /G /BPC 1 /F /AHx /D [0.0 1.0] /IM true\r\nID\r\n";
-    static const char *hex_string= "0123456789ABCDEF";
+    static const char* hex_string= "0123456789ABCDEF";
     string             hex_code;
     int                i, j, count= 0, cur= 0;
     for (j= 0; j < cheight; j++)
@@ -1163,14 +1163,13 @@ t3font_rep::write_char (glyph gl, ObjectIDType inCharID) {
     data << ">\r\nEI\r\nQ\r\n"; // ">" is the EOD char for ASCIIHex
   }
   c_string buf (data);
-  charStream->GetWriteStream ()->Write ((unsigned char *) (char *) buf,
-                                        N (data));
+  charStream->GetWriteStream ()->Write ((unsigned char*) (char*) buf, N (data));
   objectsContext.EndPDFStream (charStream); // It does the EndIndirectObject()
   delete charStream;
 }
 
 void
-t3font_rep::write_definition (int &registry_id) {
+t3font_rep::write_definition (int& registry_id) {
   array<int>          glyph_list;
   array<ObjectIDType> charIds;
   // order used glyphs
@@ -1285,10 +1284,10 @@ t3font_rep::write_definition (int &registry_id) {
   cmap << "endcmap CMapName currentdict /CMap defineresource\r\n"
        << "pop end end\r\n";
   objectsContext.StartNewIndirectObject (tounicodeId);
-  PDFStream           *cmapStream= objectsContext.StartPDFStream (NULL, true);
+  PDFStream*           cmapStream= objectsContext.StartPDFStream (NULL, true);
   OutputStreamTraits   outputTraits (cmapStream->GetWriteStream ());
   c_string             buf (cmap);
-  InputByteArrayStream reader ((IOBasicTypes::Byte *) (char *) buf, N (cmap));
+  InputByteArrayStream reader ((IOBasicTypes::Byte*) (char*) buf, N (cmap));
   EStatusCode          status= outputTraits.CopyToOutputStream (&reader);
   if (status != PDFHummus::eSuccess) {
     delete cmapStream;
@@ -1355,11 +1354,11 @@ pdf_hummus_renderer_rep::make_pdf_font (string fontname) {
     // double fsize= font_size (fn->res_name);
 
     // char *_rname = as_charp(fname);
-    PDFUsedFont *font;
+    PDFUsedFont* font;
     {
       // debug_convert << "GetFontForFile "  << u  << LF;
       c_string _u (concretize (u));
-      font= pdfWriter.GetFontForFile ((char *) _u);
+      font= pdfWriter.GetFontForFile ((char*) _u);
     }
 
     if (font != NULL && no_font_issues (u)) {
@@ -1721,7 +1720,7 @@ pdf_hummus_renderer_rep::polygon (array<SI> x, array<SI> y, bool convex) {
 }
 
 void
-pdf_image_rep::flush (PDFWriter &pdfw) {
+pdf_image_rep::flush (PDFWriter& pdfw) {
   url name= resolve (u);
   if (is_none (name)) name= "$TEXMACS_PATH/misc/pixmaps/unknown.ps";
 
@@ -1772,10 +1771,10 @@ pdf_image_rep::flush (PDFWriter &pdfw) {
     // ...)
   }
   EStatusCode      status= PDFHummus::eFailure;
-  DocumentContext &dc    = pdfw.GetDocumentContext ();
+  DocumentContext& dc    = pdfw.GetDocumentContext ();
 
-  char                      *_temp= as_charp (concretize (temp));
-  PDFDocumentCopyingContext *copyingContext=
+  char*                      _temp= as_charp (concretize (temp));
+  PDFDocumentCopyingContext* copyingContext=
       pdfw.CreatePDFCopyingContext (_temp);
   if (copyingContext) {
     PDFPageInput pageInput (
@@ -1803,7 +1802,7 @@ pdf_image_rep::flush (PDFWriter &pdfw) {
       for (j= 0; j < 6; j++)
         tMat[j]*= r;
     }
-    PDFFormXObject *form= dc.StartFormXObject (cropBox, id, tMat, true);
+    PDFFormXObject* form= dc.StartFormXObject (cropBox, id, tMat, true);
     status              = copyingContext->MergePDFPageToFormXObject (form, 0);
     if (status == eSuccess) pdfw.EndFormXObjectAndRelease (form);
     delete copyingContext;
@@ -1816,9 +1815,9 @@ pdf_image_rep::flush (PDFWriter &pdfw) {
 }
 
 void
-hummus_pdf_image_size (url image, int &w, int &h) {
+hummus_pdf_image_size (url image, int& w, int& h) {
   InputFile  pdfFile;
-  PDFParser *parser= new PDFParser ();
+  PDFParser* parser= new PDFParser ();
   pdfFile.OpenFile (as_charp (concretize (image)));
   EStatusCode status= parser->StartPDFParsing (pdfFile.GetInputStream ());
   if (status != PDFHummus::eFailure) {
@@ -1836,8 +1835,8 @@ hummus_pdf_image_size (url image, int &w, int &h) {
 }
 
 void
-pdf_image_info (url image, int &w, int &h, PDFRectangle &cropBox,
-                double (&tMat)[6], PDFPageInput &pageInput) {
+pdf_image_info (url image, int& w, int& h, PDFRectangle& cropBox,
+                double (&tMat)[6], PDFPageInput& pageInput) {
   int rot= (pageInput.GetRotate ()) % 360;
   if (rot < 0) rot+= 360;
   cropBox              = pageInput.GetCropBox ();
@@ -1908,7 +1907,7 @@ pdf_image_info (url image, int &w, int &h, PDFRectangle &cropBox,
 
 #ifdef QTTEXMACS
 void
-qt_image_data (url image, int &w, int &h, string &data, string &mask) {
+qt_image_data (url image, int& w, int& h, string& data, string& mask) {
   // debug_convert << "in qt_image_data"<<LF;
   QImage im (utf8_to_qstring (concretize (image)));
   if (im.isNull ()) {
@@ -1934,7 +1933,7 @@ qt_image_data (url image, int &w, int &h, string &data, string &mask) {
 #endif
 
 bool
-pdf_image_rep::flush_for_pattern (PDFWriter &pdfw) {
+pdf_image_rep::flush_for_pattern (PDFWriter& pdfw) {
   string data, smask;
   int    iw= 0, ih= 0;
 #ifdef QTTEXMACS
@@ -1945,10 +1944,10 @@ pdf_image_rep::flush_for_pattern (PDFWriter &pdfw) {
 #endif
   if ((iw == 0) || (ih == 0)) return false;
 
-  ObjectsContext &objectsContext= pdfw.GetObjectsContext ();
+  ObjectsContext& objectsContext= pdfw.GetObjectsContext ();
   objectsContext.StartNewIndirectObject (id);
 
-  DictionaryContext *imageContext= objectsContext.StartDictionary ();
+  DictionaryContext* imageContext= objectsContext.StartDictionary ();
   imageContext->WriteKey (scType);
   imageContext->WriteNameValue (scXObject);
   imageContext->WriteKey (scSubType);
@@ -1965,10 +1964,10 @@ pdf_image_rep::flush_for_pattern (PDFWriter &pdfw) {
       objectsContext.GetInDirectObjectsRegistry ().AllocateNewObjectID ();
   imageContext->WriteKey ("SMask");
   imageContext->WriteNewObjectReferenceValue (smaskId);
-  PDFStream *imageStream= objectsContext.StartPDFStream (imageContext, true);
+  PDFStream* imageStream= objectsContext.StartPDFStream (imageContext, true);
   OutputStreamTraits   outputTraits (imageStream->GetWriteStream ());
   c_string             buf (data);
-  InputByteArrayStream reader ((IOBasicTypes::Byte *) (char *) buf, N (data));
+  InputByteArrayStream reader ((IOBasicTypes::Byte*) (char*) buf, N (data));
   EStatusCode          status= outputTraits.CopyToOutputStream (&reader);
   if (status != PDFHummus::eSuccess) {
     delete imageStream;
@@ -1978,7 +1977,7 @@ pdf_image_rep::flush_for_pattern (PDFWriter &pdfw) {
   delete imageStream;
 
   objectsContext.StartNewIndirectObject (smaskId);
-  DictionaryContext *smaskContext= objectsContext.StartDictionary ();
+  DictionaryContext* smaskContext= objectsContext.StartDictionary ();
   smaskContext->WriteKey (scType);
   smaskContext->WriteNameValue (scXObject);
   smaskContext->WriteKey (scSubType);
@@ -1991,10 +1990,10 @@ pdf_image_rep::flush_for_pattern (PDFWriter &pdfw) {
   smaskContext->WriteIntegerValue (8);
   smaskContext->WriteKey (scColorSpace);
   smaskContext->WriteNameValue (scDeviceGray);
-  PDFStream *smaskStream= objectsContext.StartPDFStream (smaskContext, true);
+  PDFStream* smaskStream= objectsContext.StartPDFStream (smaskContext, true);
   OutputStreamTraits   smaskOutputTraits (smaskStream->GetWriteStream ());
   c_string             buf_smask (smask);
-  InputByteArrayStream smaskReader ((IOBasicTypes::Byte *) (char *) buf_smask,
+  InputByteArrayStream smaskReader ((IOBasicTypes::Byte*) (char*) buf_smask,
                                     N (smask));
   status= smaskOutputTraits.CopyToOutputStream (&smaskReader);
   if (status != PDFHummus::eSuccess) {
@@ -2007,18 +2006,18 @@ pdf_image_rep::flush_for_pattern (PDFWriter &pdfw) {
 }
 
 bool
-pdf_image_rep::flush_jpg (PDFWriter &pdfw, url image) {
+pdf_image_rep::flush_jpg (PDFWriter& pdfw, url image) {
   c_string         f (concretize (image));
-  DocumentContext &documentContext= pdfw.GetDocumentContext ();
-  PDFImageXObject *imageXObject=
-      documentContext.CreateImageXObjectFromJPGFile ((char *) f);
-  if ((void *) imageXObject == NULL) {
+  DocumentContext& documentContext= pdfw.GetDocumentContext ();
+  PDFImageXObject* imageXObject=
+      documentContext.CreateImageXObjectFromJPGFile ((char*) f);
+  if ((void*) imageXObject == NULL) {
     convert_error << "pdf_hummus, failed to include JPG file " << image << LF;
     return false;
   }
-  PDFFormXObject *xobjectForm=
+  PDFFormXObject* xobjectForm=
       pdfw.StartFormXObject (PDFRectangle (0, 0, w, h), id);
-  XObjectContentContext *xobjectContentContext=
+  XObjectContentContext* xobjectContentContext=
       xobjectForm->GetContentContext ();
   xobjectContentContext->q ();
   xobjectContentContext->cm (w, 0, 0, h, 0, 0);
@@ -2034,27 +2033,27 @@ pdf_image_rep::flush_jpg (PDFWriter &pdfw, url image) {
 
 #ifndef PDFHUMMUS_NO_PNG
 bool
-pdf_image_rep::flush_png (PDFWriter &pdfw, url image) {
+pdf_image_rep::flush_png (PDFWriter& pdfw, url image) {
   c_string        f (concretize (image));
   PNGImageHandler pngHandler;
   InputFile       file;
-  if (file.OpenFile (std::string ((char *) f)) != PDFHummus::eSuccess) {
+  if (file.OpenFile (std::string ((char*) f)) != PDFHummus::eSuccess) {
     convert_error << "pdf_hummus, failed to include PNG file " << image << LF;
     return false;
   }
-  IByteReaderWithPosition *stream= file.GetInputStream ();
+  IByteReaderWithPosition* stream= file.GetInputStream ();
   DoubleAndDoublePair      dim   = pngHandler.ReadImageDimensions (stream);
   double                   iw= dim.first, ih= dim.second;
 
   stream->SetPosition (0);
-  PDFFormXObject *formXObject= pdfw.CreateFormXObjectFromPNGStream (stream);
-  if ((void *) formXObject == NULL) {
+  PDFFormXObject* formXObject= pdfw.CreateFormXObjectFromPNGStream (stream);
+  if ((void*) formXObject == NULL) {
     convert_error << "pdf_hummus, failed to create Form from PNG stream" << LF;
     return false;
   }
-  PDFFormXObject *xobjectForm=
+  PDFFormXObject* xobjectForm=
       pdfw.StartFormXObject (PDFRectangle (0, 0, w, h), id);
-  XObjectContentContext *xobjectContentContext=
+  XObjectContentContext* xobjectContentContext=
       xobjectForm->GetContentContext ();
   xobjectContentContext->q ();
   xobjectContentContext->cm (w / iw, 0, 0, h / ih, 0, 0);
@@ -2156,7 +2155,7 @@ pdf_hummus_renderer_rep::draw_picture (picture p, SI x, SI y, int alpha) {
     // As an improvement one could handle native pictures without conversions
 #ifdef QTTEXMACS
     picture         q   = pdf_raster_picture (p);
-    qt_picture_rep *pict= (qt_picture_rep *) q->get_handle ();
+    qt_picture_rep* pict= (qt_picture_rep*) q->get_handle ();
     temp                = url_temp (".png");
     pict->pict.save (utf8_to_qstring (concretize (temp)), "PNG");
     temp_images << temp;
@@ -2250,7 +2249,7 @@ static PDFTextString
 utf8_as_hummus_string (string s) {
   c_string      u (s);
   PDFTextString r;
-  std::string   stds ((char *) u);
+  std::string   stds ((char*) u);
   return r.FromUTF8 (stds);
 }
 
@@ -2260,10 +2259,10 @@ utf8_as_hummus_string (string s) {
 
 PDFHummus::EStatusCode
 pdf_hummus_renderer_rep::on_catalog_write (
-    CatalogInformation         *inCatalogInformation,
-    DictionaryContext          *inCatalogDictionaryContext,
-    ObjectsContext             *inPDFWriterObjectContext,
-    PDFHummus::DocumentContext *inDocumentContext) {
+    CatalogInformation*         inCatalogInformation,
+    DictionaryContext*          inCatalogDictionaryContext,
+    ObjectsContext*             inPDFWriterObjectContext,
+    PDFHummus::DocumentContext* inDocumentContext) {
   (void) inCatalogInformation;
   (void) inPDFWriterObjectContext;
   (void) inDocumentContext;
@@ -2352,7 +2351,7 @@ pdf_hummus_renderer_rep::flush_dests () {
   dict << ">>\r\n";
   {
     // flush the buffer
-    ObjectsContext &objectsContext= pdfWriter.GetObjectsContext ();
+    ObjectsContext& objectsContext= pdfWriter.GetObjectsContext ();
     destId= objectsContext.GetInDirectObjectsRegistry ().AllocateNewObjectID ();
     write_indirect_obj (objectsContext, destId, dict);
   }
@@ -2380,10 +2379,10 @@ pdf_hummus_renderer_rep::toc_entry (string kind, string title, SI x, SI y) {
 }
 
 void
-pdf_hummus_renderer_rep::recurse (ObjectsContext &objectsContext, int parent_ls,
-                                  list<outline_data> &it, ObjectIDType parentId,
-                                  ObjectIDType &firstId, ObjectIDType &lastId,
-                                  int &count) {
+pdf_hummus_renderer_rep::recurse (ObjectsContext& objectsContext, int parent_ls,
+                                  list<outline_data>& it, ObjectIDType parentId,
+                                  ObjectIDType& firstId, ObjectIDType& lastId,
+                                  int& count) {
   // weave the tangle of forward/backward references
   // are recurse over substructures
 
@@ -2448,7 +2447,7 @@ void
 pdf_hummus_renderer_rep::flush_outlines () {
   if (is_nil (outlines)) return;
 
-  ObjectsContext    &objectsContext= pdfWriter.GetObjectsContext ();
+  ObjectsContext&    objectsContext= pdfWriter.GetObjectsContext ();
   ObjectIDType       firstId= 0, lastId= 0;
   int                count= 0;
   list<outline_data> it   = outlines;
@@ -2481,9 +2480,9 @@ pdf_hummus_renderer_rep::set_metadata (string kind, string val) {
 void
 pdf_hummus_renderer_rep::flush_metadata () {
   if (N (metadata) == 0) return;
-  DocumentContext    &documentContext= pdfWriter.GetDocumentContext ();
-  TrailerInformation &trailerInfo    = documentContext.GetTrailerInformation ();
-  InfoDictionary     &info           = trailerInfo.GetInfo ();
+  DocumentContext&    documentContext= pdfWriter.GetDocumentContext ();
+  TrailerInformation& trailerInfo    = documentContext.GetTrailerInformation ();
+  InfoDictionary&     info           = trailerInfo.GetInfo ();
   if (metadata->contains ("title"))
     info.Title= utf8_as_hummus_string (metadata["title"]);
   if (metadata->contains ("author"))
@@ -2517,13 +2516,13 @@ pdf_hummus_renderer_rep::fetch (SI x1, SI y1, SI x2, SI y2, renderer ren, SI x,
 }
 
 void
-pdf_hummus_renderer_rep::new_shadow (renderer &ren) {
+pdf_hummus_renderer_rep::new_shadow (renderer& ren) {
   // debug_convert << "new_shadow\n";
   (void) ren;
 }
 
 void
-pdf_hummus_renderer_rep::delete_shadow (renderer &ren) {
+pdf_hummus_renderer_rep::delete_shadow (renderer& ren) {
   // debug_convert << "delete_shadow\n";
   (void) ren;
 }
@@ -2558,7 +2557,7 @@ pdf_hummus_renderer_rep::apply_shadow (SI x1, SI y1, SI x2, SI y2) {
 }
 
 renderer
-pdf_hummus_renderer_rep::shadow (picture &pic, SI x1, SI y1, SI x2, SI y2) {
+pdf_hummus_renderer_rep::shadow (picture& pic, SI x1, SI y1, SI x2, SI y2) {
   double old_zoomf= this->zoomf;
   set_zoom_factor (5.0 * PICTURE_ZOOM);
   renderer ren= renderer_rep::shadow (pic, x1, y1, x2, y2);

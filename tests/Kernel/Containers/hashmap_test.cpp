@@ -85,7 +85,7 @@ TestHashmap::test_generate () {
  ******************************************************************************/
 void
 TestHashmap::test_contains () {
-  auto hm= hashmap<int, void *> (nullptr, 2, 2);
+  auto hm= hashmap<int, void*> (nullptr, 2, 2);
   hm (1) = nullptr;
   QCOMPARE (hm->contains (1), true);
   QCOMPARE (hm->contains (3), false);
@@ -258,10 +258,10 @@ TestHashmap::test_invert () {
  ******************************************************************************/
 void
 TestHashmap::test_size () {
-  auto empty_hm= hashmap<int, void *> ();
+  auto empty_hm= hashmap<int, void*> ();
   QCOMPARE (N (empty_hm) == 0, true);
 
-  auto non_empty_hm= hashmap<int, void *> ();
+  auto non_empty_hm= hashmap<int, void*> ();
   non_empty_hm (1) = nullptr;
   QCOMPARE (N (non_empty_hm) == 1, true);
 }

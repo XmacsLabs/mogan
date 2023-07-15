@@ -225,7 +225,7 @@ linearly_dependent (point p1, point p2, point p3) {
 }
 
 bool
-orthogonalize (point &i, point &j, point p1, point p2, point p3) {
+orthogonalize (point& i, point& j, point p1, point p2, point p3) {
   if (linearly_dependent (p1, p2, p3)) return false;
   i= (p2 - p1) / norm (p2 - p1);
   j= (p3 - p1) - inner (p3 - p1, i) * i;

@@ -22,7 +22,7 @@
 typedef s7_pointer tmscm;
 
 // the global scheme interpreter state
-extern s7_scheme *tm_s7;
+extern s7_scheme* tm_s7;
 
 bool     tmscm_is_blackbox (tmscm obj);
 tmscm    blackbox_to_tmscm (blackbox b);
@@ -173,13 +173,13 @@ tmscm call_scheme (tmscm fun, array<tmscm> a);
 
 template <tmscm (*PROC) ()>
 static tmscm
-proc (s7_scheme *, tmscm) {
+proc (s7_scheme*, tmscm) {
   tmscm res= PROC ();
   return (res);
 }
 template <tmscm (*PROC) (tmscm)>
 static tmscm
-proc (s7_scheme *, tmscm args) {
+proc (s7_scheme*, tmscm args) {
   tmscm a1 = (tmscm_car (args));
   args     = tmscm_cdr (args);
   tmscm res= PROC (a1);
@@ -187,7 +187,7 @@ proc (s7_scheme *, tmscm args) {
 }
 template <tmscm (*PROC) (tmscm, tmscm)>
 static tmscm
-proc (s7_scheme *, tmscm args) {
+proc (s7_scheme*, tmscm args) {
   tmscm a1 = (tmscm_car (args));
   args     = tmscm_cdr (args);
   tmscm a2 = (tmscm_car (args));
@@ -197,7 +197,7 @@ proc (s7_scheme *, tmscm args) {
 }
 template <tmscm (*PROC) (tmscm, tmscm, tmscm)>
 static tmscm
-proc (s7_scheme *, tmscm args) {
+proc (s7_scheme*, tmscm args) {
   tmscm a1 = (tmscm_car (args));
   args     = tmscm_cdr (args);
   tmscm a2 = (tmscm_car (args));
@@ -209,7 +209,7 @@ proc (s7_scheme *, tmscm args) {
 }
 template <tmscm (*PROC) (tmscm, tmscm, tmscm, tmscm)>
 static tmscm
-proc (s7_scheme *, tmscm args) {
+proc (s7_scheme*, tmscm args) {
   tmscm a1 = (tmscm_car (args));
   args     = tmscm_cdr (args);
   tmscm a2 = (tmscm_car (args));
@@ -223,7 +223,7 @@ proc (s7_scheme *, tmscm args) {
 }
 template <tmscm (*PROC) (tmscm, tmscm, tmscm, tmscm, tmscm)>
 static tmscm
-proc (s7_scheme *, tmscm args) {
+proc (s7_scheme*, tmscm args) {
   tmscm a1 = (tmscm_car (args));
   args     = tmscm_cdr (args);
   tmscm a2 = (tmscm_car (args));
@@ -240,7 +240,7 @@ proc (s7_scheme *, tmscm args) {
 
 template <tmscm (*PROC) (tmscm, tmscm, tmscm, tmscm, tmscm, tmscm)>
 static tmscm
-proc (s7_scheme *, tmscm args) {
+proc (s7_scheme*, tmscm args) {
   tmscm a1 = (tmscm_car (args));
   args     = tmscm_cdr (args);
   tmscm a2 = (tmscm_car (args));
@@ -259,7 +259,7 @@ proc (s7_scheme *, tmscm args) {
 
 template <tmscm (*PROC) (tmscm, tmscm, tmscm, tmscm, tmscm, tmscm, tmscm)>
 static tmscm
-proc (s7_scheme *, tmscm args) {
+proc (s7_scheme*, tmscm args) {
   tmscm a1 = (tmscm_car (args));
   args     = tmscm_cdr (args);
   tmscm a2 = (tmscm_car (args));
@@ -281,7 +281,7 @@ proc (s7_scheme *, tmscm args) {
 template <tmscm (*PROC) (tmscm, tmscm, tmscm, tmscm, tmscm, tmscm, tmscm,
                          tmscm)>
 static tmscm
-proc (s7_scheme *, tmscm args) {
+proc (s7_scheme*, tmscm args) {
   tmscm a1 = (tmscm_car (args));
   args     = tmscm_cdr (args);
   tmscm a2 = (tmscm_car (args));
@@ -305,7 +305,7 @@ proc (s7_scheme *, tmscm args) {
 template <tmscm (*PROC) (tmscm, tmscm, tmscm, tmscm, tmscm, tmscm, tmscm, tmscm,
                          tmscm)>
 static tmscm
-proc (s7_scheme *, tmscm args) {
+proc (s7_scheme*, tmscm args) {
   tmscm a1 = (tmscm_car (args));
   args     = tmscm_cdr (args);
   tmscm a2 = (tmscm_car (args));
@@ -331,7 +331,7 @@ proc (s7_scheme *, tmscm args) {
 template <tmscm (*PROC) (tmscm, tmscm, tmscm, tmscm, tmscm, tmscm, tmscm, tmscm,
                          tmscm, tmscm)>
 static tmscm
-proc (s7_scheme *, tmscm args) {
+proc (s7_scheme*, tmscm args) {
   tmscm a1 = (tmscm_car (args));
   args     = tmscm_cdr (args);
   tmscm a2 = (tmscm_car (args));
