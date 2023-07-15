@@ -21,7 +21,7 @@
     </cell>>>>
   </wide-tabular>
 
-  <section|v1.2.0-alpha12>
+  <section|v1.2.0-alpha13>
 
   <\wide-tabular>
     <tformat|<cwith|1|1|1|1|cell-valign|B>|<table|<row|<\cell>
@@ -36,6 +36,54 @@
       Darcy
     </cell>|<\cell>
       xmake integration for packaging on Ubuntu/Windows/macOS
+    </cell>>|<row|<\cell>
+      <dlink|23>
+    </cell>|<\cell>
+      Oyyko
+    </cell>|<\cell>
+      Mogan Draw optimization \ (OSPP)
+    </cell>>|<row|<\cell>
+      <dlink|25>
+    </cell>|<\cell>
+      Pluto
+    </cell>|<\cell>
+      Add CI on Gitee
+    </cell>>>>
+  </wide-tabular>
+
+  <section|v1.2.0-alpha12>
+
+  <\wide-tabular>
+    <tformat|<cwith|3|3|1|1|cell-valign|B>|<table|<row|<\cell>
+      <dlink|2>
+    </cell>|<\cell>
+      jinkaimori
+    </cell>|<\cell>
+      S7 Scheme Integration
+    </cell>>|<row|<\cell>
+      <dlink|3>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Initial xmake support
+    </cell>>|<row|<\cell>
+      <dlink|5>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Documentation in markdown format for users and developers
+    </cell>>|<row|<\cell>
+      <dlink|8>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      xmake integration for packaging on Ubuntu/Windows/macOS
+    </cell>>|<row|<\cell>
+      <dlink|16>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Code formatting and static checking
     </cell>>|<row|<\cell>
       <dlink|20>
     </cell>|<\cell>
@@ -54,6 +102,12 @@
       Oyyko
     </cell>|<\cell>
       Mogan Draw optimization \ (OSPP)
+    </cell>>|<row|<\cell>
+      <dlink|25>
+    </cell>|<\cell>
+      Pluto
+    </cell>|<\cell>
+      Add CI on Gitee
     </cell>>>>
   </wide-tabular>
 
@@ -155,7 +209,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Natual language related issues
+      Natural language related issues
     </cell>>|<row|<\cell>
       <dlink|20>
     </cell>|<\cell>
