@@ -29,8 +29,8 @@ struct grid_box_rep : public box_rep {
   array<box> bs;
   SI         un;
   grid_box_rep (path ip, grid g, frame f, SI un, point lim1, point lim2);
-  void display (renderer ren);
-  operator tree () { return (tree) g; }
+  void          display (renderer ren);
+                operator tree () { return (tree) g; }
   path          find_lip () { return path (-1); }
   path          find_rip () { return path (-1); }
   gr_selections graphical_select (SI x, SI y, SI dist);

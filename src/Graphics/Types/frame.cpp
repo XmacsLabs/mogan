@@ -17,7 +17,7 @@
  ******************************************************************************/
 
 void
-frame::enclose (double &x1, double &y1, double &x2, double &y2, point p1,
+frame::enclose (double& x1, double& y1, double& x2, double& y2, point p1,
                 point p2, bool direct) {
   int n= 1;
   if (!rep->linear) n= 20;
@@ -63,15 +63,15 @@ frame::operator[] (rectangle r) {
 struct shift_2D_rep : public frame_rep {
   point d;
   shift_2D_rep (point d2) : d (d2) { linear= true; }
-  operator tree () { return tuple ("shift_2D", as_tree (d)); }
+        operator tree () { return tuple ("shift_2D", as_tree (d)); }
   point direct_transform (point p) { return p + d; }
   point inverse_transform (point p) { return p - d; }
-  point jacobian (point p, point v, bool &error) {
+  point jacobian (point p, point v, bool& error) {
     (void) p;
     error= false;
     return v;
   }
-  point jacobian_of_inverse (point p, point v, bool &error) {
+  point jacobian_of_inverse (point p, point v, bool& error) {
     (void) p;
     error= false;
     return v;
@@ -104,12 +104,12 @@ struct scaling_rep : public frame_rep {
   }
   point direct_transform (point p) { return shift + magnify * p; }
   point inverse_transform (point p) { return (p - shift) / magnify; }
-  point jacobian (point p, point v, bool &error) {
+  point jacobian (point p, point v, bool& error) {
     (void) p;
     error= false;
     return magnify * v;
   }
-  point jacobian_of_inverse (point p, point v, bool &error) {
+  point jacobian_of_inverse (point p, point v, bool& error) {
     (void) p;
     error= false;
     return v / magnify;
@@ -138,12 +138,12 @@ struct an_scaling_rep : public frame_rep {
   }
   point direct_transform (point p) { return shift + magnify * p; }
   point inverse_transform (point p) { return (p - shift) / magnify; }
-  point jacobian (point p, point v, bool &error) {
+  point jacobian (point p, point v, bool& error) {
     (void) p;
     error= false;
     return magnify * v;
   }
-  point jacobian_of_inverse (point p, point v, bool &error) {
+  point jacobian_of_inverse (point p, point v, bool& error) {
     (void) p;
     error= false;
     return v / magnify;
@@ -176,12 +176,12 @@ struct rotation_2D_rep : public frame_rep {
   }
   point direct_transform (point p) { return rotate_2D (p, center, angle); }
   point inverse_transform (point p) { return rotate_2D (p, center, -angle); }
-  point jacobian (point p, point v, bool &error) {
+  point jacobian (point p, point v, bool& error) {
     (void) p;
     error= false;
     return rotate_2D (v, point (0.0, 0.0), angle);
   }
-  point jacobian_of_inverse (point p, point v, bool &error) {
+  point jacobian_of_inverse (point p, point v, bool& error) {
     (void) p;
     error= false;
     return rotate_2D (v, point (0.0, 0.0), -angle);
@@ -218,12 +218,12 @@ struct slanting_rep : public frame_rep {
   point inverse_transform (point p) {
     return slanted (p - center, -slant) + center;
   }
-  point jacobian (point p, point v, bool &error) {
+  point jacobian (point p, point v, bool& error) {
     (void) p;
     error= false;
     return slanted (v, slant);
   }
-  point jacobian_of_inverse (point p, point v, bool &error) {
+  point jacobian_of_inverse (point p, point v, bool& error) {
     (void) p;
     error= false;
     return slanted (v, slant);
@@ -250,15 +250,15 @@ slanting (point center, double slant) {
 struct linear_2D_rep : public frame_rep {
   matrix<double> m, u;
   linear_2D_rep (matrix<double> m2) : m (m2), u (invert (m)) { linear= true; }
-  operator tree () { return tuple ("linear_2D", as_tree (m)); }
+        operator tree () { return tuple ("linear_2D", as_tree (m)); }
   point direct_transform (point p) { return m * p; }
   point inverse_transform (point p) { return u * p; }
-  point jacobian (point p, point v, bool &error) {
+  point jacobian (point p, point v, bool& error) {
     (void) p;
     error= false;
     return m * v;
   }
-  point jacobian_of_inverse (point p, point v, bool &error) {
+  point jacobian_of_inverse (point p, point v, bool& error) {
     (void) p;
     error= false;
     return u * v;
@@ -290,7 +290,7 @@ struct affine_2D_rep : public frame_rep {
   }
   // FIXME: Do we use "linear" in such a
   //   weakest sense for affine transforms ?
-  operator tree () { return tuple ("affine_2D", as_tree (m)); }
+        operator tree () { return tuple ("affine_2D", as_tree (m)); }
   point direct_transform (point p) {
     point q= point (3), r;
     q[0]   = p[0];
@@ -303,12 +303,12 @@ struct affine_2D_rep : public frame_rep {
     FAILED ("not yet implemented");
     return p;
   }
-  point jacobian (point p, point v, bool &error) {
+  point jacobian (point p, point v, bool& error) {
     (void) p;
     error= false;
     return j * v;
   }
-  point jacobian_of_inverse (point p, point v, bool &error) {
+  point jacobian_of_inverse (point p, point v, bool& error) {
     (void) p;
     (void) v;
     (void) error;
@@ -337,17 +337,17 @@ affine_2D (matrix<double> m) {
 struct bend_frame_rep : public frame_rep {
   double (*fun) (double);
   bend_frame_rep (double (*fun2) (double)) : fun (fun2) {}
-  operator tree () { return tuple ("bend"); }
+        operator tree () { return tuple ("bend"); }
   point direct_transform (point p) { return point (p[0], p[1] + fun (p[0])); }
   point inverse_transform (point p) { return point (p[0], p[1] - fun (p[0])); }
-  point jacobian (point p, point v, bool &error) {
+  point jacobian (point p, point v, bool& error) {
     (void) p;
     (void) v;
     (void) error;
     FAILED ("not yet implemented");
     return p;
   }
-  point jacobian_of_inverse (point p, point v, bool &error) {
+  point jacobian_of_inverse (point p, point v, bool& error) {
     (void) p;
     (void) v;
     (void) error;
@@ -386,17 +386,17 @@ struct compound_frame_rep : public frame_rep {
   compound_frame_rep (frame f1b, frame f2b) : f1 (f1b), f2 (f2b) {
     linear= f1->linear && f2->linear;
   }
-  operator tree () { return tuple ("compound", (tree) f1, (tree) f2); }
+        operator tree () { return tuple ("compound", (tree) f1, (tree) f2); }
   point direct_transform (point p) { return f1 (f2 (p)); }
   point inverse_transform (point p) { return f2[f1[p]]; }
-  point jacobian (point p, point v, bool &error) {
+  point jacobian (point p, point v, bool& error) {
     bool  error2;
     point w2= f2->jacobian (p, v, error2);
     point w1= f1->jacobian (f2 (p), w2, error);
     error|= error2;
     return w1;
   }
-  point jacobian_of_inverse (point p, point v, bool &error) {
+  point jacobian_of_inverse (point p, point v, bool& error) {
     (void) p;
     (void) v;
     (void) error;
@@ -423,13 +423,13 @@ operator* (frame f1, frame f2) {
 struct inverted_frame_rep : public frame_rep {
   frame f;
   inverted_frame_rep (frame f2) : f (f2) { linear= f->linear; }
-  operator tree () { return tuple ("inverse", (tree) f); }
+        operator tree () { return tuple ("inverse", (tree) f); }
   point direct_transform (point p) { return f[p]; }
   point inverse_transform (point p) { return f (p); }
-  point jacobian (point p, point v, bool &error) {
+  point jacobian (point p, point v, bool& error) {
     return f->jacobian_of_inverse (p, v, error);
   }
-  point jacobian_of_inverse (point p, point v, bool &error) {
+  point jacobian_of_inverse (point p, point v, bool& error) {
     return f->jacobian (p, v, error);
   }
   double direct_bound (point p, double eps) {

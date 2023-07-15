@@ -18,15 +18,15 @@
 static std::string readBuffer;
 
 static size_t
-write_data (void *contents, size_t size, size_t nmemb, void *userp) {
-  ((std::string *) userp)->append ((char *) contents, size * nmemb);
+write_data (void* contents, size_t size, size_t nmemb, void* userp) {
+  ((std::string*) userp)->append ((char*) contents, size * nmemb);
   return size * nmemb;
 }
 
 string
 curl_get (string source, string user_agent) {
   std::string readBuffer;
-  CURL       *curl= curl_easy_init ();
+  CURL*       curl= curl_easy_init ();
 
   if (curl) {
     string url;

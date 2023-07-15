@@ -51,7 +51,7 @@ is_spc (char c) {
 }
 
 static scheme_tree
-string_to_scheme_tree (string s, int &i) {
+string_to_scheme_tree (string s, int& i) {
   for (; i < N (s); i++)
     switch (s[i]) {
 
@@ -172,7 +172,7 @@ slash (string s) {
  ******************************************************************************/
 
 static void
-scheme_tree_to_string (string &out, scheme_tree p) {
+scheme_tree_to_string (string& out, scheme_tree p) {
   if (!is_tuple (p)) {
     string s= p->label;
     if (is_quoted (s)) out << scm_quote (raw_unquote (s));
