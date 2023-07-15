@@ -66,15 +66,23 @@ jobs:
 
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
+        env:
+          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
       - name: build
         run: xmake build --yes --verbose --diagnosis --all
+        env:
+          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
       - name: test
         run: bin/test_all
         env:
           QT_QPA_PLATFORM: offscreen
+          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
       - name: install
         run: xmake install mogan
+        env:
+          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
       - name: integration test
         run: xmake run --yes -vD --group=integration_tests
         env:
           QT_QPA_PLATFORM: offscreen
+          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
