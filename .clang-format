@@ -9,3 +9,4 @@ AllowShortFunctionsOnASingleLine: All
 BreakBeforeBraces: Custom
 BraceWrapping:
   BeforeElse: true
+PointerAlignment: Left

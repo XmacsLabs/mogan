@@ -22,13 +22,13 @@
 #include "tree.hpp"
 
 tree
-var_apply (tree &t, modification m) {
+var_apply (tree& t, modification m) {
   apply (t, copy (m));
   return t;
 }
 
 tree
-var_clean_apply (tree &t, modification m) {
+var_clean_apply (tree& t, modification m) {
   return clean_apply (t, copy (m));
 }
 
@@ -43,7 +43,7 @@ var_clean_apply (tree t, patch p) {
 }
 
 tree
-var_apply (tree &t, patch p) {
+var_apply (tree& t, patch p) {
   apply (copy (p), t);
   return t;
 }

@@ -376,7 +376,7 @@ bezier_fit (array<point> a, double eps, double advance) {
  ******************************************************************************/
 
 void
-rectify_bezier (array<point> &r, array<point> bez, double t0, double t1,
+rectify_bezier (array<point>& r, array<point> bez, double t0, double t1,
                 double eps) {
   array<point> pbez= project2 (bez);
   point        p0  = eval_bezier (pbez, t0);
