@@ -65,7 +65,7 @@ jobs:
           key: ${{ runner.os }}-xmake-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
 
       - name: config
-        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
+        run: xmake config --policies=build.ccache -m releasedbg --yes
       - name: build
         run: xmake build --yes --verbose --diagnosis --all
       - name: test
