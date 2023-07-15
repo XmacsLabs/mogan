@@ -412,8 +412,9 @@ if is_plat("mingw") then
 elseif is_plat("macosx") then 
     INSTALL_DIR = path.join("$(buildir)", "macosx/$(arch)/$(mode)/Mogan.app/Contents/Resources/")
 else 
-    INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/")
+    INSTALL_DIR = os.getenv("INSTALL_DIR", path.join("$(buildir)", "packages/app.mogan/"))
 end
+print("INSTALL_DIR is "..INSTALL_DIR)
 
 local DEVEL_VERSION = TEXMACS_VERSION
 local DEVEL_RELEASE = 1
@@ -867,11 +868,11 @@ target("mogan") do
         on_run(function (target)
             name = target:name()
             if is_plat("mingw") then
-                os.execv(INSTALL_DIR.."/bin/mogan.exe")
+                os.execv(target:installdir().."/bin/mogan.exe")
             elseif is_plat("linux") then
-                os.execv(INSTALL_DIR.."/bin/mogan")
+                os.execv(target:installdir().."/bin/mogan")
             else
-                os.execv(INSTALL_DIR.."/../MacOS/Mogan")
+                os.execv(target:installdir().."/../MacOS/Mogan")
             end
         end)
 end
@@ -973,11 +974,11 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
             name = target:name()
             params = {"-headless", "-b", "TeXmacs/tests/"..name..".scm", "-x", "(test_"..name..")", "-q"}
             if is_plat("macosx") then
-                os.execv(INSTALL_DIR.."/../MacOS/Mogan", params)
+                os.execv(target:installdir().."/../MacOS/Mogan", params)
             elseif is_plat("mingw") then
-                os.execv(INSTALL_DIR.."/bin/mogan.exe", params)
+                os.execv(target:installdir().."/bin/mogan.exe", params)
             else
-                os.execv(INSTALL_DIR.."/bin/mogan", params)
+                os.execv(target:installdir().."/bin/mogan", params)
             end
         end)
     end

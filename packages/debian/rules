@@ -19,4 +19,4 @@ override_dh_auto_build:
 	xmake build --yes --verbose --diagnosis --jobs=8 --all --root
 
 override_dh_auto_install:
-	xmake install --root -o debian/mogan/usr mogan
+	xmake install --root mogan
