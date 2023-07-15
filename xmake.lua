@@ -414,7 +414,6 @@ elseif is_plat("macosx") then
 else 
     INSTALL_DIR = os.getenv("INSTALL_DIR", path.join("$(buildir)", "packages/app.mogan/"))
 end
-print("INSTALL_DIR is "..INSTALL_DIR)
 
 local DEVEL_VERSION = TEXMACS_VERSION
 local DEVEL_RELEASE = 1
