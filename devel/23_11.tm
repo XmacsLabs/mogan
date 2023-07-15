@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|chinese>>
+<style|<tuple|tmdoc|chinese|devel>>
 
 <\body>
   <tmdoc-title|When pasting an object, it is necessary to keep a certain

@@ -8,7 +8,7 @@
   This is a project about the drawing function of the Mogan Editor. It is
   also a project for the OpenSource Summer of Code.
 
-  <section|Target>
+  <section|Goal>
 
   The main goal of this project is to improve the built-in tools for making
   technical graphics to be friendly enough for most users. User-friendliness
@@ -19,7 +19,7 @@
 
   <\quotation>
     Imagine that you are a teacher in a junior high school teaching Euclid's
-    Elements, and you are using Mogan Editor/GNU TeXmacs to prepare the
+    Elements, and you are using Mogan Editor/GNU <TeXmacs> to prepare the
     slides. You should be able to re-draw the figures in Euclid's Element via
     Mogan Draw in an easy way (straight-forward and no need to remember any
     tricks) and can persuade your colleagues to use Mogan Draw.
@@ -30,18 +30,19 @@
 
   <section|Why>
 
-  Due to the fact that<nbsp>Mogan Editor<nbsp>targets a user base that
-  includes primary and secondary school teachers, and<nbsp>drawing
-  functions<nbsp>are commonly used by them, we need to optimize the product
-  to improve user experience.
+  Due to the fact that Mogan Editor<nbsp>targets a user base that includes
+  primary and secondary school teachers, and<nbsp>drawing functions<nbsp>are
+  commonly used by them, we need to optimize the product to improve user
+  experience.
 
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|2|2|4|4|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|2|2|4|4|cell-valign|b>|<cwith|7|7|2|2|cell-background|pastel
+    green>|<cwith|11|11|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Feature
     </cell>|<\cell>
-      23_1
+      <dlink|23_1>
     </cell>|<\cell>
       Oyyko
     </cell>|<\cell>
@@ -82,7 +83,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      23_6
+      <dlink|23_6>
     </cell>|<\cell>
       Oyyko
     </cell>|<\cell>
@@ -90,7 +91,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      23_7
+      <dlink|23_7>
     </cell>|<\cell>
       Oyyko
     </cell>|<\cell>
@@ -125,7 +126,7 @@
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
-      23_11
+      <dlink|23_11>
     </cell>|<\cell>
       Oyyko
     </cell>|<\cell>
@@ -152,7 +153,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      23_14
+      <dlink|23_14>
     </cell>|<\cell>
       Oyyko
     </cell>|<\cell>
@@ -161,7 +162,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      23_15
+      <dlink|23_15>
     </cell>|<\cell>
       Oyyko
     </cell>|<\cell>
