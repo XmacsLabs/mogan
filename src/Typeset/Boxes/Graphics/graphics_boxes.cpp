@@ -26,10 +26,10 @@ struct graphics_box_rep : public composite_box_rep {
   SI    old_clip_x1, old_clip_x2, old_clip_y1, old_clip_y2;
   graphics_box_rep (path ip, array<box> bs, frame f, grid g, point lim1,
                     point lim2);
-  frame         get_frame ();
-  grid          get_grid ();
-  void          get_limits (point& lim1, point& lim2);
-                operator tree () { return "graphics"; }
+  frame get_frame ();
+  grid  get_grid ();
+  void  get_limits (point& lim1, point& lim2);
+  operator tree () { return "graphics"; }
   void          pre_display (renderer& ren);
   void          post_display (renderer& ren);
   int           reindex (int i, int item, int n);
@@ -139,8 +139,8 @@ struct graphics_group_box_rep : public composite_box_rep {
       : composite_box_rep (ip, bs, true) {
     finalize ();
   }
-  bool          access_allowed () { return false; }
-                operator tree () { return "graphics_group"; }
+  bool access_allowed () { return false; }
+  operator tree () { return "graphics_group"; }
   path          find_lip () { return path (-1); }
   path          find_rip () { return path (-1); }
   gr_selections graphical_select (SI x, SI y, SI dist);
@@ -201,7 +201,7 @@ struct point_box_rep : public box_rep {
   SI graphical_distance (SI x, SI y) { return (SI) norm (p - point (x, y)); }
   gr_selections graphical_select (SI x, SI y, SI dist);
   void          display (renderer ren);
-                operator tree () { return "point"; }
+  operator tree () { return "point"; }
 };
 
 point_box_rep::point_box_rep (path ip2, point p2, SI r2, pencil pen2, brush br2,
@@ -334,10 +334,10 @@ struct curve_box_rep : public box_rep {
   gr_selections graphical_select (SI x, SI y, SI dist);
   gr_selections graphical_select (SI x1, SI y1, SI x2, SI y2);
   void          display (renderer ren);
-                operator tree () { return "curve"; }
-  SI            length ();
-  void          apply_style ();
-  void          apply_motif (array<box> arrows);
+  operator tree () { return "curve"; }
+  SI   length ();
+  void apply_style ();
+  void apply_motif (array<box> arrows);
 };
 
 curve_box_rep::curve_box_rep (path ip2, curve c2, pencil pen2,
@@ -718,7 +718,7 @@ struct spacial_box_rep : public box_rep {
   spacial obj;
   spacial_box_rep (path ip, spacial obj2);
   void display (renderer ren);
-       operator tree () { return "spacial"; }
+  operator tree () { return "spacial"; }
 };
 
 spacial_box_rep::spacial_box_rep (path ip, spacial obj2)
