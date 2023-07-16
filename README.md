@@ -47,6 +47,10 @@ Please review the [Contribution guide](https://mogan.app/guide/CONTRIBUTING.html
   <tr>
     <td align="center"><a href="https://github.com/cqyisbug"><img src="https://avatars.githubusercontent.com/u/25382172?v=4?s=50" width="50px;" alt=""/><br /><sub><b>QiyuanCai</b></sub></a><br />💻</td>
     <td align="center"><a href="https://github.com/cireu"><img src="https://avatars.githubusercontent.com/u/18224684?v=4?s=50" width="50px;" alt=""/><br /><sub><b>ZihaoZhu</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://codeberg.org/woutersj"><img src="https://codeberg.org/avatars/d3a60f144316391ac6732da3ea035ae6?size=870" width="50px;" alt=""/><br /><sub><b>woutersj</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/Oyyko"><img src="https://avatars.githubusercontent.com/u/66729335?v=4" width="50px;" alt=""/><br /><sub><b>Oyyko</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/MengXinxin1"><img src="https://avatars.githubusercontent.com/u/91298205?v=4" width="50px;" alt=""/><br /><sub><b>CharonXin</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/tangdouer1005"><img src="https://avatars.githubusercontent.com/u/92971282?v=4" width="50px;" alt=""/><br /><sub><b>Tangdouer</b></sub></a><br />💻</td>
   </tr>
 </table>
 
