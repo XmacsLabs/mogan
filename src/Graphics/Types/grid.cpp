@@ -97,7 +97,7 @@ struct empty_grid_rep : public grid_rep {
     array<grid_curve> res;
     return res;
   }
-        operator tree () { return "empty_grid"; }
+  operator tree () { return "empty_grid"; }
   point find_closest_point (point p, point pmin, point pmax);
 };
 
@@ -124,7 +124,7 @@ struct cartesian_rep : public grid_rep {
   double step; // Unit length
   cartesian_rep (array<SI> subd, array<string> col, point o, double st)
       : grid_rep (subd, col, o), step (st) {}
-                    operator tree () { return "cartesian"; }
+  operator tree () { return "cartesian"; }
   array<grid_curve> get_curves (point lim1, point lim2, bool b);
   array<grid_curve> get_curves_around (point p, double delta, frame f);
   point             find_closest_point (point p, point pmin, point pmax);
@@ -263,7 +263,7 @@ struct polar_rep : public grid_rep {
   SI     astep; // # angles
   polar_rep (array<SI> subd, array<string> col, point o, double st, SI ast)
       : grid_rep (subd, col, o), step (st), astep (ast) {}
-                    operator tree () { return "polar"; }
+  operator tree () { return "polar"; }
   array<grid_curve> get_curves (point lim1, point lim2, bool b);
   point             find_closest_point (point p, point pmin, point pmax);
 };
@@ -371,7 +371,7 @@ struct logarithmic_rep : public grid_rep {
   SI     base;
   logarithmic_rep (array<SI> subd, array<string> col, point o, double st, SI b)
       : grid_rep (subd, col, o), step (max (st, 1.0e-6)), base (b) {}
-                    operator tree () { return "logarithmic"; }
+  operator tree () { return "logarithmic"; }
   array<grid_curve> get_curves (point lim1, point lim2, bool b);
   point             find_closest_point (point p, point pmin, point pmax);
 };
