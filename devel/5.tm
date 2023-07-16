@@ -97,6 +97,14 @@
       Darcy
     </cell>|<\cell>
       OSPP 2023 Info
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_11
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      New contributors
     </cell>>>>
   </wide-tabular>
 
