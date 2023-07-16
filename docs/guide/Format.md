@@ -2,17 +2,22 @@
 ```
 elvish bin/format
 ```
-
 ## clang-format
-Pin clang-format to `15.0.7`, because the default version of `clang-format` on ubuntu is `15.0.7`.
+Pin clang-format to `16.0.x`.
 
+### macOS
+```
+brew install clang-format
+```
 ### Windows
 ```
-scoop install llvm@15.0.7
+scoop install llvm@16.0.6
 ```
 
 ### Linux
-We suggest that you should use Ubuntu 22.04.
+We need to install llvm manually on Linux.
+
+For example:
 ```
-sudo apt install clang-format-15
+xrepo install "llvm==16.0.5"
 ```
