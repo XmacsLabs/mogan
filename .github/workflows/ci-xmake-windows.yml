@@ -28,8 +28,6 @@ jobs:
     # mingw-w64 8.1.0 is installed on windows-2019
     runs-on: windows-2019
     if: always()
-    env:
-      is-package: ${{contains(github.ref, 'release') || startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'}}
     steps:
       - name: Install msys
         uses: msys2/setup-msys2@v2
@@ -93,21 +91,3 @@ jobs:
         run: xmake run --yes -vD --group=integration_tests
         env:
           QT_QPA_PLATFORM: offscreen
-      - name: Upload 
-        uses: actions/upload-artifact@v2
-        with:
-          name: mogan-windows-dev
-          path: |
-            build\packages\app.mogan\data\**
-      - name: Generate Installer
-        if: ${{ env.is-package }}
-        shell: msys2 {0}
-        run: |
-          xmake install windows_installer
-      - name: Upload Installer
-        if: ${{ env.is-package }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: mogan-windows-nightly-installer.exe
-          path: |
-            build\*.exe
