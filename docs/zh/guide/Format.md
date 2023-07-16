@@ -4,15 +4,17 @@ elvish bin/format
 ```
 
 ## clang-format
-将`clang-format`固定为`15.0.7`，因为Ubuntu 22.04里面内置的`clang-format`是`15.0.7`。
+clang-format版本需要固定为16.0.x。
 
 ### Linux
-推荐使用Ubuntu 22.04开发，这样可以直接使用apt安装
+我们需要手动安装llvm 16.
+
+### macOS
 ```
-sudo apt install clang-format-15
+brew install clang-format
 ```
 
 ### Windows
 ```
-scoop install llvm@15.0.7
+scoop install llvm@16.0.6
 ```
