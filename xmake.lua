@@ -412,7 +412,7 @@ if is_plat("mingw") then
 elseif is_plat("macosx") then 
     INSTALL_DIR = path.join("$(buildir)", "macosx/$(arch)/$(mode)/Mogan.app/Contents/Resources/")
 else 
-    INSTALL_DIR = os.getenv("INSTALL_DIR", path.join("$(buildir)", "packages/app.mogan/"))
+    INSTALL_DIR = os.getenv("INSTALL_DIR", "$(buildir)/packages/app.mogan/")
 end
 
 local DEVEL_VERSION = TEXMACS_VERSION
