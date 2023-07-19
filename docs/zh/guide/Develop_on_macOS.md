@@ -17,7 +17,7 @@ xrepo update-repo
 ### 第二步：编译
 ```
 xmake config --yes
-xmake build --yes --verbose --all
+xmake build mogan
 ```
 
 ### 第三步：测试

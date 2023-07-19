@@ -19,7 +19,7 @@ xrepo update-repo
 ### 第二步：编译
 ```
 xmake config --yes
-xmake build --yes --verbose --all
+xmake build mogan
 ```
 
 如果找不到Qt，那么在config的时候，可以手动指定，比如：
