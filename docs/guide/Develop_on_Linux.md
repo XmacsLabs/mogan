@@ -18,7 +18,7 @@ xrepo update-repo
 ### Step 2: Compile
 ``` bash
 xmake config --yes
-xmake build --yes --verbose --all
+xmake build mogan
 ```
 
 If Qt SDK is not found, we can config it manually:
