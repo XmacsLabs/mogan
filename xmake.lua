@@ -419,7 +419,6 @@ else
     end
 end
 
-print(INSTALL_DIR)
 
 local DEVEL_VERSION = TEXMACS_VERSION
 local DEVEL_RELEASE = 1
