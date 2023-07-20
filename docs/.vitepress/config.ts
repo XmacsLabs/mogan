@@ -35,13 +35,16 @@ export default {
         },
 
         socialLinks: [
-            {icon: 'github', link: 'https://github.com/XmacsLabs/mogan'}
+            { icon: 'github', link: 'https://github.com/XmacsLabs/mogan' }
         ],
 
         footer: {
             message: 'Let us enjoy exploring science and technology!',
             copyright: 'Copyright © 2022-2023 contributors of Mogan Editor'
         },
+        search: {
+            provider: 'local',
+        }
     }
 }
 
@@ -59,8 +62,8 @@ function nav() {
         {
             text: 'Language',
             items: [
-                {text: '简体中文', link: '/zh/guide/what-is-mogan'},
-                {text: 'English', link: '/guide/what-is-mogan'},
+                { text: '简体中文', link: '/zh/guide/what-is-mogan' },
+                { text: 'English', link: '/guide/what-is-mogan' },
             ]
         },
     ]
@@ -72,9 +75,9 @@ function sidebarGuide() {
             text: 'Introduction',
             collapsible: true,
             items: [
-                {text: 'What is Mogan?', link: '/guide/what-is-mogan'},
-                {text: 'Major Features', link: '/guide/Feature'},
-                {text: 'The Name', link: '/guide/Name'},
+                { text: 'What is Mogan?', link: '/guide/what-is-mogan' },
+                { text: 'Major Features', link: '/guide/Feature' },
+                { text: 'The Name', link: '/guide/Name' },
             ]
         },
         {
@@ -116,9 +119,9 @@ function sidebarGuideZh() {
             text: '简介',
             collapsible: true,
             items: [
-                {text: '墨干编辑器', link: '/zh/guide/what-is-mogan'},
-                {text: '主要功能', link: '/guide/Feature'},
-                {text: '命名', link: '/zh/guide/Name'},
+                { text: '墨干编辑器', link: '/zh/guide/what-is-mogan' },
+                { text: '主要功能', link: '/guide/Feature' },
+                { text: '命名', link: '/zh/guide/Name' },
             ]
         },
         {
