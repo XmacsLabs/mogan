@@ -10,7 +10,7 @@
 ******************************************************************************/
 
 #include "QTMWindow.hpp"
-#include "window.hpp"
+#include "tm_window.hpp"
 #include "qt_utilities.hpp"
 
 #include <QCloseEvent>
