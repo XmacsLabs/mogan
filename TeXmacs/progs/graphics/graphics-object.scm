@@ -613,7 +613,7 @@
             (graphics-remove (tree->path o) 'memoize-layer)
             (if (or (tree->path o) (tree->path (enhanced-tree->radical o)))
                 (set-car! c (tree-copy o)))))))
-  (set! sticky-point #t)
+  (set-sticky-point-true)
   (set! graphics-undo-enabled #f)
   (graphics-decorations-update))
 
@@ -640,7 +640,7 @@
                    (tree? (car (sketch-get))))
               (tree->path (car (sketch-get)))
               #f)))
-  (set! sticky-point #f)
+  (set-sticky-point-false)
   (set! graphics-undo-enabled #t)
   (if remove-undo-mark?
       (remove-undo-mark))

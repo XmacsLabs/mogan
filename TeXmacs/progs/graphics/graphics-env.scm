@@ -190,7 +190,7 @@
 (tm-define (graphics-reset-state)
   (graphics-decorations-reset)
   (set! choosing #f)
-  (set! sticky-point #f)
+  (set-sticky-point-false)
   (set! dragging-create? #f)
   (set! dragging-busy? #f)
   (set! leftclick-waiting #f)
@@ -458,7 +458,7 @@
           (if (and (not graphics-undo-enabled) sticky-point)
               (graphics-decorations-reset))
           (set! choosing #f)
-          (set! sticky-point #f)
+          (set-sticky-point-false)
           (set! dragging-create? #f)
           (set! dragging-busy? #f)
           (set! current-point-no #f)
@@ -472,3 +472,15 @@
           (invalidate-graphical-object)))
     (graphics-group-start))
    (else (display* "Uncaptured reset-context " cmd "\n"))))
+
+
+;; helper functions
+(tm-define (set-sticky-point-true)
+  (if (== (graphics-mode) '(group-edit move))
+    (set-cursor-style "closehand"))
+  (set! sticky-point #t))
+
+(tm-define (set-sticky-point-false)
+  (if (== (graphics-mode) '(group-edit move))
+    (set-cursor-style "openhand"))
+  (set! sticky-point #f))

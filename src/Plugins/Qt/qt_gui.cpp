@@ -407,14 +407,6 @@ qt_gui_rep::clear_selection (string key) {
   if (owns) cb->clear (mode);
 }
 
-/******************************************************************************
- * Miscellaneous
- ******************************************************************************/
-
-void qt_gui_rep::set_mouse_pointer (string curs_name, string mask_name){
-  cout<<"SET_MOUSE_POINTER!\n";
-}
-
 
 /******************************************************************************
  * Main loop
