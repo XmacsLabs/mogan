@@ -187,9 +187,35 @@
             (if (graphics-states-void?)
                 (graphics-push-state st))))))
 
+(tm-define (graphics-init-state)
+  (graphics-decorations-reset)
+  (set! choosing #f)
+  (set! sticky-point #f)
+  (set! dragging-create? #f)
+  (set! dragging-busy? #f)
+  (set! leftclick-waiting #f)
+  (set! current-obj #f)
+  (set! current-point-no #f)
+  (set! current-edge-sel? #f)
+  (set! current-selection #f)
+  (set! previous-selection #f)
+  (set! subsel-no #f)
+  (set! current-x #f)
+  (set! current-y #f)
+  (set! graphics-undo-enabled #t)
+  (set! remove-undo-mark? #f)
+  (set! the-sketch '())
+  (set! selecting-x0 #f)
+  (set! selecting-y0 #f)
+  (set! multiselecting #f)
+  (set! preselected #f)
+  (set! current-path #f)
+  (set! layer-of-last-removed-object #f))
+
 (tm-define (graphics-reset-state)
   (graphics-decorations-reset)
   (set! choosing #f)
+  (display* "AAA\n")
   (set-sticky-point-false)
   (set! dragging-create? #f)
   (set! dragging-busy? #f)
@@ -413,7 +439,7 @@
    ((and (in? cmd '(begin exit)) (or (== cmd 'begin) (not sticky-point)))
    ; FIXME : when we move the cursor from one <graphics> to another,
    ;   we are not called, whereas it should be the case.
-    (graphics-reset-state)
+    (graphics-init-state)
     (graphics-forget-states)
     (with p (graphics-active-path)
        (if p
@@ -432,7 +458,7 @@
               (with p (cursor-path)
                 (unredoable-undo) ;; FIXME: Should rely on remove-undo-mark?
                 (go-to p)))))
-    (graphics-reset-state)
+    (graphics-init-state)
     (graphics-forget-states))
    ((== cmd 'undo)
     (if (and sticky-point (not graphics-undo-enabled)
@@ -476,11 +502,11 @@
 
 ;; helper functions
 (tm-define (set-sticky-point-true)
-  (if (== (graphics-mode) '(group-edit move))
-    (set-cursor-style "closehand"))
+  (if (== (graphics-get-property "gr-mode") '(tuple "group-edit" "move"))
+    (begin(set-cursor-style "closehand")(display* "FUCK\n")))
   (set! sticky-point #t))
 
 (tm-define (set-sticky-point-false)
-  (if (== (graphics-mode) '(group-edit move))
+  (if (== (graphics-get-property "gr-mode") '(tuple "group-edit" "move"))
     (set-cursor-style "openhand"))
   (set! sticky-point #f))
