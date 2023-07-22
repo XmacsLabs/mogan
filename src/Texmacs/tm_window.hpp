@@ -115,4 +115,18 @@ void windows_delayed_refresh (int ms);
 void windows_refresh (string kind= "auto");
 path window_search (url name);
 
+
+void windows_delayed_refresh (int ms);
+  // Refresh all windows after ms milliseconds
+
+void notify_window_move (string name, SI x, SI y);
+  // Call this routine when the window 'name' moved to (x, y)
+void notify_window_resize (string name, SI w, SI h);
+  // Call this routine when the window 'name' is resized to width w and height h
+void notify_window_destroy (string name);
+  // Call this routine when the window 'name' is destroyed
+
+void get_preferred_position (string name, SI& xx, SI& yy);
+void get_preferred_size (string name, SI& ww, SI& hh);
+
 #endif // defined TM_WINDOW_H
