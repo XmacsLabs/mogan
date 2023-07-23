@@ -502,7 +502,7 @@
 ;; helper functions
 (tm-define (set-sticky-point-true)
   (if (== (graphics-get-property "gr-mode") '(tuple "group-edit" "move"))
-    (begin(set-cursor-style "closehand")(display* "FUCK\n")))
+    (set-cursor-style "closehand"))
   (set! sticky-point #t))
 
 (tm-define (set-sticky-point-false)
