@@ -215,7 +215,6 @@
 (tm-define (graphics-reset-state)
   (graphics-decorations-reset)
   (set! choosing #f)
-  (display* "AAA\n")
   (set-sticky-point-false)
   (set! dragging-create? #f)
   (set! dragging-busy? #f)
