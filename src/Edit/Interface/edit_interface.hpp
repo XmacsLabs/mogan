@@ -196,6 +196,7 @@ public:
   array<SI> get_mouse_position ();
   void set_pointer (string name);
   void set_pointer (string curs_name, string mask_name);
+  void set_cursor_style (string style_name);
   void update_mouse_loci ();
   void update_focus_loci ();
 

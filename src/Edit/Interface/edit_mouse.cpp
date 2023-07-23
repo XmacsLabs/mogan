@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "edit_interface.hpp"
+#include "qapplication.h"
 #include "tm_buffer.hpp"
 #include "tm_timer.hpp"
 #include "link.hpp"
@@ -275,6 +276,17 @@ edit_interface_rep::set_pointer (
   string curs_name, string mask_name)
 {
   send_mouse_pointer (this, curs_name, mask_name);
+}
+
+void
+edit_interface_rep::set_cursor_style (string style_name){
+  QWidget* mainwindow = QApplication::activeWindow();
+  if(style_name == "openhand")
+    mainwindow->setCursor(Qt::OpenHandCursor);
+  else if(style_name == "normal" || style_name == "top_left_arrow")
+    mainwindow->setCursor(Qt::ArrowCursor);
+  else if(style_name == "closehand")
+    mainwindow->setCursor(Qt::ClosedHandCursor);
 }
 
 /******************************************************************************
