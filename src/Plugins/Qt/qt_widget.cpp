@@ -22,8 +22,7 @@
 #include "qt_printer_widget.hpp"
 
 #include "preferences.hpp"
-#include "window.hpp"
-
+#include "tm_window.hpp"
 #include <QWidget>
 #include <QWidgetItem>
 #include "QTMMenuHelper.hpp"
