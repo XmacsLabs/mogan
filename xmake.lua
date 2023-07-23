@@ -101,14 +101,14 @@ end
 
 if is_plat("mingw") then
     add_requires("nowide_standalone 11.2.0", {system=false})
+    add_requires("qt5widgets 5.15.2")
+    add_requires("qtifw 4.6.0")
 end
 
 if is_plat("linux") then
     add_requires("fontconfig", {system = true})
 end
 
-add_requires("qt5widgets 5.15.2")
-add_requires("qtifw 4.6.0")
 local PDFHUMMUS_VERSION = "4.5.6"
 add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
 add_requires("s7 2023.04.13", {system=false})
