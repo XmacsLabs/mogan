@@ -167,8 +167,6 @@ public:
   bool put_graphics_on_clipboard (url file);
 
   /* miscellaneous */
-  void set_mouse_pointer (string name);
-  void set_mouse_pointer (string curs_name, string mask_name);
   void show_wait_indicator (widget w, string message, string arg);
   void show_help_balloon (widget wid, SI x, SI y);
   void add_event (const queued_event& ev);
