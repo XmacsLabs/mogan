@@ -101,6 +101,8 @@ end
 
 if is_plat("mingw") then
     add_requires("nowide_standalone 11.2.0", {system=false})
+    add_requires("qt5widgets 5.15.2")
+    add_requires("qtifw 4.6.0")
 end
 
 if is_plat("linux") then
@@ -704,6 +706,7 @@ target("mogan") do
 
     if is_plat("mingw") then
         add_packages("nowide_standalone")
+        add_packages("qt5widgets")
     end
 
     if is_plat("mingw") and is_mode("releasedbg") then
@@ -840,18 +843,22 @@ target("mogan") do
                 import("detect.sdks.find_qt")
                 import("core.base.option")
                 import("core.project.config")
+                import("lib.detect.find_tool")
 
                 -- get qt sdk
                 local qt = assert(find_qt(), "Qt SDK not found!")
 
                 -- get windeployqt
-                local windeployqt = path.join(qt.bindir, "windeployqt.exe")
-                assert(os.isexec(windeployqt), "windeployqt.exe not found!\n if you are using msys, package mingw-w64-<arch>-qt5-translations and mingw-w64-<arch>-qt5-tools is needed!")
+                local windeployqt_tool = assert(
+                    find_tool("windeployqt", {check = "--help"}),
+                    "windeployqt.exe not found!")
+                local windeployqt = windeployqt_tool.program
                 
                 -- deploy necessary dll
                 -- since version of mingw used to build mogan may differs from
                 --   version of Qt, tell windeployqt to use lib from mingw may
-                --   break ABI compability.
+                --   break ABI compability, but major version of mingw must be
+                --   same.
                 local deploy_argv = {"--no-compiler-runtime", "-printsupport"}
                 if option.get("diagnosis") then
                     table.insert(deploy_argv, "--verbose=2")
@@ -884,6 +891,7 @@ end
 target("windows_installer") do
     set_kind("phony")
     set_enabled(is_plat("mingw"))
+    add_packages("qtifw")
     add_deps("mogan")
     set_configvar("PACKAGE_DATE", os.date("%Y-%m-%d"))
     set_configvar("XMACS_VERSION", XMACS_VERSION)
@@ -911,29 +919,14 @@ target("windows_installer") do
     end
 
     after_install(function (target, opt)
-        import("core.base.option")
         import("core.project.config")
-        import("detect.sdks.find_qt")
-        import("lib.detect.find_program")
-
-        -- get qt sdk
-        local qt = assert(find_qt(), "Qt SDK not found!")
+        import("lib.detect.find_tool")
 
         -- get binarycreator
-        local binarycreator_missing_prompt = [[
-binarycreator.exe not found!
-if you are using msys, package mingw-w64-<arch>-qt-installer-framework is needed!"
-]]
-        local binarycreator_path = find_program("binarycreator", {
-            check = "--help",
-            paths = {
-                path.join(os.getenv("IQTA_TOOLS"), "/QtInstallerFramework/4.6/bin"),
-                "$(env PATH)"}})
-        if not binarycreator_path then
-            binarycreator_path = path.translate(path.join(qt.bindir, "binarycreator.exe"))
-            assert(os.isexec(binarycreator_path), binarycreator_missing_prompt)
-        end
-        assert(binarycreator_path, binarycreator_missing_prompt)
+        local binarycreator_tool = assert(
+            find_tool("binarycreator", {check = "--help"}),
+            "binarycreator.exe not found!")
+        local binarycreator_path = binarycreator_tool.program
 
         -- generate windows package
         local buildir = config.buildir()
@@ -976,11 +969,15 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
         set_group("integration_tests")
         on_run(function (target)
             name = target:name()
-            params = {"-headless", "-b", "TeXmacs/tests/"..name..".scm", "-x", "(test_"..name..")", "-q"}
+            params = {
+                "-headless",
+                "-b", path.join("TeXmacs","tests",name..".scm"),
+                "-x", "\"(test_"..name..")\"",
+                "-q"}
             if is_plat("macosx") then
                 os.execv(INSTALL_DIR.."/../MacOS/Mogan", params)
             elseif is_plat("mingw") then
-                os.execv(INSTALL_DIR.."/bin/mogan.exe", params)
+                os.execv(path.join(INSTALL_DIR,"bin","mogan.exe"), params)
             else
                 os.execv(INSTALL_DIR.."/bin/mogan", params)
             end
