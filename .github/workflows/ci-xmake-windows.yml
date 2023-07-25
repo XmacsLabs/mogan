@@ -41,13 +41,18 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - name: cache xmake
+      - name: cache packages from xrepo
         uses: actions/cache@v2
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+          key: ${{ runner.os }}-xrepo-qt-${{ hashFiles('**/packages.lua') }}
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
             ${{ github.workspace }}/build/.build_cache
-          key: ${{ runner.os }}-xmake-qt-${{ hashFiles('**/xmake.lua') }}
+          key: ${{ runner.os }}-xmake-build-${{ hashFiles('**/xmake.lua') }}
       # Force xmake to a specific folder (for cache)
       - name: Set MinGW for xmake
         run: |
