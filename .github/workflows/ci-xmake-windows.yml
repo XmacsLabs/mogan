@@ -28,35 +28,16 @@ jobs:
     # mingw-w64 8.1.0 is installed on windows-2019
     runs-on: windows-2019
     if: always()
-    steps:
-      - name: Install msys
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MSYS
-          path-type: inherit
-          install:  >-
-            mingw-w64-x86_64-make 
-            p7zip 
-            git 
+    env:
       # Force xmake to a specific folder (for cache)
-      - name: Set xmake global dir
-        run: |
-          echo "XMAKE_GLOBALDIR=${{ runner.workspace }}\.xmake-global" >> "${{ github.env }}"
+      XMAKE_GLOBALDIR: "${{ github.workspace }}\\.xmake-global"
+    steps:
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: v2.8.1
       - name: update repo
         run: |
           xrepo update-repo
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: 5.15.2
-          arch: win64_mingw81
-          host: 'windows'
-          target: 'desktop'
-          cache: 'true'
-          tools: 'tools_ifw,qt.tools.ifw.46'
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -68,26 +49,20 @@ jobs:
             ${{ github.workspace }}/build/.build_cache
           key: ${{ runner.os }}-xmake-qt-${{ hashFiles('**/xmake.lua') }}
       # Force xmake to a specific folder (for cache)
-      - name: Set PATH
+      - name: Set MinGW for xmake
         run: |
-          echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin\" >> "${{ github.path }}"
+          xmake global --mingw="C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\"
       - name: config
-        shell: msys2 {0}
         run: xmake config --policies=build.ccache --yes --verbose --diagnosis -m releasedbg --plat=mingw
       - name: build
-        shell: msys2 {0}
-        id: build
         run: xmake build --yes --verbose --diagnosis --all
-      - name: install
-        shell: msys2 {0}
-        run: |
-          xmake install mogan
       - name: test
-        shell: msys2 {0}
         run: |
           xmake run --yes --verbose --diagnosis --group=tests
+      - name: install
+        run: |
+          xmake install mogan
       - name: integration test in scheme
-        shell: msys2 {0}
         run: xmake run --yes -vD --group=integration_tests
         env:
           QT_QPA_PLATFORM: offscreen
