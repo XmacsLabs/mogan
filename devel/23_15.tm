@@ -35,7 +35,8 @@
   I want to set the default style to <cpp|Centre/Centre> and temporarily
   close this Issue.
 
-  Then, Yiqi Xu suggested a good method to change the alignment setting.
+  Then, Yiqi Xu explained the current methods to change the alignment
+  setting.
 
   <\enumerate>
     <item>When you haven't selected a specific object, you can change the
@@ -46,11 +47,10 @@
     alignment.
   </enumerate>
 
-  And this method is implemented in the current version.
-
   <subsection|Conclusion>
 
-  After discussion, it was considered that this task could be omitted.
+  After discussion, it was considered that this task could be omitted
+  temporarily.
 
   \;
 

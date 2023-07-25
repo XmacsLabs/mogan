@@ -6,8 +6,8 @@
   <tmdoc-title|Mogan Draw <code|optimization> (OSPP)>
 
   This is a project about the drawing function of the Mogan Editor. It is
-  also a project for the OpenSource Summer of Code. The time for this OSPP is
-  from July to September in 2023.
+  also a project for the OpenSource Summer of Code. The duration for this
+  OSPP is from July to September in 2023.
 
   \;
 
