@@ -39,9 +39,10 @@
   setting.
 
   <\enumerate>
-    <item>When you haven't selected a specific object, you can change the
-    alignment universally through the focus toolbar. This new setting will
-    then apply to all the upcoming text/formula boxes.
+    <item>When you haven't selected a specific object or unselect it by
+    clicking anywhere inside the drawing area outside the object, you can
+    change the alignment universally through the focus toolbar. This new
+    setting will then apply to all the upcoming text/formula boxes.
 
     <item>When you select a text/formula box, you can individually change its
     alignment.
