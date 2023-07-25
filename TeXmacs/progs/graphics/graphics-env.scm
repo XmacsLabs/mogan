@@ -23,6 +23,7 @@
 ;; State variables
 (define-state graphics-state
   (slots ((graphics-action #f)
+          (the-current-cursor-style "normal")
           (current-graphical-object #f)
           (choosing #f)
           (sticky-point #f)
@@ -482,12 +483,22 @@
 
 
 ;; helper functions
+(tm-define (set-cursor-style style)
+  (set-cursor-style-origin style)
+  (set! the-current-cursor-style style))
+
+
 (tm-define (set-sticky-point-true)
-  (if (== (graphics-get-property "gr-mode") '(tuple "group-edit" "move"))
-    (set-cursor-style "closehand"))
+  (set-cursor-style-if-in-move-mode "closehand")
   (set! sticky-point #t))
 
 (tm-define (set-sticky-point-false)
-  (if (== (graphics-get-property "gr-mode") '(tuple "group-edit" "move"))
-    (begin(set-cursor-style "openhand")(display* "WOW\n")))
+  (set-cursor-style-if-in-move-mode "openhand")
   (set! sticky-point #f))
+
+(tm-define (set-cursor-style-if-in-move-mode style)
+  (if (== (graphics-get-property "gr-mode") '(tuple "group-edit" "move"))
+    (set-cursor-style style)))
+
+(tm-define (set-cursor-style-now)
+  (set-cursor-style the-current-cursor-style))

@@ -61,6 +61,7 @@
           (graphics-enter-into u)))))
 
 (tm-define (graphics-exit-right)
+  (set-cursor-style "normal")
   (cond ((inside-graphical-over-under?)
          (with-innermost t graphical-over-under-context?
            (tree-go-to t :end)))

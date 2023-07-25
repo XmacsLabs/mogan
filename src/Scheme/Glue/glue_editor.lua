@@ -1146,7 +1146,7 @@ function main()
                 }
             },
             {
-              scm_name = "set-cursor-style",
+              scm_name = "set-cursor-style-origin",
               cpp_name = "set_cursor_style",
               ret_type = "void",
               arg_list = {
