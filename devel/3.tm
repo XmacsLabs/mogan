@@ -16,7 +16,9 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|25|25|3|3|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|25|25|3|3|cell-valign|b>|<cwith|25|25|2|2|cell-background|pastel
+    green>|<cwith|23|23|2|2|cell-background|pastel
+    green>|<cwith|16|16|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       3_1
@@ -241,6 +243,14 @@
       Darcy
     </cell>|<\cell>
       pin XMAKE_MAIN_REPO and set proxy_pac
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <dlink|3_29>
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Separate package cache from xmake cache
     </cell>>>>
   </wide-tabular>
 
