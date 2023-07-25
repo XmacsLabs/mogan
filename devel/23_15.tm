@@ -47,6 +47,9 @@
     alignment.
   </enumerate>
 
+  He recommended starting with the implementation of remembering the setting
+  changed in the universal way (1.) mentioned above.
+
   <subsection|Conclusion>
 
   After discussion, it was considered that this task could be omitted
