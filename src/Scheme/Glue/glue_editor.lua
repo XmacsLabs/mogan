@@ -1146,6 +1146,14 @@ function main()
                 }
             },
             {
+              scm_name = "set-cursor-style-origin",
+              cpp_name = "set_cursor_style",
+              ret_type = "void",
+              arg_list = {
+                "string"
+              }
+            },
+            {
                 scm_name = "set-predef-mouse-pointer",
                 cpp_name = "set_pointer",
                 ret_type = "void",
