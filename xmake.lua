@@ -35,7 +35,6 @@ configvar_check_cxxsnippets(
         static_assert(sizeof(void*) == 8, "");]])
 
 
-
 ---
 --- Project: Mogan Editor
 ---
@@ -63,55 +62,11 @@ else
 end
 
 
-
 --
--- Dependencies: Platform|Package Manager
+-- Add packages from xrepo or platform package manager
 --
-
--- GNU/Linux variants
--- [x] APT powered
--- [ ] pacman powered
--- [ ] portage powered
--- ...
-if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
-    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-    add_requires("apt::libpng-dev", {alias="libpng"})
-    add_requires("apt::zlib1g-dev", {alias="zlib"})
-    -- config package name for libjpeg on Ubuntu
-    if linuxos.name() == "ubuntu" then
-        add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
-    else
-        add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
-    end
-    -- config package name for freetype on UOS
-    if linuxos.name() == "uos" then
-    	add_requires("apt::libfreetype6-dev", {alias="freetype"})
-    else
-        add_requires("apt::libfreetype-dev", {alias="freetype"})
-    end
-else
--- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
-    add_requires("libpng 1.6.37", {system=false})
-    add_requires("libiconv 1.17", {system=false})
-    add_requires("zlib 1.2.12", {system=false})
-    add_requires("libjpeg v9e", {system=false})
-    add_requires("libcurl 7.84.0", {system=false})
-    add_requires("freetype 2.12.1", {system=false})
-end
-
-if is_plat("mingw") then
-    add_requires("nowide_standalone 11.2.0", {system=false})
-    add_requires("qt5widgets 5.15.2")
-    add_requires("qtifw 4.6.0")
-end
-
-if is_plat("linux") then
-    add_requires("fontconfig", {system = true})
-end
-
-local PDFHUMMUS_VERSION = "4.5.6"
-add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
-add_requires("s7 2023.04.13", {system=false})
+includes("misc/xmake/packages.lua")
+add_requires_of_mogan()
 
 
 --
@@ -440,7 +395,6 @@ set_configvar("USE_FREETYPE", 1)
 set_configvar("USE_GS", 1)
 set_configvar("PDF_RENDERER", 1)
 set_configvar("PDFHUMMUS_NO_TIFF", true)
-set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
 
 if is_plat("mingw") then
     set_configvar("GS_EXE", "bin/gs.exe")
