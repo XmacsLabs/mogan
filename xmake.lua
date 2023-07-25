@@ -969,11 +969,15 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
         set_group("integration_tests")
         on_run(function (target)
             name = target:name()
-            params = {"-headless", "-b", "TeXmacs/tests/"..name..".scm", "-x", "(test_"..name..")", "-q"}
+            params = {
+                "-headless",
+                "-b", path.join("TeXmacs","tests",name..".scm"),
+                "-x", "\"(test_"..name..")\"",
+                "-q"}
             if is_plat("macosx") then
                 os.execv(INSTALL_DIR.."/../MacOS/Mogan", params)
             elseif is_plat("mingw") then
-                os.execv(INSTALL_DIR.."/bin/mogan.exe", params)
+                os.execv(path.join(INSTALL_DIR,"bin","mogan.exe"), params)
             else
                 os.execv(INSTALL_DIR.."/bin/mogan", params)
             end
