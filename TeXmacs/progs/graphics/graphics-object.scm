@@ -640,7 +640,6 @@
                    (tree? (car (sketch-get))))
               (tree->path (car (sketch-get)))
               #f)))
-  (display* "DEBUG: A3\n")
   (set-sticky-point-false)
   (set! graphics-undo-enabled #t)
   (if remove-undo-mark?
