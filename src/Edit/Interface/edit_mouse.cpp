@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "edit_interface.hpp"
+#include "qapplication.h"
 #include "tm_buffer.hpp"
 #include "tm_timer.hpp"
 #include "link.hpp"
@@ -19,6 +20,12 @@
 
 
 void disable_double_clicks ();
+
+/******************************************************************************
+ * Status of graphics mode
+ ******************************************************************************/
+
+bool is_in_graphics_mode = false;
 
 /******************************************************************************
 * Routines for the mouse
@@ -274,6 +281,17 @@ edit_interface_rep::set_pointer (
   string curs_name, string mask_name)
 {
   send_mouse_pointer (this, curs_name, mask_name);
+}
+
+void
+edit_interface_rep::set_cursor_style (string style_name){
+  QWidget* mainwindow = QApplication::activeWindow();
+  if(style_name == "openhand")
+    mainwindow->setCursor(Qt::OpenHandCursor);
+  else if(style_name == "normal" || style_name == "top_left_arrow")
+    mainwindow->setCursor(Qt::ArrowCursor);
+  else if(style_name == "closehand")
+    mainwindow->setCursor(Qt::ClosedHandCursor);
 }
 
 /******************************************************************************
@@ -546,9 +564,23 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
   //if (inside_graphics (false)) {
   //if (inside_graphics ()) {
   if (inside_graphics (type != "release-left")) {
-    if (mouse_graphics (type, x, y, mods, t, data)) return;
-    if (!over_graphics (x, y))
+    if (mouse_graphics (type, x, y, mods, t, data)) {
+      if(is_in_graphics_mode) return;
+      else {
+        if(type == "press-left"){
+          is_in_graphics_mode = true;
+        }
+        eval("(set-cursor-style-now)");
+        return;
+      } 
+    }
+    if (!over_graphics (x, y)) {
       eval ("(graphics-reset-context 'text-cursor)");
+      if(type == "press-left") {
+        set_cursor_style("normal");
+        is_in_graphics_mode = false;
+      }
+    };
   }
   
   if (type == "press-left" || type == "start-drag-left") {

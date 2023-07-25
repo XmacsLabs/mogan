@@ -207,6 +207,7 @@ public:
   virtual array<SI> get_mouse_position () = 0;
   virtual void set_pointer (string name) = 0;
   virtual void set_pointer (string curs_name, string mask_name) = 0;
+  virtual void set_cursor_style (string style_name) = 0;
   virtual void set_message (tree l, tree r= "", bool temp= false) = 0;
   virtual void recall_message () = 0;
 

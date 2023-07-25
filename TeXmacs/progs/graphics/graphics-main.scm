@@ -61,6 +61,7 @@
           (graphics-enter-into u)))))
 
 (tm-define (graphics-exit-right)
+  (set-cursor-style "normal")
   (cond ((inside-graphical-over-under?)
          (with-innermost t graphical-over-under-context?
            (tree-go-to t :end)))
@@ -855,9 +856,12 @@
 
 (tm-define (graphics-set-mode val)
   (:check-mark "v" graphics-mode-has-value?)
+  (if (== val '(group-edit move))
+    (set-cursor-style "openhand")
+    (set-cursor-style "normal"))
   (graphics-group-start)
-  (graphics-enter-mode (graphics-mode) val)
-  (graphics-set-property "gr-mode" `(tuple ,@(map symbol->string val))))
+  (graphics-set-property "gr-mode" `(tuple ,@(map symbol->string val)))
+  (graphics-enter-mode (graphics-mode) val))
 
 (tm-define (graphics-group-mode? mode)
   (func? mode 'group-edit 1))

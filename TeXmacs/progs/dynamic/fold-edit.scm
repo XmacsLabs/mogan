@@ -1254,7 +1254,7 @@
 (define (go-to-graphics)
   (and-with t (innermost-graphics-screen)
     (tree-go-to t 0 :start)
-    (graphics-reset-state)
+    (graphics-init-state)
     (graphics-decorations-update)))
 
 (tm-define (dynamic-operate-on-buffer mode)

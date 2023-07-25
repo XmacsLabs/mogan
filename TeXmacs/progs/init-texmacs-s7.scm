@@ -251,7 +251,7 @@
 (lazy-keyboard (graphics graphics-kbd) in-active-graphics?)
 (lazy-menu (graphics graphics-menu) graphics-menu graphics-icons)
 (lazy-define (graphics graphics-object)
-             graphics-reset-state graphics-decorations-update)
+             graphics-init-state graphics-decorations-update)
 (lazy-define (graphics graphics-utils) make-graphics)
 (lazy-define (graphics graphics-edit)
              graphics-busy?
