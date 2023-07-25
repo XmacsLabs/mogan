@@ -23,6 +23,7 @@
 ;; State variables
 (define-state graphics-state
   (slots ((graphics-action #f)
+          (the-current-cursor-style "normal")
           (current-graphical-object #f)
           (choosing #f)
           (sticky-point #f)
@@ -187,10 +188,9 @@
             (if (graphics-states-void?)
                 (graphics-push-state st))))))
 
-(tm-define (graphics-reset-state)
+(tm-define (graphics-set-default-state-except-sticky-point)
   (graphics-decorations-reset)
   (set! choosing #f)
-  (set! sticky-point #f)
   (set! dragging-create? #f)
   (set! dragging-busy? #f)
   (set! leftclick-waiting #f)
@@ -211,6 +211,14 @@
   (set! preselected #f)
   (set! current-path #f)
   (set! layer-of-last-removed-object #f))
+
+(tm-define (graphics-init-state)
+  (graphics-set-default-state-except-sticky-point)
+  (set! sticky-point #f))
+
+(tm-define (graphics-reset-state)
+  (graphics-set-default-state-except-sticky-point)
+  (set-sticky-point-false))
 
 (tm-define (graphics-forget-states)
   (set! graphics-first-state #f)
@@ -413,7 +421,7 @@
    ((and (in? cmd '(begin exit)) (or (== cmd 'begin) (not sticky-point)))
    ; FIXME : when we move the cursor from one <graphics> to another,
    ;   we are not called, whereas it should be the case.
-    (graphics-reset-state)
+    (graphics-init-state)
     (graphics-forget-states)
     (with p (graphics-active-path)
        (if p
@@ -432,7 +440,7 @@
               (with p (cursor-path)
                 (unredoable-undo) ;; FIXME: Should rely on remove-undo-mark?
                 (go-to p)))))
-    (graphics-reset-state)
+    (graphics-init-state)
     (graphics-forget-states))
    ((== cmd 'undo)
     (if (and sticky-point (not graphics-undo-enabled)
@@ -458,7 +466,7 @@
           (if (and (not graphics-undo-enabled) sticky-point)
               (graphics-decorations-reset))
           (set! choosing #f)
-          (set! sticky-point #f)
+          (set-sticky-point-false)
           (set! dragging-create? #f)
           (set! dragging-busy? #f)
           (set! current-point-no #f)
@@ -472,3 +480,25 @@
           (invalidate-graphical-object)))
     (graphics-group-start))
    (else (display* "Uncaptured reset-context " cmd "\n"))))
+
+
+;; helper functions
+(tm-define (set-cursor-style style)
+  (set-cursor-style-origin style)
+  (set! the-current-cursor-style style))
+
+
+(tm-define (set-sticky-point-true)
+  (set-cursor-style-if-in-move-mode "closehand")
+  (set! sticky-point #t))
+
+(tm-define (set-sticky-point-false)
+  (set-cursor-style-if-in-move-mode "openhand")
+  (set! sticky-point #f))
+
+(tm-define (set-cursor-style-if-in-move-mode style)
+  (if (== (graphics-get-property "gr-mode") '(tuple "group-edit" "move"))
+    (set-cursor-style style)))
+
+(tm-define (set-cursor-style-now)
+  (set-cursor-style the-current-cursor-style))
