@@ -6,7 +6,10 @@
   <tmdoc-title|Mogan Draw <code|optimization> (OSPP)>
 
   This is a project about the drawing function of the Mogan Editor. It is
-  also a project for the OpenSource Summer of Code.
+  also a project for the OpenSource Summer of Code. The duration for this
+  OSPP is from July to September in 2023.
+
+  \;
 
   <section|Goal>
 
@@ -30,174 +33,295 @@
 
   <section|Why>
 
-  Due to the fact that Mogan Editor<nbsp>targets a user base that includes
-  primary and secondary school teachers, and<nbsp>drawing functions<nbsp>are
-  commonly used by them, we need to optimize the product to improve user
-  experience.
+  Due to the fact that Mogan Editor targets a user base that includes primary
+  and secondary school teachers, and drawing functions are commonly used by
+  them, we need to optimize the product to improve user experience.\ 
 
   <section|Tasks>
 
-  <\wide-tabular>
-    <tformat|<cwith|2|2|4|4|cell-valign|b>|<cwith|7|7|2|2|cell-background|pastel
-    green>|<cwith|11|11|2|2|cell-background|pastel green>|<table|<row|<\cell>
-      Feature
+  <\wide-block>
+    <tformat|<table|<row|<\cell>
+      Type
+    </cell>|<\cell>
+      No.
+    </cell>|<\cell>
+      Mgr.
+    </cell>|<\cell>
+      Description
+    </cell>|<\cell>
+      Links
+    </cell>|<\cell>
+      Status
+    </cell>>|<row|<\cell>
+      <value|f>
     </cell>|<\cell>
       <dlink|23_1>
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      Draw an ellipse. <href|https://gitee.com/XmacsLabs/mogan/issues/I6QBAE>
+      Draw an ellipse.
+    </cell>|<\cell>
+      <href|https://gitee.com/XmacsLabs/mogan/issues/I6QBAE>
+    </cell>|<\cell>
+      <value|re>
     </cell>>|<row|<\cell>
-      Feature
+      <value|b>
     </cell>|<\cell>
-      23_2
+      <dlink|23_2>
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      Draw sectors
+      When moving an object, the snap point may not be the object's vertex.
+    </cell>|<\cell>
+      <href|https://gitee.com/XmacsLabs/mogan/issues/I668I5>, just a ref, the
+      content of this bug will be explained in <dlink|23_2>.
+    </cell>|<\cell>
+      <value|li>
+
+      \;
     </cell>>|<row|<\cell>
-      Feature
+      <value|b>
     </cell>|<\cell>
-      23_3
+      <dlink|23_3>
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      add the Snap mode to keep the lines horizontal, vertical or parallel to
-      existing line segments. <href|https://gitee.com/XmacsLabs/mogan/issues/I4WURX>
+      Select a drawing, and then export to PDF or PNG, the curve becomes not
+      smooth.
+    </cell>|<\cell>
+      <href|https://gitee.com/XmacsLabs/mogan/issues/I62I5H>
+    </cell>|<\cell>
+      <value|dis>
     </cell>>|<row|<\cell>
-      Feature
+      <value|b>
     </cell>|<\cell>
-      23_4
+      <dlink|23_4>
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      Draw angle markers
+      After selecting an object, using the cursor should not move the
+      background, but the object.
+    </cell>|<\cell>
+      <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGQ7>
+    </cell>|<\cell>
+      <value|dis>
     </cell>>|<row|<\cell>
-      Feature
+      <value|b>
     </cell>|<\cell>
       23_5
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      Paint specific areas
+      After reducing the image, the input box will not shrink accordingly.
+    </cell>|<\cell>
+      <href|https://gitee.com/XmacsLabs/mogan/issues/I66QRB>
+    </cell>|<\cell>
+      <value|li>
     </cell>>|<row|<\cell>
-      Feature
+      <value|f>
     </cell>|<\cell>
       <dlink|23_6>
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      Add more arrow types. <href|https://gitee.com/XmacsLabs/mogan/issues/I6BKQN>
+      Add more arrow types.
+    </cell>|<\cell>
+      <href|https://gitee.com/XmacsLabs/mogan/issues/I6BKQN>
+    </cell>|<\cell>
+      <value|re>
     </cell>>|<row|<\cell>
-      Feature
+      <value|f>
     </cell>|<\cell>
       <dlink|23_7>
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
       After pressing Shift, pressing the left mouse button is equivalent to
-      pressing the right mouse button. <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGW8>
+      pressing the right mouse button.
+    </cell>|<\cell>
+      <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGW8>
+    </cell>|<\cell>
+      <value|ok>
     </cell>>|<row|<\cell>
-      Feature
+      <value|f>
     </cell>|<\cell>
       23_8
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      Enhance the practicability of endpoint snapping in the drawing
-      function. <href|https://gitee.com/XmacsLabs/mogan/issues/I5IC8N>
+      After entering the move mode, auto unselect the previously selected
+      items.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|li>
     </cell>>|<row|<\cell>
-      Feature
+      <value|f>
     </cell>|<\cell>
       23_9
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      Drawing object alignment and equidistant distribution functions
+      Optimize the translation
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|li>
     </cell>>|<row|<\cell>
-      Feature
-    </cell>|<\cell>
-      23_10
-    </cell>|<\cell>
-      Oyyko
-    </cell>|<\cell>
-      Interchange graph exportable TikZ code.
-      <href|https://gitee.com/XmacsLabs/mogan/issues/I6W4GJ>
-    </cell>>|<row|<\cell>
-      Bug
+      <value|b>
     </cell>|<\cell>
       <dlink|23_11>
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
       When pasting an object, it is necessary to keep a certain distance from
-      the original object. <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGKD>
+      the original object.
+    </cell>|<\cell>
+      <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGKD>
+    </cell>|<\cell>
+      <value|ok>
     </cell>>|<row|<\cell>
-      Bug
+      <value|f>
     </cell>|<\cell>
       23_12
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      Select a drawing, and then export to PDF or PNG, the curve becomes not
-      smooth. <href|https://gitee.com/XmacsLabs/mogan/issues/I62I5H>
+      Move the \PExit graphics mode\Q button to the rightest.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|li>
     </cell>>|<row|<\cell>
-      Bug
+      <value|f>
     </cell>|<\cell>
       23_13
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      After selecting an object, using the cursor should not move the
-      background, but the object. <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGQ7>
+      Change the Arrow setting memory from global to per-tool.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|li>
     </cell>>|<row|<\cell>
-      Feature
+      <value|f>
     </cell>|<\cell>
       <dlink|23_14>
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
       After entering the function of moving, the cursor should become a small
-      hand. <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGM7>
+      hand.
+    </cell>|<\cell>
+      <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGM7>
+    </cell>|<\cell>
+      <value|ok>
     </cell>>|<row|<\cell>
-      Feature
+      <value|f>
     </cell>|<\cell>
       <dlink|23_15>
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
       When inserting a Text At object, the alignment of Centre/Centre should
-      be adopted by default. <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGVX>
-      and <href|https://github.com/XmacsLabs/mogan/issues/185>
+      be adopted by default.
+    </cell>|<\cell>
+      <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGVX> and
+      <href|https://github.com/XmacsLabs/mogan/issues/185>
+    </cell>|<\cell>
+      <value|dis>
     </cell>>|<row|<\cell>
-      Bug
+      <value|f>
     </cell>|<\cell>
       23_16
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      When moving an object, the snap point may not be the object's vertex.
-      <href|https://gitee.com/XmacsLabs/mogan/issues/I668I5>
+      Add the font size property for Text-at and normal text. Use
+      <cpp|\\small> rather than size number to set the font size.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|li>
     </cell>>|<row|<\cell>
-      Bug
+      <value|f>
     </cell>|<\cell>
       23_17
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      After reducing the image, the input box will not shrink accordingly.
-      <href|https://gitee.com/XmacsLabs/mogan/issues/I66QRB>
+      <strong|Bold> the origin point and the axes.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|li>
     </cell>>|<row|<\cell>
-      Bug
+      <value|f>
     </cell>|<\cell>
       23_18
     </cell>|<\cell>
-      Oyyko
+      <value|oy>
     </cell>|<\cell>
-      Text on arrow with text cannot be used as macro variable.
-      <href|https://gitee.com/XmacsLabs/mogan/issues/I689L0>
-    </cell>>>>
-  </wide-tabular>
+      Display the coordinates of a point or object.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|li>
+    </cell>>|<row|<\cell>
+      <value|f>
+    </cell>|<\cell>
+      23_19
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      Set the location of an object by setting its coordinates.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|li>
+    </cell>>|<row|<\cell>
+      <value|b>
+    </cell>|<\cell>
+      23_20
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      Click the current mode to exit the current mode.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|li>
+    </cell>>|<row|<\cell>
+      <value|b>
+    </cell>|<\cell>
+      23_21
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      For Array-with-texts in two graphics area, if you edit one, the cursor
+      will jump to the other one.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|li>
+    </cell>>|<row|<\cell>
+      <value|b>
+    </cell>|<\cell>
+      23_22
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      For commutative diagram, the color-of-units should be setted by
+      default.
+    </cell>|<\cell>
+      \;
+    </cell>|<value|li>>>>
+  </wide-block>
+
+  \;
+
+  \;
 
   \;
 </body>
