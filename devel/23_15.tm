@@ -46,7 +46,11 @@
     alignment.
   </enumerate>
 
-  This is a great idea and I will implement it.
+  And this method is implemented in the current version.
+
+  <subsection|Conclusion>
+
+  After discussion, it was considered that this task could be omitted.
 
   \;
 
