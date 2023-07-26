@@ -48,7 +48,9 @@ function add_requires_of_mogan()
     if is_plat("mingw") then
         add_requires("nowide_standalone 11.2.0", {system=false})
         add_requires("qt5widgets 5.15.2")
-        add_requires("qtifw 4.6.0")
+        if is_mode("release") then
+            add_requires("qtifw 4.6.0")
+        end
     end
 
     if is_plat("linux") then
