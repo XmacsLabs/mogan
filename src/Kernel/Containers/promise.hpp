@@ -12,6 +12,7 @@
 #ifndef PROMISE_H
 #define PROMISE_H
 
+#include "basic.hpp"
 #include "tm_ostream.hpp"
 
 template<class T> class promise_rep;
