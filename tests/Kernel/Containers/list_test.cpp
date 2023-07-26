@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "list.hpp"
+#include "string.hpp"
 #include <QtTest/QtTest>
 
 static list<long>

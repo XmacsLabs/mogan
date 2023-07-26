@@ -257,6 +257,16 @@ template<> inline tree as_tree (pointer x) { (void) x; return "pointer"; }
 inline tree bool_as_tree (bool f) {
   return (f? tree ("true"): tree ("false")); }
 
+template<class T> inline tree as_tree (list<T> x) {
+  list<T> l;
+  int i, n=N(x);
+  tree t (TUPLE, n);
+  for (i=0, l=x; i<n; i++, l=l->next)
+    t[i]= as_tree (l->item);
+  return t;
+}
+
+
 /******************************************************************************
 * Data
 ******************************************************************************/
