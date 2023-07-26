@@ -10,7 +10,7 @@ on:
       - 'tests/**'
       - 'xmake.lua'
       - 'misc/xmake/packages.lua'
-      - '.github/workflows/ci-xmake-windows.yml'
+      - '.github/workflows/ci-xmake-mingw.yml'
     tags:
       - '*'
   pull_request:
@@ -22,7 +22,7 @@ on:
       - 'tests/**'
       - 'xmake.lua'
       - 'misc/xmake/packages.lua'
-      - '.github/workflows/ci-xmake-windows.yml'
+      - '.github/workflows/ci-xmake-mingw.yml'
   workflow_dispatch:
 
 jobs:
