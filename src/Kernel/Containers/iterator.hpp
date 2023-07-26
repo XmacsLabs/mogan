@@ -27,7 +27,6 @@ public:
 
 template<class T> struct iterator {
   ABSTRACT_TEMPLATE(iterator,T);
-  operator tree ();
 };
 ABSTRACT_TEMPLATE_CODE(iterator,class,T);
 
