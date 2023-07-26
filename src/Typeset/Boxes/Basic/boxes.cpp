@@ -742,7 +742,7 @@ as_tree (gr_selections sels) {
   array<array<path> > res (n);
   for (i=0; i<n; i++)
     res[i]= sels[i]->cp;
-  return (tree) res;
+  return as_tree (res);
 }
 
 /******************************************************************************
