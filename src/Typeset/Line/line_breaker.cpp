@@ -29,7 +29,7 @@ struct lb_info {
   CONCRETE(lb_info);
   lb_info () { rep= tm_new<lb_info_rep> (); }
   operator tree () {
-    return tuple ((tree) rep->prev,
+    return tuple (as_tree (rep->prev),
 		  as_string (rep->pen),
 		  as_string ((double) rep->pen_spc)); }
 };
