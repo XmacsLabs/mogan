@@ -15,15 +15,23 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      \;
+      Explicit list to tree conversion
     </cell>>|<row|<\cell>
-      \;
+      Chore
     </cell>|<\cell>
-      \;
+      28_2
     </cell>|<\cell>
-      \;
+      Darcy
     </cell>|<\cell>
-      \;
+      Explicit array to tree conversion
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      28_3
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Explicit hashmap to tree conversion
     </cell>>>>
   </wide-tabular>
 
