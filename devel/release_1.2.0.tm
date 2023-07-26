@@ -21,10 +21,28 @@
     </cell>>>>
   </wide-tabular>
 
+  <section|v1.2.0-alpha14>
+
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|1|1|1|cell-valign|B>|<table|<row|<cell|<dlink|5>>|<cell|Darcy>|<cell|Documentation
+  in markdown format for users and developers>>|<row|<cell|<dlink|8>>|<cell|jinkaimori>|<cell|xmake
+  integration for packaging on Ubuntu/Windows/macOS>>|<row|<\cell>
+    <dlink|23>
+  </cell>|<\cell>
+    Oyyko
+  </cell>|<\cell>
+    Mogan Draw optimization \ (OSPP)
+  </cell>>>>>
+
   <section|v1.2.0-alpha13>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|1|1|cell-valign|B>|<table|<row|<\cell>
+    <tformat|<cwith|2|2|1|1|cell-valign|B>|<table|<row|<\cell>
+      <dlink|3>
+    </cell>|<\cell>
+      jinkaimori
+    </cell>|<\cell>
+      Initial xmake integration
+    </cell>>|<row|<\cell>
       <dlink|5>
     </cell>|<\cell>
       Darcy
@@ -33,21 +51,21 @@
     </cell>>|<row|<\cell>
       <dlink|8>
     </cell>|<\cell>
-      Darcy
+      jinkaimori
     </cell>|<\cell>
       xmake integration for packaging on Ubuntu/Windows/macOS
+    </cell>>|<row|<\cell>
+      <dlink|16>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Code Formatting and Static Checking
     </cell>>|<row|<\cell>
       <dlink|23>
     </cell>|<\cell>
       Oyyko
     </cell>|<\cell>
       Mogan Draw optimization \ (OSPP)
-    </cell>>|<row|<\cell>
-      <dlink|25>
-    </cell>|<\cell>
-      Pluto
-    </cell>|<\cell>
-      Add CI on Gitee
     </cell>>>>
   </wide-tabular>
 
