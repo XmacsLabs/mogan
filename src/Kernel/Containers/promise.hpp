@@ -11,9 +11,10 @@
 
 #ifndef PROMISE_H
 #define PROMISE_H
-#include "tree.hpp"
 
-class tree;
+#include "basic.hpp"
+#include "tm_ostream.hpp"
+
 template<class T> class promise_rep;
 template<class T> class promise;
 template<class T> tm_ostream& operator << (tm_ostream& out, promise<T> cmd);
