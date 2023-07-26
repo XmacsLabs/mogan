@@ -266,6 +266,15 @@ template<class T> inline tree as_tree (list<T> x) {
   return t;
 }
 
+template<class T>
+tree as_tree (array<T> x) {
+  int i, n=N(x);
+  tree t (TUPLE, n);
+  for (i=0; i<n; i++)
+    t[i]= as_tree (x[i]);
+  return t;
+}
+
 
 /******************************************************************************
 * Data
@@ -384,15 +393,6 @@ inline tree verbatim (tree t1) {
 
 tree   correct (tree t);
 int    hash (tree t);
-
-template<class T>
-array<T>::operator tree () {
-  int i, n=rep->n;
-  tree t (TUPLE, n);
-  for (i=0; i<n; i++)
-    t[i]= as_tree(rep->a[i]);
-  return t;
-}
 
 class formatted {
 public:
