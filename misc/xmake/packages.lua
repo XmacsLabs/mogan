@@ -58,7 +58,7 @@ function add_requires_of_mogan()
     end
 
     local PDFHUMMUS_VERSION = "4.5.10"
-    set_configvar("PDFHUMMUS_VERSION", PDFH3UMMUS_VERSION)
+    set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
     add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
     add_requires("s7 2023.04.13", {system=false})
 end
