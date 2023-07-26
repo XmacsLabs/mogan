@@ -14,7 +14,6 @@
 #define ARRAY_H
 #include "basic.hpp"
 
-class tree;
 template<class T> class array;
 template<class T> int N (array<T> a);
 template<class T> T*  A (array<T> a);
@@ -44,7 +43,6 @@ template<class T> class array {
   array (T x1, T x2, T x3, T x4);
   array (T x1, T x2, T x3, T x4, T x5);
   inline T& operator [] (int i) { return rep->a[i]; }
-  operator tree (); // defined in tree.hpp
 };
 CONCRETE_TEMPLATE_CODE(array,class,T);
 
