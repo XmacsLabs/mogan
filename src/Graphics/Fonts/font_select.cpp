@@ -65,7 +65,7 @@ remove_duplicates (array<string> a) {
 
 tree
 array_as_tuple (array<string> a) {
-  return tree (a);
+  return as_tree (a);
 }
 
 array<string>

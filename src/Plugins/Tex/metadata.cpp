@@ -395,7 +395,7 @@ collect_metadata (tree t, tree latex_class) {
     r= collect_metadata_ieee (t);
   else
     r << collect_metadata_latex (t);
-  r= unconcat_tmseps (r);
+  r= as_tree (unconcat_tmseps (r));
   r= filter_spaces (r, spaced);
   return r;
 }

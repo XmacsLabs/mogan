@@ -304,8 +304,8 @@ tag_info::tag_info (tree t) {
 }
 
 tag_info::operator tree () {
-  if (rep->extra == "") return tree (TUPLE, (tree) rep->pi, (tree) rep->ci);
-  else return tree (TUPLE, (tree) rep->pi, (tree) rep->ci, rep->extra);
+  if (rep->extra == "") return tree (TUPLE, as_tree (rep->pi), as_tree (rep->ci));
+  else return tree (TUPLE, as_tree (rep->pi), as_tree (rep->ci), rep->extra);
 }
 
 /******************************************************************************

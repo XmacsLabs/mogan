@@ -134,7 +134,7 @@ struct an_scaling_rep : public frame_rep {
   point shift;
   an_scaling_rep (point m, point s) : magnify (m), shift (s) { linear= true; }
   operator tree () {
-    return tuple ("scale", as_string (magnify), as_tree (shift));
+    return tuple ("scale", as_string (as_tree (magnify)), as_tree (shift));
   }
   point direct_transform (point p) { return shift + magnify * p; }
   point inverse_transform (point p) { return (p - shift) / magnify; }
@@ -210,7 +210,7 @@ struct slanting_rep : public frame_rep {
   double slant;
   slanting_rep (point c, double s) : center (c), slant (s) { linear= true; }
   operator tree () {
-    return tuple ("slanting", as_string (center), as_string (slant));
+    return tuple ("slanting", as_string (as_tree (center)), as_string (slant));
   }
   point direct_transform (point p) {
     return slanted (p - center, slant) + center;
