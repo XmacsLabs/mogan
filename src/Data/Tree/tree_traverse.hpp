@@ -11,6 +11,9 @@
 
 #ifndef TREE_TRAVERSE_H
 #define TREE_TRAVERSE_H
+
+#include "tree.hpp"
+#include "tree_label.hpp"
 #include "tree_cursor.hpp"
 
 bool is_macro (tree_label l);

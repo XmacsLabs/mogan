@@ -11,7 +11,10 @@
 
 #ifndef HASHMAP_CC
 #define HASHMAP_CC
+
 #include "hashmap.hpp"
+#include "tree.hpp"
+
 #define TMPL template<class T, class U>
 #define H hashentry<T,U>
 

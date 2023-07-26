@@ -406,7 +406,7 @@ left_most (tree t, path p) {
 
   int i=p->item;
   if (is_atom (p)) return i==0;
-  if (is_concat (p)) return (i==0) && left_most (t[0], p->next);
+  if (is_concat (as_tree (p))) return (i==0) && left_most (t[0], p->next);
   return false;
 }
 
@@ -442,7 +442,7 @@ right_most (tree t, path p) {
 
   int i=p->item;
   if (is_atom (p)) return i==right_index (t);
-  if (is_concat (p)) return (i==1) && right_most (t[N(t)-1], p->next);
+  if (is_concat (as_tree (p))) return (i==1) && right_most (t[N(t)-1], p->next);
   return false;
 }
 

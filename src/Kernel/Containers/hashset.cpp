@@ -12,6 +12,7 @@
 #ifndef HASHSET_CC
 #define HASHSET_CC
 #include "hashset.hpp"
+#include "tree.hpp"
 
 template<class T> void
 hashset_rep<T>::resize (int n2) {
