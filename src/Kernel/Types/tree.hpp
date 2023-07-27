@@ -11,6 +11,7 @@
 
 #ifndef TREE_H
 #define TREE_H
+
 #include "tree_label.hpp"
 #include "observer.hpp"
 #include "array.hpp"
@@ -25,6 +26,8 @@ class atomic_rep;
 class compound_rep;
 class generic_rep;
 class blackbox;
+template<class T> class iterator;
+
 tree copy (tree t);
 
 class tree {
@@ -257,7 +260,8 @@ template<> inline tree as_tree (pointer x) { (void) x; return "pointer"; }
 inline tree bool_as_tree (bool f) {
   return (f? tree ("true"): tree ("false")); }
 
-template<class T> inline tree as_tree (list<T> x) {
+template<class T> inline tree
+as_tree (list<T> x) {
   list<T> l;
   int i, n=N(x);
   tree t (TUPLE, n);
@@ -266,12 +270,21 @@ template<class T> inline tree as_tree (list<T> x) {
   return t;
 }
 
-template<class T>
-tree as_tree (array<T> x) {
+template<class T> inline tree
+as_tree (array<T> x) {
   int i, n=N(x);
   tree t (TUPLE, n);
   for (i=0; i<n; i++)
     t[i]= as_tree (x[i]);
+  return t;
+}
+
+template<class T> inline tree
+as_tree (iterator<T> x) {
+  tree t (TUPLE);
+  while (x->busy ()) {
+    t << as_tree (x->next());
+  }
   return t;
 }
 
