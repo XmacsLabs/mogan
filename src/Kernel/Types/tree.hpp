@@ -27,6 +27,7 @@ class compound_rep;
 class generic_rep;
 class blackbox;
 template<class T> class iterator;
+template<class T> class hashset;
 
 tree copy (tree t);
 
@@ -288,6 +289,15 @@ as_tree (iterator<T> x) {
   return t;
 }
 
+template<class T> inline tree
+as_tree (hashset<T> x) {
+  tree t (COLLECTION);
+  iterator<T> iter = iterate (x);
+  while (iter->busy ()) {
+    t << as_tree (iter->next());
+  }
+  return t;
+}
 
 /******************************************************************************
 * Data
