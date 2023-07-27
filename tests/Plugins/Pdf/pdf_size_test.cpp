@@ -10,7 +10,6 @@
 
 #include "Pdf/pdf_hummus_renderer.hpp"
 #include <QtTest/QtTest>
-//void hummus_pdf_image_size (url image, int& w, int& h);
 
 class TestHummusPdfImageSize : public QObject {
   Q_OBJECT
