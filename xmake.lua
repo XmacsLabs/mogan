@@ -844,7 +844,7 @@ end
 
 target("windows_installer") do
     set_kind("phony")
-    set_enabled(is_plat("mingw"))
+    set_enabled(is_plat("mingw") and is_mode("release"))
     add_packages("qtifw")
     add_deps("mogan")
     set_configvar("PACKAGE_DATE", os.date("%Y-%m-%d"))

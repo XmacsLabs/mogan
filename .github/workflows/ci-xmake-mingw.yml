@@ -11,8 +11,6 @@ on:
       - 'xmake.lua'
       - 'misc/xmake/packages.lua'
       - '.github/workflows/ci-xmake-mingw.yml'
-    tags:
-      - '*'
   pull_request:
     branches: [ branch-1.2 ]
     paths:
