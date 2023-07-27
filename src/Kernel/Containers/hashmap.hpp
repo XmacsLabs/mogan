@@ -13,7 +13,6 @@
 #define HASHMAP_H
 #include "list.hpp"
 
-class tree;
 template<class T> class list;
 template<class T,class U> class hashmap;
 template<class T,class U> class rel_hashmap;
@@ -34,7 +33,6 @@ template<class T, class U> struct hashentry {
   U im;
   hashentry<T,U> () { }
   hashentry<T,U> (int code, T key2, U im2);
-  operator tree ();
 };
 
 template<class T, class U> class hashmap_rep: concrete_struct {
@@ -87,12 +85,8 @@ CONCRETE_TEMPLATE_2(hashmap,T,U);
     rep (tm_new<hashmap_rep<T,U> > (type_helper<U>::init_val (), 1, 1)) {}
   inline hashmap (U init, int n=1, int max=1):
     rep (tm_new<hashmap_rep<T,U> > (init, n, max)) {}
-  // only for hashmap<string,tree>
-  hashmap (U init, tree t);
-  // end only for hashmap<string,tree>
   inline U  operator [] (T x) { return rep->bracket_ro (x); }
   inline U& operator () (T x) { return rep->bracket_rw (x); }
-  operator tree ();
 };
 CONCRETE_TEMPLATE_2_CODE(hashmap,class,T,class,U);
 

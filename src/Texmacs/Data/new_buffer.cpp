@@ -430,7 +430,7 @@ attach_subformat (tree t, url u, string fm) {
       fm != "scilab" &&
       fm != "scheme") return t;
 
-  hashmap<string,tree> h (UNINIT, extract (t, "initial"));
+  hashmap<string,tree> h= tree_hashmap (UNINIT, extract (t, "initial"));
   h (MODE)= "prog";
   h (PROG_LANGUAGE)= fm;
   tree t2= change_doc_attr (t, "initial", make_collection (h));
