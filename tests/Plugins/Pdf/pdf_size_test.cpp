@@ -21,7 +21,7 @@ private slots:
 void
 TestHummusPdfImageSize::test_hummus_pdf_image_size () {
   int w= 0, h= 0;
-  hummus_pdf_image_size (url ("$TEXMACS_PATH/tests/images/0.pdf"), w, h);
+  hummus_pdf_image_size (url ("$TEXMACS_PATH/tests/images/26_2_1.pdf"), w, h);
   QCOMPARE (w, 595);
   QCOMPARE (h, 595);
 }
