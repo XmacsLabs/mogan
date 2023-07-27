@@ -12,7 +12,6 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "iterator.hpp"
 #include "tree.hpp"
 #include "path.hpp"
 
