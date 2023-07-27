@@ -15,6 +15,7 @@
 #include "string.hpp"
 #include "hashset.hpp"
 #include "parser.hpp"
+#include "array.hpp"
 
 class preprocessor_parser_rep : public parser_rep {
 public:
