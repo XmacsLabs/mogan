@@ -10,6 +10,8 @@
 
 #ifndef MERGE_SORT_H
 #define MERGE_SORT_H
+
+#include "tree.hpp"
 #include "array.hpp"
 #include "hashmap.hpp"
 
@@ -60,8 +62,8 @@ struct less_eq_associate {
 
 template <class T, class U> static tree
 make_collection (hashmap<T,U> h) {
-  tree t(h);
-  array<tree> a=A(h);
+  tree t= as_tree (h);
+  array<tree> a= A(t);
   merge_sort_leq <tree, less_eq_associate> (a);
   int i, n=N(a);
   for (i=0; i<n; i++) t[i] = a[i];
