@@ -11,6 +11,7 @@
 
 #include "edit_interface.hpp"
 #include "hashset.hpp"
+#include "iterator.hpp"
 #include "analyze.hpp"
 #include "connect.hpp"
 #include "dictionary.hpp"

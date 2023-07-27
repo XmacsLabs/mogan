@@ -289,7 +289,15 @@ as_tree (iterator<T> x) {
   return t;
 }
 
-template<class T> inline tree as_tree (hashset<T> x);
+template<class T> inline tree
+as_tree (hashset<T> x) {
+  tree t (COLLECTION);
+  iterator<T> iter = iterate (x);
+  while (iter->busy ()) {
+    t << as_tree (iter->next());
+  }
+  return t;
+}
 
 /******************************************************************************
 * Data

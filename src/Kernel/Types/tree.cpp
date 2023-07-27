@@ -117,16 +117,6 @@ tree::operator () (int begin, int end) {
   return r;
 }
 
-template<class T> inline tree
-as_tree (hashset<T> x) {
-  tree t (COLLECTION, x->size);
-  iterator<T> iter = iterate(x);
-  while (iter->busy ()) {
-    t << as_tree (iter->next());
-  }
-  return t;
-}
-
 bool
 operator == (tree t, tree u) {
   if (strong_equal (t, u)) return true;
