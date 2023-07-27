@@ -3177,7 +3177,7 @@ upgrade_hyphenation (tree t) {
   if (ms == "article" || ms == "beamer" || ms == "book" || ms == "exam" ||
       ms == "generic" || ms == "letter" || ms == "seminar")
     {
-      hashmap<string,tree> h (UNINIT, init);
+      hashmap<string,tree> h= tree_hashmap (UNINIT, init);
       if (!h->contains (PAR_HYPHEN)) h (PAR_HYPHEN)= "normal";
       tree new_init= make_collection (h);
       return change_doc_attr (t, "initial", new_init);

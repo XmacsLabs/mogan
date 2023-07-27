@@ -12,7 +12,6 @@
 #ifndef HASHMAP_EXTRA_CC
 #define HASHMAP_EXTRA_CC
 
-#include "tree.hpp"
 #include "hashmap.hpp"
 #define TMPL template<class T, class U>
 #define H hashentry<T,U>
@@ -116,15 +115,6 @@ invert (hashmap<T,U> patch, hashmap<T,U> base) {
     }
   }
   return h;
-}
-
-TMPL hashmap<T,U>::hashmap (U init, tree t):
-  rep (tm_new<hashmap_rep<T,U> > (init, 1, 1))
-{
-  int i, n= arity (t);
-  for (i=0; i<n; i++)
-    if (is_func (t[i], ASSOCIATE, 2))
-      rep->bracket_rw (get_label (t[i][0]))= copy (t[i][1]);
 }
 
 #undef H
