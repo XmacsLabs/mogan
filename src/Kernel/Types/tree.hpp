@@ -304,7 +304,7 @@ as_tree (hashset<T> x) {
 
 template<class T, class U> inline tree
 as_tree (hashentry<T, U> x) {
-  return tree (ASSOCIATE, as_tree(x.key), as_tree(x.im)); 
+  return tree (ASSOCIATE, as_tree (x.key), as_tree (x.im));
 }
 
 template<class T, class U> inline tree
@@ -319,9 +319,9 @@ as_tree (hashmap<T,U> x) {
   return t;
 }
 
-template<class U> inline hashmap<U, tree>
-tree_hashmap (U init, tree t) {
-  hashmap<U, tree> ret;
+inline hashmap<string, tree>
+tree_hashmap (tree_label init, tree t) {
+  hashmap<string, tree> ret (init);
   int i, n= arity (t);
   for (i=0; i<n; i++)
     if (is_func (t[i], ASSOCIATE, 2))

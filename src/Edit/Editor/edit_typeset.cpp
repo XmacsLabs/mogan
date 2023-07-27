@@ -771,7 +771,7 @@ edit_typeset_rep::exec_html (tree t, path p) {
   typeset_exec_until (p);
   hashmap<string,tree> H= copy (cur[p]);
   tree patch= as_tree (eval ("(stree->tree (tmhtml-env-patch))"));
-  hashmap<string,tree> P= tree_hashmap<string> (as_string (UNINIT), patch);
+  hashmap<string,tree> P= tree_hashmap (UNINIT, patch);
   H->join (P);
   prefix_specific (H, "tmhtml-");
   tree w (WITH);
@@ -845,7 +845,7 @@ edit_typeset_rep::exec_latex (tree t, path p) {
   iterator<string> it= iterate (H);
   while (it->busy ()) l= cons (object (it->next ()), l);
   tree patch= as_tree (call ("stree->tree", call ("tmtex-env-patch", t, l)));
-  hashmap<string,tree> P= tree_hashmap<string> (as_string (UNINIT), patch);
+  hashmap<string,tree> P= tree_hashmap (UNINIT, patch);
   H->join (P);
   prefix_specific (H, "tmlatex-");
 

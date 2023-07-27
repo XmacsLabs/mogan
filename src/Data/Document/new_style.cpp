@@ -138,7 +138,7 @@ style_get_cache (tree style, hashmap<string,tree>& H, tree& t, bool& f) {
     if (exists (name) && (!load_string (name, s, false))) {
       //cout << "loaded " << name << LF;
       tree p= scheme_to_tree (s);
-      H= tree_hashmap (as_string (UNINIT), p[0]);
+      H= tree_hashmap (UNINIT, p[0]);
       t= p[1];
       sd->style_cache (copy (style))= H;
       sd->style_drd   (copy (style))= t;
