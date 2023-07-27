@@ -21,15 +21,6 @@ iterator_rep<T>::remains () {
   else return 0;
 }
 
-template<class T>
-iterator<T>::operator tree () {
-  tree t (TUPLE);
-  while (this->rep->busy ()) {
-    t << as_tree (this->rep->next());
-  }
-  return t;
-}
-
 template<class T> tm_ostream&
 operator << (tm_ostream& out, iterator<T> it) {
   bool flag=false;
