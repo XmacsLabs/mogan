@@ -12,6 +12,7 @@
 #include "generic_tree.hpp"
 #include "drd_std.hpp"
 #include "hashset.hpp"
+#include "iterator.hpp"
 
 /******************************************************************************
 * Main routines for trees
@@ -114,6 +115,16 @@ tree::operator () (int begin, int end) {
   for (i=begin; i<end; i++)
     r[i-begin]= (static_cast<compound_rep*> (rep))->a[i];
   return r;
+}
+
+template<class T> inline tree
+as_tree (hashset<T> x) {
+  tree t (COLLECTION, x->size);
+  iterator<T> iter = iterate(x);
+  while (iter->busy ()) {
+    t << as_tree (iter->next());
+  }
+  return t;
 }
 
 bool
