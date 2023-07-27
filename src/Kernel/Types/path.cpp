@@ -12,6 +12,7 @@
 
 #include "path.hpp"
 #include "analyze.hpp"
+#include "tree.hpp"
 
 /******************************************************************************
 * General routines on paths

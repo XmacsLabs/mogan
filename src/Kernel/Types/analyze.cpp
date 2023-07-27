@@ -11,6 +11,7 @@
 
 #include "analyze.hpp"
 #include "ntuple.hpp"
+#include "tree.hpp"
 
 /******************************************************************************
 * Tests for characters
