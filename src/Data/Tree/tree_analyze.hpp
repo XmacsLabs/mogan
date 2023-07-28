@@ -89,4 +89,8 @@ array<int> symbol_priorities (array<tree> a);
 drd_info get_document_drd (tree doc);
 bool is_correctable_child (tree t, int i, bool noaround= false);
 
+tree   trim_spaces_left (tree t);
+tree   trim_spaces_right (tree t);
+tree   trim_spaces (tree t);
+
 #endif // defined TREE_ANALYZE_H

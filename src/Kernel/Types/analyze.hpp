@@ -76,7 +76,6 @@ string spanish_to_ispanish (string s);
 string igerman_to_german (string s);
 string german_to_igerman (string s);
 bool   contains_unicode_char (string s);
-tree   convert_OTS1_symbols_to_universal_encoding (tree t);
 string convert_tabs_to_spaces (string s, int w);
 string downgrade_math_letters (string s);
 
@@ -160,13 +159,10 @@ int    find_non_alpha (string s, int pos, bool forward);
 array<string> tokenize (string s, string sep);
 string recompose (array<string> a, string sep);
 string trim_spaces_left (string s);
-tree   trim_spaces_left (tree t);
 array<string> trim_spaces_left (array<string> a);
 string trim_spaces_right (string s);
-tree   trim_spaces_right (tree t);
 array<string> trim_spaces_right (array<string> a);
 string trim_spaces (string s);
-tree   trim_spaces (tree t);
 array<string> trim_spaces (array<string> a);
 
 array<int> differences (string s1, string s2);

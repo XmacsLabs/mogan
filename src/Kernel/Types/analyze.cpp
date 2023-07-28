@@ -407,45 +407,6 @@ iso_to_koi8uk (string s) {
   return r;
 }
 
-/******************************************************************************
-* Convert TS1 defined symbols to universal encoding
-******************************************************************************/
-
-tree
-convert_OTS1_symbols_to_universal_encoding (tree t) {
-  if (is_atomic (t)) return t;
-  if (N(t) == 0) {
-    static tree symbols (CONCAT);
-    if (N(symbols) == 0)
-      symbols << "cent" << "copyright" << "currency" << "yen" << "twosuperior"
-        << "threesuperior" << "onesuperior" << "mu" << "onequarter"
-        << "onehalf" << "threequarters" << "trademark";
-    tree l= tree (as_string (L(t)));
-    if (contains (l, A(symbols)))
-      return "<" * as_string (L(t)) * ">";
-    else if (l == "degreesign")
-      return "<degree>";
-    else if (l == "copyleft")
-      return "<copyright>"; // Copyleft is nor defined in TeXmacs universal
-                            // encoding, neither in utf8, neither buildable
-                            // with TeXmacs primitive construction.
-    else if (l == "registered")
-      return "<circledR>";
-    else if (l == "paragraphsign")
-      return "<paragraph>";
-    else if (l == "euro")
-      return "<#20AC>";
-    else
-      return t;
-
-  }
-  int i, n= N(t);
-  tree r (t, n);
-  for (i=0; i<n; i++)
-    r[i]= convert_OTS1_symbols_to_universal_encoding (t[i]);
-  return r;
-}
-
 bool
 contains_unicode_char (string s) {
   int i= 0, n= N(s);
@@ -1398,51 +1359,6 @@ trim_spaces (array<string> a) {
   for (int i=0; i<N(a); i++)
     b[i]= trim_spaces (a[i]);
   return b;
-}
-
-tree
-trim_spaces_right (tree t) {
-  if (is_atomic (t)) return trim_spaces_right (as_string (t));
-  else if (is_concat (t)) {
-    tree l;
-    int end;
-    for (end= N(t)-1; end >= 0; end--) {
-      l= trim_spaces_right (t[end]);
-      if (l != "") break;
-    }
-    tree r= tree (L(t));
-    for (int i=0; i<end; i++) r << t[i];
-    if (end >= 0) r << l;
-    if (N(r) == 0) return "";
-    else if (N(r) == 1) return r[0];
-    else return r;
-  }
-  else return t;
-}
-
-tree
-trim_spaces_left (tree t) {
-  if (is_atomic (t)) return trim_spaces_left (as_string (t));
-  else if (is_concat (t)) {
-    tree l;
-    int start;
-    for (start= 0; start < N(t); start++) {
-      l= trim_spaces_left (t[start]);
-      if (l != "") break;
-    }
-    tree r= tree (L(t));
-    if (start < N(t)) r << l;
-    for (int i=start+1; i<N(t); i++) r << t[i];
-    if (N(r) == 0) return "";
-    else if (N(r) == 1) return r[0];
-    else return r;
-  }
-  else return t;
-}
-
-tree
-trim_spaces (tree t) {
-  return trim_spaces_left (trim_spaces_right (t));
 }
 
 /******************************************************************************
