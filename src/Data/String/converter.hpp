@@ -14,6 +14,7 @@
 #include "resource.hpp"
 #include "hashtree.hpp"
 #include "file.hpp"
+#include "tree.hpp"
 
 enum escape_type { NOESCAPES, BIT2BIT, UTF8, ENTITY_NAME, CHAR_ENTITY };
 
@@ -122,5 +123,6 @@ string convert_char_entities (string s);
 string convert_char_entity (string s, int& start, bool& success);
 string utf8_to_hex_entities (string s);
 string utf8_to_pdf_hex_string (string s);
+tree   convert_OTS1_symbols_to_universal_encoding (tree t);
 
 #endif // CONVERTER_H
