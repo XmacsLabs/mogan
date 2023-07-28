@@ -11,6 +11,7 @@
 
 #include "xml.hpp"
 #include "analyze.hpp"
+#include "tree_analyze.hpp"
 
 /******************************************************************************
 * Predicates
