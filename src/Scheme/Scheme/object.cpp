@@ -61,7 +61,7 @@ operator<< (tm_ostream& out, object obj) {
   out.flush ();
   if (out == cout) call ("write", obj);
   else if (out == cerr) call ("write-err", obj);
-  else FAILED ("not yet implemented");
+  else TM_FAILED ("not yet implemented");
   call ("force-output");
   return out;
 }

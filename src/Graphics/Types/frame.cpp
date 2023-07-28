@@ -300,7 +300,7 @@ struct affine_2D_rep : public frame_rep {
     return point (q[0], q[1]);
   }
   point inverse_transform (point p) {
-    FAILED ("not yet implemented");
+    TM_FAILED ("not yet implemented");
     return p;
   }
   point jacobian (point p, point v, bool& error) {
@@ -312,7 +312,7 @@ struct affine_2D_rep : public frame_rep {
     (void) p;
     (void) v;
     (void) error;
-    FAILED ("not yet implemented");
+    TM_FAILED ("not yet implemented");
     return p;
   }
   double direct_bound (point p, double eps) {
@@ -344,14 +344,14 @@ struct bend_frame_rep : public frame_rep {
     (void) p;
     (void) v;
     (void) error;
-    FAILED ("not yet implemented");
+    TM_FAILED ("not yet implemented");
     return p;
   }
   point jacobian_of_inverse (point p, point v, bool& error) {
     (void) p;
     (void) v;
     (void) error;
-    FAILED ("not yet implemented");
+    TM_FAILED ("not yet implemented");
     return p;
   }
   double direct_bound (point p, double eps) {
@@ -400,7 +400,7 @@ struct compound_frame_rep : public frame_rep {
     (void) p;
     (void) v;
     (void) error;
-    FAILED ("not yet implemented");
+    TM_FAILED ("not yet implemented");
     return p;
   }
   double direct_bound (point p, double eps) {

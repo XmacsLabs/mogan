@@ -92,15 +92,15 @@ extern string the_exception;
 void tm_throw (const char* msg);
 void handle_exceptions ();
 #define ASSERT(cond,msg) { if (!(cond)) tm_throw (msg); }
-#define FAILED(msg) { tm_throw (msg); }
+#define TM_FAILED(msg) { tm_throw (msg); }
 #else
 #ifdef DEBUG_ASSERT
 #include <assert.h>
 #define ASSERT(cond,msg) { if (!(cond)) { tm_failure (msg); assert (cond); } }
-#define FAILED(msg) { tm_failure (msg); assert (false); }
+#define TM_FAILED(msg) { tm_failure (msg); assert (false); }
 #else
 #define ASSERT(cond,msg) { if (!(cond)) { tm_failure (msg); } }
-#define FAILED(msg) { tm_failure (msg); }
+#define TM_FAILED(msg) { tm_failure (msg); }
 #endif
 #endif
 

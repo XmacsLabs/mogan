@@ -279,7 +279,7 @@ edit_typeset_rep::typeset_style_use_cache (tree style) {
   }
   if (!ok) {
     //cout << "Typeset without cache " << style << LF;
-    if (!is_tuple (style)) FAILED ("tuple expected as style");
+    if (!is_tuple (style)) TM_FAILED ("tuple expected as style");
     H= get_style_env (style);
     drd= get_style_drd (style);
     style_set_cache (style, H, drd->get_locals ());
@@ -463,7 +463,7 @@ edit_typeset_rep::typeset_exec_until (path p) {
   if (enable_fastenv) {
     if (!(rp < p)) {
       failed_error << "Erroneous path " << p << "\n";
-      FAILED ("invalid typesetting path");
+      TM_FAILED ("invalid typesetting path");
     }
     tree t= subtree (et, rp);
     path q= path_up (p / rp);

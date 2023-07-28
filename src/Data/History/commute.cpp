@@ -71,7 +71,7 @@ invert (modification m, tree t) {
   case MOD_SET_CURSOR:
     return m;
   default:
-    FAILED ("unexpected situation");
+    TM_FAILED ("unexpected situation");
   }
   return m;
 }
@@ -307,7 +307,7 @@ swap (modification& m1, modification& m2) {
     return r;
   }
   else return swap_basic (m1, m2);
-  FAILED ("unexpected situation");
+  TM_FAILED ("unexpected situation");
   return false;
 }
 
@@ -415,7 +415,7 @@ test_modification (int i) {
   case 34: case 35: case 36: case 37: case 38: case 39: case 40: case 41:
     return path (2) * test_modification (i-34);
   default:
-    FAILED ("not implemented");
+    TM_FAILED ("not implemented");
     return mod_assign (path (), "");
   }
 }
@@ -457,7 +457,7 @@ test_commute () {
                        << clean_apply (clean_apply (tt, t1), t2) << "\n";
           failed_error << "t2  = "
                        << clean_apply (clean_apply (tt, m1), m2) << "\n";
-          FAILED ("inconsistency");
+          TM_FAILED ("inconsistency");
         }
         r= swap (m1, m2);
         if (!r) debug_std << "r   = " << r << "\n";
@@ -475,7 +475,7 @@ test_commute () {
         if (r) debug_std << "  Consistency check succeeded\n\n";
         else {
           failed_error << "  Consistency check failed\n\n";
-          FAILED ("inconsistency");
+          TM_FAILED ("inconsistency");
         }
       }
     }
@@ -496,7 +496,7 @@ test_invert () {
       failed_error << "t2= " << t2 << "\n";
       failed_error << "m2= " << m2 << "\n";
       failed_error << "t3= " << t3 << "\n";
-      FAILED ("inconsistency");
+      TM_FAILED ("inconsistency");
     }
  }
 }

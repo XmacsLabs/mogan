@@ -236,7 +236,7 @@ texmacs_input_rep::flush (bool force) {
     file_flush (force);
     break;
   default:
-    FAILED ("invalid mode");
+    TM_FAILED ("invalid mode");
     break;
   }
 }

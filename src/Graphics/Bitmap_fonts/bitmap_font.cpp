@@ -22,7 +22,7 @@ font_metric_rep::font_metric_rep (string name):
   rep<font_metric> (name), bad_font_metric (false) {}
 
 font_metric_rep::~font_metric_rep () {
-  FAILED ("not yet implemented"); }
+  TM_FAILED ("not yet implemented"); }
 
 bool font_metric_rep::exists (int char_code) {
   (void) char_code; return true; }
@@ -74,7 +74,7 @@ font_glyphs_rep::font_glyphs_rep (string name):
   rep<font_glyphs> (name), bad_font_glyphs (false) {}
 
 font_glyphs_rep::~font_glyphs_rep () {
-  FAILED ("not yet implemented"); }
+  TM_FAILED ("not yet implemented"); }
 
 /******************************************************************************
 * Standard bitmap fonts

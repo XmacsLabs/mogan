@@ -178,7 +178,7 @@ void
 edit_join (editor_rep* ed, path pp) {
   path p= copy (pp);
   ASSERT (ed->the_buffer_path() <= p, "invalid modification");
-  if (N(p)<1) FAILED ("path too short in join");
+  if (N(p)<1) TM_FAILED ("path too short in join");
   ed->notify_join (p);
 }
 
@@ -240,7 +240,7 @@ edit_announce (editor_rep* ed, modification mod) {
   case MOD_SET_CURSOR:
     edit_set_cursor (ed, mod->p, mod->t);
     break;
-  default: FAILED ("invalid modification type");
+  default: TM_FAILED ("invalid modification type");
   }
 }
 
