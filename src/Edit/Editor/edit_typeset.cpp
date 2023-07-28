@@ -13,6 +13,7 @@
 #include "edit_typeset.hpp"
 #include "tm_buffer.hpp"
 #include "convert.hpp"
+#include "converter.hpp"
 #include "file.hpp"
 #include "analyze.hpp"
 #include "tm_timer.hpp"
