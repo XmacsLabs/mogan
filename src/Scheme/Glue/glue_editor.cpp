@@ -1877,6 +1877,19 @@ tmg_set_mouse_pointer (tmscm arg1, tmscm arg2) {
 }
 
 tmscm
+tmg_set_cursor_style (tmscm arg1) {
+  TMSCM_ASSERT_STRING (arg1, TMSCM_ARG1, "set-cursor-style");
+
+  string in1= tmscm_to_string (arg1);
+
+  // TMSCM_DEFER_INTS;
+  get_current_editor()->set_cursor_style (in1);
+  // TMSCM_ALLOW_INTS;
+
+  return TMSCM_UNSPECIFIED;
+}
+
+tmscm
 tmg_set_predef_mouse_pointer (tmscm arg1) {
   TMSCM_ASSERT_STRING (arg1, TMSCM_ARG1, "set-predef-mouse-pointer");
 
