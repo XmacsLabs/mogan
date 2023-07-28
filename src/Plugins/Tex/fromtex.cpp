@@ -1064,7 +1064,7 @@ latex_symbol_to_tree (string s) {
       if (s == "boldmath") return tree (SET, MATH_FONT_SERIES, "bold");
 
       failed_error << "The symbol was \\" << s << "\n";
-      FAILED ("unexpected situation");
+      TM_FAILED ("unexpected situation");
     }
 
     if (latex_type (s) == "length") {

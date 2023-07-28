@@ -621,7 +621,7 @@ side_box_rep::find_tree_path (path bp) {
       if (nr_right == 1) return reverse (descend_script (bs[nr_left+1]->ip,0));
       return reverse (descend_script (bs[nr_left+1]->ip, bs[nr_left+2]->ip,0));
     }
-    FAILED ("bad leaf");
+    TM_FAILED ("bad leaf");
     return composite_box_rep::find_tree_path (bp);
   }
   else return composite_box_rep::find_tree_path (bp);

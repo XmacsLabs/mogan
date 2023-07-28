@@ -74,7 +74,7 @@ public:
     tmscm result= call_scheme (object_to_tmscm (obj));
     if (tmscm_is_widget (result)) return tmscm_to_widget (result);
     else {
-      FAILED ("widget expected");
+      TM_FAILED ("widget expected");
       return glue_widget ();
     }
   }

@@ -340,6 +340,6 @@ load_tex (string family, int size, int dpi, int dsize,
 #endif
   string name= family * as_string (size) * "@" * as_string (dpi);
   failed_error << "Could not open " << name << "\n";
-  FAILED ("Tex seems not to be installed properly");
+  TM_FAILED ("Tex seems not to be installed properly");
   bench_cumul ("load tex font");
 }

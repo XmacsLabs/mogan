@@ -337,7 +337,7 @@ unix_system (array<string> arg,
 	     array<int> fd_in, array<string> str_in,
 	     array<int> fd_out, array<string*> str_out) {
   (void) arg; (void) fd_in; (void) str_in; (void) fd_out; (void) str_out;
-  FAILED ("unsupported system call");
+  TM_FAILED ("unsupported system call");
 }
 
 #endif

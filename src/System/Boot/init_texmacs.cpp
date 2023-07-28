@@ -98,7 +98,7 @@ init_main_paths () {
     boot_error << "'TEXMACS_HOME_PATH' could not be set to '~/.TeXmacs'.\n";
     boot_error << "You may try to set this environment variable manually\n";
     boot_error << "\n";
-    FAILED ("installation problem");
+    TM_FAILED ("installation problem");
     exit (1);
   }
 }
@@ -368,7 +368,7 @@ setup_texmacs () {
     failed_error << "Please give me full access control over this file and\n";
     failed_error << "rerun 'TeXmacs'.\n";
     failed_error << HRULE;
-    FAILED ("unable to write settings");
+    TM_FAILED ("unable to write settings");
   }
   
   debug_boot << HRULE;
