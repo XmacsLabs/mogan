@@ -33,11 +33,11 @@ public:
     return 0; }
   inline virtual patch get_child (int i);
   inline virtual modification get_modification () {
-    FAILED ("not a modification"); return mod_assign (path (), ""); }
+    TM_FAILED ("not a modification"); return mod_assign (path (), ""); }
   inline virtual modification get_inverse () {
-    FAILED ("not a modification"); return mod_assign (path (), ""); }
+    TM_FAILED ("not a modification"); return mod_assign (path (), ""); }
   inline virtual bool get_birth () {
-    FAILED ("not a birth"); return false; }
+    TM_FAILED ("not a birth"); return false; }
   inline virtual double get_author () {
     return -1; }
 };
@@ -56,7 +56,7 @@ ABSTRACT_NULL (patch);
 ABSTRACT_NULL_CODE (patch);
 
 inline patch patch_rep::get_child (int i) {
-  FAILED ("not a composite patch"); (void) i; return patch (); }
+  TM_FAILED ("not a composite patch"); (void) i; return patch (); }
 
 /******************************************************************************
 * Routines on patches

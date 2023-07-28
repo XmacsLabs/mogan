@@ -1400,7 +1400,7 @@ smart_font_rep::initialize_font (int nr) {
   if (fn[nr]->res_name == res_name) {
     failed_error << "Font " << nr << ", " << a
                  << " -> " << fn[nr]->res_name << "\n";
-    FAILED ("substitution font loop detected");
+    TM_FAILED ("substitution font loop detected");
   }
 }
 

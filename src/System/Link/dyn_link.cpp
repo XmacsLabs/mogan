@@ -145,7 +145,7 @@ dyn_link_rep::write (string s, int channel) {
   if ((!alive) || (channel != LINK_IN)) return;
   if (routs==NULL) {
     failed_error << "Library= " << lib << "\n";
-    FAILED ("library not installed");
+    TM_FAILED ("library not installed");
   }
   package_exports_1* pack= (package_exports_1*) routs;
 

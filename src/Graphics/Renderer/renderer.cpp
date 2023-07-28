@@ -496,20 +496,20 @@ renderer_rep::shadow (picture& pic, SI x1, SI y1, SI x2, SI y2) {
 renderer
 renderer_rep::shadow (scalable& im , SI x1, SI y1, SI x2, SI y2) {
   (void) im; (void) x1; (void) y1; (void) x2; (void) y2;
-  FAILED ("shadowing is not supported");
+  TM_FAILED ("shadowing is not supported");
   return NULL;
 }
 
 void
 renderer_rep::draw_picture (picture p, SI x, SI y, int alpha) {
   (void) p; (void) x; (void) y; (void) alpha;
-  FAILED ("rendering pictures is not supported");
+  TM_FAILED ("rendering pictures is not supported");
 }
 
 renderer
 scalable_renderer (scalable im) {
   (void) im;
-  FAILED ("not yet implemented");
+  TM_FAILED ("not yet implemented");
   return NULL;
 }
 
@@ -524,34 +524,34 @@ delete_renderer (renderer ren) {
 picture
 native_picture (int w, int h, int ox, int oy) {
   (void) w; (void) h; (void) ox; (void) oy;
-  FAILED ("not yet implemented");
+  TM_FAILED ("not yet implemented");
   return picture ();
 }
 
 renderer
 picture_renderer (picture p, double zoomf) {
   (void) p; (void) zoomf;
-  FAILED ("not yet implemented");
+  TM_FAILED ("not yet implemented");
   return NULL;
 }
 
 picture
 load_picture (url u, int w, int h, tree eff, int pixel) {
   (void) u; (void) w; (void) h; (void) eff; (void) pixel;
-  FAILED ("not yet implemented");
+  TM_FAILED ("not yet implemented");
   return picture ();
 }
 
 picture
 as_native_picture (picture pict) {
-  FAILED ("not yet implemented");
+  TM_FAILED ("not yet implemented");
   return pict;
 }
 
 void
 save_picture (url dest, picture p) {
   (void) dest; (void) p;
-  FAILED ("not yet implemented");
+  TM_FAILED ("not yet implemented");
 }
 
 #endif

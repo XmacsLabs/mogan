@@ -223,11 +223,11 @@ sub (array<page_item> l, path p, path q) {
   else {
     if ((N(p) <= 2) || (N(q) <= 2)) {
       failed_error << "The paths were " << p << " and " << q << "\n";
-      FAILED ("paths to short");
+      TM_FAILED ("paths to short");
     }
     if ((p->item != q->item) || (p->next->item != q->next->item)) {
       failed_error << "The paths were " << p << " and " << q << "\n";
-      FAILED ("paths don't match");
+      TM_FAILED ("paths don't match");
     }
     page_item item= l[p->item];
     lazy_vstream ins= (lazy_vstream) item->fl[p->next->item];

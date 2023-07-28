@@ -95,7 +95,7 @@ hashtree<K,V>::operator-> (void) {
 template<class K, class V> inline hashtree<K,V> 
 hashtree<K,V>::operator[] (K key) {
   if (*this->contains (key)) return *this->children (key);
-  else FAILED ("read-access to non-existent node requested");
+  else TM_FAILED ("read-access to non-existent node requested");
 }
   
 template<class K, class V> inline hashtree<K,V> 

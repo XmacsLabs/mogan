@@ -18,7 +18,7 @@ log2i (int i) {
   if (i==1) return 0;
   for (l=1; l<30; l++)
     if (i <= (1 << l)) return l;
-  FAILED ("too large shrinking factor");
+  TM_FAILED ("too large shrinking factor");
   return 0;
 }
 
