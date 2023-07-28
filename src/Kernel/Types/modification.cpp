@@ -260,7 +260,7 @@ clean_assign (tree t, path p, tree u) {
   if (is_nil (p)) return copy (u);
   else {
     int i, j= p->item, n= N(t);
-    if (j >= n) FAILED("clean_remove(): Invalid path."); //return copy(u);  // FIXME? check whether this is the right return value.
+    if (j >= n) TM_FAILED ("clean_remove(): Invalid path."); //return copy(u);  // FIXME? check whether this is the right return value.
     tree r (t, n);
     for (i=0; i<j; i++) r[i]= t[i];
     r[j]= clean_assign (t[j], p->next, u);

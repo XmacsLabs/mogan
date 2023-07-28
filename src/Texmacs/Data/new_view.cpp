@@ -138,7 +138,7 @@ get_current_editor () {
     notify_delete_view (u);
     array<url> history = get_all_views();
     if (as_tree (history) == NULL || N(history) == 0)
-      FAILED("View history is empty")
+      TM_FAILED ("View history is empty")
     return view_to_editor (history[N(history)-1]);
   }
   return vw->ed;
