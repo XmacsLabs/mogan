@@ -1,4 +1,4 @@
-name: package on mingw
+name: package on macos
 
 on:
   workflow_dispatch:
@@ -32,17 +32,17 @@ jobs:
       - name: install
         run: xmake install -vD mogan
       - name: Generate Installer
-        run: xmake install -vD macos_installer
+        run: |
+          xmake install -vD macos_installer
       - name: Upload 
         uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
-          path: |
-            build/*.dmg
+          path: Mogan-*.dmg
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           prerelease: true
-          files: build/*.dmg
+          files: Mogan-*.dmg
 
