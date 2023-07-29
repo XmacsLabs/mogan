@@ -11,6 +11,8 @@
 
 #ifndef TIMER_H
 #define TIMER_H
+
+#include "basic.hpp"
 #include "string.hpp"
 #include "tm_configure.hpp"
 #include "tm_debug.hpp"
