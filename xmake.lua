@@ -656,7 +656,13 @@ target("mogan") do
         end
 
         if is_plat("macosx") and is_arch("arm64") then
-            os.execv("codesign", {"--force", "--deep", "--sign", "-", target:installdir().."/../.."})
+            local app_dir = target:installdir() .. "/../../"
+            os.rm(app_dir .. "Contents/Resources/lib")
+            os.rm(app_dir .. "Contents/Resources/include")
+            os.rm(app_dir .. "Contents/Frameworks/QtQmlModels.framework")
+            os.rm(app_dir .. "Contents/Frameworks/QtQml.framework")
+            os.rm(app_dir .. "Contents/Frameworks/QtQuick.framework")
+            os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
         end
 
         if is_plat("mingw") then
@@ -705,6 +711,18 @@ target("mogan") do
         else
             os.execv(target:installdir().."/../MacOS/Mogan")
         end
+    end)
+end
+
+target("macos_installer") do
+    set_enabled(is_plat("macosx") and is_mode("release"))
+    set_kind("phony")
+    set_installdir(INSTALL_DIR)
+    add_deps("mogan")
+
+    after_install(function (target, opt)
+        local app_dir = target:installdir() .. "/../../"
+        os.execv("hdiutil create build/Mogan.dmg -fs HFS+ -srcfolder " .. app_dir)
     end)
 end
 
