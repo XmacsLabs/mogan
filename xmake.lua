@@ -90,20 +90,13 @@ add_requires_of_mogan()
 
 
 --
--- Library: L1 Kernel
+-- Library: L3 Kernel
 --
 set_configvar("QTTEXMACS", 1)
-
---
--- Library: L2 Kernel
---
 local CONFIG_USER = "MOGAN_DEVELOPERS"
 local CONFIG_DATE = "1970-01-01"
 local TEXMACS_VERSION = "2.1.2"
 
---
--- Library: L3 Kernel
---
 local l3_files = {
     "src/Kernel/**.cpp",
     "src/Data/History/**.cpp",
@@ -200,6 +193,8 @@ target("libkernel_l3") do
         add_includedirs("src/Plugins/Windows")
         add_files("src/Plugins/Windows/**.cpp")
     end
+    add_cxxflags("-include $(buildir)/L3/config.h")
+    add_cxxflags("-include $(buildir)/L3/tm_configure.hpp")
 end
 
 for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
@@ -220,7 +215,6 @@ for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
         end
         add_includedirs("tests/Base")
         add_includedirs("$(buildir)/L3")
-        add_includedirs(l1_includedirs)
         add_includedirs(l3_includedirs)
         add_files("tests/Base/base.cpp")
         add_files(filepath)
@@ -391,8 +385,6 @@ target("libmogan") do
             "src/Graphics/Types",
             "src/Kernel/Abstractions",
             "src/Kernel/Algorithms",
-            "src/Kernel/Basic",
-            "src/Kernel/Containers",
             "src/Kernel/Types",
             "src/Plugins",
             "src/Plugins/Pdf",
@@ -410,8 +402,6 @@ target("libmogan") do
             "src/Style/Evaluate",
             "src/Style/Memorizer",
             "src/System",
-            "src/System/Memory",
-            "src/System/IO",
             "src/System/Boot",
             "src/System/Classes",
             "src/System/Config",
