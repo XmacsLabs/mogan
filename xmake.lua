@@ -3,7 +3,7 @@ package("lolly")
     set_homepage("https://github.com/XmacsLabs/lolly")
     set_description("Lolly is a C++ library")
 
-    add_urls("git@gitee.com:XmacsLabs/lolly.git")
+    add_urls("git@github.com:XmacsLabs/lolly.git")
 
     add_versions("v0.99.4", "e4d0a4d555335b8d829636469787ff8582bdb968")
 
