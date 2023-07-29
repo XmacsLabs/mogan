@@ -25,16 +25,19 @@ TestHummusPdfImageSize::test_hummus_pdf_image_size () {
   QCOMPARE (w, 595);
   QCOMPARE (h, 595);
 
-  hummus_pdf_image_size (url ("$TEXMACS_PATH/tests/images/26_2_2page.pdf"), w,
+  w= h= -1;
+  hummus_pdf_image_size (url ("$TEXMACS_PATH/tests/images/26_2_2pages.pdf"), w,
                          h);
   QCOMPARE (w, 595);
   QCOMPARE (h, 841);
 
-  hummus_pdf_image_size (url ("$TEXMACS_PATH/tests/images/26_2_3wrong.pdf"), w,
+  w= h= -1;
+  hummus_pdf_image_size (url ("$TEXMACS_PATH/tests/images/26_2_3wrong.txt"), w,
                          h);
   QCOMPARE (w, 0);
   QCOMPARE (h, 0);
 
+  w= h= -1;
   hummus_pdf_image_size (url ("$TEXMACS_PATH/tests/images/null.pdf"), w, h);
   QCOMPARE (w, 0);
   QCOMPARE (h, 0);
