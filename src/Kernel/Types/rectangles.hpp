@@ -12,7 +12,9 @@
 
 #ifndef RECTANGLES_H
 #define RECTANGLES_H
+
 #include "list.hpp"
+#include "tree.hpp"
 
 class rectangle_rep: concrete_struct {
 public:

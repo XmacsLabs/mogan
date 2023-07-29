@@ -10,7 +10,6 @@
 ******************************************************************************/
 
 #include "tm_ostream.hpp"
-#include "tree.hpp"
 #ifdef OS_MINGW
 #include "Windows/win-utf8-compat.hpp"
 #include "nowide/iostream.hpp"
@@ -28,7 +27,6 @@ void tm_ostream_rep::flush () {}
 void tm_ostream_rep::clear () {}
 bool tm_ostream_rep::is_writable () const { return false; }
 void tm_ostream_rep::write (const char*) {}
-void tm_ostream_rep::write (tree t) { (void) t; }
 
 /******************************************************************************
 * Standard streams
@@ -318,12 +316,6 @@ tm_ostream::operator << (long double ld) {
 tm_ostream&
 tm_ostream::operator << (const char* s) {
   rep->write (s);
-  return *this;
-}
-
-tm_ostream&
-tm_ostream::operator << (formatted f) {
-  rep->write (f.rep);
   return *this;
 }
 
