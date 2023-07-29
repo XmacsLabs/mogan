@@ -1,3 +1,24 @@
+-- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
+package("lolly")
+    set_homepage("https://github.com/XmacsLabs/lolly")
+    set_description("Lolly is a C++ library")
+
+    add_urls("https://github.com/XmacsLabs/lolly.git")
+    add_urls("https://gitee.com/XmacsLabs/lolly.git")
+
+    add_versions("v0.99.4", "e4d0a4d555335b8d829636469787ff8582bdb968")
+
+    on_install("linux", "macosx", "mingw", "wasm", function (package)
+        local configs = {}
+        if package:config("shared") then
+            configs.kind = "shared"
+        end
+        import("package.tools.xmake").install(package, configs)
+    end)
+package_end()
+
+add_requires("lolly", {system=false})
+
 -------------------------------------------------------------------------------
 --
 -- MODULE      : xmake.lua
@@ -70,181 +91,21 @@ add_requires_of_mogan()
 
 
 --
--- Library: L1 Kernel
+-- Library: L3 Kernel
 --
 set_configvar("QTTEXMACS", 1)
-
-local l1_files = {
-    "src/Kernel/Basic/**.cpp",
-    "src/Kernel/Containers/**.cpp",
-    "src/Kernel/Types/**.cpp",
-    "src/Data/Drd/**.cpp",
-    "src/System/IO/**.cpp",
-    "src/System/Memory/**.cpp"
-}
-local l1_includedirs = {
-    "src/Kernel/Basic",
-    "src/Kernel/Abstractions",
-    "src/Kernel/Containers",
-    "src/Kernel/Types",
-    "src/Data/Drd",
-    "src/Data/String",
-    "src/System/IO",
-    "src/System/Memory",
-    "src/Plugins"
-}
-
-target("libkernel_l1") do
-    set_languages("c++17")
-    set_policy("check.auto_ignore_flags", false)
-
-    set_kind("static")
-    set_group("kernel_l1")
-    set_basename("kernel_l1")
-
-    if is_plat("mingw") then
-        add_packages("nowide_standalone")
-    end
-
-    add_configfiles(
-        "src/System/config_l1.h.xmake", {
-            filename = "L1/config.h",
-            variables = {
-                OS_MINGW = is_plat("mingw")
-            }
-        }
-    )
-    add_configfiles(
-        "src/System/tm_configure_l1.hpp.xmake", {
-            filename = "L1/tm_configure.hpp",
-            pattern = "@(.-)@"
-        }
-    )
-
-    add_includedirs("$(buildir)/L1")
-    add_includedirs(l1_includedirs, {public = true})
-    add_files(l1_files)
-
-    if is_plat("mingw") then
-        add_includedirs({
-            "src/Plugins/Windows"
-        })
-    end
-end
-
-for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
-    local testname = path.basename(filepath)
-    target(testname) do
-        set_languages("c++17")
-        set_policy("check.auto_ignore_flags", false)
-
-        set_group("kernel_l1_tests")
-        add_deps("libkernel_l1")
-        add_rules("qt.console")
-        add_frameworks("QtTest")
-
-        if is_plat("mingw") then
-            add_packages("nowide_standalone")
-        end
-        add_includedirs("tests/Base")
-        add_includedirs("$(buildir)/L1")
-        add_includedirs(l1_includedirs)
-        add_files("tests/Base/base.cpp")
-        add_files(filepath)
-        add_files(filepath, {rules = "qt.moc"})
-    end
-end
-
-
-
---
--- Library: L2 Kernel
---
 local CONFIG_USER = "MOGAN_DEVELOPERS"
 local CONFIG_DATE = "1970-01-01"
 local TEXMACS_VERSION = "2.1.2"
 
-local l2_files = {
-    "src/System/Classes/**.cpp",
-    "src/System/Files/**.cpp",
-    "src/System/Misc/**.cpp",
-    "src/Plugins/Curl/**.cpp",
-    "src/Texmacs/Server/tm_debug.cpp",
-}
-local l2_includedirs = {
-    "src/Kernel/Algorithms",
-    "src/System/Files",
-    "src/System/Classes",
-    "src/System/Misc",
-    "src/Plugins",
-    "src/Texmacs",
-}
-
-target("libkernel_l2") do
-    set_languages("c++17")
-    set_policy("check.auto_ignore_flags", false)
-
-    set_kind("static")
-    set_group("kernel_l2")
-    set_basename("kernel_l2")
-
-    add_packages("libcurl")
-    if is_plat("mingw") then
-        add_packages("nowide_standalone")
-    end
-    add_deps("libkernel_l1")
-
-    add_configfiles(
-        "src/System/config_l2.h.xmake", {
-            filename = "L2/config.h",
-            variables = {
-                OS_MINGW = is_plat("mingw"),
-                QTTEXMACS = false,
-            }
-        }
-    )
-    add_configfiles(
-        "src/System/tm_configure_l2.hpp.xmake", {
-            filename = "L2/tm_configure.hpp",
-            pattern = "@(.-)@",
-            variables = {
-                CONFIG_USER = CONFIG_USER,
-                CONFIG_DATE = CONFIG_DATE,
-                CONFIG_OS = CONFIG_OS,
-                VERSION = TEXMACS_VERSION,
-            }
-        }
-    )
-
-    add_headerfiles({
-        "src/System/Classes/tm_timer.hpp",
-        "src/Texmacs/tm_debug.hpp",
-    })
-    add_includedirs("$(buildir)/L2")
-    add_includedirs(l2_includedirs, {public = true})
-    add_files(l2_files)
-
-    if is_plat("linux") or is_plat("macosx") then
-        add_includedirs("src/Plugins/Unix")
-        add_files("src/Plugins/Unix/**.cpp")
-    end
-
-    if is_plat("mingw") then
-        add_includedirs("src/Plugins/Windows")
-        add_files("src/Plugins/Windows/**.cpp")
-    end
-end
-
---
--- Library: L3 Kernel
---
 local l3_files = {
-    "src/Kernel/Abstractions/**.cpp",
+    "src/Kernel/**.cpp",
     "src/Data/History/**.cpp",
     "src/Data/Observers/**.cpp",
     "src/Data/Scheme/**.cpp",
     "src/Data/String/**.cpp",
     "src/Data/Document/new_document.cpp",
+    "src/Data/Drd/**.cpp",
     "src/Scheme/L1/**.cpp",
     "src/Scheme/L2/**.cpp",
     "src/Scheme/L3/**.cpp",
@@ -259,7 +120,9 @@ local l3_files = {
     "src/Texmacs/Server/tm_debug.cpp",
 }
 local l3_includedirs = {
+    "src/Kernel/Types",
     "src/Kernel/Abstractions",
+    "src/Data/Drd",
     "src/Data/Document",
     "src/Data/History",
     "src/Data/Observers",
@@ -291,10 +154,10 @@ target("libkernel_l3") do
 
     add_packages("libcurl")
     add_packages("s7")
+    add_packages("lolly")
     if is_plat("mingw") then
         add_packages("nowide_standalone")
     end
-    add_deps("libkernel_l1")
 
     add_configfiles(
         "src/System/config_l3.h.xmake", {
@@ -332,6 +195,8 @@ target("libkernel_l3") do
         add_includedirs("src/Plugins/Windows")
         add_files("src/Plugins/Windows/**.cpp")
     end
+    add_cxxflags("-include $(buildir)/L3/config.h")
+    add_cxxflags("-include $(buildir)/L3/tm_configure.hpp")
 end
 
 for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
@@ -346,13 +211,13 @@ for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
         add_rules("qt.console")
         add_frameworks("QtTest")
 
+        add_packages("lolly")
         add_packages("libcurl")
         if is_plat("mingw") then
             add_packages("nowide_standalone")
         end
         add_includedirs("tests/Base")
         add_includedirs("$(buildir)/L3")
-        add_includedirs(l1_includedirs)
         add_includedirs(l3_includedirs)
         add_files("tests/Base/base.cpp")
         add_files(filepath)
@@ -465,6 +330,7 @@ target("libmogan") do
         add_frameworks("QtMacExtras")
     end
 
+    add_packages("lolly")
     add_packages("libpng")
     add_packages("libiconv")
     add_packages("zlib")
@@ -523,8 +389,6 @@ target("libmogan") do
             "src/Graphics/Types",
             "src/Kernel/Abstractions",
             "src/Kernel/Algorithms",
-            "src/Kernel/Basic",
-            "src/Kernel/Containers",
             "src/Kernel/Types",
             "src/Plugins",
             "src/Plugins/Pdf",
@@ -542,8 +406,6 @@ target("libmogan") do
             "src/Style/Evaluate",
             "src/Style/Memorizer",
             "src/System",
-            "src/System/Memory",
-            "src/System/IO",
             "src/System/Boot",
             "src/System/Classes",
             "src/System/Config",
@@ -619,6 +481,7 @@ target("libmogan") do
 
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include $(buildir)/config.h")
+    add_cxxflags("-include $(buildir)/tm_configure.hpp")
 end 
 
 option("libdl") do
@@ -658,6 +521,7 @@ target("mogan") do
         add_frameworks("QtMacExtras")
     end
 
+    add_packages("lolly")
     if is_plat("mingw") then
         add_packages("nowide_standalone")
         add_packages("qt5widgets")
@@ -674,6 +538,9 @@ target("mogan") do
     add_deps("libmogan")
     add_syslinks("pthread")
 
+    add_includedirs({
+        "$(buildir)",
+    })
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
     if is_plat("mingw") and is_mode("release") then
         add_deps("windows_icon")
@@ -777,69 +644,68 @@ target("mogan") do
         end
     end
 
-    after_install(
-        function (target)
-            print("after_install of target mogan")
+    after_install(function (target)
+        print("after_install of target mogan")
 
-            os.cp ("TeXmacs/misc/images/texmacs.svg", 
-                path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
-            for _,size in ipairs({32, 48, 64, 128, 256, 512}) do
-                os.cp (
-                    "TeXmacs/misc/images/texmacs-"..size..".png",
-                    path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
-            end
+        os.cp ("TeXmacs/misc/images/texmacs.svg", 
+            path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
+        for _,size in ipairs({32, 48, 64, 128, 256, 512}) do
+            os.cp (
+                "TeXmacs/misc/images/texmacs-"..size..".png",
+                path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
+        end
 
-            if is_plat("macosx") and is_arch("arm64") then
-                os.execv("codesign", {"--force", "--deep", "--sign", "-", target:installdir().."/../.."})
-            end
+        if is_plat("macosx") and is_arch("arm64") then
+            os.execv("codesign", {"--force", "--deep", "--sign", "-", target:installdir().."/../.."})
+        end
 
-            if is_plat("mingw") then
-                import("detect.sdks.find_qt")
-                import("core.base.option")
-                import("core.project.config")
-                import("lib.detect.find_tool")
+        if is_plat("mingw") then
+            import("detect.sdks.find_qt")
+            import("core.base.option")
+            import("core.project.config")
+            import("lib.detect.find_tool")
 
-                -- get qt sdk
-                local qt = assert(find_qt(), "Qt SDK not found!")
+            -- get qt sdk
+            local qt = assert(find_qt(), "Qt SDK not found!")
 
-                -- get windeployqt
-                local windeployqt_tool = assert(
-                    find_tool("windeployqt", {check = "--help"}),
-                    "windeployqt.exe not found!")
-                local windeployqt = windeployqt_tool.program
-                
-                -- deploy necessary dll
-                -- since version of mingw used to build mogan may differs from
-                --   version of Qt, tell windeployqt to use lib from mingw may
-                --   break ABI compability, but major version of mingw must be
-                --   same.
-                local deploy_argv = {"--no-compiler-runtime", "-printsupport"}
-                if option.get("diagnosis") then
-                    table.insert(deploy_argv, "--verbose=2")
-                elseif option.get("verbose") then
-                    table.insert(deploy_argv, "--verbose=1")
-                else
-                    table.insert(deploy_argv, "--verbose=0")
-                end
-                local install_bindir = path.join(target:installdir(), "bin")
-                table.insert(deploy_argv, install_bindir)
-                os.iorunv(windeployqt, deploy_argv, {envs = {PATH = qt.bindir}})
-                os.cp(path.join(qt.bindir, "libstdc++*.dll"), install_bindir)
-                os.cp(path.join(qt.bindir, "libgcc*.dll"), install_bindir)
-                os.cp(path.join(qt.bindir, "libwinpthread*.dll"), install_bindir)
-            end
-        end)
-
-        on_run(function (target)
-            name = target:name()
-            if is_plat("mingw") then
-                os.execv(target:installdir().."/bin/mogan.exe")
-            elseif is_plat("linux") then
-                os.execv(target:installdir().."/bin/mogan")
+            -- get windeployqt
+            local windeployqt_tool = assert(
+                find_tool("windeployqt", {check = "--help"}),
+                "windeployqt.exe not found!")
+            local windeployqt = windeployqt_tool.program
+            
+            -- deploy necessary dll
+            -- since version of mingw used to build mogan may differs from
+            --   version of Qt, tell windeployqt to use lib from mingw may
+            --   break ABI compability, but major version of mingw must be
+            --   same.
+            local deploy_argv = {"--no-compiler-runtime", "-printsupport"}
+            if option.get("diagnosis") then
+                table.insert(deploy_argv, "--verbose=2")
+            elseif option.get("verbose") then
+                table.insert(deploy_argv, "--verbose=1")
             else
-                os.execv(target:installdir().."/../MacOS/Mogan")
+                table.insert(deploy_argv, "--verbose=0")
             end
-        end)
+            local install_bindir = path.join(target:installdir(), "bin")
+            table.insert(deploy_argv, install_bindir)
+            os.iorunv(windeployqt, deploy_argv, {envs = {PATH = qt.bindir}})
+            os.cp(path.join(qt.bindir, "libstdc++*.dll"), install_bindir)
+            os.cp(path.join(qt.bindir, "libgcc*.dll"), install_bindir)
+            os.cp(path.join(qt.bindir, "libwinpthread*.dll"), install_bindir)
+        end
+    end)
+
+    on_run(function (target)
+        name = target:name()
+        if is_plat("mingw") then
+            os.execv(target:installdir().."/bin/mogan.exe")
+        elseif is_plat("linux") then
+            os.execv(target:installdir().."/bin/mogan")
+        else
+            os.execv(target:installdir().."/../MacOS/Mogan")
+        end
+    end)
 end
 
 target("windows_installer") do
@@ -907,11 +773,13 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
             add_syslinks("pthread")
             add_packages("s7")
+            add_packages("lolly")
 
             add_includedirs({"$(buildir)", "tests/Base"})
             add_files("tests/Base/base.cpp")
             add_files(filepath) 
             add_files(filepath, {rules = "qt.moc"})
+            add_cxxflags("-include $(buildir)/config.h")
         end
     end
 end
