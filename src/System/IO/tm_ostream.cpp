@@ -10,6 +10,8 @@
 ******************************************************************************/
 
 #include "tm_ostream.hpp"
+#include "string.hpp"
+
 #ifdef OS_MINGW
 #include "Windows/win-utf8-compat.hpp"
 #include "nowide/iostream.hpp"
@@ -17,6 +19,7 @@
 FILE* fstdout;
 FILE* fstderr; 
 #endif
+
 /******************************************************************************
 * Routines for abstract base class
 ******************************************************************************/
