@@ -94,89 +94,6 @@ add_requires_of_mogan()
 --
 set_configvar("QTTEXMACS", 1)
 
-local l1_files = {
-    "src/Kernel/Basic/**.cpp",
-    "src/Kernel/Containers/**.cpp",
-    "src/Kernel/Types/**.cpp",
-    "src/Data/Drd/**.cpp",
-    "src/System/IO/**.cpp",
-    "src/System/Memory/**.cpp"
-}
-local l1_includedirs = {
-    "src/Kernel/Basic",
-    "src/Kernel/Abstractions",
-    "src/Kernel/Containers",
-    "src/Kernel/Types",
-    "src/Data/Drd",
-    "src/Data/String",
-    "src/System/IO",
-    "src/System/Memory",
-    "src/Plugins"
-}
-
-target("libkernel_l1") do
-    set_languages("c++17")
-    set_policy("check.auto_ignore_flags", false)
-
-    set_kind("static")
-    set_group("kernel_l1")
-    set_basename("kernel_l1")
-
-    if is_plat("mingw") then
-        add_packages("nowide_standalone")
-    end
-
-    add_configfiles(
-        "src/System/config_l1.h.xmake", {
-            filename = "L1/config.h",
-            variables = {
-                OS_MINGW = is_plat("mingw")
-            }
-        }
-    )
-    add_configfiles(
-        "src/System/tm_configure_l1.hpp.xmake", {
-            filename = "L1/tm_configure.hpp",
-            pattern = "@(.-)@"
-        }
-    )
-
-    add_includedirs("$(buildir)/L1")
-    add_includedirs(l1_includedirs, {public = true})
-    add_files(l1_files)
-
-    if is_plat("mingw") then
-        add_includedirs({
-            "src/Plugins/Windows"
-        })
-    end
-end
-
-for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
-    local testname = path.basename(filepath)
-    target(testname) do
-        set_languages("c++17")
-        set_policy("check.auto_ignore_flags", false)
-
-        set_group("kernel_l1_tests")
-        add_deps("libkernel_l1")
-        add_rules("qt.console")
-        add_frameworks("QtTest")
-
-        if is_plat("mingw") then
-            add_packages("nowide_standalone")
-        end
-        add_includedirs("tests/Base")
-        add_includedirs("$(buildir)/L1")
-        add_includedirs(l1_includedirs)
-        add_files("tests/Base/base.cpp")
-        add_files(filepath)
-        add_files(filepath, {rules = "qt.moc"})
-    end
-end
-
-
-
 --
 -- Library: L2 Kernel
 --
@@ -184,82 +101,11 @@ local CONFIG_USER = "MOGAN_DEVELOPERS"
 local CONFIG_DATE = "1970-01-01"
 local TEXMACS_VERSION = "2.1.2"
 
-local l2_files = {
-    "src/System/Classes/**.cpp",
-    "src/System/Files/**.cpp",
-    "src/System/Misc/**.cpp",
-    "src/Plugins/Curl/**.cpp",
-    "src/Texmacs/Server/tm_debug.cpp",
-}
-local l2_includedirs = {
-    "src/Kernel/Algorithms",
-    "src/System/Files",
-    "src/System/Classes",
-    "src/System/Misc",
-    "src/Plugins",
-    "src/Texmacs",
-}
-
-target("libkernel_l2") do
-    set_languages("c++17")
-    set_policy("check.auto_ignore_flags", false)
-
-    set_kind("static")
-    set_group("kernel_l2")
-    set_basename("kernel_l2")
-
-    add_packages("libcurl")
-    if is_plat("mingw") then
-        add_packages("nowide_standalone")
-    end
-    add_deps("libkernel_l1")
-
-    add_configfiles(
-        "src/System/config_l2.h.xmake", {
-            filename = "L2/config.h",
-            variables = {
-                OS_MINGW = is_plat("mingw"),
-                QTTEXMACS = false,
-            }
-        }
-    )
-    add_configfiles(
-        "src/System/tm_configure_l2.hpp.xmake", {
-            filename = "L2/tm_configure.hpp",
-            pattern = "@(.-)@",
-            variables = {
-                CONFIG_USER = CONFIG_USER,
-                CONFIG_DATE = CONFIG_DATE,
-                CONFIG_OS = CONFIG_OS,
-                VERSION = TEXMACS_VERSION,
-            }
-        }
-    )
-
-    add_headerfiles({
-        "src/System/Classes/tm_timer.hpp",
-        "src/Texmacs/tm_debug.hpp",
-    })
-    add_includedirs("$(buildir)/L2")
-    add_includedirs(l2_includedirs, {public = true})
-    add_files(l2_files)
-
-    if is_plat("linux") or is_plat("macosx") then
-        add_includedirs("src/Plugins/Unix")
-        add_files("src/Plugins/Unix/**.cpp")
-    end
-
-    if is_plat("mingw") then
-        add_includedirs("src/Plugins/Windows")
-        add_files("src/Plugins/Windows/**.cpp")
-    end
-end
-
 --
 -- Library: L3 Kernel
 --
 local l3_files = {
-    "src/Kernel/Abstractions/**.cpp",
+    "src/Kernel/**.cpp",
     "src/Data/History/**.cpp",
     "src/Data/Observers/**.cpp",
     "src/Data/Scheme/**.cpp",
@@ -279,7 +125,9 @@ local l3_files = {
     "src/Texmacs/Server/tm_debug.cpp",
 }
 local l3_includedirs = {
+    "src/Kernel/Types",
     "src/Kernel/Abstractions",
+    "src/Data/Drd",
     "src/Data/Document",
     "src/Data/History",
     "src/Data/Observers",
@@ -311,10 +159,10 @@ target("libkernel_l3") do
 
     add_packages("libcurl")
     add_packages("s7")
+    add_packages("lolly")
     if is_plat("mingw") then
         add_packages("nowide_standalone")
     end
-    add_deps("libkernel_l1")
 
     add_configfiles(
         "src/System/config_l3.h.xmake", {
