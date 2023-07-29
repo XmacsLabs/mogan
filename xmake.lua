@@ -210,6 +210,7 @@ for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
         add_rules("qt.console")
         add_frameworks("QtTest")
 
+        add_packages("lolly")
         add_packages("libcurl")
         if is_plat("mingw") then
             add_packages("nowide_standalone")
@@ -771,11 +772,13 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
             add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
             add_syslinks("pthread")
             add_packages("s7")
+            add_packages("lolly")
 
             add_includedirs({"$(buildir)", "tests/Base"})
             add_files("tests/Base/base.cpp")
             add_files(filepath) 
             add_files(filepath, {rules = "qt.moc"})
+            add_cxxflags("-include $(buildir)/config.h")
         end
     end
 end
