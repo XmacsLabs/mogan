@@ -27,7 +27,6 @@ template<class T, class U> class hashfunc {
   inline hashfunc (U (*func) (T), U init):
     rep (tm_new<hashfunc_rep<T,U> > (func, init)) {}
   inline U operator [] (T x) { return rep->apply (x); }
-  operator tree ();
 };
 CONCRETE_TEMPLATE_2_CODE(hashfunc,class,T,class,U);
 
