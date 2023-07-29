@@ -1878,7 +1878,7 @@ tmg_set_mouse_pointer (tmscm arg1, tmscm arg2) {
 
 tmscm
 tmg_set_cursor_style (tmscm arg1) {
-  TMSCM_ASSERT_STRING (arg1, TMSCM_ARG1, "set-cursor-style");
+  TMSCM_ASSERT_STRING (arg1, TMSCM_ARG1, "set-cursor-style-origin");
 
   string in1= tmscm_to_string (arg1);
 
@@ -3762,6 +3762,7 @@ initialize_glue_editor () {
   tmscm_install_procedure ("mouse-any",  tmg_mouse_any, 5, 0, 0);
   tmscm_install_procedure ("get-mouse-position",  tmg_get_mouse_position, 0, 0, 0);
   tmscm_install_procedure ("set-mouse-pointer",  tmg_set_mouse_pointer, 2, 0, 0);
+  tmscm_install_procedure ("set-cursor-style-origin",  tmg_set_cursor_style, 1, 0, 0);
   tmscm_install_procedure ("set-predef-mouse-pointer",  tmg_set_predef_mouse_pointer, 1, 0, 0);
   tmscm_install_procedure ("go-to-path",  tmg_go_to_path, 1, 0, 0);
   tmscm_install_procedure ("go-left",  tmg_go_left, 0, 0, 0);

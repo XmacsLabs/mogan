@@ -960,6 +960,7 @@
 "mouse-any"
 "get-mouse-position"
 "set-mouse-pointer"
+"set-cursor-style-origin"
 "set-predef-mouse-pointer"
 "go-to-path"
 "go-left"

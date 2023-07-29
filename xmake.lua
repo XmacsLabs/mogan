@@ -61,10 +61,14 @@ else
     add_requires("libpng 1.6.37", {system=false})
     add_requires("libjpeg v9e", {system=false})
     add_requires("freetype 2.12.1", {system=false})
-    add_requires("sqlite3 3.39.0+200", {system=false})
+    if is_plat ("macosx") then
+        add_requires("sqlite3", {system=true})
+    else
+        add_requires("sqlite3 3.39.0+200", {system=false})
+    end
 end
 
-local PDFHUMMUS_VERSION = "4.1"
+local PDFHUMMUS_VERSION = "4.5.10"
 if not is_plat("wasm") then
     add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
     add_requires("nowide_standalone 11.2.0", {system=false})
