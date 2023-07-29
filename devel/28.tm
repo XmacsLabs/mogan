@@ -32,6 +32,47 @@
       Darcy
     </cell>|<\cell>
       Explicit hashmap to tree conversion
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      28_4
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Remove tree in promise and unary_f
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      28_5
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Move tree related routines to edit_typeset and tree_analyze and rename
+      macro from FAILED to TM_FAILED
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      28_6
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Remove tree in tm_ostream
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      28_7
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Remove tree in hashfunc
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      28_8
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Use lolly as a package and remove kernel L1
     </cell>>>>
   </wide-tabular>
 
