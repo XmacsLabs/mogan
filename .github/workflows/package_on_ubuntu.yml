@@ -1,4 +1,4 @@
-name: Package for Ubuntu
+name: package on ubuntu
 
 on:
   workflow_dispatch:
@@ -44,8 +44,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
-          path: |
-            mogan-*.deb
+          path: mogan-*.deb
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
