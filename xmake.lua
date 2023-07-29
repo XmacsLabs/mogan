@@ -327,6 +327,7 @@ target("libmogan") do
         add_frameworks("QtMacExtras")
     end
 
+    add_packages("lolly")
     add_packages("libpng")
     add_packages("libiconv")
     add_packages("zlib")
@@ -477,6 +478,7 @@ target("libmogan") do
 
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include $(buildir)/config.h")
+    add_cxxflags("-include $(buildir)/tm_configure.hpp")
 end 
 
 option("libdl") do
@@ -516,6 +518,7 @@ target("mogan") do
         add_frameworks("QtMacExtras")
     end
 
+    add_packages("lolly")
     if is_plat("mingw") then
         add_packages("nowide_standalone")
         add_packages("qt5widgets")
@@ -532,6 +535,9 @@ target("mogan") do
     add_deps("libmogan")
     add_syslinks("pthread")
 
+    add_includedirs({
+        "$(buildir)",
+    })
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
     if is_plat("mingw") and is_mode("release") then
         add_deps("windows_icon")
@@ -635,69 +641,68 @@ target("mogan") do
         end
     end
 
-    after_install(
-        function (target)
-            print("after_install of target mogan")
+    after_install(function (target)
+        print("after_install of target mogan")
 
-            os.cp ("TeXmacs/misc/images/texmacs.svg", 
-                path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
-            for _,size in ipairs({32, 48, 64, 128, 256, 512}) do
-                os.cp (
-                    "TeXmacs/misc/images/texmacs-"..size..".png",
-                    path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
-            end
+        os.cp ("TeXmacs/misc/images/texmacs.svg", 
+            path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
+        for _,size in ipairs({32, 48, 64, 128, 256, 512}) do
+            os.cp (
+                "TeXmacs/misc/images/texmacs-"..size..".png",
+                path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
+        end
 
-            if is_plat("macosx") and is_arch("arm64") then
-                os.execv("codesign", {"--force", "--deep", "--sign", "-", target:installdir().."/../.."})
-            end
+        if is_plat("macosx") and is_arch("arm64") then
+            os.execv("codesign", {"--force", "--deep", "--sign", "-", target:installdir().."/../.."})
+        end
 
-            if is_plat("mingw") then
-                import("detect.sdks.find_qt")
-                import("core.base.option")
-                import("core.project.config")
-                import("lib.detect.find_tool")
+        if is_plat("mingw") then
+            import("detect.sdks.find_qt")
+            import("core.base.option")
+            import("core.project.config")
+            import("lib.detect.find_tool")
 
-                -- get qt sdk
-                local qt = assert(find_qt(), "Qt SDK not found!")
+            -- get qt sdk
+            local qt = assert(find_qt(), "Qt SDK not found!")
 
-                -- get windeployqt
-                local windeployqt_tool = assert(
-                    find_tool("windeployqt", {check = "--help"}),
-                    "windeployqt.exe not found!")
-                local windeployqt = windeployqt_tool.program
-                
-                -- deploy necessary dll
-                -- since version of mingw used to build mogan may differs from
-                --   version of Qt, tell windeployqt to use lib from mingw may
-                --   break ABI compability, but major version of mingw must be
-                --   same.
-                local deploy_argv = {"--no-compiler-runtime", "-printsupport"}
-                if option.get("diagnosis") then
-                    table.insert(deploy_argv, "--verbose=2")
-                elseif option.get("verbose") then
-                    table.insert(deploy_argv, "--verbose=1")
-                else
-                    table.insert(deploy_argv, "--verbose=0")
-                end
-                local install_bindir = path.join(target:installdir(), "bin")
-                table.insert(deploy_argv, install_bindir)
-                os.iorunv(windeployqt, deploy_argv, {envs = {PATH = qt.bindir}})
-                os.cp(path.join(qt.bindir, "libstdc++*.dll"), install_bindir)
-                os.cp(path.join(qt.bindir, "libgcc*.dll"), install_bindir)
-                os.cp(path.join(qt.bindir, "libwinpthread*.dll"), install_bindir)
-            end
-        end)
-
-        on_run(function (target)
-            name = target:name()
-            if is_plat("mingw") then
-                os.execv(target:installdir().."/bin/mogan.exe")
-            elseif is_plat("linux") then
-                os.execv(target:installdir().."/bin/mogan")
+            -- get windeployqt
+            local windeployqt_tool = assert(
+                find_tool("windeployqt", {check = "--help"}),
+                "windeployqt.exe not found!")
+            local windeployqt = windeployqt_tool.program
+            
+            -- deploy necessary dll
+            -- since version of mingw used to build mogan may differs from
+            --   version of Qt, tell windeployqt to use lib from mingw may
+            --   break ABI compability, but major version of mingw must be
+            --   same.
+            local deploy_argv = {"--no-compiler-runtime", "-printsupport"}
+            if option.get("diagnosis") then
+                table.insert(deploy_argv, "--verbose=2")
+            elseif option.get("verbose") then
+                table.insert(deploy_argv, "--verbose=1")
             else
-                os.execv(target:installdir().."/../MacOS/Mogan")
+                table.insert(deploy_argv, "--verbose=0")
             end
-        end)
+            local install_bindir = path.join(target:installdir(), "bin")
+            table.insert(deploy_argv, install_bindir)
+            os.iorunv(windeployqt, deploy_argv, {envs = {PATH = qt.bindir}})
+            os.cp(path.join(qt.bindir, "libstdc++*.dll"), install_bindir)
+            os.cp(path.join(qt.bindir, "libgcc*.dll"), install_bindir)
+            os.cp(path.join(qt.bindir, "libwinpthread*.dll"), install_bindir)
+        end
+    end)
+
+    on_run(function (target)
+        name = target:name()
+        if is_plat("mingw") then
+            os.execv(target:installdir().."/bin/mogan.exe")
+        elseif is_plat("linux") then
+            os.execv(target:installdir().."/bin/mogan")
+        else
+            os.execv(target:installdir().."/../MacOS/Mogan")
+        end
+    end)
 end
 
 target("windows_installer") do
