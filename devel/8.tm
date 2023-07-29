@@ -10,26 +10,30 @@
   <\wide-tabular>
     <tformat|<cwith|1|1|4|4|cell-valign|b>|<cwith|2|2|4|4|cell-valign|b>|<cwith|3|3|4|4|cell-valign|b>|<cwith|7|7|2|2|cell-background|pastel
     green>|<cwith|8|8|2|2|cell-background|pastel
-    green>|<cwith|5|5|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|5|5|2|2|cell-background|pastel
+    green>|<cwith|2|2|2|2|cell-background|pastel
+    green>|<cwith|3|3|2|2|cell-background|pastel
+    green>|<cwith|4|4|2|2|cell-background|pastel
+    green>|<cwith|9|9|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Feature
     </cell>|<\cell>
       <todo|8_1>
     </cell>|<\cell>
-      \;
+      jingkaimori
     </cell>|<\cell>
       packaging on Windows
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <todo|8_2>
+      8_2
     </cell>|<\cell>
-      \;
+      Darcy
     </cell>|<\cell>
       Github Action to package on Windows
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <todo|8_3>
+      8_3
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -37,7 +41,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <todo|8_4>
+      8_4
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
