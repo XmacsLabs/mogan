@@ -13,6 +13,7 @@
 #include "edit_typeset.hpp"
 #include "tm_buffer.hpp"
 #include "convert.hpp"
+#include "converter.hpp"
 #include "file.hpp"
 #include "analyze.hpp"
 #include "tm_timer.hpp"
@@ -118,8 +119,8 @@ concat_as_string (tree t) {
 
 array<string>
 edit_typeset_rep::find_refs (string val, bool global) {
-  tree a= (tree) buf->data->ref;
-  if (global && buf->prj != NULL) a= buf->prj->data->ref;
+  tree a= as_tree (buf->data->ref);
+  if (global && buf->prj != NULL) a= as_tree (buf->prj->data->ref);
   array<string> v;
   int i, n= N(a);
   for (i=0; i<n; i++)
@@ -131,8 +132,8 @@ edit_typeset_rep::find_refs (string val, bool global) {
 
 array<string>
 edit_typeset_rep::list_refs (bool global) {
-  tree a= (tree) buf->data->ref;
-  if (global && buf->prj != NULL) a= buf->prj->data->ref;
+  tree a= as_tree (buf->data->ref);
+  if (global && buf->prj != NULL) a= as_tree (buf->prj->data->ref);
   array<string> v;
   int i, n= N(a);
   for (i=0; i<n; i++)
@@ -158,8 +159,8 @@ edit_typeset_rep::reset_aux (string key) {
 
 array<string>
 edit_typeset_rep::list_auxs (bool global) {
-  tree a= (tree) buf->data->aux;
-  if (global && buf->prj != NULL) a= buf->prj->data->aux;
+  tree a= as_tree (buf->data->aux);
+  if (global && buf->prj != NULL) a= as_tree (buf->prj->data->aux);
   array<string> v;
   int i, n= N(a);
   for (i=0; i<n; i++)
@@ -185,8 +186,8 @@ edit_typeset_rep::reset_att (string key) {
 
 array<string>
 edit_typeset_rep::list_atts (bool global) {
-  tree a= (tree) buf->data->att;
-  if (global && buf->prj != NULL) a= buf->prj->data->att;
+  tree a= as_tree (buf->data->att);
+  if (global && buf->prj != NULL) a= as_tree (buf->prj->data->att);
   array<string> v;
   int i, n= N(a);
   for (i=0; i<n; i++)
@@ -279,7 +280,7 @@ edit_typeset_rep::typeset_style_use_cache (tree style) {
   }
   if (!ok) {
     //cout << "Typeset without cache " << style << LF;
-    if (!is_tuple (style)) FAILED ("tuple expected as style");
+    if (!is_tuple (style)) TM_FAILED ("tuple expected as style");
     H= get_style_env (style);
     drd= get_style_drd (style);
     style_set_cache (style, H, drd->get_locals ());
@@ -463,7 +464,7 @@ edit_typeset_rep::typeset_exec_until (path p) {
   if (enable_fastenv) {
     if (!(rp < p)) {
       failed_error << "Erroneous path " << p << "\n";
-      FAILED ("invalid typesetting path");
+      TM_FAILED ("invalid typesetting path");
     }
     tree t= subtree (et, rp);
     path q= path_up (p / rp);
@@ -509,7 +510,7 @@ edit_typeset_rep::typeset_exec_until (path p) {
 tree
 edit_typeset_rep::get_full_env () {
   typeset_exec_until (tp);
-  return (tree) cur[tp];
+  return as_tree (cur[tp]);
 }
 
 bool
@@ -771,7 +772,7 @@ edit_typeset_rep::exec_html (tree t, path p) {
   typeset_exec_until (p);
   hashmap<string,tree> H= copy (cur[p]);
   tree patch= as_tree (eval ("(stree->tree (tmhtml-env-patch))"));
-  hashmap<string,tree> P (UNINIT, patch);
+  hashmap<string,tree> P= tree_hashmap (UNINIT, patch);
   H->join (P);
   prefix_specific (H, "tmhtml-");
   tree w (WITH);
@@ -845,7 +846,7 @@ edit_typeset_rep::exec_latex (tree t, path p) {
   iterator<string> it= iterate (H);
   while (it->busy ()) l= cons (object (it->next ()), l);
   tree patch= as_tree (call ("stree->tree", call ("tmtex-env-patch", t, l)));
-  hashmap<string,tree> P (UNINIT, patch);
+  hashmap<string,tree> P= tree_hashmap (UNINIT, patch);
   H->join (P);
   prefix_specific (H, "tmlatex-");
 
@@ -939,7 +940,7 @@ edit_typeset_rep::init_style (string name) {
 
 tree
 edit_typeset_rep::get_init_all () {
-  return (tree) init;
+  return as_tree (init);
 }
 
 void

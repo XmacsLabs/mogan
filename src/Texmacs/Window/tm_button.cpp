@@ -53,7 +53,7 @@ initialize_environment (edit_env& env, tree doc, drd_info& drd) {
     drd->set_environment (H);
   }
   if (!ok) {
-    if (!is_tuple (style)) FAILED ("tuple expected as style");
+    if (!is_tuple (style)) TM_FAILED ("tuple expected as style");
     H= get_style_env (style);
     drd= get_style_drd (style);
     style_set_cache (style, H, drd->get_locals ());

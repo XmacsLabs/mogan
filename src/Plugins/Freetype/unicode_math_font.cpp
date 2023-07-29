@@ -349,7 +349,7 @@ unicode_math_font (font up, font it, font bup, font bit, font fb) {
     bit->res_name * "," *
     fb->res_name * "]";
   failed_error << "Font name= " << name << "\n";
-  FAILED ("true type support was disabled");
+  TM_FAILED ("true type support was disabled");
   return font ();
 }
 

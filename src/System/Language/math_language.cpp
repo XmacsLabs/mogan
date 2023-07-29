@@ -64,7 +64,7 @@ math_language_rep::set_type (string cl, string s) {
   else if (s == "closing-bracket") ot= OP_CLOSING_BRACKET;
   else {
     failed_error << "Attempt to associate type " << s << " to " << cl << "\n";
-    FAILED ("invalid type");
+    TM_FAILED ("invalid type");
   }
 }
 
@@ -76,7 +76,7 @@ math_language_rep::set_left_penalty (string cl, string s) {
   else {
     failed_error << "Attempt to associate left penalty " << s
                  << " to " << cl << "\n";
-    FAILED ("invalid penalty");
+    TM_FAILED ("invalid penalty");
   }
 }
 
@@ -88,7 +88,7 @@ math_language_rep::set_right_penalty (string cl, string s) {
   else {
     failed_error << "Attempt to associate right penalty " << s
                  << " to " << cl << "\n";
-    FAILED ("invalid penalty");
+    TM_FAILED ("invalid penalty");
   }
 }
 
@@ -104,7 +104,7 @@ math_language_rep::set_left_spacing (string cl, string s) {
   else {
     failed_error << "Attempt to associate left spacing " << s
                  << " to " << cl << "\n";
-    FAILED ("invalid spacing");
+    TM_FAILED ("invalid spacing");
   }
 }
 
@@ -120,7 +120,7 @@ math_language_rep::set_right_spacing (string cl, string s) {
   else {
     failed_error << "Attempt to associate right spacing " << s
                  << " to " << cl << "\n";
-    FAILED ("invalid spacing");
+    TM_FAILED ("invalid spacing");
   }
 }
 
@@ -132,7 +132,7 @@ math_language_rep::set_limits (string cl, string s) {
   else {
     failed_error << "Attempt to associate limits " << s
                  << " to " << cl << "\n";
-    FAILED ("invalid limits");
+    TM_FAILED ("invalid limits");
   }
 }
 

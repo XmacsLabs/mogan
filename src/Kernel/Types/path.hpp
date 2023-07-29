@@ -12,7 +12,9 @@
 
 #ifndef PATH_H
 #define PATH_H
+
 #include "list.hpp"
+#include "tree.hpp"
 typedef list<int> path;
 #include "tree_cursor.hpp"
 
