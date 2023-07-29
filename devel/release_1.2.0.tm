@@ -9,8 +9,6 @@
 
   <tmdoc-title|Mogan Editor 1.2.0>
 
-  <section|v1.2.0-beta1>
-
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
       <dlink|11>
@@ -21,17 +19,18 @@
     </cell>>>>
   </wide-tabular>
 
-  <section|v1.2.0-alpha14>
+  <section|v1.2.0-beta1>
 
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|1|1|1|cell-valign|B>|<table|<row|<cell|<dlink|5>>|<cell|Darcy>|<cell|Documentation
-  in markdown format for users and developers>>|<row|<cell|<dlink|8>>|<cell|jinkaimori>|<cell|xmake
-  integration for packaging on Ubuntu/Windows/macOS>>|<row|<\cell>
-    <dlink|23>
-  </cell>|<\cell>
-    Oyyko
-  </cell>|<\cell>
-    Mogan Draw optimization \ (OSPP)
-  </cell>>>>>
+  in markdown format for users and developers>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan
+  Draw optimization \ (OSPP)>>>>>
+
+  <section|v1.2.0-alpha14>
+
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|<dlink|8>>|<cell|Darcy>|<cell|xmake
+  integration for packaging on Ubuntu/Windows/macOS>>|<row|<cell|<dlink|26>>|<cell|tangdouer>|<cell|OSPP
+  PDF Pproject Onboarding>>|<row|<cell|<dlink|28>>|<cell|Darcy>|<cell|Use
+  Lolly and Remove Kernel L1>>>>>
 
   <section|v1.2.0-alpha13>
 
