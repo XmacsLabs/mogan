@@ -1,3 +1,23 @@
+-- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
+package("lolly")
+    set_homepage("https://github.com/XmacsLabs/lolly")
+    set_description("Lolly is a C++ library")
+
+    add_urls("git@gitee.com:XmacsLabs/lolly.git")
+
+    add_versions("v0.1.4", "3d417ee76c35146938d69798c20c2a31ac9c7678")
+
+    on_install("linux", "macosx", "mingw", "wasm", function (package)
+        local configs = {}
+        if package:config("shared") then
+            configs.kind = "shared"
+        end
+        import("package.tools.xmake").install(package, configs)
+    end)
+package_end()
+
+add_requires("lolly", {system=false})
+
 -------------------------------------------------------------------------------
 --
 -- MODULE      : xmake.lua
