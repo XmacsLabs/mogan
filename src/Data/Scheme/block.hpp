@@ -13,7 +13,6 @@
 #ifndef BLOCK_HPP
 #define BLOCK_HPP
 
-#include "string.hpp"
 #include "hashmap.hpp"
 #include "tree.hpp"
 
