@@ -11,11 +11,13 @@
 
 #ifndef DRD_STD_H
 #define DRD_STD_H
+
 #include "drd_info.hpp"
+#include "hashmap.hpp"
 
 extern drd_info std_drd;
 extern drd_info the_drd;
-extern hashmap<string,int> STD_CODE;
+hashmap<string,int> STD_CODE (UNKNOWN);
 
 inline bool std_contains (string s) { return STD_CODE->contains (s); }
 

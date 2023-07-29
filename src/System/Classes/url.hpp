@@ -11,6 +11,8 @@
 
 #ifndef URL_H
 #define URL_H
+
+#include "block.hpp"
 #include "tree.hpp"
 #include "tm_debug.hpp"
 
