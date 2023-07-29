@@ -31,16 +31,9 @@ jobs:
         run: xmake build --yes --verbose --diagnosis --all
       - name: install
         run: xmake install -vD mogan
-      - name: Write release version
-        run: |
-          VERSION=${GITHUB_REF_NAME#v}
-          VERSION=${VERSION//\//}
-          echo Version: $VERSION
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Generate Installer
         run: |
           xmake install -vD macos_installer
-          cp ../*.dmg Mogan-v${VERSION}.dmg
       - name: Upload 
         uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
