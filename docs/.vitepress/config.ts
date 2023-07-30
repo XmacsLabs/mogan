@@ -100,16 +100,20 @@ function sidebarGuide() {
                 },
             ]
         },
-        // {
-        //     text: 'ChangeLog',
-        //     collapsible: false,
-        //     items: [
+        {
+            text: 'ChangeLog',
+            collapsible: false,
+            items: [
+                {
+                    text: 'v1.1.4 (2023/07/31)',
+                    link: '/guide/ChangeLog_v1.1.4.md'
+                },
         //         {
         //             text: 'v1.1.3',
         //             link: '/guide/ChangeLog_v1.1.3.md'
         //         },
-        //     ]
-        // },
+             ]
+        },
     ]
 }
 
@@ -148,6 +152,10 @@ function sidebarGuideZh() {
             text: '变更记录',
             collapsible: true,
             items: [
+                {
+                    text: 'v1.1.4 (2023/07/31)',
+                    link: '/zh/guide/ChangeLog_v1.1.4.md'
+                },
                 {
                     text: 'v1.1.3 (2023/06/05)',
                     link: '/zh/guide/ChangeLog_v1.1.3.md'
