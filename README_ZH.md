@@ -24,7 +24,7 @@ Windows、macOS、Ubuntu和UOS这四大平台的安装包是由墨客实验室�
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
 
 ## 如何贡献
-请仔细阅读[贡献指南](https://mogan.app/zh/guide/CONTRIBUTING.html)，以了解如何开始为墨干编辑器做贡献。
+请仔细阅读[贡献指南](CONTRIBUTING.md)，以了解如何开始为墨干编辑器做贡献。
 
 ### 贡献者
 <table>
