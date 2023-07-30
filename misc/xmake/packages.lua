@@ -18,6 +18,27 @@
 -- [ ] pacman powered
 -- [ ] portage powered
 -- ...
+
+-- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
+package("lolly")
+    set_homepage("https://github.com/XmacsLabs/lolly")
+    set_description("Lolly is a C++ library")
+
+    add_urls("https://github.com/XmacsLabs/lolly.git")
+    add_urls("https://gitee.com/XmacsLabs/lolly.git")
+
+    add_versions("v0.99.5", "8755ab6a1966a72ced2e6fcf26a88bd633ecdb11")
+
+    on_install("linux", "macosx", "mingw", "wasm", function (package)
+        local configs = {}
+        if package:config("shared") then
+            configs.kind = "shared"
+        end
+        import("package.tools.xmake").install(package, configs)
+    end)
+package_end()
+
+
 function add_requires_of_mogan()
     if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
         add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
@@ -61,4 +82,5 @@ function add_requires_of_mogan()
     set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
     add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
     add_requires("s7 2023.04.13", {system=false})
+    add_requires("lolly", {system=false})
 end
