@@ -24,7 +24,7 @@ Windows, macOS, Ubuntu and UOS installers are officially provided. Packages for 
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://youtu.be/H46ON2FB30U)
 
 ## Contributing as User or Developer
-Please review the [Contribution guide](https://mogan.app/guide/CONTRIBUTING.html) for information on how to get started contributing to Mogan Editor.
+Please review the [Contribution guide](CONTRIBUTING.md) for information on how to get started contributing to Mogan Editor.
 
 ### Contributors
 <table>
