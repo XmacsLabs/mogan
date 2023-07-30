@@ -4,13 +4,13 @@
 
 | Operating System | Download | MD5 Checksum|
 |-------|-----|--------|
-| Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/Mogan-v1.1.3-64bit-installer.exe) | f6d46f104156f83f72e9e93122b17797 |
-| macOS (>=10.15) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/Mogan_v1.1.3.dmg) | 51ab76ba5ade77d604b6956131f4d489 |
-| macOS arm (>=12.6) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/Mogan_arm_v1.1.3.dmg) | af6a5ee2b9237891feaf698148a7bca0 |
-| Ubuntu 20.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/mogan-v1.1.3-ubuntu20.04.deb) | 1aa101ff1c5ba74212a5d81d0c647a2e |
-| Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/mogan-v1.1.3-ubuntu22.04.deb) | 6e29e788f24b57cb742c5b0ec1cef0c8 |
-| UOS amd64 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/mogan_1.1.3-uos-amd64.deb) | ea09c29cfbc3d81ebb9156855e89fa1c |
-| UOS loongarch | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/Mogan%20Editor%20v1.1.3/mogan_1.1.3-uos-loongarch64.deb) | 8837ce391de7558cfb387db74ff9edb2 |
+| Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/Mogan-v1.1.4-64bit-installer.exe) | 36dcac15825bbb527de51e348d18df7a |
+| macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/Mogan_v1.1.4.dmg) | d45cca14fa8e36f55f5e2c1c1dffe76d |
+| macOS arm (>=12.6) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/Mogan_arm_v1.1.4.dmg) | bac4d3acb670905acea567f28c1e84f8 |
+| Ubuntu 20.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/mogan-v1.1.4-ubuntu20.04.deb) | 722add12fe4aeba0ed8c3c7bef10f79a |
+| Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/mogan-v1.1.4-ubuntu22.04.deb) | d45cca14fa8e36f55f5e2c1c1dffe76d |
+| UOS amd64 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/mogan-v1.1.4-uos.deb) | e65a45c5e836fb8949cfb2f9f2858725 |
+| UOS loongarch | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/mogan-v1.1.4-uos-loongarch64.deb) | e1b2a8a63912ea28980b5becb80a2f49 |
 
 Other sites to download：
 + https://codeberg.org/XmacsLabs/mogan/releases
