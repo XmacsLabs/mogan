@@ -760,21 +760,16 @@ target("windows_installer") do
         print("after_install of target windows_installer")
         import("core.project.config")
         import("lib.detect.find_tool")
-        import("private.action.require.impl.package")
-        local pkgs = package.load_packages("qtifw 4.6.0")
-        for _, pkg in ipairs(pkgs) do 
-            if pkg._NAME == "qtifw" then
-                local binarycreator_path = path.join(pkg._INSTALLDIR, "/bin/binarycreator.exe")
-                -- generate windows package
-                local buildir = config.buildir()
-                local package_argv = {
-                    "--config", path.join(buildir, "config/config.xml"),
-                    "--packages", path.join(buildir, "packages"),
-                    path.join(buildir, "Mogan-v"..XMACS_VERSION.."-64bit-installer.exe")
-                }
-                os.iorunv(binarycreator_path, package_argv)
-            end
-        end
+        local qtifw_dir = target:pkg("qtifw"):installdir()
+        local binarycreator_path = path.join(qtifw_dir, "/bin/binarycreator.exe")
+        -- generate windows package
+        local buildir = config.buildir()
+        local package_argv = {
+            "--config", path.join(buildir, "config/config.xml"),
+            "--packages", path.join(buildir, "packages"),
+            path.join(buildir, "Mogan-v"..XMACS_VERSION.."-64bit-installer.exe")
+        }
+        os.iorunv(binarycreator_path, package_argv)
     end)
 end
 
