@@ -1,11 +1,10 @@
 # Installation Guide
 ## Official Packages
-> WARNING: There is [a severe bug](https://github.com/XmacsLabs/mogan/issues/701) in Mogan Editor v1.1.3 for Windows. We have released Mogan Editor v1.1.4 RC1 and here is the [download link](https://github.com/XmacsLabs/mogan/releases/download/v1.1.4-rc1/Mogan-v1.1.4-rc1-64bit-installer.exe) for Windows. We will release Mogan Editor v1.1.4 in early July.
 
 | Operating System | Download | MD5 Checksum|
 |-------|-----|--------|
 | Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/Mogan-v1.1.4-64bit-installer.exe) | 36dcac15825bbb527de51e348d18df7a |
-| macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/Mogan_v1.1.4.dmg) | d45cca14fa8e36f55f5e2c1c1dffe76d |
+| macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/Mogan_v1.1.4.dmg) | 6224ba3a809a1d20ee118c20ee06d4a6 |
 | macOS arm (>=12.6) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/Mogan_arm_v1.1.4.dmg) | bac4d3acb670905acea567f28c1e84f8 |
 | Ubuntu 20.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/mogan-v1.1.4-ubuntu20.04.deb) | 722add12fe4aeba0ed8c3c7bef10f79a |
 | Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/mogan-v1.1.4-ubuntu22.04.deb) | d45cca14fa8e36f55f5e2c1c1dffe76d |
@@ -18,6 +17,7 @@ Other sites to download：
 + https://github.com/XmacsLabs/mogan/releases
 
 Old releases:
++ [v1.1.3 (2023/06/05)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.3)
 + [v1.1.2 (2023/04/09)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.2)
 + [v1.1.1 (2022/10/29)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.1)
 + [v1.1.0 (2022/08/31)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.0)
