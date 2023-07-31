@@ -73,8 +73,7 @@ add_requires_of_mogan()
 -- Library: L3 Kernel
 --
 set_configvar("QTTEXMACS", 1)
-local CONFIG_USER = "MOGAN_DEVELOPERS"
-local CONFIG_DATE = "1970-01-01"
+local CONFIG_USER = "XmacsLabs"
 local TEXMACS_VERSION = "2.1.2"
 
 local l3_files = {
@@ -130,6 +129,7 @@ target("libkernel_l3") do
     set_kind("static")
     set_group("kernel_l3")
     set_basename("kernel_l3")
+    set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
 
     add_packages("libcurl")
     add_packages("s7")
@@ -153,7 +153,6 @@ target("libkernel_l3") do
             pattern = "@(.-)@",
             variables = {
                 CONFIG_USER = CONFIG_USER,
-                CONFIG_DATE = CONFIG_DATE,
                 CONFIG_OS = CONFIG_OS,
                 VERSION = TEXMACS_VERSION,
             }
@@ -256,8 +255,8 @@ end
 
 set_configvar("STDC_HEADERS", true)
 
-set_version(TEXMACS_VERSION)
 
+set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
 
 add_configfiles(
     "src/System/config.h.xmake", {
@@ -281,8 +280,7 @@ add_configfiles(
         pattern = "@(.-)@",
         variables = {
             XMACS_VERSION = XMACS_VERSION,
-            CONFIG_USER = os.getenv("USER") or "unknown",
-            CONFIG_DATE = os.time(),
+            CONFIG_USER = CONFIG_USER,
             CONFIG_STD_SETENV = "#define STD_SETENV",
             tm_devel = "Texmacs-" .. DEVEL_VERSION,
             tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
