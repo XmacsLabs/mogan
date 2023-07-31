@@ -8,7 +8,8 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|2|2|cell-valign|b>|<cwith|2|2|3|3|cell-valign|b>|<cwith|3|3|4|4|cell-valign|b>|<cwith|4|4|2|2|cell-valign|b>|<cwith|7|7|4|4|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|1|1|2|2|cell-valign|b>|<cwith|2|2|3|3|cell-valign|b>|<cwith|3|3|4|4|cell-valign|b>|<cwith|4|4|2|2|cell-valign|b>|<cwith|7|7|4|4|cell-valign|b>|<cwith|1|-1|2|2|cell-background|pastel
+    green>|<table|<row|<\cell>
       Bug
     </cell>|<\cell>
       <dlink|12_1>

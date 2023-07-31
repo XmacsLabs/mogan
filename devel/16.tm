@@ -3,7 +3,7 @@
 <style|<tuple|tmdoc|british|devel>>
 
 <\body>
-  <tmdoc-title|Code Formatting and Static Checking>
+  <tmdoc-title|Code Formatting via clang-format>
 
   <section|Tasks>
 
