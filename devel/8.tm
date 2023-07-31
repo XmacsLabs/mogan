@@ -15,7 +15,8 @@
     green>|<cwith|3|3|2|2|cell-background|pastel
     green>|<cwith|4|4|2|2|cell-background|pastel
     green>|<cwith|9|9|2|2|cell-background|pastel
-    green>|<cwith|1|1|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|1|1|2|2|cell-background|pastel
+    green>|<cwith|6|6|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Feature
     </cell>|<\cell>
       8_1
@@ -62,7 +63,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      get OS and CPU info via Qt
+      set BUILD_DATE via xmake
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
