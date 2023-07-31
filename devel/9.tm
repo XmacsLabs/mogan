@@ -12,7 +12,8 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<table|<row|<\cell>
+    <tformat|<cwith|1|-1|2|2|cell-background|pastel
+    green>|<table|<row|<\cell>
       Bug
     </cell>|<\cell>
       <dlink|9_1>

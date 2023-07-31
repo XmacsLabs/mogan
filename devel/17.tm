@@ -1,25 +1,29 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|devel>>
+<style|<tuple|tmdoc|devel|comment>>
 
 <\body>
-  <tmdoc-title|Unicode related issue>
+  <tmdoc-title|Character Count for CJK>
 
   <TeXmacs> uses cork encoding to handle unicode string, which introduce a
   lot of trouble. We should examine all usage of string, and determine
   encoding of each string.
 
+  <unfolded-comment|+1AFyES7cXfnJoc|+1AFyES7cXfnJod|comment|Darcy|1690813220||Let
+  us focus on character count for CJK in this project.>
+
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<table|<row|<\cell>
+    <tformat|<cwith|1|-1|2|2|cell-background|pastel
+    green>|<table|<row|<\cell>
       Bug
     </cell>|<\cell>
       <dlink|17_1>
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
-      Fix incorrect word count for cjk content
+      Fix incorrect character count for CJK document
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>

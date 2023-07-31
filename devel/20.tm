@@ -8,7 +8,8 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|2|2|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|1|1|2|2|cell-valign|b>|<cwith|1|-1|1|1|cell-background|pastel
+    green>|<table|<row|<\cell>
       20_1
     </cell>|<\cell>
       Chore

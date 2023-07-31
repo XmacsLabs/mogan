@@ -11,7 +11,8 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<table|<row|<\cell>
+    <tformat|<cwith|1|16|2|2|cell-background|pastel
+    green>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       2_1
@@ -129,7 +130,7 @@
     </cell>|<\cell>
       <dlink|2_15>
     </cell>|<\cell>
-      \;
+      jingkaimori
     </cell>|<\cell>
       Optimize generated s7 glue
     </cell>>|<row|<\cell>
@@ -137,7 +138,7 @@
     </cell>|<\cell>
       <dlink|2_16>
     </cell>|<\cell>
-      \;
+      jingkaimori
     </cell>|<\cell>
       Use procedures defined in S7 to look up metadata instead of procedures
       defined in Guile.

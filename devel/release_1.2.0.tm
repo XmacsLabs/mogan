@@ -9,140 +9,66 @@
 
   <tmdoc-title|Mogan Editor 1.2.0>
 
-  <\wide-tabular>
-    <tformat|<table|<row|<\cell>
-      <dlink|11>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Font tuning
-    </cell>>>>
-  </wide-tabular>
+  <section|Mogan Editor v1.2.0 beta>
 
-  <section|v1.2.0-beta1>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|22|22|1|1|cell-background|pastel
+  red>|<cwith|19|19|1|1|cell-background|pastel
+  red>|<cwith|21|21|1|1|cell-background|pastel
+  red>|<cwith|17|17|1|1|cell-background|pastel
+  red>|<table|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning as
+  plugin>>|<row|<cell|<dlink|43>>|<cell|>|<cell|LaTeX converters as
+  plugin>>|<row|<cell|<dlink|42>>|<cell|>|<cell|HTML converters as
+  plugin>>|<row|<cell|<dlink|42>>|<cell|>|<cell|Spell checking as a
+  plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs instead of the gs
+  binary>>|<row|<cell|<dlink|40>>|<cell|>|<cell|Use XDG_DATA_PATH on
+  Linux>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize the Help
+  menu>>|<row|<cell|<dlink|38>>|<cell|>|<cell|CD for the Windows
+  platform>>|<row|<cell|<dlink|37>>|<cell|>|<cell|Test on Windows
+  platform>>|<row|<cell|<dlink|36>>|<cell|>|<cell|Build on Windows
+  platform>>|<row|<cell|<dlink|35>>|<cell|>|<cell|Use the Breeze
+  icon>>|<row|<cell|<dlink|34>>|<cell|Oyyko>|<cell|CICD for the website and
+  mogan wasm>>|<row|<cell|<dlink|33>>|<cell|>|<cell|Test on
+  wasm>>|<row|<cell|<dlink|32>>|<cell|>|<cell|Build on
+  wasm>>|<row|<cell|<dlink|31>>|<cell|>|<cell|Lolly
+  1.1.0>>|<row|<cell|<dlink|30>>|<cell|>|<cell|Lolly
+  1.0.0>>|<row|<cell|<dlink|29>>|<cell|tangdouer>|<cell|OSPP PDF
+  Project>>|<row|<cell|<dlink|27>>|<cell|>|<cell|Mogan Draw optimization
+  (long term)>>|<row|<cell|<dlink|26>>|<cell|tangdouer>|<cell|OSPP PDF
+  Project Onboarding>>|<row|<cell|<dlink|25>>|<cell|Pluto>|<cell|Add CI on
+  Gitee>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML import and
+  export>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan Draw optimization
+  \ (OSPP)>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language
+  related issues>>|<row|<cell|<dlink|18>>|<cell|jinkaimori>|<cell|Embedded
+  documentation issues>>|<row|<cell|<dlink|13>>|<cell|Darcy>|<cell|Libcurl
+  integration>>|<row|<cell|<dlink|11>>|<cell|Darcy>|<cell|Font tuning>>>>>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|1|1|1|cell-valign|B>|<table|<row|<cell|<dlink|5>>|<cell|Darcy>|<cell|Documentation
-  in markdown format for users and developers>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan
-  Draw optimization \ (OSPP)>>>>>
-
-  <section|v1.2.0-alpha14>
-
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|<dlink|8>>|<cell|Darcy>|<cell|xmake
-  integration for packaging on Ubuntu/Windows/macOS>>|<row|<cell|<dlink|26>>|<cell|tangdouer>|<cell|OSPP
-  PDF Pproject Onboarding>>|<row|<cell|<dlink|28>>|<cell|Darcy>|<cell|Use
-  Lolly and Remove Kernel L1>>>>>
-
-  <section|v1.2.0-alpha13>
-
-  <\wide-tabular>
-    <tformat|<cwith|2|2|1|1|cell-valign|B>|<table|<row|<\cell>
-      <dlink|3>
-    </cell>|<\cell>
-      jinkaimori
-    </cell>|<\cell>
-      Initial xmake integration
-    </cell>>|<row|<\cell>
-      <dlink|5>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Documentation in markdown format for users and developers
-    </cell>>|<row|<\cell>
-      <dlink|8>
-    </cell>|<\cell>
-      jinkaimori
-    </cell>|<\cell>
-      xmake integration for packaging on Ubuntu/Windows/macOS
-    </cell>>|<row|<\cell>
-      <dlink|16>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Code Formatting and Static Checking
-    </cell>>|<row|<\cell>
-      <dlink|23>
-    </cell>|<\cell>
-      Oyyko
-    </cell>|<\cell>
-      Mogan Draw optimization \ (OSPP)
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha12>
+  <section|Mogan Editor 1.2.0 alpha>
 
   <\wide-tabular>
-    <tformat|<cwith|3|3|1|1|cell-valign|B>|<table|<row|<\cell>
-      <dlink|2>
-    </cell>|<\cell>
-      jinkaimori
-    </cell>|<\cell>
-      S7 Scheme Integration
-    </cell>>|<row|<\cell>
-      <dlink|3>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Initial xmake support
-    </cell>>|<row|<\cell>
-      <dlink|5>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Documentation in markdown format for users and developers
-    </cell>>|<row|<\cell>
-      <dlink|8>
+    <tformat|<cwith|19|19|1|1|cell-background|pastel
+    green>|<cwith|15|15|1|1|cell-valign|b>|<cwith|13|13|3|3|cell-valign|b>|<cwith|10|10|1|1|cell-background|pastel
+    green>|<cwith|9|9|1|1|cell-background|pastel
+    green>|<cwith|8|8|1|1|cell-background|pastel
+    green>|<cwith|7|7|1|1|cell-background|pastel
+    green>|<cwith|4|4|1|1|cell-background|pastel
+    green>|<cwith|1|1|1|1|cell-background|pastel
+    green>|<cwith|16|16|1|1|cell-background|pastel
+    green>|<cwith|11|11|1|1|cell-background|pastel
+    green>|<cwith|3|3|1|1|cell-background|pastel
+    green>|<cwith|14|14|1|1|cell-background|pastel
+    green>|<cwith|5|5|1|1|cell-background|pastel
+    green>|<cwith|6|6|1|1|cell-background|pastel green>|<table|<row|<\cell>
+      <dlink|28>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      xmake integration for packaging on Ubuntu/Windows/macOS
-    </cell>>|<row|<\cell>
-      <dlink|16>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Code formatting and static checking
-    </cell>>|<row|<\cell>
-      <dlink|20>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Editor related issues
+      Use Lolly and Remove Kernel L1
     </cell>>|<row|<\cell>
       <dlink|22>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       Chinese Dictionary
-    </cell>>|<row|<\cell>
-      <dlink|23>
-    </cell>|<\cell>
-      Oyyko
-    </cell>|<\cell>
-      Mogan Draw optimization \ (OSPP)
-    </cell>>|<row|<\cell>
-      <dlink|25>
-    </cell>|<\cell>
-      Pluto
-    </cell>|<\cell>
-      Add CI on Gitee
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha11>
-
-  <\wide-tabular>
-    <tformat|<cwith|1|1|1|1|cell-valign|B>|<table|<row|<\cell>
-      <dlink|5>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Documentation in markdown format for users and developers
-    </cell>>|<row|<\cell>
-      <dlink|8>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for packaging on Ubuntu/Windows/macOS
     </cell>>|<row|<\cell>
       <dlink|21>
     </cell>|<\cell>
@@ -150,197 +76,23 @@
     </cell>|<\cell>
       Deprecate getenv in Scheme
     </cell>>|<row|<\cell>
-      <dlink|22>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Chinese Dictionary
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha10>
-
-  <\wide-tabular>
-    <tformat|<table|<row|<\cell>
-      <dlink|3>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for building and testing
-    </cell>>|<row|<\cell>
-      <dlink|15>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      L3 Kernel
-    </cell>>|<row|<\cell>
       <dlink|20>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       Editor related issues
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha9>
-
-  <\wide-tabular>
-    <tformat|<table|<row|<\cell>
-      <dlink|2>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      S7 Scheme Integration
-    </cell>>|<row|<\cell>
-      <dlink|3>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for building and testing
-    </cell>>|<row|<\cell>
-      <dlink|6>
-    </cell>|<\cell>
-      jinkaimori
-    </cell>|<\cell>
-      Avoid retrieving large pictures from texmacs website
-    </cell>>|<row|<\cell>
-      <dlink|8>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for packaging on Ubuntu/Windows/macOS
-    </cell>>|<row|<\cell>
-      <dlink|15>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      L3 Kernel
-    </cell>>|<row|<\cell>
-      <dlink|18>
-    </cell>|<\cell>
-      jinkaimori
-    </cell>|<\cell>
-      Embedded documentation issues
-    </cell>>|<row|<\cell>
-      <dlink|19>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Natural language related issues
-    </cell>>|<row|<\cell>
-      <dlink|20>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Editor related issues
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha8>
-
-  <\wide-tabular>
-    <tformat|<cwith|3|3|1|1|cell-valign|B>|<cwith|4|4|1|1|cell-valign|B>|<table|<row|<\cell>
-      <dlink|3>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for building and testing
-    </cell>>|<row|<\cell>
-      <dlink|6>
-    </cell>|<\cell>
-      jinkaimori
-    </cell>|<\cell>
-      Avoid retrieving large pictures from texmacs website
-    </cell>>|<row|<\cell>
-      <dlink|5>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Documentation in markdown format for users and developers
-    </cell>>|<row|<\cell>
-      <dlink|8>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for packaging on Ubuntu/Windows/macOS
-    </cell>>|<row|<\cell>
-      <dlink|14>
-    </cell>|<\cell>
-      OSPP Students
-    </cell>|<\cell>
-      Unit Tests for OSPP Students
     </cell>>|<row|<\cell>
       <dlink|17>
     </cell>|<\cell>
       jinkaimori
     </cell>|<\cell>
-      Unicode related issues
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha7>
-
-  <\wide-tabular>
-    <tformat|<cwith|2|2|1|1|cell-valign|B>|<cwith|4|4|1|1|cell-valign|b>|<table|<row|<\cell>
-      <dlink|3>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for building and testing
-    </cell>>|<row|<\cell>
-      <dlink|5>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Documentation in markdown format for users and developers
-    </cell>>|<row|<\cell>
-      <dlink|14>
-    </cell>|<\cell>
-      OSPP Students
-    </cell>|<\cell>
-      Unit Tests for OSPP Students
+      Character count for CJK
     </cell>>|<row|<\cell>
       <dlink|16>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Code formatting and static checking
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha6>
-
-  <\wide-tabular>
-    <tformat|<cwith|2|2|1|1|cell-valign|b>|<table|<row|<\cell>
-      <dlink|1>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Cleaning for Mogan Editor 1.2.x
-    </cell>>|<row|<\cell>
-      <dlink|5>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Documentation in markdown format for users and developers
-    </cell>>|<row|<\cell>
-      <dlink|9>
-    </cell>|<\cell>
-      jinkaimori
-    </cell>|<\cell>
-      Fix corrupted field generated by export
-    </cell>>|<row|<\cell>
-      <dlink|13>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Libcurl integration
-    </cell>>|<row|<\cell>
-      <dlink|14>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Unit Tests on L1 Kernel for OSPP Students
+      Code formatting via clang-format
     </cell>>|<row|<\cell>
       <dlink|15>
     </cell>|<\cell>
@@ -348,35 +100,17 @@
     </cell>|<\cell>
       L3 Kernel
     </cell>>|<row|<\cell>
-      <dlink|16>
+      <dlink|14>
     </cell>|<\cell>
-      Darcy
+      OSPP Students
     </cell>|<\cell>
-      Code formatting and static checking
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha5>
-
-  <\wide-tabular>
-    <tformat|<table|<row|<\cell>
+      Unit Tests on L1 Kernel for OSPP Students
+    </cell>>|<row|<\cell>
       <dlink|12>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       BibTeX improvements
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha4>
-
-  <\wide-tabular>
-    <tformat|<table|<row|<\cell>
-      <dlink|3>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for building and testing
     </cell>>|<row|<\cell>
       <dlink|10>
     </cell>|<\cell>
@@ -384,63 +118,17 @@
     </cell>|<\cell>
       Tuning default settings
     </cell>>|<row|<\cell>
-      <dlink|11>
+      <dlink|9>
     </cell>|<\cell>
-      Darcy
+      jinkaimori
     </cell>|<\cell>
-      Font tuning
+      Fix corrupted field generated by export
     </cell>>|<row|<\cell>
-      <dlink|12>
+      <dlink|8>
     </cell>|<\cell>
-      Darcy
+      jinkaimori
     </cell>|<\cell>
-      BibTeX improvements
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha3>
-
-  <\wide-tabular>
-    <tformat|<table|<row|<\cell>
-      <dlink|3>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for building and testing
-    </cell>>|<row|<\cell>
-      <dlink|11>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Font tuning
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha2>
-
-  The goal of alpha2 is to setup the Continuous Integration for building,
-  testing and packaging on Ubuntu/Windows/macOS. Documentation for
-  contributors will also be prepared.
-
-  <\wide-tabular>
-    <tformat|<cwith|3|3|1|1|cell-valign|b>|<cwith|4|4|3|3|cell-valign|b>|<table|<row|<\cell>
-      <dlink|1>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      More Cleaning for Mogan Editor 1.2.x
-    </cell>>|<row|<\cell>
-      <dlink|3>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for building and testing
-    </cell>>|<row|<\cell>
-      <dlink|5>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Documentation in markdown format for users and developers
+      xmake integration for packaging on Ubuntu/Windows/macOS
     </cell>>|<row|<\cell>
       <dlink|7>
     </cell>|<\cell>
@@ -448,51 +136,17 @@
     </cell>|<\cell>
       Stability Issues
     </cell>>|<row|<\cell>
-      <dlink|8>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration for packaging on Ubuntu/Windows/macOS
-    </cell>>|<row|<\cell>
-      <dlink|9>
+      <dlink|6>
     </cell>|<\cell>
       jinkaimori
     </cell>|<\cell>
-      Fix corrupted field generated by export
+      Avoid retrieving large pictures from texmacs website
     </cell>>|<row|<\cell>
-      <dlink|10>
+      <dlink|5>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Tuning default settings
-    </cell>>>>
-  </wide-tabular>
-
-  <section|v1.2.0-alpha1>
-
-  Mogan Editor v1.2.0-alpha1 is the baseline release of Mogan Editor v1.2.x.
-  It is GNU <TeXmacs> 2.1.2 (2023/02/16) with Qt 5.x and S7 scheme built by
-  xmake on Ubuntu.
-
-  <\wide-tabular>
-    <tformat|<table|<row|<\cell>
-      <dlink|1>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Cleaning for Mogan Editor 1.2.x
-    </cell>>|<row|<\cell>
-      <dlink|2>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      S7 Scheme Integration
-    </cell>>|<row|<\cell>
-      <dlink|3>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      xmake integration on Ubuntu
+      Documentation in markdown format for users and developers
     </cell>>|<row|<\cell>
       <dlink|4>
     </cell>|<\cell>
@@ -500,11 +154,23 @@
     </cell>|<\cell>
       Upgrade Qt
     </cell>>|<row|<\cell>
-      <dlink|6>
+      <dlink|3>
     </cell>|<\cell>
-      jinkaimori
+      Darcy
     </cell>|<\cell>
-      Avoid retrieving large pictures from texmacs website
+      xmake integration on Ubuntu
+    </cell>>|<row|<\cell>
+      <dlink|2>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      S7 Scheme Integration
+    </cell>>|<row|<\cell>
+      <dlink|1>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Cleaning for Mogan Editor 1.2.x
     </cell>>>>
   </wide-tabular>
 
