@@ -57,7 +57,8 @@
     green>|<cwith|3|3|1|1|cell-background|pastel
     green>|<cwith|14|14|1|1|cell-background|pastel
     green>|<cwith|5|5|1|1|cell-background|pastel
-    green>|<cwith|6|6|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|6|6|1|1|cell-background|pastel
+    green>|<cwith|12|12|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|28>
     </cell>|<\cell>
       Darcy
