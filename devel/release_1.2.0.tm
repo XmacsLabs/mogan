@@ -11,12 +11,13 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|22|22|1|1|cell-background|pastel
-  red>|<cwith|19|19|1|1|cell-background|pastel
-  red>|<cwith|21|21|1|1|cell-background|pastel
-  red>|<cwith|17|17|1|1|cell-background|pastel
-  red>|<table|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning as
-  plugin>>|<row|<cell|<dlink|43>>|<cell|>|<cell|LaTeX converters as
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|23|23|1|1|cell-background|pastel
+  red>|<cwith|20|20|1|1|cell-background|pastel
+  red>|<cwith|22|22|1|1|cell-background|pastel
+  red>|<cwith|18|18|1|1|cell-background|pastel
+  red>|<table|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete the new mechanism
+  of glue code generation>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning
+  as plugin>>|<row|<cell|<dlink|43>>|<cell|>|<cell|LaTeX converters as
   plugin>>|<row|<cell|<dlink|42>>|<cell|>|<cell|HTML converters as
   plugin>>|<row|<cell|<dlink|42>>|<cell|>|<cell|Spell checking as a
   plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs instead of the gs
