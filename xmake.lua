@@ -298,6 +298,7 @@ target("libmogan") do
     set_policy("check.auto_ignore_flags", false)
     if is_plat("linux") then
         add_rules("qt.shared")
+        set_installdir(INSTALL_DIR)
     else
         add_rules("qt.static")
     end
