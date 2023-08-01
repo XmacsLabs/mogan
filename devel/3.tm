@@ -18,7 +18,11 @@
   <\wide-tabular>
     <tformat|<cwith|25|25|3|3|cell-valign|b>|<cwith|25|25|2|2|cell-background|pastel
     green>|<cwith|23|23|2|2|cell-background|pastel
-    green>|<cwith|16|16|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|16|16|2|2|cell-background|pastel
+    green>|<cwith|1|15|2|2|cell-background|pastel
+    green>|<cwith|17|22|2|2|cell-background|pastel
+    green>|<cwith|24|24|2|2|cell-background|pastel
+    green>|<cwith|26|29|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       3_1

@@ -15,8 +15,8 @@
   red>|<cwith|20|20|1|1|cell-background|pastel
   red>|<cwith|22|22|1|1|cell-background|pastel
   red>|<cwith|18|18|1|1|cell-background|pastel
-  red>|<table|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete the new mechanism
-  of glue code generation>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning
+  red>|<cwith|29|29|3|3|cell-valign|b>|<cwith|30|30|1|1|cell-valign|b>|<table|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
+  the new mechanism of glue code generation>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning
   as plugin>>|<row|<cell|<dlink|43>>|<cell|>|<cell|LaTeX converters as
   plugin>>|<row|<cell|<dlink|42>>|<cell|>|<cell|HTML converters as
   plugin>>|<row|<cell|<dlink|42>>|<cell|>|<cell|Spell checking as a
@@ -38,39 +38,44 @@
   Project Onboarding>>|<row|<cell|<dlink|25>>|<cell|Pluto>|<cell|Add CI on
   Gitee>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML import and
   export>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan Draw optimization
-  \ (OSPP)>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language
-  related issues>>|<row|<cell|<dlink|18>>|<cell|jinkaimori>|<cell|Embedded
+  \ (OSPP)>>|<row|<\cell>
+    <dlink|22>
+  </cell>|<\cell>
+    Darcy
+  </cell>|<\cell>
+    Chinese Dictionary
+  </cell>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language related
+  issues>>|<row|<cell|<dlink|18>>|<cell|jinkaimori>|<cell|Embedded
   documentation issues>>|<row|<cell|<dlink|13>>|<cell|Darcy>|<cell|Libcurl
-  integration>>|<row|<cell|<dlink|11>>|<cell|Darcy>|<cell|Font tuning>>>>>
+  integration>>|<row|<cell|<dlink|11>>|<cell|Darcy>|<cell|Font
+  tuning>>|<row|<cell|<dlink|7>>|<cell|Darcy>|<cell|Stability
+  Issues>>|<row|<cell|<dlink|5>>|<cell|Darcy>|<cell|Documentation in markdown
+  format for users and developers>>>>>
 
   <section|Mogan Editor 1.2.0 alpha>
 
   <\wide-tabular>
-    <tformat|<cwith|19|19|1|1|cell-background|pastel
-    green>|<cwith|15|15|1|1|cell-valign|b>|<cwith|13|13|3|3|cell-valign|b>|<cwith|10|10|1|1|cell-background|pastel
+    <tformat|<cwith|16|16|1|1|cell-background|pastel
     green>|<cwith|9|9|1|1|cell-background|pastel
     green>|<cwith|8|8|1|1|cell-background|pastel
     green>|<cwith|7|7|1|1|cell-background|pastel
-    green>|<cwith|4|4|1|1|cell-background|pastel
-    green>|<cwith|1|1|1|1|cell-background|pastel
-    green>|<cwith|16|16|1|1|cell-background|pastel
-    green>|<cwith|11|11|1|1|cell-background|pastel
-    green>|<cwith|3|3|1|1|cell-background|pastel
-    green>|<cwith|14|14|1|1|cell-background|pastel
-    green>|<cwith|5|5|1|1|cell-background|pastel
     green>|<cwith|6|6|1|1|cell-background|pastel
-    green>|<cwith|12|12|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|3|3|1|1|cell-background|pastel
+    green>|<cwith|1|1|1|1|cell-background|pastel
+    green>|<cwith|13|13|1|1|cell-background|pastel
+    green>|<cwith|10|10|1|1|cell-background|pastel
+    green>|<cwith|2|2|1|1|cell-background|pastel
+    green>|<cwith|12|12|1|1|cell-background|pastel
+    green>|<cwith|4|4|1|1|cell-background|pastel
+    green>|<cwith|5|5|1|1|cell-background|pastel
+    green>|<cwith|11|11|1|1|cell-background|pastel
+    green>|<cwith|15|15|1|1|cell-background|pastel
+    green>|<cwith|14|14|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|28>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       Use Lolly and Remove Kernel L1
-    </cell>>|<row|<\cell>
-      <dlink|22>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Chinese Dictionary
     </cell>>|<row|<\cell>
       <dlink|21>
     </cell>|<\cell>
@@ -132,29 +137,17 @@
     </cell>|<\cell>
       xmake integration for packaging on Ubuntu/Windows/macOS
     </cell>>|<row|<\cell>
-      <dlink|7>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Stability Issues
-    </cell>>|<row|<\cell>
       <dlink|6>
     </cell>|<\cell>
       jinkaimori
     </cell>|<\cell>
       Avoid retrieving large pictures from texmacs website
     </cell>>|<row|<\cell>
-      <dlink|5>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Documentation in markdown format for users and developers
-    </cell>>|<row|<\cell>
       <dlink|4>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Upgrade Qt
+      Deprecate Qt 4.x support and add Qt 6.x support on Linux
     </cell>>|<row|<\cell>
       <dlink|3>
     </cell>|<\cell>
