@@ -8,19 +8,21 @@
 
   <section|Feature Metadata>
 
-  <\itemize>
-    <item>Reporter: Jingkaimori
+  <\description>
+    <item*|Reporter>Jingkaimori
 
-    <item>Owner: Jingkaimori
+    <item*|Owner>Jingkaimori
 
-    <item>Tester: Jingkaimori
-  </itemize>
+    <item*|Tester>Jingkaimori
+  </description>
 
   <section|Which behavior is expected>
 
   Use xmake doxygen plugin to generate document and header include diagram
-  for Mogan. This plugin requires doxygen and dot could be found in
-  <verbatim|PATH>:
+  for Mogan. This plugin requires doxygen from either <verbatim|$PATH> or
+  xmake repo. Doxygen requires dot from <verbatim|$PATH> only. If there is no
+  doxyfile at workdir of xmake(typically root dir of project), xmake will
+  generate a default one.
 
   <\shell-code>
     xmake config
