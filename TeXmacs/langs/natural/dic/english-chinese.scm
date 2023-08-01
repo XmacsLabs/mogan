@@ -240,7 +240,7 @@
 ("chapter" "章")
 ("character encoding" "字符编码")
 ("check" "检查")
-("check exported Pdf files for correctness" "检查已导出的PDF文件的正确性")
+("check exported Pdf files for correctness" "检查导出的PDF文件的正确性")
 ("check for updates" "检查更新")
 ("check for automatic updates" "检测自动更新")
 ("check text for spelling errors" "检查拼写")
