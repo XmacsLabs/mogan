@@ -293,12 +293,12 @@ add_configfiles(
 target("libmogan") do
     set_basename("mogan")
     set_version(TEXMACS_VERSION)
-    set_installdir(INSTALL_DIR)
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
     if is_plat("linux") then
         add_rules("qt.shared")
+        set_installdir(INSTALL_DIR)
     else
         add_rules("qt.static")
     end
