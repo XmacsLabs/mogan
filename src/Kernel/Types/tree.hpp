@@ -16,6 +16,7 @@
 #include "observer.hpp"
 #include "array.hpp"
 #include "iterator.hpp"
+#include "merge_sort.hpp"
 
 /******************************************************************************
 * The tree class 'tree'
@@ -455,5 +456,20 @@ public:
 };
 
 void print_tree (tree t, int tab=0);
+
+struct less_eq_associate {
+  static inline bool leq (tree& a, tree& b) {
+    return as_string(a[0]) <= as_string(b[0]); }
+};
+
+template <class T, class U> static tree
+make_collection (hashmap<T,U> h) {
+  tree t= as_tree (h);
+  array<tree> a= A(t);
+  merge_sort_leq <tree, less_eq_associate> (a);
+  int i, n=N(a);
+  for (i=0; i<n; i++) t[i] = a[i];
+  return t;
+}
 
 #endif // defined TREE_H
