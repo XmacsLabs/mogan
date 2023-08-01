@@ -293,7 +293,6 @@ add_configfiles(
 target("libmogan") do
     set_basename("mogan")
     set_version(TEXMACS_VERSION)
-    set_installdir(INSTALL_DIR)
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
