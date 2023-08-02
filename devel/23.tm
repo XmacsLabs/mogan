@@ -305,7 +305,7 @@
       \;
     </cell>|<\cell>
       <value|li>
-    </cell>>|<row|<\cell>
+    </cell>>|<\row|<\cell>
       <value|b>
     </cell>|<\cell>
       23_22
@@ -316,7 +316,22 @@
       default.
     </cell>|<\cell>
       \;
-    </cell>|<value|li>>>>
+    </cell>>
+      <value|li>
+    </row>|<row|<\cell>
+      <value|f>
+    </cell>|<\cell>
+      <dlink|23_23>
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      By default, draw a circle with two points. And change it to three
+      points in the graphics-markup.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|re>
+    </cell>>>>
   </wide-block>
 
   \;
