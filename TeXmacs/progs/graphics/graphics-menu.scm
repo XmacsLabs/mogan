@@ -669,7 +669,9 @@
         (link graphics-overlays-menu)))
   (assuming (not (inside? 'screens))
     (=> (balloon (icon "tm_overlays.xpm") "Graphical overlays")
-        (link graphics-overlays-menu)))
+        (link graphics-overlays-menu))))
+
+(tm-menu (graphics-exit-icon)
   ((balloon (icon "tm_exit_image.xpm") "Exit graphics mode")
    (graphics-exit-right)))
 
@@ -927,7 +929,9 @@
   /
   (link graphics-insert-icons)
   /
-  (link graphics-group-icons))
+  (link graphics-group-icons)
+  /
+  (link graphics-exit-icon))
 
 (tm-menu (graphics-focus-icons)
   (mini #t
