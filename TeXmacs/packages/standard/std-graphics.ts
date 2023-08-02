@@ -64,15 +64,7 @@
     <cline|<arg|p1>|<point|<look-up|<arg|p1>|0>|<look-up|<arg|p2>|1>>|<arg|p2>|<point|<look-up|<arg|p2>|0>|<look-up|<arg|p1>|1>>>
   </macro>>
 
-  <assign|circle|<\macro|p1|p2>
-    <\with|x1|<look-up|<arg|p1>|0>|y1|<look-up|<arg|p1>|1>>
-      <\with|x2|<look-up|<arg|p2>|0>|y2|<look-up|<arg|p2>|1>>
-        <\with|xr|<minus|<value|x2>|<value|x1>>|yr|<minus|<value|y2>|<value|y1>>>
-          <carc|<arg|p2>|<point|<plus|<value|x1>|<minus|<value|xr>>>|<plus|<value|y1>|<minus|<value|yr>>>>|<point|<plus|<value|x1>|<minus|<value|yr>>>|<plus|<value|y1>|<value|xr>>>>
-        </with>
-      </with>
-    </with>
-  </macro>>
+  <assign|circle|<macro|p1|p2|<extern|circle|<arg|p1>|<arg|p2>>>>
 
   <assign|arrow-with-text|<macro|p1|p2|t|<extern|arrow-with-text|<arg|p1>|<arg|p2>|<quote-arg|t>>>>
 

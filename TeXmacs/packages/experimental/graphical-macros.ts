@@ -46,6 +46,8 @@
 
   <assign|resistor|<macro|p1|p2|p3|<extern|resistor|<arg|p1>|<arg|p2>|<arg|p3>>>>
 
+  <assign|three-points-circle|<macro|p1|p2|p3|<extern|three-points-circle|<arg|p1>|<arg|p2>|<arg|p3>>>>
+
   <\active*>
     <\src-comment>
       Testing.

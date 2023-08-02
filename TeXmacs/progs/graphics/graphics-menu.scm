@@ -285,7 +285,7 @@
       ("Closed smooth" (graphics-set-mode '(edit csmooth)))
       ("Closed bezier" (graphics-set-mode '(edit cbezier))))
   ("Arc" (graphics-set-mode '(edit arc)))
-  ("Circle" (graphics-set-mode '(edit carc)))
+  ("Circle" (graphics-set-mode '(edit circle)))
   ---
   ("Text" (graphics-set-mode '(edit text-at)))
   ("Mathematics" (graphics-set-mode '(edit math-at)))
@@ -299,7 +299,7 @@
           ((eval (upcase-first (symbol->string tag)))
            (import-from (graphics graphics-markup))
            (graphics-set-mode `(edit ,tag))))))
-    (with u (list-difference gr-tags-user '(arrow-with-text arrow-with-text*))
+    (with u (list-difference gr-tags-user '(arrow-with-text arrow-with-text* circle))
       (with l (list-filter u (lambda (s) (style-has? (symbol->string s))))
         (assuming (nnull? l)
           ---
@@ -750,8 +750,8 @@
           "v" (== (graphics-mode) '(edit arc)))
    (graphics-set-mode '(edit arc)))
   ((check (balloon (icon "tm_carc_mode.xpm") "Insert circles")
-          "v" (== (graphics-mode) '(edit carc)))
-   (graphics-set-mode '(edit carc)))
+          "v" (== (graphics-mode) '(edit circle)))
+   (graphics-set-mode '(edit circle)))
   /
   ((check (balloon (icon "tm_textat_mode.xpm") "Insert text")
           "v" (== (graphics-mode) '(edit text-at)))
@@ -984,7 +984,7 @@
         ((== s '(edit smooth)) "smooth")
         ((== s '(edit csmooth)) "closed smooth")
         ((== s '(edit arc)) "arc")
-        ((== s '(edit carc)) "circle")
+        ((== s '(edit circle)) "circle")
         ((== s '(edit text-at)) "text")
         ((== s '(edit math-at)) "mathematics")
         ((== s '(edit document-at)) "long text")
