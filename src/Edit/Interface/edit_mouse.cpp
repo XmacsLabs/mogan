@@ -11,6 +11,7 @@
 
 #include "edit_interface.hpp"
 #include "qapplication.h"
+#include "qnamespace.h"
 #include "tm_buffer.hpp"
 #include "tm_timer.hpp"
 #include "link.hpp"
@@ -284,6 +285,8 @@ edit_interface_rep::set_pointer (
   send_mouse_pointer (this, curs_name, mask_name);
 }
 
+
+// https://doc.qt.io/qt-5.15/qcursor.html
 void
 edit_interface_rep::set_cursor_style (string style_name){
   QWidget* mainwindow = QApplication::activeWindow();
@@ -293,6 +296,31 @@ edit_interface_rep::set_cursor_style (string style_name){
     mainwindow->setCursor(Qt::ArrowCursor);
   else if(style_name == "closehand")
     mainwindow->setCursor(Qt::ClosedHandCursor);
+  else if(style_name == "cross")
+    mainwindow->setCursor(Qt::CrossCursor);
+  else if(style_name == "up_arrow")
+    mainwindow->setCursor(Qt::UpArrowCursor);
+  else if(style_name == "ibeam")
+    mainwindow->setCursor(Qt::IBeamCursor);
+  else if(style_name == "wait")
+    mainwindow->setCursor(Qt::WaitCursor);
+  else if(style_name == "fobidden")
+    mainwindow->setCursor(Qt::ForbiddenCursor);
+  else if(style_name == "pointing_hand")
+    mainwindow->setCursor(Qt::PointingHandCursor);
+  else if(style_name == "size_ver")
+    mainwindow->setCursor(Qt::SizeVerCursor);
+  else if(style_name == "size_hor")
+    mainwindow->setCursor(Qt::SizeHorCursor);
+  else if(style_name == "size_bdiag")
+    mainwindow->setCursor(Qt::SizeBDiagCursor);
+  else if(style_name == "size_fdiag")
+    mainwindow->setCursor(Qt::SizeFDiagCursor);
+  else if(style_name == "size_all")
+    mainwindow->setCursor(Qt::SizeAllCursor);
+  else
+    TM_FAILED("invalid cursor style");
+
 }
 
 /******************************************************************************
