@@ -1870,6 +1870,7 @@
 ("this page" "")
 ("this row" "此行")
 ("three times" "三次")
+("three-points-circle" "三点画圆")
 ("through popup windows" "通过弹出窗口")
 ("through the menus" "通过菜单")
 ("thumbnails" "缩略图")
