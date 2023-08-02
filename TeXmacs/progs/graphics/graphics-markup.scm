@@ -73,6 +73,12 @@
          (q2 `(point (minus ,cx ,dy) (plus ,cy ,dx))))
     `(superpose (with "point-style" "none" ,c) (carc ,p ,q1 ,q2))))
 
+(define-graphics (three-points-circle P1 P2 P3)
+  (let* ((p1 (if (tm-point? P1) P1 '(point "0" "0")))
+         (p2 (if (tm-point? P2) P2 p1))
+         (p3 (if (tm-point? P3) P3 p2)))
+    `(carc ,p1 ,p2 ,p3)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Electrical diagrams
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
