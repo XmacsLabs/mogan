@@ -12,6 +12,8 @@
 #include "tm_timer.hpp"
 #include "iterator.hpp"
 #include "merge_sort.hpp"
+#include "tm_ostream.hpp"
+#include "basic.hpp"
 
 static hashmap<string,int> timing_level (0);
 static hashmap<string,int> timing_nr    (0);
@@ -75,10 +77,10 @@ bench_cumul (string task) {
 }
 
 void
-bench_end (string task) {
+bench_end (tm_ostream ostream, string task) {
   // end timer for a given type of task, print result and reset timer
   bench_cumul (task);
-  bench_print (task);
+  bench_print (ostream, task);
   bench_reset (task);
 }
 
@@ -92,14 +94,13 @@ bench_reset (string task) {
 }
 
 void
-bench_print (string task) {
+bench_print (tm_ostream ostream, string task) {
   // print timing for a given type of task
   if (DEBUG_BENCH) {
     int nr= timing_nr [task];
-    std_bench << "Task '" << task << "' took "
-              << timing_cumul [task] << " ms";
+    ostream << "Task '" << task << "' took " << timing_cumul [task] << " ms";
     if (nr > 1) std_bench << " (" << nr << " invocations)";
-    std_bench << "\n";
+    ostream << LF;
   }
 }
 
@@ -114,10 +115,10 @@ collect (hashmap<string,int> h) {
 }
 
 void
-bench_print () {
+bench_print (tm_ostream ostream) {
   // print timings for all types of tasks
   array<string> a= collect (timing_cumul);
   int i, n= N(a);
   for (i=0; i<n; i++)
-    bench_print (a[i]);
+    bench_print (ostream, a[i]);
 }
