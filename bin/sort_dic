@@ -1,0 +1,8 @@
+#!/usr/bin/env elvish
+
+var path = $args[0]
+
+var content = [(cat $path | order)]
+all $content | each { |line|
+    echo $line
+} > $path
