@@ -260,7 +260,7 @@ tree_translate (tree t) {
 * Translate and serialize
 ******************************************************************************/
 
-static string
+string
 serialize (tree t) {
   if (is_atomic (t))
     return t->label;
