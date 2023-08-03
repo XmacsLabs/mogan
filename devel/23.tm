@@ -330,7 +330,7 @@
     </cell>|<\cell>
       \;
     </cell>|<\cell>
-      <value|re>
+      <value|ok>
     </cell>>|<row|<\cell>
       <strong|Code>
     </cell>|<\cell>
@@ -367,6 +367,19 @@
       \;
     </cell>|<\cell>
       <value|ok>
+    </cell>>|<row|<\cell>
+      <value|f>
+    </cell>|<\cell>
+      23_27
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      Draw an arc by three points, one is center, the other two are the start
+      and end of the arc.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|re>
     </cell>>>>
   </wide-block>
 
