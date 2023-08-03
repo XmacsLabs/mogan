@@ -331,6 +331,42 @@
       \;
     </cell>|<\cell>
       <value|re>
+    </cell>>|<row|<\cell>
+      <strong|Code>
+    </cell>|<\cell>
+      23_24
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      new complete cursor style setting function
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|ok>
+    </cell>>|<row|<\cell>
+      <value|f>
+    </cell>|<\cell>
+      23_25
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      Ban translation in the right footer.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|ok>
+    </cell>>|<row|<\cell>
+      <strong|Code>
+    </cell>|<\cell>
+      23_26
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      remove the useless file init-texmacs.scm
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|ok>
     </cell>>>>
   </wide-block>
 
