@@ -750,6 +750,11 @@ target("windows_installer") do
     end)
 end
 
+target("translation_sort") do
+  set_kind("binary")
+  add_files("misc/translation/sort_dict.cpp")
+end
+
 for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
     if string.sub(filepath, 1, string.len("tests/Kernel")) ~= "tests/Kernel"
        and string.sub(filepath, 1, string.len("tests/System/Classes")) ~= "tests/System/Classes" then
