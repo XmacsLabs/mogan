@@ -299,6 +299,11 @@ target("libmogan") do
     if is_plat("linux") then
         add_rules("qt.shared")
         set_installdir(INSTALL_DIR)
+    elseif is_plat("macosx") then
+        on_install(function (target)
+            print("No need to install libmogan on macOS")
+        end)
+        add_rules("qt.static")
     else
         add_rules("qt.static")
     end
@@ -634,7 +639,6 @@ target("mogan") do
 
         if is_plat("macosx") and is_arch("arm64") then
             local app_dir = target:installdir() .. "/../../"
-            os.rm(app_dir .. "Contents/Resources/lib")
             os.rm(app_dir .. "Contents/Resources/include")
             os.rm(app_dir .. "Contents/Frameworks/QtQmlModels.framework")
             os.rm(app_dir .. "Contents/Frameworks/QtQml.framework")
