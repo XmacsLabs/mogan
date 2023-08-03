@@ -355,6 +355,18 @@
       \;
     </cell>|<\cell>
       <value|ok>
+    </cell>>|<row|<\cell>
+      <strong|Code>
+    </cell>|<\cell>
+      23_26
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      remove the useless file init-texmacs.scm
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|ok>
     </cell>>>>
   </wide-block>
 
