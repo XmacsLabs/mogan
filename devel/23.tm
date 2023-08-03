@@ -331,6 +331,18 @@
       \;
     </cell>|<\cell>
       <value|re>
+    </cell>>|<row|<\cell>
+      <strong|Code>
+    </cell>|<\cell>
+      23_24
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      new complete cursor style setting function
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|ok>
     </cell>>>>
   </wide-block>
 
