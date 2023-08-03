@@ -343,6 +343,18 @@
       \;
     </cell>|<\cell>
       <value|ok>
+    </cell>>|<row|<\cell>
+      <value|f>
+    </cell>|<\cell>
+      23_25
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      Ban translation in the right footer.
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|ok>
     </cell>>>>
   </wide-block>
 
