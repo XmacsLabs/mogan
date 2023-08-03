@@ -99,7 +99,7 @@ bench_print (tm_ostream ostream, string task) {
   if (DEBUG_BENCH) {
     int nr= timing_nr [task];
     ostream << "Task '" << task << "' took " << timing_cumul [task] << " ms";
-    if (nr > 1) std_bench << " (" << nr << " invocations)";
+    if (nr > 1) ostream << " (" << nr << " invocations)";
     ostream << LF;
   }
 }

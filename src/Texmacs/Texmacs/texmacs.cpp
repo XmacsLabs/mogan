@@ -507,7 +507,7 @@ TeXmacs_main (int argc, char** argv) {
     open_window ();
   }
 
-  bench_print ();
+  bench_print (std_bench);
   bench_reset ("initialize texmacs");
   bench_reset ("initialize plugins");
   bench_reset ("initialize scheme");
