@@ -430,7 +430,8 @@
   (cond ((not (url-rooted-web? u))
          (system-1 (default-open) u))
         ((or (os-mingw?) (os-win32?))
-         (system (string-append (default-open) " " (url->system u))))
+         (system (string-append (default-open) " " 
+                                (string-replace (url->system u) "&" "^&"))))
         (else
          (system (string-append (default-open) " "
                                 (raw-quote (url->system u)))))))
