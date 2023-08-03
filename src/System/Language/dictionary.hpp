@@ -34,6 +34,7 @@ public:
   friend dictionary load_dictionary (string from, string to);
 };
 
+string serialize (tree t);
 dictionary load_dictionary (string from, string to);
 void force_load_dictionary (string from, string to);
 void set_input_language (string s);
