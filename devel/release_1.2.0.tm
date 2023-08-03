@@ -11,11 +11,12 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|23|23|1|1|cell-background|pastel
-  red>|<cwith|20|20|1|1|cell-background|pastel
-  red>|<cwith|22|22|1|1|cell-background|pastel
-  red>|<cwith|18|18|1|1|cell-background|pastel
-  red>|<cwith|29|29|3|3|cell-valign|b>|<cwith|30|30|1|1|cell-valign|b>|<table|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|24|24|1|1|cell-background|pastel
+  red>|<cwith|21|21|1|1|cell-background|pastel
+  red>|<cwith|23|23|1|1|cell-background|pastel
+  red>|<cwith|19|19|1|1|cell-background|pastel
+  red>|<cwith|30|30|3|3|cell-valign|b>|<cwith|31|31|1|1|cell-valign|b>|<table|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
+  indentation of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
   the new mechanism of glue code generation>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning
   as plugin>>|<row|<cell|<dlink|43>>|<cell|>|<cell|LaTeX converters as
   plugin>>|<row|<cell|<dlink|42>>|<cell|>|<cell|HTML converters as
@@ -38,14 +39,9 @@
   Project Onboarding>>|<row|<cell|<dlink|25>>|<cell|Pluto>|<cell|Add CI on
   Gitee>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML import and
   export>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan Draw optimization
-  \ (OSPP)>>|<row|<\cell>
-    <dlink|22>
-  </cell>|<\cell>
-    Darcy
-  </cell>|<\cell>
-    Chinese Dictionary
-  </cell>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language related
-  issues>>|<row|<cell|<dlink|18>>|<cell|jinkaimori>|<cell|Embedded
+  \ (OSPP)>>|<row|<cell|<dlink|22>>|<cell|Darcy>|<cell|Chinese
+  Dictionary>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language
+  related issues>>|<row|<cell|<dlink|18>>|<cell|jinkaimori>|<cell|Embedded
   documentation issues>>|<row|<cell|<dlink|13>>|<cell|Darcy>|<cell|Libcurl
   integration>>|<row|<cell|<dlink|11>>|<cell|Darcy>|<cell|Font
   tuning>>|<row|<cell|<dlink|7>>|<cell|Darcy>|<cell|Stability
