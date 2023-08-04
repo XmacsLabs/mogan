@@ -1,6 +1,6 @@
-<TeXmacs|1.0.7.10>
+<TeXmacs|2.1.2>
 
-<style|tmdoc>
+<style|<tuple|tmdoc|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|Paragraph layout>
@@ -201,6 +201,47 @@
   </explain>
 
   <\explain>
+    <var-val|par-no-first|true><explain-synopsis|disable first indentation
+    for next paragraph?>
+  <|explain>
+    This flag enables first indentation defined by <src-var|par-first> for
+    the next paragraph. First paragraph of a section may not be indented in
+    English document, but must be indented in Chinese document.
+
+    <\big-table>
+      <\quote-env>
+        <\quote-env>
+          <block|<tformat|<twith|table-width|1par>|<cwith|1|-1|1|-1|cell-hyphen|t>|<table|<row|<\cell>
+            <var-val|par-no-first|true>
+          </cell>|<\cell>
+            <var-val|par-no-first|false>
+          </cell>>|<row|<\cell>
+            <\with|par-par-sep|0fn|par-first|1.5fn|par-no-first|true>
+              The <tmstyle|article> and <tmstyle|book> styles in <TeXmacs>
+              indictate the starts of new paragraphs through the use of a
+              first indentation.
+
+              The <tmstyle|generic> and <tmstyle|letter> styles rather use
+              vertical whitespace.
+            </with>
+          </cell>|<\cell>
+            <\with|par-par-sep|0fn|par-first|1.5fn|par-no-first|false>
+              The <tmstyle|article> and <tmstyle|book> styles in <TeXmacs>
+              indictate the starts of new paragraphs through the use of a
+              first indentation.
+
+              The <tmstyle|generic> and <tmstyle|letter> styles rather use
+              vertical whitespace.
+            </with>
+          </cell>>>>>
+        </quote-env>
+      </quote-env>
+    <|big-table>
+      <label|par-no-first-tab>Different first indentation style\ 
+    </big-table>
+  </explain>
+
+  <\explain>
     <var-val|par-sep|0.2fn><explain-synopsis|extra separation between
     successive lines>
   <|explain>
@@ -342,3 +383,9 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
+
+<\initial>
+  <\collection>
+    <associate|preamble|false>
+  </collection>
+</initial>

@@ -1,6 +1,6 @@
-<TeXmacs|1.0.3.11>
+<TeXmacs|2.1.2>
 
-<style|tmdoc>
+<style|<tuple|tmdoc|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|Miscellaneous environment variables>
@@ -19,13 +19,6 @@
     <var-val|sfactor|5><explain-synopsis|shrinking factor>
   <|explain>
     The shrinking factor which is used for rendering.
-  </explain>
-
-  <\explain>
-    <var-val|par-no-first|false><explain-synopsis|disable first indentation
-    for next paragraph?>
-  <|explain>
-    This flag disables first indentation for the next paragraph.
   </explain>
 
   <\explain>
@@ -60,3 +53,6 @@
   Texts. A copy of the license is included in the section entitled "GNU Free
   Documentation License".>
 </body>
+
+<initial|<\collection>
+</collection>>
