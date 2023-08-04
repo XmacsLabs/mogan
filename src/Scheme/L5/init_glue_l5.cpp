@@ -26,6 +26,7 @@
 #include "promise.hpp"
 #include "universal.hpp"
 #include "widget.hpp"
+#include "tm_debug.hpp"
 
 #if 0
 template<class T> tmscm box_to_tmscm (T o) {
@@ -248,6 +249,11 @@ protected_call (object cmd) {
   }
   handle_exceptions ();
 #endif
+}
+
+void
+bench_print_all () {
+  bench_print (std_bench);
 }
 
 /******************************************************************************

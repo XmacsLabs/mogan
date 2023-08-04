@@ -12,10 +12,9 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include "basic.hpp"
 #include "string.hpp"
+#include "tm_ostream.hpp"
 #include "tm_configure.hpp"
-#include "tm_debug.hpp"
 
 #ifndef __FreeBSD__
 #ifndef HAVE_TIME_T
@@ -46,9 +45,9 @@ time_t texmacs_time ();
 
 void   bench_start (string task);
 void   bench_cumul (string task);
-void   bench_end   (string task);
+void   bench_end   (tm_ostream ostream, string task);
 void   bench_reset (string task);
-void   bench_print (string task);
-void   bench_print ();
+void   bench_print (tm_ostream ostream, string task);
+void   bench_print (tm_ostream ostream);
 
 #endif // defined TIMER_H
