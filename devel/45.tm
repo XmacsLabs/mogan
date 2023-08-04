@@ -16,6 +16,14 @@
       \;
     </cell>|<\cell>
       Generate document, texmacs definition and properties for glue
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <dlink|45_2>
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Cache generated glue
     </cell>>>>
   </wide-tabular>
 
