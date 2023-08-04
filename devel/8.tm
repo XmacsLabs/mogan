@@ -16,7 +16,8 @@
     green>|<cwith|4|4|2|2|cell-background|pastel
     green>|<cwith|9|9|2|2|cell-background|pastel
     green>|<cwith|1|1|2|2|cell-background|pastel
-    green>|<cwith|6|6|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|6|6|2|2|cell-background|pastel
+    green>|<cwith|10|10|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Feature
     </cell>|<\cell>
       8_1
@@ -88,6 +89,14 @@
       Darcy
     </cell>|<\cell>
       Upgrade to xmake 2.8.1
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      8_10
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Do not install static library <verbatim|libmogan>
     </cell>>>>
   </wide-tabular>
 
