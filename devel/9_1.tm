@@ -7,9 +7,9 @@
 
   <section|Bug metadata>
 
-  <\itemize>
-    <item>Owner: jingkaimori
-  </itemize>
+  <\description>
+    <item*|Owner>jingkaimori
+  </description>
 
   <section|Description>
 

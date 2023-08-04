@@ -7,9 +7,13 @@
 
   <section|Bug metadata>
 
-  <\itemize>
-    <item>Owner: jingkaimori
-  </itemize>
+  <\description>
+    <item*|Reporter>jingkaimori
+
+    <item*|Owner>jingkaimori
+
+    <item*|Savannah issue><hlink|64258|https://savannah.gnu.org/bugs/index.php?64258>
+  </description>
 
   <section|Description>
 
