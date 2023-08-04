@@ -643,8 +643,8 @@ glue (url u, string s) {
   if (is_concat (u)) return u[1] * glue (u[2], s);
   if (is_or (u)) return glue (u[1], s) | glue (u[2], s);
   if (is_none (u)) return u;
-  failed_error << "u= " << u << "\n";
-  failed_error << "s= " << s << "\n";
+  // failed_error << "u= " << u << "\n";
+  // failed_error << "s= " << s << "\n";
   TM_FAILED ("can't glue string to url");
   return u;
 }
@@ -656,8 +656,8 @@ unglue (url u, int nr) {
   if (is_concat (u)) return u[1] * unglue (u[2], nr);
   if (is_or (u)) return unglue (u[1], nr) | unglue (u[2], nr);
   if (is_none (u)) return u;
-  failed_error << "u = " << u << "\n";
-  failed_error << "nr= " << nr << "\n";
+  // failed_error << "u = " << u << "\n";
+  // failed_error << "nr= " << nr << "\n";
   TM_FAILED ("can't unglue from url");
   return u;
 }
@@ -857,9 +857,9 @@ complete (url base, url u, string filter, bool flag) {
      if (is_none (base)) return base;
      if (is_none (u)) return u;
      if ((!is_root (base)) && (!is_rooted_name (base))) {
-       failed_error << "base  = " << base << LF;
-       failed_error << "u     = " << u << LF;
-       failed_error << "filter= " << filter << LF;
+      //  failed_error << "base  = " << base << LF;
+      //  failed_error << "u     = " << u << LF;
+      //  failed_error << "filter= " << filter << LF;
        TM_FAILED ("invalid base url");
      }
   }
@@ -873,9 +873,9 @@ complete (url base, url u, string filter, bool flag) {
       if (is_of_type (comp, filter)) return u;
       return url_none ();
     }
-    failed_error << "base  = " << base << LF;
-    failed_error << "u     = " << u << LF;
-    failed_error << "filter= " << filter << LF;
+    // failed_error << "base  = " << base << LF;
+    // failed_error << "u     = " << u << LF;
+    // failed_error << "filter= " << filter << LF;
     ASSERT (is_rooted (comp), "unrooted url");
     TM_FAILED ("bad protocol in url");
   }
@@ -886,9 +886,9 @@ complete (url base, url u, string filter, bool flag) {
   if (is_concat (u) && is_wildcard (u[1], 0) && is_wildcard (u[2], 1)) {
     // FIXME: ret= ret | ... is unefficient (quadratic) in main loop
     if (!(is_rooted (base, "default") || is_rooted (base, "file"))) {
-      failed_error << "base  = " << base << LF;
-      failed_error << "u     = " << u << LF;
-      failed_error << "filter= " << filter << LF;
+      // failed_error << "base  = " << base << LF;
+      // failed_error << "u     = " << u << LF;
+      // failed_error << "filter= " << filter << LF;
       TM_FAILED ("wildcards only implemented for files");
     }
     url ret= url_none ();
@@ -921,9 +921,9 @@ complete (url base, url u, string filter, bool flag) {
   if (is_wildcard (u)) {
     // FIXME: ret= ret | ... is unefficient (quadratic) in main loop
     if (!(is_rooted (base, "default") || is_rooted (base, "file"))) {
-      failed_error << "base  = " << base << LF;
-      failed_error << "u     = " << u << LF;
-      failed_error << "filter= " << filter << LF;
+      // failed_error << "base  = " << base << LF;
+      // failed_error << "u     = " << u << LF;
+      // failed_error << "filter= " << filter << LF;
       TM_FAILED ("wildcards only implemented for files");
     }
     url ret= url_none ();
@@ -945,7 +945,7 @@ complete (url base, url u, string filter, bool flag) {
     }
     return ret;
   }
-  failed_error << "url= " << u << LF;
+  // failed_error << "url= " << u << LF;
   TM_FAILED ("bad url");
   return u;
 }
@@ -1066,7 +1066,7 @@ concretize (url u) {
   url c= concretize_url (u);
   if (!is_none (c)) return as_string (c);
   if (is_wildcard (u, 1)) return u->t[1]->label;
-  std_warning << "Couldn't concretize " << u->t << LF;
+  // std_warning << "Couldn't concretize " << u->t << LF;
   // failed_error << "u= " << u << LF;
   // TM_FAILED ("url has no root");
   return "xxx";
@@ -1077,7 +1077,7 @@ materialize (url u, string filter) {
   // Combines resolve and concretize
   url r= resolve (u, filter);
   if (!(is_rooted (r) || is_here (r) || is_parent (r))) {
-    failed_error << "u= " << u << LF;
+    // failed_error << "u= " << u << LF;
     TM_FAILED ("url could not be resolved");
   }
   return concretize (r);
