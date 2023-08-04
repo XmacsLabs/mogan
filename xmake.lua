@@ -529,18 +529,25 @@ target("mogan") do
     end
 
     on_config(function (target) 
+        import("core.project.depend")
         -- use relative path here to avoid import failure on windows
         local scheme_path = path.join("src", "Scheme")
         local build_glue_path = path.join("src", "Scheme", "Glue")
         local build_glue = import("build_glue", {rootdir = build_glue_path})
         for _, filepath in ipairs(os.filedirs(path.join(scheme_path, "**/glue_*.lua"))) do
-            local glue_name = path.basename(filepath)
-            local glue_dir = path.directory(filepath)
-            local glue_table = import(glue_name, {rootdir = glue_dir})()
-            io.writefile(
-                path.join("$(buildir)", glue_name .. ".cpp"),
-                build_glue(glue_table, glue_name))
-            cprint("generating scheme glue %s ... %s", glue_name, "${color.success}${text.success}")
+            depend.on_changed(function ()
+                local glue_name = path.basename(filepath)
+                local glue_dir = path.directory(filepath)
+                local glue_table = import(glue_name, {rootdir = glue_dir})()
+                io.writefile(
+                    path.join("$(buildir)", glue_name .. ".cpp"),
+                    build_glue(glue_table, glue_name))
+                cprint("generating scheme glue %s ... %s", glue_name, "${color.success}${text.success}")
+            end, {
+                values = {true},
+                files = {filepath, path.join(build_glue_path, "build_glue.lua")},
+                always_changed = false
+            })
         end
     end)
 
