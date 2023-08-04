@@ -13,6 +13,8 @@
 #define URL_H
 #include "tree.hpp"
 #include "tm_debug.hpp"
+#include "array.hpp"
+#include "string.hpp"
 
 #define URL_SYSTEM 0
 #define URL_UNIX 1
@@ -25,13 +27,16 @@
 
 struct url_rep: concrete_struct {
   tree t;
+  array<string> path;
   inline url_rep (tree t2): t (t2) {}
+  inline url_rep (array<string> path2): path (path2) {}
 };
 
 class url {
   CONCRETE(url);
 private:
   url (tree t): rep (tm_new<url_rep> (t)) {}
+  url (array<string> path): rep (tm_new<url_rep> (path)) {}
 public:
   url ();
   url (const char* name);
@@ -88,7 +93,9 @@ inline url url_parent (url u) { return u * url_parent (); }
 * predicates
 ******************************************************************************/
 
-inline bool is_none (url u) { return is_tuple (u->t, "none", 0); }
+inline bool is_none (url u) { 
+  return (L(u->t) == TUPLE) && (N(u->t) == (1)) && (u->t[0] == "none");
+}
 inline bool is_here (url u) { return u->t == "."; }
 inline bool is_parent (url u) { return u->t == ".."; }
 inline bool is_ancestor (url u) { return u->t == "..."; }
