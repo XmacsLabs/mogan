@@ -9,6 +9,7 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "tm_configure.hpp"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
