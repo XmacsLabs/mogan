@@ -34,6 +34,7 @@ private slots:
 void
 TestTree::test_is_atomic () {
   QVERIFY (is_atomic (tree ()));
+  QVERIFY (is_atomic ("string"));
 }
 
 void

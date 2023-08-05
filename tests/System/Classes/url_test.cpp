@@ -27,6 +27,7 @@ public:
   url root_no_such_tmp= url ("/no_such_tmp");
 
 private slots:
+  void test_constructors ();
   void test_exists ();
   void test_suffix ();
 
@@ -37,6 +38,13 @@ private slots:
   // operations
   void test_descends ();
 };
+
+void 
+TestURL::test_constructors () {
+  url empty = url ();
+  QVERIFY (empty->path[0] ==  "STRING");
+  QVERIFY (empty->path[1] ==  "none");
+}
 
 void
 TestURL::test_exists () {

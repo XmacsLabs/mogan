@@ -27,7 +27,7 @@
 
 struct url_rep: concrete_struct {
   tree t;
-  array<string> path;
+  array<string> path;   // store op | label
   inline url_rep (tree t2): t (t2) {}
   inline url_rep (array<string> path2): path (path2) {}
 };
@@ -46,11 +46,13 @@ public:
   inline bool operator != (url u) { return rep->t != u->t; }
   inline url operator [] (int i) { return url (rep->t[i]); }
   friend url as_url (tree t);
+  friend url as_url (array<string> s);
 };
 CONCRETE_CODE(url);
 
 tm_ostream& operator << (tm_ostream& out, url u);
 inline url as_url (tree t) { return url(t); }
+inline url as_url (array<string> s) { return url(s); }
 string as_string (url u, int type= URL_SYSTEM);
 inline tree as_tree (url u) { return tree (u->t); }
 inline string as_system_string (url u) { return as_string (u, URL_SYSTEM); }
