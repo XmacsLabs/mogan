@@ -11,6 +11,8 @@
  ******************************************************************************/
 
 #include "tree.hpp"
+#include "tree_helper.hpp"
+
 #include <QtTest/QtTest>
 
 class TestTree : public QObject {
