@@ -106,6 +106,7 @@ local l3_includedirs = {
     "src/Data/Observers",
     "src/Data/Scheme",
     "src/Data/String",
+    "src/Data/Tree",
     "src/Kernel/Abstractions",
     "src/Kernel/Algorithms",
     "src/Scheme",
