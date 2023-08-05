@@ -45,12 +45,14 @@ public:
   inline bool operator == (url u) { return rep->t == u->t; }
   inline bool operator != (url u) { return rep->t != u->t; }
   inline url operator [] (int i) { return url (rep->t[i]); }
+  friend url as_url ();
   friend url as_url (tree t);
   friend url as_url (array<string> s);
 };
 CONCRETE_CODE(url);
 
 tm_ostream& operator << (tm_ostream& out, url u);
+inline url as_url () { return url (array<string> ("STRING","")); }
 inline url as_url (tree t) { return url(t); }
 inline url as_url (array<string> s) { return url(s); }
 string as_string (url u, int type= URL_SYSTEM);
@@ -71,10 +73,10 @@ url url_system (string dir, string name);
 url url_standard (string name);
 url url_standard (string dir, string name);
 
-inline url url_none () { return as_url (tuple ("none")); }
-inline url url_here () { return as_url (tree (".")); }
-inline url url_parent () { return as_url (tree ("..")); }
-inline url url_ancestor () { return as_url (tree ("...")); }
+inline url url_none () { return as_url (); }
+inline url url_here () { return as_url (array<string> ("STRING",".")); }
+inline url url_parent () { return as_url (array<string> ("STRING","..")); }
+inline url url_ancestor () { return as_url (array<string> ("STRING","...")); }
 inline url url_pwd () { return url_system ("$PWD"); }
 
 url url_root (string protocol);       // root url
