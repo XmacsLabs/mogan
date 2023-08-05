@@ -84,6 +84,7 @@ local l3_files = {
     "src/Data/String/**.cpp",
     "src/Data/Document/new_document.cpp",
     "src/Data/Drd/**.cpp",
+    "src/Data/Tree/tree_helper.cpp",
     "src/Scheme/L1/**.cpp",
     "src/Scheme/L2/**.cpp",
     "src/Scheme/L3/**.cpp",
