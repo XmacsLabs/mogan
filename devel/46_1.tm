@@ -3,7 +3,8 @@
 <style|<tuple|tmdoc|chinese>>
 
 <\body>
-  <tmdoc-title|Fix incorrect word count for cjk content>
+  <tmdoc-title|Default value of <src-var|par-no-first> does not match default
+  behavior>
 
   <section|Bug metadata>
 
@@ -33,6 +34,12 @@
   When default value was changed, style cache in
   <verbatim|~/.TeXmacs/system/cache> should be deleted so that changed
   default value can take effect.
+
+  <subsection|Why skipped>
+
+  Because <src-var|par-no-first> should not be toggled by user, so it is not
+  necessary to read its initial value, thus changing default value is
+  meaningless.
 
   <tmdoc-copyright|2023|jingkaimori>
 
