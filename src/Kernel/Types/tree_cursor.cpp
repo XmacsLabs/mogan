@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "tree_cursor.hpp"
+#include "tree_helper.hpp"
 #include "drd_std.hpp"
 #include "drd_mode.hpp"
 #include "analyze.hpp"

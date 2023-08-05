@@ -258,20 +258,6 @@ replace (tree t, tree w, tree b) {
 * Tree predicates
 ******************************************************************************/
 
-bool
-is_document (tree t) {
-  return L(t) == DOCUMENT;
-}
-
-bool
-is_concat (tree t) {
-  return L(t) == CONCAT;
-}
-
-bool
-is_format (tree t) {
-  return is_document (t) || is_concat (t);
-}
 
 bool
 is_formatting (tree t) {
