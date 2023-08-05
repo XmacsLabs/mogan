@@ -99,7 +99,7 @@ url_get_atom (string s, int type) {
   if (N(s)==2 && ends (s, ":"))
     s->resize(1); // remove the ':' after unit letter
 #endif
-  return as_url (array<string> (s));
+  return as_url (tree (s));
 }
 
 static void
