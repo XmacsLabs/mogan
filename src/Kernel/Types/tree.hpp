@@ -381,34 +381,6 @@ bool is_compound (tree t, string s);
 bool is_compound (tree t, string s, int n);
 
 /******************************************************************************
-* Tuples
-******************************************************************************/
-
-inline tree tuple () {
-  return tree (TUPLE); }
-inline tree tuple (tree t1) {
-  return tree (TUPLE, t1); }
-inline tree tuple (tree t1, tree t2) {
-  return tree (TUPLE, t1, t2); }
-inline tree tuple (tree t1, tree t2, tree t3) {
-  return tree (TUPLE, t1, t2, t3); }
-inline tree tuple (tree t1, tree t2, tree t3, tree t4) {
-  return tree (TUPLE, t1, t2, t3, t4); }
-inline tree tuple (tree t1, tree t2, tree t3, tree t4, tree t5) {
-  return tree (TUPLE, t1, t2, t3, t4, t5); }
-
-inline bool is_tuple (tree t) {
-  return (L(t) == TUPLE); }
-inline bool is_tuple (tree t, string s) {
-  return (L(t) == TUPLE) && (N(t) >= 1) && (t[0] == s); }
-inline bool is_tuple (tree t, const char* s) {
-  return (L(t) == TUPLE) && (N(t) >= 1) && (t[0] == s); }
-inline bool is_tuple (tree t, string s, int n) {
-  return (L(t) == TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
-inline bool is_tuple (tree t, const char* s, int n) {
-  return (L(t) == TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
-
-/******************************************************************************
 * Other frequent markup
 ******************************************************************************/
 

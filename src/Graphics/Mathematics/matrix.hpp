@@ -11,6 +11,8 @@
 
 #ifndef MATRIX_H
 #define MATRIX_H
+
+#include "tree_helper.hpp"
 #include "vector.hpp"
 #include "ntuple.hpp"
 #define TMPL template<typename T>
