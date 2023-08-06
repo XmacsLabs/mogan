@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "tree_modify.hpp"
+#include "tree_helper.hpp"
 #include "drd_std.hpp"
 #include "path.hpp"
 

@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "tree_search.hpp"
+#include "tree_helper.hpp"
 #include "analyze.hpp"
 #include "preferences.hpp"
 #include "drd_mode.hpp"
