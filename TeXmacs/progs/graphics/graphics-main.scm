@@ -856,12 +856,15 @@
 
 (tm-define (graphics-set-mode val)
   (:check-mark "v" graphics-mode-has-value?)
-  (if (== val '(group-edit move))
-    (set-cursor-style "openhand")
-    (set-cursor-style "normal"))
-  (graphics-group-start)
-  (graphics-set-property "gr-mode" `(tuple ,@(map symbol->string val)))
-  (graphics-enter-mode (graphics-mode) val))
+  (if (equal? (graphics-mode) val)
+    (graphics-set-mode '(group-edit edit-props))
+    (begin
+      (if (== val '(group-edit move))
+        (set-cursor-style "openhand")
+        (set-cursor-style "normal"))
+      (graphics-group-start)
+      (graphics-set-property "gr-mode" `(tuple ,@(map symbol->string val)))
+      (graphics-enter-mode (graphics-mode) val))))
 
 (tm-define (graphics-group-mode? mode)
   (func? mode 'group-edit 1))
