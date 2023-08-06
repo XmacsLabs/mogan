@@ -19,6 +19,7 @@ class TestTree : public QObject {
 private slots:
   void test_is_atomic ();
   void test_is_tuple ();
+  void test_construct_tuple ();
   void test_is_concat ();
   void test_is_compound ();
   void test_is_bool ();
@@ -45,6 +46,26 @@ TestTree::test_is_tuple () {
   QVERIFY (is_tuple (tuple (tree (), tree (), tree ())));
   QVERIFY (is_tuple (tuple (tree (), tree (), tree (), tree ())));
   QVERIFY (is_tuple (tuple (tree (), tree (), tree (), tree (), tree ())));
+}
+
+void
+TestTree::test_construct_tuple () {
+  // QVERIFY (tuple () == tree (TUPLE, 0));
+  // QVERIFY (tuple (tree ()) == tree (TUPLE, 1, tree ()));
+  tree t = tuple("string1");
+  QVERIFY (t[0] == "string1");
+  QVERIFY (N(t) == 1);
+
+  tree t1 = tuple("concat",tree());
+  QVERIFY (t1[0] == "concat");
+  QVERIFY (N(t1) == 2);
+  QVERIFY (t1[1] == "");
+
+  tree t2 = tuple("concat",tree(),tree()); // TUPLE STRING concat | STRING "" | STRING ""
+  QVERIFY (t2[0] == "concat");
+  QVERIFY (N(t2) == 3);
+  QVERIFY (t2[1] == "");
+  QVERIFY (t2[2] == "");
 }
 
 void

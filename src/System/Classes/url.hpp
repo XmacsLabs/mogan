@@ -52,7 +52,7 @@ public:
 CONCRETE_CODE(url);
 
 tm_ostream& operator << (tm_ostream& out, url u);
-inline url as_url () { return url (array<string> ("STRING","")); }
+inline url as_url () { return url (array<string> ("TUPLE","STRING","none")); }
 inline url as_url (tree t) { return url(t); }
 inline url as_url (array<string> s) { return url(s); }
 string as_string (url u, int type= URL_SYSTEM);
@@ -73,7 +73,7 @@ url url_system (string dir, string name);
 url url_standard (string name);
 url url_standard (string dir, string name);
 
-inline url url_none () { return as_url (); }
+inline url url_none () { return as_url (array<string> ("TUPLE","STRING","none")); }
 inline url url_here () { return as_url (array<string> ("STRING",".")); }
 inline url url_parent () { return as_url (array<string> ("STRING","..")); }
 inline url url_ancestor () { return as_url (array<string> ("STRING","...")); }
@@ -97,17 +97,46 @@ inline url url_parent (url u) { return u * url_parent (); }
 * predicates
 ******************************************************************************/
 
-inline bool is_none (url u) { 
-  return (L(u->t) == TUPLE) && (N(u->t) == (1)) && (u->t[0] == "none");
+inline bool is_none (url u) {
+  return (u->path[0] == "TUPLE") && (N(u->path) == 3) && (u->path[2] == "none");
+  // return (L(u->t) == TUPLE) && (N(u->t) == (1)) && (u->t[0] == "none");
 }
-inline bool is_here (url u) { return u->t == "."; }
-inline bool is_parent (url u) { return u->t == ".."; }
-inline bool is_ancestor (url u) { return u->t == "..."; }
-inline bool is_atomic (url u) { return is_atomic (u->t); }
-inline bool is_concat (url u) { return is_tuple (u->t, "concat", 2); }
-inline bool is_or (url u) { return is_tuple (u->t, "or", 2); }
+inline bool is_here (url u) { 
+  return (u->path[0] == "STRING") && (N(u->path) == 2) && (u->path[1] == "."); 
+}
+inline bool is_parent (url u) { 
+  return (u->path[0] == "STRING") && (N(u->path) == 2) && (u->path[1] == "..");
+}
+inline bool is_ancestor (url u) { 
+  return (u->path[0] == "STRING") && (N(u->path) == 2) && (u->path[1] == "...");
+}
+inline bool is_atomic (url u) {
+  return (u->path[0] == "STRING");
+}
+
+static inline bool is_tuple (array<string> path) {
+  return path[0] == "TUPLE";
+}
+static inline bool is_tuple (array<string> path, string s) {
+  return (path[0] == "TUPLE") && (N(path) >= 3) && (path[2] == s);
+  // return (L(t) == TUPLE) && (N(t) >= 1) && (t[0] == s);
+}
+static inline bool is_tuple (array<string> path, const char* s) {
+  return (path[0] == "TUPLE") && (N(path) >= 3) && (path[2] == s);
+  // return (L(t) == TUPLE) && (N(t) >= 1) && (t[0] == s);
+}
+static inline bool is_tuple (array<string> path, string s, int n) {
+  return (path[0] == "TUPLE") && (N(path) == 7) && (path[2] == s);
+  // return (L(t) == TUPLE) && (N(t) == (n+1)) && (t[0] == s);
+}
+static inline bool is_tuple (array<string> path, const char* s, int n) {
+  return (path[0] == "TUPLE") && (N(path) == 2*n + 3) && (path[2] == s);
+}
+
+inline bool is_concat (url u) { return is_tuple (u->path, "concat", 2); }
+inline bool is_or (url u) { return is_tuple (u->path, "or", 2); }
 inline bool is_root (url u) {
-  return is_tuple (u->t, "root") && (N(u->t) >= 2); }
+  return is_tuple (u->path, "root") && (N(u->path) >= 5); }
 inline bool is_root (url u, string s) {
   return is_root (u) && (u[1]->t->label == s); }
 inline bool is_root_web (url u) {
