@@ -436,6 +436,9 @@
         ((and p (not multiselecting) (== (cadr (graphics-mode)) 'props))
          (graphics-get-props p))))
 
+(tm-define (unselect-everything)
+  (any_unselect-all #f #f))
+
 (tm-define (unselect-all p obj)
   (texmacs-error "unselect-all" "invalid context"))
 
@@ -576,7 +579,7 @@
   (set! paste-times 0)
   (if (== (car (graphics-mode)) 'group-edit)
       (with copied-objects (list-copy (sketch-get))
-        (any_unselect-all #f #f)
+        (unselect-everything)
         (update-current-buffer)
         (if (null? copied-objects)
             (stree->tree "")
