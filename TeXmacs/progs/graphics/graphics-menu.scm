@@ -991,7 +991,7 @@
         ((== s '(edit math-at)) "mathematics")
         ((== s '(edit document-at)) "long text")
         ((== s '(group-edit props)) "properties")
-        ((== s '(group-edit edit-props)) "properties")
+        ((== s '(group-edit edit-props)) "set properties")
         ((== s '(group-edit animate)) "animate")
         ((== s '(group-edit move)) "move")
         ((== s '(group-edit zoom)) "resize")
