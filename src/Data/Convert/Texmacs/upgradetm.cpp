@@ -3005,6 +3005,16 @@ declare_style (url u) {
 }
 
 bool
+is_internal_style (string style) {
+  if (N (existing_styles) == 0) {
+    url sty_u= descendance ("$TEXMACS_STYLE_ROOT");
+    declare_style (sty_u);
+    cout << "Styles: " << existing_styles << LF;
+  }
+  return existing_styles->contains (style);
+}
+
+bool
 is_non_style_document (tree doc) {
   tree style= extract (doc, "style");
   if (!is_tuple (style) || N(style) == 0 || !is_atomic (style[0]))
