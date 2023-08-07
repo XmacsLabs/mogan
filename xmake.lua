@@ -490,6 +490,8 @@ target("research") do
 
     if is_plat("macosx") then
         set_filename("Mogan")
+    elseif is_plat("mingw") then
+        set_filename("mogan.exe")
     else
         set_filename("mogan")
     end
