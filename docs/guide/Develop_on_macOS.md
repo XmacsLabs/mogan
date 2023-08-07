@@ -16,7 +16,7 @@ xrepo update-repo
 ### Step 2: Compile
 ``` bash
 xmake config --yes
-xmake build mogan
+xmake build research
 ```
 
 ### Step 3: Run tests
@@ -24,10 +24,10 @@ See [How to test](Test.md)。
 
 ### Step 4: Install to `build/macosx/{arch}/release/Mogan.app/`
 ``` bash
-xmake install mogan
+xmake install research
 ```
 
 ### Step 5: Launch Mogan Editor
 ``` bash
-xmake run mogan
+xmake run research
 ```

@@ -30,7 +30,7 @@ jobs:
       - name: build
         run: xmake build --yes --verbose --diagnosis --all
       - name: install
-        run: xmake install -vD mogan
+        run: xmake install -vD research
       - name: Generate Installer
         run: |
           xmake install -vD macos_installer

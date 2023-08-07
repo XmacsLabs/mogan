@@ -24,3 +24,4 @@ clang-format -i src/Plugins/Curl/**.cpp
 clang-format -i src/Graphics/Types/**.cpp
 clang-format -i src/Typeset/Boxes/Graphics/**.cpp
 clang-format -i src/Plugins/Pdf/**.cpp
+clang-format -i src/Mogan/**.cpp

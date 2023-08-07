@@ -1,5 +1,4 @@
 # 开发者文档
-## Using xmake on Windows
 墨干的代码使用变长数组，因此不能用msvc来编译开发。推荐使用MinGW编译器来开发。
 
 ### 第一步：安装xmake、MinGW、msys以及Qt
@@ -40,7 +39,7 @@ xmake config --yes --verbose --diagnosis --plat=mingw --mingw=<newly installed q
 上面的命令行会选择Qt安装程序安装的MinGW 8.1.0。
 
 ``` bash
-xmake build --jobs=<numbers of processes your computer can support, same as make>
+xmake build research
 ```
 
 ### 第三步：运行单元测试
@@ -55,14 +54,14 @@ xmake run --yes --verbose --diagnosis --group=keneral_tests
 
 ### 第四步：安装到`build/packages`目录
 ``` bash
-xmake install mogan
+xmake install research
 ```
 
 墨干编辑器的某些功能需要其他程序来配合。这些程序在[xmacslabs/mogan-dependencies](https://github.com/XmacsLabs/mogan-dependencies)仓库下。
 
 ### 第五步：启动墨干编辑器
 ``` bash
-xmake run mogan
+xmake run research
 ```
 
 ### 在VSCode下开发（可选）

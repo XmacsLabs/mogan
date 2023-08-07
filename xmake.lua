@@ -484,12 +484,14 @@ if is_plat("mingw") then
     end
 end
 
-target("mogan") do 
+target("research") do 
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
 
     if is_plat("macosx") then
         set_filename("Mogan")
+    else
+        set_filename("mogan")
     end
 
     if is_plat("macosx") or is_plat("linux") then
@@ -523,7 +525,7 @@ target("mogan") do
     add_includedirs({
         "$(buildir)",
     })
-    add_files("src/Texmacs/Texmacs/texmacs.cpp")
+    add_files("src/Mogan/Research/research.cpp")
     if is_plat("mingw") and is_mode("release") then
         add_deps("windows_icon")
     end
@@ -634,7 +636,7 @@ target("mogan") do
     end
 
     after_install(function (target)
-        print("after_install of target mogan")
+        print("after_install of target research")
 
         os.cp ("TeXmacs/misc/images/texmacs.svg", 
             path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
@@ -706,7 +708,7 @@ target("macos_installer") do
     set_enabled(is_plat("macosx") and is_mode("release"))
     set_kind("phony")
     set_installdir(INSTALL_DIR)
-    add_deps("mogan")
+    add_deps("research")
 
     after_install(function (target, opt)
         local app_dir = target:installdir() .. "/../../"
@@ -718,7 +720,7 @@ target("windows_installer") do
     set_kind("phony")
     set_enabled(is_plat("mingw") and is_mode("release"))
     add_packages("qtifw")
-    add_deps("mogan")
+    add_deps("research")
     set_configvar("PACKAGE_DATE", os.date("%Y-%m-%d"))
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_installdir("$(buildir)")
