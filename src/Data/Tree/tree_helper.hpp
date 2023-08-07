@@ -16,6 +16,78 @@
 #include "tree.hpp"
 #include "tree_label.hpp"
 
+template<class T> inline tree as_tree (T x) { return (tree) x; }
+template<> inline tree as_tree (int x) { return as_string (x); }
+template<> inline tree as_tree (long int x) { return as_string (x); }
+template<> inline tree as_tree (double x) { return as_string (x); }
+template<> inline tree as_tree (pointer x) { (void) x; return "pointer"; }
+
+template<class T> inline tree
+as_tree (list<T> x) {
+  list<T> l;
+  int i, n=N(x);
+  tree t (TUPLE, n);
+  for (i=0, l=x; i<n; i++, l=l->next)
+    t[i]= as_tree (l->item);
+  return t;
+}
+
+template<class T> inline tree
+as_tree (array<T> x) {
+  int i, n=N(x);
+  tree t (TUPLE, n);
+  for (i=0; i<n; i++)
+    t[i]= as_tree (x[i]);
+  return t;
+}
+
+template<class T> inline tree
+as_tree (iterator<T> x) {
+  tree t (TUPLE);
+  while (x->busy ()) {
+    t << as_tree (x->next());
+  }
+  return t;
+}
+
+template<class T> inline tree
+as_tree (hashset<T> x) {
+  tree t (COLLECTION);
+  iterator<T> iter = iterate (x);
+  while (iter->busy ()) {
+    t << as_tree (iter->next());
+  }
+  return t;
+}
+
+template<class T, class U> inline tree
+as_tree (hashentry<T, U> x) {
+  return tree (ASSOCIATE, as_tree (x.key), as_tree (x.im));
+}
+
+template<class T, class U> inline tree
+as_tree (hashmap<T,U> x) {
+  tree t (COLLECTION);
+  iterator<T> iter= iterate (x);
+  while (iter->busy()) {
+    T key= iter->next();
+    U value= x[key];
+    t << tree (ASSOCIATE, as_tree (key), as_tree (value));
+  }
+  return t;
+}
+
+inline hashmap<string, tree>
+tree_hashmap (tree_label init, tree t) {
+  hashmap<string, tree> ret (init);
+  int i, n= arity (t);
+  for (i=0; i<n; i++)
+    if (is_func (t[i], ASSOCIATE, 2))
+      ret (get_label (t[i][0]))= copy (t[i][1]);
+  return ret;
+}
+
+
 /******************************************************************************
 * Tuples
 ******************************************************************************/

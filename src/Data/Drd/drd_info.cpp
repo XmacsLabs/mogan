@@ -15,6 +15,7 @@
 #include "drd_mode.hpp"
 #include "iterator.hpp"
 #include "analyze.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Constructors and basic operations
