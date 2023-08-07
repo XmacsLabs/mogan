@@ -15,6 +15,7 @@
 #include "hashset.hpp"
 #include "scheme.hpp"
 #include "iterator.hpp"
+#include "tree_modify.hpp"
 
 /******************************************************************************
 * Extract tables for source/target correspondences

@@ -21,6 +21,7 @@
 #include "new_style.hpp"
 #include "iterator.hpp"
 #include "merge_sort.hpp"
+#include "tree_modify.hpp"
 #ifdef EXPERIMENTAL
 #include "../../Style/Environment/std_environment.hpp"
 #endif // EXPERIMENTAL

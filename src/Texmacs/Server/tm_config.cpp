@@ -11,6 +11,7 @@
 
 #include "tm_config.hpp"
 #include "analyze.hpp"
+#include "tree_modify.hpp"
 
 #ifdef Q_OS_MAC
 extern hashmap<int,string> qtcomposemap;

@@ -13,6 +13,7 @@
 #include "file.hpp"
 #include "analyze.hpp"
 #include "scheme.hpp"
+#include "tree_modify.hpp"
 
 /******************************************************************************
 * Constructors and destructors

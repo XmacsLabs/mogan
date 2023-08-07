@@ -18,6 +18,7 @@
 #include "vars.hpp"
 #include "tree_analyze.hpp"
 #include "tree_correct.hpp"
+#include "tree_modify.hpp"
 #include "url.hpp"
 
 tree upgrade_tex (tree t);
