@@ -334,28 +334,6 @@ tree_hashmap (tree_label init, tree t) {
 * Data
 ******************************************************************************/
 
-bool is_formatting (tree t);
-bool is_table (tree t);
-bool is_table_format (tree t);
-bool is_multi_paragraph (tree t);
-bool is_around (tree t);
-bool is_script (tree t);
-bool is_script (tree t, bool& right);
-bool is_prime (tree t);
-bool is_left_script_prime (tree t);
-bool is_right_script_prime (tree t);
-bool is_mod_active (tree t);
-bool is_mod_active_once (tree t);
-bool is_graphical_text (tree t);
-bool is_empty (tree t);
-bool is_multi_line (tree t);
-
-inline bool
-is_applicable (tree t) {
-  return is_compound (t) && (N(t) >= 1) &&
-    ((L(t) == MACRO) || (L(t) == FUNC) || (L(t) == XMACRO));
-}
-
 tree simplify_concat (tree t);
 tree simplify_document (tree t);
 tree simplify_correct (tree t);
