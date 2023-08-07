@@ -23,6 +23,8 @@
 #include "image_files.hpp"
 #include "iterator.hpp"
 
+#include "Pdf/pdf_hummus_make_attachment.hpp"
+
 #ifdef EXPERIMENTAL
 #include "../../Style/Memorizer/clean_copy.hpp"
 #endif
@@ -318,6 +320,11 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
 void
 edit_main_rep::print_to_file (url name, string first, string last) {
   print_doc (name, false, as_int (first), as_int (last));
+  if(as_bool(call("get-boolean-preference", "gui:export PDF with tm attachment"))){
+    if(!pdf_hummus_make_attachment(name, get_name(), name)){
+      cout << "attach wrong" << LF;
+    }
+  }
   set_message ("Done printing", "print to file");
 }
 
