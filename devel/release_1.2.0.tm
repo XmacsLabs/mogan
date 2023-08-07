@@ -11,11 +11,13 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|24|24|1|1|cell-background|pastel
-  red>|<cwith|21|21|1|1|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|26|26|1|1|cell-background|pastel
   red>|<cwith|23|23|1|1|cell-background|pastel
-  red>|<cwith|19|19|1|1|cell-background|pastel
-  red>|<cwith|30|30|3|3|cell-valign|b>|<cwith|31|31|1|1|cell-valign|b>|<table|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
+  red>|<cwith|25|25|1|1|cell-background|pastel
+  red>|<cwith|21|21|1|1|cell-background|pastel
+  red>|<cwith|32|32|3|3|cell-valign|b>|<cwith|33|33|1|1|cell-valign|b>|<cwith|20|20|1|1|cell-background|pastel
+  green>|<table|<row|<cell|<dlink|48>>|<cell|Darcy>|<cell|Mogan Code
+  Kickoff>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
   indentation of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
   the new mechanism of glue code generation>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning
   as plugin>>|<row|<cell|<dlink|43>>|<cell|>|<cell|LaTeX converters as
@@ -32,8 +34,8 @@
   mogan wasm>>|<row|<cell|<dlink|33>>|<cell|>|<cell|Test on
   wasm>>|<row|<cell|<dlink|32>>|<cell|>|<cell|Build on
   wasm>>|<row|<cell|<dlink|31>>|<cell|>|<cell|Lolly
-  1.1.0>>|<row|<cell|<dlink|30>>|<cell|>|<cell|Lolly
-  1.0.0>>|<row|<cell|<dlink|29>>|<cell|tangdouer>|<cell|OSPP PDF
+  1.1.0>>|<row|<cell|<dlink|30>>|<cell|Darcy>|<cell|Lolly
+  1.0.x>>|<row|<cell|<dlink|29>>|<cell|tangdouer>|<cell|OSPP PDF
   Project>>|<row|<cell|<dlink|27>>|<cell|>|<cell|Mogan Draw optimization
   (long term)>>|<row|<cell|<dlink|26>>|<cell|tangdouer>|<cell|OSPP PDF
   Project Onboarding>>|<row|<cell|<dlink|25>>|<cell|Pluto>|<cell|Add CI on

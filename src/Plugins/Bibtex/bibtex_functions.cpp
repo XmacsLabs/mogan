@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "block.hpp"
+#include "tree_modify.hpp"
 #include "bibtex_functions.hpp"
 #include "converter.hpp"
 #include "vars.hpp"

@@ -13,6 +13,10 @@
 #define TREE_MODIFY_H
 #include "drd_std.hpp"
 
+tree simplify_concat (tree t);
+tree simplify_document (tree t);
+tree simplify_correct (tree t);
+
 void correct_node (tree& t);
 void correct_downwards (tree& t);
 void correct_upwards (tree& t);
