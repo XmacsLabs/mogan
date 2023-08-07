@@ -93,6 +93,8 @@ bool is_mod_active_once (tree t);
 bool is_graphical_text (tree t);
 bool is_empty (tree t);
 bool is_multi_line (tree t);
+bool is_extension (tree t);
+bool is_extension (tree t, int n);
 
 inline bool
 is_applicable (tree t) {
