@@ -17,7 +17,11 @@
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|31_1>|<cell|Da>|<cell|Move
   tuple to tree_helper>>|<row|<cell|Chore>|<cell|31_2>|<cell|Da>|<cell|Move
   concat/document to tree_helper>>|<row|<cell|Chore>|<cell|31_3>|<cell|Da>|<cell|Move
-  tree label related predicates to tree_helper>>>>>
+  tree label related predicates to tree_helper>>|<row|<cell|Chore>|<cell|31_4>|<cell|Da>|<cell|Move
+  simplifier to tree_modify>>|<row|<cell|Chore>|<cell|31_5>|<cell|Da>|<cell|Move
+  tree_label to src/Data/Tree>>|<row|<cell|Chore>|<cell|31_6>|<cell|Da>|<cell|Move
+  as_tree to tree_helper>>|<row|<cell|Chore>|<cell|31_7>|<cell|Pluto>|<cell|Replace
+  routines like is_tuple with routines in tree.hpp>>>>>
 
   <tmdoc-copyright|2023|Darcy Shen>
 
