@@ -490,6 +490,8 @@ target("research") do
 
     if is_plat("macosx") then
         set_filename("Mogan")
+    else
+        set_filename("mogan")
     end
 
     if is_plat("macosx") or is_plat("linux") then
