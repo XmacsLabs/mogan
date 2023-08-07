@@ -11,13 +11,13 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|25|25|1|1|cell-background|pastel
-  red>|<cwith|22|22|1|1|cell-background|pastel
-  red>|<cwith|24|24|1|1|cell-background|pastel
-  red>|<cwith|20|20|1|1|cell-background|pastel
-  red>|<cwith|31|31|3|3|cell-valign|b>|<cwith|32|32|1|1|cell-valign|b>|<cwith|19|19|1|1|cell-background|pastel
-  green>|<table|<row|<cell|<dlink|47>>|<cell|Darcy>|<cell|Mogan Code
-  Kickoff>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|26|26|1|1|cell-background|pastel
+  red>|<cwith|23|23|1|1|cell-background|pastel
+  red>|<cwith|25|25|1|1|cell-background|pastel
+  red>|<cwith|21|21|1|1|cell-background|pastel
+  red>|<cwith|32|32|3|3|cell-valign|b>|<cwith|33|33|1|1|cell-valign|b>|<cwith|20|20|1|1|cell-background|pastel
+  green>|<table|<row|<cell|<dlink|48>>|<cell|Darcy>|<cell|Mogan Code
+  Kickoff>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
   indentation of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
   the new mechanism of glue code generation>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning
   as plugin>>|<row|<cell|<dlink|43>>|<cell|>|<cell|LaTeX converters as
