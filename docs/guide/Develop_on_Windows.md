@@ -40,7 +40,7 @@ xmake config --yes --verbose --diagnosis --plat=mingw --mingw=<newly installed q
 The above example is using MinGW 8.1.0 installed by the Qt installer
 
 ``` bash
-xmake build --jobs=<numbers of processes your computer can support, same as make>
+xmake build research
 ```
 
 ### Step 3: Run unit test
@@ -52,14 +52,14 @@ xmake run --yes --verbose --diagnosis --group=keneral_tests
 
 ### Step 4: Install to `build/packages`
 ``` bash
-xmake install mogan
+xmake build research
 ```
 
 There are other binary used by mogan as optional dependencies, you can found them at [xmacslabs/mogan-dependencies](https://github.com/XmacsLabs/mogan-dependencies).
 
 ### Step 5: Launch Mogan Editor
 ``` bash
-xmake run mogan
+xmake run research
 ```
 
 ### Optional: Vscode support

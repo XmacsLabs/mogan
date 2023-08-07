@@ -18,7 +18,7 @@ xrepo update-repo
 ### Step 2: Compile
 ``` bash
 xmake config --yes
-xmake build mogan
+xmake build research
 ```
 
 If Qt SDK is not found, we can config it manually:
@@ -35,12 +35,12 @@ See [How to test](Test.md)。
 
 ### Step 4: Install to `build/packages/app.mogan`
 ``` bash
-xmake install mogan
+xmake install research
 ```
 
 ### Step 5: Launch Mogan Editor
 ``` bash
-xmake run mogan
+xmake run research
 ```
 
 ### Use VSCode to help code completion

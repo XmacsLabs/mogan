@@ -1,7 +1,7 @@
 
 /******************************************************************************
-* MODULE     : texmacs.cpp
-* DESCRIPTION: main program
+* MODULE     : research.cpp
+* DESCRIPTION: main entry for Mogan Research
 * COPYRIGHT  : (C) 1999  Joris van der Hoeven
 *******************************************************************************
 * This software falls under the GNU general public license version 3 or later.

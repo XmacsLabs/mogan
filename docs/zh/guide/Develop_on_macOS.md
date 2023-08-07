@@ -17,7 +17,7 @@ xrepo update-repo
 ### 第二步：编译
 ```
 xmake config --yes
-xmake build mogan
+xmake build research
 ```
 
 ### 第三步：测试
@@ -25,10 +25,10 @@ xmake build mogan
 
 ### 第四步: 安装到`build/macosx/{arch}/release/Mogan.app/`
 ``` bash
-xmake install mogan
+xmake install research
 ```
 
 ### 第五步：启动墨干编辑器
 ``` bash
-xmake run mogan
+xmake run research
 ```
