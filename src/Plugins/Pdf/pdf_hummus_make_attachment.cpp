@@ -1,4 +1,12 @@
-
+/******************************************************************************
+* MODULE     : pdf_hummus_renderer.hpp
+* DESCRIPTION: Interface for embedding text files into pdf files
+* COPYRIGHT  : (C) 2023 Tangdouer
+*******************************************************************************
+* This software falls under the GNU general public license version 3 or later.
+* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+******************************************************************************/
 #include "pdf_hummus_make_attachment.hpp"
 
 #include "PDFWriter/DictionaryContext.h"
@@ -251,7 +259,6 @@ PDFAttachmentWriter::WriteAttachment (PDFAttachment* inAttachment) {
   do {
     ObjectsContext& objectsContext= mPDFWriter->GetObjectsContext ();
 
-    // Start new InDirect object for annotation dictionary
     result.second= objectsContext.StartNewIndirectObject ();
 
     DictionaryContext* dictionaryContext= objectsContext.StartDictionary ();
