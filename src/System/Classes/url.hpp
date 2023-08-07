@@ -114,6 +114,9 @@ inline bool is_atomic (url u) {
   return (u->path[0] == "STRING");
 }
 
+static inline bool is_atomic (array<string> path) {
+  return path[0] == "STRING";
+}
 static inline bool is_tuple (array<string> path) {
   return path[0] == "TUPLE";
 }
@@ -133,22 +136,41 @@ static inline bool is_tuple (array<string> path, const char* s, int n) {
   return (path[0] == "TUPLE") && (N(path) == 2*n + 3) && (path[2] == s);
 }
 
-inline bool is_concat (url u) { return is_tuple (u->path, "concat", 2); }
-inline bool is_or (url u) { return is_tuple (u->path, "or", 2); }
+inline bool is_concat (url u) {
+  // return is_tuple (u->t, "concat", 2);
+  return is_tuple (u->path, "concat", 2);
+}
+inline bool is_or (url u) {
+  // return is_tuple (u->t, "or", 2); 
+  return is_tuple (u->path, "or", 2);
+}
 inline bool is_root (url u) {
-  return is_tuple (u->path, "root") && (N(u->path) >= 5); }
-inline bool is_root (url u, string s) {
-  return is_root (u) && (u[1]->t->label == s); }
+  // return is_tuple (u->t, "root") && (N(u->t) >= 2);
+  return is_tuple (u->path, "root") && (N(u->path) >= 5);
+}
+inline bool is_root (url u, string s) {   // such as: TUPLE STRING root | STRING http | STRING www | STRING tm | STRING fr
+  // return is_root (u) && (u[1]->t->label == s);
+  return is_root (u) && (u->path[4] == s);
+}
 inline bool is_root_web (url u) {
   return is_root (u, "http") || is_root (u, "https") || is_root (u, "ftp") ||
-         is_root (u, "blank"); }
-inline bool is_root_tmfs (url u) { return is_root (u, "tmfs"); }
-inline bool is_root_blank (url u) { return is_root (u, "blank"); }
-inline bool is_wildcard (url u) { return is_tuple (u->t, "wildcard"); }
+         is_root (u, "blank");
+}
+inline bool is_root_tmfs (url u) {
+  return is_root (u, "tmfs");
+}
+inline bool is_root_blank (url u) {
+  return is_root (u, "blank");
+}
+inline bool is_wildcard (url u) {
+  return is_tuple (u->path, "wildcard");
+}
 inline bool is_wildcard (url u, int n) {
-  return is_tuple (u->t, "wildcard", n); }
+  return is_tuple (u->path, "wildcard", n);
+}
 inline bool is_pseudo_atomic (url u) {
-  return is_atomic (u->t) || is_tuple (u->t, "wildcard", 1); }
+  return is_atomic (u->path) || is_tuple (u->path, "wildcard", 1);
+}
 
 bool is_rooted (url u);
 bool is_rooted (url u, string protocol);

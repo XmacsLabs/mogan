@@ -60,6 +60,7 @@ TestTree::test_construct_tuple () {
   QVERIFY (t1[0] == "concat");
   QVERIFY (N(t1) == 2);
   QVERIFY (t1[1] == "");
+  QVERIFY (t1->label == "");
 
   tree t2 = tuple("concat",tree(),tree()); // TUPLE STRING concat | STRING "" | STRING ""
   QVERIFY (t2[0] == "concat");
