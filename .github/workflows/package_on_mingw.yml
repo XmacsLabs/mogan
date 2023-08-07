@@ -26,9 +26,9 @@ jobs:
       - name: config
         run: xmake config --yes -vD -m release --plat=mingw
       - name: build
-        run: xmake build -vD mogan
+        run: xmake build -vD research
       - name: install
-        run: xmake install -vD mogan
+        run: xmake install -vD research
       - name: Generate Installer
         run: xmake install -vD windows_installer
       - name: Upload 
