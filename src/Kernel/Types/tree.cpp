@@ -300,21 +300,6 @@ compound (string s, array<tree> a) {
 }
 
 bool
-is_extension(tree_label l) {
-  return l >= START_EXTENSIONS;
-}
-
-bool
-is_extension (tree t) {
-  return L(t) >= START_EXTENSIONS;
-}
-
-bool
-is_extension (tree t, int n) {
-  return (L(t) >= START_EXTENSIONS) && (N(t) == n);
-}
-
-bool
 is_compound (tree t, string s) {
   return as_string (L(t)) == s;
 }
