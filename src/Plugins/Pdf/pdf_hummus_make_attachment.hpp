@@ -22,13 +22,7 @@
 bool pdf_hummus_make_attachments (string pdf_path, list<string> attachment_path,
                                   string out_path);
 
-bool
-pdf_hummus_make_attachment (url pdf_path, url attachment_path, url out_path) {
-  if ((suffix (pdf_path) == "pdf"))
-    return pdf_hummus_make_attachments (
-        as_string (pdf_path), list<string> (as_string (attachment_path)),
-        as_string (out_path));
-  else return false;
-}
+bool pdf_hummus_make_attachment (url pdf_path, url attachment_path,
+                                 url out_path);
 
 #endif // ifdef PDF_HUMMUS_MAKE_ATTACHMENT_H

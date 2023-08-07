@@ -117,6 +117,15 @@ pdf_hummus_make_attachments (string pdf_path, list<string> attachment_paths,
     return false;
   }
 }
+
+bool
+pdf_hummus_make_attachment (url pdf_path, url attachment_path, url out_path) {
+  if ((suffix (pdf_path) == "pdf"))
+    return pdf_hummus_make_attachments (
+        as_string (pdf_path), list<string> (as_string (attachment_path)),
+        as_string (out_path));
+  else return false;
+}
 PDFAttachment::PDFAttachment (void) {
   file_content= NULL;
   lenth       = 0;
