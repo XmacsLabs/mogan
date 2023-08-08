@@ -15,6 +15,7 @@
 #include "hashset.hpp"
 #include "converter.hpp"
 #include "parse_string.hpp"
+#include "tree_helper.hpp"
 
 #define xml_quote scm_quote
 // FIXME: to be checked that this is the correct quoting style

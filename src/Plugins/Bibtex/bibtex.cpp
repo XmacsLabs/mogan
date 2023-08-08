@@ -15,6 +15,7 @@
 #include "convert.hpp"
 #include "converter.hpp"
 #include "wencoding.hpp"
+#include "tree_helper.hpp"
 
 
 static string bibtex_command= "bibtex";

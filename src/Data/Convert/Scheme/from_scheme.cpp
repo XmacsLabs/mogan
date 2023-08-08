@@ -14,6 +14,7 @@
 #include "analyze.hpp"
 #include "drd_std.hpp"
 #include "path.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Converting scheme trees to trees

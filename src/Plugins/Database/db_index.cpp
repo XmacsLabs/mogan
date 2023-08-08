@@ -14,6 +14,7 @@
 #include "convert.hpp"
 #include "universal.hpp"
 #include "analyze.hpp"
+#include "tree_helper.hpp"
 
 #define MAX_PREFIX_LENGTH 6
 

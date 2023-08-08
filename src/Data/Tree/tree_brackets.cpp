@@ -12,6 +12,7 @@
 #include "tree_correct.hpp"
 #include "tree_analyze.hpp"
 #include "scheme.hpp"
+#include "tree_helper.hpp"
 
 static array<tree> upgrade_brackets (array<tree> a, int level);
 

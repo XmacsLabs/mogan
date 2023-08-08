@@ -17,6 +17,7 @@
 #include "convert.hpp"
 #include "iterator.hpp"
 #include "tree_modify.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Protect against adding markers to a LaTeX document

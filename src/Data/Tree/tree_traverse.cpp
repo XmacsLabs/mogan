@@ -15,6 +15,7 @@
 #include "analyze.hpp"
 #include "hashset.hpp"
 #include "scheme.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Accessability

@@ -14,6 +14,7 @@
 #include "analyze.hpp"
 #include "scheme.hpp"
 #include "iterator.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Break bibtex files into individual chunks, alternating comments and entries

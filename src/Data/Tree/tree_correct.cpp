@@ -13,6 +13,7 @@
 #include "tree_analyze.hpp"
 #include "scheme.hpp"
 #include "packrat.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * DRD based correction
