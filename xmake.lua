@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 --
 -- MODULE      : xmake.lua
--- DESCRIPTION : Xmake config file for Mogan Editor
+-- DESCRIPTION : Xmake config file for Mogan Applications
 -- COPYRIGHT   : (C) 2022-2023  jingkaimori
 --                   2022-2023  Darcy Shen
 --
@@ -36,9 +36,9 @@ configvar_check_cxxsnippets(
 
 
 ---
---- Project: Mogan Editor
+--- Project: Mogan Applications
 ---
-set_project("Mogan Editor")
+set_project("Mogan Applications")
 
 set_allowedplats(
     -- these plat should be guaranteed
@@ -558,7 +558,7 @@ target("research") do
 
     set_configdir(INSTALL_DIR)
     set_configvar("DEVEL_VERSION", DEVEL_VERSION)
-    set_configvar("PACKAGE", "Mogan Editor")
+    set_configvar("PACKAGE", "Mogan Research")
     set_configvar("XMACS_VERSION", XMACS_VERSION)
 
     -- install man.1 manual file
@@ -820,7 +820,7 @@ add_configfiles(
         filename = "doxyfile",
         pattern = "@(.-)@",
         variables = {
-            PACKAGE = "Mogan Editor",
+            PACKAGE = "Mogan Applications",
             DOXYGEN_DIR = get_config("buildir"),
             DEVEL_VERSION = DEVEL_VERSION,
         }
