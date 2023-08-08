@@ -19,7 +19,6 @@
 #include "fast_search.hpp"
 #include "file.hpp"
 #include "block.hpp"
-#include "tree_helper.hpp"
 
 tree latex_expand (tree doc);
 

@@ -11,8 +11,6 @@
 
 #include "block.hpp"
 #include "converter.hpp"
-#include "tree_helper.hpp"
-
 #ifdef USE_ICONV
 #include <iconv.h>
 #endif

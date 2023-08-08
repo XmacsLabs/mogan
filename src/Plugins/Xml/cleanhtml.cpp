@@ -13,7 +13,6 @@
 #include "analyze.hpp"
 #include "tree_analyze.hpp"
 #include "tree_modify.hpp"
-#include "tree_helper.hpp"
 
 /******************************************************************************
 * Predicates

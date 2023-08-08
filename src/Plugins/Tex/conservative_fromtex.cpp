@@ -19,7 +19,6 @@
 #include "fast_search.hpp"
 #include "merge_sort.hpp"
 #include "block.hpp"
-#include "tree_helper.hpp"
 
 /******************************************************************************
 * Get correspondence between subtrees when upgrading texmacs documents

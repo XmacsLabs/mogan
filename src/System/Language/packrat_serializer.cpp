@@ -12,7 +12,6 @@
 #include "packrat_parser.hpp"
 #include "analyze.hpp"
 #include "drd_std.hpp"
-#include "tree_helper.hpp"
 
 /******************************************************************************
 * Useful subroutines

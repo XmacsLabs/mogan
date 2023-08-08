@@ -15,7 +15,6 @@
 #include "convert.hpp"
 #include "iterator.hpp"
 #include "analyze.hpp"
-#include "tree_helper.hpp"
 
 RESOURCE_CODE(translator);
 

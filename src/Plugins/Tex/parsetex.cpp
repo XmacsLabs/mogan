@@ -13,7 +13,6 @@
 #include "Tex/convert_tex.hpp"
 #include "converter.hpp"
 #include "wencoding.hpp"
-#include "tree_helper.hpp"
 
 extern bool textm_class_flag;
 

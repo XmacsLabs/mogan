@@ -12,7 +12,6 @@
 #include "Database/database.hpp"
 #include "hashset.hpp"
 #include "analyze.hpp"
-#include "tree_helper.hpp"
 
 /******************************************************************************
 * Constructors

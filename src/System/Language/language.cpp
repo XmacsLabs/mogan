@@ -14,7 +14,6 @@
 #include "hyphenate.hpp"
 #include "iterator.hpp"
 #include "universal.hpp"
-#include "tree_helper.hpp"
 
 RESOURCE_CODE(language);
 

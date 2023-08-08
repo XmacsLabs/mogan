@@ -13,7 +13,6 @@
 #include "tt_file.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
-#include "tree_helper.hpp"
 
 #ifdef HAVE_STDINT_H
 #include <stdint.h>

@@ -12,7 +12,6 @@
 #include "Tex/tex.hpp"
 #include "Tex/convert_tex.hpp"
 #include "metadata.hpp"
-#include "tree_helper.hpp"
 
 static bool
 is_and (tree t, int &i) {

@@ -20,7 +20,6 @@
 #include "image_files.hpp"
 #include "file.hpp"
 #include "tree_modify.hpp"
-#include "tree_helper.hpp"
 
 #define STATUS_NORMAL  0
 #define STATUS_ESCAPE  1

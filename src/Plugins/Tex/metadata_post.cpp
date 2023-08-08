@@ -15,7 +15,6 @@
 #include "vars.hpp"
 #include "universal.hpp"
 #include "tree_modify.hpp"
-#include "tree_helper.hpp"
 
 /******************************************************************************
 * Useful subroutines

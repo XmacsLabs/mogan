@@ -12,7 +12,6 @@
 #include "tree.hpp"
 #include "string.hpp"
 #include "convert.hpp"
-#include "tree_helper.hpp"
 
 #define cmp compound
 #define is_cmp is_compound

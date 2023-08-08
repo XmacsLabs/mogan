@@ -16,7 +16,6 @@
 #include "scheme.hpp"
 #include "iterator.hpp"
 #include "tree_modify.hpp"
-#include "tree_helper.hpp"
 
 /******************************************************************************
 * Extract tables for source/target correspondences
