@@ -856,7 +856,8 @@
 
 (tm-define (graphics-set-mode val)
   (:check-mark "v" graphics-mode-has-value?)
-  (if (equal? (graphics-mode) val)
+  (if (and (equal? (graphics-mode) val)
+           (not (equal? (graphics-mode) '(group-edit edit-props))))
     (graphics-set-mode '(group-edit edit-props))
     (begin
       (if (== val '(group-edit move))
