@@ -12,6 +12,7 @@
 #include "Tex/tex.hpp"
 #include "convert.hpp"
 #include "metadata.hpp"
+#include "tree_helper.hpp"
 
 tree
 collect_metadata_ams (tree t) {

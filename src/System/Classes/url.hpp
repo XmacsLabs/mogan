@@ -13,7 +13,7 @@
 #define URL_H
 
 #include "tree.hpp"
-// #include "tree_helper.hpp"
+#include "tree_label.hpp"
 #include "tm_debug.hpp"
 
 #define URL_SYSTEM 0
@@ -66,7 +66,7 @@ url url_system (string dir, string name);
 url url_standard (string name);
 url url_standard (string dir, string name);
 
-inline url url_none (); 
+url url_none (); 
 inline url url_here () { return as_url (tree (".")); }
 inline url url_parent () { return as_url (tree ("..")); }
 inline url url_ancestor () { return as_url (tree ("...")); }

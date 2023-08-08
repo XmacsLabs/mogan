@@ -15,6 +15,7 @@
 #include <iconv.h>
 #endif
 #include <errno.h>
+#include "tree_helper.hpp"
 
 RESOURCE_CODE (converter);
 
