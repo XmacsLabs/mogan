@@ -49,6 +49,12 @@
 
   <assign|jk|<strong|jingkaimori>>
 
+  Useful shortcut:
+
+  <assign|dr|<strong|Mogan Draw>>
+
+  \;
+
   \;
 
   The status of a task can be divied into 4 stages: Listed, Ready, WIP, Done.
