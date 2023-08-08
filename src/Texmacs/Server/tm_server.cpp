@@ -27,7 +27,6 @@
 server* the_server= NULL;
 bool texmacs_started= false;
 bool headless_mode= false;
-url tm_init_file= url_none ();
 url my_init_file= url_none ();
 string my_init_cmds= "";
 
@@ -98,12 +97,9 @@ tm_server_rep::tm_server_rep (): def_zoomf (1.0) {
   initialize_scheme ();
   gui_interpose (texmacs_interpose_handler);
   set_wait_handler (texmacs_wait_handler);
-  if (is_none (tm_init_file))
-    tm_init_file= "$TEXMACS_PATH/progs/init-texmacs-s7.scm";
   if (is_none (my_init_file))
     my_init_file= "$TEXMACS_HOME_PATH/progs/my-init-texmacs.scm";
   bench_start ("initialize scheme");
-  if (exists (tm_init_file)) exec_file (tm_init_file);
   if (exists (my_init_file)) exec_file (my_init_file);
   bench_cumul ("initialize scheme");
   if (my_init_cmds != "") {

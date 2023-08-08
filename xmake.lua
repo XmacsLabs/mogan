@@ -485,7 +485,7 @@ if is_plat("mingw") then
     end
 end
 
-target("research") do 
+target("draw") do 
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
 

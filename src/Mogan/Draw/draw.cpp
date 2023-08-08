@@ -1,6 +1,6 @@
 
 /******************************************************************************
- * MODULE     : research.cpp
+ * MODULE     : draw.cpp
  * DESCRIPTION: main entry for Mogan Draw
  * COPYRIGHT  : (C) 2023 Oyyko
  *******************************************************************************
@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "tm_configure.hpp"
+#include "url.hpp"
 #include <fcntl.h>
 #include <locale.h> // for setlocale
 #include <signal.h>
@@ -52,7 +53,7 @@ void mac_fix_paths ();
 
 extern bool char_clip;
 
-extern url    tm_init_file;
+url           tm_init_file= url_none ();
 extern url    tm_init_buffer_file;
 extern string my_init_cmds;
 extern string original_path;
@@ -74,6 +75,26 @@ void   server_start ();
 static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
 #endif
+
+/******************************************************************************
+ * Init applications
+ ******************************************************************************/
+
+enum class App { RESEARCH, DRAW };
+constexpr App now_app= App::DRAW;
+
+void
+init_app (App app) {
+  if (is_none (tm_init_file)) {
+    if (app == App::DRAW) {
+      tm_init_file= "$TEXMACS_PATH/progs/init-draw.scm";
+    }
+    else if (app == App::RESEARCH) {
+      tm_init_file= "$TEXMACS_PATH/progs/init-texmacs-s7.scm";
+    }
+  }
+  exec_file (tm_init_file);
+}
 
 /******************************************************************************
  * For testing
@@ -472,7 +493,7 @@ TeXmacs_main (int argc, char** argv) {
   if (DEBUG_STD) debug_boot << "Starting server...\n";
   { // opening scope for server sv
     server sv;
-
+    init_app (now_app);
     string where= "";
     for (i= 1; i < argc; i++) {
       if (argv[i] == NULL) break;
