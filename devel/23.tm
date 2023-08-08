@@ -154,7 +154,7 @@
     </cell>|<\cell>
       \;
     </cell>|<\cell>
-      <value|li>
+      <value|ok>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -166,7 +166,7 @@
     </cell>|<\cell>
       \;
     </cell>|<\cell>
-      <value|li>
+      <value|ok>
     </cell>>|<row|<\cell>
       <value|b>
     </cell>|<\cell>
@@ -191,7 +191,7 @@
     </cell>|<\cell>
       \;
     </cell>|<\cell>
-      <value|li>
+      <value|ok>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -291,7 +291,7 @@
     </cell>|<\cell>
       \;
     </cell>|<\cell>
-      <value|li>
+      <value|ok>
     </cell>>|<row|<\cell>
       <value|b>
     </cell>|<\cell>
@@ -304,7 +304,7 @@
     </cell>|<\cell>
       \;
     </cell>|<\cell>
-      <value|li>
+      <value|ok>
     </cell>>|<\row|<\cell>
       <value|b>
     </cell>|<\cell>
@@ -379,7 +379,7 @@
     </cell>|<\cell>
       \;
     </cell>|<\cell>
-      <value|re>
+      <value|dis>
     </cell>>>>
   </wide-block>
 
