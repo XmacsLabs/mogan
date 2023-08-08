@@ -11,6 +11,7 @@
 
 #include "xml.hpp"
 #include "analyze.hpp"
+#include "tree_helper.hpp"
 
 tree find_first_element_by_name (tree t, string name) {
   if (!is_tuple (t)) return tree();

@@ -15,6 +15,7 @@
 #include "analyze.hpp"
 #include "hashmap.hpp"
 #include "image_files.hpp"
+#include "tree_helper.hpp"
 
 #ifndef KERNEL_L2
 #include "block.hpp"

@@ -12,6 +12,7 @@
 #include "convert.hpp"
 #include "file.hpp"
 #include "scheme.hpp"
+#include "tree_helper.hpp"
 
 static url current_file_focus= url_none ();
 

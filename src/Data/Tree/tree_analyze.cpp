@@ -11,6 +11,7 @@
 
 #include "tree_analyze.hpp"
 #include "convert.hpp"
+#include "tree_helper.hpp"
 
 drd_info get_style_drd (tree style);
 

@@ -11,6 +11,7 @@
 
 #include "convert.hpp"
 #include "xml.hpp"
+#include "tree_helper.hpp"
 
 tree
 tmml_upgrade (tree doc) {
