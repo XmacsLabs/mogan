@@ -13,8 +13,6 @@
 #include "hashmap.hpp"
 #include "blackbox.hpp"
 
-#define DETACHED (-5)
-
 observer nil_observer;
 
 tm_ostream&
