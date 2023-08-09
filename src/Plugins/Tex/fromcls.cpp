@@ -12,6 +12,7 @@
 #include "Tex/tex.hpp"
 #include "Tex/convert_tex.hpp"
 #include "vars.hpp"
+#include "tree_helper.hpp"
 
 extern bool textm_class_flag;
 

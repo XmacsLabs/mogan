@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "Tex/convert_tex.hpp"
+#include "tree_helper.hpp"
 
 #ifndef METADATA_H
 #define METADATA_H

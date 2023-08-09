@@ -11,7 +11,7 @@
 
 #ifndef MATH_TREE_H
 #define MATH_TREE_H
-#include "tree.hpp"
+#include "tree_helper.hpp"
 
 tree neg (tree t1);
 tree add (tree t1, tree t2);

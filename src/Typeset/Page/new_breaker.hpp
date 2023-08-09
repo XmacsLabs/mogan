@@ -95,5 +95,6 @@ struct new_breaker_rep {
 vpenalty as_vpenalty (SI diff);
 bool float_has (tree t, char c);
 bool float_here (tree t);
+space as_space (tree t);
 
 #endif // NEW_BREAKER_H

@@ -18,6 +18,7 @@
 #include "vars.hpp"
 #include "hashset.hpp"
 #include "universal.hpp"
+#include "tree_helper.hpp"
 
 int  spell_max_hits= 1000000;
 void spell (range_set& sel, tree t, tree what, path p);

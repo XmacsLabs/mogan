@@ -425,7 +425,7 @@ cyrillic_subset_in_t2a_to_code_point (string input) {
     }
     else {
       tmp = apply (conv, input[i]);
-      if (tmp == input[i]) r << tmp;
+      if (tmp == string(input[i])) r << tmp;
       else r << '<'*tmp*'>';
     }
   }

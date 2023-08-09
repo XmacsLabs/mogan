@@ -12,7 +12,8 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 #include "string.hpp"
-enum  tree_label;
+#include "tree_label.hpp"
+
 class tree;
 class hard_link_rep;
 class observer;
