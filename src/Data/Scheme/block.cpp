@@ -10,11 +10,11 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "tree_helper.hpp"
 #include "block.hpp"
 #include "analyze.hpp"
 #include "drd_std.hpp"
 #include "tm_debug.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
  * Handling escape characters

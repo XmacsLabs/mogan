@@ -13,6 +13,8 @@
 #include "tree_helper.hpp"
 #include "drd_std.hpp"
 #include "path.hpp"
+#include "tree_observer.hpp"
+
 
 extern tree the_et;
 

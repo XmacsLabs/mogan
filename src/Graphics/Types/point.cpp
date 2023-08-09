@@ -9,9 +9,9 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "tree_helper.hpp"
 #include "point.hpp"
 #include "math_util.hpp"
+#include "tree_helper.hpp"
 
 point
 operator- (point p) {

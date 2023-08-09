@@ -16,6 +16,7 @@
 #include "connect.hpp"
 #include "dictionary.hpp"
 #include "merge_sort.hpp"
+#include "tree_observer.hpp"
 
 /******************************************************************************
 * Finding completions in text
