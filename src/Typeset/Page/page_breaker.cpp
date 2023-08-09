@@ -147,7 +147,7 @@ page_breaker_rep::page_breaker_rep (
   array<page_item> l2, space ph, int quality2,
   space fn_sep2, space fnote_sep2, space float_sep2,
   font fn2, int fp2):
-    l (l2), papyrus_mode (ph == as_space ( as_tree((MAX_SI >> 1)))), height (ph),
+    l (l2), papyrus_mode (ph == as_space (as_tree ((MAX_SI >> 1)))), height (ph),
     fn_sep (fn_sep2), fnote_sep (fnote_sep2), float_sep (float_sep2),
     fn (fn2), first_page (fp2),
     flow_id (-1), brk_nr (-1), quality (quality2)
