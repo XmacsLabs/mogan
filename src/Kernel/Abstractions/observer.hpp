@@ -12,7 +12,7 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 #include "string.hpp"
-#include "tree_label.hpp"
+
 
 class tree;
 class hard_link_rep;
@@ -152,6 +152,5 @@ bool has_highlight (tree& ref, int lan);
 array<int> obtain_highlight (tree& ref, int lan);
 void detach_highlight (tree& ref, int lan);
 
-void stretched_print (tree t, bool ips= false, int indent= 0);
 
 #endif // defined OBSERVER_H

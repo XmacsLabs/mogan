@@ -8,7 +8,7 @@ if (eq $platform:os windows) {
   ]
 } elif (eq $platform:os linux) {
   set paths = [
-    /usr/lib/llvm-15/bin
+    /usr/lib/llvm-16/bin
   ]
 } else {
 }
@@ -25,3 +25,8 @@ clang-format -i src/Graphics/Types/**.cpp
 clang-format -i src/Typeset/Boxes/Graphics/**.cpp
 clang-format -i src/Plugins/Pdf/**.cpp
 clang-format -i src/Mogan/**.cpp
+
+clang-format -i src/Data/Tree/tree_helper.cpp
+clang-format -i src/Data/Tree/tree_label.cpp
+clang-format -i src/Data/Tree/tree_cursor.cpp
+clang-format -i src/Data/Tree/tree_observer.cpp

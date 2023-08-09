@@ -4,7 +4,8 @@
 
 #include "modification.hpp"
 
-void apply (tree& t, modification mod);          // in observer.cpp
+
+void stretched_print (tree t, bool ips= false, int indent= 0);
 
 void assign      (path p, tree t);
 void insert      (path p, tree ins);
@@ -30,5 +31,7 @@ void set_cursor  (tree& ref, int pos, tree data);
 extern bool busy_modifying;
 extern bool busy_versioning;
 bool busy_tree (tree& ref);
+
+void apply (tree& t, modification mod);
 
 #endif // defined TREE_OBSERVER_H

@@ -10,31 +10,12 @@
 ******************************************************************************/
 
 #include "modification.hpp"
-#include "analyze.hpp"
 #include "hashmap.hpp"
 #include "blackbox.hpp"
 
 #define DETACHED (-5)
 
 observer nil_observer;
-
-void
-stretched_print (tree t, bool ips, int indent) {
-  int i;
-  for (i=0; i<indent; i++) cout << "  ";
-  if (is_atomic (t)) {
-    cout << raw_quote (t->label);
-    if (ips) cout << " -- " << obtain_ip (t);
-    cout << "\n";
-  }
-  else {
-    cout << as_string (L(t));
-    if (ips) cout << " -- " << obtain_ip (t);
-    cout << "\n";    
-    for (i=0; i<N(t); i++)
-      stretched_print (t[i], ips, indent+1);
-  }
-}
 
 tm_ostream&
 operator << (tm_ostream& out, observer o) {

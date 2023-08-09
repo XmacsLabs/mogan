@@ -20,6 +20,7 @@
 #include <sys/resource.h>
 #endif
 
+#include "../app_type.hpp"
 #include "boot.hpp"
 #include "data_cache.hpp"
 #include "file.hpp"
@@ -28,7 +29,6 @@
 #include "tm_ostream.hpp"
 #include "tm_timer.hpp"
 #include "tm_window.hpp"
-#include "../app_type.hpp"
 #ifdef AQUATEXMACS
 void mac_fix_paths ();
 #endif
@@ -75,8 +75,6 @@ void   server_start ();
 static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
 #endif
-
-
 
 /******************************************************************************
  * For testing
@@ -474,7 +472,7 @@ TeXmacs_main (int argc, char** argv) {
   set_default_font (the_default_font);
   if (DEBUG_STD) debug_boot << "Starting server...\n";
   { // opening scope for server sv
-    server sv(app_type::RESEARCH);
+    server sv (app_type::RESEARCH);
     string where= "";
     for (i= 1; i < argc; i++) {
       if (argv[i] == NULL) break;
