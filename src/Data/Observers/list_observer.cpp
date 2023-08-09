@@ -46,7 +46,7 @@ public:
   void notify_var_split   (tree& ref, tree t1, tree t2);
   void notify_join        (tree& ref, int pos, tree next);
   void notify_var_join    (tree& ref, tree t, int offset);
-  void notify_assign_node (tree& ref, tree_label op);
+  void notify_assign_node (tree& ref, int op);
   void notify_insert_node (tree& ref, int pos);
   void notify_remove_node (tree& ref, int pos);
   void notify_set_cursor  (tree& ref, int pos, tree data);
@@ -133,7 +133,7 @@ list_observer_rep::notify_var_join (tree& ref, tree t, int offset) {
 }
 
 void
-list_observer_rep::notify_assign_node (tree& ref, tree_label op) {
+list_observer_rep::notify_assign_node (tree& ref, int op) {
   if (!is_nil (o1)) o1->notify_assign_node (ref, op);
   if (!is_nil (o2)) o2->notify_assign_node (ref, op);
 }

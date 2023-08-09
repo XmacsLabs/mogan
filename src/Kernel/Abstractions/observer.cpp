@@ -13,8 +13,6 @@
 #include "hashmap.hpp"
 #include "blackbox.hpp"
 
-#define DETACHED (-5)
-
 observer nil_observer;
 
 tm_ostream&
@@ -57,7 +55,7 @@ observer_rep::announce (tree& ref, modification mod) {
     announce_join (ref, mod->p);
     break;
   case MOD_ASSIGN_NODE:
-    announce_assign_node (ref, mod->p, L(mod->t));
+    announce_assign_node (ref, mod->p, mod->t->op);
     break;
   case MOD_INSERT_NODE:
     announce_insert_node (ref, mod->p, mod->t);
@@ -107,7 +105,7 @@ observer_rep::announce_join (tree& ref, path p) {
 }
 
 void
-observer_rep::announce_assign_node (tree& ref, path p, tree_label op) {
+observer_rep::announce_assign_node (tree& ref, path p, int op) {
   (void) ref; (void) p; (void) op;
 }
 
@@ -162,7 +160,7 @@ observer_rep::notify_var_join (tree& ref, tree t, int offset) {
 }
 
 void
-observer_rep::notify_assign_node (tree& ref, tree_label op) {
+observer_rep::notify_assign_node (tree& ref, int op) {
   (void) ref; (void) op;
 }
 
