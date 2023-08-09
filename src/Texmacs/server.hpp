@@ -19,6 +19,7 @@
 #include "Data/new_view.hpp"
 #include "Data/new_window.hpp"
 #include "Data/new_project.hpp"
+#include "../Mogan/app_type.hpp"
 
 class editor;
 
@@ -112,7 +113,7 @@ public:
 
 class server {
   ABSTRACT(server);
-  server ();
+  server (app_type app);
 };
 ABSTRACT_CODE(server);
 
