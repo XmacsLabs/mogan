@@ -214,7 +214,7 @@ parse_ispell (string s) {
 #endif
   bool flag= true;
   int i, j;
-  tree t (TUPLE);
+  tree t (URL_TUPLE);
   for (i=0, j=0; j<N(s); j++)
     if (s[j]==':') flag= false;
     else if (((s[j]==' ') && (flag || (j==i) || (s[j-1]==':'))) || (s[j]==','))
@@ -224,14 +224,14 @@ parse_ispell (string s) {
       }
   t << s (i, j);
 
-  if (N(t) == 0) return tree (TUPLE, "0");
+  if (N(t) == 0) return tree (URL_TUPLE, "0");
   if ((t[0] == "+") || (t[0] == "*") || (t[0] == "-")) return "ok";
   if ((N(t)>=4) && ((t[0] == "&") || (t[0]=="?"))) {
-    tree u (TUPLE, t[2]);
+    tree u (URL_TUPLE, t[2]);
     u << A (t (4, N (t)));
     return u;
   }
-  return tree (TUPLE, "0");
+  return tree (URL_TUPLE, "0");
 }
 
 static void

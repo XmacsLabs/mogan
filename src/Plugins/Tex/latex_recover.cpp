@@ -15,6 +15,7 @@
 #include "iterator.hpp"
 #include "file.hpp"
 #include "scheme.hpp"
+#include "tree_label.hpp"
 
 tree latex_expand (tree doc, url name);
 bool tracked_tree_to_latex_document (tree, object, string&, string&);
