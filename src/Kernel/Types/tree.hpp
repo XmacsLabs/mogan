@@ -12,7 +12,6 @@
 #ifndef TREE_H
 #define TREE_H
 
-#include "tree_label.hpp"
 #include "observer.hpp"
 #include "array.hpp"
 #include "iterator.hpp"
@@ -85,7 +84,6 @@ public:
   friend inline bool is_func (tree t, int l, int i);
 
   friend tree copy (tree t);
-  friend tree freeze (tree t);
   friend bool operator == (tree t, tree u);
   friend bool operator != (tree t, tree u);
   friend tree& operator << (tree& t, tree t2);

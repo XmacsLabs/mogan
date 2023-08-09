@@ -187,4 +187,6 @@ is_applicable (tree t) {
     ((L(t) == MACRO) || (L(t) == FUNC) || (L(t) == XMACRO));
 }
 
+tree freeze (tree t);
+
 #endif

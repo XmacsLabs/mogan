@@ -10,10 +10,8 @@
 ******************************************************************************/
 
 #include "generic_tree.hpp"
-#include "drd_std.hpp"
 #include "hashset.hpp"
 #include "iterator.hpp"
-#include "tree_helper.hpp"
 
 /******************************************************************************
 * Main routines for trees
@@ -140,19 +138,6 @@ copy (tree t) {
     tree t2 (t, n);
     for (i=0; i<n; i++) t2[i]= copy (t[i]);
     return t2;
-  }
-}
-
-tree
-freeze (tree t) {
-  if (is_atomic (t)) return copy (t->label);
-  if (is_func (t, UNFREEZE, 1)) return t[0];
-  else {
-    int i, n= N(t);
-    tree r (t, n);
-    for (i=0; i<n; i++)
-      r[i]= freeze (t[i]);
-    return r;
   }
 }
 

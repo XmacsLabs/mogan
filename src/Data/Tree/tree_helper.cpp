@@ -198,3 +198,16 @@ bool
 is_extension (tree t, int n) {
   return (L (t) >= START_EXTENSIONS) && (N (t) == n);
 }
+
+tree
+freeze (tree t) {
+  if (is_atomic (t)) return copy (t->label);
+  if (is_func (t, UNFREEZE, 1)) return t[0];
+  else {
+    int i, n= N(t);
+    tree r (t, n);
+    for (i=0; i<n; i++)
+      r[i]= freeze (t[i]);
+    return r;
+  }
+}
