@@ -11,6 +11,7 @@
 
 #ifndef ISPELL_H
 #define ISPELL_H
+
 #include "tree.hpp"
 
 string ispell_start (string lan);
