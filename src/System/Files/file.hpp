@@ -88,6 +88,6 @@ url search_file_upwards (url u, string name, array<string> stops);
 #define CMD_GET_FROM_WEB    1
 #define CMD_GET_FROM_SERVER 2
 #define CMD_APPLY_EFFECT    3
-url make_file (int cmd, tree data, array<url> args);
+url make_file (int cmd, pre_tree data, array<url> args);
 
 #endif // defined FILE_H

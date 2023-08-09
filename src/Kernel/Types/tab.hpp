@@ -11,7 +11,7 @@
 
 #ifndef TAB_H
 #define TAB_H
-#include "tree.hpp"
+#include "tree_helper.hpp"
 
 enum tab_kind { tab_all, tab_first, tab_last };
 

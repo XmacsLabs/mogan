@@ -2,10 +2,10 @@
 #define TM_DEBUG_H
 #include "string.hpp"
 
-class tree;
+class pre_tree;
 void debug_message (string channel, string msg);
-void debug_formatted (string channel, tree msg);
-tree get_debug_messages (string kind, int max_number);
+void debug_formatted (string channel, pre_tree msg);
+pre_tree get_debug_messages (string kind, int max_number);
 void clear_debug_messages ();
 void clear_debug_messages (string channel);
 

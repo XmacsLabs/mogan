@@ -80,28 +80,28 @@
 #define URL_SEPARATOR ':'
 #endif
 
-static inline tree tuple () {
-  return tree (TUPLE); }
-static inline tree tuple (tree t1) {
-  return tree (TUPLE, t1); }
-static inline tree tuple (tree t1, tree t2) {
-  return tree (TUPLE, t1, t2); }
-static inline tree tuple (tree t1, tree t2, tree t3) {
-  return tree (TUPLE, t1, t2, t3); }
-static inline tree tuple (tree t1, tree t2, tree t3, tree t4) {
-  return tree (TUPLE, t1, t2, t3, t4); }
-static inline tree tuple (tree t1, tree t2, tree t3, tree t4, tree t5) {
-  return tree (TUPLE, t1, t2, t3, t4, t5); }
+static inline pre_tree tuple () {
+  return pre_tree (TUPLE); }
+static inline pre_tree tuple (pre_tree t1) {
+  return pre_tree (TUPLE, t1); }
+static inline pre_tree tuple (pre_tree t1, pre_tree t2) {
+  return pre_tree (TUPLE, t1, t2); }
+static inline pre_tree tuple (pre_tree t1, pre_tree t2, pre_tree t3) {
+  return pre_tree (TUPLE, t1, t2, t3); }
+static inline pre_tree tuple (pre_tree t1, pre_tree t2, pre_tree t3, pre_tree t4) {
+  return pre_tree (TUPLE, t1, t2, t3, t4); }
+static inline pre_tree tuple (pre_tree t1, pre_tree t2, pre_tree t3, pre_tree t4, pre_tree t5) {
+  return pre_tree (TUPLE, t1, t2, t3, t4, t5); }
 
-static inline bool is_tuple (tree t) {
+static inline bool is_tuple (pre_tree t) {
   return (L(t) == TUPLE); }
-static inline bool is_tuple (tree t, string s) {
+static inline bool is_tuple (pre_tree t, string s) {
   return (L(t) == TUPLE) && (N(t) >= 1) && (t[0] == s); }
-static inline bool is_tuple (tree t, const char* s) {
+static inline bool is_tuple (pre_tree t, const char* s) {
   return (L(t) == TUPLE) && (N(t) >= 1) && (t[0] == s); }
-static inline bool is_tuple (tree t, string s, int n) {
+static inline bool is_tuple (pre_tree t, string s, int n) {
   return (L(t) == TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
-static inline bool is_tuple (tree t, const char* s, int n) {
+static inline bool is_tuple (pre_tree t, const char* s, int n) {
   return (L(t) == TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
 
 url url_none () { return as_url (tuple ("none")); }
@@ -147,7 +147,7 @@ url_get_atom (string s, int type) {
   if (N(s)==2 && ends (s, ":"))
     s->resize(1); // remove the ':' after unit letter
 #endif
-  return as_url (tree (s));
+  return as_url (pre_tree (s));
 }
 
 static void
@@ -687,7 +687,7 @@ basename (url u) {
 
 url
 glue (url u, string s) {
-  if (is_atomic (u)) return as_url (tree (u->t->label * s));
+  if (is_atomic (u)) return as_url (pre_tree (u->t->label * s));
   if (is_concat (u)) return u[1] * glue (u[2], s);
   if (is_or (u)) return glue (u[1], s) | glue (u[2], s);
   if (is_none (u)) return u;
@@ -700,7 +700,7 @@ glue (url u, string s) {
 url
 unglue (url u, int nr) {
   if (is_atomic (u))
-    return as_url (tree (u->t->label (0, max (N(u->t->label) - nr, 0))));
+    return as_url (pre_tree (u->t->label (0, max (N(u->t->label) - nr, 0))));
   if (is_concat (u)) return u[1] * unglue (u[2], nr);
   if (is_or (u)) return unglue (u[1], nr) | unglue (u[2], nr);
   if (is_none (u)) return u;

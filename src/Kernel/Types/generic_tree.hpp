@@ -20,11 +20,11 @@ public:
   template<typename T> inline generic_rep (const T& x):
     tree_rep ((tree_label) type_helper<T>::id),
     data (close_box<T> (x)) {}
-  friend class tree;
+  friend class pre_tree;
 };
 
 inline blackbox
-as_blackbox (const tree& t) {
+as_blackbox (const pre_tree& t) {
   return ((generic_rep*) t.rep) -> data;
 }
 
@@ -34,18 +34,18 @@ struct convert_helper {
 };
 
 template<typename F>
-struct convert_helper<tree,F> {
-  static inline tree op (const F& data) {
-    return tree ((tree_rep*) tm_new<generic_rep> (data)); }
+struct convert_helper<pre_tree,F> {
+  static inline pre_tree op (const F& data) {
+    return pre_tree ((tree_rep*) tm_new<generic_rep> (data)); }
 };
 
 template<typename T>
-struct convert_helper<T,tree> {
-  static inline T op (const tree& t) {
+struct convert_helper<T,pre_tree> {
+  static inline T op (const pre_tree& t) {
     return open_box<T> (as_blackbox (t)); }
 };
 
-template<typename T> inline bool is (const tree& t) {
+template<typename T> inline bool is (const pre_tree& t) {
   return ((int) L(t)) == type_helper<T>::id; }
 template<typename T, typename F> inline T as (const F& t) {
   return convert_helper<F,T>::op (t); }

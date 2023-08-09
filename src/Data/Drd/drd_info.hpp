@@ -20,20 +20,20 @@ class drd_info_rep: concrete_struct {
 public:
   string name;
   rel_hashmap<tree_label,tag_info> info;
-  hashmap<string,tree> env;
+  hashmap<string,pre_tree> env;
 
 public:
   drd_info_rep (string name);
   drd_info_rep (string name, drd_info base);
-  tree get_locals ();
-  bool set_locals (tree t);
+  pre_tree get_locals ();
+  bool set_locals (pre_tree t);
   bool contains (string l);
 
   /* Properties of the tag itself */
   void set_type (tree_label tag, int tp);
   int  get_type (tree_label tag);
   void freeze_type (tree_label tag);
-  int  get_type (tree t);
+  int  get_type (pre_tree t);
 
   void set_arity (tree_label tag, int arity, int extra, int am, int cm);
   int  get_arity_mode (tree_label tag);
@@ -47,13 +47,13 @@ public:
   int  get_maximal_arity (tree_label l);
   bool correct_arity (tree_label l, int i);
   bool insert_point (tree_label l, int i, int n);
-  bool is_dynamic (tree t, bool hack= true);
+  bool is_dynamic (pre_tree t, bool hack= true);
 
   void set_border (tree_label tag, int mode);
   int  get_border (tree_label tag);
   void freeze_border (tree_label tag);
-  bool is_child_enforcing (tree t);
-  bool is_parent_enforcing (tree t);
+  bool is_child_enforcing (pre_tree t);
+  bool is_parent_enforcing (pre_tree t);
   bool var_without_border (tree_label tag);
 
   void set_block (tree_label tag, int is_block);
@@ -63,69 +63,69 @@ public:
   void set_with_like (tree_label tag, bool is_with_like);
   bool get_with_like (tree_label tag);
   void freeze_with_like (tree_label tag);
-  bool is_with_like (tree t);
+  bool is_with_like (pre_tree t);
 
   void set_var_type (tree_label tag, int vt);
   int  get_var_type (tree_label tag);
   void freeze_var_type (tree_label tag);
 
-  void set_attribute (tree_label tag, string which, tree val);
-  tree get_attribute (tree_label tag, string which);
+  void set_attribute (tree_label tag, string which, pre_tree val);
+  pre_tree get_attribute (tree_label tag, string which);
   void set_name (tree_label tag, string val);
   void set_long_name (tree_label tag, string val);
-  void set_syntax (tree_label tag, tree val);
+  void set_syntax (tree_label tag, pre_tree val);
   string get_name (tree_label tag);
   string get_long_name (tree_label tag);
-  tree   get_syntax (tree_label tag);
-  tree   get_syntax (tree t, path p= path (-1));
+  pre_tree   get_syntax (tree_label tag);
+  pre_tree   get_syntax (pre_tree t, path p= path (-1));
 
   /* Properties of the children of the tag */
   void set_type (tree_label tag, int nr, int tp);
   int  get_type (tree_label tag, int nr);
   void freeze_type (tree_label tag, int nr);
-  int  get_type_child (tree t, int child);
+  int  get_type_child (pre_tree t, int child);
 
   void set_accessible (tree_label tag, int nr, int access_mode);
   int  get_accessible (tree_label tag, int nr);
   void freeze_accessible (tree_label tag, int nr);
   bool all_accessible (tree_label tag);
   bool none_accessible (tree_label tag);
-  bool is_accessible_child (tree t, int child);
-  bool is_accessible_path (tree t, path p);
+  bool is_accessible_child (pre_tree t, int child);
+  bool is_accessible_path (pre_tree t, path p);
 
   void set_writability (tree_label tag, int nr, int writability);
   int  get_writability (tree_label tag, int nr);
   void freeze_writability (tree_label tag, int nr);
-  int  get_writability_child (tree t, int child);
+  int  get_writability_child (pre_tree t, int child);
 
   void set_block (tree_label tag, int nr, int require_block);
   int  get_block (tree_label tag, int nr);
   void freeze_block (tree_label tag, int nr);
 
-  void set_env (tree_label tag, int nr, tree env);
-  tree get_env (tree_label tag, int nr);
+  void set_env (tree_label tag, int nr, pre_tree env);
+  pre_tree get_env (tree_label tag, int nr);
   void freeze_env (tree_label tag, int nr);
-  tree get_env_child (tree t, int child, tree env);
-  tree get_env_child (tree t, int child, string var, tree val);
-  tree get_env_descendant (tree t, path p, tree env);
-  tree get_env_descendant (tree t, path p, string var, tree val);
+  pre_tree get_env_child (pre_tree t, int child, pre_tree env);
+  pre_tree get_env_child (pre_tree t, int child, string var, pre_tree val);
+  pre_tree get_env_descendant (pre_tree t, path p, pre_tree env);
+  pre_tree get_env_descendant (pre_tree t, path p, string var, pre_tree val);
 
   void set_child_name (tree_label tag, int nr, string val);
   void set_child_long_name (tree_label tag, int nr, string val);
   string get_child_name (tree_label tag, int nr);
   string get_child_long_name (tree_label tag, int nr);
-  string get_child_name (tree t, int child);
-  string get_child_long_name (tree t, int child);
+  string get_child_name (pre_tree t, int child);
+  string get_child_long_name (pre_tree t, int child);
 
   /* Heuristic initialization */
-  void set_environment (hashmap<string,tree> env);
-  tree arg_access (tree t, tree arg, tree env, int& type, bool& found);
-  bool heuristic_with_like (tree t, tree arg);
-  bool heuristic_init_macro (string var, tree macro);
-  bool heuristic_init_xmacro (string var, tree xmacro);
+  void set_environment (hashmap<string,pre_tree> env);
+  pre_tree arg_access (pre_tree t, pre_tree arg, pre_tree env, int& type, bool& found);
+  bool heuristic_with_like (pre_tree t, pre_tree arg);
+  bool heuristic_init_macro (string var, pre_tree macro);
+  bool heuristic_init_xmacro (string var, pre_tree xmacro);
   bool heuristic_init_parameter (string var, string val);
-  bool heuristic_init_parameter (string var, tree val);
-  void heuristic_init (hashmap<string,tree> env);
+  bool heuristic_init_parameter (string var, pre_tree val);
+  void heuristic_init (hashmap<string,pre_tree> env);
 
   friend class drd_info;
   friend tm_ostream& operator << (tm_ostream& out, drd_info drd);
@@ -135,12 +135,12 @@ class drd_info {
   CONCRETE(drd_info);
   drd_info (string name);
   drd_info (string name, drd_info base);
-  operator tree ();
+  operator pre_tree ();
 };
 CONCRETE_CODE(drd_info);
 
-tree drd_env_write (tree env, string var, tree val);
-tree drd_env_merge (tree env, tree t);
-tree drd_env_read (tree env, string var, tree val= tree (UNINIT));
+pre_tree drd_env_write (pre_tree env, string var, pre_tree val);
+pre_tree drd_env_merge (pre_tree env, pre_tree t);
+pre_tree drd_env_read (pre_tree env, string var, pre_tree val= pre_tree (UNINIT));
 
 #endif // defined DRD_INFO_H
