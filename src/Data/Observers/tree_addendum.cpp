@@ -31,7 +31,7 @@ private:
 
 public:
   tree_addendum_rep (tree ref, int kind2, blackbox contents2, bool keep2):
-    ptr (ref.rep), kind (kind2), contents (contents2), keep (keep2) {}
+    ptr (inside (ref)), kind (kind2), contents (contents2), keep (keep2) {}
   int get_type () { return OBSERVER_ADDENDUM; }
   tm_ostream& print (tm_ostream& out) {
     return out << " addendum (" << kind << ", " << contents << ")"; }
@@ -72,11 +72,11 @@ tree_addendum_rep::get_tree (tree& t) {
 
 bool
 tree_addendum_rep::set_tree (tree t) {
-  if (ptr != t.rep) {
+  if (ptr != inside (t)) {
     tree ref (ptr);
     remove_observer (ref->obs, observer (this));
     if (keep) {
-      ptr= t.rep;
+      ptr= inside (t);
       insert_observer (t->obs, observer (this));
     }
     // FIXME: if !keep, then is it safe to not reinsert the observer?
@@ -148,7 +148,7 @@ tree_addendum_rep::notify_insert_node (tree& ref, int pos) {
   // NOTE: should we remove the 'false'? see also tree_pointer.cpp
   if (keep && false) {
     remove_observer (ref[pos]->obs, observer (this));
-    ptr= ref.rep;
+    ptr= inside (ref);
     insert_observer (ref->obs, observer (this));
   }
   //cout << "position -> " << obtain_position (observer (this)) << "\n";

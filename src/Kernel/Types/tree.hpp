@@ -90,14 +90,7 @@ public:
   friend tree& operator << (tree& t, array<tree> a);
   friend tm_ostream& operator << (tm_ostream& out, tree t);
   friend tree operator * (tree t1, tree t2);
-  friend void print_tree (tree t, int tab);
   friend list<tree> as_trees (list<pointer> l);
-  friend class tree_position_rep;
-  friend class tree_addendum_rep;
-  friend class edit_observer_rep;
-  friend class undo_observer_rep;
-  friend class tree_links_rep;
-  friend class link_repository_rep;
   friend blackbox as_blackbox (const tree& t);
 };
 
