@@ -16,91 +16,90 @@
 #include "tree.hpp"
 #include "tree_label.hpp"
 
-class tree : pre_tree {
+
+class labeled_tree : public tree {
 public:
-
-  tree () { pre_tree(); }
-  tree (string l) { pre_tree(l); }
-  tree (const char* l) { pre_tree(l); }
-  tree (int l, int n=0) { pre_tree(l,n); }
-  tree (int l, array<pre_tree> a) { pre_tree(l,a); }
-  tree (pre_tree t, int n) {pre_tree(t,n);}
-
-  tree (tree_label l, tree t1) {
-    pre_tree(static_cast<int>(l), t1);
-  }
-  tree (tree_label l, tree t1, tree t2) {
-    pre_tree(static_cast<int>(l), t1, t2);
-  }
-  tree (tree_label l, tree t1, tree t2, tree t3) {
-    pre_tree(static_cast<int>(l), t1, t2, t3);
-  }
-  tree (tree_label l, tree t1, tree t2, tree t3, tree t4) {
-    pre_tree(static_cast<int>(l), t1, t2, t3, t4);
-  }
-  tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5) {
-    pre_tree(static_cast<int>(l), t1, t2, t3, t4, t5);
-  }
-  tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5, tree t6) {
-    pre_tree(static_cast<int>(l), t1, t2, t3, t4, t5, t6);
-  }
-  tree (tree_label l, tree t1, tree t2, tree t3, tree t4,
-	              tree t5, tree t6, tree t7) {
-    pre_tree(static_cast<int>(l), t1, t2, t3, t4, t5, t6, t7);
-                }
-  // tree (int l, pre_tree t1, pre_tree t2, pre_tree t3, pre_tree t4,
-	//               pre_tree t5, pre_tree t6, pre_tree t7, pre_tree t8);
-  // friend inline tree_label L (pre_tree t);
-  // friend inline tree_label& LR(pre_tree t);
+  labeled_tree (tree_label l) : tree (l) {}
+  labeled_tree (tree_label l, tree t1) : tree (l, t1) {}
+  labeled_tree (tree_label l, tree t1, tree t2) : tree (l, t1, t2) {}
+  labeled_tree (tree_label l, tree t1, tree t2, tree t3) : tree (l, t1, t2, t3) {}
 };
 
-inline tree_label L (pre_tree t) {
+labeled_tree tree (tree_label l, tree t1) {
+  return tree(static_cast<int>(l), t1);
+}
+labeled_tree tree (tree_label l, tree t1, tree t2) {
+  return tree(static_cast<int>(l), t1, t2);
+}
+labeled_tree tree (tree_label l, tree t1, tree t2, tree t3) {
+  return tree(static_cast<int>(l), t1, t2, t3);
+}
+labeled_tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4) {
+  return tree(static_cast<int>(l), t1, t2, t3, t4);
+}
+labeled_tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5) {
+  return tree(static_cast<int>(l), t1, t2, t3, t4, t5);
+}
+labeled_tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5, tree t6) {
+  return tree(static_cast<int>(l), t1, t2, t3, t4, t5, t6);
+}
+labeled_tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4,
+	            tree t5, tree t6, tree t7){
+  return tree(static_cast<int>(l), t1, t2, t3, t4, t5, t6, t7);
+              }
+labeled_tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4,
+              tree t5, tree t6, tree t7, tree t8) {
+  return tree(static_cast<int>(l), t1, t2, t3, t4, t5, t6, t7, t8);
+              }
+
+
+inline tree_label L (tree t) {
   return static_cast<tree_label> (t->op);
 }
-inline tree_label& LR (pre_tree t) {
+inline tree_label& LR (tree t) {
   return *(tree_label*)(&(t->op));
 }
 
-inline string get_label (pre_tree t) {
+inline string get_label (tree t) {
   return is_atomic (t)? t->label: copy (as_string (L(t))); }
 
-template<class T> inline pre_tree as_tree (T x) { return (pre_tree) x; }
-template<> inline pre_tree as_tree (int x) { return as_string (x); }
-template<> inline pre_tree as_tree (long int x) { return as_string (x); }
-template<> inline pre_tree as_tree (double x) { return as_string (x); }
-template<> inline pre_tree as_tree (pointer x) { (void) x; return "pointer"; }
+template<class T> inline tree as_tree (T x) { return (tree) x; }
+template<> inline tree as_tree (int x) { return as_string (x); }
+template<> inline tree as_tree (long int x) { return as_string (x); }
+template<> inline tree as_tree (double x) { return as_string (x); }
+template<> inline tree as_tree (pointer x) { (void) x; return "pointer"; }
 
-template<class T> inline pre_tree
+template<class T> inline tree
 as_tree (list<T> x) {
   list<T> l;
   int i, n=N(x);
-  pre_tree t (TUPLE, n);
+  tree t (TUPLE, n);
   for (i=0, l=x; i<n; i++, l=l->next)
     t[i]= as_tree (l->item);
   return t;
 }
 
-template<class T> inline pre_tree
+template<class T> inline tree
 as_tree (array<T> x) {
   int i, n=N(x);
-  pre_tree t (TUPLE, n);
+  tree t (TUPLE, n);
   for (i=0; i<n; i++)
     t[i]= as_tree (x[i]);
   return t;
 }
 
-template<class T> inline pre_tree
+template<class T> inline tree
 as_tree (iterator<T> x) {
-  pre_tree t (TUPLE);
+  tree t (TUPLE);
   while (x->busy ()) {
     t << as_tree (x->next());
   }
   return t;
 }
 
-template<class T> inline pre_tree
+template<class T> inline tree
 as_tree (hashset<T> x) {
-  pre_tree t (COLLECTION);
+  tree t (COLLECTION);
   iterator<T> iter = iterate (x);
   while (iter->busy ()) {
     t << as_tree (iter->next());
@@ -108,26 +107,26 @@ as_tree (hashset<T> x) {
   return t;
 }
 
-template<class T, class U> inline pre_tree
+template<class T, class U> inline tree
 as_tree (hashentry<T, U> x) {
-  return pre_tree (ASSOCIATE, as_tree (x.key), as_tree (x.im));
+  return tree (ASSOCIATE, as_tree (x.key), as_tree (x.im));
 }
 
-template<class T, class U> inline pre_tree
+template<class T, class U> inline tree
 as_tree (hashmap<T,U> x) {
-  pre_tree t (COLLECTION);
+  tree t (COLLECTION);
   iterator<T> iter= iterate (x);
   while (iter->busy()) {
     T key= iter->next();
     U value= x[key];
-    t << pre_tree (ASSOCIATE, as_tree (key), as_tree (value));
+    t << tree (ASSOCIATE, as_tree (key), as_tree (value));
   }
   return t;
 }
 
-inline hashmap<string, pre_tree>
-tree_hashmap (tree_label init, pre_tree t) {
-  hashmap<string, pre_tree> ret (init);
+inline hashmap<string, tree>
+tree_hashmap (tree_label init, tree t) {
+  hashmap<string, tree> ret (init);
   int i, n= arity (t);
   for (i=0; i<n; i++)
     if (is_func (t[i], ASSOCIATE, 2))
@@ -140,28 +139,28 @@ tree_hashmap (tree_label init, pre_tree t) {
 * Tuples
 ******************************************************************************/
 
-inline pre_tree tuple () {
-  return pre_tree (TUPLE); }
-inline pre_tree tuple (pre_tree t1) {
-  return pre_tree (TUPLE, t1); }
-inline pre_tree tuple (pre_tree t1, pre_tree t2) {
-  return pre_tree (TUPLE, t1, t2); }
-inline pre_tree tuple (pre_tree t1, pre_tree t2, pre_tree t3) {
-  return pre_tree (TUPLE, t1, t2, t3); }
-inline pre_tree tuple (pre_tree t1, pre_tree t2, pre_tree t3, pre_tree t4) {
-  return pre_tree (TUPLE, t1, t2, t3, t4); }
-inline pre_tree tuple (pre_tree t1, pre_tree t2, pre_tree t3, pre_tree t4, pre_tree t5) {
-  return pre_tree (TUPLE, t1, t2, t3, t4, t5); }
+inline tree tuple () {
+  return tree (TUPLE); }
+inline tree tuple (tree t1) {
+  return tree (TUPLE, t1); }
+inline tree tuple (tree t1, tree t2) {
+  return tree (TUPLE, t1, t2); }
+inline tree tuple (tree t1, tree t2, tree t3) {
+  return tree (TUPLE, t1, t2, t3); }
+inline tree tuple (tree t1, tree t2, tree t3, tree t4) {
+  return tree (TUPLE, t1, t2, t3, t4); }
+inline tree tuple (tree t1, tree t2, tree t3, tree t4, tree t5) {
+  return tree (TUPLE, t1, t2, t3, t4, t5); }
 
-inline bool is_tuple (pre_tree t) {
+inline bool is_tuple (tree t) {
   return (L(t) == TUPLE); }
-inline bool is_tuple (pre_tree t, string s) {
+inline bool is_tuple (tree t, string s) {
   return (L(t) == TUPLE) && (N(t) >= 1) && (t[0] == s); }
-inline bool is_tuple (pre_tree t, const char* s) {
+inline bool is_tuple (tree t, const char* s) {
   return (L(t) == TUPLE) && (N(t) >= 1) && (t[0] == s); }
-inline bool is_tuple (pre_tree t, string s, int n) {
+inline bool is_tuple (tree t, string s, int n) {
   return (L(t) == TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
-inline bool is_tuple (pre_tree t, const char* s, int n) {
+inline bool is_tuple (tree t, const char* s, int n) {
   return (L(t) == TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
 
 
@@ -169,55 +168,55 @@ inline bool is_tuple (pre_tree t, const char* s, int n) {
 * Other frequent markup
 ******************************************************************************/
 
-inline pre_tree concat () {
-  return pre_tree (CONCAT); }
-inline pre_tree concat (pre_tree t1) {
-  return pre_tree (CONCAT, t1); }
-inline pre_tree concat (pre_tree t1, pre_tree t2) {
-  return pre_tree (CONCAT, t1, t2); }
-inline pre_tree concat (pre_tree t1, pre_tree t2, pre_tree t3) {
-  return pre_tree (CONCAT, t1, t2, t3); }
-inline pre_tree concat (pre_tree t1, pre_tree t2, pre_tree t3, pre_tree t4) {
-  return pre_tree (CONCAT, t1, t2, t3, t4); }
-inline pre_tree concat (pre_tree t1, pre_tree t2, pre_tree t3, pre_tree t4, pre_tree t5) {
-  return pre_tree (CONCAT, t1, t2, t3, t4, t5); }
+inline tree concat () {
+  return tree (CONCAT); }
+inline tree concat (tree t1) {
+  return tree (CONCAT, t1); }
+inline tree concat (tree t1, tree t2) {
+  return tree (CONCAT, t1, t2); }
+inline tree concat (tree t1, tree t2, tree t3) {
+  return tree (CONCAT, t1, t2, t3); }
+inline tree concat (tree t1, tree t2, tree t3, tree t4) {
+  return tree (CONCAT, t1, t2, t3, t4); }
+inline tree concat (tree t1, tree t2, tree t3, tree t4, tree t5) {
+  return tree (CONCAT, t1, t2, t3, t4, t5); }
 
-inline pre_tree document () {
-  return pre_tree (DOCUMENT); }
-inline pre_tree document (pre_tree t1) {
-  return pre_tree (DOCUMENT, t1); }
-inline pre_tree document (pre_tree t1, pre_tree t2) {
-  return pre_tree (DOCUMENT, t1, t2); }
-inline pre_tree document (pre_tree t1, pre_tree t2, pre_tree t3) {
-  return pre_tree (DOCUMENT, t1, t2, t3); }
-inline pre_tree document (pre_tree t1, pre_tree t2, pre_tree t3, pre_tree t4) {
-  return pre_tree (DOCUMENT, t1, t2, t3, t4); }
-inline pre_tree document (pre_tree t1, pre_tree t2, pre_tree t3, pre_tree t4, pre_tree t5) {
-  return pre_tree (DOCUMENT, t1, t2, t3, t4, t5); }
+inline tree document () {
+  return tree (DOCUMENT); }
+inline tree document (tree t1) {
+  return tree (DOCUMENT, t1); }
+inline tree document (tree t1, tree t2) {
+  return tree (DOCUMENT, t1, t2); }
+inline tree document (tree t1, tree t2, tree t3) {
+  return tree (DOCUMENT, t1, t2, t3); }
+inline tree document (tree t1, tree t2, tree t3, tree t4) {
+  return tree (DOCUMENT, t1, t2, t3, t4); }
+inline tree document (tree t1, tree t2, tree t3, tree t4, tree t5) {
+  return tree (DOCUMENT, t1, t2, t3, t4, t5); }
 
-bool is_document (pre_tree t);
-bool is_concat (pre_tree t);
-bool is_format (pre_tree t);
-bool is_formatting (pre_tree t);
-bool is_table (pre_tree t);
-bool is_table_format (pre_tree t);
-bool is_multi_paragraph (pre_tree t);
-bool is_around (pre_tree t);
-bool is_script (pre_tree t);
-bool is_script (pre_tree t, bool& right);
-bool is_prime (pre_tree t);
-bool is_left_script_prime (pre_tree t);
-bool is_right_script_prime (pre_tree t);
-bool is_mod_active (pre_tree t);
-bool is_mod_active_once (pre_tree t);
-bool is_graphical_text (pre_tree t);
-bool is_empty (pre_tree t);
-bool is_multi_line (pre_tree t);
-bool is_extension (pre_tree t);
-bool is_extension (pre_tree t, int n);
+bool is_document (tree t);
+bool is_concat (tree t);
+bool is_format (tree t);
+bool is_formatting (tree t);
+bool is_table (tree t);
+bool is_table_format (tree t);
+bool is_multi_paragraph (tree t);
+bool is_around (tree t);
+bool is_script (tree t);
+bool is_script (tree t, bool& right);
+bool is_prime (tree t);
+bool is_left_script_prime (tree t);
+bool is_right_script_prime (tree t);
+bool is_mod_active (tree t);
+bool is_mod_active_once (tree t);
+bool is_graphical_text (tree t);
+bool is_empty (tree t);
+bool is_multi_line (tree t);
+bool is_extension (tree t);
+bool is_extension (tree t, int n);
 
 inline bool
-is_applicable (pre_tree t) {
+is_applicable (tree t) {
   return is_compound (t) && (N(t) >= 1) &&
     ((L(t) == MACRO) || (L(t) == FUNC) || (L(t) == XMACRO));
 }

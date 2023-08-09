@@ -14,7 +14,7 @@
 #define RECTANGLES_H
 
 #include "list.hpp"
-#include "tree_helper.hpp"
+#include "tree.hpp"
 
 class rectangle_rep: concrete_struct {
 public:

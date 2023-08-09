@@ -17,39 +17,39 @@
 ******************************************************************************/
 
 bool
-is_document (pre_tree t) {
+is_document (tree t) {
   return L(t) == DOCUMENT;
 }
 
 bool
-is_concat (pre_tree t) {
+is_concat (tree t) {
   return L(t) == CONCAT;
 }
 
 bool
-is_format (pre_tree t) {
+is_format (tree t) {
   return is_document (t) || is_concat (t);
 }
 
 bool
-is_formatting (pre_tree t) {
+is_formatting (tree t) {
   return (L(t)>=WITH_LIMITS) && (L(t)<=NEW_DPAGE);
 }
 
 bool
-is_table (pre_tree t) {
+is_table (tree t) {
   return
     is_func (t, TABLE) || is_func (t, SUBTABLE) ||
     is_func (t, ROW) || is_func (t, CELL);
 }
 
 bool
-is_table_format (pre_tree t) {
+is_table_format (tree t) {
   return is_func (t, TFORMAT);
 }
 
 bool
-is_multi_paragraph (pre_tree t) {
+is_multi_paragraph (tree t) {
   switch (L(t)) {
   case DOCUMENT:
     return true;
@@ -101,19 +101,19 @@ is_multi_paragraph (pre_tree t) {
 }
 
 bool
-is_around (pre_tree t) {
+is_around (tree t) {
   return is_func (t, AROUND, 3) || is_func (t, VAR_AROUND, 3);
 }
 
 bool
-is_script (pre_tree t) {
+is_script (tree t) {
   return
     is_func (t, LSUB) || is_func (t, LSUP) ||
     is_func (t, RSUB) || is_func (t, RSUP);
 }
 
 bool
-is_script (pre_tree t, bool& right) {
+is_script (tree t, bool& right) {
   if (is_func (t, LSUB) ||
       is_func (t, LSUP)) { right=false; return true; }
   if (is_func (t, RSUB) ||
@@ -122,35 +122,35 @@ is_script (pre_tree t, bool& right) {
 }
 
 bool
-is_prime (pre_tree t) {
+is_prime (tree t) {
   return ((L(t) == LPRIME) || (L(t) == RPRIME)) && (N(t) == 1);
 }
 
 bool
-is_left_script_prime (pre_tree t) {
+is_left_script_prime (tree t) {
   return is_func (t, LSUB, 1) || is_func (t, LSUP, 1) ||
          is_func (t, LPRIME, 1);
 }
 
 bool
-is_right_script_prime (pre_tree t) {
+is_right_script_prime (tree t) {
   return is_func (t, RSUB, 1) || is_func (t, RSUP, 1) ||
          is_func (t, RPRIME, 1);
 }
 
 bool
-is_mod_active (pre_tree t) {
+is_mod_active (tree t) {
   return (N(t) == 1) && (L(t) >= STYLE_ONLY) && (L(t) <= VAR_INACTIVE);
 }
 
 bool
-is_mod_active_once (pre_tree t) {
+is_mod_active_once (tree t) {
   return (N(t) == 1) &&
     ((L(t) == STYLE_ONLY) || (L(t) == ACTIVE) || (L(t) == INACTIVE));
 }
 
 bool
-is_graphical_text (pre_tree t) {
+is_graphical_text (tree t) {
   return
     is_func (t, TEXT_AT) ||
     is_func (t, MATH_AT) ||
@@ -158,7 +158,7 @@ is_graphical_text (pre_tree t) {
 }
 
 bool
-is_empty (pre_tree t) {
+is_empty (tree t) {
   if (is_atomic (t)) return (t == "");
   if (is_document (t) || is_concat (t)) {
     int i, n= N(t);
@@ -170,7 +170,7 @@ is_empty (pre_tree t) {
 }
 
 bool
-is_multi_line (pre_tree t) {
+is_multi_line (tree t) {
   if (is_atomic (t)) return false;
   else if (is_func (t, DOCUMENT)) return true;
   else if (is_func (t, CONCAT) || is_func (t, TABLE)) return false;
@@ -188,11 +188,11 @@ is_extension (tree_label l) {
 }
 
 bool
-is_extension (pre_tree t) {
+is_extension (tree t) {
   return L(t) >= START_EXTENSIONS;
 }
 
 bool
-is_extension (pre_tree t, int n) {
+is_extension (tree t, int n) {
   return (L(t) >= START_EXTENSIONS) && (N(t) == n);
 }

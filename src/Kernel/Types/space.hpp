@@ -11,7 +11,7 @@
 
 #ifndef SPACE_H
 #define SPACE_H
-#include "tree_helper.hpp"
+#include "tree.hpp"
 
 class space_rep: concrete_struct {
 public:

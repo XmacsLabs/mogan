@@ -41,8 +41,8 @@
 #define TYPE_UNKNOWN         24
 #define TYPE_ERROR           25
 
-int    drd_encode (pre_tree t);
-pre_tree   drd_decode (int i);
+int    drd_encode (tree t);
+tree   drd_decode (int i);
 int    drd_encode_type (string s);
 string drd_decode_type (int i);
 
@@ -120,9 +120,9 @@ struct parent_info {
   unsigned freeze_var_type  : 1;
 
   parent_info (int arity, int extra, int amode, int cmode, bool frozen= false);
-  parent_info (pre_tree t);
+  parent_info (tree t);
   inline ~parent_info () {}
-  operator pre_tree ();
+  operator tree ();
   bool operator == (const parent_info& pi);
   bool operator != (const parent_info& pi);
   friend tm_ostream& operator << (tm_ostream& out, parent_info pi);
@@ -180,9 +180,9 @@ struct child_info {
   unsigned freeze_env        :  1;
 
   child_info (bool frozen= false);
-  child_info (pre_tree t);
+  child_info (tree t);
   inline ~child_info () {}
-  operator pre_tree ();
+  operator tree ();
   bool operator == (const child_info& pi);
   bool operator != (const child_info& pi);
   friend tm_ostream& operator << (tm_ostream& out, child_info ci);
@@ -193,9 +193,9 @@ class tag_info_rep: concrete_struct {
 public:
   parent_info       pi;
   array<child_info> ci;
-  pre_tree              extra;
+  tree              extra;
 
-  tag_info_rep (parent_info pi, array<child_info> ci, pre_tree extra);
+  tag_info_rep (parent_info pi, array<child_info> ci, tree extra);
   tag_info_rep (int arity, int extra, int amode, int cmode, bool frozen);
   inline ~tag_info_rep () {}
 
@@ -216,8 +216,8 @@ public:
   tag_info name (int i, string s);
   tag_info long_name (int i, string s);
   int      get_index (int child, int n);
-  void     set_attribute (string which, pre_tree val);
-  pre_tree     get_attribute (string which);
+  void     set_attribute (string which, tree val);
+  tree     get_attribute (string which);
 
   friend class tag_info;
 };
@@ -228,12 +228,12 @@ public:
 
 class tag_info {
   CONCRETE(tag_info);
-  tag_info (parent_info pi, array<child_info> ci, pre_tree extra);
+  tag_info (parent_info pi, array<child_info> ci, tree extra);
   tag_info (int arity=0, int extra=0,
 	    int am=ARITY_NORMAL, int cm= CHILD_UNIFORM,
 	    bool frozen= false);
-  tag_info (pre_tree t);
-  operator pre_tree ();
+  tag_info (tree t);
+  operator tree ();
   child_info& operator () (int child, int n);
 };
 CONCRETE_CODE(tag_info);

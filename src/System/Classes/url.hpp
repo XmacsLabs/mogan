@@ -26,14 +26,14 @@
 ******************************************************************************/
 
 struct url_rep: concrete_struct {
-  pre_tree t;
-  inline url_rep (pre_tree t2): t (t2) {}
+  tree t;
+  inline url_rep (tree t2): t (t2) {}
 };
 
 class url {
   CONCRETE(url);
 private:
-  url (pre_tree t): rep (tm_new<url_rep> (t)) {}
+  url (tree t): rep (tm_new<url_rep> (t)) {}
 public:
   url ();
   url (const char* name);
@@ -42,14 +42,14 @@ public:
   inline bool operator == (url u) { return rep->t == u->t; }
   inline bool operator != (url u) { return rep->t != u->t; }
   inline url operator [] (int i) { return url (rep->t[i]); }
-  friend url as_url (pre_tree t);
+  friend url as_url (tree t);
 };
 CONCRETE_CODE(url);
 
 tm_ostream& operator << (tm_ostream& out, url u);
-inline url as_url (pre_tree t) { return url(t); }
+inline url as_url (tree t) { return url(t); }
 string as_string (url u, int type= URL_SYSTEM);
-inline pre_tree as_tree (url u) { return pre_tree (u->t); }
+inline tree as_tree (url u) { return tree (u->t); }
 inline string as_system_string (url u) { return as_string (u, URL_SYSTEM); }
 inline string as_unix_string (url u) { return as_string (u, URL_UNIX); }
 inline string as_standard_string (url u) { return as_string (u,URL_STANDARD); }
@@ -67,9 +67,9 @@ url url_standard (string name);
 url url_standard (string dir, string name);
 
 url url_none (); 
-inline url url_here () { return as_url (pre_tree (".")); }
-inline url url_parent () { return as_url (pre_tree ("..")); }
-inline url url_ancestor () { return as_url (pre_tree ("...")); }
+inline url url_here () { return as_url (tree (".")); }
+inline url url_parent () { return as_url (tree ("..")); }
+inline url url_ancestor () { return as_url (tree ("...")); }
 inline url url_pwd () { return url_system ("$PWD"); }
 
 url url_root (string protocol);       // root url
