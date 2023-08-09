@@ -490,39 +490,11 @@ target("draw") do
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
 
-    -- if is_plat("macosx") then
-    --     set_filename("Mogan_Draw")
-    -- elseif is_plat("mingw") then
-    --     set_filename("mogan_draw.exe")
-    -- else
-        set_filename("mogan_draw")
-    -- end
-
-    if is_plat("macosx") or is_plat("linux") then
-        add_rules("qt.widgetapp")
-    else
-        add_rules("qt.widgetapp_static")
-    end
-
+    set_filename("mogan_draw")
+    add_rules("qt.widgetapp")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
-    if is_plat("macosx") then
-        add_frameworks("QtMacExtras")
-    end
-
     add_packages("lolly")
-    if is_plat("mingw") then
-        add_packages("nowide_standalone")
-        add_packages("qt5widgets")
-    end
-
-    if is_plat("mingw") and is_mode("releasedbg") then
-        set_policy("check.auto_ignore_flags", false)
-        add_ldflags("-mconsole")
-    end
-
-    if is_plat("linux") then
-        add_rpathdirs("@executable_path/../lib")
-    end
+    add_rpathdirs("@executable_path/../lib")
     add_deps("libmogan")
     add_syslinks("pthread")
 
@@ -530,9 +502,6 @@ target("draw") do
         "$(buildir)",
     })
     add_files("src/Mogan/Draw/draw.cpp")
-    if is_plat("mingw") and is_mode("release") then
-        add_deps("windows_icon")
-    end
 
     on_config(function (target) 
         import("core.project.depend")
@@ -570,35 +539,6 @@ target("draw") do
         }
     )
 
-    -- package metadata
-    if is_plat("macosx") then
-        set_configvar("APPCAST", "")
-        set_configvar("OSXVERMIN", "")
-        add_configfiles(
-            "(packages/macos/Info.plist.in)",{
-                filename = "Info.plist",
-                pattern = "@(.-)@",
-            }
-        )
-        add_installfiles({
-            "packages/macos/Xmacs.icns",
-            "packages/macos/TeXmacs-document.icns",
-            "src/Plugins/Cocoa/(English.lproj/**)",
-            "src/Plugins/Cocoa/(zh_CN.lproj/**)",
-            "misc/scripts/mogan.sh"
-        })
-    elseif is_plat("linux") then
-        add_installfiles({
-            "misc/scripts/mogan"
-        })
-    end
-
-    -- install icons
-    add_installfiles("TeXmacs/misc/images/text-x-mogan.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
-    add_installfiles("TeXmacs/misc/mime/mogan.desktop", {prefixdir="share/applications"})
-    add_installfiles("TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
-    add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm", {prefixdir="share/pixmaps"})
-
     -- install texmacs runtime files
     local TeXmacs_files = {
         "TeXmacs(/doc/**)",
@@ -617,26 +557,16 @@ target("draw") do
         "TeXmacs/TEX_FONTS",
         "(plugins/**)" -- plugin files
     }
-    if is_plat("mingw") then
-        add_installfiles(TeXmacs_files)
-    else
-        add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
-        add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
-    end
+    
+      add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
+      add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
 
     -- install tm files for testing purpose
     if is_mode("releasedbg") then
-        if is_plat("mingw") then
-            add_installfiles({
-                "TeXmacs(/tests/*.tm)",
-                "TeXmacs(/tests/*.bib)",
-            })
-        else
             add_installfiles({
                 "TeXmacs(/tests/*.tm)",
                 "TeXmacs(/tests/*.bib)",
             }, {prefixdir="share/Xmacs"})
-        end
     end
 
     after_install(function (target)
@@ -648,51 +578,6 @@ target("draw") do
             os.cp (
                 "TeXmacs/misc/images/texmacs-"..size..".png",
                 path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
-        end
-
-        if is_plat("macosx") and is_arch("arm64") then
-            local app_dir = target:installdir() .. "/../../"
-            os.rm(app_dir .. "Contents/Resources/include")
-            os.rm(app_dir .. "Contents/Frameworks/QtQmlModels.framework")
-            os.rm(app_dir .. "Contents/Frameworks/QtQml.framework")
-            os.rm(app_dir .. "Contents/Frameworks/QtQuick.framework")
-            os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
-        end
-
-        if is_plat("mingw") then
-            import("detect.sdks.find_qt")
-            import("core.base.option")
-            import("core.project.config")
-            import("lib.detect.find_tool")
-
-            -- get qt sdk
-            local qt = assert(find_qt(), "Qt SDK not found!")
-
-            -- get windeployqt
-            local windeployqt_tool = assert(
-                find_tool("windeployqt", {check = "--help"}),
-                "windeployqt.exe not found!")
-            local windeployqt = windeployqt_tool.program
-
-            -- deploy necessary dll
-            -- since version of mingw used to build mogan may differs from
-            --   version of Qt, tell windeployqt to use lib from mingw may
-            --   break ABI compability, but major version of mingw must be
-            --   same.
-            local deploy_argv = {"--no-compiler-runtime", "-printsupport"}
-            if option.get("diagnosis") then
-                table.insert(deploy_argv, "--verbose=2")
-            elseif option.get("verbose") then
-                table.insert(deploy_argv, "--verbose=1")
-            else
-                table.insert(deploy_argv, "--verbose=0")
-            end
-            local install_bindir = path.join(target:installdir(), "bin")
-            table.insert(deploy_argv, install_bindir)
-            os.iorunv(windeployqt, deploy_argv, {envs = {PATH = qt.bindir}})
-            os.cp(path.join(qt.bindir, "libstdc++*.dll"), install_bindir)
-            os.cp(path.join(qt.bindir, "libgcc*.dll"), install_bindir)
-            os.cp(path.join(qt.bindir, "libwinpthread*.dll"), install_bindir)
         end
     end)
 
