@@ -70,7 +70,7 @@ edit_observer_rep::touched (tree& ref, path p) {
 
 void
 edit_observer_rep::reattach (tree& ref, tree t) {
-  if (ref.rep != t.rep) {
+  if (!strong_equal (ref, t)) {
     remove_observer (ref->obs, observer (this));
     insert_observer (t->obs, observer (this));
   }

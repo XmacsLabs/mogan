@@ -19,6 +19,60 @@ L (modification mod) {
 }
 
 /******************************************************************************
+ * Compound trees
+ ******************************************************************************/
+
+tree
+compound (string s) {
+  return tree (make_tree_label (s));
+}
+
+tree
+compound (string s, tree t1) {
+  return tree (make_tree_label (s), t1);
+}
+
+tree
+compound (string s, tree t1, tree t2) {
+  return tree (make_tree_label (s), t1, t2);
+}
+
+tree
+compound (string s, tree t1, tree t2, tree t3) {
+  return tree (make_tree_label (s), t1, t2, t3);
+}
+
+tree
+compound (string s, tree t1, tree t2, tree t3, tree t4) {
+  return tree (make_tree_label (s), t1, t2, t3, t4);
+}
+
+tree
+compound (string s, tree t1, tree t2, tree t3, tree t4, tree t5) {
+  return tree (make_tree_label (s), t1, t2, t3, t4, t5);
+}
+
+tree
+compound (string s, tree t1, tree t2, tree t3, tree t4, tree t5, tree t6) {
+  return tree (make_tree_label (s), t1, t2, t3, t4, t5, t6);
+}
+
+tree
+compound (string s, array<tree> a) {
+  return tree (make_tree_label (s), a);
+}
+
+bool
+is_compound (tree t, string s) {
+  return as_string (L (t)) == s;
+}
+
+bool
+is_compound (tree t, string s, int n) {
+  return (as_string (L (t)) == s) && (N (t) == n);
+}
+
+/******************************************************************************
  * Tree predicates
  ******************************************************************************/
 
@@ -197,4 +251,45 @@ is_extension (tree t) {
 bool
 is_extension (tree t, int n) {
   return (L (t) >= START_EXTENSIONS) && (N (t) == n);
+}
+
+tree
+freeze (tree t) {
+  if (is_atomic (t)) return copy (t->label);
+  if (is_func (t, UNFREEZE, 1)) return t[0];
+  else {
+    int  i, n= N (t);
+    tree r (t, n);
+    for (i= 0; i < n; i++)
+      r[i]= freeze (t[i]);
+    return r;
+  }
+}
+
+string
+tree_as_string (tree t) {
+  if (is_atomic (t)) return t->label;
+  else if (is_concat (t) || is_document (t)) {
+    int    i, n= N (t);
+    string cumul;
+    for (i= 0; i < n; i++)
+      cumul << tree_as_string (t[i]);
+    return cumul;
+  }
+  else if (is_func (t, WITH)) return tree_as_string (t[N (t) - 1]);
+  else if (is_compound (t, "nbsp", 0)) return " ";
+  return "";
+}
+
+void
+print_tree (tree t, int tab) {
+  int i;
+  for (i= 0; i < tab; i++)
+    cout << " ";
+  if (is_atomic (t)) cout << t->label << "\n";
+  else {
+    cout << as_string (L (t)) << "\n";
+    for (i= 0; i < N (t); i++)
+      print_tree (t[i], tab + 2);
+  }
 }

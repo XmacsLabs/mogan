@@ -15,6 +15,7 @@
 #include <QAbstractItemModel>
 
 #include "tree.hpp"
+#include "tree_label.hpp"
 #include "hashmap.hpp"
 #include "observer.hpp"
 
