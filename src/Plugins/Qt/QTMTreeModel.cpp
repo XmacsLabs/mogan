@@ -52,7 +52,7 @@ QTMTreeModel::instance (const tree& data, const tree& roles, QObject* parent) {
  the QTMTreeModel.
  */
 QTMTreeModel::QTMTreeModel (const tree& data, const tree& roles, QObject* p)
-: QAbstractItemModel (p), _t_rep (data.rep) {
+: QAbstractItemModel (p), _t_rep (inside (data)) {
   tree t = tree (_t_rep);
   parse_roles (roles);
   const path& ip = obtain_ip (t);
@@ -86,10 +86,10 @@ QTMTreeModel::index_from_item (const tree& tref) const {
   path ip = obtain_ip (t);
   if (ipath_has_parent (ip)) {
     path   p = reverse (ip->next) / reverse (obtain_ip (_t));// Look one item up
-    if (is_nil (p)) return createIndex (ip->item, 0, t.rep); // parent is root?
+    if (is_nil (p)) return createIndex (ip->item, 0, inside (t)); // parent is root?
     tree& pt = subtree (_t, p);                              // pt is the parent
     int  row = ip->item - row_offset (pt);
-    return createIndex (row, 0, t.rep);
+    return createIndex (row, 0, inside (t));
   }
   return QModelIndex();
 }
@@ -107,7 +107,7 @@ QTMTreeModel::index (int row, int column, const QModelIndex& parent) const {
   tree t = item_from_index (parent);
 
   if (is_compound (t) && row + row_offset(t) < N(t))
-    return createIndex (row, column, t[row + row_offset(t)].rep);
+    return createIndex (row, column, inside (t[row + row_offset(t)]));
   else
     return QModelIndex();
 }

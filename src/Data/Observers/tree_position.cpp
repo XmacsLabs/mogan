@@ -28,7 +28,7 @@ class tree_position_rep: public observer_rep {
   int index;
 
 public:
-  tree_position_rep (tree ref, int index2): ptr (ref.rep), index (index2) {}
+  tree_position_rep (tree ref, int index2): ptr (inside (ref)), index (index2) {}
   int get_type () { return OBSERVER_POSITION; }
   tm_ostream& print (tm_ostream& out) { return out << " " << index; }
 
@@ -63,7 +63,7 @@ bool
 tree_position_rep::set_position (tree t, int index2) {
   tree ref (ptr);
   detach_observer (ref, observer (this));
-  ptr  = t.rep;
+  ptr  = inside (t);
   index= index2;
   attach_observer (t, observer (this));
   return true;

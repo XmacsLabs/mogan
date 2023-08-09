@@ -15,7 +15,7 @@
 
 #include "tree.hpp"
 #include "tree_label.hpp"
-//#include "modification.hpp"
+#include "modification.hpp"
 
 inline tree_label L (tree t) {
   return static_cast<tree_label> (t->op);
@@ -34,6 +34,7 @@ template<> inline tree as_tree (int x) { return as_string (x); }
 template<> inline tree as_tree (long int x) { return as_string (x); }
 template<> inline tree as_tree (double x) { return as_string (x); }
 template<> inline tree as_tree (pointer x) { (void) x; return "pointer"; }
+template<> inline tree as_tree (bool x) { return x? tree ("true"): tree ("false"); }
 
 template<class T> inline tree
 as_tree (list<T> x) {
@@ -131,6 +132,22 @@ inline bool is_tuple (tree t, const char* s, int n) {
 
 
 /******************************************************************************
+* Compound trees
+******************************************************************************/
+
+tree compound (string s);
+tree compound (string s, tree t1);
+tree compound (string s, tree t1, tree t2);
+tree compound (string s, tree t1, tree t2, tree t3);
+tree compound (string s, tree t1, tree t2, tree t3, tree t4);
+tree compound (string s, tree t1, tree t2, tree t3, tree t4, tree t5);
+tree compound (string s, tree t1, tree t2, tree t3, tree t4, tree t5, tree t6);
+tree compound (string s, array<tree> a);
+bool is_compound (tree t, string s);
+bool is_compound (tree t, string s, int n);
+
+
+/******************************************************************************
 * Other frequent markup
 ******************************************************************************/
 
@@ -186,5 +203,11 @@ is_applicable (tree t) {
   return is_compound (t) && (N(t) >= 1) &&
     ((L(t) == MACRO) || (L(t) == FUNC) || (L(t) == XMACRO));
 }
+
+tree freeze (tree t);
+inline tree verbatim (tree t1) {
+  return compound ("verbatim", t1); }
+string tree_as_string (tree t);
+void print_tree (tree t, int tab=0);
 
 #endif

@@ -15,6 +15,7 @@
 #include "list.hpp"
 #include "tree_traverse.hpp"
 #include "tree_modify.hpp"
+#include "tree_helper.hpp"
 #include "Bibtex/bibtex_functions.hpp"
 
 static string bib_current_tag= "";

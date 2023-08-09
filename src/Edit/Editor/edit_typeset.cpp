@@ -361,7 +361,7 @@ edit_typeset_rep::environment_update () {
   typeset_prepare ();
   env->assign ("base-file-name", as_string (env->base_file_name));
   env->assign ("cur-file-name", as_string (env->cur_file_name));
-  env->assign ("secure", bool_as_tree (env->secure));
+  env->assign ("secure", as_tree (env->secure));
   env->read_env (h);
   ::primitive (ste, h);
 }

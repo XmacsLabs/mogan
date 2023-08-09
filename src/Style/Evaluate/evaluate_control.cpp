@@ -86,7 +86,7 @@ evaluate_include (tree t) {
   local->raw_write (0, string ("cur-file-name"),
 		    as_string (incl_file_name));
   local->raw_write (1, string ("secure"),
-		    bool_as_tree (is_secure (incl_file_name)));
+		    as_tree (is_secure (incl_file_name)));
 
   begin_with (std_env, local);
   tree r= evaluate (incl);

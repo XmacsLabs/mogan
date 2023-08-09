@@ -12,13 +12,12 @@
 #ifndef TREE_H
 #define TREE_H
 
-#include "tree_label.hpp"
+#include "string.hpp"
 #include "observer.hpp"
 #include "array.hpp"
 #include "iterator.hpp"
 #include "merge_sort.hpp"
 
-// using enum tree_label;
 
 /******************************************************************************
 * The tree class 'tree'
@@ -39,9 +38,9 @@ tree copy (tree t);
 
 class tree {
   tree_rep* rep; // can be atomic or compound or generic
-  inline tree (tree_rep* rep2);
 
 public:
+  inline tree (tree_rep* rep2);
   inline tree (const tree& x);
   inline ~tree ();
   inline atomic_rep* operator -> ();
@@ -85,25 +84,13 @@ public:
   friend inline bool is_func (tree t, int l, int i);
 
   friend tree copy (tree t);
-  friend tree freeze (tree t);
   friend bool operator == (tree t, tree u);
   friend bool operator != (tree t, tree u);
   friend tree& operator << (tree& t, tree t2);
   friend tree& operator << (tree& t, array<tree> a);
   friend tm_ostream& operator << (tm_ostream& out, tree t);
   friend tree operator * (tree t1, tree t2);
-  friend void print_tree (tree t, int tab);
   friend list<tree> as_trees (list<pointer> l);
-  friend class tree_pointer_rep;
-  friend class tree_position_rep;
-  friend class tree_addendum_rep;
-  friend class edit_observer_rep;
-  friend class undo_observer_rep;
-  friend class tree_links_rep;
-  friend class link_repository_rep;
-#ifdef QTTEXMACS
-  friend class QTMTreeModel;  // hack: wouldn't need it with a widget_observer
-#endif
   friend blackbox as_blackbox (const tree& t);
 };
 
@@ -130,12 +117,6 @@ public:
 };
 
 // generic_rep in generic_tree.hpp
-
-template<> struct type_helper<tree> {
-  static int  id;
-  static tree init;
-  static inline tree init_val () { return tree (); }
-};
 
 typedef tree scheme_tree;
 
@@ -249,29 +230,7 @@ inline double as_double (tree t) {
 inline string as_string (tree t) {
   if (is_atomic (t)) return t->label;
   else return ""; }
-string tree_as_string (tree t);
 tree replace (tree t, tree w, tree b);
-inline tree bool_as_tree (bool f) {
-  return (f? tree ("true"): tree ("false")); }
-
-/******************************************************************************
-* Compound trees
-******************************************************************************/
-
-tree compound (string s);
-tree compound (string s, tree t1);
-tree compound (string s, tree t1, tree t2);
-tree compound (string s, tree t1, tree t2, tree t3);
-tree compound (string s, tree t1, tree t2, tree t3, tree t4);
-tree compound (string s, tree t1, tree t2, tree t3, tree t4, tree t5);
-tree compound (string s, tree t1, tree t2, tree t3, tree t4, tree t5, tree t6);
-tree compound (string s, array<tree> a);
-bool is_compound (tree t, string s);
-bool is_compound (tree t, string s, int n);
-
-
-inline tree verbatim (tree t1) {
-  return compound ("verbatim", t1); }
 
 /******************************************************************************
 * Miscellaneous
@@ -287,7 +246,6 @@ public:
   inline formatted (const formatted& f): rep (f.rep) {}
 };
 
-void print_tree (tree t, int tab=0);
 
 struct less_eq_associate {
   static inline bool leq (tree& a, tree& b) {
@@ -303,5 +261,10 @@ make_collection (hashmap<T,U> h) {
   for (i=0; i<n; i++) t[i] = a[i];
   return t;
 }
+
+template<> struct type_helper<tree> {
+  static int  id;
+  static inline tree init_val () { return tree (); }
+};
 
 #endif // defined TREE_H
