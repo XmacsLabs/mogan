@@ -14,15 +14,12 @@
 
 #include "string.hpp"
 
-
 class tree;
-class hard_link_rep;
 class observer;
 class modification;
 class blackbox;
 template<class T> class list;
 template<class T> class array;
-typedef hard_link_rep* weak_link;
 typedef list<int> path;
 
 #define OBSERVER_UNKNOWN    0
@@ -57,7 +54,7 @@ public:
   virtual void announce_remove      (tree& ref, path p, int nr);
   virtual void announce_split       (tree& ref, path p);
   virtual void announce_join        (tree& ref, path p);
-  virtual void announce_assign_node (tree& ref, path p, tree_label op);
+  virtual void announce_assign_node (tree& ref, path p, int op);
   virtual void announce_insert_node (tree& ref, path p, tree ins);
   virtual void announce_remove_node (tree& ref, path p);
   virtual void announce_set_cursor  (tree& ref, path p, tree data);
@@ -72,7 +69,7 @@ public:
   virtual void notify_var_split     (tree& ref, tree t1, tree t2);
   virtual void notify_join          (tree& ref, int pos, tree next);
   virtual void notify_var_join      (tree& ref, tree t, int offset);
-  virtual void notify_assign_node   (tree& ref, tree_label op);
+  virtual void notify_assign_node   (tree& ref, int op);
   virtual void notify_insert_node   (tree& ref, int pos);
   virtual void notify_remove_node   (tree& ref, int pos);
   virtual void notify_set_cursor    (tree& ref, int pos, tree data);
