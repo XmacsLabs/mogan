@@ -29,9 +29,6 @@
 #include "tm_ostream.hpp"
 #include "tm_timer.hpp"
 #include "tm_window.hpp"
-#ifdef AQUATEXMACS
-void mac_fix_paths ();
-#endif
 
 #ifdef QTTEXMACS
 #include "Qt/QTMApplication.hpp"
@@ -39,17 +36,6 @@ void mac_fix_paths ();
 #include <QDir>
 #endif
 
-#ifdef OS_MINGW
-#include "Windows/win-utf8-compat.hpp"
-#endif
-
-#ifdef MACOSX_EXTENSIONS
-#include "MacOS/mac_utilities.h"
-#endif
-
-#if defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS)
-#include "MacOS/mac_app.h"
-#endif
 
 extern bool char_clip;
 
@@ -143,100 +129,6 @@ TeXmacs_init_paths (int& argc, char** argv) {
     set_env ("TEXMACS_PATH", as_string (exedir * "../share/Xmacs"));
   }
 #endif
-
-#ifdef Q_OS_MAC
-  // the following line can inibith external plugin loading
-  // QCoreApplication::setLibraryPaths(QStringList());
-  // ideally we would like to control the external plugins
-  // and add the most useful (gif, jpeg, svg converters)
-  // to the bundle package. I still do not have a reliable solution
-  // so just allow everything that is reachable.
-
-  // plugins need to be installed in TeXmacs.app/Contents/Plugins
-  QCoreApplication::addLibraryPath (QDir::cleanPath (
-      QCoreApplication::applicationDirPath ().append ("/../Plugins")));
-  // cout << from_qstring ( QCoreApplication::libraryPaths () .join("\n") ) <<
-  // LF;
-  {
-    // ensure that private versions of the Qt frameworks have priority on
-    // other instances.
-    // in the event that we load qt plugins which could possibly link to
-    // other instances of the Qt libraries
-    string buf;
-    buf= as_string (exedir * "../Frameworks");
-    if (get_env ("DYLD_FRAMEWORK_PATH") != "")
-      buf= buf * ":" * get_env ("DYLD_FRAMEWORK_PATH");
-    set_env ("DYLD_FRAMEWORK_PATH", buf);
-    buf= as_string (exedir * "../Resources/lib");
-    if (get_env ("DYLD_LIBRARY_PATH") != "")
-      buf= buf * ":" * get_env ("DYLD_LIBRARY_PATH");
-    set_env ("DYLD_LIBRARY_PATH", buf);
-  }
-#endif
-
-#if defined(AQUATEXMACS) || defined(Q_OS_MAC) ||                               \
-    (defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS))
-  // Mac bundle environment initialization
-  // We set some environment variables when the executable
-  // is in a .app bundle on MacOSX
-  if (is_empty (current_texmacs_path))
-    set_env ("TEXMACS_PATH", as_string (exedir * "../Resources/share/Xmacs"));
-  // cout << get_env("PATH") * ":" * as_string(url("$PWD") * argv[0]
-  //  * "../../Resources/share/TeXmacs/bin") << LF;
-  if (exists ("/bin/bash")) {
-    string shell_env= var_eval_system ("PATH='' /bin/bash -l -c 'echo $PATH'");
-    set_env ("PATH", get_env ("PATH") * ":" * shell_env * ":" *
-                         as_string (exedir * "../Resources/share/TeXmacs/bin"));
-  }
-  else {
-    set_env ("PATH", get_env ("PATH") * ":" *
-                         as_string (exedir * "../Resources/share/TeXmacs/bin"));
-  }
-  // system("set");
-#endif
-
-#ifdef OS_MINGW
-  // Win bundle environment initialization
-  // TEXMACS_PATH is set by assuming that the executable is in TeXmacs/bin/
-  // HOME is set to USERPROFILE
-  // PWD is set to HOME
-  // if PWD is lacking, then the path resolution machinery may not work
-
-  if (is_empty (current_texmacs_path))
-    set_env ("TEXMACS_PATH", as_string (exedir * ".."));
-  // if (get_env ("HOME") == "") //now set in immediate_options otherwise
-  // --setup option fails
-  //   set_env ("HOME", get_env("USERPROFILE"));
-  // HACK
-  // In WINE the variable PWD is already in the outer Unix environment
-  // so we need to override it to have a correct behaviour
-  if ((get_env ("PWD") == "") || (get_env ("PWD")[0] == '/')) {
-    set_env ("PWD", as_string (exedir));
-    // set_env ("PWD", get_env("HOME"));
-  }
-  // system("set");
-#endif
-
-#ifdef OS_HAIKU
-  // Initialization inside the Haiku package management environment
-  // TEXMACS_PATH is set relative to the executable which is in $prefix/app
-  // to $prefix/data/TeXmacs
-
-  if (is_empty (current_texmacs_path))
-    set_env ("TEXMACS_PATH", as_string (exedir * "../data/TeXmacs"));
-
-  set_env ("PATH", get_env ("PATH") * ":" *
-                       as_string (exedir * "/system/lib/TeXmacs/bin"));
-#endif
-
-  // check on the latest $TEXMACS_PATH
-  current_texmacs_path= get_env ("TEXMACS_PATH");
-  if (is_empty (current_texmacs_path) ||
-      !exists (url_system (current_texmacs_path))) {
-    cout << "The required TEXMACS_PATH(" << current_texmacs_path
-         << ") does not exists" << LF;
-    exit (1);
-  }
 }
 
 /******************************************************************************
@@ -350,15 +242,9 @@ TeXmacs_main (int argc, char** argv) {
       }
       else if ((s == "-R") || (s == "-retina")) {
         retina_manual= true;
-#ifdef MACOSX_EXTENSIONS
-        retina_factor= 2;
-        retina_zoom  = 1;
-        retina_scale = 1.4;
-#else
         retina_factor= 1;
         retina_zoom  = 2;
         retina_scale = (tm_style_sheet == "" ? 1.0 : 1.6666);
-#endif
         retina_icons= 2;
       }
       else if (s == "-no-retina-icons") {
@@ -446,15 +332,9 @@ TeXmacs_main (int argc, char** argv) {
   }
   if (get_env ("TEXMACS_RETINA") == "on") {
     retina_manual= true;
-#ifdef MACOSX_EXTENSIONS
-    retina_factor= 2;
-    retina_zoom  = 1;
-    retina_scale = 1.4;
-#else
     retina_factor= 1;
     retina_zoom  = 2;
     retina_scale = (tm_style_sheet == "" ? 1.0 : 1.6666);
-#endif
     retina_icons= 2;
   }
   if (get_env ("TEXMACS_RETINA_ICONS") == "off") {
@@ -484,9 +364,6 @@ TeXmacs_main (int argc, char** argv) {
   bench_cumul ("initialize plugins");
   if (DEBUG_STD) debug_boot << "Opening display...\n";
 
-#if defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS)
-    // init_mac_application ();
-#endif
 
   gui_open (argc, argv);
   set_default_font (the_default_font);
@@ -559,46 +436,8 @@ TeXmacs_main (int argc, char** argv) {
   if (DEBUG_STD) debug_boot << "Closing display...\n";
   gui_close ();
 
-#if defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS)
-  finalize_mac_application ();
-#endif
 
   if (DEBUG_STD) debug_boot << "Good bye...\n";
-}
-
-/******************************************************************************
- * Main program
- ******************************************************************************/
-
-#ifdef OS_MACOS
-#include <sys/resource.h>
-#endif
-
-void
-boot_hacks () {
-#ifdef OS_MACOS
-  // NOTE: under MACOS, there is a limited number of open file descriptors,
-  // by default 256.  Any open file descriptor can actually count several times
-  // whenever the files is stored in various chunks on disk.  Hence, the limit
-  // is easily exceeded, although this situation cannot easily be debugged.
-  // Our current hack is to allow for at least 4096 open file descriptors.
-  rlimit lims;
-  getrlimit (RLIMIT_NOFILE, &lims);
-  lims.rlim_cur= max (lims.rlim_cur, 4096);
-  setrlimit (RLIMIT_NOFILE, &lims);
-  // getrlimit (RLIMIT_NOFILE, &lims);
-  // printf ("cur: %i\n", lims.rlim_cur);
-  // printf ("max: %i\n", lims.rlim_max);
-#ifdef MACOSX_EXTENSIONS
-  mac_fix_yosemite_bug ();
-#endif
-
-#ifdef QTTEXMACS
-#if defined(MAC_OS_X_VERSION_10_9) || defined(MAC_OS_X_VERSION_10_10)
-#endif
-#endif
-
-#endif
 }
 
 /******************************************************************************
@@ -608,17 +447,7 @@ boot_hacks () {
 void
 immediate_options (int argc, char** argv) {
   if (get_env ("TEXMACS_HOME_PATH") == "")
-#ifdef OS_MINGW
-  {
-    if (get_env ("HOME") == "") set_env ("HOME", get_env ("USERPROFILE"));
-    set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\TeXmacs");
-  }
-#elif defined(OS_HAIKU)
-    set_env ("TEXMACS_HOME_PATH",
-             get_env ("HOME") * "/config/settings/TeXmacs");
-#else
     set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/.TeXmacs");
-#endif
   if (get_env ("TEXMACS_HOME_PATH") == "") return;
   for (int i= 1; i < argc; i++) {
     string s= argv[i];
@@ -696,21 +525,12 @@ main (int argc, char** argv) {
   else cerr << "Cannot get stack value\n";
 #endif
 
-#ifdef OS_MINGW
-  nowide::args a (argc, argv); // Fix arguments - make them UTF-8
-#endif
-
   original_path= get_env ("PATH");
-  boot_hacks ();
   windows_delayed_refresh (1000000000);
   immediate_options (argc, argv);
   load_user_preferences ();
   string theme= get_user_preference ("gui theme", "default");
-#if defined(OS_MACOS) && !defined(__arm64__)
-  if (theme == "default") theme= "";
-#else
   if (theme == "default") theme= "light";
-#endif
   if (theme == "light")
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-light.css";
   else if (theme == "dark")
@@ -722,16 +542,6 @@ main (int argc, char** argv) {
   set_env ("QT_QPA_PLATFORM", "xcb");
   set_env ("XDG_SESSION_TYPE", "x11");
 #endif
-#endif
-#ifdef MACOSX_EXTENSIONS
-  // Reset TeXmacs if Alt is pressed during startup
-  if (mac_alternate_startup ()) {
-    cout << "TeXmacs] Performing setup (Alt on startup)" << LF;
-    remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
-    remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-    remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
-    remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
-  }
 #endif
 #ifdef QTTEXMACS
   // initialize the Qt application infrastructure
