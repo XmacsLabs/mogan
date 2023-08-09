@@ -15,6 +15,7 @@
 #include "converter.hpp"
 #include "vars.hpp"
 #include "Tex/tex.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Helper functions

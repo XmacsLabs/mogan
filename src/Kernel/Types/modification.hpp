@@ -11,7 +11,7 @@
 
 #ifndef MODIFICATION_H
 #define MODIFICATION_H
-#include "tree.hpp"
+#include "tree_helper.hpp"
 #include "path.hpp"
 
 /******************************************************************************

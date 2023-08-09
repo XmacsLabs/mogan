@@ -16,6 +16,15 @@
 #include "tree.hpp"
 #include "tree_label.hpp"
 
+inline tree_label L (tree t) {
+  return static_cast<tree_label> (t->op);
+}
+inline tree_label& LR (tree t) {
+  return *(tree_label*)(&(t->op));
+}
+inline string get_label (tree t) {
+  return is_atomic (t)? t->label: copy (as_string (L(t))); }
+
 template<class T> inline tree as_tree (T x) { return (tree) x; }
 template<> inline tree as_tree (int x) { return as_string (x); }
 template<> inline tree as_tree (long int x) { return as_string (x); }

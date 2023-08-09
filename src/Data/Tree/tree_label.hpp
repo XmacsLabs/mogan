@@ -17,7 +17,7 @@
 * Standard tree labels
 ******************************************************************************/
 
-enum tree_label {
+enum tree_label : int {
   STRING= 0, UNKNOWN, UNINIT, ERROR, RAW_DATA,
 
   // basic formatting tags

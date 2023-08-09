@@ -80,29 +80,32 @@
 #define URL_SEPARATOR ':'
 #endif
 
+#define URL_TUPLE 245     // 
+
+
 static inline tree tuple () {
-  return tree (TUPLE); }
+  return tree (URL_TUPLE); }
 static inline tree tuple (tree t1) {
-  return tree (TUPLE, t1); }
+  return tree (URL_TUPLE, t1); }
 static inline tree tuple (tree t1, tree t2) {
-  return tree (TUPLE, t1, t2); }
+  return tree (URL_TUPLE, t1, t2); }
 static inline tree tuple (tree t1, tree t2, tree t3) {
-  return tree (TUPLE, t1, t2, t3); }
+  return tree (URL_TUPLE, t1, t2, t3); }
 static inline tree tuple (tree t1, tree t2, tree t3, tree t4) {
-  return tree (TUPLE, t1, t2, t3, t4); }
+  return tree (URL_TUPLE, t1, t2, t3, t4); }
 static inline tree tuple (tree t1, tree t2, tree t3, tree t4, tree t5) {
-  return tree (TUPLE, t1, t2, t3, t4, t5); }
+  return tree (URL_TUPLE, t1, t2, t3, t4, t5); }
 
 static inline bool is_tuple (tree t) {
-  return (L(t) == TUPLE); }
+  return (t->op == URL_TUPLE); }
 static inline bool is_tuple (tree t, string s) {
-  return (L(t) == TUPLE) && (N(t) >= 1) && (t[0] == s); }
+  return (t->op == URL_TUPLE) && (N(t) >= 1) && (t[0] == s); }
 static inline bool is_tuple (tree t, const char* s) {
-  return (L(t) == TUPLE) && (N(t) >= 1) && (t[0] == s); }
+  return (t->op == URL_TUPLE) && (N(t) >= 1) && (t[0] == s); }
 static inline bool is_tuple (tree t, string s, int n) {
-  return (L(t) == TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
+  return (t->op == URL_TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
 static inline bool is_tuple (tree t, const char* s, int n) {
-  return (L(t) == TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
+  return (t->op == URL_TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
 
 url url_none () { return as_url (tuple ("none")); }
 bool is_none (url u) { return is_tuple (u->t, "none", 0); }
