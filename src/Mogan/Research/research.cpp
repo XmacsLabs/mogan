@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "tm_configure.hpp"
-#include "url.hpp"
 #include <fcntl.h>
 #include <locale.h> // for setlocale
 #include <signal.h>
@@ -29,6 +28,7 @@
 #include "tm_ostream.hpp"
 #include "tm_timer.hpp"
 #include "tm_window.hpp"
+#include "../app_type.hpp"
 #ifdef AQUATEXMACS
 void mac_fix_paths ();
 #endif
@@ -53,7 +53,7 @@ void mac_fix_paths ();
 
 extern bool char_clip;
 
-url           tm_init_file= url_none ();
+extern url    tm_init_file;
 extern url    tm_init_buffer_file;
 extern string my_init_cmds;
 extern string original_path;
@@ -76,25 +76,7 @@ static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
 #endif
 
-/******************************************************************************
- * Init applications
- ******************************************************************************/
- 
-enum class App { RESEARCH, DRAW };
-constexpr App now_app= App::RESEARCH;
 
-void
-init_app (App app) {
-  if (is_none (tm_init_file)) {
-    if (app == App::DRAW) {
-      tm_init_file= "$TEXMACS_PATH/progs/init-draw.scm";
-    }
-    else if (app == App::RESEARCH) {
-      tm_init_file= "$TEXMACS_PATH/progs/init-texmacs-s7.scm";
-    }
-  }
-  exec_file (tm_init_file);
-}
 
 /******************************************************************************
  * For testing
@@ -492,8 +474,7 @@ TeXmacs_main (int argc, char** argv) {
   set_default_font (the_default_font);
   if (DEBUG_STD) debug_boot << "Starting server...\n";
   { // opening scope for server sv
-    server sv;
-    init_app (now_app);
+    server sv(app_type::RESEARCH);
     string where= "";
     for (i= 1; i < argc; i++) {
       if (argv[i] == NULL) break;
