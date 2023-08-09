@@ -583,13 +583,7 @@ target("draw") do
 
     on_run(function (target)
         name = target:name()
-        if is_plat("mingw") then
-            os.execv(target:installdir().."/bin/mogan_draw.exe")
-        elseif is_plat("linux") then
-            os.execv(target:installdir().."/bin/mogan_draw")
-        else
-            os.execv(target:installdir().."/../MacOS/Mogan_Draw")
-        end
+        os.execv(target:installdir().."/bin/mogan_draw")
     end)
 end
 
