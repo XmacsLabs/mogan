@@ -68,8 +68,8 @@ public:
 
   friend inline int N (tree t);
   friend inline int arity (tree t);
-//  friend inline tree_label L (tree t);
-//  friend inline tree_label& LR (tree t);
+  friend inline tree_label L (tree t);
+  friend const inline tree_label& LR (tree t);
   friend inline array<tree> A (tree t);
   friend inline array<tree>& AR (tree t);
   friend inline bool is_atomic (tree t);
@@ -200,16 +200,14 @@ inline int arity (tree t) {
   else return N ((static_cast<compound_rep*> (t.rep))->a); }
 inline int right_index (tree t) {
   return is_atomic (t)? N(t->label): 1; }
-// inline tree_label L (tree t) {
-//   return static_cast<tree_label> (t.rep->op); 
-//   // return t.rep->op;
-// }
-// inline tree_label& LR (tree t) {
-//   return *(tree_label*)(&(t.rep->op));
-//   // return (tree_label) (t.rep->op);
-//   // return static_cast<tree_label> (t.rep->op);
-//   // return t.rep->op;
-// }
+inline tree_label L (tree t) {
+  return static_cast<tree_label> (t.rep->op); 
+  // return t.rep->op;
+}
+const inline tree_label& LR (tree t) {
+  return static_cast<tree_label> (t.rep->op);
+  // return t.rep->op;
+}
 inline array<tree> A (tree t) {
   CHECK_COMPOUND (t);
   return (static_cast<compound_rep*> (t.rep))->a; }
@@ -220,7 +218,8 @@ inline array<tree>& AR (tree t) {
 inline bool is_atomic (tree t) { return (((int) t.rep->op) == 0); }
 inline bool is_compound (tree t) { return (((int) t.rep->op) > /*STRING*/ 0); }
 inline bool is_generic (tree t) { return ((int) t.rep->op) < 0; }
-
+inline string get_label (tree t) {
+  return is_atomic (t)? t->label: copy (as_string (L(t))); }
 inline bool operator == (tree t, int lab) {
   return (t.rep->op == lab) && (N(t)==0); }
 inline bool operator != (tree t, int lab) {

@@ -17,51 +17,32 @@
 #include "tree_label.hpp"
 
 
-class labeled_tree : public tree {
-public:
-  labeled_tree (tree_label l) : tree (l) {}
-  labeled_tree (tree_label l, tree t1) : tree (l, t1) {}
-  labeled_tree (tree_label l, tree t1, tree t2) : tree (l, t1, t2) {}
-  labeled_tree (tree_label l, tree t1, tree t2, tree t3) : tree (l, t1, t2, t3) {}
-};
-
-labeled_tree tree (tree_label l, tree t1) {
-  return tree(static_cast<int>(l), t1);
+tree tree (tree_label l, tree t1) {
+  return tree(static_cast<tree_label>(l), t1);
 }
-labeled_tree tree (tree_label l, tree t1, tree t2) {
+tree tree (tree_label l, tree t1, tree t2) {
   return tree(static_cast<int>(l), t1, t2);
 }
-labeled_tree tree (tree_label l, tree t1, tree t2, tree t3) {
+tree tree (tree_label l, tree t1, tree t2, tree t3) {
   return tree(static_cast<int>(l), t1, t2, t3);
 }
-labeled_tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4) {
+tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4) {
   return tree(static_cast<int>(l), t1, t2, t3, t4);
 }
-labeled_tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5) {
+tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5) {
   return tree(static_cast<int>(l), t1, t2, t3, t4, t5);
 }
-labeled_tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5, tree t6) {
+tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5, tree t6) {
   return tree(static_cast<int>(l), t1, t2, t3, t4, t5, t6);
 }
-labeled_tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4,
+tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4,
 	            tree t5, tree t6, tree t7){
   return tree(static_cast<int>(l), t1, t2, t3, t4, t5, t6, t7);
               }
-labeled_tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4,
+tree tree (tree_label l, tree t1, tree t2, tree t3, tree t4,
               tree t5, tree t6, tree t7, tree t8) {
   return tree(static_cast<int>(l), t1, t2, t3, t4, t5, t6, t7, t8);
               }
-
-
-inline tree_label L (tree t) {
-  return static_cast<tree_label> (t->op);
-}
-inline tree_label& LR (tree t) {
-  return *(tree_label*)(&(t->op));
-}
-
-inline string get_label (tree t) {
-  return is_atomic (t)? t->label: copy (as_string (L(t))); }
 
 template<class T> inline tree as_tree (T x) { return (tree) x; }
 template<> inline tree as_tree (int x) { return as_string (x); }
