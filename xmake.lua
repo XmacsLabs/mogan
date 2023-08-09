@@ -485,6 +485,230 @@ if is_plat("mingw") then
     end
 end
 
+target("draw") do
+    set_enabled(is_plat("linux") or is_plat("wasm"))
+    set_version(XMACS_VERSION)
+    set_installdir(INSTALL_DIR)
+
+    -- if is_plat("macosx") then
+    --     set_filename("Mogan_Draw")
+    -- elseif is_plat("mingw") then
+    --     set_filename("mogan_draw.exe")
+    -- else
+        set_filename("mogan_draw")
+    -- end
+
+    if is_plat("macosx") or is_plat("linux") then
+        add_rules("qt.widgetapp")
+    else
+        add_rules("qt.widgetapp_static")
+    end
+
+    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
+    if is_plat("macosx") then
+        add_frameworks("QtMacExtras")
+    end
+
+    add_packages("lolly")
+    if is_plat("mingw") then
+        add_packages("nowide_standalone")
+        add_packages("qt5widgets")
+    end
+
+    if is_plat("mingw") and is_mode("releasedbg") then
+        set_policy("check.auto_ignore_flags", false)
+        add_ldflags("-mconsole")
+    end
+
+    if is_plat("linux") then
+        add_rpathdirs("@executable_path/../lib")
+    end
+    add_deps("libmogan")
+    add_syslinks("pthread")
+
+    add_includedirs({
+        "$(buildir)",
+    })
+    add_files("src/Mogan/Draw/draw.cpp")
+    if is_plat("mingw") and is_mode("release") then
+        add_deps("windows_icon")
+    end
+
+    on_config(function (target) 
+        import("core.project.depend")
+        -- use relative path here to avoid import failure on windows
+        local scheme_path = path.join("src", "Scheme")
+        local build_glue_path = path.join("src", "Scheme", "Glue")
+        local build_glue = import("build_glue", {rootdir = build_glue_path})
+        for _, filepath in ipairs(os.filedirs(path.join(scheme_path, "**/glue_*.lua"))) do
+            depend.on_changed(function ()
+                local glue_name = path.basename(filepath)
+                local glue_dir = path.directory(filepath)
+                local glue_table = import(glue_name, {rootdir = glue_dir})()
+                io.writefile(
+                    path.join("$(buildir)", glue_name .. ".cpp"),
+                    build_glue(glue_table, glue_name))
+                cprint("generating scheme glue %s ... %s", glue_name, "${color.success}${text.success}")
+            end, {
+                values = {true},
+                files = {filepath, path.join(build_glue_path, "build_glue.lua")},
+                always_changed = false
+            })
+        end
+    end)
+
+    set_configdir(INSTALL_DIR)
+    set_configvar("DEVEL_VERSION", DEVEL_VERSION)
+    set_configvar("PACKAGE", "Mogan Draw")
+    set_configvar("XMACS_VERSION", XMACS_VERSION)
+
+    -- install man.1 manual file
+    add_configfiles(
+        "(misc/man/texmacs.1.in)",{
+            filename = "texmacs.1",
+            pattern = "@([^\n]-)@",
+        }
+    )
+
+    -- package metadata
+    if is_plat("macosx") then
+        set_configvar("APPCAST", "")
+        set_configvar("OSXVERMIN", "")
+        add_configfiles(
+            "(packages/macos/Info.plist.in)",{
+                filename = "Info.plist",
+                pattern = "@(.-)@",
+            }
+        )
+        add_installfiles({
+            "packages/macos/Xmacs.icns",
+            "packages/macos/TeXmacs-document.icns",
+            "src/Plugins/Cocoa/(English.lproj/**)",
+            "src/Plugins/Cocoa/(zh_CN.lproj/**)",
+            "misc/scripts/mogan.sh"
+        })
+    elseif is_plat("linux") then
+        add_installfiles({
+            "misc/scripts/mogan"
+        })
+    end
+
+    -- install icons
+    add_installfiles("TeXmacs/misc/images/text-x-mogan.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
+    add_installfiles("TeXmacs/misc/mime/mogan.desktop", {prefixdir="share/applications"})
+    add_installfiles("TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
+    add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm", {prefixdir="share/pixmaps"})
+
+    -- install texmacs runtime files
+    local TeXmacs_files = {
+        "TeXmacs(/doc/**)",
+        "TeXmacs(/examples/**)",
+        "TeXmacs(/fonts/**)",
+        "TeXmacs(/langs/**)",
+        "TeXmacs(/misc/**)",
+        "TeXmacs(/packages/**)",
+        "TeXmacs(/progs/**)",
+        "TeXmacs(/styles/**)",
+        "TeXmacs(/texts/**)",
+        "TeXmacs/COPYING", -- copying files are different
+        "TeXmacs/INSTALL",
+        "LICENSE", -- license files are same
+        "TeXmacs/README",
+        "TeXmacs/TEX_FONTS",
+        "(plugins/**)" -- plugin files
+    }
+    if is_plat("mingw") then
+        add_installfiles(TeXmacs_files)
+    else
+        add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
+        add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
+    end
+
+    -- install tm files for testing purpose
+    if is_mode("releasedbg") then
+        if is_plat("mingw") then
+            add_installfiles({
+                "TeXmacs(/tests/*.tm)",
+                "TeXmacs(/tests/*.bib)",
+            })
+        else
+            add_installfiles({
+                "TeXmacs(/tests/*.tm)",
+                "TeXmacs(/tests/*.bib)",
+            }, {prefixdir="share/Xmacs"})
+        end
+    end
+
+    after_install(function (target)
+        print("after_install of target research")
+
+        os.cp ("TeXmacs/misc/images/texmacs.svg", 
+            path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
+        for _,size in ipairs({32, 48, 64, 128, 256, 512}) do
+            os.cp (
+                "TeXmacs/misc/images/texmacs-"..size..".png",
+                path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
+        end
+
+        if is_plat("macosx") and is_arch("arm64") then
+            local app_dir = target:installdir() .. "/../../"
+            os.rm(app_dir .. "Contents/Resources/include")
+            os.rm(app_dir .. "Contents/Frameworks/QtQmlModels.framework")
+            os.rm(app_dir .. "Contents/Frameworks/QtQml.framework")
+            os.rm(app_dir .. "Contents/Frameworks/QtQuick.framework")
+            os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
+        end
+
+        if is_plat("mingw") then
+            import("detect.sdks.find_qt")
+            import("core.base.option")
+            import("core.project.config")
+            import("lib.detect.find_tool")
+
+            -- get qt sdk
+            local qt = assert(find_qt(), "Qt SDK not found!")
+
+            -- get windeployqt
+            local windeployqt_tool = assert(
+                find_tool("windeployqt", {check = "--help"}),
+                "windeployqt.exe not found!")
+            local windeployqt = windeployqt_tool.program
+
+            -- deploy necessary dll
+            -- since version of mingw used to build mogan may differs from
+            --   version of Qt, tell windeployqt to use lib from mingw may
+            --   break ABI compability, but major version of mingw must be
+            --   same.
+            local deploy_argv = {"--no-compiler-runtime", "-printsupport"}
+            if option.get("diagnosis") then
+                table.insert(deploy_argv, "--verbose=2")
+            elseif option.get("verbose") then
+                table.insert(deploy_argv, "--verbose=1")
+            else
+                table.insert(deploy_argv, "--verbose=0")
+            end
+            local install_bindir = path.join(target:installdir(), "bin")
+            table.insert(deploy_argv, install_bindir)
+            os.iorunv(windeployqt, deploy_argv, {envs = {PATH = qt.bindir}})
+            os.cp(path.join(qt.bindir, "libstdc++*.dll"), install_bindir)
+            os.cp(path.join(qt.bindir, "libgcc*.dll"), install_bindir)
+            os.cp(path.join(qt.bindir, "libwinpthread*.dll"), install_bindir)
+        end
+    end)
+
+    on_run(function (target)
+        name = target:name()
+        if is_plat("mingw") then
+            os.execv(target:installdir().."/bin/mogan_draw.exe")
+        elseif is_plat("linux") then
+            os.execv(target:installdir().."/bin/mogan_draw")
+        else
+            os.execv(target:installdir().."/../MacOS/Mogan_Draw")
+        end
+    end)
+end
+
+
 target("research") do 
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
