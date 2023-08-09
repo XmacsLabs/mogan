@@ -22,6 +22,7 @@
 #include "editor.hpp"
 #include "iterator.hpp"
 #include "locale.hpp"
+#include "observers.hpp"
 #include "preferences.hpp"
 #include "promise.hpp"
 #include "tm_debug.hpp"

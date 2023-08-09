@@ -24,6 +24,7 @@
 #include "boot.hpp"
 #include "data_cache.hpp"
 #include "file.hpp"
+#include "observers.hpp"
 #include "preferences.hpp"
 #include "server.hpp"
 #include "tm_ostream.hpp"

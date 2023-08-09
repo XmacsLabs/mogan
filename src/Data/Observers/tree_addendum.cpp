@@ -15,6 +15,8 @@
 #include "tree.hpp"
 #include "list.hpp"
 #include "blackbox.hpp"
+#include "observers.hpp"
+
 
 /******************************************************************************
 * Definition of the tree_pointer_rep class

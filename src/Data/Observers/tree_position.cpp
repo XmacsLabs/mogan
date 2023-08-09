@@ -14,6 +14,8 @@
 
 #include "tree.hpp"
 #include "path.hpp"
+#include "observers.hpp"
+
 
 #define DETACHED (-5)
 

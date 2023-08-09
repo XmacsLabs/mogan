@@ -12,6 +12,8 @@
 #include "concater.hpp"
 #include "blackbox.hpp"
 #include "analyze.hpp"
+#include "observers.hpp"
+
 
 extern tree the_et;
 

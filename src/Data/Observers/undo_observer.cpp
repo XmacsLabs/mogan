@@ -13,6 +13,9 @@
 ******************************************************************************/
 
 #include "modification.hpp"
+#include "observers.hpp"
+#include "archiver.hpp"
+
 
 /******************************************************************************
 * Definition of the undo_observer_rep class

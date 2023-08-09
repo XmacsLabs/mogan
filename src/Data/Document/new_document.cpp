@@ -12,6 +12,8 @@
 #include "tree_helper.hpp"
 #include "new_document.hpp"
 #include "tree_observer.hpp"
+#include "observers.hpp"
+
 
 /******************************************************************************
 * Management of all edit trees
