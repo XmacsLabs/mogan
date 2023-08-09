@@ -16,6 +16,7 @@
 #include "tm_buffer.hpp"
 #include "tm_frame.hpp"
 #include "tm_data.hpp"
+#include "../Mogan/app_type.hpp"
 
 bool is_server_started ();
 
@@ -27,7 +28,7 @@ protected:
   double def_zoomf; // default zoom factor
 
 public:
-  tm_server_rep ();
+  tm_server_rep (app_type app);
   ~tm_server_rep ();
   server_rep* get_server ();
 
