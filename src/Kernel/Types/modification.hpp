@@ -77,7 +77,7 @@ inline modification mod_split (path p, int pos, int at) {
   return modification (MOD_SPLIT, p * path (pos, at)); }
 inline modification mod_join (path p, int pos) {
   return modification (MOD_JOIN, p * pos); }
-inline modification mod_assign_node (path p, tree_label lab) {
+inline modification mod_assign_node (path p, int lab) {
   return modification (MOD_ASSIGN_NODE, p, tree (lab)); }
 inline modification mod_insert_node (path p, int pos, tree t) {
   return modification (MOD_INSERT_NODE, p * pos, t); }
@@ -99,7 +99,6 @@ inline modification copy (modification mod) {
 path root (modification mod);
 int index (modification mod);
 int argument (modification mod);
-tree_label L (modification mod);
 
 modification make_modification (string k, path p, tree t);
 string get_type (modification mod);
