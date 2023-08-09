@@ -13,6 +13,8 @@
 #include "impl_language.hpp"
 #include "scheme.hpp"
 #include "packrat.hpp"
+#include "observers.hpp"
+
 
 verb_language_rep::verb_language_rep (string name):
   language_rep (name)

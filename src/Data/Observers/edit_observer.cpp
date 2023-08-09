@@ -13,6 +13,8 @@
 ******************************************************************************/
 
 #include "modification.hpp"
+#include "observers.hpp"
+
 
 /******************************************************************************
 * Definition of the edit_observer_rep class
@@ -111,7 +113,7 @@ edit_observer (editor_rep* ed) {
   return tm_new<edit_observer_rep> (ed);
 }
 
-observer
+static observer
 search_type (observer o, int type) {
   if (is_nil (o)) return o;
   if (o->get_type () == type) return o;

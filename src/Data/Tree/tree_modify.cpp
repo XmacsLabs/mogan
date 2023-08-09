@@ -14,6 +14,7 @@
 #include "drd_std.hpp"
 #include "path.hpp"
 #include "tree_observer.hpp"
+#include "observers.hpp"
 
 
 extern tree the_et;

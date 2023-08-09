@@ -23,6 +23,7 @@
 #include "merge_sort.hpp"
 #include "tree_modify.hpp"
 #include "tree_observer.hpp"
+#include "observers.hpp"
 
 
 #ifdef EXPERIMENTAL

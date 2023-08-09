@@ -18,6 +18,8 @@
 #include "packrat.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
+#include "observers.hpp"
+
 
 /******************************************************************************
 * Typesetting executable markup

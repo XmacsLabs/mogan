@@ -13,6 +13,8 @@
 ******************************************************************************/
 
 #include "modification.hpp"
+#include "observers.hpp"
+
 
 #define DETACHED (-5)
 extern tree the_et;

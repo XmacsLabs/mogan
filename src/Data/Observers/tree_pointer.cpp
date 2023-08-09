@@ -16,6 +16,8 @@
 #include "link.hpp"
 #include "list.hpp"
 #include "scheme.hpp"
+#include "observers.hpp"
+
 
 /******************************************************************************
 * Definition of the tree_pointer_rep class
