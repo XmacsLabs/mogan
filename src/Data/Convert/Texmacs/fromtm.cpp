@@ -291,7 +291,7 @@ tm_reader::read (bool skip_flag) {
         else sep = read_next ();
         // cout << "==> " << name << "\n";
         // cout << "~~> " << sep << "\n";
-        if (sep == '|') {
+        if (sep == "|") {
           last= "|";
           C << read_apply (name, false);
         }

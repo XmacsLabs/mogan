@@ -11,7 +11,7 @@
 
 #ifndef GENERIC_TREE_H
 #define GENERIC_TREE_H
-#include "tree.hpp"
+#include "tree_helper.hpp"
 #include "blackbox.hpp"
 
 class generic_rep: public tree_rep {

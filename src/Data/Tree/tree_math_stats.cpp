@@ -14,6 +14,7 @@
 #include "scheme.hpp"
 #include "packrat.hpp"
 #include "analyze.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Compile statistics

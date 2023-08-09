@@ -14,7 +14,7 @@
 #include "convert.hpp"
 #include "impl_language.hpp"
 #include "scheme.hpp"
-#include "tree.hpp"
+#include "tree_helper.hpp"
 #include "iterator.hpp"
 
 prog_language_rep::prog_language_rep (string name):
