@@ -15,10 +15,14 @@
 
 #include "tree.hpp"
 #include "tree_label.hpp"
+//#include "modification.hpp"
 
 inline tree_label L (tree t) {
   return static_cast<tree_label> (t->op);
 }
+
+tree_label L (modification mod); 
+
 inline tree_label& LR (tree t) {
   return *(tree_label*)(&(t->op));
 }

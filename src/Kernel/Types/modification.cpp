@@ -106,11 +106,6 @@ argument (modification mod) {
   return 0;
 }
 
-tree_label
-L (modification mod) {
-  ASSERT (mod->k == MOD_ASSIGN_NODE, "assign_node modification expected");
-  return L (mod->t);
-}
 
 /******************************************************************************
 * Constructor and accessors for scheme interface
