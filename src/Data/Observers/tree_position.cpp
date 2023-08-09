@@ -39,7 +39,7 @@ public:
   void notify_var_split   (tree& ref, tree t1, tree t2);
   void notify_join        (tree& ref, int pos, tree next);
   void notify_var_join    (tree& ref, tree t, int offset);
-  void notify_assign_node (tree& ref, tree_label op);
+  void notify_assign_node (tree& ref, int op);
   void notify_insert_node (tree& ref, int pos);
   void notify_remove_node (tree& ref, int pos);
   void notify_detach      (tree& ref, tree closest, bool right);
@@ -150,7 +150,7 @@ tree_position_rep::notify_var_join (tree& ref, tree t, int offset) {
 }
 
 void
-tree_position_rep::notify_assign_node (tree& ref, tree_label op) {
+tree_position_rep::notify_assign_node (tree& ref, int op) {
   // cout << "Notify assign node " << ref << ", " << as_string (op) << "\n";
   (void) ref; (void) op;
   // cout << "position -> " << obtain_position (observer (this)) << "\n";
