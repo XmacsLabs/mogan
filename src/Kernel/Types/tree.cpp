@@ -29,20 +29,20 @@ destroy_tree_rep (tree_rep* rep) {
   else tm_delete (static_cast<generic_rep*>(rep));
 }
 
-tree::tree (tree_label l, tree t1):
+tree::tree (int l, tree t1):
   rep (tm_new<compound_rep> (l, array<tree> (1)))
 {
   (static_cast<compound_rep*> (rep))->a[0]=t1;
 }
 
-tree::tree (tree_label l, tree t1, tree t2):
+tree::tree (int l, tree t1, tree t2):
   rep (tm_new<compound_rep> (l, array<tree> (2)))
 {
   (static_cast<compound_rep*> (rep))->a[0]=t1;
   (static_cast<compound_rep*> (rep))->a[1]=t2;
 }
 
-tree::tree (tree_label l, tree t1, tree t2, tree t3):
+tree::tree (int l, tree t1, tree t2, tree t3):
   rep (tm_new<compound_rep> (l, array<tree> (3)))
 {
   (static_cast<compound_rep*> (rep))->a[0]=t1;
@@ -50,7 +50,7 @@ tree::tree (tree_label l, tree t1, tree t2, tree t3):
   (static_cast<compound_rep*> (rep))->a[2]=t3;
 }
 
-tree::tree (tree_label l, tree t1, tree t2, tree t3, tree t4):
+tree::tree (int l, tree t1, tree t2, tree t3, tree t4):
   rep (tm_new<compound_rep> (l, array<tree> (4)))
 {
   (static_cast<compound_rep*> (rep))->a[0]=t1;
@@ -59,7 +59,7 @@ tree::tree (tree_label l, tree t1, tree t2, tree t3, tree t4):
   (static_cast<compound_rep*> (rep))->a[3]=t4;
 }
 
-tree::tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5):
+tree::tree (int l, tree t1, tree t2, tree t3, tree t4, tree t5):
   rep (tm_new<compound_rep> (l, array<tree> (5)))
 {
   (static_cast<compound_rep*> (rep))->a[0]=t1;
@@ -69,7 +69,7 @@ tree::tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5):
   (static_cast<compound_rep*> (rep))->a[4]=t5;
 }
 
-tree::tree (tree_label l,
+tree::tree (int l,
 	    tree t1, tree t2, tree t3, tree t4, tree t5, tree t6):
   rep (tm_new<compound_rep> (l, array<tree> (6)))
 {
@@ -81,7 +81,7 @@ tree::tree (tree_label l,
   (static_cast<compound_rep*> (rep))->a[5]=t6;
 }
 
-tree::tree (tree_label l,
+tree::tree (int l,
 	    tree t1, tree t2, tree t3, tree t4, tree t5, tree t6, tree t7):
   rep (tm_new<compound_rep> (l, array<tree> (7)))
 {
@@ -94,7 +94,7 @@ tree::tree (tree_label l,
   (static_cast<compound_rep*> (rep))->a[6]=t7;
 }
 
-tree::tree (tree_label l,
+tree::tree (int l,
 	    tree t1, tree t2, tree t3, tree t4,
 	    tree t5, tree t6, tree t7, tree t8):
   rep (tm_new<compound_rep> (l, array<tree> (8)))

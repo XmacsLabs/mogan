@@ -18,6 +18,8 @@
 #include "iterator.hpp"
 #include "merge_sort.hpp"
 
+// using enum tree_label;
+
 /******************************************************************************
 * The tree class 'tree'
 ******************************************************************************/
@@ -48,18 +50,18 @@ public:
   inline tree ();
   inline tree (string l);
   inline tree (const char* l);
-  inline tree (tree_label l, int n=0);
-  inline tree (tree_label l, array<tree> a);
+  inline tree (int l, int n=0);
+  inline tree (int l, array<tree> a);
   inline tree (tree t, int n);
-  tree (tree_label l, tree t1);
-  tree (tree_label l, tree t1, tree t2);
-  tree (tree_label l, tree t1, tree t2, tree t3);
-  tree (tree_label l, tree t1, tree t2, tree t3, tree t4);
-  tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5);
-  tree (tree_label l, tree t1, tree t2, tree t3, tree t4, tree t5, tree t6);
-  tree (tree_label l, tree t1, tree t2, tree t3, tree t4,
+  tree (int l, tree t1);
+  tree (int l, tree t1, tree t2);
+  tree (int l, tree t1, tree t2, tree t3);
+  tree (int l, tree t1, tree t2, tree t3, tree t4);
+  tree (int l, tree t1, tree t2, tree t3, tree t4, tree t5);
+  tree (int l, tree t1, tree t2, tree t3, tree t4, tree t5, tree t6);
+  tree (int l, tree t1, tree t2, tree t3, tree t4,
 	              tree t5, tree t6, tree t7);
-  tree (tree_label l, tree t1, tree t2, tree t3, tree t4,
+  tree (int l, tree t1, tree t2, tree t3, tree t4,
 	              tree t5, tree t6, tree t7, tree t8);
   inline tree& operator [] (int i);
   tree operator () (int start, int end);
@@ -67,22 +69,22 @@ public:
   friend inline int N (tree t);
   friend inline int arity (tree t);
   friend inline tree_label L (tree t);
-  friend inline tree_label& LR (tree t);
+  friend const inline tree_label& LR (tree t);
   friend inline array<tree> A (tree t);
   friend inline array<tree>& AR (tree t);
   friend inline bool is_atomic (tree t);
   friend inline bool is_compound (tree t);
   friend inline bool is_generic (tree t);
-  friend inline bool operator == (tree t, tree_label lab);
-  friend inline bool operator != (tree t, tree_label lab);
+  friend inline bool operator == (tree t, int lab);
+  friend inline bool operator != (tree t, int lab);
   friend inline bool operator == (tree t, string s);
   friend inline bool operator != (tree t, string s);
   friend inline bool operator == (tree t, const char* s);
   friend inline bool operator != (tree t, const char* s);
   friend inline tree_rep* inside (tree t);
   friend inline bool strong_equal (tree t, tree u);
-  friend inline bool is_func (tree t, tree_label l);
-  friend inline bool is_func (tree t, tree_label l, int i);
+  friend inline bool is_func (tree t, int l);
+  friend inline bool is_func (tree t, int l, int i);
 
   friend tree copy (tree t);
   friend tree freeze (tree t);
@@ -109,23 +111,23 @@ public:
 
 class tree_rep: concrete_struct {
 public:
-  tree_label op;
+  int op;
   observer obs;
-  inline tree_rep (tree_label op2): op (op2) {}
+  inline tree_rep (int op2): op (op2) {}
   friend class tree;
 };
 
 class atomic_rep: public tree_rep {
 public:
   string label;
-  inline atomic_rep (string l): tree_rep (STRING), label (l) {}
+  inline atomic_rep (string l): tree_rep (/*STRING*/ 0), label (l) {}
   friend class tree;
 };
 
 class compound_rep: public tree_rep {
 public:
   array<tree> a;
-  inline compound_rep (tree_label l, array<tree> a2): tree_rep (l), a (a2) {}
+  inline compound_rep (int l, array<tree> a2): tree_rep (l), a (a2) {}
   friend class tree;
 };
 
@@ -145,12 +147,12 @@ typedef tree scheme_tree;
 
 #ifdef debug_trees
 #define CHECK_ATOMIC(t) \
-  if (((t).rep)->op != STRING) { \
+  if (((t).rep)->op != /*STRING*/ 0) { \
     failed_error << "The tree : " << (t) << "\n"; \
     TM_FAILED ("atomic tree expected"); \
   }
 #define CHECK_COMPOUND(t) \
-  if (((t).rep)->op == STRING) { \
+  if (((t).rep)->op == /*STRING*/) { \
     failed_error << "The tree : " << (t) << "\n"; \
     TM_FAILED ("compound tree expected"); \
   }
@@ -179,9 +181,9 @@ inline tree::tree (const char *s):
   rep (tm_new<atomic_rep> (s)) {}
 inline tree::tree (string s):
   rep (tm_new<atomic_rep> (s)) {}
-inline tree::tree (tree_label l, int n):
+inline tree::tree (int l, int n):
   rep (tm_new<compound_rep> (l, array<tree> (n))) {}
-inline tree::tree (tree_label l, array<tree> a):
+inline tree::tree (int l, array<tree> a):
   rep (tm_new<compound_rep> (l, a)) {}
 inline tree::tree (tree t, int n):
   rep (tm_new<compound_rep> (t.rep->op, array<tree> (n))) {
@@ -194,14 +196,18 @@ inline int N (tree t) {
   CHECK_COMPOUND (t);
   return N ((static_cast<compound_rep*> (t.rep))->a); }
 inline int arity (tree t) {
-  if (t.rep->op == STRING) return 0;
+  if (t.rep->op == /*STRING*/ 0) return 0;
   else return N ((static_cast<compound_rep*> (t.rep))->a); }
 inline int right_index (tree t) {
   return is_atomic (t)? N(t->label): 1; }
 inline tree_label L (tree t) {
-  return t.rep->op; }
-inline tree_label& LR (tree t) {
-  return t.rep->op; }
+  return static_cast<tree_label> (t.rep->op); 
+  // return t.rep->op;
+}
+const inline tree_label& LR (tree t) {
+  return static_cast<tree_label> (t.rep->op);
+  // return t.rep->op;
+}
 inline array<tree> A (tree t) {
   CHECK_COMPOUND (t);
   return (static_cast<compound_rep*> (t.rep))->a; }
@@ -210,30 +216,30 @@ inline array<tree>& AR (tree t) {
   return (static_cast<compound_rep*> (t.rep))->a; }
 
 inline bool is_atomic (tree t) { return (((int) t.rep->op) == 0); }
-inline bool is_compound (tree t) { return (((int) t.rep->op) > STRING); }
+inline bool is_compound (tree t) { return (((int) t.rep->op) > /*STRING*/ 0); }
 inline bool is_generic (tree t) { return ((int) t.rep->op) < 0; }
 inline string get_label (tree t) {
   return is_atomic (t)? t->label: copy (as_string (L(t))); }
-inline bool operator == (tree t, tree_label lab) {
+inline bool operator == (tree t, int lab) {
   return (t.rep->op == lab) && (N(t)==0); }
-inline bool operator != (tree t, tree_label lab) {
+inline bool operator != (tree t, int lab) {
   return (t.rep->op != lab) || (N(t)!=0); }
 inline bool operator == (tree t, string s) {
-  return (t.rep->op == STRING) && (t->label == s); }
+  return (t.rep->op == /*STRING*/ 0) && (t->label == s); }
 inline bool operator != (tree t, string s) {
-  return (t.rep->op != STRING) || (t->label != s); }
+  return (t.rep->op != /*STRING*/ 0) || (t->label != s); }
 inline bool operator == (tree t, const char* s) {
-  return (t.rep->op == STRING) && (t->label == s); }
+  return (t.rep->op == /*STRING*/ 0) && (t->label == s); }
 inline bool operator != (tree t, const char* s) {
-  return (t.rep->op != STRING) || (t->label != s); }
+  return (t.rep->op != /*STRING*/ 0) || (t->label != s); }
 inline tree_rep* inside (tree t) {
   return t.rep; }
 inline bool strong_equal (tree t, tree u) {
   return t.rep == u.rep; }
 
-inline bool is_func (tree t, tree_label l) {
+inline bool is_func (tree t, int l) {
   return (t.rep->op==l) && (N(t)!=0); }
-inline bool is_func (tree t, tree_label l, int i) {
+inline bool is_func (tree t, int l, int i) {
   return (t.rep->op==l) && (N(t)==i); }
 
 inline bool is_bool (tree t) { return is_atomic (t) && is_bool (t->label); }
