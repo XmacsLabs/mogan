@@ -15,7 +15,7 @@
 
 #include "tree.hpp"
 #include "tree_label.hpp"
-//#include "modification.hpp"
+#include "modification.hpp"
 
 inline tree_label L (tree t) {
   return static_cast<tree_label> (t->op);

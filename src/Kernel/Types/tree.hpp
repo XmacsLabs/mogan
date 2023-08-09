@@ -38,9 +38,9 @@ tree copy (tree t);
 
 class tree {
   tree_rep* rep; // can be atomic or compound or generic
-  inline tree (tree_rep* rep2);
 
 public:
+  inline tree (tree_rep* rep2);
   inline tree (const tree& x);
   inline ~tree ();
   inline atomic_rep* operator -> ();
@@ -99,9 +99,6 @@ public:
   friend class undo_observer_rep;
   friend class tree_links_rep;
   friend class link_repository_rep;
-#ifdef QTTEXMACS
-  friend class QTMTreeModel;  // hack: wouldn't need it with a widget_observer
-#endif
   friend blackbox as_blackbox (const tree& t);
 };
 
