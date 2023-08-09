@@ -13,6 +13,7 @@
 #include "hashset.hpp"
 #include "iterator.hpp"
 #include "tm_debug.hpp"
+#include "tree_observer.hpp"
 
 extern tree the_et;
 array<patch> singleton (patch p);

@@ -86,6 +86,8 @@ local l3_files = {
     "src/Data/Drd/**.cpp",
     "src/Data/Tree/tree_helper.cpp",
     "src/Data/Tree/tree_label.cpp",
+    "src/Data/Tree/tree_cursor.cpp",
+    "src/Data/Tree/tree_observer.cpp",
     "src/Scheme/L1/**.cpp",
     "src/Scheme/L2/**.cpp",
     "src/Scheme/L3/**.cpp",

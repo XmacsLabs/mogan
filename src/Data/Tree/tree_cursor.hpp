@@ -23,7 +23,7 @@ void show_hidden_upwards (tree t, path p);
 bool valid_cursor (tree t, path p, bool start_flag= false);
 path start (tree t, path p);
 path end (tree t, path p);
-path start (tree t);
+path start (tree t); 
 path end (tree t);
 path correct_cursor (tree t, path p, bool forwards= false);
 path super_correct (tree t, path p, bool forwards= false);

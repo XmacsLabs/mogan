@@ -16,7 +16,7 @@
 #include "list.hpp"
 #include "tree.hpp"
 typedef list<int> path;
-#include "tree_cursor.hpp"
+
 
 /******************************************************************************
 * General routines
