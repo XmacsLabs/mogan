@@ -70,7 +70,7 @@ QTMTreeModel::~QTMTreeModel () {
 
 inline int
 QTMTreeModel::row_offset (const tree& t) const {
-  return _roles[L(const_cast<tree&>(t))][NumberOfArguments];
+  return _roles[(inside (t))->op][NumberOfArguments];
 }
 
 tree
@@ -146,8 +146,8 @@ QVariant
 QTMTreeModel::data (const QModelIndex& index, int role) const {
   const tree& tref = item_from_index (index);
   tree& t = const_cast<tree&> (tref);
-  int pos = _roles.contains(L(t)) && _roles[L(t)].contains(role)
-              ? _roles[L(t)][role] : -1;
+  int pos = _roles.contains(t->op) && _roles[t->op].contains(role)
+              ? _roles[t->op][role] : -1;
   if (role >= TMUserRole && pos > -1 && !is_atomic (t) && N(t) >= pos && 
       is_atomic (t[pos]))
     return QVariant (to_qstring (t[pos]->label));
@@ -231,7 +231,7 @@ QTMTreeModel::parse_roles (const tree& roles) {
   
   for (int i = 0; i < N(roles); ++i) {
     if (is_compound (r[i])) {
-      tree_label tag = L(r[i]);
+      int tag = r[i]->op;
       _roles[tag][NumberOfArguments] = N(r[i]);
       for (int j = 0; j < N(r[i]); ++j) {
         ASSERT (is_atomic (r[i][j]), "QTMTreeModel: bad format declaration");

@@ -80,8 +80,6 @@
 #define URL_SEPARATOR ':'
 #endif
 
-#define URL_TUPLE 245     // 
-
 
 static inline tree tuple () {
   return tree (URL_TUPLE); }
