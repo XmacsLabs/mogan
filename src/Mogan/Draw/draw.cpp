@@ -492,8 +492,7 @@ TeXmacs_main (int argc, char** argv) {
   set_default_font (the_default_font);
   if (DEBUG_STD) debug_boot << "Starting server...\n";
   { // opening scope for server sv
-    server sv;
-    init_app (now_app);
+    server sv(app_type::DRAW);
     string where= "";
     for (i= 1; i < argc; i++) {
       if (argv[i] == NULL) break;

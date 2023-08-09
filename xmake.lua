@@ -486,16 +486,17 @@ if is_plat("mingw") then
 end
 
 target("draw") do 
+    set_enabled(is_plat("linux") or is_plat("wasm"))
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
 
-    if is_plat("macosx") then
-        set_filename("Mogan_Draw")
-    elseif is_plat("mingw") then
-        set_filename("mogan_draw.exe")
-    else
+    -- if is_plat("macosx") then
+    --     set_filename("Mogan_Draw")
+    -- elseif is_plat("mingw") then
+    --     set_filename("mogan_draw.exe")
+    -- else
         set_filename("mogan_draw")
-    end
+    -- end
 
     if is_plat("macosx") or is_plat("linux") then
         add_rules("qt.widgetapp")
