@@ -34,6 +34,7 @@ template<> inline tree as_tree (int x) { return as_string (x); }
 template<> inline tree as_tree (long int x) { return as_string (x); }
 template<> inline tree as_tree (double x) { return as_string (x); }
 template<> inline tree as_tree (pointer x) { (void) x; return "pointer"; }
+template<> inline tree as_tree (bool x) { return x? tree ("true"): tree ("false"); }
 
 template<class T> inline tree
 as_tree (list<T> x) {

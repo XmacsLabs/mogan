@@ -231,9 +231,6 @@ inline string as_string (tree t) {
   if (is_atomic (t)) return t->label;
   else return ""; }
 tree replace (tree t, tree w, tree b);
-inline tree bool_as_tree (bool f) {
-  return (f? tree ("true"): tree ("false")); }
-
 
 /******************************************************************************
 * Miscellaneous
