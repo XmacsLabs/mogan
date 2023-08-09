@@ -22,6 +22,9 @@
 #include "iterator.hpp"
 #include "merge_sort.hpp"
 #include "tree_modify.hpp"
+#include "tree_observer.hpp"
+
+
 #ifdef EXPERIMENTAL
 #include "../../Style/Environment/std_environment.hpp"
 #endif // EXPERIMENTAL

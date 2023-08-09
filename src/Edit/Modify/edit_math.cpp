@@ -11,6 +11,8 @@
 
 #include "edit_math.hpp"
 #include "analyze.hpp"
+#include "tree_observer.hpp"
+
 
 /******************************************************************************
 * Constructors and destructors

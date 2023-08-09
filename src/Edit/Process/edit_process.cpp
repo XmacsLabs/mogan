@@ -18,6 +18,8 @@
 #include "file.hpp"
 #include "convert.hpp"
 #include "scheme.hpp"
+#include "tree_observer.hpp"
+
 
 /******************************************************************************
 * Constructors and destructors

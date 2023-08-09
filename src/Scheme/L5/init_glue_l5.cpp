@@ -27,6 +27,7 @@
 #include "universal.hpp"
 #include "widget.hpp"
 #include "tm_debug.hpp"
+#include "tree_observer.hpp"
 
 #if 0
 template<class T> tmscm box_to_tmscm (T o) {
