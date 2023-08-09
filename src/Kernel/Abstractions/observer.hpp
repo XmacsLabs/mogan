@@ -11,6 +11,7 @@
 
 #ifndef OBSERVER_H
 #define OBSERVER_H
+
 #include "string.hpp"
 
 
@@ -104,53 +105,12 @@ ABSTRACT_NULL_CODE(observer);
 
 tm_ostream& operator << (tm_ostream& out, observer o);
 
-class editor_rep;
-class archiver_rep;
-
 extern observer nil_observer;
-observer ip_observer (path ip);
-observer list_observer (observer o1, observer o2);
-observer tree_pointer (tree t, bool flag= false);
-observer scheme_observer (tree t, string cb);
-observer tree_position (tree t, int index);
-observer edit_observer (editor_rep* ed);
-observer undo_observer (archiver_rep* arch);
-observer highlight_observer (int lan, array<int> cols);
 
 /******************************************************************************
 * Modification routines for trees and other observer-related facilities
 ******************************************************************************/
 
 void touch       (tree& ref);
-void insert_observer (observer& o, observer what);
-void remove_observer (observer& o, observer what);
-void attach_observer (tree& ref, observer o);
-void detach_observer (tree& ref, observer o);
-void clean_observers (tree& ref);
-
-path obtain_ip (tree& ref);
-void attach_ip (tree& ref, path ip);
-void detach_ip (tree& ref);
-bool ip_attached (path ip);
-
-tree obtain_tree (observer o);
-observer tree_pointer_new (tree t);
-void tree_pointer_delete (observer o);
-
-path obtain_position (observer o);
-
-observer tree_addendum_new (tree t, int kind, blackbox bb, bool keep= true);
-void tree_addendum_delete (observer o);
-void tree_addendum_delete (tree t, int type);
-
-observer search_observer (tree& ref, int type);
-bool admits_edit_observer (tree t);
-
-void attach_highlight (tree& ref, int lan);
-void attach_highlight (tree& ref, int lan, int col, int start, int end);
-bool has_highlight (tree& ref, int lan);
-array<int> obtain_highlight (tree& ref, int lan);
-void detach_highlight (tree& ref, int lan);
-
 
 #endif // defined OBSERVER_H

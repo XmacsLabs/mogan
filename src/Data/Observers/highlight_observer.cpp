@@ -13,6 +13,9 @@
 ******************************************************************************/
 
 #include "modification.hpp"
+#include "observers.hpp"
+
+
 
 /******************************************************************************
 * Definition of the highlight_observer_rep class
@@ -119,7 +122,7 @@ obtain_highlight (tree& ref, int lan) {
   return array<int> ();
 }
 
-bool
+static bool
 detach_highlight_sub (tree& ref, int lan) {
   //cout << "Detach highlight " << ref << "\n";
   array<int> cols;

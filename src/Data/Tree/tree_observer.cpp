@@ -1,6 +1,7 @@
 #include "tree_observer.hpp"
 #include "analyze.hpp"
 #include "modification.hpp"
+#include "observers.hpp"
 #include "tm_debug.hpp"
 #include "tree_cursor.hpp"
 

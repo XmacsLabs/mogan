@@ -84,4 +84,6 @@ string get_locus_rendering (string var);
 void declare_visited (string id);
 bool has_been_visited (string id);
 
+void link_announce (observer obs, modification mod);
+
 #endif // HARD_LINK_H

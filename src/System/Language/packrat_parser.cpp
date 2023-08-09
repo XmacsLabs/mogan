@@ -14,6 +14,8 @@
 #include "drd_std.hpp"
 #include "language.hpp" //(en|de)code_color
 #include "tm_debug.hpp"
+#include "observers.hpp"
+
 
 extern tree the_et;
 

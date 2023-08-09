@@ -13,7 +13,7 @@
 #include "QTMTreeModel.hpp"
 
 #include "path.hpp"
-#include "observer.hpp"
+#include "observers.hpp"
 #include "modification.hpp"
 
 #include "qt_utilities.hpp"

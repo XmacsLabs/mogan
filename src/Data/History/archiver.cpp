@@ -14,6 +14,8 @@
 #include "iterator.hpp"
 #include "tm_debug.hpp"
 #include "tree_observer.hpp"
+#include "observers.hpp"
+
 
 extern tree the_et;
 array<patch> singleton (patch p);

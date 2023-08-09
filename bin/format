@@ -30,3 +30,4 @@ clang-format -i src/Data/Tree/tree_helper.cpp
 clang-format -i src/Data/Tree/tree_label.cpp
 clang-format -i src/Data/Tree/tree_cursor.cpp
 clang-format -i src/Data/Tree/tree_observer.cpp
+clang-format -i src/Data/Observers/observers.hpp

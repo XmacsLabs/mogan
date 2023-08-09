@@ -14,6 +14,8 @@
 
 #include "modification.hpp"
 #include "blackbox.hpp"
+#include "observers.hpp"
+
 
 #define DETACHED (-5)
 
@@ -252,7 +254,7 @@ remove_observer (observer& o, observer what) {
   }
 }
 
-void
+static void
 clean_observers (observer& o) {
   if (is_nil (o)) return;
   if (o->get_type () == OBSERVER_IP) return;
