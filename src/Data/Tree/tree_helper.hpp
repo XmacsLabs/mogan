@@ -131,6 +131,22 @@ inline bool is_tuple (tree t, const char* s, int n) {
 
 
 /******************************************************************************
+* Compound trees
+******************************************************************************/
+
+tree compound (string s);
+tree compound (string s, tree t1);
+tree compound (string s, tree t1, tree t2);
+tree compound (string s, tree t1, tree t2, tree t3);
+tree compound (string s, tree t1, tree t2, tree t3, tree t4);
+tree compound (string s, tree t1, tree t2, tree t3, tree t4, tree t5);
+tree compound (string s, tree t1, tree t2, tree t3, tree t4, tree t5, tree t6);
+tree compound (string s, array<tree> a);
+bool is_compound (tree t, string s);
+bool is_compound (tree t, string s, int n);
+
+
+/******************************************************************************
 * Other frequent markup
 ******************************************************************************/
 
@@ -188,5 +204,9 @@ is_applicable (tree t) {
 }
 
 tree freeze (tree t);
+inline tree verbatim (tree t1) {
+  return compound ("verbatim", t1); }
+string tree_as_string (tree t);
+void print_tree (tree t, int tab=0);
 
 #endif

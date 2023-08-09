@@ -11,14 +11,14 @@
 
 #ifndef GENERIC_TREE_H
 #define GENERIC_TREE_H
-#include "tree_helper.hpp"
+
 #include "blackbox.hpp"
 
 class generic_rep: public tree_rep {
 public:
   blackbox data;
   template<typename T> inline generic_rep (const T& x):
-    tree_rep ((tree_label) type_helper<T>::id),
+    tree_rep (type_helper<T>::id),
     data (close_box<T> (x)) {}
   friend class tree;
 };
@@ -45,8 +45,6 @@ struct convert_helper<T,tree> {
     return open_box<T> (as_blackbox (t)); }
 };
 
-template<typename T> inline bool is (const tree& t) {
-  return ((int) L(t)) == type_helper<T>::id; }
 template<typename T, typename F> inline T as (const F& t) {
   return convert_helper<F,T>::op (t); }
 

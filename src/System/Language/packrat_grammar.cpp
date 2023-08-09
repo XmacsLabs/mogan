@@ -12,6 +12,7 @@
 #include "packrat_grammar.hpp"
 #include "analyze.hpp"
 #include "iterator.hpp"
+#include "tree_helper.hpp"
 
 tree                 packrat_uninit (UNINIT);
 int                  packrat_nr_tokens= 256;
