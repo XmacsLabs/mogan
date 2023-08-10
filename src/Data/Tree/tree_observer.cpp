@@ -4,6 +4,7 @@
 #include "observers.hpp"
 #include "tm_debug.hpp"
 #include "tree_cursor.hpp"
+#include "tree_helper.hpp"
 
 extern tree the_et;
 
