@@ -14,7 +14,6 @@
 
 #include "string.hpp"
 
-string
-curl_get (string source, string user_agent);
+string curl_get (string source, string user_agent);
 
 #endif

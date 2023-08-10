@@ -10,14 +10,14 @@ on:
       -  'src/Scheme/**.cpp'
       -  'src/Scheme/**.hpp'
       -  'src/Plugins/Curl/**.cpp'
+      -  'src/Plugins/Curl/**.hpp'
       -  'src/Graphics/Types/**.cpp'
       -  'src/Typeset/Boxes/Graphics/**.cpp'
       -  'src/Plugins/Pdf/**.cpp'
-      -  'src/Data/Tree/tree_helper.cpp'
-      -  'src/Data/Tree/tree_label.cpp'
-      -  'src/Data/Tree/tree_cursor.cpp'
-      -  'src/Data/Tree/tree_observer.cpp'
-      -  'src/Data/Observers/observers.hpp'
+      -  'src/Data/Tree/**.cpp'
+      -  'src/Data/Tree/**.hpp'
+      -  'src/Data/Observers/**.cpp'
+      -  'src/Data/Observers/**.hpp'
       -  '.github/workflows/clang-format-linter.yml'
       -  'xmake.lua' 
   workflow_dispatch:
@@ -30,7 +30,15 @@ jobs:
     - uses: actions/checkout@v2
     - uses: DoozyX/clang-format-lint-action@v0.16.2
       with:
-        source: './src ./tests'
+        source: './src/Data/Scheme 
+                ./src/Scheme 
+                ./src/Plugins/Curl 
+                ./src/Graphics/Types 
+                ./src/Typeset/Boxes/Graphics 
+                ./src/Plugins/Pdf
+                ./src/Data/Tree
+                ./src/Data/Observers
+                ./tests'
         exclude: './build ./xmake ./workflow ./github'
         extensions: 'hpp,cpp'
         clangFormatVersion: 16
