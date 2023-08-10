@@ -27,6 +27,8 @@ Testing
 mogan.1
 tests/gtest
 misc/benchmark/gbench
+.cache
+compile_commands.json
 
 TeXmacs/progs/ice-9
 src/Plugins/Qt/moc_*.cpp
