@@ -16,18 +16,23 @@ if (eq $platform:os windows) {
 clang-format --version
 
 clang-format -i tests/**/*.cpp
+clang-format -i tests/**/*.hpp
 clang-format -i src/Data/Scheme/**.hpp
 clang-format -i src/Data/Scheme/**.cpp
 clang-format -i src/Scheme/**.cpp
 clang-format -i src/Scheme/**.hpp
 clang-format -i src/Plugins/Curl/**.cpp
+clang-format -i src/Plugins/Curl/**.hpp
 clang-format -i src/Graphics/Types/**.cpp
+clang-format -i src/Graphics/Types/**.hpp
 clang-format -i src/Typeset/Boxes/Graphics/**.cpp
 clang-format -i src/Plugins/Pdf/**.cpp
+clang-format -i src/Plugins/Pdf/**.hpp
 clang-format -i src/Mogan/**.cpp
+clang-format -i src/Mogan/**.hpp
 
-clang-format -i src/Data/Tree/tree_helper.cpp
-clang-format -i src/Data/Tree/tree_label.cpp
-clang-format -i src/Data/Tree/tree_cursor.cpp
-clang-format -i src/Data/Tree/tree_observer.cpp
-clang-format -i src/Data/Observers/observers.hpp
+clang-format -i src/Data/Tree/**.cpp
+clang-format -i src/Data/Tree/**.hpp
+clang-format -i src/Data/Observers/**.cpp
+clang-format -i src/Data/Observers/**.hpp
+
