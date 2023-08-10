@@ -11,7 +11,7 @@
 
 #ifndef MODIFICATION_H
 #define MODIFICATION_H
-#include "tree_helper.hpp"
+
 #include "path.hpp"
 
 /******************************************************************************
@@ -95,6 +95,7 @@ inline modification operator / (modification mod, path p) {
   return modification (mod->k, mod->p / p, mod->t); }
 inline modification copy (modification mod) {
   return modification (mod->k, copy (mod->p), copy (mod->t)); }
+
 
 path root (modification mod);
 int index (modification mod);

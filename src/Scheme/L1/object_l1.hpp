@@ -16,7 +16,7 @@
 #include "modification.hpp"
 #include "path.hpp"
 #include "s7_tm.hpp"
-#include "tree.hpp"
+#include "tree_helper.hpp"
 
 #define content tree
 

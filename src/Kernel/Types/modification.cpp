@@ -11,6 +11,17 @@
 
 #include "modification.hpp"
 
+static inline int
+L (tree t) {
+  return (t->op);
+}
+
+static int
+L (modification mod) {
+  ASSERT (mod->k == MOD_ASSIGN_NODE, "assign_node modification expected");
+  return L (mod->t);
+}
+
 /******************************************************************************
 * Equality and Output
 ******************************************************************************/
@@ -198,7 +209,7 @@ can_join (tree t, path p, int pos) {
 }
 
 bool
-can_assign_node (tree t, path p, tree_label op) {
+can_assign_node (tree t, path p, int op) {
   (void) op;
   return has_subtree (t, p) && is_compound (subtree (t, p));
 }
@@ -380,7 +391,7 @@ clean_join (tree t, path p) {
 }
 
 tree
-clean_assign_node (tree t, path p, tree_label op) {
+clean_assign_node (tree t, path p, int op) {
   if (is_nil (p)) {
     int i, n= N(t);
     tree r (op, n);
