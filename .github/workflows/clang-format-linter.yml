@@ -1,0 +1,37 @@
+name: Lint
+
+on:
+  pull_request:
+    branches: [ branch-1.2 ]
+    paths:
+      -  'tests/**/*.cpp'
+      -  'src/Data/Scheme/**.hpp'
+      -  'src/Data/Scheme/**.cpp'
+      -  'src/Scheme/**.cpp'
+      -  'src/Scheme/**.hpp'
+      -  'src/Plugins/Curl/**.cpp'
+      -  'src/Graphics/Types/**.cpp'
+      -  'src/Typeset/Boxes/Graphics/**.cpp'
+      -  'src/Plugins/Pdf/**.cpp'
+      -  'src/Data/Tree/tree_helper.cpp'
+      -  'src/Data/Tree/tree_label.cpp'
+      -  'src/Data/Tree/tree_cursor.cpp'
+      -  'src/Data/Tree/tree_observer.cpp'
+      -  'src/Data/Observers/observers.hpp'
+      -  '.github/workflows/clang-format-linter.yml'
+      -  'xmake.lua' 
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: DoozyX/clang-format-lint-action@v0.16.2
+      with:
+        source: './src ./tests'
+        exclude: './build ./xmake ./workflow ./github'
+        extensions: 'hpp,cpp'
+        clangFormatVersion: 16
+        style: file
