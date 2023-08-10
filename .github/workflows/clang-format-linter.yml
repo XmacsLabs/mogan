@@ -4,7 +4,8 @@ on:
   pull_request:
     branches: [ branch-1.2 ]
     paths:
-      -  'tests/**/*.cpp'
+      -  'tests/**.cpp'
+      -  'tests/**.hpp'
       -  'src/Data/Scheme/**.hpp'
       -  'src/Data/Scheme/**.cpp'
       -  'src/Scheme/**.cpp'

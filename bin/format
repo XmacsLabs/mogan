@@ -16,6 +16,7 @@ if (eq $platform:os windows) {
 clang-format --version
 
 clang-format -i tests/**/*.cpp
+clang-format -i tests/**/*.hpp
 clang-format -i src/Data/Scheme/**.hpp
 clang-format -i src/Data/Scheme/**.cpp
 clang-format -i src/Scheme/**.cpp
