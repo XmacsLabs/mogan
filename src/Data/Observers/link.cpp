@@ -16,6 +16,8 @@
 #include "preferences.hpp"
 #include "tree_observer.hpp"
 #include "vars.hpp"
+#include "tree_helper.hpp"
+#include "observers.hpp"
 
 hashmap<string, list<observer>> id_resolve;
 hashmap<observer, list<string>> pointer_resolve;
