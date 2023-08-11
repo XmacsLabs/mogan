@@ -34,6 +34,40 @@ configvar_check_cxxsnippets(
         #include <stdlib.h>
         static_assert(sizeof(void*) == 8, "");]])
 
+package("lolly")
+    set_homepage("https://github.com/XmacsLabs/lolly")
+    set_description("Lolly is an alternative to the C++ Standard Library.")
+
+    add_urls("https://github.com/XmacsLabs/lolly.git")
+    add_urls("https://gitee.com/XmacsLabs/lolly.git")
+
+    add_versions("v1.1.0", "ccf16d05a7740e468354085ccb5f4f166bb53a0b")
+
+    -- add_configs("nowide_standalone", {description = "nowide", default = true, type = "boolean"})
+
+    -- on_load(function (package)
+    --     if package:is_plat("mingw", "windows") and package:config("nowide_standalone") then
+    --         package:add("deps", "nowide_standalone")
+    --     end
+    -- end)
+
+    on_install("linux", "macosx", "mingw", "wasm", function (package)
+        local configs = {}
+        if package:config("shared") then
+            configs.kind = "shared"
+        end
+        import("package.tools.xmake").install(package, configs)
+    end)
+
+    -- on_test(function (package)
+    --     assert(package:check_cxxsnippets({test = [[
+    --         #include "string.hpp"
+    --         void test() {
+    --             string s("hello");
+    --         }
+    --     ]]}, {configs = {languages = "c++11"}}))
+    -- end)
+package_end()
 
 ---
 --- Project: Mogan Applications

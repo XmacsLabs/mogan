@@ -36,6 +36,7 @@
 #include <string.h>  // strerror
 #if defined (OS_MINGW)
 #include "Windows/win-utf8-compat.hpp"
+#include <time.h>
 #else
 #include <dirent.h>
 #define struct_stat struct stat
