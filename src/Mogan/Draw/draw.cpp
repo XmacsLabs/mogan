@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "tm_configure.hpp"
-#include "url.hpp"
 #include <fcntl.h>
 #include <locale.h> // for setlocale
 #include <signal.h>
@@ -21,9 +20,11 @@
 #include <sys/resource.h>
 #endif
 
+#include "../app_type.hpp"
 #include "boot.hpp"
 #include "data_cache.hpp"
 #include "file.hpp"
+#include "observers.hpp"
 #include "preferences.hpp"
 #include "server.hpp"
 #include "tm_ostream.hpp"
@@ -36,10 +37,9 @@
 #include <QDir>
 #endif
 
-
 extern bool char_clip;
 
-url           tm_init_file= url_none ();
+extern url    tm_init_file;
 extern url    tm_init_buffer_file;
 extern string my_init_cmds;
 extern string original_path;
@@ -61,26 +61,6 @@ void   server_start ();
 static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
 #endif
-
-/******************************************************************************
- * Init applications
- ******************************************************************************/
-
-enum class App { RESEARCH, DRAW };
-constexpr App now_app= App::DRAW;
-
-void
-init_app (App app) {
-  if (is_none (tm_init_file)) {
-    if (app == App::DRAW) {
-      tm_init_file= "$TEXMACS_PATH/progs/init-draw.scm";
-    }
-    else if (app == App::RESEARCH) {
-      tm_init_file= "$TEXMACS_PATH/progs/init-texmacs-s7.scm";
-    }
-  }
-  exec_file (tm_init_file);
-}
 
 /******************************************************************************
  * For testing
@@ -129,6 +109,15 @@ TeXmacs_init_paths (int& argc, char** argv) {
     set_env ("TEXMACS_PATH", as_string (exedir * "../share/Xmacs"));
   }
 #endif
+
+  // check on the latest $TEXMACS_PATH
+  current_texmacs_path= get_env ("TEXMACS_PATH");
+  if (is_empty (current_texmacs_path) ||
+      !exists (url_system (current_texmacs_path))) {
+    cout << "The required TEXMACS_PATH(" << current_texmacs_path
+         << ") does not exists" << LF;
+    exit (1);
+  }
 }
 
 /******************************************************************************
@@ -364,12 +353,15 @@ TeXmacs_main (int argc, char** argv) {
   bench_cumul ("initialize plugins");
   if (DEBUG_STD) debug_boot << "Opening display...\n";
 
+#if defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS)
+    // init_mac_application ();
+#endif
 
   gui_open (argc, argv);
   set_default_font (the_default_font);
   if (DEBUG_STD) debug_boot << "Starting server...\n";
   { // opening scope for server sv
-    server sv(app_type::DRAW);
+    server sv (app_type::RESEARCH);
     string where= "";
     for (i= 1; i < argc; i++) {
       if (argv[i] == NULL) break;
