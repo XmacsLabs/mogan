@@ -2,13 +2,13 @@
 ## 官方提供的安装包
 | 操作系统 | 马上下载 | MD5校验 |
 |-------|-----|--------|
-| Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/Mogan-v1.1.4-64bit-installer.exe) | 36dcac15825bbb527de51e348d18df7a |
-| macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/Mogan_v1.1.4.dmg) | 6224ba3a809a1d20ee118c20ee06d4a6 |
-| macOS arm (>=13.1) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/Mogan_arm_v1.1.4.dmg) | bac4d3acb670905acea567f28c1e84f8 |
-| Ubuntu 20.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/mogan-v1.1.4-ubuntu20.04.deb) | 722add12fe4aeba0ed8c3c7bef10f79a |
-| Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/mogan-v1.1.4-ubuntu22.04.deb) | d45cca14fa8e36f55f5e2c1c1dffe76d |
-| UOS amd64 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/mogan-v1.1.4-uos.deb) | e65a45c5e836fb8949cfb2f9f2858725 |
-| UOS loongarch | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.4/mogan-v1.1.4-uos-loongarch64.deb) | e1b2a8a63912ea28980b5becb80a2f49 |
+| Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/Mogan-v1.1.5-64bit-installer.exe) | 7c53df195ddc66fd9c84026100caa066 |
+| macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/Mogan_v1.1.5.dmg) | feef723476a32a3d0a85ec21b9e400d2 |
+| macOS arm (>=13.1) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/Mogan_arm_v1.1.5.dmg) | e09d6d99f27a53589c6a9323de1ff9be |
+| Ubuntu 20.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/mogan-v1.1.5-ubuntu20.04.deb) | bc8bec1a078a98530d25ee9465fb2a75 |
+| Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/mogan-v1.1.5-ubuntu22.04.deb) | 5b00b931b4864222d582a4e11a7e25d0 |
+| UOS amd64 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/mogan-v1.1.5-uos.deb) | 882743a622b8a71cbbec0bc98af1cfe9 |
+| UOS loongarch | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/mogan-v1.1.5-uos-loongarch64.deb) | 9bece35cfbf2d175455fdc6841c36475 |
 
 从其它站点下载：
 + https://codeberg.org/XmacsLabs/mogan/releases
@@ -16,6 +16,7 @@
 + https://github.com/XmacsLabs/mogan/releases
 
 旧版本安装包：
++ [v1.1.4 (2023/07/31)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.4)
 + [v1.1.3 (2023/06/05)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.3)
 + [v1.1.2 (2023/04/09)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.2)
 + [v1.1.1 (2022/10/29)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.1)
