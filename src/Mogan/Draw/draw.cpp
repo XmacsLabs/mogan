@@ -20,7 +20,7 @@
 #include <sys/resource.h>
 #endif
 
-#include "../app_type.hpp"
+#include "app_type.hpp"
 #include "boot.hpp"
 #include "data_cache.hpp"
 #include "file.hpp"
@@ -352,10 +352,6 @@ TeXmacs_main (int argc, char** argv) {
   init_plugins ();
   bench_cumul ("initialize plugins");
   if (DEBUG_STD) debug_boot << "Opening display...\n";
-
-#if defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS)
-    // init_mac_application ();
-#endif
 
   gui_open (argc, argv);
   set_default_font (the_default_font);

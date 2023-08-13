@@ -482,7 +482,8 @@ target("libmogan") do
             "src/Typeset/Concat",
             "src/Typeset/Page",
             "$(buildir)",
-            "TeXmacs/include"
+            "TeXmacs/include",
+            "src/Mogan"
         }, {public = true})
 
     if is_plat("macosx") then
@@ -611,7 +612,7 @@ target("draw") do
 
     after_install(function (target)
         print("after_install of target draw")
-        import("xmake_modules.global")
+        import("misc.xmake.global")
         global.copy_icons(target)
     end)
 
@@ -736,7 +737,7 @@ target("research") do
 
     after_install(function (target)
         print("after_install of target research")
-        import("xmake_modules.global")
+        import("misc.xmake.global")
         global.copy_icons(target)
 
         if is_plat("macosx") and is_arch("arm64") then
