@@ -98,7 +98,7 @@ end
 --
 -- global variables in configurations domain
 --
-TeXmacs_files = {
+local TeXmacs_files = {
         "TeXmacs(/doc/**)",
         "TeXmacs(/examples/**)",
         "TeXmacs(/fonts/**)",

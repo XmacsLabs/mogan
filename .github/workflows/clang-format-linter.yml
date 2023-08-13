@@ -41,7 +41,8 @@ jobs:
                 ./src/Plugins/Pdf
                 ./src/Data/Tree
                 ./src/Data/Observers
-                ./tests'
+                ./tests
+                ./src/Mogan'
         exclude: './build ./xmake ./workflow ./github'
         extensions: 'hpp,cpp'
         clangFormatVersion: 16

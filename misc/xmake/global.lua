@@ -1,4 +1,16 @@
--- The file for Global functions and variables that will be used in the SCRIPT scope of xmake.lua
+-------------------------------------------------------------------------------
+--
+-- MODULE      : global.lua
+-- DESCRIPTION : Global functions & variables for Mogan Applications
+-- COPYRIGHT   : (C) 2023 Oyyko
+--
+-- This software falls under the GNU general public license version 3 or later.
+-- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+-- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+
+
+
+-- The file for Global functions and variables that will be used in the SCRIPT DOMAIN of xmake.lua
 -- see https://github.com/xmake-io/xmake/discussions/4070
 
 -- usage:
