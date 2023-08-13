@@ -20,7 +20,9 @@ on:
       -  'src/Data/Observers/**.cpp'
       -  'src/Data/Observers/**.hpp'
       -  '.github/workflows/clang-format-linter.yml'
-      -  'xmake.lua' 
+      -  'xmake.lua'
+      -  'src/Mogan/**.cpp'
+      -  'src/Mogan/**.hpp'
   workflow_dispatch:
 
 jobs:
