@@ -1,30 +1,30 @@
 /******************************************************************************
-* MODULE     : pdf_hummus_renderer.hpp
-* DESCRIPTION: Interface for embedding text files into pdf files
-* COPYRIGHT  : (C) 2023 Tangdouer
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : pdf_hummus_renderer.hpp
+ * DESCRIPTION: Interface for embedding text files into pdf files
+ * COPYRIGHT  : (C) 2023 Tangdouer
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 #include "pdf_hummus_make_attachment.hpp"
 
 #include "PDFWriter/DictionaryContext.h"
-#include "PDFWriter/ObjectsContext.h"
-#include "PDFWriter/PDFRectangle.h"
-#include "PDFWriter/PDFStream.h"
-#include "PDFWriter/PDFWriter.h"
-#include "PDFWriter/SafeBufferMacrosDefs.h"
-#include "PDFWriter/Trace.h"
-#include "PDFWriter/PDFObjectCast.h"
-#include "PDFWriter/PDFParser.h"
-#include "PDFWriter/PDFArray.h"
-#include "PDFWriter/PDFLiteralString.h"
-#include "PDFWriter/PDFStreamInput.h"
 #include "PDFWriter/InputFileStream.h"
+#include "PDFWriter/ObjectsContext.h"
 #include "PDFWriter/OutputBufferedStream.h"
 #include "PDFWriter/OutputFileStream.h"
 #include "PDFWriter/OutputStreamTraits.h"
+#include "PDFWriter/PDFArray.h"
+#include "PDFWriter/PDFLiteralString.h"
+#include "PDFWriter/PDFObjectCast.h"
+#include "PDFWriter/PDFParser.h"
+#include "PDFWriter/PDFRectangle.h"
+#include "PDFWriter/PDFStream.h"
+#include "PDFWriter/PDFStreamInput.h"
+#include "PDFWriter/PDFWriter.h"
+#include "PDFWriter/SafeBufferMacrosDefs.h"
+#include "PDFWriter/Trace.h"
 using namespace PDFHummus;
 #include <utility>
 
@@ -280,132 +280,117 @@ PDFAttachmentWriter::WriteAttachment (PDFAttachment* inAttachment) {
   return result;
 }
 
-
-
-bool load_tm_attachment_in_pdf(url pdf_path ,array<string> &names, array<string> &s)
-{
-  EStatusCode status = PDFHummus::eSuccess;
-  InputFile pdfFile;
-  PDFParser parser;
-  do
-  {
-    status = pdfFile.OpenFile(as_charp(as_string(pdf_path)));
-    if(status != PDFHummus::eSuccess)
-		{
-			cout<<"fail to open " << as_string(pdf_path) << LF;
-			break;
-		}
-    parser.StartPDFParsing(pdfFile.GetInputStream());
-    PDFObjectCastPtr<PDFDictionary> catalog(parser.QueryDictionaryObject(parser.GetTrailer(), "Root"));
-    //return 0;
-    if (!catalog)
-    {
+bool
+load_tm_attachment_in_pdf (url pdf_path, array<string>& names,
+                           array<string>& s) {
+  EStatusCode status= PDFHummus::eSuccess;
+  InputFile   pdfFile;
+  PDFParser   parser;
+  do {
+    status= pdfFile.OpenFile (as_charp (as_string (pdf_path)));
+    if (status != PDFHummus::eSuccess) {
+      cout << "fail to open " << as_string (pdf_path) << LF;
+      break;
+    }
+    parser.StartPDFParsing (pdfFile.GetInputStream ());
+    PDFObjectCastPtr<PDFDictionary> catalog (
+        parser.QueryDictionaryObject (parser.GetTrailer (), "Root"));
+    // return 0;
+    if (!catalog) {
       cout << "Can't find catalog. fail\n";
-      status = PDFHummus::eFailure;
+      status= PDFHummus::eFailure;
       break;
     }
 
-    PDFObjectCastPtr<PDFDictionary> d_1(catalog->QueryDirectObject("Names"));
-    if (!d_1)
-    {
+    PDFObjectCastPtr<PDFDictionary> d_1 (catalog->QueryDirectObject ("Names"));
+    if (!d_1) {
       cout << "Can't find d1. fail\n";
-      status = PDFHummus::eFailure;
+      status= PDFHummus::eFailure;
       break;
     }
-    PDFObjectCastPtr<PDFDictionary> d_2(d_1->QueryDirectObject("EmbeddedFiles"));
-    if (!d_2)
-    {
+    PDFObjectCastPtr<PDFDictionary> d_2 (
+        d_1->QueryDirectObject ("EmbeddedFiles"));
+    if (!d_2) {
       cout << "Can't find d2. fail\n";
-      status = PDFHummus::eFailure;
+      status= PDFHummus::eFailure;
       break;
     }
 
-    PDFObjectCastPtr<PDFArray> arr(d_2->QueryDirectObject("Names"));
-    if (!arr)
-    {
+    PDFObjectCastPtr<PDFArray> arr (d_2->QueryDirectObject ("Names"));
+    if (!arr) {
       cout << "Can't find arr. fail\n";
-      status = PDFHummus::eFailure;
+      status= PDFHummus::eFailure;
       break;
     }
-    unsigned long n = arr->GetLength();
-    if (n & 1)
-    {
+    unsigned long n= arr->GetLength ();
+    if (n & 1) {
       cout << "n is wrong\n";
       break;
     }
-    for (unsigned long i = 0; i < n; i += 2)
-    {
-      PDFObjectCastPtr<PDFLiteralString> name(arr->QueryObject(i));
-      if (!name)
-      {
+    for (unsigned long i= 0; i < n; i+= 2) {
+      PDFObjectCastPtr<PDFLiteralString> name (arr->QueryObject (i));
+      if (!name) {
         cout << "Can't find name\n";
-        status = PDFHummus::eFailure;
+        status= PDFHummus::eFailure;
         break;
       }
-      PDFObjectCastPtr<PDFDictionary> arr_d1(arr->QueryObject(i + 1));
-      if (!arr_d1)
-      {
+      PDFObjectCastPtr<PDFDictionary> arr_d1 (arr->QueryObject (i + 1));
+      if (!arr_d1) {
         cout << "Can't find arr_d1\n";
-        status = PDFHummus::eFailure;
+        status= PDFHummus::eFailure;
         break;
       }
-      PDFObjectCastPtr<PDFDictionary> arr_d2(arr_d1->QueryDirectObject("EF"));
-      if (!arr_d2)
-      {
+      PDFObjectCastPtr<PDFDictionary> arr_d2 (arr_d1->QueryDirectObject ("EF"));
+      if (!arr_d2) {
         cout << "Can't find arr_d2\n";
-        status = PDFHummus::eFailure;
+        status= PDFHummus::eFailure;
         break;
       }
-      PDFObjectCastPtr<PDFStreamInput> stream(parser.QueryDictionaryObject(arr_d2.GetPtr(), "F"));
-      if (!stream)
-      {
+      PDFObjectCastPtr<PDFStreamInput> stream (
+          parser.QueryDictionaryObject (arr_d2.GetPtr (), "F"));
+      if (!stream) {
         cout << "Can't find stream\n";
-        status = PDFHummus::eFailure;
+        status= PDFHummus::eFailure;
         break;
       }
-      PDFDictionary* dir = stream -> QueryStreamDictionary();
+      PDFDictionary* dir= stream->QueryStreamDictionary ();
 
-      IByteReader* streamReader = parser.CreateInputStreamReader(stream.GetPtr());
-      if(! streamReader)
-          return false;
+      IByteReader* streamReader=
+          parser.CreateInputStreamReader (stream.GetPtr ());
+      if (!streamReader) return false;
 
-      char buffer[0xffff];
+      char   buffer[0xffff];
       string tmp;
-      if(streamReader)
-      {
-          pdfFile.GetInputStream()->SetPosition(stream->GetStreamContentStart());
-          while(streamReader->NotEnded())
-          {
-            LongBufferSizeType readAmount = streamReader->Read((Byte*)buffer,sizeof(buffer));
-            tmp << string(buffer, readAmount);
-          }
-        
+      if (streamReader) {
+        pdfFile.GetInputStream ()->SetPosition (
+            stream->GetStreamContentStart ());
+        while (streamReader->NotEnded ()) {
+          LongBufferSizeType readAmount=
+              streamReader->Read ((Byte*) buffer, sizeof (buffer));
+          tmp << string (buffer, readAmount);
+        }
       }
-      s = append(tmp, s);
-      names = append(string(name -> GetValue().c_str()), names);
+      s    = append (tmp, s);
+      names= append (string (name->GetValue ().c_str ()), names);
       delete streamReader;
     }
   } while (0);
-  if(status == PDFHummus::eFailure)
-    return false;
-  else
-    return true;
+  if (status == PDFHummus::eFailure) return false;
+  else return true;
 }
 
-bool get_tm_attachment_in_pdf(url pdf_path, string &s)
-{
+bool
+get_tm_attachment_in_pdf (url pdf_path, string& s) {
   array<string> names, ss;
-  if(load_tm_attachment_in_pdf(pdf_path ,names, ss))
-  {
-    if(N(ss) != 1)
-    {
+  if (load_tm_attachment_in_pdf (pdf_path, names, ss)) {
+    if (N (ss) != 1) {
       cout << "TODO: many attachment" << LF;
       return false;
     }
-    s = ss[0];
+    s= ss[0];
     return true;
-  }else
-  {
+  }
+  else {
     return false;
   }
 }
