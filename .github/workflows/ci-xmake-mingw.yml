@@ -60,7 +60,7 @@ jobs:
       - name: config
         run: xmake config --policies=build.ccache --yes --verbose --diagnosis -m releasedbg --plat=mingw
       - name: build
-        run: xmake build research --yes --verbose --diagnosis --all
+        run: xmake build --yes --verbose --diagnosis research
       - name: test
         run: |
           xmake run --yes --verbose --diagnosis --group=tests

@@ -62,7 +62,7 @@ jobs:
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
       - name: build
-        run: xmake build research --yes --verbose --diagnosis --all
+        run: xmake build --yes --verbose --diagnosis research
       - name: test
         run: bin/test_all
         env:
