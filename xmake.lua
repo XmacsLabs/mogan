@@ -95,6 +95,26 @@ else
     add_rules("mode.releasedbg", "mode.release", "mode.debug")
 end
 
+--
+-- global variables in configurations domain
+--
+TeXmacs_files = {
+        "TeXmacs(/doc/**)",
+        "TeXmacs(/examples/**)",
+        "TeXmacs(/fonts/**)",
+        "TeXmacs(/langs/**)",
+        "TeXmacs(/misc/**)",
+        "TeXmacs(/packages/**)",
+        "TeXmacs(/progs/**)",
+        "TeXmacs(/styles/**)",
+        "TeXmacs(/texts/**)",
+        "TeXmacs/COPYING", -- copying files are different
+        "TeXmacs/INSTALL",
+        "LICENSE", -- license files are same
+        "TeXmacs/README",
+        "TeXmacs/TEX_FONTS",
+        "(plugins/**)" -- plugin files
+}
 
 --
 -- Add packages from xrepo or platform package manager
@@ -350,6 +370,29 @@ target("libmogan") do
         add_frameworks("QtMacExtras")
     end
 
+    on_config(function (target) 
+        import("core.project.depend")
+        -- use relative path here to avoid import failure on windows
+        local scheme_path = path.join("src", "Scheme")
+        local build_glue_path = path.join("src", "Scheme", "Glue")
+        local build_glue = import("build_glue", {rootdir = build_glue_path})
+        for _, filepath in ipairs(os.filedirs(path.join(scheme_path, "**/glue_*.lua"))) do
+            depend.on_changed(function ()
+                local glue_name = path.basename(filepath)
+                local glue_dir = path.directory(filepath)
+                local glue_table = import(glue_name, {rootdir = glue_dir})()
+                io.writefile(
+                    path.join("$(buildir)", glue_name .. ".cpp"),
+                    build_glue(glue_table, glue_name))
+                cprint("generating scheme glue %s ... %s", glue_name, "${color.success}${text.success}")
+            end, {
+                values = {true},
+                files = {filepath, path.join(build_glue_path, "build_glue.lua")},
+                always_changed = false
+            })
+        end
+    end)
+
     add_packages("lolly")
     add_packages("libpng")
     add_packages("libiconv")
@@ -521,6 +564,64 @@ if is_plat("mingw") then
     end
 end
 
+target("draw") do
+    set_enabled(is_plat("linux") or is_plat("wasm"))
+    set_version(XMACS_VERSION)
+    set_installdir(INSTALL_DIR)
+
+    set_filename("mogan_draw")
+    add_rules("qt.widgetapp")
+    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
+    add_packages("lolly")
+    add_rpathdirs("@executable_path/../lib")
+    add_deps("libmogan")
+    add_syslinks("pthread")
+
+    add_includedirs({
+        "$(buildir)",
+    })
+    add_files("src/Mogan/Draw/draw.cpp")
+
+    
+
+    set_configdir(INSTALL_DIR)
+    set_configvar("DEVEL_VERSION", DEVEL_VERSION)
+    set_configvar("PACKAGE", "Mogan Draw")
+    set_configvar("XMACS_VERSION", XMACS_VERSION)
+
+    -- install man.1 manual file
+    add_configfiles(
+        "(misc/man/texmacs.1.in)",{
+            filename = "texmacs.1",
+            pattern = "@([^\n]-)@",
+        }
+    )
+
+    -- install texmacs runtime files
+      add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
+      add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
+
+    -- install tm files for testing purpose
+    if is_mode("releasedbg") then
+            add_installfiles({
+                "TeXmacs(/tests/*.tm)",
+                "TeXmacs(/tests/*.bib)",
+            }, {prefixdir="share/Xmacs"})
+    end
+
+    after_install(function (target)
+        print("after_install of target draw")
+        import("xmake_modules.global")
+        global.copy_icons(target)
+    end)
+
+    on_run(function (target)
+        name = target:name()
+        os.execv(target:installdir().."/bin/mogan_draw")
+    end)
+end
+
+
 target("research") do 
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
@@ -569,29 +670,6 @@ target("research") do
         add_deps("windows_icon")
     end
 
-    on_config(function (target) 
-        import("core.project.depend")
-        -- use relative path here to avoid import failure on windows
-        local scheme_path = path.join("src", "Scheme")
-        local build_glue_path = path.join("src", "Scheme", "Glue")
-        local build_glue = import("build_glue", {rootdir = build_glue_path})
-        for _, filepath in ipairs(os.filedirs(path.join(scheme_path, "**/glue_*.lua"))) do
-            depend.on_changed(function ()
-                local glue_name = path.basename(filepath)
-                local glue_dir = path.directory(filepath)
-                local glue_table = import(glue_name, {rootdir = glue_dir})()
-                io.writefile(
-                    path.join("$(buildir)", glue_name .. ".cpp"),
-                    build_glue(glue_table, glue_name))
-                cprint("generating scheme glue %s ... %s", glue_name, "${color.success}${text.success}")
-            end, {
-                values = {true},
-                files = {filepath, path.join(build_glue_path, "build_glue.lua")},
-                always_changed = false
-            })
-        end
-    end)
-
     set_configdir(INSTALL_DIR)
     set_configvar("DEVEL_VERSION", DEVEL_VERSION)
     set_configvar("PACKAGE", "Mogan Research")
@@ -634,24 +712,6 @@ target("research") do
     add_installfiles("TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
     add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm", {prefixdir="share/pixmaps"})
   
-    -- install texmacs runtime files
-    local TeXmacs_files = {
-        "TeXmacs(/doc/**)",
-        "TeXmacs(/examples/**)",
-        "TeXmacs(/fonts/**)",
-        "TeXmacs(/langs/**)",
-        "TeXmacs(/misc/**)",
-        "TeXmacs(/packages/**)",
-        "TeXmacs(/progs/**)",
-        "TeXmacs(/styles/**)",
-        "TeXmacs(/texts/**)",
-        "TeXmacs/COPYING", -- copying files are different
-        "TeXmacs/INSTALL",
-        "LICENSE", -- license files are same
-        "TeXmacs/README",
-        "TeXmacs/TEX_FONTS",
-        "(plugins/**)" -- plugin files
-    }
     if is_plat("mingw") then
         add_installfiles(TeXmacs_files)
     else
@@ -676,14 +736,8 @@ target("research") do
 
     after_install(function (target)
         print("after_install of target research")
-
-        os.cp ("TeXmacs/misc/images/texmacs.svg", 
-            path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "Mogan.svg"))
-        for _,size in ipairs({32, 48, 64, 128, 256, 512}) do
-            os.cp (
-                "TeXmacs/misc/images/texmacs-"..size..".png",
-                path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/Xmacs.png"))
-        end
+        import("xmake_modules.global")
+        global.copy_icons(target)
 
         if is_plat("macosx") and is_arch("arm64") then
             local app_dir = target:installdir() .. "/../../"
