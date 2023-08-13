@@ -24,4 +24,8 @@ bool pdf_hummus_make_attachments (string pdf_path, list<string> attachment_path,
 bool pdf_hummus_make_attachment (url pdf_path, url attachment_path,
                                  url out_path);
 
+bool get_tm_attachments_in_pdf(url pdf_path, array<string> &names, array<string> &s);
+
+bool get_tm_attachment_in_pdf(url pdf_path, string &s);
+
 #endif // ifdef PDF_HUMMUS_MAKE_ATTACHMENT_H

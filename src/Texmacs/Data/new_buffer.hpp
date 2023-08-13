@@ -15,6 +15,7 @@
 #include "hashmap.hpp"
 #include "url.hpp"
 #include "tm_timer.hpp"
+#include "pdf_hummus_make_attachment.hpp"
 
 /******************************************************************************
 * The buffer class
