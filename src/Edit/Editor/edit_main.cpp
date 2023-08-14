@@ -320,10 +320,15 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
 void
 edit_main_rep::print_to_file (url name, string first, string last) {
   print_doc (name, false, as_int (first), as_int (last));
-
-  if ((suffix (name) == "pdf")){
-    if(as_bool(call("get-boolean-preference", "gui:export PDF with tm attachment"))){
-      if(!pdf_hummus_make_attachment(name, get_name(), name)){
+  string dir ("$TEXMACS_HOME_PATH/texts/scratch/");
+  string name_= basename (name) * string (".tm");
+  url    buf (dir, name_);
+  // cout << buf << LF;
+  call ("save-buffer-as-main", buf);
+  if ((suffix (name) == "pdf")) {
+    if (as_bool (call ("get-boolean-preference",
+                       "gui:export PDF with tm attachment"))) {
+      if (!pdf_hummus_make_attachment (name, buf, name)) {
         cout << "attach wrong" << LF;
       }
     }
