@@ -18,7 +18,7 @@ using namespace IOBasicTypes;
 
 bool
 get_tm_attachments_in_pdf (url pdf_path, array<string>& names,
-                          array<string>& s) {
+                           array<string>& s) {
   EStatusCode status= PDFHummus::eSuccess;
   InputFile   pdfFile;
   PDFParser   parser;
