@@ -19,7 +19,7 @@
 #include "new_document.hpp"
 #include "merge_sort.hpp"
 #include "tree_observer.hpp"
-#incldue "pdf_hummus_get_attachment.hpp"
+#include "pdf_hummus_get_attachment.hpp"
 
 
 array<tm_buffer> bufs;
