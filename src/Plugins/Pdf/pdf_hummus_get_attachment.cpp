@@ -14,7 +14,7 @@
 using namespace PDFHummus;
 #include <utility>
 using namespace IOBasicTypes;
-#incldue "pdf_hummus_get_attachment.hpp"
+#include "pdf_hummus_get_attachment.hpp"
 
 bool
 get_tm_attachment_in_pdf (url pdf_path, array<string>& names,
