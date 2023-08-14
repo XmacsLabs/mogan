@@ -457,6 +457,7 @@ import_loaded_tree (string s, url u, string fm) {
 
 tree
 import_tree (url u, string fm) {
+  //cout << "import_tree" << u << ", " << fm << LF;
   u= resolve (u, "fr");
   set_file_focus (u);
   string s;
@@ -466,6 +467,7 @@ import_tree (url u, string fm) {
 
 bool
 buffer_import (url name, url src, string fm) {
+  //cout << "buffer_import run import_tree" << LF;
   tree t= import_tree (src, fm);
   if (t == "error") return true;
   set_buffer_tree (name, t);
@@ -624,6 +626,7 @@ load_inclusion (url name) {
   string name_s= as_string (name);
   if (document_inclusions->contains (name_s))
     return document_inclusions [name_s];
+  //cout << "load inclusion run import_tree" << LF;
   tree doc= extract_document (import_tree (name, "generic"));
   if (!is_func (doc, ERROR)) document_inclusions (name_s)= doc;
   return doc;

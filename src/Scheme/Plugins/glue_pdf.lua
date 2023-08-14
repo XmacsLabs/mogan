@@ -25,6 +25,14 @@ function main()
                 cpp_name = "pdfhummus_version",
                 ret_type = "string"
             },
+            {
+                scm_name = "get-attachments",
+                cpp_name = "scm_get_attachments",
+                ret_type = "bool",
+                arg_list = {
+                    "url"
+                }
+            },
         }
     }
 end
