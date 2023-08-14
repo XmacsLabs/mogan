@@ -19,6 +19,7 @@
 #include "new_document.hpp"
 #include "merge_sort.hpp"
 #include "tree_observer.hpp"
+#incldue "pdf_hummus_get_attachment.hpp"
 
 
 array<tm_buffer> bufs;
@@ -458,7 +459,17 @@ import_tree (url u, string fm) {
   u= resolve (u, "fr");
   set_file_focus (u);
   string s;
-  if (is_none (u) || load_string (u, s, false)) return "error";
+  //if (is_none (u) || load_string (u, s, false)) return "error";
+  if(fm == string("pdf"))
+  {
+    cout << "get_tm_attachment_in_pdf" << LF;
+    if (is_none (u) || !get_tm_attachment_in_pdf(u, s)) return "error";
+    cout << s << LF;
+    fm = "texmacs";
+  }else
+  {
+    if (is_none (u) || load_string (u, s, false)) return "error";
+  }
   return import_loaded_tree (s, u, fm);
 }
 
