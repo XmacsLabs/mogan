@@ -17,7 +17,7 @@ using namespace IOBasicTypes;
 #include "pdf_hummus_get_attachment.hpp"
 
 bool
-get_tm_attachment_in_pdf (url pdf_path, array<string>& names,
+get_tm_attachments_in_pdf (url pdf_path, array<string>& names,
                           array<string>& s) {
   EStatusCode status= PDFHummus::eSuccess;
   InputFile   pdfFile;
@@ -118,7 +118,7 @@ get_tm_attachment_in_pdf (url pdf_path, array<string>& names,
 bool
 get_tm_attachment_in_pdf (url pdf_path, string& s) {
   array<string> names, ss;
-  if (load_tm_attachment_in_pdf (pdf_path, names, ss)) {
+  if (get_tm_attachments_in_pdf (pdf_path, names, ss)) {
     if (N (ss) != 1) {
       cout << "TODO: many attachment" << LF;
       return false;
