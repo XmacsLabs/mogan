@@ -16,7 +16,6 @@
 #include <dlfcn.h>
 #endif
 #include <TeXmacs.h>
-#include "tm_debug.hpp"
 
 static hashmap<string,pointer> dyn_linked (NULL);
 

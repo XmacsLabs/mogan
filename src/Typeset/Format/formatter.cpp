@@ -13,7 +13,6 @@
 
 #include "formatter.hpp"
 #include "Format/format.hpp"
-#include "tm_debug.hpp"
 
 int format_count= 0;
 int lazy_count= 0;

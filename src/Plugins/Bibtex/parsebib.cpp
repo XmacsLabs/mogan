@@ -17,7 +17,6 @@
 #include "tree_modify.hpp"
 #include "tree_helper.hpp"
 #include "Bibtex/bibtex_functions.hpp"
-#include "tm_debug.hpp"
 
 static string bib_current_tag= "";
 

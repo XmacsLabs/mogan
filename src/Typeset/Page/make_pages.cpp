@@ -14,7 +14,6 @@
 #include "Format/stack_border.hpp"
 #include "pager.hpp"
 #include "new_breaker.hpp"
-#include "tm_debug.hpp"
 
 box format_stack (path ip, array<box> bx, array<space> ht, SI height,
 		  bool may_stretch);

@@ -16,7 +16,6 @@
 #endif
 #include <errno.h>
 #include "tree_helper.hpp"
-#include "tm_debug.hpp"
 
 RESOURCE_CODE (converter);
 

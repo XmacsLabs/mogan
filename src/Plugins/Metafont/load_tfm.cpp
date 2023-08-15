@@ -12,7 +12,6 @@
 #include "load_tex.hpp"
 #include "analyze.hpp"
 #include "tm_timer.hpp"
-#include "tm_debug.hpp"
 
 RESOURCE_CODE(tex_font_metric);
 

@@ -12,7 +12,6 @@
 #include "unix_sys_utils.hpp"
 #include "file.hpp"
 #include "tm_timer.hpp"
-#include "tm_debug.hpp"
 #include <stdlib.h>
 #include <fcntl.h>
 #include <spawn.h>

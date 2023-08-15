@@ -16,7 +16,6 @@
 #include "Freetype/tt_face.hpp"
 #include "analyze.hpp"
 #include "converter.hpp"
-#include "tm_debug.hpp"
 
 #ifdef USE_FREETYPE
 

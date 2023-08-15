@@ -18,7 +18,6 @@
 #include "hashset.hpp"
 #include "string.hpp"
 #include "tm_link.hpp"
-#include "tm_debug.hpp"
 
 #ifndef OS_MINGW
 

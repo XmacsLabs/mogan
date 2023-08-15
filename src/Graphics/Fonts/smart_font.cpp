@@ -15,7 +15,6 @@
 #include "Freetype/tt_tools.hpp"
 #include "translator.hpp"
 #include "iterator.hpp"
-#include "tm_debug.hpp"
 
 bool virtually_defined (string c, string name);
 font smart_font_bis (string f, string v, string s, string sh, int sz,

@@ -21,7 +21,6 @@
 #include "file.hpp"
 #include "tree_modify.hpp"
 #include "tree_helper.hpp"
-#include "tm_debug.hpp"
 
 #define STATUS_NORMAL  0
 #define STATUS_ESCAPE  1
