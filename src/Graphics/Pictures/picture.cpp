@@ -18,6 +18,7 @@
 #include "iterator.hpp"
 #include "file.hpp"
 #include "effect.hpp"
+#include "tm_debug.hpp"
 
 /******************************************************************************
 * Unique id for pictures

@@ -24,6 +24,7 @@
 #endif
 
 #include <unistd.h> // for getpid
+#include "tm_debug.hpp"
 
 /******************************************************************************
  * Initialization of s7

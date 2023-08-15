@@ -16,6 +16,7 @@
 #include "path.hpp"
 #include "sys_utils.hpp"
 #include "data_cache.hpp"
+#include "tm_debug.hpp"
 
 /******************************************************************************
 * Check for old Init.scm and Init-buffer.scm files

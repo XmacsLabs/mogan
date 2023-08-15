@@ -16,6 +16,7 @@
 #include "vars.hpp"
 #include "Tex/tex.hpp"
 #include "tree_helper.hpp"
+#include "tm_debug.hpp"
 
 /******************************************************************************
 * Helper functions

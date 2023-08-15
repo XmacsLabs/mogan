@@ -16,6 +16,7 @@
 #include "iterator.hpp"
 #include "analyze.hpp"
 #include "tree_helper.hpp"
+#include "tm_debug.hpp"
 
 RESOURCE_CODE(translator);
 

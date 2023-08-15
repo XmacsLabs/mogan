@@ -18,6 +18,7 @@
 #include "analyze.hpp"
 #include "tm_timer.hpp"
 #include "data_cache.hpp"
+#include "tm_debug.hpp"
 
 static url the_tfm_path= url_none ();
 static url the_pk_path = url_none ();

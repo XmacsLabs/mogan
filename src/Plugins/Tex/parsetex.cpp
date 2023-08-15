@@ -14,6 +14,7 @@
 #include "converter.hpp"
 #include "wencoding.hpp"
 #include "tree_helper.hpp"
+#include "tm_debug.hpp"
 
 extern bool textm_class_flag;
 

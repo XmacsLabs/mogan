@@ -20,6 +20,7 @@
 #include "scheme.hpp"
 #include "iterator.hpp"
 #include "font.hpp"
+#include "tm_debug.hpp"
 
 RESOURCE_CODE(dictionary);
 

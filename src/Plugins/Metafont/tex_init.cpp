@@ -15,6 +15,7 @@
 #include "sys_utils.hpp"
 #include "convert.hpp"
 #include "tex_files.hpp"
+#include "tm_debug.hpp"
 
 /******************************************************************************
 * Determine installed programs

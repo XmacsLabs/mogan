@@ -16,6 +16,7 @@
 #include "converter.hpp"
 #include "wencoding.hpp"
 #include "tree_helper.hpp"
+#include "tm_debug.hpp"
 
 
 static string bibtex_command= "bibtex";

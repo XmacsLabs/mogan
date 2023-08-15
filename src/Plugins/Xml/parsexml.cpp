@@ -16,6 +16,7 @@
 #include "converter.hpp"
 #include "parse_string.hpp"
 #include "tree_helper.hpp"
+#include "tm_debug.hpp"
 
 #define xml_quote scm_quote
 // FIXME: to be checked that this is the correct quoting style

@@ -18,6 +18,7 @@
 ******************************************************************************/
 
 #include "bridge.hpp"
+#include "tm_debug.hpp"
 
 #define ACC_THRESHOLD 32
 

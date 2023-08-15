@@ -19,6 +19,7 @@
 #include "web_files.hpp"
 #include "tree_label.hpp"
 #include "tree_helper.hpp"
+#include "tm_debug.hpp"
 
 #if !(defined(KERNEL_L2) || defined(KERNEL_L3))
 #include "scheme.hpp"

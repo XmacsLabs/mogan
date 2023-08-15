@@ -14,6 +14,7 @@
 #include "file.hpp"
 #include "tree.hpp"
 #include "parse_string.hpp"
+#include "tm_debug.hpp"
 
 #ifdef OS_MINGW
 #include "Windows/mingw_sys_utils.hpp"
