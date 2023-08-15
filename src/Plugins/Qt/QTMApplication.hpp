@@ -18,6 +18,7 @@
 #include "string.hpp"
 #include "sys_utils.hpp"
 #include "url.hpp"
+#include "url_helper.hpp"
 
 void init_palette (QApplication* app);
 void init_style_sheet (QApplication* app);

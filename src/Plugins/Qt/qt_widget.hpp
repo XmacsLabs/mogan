@@ -16,6 +16,7 @@
 #include "widget.hpp"
 #include "message.hpp"
 #include "qt_utilities.hpp"
+#include "url_helper.hpp"
 #include <QPointer>
 
 class QWidget;

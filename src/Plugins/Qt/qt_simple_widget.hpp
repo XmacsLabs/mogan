@@ -18,6 +18,7 @@
 #include "qt_widget.hpp"
 #include "QTMScrollView.hpp"
 #include "QTMWidget.hpp"
+#include "url_helper.hpp"
 
 /*! A widget containing a TeXmacs canvas.
  

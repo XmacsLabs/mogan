@@ -18,6 +18,7 @@
 
 #include "qt_gui.hpp"
 #include "qt_dialogues.hpp"
+#include "url_helper.hpp"
 
 #include <QTimer>
 #include <QPoint>

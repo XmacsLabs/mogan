@@ -25,6 +25,7 @@
 #include "array.hpp"
 #include "hashmap.hpp"
 #include "socket_notifier.hpp"
+#include "url_helper.hpp"
 
 #if defined(OS_MACOS) && defined(CocoaPlugin)
 #ifndef QT_MAC_USE_COCOA

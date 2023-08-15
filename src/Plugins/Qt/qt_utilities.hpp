@@ -12,6 +12,7 @@
 #define QT_UTILITIES_HPP
 
 #include "message.hpp"
+#include "url_helper.hpp"
 
 #include <QRect>
 #include <QSize>
