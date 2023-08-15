@@ -41,7 +41,7 @@ package("lolly")
     add_urls("https://github.com/XmacsLabs/lolly.git")
     add_urls("https://gitee.com/XmacsLabs/lolly.git")
 
-    add_versions("v1.1.1", "fb92fd6b3b8966894381b316af3575fd3b97dba2")
+    add_versions("v1.1.2", "60c7c9b2ba2a259a67ae084ee999535ee10460f0")
 
     -- add_configs("nowide_standalone", {description = "nowide", default = true, type = "boolean"})
 
@@ -201,6 +201,7 @@ target("libkernel_l3") do
             filename = "L3/config.h",
             variables = {
                 OS_MINGW = is_plat("mingw"),
+                OS_MACOSX = is_plat("macosx"),
                 QTTEXMACS = false,
             }
         }
@@ -227,10 +228,6 @@ target("libkernel_l3") do
         add_files("src/Plugins/Unix/**.cpp")
     end
 
-    if is_plat("mingw") then
-        add_includedirs("src/Plugins/Windows")
-        add_files("src/Plugins/Windows/**.cpp")
-    end
     add_cxxflags("-include $(buildir)/L3/config.h")
     add_cxxflags("-include $(buildir)/L3/tm_configure.hpp")
 end
@@ -524,11 +521,7 @@ target("libmogan") do
             "src/Plugins/Updater/**.cpp",
             "src/Plugins/Xml/**.cpp"})
 
-    if is_plat("mingw") then
-        add_files("src/Plugins/Windows/**.cpp")
-    else
-        add_files("src/Plugins/Unix/**.cpp")
-    end
+    add_files("src/Plugins/Unix/**.cpp")
 
     if is_plat("macosx") then
         add_files({
