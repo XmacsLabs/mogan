@@ -520,9 +520,11 @@ target("libmogan") do
             "src/Plugins/Tex/**.cpp",
             "src/Plugins/Updater/**.cpp",
             "src/Plugins/Xml/**.cpp"})
-
-    add_files("src/Plugins/Unix/**.cpp")
-
+    
+    if not is_plat("mingw") then
+        add_files("src/Plugins/Unix/**.cpp")
+    end 
+    
     if is_plat("macosx") then
         add_files({
                 "src/Plugins/MacOS/HIDRemote.m",
