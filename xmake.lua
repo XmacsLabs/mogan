@@ -41,7 +41,7 @@ package("lolly")
     add_urls("https://github.com/XmacsLabs/lolly.git")
     add_urls("https://gitee.com/XmacsLabs/lolly.git")
 
-    add_versions("v1.1.1", "fb92fd6b3b8966894381b316af3575fd3b97dba2")
+    add_versions("v1.1.0", "ccf16d05a7740e468354085ccb5f4f166bb53a0b")
 
     -- add_configs("nowide_standalone", {description = "nowide", default = true, type = "boolean"})
 
