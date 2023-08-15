@@ -1,6 +1,6 @@
 /******************************************************************************
- * MODULE     : pdf_hummus_renderer.hpp
- * DESCRIPTION: Interface for embedding text files into pdf files
+ * MODULE     : pdf_hummus_get_attachment.cpp
+ * DESCRIPTION: Interface for getting attachment file in pdf
  * COPYRIGHT  : (C) 2023 Tangdouer
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
