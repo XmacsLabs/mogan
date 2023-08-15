@@ -13,6 +13,7 @@
 #include "blackbox.hpp"
 #include "analyze.hpp"
 #include "observers.hpp"
+#include "url_helper.hpp"
 
 
 extern tree the_et;

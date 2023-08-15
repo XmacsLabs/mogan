@@ -17,6 +17,7 @@
 #include "modification.hpp"
 
 #include "qt_utilities.hpp"
+#include "url_helper.hpp"
 
 #include <QPixmap>
 

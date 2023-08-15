@@ -12,6 +12,7 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 #include "tree.hpp"
+
 class object;
 
 extern int command_count;

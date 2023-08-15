@@ -15,6 +15,7 @@
 #include "tm_frame.hpp"
 #include "tm_buffer.hpp"
 #include "message.hpp"
+#include "url_helper.hpp"
 #ifdef AQUATEXMACS
 #include "Cocoa/aqua_simple_widget.h"
 #else

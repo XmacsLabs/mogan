@@ -23,6 +23,7 @@
 #include "preferences.hpp"
 #include "promise.hpp"
 #include "tm_timer.hpp"
+#include "url_helper.hpp"
 
 /******************************************************************************
  * The object representation class

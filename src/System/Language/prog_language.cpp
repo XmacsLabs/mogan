@@ -16,6 +16,7 @@
 #include "scheme.hpp"
 #include "tree_helper.hpp"
 #include "iterator.hpp"
+#include "url_helper.hpp"
 
 prog_language_rep::prog_language_rep (string name):
   abstract_language_rep (name)

@@ -11,9 +11,10 @@
 
 #ifndef FILE_H
 #define FILE_H
-#include "url.hpp"
+// #include "url.hpp"
 #include "sys_utils.hpp"
 #include "analyze.hpp"
+#include "url_helper.hpp"
 
 /**
  * Load the url to a string, and return a boolean indicator
