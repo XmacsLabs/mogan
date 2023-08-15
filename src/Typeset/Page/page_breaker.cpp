@@ -14,6 +14,7 @@
 #include "skeleton.hpp"
 #include "preferences.hpp"
 #include "new_breaker.hpp"
+#include "url_helper.hpp"
 
 #include "merge_sort.hpp"
 void sort (pagelet& pg);

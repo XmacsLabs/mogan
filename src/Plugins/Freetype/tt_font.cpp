@@ -14,6 +14,7 @@
 #include "Freetype/free_type.hpp"
 #include "Freetype/tt_file.hpp"
 #include "Freetype/tt_face.hpp"
+#include "url_helper.hpp"
 
 #ifdef USE_FREETYPE
 

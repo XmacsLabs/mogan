@@ -18,6 +18,7 @@
 #include "hashset.hpp"
 #include "string.hpp"
 #include "tm_link.hpp"
+#include "url_helper.hpp"
 
 #ifndef OS_MINGW
 

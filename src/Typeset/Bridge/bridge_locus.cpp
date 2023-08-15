@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "bridge.hpp"
+#include "url_helper.hpp"
 
 class bridge_locus_rep: public bridge_rep {
 protected:

@@ -17,6 +17,7 @@
 #include "analyze.hpp"
 #include "packrat.hpp"
 #include "observers.hpp"
+#include "url_helper.hpp"
 
 
 array<line_item> typeset_marker (edit_env env, path ip);

@@ -13,6 +13,7 @@
 
 #include "formatter.hpp"
 #include "Format/format.hpp"
+#include "url_helper.hpp"
 
 int format_count= 0;
 int lazy_count= 0;

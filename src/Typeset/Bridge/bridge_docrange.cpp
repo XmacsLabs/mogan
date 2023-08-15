@@ -18,6 +18,7 @@
 ******************************************************************************/
 
 #include "bridge.hpp"
+#include "url_helper.hpp"
 
 #define ACC_THRESHOLD 32
 

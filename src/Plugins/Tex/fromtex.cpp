@@ -20,6 +20,7 @@
 #include "tree_correct.hpp"
 #include "url.hpp"
 #include "font.hpp"
+#include "url_helper.hpp"
 
 tree upgrade_tex (tree t);
 bool textm_class_flag= false;
