@@ -705,8 +705,6 @@ glue (url u, string s) {
   if (is_concat (u)) return u[1] * glue (u[2], s);
   if (is_or (u)) return glue (u[1], s) | glue (u[2], s);
   if (is_none (u)) return u;
-  failed_error << "u= " << u << "\n";
-  failed_error << "s= " << s << "\n";
   TM_FAILED ("can't glue string to url");
   return u;
 }
@@ -718,8 +716,6 @@ unglue (url u, int nr) {
   if (is_concat (u)) return u[1] * unglue (u[2], nr);
   if (is_or (u)) return unglue (u[1], nr) | unglue (u[2], nr);
   if (is_none (u)) return u;
-  failed_error << "u = " << u << "\n";
-  failed_error << "nr= " << nr << "\n";
   TM_FAILED ("can't unglue from url");
   return u;
 }

@@ -1,4 +1,8 @@
 
+#ifndef URL_HELPER_H
+#define URL_HELPER_H
+
+
 #include "url.hpp"
 #include "tm_debug.hpp"
 
@@ -19,3 +23,6 @@ url  concretize_url (url u);                // variant of concretize below
 string concretize (url u);                  // system name for resolved url
 string materialize (url u);  
 string materialize (url u, string f); // resolve + concretize
+
+
+#endif // URL_HELPER_H
