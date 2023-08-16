@@ -34,41 +34,6 @@ configvar_check_cxxsnippets(
         #include <stdlib.h>
         static_assert(sizeof(void*) == 8, "");]])
 
-package("lolly")
-    set_homepage("https://github.com/XmacsLabs/lolly")
-    set_description("Lolly is an alternative to the C++ Standard Library.")
-
-    add_urls("https://github.com/XmacsLabs/lolly.git")
-    add_urls("https://gitee.com/XmacsLabs/lolly.git")
-
-    add_versions("v1.1.1", "fb92fd6b3b8966894381b316af3575fd3b97dba2")
-
-    -- add_configs("nowide_standalone", {description = "nowide", default = true, type = "boolean"})
-
-    -- on_load(function (package)
-    --     if package:is_plat("mingw", "windows") and package:config("nowide_standalone") then
-    --         package:add("deps", "nowide_standalone")
-    --     end
-    -- end)
-
-    on_install("linux", "macosx", "mingw", "wasm", function (package)
-        local configs = {}
-        if package:config("shared") then
-            configs.kind = "shared"
-        end
-        import("package.tools.xmake").install(package, configs)
-    end)
-
-    -- on_test(function (package)
-    --     assert(package:check_cxxsnippets({test = [[
-    --         #include "string.hpp"
-    --         void test() {
-    --             string s("hello");
-    --         }
-    --     ]]}, {configs = {languages = "c++11"}}))
-    -- end)
-package_end()
-
 ---
 --- Project: Mogan Applications
 ---
@@ -201,6 +166,7 @@ target("libkernel_l3") do
             filename = "L3/config.h",
             variables = {
                 OS_MINGW = is_plat("mingw"),
+                OS_MACOSX = is_plat("macosx"),
                 QTTEXMACS = false,
             }
         }
@@ -227,10 +193,6 @@ target("libkernel_l3") do
         add_files("src/Plugins/Unix/**.cpp")
     end
 
-    if is_plat("mingw") then
-        add_includedirs("src/Plugins/Windows")
-        add_files("src/Plugins/Windows/**.cpp")
-    end
     add_cxxflags("-include $(buildir)/L3/config.h")
     add_cxxflags("-include $(buildir)/L3/tm_configure.hpp")
 end
@@ -523,13 +485,11 @@ target("libmogan") do
             "src/Plugins/Tex/**.cpp",
             "src/Plugins/Updater/**.cpp",
             "src/Plugins/Xml/**.cpp"})
-
-    if is_plat("mingw") then
-        add_files("src/Plugins/Windows/**.cpp")
-    else
+    
+    if not is_plat("mingw") then
         add_files("src/Plugins/Unix/**.cpp")
-    end
-
+    end 
+    
     if is_plat("macosx") then
         add_files({
                 "src/Plugins/MacOS/HIDRemote.m",
