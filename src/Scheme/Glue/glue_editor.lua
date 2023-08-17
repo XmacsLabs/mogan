@@ -2171,11 +2171,6 @@ function main()
                 cpp_name = "edit_special",
                 ret_type = "void"
             },
-            {
-                scm_name = "edit-test",
-                cpp_name = "edit_test",
-                ret_type = "void"
-            },
         
         }
     }
