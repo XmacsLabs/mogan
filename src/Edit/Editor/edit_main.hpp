@@ -89,7 +89,6 @@ public:
   void show_selection ();
   void show_meminfo ();
   void edit_special ();
-  void edit_test ();
 
   friend class editor;
 };
