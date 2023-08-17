@@ -89,6 +89,34 @@ add_requires_of_mogan()
 
 
 --
+-- Experimental options of Mogan
+--
+option("experimental")
+    set_description("Enable experimental style rewriting code")
+    set_default(false)
+    set_values(false, true)
+option_end()
+if has_config("experimental") then
+    set_configvar("EXPERIMENTAL", true)
+end
+option("sanity-checks")
+    set_description("Enable sanity checks")
+    set_default(false)
+    set_values(false, true)
+option_end()
+if has_config("sanity-checks") then
+    set_configvar("SANITY_CHECKS", true)
+end
+option("use-exceptions")
+    set_description("Use C++ exception mechanism")
+    set_default(false)
+    set_values(false, true)
+option_end()
+if has_config("use-exceptions") then
+    set_configvar("USE_EXCEPTIONS", true)
+end
+
+--
 -- Library: L3 Kernel
 --
 set_configvar("QTTEXMACS", 1)

@@ -1,6 +1,5 @@
 /* L1 Kernel */
 ${define QTTEXMACS}
-${define SANITY_CHECKS}
 ${define OS_MINGW}
 
 /* Define to 1 if the system has the type `intptr_t'. */
@@ -112,6 +111,8 @@ ${define USE_QT_PRINTER}
 
 ${define USE_CURL}
 
+${define SANITY_CHECKS}
+
 #define SIZEOF_VOID_P ${SIZEOF_VOID_P} 
 
 /* Define to 1 if you have the ANSI C header files. */
@@ -120,6 +121,8 @@ ${define STDC_HEADERS}
 #define TEXMACS_REVISION "${VERSION}"
 
 ${define TM_DYNAMIC_LINKING}
+
+${define USE_EXCEPTIONS}
 
 /* Use freetype library */
 ${define USE_FREETYPE}
