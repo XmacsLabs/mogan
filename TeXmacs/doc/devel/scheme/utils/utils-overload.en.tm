@@ -1,6 +1,6 @@
-<TeXmacs|1.99.8>
+<TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|english|old-spacing>>
+<style|<tuple|tmdoc|english|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|Function definition and contextual overloading>
@@ -191,6 +191,53 @@
   </explain>
 
   <\explain>
+    <scm|(:default <scm-arg|var> <scm-arg|default-value>)><explain-synopsis|place-holder
+    value description>
+  <|explain>
+    This option specifies place-holder value of an argument of given
+    procedure. Value of <scm-arg|default-value> will appear in input box when
+    <scm|interactive> procedure is called. For instance:
+
+    <\scm-code>
+      (tm-define (make-test num den)
+
+      \ \ (:argument num "content" "Numerator")
+
+      \ \ (:argument den "content" "Denominator")
+
+      \ \ (:proposals num '("1" "x" "a+b"))
+
+      \ \ (insert `(frac ,num ,den)))
+    </scm-code>
+  </explain>
+
+  <\explain>
+    <scm|(:proposal <scm-arg|var> <scm-arg|default-value>)><explain-synopsis|another
+    place-holder value description>
+  <|explain>
+    This option specifies place-holder value of an argument of given
+    procedure. Value of <scm-arg|default-value> will appear in input box when
+    <scm|interactive> procedure is called. For instance:
+
+    <\scm-code>
+      (tm-property (clipboard-copy to)
+
+      \ \ (:argument to "Copy to")
+
+      \ \ (:default \ to "primary"))
+    </scm-code>
+
+    <todo|relationship between <scm|:proposals> and <scm|:default>>
+  </explain>
+
+  <\explain>
+    <scm|(:check-mark <scm-arg|str> <scm-arg|test-fun>)><explain-synopsis|another
+    place-holder value description>
+  <|explain>
+    <todo|usage of <scm-arg|str> and <scm-arg|test-fun>>
+  </explain>
+
+  <\explain>
     <scm|(:returns <scm-arg|description>)><explain-synopsis|return value
     description>
   <|explain>
@@ -206,7 +253,7 @@
     the data type <scm-arg|from> to the data type <scm-arg|to>.
   </explain>
 
-  <tmdoc-copyright|2007--2010|Joris van der Hoeven>
+  <tmdoc-copyright|2007\U2023|Joris van der Hoeven, jingkaimori>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
