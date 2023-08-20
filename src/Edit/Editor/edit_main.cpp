@@ -393,6 +393,8 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
                   }
                 }
                 tm_and_linked_file= tm_and_linked_file * style_url;
+                string name       = as_string (tail (style_url));
+                la[i][0]->label   = string (name);
               }
             }
           }
@@ -411,6 +413,8 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
                 }
               }
               tm_and_linked_file= tm_and_linked_file * style_url;
+              string name       = as_string (tail (style_url));
+              la[0]->label      = string (name);
             }
           }
         }
