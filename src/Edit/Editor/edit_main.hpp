@@ -68,6 +68,7 @@ public:
   int  nr_pages ();
   void print_doc (url ps_name, bool to_file, int first, int last);
   void print_to_file (url ps_name, string first="1", string last="1000000");
+  bool attach_doc_to_exported_pdf (url pdf_name);
   void print_buffer (string first="1", string last="1000000");
   void export_ps (url ps_name, string first="1", string last="1000000");
   array<int> print_snippet (url u, tree t, bool conserve_preamble);

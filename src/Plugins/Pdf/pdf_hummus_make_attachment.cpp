@@ -61,13 +61,13 @@ private:
   void                           CleanupAttachment ();
 };
 bool
-pdf_hummus_make_attachments (string pdf_path, list<string> attachment_paths,
-                             string out_path) {
+pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
+                             url out_path) {
   PDFWriter   pdfWriter;
   EStatusCode status;
   do {
-    status= pdfWriter.ModifyPDF (as_charp (pdf_path), ePDFVersion16,
-                                 as_charp (out_path));
+    status= pdfWriter.ModifyPDF (as_charp (as_string (pdf_path)), ePDFVersion16,
+                                 as_charp (as_string (out_path)));
 
     if (status != eSuccess) {
       cout << "start fail\n";
@@ -76,7 +76,7 @@ pdf_hummus_make_attachments (string pdf_path, list<string> attachment_paths,
     PDFAttachmentWriter attachmentWriter (&pdfWriter);
 
     for (int i= 0; i < (int) N (attachment_paths); i++) {
-      string          attachment_path= attachment_paths[i];
+      string          attachment_path= as_string (attachment_paths[i]);
       InputFileStream tm_file_stream;
       status= tm_file_stream.Open (as_charp (attachment_path));
 
@@ -93,12 +93,7 @@ pdf_hummus_make_attachments (string pdf_path, list<string> attachment_paths,
       Byte* file_content= new Byte[file_size + 16];
       tm_file_stream.Read (file_content, file_size);
 
-      int j, last_slash_index= 0;
-      for (j= 0; j < N (attachment_path); j++) {
-        if (attachment_path[j] == '/') last_slash_index= j;
-      }
-      string attachment_name=
-          attachment_path (last_slash_index + 1, N (attachment_path));
+      string attachment_name= as_string (tail (attachment_paths[i]));
 
       PDFAttachment* aAttachment=
           new PDFAttachment (file_content, file_size, attachment_name);
@@ -129,9 +124,8 @@ pdf_hummus_make_attachments (string pdf_path, list<string> attachment_paths,
 bool
 pdf_hummus_make_attachment (url pdf_path, url attachment_path, url out_path) {
   if ((suffix (pdf_path) == "pdf"))
-    return pdf_hummus_make_attachments (
-        as_string (pdf_path), list<string> (as_string (attachment_path)),
-        as_string (out_path));
+    return pdf_hummus_make_attachments (pdf_path, list<url> (attachment_path),
+                                        out_path);
   else return false;
 }
 PDFAttachment::PDFAttachment (void) {

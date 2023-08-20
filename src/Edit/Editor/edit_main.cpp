@@ -324,16 +324,109 @@ edit_main_rep::print_to_file (url name, string first, string last) {
   if ((suffix (name) == "pdf")) {
     if (as_bool (call ("get-boolean-preference",
                        "gui:export PDF with tm attachment"))) {
-      string dir ("$TEXMACS_HOME_PATH/texts/scratch/");
-      string name_= basename (name) * string (".tm");
-      url    buf (dir, name_);
-      call ("save-buffer-as-main", buf);
-      if (!pdf_hummus_make_attachment (name, buf, name)) {
+      if (!attach_doc_to_exported_pdf (name)) {
         cout << "attach wrong" << LF;
       }
     }
   }
   set_message ("Done printing", "print to file");
+}
+
+bool
+edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
+  // copy the current buffer to a new buffer
+  string dir ("$TEXMACS_HOME_PATH/texts/scratch/");
+  string name_= basename (pdf_name) * string (".tm");
+  url    tmp_save_path (dir, name_);
+
+  url new_u= make_new_buffer ();
+  rename_buffer (new_u, tmp_save_path);
+  new_u    = tmp_save_path;
+  url cur_u= get_current_buffer ();
+  // print_tree(get_buffer_tree(cur_u), 4);
+  call ("buffer-copy", cur_u, new_u);
+  buffer_save (new_u);
+
+  // Re-read the saved file to update the buffer, otherwise there is no style in
+  // the export tree
+  tree new_t= import_tree (new_u, "texmacs");
+  set_buffer_tree (new_u, new_t);
+  new_t= get_buffer_tree (new_u);
+  // print_tree(new_t, 4);
+
+  // dfs search all style and link
+  list<tree> st (new_t);
+  list<url>  tm_and_linked_file (new_u);
+  while (N (st) != 0) {
+    auto la= last_item (st);
+    st     = suppress_last (st);
+    for (int i= 0; i < arity (la); i++) {
+      if (is_compound (la[i])) {
+        // cout << get_label(la[i]) << LF;
+        string label= get_label (la[i]);
+        if (label == "image" || label == "include") {
+          if (is_atomic (la[i][0])) {
+            url pre_url= url (la[i][0]->label);
+            if (!exists (pre_url)) {
+              pre_url= head (cur_u) * pre_url;
+              if (!exists (pre_url)) {
+                cout << pre_url << "no exitst" << LF;
+              }
+            }
+            tm_and_linked_file= tm_and_linked_file * pre_url;
+            string name       = as_string (tail (pre_url));
+            la[i][0]->label   = string (name);
+          }
+        }
+        if (label == "style") {
+          tree style= la[i];
+          if (is_func (style[0], TUPLE)) {
+            for (int i= 0; i < N (style[0]); i++) {
+              string style_name= get_label (style[0][i]);
+              if (!is_internal_style (style_name)) {
+                url style_url= url (style_name);
+                style_url    = glue (style_url, ".ts");
+                if (!exists (style_url)) {
+                  style_url= head (cur_u) * style_url;
+                  if (!exists (style_url)) {
+                    cout << style_url << "no exitst" << LF;
+                  }
+                }
+                tm_and_linked_file= tm_and_linked_file * style_url;
+              }
+            }
+          }
+          else {
+            if (!is_atomic (style[0])) {
+              cout << "wrong: not a atomic tree" << LF;
+            }
+            string style_name= get_label (style[0]);
+            if (!is_internal_style (style_name)) {
+              url style_url= url (style_name);
+              style_url    = glue (style_url, ".ts");
+              if (!exists (style_url)) {
+                style_url= head (cur_u) * style_url;
+                if (!exists (style_url)) {
+                  cout << style_url << "no exitst" << LF;
+                }
+              }
+              tm_and_linked_file= tm_and_linked_file * style_url;
+            }
+          }
+        }
+        st= st * la[i];
+      }
+    }
+  }
+  buffer_save (new_u);
+  new_t= get_buffer_tree (new_u);
+  // print_tree(new_t, 4);
+
+  if (!pdf_hummus_make_attachments (pdf_name, tm_and_linked_file, pdf_name)) {
+    cout << "attach wrong" << LF;
+    return false;
+  }
+  return true;
 }
 
 void

@@ -18,8 +18,8 @@
 #include "tm_ostream.hpp"
 #include "url.hpp"
 
-bool pdf_hummus_make_attachments (string pdf_path, list<string> attachment_path,
-                                  string out_path);
+bool pdf_hummus_make_attachments (url pdf_path, list<url> attachment_path,
+                                  url out_path);
 
 bool pdf_hummus_make_attachment (url pdf_path, url attachment_path,
                                  url out_path);
