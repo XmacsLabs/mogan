@@ -461,7 +461,7 @@ import_tree (url u, string fm) {
   string s;
   // if (is_none (u) || load_string (u, s, false)) return "error";
   if (fm == string ("pdf")) {
-    cout << "get_tm_attachment_in_pdf" << LF;
+    //cout << "get_tm_attachment_in_pdf" << LF;
     array<url> attachment_path;
     if (is_none (u) || !get_tm_attachments_in_pdf (u, attachment_path)) {
       cout << "cann't get attachments" << LF;

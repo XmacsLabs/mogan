@@ -101,37 +101,37 @@ get_tm_attachments_in_pdf (url pdf_path, array<url>& names) {
 
       IByteReader* streamReader=
           parser.CreateInputStreamReader (stream.GetPtr ());
-      if (!streamReader) return false;
+      if (!streamReader) {
+        cout << "Can't find streamReader\n";
+        status= PDFHummus::eFailure;
+        break;
+      }
 
       url attachment_path=
           relative (pdf_path, url (string (name->GetValue ().c_str ())));
       OutputFile attachment_file;
-      attachment_file.OpenFile (
+      status= attachment_file.OpenFile (
           std::string (as_charp (as_string (attachment_path))));
-      OutputStreamTraits copy_help (attachment_file.GetOutputStream ());
+      if (status != PDFHummus::eSuccess) {
+        cout << "fail to open " << as_string (attachment_path) << LF;
+        break;
+      }
+      pdfFile.GetInputStream ()->SetPosition (stream->GetStreamContentStart ());
+      OutputStreamTraits copy_help (
+          (IByteWriter*) attachment_file.GetOutputStream ());
       status= copy_help.CopyToOutputStream (streamReader);
-      if (status == PDFHummus::eFailure) {
+      if (status != PDFHummus::eSuccess) {
         cout << "Can't CopyToOutputStream\n";
         break;
       }
-      attachment_file.CloseFile ();
+      status= attachment_file.CloseFile ();
+      if (status != PDFHummus::eSuccess) {
+        cout << "fail to close " << as_string (attachment_path) << LF;
+        break;
+      }
 
-      // char   buffer[0xffff];
-      // string tmp;
-      // if (streamReader) {
-      //   pdfFile.GetInputStream ()->SetPosition (
-      //       stream->GetStreamContentStart ());
-
-      //   while (streamReader->NotEnded ()) {
-      //     LongBufferSizeType readAmount=
-      //         streamReader->Read ((Byte*) buffer, sizeof (buffer));
-      //     CopyToOutputStream(streamReader);
-      //     tmp << string (buffer, readAmount);
-      //   }
-      // }
-      // s    = append (tmp, s);
-      // names= append (string (name->GetValue ().c_str ()), names);
       names= append (attachment_path, names);
+      cout << "\n\n" << names << LF;
       delete streamReader;
     }
   } while (0);
