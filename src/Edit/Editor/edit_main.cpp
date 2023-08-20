@@ -421,7 +421,8 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
   buffer_save (new_u);
   new_t= get_buffer_tree (new_u);
   // print_tree(new_t, 4);
-
+  
+  // attach tm style linked file in pdf
   if (!pdf_hummus_make_attachments (pdf_name, tm_and_linked_file, pdf_name)) {
     cout << "attach wrong" << LF;
     return false;
