@@ -378,11 +378,11 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
             la[i][0]->label   = string (name);
           }
         }
-        if (label == "style") {
-          tree style= la[i];
-          if (is_func (style[0], TUPLE)) {
-            for (int i= 0; i < N (style[0]); i++) {
-              string style_name= get_label (style[0][i]);
+        else if (label == "style") {
+          // tree style= la[i];
+          if (is_func (la[i][0], TUPLE)) {
+            for (int j= 0; j < N (la[i][0]); j++) {
+              string style_name= get_label (la[i][0][j]);
               if (!is_internal_style (style_name)) {
                 url style_url= url (style_name);
                 style_url    = glue (style_url, ".ts");
@@ -394,15 +394,15 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
                 }
                 tm_and_linked_file= tm_and_linked_file * style_url;
                 string name       = as_string (tail (style_url));
-                la[i][0]->label   = string (name);
+                la[i][0][j]->label= string (name);
               }
             }
           }
           else {
-            if (!is_atomic (style[0])) {
+            if (!is_atomic (la[i][0])) {
               cout << "wrong: not a atomic tree" << LF;
             }
-            string style_name= get_label (style[0]);
+            string style_name= get_label (la[i][0]);
             if (!is_internal_style (style_name)) {
               url style_url= url (style_name);
               style_url    = glue (style_url, ".ts");
@@ -414,18 +414,18 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
               }
               tm_and_linked_file= tm_and_linked_file * style_url;
               string name       = as_string (tail (style_url));
-              la[0]->label      = string (name);
+              la[i][0]->label   = string (name);
             }
           }
         }
-        st= st * la[i];
+        else st= st * la[i];
       }
     }
   }
   buffer_save (new_u);
   new_t= get_buffer_tree (new_u);
   // print_tree(new_t, 4);
-  
+
   // attach tm style linked file in pdf
   if (!pdf_hummus_make_attachments (pdf_name, tm_and_linked_file, pdf_name)) {
     cout << "attach wrong" << LF;
