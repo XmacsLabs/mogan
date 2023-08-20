@@ -26,8 +26,7 @@ using namespace IOBasicTypes;
 #include "pdf_hummus_get_attachment.hpp"
 
 bool
-get_tm_attachments_in_pdf (url pdf_path, array<string>& names,
-                           array<string>& s) {
+get_tm_attachments_in_pdf (url pdf_path, array<url>& names) {
   EStatusCode status= PDFHummus::eSuccess;
   InputFile   pdfFile;
   PDFParser   parser;
@@ -104,19 +103,35 @@ get_tm_attachments_in_pdf (url pdf_path, array<string>& names,
           parser.CreateInputStreamReader (stream.GetPtr ());
       if (!streamReader) return false;
 
-      char   buffer[0xffff];
-      string tmp;
-      if (streamReader) {
-        pdfFile.GetInputStream ()->SetPosition (
-            stream->GetStreamContentStart ());
-        while (streamReader->NotEnded ()) {
-          LongBufferSizeType readAmount=
-              streamReader->Read ((Byte*) buffer, sizeof (buffer));
-          tmp << string (buffer, readAmount);
-        }
+      url attachment_path=
+          relative (pdf_path, url (string (name->GetValue ().c_str ())));
+      OutputFile attachment_file;
+      attachment_file.OpenFile (
+          std::string (as_charp (as_string (attachment_path))));
+      OutputStreamTraits copy_help (attachment_file.GetOutputStream ());
+      status= copy_help.CopyToOutputStream (streamReader);
+      if (status == PDFHummus::eFailure) {
+        cout << "Can't CopyToOutputStream\n";
+        break;
       }
-      s    = append (tmp, s);
-      names= append (string (name->GetValue ().c_str ()), names);
+      attachment_file.CloseFile ();
+
+      // char   buffer[0xffff];
+      // string tmp;
+      // if (streamReader) {
+      //   pdfFile.GetInputStream ()->SetPosition (
+      //       stream->GetStreamContentStart ());
+
+      //   while (streamReader->NotEnded ()) {
+      //     LongBufferSizeType readAmount=
+      //         streamReader->Read ((Byte*) buffer, sizeof (buffer));
+      //     CopyToOutputStream(streamReader);
+      //     tmp << string (buffer, readAmount);
+      //   }
+      // }
+      // s    = append (tmp, s);
+      // names= append (string (name->GetValue ().c_str ()), names);
+      names= append (attachment_path, names);
       delete streamReader;
     }
   } while (0);
@@ -125,14 +140,14 @@ get_tm_attachments_in_pdf (url pdf_path, array<string>& names,
 }
 
 bool
-get_tm_attachment_in_pdf (url pdf_path, string& s) {
-  array<string> names, ss;
-  if (get_tm_attachments_in_pdf (pdf_path, names, ss)) {
-    if (N (ss) != 1) {
+get_tm_attachment_in_pdf (url pdf_path, url& name) {
+  array<url> names;
+  if (get_tm_attachments_in_pdf (pdf_path, names)) {
+    if (N (names) != 1) {
       cout << "TODO: many attachment" << LF;
       return false;
     }
-    s= ss[0];
+    name= names[0];
     return true;
   }
   else {

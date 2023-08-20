@@ -462,13 +462,28 @@ import_tree (url u, string fm) {
   // if (is_none (u) || load_string (u, s, false)) return "error";
   if (fm == string ("pdf")) {
     cout << "get_tm_attachment_in_pdf" << LF;
-    if (is_none (u) || !get_tm_attachment_in_pdf (u, s)) return "error";
-    cout << s << LF;
+    array<url> attachment_path;
+    if (is_none (u) || !get_tm_attachments_in_pdf (u, attachment_path)) {
+      cout << "cann't get attachments" << LF;
+      return "error";
+    }
+    bool found= false;
+    for (int i= 0; i < N (attachment_path); i++) {
+      if (suffix (attachment_path[i]) == string ("tm") &&
+          basename (attachment_path[i]) == basename (u)) {
+        u= attachment_path[i];
+        set_file_focus (u);
+        found= true;
+        break;
+      }
+    }
+    if (!found) {
+      cout << "cann't find its tm" << LF;
+      return "error";
+    }
     fm= "texmacs";
   }
-  else {
-    if (is_none (u) || load_string (u, s, false)) return "error";
-  }
+  if (is_none (u) || load_string (u, s, false)) return "error";
   return import_loaded_tree (s, u, fm);
 }
 
