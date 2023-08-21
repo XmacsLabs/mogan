@@ -355,6 +355,7 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
   // print_tree(new_t, 4);
 
   // dfs search all style and link
+  // print_tree(new_t, 4);
   list<tree> st (new_t);
   list<url>  tm_and_linked_file (new_u);
   while (N (st) != 0) {
@@ -393,8 +394,11 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
                   }
                 }
                 tm_and_linked_file= tm_and_linked_file * style_url;
-                string name       = as_string (tail (style_url));
-                la[i][0][j]->label= string (name);
+                string name       = basename (style_url);
+                // cout << la[i][0][j] << LF;
+                // cout << name << LF;
+                la[i][0][j]->label= name;
+                // cout << la[i][0][j] << LF;
               }
             }
           }
@@ -413,8 +417,13 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
                 }
               }
               tm_and_linked_file= tm_and_linked_file * style_url;
-              string name       = as_string (tail (style_url));
-              la[i][0]->label   = string (name);
+              // cout << "here\n\n\n" << LF;
+              // cout << tm_and_linked_file << LF;
+              string name= basename (style_url);
+              // cout << name << LF;
+              // cout << la[i][0] << LF;
+              la[i][0]->label= name;
+              // cout << la[i][0] << LF;
             }
           }
         }
@@ -422,11 +431,15 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
       }
     }
   }
+
+  // print_tree(new_t, 4);
+  set_buffer_tree (new_u, new_t);
   buffer_save (new_u);
   new_t= get_buffer_tree (new_u);
   // print_tree(new_t, 4);
 
   // attach tm style linked file in pdf
+  // cout << tm_and_linked_file << LF;
   if (!pdf_hummus_make_attachments (pdf_name, tm_and_linked_file, pdf_name)) {
     cout << "attach wrong" << LF;
     return false;
