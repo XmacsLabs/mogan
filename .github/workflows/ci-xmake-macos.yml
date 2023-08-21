@@ -7,6 +7,7 @@ on:
       - 'src/**'
       - '!src/Plugins/Windows/**'
       - 'tests/**'
+      - 'misc/xmake/packages.lua'
       - 'xmake.lua'
       - '.github/workflows/ci-xmake-macos.yml'
   pull_request:
