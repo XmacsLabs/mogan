@@ -27,7 +27,7 @@ package("lolly")
     add_urls("https://github.com/XmacsLabs/lolly.git")
     add_urls("https://gitee.com/XmacsLabs/lolly.git")
 
-    add_versions("main", "2fdf04d551250743cfba51394a2717f498f3fc90")
+    add_versions("v1.1.3", "dfc97d7198b511fcc250640375e7f89ac9796610")
 
     on_install("linux", "macosx", "mingw", "wasm", function (package)
         local configs = {}
