@@ -194,7 +194,7 @@ target("libkernel_l3") do
             filename = "L3/config.h",
             variables = {
                 OS_MINGW = is_plat("mingw"),
-                OS_MACOSX = is_plat("macosx"),
+                OS_MACOS = is_plat("macosx"),
                 QTTEXMACS = false,
             }
         }
