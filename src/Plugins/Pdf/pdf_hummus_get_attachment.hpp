@@ -20,6 +20,6 @@ bool get_tm_attachments_in_pdf (url pdf_path, array<url>& names);
 
 bool get_tm_attachment_in_pdf (url pdf_path, url& name);
 
-bool scm_get_attachments(url pdf_path);
+bool scm_get_attachments (url pdf_path);
 
 #endif // ifdef PDF_HUMMUS_MAKE_ATTACHMENT_H
