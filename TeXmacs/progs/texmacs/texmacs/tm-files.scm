@@ -513,6 +513,10 @@
       (if (current-buffer)
           (set! name (url-relative (current-buffer) name))
           (set! name (url-append (url-pwd) name))))
+  (if (and (string=? (url-format name) "pdf") (get-attachments name))
+    (let* ((tm-name (url-glue (url-relative name (url-basename name)) ".tm")))
+    (if(url-exists? tm-name)
+        (set! name tm-name))))
   (load-buffer-check-autosave name opts))
 
 (tm-define (load-buffer name . opts)

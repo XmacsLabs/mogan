@@ -19,7 +19,6 @@
 #include "new_document.hpp"
 #include "merge_sort.hpp"
 #include "tree_observer.hpp"
-#include "pdf_hummus_get_attachment.hpp"
 
 
 array<tm_buffer> bufs;
@@ -456,39 +455,17 @@ import_loaded_tree (string s, url u, string fm) {
 
 tree
 import_tree (url u, string fm) {
+  //cout << "import_tree" << u << ", " << fm << LF;
   u= resolve (u, "fr");
   set_file_focus (u);
   string s;
-  // if (is_none (u) || load_string (u, s, false)) return "error";
-  if (fm == string ("pdf")) {
-    //cout << "get_tm_attachment_in_pdf" << LF;
-    array<url> attachment_path;
-    if (is_none (u) || !get_tm_attachments_in_pdf (u, attachment_path)) {
-      cout << "cann't get attachments" << LF;
-      return "error";
-    }
-    bool found= false;
-    for (int i= 0; i < N (attachment_path); i++) {
-      if (suffix (attachment_path[i]) == string ("tm") &&
-          basename (attachment_path[i]) == basename (u)) {
-        u= attachment_path[i];
-        set_file_focus (u);
-        found= true;
-        break;
-      }
-    }
-    if (!found) {
-      cout << "cann't find its tm" << LF;
-      return "error";
-    }
-    fm= "texmacs";
-  }
   if (is_none (u) || load_string (u, s, false)) return "error";
   return import_loaded_tree (s, u, fm);
 }
 
 bool
 buffer_import (url name, url src, string fm) {
+  //cout << "buffer_import run import_tree" << LF;
   tree t= import_tree (src, fm);
   if (t == "error") return true;
   set_buffer_tree (name, t);
@@ -647,6 +624,7 @@ load_inclusion (url name) {
   string name_s= as_string (name);
   if (document_inclusions->contains (name_s))
     return document_inclusions [name_s];
+  //cout << "load inclusion run import_tree" << LF;
   tree doc= extract_document (import_tree (name, "generic"));
   if (!is_func (doc, ERROR)) document_inclusions (name_s)= doc;
   return doc;

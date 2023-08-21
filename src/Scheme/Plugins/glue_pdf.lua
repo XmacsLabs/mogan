@@ -20,6 +20,14 @@ function main()
                 cpp_name = "supports_native_pdf",
                 ret_type = "bool"
             },
+            {
+                scm_name = "get-attachments",
+                cpp_name = "scm_get_attachments",
+                ret_type = "bool",
+                arg_list = {
+                    "url"
+                }
+            },
         }
     }
 end

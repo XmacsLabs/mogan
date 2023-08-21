@@ -154,3 +154,9 @@ get_tm_attachment_in_pdf (url pdf_path, url& name) {
     return false;
   }
 }
+
+bool
+scm_get_attachments (url pdf_path) {
+  array<url> attachments_paths;
+  return get_tm_attachments_in_pdf (pdf_path, attachments_paths);
+}
