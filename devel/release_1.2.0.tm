@@ -11,13 +11,15 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|26|26|1|1|cell-background|pastel
-  red>|<cwith|23|23|1|1|cell-background|pastel
-  red>|<cwith|25|25|1|1|cell-background|pastel
-  red>|<cwith|21|21|1|1|cell-background|pastel
-  red>|<cwith|32|32|3|3|cell-valign|b>|<cwith|33|33|1|1|cell-valign|b>|<cwith|20|20|1|1|cell-background|pastel
-  green>|<table|<row|<cell|<dlink|48>>|<cell|Darcy>|<cell|Mogan Code
-  Kickoff>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|29|29|1|1|cell-background|pastel
+  red>|<cwith|26|26|1|1|cell-background|pastel
+  red>|<cwith|28|28|1|1|cell-background|pastel
+  red>|<cwith|24|24|1|1|cell-background|pastel
+  red>|<cwith|35|35|3|3|cell-valign|b>|<cwith|36|36|1|1|cell-valign|b>|<cwith|23|23|1|1|cell-background|pastel
+  green>|<table|<row|<cell|<dlink|51>>|<cell|Darcy>|<cell|Scheme
+  Onboarding>>|<row|<cell|<dlink|50>>|<cell|Oyyko>|<cell|Mogan Draw app &
+  WASM (OSPP)>>|<row|<cell|<dlink|49>>|<cell|jingkaimori>|<cell|>>|<row|<cell|<dlink|48>>|<cell|Darcy>|<cell|Mogan
+  Code Kickoff>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
   indentation of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
   the new mechanism of glue code generation>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning
   as plugin>>|<row|<cell|<dlink|43>>|<cell|>|<cell|LaTeX converters as
