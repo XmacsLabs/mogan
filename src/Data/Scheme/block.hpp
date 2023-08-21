@@ -20,10 +20,5 @@ scheme_tree string_to_scheme_tree (string s);
 scheme_tree block_to_scheme_tree (string s);
 string      scheme_tree_to_string (scheme_tree t);
 string      scheme_tree_to_block (scheme_tree t);
-tree        scheme_tree_to_tree (scheme_tree t);
-tree        scheme_to_tree (string s);
-scheme_tree tree_to_scheme_tree (tree t);
-string      tree_to_scheme (tree t);
-tree scheme_tree_to_tree (scheme_tree t, hashmap<string, int> codes, bool flag);
 
 #endif
