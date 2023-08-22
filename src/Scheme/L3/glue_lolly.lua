@@ -1,10 +1,8 @@
 -------------------------------------------------------------------------------
 --
--- MODULE      : glue_string.lua
+-- MODULE      : glue_lolly.lua
 -- DESCRIPTION : Generating glue on src/Kernel/Types/string.hpp
--- COPYRIGHT   : (C) 1999-2023  Joris van der Hoeven
---                   2023       jingkaimori
---                   2023       Darcy Shen
+-- COPYRIGHT   : (C) 2023       charonxin
 --
 -- This software falls under the GNU general public license version 3 or later.
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
