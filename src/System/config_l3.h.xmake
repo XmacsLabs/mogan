@@ -1,4 +1,5 @@
 #define KERNEL_L3
+#define LOLLY_VERSION "@LOLLY_VERSION@"
 
 /* L1 Kernel */
 ${define HAVE_INTPTR_T}
