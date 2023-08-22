@@ -28,7 +28,7 @@ jobs:
       - name: config
         run: xmake config -m release -vD --yes
       - name: build
-        run: xmake build --yes --verbose --diagnosis --all
+        run: xmake build -vD --diagnosis research
       - name: install
         run: xmake install -vD research
       - name: Generate Installer
