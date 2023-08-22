@@ -79,7 +79,9 @@ function add_requires_of_mogan()
     end
 
     local PDFHUMMUS_VERSION = "4.5.10"
+    local LOLLY_VERSION = "1.1.3"
     set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
+    set_configvar("LOLLY_VERSION", LOLLY_VERSION)
     add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
     add_requires("s7 2023.04.13", {system=false})
     add_requires("lolly", {system=false})
