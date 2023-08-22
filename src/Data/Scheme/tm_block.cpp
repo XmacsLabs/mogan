@@ -1,7 +1,7 @@
 
 #include "tm_block.hpp"
-#include "block.hpp"
 #include "analyze.hpp"
+#include "block.hpp"
 #include "drd_std.hpp"
 #include "tm_debug.hpp"
 #include "tree_helper.hpp"
