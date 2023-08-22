@@ -50,6 +50,11 @@ supports_ghostscript () {
 #endif
 }
 
+string
+pdfhummus_version () {
+  return string (PDFHUMMUS_VERSION);
+}
+
 #include "glue_ghostscript.cpp"
 #include "glue_pdf.cpp"
 
