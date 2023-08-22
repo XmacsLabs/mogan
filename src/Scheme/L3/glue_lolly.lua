@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 --
 -- MODULE      : glue_lolly.lua
--- DESCRIPTION : Generating glue on src/Kernel/Types/string.hpp
+-- DESCRIPTION : Generating glue to get information about Lolly
 -- COPYRIGHT   : (C) 2023       charonxin
 --
 -- This software falls under the GNU general public license version 3 or later.
