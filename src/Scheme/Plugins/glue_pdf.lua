@@ -25,6 +25,6 @@ function main()
                 cpp_name = "pdfhummus_version",
                 ret_type = "string"
             },
-        },
+        }
     }
 end
