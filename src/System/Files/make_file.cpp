@@ -18,7 +18,7 @@
 #include "tree_helper.hpp"
 
 #ifndef KERNEL_L2
-#include "block.hpp"
+#include "tm_block.hpp"
 #endif
 
 /******************************************************************************
