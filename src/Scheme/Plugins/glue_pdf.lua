@@ -20,8 +20,6 @@ function main()
                 cpp_name = "supports_native_pdf",
                 ret_type = "bool"
             },
-        },
-        glues = {
             {
                 scm_name = "pdfhummus-version",
                 cpp_name = "pdfhummus_version",
