@@ -18,7 +18,7 @@
 #include "iterator.hpp"
 #include "fast_search.hpp"
 #include "merge_sort.hpp"
-#include "block.hpp"
+#include "tm_block.hpp"
 #include "tree_helper.hpp"
 
 /******************************************************************************

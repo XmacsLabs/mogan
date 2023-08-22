@@ -9,7 +9,7 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "block.hpp"
+#include "tm_block.hpp"
 #include "new_style.hpp"
 #include "file.hpp"
 #include "data_cache.hpp"

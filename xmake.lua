@@ -149,7 +149,6 @@ local l3_files = {
     "src/Texmacs/Server/tm_debug.cpp",
 }
 local l3_includedirs = {
-    "src/Data/Convert",
     "src/Kernel/Types",
     "src/Kernel/Abstractions",
     "src/Data/Drd",

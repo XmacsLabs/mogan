@@ -11,7 +11,7 @@
 
 #include "init_glue_l4.hpp"
 
-#include "block.hpp"
+#include "tm_block.hpp"
 #include "convert.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
