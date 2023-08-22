@@ -18,7 +18,7 @@
 #ifndef KERNEL_L2
 #include "scheme.hpp"
 #endif
-#include "Curl/curl.hpp"
+#include "curl.hpp"
 
 #define MAX_CACHED 25
 static int web_nr=0;

@@ -145,7 +145,6 @@ local l3_files = {
     "src/System/Classes/**.cpp",
     "src/System/Files/**.cpp",
     "src/System/Misc/**.cpp",
-    "src/Plugins/Curl/**.cpp",
     "src/Texmacs/Server/tm_debug.cpp",
 }
 local l3_includedirs = {
@@ -501,7 +500,6 @@ target("libmogan") do
             "src/Texmacs/Window/**.cpp",
             "src/Typeset/**.cpp",
             "src/Plugins/Bibtex/**.cpp",
-            "src/Plugins/Curl/**.cpp",
             "src/Plugins/Database/**.cpp",
             "src/Plugins/Freetype/**.cpp",
             "src/Plugins/Pdf/**.cpp",
