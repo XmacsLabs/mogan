@@ -22,12 +22,10 @@ private slots:
 
 void
 TestImageFiles::test_svg_image_size () {
-#ifndef KERNEL_L2
   int w= 0, h= 0;
   svg_image_size (url ("$TEXMACS_PATH/misc/images/fancy-c.svg"), w, h);
   QCOMPARE (w, 24);
   QCOMPARE (h, 24);
-#endif
 }
 
 QTEST_MAIN (TestImageFiles)
