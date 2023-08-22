@@ -58,14 +58,14 @@ patchP (tmscm t) {
 
 string
 lolly_version () {
-  return string(LOLLY_VERSION);
+  return string (LOLLY_VERSION);
 }
 
+#include "glue_lolly.cpp"
 #include "glue_modification.cpp"
 #include "glue_patch.cpp"
 #include "glue_path.cpp"
 #include "glue_string.cpp"
-#include "glue_lolly.cpp"
 
 void
 initialize_glue_l3 () {
