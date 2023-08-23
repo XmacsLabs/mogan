@@ -21,7 +21,15 @@
   simplifier to tree_modify>>|<row|<cell|Chore>|<cell|31_5>|<cell|Da>|<cell|Move
   tree_label to src/Data/Tree>>|<row|<cell|Chore>|<cell|31_6>|<cell|Da>|<cell|Move
   as_tree to tree_helper>>|<row|<cell|Chore>|<cell|31_7>|<cell|Pluto>|<cell|Replace
-  routines like is_tuple with routines in tree.hpp>>>>>
+  routines like is_tuple with routines in
+  tree.hpp>>|<row|<cell|Chore>|<cell|31_8>|<cell|Pluto>|<cell|Separate tree
+  and tree_label>>|<row|<cell|Chore>|<cell|31_9>|<cell|Pluto>|<cell|Separate
+  modification and tree_label>>|<row|<cell|Chore>|<cell|31_10>|<cell|Pluto>|<cell|Separate
+  observer and tree_label>>|<row|<cell|Chore>|<cell|31_11>|<cell|Pluto>|<cell|Separate
+  observer and observers>>|<row|<cell|Chore>|<cell|31_12>|<cell|Pluto>|<cell|Remove
+  tree and use Lolly v1.1.0>>|<row|<cell|Chore>|<cell|31_13>|<cell|Pluto>|<cell|Migrate
+  basic windows files to Lolly>>|<row|<cell|Chore>|<cell|31_14>|<cell|Pluto>|<cell|Separate
+  block to tm_block and block>>>>>
 
   <tmdoc-copyright|2023|Darcy Shen>
 
