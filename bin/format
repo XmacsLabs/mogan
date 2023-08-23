@@ -21,8 +21,6 @@ clang-format -i src/Data/Scheme/**.hpp
 clang-format -i src/Data/Scheme/**.cpp
 clang-format -i src/Scheme/**.cpp
 clang-format -i src/Scheme/**.hpp
-clang-format -i src/Plugins/Curl/**.cpp
-clang-format -i src/Plugins/Curl/**.hpp
 clang-format -i src/Graphics/Types/**.cpp
 clang-format -i src/Graphics/Types/**.hpp
 clang-format -i src/Typeset/Boxes/Graphics/**.cpp

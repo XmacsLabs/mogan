@@ -10,8 +10,6 @@ on:
       -  'src/Data/Scheme/**.cpp'
       -  'src/Scheme/**.cpp'
       -  'src/Scheme/**.hpp'
-      -  'src/Plugins/Curl/**.cpp'
-      -  'src/Plugins/Curl/**.hpp'
       -  'src/Graphics/Types/**.cpp'
       -  'src/Typeset/Boxes/Graphics/**.cpp'
       -  'src/Plugins/Pdf/**.cpp'
@@ -35,7 +33,6 @@ jobs:
       with:
         source: './src/Data/Scheme 
                 ./src/Scheme 
-                ./src/Plugins/Curl 
                 ./src/Graphics/Types 
                 ./src/Typeset/Boxes/Graphics 
                 ./src/Plugins/Pdf

@@ -145,7 +145,6 @@ local l3_files = {
     "src/System/Classes/**.cpp",
     "src/System/Files/**.cpp",
     "src/System/Misc/**.cpp",
-    "src/Plugins/Curl/**.cpp",
     "src/Texmacs/Server/tm_debug.cpp",
 }
 local l3_includedirs = {
@@ -182,7 +181,6 @@ target("libkernel_l3") do
     set_basename("kernel_l3")
     set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
 
-    add_packages("libcurl")
     add_packages("s7")
     add_packages("lolly")
     if is_plat("mingw") then
@@ -238,7 +236,6 @@ for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
         add_frameworks("QtTest")
 
         add_packages("lolly")
-        add_packages("libcurl")
         if is_plat("mingw") then
             add_packages("nowide_standalone")
         end
@@ -388,7 +385,6 @@ target("libmogan") do
     add_packages("libiconv")
     add_packages("zlib")
     add_packages("libjpeg")
-    add_packages("libcurl")
     add_packages("freetype")
     add_packages("pdfhummus")
     add_packages("nowide_standalone")
@@ -501,7 +497,6 @@ target("libmogan") do
             "src/Texmacs/Window/**.cpp",
             "src/Typeset/**.cpp",
             "src/Plugins/Bibtex/**.cpp",
-            "src/Plugins/Curl/**.cpp",
             "src/Plugins/Database/**.cpp",
             "src/Plugins/Freetype/**.cpp",
             "src/Plugins/Pdf/**.cpp",
