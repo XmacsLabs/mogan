@@ -20,7 +20,7 @@
 #include "tree_label.hpp"
 #include "tree_helper.hpp"
 
-#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
+#if !defined(KERNEL_L3)
 #include "scheme.hpp"
 #include "convert.hpp"
 #endif
@@ -366,13 +366,13 @@ is_of_type (url name, string filter) {
       case 'd': return false;
       case 'l': return false;
       case 'r':
-#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
+#if !defined(KERNEL_L3)
         if (!as_bool (call ("tmfs-permission?", name, "read")))
 #endif
           return false;
         break;
       case 'w':
-#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
+#if !defined(KERNEL_L3)
         if (!as_bool (call ("tmfs-permission?", name, "write")))
 #endif
           return false;
@@ -544,7 +544,7 @@ is_scratch (url u) {
 
 string
 file_format (url u) {
-#if (defined(KERNEL_L2) || defined(KERNEL_L3))
+#if defined(KERNEL_L3)
   return "texmacs-file";
 #else
   if (is_rooted_tmfs (u)) {
@@ -885,7 +885,7 @@ escape_cork_words (string s) {
   return r;
 }
 
-#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
+#if !defined(KERNEL_L3)
 int
 search_score (url u, array<string> a) {
   int n= N(a);

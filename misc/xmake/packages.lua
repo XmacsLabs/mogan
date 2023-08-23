@@ -30,7 +30,7 @@ package("lolly")
         add_deps("libcurl")
     end
 
-    add_versions("v1.1.3", "dfc97d7198b511fcc250640375e7f89ac9796610")
+    add_versions("v1.1.4", "79f9d31123c0310d8b69121e498c66aeb39fd523")
 
     on_install("linux", "macosx", "mingw", "wasm", function (package)
         local configs = {}
@@ -82,7 +82,9 @@ function add_requires_of_mogan()
     end
 
     local PDFHUMMUS_VERSION = "4.5.10"
+    local LOLLY_VERSION = "1.1.3"
     set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
+    set_configvar("LOLLY_VERSION", LOLLY_VERSION)
     add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
     add_requires("s7 2023.04.13", {system=false})
     add_requires("lolly", {system=false})
