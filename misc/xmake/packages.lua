@@ -26,7 +26,7 @@ package("lolly")
 
     add_urls("https://github.com/XmacsLabs/lolly.git")
     add_urls("https://gitee.com/XmacsLabs/lolly.git")
-    if not is_plat("wasm", "windows") then
+    if not is_plat("wasm") then
         add_deps("libcurl")
     end
 
@@ -44,7 +44,6 @@ package_end()
 
 function add_requires_of_mogan()
     if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
-        -- add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
         add_requires("apt::libpng-dev", {alias="libpng"})
         add_requires("apt::zlib1g-dev", {alias="zlib"})
         -- config package name for libjpeg on Ubuntu
@@ -65,7 +64,6 @@ function add_requires_of_mogan()
         add_requires("libiconv 1.17", {system=false})
         add_requires("zlib 1.2.12", {system=false})
         add_requires("libjpeg v9e", {system=false})
-        -- add_requires("libcurl 7.84.0", {system=false})
         add_requires("freetype 2.12.1", {system=false})
     end
 
