@@ -181,7 +181,6 @@ target("libkernel_l3") do
     set_basename("kernel_l3")
     set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
 
-    add_packages("libcurl")
     add_packages("s7")
     add_packages("lolly")
     if is_plat("mingw") then
@@ -387,7 +386,6 @@ target("libmogan") do
     add_packages("libiconv")
     add_packages("zlib")
     add_packages("libjpeg")
-    add_packages("libcurl")
     add_packages("freetype")
     add_packages("pdfhummus")
     add_packages("nowide_standalone")

@@ -26,6 +26,9 @@ package("lolly")
 
     add_urls("https://github.com/XmacsLabs/lolly.git")
     add_urls("https://gitee.com/XmacsLabs/lolly.git")
+    if not is_plat("wasm", "windows") then
+        add_deps("libcurl")
+    end
 
     add_versions("v1.1.3", "dfc97d7198b511fcc250640375e7f89ac9796610")
 
