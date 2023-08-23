@@ -236,7 +236,6 @@ for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
         add_frameworks("QtTest")
 
         add_packages("lolly")
-        add_packages("libcurl")
         if is_plat("mingw") then
             add_packages("nowide_standalone")
         end
