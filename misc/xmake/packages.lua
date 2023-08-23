@@ -86,4 +86,7 @@ function add_requires_of_mogan()
     add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
     add_requires("s7 2023.04.13", {system=false})
     add_requires("lolly", {system=false})
+    if is_plat("macosx") or is_plat("mingw") then
+        add_requireconfs("lolly.libcurl", {version = "7.84.0", system = false, override=true})
+    end
 end
