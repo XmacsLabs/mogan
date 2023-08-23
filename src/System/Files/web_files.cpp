@@ -16,7 +16,6 @@
 #include "hashmap.hpp"
 
 #include "scheme.hpp"
-#endif
 #include "curl.hpp"
 
 #define MAX_CACHED 25
