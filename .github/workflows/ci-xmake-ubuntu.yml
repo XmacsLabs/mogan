@@ -18,6 +18,7 @@ on:
       - '!src/Plugins/Macos/**'
       - '!src/Plugins/Windows/**'
       - 'tests/**'
+      - 'misc/xmake/packages.lua'
       - 'xmake.lua'
       - '.github/workflows/ci-xmake-ubuntu.yml'
 
