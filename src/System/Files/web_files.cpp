@@ -16,7 +16,7 @@
 #include "hashmap.hpp"
 
 #include "scheme.hpp"
-#include "curl.hpp"
+#include "Curl/curl.hpp"
 
 #define MAX_CACHED 25
 static int web_nr=0;
