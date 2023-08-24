@@ -401,6 +401,32 @@ function main()
                     "string"
                 }
             },
+            -- Kernel/Types/string.hpp
+            {
+                scm_name = "cpp-string-number?",
+                cpp_name = "is_double",
+                ret_type = "bool",
+                arg_list = {
+                    "string"
+                }
+            },
+            -- Data/String/base64.hpp
+            {
+                scm_name = "encode-base64",
+                cpp_name = "encode_base64",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "decode-base64",
+                cpp_name = "decode_base64",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
         }
     }
 end
