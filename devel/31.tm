@@ -29,7 +29,10 @@
   observer and observers>>|<row|<cell|Chore>|<cell|31_12>|<cell|Pluto>|<cell|Remove
   tree and use Lolly v1.1.0>>|<row|<cell|Chore>|<cell|31_13>|<cell|Pluto>|<cell|Migrate
   basic windows files to Lolly>>|<row|<cell|Chore>|<cell|31_14>|<cell|Pluto>|<cell|Separate
-  block to tm_block and block>>>>>
+  block to tm_block and block>>|<row|<cell|Chore>|<cell|31_15>|<cell|Pluto>|<cell|Use
+  curl in lolly>>|<row|<cell|Chore>|<cell|31_16>|<cell|Pluto>|<cell|Move
+  glues to glue_lolly>>|<row|<cell|Chore>|<cell|31_17>|<cell|Da>|<cell|lolly
+  1.1.5: remove unix sys utils>>>>>
 
   <tmdoc-copyright|2023|Darcy Shen>
 
