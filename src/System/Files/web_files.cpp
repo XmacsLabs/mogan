@@ -83,7 +83,7 @@ get_from_web (url name) {
   if (!is_empty (suf)) suf= string(".") * suf;
 
   url tmp= url_temp (suf);
-  string content= curl_get (
+  string content= lolly::curl_get (
     escape_sh (web_encode (as_string (name))),
     string("TeXmacs-") * TEXMACS_VERSION);
 
