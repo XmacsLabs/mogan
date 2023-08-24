@@ -214,11 +214,6 @@ target("libkernel_l3") do
     add_includedirs(l3_includedirs, {public = true})
     add_files(l3_files)
 
-    if is_plat("linux") or is_plat("macosx") then
-        add_includedirs("src/Plugins/Unix")
-        add_files("src/Plugins/Unix/**.cpp")
-    end
-
     add_cxxflags("-include $(buildir)/L3/config.h")
     add_cxxflags("-include $(buildir)/L3/tm_configure.hpp")
 end
@@ -474,8 +469,6 @@ target("libmogan") do
 
     if is_plat("macosx") then
         add_includedirs("src/Plugins/MacOS", {public = true})
-    else
-        add_includedirs("src/Plugins/Unix", {public = true})
     end
 
     add_files({
@@ -508,10 +501,6 @@ target("libmogan") do
             "src/Plugins/Tex/**.cpp",
             "src/Plugins/Updater/**.cpp",
             "src/Plugins/Xml/**.cpp"})
-    
-    if not is_plat("mingw") then
-        add_files("src/Plugins/Unix/**.cpp")
-    end 
     
     if is_plat("macosx") then
         add_files({

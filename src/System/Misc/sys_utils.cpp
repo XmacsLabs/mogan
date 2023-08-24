@@ -16,8 +16,8 @@
 #include "parse_string.hpp"
 
 #ifdef OS_MINGW
-#include "mingw_sys_utils.hpp"
-#include "win-utf8-compat.hpp"
+#include "Windows/mingw_sys_utils.hpp"
+#include "Windows/win-utf8-compat.hpp"
 #else
 #include "Unix/unix_sys_utils.hpp"
 #endif
@@ -51,27 +51,19 @@ string get_pretty_os_name () {
 
 int
 system (string s, string& result, string& error) {
-#if defined (OS_MINGW)
 #if !defined(KERNEL_L3)
   return qt_system (s, result, error);
 #else
   return -1;
 #endif
-#else
-  return unix_system (s, result, error);
-#endif
 }
 
 int
 system (string s, string& result) {
-#if defined (OS_MINGW)
 #if !defined(KERNEL_L3)
   return qt_system (s, result);
 #else
   return -1;
-#endif
-#else
-  return unix_system (s, result);
 #endif
 }
 
