@@ -43,6 +43,11 @@ package_end()
 
 
 function add_requires_of_mogan()
+    local LOLLY_VERSION = "1.1.3"
+    local CURL_VERSION = "7.84.0"
+    local FREETYPE_VERSION = "2.12.1"
+    local PDFHUMMUS_VERSION = "4.5.10"
+
     if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
         add_requires("apt::libpng-dev", {alias="libpng"})
         add_requires("apt::zlib1g-dev", {alias="zlib"})
@@ -64,7 +69,7 @@ function add_requires_of_mogan()
         add_requires("libiconv 1.17", {system=false})
         add_requires("zlib 1.2.12", {system=false})
         add_requires("libjpeg v9e", {system=false})
-        add_requires("freetype 2.12.1", {system=false})
+        add_requires("freetype "..FREETYPE_VERSION, {system=false})
     end
 
     if is_plat("mingw") then
@@ -79,14 +84,15 @@ function add_requires_of_mogan()
         add_requires("fontconfig", {system = true})
     end
 
-    local PDFHUMMUS_VERSION = "4.5.10"
-    local LOLLY_VERSION = "1.1.3"
-    set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
     set_configvar("LOLLY_VERSION", LOLLY_VERSION)
-    add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
-    add_requires("s7 2023.04.13", {system=false})
     add_requires("lolly", {system=false})
     if is_plat("macosx") or is_plat("mingw") then
-        add_requireconfs("lolly.libcurl", {version = "7.84.0", system = false, override=true})
+        add_requireconfs("lolly.libcurl", {version = CURL_VERSION, system = false, override=true})
     end
+
+    set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
+    add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+    add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
+
+    add_requires("s7 2023.04.13", {system=false})
 end
