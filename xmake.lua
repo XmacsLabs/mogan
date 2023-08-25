@@ -634,6 +634,7 @@ target("research") do
     end
     add_deps("libmogan")
     add_syslinks("pthread")
+    add_ldflags("-fuse-ld=gold")
 
     add_includedirs({
         "$(buildir)",
