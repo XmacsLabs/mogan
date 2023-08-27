@@ -20,6 +20,7 @@
 #include "tm_timer.hpp"
 #include "data_cache.hpp"
 #include "scheme.hpp"
+#include "sys_utils.hpp"
 
 #ifdef USE_FONTCONFIG
 #include <fontconfig/fontconfig.h>

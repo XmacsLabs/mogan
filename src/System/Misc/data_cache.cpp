@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "data_cache.hpp"
+#include "sys_utils.hpp"
 #include "file.hpp"
 #include "iterator.hpp"
 #include "tree_helper.hpp"
