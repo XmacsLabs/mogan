@@ -176,7 +176,7 @@ target("libkernel_l3") do
 
     add_packages("s7")
     add_packages("lolly")
-    if is_plat("mingw") then
+    if is_plat("mingw") or is_plat("windows") then
         add_packages("nowide_standalone")
     end
 
@@ -186,6 +186,7 @@ target("libkernel_l3") do
             variables = {
                 OS_MINGW = is_plat("mingw"),
                 OS_MACOS = is_plat("macosx"),
+                OS_WIN32 = is_plat("windows"),
                 QTTEXMACS = false,
             }
         }
@@ -207,8 +208,13 @@ target("libkernel_l3") do
     add_includedirs(l3_includedirs, {public = true})
     add_files(l3_files)
 
-    add_cxxflags("-include $(buildir)/L3/config.h")
-    add_cxxflags("-include $(buildir)/L3/tm_configure.hpp")
+    if is_plat("windows") then
+        add_cxxflags("-FI " .. path.absolute("$(buildir)\\L3\\config.h"))
+        add_cxxflags("-FI " .. path.absolute("$(buildir)\\L3\\tm_configure.hpp"))
+    else
+        add_cxxflags("-include $(buildir)/L3/config.h")
+        add_cxxflags("-include $(buildir)/L3/tm_configure.hpp")
+    end
 end
 
 for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
