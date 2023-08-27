@@ -50,12 +50,6 @@ function add_requires_of_mogan()
 
     if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
         add_requires("apt::zlib1g-dev", {alias="zlib"})
-        -- config package name for libjpeg on Ubuntu
-        if linuxos.name() == "ubuntu" then
-            add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
-        else
-            add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
-        end
         -- config package name for freetype on UOS
         if linuxos.name() == "uos" then
             add_requires("apt::libfreetype6-dev", {alias="freetype"})
@@ -66,7 +60,6 @@ function add_requires_of_mogan()
     -- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
         add_requires("libiconv 1.17", {system=false})
         add_requires("zlib 1.2.12", {system=false})
-        add_requires("libjpeg v9e", {system=false})
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
     end
 

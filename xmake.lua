@@ -378,7 +378,6 @@ target("libmogan") do
     add_packages("lolly")
     add_packages("libiconv")
     add_packages("zlib")
-    add_packages("libjpeg")
     add_packages("freetype")
     add_packages("pdfhummus")
     add_packages("nowide_standalone")
