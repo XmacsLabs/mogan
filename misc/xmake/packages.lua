@@ -49,7 +49,6 @@ function add_requires_of_mogan()
     local PDFHUMMUS_VERSION = "4.5.10"
 
     if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
-        add_requires("apt::zlib1g-dev", {alias="zlib"})
         -- config package name for freetype on UOS
         if linuxos.name() == "uos" then
             add_requires("apt::libfreetype6-dev", {alias="freetype"})
@@ -59,7 +58,6 @@ function add_requires_of_mogan()
     else
     -- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
         add_requires("libiconv 1.17", {system=false})
-        add_requires("zlib 1.2.12", {system=false})
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
     end
 
