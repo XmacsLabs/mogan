@@ -40,14 +40,7 @@ configvar_check_cxxsnippets(
 set_project("Mogan Applications")
 
 set_allowedplats(
-    -- these plat should be guaranteed
-    "linux", "macosx", "mingw",
-    --this plat is not maintained
-    "android", "appletvos", "bsd", "cross", "iphoneos", "msys", "wasm", "watchos"
-    -- because this cpp project use variant length arrays which is not supported by
-    -- msvc, this project will not support windows env.
-    -- because some package is not ported to cygwin env, this project will not
-    -- support cygwin env.
+    "wasm", "linux", "macosx", "mingw", "windows"
 ) 
 
 -- add releasedbg, debug and release modes for different platforms.
