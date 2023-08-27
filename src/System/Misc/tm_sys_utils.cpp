@@ -10,21 +10,21 @@
 ******************************************************************************/
 
 #include "tm_sys_utils.hpp"
-#ifdef QTTEXMACS
-#include "Qt/qt_sys_utils.hpp"
-#endif
+#include "sys_utils.hpp"
 #include "tm_debug.hpp"
 #include "url.hpp"
 #include "file.hpp"
-#include "sys_utils.hpp"
 
 #ifdef OS_MINGW
-#include "Windows/mingw_sys_utils.hpp"
-#include "Windows/win-utf8-compat.hpp"
+#include "Windows/win_sys_utils.hpp"
+#include "Windows/win_utf8_compat.hpp"
 #else
 #include "Unix/unix_sys_utils.hpp"
 #endif
 
+#ifdef QTTEXMACS
+#include "Qt/qt_sys_utils.hpp"
+#endif
 
 
 int script_status = 1;
@@ -119,21 +119,6 @@ get_texmacs_home_path () {
   if (path == "")
     path= url_system ("$HOME/.TeXmacs");
   return path;
-}
-
-array<string>
-evaluate_system (array<string> arg,
-		 array<int> fd_in, array<string> in,
-		 array<int> fd_out) {
-  array<string> out (N(fd_out));
-  array<string*> ptr (N(fd_out));
-  for (int i= 0; i < N(fd_out); i++) ptr[i]= &(out[i]);
-#ifdef OS_MINGW
-  int ret= mingw_system (arg, fd_in, in, fd_out, ptr);
-#else
-  int ret= unix_system (arg, fd_in, in, fd_out, ptr);
-#endif
-  return append (as_string (ret), out);
 }
 
 

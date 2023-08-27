@@ -427,6 +427,52 @@ function main()
                     "string"
                 }
             },
+            -- System/Misc/sys_utils.hpp
+            {
+                scm_name = "get-user-login",
+                cpp_name = "get_user_login",
+                ret_type = "string"
+            },
+            {
+                scm_name = "get-user-name",
+                cpp_name = "get_user_name",
+                ret_type = "string"
+            },
+            {
+                scm_name = "os-win32?",
+                cpp_name = "os_win",
+                ret_type = "bool"
+            },
+            {
+                scm_name = "os-mingw?",
+                cpp_name = "os_mingw",
+                ret_type = "bool"
+            },
+            {
+                scm_name = "os-macos?",
+                cpp_name = "os_macos",
+                ret_type = "bool"
+            },
+            {
+                scm_name = "evaluate-system",
+                cpp_name = "evaluate_system",
+                ret_type = "array_string",
+                arg_list = {
+                    "array_string",
+                    "array_int",
+                    "array_string",
+                    "array_int"
+                }
+            },
+            {
+                scm_name = "system-setenv",
+                cpp_name = "set_env",
+                ret_type = "void",
+                arg_list = {
+                    "string",
+                    "string"
+                }
+            },
         }
     }
 end
