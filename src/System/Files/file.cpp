@@ -39,8 +39,9 @@
 #include <sys/types.h>
 #include <string.h>  // strerror
 #if defined (OS_MINGW) || defined (OS_WIN)
-#include "Windows/win-utf8-compat.hpp"
+#include "Windows/win_utf8_compat.hpp"
 #include <time.h>
+#include <dirent.h>
 #else
 #include <dirent.h>
 #define struct_stat struct stat
