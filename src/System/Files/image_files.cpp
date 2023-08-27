@@ -175,7 +175,7 @@ ps_load (url image, bool conv) {
   if (is_none (name))
     name= "$TEXMACS_PATH/misc/pixmaps/unknown.ps";
 
-#ifdef OS_WIN32
+#ifdef OS_WIN
   if (is_ramdisc (name)) name= get_from_ramdisc (name);
 #endif
 

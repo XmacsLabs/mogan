@@ -30,7 +30,7 @@ static int gs_type= -1;
 
 bool
 ghostscript_bugged () {
-#ifdef OS_WIN32
+#ifdef OS_WIN
   return false;
 #else
   if (gs_type == -1) {
@@ -88,7 +88,7 @@ ghostscript_run (Display* dpy, Window gs_win, Pixmap pm, url im, SI w, SI h) {
     h= min (h, max_h);
   }
 
-#ifndef OS_WIN32
+#ifndef OS_WIN
   int win_id= (int) gs_win;
   int pix_id= (int) pm;
   if (ghostscript_bugged ()) set_env ("GHOSTVIEW", as_string (win_id));

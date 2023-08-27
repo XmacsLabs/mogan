@@ -223,8 +223,8 @@ string get_user_name () {
 }
 
 bool
-os_win32 () {
-#if defined (OS_WIN32)
+os_win () {
+#if defined (OS_WIN)
   return true;
 #else
   return false;
@@ -251,7 +251,7 @@ os_macos () {
 
 static const char*
 default_look_and_feel_impl () {
-  if (os_mingw () || os_win32 ()) return "windows";
+  if (os_mingw () || os_win ()) return "windows";
   if (os_macos ()) return "macos";
   return "emacs";
 }

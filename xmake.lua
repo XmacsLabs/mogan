@@ -186,7 +186,7 @@ target("libkernel_l3") do
             variables = {
                 OS_MINGW = is_plat("mingw"),
                 OS_MACOS = is_plat("macosx"),
-                OS_WIN32 = is_plat("windows"),
+                OS_WIN = is_plat("windows"),
                 QTTEXMACS = false,
             }
         }

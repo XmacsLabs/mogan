@@ -31,14 +31,14 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-#ifndef OS_WIN32
+#ifndef OS_WIN
 #include <sys/file.h>
 #include <unistd.h>
 #endif
 
 #include <sys/types.h>
 #include <string.h>  // strerror
-#if defined (OS_MINGW) || defined (OS_WIN32)
+#if defined (OS_MINGW) || defined (OS_WIN)
 #include "Windows/win-utf8-compat.hpp"
 #include <time.h>
 #else
@@ -706,7 +706,7 @@ change_mode (url u, int mode) {
 * Tab-completion for file names
 ******************************************************************************/
 
-#ifdef OS_WIN32
+#ifdef OS_WIN
 #define URL_CONCATER  '\\'
 #else
 #define URL_CONCATER  '/'

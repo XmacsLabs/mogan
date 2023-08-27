@@ -106,7 +106,7 @@ init_heuristic_tex_paths () {
   url tfm= url_none (), pk= url_none (), pfb= url_none ();
 
   // Try some 'standard' directories
-#ifdef OS_WIN32
+#ifdef OS_WIN
   tfm= search_sub_dirs ("$TEX_HOME/fonts/tfm");
   pk = search_sub_dirs ("$TEX_HOME/fonts/pk");
   pfb= search_sub_dirs ("$TEX_HOME/fonts/type1");
@@ -121,7 +121,7 @@ init_heuristic_tex_paths () {
   search_sub_dirs ("/var/tmp/texfonts", tfm, pk, pfb);
 #endif
 
-#ifdef OS_WIN32
+#ifdef OS_WIN
   set_setting ("TFM", as_string (tfm));
   set_setting ("PK" , as_string (pk ));
   set_setting ("PFB", as_string (pfb));

@@ -11,7 +11,7 @@
 
 #include "locale.hpp"
 
-#if !defined(OS_MINGW) && !defined(OS_WIN32)
+#if !defined(OS_MINGW) && !defined(OS_WIN)
 #include <langinfo.h>
 #ifndef X11TEXMACS
 #include <locale>

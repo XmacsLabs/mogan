@@ -45,7 +45,7 @@ void set_printing_cmd (string cmd);
 string get_user_login ();
 string get_user_name ();
 
-bool os_win32 ();
+bool os_win ();
 bool os_mingw ();
 bool os_macos ();
 const char* default_look_and_feel ();
