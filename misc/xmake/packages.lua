@@ -83,6 +83,7 @@ function add_requires_of_mogan()
     if not is_plat("wasm") then
         add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
         add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
+        add_requireconfs("pdfhummus.libpng", {version = "1.6.37", system = false, override=true})
     end
 
     add_requires("s7 2023.04.13", {system=false})
