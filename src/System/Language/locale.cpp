@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "locale.hpp"
+#include "tm_sys_utils.hpp"
 
 #if !defined(OS_MINGW) && !defined(OS_WIN)
 #include <langinfo.h>
