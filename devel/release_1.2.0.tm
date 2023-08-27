@@ -11,20 +11,19 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|29|29|1|1|cell-background|pastel
-  red>|<cwith|26|26|1|1|cell-background|pastel
-  red>|<cwith|28|28|1|1|cell-background|pastel
-  red>|<cwith|24|24|1|1|cell-background|pastel
-  red>|<cwith|35|35|3|3|cell-valign|b>|<cwith|36|36|1|1|cell-valign|b>|<cwith|23|23|1|1|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|28|28|1|1|cell-background|pastel
+  red>|<cwith|27|27|1|1|cell-background|pastel
+  red>|<cwith|23|23|1|1|cell-background|pastel
+  red>|<cwith|34|34|3|3|cell-valign|b>|<cwith|35|35|1|1|cell-valign|b>|<cwith|22|22|1|1|cell-background|pastel
+  green>|<cwith|25|25|1|1|cell-background|pastel
   green>|<table|<row|<cell|<dlink|51>>|<cell|Darcy>|<cell|Scheme
   Onboarding>>|<row|<cell|<dlink|50>>|<cell|Oyyko>|<cell|Mogan Draw app &
   WASM (OSPP)>>|<row|<cell|<dlink|49>>|<cell|jingkaimori>|<cell|>>|<row|<cell|<dlink|48>>|<cell|Darcy>|<cell|Mogan
   Code Kickoff>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
   indentation of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
   the new mechanism of glue code generation>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning
-  as plugin>>|<row|<cell|<dlink|43>>|<cell|>|<cell|LaTeX converters as
-  plugin>>|<row|<cell|<dlink|42>>|<cell|>|<cell|HTML converters as
-  plugin>>|<row|<cell|<dlink|42>>|<cell|>|<cell|Spell checking as a
+  as plugin>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|LaTeX converters as
+  plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML converters as
   plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs instead of the gs
   binary>>|<row|<cell|<dlink|40>>|<cell|>|<cell|Use XDG_DATA_PATH on
   Linux>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize the Help
@@ -33,9 +32,9 @@
   platform>>|<row|<cell|<dlink|36>>|<cell|>|<cell|Build on Windows
   platform>>|<row|<cell|<dlink|35>>|<cell|>|<cell|Use the Breeze
   icon>>|<row|<cell|<dlink|34>>|<cell|Oyyko>|<cell|CICD for the website and
-  mogan wasm>>|<row|<cell|<dlink|33>>|<cell|>|<cell|Test on
-  wasm>>|<row|<cell|<dlink|32>>|<cell|>|<cell|Build on
-  wasm>>|<row|<cell|<dlink|31>>|<cell|>|<cell|Lolly
+  mogan wasm>>|<row|<cell|<dlink|33>>|<cell|>|<cell|Spell checking as a
+  plugin>>|<row|<cell|<dlink|32>>|<cell|Darcy>|<cell|Build and Test on
+  wasm>>|<row|<cell|<dlink|31>>|<cell|Pluto>|<cell|Lolly
   1.1.0>>|<row|<cell|<dlink|30>>|<cell|Darcy>|<cell|Lolly
   1.0.x>>|<row|<cell|<dlink|29>>|<cell|tangdouer>|<cell|OSPP PDF
   Project>>|<row|<cell|<dlink|27>>|<cell|>|<cell|Mogan Draw optimization
