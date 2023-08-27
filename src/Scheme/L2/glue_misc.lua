@@ -81,15 +81,6 @@ function main()
                 }
             },
             {
-                scm_name = "system-setenv",
-                cpp_name = "set_env",
-                ret_type = "void",
-                arg_list = {
-                    "string",
-                    "string"
-                }
-            },
-            {
                 scm_name = "eval-system",
                 cpp_name = "eval_system",
                 ret_type = "string",
@@ -106,17 +97,6 @@ function main()
                 }
             },
             {
-                scm_name = "evaluate-system",
-                cpp_name = "evaluate_system",
-                ret_type = "array_string",
-                arg_list = {
-                    "array_string",
-                    "array_int",
-                    "array_string",
-                    "array_int"
-                }
-            },
-            {
                 scm_name = "get-texmacs-path",
                 cpp_name = "get_texmacs_path",
                 ret_type = "url"
@@ -125,31 +105,6 @@ function main()
                 scm_name = "get-texmacs-home-path",
                 cpp_name = "get_texmacs_home_path",
                 ret_type = "url"
-            },
-            {
-                scm_name = "get-user-login",
-                cpp_name = "get_user_login",
-                ret_type = "string"
-            },
-            {
-                scm_name = "get-user-name",
-                cpp_name = "get_user_name",
-                ret_type = "string"
-            },
-            {
-                scm_name = "os-win32?",
-                cpp_name = "os_win",
-                ret_type = "bool"
-            },
-            {
-                scm_name = "os-mingw?",
-                cpp_name = "os_mingw",
-                ret_type = "bool"
-            },
-            {
-                scm_name = "os-macos?",
-                cpp_name = "os_macos",
-                ret_type = "bool"
             },
             {
                 scm_name = "default-look-and-feel",
