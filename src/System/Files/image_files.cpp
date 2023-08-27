@@ -40,10 +40,6 @@
 #include "Qt/qt_utilities.hpp"
 #endif
 
-#ifdef OS_WIN32
-#include <x11/xlib.h>
-#endif
-
 #ifdef USE_GS
 #include "Ghostscript/gs_utilities.hpp"
 #endif
@@ -249,7 +245,7 @@ ps_read_bbox (string buf, int& x1, int& y1, int& x2, int& y2 ) {
 
 void
 set_imgbox_cache(tree t, int w, int h, int xmin, int ymin){
-    img_box (t)= (imgbox) {w, h, xmin, ymin};
+    img_box (t)= imgbox {w, h, xmin, ymin};
 }
 
 void

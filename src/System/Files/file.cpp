@@ -30,11 +30,15 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/stat.h>
+
+#ifndef OS_WIN32
 #include <sys/file.h>
 #include <unistd.h>
+#endif
+
 #include <sys/types.h>
 #include <string.h>  // strerror
-#if defined (OS_MINGW)
+#if defined (OS_MINGW) || defined (OS_WIN32)
 #include "Windows/win-utf8-compat.hpp"
 #include <time.h>
 #else
