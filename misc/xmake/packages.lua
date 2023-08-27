@@ -61,7 +61,7 @@ function add_requires_of_mogan()
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
     end
 
-    if is_plat("mingw") then
+    if is_plat("mingw") or is_plat("windows") then
         add_requires("nowide_standalone 11.2.0", {system=false})
         add_requires("qt5widgets 5.15.2")
         if is_mode("release") then
