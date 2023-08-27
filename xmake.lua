@@ -376,7 +376,6 @@ target("libmogan") do
     end)
 
     add_packages("lolly")
-    add_packages("libpng")
     add_packages("libiconv")
     add_packages("zlib")
     add_packages("libjpeg")

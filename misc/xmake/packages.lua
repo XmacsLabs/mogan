@@ -49,7 +49,6 @@ function add_requires_of_mogan()
     local PDFHUMMUS_VERSION = "4.5.10"
 
     if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
-        add_requires("apt::libpng-dev", {alias="libpng"})
         add_requires("apt::zlib1g-dev", {alias="zlib"})
         -- config package name for libjpeg on Ubuntu
         if linuxos.name() == "ubuntu" then
@@ -65,7 +64,6 @@ function add_requires_of_mogan()
         end
     else
     -- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
-        add_requires("libpng 1.6.37", {system=false})
         add_requires("libiconv 1.17", {system=false})
         add_requires("zlib 1.2.12", {system=false})
         add_requires("libjpeg v9e", {system=false})
