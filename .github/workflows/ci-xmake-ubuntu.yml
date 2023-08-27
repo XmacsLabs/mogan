@@ -40,7 +40,7 @@ jobs:
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc \
-              fonts-noto-cjk zlib1g-dev libjpeg-turbo8-dev \
+              fonts-noto-cjk zlib1g-dev \
               libcurl4-openssl-dev libfreetype-dev \
               ${{matrix.qt_pkg}}
       - uses: actions/checkout@v3
