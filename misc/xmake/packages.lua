@@ -32,7 +32,7 @@ package("lolly")
 
     add_versions("v1.1.6", "0504b5b1ae79b357eb6dd0d368d84535df3e0bd4")
 
-    on_install("linux", "macosx", "mingw", "wasm", function (package)
+    on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
         if package:config("shared") then
             configs.kind = "shared"
@@ -61,7 +61,7 @@ function add_requires_of_mogan()
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
     end
 
-    if is_plat("mingw") then
+    if is_plat("mingw") or is_plat("windows") then
         add_requires("nowide_standalone 11.2.0", {system=false})
         add_requires("qt5widgets 5.15.2")
         if is_mode("release") then
