@@ -18,7 +18,7 @@
 #include "tm_timer.hpp"
 #include "data_cache.hpp"
 
-#ifdef OS_WIN32
+#ifdef OS_WIN
 #include <x11/xlib.h>
 #endif
 
@@ -324,7 +324,7 @@ load_tex (string family, int size, int dpi, int dsize,
       bench_cumul ("load tex font");
       return;
     }
-#ifdef OS_WIN32
+#ifdef OS_WIN
   else {
     string name= family * as_string (size) * "@" * as_string (dpi);
     failed_error << "Could not open font " << name << "\nLoading default" << LF;

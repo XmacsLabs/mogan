@@ -248,7 +248,7 @@ tree_to_verbatim (tree t, bool wrap, string enc) {
   if (enc == "iso-8859-1" || enc == "ISO-8859-1") buf= tm_decode (buf);
   else if (enc == "SourceCode") buf= var_cork_to_sourcecode (buf);
   else if (enc != "cork" && enc != "Cork") buf= var_cork_to_utf8 (buf);
-#ifdef OS_WIN32
+#ifdef OS_WIN
   return unix_to_dos (buf);
 #else
   return buf;

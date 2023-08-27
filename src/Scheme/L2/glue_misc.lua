@@ -138,7 +138,7 @@ function main()
             },
             {
                 scm_name = "os-win32?",
-                cpp_name = "os_win32",
+                cpp_name = "os_win",
                 ret_type = "bool"
             },
             {

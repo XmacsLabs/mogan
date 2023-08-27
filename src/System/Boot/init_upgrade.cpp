@@ -23,7 +23,7 @@
 
 static void
 init_upgrade_scheme () {
-#ifndef OS_WIN32
+#ifndef OS_WIN
   url u= "$TEXMACS_HOME_PATH/progs";
   string prgs= as_string (u);
   if (exists (u * "Init.scm") && (!exists (u * "my-init-texmacs.scm"))) {
