@@ -27,9 +27,6 @@ int    system (string s, string &r, string& e);
 
 string eval_system (string s);
 string var_eval_system (string s);
-array<string> evaluate_system (array<string> arg,
-			       array<int> fd_in, array<string> in,
-			       array<int> fd_out);
 
 url get_texmacs_path ();
 url get_texmacs_home_path ();
