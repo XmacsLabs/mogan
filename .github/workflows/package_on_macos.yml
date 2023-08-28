@@ -21,7 +21,7 @@ jobs:
           cache: 'true'
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.8.1
+          xmake-version: v2.8.2
           actions-cache-folder: '.xmake-cache'
       - name: xmake repo --update
         run: xmake repo --update
