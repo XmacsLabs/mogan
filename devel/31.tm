@@ -32,7 +32,10 @@
   block to tm_block and block>>|<row|<cell|Chore>|<cell|31_15>|<cell|Pluto>|<cell|Use
   curl in lolly>>|<row|<cell|Chore>|<cell|31_16>|<cell|Pluto>|<cell|Move
   glues to glue_lolly>>|<row|<cell|Chore>|<cell|31_17>|<cell|Da>|<cell|lolly
-  1.1.5: remove unix sys utils>>>>>
+  1.1.5: remove unix sys utils>>|<row|<cell|Chore>|<cell|31_18>|<cell|Da>|<cell|lolly
+  1.1.6>>|<row|<cell|Chore>|<cell|31_19>|<cell|Da>|<cell|Separate
+  tm_sys_utils from sys_utils>>|<row|<cell|Chore>|<cell|31_20>|<cell|Da>|<cell|lolly
+  1.1.7: use sys_utils in lolly>>>>>
 
   <tmdoc-copyright|2023|Darcy Shen>
 
