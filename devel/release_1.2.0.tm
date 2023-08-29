@@ -11,13 +11,14 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|28|28|1|1|cell-background|pastel
-  red>|<cwith|27|27|1|1|cell-background|pastel
-  red>|<cwith|23|23|1|1|cell-background|pastel
-  red>|<cwith|34|34|3|3|cell-valign|b>|<cwith|35|35|1|1|cell-valign|b>|<cwith|22|22|1|1|cell-background|pastel
-  green>|<cwith|25|25|1|1|cell-background|pastel
-  green>|<cwith|21|21|1|1|cell-background|pastel
-  green>|<table|<row|<cell|<dlink|51>>|<cell|Darcy>|<cell|Scheme
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|29|29|1|1|cell-background|pastel
+  red>|<cwith|28|28|1|1|cell-background|pastel
+  red>|<cwith|24|24|1|1|cell-background|pastel
+  red>|<cwith|35|35|3|3|cell-valign|b>|<cwith|36|36|1|1|cell-valign|b>|<cwith|23|23|1|1|cell-background|pastel
+  green>|<cwith|26|26|1|1|cell-background|pastel
+  green>|<cwith|22|22|1|1|cell-background|pastel
+  green>|<cwith|2|2|2|2|cell-valign|c>|<table|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements
+  on Table>>|<row|<cell|<dlink|51>>|<cell|Darcy>|<cell|Scheme
   Onboarding>>|<row|<cell|<dlink|50>>|<cell|Oyyko>|<cell|Mogan Draw app &
   WASM (OSPP)>>|<row|<cell|<dlink|49>>|<cell|jingkaimori>|<cell|>>|<row|<cell|<dlink|48>>|<cell|Darcy>|<cell|Mogan
   Code Kickoff>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
