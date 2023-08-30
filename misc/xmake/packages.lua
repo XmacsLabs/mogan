@@ -32,7 +32,7 @@ package("lolly")
         add_deps("libcurl")
     end
 
-    add_versions("main", "87095228118e1a651c7605f2c0c9e7ed6cf38751")
+    add_versions("v1.2.0", "87095228118e1a651c7605f2c0c9e7ed6cf38751")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
