@@ -15,14 +15,6 @@
 #include "tree.hpp"
 #include "tm_debug.hpp"
 
-
-inline tree as_tree (url u) { return tree (u->t); }
-inline string as_system_string (url u) { return as_string (u, URL_SYSTEM); }
-inline string as_unix_string (url u) { return as_string (u, URL_UNIX); }
-inline string as_standard_string (url u) { return as_string (u,URL_STANDARD); }
-
-inline url url_parent (url u) { return u * url_parent (); }
-
 bool   is_secure (url u);            // is u secure?
 
 /******************************************************************************

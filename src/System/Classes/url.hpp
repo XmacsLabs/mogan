@@ -100,6 +100,7 @@ url url_or (url u1, url u2);
 url url_wildcard ();                  // any url
 url url_wildcard (string name);       // string with * wildcards
 
+inline url url_parent (url u) { return u * url_parent (); }
 
 /******************************************************************************
 * predicates
@@ -135,5 +136,10 @@ void skip_ipv6 (string s, int& i);
 
 string as_string (url u, int type= URL_SYSTEM);
 tm_ostream& operator << (tm_ostream& out, url u);
+
+inline tree as_tree (url u) { return tree (u->t); }
+inline string as_system_string (url u) { return as_string (u, URL_SYSTEM); }
+inline string as_unix_string (url u) { return as_string (u, URL_UNIX); }
+inline string as_standard_string (url u) { return as_string (u,URL_STANDARD); }
 
 #endif
