@@ -245,6 +245,13 @@ end
 
 local XMACS_VERSION="1.2.0"
 
+local plugin_pdf_files = {
+    "src/Plugins/Pdf/**.cpp",
+}
+local plugin_pdf_includedirs = {
+    "Plugins/Pdf"
+}
+
 local INSTALL_DIR = "$(buildir)"
 if is_plat("mingw") then 
     INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/data/")
@@ -377,7 +384,6 @@ target("libmogan") do
     add_packages("lolly")
     add_packages("libiconv")
     add_packages("freetype")
-    add_packages("pdfhummus")
     add_packages("nowide_standalone")
     add_packages("s7")
 
@@ -430,7 +436,6 @@ target("libmogan") do
             "src/Kernel/Abstractions",
             "src/Kernel/Types",
             "src/Plugins",
-            "src/Plugins/Pdf",
             "src/Plugins/Qt",
             "src/Scheme",
             "src/Scheme/S7",
@@ -488,7 +493,6 @@ target("libmogan") do
             "src/Plugins/Bibtex/**.cpp",
             "src/Plugins/Database/**.cpp",
             "src/Plugins/Freetype/**.cpp",
-            "src/Plugins/Pdf/**.cpp",
             "src/Plugins/Ghostscript/**.cpp",
             "src/Plugins/Ispell/**.cpp",
             "src/Plugins/Metafont/**.cpp",
@@ -615,6 +619,7 @@ target("research") do
     end
 
     add_packages("lolly")
+    add_packages("pdfhummus")
     if is_plat("mingw") then
         add_packages("nowide_standalone")
         add_packages("qt5widgets")
@@ -634,6 +639,7 @@ target("research") do
     add_includedirs({
         "$(buildir)",
     })
+    add_files(plugin_pdf_files)
     add_files("src/Mogan/Research/research.cpp")
     if is_plat("mingw") and is_mode("release") then
         add_deps("windows_icon")

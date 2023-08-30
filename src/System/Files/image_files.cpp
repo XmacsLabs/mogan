@@ -44,9 +44,7 @@
 #include "Ghostscript/gs_utilities.hpp"
 #endif
 
-#ifdef PDF_RENDERER
-#include "Pdf/pdf_hummus_renderer.hpp"
-#endif
+extern void hummus_pdf_image_size (url image, int& w, int& h);
 
 typedef struct { int w; int h; int xmin; int ymin;} imgbox ;
 hashmap<tree,imgbox> img_box;
