@@ -419,6 +419,35 @@ delta (url base, url u) {
   return res;
 }
 
+string
+get_root (url u) {
+  if (is_concat (u)) return get_root (u[1]);
+  if (is_or (u)) {
+    string s1= get_root (u[1]);
+    string s2= get_root (u[2]);
+    if (s1 == s2) return s1; else return "";
+  }
+  if (is_root (u)) return u[1]->t->label;
+  return "";
+}
+
+url
+unroot (url u) {
+  if (is_concat (u)) return unroot (u[1]) * u[2];
+  if (is_or (u)) return unroot (u[1]) | unroot (u[2]);
+  if (is_root (u)) return url_here ();
+  return u;
+}
+
+url
+reroot (url u, string protocol) {
+  if (is_concat (u)) return reroot (u[1], protocol) * u[2];
+  if (is_or (u)) return reroot (u[1], protocol) | reroot (u[2], protocol);
+  if (is_root (u)) return url_root (protocol);
+  return u;
+}
+
+
 static url
 expand (url u1, url u2) {
   if (is_or (u1)) return expand (u1[1], u2) | expand (u1[2], u2);
