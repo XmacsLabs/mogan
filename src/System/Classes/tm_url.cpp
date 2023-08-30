@@ -91,67 +91,6 @@ is_secure (url u) {
 }
 
 /******************************************************************************
-* Url sorting and factorization
-******************************************************************************/
-
-static bool
-operator <= (url u1, url u2) {
-  if (is_atomic (u1) && is_atomic (u2))
-    return u1->t->label <= u2->t->label;
-  if (is_atomic (u1)) return true;
-  if (is_atomic (u2)) return false;
-  if (is_concat (u1) && is_concat (u2)) {
-    if (u1[1] == u2[1]) return u1[2] <= u2[2];
-    else return u1[1] <= u2[1];
-  }
-  if (is_concat (u1)) return true;
-  if (is_concat (u2)) return false;
-  return true; // does not matter for sorting
-}
-
-static url
-sort_sub (url add, url to) {
-  if (is_or (to)) {
-    if (add <= to[1]) return add | to;
-    return to[1] | sort_sub (add, to[2]);
-  }
-  if (add <= to) return add | to;
-  else return to | add;
-}
-
-url
-sort (url u) {
-  if (is_or (u))
-    return sort_sub (u[1], sort (u[2]));
-  else return u;
-}
-
-static url
-factor_sorted (url u) {
-  if (!is_or (u)) return u;
-  url v= factor_sorted (u[2]);
-  if (is_concat (u[1])) {
-    if (is_concat (v) && (u[1][1] == v[1]))
-      return u[1][1] * (u[1][2] | v[2]);
-    if (is_or (v) && is_concat (v[1]) && (u[1][1] == v[1][1]))
-      return (u[1][1] * (u[1][2] | v[1][2])) | v[2];
-  }
-  return u[1] | v;
-}
-
-static url
-factor_sub (url u) {
-  if (is_concat (u)) return u[1] * factor (u[2]);
-  if (is_or (u)) return factor_sub (u[1]) | factor_sub (u[2]);
-  return u;
-}
-
-url
-factor (url u) {
-  return factor_sub (factor_sorted (sort (u)));
-}
-
-/******************************************************************************
 * Url resolution and wildcard expansion
 ******************************************************************************/
 
