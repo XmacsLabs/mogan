@@ -18,8 +18,6 @@
 #ifdef OS_MINGW
 #include "Windows/win_sys_utils.hpp"
 #include "Windows/win_utf8_compat.hpp"
-#else
-#include "Unix/unix_sys_utils.hpp"
 #endif
 
 #ifdef QTTEXMACS
@@ -66,28 +64,6 @@ system (string s, string& result) {
 #else
   return -1;
 #endif
-}
-
-int
-system (string s) {
-  if (DEBUG_STD) debug_shell << s << "\n";
-  if (DEBUG_VERBOSE) {
-    string result;
-    int r= system (s, result);
-    debug_shell << result;
-    return r;
-  }
-  else {
-#if defined (OS_MINGW)
-#if !defined(KERNEL_L3)
-  return qt_system (s);
-#else
-  return -1;
-#endif
-#else
-    return unix_system (s);
-#endif
-  }
 }
 
 string

@@ -21,7 +21,6 @@ extern int script_status; // 0: never accept, 1: prompt, 2: always accept
 string get_current_cpu_arch ();
 string get_pretty_os_name ();
 
-int    system (string s);
 int    system (string s, string &r);
 int    system (string s, string &r, string& e);
 
