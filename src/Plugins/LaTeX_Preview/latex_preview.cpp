@@ -159,7 +159,7 @@ latex_load_preview (url wdir, bool dvips= false) {
       << "-dLanguageLevel=3 -sOutputFile=temp%d.eps temp.pdf";
   }
   dbg ("GS command: " * cmdln);
-  if (system (cmdln)) {
+  if (lolly::system (cmdln)) {
     dbg ("Could not extract pictures from LaTeX document");
     return array<tree> ();
   }
@@ -204,7 +204,7 @@ latex_preview (string s, tree t) {
         << " -output-directory \"" << as_string (wdir)
         << "\" \"" << as_string (wdir) << "/temp.tex\"";
   dbg ("LaTeX command: " * cmdln);
-  if (system (cmdln)) {
+  if (lolly::system (cmdln)) {
     dbg ("Could not compile LaTeX document using " * latex_command);
     dbg ("Try to fallback on LaTeX");
     dvips= true;
@@ -215,7 +215,7 @@ latex_preview (string s, tree t) {
           << " -output-directory \"" << as_string (wdir)
           << "\" \"" << as_string (wdir) << "/temp.tex\"";
     dbg ("LaTeX command: " * cmdln);
-    if (system (cmdln)) {
+    if (lolly::system (cmdln)) {
       dbg ("Could not compile LaTeX document");
       latex_clean_tmp_directory (wdir);
       return array<tree> ();
