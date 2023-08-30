@@ -74,7 +74,8 @@ public:
   void handle_span ();
   void merge_borders ();
   void compute_width (SI& tmw, SI& tlw, SI& trw);
-  void compute_widths (SI* Mw, SI* Lw, SI* Rw, bool large);
+  void compute_widths_by_column (SI* Mw, SI* Lw, SI* Rw, bool large);
+  void compute_width_by_row (SI& w, bool large);
   void compute_horizontal_parts (double* parts);
   void position_columns ();
   void compute_height (SI& mh, SI& bh, SI& th);
@@ -147,6 +148,7 @@ public:
   void cell_local_end (tree fm);
   void format_cell (tree fm);
   void format_item (tree with);
+  // mw: the width of the content (including the padding)
   void compute_width (SI& mw, SI& lw, SI& rw, bool large);
   void compute_height (SI& mh, SI& bh, SI& th);
   void position_horizontally (SI offset, SI mw, SI lw, SI rw);
