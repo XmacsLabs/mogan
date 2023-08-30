@@ -12,15 +12,15 @@
 #ifndef URL_H
 #define URL_H
 
-#include "tree.hpp"
-#include "tm_debug.hpp"
-
 #define URL_SYSTEM 0
 #define URL_UNIX 1
 #define URL_STANDARD 2
 #define URL_CLEAN_UNIX 3
 
 #define URL_TUPLE 245
+
+#include "string.hpp"
+#include "tree.hpp"
 
 /******************************************************************************
 * The url data type
@@ -47,18 +47,12 @@ public:
 };
 CONCRETE_CODE(url);
 
-tm_ostream& operator << (tm_ostream& out, url u);
 inline url as_url (tree t) { return url(t); }
-string as_string (url u, int type= URL_SYSTEM);
-inline tree as_tree (url u) { return tree (u->t); }
-inline string as_system_string (url u) { return as_string (u, URL_SYSTEM); }
-inline string as_unix_string (url u) { return as_string (u, URL_UNIX); }
-inline string as_standard_string (url u) { return as_string (u,URL_STANDARD); }
 
 /******************************************************************************
 * url constructors
 ******************************************************************************/
-
+url url_path (string s, int type= URL_SYSTEM);
 url url_general (string name, int type);
 url url_unix (string name);
 url url_unix (string dir, string name);
@@ -75,8 +69,27 @@ inline url url_pwd () { return url_system ("$PWD"); }
 
 url url_root (string protocol);       // root url
 url url_ramdisc (string contents);    // ramdisc with contents contents
-url url_wildcard ();                  // any url
-url url_wildcard (string name);       // string with * wildcards
+
+/******************************************************************************
+* operations on urls
+******************************************************************************/
+url    head (url u);                 // keep only the directory of the file
+url    tail (url u);                 // keep only the file name without path
+string suffix (url u);               // get suffix of file
+string basename (url u, string suf); // get basename of file with given suffix
+string basename (url u);             // get basename of file
+url    glue (url u, string s);       // glue suffix to url tail
+url    unglue (url u, int nr);       // remove nr chars from suffix
+url    unblank (url u);              // a/b/ -> a/b
+url    relative (url base, url u);   // a/b, c -> a/c
+url    delta (url base, url u);      // relative (a, delta (a, b)) == b
+string get_root (url u);             // get root
+url    unroot (url u);               // remove root
+url    reroot (url u, string s);     // reroot using new protocol
+url    expand (url u);               // rewrite a/{b:c} -> a/b:a/c
+url    sort (url u);                 // order items in ors
+url    factor (url u);               // inverse of expand; also sorts
+bool   descends (url u, url base);   // does u descend from base?
 
 url operator * (url u1, url u2);      // concatenation of url with rootless url
 url operator * (url u1, const char* name);
@@ -84,13 +97,14 @@ url operator * (url u1, string name);
 url url_concat (url u1, url u2);
 url operator | (url u1, url u2);      // disjunction of urls like in file paths
 url url_or (url u1, url u2);
+url url_wildcard ();                  // any url
+url url_wildcard (string name);       // string with * wildcards
 
 inline url url_parent (url u) { return u * url_parent (); }
 
 /******************************************************************************
 * predicates
 ******************************************************************************/
-
 bool is_none (url u);
 bool is_here (url u);
 bool is_parent (url u);
@@ -117,43 +131,15 @@ bool is_name (url u);
 bool is_rooted_name (url u);
 bool is_ramdisc (url u);
 
-/******************************************************************************
-* operations on urls
-******************************************************************************/
 
-url    head (url u);                 // keep only the directory of the file
-url    tail (url u);                 // keep only the file name without path
-string suffix (url u);               // get suffix of file
-string basename (url u, string suf); // get basename of file with given suffix
-string basename (url u);             // get basename of file
-url    glue (url u, string s);       // glue suffix to url tail
-url    unglue (url u, int nr);       // remove nr chars from suffix
-url    unblank (url u);              // a/b/ -> a/b
-url    relative (url base, url u);   // a/b, c -> a/c
-url    delta (url base, url u);      // relative (a, delta (a, b)) == b
-string get_root (url u);             // get root
-url    unroot (url u);               // remove root
-url    reroot (url u, string s);     // reroot using new protocol
-url    expand (url u);               // rewrite a/{b:c} -> a/b:a/c
-url    sort (url u);                 // order items in ors
-url    factor (url u);               // inverse of expand; also sorts
-bool   descends (url u, url base);   // does u descend from base?
-bool   is_secure (url u);            // is u secure?
+void skip_ipv6 (string s, int& i);
 
-/******************************************************************************
-* url resolution
-******************************************************************************/
+string as_string (url u, int type= URL_SYSTEM);
+tm_ostream& operator << (tm_ostream& out, url u);
 
-url  complete (url u, string filter= "fr"); // wildcard completion
-url  resolve (url u, string filter= "fr");  // find first match only
-url  resolve_in_path (url u);               // find file in path
-bool exists (url u);                        // file exists
-bool exists_in_path (url u);                // file exists in path
-bool has_permission (url u, string filter); // check file permissions
-url  descendance (url u);                   // utility for style&package menus
-url  subdirectories (url u);                // similarly for patters
-url  concretize_url (url u);                // variant of concretize below
-string concretize (url u);                  // system name for resolved url
-string materialize (url u, string f= "fr"); // resolve + concretize
+inline tree as_tree (url u) { return tree (u->t); }
+inline string as_system_string (url u) { return as_string (u, URL_SYSTEM); }
+inline string as_unix_string (url u) { return as_string (u, URL_UNIX); }
+inline string as_standard_string (url u) { return as_string (u,URL_STANDARD); }
 
-#endif // defined URL_H
+#endif

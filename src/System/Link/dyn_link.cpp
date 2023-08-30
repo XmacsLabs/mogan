@@ -12,6 +12,7 @@
 #include "dyn_link.hpp"
 #include "url.hpp"
 #include "hashmap.hpp"
+#include "tm_debug.hpp"
 #ifndef OS_MINGW
 #include <dlfcn.h>
 #endif

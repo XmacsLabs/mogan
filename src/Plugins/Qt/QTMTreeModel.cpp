@@ -15,6 +15,7 @@
 #include "path.hpp"
 #include "observers.hpp"
 #include "modification.hpp"
+#include "tm_url.hpp"
 
 #include "qt_utilities.hpp"
 
