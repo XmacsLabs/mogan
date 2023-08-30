@@ -26,11 +26,13 @@ package("lolly")
 
     add_urls("https://github.com/XmacsLabs/lolly.git")
     add_urls("https://gitee.com/XmacsLabs/lolly.git")
+
+    add_deps("tbox")
     if not is_plat("wasm") then
         add_deps("libcurl")
     end
 
-    add_versions("v1.1.7", "75f2a4f23860f5c6fabef82168f637b29d60c30b")
+    add_versions("main", "87095228118e1a651c7605f2c0c9e7ed6cf38751")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
@@ -43,7 +45,7 @@ package_end()
 
 
 function add_requires_of_mogan()
-    local LOLLY_VERSION = "1.1.3"
+    local LOLLY_VERSION = "1.2.0"
     local CURL_VERSION = "7.84.0"
     local FREETYPE_VERSION = "2.12.1"
     local PDFHUMMUS_VERSION = "4.5.10"
