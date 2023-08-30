@@ -13,6 +13,7 @@
 #include "gui.hpp"
 #include "image_files.hpp"
 #include "true_color.hpp"
+#include "tm_url.hpp"
 
 url get_current_buffer_safe ();
 bool is_percentage (tree t, string s= "%");
