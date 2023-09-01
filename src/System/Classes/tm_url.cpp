@@ -61,6 +61,7 @@
 #include "config.h"
 
 #include "url.hpp"
+#include "tmfs_url.hpp"
 #include "tm_url.hpp"
 #include "sys_utils.hpp"
 #include "web_files.hpp"
