@@ -17,6 +17,7 @@
 #include "analyze.hpp"
 #include "message.hpp"
 #include "dictionary.hpp"
+#include "tmfs_url.hpp"
 
 /******************************************************************************
 * Dialogues

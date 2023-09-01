@@ -17,6 +17,8 @@
 #include "file.hpp"
 #include "persistent.hpp"
 #include "sys_utils.hpp"
+#include "tmfs_url.hpp"
+#include "tree.hpp"
 #include "url.hpp"
 
 url

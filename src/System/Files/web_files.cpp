@@ -16,6 +16,7 @@
 #include "hashmap.hpp"
 
 #include "scheme.hpp"
+#include "tmfs_url.hpp"
 #include "Curl/curl.hpp"
 
 #define MAX_CACHED 25
