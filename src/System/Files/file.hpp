@@ -73,13 +73,6 @@ void rmdir (url what);
 void change_mode (url u, int mode);
 
 
-url search_sub_dirs (url root);
-array<string> file_completions (url search, url dir);
-
-url grep (string what, url u);
-url search_file_in (url u, string name);
-url search_file_upwards (url u, string name, array<string> stops);
-
 #define CMD_GET_FROM_WEB    1
 #define CMD_GET_FROM_SERVER 2
 #define CMD_APPLY_EFFECT    3
