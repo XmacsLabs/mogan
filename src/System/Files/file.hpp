@@ -73,9 +73,4 @@ void rmdir (url what);
 void change_mode (url u, int mode);
 
 
-#define CMD_GET_FROM_WEB    1
-#define CMD_GET_FROM_SERVER 2
-#define CMD_APPLY_EFFECT    3
-url make_file (int cmd, tree data, array<url> args);
-
 #endif // defined FILE_H
