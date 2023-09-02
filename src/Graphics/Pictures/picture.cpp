@@ -17,6 +17,7 @@
 #include "colors.hpp"
 #include "iterator.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "effect.hpp"
 
 /******************************************************************************
