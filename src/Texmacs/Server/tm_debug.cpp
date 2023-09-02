@@ -22,6 +22,7 @@
 #include "tm_link.hpp"
 #endif
 #include "file.hpp"
+#include "tm_file.hpp"
 
 
 bool rescue_mode= false;

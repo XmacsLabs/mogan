@@ -16,6 +16,7 @@
 #include "effect.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "image_files.hpp"
 
 /******************************************************************************

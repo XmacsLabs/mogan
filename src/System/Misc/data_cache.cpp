@@ -12,6 +12,7 @@
 #include "data_cache.hpp"
 #include "sys_utils.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "iterator.hpp"
 #include "tree_helper.hpp"
 #include "tm_block.hpp"
