@@ -21,6 +21,8 @@
 #include "tree_label.hpp"
 #include "tree_helper.hpp"
 
+#include <sys/stat.h>
+
 #if defined (OS_MINGW) || defined (OS_WIN)
 #include "Windows/win_utf8_compat.hpp"
 #include <time.h>
