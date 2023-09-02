@@ -138,7 +138,9 @@ local l3_files = {
     "src/System/Classes/**.cpp",
     "src/System/Files/**files.cpp",
     "src/System/Files/file.cpp",
-    "src/System/Misc/**.cpp",
+    "src/System/Misc/data_cache.cpp",
+    "src/System/Misc/persistent.cpp",
+    "src/System/Misc/stack_trace.cpp",
     "src/Texmacs/Server/tm_debug.cpp",
 }
 local l3_includedirs = {
