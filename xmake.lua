@@ -136,7 +136,8 @@ local l3_files = {
     "src/System/Config/**.cpp",
     "src/System/Language/locale.cpp",
     "src/System/Classes/**.cpp",
-    "src/System/Files/**.cpp",
+    "src/System/Files/**files.cpp",
+    "src/System/Files/file.cpp",
     "src/System/Misc/**.cpp",
     "src/Texmacs/Server/tm_debug.cpp",
 }
