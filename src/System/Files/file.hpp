@@ -9,8 +9,8 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#ifndef FILE_H
-#define FILE_H
+#ifndef LOLLY_FILE_H
+#define LOLLY_FILE_H
 
 #include "url.hpp"
 #include "tm_url.hpp"
@@ -33,13 +33,10 @@ void string_save (string s, url u);
 bool append_string (url u, string s, bool fatal= false);
 void string_append_to_file (string s, url u);
 
-bool is_of_type (url name, string filter);
 bool is_regular (url name);
 bool is_directory (url name);
 bool is_symbolic_link (url name);
 bool is_newer (url which, url than);
-int  file_size (url u);
-int  last_modified (url u, bool cache_flag= true);
 url  url_temp_dir ();
 url  url_temp_dir_sub ();
 url  url_temp (string suffix= "");

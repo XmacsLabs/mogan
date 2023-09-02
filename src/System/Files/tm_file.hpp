@@ -15,6 +15,9 @@
 #include "string.hpp"
 #include "url.hpp"
 
+bool is_of_type (url name, string filter);
+int  file_size (url u);
+int  last_modified (url u, bool cache_flag= true);
 
 url  url_numbered (url dir, string prefix, string postfix, int i=1);
 url  url_scratch (string prefix="no_name_", string postfix=".tm", int i=1);
