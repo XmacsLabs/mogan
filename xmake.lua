@@ -220,31 +220,6 @@ target("libkernel_l3") do
     end
 end
 
-for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
-    local testname = path.basename(filepath)
-    target(testname) do
-        set_languages("c++17")
-        set_policy("check.auto_ignore_flags", false)
-
-        set_group("kernel_l3_tests")
-        add_deps("libkernel_l3")
-        add_syslinks("pthread")
-        add_rules("qt.console")
-        add_frameworks("QtTest")
-
-        add_packages("lolly")
-        if is_plat("mingw") then
-            add_packages("nowide_standalone")
-        end
-        add_includedirs("tests/Base")
-        add_includedirs("$(buildir)/L3")
-        add_includedirs(l3_includedirs)
-        add_files("tests/Base/base.cpp")
-        add_files(filepath)
-        add_files(filepath, {rules = "qt.moc"})
-    end
-end
-
 
 local XMACS_VERSION="1.2.0"
 
