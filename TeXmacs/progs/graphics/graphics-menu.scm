@@ -754,6 +754,9 @@
   ((check (balloon (icon "tm_carc_mode.xpm") "Insert circles")
           "v" (== (graphics-mode) '(edit circle)))
    (graphics-set-mode '(edit circle)))
+  ((check (balloon (icon "tm_oval_mode.xpm") "Insert Oval")
+          "v" (== (graphics-mode) '(edit oval)))
+   (graphics-set-mode '(edit oval)))
   /
   ((check (balloon (icon "tm_textat_mode.xpm") "Insert text")
           "v" (== (graphics-mode) '(edit text-at)))
@@ -987,6 +990,7 @@
         ((== s '(edit csmooth)) "closed smooth")
         ((== s '(edit arc)) "arc")
         ((== s '(edit circle)) "circle")
+        ((== s '(edit oval)) "oval")
         ((== s '(edit text-at)) "text")
         ((== s '(edit math-at)) "mathematics")
         ((== s '(edit document-at)) "long text")

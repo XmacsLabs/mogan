@@ -1001,6 +1001,114 @@ arc_rep::get_control_points (array<double>& abs, array<point>& pts,
 }
 
 /******************************************************************************
+ * Ovals
+ ******************************************************************************/
+
+struct oval_rep : public curve_rep {
+  array<point>  a;
+  array<path>   cip;
+  array<double> u;
+  point         f1, f2; // two foci of the ellipsis
+  point         center;
+  double        focal_length;
+  double        sum_of_two_dis;
+  point         i, j;   // The two base vectors of the ellipsis's 2D plane
+  double        r1, r2; // The two radiuses of the ellipsis
+  oval_rep (array<point> a, array<path> cip, bool close);
+  point  evaluate (double t);
+  void   rectify_cumul (array<point>& cum, double eps);
+  double bound (double t, double eps);
+  point  grad (double t, bool& error);
+  double curvature (double t1, double t2);
+  int    get_control_points (array<double>& abs, array<point>& pts,
+                             array<path>& cip);
+};
+
+oval_rep::oval_rep (array<point> a2, array<path> cip2, bool close)
+    : a (a2), cip (cip2) {
+  int   n = N (a);
+  point o1= (n > 0 ? a[0] : point (0, 0));
+  point o2= (n > 1 ? a[1] : point (0, 0));
+  point o3= (n > 2 ? a[2] : point (0, 0));
+  // DONT NEED
+  // if (n != 3 || linearly_dependent (o1, o2, o3)) {
+  //   i = j = 0;
+  //   r1= r2= 1;
+  //   a     = array<point> (1);
+  //   a[0]  = o1;
+  //   if (N (cip)) {
+  //     path p= cip[0];
+  //     cip   = array<path> (1);
+  //     cip[0]= p;
+  //   }
+  //   u   = array<double> (1);
+  //   u[0]= 0;
+  //   return;
+  // }
+  f1=o1;
+  f2=o2;
+  center = (f1+f2)/2;
+  focal_length = norm(f2 - f1);
+  sum_of_two_dis = norm(o3 - f1) + norm(o3 - f2);
+  r1 = (sum_of_two_dis) / 2;
+  cout<<"HERE1\n";
+  r2 = sqrt(square(sum_of_two_dis/2)-square(focal_length/2));
+  cout<<"HERE2\n";
+  if (orthogonalize (i, j, center, o1, o2))
+    ;
+  else orthogonalize (i, j, center, o1, o3);
+}
+
+point
+oval_rep::evaluate (double t) {
+  return center + r1 * cos (2 * tm_PI * t) * i + r2 * sin (2 * tm_PI * t) * j;
+}
+
+void
+oval_rep::rectify_cumul (array<point>& cum, double eps) {
+  double t, step;
+  step= sqrt (2 * eps / max (r1, r2)) / tm_PI;
+  for (t= step; t <= 1.0; t+= step)
+    cum << evaluate (t);
+  if (t - step != 1.0) cum << evaluate (1.0);
+}
+
+double
+oval_rep::bound (double t, double eps) {
+  return curve_rep::bound (t, eps);
+}
+
+point
+oval_rep::grad (double t, bool& error) {
+  error= false;
+  return -2 * tm_PI * r1 * sin (2 * tm_PI * t) * i +
+         2 * tm_PI * r2 * cos (2 * tm_PI * t) * j;
+}
+
+double
+oval_rep::curvature (double t1, double t2) {
+  (void) t1;
+  (void) t2;
+  if (r1 >= r2) return fnull (r1, 1.0e-6) ? tm_infinity : square (r2) / r1;
+  else return fnull (r2, 1.0e-6) ? tm_infinity : square (r1) / r2;
+}
+
+curve
+oval (array<point> a, array<path> cip, bool close) {
+  return tm_new<oval_rep> (a, cip, close);
+}
+
+int
+oval_rep::get_control_points (array<double>& abs, array<point>& pts,
+                             array<path>& rcip) {
+  abs = u;
+  pts = a;
+  rcip= cip;
+  return N (a);
+}
+
+
+/******************************************************************************
  * Compound curves
  ******************************************************************************/
 

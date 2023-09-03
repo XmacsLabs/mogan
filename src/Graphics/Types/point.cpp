@@ -234,6 +234,7 @@ orthogonalize (point& i, point& j, point p1, point p2, point p3) {
   return true;
 }
 
+// perpendicular bisector of P1 and P2. P3 is meaningless!!
 axis
 midperp (point p1, point p2, point p3) {
   axis a;

@@ -325,6 +325,7 @@ enum tree_label : int {
   CLINE,
   ARC,
   CARC,
+  OVAL,
   SPLINE,
   VAR_SPLINE,
   CSPLINE,
