@@ -40,10 +40,6 @@ void mac_fix_paths ();
 #include <QDir>
 #endif
 
-#ifdef OS_MINGW
-#include "Windows/win_utf8_compat.hpp"
-#endif
-
 #ifdef MACOSX_EXTENSIONS
 #include "MacOS/mac_utilities.h"
 #endif
@@ -675,10 +671,6 @@ main (int argc, char** argv) {
     if (setrlimit (RLIMIT_STACK, &limit)) cerr << "Cannot set stack value\n";
   }
   else cerr << "Cannot get stack value\n";
-#endif
-
-#ifdef OS_MINGW
-  nowide::args a (argc, argv); // Fix arguments - make them UTF-8
 #endif
 
   original_path= get_env ("PATH");
