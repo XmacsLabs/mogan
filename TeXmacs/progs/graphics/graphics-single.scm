@@ -247,7 +247,7 @@
 
 (define (edit-insert x y)
   (edit-clean-up)
-  (display* "[DEBUG] Edit Insert")
+  ; (display* "[DEBUG] Edit Insert")
   (object_create (cadr (graphics-mode)) x y))
 
 (define (start-move)

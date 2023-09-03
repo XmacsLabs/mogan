@@ -808,8 +808,6 @@ concater_rep::typeset (tree t, path ip) {
     typeset_arc (t, ip, true);
     break;
   case OVAL:
-    static int xxx=1;
-    cout<<(xxx++)<<"\n";
     typeset_oval (t, ip, true);
     break;
   case SPLINE:

@@ -301,6 +301,7 @@
     (cdr l2)))
 
 (tm-define (graphics-select x y d)
+  ; (display* "[DEBUG] " x " " y  " " d  " " "\n")
   (with res (tree->stree (graphical-select x y))
    ;(display* "res=" res "\n")
     (filter-graphical-select res x y)))

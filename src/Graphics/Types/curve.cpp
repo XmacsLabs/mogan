@@ -1027,36 +1027,24 @@ struct oval_rep : public curve_rep {
 oval_rep::oval_rep (array<point> a2, array<path> cip2, bool close)
     : a (a2), cip (cip2) {
   int   n = N (a);
+  // if(n!=3){cout<<"[DEBUG] ERROR!\n";}
   point o1= (n > 0 ? a[0] : point (0, 0));
   point o2= (n > 1 ? a[1] : point (0, 0));
   point o3= (n > 2 ? a[2] : point (0, 0));
-  // DONT NEED
-  // if (n != 3 || linearly_dependent (o1, o2, o3)) {
-  //   i = j = 0;
-  //   r1= r2= 1;
-  //   a     = array<point> (1);
-  //   a[0]  = o1;
-  //   if (N (cip)) {
-  //     path p= cip[0];
-  //     cip   = array<path> (1);
-  //     cip[0]= p;
-  //   }
-  //   u   = array<double> (1);
-  //   u[0]= 0;
-  //   return;
-  // }
   f1=o1;
   f2=o2;
   center = (f1+f2)/2;
   focal_length = norm(f2 - f1);
   sum_of_two_dis = norm(o3 - f1) + norm(o3 - f2);
   r1 = (sum_of_two_dis) / 2;
-  cout<<"HERE1\n";
   r2 = sqrt(square(sum_of_two_dis/2)-square(focal_length/2));
-  cout<<"HERE2\n";
   if (orthogonalize (i, j, center, o1, o2))
     ;
   else orthogonalize (i, j, center, o1, o3);
+  u   = array<double> (3);
+  u[0]= 0.0;
+  u[1]= 0.5;
+  u[2]= 1.0;
 }
 
 point
