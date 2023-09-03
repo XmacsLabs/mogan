@@ -44,7 +44,6 @@
 #define struct_stat struct stat
 #endif
 
-string main_tmp_dir= "$TEXMACS_HOME_PATH/system/tmp";
 
 /******************************************************************************
 * New style loading and saving
@@ -279,56 +278,6 @@ void string_append_to_file (string s, url u) {
 bool is_regular (url name) { return is_of_type (name, "f"); }
 bool is_directory (url name) { return is_of_type (name, "d"); }
 bool is_symbolic_link (url name) { return is_of_type (name, "l"); }
-
-url
-url_temp (string suffix) {
-#ifdef OS_MINGW
-  unsigned int rnd= raw_time ();
-#else
-  static bool initialized= false;
-  if (!initialized) {
-    srandom ((int) raw_time ());
-    initialized= true;
-  }
-  unsigned int rnd= random ();
-#endif
-  string name= "tmp_" * as_string (rnd) * suffix;
-  url u= url_temp_dir () * url (name);
-  if (exists (u)) return url_temp (suffix);
-  return u;
-}
-
-url
-url_temp_dir_sub () {
-#ifdef OS_MINGW
-  static url tmp_dir=
-    url_system (main_tmp_dir) * url_system (as_string (time (NULL)));
-#else
-  static url tmp_dir=
-    url_system (main_tmp_dir) * url_system (as_string ((int) getpid ()));
-#endif
-  return (tmp_dir);
-}
-
-void
-make_dir (url which) {
-  if (is_none(which))
-    return ;
-  if (!is_directory (which)) {
-    make_dir (head (which));
-    mkdir (which);
-  }
-}
-
-url
-url_temp_dir () {
-  static url u;
-  if (u == url_none()) {
-    u= url_temp_dir_sub ();
-    make_dir (u);
-  }
-  return u;
-}
 
 /******************************************************************************
 * Reading directories

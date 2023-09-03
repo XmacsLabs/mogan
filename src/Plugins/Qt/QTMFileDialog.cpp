@@ -20,6 +20,7 @@
 #include <QDragLeaveEvent>
 #include <QDropEvent>
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "sys_utils.hpp"
 #include "qt_utilities.hpp"
 #include "qt_gui.hpp"

@@ -9,6 +9,7 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "tm_file.hpp"
 #include "file.hpp"
 #include "web_files.hpp"
 #include "analyze.hpp"
@@ -33,6 +34,59 @@
 #endif
 
 #include "data_cache.hpp"
+
+string main_tmp_dir= "$TEXMACS_HOME_PATH/system/tmp";
+
+url
+url_temp (string suffix) {
+#ifdef OS_MINGW
+  unsigned int rnd= raw_time ();
+#else
+  static bool initialized= false;
+  if (!initialized) {
+    srandom ((int) raw_time ());
+    initialized= true;
+  }
+  unsigned int rnd= random ();
+#endif
+  string name= "tmp_" * as_string (rnd) * suffix;
+  url u= url_temp_dir () * url (name);
+  if (exists (u)) return url_temp (suffix);
+  return u;
+}
+
+url
+url_temp_dir_sub () {
+#ifdef OS_MINGW
+  static url tmp_dir=
+    url_system (main_tmp_dir) * url_system (as_string (time (NULL)));
+#else
+  static url tmp_dir=
+    url_system (main_tmp_dir) * url_system (as_string ((int) getpid ()));
+#endif
+  return (tmp_dir);
+}
+
+void
+make_dir (url which) {
+  if (is_none(which))
+    return ;
+  if (!is_directory (which)) {
+    make_dir (head (which));
+    mkdir (which);
+  }
+}
+
+url
+url_temp_dir () {
+  static url u;
+  if (u == url_none()) {
+    u= url_temp_dir_sub ();
+    make_dir (u);
+  }
+  return u;
+}
+
 
 /******************************************************************************
 * Getting attributes of a file

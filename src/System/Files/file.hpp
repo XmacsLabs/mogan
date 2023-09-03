@@ -37,10 +37,6 @@ bool is_regular (url name);
 bool is_directory (url name);
 bool is_symbolic_link (url name);
 bool is_newer (url which, url than);
-url  url_temp_dir ();
-url  url_temp_dir_sub ();
-url  url_temp (string suffix= "");
-
 array<string> read_directory (url name, bool& error_flag);
 
 inline string sys_concretize (url u1) {
@@ -65,7 +61,6 @@ void copy (url from, url to);
 void remove (url what);
 void append_to (url what, url to);
 void mkdir (url dir);
-void make_dir (url which);
 void rmdir (url what);
 void change_mode (url u, int mode);
 

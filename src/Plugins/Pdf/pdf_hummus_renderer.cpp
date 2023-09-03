@@ -26,6 +26,7 @@
 #include "ntuple.hpp"
 #include "scheme.hpp"
 #include "sys_utils.hpp"
+#include "tm_file.hpp"
 #include "wencoding.hpp"
 
 #ifdef QT_CORE_LIB

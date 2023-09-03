@@ -15,6 +15,11 @@
 #include "string.hpp"
 #include "url.hpp"
 
+void make_dir (url which);
+url  url_temp_dir ();
+url  url_temp_dir_sub ();
+url  url_temp (string suffix= "");
+
 bool is_of_type (url name, string filter);
 int  file_size (url u);
 int  last_modified (url u, bool cache_flag= true);
