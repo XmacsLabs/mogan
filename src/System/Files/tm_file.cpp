@@ -9,6 +9,7 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "tm_file.hpp"
 #include "file.hpp"
 #include "web_files.hpp"
 #include "analyze.hpp"
@@ -33,6 +34,245 @@
 #endif
 
 #include "data_cache.hpp"
+
+/******************************************************************************
+* New style loading and saving
+******************************************************************************/
+
+bool
+load_string (url u, string& s, bool fatal) {
+  // cout << "Load " << u << LF;
+  url r= u;
+  if (!is_rooted_name (r)) r= resolve (r);
+  // cout << "Resolved " << r << LF;
+  bool err= !is_rooted_name (r);
+  if (!err) {
+    string name= concretize (r);
+    // cout << "Concrete :" << name << LF;
+    // File contents in cache?
+    bool file_flag= do_cache_file (name);
+    bool doc_flag= do_cache_doc (name);
+    string cache_type= doc_flag? string ("doc_cache"): string ("file_cache");
+    if (doc_flag) cache_load ("doc_cache");
+    bool currently_cached= is_cached (cache_type, name);
+    if (currently_cached && is_up_to_date (url_parent (r))) {
+      s= cache_get (cache_type, name) -> label;
+      return false;
+    }
+    // End caching
+
+    bench_start ("load file");
+    c_string _name (name);
+    // cout << "OPEN :" << _name << LF;
+#ifdef OS_MINGW
+    FILE* fin= fopen (_name, "rb");
+#else
+    FILE* fin= fopen (_name, "r");
+    int fd= -1;
+    if (fin != NULL) {
+      fd= fileno (fin);
+      if (flock (fd, LOCK_SH) == -1) {
+        fclose (fin);
+        fin= NULL;
+      }
+    }
+#endif
+    if (fin == NULL) {
+      err= true;
+      if (!occurs ("system", name))
+        std_warning << "Load error for " << name << ", "
+                    << strerror(errno) << "\n";
+    }
+    int size= 0;
+    if (!err) {
+      if (fseek (fin, 0L, SEEK_END) < 0) err= true;
+      else {
+        size= ftell (fin);
+        if (size<0) err= true;
+      }
+      if (err) {
+        std_warning << "Seek failed for " << as_string (u) << "\n";
+#ifdef OS_MINGW
+#else
+        flock (fd, LOCK_UN);
+#endif
+        fclose (fin);
+      }
+    }
+    if (!err) {
+      rewind (fin);
+      s->resize (size);
+      int read= fread (&(s[0]), 1, size, fin);
+      if (read < size) s->resize (read);
+#ifdef OS_MINGW
+#else
+      flock (fd, LOCK_UN);
+#endif
+      fclose (fin);
+    }
+    bench_cumul ("load file");
+
+    // Cache file contents
+    if (!err && (N(s) <= 10000 || currently_cached))
+      if (file_flag || doc_flag)
+        cache_set (cache_type, name, s);
+    // End caching
+  }
+  if (err) {
+    string err_msg = string("Failed to load file: ") * as_string (u);
+    if (fatal) {
+      failed_error << err_msg << LF;
+      TM_FAILED ("file not readable");
+    }
+    //else debug_io << err_msg << LF;
+  }
+  return err;
+}
+
+string string_load (url u) {
+  string s;
+  (void) load_string (u, s, false);
+  return s;
+}
+
+bool
+save_string (url u, string s, bool fatal) {
+  if (is_rooted_tmfs (u)) {
+    bool err= save_to_server (u, s);
+    if (err && fatal) {
+      failed_error << "File name= " << as_string (u) << "\n";
+      TM_FAILED ("file not writeable");
+    }
+    return err;
+  }
+
+  // cout << "Save " << u << LF;
+  url r= u;
+  if (!is_rooted_name (r)) r= resolve (r, "");
+  bool err= !is_rooted_name (r);
+  if (!err) {
+    string name= concretize (r);
+    {
+      c_string _name (name);
+#ifdef OS_MINGW
+      FILE* fout= fopen (_name, "wb");
+#else
+      FILE* fout= fopen (_name, "r+");
+      bool rw= (fout != NULL);
+      if (!rw) fout= fopen (_name, "w");
+      int fd= -1;
+      if (fout != NULL) {
+        fd= fileno (fout);
+        if (flock (fd, LOCK_EX) == -1) {
+          fclose (fout);
+          fout= NULL;
+        }
+        else if (rw) ftruncate (fd, 0);
+      }
+#endif
+      if (fout == NULL) {
+        err= true;
+        std_warning << "Save error for " << name << ", "
+                    << strerror(errno) << "\n";
+      }
+      if (!err) {
+        int i, n= N(s);
+        for (i=0; i<n; i++)
+          fputc (s[i], fout);
+#ifdef OS_MINGW
+#else
+        flock (fd, LOCK_UN);
+#endif
+        fclose (fout);
+      }
+    }
+    // Cache file contents
+    bool file_flag= do_cache_file (name);
+    bool doc_flag= do_cache_doc (name);
+    string cache_type= doc_flag? string ("doc_cache"): string ("file_cache");
+    if (!err && N(s) <= 10000)
+      if (file_flag || doc_flag)
+        cache_set (cache_type, name, s);
+    declare_out_of_date (url_parent (r));
+    // End caching
+  }
+
+  if (err && fatal) {
+    failed_error << "File name= " << as_string (u) << "\n";
+    TM_FAILED ("file not writeable");
+  }
+  return err;
+}
+
+void string_save (string s, url u) {
+  (void) save_string (u, s);
+}
+
+bool
+append_string (url u, string s, bool fatal) {
+  if (is_rooted_tmfs (u)) TM_FAILED ("file not appendable");
+
+  // cout << "Save " << u << LF;
+  url r= u;
+  if (!is_rooted_name (r)) r= resolve (r, "");
+  bool err= !is_rooted_name (r);
+  if (!err) {
+    string name= concretize (r);
+    {
+      c_string _name (name);
+#ifdef OS_MINGW
+      FILE* fout= fopen (_name, "ab");
+#else
+      FILE* fout= fopen (_name, "a");
+      int fd= -1;
+      if (fout != NULL) {
+        fd= fileno (fout);
+        if (flock (fd, LOCK_EX) == -1) {
+          fclose (fout);
+          fout= NULL;
+        }
+      }
+#endif
+      if (fout == NULL) {
+        err= true;
+        std_warning << "Append error for " << name << ", "
+                    << strerror(errno) << "\n";
+      }
+      if (!err) {
+        int i, n= N(s);
+        for (i=0; i<n; i++)
+          fputc (s[i], fout);
+#ifdef OS_MINGW
+#else
+        flock (fd, LOCK_UN);
+#endif
+        fclose (fout);
+      }
+    }
+    // Cache file contents
+    declare_out_of_date (url_parent (r));
+    // End caching
+  }
+
+  if (err && fatal) {
+    failed_error << "File name= " << as_string (u) << "\n";
+    TM_FAILED ("file not appendable");
+  }
+  return err;
+}
+
+void string_append_to_file (string s, url u) {
+  (void) append_string (u, s);
+}
+
+void
+append_to (url what, url to) {
+  string what_s;
+  if (load_string (what, what_s, false) ||
+      append_string (to, what_s, false))
+    std_warning << "Append failed for " << to << LF;
+}
+
 
 /******************************************************************************
 * Getting attributes of a file
@@ -522,4 +762,54 @@ search_score (url u, array<string> a) {
     if (score > 1000000) score= 1000000;
   }
   return score;
+}
+
+/******************************************************************************
+* Tab-completion for file names
+******************************************************************************/
+
+#ifdef OS_WIN
+#define URL_CONCATER  '\\'
+#else
+#define URL_CONCATER  '/'
+#endif
+
+static void
+file_completions_file (array<string>& a, url search, url u) {
+  if (is_or (u)) {
+    file_completions_file (a, search, u[1]);
+    file_completions_file (a, search, u[2]);
+  }
+  else {
+    url v= delta (search * url ("dummy"), u);
+    if (is_none (v)) return;
+    string s= as_string (v);
+    if (is_directory (u)) s= s * string (URL_CONCATER);
+    a << s;
+  }
+}
+
+static void
+file_completions_dir (array<string>& a, url search, url dir) {
+  if (is_or (search)) {
+    file_completions_dir (a, search[1], dir);
+    file_completions_dir (a, search[2], dir);
+  }
+  else if (is_or (dir)) {
+    file_completions_dir (a, search, dir[1]);
+    file_completions_dir (a, search, dir[2]);
+  }
+  else {
+    url u= search * dir * url_wildcard ("*");
+    u= complete (u, "r");
+    u= expand (u);
+    file_completions_file (a, search, u);
+  }
+}
+
+array<string>
+file_completions (url search, url dir) {
+  array<string> a;
+  file_completions_dir (a, search, dir);
+  return a;
 }

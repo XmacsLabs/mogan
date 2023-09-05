@@ -16,6 +16,7 @@
 #include "iterator.hpp"
 #include "dictionary.hpp"
 #include "file.hpp" // added for copy_as_graphics
+#include "tm_file.hpp"
 #include "analyze.hpp"
 #include "locale.hpp"
 #include "message.hpp"

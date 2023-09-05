@@ -12,6 +12,7 @@
 #include "Boxes/composite.hpp"
 #include "Boxes/construct.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "player.hpp"
 #include "Files/image_files.hpp"
 

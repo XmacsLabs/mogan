@@ -27,6 +27,7 @@
 #include "observers.hpp"
 #include "preferences.hpp"
 #include "server.hpp"
+#include "tm_file.hpp"
 #include "tm_ostream.hpp"
 #include "tm_timer.hpp"
 #include "tm_window.hpp"
