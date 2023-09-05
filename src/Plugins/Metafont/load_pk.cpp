@@ -15,6 +15,7 @@
 #include "load_tex.hpp"
 #include "tm_timer.hpp"
 #include "renderer.hpp" // for PIXEL
+#include "tm_file.hpp"
 
 typedef short HI;
 

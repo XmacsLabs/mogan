@@ -27,6 +27,7 @@
 ******************************************************************************/
 
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "image_files.hpp"
 #include "web_files.hpp"
 #include "sys_utils.hpp"

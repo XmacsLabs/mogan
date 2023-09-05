@@ -15,6 +15,7 @@
 #include "gs_utilities.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "image_files.hpp"
 #include "scheme.hpp" 
 #include "sys_utils.hpp"
