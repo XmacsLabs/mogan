@@ -20,7 +20,7 @@
 #include "tm_sys_utils.hpp"
 
 
-string sys_concretize (url u1);
+inline string sys_concretize (url u1) { return escape_sh (concretize (u1)); }
 void system (string which, url u1);
 void system (string which, url u1, url u2);
 void system (string which, url u1, const char* post);
@@ -45,8 +45,6 @@ void string_save (string s, url u);
 bool append_string (url u, string s, bool fatal= false);
 void string_append_to_file (string s, url u);
 void append_to (url what, url to);
-
-bool is_of_type (url name, string filter);
 
 url  url_numbered (url dir, string prefix, string postfix, int i=1);
 url  url_scratch (string prefix="no_name_", string postfix=".tm", int i=1);

@@ -26,7 +26,6 @@
 #include <direct.h>
 #endif
 
-extern string main_tmp_dir;
 int  install_status   = 0;
 bool use_which        = false;
 bool use_locate       = false;
@@ -118,6 +117,7 @@ process_running (int pid) {
 static void
 clean_temp_dirs () {
   bool err= false;
+  url main_tmp_dir= url_system ("$TMP") * url (".lolly");
   array<string> a= read_directory (main_tmp_dir, err);
   for (int i=0; i<N(a); i++)
     if (is_int (a[i]))

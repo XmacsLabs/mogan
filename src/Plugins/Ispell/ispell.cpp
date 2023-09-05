@@ -11,6 +11,7 @@
 
 #include "Ispell/ispell.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "resource.hpp"
 #include "tm_link.hpp"
 #include "convert.hpp"

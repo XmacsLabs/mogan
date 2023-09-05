@@ -12,6 +12,7 @@
 #include "font.hpp"
 #include "translator.hpp"
 #include "Metafont/load_tex.hpp"
+#include "analyze.hpp"
 
 font_metric tfm_font_metric (tex_font_metric tfm, font_glyphs pk, double unit);
 

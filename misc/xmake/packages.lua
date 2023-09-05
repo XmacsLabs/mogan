@@ -32,7 +32,7 @@ package("lolly")
         add_deps("libcurl")
     end
 
-    add_versions("main", "be6ca723320b16381c32504ae1652e90dc300f4c")
+    add_versions("main", "5810443d06049b34b7272e5eeb2795e82eebe4fb")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
@@ -76,7 +76,8 @@ function add_requires_of_mogan()
 
     set_configvar("LOLLY_VERSION", LOLLY_VERSION)
     add_requires("lolly", {system=false})
-    add_requireconfs("lolly.tbox", {version = "dev", system = false, override=true})
+    tbox_configs = {hash=true, ["force-utf8"]=true}
+    add_requireconfs("lolly.tbox", {version = "dev", configs=tbox_configs, system = false, override=true})
     if is_plat("macosx") or is_plat("mingw") then
         add_requireconfs("lolly.libcurl", {version = CURL_VERSION, system = false, override=true})
     end

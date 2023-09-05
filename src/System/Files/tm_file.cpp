@@ -298,12 +298,6 @@ append_to (url what, url to) {
 /******************************************************************************
 * Getting attributes of a file
 ******************************************************************************/
-
-bool
-is_of_type (url name, string filter) {
-  return false;
-}
-
 url
 url_numbered (url dir, string prefix, string postfix, int i) {
   if (!exists (dir)) mkdir (dir);
