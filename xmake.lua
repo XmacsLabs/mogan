@@ -179,9 +179,6 @@ target("libkernel_l3") do
 
     add_packages("s7")
     add_packages("lolly")
-    if is_plat("mingw") or is_plat("windows") then
-        add_packages("nowide_standalone")
-    end
 
     add_configfiles(
         "src/System/config_l3.h.xmake", {

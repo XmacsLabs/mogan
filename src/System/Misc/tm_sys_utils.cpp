@@ -18,7 +18,6 @@
 
 #ifdef OS_MINGW
 #include "Windows/win_sys_utils.hpp"
-#include "Windows/win_utf8_compat.hpp"
 #endif
 
 #ifdef QTTEXMACS

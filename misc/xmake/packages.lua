@@ -32,7 +32,7 @@ package("lolly")
         add_deps("libcurl")
     end
 
-    add_versions("v1.2.1", "fea6366e29edb114530070642065c6c32d3516e2")
+    add_versions("main", "be6ca723320b16381c32504ae1652e90dc300f4c")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
@@ -64,7 +64,6 @@ function add_requires_of_mogan()
     end
 
     if is_plat("mingw") or is_plat("windows") then
-        add_requires("nowide_standalone 11.2.0", {system=false})
         add_requires("qt5widgets 5.15.2")
         if is_mode("release") then
             add_requires("qtifw 4.6.0")

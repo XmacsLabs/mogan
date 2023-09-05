@@ -30,6 +30,7 @@ typedef long intptr_t;
 #include "iterator.hpp"
 #include "convert.hpp"
 #include "file.hpp"
+#include "tm_debug.hpp"
 #include <string.h>
 
 /******************************************************************************

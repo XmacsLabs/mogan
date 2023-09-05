@@ -58,7 +58,7 @@ bool
 is_up_to_date (url dir) {
   string name_dir= concretize (dir);
   if (cache_valid->contains (name_dir)) return cache_valid [name_dir];
-  int l= last_modified (dir, false);
+  int l= last_modified (dir);
   if (is_cached ("validate_cache.scm", name_dir)) {
     int r= as_int (cache_get ("validate_cache.scm", name_dir) -> label);
     if (l == r) {
@@ -99,7 +99,7 @@ void
 declare_out_of_date (url dir) {
   //cout << "out of date: " << dir << "\n";
   string name_dir= concretize (dir);
-  int l= last_modified (dir, false);
+  int l= last_modified (dir);
   cache_set ("validate_cache.scm", name_dir, as_string (l));
   cache_valid (name_dir)= false;
   // FIXME: see 'FIXME' in 'is_up_to_date'.

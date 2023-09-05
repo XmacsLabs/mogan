@@ -9,6 +9,7 @@
  ******************************************************************************/
 
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "tmfs_url.hpp"
 
 #include <QtTest/QtTest>
