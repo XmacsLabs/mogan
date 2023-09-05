@@ -22,7 +22,19 @@
 #include "tree_label.hpp"
 #include "tree_helper.hpp"
 
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
 #include <sys/stat.h>
+
+#ifndef OS_WIN
+#include <sys/file.h>
+#include <unistd.h>
+#endif
+
+#include <sys/types.h>
+#include <string.h>  // strerror
 
 #if defined (OS_MINGW) || defined (OS_WIN)
 #include "Windows/win_utf8_compat.hpp"
