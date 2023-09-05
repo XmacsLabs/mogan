@@ -31,6 +31,7 @@
 #include "tm_ostream.hpp"
 #include "tm_timer.hpp"
 #include "tm_window.hpp"
+#include "sys_utils.hpp"
 #ifdef AQUATEXMACS
 void mac_fix_paths ();
 #endif
@@ -659,6 +660,7 @@ immediate_options (int argc, char** argv) {
 
 int
 main (int argc, char** argv) {
+  lolly::init_tbox ();
 
 #ifdef STACK_SIZE
   struct rlimit limit;
