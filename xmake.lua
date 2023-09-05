@@ -137,7 +137,6 @@ local l3_files = {
     "src/System/Language/locale.cpp",
     "src/System/Classes/**.cpp",
     "src/System/Files/**files.cpp",
-    "src/System/Files/file.cpp",
     "src/System/Misc/data_cache.cpp",
     "src/System/Misc/persistent.cpp",
     "src/System/Misc/stack_trace.cpp",
