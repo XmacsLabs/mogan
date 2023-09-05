@@ -3,7 +3,7 @@
 <style|<tuple|article|chinese>>
 
 <\body>
-  <doc-data|<doc-title|\<#6807\>\<#9898\>>|<doc-author|<author-data|<author-name|\<#4F5C\>\<#8005\>>>>>
+  <doc-data|<doc-title|\<#6807\>\<#9898\>>|<doc-author|<author-data|<author-name|author>>>>
 </body>
 
 <\initial>
