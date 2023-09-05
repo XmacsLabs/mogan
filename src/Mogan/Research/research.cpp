@@ -27,11 +27,11 @@
 #include "observers.hpp"
 #include "preferences.hpp"
 #include "server.hpp"
+#include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_ostream.hpp"
 #include "tm_timer.hpp"
 #include "tm_window.hpp"
-#include "sys_utils.hpp"
 #ifdef AQUATEXMACS
 void mac_fix_paths ();
 #endif

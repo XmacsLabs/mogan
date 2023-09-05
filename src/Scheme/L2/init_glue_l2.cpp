@@ -19,17 +19,44 @@
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_url.hpp"
+#include "tmfs_url.hpp"
 #include "tree.hpp"
 
-#include "glue_file.cpp"
 #include "glue_misc.cpp"
 #include "glue_url.cpp"
+#include "scheme.hpp"
 
 tmscm
 urlP (tmscm t) {
   bool b= tmscm_is_url (t);
   return bool_to_tmscm (b);
 }
+
+static bool
+is_of_type_with_tmfs (url name, string filter) {
+  // Files from a remote server
+  if (is_rooted_tmfs (name)) {
+    for (int i= 0; i < N (filter); i++)
+      switch (filter[i]) {
+      case 'd':
+        return false;
+      case 'l':
+        return false;
+      case 'r':
+        if (!as_bool (call ("tmfs-permission?", name, "read"))) return false;
+        break;
+      case 'w':
+        if (!as_bool (call ("tmfs-permission?", name, "write"))) return false;
+        break;
+      case 'x':
+        return false;
+      }
+    return true;
+  }
+  return is_of_type (name, filter);
+}
+
+#include "glue_file.cpp"
 
 void
 initialize_glue_l2 () {

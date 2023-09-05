@@ -43,7 +43,7 @@ function main()
             },
             {
                 scm_name = "url-test?",
-                cpp_name = "is_of_type",
+                cpp_name = "is_of_type_with_tmfs",
                 ret_type = "bool",
                 arg_list = {
                     "url",
