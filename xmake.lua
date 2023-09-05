@@ -841,12 +841,18 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
                 "-x", "\"(test_"..name..")\"",
                 "-q"}
             if is_plat("macosx") then
-                os.execv(INSTALL_DIR.."/../MacOS/Mogan", params)
+                binary = INSTALL_DIR.."/../MacOS/Mogan"
             elseif is_plat("mingw") then
-                os.execv(path.join(INSTALL_DIR,"bin","mogan.exe"), params)
+                binary = path.join(INSTALL_DIR,"bin","mogan.exe")
             else
-                os.execv(INSTALL_DIR.."/bin/mogan", params)
+                binary = INSTALL_DIR.."/bin/mogan"
             end
+            cmd = binary
+            for _, param in ipairs(params) do
+                cmd = cmd .. " " .. param
+            end
+            print ("> " .. cmd)
+            os.execv(cmd)
         end)
     end
 end
