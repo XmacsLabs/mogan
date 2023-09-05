@@ -14,7 +14,6 @@
 
 (define (test-metadata)
   (load-buffer "$TEXMACS_PATH/tests/9_1_with_metadata.tm")
-  (display* "\n" (get-metadata "author") "\n")
   (regression-test-group
    "get-metadata" "result"
    get-metadata :none
