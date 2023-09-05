@@ -16,14 +16,6 @@
       Pluto
     </cell>|<\cell>
       \ gibberish encoding for html title
-    </cell>>|<row|<\cell>
-      Plugin
-    </cell>|<\cell>
-      <dlink|24_2>
-    </cell>|<\cell>
-      Pluto
-    </cell>|<\cell>
-      \ use html export as a Plugin
     </cell>>>>
   </wide-tabular>
 
