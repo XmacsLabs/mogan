@@ -22,6 +22,7 @@ private slots:
 
 void
 TestConverter::test_utf8_to_cork () {
+  lolly::init_tbox ();
   qcompare (utf8_to_cork ("中"), "<#4E2D>");
   qcompare (utf8_to_cork ("“"), "\x10");
   qcompare (utf8_to_cork ("”"), "\x11");

@@ -800,27 +800,24 @@ target("windows_installer") do
 end
 
 for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
-    if string.sub(filepath, 1, string.len("tests/Kernel")) ~= "tests/Kernel"
-       and string.sub(filepath, 1, string.len("tests/System/Classes")) ~= "tests/System/Classes" then
-        local testname = path.basename(filepath)
-        target(testname) do 
-            add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
-            set_group("tests")
-            add_deps("libmogan")
-            set_languages("c++17")
-            set_policy("check.auto_ignore_flags", false)
-            add_rules("qt.console")
-            add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
-            add_syslinks("pthread")
-            add_packages("s7")
-            add_packages("lolly")
+    local testname = path.basename(filepath)
+    target(testname) do
+        add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
+        set_group("tests")
+        add_deps("libmogan")
+        set_languages("c++17")
+        set_policy("check.auto_ignore_flags", false)
+        add_rules("qt.console")
+        add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
+        add_syslinks("pthread")
+        add_packages("s7")
+        add_packages("lolly")
 
-            add_includedirs({"$(buildir)", "tests/Base"})
-            add_files("tests/Base/base.cpp")
-            add_files(filepath) 
-            add_files(filepath, {rules = "qt.moc"})
-            add_cxxflags("-include $(buildir)/config.h")
-        end
+        add_includedirs({"$(buildir)", "tests/Base"})
+        add_files("tests/Base/base.cpp")
+        add_files(filepath)
+        add_files(filepath, {rules = "qt.moc"})
+        add_cxxflags("-include $(buildir)/config.h")
     end
 end
 

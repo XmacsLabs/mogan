@@ -1,18 +1,15 @@
-#!/bin/bash
+use platform
 
-if [ -z $1 ];then
-    xmake --help
-    echo "----------"
-    echo "bin/test_only target-name"
-    exit 0
-fi
+xrepo install "mingw-w64 8.1.0"
 
-if [[ "--help" == "$1" ]];then
-    xmake --help
-    echo "----------"
-    echo "bin/test_only target-name"
-    exit 0
-fi
+var pkg_info = (xrepo fetch --json mingw-w64 | from-json)
+var mingw_path = $pkg_info[0][artifacts][installdir]
 
-xmake build $1 && xmake run $1
+if $platform:is-windows {
+  set paths = [
+    ~/scoop/shims/
+    $mingw_path/bin
+  ]
+}
 
+xmake build $args[0] ; xmake run $args[0]

@@ -8,33 +8,36 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "config.h"
 #include "file.hpp"
 #include "tm_file.hpp"
+#include "sys_utils.hpp"
 #include "tmfs_url.hpp"
 
 #include <QtTest/QtTest>
 
+
 class TestURL : public QObject {
   Q_OBJECT
 
-public:
-  url tmfs_1 = url_system ("tmfs://git/help");
-  url http_1 = url_system ("http://texmacs.org");
-  url https_1= url_system ("https://ustc.edu.cn");
-#ifdef OS_MINGW
-  url root_tmp= url ("$TEMP");
-#else
-  url root_tmp= url ("/tmp");
-#endif
-  url root_no_such_tmp= url ("/no_such_tmp");
+private:
+  url root_tmp;
+  url root_no_such_tmp;
 
 private slots:
+
+  void init ()
+  {
+    lolly::init_tbox ();
+    if (os_mingw ()) {
+      root_tmp= url ("$TEMP");
+    } else {
+      root_tmp= url ("/tmp");
+    }
+    root_no_such_tmp= url ("/no_such_tmp");
+  }
   void test_exists ();
   void test_suffix ();
-
-  // predicates
-  void test_is_rooted_tmfs ();
-  void test_is_rooted_web ();
 
   // operations
   void test_descends ();
@@ -60,22 +63,6 @@ TestURL::test_suffix () {
   QCOMPARE (suffix (png), string ("png"));
   url png2= url ("/a/b.c/d.png");
   QCOMPARE (suffix (png2), string ("png"));
-}
-
-void
-TestURL::test_is_rooted_tmfs () {
-  QVERIFY (is_rooted_tmfs (tmfs_1));
-  QVERIFY (!is_rooted_tmfs (http_1));
-  QVERIFY (!is_rooted_tmfs (https_1));
-  QVERIFY (!is_rooted_tmfs (root_tmp));
-}
-
-void
-TestURL::test_is_rooted_web () {
-  QVERIFY (is_rooted_web (http_1));
-  QVERIFY (is_rooted_web (https_1));
-  QVERIFY (!is_rooted_web (root_tmp));
-  QVERIFY (!is_rooted_web (tmfs_1));
 }
 
 void
