@@ -1006,14 +1006,15 @@ arc_rep::get_control_points (array<double>& abs, array<point>& pts,
  ******************************************************************************/
 
 struct ellipse_rep : public curve_rep {
-  array<point>  points;
-  array<path>   cip;
-  point         f1, f2; // two foci of the ellipsis
-  point         center; // the center of the ellipse
-  double        focal_length; // the distance between f1 and f2
-  double        sum_of_two_dis; // The sum of the distances of any point on the ellipse to f1 and f2
-  point         i, j;   // The two base vectors of the ellipsis's 2D plane
-  double        r1, r2; // The two radiuses of the ellipsis
+  array<point> points;
+  array<path>  cip;
+  point        f1, f2;       // two foci of the ellipsis
+  point        center;       // the center of the ellipse
+  double       focal_length; // the distance between f1 and f2
+  double sum_of_two_dis; // The sum of the distances of any point on the ellipse
+                         // to f1 and f2
+  point  i, j;           // The two base vectors of the ellipsis's 2D plane
+  double r1, r2;         // The two radiuses of the ellipsis
   ellipse_rep (array<point> a, array<path> cip, bool close);
   point  evaluate (double t) override;
   void   rectify_cumul (array<point>& cum, double eps) override;
@@ -1024,16 +1025,17 @@ struct ellipse_rep : public curve_rep {
                              array<path>& cip) override;
 };
 
-ellipse_rep::ellipse_rep (array<point> a2, array<path> cip2, bool close) 
+ellipse_rep::ellipse_rep (array<point> a2, array<path> cip2, bool close)
     : points (a2), cip (cip2) {
-      cout<<"AAAIN\n";
+  cout << "AAAIN\n";
   int n= N (points);
   // we must ensure that the input "n" is 3.
-  // Point 0 and Point 1 are the two foci of the ellipse. Point 2 is an arbitrary point on the ellipse.
-      cout<<"AAAIN2\n";
+  // Point 0 and Point 1 are the two foci of the ellipse. Point 2 is an
+  // arbitrary point on the ellipse.
+  cout << "AAAIN2\n";
 
-  ASSERT(n==3, "WRONG PARAMETERS OF ELLIPSE");
-      cout<<"AAAIN3\n";
+  ASSERT (n == 3, "WRONG PARAMETERS OF ELLIPSE");
+  cout << "AAAIN3\n";
 
   f1            = points[0];
   f2            = points[1];
@@ -1042,10 +1044,10 @@ ellipse_rep::ellipse_rep (array<point> a2, array<path> cip2, bool close)
   sum_of_two_dis= norm (points[2] - f1) + norm (points[2] - f2);
   r1            = (sum_of_two_dis) / 2;
   r2= sqrt (square (sum_of_two_dis / 2) - square (focal_length / 2));
-  if (orthogonalize (i, j, center, points[0], points[1]));
+  if (orthogonalize (i, j, center, points[0], points[1]))
+    ;
   else orthogonalize (i, j, center, points[0], points[2]);
-      cout<<"AAAOUT\n";
-
+  cout << "AAAOUT\n";
 }
 
 point
@@ -1089,9 +1091,15 @@ ellipse (array<point> a, array<path> cip, bool close) {
 
 int
 ellipse_rep::get_control_points (array<double>& abs, array<point>& pts,
-                              array<path>& rcip) {
-  // According to the design, the points in the "abs" array represent the control points of the curve, with their corresponding parameter values on the curve. However, in practice, only the first and last points in the array will be used. Therefore, the "abs" array is used to represent the range of parameter values. Since we have a closed curve here, we just need to ensure that the starting point has a parameter value of 0 and the ending point has a parameter value of 1.
-  abs = array<double>(0.0,1.0);
+                                 array<path>& rcip) {
+  // According to the design, the points in the "abs" array represent the
+  // control points of the curve, with their corresponding parameter values on
+  // the curve. However, in practice, only the first and last points in the
+  // array will be used. Therefore, the "abs" array is used to represent the
+  // range of parameter values. Since we have a closed curve here, we just need
+  // to ensure that the starting point has a parameter value of 0 and the ending
+  // point has a parameter value of 1.
+  abs = array<double> (0.0, 1.0);
   pts = points;
   rcip= cip;
   return N (points);
