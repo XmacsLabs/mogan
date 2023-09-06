@@ -799,7 +799,7 @@ target("windows_installer") do
     end)
 end
 
-for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
+function add_test_target (filepath)
     local testname = path.basename(filepath)
     target(testname) do
         add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
@@ -819,6 +819,22 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
         add_files(filepath, {rules = "qt.moc"})
         add_cxxflags("-include $(buildir)/config.h")
     end
+end
+
+for _, filepath in ipairs(os.files("tests/Data/**_test.cpp")) do
+    add_test_target (filepath)
+end
+
+for _, filepath in ipairs(os.files("tests/Graphics/**_test.cpp")) do
+    add_test_target (filepath)
+end
+
+for _, filepath in ipairs(os.files("tests/System/**_test.cpp")) do
+    add_test_target (filepath)
+end
+
+for _, filepath in ipairs(os.files("tests/Typeset/**_test.cpp")) do
+    add_test_target (filepath)
 end
 
 for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
