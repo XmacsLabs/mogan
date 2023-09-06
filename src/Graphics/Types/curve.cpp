@@ -1043,7 +1043,6 @@ ellipse_rep::ellipse_rep (array<point> a2, array<path> cip2, bool close)
   if (orthogonalize (i, j, center, points[0], points[1]))
     ;
   else orthogonalize (i, j, center, points[0], points[2]);
-  cout << "AAAOUT\n";
 }
 
 point
