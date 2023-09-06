@@ -1027,15 +1027,11 @@ struct ellipse_rep : public curve_rep {
 
 ellipse_rep::ellipse_rep (array<point> a2, array<path> cip2, bool close)
     : points (a2), cip (cip2) {
-  cout << "AAAIN\n";
   int n= N (points);
   // we must ensure that the input "n" is 3.
   // Point 0 and Point 1 are the two foci of the ellipse. Point 2 is an
   // arbitrary point on the ellipse.
-  cout << "AAAIN2\n";
-
   ASSERT (n == 3, "WRONG PARAMETERS OF ELLIPSE");
-  cout << "AAAIN3\n";
 
   f1            = points[0];
   f2            = points[1];
