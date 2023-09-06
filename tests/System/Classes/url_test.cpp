@@ -10,12 +10,11 @@
 
 #include "config.h"
 #include "file.hpp"
-#include "tm_file.hpp"
 #include "sys_utils.hpp"
+#include "tm_file.hpp"
 #include "tmfs_url.hpp"
 
 #include <QtTest/QtTest>
-
 
 class TestURL : public QObject {
   Q_OBJECT
@@ -26,12 +25,12 @@ private:
 
 private slots:
 
-  void init ()
-  {
+  void init () {
     lolly::init_tbox ();
     if (os_mingw ()) {
       root_tmp= url ("$TEMP");
-    } else {
+    }
+    else {
       root_tmp= url ("/tmp");
     }
     root_no_such_tmp= url ("/no_such_tmp");

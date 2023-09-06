@@ -9,12 +9,14 @@
  ******************************************************************************/
 
 #include "Pdf/pdf_hummus_renderer.hpp"
+#include "sys_utils.hpp"
 #include <QtTest/QtTest>
 
 class TestHummusPdfImageSize : public QObject {
   Q_OBJECT
 
 private slots:
+  void init () { lolly::init_tbox (); }
   void test_hummus_pdf_image_size ();
 };
 

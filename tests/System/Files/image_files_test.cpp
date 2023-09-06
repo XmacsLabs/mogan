@@ -17,6 +17,7 @@ class TestImageFiles : public QObject {
   Q_OBJECT
 
 private slots:
+  void init () { lolly::init_tbox (); }
   void test_svg_image_size ();
 };
 
