@@ -12,6 +12,7 @@
 #include "block.hpp"
 #include "translator.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "convert.hpp"
 #include "iterator.hpp"
 #include "analyze.hpp"

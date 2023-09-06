@@ -11,6 +11,7 @@
 
 #include "edit_text.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "analyze.hpp"
 #include "scheme.hpp"
 #include "tree_modify.hpp"

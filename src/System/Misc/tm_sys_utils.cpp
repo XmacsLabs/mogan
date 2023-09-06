@@ -14,6 +14,7 @@
 #include "tm_debug.hpp"
 #include "url.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 
 #ifdef OS_MINGW
 #include "Windows/win_sys_utils.hpp"

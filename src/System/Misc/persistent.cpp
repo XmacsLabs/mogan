@@ -11,6 +11,7 @@
 
 #include "persistent.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "iterator.hpp"
 #include "analyze.hpp"
 

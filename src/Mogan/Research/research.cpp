@@ -27,6 +27,7 @@
 #include "observers.hpp"
 #include "preferences.hpp"
 #include "server.hpp"
+#include "tm_file.hpp"
 #include "tm_ostream.hpp"
 #include "tm_timer.hpp"
 #include "tm_window.hpp"
@@ -38,10 +39,6 @@ void mac_fix_paths ();
 #include "Qt/QTMApplication.hpp"
 #include "Qt/qt_utilities.hpp"
 #include <QDir>
-#endif
-
-#ifdef OS_MINGW
-#include "Windows/win_utf8_compat.hpp"
 #endif
 
 #ifdef MACOSX_EXTENSIONS
@@ -675,10 +672,6 @@ main (int argc, char** argv) {
     if (setrlimit (RLIMIT_STACK, &limit)) cerr << "Cannot set stack value\n";
   }
   else cerr << "Cannot get stack value\n";
-#endif
-
-#ifdef OS_MINGW
-  nowide::args a (argc, argv); // Fix arguments - make them UTF-8
 #endif
 
   original_path= get_env ("PATH");
