@@ -1026,18 +1026,18 @@ struct oval_rep : public curve_rep {
 
 oval_rep::oval_rep (array<point> a2, array<path> cip2, bool close)
     : a (a2), cip (cip2) {
-  int   n = N (a);
+  int n= N (a);
   // if(n!=3){cout<<"[DEBUG] ERROR!\n";}
-  point o1= (n > 0 ? a[0] : point (0, 0));
-  point o2= (n > 1 ? a[1] : point (0, 0));
-  point o3= (n > 2 ? a[2] : point (0, 0));
-  f1=o1;
-  f2=o2;
-  center = (f1+f2)/2;
-  focal_length = norm(f2 - f1);
-  sum_of_two_dis = norm(o3 - f1) + norm(o3 - f2);
-  r1 = (sum_of_two_dis) / 2;
-  r2 = sqrt(square(sum_of_two_dis/2)-square(focal_length/2));
+  point o1      = (n > 0 ? a[0] : point (0, 0));
+  point o2      = (n > 1 ? a[1] : point (0, 0));
+  point o3      = (n > 2 ? a[2] : point (0, 0));
+  f1            = o1;
+  f2            = o2;
+  center        = (f1 + f2) / 2;
+  focal_length  = norm (f2 - f1);
+  sum_of_two_dis= norm (o3 - f1) + norm (o3 - f2);
+  r1            = (sum_of_two_dis) / 2;
+  r2= sqrt (square (sum_of_two_dis / 2) - square (focal_length / 2));
   if (orthogonalize (i, j, center, o1, o2))
     ;
   else orthogonalize (i, j, center, o1, o3);
@@ -1088,13 +1088,12 @@ oval (array<point> a, array<path> cip, bool close) {
 
 int
 oval_rep::get_control_points (array<double>& abs, array<point>& pts,
-                             array<path>& rcip) {
+                              array<path>& rcip) {
   abs = u;
   pts = a;
   rcip= cip;
   return N (a);
 }
-
 
 /******************************************************************************
  * Compound curves

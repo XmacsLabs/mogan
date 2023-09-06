@@ -51,7 +51,7 @@ public:
 class curve;
 class frame {
   ABSTRACT_NULL (frame);
-  operator tree () { return (tree) *rep; }
+               operator tree () { return (tree) *rep; }
   inline point operator() (point p) { return rep->direct_transform (p); }
   inline point operator[] (point p) { return rep->inverse_transform (p); }
   void        enclose (double& x1, double& y1, double& x2, double& y2, point p1,

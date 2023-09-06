@@ -63,7 +63,7 @@ frame::operator[] (rectangle r) {
 struct shift_2D_rep : public frame_rep {
   point d;
   shift_2D_rep (point d2) : d (d2) { linear= true; }
-  operator tree () { return tuple ("shift_2D", as_tree (d)); }
+        operator tree () { return tuple ("shift_2D", as_tree (d)); }
   point direct_transform (point p) { return p + d; }
   point inverse_transform (point p) { return p - d; }
   point jacobian (point p, point v, bool& error) {
@@ -250,7 +250,7 @@ slanting (point center, double slant) {
 struct linear_2D_rep : public frame_rep {
   matrix<double> m, u;
   linear_2D_rep (matrix<double> m2) : m (m2), u (invert (m)) { linear= true; }
-  operator tree () { return tuple ("linear_2D", as_tree (m)); }
+        operator tree () { return tuple ("linear_2D", as_tree (m)); }
   point direct_transform (point p) { return m * p; }
   point inverse_transform (point p) { return u * p; }
   point jacobian (point p, point v, bool& error) {
@@ -290,7 +290,7 @@ struct affine_2D_rep : public frame_rep {
   }
   // FIXME: Do we use "linear" in such a
   //   weakest sense for affine transforms ?
-  operator tree () { return tuple ("affine_2D", as_tree (m)); }
+        operator tree () { return tuple ("affine_2D", as_tree (m)); }
   point direct_transform (point p) {
     point q= point (3), r;
     q[0]   = p[0];
@@ -337,7 +337,7 @@ affine_2D (matrix<double> m) {
 struct bend_frame_rep : public frame_rep {
   double (*fun) (double);
   bend_frame_rep (double (*fun2) (double)) : fun (fun2) {}
-  operator tree () { return tuple ("bend"); }
+        operator tree () { return tuple ("bend"); }
   point direct_transform (point p) { return point (p[0], p[1] + fun (p[0])); }
   point inverse_transform (point p) { return point (p[0], p[1] - fun (p[0])); }
   point jacobian (point p, point v, bool& error) {
@@ -386,7 +386,7 @@ struct compound_frame_rep : public frame_rep {
   compound_frame_rep (frame f1b, frame f2b) : f1 (f1b), f2 (f2b) {
     linear= f1->linear && f2->linear;
   }
-  operator tree () { return tuple ("compound", (tree) f1, (tree) f2); }
+        operator tree () { return tuple ("compound", (tree) f1, (tree) f2); }
   point direct_transform (point p) { return f1 (f2 (p)); }
   point inverse_transform (point p) { return f2[f1[p]]; }
   point jacobian (point p, point v, bool& error) {
@@ -423,7 +423,7 @@ operator* (frame f1, frame f2) {
 struct inverted_frame_rep : public frame_rep {
   frame f;
   inverted_frame_rep (frame f2) : f (f2) { linear= f->linear; }
-  operator tree () { return tuple ("inverse", (tree) f); }
+        operator tree () { return tuple ("inverse", (tree) f); }
   point direct_transform (point p) { return f[p]; }
   point inverse_transform (point p) { return f (p); }
   point jacobian (point p, point v, bool& error) {
