@@ -71,18 +71,6 @@
 #include "scheme.hpp"
 
 
-#ifdef OS_MINGW
-#define WINPATHS
-#endif
-
-#ifdef WINPATHS
-#define URL_CONCATER  '\\'
-#define URL_SEPARATOR ';'
-#else
-#define URL_CONCATER  '/'
-#define URL_SEPARATOR ':'
-#endif
-
 bool url_test (url name, string filter) {
     if (filter == "") return true;
   int i, n= N(filter);
