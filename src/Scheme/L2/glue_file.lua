@@ -43,7 +43,7 @@ function main()
             },
             {
                 scm_name = "url-test?",
-                cpp_name = "is_of_type",
+                cpp_name = "url_test",
                 ret_type = "bool",
                 arg_list = {
                     "url",

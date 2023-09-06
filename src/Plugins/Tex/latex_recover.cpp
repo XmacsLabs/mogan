@@ -15,6 +15,7 @@
 #include "iterator.hpp"
 #include "file.hpp"
 #include "tm_file.hpp"
+#include "sys_utils.hpp"
 #include "scheme.hpp"
 #include "tree_label.hpp"
 

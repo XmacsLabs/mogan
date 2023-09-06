@@ -68,19 +68,54 @@
 #include "file.hpp"
 #include "tm_file.hpp"
 #include "analyze.hpp"
+#include "scheme.hpp"
 
 
-#ifdef OS_MINGW
-#define WINPATHS
-#endif
+bool url_test (url name, string filter) {
+    if (filter == "") return true;
+  int i, n= N(filter);
 
-#ifdef WINPATHS
-#define URL_CONCATER  '\\'
-#define URL_SEPARATOR ';'
-#else
-#define URL_CONCATER  '/'
-#define URL_SEPARATOR ':'
-#endif
+  // Files from the web
+  if (is_rooted_web (name)) {
+    // cout << "  try " << name << "\n";
+    url from_web= get_from_web (name);
+    // cout << "  --> " << from_web << "\n";
+    if (is_none (from_web)) return false;
+    for (i=0; i<n; i++)
+      switch (filter[i]) {
+      case 'd': return false;
+      case 'l': return false;
+      case 'w': return false;
+      case 'x': return false;
+      }
+    return true;
+  }
+
+  // Files from a remote server
+  if (is_rooted_tmfs (name)) {
+    for (i=0; i<n; i++)
+      switch (filter[i]) {
+      case 'd': return false;
+      case 'l': return false;
+      case 'r':
+        if (!as_bool (call ("tmfs-permission?", name, "read")))
+          return false;
+        break;
+      case 'w':
+        if (!as_bool (call ("tmfs-permission?", name, "write")))
+          return false;
+        break;
+      case 'x': return false;
+      }
+    return true;
+  }
+
+  // Files from the ramdisk
+  if (is_ramdisc (name))
+    return true;
+
+  return is_of_type (name, filter);
+}
 
 
 /******************************************************************************
@@ -128,11 +163,11 @@ complete (url base, url u, string filter, bool flag) {
   if (is_name (u) || (is_concat (u) && is_root (u[1]) && is_name (u[2]))) {
     url comp= base * u;
     if (is_rooted (comp, "default") || is_rooted (comp, "file")) {
-      if (is_of_type (comp, filter)) return reroot (u, "default");
+      if (url_test (comp, filter)) return reroot (u, "default");
       return url_none ();
     }
     if (is_rooted_web (comp) || is_rooted_tmfs (comp) || is_ramdisc (comp)) {
-      if (is_of_type (comp, filter)) return u;
+      if (url_test (comp, filter)) return u;
       return url_none ();
     }
     failed_error << "base  = " << base << LF;
@@ -189,7 +224,7 @@ complete (url base, url u, string filter, bool flag) {
       TM_FAILED ("wildcards only implemented for files");
     }
     url ret= url_none ();
-    if (is_wildcard (u, 0) && is_of_type (base, filter)) ret= url_here ();
+    if (is_wildcard (u, 0) && url_test (base, filter)) ret= url_here ();
     bool error_flag;
     array<string> dir= read_directory (base, error_flag);
     int i, n= N(dir);

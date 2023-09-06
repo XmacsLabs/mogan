@@ -14,12 +14,14 @@
 #include "Xml/xml.hpp"
 #include "convert.hpp"
 #include "drd_std.hpp"
+#include "sys_utils.hpp"
 #include "tree_helper.hpp"
 
 class TestParseXML : public QObject {
   Q_OBJECT
 
 private slots:
+  void init () { lolly::init_tbox (); }
   void expand_xml_default_entity ();
 };
 

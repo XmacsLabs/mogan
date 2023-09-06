@@ -27,6 +27,7 @@
 #include "observers.hpp"
 #include "preferences.hpp"
 #include "server.hpp"
+#include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_ostream.hpp"
 #include "tm_timer.hpp"
@@ -659,6 +660,7 @@ immediate_options (int argc, char** argv) {
 
 int
 main (int argc, char** argv) {
+  lolly::init_tbox ();
 
 #ifdef STACK_SIZE
   struct rlimit limit;

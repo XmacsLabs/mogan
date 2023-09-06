@@ -32,7 +32,7 @@ package("lolly")
         add_deps("libcurl")
     end
 
-    add_versions("v1.2.1", "fea6366e29edb114530070642065c6c32d3516e2")
+    add_versions("v1.2.3", "719651dec2b8fd881238688a75bed4b5868681c0")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
@@ -64,7 +64,6 @@ function add_requires_of_mogan()
     end
 
     if is_plat("mingw") or is_plat("windows") then
-        add_requires("nowide_standalone 11.2.0", {system=false})
         add_requires("qt5widgets 5.15.2")
         if is_mode("release") then
             add_requires("qtifw 4.6.0")
@@ -77,7 +76,8 @@ function add_requires_of_mogan()
 
     set_configvar("LOLLY_VERSION", LOLLY_VERSION)
     add_requires("lolly", {system=false})
-    add_requireconfs("lolly.tbox", {version = "dev", system = false, override=true})
+    tbox_configs = {hash=true, ["force-utf8"]=true}
+    add_requireconfs("lolly.tbox", {version = "dev", configs=tbox_configs, system = false, override=true})
     if is_plat("macosx") or is_plat("mingw") then
         add_requireconfs("lolly.libcurl", {version = CURL_VERSION, system = false, override=true})
     end

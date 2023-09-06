@@ -18,6 +18,7 @@
 #include "convert.hpp"
 #include "scheme.hpp"
 #include "dictionary.hpp"
+#include "tm_debug.hpp"
 
 RESOURCE_CODE(font);
 

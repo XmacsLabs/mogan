@@ -21,6 +21,7 @@
 #include "tm_timer.hpp"
 #include "tree_label.hpp"
 #include "tree_helper.hpp"
+#include "sys_utils.hpp"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -37,15 +38,23 @@
 #include <string.h>  // strerror
 
 #if defined (OS_MINGW) || defined (OS_WIN)
-#include "Windows/win_utf8_compat.hpp"
 #include <time.h>
 #include <dirent.h>
 #else
 #include <dirent.h>
-#define struct_stat struct stat
 #endif
 
 #include "data_cache.hpp"
+
+void system (string which, url u1) {
+  lolly::system (which * " " * sys_concretize (u1)); }
+void system (string which, url u1, url u2) {
+  lolly::system (which * " " * sys_concretize (u1) * " " * sys_concretize (u2)); }
+void system (string which, url u1, const char* post) {
+  lolly::system (which * " " * sys_concretize (u1) * " " * post); }
+void system (string which, url u1, const char* sep, url u2) {
+  lolly::system (which * " " * sys_concretize (u1) * " " * sep *
+	          " " * sys_concretize (u2)); }
 
 /******************************************************************************
 * New style loading and saving
@@ -289,192 +298,6 @@ append_to (url what, url to) {
 /******************************************************************************
 * Getting attributes of a file
 ******************************************************************************/
-
-static bool
-get_attributes (url name, struct_stat* buf,
-                bool link_flag=false, bool cache_flag= true)
-{
-  // cout << "Stat " << name << LF;
-  string name_s= concretize (name);
-
-  // Stat result in cache?
-  if (cache_flag &&
-      is_cached ("stat_cache.scm", name_s) &&
-      is_up_to_date (url_parent (name)))
-    {
-      tree r= cache_get ("stat_cache.scm", name_s);
-      // cout << "Cache : " << r << LF;
-      if (r == "#f") return true;
-      if ((is_compound(r)) && (N(r)==3)) {
-        buf->st_mode = ((unsigned int) as_int (r[0]));
-        buf->st_mtime= ((unsigned int) as_int (r[1]));
-        buf->st_size = ((unsigned int) as_int (r[2]));
-        return false;
-      } 
-      std_warning << "Inconsistent value in stat_cache.scm for key "
-                  << name_s << LF;
-      std_warning << "The current value is " << r << LF;
-      std_warning << "I'm resetting this key" << LF;
-      // continue and recache, the current value is inconsistent. 
-    }
-  // End caching
-
-  //cout << "No cache" << LF;
-
-  bench_start ("stat");
-  bool flag;
-  c_string temp (name_s);
-  flag= stat (temp, buf);
-  (void) link_flag;
-  // FIXME: configure should test whether lstat works
-  // flag= (link_flag? lstat (temp, buf): stat (temp, buf));
-  bench_cumul ("stat");
-
-  // Cache stat results
-  if (cache_flag) {
-    if (flag) {
-      if (do_cache_stat_fail (name_s))
-        cache_set ("stat_cache.scm", name_s, "#f");
-    }
-    else {
-      if (do_cache_stat (name_s)) {
-        string s1= as_string ((int) buf->st_mode);
-        string s2= as_string ((int) buf->st_mtime);
-        string s3= as_string ((int) buf->st_size);
-        cache_set ("stat_cache.scm", name_s, tree (TUPLE, s1, s2, s3));
-      }
-    }
-  }
-  // End caching
-
-  return flag;
-}
-
-bool
-is_of_type (url name, string filter) {
-  if (filter == "") return true;
-  int i, n= N(filter);
-
-  // Files from the web
-  if (is_rooted_web (name)) {
-    // cout << "  try " << name << "\n";
-    url from_web= get_from_web (name);
-    // cout << "  --> " << from_web << "\n";
-    if (is_none (from_web)) return false;
-    for (i=0; i<n; i++)
-      switch (filter[i]) {
-      case 'd': return false;
-      case 'l': return false;
-      case 'w': return false;
-      case 'x': return false;
-      }
-    return true;
-  }
-
-  // Files from a remote server
-  if (is_rooted_tmfs (name)) {
-    for (i=0; i<n; i++)
-      switch (filter[i]) {
-      case 'd': return false;
-      case 'l': return false;
-      case 'r':
-        if (!as_bool (call ("tmfs-permission?", name, "read")))
-          return false;
-        break;
-      case 'w':
-        if (!as_bool (call ("tmfs-permission?", name, "write")))
-          return false;
-        break;
-      case 'x': return false;
-      }
-    return true;
-  }
-
-  // Files from the ramdisk
-  if (is_ramdisc (name))
-    return true;
-
-  // Normal files
-#ifdef OS_MINGW
-  string suf;
-  if (filter == "x") {
-    suf= suffix(name);
-    if ((suf != "exe") && (suf != "bat") && (suf != "com")) {
-      name = glue (name, ".exe");
-      suf = "exe";
-    }
-  }
-#endif
-  bool preserve_links= false;
-  for (i=0; i<n; i++)
-    preserve_links= preserve_links || (filter[i] == 'l');
-  struct_stat buf;
-  bool err= get_attributes (name, &buf, preserve_links);
-  for (i=0; i<n; i++)
-    switch (filter[i]) {
-      // FIXME: should check user id and group id for r, w and x
-    case 'f':
-      if (err || !S_ISREG (buf.st_mode)) return false;
-      break;
-    case 'd':
-      if (err || !S_ISDIR (buf.st_mode)) return false;
-      break;
-    case 'l':
-      if (err || !S_ISLNK (buf.st_mode)) return false;
-      break;
-    case 'r':
-      if (err) return false;
-      if ((buf.st_mode & (S_IRUSR | S_IRGRP | S_IROTH)) == 0) return false;
-      break;
-    case 'w':
-      if (err) return false;
-      if ((buf.st_mode & (S_IWUSR | S_IWGRP | S_IWOTH)) == 0) return false;
-      break;
-    case 'x':
-      if (err) return false;
-#ifdef OS_MINGW
-      if (((suf == "exe") || (suf == "com") || (suf == "bat")) && (buf.st_mode & S_IRUSR)) return true;
-#endif
-      if ((buf.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)) == 0) return false;
-      break;
-    }
-  return true;
-}
-
-int
-file_size (url u) {
-  if (is_rooted_web (u)) return -1;
-  if (is_rooted_tmfs (u)) return -1;
-  struct_stat u_stat;
-  if (get_attributes (u, &u_stat, true)) return -1;
-  return u_stat.st_size;
-}
-
-int
-last_modified (url u, bool cache_flag) {
-  if (is_rooted_web (u))
-    return - (int) (((unsigned int) (-1)) >> 1);
-  if (is_rooted_tmfs (u))
-    return - (int) (((unsigned int) (-1)) >> 1);
-  struct_stat u_stat;
-  if (get_attributes (u, &u_stat, true, cache_flag))
-    return - (int) (((unsigned int) (-1)) >> 1);
-  return u_stat.st_mtime;
-}
-
-bool
-is_newer (url which, url than) {
-  struct_stat which_stat;
-  struct_stat than_stat;
-  // FIXME: why was this? 
-  if (is_cached ("stat_cache.scm", concretize (which))) return false;
-  if (is_cached ("stat_cache.scm", concretize (than))) return false;
-  // end FIXME
-  if (get_attributes (which, &which_stat, true)) return false;
-  if (get_attributes (than , &than_stat , true)) return false;
-  return which_stat.st_mtime > than_stat.st_mtime;
-}
-
 url
 url_numbered (url dir, string prefix, string postfix, int i) {
   if (!exists (dir)) mkdir (dir);

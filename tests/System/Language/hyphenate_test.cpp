@@ -17,6 +17,7 @@
 
 #include "hyphenate.hpp"
 #include "language.hpp"
+#include "sys_utils.hpp"
 #include <QtTest/QtTest>
 
 class TestHyphens : public QObject {
@@ -26,6 +27,7 @@ private:
   void test_hyphens (language lan, string s, string t);
 
 private slots:
+  void init () { lolly::init_tbox (); }
   // TODO: add tests for predefined hyphenations
   void russian ();
   void english ();

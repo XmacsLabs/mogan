@@ -66,7 +66,7 @@ jobs:
       - name: build
         run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
       - name: test
-        run: bin/test_all
+        run: xmake run --yes --verbose --diagnosis --group=tests
         env:
           QT_QPA_PLATFORM: offscreen
       - name: install
