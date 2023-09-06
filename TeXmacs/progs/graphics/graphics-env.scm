@@ -297,12 +297,10 @@
   )
   (with l2 (cons 'tuple (map filter-sel (cdr l)))
     (remove-filtered-elts l2)
-   ;(display* "res2=" (cdr l2) "\n")
     (cdr l2)))
 
 (tm-define (graphics-select x y d)
   (with res (tree->stree (graphical-select x y))
-   ;(display* "res=" res "\n")
     (filter-graphical-select res x y)))
 
 (tm-define (graphics-select-area x1 y1 x2 y2)

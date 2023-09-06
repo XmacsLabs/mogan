@@ -3473,6 +3473,7 @@ replace_magnification (tree& t, string var, string repl) {
         is_func (body, CSPLINE) ||
         is_func (body, ARC) ||
         is_func (body, CARC) ||
+        is_func (body, ELLIPSE) ||
         is_func (body, VAR_SPLINE))
       {
         tree val= get_attr (t, var, "1");

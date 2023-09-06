@@ -1,7 +1,7 @@
 /******************************************************************************
  * MODULE     : curve_test.cpp
  * DESCRIPTION: Add tests for curve.cpp.
- * COPYRIGHT  : (C) 2023  charonxin
+ * COPYRIGHT  : (C) 2023  charonxin Oyyko
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -10,6 +10,8 @@
 
 #include "curve.hpp"
 #include "path.hpp"
+#include "point.hpp"
+#include "qtestcase.h"
 #include <QtTest/QtTest>
 #include <list>
 
@@ -18,9 +20,23 @@
 class TestCurve : public QObject {
   Q_OBJECT
 private slots:
+  void text_linearly_dependent ();
   void test_segment ();
   void test_poly_segment ();
+  void test_ellipse ();
 };
+
+void
+TestCurve::text_linearly_dependent () {
+  QVERIFY (linearly_dependent (point (1, 1), point (2, 2), point (3, 3)) ==
+           true);
+  QVERIFY (linearly_dependent (point (1, 1), point (1, 1), point (3, 3)) ==
+           true);
+  QVERIFY (linearly_dependent (point (1, 1), point (1, 1), point (1, 1)) ==
+           true);
+  QVERIFY (linearly_dependent (point (1, 1), point (1, 2), point (3, 3)) ==
+           false);
+}
 
 void
 TestCurve::test_segment () {
@@ -66,6 +82,21 @@ TestCurve::test_poly_segment () {
   bool  _d;
   point d= b->grad (1.5, _d);
   QVERIFY (norm (d - point (2, 2)) < 1e-6);
+}
+
+void
+TestCurve::test_ellipse () {
+  auto points=
+      array<point> (point (0.0, 0.0), point (0.0, 2.0), point (1.0, 1.0));
+  auto  obj= ellipse (points, array<path> (), true);
+  point p1 = obj->evaluate (0);
+  point p2 = obj->evaluate (0.5);
+  point p3 = obj->evaluate (0.25);
+  point p4 = obj->evaluate (0.75);
+  QVERIFY (norm (p1 - point (0, -sqrt (2) + 1)) < 1e-6);
+  QVERIFY (norm (p2 - point (0, 1 + sqrt (2))) < 1e-6);
+  QVERIFY (norm (p3 - point (1.0, 1.0)) < 1e-6);
+  QVERIFY (norm (p4 - point (-1.0, 1.0)) < 1e-6);
 }
 
 QTEST_MAIN (TestCurve)
