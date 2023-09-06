@@ -727,8 +727,8 @@
 (tm-define-macro ($carc . l)
   `(cons 'carc ($list ,@l)))
 
-(tm-define-macro ($oval . l)
-  `(cons 'oval ($list ,@l)))
+(tm-define-macro ($ellipse . l)
+  `(cons 'ellipse ($list ,@l)))
 
 (tm-define-macro ($text-at p . l)
   ($quote `(text-at ($unquote ($inline ,@l)) ($unquote ($inline ,p)))))

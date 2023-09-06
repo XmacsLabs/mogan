@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "drd_std.hpp"
+#include "tree_label.hpp"
 #include "vars.hpp"
 
 drd_info std_drd ("tm");
@@ -697,7 +698,7 @@ init_std_drd () {
         fixed (3) -> returns_graphical () -> point_type (0));
   init (CARC, "carc",
         fixed (3) -> returns_graphical () -> point_type (0));
-  init (OVAL, "oval",
+  init (ELLIPSE, "ellipse",
         fixed (3) -> returns_graphical () -> point_type (0));
   init (SPLINE, "spline",
         repeat (2, 1) -> returns_graphical () -> point_type (0));

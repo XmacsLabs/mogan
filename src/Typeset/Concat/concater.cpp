@@ -14,6 +14,7 @@
 #include "analyze.hpp"
 #include "file.hpp"
 #include "observers.hpp"
+#include "tree_label.hpp"
 
 
 /******************************************************************************
@@ -807,8 +808,8 @@ concater_rep::typeset (tree t, path ip) {
   case CARC:
     typeset_arc (t, ip, true);
     break;
-  case OVAL:
-    typeset_oval (t, ip, true);
+  case ELLIPSE:
+    typeset_ellipse (t, ip, true);
     break;
   case SPLINE:
     typeset_spline (t, ip, false);

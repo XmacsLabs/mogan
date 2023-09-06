@@ -5,12 +5,10 @@ use platform
 if (eq $platform:os windows) {
   set paths = [
     ~/scoop/apps/llvm/16.0.6/bin
-    $@paths
   ]
 } elif (eq $platform:os linux) {
   set paths = [
     /usr/lib/llvm-16/bin
-    $@paths
   ]
 } else {
 }

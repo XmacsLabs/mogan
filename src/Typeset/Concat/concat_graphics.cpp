@@ -481,7 +481,7 @@ END_MAGNIFY
 }
 
 void
-concater_rep::typeset_oval (tree t, path ip, bool close) {
+concater_rep::typeset_ellipse (tree t, path ip, bool close) {
 BEGIN_MAGNIFY
   int i, n= N(t);
   array<point> a(n);
@@ -499,17 +499,11 @@ BEGIN_MAGNIFY
       point f1=a[0],f2=a[1],o3=a[2];
       focal_length = norm(f2 - f1);
       sum_of_two_dis = norm(o3 - f1) + norm(o3 - f2);
-      // The sum of two sides of a triangle is greater than the third side
-      if(sum_of_two_dis <= focal_length){
-        typeset_line (t, ip, close);
-      }
-      else{
-        curve c= env->fr (oval (a, cip, close));
+        curve c= env->fr (ellipse (a, cip, close));
         adjust_extremities (c, env->white_zones);
         print (curve_box (ip, c, env->line_portion, env->pen,
                         env->dash_style, env->dash_motif, env->dash_style_unit,
                         env->fill_brush, typeset_line_arrows (ip)));
-      }
     }
   }
 END_MAGNIFY

@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "curve.hpp"
+#include "basic.hpp"
 #include "equations.hpp"
 #include "frame.hpp"
 #include "math_util.hpp"
@@ -1004,56 +1005,56 @@ arc_rep::get_control_points (array<double>& abs, array<point>& pts,
  * Ovals
  ******************************************************************************/
 
-struct oval_rep : public curve_rep {
-  array<point>  a;
+struct ellipse_rep : public curve_rep {
+  array<point>  points;
   array<path>   cip;
-  array<double> u;
   point         f1, f2; // two foci of the ellipsis
-  point         center;
-  double        focal_length;
-  double        sum_of_two_dis;
+  point         center; // the center of the ellipse
+  double        focal_length; // the distance between f1 and f2
+  double        sum_of_two_dis; // The sum of the distances of any point on the ellipse to f1 and f2
   point         i, j;   // The two base vectors of the ellipsis's 2D plane
   double        r1, r2; // The two radiuses of the ellipsis
-  oval_rep (array<point> a, array<path> cip, bool close);
-  point  evaluate (double t);
-  void   rectify_cumul (array<point>& cum, double eps);
-  double bound (double t, double eps);
-  point  grad (double t, bool& error);
-  double curvature (double t1, double t2);
+  ellipse_rep (array<point> a, array<path> cip, bool close);
+  point  evaluate (double t) override;
+  void   rectify_cumul (array<point>& cum, double eps) override;
+  double bound (double t, double eps) override;
+  point  grad (double t, bool& error) override;
+  double curvature (double t1, double t2) override;
   int    get_control_points (array<double>& abs, array<point>& pts,
-                             array<path>& cip);
+                             array<path>& cip) override;
 };
 
-oval_rep::oval_rep (array<point> a2, array<path> cip2, bool close)
-    : a (a2), cip (cip2) {
-  int n= N (a);
-  // if(n!=3){cout<<"[DEBUG] ERROR!\n";}
-  point o1      = (n > 0 ? a[0] : point (0, 0));
-  point o2      = (n > 1 ? a[1] : point (0, 0));
-  point o3      = (n > 2 ? a[2] : point (0, 0));
-  f1            = o1;
-  f2            = o2;
+ellipse_rep::ellipse_rep (array<point> a2, array<path> cip2, bool close) 
+    : points (a2), cip (cip2) {
+      cout<<"AAAIN\n";
+  int n= N (points);
+  // we must ensure that the input "n" is 3.
+  // Point 0 and Point 1 are the two foci of the ellipse. Point 2 is an arbitrary point on the ellipse.
+      cout<<"AAAIN2\n";
+
+  ASSERT(n==3, "WRONG PARAMETERS OF ELLIPSE");
+      cout<<"AAAIN3\n";
+
+  f1            = points[0];
+  f2            = points[1];
   center        = (f1 + f2) / 2;
   focal_length  = norm (f2 - f1);
-  sum_of_two_dis= norm (o3 - f1) + norm (o3 - f2);
+  sum_of_two_dis= norm (points[2] - f1) + norm (points[2] - f2);
   r1            = (sum_of_two_dis) / 2;
   r2= sqrt (square (sum_of_two_dis / 2) - square (focal_length / 2));
-  if (orthogonalize (i, j, center, o1, o2))
-    ;
-  else orthogonalize (i, j, center, o1, o3);
-  u   = array<double> (3);
-  u[0]= 0.0;
-  u[1]= 0.5;
-  u[2]= 1.0;
+  if (orthogonalize (i, j, center, points[0], points[1]));
+  else orthogonalize (i, j, center, points[0], points[2]);
+      cout<<"AAAOUT\n";
+
 }
 
 point
-oval_rep::evaluate (double t) {
+ellipse_rep::evaluate (double t) {
   return center + r1 * cos (2 * tm_PI * t) * i + r2 * sin (2 * tm_PI * t) * j;
 }
 
 void
-oval_rep::rectify_cumul (array<point>& cum, double eps) {
+ellipse_rep::rectify_cumul (array<point>& cum, double eps) {
   double t, step;
   step= sqrt (2 * eps / max (r1, r2)) / tm_PI;
   for (t= step; t <= 1.0; t+= step)
@@ -1062,19 +1063,19 @@ oval_rep::rectify_cumul (array<point>& cum, double eps) {
 }
 
 double
-oval_rep::bound (double t, double eps) {
+ellipse_rep::bound (double t, double eps) {
   return curve_rep::bound (t, eps);
 }
 
 point
-oval_rep::grad (double t, bool& error) {
+ellipse_rep::grad (double t, bool& error) {
   error= false;
   return -2 * tm_PI * r1 * sin (2 * tm_PI * t) * i +
          2 * tm_PI * r2 * cos (2 * tm_PI * t) * j;
 }
 
 double
-oval_rep::curvature (double t1, double t2) {
+ellipse_rep::curvature (double t1, double t2) {
   (void) t1;
   (void) t2;
   if (r1 >= r2) return fnull (r1, 1.0e-6) ? tm_infinity : square (r2) / r1;
@@ -1082,17 +1083,18 @@ oval_rep::curvature (double t1, double t2) {
 }
 
 curve
-oval (array<point> a, array<path> cip, bool close) {
-  return tm_new<oval_rep> (a, cip, close);
+ellipse (array<point> a, array<path> cip, bool close) {
+  return tm_new<ellipse_rep> (a, cip, close);
 }
 
 int
-oval_rep::get_control_points (array<double>& abs, array<point>& pts,
+ellipse_rep::get_control_points (array<double>& abs, array<point>& pts,
                               array<path>& rcip) {
-  abs = u;
-  pts = a;
+  // According to the design, the points in the "abs" array represent the control points of the curve, with their corresponding parameter values on the curve. However, in practice, only the first and last points in the array will be used. Therefore, the "abs" array is used to represent the range of parameter values. Since we have a closed curve here, we just need to ensure that the starting point has a parameter value of 0 and the ending point has a parameter value of 1.
+  abs = array<double>(0.0,1.0);
+  pts = points;
   rcip= cip;
-  return N (a);
+  return N (points);
 }
 
 /******************************************************************************
