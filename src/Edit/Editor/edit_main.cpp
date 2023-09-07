@@ -319,7 +319,7 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
     }
 #endif
 }
-static hashset<string> existing_styles;
+static hashset<string> internal_styles;
 
 static void
 declare_style (url u) {
@@ -347,10 +347,11 @@ declare_style (url u) {
 static bool
 is_internal_style (string style) {
   return true;
+  
   if (N (internal_styles) == 0) {
     url sty_u= descendance ("$TEXMACS_STYLE_ROOT");
     declare_style (sty_u);
-    cout << "Styles: " << internal_styles << LF;
+    //cout << "Styles: " << internal_styles << LF;
   }
   return internal_styles->contains (style);
 }

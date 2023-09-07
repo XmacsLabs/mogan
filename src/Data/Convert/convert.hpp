@@ -22,7 +22,6 @@ class object;
 bool   is_snippet (tree doc);
 void   set_file_focus (url u);
 url    get_file_focus ();
-bool   is_internal_style (string style);
 
 /*** Generic ***/
 string suffix_to_format (string suffix);
