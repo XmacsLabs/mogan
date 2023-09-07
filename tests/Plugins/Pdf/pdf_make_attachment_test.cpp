@@ -27,11 +27,11 @@ TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachment () {
   bool attach_judge= pdf_hummus_make_attachment (
       url ("$TEXMACS_PATH/tests/images/29_1_1.pdf"),
       url ("$TEXMACS_PATH/tests/29_1_1.tm"),
-      url ("$TEXMACS_HOME_PATH/texts/scratch/29_1_1_attach.pdf"));
+      url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"));
   QVERIFY (attach_judge);
 
   bool out_pdf_judge=
-      is_regular (url ("$TEXMACS_HOME_PATH/texts/scratch/29_1_1_attach.pdf"));
+      is_regular (url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"));
   QVERIFY (out_pdf_judge);
 }
 
