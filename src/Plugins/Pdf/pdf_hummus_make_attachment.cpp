@@ -21,7 +21,6 @@
 #include "PDFWriter/OutputBufferedStream.h"
 #include "PDFWriter/OutputFileStream.h"
 using namespace PDFHummus;
-#include <utility>
 
 using namespace IOBasicTypes;
 class PDFAttachment {
