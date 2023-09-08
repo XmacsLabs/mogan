@@ -365,7 +365,6 @@ target("libmogan") do
     add_packages("libiconv")
     add_packages("freetype")
     add_packages("pdfhummus")
-    add_packages("nowide_standalone")
     add_packages("s7")
 
     if is_plat("mingw") then
@@ -540,8 +539,6 @@ target("draw") do
     })
     add_files("src/Mogan/Draw/draw.cpp")
 
-    
-
     set_configdir(INSTALL_DIR)
     set_configvar("DEVEL_VERSION", DEVEL_VERSION)
     set_configvar("PACKAGE", "Mogan Draw")
@@ -602,10 +599,12 @@ target("research") do
     if is_plat("macosx") then
         add_frameworks("QtMacExtras")
     end
+    if is_plat("wasm") then
+        add_frameworks("QWasmIntegrationPlugin")
+    end
 
     add_packages("lolly")
     if is_plat("mingw") then
-        add_packages("nowide_standalone")
         add_packages("qt5widgets")
     end
 
