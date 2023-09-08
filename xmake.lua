@@ -374,7 +374,7 @@ plugin_pdf_srcs = {
 }
 if is_plat("wasm") then
     plugin_qt_srcs = {
-        "src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp",
+        "src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp|qt_printer_widget.cpp",
         "src/Plugins/Qt/*.hpp|QTMPipeLink.hpp|QTMPrintDialog.hpp|QTMPrinterSettings.hpp",
     }
 else
