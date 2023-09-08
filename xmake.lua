@@ -249,29 +249,26 @@ target("libkernel_l3") do
     add_packages("lolly")
 
     my_configvar_check()
-    add_configfiles(
-        "src/System/config_l3.h.xmake", {
-            filename = "L3/config.h",
-            variables = {
-                OS_MINGW = is_plat("mingw"),
-                OS_MACOS = is_plat("macosx"),
-                OS_WIN = is_plat("windows"),
-                OS_WASM = is_plat("wasm"),
-                QTTEXMACS = false,
-            }
+    add_configfiles("src/System/config_l3.h.xmake", {
+        filename = "L3/config.h",
+        variables = {
+            OS_MINGW = is_plat("mingw"),
+            OS_MACOS = is_plat("macosx"),
+            OS_WIN = is_plat("windows"),
+            OS_WASM = is_plat("wasm"),
+            QTTEXMACS = false,
         }
-    )
-    add_configfiles(
-        "src/System/tm_configure_l3.hpp.xmake", {
-            filename = "L3/tm_configure.hpp",
-            pattern = "@(.-)@",
-            variables = {
-                CONFIG_USER = CONFIG_USER,
-                CONFIG_OS = CONFIG_OS,
-                VERSION = TEXMACS_VERSION,
-            }
+    })
+    add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
+        filename = "L3/tm_configure.hpp",
+        pattern = "@(.-)@",
+        variables = {
+            CONFIG_USER = CONFIG_USER,
+            CONFIG_OS = CONFIG_OS,
+            VERSION = TEXMACS_VERSION,
+            LOLLY_VERSION = LOLLY_VERSION,
         }
-    )
+    })
 
     add_includedirs("$(buildir)/L3")
     add_includedirs("$(buildir)")
@@ -335,36 +332,37 @@ set_configvar("STDC_HEADERS", true)
 
 set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
 
-add_configfiles(
-    "src/System/config.h.xmake", {
-        filename = "config.h",
-        variables = {
-            GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
-            GS_LIB = "../share/ghostscript/9.06/lib:",
-            OS_GNU_LINUX = is_plat("linux"),
-            OS_MACOS = is_plat("macosx"),
-            OS_MINGW = is_plat("mingw"),
-            OS_WASM = is_plat("wasm"),
-            MACOSX_EXTENSIONS = is_plat("macosx"),
-            SIZEOF_VOID_P = 8,
-            USE_FONTCONFIG = is_plat("linux"),
-            USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")),
-            USE_GS = not is_plat("wasm"),
-            }})
+add_configfiles("src/System/config.h.xmake", {
+    filename = "config.h",
+    variables = {
+        GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
+        GS_LIB = "../share/ghostscript/9.06/lib:",
+        OS_GNU_LINUX = is_plat("linux"),
+        OS_MACOS = is_plat("macosx"),
+        OS_MINGW = is_plat("mingw"),
+        OS_WASM = is_plat("wasm"),
+        MACOSX_EXTENSIONS = is_plat("macosx"),
+        SIZEOF_VOID_P = 8,
+        USE_FONTCONFIG = is_plat("linux"),
+        USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")),
+        USE_GS = not is_plat("wasm"),
+    }
+})
 
-add_configfiles(
-    "src/System/tm_configure.hpp.xmake", {
-        filename = "tm_configure.hpp",
-        pattern = "@(.-)@",
-        variables = {
-            XMACS_VERSION = XMACS_VERSION,
-            CONFIG_USER = CONFIG_USER,
-            CONFIG_STD_SETENV = "#define STD_SETENV",
-            tm_devel = "Texmacs-" .. DEVEL_VERSION,
-            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
-            tm_stable = "Texmacs-" .. STABLE_VERSION,
-            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
-            }})
+add_configfiles("src/System/tm_configure.hpp.xmake", {
+    filename = "tm_configure.hpp",
+    pattern = "@(.-)@",
+    variables = {
+        XMACS_VERSION = XMACS_VERSION,
+        CONFIG_USER = CONFIG_USER,
+        CONFIG_STD_SETENV = "#define STD_SETENV",
+        tm_devel = "Texmacs-" .. DEVEL_VERSION,
+        tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
+        tm_stable = "Texmacs-" .. STABLE_VERSION,
+        tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
+        LOLLY_VERSION = LOLLY_VERSION,
+    }
+})
 
 plugin_pdf_srcs = {
     "src/Plugins/Pdf/**.cpp",
@@ -592,12 +590,10 @@ target("draw") do
     set_configvar("XMACS_VERSION", XMACS_VERSION)
 
     -- install man.1 manual file
-    add_configfiles(
-        "(misc/man/texmacs.1.in)",{
-            filename = "texmacs.1",
-            pattern = "@([^\n]-)@",
-        }
-    )
+    add_configfiles("(misc/man/texmacs.1.in)", {
+        filename = "texmacs.1",
+        pattern = "@([^\n]-)@",
+    })
 
     -- install texmacs runtime files
       add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
@@ -681,23 +677,19 @@ target("research") do
     set_configvar("XMACS_VERSION", XMACS_VERSION)
 
     -- install man.1 manual file
-    add_configfiles(
-        "(misc/man/texmacs.1.in)",{
-            filename = "texmacs.1",
-            pattern = "@([^\n]-)@",
-        }
-    )
+    add_configfiles("(misc/man/texmacs.1.in)", {
+        filename = "texmacs.1",
+        pattern = "@([^\n]-)@",
+    })
 
     -- package metadata
     if is_plat("macosx") then
         set_configvar("APPCAST", "")
         set_configvar("OSXVERMIN", "")
-        add_configfiles(
-            "(packages/macos/Info.plist.in)",{
-                filename = "Info.plist",
-                pattern = "@(.-)@",
-            }
-        )
+        add_configfiles("(packages/macos/Info.plist.in)", {
+            filename = "Info.plist",
+            pattern = "@(.-)@",
+        })
         add_installfiles({
             "packages/macos/Xmacs.icns",
             "packages/macos/TeXmacs-document.icns",
