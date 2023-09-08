@@ -43,6 +43,11 @@ set_allowedplats(
     "wasm", "linux", "macosx", "mingw", "windows"
 ) 
 
+if is_plat("mingw") and is_host("windows") then
+    add_requires("mingw-w64 8.1.0")
+    set_toolchains("mingw@mingw-w64")
+end
+
 -- add releasedbg, debug and release modes for different platforms.
 -- debug mode cannot run on mingw with qt precompiled binary
 if is_plat("mingw") then
@@ -799,7 +804,7 @@ target("windows_installer") do
     end)
 end
 
-for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
+function add_test_target (filepath)
     local testname = path.basename(filepath)
     target(testname) do
         add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
@@ -810,6 +815,9 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
         add_rules("qt.console")
         add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
         add_syslinks("pthread")
+        if is_plat ("mingw") then
+            add_packages("mingw-w64")
+        end
         add_packages("s7")
         add_packages("lolly")
 
@@ -819,6 +827,26 @@ for _, filepath in ipairs(os.files("tests/**_test.cpp")) do
         add_files(filepath, {rules = "qt.moc"})
         add_cxxflags("-include $(buildir)/config.h")
     end
+end
+
+for _, filepath in ipairs(os.files("tests/Data/**_test.cpp")) do
+    add_test_target (filepath)
+end
+
+for _, filepath in ipairs(os.files("tests/Graphics/**_test.cpp")) do
+    add_test_target (filepath)
+end
+
+for _, filepath in ipairs(os.files("tests/System/**_test.cpp")) do
+    add_test_target (filepath)
+end
+
+for _, filepath in ipairs(os.files("tests/Typeset/**_test.cpp")) do
+    add_test_target (filepath)
+end
+
+for _, filepath in ipairs(os.files("tests/Plugins/**_test.cpp")) do
+    add_test_target (filepath)
 end
 
 for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
