@@ -33,6 +33,22 @@
       Tangdouer
     </cell>|<\cell>
       Optimize pdf export efficiency
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      29_4
+    </cell>|<\cell>
+      Tangdouer
+    </cell>|<\cell>
+      Add test for embeding tm doc in pdf
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      29_5
+    </cell>|<\cell>
+      Tanddouer
+    </cell>|<\cell>
+      Add test for loading pdf with tm doc attachment
     </cell>>>>
   </wide-tabular>
 
