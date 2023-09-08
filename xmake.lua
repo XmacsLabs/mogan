@@ -85,6 +85,31 @@ local TeXmacs_files = {
 includes("misc/xmake/packages.lua")
 add_requires_of_mogan()
 
+function build_glue_on_config()
+    on_config(function (target) 
+        import("core.project.depend")
+        -- use relative path here to avoid import failure on windows
+        local scheme_path = path.join("src", "Scheme")
+        local build_glue_path = path.join("src", "Scheme", "Glue")
+        local build_glue = import("build_glue", {rootdir = build_glue_path})
+        for _, filepath in ipairs(os.filedirs(path.join(scheme_path, "**/glue_*.lua"))) do
+            depend.on_changed(function ()
+                local glue_name = path.basename(filepath)
+                local glue_dir = path.directory(filepath)
+                local glue_table = import(glue_name, {rootdir = glue_dir})()
+                io.writefile(
+                    path.join("$(buildir)", glue_name .. ".cpp"),
+                    build_glue(glue_table, glue_name))
+                cprint("generating scheme glue %s ... %s", glue_name, "${color.success}${text.success}")
+            end, {
+                values = {true},
+                files = {filepath, path.join(build_glue_path, "build_glue.lua")},
+                always_changed = false
+            })
+        end
+    end)
+end
+
 
 --
 -- Experimental options of Mogan
@@ -330,28 +355,7 @@ target("libmogan") do
         add_frameworks("QtMacExtras")
     end
 
-    on_config(function (target) 
-        import("core.project.depend")
-        -- use relative path here to avoid import failure on windows
-        local scheme_path = path.join("src", "Scheme")
-        local build_glue_path = path.join("src", "Scheme", "Glue")
-        local build_glue = import("build_glue", {rootdir = build_glue_path})
-        for _, filepath in ipairs(os.filedirs(path.join(scheme_path, "**/glue_*.lua"))) do
-            depend.on_changed(function ()
-                local glue_name = path.basename(filepath)
-                local glue_dir = path.directory(filepath)
-                local glue_table = import(glue_name, {rootdir = glue_dir})()
-                io.writefile(
-                    path.join("$(buildir)", glue_name .. ".cpp"),
-                    build_glue(glue_table, glue_name))
-                cprint("generating scheme glue %s ... %s", glue_name, "${color.success}${text.success}")
-            end, {
-                values = {true},
-                files = {filepath, path.join(build_glue_path, "build_glue.lua")},
-                always_changed = false
-            })
-        end
-    end)
+    build_glue_on_config()
 
     add_packages("lolly")
     add_packages("libiconv")
@@ -804,12 +808,12 @@ target("windows_installer") do
     end)
 end
 
-function add_test_target (filepath)
+function add_test_target (filepath, dep)
     local testname = path.basename(filepath)
     target(testname) do
         add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
         set_group("tests")
-        add_deps("libmogan")
+        add_deps(dep)
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
         add_rules("qt.console")
@@ -822,6 +826,7 @@ function add_test_target (filepath)
         add_packages("lolly")
 
         add_includedirs({"$(buildir)", "tests/Base"})
+        build_glue_on_config()
         add_files("tests/Base/base.cpp")
         add_files(filepath)
         add_files(filepath, {rules = "qt.moc"})
@@ -829,24 +834,32 @@ function add_test_target (filepath)
     end
 end
 
-for _, filepath in ipairs(os.files("tests/Data/**_test.cpp")) do
-    add_test_target (filepath)
+for _, filepath in ipairs(os.files("tests/Data/History/**_test.cpp")) do
+    add_test_target (filepath, "libkernel_l3")
+end
+
+for _, filepath in ipairs(os.files("tests/Data/Parser/**_test.cpp")) do
+    add_test_target (filepath, "libmogan")
+end
+
+for _, filepath in ipairs(os.files("tests/Data/String/**_test.cpp")) do
+    add_test_target (filepath, "libmogan")
 end
 
 for _, filepath in ipairs(os.files("tests/Graphics/**_test.cpp")) do
-    add_test_target (filepath)
+    add_test_target (filepath, "libmogan")
 end
 
 for _, filepath in ipairs(os.files("tests/System/**_test.cpp")) do
-    add_test_target (filepath)
+    add_test_target (filepath, "libmogan")
 end
 
 for _, filepath in ipairs(os.files("tests/Typeset/**_test.cpp")) do
-    add_test_target (filepath)
+    add_test_target (filepath, "libmogan")
 end
 
 for _, filepath in ipairs(os.files("tests/Plugins/**_test.cpp")) do
-    add_test_target (filepath)
+    add_test_target (filepath, "libmogan")
 end
 
 for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
