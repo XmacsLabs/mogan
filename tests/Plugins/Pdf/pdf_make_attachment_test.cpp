@@ -9,6 +9,7 @@
  ******************************************************************************/
 
 #include "file.hpp"
+#include "pdf_hummus_get_attachment.hpp"
 #include "pdf_hummus_make_attachment.hpp"
 #include "sys_utils.hpp"
 #include <QtTest/QtTest>
@@ -34,7 +35,18 @@ TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachment () {
       is_regular (url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"));
   QVERIFY (out_pdf_judge);
 
+  url  attachment;
+  bool separate_tm_judge= get_tm_attachment_in_pdf (
+      url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"), attachment);
+  QVERIFY (separate_tm_judge);
+
+  bool tm_exist_judge= is_regular (attachment);
+  QVERIFY (separate_tm_judge);
+
+  QVERIFY (attachment == url ("$TEXMACS_PATH/tests/images/29_1_1.tm"));
+
   remove (url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"));
+  remove (attachment);
 }
 
 QTEST_MAIN (TestHummusPdfMakeAttachment)
