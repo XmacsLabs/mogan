@@ -273,18 +273,18 @@ local DEVEL_RELEASE = 1
 local STABLE_VERSION = TEXMACS_VERSION
 local STABLE_RELEASE = 1
 
-
-set_configvar("QTPIPES", 1)
-add_defines("QTPIPES")
-
-set_configvar("USE_QT_PRINTER", 1)
-add_defines("USE_QT_PRINTER")
+if not is_plat("wasm") then
+    set_configvar("QTPIPES", 1)
+    set_configvar("USE_QT_PRINTER", 1)
+end
 
 set_configvar("USE_ICONV", 1)
-set_configvar("USE_CURL", 1)
 set_configvar("USE_FREETYPE", 1)
-set_configvar("USE_GS", 1)
-set_configvar("PDF_RENDERER", 1)
+if is_plat("wasm") then
+    set_configvar("PDF_RENDERER", false)
+else
+    set_configvar("PDF_RENDERER", true)
+end
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 
 if is_plat("mingw") then
@@ -293,12 +293,8 @@ else
     set_configvar("GS_EXE", "/usr/bin/gs")
 end
 
-if is_plat("mingw") then
-else if is_plat("macosx") then
-    set_configvar("USE_STACK_TRACE", true)
+if is_plat("macosx") then
     set_configvar("AQUATEXMACS", true)
-end
-    set_configvar("USE_STACK_TRACE", true)
 end
 
 set_configvar("STDC_HEADERS", true)
@@ -314,12 +310,13 @@ add_configfiles(
             GS_LIB = "../share/ghostscript/9.06/lib:",
             OS_GNU_LINUX = is_plat("linux"),
             OS_MACOS = is_plat("macosx"),
-            MACOSX_EXTENSIONS = is_plat("macosx"),
             OS_MINGW = is_plat("mingw"),
+            OS_WASM = is_plat("wasm"),
+            MACOSX_EXTENSIONS = is_plat("macosx"),
             SIZEOF_VOID_P = 8,
             USE_FONTCONFIG = is_plat("linux"),
-            USE_STACK_TRACE = not is_plat("mingw"),
-            USE_GS = true,
+            USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")),
+            USE_GS = not is_plat("wasm"),
             }})
 
 add_configfiles(
@@ -336,7 +333,9 @@ add_configfiles(
             tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
             }})
 
-
+plugin_pdf_srcs = {
+    "src/Plugins/Pdf/**.cpp",
+}
 
 target("libmogan") do
     set_basename("mogan")
@@ -476,7 +475,6 @@ target("libmogan") do
             "src/Plugins/Bibtex/**.cpp",
             "src/Plugins/Database/**.cpp",
             "src/Plugins/Freetype/**.cpp",
-            "src/Plugins/Pdf/**.cpp",
             "src/Plugins/Ghostscript/**.cpp",
             "src/Plugins/Ispell/**.cpp",
             "src/Plugins/Metafont/**.cpp",
@@ -485,6 +483,9 @@ target("libmogan") do
             "src/Plugins/Tex/**.cpp",
             "src/Plugins/Updater/**.cpp",
             "src/Plugins/Xml/**.cpp"})
+    if not is_plat("wasm") then
+        add_files(plugin_pdf_srcs)
+    end
     
     if is_plat("macosx") then
         add_files({

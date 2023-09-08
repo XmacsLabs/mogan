@@ -19,6 +19,8 @@
  ** WARNING! All changes made in this file will be lost when recompiling UI file!
  ********************************************************************************/
 
+#ifdef USE_QT_PRINTER
+
 #ifndef UI_QTMPRINTDIALOG_H
 #define UI_QTMPRINTDIALOG_H
 
@@ -450,3 +452,5 @@ protected:
 };
 
 #endif // QTMPRINTDIALOG_HPP
+
+#endif //USE_QT_PRINTER

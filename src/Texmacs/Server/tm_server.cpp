@@ -166,6 +166,7 @@ tm_server_rep::refresh () {
 
 void
 tm_server_rep::interpose_handler () {
+#ifndef OS_WASM
 #ifdef QTTEXMACS
   // TeXmacs/Qt handles delayed messages and socket notification
   // in its own runloop
@@ -177,6 +178,7 @@ tm_server_rep::interpose_handler () {
   perform_select ();
   exec_pending_commands ();
 #endif
+#endif // not OS_WASM
 
   if (!headless_mode) {
     int i, j;
