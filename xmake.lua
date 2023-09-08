@@ -48,6 +48,11 @@ if is_plat("mingw") and is_host("windows") then
     set_toolchains("mingw@mingw-w64")
 end
 
+if is_plat("wasm") then
+    add_requires("emscripten 3.1.25")
+    set_toolchains("emcc@emscripten")
+end
+
 -- add releasedbg, debug and release modes for different platforms.
 -- debug mode cannot run on mingw with qt precompiled binary
 if is_plat("mingw") then
@@ -831,6 +836,15 @@ function add_test_target (filepath, dep)
         add_files(filepath)
         add_files(filepath, {rules = "qt.moc"})
         add_cxxflags("-include $(buildir)/config.h")
+
+        if is_plat("wasm") then
+            on_run(function (target)
+                node = os.getenv("EMSDK_NODE")
+                cmd = node .. " $(buildir)/wasm/wasm32/$(mode)/" .. testname .. ".js"
+                print("> " .. cmd)
+                os.exec(cmd)
+            end)
+        end
     end
 end
 
