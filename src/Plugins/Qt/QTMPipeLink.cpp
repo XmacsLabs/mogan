@@ -9,7 +9,6 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#ifdef QTPIPES
 #include "tm_link.hpp"
 #include "qt_utilities.hpp"
 #include "qt_gui.hpp"
@@ -95,5 +94,3 @@ QTMPipeLink::killProcess (int msecs) {
   if (! waitForFinished (msecs)) kill ();
 #endif
 }
-
-#endif // QTPIPES

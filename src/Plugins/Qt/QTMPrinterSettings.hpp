@@ -9,8 +9,6 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#ifdef USE_QT_PRINTER
-
 #ifndef QTMPRINTERSETTINGS_HPP
 #define QTMPRINTERSETTINGS_HPP
 
@@ -179,5 +177,3 @@ protected:
 #endif // Q_WS_WIN
 
 #endif  // QTMPRINTERSETTINGS_HPP
-
-#endif // USE_QT_PRINTER

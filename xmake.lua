@@ -275,7 +275,9 @@ local STABLE_RELEASE = 1
 
 if not is_plat("wasm") then
     set_configvar("QTPIPES", 1)
+    add_defines("QTPIPES")
     set_configvar("USE_QT_PRINTER", 1)
+    add_defines("USE_QT_PRINTER")
 end
 
 set_configvar("USE_ICONV", 1)

@@ -9,7 +9,6 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#ifdef QTPIPES
 #ifndef QTM_PIPE_LINK_H
 #define QTM_PIPE_LINK_H
 
@@ -45,4 +44,3 @@ public:
 };
 
 #endif // QTM_PIPE_LINK
-#endif // QTPIPES

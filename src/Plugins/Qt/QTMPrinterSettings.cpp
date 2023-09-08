@@ -9,7 +9,6 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#ifdef USE_QT_PRINTER
 #include "QTMPrinterSettings.hpp"
 #include "qt_utilities.hpp"
 #include "tm_sys_utils.hpp"
@@ -572,5 +571,3 @@ WinQTMPrinterSettings::availablePrinters() {
 }
 
 #endif
-
-#endif // USE_QT_PRINTER
