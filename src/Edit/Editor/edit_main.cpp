@@ -347,11 +347,10 @@ declare_style (url u) {
 static bool
 is_internal_style (string style) {
   return true;
-  
+
   if (N (internal_styles) == 0) {
     url sty_u= descendance ("$TEXMACS_STYLE_ROOT");
     declare_style (sty_u);
-    //cout << "Styles: " << internal_styles << LF;
   }
   return internal_styles->contains (style);
 }
@@ -364,7 +363,7 @@ edit_main_rep::print_to_file (url name, string first, string last) {
     if (as_bool (call ("get-boolean-preference",
                        "gui:export PDF with tm attachment"))) {
       if (!attach_doc_to_exported_pdf (name)) {
-        cout << "attach wrong" << LF;
+        debug_convert << "fail : attach_doc_to_exported_pdf" << LF;
       }
     }
   }
@@ -382,7 +381,6 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
   rename_buffer (new_u, tmp_save_path);
   new_u    = tmp_save_path;
   url cur_u= get_current_buffer ();
-  // print_tree(get_buffer_tree(cur_u), 4);
   call ("buffer-copy", cur_u, new_u);
   buffer_save (new_u);
 
@@ -391,10 +389,8 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
   tree new_t= import_tree (new_u, "texmacs");
   set_buffer_tree (new_u, new_t);
   new_t= get_buffer_tree (new_u);
-  // print_tree(new_t, 4);
 
   // dfs search all style and link
-  // print_tree(new_t, 4);
   list<tree> st (new_t);
   list<url>  tm_and_linked_file (new_u);
   while (N (st) != 0) {
@@ -402,7 +398,6 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
     st     = suppress_last (st);
     for (int i= 0; i < arity (la); i++) {
       if (is_compound (la[i])) {
-        // cout << get_label(la[i]) << LF;
         string label= get_label (la[i]);
         if (label == "image" || label == "include") {
           if (is_atomic (la[i][0])) {
@@ -410,7 +405,7 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
             if (!exists (pre_url)) {
               pre_url= head (cur_u) * pre_url;
               if (!exists (pre_url)) {
-                cout << pre_url << "no exitst" << LF;
+                debug_convert << pre_url << "do not exist" << LF;
               }
             }
             tm_and_linked_file= tm_and_linked_file * pre_url;
@@ -419,7 +414,6 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
           }
         }
         else if (label == "style") {
-          // tree style= la[i];
           if (is_func (la[i][0], TUPLE)) {
             for (int j= 0; j < N (la[i][0]); j++) {
               string style_name= get_label (la[i][0][j]);
@@ -429,21 +423,18 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
                 if (!exists (style_url)) {
                   style_url= head (cur_u) * style_url;
                   if (!exists (style_url)) {
-                    cout << style_url << "no exitst" << LF;
+                    debug_convert << style_url << "do not exist" << LF;
                   }
                 }
                 tm_and_linked_file= tm_and_linked_file * style_url;
                 string name       = basename (style_url);
-                // cout << la[i][0][j] << LF;
-                // cout << name << LF;
                 la[i][0][j]->label= name;
-                // cout << la[i][0][j] << LF;
               }
             }
           }
           else {
             if (!is_atomic (la[i][0])) {
-              cout << "wrong: not a atomic tree" << LF;
+              debug_convert << get_label (la[i][0]) << "is not atomic tree" << LF;
             }
             string style_name= get_label (la[i][0]);
             if (!is_internal_style (style_name)) {
@@ -452,17 +443,12 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
               if (!exists (style_url)) {
                 style_url= head (cur_u) * style_url;
                 if (!exists (style_url)) {
-                  cout << style_url << "no exitst" << LF;
+                    debug_convert << style_url << "do not exist" << LF;
                 }
               }
               tm_and_linked_file= tm_and_linked_file * style_url;
-              // cout << "here\n\n\n" << LF;
-              // cout << tm_and_linked_file << LF;
               string name= basename (style_url);
-              // cout << name << LF;
-              // cout << la[i][0] << LF;
               la[i][0]->label= name;
-              // cout << la[i][0] << LF;
             }
           }
         }
@@ -471,16 +457,12 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
     }
   }
 
-  // print_tree(new_t, 4);
   set_buffer_tree (new_u, new_t);
   buffer_save (new_u);
   new_t= get_buffer_tree (new_u);
-  // print_tree(new_t, 4);
 
-  // attach tm style linked file in pdf
-  // cout << tm_and_linked_file << LF;
   if (!pdf_hummus_make_attachments (pdf_name, tm_and_linked_file, pdf_name)) {
-    cout << "attach wrong" << LF;
+    debug_convert << "fail : pdf_hummus_make_attachments" << LF;
     return false;
   }
   return true;
