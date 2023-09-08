@@ -278,13 +278,10 @@ target("libkernel_l3") do
     add_includedirs(l3_includedirs, {public = true})
     add_files(l3_files)
 
-    if is_plat("windows") then
-        add_cxxflags("-FI " .. path.absolute("$(buildir)\\L3\\config.h"))
-        add_cxxflags("-FI " .. path.absolute("$(buildir)\\L3\\tm_configure.hpp"))
-    else
-        add_cxxflags("-include $(buildir)/L3/config.h")
-        add_cxxflags("-include $(buildir)/L3/tm_configure.hpp")
-    end
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("$(buildir)/L3/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/L3/tm_configure.hpp"))
+    end)
 end
 
 
@@ -546,8 +543,10 @@ target("libmogan") do
     add_files(plugin_qt_srcs)
 
     add_mxflags("-fno-objc-arc")
-    add_cxxflags("-include $(buildir)/config.h")
-    add_cxxflags("-include $(buildir)/tm_configure.hpp")
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("$(buildir)/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
+    end)
 end 
 
 option("libdl") do
