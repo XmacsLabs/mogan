@@ -20,6 +20,7 @@ class TestHummusPdfMakeAttachment : public QObject {
 private slots:
   void init () { lolly::init_tbox (); }
   void test_pdf_hummus_make_attachment ();
+  void test_pdf_hummus_make_attachments ();
 };
 
 void
@@ -47,6 +48,46 @@ TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachment () {
 
   remove (url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"));
   remove (attachment);
+}
+
+void
+TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachments () {
+
+  auto multiple_tm= list<url> (
+      url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main.tm"),
+      url ("$TEXMACS_PATH/tests/29_4_2multiple-files/tsts/myslides.ts"),
+      url ("$TEXMACS_PATH/tests/29_4_2multiple-files/p/logo.pdf"));
+
+  bool attach_judge= pdf_hummus_make_attachments (
+      url ("$TEXMACS_PATH/tests/images/29_4_2.pdf"), multiple_tm,
+      url ("$TEXMACS_PATH/tests/images/29_4_2_attach.pdf"));
+  QVERIFY (attach_judge);
+
+  bool out_pdf_judge=
+      is_regular (url ("$TEXMACS_PATH/tests/images/29_4_2_attach.pdf"));
+  QVERIFY (out_pdf_judge);
+
+  array<url> attachments;
+  bool       separate_tm_judge= get_tm_attachments_in_pdf (
+      url ("$TEXMACS_PATH/tests/images/29_4_2_attach.pdf"), attachments);
+  QVERIFY (separate_tm_judge);
+
+  QVERIFY (N (attachments) == 3);
+  for (int i= 0; i < N (attachments); i++) {
+    bool tm_exist_judge= is_regular (attachments[i]);
+    QVERIFY (tm_exist_judge);
+  }
+
+  QVERIFY (contains (url ("$TEXMACS_PATH/tests/images/main.tm"), attachments));
+  QVERIFY (
+      contains (url ("$TEXMACS_PATH/tests/images/myslides.ts"), attachments));
+  QVERIFY (contains (url ("$TEXMACS_PATH/tests/images/logo.pdf"), attachments));
+
+  remove (url ("$TEXMACS_PATH/tests/images/29_4_2_attach.pdf"));
+
+  for (int i= 0; i < N (attachments); i++) {
+    remove (attachments[i]);
+  }
 }
 
 QTEST_MAIN (TestHummusPdfMakeAttachment)
