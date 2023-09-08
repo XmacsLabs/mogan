@@ -36,12 +36,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+      - name: set XMAKE_GLOBALDIR
+        run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
       - name: cache packages from xrepo
         uses: actions/cache@v2
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
-          key: ${{ runner.os }}-xrepo-qt-${{ hashFiles('**/packages.lua') }}
+          key: ${{ runner.os }}-xrepo-wasm-${{ hashFiles('**/packages.lua') }}
       - name: cache xmake
         uses: actions/cache@v2
         with:
