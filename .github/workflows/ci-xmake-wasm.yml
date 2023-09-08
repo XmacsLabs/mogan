@@ -2,7 +2,7 @@ name: Build and Test by WASM
 
 on:
   push:
-    branches: [ branch-1.1 ]
+    branches: [ branch-1.2 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Macos/**'
@@ -12,7 +12,7 @@ on:
       - 'xmake.lua'
       - '.github/workflows/ci-xmake-wasm.yml'
   pull_request:
-    branches: [ branch-1.1 ]
+    branches: [ branch-1.2 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Macos/**'
