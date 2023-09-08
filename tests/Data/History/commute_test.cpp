@@ -120,27 +120,29 @@ TestCommute::test_commute () {
       modification m2= test_modification (j);
       modification t1= m1;
       modification t2= m2;
-      cout << "m1  = " << m1 << "\n";
-      cout << "m2  = " << m2 << "\n";
+      // cout << "m1  = " << m1 << "\n";
+      // cout << "m2  = " << m2 << "\n";
       bool         r = swap (m1, m2);
       modification u1= m1;
       modification u2= m2;
-      if (!r) cout << "  Modifications do not commute\n\n";
+      if (!r) {
+        // cout << "  Modifications do not commute\n\n";
+      }
       else {
-        cout << "m1' = " << m1 << "\n";
-        cout << "m2' = " << m2 << "\n";
+        // cout << "m1' = " << m1 << "\n";
+        // cout << "m2' = " << m2 << "\n";
         QCOMPARE (clean_apply (clean_apply (tt, t1), t2),
                   clean_apply (clean_apply (tt, m1), m2));
         r= swap (m1, m2);
         if (!r) cout << "r   = " << r << "\n";
         else if (m1 != t1 || m2 != t2) {
-          cout << "m1''= " << m1 << "\n";
-          cout << "m2''= " << m2 << "\n";
+          // cout << "m1''= " << m1 << "\n";
+          // cout << "m2''= " << m2 << "\n";
           r= swap (m1, m2);
           if (!r) cout << "r   = " << r << "\n";
           else if (m1 != u1 || m2 != u2) {
-            cout << "m1* = " << m1 << "\n";
-            cout << "m2* = " << m2 << "\n";
+            // cout << "m1* = " << m1 << "\n";
+            // cout << "m2* = " << m2 << "\n";
             r= false;
           }
         }
