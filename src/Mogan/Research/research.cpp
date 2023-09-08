@@ -211,8 +211,7 @@ TeXmacs_init_paths (int& argc, char** argv) {
 #ifdef OS_WASM
   set_env ("PWD", "/");
   set_env ("HOME", "/");
-  if (is_empty (current_texmacs_path))
-    set_env ("TEXMACS_PATH", "/TeXmacs");
+  if (is_empty (current_texmacs_path)) set_env ("TEXMACS_PATH", "/TeXmacs");
 #endif
 
   // check on the latest $TEXMACS_PATH
@@ -343,7 +342,7 @@ TeXmacs_main (int argc, char** argv) {
 #elif defined(OS_WASM)
         retina_factor= 2;
         retina_zoom  = 2;
-        retina_scale = (tm_style_sheet == ""? 1.0: 1.6666);
+        retina_scale = (tm_style_sheet == "" ? 1.0 : 1.6666);
 #else
         retina_factor= 1;
         retina_zoom  = 2;
@@ -607,7 +606,7 @@ immediate_options (int argc, char** argv) {
     set_env ("TEXMACS_HOME_PATH",
              get_env ("HOME") * "/config/settings/TeXmacs");
 #elif defined(OS_WASM)
-      set_env ("TEXMACS_HOME_PATH", "/.Xmacs");
+    set_env ("TEXMACS_HOME_PATH", "/.Xmacs");
 #else
     set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/.TeXmacs");
 #endif
