@@ -1,0 +1,68 @@
+name: Build and Test by WASM
+
+on:
+  push:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - '!src/Plugins/Unix/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - '.github/workflows/ci-xmake-wasm.yml'
+  pull_request:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - '!src/Plugins/Unix/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - '.github/workflows/ci-xmake-wasm.yml'
+
+jobs:
+  wasmbuild:
+    runs-on: ubuntu-22.04
+    if: always()
+    steps:
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: branch@dev
+      - name: update repo
+        run: |
+          xrepo update-repo
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: set XMAKE_GLOBALDIR
+        run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
+      - name: cache packages from xrepo
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+          key: ${{ runner.os }}-xrepo-wasm-${{ hashFiles('**/packages.lua') }}
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/build/.build_cache
+          key: ${{ runner.os }}-xmake-build-${{ hashFiles('**/xmake.lua') }}
+      - name: Install Qt wasm
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.5.2
+          arch: wasm_singlethread
+          host: 'linux'
+          target: 'desktop'
+          cache: 'true'
+          # workarounds in https://github.com/jurplel/install-qt-action/issues/181
+          aqtversion: '==3.1.*'
+          py7zrversion: '==0.20.*'
+          extra: '--autodesktop'
+      - name: config
+        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -vD -p wasm -m releasedbg --yes
+      - name: build
+        run: xmake build libmogan

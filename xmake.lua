@@ -15,33 +15,67 @@ includes("check_cxxincludes.lua")
 includes("check_cxxfuncs.lua")
 includes("check_cxxsnippets.lua")
 
-configvar_check_cxxincludes("HAVE_STDLIB_H", "stdlib.h")
-configvar_check_cxxincludes("HAVE_STRINGS_H", "strings.h")
-configvar_check_cxxincludes("HAVE_STRING_H", "string.h")
-configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
-configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
-configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
-configvar_check_cxxincludes("HAVE_MEMORY_H", "memory.h")
-configvar_check_cxxincludes("HAVE_PTY_H", "pty.h")
-configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
-configvar_check_cxxincludes("HAVE_SYS_STAT_H", "sys/stat.h")
-configvar_check_cxxincludes("HAVE_SYS_TYPES_H", "sys/types.h")
-configvar_check_cxxtypes("HAVE_TIME_T", "time_t", {includes = {"memory"}})
-configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
-configvar_check_cxxfuncs("HAVE_GETTIMEOFDAY", "gettimeofday", {includes={"sys/time.h"}})
-configvar_check_cxxsnippets(
-    "CONFIG_LARGE_POINTER", [[
-        #include <stdlib.h>
-        static_assert(sizeof(void*) == 8, "");]])
+function my_configvar_check()
+    on_config(function (target)
+        print("my_configvar_check " .. target:name())
+        if target:has_cxxincludes("stdlib.h") then
+            target:set("configvar", "HAVE_STDLIB_H", 1)
+        end
+        if target:has_cxxincludes("strings.h") then
+            target:set("configvar", "HAVE_STRINGS_H", 1)
+        end
+        if target:has_cxxincludes("string.h") then
+            target:set("configvar", "HAVE_STRING_H", 1)
+        end
+        if target:has_cxxincludes("unistd.h") then
+            target:set("configvar", "HAVE_UNISTD_H", 1)
+        end
+        if target:has_cxxincludes("inttypes.h") then
+            target:set("configvar", "HAVE_INTTYPES_H", 1)
+        end
+        if target:has_cxxincludes("memory.h") then
+            target:set("configvar", "HAVE_MEMORY_H", 1)
+        end
+        if target:has_cxxincludes("pty.h") then
+            target:set("configvar", "HAVE_PTY_H", 1)
+        end
+        if target:has_cxxincludes("stdint.h") then
+            target:set("configvar", "HAVE_STDINT_H", 1)
+        end
+        if target:has_cxxincludes("sys/stat.h") then
+            target:set("configvar", "HAVE_SYS_STAT_H", 1)
+        end
+        if target:has_cxxincludes("sys/types.h") then
+            target:set("configvar", "HAVE_SYS_TYPES_H", 1)
+        end
+        if target:has_cxxincludes("util.h") then
+            target:set("configvar", "HAVE_UTIL_H", 1)
+        end
+        if target:has_cxxtypes("intptr_t", {includes = "memory"}) then
+            target:set("configvar", "HAVE_INTPTR_T", 1)
+        end
+        if target:has_cxxtypes("time_t", {incldes = "memory"}) then
+            target:set("configvar", "HAVE_TIME_T", 1)
+        end
+        if target:has_cfuncs("gettimeofday", {includes={"sys/time.h"}}) then
+            target:set("configvar", "HAVE_GETTIMEOFDAY", 1)
+        end
+        if target:check_cxxsnippets({test=[[
+                #include <stdlib.h>
+                static_assert(sizeof(void*) == 8, "");
+        ]]}) then
+            target:set("configvar", "CONFIG_LARGE_POINTER", 1)
+        end
+    end)
+end
+
 
 ---
 --- Project: Mogan Applications
 ---
 set_project("Mogan Applications")
 
-set_allowedplats(
-    "wasm", "linux", "macosx", "mingw", "windows"
-) 
+set_allowedplats("wasm", "linux", "macosx", "mingw", "windows") 
 
 if is_plat("mingw") and is_host("windows") then
     add_requires("mingw-w64 8.1.0")
@@ -214,41 +248,37 @@ target("libkernel_l3") do
     add_packages("s7")
     add_packages("lolly")
 
-    add_configfiles(
-        "src/System/config_l3.h.xmake", {
-            filename = "L3/config.h",
-            variables = {
-                OS_MINGW = is_plat("mingw"),
-                OS_MACOS = is_plat("macosx"),
-                OS_WIN = is_plat("windows"),
-                QTTEXMACS = false,
-            }
+    my_configvar_check()
+    add_configfiles("src/System/config_l3.h.xmake", {
+        filename = "L3/config.h",
+        variables = {
+            OS_MINGW = is_plat("mingw"),
+            OS_MACOS = is_plat("macosx"),
+            OS_WIN = is_plat("windows"),
+            OS_WASM = is_plat("wasm"),
+            QTTEXMACS = false,
         }
-    )
-    add_configfiles(
-        "src/System/tm_configure_l3.hpp.xmake", {
-            filename = "L3/tm_configure.hpp",
-            pattern = "@(.-)@",
-            variables = {
-                CONFIG_USER = CONFIG_USER,
-                CONFIG_OS = CONFIG_OS,
-                VERSION = TEXMACS_VERSION,
-            }
+    })
+    add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
+        filename = "L3/tm_configure.hpp",
+        pattern = "@(.-)@",
+        variables = {
+            CONFIG_USER = CONFIG_USER,
+            CONFIG_OS = CONFIG_OS,
+            VERSION = TEXMACS_VERSION,
+            LOLLY_VERSION = LOLLY_VERSION,
         }
-    )
+    })
 
     add_includedirs("$(buildir)/L3")
     add_includedirs("$(buildir)")
     add_includedirs(l3_includedirs, {public = true})
     add_files(l3_files)
 
-    if is_plat("windows") then
-        add_cxxflags("-FI " .. path.absolute("$(buildir)\\L3\\config.h"))
-        add_cxxflags("-FI " .. path.absolute("$(buildir)\\L3\\tm_configure.hpp"))
-    else
-        add_cxxflags("-include $(buildir)/L3/config.h")
-        add_cxxflags("-include $(buildir)/L3/tm_configure.hpp")
-    end
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("$(buildir)/L3/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/L3/tm_configure.hpp"))
+    end)
 end
 
 
@@ -273,18 +303,18 @@ local DEVEL_RELEASE = 1
 local STABLE_VERSION = TEXMACS_VERSION
 local STABLE_RELEASE = 1
 
-
-set_configvar("QTPIPES", 1)
-add_defines("QTPIPES")
-
-set_configvar("USE_QT_PRINTER", 1)
-add_defines("USE_QT_PRINTER")
+if not is_plat("wasm") then
+    set_configvar("QTPIPES", 1)
+    set_configvar("USE_QT_PRINTER", 1)
+end
 
 set_configvar("USE_ICONV", 1)
-set_configvar("USE_CURL", 1)
 set_configvar("USE_FREETYPE", 1)
-set_configvar("USE_GS", 1)
-set_configvar("PDF_RENDERER", 1)
+if is_plat("wasm") then
+    set_configvar("PDF_RENDERER", false)
+else
+    set_configvar("PDF_RENDERER", true)
+end
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 
 if is_plat("mingw") then
@@ -293,12 +323,8 @@ else
     set_configvar("GS_EXE", "/usr/bin/gs")
 end
 
-if is_plat("mingw") then
-else if is_plat("macosx") then
-    set_configvar("USE_STACK_TRACE", true)
+if is_plat("macosx") then
     set_configvar("AQUATEXMACS", true)
-end
-    set_configvar("USE_STACK_TRACE", true)
 end
 
 set_configvar("STDC_HEADERS", true)
@@ -306,37 +332,52 @@ set_configvar("STDC_HEADERS", true)
 
 set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
 
-add_configfiles(
-    "src/System/config.h.xmake", {
-        filename = "config.h",
-        variables = {
-            GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
-            GS_LIB = "../share/ghostscript/9.06/lib:",
-            OS_GNU_LINUX = is_plat("linux"),
-            OS_MACOS = is_plat("macosx"),
-            MACOSX_EXTENSIONS = is_plat("macosx"),
-            OS_MINGW = is_plat("mingw"),
-            SIZEOF_VOID_P = 8,
-            USE_FONTCONFIG = is_plat("linux"),
-            USE_STACK_TRACE = not is_plat("mingw"),
-            USE_GS = true,
-            }})
+add_configfiles("src/System/config.h.xmake", {
+    filename = "config.h",
+    variables = {
+        GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
+        GS_LIB = "../share/ghostscript/9.06/lib:",
+        OS_GNU_LINUX = is_plat("linux"),
+        OS_MACOS = is_plat("macosx"),
+        OS_MINGW = is_plat("mingw"),
+        OS_WASM = is_plat("wasm"),
+        MACOSX_EXTENSIONS = is_plat("macosx"),
+        SIZEOF_VOID_P = 8,
+        USE_FONTCONFIG = is_plat("linux"),
+        USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")),
+        USE_GS = not is_plat("wasm"),
+    }
+})
 
-add_configfiles(
-    "src/System/tm_configure.hpp.xmake", {
-        filename = "tm_configure.hpp",
-        pattern = "@(.-)@",
-        variables = {
-            XMACS_VERSION = XMACS_VERSION,
-            CONFIG_USER = CONFIG_USER,
-            CONFIG_STD_SETENV = "#define STD_SETENV",
-            tm_devel = "Texmacs-" .. DEVEL_VERSION,
-            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
-            tm_stable = "Texmacs-" .. STABLE_VERSION,
-            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
-            }})
+add_configfiles("src/System/tm_configure.hpp.xmake", {
+    filename = "tm_configure.hpp",
+    pattern = "@(.-)@",
+    variables = {
+        XMACS_VERSION = XMACS_VERSION,
+        CONFIG_USER = CONFIG_USER,
+        CONFIG_STD_SETENV = "#define STD_SETENV",
+        tm_devel = "Texmacs-" .. DEVEL_VERSION,
+        tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
+        tm_stable = "Texmacs-" .. STABLE_VERSION,
+        tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
+        LOLLY_VERSION = LOLLY_VERSION,
+    }
+})
 
-
+plugin_pdf_srcs = {
+    "src/Plugins/Pdf/**.cpp",
+}
+if is_plat("wasm") then
+    plugin_qt_srcs = {
+        "src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp|qt_printer_widget.cpp",
+        "src/Plugins/Qt/*.hpp|QTMPipeLink.hpp|QTMPrintDialog.hpp|QTMPrinterSettings.hpp",
+    }
+else
+    plugin_qt_srcs = {
+        "src/Plugins/Qt/**.cpp",
+        "src/Plugins/Qt/**.hpp"
+    }
+end
 
 target("libmogan") do
     set_basename("mogan")
@@ -344,6 +385,8 @@ target("libmogan") do
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
+    my_configvar_check()
+
     if is_plat("linux") then
         add_rules("qt.shared")
         set_installdir(INSTALL_DIR)
@@ -366,7 +409,6 @@ target("libmogan") do
     add_packages("libiconv")
     add_packages("freetype")
     add_packages("pdfhummus")
-    add_packages("nowide_standalone")
     add_packages("s7")
 
     if is_plat("mingw") then
@@ -476,7 +518,6 @@ target("libmogan") do
             "src/Plugins/Bibtex/**.cpp",
             "src/Plugins/Database/**.cpp",
             "src/Plugins/Freetype/**.cpp",
-            "src/Plugins/Pdf/**.cpp",
             "src/Plugins/Ghostscript/**.cpp",
             "src/Plugins/Ispell/**.cpp",
             "src/Plugins/Metafont/**.cpp",
@@ -485,6 +526,9 @@ target("libmogan") do
             "src/Plugins/Tex/**.cpp",
             "src/Plugins/Updater/**.cpp",
             "src/Plugins/Xml/**.cpp"})
+    if not is_plat("wasm") then
+        add_files(plugin_pdf_srcs)
+    end
     
     if is_plat("macosx") then
         add_files({
@@ -494,13 +538,13 @@ target("libmogan") do
                 "src/Plugins/MacOS/mac_app.mm"})
     end
 
-    add_files({
-        "src/Plugins/Qt/**.cpp",
-        "src/Plugins/Qt/**.hpp"})
+    add_files(plugin_qt_srcs)
 
     add_mxflags("-fno-objc-arc")
-    add_cxxflags("-include $(buildir)/config.h")
-    add_cxxflags("-include $(buildir)/tm_configure.hpp")
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("$(buildir)/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
+    end)
 end 
 
 option("libdl") do
@@ -525,6 +569,7 @@ target("draw") do
     set_enabled(is_plat("linux") or is_plat("wasm"))
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
+    my_configvar_check()
 
     set_filename("mogan_draw")
     add_rules("qt.widgetapp")
@@ -539,20 +584,16 @@ target("draw") do
     })
     add_files("src/Mogan/Draw/draw.cpp")
 
-    
-
     set_configdir(INSTALL_DIR)
     set_configvar("DEVEL_VERSION", DEVEL_VERSION)
     set_configvar("PACKAGE", "Mogan Draw")
     set_configvar("XMACS_VERSION", XMACS_VERSION)
 
     -- install man.1 manual file
-    add_configfiles(
-        "(misc/man/texmacs.1.in)",{
-            filename = "texmacs.1",
-            pattern = "@([^\n]-)@",
-        }
-    )
+    add_configfiles("(misc/man/texmacs.1.in)", {
+        filename = "texmacs.1",
+        pattern = "@([^\n]-)@",
+    })
 
     -- install texmacs runtime files
       add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
@@ -582,6 +623,7 @@ end
 target("research") do 
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
+    my_configvar_check()
 
     if is_plat("macosx") then
         set_filename("Mogan")
@@ -601,10 +643,12 @@ target("research") do
     if is_plat("macosx") then
         add_frameworks("QtMacExtras")
     end
+    if is_plat("wasm") then
+        add_frameworks("QWasmIntegrationPlugin")
+    end
 
     add_packages("lolly")
     if is_plat("mingw") then
-        add_packages("nowide_standalone")
         add_packages("qt5widgets")
     end
 
@@ -633,23 +677,19 @@ target("research") do
     set_configvar("XMACS_VERSION", XMACS_VERSION)
 
     -- install man.1 manual file
-    add_configfiles(
-        "(misc/man/texmacs.1.in)",{
-            filename = "texmacs.1",
-            pattern = "@([^\n]-)@",
-        }
-    )
+    add_configfiles("(misc/man/texmacs.1.in)", {
+        filename = "texmacs.1",
+        pattern = "@([^\n]-)@",
+    })
 
     -- package metadata
     if is_plat("macosx") then
         set_configvar("APPCAST", "")
         set_configvar("OSXVERMIN", "")
-        add_configfiles(
-            "(packages/macos/Info.plist.in)",{
-                filename = "Info.plist",
-                pattern = "@(.-)@",
-            }
-        )
+        add_configfiles("(packages/macos/Info.plist.in)", {
+            filename = "Info.plist",
+            pattern = "@(.-)@",
+        })
         add_installfiles({
             "packages/macos/Xmacs.icns",
             "packages/macos/TeXmacs-document.icns",
@@ -821,6 +861,7 @@ function add_test_target (filepath, dep)
         add_deps(dep)
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
+        my_configvar_check()
         add_rules("qt.console")
         add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
         add_syslinks("pthread")

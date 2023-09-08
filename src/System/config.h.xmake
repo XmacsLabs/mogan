@@ -1,6 +1,10 @@
 /* L1 Kernel */
 ${define QTTEXMACS}
 ${define OS_MINGW}
+${define OS_GNU_LINUX}
+${define OS_MACOS}
+${define OS_WASM}
+
 
 /* Define to 1 if the system has the type `intptr_t'. */
 ${define HAVE_INTPTR_T}
@@ -77,10 +81,6 @@ ${define LINKED_SQLITE3}
 
 ${define MACOSX_EXTENSIONS}
 
-${define OS_GNU_LINUX}
-
-${define OS_MACOS}
-
 ${define PDFHUMMUS_NO_TIFF}
 
 /* Disable fast memory allocator */
@@ -108,8 +108,6 @@ ${define PDF_RENDERER}
 ${define QTPIPES}
 
 ${define USE_QT_PRINTER}
-
-${define USE_CURL}
 
 ${define SANITY_CHECKS}
 

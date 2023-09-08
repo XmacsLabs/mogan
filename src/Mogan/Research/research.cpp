@@ -208,6 +208,12 @@ TeXmacs_init_paths (int& argc, char** argv) {
                        as_string (exedir * "/system/lib/TeXmacs/bin"));
 #endif
 
+#ifdef OS_WASM
+  set_env ("PWD", "/");
+  set_env ("HOME", "/");
+  if (is_empty (current_texmacs_path)) set_env ("TEXMACS_PATH", "/TeXmacs");
+#endif
+
   // check on the latest $TEXMACS_PATH
   current_texmacs_path= get_env ("TEXMACS_PATH");
   if (is_empty (current_texmacs_path) ||
@@ -333,6 +339,10 @@ TeXmacs_main (int argc, char** argv) {
         retina_factor= 2;
         retina_zoom  = 1;
         retina_scale = 1.4;
+#elif defined(OS_WASM)
+        retina_factor= 2;
+        retina_zoom  = 2;
+        retina_scale = (tm_style_sheet == "" ? 1.0 : 1.6666);
 #else
         retina_factor= 1;
         retina_zoom  = 2;
@@ -595,6 +605,8 @@ immediate_options (int argc, char** argv) {
 #elif defined(OS_HAIKU)
     set_env ("TEXMACS_HOME_PATH",
              get_env ("HOME") * "/config/settings/TeXmacs");
+#elif defined(OS_WASM)
+    set_env ("TEXMACS_HOME_PATH", "/.Xmacs");
 #else
     set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/.TeXmacs");
 #endif
@@ -695,8 +707,10 @@ main (int argc, char** argv) {
 #ifndef OS_MINGW
   set_env ("LC_NUMERIC", "POSIX");
 #ifndef OS_MACOS
+#ifndef OS_WASM
   set_env ("QT_QPA_PLATFORM", "xcb");
   set_env ("XDG_SESSION_TYPE", "x11");
+#endif
 #endif
 #endif
 #ifdef MACOSX_EXTENSIONS

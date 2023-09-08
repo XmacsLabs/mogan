@@ -94,4 +94,3 @@ QTMPipeLink::killProcess (int msecs) {
   if (! waitForFinished (msecs)) kill ();
 #endif
 }
-
