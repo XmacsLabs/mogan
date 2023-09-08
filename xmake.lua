@@ -275,9 +275,7 @@ local STABLE_RELEASE = 1
 
 if not is_plat("wasm") then
     set_configvar("QTPIPES", 1)
-    add_defines("QTPIPES")
     set_configvar("USE_QT_PRINTER", 1)
-    add_defines("USE_QT_PRINTER")
 end
 
 set_configvar("USE_ICONV", 1)
@@ -338,6 +336,17 @@ add_configfiles(
 plugin_pdf_srcs = {
     "src/Plugins/Pdf/**.cpp",
 }
+if is_plat("wasm") then
+    plugin_qt_srcs = {
+        "src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp",
+        "src/Plugins/Qt/*.hpp|QTMPipeLink.hpp|QTMPrintDialog.hpp|QTMPrinterSettings.hpp",
+    }
+else
+    plugin_qt_srcs = {
+        "src/Plugins/Qt/**.cpp",
+        "src/Plugins/Qt/**.hpp"
+    }
+end
 
 target("libmogan") do
     set_basename("mogan")
@@ -496,9 +505,7 @@ target("libmogan") do
                 "src/Plugins/MacOS/mac_app.mm"})
     end
 
-    add_files({
-        "src/Plugins/Qt/**.cpp",
-        "src/Plugins/Qt/**.hpp"})
+    add_files(plugin_qt_srcs)
 
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include $(buildir)/config.h")
