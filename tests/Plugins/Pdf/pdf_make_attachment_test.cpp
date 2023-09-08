@@ -41,7 +41,7 @@ TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachment () {
   QVERIFY (separate_tm_judge);
 
   bool tm_exist_judge= is_regular (attachment);
-  QVERIFY (separate_tm_judge);
+  QVERIFY (tm_exist_judge);
 
   QVERIFY (attachment == url ("$TEXMACS_PATH/tests/images/29_1_1.tm"));
 
