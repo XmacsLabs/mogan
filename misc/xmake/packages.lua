@@ -45,7 +45,7 @@ package_end()
 
 
 function add_requires_of_mogan()
-    local LOLLY_VERSION = "1.2.0"
+    local LOLLY_VERSION = "1.2.3"
     local CURL_VERSION = "7.84.0"
     local FREETYPE_VERSION = "2.12.1"
     local PDFHUMMUS_VERSION = "4.5.10"

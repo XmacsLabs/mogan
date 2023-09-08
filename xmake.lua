@@ -15,24 +15,60 @@ includes("check_cxxincludes.lua")
 includes("check_cxxfuncs.lua")
 includes("check_cxxsnippets.lua")
 
-configvar_check_cxxincludes("HAVE_STDLIB_H", "stdlib.h")
-configvar_check_cxxincludes("HAVE_STRINGS_H", "strings.h")
-configvar_check_cxxincludes("HAVE_STRING_H", "string.h")
-configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
-configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
-configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
-configvar_check_cxxincludes("HAVE_MEMORY_H", "memory.h")
-configvar_check_cxxincludes("HAVE_PTY_H", "pty.h")
-configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
-configvar_check_cxxincludes("HAVE_SYS_STAT_H", "sys/stat.h")
-configvar_check_cxxincludes("HAVE_SYS_TYPES_H", "sys/types.h")
-configvar_check_cxxtypes("HAVE_TIME_T", "time_t", {includes = {"memory"}})
-configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
-configvar_check_cxxfuncs("HAVE_GETTIMEOFDAY", "gettimeofday", {includes={"sys/time.h"}})
-configvar_check_cxxsnippets(
-    "CONFIG_LARGE_POINTER", [[
-        #include <stdlib.h>
-        static_assert(sizeof(void*) == 8, "");]])
+function my_configvar_check()
+    on_config(function (target)
+        print("my_configvar_check " .. target:name())
+        if target:has_cxxincludes("stdlib.h") then
+            target:set("configvar", "HAVE_STDLIB_H", 1)
+        end
+        if target:has_cxxincludes("strings.h") then
+            target:set("configvar", "HAVE_STRINGS_H", 1)
+        end
+        if target:has_cxxincludes("string.h") then
+            target:set("configvar", "HAVE_STRING_H", 1)
+        end
+        if target:has_cxxincludes("unistd.h") then
+            target:set("configvar", "HAVE_UNISTD_H", 1)
+        end
+        if target:has_cxxincludes("inttypes.h") then
+            target:set("configvar", "HAVE_INTTYPES_H", 1)
+        end
+        if target:has_cxxincludes("memory.h") then
+            target:set("configvar", "HAVE_MEMORY_H", 1)
+        end
+        if target:has_cxxincludes("pty.h") then
+            target:set("configvar", "HAVE_PTY_H", 1)
+        end
+        if target:has_cxxincludes("stdint.h") then
+            target:set("configvar", "HAVE_STDINT_H", 1)
+        end
+        if target:has_cxxincludes("sys/stat.h") then
+            target:set("configvar", "HAVE_SYS_STAT_H", 1)
+        end
+        if target:has_cxxincludes("sys/types.h") then
+            target:set("configvar", "HAVE_SYS_TYPES_H", 1)
+        end
+        if target:has_cxxincludes("util.h") then
+            target:set("configvar", "HAVE_UTIL_H", 1)
+        end
+        if target:has_cxxtypes("intptr_t", {includes = "memory"}) then
+            target:set("configvar", "HAVE_INTPTR_T", 1)
+        end
+        if target:has_cxxtypes("time_t", {incldes = "memory"}) then
+            target:set("configvar", "HAVE_TIME_T", 1)
+        end
+        if target:has_cfuncs("gettimeofday", {includes={"sys/time.h"}}) then
+            target:set("configvar", "HAVE_GETTIMEOFDAY", 1)
+        end
+        if target:check_cxxsnippets({test=[[
+                #include <stdlib.h>
+                static_assert(sizeof(void*) == 8, "");
+        ]]}) then
+            target:set("configvar", "CONFIG_LARGE_POINTER", 1)
+        end
+    end)
+end
+
 
 ---
 --- Project: Mogan Applications
@@ -214,6 +250,7 @@ target("libkernel_l3") do
     add_packages("s7")
     add_packages("lolly")
 
+    my_configvar_check()
     add_configfiles(
         "src/System/config_l3.h.xmake", {
             filename = "L3/config.h",
@@ -221,6 +258,7 @@ target("libkernel_l3") do
                 OS_MINGW = is_plat("mingw"),
                 OS_MACOS = is_plat("macosx"),
                 OS_WIN = is_plat("windows"),
+                OS_WASM = is_plat("wasm"),
                 QTTEXMACS = false,
             }
         }
@@ -354,6 +392,8 @@ target("libmogan") do
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
+    my_configvar_check()
+
     if is_plat("linux") then
         add_rules("qt.shared")
         set_installdir(INSTALL_DIR)
@@ -534,6 +574,7 @@ target("draw") do
     set_enabled(is_plat("linux") or is_plat("wasm"))
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
+    my_configvar_check()
 
     set_filename("mogan_draw")
     add_rules("qt.widgetapp")
@@ -589,6 +630,7 @@ end
 target("research") do 
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
+    my_configvar_check()
 
     if is_plat("macosx") then
         set_filename("Mogan")
@@ -830,6 +872,7 @@ function add_test_target (filepath, dep)
         add_deps(dep)
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
+        my_configvar_check()
         add_rules("qt.console")
         add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
         add_syslinks("pthread")

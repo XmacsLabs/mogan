@@ -1,4 +1,4 @@
 #!/usr/bin/env elvish
 
-xmake config -p wasm --qt=~/6.5.2/wasm_singlethread/ -vD --yes
+xmake config -p wasm --qt=~/6.5.2/wasm_singlethread/ --yes
 
