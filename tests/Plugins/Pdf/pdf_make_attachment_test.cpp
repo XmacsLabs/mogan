@@ -33,6 +33,8 @@ TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachment () {
   bool out_pdf_judge=
       is_regular (url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"));
   QVERIFY (out_pdf_judge);
+
+  remove (url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"));
 }
 
 QTEST_MAIN (TestHummusPdfMakeAttachment)
