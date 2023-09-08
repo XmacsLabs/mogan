@@ -75,9 +75,7 @@ end
 ---
 set_project("Mogan Applications")
 
-set_allowedplats(
-    "wasm", "linux", "macosx", "mingw", "windows"
-) 
+set_allowedplats("wasm", "linux", "macosx", "mingw", "windows") 
 
 if is_plat("mingw") and is_host("windows") then
     add_requires("mingw-w64 8.1.0")
