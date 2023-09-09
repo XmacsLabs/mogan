@@ -56,12 +56,6 @@ function my_configvar_check()
         if target:has_cxxtypes("intptr_t", {includes = "memory"}) then
             target:set("configvar", "HAVE_INTPTR_T", 1)
         end
-        if target:has_cxxtypes("time_t", {incldes = "memory"}) then
-            target:set("configvar", "HAVE_TIME_T", 1)
-        end
-        if target:has_cfuncs("gettimeofday", {includes={"sys/time.h"}}) then
-            target:set("configvar", "HAVE_GETTIMEOFDAY", 1)
-        end
         if target:check_cxxsnippets({test=[[
                 #include <stdlib.h>
                 static_assert(sizeof(void*) == 8, "");
