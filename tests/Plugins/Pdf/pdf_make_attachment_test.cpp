@@ -9,10 +9,10 @@
  ******************************************************************************/
 
 #include "file.hpp"
-#include "tm_file.hpp"
 #include "pdf_hummus_extract_attachment.hpp"
 #include "pdf_hummus_make_attachment.hpp"
 #include "sys_utils.hpp"
+#include "tm_file.hpp"
 #include <QtTest/QtTest>
 
 class TestHummusPdfMakeAttachment : public QObject {
