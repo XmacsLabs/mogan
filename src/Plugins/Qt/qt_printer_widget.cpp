@@ -98,5 +98,3 @@ qt_printer_widget_rep::showDialog () {
   if (!is_nil (commandAfterExecution))
     commandAfterExecution ();
 }
-
-

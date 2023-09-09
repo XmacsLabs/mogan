@@ -28,6 +28,7 @@ string qt_get_pretty_os_name () {
   return from_qstring (QSysInfo::prettyProductName ());
 }
 
+#if !defined (OS_WASM)
 static void
 ReadOutputs(QProcess& p, string& o, string& e) {
   if (p.processChannelMode() == QProcess::MergedChannels)
@@ -85,3 +86,4 @@ qt_system (string cmd, string& result) {
   proc.setProcessChannelMode (QProcess::MergedChannels);
   return qt_system (proc, cmd, result, dummy);
 }
+#endif // !defined (OS_WASM)
