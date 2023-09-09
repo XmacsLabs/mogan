@@ -22,6 +22,7 @@ private slots:
   void init () { lolly::init_tbox (); }
   void test_pdf_hummus_make_single_attachment ();
   void test_pdf_hummus_make_multiple_attachments ();
+  void test_pdf_hummus_make_zero_attachment();
 };
 void
 TestHummusPdfMakeAttachment::test_pdf_hummus_make_single_attachment () {
@@ -99,6 +100,25 @@ TestHummusPdfMakeAttachment::test_pdf_hummus_make_multiple_attachments () {
   for (int i= 0; i < N (attachments); i++) {
     remove (attachments[i]);
   }
+}
+
+void
+TestHummusPdfMakeAttachment::test_pdf_hummus_make_zero_attachment(){
+  bool attach_judge= pdf_hummus_make_attachments (
+      url ("$TEXMACS_PATH/tests/images/29_4_3.pdf"),
+      list<url> (),
+      url ("$TEXMACS_PATH/tests/images/29_4_3_attach.pdf"));
+  QVERIFY (!attach_judge);
+  bool out_pdf_judge=
+      is_regular (url ("$TEXMACS_PATH/tests/images/29_4_3_attach.pdf"));
+  QVERIFY (!out_pdf_judge);
+
+  list<url> attachment;
+  bool      separate_tm_judge= extract_attachments_from_pdf (
+      url ("$TEXMACS_PATH/tests/images/29_4_3_attach.pdf"), attachment);
+  QVERIFY (!separate_tm_judge);
+  QVERIFY (N(separate_tm_judge) == 0);
+
 }
 
 QTEST_MAIN (TestHummusPdfMakeAttachment)

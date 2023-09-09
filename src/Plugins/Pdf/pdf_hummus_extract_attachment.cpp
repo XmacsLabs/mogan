@@ -69,8 +69,14 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
       break;
     }
     unsigned long n= arr->GetLength ();
+    if (n == 0){
+      if (DEBUG_CONVERT) debug_convert << "n is 0\n";
+      status= PDFHummus::eFailure;
+      break;
+    }
     if (n & 1) {
       if (DEBUG_CONVERT) debug_convert << "n is wrong\n";
+      status= PDFHummus::eFailure;
       break;
     }
     for (unsigned long i= 0; i < n; i+= 2) {
