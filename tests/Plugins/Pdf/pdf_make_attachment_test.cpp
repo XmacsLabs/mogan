@@ -26,7 +26,7 @@ TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachment () {
 
   bool attach_judge= pdf_hummus_make_attachment (
       url ("$TEXMACS_PATH/tests/images/29_1_1.pdf"),
-      url ("$TEXMACS_PATH/tests/29_1_1.tm"),
+      list<url>(url ("$TEXMACS_PATH/tests/29_1_1.tm")),
       url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"));
   QVERIFY (attach_judge);
 

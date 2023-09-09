@@ -1,6 +1,6 @@
 /******************************************************************************
- * MODULE     : pdf_hummus_get_attachment.cpp
- * DESCRIPTION: Interface for getting attachment file in pdf
+ * MODULE     : pdf_hummus_pdf_hummus__attachment.cpp
+ * DESCRIPTION: Interface for pdf_hummus_ing attachment file in pdf
  * COPYRIGHT  : (C) 2023 Tangdouer
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
@@ -16,10 +16,21 @@
 #include "tm_ostream.hpp"
 #include "url.hpp"
 
-bool get_tm_attachments_in_pdf (url pdf_path, array<url>& names);
+/**
 
-bool get_tm_attachment_in_pdf (url pdf_path, url& name);
+Extracts attachments from a PDF file.
+@param pdf_path The path of the PDF file.
+@param names A reference to a list that will store the paths of extracted attachments.
+@return Returns true if the extraction is successful, false otherwise.
+*/
+bool extract_attachments_from_pdf (url pdf_path, list<url>& names);
 
-bool scm_get_attachments (url pdf_path);
+/**
+
+Extracts attachments from a PDF file in a simplified way for SCM glue operations.
+@param pdf_path The path of the PDF file.
+@return Returns true if the extraction is successful, false otherwise.
+*/
+bool scm_extract_attachments (url pdf_path);
 
 #endif // ifdef PDF_HUMMUS_MAKE_ATTACHMENT_H

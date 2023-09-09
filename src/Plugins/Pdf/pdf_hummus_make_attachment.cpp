@@ -8,6 +8,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 #include "pdf_hummus_make_attachment.hpp"
+#include "tm_debug.hpp"
 
 #include "PDFWriter/DictionaryContext.h"
 #include "PDFWriter/ObjectsContext.h"
@@ -69,7 +70,7 @@ pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
                                  as_charp (as_string (out_path)));
 
     if (status != eSuccess) {
-      cout << "start fail\n";
+      if (DEBUG_CONVERT) debug_convert << "start fail\n";
       break;
     }
     PDFAttachmentWriter attachmentWriter (&pdfWriter);
@@ -80,11 +81,11 @@ pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
       status= tm_file_stream.Open (as_charp (attachment_path));
 
       if (status != PDFHummus::eSuccess) {
-        cout << "failed to open " << attachment_path << "\n";
+        if (DEBUG_CONVERT) debug_convert << "failed to open " << attachment_path << "\n";
         continue;
       }
       else {
-        cout << "success to open " << attachment_path << "\n";
+        if (DEBUG_CONVERT) debug_convert << "success to open " << attachment_path << "\n";
       }
 
       LongFilePositionType file_size= tm_file_stream.GetFileSize ();
@@ -99,11 +100,11 @@ pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
       status= attachmentWriter.AttachToAllPage (aAttachment);
       // return status;
       if (status != eSuccess) {
-        cout << "fail to attach " << attachment_path << "\n";
+        if (DEBUG_CONVERT) debug_convert << "fail to attach " << attachment_path << "\n";
         continue;
       }
       else {
-        cout << "success to attach " << attachment_path << "\n";
+        if (DEBUG_CONVERT) debug_convert << "success to attach " << attachment_path << "\n";
         continue;
       }
     }
@@ -111,22 +112,15 @@ pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
   } while (false);
 
   if (eSuccess == status) {
-    cout << "Succeeded in creating PDF file\n";
+    if (DEBUG_CONVERT) debug_convert << "Succeeded in creating PDF file\n";
     return true;
   }
   else {
-    cout << "Failed in creating PDF file\n";
+    if (DEBUG_CONVERT) debug_convert << "Failed in creating PDF file\n";
     return false;
   }
 }
 
-bool
-pdf_hummus_make_attachment (url pdf_path, url attachment_path, url out_path) {
-  if ((suffix (pdf_path) == "pdf"))
-    return pdf_hummus_make_attachments (pdf_path, list<url> (attachment_path),
-                                        out_path);
-  else return false;
-}
 PDFAttachment::PDFAttachment (void) {
   file_content= NULL;
   lenth       = 0;
@@ -136,7 +130,7 @@ PDFAttachment::PDFAttachment (string attachment_path) {
   InputFileStream tm_file_stream;
   EStatusCode     status= tm_file_stream.Open (as_charp (attachment_path));
   if (status != PDFHummus::eSuccess) {
-    cout << "failed to open tm\n";
+    if (DEBUG_CONVERT) debug_convert << "failed to open tm\n";
     return;
   }
 
