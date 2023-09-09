@@ -1,6 +1,6 @@
 /******************************************************************************
- * MODULE     : pdf_hummus_get_attachment.cpp
- * DESCRIPTION: Interface for getting attachment file in pdf
+ * MODULE     : pdf_hummus_extract_attachment.cpp
+ * DESCRIPTION: Interface for extract attachment file in pdf
  * COPYRIGHT  : (C) 2023 Tangdouer
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
@@ -23,17 +23,19 @@
 using namespace PDFHummus;
 #include <utility>
 using namespace IOBasicTypes;
-#include "pdf_hummus_get_attachment.hpp"
+#include "pdf_hummus_extract_attachment.hpp"
+#include "tm_debug.hpp"
 
 bool
-get_tm_attachments_in_pdf (url pdf_path, array<url>& names) {
+extract_attachments_from_pdf (url pdf_path, list<url>& names) {
   EStatusCode status= PDFHummus::eSuccess;
   InputFile   pdfFile;
   PDFParser   parser;
   do {
     status= pdfFile.OpenFile (as_charp (as_string (pdf_path)));
     if (status != PDFHummus::eSuccess) {
-      cout << "fail to open " << as_string (pdf_path) << LF;
+      if (DEBUG_CONVERT)
+        debug_convert << "fail to open " << as_string (pdf_path) << LF;
       break;
     }
     parser.StartPDFParsing (pdfFile.GetInputStream ());
@@ -41,59 +43,59 @@ get_tm_attachments_in_pdf (url pdf_path, array<url>& names) {
         parser.QueryDictionaryObject (parser.GetTrailer (), "Root"));
     // return 0;
     if (!catalog) {
-      cout << "Can't find catalog. fail\n";
+      if (DEBUG_CONVERT) debug_convert << "Can't find catalog. fail\n";
       status= PDFHummus::eFailure;
       break;
     }
 
     PDFObjectCastPtr<PDFDictionary> d_1 (catalog->QueryDirectObject ("Names"));
     if (!d_1) {
-      cout << "Can't find d1. fail\n";
+      if (DEBUG_CONVERT) debug_convert << "Can't find d1. fail\n";
       status= PDFHummus::eFailure;
       break;
     }
     PDFObjectCastPtr<PDFDictionary> d_2 (
         d_1->QueryDirectObject ("EmbeddedFiles"));
     if (!d_2) {
-      cout << "Can't find d2. fail\n";
+      if (DEBUG_CONVERT) debug_convert << "Can't find d2. fail\n";
       status= PDFHummus::eFailure;
       break;
     }
 
     PDFObjectCastPtr<PDFArray> arr (d_2->QueryDirectObject ("Names"));
     if (!arr) {
-      cout << "Can't find arr. fail\n";
+      if (DEBUG_CONVERT) debug_convert << "Can't find arr. fail\n";
       status= PDFHummus::eFailure;
       break;
     }
     unsigned long n= arr->GetLength ();
     if (n & 1) {
-      cout << "n is wrong\n";
+      if (DEBUG_CONVERT) debug_convert << "n is wrong\n";
       break;
     }
     for (unsigned long i= 0; i < n; i+= 2) {
       PDFObjectCastPtr<PDFLiteralString> name (arr->QueryObject (i));
       if (!name) {
-        cout << "Can't find name\n";
+        if (DEBUG_CONVERT) debug_convert << "Can't find name\n";
         status= PDFHummus::eFailure;
         break;
       }
       PDFObjectCastPtr<PDFDictionary> arr_d1 (arr->QueryObject (i + 1));
       if (!arr_d1) {
-        cout << "Can't find arr_d1\n";
+        if (DEBUG_CONVERT) debug_convert << "Can't find arr_d1\n";
         status= PDFHummus::eFailure;
         break;
       }
       PDFObjectCastPtr<PDFDictionary> arr_d2 (arr_d1->QueryDirectObject ("EF"));
       if (!arr_d2) {
-        cout << "Can't find arr_d2\n";
+        if (DEBUG_CONVERT) debug_convert << "Can't find arr_d2\n";
         status= PDFHummus::eFailure;
         break;
       }
       PDFObjectCastPtr<PDFStreamInput> stream (
           parser.QueryDictionaryObject (arr_d2.GetPtr (), "F"));
       if (!stream) {
-        cout << "Can't find stream\n";
+        if (DEBUG_CONVERT) debug_convert << "Can't find stream\n";
         status= PDFHummus::eFailure;
         break;
       }
@@ -102,7 +104,7 @@ get_tm_attachments_in_pdf (url pdf_path, array<url>& names) {
       IByteReader* streamReader=
           parser.CreateInputStreamReader (stream.GetPtr ());
       if (!streamReader) {
-        cout << "Can't find streamReader\n";
+        if (DEBUG_CONVERT) debug_convert << "Can't find streamReader\n";
         status= PDFHummus::eFailure;
         break;
       }
@@ -113,7 +115,8 @@ get_tm_attachments_in_pdf (url pdf_path, array<url>& names) {
       status= attachment_file.OpenFile (
           std::string (as_charp (as_string (attachment_path))));
       if (status != PDFHummus::eSuccess) {
-        cout << "fail to open " << as_string (attachment_path) << LF;
+        if (DEBUG_CONVERT)
+          debug_convert << "fail to open " << as_string (attachment_path) << LF;
         break;
       }
       pdfFile.GetInputStream ()->SetPosition (stream->GetStreamContentStart ());
@@ -121,17 +124,18 @@ get_tm_attachments_in_pdf (url pdf_path, array<url>& names) {
           (IByteWriter*) attachment_file.GetOutputStream ());
       status= copy_help.CopyToOutputStream (streamReader);
       if (status != PDFHummus::eSuccess) {
-        cout << "Can't CopyToOutputStream\n";
+        if (DEBUG_CONVERT) debug_convert << "Can't CopyToOutputStream\n";
         break;
       }
       status= attachment_file.CloseFile ();
       if (status != PDFHummus::eSuccess) {
-        cout << "fail to close " << as_string (attachment_path) << LF;
+        if (DEBUG_CONVERT)
+          debug_convert << "fail to close " << as_string (attachment_path)
+                        << LF;
         break;
       }
 
-      names= append (attachment_path, names);
-      cout << "\n\n" << names << LF;
+      names= names * attachment_path;
       delete streamReader;
     }
   } while (0);
@@ -140,23 +144,7 @@ get_tm_attachments_in_pdf (url pdf_path, array<url>& names) {
 }
 
 bool
-get_tm_attachment_in_pdf (url pdf_path, url& name) {
-  array<url> names;
-  if (get_tm_attachments_in_pdf (pdf_path, names)) {
-    if (N (names) != 1) {
-      cout << "TODO: many attachment" << LF;
-      return false;
-    }
-    name= names[0];
-    return true;
-  }
-  else {
-    return false;
-  }
-}
-
-bool
-scm_get_attachments (url pdf_path) {
-  array<url> attachments_paths;
-  return get_tm_attachments_in_pdf (pdf_path, attachments_paths);
+scm_extract_attachments (url pdf_path) {
+  list<url> attachments_paths;
+  return extract_attachments_from_pdf (pdf_path, attachments_paths);
 }

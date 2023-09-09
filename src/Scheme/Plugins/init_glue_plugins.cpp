@@ -57,7 +57,7 @@ pdfhummus_version () {
 
 #include "glue_ghostscript.cpp"
 
-#include "Pdf/pdf_hummus_get_attachment.hpp"
+#include "Pdf/pdf_hummus_extract_attachment.hpp"
 #include "glue_pdf.cpp"
 
 void
