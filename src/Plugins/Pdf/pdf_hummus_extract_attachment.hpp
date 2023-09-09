@@ -1,6 +1,6 @@
 /******************************************************************************
- * MODULE     : pdf_hummus_pdf_hummus__attachment.cpp
- * DESCRIPTION: Interface for pdf_hummus_ing attachment file in pdf
+ * MODULE     : pdf_hummus_extract_attachment.cpp
+ * DESCRIPTION: Interface for extract attachment file in pdf
  * COPYRIGHT  : (C) 2023 Tangdouer
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
