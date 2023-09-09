@@ -22,7 +22,8 @@
 
 Embeds attachments into a PDF file.
 @param pdf_path The path of the PDF file where attachments need to be embedded.
-@param attachment_path A list that specifies the paths of attachments to be embedded.
+@param attachment_path A list that specifies the paths of attachments to be
+embedded.
 @param out_path The path of the new PDF file with the embedded attachments.
 @return Returns true if the embedding is successful, false otherwise.
 */

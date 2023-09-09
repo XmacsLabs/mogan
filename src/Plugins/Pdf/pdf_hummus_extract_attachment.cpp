@@ -34,7 +34,8 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
   do {
     status= pdfFile.OpenFile (as_charp (as_string (pdf_path)));
     if (status != PDFHummus::eSuccess) {
-      if (DEBUG_CONVERT) debug_convert << "fail to open " << as_string (pdf_path) << LF;
+      if (DEBUG_CONVERT)
+        debug_convert << "fail to open " << as_string (pdf_path) << LF;
       break;
     }
     parser.StartPDFParsing (pdfFile.GetInputStream ());
@@ -114,7 +115,8 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
       status= attachment_file.OpenFile (
           std::string (as_charp (as_string (attachment_path))));
       if (status != PDFHummus::eSuccess) {
-        if (DEBUG_CONVERT) debug_convert << "fail to open " << as_string (attachment_path) << LF;
+        if (DEBUG_CONVERT)
+          debug_convert << "fail to open " << as_string (attachment_path) << LF;
         break;
       }
       pdfFile.GetInputStream ()->SetPosition (stream->GetStreamContentStart ());
@@ -127,7 +129,9 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
       }
       status= attachment_file.CloseFile ();
       if (status != PDFHummus::eSuccess) {
-        if (DEBUG_CONVERT) debug_convert << "fail to close " << as_string (attachment_path) << LF;
+        if (DEBUG_CONVERT)
+          debug_convert << "fail to close " << as_string (attachment_path)
+                        << LF;
         break;
       }
 

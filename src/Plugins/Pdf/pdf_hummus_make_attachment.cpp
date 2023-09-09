@@ -81,11 +81,13 @@ pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
       status= tm_file_stream.Open (as_charp (attachment_path));
 
       if (status != PDFHummus::eSuccess) {
-        if (DEBUG_CONVERT) debug_convert << "failed to open " << attachment_path << "\n";
+        if (DEBUG_CONVERT)
+          debug_convert << "failed to open " << attachment_path << "\n";
         continue;
       }
       else {
-        if (DEBUG_CONVERT) debug_convert << "success to open " << attachment_path << "\n";
+        if (DEBUG_CONVERT)
+          debug_convert << "success to open " << attachment_path << "\n";
       }
 
       LongFilePositionType file_size= tm_file_stream.GetFileSize ();
@@ -100,11 +102,13 @@ pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
       status= attachmentWriter.AttachToAllPage (aAttachment);
       // return status;
       if (status != eSuccess) {
-        if (DEBUG_CONVERT) debug_convert << "fail to attach " << attachment_path << "\n";
+        if (DEBUG_CONVERT)
+          debug_convert << "fail to attach " << attachment_path << "\n";
         continue;
       }
       else {
-        if (DEBUG_CONVERT) debug_convert << "success to attach " << attachment_path << "\n";
+        if (DEBUG_CONVERT)
+          debug_convert << "success to attach " << attachment_path << "\n";
         continue;
       }
     }

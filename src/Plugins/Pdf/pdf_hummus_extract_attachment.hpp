@@ -20,14 +20,16 @@
 
 Extracts attachments from a PDF file.
 @param pdf_path The path of the PDF file.
-@param names A reference to a list that will store the paths of extracted attachments.
+@param names A reference to a list that will store the paths of extracted
+attachments.
 @return Returns true if the extraction is successful, false otherwise.
 */
 bool extract_attachments_from_pdf (url pdf_path, list<url>& names);
 
 /**
 
-Extracts attachments from a PDF file in a simplified way for SCM glue operations.
+Extracts attachments from a PDF file in a simplified way for SCM glue
+operations.
 @param pdf_path The path of the PDF file.
 @return Returns true if the extraction is successful, false otherwise.
 */
