@@ -14,6 +14,7 @@
 #include "convert.hpp"
 #include "drd_std.hpp"
 #include "sys_utils.hpp"
+#include "tm_ostream.hpp"
 #include "tree_helper.hpp"
 
 class TestParseHTML : public QObject {
@@ -21,18 +22,91 @@ class TestParseHTML : public QObject {
 
 private slots:
   void init () { lolly::init_tbox (); }
-  void test_parse_html ();
+  void test_html_p ();
+  void test_html_title ();
 };
 
 void
-TestParseHTML::test_parse_html () {
-   string a = string("<p>hello</p><p>hello</p>");
-  // print_tree (parse_html (a));
-//   245 (*TOP*, 245 (p, "hello"), 245 (p, "hello"))
-  QVERIFY (parse_html (a) == tuple (tree ("*TOP*"), tuple ("p","\"hello\""), tuple ("p","\"hello\""))); 
-
+TestParseHTML::test_html_p () {
+  string a= string ("<p>hello</p><p>hello</p>");
+  QVERIFY (parse_html (a) == tuple (tree ("*TOP*"), tuple ("p", "\"hello\""),
+                                    tuple ("p", "\"hello\"")));
 }
 
+void
+TestParseHTML::test_html_title () {
+  string a= string ("\
+<table style=\"margin-bottom: 2em\" class=\"title-block\">\
+  <tr>\
+    <td><table style=\"margin-top: 0.5em; margin-bottom: 0.5em\" class=\"title-block\">\
+      <tr>\
+        <td><font style=\"font-size: 168.2%\"><strong>hello</strong></font></td>\
+      </tr>\
+    </table></td>\
+  </tr>\
+</table>");
+
+  //     parse_plain_html= 245 (*TOP*, 245 (table, 245 (@, 245 (style,
+  //     "margin-bottom: 2em"), 245 (class, "title-block")), "
+  //   ", 245 (tr, "
+  //     ", 245 (td, 245 (table, 245 (@, 245 (style, "margin-top: 0.5em;
+  //     margin-bottom: 0.5em"), 245 (class, "title-block")), "
+  //       ", 245 (tr, "
+  //         ", 245 (td, 245 (font, 245 (@, 245 (style, "font-size: 168.2%")),
+  //         245 (strong, "hello"))), "
+  //       "), "
+  //     ")), "
+  //   "), "
+  // "))
+
+  tree b= tuple (
+      "*TOP*",
+      tuple (
+          "table",
+          tuple ("@", tuple ("style, \"margin-bottom: 2em\""),
+                 tuple ("class, \"title-block\"")),
+          "\"  \"",
+          tuple (
+              "tr", "\"    \"",
+              tuple (
+                  "td",
+                  tuple (
+                      "table",
+                      tuple ("@",
+                             tuple ("style, \"margin-top: 0.5em; "
+                                    "margin-bottom: 0.5em\""),
+                             tuple ("class, \"title-block\"")),
+                      "\"      \"",
+                      tuple (
+                          "tr", "\"        \"",
+                          tuple (
+                              "td",
+                              tuple (
+                                  "font",
+                                  tuple (
+                                      "@",
+                                      tuple ("style, \"font-size: 168.2%\"")),
+                                  tuple ("strong, \"hello\""))),
+                          "\"      \""),
+                      "\"    \"")),
+              "\"  \"")));
+
+  tree c= parse_html (a);
+
+  cout << "[DEBUG] a: " << a << LF;
+
+  cout << "[DEBUG] b: " << b << LF;
+
+  cout << "[DEBUG] c: " << c << LF;
+
+  tm_ostream b_out, c_out;
+  b_out.buffer ();
+  c_out.buffer ();
+  b_out << b;
+  c_out << c;
+
+  QVERIFY (b_out.unbuffer () == c_out.unbuffer ());
+}
 
 QTEST_MAIN (TestParseHTML)
 #include "parsehtml_test.moc"
