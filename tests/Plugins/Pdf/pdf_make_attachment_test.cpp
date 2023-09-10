@@ -8,9 +8,9 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "Pdf/pdf_hummus_extract_attachment.hpp"
+#include "Pdf/pdf_hummus_make_attachment.hpp"
 #include "file.hpp"
-#include "pdf_hummus_extract_attachment.hpp"
-#include "pdf_hummus_make_attachment.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include <QtTest/QtTest>

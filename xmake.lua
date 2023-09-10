@@ -366,9 +366,86 @@ add_configfiles("src/System/tm_configure.hpp.xmake", {
     }
 })
 
-plugin_pdf_srcs = {
-    "src/Plugins/Pdf/**.cpp",
+
+libmogan_srcs = {
+    "src/Data/**.cpp",
+    "src/Edit/**.cpp",
+    "src/Graphics/**.cpp",
+    "src/Kernel/**.cpp",
+    "src/Scheme/Scheme/**.cpp",
+    "src/Scheme/S7/**.cpp",
+    "src/Scheme/L1/**.cpp",
+    "src/Scheme/L2/**.cpp",
+    "src/Scheme/L3/**.cpp",
+    "src/Scheme/L4/**.cpp",
+    "src/Scheme/L5/**.cpp",
+    "src/Scheme/Plugins/**.cpp",
+    "src/System/**.cpp",
+    "src/Texmacs/Data/**.cpp",
+    "src/Texmacs/Server/**.cpp",
+    "src/Texmacs/Window/**.cpp",
+    "src/Typeset/**.cpp",
 }
+libmogan_headers = {
+    "src/Data/Convert",
+    "src/Data/Document",
+    "src/Data/Drd",
+    "src/Data/History",
+    "src/Data/Observers",
+    "src/Data/Parser",
+    "src/Data/Scheme",
+    "src/Data/String",
+    "src/Data/Tree",
+    "src/Edit",
+    "src/Edit/Editor",
+    "src/Edit/Interface",
+    "src/Edit/Modify",
+    "src/Edit/Process",
+    "src/Edit/Replace",
+    "src/Graphics/Bitmap_fonts",
+    "src/Graphics/Colors",
+    "src/Graphics/Fonts",
+    "src/Graphics/Gui",
+    "src/Graphics/Handwriting",
+    "src/Graphics/Mathematics",
+    "src/Graphics/Pictures",
+    "src/Graphics/Renderer",
+    "src/Graphics/Spacial",
+    "src/Graphics/Types",
+    "src/Kernel/Abstractions",
+    "src/Kernel/Types",
+    "src/Plugins",
+    "src/Scheme",
+    "src/Scheme/S7",
+    "src/Scheme/L1",
+    "src/Scheme/L2",
+    "src/Scheme/L3",
+    "src/Scheme/L4",
+    "src/Scheme/L5",
+    "src/Scheme/Plugins",
+    "src/Scheme/Scheme",
+    "src/Style/Environment",
+    "src/Style/Evaluate",
+    "src/Style/Memorizer",
+    "src/System",
+    "src/System/Boot",
+    "src/System/Classes",
+    "src/System/Config",
+    "src/System/Files",
+    "src/System/Language",
+    "src/System/Link",
+    "src/System/Misc",
+    "src/Texmacs",
+    "src/Texmacs/Data",
+    "src/Typeset",
+    "src/Typeset/Bridge",
+    "src/Typeset/Concat",
+    "src/Typeset/Page",
+    "$(buildir)",
+    "TeXmacs/include",
+    "src/Mogan"
+}
+
 if is_plat("wasm") then
     plugin_qt_srcs = {
         "src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp|qt_printer_widget.cpp",
@@ -380,6 +457,47 @@ else
         "src/Plugins/Qt/**.hpp"
     }
 end
+plugin_pdf_srcs = {
+    "src/Plugins/Pdf/**.cpp",
+}
+plugin_bibtex_srcs = {
+    "src/Plugins/Bibtex/**.cpp",
+}
+plugin_macos_srcs = {
+    "src/Plugins/MacOS/HIDRemote.m",
+    "src/Plugins/MacOS/mac_spellservice.mm",
+    "src/Plugins/MacOS/mac_utilities.mm",
+    "src/Plugins/MacOS/mac_app.mm"
+}
+plugin_freetype_srcs = {
+    "src/Plugins/Freetype/**.cpp",
+}
+plugin_database_srcs = {
+    "src/Plugins/Database/**.cpp",
+}
+plugin_ghostscript_srcs = {
+    "src/Plugins/Ghostscript/**.cpp",
+}
+plugin_ispell_srcs = {
+    "src/Plugins/Ispell/**.cpp",
+}
+plugin_metafont_srcs = {
+    "src/Plugins/Metafont/**.cpp",
+}
+plugin_latex_srcs = {
+    "src/Plugins/LaTeX_Preview/**.cpp",
+    "src/Plugins/Tex/**.cpp",
+}
+plugin_openssl_srcs = {
+    "src/Plugins/Openssl/**.cpp",
+}
+plugin_updater_srcs = {
+    "src/Plugins/Updater/**.cpp",
+}
+plugin_xml_srcs = {
+    "src/Plugins/Xml/**.cpp"
+}
+
 
 target("libmogan") do
     set_basename("mogan")
@@ -433,114 +551,31 @@ target("libmogan") do
     ---------------------------------------------------------------------------
     -- add source and header files
     ---------------------------------------------------------------------------
-    add_includedirs({
-            "src/Data/Convert",
-            "src/Data/Document",
-            "src/Data/Drd",
-            "src/Data/History",
-            "src/Data/Observers",
-            "src/Data/Parser",
-            "src/Data/Scheme",
-            "src/Data/String",
-            "src/Data/Tree",
-            "src/Edit",
-            "src/Edit/Editor",
-            "src/Edit/Interface",
-            "src/Edit/Modify",
-            "src/Edit/Process",
-            "src/Edit/Replace",
-            "src/Graphics/Bitmap_fonts",
-            "src/Graphics/Colors",
-            "src/Graphics/Fonts",
-            "src/Graphics/Gui",
-            "src/Graphics/Handwriting",
-            "src/Graphics/Mathematics",
-            "src/Graphics/Pictures",
-            "src/Graphics/Renderer",
-            "src/Graphics/Spacial",
-            "src/Graphics/Types",
-            "src/Kernel/Abstractions",
-            "src/Kernel/Types",
-            "src/Plugins",
-            "src/Plugins/Pdf",
-            "src/Plugins/Qt",
-            "src/Scheme",
-            "src/Scheme/S7",
-            "src/Scheme/L1",
-            "src/Scheme/L2",
-            "src/Scheme/L3",
-            "src/Scheme/L4",
-            "src/Scheme/L5",
-            "src/Scheme/Plugins",
-            "src/Scheme/Scheme",
-            "src/Style/Environment",
-            "src/Style/Evaluate",
-            "src/Style/Memorizer",
-            "src/System",
-            "src/System/Boot",
-            "src/System/Classes",
-            "src/System/Config",
-            "src/System/Files",
-            "src/System/Language",
-            "src/System/Link",
-            "src/System/Misc",
-            "src/Texmacs",
-            "src/Texmacs/Data",
-            "src/Typeset",
-            "src/Typeset/Bridge",
-            "src/Typeset/Concat",
-            "src/Typeset/Page",
-            "$(buildir)",
-            "TeXmacs/include",
-            "src/Mogan"
-        }, {public = true})
+    add_includedirs(libmogan_headers, {public = true})
 
     if is_plat("macosx") then
         add_includedirs("src/Plugins/MacOS", {public = true})
     end
 
-    add_files({
-            "src/Data/**.cpp",
-            "src/Edit/**.cpp",
-            "src/Graphics/**.cpp",
-            "src/Kernel/**.cpp",
-            "src/Scheme/Scheme/**.cpp",
-            "src/Scheme/S7/**.cpp",
-            "src/Scheme/L1/**.cpp",
-            "src/Scheme/L2/**.cpp",
-            "src/Scheme/L3/**.cpp",
-            "src/Scheme/L4/**.cpp",
-            "src/Scheme/L5/**.cpp",
-            "src/Scheme/Plugins/**.cpp",
-            "src/System/**.cpp",
-            "src/Texmacs/Data/**.cpp",
-            "src/Texmacs/Server/**.cpp",
-            "src/Texmacs/Window/**.cpp",
-            "src/Typeset/**.cpp",
-            "src/Plugins/Bibtex/**.cpp",
-            "src/Plugins/Database/**.cpp",
-            "src/Plugins/Freetype/**.cpp",
-            "src/Plugins/Ghostscript/**.cpp",
-            "src/Plugins/Ispell/**.cpp",
-            "src/Plugins/Metafont/**.cpp",
-            "src/Plugins/LaTeX_Preview/**.cpp",
-            "src/Plugins/Openssl/**.cpp",
-            "src/Plugins/Tex/**.cpp",
-            "src/Plugins/Updater/**.cpp",
-            "src/Plugins/Xml/**.cpp"})
+    add_files(libmogan_srcs)
+
     if not is_plat("wasm") then
         add_files(plugin_pdf_srcs)
     end
-    
     if is_plat("macosx") then
-        add_files({
-                "src/Plugins/MacOS/HIDRemote.m",
-                "src/Plugins/MacOS/mac_spellservice.mm",
-                "src/Plugins/MacOS/mac_utilities.mm",
-                "src/Plugins/MacOS/mac_app.mm"})
+        add_files(plugin_macos_srcs)
     end
-
     add_files(plugin_qt_srcs)
+    add_files(plugin_bibtex_srcs)
+    add_files(plugin_freetype_srcs)
+    add_files(plugin_database_srcs)
+    add_files(plugin_ghostscript_srcs)
+    add_files(plugin_ispell_srcs)
+    add_files(plugin_metafont_srcs)
+    add_files(plugin_latex_srcs)
+    add_files(plugin_openssl_srcs)
+    add_files(plugin_updater_srcs)
+    add_files(plugin_xml_srcs)
 
     add_mxflags("-fno-objc-arc")
     before_build(function (target)
