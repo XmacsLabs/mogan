@@ -9,7 +9,3 @@ ${define OS_MINGW}
 ${define OS_MACOS}
 ${define OS_WIN}
 ${define OS_WASM}
-
-/* L2 Kernel */
-${define HAVE_TIME_T}
-${define HAVE_GETTIMEOFDAY}

@@ -12,16 +12,6 @@ ${define HAVE_INTPTR_T}
 /* Define to 1 if you have the <stdint.h> header file. */
 ${define HAVE_STDINT_H}
 
-
-/* L2 Kernel */
-
-/* Define to 1 if the system has the type `time_t'. */
-${define HAVE_TIME_T}
-
-/* Define to 1 if you have the `gettimeofday' function. */
-${define HAVE_GETTIMEOFDAY}
-
-
 /* check assertions in code */
 #define DEBUG_ASSERT 1
 
