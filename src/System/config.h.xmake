@@ -93,7 +93,7 @@ ${define NO_FAST_ALLOC}
 /* Define to the version of this package. */
 #define PACKAGE_VERSION ""
 
-${define PDF_RENDERER}
+${define USE_PLUGIN_PDF}
 
 ${define QTPIPES}
 

@@ -307,9 +307,9 @@ end
 set_configvar("USE_ICONV", 1)
 set_configvar("USE_FREETYPE", 1)
 if is_plat("wasm") then
-    set_configvar("PDF_RENDERER", false)
+    set_configvar("USE_PLUGIN_PDF", false)
 else
-    set_configvar("PDF_RENDERER", true)
+    set_configvar("USE_PLUGIN_PDF", true)
 end
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 
@@ -494,6 +494,7 @@ plugin_xml_srcs = {
 
 
 target("libmogan") do
+    set_enabled(not is_plat ("wasm"))
     set_basename("mogan")
     set_version(TEXMACS_VERSION)
     
@@ -546,17 +547,10 @@ target("libmogan") do
     -- add source and header files
     ---------------------------------------------------------------------------
     add_includedirs(libmogan_headers, {public = true})
+    add_files(libmogan_srcs)
 
     if is_plat("macosx") then
         add_includedirs("src/Plugins/MacOS", {public = true})
-    end
-
-    add_files(libmogan_srcs)
-
-    if not is_plat("wasm") then
-        add_files(plugin_pdf_srcs)
-    end
-    if is_plat("macosx") then
         add_files(plugin_macos_srcs)
     end
     add_files(plugin_qt_srcs)
@@ -570,6 +564,7 @@ target("libmogan") do
     add_files(plugin_openssl_srcs)
     add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)
+    add_files(plugin_pdf_srcs)
 
     add_mxflags("-fno-objc-arc")
     before_build(function (target)
@@ -607,7 +602,9 @@ target("draw") do
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     add_packages("lolly")
     add_rpathdirs("@executable_path/../lib")
-    add_deps("libmogan")
+    if (is_plat("linux")) then
+        add_deps("libmogan")
+    end
     add_syslinks("pthread")
 
     add_includedirs({
@@ -627,8 +624,8 @@ target("draw") do
     })
 
     -- install texmacs runtime files
-      add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
-      add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
+    add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
+    add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
 
     -- install tm files for testing purpose
     if is_mode("releasedbg") then
@@ -650,8 +647,41 @@ target("draw") do
     end)
 end
 
+function target_research_on_wasm()
+    set_languages("c++17")
+    set_version(XMACS_VERSION)
+    my_configvar_check()
+    build_glue_on_config()
+    
+    add_packages("lolly")
+    add_packages("freetype")
+    add_packages("s7")
+    add_rules("qt.widgetapp_static")
+    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QWasmIntegrationPlugin")
+    
+    add_includedirs(libmogan_headers, {public = true})
+    add_files(libmogan_srcs)
+    add_files(plugin_qt_srcs)
+    add_files(plugin_bibtex_srcs)
+    add_files(plugin_freetype_srcs)
+    add_files(plugin_database_srcs)
+    add_files(plugin_ispell_srcs)
+    add_files(plugin_metafont_srcs)
+    add_files(plugin_latex_srcs)
+    add_files(plugin_openssl_srcs)
+    add_files(plugin_updater_srcs)
+    add_files(plugin_xml_srcs)
+    add_files("src/Mogan/Research/research.cpp")
+    
+    add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
+    
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("$(buildir)/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
+    end)
+end
 
-target("research") do 
+function target_research_on_others()
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
     my_configvar_check()
@@ -674,9 +704,6 @@ target("research") do
     if is_plat("macosx") then
         add_frameworks("QtMacExtras")
     end
-    if is_plat("wasm") then
-        add_frameworks("QWasmIntegrationPlugin")
-    end
 
     add_packages("lolly")
     if is_plat("mingw") then
@@ -688,16 +715,17 @@ target("research") do
         add_ldflags("-mconsole")
     end
 
-    if is_plat("linux") then
-        add_rpathdirs("@executable_path/../lib")
-    end
     add_deps("libmogan")
-    add_syslinks("pthread")
-
     add_includedirs({
         "$(buildir)",
     })
     add_files("src/Mogan/Research/research.cpp")
+
+    if is_plat("linux") then
+        add_rpathdirs("@executable_path/../lib")
+    end
+    add_syslinks("pthread")
+
     if is_plat("mingw") and is_mode("release") then
         add_deps("windows_icon")
     end
@@ -825,11 +853,21 @@ target("research") do
     end)
 end
 
+target("research") do
+    if is_plat("wasm") then
+        target_research_on_wasm()
+    else
+        target_research_on_others()
+    end
+end
+
 target("macos_installer") do
     set_enabled(is_plat("macosx") and is_mode("release"))
     set_kind("phony")
     set_installdir(INSTALL_DIR)
-    add_deps("research")
+    if is_plat("macosx") then
+        add_deps("research")
+    end
 
     after_install(function (target, opt)
         local app_dir = target:installdir() .. "/../../"
@@ -841,7 +879,9 @@ target("windows_installer") do
     set_kind("phony")
     set_enabled(is_plat("mingw") and is_mode("release"))
     add_packages("qtifw")
-    add_deps("research")
+    if (is_plat("mingw")) then
+        add_deps("research")
+    end
     set_configvar("PACKAGE_DATE", os.date("%Y-%m-%d"))
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_installdir("$(buildir)")
@@ -887,6 +927,7 @@ end
 function add_test_target (filepath, dep)
     local testname = path.basename(filepath)
     target(testname) do
+        set_enabled(not is_plat("wasm"))
         add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
         set_group("tests")
         add_deps(dep)
@@ -951,6 +992,7 @@ end
 for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
     local testname = path.basename(filepath)
     target(testname) do
+        set_enabled(not is_plat("wasm"))
         set_kind("phony")
         set_group("integration_tests")
         on_run(function (target)

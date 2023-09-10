@@ -23,7 +23,7 @@
 #include "frame.hpp"
 #include "converter.hpp"
 
-#ifdef PDF_RENDERER
+#ifdef USE_PLUGIN_PDF
 #include "Pdf/pdf_hummus_renderer.hpp"
 #endif
 

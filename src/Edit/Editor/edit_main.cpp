@@ -25,8 +25,9 @@
 #include "tree_observer.hpp"
 #include "observers.hpp"
 
-
+#ifdef USE_PLUGIN_PDF
 #include "Pdf/pdf_hummus_make_attachment.hpp"
+#endif
 
 #ifdef EXPERIMENTAL
 #include "../../Style/Memorizer/clean_copy.hpp"
@@ -192,7 +193,7 @@ string printing_on ("a4");
 
 bool
 use_pdf () {
-#ifdef PDF_RENDERER
+#ifdef USE_PLUGIN_PDF
   return get_preference ("native pdf", "on") == "on";
 #else
   return false;
@@ -201,7 +202,7 @@ use_pdf () {
 
 bool
 use_ps () {
-#ifdef PDF_RENDERER
+#ifdef USE_PLUGIN_PDF
   return get_preference ("native postscript", "on") == "on";
 #else
   return true;
@@ -359,6 +360,7 @@ void
 edit_main_rep::print_to_file (url name, string first, string last) {
   print_doc (name, false, as_int (first), as_int (last));
 
+#ifdef USE_PLUGIN_PDF
   if ((suffix (name) == "pdf")) {
     if (as_bool (call ("get-boolean-preference",
                        "gui:export PDF with tm attachment"))) {
@@ -367,9 +369,11 @@ edit_main_rep::print_to_file (url name, string first, string last) {
       }
     }
   }
+#endif
   set_message ("Done printing", "print to file");
 }
 
+#ifdef USE_PLUGIN_PDF
 bool
 edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
   // copy the current buffer to a new buffer
@@ -467,6 +471,7 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
   }
   return true;
 }
+#endif
 
 void
 edit_main_rep::print_buffer (string first, string last) {
