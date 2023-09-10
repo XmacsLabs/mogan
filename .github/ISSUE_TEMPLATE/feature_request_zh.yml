@@ -15,7 +15,7 @@ body:
   id: solution
   attributes:
     label: 描述可能的解决方案
-    description: 请尽量清晰精准地描述你期待我们要做的，描述你想到的实现方案。
+    description: 请尽量清晰精准地描述你期待我们要做的，描述你想到的实现方案。如果不熟悉墨干的内部实现，可以描述预期实现的行为或者Latex等其他工具的类似功能
   validations:
     required: true
 
