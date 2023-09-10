@@ -8,6 +8,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 #include "pdf_hummus_make_attachment.hpp"
+#include "file.hpp"
 #include "tm_debug.hpp"
 
 #include "PDFWriter/DictionaryContext.h"
@@ -63,17 +64,22 @@ private:
 bool
 pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
                              url out_path) {
-  if(N(attachment_paths) == 0){
+  if (N (attachment_paths) == 0) {
     if (DEBUG_CONVERT) debug_convert << "attachment_paths number is 0\n";
     return false;
   }
-  for(int i = 0; i < N(attachment_paths); i ++){
-    if(!is_regular(attachment_paths[i])){
-      if (DEBUG_CONVERT) debug_convert << attachment_paths[i] << " has not existed\n";
+  for (int i= 0; i < N (attachment_paths); i++) {
+    if (!is_regular (attachment_paths[i])) {
+      if (DEBUG_CONVERT)
+        debug_convert << attachment_paths[i] << " has not existed\n";
       return false;
     }
   }
-  if(is_regular(out_path)){
+  if (!is_regular (pdf_path)) {
+    if (DEBUG_CONVERT) debug_convert << pdf_path << " has not existed\n";
+    return false;
+  }
+  if (is_regular (out_path)) {
     if (DEBUG_CONVERT) debug_convert << out_path << " has existed\n";
     return false;
   }
