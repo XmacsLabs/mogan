@@ -6,14 +6,14 @@ body:
 - type: textarea
   attributes:
     label: Is your feature request related to a problem? Please describe.
-    description: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+    description: A clear and concise description of what the problem is. You can upload a sample document below the input box and illustrate it with a similar situation in Latex. Ex. I'm always frustrated when [...]
   validations:
     required: true
 
 - type: textarea
   attributes:
     label: Describe the solution you'd like
-    description: A clear and concise description of what you want to happen.
+    description: A clear and concise description of what you want to happen. If you are not familiar with the internal implementation of Ink Dry, you can describe the behavior of the expected implementation or similar functionality of other tools such as Latex.
   validations:
     required: true
 
@@ -25,4 +25,5 @@ body:
 - type: textarea
   attributes:
     label: Additional context
-    description: Add any other context or screenshots about the feature request here.
+    description: Add any other context or screenshots about the feature request here. For example, related forum discussion threads or existing implementations in the TeXMacs community, etc.
+    
