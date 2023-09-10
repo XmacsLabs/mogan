@@ -307,9 +307,9 @@ end
 set_configvar("USE_ICONV", 1)
 set_configvar("USE_FREETYPE", 1)
 if is_plat("wasm") then
-    set_configvar("PDF_RENDERER", false)
+    set_configvar("USE_PLUGIN_PDF", false)
 else
-    set_configvar("PDF_RENDERER", true)
+    set_configvar("USE_PLUGIN_PDF", true)
 end
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 
@@ -653,8 +653,6 @@ target("wasm_research") do
     set_version(XMACS_VERSION)
     my_configvar_check()
     build_glue_on_config()
-
-    set_filename("research")
 
     add_packages("lolly")
     add_packages("freetype")
