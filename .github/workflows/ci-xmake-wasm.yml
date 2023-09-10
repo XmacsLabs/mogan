@@ -65,4 +65,4 @@ jobs:
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -vD -p wasm -m releasedbg --yes
       - name: build
-        run: xmake build wasm_research
+        run: xmake build research
