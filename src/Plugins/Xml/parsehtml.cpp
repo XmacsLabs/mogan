@@ -117,11 +117,7 @@ retrieve_mathjax (int id) {
 
 tree
 parse_html (string s) {
-  cout << "[DEBUG] parse html: "<< s << LF;
-  if (contains_mathjax (s)){
+  if (contains_mathjax (s))
     s= process_mathjax (s);
-    cout << "[DEBUG] parse html: "<< s << LF;
-  }
-  cout << "[DEBUG] parse html: "<< s << LF;
   return parse_plain_html (s);
 }
