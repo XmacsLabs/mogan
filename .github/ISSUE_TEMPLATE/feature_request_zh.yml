@@ -29,4 +29,4 @@ body:
   id: other
   attributes:
     label: 其他信息
-    description: 请提供关于该功能建议的其他附加信息。
+    description: 请提供关于该功能建议的其他附加信息，比如相关的论坛讨论串或者TeXMacs社区已有的实现等。
