@@ -674,6 +674,8 @@ target("wasm_research") do
     add_files(plugin_xml_srcs)
     add_files("src/Mogan/Research/research.cpp")
 
+    add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs")
+
     before_build(function (target)
         target:add("forceincludes", path.absolute("$(buildir)/config.h"))
         target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
