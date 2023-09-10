@@ -16,6 +16,7 @@
 #include "object_l1.hpp"
 #include "object_l2.hpp"
 #include "tm_debug.hpp"
+#include "tbox/tbox.h"
 
 #ifndef KERNEL_L3
 #include "convert.hpp" // tree_to_texmacs (should not belong here)
@@ -23,9 +24,6 @@
 #include <unistd.h> // for getpid
 #endif
 
-#ifdef HAVE_GETTIMEOFDAY
-#include <sys/time.h>
-#endif
 
 /******************************************************************************
  * Initialization of s7
@@ -299,15 +297,9 @@ static s7_pointer
 g_current_time (s7_scheme* sc, s7_pointer args) {
   s7_int res;
 
-#ifdef HAVE_GETTIMEOFDAY
-  struct timeval tp;
-  gettimeofday (&tp, NULL);
+  tb_timeval_t tp= {0};
+  tb_gettimeofday (&tp, tb_null);
   res= tp.tv_sec;
-#else
-  timeb tb;
-  ftime (&tb);
-  res= tb.time;
-#endif
 
   return s7_make_integer (sc, res);
 }
