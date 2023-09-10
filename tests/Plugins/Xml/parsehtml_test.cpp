@@ -26,21 +26,10 @@ private slots:
 
 void
 TestParseHTML::test_parse_html () {
-    string a =string("<table style=\"margin-bottom: 2em\" class=\"title-block\"><tr><td><table style=\"margin-top: 0.5em; margin-bottom: 0.5em\" class=\"title-block\"><tr><td><font style=\"font-size: 168.2%\"><strong>hello</strong></font></td></tr></table></td></tr></table><p></p>");
-    tree b = tree("*TOP*", 245 ,tuple("table", 245 ,tuple("@", 245 ,tuple("style", "margin-bottom: 2em"), 245 ,tuple("class", "title-block")), "
-  ", 245 ,tree("tr", "
-    ", 245 ,tree("td", 245 ,tuple("table", 245 ,tuple("@", 245 ,tuple("style", "margin-top: 0.5em; margin-bottom: 0.5em"), 245 ,tuple(class, "title-block")), "
-      ", 245 ,tree("tr", "
-        ", 245 ,tree("td", 245 ,tuple("font", 245 ,tuple("@", 245 tuple("style", "font-size: 168.2%")), 245 ,tuple("strong", "hello"))), "
-      "), "
-    ")), "
-  "), "
-"), 245 ,tree("p", "
-
-"));
-    //std::cout << "parse html: "<< a << LF; 
-    cout << "parse html: "<< a << LF;
-    QVERIFY (a,b);
+   string a = string("<p>hello</p><p>hello</p>");
+  // print_tree (parse_html (a));
+//   245 (*TOP*, 245 (p, "hello"), 245 (p, "hello"))
+  QVERIFY (parse_html (a) == tuple (tree ("*TOP*"), tuple ("p","\"hello\""), tuple ("p","\"hello\""))); 
 
 }
 
