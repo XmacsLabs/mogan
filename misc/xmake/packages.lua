@@ -32,7 +32,7 @@ package("lolly")
         add_deps("libcurl")
     end
 
-    add_versions("main", "0c2770ee1ef2e6e3477b53c1a636ac41819c0a5c")
+    add_versions("v1.2.4", "0c2770ee1ef2e6e3477b53c1a636ac41819c0a5c")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
@@ -45,7 +45,7 @@ package_end()
 
 
 function add_requires_of_mogan()
-    local LOLLY_VERSION = "1.2.3"
+    local LOLLY_VERSION = "1.2.4"
     local CURL_VERSION = "7.84.0"
     local FREETYPE_VERSION = "2.12.1"
     local PDFHUMMUS_VERSION = "4.5.10"
