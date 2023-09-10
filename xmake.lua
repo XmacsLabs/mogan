@@ -647,19 +647,18 @@ target("draw") do
     end)
 end
 
-target("wasm_research") do
-    set_enabled(is_plat("wasm"))
+function target_research_on_wasm()
     set_languages("c++17")
     set_version(XMACS_VERSION)
     my_configvar_check()
     build_glue_on_config()
-
+    
     add_packages("lolly")
     add_packages("freetype")
     add_packages("s7")
     add_rules("qt.widgetapp_static")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QWasmIntegrationPlugin")
-
+    
     add_includedirs(libmogan_headers, {public = true})
     add_files(libmogan_srcs)
     add_files(plugin_qt_srcs)
@@ -673,18 +672,16 @@ target("wasm_research") do
     add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)
     add_files("src/Mogan/Research/research.cpp")
-
-    add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs")
-
+    
+    add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
+    
     before_build(function (target)
         target:add("forceincludes", path.absolute("$(buildir)/config.h"))
         target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
     end)
 end
 
-
-target("research") do 
-    set_enabled(not is_plat("wasm"))
+function target_research_on_others()
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
     my_configvar_check()
@@ -854,6 +851,14 @@ target("research") do
             os.execv(target:installdir().."/../MacOS/Mogan")
         end
     end)
+end
+
+target("research") do
+    if is_plat("wasm") then
+        target_research_on_wasm()
+    else
+        target_research_on_others()
+    end
 end
 
 target("macos_installer") do
