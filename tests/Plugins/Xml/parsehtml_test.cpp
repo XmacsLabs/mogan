@@ -46,19 +46,6 @@ TestParseHTML::test_html_title () {
   </tr>\
 </table>");
 
-  //     parse_plain_html= 245 (*TOP*, 245 (table, 245 (@, 245 (style,
-  //     "margin-bottom: 2em"), 245 (class, "title-block")), "
-  //   ", 245 (tr, "
-  //     ", 245 (td, 245 (table, 245 (@, 245 (style, "margin-top: 0.5em;
-  //     margin-bottom: 0.5em"), 245 (class, "title-block")), "
-  //       ", 245 (tr, "
-  //         ", 245 (td, 245 (font, 245 (@, 245 (style, "font-size: 168.2%")),
-  //         245 (strong, "hello"))), "
-  //       "), "
-  //     ")), "
-  //   "), "
-  // "))
-
   tree b= tuple (
       "*TOP*",
       tuple (
