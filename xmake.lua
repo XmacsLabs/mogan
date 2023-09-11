@@ -21,6 +21,9 @@ local tmp_cache = false
 
 function my_configvar_check()
     on_config(function (target)
+        if is_plat("wasm") then
+            tmp_cache = false
+        end
         if tmp_cache then
             return
         end
