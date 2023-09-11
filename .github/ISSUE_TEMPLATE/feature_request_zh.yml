@@ -1,0 +1,32 @@
+name: 请求新功能
+description: 提出你期待的功能特性
+labels: 'feature request'
+body:
+
+- type: textarea
+  id: problem
+  attributes:
+    label: 你在什么场景下需要该功能？
+    description: 请尽量清晰精准地描述你碰到的问题。可以在输入框下方上传示例文档，并用Latex的类似情况来说明。
+  validations:
+    required: true
+
+- type: textarea
+  id: solution
+  attributes:
+    label: 描述可能的解决方案
+    description: 请尽量清晰精准地描述你期待我们要做的，描述你想到的实现方案。如果不熟悉墨干的内部实现，可以描述预期实现的行为或者Latex等其他工具的类似功能
+  validations:
+    required: true
+
+- type: textarea
+  id: second-solution
+  attributes:
+    label: 描述你认为的候选方案
+    description: 请尽量清晰精准地描述你能接受的候选解决方案。
+
+- type: textarea
+  id: other
+  attributes:
+    label: 其他信息
+    description: 请提供关于该功能建议的其他附加信息，比如相关的论坛讨论串或者TeXMacs社区已有的实现等。
