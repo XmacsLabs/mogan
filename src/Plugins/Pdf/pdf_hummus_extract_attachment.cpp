@@ -69,20 +69,29 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
       break;
     }
     unsigned long n= arr->GetLength ();
+    // Every two elements in the array represent an attachment
+    if (n == 0) {
+      if (DEBUG_CONVERT) debug_convert << "arr->GetLength () is 0\n";
+      status= PDFHummus::eFailure;
+      break;
+    }
     if (n & 1) {
-      if (DEBUG_CONVERT) debug_convert << "n is wrong\n";
+      if (DEBUG_CONVERT) debug_convert << "arr->GetLength () is wrong\n";
+      status= PDFHummus::eFailure;
       break;
     }
     for (unsigned long i= 0; i < n; i+= 2) {
       PDFObjectCastPtr<PDFLiteralString> name (arr->QueryObject (i));
       if (!name) {
-        if (DEBUG_CONVERT) debug_convert << "Can't find name\n";
+        if (DEBUG_CONVERT)
+          debug_convert << "Can't find arr->QueryObject (" << i << ")\n";
         status= PDFHummus::eFailure;
         break;
       }
       PDFObjectCastPtr<PDFDictionary> arr_d1 (arr->QueryObject (i + 1));
       if (!arr_d1) {
-        if (DEBUG_CONVERT) debug_convert << "Can't find arr_d1\n";
+        if (DEBUG_CONVERT)
+          debug_convert << "Can't find arr->QueryObject (" << i + 1 << ")\n";
         status= PDFHummus::eFailure;
         break;
       }

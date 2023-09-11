@@ -22,6 +22,9 @@ private slots:
   void init () { lolly::init_tbox (); }
   void test_pdf_hummus_make_single_attachment ();
   void test_pdf_hummus_make_multiple_attachments ();
+  void test_pdf_hummus_make_zero_attachment ();
+  void test_pdf_hummus_make_attachment_for_wrong_pdf ();
+  void test_pdf_hummus_make_attachment_for_no_pdf ();
 };
 void
 TestHummusPdfMakeAttachment::test_pdf_hummus_make_single_attachment () {
@@ -101,5 +104,46 @@ TestHummusPdfMakeAttachment::test_pdf_hummus_make_multiple_attachments () {
   }
 }
 
+void
+TestHummusPdfMakeAttachment::test_pdf_hummus_make_zero_attachment () {
+  bool attach_judge= pdf_hummus_make_attachments (
+      url ("$TEXMACS_PATH/tests/images/29_4_3.pdf"), list<url> (),
+      url ("$TEXMACS_PATH/tests/images/29_4_3_attach.pdf"));
+  QVERIFY (!attach_judge);
+  bool out_pdf_judge=
+      is_regular (url ("$TEXMACS_PATH/tests/images/29_4_3_attach.pdf"));
+  QVERIFY (!out_pdf_judge);
+
+  list<url> attachment;
+  bool      separate_tm_judge= extract_attachments_from_pdf (
+      url ("$TEXMACS_PATH/tests/images/29_4_3_attach.pdf"), attachment);
+  QVERIFY (!separate_tm_judge);
+  QVERIFY (N (attachment) == 0);
+}
+
+void
+TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachment_for_wrong_pdf () {
+  bool attach_judge= pdf_hummus_make_attachments (
+      url ("$TEXMACS_PATH/tests/images/29_4_4.pdf"),
+      list<url> (url ("$TEXMACS_PATH/tests/29_1_1.tm")),
+      url ("$TEXMACS_PATH/tests/images/29_4_4_attach.pdf"));
+  QVERIFY (!attach_judge);
+  bool out_pdf_judge=
+      is_regular (url ("$TEXMACS_PATH/tests/images/29_4_4_attach.pdf"));
+  QVERIFY (out_pdf_judge);
+  remove (url ("$TEXMACS_PATH/tests/images/29_4_4_attach.pdf"));
+}
+void
+TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachment_for_no_pdf () {
+  QVERIFY (!is_regular (url ("$TEXMACS_PATH/tests/images/29_4_5.pdf")));
+  bool attach_judge= pdf_hummus_make_attachments (
+      url ("$TEXMACS_PATH/tests/images/29_4_5.pdf"),
+      list<url> (url ("$TEXMACS_PATH/tests/29_1_1.tm")),
+      url ("$TEXMACS_PATH/tests/images/29_4_5_attach.pdf"));
+  QVERIFY (!attach_judge);
+  bool out_pdf_judge=
+      is_regular (url ("$TEXMACS_PATH/tests/images/29_4_5_attach.pdf"));
+  QVERIFY (!out_pdf_judge);
+}
 QTEST_MAIN (TestHummusPdfMakeAttachment)
 #include "pdf_make_attachment_test.moc"
