@@ -17,9 +17,14 @@ includes("check_cxxincludes.lua")
 includes("check_cxxfuncs.lua")
 includes("check_cxxsnippets.lua")
 
+local tmp_cache = false
+
 function my_configvar_check()
     on_config(function (target)
-        print("my_configvar_check " .. target:name())
+        if tmp_cache then
+            return
+        end
+        print("my_configvar_check " .. target:name()) 
         if target:has_cxxincludes("stdlib.h") then
             target:set("configvar", "HAVE_STDLIB_H", 1)
         end
@@ -62,6 +67,8 @@ function my_configvar_check()
         ]]}) then
             target:set("configvar", "CONFIG_LARGE_POINTER", 1)
         end
+        print("my_configvar_check end, cached")
+        tmp_cache = true 
     end)
 end
 
