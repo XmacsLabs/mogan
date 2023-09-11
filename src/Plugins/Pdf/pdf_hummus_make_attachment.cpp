@@ -65,22 +65,23 @@ bool
 pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
                              url out_path) {
   if (N (attachment_paths) == 0) {
-    if (DEBUG_CONVERT) debug_convert << "attachment_paths number is 0\n";
+    if (DEBUG_CONVERT) debug_convert << "N (attachment_paths) is 0\n";
     return false;
   }
   for (int i= 0; i < N (attachment_paths); i++) {
     if (!is_regular (attachment_paths[i])) {
       if (DEBUG_CONVERT)
-        debug_convert << attachment_paths[i] << " has not existed\n";
+        debug_convert << attachment_paths[i] << " is not regular\n";
       return false;
     }
   }
   if (!is_regular (pdf_path)) {
-    if (DEBUG_CONVERT) debug_convert << pdf_path << " has not existed\n";
+    if (DEBUG_CONVERT) debug_convert << pdf_path << " is not regular\n";
     return false;
   }
   if (is_regular (out_path)) {
-    if (DEBUG_CONVERT) debug_convert << out_path << " has existed\n";
+    if (DEBUG_CONVERT)
+      debug_convert << out_path << " has existed, causing coverage\n";
     return false;
   }
 
@@ -91,7 +92,8 @@ pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
                                  as_charp (as_string (out_path)));
 
     if (status != eSuccess) {
-      if (DEBUG_CONVERT) debug_convert << "start fail\n";
+      if (DEBUG_CONVERT)
+        debug_convert << "ModifyPDF fail to open " << pdf_path << LF;
       break;
     }
     PDFAttachmentWriter attachmentWriter (&pdfWriter);
@@ -121,7 +123,6 @@ pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
       PDFAttachment* aAttachment=
           new PDFAttachment (file_content, file_size, attachment_name);
       status= attachmentWriter.AttachToAllPage (aAttachment);
-      // return status;
       if (status != eSuccess) {
         if (DEBUG_CONVERT)
           debug_convert << "fail to attach " << attachment_path << "\n";
