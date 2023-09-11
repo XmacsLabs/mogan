@@ -11,13 +11,14 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|30|30|1|1|cell-background|pastel
-  red>|<cwith|29|29|1|1|cell-background|pastel
-  red>|<cwith|25|25|1|1|cell-background|pastel
-  red>|<cwith|36|36|3|3|cell-valign|b>|<cwith|37|37|1|1|cell-valign|b>|<cwith|24|24|1|1|cell-background|pastel
-  green>|<cwith|27|27|1|1|cell-background|pastel
-  green>|<cwith|23|23|1|1|cell-background|pastel
-  green>|<cwith|3|3|2|2|cell-valign|c>|<cwith|2|2|1|1|cell-valign|c>|<table|<row|<cell|<dlink|53>>|<cell|Darcy>|<cell|Lolly
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|31|31|1|1|cell-background|pastel
+  red>|<cwith|30|30|1|1|cell-background|pastel
+  red>|<cwith|26|26|1|1|cell-background|pastel
+  red>|<cwith|37|37|3|3|cell-valign|b>|<cwith|38|38|1|1|cell-valign|b>|<cwith|25|25|1|1|cell-background|pastel
+  green>|<cwith|28|28|1|1|cell-background|pastel
+  green>|<cwith|24|24|1|1|cell-background|pastel
+  green>|<cwith|4|4|2|2|cell-valign|c>|<cwith|3|3|1|1|cell-valign|c>|<table|<row|<cell|<dlink|54>>|<cell|Pluto>|<cell|Chore
+  work>>|<row|<cell|<dlink|53>>|<cell|Darcy>|<cell|Lolly
   1.2.x>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
   Table>>|<row|<cell|<dlink|51>>|<cell|Darcy>|<cell|Scheme
   Onboarding>>|<row|<cell|<dlink|50>>|<cell|Oyyko>|<cell|Mogan Draw app &
