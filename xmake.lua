@@ -692,7 +692,7 @@ function target_research_on_others()
 
     if is_plat("macosx") then
         set_filename("Mogan")
-    elseif is_plat("mingw") then
+    elseif is_plat("mingw", "windows") then
         set_filename("mogan.exe")
     else
         set_filename("mogan")
@@ -1024,7 +1024,7 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
                 "-q"}
             if is_plat("macosx") then
                 binary = INSTALL_DIR.."/../MacOS/Mogan"
-            elseif is_plat("mingw") then
+            elseif is_plat("mingw", "windows") then
                 binary = path.join(INSTALL_DIR,"bin","mogan.exe")
             else
                 binary = INSTALL_DIR.."/bin/mogan"
