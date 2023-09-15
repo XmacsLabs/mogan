@@ -349,7 +349,7 @@ evaluate_impl (tree t) {
     return evaluate_get_binding (t);
 
   /* Graphical primitives */
-  case PATTERN:
+  case PATTERN_:
     return evaluate_pattern (t);
   case _POINT:
     return evaluate_point (t);
@@ -385,17 +385,17 @@ evaluate_impl (tree t) {
 
 tree
 evaluate_error (string error) {
-  return tree (ERROR, error);
+  return tree (ERROR_, error);
 }
 
 tree
 evaluate_error (string error, tree arg) {
-  return tree (ERROR, error, arg);
+  return tree (ERROR_, error, arg);
 }
 
 tree
 evaluate_error (string error, array<tree> args) {
-  tree r= tree (ERROR, error);
+  tree r= tree (ERROR_, error);
   r << args;
   return r;
 }

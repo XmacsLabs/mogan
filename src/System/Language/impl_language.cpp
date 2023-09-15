@@ -49,10 +49,10 @@ tree
 line_inc (tree t, int i) {
   if (i == 0) return t;
   path p= obtain_ip (t);
-  if (is_nil (p) || last_item (p) < 0) return tree (ERROR);
+  if (is_nil (p) || last_item (p) < 0) return tree (ERROR_);
   tree pt= subtree (the_et, reverse (p->next));
-  if (!is_func (pt, DOCUMENT)) return tree (ERROR);
-  if ((p->item + i < 0) || (p->item + i >= N(pt))) return tree (ERROR);
+  if (!is_func (pt, DOCUMENT)) return tree (ERROR_);
+  if ((p->item + i < 0) || (p->item + i >= N(pt))) return tree (ERROR_);
   return pt[p->item + i];
 }
 
@@ -114,7 +114,7 @@ after_begin_comment (int i, tree t) {
     if (begin_comment (s2, i)) return line;
     t2= line_inc (t2, -1);
     --line;
-      // line_inc returns tree(ERROR) upon error
+      // line_inc returns tree(ERROR_) upon error
     if (!is_atomic (t2)) return -1; // FIXME
     s2= t2->label;
     i = N(s2) - 1;
@@ -154,7 +154,7 @@ before_end_comment (int i, tree t) {
     if (end_comment (s2, i)) return line;
     t2= line_inc (t2, 1);
     ++line;
-      // line_inc returns tree(ERROR) upon error
+      // line_inc returns tree(ERROR_) upon error
     if (!is_atomic (t2)) return -1; // FIXME
     s2= t2->label;
     i = 0;

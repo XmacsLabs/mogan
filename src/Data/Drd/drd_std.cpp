@@ -110,7 +110,7 @@ init_std_drd () {
   init (STRING, "string", fixed (0) -> returns_string ());
   init (UNKNOWN, "unknown", fixed (0));
   init (UNINIT, "uninit", fixed (0));
-  init (ERROR, "error", fixed (1));
+  init (ERROR_, "error", fixed (1));
   init (RAW_DATA, "raw-data", fixed (1) -> raw (0));
 
   init (DOCUMENT, "document",
@@ -600,7 +600,7 @@ init_std_drd () {
         fixed (2) -> binding (0));
   init (BACKUP, "backup",
         fixed (2) -> regular (0));
-  init (PATTERN, "pattern",
+  init (PATTERN_, "pattern",
         options (3, 1, DETAILED) -> returns_color () ->
         url_type (0));
   init (GRADIENT, "gradient",

@@ -24,7 +24,7 @@
 tree
 scheme_tree_to_tree (scheme_tree t, string version) {
   version= scm_unquote (version);
-  tree doc, error (ERROR, "bad format or data");
+  tree doc, error (ERROR_, "bad format or data");
   if (version_inf (version, "1.0.2.4"))
     doc= scheme_tree_to_tree (t, get_codes (version), false);
   else doc= scheme_tree_to_tree (t);
@@ -39,7 +39,7 @@ scheme_tree_to_tree (scheme_tree t, string version) {
 
 tree
 scheme_document_to_tree (string s) {
-  tree error (ERROR, "bad format or data");
+  tree error (ERROR_, "bad format or data");
   if (starts (s, "(document (apply \"TeXmacs\" ") ||
       starts (s, "(document (expand \"TeXmacs\" ") ||
       starts (s, "(document (TeXmacs "))

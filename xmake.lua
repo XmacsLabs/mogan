@@ -530,6 +530,8 @@ target("libmogan") do
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
+    elseif is_plat("windows") then
+        add_syslinks("secur32", {public = true})
     end
     
     if is_plat("linux") then
@@ -696,7 +698,11 @@ function target_research_on_others()
         set_filename("mogan")
     end
 
-    if is_plat("macosx") or is_plat("linux") then
+    if is_plat("windows") then
+        set_optimize("smallest");
+    end
+
+    if is_plat("macosx", "linux", "windows") then
         add_rules("qt.widgetapp")
     else
         add_rules("qt.widgetapp_static")
@@ -708,7 +714,7 @@ function target_research_on_others()
     end
 
     add_packages("lolly")
-    if is_plat("mingw") then
+    if is_plat("mingw", "windows") then
         add_packages("qt5widgets")
     end
 
@@ -730,7 +736,9 @@ function target_research_on_others()
     if is_plat("linux") then
         add_rpathdirs("@executable_path/../lib")
     end
-    add_syslinks("pthread")
+    if not is_plat("windows") then
+        add_syslinks("pthread")
+    end
 
     if is_plat("mingw") and is_mode("release") then
         add_deps("windows_icon")
@@ -818,6 +826,7 @@ function target_research_on_others()
 
             -- get qt sdk
             local qt = assert(find_qt(), "Qt SDK not found!")
+            print(os.getenv("PATH"))
 
             -- get windeployqt
             local windeployqt_tool = assert(
@@ -939,10 +948,13 @@ function add_test_target (filepath, dep)
         add_deps(dep)
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
+        set_encodings("utf-8")
         my_configvar_check()
         add_rules("qt.console")
         add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
-        add_syslinks("pthread")
+        if not is_plat("windows") then
+            add_syslinks("pthread")
+        end
         if is_plat ("mingw") then
             add_packages("mingw-w64")
         end
@@ -954,7 +966,9 @@ function add_test_target (filepath, dep)
         add_files("tests/Base/base.cpp")
         add_files(filepath)
         add_files(filepath, {rules = "qt.moc"})
-        add_cxxflags("-include $(buildir)/config.h")
+        before_build(function (target)
+            target:add("forceincludes", path.absolute("$(buildir)/config.h"))
+        end)
 
         if is_plat("wasm") then
             on_run(function (target)

@@ -27,7 +27,7 @@ private slots:
 
   void init () {
     lolly::init_tbox ();
-    if (os_mingw ()) {
+    if (os_mingw () || os_win()) {
       root_tmp= url ("$TEMP");
     }
     else {
