@@ -948,7 +948,9 @@ function add_test_target (filepath, dep)
         add_deps(dep)
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
-        set_encodings("utf-8")
+        if is_plat("windows") then
+            set_encodings("utf-8") -- eliminate warning C4819 on msvc
+        end
         my_configvar_check()
         add_rules("qt.console")
         add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")

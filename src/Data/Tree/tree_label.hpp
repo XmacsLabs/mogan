@@ -21,7 +21,7 @@ enum tree_label : int {
   STRING= 0,
   UNKNOWN,
   UNINIT,
-  ERROR_, //avoid definition collision in msvc
+  ERROR_, // avoid definition collision in msvc
   RAW_DATA,
 
   // basic formatting tags
@@ -290,7 +290,7 @@ enum tree_label : int {
   COLLECTION,
   ASSOCIATE,
   BACKUP,
-  PATTERN_, //avoid definition collision in msvc
+  PATTERN_, // avoid definition collision in msvc
   GRADIENT,
   SPECIFIC,
   FLAG,
