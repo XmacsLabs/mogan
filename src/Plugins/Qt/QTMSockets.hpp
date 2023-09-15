@@ -20,7 +20,7 @@
 #include "tm_link.hpp"
 #include "tm_debug.hpp"
 
-#ifndef OS_MINGW
+#if !defined(OS_MINGW) && !defined(OS_WIN)
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -74,7 +74,7 @@ protected:
   enum state st;
 private:
   static int count;
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   static wsoc::WSADATA wsadata;
 #endif
 };

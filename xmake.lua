@@ -281,7 +281,7 @@ end
 local XMACS_VERSION="1.2.0"
 
 local INSTALL_DIR = "$(buildir)"
-if is_plat("mingw") then 
+if is_plat("mingw", "windows") then 
     INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/data/")
 elseif is_plat("macosx") then 
     INSTALL_DIR = path.join("$(buildir)", "macosx/$(arch)/$(mode)/Mogan.app/Contents/Resources/")
@@ -313,7 +313,7 @@ else
 end
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 
-if is_plat("mingw") then
+if is_plat("mingw", "windows") then
     set_configvar("GS_EXE", "bin/gs.exe")
 else
     set_configvar("GS_EXE", "/usr/bin/gs")
@@ -333,14 +333,16 @@ add_configfiles("src/System/config.h.xmake", {
     variables = {
         GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
         GS_LIB = "../share/ghostscript/9.06/lib:",
+        NOMINMAX = is_plat("windows"),
         OS_GNU_LINUX = is_plat("linux"),
         OS_MACOS = is_plat("macosx"),
         OS_MINGW = is_plat("mingw"),
+        OS_WIN = is_plat("windows"),
         OS_WASM = is_plat("wasm"),
         MACOSX_EXTENSIONS = is_plat("macosx"),
         SIZEOF_VOID_P = 8,
         USE_FONTCONFIG = is_plat("linux"),
-        USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")),
+        USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
         USE_GS = not is_plat("wasm"),
     }
 })
@@ -577,7 +579,7 @@ option("libdl") do
     add_links("dl")
 end
 
-if is_plat("mingw") then
+if is_plat("mingw", "windows") then
     target("windows_icon") do
         set_version(XMACS_VERSION)
         set_kind("object")
@@ -719,6 +721,10 @@ function target_research_on_others()
     add_includedirs({
         "$(buildir)",
     })
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("$(buildir)/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
+    end)
     add_files("src/Mogan/Research/research.cpp")
 
     if is_plat("linux") then
@@ -777,7 +783,7 @@ function target_research_on_others()
 
     -- install tm files for testing purpose
     if is_mode("releasedbg") then
-        if is_plat("mingw") then
+        if is_plat("mingw", "windows") then
             add_installfiles({
                 "TeXmacs(/tests/*.tm)",
                 "TeXmacs(/tests/*.bib)",
@@ -804,7 +810,7 @@ function target_research_on_others()
             os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
         end
 
-        if is_plat("mingw") then
+        if is_plat("mingw", "windows") then
             import("detect.sdks.find_qt")
             import("core.base.option")
             import("core.project.config")
@@ -843,7 +849,7 @@ function target_research_on_others()
 
     on_run(function (target)
         name = target:name()
-        if is_plat("mingw") then
+        if is_plat("mingw", "windows") then
             os.execv(target:installdir().."/bin/mogan.exe")
         elseif is_plat("linux") then
             os.execv(target:installdir().."/bin/mogan")

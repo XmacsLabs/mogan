@@ -4,7 +4,7 @@
 */
 #include <stdlib.h>
 
-#if defined(__TMSTATIC__) && !defined(OS_MINGW) && !defined(__WIN32__)
+#if defined(__TMSTATIC__) && !defined(OS_MINGW) && !defined(OS_WIN)
 void* dlopen(const char *name, int flag) {
    return(NULL);
 }

@@ -73,7 +73,7 @@ ispeller_rep::start () {
       if (locale != "") cmd = cmd * " --language-tag=" * locale;
       testdic = connect_spellchecker(cmd);
     }
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   //look in "program files" for system-wide install (but not found in PATH)
   url u;
   bool testcmd;
@@ -161,7 +161,7 @@ ispeller_rep::connect_spellchecker (string cmd) {
 string
 ispeller_rep::retrieve () {
   string ret;
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   while ((ret != "\r\n") && (!ends (ret, "\r\n\r\n")) &&
         ((!ends (ret, "\r\n")) || (!starts (ret, "@(#)"))))
 #else
@@ -209,7 +209,7 @@ ispell_decode (string lan, string s) {
 
 static tree
 parse_ispell (string s) {
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   while (ends (s, "\r\n")) s= s (0, N(s)-2);
 #else
   while (ends (s, "\n")) s= s (0, N(s)-1);

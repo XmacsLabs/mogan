@@ -66,7 +66,7 @@ TestURL::test_suffix () {
 
 void
 TestURL::test_descends () {
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   QVERIFY (descends (url_system ("$TEMP/a.txt"), root_tmp));
 #else
   QVERIFY (descends (url_system ("/tmp/a.txt"), root_tmp));
