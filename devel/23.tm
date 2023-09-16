@@ -380,7 +380,6 @@
       \;
     </cell>|<\cell>
       <value|dis>
-
     </cell>>>>
   </wide-block>
 
