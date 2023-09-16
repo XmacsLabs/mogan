@@ -922,20 +922,9 @@
   `((h:font (@ (color ,(tmcolor->htmlcolor val))) ,@(tmhtml arg))))
 
 (define (my-string->number str)
-  (let ((result (string->number-helper str 0 0)))
-    (if (positive? result)
-        result
-        (if (negative? result)
-            result
-            0))))
-
-(define (string->number-helper str index acc)
-  (if (>= index (string-length str))
-      acc
-      (let ((char (string-ref str index)))
-        (if (char-numeric? char)
-            (string->number-helper str (+ index 1) (+ (* acc 10) (- (char->integer char) (char->integer #\0))))
-            #f))))
+  (if (== str "")
+      0
+      (string->number str)))
 
 (define (tmhtml-with-font-size val arg)
   (ahash-with tmhtml-env :mag val
