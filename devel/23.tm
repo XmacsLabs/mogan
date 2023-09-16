@@ -380,19 +380,7 @@
       \;
     </cell>|<\cell>
       <value|dis>
-    </cell>>|<row|<\cell>
-      <value|f>
-    </cell>|<\cell>
-      23_28
-    </cell>|<\cell>
-      <value|oy>
-    </cell>|<\cell>
-      After entering the mode of rotate or zoom, the cursor should become a
-      small hand.
-    </cell>|<\cell>
-      \;
-    </cell>|<\cell>
-      <value|ok>
+
     </cell>>>>
   </wide-block>
 

@@ -855,7 +855,9 @@
   (== mode (graphics-mode)))
 
 ;; modes in which the cursor should become hand-style, see graphics-env.scm too.
-(define hand-modes '((group-edit move) (group-edit zoom) (group-edit rotate)))
+(define hand-modes '((group-edit move) 
+                     (group-edit zoom) 
+                     (group-edit rotate)))
 
 (tm-define (graphics-set-mode val)
   (:check-mark "v" graphics-mode-has-value?)

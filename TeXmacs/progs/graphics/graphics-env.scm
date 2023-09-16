@@ -486,7 +486,9 @@
   (set! the-current-cursor-style style))
 
 ;; modes in which the cursor should become hand-style, see graphics-main.scm too.
-(define hand-modes '((tuple "group-edit" "move") (tuple "group-edit" "rotate") (tuple "group-edit" "zoom")))
+(define hand-modes '((tuple "group-edit" "move") 
+                     (tuple "group-edit" "rotate") 
+                     (tuple "group-edit" "zoom")))
 
 (tm-define (set-sticky-point-true)
   (set-cursor-style-if-in-hand-modes "closehand")
