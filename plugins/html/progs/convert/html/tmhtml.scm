@@ -921,9 +921,26 @@
 (define (tmhtml-with-color val arg)
   `((h:font (@ (color ,(tmcolor->htmlcolor val))) ,@(tmhtml arg))))
 
+(define (my-string->number str)
+  (let ((result (string->number-helper str 0 0)))
+    (if (positive? result)
+        result
+        (if (negative? result)
+            result
+            0))))
+
+(define (string->number-helper str index acc)
+  (if (>= index (string-length str))
+      acc
+      (let ((char (string-ref str index)))
+        (if (char-numeric? char)
+            (string->number-helper str (+ index 1) (+ (* acc 10) (- (char->integer char) (char->integer #\0))))
+            #f))))
+
 (define (tmhtml-with-font-size val arg)
   (ahash-with tmhtml-env :mag val
-    (let* ((x (* (string->number val) 100))
+  ;(display* " [DEBUG]" val "end")
+    (let* ((x (* (my-string->number val) 100))
            (c (string-append "font-size: " (number->string x) "%"))
 	   (s (cond ((< x 1) "-4") ((< x 55) "-4") ((< x 65) "-3")
 		    ((< x 75) "-2") ((< x 95) "-1") ((< x 115) "0")
