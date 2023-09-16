@@ -77,10 +77,10 @@ function add_requires_of_mogan()
     set_configvar("LOLLY_VERSION", LOLLY_VERSION)
     add_requires("lolly", {system=false})
     tbox_configs = {hash=true, ["force-utf8"]=true}
-    if is_plat("macosx") or is_plat("linux") then
-        tbox_version = "v1.7.4"
-    else
+    if is_plat("wasm") then
         tbox_version = "dev"
+    else
+        tbox_version = "v1.7.4"
     end
     add_requireconfs("lolly.tbox", {version = tbox_version, configs=tbox_configs, system = false, override=true})
     if is_plat("macosx") or is_plat("mingw") then
