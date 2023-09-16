@@ -41,7 +41,6 @@
 
 #if defined (OS_MINGW) || defined (OS_WIN)
 #include <time.h>
-// #include <dirent.h>
 #else
 #include <dirent.h>
 #endif
