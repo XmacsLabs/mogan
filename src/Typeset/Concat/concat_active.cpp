@@ -390,7 +390,7 @@ concater_rep::typeset_hyphenate_as (tree t, path ip) {
 ******************************************************************************/
 
 #define error_image(t) { \
-  typeset_dynamic (tree (ERROR_, "bad image", t), ip); \
+  typeset_dynamic (tree (ERROR, "bad image", t), ip); \
   return; \
 }
 

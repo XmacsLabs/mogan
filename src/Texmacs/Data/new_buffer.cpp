@@ -625,6 +625,6 @@ load_inclusion (url name) {
   if (document_inclusions->contains (name_s))
     return document_inclusions [name_s];
   tree doc= extract_document (import_tree (name, "generic"));
-  if (!is_func (doc, ERROR_)) document_inclusions (name_s)= doc;
+  if (!is_func (doc, ERROR)) document_inclusions (name_s)= doc;
   return doc;
 }

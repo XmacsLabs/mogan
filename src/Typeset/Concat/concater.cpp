@@ -196,7 +196,7 @@ concater_rep::typeset (tree t, path ip) {
 
   switch (L (t)) {
   case UNINIT:
-  case ERROR_:
+  case ERROR:
     typeset_error (t, ip);
     break;
   case RAW_DATA:
@@ -721,7 +721,7 @@ concater_rep::typeset (tree t, path ip) {
   case BACKUP:
     typeset_inactive (t, ip);
     break;
-  case PATTERN_:
+  case PATTERN:
   case GRADIENT:
     marker (descend (ip, 0));
     typeset_inactive (env->exec (t), decorate (ip));
@@ -1086,8 +1086,8 @@ box_info (edit_env env, tree t, string what) {
     case 'H': r << as_string (b->y4 - b->y3); break;
     case '.':
       if (N(r)==1) return as_string (r[0]) * "tmpt";
-      else if (N(r)==0) return tree (ERROR_, "No query for box-info");
-      else return tree (ERROR_, "More than one query for box-info");
+      else if (N(r)==0) return tree (ERROR, "No query for box-info");
+      else return tree (ERROR, "More than one query for box-info");
     }
   }
   return r;

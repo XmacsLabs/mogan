@@ -19,8 +19,11 @@
 #endif
 #endif
 
-#if defined(OS_MINGW) || defined(OS_WIN)
+#if defined(OS_WIN)
+#define NOGDI
 #include <windows.h>
+#include <winnls.h>
+#elif defined(OS_MINGW)
 #include <winnls.h>
 #endif
 

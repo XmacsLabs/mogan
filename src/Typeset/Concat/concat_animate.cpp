@@ -213,7 +213,7 @@ concater_rep::typeset_sound (tree t, path ip) {
     print (sound_box (ip, pl, sound, gfn->yx));
     flag ("sound", ip, brown);
   }
-  else typeset_dynamic (tree (ERROR_, "bad sound", t[0]), ip);
+  else typeset_dynamic (tree (ERROR, "bad sound", t[0]), ip);
 }
 
 /******************************************************************************
@@ -237,7 +237,7 @@ concater_rep::typeset_video (tree t, path ip) {
     bool rep= env->exec (t[4]) != "false";
     print (video_box (ip, pl, video, w, h, env->alpha, len, rep, env->pixel));
   }
-  else typeset_dynamic (tree (ERROR_, "bad video", t[0]), ip);
+  else typeset_dynamic (tree (ERROR, "bad video", t[0]), ip);
 }
 
 /******************************************************************************

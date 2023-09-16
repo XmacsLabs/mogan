@@ -228,7 +228,7 @@ BEGIN_MAGNIFY
     string valign= env->text_at_valign;
 
     if (N(p) == 0)
-      typeset_dynamic (tree (ERROR_, "bad text-at"), ip);
+      typeset_dynamic (tree (ERROR, "bad text-at"), ip);
     else {
       SI ox= (SI) p[0], oy= (SI) p[1], axis= (b->h() >> 1), x= ox, y= oy;
       if (halign == "left") x -= b->x1;
@@ -265,7 +265,7 @@ BEGIN_MAGNIFY
     string valign= env->text_at_valign;
 
     if (N(p) == 0)
-      typeset_dynamic (tree (ERROR_, "bad math-at"), ip);
+      typeset_dynamic (tree (ERROR, "bad math-at"), ip);
     else {
       SI ox= (SI) p[0], oy= (SI) p[1], axis= (b->h() >> 1), x= ox, y= oy;
       if (halign == "left") x -= b->x1;
@@ -302,7 +302,7 @@ BEGIN_MAGNIFY
     string valign= env->doc_at_valign;
 
     if (N(p) == 0)
-      typeset_dynamic (tree (ERROR_, "bad document-at"), ip);
+      typeset_dynamic (tree (ERROR, "bad document-at"), ip);
     else {
       SI ox= (SI) p[0], oy= (SI) p[1], axis= (b->h() >> 1), x= ox, y= oy;
       if (halign == "left") x -= b->x1;
@@ -969,7 +969,7 @@ BEGIN_MAGNIFY
   tree u= env->exec (t);
   spacial obj= as_spacial (u);
   if (is_nil (obj))
-    typeset_dynamic (tree (ERROR_, "bad spacial object"), ip);
+    typeset_dynamic (tree (ERROR, "bad spacial object"), ip);
   else
     print (spacial_box (ip, transformed (obj, vt)));
 END_MAGNIFY
