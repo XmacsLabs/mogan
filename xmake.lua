@@ -782,7 +782,7 @@ function target_research_on_others()
     add_installfiles("TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
     add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm", {prefixdir="share/pixmaps"})
   
-    if is_plat("mingw") then
+    if is_plat("mingw", "windows") then
         add_installfiles(TeXmacs_files)
     else
         add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
