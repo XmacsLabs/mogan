@@ -281,7 +281,7 @@ end
 local XMACS_VERSION="1.2.0"
 
 local INSTALL_DIR = "$(buildir)"
-if is_plat("mingw") then 
+if is_plat("mingw", "windows") then 
     INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/data/")
 elseif is_plat("macosx") then 
     INSTALL_DIR = path.join("$(buildir)", "macosx/$(arch)/$(mode)/Mogan.app/Contents/Resources/")
@@ -313,7 +313,7 @@ else
 end
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 
-if is_plat("mingw") then
+if is_plat("mingw", "windows") then
     set_configvar("GS_EXE", "bin/gs.exe")
 else
     set_configvar("GS_EXE", "/usr/bin/gs")
@@ -333,14 +333,16 @@ add_configfiles("src/System/config.h.xmake", {
     variables = {
         GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
         GS_LIB = "../share/ghostscript/9.06/lib:",
+        NOMINMAX = is_plat("windows"),
         OS_GNU_LINUX = is_plat("linux"),
         OS_MACOS = is_plat("macosx"),
         OS_MINGW = is_plat("mingw"),
+        OS_WIN = is_plat("windows"),
         OS_WASM = is_plat("wasm"),
         MACOSX_EXTENSIONS = is_plat("macosx"),
         SIZEOF_VOID_P = 8,
         USE_FONTCONFIG = is_plat("linux"),
-        USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")),
+        USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
         USE_GS = not is_plat("wasm"),
     }
 })
@@ -528,6 +530,8 @@ target("libmogan") do
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
+    elseif is_plat("windows") then
+        add_syslinks("secur32", {public = true})
     end
     
     if is_plat("linux") then
@@ -577,7 +581,7 @@ option("libdl") do
     add_links("dl")
 end
 
-if is_plat("mingw") then
+if is_plat("mingw", "windows") then
     target("windows_icon") do
         set_version(XMACS_VERSION)
         set_kind("object")
@@ -688,13 +692,17 @@ function target_research_on_others()
 
     if is_plat("macosx") then
         set_filename("Mogan")
-    elseif is_plat("mingw") then
+    elseif is_plat("mingw", "windows") then
         set_filename("mogan.exe")
     else
         set_filename("mogan")
     end
 
-    if is_plat("macosx") or is_plat("linux") then
+    if is_plat("windows") then
+        set_optimize("smallest");
+    end
+
+    if is_plat("macosx", "linux", "windows") then
         add_rules("qt.widgetapp")
     else
         add_rules("qt.widgetapp_static")
@@ -706,7 +714,7 @@ function target_research_on_others()
     end
 
     add_packages("lolly")
-    if is_plat("mingw") then
+    if is_plat("mingw", "windows") then
         add_packages("qt5widgets")
     end
 
@@ -719,12 +727,18 @@ function target_research_on_others()
     add_includedirs({
         "$(buildir)",
     })
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("$(buildir)/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
+    end)
     add_files("src/Mogan/Research/research.cpp")
 
     if is_plat("linux") then
         add_rpathdirs("@executable_path/../lib")
     end
-    add_syslinks("pthread")
+    if not is_plat("windows") then
+        add_syslinks("pthread")
+    end
 
     if is_plat("mingw") and is_mode("release") then
         add_deps("windows_icon")
@@ -768,7 +782,7 @@ function target_research_on_others()
     add_installfiles("TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
     add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm", {prefixdir="share/pixmaps"})
   
-    if is_plat("mingw") then
+    if is_plat("mingw", "windows") then
         add_installfiles(TeXmacs_files)
     else
         add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
@@ -777,7 +791,7 @@ function target_research_on_others()
 
     -- install tm files for testing purpose
     if is_mode("releasedbg") then
-        if is_plat("mingw") then
+        if is_plat("mingw", "windows") then
             add_installfiles({
                 "TeXmacs(/tests/*.tm)",
                 "TeXmacs(/tests/*.bib)",
@@ -804,7 +818,7 @@ function target_research_on_others()
             os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
         end
 
-        if is_plat("mingw") then
+        if is_plat("mingw", "windows") then
             import("detect.sdks.find_qt")
             import("core.base.option")
             import("core.project.config")
@@ -812,6 +826,7 @@ function target_research_on_others()
 
             -- get qt sdk
             local qt = assert(find_qt(), "Qt SDK not found!")
+            print(os.getenv("PATH"))
 
             -- get windeployqt
             local windeployqt_tool = assert(
@@ -843,7 +858,7 @@ function target_research_on_others()
 
     on_run(function (target)
         name = target:name()
-        if is_plat("mingw") then
+        if is_plat("mingw", "windows") then
             os.execv(target:installdir().."/bin/mogan.exe")
         elseif is_plat("linux") then
             os.execv(target:installdir().."/bin/mogan")
@@ -933,10 +948,15 @@ function add_test_target (filepath, dep)
         add_deps(dep)
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
+        if is_plat("windows") then
+            set_encodings("utf-8") -- eliminate warning C4819 on msvc
+        end
         my_configvar_check()
         add_rules("qt.console")
         add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
-        add_syslinks("pthread")
+        if not is_plat("windows") then
+            add_syslinks("pthread")
+        end
         if is_plat ("mingw") then
             add_packages("mingw-w64")
         end
@@ -948,7 +968,9 @@ function add_test_target (filepath, dep)
         add_files("tests/Base/base.cpp")
         add_files(filepath)
         add_files(filepath, {rules = "qt.moc"})
-        add_cxxflags("-include $(buildir)/config.h")
+        before_build(function (target)
+            target:add("forceincludes", path.absolute("$(buildir)/config.h"))
+        end)
 
         if is_plat("wasm") then
             on_run(function (target)
@@ -1004,7 +1026,7 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
                 "-q"}
             if is_plat("macosx") then
                 binary = INSTALL_DIR.."/../MacOS/Mogan"
-            elseif is_plat("mingw") then
+            elseif is_plat("mingw", "windows") then
                 binary = path.join(INSTALL_DIR,"bin","mogan.exe")
             else
                 binary = INSTALL_DIR.."/bin/mogan"

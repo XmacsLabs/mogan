@@ -31,7 +31,7 @@ url_to_tmscm (url u) {
 url
 tmscm_to_url (tmscm obj) {
   if (tmscm_is_string (obj))
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
     return url_system (tmscm_to_string (obj));
 #else
     return tmscm_to_string (obj);

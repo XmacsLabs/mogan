@@ -15,7 +15,7 @@
 #include "iterator.hpp"
 #include <stdlib.h>
 #include <string.h>
-#ifndef OS_MINGW
+#if !defined(OS_MINGW) && !defined(OS_WIN)
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -83,7 +83,7 @@ string
 socket_server_rep::start () {
   // get the server
 
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   using namespace wsoc;
   {
     WSAData data;
@@ -99,7 +99,7 @@ socket_server_rep::start () {
 #endif
   if ((server = socket (PF_INET, SOCK_STREAM, 0)) == -1) {
     string ret="Error: call to 'socket' failed";
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
     char buf[32];
     ret <<" code:"<<itoa(WSAGetLastError(),buf,10);
 #endif
@@ -108,7 +108,7 @@ socket_server_rep::start () {
 
   // lose the pesky "address already in use" error message
   int yes= 1;
-#ifndef OS_MINGW
+#if !defined(OS_MINGW) && !defined(OS_WIN)
   if (setsockopt (server, SOL_SOCKET, SO_REUSEADDR,
     &yes, sizeof (int)) == -1)
 #else
@@ -128,7 +128,7 @@ socket_server_rep::start () {
     return "Error: call to 'bind' failed";
 
   // listen
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   if (wsoc::listen (server, 10) == -1)
 #else
   if (::listen (server, 10) == -1)
@@ -146,7 +146,7 @@ socket_server_rep::start () {
 
 void
 socket_server_rep::start_client () {
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   using namespace wsoc;
 #endif
   struct sockaddr_in remote_address;
@@ -193,7 +193,7 @@ socket_server_rep::interrupt () {
 
 void
 socket_server_rep::stop () {
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   using namespace wsoc;
 #endif
   // FIXME: close children
@@ -202,7 +202,7 @@ socket_server_rep::stop () {
   alive= false;
   remove_notifier (sn);
   sn= socket_notifier ();
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   closesocket (server);
   WSACleanup();
 #else
@@ -217,7 +217,7 @@ socket_server_rep::stop () {
 
 void 
 socket_server_callback (void *obj, void *info) {
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   using namespace wsoc;
 #endif
   (void) info;
