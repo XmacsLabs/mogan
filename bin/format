@@ -9,6 +9,8 @@ if (eq $platform:os windows) {
 } elif (eq $platform:os linux) {
   set paths = [
     /usr/lib/llvm-16/bin
+    # archlinux clang-format is at /usr/bin
+    /usr/bin
   ]
 } else {
 }
