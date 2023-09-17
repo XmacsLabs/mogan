@@ -379,7 +379,7 @@
     </cell>|<\cell>
       \;
     </cell>|<\cell>
-      <value|dis>
+      <value|ok>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
