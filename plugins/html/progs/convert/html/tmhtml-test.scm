@@ -408,6 +408,40 @@
 	 '((h:h2 "a") (h:p "b") (h:ul (h:li))))
    (test "table" `(document ,(simple-table)) (list (simple-h:table)))))
 
+(define (regtest-font-size-string->number)
+  (define (font-size-string->number str)
+    (if (string=? str "")
+        0
+        (string->number str)))
+  (regression-test-group
+   "font-size-string->number" "string->number"
+   tmhtml-root :none
+   font-size-string->number
+   ;(test "Positive integer" "123" '(font-size-string->number "123"))
+   (test "Positive integer" '(123) (font-size-string->number "123"))
+  ; (test "Positive integer"
+  ;    (let ((result (font-size-string->number "123")))
+  ;      result)
+  ;    '((123)))
+   ;(test "Positive integer"
+   ;   (font-size-string->number "123")
+   ;   '(123))
+  ; (test "Positive integer"
+  ;    (let ((result (font-size-string->number "123")))
+  ;      (if (= result 123)
+  ;          '(pass)
+  ;          'fail))
+  ;    '())
+   (test "Zero" '(font-size-string->number "0") 0)
+   (test "Negative integer"
+         '(font-size-string->number "-456") -456)
+   (test "Floating-point number"
+         '(font-size-string->number "3.14") 3.14)
+   (test "Empty string"
+         '(font-size-string->number "") 0)
+   (test "Invalid string"
+         '(font-size-string->number "abc") #f)))
+;; build/packages/app.mogan/bin/mogan -headless -b plugins/html/progs/convert/html/tmhtml-test.scm -x "(regtest-tmhtml)" -q
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Complete test suite
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -428,7 +462,9 @@
 	      (regtest-tmhtml-verbatim)
 	      ;; (regtest-tmhtml-table)
 	      ;; (regtest-tmhtml-table-post)
-	       (regtest-tmhtml-picture))))
+        (regtest-font-size-string->number)
+	      (regtest-tmhtml-picture))))
 	      ;; (regtest-tmhtml-document-post))))
+        
     (display* "Total: " (object->string n) " tests.\n")
     (display "Test suite of tmhtml: ok\n")))
