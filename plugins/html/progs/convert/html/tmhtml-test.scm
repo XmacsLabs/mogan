@@ -409,30 +409,16 @@
    (test "table" `(document ,(simple-table)) (list (simple-h:table)))))
 
 (define (regtest-font-size-string->number)
-  (define (font-size-string->number str)
+ (regression-test-group
+   "font-size-string->number" "string->number"
+   tmhtml-root list
+   (define (font-size-string->number str)
     (if (string=? str "")
         0
         (string->number str)))
-  (regression-test-group
-   "font-size-string->number" "string->number"
-   tmhtml-root :none
-   font-size-string->number
-   ;(test "Positive integer" "123" '(font-size-string->number "123"))
-   (test "Positive integer" '(123) (font-size-string->number "123"))
-  ; (test "Positive integer"
-  ;    (let ((result (font-size-string->number "123")))
-  ;      result)
-  ;    '((123)))
-   ;(test "Positive integer"
-   ;   (font-size-string->number "123")
-   ;   '(123))
-  ; (test "Positive integer"
-  ;    (let ((result (font-size-string->number "123")))
-  ;      (if (= result 123)
-  ;          '(pass)
-  ;          'fail))
-  ;    '())
-   (test "Zero" '(font-size-string->number "0") 0)
+   (test "Zero" '(let ((result (font-size-string->number "0"))) result) 0)
+   ;(test "Zero" (eq? 0 0) '(cons #t '()))
+   
    (test "Negative integer"
          '(font-size-string->number "-456") -456)
    (test "Floating-point number"
