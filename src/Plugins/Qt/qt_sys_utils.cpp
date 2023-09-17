@@ -43,7 +43,7 @@ ReadOutputs(QProcess& p, string& o, string& e) {
 static int
 qt_system (QProcess& proc, string& cmd, string& cmdout, string& cmderr) {
   c_string _cmd (cmd);
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   QString qcmd = QString::fromUtf8 (_cmd);
 #else
   QString qcmd = "sh -c \"";

@@ -9,7 +9,7 @@ on:
       - '!src/Plugins/Windows/**'
       - '!src/Plugins/Unix/**'
       - 'tests/**'
-      - 'xmake.lua'
+      - '**.lua'
       - '.github/workflows/ci-xmake-wasm.yml'
   pull_request:
     branches: [ branch-1.2 ]
@@ -19,7 +19,7 @@ on:
       - '!src/Plugins/Windows/**'
       - '!src/Plugins/Unix/**'
       - 'tests/**'
-      - 'xmake.lua'
+      - '**.lua'
       - '.github/workflows/ci-xmake-wasm.yml'
 
 jobs:

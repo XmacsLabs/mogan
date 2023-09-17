@@ -1058,7 +1058,7 @@ qt_gui_rep::put_graphics_on_clipboard (url file) {
 * Miscellaneous
 ******************************************************************************/
 
-int char_clip = 0;
+bool char_clip = false;
 
 void
 beep () {

@@ -476,7 +476,7 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
 void
 edit_main_rep::print_buffer (string first, string last) {
   url target;
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   target= use_pdf ()? url_temp (".pdf"): url_temp (".ps");
 #else
   target= url_temp (".ps");

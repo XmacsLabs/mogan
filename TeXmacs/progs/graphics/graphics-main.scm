@@ -854,13 +854,18 @@
       (set! mode (cadr mode)))
   (== mode (graphics-mode)))
 
+;; modes in which the cursor should become hand-style, see graphics-env.scm too.
+(define hand-modes '((group-edit move) 
+                     (group-edit zoom) 
+                     (group-edit rotate)))
+
 (tm-define (graphics-set-mode val)
   (:check-mark "v" graphics-mode-has-value?)
   (if (and (equal? (graphics-mode) val)
            (not (equal? (graphics-mode) '(group-edit edit-props))))
     (graphics-set-mode '(group-edit edit-props))
     (begin
-      (if (== val '(group-edit move))
+      (if (not (eq? (member val hand-modes) #f))
         (begin
          (set-cursor-style "openhand")
          (unselect-everything))
