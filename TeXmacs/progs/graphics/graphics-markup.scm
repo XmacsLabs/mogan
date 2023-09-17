@@ -75,11 +75,13 @@
          (q2 `(point (minus ,cx ,dy) (plus ,cy ,dx))))
     `(carc ,p ,q1 ,q2)))
 
+
 ;; C is the center of the circle
 ;; P is a point on the circle, and P is also the starting point of the arc. 
 ;; The point where Q and C intersect the circle is called X. X is the end point of the arc.
 ;; Then we will find a point M, M is in the middle of arc P to X.
 ;; r is the radius
+;; Enter three points. The first is the center of the circle and the second is the starting point of the arc. Draw a straight line through the third point and the center of the circle. The intersection of the straight line and the circle is the end point of the arc. Use clockwise method.
 (define-graphics (std-arc C P Q)
   (let* ((c  (if (tm-point? C) (tree->stree C) '(point "0" "0")))
          (p  (if (tm-point? P) (tree->stree P) c))
