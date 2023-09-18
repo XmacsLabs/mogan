@@ -1,0 +1,69 @@
+name: Build and Test on windows
+
+on:
+  push:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Unix/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - 'misc/xmake/packages.lua'
+      - '.github/workflows/ci-xmake-windows.yml'
+  pull_request:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Unix/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - 'misc/xmake/packages.lua'
+      - '.github/workflows/ci-xmake-windows.yml'
+  workflow_dispatch:
+
+jobs:
+  windowsbuild:
+    # mingw-w64 8.1.0 is installed on windows-2019
+    runs-on: windows-2019
+    if: always()
+    env:
+      # Force xmake to a specific folder (for cache)
+      XMAKE_GLOBALDIR: "${{ github.workspace }}\\.xmake-global"
+    steps:
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.8.2
+      - name: update repo
+        run: |
+          xrepo update-repo
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: cache packages from xrepo
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+          key: ${{ runner.os }}-windows-${{ hashFiles('**/packages.lua') }}
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/build/.build_cache
+          key: ${{ runner.os }}-windows-${{ hashFiles('**/xmake.lua') }}
+      - name: config
+        run: xmake config --policies=build.ccache --yes -vD -m releasedbg --plat=windows
+      - name: build
+        run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
+      - name: test
+        run: |
+          xmake run --yes --verbose --diagnosis --group=tests
+      - name: install
+        run: |
+          xmake install research
+      - name: integration test in scheme
+        run: xmake run --yes -vD --group=integration_tests
+        env:
+          QT_QPA_PLATFORM: offscreen
