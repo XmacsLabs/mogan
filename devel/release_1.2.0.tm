@@ -17,7 +17,8 @@
   red>|<cwith|37|37|3|3|cell-valign|b>|<cwith|38|38|1|1|cell-valign|b>|<cwith|25|25|1|1|cell-background|pastel
   green>|<cwith|28|28|1|1|cell-background|pastel
   green>|<cwith|24|24|1|1|cell-background|pastel
-  green>|<cwith|4|4|2|2|cell-valign|c>|<cwith|3|3|1|1|cell-valign|c>|<table|<row|<cell|<dlink|54>>|<cell|Pluto>|<cell|Chore
+  green>|<cwith|4|4|2|2|cell-valign|c>|<cwith|3|3|1|1|cell-valign|c>|<cwith|19|19|1|1|cell-background|pastel
+  green>|<table|<row|<cell|<dlink|54>>|<cell|Pluto>|<cell|Chore
   work>>|<row|<cell|<dlink|53>>|<cell|Darcy>|<cell|Lolly
   1.2.x>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
   Table>>|<row|<cell|<dlink|51>>|<cell|Darcy>|<cell|Scheme
@@ -33,7 +34,7 @@
   Linux>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize the Help
   menu>>|<row|<cell|<dlink|38>>|<cell|>|<cell|CD for the Windows
   platform>>|<row|<cell|<dlink|37>>|<cell|>|<cell|Test on Windows
-  platform>>|<row|<cell|<dlink|36>>|<cell|Darcy/jingkaimori>|<cell|Build on
+  platform>>|<row|<cell|<dlink|36>>|<cell|Darcy, jingkaimori>|<cell|Build on
   Windows platform>>|<row|<cell|<dlink|35>>|<cell|>|<cell|Use the Breeze
   icon>>|<row|<cell|<dlink|34>>|<cell|Oyyko>|<cell|CICD for the website and
   mogan wasm>>|<row|<cell|<dlink|33>>|<cell|>|<cell|Spell checking as a
