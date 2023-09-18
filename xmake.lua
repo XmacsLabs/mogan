@@ -946,33 +946,20 @@ function add_test_target (filepath, dep)
     end
 end
 
-for _, filepath in ipairs(os.files("tests/Data/History/**_test.cpp")) do
+-- Tests in C++
+l3_cpp_tests = os.files("tests/Data/History/**_test.cpp")
+all_cpp_tests = os.files("tests/**_test.cpp")
+
+for _, filepath in ipairs(l3_cpp_tests) do
     add_test_target (filepath, "libkernel_l3")
 end
 
-for _, filepath in ipairs(os.files("tests/Data/Parser/**_test.cpp")) do
-    add_test_target (filepath, "libmogan")
+for _, filepath in ipairs(all_cpp_tests) do
+    if not table.contains(l3_cpp_tests, filepath) then
+        add_test_target (filepath, "libmogan")
+    end
 end
 
-for _, filepath in ipairs(os.files("tests/Data/String/**_test.cpp")) do
-    add_test_target (filepath, "libmogan")
-end
-
-for _, filepath in ipairs(os.files("tests/Graphics/**_test.cpp")) do
-    add_test_target (filepath, "libmogan")
-end
-
-for _, filepath in ipairs(os.files("tests/System/**_test.cpp")) do
-    add_test_target (filepath, "libmogan")
-end
-
-for _, filepath in ipairs(os.files("tests/Typeset/**_test.cpp")) do
-    add_test_target (filepath, "libmogan")
-end
-
-for _, filepath in ipairs(os.files("tests/Plugins/**_test.cpp")) do
-    add_test_target (filepath, "libmogan")
-end
 
 for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
     local testname = path.basename(filepath)
