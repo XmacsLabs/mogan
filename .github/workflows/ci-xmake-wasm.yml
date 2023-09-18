@@ -11,6 +11,7 @@ on:
       - 'tests/**'
       - '**.lua'
       - '.github/workflows/ci-xmake-wasm.yml'
+      - bin/config_wasm
   pull_request:
     branches: [ branch-1.2 ]
     paths:
@@ -21,12 +22,16 @@ on:
       - 'tests/**'
       - '**.lua'
       - '.github/workflows/ci-xmake-wasm.yml'
+      - bin/config_wasm
 
 jobs:
   wasmbuild:
     runs-on: ubuntu-22.04
     if: always()
     steps:
+      - uses: elves/setup-elvish@v1
+        with:
+          elvish-version: 0.19.2
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: branch@dev
@@ -63,6 +68,6 @@ jobs:
           py7zrversion: '==0.20.*'
           extra: '--autodesktop'
       - name: config
-        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -vD -p wasm -m releasedbg --yes
+        run: elvish bin/config_wasm
       - name: build
         run: xmake build research
