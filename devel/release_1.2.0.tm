@@ -33,8 +33,8 @@
   Linux>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize the Help
   menu>>|<row|<cell|<dlink|38>>|<cell|>|<cell|CD for the Windows
   platform>>|<row|<cell|<dlink|37>>|<cell|>|<cell|Test on Windows
-  platform>>|<row|<cell|<dlink|36>>|<cell|>|<cell|Build on Windows
-  platform>>|<row|<cell|<dlink|35>>|<cell|>|<cell|Use the Breeze
+  platform>>|<row|<cell|<dlink|36>>|<cell|Darcy/jingkaimori>|<cell|Build on
+  Windows platform>>|<row|<cell|<dlink|35>>|<cell|>|<cell|Use the Breeze
   icon>>|<row|<cell|<dlink|34>>|<cell|Oyyko>|<cell|CICD for the website and
   mogan wasm>>|<row|<cell|<dlink|33>>|<cell|>|<cell|Spell checking as a
   plugin>>|<row|<cell|<dlink|32>>|<cell|Darcy>|<cell|Build and Test on
