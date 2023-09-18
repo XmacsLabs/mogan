@@ -32,8 +32,8 @@
   plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs instead of the gs
   binary>>|<row|<cell|<dlink|40>>|<cell|>|<cell|Use XDG_DATA_PATH on
   Linux>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize the Help
-  menu>>|<row|<cell|<dlink|38>>|<cell|>|<cell|CD for the Windows
-  platform>>|<row|<cell|<dlink|37>>|<cell|>|<cell|CICD for the Windows
+  menu>>|<row|<cell|<dlink|38>>|<cell|Darcy>|<cell|Image formats as
+  plugins>>|<row|<cell|<dlink|37>>|<cell|Darcy>|<cell|CICD for the Windows
   platform>>|<row|<cell|<dlink|36>>|<cell|Darcy, jingkaimori>|<cell|Build on
   Windows platform>>|<row|<cell|<dlink|35>>|<cell|>|<cell|Use the Breeze
   icon>>|<row|<cell|<dlink|34>>|<cell|Oyyko>|<cell|CICD for the website and
