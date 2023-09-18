@@ -65,7 +65,6 @@
             ,p2 (point ,(tm-x p1) ,(tm-y p2)))))
 
 (define-graphics (circle C P)
-  (display* C P "BBB\n")
   (let* ((c  (if (tm-point? C) C '(point "0" "0")))
          (p  (if (tm-point? P) P c))
          (cx (tm-x c)) (cy (tm-y c))
@@ -99,8 +98,7 @@
                   (points-add (point-times (point-get-unit (points-sub mid-p-x c)) (- r)) c)
                   (if (= (points-cross-product-k vec-c-p vec-c-q) 0)
                     x
-                    (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c)))))
-         )
+                    (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
     `(arc ,p ,m ,x)))
 
 (define-graphics (three-points-circle P1 P2 P3)
