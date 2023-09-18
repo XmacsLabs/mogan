@@ -12,7 +12,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (graphics graphics-markup)
-  (:use (graphics graphics-drd)))
+  (:use (graphics graphics-drd)
+        (graphics graphics-utils)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Definition of graphical macros
@@ -71,13 +72,46 @@
          (dx `(minus ,px ,cx)) (dy `(minus ,py ,cy))
          (q1 `(point (minus ,cx ,dx) (minus ,cy ,dy)))
          (q2 `(point (minus ,cx ,dy) (plus ,cy ,dx))))
-    `(superpose (with "point-style" "none" ,c) (carc ,p ,q1 ,q2))))
+    `(carc ,p ,q1 ,q2)))
+
+
+;; C is the center of the circle
+;; P is a point on the circle, and P is also the starting point of the arc. 
+;; The point where Q and C intersect the circle is called X. X is the end point of the arc.
+;; Then we will find a point M, M is in the middle of arc P to X.
+;; r is the radius
+;; Enter three points. The first is the center of the circle and the second is the starting point of the arc. Draw a straight line through the third point and the center of the circle. The intersection of the straight line and the circle is the end point of the arc. Use clockwise method.
+(define-graphics (std-arc C P Q)
+  (let* ((c  (if (tm-point? C) (tree->stree C) '(point "0" "0")))
+         (p  (if (tm-point? P) (tree->stree P) c))
+         (q  (if (tm-point? Q) (tree->stree Q) p))
+         (r  (points-distance c p))
+         (x  (if (equal? r 0.0)
+                c
+                (points-add (point-times (point-get-unit (points-sub q c)) r) c)))
+         (mid-p-x (points-mid p x))
+         (vec-c-p (points-sub p c))
+         (vec-c-q (points-sub q c))
+         (m  (if (equal? r 0.0)
+                c
+                (if (> (points-cross-product-k vec-c-p vec-c-q) 0)
+                  (points-add (point-times (point-get-unit (points-sub mid-p-x c)) (- r)) c)
+                  (if (= (points-cross-product-k vec-c-p vec-c-q) 0)
+                    x
+                    (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
+    `(arc ,p ,m ,x)))
 
 (define-graphics (three-points-circle P1 P2 P3)
   (let* ((p1 (if (tm-point? P1) P1 '(point "0" "0")))
          (p2 (if (tm-point? P2) P2 p1))
          (p3 (if (tm-point? P3) P3 p2)))
     `(carc ,p1 ,p2 ,p3)))
+
+(define-graphics (three-points-arc P1 P2 P3)
+  (let* ((p1 (if (tm-point? P1) P1 '(point "0" "0")))
+         (p2 (if (tm-point? P2) P2 p1))
+         (p3 (if (tm-point? P3) P3 p2)))
+    `(arc ,p1 ,p2 ,p3)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Electrical diagrams

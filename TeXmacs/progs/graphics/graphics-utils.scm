@@ -739,10 +739,54 @@
 (tm-define (point-get-y pt)
   (s2f (caddr pt)))
 
-; add points (x1,y1) and (x2,y2) to return (x1+x2,y1+y2)
+; add points(vectors) (x1,y1) and (x2,y2) to return (x1+x2,y1+y2)
 (tm-define (points-add pt1 pt2)
   `(point ,(f2s (+ (point-get-x pt1)(point-get-x pt2)))
           ,(f2s (+ (point-get-y pt1)(point-get-y pt2)))))
+
+; sub points(vectors) (x1,y1) and (x2,y2) to return (x1-x2,y1-y2)
+(tm-define (points-sub pt1 pt2)
+  `(point ,(f2s (- (point-get-x pt1)(point-get-x pt2)))
+          ,(f2s (- (point-get-y pt1)(point-get-y pt2)))))
+  
+; times points(vectors) (x1,y1) and a real number f to return (x1*f, x2*f)
+(tm-define (point-times pt f)
+  `(point ,(f2s (* (point-get-x pt) f))
+          ,(f2s (* (point-get-y pt) f))))
+
+; div points(vectors) (x1,y1) and a real number f to return (x1/f, x2/f)
+(tm-define (point-div pt f)
+  `(point ,(f2s (/ (point-get-x pt) f))
+          ,(f2s (/ (point-get-y pt) f))))
+
+(tm-define (points-mid P1 P2)
+  (point-div (points-add P1 P2) 2))
+
+(define (square x) (* x x))
+
+; the distance between P and point(0,0)
+; if you consider P as a vector, then it is its norm
+(tm-define (point-norm P)
+  (sqrt (+ (square (point-get-x P)) (square (point-get-y P)))))
+
+; input a vector P (or point P), return P / norm(P)
+(tm-define (point-get-unit P)
+  (point-div P
+             (point-norm P)))
+
+; see https://en.wikipedia.org/wiki/Cross_product
+; Cross Product of two vectors
+; The product is a 3D vector. Here we only return the k-components
+(tm-define (points-cross-product-k P1 P2)
+  (let* ((p1x (point-get-x P1))
+         (p1y (point-get-y P1))
+         (p2x (point-get-x P2))
+         (p2y (point-get-y P2)))
+         (- (* p1x p2y) (* p1y p2x))))
+         
+; distance between two points
+(tm-define (points-distance P1 P2)
+  (point-norm (points-sub P1 P2)))
 
 ; get the sum point from an graphics object. The sum point of an object is 
 ; the sum of all points as parameters of this object. For example, the sum 
