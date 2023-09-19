@@ -17,15 +17,18 @@ class TestConverter : public QObject {
   Q_OBJECT
 
 private slots:
-  void init () { lolly::init_tbox (); };
+  void init () {
+    lolly::init_tbox ();
+    debug_set ("convert", true);
+  };
   void test_utf8_to_cork ();
 };
 
 void
 TestConverter::test_utf8_to_cork () {
   qcompare (utf8_to_cork ("中"), "<#4E2D>");
-  qcompare (utf8_to_cork ("“"), "\x10");
-  qcompare (utf8_to_cork ("”"), "\x11");
+  qcompare (utf8_to_cork ("“"), "<#201C>");
+  qcompare (utf8_to_cork ("”"), "<#201D>");
 }
 
 QTEST_MAIN (TestConverter)
