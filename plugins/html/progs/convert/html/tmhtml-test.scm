@@ -98,6 +98,7 @@
    (test "size=+3" "1.7" "+3")
    (test "size=+4" "2" "+4")
    (test "size=+5" "4" "+5")
+   (test "size=empty" "0" "")
    (test "too big" "5.001" #f)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -408,26 +409,6 @@
 	 '((h:h2 "a") (h:p "b") (h:ul (h:li))))
    (test "table" `(document ,(simple-table)) (list (simple-h:table)))))
 
-(define (regtest-font-size-string->number)
- (regression-test-group
-   "font-size-string->number" "string->number"
-   tmhtml-root list
-   (define (font-size-string->number str)
-    (if (string=? str "")
-        0
-        (string->number str)))
-   (test "Zero" '(let ((result (font-size-string->number "0"))) result) 0)
-   ;(test "Zero" (eq? 0 0) '(cons #t '()))
-   
-   (test "Negative integer"
-         '(font-size-string->number "-456") -456)
-   (test "Floating-point number"
-         '(font-size-string->number "3.14") 3.14)
-   (test "Empty string"
-         '(font-size-string->number "") 0)
-   (test "Invalid string"
-         '(font-size-string->number "abc") #f)))
-;; build/packages/app.mogan/bin/mogan -headless -b plugins/html/progs/convert/html/tmhtml-test.scm -x "(regtest-tmhtml)" -q
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Complete test suite
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -448,7 +429,6 @@
 	      (regtest-tmhtml-verbatim)
 	      ;; (regtest-tmhtml-table)
 	      ;; (regtest-tmhtml-table-post)
-        (regtest-font-size-string->number)
 	      (regtest-tmhtml-picture))))
 	      ;; (regtest-tmhtml-document-post))))
         
