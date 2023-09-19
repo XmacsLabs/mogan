@@ -15,7 +15,7 @@
 // TeXmacs/Mogan don't break words close to the start or end of the word. It is
 // not clear if this was an intentional decision.
 
-#include "file.hpp"
+#include "base.hpp"
 #include "hyphenate.hpp"
 #include "language.hpp"
 #include "sys_utils.hpp"
