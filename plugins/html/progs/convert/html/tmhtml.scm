@@ -928,7 +928,6 @@
 
 (define (tmhtml-with-font-size val arg)
   (ahash-with tmhtml-env :mag val
-  (display* " [DEBUG]" val "end")
     (let* ((x (* (font-size-string->number val) 100))
            (c (string-append "font-size: " (number->string x) "%"))
 	   (s (cond ((< x 1) "-4") ((< x 55) "-4") ((< x 65) "-3")
