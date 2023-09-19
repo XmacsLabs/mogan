@@ -8,8 +8,8 @@
  ******************************************************************************/
 
 #include "Database/database.hpp"
-#include "base.hpp"
 #include "analyze.hpp"
+#include "base.hpp"
 #include "file.hpp"
 #include "sys_utils.hpp"
 #include "tm_timer.hpp"
