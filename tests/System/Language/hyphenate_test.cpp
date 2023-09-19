@@ -18,6 +18,7 @@
 #include "hyphenate.hpp"
 #include "language.hpp"
 #include "sys_utils.hpp"
+#include "file.hpp"
 #include <QtTest/QtTest>
 
 class TestHyphens : public QObject {
