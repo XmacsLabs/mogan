@@ -12,6 +12,7 @@
 #include <QtTest/QtTest>
 
 #include "Xml/xml.hpp"
+#include "base.hpp"
 #include "convert.hpp"
 #include "drd_std.hpp"
 #include "sys_utils.hpp"
@@ -21,7 +22,7 @@ class TestParseXML : public QObject {
   Q_OBJECT
 
 private slots:
-  void init () { lolly::init_tbox (); }
+  void init () { init_lolly (); }
   void expand_xml_default_entity ();
 };
 

@@ -8,6 +8,8 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "base.hpp"
+#include "file.hpp"
 #include "image_files.hpp"
 #include "sys_utils.hpp"
 #include "url.hpp"
@@ -17,7 +19,7 @@ class TestImageFiles : public QObject {
   Q_OBJECT
 
 private slots:
-  void init () { lolly::init_tbox (); }
+  void init () { init_lolly (); }
   void test_svg_image_size ();
 };
 

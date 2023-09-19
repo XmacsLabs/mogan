@@ -15,6 +15,7 @@
 // TeXmacs/Mogan don't break words close to the start or end of the word. It is
 // not clear if this was an intentional decision.
 
+#include "base.hpp"
 #include "hyphenate.hpp"
 #include "language.hpp"
 #include "sys_utils.hpp"
@@ -27,7 +28,7 @@ private:
   void test_hyphens (language lan, string s, string t);
 
 private slots:
-  void init () { lolly::init_tbox (); }
+  void init () { init_lolly (); }
   // TODO: add tests for predefined hyphenations
   void russian ();
   void english ();

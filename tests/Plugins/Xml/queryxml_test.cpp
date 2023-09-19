@@ -19,7 +19,7 @@ class TestQueryXML : public QObject {
   Q_OBJECT
 
 private slots:
-  void init () { lolly::init_tbox (); }
+  void init () { init_lolly (); }
   void test_find_first_element_by_name ();
   void test_parse_xml_length ();
 };
