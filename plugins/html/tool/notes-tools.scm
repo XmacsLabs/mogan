@@ -1,6 +1,6 @@
 
 
-(define src-dir (url->string (url-expand "$PWD/html-src")))
+(define src-dir (url->string (url-expand "$PWD/devel")))
 (define dest-dir (url->string (url-expand "$PWD/html-docs")))
 
 (define (notes-run update?)

@@ -95,7 +95,7 @@
                (not (string-ends? name "#")))
       (tmweb-make-dir dir (url-expand html-dir))
       (when (needs-update? file u2 update?)
-        (system-wait "Copying" (url->system u1))
+        ;(system-wait "Copying" (url->system u1))
         (display* "TeXmacs] Copying " (url->system u1) "\n")
         (system-copy file u2)))))
 
