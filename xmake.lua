@@ -914,6 +914,10 @@ function add_test_target (filepath, dep)
         set_policy("check.auto_ignore_flags", false)
         if is_plat("windows") then
             set_encodings("utf-8") -- eliminate warning C4819 on msvc
+            add_ldflags("/LTCG")
+        end
+        if is_plat("windows") or is_plat("mingw") then
+            add_syslinks("secur32")
         end
         add_rules("qt.console")
         add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
