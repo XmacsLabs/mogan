@@ -380,7 +380,9 @@ load_tfm (url file_name, string family, int size) {
 
   int i= 0;
   string s;
-  (void) load_string (file_name, s, true);
+  load_string (file_name, s, true);
+  cout << "load_tfm: " << file_name << LF;
+  cout << "size: "<< N(s) << LF;
   bench_start ("decode tfm");
 
   parse (s, i, tfm->lf);
