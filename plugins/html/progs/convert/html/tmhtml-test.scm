@@ -98,6 +98,7 @@
    (test "size=+3" "1.7" "+3")
    (test "size=+4" "2" "+4")
    (test "size=+5" "4" "+5")
+   (test "size=empty" "0" "")
    (test "too big" "5.001" #f)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -428,7 +429,8 @@
 	      (regtest-tmhtml-verbatim)
 	      ;; (regtest-tmhtml-table)
 	      ;; (regtest-tmhtml-table-post)
-	       (regtest-tmhtml-picture))))
+	      (regtest-tmhtml-picture))))
 	      ;; (regtest-tmhtml-document-post))))
+        
     (display* "Total: " (object->string n) " tests.\n")
     (display "Test suite of tmhtml: ok\n")))

@@ -921,9 +921,14 @@
 (define (tmhtml-with-color val arg)
   `((h:font (@ (color ,(tmcolor->htmlcolor val))) ,@(tmhtml arg))))
 
+(define (font-size-string->number str)
+  (if (string=? str "")
+      0
+      (string->number str)))
+
 (define (tmhtml-with-font-size val arg)
   (ahash-with tmhtml-env :mag val
-    (let* ((x (* (string->number val) 100))
+    (let* ((x (* (font-size-string->number val) 100))
            (c (string-append "font-size: " (number->string x) "%"))
 	   (s (cond ((< x 1) "-4") ((< x 55) "-4") ((< x 65) "-3")
 		    ((< x 75) "-2") ((< x 95) "-1") ((< x 115) "0")
