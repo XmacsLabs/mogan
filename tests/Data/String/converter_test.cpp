@@ -12,6 +12,7 @@
 
 #include "base.hpp"
 #include "converter.hpp"
+#include "file.hpp"
 
 class TestConverter : public QObject {
   Q_OBJECT
@@ -26,6 +27,9 @@ private slots:
 
 void
 TestConverter::test_utf8_to_cork () {
+  string s;
+  load_string (url_system ("$TEXMACS_PATH/LICENSE"), s, true);
+  QVERIFY (N (s) > 0);
   qcompare (utf8_to_cork ("中"), "<#4E2D>");
   qcompare (utf8_to_cork ("“"), "\x10");
   qcompare (utf8_to_cork ("”"), "\x11");
