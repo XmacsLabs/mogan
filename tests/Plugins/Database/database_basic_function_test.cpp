@@ -8,6 +8,7 @@
  ******************************************************************************/
 
 #include "Database/database.hpp"
+#include "base.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
 #include "sys_utils.hpp"
@@ -21,7 +22,7 @@ extern hashmap<tree, int> db_index;
 class TestDatabaseBasicFunciton : public QObject {
   Q_OBJECT
 private slots:
-  void init () {}
+  void init () { init_lolly (); }
   void test_set_field_and_get_field ();
   void test_remove_field ();
   void test_set_entry_and_get_entry ();
