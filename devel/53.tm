@@ -7,9 +7,17 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|31_1>|<cell|Da>|<cell|Separate
-  url and tm_url>>|<row|<cell|Chore>|<cell|31_2>|<cell|Da>|<cell|Use lolly
-  1.2.0 and remove url>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|53_1>|<cell|Da>|<cell|Separate
+  url and tm_url>>|<row|<cell|Chore>|<cell|53_2>|<cell|Da>|<cell|Use lolly
+  1.2.0 and remove url>>|<row|<cell|Chore>|<cell|53_3>|<cell|Da>|<cell|Use
+  lolly 1.2.1>>|<row|<cell|Chore>|<cell|53_4>|<cell|Da>|<cell|Migrate url
+  related routines to glue_lolly>>|<row|<cell|Chore>|<cell|53_5>|<cell|Da>|<cell|Separate
+  tm_file from file>>|<row|<cell|Chore>|<cell|53_6>|<cell|Da>|<cell|Remove
+  nowide usage in research entry>>|<row|<cell|Chore>|<cell|53_7>|<cell|Da>|<cell|Migrate
+  glue_file to glue_lolly in lolly 1.2.3>>|<row|<cell|Chore>|<cell|53_8>|<cell|Da>|<cell|xmake:
+  Keep files and headers in variables>>|<row|<cell|Chore>|<cell|53_9>|<cell|Da>|<cell|Use
+  lolly 1.2.4>>|<row|<cell|Chore>|<cell|53_10>|<cell|Da>|<cell|Use lolly
+  1.2.5>>>>>
 
   <tmdoc-copyright|2023|Darcy Shen>
 
