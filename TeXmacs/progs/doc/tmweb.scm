@@ -77,7 +77,7 @@
 	       (!= dir-name "prop-base") (!= dir-name "text-base"))
       (tmweb-make-dir dir (url-expand html-dir))
       (when (needs-update? file u3 update?)
-        (system-wait "Converting" (url->system u1))
+        ;(system-wait "Converting" (url->system u1))
         (display* "TeXmacs] Converting " (url->system u1) "\n")
         (tmweb-convert-file file u3)))))
 
@@ -95,7 +95,7 @@
                (not (string-ends? name "#")))
       (tmweb-make-dir dir (url-expand html-dir))
       (when (needs-update? file u2 update?)
-        (system-wait "Copying" (url->system u1))
+        ;(system-wait "Copying" (url->system u1))
         (display* "TeXmacs] Copying " (url->system u1) "\n")
         (system-copy file u2)))))
 
