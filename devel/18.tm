@@ -44,6 +44,14 @@
       \;
     </cell>|<\cell>
       Explain primitives like <explain-macro|set-binding>
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      18_5
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Improve document of <scm|tm-define>
     </cell>>>>
   </wide-tabular>
 
