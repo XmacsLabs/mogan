@@ -17,7 +17,10 @@ class TestConverter : public QObject {
   Q_OBJECT
 
 private slots:
-  void init () { lolly::init_tbox (); };
+  void init () {
+    lolly::init_tbox ();
+    debug_set ("convert", true);
+  };
   void test_utf8_to_cork ();
 };
 
