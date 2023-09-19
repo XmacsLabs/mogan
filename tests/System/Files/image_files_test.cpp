@@ -18,12 +18,7 @@ class TestImageFiles : public QObject {
   Q_OBJECT
 
 private slots:
-  void init () {
-    lolly::init_tbox ();
-    string s;
-    load_string (url_system ("$TEXMACS_PATH/LICENSE"), s, true);
-    QVERIFY (N (s) > 0);
-  }
+  void init () { init_lolly(); }
   void test_svg_image_size ();
 };
 

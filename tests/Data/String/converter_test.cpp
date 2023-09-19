@@ -19,11 +19,7 @@ class TestConverter : public QObject {
 
 private slots:
   void init () {
-    lolly::init_tbox ();
-    debug_set ("convert", true);
-    string s;
-    load_string (url_system ("$TEXMACS_PATH/LICENSE"), s, true);
-    QVERIFY (N (s) > 0);
+    init_lolly ()
   };
   void test_utf8_to_cork ();
 };

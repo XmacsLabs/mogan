@@ -10,6 +10,7 @@
 
 #include <QtTest/QtTest>
 
+#include "base.hpp"
 #include "Xml/xml.hpp"
 #include "convert.hpp"
 #include "drd_std.hpp"
@@ -21,7 +22,7 @@ class TestParseHTML : public QObject {
   Q_OBJECT
 
 private slots:
-  void init () { lolly::init_tbox (); }
+  void init () { init_lolly (); }
   void test_html_p ();
   void test_html_title ();
 };

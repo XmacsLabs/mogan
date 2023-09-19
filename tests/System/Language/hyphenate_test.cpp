@@ -28,12 +28,7 @@ private:
   void test_hyphens (language lan, string s, string t);
 
 private slots:
-  void init () {
-    lolly::init_tbox ();
-    string s;
-    load_string (url_system ("$TEXMACS_PATH/LICENSE"), s, true);
-    QVERIFY (N (s) > 0);
-  }
+  void init () { init_lolly(); }
   // TODO: add tests for predefined hyphenations
   void russian ();
   void english ();
