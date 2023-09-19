@@ -317,14 +317,10 @@ utf8_to_cork (string input) {
   for (i=0; i<n; ) {
     start= i;
     unsigned int code= decode_from_utf8 (input, i);
-    cout << "code: " << code << LF;
     string s= input (start, i);
-    cout << "s: " << s << LF;
     string r= apply (conv, s);
-    cout << "r: " << r << LF;
     if (r == s && code >= 256)
       r= "<#" * as_hexadecimal (code) * ">";
-    cout << "r: " << r << LF;
     output << r;
   }
   return output;
@@ -641,7 +637,6 @@ hashtree_from_dictionary (
     convert_error << "Couldn't open encoding dictionary " << file_name << LF;
     return;
   }
-  cout << "file_name: " << file_name << " size: " << N(file) << LF;
   tree t = block_to_scheme_tree (file);
   if (!is_tuple (t)) {
     convert_error << "Malformed encoding dictionary " << file_name << LF;
