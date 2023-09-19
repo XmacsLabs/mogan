@@ -2133,6 +2133,7 @@
 	     (lan (tmfile-language x))
 	     (doc (list '!file body style lan
                         (url->string (get-texmacs-path)))))
+  (display* "[DEBUG] texmacs->html: " doc  " |opts| " opts "\n")
 	(texmacs->html doc opts))
       (begin
 	(tmhtml-initialize opts)

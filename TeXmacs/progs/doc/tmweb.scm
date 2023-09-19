@@ -58,6 +58,7 @@
 
 (define (tmweb-convert-file tm-file html-file)
   (with-aux tm-file
+    (display* "[DEBUG] Converting :" (url->system tm-file) "\n")
     (if (url? html-file) (set! current-save-target html-file))
     (export-buffer-main (current-buffer) html-file "html" (list :overwrite))))
 
@@ -76,8 +77,9 @@
     (when (and (!= dir-name "CVS") (!= dir-name ".svn")
 	       (!= dir-name "prop-base") (!= dir-name "text-base"))
       (tmweb-make-dir dir (url-expand html-dir))
+      (display* "[DEBUG] needs-update? : " (needs-update? file u3 update?) "\n")
       (when (needs-update? file u3 update?)
-        (system-wait "Converting" (url->system u1))
+        ;(system-wait "Converting" (url->system u1))
         (display* "TeXmacs] Converting " (url->system u1) "\n")
         (tmweb-convert-file file u3)))))
 
@@ -105,11 +107,14 @@
 	 (u3 (url-append u2 (url-wildcard "*.tm")))
 	 (u4 (url-expand (url-complete u3 "fr")))
 	 (u5 (url-expand (url-complete u1 "fr"))))
+   (display* "[DEBUG] url->list: " (url->list u4) " tm-dir: " tm-dir "\n")
     (when (!= html-dir tm-dir)
       (for-each (lambda (x) (tmweb-copy-file-dir x tm-dir html-dir update?))
                 (if keep? (url->list u5)
                     (list-difference (url->list u5) (url->list u4)))))
-    (for-each (lambda (x) (tmweb-convert-file-dir x tm-dir html-dir update?))
+    (for-each (lambda (x) 
+      (display* "[DEBUG] the x: " x "\n")
+      (tmweb-convert-file-dir x tm-dir html-dir update?))
 	      (url->list u4))))
 
 (tm-define (tmweb-convert-dir tm-dir html-dir)
