@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "base.hpp"
+#include "file.hpp"
 #include <QtTest/QtTest>
 
 void
