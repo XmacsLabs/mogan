@@ -9,17 +9,17 @@
  ******************************************************************************/
 
 #include "base.hpp"
+#include "file.hpp"
 #include "image_files.hpp"
 #include "sys_utils.hpp"
 #include "url.hpp"
-#include "file.hpp"
 #include <QtTest/QtTest>
 
 class TestImageFiles : public QObject {
   Q_OBJECT
 
 private slots:
-  void init () { init_lolly(); }
+  void init () { init_lolly (); }
   void test_svg_image_size ();
 };
 

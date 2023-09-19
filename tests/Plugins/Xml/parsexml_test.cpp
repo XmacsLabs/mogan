@@ -11,8 +11,8 @@
 
 #include <QtTest/QtTest>
 
-#include "base.hpp"
 #include "Xml/xml.hpp"
+#include "base.hpp"
 #include "convert.hpp"
 #include "drd_std.hpp"
 #include "sys_utils.hpp"
