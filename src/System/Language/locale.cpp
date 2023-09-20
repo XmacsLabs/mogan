@@ -195,7 +195,17 @@ string
 get_locale_language () {
 #if defined(OS_MINGW) || defined(OS_WIN)
   return windows_locale_to_language ();
-#else
+#endif
+
+#ifdef OS_MACOS
+  return locale_to_language (get_mac_language ());
+#endif
+
+#ifdef OS_WASM
+  return "english";
+#endif
+
+#ifdef OS_LINUX
   string env_lan= get_env ("LC_ALL");
   if (env_lan != "") return locale_to_language (env_lan);
   env_lan= get_env ("LC_MESSAGES");
@@ -204,11 +214,8 @@ get_locale_language () {
   if (env_lan != "") return locale_to_language (env_lan);
   env_lan= get_env ("GDM_LANG");
   if (env_lan != "") return locale_to_language (env_lan);
-#ifdef OS_MACOS
-  return locale_to_language (get_mac_language ());
 #endif
   return "english";
-#endif
 }
 
 string
