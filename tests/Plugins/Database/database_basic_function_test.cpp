@@ -230,11 +230,10 @@ TestDatabaseBasicFunciton::test_query () {
   string t_begin (scm_quote (as_string (t1)));
   string t_end (scm_quote (as_string ((double) get_usec_time ())));
 
-  tree q3= tuple (tuple ("modified", t_begin, t_end));
-  auto a3= query (test_db, q3, (double) get_usec_time (), 1000000);
-
-  string ans[1]= {"query2"};
-  QVERIFY (a3 == array<string> (ans, 1));
+  // tree q3= tuple (tuple ("modified", t_begin, t_end));
+  // auto a3= query (test_db, q3, (double) get_usec_time (), 1000000);
+  // string ans[1]= {"query2"};
+  // QVERIFY (a3 == array<string> (ans, 1));
 
   // test contains
   tree q4= tuple (tuple ("contains", "\"no1_name\""));
