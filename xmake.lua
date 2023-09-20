@@ -692,7 +692,7 @@ function target_research_on_others()
         "$(buildir)",
     })
     on_config(function (target)
-        local linkers = {"mold", "lld"}
+        local linkers = {"lld"}
         if not is_plat("mingw") then
             -- gold produce only elf file and should not be used under mingw
             table.insert(linkers, "gold")
