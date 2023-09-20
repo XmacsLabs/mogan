@@ -19,6 +19,9 @@
 -- [ ] portage powered
 -- ...
 
+local LOLLY_VERSION = "1.2.6"
+local TBOX_VERSION = "1.7.4"
+
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
 package("lolly")
     set_homepage("https://github.com/XmacsLabs/lolly")
@@ -32,7 +35,7 @@ package("lolly")
         add_deps("libcurl")
     end
 
-    add_versions("v1.2.5", "099701ccae1deaeed85df570b668fa5f5749f7c0")
+    add_versions("v" .. LOLLY_VERSION, "11633c9c4929d2f7d3e36bb75deab2b3a7aa3c24")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
@@ -45,7 +48,6 @@ package_end()
 
 
 function add_requires_of_mogan()
-    local LOLLY_VERSION = "1.2.4"
     local CURL_VERSION = "7.84.0"
     local FREETYPE_VERSION = "2.12.1"
     local PDFHUMMUS_VERSION = "4.5.10"
@@ -80,7 +82,7 @@ function add_requires_of_mogan()
     if is_plat("wasm") then
         tbox_version = "dev"
     else
-        tbox_version = "v1.7.4"
+        tbox_version = "v" .. TBOX_VERSION
     end
     add_requireconfs("lolly.tbox", {version = tbox_version, configs=tbox_configs, system = false, override=true})
     if is_plat("macosx") or is_plat("mingw") then
