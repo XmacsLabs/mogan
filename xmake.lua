@@ -995,6 +995,19 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
     end
 end
 
+tm2html_includedirs = {
+    "src/Scheme",
+    "src/Kernel/Abstractions",
+}
+
+target ("tm2html") do 
+    add_includedirs(tm2html_includedirs)
+    add_packages("lolly")
+    set_languages("c++17")
+    set_kind("binary")
+    add_files("plugins/html/tools/tm2html.cpp")
+end 
+
 -- xmake plugins
 add_configfiles(
     "misc/doxygen/Doxyfile.in", {
