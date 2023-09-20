@@ -691,6 +691,15 @@ function target_research_on_others()
     add_includedirs({
         "$(buildir)",
     })
+    on_config(function (target)
+        for _, linker  in ipairs({"mold", "lld", "gold"}) do
+            local linker_flag = "-fuse-ld="..linker
+            if target:has_cxxflags(linker_flag) then
+                target:add("ldflags", linker_flag)
+                break
+            end
+        end
+    end)
     before_build(function (target)
         target:add("forceincludes", path.absolute("$(buildir)/config.h"))
         target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
