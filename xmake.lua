@@ -700,7 +700,7 @@ function target_research_on_others()
         for _, linker  in ipairs(linkers) do
             local linker_flag = "-fuse-ld="..linker
             if target:has_cxxflags(linker_flag) then
-                target:add("ldflags", linker_flag)
+                target:add("ldflags", linker_flag, {force = true})
                 break
             end
         end
