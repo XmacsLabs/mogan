@@ -692,7 +692,12 @@ function target_research_on_others()
         "$(buildir)",
     })
     on_config(function (target)
-        for _, linker  in ipairs({"mold", "lld", "gold"}) do
+        local linkers = {"mold", "lld"}
+        if not is_plat("mingw") then
+            -- gold produce only elf file and should not be used under mingw
+            table.insert(linkers, "gold")
+        end
+        for _, linker  in ipairs(linkers) do
             local linker_flag = "-fuse-ld="..linker
             if target:has_cxxflags(linker_flag) then
                 target:add("ldflags", linker_flag)
