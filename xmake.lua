@@ -275,9 +275,9 @@ end
 set_configvar("USE_ICONV", 1)
 set_configvar("USE_FREETYPE", 1)
 set_configvar("USE_PLUGIN_PDF", true)
+set_configvar("PDFHUMMUS_NO_TIFF", true)
 set_configvar("USE_PLUGIN_BIBTEX", true)
 set_configvar("USE_PLUGIN_LATEX_PREVIEW", true)
-set_configvar("PDFHUMMUS_NO_TIFF", true)
 
 if is_plat("mingw", "windows") then
     set_configvar("GS_EXE", "bin/gs.exe")
