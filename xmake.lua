@@ -617,6 +617,40 @@ target("draw") do
     end)
 end
 
+function target_code_on_wasm()
+    set_languages("c++17")
+    set_version(XMACS_VERSION)
+    build_glue_on_config()
+
+    add_packages("lolly")
+    add_packages("freetype")
+    add_packages("s7")
+    add_rules("qt.widgetapp_static")
+    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QWasmIntegrationPlugin")
+
+    add_includedirs(libmogan_headers, {public = true})
+    add_files(libmogan_srcs)
+    add_files(plugin_qt_srcs)
+    add_files(plugin_bibtex_srcs)
+    add_files(plugin_freetype_srcs)
+    add_files(plugin_database_srcs)
+    add_files(plugin_ispell_srcs)
+    add_files(plugin_metafont_srcs)
+    add_files(plugin_latex_srcs)
+    add_files(plugin_openssl_srcs)
+    add_files(plugin_updater_srcs)
+    add_files(plugin_xml_srcs)
+    add_files("src/Mogan/Research/research.cpp")
+
+    add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
+    add_ldflags("-s --preload-file $(projectdir)/plugins@TeXmacs/plugins", {force = true})
+
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("$(buildir)/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
+    end)
+end
+
 function target_research_on_wasm()
     set_languages("c++17")
     set_version(XMACS_VERSION)
@@ -831,6 +865,12 @@ function target_research_on_others()
             os.execv(target:installdir().."/../MacOS/Mogan")
         end
     end)
+end
+
+if is_plat("wasm") then
+    target("code") do
+        target_code_on_wasm()
+    end
 end
 
 target("research") do
