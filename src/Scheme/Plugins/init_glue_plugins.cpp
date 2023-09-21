@@ -27,6 +27,15 @@
 #include "glue_xml.cpp"
 
 
+bool
+use_plugin_tex () {
+#ifdef USE_PLUGIN_TEX
+  return true;
+#else
+  return false;
+#endif
+}
+
 #ifdef USE_PLUGIN_TEX
 #include "Tex/tex.hpp"
 #include "glue_tex.cpp"
