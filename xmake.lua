@@ -643,9 +643,9 @@ function add_target_code()
     add_packages("freetype")
     add_packages("s7")
     if is_plat("wasm") then
-        add_rules("qt.widgetapp")
-    else
         add_rules("qt.widgetapp_static")
+    else
+        add_rules("qt.widgetapp")
     end
     if is_plat("wasm") then
         add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QWasmIntegrationPlugin")
