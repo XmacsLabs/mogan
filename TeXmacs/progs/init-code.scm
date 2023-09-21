@@ -113,7 +113,6 @@
              (texmacs texmacs tm-files) (texmacs texmacs tm-print))
 (use-modules (texmacs keyboard config-kbd))
 (lazy-keyboard (texmacs keyboard prefix-kbd) always?)
-(lazy-keyboard (texmacs keyboard latex-kbd) always?)
 (lazy-menu (texmacs menus file-menu) file-menu go-menu
            new-file-menu load-menu save-menu
            print-menu print-menu-inline close-menu)
@@ -322,9 +321,7 @@
 ;;(display "Booting converters\n")
 (lazy-format (convert rewrite init-rewrite) texmacs verbatim)
 (lazy-format (convert tmml init-tmml) tmml)
-(lazy-format (convert latex init-latex) latex)
 (lazy-format (convert html init-html) html)
-(lazy-format (convert bibtex init-bibtex) bibtex)
 (lazy-format (convert images init-images)
              postscript pdf xfig xmgrace svg xpm jpeg ppm gif png pnm)
 (lazy-define (convert images tmimage)
@@ -333,12 +330,6 @@
 (lazy-define (convert html tmhtml) ext-tmhtml-eqnarray*)
 (define-secure-symbols ext-tmhtml-eqnarray*)
 (lazy-define (convert html tmhtml-expand) tmhtml-env-patch)
-(lazy-define (convert latex latex-drd) latex-arity latex-type)
-(lazy-define (convert latex tmtex) tmtex-env-patch)
-(lazy-define (convert latex latex-tools) latex-set-virtual-packages
-             latex-has-style? latex-has-package?
-             latex-has-texmacs-style? latex-has-texmacs-package?)
-(lazy-menu (convert latex tmtex-widgets) tmtex-menu)
 ;;(display* "time: " (- (texmacs-time) boot-start) "\n")
 ;;(display* "memory: " (texmacs-memory) " bytes\n")
 
@@ -353,13 +344,8 @@
 (lazy-define (database db-widget) open-db-chooser)
 (lazy-define (database db-menu) db-show-toolbar)
 (lazy-define (database db-convert) db-url?)
-(lazy-define (database bib-db) zealous-bib-import zealous-bib-export)
-(lazy-define (database bib-manage)
-             bib-import-bibtex bib-compile bib-attach open-bib-chooser)
-(lazy-define (database bib-local) open-biblio)
 (lazy-menu (database db-menu) db-menu db-toolbar)
 (lazy-tmfs-handler (database db-tmfs) db)
-(lazy-keyboard (database bib-kbd) in-bib?)
 (tm-property (open-biblio) (:interactive #t))
 ;;(display* "time: " (- (texmacs-time) boot-start) "\n")
 ;;(display* "memory: " (texmacs-memory) " bytes\n")

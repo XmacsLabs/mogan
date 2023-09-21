@@ -278,6 +278,7 @@ set_configvar("USE_PLUGIN_PDF", true)
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 set_configvar("USE_PLUGIN_BIBTEX", true)
 set_configvar("USE_PLUGIN_LATEX_PREVIEW", true)
+set_configvar("USE_PLUGIN_TEX", true)
 
 if is_plat("mingw", "windows") then
     set_configvar("GS_EXE", "bin/gs.exe")
@@ -416,46 +417,24 @@ plugin_qt_srcs = {
     "src/Plugins/Qt/**.cpp",
     "src/Plugins/Qt/**.hpp"
 }
-plugin_pdf_srcs = {
-    "src/Plugins/Pdf/**.cpp",
-}
-plugin_bibtex_srcs = {
-    "src/Plugins/Bibtex/**.cpp",
-}
 plugin_macos_srcs = {
     "src/Plugins/MacOS/HIDRemote.m",
     "src/Plugins/MacOS/mac_spellservice.mm",
     "src/Plugins/MacOS/mac_utilities.mm",
     "src/Plugins/MacOS/mac_app.mm"
 }
-plugin_freetype_srcs = {
-    "src/Plugins/Freetype/**.cpp",
-}
-plugin_database_srcs = {
-    "src/Plugins/Database/**.cpp",
-}
-plugin_ghostscript_srcs = {
-    "src/Plugins/Ghostscript/**.cpp",
-}
-plugin_ispell_srcs = {
-    "src/Plugins/Ispell/**.cpp",
-}
-plugin_metafont_srcs = {
-    "src/Plugins/Metafont/**.cpp",
-}
-plugin_latex_srcs = {
-    "src/Plugins/LaTeX_Preview/**.cpp",
-    "src/Plugins/Tex/**.cpp",
-}
-plugin_openssl_srcs = {
-    "src/Plugins/Openssl/**.cpp",
-}
-plugin_updater_srcs = {
-    "src/Plugins/Updater/**.cpp",
-}
-plugin_xml_srcs = {
-    "src/Plugins/Xml/**.cpp"
-}
+plugin_pdf_srcs = { "src/Plugins/Pdf/**.cpp" }
+plugin_xml_srcs = { "src/Plugins/Xml/**.cpp" }
+plugin_database_srcs = { "src/Plugins/Database/**.cpp" }
+plugin_freetype_srcs = { "src/Plugins/Freetype/**.cpp" }
+plugin_metafont_srcs = { "src/Plugins/Metafont/**.cpp" }
+plugin_ghostscript_srcs = { "src/Plugins/Ghostscript/**.cpp" }
+plugin_ispell_srcs = { "src/Plugins/Ispell/**.cpp" }
+plugin_tex_srcs = {"src/Plugins/Tex/**.cpp"}
+plugin_latex_preview_srcs = {"src/Plugins/LaTeX_Preview/**.cpp"}
+plugin_bibtex_srcs = { "src/Plugins/Bibtex/**.cpp" }
+plugin_openssl_srcs = { "src/Plugins/Openssl/**.cpp" }
+plugin_updater_srcs = { "src/Plugins/Updater/**.cpp" }
 
 
 target("libmogan") do
@@ -527,7 +506,8 @@ target("libmogan") do
     add_files(plugin_ghostscript_srcs)
     add_files(plugin_ispell_srcs)
     add_files(plugin_metafont_srcs)
-    add_files(plugin_latex_srcs)
+    add_files(plugin_tex_srcs)
+    add_files(plugin_latex_preview_srcs)
     add_files(plugin_openssl_srcs)
     add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)
@@ -628,13 +608,14 @@ function add_target_code()
             USE_PLUGIN_PDF = false,
             USE_PLUGIN_BIBTEX = false,
             USE_PLUGIN_LATEX_PREVIEW = false,
-            QTPIPES = false,
-            USE_QT_PRINTER = false,
+            USE_PLUGIN_TEX = false,
+            QTPIPES = is_plat("linux"),
+            USE_QT_PRINTER = is_plat("linux"),
             NOMINMAX = is_plat("windows"),
             SIZEOF_VOID_P = 8,
             USE_FONTCONFIG = is_plat("linux"),
             USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
-            USE_GS = not is_plat("wasm"),
+            USE_GS = false,
             GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
             GS_LIB = "../share/ghostscript/9.06/lib:",
             GS_EXE = "",
@@ -661,21 +642,36 @@ function add_target_code()
     add_packages("lolly")
     add_packages("freetype")
     add_packages("s7")
-    add_rules("qt.widgetapp_static")
-    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QWasmIntegrationPlugin")
+    if is_plat("wasm") then
+        add_rules("qt.widgetapp_static")
+    else
+        add_rules("qt.widgetapp")
+    end
+    if is_plat("wasm") then
+        add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QWasmIntegrationPlugin")
+    else
+        add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QtPrintSupport")
+    end
+    if is_plat("linux") then
+        add_packages("fontconfig")
+    end
 
     add_includedirs(libmogan_headers, {public = true})
     add_includedirs("$(buildir)/code")
     add_files(libmogan_srcs)
-    add_files(plugin_qt_srcs_on_wasm)
+    if is_plat("wasm") then
+        add_files(plugin_qt_srcs_on_wasm)
+    else
+        add_files(plugin_qt_srcs)
+    end
     add_files(plugin_freetype_srcs)
     add_files(plugin_database_srcs)
     add_files(plugin_ispell_srcs)
     add_files(plugin_metafont_srcs)
-    add_files(plugin_latex_srcs)
     add_files(plugin_openssl_srcs)
     add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)
+    add_files(plugin_ghostscript_srcs)
     add_files("src/Mogan/Code/code.cpp")
 
     if is_plat("wasm") then
@@ -696,7 +692,7 @@ if is_plat("wasm", "linux") then
 end
 
 
-function target_research_on_wasm()
+function add_target_research_on_wasm()
     set_languages("c++17")
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
@@ -711,6 +707,9 @@ function target_research_on_wasm()
             OS_WASM = is_plat("wasm"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
             USE_PLUGIN_PDF = false,
+            USE_PLUGIN_BIBTEX = true,
+            USE_PLUGIN_LATEX_PREVIEW = false,
+            USE_PLUGIN_TEX = true,
             NOMINMAX = is_plat("windows"),
             SIZEOF_VOID_P = 8,
             USE_FONTCONFIG = is_plat("linux"),
@@ -754,7 +753,8 @@ function target_research_on_wasm()
     add_files(plugin_database_srcs)
     add_files(plugin_ispell_srcs)
     add_files(plugin_metafont_srcs)
-    add_files(plugin_latex_srcs)
+    add_files(plugin_tex_srcs)
+    add_files(plugin_latex_preview_srcs)
     add_files(plugin_openssl_srcs)
     add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)
@@ -769,7 +769,7 @@ function target_research_on_wasm()
     end)
 end
 
-function target_research_on_others()
+function add_target_research_on_others()
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
 
@@ -953,9 +953,9 @@ end
 
 target("research") do
     if is_plat("wasm") then
-        target_research_on_wasm()
+        add_target_research_on_wasm()
     else
-        target_research_on_others()
+        add_target_research_on_others()
     end
 end
 

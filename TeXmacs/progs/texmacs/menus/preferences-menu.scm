@@ -18,7 +18,6 @@
     (texmacs texmacs tm-view)
     (texmacs texmacs tm-print)
     (texmacs keyboard config-kbd)
-    (convert latex init-latex)
     (language natural)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -99,6 +99,7 @@ ${define NOMINMAX}
 ${define USE_PLUGIN_PDF}
 ${define USE_PLUGIN_BIBTEX}
 ${define USE_PLUGIN_LATEX_PREVIEW}
+${define USE_PLUGIN_TEX}
 
 ${define QTPIPES}
 
