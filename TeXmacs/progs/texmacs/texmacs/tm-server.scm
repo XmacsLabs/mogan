@@ -59,7 +59,8 @@
   (set-latex-command val))
 
 (define (notify-bibtex-command var val)
-  (set-bibtex-command val))
+  (if (use-plugin-bibtex?)
+      (set-bibtex-command val)))
 
 (define (notify-tool var val)
   ;; FIXME: the menus sometimes don't get updated,

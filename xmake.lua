@@ -262,7 +262,6 @@ else
     end
 end
 
-
 local DEVEL_VERSION = TEXMACS_VERSION
 local DEVEL_RELEASE = 1
 local STABLE_VERSION = TEXMACS_VERSION
@@ -276,6 +275,8 @@ end
 set_configvar("USE_ICONV", 1)
 set_configvar("USE_FREETYPE", 1)
 set_configvar("USE_PLUGIN_PDF", true)
+set_configvar("USE_PLUGIN_BIBTEX", true)
+set_configvar("USE_PLUGIN_LATEX_PREVIEW", true)
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 
 if is_plat("mingw", "windows") then
@@ -407,17 +408,14 @@ libmogan_headers = {
     "src/Mogan"
 }
 
-if is_plat("wasm") then
-    plugin_qt_srcs = {
-        "src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp|qt_printer_widget.cpp",
-        "src/Plugins/Qt/*.hpp|QTMPipeLink.hpp|QTMPrintDialog.hpp|QTMPrinterSettings.hpp",
-    }
-else
-    plugin_qt_srcs = {
-        "src/Plugins/Qt/**.cpp",
-        "src/Plugins/Qt/**.hpp"
-    }
-end
+plugin_qt_srcs_on_wasm = {
+    "src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp|qt_printer_widget.cpp",
+    "src/Plugins/Qt/*.hpp|QTMPipeLink.hpp|QTMPrintDialog.hpp|QTMPrinterSettings.hpp",
+}
+plugin_qt_srcs = {
+    "src/Plugins/Qt/**.cpp",
+    "src/Plugins/Qt/**.hpp"
+}
 plugin_pdf_srcs = {
     "src/Plugins/Pdf/**.cpp",
 }
@@ -613,7 +611,7 @@ target("draw") do
     end)
 end
 
-function target_code_on_wasm()
+function add_target_code()
     set_languages("c++17")
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
@@ -628,6 +626,10 @@ function target_code_on_wasm()
             OS_WASM = is_plat("wasm"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
             USE_PLUGIN_PDF = false,
+            USE_PLUGIN_BIBTEX = false,
+            USE_PLUGIN_LATEX_PREVIEW = false,
+            QTPIPES = false,
+            USE_QT_PRINTER = false,
             NOMINMAX = is_plat("windows"),
             SIZEOF_VOID_P = 8,
             USE_FONTCONFIG = is_plat("linux"),
@@ -665,8 +667,7 @@ function target_code_on_wasm()
     add_includedirs(libmogan_headers, {public = true})
     add_includedirs("$(buildir)/code")
     add_files(libmogan_srcs)
-    add_files(plugin_qt_srcs)
-    add_files(plugin_bibtex_srcs)
+    add_files(plugin_qt_srcs_on_wasm)
     add_files(plugin_freetype_srcs)
     add_files(plugin_database_srcs)
     add_files(plugin_ispell_srcs)
@@ -677,14 +678,23 @@ function target_code_on_wasm()
     add_files(plugin_xml_srcs)
     add_files("src/Mogan/Code/code.cpp")
 
-    add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
-    add_ldflags("-s --preload-file $(projectdir)/plugins@TeXmacs/plugins", {force = true})
+    if is_plat("wasm") then
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/plugins@TeXmacs/plugins", {force = true})
+    end
 
     before_build(function (target)
         target:add("forceincludes", path.absolute("$(buildir)/code/config.h"))
         target:add("forceincludes", path.absolute("$(buildir)/code/tm_configure.hpp"))
     end)
 end
+
+if is_plat("wasm", "linux") then
+    target("code") do
+        add_target_code()
+    end
+end
+
 
 function target_research_on_wasm()
     set_languages("c++17")
@@ -738,7 +748,7 @@ function target_research_on_wasm()
     add_includedirs(libmogan_headers, {public = true})
     add_includedirs("$(buildir)/research")
     add_files(libmogan_srcs)
-    add_files(plugin_qt_srcs)
+    add_files(plugin_qt_srcs_on_wasm)
     add_files(plugin_bibtex_srcs)
     add_files(plugin_freetype_srcs)
     add_files(plugin_database_srcs)
@@ -939,12 +949,6 @@ function target_research_on_others()
             os.execv(target:installdir().."/../MacOS/Mogan")
         end
     end)
-end
-
-if is_plat("wasm") then
-    target("code") do
-        target_code_on_wasm()
-    end
 end
 
 target("research") do

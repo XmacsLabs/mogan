@@ -12,7 +12,6 @@
 #include "LaTeX_Preview/latex_preview.hpp"
 #include "Tex/tex.hpp"
 #include "Tex/convert_tex.hpp"
-#include "Bibtex/bibtex.hpp"
 #include "metadata.hpp"
 #include "scheme.hpp"
 #include "vars.hpp"
@@ -21,6 +20,10 @@
 #include "url.hpp"
 #include "font.hpp"
 #include "tm_debug.hpp"
+
+#ifdef USE_PLUGIN_BIBTEX
+#include "Bibtex/bibtex.hpp"
+#endif
 
 
 tree upgrade_tex (tree t);

@@ -108,13 +108,6 @@
 ;;(display* "time: " (- (texmacs-time) boot-start) "\n")
 ;;(display* "memory: " (texmacs-memory) " bytes\n")
 
-;;(display "Booting BibTeX style modules\n")
-(use-modules (bibtex bib-utils))
-(lazy-define (bibtex bib-complete) current-bib-file citekey-completions)
-(lazy-menu (bibtex bib-widgets) open-bibliography-inserter)
-;;(display* "time: " (- (texmacs-time) boot-start) "\n")
-;;(display* "memory: " (texmacs-memory) " bytes\n")
-
 ;;(display "Booting main TeXmacs functionality\n")
 (use-modules (texmacs texmacs tm-server) (texmacs texmacs tm-view)
              (texmacs texmacs tm-files) (texmacs texmacs tm-print))
