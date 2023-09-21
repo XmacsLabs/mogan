@@ -31,7 +31,7 @@ set_latex_command (string cmd) {
   latex_command= cmd;
 }
 
-#ifdef OS_WASM
+#ifndef USE_PLUGIN_LATEX_PREVIEW
 array<tree>
 latex_preview (string s, tree t) {
   dbg ("LaTeX preview disabled in WASM");

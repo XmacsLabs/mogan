@@ -105,9 +105,14 @@ TeXmacs_init_paths (int& argc, char** argv) {
 #endif
 
   string current_texmacs_path= get_env ("TEXMACS_PATH");
-  set_env ("PWD", "/");
-  set_env ("HOME", "/");
+#ifdef OS_WASM
   if (is_empty (current_texmacs_path)) set_env ("TEXMACS_PATH", "/TeXmacs");
+#endif
+#ifdef OS_GNU_LINUX
+  if (is_empty (current_texmacs_path) && exists (exedir * "../share/Xmacs")) {
+    set_env ("TEXMACS_PATH", as_string (exedir * "../share/Xmacs"));
+  }
+#endif
 
   // check on the latest $TEXMACS_PATH
   current_texmacs_path= get_env ("TEXMACS_PATH");
@@ -117,6 +122,8 @@ TeXmacs_init_paths (int& argc, char** argv) {
          << ") does not exists" << LF;
     exit (1);
   }
+  set_env ("PWD", "/");
+  set_env ("HOME", "/");
 }
 
 /******************************************************************************
