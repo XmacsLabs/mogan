@@ -627,6 +627,7 @@ function target_code_on_wasm()
             OS_WIN = is_plat("windows"),
             OS_WASM = is_plat("wasm"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
+            USE_PLUGIN_PDF = false,
             NOMINMAX = is_plat("windows"),
             SIZEOF_VOID_P = 8,
             USE_FONTCONFIG = is_plat("linux"),
@@ -635,7 +636,9 @@ function target_code_on_wasm()
             GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
             GS_LIB = "../share/ghostscript/9.06/lib:",
             GS_EXE = "",
-            USE_PLUGIN_PDF = false,
+            USE_FREETYPE = true,
+            USE_ICONV = true,
+            STDC_HEADERS = true,
         }
     })
     add_configfiles("src/System/tm_configure.hpp.xmake", {
@@ -697,6 +700,7 @@ function target_research_on_wasm()
             OS_WIN = is_plat("windows"),
             OS_WASM = is_plat("wasm"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
+            USE_PLUGIN_PDF = false,
             NOMINMAX = is_plat("windows"),
             SIZEOF_VOID_P = 8,
             USE_FONTCONFIG = is_plat("linux"),
@@ -705,7 +709,9 @@ function target_research_on_wasm()
             GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
             GS_LIB = "../share/ghostscript/9.06/lib:",
             GS_EXE = "",
-            USE_PLUGIN_PDF = false,
+            USE_FREETYPE = true,
+            USE_ICONV = true,
+            STDC_HEADERS = true,
         }
     })
     add_configfiles("src/System/tm_configure.hpp.xmake", {
