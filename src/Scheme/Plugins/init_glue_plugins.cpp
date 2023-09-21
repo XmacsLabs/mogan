@@ -20,22 +20,18 @@
 
 #include "LaTeX_Preview/latex_preview.hpp"
 
-#ifdef USE_PLUGIN_TEX
-#include "Tex/tex.hpp"
-#include "glue_tex.cpp"
-#endif
-
-#ifdef USE_PLUGIN_BIBTEX
-#include "Bibtex/bibtex.hpp"
-#include "Bibtex/bibtex_functions.hpp"
-#include "glue_bibtex.cpp"
-#endif
-
 #include "Database/database.hpp"
 #include "glue_tmdb.cpp"
 
 #include "Xml/xml.hpp"
 #include "glue_xml.cpp"
+
+
+#ifdef USE_PLUGIN_TEX
+#include "Tex/tex.hpp"
+#include "glue_tex.cpp"
+#endif
+
 
 bool
 use_plugin_bibtex () {
@@ -46,18 +42,16 @@ use_plugin_bibtex () {
 #endif
 }
 
+#ifdef USE_PLUGIN_BIBTEX
+#include "Bibtex/bibtex.hpp"
+#include "Bibtex/bibtex_functions.hpp"
+#include "glue_bibtex.cpp"
+#endif
+
+
 bool
 supports_native_pdf () {
 #ifdef USE_PLUGIN_PDF
-  return true;
-#else
-  return false;
-#endif
-}
-
-bool
-supports_ghostscript () {
-#ifdef USE_GS
   return true;
 #else
   return false;
@@ -69,21 +63,34 @@ pdfhummus_version () {
   return string (PDFHUMMUS_VERSION);
 }
 
-#ifdef USE_GS
-#include "glue_ghostscript.cpp"
-#endif
-
 #ifdef USE_PLUGIN_PDF
 #include "Pdf/pdf_hummus_extract_attachment.hpp"
 #include "glue_pdf.cpp"
 #endif
 
-#include "glue_plugin.cpp"
 
+bool
+supports_ghostscript () {
+#ifdef USE_GS
+  return true;
+#else
+  return false;
+#endif
+}
+
+#ifdef USE_GS
+#include "glue_ghostscript.cpp"
+#endif
+
+
+#include "glue_plugin.cpp"
 
 void
 initialize_glue_plugins () {
   initialize_glue_plugin ();
+  initialize_glue_tmdb ();
+  initialize_glue_updater ();
+  initialize_glue_xml ();
 
 #ifdef USE_PLUGIN_BIBTEX
   initialize_glue_bibtex ();
@@ -92,10 +99,6 @@ initialize_glue_plugins () {
 #ifdef USE_PLUGIN_TEX
   initialize_glue_tex ();
 #endif
-
-  initialize_glue_tmdb ();
-  initialize_glue_updater ();
-  initialize_glue_xml ();
 
 #ifdef USE_GS
   initialize_glue_ghostscript ();
