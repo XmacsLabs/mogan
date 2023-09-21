@@ -1,8 +1,9 @@
 
 /******************************************************************************
- * MODULE     : draw.cpp
- * DESCRIPTION: main entry for Mogan Draw
+ * MODULE     : code.cpp
+ * DESCRIPTION: main entry for Mogan Code
  * COPYRIGHT  : (C) 2023 Oyyko
+ *                  2023 Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -104,6 +105,9 @@ TeXmacs_init_paths (int& argc, char** argv) {
 #endif
 
   string current_texmacs_path= get_env ("TEXMACS_PATH");
+  set_env ("PWD", "/");
+  set_env ("HOME", "/");
+  if (is_empty (current_texmacs_path)) set_env ("TEXMACS_PATH", "/TeXmacs");
 
   // check on the latest $TEXMACS_PATH
   current_texmacs_path= get_env ("TEXMACS_PATH");
@@ -521,7 +525,6 @@ main (int argc, char** argv) {
   else if (theme != "") tm_style_sheet= theme;
 
   set_env ("LC_NUMERIC", "POSIX");
-  set_env ("QT_QPA_PLATFORM", "xcb");
   set_env ("XDG_SESSION_TYPE", "x11");
 
 #ifdef QTTEXMACS

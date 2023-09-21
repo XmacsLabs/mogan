@@ -640,7 +640,7 @@ function target_code_on_wasm()
     add_files(plugin_openssl_srcs)
     add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)
-    add_files("src/Mogan/Research/research.cpp")
+    add_files("src/Mogan/Code/code.cpp")
 
     add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
     add_ldflags("-s --preload-file $(projectdir)/plugins@TeXmacs/plugins", {force = true})
