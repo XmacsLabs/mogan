@@ -712,7 +712,7 @@ if is_plat("wasm", "linux") then
 end
 
 
-function target_research_on_wasm()
+function add_target_research_on_wasm()
     set_languages("c++17")
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
@@ -727,6 +727,9 @@ function target_research_on_wasm()
             OS_WASM = is_plat("wasm"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
             USE_PLUGIN_PDF = false,
+            USE_PLUGIN_BIBTEX = true,
+            USE_PLUGIN_LATEX_PREVIEW = false,
+            USE_PLUGIN_TEX = true,
             NOMINMAX = is_plat("windows"),
             SIZEOF_VOID_P = 8,
             USE_FONTCONFIG = is_plat("linux"),
@@ -786,7 +789,7 @@ function target_research_on_wasm()
     end)
 end
 
-function target_research_on_others()
+function add_target_research_on_others()
     set_version(XMACS_VERSION)
     set_installdir(INSTALL_DIR)
 
@@ -970,9 +973,9 @@ end
 
 target("research") do
     if is_plat("wasm") then
-        target_research_on_wasm()
+        add_target_research_on_wasm()
     else
-        target_research_on_others()
+        add_target_research_on_others()
     end
 end
 
