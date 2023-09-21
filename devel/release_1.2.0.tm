@@ -18,9 +18,10 @@
   green>|<cwith|28|28|1|1|cell-background|pastel
   green>|<cwith|24|24|1|1|cell-background|pastel
   green>|<cwith|4|4|2|2|cell-valign|c>|<cwith|3|3|1|1|cell-valign|c>|<cwith|19|19|1|1|cell-background|pastel
+  green>|<cwith|2|2|1|1|cell-background|pastel
   green>|<table|<row|<cell|<dlink|54>>|<cell|Pluto>|<cell|Chore
   work>>|<row|<cell|<dlink|53>>|<cell|Darcy>|<cell|Lolly
-  1.2.x>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
+  1.2.0~1.2.6>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
   Table>>|<row|<cell|<dlink|51>>|<cell|Darcy>|<cell|Scheme
   Onboarding>>|<row|<cell|<dlink|50>>|<cell|Oyyko>|<cell|Mogan Draw app &
   WASM (OSPP)>>|<row|<cell|<dlink|49>>|<cell|jingkaimori>|<cell|Fine tuning
