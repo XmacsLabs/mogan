@@ -444,10 +444,8 @@ plugin_ispell_srcs = {
 plugin_metafont_srcs = {
     "src/Plugins/Metafont/**.cpp",
 }
-plugin_latex_srcs = {
-    "src/Plugins/LaTeX_Preview/**.cpp",
-    "src/Plugins/Tex/**.cpp",
-}
+plugin_tex_srcs = {"src/Plugins/Tex/**.cpp"}
+plugin_latex_preview_srcs = {"src/Plugins/LaTeX_Preview/**.cpp"}
 plugin_openssl_srcs = {
     "src/Plugins/Openssl/**.cpp",
 }
@@ -528,7 +526,8 @@ target("libmogan") do
     add_files(plugin_ghostscript_srcs)
     add_files(plugin_ispell_srcs)
     add_files(plugin_metafont_srcs)
-    add_files(plugin_latex_srcs)
+    add_files(plugin_tex_srcs)
+    add_files(plugin_latex_preview_srcs)
     add_files(plugin_openssl_srcs)
     add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)
@@ -755,7 +754,8 @@ function target_research_on_wasm()
     add_files(plugin_database_srcs)
     add_files(plugin_ispell_srcs)
     add_files(plugin_metafont_srcs)
-    add_files(plugin_latex_srcs)
+    add_files(plugin_tex_srcs)
+    add_files(plugin_latex_preview_srcs)
     add_files(plugin_openssl_srcs)
     add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)
