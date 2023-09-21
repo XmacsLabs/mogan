@@ -194,52 +194,61 @@ TestDatabaseBasicFunciton::test_get_attributes () {
 
 void
 TestDatabaseBasicFunciton::test_query () {
-  url    test_db= url_temp ("db6");
-  double t1     = (double) get_usec_time ();
+  url test_db= url_temp ("db6");
 
+  // use % 1000 to avoid sec_time too big to convert to an inaccurate number
   set_field (test_db, "query1", "no1", array<string> ("no1_name", "1"),
-             (double) get_usec_time ());
+             (double) (get_sec_time () % 1000));
   set_field (test_db, "query1", "no2", array<string> ("no2_name", "2"),
-             (double) get_usec_time ());
+             (double) (get_sec_time () % 1000));
   set_field (test_db, "query1", "no3", array<string> ("no3_name", "3"),
-             (double) get_usec_time ());
+             (double) (get_sec_time () % 1000));
 
-  while ((double) get_usec_time () == t1)
+  double t1= (double) (get_sec_time () % 1000);
+
+  while ((double) (get_sec_time () % 1000) <= t1)
     ;
-  t1= (double) get_usec_time ();
+  t1= (double) (get_sec_time () % 1000);
 
   set_field (test_db, "query2", "no1", array<string> ("no1_name", "1"),
-             (double) get_usec_time ());
+             (double) (get_sec_time () % 1000));
   set_field (test_db, "query2", "no4", array<string> ("no4_name", "4"),
-             (double) get_usec_time ());
+             (double) (get_sec_time () % 1000));
   set_field (test_db, "query2", "no5", array<string> ("no4_name", "4"),
-             (double) get_usec_time ());
+             (double) (get_sec_time () % 1000));
 
   // order to sort
   // sort ascending order
   tree q1= tuple (tuple ("order", "\"no1_name\"", "#t"));
-  auto a1= query (test_db, q1, (double) get_usec_time (), 1000000);
+  auto a1= query (test_db, q1, (double) (get_sec_time () % 1000), 1000000);
   // sort decending order
   tree q2= tuple (tuple ("order", "\"no1_name\"", "#f"));
-  auto a2= query (test_db, q2, (double) get_usec_time (), 1000000);
+  auto a2= query (test_db, q2, (double) (get_sec_time () % 1000), 1000000);
 
   QVERIFY (a1 == array<string> ("query1", "query2"));
   QVERIFY (a2 == array<string> ("query2", "query1"));
 
   // modified: the modified id between t_begin and t_end
-  string t_begin (scm_quote (as_string (t1)));
-  string t_end (scm_quote (as_string ((double) get_usec_time ())));
+  double t2= (double) (get_sec_time () % 1000);
+  while ((double) (get_sec_time () % 1000) <= t2)
+    ;
+  t2= (double) (get_sec_time () % 1000);
 
-  // tree q3= tuple (tuple ("modified", t_begin, t_end));
-  // auto a3= query (test_db, q3, (double) get_usec_time (), 1000000);
-  // string ans[1]= {"query2"};
-  // QVERIFY (a3 == array<string> (ans, 1));
+  // The end needs to be strictly greater than the modification time, while the
+  // begin does not strictly less.
+  string t_begin (scm_quote (as_string (t1)));
+  string t_end (scm_quote (as_string (t2)));
+
+  tree   q3= tuple (tuple ("modified", t_begin, t_end));
+  auto   a3= query (test_db, q3, (double) (get_sec_time () % 1000), 1000000);
+  string ans[1]= {"query2"};
+  QVERIFY (a3 == array<string> (ans, 1));
 
   // test contains
   tree q4= tuple (tuple ("contains", "\"no1_name\""));
-  auto a4= query (test_db, q4, (double) get_usec_time (), 1000000);
+  auto a4= query (test_db, q4, (double) get_sec_time (), 1000000);
   tree q5= tuple (tuple ("contains", "\"no2_name\""));
-  auto a5= query (test_db, q5, (double) get_usec_time (), 1000000);
+  auto a5= query (test_db, q5, (double) get_sec_time (), 1000000);
 
   QVERIFY (a4 == array<string> ("query1", "query2"));
   string ans1[1]= {"query1"};
