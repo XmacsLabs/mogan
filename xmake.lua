@@ -996,15 +996,98 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
 end
 
 tm2html_includedirs = {
-    "src/Scheme",
+    "src/Data/Convert",
+    "src/Data/Document",
+    "src/Data/Drd",
+    "src/Data/History",
+    "src/Data/Observers",
+    "src/Data/Parser",
+    "src/Data/Scheme",
+    "src/Data/String",
+    "src/Data/Tree",
+    "src/Edit",
+    "src/Edit/Editor",
+    "src/Edit/Interface",
+    "src/Edit/Modify",
+    "src/Edit/Process",
+    "src/Edit/Replace",
+    "src/Graphics/Bitmap_fonts",
+    "src/Graphics/Colors",
+    "src/Graphics/Fonts",
+    "src/Graphics/Gui",
+    "src/Graphics/Handwriting",
+    "src/Graphics/Mathematics",
+    "src/Graphics/Pictures",
+    "src/Graphics/Renderer",
+    "src/Graphics/Spacial",
+    "src/Graphics/Types",
     "src/Kernel/Abstractions",
+    "src/Kernel/Types",
+    "src/Plugins",
+    "src/Scheme",
+    "src/Scheme/S7",
+    "src/Scheme/L1",
+    "src/Scheme/L2",
+    "src/Scheme/L3",
+    "src/Scheme/L4",
+    "src/Scheme/Plugins",
+    "src/Style/Environment",
+    "src/Style/Evaluate",
+    "src/Style/Memorizer",
+    "src/System",
+    "src/System/Boot",
+    "src/System/Classes",
+    "src/System/Config",
+    "src/System/Files",
+    "src/System/Language",
+    "src/System/Link",
+    "src/System/Misc",
+    "src/Texmacs",
+    "src/Texmacs/Data",
+    "src/Typeset",
+    "src/Typeset/Bridge",
+    "src/Typeset/Concat",
+    "src/Typeset/Page",
+    "plugins/html/tools",
+}
+
+tm2html_files = {
+    "src/Scheme/S7/**.cpp",
+    "src/Scheme/L1/**.cpp",
+    "src/Scheme/L2/**.cpp",
+    "src/Scheme/L3/**.cpp",
+    "src/Scheme/L4/**.cpp",
+    -- "src/Scheme/L5/**.cpp",
+    "src/Scheme/Plugins/**.cpp",
+    "src/html/tools/glue.cpp",
+    "src/html/tools/object.cpp",
 }
 
 target ("tm2html") do 
     add_includedirs(tm2html_includedirs)
     add_packages("lolly")
+    add_packages("s7")
+
     set_languages("c++17")
     set_kind("binary")
+
+    add_configfiles("src/System/config_l3.h.xmake", {
+        filename = "L3/config.h",
+        variables = {
+            OS_MINGW = is_plat("mingw"),
+            OS_MACOS = is_plat("macosx"),
+            OS_WIN = is_plat("windows"),
+            OS_WASM = is_plat("wasm"),
+            QTTEXMACS = false,
+        }
+    })
+    add_includedirs("$(buildir)/L3")
+    add_includedirs("$(buildir)")
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("$(buildir)/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
+    end)
+    add_files(tm2html_files)
     add_files("plugins/html/tools/tm2html.cpp")
 end 
 
