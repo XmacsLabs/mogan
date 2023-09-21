@@ -275,11 +275,7 @@ end
 
 set_configvar("USE_ICONV", 1)
 set_configvar("USE_FREETYPE", 1)
-if is_plat("wasm") then
-    set_configvar("USE_PLUGIN_PDF", false)
-else
-    set_configvar("USE_PLUGIN_PDF", true)
-end
+set_configvar("USE_PLUGIN_PDF", true)
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 
 if is_plat("mingw", "windows") then
@@ -407,7 +403,6 @@ libmogan_headers = {
     "src/Typeset/Concat",
     "src/Typeset/Page",
     "$(buildir)/glue",
-    "$(buildir)",
     "TeXmacs/include",
     "src/Mogan"
 }
@@ -520,6 +515,7 @@ target("libmogan") do
     -- add source and header files
     ---------------------------------------------------------------------------
     add_includedirs(libmogan_headers, {public = true})
+    add_includedirs("$(buildir)")
     add_files(libmogan_srcs)
 
     if is_plat("macosx") then
@@ -579,9 +575,7 @@ target("draw") do
     end
     add_syslinks("pthread")
 
-    add_includedirs({
-        "$(buildir)",
-    })
+    add_includedirs("$(buildir)")
     add_files("src/Mogan/Draw/draw.cpp")
 
     set_configdir(INSTALL_DIR)
@@ -621,8 +615,43 @@ end
 
 function target_code_on_wasm()
     set_languages("c++17")
-    set_version(XMACS_VERSION)
+    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
+
     build_glue_on_config()
+    add_configfiles("src/System/config.h.xmake", {
+        filename = "code/config.h",
+        variables = {
+            OS_GNU_LINUX = is_plat("linux"),
+            OS_MACOS = is_plat("macosx"),
+            OS_MINGW = is_plat("mingw"),
+            OS_WIN = is_plat("windows"),
+            OS_WASM = is_plat("wasm"),
+            MACOSX_EXTENSIONS = is_plat("macosx"),
+            NOMINMAX = is_plat("windows"),
+            SIZEOF_VOID_P = 8,
+            USE_FONTCONFIG = is_plat("linux"),
+            USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
+            USE_GS = not is_plat("wasm"),
+            GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
+            GS_LIB = "../share/ghostscript/9.06/lib:",
+            GS_EXE = "",
+            USE_PLUGIN_PDF = false,
+        }
+    })
+    add_configfiles("src/System/tm_configure.hpp.xmake", {
+        filename = "code/tm_configure.hpp",
+        pattern = "@(.-)@",
+        variables = {
+            XMACS_VERSION = XMACS_VERSION,
+            CONFIG_USER = CONFIG_USER,
+            CONFIG_STD_SETENV = "#define STD_SETENV",
+            tm_devel = "Texmacs-" .. DEVEL_VERSION,
+            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
+            tm_stable = "Texmacs-" .. STABLE_VERSION,
+            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
+            LOLLY_VERSION = LOLLY_VERSION,
+        }
+    })
 
     add_packages("lolly")
     add_packages("freetype")
@@ -631,6 +660,7 @@ function target_code_on_wasm()
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QWasmIntegrationPlugin")
 
     add_includedirs(libmogan_headers, {public = true})
+    add_includedirs("$(buildir)/code")
     add_files(libmogan_srcs)
     add_files(plugin_qt_srcs)
     add_files(plugin_bibtex_srcs)
@@ -648,15 +678,50 @@ function target_code_on_wasm()
     add_ldflags("-s --preload-file $(projectdir)/plugins@TeXmacs/plugins", {force = true})
 
     before_build(function (target)
-        target:add("forceincludes", path.absolute("$(buildir)/config.h"))
-        target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
+        target:add("forceincludes", path.absolute("$(buildir)/code/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/code/tm_configure.hpp"))
     end)
 end
 
 function target_research_on_wasm()
     set_languages("c++17")
-    set_version(XMACS_VERSION)
+    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
+
     build_glue_on_config()
+    add_configfiles("src/System/config.h.xmake", {
+        filename = "research/config.h",
+        variables = {
+            OS_GNU_LINUX = is_plat("linux"),
+            OS_MACOS = is_plat("macosx"),
+            OS_MINGW = is_plat("mingw"),
+            OS_WIN = is_plat("windows"),
+            OS_WASM = is_plat("wasm"),
+            MACOSX_EXTENSIONS = is_plat("macosx"),
+            NOMINMAX = is_plat("windows"),
+            SIZEOF_VOID_P = 8,
+            USE_FONTCONFIG = is_plat("linux"),
+            USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
+            USE_GS = not is_plat("wasm"),
+            GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
+            GS_LIB = "../share/ghostscript/9.06/lib:",
+            GS_EXE = "",
+            USE_PLUGIN_PDF = false,
+        }
+    })
+    add_configfiles("src/System/tm_configure.hpp.xmake", {
+        filename = "research/tm_configure.hpp",
+        pattern = "@(.-)@",
+        variables = {
+            XMACS_VERSION = XMACS_VERSION,
+            CONFIG_USER = CONFIG_USER,
+            CONFIG_STD_SETENV = "#define STD_SETENV",
+            tm_devel = "Texmacs-" .. DEVEL_VERSION,
+            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
+            tm_stable = "Texmacs-" .. STABLE_VERSION,
+            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
+            LOLLY_VERSION = LOLLY_VERSION,
+        }
+    })
     
     add_packages("lolly")
     add_packages("freetype")
@@ -665,6 +730,7 @@ function target_research_on_wasm()
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QWasmIntegrationPlugin")
     
     add_includedirs(libmogan_headers, {public = true})
+    add_includedirs("$(buildir)/research")
     add_files(libmogan_srcs)
     add_files(plugin_qt_srcs)
     add_files(plugin_bibtex_srcs)
@@ -682,8 +748,8 @@ function target_research_on_wasm()
     add_ldflags("-s --preload-file $(projectdir)/plugins@TeXmacs/plugins", {force = true})
     
     before_build(function (target)
-        target:add("forceincludes", path.absolute("$(buildir)/config.h"))
-        target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
+        target:add("forceincludes", path.absolute("$(buildir)/research/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/research/tm_configure.hpp"))
     end)
 end
 
