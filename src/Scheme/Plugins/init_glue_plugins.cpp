@@ -34,7 +34,6 @@
 #include "Xml/xml.hpp"
 #include "glue_xml.cpp"
 
-
 bool
 use_plugin_bibtex () {
 #ifdef USE_PLUGIN_BIBTEX
