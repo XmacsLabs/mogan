@@ -23,7 +23,26 @@ get_translit_table () {
   return t;
 }
 hashmap<string,string> &translit_table = get_translit_table();
-extern char Cork_unaccented[128];
+
+char Cork_unaccented[128]= {
+  'A', 'A', 'C', 'C', 'D', 'E', 'E', 'G',
+  'L', 'L', ' ', 'N', 'N', ' ', 'O', 'R',
+  'R', 'S', 'S', 'S', 'T', 'T', 'U', 'U',
+  'Y', 'Z', 'Z', 'Z', ' ', 'I', 'd', ' ',
+  'a', 'a', 'c', 'c', 'd', 'e', 'e', 'g',
+  'l', 'l', ' ', 'n', 'n', ' ', 'o', 'r',
+  'r', 's', 's', 's', 't', 't', 'u', 'u',
+  'y', 'z', 'z', 'z', ' ', ' ', ' ', ' ',
+  'A', 'A', 'A', 'A', 'A', 'A', ' ', 'C',
+  'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I',
+  'D', 'N', 'O', 'O', 'O', 'O', 'O', ' ',
+  ' ', 'U', 'U', 'U', 'U', 'Y', ' ', ' ',
+  'a', 'a', 'a', 'a', 'a', 'a', ' ', 'c',
+  'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i',
+  'd', 'n', 'o', 'o', 'o', 'o', 'o', ' ',
+  ' ', 'u', 'u', 'u', 'u', 'y', ' ', ' '
+};
+
 
 static void
 translit_set (int i, string s) {
