@@ -417,44 +417,24 @@ plugin_qt_srcs = {
     "src/Plugins/Qt/**.cpp",
     "src/Plugins/Qt/**.hpp"
 }
-plugin_pdf_srcs = {
-    "src/Plugins/Pdf/**.cpp",
-}
-plugin_bibtex_srcs = {
-    "src/Plugins/Bibtex/**.cpp",
-}
 plugin_macos_srcs = {
     "src/Plugins/MacOS/HIDRemote.m",
     "src/Plugins/MacOS/mac_spellservice.mm",
     "src/Plugins/MacOS/mac_utilities.mm",
     "src/Plugins/MacOS/mac_app.mm"
 }
-plugin_freetype_srcs = {
-    "src/Plugins/Freetype/**.cpp",
-}
-plugin_database_srcs = {
-    "src/Plugins/Database/**.cpp",
-}
-plugin_ghostscript_srcs = {
-    "src/Plugins/Ghostscript/**.cpp",
-}
-plugin_ispell_srcs = {
-    "src/Plugins/Ispell/**.cpp",
-}
-plugin_metafont_srcs = {
-    "src/Plugins/Metafont/**.cpp",
-}
+plugin_pdf_srcs = { "src/Plugins/Pdf/**.cpp" }
+plugin_xml_srcs = { "src/Plugins/Xml/**.cpp" }
+plugin_database_srcs = { "src/Plugins/Database/**.cpp" }
+plugin_freetype_srcs = { "src/Plugins/Freetype/**.cpp" }
+plugin_metafont_srcs = { "src/Plugins/Metafont/**.cpp" }
+plugin_ghostscript_srcs = { "src/Plugins/Ghostscript/**.cpp" }
+plugin_ispell_srcs = { "src/Plugins/Ispell/**.cpp" }
 plugin_tex_srcs = {"src/Plugins/Tex/**.cpp"}
 plugin_latex_preview_srcs = {"src/Plugins/LaTeX_Preview/**.cpp"}
-plugin_openssl_srcs = {
-    "src/Plugins/Openssl/**.cpp",
-}
-plugin_updater_srcs = {
-    "src/Plugins/Updater/**.cpp",
-}
-plugin_xml_srcs = {
-    "src/Plugins/Xml/**.cpp"
-}
+plugin_bibtex_srcs = { "src/Plugins/Bibtex/**.cpp" }
+plugin_openssl_srcs = { "src/Plugins/Openssl/**.cpp" }
+plugin_updater_srcs = { "src/Plugins/Updater/**.cpp" }
 
 
 target("libmogan") do

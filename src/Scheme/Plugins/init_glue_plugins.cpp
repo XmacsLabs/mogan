@@ -26,7 +26,6 @@
 #include "Xml/xml.hpp"
 #include "glue_xml.cpp"
 
-
 bool
 use_plugin_tex () {
 #ifdef USE_PLUGIN_TEX
@@ -40,7 +39,6 @@ use_plugin_tex () {
 #include "Tex/tex.hpp"
 #include "glue_tex.cpp"
 #endif
-
 
 bool
 use_plugin_bibtex () {
@@ -56,7 +54,6 @@ use_plugin_bibtex () {
 #include "Bibtex/bibtex_functions.hpp"
 #include "glue_bibtex.cpp"
 #endif
-
 
 bool
 supports_native_pdf () {
@@ -77,7 +74,6 @@ pdfhummus_version () {
 #include "glue_pdf.cpp"
 #endif
 
-
 bool
 supports_ghostscript () {
 #ifdef USE_GS
@@ -90,7 +86,6 @@ supports_ghostscript () {
 #ifdef USE_GS
 #include "glue_ghostscript.cpp"
 #endif
-
 
 #include "glue_plugin.cpp"
 
