@@ -278,6 +278,7 @@ set_configvar("USE_PLUGIN_PDF", true)
 set_configvar("PDFHUMMUS_NO_TIFF", true)
 set_configvar("USE_PLUGIN_BIBTEX", true)
 set_configvar("USE_PLUGIN_LATEX_PREVIEW", true)
+set_configvar("USE_PLUGIN_TEX", true)
 
 if is_plat("mingw", "windows") then
     set_configvar("GS_EXE", "bin/gs.exe")
@@ -628,13 +629,14 @@ function add_target_code()
             USE_PLUGIN_PDF = false,
             USE_PLUGIN_BIBTEX = false,
             USE_PLUGIN_LATEX_PREVIEW = false,
+            USE_PLUGIN_TEX = false,
             QTPIPES = false,
             USE_QT_PRINTER = false,
             NOMINMAX = is_plat("windows"),
             SIZEOF_VOID_P = 8,
             USE_FONTCONFIG = is_plat("linux"),
             USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
-            USE_GS = not is_plat("wasm"),
+            USE_GS = false,
             GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
             GS_LIB = "../share/ghostscript/9.06/lib:",
             GS_EXE = "",
@@ -672,7 +674,6 @@ function add_target_code()
     add_files(plugin_database_srcs)
     add_files(plugin_ispell_srcs)
     add_files(plugin_metafont_srcs)
-    add_files(plugin_latex_srcs)
     add_files(plugin_openssl_srcs)
     add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)

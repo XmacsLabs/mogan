@@ -19,8 +19,11 @@
 #include "glue_updater.cpp"
 
 #include "LaTeX_Preview/latex_preview.hpp"
+
+#ifdef USE_PLUGIN_TEX
 #include "Tex/tex.hpp"
 #include "glue_tex.cpp"
+#endif
 
 #ifdef USE_PLUGIN_BIBTEX
 #include "Bibtex/bibtex.hpp"
@@ -43,7 +46,6 @@ use_plugin_bibtex () {
 #endif
 }
 
-#ifndef OS_WASM
 bool
 supports_native_pdf () {
 #ifdef USE_PLUGIN_PDF
@@ -67,26 +69,39 @@ pdfhummus_version () {
   return string (PDFHUMMUS_VERSION);
 }
 
+#ifdef USE_GS
 #include "glue_ghostscript.cpp"
+#endif
 
+#ifdef USE_PLUGIN_PDF
 #include "Pdf/pdf_hummus_extract_attachment.hpp"
 #include "glue_pdf.cpp"
 #endif
 
 #include "glue_plugin.cpp"
 
+
 void
 initialize_glue_plugins () {
   initialize_glue_plugin ();
+
 #ifdef USE_PLUGIN_BIBTEX
   initialize_glue_bibtex ();
 #endif
+
+#ifdef USE_PLUGIN_TEX
   initialize_glue_tex ();
+#endif
+
   initialize_glue_tmdb ();
   initialize_glue_updater ();
   initialize_glue_xml ();
-#ifndef OS_WASM
+
+#ifdef USE_GS
   initialize_glue_ghostscript ();
+#endif
+
+#ifdef USE_PLUGIN_PDF
   initialize_glue_pdf ();
 #endif
 }
