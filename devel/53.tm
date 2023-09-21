@@ -3,11 +3,11 @@
 <style|tmdoc>
 
 <\body>
-  <tmdoc-title|Lolly 1.2.0>
+  <tmdoc-title|Lolly 1.2.0~1.2.6>
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|53_1>|<cell|Da>|<cell|Separate
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|10|10|2|2|cell-valign|b>|<table|<row|<cell|Chore>|<cell|53_1>|<cell|Da>|<cell|Separate
   url and tm_url>>|<row|<cell|Chore>|<cell|53_2>|<cell|Da>|<cell|Use lolly
   1.2.0 and remove url>>|<row|<cell|Chore>|<cell|53_3>|<cell|Da>|<cell|Use
   lolly 1.2.1>>|<row|<cell|Chore>|<cell|53_4>|<cell|Da>|<cell|Migrate url
@@ -17,7 +17,7 @@
   glue_file to glue_lolly in lolly 1.2.3>>|<row|<cell|Chore>|<cell|53_8>|<cell|Da>|<cell|xmake:
   Keep files and headers in variables>>|<row|<cell|Chore>|<cell|53_9>|<cell|Da>|<cell|Use
   lolly 1.2.4>>|<row|<cell|Chore>|<cell|53_10>|<cell|Da>|<cell|Use lolly
-  1.2.5>>>>>
+  1.2.5>>|<row|<cell|Chore>|<cell|53_11>|<cell|Da>|<cell|Use lolly 1.2.6>>>>>
 
   <tmdoc-copyright|2023|Darcy Shen>
 
