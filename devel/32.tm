@@ -12,7 +12,12 @@
   of libpng>>|<row|<cell|Chore>|<cell|32_3>|<cell|Da>|<cell|Remove dep of
   libjpeg>>|<row|<cell|Chore>|<cell|32_4>|<cell|Da>|<cell|Remove dep of
   zlib>>|<row|<cell|Chore>|<cell|32_5>|<cell|Da>|<cell|Upgrade xmake to
-  2.8.2>>>>>
+  2.8.2>>|<row|<cell|Chore>|<cell|32_6>|<cell|Da>|<cell|xmake: simplify cpp
+  test targets>>|<row|<cell|Chore>|<cell|32_7>|<cell|Da>|<cell|build kernel
+  L3>>|<row|<cell|Chore>|<cell|32_8>|<cell|Da>|<cell|build
+  libmogan>>|<row|<cell|Chore>|<cell|32_9>|<cell|Da>|<cell|Default to english
+  language on wasm>>|<row|<cell|Chore>|<cell|32_10>|<cell|Da>|<cell|wasm: Add
+  plugins to in-memory fs>>>>>
 
   <tmdoc-copyright|2023|Darcy Shen>
 
