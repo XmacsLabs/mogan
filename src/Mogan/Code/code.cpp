@@ -105,12 +105,6 @@ TeXmacs_init_paths (int& argc, char** argv) {
 
   string current_texmacs_path= get_env ("TEXMACS_PATH");
 
-#ifdef Q_OS_LINUX
-  if (is_empty (current_texmacs_path) && exists (exedir * "../share/Xmacs")) {
-    set_env ("TEXMACS_PATH", as_string (exedir * "../share/Xmacs"));
-  }
-#endif
-
   // check on the latest $TEXMACS_PATH
   current_texmacs_path= get_env ("TEXMACS_PATH");
   if (is_empty (current_texmacs_path) ||
@@ -525,13 +519,11 @@ main (int argc, char** argv) {
   else if (theme == "dark")
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-dark.css";
   else if (theme != "") tm_style_sheet= theme;
-#ifndef OS_MINGW
+
   set_env ("LC_NUMERIC", "POSIX");
-#ifndef OS_MACOS
   set_env ("QT_QPA_PLATFORM", "xcb");
   set_env ("XDG_SESSION_TYPE", "x11");
-#endif
-#endif
+
 #ifdef QTTEXMACS
   // initialize the Qt application infrastructure
   if (headless_mode) qtmcoreapp= new QTMCoreApplication (argc, argv);
