@@ -11,16 +11,17 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|32|32|1|1|cell-background|pastel
-  red>|<cwith|31|31|1|1|cell-background|pastel
-  red>|<cwith|27|27|1|1|cell-background|pastel
-  red>|<cwith|38|38|3|3|cell-valign|b>|<cwith|39|39|1|1|cell-valign|b>|<cwith|26|26|1|1|cell-background|pastel
-  green>|<cwith|29|29|1|1|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|33|33|1|1|cell-background|pastel
+  red>|<cwith|32|32|1|1|cell-background|pastel
+  red>|<cwith|28|28|1|1|cell-background|pastel
+  red>|<cwith|39|39|3|3|cell-valign|b>|<cwith|40|40|1|1|cell-valign|b>|<cwith|27|27|1|1|cell-background|pastel
+  green>|<cwith|30|30|1|1|cell-background|pastel
+  green>|<cwith|26|26|1|1|cell-background|pastel
+  green>|<cwith|6|6|2|2|cell-valign|c>|<cwith|5|5|1|1|cell-valign|c>|<cwith|21|21|1|1|cell-background|pastel
+  green>|<cwith|4|4|1|1|cell-background|pastel
   green>|<cwith|25|25|1|1|cell-background|pastel
-  green>|<cwith|5|5|2|2|cell-valign|c>|<cwith|4|4|1|1|cell-valign|c>|<cwith|20|20|1|1|cell-background|pastel
-  green>|<cwith|3|3|1|1|cell-background|pastel
-  green>|<cwith|24|24|1|1|cell-background|pastel
-  green>|<table|<row|<cell|<dlink|55>>|<cell|paradisum>|<cell|tmdb
+  green>|<table|<row|<cell|<dlink|56>>|<cell|Darcy>|<cell|Tuning cache to
+  avoid corruption>>|<row|<cell|<dlink|55>>|<cell|paradisum>|<cell|tmdb
   onboarding>>|<row|<cell|<dlink|54>>|<cell|Pluto>|<cell|Community for Users
   and Developers>>|<row|<cell|<dlink|53>>|<cell|Darcy>|<cell|Lolly
   1.2.0~1.2.6>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
