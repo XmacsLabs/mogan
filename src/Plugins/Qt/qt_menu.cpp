@@ -67,7 +67,14 @@ qt_menu_rep::send (slot s, blackbox val) {
     {   
       check_type<bool> (val, s);
       bool flag = open_box<bool> (val);  // true= get grab, false= release grab
+#if defined (OS_WASM)
+      if (flag) {
+          QMenu* qm = get_qmenu();
+          qm->popup(qm->pos());
+      }
+#else
       if (flag) get_qmenu()->exec();
+#endif
     }   
     break;
   default:
