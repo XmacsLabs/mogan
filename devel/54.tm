@@ -3,14 +3,13 @@
 <style|tmdoc>
 
 <\body>
-  <tmdoc-title|Chore work>
+  <tmdoc-title|Community for Users and Developers>
 
   <section|Tasks>
 
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|54_1>|<cell|Pluto>|<cell|Issue
   Template>>|<row|<cell|Chore>|<cell|54_2>|<cell|Pluto>|<cell|Pull Request
-  Template>>|<row|<cell|Chore>|<cell|54_3>|<cell|Pluto>|<cell|Shorten
-  my_configvar_check() run time>>>>>
+  Template>>>>>
 
   <tmdoc-copyright|2023|Charonxin>
 
