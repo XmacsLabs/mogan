@@ -143,7 +143,7 @@ bool
 process_running (int pid) {
   string cmd= "ps -p " * as_string (pid);
   string ret= eval_system (cmd);
-  return occurs ("texmacs", ret) && occurs (as_string (pid), ret);
+  return occurs ("mogan", ret) && occurs (as_string (pid), ret);
 }
 
 static void
