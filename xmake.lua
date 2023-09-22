@@ -995,7 +995,26 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
     end
 end
 
-tm2html_includedirs = {
+tm2html_srcs = {
+    "src/Data/**.cpp",
+    "src/Edit/**.cpp",
+    "src/Graphics/**.cpp",
+    "src/Kernel/**.cpp",
+    "src/Scheme/Scheme/**.cpp",
+    "src/Scheme/S7/**.cpp",
+    "src/Scheme/L1/**.cpp",
+    "src/Scheme/L2/**.cpp",
+    "src/Scheme/L3/**.cpp",
+    "src/Scheme/L4/**.cpp",
+    "src/Scheme/L5/**.cpp",
+    "src/Scheme/Plugins/**.cpp",
+    "src/System/**.cpp",
+    "src/Texmacs/Data/**.cpp",
+    "src/Texmacs/Server/**.cpp",
+    "src/Texmacs/Window/**.cpp",
+    "src/Typeset/**.cpp",
+}
+tm2html_headers = {
     "src/Data/Convert",
     "src/Data/Document",
     "src/Data/Drd",
@@ -1030,7 +1049,9 @@ tm2html_includedirs = {
     "src/Scheme/L2",
     "src/Scheme/L3",
     "src/Scheme/L4",
+    "src/Scheme/L5",
     "src/Scheme/Plugins",
+    "src/Scheme/Scheme",
     "src/Style/Environment",
     "src/Style/Evaluate",
     "src/Style/Memorizer",
@@ -1044,32 +1065,27 @@ tm2html_includedirs = {
     "src/System/Misc",
     "src/Texmacs",
     "src/Texmacs/Data",
+    "src/Texmacs/Server",
     "src/Typeset",
     "src/Typeset/Bridge",
     "src/Typeset/Concat",
     "src/Typeset/Page",
-    "plugins/html/tools",
-}
-
-tm2html_files = {
-    "src/Scheme/S7/**.cpp",
-    "src/Scheme/L1/**.cpp",
-    "src/Scheme/L2/**.cpp",
-    "src/Scheme/L3/**.cpp",
-    "src/Scheme/L4/**.cpp",
-    -- "src/Scheme/L5/**.cpp",
-    "src/Scheme/Plugins/**.cpp",
-    "src/html/tools/glue.cpp",
-    "src/html/tools/object.cpp",
+    "$(buildir)",
+    "TeXmacs/include",
+    "src/Mogan"
 }
 
 target ("tm2html") do 
     add_includedirs(tm2html_includedirs)
     add_packages("lolly")
     add_packages("s7")
+    add_packages("fontconfig")
+    add_packages("freetype")
+    add_packages("pdfhummus")
+    add_deps("libmogan")
 
     set_languages("c++17")
-    set_kind("binary")
+    set_kind("static")
 
     add_configfiles("src/System/config_l3.h.xmake", {
         filename = "L3/config.h",
@@ -1081,13 +1097,33 @@ target ("tm2html") do
             QTTEXMACS = false,
         }
     })
+    add_rules("qt.shared")
+    add_rules("qt.widgetapp")
+    add_rules("qt.console")
+    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
     add_includedirs("$(buildir)/L3")
     add_includedirs("$(buildir)")
+    add_includedirs(tm2html_headers)
+    add_files(tm2html_srcs)
+
+    add_files(plugin_qt_srcs)
+    add_files(plugin_bibtex_srcs)
+    add_files(plugin_freetype_srcs)
+    add_files(plugin_database_srcs)
+    add_files(plugin_ghostscript_srcs)
+    add_files(plugin_ispell_srcs)
+    add_files(plugin_metafont_srcs)
+    add_files(plugin_latex_srcs)
+    add_files(plugin_openssl_srcs)
+    add_files(plugin_updater_srcs)
+    add_files(plugin_xml_srcs)
+    add_files(plugin_pdf_srcs)
+
     before_build(function (target)
         target:add("forceincludes", path.absolute("$(buildir)/config.h"))
         target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
     end)
-    add_files(tm2html_files)
+    -- add_files(tm2html_files)
     add_files("plugins/html/tools/tm2html.cpp")
 end 
 
