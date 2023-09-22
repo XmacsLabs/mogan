@@ -46,9 +46,17 @@
     </cell>|<\cell>
       29_5
     </cell>|<\cell>
-      Tanddouer
+      Tangdouer
     </cell>|<\cell>
       Add test for loading pdf with tm doc attachment
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      29_6
+    </cell>|<\cell>
+      Tangdouer
+    </cell>|<\cell>
+      Add conversion mechanism between pdf and tm
     </cell>>>>
   </wide-tabular>
 
