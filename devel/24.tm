@@ -24,6 +24,30 @@
       Pluto
     </cell>|<\cell>
       \ use html export as a Plugin
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|24_3>
+    </cell>|<\cell>
+      Pluto
+    </cell>|<\cell>
+      \ Fix: Failed to convert title to HTML\ 
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|24_4>
+    </cell>|<\cell>
+      Pluto
+    </cell>|<\cell>
+      \ Fix: tmweb-convert-file-dir bug & Support Integration test
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|24_5>
+    </cell>|<\cell>
+      Pluto
+    </cell>|<\cell>
+      \ tm2html tool on terminal
     </cell>>>>
   </wide-tabular>
 
