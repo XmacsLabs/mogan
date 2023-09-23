@@ -538,57 +538,104 @@ if is_plat("mingw", "windows") then
     end
 end
 
-target("draw") do
-    set_enabled(is_plat("linux") or is_plat("wasm"))
-    set_version(XMACS_VERSION)
-    set_installdir(INSTALL_DIR)
+function add_target_draw()
+    set_languages("c++17")
+    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
-    set_filename("mogan_draw")
-    add_rules("qt.widgetapp")
-    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
-    add_packages("lolly")
-    add_rpathdirs("@executable_path/../lib")
-    if (is_plat("linux")) then
-        add_deps("libmogan")
-    end
-    add_syslinks("pthread")
-
-    add_includedirs("$(buildir)")
-    add_files("src/Mogan/Draw/draw.cpp")
-
-    set_configdir(INSTALL_DIR)
-    set_configvar("DEVEL_VERSION", DEVEL_VERSION)
-    set_configvar("PACKAGE", "Mogan Draw")
-    set_configvar("XMACS_VERSION", XMACS_VERSION)
-
-    -- install man.1 manual file
-    add_configfiles("(misc/man/texmacs.1.in)", {
-        filename = "texmacs.1",
-        pattern = "@([^\n]-)@",
+    build_glue_on_config()
+    add_configfiles("src/System/config.h.xmake", {
+        filename = "draw/config.h",
+        variables = {
+            OS_GNU_LINUX = is_plat("linux"),
+            OS_MACOS = is_plat("macosx"),
+            OS_MINGW = is_plat("mingw"),
+            OS_WIN = is_plat("windows"),
+            OS_WASM = is_plat("wasm"),
+            MACOSX_EXTENSIONS = is_plat("macosx"),
+            USE_PLUGIN_PDF = false,
+            USE_PLUGIN_BIBTEX = false,
+            USE_PLUGIN_LATEX_PREVIEW = false,
+            USE_PLUGIN_TEX = false,
+            QTPIPES = is_plat("linux"),
+            USE_QT_PRINTER = is_plat("linux"),
+            NOMINMAX = is_plat("windows"),
+            SIZEOF_VOID_P = 8,
+            USE_FONTCONFIG = is_plat("linux"),
+            USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
+            USE_GS = false,
+            GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
+            GS_LIB = "../share/ghostscript/9.06/lib:",
+            GS_EXE = "",
+            USE_FREETYPE = true,
+            USE_ICONV = true,
+            STDC_HEADERS = true,
+        }
+    })
+    add_configfiles("src/System/tm_configure.hpp.xmake", {
+        filename = "draw/tm_configure.hpp",
+        pattern = "@(.-)@",
+        variables = {
+            XMACS_VERSION = XMACS_VERSION,
+            CONFIG_USER = CONFIG_USER,
+            CONFIG_STD_SETENV = "#define STD_SETENV",
+            tm_devel = "Texmacs-" .. DEVEL_VERSION,
+            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
+            tm_stable = "Texmacs-" .. STABLE_VERSION,
+            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
+            LOLLY_VERSION = LOLLY_VERSION,
+        }
     })
 
-    -- install texmacs runtime files
-    add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
-    add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
-
-    -- install tm files for testing purpose
-    if is_mode("releasedbg") then
-            add_installfiles({
-                "TeXmacs(/tests/*.tm)",
-                "TeXmacs(/tests/*.bib)",
-            }, {prefixdir="share/Xmacs"})
+    add_packages("lolly")
+    add_packages("freetype")
+    add_packages("s7")
+    if is_plat("wasm") then
+        add_rules("qt.widgetapp_static")
+    else
+        add_rules("qt.widgetapp")
+    end
+    if is_plat("wasm") then
+        add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QWasmIntegrationPlugin")
+    else
+        add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QtPrintSupport")
+    end
+    if is_plat("linux") then
+        add_packages("fontconfig")
     end
 
-    after_install(function (target)
-        print("after_install of target draw")
-        import("misc.xmake.global")
-        global.copy_icons(target)
-    end)
+    add_includedirs(libmogan_headers, {public = true})
+    add_includedirs("$(buildir)/draw")
+    add_files(libmogan_srcs)
+    if is_plat("wasm") then
+        add_files(plugin_qt_srcs_on_wasm)
+    else
+        add_files(plugin_qt_srcs)
+    end
+    add_files(plugin_freetype_srcs)
+    add_files(plugin_database_srcs)
+    add_files(plugin_ispell_srcs)
+    add_files(plugin_metafont_srcs)
+    add_files(plugin_openssl_srcs)
+    add_files(plugin_updater_srcs)
+    add_files(plugin_xml_srcs)
+    add_files(plugin_ghostscript_srcs)
+    add_files("src/Mogan/Draw/draw.cpp")
 
-    on_run(function (target)
-        name = target:name()
-        os.execv(target:installdir().."/bin/mogan_draw")
+    if is_plat("wasm") then
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/plugins@TeXmacs/plugins", {force = true})
+    end
+
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("$(buildir)/draw/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/draw/tm_configure.hpp"))
     end)
+end
+
+if is_plat("wasm", "linux") then
+    target("draw") do
+        add_target_draw()
+    end
 end
 
 function add_target_code()
