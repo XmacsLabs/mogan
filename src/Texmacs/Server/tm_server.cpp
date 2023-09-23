@@ -49,6 +49,9 @@ init_app (app_type app) {
     else if (app == app_type::RESEARCH) {
       tm_init_file= "$TEXMACS_PATH/progs/init-research.scm";
     }
+    else if (app == app_type::TM2HTML) {
+      tm_init_file= "$TEXMACS_PATH/progs/init-tm2html.scm";
+    }
   }
   exec_file (tm_init_file);
   if (is_none (my_init_file))

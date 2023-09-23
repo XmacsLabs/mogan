@@ -1114,6 +1114,103 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
     end
 end
 
+function add_target_tm2html()
+    set_version(XMACS_VERSION)
+    set_installdir(INSTALL_DIR)
+
+    if is_plat("macosx") then
+        set_filename("tm2html")
+    elseif is_plat("mingw", "windows") then
+        set_filename("tm2html.exe")
+    else
+        set_filename("tm2html")
+    end
+
+    if is_plat("windows") then
+        set_optimize("smallest");
+    end
+
+    if is_plat("macosx", "linux", "windows") then
+        add_rules("qt.widgetapp")
+    else
+        add_rules("qt.widgetapp_static")
+    end
+
+    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
+    if is_plat("macosx") then
+        add_frameworks("QtMacExtras")
+    end
+
+    add_packages("lolly")
+    if is_plat("mingw", "windows") then
+        add_packages("qt5widgets")
+    end
+
+    if is_plat("mingw") and is_mode("releasedbg") then
+        set_policy("check.auto_ignore_flags", false)
+        add_ldflags("-mconsole")
+    end
+
+    add_deps("libmogan")
+    add_includedirs({
+        "$(buildir)",
+    })
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("$(buildir)/config.h"))
+        target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
+    end)
+    -- add_files("src/Mogan/Research/research.cpp")
+    add_files("src/Mogan/Command/tm2html.cpp")
+    
+
+    if is_plat("linux") then
+        add_rpathdirs("@executable_path/../lib")
+    end
+    if not is_plat("windows") then
+        add_syslinks("pthread")
+    end
+
+    if is_plat("mingw") and is_mode("release") then
+        add_deps("windows_icon")
+    end
+
+    set_configdir(INSTALL_DIR)
+    set_configvar("DEVEL_VERSION", DEVEL_VERSION)
+    set_configvar("PACKAGE", "Mogan Research")
+    set_configvar("XMACS_VERSION", XMACS_VERSION)
+
+    -- install man.1 manual file
+    add_configfiles("(misc/man/texmacs.1.in)", {
+        filename = "texmacs.1",
+        pattern = "@([^\n]-)@",
+    })
+
+    -- package metadata
+    if is_plat("macosx") then
+        set_configvar("APPCAST", "")
+        set_configvar("OSXVERMIN", "")
+        add_configfiles("(packages/macos/Info.plist.in)", {
+            filename = "Info.plist",
+            pattern = "@(.-)@",
+        })
+        add_installfiles({
+            "packages/macos/Xmacs.icns",
+            "packages/macos/TeXmacs-document.icns",
+            "src/Plugins/Cocoa/(English.lproj/**)",
+            "src/Plugins/Cocoa/(zh_CN.lproj/**)",
+            "misc/scripts/mogan.sh"
+        })
+    elseif is_plat("linux") then
+        add_installfiles({
+            "misc/scripts/mogan"
+        })
+    end
+end
+
+target ("tm2html") do
+    add_target_tm2html()
+end
+
 -- xmake plugins
 add_configfiles(
     "misc/doxygen/Doxyfile.in", {
