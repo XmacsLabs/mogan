@@ -31,6 +31,7 @@ string get_stacktrace (unsigned int max_frames= 127);
 
 url get_texmacs_path ();
 url get_texmacs_home_path ();
+url get_tm_cache_path ();
 
 array<string> evaluate_system (array<string> arg,
                                array<int> fd_in, array<string> in,
