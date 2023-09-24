@@ -313,7 +313,7 @@ main (int argc, char** argv) {
   else if (theme != "") tm_style_sheet= theme;
 #if !defined(OS_MINGW) && !defined(OS_WIN)
   set_env ("LC_NUMERIC", "POSIX");
-#if  !(defined OS_MACOS || defined OS_WASM)
+#if !(defined OS_MACOS || defined OS_WASM)
   set_env ("QT_QPA_PLATFORM", "xcb");
   set_env ("XDG_SESSION_TYPE", "x11");
 #endif
@@ -334,7 +334,7 @@ main (int argc, char** argv) {
   start_scheme (argc, argv, TeXmacs_main);
 #ifdef QTTEXMACS
   delete qtmcoreapp;
-  
+
 #endif
   return 0;
 }
