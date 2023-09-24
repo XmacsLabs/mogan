@@ -100,15 +100,15 @@ get_texmacs_home_path () {
 url
 get_tm_cache_path () {
 #if defined(OS_WIN) || defined(OS_MINGW)
-  return url ("$LOCALAPPDATA/Xmacs/system/cache/" * XMACS_VERSION);
+  return url (string ("$LOCALAPPDATA/Xmacs/system/cache/") * XMACS_VERSION);
 #endif
 #if defined(OS_MACOS)
-  return url ("$HOME/Library/Caches/Xmacs/" * XMACS_VERSION);
+  return url (string ("$HOME/Library/Caches/Xmacs/") * XMACS_VERSION);
 #endif
 #if defined(OS_LINUX)
-  return url ("$XDG_CACHE_HOME/Xmacs/" * XMACS_VERSION);
+  return url (string ("$XDG_CACHE_HOME/Xmacs/") * XMACS_VERSION);
 #endif
-  return url ("$TEXMACS_HOME_PATH/system/cache/" * XMACS_VERSION);
+  return url (string ("$TEXMACS_HOME_PATH/system/cache/") * XMACS_VERSION);
 }
 
 string 
