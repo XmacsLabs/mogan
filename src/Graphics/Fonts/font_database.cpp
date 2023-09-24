@@ -155,7 +155,7 @@ font_database_save_database (url u) {
   string s= scheme_tree_to_block (tree (TUPLE, r));
   save_string (u, s);
   // FIXME: this should not be necessary
-  remove ("$TEXMACS_PATH/system/cache/file_cache");
+  remove (get_tm_cache_path () * url ("file_cache"));
   cache_refresh ();
 }
 
@@ -173,7 +173,7 @@ font_database_save_features (url u) {
   string s= scheme_tree_to_block (tree (TUPLE, r));
   save_string (u, s);
   // FIXME: this should not be necessary
-  remove ("$TEXMACS_PATH/system/cache/file_cache");
+  remove (get_tm_cache_path () * url ("file_cache"));
   cache_refresh ();
 }
 
@@ -189,7 +189,7 @@ font_database_save_characteristics (url u) {
   string s= scheme_tree_to_block (tree (TUPLE, r));
   save_string (u, s);
   // FIXME: this should not be necessary
-  remove ("$TEXMACS_PATH/system/cache/file_cache");
+  remove (get_tm_cache_path () * url ("file_cache"));
   cache_refresh ();
 }
 
