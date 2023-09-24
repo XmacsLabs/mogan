@@ -155,6 +155,15 @@ get_texmacs_home_path () {
 
 url
 get_tm_cache_path () {
+#if defined(OS_WIN) || defined(OS_MINGW)
+  return url ("$LOCALAPPDATA/Xmacs/system/cache");
+#endif
+#if defined(OS_MACOS)
+  return url ("$HOME/Library/Caches/Xmacs");
+#endif
+#if defined(OS_LINUX)
+  return url ("$XDG_CACHE_HOME/Xmacs");
+#endif
   return url ("$TEXMACS_HOME_PATH/system/cache");
 }
 
