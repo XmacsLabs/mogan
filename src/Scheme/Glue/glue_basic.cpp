@@ -10126,6 +10126,7 @@ initialize_glue_basic () {
   tmscm_install_procedure ("scheme-dialect",  tmg_scheme_dialect, 0, 0, 0);
   tmscm_install_procedure ("get-texmacs-path",  tmg_get_texmacs_path, 0, 0, 0);
   tmscm_install_procedure ("get-texmacs-home-path",  tmg_get_texmacs_home_path, 0, 0, 0);
+  tmscm_install_procedure ("get-tm-cache-path",  tmg_get_tm_cache_path, 0, 0, 0);
   tmscm_install_procedure ("get-user-login",  tmg_get_user_login, 0, 0, 0);
   tmscm_install_procedure ("get-user-name",  tmg_get_user_name, 0, 0, 0);
   tmscm_install_procedure ("mimetype-for-url",  tmg_mimetype_for_url, 1, 0, 0);

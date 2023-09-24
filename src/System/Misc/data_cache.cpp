@@ -142,6 +142,10 @@ do_cache_stat_fail (string name) {
 
 bool
 do_cache_file (string name) {
+  if (is_empty (texmacs_path_string))
+    return false;
+  if (is_empty (texmacs_font_path_string))
+    return false;
   return
     !ends (name, ".ts") &&
     (starts (name, texmacs_path_string) ||
@@ -150,6 +154,8 @@ do_cache_file (string name) {
 
 bool
 do_cache_doc (string name) {
+  if (is_empty (texmacs_doc_path_string))
+    return false;
   return starts (name, texmacs_doc_path_string);
 }
 
