@@ -97,6 +97,10 @@ get_texmacs_home_path () {
   return path;
 }
 
+url
+get_tm_cache_path () {
+  return url ("$TEXMACS_HOME_PATH/system/cache");
+}
 
 string 
 get_printing_default () {
