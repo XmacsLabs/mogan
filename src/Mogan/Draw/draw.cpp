@@ -3,6 +3,7 @@
  * MODULE     : draw.cpp
  * DESCRIPTION: main entry for Mogan Draw
  * COPYRIGHT  : (C) 2023 Oyyko
+ *                  2023 Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -104,8 +105,10 @@ TeXmacs_init_paths (int& argc, char** argv) {
 #endif
 
   string current_texmacs_path= get_env ("TEXMACS_PATH");
-
-#ifdef Q_OS_LINUX
+#ifdef OS_WASM
+  if (is_empty (current_texmacs_path)) set_env ("TEXMACS_PATH", "/TeXmacs");
+#endif
+#ifdef OS_GNU_LINUX
   if (is_empty (current_texmacs_path) && exists (exedir * "../share/Xmacs")) {
     set_env ("TEXMACS_PATH", as_string (exedir * "../share/Xmacs"));
   }
@@ -119,6 +122,8 @@ TeXmacs_init_paths (int& argc, char** argv) {
          << ") does not exists" << LF;
     exit (1);
   }
+  set_env ("PWD", "/");
+  set_env ("HOME", "/");
 }
 
 /******************************************************************************
@@ -525,13 +530,10 @@ main (int argc, char** argv) {
   else if (theme == "dark")
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-dark.css";
   else if (theme != "") tm_style_sheet= theme;
-#ifndef OS_MINGW
+
   set_env ("LC_NUMERIC", "POSIX");
-#ifndef OS_MACOS
-  set_env ("QT_QPA_PLATFORM", "xcb");
   set_env ("XDG_SESSION_TYPE", "x11");
-#endif
-#endif
+
 #ifdef QTTEXMACS
   // initialize the Qt application infrastructure
   if (headless_mode) qtmcoreapp= new QTMCoreApplication (argc, argv);
