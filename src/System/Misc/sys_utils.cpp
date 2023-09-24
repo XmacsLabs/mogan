@@ -153,6 +153,11 @@ get_texmacs_home_path () {
   return path;
 }
 
+url
+get_tm_cache_path () {
+  return url ("$TEXMACS_HOME_PATH/system/cache");
+}
+
 array<string>
 evaluate_system (array<string> arg,
                  array<int> fd_in, array<string> in,
