@@ -15,6 +15,7 @@
 #include "string.hpp"
 #include "tm_ostream.hpp"
 #include "url.hpp"
+#include "tree.hpp"
 
 /**
 
@@ -34,5 +35,11 @@ operations.
 @return Returns true if the extraction is successful, false otherwise.
 */
 bool scm_extract_attachments (url pdf_path);
+
+array<url> get_linked_file_paths(tree t);
+
+tree replace_with_relative_path(tree t);
+
+url get_main_tm(url pdf_path);
 
 #endif // ifdef PDF_HUMMUS_MAKE_ATTACHMENT_H

@@ -27,6 +27,7 @@
 
 #ifdef USE_PLUGIN_PDF
 #include "Pdf/pdf_hummus_make_attachment.hpp"
+#include "Pdf/pdf_hummus_extract_attachment.hpp"
 #endif
 
 #ifdef EXPERIMENTAL
@@ -394,78 +395,84 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
   set_buffer_tree (new_u, new_t);
   new_t= get_buffer_tree (new_u);
 
-  // dfs search all style and link
-  list<tree> st (new_t);
-  list<url>  tm_and_linked_file (new_u);
-  while (N (st) != 0) {
-    auto la= last_item (st);
-    st     = suppress_last (st);
-    for (int i= 0; i < arity (la); i++) {
-      if (is_compound (la[i])) {
-        string label= get_label (la[i]);
-        if (label == "image" || label == "include") {
-          if (is_atomic (la[i][0])) {
-            url pre_url= url (la[i][0]->label);
-            if (!exists (pre_url)) {
-              pre_url= head (cur_u) * pre_url;
-              if (!exists (pre_url)) {
-                debug_convert << pre_url << "do not exist" << LF;
-              }
-            }
-            tm_and_linked_file= tm_and_linked_file * pre_url;
-            string name       = as_string (tail (pre_url));
-            la[i][0]->label   = string (name);
-          }
-        }
-        else if (label == "style") {
-          if (is_func (la[i][0], TUPLE)) {
-            for (int j= 0; j < N (la[i][0]); j++) {
-              string style_name= get_label (la[i][0][j]);
-              if (!is_internal_style (style_name)) {
-                url style_url= url (style_name);
-                style_url    = glue (style_url, ".ts");
-                if (!exists (style_url)) {
-                  style_url= head (cur_u) * style_url;
-                  if (!exists (style_url)) {
-                    debug_convert << style_url << "do not exist" << LF;
-                  }
-                }
-                tm_and_linked_file= tm_and_linked_file * style_url;
-                string name       = basename (style_url);
-                la[i][0][j]->label= name;
-              }
-            }
-          }
-          else {
-            if (!is_atomic (la[i][0])) {
-              debug_convert << get_label (la[i][0]) << "is not atomic tree" << LF;
-            }
-            string style_name= get_label (la[i][0]);
-            if (!is_internal_style (style_name)) {
-              url style_url= url (style_name);
-              style_url    = glue (style_url, ".ts");
-              if (!exists (style_url)) {
-                style_url= head (cur_u) * style_url;
-                if (!exists (style_url)) {
-                    debug_convert << style_url << "do not exist" << LF;
-                }
-              }
-              tm_and_linked_file= tm_and_linked_file * style_url;
-              string name= basename (style_url);
-              la[i][0]->label= name;
-            }
-          }
-        }
-        else st= st * la[i];
-      }
-    }
-  }
+  new_t = replace_with_relative_path(new_t);
+  array<url>  tm_and_linked_file = get_linked_file_paths(new_t);
+  array<url> attachments;
+  attachments = append(new_u, attachments);
+  attachments = append(tm_and_linked_file, attachments);
+  cout << "attachments -> " << attachments << LF;
+  // // dfs search all style and link
+  // list<tree> st (new_t);
+  // array<url>  tm_and_linked_file (new_u);
+  // while (N (st) != 0) {
+  //   auto la= last_item (st);
+  //   st     = suppress_last (st);
+  //   for (int i= 0; i < arity (la); i++) {
+  //     if (is_compound (la[i])) {
+  //       string label= get_label (la[i]);
+  //       if (label == "image" || label == "include") {
+  //         if (is_atomic (la[i][0])) {
+  //           url pre_url= url (la[i][0]->label);
+  //           if (!exists (pre_url)) {
+  //             pre_url= head (cur_u) * pre_url;
+  //             if (!exists (pre_url)) {
+  //               debug_convert << pre_url << "do not exist" << LF;
+  //             }
+  //           }
+  //           tm_and_linked_file= append(pre_url, tm_and_linked_file);
+  //           string name       = as_string (tail (pre_url));
+  //           la[i][0]->label   = string (name);
+  //         }
+  //       }
+  //       else if (label == "style") {
+  //         if (is_func (la[i][0], TUPLE)) {
+  //           for (int j= 0; j < N (la[i][0]); j++) {
+  //             string style_name= get_label (la[i][0][j]);
+  //             if (!is_internal_style (style_name)) {
+  //               url style_url= url (style_name);
+  //               style_url    = glue (style_url, ".ts");
+  //               if (!exists (style_url)) {
+  //                 style_url= head (cur_u) * style_url;
+  //                 if (!exists (style_url)) {
+  //                   debug_convert << style_url << "do not exist" << LF;
+  //                 }
+  //               }
+  //               tm_and_linked_file=  append(style_url, tm_and_linked_file);
+  //               string name       = basename (style_url);
+  //               la[i][0][j]->label= name;
+  //             }
+  //           }
+  //         }
+  //         else {
+  //           if (!is_atomic (la[i][0])) {
+  //             debug_convert << get_label (la[i][0]) << "is not atomic tree" << LF;
+  //           }
+  //           string style_name= get_label (la[i][0]);
+  //           if (!is_internal_style (style_name)) {
+  //             url style_url= url (style_name);
+  //             style_url    = glue (style_url, ".ts");
+  //             if (!exists (style_url)) {
+  //               style_url= head (cur_u) * style_url;
+  //               if (!exists (style_url)) {
+  //                   debug_convert << style_url << "do not exist" << LF;
+  //               }
+  //             }
+  //             tm_and_linked_file=  append(style_url, tm_and_linked_file);
+  //             string name= basename (style_url);
+  //             la[i][0]->label= name;
+  //           }
+  //         }
+  //       }
+  //       else st= st * la[i];
+  //     }
+  //   }
+  // }
 
   set_buffer_tree (new_u, new_t);
   buffer_save (new_u);
   new_t= get_buffer_tree (new_u);
 
-  if (!pdf_hummus_make_attachments (pdf_name, tm_and_linked_file, pdf_name)) {
+  if (!pdf_hummus_make_attachments (pdf_name, attachments, pdf_name)) {
     debug_convert << "fail : pdf_hummus_make_attachments" << LF;
     return false;
   }

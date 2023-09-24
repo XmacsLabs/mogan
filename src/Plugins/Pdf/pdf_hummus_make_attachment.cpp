@@ -62,7 +62,7 @@ private:
   void                           CleanupAttachment ();
 };
 bool
-pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
+pdf_hummus_make_attachments (url pdf_path, array<url> attachment_paths,
                              url out_path) {
   if (N (attachment_paths) == 0) {
     if (DEBUG_CONVERT) debug_convert << "N (attachment_paths) is 0\n";
@@ -79,11 +79,11 @@ pdf_hummus_make_attachments (url pdf_path, list<url> attachment_paths,
     if (DEBUG_CONVERT) debug_convert << pdf_path << " is not regular\n";
     return false;
   }
-  if (is_regular (out_path)) {
-    if (DEBUG_CONVERT)
-      debug_convert << out_path << " has existed, causing coverage\n";
-    return false;
-  }
+  // if (is_regular (out_path)) {
+  //   if (DEBUG_CONVERT)
+  //     debug_convert << out_path << " has existed, causing coverage\n";
+  //   return false;
+  // }
 
   PDFWriter   pdfWriter;
   EStatusCode status;
