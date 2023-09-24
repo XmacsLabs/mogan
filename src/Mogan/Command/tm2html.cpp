@@ -102,132 +102,6 @@ clean_exit_on_segfault (int sig_num) {
 }
 
 /******************************************************************************
- * Texmacs paths
- ******************************************************************************/
-
-void
-TeXmacs_init_paths (int& argc, char** argv) {
-  (void) argc;
-  (void) argv;
-#ifdef QTTEXMACS
-  url exedir= url_system (qt_application_directory ());
-#else
-  url exedir= url_system (argv[0]) * "..";
-  if (!is_rooted (exedir)) {
-    exedir= url_pwd () * exedir;
-  }
-#endif
-
-  string current_texmacs_path= get_env ("TEXMACS_PATH");
-
-#ifdef Q_OS_LINUX
-  if (is_empty (current_texmacs_path) && exists (exedir * "../share/Xmacs")) {
-    set_env ("TEXMACS_PATH", as_string (exedir * "../share/Xmacs"));
-  }
-#endif
-
-#ifdef Q_OS_MAC
-  // the following line can inibith external plugin loading
-  // QCoreApplication::setLibraryPaths(QStringList());
-  // ideally we would like to control the external plugins
-  // and add the most useful (gif, jpeg, svg converters)
-  // to the bundle package. I still do not have a reliable solution
-  // so just allow everything that is reachable.
-
-  // plugins need to be installed in TeXmacs.app/Contents/Plugins
-  QCoreApplication::addLibraryPath (QDir::cleanPath (
-      QCoreApplication::applicationDirPath ().append ("/../Plugins")));
-  // cout << from_qstring ( QCoreApplication::libraryPaths () .join("\n") ) <<
-  // LF;
-  {
-    // ensure that private versions of the Qt frameworks have priority on
-    // other instances.
-    // in the event that we load qt plugins which could possibly link to
-    // other instances of the Qt libraries
-    string buf;
-    buf= as_string (exedir * "../Frameworks");
-    if (get_env ("DYLD_FRAMEWORK_PATH") != "")
-      buf= buf * ":" * get_env ("DYLD_FRAMEWORK_PATH");
-    set_env ("DYLD_FRAMEWORK_PATH", buf);
-    buf= as_string (exedir * "../Resources/lib");
-    if (get_env ("DYLD_LIBRARY_PATH") != "")
-      buf= buf * ":" * get_env ("DYLD_LIBRARY_PATH");
-    set_env ("DYLD_LIBRARY_PATH", buf);
-  }
-#endif
-
-#if defined(AQUATEXMACS) || defined(Q_OS_MAC) ||                               \
-    (defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS))
-  // Mac bundle environment initialization
-  // We set some environment variables when the executable
-  // is in a .app bundle on MacOSX
-  if (is_empty (current_texmacs_path))
-    set_env ("TEXMACS_PATH", as_string (exedir * "../Resources/share/Xmacs"));
-  // cout << get_env("PATH") * ":" * as_string(url("$PWD") * argv[0]
-  //  * "../../Resources/share/TeXmacs/bin") << LF;
-  if (exists ("/bin/bash")) {
-    string shell_env= var_eval_system ("PATH='' /bin/bash -l -c 'echo $PATH'");
-    set_env ("PATH", get_env ("PATH") * ":" * shell_env * ":" *
-                         as_string (exedir * "../Resources/share/TeXmacs/bin"));
-  }
-  else {
-    set_env ("PATH", get_env ("PATH") * ":" *
-                         as_string (exedir * "../Resources/share/TeXmacs/bin"));
-  }
-  // system("set");
-#endif
-
-#if defined(OS_MINGW) || defined(OS_WIN)
-  // Win bundle environment initialization
-  // TEXMACS_PATH is set by assuming that the executable is in TeXmacs/bin/
-  // HOME is set to USERPROFILE
-  // PWD is set to HOME
-  // if PWD is lacking, then the path resolution machinery may not work
-
-  if (is_empty (current_texmacs_path))
-    set_env ("TEXMACS_PATH", as_string (exedir * ".."));
-  // if (get_env ("HOME") == "") //now set in immediate_options otherwise
-  // --setup option fails
-  //   set_env ("HOME", get_env("USERPROFILE"));
-  // HACK
-  // In WINE the variable PWD is already in the outer Unix environment
-  // so we need to override it to have a correct behaviour
-  if ((get_env ("PWD") == "") || (get_env ("PWD")[0] == '/')) {
-    set_env ("PWD", as_string (exedir));
-    // set_env ("PWD", get_env("HOME"));
-  }
-  // system("set");
-#endif
-
-#ifdef OS_HAIKU
-  // Initialization inside the Haiku package management environment
-  // TEXMACS_PATH is set relative to the executable which is in $prefix/app
-  // to $prefix/data/TeXmacs
-
-  if (is_empty (current_texmacs_path))
-    set_env ("TEXMACS_PATH", as_string (exedir * "../data/TeXmacs"));
-
-  set_env ("PATH", get_env ("PATH") * ":" *
-                       as_string (exedir * "/system/lib/TeXmacs/bin"));
-#endif
-
-#ifdef OS_WASM
-  set_env ("PWD", "/");
-  set_env ("HOME", "/");
-  if (is_empty (current_texmacs_path)) set_env ("TEXMACS_PATH", "/TeXmacs");
-#endif
-
-  // check on the latest $TEXMACS_PATH
-  current_texmacs_path= get_env ("TEXMACS_PATH");
-  if (is_empty (current_texmacs_path) ||
-      !exists (url_system (current_texmacs_path))) {
-    cout << "The required TEXMACS_PATH(" << current_texmacs_path
-         << ") does not exists" << LF;
-    exit (1);
-  }
-}
-
-/******************************************************************************
  * Real main program for encaptulation of guile
  ******************************************************************************/
 
@@ -270,44 +144,6 @@ TeXmacs_main (int argc, char** argv) {
         }
       }
     }
-  // if (flag) {
-  //   debug (DEBUG_FLAG_AUTO, true);
-  //   cout << "[DEBUG] TeXmacs started" << LF;
-  // }
-
-  // Further options via environment variables
-  //   if (get_env ("TEXMACS_RETINA") == "off") {
-  //     cout << "[DEBUG] retina off" << LF;
-  //     retina_manual= true;
-  //     retina_factor= 1;
-  //     retina_icons = 1;
-  //     retina_scale = 1.0;
-  //   }
-  //   if (get_env ("TEXMACS_RETINA") == "on") {
-  //     cout << "[DEBUG] retina on" << LF;
-  //     retina_manual= true;
-  // #ifdef MACOSX_EXTENSIONS
-  //     retina_factor= 2;
-  //     retina_zoom  = 1;
-  //     retina_scale = 1.4;
-  // #else
-  //     retina_factor= 1;
-  //     retina_zoom  = 2;
-  //     retina_scale = (tm_style_sheet == "" ? 1.0 : 1.6666);
-  // #endif
-  //     retina_icons= 2;
-  //   }
-  // if (get_env ("TEXMACS_RETINA_ICONS") == "off") {
-  //   cout << "[DEBUG] retina icons off" << LF;
-  //   retina_iman = true;
-  //   retina_icons= 1;
-  // }
-  // if (get_env ("TEXMACS_RETINA_ICONS") == "on") {
-  //   cout << "[DEBUG] retina icons on" << LF;
-  //   retina_iman = true;
-  //   retina_icons= 2;
-  // }
-  // End options via environment variables
 
   // Further user preferences
   string native= string ("off");
@@ -341,14 +177,6 @@ TeXmacs_main (int argc, char** argv) {
       exec_delayed (scheme_cmd (cmd));
     }
     if ((s == "-c") || (s == "-convert")) i+= 2;
-    else if ((s == "-b") || (s == "-initialize-buffer") || (s == "-fn") ||
-             (s == "-font") || (s == "-i") || (s == "-initialize") ||
-             (s == "-g") || (s == "-geometry") || (s == "-x") ||
-             (s == "-execute") || (s == "-log-file") ||
-             (s == "-build-manual") || (s == "-reference-suite") ||
-             (s == "-test-suite")) {
-      i++;
-    }
   }
   if (install_status == 1) {
     string cmd= "(load-help-article \"about/welcome/new-welcome\")";
@@ -490,25 +318,8 @@ main (int argc, char** argv) {
   set_env ("XDG_SESSION_TYPE", "x11");
 #endif
 #endif
-#ifdef MACOSX_EXTENSIONS
-  // Reset TeXmacs if Alt is pressed during startup
-  if (mac_alternate_startup ()) {
-    cout << "TeXmacs] Performing setup (Alt on startup)" << LF;
-    remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
-    remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-    remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
-    remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
-  }
-#endif
-#ifdef QTTEXMACS
-  // initialize the Qt application infrastructure
-  if (headless_mode) qtmcoreapp= new QTMCoreApplication (argc, argv);
-  else qtmapp= new QTMApplication (argc, argv);
-#endif
-  TeXmacs_init_paths (argc, argv);
-#ifdef QTTEXMACS
-  if (!headless_mode) qtmapp->set_window_icon ("/misc/images/texmacs-512.png");
-#endif
+  qtmapp= new QTMApplication (argc, argv);
+
   // cout << "Bench  ] Started TeXmacs\n";
   the_et     = tuple ();
   the_et->obs= ip_observer (path ());
@@ -520,13 +331,10 @@ main (int argc, char** argv) {
   cout << "[DEBUG] Started tests\n";
   test_routines ();
 #endif
-  // #ifdef EXPERIMENTAL
-  //   test_environments ();
-  // #endif
   start_scheme (argc, argv, TeXmacs_main);
 #ifdef QTTEXMACS
-  if (headless_mode) delete qtmcoreapp;
-  else delete qtmapp;
+  delete qtmcoreapp;
+  
 #endif
   return 0;
 }
