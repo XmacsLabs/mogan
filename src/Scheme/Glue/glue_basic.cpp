@@ -396,6 +396,15 @@ tmg_get_texmacs_home_path () {
 }
 
 tmscm
+tmg_get_tm_cache_path () {
+  // TMSCM_DEFER_INTS;
+  url out= get_tm_cache_path ();
+  // TMSCM_ALLOW_INTS;
+
+  return url_to_tmscm (out);
+}
+
+tmscm
 tmg_get_user_login () {
   // TMSCM_DEFER_INTS;
   string out= get_user_login ();

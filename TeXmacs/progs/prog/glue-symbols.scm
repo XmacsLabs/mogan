@@ -65,6 +65,7 @@
 "scheme-dialect"
 "get-texmacs-path"
 "get-texmacs-home-path"
+"get-tm-cache-path"
 "get-user-login"
 "get-user-name"
 "mimetype-for-url"

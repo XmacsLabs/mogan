@@ -55,6 +55,7 @@
   (scheme-dialect scheme_dialect (string))
   (get-texmacs-path get_texmacs_path (url))
   (get-texmacs-home-path get_texmacs_home_path (url))
+  (get-tm-cache-path get_tm_cache_path (url))
   (get-user-login get_user_login (string))
   (get-user-name get_user_name (string))
   (mimetype-for-url mimetype_for_url (string url))
