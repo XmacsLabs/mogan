@@ -368,7 +368,20 @@ TeXmacs_main (int argc, char** argv) {
           url out ("$PWD", argv[i]);
           my_init_cmds= my_init_cmds * " " * "(load-buffer " *
                         scm_quote (as_string (in)) * " :strict) " *
-                        "(export-buffer " * scm_quote (as_string (out)) * ")";
+                        "(export-buffer " * scm_quote (as_string (out) * string(".html")) * ")";
+        }
+      }
+      else if (s=="-dir") {
+        cout << "[DEBUG] convert dir to dir" << LF;
+        i+= 2;
+        if (i < argc) {
+          url in ("$PWD", argv[i - 1]);
+          url out ("$PWD", argv[i]);
+          cout << "[DEBUG] in: " << as_string(in) << LF;
+          cout << "[DEBUG] out: " << as_string(out) << LF;
+          my_init_cmds= my_init_cmds * " " * "(begin (tmweb-convert-dir " *
+                        scm_quote (as_string (in)) * " " *
+                        scm_quote (as_string (out)) * "))";
         }
       }
       else if ((s == "-x") || (s == "-execute")) {

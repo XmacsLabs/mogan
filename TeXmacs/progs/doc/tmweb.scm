@@ -113,6 +113,9 @@
 	      (url->list u4))))
 
 (tm-define (tmweb-convert-dir tm-dir html-dir)
+  (display* "[DEBUG] enter scheme func\n")
+  (display* "[DEBUG] tm-dir: " tm-dir "\n")
+  (display* "[DEBUG] html-dir: " html-dir "\n")
   (tmweb-convert-directory tm-dir html-dir #f #f))
 
 (tm-define (tmweb-update-dir tm-dir html-dir)
