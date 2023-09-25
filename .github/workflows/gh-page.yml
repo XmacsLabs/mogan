@@ -29,6 +29,11 @@ jobs:
         sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc \
             fonts-noto-cjk libcurl4-openssl-dev libfreetype-dev \
             qtbase5-dev libqt5svg5-dev qt5-image-formats-plugins
+
+    - name: Set PATH
+      run: |
+        export TEXMACS_PATH=${{ runner.workspace }}/TeXmacs
+        ln -s ${{ runner.workspace }}/plugins ${{ runner.workspace }}/TeXmacs/plugins
     
     - name: set XMAKE_GLOBALDIR
       run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
