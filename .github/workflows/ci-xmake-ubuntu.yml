@@ -70,11 +70,11 @@ jobs:
         env:
           INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
       - name: build
-        run: xmake build --yes --verbose --diagnosis --all
+        run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
         env:
           INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
       - name: test
-        run: xmake run --yes --verbose --diagnosis --group=tests
+        run: xmake run --yes -vD --group=tests
         env:
           QT_QPA_PLATFORM: offscreen
           INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
