@@ -38,6 +38,7 @@ website/
 
 TeXmacs/tests/*.ps
 TeXmacs/tests/*.pdf
+TeXmacs/plugins
 
 doxyfile
 
