@@ -38,13 +38,12 @@
 	(close-output-port tem-pdf-out)
 	(if (extract-attachments tem-pdf)
 		()(display* "extract-attachments return false\n"))
-	
 	(set! tem-tm (url-relative tem-tm (get-main-tm tem-pdf)))
 
 	(if (url-exists? tem-tm)
 				(display* tem-tm " exist\n")
 				(display* tem-tm " not exist\n"))
-	(tree-import tem-tm (url-format tem-tm))
+	(replace-with-relative-path (tree-import tem-tm (url-format tem-tm)) tem-pdf)
 	))
 
 (converter texmacs-tree pdf-document
