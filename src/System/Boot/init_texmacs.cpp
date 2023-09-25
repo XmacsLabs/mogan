@@ -29,6 +29,9 @@
 #include <time.h>
 #include <direct.h>
 #endif
+#ifdef QTTEXMACS
+#include "Qt/qt_utilities.hpp"
+#endif
 
 int  install_status   = 0;
 bool use_which        = false;

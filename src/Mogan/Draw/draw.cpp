@@ -35,7 +35,6 @@
 
 #ifdef QTTEXMACS
 #include "Qt/QTMApplication.hpp"
-#include "Qt/qt_utilities.hpp"
 #include <QDir>
 #endif
 
