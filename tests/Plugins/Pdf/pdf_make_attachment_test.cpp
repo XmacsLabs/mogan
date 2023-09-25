@@ -189,8 +189,10 @@ TestHummusPdfMakeAttachment::test_replace_with_relative_path () {
   tree texmacs_tree_2= texmacs_to_tree (texmacs_doc_2);
   tree after_1       = replace_with_relative_path (
       texmacs_tree_1, url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main.tm"));
-
-  QVERIFY (texmacs_tree_2 == after_1);
+  tree after_2= replace_with_relative_path (
+      texmacs_tree_2,
+      url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main_convert_path.tm"));
+  QVERIFY (after_2 == after_1);
 }
 void
 TestHummusPdfMakeAttachment::test_get_main_tm () {
