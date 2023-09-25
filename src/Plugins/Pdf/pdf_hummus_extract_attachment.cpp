@@ -7,9 +7,14 @@
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
-#include "PDFWriter/PDFWriter.h"
-#include "PDFWriter/SafeBufferMacrosDefs.h"
-#include "PDFWriter/Trace.h"
+#include "pdf_hummus_extract_attachment.hpp"
+#include "analyze.hpp"
+#include "file.hpp"
+#include "new_buffer.hpp"
+#include "sys_utils.hpp"
+#include "tm_debug.hpp"
+#include "tm_url.hpp"
+#include "tree_helper.hpp"
 
 #include "PDFWriter/InputFileStream.h"
 #include "PDFWriter/OutputBufferedStream.h"
@@ -20,17 +25,12 @@
 #include "PDFWriter/PDFObjectCast.h"
 #include "PDFWriter/PDFParser.h"
 #include "PDFWriter/PDFStreamInput.h"
+#include "PDFWriter/PDFWriter.h"
+#include "PDFWriter/SafeBufferMacrosDefs.h"
+#include "PDFWriter/Trace.h"
 using namespace PDFHummus;
 using namespace IOBasicTypes;
-#include "analyze.hpp"
-#include "file.hpp"
-#include "new_buffer.hpp"
-#include "pdf_hummus_extract_attachment.hpp"
-#include "tm_debug.hpp"
-#include "tm_url.hpp"
-#include "tree_helper.hpp"
 
-#include "sys_utils.hpp"
 bool
 extract_attachments_from_pdf (url pdf_path, list<url>& names) {
   EStatusCode status= PDFHummus::eSuccess;

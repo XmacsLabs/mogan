@@ -8,23 +8,21 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 #include "pdf_hummus_make_attachment.hpp"
-#include "file.hpp"
-#include "tm_debug.hpp"
-
 #include "PDFWriter/DictionaryContext.h"
+#include "PDFWriter/InputFileStream.h"
 #include "PDFWriter/ObjectsContext.h"
+#include "PDFWriter/OutputBufferedStream.h"
+#include "PDFWriter/OutputFileStream.h"
 #include "PDFWriter/PDFRectangle.h"
 #include "PDFWriter/PDFStream.h"
 #include "PDFWriter/PDFWriter.h"
 #include "PDFWriter/SafeBufferMacrosDefs.h"
 #include "PDFWriter/Trace.h"
-
-#include "PDFWriter/InputFileStream.h"
-#include "PDFWriter/OutputBufferedStream.h"
-#include "PDFWriter/OutputFileStream.h"
+#include "file.hpp"
+#include "tm_debug.hpp"
 using namespace PDFHummus;
-
 using namespace IOBasicTypes;
+
 class PDFAttachment {
 public:
   PDFAttachment (void);
@@ -80,11 +78,6 @@ pdf_hummus_make_attachments (url pdf_path, array<url> attachment_paths,
     if (DEBUG_CONVERT) debug_convert << pdf_path << " is not regular\n";
     return false;
   }
-  // if (is_regular (out_path)) {
-  //   if (DEBUG_CONVERT)
-  //     debug_convert << out_path << " has existed, causing coverage\n";
-  //   return false;
-  // }
 
   PDFWriter   pdfWriter;
   EStatusCode status;
