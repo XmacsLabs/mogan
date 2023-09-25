@@ -33,8 +33,8 @@
   mechanism of link navigating>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
   indentation of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
   the new mechanism of glue code generation>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning
-  as plugin>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|LaTeX converters as
-  plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML converters as
+  as plugin>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|LaTeX converter as a
+  plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML converter as a
   plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs instead of the gs
   binary>>|<row|<cell|<dlink|40>>|<cell|>|<cell|Use XDG_DATA_PATH on
   Linux>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize the Help
