@@ -10,18 +10,18 @@
 
 #include "Pdf/pdf_hummus_extract_attachment.hpp"
 #include "Pdf/pdf_hummus_make_attachment.hpp"
+#include "base.hpp"
 #include "convert.hpp"
 #include "file.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
 #include <QtTest/QtTest>
-
 class TestHummusPdfMakeAttachment : public QObject {
   Q_OBJECT
 
 private slots:
-  void init () { lolly::init_tbox (); }
+  void init () { init_lolly (); }
   void test_pdf_hummus_make_single_attachment ();
   void test_pdf_hummus_make_multiple_attachments ();
   void test_pdf_hummus_make_zero_attachment ();
@@ -158,9 +158,6 @@ void
 TestHummusPdfMakeAttachment::test_get_linked_file_paths () {
   array<url> attachment_0;
   attachment_0 << url ("$TEXMACS_PATH/tests/29_1_1.tm");
-  bool attach_judge= pdf_hummus_make_attachments (
-      url ("$TEXMACS_PATH/tests/images/29_1_1.pdf"), attachment_0,
-      url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"));
   string     texmacs_doc_1= string_load (url ("$TEXMACS_PATH/tests/29_1_1.tm"));
   tree       texmacs_tree_1= texmacs_to_tree (texmacs_doc_1);
   array<url> linked_0      = get_linked_file_paths (

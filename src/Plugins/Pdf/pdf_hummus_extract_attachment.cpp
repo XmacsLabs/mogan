@@ -30,6 +30,7 @@ using namespace IOBasicTypes;
 #include "tm_url.hpp"
 #include "tree_helper.hpp"
 
+#include "sys_utils.hpp"
 bool
 extract_attachments_from_pdf (url pdf_path, list<url>& names) {
   EStatusCode status= PDFHummus::eSuccess;
@@ -188,9 +189,10 @@ declare_style (url u) {
 
 static bool
 is_internal_style (string style) {
-  return false;
   if (N (internal_styles) == 0) {
-    url sty_u= descendance ("$TEXMACS_STYLE_ROOT");
+    url sty_u= descendance ("$TEXMACS_PATH/styles");
+    declare_style (sty_u);
+    sty_u= descendance ("$TEXMACS_PATH/packages");
     declare_style (sty_u);
   }
   return internal_styles->contains (style);
@@ -249,6 +251,7 @@ get_linked_file_paths (tree t, url path) {
                 style_url= relative (path, style_url);
                 if (!exists (style_url)) {
                   debug_convert << style_url << "do not exist" << LF;
+                  continue;
                 }
               }
               tm_and_linked_file= append (style_url, tm_and_linked_file);

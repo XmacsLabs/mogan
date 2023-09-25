@@ -34,7 +34,7 @@ function main()
                 }
             },
             {
-                scm_name = "make-attachments",
+                scm_name = "pdf-make-attachments",
                 cpp_name = "pdf_hummus_make_attachments",
                 ret_type = "bool",
                 arg_list = {
@@ -44,7 +44,7 @@ function main()
                 }
             },
             {
-                scm_name = "get-linked-file-paths",
+                scm_name = "pdf-get-linked-file-paths",
                 cpp_name = "get_linked_file_paths",
                 ret_type = "array_url",
                 arg_list = {
@@ -53,7 +53,7 @@ function main()
                 }
             },
             {
-                scm_name = "replace-with-relative-path",
+                scm_name = "pdf-replace-linked-path",
                 cpp_name = "replace_with_relative_path",
                 ret_type = "tree",
                 arg_list = {
@@ -62,7 +62,7 @@ function main()
                 }
             },
             {
-                scm_name = "get-main-tm",
+                scm_name = "pdf-get-attached-main-tm",
                 cpp_name = "get_main_tm",
                 ret_type = "url",
                 arg_list = {
