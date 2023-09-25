@@ -33,11 +33,10 @@
     (switch-to-buffer cur)
     (buffer-close buf))
   ;;attachment-list need be generated
-  (if(pdf-make-attachments tem-pdf url-list tem-pdf)
+  (if (pdf-make-attachments tem-pdf url-list tem-pdf)
     (display* "pdf-make-attachments return true\n")
     (display* "pdf-make-attachments return false\n"))
-  (string-load tem-pdf)
-  ))
+  (string-load tem-pdf)))
 
 (define (pdf->texmacs x . opts)
   (let* ((tem-dir (url-temp-dir))
@@ -55,8 +54,7 @@
     (if (url-exists? tem-tm)
       (display* tem-tm " exist\n")
       (display* tem-tm " not exist\n"))
-    (pdf-replace-linked-path (tree-import tem-tm (url-format tem-tm)) tem-pdf)
-    ))
+    (pdf-replace-linked-path (tree-import tem-tm (url-format tem-tm)) tem-pdf)))
 
 (converter texmacs-tree pdf-document
   (:function texmacs->pdf))
