@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [ branch-1.2 ]
     paths:
-      - '.github/workflows/ci-doxygen.yml'
+      - '.github/workflows/gh-page.yml'
   workflow_dispatch:
 
 jobs:
