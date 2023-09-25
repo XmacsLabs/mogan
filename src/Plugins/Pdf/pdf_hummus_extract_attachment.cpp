@@ -28,6 +28,8 @@ using namespace IOBasicTypes;
 #include "tm_url.hpp"
 #include "analyze.hpp"
 #include "tree_helper.hpp"
+#include "new_buffer.hpp"
+
 bool
 extract_attachments_from_pdf (url pdf_path, list<url>& names) {
   EStatusCode status= PDFHummus::eSuccess;
@@ -156,10 +158,8 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
 
 bool
 scm_extract_attachments (url pdf_path) {
-  cout << "scm_extract_attachments " << pdf_path << LF;
   list<url> attachments_paths;
   bool ret = extract_attachments_from_pdf (pdf_path, attachments_paths);
-  cout << "attachments_paths -> " << attachments_paths << LF;
   return ret;
 }
 static hashset<string> internal_styles;
@@ -189,8 +189,7 @@ declare_style (url u) {
 
 static bool
 is_internal_style (string style) {
-  return true;
-
+  return false;
   if (N (internal_styles) == 0) {
     url sty_u= descendance ("$TEXMACS_STYLE_ROOT");
     declare_style (sty_u);
@@ -198,7 +197,7 @@ is_internal_style (string style) {
   return internal_styles->contains (style);
 }
 
-array<url> get_linked_file_paths(tree t){
+array<url> get_linked_file_paths(tree t, url path){
   list<tree> st (t);
   array<url>  tm_and_linked_file;
   while (N (st) != 0) {
@@ -206,25 +205,32 @@ array<url> get_linked_file_paths(tree t){
     st     = suppress_last (st);
     for (int i= 0; i < arity (la); i++) {
       if (is_compound (la[i])) {
-        string label= la[i] -> label;
+        string label= get_label(la[i]);
         if (label == "image" || label == "include") {
           if (is_atomic (la[i][0])) {
-            url pre_url= url (la[i][0]->label);
+            url pre_url= url (get_label(la[i][0]));
             if (!exists (pre_url)) {
+              pre_url= relative(path, pre_url);
+              if (!exists (pre_url)) {
                 debug_convert << pre_url << "do not exist" << LF;
+              }
             }
             tm_and_linked_file= append (pre_url, tm_and_linked_file);
           }
         }
         else if (label == "style") {
-          if (is_tuple (la[i][0])) {
+          if (get_label(la[i][0]) == "tuple") {
             for (int j= 0; j < N (la[i][0]); j++) {
-              string style_name= la[i][0][j] -> label;
+              string style_name= get_label(la[i][0][j]);
               if (!is_internal_style (style_name)) {
                 url style_url= url (style_name);
                 style_url    = glue (style_url, ".ts");
                 if (!exists (style_url)) {
+                  style_url= relative(path, style_url);
+                  if (!exists (style_url)) {
                     debug_convert << style_url << "do not exist" << LF;
+                    continue;
+                  }
                 }
                 tm_and_linked_file= append(style_url, tm_and_linked_file);
               }
@@ -232,14 +238,17 @@ array<url> get_linked_file_paths(tree t){
           }
           else {
             if (!is_atomic (la[i][0])) {
-              debug_convert << la[i][0] -> label << "is not atomic tree" << LF;
+              debug_convert << get_label(la[i][0]) << "is not atomic tree" << LF;
             }
-            string style_name= la[i][0] -> label;
+            string style_name= get_label(la[i][0]);
             if (!is_internal_style (style_name)) {
               url style_url= url (style_name);
               style_url    = glue (style_url, ".ts");
               if (!exists (style_url)) {
-                    debug_convert << style_url << "do not exist" << LF;
+                style_url= relative(path, style_url);
+                if (!exists (style_url)) {
+                  debug_convert << style_url << "do not exist" << LF;
+                }
               }
               tm_and_linked_file= append(style_url, tm_and_linked_file);
             }
@@ -253,7 +262,7 @@ array<url> get_linked_file_paths(tree t){
   return tm_and_linked_file;
 }
 
-tree replace_with_relative_path(tree t){
+tree replace_with_relative_path(tree t, url path){
    // dfs search all style and link
   list<tree> st (t);
   list<url>  tm_and_linked_file;
@@ -263,51 +272,51 @@ tree replace_with_relative_path(tree t){
     st     = suppress_last (st);
     for (int i= 0; i < arity (la); i++) {
       if (is_compound (la[i])) {
-        string label= la[i] -> label;
+        string label= get_label(la[i]);
         if (label == "image" || label == "include") {
           if (is_atomic (la[i][0])) {
-            url pre_url= url (la[i][0]->label);
+            url pre_url= url (get_label(la[i][0]));
             if (!exists (pre_url)) {
-              // pre_url= head (cur_u) * pre_url;
-              // if (!exists (pre_url)) {
+              pre_url=  relative(path, pre_url);
+              if (!exists (pre_url)) {
                 debug_convert << pre_url << "do not exist" << LF;
-              //}
+              }
             }
             string name       = as_string (tail (pre_url));
-            la[i][0]->label   = string (name);
+            la[i][0] -> label   = string (name);
           }
         }
         else if (label == "style") {
           if (is_tuple (la[i][0])) {
             for (int j= 0; j < N (la[i][0]); j++) {
-              string style_name= la[i][0][j] -> label;
+              string style_name= get_label(la[i][0][j]);
               if (!is_internal_style (style_name)) {
                 url style_url= url (style_name);
                 style_url    = glue (style_url, ".ts");
                 if (!exists (style_url)) {
-                  // style_url= head (cur_u) * style_url;
-                  // if (!exists (style_url)) {
+                  style_url= relative(path, style_url);
+                  if (!exists (style_url)) {
                     debug_convert << style_url << "do not exist" << LF;
-                  //}
+                  }
                 }
                 string name       = basename (style_url);
-                la[i][0][j]->label= name;
+                la[i][0][j] -> label = name; 
               }
             }
           }
           else {
             if (!is_atomic (la[i][0])) {
-              debug_convert << la[i][0] -> label << "is not atomic tree" << LF;
+              debug_convert << get_label(la[i][0]) << "is not atomic tree" << LF;
             }
-            string style_name= la[i][0] -> label;
+            string style_name= get_label(la[i][0]);
             if (!is_internal_style (style_name)) {
               url style_url= url (style_name);
               style_url    = glue (style_url, ".ts");
               if (!exists (style_url)) {
-                // style_url= head (cur_u) * style_url;
-                // if (!exists (style_url)) {
+                style_url= relative(path, style_url);
+                if (!exists (style_url)) {
                     debug_convert << style_url << "do not exist" << LF;
-                //}
+                }
               }
               string name= basename (style_url);
               la[i][0]->label= name;

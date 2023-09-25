@@ -321,41 +321,6 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
     }
 #endif
 }
-static hashset<string> internal_styles;
-
-static void
-declare_style (url u) {
-  if (is_or (u)) {
-    declare_style (u[1]);
-    declare_style (u[2]);
-  }
-  else if (is_concat (u)) {
-    string dir= upcase_first (as_string (u[1]));
-    if (dir == "CVS" || dir == ".svn");
-    else declare_style (u[2]);
-  }
-  else if (is_atomic (u)) {
-    string s= as_string (u);
-    if (ends (s, ".ts") && !starts (s, "source")) {
-      internal_styles->insert (s(0,N(s)-3));
-      if (starts (s, "old-"))
-        internal_styles->insert (s(4,N(s)-3));
-      if (starts (s, "old2-"))
-        internal_styles->insert (s(5,N(s)-3));
-    }
-  }
-}
-
-static bool
-is_internal_style (string style) {
-  return true;
-
-  if (N (internal_styles) == 0) {
-    url sty_u= descendance ("$TEXMACS_STYLE_ROOT");
-    declare_style (sty_u);
-  }
-  return internal_styles->contains (style);
-}
 
 void
 edit_main_rep::print_to_file (url name, string first, string last) {
@@ -395,8 +360,8 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
   set_buffer_tree (new_u, new_t);
   new_t= get_buffer_tree (new_u);
 
-  new_t = replace_with_relative_path(new_t);
-  array<url>  tm_and_linked_file = get_linked_file_paths(new_t);
+  new_t = replace_with_relative_path(new_t, cur_u);
+  array<url>  tm_and_linked_file = get_linked_file_paths(new_t, cur_u);
   array<url> attachments;
   attachments = append(new_u, attachments);
   attachments = append(tm_and_linked_file, attachments);

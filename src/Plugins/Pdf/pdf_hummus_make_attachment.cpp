@@ -97,7 +97,6 @@ pdf_hummus_make_attachments (url pdf_path, array<url> attachment_paths,
       break;
     }
     PDFAttachmentWriter attachmentWriter (&pdfWriter);
-
     for (int i= 0; i < (int) N (attachment_paths); i++) {
       string          attachment_path= as_string (attachment_paths[i]);
       InputFileStream tm_file_stream;

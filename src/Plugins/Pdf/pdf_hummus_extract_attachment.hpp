@@ -36,9 +36,9 @@ operations.
 */
 bool scm_extract_attachments (url pdf_path);
 
-array<url> get_linked_file_paths(tree t);
+array<url> get_linked_file_paths(tree t, url path);
 
-tree replace_with_relative_path(tree t);
+tree replace_with_relative_path(tree t, url path);
 
 url get_main_tm(url pdf_path);
 

@@ -6,9 +6,9 @@
 				(tem-pdf (string->url (string-append (url->string tem-dir) "/tem.pdf")))
 				(tem-tm (string->url (string-append (url->string tem-dir) "/tem.tm")))
 				(tem-tm-out (open-output-file (url->string tem-tm)))
-				(url-list (get-linked-file-paths x)))
+				(url-list (get-linked-file-paths x buffer-get)))
 	(display* tem-dir "\n")
-	(display (serialize-texmacs (replace-with-relative-path x)) tem-tm-out)
+	(display (serialize-texmacs (replace-with-relative-path x buffer-get)) tem-tm-out)
 	(close-output-port tem-tm-out)
 
 	(let* ((cur (current-buffer))

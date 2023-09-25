@@ -48,7 +48,8 @@ function main()
                 cpp_name = "get_linked_file_paths",
                 ret_type = "array_url",
                 arg_list = {
-                    "tree"
+                    "tree",
+                    "url"
                 }
             },
             {
@@ -56,7 +57,8 @@ function main()
                 cpp_name = "replace_with_relative_path",
                 ret_type = "tree",
                 arg_list = {
-                    "tree"
+                    "tree",
+                    "url"
                 }
             },
             {
