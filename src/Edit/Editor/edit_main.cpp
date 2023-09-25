@@ -360,11 +360,11 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
   set_buffer_tree (new_u, new_t);
   new_t= get_buffer_tree (new_u);
 
-  new_t = replace_with_relative_path(new_t, cur_u);
   array<url>  tm_and_linked_file = get_linked_file_paths(new_t, cur_u);
+  new_t = replace_with_relative_path(new_t, cur_u);
   array<url> attachments;
-  attachments = append(new_u, attachments);
   attachments = append(tm_and_linked_file, attachments);
+  attachments = append(new_u, attachments);
   cout << "attachments -> " << attachments << LF;
 
   set_buffer_tree (new_u, new_t);

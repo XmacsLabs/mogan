@@ -283,6 +283,9 @@ tree replace_with_relative_path(tree t, url path){
               }
             }
             string name       = as_string (tail (pre_url));
+            if(path != url()){
+              name = as_string(relative(path, name));
+            }
             la[i][0] -> label   = string (name);
           }
         }
@@ -300,6 +303,9 @@ tree replace_with_relative_path(tree t, url path){
                   }
                 }
                 string name       = basename (style_url);
+                if(path != url()){
+                  name = as_string(relative(path, name));
+                }
                 la[i][0][j] -> label = name; 
               }
             }
@@ -319,6 +325,9 @@ tree replace_with_relative_path(tree t, url path){
                 }
               }
               string name= basename (style_url);
+              if(path != url()){
+                name = as_string(relative(path, name));
+              }
               la[i][0]->label= name;
             }
           }
@@ -334,5 +343,9 @@ tree replace_with_relative_path(tree t, url path){
 url get_main_tm(url pdf_path){
   list<url> attachments_paths;
   bool ret = extract_attachments_from_pdf (pdf_path, attachments_paths);
+  // for(int i = 0; i < N(attachments_paths); i ++){
+  //   if(basename(attachments_paths[i]) == basename(pdf_path) && suffix(attachments_paths[0]) == "tm")
+  //     return attachments_paths[i];
+  // }
   return attachments_paths[0];
 }
