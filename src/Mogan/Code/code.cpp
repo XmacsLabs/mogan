@@ -35,8 +35,6 @@
 
 #ifdef QTTEXMACS
 #include "Qt/QTMApplication.hpp"
-#include "Qt/qt_utilities.hpp"
-#include <QDir>
 #endif
 
 extern bool char_clip;
@@ -85,45 +83,6 @@ void
 clean_exit_on_segfault (int sig_num) {
   (void) sig_num;
   TM_FAILED ("segmentation fault");
-}
-
-/******************************************************************************
- * Texmacs paths
- ******************************************************************************/
-
-void
-TeXmacs_init_paths (int& argc, char** argv) {
-  (void) argc;
-  (void) argv;
-#ifdef QTTEXMACS
-  url exedir= url_system (qt_application_directory ());
-#else
-  url exedir= url_system (argv[0]) * "..";
-  if (!is_rooted (exedir)) {
-    exedir= url_pwd () * exedir;
-  }
-#endif
-
-  string current_texmacs_path= get_env ("TEXMACS_PATH");
-#ifdef OS_WASM
-  if (is_empty (current_texmacs_path)) set_env ("TEXMACS_PATH", "/TeXmacs");
-#endif
-#ifdef OS_GNU_LINUX
-  if (is_empty (current_texmacs_path) && exists (exedir * "../share/Xmacs")) {
-    set_env ("TEXMACS_PATH", as_string (exedir * "../share/Xmacs"));
-  }
-#endif
-
-  // check on the latest $TEXMACS_PATH
-  current_texmacs_path= get_env ("TEXMACS_PATH");
-  if (is_empty (current_texmacs_path) ||
-      !exists (url_system (current_texmacs_path))) {
-    cout << "The required TEXMACS_PATH(" << current_texmacs_path
-         << ") does not exists" << LF;
-    exit (1);
-  }
-  set_env ("PWD", "/");
-  set_env ("HOME", "/");
 }
 
 /******************************************************************************
@@ -539,7 +498,7 @@ main (int argc, char** argv) {
   if (headless_mode) qtmcoreapp= new QTMCoreApplication (argc, argv);
   else qtmapp= new QTMApplication (argc, argv);
 #endif
-  TeXmacs_init_paths (argc, argv);
+  init_texmacs_path (argc, argv);
 #ifdef QTTEXMACS
   if (!headless_mode) qtmapp->set_window_icon ("/misc/images/texmacs-512.png");
 #endif

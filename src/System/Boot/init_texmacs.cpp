@@ -29,6 +29,11 @@
 #include <time.h>
 #include <direct.h>
 #endif
+#ifdef QTTEXMACS
+#include "Qt/qt_utilities.hpp"
+#include <QCoreApplication>
+#include <QDir>
+#endif
 
 int  install_status   = 0;
 bool use_which        = false;
@@ -36,6 +41,132 @@ bool use_locate       = false;
 
 extern void setup_tex (); // from Plugins/Metafont/tex_init.cpp
 extern void init_tex  (); // from Plugins/Metafont/tex_init.cpp
+
+
+/******************************************************************************
+ * Texmacs paths
+ ******************************************************************************/
+void
+init_texmacs_path (int& argc, char** argv) {
+  (void) argc;
+  (void) argv;
+#ifdef QTTEXMACS
+  url exedir= url_system (qt_application_directory ());
+#else
+  url exedir= url_system (argv[0]) * "..";
+  if (!is_rooted (exedir)) {
+    exedir= url_pwd () * exedir;
+  }
+#endif
+
+  string current_texmacs_path= get_env ("TEXMACS_PATH");
+
+#ifdef OS_GNU_LINUX
+  if (is_empty (current_texmacs_path) && exists (exedir * "../share/Xmacs")) {
+    set_env ("TEXMACS_PATH", as_string (exedir * "../share/Xmacs"));
+  }
+#endif
+
+#ifdef OS_MACOS
+  // the following line can inibith external plugin loading
+  // QCoreApplication::setLibraryPaths(QStringList());
+  // ideally we would like to control the external plugins
+  // and add the most useful (gif, jpeg, svg converters)
+  // to the bundle package. I still do not have a reliable solution
+  // so just allow everything that is reachable.
+
+  // plugins need to be installed in TeXmacs.app/Contents/Plugins
+  QCoreApplication::addLibraryPath (QDir::cleanPath (
+      QCoreApplication::applicationDirPath ().append ("/../Plugins")));
+  // cout << from_qstring ( QCoreApplication::libraryPaths () .join("\n") ) <<
+  // LF;
+  {
+    // ensure that private versions of the Qt frameworks have priority on
+    // other instances.
+    // in the event that we load qt plugins which could possibly link to
+    // other instances of the Qt libraries
+    string buf;
+    buf= as_string (exedir * "../Frameworks");
+    if (get_env ("DYLD_FRAMEWORK_PATH") != "")
+      buf= buf * ":" * get_env ("DYLD_FRAMEWORK_PATH");
+    set_env ("DYLD_FRAMEWORK_PATH", buf);
+    buf= as_string (exedir * "../Resources/lib");
+    if (get_env ("DYLD_LIBRARY_PATH") != "")
+      buf= buf * ":" * get_env ("DYLD_LIBRARY_PATH");
+    set_env ("DYLD_LIBRARY_PATH", buf);
+  }
+#endif
+
+#if defined(AQUATEXMACS) || defined(OS_MACOS) || \
+    (defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS))
+  // Mac bundle environment initialization
+  // We set some environment variables when the executable
+  // is in a .app bundle on MacOSX
+  if (is_empty (current_texmacs_path))
+    set_env ("TEXMACS_PATH", as_string (exedir * "../Resources/share/Xmacs"));
+  // cout << get_env("PATH") * ":" * as_string(url("$PWD") * argv[0]
+  //  * "../../Resources/share/TeXmacs/bin") << LF;
+  if (exists ("/bin/bash")) {
+    string shell_env= var_eval_system ("PATH='' /bin/bash -l -c 'echo $PATH'");
+    set_env ("PATH", get_env ("PATH") * ":" * shell_env * ":" *
+                         as_string (exedir * "../Resources/share/TeXmacs/bin"));
+  }
+  else {
+    set_env ("PATH", get_env ("PATH") * ":" *
+                         as_string (exedir * "../Resources/share/TeXmacs/bin"));
+  }
+  // system("set");
+#endif
+
+#if defined(OS_MINGW) || defined(OS_WIN)
+  // Win bundle environment initialization
+  // TEXMACS_PATH is set by assuming that the executable is in TeXmacs/bin/
+  // HOME is set to USERPROFILE
+  // PWD is set to HOME
+  // if PWD is lacking, then the path resolution machinery may not work
+
+  if (is_empty (current_texmacs_path))
+    set_env ("TEXMACS_PATH", as_string (exedir * ".."));
+  // if (get_env ("HOME") == "") //now set in immediate_options otherwise
+  // --setup option fails
+  //   set_env ("HOME", get_env("USERPROFILE"));
+  // HACK
+  // In WINE the variable PWD is already in the outer Unix environment
+  // so we need to override it to have a correct behaviour
+  if ((get_env ("PWD") == "") || (get_env ("PWD")[0] == '/')) {
+    set_env ("PWD", as_string (exedir));
+    // set_env ("PWD", get_env("HOME"));
+  }
+  // system("set");
+#endif
+
+#ifdef OS_HAIKU
+  // Initialization inside the Haiku package management environment
+  // TEXMACS_PATH is set relative to the executable which is in $prefix/app
+  // to $prefix/data/TeXmacs
+
+  if (is_empty (current_texmacs_path))
+    set_env ("TEXMACS_PATH", as_string (exedir * "../data/TeXmacs"));
+
+  set_env ("PATH", get_env ("PATH") * ":" *
+                       as_string (exedir * "/system/lib/TeXmacs/bin"));
+#endif
+
+#ifdef OS_WASM
+  set_env ("PWD", "/");
+  set_env ("HOME", "/");
+  if (is_empty (current_texmacs_path)) set_env ("TEXMACS_PATH", "/TeXmacs");
+#endif
+
+  // check on the latest $TEXMACS_PATH
+  current_texmacs_path= get_env ("TEXMACS_PATH");
+  if (is_empty (current_texmacs_path) ||
+      !exists (url_system (current_texmacs_path))) {
+    cout << "The required TEXMACS_PATH(" << current_texmacs_path
+         << ") does not exists" << LF;
+    exit (1);
+  }
+}
 
 /******************************************************************************
 * Subroutines for paths
