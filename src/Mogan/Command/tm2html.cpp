@@ -131,13 +131,10 @@ TeXmacs_main (int argc, char** argv) {
         }
       }
       else if (s == "-dir") {
-        cout << "[DEBUG] convert dir to dir" << LF;
         i+= 2;
         if (i < argc) {
           url in ("$PWD", argv[i - 1]);
           url out ("$PWD", argv[i]);
-          cout << "[DEBUG] in: " << as_string (in) << LF;
-          cout << "[DEBUG] out: " << as_string (out) << LF;
           my_init_cmds= my_init_cmds * " " * "(begin (tmweb-convert-dir " *
                         scm_quote (as_string (in)) * " " *
                         scm_quote (as_string (out)) * "))";
@@ -273,7 +270,6 @@ immediate_options (int argc, char** argv) {
     string s= argv[i];
     if ((N (s) >= 2) && (s (0, 2) == "--")) s= s (1, N (s));
     if ((s == "-S") || (s == "-setup")) {
-      cout << "[DEBUG] setup" << LF;
       remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
       remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
       remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
@@ -284,7 +280,6 @@ immediate_options (int argc, char** argv) {
     }
     if (s == "-headless") {
       headless_mode= true;
-      cout << "[DEBUG] headless mode" << LF;
     }
   }
 }
@@ -328,7 +323,6 @@ main (int argc, char** argv) {
   init_texmacs ();
   bench_cumul ("initialize texmacs");
 #ifdef ENABLE_TESTS
-  cout << "[DEBUG] Started tests\n";
   test_routines ();
 #endif
   start_scheme (argc, argv, TeXmacs_main);

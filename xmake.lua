@@ -1202,11 +1202,10 @@ function add_target_tm2html()
     end
 end
 
-target ("tm2html") do
-    if not is_plat("wasm") then
+if not is_plat("wasm") then
+    target ("tm2html") do
         add_target_tm2html()
     end
-    -- add_target_tm2html()
 end
 
 -- xmake plugins
