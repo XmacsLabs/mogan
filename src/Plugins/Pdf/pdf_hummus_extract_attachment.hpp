@@ -14,8 +14,8 @@
 #include "list.hpp"
 #include "string.hpp"
 #include "tm_ostream.hpp"
-#include "url.hpp"
 #include "tree.hpp"
+#include "url.hpp"
 
 /**
 
@@ -36,10 +36,10 @@ operations.
 */
 bool scm_extract_attachments (url pdf_path);
 
-array<url> get_linked_file_paths(tree t, url path);
+array<url> get_linked_file_paths (tree t, url path);
 
-tree replace_with_relative_path(tree t, url path);
+tree replace_with_relative_path (tree t, url path);
 
-url get_main_tm(url pdf_path);
+url get_main_tm (url pdf_path);
 
 #endif // ifdef PDF_HUMMUS_MAKE_ATTACHMENT_H

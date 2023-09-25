@@ -10,12 +10,12 @@
 
 #include "Pdf/pdf_hummus_extract_attachment.hpp"
 #include "Pdf/pdf_hummus_make_attachment.hpp"
+#include "convert.hpp"
 #include "file.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
-#include <QtTest/QtTest>
-#include "convert.hpp"
 #include "tree_helper.hpp"
+#include <QtTest/QtTest>
 
 class TestHummusPdfMakeAttachment : public QObject {
   Q_OBJECT
@@ -30,16 +30,14 @@ private slots:
   void test_get_linked_file_paths ();
   void test_replace_with_relative_path ();
   void test_get_main_tm ();
-  
 };
 void
 TestHummusPdfMakeAttachment::test_pdf_hummus_make_single_attachment () {
-  
+
   array<url> attachmen_0;
   attachmen_0 << url ("$TEXMACS_PATH/tests/29_1_1.tm");
   bool attach_judge= pdf_hummus_make_attachments (
-      url ("$TEXMACS_PATH/tests/images/29_1_1.pdf"),
-      attachmen_0,
+      url ("$TEXMACS_PATH/tests/images/29_1_1.pdf"), attachmen_0,
       url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"));
   QVERIFY (attach_judge);
   bool out_pdf_judge=
@@ -134,8 +132,7 @@ TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachment_for_wrong_pdf () {
   array<url> attachment_0;
   attachment_0 << url ("$TEXMACS_PATH/tests/29_1_1.tm");
   bool attach_judge= pdf_hummus_make_attachments (
-      url ("$TEXMACS_PATH/tests/images/29_4_4.pdf"),
-      attachment_0,
+      url ("$TEXMACS_PATH/tests/images/29_4_4.pdf"), attachment_0,
       url ("$TEXMACS_PATH/tests/images/29_4_4_attach.pdf"));
   QVERIFY (!attach_judge);
   bool out_pdf_judge=
@@ -149,8 +146,7 @@ TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachment_for_no_pdf () {
   array<url> attachment_0;
   attachment_0 << url ("$TEXMACS_PATH/tests/29_1_1.tm");
   bool attach_judge= pdf_hummus_make_attachments (
-      url ("$TEXMACS_PATH/tests/images/29_4_5.pdf"),
-      attachment_0,
+      url ("$TEXMACS_PATH/tests/images/29_4_5.pdf"), attachment_0,
       url ("$TEXMACS_PATH/tests/images/29_4_5_attach.pdf"));
   QVERIFY (!attach_judge);
   bool out_pdf_judge=
@@ -158,42 +154,50 @@ TestHummusPdfMakeAttachment::test_pdf_hummus_make_attachment_for_no_pdf () {
   QVERIFY (!out_pdf_judge);
 }
 
-void TestHummusPdfMakeAttachment::test_get_linked_file_paths (){
+void
+TestHummusPdfMakeAttachment::test_get_linked_file_paths () {
   array<url> attachment_0;
   attachment_0 << url ("$TEXMACS_PATH/tests/29_1_1.tm");
   bool attach_judge= pdf_hummus_make_attachments (
-      url ("$TEXMACS_PATH/tests/images/29_1_1.pdf"),
-      attachment_0,
+      url ("$TEXMACS_PATH/tests/images/29_1_1.pdf"), attachment_0,
       url ("$TEXMACS_PATH/tests/images/29_1_1_attach.pdf"));
-  string texmacs_doc_1 = string_load(url ("$TEXMACS_PATH/tests/29_1_1.tm"));
-  tree   texmacs_tree_1 = texmacs_to_tree (texmacs_doc_1);
-  array<url> linked_0 = get_linked_file_paths(texmacs_tree_1, url ("$TEXMACS_PATH/tests/29_1_1.tm"));
-  QVERIFY (N(linked_0) == 0);
+  string     texmacs_doc_1= string_load (url ("$TEXMACS_PATH/tests/29_1_1.tm"));
+  tree       texmacs_tree_1= texmacs_to_tree (texmacs_doc_1);
+  array<url> linked_0      = get_linked_file_paths (
+      texmacs_tree_1, url ("$TEXMACS_PATH/tests/29_1_1.tm"));
+  QVERIFY (N (linked_0) == 0);
 
-  string texmacs_doc_2 = string_load(url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main.tm"));
-  tree   texmacs_tree_2 = texmacs_to_tree (texmacs_doc_2);
-  array<url> linked = get_linked_file_paths(texmacs_tree_2, url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main.tm"));
-  QVERIFY (N(linked) == 2);
-  QVERIFY(is_regular(linked[0]));
-  QVERIFY (tail(linked[0]) == url("logo.pdf"));
-  QVERIFY(is_regular(linked[1]));
-  QVERIFY (tail(linked[1]) == url("myslides.ts"));
+  string texmacs_doc_2=
+      string_load (url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main.tm"));
+  tree       texmacs_tree_2= texmacs_to_tree (texmacs_doc_2);
+  array<url> linked        = get_linked_file_paths (
+      texmacs_tree_2, url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main.tm"));
+  QVERIFY (N (linked) == 2);
+  QVERIFY (is_regular (linked[0]));
+  QVERIFY (tail (linked[0]) == url ("logo.pdf"));
+  QVERIFY (is_regular (linked[1]));
+  QVERIFY (tail (linked[1]) == url ("myslides.ts"));
 }
-void TestHummusPdfMakeAttachment::test_replace_with_relative_path (){
-  string texmacs_doc_1 = string_load(url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main.tm"));
-  tree   texmacs_tree_1 = texmacs_to_tree (texmacs_doc_1);
+void
+TestHummusPdfMakeAttachment::test_replace_with_relative_path () {
+  string texmacs_doc_1=
+      string_load (url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main.tm"));
+  tree texmacs_tree_1= texmacs_to_tree (texmacs_doc_1);
 
-  string texmacs_doc_2 = string_load(url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main_convert_path.tm"));
-  tree   texmacs_tree_2 = texmacs_to_tree (texmacs_doc_2);
-  tree   after_1 = replace_with_relative_path(texmacs_tree_1, url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main.tm"));
+  string texmacs_doc_2= string_load (
+      url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main_convert_path.tm"));
+  tree texmacs_tree_2= texmacs_to_tree (texmacs_doc_2);
+  tree after_1       = replace_with_relative_path (
+      texmacs_tree_1, url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main.tm"));
 
-  
   QVERIFY (texmacs_tree_2 == after_1);
-  
 }
-void TestHummusPdfMakeAttachment::test_get_main_tm (){
-  QVERIFY(get_main_tm(url ("$TEXMACS_PATH/tests/images/29_5_1.pdf")) == url("$TEXMACS_PATH/tests/images/29_5_1.tm"));
-  QVERIFY(get_main_tm(url ("$TEXMACS_PATH/tests/images/29_5_2.pdf")) == url("$TEXMACS_PATH/tests/images/29_5_2.tm"));
+void
+TestHummusPdfMakeAttachment::test_get_main_tm () {
+  QVERIFY (get_main_tm (url ("$TEXMACS_PATH/tests/images/29_5_1.pdf")) ==
+           url ("$TEXMACS_PATH/tests/images/29_5_1.tm"));
+  QVERIFY (get_main_tm (url ("$TEXMACS_PATH/tests/images/29_5_2.pdf")) ==
+           url ("$TEXMACS_PATH/tests/images/29_5_2.tm"));
 }
 
 QTEST_MAIN (TestHummusPdfMakeAttachment)

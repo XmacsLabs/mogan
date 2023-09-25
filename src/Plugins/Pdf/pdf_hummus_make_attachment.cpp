@@ -58,9 +58,9 @@ private:
   PDFWriter*                     mPDFWriter;
   PDFAttachmentToObjectIDTypeMap mAttachment;
 
-  void                           ListenOnCatalogWrite ();
-  EStatusCodeAndObjectIDType     WriteAttachment (PDFAttachment* inAttachment);
-  void                           CleanupAttachment ();
+  void                       ListenOnCatalogWrite ();
+  EStatusCodeAndObjectIDType WriteAttachment (PDFAttachment* inAttachment);
+  void                       CleanupAttachment ();
 };
 bool
 pdf_hummus_make_attachments (url pdf_path, array<url> attachment_paths,
@@ -216,19 +216,18 @@ PDFAttachmentWriter::OnCatalogWrite (
   dictionaryContext_0->WriteKey ("Names");
   inPDFWriterObjectContext->StartArray ();
 
-  iterator<PDFAttachment*> it_0 = iterate (mAttachment);
-  ObjectIDType the_main_tm_id = 999999999;
-  PDFAttachment* the_main_tm = NULL;
-  while (it_0->busy ()){
+  iterator<PDFAttachment*> it_0          = iterate (mAttachment);
+  ObjectIDType             the_main_tm_id= 999999999;
+  PDFAttachment*           the_main_tm   = NULL;
+  while (it_0->busy ()) {
     PDFAttachment* cur_attachment= it_0->next ();
-    if(the_main_tm_id > mAttachment(cur_attachment)){
-      the_main_tm = cur_attachment;
-      the_main_tm_id = mAttachment(cur_attachment);
+    if (the_main_tm_id > mAttachment (cur_attachment)) {
+      the_main_tm   = cur_attachment;
+      the_main_tm_id= mAttachment (cur_attachment);
     }
   }
-  if(the_main_tm != NULL){
-    inPDFWriterObjectContext->WriteLiteralString (
-        as_charp (the_main_tm->name));
+  if (the_main_tm != NULL) {
+    inPDFWriterObjectContext->WriteLiteralString (as_charp (the_main_tm->name));
     DictionaryContext* dictionaryContext_2=
         inPDFWriterObjectContext->StartDictionary ();
     dictionaryContext_2->WriteKey ("EF");
@@ -239,8 +238,7 @@ PDFAttachmentWriter::OnCatalogWrite (
         mAttachment[the_main_tm]);
     inPDFWriterObjectContext->EndDictionary (dictionaryContext_3);
     dictionaryContext_2->WriteKey ("F");
-    dictionaryContext_2->WriteLiteralStringValue (
-        as_charp (the_main_tm->name));
+    dictionaryContext_2->WriteLiteralStringValue (as_charp (the_main_tm->name));
     dictionaryContext_2->WriteKey ("Type");
     dictionaryContext_2->WriteNameValue ("F");
     inPDFWriterObjectContext->EndDictionary (dictionaryContext_2);
@@ -249,8 +247,7 @@ PDFAttachmentWriter::OnCatalogWrite (
   iterator<PDFAttachment*> it= iterate (mAttachment);
   while (it->busy ()) {
     PDFAttachment* cur_attachment= it->next ();
-    if(cur_attachment == the_main_tm)
-      continue;
+    if (cur_attachment == the_main_tm) continue;
     inPDFWriterObjectContext->WriteLiteralString (
         as_charp (cur_attachment->name));
     DictionaryContext* dictionaryContext_2=
