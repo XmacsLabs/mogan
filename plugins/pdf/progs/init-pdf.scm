@@ -2,7 +2,7 @@
 ;;
 ;; MODULE      : init-pdf.scm
 ;; DESCRIPTION : setup pdf converters
-;; COPYRIGHT   : (C) 2023  tandouer
+;; COPYRIGHT   : (C) 2023  tangdouer
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
 ;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -23,7 +23,7 @@
   (close-output-port tem-tm-out)
 
   (let* ((cur (current-buffer))
-            (buf (buffer-new)))
+          (buf (buffer-new)))
     (buffer-set-master buf cur)
     (switch-to-buffer buf)
     (load-buffer tem-tm)
@@ -40,9 +40,9 @@
 
 (define (pdf->texmacs x . opts)
   (let* ((tem-dir (url-temp-dir))
-      (tem-pdf (string->url (string-append (url->string tem-dir) "/tem.pdf")))
-      (tem-tm (string->url (string-append (url->string tem-dir) "/tem.tm")))
-      (tem-pdf-out (open-output-file (url->string tem-pdf))))
+          (tem-pdf (string->url (string-append (url->string tem-dir) "/tem.pdf")))
+          (tem-tm (string->url (string-append (url->string tem-dir) "/tem.tm")))
+          (tem-pdf-out (open-output-file (url->string tem-pdf))))
     (display* tem-dir "\n")
     (display x tem-pdf-out)
     (close-output-port tem-pdf-out)

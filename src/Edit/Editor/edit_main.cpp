@@ -365,7 +365,6 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
   array<url> attachments;
   attachments = append(tm_and_linked_file, attachments);
   attachments = append(new_u, attachments);
-  cout << "attachments -> " << attachments << LF;
 
   set_buffer_tree (new_u, new_t);
   buffer_save (new_u);
