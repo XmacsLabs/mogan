@@ -53,10 +53,6 @@ jobs:
           path: |
             ${{ github.workspace }}/build/.build_cache
           key: ${{ runner.os }}-xmake-build-${{ hashFiles('**/xmake.lua') }}
-      # Force xmake to a specific folder (for cache)
-      - name: Set MinGW for xmake
-        run: |
-          xmake global --mingw="C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\"
       - name: config
         run: xmake config --policies=build.ccache --yes --verbose --diagnosis -m releasedbg --plat=mingw
       - name: build
