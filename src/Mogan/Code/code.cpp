@@ -35,7 +35,6 @@
 
 #ifdef QTTEXMACS
 #include "Qt/QTMApplication.hpp"
-#include <QDir>
 #endif
 
 extern bool char_clip;

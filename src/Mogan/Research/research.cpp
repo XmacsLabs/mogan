@@ -40,7 +40,6 @@ void mac_fix_paths ();
 
 #ifdef QTTEXMACS
 #include "Qt/QTMApplication.hpp"
-#include <QDir>
 #endif
 
 #ifdef MACOSX_EXTENSIONS

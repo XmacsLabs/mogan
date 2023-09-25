@@ -32,6 +32,7 @@
 #ifdef QTTEXMACS
 #include "Qt/qt_utilities.hpp"
 #include <QCoreApplication>
+#include <QDir>
 #endif
 
 int  install_status   = 0;
