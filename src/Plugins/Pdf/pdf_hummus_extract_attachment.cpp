@@ -7,9 +7,14 @@
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
-#include "PDFWriter/PDFWriter.h"
-#include "PDFWriter/SafeBufferMacrosDefs.h"
-#include "PDFWriter/Trace.h"
+#include "pdf_hummus_extract_attachment.hpp"
+#include "analyze.hpp"
+#include "file.hpp"
+#include "new_buffer.hpp"
+#include "sys_utils.hpp"
+#include "tm_debug.hpp"
+#include "tm_url.hpp"
+#include "tree_helper.hpp"
 
 #include "PDFWriter/InputFileStream.h"
 #include "PDFWriter/OutputBufferedStream.h"
@@ -20,11 +25,11 @@
 #include "PDFWriter/PDFObjectCast.h"
 #include "PDFWriter/PDFParser.h"
 #include "PDFWriter/PDFStreamInput.h"
+#include "PDFWriter/PDFWriter.h"
+#include "PDFWriter/SafeBufferMacrosDefs.h"
+#include "PDFWriter/Trace.h"
 using namespace PDFHummus;
-#include <utility>
 using namespace IOBasicTypes;
-#include "pdf_hummus_extract_attachment.hpp"
-#include "tm_debug.hpp"
 
 bool
 extract_attachments_from_pdf (url pdf_path, list<url>& names) {
@@ -155,5 +160,194 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
 bool
 scm_extract_attachments (url pdf_path) {
   list<url> attachments_paths;
-  return extract_attachments_from_pdf (pdf_path, attachments_paths);
+  bool      ret= extract_attachments_from_pdf (pdf_path, attachments_paths);
+  return ret;
+}
+static hashset<string> internal_styles;
+
+static void
+declare_style (url u) {
+  if (is_or (u)) {
+    declare_style (u[1]);
+    declare_style (u[2]);
+  }
+  else if (is_concat (u)) {
+    string dir= upcase_first (as_string (u[1]));
+    if (dir == "CVS" || dir == ".svn")
+      ;
+    else declare_style (u[2]);
+  }
+  else if (is_atomic (u)) {
+    string s= as_string (u);
+    if (ends (s, ".ts") && !starts (s, "source")) {
+      internal_styles->insert (s (0, N (s) - 3));
+      if (starts (s, "old-")) internal_styles->insert (s (4, N (s) - 3));
+      if (starts (s, "old2-")) internal_styles->insert (s (5, N (s) - 3));
+    }
+  }
+}
+
+static bool
+is_internal_style (string style) {
+  if (N (internal_styles) == 0) {
+    url sty_u= descendance ("$TEXMACS_PATH/styles");
+    declare_style (sty_u);
+    sty_u= descendance ("$TEXMACS_PATH/packages");
+    declare_style (sty_u);
+  }
+  return internal_styles->contains (style);
+}
+
+array<url>
+get_linked_file_paths (tree t, url path) {
+  list<tree> st (t);
+  array<url> tm_and_linked_file;
+  while (N (st) != 0) {
+    auto la= last_item (st);
+    st     = suppress_last (st);
+    for (int i= 0; i < arity (la); i++) {
+      if (is_compound (la[i])) {
+        string label= get_label (la[i]);
+        if (label == "image" || label == "include") {
+          if (is_atomic (la[i][0])) {
+            url pre_url= url (get_label (la[i][0]));
+            if (!exists (pre_url)) {
+              pre_url= relative (path, pre_url);
+              if (!exists (pre_url)) {
+                debug_convert << pre_url << "do not exist" << LF;
+              }
+            }
+            tm_and_linked_file= append (pre_url, tm_and_linked_file);
+          }
+        }
+        else if (label == "style") {
+          if (get_label (la[i][0]) == "tuple") {
+            for (int j= 0; j < N (la[i][0]); j++) {
+              string style_name= get_label (la[i][0][j]);
+              if (!is_internal_style (style_name)) {
+                url style_url= url (style_name);
+                style_url    = glue (style_url, ".ts");
+                if (!exists (style_url)) {
+                  style_url= relative (path, style_url);
+                  if (!exists (style_url)) {
+                    debug_convert << style_url << "do not exist" << LF;
+                    continue;
+                  }
+                }
+                tm_and_linked_file= append (style_url, tm_and_linked_file);
+              }
+            }
+          }
+          else {
+            if (!is_atomic (la[i][0])) {
+              debug_convert << get_label (la[i][0]) << "is not atomic tree"
+                            << LF;
+            }
+            string style_name= get_label (la[i][0]);
+            if (!is_internal_style (style_name)) {
+              url style_url= url (style_name);
+              style_url    = glue (style_url, ".ts");
+              if (!exists (style_url)) {
+                style_url= relative (path, style_url);
+                if (!exists (style_url)) {
+                  debug_convert << style_url << "do not exist" << LF;
+                  continue;
+                }
+              }
+              tm_and_linked_file= append (style_url, tm_and_linked_file);
+            }
+          }
+        }
+        else st= st * la[i];
+      }
+    }
+  }
+
+  return tm_and_linked_file;
+}
+
+tree
+replace_with_relative_path (tree t, url path) {
+  // dfs search all style and link
+  list<tree> st (t);
+  list<url>  tm_and_linked_file;
+  // url cur_u = get_current_buffer ();
+  while (N (st) != 0) {
+    auto la= last_item (st);
+    st     = suppress_last (st);
+    for (int i= 0; i < arity (la); i++) {
+      if (is_compound (la[i])) {
+        string label= get_label (la[i]);
+        if (label == "image" || label == "include") {
+          if (is_atomic (la[i][0])) {
+            url pre_url= url (get_label (la[i][0]));
+            if (!exists (pre_url)) {
+              pre_url= relative (path, pre_url);
+              if (!exists (pre_url)) {
+                debug_convert << pre_url << "do not exist" << LF;
+              }
+            }
+            string name= as_string (tail (pre_url));
+            if (path != url ()) {
+              name= as_string (relative (path, name));
+            }
+            la[i][0]->label= string (name);
+          }
+        }
+        else if (label == "style") {
+          if (is_tuple (la[i][0])) {
+            for (int j= 0; j < N (la[i][0]); j++) {
+              string style_name= get_label (la[i][0][j]);
+              if (!is_internal_style (style_name)) {
+                url style_url= url (style_name);
+                style_url    = glue (style_url, ".ts");
+                if (!exists (style_url)) {
+                  style_url= relative (path, style_url);
+                  if (!exists (style_url)) {
+                    debug_convert << style_url << "do not exist" << LF;
+                  }
+                }
+                string name= basename (style_url);
+                if (path != url ()) {
+                  name= as_string (relative (path, name));
+                }
+                la[i][0][j]->label= name;
+              }
+            }
+          }
+          else {
+            if (!is_atomic (la[i][0])) {
+              debug_convert << get_label (la[i][0]) << "is not atomic tree"
+                            << LF;
+            }
+            string style_name= get_label (la[i][0]);
+            if (!is_internal_style (style_name)) {
+              url style_url= url (style_name);
+              style_url    = glue (style_url, ".ts");
+              if (!exists (style_url)) {
+                style_url= relative (path, style_url);
+                if (!exists (style_url)) {
+                  debug_convert << style_url << "do not exist" << LF;
+                }
+              }
+              string name= basename (style_url);
+              if (path != url ()) {
+                name= as_string (relative (path, name));
+              }
+              la[i][0]->label= name;
+            }
+          }
+        }
+        else st= st * la[i];
+      }
+    }
+  }
+  return t;
+}
+
+url
+get_main_tm (url pdf_path) {
+  list<url> attachments_paths;
+  bool      ret= extract_attachments_from_pdf (pdf_path, attachments_paths);
+  return attachments_paths[0];
 }

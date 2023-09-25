@@ -27,7 +27,7 @@ embedded.
 @param out_path The path of the new PDF file with the embedded attachments.
 @return Returns true if the embedding is successful, false otherwise.
 */
-bool pdf_hummus_make_attachments (url pdf_path, list<url> attachment_path,
+bool pdf_hummus_make_attachments (url pdf_path, array<url> attachment_path,
                                   url out_path);
 
 #endif // ifdef PDF_HUMMUS_MAKE_ATTACHMENT_H

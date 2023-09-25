@@ -71,6 +71,7 @@ pdfhummus_version () {
 
 #ifdef USE_PLUGIN_PDF
 #include "Pdf/pdf_hummus_extract_attachment.hpp"
+#include "Pdf/pdf_hummus_make_attachment.hpp"
 #include "glue_pdf.cpp"
 #endif
 
