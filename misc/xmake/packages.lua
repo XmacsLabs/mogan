@@ -19,7 +19,7 @@
 -- [ ] portage powered
 -- ...
 
-local LOLLY_VERSION = "1.2.6"
+local LOLLY_VERSION = "1.2.7"
 local TBOX_VERSION = "1.7.4"
 
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
