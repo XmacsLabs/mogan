@@ -11,21 +11,22 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|34|34|1|1|cell-background|pastel
-  red>|<cwith|33|33|1|1|cell-background|pastel
-  red>|<cwith|29|29|1|1|cell-background|pastel
-  red>|<cwith|40|40|3|3|cell-valign|b>|<cwith|41|41|1|1|cell-valign|b>|<cwith|28|28|1|1|cell-background|pastel
-  green>|<cwith|31|31|1|1|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|35|35|1|1|cell-background|pastel
+  red>|<cwith|34|34|1|1|cell-background|pastel
+  red>|<cwith|30|30|1|1|cell-background|pastel
+  red>|<cwith|41|41|3|3|cell-valign|b>|<cwith|42|42|1|1|cell-valign|b>|<cwith|29|29|1|1|cell-background|pastel
+  green>|<cwith|32|32|1|1|cell-background|pastel
+  green>|<cwith|28|28|1|1|cell-background|pastel
+  green>|<cwith|8|8|2|2|cell-valign|c>|<cwith|7|7|1|1|cell-valign|c>|<cwith|23|23|1|1|cell-background|pastel
+  green>|<cwith|6|6|1|1|cell-background|pastel
   green>|<cwith|27|27|1|1|cell-background|pastel
-  green>|<cwith|7|7|2|2|cell-valign|c>|<cwith|6|6|1|1|cell-valign|c>|<cwith|22|22|1|1|cell-background|pastel
-  green>|<cwith|5|5|1|1|cell-background|pastel
-  green>|<cwith|26|26|1|1|cell-background|pastel
-  green>|<cwith|2|2|2|2|cell-valign|c>|<table|<row|<cell|<dlink|57>>|<cell|Pluto>|<cell|Slim
+  green>|<cwith|3|3|2|2|cell-valign|c>|<table|<row|<cell|<dlink|58>>|<cell|paradisum>|<cell|Github
+  Action onboarding>>|<row|<cell|<dlink|57>>|<cell|Pluto>|<cell|Slim
   libmogan>>|<row|<cell|<dlink|56>>|<cell|Darcy>|<cell|Tuning cache to avoid
   corruption>>|<row|<cell|<dlink|55>>|<cell|paradisum>|<cell|tmdb
   onboarding>>|<row|<cell|<dlink|54>>|<cell|Pluto>|<cell|Community for Users
   and Developers>>|<row|<cell|<dlink|53>>|<cell|Darcy>|<cell|Lolly
-  1.2.0~1.2.6>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
+  1.2.0~1.2.8>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
   Table>>|<row|<cell|<dlink|51>>|<cell|Darcy>|<cell|Scheme
   Onboarding>>|<row|<cell|<dlink|50>>|<cell|Oyyko>|<cell|Mogan Draw app &
   WASM (OSPP)>>|<row|<cell|<dlink|49>>|<cell|jingkaimori>|<cell|Fine tuning
