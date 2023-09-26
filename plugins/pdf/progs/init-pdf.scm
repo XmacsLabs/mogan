@@ -32,8 +32,8 @@
   (if (pdf-make-attachments tem-pdf url-list tem-pdf)
     (string-load tem-pdf)
     (begin
-      (notify-now "Can not extract attachments from PDF")
-      (texmacs-error "pdf" "Can not extract attachments from PDF")))))
+      (notify-now "Can not make attachments to pdf normally")
+      (texmacs-error "pdf" "Can not make attachments to pdf normally")))))
 
 (define (pdf->texmacs x . opts)
   (let* ((tem-dir (url-temp-dir))
@@ -46,7 +46,7 @@
           tem-pdf)
         (begin
           (notify-now "Can not extract attachments from PDF")
-          (texmacs-error "pdf" "Can not extract attachments from " tem-pdf)))))
+          (texmacs-error "pdf" "Can not extract attachments from PDF")))))
 
 (converter texmacs-tree pdf-document
   (:function texmacs->pdf))
