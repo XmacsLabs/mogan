@@ -18,7 +18,6 @@
           (tem-tm (url-append tem-dir "/tem.tm"))
           (tem-tm-out (open-output-file (url->string tem-tm)))
           (url-list (pdf-get-linked-file-paths x buffer-get)))
-  (display* tem-dir "\n")
   (display (serialize-texmacs (pdf-replace-linked-path x buffer-get)) tem-tm-out)
   (close-output-port tem-tm-out)
 
@@ -43,7 +42,6 @@
           (tem-pdf (url-append tem-dir "/tem.pdf"))
           (tem-tm (url-append tem-dir "/tem.tm"))
           (tem-pdf-out (open-output-file (url->string tem-pdf))))
-    (display* tem-dir "\n")
     (display x tem-pdf-out)
     (close-output-port tem-pdf-out)
     (if (extract-attachments tem-pdf)
