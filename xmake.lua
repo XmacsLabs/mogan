@@ -713,7 +713,6 @@ function add_target_code()
     end
     add_files(plugin_freetype_srcs)
     add_files(plugin_database_srcs)
-    add_files(plugin_ispell_srcs)
     add_files(plugin_metafont_srcs)
     add_files(plugin_openssl_srcs)
     add_files(plugin_updater_srcs)
