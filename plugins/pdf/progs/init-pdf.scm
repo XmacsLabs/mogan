@@ -14,8 +14,8 @@
 
 (define (texmacs->pdf x . opts)
   (let* ((tem-dir (url-temp-dir))
-          (tem-pdf (string->url (string-append (url->string tem-dir) "/tem.pdf")))
-          (tem-tm (string->url (string-append (url->string tem-dir) "/tem.tm")))
+          (tem-pdf (url-append tem-dir "/tem.pdf"))
+          (tem-tm (url-append tem-dir "/tem.tm"))
           (tem-tm-out (open-output-file (url->string tem-tm)))
           (url-list (pdf-get-linked-file-paths x buffer-get)))
   (display* tem-dir "\n")
@@ -40,8 +40,8 @@
 
 (define (pdf->texmacs x . opts)
   (let* ((tem-dir (url-temp-dir))
-          (tem-pdf (string->url (string-append (url->string tem-dir) "/tem.pdf")))
-          (tem-tm (string->url (string-append (url->string tem-dir) "/tem.tm")))
+          (tem-pdf (url-append tem-dir "/tem.pdf"))
+          (tem-tm (url-append tem-dir "/tem.tm"))
           (tem-pdf-out (open-output-file (url->string tem-pdf))))
     (display* tem-dir "\n")
     (display x tem-pdf-out)
