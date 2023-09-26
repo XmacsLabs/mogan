@@ -279,6 +279,7 @@ set_configvar("PDFHUMMUS_NO_TIFF", true)
 set_configvar("USE_PLUGIN_BIBTEX", true)
 set_configvar("USE_PLUGIN_LATEX_PREVIEW", true)
 set_configvar("USE_PLUGIN_TEX", true)
+set_configvar("USE_PLUGIN_ISPELL", true)
 
 if is_plat("mingw", "windows") then
     set_configvar("GS_EXE", "bin/gs.exe")
@@ -556,6 +557,7 @@ function add_target_draw()
             USE_PLUGIN_BIBTEX = false,
             USE_PLUGIN_LATEX_PREVIEW = false,
             USE_PLUGIN_TEX = false,
+            USE_PLUGIN_ISPELL = false,
             QTPIPES = is_plat("linux"),
             USE_QT_PRINTER = is_plat("linux"),
             NOMINMAX = is_plat("windows"),
@@ -656,6 +658,7 @@ function add_target_code()
             USE_PLUGIN_BIBTEX = false,
             USE_PLUGIN_LATEX_PREVIEW = false,
             USE_PLUGIN_TEX = false,
+            USE_PLUGIN_ISPELL = false,
             QTPIPES = is_plat("linux"),
             USE_QT_PRINTER = is_plat("linux"),
             NOMINMAX = is_plat("windows"),
@@ -756,6 +759,7 @@ function add_target_research_on_wasm()
             USE_PLUGIN_BIBTEX = true,
             USE_PLUGIN_LATEX_PREVIEW = false,
             USE_PLUGIN_TEX = true,
+            USE_PLUGIN_ISPELL = true,
             NOMINMAX = is_plat("windows"),
             SIZEOF_VOID_P = 8,
             USE_FONTCONFIG = is_plat("linux"),
