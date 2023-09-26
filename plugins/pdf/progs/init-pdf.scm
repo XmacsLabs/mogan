@@ -14,11 +14,11 @@
 
 (define (texmacs->pdf x . opts)
   (let* ((tem-dir (url-temp-dir))
-          (tem-pdf (url-append tem-dir "/tem.pdf"))
-          (tem-tm (url-append tem-dir "/tem.tm"))
+          (tem-pdf (url-append tem-dir "tem.pdf"))
+          (tem-tm (url-append tem-dir "tem.tm"))
           (url-list (pdf-get-linked-file-paths x buffer-get)))
   (string-save (serialize-texmacs (pdf-replace-linked-path x buffer-get)) tem-tm)
-
+  
   (let* ((cur (current-buffer))
           (buf (buffer-new)))
     (buffer-set-master buf cur)
@@ -29,26 +29,24 @@
     (print-to-file tem-pdf)
     (switch-to-buffer cur)
     (buffer-close buf))
-  ;;attachment-list need be generated
   (if (pdf-make-attachments tem-pdf url-list tem-pdf)
-    (display* "pdf-make-attachments return true\n")
-    (display* "pdf-make-attachments return false\n"))
-  (string-load tem-pdf)))
+    (string-load tem-pdf)
+    (begin
+      (notify-now "Can not make attachments to pdf normally")
+      (texmacs-error "pdf" "Can not make attachments to pdf normally")))))
 
 (define (pdf->texmacs x . opts)
   (let* ((tem-dir (url-temp-dir))
-          (tem-pdf (url-append tem-dir "/tem.pdf"))
-          (tem-tm (url-append tem-dir "/tem.tm")))
+          (tem-pdf (url-append tem-dir "tem.pdf"))
+          (tem-tm (url-append tem-dir "tem.tm")))
     (string-save x tem-pdf)
     (if (extract-attachments tem-pdf)
-      (noop)
-      (display* "extract-attachments return false\n"))
-    (set! tem-tm (url-relative tem-tm (pdf-get-attached-main-tm tem-pdf)))
-
-    (if (url-exists? tem-tm)
-      (display* tem-tm " exist\n")
-      (display* tem-tm " not exist\n"))
-    (pdf-replace-linked-path (tree-import tem-tm (url-format tem-tm)) tem-pdf)))
+        (pdf-replace-linked-path 
+          (tree-import (url-relative tem-tm (pdf-get-attached-main-tm tem-pdf)) "texmacs") 
+          tem-pdf)
+        (begin
+          (notify-now "Can not extract attachments from PDF")
+          (texmacs-error "pdf" "Can not extract attachments from PDF")))))
 
 (converter texmacs-tree pdf-document
   (:function texmacs->pdf))
