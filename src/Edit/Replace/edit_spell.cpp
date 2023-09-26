@@ -13,6 +13,7 @@
 #include "Replace/edit_replace.hpp"
 #include "Interface/edit_interface.hpp"
 
+#ifdef USE_PLUGIN_ISPELL
 #ifdef MACOSX_EXTENSIONS
 #include "MacOS/mac_spellservice.h"
 #define ispell_start mac_spell_start
@@ -22,6 +23,7 @@
 #define ispell_done mac_spell_done
 #else
 #include "Ispell/ispell.hpp"
+#endif
 #endif
 
 
@@ -45,7 +47,11 @@ edit_replace_rep::spell_start () {
   search_lan  =
     copy (as_string (get_env_value (MODE_LANGUAGE (search_mode), spell_p)));
 
+#ifdef USE_PLUGIN_ISPELL
   string message= ispell_start (search_lan);
+#else
+  string message= "Error: USE_PLUGIN_ISPELL disabled";
+#endif
   if (starts (message, "Error: ")) {
     spell_end ();
     std_error << message (7, N(message)) << LF;
@@ -67,7 +73,9 @@ edit_replace_rep::spell_start () {
 void
 edit_replace_rep::spell_end () {
   if (spell_dicmod) {
+#ifdef USE_PLUGIN_ISPELL
     ispell_done (search_lan);
+#endif
     set_message ("personal dictionary has been modified", "correct text");
   }
   else if (nr_replaced == 1)
@@ -122,7 +130,9 @@ edit_replace_rep::spell_next () {
     }
     search_end= test_spellable (search_at);
     if (search_end != search_at) {
+#ifdef USE_PLUGIN_ISPELL
       spell_t= ispell_check (search_lan, spell_s);
+#endif
       if (is_atomic (spell_t) && starts (spell_t->label, "Error: ")) {
         spell_end ();
         set_message (spell_t->label, "spelling text");
@@ -165,14 +175,18 @@ edit_replace_rep::spell_keypress (string s) {
   if ((s == "C-c") || (s == "C-g") || (s == "escape"))
     spell_end ();
   else if ((s == "a") || (s == "A")) {
+#ifdef USE_PLUGIN_ISPELL
     ispell_accept (search_lan, spell_s);
+#endif
     step_horizontal (forward);
     spell_next ();
   }
   else if ((s == "r") || (s == "R"))
     (void) eval ("(interactive spell-replace \"Replace by\")");
   else if ((s == "i") || (s == "I")) {
+#ifdef USE_PLUGIN_ISPELL
     ispell_insert (search_lan, spell_s);
+#endif
     spell_dicmod= true;
     step_horizontal (forward);
     spell_next ();
@@ -189,7 +203,9 @@ edit_replace_rep::spell_keypress (string s) {
       spell_next ();
     }
     else if (i < N (spell_t)) {
+#ifdef USE_PLUGIN_ISPELL
       ispell_accept (search_lan, spell_s);
+#endif
       step_horizontal (forward);
       spell_next ();
     }
