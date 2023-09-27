@@ -9,7 +9,7 @@
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
-set_xmakever("2.8.2")
+set_xmakever("2.8.3")
 
 -- Check CXX Types/Includes/Funcs/Snippets
 includes("check_cxxtypes.lua")
@@ -937,6 +937,14 @@ function add_target_research_on_others()
         end
     end
 
+    -- deploy necessary dll
+    if is_plat("windows") then
+        set_values("qt.deploy.flags", {"-printsupport"})
+    elseif is_plat("mingw") then
+        -- qt on mingw provides debug dll only, without "d" suffix.
+        set_values("qt.deploy.flags", {"-printsupport", "--debug"})
+    end
+
     after_install(function (target)
         print("after_install of target research")
         import("misc.xmake.global")
@@ -949,43 +957,6 @@ function add_target_research_on_others()
             os.rm(app_dir .. "Contents/Frameworks/QtQml.framework")
             os.rm(app_dir .. "Contents/Frameworks/QtQuick.framework")
             os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
-        end
-
-        if is_plat("mingw", "windows") then
-            import("detect.sdks.find_qt")
-            import("core.base.option")
-            import("core.project.config")
-            import("lib.detect.find_tool")
-
-            -- get qt sdk
-            local qt = assert(find_qt(), "Qt SDK not found!")
-            print(os.getenv("PATH"))
-
-            -- get windeployqt
-            local windeployqt_tool = assert(
-                find_tool("windeployqt", {check = "--help"}),
-                "windeployqt.exe not found!")
-            local windeployqt = windeployqt_tool.program
-            
-            -- deploy necessary dll
-            -- since version of mingw used to build mogan may differs from
-            --   version of Qt, tell windeployqt to use lib from mingw may
-            --   break ABI compability, but major version of mingw must be
-            --   same.
-            local deploy_argv = {"--no-compiler-runtime", "-printsupport"}
-            if option.get("diagnosis") then
-                table.insert(deploy_argv, "--verbose=2")
-            elseif option.get("verbose") then
-                table.insert(deploy_argv, "--verbose=1")
-            else
-                table.insert(deploy_argv, "--verbose=0")
-            end
-            local install_bindir = path.join(target:installdir(), "bin")
-            table.insert(deploy_argv, install_bindir)
-            os.iorunv(windeployqt, deploy_argv, {envs = {PATH = qt.bindir}})
-            os.cp(path.join(qt.bindir, "libstdc++*.dll"), install_bindir)
-            os.cp(path.join(qt.bindir, "libgcc*.dll"), install_bindir)
-            os.cp(path.join(qt.bindir, "libwinpthread*.dll"), install_bindir)
         end
     end)
 
