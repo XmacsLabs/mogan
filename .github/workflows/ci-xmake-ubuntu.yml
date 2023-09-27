@@ -51,7 +51,7 @@ jobs:
 
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.8.2
+          xmake-version: v2.8.3
           actions-cache-folder: '.xmake-cache'
 
       - name: xmake repo --update
