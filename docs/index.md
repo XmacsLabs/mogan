@@ -16,7 +16,7 @@ hero:
       link: /guide/Install
     - theme: alt
       text: Try Online (Experimental)
-      link: https://mogan.app/wasm/Mogan.html
+      link: https://xmacslabs.github.io/mogan/research.html
 
 features:
   - title: "WYSIWYG"
