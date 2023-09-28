@@ -11,29 +11,18 @@
 
 set_xmakever("2.8.3")
 
--- Check CXX Types/Includes/Funcs/Snippets
+-- Check CXX Types/Includes/Funcs
 includes("check_cxxtypes.lua")
 includes("check_cxxincludes.lua")
 includes("check_cxxfuncs.lua")
-includes("check_cxxsnippets.lua")
 
-configvar_check_cxxincludes("HAVE_STDLIB_H", "stdlib.h")
-configvar_check_cxxincludes("HAVE_STRINGS_H", "strings.h")
-configvar_check_cxxincludes("HAVE_STRING_H", "string.h")
 configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
 configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
 configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
-configvar_check_cxxincludes("HAVE_MEMORY_H", "memory.h")
-configvar_check_cxxincludes("HAVE_PTY_H", "pty.h")
 configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
 configvar_check_cxxincludes("HAVE_SYS_STAT_H", "sys/stat.h")
 configvar_check_cxxincludes("HAVE_SYS_TYPES_H", "sys/types.h")
 configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
-configvar_check_cxxsnippets(
-    "CONFIG_LARGE_POINTER", [[
-        #include <stdlib.h>
-        static_assert(sizeof(void*) == 8, "");]])
-
 
 ---
 --- Project: Mogan Applications
@@ -52,15 +41,9 @@ if is_plat("wasm") then
     set_toolchains("emcc@emscripten")
 end
 
--- add releasedbg, debug and release modes for different platforms.
--- debug mode cannot run on mingw with qt precompiled binary
-if is_plat("mingw") then
-    set_allowedmodes("releasedbg", "release")
-    add_rules("mode.releasedbg", "mode.release")
-else 
-    set_allowedmodes("releasedbg", "release", "debug")
-    add_rules("mode.releasedbg", "mode.release", "mode.debug")
-end
+-- add releasedbg, debug and release modes.
+set_allowedmodes("releasedbg", "release", "debug")
+add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
 --
 -- global variables in configurations domain
@@ -213,6 +196,11 @@ target("libkernel_l3") do
     add_packages("s7")
     add_packages("lolly")
 
+    ---------------------------------------------------------------------------
+    -- generate config files. see also:
+    --    * https://github.com/xmake-io/xmake/issues/320
+    --    * https://github.com/xmake-io/xmake/issues/342
+    ---------------------------------------------------------------------------
     add_configfiles("src/System/config_l3.h.xmake", {
         filename = "L3/config.h",
         variables = {
@@ -280,6 +268,7 @@ set_configvar("USE_PLUGIN_BIBTEX", true)
 set_configvar("USE_PLUGIN_LATEX_PREVIEW", true)
 set_configvar("USE_PLUGIN_TEX", true)
 set_configvar("USE_PLUGIN_ISPELL", true)
+set_configvar("TM_DYNAMIC_LINKING", false)
 
 if is_plat("mingw", "windows") then
     set_configvar("GS_EXE", "bin/gs.exe")
@@ -290,9 +279,6 @@ end
 if is_plat("macosx") then
     set_configvar("AQUATEXMACS", true)
 end
-
-set_configvar("STDC_HEADERS", true)
-
 
 set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
 
@@ -469,6 +455,9 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("pdfhummus")
     add_packages("s7")
+    if is_plat("linux") then
+        add_packages("fontconfig")
+    end
 
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
@@ -476,19 +465,6 @@ target("libmogan") do
         add_syslinks("secur32", {public = true})
     end
     
-    if is_plat("linux") then
-        add_packages("fontconfig")
-    end
-
-    ---------------------------------------------------------------------------
-    -- generate config files. see also:
-    --    * https://github.com/xmake-io/xmake/issues/320
-    --    * https://github.com/xmake-io/xmake/issues/342
-    ---------------------------------------------------------------------------
-    -- check for dl library
-    -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
-    add_options("libdl")
-
     ---------------------------------------------------------------------------
     -- add source and header files
     ---------------------------------------------------------------------------
@@ -520,10 +496,6 @@ target("libmogan") do
         target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
     end)
 end 
-
-option("libdl") do
-    add_links("dl")
-end
 
 if is_plat("mingw", "windows") then
     target("windows_icon") do
@@ -570,7 +542,6 @@ function add_target_draw()
             GS_EXE = "",
             USE_FREETYPE = true,
             USE_ICONV = true,
-            STDC_HEADERS = true,
         }
     })
     add_configfiles("src/System/tm_configure.hpp.xmake", {
@@ -671,7 +642,6 @@ function add_target_code()
             GS_EXE = "",
             USE_FREETYPE = true,
             USE_ICONV = true,
-            STDC_HEADERS = true,
         }
     })
     add_configfiles("src/System/tm_configure.hpp.xmake", {
@@ -770,7 +740,6 @@ function add_target_research_on_wasm()
             GS_EXE = "",
             USE_FREETYPE = true,
             USE_ICONV = true,
-            STDC_HEADERS = true,
         }
     })
     add_configfiles("src/System/tm_configure.hpp.xmake", {
@@ -910,10 +879,10 @@ function add_target_research_on_others()
     end
   
     -- install icons
-    add_installfiles("TeXmacs/misc/images/text-x-mogan.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
-    add_installfiles("TeXmacs/misc/mime/mogan.desktop", {prefixdir="share/applications"})
-    add_installfiles("TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
-    add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm", {prefixdir="share/pixmaps"})
+    add_installfiles("TeXmacs/misc/images/text-x-texmacs.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
+    add_installfiles("TeXmacs/misc/mime/texmacs.desktop", {prefixdir="share/applications"})
+    add_installfiles("TeXmacs/misc/mime/texmacs.xml", {prefixdir="share/mime/packages"})
+    add_installfiles("TeXmacs/misc/pixmaps/TeXmacs.xpm", {prefixdir="share/pixmaps"})
   
     if is_plat("mingw", "windows") then
         add_installfiles(TeXmacs_files)
@@ -996,16 +965,13 @@ end
 
 target("windows_installer") do
     set_kind("phony")
-    set_enabled(is_plat("mingw") and is_mode("release"))
+    set_enabled(is_plat("mingw", "windows") and is_mode("release"))
     add_packages("qtifw")
-    if (is_plat("mingw")) then
         add_deps("research")
-    end
     set_configvar("PACKAGE_DATE", os.date("%Y-%m-%d"))
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_installdir("$(buildir)")
 
-    if is_plat("mingw") then
         add_configfiles(
             "packages/windows/(config/config.in.xml)",{
                 filename = "config.xml",
@@ -1024,7 +990,6 @@ target("windows_installer") do
             "packages/windows/config/TeXmacs-large.png",
             "packages/windows/TeXmacs.ico",
         }, {prefixdir = "config/"})
-    end
 
     after_install(function (target, opt)
         print("after_install of target windows_installer")
@@ -1056,7 +1021,7 @@ function add_test_target (filepath, dep)
             set_encodings("utf-8") -- eliminate warning C4819 on msvc
             add_ldflags("/LTCG")
         end
-        if is_plat("windows") or is_plat("mingw") then
+        if is_plat("windows", "mingw") then
             add_syslinks("secur32")
         end
         add_rules("qt.console")

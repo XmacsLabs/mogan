@@ -27,42 +27,11 @@ ${define USE_GS}
 #define GS_LIB "${GS_LIB}"
 #endif
 
-/* Define to 1 if the system has the type `FILE'. */
-${define HAVE_FILE}
-
 /* Define to 1 if you have the <inttypes.h> header file. */
 ${define HAVE_INTTYPES_H}
 
-/* Define to 1 if you have the <memory.h> header file. */
-${define HAVE_MEMORY_H}
-
-/* Define to 1 if you have the <pty.h> header file. */
-${define HAVE_PTY_H}
-
-/* Define to 1 if you have the <stdlib.h> header file. */
-${define HAVE_STDLIB_H}
-
-/* Define to 1 if you have the <strings.h> header file. */
-${define HAVE_STRINGS_H}
-
-/* Define to 1 if you have the <string.h> header file. */
-${define HAVE_STRING_H}
-
-/* Define to 1 if you have the <sys/stat.h> header file. */
-${define HAVE_SYS_STAT_H}
-
-/* Define to 1 if you have the <sys/types.h> header file. */
-${define HAVE_SYS_TYPES_H}
-
 /* Define to 1 if you have the <unistd.h> header file. */
 ${define HAVE_UNISTD_H}
-
-/* Define to 1 if you have the <util.h> header file. */
-${define HAVE_UTIL_H}
-
-${define HAVE_X11_XLIB_H}
-
-${define HAVE_X11_XUTIL_H}
 
 /* Link freetype library with TeXmacs */
 #define LINKED_FREETYPE 1
@@ -109,9 +78,6 @@ ${define USE_QT_PRINTER}
 ${define SANITY_CHECKS}
 
 #define SIZEOF_VOID_P ${SIZEOF_VOID_P} 
-
-/* Define to 1 if you have the ANSI C header files. */
-${define STDC_HEADERS}
 
 #define TEXMACS_REVISION "${VERSION}"
 
