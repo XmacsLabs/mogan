@@ -1,0 +1,68 @@
+name: Github Pages
+
+on:
+  push:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '**.lua'
+      - '.github/workflows/cd-gh-pages.yml'
+      - bin/config_wasm
+  workflow_dispatch:
+
+jobs:
+  wasmbuild:
+    runs-on: ubuntu-22.04
+    if: always()
+    steps:
+      - uses: elves/setup-elvish@v1
+        with:
+          elvish-version: 0.19.2
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.8.3
+      - name: update repo
+        run: |
+          xrepo update-repo
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: set XMAKE_GLOBALDIR
+        run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
+      - name: cache packages from xrepo
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+          key: ${{ runner.os }}-xrepo-wasm-${{ hashFiles('**/packages.lua') }}
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/build/.build_cache
+          key: ${{ runner.os }}-xmake-build-${{ hashFiles('**/xmake.lua') }}
+      - name: Install Qt wasm
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.5.2
+          arch: wasm_singlethread
+          host: 'linux'
+          target: 'desktop'
+          cache: 'true'
+          # workarounds in https://github.com/jurplel/install-qt-action/issues/181
+          aqtversion: '==3.1.*'
+          py7zrversion: '==0.20.*'
+          extra: '--autodesktop'
+      - name: config
+        run: elvish bin/config_wasm
+      - name: build
+        run: xmake build research
+      - name: Push
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: gh-pages # The branch name where you want to push the assets
+          FOLDER: build/wasm/wasm32/release # The directory where your assets are generated
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+          MESSAGE: "Build: ({sha}) {msg}" # The commit message
