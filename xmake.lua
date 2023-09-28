@@ -804,10 +804,10 @@ function add_target_research_on_others()
         set_optimize("smallest");
     end
 
-    if is_plat("macosx", "linux", "windows") then
-        add_rules("qt.widgetapp")
+    if is_mode("debug", "releasedbg") and is_plat("mingw", "windows") then
+        add_rules("qt.console")
     else
-        add_rules("qt.widgetapp_static")
+        add_rules("qt.widgetapp")
     end
 
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
@@ -818,11 +818,6 @@ function add_target_research_on_others()
     add_packages("lolly")
     if is_plat("mingw", "windows") then
         add_packages("qt5widgets")
-    end
-
-    if is_plat("mingw") and is_mode("releasedbg") then
-        set_policy("check.auto_ignore_flags", false)
-        add_ldflags("-mconsole")
     end
 
     add_deps("libmogan")
@@ -1127,19 +1122,14 @@ function add_target_tm2html()
         set_optimize("smallest");
     end
 
-    if is_plat("macosx", "linux", "windows") then
-        add_rules("qt.widgetapp")
+    if is_mode("debug", "releasedbg") and is_plat("mingw", "windows") then
+        add_rules("qt.console")
     else
-        add_rules("qt.widgetapp_static")
+        add_rules("qt.widgetapp")
     end
 
     if is_plat("macosx") then
         add_frameworks("QtMacExtras")
-    end
-
-    if is_plat("mingw") and is_mode("releasedbg") then
-        set_policy("check.auto_ignore_flags", false)
-        add_ldflags("-mconsole")
     end
 
     if is_plat("linux") then
