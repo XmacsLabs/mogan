@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  wasmbuild:
+  linuxbuild:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
