@@ -42,8 +42,8 @@ if is_plat("wasm") then
 end
 
 -- add releasedbg, debug and release modes.
-    set_allowedmodes("releasedbg", "release", "debug")
-    add_rules("mode.releasedbg", "mode.release", "mode.debug")
+set_allowedmodes("releasedbg", "release", "debug")
+add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
 --
 -- global variables in configurations domain
