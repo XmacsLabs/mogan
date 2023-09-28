@@ -16,12 +16,19 @@
 #include "frame.hpp"
 
 int    std_shrinkf  = 5;
-bool   retina_manual= false;
-bool   retina_iman  = false;
-int    retina_factor= 1;
+#ifdef OS_WASM
+bool   retina_manual= true;
 int    retina_zoom  = 1;
-int    retina_icons = 1;
 double retina_scale = 1.0;
+int    retina_factor= 2;
+#else
+bool   retina_manual= false;
+int    retina_zoom  = 1;
+double retina_scale = 1.0;
+int    retina_factor= 1;
+#endif
+bool   retina_iman  = false;
+int    retina_icons = 1;
 
 int    get_retina_factor () { return retina_factor; }
 int    get_retina_zoom () { return retina_zoom; }
