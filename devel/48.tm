@@ -80,6 +80,30 @@
       Darcy
     </cell>|<\cell>
       disable USE_QT_SVG
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      48_10
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      WASM: fix right click freeze issue
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      48_11
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Disable toolbars on wasm
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      48_12
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Tune retina settings on wasm
     </cell>>>>
   </wide-tabular>
 
