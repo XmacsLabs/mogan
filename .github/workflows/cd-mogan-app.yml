@@ -1,0 +1,27 @@
+name: mogan.app
+
+on:
+  push:
+    branches: [ branch-1.2 ]
+    paths:
+      - '.github/workflows/cd-mogan-app.yml'
+      - 'docs/**'
+      - 'packages.json'
+      - 'yarn.lock'
+      - 'CNAME'
+  workflow_dispatch:
+
+jobs:
+  linuxbuild:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - name: yarn install
+      run: yarn install
+    - name: yarn docs:build
+      run: yarn docs:build
+    - name: cp CNAME
+      run: cp CNAME website/
