@@ -15,42 +15,12 @@
 #include "converter.hpp"
 #include "../Scheme/scheme.hpp"
 
-static string 
-from_nsstring (NSString *s) {
-  const char *cstr = [s cStringUsingEncoding:NSUTF8StringEncoding];
-  return string((char*)cstr); // don't convert filenames to cork!
-}
-
-#if defined (MAC_OS_X_VERSION_10_11)
-@interface TMAppDelegate : NSObject <NSFileManagerDelegate, NSApplicationDelegate> {
-#elif defined (MAC_OS_X_VERSION_10_7)
-@interface TMAppDelegate : NSObject <NSFileManagerDelegate> {
-#else
-@interface TMAppDelegate : NSObject {
-#endif
-}
-- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename ;
-@end
-
-@implementation TMAppDelegate
-- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename 
-{
-  (void) theApplication;
-  call ("load-buffer", object (url_system (from_nsstring (filename))),
-                       eval (":new-window"));
-  return YES;
-}
-@end
-
 NSAutoreleasePool *pool = nil;
-TMAppDelegate *delegate = nil;
 
 void init_mac_application ()
 {
   [NSApplication sharedApplication];
   pool = [[NSAutoreleasePool alloc] init]; 
-  delegate = [[TMAppDelegate alloc] init];
-  [NSApp setDelegate: delegate];
   [NSApp finishLaunching];
 
   mac_begin_remote ();
@@ -62,7 +32,6 @@ void finalize_mac_application ()
 
   [pool release];
   [NSApp setDelegate:nil];
-  [delegate release];
 }
 
 void process_mac_events ()
