@@ -6,4 +6,4 @@
 + 修复：macOS M1平台双击无法打开tm文件 ([Github #457](https://github.com/XmacsLabs/mogan/issues/457))
 + LaTeX：修复文档片段复制为LaTeX片段时中文乱码的问题 ([Gitee #I83Y8F](https://gitee.com/XmacsLabs/mogan/issues/I83Y8F))
 + 绘图：修复v1.1.5引入的画圆出错的问题 ([Github #931](https://github.com/XmacsLabs/mogan/issues/931))
-+ 幻灯片：调整下一页幻灯片的快捷键，以适配主流幻灯片翻页笔
++ 幻灯片：调整切换幻灯片的快捷键，以适配主流幻灯片翻页笔
