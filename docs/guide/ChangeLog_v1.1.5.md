@@ -1,4 +1,4 @@
-# Ink Editor V1.1.4
+# Mogan Editor V1.1.5
 
 Backported four drawing tool improvements completed by Jia Zhang from the 1.2.0 development branch. Fixed one critical bug and made a single overall logic improvement.
 
