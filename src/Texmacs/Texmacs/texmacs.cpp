@@ -26,6 +26,7 @@
 #include "tm_ostream.hpp"
 #include "tm_timer.hpp"
 #include "tm_window.hpp"
+#include "sys_utils.hpp"
 #ifdef AQUATEXMACS
 void
 mac_fix_paths ();
