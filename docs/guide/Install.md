@@ -3,13 +3,13 @@
 
 | Operating System | Download | MD5 Checksum|
 |-------|-----|--------|
-| Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/Mogan-v1.1.5-64bit-installer.exe) | 36dcac15825bbb527de51e348d18df7a |
-| macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/Mogan_v1.1.5.dmg) | 6224ba3a809a1d20ee118c20ee06d4a6 |
-| macOS arm (>=12.6) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/Mogan_arm_v1.1.5.dmg) | bac4d3acb670905acea567f28c1e84f8 |
-| Ubuntu 20.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/mogan-v1.1.5-ubuntu20.04.deb) | 722add12fe4aeba0ed8c3c7bef10f79a |
-| Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/mogan-v1.1.5-ubuntu22.04.deb) | d45cca14fa8e36f55f5e2c1c1dffe76d |
-| UOS amd64 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/mogan-v1.1.5-uos.deb) | e65a45c5e836fb8949cfb2f9f2858725 |
-| UOS loongarch | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.5/mogan-v1.1.5-uos-loongarch64.deb) | e1b2a8a63912ea28980b5becb80a2f49 |
+| Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/Mogan-v1.1.6-64bit-installer.exe) | 2ea3b981eca36397db3222e8485e52e7 |
+| macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/Mogan_v1.1.6.dmg) | 89ad25b821e9d0f754d569b9bfcf5077 |
+| macOS arm (>=12.6) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/Mogan_arm_v1.1.6.dmg) | b7d44f341bd202fa251125e23d5d0a64 |
+| Ubuntu 20.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/mogan-v1.1.6-ubuntu20.04.deb) | b07f95c2e083ee658a6176c5bc6dd189 |
+| Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/mogan-v1.1.6-ubuntu22.04.deb) | fe177fd88e699e4700f53f63510b7c3f |
+| UOS amd64 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/mogan-v1.1.6-uos.deb) | 64f6b3bf64082ed65014b277d4b3d481 |
+| UOS loongarch | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/mogan-v1.1.6-uos-loongarch64.deb) | 29bfc986f9291d7e478e330c5d73a66d |
 
 Other sites to download：
 + https://codeberg.org/XmacsLabs/mogan/releases
@@ -17,6 +17,7 @@ Other sites to download：
 + https://github.com/XmacsLabs/mogan/releases
 
 Old releases:
++ [v1.1.5 (2023/08/11)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.5)
 + [v1.1.4 (2023/07/31)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.4)
 + [v1.1.3 (2023/06/05)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.3)
 + [v1.1.2 (2023/04/09)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.2)
