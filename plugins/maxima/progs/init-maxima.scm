@@ -30,7 +30,7 @@
      (string-split (var-eval-system "maxima --list-avail") #\newline))))
 
 (define (maxima-launchers) ;; returns list of launchers for each version
-  (if (os-mingw?)
+  (if (or (os-mingw?) (os-win32?))
       `((:launch ,(string-append "maxima.bat -p " (maxima-entry))))
       (with version-list (if reconfigure-flag?
                              (maxima-versions)
@@ -55,7 +55,7 @@
 (plugin-add-windows-path "maxima*" "bin" #t)
 
 (plugin-configure maxima
-  (:require (url-exists-in-path? "maxima"))
+  (:require (or (url-exists-in-path? "maxima.bat") (url-exists-in-path? "maxima")))
   (:versions (maxima-versions))
   ,@(maxima-launchers)
   (:serializer ,maxima-serialize)
