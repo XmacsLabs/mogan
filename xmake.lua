@@ -923,12 +923,14 @@ function add_target_research_on_others()
 
     on_run(function (target)
         name = target:name()
+        run_envs = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
         if is_plat("mingw", "windows") then
             os.execv(target:installdir().."/bin/mogan.exe")
         elseif is_plat("linux") then
             os.execv(target:installdir().."/bin/mogan")
         else
-            os.execv(target:installdir().."/../MacOS/Mogan")
+            print("Launching " .. target:targetfile())
+            os.execv(target:targetfile(), {}, {envs=run_envs})
         end
     end)
 end
