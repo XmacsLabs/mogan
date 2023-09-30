@@ -63,7 +63,7 @@ local TeXmacs_files = {
         "LICENSE", -- license files are same
         "TeXmacs/README",
         "TeXmacs/TEX_FONTS",
-        "(plugins/**)" -- plugin files
+        "TeXmacs(/plugins/**)" -- plugin files
 }
 
 --
@@ -596,7 +596,6 @@ function add_target_draw()
 
     if is_plat("wasm") then
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
-        add_ldflags("-s --preload-file $(projectdir)/plugins@TeXmacs/plugins", {force = true})
     end
 
     before_build(function (target)
@@ -695,7 +694,6 @@ function add_target_code()
 
     if is_plat("wasm") then
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
-        add_ldflags("-s --preload-file $(projectdir)/plugins@TeXmacs/plugins", {force = true})
     end
 
     before_build(function (target)
@@ -780,7 +778,6 @@ function add_target_research_on_wasm()
     add_files("src/Mogan/Research/research.cpp")
     
     add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
-    add_ldflags("-s --preload-file $(projectdir)/plugins@TeXmacs/plugins", {force = true})
     
     before_build(function (target)
         target:add("forceincludes", path.absolute("$(buildir)/research/config.h"))
