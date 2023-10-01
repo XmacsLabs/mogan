@@ -21,7 +21,6 @@
 #include "boxes.hpp"
 #include "editor.hpp"
 #include "iterator.hpp"
-#include "locale.hpp"
 #include "observers.hpp"
 #include "preferences.hpp"
 #include "promise.hpp"
