@@ -20,6 +20,7 @@
 #include "scheme.hpp"
 #include "iterator.hpp"
 #include "font.hpp"
+#include "locale.hpp"
 
 RESOURCE_CODE(dictionary);
 
@@ -61,11 +62,14 @@ dictionary_rep::load (url u) {
 }
 
 void
-dictionary_rep::load (string fname) {
-  fname= fname * ".scm";
-  if (DEBUG_CONVERT) debug_convert << "Loading " << fname << "\n";
-  url u= url ("$TEXMACS_DIC_PATH") * url_wildcard ("*" * fname);
-  load (expand (complete (u)));
+dictionary_rep::load (string from, string to) {
+  string fname = from * "-" * to * ".scm";
+  cout << "Loading " << fname << "\n";
+  url u= url_system ("$TEXMACS_DIC_PATH") * url_wildcard ("*" * fname);
+  string locale_tag= language_to_locale (to);
+  string path_to_dic= string("plugins/lang_") * locale_tag * "/progs/" * fname;
+  url u2= get_texmacs_home_path () * path_to_dic | get_texmacs_path () * path_to_dic | u;
+  load (expand (complete (u2)));
 }
 
 dictionary
@@ -74,7 +78,7 @@ load_dictionary (string from, string to) {
   if (dictionary::instances -> contains (name))
     return dictionary (name);
   dictionary dict= tm_new<dictionary_rep> (from, to);
-  if (from != to) dict->load (name);
+  if (from != to) dict->load (from, to);
   
   if (N(dict->table) == 0) {
     dictionary inv= load_dictionary (to, from);

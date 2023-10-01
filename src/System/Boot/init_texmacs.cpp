@@ -408,8 +408,7 @@ init_env_vars () {
                        plugin_path ("misc/pixmaps"));
   (void) get_env_path ("TEXMACS_DIC_PATH",
                        "$TEXMACS_HOME_PATH/langs/natural/dic" |
-                       url ("$TEXMACS_PATH/langs/natural/dic") |
-                       plugin_path ("langs/natural/dic"));
+                       url ("$TEXMACS_PATH/langs/natural/dic"));
   (void) get_env_path ("TEXMACS_THEME_PATH",
                        url ("$TEXMACS_PATH/misc/themes") |
                        url ("$TEXMACS_HOME_PATH/misc/themes") |
