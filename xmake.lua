@@ -926,11 +926,11 @@ function add_target_research_on_others()
         name = target:name()
         if is_plat("mingw", "windows") then
             os.execv(target:installdir().."/bin/mogan.exe")
-        elseif is_plat("linux") then
-            os.execv(target:installdir().."/bin/mogan")
-        else
+        elseif is_plat("linux", "macosx") then
             print("Launching " .. target:targetfile())
             os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
+        else
+            print("Unsupported plat $(plat)")
         end
     end)
 end
