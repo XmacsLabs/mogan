@@ -249,6 +249,7 @@ else
       INSTALL_DIR = os.getenv("INSTALL_DIR")
     end
 end
+local RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
 
 local DEVEL_VERSION = TEXMACS_VERSION
 local DEVEL_RELEASE = 1
@@ -928,7 +929,8 @@ function add_target_research_on_others()
         elseif is_plat("linux") then
             os.execv(target:installdir().."/bin/mogan")
         else
-            os.execv(target:installdir().."/../MacOS/Mogan")
+            print("Launching " .. target:targetfile())
+            os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
         end
     end)
 end
@@ -1073,21 +1075,22 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
             params = {
                 "-headless",
                 "-b", path.join("TeXmacs","tests",name..".scm"),
-                "-x", "\"(test_"..name..")\"",
-                "-q"}
+                "-x", "(test_"..name..")",
+                "-q"
+            }
             if is_plat("macosx") then
-                binary = INSTALL_DIR.."/../MacOS/Mogan"
+                binary = "$(buildir)/$(plat)/$(arch)/$(mode)/Mogan"
             elseif is_plat("mingw", "windows") then
                 binary = path.join(INSTALL_DIR,"bin","mogan.exe")
             else
                 binary = INSTALL_DIR.."/bin/mogan"
             end
             cmd = binary
-            for _, param in ipairs(params) do
-                cmd = cmd .. " " .. param
+            if is_plat("macosx") then
+                os.execv(cmd, params, {envs=RUN_ENVS})
+            else
+                os.execv(cmd, params)
             end
-            print ("> " .. cmd)
-            os.execv(cmd)
         end)
     end
 end
