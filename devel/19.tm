@@ -42,6 +42,14 @@
       Darcy
     </cell>|<\cell>
       wrong line break of Chinese text in English doc
+    </cell>>|<row|<\cell>
+      19_5
+    </cell>|<\cell>
+      Chore
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Separate tm_locale from locale for migration to lolly
     </cell>>>>
   </wide-tabular>
 
