@@ -70,8 +70,6 @@ jobs:
         run: xmake run --yes --verbose --diagnosis --group=tests
         env:
           QT_QPA_PLATFORM: offscreen
-      - name: install
-        run: xmake install research
       - name: integration test
         run: xmake run --yes -vD --group=integration_tests
         env:
