@@ -27,6 +27,7 @@ on:
 jobs:
   wasmbuild:
     runs-on: ubuntu-22.04
+    timeout-minutes: 45
     if: always()
     steps:
       - uses: elves/setup-elvish@v1
