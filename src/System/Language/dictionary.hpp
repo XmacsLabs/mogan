@@ -28,7 +28,7 @@ public:
   dictionary_rep (string from, string to);
 
   void   load (url fname);
-  void   load (string fname);
+  void   load (string from, string to);
   string translate (string s, bool guess=true);
 
   friend dictionary load_dictionary (string from, string to);

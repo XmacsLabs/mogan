@@ -172,10 +172,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (tr-file language)
-  (url-concretize
-   (string-append "$TEXMACS_PATH/langs/natural/dic/english-"
-                  language
-                  ".scm")))
+  (let* ((locale_tag (language-to-locale language))
+         (lang_plugin_dir (string-append "plugins/lang_" locale_tag "/progs/"))
+         (lang_dic_file (string-append "english-" language ".scm"))
+         (candidates
+          (url-or (url-append (url-append (get-texmacs-home-path) lang_plugin_dir) lang_dic_file)
+           (url-or (url-append (url-append (get-texmacs-path) lang_plugin_dir) lang_dic_file)
+                   (system->url (string-append "$TEXMACS_PATH/langs/natural/dic/" lang_dic_file))))))
+   (url-resolve candidates "r")))
 
 (define (tr-miss language)
   (url-concretize

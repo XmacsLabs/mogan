@@ -91,10 +91,11 @@ get_texmacs_path () {
 
 url
 get_texmacs_home_path () {
-  url path= get_env ("TEXMACS_HOME_PATH");
-  if (path == "")
-    path= url_system ("$HOME/.TeXmacs");
-  return path;
+  string path= get_env ("TEXMACS_HOME_PATH");
+  if (is_empty (path)) {
+    path= "$HOME/.TeXmacs";
+  }
+  return url_system (path);
 }
 
 url
