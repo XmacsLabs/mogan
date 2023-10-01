@@ -1070,6 +1070,7 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
         set_enabled(not is_plat("wasm"))
         set_kind("phony")
         set_group("integration_tests")
+        add_deps("research")
         on_run(function (target)
             name = target:name()
             params = {
@@ -1078,15 +1079,15 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
                 "-x", "(test_"..name..")",
                 "-q"
             }
-            if is_plat("macosx") then
-                binary = "$(buildir)/$(plat)/$(arch)/$(mode)/Mogan"
+            if is_plat("macosx", "linux") then
+                binary = target:deps()["research"]:targetfile()
             elseif is_plat("mingw", "windows") then
                 binary = path.join(INSTALL_DIR,"bin","mogan.exe")
             else
-                binary = INSTALL_DIR.."/bin/mogan"
+                print("Unsupported plat $(plat)")
             end
             cmd = binary
-            if is_plat("macosx") then
+            if is_plat("macosx", "linux") then
                 os.execv(cmd, params, {envs=RUN_ENVS})
             else
                 os.execv(cmd, params)
