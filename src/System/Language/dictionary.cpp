@@ -64,7 +64,7 @@ dictionary_rep::load (url u) {
 void
 dictionary_rep::load (string from, string to) {
   string fname = from * "-" * to * ".scm";
-  cout << "Loading " << fname << "\n";
+  if (DEBUG_CONVERT) debug_convert << "Loading " << fname << LF;
   url u= url_system ("$TEXMACS_DIC_PATH") * url_wildcard ("*" * fname);
   string locale_tag= language_to_locale (to);
   string path_to_dic= string("plugins/lang_") * locale_tag * "/progs/" * fname;
