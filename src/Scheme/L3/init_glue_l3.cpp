@@ -18,6 +18,7 @@
 #include "analyze.hpp"
 #include "base64.hpp"
 #include "file.hpp"
+#include "locale.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
 #include "path.hpp"
@@ -27,8 +28,6 @@
 #include "tree_cursor.hpp"
 #include "tree_observer.hpp"
 #include "url.hpp"
-#include "locale.hpp"
-
 
 tree
 var_apply (tree& t, modification m) {
