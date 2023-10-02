@@ -69,7 +69,7 @@ local TeXmacs_files = {
 --
 -- Add packages from xrepo or platform package manager
 --
-includes("misc/xmake/packages.lua")
+includes("xmake/packages.lua")
 add_requires_of_mogan()
 
 function build_glue_on_config()
@@ -909,7 +909,7 @@ function add_target_research_on_others()
 
     after_install(function (target)
         print("after_install of target research")
-        import("misc.xmake.global")
+        import("xmake.global")
         global.copy_icons(target)
 
         if is_plat("macosx") and is_arch("arm64") then
