@@ -50,6 +50,22 @@
       Darcy
     </cell>|<\cell>
       Separate tm_locale from locale for migration to lolly
+    </cell>>|<row|<\cell>
+      19_6
+    </cell>|<\cell>
+      Chore
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Move language-sensitive shortcuts to language plugins
+    </cell>>|<row|<\cell>
+      19_7
+    </cell>|<\cell>
+      Chore
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Move language-sensitive styles to language plugins
     </cell>>>>
   </wide-tabular>
 
