@@ -1,22 +1,23 @@
-# 墨干编辑器 / [Mogan Editor](README.md)
+# 墨干理工套件 / [Mogan STEM Suite](README.md)
 ![GPL v3](http://www.gnu.org/graphics/gplv3-127x51.png)
 
 > **让我们享受探索科学与技术的乐趣！**
 
-墨干编辑器是[墨客实验室](https://gitee.com/XmacsLabs)旗下的结构化编辑器。我们致力于将墨干编辑器打造成最易用的 [GNU TeXmacs](https://www.texmacs.org) 发行版。
+墨干是结构化的理工套件，是[墨客实验室](https://gitee.com/XmacsLabs)旗下的自由软件：
++ 墨砚：GNU TeXmacs的发行版之一，主要用于学术写作、书籍出版
++ 墨码：基于GNU TeXmacs内核的代码编辑器
++ 墨板：基于GNU TeXmacs内核的幻灯片产品
 
 ## 如何安装
-Windows、macOS、Ubuntu和UOS这四大平台的安装包是由墨客实验室官方提供的。其他操作系统（比如Arch Linux, OpenSUSE, GNU Guix）的安装包由墨客社区维护。
-
 + 马上下载：[安装指南](docs/zh/guide/Install.md)
-+ 在线试用：[实验性的WASM移植版](https://mogan.app/wasm/Mogan.html)
++ 在线试用：
+  + [墨砚日更版](https://xmacslabs.github.io/mogan/research.html)
 
 ## 如何入门
-> 墨干编辑器是GNU TeXmacs的发行版。
-
 + 访问官网：[https://texmacs.org](https://texmacs.org) 和 [https://mogan.app](https://mogan.app)
 + 观看视频：三分钟GNU TeXmacs速览
 + 阅读书籍：系统学习GNU TeXmacs的捷径
+
 ### 书籍：The Jolly Writer
 [**The Jolly Writer**](https://www.scypress.com/book_info.html) 是目前唯一的系统且详细的 TeXmacs 官方教材。请[点击此处](https://www.scypress.com/book_download.html)免费下载或捐赠。
 
@@ -24,7 +25,7 @@ Windows、macOS、Ubuntu和UOS这四大平台的安装包是由墨客实验室�
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
 
 ## 如何贡献
-请仔细阅读[贡献指南](CONTRIBUTING.md)，以了解如何开始为墨干编辑器做贡献。
+请仔细阅读[贡献指南](CONTRIBUTING.md)，以了解如何开始为墨干做贡献。
 
 ### 贡献者
 <table>

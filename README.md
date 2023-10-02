@@ -1,19 +1,19 @@
-# Mogan Editor / [墨干编辑器](README_ZH.md)
+# Mogan STEM Suite / [墨干理工套件](README_ZH.md)
 ![GPL v3](http://www.gnu.org/graphics/gplv3-127x51.png)
 
 > **Let us enjoy exploring science and technology!**
 
-Mogan Editor is a structure editor delivered by [Xmacs Labs](https://github.com/XmacsLabs). We are dedicated to make Mogan Editor the most user-friendly distribution of [GNU TeXmacs](https://www.texmacs.org).
+Mogan is a structured STEM suite, and it is libre software delivered by [Xmacs Labs](https://github.com/XmacsLabs).
++ Mogan Research：one of the distribution of GNU TeXmacs, mainly for writing papers and books
++ Mogan Code: Structured code editor based on GNU TeXmacs
++ Mogan Beamer: Beamer-like presentation tool based on GNU TeXmacs
 
 ## How to install
-Windows, macOS, Ubuntu and UOS installers are officially provided. Packages for other OS (eg. Arch Linux, OpenSUSE, GNU Guix) are maintained by the community.
-
-+ Download now via [Installation Guide](docs/guide/Install.md)
-+ Try online via the [Experimental WASM port](https://mogan.app/wasm/Mogan.html)
++ Download now via [Installation Guide](docs/zh/guide/Install.md)
++ Try online：
+  + [Mogan Research nightly](https://xmacslabs.github.io/mogan/research.html)
 
 ## Getting Started
-> Mogan Editor is one of the GNU TeXmacs distribution.
-
 + Visit [https://texmacs.org](https://texmacs.org) and [https://mogan.app](https://mogan.app)
 + Watch the following video to learn what is GNU TeXmacs (Mogan Editor) in 5 minutes
 + Read the book to learn GNU TeXmacs (Mogan Editor) in a systematical way
@@ -24,7 +24,7 @@ Windows, macOS, Ubuntu and UOS installers are officially provided. Packages for 
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://youtu.be/H46ON2FB30U)
 
 ## Contributing as User or Developer
-Please review the [Contribution guide](CONTRIBUTING.md) for information on how to get started contributing to Mogan Editor.
+Please review the [Contribution guide](CONTRIBUTING.md) for information on how to get started contributing to Mogan.
 
 ### Contributors
 <table>
