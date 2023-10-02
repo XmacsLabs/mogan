@@ -4,7 +4,7 @@
 > **Let us enjoy exploring science and technology!**
 
 Mogan is a structured STEM suite, and it is libre software delivered by [Xmacs Labs](https://github.com/XmacsLabs).
-+ Mogan Research：one of the distribution of GNU TeXmacs, mainly for writing papers and books
++ Mogan Research: one of the distribution of GNU TeXmacs, mainly for writing papers and books
 + Mogan Code: Structured code editor based on GNU TeXmacs
 + Mogan Beamer: Beamer-like presentation tool based on GNU TeXmacs
 
@@ -15,8 +15,8 @@ Mogan is a structured STEM suite, and it is libre software delivered by [Xmacs L
 
 ## Getting Started
 + Visit [https://texmacs.org](https://texmacs.org) and [https://mogan.app](https://mogan.app)
-+ Watch the following video to learn what is GNU TeXmacs (Mogan Editor) in 5 minutes
-+ Read the book to learn GNU TeXmacs (Mogan Editor) in a systematical way
++ Watch the following video to learn what is GNU TeXmacs in 5 minutes
++ Read the book to learn GNU TeXmacs in a systematical way
 ### Book: The Jolly Writer
 [**The Jolly Writer**](https://www.scypress.com/book_info.html) is the only systematic and detailed official TeXmacs textbook available. Please [click here](https://www.scypress.com/book_download.html) to download for free or make a donation.
 
