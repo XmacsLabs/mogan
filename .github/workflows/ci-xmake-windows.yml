@@ -9,7 +9,7 @@ on:
       - '!src/Plugins/Unix/**'
       - 'tests/**'
       - 'xmake.lua'
-      - 'misc/xmake/packages.lua'
+      - 'xmake/packages.lua'
       - '.github/workflows/ci-xmake-windows.yml'
   pull_request:
     branches: [ branch-1.2 ]
@@ -19,7 +19,7 @@ on:
       - '!src/Plugins/Unix/**'
       - 'tests/**'
       - 'xmake.lua'
-      - 'misc/xmake/packages.lua'
+      - 'xmake/packages.lua'
       - '.github/workflows/ci-xmake-windows.yml'
   workflow_dispatch:
 
