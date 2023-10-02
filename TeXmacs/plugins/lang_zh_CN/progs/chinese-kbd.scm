@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (text chinese chinese)
+(texmacs-module (chinese-kbd)
   (:use (text text-kbd)))
 
 (kbd-map
