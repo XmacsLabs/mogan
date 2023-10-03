@@ -31,6 +31,13 @@ set_project("Mogan Applications")
 
 set_allowedplats("wasm", "linux", "macosx", "mingw", "windows") 
 
+set_configvar(OS_GNU_LINUX, is_plat("linux"))
+set_configvar(OS_MACOS, is_plat("macosx"))
+set_configvar(OS_MINGW, is_plat("mingw"))
+set_configvar(OS_WIN, is_plat("windows"))
+set_configvar(OS_WASM, is_plat("wasm"))
+
+
 if is_plat("mingw") and is_host("windows") then
     add_requires("mingw-w64 8.1.0")
     set_toolchains("mingw@mingw-w64")
@@ -204,10 +211,6 @@ target("libkernel_l3") do
     add_configfiles("src/System/config_l3.h.xmake", {
         filename = "L3/config.h",
         variables = {
-            OS_MINGW = is_plat("mingw"),
-            OS_MACOS = is_plat("macosx"),
-            OS_WIN = is_plat("windows"),
-            OS_WASM = is_plat("wasm"),
             QTTEXMACS = false,
         }
     })
@@ -289,11 +292,6 @@ add_configfiles("src/System/config.h.xmake", {
         GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
         GS_LIB = "../share/ghostscript/9.06/lib:",
         NOMINMAX = is_plat("windows"),
-        OS_GNU_LINUX = is_plat("linux"),
-        OS_MACOS = is_plat("macosx"),
-        OS_MINGW = is_plat("mingw"),
-        OS_WIN = is_plat("windows"),
-        OS_WASM = is_plat("wasm"),
         MACOSX_EXTENSIONS = is_plat("macosx"),
         SIZEOF_VOID_P = 8,
         USE_FONTCONFIG = is_plat("linux"),
@@ -520,11 +518,6 @@ function add_target_draw()
     add_configfiles("src/System/config.h.xmake", {
         filename = "draw/config.h",
         variables = {
-            OS_GNU_LINUX = is_plat("linux"),
-            OS_MACOS = is_plat("macosx"),
-            OS_MINGW = is_plat("mingw"),
-            OS_WIN = is_plat("windows"),
-            OS_WASM = is_plat("wasm"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
             USE_PLUGIN_PDF = false,
             USE_PLUGIN_BIBTEX = false,
@@ -619,11 +612,6 @@ function add_target_code()
     add_configfiles("src/System/config.h.xmake", {
         filename = "code/config.h",
         variables = {
-            OS_GNU_LINUX = is_plat("linux"),
-            OS_MACOS = is_plat("macosx"),
-            OS_MINGW = is_plat("mingw"),
-            OS_WIN = is_plat("windows"),
-            OS_WASM = is_plat("wasm"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
             USE_PLUGIN_PDF = false,
             USE_PLUGIN_BIBTEX = false,
@@ -718,11 +706,6 @@ function add_target_research_on_wasm()
     add_configfiles("src/System/config.h.xmake", {
         filename = "research/config.h",
         variables = {
-            OS_GNU_LINUX = is_plat("linux"),
-            OS_MACOS = is_plat("macosx"),
-            OS_MINGW = is_plat("mingw"),
-            OS_WIN = is_plat("windows"),
-            OS_WASM = is_plat("wasm"),
             MACOSX_EXTENSIONS = is_plat("macosx"),
             USE_PLUGIN_PDF = false,
             USE_PLUGIN_BIBTEX = true,
