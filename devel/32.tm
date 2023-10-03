@@ -17,8 +17,8 @@
   L3>>|<row|<cell|Chore>|<cell|32_8>|<cell|Da>|<cell|build
   libmogan>>|<row|<cell|Chore>|<cell|32_9>|<cell|Da>|<cell|Default to english
   language on wasm>>|<row|<cell|Chore>|<cell|32_10>|<cell|Da>|<cell|wasm: Add
-  plugins to in-memory fs>>|<row|<cell|Chore>|<cell|32_11>|<cell|Da>|<cell|
-  Upgrade to Qt 6.5.3 on wasm>>>>>
+  plugins to in-memory fs>>|<row|<cell|Chore>|<cell|32_11>|<cell|Da>|<cell|Upgrade
+  to Qt 6.5.3 on wasm>>>>>
 
   <tmdoc-copyright|2023|Darcy Shen>
 
