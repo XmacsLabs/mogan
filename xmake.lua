@@ -31,11 +31,31 @@ set_project("Mogan Applications")
 
 set_allowedplats("wasm", "linux", "macosx", "mingw", "windows") 
 
-set_configvar("OS_GNU_LINUX", is_plat("linux"))
-set_configvar("OS_MACOS", is_plat("macosx"))
-set_configvar("OS_MINGW", is_plat("mingw"))
-set_configvar("OS_WIN", is_plat("windows"))
-set_configvar("OS_WASM", is_plat("wasm"))
+if is_plat("wasm") then
+    set_configvar("OS_WASM", true)
+else
+    set_configvar("OS_WASM", false)
+end
+if is_plat("linux") then
+    set_configvar("OS_GNU_LINUX", true)
+else
+    set_configvar("OS_GNU_LINUX", false)
+end
+if is_plat("macosx") then
+    set_configvar("OS_MACOS", true)
+else
+    set_configvar("OS_MACOS", false)
+end
+if is_plat("mingw") then
+    set_configvar("OS_MINGW", true)
+else
+    set_configvar("OS_MINGW", false)
+end
+if is_plat("windows") then
+    set_configvar("OS_WIN", true)
+else
+    set_configvar("OS_WIN", false)
+end
 
 
 if is_plat("mingw") and is_host("windows") then
