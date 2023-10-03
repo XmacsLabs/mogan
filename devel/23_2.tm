@@ -13,9 +13,7 @@
   <\description>
     <item*|Owner>Oyyko
 
-    <item*|Gitee issue>
-
-    <item*|Github issue>
+    <item*|Gitee issue><href|https://gitee.com/XmacsLabs/mogan/issues/I668I5>
   </description>
 
   <section|Description>

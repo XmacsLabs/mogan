@@ -39,8 +39,21 @@
 
   <section|Tasks>
 
-  <\wide-block>
-    <tformat|<table|<row|<\cell>
+  <\wide-tabular>
+    <tformat|<cwith|9|9|2|2|cell-background|pastel
+    green>|<cwith|8|8|2|2|cell-background|pastel
+    green>|<cwith|10|10|2|2|cell-background|pastel
+    green>|<cwith|11|11|2|2|cell-background|pastel
+    green>|<cwith|12|12|2|2|cell-background|#f0f0f0>|<cwith|14|14|2|2|cell-background|pastel
+    green>|<cwith|15|15|2|2|cell-background|#f0f0f0>|<cwith|28|28|2|2|cell-background|pastel
+    green>|<cwith|27|27|2|2|cell-background|pastel
+    green>|<cwith|26|26|2|2|cell-background|pastel
+    green>|<cwith|5|5|2|2|cell-background|#f0f0f0>|<cwith|4|4|2|2|cell-background|#f0f0f0>|<cwith|21|21|2|2|cell-background|pastel
+    green>|<cwith|25|25|2|2|cell-background|pastel
+    green>|<cwith|23|23|2|2|cell-background|pastel
+    green>|<cwith|24|24|2|2|cell-background|pastel
+    green>|<cwith|2|2|2|2|cell-background|pastel
+    green>|<cwith|20|20|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Type
     </cell>|<\cell>
       No.
@@ -50,8 +63,6 @@
       Description
     </cell>|<\cell>
       Links
-    </cell>|<\cell>
-      Status
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -62,8 +73,6 @@
       Draw an ellipse.
     </cell>|<\cell>
       <href|https://gitee.com/XmacsLabs/mogan/issues/I6QBAE>
-    </cell>|<\cell>
-      <value|re>
     </cell>>|<row|<\cell>
       <value|b>
     </cell>|<\cell>
@@ -73,11 +82,6 @@
     </cell>|<\cell>
       When moving an object, the snap point may not be the object's vertex.
     </cell>|<\cell>
-      <href|https://gitee.com/XmacsLabs/mogan/issues/I668I5>, just a ref, the
-      content of this bug will be explained in <dlink|23_2>.
-    </cell>|<\cell>
-      <value|li>
-
       \;
     </cell>>|<row|<\cell>
       <value|b>
@@ -90,8 +94,6 @@
       smooth.
     </cell>|<\cell>
       <href|https://gitee.com/XmacsLabs/mogan/issues/I62I5H>
-    </cell>|<\cell>
-      <value|dis>
     </cell>>|<row|<\cell>
       <value|b>
     </cell>|<\cell>
@@ -103,8 +105,6 @@
       background, but the object.
     </cell>|<\cell>
       <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGQ7>
-    </cell>|<\cell>
-      <value|dis>
     </cell>>|<row|<\cell>
       <value|b>
     </cell>|<\cell>
@@ -115,8 +115,6 @@
       After reducing the image, the input box will not shrink accordingly.
     </cell>|<\cell>
       <href|https://gitee.com/XmacsLabs/mogan/issues/I66QRB>
-    </cell>|<\cell>
-      <value|li>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -127,8 +125,6 @@
       Add more arrow types.
     </cell>|<\cell>
       <href|https://gitee.com/XmacsLabs/mogan/issues/I6BKQN>
-    </cell>|<\cell>
-      <value|re>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -140,8 +136,6 @@
       pressing the right mouse button.
     </cell>|<\cell>
       <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGW8>
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -153,10 +147,8 @@
       items.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
-      <value|f>
+      Chore
     </cell>|<\cell>
       23_9
     </cell>|<\cell>
@@ -165,8 +157,6 @@
       Optimize the translation
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
       <value|b>
     </cell>|<\cell>
@@ -178,8 +168,6 @@
       the original object.
     </cell>|<\cell>
       <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGKD>
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -190,8 +178,6 @@
       Move the \PExit graphics mode\Q button to the rightest.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -202,8 +188,6 @@
       Change the Arrow setting memory from global to per-tool.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|li>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -215,8 +199,6 @@
       hand.
     </cell>|<\cell>
       <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGM7>
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -229,8 +211,6 @@
     </cell>|<\cell>
       <href|https://gitee.com/XmacsLabs/mogan/issues/I5XGVX> and
       <href|https://github.com/XmacsLabs/mogan/issues/185>
-    </cell>|<\cell>
-      <value|dis>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -242,8 +222,6 @@
       <cpp|\\small> rather than size number to set the font size.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|li>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -254,8 +232,6 @@
       <strong|Bold> the origin point and the axes.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|li>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -266,8 +242,6 @@
       Display the coordinates of a point or object.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|li>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -278,8 +252,6 @@
       Set the location of an object by setting its coordinates.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|li>
     </cell>>|<row|<\cell>
       <value|b>
     </cell>|<\cell>
@@ -290,8 +262,6 @@
       Click the current mode to exit the current mode.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
       <value|b>
     </cell>|<\cell>
@@ -303,9 +273,7 @@
       will jump to the other one.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|ok>
-    </cell>>|<\row|<\cell>
+    </cell>>|<row|<\cell>
       <value|b>
     </cell>|<\cell>
       23_22
@@ -316,9 +284,7 @@
       default.
     </cell>|<\cell>
       \;
-    </cell>>
-      <value|li>
-    </row>|<row|<\cell>
+    </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
       <dlink|23_23>
@@ -329,10 +295,8 @@
       points in the graphics-markup.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
-      <strong|Code>
+      Chore
     </cell>|<\cell>
       23_24
     </cell>|<\cell>
@@ -341,8 +305,6 @@
       new complete cursor style setting function
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -353,10 +315,8 @@
       Ban translation in the right footer.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
-      <strong|Code>
+      Chore
     </cell>|<\cell>
       23_26
     </cell>|<\cell>
@@ -365,8 +325,6 @@
       remove the useless file init-texmacs.scm
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -378,8 +336,6 @@
       and end of the arc.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|ok>
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -391,10 +347,8 @@
       small hand.
     </cell>|<\cell>
       \;
-    </cell>|<\cell>
-      <value|ok>
     </cell>>>>
-  </wide-block>
+  </wide-tabular>
 
   \;
 
