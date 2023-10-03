@@ -782,7 +782,6 @@ function add_target_research_on_wasm()
     add_files(plugin_xml_srcs)
     add_files("src/Mogan/Research/research.cpp")
     
-    set_optimize("fastest")
     add_ldflags("-sASYNCIFY")
     add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
     
