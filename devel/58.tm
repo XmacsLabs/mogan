@@ -7,13 +7,17 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|58_1>|<cell|Darcy>|<cell|CI:
-  use the mingw toolchain>>|<row|<cell|Chore>|<cell|58_2>|<cell|Darcy>|<cell|CI:
-  Only build tests and research on Linux>>|<row|<cell|Chore>|<cell|58_3>|<cell|paradisum>|<cell|Upgrade
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|2|2|2|cell-background|pastel
+  green>|<cwith|3|3|2|2|cell-background|pastel
+  green>|<cwith|6|6|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Chore>|<cell|58_1>|<cell|Darcy>|<cell|CI: use the
+  mingw toolchain>>|<row|<cell|Chore>|<cell|58_2>|<cell|Darcy>|<cell|CI: Only
+  build tests and research on Linux>>|<row|<cell|Chore>|<cell|58_3>|<cell|paradisum>|<cell|Upgrade
   to xmake 2.8.3>>|<row|<cell|Chore>|<cell|58_4>|<cell|paradisum>|<cell|Improve
   macOS CI like <dlink|3_29>>>|<row|<cell|Chore>|<cell|58_5>|<cell|paradisum>|<cell|Improve
   Ubuntu CI like <dlink|3_29>>>|<row|<cell|Chore>|<cell|58_6>|<cell|Darcy>|<cell|set
-  CI/CD timeout to 45m>>>>>
+  CI/CD timeout to 45m>>|<row|<cell|Chore>|<cell|58_7>|<cell|Oyyko>|<cell|Github
+  Action CI on Arch Linux>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
