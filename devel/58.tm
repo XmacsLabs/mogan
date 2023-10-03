@@ -12,7 +12,8 @@
   Only build tests and research on Linux>>|<row|<cell|Chore>|<cell|58_3>|<cell|paradisum>|<cell|Upgrade
   to xmake 2.8.3>>|<row|<cell|Chore>|<cell|58_4>|<cell|paradisum>|<cell|Improve
   macOS CI like <dlink|3_29>>>|<row|<cell|Chore>|<cell|58_5>|<cell|paradisum>|<cell|Improve
-  Ubuntu CI like <dlink|3_29>>>>>>
+  Ubuntu CI like <dlink|3_29>>>|<row|<cell|Chore>|<cell|58_6>|<cell|Darcy>|<cell|set
+  CI/CD timeout to 45m>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
