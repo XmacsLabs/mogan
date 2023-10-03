@@ -14,10 +14,10 @@
 
 #include "tree.hpp"
 
-string ispell_start (string lan);
-tree   ispell_check (string lan, string s);
-void   ispell_accept (string lan, string s);
-void   ispell_insert (string lan, string s);
-void   ispell_done (string lan);
+// string ispell_start (string lan);
+// tree   ispell_check (string lan, string s);
+// void   ispell_accept (string lan, string s);
+// void   ispell_insert (string lan, string s);
+// void   ispell_done (string lan);
 
 #endif // ISPELL_H

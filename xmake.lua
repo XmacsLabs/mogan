@@ -291,7 +291,7 @@ set_configvar("PDFHUMMUS_NO_TIFF", true)
 set_configvar("USE_PLUGIN_BIBTEX", true)
 set_configvar("USE_PLUGIN_LATEX_PREVIEW", true)
 set_configvar("USE_PLUGIN_TEX", true)
-set_configvar("USE_PLUGIN_ISPELL", true)
+set_configvar("USE_PLUGIN_ISPELL", false)
 set_configvar("TM_DYNAMIC_LINKING", false)
 
 if is_plat("mingw", "windows") then
@@ -500,7 +500,7 @@ target("libmogan") do
     add_files(plugin_freetype_srcs)
     add_files(plugin_database_srcs)
     add_files(plugin_ghostscript_srcs)
-    add_files(plugin_ispell_srcs)
+    -- add_files(plugin_ispell_srcs)
     add_files(plugin_metafont_srcs)
     add_files(plugin_tex_srcs)
     add_files(plugin_latex_preview_srcs)
