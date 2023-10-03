@@ -52,6 +52,7 @@ jobs:
           target: 'desktop'
           cache: 'true'
           # workarounds in https://github.com/jurplel/install-qt-action/issues/181
+          setup-python: 'false'
           aqtversion: '==3.1.*'
           py7zrversion: '==0.20.*'
           extra: '--autodesktop'
