@@ -39,12 +39,10 @@ jobs:
       - name: Generate
         run: |
           sudo pacman -Syyu --noconfirm --needed
-          sudo pacman -S --noconfirm --needed qt5-base qt5-svg freetype2 sqlite libpng libiconv zlib libjpeg curl texlive-core python libxext
+          sudo pacman -S --noconfirm --needed qt5-base qt5-svg freetype2 sqlite libpng libiconv zlib libjpeg curl texlive-core python libxext xmake
             xrepo update-repo
             xmake config -m release --yes
             xmake build --yes --verbose --diagnosis --jobs=8 --all
-      - uses: actions/checkout@v1
-      - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: branch@master
           actions-cache-folder: '.xmake-cache'
