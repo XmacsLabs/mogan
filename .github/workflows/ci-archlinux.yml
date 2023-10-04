@@ -43,4 +43,4 @@ jobs:
           xrepo update-repo
           xmake config -m release --yes
           xmake build --yes --verbose --diagnosis --jobs=8 --all
-        - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
