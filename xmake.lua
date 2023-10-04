@@ -143,7 +143,6 @@ function build_glue_on_config()
 end
 
 function add_tm_configure(target_name, variables)
-    print("config tm_configure.hpp for " .. target_name)
     if target_name == "libmogan" then
         add_configfiles("src/System/tm_configure.hpp.xmake", {
             filename = "tm_configure.hpp",
