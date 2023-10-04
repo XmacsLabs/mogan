@@ -625,7 +625,7 @@ if is_plat("wasm", "linux") then
 end
 
 
-import("xmake.code")
+includes("xmake/code.lua")
 if is_plat("wasm", "linux") then
     target("code") do
         add_target_code()
