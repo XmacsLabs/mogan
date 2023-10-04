@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: Generate
         run: |
-          sudo pacman -Syyu
+          sudo pacman -Syyu --noconfirm
           sudo pacman -S qt5-base qt5-svg freetype2 sqlite libpng libiconv zlib libjpeg curl texlive-core python libxext
             xrepo update-repo
             xmake config -m release --yes
