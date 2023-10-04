@@ -25,7 +25,7 @@ function main()
                 ret_type = "bool"
             },
             {
-                scm_name = "use-plugin-updater?"
+                scm_name = "use-plugin-updater?",
                 cpp_name = "use_plugin_updater",
                 ret_type = "bool"
             }
