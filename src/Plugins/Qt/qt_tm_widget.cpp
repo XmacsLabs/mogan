@@ -119,13 +119,6 @@ qt_tm_widget_rep::qt_tm_widget_rep(int mask, command _quit)
   visibility[6] = (mask & 64)  == 64;  // side tools #0
   visibility[7] = (mask & 128) == 128; // bottom tools
 
-#ifdef OS_WASM
-  visibility[1] = false;   // main
-  visibility[2] = false;   // mode
-  visibility[3] = false;   // focus
-  visibility[4] = false;   // user
-#endif
-
   // general setup for main window
   
   QMainWindow* mw= mainwindow ();

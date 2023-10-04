@@ -609,6 +609,8 @@ function add_target_draw()
     add_files("src/Mogan/Draw/draw.cpp")
 
     if is_plat("wasm") then
+        set_optimize("fastest")
+        add_ldflags("-sASYNCIFY")
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
     end
 
@@ -701,6 +703,8 @@ function add_target_code()
     add_files("src/Mogan/Code/code.cpp")
 
     if is_plat("wasm") then
+        set_optimize("fastest")
+        add_ldflags("-sASYNCIFY")
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
     end
 
@@ -779,6 +783,7 @@ function add_target_research_on_wasm()
     add_files(plugin_xml_srcs)
     add_files("src/Mogan/Research/research.cpp")
     
+    add_ldflags("-sASYNCIFY")
     add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
     
     before_build(function (target)
