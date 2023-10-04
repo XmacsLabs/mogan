@@ -94,8 +94,11 @@ void
 initialize_glue_plugins () {
   initialize_glue_plugin ();
   initialize_glue_tmdb ();
-  initialize_glue_updater ();
   initialize_glue_xml ();
+
+#ifdef USE_PLUGIN_SPARKLE
+  initialize_glue_updater ();
+#endif
 
 #ifdef USE_PLUGIN_BIBTEX
   initialize_glue_bibtex ();
