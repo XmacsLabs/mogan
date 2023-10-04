@@ -131,7 +131,6 @@ function add_tm_configure(target_name)
         variables = {
             XMACS_VERSION = XMACS_VERSION,
             CONFIG_USER = CONFIG_USER,
-            CONFIG_STD_SETENV = "#define STD_SETENV",
             tm_devel = "Texmacs-" .. DEVEL_VERSION,
             tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
             tm_stable = "Texmacs-" .. STABLE_VERSION,
@@ -343,7 +342,6 @@ add_configfiles("src/System/tm_configure.hpp.xmake", {
     variables = {
         XMACS_VERSION = XMACS_VERSION,
         CONFIG_USER = CONFIG_USER,
-        CONFIG_STD_SETENV = "#define STD_SETENV",
         tm_devel = "Texmacs-" .. DEVEL_VERSION,
         tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
         tm_stable = "Texmacs-" .. STABLE_VERSION,
