@@ -19,7 +19,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (updater-initialize)
-  (when (updater-supported?)
+  (when (use-plugin-updater?)
 	(with n (get-preference "updater:interval")
 	      (when (string-number? n)
 		    (updater-set-interval (string->number n))

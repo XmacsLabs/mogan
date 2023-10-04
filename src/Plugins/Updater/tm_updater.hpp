@@ -45,7 +45,6 @@ public:
  * Scheme interface
  ******************************************************************************/
 
-bool updater_supported ();
 bool updater_is_running ();
 bool updater_check_background ();
 bool updater_check_foreground ();
