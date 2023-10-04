@@ -70,6 +70,6 @@ jobs:
           py7zrversion: '==0.20.*'
           extra: '--autodesktop'
       - name: config
-        run: xmake config -p wasm --yes -vD
+        run: elvish bin/config_wasm
       - name: build
         run: xmake build research
