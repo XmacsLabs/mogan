@@ -1,4 +1,4 @@
-<TeXmacs|2.1>
+<TeXmacs|2.1.2>
 
 <style|source>
 
@@ -61,6 +61,12 @@
       </surround>>
     </cell>>>>>>>
   </macro>>
+
+  \;
+
+  <assign|sectional-normal|<macro|name|<wide-normal|<arg|name><no-page-break>>>>
+
+  <assign|sectional-centered|<macro|name|<wide-centered|<arg|name><no-page-break>>>>
 
   <\active*>
     <\src-comment>
