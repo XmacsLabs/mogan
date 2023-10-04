@@ -104,6 +104,14 @@
       Darcy
     </cell>|<\cell>
       Tune retina settings on wasm
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      48_13
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Separate Mogan Code from xmake.lua
     </cell>>>>
   </wide-tabular>
 
