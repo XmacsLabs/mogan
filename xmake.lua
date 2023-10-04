@@ -258,7 +258,7 @@ target("libkernel_l3") do
 end
 
 
-XMACS_VERSION="1.2.0"
+local XMACS_VERSION="1.2.0"
 
 local INSTALL_DIR = "$(buildir)"
 if is_plat("mingw", "windows") then 
@@ -628,6 +628,7 @@ end
 includes("xmake/code.lua")
 if is_plat("wasm", "linux") then
     target("code") do
+        set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
         add_target_code()
     end
 end

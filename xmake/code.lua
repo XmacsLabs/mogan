@@ -10,7 +10,6 @@
 
 function add_target_code()
     set_languages("c++17")
-    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
     build_glue_on_config()
     add_configfiles("src/System/config.h.xmake", {
