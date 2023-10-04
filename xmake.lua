@@ -250,7 +250,7 @@ target("libkernel_l3") do
     set_kind("static")
     set_group("kernel_l3")
     set_basename("kernel_l3")
-    set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
+    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
     add_packages("s7")
     add_packages("lolly")
@@ -331,7 +331,7 @@ if is_plat("macosx") then
     set_configvar("AQUATEXMACS", true)
 end
 
-set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
+set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
 add_configfiles("src/System/config.h.xmake", {
     filename = "config.h",
@@ -457,7 +457,7 @@ plugin_updater_srcs = { "src/Plugins/Updater/**.cpp" }
 target("libmogan") do
     set_enabled(not is_plat ("wasm"))
     set_basename("mogan")
-    set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
+    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
