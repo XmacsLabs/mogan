@@ -157,7 +157,7 @@ end
 -- Library: L3 Kernel
 --
 set_configvar("QTTEXMACS", 1)
-local CONFIG_USER = "XmacsLabs"
+CONFIG_USER = "XmacsLabs"
 local TEXMACS_VERSION = "2.1.2"
 
 local l3_files = {
@@ -258,7 +258,7 @@ target("libkernel_l3") do
 end
 
 
-local XMACS_VERSION="1.2.0"
+XMACS_VERSION="1.2.0"
 
 local INSTALL_DIR = "$(buildir)"
 if is_plat("mingw", "windows") then 
@@ -274,10 +274,10 @@ else
 end
 local RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
 
-local DEVEL_VERSION = TEXMACS_VERSION
-local DEVEL_RELEASE = 1
-local STABLE_VERSION = TEXMACS_VERSION
-local STABLE_RELEASE = 1
+DEVEL_VERSION = TEXMACS_VERSION
+DEVEL_RELEASE = 1
+STABLE_VERSION = TEXMACS_VERSION
+STABLE_RELEASE = 1
 
 if not is_plat("wasm") then
     set_configvar("QTPIPES", 1)
