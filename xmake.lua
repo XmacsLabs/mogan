@@ -562,6 +562,7 @@ function add_target_draw()
             USE_PLUGIN_LATEX_PREVIEW = false,
             USE_PLUGIN_TEX = false,
             USE_PLUGIN_ISPELL = false,
+            USE_PLUGIN_SPARKLE = false,
             QTPIPES = is_plat("linux"),
             USE_QT_PRINTER = is_plat("linux"),
             NOMINMAX = is_plat("windows"),
@@ -603,7 +604,6 @@ function add_target_draw()
     end
     add_files(plugin_freetype_srcs)
     add_files(plugin_database_srcs)
-    add_files(plugin_ispell_srcs)
     add_files(plugin_metafont_srcs)
     add_files(plugin_openssl_srcs)
     add_files(plugin_xml_srcs)
