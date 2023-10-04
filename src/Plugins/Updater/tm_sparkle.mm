@@ -11,7 +11,7 @@
 ******************************************************************************/
 
   // HACK, should be fixed with autotools
-#if defined (OS_MACOS) && defined (USE_SPARKLE)
+#if defined (OS_MACOS) && defined (USE_PLUGIN_SPARKLE)
 
 #include "tm_sparkle.hpp"
 #include "string.hpp"
@@ -115,4 +115,4 @@ bool tm_sparkle::checkInForeground ()
   return true;
 }
 
-#endif // defined (OS_MACOS) && defined (USE_SPARKLE)
+#endif // defined (OS_MACOS) && defined (USE_PLUGIN_SPARKLE)
