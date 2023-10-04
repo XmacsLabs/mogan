@@ -42,8 +42,8 @@ jobs:
           sudo pacman -S --noconfirm --needed qt5-base qt5-svg freetype2 sqlite libpng libiconv zlib libjpeg curl texlive-core python libxext xmake
       - uses: actions/checkout@v1
       - name: Xrepo
-        run: xrepo update-repo
+        run: xrepo --root update-repo
       - name: Config
-        run: xmake config -m release --yes
+        run: xmake --root config -m release --yes
       - name: Build
-        run: xmake build --yes --verbose --diagnosis --jobs=8 --all
+        run: xmake --root build --yes --verbose --diagnosis --jobs=8 --all
