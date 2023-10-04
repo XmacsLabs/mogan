@@ -501,11 +501,11 @@ target("libmogan") do
     add_files(plugin_freetype_srcs)
     add_files(plugin_database_srcs)
     add_files(plugin_ghostscript_srcs)
+    add_files(plugin_ispell_srcs)
     add_files(plugin_metafont_srcs)
     add_files(plugin_tex_srcs)
     add_files(plugin_latex_preview_srcs)
     add_files(plugin_openssl_srcs)
-    add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)
     add_files(plugin_pdf_srcs)
 
