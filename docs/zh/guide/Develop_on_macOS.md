@@ -14,6 +14,12 @@ brew install pkg-config
 xrepo update-repo
 ```
 
+有时需要xmake使用最新的版本才能正常编译，可以用
+```
+xmake update dev
+```
+来切换到最新版本
+
 ### 第二步：编译
 ```
 xmake config --yes
