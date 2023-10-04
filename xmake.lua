@@ -28,6 +28,24 @@ configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
 --- Project: Mogan Applications
 ---
 set_project("Mogan Applications")
+local TEXMACS_VERSION = "2.1.2"
+local XMACS_VERSION="1.2.0"
+local CONFIG_USER = "XmacsLabs"
+local DEVEL_VERSION = TEXMACS_VERSION
+local DEVEL_RELEASE = 1
+local STABLE_VERSION = TEXMACS_VERSION
+local STABLE_RELEASE = 1
+
+local TM_CONFIGURE_VARS = {
+    CONFIG_USER = CONFIG_USER,
+    XMACS_VERSION = XMACS_VERSION,
+    tm_devel = "Texmacs-" .. DEVEL_VERSION,
+    tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
+    tm_stable = "Texmacs-" .. STABLE_VERSION,
+    tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
+    LOLLY_VERSION = LOLLY_VERSION,
+}
+
 
 set_allowedplats("wasm", "linux", "macosx", "mingw", "windows") 
 
@@ -124,20 +142,21 @@ function build_glue_on_config()
     end)
 end
 
-function add_tm_configure(target_name)
-    add_configfiles("src/System/tm_configure.hpp.xmake", {
-        filename = target_name .. "/tm_configure.hpp",
-        pattern = "@(.-)@",
-        variables = {
-            XMACS_VERSION = XMACS_VERSION,
-            CONFIG_USER = CONFIG_USER,
-            tm_devel = "Texmacs-" .. DEVEL_VERSION,
-            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
-            tm_stable = "Texmacs-" .. STABLE_VERSION,
-            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
-            LOLLY_VERSION = LOLLY_VERSION,
-        }
-    })
+function add_tm_configure(target_name, variables)
+    print("config tm_configure.hpp for " .. target_name)
+    if target_name == "libmogan" then
+        add_configfiles("src/System/tm_configure.hpp.xmake", {
+            filename = "tm_configure.hpp",
+            pattern = "@(.-)@",
+            variables = variables
+        })
+    else
+        add_configfiles("src/System/tm_configure.hpp.xmake", {
+            filename = target_name .. "/tm_configure.hpp",
+            pattern = "@(.-)@",
+            variables = variables
+        })
+    end
 end
 
 --
@@ -172,8 +191,6 @@ end
 -- Library: L3 Kernel
 --
 set_configvar("QTTEXMACS", 1)
-CONFIG_USER = "XmacsLabs"
-local TEXMACS_VERSION = "2.1.2"
 
 local l3_files = {
     "src/Kernel/**.cpp",
@@ -273,7 +290,6 @@ target("libkernel_l3") do
 end
 
 
-XMACS_VERSION="1.2.0"
 
 local INSTALL_DIR = "$(buildir)"
 if is_plat("mingw", "windows") then 
@@ -288,11 +304,6 @@ else
     end
 end
 local RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
-
-DEVEL_VERSION = TEXMACS_VERSION
-DEVEL_RELEASE = 1
-STABLE_VERSION = TEXMACS_VERSION
-STABLE_RELEASE = 1
 
 if not is_plat("wasm") then
     set_configvar("QTPIPES", 1)
@@ -335,21 +346,6 @@ add_configfiles("src/System/config.h.xmake", {
         USE_GS = not is_plat("wasm"),
     }
 })
-
-add_configfiles("src/System/tm_configure.hpp.xmake", {
-    filename = "tm_configure.hpp",
-    pattern = "@(.-)@",
-    variables = {
-        XMACS_VERSION = XMACS_VERSION,
-        CONFIG_USER = CONFIG_USER,
-        tm_devel = "Texmacs-" .. DEVEL_VERSION,
-        tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
-        tm_stable = "Texmacs-" .. STABLE_VERSION,
-        tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
-        LOLLY_VERSION = LOLLY_VERSION,
-    }
-})
-
 
 libmogan_srcs = {
     "src/Data/**.cpp",
@@ -461,7 +457,7 @@ plugin_updater_srcs = { "src/Plugins/Updater/**.cpp" }
 target("libmogan") do
     set_enabled(not is_plat ("wasm"))
     set_basename("mogan")
-    set_version(TEXMACS_VERSION)
+    set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
@@ -483,6 +479,7 @@ target("libmogan") do
     end
 
     build_glue_on_config()
+    add_tm_configure("libmogan", TM_CONFIGURE_VARS)
 
     add_packages("lolly")
     add_packages("libiconv")
@@ -550,7 +547,7 @@ function add_target_draw()
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
     build_glue_on_config()
-    add_tm_configure("draw")
+    add_tm_configure("draw", TM_CONFIGURE_VARS)
     add_configfiles("src/System/config.h.xmake", {
         filename = "draw/config.h",
         variables = {
@@ -629,7 +626,7 @@ includes("xmake/code.lua")
 if is_plat("wasm", "linux") then
     target("code") do
         set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
-        add_tm_configure("code")
+        add_tm_configure("code", TM_CONFIGURE_VARS)
         add_target_code()
     end
 end
@@ -640,7 +637,7 @@ function add_target_research_on_wasm()
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
     build_glue_on_config()
-    add_tm_configure("research")
+    add_tm_configure("research", TM_CONFIGURE_VARS)
     add_configfiles("src/System/config.h.xmake", {
         filename = "research/config.h",
         variables = {
