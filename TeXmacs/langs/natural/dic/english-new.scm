@@ -2873,7 +2873,6 @@
 ("tabular material" "")
 ("tag" "")
 ("tags with special rendering" "")
-("taiwanese" "")
 ("tangent" "")
 ("target" "")
 ("teXmacs DTD" "")
