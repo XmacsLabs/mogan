@@ -35,20 +35,6 @@ function add_target_code()
             USE_ICONV = true,
         }
     })
-    add_configfiles("src/System/tm_configure.hpp.xmake", {
-        filename = "code/tm_configure.hpp",
-        pattern = "@(.-)@",
-        variables = {
-            XMACS_VERSION = XMACS_VERSION,
-            CONFIG_USER = CONFIG_USER,
-            CONFIG_STD_SETENV = "#define STD_SETENV",
-            tm_devel = "Texmacs-" .. DEVEL_VERSION,
-            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
-            tm_stable = "Texmacs-" .. STABLE_VERSION,
-            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
-            LOLLY_VERSION = LOLLY_VERSION,
-        }
-    })
 
     add_packages("lolly")
     add_packages("freetype")

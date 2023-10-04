@@ -124,6 +124,22 @@ function build_glue_on_config()
     end)
 end
 
+function add_tm_configure(target_name)
+    add_configfiles("src/System/tm_configure.hpp.xmake", {
+        filename = target_name .. "/tm_configure.hpp",
+        pattern = "@(.-)@",
+        variables = {
+            XMACS_VERSION = XMACS_VERSION,
+            CONFIG_USER = CONFIG_USER,
+            CONFIG_STD_SETENV = "#define STD_SETENV",
+            tm_devel = "Texmacs-" .. DEVEL_VERSION,
+            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
+            tm_stable = "Texmacs-" .. STABLE_VERSION,
+            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
+            LOLLY_VERSION = LOLLY_VERSION,
+        }
+    })
+end
 
 --
 -- Experimental options of Mogan
@@ -536,6 +552,7 @@ function add_target_draw()
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
     build_glue_on_config()
+    add_tm_configure("draw")
     add_configfiles("src/System/config.h.xmake", {
         filename = "draw/config.h",
         variables = {
@@ -559,21 +576,6 @@ function add_target_draw()
             USE_ICONV = true,
         }
     })
-    add_configfiles("src/System/tm_configure.hpp.xmake", {
-        filename = "draw/tm_configure.hpp",
-        pattern = "@(.-)@",
-        variables = {
-            XMACS_VERSION = XMACS_VERSION,
-            CONFIG_USER = CONFIG_USER,
-            CONFIG_STD_SETENV = "#define STD_SETENV",
-            tm_devel = "Texmacs-" .. DEVEL_VERSION,
-            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
-            tm_stable = "Texmacs-" .. STABLE_VERSION,
-            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
-            LOLLY_VERSION = LOLLY_VERSION,
-        }
-    })
-
     add_packages("lolly")
     add_packages("freetype")
     add_packages("s7")
@@ -629,6 +631,7 @@ includes("xmake/code.lua")
 if is_plat("wasm", "linux") then
     target("code") do
         set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
+        add_tm_configure(target:name)
         add_target_code()
     end
 end
@@ -639,6 +642,7 @@ function add_target_research_on_wasm()
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
     build_glue_on_config()
+    add_tm_configure("research")
     add_configfiles("src/System/config.h.xmake", {
         filename = "research/config.h",
         variables = {
@@ -658,20 +662,6 @@ function add_target_research_on_wasm()
             GS_EXE = "",
             USE_FREETYPE = true,
             USE_ICONV = true,
-        }
-    })
-    add_configfiles("src/System/tm_configure.hpp.xmake", {
-        filename = "research/tm_configure.hpp",
-        pattern = "@(.-)@",
-        variables = {
-            XMACS_VERSION = XMACS_VERSION,
-            CONFIG_USER = CONFIG_USER,
-            CONFIG_STD_SETENV = "#define STD_SETENV",
-            tm_devel = "Texmacs-" .. DEVEL_VERSION,
-            tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
-            tm_stable = "Texmacs-" .. STABLE_VERSION,
-            tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
-            LOLLY_VERSION = LOLLY_VERSION,
         }
     })
     
