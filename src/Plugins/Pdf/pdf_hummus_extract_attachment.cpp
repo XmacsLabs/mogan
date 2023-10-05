@@ -232,9 +232,7 @@ get_actural_style_url (string style_name, url path) {
 }
 array<url>
 style_tree_operate (tree t, url path) {
-  // cout << "style_tree_operate t -> " << t << " path -> " << path << LF;
   array<url> style_file;
-  // print_tree(t);
   if (N (t) == 0) return style_file;
   if (get_label (t[0]) == "tuple") {
     for (int i= 0; i < N (t[0]); i++) {
@@ -255,11 +253,8 @@ style_tree_operate (tree t, url path) {
 
 array<url>
 get_linked_file_paths (tree t, url path) {
-  // print_tree(t);
   array<url> tm_and_linked_file;
   string     label= get_label (t);
-  // cout << "label -> " << label << LF;
-  // cout << "N(t) -> " << N(t) << LF;
   if (label == "image" || label == "include") {
     tm_and_linked_file << image_and_include_tree_operate (t, path);
     return tm_and_linked_file;
@@ -277,7 +272,6 @@ replace_with_relative_path (tree t, url path) {
   // dfs search all style and link
   list<tree> st (t);
   list<url>  tm_and_linked_file;
-  // url cur_u = get_current_buffer ();
   while (N (st) != 0) {
     auto la= last_item (st);
     st     = suppress_last (st);
