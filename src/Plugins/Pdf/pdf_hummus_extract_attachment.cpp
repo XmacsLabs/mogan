@@ -266,7 +266,9 @@ get_linked_file_paths (tree t, url path) {
   return tm_and_linked_file;
 }
 
-tree
+//Pass in an image or include tree and a path.
+//change the url in tree to a url with the same path as the path.
+static tree
 replace_url_image_or_include_tree (tree t, url path) {
   if (get_label (t) != "image" && get_label (t) != "include") {
     debug_convert << get_label (t) << " is not image or include" << LF;
@@ -295,7 +297,10 @@ replace_url_image_or_include_tree (tree t, url path) {
   }
   return t;
 }
-tree
+
+//Pass in an tree with style label and a path.
+//change the label to a url with the same path as the path.
+static tree
 repalce_url_style (tree t, url path) {
   if (!is_atomic (t)) {
     debug_convert << get_label (t) << " is not atomic" << LF;
@@ -319,7 +324,10 @@ repalce_url_style (tree t, url path) {
   }
   return t;
 }
-tree
+
+//Pass in an style tree and a path.
+//change the urls in style tree to a url with the same path as the path.
+static tree
 replace_url_style_tree (tree t, url path) {
   if (get_label (t) != "style") {
     debug_convert << get_label (t) << " is not style" << LF;
