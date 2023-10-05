@@ -18,6 +18,10 @@
       Darcy Shen
     </src-copyright>
 
+    <\src-copyright|2023>
+      Jingkaimori
+    </src-copyright>
+
     <\src-license>
       This software falls under the <hlink|GNU general public license,
       version 3 or later|$TEXMACS_PATH/LICENSE>. It comes WITHOUT ANY
@@ -62,7 +66,13 @@
     </cell>>>>>>>
   </macro>>
 
-  \;
+  <\active*>
+    <\src-comment>
+      Document in Chinese should indent every paragraph, though some
+      mathematics documents in Latin align the first paragraph in section to
+      the title of section.
+    </src-comment>
+  </active*>
 
   <assign|sectional-normal|<macro|name|<wide-normal|<arg|name><no-page-break>>>>
 
