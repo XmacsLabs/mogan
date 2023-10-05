@@ -281,7 +281,7 @@ else
       INSTALL_DIR = os.getenv("INSTALL_DIR")
     end
 end
-local RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
+RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
 
 if not is_plat("wasm") then
     set_configvar("QTPIPES", 1)
@@ -616,6 +616,7 @@ target("research") do
         add_tm_configure("research", TM_CONFIGURE_VARS)
         add_target_research_on_wasm()
     else
+        set_installdir(INSTALL_DIR)
         set_configdir(INSTALL_DIR)
         set_configvar("DEVEL_VERSION", DEVEL_VERSION)
         set_configvar("XMACS_VERSION", XMACS_VERSION)

@@ -86,8 +86,6 @@ end
 
 
 function add_target_research_on_others()
-    set_installdir(INSTALL_DIR)
-
     if is_plat("macosx") then
         set_filename("Mogan")
     elseif is_plat("mingw", "windows") then
