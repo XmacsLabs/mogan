@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 --
 -- MODULE      : xmake.lua
--- DESCRIPTION : Xmake config file for Mogan Applications
+-- DESCRIPTION : Xmake config file for Mogan STEM Suite
 -- COPYRIGHT   : (C) 2022-2023  jingkaimori
 --                   2022-2023  Darcy Shen
 --
@@ -25,9 +25,9 @@ configvar_check_cxxincludes("HAVE_SYS_TYPES_H", "sys/types.h")
 configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
 
 ---
---- Project: Mogan Applications
+--- Project: Mogan STEM Suite
 ---
-set_project("Mogan Applications")
+set_project("Mogan STEM Suite")
 local TEXMACS_VERSION = "2.1.2"
 local XMACS_VERSION="1.2.0"
 local CONFIG_USER = "XmacsLabs"
@@ -1093,7 +1093,7 @@ add_configfiles(
         filename = "doxyfile",
         pattern = "@(.-)@",
         variables = {
-            PACKAGE = "Mogan Applications",
+            PACKAGE = "Mogan STEM Suite",
             DOXYGEN_DIR = get_config("buildir"),
             DEVEL_VERSION = DEVEL_VERSION,
         }
