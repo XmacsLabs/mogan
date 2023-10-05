@@ -8,9 +8,10 @@ on:
       - '!src/Plugins/Macos/**'
       - '!src/Plugins/Windows/**'
       - 'tests/**'
-      - 'misc/xmake/packages.lua'
-      - 'xmake.lua'
       - '.github/workflows/ci-xmake-ubuntu.yml'
+      - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/research.lua'
   pull_request:
     branches: [ branch-1.2 ]
     paths:
@@ -18,9 +19,10 @@ on:
       - '!src/Plugins/Macos/**'
       - '!src/Plugins/Windows/**'
       - 'tests/**'
-      - 'misc/xmake/packages.lua'
-      - 'xmake.lua'
       - '.github/workflows/ci-xmake-ubuntu.yml'
+      - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/research.lua'
 
 jobs:
   linuxbuild:
