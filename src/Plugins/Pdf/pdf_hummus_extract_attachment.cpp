@@ -199,7 +199,7 @@ is_internal_style (string style) {
 }
 
 url
-image_and_include_tree_operate (tree t, url path) {
+get_url_image_or_include_tree (tree t, url path) {
   if (is_atomic (t[0])) {
     url pre_url= url (get_label (t[0]));
     if (!exists (pre_url)) {
@@ -231,7 +231,7 @@ get_actural_style_url (string style_name, url path) {
   return style_file;
 }
 array<url>
-style_tree_operate (tree t, url path) {
+get_url_style_tree (tree t, url path) {
   array<url> style_file;
   if (N (t) == 0) return style_file;
   if (get_label (t[0]) == "tuple") {
@@ -256,14 +256,13 @@ get_linked_file_paths (tree t, url path) {
   array<url> tm_and_linked_file;
   string     label= get_label (t);
   if (label == "image" || label == "include") {
-    tm_and_linked_file << image_and_include_tree_operate (t, path);
+    tm_and_linked_file << get_url_image_or_include_tree (t, path);
     return tm_and_linked_file;
   }
-  if (label == "style") return style_tree_operate (t, path);
+  if (label == "style") return get_url_style_tree (t, path);
   if (!is_atomic (t))
-    for (int i= 0; i < N (t); i++) {
+    for (int i= 0; i < N (t); i++)
       tm_and_linked_file << get_linked_file_paths (t[i], path);
-    }
   return tm_and_linked_file;
 }
 
