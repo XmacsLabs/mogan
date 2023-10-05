@@ -57,6 +57,14 @@
       Tangdouer
     </cell>|<\cell>
       Add conversion mechanism between pdf and tm
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      29_7
+    </cell>|<\cell>
+      Tangdouer
+    </cell>|<\cell>
+      Refactor relevant code to improve code quality
     </cell>>>>
   </wide-tabular>
 
