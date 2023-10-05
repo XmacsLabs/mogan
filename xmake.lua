@@ -281,7 +281,7 @@ else
       INSTALL_DIR = os.getenv("INSTALL_DIR")
     end
 end
-RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
+local RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
 
 if not is_plat("wasm") then
     set_configvar("QTPIPES", 1)
@@ -621,6 +621,17 @@ target("research") do
         set_configvar("DEVEL_VERSION", DEVEL_VERSION)
         set_configvar("XMACS_VERSION", XMACS_VERSION)
         add_target_research_on_others()
+        on_run(function (target)
+            name = target:name()
+            if is_plat("mingw", "windows") then
+                os.execv(target:installdir().."/bin/mogan.exe")
+            elseif is_plat("linux", "macosx") then
+                print("Launching " .. target:targetfile())
+                os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
+            else
+                print("Unsupported plat $(plat)")
+            end
+        end)
     end
 end
 

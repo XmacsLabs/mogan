@@ -213,16 +213,4 @@ function add_target_research_on_others()
             os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
         end
     end)
-
-    on_run(function (target)
-        name = target:name()
-        if is_plat("mingw", "windows") then
-            os.execv(target:installdir().."/bin/mogan.exe")
-        elseif is_plat("linux", "macosx") then
-            print("Launching " .. target:targetfile())
-            os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
-        else
-            print("Unsupported plat $(plat)")
-        end
-    end)
 end
