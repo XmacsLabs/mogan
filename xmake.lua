@@ -91,27 +91,6 @@ set_allowedmodes("releasedbg", "release", "debug")
 add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
 --
--- global variables in configurations domain
---
-local TeXmacs_files = {
-        "TeXmacs(/doc/**)",
-        "TeXmacs(/examples/**)",
-        "TeXmacs(/fonts/**)",
-        "TeXmacs(/langs/**)",
-        "TeXmacs(/misc/**)",
-        "TeXmacs(/packages/**)",
-        "TeXmacs(/progs/**)",
-        "TeXmacs(/styles/**)",
-        "TeXmacs(/texts/**)",
-        "TeXmacs/COPYING", -- copying files are different
-        "TeXmacs/INSTALL",
-        "LICENSE", -- license files are same
-        "TeXmacs/README",
-        "TeXmacs/TEX_FONTS",
-        "TeXmacs(/plugins/**)" -- plugin files
-}
-
---
 -- Add packages from xrepo or platform package manager
 --
 includes("xmake/packages.lua")

@@ -9,6 +9,26 @@
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
+
+local TeXmacs_files = {
+        "TeXmacs(/doc/**)",
+        "TeXmacs(/examples/**)",
+        "TeXmacs(/fonts/**)",
+        "TeXmacs(/langs/**)",
+        "TeXmacs(/misc/**)",
+        "TeXmacs(/packages/**)",
+        "TeXmacs(/progs/**)",
+        "TeXmacs(/styles/**)",
+        "TeXmacs(/texts/**)",
+        "TeXmacs/COPYING", -- copying files are different
+        "TeXmacs/INSTALL",
+        "LICENSE", -- license files are same
+        "TeXmacs/README",
+        "TeXmacs/TEX_FONTS",
+        "TeXmacs(/plugins/**)" -- plugin files
+}
+
+
 function add_target_research_on_wasm()
     set_languages("c++17")
 
@@ -63,6 +83,7 @@ function add_target_research_on_wasm()
         target:add("forceincludes", path.absolute("$(buildir)/research/tm_configure.hpp"))
     end)
 end
+
 
 function add_target_research_on_others()
     set_installdir(INSTALL_DIR)
