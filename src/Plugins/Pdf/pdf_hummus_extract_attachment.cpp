@@ -187,6 +187,7 @@ declare_style (url u) {
   }
 }
 
+// Determine whether the style is a internal style
 static bool
 is_internal_style (string style) {
   if (N (internal_styles) == 0) {
@@ -198,7 +199,9 @@ is_internal_style (string style) {
   return internal_styles->contains (style);
 }
 
-url
+// Pass in a image or include tree.
+// return all include or image file url
+static url
 get_url_image_or_include_tree (tree t, url path) {
   if (is_atomic (t[0])) {
     url pre_url= url (get_label (t[0]));
@@ -215,7 +218,10 @@ get_url_image_or_include_tree (tree t, url path) {
     return url ();
   }
 }
-url
+
+// Pass in a tree with style label.
+// return a actual ts file url
+static url
 get_actural_style_url (string style_name, url path) {
   url style_file;
   if (!is_internal_style (style_name)) {
@@ -230,7 +236,10 @@ get_actural_style_url (string style_name, url path) {
   }
   return style_file;
 }
-array<url>
+
+// Pass in a style tree.
+// return all external ts file url
+static array<url>
 get_url_style_tree (tree t, url path) {
   array<url> style_file;
   if (N (t) == 0) return style_file;
