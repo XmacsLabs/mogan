@@ -171,9 +171,9 @@ TestHummusPdfMakeAttachment::test_get_linked_file_paths () {
       texmacs_tree_2, url ("$TEXMACS_PATH/tests/29_4_2multiple-files/main.tm"));
   QVERIFY (N (linked) == 2);
   QVERIFY (is_regular (linked[0]));
-  QVERIFY (tail (linked[0]) == url ("logo.pdf"));
+  QVERIFY (tail (linked[0]) == url ("myslides.ts"));
   QVERIFY (is_regular (linked[1]));
-  QVERIFY (tail (linked[1]) == url ("myslides.ts"));
+  QVERIFY (tail (linked[1]) == url ("logo.pdf"));
 }
 void
 TestHummusPdfMakeAttachment::test_replace_with_relative_path () {
