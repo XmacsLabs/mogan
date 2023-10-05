@@ -14,7 +14,8 @@
   unused compiler checks>>|<row|<cell|Chore>|<cell|49_5>|<cell|<value|jk>>|<cell|use
   qt.console instead of -mconsole>>|<row|<cell|Chore>|<cell|49_6>|<cell|<value|da>>|<cell|set_configvar
   for OS_XXX>>|<row|<cell|Chore>|<cell|49_7>|<cell|<value|da>>|<cell|Remove
-  unused CONFIG_STD_SETENV>>>>>
+  unused CONFIG_STD_SETENV>>|<row|<cell|Chore>|<cell|49_8>|<cell|<value|da>>|<cell|Simplify
+  tm_configure generation>>>>>
 
   <tmdoc-copyright|2023|jingkaimori>
 
