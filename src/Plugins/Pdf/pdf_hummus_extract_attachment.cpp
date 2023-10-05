@@ -198,7 +198,8 @@ is_internal_style (string style) {
   return internal_styles->contains (style);
 }
 
-url image_and_include_tree_operate(tree t, url path){
+url
+image_and_include_tree_operate (tree t, url path) {
   if (is_atomic (t[0])) {
     url pre_url= url (get_label (t[0]));
     if (!exists (pre_url)) {
@@ -208,67 +209,65 @@ url image_and_include_tree_operate(tree t, url path){
       }
     }
     return pre_url;
-  }else{
+  }
+  else {
     debug_convert << t << " image or include tree format wrong\n" << LF;
-    return url();
+    return url ();
   }
 }
-url get_actural_style_url(string style_name, url path){
+url
+get_actural_style_url (string style_name, url path) {
   url style_file;
   if (!is_internal_style (style_name)) {
-    style_file    = glue (url (style_name), ".ts");
+    style_file= glue (url (style_name), ".ts");
     if (!exists (style_file)) {
       style_file= relative (path, style_file);
       if (!exists (style_file)) {
         debug_convert << style_file << "do not exist" << LF;
-        style_file = url();
+        style_file= url ();
       }
     }
   }
   return style_file;
 }
-array<url> style_tree_operate(tree t, url path){
-  //cout << "style_tree_operate t -> " << t << " path -> " << path << LF;
+array<url>
+style_tree_operate (tree t, url path) {
+  // cout << "style_tree_operate t -> " << t << " path -> " << path << LF;
   array<url> style_file;
-  //print_tree(t);
-  if(N(t) == 0)
-    return style_file;
+  // print_tree(t);
+  if (N (t) == 0) return style_file;
   if (get_label (t[0]) == "tuple") {
     for (int i= 0; i < N (t[0]); i++) {
-      url style_url = get_actural_style_url(get_label (t[0][i]), path);
-      if(style_url != url())
-        style_file << style_url;
+      url style_url= get_actural_style_url (get_label (t[0][i]), path);
+      if (style_url != url ()) style_file << style_url;
     }
   }
   else {
     if (!is_atomic (t[0])) {
-      debug_convert << get_label (t[0]) << "is not atomic tree"
-                    << LF;
+      debug_convert << get_label (t[0]) << "is not atomic tree" << LF;
       return style_file;
     }
-    url style_url = get_actural_style_url(get_label (t[0]), path);
-    if(style_url != url())
-      style_file << style_url;
+    url style_url= get_actural_style_url (get_label (t[0]), path);
+    if (style_url != url ()) style_file << style_url;
   }
   return style_file;
 }
 
 array<url>
-get_linked_file_paths (tree t, url path){
-  //print_tree(t);
+get_linked_file_paths (tree t, url path) {
+  // print_tree(t);
   array<url> tm_and_linked_file;
-  string label= get_label (t);
+  string     label= get_label (t);
   // cout << "label -> " << label << LF;
   // cout << "N(t) -> " << N(t) << LF;
-  if(label == "image" || label == "include"){
-    tm_and_linked_file << image_and_include_tree_operate(t, path);
+  if (label == "image" || label == "include") {
+    tm_and_linked_file << image_and_include_tree_operate (t, path);
     return tm_and_linked_file;
   }
-  if(label == "style")
-    return style_tree_operate(t, path);
-  if(!is_atomic (t))
-    for(int i = 0; i < N(t); i ++){
-      tm_and_linked_file << get_linked_file_paths(t[i], path);
+  if (label == "style") return style_tree_operate (t, path);
+  if (!is_atomic (t))
+    for (int i= 0; i < N (t); i++) {
+      tm_and_linked_file << get_linked_file_paths (t[i], path);
     }
   return tm_and_linked_file;
 }
