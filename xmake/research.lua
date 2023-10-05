@@ -116,10 +116,7 @@ function add_target_research_on_others()
         add_deps("windows_icon")
     end
 
-    set_configdir(INSTALL_DIR)
-    set_configvar("DEVEL_VERSION", DEVEL_VERSION)
     set_configvar("PACKAGE", "Mogan Research")
-    set_configvar("XMACS_VERSION", XMACS_VERSION)
 
     -- install man.1 manual file
     add_configfiles("(misc/man/texmacs.1.in)", {
