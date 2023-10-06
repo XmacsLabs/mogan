@@ -104,9 +104,6 @@ function add_target_research_on_others()
     end
 
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
-    if is_plat("macosx") then
-        add_frameworks("QtMacExtras")
-    end
 
     add_packages("lolly")
     if is_plat("mingw", "windows") then

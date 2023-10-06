@@ -451,9 +451,6 @@ target("libmogan") do
         add_rules("qt.static")
     end
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
-    if is_plat("macosx") then
-        add_frameworks("QtMacExtras")
-    end
 
     build_glue_on_config()
     add_tm_configure("libmogan", TM_CONFIGURE_VARS)
