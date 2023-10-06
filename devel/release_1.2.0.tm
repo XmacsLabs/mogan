@@ -11,17 +11,18 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|41|41|1|1|cell-background|pastel
-  red>|<cwith|40|40|1|1|cell-background|pastel
-  red>|<cwith|36|36|1|1|cell-background|pastel
-  red>|<cwith|47|47|3|3|cell-valign|b>|<cwith|48|48|1|1|cell-valign|b>|<cwith|35|35|1|1|cell-background|pastel
-  green>|<cwith|38|38|1|1|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|42|42|1|1|cell-background|pastel
+  red>|<cwith|41|41|1|1|cell-background|pastel
+  red>|<cwith|37|37|1|1|cell-background|pastel
+  red>|<cwith|48|48|3|3|cell-valign|b>|<cwith|49|49|1|1|cell-valign|b>|<cwith|36|36|1|1|cell-background|pastel
+  green>|<cwith|39|39|1|1|cell-background|pastel
+  green>|<cwith|35|35|1|1|cell-background|pastel
+  green>|<cwith|15|15|2|2|cell-valign|c>|<cwith|14|14|1|1|cell-valign|c>|<cwith|30|30|1|1|cell-background|pastel
+  green>|<cwith|13|13|1|1|cell-background|pastel
   green>|<cwith|34|34|1|1|cell-background|pastel
-  green>|<cwith|14|14|2|2|cell-valign|c>|<cwith|13|13|1|1|cell-valign|c>|<cwith|29|29|1|1|cell-background|pastel
-  green>|<cwith|12|12|1|1|cell-background|pastel
-  green>|<cwith|33|33|1|1|cell-background|pastel
-  green>|<cwith|9|9|2|2|cell-valign|c>|<table|<row|<cell|<dlink|64>>|<cell|>|<cell|Image
-  import and exports>>|<row|<cell|<dlink|63>>|<cell|>|<cell|Fixing style
+  green>|<cwith|10|10|2|2|cell-valign|c>|<cwith|2|2|2|2|cell-valign|c>|<table|<row|<cell|<dlink|65>>|<cell|<value|da>>|<cell|Upgrade
+  to Qt 6>>|<row|<cell|<dlink|64>>|<cell|>|<cell|Image import and
+  exports>>|<row|<cell|<dlink|63>>|<cell|>|<cell|Fixing style
   corruption>>|<row|<cell|<dlink|62>>|<cell|Darcy>|<cell|Mogan STEM
   Suite>>|<row|<cell|<dlink|61>>|<cell|Darcy>|<cell|Plugin
   Center>>|<row|<cell|<dlink|60>>|<cell|Darcy>|<cell|Maxima
