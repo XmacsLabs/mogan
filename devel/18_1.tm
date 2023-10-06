@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|chinese>>
+<style|<tuple|tmdoc|devel>>
 
 <\body>
   <tmdoc-title|Improve document of float object>
@@ -8,7 +8,7 @@
   <section|Bug metadata>
 
   <\description>
-    <item*|Owner>jingkaimori
+    <item*|Owner><value|jk>
 
     <item*|Gitee issue><slink|https://gitee.com/XmacsLabs/mogan/issues/I6UVXL>
 
