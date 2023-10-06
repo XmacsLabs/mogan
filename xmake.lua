@@ -188,6 +188,7 @@ local l3_files = {
     "src/Scheme/S7/**.cpp",
     "src/Scheme/Scheme/object.cpp",
     "src/System/Config/**.cpp",
+    "src/System/Language/locale.cpp",
     "src/System/Classes/**.cpp",
     "src/System/Files/**files.cpp",
     "src/System/Misc/data_cache.cpp",
