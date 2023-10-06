@@ -38,7 +38,7 @@ jobs:
           sudo pacman -S --noconfirm --needed qt5-base qt5-svg freetype2 sqlite libpng libiconv zlib libjpeg curl texlive-core python libxext xmake unzip
       - uses: actions/checkout@v1
       - name: Xrepo update
-        run: XMAKE_ROOT=y xrepo update-repo
+        run: XMAKE_ROOT=y xrepo update-repo --yes
       - name: Config
         run: XMAKE_ROOT=y xmake config -m release --yes
       - name: Build
