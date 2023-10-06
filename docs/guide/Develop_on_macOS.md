@@ -13,6 +13,14 @@ Sometimes, we need the latest xrepo:
 xrepo update-repo
 ```
 
+Sometimes we need to use the newest version xmake to build. It is a problem in xmake 2.8.3, and it should not happen in the future version of xmake.
+
+You can use
+```
+xmake update -s dev
+```
+to update xmake version.
+
 ### Step 2: Compile
 ``` bash
 xmake config --yes
