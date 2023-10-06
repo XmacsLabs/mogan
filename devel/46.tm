@@ -1,20 +1,21 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|devel|british>>
+<style|<tuple|tmdoc|devel>>
 
 <\body>
   <tmdoc-title|Handle indentation of first paragraph of section>
 
   First paragraph of a section may not be indented in English document, but
-  must be indented in Chinese document. <TeXmacs> uses <src-var|par-no-first>
-  to control such behavior, but this environment variable is marked as
-  internal in its document, therefore no gui is provided for user to toggle
-  this boolean variable.
+  must be indented in Chinese document. Macros such as <markup|yes-indent>
+  should be used to achieve this task by toppling value of
+  <src-var|par-no-first> in cpp code. To improve user experience, style
+  package should be improved and UI should be alterred.
 
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|-1|2|2|cell-background|>|<table|<row|<\cell>
+    <tformat|<cwith|1|-1|2|2|cell-background|>|<cwith|1|1|2|2|cell-background|pastel
+    grey>|<table|<row|<\cell>
       Bug
     </cell>|<\cell>
       <dlink|46_1>
@@ -29,17 +30,15 @@
     </cell>|<\cell>
       jingkaimori
     </cell>|<\cell>
-      Set <src-var|par-no-first> for paragraph in <menu|Format|Paragraph>
-      menu
+      Toggle indent of paragraph in <menu|Format|Paragraph> menu
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      <todo|46_3>
+      <dlink|46_3>
     </cell>|<\cell>
       \;
     </cell>|<\cell>
-      Set <src-var|par-no-first> for document in <menu|Format|Paragraph> menu
-      and <menu|page layout> toolbar
+      Improve first indent in package <tmpackage|indent-paragraphs>.
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
@@ -64,5 +63,6 @@
 <\initial>
   <\collection>
     <associate|page-medium|paper>
+    <associate|preamble|false>
   </collection>
 </initial>

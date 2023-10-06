@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 --
 -- MODULE      : global.lua
--- DESCRIPTION : Global functions & variables for Mogan Applications
+-- DESCRIPTION : Global functions & variables for Mogan STEM Suite
 -- COPYRIGHT   : (C) 2023 Oyyko
 --
 -- This software falls under the GNU general public license version 3 or later.

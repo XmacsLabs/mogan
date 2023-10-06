@@ -23,7 +23,7 @@
     <linearGradient
        id="linearGradient6140">
       <stop
-         style="stop-color:#808080;stop-opacity:1;"
+         style="stop-color:#232629;stop-opacity:1;"
          offset="0"
          id="stop6142" />
       <stop
@@ -313,13 +313,13 @@
        cy="5.5"
        r="4.5" />
     <path
-       style="fill:#808080;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter8065)"
+       style="fill:#232629;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter8065)"
        d="M 0,13.977822 2.0221778,16.06371 8.0250018,9.9971761 6.0028239,7.9749982 Z"
        id="path9010"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
     <path
-       style="opacity:1;fill:#808080;fill-opacity:1;stroke:#303032;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter8061)"
+       style="opacity:1;fill:#232629;fill-opacity:1;stroke:#303032;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter8061)"
        d="M 10.513293,0.03185528 A 5.4778217,5.4618943 0 0 0 5.035471,5.4937495 5.4778217,5.4618943 0 0 0 10.513293,10.955644 5.4778217,5.4618943 0 0 0 15.991115,5.4937495 5.4778217,5.4618943 0 0 0 10.513293,0.03185528 Z m 0,1.09237882 A 4.3822573,4.3695154 0 0 1 14.89555,5.4937495 4.3822573,4.3695154 0 0 1 10.513293,9.863265 4.3822573,4.3695154 0 0 1 6.1310353,5.4937495 4.3822573,4.3695154 0 0 1 10.513293,1.1242341 Z"
        id="path8009"
        inkscape:connector-curvature="0" />

@@ -7,8 +7,9 @@ on:
       - 'src/**'
       - '!src/Plugins/Windows/**'
       - 'tests/**'
-      - 'misc/xmake/packages.lua'
       - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/research.lua'
       - '.github/workflows/ci-xmake-macos.yml'
   pull_request:
     branches: [ branch-1.2 ]
@@ -16,8 +17,9 @@ on:
       - 'src/**'
       - '!src/Plugins/Windows/**'
       - 'tests/**'
-      - 'misc/xmake/packages.lua'
       - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/research.lua'
       - '.github/workflows/ci-xmake-macos.yml'
 
 jobs:

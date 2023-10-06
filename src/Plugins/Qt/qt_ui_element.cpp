@@ -536,7 +536,7 @@ qt_ui_element_rep::as_qaction () {
     {
       url    image = open_box<url>(load);
       act = new QTMAction (NULL);
-      act->setIcon (QIcon (as_pixmap (*xpm_image (image))));
+      act->setIcon (qt_load_icon (image));
     }
       break;
 
