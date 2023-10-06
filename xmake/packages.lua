@@ -19,7 +19,7 @@
 -- [ ] portage powered
 -- ...
 
-local LOLLY_VERSION = "1.2.7"
+local LOLLY_VERSION = "1.2.8"
 local TBOX_VERSION = "1.7.4"
 
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
@@ -35,7 +35,7 @@ package("lolly")
         add_deps("libcurl")
     end
 
-    add_versions("v" .. LOLLY_VERSION, "abe2055a1a1778d2949dc70f697efa016487b290")
+    add_versions("v" .. LOLLY_VERSION, "2bb0aa7d9534d5155770baecc66e06b01ed18068")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
