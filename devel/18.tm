@@ -9,6 +9,11 @@
   embedded in mogan released packages. These documents lacks maintaince, and
   some new feature and change is missing.
 
+  <\remark>
+    Due to <dlink|39_1>, improvements of documents should be submitted to
+    TeXmacs, rather than mogan.
+  </remark>
+
   <section|Tasks>
 
   <\wide-tabular>
@@ -17,7 +22,7 @@
     </cell>|<\cell>
       <dlink|18_1>
     </cell>|<\cell>
-      jingkaimori
+      <value|jk>
     </cell>|<\cell>
       Improve document of float object
     </cell>>|<row|<\cell>
@@ -25,7 +30,7 @@
     </cell>|<\cell>
       <todo|18_2>
     </cell>|<\cell>
-      jingkaimori
+      \;
     </cell>|<\cell>
       Explain how to use <scm|(debug-message)>
     </cell>>|<row|<\cell>
@@ -49,7 +54,7 @@
     </cell>|<\cell>
       18_5
     </cell>|<\cell>
-      jingkaimori
+      <value|jk>
     </cell>|<\cell>
       Improve document of <scm|tm-define>
     </cell>>>>
