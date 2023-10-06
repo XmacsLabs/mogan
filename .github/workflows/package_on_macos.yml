@@ -17,7 +17,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: 5.15.2
+          version: 6.5.3
           target: 'desktop'
           cache: 'true'
       - uses: xmake-io/github-action-setup-xmake@v1
