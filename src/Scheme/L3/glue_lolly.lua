@@ -492,7 +492,7 @@ function main()
             },
             {
                 scm_name = "string->url",
-                cpp_name = "url",
+                cpp_name = "tm_url",
                 ret_type = "url",
                 arg_list = {
                     "string"
