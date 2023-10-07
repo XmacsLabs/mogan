@@ -120,6 +120,7 @@ public:
     QApplication (argc, argv) {
       init_palette (this);
       init_style_sheet (this);
+      QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
     }
 
   void set_window_icon (string icon_path) {
