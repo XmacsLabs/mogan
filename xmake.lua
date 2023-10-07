@@ -77,7 +77,7 @@ end
 
 
 if is_plat("mingw") and is_host("windows") then
-    add_requires("mingw-w64 8.1.0")
+    add_requires("mingw-w64 11.2.0")
     set_toolchains("mingw@mingw-w64")
 end
 
