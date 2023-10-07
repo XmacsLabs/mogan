@@ -1,4 +1,4 @@
-name: package on ubuntu
+name: CD for Mogan Research on Ubuntu
 
 on:
   workflow_dispatch:

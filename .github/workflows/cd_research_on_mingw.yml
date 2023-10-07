@@ -1,4 +1,4 @@
-name: package on mingw
+name: CD for Mogan Research on mingw
 
 on:
   workflow_dispatch:
