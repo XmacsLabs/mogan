@@ -141,19 +141,6 @@ do_cache_stat_fail (string name) {
      starts (name, texmacs_doc_path_string));
 }
 
-bool
-do_cache_file (string name) {
-  return
-    !ends (name, ".ts") &&
-    (starts (name, texmacs_path_string) ||
-     starts (name, texmacs_font_path_string));
-}
-
-bool
-do_cache_doc (string name) {
-  return starts (name, texmacs_doc_path_string);
-}
-
 /******************************************************************************
 * Saving and loading the cache to/from disk
 ******************************************************************************/
