@@ -23,7 +23,7 @@ xmake update -s dev
 
 ### 第二步：配置
 ```
-xmake config --qt=/opt/homebrew/share/qt/ --yes
+xmake config --yes -c --qt=/opt/homebrew/share/qt/
 ```
 请按需调整Qt相关目录，并不一定是`/opt/homebrew/share/qt`。
 

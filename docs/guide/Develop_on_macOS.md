@@ -22,7 +22,7 @@ to update xmake version.
 
 ### Step 2: Config
 ```
-xmake config --qt=/opt/homebrew/share/qt/ --yes
+xmake config --yes -c --qt=/opt/homebrew/share/qt/
 ```
 The Qt Dir might not be `/opt/homebrew/share/qt`, please adjust it if needed.
 
