@@ -509,13 +509,10 @@ immediate_options (int argc, char** argv) {
       remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
     }
     else if (s == "-delete-doc-cache") {
-      remove (get_tm_cache_path () * url ("doc_cache"));
       remove (get_tm_cache_path () * url ("dir_cache.scm"));
       remove (get_tm_cache_path () * url ("stat_cache.scm"));
     }
     else if (s == "-delete-file-cache") {
-      remove (get_tm_cache_path () * url ("file_cache"));
-      remove (get_tm_cache_path () * url ("doc_cache"));
       remove (get_tm_cache_path () * url ("dir_cache.scm"));
       remove (get_tm_cache_path () * url ("stat_cache.scm"));
     }
