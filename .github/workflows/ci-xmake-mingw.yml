@@ -1,28 +1,6 @@
 name: Build and Test on mingw
 
 on:
-  push:
-    branches: [ branch-1.2 ]
-    paths:
-      - 'src/**'
-      - '!src/Plugins/Macos/**'
-      - '!src/Plugins/Unix/**'
-      - 'tests/**'
-      - 'xmake.lua'
-      - 'xmake/packages.lua'
-      - 'xmake/research.lua'
-      - '.github/workflows/ci-xmake-mingw.yml'
-  pull_request:
-    branches: [ branch-1.2 ]
-    paths:
-      - 'src/**'
-      - '!src/Plugins/Macos/**'
-      - '!src/Plugins/Unix/**'
-      - 'tests/**'
-      - 'xmake.lua'
-      - 'xmake/packages.lua'
-      - 'xmake/research.lua'
-      - '.github/workflows/ci-xmake-mingw.yml'
   workflow_dispatch:
 
 jobs:
