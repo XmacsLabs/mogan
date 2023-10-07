@@ -66,7 +66,7 @@ function add_requires_of_mogan()
     end
 
     if is_plat("mingw") or is_plat("windows") then
-        add_requires("qt6widgets 6.5.1")
+        add_requires("qt6widgets 6.5.3")
         if is_mode("release") then
             add_requires("qtifw 4.6.0")
         end
