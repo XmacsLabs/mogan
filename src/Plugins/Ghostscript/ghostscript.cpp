@@ -10,7 +10,7 @@
 ******************************************************************************/
 
 #include "Ghostscript/ghostscript.hpp"
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
 #include "Ghostscript/gs_utilities.hpp"
 #endif
 
@@ -116,7 +116,7 @@ ghostscript_run (Display* dpy, Window gs_win, Pixmap pm, url im, SI w, SI h) {
   nice_ps= encapsulate_postscript (raw_ps);
   url temp_name= url_temp ();
   save_string (temp_name, nice_ps, true);
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
   tm_gs (temp_name);
 #else
   system ("tm_gs", temp_name);

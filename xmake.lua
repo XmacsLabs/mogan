@@ -320,7 +320,7 @@ add_configfiles("src/System/config.h.xmake", {
         SIZEOF_VOID_P = 8,
         USE_FONTCONFIG = is_plat("linux"),
         USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
-        USE_GS = not is_plat("wasm"),
+        USE_PLUGIN_GS = not is_plat("wasm"),
     }
 })
 
