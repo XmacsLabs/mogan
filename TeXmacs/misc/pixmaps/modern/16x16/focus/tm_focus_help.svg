@@ -23,7 +23,7 @@
     <linearGradient
        id="linearGradient6140">
       <stop
-         style="stop-color:#808080;stop-opacity:1;"
+         style="stop-color:#232629;stop-opacity:1;"
          offset="0"
          id="stop6142" />
       <stop
@@ -276,15 +276,15 @@
          sodipodi:role="line"
          id="tspan6105"></tspan></text>
     <g
-       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:25%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#808080;fill-opacity:1;stroke:#808080;font-family:CMU Serif;-inkscape-font-specification:Sans Bold;stroke-opacity:1;filter:url(#filter6220)"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:25%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#232629;fill-opacity:1;stroke:#232629;font-family:CMU Serif;-inkscape-font-specification:Sans Bold;stroke-opacity:1;filter:url(#filter6220)"
        id="text6107">
       <path
          d="m 4.424,4.08 c 0,0.7679992 0.5920004,1.024 0.992,1.024 0.5119995,0 1.008,-0.3520007 1.008,-1.008 C 6.424,3.3440007 5.736,3.136 5.704,3.12 6.1199996,2.8160003 6.7760007,2.624 7.512,2.624 8.9839985,2.624 9,3.2480007 9,4 9,4.7039993 8.8719997,4.9600003 8.552,5.28 7.560001,6.319999 7.112,7.552001 7.112,8.592 l 0,0.608 c 0,0.3520001 4e-7,0.4320001 0.368,0.4320001 0.3839996,0 0.384,-0.096 0.384,-0.4800001 l 0,-0.432 C 7.864,7.0720016 9.3520006,6.0959996 9.9599997,5.744 10.28,5.5520002 11.048,5.119999 11.048,4.112 11.048,2.0480021 8.1999994,2.048 7.608,2.048 5.3840022,2.048 4.424,3.056001 4.424,4.08"
          id="path6116"
          inkscape:connector-curvature="0"
-         style="stroke:#808080;stroke-opacity:1;fill:#808080;fill-opacity:1" />
+         style="stroke:#232629;stroke-opacity:1;fill:#232629;fill-opacity:1" />
       <path
-         style="stroke:#808080;stroke-opacity:1;fill:#808080;fill-opacity:1"
+         style="stroke:#232629;stroke-opacity:1;fill:#232629;fill-opacity:1"
          d="m 6.4838073,12.745147 c 0,0.687999 0.5440007,1.248 1.248,1.248 0.6719993,0 1.248,-0.560001 1.248,-1.248 0,-0.687999 -0.5760007,-1.248 -1.248,-1.248 -0.7039993,0 -1.248,0.560001 -1.248,1.248"
          id="path6112" />
     </g>

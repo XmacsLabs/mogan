@@ -11,16 +11,19 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|38|38|1|1|cell-background|pastel
-  red>|<cwith|37|37|1|1|cell-background|pastel
-  red>|<cwith|33|33|1|1|cell-background|pastel
-  red>|<cwith|44|44|3|3|cell-valign|b>|<cwith|45|45|1|1|cell-valign|b>|<cwith|32|32|1|1|cell-background|pastel
-  green>|<cwith|35|35|1|1|cell-background|pastel
-  green>|<cwith|31|31|1|1|cell-background|pastel
-  green>|<cwith|11|11|2|2|cell-valign|c>|<cwith|10|10|1|1|cell-valign|c>|<cwith|26|26|1|1|cell-background|pastel
-  green>|<cwith|9|9|1|1|cell-background|pastel
-  green>|<cwith|30|30|1|1|cell-background|pastel
-  green>|<cwith|6|6|2|2|cell-valign|c>|<table|<row|<cell|<dlink|61>>|<cell|Darcy>|<cell|Plugin
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|41|41|1|1|cell-background|pastel
+  red>|<cwith|40|40|1|1|cell-background|pastel
+  red>|<cwith|36|36|1|1|cell-background|pastel
+  red>|<cwith|47|47|3|3|cell-valign|b>|<cwith|48|48|1|1|cell-valign|b>|<cwith|35|35|1|1|cell-background|pastel
+  green>|<cwith|38|38|1|1|cell-background|pastel
+  green>|<cwith|34|34|1|1|cell-background|pastel
+  green>|<cwith|14|14|2|2|cell-valign|c>|<cwith|13|13|1|1|cell-valign|c>|<cwith|29|29|1|1|cell-background|pastel
+  green>|<cwith|12|12|1|1|cell-background|pastel
+  green>|<cwith|33|33|1|1|cell-background|pastel
+  green>|<cwith|9|9|2|2|cell-valign|c>|<table|<row|<cell|<dlink|64>>|<cell|>|<cell|Image
+  import and exports>>|<row|<cell|<dlink|63>>|<cell|>|<cell|Fixing style
+  corruption>>|<row|<cell|<dlink|62>>|<cell|Darcy>|<cell|Mogan STEM
+  Suite>>|<row|<cell|<dlink|61>>|<cell|Darcy>|<cell|Plugin
   Center>>|<row|<cell|<dlink|60>>|<cell|Darcy>|<cell|Maxima
   plugin>>|<row|<cell|<dlink|59>>|<cell|Darcy>|<cell|Tuning Keyboard
   Shortcuts>>|<row|<cell|<dlink|58>>|<cell|paradisum>|<cell|Github Action

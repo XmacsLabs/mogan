@@ -11,7 +11,8 @@
   init_texmacs_path to libmogan>>|<row|<cell|Chore>|<cell|57_2>|<cell|Pluto>|<cell|Remove
   ispell plugin from libmogan>>|<row|<cell|Chore>|<cell|57_3>|<cell|Pluto>|<cell|Split
   Plugins/Xml to Plugins/Xml and Plugins/Html>>|<row|<cell|Chore>|<cell|57_4>|<cell|Pluto>|<cell|Remove
-  Plugins/Html from libmogan>>>>>
+  Plugins/Html from libmogan>>|<row|<cell|Chore>|<cell|57_5>|<cell|Darcy>|<cell|Remove
+  updater plugin from libmogan>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 

@@ -9,7 +9,8 @@ on:
       - '!src/Plugins/Unix/**'
       - 'tests/**'
       - 'xmake.lua'
-      - 'misc/xmake/packages.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/research.lua'
       - '.github/workflows/ci-xmake-mingw.yml'
   pull_request:
     branches: [ branch-1.2 ]
@@ -19,7 +20,8 @@ on:
       - '!src/Plugins/Unix/**'
       - 'tests/**'
       - 'xmake.lua'
-      - 'misc/xmake/packages.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/research.lua'
       - '.github/workflows/ci-xmake-mingw.yml'
   workflow_dispatch:
 

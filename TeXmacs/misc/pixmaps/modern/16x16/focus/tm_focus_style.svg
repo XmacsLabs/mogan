@@ -23,7 +23,7 @@
     <linearGradient
        id="linearGradient6140">
       <stop
-         style="stop-color:#808080;stop-opacity:1;"
+         style="stop-color:#232629;stop-opacity:1;"
          offset="0"
          id="stop6142" />
       <stop
@@ -282,19 +282,19 @@
          sodipodi:role="line"
          id="tspan6105" /></text>
     <path
-       style="fill:#ffffff;fill-rule:evenodd;stroke:#808080;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1;"
+       style="fill:#ffffff;fill-rule:evenodd;stroke:#232629;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1;"
        d="M 1,8 C 1,8 5.2411758,4.5 8,4.5 10.758824,4.5 15,8 15,8 15,8 10.758824,11.5 8,11.5 5.2411758,11.5 1,8 1,8 Z"
        id="path4353"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="czczc" />
     <circle
-       style="opacity:0.33300003;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:0.33300003;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#232629;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path4359"
        cx="8"
        cy="8"
        r="3" />
     <circle
-       style="opacity:1;fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:#808080;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#232629;fill-opacity:1;fill-rule:evenodd;stroke:#232629;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path4363"
        cx="8"
        cy="8"

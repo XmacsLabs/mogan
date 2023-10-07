@@ -11,7 +11,7 @@
 
 #include "tm_configure.hpp"
 
-#if defined (USE_SPARKLE) && (defined (OS_MINGW) || defined (OS_WIN))
+#if defined (USE_PLUGIN_SPARKLE) && (defined (OS_MINGW) || defined (OS_WIN))
 
 #include "tm_winsparkle.hpp"
 #include "string.hpp"
@@ -57,4 +57,4 @@ bool tm_winsparkle::checkInForeground ()
   return true;
 }
 
-#endif  // defined (USE_SPARKLE) && (defined (OS_MINGW) || defined (OS_WIN))
+#endif  // defined (USE_PLUGIN_SPARKLE) && (defined (OS_MINGW) || defined (OS_WIN))

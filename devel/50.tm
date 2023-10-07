@@ -26,19 +26,15 @@
 
   <section|Tasks>
 
-  <\wide-block>
+  <\wide-tabular>
     <tformat|<table|<row|<\cell>
       Type
     </cell>|<\cell>
       No.
     </cell>|<\cell>
-      Mgr.
+      Owner
     </cell>|<\cell>
       Description
-    </cell>|<\cell>
-      Links
-    </cell>|<\cell>
-      Status
     </cell>>|<row|<\cell>
       <value|f>
     </cell>|<\cell>
@@ -47,12 +43,16 @@
       <value|oy>
     </cell>|<\cell>
       New <value|dr> Entry
+    </cell>>|<row|<\cell>
+      Chore
     </cell>|<\cell>
-      \;
+      50_2
     </cell>|<\cell>
-      <value|re>
+      <value|da>
+    </cell>|<\cell>
+      Separate Mogan Draw from xmake.lua
     </cell>>>>
-  </wide-block>
+  </wide-tabular>
 
   <tmdoc-copyright|2023|Oyyko>
 
