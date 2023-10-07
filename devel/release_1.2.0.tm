@@ -20,8 +20,10 @@
   green>|<cwith|15|15|2|2|cell-valign|c>|<cwith|14|14|1|1|cell-valign|c>|<cwith|30|30|1|1|cell-background|pastel
   green>|<cwith|13|13|1|1|cell-background|pastel
   green>|<cwith|34|34|1|1|cell-background|pastel
-  green>|<cwith|10|10|2|2|cell-valign|c>|<cwith|2|2|2|2|cell-valign|c>|<table|<row|<cell|<dlink|65>>|<cell|<value|da>>|<cell|Upgrade
-  to Qt 6>>|<row|<cell|<dlink|64>>|<cell|>|<cell|Image import and
+  green>|<cwith|10|10|2|2|cell-valign|c>|<cwith|2|2|2|2|cell-valign|c>|<cwith|18|18|1|1|cell-background|pastel
+  green>|<cwith|29|29|1|1|cell-background|pastel
+  green>|<table|<row|<cell|<dlink|65>>|<cell|<value|da>>|<cell|Upgrade to Qt
+  6>>|<row|<cell|<dlink|64>>|<cell|>|<cell|Image import and
   exports>>|<row|<cell|<dlink|63>>|<cell|>|<cell|Fixing style
   corruption>>|<row|<cell|<dlink|62>>|<cell|Darcy>|<cell|Mogan STEM
   Suite>>|<row|<cell|<dlink|61>>|<cell|Darcy>|<cell|Plugin
@@ -38,7 +40,7 @@
   Onboarding>>|<row|<cell|<dlink|50>>|<cell|Oyyko>|<cell|Mogan Draw app &
   WASM (OSPP)>>|<row|<cell|<dlink|49>>|<cell|jingkaimori>|<cell|Fine tuning
   of xmake configuration>>|<row|<cell|<dlink|48>>|<cell|Darcy>|<cell|Mogan
-  Code on wasm>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|Fix
+  Code on wasm and preparation>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|Fix
   mechanism of link navigating>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
   indentation of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
   the new mechanism of glue code generation>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning
