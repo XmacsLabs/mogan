@@ -41,13 +41,15 @@
 
   <assign|dis|<strong|Discarded>>
 
-  Managers:
+  Owers:
 
-  <assign|da|<strong|Darcy>>
+  <assign|da|Darcy>
 
-  <assign|oy|<strong|Oyyko>>
+  <assign|oy|Oyyko>
 
-  <assign|jk|<strong|jingkaimori>>
+  <assign|jk|jingkaimori>
+
+  <assign|tt|Paradisum>
 
   Useful shortcut:
 
