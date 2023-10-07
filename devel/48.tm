@@ -3,7 +3,10 @@
 <style|<tuple|tmdoc|devel>>
 
 <\body>
-  <tmdoc-title|Mogan Code on WASM>
+  <tmdoc-title|Mogan Code on WASM and preparation>
+
+  This is the first project for Mogan Code. We tried to remove all plugins
+  which is useless in Mogan Code.
 
   <section|Tasks>
 
@@ -79,7 +82,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      disable USE_QT_SVG
+      Rename USE_GS to USE_PLUGIN_GS
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
@@ -112,6 +115,14 @@
       Darcy
     </cell>|<\cell>
       Separate Mogan Code from xmake.lua
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      48_14
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Separate Mogan Research from xmake.lua
     </cell>>>>
   </wide-tabular>
 
