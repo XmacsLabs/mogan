@@ -387,7 +387,6 @@ TeXmacs_main (int argc, char** argv) {
       exec_delayed (scheme_cmd (cmd));
     }
     else if (install_status == 2) {
-    if (install_status == 2) {
       if (DEBUG_STD) debug_boot << "Loading upgrade message...\n";
       url    u  = "tmfs://help/plain/tm/doc/about/changes/changes-recent.en.tm";
       string b  = scm_quote (as_string (u));
