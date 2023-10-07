@@ -3,8 +3,7 @@
 ### Step 1: Install xmake and xrepo
 For Homebrew:
 ```
-brew install xmake qt@5 ccache
-brew link qt@5
+brew install xmake qt
 brew install pkg-config
 ```
 
@@ -21,21 +20,21 @@ xmake update -s dev
 ```
 to update xmake version.
 
-### Step 2: Compile
+### Step 2: Config
+```
+xmake config --yes -c --qt=/opt/homebrew/share/qt/
+```
+The Qt Dir might not be `/opt/homebrew/share/qt`, please adjust it if needed.
+
+### Step 3: Build
 ``` bash
-xmake config --yes
 xmake build research
 ```
 
-### Step 3: Run tests
+### Step 4: Run tests
 See [How to test](Test.md)。
 
-### Step 4: Install to `build/macosx/{arch}/release/Mogan.app/`
-``` bash
-xmake install research
-```
-
-### Step 5: Launch Mogan Editor
+### Step 5: Launch Mogan Research
 ``` bash
 xmake run research
 ```
