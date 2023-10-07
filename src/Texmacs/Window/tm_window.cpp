@@ -17,7 +17,7 @@
 #include "iterator.hpp"
 #include "preferences.hpp"
 #include "drd_std.hpp"
-#include "tmfs_url.hpp"
+#include "tm_url.hpp"
 
 
 int geometry_w= 800, geometry_h= 600;
@@ -268,7 +268,7 @@ embedded_name (url name) {
   static int nr= 0;
   if (!is_none (name)) return name;
   nr++;
-  return tmfs_url (string ("tmfs://aux/TeXmacs-input-" * as_string (nr)));
+  return tm_url (string ("tmfs://aux/TeXmacs-input-" * as_string (nr)));
 }
 
 tree
