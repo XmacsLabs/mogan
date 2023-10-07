@@ -44,7 +44,7 @@ static int
 qt_system (QProcess& proc, string& cmd, string& cmdout, string& cmderr) {
   c_string _cmd (cmd);
 #if defined(OS_MINGW) || defined(OS_WIN)
-  QString qcmd = QString::fromUtf8 (_cmd);
+  QString qcmd = QString::fromUtf8 ((char*)_cmd);
 #else
   QString qcmd = "sh -c \"";
   qcmd += _cmd;
