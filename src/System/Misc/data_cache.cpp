@@ -164,7 +164,7 @@ cache_save (string buffer) {
     url cache_file= get_tm_cache_path () * url (buffer);
     string cached;
     iterator<tree> it= iterate (cache_data);
-    if (buffer == "file_cache" || buffer == "doc_cache") {
+    if (buffer == "doc_cache") {
       while (it->busy ()) {
         tree ckey= it->next ();
         if (ckey[0] == buffer) {
@@ -197,7 +197,7 @@ cache_load (string buffer) {
     //cout << "cache_file "<< cache_file << LF;
     string cached;
     if (!load_string (cache_file, cached, false)) {
-      if (buffer == "file_cache" || buffer == "doc_cache") {
+      if (buffer == "doc_cache") {
         int i=0, n= N(cached);
         while (i<n) {
           int start= i;
@@ -227,7 +227,6 @@ cache_load (string buffer) {
 
 void
 cache_memorize () {
-  cache_save ("file_cache");
   cache_save ("doc_cache");
   cache_save ("dir_cache.scm");
   cache_save ("stat_cache.scm");
@@ -240,7 +239,6 @@ cache_refresh () {
   cache_data   = hashmap<tree,tree> ("?");
   cache_loaded = hashset<string> ();
   cache_changed= hashset<string> ();
-  cache_load ("file_cache");
   cache_load ("dir_cache.scm");
   cache_load ("stat_cache.scm");
   cache_load ("font_cache.scm");
