@@ -507,11 +507,21 @@ WinQTMPrinterSettings::systemCommandFinished(int exitCode,
     // Parse special lines after the DC_ENUMRESOLUTIONS : (see below)
     if (resolutionsCounter > 0) {
       --resolutionsCounter;
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
       QRegExp rx2("^.*x=(\\d)+.*y=(\\d)+.*$");
       rx2.setMinimal(true);
       if (rx2.indexIn(_line) > -1)
         printerOptions["Resolution"] += QString("%1x%2dpi ").
                                                 arg(rx2.cap(1)).arg(rx2.cap(2));
+#else
+      QRegularExpression rx2 ("^.*x=(\\d)+.*y=(\\d)+.*$");
+      rx2.setPatternOptions (QRegularExpression::InvertedGreedinessOption);
+      QRegularExpressionMatch match = rx2.match (_line);
+      if (match.hasMatch ()){
+        printerOptions["Resolution"] += QString("%1x%2dpi ").
+                                                arg(match.captured(1)).arg(match.captured(2));
+      }
+#endif
       continue;
     }
 
@@ -523,18 +533,38 @@ WinQTMPrinterSettings::systemCommandFinished(int exitCode,
                                                     
     // Parse special lines after PAPER SIZES FROM THE DEVMODE :   
     if (readingSizes) {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
       QRegExp rx2("^.*mm *(\\w)+.*$");  // [ 0]   215.90  279.40 mm  Letter
       rx2.setMinimal(true);
       if (rx2.indexIn(_line) > -1)
         printerOptions["PaperSize"] += rx2.cap(1);
       continue;
+#else
+      QRegularExpression rx2 ("^.*mm *(\\w)+.*$");
+      rx2.setPatternOptions (QRegularExpression::InvertedGreedinessOption);
+      QRegularExpressionMatch match = rx2.match (_line);
+      if (match.hasMatch()) {
+        printerOptions["PaperSize"] += match.captured(1);
+      }
+      continue;
+#endif
     }
 
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
     QRegExp rx("^ *DC_(\\w+) *(\\w+) *$"); // DC_SOMETHING    <num>
     rx.setMinimal(true);                   // Non-greedy matching
     if(rx.indexIn(_line) == -1)      // No matches?
       continue;
     QStringList capt = rx.capturedTexts();
+#else
+    QRegularExpression rx2 ("^ *DC_(\\w+) *(\\w+) *$");
+    rx2.setPatternOptions (QRegularExpression::InvertedGreedinessOption);
+    QRegularExpressionMatch match = rx2.match (_line);
+    if (!match.hasMatch()) {
+      continue;
+    }
+    QStringList capt = match.capturedTexts();
+#endif
     if (capt.size() != 3)              // We are only interested in some options.
       continue;
     
