@@ -24,6 +24,13 @@ inline string tm_string_load (url u) {
   return string_load (concretize (u));
 }
 
+inline bool tm_load_string (url u, string& s, bool fatal) {
+  cout << "u: " << u << LF;
+  url name= concretize (u);
+  cout << "name: " << u << LF;
+  return load_string (name, s, fatal);
+}
+
 inline string sys_concretize (url u1) { return escape_sh (concretize (u1)); }
 
 void system (string which, url u1);

@@ -111,6 +111,7 @@ get_from_web (url name) {
 url
 get_from_server (url u) {
   if (!is_rooted_tmfs (u)) return url_none ();
+  cout << "get_from_server: " << u << LF;
   url res= get_cache (u);
   if (!is_none (res)) return res;
 
@@ -120,7 +121,9 @@ get_from_server (url u) {
     if (!as_bool (call ("tmfs-can-autosave?", unglue (u, 1))))
       return url_none ();
   }
+  cout << "name: " << name << LF;
   string r= as_string (call ("tmfs-load", object (name)));
+  cout << r << LF;
   if (r == "") return url_none ();
   url tmp= url_temp (string (".") * suffix (name));
   (void) save_string (tmp, r, true);
