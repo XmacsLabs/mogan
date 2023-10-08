@@ -72,7 +72,7 @@ jobs:
         with:
           path: |
             ${{ runner.workspace }}/build/.build_cache
-          key: ${{ runner.os }}-xmake-build-${{ hashFiles('**/xmake.lua') }}
+          key: ${{ runner.os }}-build-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
 
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
