@@ -21,11 +21,11 @@
 
 
 inline string tm_string_load (url u) {
-  return string_load (concretize (u));
+  return string_load (concretize_url (u));
 }
 
 inline bool tm_load_string (url u, string& s, bool fatal) {
-  return load_string (concretize (u), s, fatal);
+  return load_string (concretize_url (u), s, fatal);
 }
 
 inline string sys_concretize (url u1) { return escape_sh (concretize (u1)); }
