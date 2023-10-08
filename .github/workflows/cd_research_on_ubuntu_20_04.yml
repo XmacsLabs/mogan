@@ -1,4 +1,4 @@
-name: CD for Mogan Research on Ubuntu
+name: CD for Mogan Research on Ubuntu 20.04
 
 on:
   workflow_dispatch:
