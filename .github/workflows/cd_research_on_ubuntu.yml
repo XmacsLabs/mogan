@@ -20,8 +20,8 @@ jobs:
       - name: Install dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc qtbase5-dev \
-              libqt5svg5-dev qt5-image-formats-plugins fonts-noto-cjk \
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc \
+              qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins fonts-noto-cjk \
               libcurl4-openssl-dev libfreetype-dev fakeroot debhelper
       - uses: actions/checkout@v3
         with:
