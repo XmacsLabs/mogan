@@ -598,6 +598,10 @@ main (int argc, char** argv) {
   // initialize the Qt application infrastructure
   if (headless_mode) qtmcoreapp= new QTMCoreApplication (argc, argv);
   else qtmapp= new QTMApplication (argc, argv);
+  if (!retina_manual) {
+    qreal ratio  = QApplication::primaryScreen ()->devicePixelRatio ();
+    retina_factor= qRound (ratio - 0.1);
+  }
 #endif
   init_texmacs_path (argc, argv);
 #ifdef QTTEXMACS
