@@ -56,19 +56,13 @@ jobs:
       - name: xmake repo --update
         run: xmake repo --update
 
-      - name: cache packages from xrepo
+      - name: cache
         uses: actions/cache@v3
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
-          key: ${{ runner.os }}-xrepo-qt${{ matrix.qt_ver }}-${{ hashFiles('**/packages.lua') }}
-
-      - name: cache xmake
-        uses: actions/cache@v3
-        with:
-          path: |
             ${{ runner.workspace }}/build/.build_cache
-          key: ${{ runner.os }}-xmake-build-${{ hashFiles('**/xmake.lua') }}
+          key: ${{ runner.os }}-xmake-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
 
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
