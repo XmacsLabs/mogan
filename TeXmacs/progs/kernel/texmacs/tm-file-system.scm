@@ -48,7 +48,7 @@
   (ahash-set! tmfs-handler-table (cons class action) handle))
 
 (define-public (tmfs-decompose-name name)
-  (if (url? name) (set! name (url->unix name)))
+  (if (not (string? name)) (set! name (url->string name)))
   (if (string-starts? name "tmfs://") (set! name (string-drop name 7)))
   (with i (string-index name #\/)
     (list (if i (substring name 0 i) "file")

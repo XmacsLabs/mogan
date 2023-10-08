@@ -460,7 +460,7 @@ import_tree (url u, string fm) {
   u= resolve (u, "fr");
   set_file_focus (u);
   string s;
-  if (is_none (u) || load_string (u, s, false)) return "error";
+  if (is_none (u) || tm_load_string (u, s, false)) return "error";
   return import_loaded_tree (s, u, fm);
 }
 
