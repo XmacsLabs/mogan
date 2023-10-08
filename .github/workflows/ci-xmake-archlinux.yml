@@ -1,0 +1,48 @@
+name: Build on Archlinux 
+on:
+  push:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'misc/xmake/packages.lua'
+      - 'xmake.lua'
+      - '.github/workflows/ci-archlinux.yml'
+  pull_request:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'misc/xmake/packages.lua'
+      - 'xmake.lua'
+      - '.github/workflows/ci-archlinux.yml'
+
+env:
+          XMAKE_ROOT: y
+
+jobs:
+  build:
+    strategy:
+    container: archlinux:base-devel
+    runs-on: ubuntu-22.04
+    concurrency:
+        group: ${{ github.ref }}-${{ github.base_ref }}-${{ github.head_ref }}-Archlinux
+        cancel-in-progress: true
+    steps:
+      - name: PacMan
+        env:
+          XMAKE_ROOT: y
+        run: |
+          sudo pacman -Syyu --noconfirm --needed
+          sudo pacman -S --noconfirm --needed qt6-base qt6-svg sqlite libpng zlib libjpeg curl texlive-core python libxext xmake unzip
+      - uses: actions/checkout@v1
+      - name: Xrepo update
+        run: yes | XMAKE_ROOT=y xrepo update-repo
+      - name: Config
+        run: XMAKE_ROOT=y xmake config -m release --yes
+      - name: Build  
+        run: XMAKE_ROOT=y xmake build --yes --verbose --diagnosis --jobs=8 --all
