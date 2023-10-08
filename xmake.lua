@@ -434,7 +434,7 @@ plugin_updater_srcs = { "src/Plugins/Updater/**.cpp" }
 target("libmogan") do
     set_enabled(not is_plat ("wasm"))
     set_basename("mogan")
-    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
+    set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
     
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
