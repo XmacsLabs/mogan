@@ -25,10 +25,7 @@ inline string tm_string_load (url u) {
 }
 
 inline bool tm_load_string (url u, string& s, bool fatal) {
-  cout << "u: " << u << LF;
-  url name= concretize (u);
-  cout << "name: " << u << LF;
-  return load_string (name, s, fatal);
+  return load_string (concretize (u), s, fatal);
 }
 
 inline string sys_concretize (url u1) { return escape_sh (concretize (u1)); }
