@@ -1,4 +1,4 @@
-<TeXmacs|2.1.2>
+<TeXmacs|1.2.0>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -22,6 +22,7 @@
   green>|<cwith|34|34|1|1|cell-background|pastel
   green>|<cwith|10|10|2|2|cell-valign|c>|<cwith|2|2|2|2|cell-valign|c>|<cwith|18|18|1|1|cell-background|pastel
   green>|<cwith|29|29|1|1|cell-background|pastel
+  green>|<cwith|1|1|1|1|cell-background|pastel
   green>|<table|<row|<cell|<dlink|65>>|<cell|<value|da>>|<cell|Upgrade to Qt
   6>>|<row|<cell|<dlink|64>>|<cell|>|<cell|Image import and
   exports>>|<row|<cell|<dlink|63>>|<cell|>|<cell|Fixing style
