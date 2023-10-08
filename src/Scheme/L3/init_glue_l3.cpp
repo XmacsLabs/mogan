@@ -29,6 +29,7 @@
 #include "tree_cursor.hpp"
 #include "tree_observer.hpp"
 #include "url.hpp"
+#include "tm_file.hpp"
 
 tree
 var_apply (tree& t, modification m) {

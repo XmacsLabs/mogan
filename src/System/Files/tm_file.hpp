@@ -20,7 +20,12 @@
 #include "tm_sys_utils.hpp"
 
 
+inline string tm_string_load (url u) {
+  return string_load (concretize (u));
+}
+
 inline string sys_concretize (url u1) { return escape_sh (concretize (u1)); }
+
 void system (string which, url u1);
 void system (string which, url u1, url u2);
 void system (string which, url u1, const char* post);
