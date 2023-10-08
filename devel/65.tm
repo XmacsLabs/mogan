@@ -1,4 +1,4 @@
-<TeXmacs|1.2.0>
+<TeXmacs|2.1.2>
 
 <style|<tuple|tmdoc|chinese|devel>>
 
