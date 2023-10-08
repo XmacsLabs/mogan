@@ -1,5 +1,5 @@
 /******************************************************************************
-* MODULE     : parsehtml.cpp
+* MODULE     : html.cpp
 * DESCRIPTION: wrapper for HTML parsing to handle extensions such as MathJax,
 *              and clean TeXmacs documents imported from HTML/MathML
 * COPYRIGHT  : (C) 2019  Joris van der Hoeven
