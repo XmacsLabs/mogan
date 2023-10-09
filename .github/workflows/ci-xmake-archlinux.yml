@@ -61,7 +61,7 @@ jobs:
 
 
       - name: config
-        run: xmake config --policies=build.ccache -o tmp/build -m releasedbg --yes
+        run: xmake config -vD --policies=build.ccache -o tmp/build -m releasedbg --yes
 
       - name: Build  
         run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
