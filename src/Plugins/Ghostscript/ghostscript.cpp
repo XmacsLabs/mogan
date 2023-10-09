@@ -1,13 +1,13 @@
 
 /******************************************************************************
-* MODULE     : ghostscript.cpp
-* DESCRIPTION: interface with ghostscript
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : ghostscript.cpp
+ * DESCRIPTION: interface with ghostscript
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "Ghostscript/ghostscript.hpp"
 #ifdef USE_PLUGIN_GS
@@ -20,13 +20,13 @@
 #include "image_files.hpp"
 
 /******************************************************************************
-* Special hack for a bug in Ghostscript 6.50, 6.51 and 6.52
-******************************************************************************/
+ * Special hack for a bug in Ghostscript 6.50, 6.51 and 6.52
+ ******************************************************************************/
 
 static int gs_type= -1;
-  // -1: uninitialized
-  //  0: OK
-  //  1: with pixmap bug
+// -1: uninitialized
+//  0: OK
+//  1: with pixmap bug
 
 bool
 ghostscript_bugged () {
@@ -35,10 +35,9 @@ ghostscript_bugged () {
 #else
   if (gs_type == -1) {
     string gs_version= var_eval_system ("gs --version");
-    gs_type= 0;
-    if ((gs_version == "6.50") ||
-	(gs_version == "6.51") ||
-	(gs_version == "6.52"))
+    gs_type          = 0;
+    if ((gs_version == "6.50") || (gs_version == "6.51") ||
+        (gs_version == "6.52"))
       gs_type= 1;
   }
   return (gs_type == 1);
@@ -46,18 +45,19 @@ ghostscript_bugged () {
 }
 
 /******************************************************************************
-* Drawing a postscript image file in a pixmap
-******************************************************************************/
+ * Drawing a postscript image file in a pixmap
+ ******************************************************************************/
 
 static string
 encapsulate_postscript (string s) {
-  int i, n= N(s);
-  int last_begin= 0;
+  int    i, n= N (s);
+  int    last_begin= 0;
   string r;
-  for (i=0; i<n; i++) {
-    if ((s[i] != 's') || (i>(n-8)) || (s(i,i+8) != "showpage")) continue;
+  for (i= 0; i < n; i++) {
+    if ((s[i] != 's') || (i > (n - 8)) || (s (i, i + 8) != "showpage"))
+      continue;
     if (i > last_begin) r << s (last_begin, i);
-    i += 8;
+    i+= 8;
     last_begin= i;
   }
   r << s (last_begin, i);
@@ -66,8 +66,7 @@ encapsulate_postscript (string s) {
 
 void
 ghostscript_run (Display* dpy, Window gs_win, Pixmap pm, url im, SI w, SI h) {
-  if (DEBUG_VERBOSE)
-    debug_io << "Running ghostscript " << im << "\n";
+  if (DEBUG_VERBOSE) debug_io << "Running ghostscript " << im << "\n";
 
   int x1, y1, x2, y2;
   ps_bounding_box (im, x1, y1, x2, y2);
@@ -76,16 +75,16 @@ ghostscript_run (Display* dpy, Window gs_win, Pixmap pm, url im, SI w, SI h) {
   // white lines may appear at the borders of the patterns.
   // However the hack also causes normal images to be rendered
   // slightly incorrectly
-  if (x1+1 < x2) x1++;
-  if (y1+1 < y2) y1++;
+  if (x1 + 1 < x2) x1++;
+  if (y1 + 1 < y2) y1++;
   // End dirty hack
 
   if (ghostscript_bugged ()) {
     int scr  = DefaultScreen (dpy);
     int max_w= 2 * DisplayWidth (dpy, scr);
     int max_h= 2 * DisplayHeight (dpy, scr);
-    w= min (w, max_w);
-    h= min (h, max_h);
+    w        = min (w, max_w);
+    h        = min (h, max_h);
   }
 
 #ifndef OS_WIN
@@ -93,27 +92,26 @@ ghostscript_run (Display* dpy, Window gs_win, Pixmap pm, url im, SI w, SI h) {
   int pix_id= (int) pm;
   if (ghostscript_bugged ()) set_env ("GHOSTVIEW", as_string (win_id));
   else set_env ("GHOSTVIEW", as_string (win_id) * " " * as_string (pix_id));
-  Atom gh= XInternAtom (dpy, "GHOSTVIEW", false);
-  Atom st= XA_STRING;
-  double dpi_x= ((double) (w*72))/((double) (x2-x1));
-  double dpi_y= ((double) (h*72))/((double) (y2-y1));
-  string data=
-    (ghostscript_bugged ()? as_string (pix_id): string ("0")) * " 0 " *
-    as_string (x1) * " " * as_string (y1) * " " *
-    as_string (x2) * " " * as_string (y2) * " " *
-    as_string (dpi_x) * " " * as_string (dpi_y) * " " *
-    "0 0 0 0";
+  Atom   gh   = XInternAtom (dpy, "GHOSTVIEW", false);
+  Atom   st   = XA_STRING;
+  double dpi_x= ((double) (w * 72)) / ((double) (x2 - x1));
+  double dpi_y= ((double) (h * 72)) / ((double) (y2 - y1));
+  string data = (ghostscript_bugged () ? as_string (pix_id) : string ("0")) *
+               " 0 " * as_string (x1) * " " * as_string (y1) * " " *
+               as_string (x2) * " " * as_string (y2) * " " * as_string (dpi_x) *
+               " " * as_string (dpi_y) * " " * "0 0 0 0";
   {
     c_string _data (data);
-    int _n= N(data);
-    XChangeProperty (dpy, gs_win, gh, st, 8, PropModeReplace, (unsigned char*)(char*)_data, _n);
+    int      _n= N (data);
+    XChangeProperty (dpy, gs_win, gh, st, 8, PropModeReplace,
+                     (unsigned char*) (char*) _data, _n);
   }
-  XSync(dpy, false);
+  XSync (dpy, false);
 #endif
 
   string raw_ps, nice_ps;
-  raw_ps= ps_load (im);
-  nice_ps= encapsulate_postscript (raw_ps);
+  raw_ps       = ps_load (im);
+  nice_ps      = encapsulate_postscript (raw_ps);
   url temp_name= url_temp ();
   save_string (temp_name, nice_ps, true);
 #ifdef USE_PLUGIN_GS
@@ -125,4 +123,3 @@ ghostscript_run (Display* dpy, Window gs_win, Pixmap pm, url im, SI w, SI h) {
 }
 
 #endif // X11TEXMACS
-
