@@ -57,4 +57,4 @@
          (loc (string-append base h ext))
          (eng (string-append base h ".en.tm"))
          (u (if (url-exists? test) loc eng)))
-    (auto-load-aux "Contextual help" u (list))))
+    (auto-load-aux "Contextual help" (string->url u) (list))))
