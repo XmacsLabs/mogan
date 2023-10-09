@@ -9,7 +9,7 @@ on:
       - 'tests/**'
       - 'misc/xmake/packages.lua'
       - 'xmake.lua'
-      - '.github/workflows/ci-archlinux.yml'
+      - '.github/workflows/ci-xmake-archlinux.yml'
   pull_request:
     branches: [ branch-1.2 ]
     paths:
@@ -19,7 +19,7 @@ on:
       - 'tests/**'
       - 'misc/xmake/packages.lua'
       - 'xmake.lua'
-      - '.github/workflows/ci-archlinux.yml'
+      - '.github/workflows/ci-xmake-archlinux.yml'
 
 env:
   XMAKE_ROOT: y
