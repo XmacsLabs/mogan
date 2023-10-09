@@ -29,9 +29,6 @@ jobs:
     strategy:
     container: archlinux:base-devel
     runs-on: ubuntu-22.04
-    concurrency:
-        group: ${{ github.ref }}-${{ github.base_ref }}-${{ github.head_ref }}-Archlinux
-        cancel-in-progress: true
     steps:
       - name: PacMan
         run: |
