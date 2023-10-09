@@ -23,20 +23,51 @@ on:
 
 env:
   XMAKE_ROOT: y
+  INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
+  QT_QPA_PLATFORM: offscreen
 
 jobs:
   build:
     container: archlinux:base-devel
     runs-on: ubuntu-22.04
     steps:
-      - name: PacMan
+      - name: Install dependencies
         run: |
           sudo pacman -Syyu --noconfirm --needed
           sudo pacman -S --noconfirm --needed qt6-base qt6-svg libpng zlib libjpeg curl python libxext xmake unzip
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: set XMAKE_GLOBALDIR
+        run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV  
+
       - name: Xrepo update
         run: xmake repo --update --yes
-      - name: Config
-        run: xmake config -m release --yes
+
+      - name: cache packages from xrepo
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages 
+          key: ${{ runner.os }}-xrepo-qt${{ matrix.qt_ver }}-${{ hashFiles('**/packages.lua') }}
+
+      - name: cache xmake
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ runner.workspace }}/build/.build_cache
+          key: ${{ runner.os }}-build-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
+
+
+      - name: config
+        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
+
       - name: Build  
-        run: xmake build --yes -vD --jobs=8 --all
+        run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
+    
+      - name: test
+        run: xmake run --yes -vD --group=tests
+
+      - name: integration test
+        run: xmake run --yes -vD --group=integration_tests
