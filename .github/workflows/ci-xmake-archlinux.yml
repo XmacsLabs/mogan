@@ -22,7 +22,7 @@ on:
       - '.github/workflows/ci-archlinux.yml'
 
 env:
-          XMAKE_ROOT: y
+  XMAKE_ROOT: y
 
 jobs:
   build:
@@ -34,15 +34,13 @@ jobs:
         cancel-in-progress: true
     steps:
       - name: PacMan
-        env:
-          XMAKE_ROOT: y
         run: |
           sudo pacman -Syyu --noconfirm --needed
-          sudo pacman -S --noconfirm --needed qt6-base qt6-svg sqlite libpng zlib libjpeg curl texlive-core python libxext xmake unzip
+          sudo pacman -S --noconfirm --needed qt6-base qt6-svg libpng zlib libjpeg curl python libxext xmake unzip
       - uses: actions/checkout@v1
       - name: Xrepo update
-        run: yes | XMAKE_ROOT=y xrepo update-repo
+        run: xmake repo --update --yes
       - name: Config
-        run: XMAKE_ROOT=y xmake config -m release --yes
+        run: xmake config -m release --yes
       - name: Build  
-        run: XMAKE_ROOT=y xmake build --yes --verbose --diagnosis --jobs=8 --all
+        run: xmake build --yes -vD --jobs=8 --all
