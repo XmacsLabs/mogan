@@ -182,8 +182,6 @@ cache_load (string buffer) {
 
 void
 cache_memorize () {
-  cache_save ("dir_cache.scm");
-  cache_save ("stat_cache.scm");
   cache_save ("font_cache.scm");
   cache_save ("validate_cache.scm");
 }
@@ -193,8 +191,6 @@ cache_refresh () {
   cache_data   = hashmap<tree,tree> ("?");
   cache_loaded = hashset<string> ();
   cache_changed= hashset<string> ();
-  cache_load ("dir_cache.scm");
-  cache_load ("stat_cache.scm");
   cache_load ("font_cache.scm");
   cache_load ("validate_cache.scm");
 }
