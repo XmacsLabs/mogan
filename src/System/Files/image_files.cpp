@@ -176,9 +176,7 @@ ps_load (url image, bool conv) {
   if (is_none (name))
     name= "$TEXMACS_PATH/misc/pixmaps/unknown.png";
 
-#ifdef OS_WIN
   if (is_ramdisc (name)) name= get_from_ramdisc (name);
-#endif
 
   string s = "", suf= suffix (image);
   if (suf == "ps" || suf == "eps") {
