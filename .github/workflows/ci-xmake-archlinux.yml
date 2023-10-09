@@ -1,0 +1,73 @@
+name: Build on Archlinux 
+on:
+  push:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'misc/xmake/packages.lua'
+      - 'xmake.lua'
+      - '.github/workflows/ci-xmake-archlinux.yml'
+  pull_request:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'misc/xmake/packages.lua'
+      - 'xmake.lua'
+      - '.github/workflows/ci-xmake-archlinux.yml'
+
+env:
+  XMAKE_ROOT: y
+  INSTALL_DIR: tmp/build/packages/app.mogan/
+  QT_QPA_PLATFORM: offscreen
+
+jobs:
+  build:
+    container: archlinux:base-devel
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo pacman -Syyu --noconfirm --needed
+          sudo pacman -S --noconfirm --needed qt6-base qt6-svg libpng zlib libjpeg curl python libxext xmake unzip
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: set XMAKE_GLOBALDIR
+        run: echo "XMAKE_GLOBALDIR=/tmp/xmake-global" >> $GITHUB_ENV  
+
+      - name: Xrepo update
+        run: xmake repo --update --yes
+
+      - name: cache packages from xrepo
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages 
+          key: archlinux-xrepo-qt6-${{ hashFiles('**/packages.lua') }}
+
+      - name: cache xmake
+        uses: actions/cache@v3
+        with:
+          path: |
+            tmp/build/.build_cache
+          key: archlinux-build-qt6-${{ hashFiles('**/xmake.lua') }}
+
+
+      - name: config
+        run: xmake config -vD --policies=build.ccache -o tmp/build -m releasedbg --yes
+
+      - name: Build  
+        run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
+    
+      - name: test
+        run: xmake run --yes -vD --group=tests
+
+      - name: integration test
+        run: xmake run --yes -vD --group=integration_tests
