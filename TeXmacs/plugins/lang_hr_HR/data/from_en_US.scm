@@ -2880,7 +2880,6 @@
 ("tabular" "tabelarni")
 ("tabular material" "tabelarni materijal")
 ("tags with special rendering" "okruženja s posebnim renderiranjem")
-("taiwanese" "tajvanski")
 ("tangent" "tangens")
 ("target" "odredište")
 ("techreport" "tehnički izvještaj")
