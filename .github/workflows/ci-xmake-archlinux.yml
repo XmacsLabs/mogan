@@ -40,7 +40,7 @@ jobs:
           fetch-depth: 1
 
       - name: set XMAKE_GLOBALDIR
-        run: echo "XMAKE_GLOBALDIR=tmp/xmake-global" >> $GITHUB_ENV  
+        run: echo "XMAKE_GLOBALDIR=/tmp/xmake-global" >> $GITHUB_ENV  
 
       - name: Xrepo update
         run: xmake repo --update --yes
