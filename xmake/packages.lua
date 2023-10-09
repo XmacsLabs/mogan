@@ -21,6 +21,7 @@
 
 local LOLLY_VERSION = "1.2.8"
 local TBOX_VERSION = "1.7.4"
+local GS_VERSION = "9.55.0"
 
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
 package("lolly")
@@ -98,4 +99,5 @@ function add_requires_of_mogan()
     end
 
     add_requires("s7 2023.04.13", {system=false})
+    add_requires("ghostscript " .. GS_VERSION)
 end
