@@ -23,7 +23,7 @@ on:
 
 env:
   XMAKE_ROOT: y
-  INSTALL_DIR: /tmp/build/packages/app.mogan/
+  INSTALL_DIR: tmp/build/packages/app.mogan/
   QT_QPA_PLATFORM: offscreen
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
           fetch-depth: 1
 
       - name: set XMAKE_GLOBALDIR
-        run: echo "XMAKE_GLOBALDIR=/tmp/xmake-global" >> $GITHUB_ENV  
+        run: echo "XMAKE_GLOBALDIR=tmp/xmake-global" >> $GITHUB_ENV  
 
       - name: Xrepo update
         run: xmake repo --update --yes
@@ -56,12 +56,12 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            /tmp/build/.build_cache
+            tmp/build/.build_cache
           key: archlinux-build-qt6-${{ hashFiles('**/xmake.lua') }}
 
 
       - name: config
-        run: xmake config --policies=build.ccache -o /tmp/build -m releasedbg --yes
+        run: xmake config --policies=build.ccache -o tmp/build -m releasedbg --yes
 
       - name: Build  
         run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
