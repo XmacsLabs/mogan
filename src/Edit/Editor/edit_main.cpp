@@ -329,9 +329,10 @@ edit_main_rep::print_to_file (url name, string first, string last) {
 #ifdef USE_PLUGIN_PDF
   if ((suffix (name) == "pdf")) {
     if (as_bool (call ("get-boolean-preference",
-                       "gui:export PDF with tm attachment"))) {
+                      "gui:export PDF with tm attachment"))) {
       if (!attach_doc_to_exported_pdf (name)) {
-        debug_convert << "fail : attach_doc_to_exported_pdf" << LF;
+        if (DEBUG_CONVERT)
+          debug_convert << "fail : attach_doc_to_exported_pdf" << LF;
       }
     }
   }
@@ -371,7 +372,7 @@ edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
   new_t= get_buffer_tree (new_u);
 
   if (!pdf_hummus_make_attachments (pdf_name, attachments, pdf_name)) {
-    debug_convert << "fail : pdf_hummus_make_attachments" << LF;
+    if (DEBUG_CONVERT) debug_convert << "fail : pdf_hummus_make_attachments" << LF;
     return false;
   }
   return true;

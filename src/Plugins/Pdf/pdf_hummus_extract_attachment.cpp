@@ -208,13 +208,14 @@ get_url_image_or_include_tree (tree t, url path) {
     if (!exists (pre_url)) {
       pre_url= relative (path, pre_url);
       if (!exists (pre_url)) {
-        debug_convert << pre_url << " do not exist\n" << LF;
+        if (DEBUG_CONVERT) debug_convert << pre_url << " do not exist\n" << LF;
       }
     }
     return pre_url;
   }
   else {
-    debug_convert << t << " image or include tree format wrong\n" << LF;
+    if (DEBUG_CONVERT)
+      debug_convert << t << " image or include tree format wrong\n" << LF;
     return url ();
   }
 }
@@ -229,7 +230,7 @@ get_actural_style_url (string style_name, url path) {
     if (!exists (style_file)) {
       style_file= relative (path, style_file);
       if (!exists (style_file)) {
-        debug_convert << style_file << "do not exist" << LF;
+        if (DEBUG_CONVERT) debug_convert << style_file << "do not exist" << LF;
         style_file= url ();
       }
     }
@@ -251,7 +252,8 @@ get_url_style_tree (tree t, url path) {
   }
   else {
     if (!is_atomic (t[0])) {
-      debug_convert << get_label (t[0]) << "is not atomic tree" << LF;
+      if (DEBUG_CONVERT)
+        debug_convert << get_label (t[0]) << "is not atomic tree" << LF;
       return style_file;
     }
     url style_url= get_actural_style_url (get_label (t[0]), path);
@@ -280,11 +282,12 @@ get_linked_file_paths (tree t, url path) {
 static tree
 replace_url_image_or_include_tree (tree t, url path) {
   if (get_label (t) != "image" && get_label (t) != "include") {
-    debug_convert << get_label (t) << " is not image or include" << LF;
+    if (DEBUG_CONVERT)
+      debug_convert << get_label (t) << " is not image or include" << LF;
     return t;
   }
   if (is_atomic (t)) {
-    debug_convert << get_label (t) << " is atomic" << LF;
+    if (DEBUG_CONVERT) debug_convert << get_label (t) << " is atomic" << LF;
     return t;
   }
   if (is_atomic (t[0])) {
@@ -292,7 +295,7 @@ replace_url_image_or_include_tree (tree t, url path) {
     if (!exists (pre_url)) {
       pre_url= relative (path, pre_url);
       if (!exists (pre_url)) {
-        debug_convert << pre_url << " do not exist\n" << LF;
+        if (DEBUG_CONVERT) debug_convert << pre_url << " do not exist\n" << LF;
       }
     }
     string name= as_string (tail (pre_url));
@@ -302,7 +305,8 @@ replace_url_image_or_include_tree (tree t, url path) {
     t[0]->label= string (name);
   }
   else {
-    debug_convert << t << " image or include tree format wrong\n" << LF;
+    if (DEBUG_CONVERT)
+      debug_convert << t << " image or include tree format wrong\n" << LF;
   }
   return t;
 }
@@ -312,7 +316,7 @@ replace_url_image_or_include_tree (tree t, url path) {
 static tree
 repalce_url_style (tree t, url path) {
   if (!is_atomic (t)) {
-    debug_convert << get_label (t) << " is not atomic" << LF;
+    if (DEBUG_CONVERT) debug_convert << get_label (t) << " is not atomic" << LF;
     return t;
   }
   string style_name= get_label (t);
@@ -322,7 +326,7 @@ repalce_url_style (tree t, url path) {
     if (!exists (style_url)) {
       style_url= relative (path, style_url);
       if (!exists (style_url)) {
-        debug_convert << style_url << "do not exist" << LF;
+        if (DEBUG_CONVERT) debug_convert << style_url << "do not exist" << LF;
       }
     }
     string name= basename (style_url);
@@ -339,11 +343,11 @@ repalce_url_style (tree t, url path) {
 static tree
 replace_url_style_tree (tree t, url path) {
   if (get_label (t) != "style") {
-    debug_convert << get_label (t) << " is not style" << LF;
+    if (DEBUG_CONVERT) debug_convert << get_label (t) << " is not style" << LF;
     return t;
   }
   if (is_atomic (t)) {
-    debug_convert << get_label (t) << " is atomic" << LF;
+    if (DEBUG_CONVERT) debug_convert << get_label (t) << " is atomic" << LF;
     return t;
   }
   if (is_tuple (t[0]))
