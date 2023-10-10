@@ -65,11 +65,7 @@ gs_executable () {
 
 string
 gs_prefix () {
-  if (os_win () || os_mingw ()) {
-    return string ("\"") * gs_executable () * string ("\"") * string (" ");
-  } else {
-    return gs_executable () * string (" ");
-  }
+  return string ("\"") * gs_executable () * string ("\"") * string (" ");
 }
 
 static double
@@ -367,10 +363,16 @@ gs_to_png (url image, url png, int w, int h) { // Achtung! w,h in pixels
   }
   else {
     // don't use -dEPSCrop which works incorrectly if (bx1 != 0 || by1 != 0)
-    cmd << " -f " << sys_concretize (image);
+    cmd << "-c \" " << as_string (-bx1) << " " << as_string (-by1)
+        << " translate gsave \"  -f " << sys_concretize (image)
+        << " -c \" grestore \"";
   }
-  string ans= eval_system (cmd);
-  if (DEBUG_CONVERT) debug_convert << cmd << LF << "answer :" << ans << LF;
+  if (os_win () || os_mingw ()) {
+    lolly::system (cmd);
+  }
+  else {
+    std::system (as_charp (cmd));
+  }
   if (!exists (png)) {
     convert_error << "gs_to_png failed for " << image << LF;
     return false;
