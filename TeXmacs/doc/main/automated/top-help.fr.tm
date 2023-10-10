@@ -1,6 +1,6 @@
-<TeXmacs|1.99.13>
+<TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|automate|french>>
+<style|<tuple|tmdoc|automate|french|old-lengths>>
 
 <\body>
   <block-assign|<implied-scm|styles>|<implied-scm|(get-style-list)>>
@@ -27,7 +27,7 @@
     modifiées utilisant les icônes et entrées sur la barre de focus, ou
     encore depuis le menu <menu|Focus>. Par exemple, en cliquant sur le style
     du document, un menu déroulant s'ouvre depuis lequel vous pouvez changer
-    de style. En cliquant sur l'icône <icon|tm_add.xpm> après le style du
+    de style. En cliquant sur l'icône <icon|tm_add.svg> après le style du
     document, vous pouvez également sélectuionner des paquetages de style
     supplémentaires.
 
