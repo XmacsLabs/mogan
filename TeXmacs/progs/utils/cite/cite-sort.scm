@@ -33,8 +33,11 @@
 
 (define (expand-references k)
   (with key (stree->tree `(get-binding ,(cadr k)))
+    (display* "key:" (object->string (tree->stree key)))
+    (newline)
     (with ret (tree->stree (texmacs-exec key))
       (if (!= ret '(uninit)) ret ""))))
+
 (define (merge-contiguous new old present)
   (let ((flush
         (lambda ()
@@ -56,6 +59,7 @@
   ;; get a (tuple (tuple key_1 value_1) ... (tuple key_n value_n))
   ;; and sort it according to values.
   (:secure #t)
+  ; (display "args: " (tree->stree args))
   (let* ((args (map tree->stree (tree-children args)))
          (keys (map expand-references (map caddr args)))
          (tup (map list keys args))
