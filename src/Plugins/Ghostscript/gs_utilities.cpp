@@ -372,7 +372,11 @@ gs_to_png (url image, url png, int w, int h) { // Achtung! w,h in pixels
         << " translate gsave '  -f " << sys_concretize (image)
         << " -c 'grestore'";
   }
-  std::system (as_charp (cmd));
+  if (os_win () || os_mingw ()) {
+    lolly::system (cmd);
+  } else {
+    std::system (as_charp (cmd));
+  }
   if (!exists (png)) {
     convert_error << "gs_to_png failed for " << image << LF;
     return false;
