@@ -65,7 +65,11 @@ gs_executable () {
 
 string
 gs_prefix () {
-  return string ("\"") * gs_executable () * string ("\"") * string (" ");
+  if (os_win () || os_mingw ()) {
+    return string ("\"") * gs_executable () * string ("\"") * string (" ");
+  } else {
+    return gs_executable () * string (" ");
+  }
 }
 
 static double
@@ -363,9 +367,7 @@ gs_to_png (url image, url png, int w, int h) { // Achtung! w,h in pixels
   }
   else {
     // don't use -dEPSCrop which works incorrectly if (bx1 != 0 || by1 != 0)
-    cmd << "-c \" " << as_string (-bx1) << " " << as_string (-by1)
-        << " translate gsave \"  -f " << sys_concretize (image)
-        << " -c \" grestore \"";
+    cmd << " -f " << sys_concretize (image);
   }
   string ans= eval_system (cmd);
   if (DEBUG_CONVERT) debug_convert << cmd << LF << "answer :" << ans << LF;
