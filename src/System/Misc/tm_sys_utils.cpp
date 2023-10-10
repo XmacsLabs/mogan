@@ -14,7 +14,6 @@
 #include "tm_debug.hpp"
 #include "url.hpp"
 #include "file.hpp"
-#include "tm_file.hpp"
 
 #if defined(OS_MINGW) || defined(OS_WIN)
 #include "Windows/win_sys_utils.hpp"
@@ -48,28 +47,10 @@ string get_pretty_os_name () {
 * System functions
 ******************************************************************************/
 
-int
-system (string s, string& result, string& error) {
-#if defined(OS_MINGW) || defined(OS_WIN)
-  return -1;
-#else
-  return qt_system (s, result, error);
-#endif
-}
-
-int
-system (string s, string& result) {
-#ifdef OS_WASM
-  return -1;
-#else
-  return qt_system (s, result);
-#endif
-}
-
 string
 eval_system (string s) {
   string result;
-  (void) system (s, result);
+  (void) lolly::system (s, result);
   return result;
 }
 
