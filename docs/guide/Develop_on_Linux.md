@@ -14,7 +14,7 @@ On Fedora and RHEL derivatives:<!-- (tested on docker) -->
 ```
 sudo dnf update
 sudo dnf groupinstall "C Development Tools and Libraries"
-sudo dnf install git wget unzip glibc-static libstdc++-static qt5-qtbase-devel fontconfig-devel
+sudo dnf install git wget unzip glibc-static libstdc++-static qt5-qtbase-devel qt5-qtsvg-devel fontconfig-devel
 wget https://xmake.io/shget.text -O - | bash #install xmake
 git clone https://github.com/XmacsLabs/mogan
 ```
