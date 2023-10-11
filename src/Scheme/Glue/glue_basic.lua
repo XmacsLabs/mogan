@@ -1882,6 +1882,26 @@ function main()
                     "url"
                 }
             },
+            {
+                scm_name = "tree-none",
+                cpp_name = "tree",
+                ret_type = "tree"
+            },
+            {
+                scm_name = "array-url-none",
+                cpp_name = "array<url>",
+                ret_type = "array_url"
+            },
+            {
+                scm_name = "array-url-append",
+                cpp_name = "append",
+                ret_type = "array_url",
+                arg_list = {
+                    "url",
+                    "array_url"
+                }
+            },
+            
         }
     }
 end

@@ -124,6 +124,33 @@
       (if(attach-doc-to-exported-pdf fname)
           (noop)
           (notify-now "fail to attach tm to pdf")))))
+
+(tm-define (attach-doc-to-exported-pdf fname)
+  (let* ((dir (string->url "$TEXMACS_HOME_PATH/texts/scratch"))
+          (tmp-name (string-append (url-basename fname) ".tm"))
+          (tm-save-path (url-append dir tmp-name))
+          (new-url (buffer-new))
+          (cur-url (current-buffer-url))
+          (new-tree (tree-none))
+          (linked-file (array-url-none)))
+    (buffer-rename new-url tm-save-path)
+    (set! new-url tm-save-path)
+    (buffer-copy cur-url new-url)
+    (buffer-save new-url)
+
+    (set! new-tree (tree-import new-url "texmacs"))
+    (buffer-set new-url new-tree)
+    (set! new-tree (buffer-get new-url))
+
+    (set! linked-file (pdf-get-linked-file-paths new-tree cur-url))
+    (set! new-tree (pdf-replace-linked-path new-tree cur-url))
+    (set! linked-file (array-url-append new-url linked-file))
+
+    (buffer-set new-url new-tree)
+    (buffer-save new-url)
+    (set! new-tree (buffer-get new-url))
+    (pdf-make-attachments fname linked-file fname)
+  ))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Printing commands
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
