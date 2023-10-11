@@ -325,18 +325,6 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
 void
 edit_main_rep::print_to_file (url name, string first, string last) {
   print_doc (name, false, as_int (first), as_int (last));
-
-#ifdef USE_PLUGIN_PDF
-  if ((suffix (name) == "pdf")) {
-    if (as_bool (call ("get-boolean-preference",
-                      "gui:export PDF with tm attachment"))) {
-      if (!attach_doc_to_exported_pdf (name)) {
-        if (DEBUG_CONVERT)
-          debug_convert << "fail : attach_doc_to_exported_pdf" << LF;
-      }
-    }
-  }
-#endif
   set_message ("Done printing", "print to file");
 }
 
