@@ -256,6 +256,7 @@
       (link export-export-menu)
       ---
       ("Pdf" (choose-file wrapped-print-to-file "Save pdf file" "pdf"))
+      ("Pdf embeded with tm" (choose-file wrapped-print-to-pdf-embeded-with-tm "Save pdf file" "pdf"))
       ("Postscript"
        (choose-file wrapped-print-to-file "Save postscript file" "postscript"))
       (when (selection-active-any?)

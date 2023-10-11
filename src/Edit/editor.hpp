@@ -597,6 +597,9 @@ public:
   virtual void print_doc (url ps_name, bool to_file, int first, int last) = 0;
   virtual void print_to_file (url ps_name,
 			      string first="1", string last="1000000") = 0;
+#ifdef USE_PLUGIN_PDF
+  virtual bool attach_doc_to_exported_pdf (url pdf_name) = 0;
+#endif
   virtual void print_buffer (string first="1", string last="1000000") = 0;
   virtual void export_ps (url ps_name,
 			  string first="1", string last="1000000") = 0;

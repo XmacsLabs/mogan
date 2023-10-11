@@ -1979,6 +1979,14 @@ function main()
                 }
             },
             {
+                scm_name = "attach-doc-to-exported-pdf",
+                cpp_name = "attach_doc_to_exported_pdf",
+                ret_type = "bool",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
                 scm_name = "print-pages-to-file",
                 cpp_name = "print_to_file",
                 ret_type = "void",

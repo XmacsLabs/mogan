@@ -101,6 +101,29 @@
         (buffer-close buf))
       (print-to-file fname)))
 
+(tm-define (wrapped-print-to-pdf-embeded-with-tm fname)
+    (if(string=? (url-suffix fname) "pdf")
+      (noop)
+      (texmacs-error "wrapped-print-to-pdf-embeded-with-tm" "fname is not a pdf"))
+    (if (screens-buffer?)
+      (let* ((cur (current-buffer))
+             (buf (buffer-new)))
+        (buffer-copy cur buf)
+        (buffer-set-master buf cur)
+        (switch-to-buffer buf)
+        (set-drd cur)
+        (dynamic-make-slides)
+        (print-to-file fname)
+        (if(attach-doc-to-exported-pdf fname)
+          (noop)
+          (notify-now "fail to attach tm to pdf"))
+        (switch-to-buffer cur)
+        (buffer-close buf))
+      (begin
+      (print-to-file fname)
+      (if(attach-doc-to-exported-pdf fname)
+          (noop)
+          (notify-now "fail to attach tm to pdf")))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Printing commands
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
