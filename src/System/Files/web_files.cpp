@@ -19,9 +19,7 @@
 #include "scheme.hpp"
 #include "tmfs_url.hpp"
 
-#ifndef OS_WASM
-#include "Curl/curl.hpp"
-#endif
+#include "lolly/io/http.hpp"
 
 #define MAX_CACHED 25
 static int web_nr=0;
@@ -91,9 +89,8 @@ get_from_web (url name) {
 #ifdef OS_WASM
   string content= "";
 #else
-  string content= lolly::curl_get (
-    escape_sh (web_encode (as_string (name))),
-    string("TeXmacs-") * TEXMACS_VERSION);
+  json j= lolly::io::http_get (name);
+  string content= as_string (j("body"));
 #endif
 
   if (is_empty (content)) return url_none ();
