@@ -10,6 +10,14 @@ sudo apt update
 sudo apt install --yes build-essential libfontconfig1-dev qtbase5-dev libqt5svg5-dev
 ```
 
+On Fedora and RHEL derivatives:
+```
+sudo dnf update
+sudo dnf groupinstall "C Development Tools and Libraries"
+sudo dnf install git wget unzip glibc-static libstdc++-static qt5-qtbase-devel qt5-qtsvg-devel fontconfig-devel
+wget https://xmake.io/shget.text -O - | bash #install xmake
+```
+
 Sometimes, we need the latest xrepo:
 ``` bash
 xrepo update-repo
