@@ -50,9 +50,14 @@ string get_pretty_os_name () {
 
 string
 eval_system (string s) {
+#ifdef OS_WASM
+  cout << "eval_system: " << s << LF:
+  return "";
+#else
   string result;
   (void) lolly::system (s, result);
   return result;
+#endif
 }
 
 string
