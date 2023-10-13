@@ -14,17 +14,57 @@
 (texmacs-module (utils cite cite-sort-test)
   (:use (utils cite cite-sort)))
 
-(tm-define (regtest-cite-sort)
-  (define (math->tree x) (htmltm-as-serial (cons 'math x)))
+(define (regtest-indice-sort)
   (regression-test-group
-   "mathtm" "mathtm"
-   math->tree :none 
-   (test "identifier" '((mi "x")) "x")
-   (test "operator" '((mi "x") (mo "+") (mi "y")) "x+y")
-   (test "numeral" '((mn "2") (mo "+") (mi "x")) "2+x")
-   ;; (test "exponent" '(msup (mi "x") (mn "2")) '(concat "x" (rsup "2")))
-   ;; (test "special ops"
-   ;;   '(mrow (mn "3") (mo "&InvisibleTimes;") (mi "x")
-   ;;      (mo "*") (msup (mi "y") (mn "4")))
-   ;;   '(concat "3*x<ast>y" (rsup "4")))   
+   "test indice sorting and merging" "indice-sort"
+   indice-sort :none 
+   (test "unmerged two element"
+     '(("1" (reference "bib1"))
+       ("2" (reference "bib2"))
+       ("4" (reference "bib4"))
+       ("5" (reference "bib5")))
+     '((reference "bib1")
+       (reference "bib2")
+       (reference "bib4")
+       (reference "bib5")))
+   (test "unmerged one element"
+     '(("1" (reference "bib1"))
+       ("3" (reference "bib3")))
+     '((reference "bib1")
+       (reference "bib3")))
+   (test "discontinue merge"
+     '(("1" (reference "bib1"))
+       ("3" (reference "bib3"))
+       ("4" (reference "bib4"))
+       ("5" (reference "bib5"))
+       ("7" (reference "bib7")))
+     '((reference "bib1")
+       (concat
+         (reference "bib3")
+         "-"
+         (reference "bib5"))
+       (reference "bib7")))
+   (test "merge at lease three elements"
+     '(("1" (reference "bib1"))
+       ("2" (reference "bib2"))
+       ("3" (reference "bib3")))
+     '((concat
+         (reference "bib1")
+         "-"
+         (reference "bib3"))))
+   (test "merge five elements"
+     '(("1" (reference "bib1"))
+       ("3" (reference "bib3"))
+       ("4" (reference "bib4"))
+       ("2" (reference "bib2"))
+       ("5" (reference "bib5")))
+     '((concat
+         (reference "bib1")
+         "-"
+         (reference "bib5"))))
 ))
+
+(tm-define (regtest-cite-sort)
+  (let ((n (+ (regtest-indice-sort))))
+    (display* "Total: " (object->string n) " tests.\n")
+    (display "Test suite of cite-sort: ok\n")))

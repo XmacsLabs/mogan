@@ -33,8 +33,6 @@
 
 (define (expand-references k)
   (with key (stree->tree `(get-binding ,(cadr k)))
-    (display* "key:" (object->string (tree->stree key)))
-    (newline)
     (with ret (tree->stree (texmacs-exec key))
       (if (!= ret '(uninit)) ret ""))))
 
@@ -55,6 +53,13 @@
                 (merge-contiguous (append new (flush)) (cdr old) (list (car old)))
                 )))))
 
+(tm-define (indice-sort tup)
+  (let* ((sorted-tup 
+           (list-sort tup (lambda (s1 s2) (compare-cite-keys s1 s2 compare-string))))
+         (merged-tup (merge-contiguous '() sorted-tup '()))
+         (merged-args (map cadr merged-tup)))
+    merged-args))
+
 (tm-define (cite-sort args)
   ;; get a (tuple (tuple key_1 value_1) ... (tuple key_n value_n))
   ;; and sort it according to values.
@@ -63,9 +68,6 @@
   (let* ((args (map tree->stree (tree-children args)))
          (keys (map expand-references (map caddr args)))
          (tup (map list keys args))
-         (sorted-tup 
-           (list-sort tup (lambda (s1 s2) (compare-cite-keys s1 s2 compare-string))))
-         (merged-tup (merge-contiguous '() sorted-tup '()))
-         (merged-args (map cadr merged-tup))
+         (merged-args (indice-sort tup))
          (ret `(concat ,@(list-intersperse merged-args '(cite-sep)))))
     ret))
