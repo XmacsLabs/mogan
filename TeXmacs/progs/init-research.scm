@@ -259,8 +259,8 @@
              graphics-dragging-left graphics-end-drag-left)
 (lazy-define (graphics graphics-main) graphics-update-proviso
              graphics-get-proviso graphics-set-proviso)
-(lazy-define (graphics graphics-markup) arrow-with-text arrow-with-text* circle three-points-circle std-arc three-points-arc)
-(define-secure-symbols arrow-with-text arrow-with-text* circle three-points-circle std-arc three-points-arc)
+(lazy-define (graphics graphics-markup) arrow-with-text arrow-with-text* circle three-points-circle std-arc three-points-arc sector)
+(define-secure-symbols arrow-with-text arrow-with-text* circle three-points-circle std-arc three-points-arc sector)
 ;;(display* "time: " (- (texmacs-time) boot-start) "\n")
 ;;(display* "memory: " (texmacs-memory) " bytes\n")
 
