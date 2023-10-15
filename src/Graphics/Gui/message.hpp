@@ -15,6 +15,7 @@
 #include "widget.hpp"
 #include "ntuple.hpp"
 #include "rectangles.hpp"
+#include "mouse_cursor_style.hpp"
 
 /******************************************************************************
 * C++ stupidity does not allow forward declaration of enums.
@@ -53,6 +54,7 @@ enum slot_id {
   SLOT_CANVAS,
   SLOT_SCROLLABLE,
   SLOT_CURSOR,
+  SLOT_CURSOR_STYLE,
 
   SLOT_HEADER_VISIBILITY,
   SLOT_MAIN_MENU,
@@ -493,6 +495,12 @@ inline void
 send_cursor (widget w, SI x1, SI y1) {
   // send current cursor coordinates
   send<SI,SI> (w, SLOT_CURSOR, x1, y1);
+}
+
+inline void
+send_cursor_style (widget w, cursor_style style) {
+  // send current cursor coordinates
+  send<cursor_style> (w, SLOT_CURSOR_STYLE, style);
 }
 
 /******************************************************************************
