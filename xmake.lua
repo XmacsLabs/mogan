@@ -532,11 +532,28 @@ end
 
 
 includes("xmake/draw.lua")
-if is_plat("wasm", "linux") then
-    target("draw") do
-        set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
+target("draw") do
+    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
+    if is_plat("wasm") then
         add_tm_configure("draw", TM_CONFIGURE_VARS)
-        add_target_draw()
+        add_target_draw_on_wasm()
+    else
+        set_installdir(INSTALL_DIR)
+        set_configdir(INSTALL_DIR)
+        set_configvar("DEVEL_VERSION", DEVEL_VERSION)
+        set_configvar("XMACS_VERSION", XMACS_VERSION)
+        add_target_draw_on_others()
+        on_run(function (target)
+            name = target:name()
+            if is_plat("mingw", "windows") then
+                os.execv(target:installdir().."/bin/mogan_draw.exe")
+            elseif is_plat("linux", "macosx") then
+                print("Launching " .. target:targetfile())
+                os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
+            else
+                print("Unsupported plat $(plat)")
+            end
+        end)
     end
 end
 
