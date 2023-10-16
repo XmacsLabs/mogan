@@ -18,6 +18,7 @@
     (texmacs texmacs tm-view)
     (texmacs texmacs tm-print)
     (texmacs keyboard config-kbd)
+    (language locale)
     (language natural)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -77,7 +78,7 @@
           ("Multiple documents share window" "shared"))
     ---
     (enum ("Language" "language")
-          ,@(map (lambda (lan) (list (upcase-first lan) lan))
+          ,@(map (lambda (lan) (list (language-to-language-name lan) lan))
                  supported-languages))
     (-> "Keyboard"
         (-> "Remote control"
