@@ -123,7 +123,9 @@
                   (if (= (points-cross-product-k vec-c-p vec-c-q) 0)
                     x
                     (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
-`(arc ,p ,m ,x)))
+      `(superpose    
+        (line ,p ,c ,x)
+        (arc ,p ,m ,x))))
 
 
 

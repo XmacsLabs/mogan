@@ -1035,6 +1035,7 @@
 (tm-define (graphics-set-fill-color val)
   (:argument val "Fill color")
   (:check-mark "*" (graphics-test-property? "gr-fill-color"))
+  (display* "DEBUG" val "\n")
   (graphics-set-property "gr-fill-color" val))
 
 (tm-define (graphics-set-arrow-begin val)
