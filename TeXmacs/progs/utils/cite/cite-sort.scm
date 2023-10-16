@@ -50,8 +50,7 @@
             (merge-contiguous new (cdr old) (list (car old)))
             (if (compare-cite-keys (cAr present) (car old) compare-string-inc?)
                 (merge-contiguous new (cdr old) (append present (list (car old))))
-                (merge-contiguous (append new (flush)) (cdr old) (list (car old)))
-                )))))
+                (merge-contiguous (append new (flush)) (cdr old) (list (car old))))))))
 
 (tm-define (indice-sort tup)
   (let* ((sorted-tup 
