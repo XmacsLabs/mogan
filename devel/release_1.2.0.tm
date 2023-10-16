@@ -68,8 +68,8 @@
   \ (OSPP)>>|<row|<cell|<dlink|22>>|<cell|Darcy>|<cell|Chinese
   Dictionary>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language
   related issues>>|<row|<cell|<dlink|18>>|<cell|jinkaimori>|<cell|Embedded
-  documentation issues>>|<row|<cell|<dlink|13>>|<cell|Darcy>|<cell|Libcurl
-  integration>>|<row|<cell|<dlink|11>>|<cell|Darcy>|<cell|Font
+  documentation issues>>|<row|<cell|<dlink|13>>|<cell|Darcy>|<cell|Lolly
+  1.2.x: HTTP and JSON>>|<row|<cell|<dlink|11>>|<cell|Darcy>|<cell|Font
   tuning>>|<row|<cell|<dlink|7>>|<cell|Darcy>|<cell|Stability
   Issues>>|<row|<cell|<dlink|5>>|<cell|Darcy>|<cell|Documentation in markdown
   format for users and developers>>>>>
