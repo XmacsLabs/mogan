@@ -8,12 +8,13 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<table|<row|<\cell>
+    <tformat|<cwith|1|1|2|2|cell-background|pastel
+    green>|<cwith|2|-1|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       13_1
     </cell>|<\cell>
-      Darcy
+      <value|da>
     </cell>|<\cell>
       Import libcurl integration from branch-1.1
     </cell>>|<row|<\cell>
@@ -21,33 +22,33 @@
     </cell>|<\cell>
       13_2
     </cell>|<\cell>
-      Darcy
+      <value|da>
     </cell>|<\cell>
       Deprecate usage of <shell|wget> and <shell|curl>
     </cell>>|<row|<\cell>
-      Feature
+      Chore
     </cell>|<\cell>
       13_3
     </cell>|<\cell>
-      Darcy
+      <value|da>
     </cell>|<\cell>
-      Design and Implement the API of HTTP head
+      Use lolly 1.2.9 for system with result
     </cell>>|<row|<\cell>
-      Feature
+      Chore
     </cell>|<\cell>
       13_4
     </cell>|<\cell>
-      Darcy
+      <value|da>
     </cell>|<\cell>
-      Design and Implement the API of HTTP get
+      Upgrade to lolly 1.2.11
     </cell>>|<row|<\cell>
-      Feature
+      Chore
     </cell>|<\cell>
       13_5
     </cell>|<\cell>
-      Darcy
+      <value|da>
     </cell>|<\cell>
-      Design and Implement the API of HTTP post
+      Upgrade to lolly 1.2.12
     </cell>>>>
   </wide-tabular>
 
