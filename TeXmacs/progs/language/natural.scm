@@ -170,3 +170,4 @@
     ;;(if (not (buffer-exists? (tr-file (get-output-language))))
     ;;    ("Rebuild translations file" (tr-rebuild (get-output-language))))
     ("Force reloading of translations" (tr-reload-translations))))
+
