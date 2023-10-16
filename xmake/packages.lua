@@ -19,8 +19,10 @@
 -- [ ] portage powered
 -- ...
 
-local LOLLY_VERSION = "1.2.11"
+local LOLLY_VERSION = "1.2.12"
 local TBOX_VERSION = "1.7.4"
+local CPR_VERSION = "1.10.5"
+local CURL_VERSION = "8.4.0"
 
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
 package("lolly")
@@ -32,10 +34,10 @@ package("lolly")
 
     add_deps("tbox")
     if not is_plat("wasm") then
-        add_deps("libcurl")
+        add_deps("cpr")
     end
 
-    add_versions("v" .. LOLLY_VERSION, "c99ffe1d0d53e324365d68191c0f89d08cf60a29")
+    add_versions("v" .. LOLLY_VERSION, "838ff8b07b1041c9197b764fe8aada5606fb4bee")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
@@ -48,7 +50,6 @@ package_end()
 
 
 function add_requires_of_mogan()
-    local CURL_VERSION = "7.84.0"
     local FREETYPE_VERSION = "2.12.1"
     local PDFHUMMUS_VERSION = "4.5.10"
 
@@ -85,9 +86,8 @@ function add_requires_of_mogan()
         tbox_version = "v" .. TBOX_VERSION
     end
     add_requireconfs("lolly.tbox", {version = tbox_version, configs=tbox_configs, system = false, override=true})
-    if is_plat("macosx") or is_plat("mingw") then
-        add_requireconfs("lolly.libcurl", {version = CURL_VERSION, system = false, override=true})
-    end
+    add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
+    add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
 
     set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
     if not is_plat("wasm") then

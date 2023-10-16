@@ -89,8 +89,8 @@ get_from_web (url name) {
 #ifdef OS_WASM
   string content= "";
 #else
-  json j= lolly::io::http_get (name);
-  string content= as_string (j("body"));
+  tree r= lolly::io::http_get (name);
+  string content= as_string (http_response_ref (r, lolly::io::http_response_label::TEXT));
 #endif
 
   if (is_empty (content)) return url_none ();
