@@ -593,8 +593,10 @@ main (int argc, char** argv) {
 #endif
   init_texmacs_path (argc, argv);
 #ifdef QTTEXMACS
-  if (!headless_mode)
-    qtmapp->set_window_icon ("/misc/images/new-mogan-512.png"); // it this really necessary? Should be set in the metadata.
+  if (!headless_mode) {
+    // it this really necessary? Should be set in the metadata.
+    qtmapp->set_window_icon ("/misc/images/new-mogan-512.png");
+  }
 #endif
   // cout << "Bench  ] Started TeXmacs\n";
   the_et     = tuple ();
