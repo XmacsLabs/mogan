@@ -25,7 +25,8 @@
         (convert tmml tmmltm-test)
         (prog prog-format-test)
         (fonts fonts-test)
-        (graphics graphics-group-test)))
+        (graphics graphics-group-test)
+        (utils cite cite-sort-test)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Test LaTeX export
@@ -99,4 +100,5 @@
   (regtest-fonts)
   (regtest-tm-tools)
   (regtest-graphics-group)
+  (regtest-cite-sort)
 )
