@@ -785,7 +785,7 @@
   ---
   (for (lan supported-languages)
     (when (supported-language? lan)
-      ((check (eval (language-to-language-name llan)) "*" (test-document-language? lan))
+      ((check (eval (language-to-language-name lan)) "*" (test-document-language? lan))
        (set-document-language lan)))))
 
 (tm-define (current-language-name)
