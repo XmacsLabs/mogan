@@ -21,6 +21,9 @@
 #include "tm_url.hpp"
 #include "tmfs_url.hpp"
 #include "tree.hpp"
+#include "locale.hpp"
+#include "analyze.hpp"
+#include "base64.hpp"
 
 #include "glue_file.cpp"
 #include "glue_misc.cpp"
@@ -33,9 +36,22 @@ urlP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
+url
+url_ref (url u, int i) {
+  return u[i];
+}
+
+string
+lolly_version () {
+  return string (LOLLY_VERSION);
+}
+
+#include "glue_lolly.cpp"
+
 void
 initialize_glue_l2 () {
   tmscm_install_procedure ("url?", urlP, 1, 0, 0);
+  initialize_glue_lolly ();
   initialize_glue_url ();
   initialize_glue_file ();
   initialize_glue_misc ();
