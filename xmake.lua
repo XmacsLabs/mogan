@@ -567,7 +567,7 @@ target("research") do
         on_run(function (target)
             name = target:name()
             if is_plat("mingw", "windows") then
-                os.execv(target:installdir().."/bin/mogan.exe")
+                os.execv(target:installdir().."/bin/MGResearch.exe")
             elseif is_plat("linux", "macosx") then
                 print("Launching " .. target:targetfile())
                 os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
@@ -717,7 +717,7 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
             if is_plat("macosx", "linux") then
                 binary = target:deps()["research"]:targetfile()
             elseif is_plat("mingw", "windows") then
-                binary = path.join(INSTALL_DIR,"bin","mogan.exe")
+                binary = path.join(INSTALL_DIR,"bin","MGResearch.exe")
             else
                 print("Unsupported plat $(plat)")
             end
