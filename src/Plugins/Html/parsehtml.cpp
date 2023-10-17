@@ -9,9 +9,11 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "html.hpp"
+
+#include "Xml/xml.hpp"
 #include "converter.hpp"
 #include "hashset.hpp"
-#include "html.hpp"
 #include "parse_string.hpp"
 
 static int                  mathjax_serial= 1;
@@ -113,6 +115,13 @@ retrieve_mathjax (int id) {
 /******************************************************************************
  * Interface
  ******************************************************************************/
+tree
+parse_plain_html (string s) {
+  xml_html_parser parser;
+  parser.html= true;
+  tree t     = parser.parse (s);
+  return t;
+}
 
 tree
 parse_html (string s) {
