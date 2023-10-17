@@ -86,13 +86,7 @@ end
 
 
 function add_target_research_on_others()
-    if is_plat("macosx") then
-        set_filename("Mogan")
-    elseif is_plat("mingw", "windows") then
-        set_filename("mogan.exe")
-    else
-        set_filename("mogan")
-    end
+    set_basename("MGResearch")
 
     if is_plat("windows") then
         set_optimize("smallest");
