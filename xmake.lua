@@ -168,70 +168,8 @@ end
 --
 -- Library: L3 Kernel
 --
-set_configvar("QTTEXMACS", 1)
-
-local l3_files = {
-    "src/Kernel/**.cpp",
-    "src/Data/History/**.cpp",
-    "src/Data/Observers/**.cpp",
-    "src/Data/Scheme/**.cpp",
-    "src/Data/String/**.cpp",
-    "src/Data/Document/new_document.cpp",
-    "src/Data/Drd/**.cpp",
-    "src/Data/Tree/tree_helper.cpp",
-    "src/Data/Tree/tree_label.cpp",
-    "src/Data/Tree/tree_cursor.cpp",
-    "src/Data/Tree/tree_observer.cpp",
-    "src/Scheme/L1/**.cpp",
-    "src/Scheme/L2/**.cpp",
-    "src/Scheme/L3/**.cpp",
-    "src/Scheme/S7/**.cpp",
-    "src/Scheme/Scheme/object.cpp",
-    "src/System/Config/**.cpp",
-    "src/System/Classes/**.cpp",
-    "src/System/Files/**files.cpp",
-    "src/System/Misc/data_cache.cpp",
-    "src/System/Misc/persistent.cpp",
-    "src/System/Misc/stack_trace.cpp",
-    "src/Texmacs/Server/tm_debug.cpp",
-}
-local l3_includedirs = {
-    "src/Kernel/Types",
-    "src/Kernel/Abstractions",
-    "src/Data/Drd",
-    "src/Data/Document",
-    "src/Data/History",
-    "src/Data/Observers",
-    "src/Data/Scheme",
-    "src/Data/String",
-    "src/Data/Tree",
-    "src/Kernel/Abstractions",
-    "src/Scheme",
-    "src/Scheme/Scheme",
-    "src/Scheme/S7",
-    "src/Scheme/L1",
-    "src/Scheme/L2",
-    "src/Scheme/L3",
-    "src/System/Config",
-    "src/System/Language",
-    "src/System/Files",
-    "src/System/Classes",
-    "src/System/Misc",
-    "src/Plugins",
-    "src/Texmacs",
-}
+includes ("xmake/L3.lua")
 target("libkernel_l3") do
-    set_languages("c++17")
-    set_policy("check.auto_ignore_flags", false)
-
-    set_kind("static")
-    set_group("kernel_l3")
-    set_basename("kernel_l3")
-    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
-
-    add_packages("s7")
-    add_packages("lolly")
-
     ---------------------------------------------------------------------------
     -- generate config files. see also:
     --    * https://github.com/xmake-io/xmake/issues/320
@@ -251,22 +189,16 @@ target("libkernel_l3") do
             CONFIG_OS = CONFIG_OS,
             VERSION = TEXMACS_VERSION,
             LOLLY_VERSION = LOLLY_VERSION,
+            XMACS_VERSION = XMACS_VERSION,
         }
     })
 
-    add_includedirs("$(buildir)/L3")
-    add_includedirs("$(buildir)/glue")
-    add_includedirs("$(buildir)")
-    add_includedirs(l3_includedirs, {public = true})
-    add_files(l3_files)
-
-    before_build(function (target)
-        target:add("forceincludes", path.absolute("$(buildir)/L3/config.h"))
-        target:add("forceincludes", path.absolute("$(buildir)/L3/tm_configure.hpp"))
-    end)
+    add_target_L3()
 end
 
 
+
+set_configvar("QTTEXMACS", 1)
 
 local INSTALL_DIR = "$(buildir)"
 if is_plat("mingw", "windows") then 
@@ -665,6 +597,7 @@ function add_test_target (filepath, dep)
         add_packages("lolly")
 
         add_includedirs({"$(buildir)", "tests/Base"})
+        add_includedirs(libmogan_headers)
         build_glue_on_config()
         add_files("tests/Base/base.cpp")
         add_files(filepath)
@@ -685,7 +618,7 @@ function add_test_target (filepath, dep)
 end
 
 -- Tests in C++
-l3_cpp_tests = os.files("tests/Data/History/**_test.cpp")
+l3_cpp_tests = os.files("tests/L3/**_test.cpp")
 all_cpp_tests = os.files("tests/**_test.cpp")
 
 for _, filepath in ipairs(l3_cpp_tests) do
