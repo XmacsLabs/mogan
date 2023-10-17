@@ -6,4 +6,4 @@ xrepo install -y $emsdk_pkg
 var pkg_info = (xrepo fetch --json $emsdk_pkg | from-json)
 var emsdk_path = $pkg_info[0][artifacts][installdir]
 
-xmake config -p wasm --emsdk=$emsdk_path --yes -vD
+xmake config -p wasm --emsdk=$emsdk_path --yes -vD --qt=$E:HOME/6.5.3/wasm_singlethread/

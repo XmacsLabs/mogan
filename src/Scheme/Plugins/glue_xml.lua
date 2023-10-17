@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 --
 -- MODULE      : glue_xml.lua
--- DESCRIPTION : Generating glue on XML/HTML/MathML
+-- DESCRIPTION : Generating glue on XML
 -- COPYRIGHT   : (C) 1999-2023  Joris van der Hoeven
 --                   2023       jingkaimori
 --                   2023       Darcy Shen
@@ -71,46 +71,6 @@ function main()
                 ret_type = "scheme_tree",
                 arg_list = {
                     "string"
-                }
-            },
-            {
-                scm_name = "parse-html",
-                cpp_name = "parse_html",
-                ret_type = "scheme_tree",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "clean-html",
-                cpp_name = "clean_html",
-                ret_type = "tree",
-                arg_list = {
-                    "content"
-                }
-            },
-            {
-                scm_name = "upgrade-tmml",
-                cpp_name = "tmml_upgrade",
-                ret_type = "tree",
-                arg_list = {
-                    "scheme_tree"
-                }
-            },
-            {
-                scm_name = "upgrade-mathml",
-                cpp_name = "upgrade_mathml",
-                ret_type = "tree",
-                arg_list = {
-                    "content"
-                }
-            },
-            {
-                scm_name = "retrieve-mathjax",
-                cpp_name = "retrieve_mathjax",
-                ret_type = "tree",
-                arg_list = {
-                    "int"
                 }
             },
         }

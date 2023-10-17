@@ -228,6 +228,7 @@ set_configvar("USE_PLUGIN_LATEX_PREVIEW", true)
 set_configvar("USE_PLUGIN_TEX", true)
 set_configvar("USE_PLUGIN_ISPELL", true)
 set_configvar("USE_PLUGIN_SPARKLE", false)
+set_configvar("USE_PLUGIN_HTML", true)
 set_configvar("TM_DYNAMIC_LINKING", false)
 
 if is_plat("mingw", "windows") then
