@@ -34,6 +34,7 @@ function add_target_code()
             GS_EXE = "",
             USE_FREETYPE = true,
             USE_ICONV = true,
+            QTTEXMACS = true,
         }
     })
 
