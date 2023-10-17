@@ -63,13 +63,17 @@ function add_target_draw()
     else
         add_files(plugin_qt_srcs)
     end
-    add_files(plugin_freetype_srcs)
-    add_files(plugin_database_srcs)
-    add_files(plugin_metafont_srcs)
-    add_files(plugin_openssl_srcs)
-    add_files(plugin_xml_srcs)
-    add_files(plugin_ghostscript_srcs)
-    add_files("src/Mogan/Draw/draw.cpp")
+
+    -- reduce the file size on wasm
+    if not is_plat("wasm") then
+      add_files(plugin_freetype_srcs)
+      add_files(plugin_database_srcs)
+      add_files(plugin_metafont_srcs)
+      add_files(plugin_openssl_srcs)
+      add_files(plugin_xml_srcs)
+      add_files(plugin_ghostscript_srcs)
+      add_files("src/Mogan/Draw/draw.cpp")
+    end
 
     if is_plat("wasm") then
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
