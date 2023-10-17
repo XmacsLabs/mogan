@@ -14,20 +14,13 @@
 #include "object_l2.hpp"
 #include "s7_tm.hpp"
 
-#include "file.hpp"
-#include "persistent.hpp"
-#include "sys_utils.hpp"
-#include "tm_file.hpp"
-#include "tm_url.hpp"
-#include "tmfs_url.hpp"
-#include "tree.hpp"
-#include "locale.hpp"
 #include "analyze.hpp"
 #include "base64.hpp"
+#include "file.hpp"
+#include "locale.hpp"
+#include "sys_utils.hpp"
+#include "tree.hpp"
 
-#include "glue_file.cpp"
-#include "glue_misc.cpp"
-#include "glue_url.cpp"
 #include "scheme.hpp"
 
 tmscm
@@ -52,7 +45,4 @@ void
 initialize_glue_l2 () {
   tmscm_install_procedure ("url?", urlP, 1, 0, 0);
   initialize_glue_lolly ();
-  initialize_glue_url ();
-  initialize_glue_file ();
-  initialize_glue_misc ();
 }

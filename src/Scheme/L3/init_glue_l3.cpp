@@ -19,6 +19,7 @@
 #include "modification.hpp"
 #include "patch.hpp"
 #include "path.hpp"
+#include "persistent.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_url.hpp"
@@ -27,6 +28,10 @@
 #include "tree_cursor.hpp"
 #include "tree_observer.hpp"
 #include "url.hpp"
+
+#include "glue_file.cpp"
+#include "glue_misc.cpp"
+#include "glue_url.cpp"
 
 tree
 var_apply (tree& t, modification m) {
@@ -69,6 +74,9 @@ void
 initialize_glue_l3 () {
   tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
 
+  initialize_glue_url ();
+  initialize_glue_file ();
+  initialize_glue_misc ();
   initialize_glue_path ();
   initialize_glue_modification ();
   initialize_glue_patch ();
