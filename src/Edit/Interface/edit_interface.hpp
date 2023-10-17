@@ -91,6 +91,7 @@ protected:
   int           cur_sb, cur_wb;
   SI            cur_wx, cur_wy;
   rectangles    keys_rects;
+  cursor_style  the_cursor_style= cursor_style::NORMAL;
 
 public:
   edit_interface_rep ();
@@ -193,6 +194,7 @@ public:
   void mouse_adjust_selection (SI x, SI y, int mods);
   void mouse_scroll (SI x, SI y, bool up);
   cursor get_cursor ();
+  cursor_style get_cursor_style ();
   array<SI> get_mouse_position ();
   void set_pointer (string name);
   void set_pointer (string curs_name, string mask_name);
