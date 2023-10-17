@@ -15,6 +15,7 @@
 #include "object_l3.hpp"
 #include "s7_tm.hpp"
 
+#include "drd_mode.hpp"
 #include "file.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
@@ -29,9 +30,29 @@
 #include "tree_observer.hpp"
 #include "url.hpp"
 
+#include "glue_drd.cpp"
 #include "glue_file.cpp"
 #include "glue_misc.cpp"
 #include "glue_url.cpp"
+
+tmscm
+observerP (tmscm t) {
+  bool b= tmscm_is_blackbox (t) &&
+          (type_box (tmscm_to_blackbox (t)) == type_helper<observer>::id);
+  return bool_to_tmscm (b);
+}
+
+tmscm
+modificationP (tmscm t) {
+  bool b= tmscm_is_modification (t);
+  return bool_to_tmscm (b);
+}
+
+tmscm
+contentP (tmscm t) {
+  bool b= tmscm_is_content (t);
+  return bool_to_tmscm (b);
+}
 
 tree
 var_apply (tree& t, modification m) {
@@ -73,7 +94,11 @@ patchP (tmscm t) {
 void
 initialize_glue_l3 () {
   tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
+  tmscm_install_procedure ("observer?", observerP, 1, 0, 0);
+  tmscm_install_procedure ("tm?", contentP, 1, 0, 0);
+  tmscm_install_procedure ("modification?", modificationP, 1, 0, 0);
 
+  initialize_glue_drd ();
   initialize_glue_url ();
   initialize_glue_file ();
   initialize_glue_misc ();

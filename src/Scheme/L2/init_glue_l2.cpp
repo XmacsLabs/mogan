@@ -24,6 +24,19 @@
 #include "scheme.hpp"
 
 tmscm
+blackboxP (tmscm t) {
+  bool b= tmscm_is_blackbox (t);
+  return bool_to_tmscm (b);
+}
+
+tmscm
+treeP (tmscm t) {
+  bool b= tmscm_is_blackbox (t) &&
+          (type_box (tmscm_to_blackbox (t)) == type_helper<tree>::id);
+  return bool_to_tmscm (b);
+}
+
+tmscm
 urlP (tmscm t) {
   bool b= tmscm_is_url (t);
   return bool_to_tmscm (b);
@@ -43,6 +56,8 @@ lolly_version () {
 
 void
 initialize_glue_l2 () {
+  tmscm_install_procedure ("blackbox?", blackboxP, 1, 0, 0);
+  tmscm_install_procedure ("tree?", treeP, 1, 0, 0);
   tmscm_install_procedure ("url?", urlP, 1, 0, 0);
   initialize_glue_lolly ();
 }
