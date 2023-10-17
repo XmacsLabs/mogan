@@ -9,7 +9,7 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "xml.hpp"
+#include "html.hpp"
 #include "analyze.hpp"
 #include "tree_analyze.hpp"
 #include "tree_modify.hpp"
@@ -19,7 +19,7 @@
 * Predicates
 ******************************************************************************/
 
-bool
+static bool
 is_section (tree t) {
   return is_compound (t, "part")     || is_compound (t, "part*")          ||
     is_compound (t, "chapter")       || is_compound (t, "chapter*")       ||

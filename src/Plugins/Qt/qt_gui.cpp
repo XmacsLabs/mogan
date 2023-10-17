@@ -13,6 +13,7 @@
 
 #include "convert.hpp"
 #include "Xml/xml.hpp"
+#include "Html/html.hpp"
 #include "iterator.hpp"
 #include "dictionary.hpp"
 #include "file.hpp" // added for copy_as_graphics
