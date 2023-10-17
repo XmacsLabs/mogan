@@ -287,41 +287,41 @@ edit_interface_rep::set_pointer (
 
 
 cursor_style 
-edit_interface_rep::get_cursor_style(){
+edit_interface_rep::get_cursor_style () {
   return the_cursor_style;
 }
 
 // https://doc.qt.io/qt-5.15/qcursor.html
 void
 edit_interface_rep::set_cursor_style (string style_name){
-  if(style_name == "openhand")
-    the_cursor_style=cursor_style::OPENHAND;
-  else if(style_name == "normal" || style_name == "top_left_arrow")
-    the_cursor_style=cursor_style::NORMAL;
-  else if(style_name == "closehand")
-    the_cursor_style=cursor_style::CLOSEHAND;
-  else if(style_name == "cross")
-    the_cursor_style=cursor_style::CROSS;
-  else if(style_name == "up_arrow")
-    the_cursor_style=cursor_style::UP_ARROW;
-  else if(style_name == "ibeam")
-    the_cursor_style=cursor_style::IBEAM;
-  else if(style_name == "wait")
-    the_cursor_style=cursor_style::WAIT;
-  else if(style_name == "forbidden")
-    the_cursor_style=cursor_style::FORBIDDEN;
-  else if(style_name == "pointing_hand")
-    the_cursor_style=cursor_style::POINTING_HAND;
-  else if(style_name == "size_ver")
-    the_cursor_style=cursor_style::SIZE_VER;
-  else if(style_name == "size_hor")
-    the_cursor_style=cursor_style::SIZE_HOR;
-  else if(style_name == "size_bdiag")
-    the_cursor_style=cursor_style::SIZE_BDIAG;
-  else if(style_name == "size_fdiag")
-    the_cursor_style=cursor_style::SIZE_FDIAG;
-  else if(style_name == "size_all")
-    the_cursor_style=cursor_style::SIZE_ALL;
+  if (style_name == "openhand")
+    the_cursor_style= cursor_style::OPENHAND;
+  else if (style_name == "normal" || style_name == "top_left_arrow")
+    the_cursor_style= cursor_style::NORMAL;
+  else if (style_name == "closehand")
+    the_cursor_style= cursor_style::CLOSEHAND;
+  else if (style_name == "cross")
+    the_cursor_style= cursor_style::CROSS;
+  else if (style_name == "up_arrow")
+    the_cursor_style= cursor_style::UP_ARROW;
+  else if (style_name == "ibeam")
+    the_cursor_style= cursor_style::IBEAM;
+  else if (style_name == "wait")
+    the_cursor_style= cursor_style::WAIT;
+  else if (style_name == "forbidden")
+    the_cursor_style= cursor_style::FORBIDDEN;
+  else if (style_name == "pointing_hand")
+    the_cursor_style= cursor_style::POINTING_HAND;
+  else if (style_name == "size_ver")
+    the_cursor_style= cursor_style::SIZE_VER;
+  else if (style_name == "size_hor")
+    the_cursor_style= cursor_style::SIZE_HOR;
+  else if (style_name == "size_bdiag")
+    the_cursor_style= cursor_style::SIZE_BDIAG;
+  else if (style_name == "size_fdiag")
+    the_cursor_style= cursor_style::SIZE_FDIAG;
+  else if (style_name == "size_all")
+    the_cursor_style= cursor_style::SIZE_ALL;
   else
     TM_FAILED("invalid cursor style");
 }

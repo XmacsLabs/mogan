@@ -888,7 +888,7 @@ edit_interface_rep::apply_changes () {
                        (SI) floor (cu->oy * magf));
     
     // set cursor style
-    send_cursor_style(this, get_cursor_style());
+    send_cursor_style (this, get_cursor_style ());
 
     path sp= selection_get_cursor_path ();
     bool semantic_flag= semantic_active (path_up (sp));
