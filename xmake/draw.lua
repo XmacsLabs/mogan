@@ -34,6 +34,7 @@ function add_target_draw()
             GS_EXE = "",
             USE_FREETYPE = true,
             USE_ICONV = true,
+            QTTEXMACS = true,
         }
     })
     add_packages("lolly")
