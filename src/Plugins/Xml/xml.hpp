@@ -1,20 +1,20 @@
 
 /******************************************************************************
-* MODULE     : xml.hpp
-* DESCRIPTION: various conversion routines on XML
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : xml.hpp
+ * DESCRIPTION: various conversion routines on XML
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef XML_HPP
 #define XML_HPP
 
+#include "object.hpp"
 #include "string.hpp"
 #include "tree.hpp"
-#include "object.hpp"
 
 string old_tm_to_xml_cdata (string s);
 object tm_to_xml_cdata (string s);
@@ -23,8 +23,8 @@ string tm_to_xml_name (string s);
 string xml_name_to_tm (string s);
 string xml_unspace (string s, bool first, bool last);
 
-tree   parse_xml (string s);
-tree   tmml_upgrade (scheme_tree t);
+tree parse_xml (string s);
+tree tmml_upgrade (scheme_tree t);
 
 tree   find_first_element_by_name (tree t, string name);
 string get_attr_from_element (tree t, string name, string default_value);
