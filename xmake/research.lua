@@ -73,6 +73,7 @@ function add_target_research_on_wasm()
     add_files(plugin_latex_preview_srcs)
     add_files(plugin_openssl_srcs)
     add_files(plugin_xml_srcs)
+    add_files(plugin_html_srcs)
     add_files("src/Mogan/Research/research.cpp")
     
     add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
