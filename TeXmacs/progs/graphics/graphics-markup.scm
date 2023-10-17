@@ -123,9 +123,15 @@
                   (if (= (points-cross-product-k vec-c-p vec-c-q) 0)
                     x
                     (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
-      `(superpose    
+       (if (> (points-cross-product-k vec-c-p vec-c-q) 0)
+        `(superpose
+          (std-arc ,c ,p ,m)
+          (std-arc ,c ,m ,x)
+         (begin (graphics-set-property "gr-color" ,(graphics-get-property "gr-fill-color") )
+           (line ,p ,c ,x ,m ,p)))
+        `(superpose    
         (line ,p ,c ,x)
-        (arc ,p ,m ,x))))
+        (arc ,p ,m ,x)))))
 
 
 

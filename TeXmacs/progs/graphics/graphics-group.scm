@@ -303,6 +303,7 @@
 (tm-define (graphics-set-property var val)
   (:require (and (== (graphics-mode) '(group-edit edit-props))
                  (graphics-selection-active?)))
+    (display* "DEBUG111" var "---" val "\n")
   (with v (if (string-starts? var "gr-") (string-drop var 3) var)
     (if (graphics-mode-attribute? (graphics-mode) v)
         (with r (map (cut property-set <> v val) (sketch-get))
