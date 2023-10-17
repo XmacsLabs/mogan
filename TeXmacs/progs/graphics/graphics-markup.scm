@@ -101,7 +101,7 @@
                     ;; We should find out whether it's 0 or 180.
                     (if (equal? (point-get-unit vec-c-p) (point-get-unit vec-c-q))
                       x
-                      (point-rotate-90 vec-c-p))
+                      (point-rotate-90 (point-rotate-90 (point-rotate-90 vec-c-p))))
                     (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
     `(arc ,p ,m ,x)))
 
