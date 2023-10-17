@@ -20,7 +20,7 @@
 
 /**
 
-Embeds attachments into a PDF file.
+Embed attachments into pdf in Embedded File Streams format
 @param pdf_path The path of the PDF file where attachments need to be embedded.
 @param attachment_path A list that specifies the paths of attachments to be
 embedded.

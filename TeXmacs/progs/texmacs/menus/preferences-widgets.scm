@@ -801,10 +801,6 @@
           (toggle
            (set-boolean-preference "gui:new bibliography dialogue" answer)
            (get-boolean-preference "gui:new bibliography dialogue")))
-        (meti (hlist // (text "Export PDF with tm attachment"))
-          (toggle
-           (set-boolean-preference "gui:export PDF with tm attachment" answer)
-           (get-boolean-preference "gui:export PDF with tm attachment")))
         (meti (hlist // (text "Program bracket matching"))
           (toggle (set-boolean-preference "prog:highlight brackets" answer)
                   (get-boolean-preference "prog:highlight brackets")))

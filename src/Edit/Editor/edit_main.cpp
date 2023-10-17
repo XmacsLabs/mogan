@@ -325,59 +325,8 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
 void
 edit_main_rep::print_to_file (url name, string first, string last) {
   print_doc (name, false, as_int (first), as_int (last));
-
-#ifdef USE_PLUGIN_PDF
-  if ((suffix (name) == "pdf")) {
-    if (as_bool (call ("get-boolean-preference",
-                      "gui:export PDF with tm attachment"))) {
-      if (!attach_doc_to_exported_pdf (name)) {
-        if (DEBUG_CONVERT)
-          debug_convert << "fail : attach_doc_to_exported_pdf" << LF;
-      }
-    }
-  }
-#endif
   set_message ("Done printing", "print to file");
 }
-
-#ifdef USE_PLUGIN_PDF
-bool
-edit_main_rep::attach_doc_to_exported_pdf (url pdf_name) {
-  // copy the current buffer to a new buffer
-  string dir ("$TEXMACS_HOME_PATH/texts/scratch/");
-  string name_= basename (pdf_name) * string (".tm");
-  url    tmp_save_path (dir, name_);
-
-  url new_u= make_new_buffer ();
-  rename_buffer (new_u, tmp_save_path);
-  new_u    = tmp_save_path;
-  url cur_u= get_current_buffer ();
-  call ("buffer-copy", cur_u, new_u);
-  buffer_save (new_u);
-
-  // Re-read the saved file to update the buffer, otherwise there is no style in
-  // the export tree
-  tree new_t= import_tree (new_u, "texmacs");
-  set_buffer_tree (new_u, new_t);
-  new_t= get_buffer_tree (new_u);
-
-  array<url>  tm_and_linked_file = get_linked_file_paths(new_t, cur_u);
-  new_t = replace_with_relative_path(new_t, cur_u);
-  array<url> attachments;
-  attachments = append(tm_and_linked_file, attachments);
-  attachments = append(new_u, attachments);
-
-  set_buffer_tree (new_u, new_t);
-  buffer_save (new_u);
-  new_t= get_buffer_tree (new_u);
-
-  if (!pdf_hummus_make_attachments (pdf_name, attachments, pdf_name)) {
-    if (DEBUG_CONVERT) debug_convert << "fail : pdf_hummus_make_attachments" << LF;
-    return false;
-  }
-  return true;
-}
-#endif
 
 void
 edit_main_rep::print_buffer (string first, string last) {
