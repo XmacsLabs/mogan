@@ -545,7 +545,7 @@ buffer_export (url name, url dest, string fm) {
   if (fm == "postscript" || fm == "pdf") {
     int old_stamp= last_modified (dest);
     vw->ed->print_to_file (dest);
-    // if the saving fime is a pdf, embed the tm into pdf
+    // if the saving format is a pdf, embed the tm into pdf
     if (fm == "pdf") {
       if (!as_bool (call ("attach-doc-to-exported-pdf", dest))) {
         if (DEBUG_CONVERT)
