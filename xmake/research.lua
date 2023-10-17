@@ -51,6 +51,7 @@ function add_target_research_on_wasm()
             GS_EXE = "",
             USE_FREETYPE = true,
             USE_ICONV = true,
+            QTTEXMACS = true,
         }
     })
     
