@@ -11,7 +11,7 @@
 
 
 local TeXmacs_files = {
-        "TeXmacs(/examples/**)",
+        "TeXmacs(/doc/**)",
         "TeXmacs(/fonts/**)",
         "TeXmacs(/langs/**)",
         "TeXmacs(/misc/**)",
