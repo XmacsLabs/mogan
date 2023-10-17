@@ -11,7 +11,6 @@
 
 #include "preferences.hpp"
 #include "font.hpp"
-#include "gui.hpp"
 #include "Freetype/tt_file.hpp"
 #include "iterator.hpp"
 #include "file.hpp"
@@ -19,6 +18,7 @@
 #include "scheme.hpp"
 #include "dictionary.hpp"
 #include "tm_debug.hpp"
+#include "colors.hpp"
 
 RESOURCE_CODE(font);
 
