@@ -168,9 +168,37 @@ end
 --
 -- Library: L3 Kernel
 --
-set_configvar("QTTEXMACS", 1)
 includes ("xmake/L3.lua")
+target("libkernel_l3") do
+    ---------------------------------------------------------------------------
+    -- generate config files. see also:
+    --    * https://github.com/xmake-io/xmake/issues/320
+    --    * https://github.com/xmake-io/xmake/issues/342
+    ---------------------------------------------------------------------------
+    add_configfiles("src/System/config_l3.h.xmake", {
+        filename = "L3/config.h",
+        variables = {
+            QTTEXMACS = false,
+        }
+    })
+    add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
+        filename = "L3/tm_configure.hpp",
+        pattern = "@(.-)@",
+        variables = {
+            CONFIG_USER = CONFIG_USER,
+            CONFIG_OS = CONFIG_OS,
+            VERSION = TEXMACS_VERSION,
+            LOLLY_VERSION = LOLLY_VERSION,
+            XMACS_VERSION = XMACS_VERSION,
+        }
+    })
 
+    add_target_L3()
+end
+
+
+
+set_configvar("QTTEXMACS", 1)
 
 local INSTALL_DIR = "$(buildir)"
 if is_plat("mingw", "windows") then 

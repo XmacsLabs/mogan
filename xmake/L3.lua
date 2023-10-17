@@ -9,31 +9,32 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 local l3_files = {
-    "src/Kernel/**.cpp",
-    "src/Data/History/**.cpp",
-    "src/Data/Observers/**.cpp",
-    "src/Data/Scheme/**.cpp",
-    "src/Data/String/**.cpp",
-    "src/Data/Document/new_document.cpp",
-    "src/Data/Drd/**.cpp",
-    "src/Data/Tree/tree_helper.cpp",
-    "src/Data/Tree/tree_label.cpp",
-    "src/Data/Tree/tree_cursor.cpp",
-    "src/Data/Tree/tree_observer.cpp",
-    "src/Graphics/Colors/**.cpp",
-    "src/Graphics/Types/**.cpp",
-    "src/Scheme/L1/**.cpp",
-    "src/Scheme/L2/**.cpp",
-    "src/Scheme/L3/**.cpp",
-    "src/Scheme/S7/**.cpp",
-    "src/Scheme/Scheme/object.cpp",
-    "src/System/Config/**.cpp",
-    "src/System/Classes/**.cpp",
-    "src/System/Files/**files.cpp",
-    "src/System/Misc/data_cache.cpp",
-    "src/System/Misc/persistent.cpp",
-    "src/System/Misc/stack_trace.cpp",
-    "src/Texmacs/Server/tm_debug.cpp",
+    "$(projectdir)/src/Kernel/**.cpp",
+    "$(projectdir)/src/Data/History/**.cpp",
+    "$(projectdir)/src/Data/Observers/**.cpp",
+    "$(projectdir)/src/Data/Scheme/**.cpp",
+    "$(projectdir)/src/Data/String/**.cpp",
+    "$(projectdir)/src/Data/Document/new_document.cpp",
+    "$(projectdir)/src/Data/Drd/**.cpp",
+    "$(projectdir)/src/Data/Tree/tree_helper.cpp",
+    "$(projectdir)/src/Data/Tree/tree_label.cpp",
+    "$(projectdir)/src/Data/Tree/tree_cursor.cpp",
+    "$(projectdir)/src/Data/Tree/tree_observer.cpp",
+    "$(projectdir)/src/Graphics/Colors/**.cpp",
+    "$(projectdir)/src/Graphics/Types/**.cpp",
+    "$(projectdir)/src/Scheme/L1/**.cpp",
+    "$(projectdir)/src/Scheme/L2/**.cpp",
+    "$(projectdir)/src/Scheme/L3/**.cpp",
+    "$(projectdir)/src/Scheme/S7/**.cpp",
+    "$(projectdir)/src/Scheme/Scheme/object.cpp",
+    "$(projectdir)/src/System/Config/**.cpp",
+    "$(projectdir)/src/System/Classes/**.cpp",
+    "$(projectdir)/src/System/Files/**files.cpp",
+    "$(projectdir)/src/System/Misc/data_cache.cpp",
+    "$(projectdir)/src/System/Misc/persistent.cpp",
+    "$(projectdir)/src/System/Misc/stack_trace.cpp",
+    "$(projectdir)/src/System/Misc/tm_sys_utils.cpp",
+    "$(projectdir)/src/Texmacs/Server/tm_debug.cpp",
 }
 local l3_includedirs = {
     "src/Kernel/Types",
@@ -62,7 +63,8 @@ local l3_includedirs = {
     "src/Plugins",
     "src/Texmacs",
 }
-target("libkernel_l3") do
+
+function add_target_L3()
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
 
@@ -73,28 +75,6 @@ target("libkernel_l3") do
 
     add_packages("s7")
     add_packages("lolly")
-
-    ---------------------------------------------------------------------------
-    -- generate config files. see also:
-    --    * https://github.com/xmake-io/xmake/issues/320
-    --    * https://github.com/xmake-io/xmake/issues/342
-    ---------------------------------------------------------------------------
-    add_configfiles("src/System/config_l3.h.xmake", {
-        filename = "L3/config.h",
-        variables = {
-            QTTEXMACS = false,
-        }
-    })
-    add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
-        filename = "L3/tm_configure.hpp",
-        pattern = "@(.-)@",
-        variables = {
-            CONFIG_USER = CONFIG_USER,
-            CONFIG_OS = CONFIG_OS,
-            VERSION = TEXMACS_VERSION,
-            LOLLY_VERSION = LOLLY_VERSION,
-        }
-    })
 
     add_includedirs("$(buildir)/L3")
     add_includedirs("$(buildir)/glue")
@@ -107,4 +87,3 @@ target("libkernel_l3") do
         target:add("forceincludes", path.absolute("$(buildir)/L3/tm_configure.hpp"))
     end)
 end
-
