@@ -21,6 +21,7 @@ function add_target_code()
             USE_PLUGIN_LATEX_PREVIEW = false,
             USE_PLUGIN_TEX = false,
             USE_PLUGIN_ISPELL = false,
+            USE_PLUGIN_HTML = false,
             QTPIPES = is_plat("linux"),
             USE_QT_PRINTER = is_plat("linux"),
             NOMINMAX = is_plat("windows"),
