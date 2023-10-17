@@ -419,6 +419,7 @@ plugin_macos_srcs = {
 }
 plugin_pdf_srcs = { "src/Plugins/Pdf/**.cpp" }
 plugin_xml_srcs = { "src/Plugins/Xml/**.cpp" }
+plugin_html_srcs = { "src/Plugins/Html/**.cpp" }
 plugin_database_srcs = { "src/Plugins/Database/**.cpp" }
 plugin_freetype_srcs = { "src/Plugins/Freetype/**.cpp" }
 plugin_metafont_srcs = { "src/Plugins/Metafont/**.cpp" }
@@ -493,6 +494,7 @@ target("libmogan") do
     add_files(plugin_openssl_srcs)
     add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)
+    add_files(plugin_html_srcs)
     add_files(plugin_pdf_srcs)
 
     add_mxflags("-fno-objc-arc")
