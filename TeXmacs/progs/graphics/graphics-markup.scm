@@ -127,10 +127,11 @@
         `(superpose
           (std-arc ,c ,p ,m)
           (std-arc ,c ,m ,x)
-         (begin (graphics-set-property "gr-color" ,(graphics-get-property "gr-fill-color") )
-           (line ,p ,c ,x ,m ,p)))
+          (with "color" "none"
+          (line ,p ,c ,x ,m ,p)))
         `(superpose    
-        (line ,p ,c ,x)
+        (with "color" "none" 
+          (line ,p ,c ,x))
         (arc ,p ,m ,x)))))
 
 
