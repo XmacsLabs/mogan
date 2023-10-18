@@ -13,7 +13,7 @@
 function main()
     return {
         binding_object = "",
-        initializer_name = "initialize_glue_xml",
+        initializer_name = "initialize_glue_html",
         glues = {
             {
                 scm_name = "parse-html",
