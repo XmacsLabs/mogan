@@ -437,20 +437,6 @@ target("libmogan") do
     end)
 end 
 
-if is_plat("mingw", "windows") then
-    target("windows_icon") do
-        set_version(XMACS_VERSION)
-        set_kind("object")
-        add_configfiles("packages/windows/resource.rc.in", {
-            filename = "resource.rc"
-        })
-        add_configfiles("packages/windows/TeXmacs.ico", {
-            onlycopy = true
-        })
-        add_files("$(buildir)/resource.rc")
-    end
-end
-
 
 includes("xmake/tm2html.lua")
 if not is_plat("wasm") then
@@ -482,6 +468,21 @@ if is_plat("wasm", "linux") then
         set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
         add_tm_configure("code", TM_CONFIGURE_VARS)
         add_target_code()
+    end
+end
+
+
+if is_plat("mingw", "windows") then
+    target("research_windows_icon") do
+        set_version(XMACS_VERSION)
+        set_kind("object")
+        add_configfiles("$(projectdir)/packages/windows/resource.rc.in", {
+            filename = "resource.rc"
+        })
+        add_configfiles("$(projectdir)/packages/windows/TeXmacs.ico", {
+            onlycopy = true
+        })
+        add_files("$(buildir)/resource.rc")
     end
 end
 
