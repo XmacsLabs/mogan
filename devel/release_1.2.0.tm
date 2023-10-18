@@ -11,19 +11,20 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|43|43|1|1|cell-background|pastel
-  red>|<cwith|42|42|1|1|cell-background|pastel
-  red>|<cwith|38|38|1|1|cell-background|pastel
-  red>|<cwith|49|49|3|3|cell-valign|b>|<cwith|50|50|1|1|cell-valign|b>|<cwith|37|37|1|1|cell-background|pastel
-  green>|<cwith|40|40|1|1|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|44|44|1|1|cell-background|pastel
+  red>|<cwith|43|43|1|1|cell-background|pastel
+  red>|<cwith|39|39|1|1|cell-background|pastel
+  red>|<cwith|50|50|3|3|cell-valign|b>|<cwith|51|51|1|1|cell-valign|b>|<cwith|38|38|1|1|cell-background|pastel
+  green>|<cwith|41|41|1|1|cell-background|pastel
+  green>|<cwith|37|37|1|1|cell-background|pastel
+  green>|<cwith|17|17|2|2|cell-valign|c>|<cwith|16|16|1|1|cell-valign|c>|<cwith|32|32|1|1|cell-background|pastel
+  green>|<cwith|15|15|1|1|cell-background|pastel
   green>|<cwith|36|36|1|1|cell-background|pastel
-  green>|<cwith|16|16|2|2|cell-valign|c>|<cwith|15|15|1|1|cell-valign|c>|<cwith|31|31|1|1|cell-background|pastel
-  green>|<cwith|14|14|1|1|cell-background|pastel
-  green>|<cwith|35|35|1|1|cell-background|pastel
-  green>|<cwith|11|11|2|2|cell-valign|c>|<cwith|3|3|2|2|cell-valign|c>|<cwith|19|19|1|1|cell-background|pastel
-  green>|<cwith|30|30|1|1|cell-background|pastel
-  green>|<cwith|2|2|1|1|cell-background|pastel
-  green>|<table|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
+  green>|<cwith|12|12|2|2|cell-valign|c>|<cwith|4|4|2|2|cell-valign|c>|<cwith|20|20|1|1|cell-background|pastel
+  green>|<cwith|31|31|1|1|cell-background|pastel
+  green>|<cwith|3|3|1|1|cell-background|pastel
+  green>|<table|<row|<cell|<dlink|67>>|<cell|<value|da>>|<cell|Octave
+  plugin>>|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
   format>>|<row|<cell|<dlink|65>>|<cell|<value|da>>|<cell|Upgrade to Qt
   6>>|<row|<cell|<dlink|64>>|<cell|>|<cell|Image import and
   exports>>|<row|<cell|<dlink|63>>|<cell|>|<cell|Fixing style
