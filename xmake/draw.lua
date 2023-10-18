@@ -72,8 +72,9 @@ function add_target_draw()
       add_files(plugin_openssl_srcs)
       add_files(plugin_xml_srcs)
       add_files(plugin_ghostscript_srcs)
-      add_files("src/Mogan/Draw/draw.cpp")
     end
+    
+    add_files("src/Mogan/Draw/draw.cpp")
 
     if is_plat("wasm") then
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
