@@ -11,26 +11,28 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|44|44|1|1|cell-background|pastel
-  red>|<cwith|43|43|1|1|cell-background|pastel
-  red>|<cwith|39|39|1|1|cell-background|pastel
-  red>|<cwith|50|50|3|3|cell-valign|b>|<cwith|51|51|1|1|cell-valign|b>|<cwith|38|38|1|1|cell-background|pastel
-  green>|<cwith|41|41|1|1|cell-background|pastel
-  green>|<cwith|37|37|1|1|cell-background|pastel
-  green>|<cwith|17|17|2|2|cell-valign|c>|<cwith|16|16|1|1|cell-valign|c>|<cwith|32|32|1|1|cell-background|pastel
-  green>|<cwith|15|15|1|1|cell-background|pastel
-  green>|<cwith|36|36|1|1|cell-background|pastel
-  green>|<cwith|12|12|2|2|cell-valign|c>|<cwith|4|4|2|2|cell-valign|c>|<cwith|20|20|1|1|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|37|37|1|1|cell-background|pastel
+  red>|<cwith|36|36|1|1|cell-background|pastel
+  red>|<cwith|43|43|3|3|cell-valign|b>|<cwith|44|44|1|1|cell-valign|b>|<cwith|32|32|1|1|cell-background|pastel
+  green>|<cwith|35|35|1|1|cell-background|pastel
   green>|<cwith|31|31|1|1|cell-background|pastel
-  green>|<cwith|3|3|1|1|cell-background|pastel
+  green>|<cwith|14|14|2|2|cell-valign|c>|<cwith|27|27|1|1|cell-background|pastel
+  green>|<cwith|13|13|1|1|cell-background|pastel
+  green>|<cwith|30|30|1|1|cell-background|pastel
+  green>|<cwith|10|10|2|2|cell-valign|c>|<cwith|3|3|2|2|cell-valign|c>|<cwith|17|17|1|1|cell-background|pastel
+  green>|<cwith|26|26|1|1|cell-background|pastel
+  green>|<cwith|2|2|1|1|cell-background|pastel
+  green>|<cwith|33|33|1|1|cell-background|pastel
+  green>|<cwith|28|28|1|1|cell-background|pastel
+  green>|<cwith|29|29|1|1|cell-background|pastel
+  green>|<cwith|1|1|1|1|cell-background|pastel
+  green>|<cwith|8|8|1|1|cell-background|pastel
   green>|<table|<row|<cell|<dlink|67>>|<cell|<value|da>>|<cell|Octave
-  plugin>>|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
-  format>>|<row|<cell|<dlink|65>>|<cell|<value|da>>|<cell|Upgrade to Qt
+  plugin>>|<row|<cell|<dlink|65>>|<cell|<value|da>>|<cell|Upgrade to Qt
   6>>|<row|<cell|<dlink|64>>|<cell|>|<cell|Image import and
   exports>>|<row|<cell|<dlink|63>>|<cell|>|<cell|Fixing style
   corruption>>|<row|<cell|<dlink|62>>|<cell|Darcy>|<cell|Mogan STEM
-  Suite>>|<row|<cell|<dlink|61>>|<cell|Darcy>|<cell|Plugin
-  Center>>|<row|<cell|<dlink|60>>|<cell|Darcy>|<cell|Maxima
+  Suite>>|<row|<cell|<dlink|60>>|<cell|Darcy>|<cell|Maxima
   plugin>>|<row|<cell|<dlink|59>>|<cell|Darcy>|<cell|Tuning Keyboard
   Shortcuts>>|<row|<cell|<dlink|58>>|<cell|paradisum>|<cell|Github Action
   onboarding>>|<row|<cell|<dlink|57>>|<cell|Pluto>|<cell|Slim
@@ -38,36 +40,31 @@
   corruption>>|<row|<cell|<dlink|55>>|<cell|paradisum>|<cell|tmdb
   onboarding>>|<row|<cell|<dlink|54>>|<cell|Pluto>|<cell|Community for Users
   and Developers>>|<row|<cell|<dlink|53>>|<cell|Darcy>|<cell|Lolly
-  1.2.0~1.2.8>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
-  Table>>|<row|<cell|<dlink|51>>|<cell|Darcy>|<cell|Scheme
+  1.2.0~1.2.8>>|<row|<cell|<dlink|51>>|<cell|Darcy>|<cell|Scheme
   Onboarding>>|<row|<cell|<dlink|50>>|<cell|Oyyko>|<cell|Mogan Draw app &
   WASM (OSPP)>>|<row|<cell|<dlink|49>>|<cell|jingkaimori>|<cell|Fine tuning
   of xmake configuration>>|<row|<cell|<dlink|48>>|<cell|Darcy>|<cell|Mogan
   Code on wasm and preparation>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|Fix
   mechanism of link navigating>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
   indentation of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
-  the new mechanism of glue code generation>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning
-  as plugin>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|LaTeX converter as a
-  plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML converter as a
-  plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs instead of the gs
-  binary>>|<row|<cell|<dlink|40>>|<cell|>|<cell|Use XDG_DATA_PATH on
-  Linux>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize the Help
-  menu>>|<row|<cell|<dlink|38>>|<cell|Darcy>|<cell|Image formats as
-  plugins>>|<row|<cell|<dlink|37>>|<cell|Darcy>|<cell|CICD for the Windows
-  platform>>|<row|<cell|<dlink|36>>|<cell|Darcy, jingkaimori>|<cell|Build on
-  Windows platform>>|<row|<cell|<dlink|35>>|<cell|>|<cell|Use the Breeze
-  icon>>|<row|<cell|<dlink|34>>|<cell|Oyyko>|<cell|CICD for the website and
-  mogan wasm>>|<row|<cell|<dlink|33>>|<cell|>|<cell|Spell checking as a
-  plugin>>|<row|<cell|<dlink|32>>|<cell|Darcy>|<cell|Build and Test on
-  wasm>>|<row|<cell|<dlink|31>>|<cell|Pluto>|<cell|Lolly
+  the new mechanism of glue code generation>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|LaTeX
+  converter as a plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML
+  converter as a plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs
+  instead of the gs binary>>|<row|<cell|<dlink|40>>|<cell|>|<cell|Use
+  XDG_DATA_PATH on Linux>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize
+  the Help menu>>|<row|<cell|<dlink|37>>|<cell|Darcy>|<cell|CICD for the
+  Windows platform>>|<row|<cell|<dlink|36>>|<cell|Darcy,
+  jingkaimori>|<cell|Build on Windows platform>>|<row|<cell|<dlink|35>>|<cell|<value|da>>|<cell|Use
+  the Breeze icon>>|<row|<cell|<dlink|34>>|<cell|Oyyko>|<cell|CICD for the
+  website and mogan wasm>>|<row|<cell|<dlink|32>>|<cell|Darcy>|<cell|Build
+  and Test on wasm>>|<row|<cell|<dlink|31>>|<cell|Pluto>|<cell|Lolly
   1.1.0>>|<row|<cell|<dlink|30>>|<cell|Darcy>|<cell|Lolly
   1.0.x>>|<row|<cell|<dlink|29>>|<cell|tangdouer>|<cell|OSPP PDF
   Project>>|<row|<cell|<dlink|27>>|<cell|>|<cell|Mogan Draw optimization
   (long term)>>|<row|<cell|<dlink|26>>|<cell|tangdouer>|<cell|OSPP PDF
-  Project Onboarding>>|<row|<cell|<dlink|25>>|<cell|Pluto>|<cell|Add CI on
-  Gitee>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML import and
-  export>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan Draw optimization
-  \ (OSPP)>>|<row|<cell|<dlink|22>>|<cell|Darcy>|<cell|Chinese
+  Project Onboarding>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML import
+  and export>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan Draw
+  optimization \ (OSPP)>>|<row|<cell|<dlink|22>>|<cell|Darcy>|<cell|Chinese
   Dictionary>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language
   related issues>>|<row|<cell|<dlink|18>>|<cell|jinkaimori>|<cell|Embedded
   documentation issues>>|<row|<cell|<dlink|13>>|<cell|Darcy>|<cell|Lolly
