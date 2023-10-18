@@ -473,6 +473,14 @@ function main()
                     "string"
                 }
             },
+            {
+                scm_name = "system-getenv",
+                cpp_name = "get_env",
+                ret_type = "string",
+                arg_list = {
+                    "string",
+                }
+            },
             -- System/Classes/url
             {
                 scm_name = "url->url",
