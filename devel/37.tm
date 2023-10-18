@@ -24,6 +24,30 @@
       Darcy
     </cell>|<\cell>
       Github Action CD on platform windows
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      37_3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Use the new Mogan icon provided by mgubi
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      37_4
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Mogan Research: set_basename to MGResearch
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      37_5
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      set the install path to C:\\Program Files\\MoganResearch
     </cell>>>>
   </wide-tabular>
 
