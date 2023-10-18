@@ -469,7 +469,7 @@
          (connection-insert-handler
           name (second cmd) (symbol->string (third cmd))))
         ((func? cmd :winpath 2)
-         (when (os-mingw?)
+         (when (or (os-mingw?) (os-win32?))
            (add-windows-program-path (url-append (second cmd) (third cmd)) #t)))
         ((func? cmd :macpath 2)
          (when (os-macos?)

@@ -23,7 +23,7 @@
 
 (define (octave-launcher)
   (with boot (octave-entry)
-    (if (os-mingw?)
+    (if (or (os-mingw?) (os-win32?))
       (string-append "octave-cli -qi " boot)
       (if (url-exists-in-path? "octave")
         (string-append "octave --no-gui -qi " boot)
