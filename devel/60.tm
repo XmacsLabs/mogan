@@ -7,8 +7,8 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|60_1>|<cell|Darcy>|<cell|Make
-  it work on plat windows>>|<row|<cell|Bug>|<cell|60_2>|<cell|Darcy>|<cell|Failed
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|60_1>>|<cell|<value|da>>|<cell|Make
+  it work on plat windows>>|<row|<cell|Bug>|<cell|<dlink|60_2>>|<cell|<value|da>>|<cell|Failed
   to show maxima help menu>>>>>
 
   <tmdoc-copyright|2023|Darcy>
