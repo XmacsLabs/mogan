@@ -41,6 +41,7 @@ function add_target_research_on_wasm()
             USE_PLUGIN_LATEX_PREVIEW = false,
             USE_PLUGIN_TEX = true,
             USE_PLUGIN_ISPELL = true,
+            USE_PLUGIN_HTML = true,
             NOMINMAX = is_plat("windows"),
             SIZEOF_VOID_P = 8,
             USE_FONTCONFIG = is_plat("linux"),
