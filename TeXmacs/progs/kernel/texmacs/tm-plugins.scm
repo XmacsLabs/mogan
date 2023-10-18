@@ -418,7 +418,7 @@
   (add-to-path* "$HOME/Applications" u after?))
 
 (define-public (plugin-add-windows-path rad rel after?)
-  (when (os-mingw?)
+  (when (or (os-win32?) (os-mingw?))
     (add-windows-program-path (url-append rad rel) after?)))
 
 (define-public (plugin-add-macos-path rad rel after?)
