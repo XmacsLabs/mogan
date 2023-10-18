@@ -50,10 +50,6 @@ function add_target_tm2html()
         add_syslinks("pthread")
     end
 
-    if is_plat("mingw") and is_mode("release") then
-        add_deps("windows_icon")
-    end
-
     before_build(function (target)
         target:add("forceincludes", path.absolute("$(buildir)/config.h"))
         target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))

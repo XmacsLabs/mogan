@@ -27,7 +27,6 @@ local TeXmacs_files = {
         "TeXmacs(/plugins/**)" -- plugin files
 }
 
-
 function add_target_research_on_wasm()
     set_languages("c++17")
 
@@ -124,8 +123,8 @@ function add_target_research_on_others()
         add_syslinks("pthread")
     end
 
-    if is_plat("mingw") and is_mode("release") then
-        add_deps("windows_icon")
+    if is_plat("mingw", "windows") and is_mode("release") then
+        add_deps("research_windows_icon")
     end
 
     set_configvar("PACKAGE", "Mogan Research")
