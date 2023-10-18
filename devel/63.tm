@@ -8,7 +8,8 @@
   <section|Tasks>
 
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|63_1>>|<cell|Joris>|<cell|Fix
-  corruped definition of toc-5>>>>>
+  corruped definition of toc-5>>|<row|<cell|Feature>|<cell|<dlink|63_2>>|<cell|Zhengfei
+  Hu>|<cell|Merge contiguous indices for sorted bib items>>>>>
 
   <tmdoc-copyright|2023|Jingkaimori>
 
