@@ -55,6 +55,7 @@ function add_target_scheme_test(filepath, INSTALL_DIR, RUN_ENVS)
         on_run(function (target)
             name = target:name()
             regtest_name = "(regtest-"..string.sub(name, 1, -6)..")"
+            print("------------------------------------------------------")
             print("Executing: " .. regtest_name)
             params = {
                 "-headless",
@@ -89,6 +90,7 @@ function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
         on_run(function (target)
             name = target:name()
             test_name = "(test_"..name..")"
+            print("------------------------------------------------------")
             print("Executing: " .. test_name)
             params = {
                 "-headless",
