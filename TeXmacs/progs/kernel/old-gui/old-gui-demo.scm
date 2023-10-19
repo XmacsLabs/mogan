@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (kernel old-gui old-gui-test))
+(texmacs-module (kernel old-gui old-gui-demo))
 
 (tm-define (open-test-widget)
   ;; NOTE: close with Done in order to test other widgets

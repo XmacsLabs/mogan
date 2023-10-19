@@ -87,6 +87,8 @@ jobs:
         env:
           QT_QPA_PLATFORM: offscreen
           INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
+      - name: Scheme tests
+        run: xmake run --yes -vD --group=scheme_tests
       - name: integration test
         run: xmake run --yes -vD --group=integration_tests
         env:
