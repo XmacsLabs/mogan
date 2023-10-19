@@ -23,8 +23,6 @@ local LOLLY_VERSION = "1.2.12"
 local TBOX_VERSION = "1.7.4"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
-local GS_VERSION = "10.02.0"
-
 
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
 package("lolly")
@@ -97,7 +95,6 @@ function add_requires_of_mogan()
         add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
         add_requireconfs("pdfhummus.libpng", {version = "1.6.37", system = false, override=true})
         add_requireconfs("pdfhummus.libjpeg", {version = "v9e", system = false, override=true})
-        add_requires("ghostscript " .. GS_VERSION)
     end
 
     add_requires("s7 2023.04.13", {system=false})
