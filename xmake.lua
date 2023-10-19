@@ -633,8 +633,40 @@ for _, filepath in ipairs(all_cpp_tests) do
     end
 end
 
+for _, filepath in ipairs(os.files("TeXmacs/progs/**/*-test.scm")) do
+    local testname = path.basename(filepath)
+    target(testname) do
+        set_enabled(not is_plat("wasm"))
+        set_kind("phony")
+        set_group("regression_tests")
+        on_run(function (target)
+            name = target:name()
+            regtest_name = "(regtest-"..string.sub(name, 1, -6)..")"
+            print("Executing: " .. regtest_name)
+            params = {
+                "-headless",
+                "-b", filepath,
+                "-x", regtest_name,
+                "-q"
+            }
+            if is_plat("macosx", "linux") then
+                binary = target:deps()["research"]:targetfile()
+            elseif is_plat("mingw", "windows") then
+                binary = path.join(INSTALL_DIR,"bin","MGResearch.exe")
+            else
+                print("Unsupported plat $(plat)")
+            end
+            cmd = binary
+            if is_plat("macosx", "linux") then
+                os.execv(cmd, params, {envs=RUN_ENVS})
+            else
+                os.execv(cmd, params)
+            end
+        end)
+    end
+end
 
-for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
+for _, filepath in ipairs(os.files("TeXmacs/tests/**/*.scm")) do
     local testname = path.basename(filepath)
     target(testname) do
         set_enabled(not is_plat("wasm"))

@@ -79,11 +79,9 @@
 (inherit-modules (kernel gui gui-markup)
                  (kernel gui menu-define) (kernel gui menu-widget)
                  (kernel gui kbd-define) (kernel gui kbd-handlers)
-                 (kernel gui menu-test)
                  (kernel old-gui old-gui-widget)
                  (kernel old-gui old-gui-factory)
-                 (kernel old-gui old-gui-form)
-                 (kernel old-gui old-gui-test))
+                 (kernel old-gui old-gui-form))
 ;;(display* "time: " (- (texmacs-time) boot-start) "\n")
 ;;(display* "memory: " (texmacs-memory) " bytes\n")
 

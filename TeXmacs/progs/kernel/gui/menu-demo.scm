@@ -1,7 +1,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : menu-test.scm
+;; MODULE      : menu-demo.scm
 ;; DESCRIPTION : some test widgets
 ;; COPYRIGHT   : (C) 2012  Joris van der Hoeven
 ;;
