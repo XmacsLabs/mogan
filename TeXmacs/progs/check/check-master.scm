@@ -12,22 +12,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (check check-master)
-  (:use (kernel texmacs tm-define-test)
-        (kernel texmacs tm-dialogue-test)
-        (kernel texmacs tm-modes-test)
-        (convert html htmltm-test)
-        (convert html tmhtml-test)
-        (convert tools xmltm-test)
-        (convert tools tmlength-test)
-        (convert tools environment-test)
-        (convert mathml mathtm-test)
-        (convert tmml tmmltm-test)
-        (prog prog-format-test)
-        (fonts fonts-test)
-        (graphics graphics-group-test)
-        (utils cite cite-sort-test)
-        (texmacs texmacs tm-tools-test)))
+(texmacs-module (check check-master))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Test LaTeX export
