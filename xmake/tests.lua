@@ -46,7 +46,7 @@ function add_target_cpp_test(filepath, dep)
     end
 end
 
-function add_target_scheme_test(filepath)
+function add_target_scheme_test(filepath, INSTALL_DIR, RUN_ENVS)
     local testname = path.basename(filepath)
     target(testname) do
         set_enabled(not is_plat("wasm"))
@@ -79,7 +79,7 @@ function add_target_scheme_test(filepath)
     end
 end
 
-function add_target_integration_test(filepath)
+function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
     local testname = path.basename(filepath)
     target(testname) do
         set_enabled(not is_plat("wasm"))
@@ -88,10 +88,12 @@ function add_target_integration_test(filepath)
         add_deps("research")
         on_run(function (target)
             name = target:name()
+            test_name = "(test_"..name..")"
+            print("Executing: " .. test_name)
             params = {
                 "-headless",
                 "-b", path.join("TeXmacs","tests",name..".scm"),
-                "-x", "(test_"..name..")",
+                "-x", test_name,
                 "-q"
             }
             if is_plat("macosx", "linux") then
