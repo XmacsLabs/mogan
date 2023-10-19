@@ -52,6 +52,7 @@ function add_target_scheme_test(filepath, INSTALL_DIR, RUN_ENVS)
         set_enabled(not is_plat("wasm"))
         set_kind("phony")
         set_group("scheme_tests")
+        add_deps("research")
         on_run(function (target)
             name = target:name()
             regtest_name = "(regtest-"..string.sub(name, 1, -6)..")"
