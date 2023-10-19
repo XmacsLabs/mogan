@@ -638,7 +638,7 @@ for _, filepath in ipairs(os.files("TeXmacs/progs/**/*-test.scm")) do
     target(testname) do
         set_enabled(not is_plat("wasm"))
         set_kind("phony")
-        set_group("regression_tests")
+        set_group("scheme_tests")
         on_run(function (target)
             name = target:name()
             regtest_name = "(regtest-"..string.sub(name, 1, -6)..")"

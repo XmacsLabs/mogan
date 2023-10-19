@@ -49,7 +49,7 @@ jobs:
         run: |
           xmake install research
       - name: Scheme tests
-        run: xmake run --yes -vD --group=regression_tests
+        run: xmake run --yes -vD --group=scheme_tests
       - name: integration test in scheme
         run: xmake run --yes -vD --group=integration_tests
         env:
