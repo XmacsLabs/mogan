@@ -481,6 +481,14 @@ function main()
                     "string",
                 }
             },
+            {
+                scm_name = "system",
+                cpp_name = "lolly::system",
+                ret_type = "void",
+                arg_list = {
+                    "string",
+                }
+            },
             -- System/Classes/url
             {
                 scm_name = "url->url",
