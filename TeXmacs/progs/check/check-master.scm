@@ -26,7 +26,8 @@
         (prog prog-format-test)
         (fonts fonts-test)
         (graphics graphics-group-test)
-        (utils cite cite-sort-test)))
+        (utils cite cite-sort-test)
+        (texmacs texmacs tm-tools-test)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Test LaTeX export
