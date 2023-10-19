@@ -18,6 +18,8 @@
 #include <QProcess>
 #include <QString>
 #include <QSysInfo>
+#include <QDesktopServices>
+#include <QUrl>
 
 
 string qt_get_current_cpu_arch () {
@@ -26,4 +28,9 @@ string qt_get_current_cpu_arch () {
 
 string qt_get_pretty_os_name () {
   return from_qstring (QSysInfo::prettyProductName ());
+}
+
+void qt_open_url (url u) {
+  QString link = to_qstring (as_string (u));
+  QDesktopServices::openUrl (QUrl (link));
 }

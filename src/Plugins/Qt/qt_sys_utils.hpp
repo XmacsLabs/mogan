@@ -13,6 +13,7 @@
 #define QT_SYS_UTILS_H
 
 #include "string.hpp"
+#include "url.hpp"
 
 
 string qt_get_current_cpu_arch ();
@@ -28,5 +29,6 @@ int qt_system (string);
 int qt_system (string, string&);
 int qt_system (string, string&, string&);
 
-#endif // defined QT_SYS_UTILS_H
+void qt_open_url (url u);
 
+#endif // defined QT_SYS_UTILS_H
