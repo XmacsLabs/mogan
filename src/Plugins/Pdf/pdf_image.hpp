@@ -9,6 +9,9 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#ifndef PDF_IMAGE_HPP
+#define PDF_IMAGE_HPP
+
 #include "PDFWriter/DictionaryContext.h"
 #include "PDFWriter/ObjectsBasicTypes.h"
 #include "PDFWriter/PDFWriter.h"
@@ -66,3 +69,5 @@ class pdf_raw_image {
 CONCRETE_NULL_CODE (pdf_raw_image);
 
 void hummus_pdf_image_size (url image, int& w, int& h);
+
+#endif
