@@ -8,7 +8,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "Pdf/pdf_hummus_renderer.hpp"
+#include "Pdf/pdf_image.hpp"
 #include "sys_utils.hpp"
 #include <QtTest/QtTest>
 
@@ -46,4 +46,4 @@ TestHummusPdfImageSize::test_hummus_pdf_image_size () {
 }
 
 QTEST_MAIN (TestHummusPdfImageSize)
-#include "pdf_size_test.moc"
+#include "pdf_image_test.moc"
