@@ -45,7 +45,7 @@
   WASM (OSPP)>>|<row|<cell|<dlink|49>>|<cell|jingkaimori>|<cell|Fine tuning
   of xmake configuration>>|<row|<cell|<dlink|48>>|<cell|Darcy>|<cell|Mogan
   Code on wasm and preparation>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|Fix
-  mechanism of link navigating>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
+  mechanism of link navigation>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
   indentation of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
   the new mechanism of glue code generation>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|LaTeX
   converter as a plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML
