@@ -2,6 +2,20 @@ name: draw.mogan.app
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [ branch-1.2 ]
+    paths:
+      - '.github/workflows/cd_draw_mogan_app.yml'
+      - 'xmake/draw.lua'
+      - 'site/draw.mogan.app/**'
+      - 'src/Mogan/Draw/**'
+  push:
+    branches: [ branch-1.2 ]
+    paths:
+      - '.github/workflows/cd_draw_mogan_app.yml'
+      - 'xmake/draw.lua'
+      - 'site/draw.mogan.app/**'
+      - 'src/Mogan/Draw/**'
 
 jobs:
   wasmbuild:
@@ -52,8 +66,11 @@ jobs:
         run: elvish bin/config_wasm
       - name: build
         run: xmake build draw
+      - name: cp site info
+        run: cp site/draw.mogan.app/* build/wasm/wasm32/release
       - name: Push
         uses: s0/git-publish-subdir-action@develop
+        if: github.event_name != 'pull_request'
         env:
           REPO: git@github.com:XmacsLabs/draw.mogan.app.git
           BRANCH: main # The branch name where you want to push the assets
