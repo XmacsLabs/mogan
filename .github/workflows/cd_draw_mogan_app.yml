@@ -2,12 +2,20 @@ name: draw.mogan.app
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [ branch-1.2 ]
+    paths:
+      - '.github/workflows/cd_draw_mogan_app.yml'
+      - 'xmake/draw.lua'
+      - 'site/draw.mogan.app/**'
+      - 'src/Mogan/Draw/**'
   push:
     branches: [ branch-1.2 ]
     paths:
       - '.github/workflows/cd_draw_mogan_app.yml'
-      - 'site/draw.mogan.app/**'
       - 'xmake/draw.lua'
+      - 'site/draw.mogan.app/**'
+      - 'src/Mogan/Draw/**'
 
 jobs:
   wasmbuild:
