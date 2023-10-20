@@ -1,3 +1,3 @@
 yarn docs:build
 
-cp CNAME website/
+cp site/mogan.app/CNAME website/

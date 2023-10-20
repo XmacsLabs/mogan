@@ -4,13 +4,13 @@ export default {
     locales: {
         "/": {
             lang: 'en-US',
-            title: 'Mogan Editor',
-            description: 'the most user-friendly distribution of GNU TeXmacs.',
+            title: 'Mogan Stem Suite',
+            description: 'libre stem suite for exploring science and technology',
         },
         "/zh/": {
             lang: 'zh-CN',
-            title: '墨干编辑器',
-            description: '最易用的GNU TeXmacs发行版',
+            title: '墨干理工套件',
+            description: '用于探索科学与技术的理工套件',
         },
     },
 
@@ -19,7 +19,7 @@ export default {
     head: [],
 
     themeConfig: {
-        siteTitle: 'Mogan Editor',
+        siteTitle: 'Mogan Stem Suite',
         locales: {
             '/': {
                 selectLanguageName: 'English',
