@@ -21,8 +21,10 @@ hero:
 features:
   - title: Mogan Research
     details: it aims to be the most user-friendly distribution of GNU TeXmacs, mainly for writing books, papers and scientific notes
+    link: https://research.mogan.app
   - title: Mogan Code (comming soon)
     details: Structured code editor based on the GNU TeXmacs structured editing kernel
   - title: Mogan Draw on WASM
     details: the built-in tool used to created technical pictures in GNU TeXmacs is now available as a standalone app online
+    link: https://draw.mogan.app
 ---
