@@ -11,9 +11,9 @@ hero:
     - theme: brand
       text: Mogan Research
       link: https://research.mogan.app
-    - theme: branch
+    - theme: brand
       text: Mogan Draw on WASM
-      link: https://draw
+      link: https://draw.mogan.app
     - theme: alt
       text: Mogan Code (comming soon)
 

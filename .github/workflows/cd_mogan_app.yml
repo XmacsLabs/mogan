@@ -4,7 +4,7 @@ on:
   push:
     branches: [ branch-1.2 ]
     paths:
-      - '.github/workflows/cd-mogan-app.yml'
+      - '.github/workflows/cd_mogan_app.yml'
       - 'docs/**'
       - 'packages.json'
       - 'yarn.lock'
@@ -25,7 +25,7 @@ jobs:
     - name: yarn docs:build
       run: yarn docs:build
     - name: cp CNAME
-      run: cp CNAME website/
+      run: cp site/mogan.app/CNAME website/
     - name: Deploy
       uses: s0/git-publish-subdir-action@develop
       env:
