@@ -6,7 +6,7 @@ titleTemplate: for exploring science and technology
 
 hero:
   name: Mogan STEM Suite
-  tagline: structured STEM suite based on GNU TeXmacs for exploring science and technology 
+  tagline: Structured STEM suite based on GNU TeXmacs for exploring science and technology 
   actions:
     - theme: brand
       text: Get Started
