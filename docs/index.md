@@ -1,12 +1,12 @@
 ---
 layout: home
 
-title: Mogan Stem Suite
+title: Mogan STEM Suite
 titleTemplate: for exploring science and technology
 
 hero:
-  name: Mogan Stem Suite
-  tagline: structured stem suite based on GNU TeXmacs for exploring science and technology 
+  name: Mogan STEM Suite
+  tagline: Structured STEM suite based on GNU TeXmacs for exploring science and technology 
   actions:
     - theme: brand
       text: Get Started
@@ -20,7 +20,7 @@ features:
     details: it aims to be the most user-friendly distribution of GNU TeXmacs, mainly for writing books, papers and scientific notes
     link: https://research.mogan.app
     linkText: Try online now!
-  - title: Mogan Code (comming soon)
+  - title: Mogan Code (coming soon)
     details: Structured code editor based on the GNU TeXmacs structured editing kernel
   - title: Mogan Draw on WASM
     details: the built-in tool used to created technical pictures in GNU TeXmacs is now available as a standalone app online

@@ -4,8 +4,8 @@ export default {
     locales: {
         "/": {
             lang: 'en-US',
-            title: 'Mogan Stem Suite',
-            description: 'libre stem suite for exploring science and technology',
+            title: 'Mogan STEM Suite',
+            description: 'libre STEM suite for exploring science and technology',
         },
         "/zh/": {
             lang: 'zh-CN',
@@ -19,7 +19,7 @@ export default {
     head: [],
 
     themeConfig: {
-        siteTitle: 'Mogan Stem Suite',
+        siteTitle: 'Mogan STEM Suite',
         locales: {
             '/': {
                 selectLanguageName: 'English',
