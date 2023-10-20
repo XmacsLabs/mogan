@@ -9,6 +9,7 @@ on:
       - '!src/Plugins/Macos/**'
       - '**.lua'
       - bin/config_wasm
+      - 'site/research.mogan.app/**'
   workflow_dispatch:
 
 jobs:
