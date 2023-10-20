@@ -1,22 +1,21 @@
 ---
 layout: home
 
-title: Mogan Editor
-titleTemplate: the most user-friendly distribution of GNU TeXmacs.
+title: Mogan Stem Suite
+titleTemplate: Libre software for science and technology
 
 hero:
-  name: Mogan Editor
-  text: the most user-friendly distribution of GNU TeXmacs.
+  name: Mogan Stem Suite
+  text: Let us enjoy exploring science and technology!
   actions:
     - theme: brand
-      text: Get Started
-      link: /guide/what-is-mogan
+      text: Mogan Research
+      link: https://research.mogan.app
+    - theme: branch
+      text: Mogan Draw on WASM
+      link: https://draw
     - theme: alt
-      text: Download Now
-      link: /guide/Install
-    - theme: alt
-      text: Try Online (Experimental)
-      link: https://xmacslabs.github.io/mogan/research.html
+      text: Mogan Code (comming soon)
 
 features:
   - title: "WYSIWYG"

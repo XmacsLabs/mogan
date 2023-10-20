@@ -1,14 +1,15 @@
-name: Github Pages
+name: research.mogan.app
 
 on:
   push:
     branches: [ branch-1.2 ]
     paths:
+      - '.github/workflows/cd_research_mogan_app.yml'
       - 'src/**'
       - '!src/Plugins/Macos/**'
       - '**.lua'
-      - '.github/workflows/cd-gh-pages.yml'
       - bin/config_wasm
+      - 'site/research.mogan.app/**'
   workflow_dispatch:
 
 jobs:
@@ -60,12 +61,15 @@ jobs:
         run: elvish bin/config_wasm
       - name: build
         run: xmake build research
+      - name: cp site info
+        run: cp site/research.mogan.app/* build/wasm/wasm32/release
       - name: Push
         uses: s0/git-publish-subdir-action@develop
+        if: github.event_name != 'pull_request'
         env:
-          REPO: self
-          BRANCH: gh-pages # The branch name where you want to push the assets
+          REPO: git@github.com:XmacsLabs/research.mogan.app.git
+          BRANCH: main # The branch name where you want to push the assets
           FOLDER: build/wasm/wasm32/release # The directory where your assets are generated
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
           MESSAGE: "Build: ({sha}) {msg}" # The commit message
           SQUASH_HISTORY: true
+          SSH_PRIVATE_KEY: ${{ secrets.RESEARCH_PRIVATE }}
