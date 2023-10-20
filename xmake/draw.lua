@@ -72,7 +72,9 @@ function add_target_draw()
     add_files("src/Mogan/Draw/draw.cpp")
 
     if is_plat("wasm") then
-        add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs/fonts@TeXmacs/fonts", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs/packages@TeXmacs/packages", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs/...@TeXmacs/...", {force = true})
     end
 
     before_build(function (target)
