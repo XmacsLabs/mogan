@@ -8,7 +8,7 @@ on:
       - 'docs/**'
       - 'packages.json'
       - 'yarn.lock'
-      - 'CNAME'
+      - 'site/mogan.app/**'
   workflow_dispatch:
 
 jobs:
