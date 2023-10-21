@@ -12,9 +12,7 @@
 set_xmakever("2.8.3")
 
 -- Check CXX Types/Includes/Funcs
-includes("check_cxxtypes.lua")
-includes("check_cxxincludes.lua")
-includes("check_cxxfuncs.lua")
+includes("@builtin/check")
 
 configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
 configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
