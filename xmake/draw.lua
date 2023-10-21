@@ -74,7 +74,12 @@ function add_target_draw()
     if is_plat("wasm") then
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs/fonts@TeXmacs/fonts", {force = true})
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs/packages@TeXmacs/packages", {force = true})
-        add_ldflags("-s --preload-file $(projectdir)/TeXmacs/...@TeXmacs/...", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs/progs@TeXmacs/progs", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs/doc@TeXmacs/doc", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs/include@TeXmacs/include", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs/langs@TeXmacs/langs", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs/styles@TeXmacs/styles", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs/texts@TeXmacs/texts", {force = true})
     end
 
     before_build(function (target)
