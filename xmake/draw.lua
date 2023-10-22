@@ -80,6 +80,7 @@ function add_target_draw()
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs/langs@TeXmacs/langs", {force = true})
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs/styles@TeXmacs/styles", {force = true})
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs/texts@TeXmacs/texts", {force = true})
+        add_ldflags("-s --preload-file $(projectdir)/TeXmacs/misc@TeXmacs/misc", {force = true})
     end
 
     before_build(function (target)
