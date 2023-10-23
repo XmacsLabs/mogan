@@ -59,6 +59,7 @@ rectangles thicken (rectangles l, SI width, SI height);
 rectangles outlines (rectangles l, SI pixel);
 rectangles correct (rectangles l);
 rectangles simplify (rectangles l);
+rectangle  least_upper_bound (rectangles l);
 rectangle  least_upper_bound (array<rectangle> l);
 double area (rectangles r);
 

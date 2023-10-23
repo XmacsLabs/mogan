@@ -257,6 +257,21 @@ simplify (rectangles l) {
 }
 
 rectangle
+least_upper_bound (rectangles l) {
+  ASSERT (!is_nil (l), "no rectangles in list");
+  rectangle r1= copy (l->item);
+  while (!is_nil (l->next)) {
+    l= l->next;
+    rectangle r2= l->item;
+    r1->x1= min (r1->x1, r2->x1);
+    r1->y1= min (r1->y1, r2->y1);
+    r1->x2= max (r1->x2, r2->x2);
+    r1->y2= max (r1->y2, r2->y2);
+  }
+  return r1;
+}
+
+rectangle
 least_upper_bound (array<rectangle> l) {
   ASSERT (N (l) != 0, "no rectangles in list");
   rectangle r1= l[0];
