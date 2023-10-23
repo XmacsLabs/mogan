@@ -45,5 +45,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           prerelease: true
-          files: Mogan-*.dmg
+          files: build/Mogan-*.dmg
 
