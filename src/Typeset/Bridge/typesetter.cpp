@@ -108,9 +108,9 @@ typesetter_rep::local_end (array<page_item>& prev_l, stack_border& prev_sb) {
 static array<rectangle>
 requires_update (array<rectangle> log) {
   array<rectangle> rs;
-  for (int i=0; 2*i<N(log); i++) {
-    rectangle r1= log[i];
-    rectangle r2= log[i+1];
+  for (int i=0; 2*i+1<N(log); i++) {
+    rectangle r1= log[2*i];
+    rectangle r2= log[2*i+1];
     if (r1 == rectangle (0, 0, 0, 0)) rs << r2;
     else if (r2 == rectangle (0, 0, 0, 0)) rs << r1;
     else if (r1 != r2) rs << r1 << r2;
@@ -180,7 +180,7 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
   b->position_at (0, 0, change_log);
   change_log= requires_update (change_log);
   rectangle r (0, 0, 0, 0);
-  if (N(change_log) == 0) r= least_upper_bound (change_log);
+  if (N(change_log) != 0) r= least_upper_bound (change_log);
   array<brush> new_bgs;
   array<rectangle> rs;
   b->collect_page_colors (new_bgs, rs);
