@@ -204,7 +204,7 @@ local INSTALL_DIR = "$(buildir)"
 if is_plat("mingw", "windows") then 
     INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/data/")
 elseif is_plat("macosx") then 
-    INSTALL_DIR = path.join("$(buildir)", "macosx/$(arch)/$(mode)/Mogan.app/Contents/Resources/")
+    INSTALL_DIR = path.join("$(buildir)", "macosx/$(arch)/$(mode)/MGResearch.app/Contents/Resources/")
 else 
     if os.getenv("INSTALL_DIR") == nil then 
       INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/")
