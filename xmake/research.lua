@@ -139,12 +139,12 @@ function add_target_research_on_others()
     if is_plat("macosx") then
         set_configvar("APPCAST", "")
         set_configvar("OSXVERMIN", "")
-        add_configfiles("(packages/macos/Info.plist.in)", {
+        add_configfiles("$(projectdir)/packages/macos/Info.plist.in", {
             filename = "Info.plist",
             pattern = "@(.-)@",
         })
         add_installfiles({
-            "packages/macos/Xmacs.icns",
+            "packages/macos/new-mogan.icns",
             "packages/macos/TeXmacs-document.icns",
             "src/Plugins/Cocoa/(English.lproj/**)",
             "src/Plugins/Cocoa/(zh_CN.lproj/**)",
