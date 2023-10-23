@@ -43,3 +43,4 @@ doxyfile
 
 .cache/
 compile_commands.json
+*.dmg

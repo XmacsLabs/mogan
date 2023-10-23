@@ -515,6 +515,15 @@ end
 target("macos_installer") do
     set_enabled(is_plat("macosx") and is_mode("release"))
     set_kind("phony")
+    if is_plat("macosx") then
+        set_configvar("XMACS_VERSION", XMACS_VERSION)
+        set_configvar("APPCAST", "")
+        set_configvar("OSXVERMIN", "")
+        add_configfiles("$(projectdir)/packages/macos/Info.plist.in", {
+            filename = "Info.plist",
+            pattern = "@(.-)@",
+        })
+    end
     set_installdir(INSTALL_DIR)
     if is_plat("macosx") then
         add_deps("research")
@@ -522,6 +531,7 @@ target("macos_installer") do
 
     after_install(function (target, opt)
         local app_dir = target:installdir() .. "/../../"
+        os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
         os.execv("hdiutil create Mogan-v" .. XMACS_VERSION .. ".dmg -fs HFS+ -srcfolder " .. app_dir)
     end)
 end
