@@ -137,22 +137,11 @@ function add_target_research_on_others()
 
     -- package metadata
     if is_plat("macosx") then
-        set_configvar("APPCAST", "")
-        set_configvar("OSXVERMIN", "")
-        add_configfiles("$(projectdir)/packages/macos/Info.plist.in", {
-            filename = "Info.plist",
-            pattern = "@(.-)@",
-        })
         add_installfiles({
             "packages/macos/new-mogan.icns",
             "packages/macos/TeXmacs-document.icns",
             "src/Plugins/Cocoa/(English.lproj/**)",
-            "src/Plugins/Cocoa/(zh_CN.lproj/**)",
-            "misc/scripts/mogan.sh"
-        })
-    elseif is_plat("linux") then
-        add_installfiles({
-            "misc/scripts/mogan"
+            "src/Plugins/Cocoa/(zh_CN.lproj/**)"
         })
     end
   

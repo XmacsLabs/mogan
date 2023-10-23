@@ -532,7 +532,7 @@ target("macos_installer") do
     after_install(function (target, opt)
         local app_dir = target:installdir() .. "/../../"
         os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
-        os.execv("hdiutil create Mogan-v" .. XMACS_VERSION .. ".dmg -fs HFS+ -srcfolder " .. app_dir)
+        os.execv("hdiutil create $(buildir)/Mogan-v" .. XMACS_VERSION .. ".dmg -fs HFS+ -srcfolder " .. app_dir)
     end)
 end
 
