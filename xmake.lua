@@ -479,7 +479,7 @@ if is_plat("mingw", "windows") then
         add_configfiles("$(projectdir)/packages/windows/resource.rc.in", {
             filename = "resource.rc"
         })
-        add_configfiles("$(projectdir)/packages/windows/TeXmacs.ico", {
+        add_configfiles("$(projectdir)/packages/windows/Xmacs.ico", {
             onlycopy = true
         })
         add_files("$(buildir)/resource.rc")

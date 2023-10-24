@@ -19,14 +19,14 @@ BEGIN
   BEGIN
     BLOCK "040904B0" // US English, Unicode
     BEGIN
-      VALUE "Comments", "TeXmacs, a scientific edition platform."
-      VALUE "CompanyName", "texmacs.org\0"
-      VALUE "FileDescription", "TeXmacsQt Windows\0"
+      VALUE "Comments", "Mogan Research, a scientific edition platform."
+      VALUE "CompanyName", "Xmacs Labs\0"
+      VALUE "FileDescription", "MGResearch\0"
       VALUE "FileVersion", "${VERSION}\0"
-      VALUE "InternalName", "texmacs\0"
-      VALUE "OriginalFilename", "texmacs.exe\0"
+      VALUE "InternalName", "Xmacs\0"
+      VALUE "OriginalFilename", "MGResearch.exe\0"
       VALUE "LegalCopyright", "Licensed under GPLv3\0"
-      VALUE "ProductName", "TeXmacs\0"
+      VALUE "ProductName", "Mogan Research\0"
       VALUE "ProductVersion", "${VERSION}\0"
     END
   END
