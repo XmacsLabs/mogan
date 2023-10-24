@@ -15,6 +15,7 @@
 #include "url.hpp"
 #include "file.hpp"
 #include "tm_file.hpp"
+#include "lolly/system/subprocess.hpp"
 
 #if defined(OS_MINGW) || defined(OS_WIN)
 #include "Windows/win_sys_utils.hpp"
@@ -55,7 +56,7 @@ eval_system (string s) {
   return "";
 #else
   string result;
-  (void) lolly::system (s, result);
+  (void) lolly::system::check_output (s, result);
   return result;
 #endif
 }

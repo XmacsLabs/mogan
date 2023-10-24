@@ -19,8 +19,8 @@
 -- [ ] portage powered
 -- ...
 
-local LOLLY_VERSION = "1.2.12"
-local TBOX_VERSION = "1.7.4"
+local LOLLY_VERSION = "1.2.14"
+local TBOX_VERSION = "dev"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
 
@@ -37,7 +37,7 @@ package("lolly")
         add_deps("cpr")
     end
 
-    add_versions("v" .. LOLLY_VERSION, "838ff8b07b1041c9197b764fe8aada5606fb4bee")
+    add_versions("v" .. LOLLY_VERSION, "02408382e37e7eff8b0027387c89ee7fa09e2aed")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
@@ -80,12 +80,7 @@ function add_requires_of_mogan()
     set_configvar("LOLLY_VERSION", LOLLY_VERSION)
     add_requires("lolly", {system=false})
     tbox_configs = {hash=true, ["force-utf8"]=true}
-    if is_plat("wasm") then
-        tbox_version = "dev"
-    else
-        tbox_version = "v" .. TBOX_VERSION
-    end
-    add_requireconfs("lolly.tbox", {version = tbox_version, configs=tbox_configs, system = false, override=true})
+    add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
     add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
     add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
 

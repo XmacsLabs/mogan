@@ -16,6 +16,7 @@
 #include "converter.hpp"
 #include "wencoding.hpp"
 #include "tree_helper.hpp"
+#include "lolly/system/subprocess.hpp"
 
 
 static string bibtex_command= "bibtex";
@@ -200,7 +201,7 @@ bibtex_run (string bib, string style, url bib_file, tree bib_t) {
       debug_shell << cmdln << "\n";
   }
   string log;
-  if (lolly::system (cmdln, log))
+  if (lolly::system::check_output (cmdln, log))
     bibtex_error << log << "\n";
   else {
     int pos=0;

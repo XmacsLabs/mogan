@@ -22,6 +22,7 @@
 #include "tree_label.hpp"
 #include "tree_helper.hpp"
 #include "sys_utils.hpp"
+#include "lolly/system/subprocess.hpp"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -48,13 +49,13 @@
 #include "data_cache.hpp"
 
 void system (string which, url u1) {
-  lolly::system (which * " " * sys_concretize (u1)); }
+  lolly::system::call (which * " " * sys_concretize (u1)); }
 void system (string which, url u1, url u2) {
-  lolly::system (which * " " * sys_concretize (u1) * " " * sys_concretize (u2)); }
+  lolly::system::call (which * " " * sys_concretize (u1) * " " * sys_concretize (u2)); }
 void system (string which, url u1, const char* post) {
-  lolly::system (which * " " * sys_concretize (u1) * " " * post); }
+  lolly::system::call (which * " " * sys_concretize (u1) * " " * post); }
 void system (string which, url u1, const char* sep, url u2) {
-  lolly::system (which * " " * sys_concretize (u1) * " " * sep *
+  lolly::system::call (which * " " * sys_concretize (u1) * " " * sep *
 	          " " * sys_concretize (u2)); }
 
 /******************************************************************************
