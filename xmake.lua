@@ -559,9 +559,9 @@ target("windows_installer") do
         "packages/windows/packages/app.mogan/meta/installscript.qs",
         "LICENSE"}, {prefixdir = "packages/app.mogan/meta/"})
     add_installfiles({
-        "packages/windows/config/TeXmacs-small.png",
-        "packages/windows/config/TeXmacs-large.png",
-        "packages/windows/TeXmacs.ico",
+        "TeXmacs/misc/images/new-mogan-32.png",
+        "TeXmacs/misc/images/new-mogan-512.png",
+        "packages/windows/Xmacs.ico",
     }, {prefixdir = "config/"})
 
     after_install(function (target, opt)
