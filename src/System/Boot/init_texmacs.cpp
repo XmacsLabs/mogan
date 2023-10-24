@@ -168,6 +168,23 @@ init_texmacs_path (int& argc, char** argv) {
   }
 }
 
+void
+init_texmacs_home_path (int& argc, char** argv) {
+  if (!is_empty (get_env ("TEXMACS_HOME_PATH"))) return;
+
+#if defined(OS_MINGW) || defined(OS_WIN)
+  set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\XmacsLabs");
+#elif defined(OS_HAIKU)
+    set_env ("TEXMACS_HOME_PATH",
+             get_env ("HOME") * "/config/settings/TeXmacs");
+#elif defined(OS_WASM)
+    set_env ("TEXMACS_HOME_PATH", "/.Xmacs");
+#else
+    set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/.TeXmacs");
+#endif
+}
+
+
 /******************************************************************************
 * Subroutines for paths
 ******************************************************************************/
@@ -224,7 +241,7 @@ plugin_list () {
 static void
 init_main_paths () {
 #if defined(OS_MINGW) || defined(OS_WIN)
-  if (is_none (get_env_path ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "/TeXmacs"))) {
+  if (is_none (get_env_path ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "/XmacsLabs"))) {
 #else
   if (is_none (get_env_path ("TEXMACS_HOME_PATH", "~/.TeXmacs"))) {
 #endif
