@@ -2,7 +2,7 @@
 // Compile with windres resource.rc -O coff -o resource.rc.o and link as any
 // other object file
 
-appicon ICON "TeXmacs.ico"
+appicon ICON "Xmacs.ico"
 
 #include <winver.h>
 
