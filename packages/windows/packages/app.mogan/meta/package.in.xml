@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package>
-    <DisplayName>Mogan Editor</DisplayName>
+    <DisplayName>Mogan Research</DisplayName>
     <Description>The most user-friendly distribution of GNU TeXmacs.</Description>
     <Version>${XMACS_VERSION}</Version>
     <ReleaseDate>${PACKAGE_DATE}</ReleaseDate>
@@ -12,10 +12,10 @@
     <Operations>
         <Operation name="RegisterFileType">
             <Argument>tm</Argument>
-            <Argument>@TargetDir@/bin/mogan.exe "%1"</Argument>
+            <Argument>@TargetDir@/bin/MGResearch.exe "%1"</Argument>
             <Argument>texmacs document style</Argument>
             <Argument>text/plain</Argument>
-            <Argument>@TargetDir@/bin/mogan.exe,8</Argument>
+            <Argument>@TargetDir@/bin/MGResearch.exe,8</Argument>
         </Operation>
     </Operations>
 </Package>
