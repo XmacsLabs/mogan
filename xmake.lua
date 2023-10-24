@@ -532,7 +532,7 @@ target("macos_installer") do
     after_install(function (target, opt)
         local app_dir = target:installdir() .. "/../../"
         os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
-        os.execv("hdiutil create $(buildir)/Mogan-v" .. XMACS_VERSION .. ".dmg -fs HFS+ -srcfolder " .. app_dir)
+        os.execv("hdiutil create $(buildir)/MoganResearch-v" .. XMACS_VERSION .. ".dmg -fs HFS+ -srcfolder " .. app_dir)
     end)
 end
 
@@ -575,7 +575,7 @@ target("windows_installer") do
         local package_argv = {
             "--config", path.join(buildir, "config/config.xml"),
             "--packages", path.join(buildir, "packages"),
-            path.join(buildir, "Mogan-v"..XMACS_VERSION.."-64bit-installer.exe")
+            path.join(buildir, "MoganResearch-v"..XMACS_VERSION.."-64bit-installer.exe")
         }
         os.iorunv(binarycreator_path, package_argv)
     end)

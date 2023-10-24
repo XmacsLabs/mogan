@@ -1,16 +1,16 @@
-Source: mogan
+Source: mogan-research
 Section: editors
 Priority: optional
 Maintainer: Darcy Shen <shenda@ustc.edu>
 Build-Depends: debhelper (>= 7.0.50~)
 Standards-Version: 3.9.1
-Homepage: https://www.texmacs.org
+Homepage: https://mogan.app
 
 Package: mogan-research
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description:  A structured editor for science and technology
-	     Mogan Editor is a fork of GNU TeXmacs using S7 Scheme and Qt 5 with massive
+	     Mogan Research is a fork of GNU TeXmacs using S7 Scheme and Qt 5 with massive
 	     online TeXmacs documents provided by Xmacs Planet and TMML wiki.
 	     The software includes a text editor with support for mathematical formulas,
 	     a small technical picture editor and a tool for making presentations from

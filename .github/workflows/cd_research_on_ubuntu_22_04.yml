@@ -38,7 +38,7 @@ jobs:
       - name: Generate Installer
         run: |
           packages/debian/package.sh
-          cp ../mogan*.deb mogan-v${VERSION}-ubuntu${{ matrix.ubuntu_ver }}.deb
+          cp ../mogan*.deb mogan-research-v${VERSION}-ubuntu${{ matrix.ubuntu_ver }}.deb
       - name: Upload 
         uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
