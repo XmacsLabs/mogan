@@ -19,7 +19,7 @@
 -- [ ] portage powered
 -- ...
 
-local LOLLY_VERSION = "main"
+local LOLLY_VERSION = "1.2.14"
 local TBOX_VERSION = "dev"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
