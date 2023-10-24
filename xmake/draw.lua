@@ -72,7 +72,7 @@ function add_target_draw()
     add_files("src/Mogan/Draw/draw.cpp")
 
     if is_plat("wasm") then
-        set_optimize("none")
+        set_optimize("fastest")
         -- see https://doc.qt.io/qt-6/wasm.html#asyncify
         add_ldflags("-sASYNCIFY")
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs/fonts@TeXmacs/fonts", {force = true})
