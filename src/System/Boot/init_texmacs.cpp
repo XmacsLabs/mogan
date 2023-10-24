@@ -174,6 +174,8 @@ init_texmacs_home_path (int& argc, char** argv) {
 
 #if defined(OS_MINGW) || defined(OS_WIN)
   set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\XmacsLabs");
+#elif defined(OS_MACOS)
+  set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/Library/Application Support/XmacsLabs");
 #elif defined(OS_HAIKU)
     set_env ("TEXMACS_HOME_PATH",
              get_env ("HOME") * "/config/settings/TeXmacs");
