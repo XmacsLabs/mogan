@@ -470,21 +470,11 @@ boot_hacks () {
 
 void
 immediate_options (int argc, char** argv) {
-  if (get_env ("TEXMACS_HOME_PATH") == "")
 #if defined(OS_MINGW) || defined(OS_WIN)
-  {
-    if (get_env ("HOME") == "") set_env ("HOME", get_env ("USERPROFILE"));
-    set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\TeXmacs");
-  }
-#elif defined(OS_HAIKU)
-    set_env ("TEXMACS_HOME_PATH",
-             get_env ("HOME") * "/config/settings/TeXmacs");
-#elif defined(OS_WASM)
-    set_env ("TEXMACS_HOME_PATH", "/.Xmacs");
-#else
-    set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/.TeXmacs");
+  if (get_env ("HOME") == "") set_env ("HOME", get_env ("USERPROFILE"));
 #endif
-  if (get_env ("TEXMACS_HOME_PATH") == "") return;
+  init_texmacs_home_path (argc, argv);
+  if (is_empty (get_env ("TEXMACS_HOME_PATH"))) return;
   for (int i= 1; i < argc; i++) {
     string s= argv[i];
     if ((N (s) >= 2) && (s (0, 2) == "--")) s= s (1, N (s));
