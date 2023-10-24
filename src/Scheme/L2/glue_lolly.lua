@@ -483,7 +483,7 @@ function main()
             },
             {
                 scm_name = "system",
-                cpp_name = "lolly::system",
+                cpp_name = "lolly::system::call",
                 ret_type = "void",
                 arg_list = {
                     "string",
