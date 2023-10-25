@@ -9,8 +9,6 @@ on:
       - 'xmake/draw.lua'
       - 'site/draw.mogan.app/**'
       - 'src/Mogan/Draw/**'
-      - TeXmacs/progs/init-draw.scm
-      - TeXmacs/progs/graphics
       - 'TeXmacs/progs/init-draw.scm'
       - 'TeXmacs/progs/graphics/**'
   push:
