@@ -9,6 +9,8 @@ on:
       - 'xmake/draw.lua'
       - 'site/draw.mogan.app/**'
       - 'src/Mogan/Draw/**'
+      - TeXmacs/progs/init-draw.scm
+      - TeXmacs/progs/graphics
   push:
     branches: [ branch-1.2 ]
     paths:
@@ -16,6 +18,8 @@ on:
       - 'xmake/draw.lua'
       - 'site/draw.mogan.app/**'
       - 'src/Mogan/Draw/**'
+      - TeXmacs/progs/init-draw.scm
+      - TeXmacs/progs/graphics
 
 jobs:
   wasmbuild:
