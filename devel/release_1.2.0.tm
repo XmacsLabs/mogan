@@ -51,8 +51,8 @@
   the new mechanism of glue code generation>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|LaTeX
   converter as a plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML
   converter as a plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs
-  instead of the gs binary>>|<row|<cell|<dlink|40>>|<cell|>|<cell|Use
-  XDG_DATA_PATH on Linux>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize
+  instead of the gs binary>>|<row|<cell|<dlink|40>>|<cell|<value|da>>|<cell|Tuning
+  various default paths>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize
   the Help menu>>|<row|<cell|<dlink|37>>|<cell|Darcy>|<cell|CICD for the
   Windows platform>>|<row|<cell|<dlink|36>>|<cell|Darcy,
   jingkaimori>|<cell|Build on Windows platform>>|<row|<cell|<dlink|35>>|<cell|<value|da>>|<cell|Use
