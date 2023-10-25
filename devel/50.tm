@@ -51,6 +51,14 @@
       <value|da>
     </cell>|<\cell>
       Separate Mogan Draw from xmake.lua
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      50_3
+    </cell>|<\cell>
+      <value|oy>/<value|da>
+    </cell>|<\cell>
+      Remove plugins and disable html/latex/bibtex conversion
     </cell>>>>
   </wide-tabular>
 

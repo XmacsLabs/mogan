@@ -13,9 +13,17 @@
     </cell>|<\cell>
       <dlink|7_1>
     </cell>|<\cell>
-      Darcy
+      <value|da>
     </cell>|<\cell>
       Crash because of incorrect locale env
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      7_2
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Use long array instead of long list to avoid stack overflow
     </cell>>>>
   </wide-tabular>
 
