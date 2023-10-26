@@ -34,7 +34,6 @@ local l3_files = {
     "$(projectdir)/src/System/Files/**files.cpp",
     "$(projectdir)/src/System/Misc/data_cache.cpp",
     "$(projectdir)/src/System/Misc/persistent.cpp",
-    "$(projectdir)/src/System/Misc/stack_trace.cpp",
     "$(projectdir)/src/System/Misc/tm_sys_utils.cpp",
     "$(projectdir)/src/Texmacs/Server/tm_debug.cpp",
 }
