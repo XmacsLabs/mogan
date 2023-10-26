@@ -574,6 +574,7 @@
     (meti (hlist // (text "Expand beamer slides"))
       (toggle (set-boolean-preference "texmacs->pdf:expand slides" answer)
               (get-boolean-preference "texmacs->pdf:expand slides")))
+    (assuming (supports-native-pdf?)
       (meti (hlist // (text "Check exported Pdf files for correctness"))
         (toggle (set-boolean-preference "texmacs->pdf:check" answer)
                 (get-boolean-preference "texmacs->pdf:check")))))
