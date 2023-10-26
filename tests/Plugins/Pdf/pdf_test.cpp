@@ -9,6 +9,7 @@
  ******************************************************************************/
 
 #include "Pdf/pdf.hpp"
+#include "base.hpp"
 #include "sys_utils.hpp"
 #include <QtTest/QtTest>
 
@@ -22,7 +23,17 @@ private slots:
 
 void
 TestPDF::test_pdf_version () {
-  pdf_version (url ("https://baidu.com"));
+  qcompare (pdf_version (url ("https://baidu.com")), default_pdf_version ());
+  qcompare (pdf_version (url ("path/to/hello.png")), default_pdf_version ());
+
+  qcompare (pdf_version (url ("$TEXMACS_PATH/tests/PDF/pdf_1_4_sample.pdf")),
+            "1.4");
+  qcompare (pdf_version (url ("$TEXMACS_PATH/tests/PDF/pdf_1_5_sample.pdf")),
+            "1.5");
+  qcompare (pdf_version (url ("$TEXMACS_PATH/tests/PDF/pdf_1_6_sample.pdf")),
+            "1.6");
+  qcompare (pdf_version (url ("$TEXMACS_PATH/tests/PDF/pdf_1_7_sample.pdf")),
+            "1.7");
 }
 
 QTEST_MAIN (TestPDF)

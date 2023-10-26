@@ -15,7 +15,11 @@
 #include "scheme.hpp"
 #include "tm_debug.hpp"
 
+#include "PDFWriter/EStatusCode.h"
+#include "PDFWriter/InputFile.h"
 #include "PDFWriter/PDFParser.h"
+
+using PDFHummus::EStatusCode;
 
 string
 default_pdf_version () {
@@ -32,20 +36,28 @@ pdf_version () {
 }
 
 string
-pdf_version (url path) {
-  if (suffix (path) != "pdf") {
-    std_error << "Suffix of " << as_string (path) << " must be pdf!" << LF;
+pdf_version (url u) {
+  c_string path (as_string (u));
+  if (suffix (u) != "pdf") {
+    std_error << "Suffix of " << path << " must be pdf!" << LF;
     return default_pdf_version ();
   }
-  if (!is_local_and_single (path)) {
-    std_error << as_string (path) << " must be a local and single file!" << LF;
+  if (!is_local_and_single (u)) {
+    std_error << path << " must be a local and single file!" << LF;
     return default_pdf_version ();
   }
 
+  InputFile pdfFile;
+  pdfFile.OpenFile (std::string (path));
+  PDFParser   parser;
+  EStatusCode status= parser.StartPDFParsing (pdfFile.GetInputStream ());
+  if (status != PDFHummus::eFailure) {
+    double version= parser.GetPDFLevel ();
+    return as_string (version);
+  }
+  else {
+    std_error << "Failed to StartPDFParsing for " << path << LF;
+  }
+
   return default_pdf_version ();
-  // InputFile  pdfFile;
-  // PDFParser* parser= new PDFParser ();
-  // pdfFile.OpenFile (as_charp (concretize (image)));
-  // EStatusCode status= parser->StartPDFParsing (pdfFile.GetInputStream ());
-  // if (status != PDFHummus::eFailure) {
 }
