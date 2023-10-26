@@ -143,7 +143,7 @@ get_crash_report (const char* msg) {
 #else
     << "\n" << get_system_information ()
     << "\n" << get_editor_status_report ()
-    << "\n" << get_stacktrace ();
+    << "\n" << lolly::get_stacktrace ();
 #endif
   return r;
 }
