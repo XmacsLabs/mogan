@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "pdf_image.hpp"
-#include "Ghostscript/gs_utilities.hpp"
 #include "PDFWriter/InputByteArrayStream.h"
 #include "PDFWriter/OutputStreamTraits.h"
 #include "PDFWriter/PDFDocumentCopyingContext.h"
@@ -206,24 +205,8 @@ pdf_image_rep::flush (PDFWriter& pdfw) {
   string s= suffix (name);
   // debug_convert << "flushing :" << name << LF;
   if (s == "pdf") {
-    // double v= as_double (pdf_version (name));
-    // if (10 * v > ((double) ePDFVersion))
-    //   convert_warning << "\"" << concretize (name) << "\" has version "
-    // 		      << v << "." << LF
-    // 		      << "But current PDF version has been set to " << ((double)
-    // ePDFVersion)/10
-    // 		      << " (see the preference menu)." << LF;
-    if (get_preference ("texmacs->pdf:distill inclusion") == "on") {
-      temp= url_temp (".pdf");
-      if (!gs_PDF_EmbedAllFonts (name, temp)) {
-        temp= name;
-        name= url_none ();
-      }
-    }
-    else {
-      temp= name;
-      name= url_none ();
-    }
+    temp= name;
+    name= url_none ();
   }
   else {
     temp= url_temp (".pdf");

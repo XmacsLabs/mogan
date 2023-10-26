@@ -437,7 +437,6 @@
 ("display style" "展示风格")
 ("displayed formula" "行间公式")
 ("dissociate joined cells" "分离合并的单元格")
-("distill encapsulated Pdf files" "提取嵌入的PDF文件中的字体")
 ("distribute unused space" "分配未使用空隙")
 ("div" "")
 ("do not remap" "")
