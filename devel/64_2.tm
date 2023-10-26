@@ -3,15 +3,29 @@
 <style|<tuple|tmdoc|chinese|devel>>
 
 <\body>
-  <tmdoc-title|Image import and exports>
+  <tmdoc-title|Failed to render the web images>
 
-  <section|Tasks>
+  <section|Bug metadata>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|64_1>>|<cell|Joris>|<cell|Fix
-  cork filename when export embed image>>|<row|<cell|Bug>|<cell|<dlink|64_2>>|<cell|Darcy>|<cell|Failed
-  to render the web images>>>>>
+  <\description>
+    <item*|Owner><value|da>
 
-  <tmdoc-copyright|2023|Jingkaimori>
+    <item*|Reporter><value|da> on <hlink|Gitee|https://gitee.com/XmacsLabs/mogan/issues/I87PJS>
+  </description>
+
+  <section|How to reproduce it>
+
+  Here is the image from web:
+
+  https://gitee.com/XmacsLabs/mogan/raw/v1.1.6/TeXmacs/misc/images/texmacs-96.png
+
+  Put it in a <markup|image> tag:
+
+  <image|https://gitee.com/XmacsLabs/mogan/raw/v1.1.6/TeXmacs/misc/images/texmacs-96.png||||>
+
+  It should work!
+
+  <tmdoc-copyright|2023|Darcy>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
