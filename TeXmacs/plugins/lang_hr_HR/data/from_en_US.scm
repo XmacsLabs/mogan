@@ -699,7 +699,6 @@
 ("displayed formula" "prikazana formula")
 ("display style" "stil prikaza")
 ("dissociate joined cells" "razgrupiraj združene ćelije")
-("distill encapsulated Pdf files" "destiliraj inkapsulirane PDF datoteke")
 ("distort" "iskrivi")
 ("distorted" "iskrivljeno")
 ("distribute unused space" "razdijeli neupotrijebljen prostor")

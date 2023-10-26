@@ -11,7 +11,6 @@
 
 #include "pdf_hummus_renderer.hpp"
 #include "Freetype/tt_file.hpp"
-#include "Ghostscript/gs_utilities.hpp" // for gs_prefix
 #include "Metafont/tex_files.hpp"
 #include "analyze.hpp"
 #include "block.hpp"

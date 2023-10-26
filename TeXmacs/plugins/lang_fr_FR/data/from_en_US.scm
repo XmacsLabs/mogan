@@ -705,7 +705,6 @@
 ("display style" "style d'affichage")
 ("displayed formula" "formule centrée")
 ("dissociate joined cells" "séparer les cellules jointes")
-("distill encapsulated Pdf files" "distiller les fichiers PDF encapsulés")
 ("distort" "distorsion")
 ("distorted" "déformé")
 ("distribute unused space" "distribuer l'espace non utilisé")
