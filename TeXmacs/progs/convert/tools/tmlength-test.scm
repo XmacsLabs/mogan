@@ -30,7 +30,19 @@
     (test "negative length" "-1in" '(-1 in))
     (test "negative^2 length" "--2fns" '(2 fns))))
 
+(define (regtest-length-decode)
+  (regression-test-group
+   "length in string" "tmpt in number"
+   length-decode :none
+   (test "inch" "1in" 153600)
+   (test "tmpt" "1tmpt" 1)
+   (test "cm" "1cm" 60472)
+   (test "mm" "1mm" 6047)
+   (test "pt: 1/72.27 of an inch" "1pt" 2125)
+   (test "bp: 1/72 of an inch" "1bp" 2133)))
+
 (tm-define (regtest-tmlength)
-  (let ((n (+ (regtest-string->tmlength))))
-    (display* "Total: " (number->string n) "tests.\n")
+  (let ((n (+ (regtest-string->tmlength)
+              (regtest-length-decode))))
+    (display* "Total: " (number->string n) " tests.\n")
     (display "Test suite of tmlength: ok\n")))
