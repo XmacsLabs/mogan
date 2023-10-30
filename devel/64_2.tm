@@ -15,6 +15,8 @@
 
   <section|How to reproduce it>
 
+  <subsection|URL ending with xxx.png>
+
   Here is the image from web:
 
   https://gitee.com/XmacsLabs/mogan/raw/v1.1.6/TeXmacs/misc/images/texmacs-256.png
@@ -24,6 +26,22 @@
   <image|https://gitee.com/XmacsLabs/mogan/raw/v1.1.6/TeXmacs/misc/images/texmacs-256.png||||>
 
   First of all, the web image should be displayed correctly.<strong|>
+
+  <subsection|URL ending with xxx.jpg>
+
+  Here is the URL:
+
+  <image|https://picx.zhimg.com/50/v2-bb0e14348049f65c20c37549158aa5a8_720w.jpg||||>
+
+  <subsection|URL ending with parameters>
+
+  Here is the URL:
+
+  <image|https://picx.zhimg.com/50/v2-bb0e14348049f65c20c37549158aa5a8_720w.jpg?source=2c26e567||||>
+
+  \;
+
+  \;
 
   <tmdoc-copyright|2023|Darcy>
 
