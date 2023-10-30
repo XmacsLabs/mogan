@@ -24,6 +24,14 @@
       <value|da>
     </cell>|<\cell>
       Use long array instead of long list to avoid stack overflow
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|7_3>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Crash when converting a big number to roman
     </cell>>>>
   </wide-tabular>
 
