@@ -3,14 +3,14 @@
 <style|<tuple|tmdoc|chinese|devel>>
 
 <\body>
-  <tmdoc-title|Failed to render the web images>
+  <tmdoc-title|Wrong image size>
 
   <section|Bug metadata>
 
   <\description>
     <item*|Owner><value|da>
 
-    <item*|Reporter><value|da> on <hlink|Gitee|https://gitee.com/XmacsLabs/mogan/issues/I87PJS>
+    <item*|Reporter><value|da><strong|>
   </description>
 
   <section|How to reproduce it>
@@ -23,7 +23,18 @@
 
   <image|https://gitee.com/XmacsLabs/mogan/raw/v1.1.6/TeXmacs/misc/images/texmacs-256.png||||>
 
-  First of all, the web image should be displayed correctly.<strong|>
+  Put the included image here:
+
+  <image|../TeXmacs/misc/images/texmacs-256.png|256pt|256pt||><compound|markup|>
+
+  Secondly, the image size of the web image should be 192pt. Both the
+  included local image or the web image are using the wrong image size.
+
+  Here is the expected image size:
+
+  <image|../TeXmacs/misc/images/texmacs-256.png|192pt|192pt||>
+
+  \;
 
   <tmdoc-copyright|2023|Darcy>
 

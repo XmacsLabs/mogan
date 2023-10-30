@@ -8,8 +8,9 @@
   <section|Tasks>
 
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|64_1>>|<cell|Joris>|<cell|Fix
-  cork filename when export embed image>>|<row|<cell|Bug>|<cell|<dlink|64_2>>|<cell|Darcy>|<cell|Failed
-  to render the web images>>>>>
+  cork filename when export embed image>>|<row|<cell|Bug>|<cell|<dlink|64_2>>|<cell|<value|da>>|<cell|Failed
+  to render the web images>>|<row|<cell|Bug>|<cell|<dlink|64_3>>|<cell|<value|da>>|<cell|Wrong
+  default image size>>>>>
 
   <tmdoc-copyright|2023|Jingkaimori>
 
