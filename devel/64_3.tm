@@ -41,20 +41,84 @@
 
   It is also using (256pt, 256pt) as the image size.
 
-  <subsection|The expected image size>
+  <section|Why and How?>
 
-  The image size of the web image should be 192pt or 256px. Both the included
-  local image or the web image are using the wrong image size.
+  The image size should look the same when:
 
-  Here is the expected image size (192pt, 192pt):
+  <\itemize>
+    <item>Inserted via various methods without any changes
 
-  <image|../TeXmacs/misc/images/texmacs-256.png|192pt|192pt||>
+    <item>Exported to PDF
 
-  and the expected image size (256px, 256px)
+    <item>Zoom in or zoom out the editor
+  </itemize>
+
+  <subsection|What is the expected unit of the image size?>
+
+  The expected image size should be in pt unit. For png image, the width and
+  height is in px unit<\footnote>
+    \<#300A\>PNG: The Definitive Guide\<#300B\>Chapter 1:
+    http://www.libpng.org/pub/png/book/chapter01.html
+  </footnote>. It should be converted to pt unit when inserted. Because if
+  you use px unit, when zooming in or zooming out the editor, the size of the
+  image using the px unit will not change.
+
+  <subsection|What is the expected image size?>
+
+  The image should look as the same size as in other software (eg. Web
+  Brower, Image Viewer).
+
+  Precisely, for png image, we need to convert the px length to pt length.
+
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (length-decode "1px")
+    <|unfolded-io>
+      1280
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (length-decode "1pt")
+    <|unfolded-io>
+      2125
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
+  <scm|length-decode> will convert a length in string format with a length
+  unit to the length in tmpt unit. tmpt unit is adopted as the internal
+  length for GNU <TeXmacs>.
+
+  <scm|(length-decode "1pt")> is fixed, but <scm|(length-decode "1px")> is
+  not. See <slink|https://github.com/XmacsLabs/mogan/blob/v1.1.6/src/Typeset/Env/env_length.cpp#L487-L493>
+  for details on how 1px is converted to tmpt.
+
+  In this specific case, the expected image size could be calculated like:
+
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (/ (* 256.0 (length-decode "1px")) (length-decode "1pt"))
+    <|unfolded-io>
+      154.20235294117646
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
+  If the image width is 256px, it should be 154pt.
+
+  <subsection|Demo image using assigned px image size>
 
   <image|../TeXmacs/misc/images/texmacs-256.png|256px|256px||>
 
-  \;
+  <subsection|Demo image using assigned pt image size>
+
+  <image|../TeXmacs/misc/images/texmacs-256.png|154pt|154pt||>
 
   <tmdoc-copyright|2023|Darcy>
 
