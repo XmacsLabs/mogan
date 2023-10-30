@@ -17,13 +17,26 @@
 
   Here is the image from web:
 
-  https://gitee.com/XmacsLabs/mogan/raw/v1.1.6/TeXmacs/misc/images/texmacs-96.png
+  https://gitee.com/XmacsLabs/mogan/raw/v1.1.6/TeXmacs/misc/images/texmacs-256.png
 
-  Put it in a <markup|image> tag:
+  Put the web image<strong|> in a <markup|image> tag:
 
-  <image|https://gitee.com/XmacsLabs/mogan/raw/v1.1.6/TeXmacs/misc/images/texmacs-96.png||||>
+  <image|https://gitee.com/XmacsLabs/mogan/raw/v1.1.6/TeXmacs/misc/images/texmacs-256.png||||>
 
-  It should work!
+  First of all, the web image should be displayed correctly.<strong|>
+
+  Put the included image here:
+
+  <image|../TeXmacs/misc/images/texmacs-256.png|256pt|256pt||><compound|markup|>
+
+  Secondly, the image size of the web image should be 192pt. Both the
+  included local image or the web image are using the wrong image size.
+
+  Here is the expected image size:
+
+  <image|../TeXmacs/misc/images/texmacs-256.png|192pt|192pt||>
+
+  \;
 
   <tmdoc-copyright|2023|Darcy>
 
@@ -37,6 +50,6 @@
 
 <\initial>
   <\collection>
-    <associate|page-medium|paper>
+    <associate|page-medium|papyrus>
   </collection>
 </initial>
