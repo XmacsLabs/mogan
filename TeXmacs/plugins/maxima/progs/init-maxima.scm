@@ -23,16 +23,10 @@
       (system-url->string "$TEXMACS_HOME_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")
       (system-url->string "$TEXMACS_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")))
 
-(define (maxima-versions)
-  (map (lambda (x)
-         (string-replace (string-replace x ", lisp" "") "version " ""))
-   (filter (lambda (x) (string-starts? x "version "))
-     (string-split (var-eval-system "maxima --list-avail") #\newline))))
-
 (define (maxima-launchers)
   (if (or (os-mingw?) (os-win32?))
       `((:launch ,(string-append "maxima.bat -p " (maxima-entry))))
-      `((:launch ,(string-append "exec maxima -p " (maxima-entry))))))
+      `((:launch ,(string-append "maxima -p " (maxima-entry))))))
 
 (plugin-add-macos-path "Maxima*" "Contents/Resources/maxima/bin" #t)
 (plugin-add-macos-path "Maxima*" "Contents/Resources/opt/bin" #t)
@@ -42,7 +36,6 @@
 
 (plugin-configure maxima
   (:require (or (url-exists-in-path? "maxima.bat") (url-exists-in-path? "maxima")))
-  (:versions (maxima-versions))
   ,@(maxima-launchers)
   (:serializer ,maxima-serialize)
   (:session "Maxima")
