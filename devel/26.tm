@@ -29,7 +29,7 @@
     </cell>|<\cell>
       26_3
     </cell>|<\cell>
-      tangdouer
+      <value|da>
     </cell>|<\cell>
       improve the pdfhummus in xrepo to avoid duplication of dependencies
       like zlib

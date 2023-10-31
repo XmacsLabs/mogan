@@ -1,15 +1,16 @@
 <TeXmacs|2.1.2>
 
-<style|tmdoc>
+<style|<tuple|tmdoc|devel>>
 
 <\body>
   <tmdoc-title|CICD for the website and mogan wasm>
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|34_1>|<cell|Darcy>|<cell|CD:
-  deploy research wasm to gh-pages>>|<row|<cell|Chore>|<cell|34_2>|<cell|Darcy>|<cell|CD
-  to mogan.app>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|34_1>|<cell|<value|da>>|<cell|CD:
+  deploy research wasm to gh-pages>>|<row|<cell|Chore>|<cell|34_2>|<cell|<value|da>>|<cell|CD
+  to mogan.app>>|<row|<cell|Chore>|<cell|34_3>|<cell|<value|da>>|<cell|CD to
+  draw.mogan.app>>>>>
 
   <tmdoc-copyright|2023|Darcy Shen>
 

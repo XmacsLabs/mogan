@@ -1,18 +1,18 @@
 <TeXmacs|2.1.2>
 
-<style|tmdoc>
+<style|<tuple|tmdoc|devel>>
 
 <\body>
   <tmdoc-title|Lolly 1.0.x>
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|30_1>|<cell|Da>|<cell|Remove
-  tree in <cpp|merge_sort>>>|<row|<cell|Chore>|<cell|30_2>|<cell|Da>|<cell|Remove
-  <cpp|tm_debug> in <cpp|tm_timer>>>|<row|<cell|Chore>|<cell|30_3>|<cell|Da>|<cell|Use
-  lolly 1.0.0>>|<row|<cell|Chore>|<cell|30_4>|<cell|Da>|<cell|Use lolly
-  1.0.1>>|<row|<cell|Chore>|<cell|30_5>|<cell|Pluto>|<cell|Use lolly 1.0.1 in
-  xrepo>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Chore>|<cell|30_1>|<cell|<value|da>>|<cell|Remove
+  tree in <cpp|merge_sort>>>|<row|<cell|Chore>|<cell|30_2>|<cell|<value|da>>|<cell|Remove
+  <cpp|tm_debug> in <cpp|tm_timer>>>|<row|<cell|Chore>|<cell|30_3>|<cell|<value|da>>|<cell|Use
+  lolly 1.0.0>>|<row|<cell|Chore>|<cell|30_4>|<cell|<value|da>>|<cell|Use
+  lolly 1.0.1>>>>>
 
   <tmdoc-copyright|2023|Darcy Shen>
 

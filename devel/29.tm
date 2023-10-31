@@ -9,7 +9,12 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<table|<row|<\cell>
+    <tformat|<cwith|1|1|2|2|cell-background|pastel
+    green>|<cwith|3|3|2|2|cell-background|pastel
+    green>|<cwith|6|6|2|2|cell-background|pastel
+    green>|<cwith|7|7|2|2|cell-background|pastel
+    green>|<cwith|4|4|2|2|cell-background|pastel
+    green>|<cwith|2|2|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       29_1
