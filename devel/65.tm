@@ -12,8 +12,9 @@
   <value|jk>>|<cell|Upgrade to Qt 6.5.3 on
   Windows>>|<row|<cell|Chore>|<cell|65_3>|<cell|<value|da>>|<cell|Set
   retina_factor automatically if retina_manual is false on Qt
-  6>>|<row|<cell|Chore>|<cell|65_4>|<cell|Darcy>|<cell|Upgrade to Qt 6 on
-  Ubuntu 22.04>>>>>
+  6>>|<row|<cell|Chore>|<cell|65_4>|<cell|<value|da>>|<cell|Upgrade to Qt 6
+  on Ubuntu 22.04>>|<row|<cell|Chore>|<cell|65_5>|<cell|<value|da>>|<cell|Qt
+  6: use startCommand instead of start>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 

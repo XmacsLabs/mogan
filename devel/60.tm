@@ -10,7 +10,9 @@
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|60_1>>|<cell|<value|da>>|<cell|Make
   it work on plat windows>>|<row|<cell|Bug>|<cell|<dlink|60_2>>|<cell|<value|da>>|<cell|Failed
   to show maxima help menu>>|<row|<cell|Bug>|<cell|60_3>|<cell|<value|da>>|<cell|Blank
-  mode dependent icons>>>>>
+  mode dependent icons>>|<row|<cell|Chore>|<cell|60_4>|<cell|<value|da>>|<cell|Maxima:
+  add path /opt/homebrew/opt/maxima/bin>>|<row|<cell|Chore>|<cell|60_5>|<cell|<value|da>>|<cell|Launch
+  maxima on macOS and Linux without tm_maxima>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 

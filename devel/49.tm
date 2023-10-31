@@ -15,7 +15,8 @@
   qt.console instead of -mconsole>>|<row|<cell|Chore>|<cell|49_6>|<cell|<value|da>>|<cell|set_configvar
   for OS_XXX>>|<row|<cell|Chore>|<cell|49_7>|<cell|<value|da>>|<cell|Remove
   unused CONFIG_STD_SETENV>>|<row|<cell|Chore>|<cell|49_8>|<cell|<value|da>>|<cell|Simplify
-  tm_configure generation>>>>>
+  tm_configure generation>>|<row|<cell|Chore>|<cell|49_9>|<cell|<value|da>>|<cell|Use
+  static libmogan on all plat>>>>>
 
   <tmdoc-copyright|2023|jingkaimori>
 
