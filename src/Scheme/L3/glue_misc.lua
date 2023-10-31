@@ -123,6 +123,11 @@ function main()
                 arg_list = {
                     "url"
                 }
+            },
+            {
+                scm_name = "xmacs-version",
+                cpp_name = "xmacs_version",
+                ret_type = "string"
             }
         }
     }
