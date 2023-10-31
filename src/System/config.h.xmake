@@ -1,11 +1,5 @@
 /* L1 Kernel */
 ${define QTTEXMACS}
-${define OS_MINGW}
-${define OS_GNU_LINUX}
-${define OS_MACOS}
-${define OS_WIN}
-${define OS_WASM}
-
 
 /* Define to 1 if the system has the type `intptr_t'. */
 ${define HAVE_INTPTR_T}

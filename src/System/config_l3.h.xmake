@@ -5,7 +5,3 @@ ${define HAVE_INTPTR_T}
 ${define HAVE_STDINT_H}
 ${define QTTEXMACS}
 ${define SANITY_CHECKS}
-${define OS_MINGW}
-${define OS_MACOS}
-${define OS_WIN}
-${define OS_WASM}
