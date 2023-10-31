@@ -23,6 +23,7 @@ local LOLLY_VERSION = "1.2.18"
 local TBOX_VERSION = "dev"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
+local PDFHUMMUS_VERSION = "4.6.1"
 
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
 package("lolly")
@@ -51,7 +52,6 @@ package_end()
 
 function add_requires_of_mogan()
     local FREETYPE_VERSION = "2.12.1"
-    local PDFHUMMUS_VERSION = "4.5.10"
 
     if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
         -- config package name for freetype on UOS
