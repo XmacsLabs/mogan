@@ -48,6 +48,14 @@
       <value|da>
     </cell>|<\cell>
       set the install path to C:\\Program Files\\MoganResearch
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      37_6
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Mogan Research: minor improve on code format
     </cell>>>>
   </wide-tabular>
 
