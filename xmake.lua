@@ -38,6 +38,7 @@ local STABLE_RELEASE = 1
 
 local TM_CONFIGURE_VARS = {
     CONFIG_USER = CONFIG_USER,
+    TEXMACS_VERSION = TEXMACS_VERSION,
     XMACS_VERSION = XMACS_VERSION,
     tm_devel = "Texmacs-" .. DEVEL_VERSION,
     tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
@@ -125,13 +126,11 @@ function add_tm_configure(target_name, variables)
     if target_name == "libmogan" then
         add_configfiles("src/System/tm_configure.hpp.xmake", {
             filename = "tm_configure.hpp",
-            pattern = "@(.-)@",
             variables = variables
         })
     else
         add_configfiles("src/System/tm_configure.hpp.xmake", {
             filename = target_name .. "/tm_configure.hpp",
-            pattern = "@(.-)@",
             variables = variables
         })
     end
@@ -183,13 +182,13 @@ target("libkernel_l3") do
     })
     add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
         filename = "L3/tm_configure.hpp",
-        pattern = "@(.-)@",
         variables = {
             CONFIG_USER = CONFIG_USER,
             CONFIG_OS = CONFIG_OS,
             VERSION = TEXMACS_VERSION,
             LOLLY_VERSION = LOLLY_VERSION,
             XMACS_VERSION = XMACS_VERSION,
+            TEXMACS_VERSION = TEXMACS_VERSION,
         }
     })
 

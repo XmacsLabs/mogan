@@ -1,5 +1,16 @@
-#define BUILD_USER "@CONFIG_USER@"
-#define BUILD_DATE "@VERSION_BUILD@"
-#define TEXMACS_VERSION "@VERSION@"
-#define LOLLY_VERSION "@LOLLY_VERSION@"
-#define XMACS_VERSION "@XMACS_VERSION@"
+#ifndef TM_CONFIGURE_H
+#define TM_CONFIGURE_H
+
+#define BUILD_USER "${CONFIG_USER}"
+#define BUILD_DATE "${VERSION_BUILD}"
+#define LOLLY_VERSION "${LOLLY_VERSION}"
+#define XMACS_VERSION "${XMACS_VERSION}"
+#define TEXMACS_VERSION "${TEXMACS_VERSION}"
+
+${define OS_MINGW}
+${define OS_GNU_LINUX}
+${define OS_MACOS}
+${define OS_WIN}
+${define OS_WASM}
+
+#endif // defined TM_CONFIGURE_H
