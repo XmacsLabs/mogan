@@ -372,17 +372,10 @@ target("libmogan") do
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
 
-    if is_plat("linux") then
-        add_rules("qt.shared")
-        set_installdir(INSTALL_DIR)
-    elseif is_plat("macosx") then
-        on_install(function (target)
-            print("No need to install libmogan on macOS")
-        end)
-        add_rules("qt.static")
-    else
-        add_rules("qt.static")
-    end
+    add_rules("qt.static")
+    on_install(function (target)
+        print("No need to install libmogan")
+    end)
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
 
     build_glue_on_config()
