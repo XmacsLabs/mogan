@@ -29,25 +29,10 @@
    (filter (lambda (x) (string-starts? x "version "))
      (string-split (var-eval-system "maxima --list-avail") #\newline))))
 
-(define (maxima-launchers) ;; returns list of launchers for each version
+(define (maxima-launchers)
   (if (or (os-mingw?) (os-win32?))
       `((:launch ,(string-append "maxima.bat -p " (maxima-entry))))
-      (with version-list (if reconfigure-flag?
-                             (maxima-versions)
-                             (plugin-versions "maxima"))
-        (if (and version-list (list? version-list) (nnull? version-list))
-            (let* ((default (car version-list))
-                   (rest (cdr version-list))
-                   (launch-default
-                    (list :launch (string-append "tm_maxima " default)))
-                   (launch-rest
-                    (map
-                     (lambda (version-name)
-                       (list :launch version-name
-                             (string-append "tm_maxima " version-name)))
-                     rest)))
-              (cons launch-default launch-rest))
-            '()))))
+      `((:launch ,(string-append "exec maxima -p " (maxima-entry))))))
 
 (plugin-add-macos-path "Maxima*" "Contents/Resources/maxima/bin" #t)
 (plugin-add-macos-path "Maxima*" "Contents/Resources/opt/bin" #t)
