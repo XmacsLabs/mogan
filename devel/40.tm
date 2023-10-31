@@ -8,11 +8,12 @@
   <section|Tasks>
 
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|2|4|4|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|40_1>|<cell|<value|da>>|<cell|Set
-  TEXMACS_HOME_PATH to %AppData%/XmacsLabs on
+  <shell|TEXMACS_HOME_PATH> to %AppData%/XmacsLabs on
   windows>>|<row|<cell|Chore>|<cell|40_2>|<cell|<value|da>>|<\cell>
-    set TEXMACS_HOME_PATH to ~/Library/Application Support/XmacsLabs on macOS
-  </cell>>|<row|<cell|Chore>|<cell|40_3>|<cell|Darcy>|<cell|set
-  TEXMACS_HOME_PATH to XDG_DATA_PATH>>>>>
+    set <shell|TEXMACS_HOME_PATH> to ~/Library/Application Support/XmacsLabs
+    on macOS
+  </cell>>|<row|<cell|Chore>|<cell|40_3>|<cell|<value|da>>|<cell|set
+  <shell|TEXMACS_HOME_PATH> to XDG_DATA_HOME/XmacsLabs>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 

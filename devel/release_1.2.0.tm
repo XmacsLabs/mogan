@@ -28,6 +28,7 @@
   green>|<cwith|2|2|1|1|cell-background|pastel
   green>|<cwith|9|9|1|1|cell-background|pastel
   green>|<cwith|15|15|1|1|cell-background|pastel
+  green>|<cwith|25|25|1|1|cell-background|pastel
   green>|<table|<row|<cell|<dlink|68>>|<cell|<value|da>>|<cell|Improvements
   on PDF image and conversion>>|<row|<cell|<dlink|67>>|<cell|<value|da>>|<cell|Octave
   plugin>>|<row|<cell|<dlink|65>>|<cell|<value|da>>|<cell|Upgrade to Qt
@@ -53,7 +54,7 @@
   converter as a plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML
   converter as a plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs
   instead of the gs binary>>|<row|<cell|<dlink|40>>|<cell|<value|da>>|<cell|Tuning
-  various default paths>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize
+  <shell|TEXMACS_HOME_PATH>>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize
   the Help menu>>|<row|<cell|<dlink|37>>|<cell|Darcy>|<cell|CICD for the
   Windows platform>>|<row|<cell|<dlink|36>>|<cell|Darcy,
   jingkaimori>|<cell|Build on Windows platform>>|<row|<cell|<dlink|35>>|<cell|<value|da>>|<cell|Use
