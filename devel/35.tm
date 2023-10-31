@@ -3,14 +3,13 @@
 <style|<tuple|tmdoc|devel>>
 
 <\body>
-  <tmdoc-title|Maxima Plugin>
+  <tmdoc-title|Use breeeze icons>
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|60_1>>|<cell|<value|da>>|<cell|Make
-  it work on plat windows>>|<row|<cell|Bug>|<cell|<dlink|60_2>>|<cell|<value|da>>|<cell|Failed
-  to show maxima help menu>>|<row|<cell|Bug>|<cell|60_3>|<cell|<value|da>>|<cell|Blank
-  mode dependent icons>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|35_1>|<cell|<value|da>>|<cell|Use
+  breeze icon introduced in branch 1.1>>|<row|<cell|Chore>|<cell|35_2>|<cell|<value|da>>|<cell|Fix
+  icon in contextual help template>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
