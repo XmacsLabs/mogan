@@ -235,26 +235,4 @@
 	     (load-help-article "devel/scheme/bibliography/bibliography"))
             ---
             ("Browse modules documentation" (apidoc-all-modules))
-            ("Browse symbols documentation" (apidoc-all-symbols)))))
-  ---
-  (-> "Search"
-      ("Documentation" (interactive docgrep-in-doc))
-      (if (detailed-menus?)
-          ("Source code" (interactive docgrep-in-src)))
-      ;;("My documents" (interactive docgrep-in-texts))
-      ("Recent documents" (interactive docgrep-in-recent))
-      ("Documents in folder" (interactive docgrep-in-dir)))
-  (if (detailed-menus?)
-      (-> "Full manuals"
-          (when (url-exists-in-help? "main/man-user-manual.en.tm")
-            ("User manual" (load-help-book "main/man-user-manual")))
-          ;; (when (url-exists-in-help? "tutorial/tut-tutorial.en.tm")
-          ;;   ("Tutorial" (load-help-book "tutorial/tut-tutorial")))
-          (when (url-exists-in-help? "devel/source/source.en.tm")
-            ("Developers guide" (load-help-book "devel/source/source")))
-          (when (url-exists-in-help? "devel/scheme/scheme.en.tm")
-            ("Scheme developers guide" (load-help-book "devel/scheme/scheme")))
-          ---
-          (when (style-has? "tmdoc-style")
-            ("Compile article" (tmdoc-expand-this "article"))
-            ("Compile book" (tmdoc-expand-this "book"))))))
+            ("Browse symbols documentation" (apidoc-all-symbols))))))
