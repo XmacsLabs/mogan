@@ -32,6 +32,30 @@
       Pluto
     </cell>|<\cell>
       glue for <scm|lolly-version>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      51_4
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix for scheme unit tests
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      51_5
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Cleaning for (check check-master)
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      51_6
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      glue for <scm|xmacs-version>
     </cell>>>>
   </wide-tabular>
 

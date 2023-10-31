@@ -27,6 +27,7 @@
   green>|<cwith|30|30|1|1|cell-background|pastel
   green>|<cwith|2|2|1|1|cell-background|pastel
   green>|<cwith|9|9|1|1|cell-background|pastel
+  green>|<cwith|15|15|1|1|cell-background|pastel
   green>|<table|<row|<cell|<dlink|68>>|<cell|<value|da>>|<cell|Improvements
   on PDF image and conversion>>|<row|<cell|<dlink|67>>|<cell|<value|da>>|<cell|Octave
   plugin>>|<row|<cell|<dlink|65>>|<cell|<value|da>>|<cell|Upgrade to Qt
