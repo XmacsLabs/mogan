@@ -163,9 +163,9 @@
   ("cutto" "std X")
   ("pastefrom" "std V")
   ("accent" "M-" #t)
-  ("structured:cmd" "A-")
+  ("structured:cmd" "C-")
   ("structured:move" "M-C-")
-  ("structured:insert" "C-")
+  ("structured:insert" "A-")
   ("structured:geometry" "M-A-"))
 
 (kbd-wildcards
