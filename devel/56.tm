@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|tmdoc>
+<style|<tuple|tmdoc|devel>>
 
 <\body>
   <tmdoc-title|Tuning Cache to avoid corruption>
@@ -9,7 +9,10 @@
 
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|56_1>|<cell|Darcy>|<cell|Invalidate
   all caches for a new release>>|<row|<cell|Chore>|<cell|56_2>|<cell|woutersj>|<cell|Fix
-  the removing of temp dirs>>>>>
+  the removing of temp dirs>>|<row|<cell|Chore>|<cell|56_3>|<cell|<value|da>>|<cell|Remove
+  file_cache and doc_cache>>|<row|<cell|Chore>|<cell|56_4>|<cell|<value|da>>|<cell|Remove
+  dir_cache and stat_cache>>|<row|<cell|Chore>|<cell|56_5>|<cell|<value|da>>|<cell|Use
+  lolly file cache for web files>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
