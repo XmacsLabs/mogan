@@ -30,7 +30,7 @@
   the new mechanism of glue code generation>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|<LaTeX>
   converter as a plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML
   converter as a plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs
-  instead of the gs binary>>|<row|<cell|<dlink|39>>|<cell|>|<cell|Re-organize
+  instead of the gs binary>>|<row|<cell|<dlink|39>>|<cell|<value|da>>|<cell|Re-organize
   the Help menu>>|<row|<cell|<dlink|27>>|<cell|>|<cell|Mogan Draw
   optimization (long term)>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML
   import and export>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan Draw
