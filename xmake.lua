@@ -9,12 +9,20 @@
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
-set_xmakever("2.8.3")
+if is_plat("windows") then
+  set_xmakever("2.8.3")
+else
+  set_xmakever("2.8.5")
+end
 
 -- Check CXX Types/Includes/Funcs
-includes("check_cxxtypes.lua")
-includes("check_cxxincludes.lua")
-includes("check_cxxfuncs.lua")
+if is_plat("windows") then
+    includes("check_cxxtypes.lua")
+    includes("check_cxxincludes.lua")
+    includes("check_cxxfuncs.lua")
+else
+    includes("@builtin/check")
+end
 
 configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
 configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})

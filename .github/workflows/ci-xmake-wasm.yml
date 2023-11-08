@@ -35,7 +35,7 @@ jobs:
           elvish-version: 0.19.2
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.8.3
+          xmake-version: v2.8.5
       - name: update repo
         run: |
           xrepo update-repo
