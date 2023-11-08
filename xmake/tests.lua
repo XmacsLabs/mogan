@@ -10,6 +10,7 @@ function add_target_cpp_test(filepath, dep)
         if is_plat("windows") then
             set_encodings("utf-8") -- eliminate warning C4819 on msvc
             add_ldflags("/LTCG")
+            set_runtimes("MT")
         end
         if is_plat("windows", "mingw") then
             add_syslinks("secur32")
