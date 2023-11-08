@@ -103,7 +103,7 @@ function add_target_research_on_others()
 
     add_packages("lolly")
     if is_plat("mingw", "windows") then
-        add_packages("qt5widgets")
+        add_packages("qt6widgets")
     end
 
     add_deps("libmogan")
