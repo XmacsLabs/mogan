@@ -16,7 +16,8 @@
   for OS_XXX>>|<row|<cell|Chore>|<cell|49_7>|<cell|<value|da>>|<cell|Remove
   unused CONFIG_STD_SETENV>>|<row|<cell|Chore>|<cell|49_8>|<cell|<value|da>>|<cell|Simplify
   tm_configure generation>>|<row|<cell|Chore>|<cell|49_9>|<cell|<value|da>>|<cell|Use
-  static libmogan on all plat>>>>>
+  static libmogan on all plat>>|<row|<cell|Chore>|<cell|49_10>|<cell|<value|da>>|<cell|Upgrade
+  to xmake 2.8.5>>>>>
 
   <tmdoc-copyright|2023|jingkaimori>
 
