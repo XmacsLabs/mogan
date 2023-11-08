@@ -9,21 +9,10 @@
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
-if is_plat("windows") then
-  set_xmakever("2.8.3")
-else
-  set_xmakever("2.8.5")
-end
+set_xmakever("2.8.5")
 
 -- Check CXX Types/Includes/Funcs
-if is_plat("windows") then
-    includes("check_cxxtypes.lua")
-    includes("check_cxxincludes.lua")
-    includes("check_cxxfuncs.lua")
-else
-    includes("@builtin/check")
-end
-
+includes("@builtin/check")
 configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
 configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
 configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
@@ -377,6 +366,9 @@ target("libmogan") do
     set_basename("mogan")
     set_version(TEXMACS_VERSION, {build = "%Y-%m-%d"})
     
+    if is_plat("windows") then
+        set_runtimes("MT")
+    end
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
 

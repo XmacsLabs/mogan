@@ -90,7 +90,8 @@ function add_target_research_on_others()
     set_basename("MGResearch")
 
     if is_plat("windows") then
-        set_optimize("smallest");
+        set_optimize("smallest")
+        set_runtimes("MT")
     end
 
     if is_mode("debug", "releasedbg") and is_plat("mingw", "windows") then
