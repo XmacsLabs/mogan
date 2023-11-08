@@ -742,8 +742,6 @@
   ("C-insert" (kbd-copy))
   ("A-F4" (close-document))
   ("A-S-F4" (close-document*))
-  ("A-left" (cursor-history-backward))
-  ("A-right" (cursor-history-forward))
 
   ("search windows g" (search-next-match #t))
   ("search windows G" (search-next-match #f))
