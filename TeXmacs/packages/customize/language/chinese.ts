@@ -97,6 +97,10 @@
   <assign|render-keyword|<macro|name|<with|font-series|bold|<arg|name>>>>
 
   <assign|dfn|<macro|body|<with|font-series|bold|math-font-series|bold|<arg|body>>>>
+
+  <assign|render-theorem|<\macro|which|body>
+    <render-enunciation|<theorem-name|<arg|which><theorem-sep>>|<arg|body>>
+  </macro>>
 </body>
 
 <initial|<\collection>
