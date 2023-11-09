@@ -128,13 +128,6 @@
   (:require (url-exists-in-path? "ps2pdf"))
   (:shell "ps2pdf" from to))
 
-(define-format xfig
-  (:name "Xfig")
-  (:suffix "fig"))
-
-(converter xfig-file postscript-file
-  (:shell "fig2ps" from to))
-
 (define-format xmgrace
   (:name "Xmgrace")
   (:suffix "agr" "xmgr"))
