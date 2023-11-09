@@ -14,7 +14,7 @@ jobs:
           - ubuntu_ver: 20.04
     runs-on: ubuntu-${{ matrix.ubuntu_ver }}
     timeout-minutes: 45
-    if: always()
+    if: false
     steps:
       - name: Install dependencies
         run: |
