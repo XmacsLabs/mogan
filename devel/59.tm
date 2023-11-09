@@ -10,7 +10,8 @@
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|59_1>|<cell|Darcy>|<cell|Swap
   the shortcuts of Preview and Preview screen>>|<row|<cell|Bug>|<cell|<dlink|59_2>>|<cell|<value|da>>|<cell|Failed
   to hide the app via <key|std h> on macOS>>|<row|<cell|Chore>|<cell|59_3>|<cell|<value|da>>|<cell|Tuning
-  <verbatim|structured:insert> and <verbatim|structured:cmd>>>>>>
+  <verbatim|structured:insert> and <verbatim|structured:cmd>>>|<row|<cell|Bug>|<cell|<dlink|59_4>>|<cell|<value|da>>|<cell|Failed
+  to show the shortcut <key|C-&> in the Qt menu>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
