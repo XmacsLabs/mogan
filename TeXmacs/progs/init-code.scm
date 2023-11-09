@@ -320,7 +320,7 @@
 (lazy-format (convert tmml init-tmml) tmml)
 (lazy-format (convert html init-html) html)
 (lazy-format (convert images init-images)
-             postscript pdf xfig xmgrace svg xpm jpeg ppm gif png pnm)
+             postscript pdf xmgrace svg xpm jpeg ppm gif png pnm)
 (lazy-define (convert images tmimage)
              export-selection-as-graphics clipboard-copy-image)
 (lazy-define (convert rewrite init-rewrite) texmacs->code texmacs->verbatim)
