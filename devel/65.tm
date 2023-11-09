@@ -14,7 +14,8 @@
   retina_factor automatically if retina_manual is false on Qt
   6>>|<row|<cell|Chore>|<cell|65_4>|<cell|<value|da>>|<cell|Upgrade to Qt 6
   on Ubuntu 22.04>>|<row|<cell|Chore>|<cell|65_5>|<cell|<value|da>>|<cell|Qt
-  6: use startCommand instead of start>>>>>
+  6: use startCommand instead of start>>|<row|<cell|Bug>|<cell|<dlink|65_6>>|<cell|<value|da>>|<cell|Qt
+  6: Failed to recognize <key|altcmd> and <key|extra>>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
