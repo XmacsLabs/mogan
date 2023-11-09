@@ -183,10 +183,10 @@ TeXmacs_main (int argc, char** argv) {
       }
       else if ((s == "-v") || (s == "-version")) {
         cout << "\n";
-        cout << "TeXmacs version " << TEXMACS_VERSION << "\n";
-        cout << "SVN version " << TEXMACS_REVISION << "\n";
-        cout << TEXMACS_COPYRIGHT << "\n";
-        cout << "\n";
+        cout << "TeXmacs version " << TEXMACS_VERSION << LF;
+        cout << TEXMACS_COPYRIGHT << LF << LF;
+        cout << "Mogan Research version " << XMACS_VERSION << LF;
+        cout << "(c) 2022-2023 by Mogan Developers" << LF << LF;
         exit (0);
       }
       else if ((s == "-p") || (s == "-path")) {
