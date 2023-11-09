@@ -32,7 +32,7 @@
 #endif
 
 
-#define TEXMACS_COPYRIGHT (string("(c) 1999-2020 by Joris van der Hoeven and others"))
+#define TEXMACS_COPYRIGHT (string("(c) 1999-2023 by Joris van der Hoeven and others"))
 
 #define THE_CURSOR 1
 #define THE_FOCUS 2
