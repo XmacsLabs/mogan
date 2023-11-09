@@ -3,15 +3,14 @@
 <style|<tuple|tmdoc|devel>>
 
 <\body>
-  <tmdoc-title|Plugin Center>
+  <tmdoc-title|Mogan STEM Suite>
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Branding>|<cell|62_1>|<cell|Darcy>|<cell|Mogan
-  STEM Suite>>|<row|<cell|Branding>|<cell|62_2>|<cell|Darcy>|<cell|Rename
-  Mogan Editor to Mogan Research>>|<row|<cell|Branding>|<cell|62_3>|<cell|Darcy>|<cell|Plan
-  for Mogan Code>>|<row|<cell|Branding>|<cell|62_4>|<cell|Darcy>|<cell|Plan
-  for Mogan Beamer>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Branding>|<cell|62_1>|<cell|<value|da>>|<cell|Mogan
+  STEM Suite>>|<row|<cell|Branding>|<cell|62_2>|<cell|<value|da>>|<cell|Rename
+  Mogan Editor to Mogan Research>>|<row|<cell|Chore>|<cell|62_3>|<cell|<value|da>>|<cell|<verbatim|--version>
+  shows info about Mogan Research>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
