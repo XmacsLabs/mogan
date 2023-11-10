@@ -7,11 +7,15 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|59_1>|<cell|Darcy>|<cell|Swap
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|4|4|1|1|cell-valign|b>|<cwith|5|5|4|4|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|59_1>|<cell|Darcy>|<cell|Swap
   the shortcuts of Preview and Preview screen>>|<row|<cell|Bug>|<cell|<dlink|59_2>>|<cell|<value|da>>|<cell|Failed
   to hide the app via <key|std h> on macOS>>|<row|<cell|Chore>|<cell|59_3>|<cell|<value|da>>|<cell|Tuning
   <verbatim|structured:insert> and <verbatim|structured:cmd>>>|<row|<cell|Bug>|<cell|<dlink|59_4>>|<cell|<value|da>>|<cell|Failed
-  to show the shortcut <key|C-&> in the Qt menu>>>>>
+  to show the shortcut <key|C-&> in the Qt
+  menu>>|<row|<cell|Bug>|<cell|<dlink|59_5>>|<cell|<value|da>>|<\cell>
+    Failed to insert itemize and enumerate via shortcut on macOS using Emacs
+    style
+  </cell>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
