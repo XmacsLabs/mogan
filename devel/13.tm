@@ -9,7 +9,8 @@
 
   <\wide-tabular>
     <tformat|<cwith|1|1|2|2|cell-background|pastel
-    green>|<cwith|2|-1|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|2|-1|2|2|cell-background|pastel
+    green>|<cwith|7|7|3|3|cell-valign|b>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       13_1
@@ -65,6 +66,14 @@
       Darcy
     </cell>|<\cell>
       Upgrade to lolly 1.2.15
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      13_8
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Upgrade to lolly 1.2.16/1.2.17
     </cell>>>>
   </wide-tabular>
 
