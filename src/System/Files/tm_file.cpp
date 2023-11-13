@@ -51,7 +51,7 @@
 bool tm_load_string (url u, string& s, bool fatal) {
   if (is_ramdisc (u)) {
     s= as_string (u[1][2]);
-    return true;
+    return false;
   } else {
     return load_string (concretize_url (u), s, fatal);
   }

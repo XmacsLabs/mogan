@@ -283,8 +283,11 @@ image_size (url image, int& w, int& h) {
     w=h=0;
     image_size_sub (image, w, h);
     if ((w <= 0) || (h <= 0)) {
-      convert_error << "bad image size for '" << image << "'"
-        << " setting 35x35 " << LF;
+      if (suffix (image) == "svg") {
+        debug_convert << "bad image size for '" << image << "'" << " setting 35x35 " << LF;
+      } else {
+        convert_error << "bad image size for '" << image << "'" << " setting 35x35 " << LF;
+      }
       w= 35; h= 35;
     }
     // for ps and eps images the imgbox should have been cached
