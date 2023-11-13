@@ -20,12 +20,11 @@
 #include "tm_sys_utils.hpp"
 
 
+bool tm_load_string (url u, string& s, bool fatal);
 inline string tm_string_load (url u) {
-  return string_load (concretize_url (u));
-}
-
-inline bool tm_load_string (url u, string& s, bool fatal) {
-  return load_string (concretize_url (u), s, fatal);
+  string content;
+  tm_load_string (u, content, false);
+  return content;
 }
 
 inline string sys_concretize (url u1) { return escape_sh (concretize (u1)); }
