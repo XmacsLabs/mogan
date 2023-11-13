@@ -8,7 +8,8 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|1|1|2|2|cell-background|pastel
+    green>|<cwith|2|2|3|3|cell-valign|b>|<table|<row|<\cell>
       Bug
     </cell>|<\cell>
       <dlink|47_1>
@@ -24,6 +25,14 @@
       <value|da>
     </cell>|<\cell>
       slink starting with http/https failed to open
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      47_3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix preview-buffer via open-url
     </cell>>>>
   </wide-tabular>
 
