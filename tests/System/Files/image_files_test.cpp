@@ -26,7 +26,14 @@ private slots:
 void
 TestImageFiles::test_svg_image_size () {
   int w= 0, h= 0;
-  svg_image_size (url ("$TEXMACS_PATH/misc/images/fancy-c.svg"), w, h);
+  url u1= url ("$TEXMACS_PATH/misc/images/fancy-c.svg");
+  svg_image_size (u1, w, h);
+  QCOMPARE (w, 24);
+  QCOMPARE (h, 24);
+
+  w=h=0;
+  url u2= url_ramdisc (string_load (u1)) * url("fancy-c.svg");
+  svg_image_size (u2, w, h);
   QCOMPARE (w, 24);
   QCOMPARE (h, 24);
 }
