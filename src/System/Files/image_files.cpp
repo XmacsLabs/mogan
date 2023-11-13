@@ -359,7 +359,7 @@ pdf_image_size (url image, int& w, int& h) {
 void
 svg_image_size (url image, int& w, int& h) {
   string content;
-  bool err= load_string (image, content, false);
+  bool err= tm_load_string (image, content, false);
   if (!err) {
     tree t= parse_xml (content);
     tree result= find_first_element_by_name (t, "svg");

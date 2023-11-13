@@ -48,6 +48,15 @@
 
 #include "data_cache.hpp"
 
+bool tm_load_string (url u, string& s, bool fatal) {
+  if (is_ramdisc (u)) {
+    s= as_string (u[1][2]);
+    return true;
+  } else {
+    return load_string (concretize_url (u), s, fatal);
+  }
+}
+
 void system (string which, url u1) {
   lolly::system::call (which * " " * sys_concretize (u1)); }
 void system (string which, url u1, url u2) {
