@@ -18,6 +18,7 @@
 #include "preferences.hpp"
 #include "object_l5.hpp"
 #include "scheme.hpp"
+#include "sys_utils.hpp"
 
 #include "config.h"
 
@@ -419,18 +420,14 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
             if (r == "less") r= "<";
             else if (r == "gtr") r= ">";
         }
-#ifdef Q_OS_MAC
-        if (mods & Qt::AltModifier) {
+#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
+        if (os_macos () && (mods & Qt::AltModifier)) {
           // Alt produces many symbols in Mac keyboards: []|{} etc.
           if ((N(r) != 1 ||
-               ((int) (unsigned char) r[0]) < 32 ||
-               ((int) (unsigned char) r[0]) >= 128) &&
+              ((int) (unsigned char) r[0]) < 32 ||
+              ((int) (unsigned char) r[0]) >= 128) &&
               key >= 32 && key < 128 &&
-#if QT_VERSION <  QT_VERSION_CHECK(6, 0, 0)
               ((mods & (Qt::MetaModifier + Qt::ControlModifier)) == 0)) {
-#else
-              ((mods & (Qt::MetaModifier | Qt::ControlModifier)) == 0)) {
-#endif
             if ((mods & Qt::ShiftModifier) == 0 && key >= 65 && key <= 90)
               key += 32;
             qtcomposemap (key)= r;
@@ -456,6 +453,34 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
 
     if (DEBUG_QT && DEBUG_KEYBOARD) debug_qt << "key press: " << r << LF;
     the_gui->process_keypress (tm_widget(), r, texmacs_time());
+  }
+}
+
+void
+QTMWidget::keyReleaseEvent (QKeyEvent* event) {
+  if (os_macos ()) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    Qt::KeyboardModifiers mods = event->modifiers();
+    int key = event->key();
+
+    // see https://bugreports.qt.io/browse/QTBUG-115525
+    if (mods & Qt::ControlModifier) {
+      string r;
+      if (key >=32 && key < 128) {
+        if ((mods & Qt::ShiftModifier) == 0 && key >= 65 && key <= 90)
+          key += 32;
+        r= string ((char) key);
+        if (mods & Qt::AltModifier) {
+          r= "M-A-" * r;
+        }
+        if (mods & Qt::MetaModifier) {
+          r= "M-C-" * r;
+        }
+      }
+      if (DEBUG_QT && DEBUG_KEYBOARD) debug_qt << "key press: " << r << LF;
+      the_gui->process_keypress (tm_widget(), r, texmacs_time());
+    }
+#endif
   }
 }
 
