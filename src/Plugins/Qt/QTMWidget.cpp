@@ -464,7 +464,8 @@ QTMWidget::keyReleaseEvent (QKeyEvent* event) {
     int key = event->key();
 
     // see https://bugreports.qt.io/browse/QTBUG-115525
-    if (mods & Qt::ControlModifier) {
+    // This branch is only for Option-Command-x or Ctrl-Command-x
+    if ((mods & Qt::ControlModifier) && ((mods & Qt::AltModifier) || (mods & Qt::MetaModifier))) {
       string r;
       if (key >=32 && key < 128) {
         if ((mods & Qt::ShiftModifier) == 0 && key >= 65 && key <= 90)
