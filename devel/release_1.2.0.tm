@@ -11,9 +11,10 @@
 
   <section|Mogan Editor v1.2.0 beta>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|22|22|1|1|cell-background|pastel
-  red>|<cwith|21|21|1|1|cell-background|pastel
-  red>|<cwith|28|28|3|3|cell-valign|b>|<cwith|29|29|1|1|cell-valign|b>|<cwith|8|8|2|2|cell-valign|c>|<cwith|3|3|2|2|cell-valign|c>|<table|<row|<cell|<dlink|69>>|<cell|<value|da>>|<cell|Improvements
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|23|23|1|1|cell-background|pastel
+  red>|<cwith|22|22|1|1|cell-background|pastel
+  red>|<cwith|29|29|3|3|cell-valign|b>|<cwith|30|30|1|1|cell-valign|b>|<cwith|9|9|2|2|cell-valign|c>|<cwith|4|4|2|2|cell-valign|c>|<table|<row|<cell|<dlink|70>>|<cell|<value|da>>|<cell|Syntax
+  Highlight on programming languages>>|<row|<cell|<dlink|69>>|<cell|<value|da>>|<cell|Improvements
   on styles for Chinese users>>|<row|<cell|<dlink|68>>|<cell|<value|da>>|<cell|Improvements
   on PDF image and conversion>>|<row|<cell|<dlink|64>>|<cell|>|<cell|Image
   import and exports>>|<row|<cell|<dlink|63>>|<cell|>|<cell|Fixing style
