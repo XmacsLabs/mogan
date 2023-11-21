@@ -848,7 +848,7 @@ qt_ui_element_rep::as_qwidget () {
         QToolButton* b = new QToolButton();
         
         QTMLazyMenu* lm = new QTMLazyMenu (pw, b, type == pullright_button);
-        b->setIcon (QIcon (as_pixmap (*xpm_image (image))));
+        b->setIcon (qt_load_icon (image));
         b->setPopupMode (QToolButton::InstantPopup);
         b->setAutoRaise (true);
         b->setMenu (lm);
