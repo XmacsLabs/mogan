@@ -850,7 +850,7 @@
       (insert-go-to `(inactive (specific ,s "")) '(0 1 0))))
 
 (tm-define (make-include u)
-  (insert `(include ,(url->delta-unix u))))
+  (insert `(include ,(utf8->cork (url->delta-unix u)))))
 
 (tm-define (make-inline-image l)
   (apply make-image (cons* (url->delta-unix (car l)) #f (cdr l))))
