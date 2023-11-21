@@ -10,7 +10,8 @@
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|35_1>|<cell|<value|da>>|<cell|Use
   breeze icon introduced in branch 1.1>>|<row|<cell|Chore>|<cell|35_2>|<cell|<value|da>>|<cell|Fix
   icon in contextual help template>>|<row|<cell|Chore>|<cell|35_3>|<cell|<value|da>>|<cell|Support
-  dark mode for icons>>>>>
+  dark mode for icons>>|<row|<cell|Chore>|<cell|35_4>|<cell|<value|da>>|<cell|Icon
+  for pulldown_button: tm_preferences.xpm>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
