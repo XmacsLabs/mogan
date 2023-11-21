@@ -109,7 +109,7 @@ edit_env_rep::rewrite (tree t) {
   case VAR_INCLUDE:
     {
       if (N(t) == 0) return tree (ERROR, "invalid include");
-      url file_name= url_unix (exec_string (t[0]));
+      url file_name= url_unix (cork_to_utf8 (exec_string (t[0])));
       url file_rel = relative (base_file_name, file_name);
       if (file_rel == base_file_name)
         return tree (ERROR, "invalid self include");
