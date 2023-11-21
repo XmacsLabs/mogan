@@ -37,7 +37,7 @@
                         " by " by " on " date ": " msg*))
                  (dest (version-revision-url head rev)))
             (when (!= (url->url dest) (url->url cur))
-              ((eval name)
+              ((eval `(verbatim ,name))
                (if (version-newer? dest cur)
                    (compare-with-newer dest)
                    (compare-with-older dest)))))))
