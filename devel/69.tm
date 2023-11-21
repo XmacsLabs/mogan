@@ -3,7 +3,7 @@
 <style|<tuple|tmdoc|chinese|devel>>
 
 <\body>
-  <tmdoc-title|Improvements on styles for Chinese users>
+  <tmdoc-title|Improvements for Chinese users>
 
   <section|Tasks>
 
@@ -12,7 +12,8 @@
   cite* should not use italic font>>|<row|<cell|Chore>|<cell|69_3>|<cell|<value|da>>|<cell|Chinese:
   do not use italic font for the render-theorem
   body>>|<row|<cell|Chore>|<cell|69_4>|<cell|<value|da>>|<cell|Chinese: use
-  bold font for dfn>>>>>
+  bold font for dfn>>|<row|<cell|Bug>|<cell|<dlink|69_5>>|<cell|<value|da>>|<cell|Inconsist
+  encoding to include a file with unicode filename>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
