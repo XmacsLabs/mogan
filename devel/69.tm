@@ -13,7 +13,9 @@
   do not use italic font for the render-theorem
   body>>|<row|<cell|Chore>|<cell|69_4>|<cell|<value|da>>|<cell|Chinese: use
   bold font for dfn>>|<row|<cell|Bug>|<cell|<dlink|69_5>>|<cell|<value|da>>|<cell|Inconsist
-  encoding to include a file with unicode filename>>>>>
+  encoding to include a file with unicode
+  filename>>|<row|<cell|Chore>|<cell|69_6>|<cell|<value|da>>|<cell|Prevent
+  Version-\<gtr\>Compare with from being translated>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
