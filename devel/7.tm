@@ -32,6 +32,14 @@
       <value|da>
     </cell>|<\cell>
       Crash when converting a big number to roman
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|7_4>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      It freezes when I diff using the Rough grain
     </cell>>>>
   </wide-tabular>
 
