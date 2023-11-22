@@ -10,7 +10,9 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|2|2|cell-valign|b>|<cwith|2|2|1|1|cell-valign|b>|<cwith|3|3|2|2|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|1|1|2|2|cell-valign|b>|<cwith|2|2|1|1|cell-valign|b>|<cwith|3|3|2|2|cell-valign|b>|<cwith|8|8|2|2|cell-background|pastel
+    green>|<cwith|10|10|2|2|cell-background|pastel
+    green>|<cwith|9|9|2|2|cell-background|pastel green>|<table|<row|<\cell>
       19_1
     </cell>|<\cell>
       Chore
@@ -66,6 +68,30 @@
       Darcy
     </cell>|<\cell>
       Move language-sensitive styles to language plugins
+    </cell>>|<row|<\cell>
+      19_8
+    </cell>|<\cell>
+      Chore
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Use utf-8 for all language dic
+    </cell>>|<row|<\cell>
+      19_9
+    </cell>|<\cell>
+      Chore
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Use language name but not flag
+    </cell>>|<row|<\cell>
+      19_10
+    </cell>|<\cell>
+      Chore
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Use verbatim but not fail on unknown language
     </cell>>>>
   </wide-tabular>
 
