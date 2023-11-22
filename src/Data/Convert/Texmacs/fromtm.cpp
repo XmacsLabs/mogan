@@ -11,10 +11,12 @@
 ******************************************************************************/
 
 #include "convert.hpp"
+#include "converter.hpp"
 #include "path.hpp"
 #include "vars.hpp"
 #include "drd_std.hpp"
 #include "tree_helper.hpp"
+#include "scheme.hpp"
 
 /******************************************************************************
 * Conversion of TeXmacs strings of the present format to TeXmacs trees
@@ -94,8 +96,21 @@ tm_reader::read_char () {
     skip_spaces (buf, pos);
   }
   if (pos >= N(buf)) return "";
-  pos++;
-  return buf (pos-1, pos);
+
+  if (get_preference ("tm format without utf8", "off") == "on") {
+    pos++;
+    return buf (pos-1, pos);
+  } else {
+    int old_pos= pos;
+    unsigned int code= decode_from_utf8 (buf, pos);
+    if (pos-old_pos == 1) {
+      return buf (pos-1, pos);
+    } else if (pos-old_pos == 2) {
+      return "\\<#00" * as_hexadecimal (code) * "\\>";
+    } else {
+      return "\\<#" * as_hexadecimal (code) * "\\>";
+    }
+  }
 }
 
 string
@@ -103,6 +118,10 @@ tm_reader::read_next () {
   int old_pos= pos;
   string c= read_char ();
   if (c == "") return c;
+  if (get_preference ("tm format without utf8", "off") == "off") {
+    if (N(c) == 9) return c; // c is like \<#FFFF\>
+  }
+
   switch (c[0]) {
   case '\t':
   case '\n':
