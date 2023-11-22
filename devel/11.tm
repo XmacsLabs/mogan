@@ -29,7 +29,7 @@
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
-      11_3
+      <dlink|11_3>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
