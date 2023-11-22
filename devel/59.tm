@@ -15,7 +15,9 @@
   menu>>|<row|<cell|Bug>|<cell|<dlink|59_5>>|<cell|<value|da>>|<\cell>
     Failed to insert itemize and enumerate via shortcut on macOS using Emacs
     style
-  </cell>>>>>
+  </cell>>|<row|<cell|Chore>|<cell|59_6>|<cell|Tesla I. Zhang>|<cell|Emacs
+  style shortcut to kill word>>|<row|<cell|Chore>|<cell|<dlink|59_7>>|<cell|<value|da>>|<cell|std
+  V to paste from verbatim>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
