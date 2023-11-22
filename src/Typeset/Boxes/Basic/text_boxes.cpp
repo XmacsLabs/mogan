@@ -83,6 +83,8 @@ struct text_box_rep: public box_rep {
   font      get_leaf_font ();
   pencil    get_leaf_pencil ();
   SI        get_leaf_offset (string search);
+  box       left_auto_spacing(SI size);
+  box       right_auto_spacing(SI size);
 };
 
 /******************************************************************************
@@ -127,6 +129,30 @@ text_box_rep::adjust_kerning (int mode, double factor) {
   }
   if ((mode & START_OF_LINE) != 0) nxk->left  -= pad;
   if ((mode & END_OF_LINE  ) != 0) nxk->right -= pad;
+  return tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+}
+
+box
+text_box_rep::right_auto_spacing(SI size) {
+  xkerning nxk (0, 0, 0);
+  if (!is_nil(xk)) {
+    nxk->left= xk->left;
+    nxk->right= xk->right;
+    nxk->padding = xk->padding;
+  }
+  nxk->right = nxk->right + size;
+  return tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+}
+
+box
+text_box_rep::left_auto_spacing(SI size) {
+  xkerning nxk (0, 0, 0);
+  if (!is_nil(xk)) {
+    nxk->left= xk->left;
+    nxk->right= xk->right;
+    nxk->padding= xk->padding;
+  }
+  nxk->left= nxk->left + size;
   return tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
 }
 

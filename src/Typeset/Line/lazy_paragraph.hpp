@@ -31,6 +31,10 @@ struct lazy_paragraph_rep: public lazy_rep {
 protected:
   array<box>    items;       // the boxes on the line in order
   array<SI>     items_sp;    // the final spaces between boxes in lines
+  array<int>    items_left;  // the index of the previous non-empty text box item
+  array<int>    items_right; // the index of the next non-empty text box item
+  array<bool>   items_box;  // is non-empty text box item: true / false
+  array<bool>   items_cjk_text;  // is non-empty text box item: true / false
   array<space>  spcs;        // the spacing between the boxes of items
   array<lazy>   fl;          // floating insertions
   array<line_item> notes;    // line notes
@@ -72,6 +76,7 @@ protected:
 
   void find_first_last_text (int& first, int& last);
   void protrude (bool lf, bool rf);
+  void cjk_auto_spacing ();
   array<box> adjusted (double factor, int first, int last);
   void increase_kerning (SI dw, SI the_width);
   void decrease_kerning (SI dw, SI the_width);

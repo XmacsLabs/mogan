@@ -132,6 +132,30 @@ lazy_paragraph_rep::operator tree () {
 * Filling lines of paragraphs
 ******************************************************************************/
 
+static bool
+is_not_skip (line_item i) {
+  return i->op_type != OP_SKIP;
+}
+
+static bool
+is_text (line_item i) {
+  box b= i->b;
+  return i->type == STRING_ITEM && b->get_type () == TEXT_BOX;
+}
+
+static bool
+is_cjk_text (line_item i) {
+  if (!is_text (i)) return false;
+  string text = i->b->get_leaf_string ();
+  return is_cjk_unified_ideographs (text) && (text != "<#3000>");
+}
+
+static bool
+is_cjk_language (language lan) {
+  return lan->lan_name == "chinese" || lan->lan_name == "korean"
+    || lan->lan_name == "japanese" || lan->lan_name == "taiwanese";
+}
+
 void
 lazy_paragraph_rep::line_print (line_item item) {
   // cout << "Printing: " << item << "\n";
@@ -183,6 +207,11 @@ lazy_paragraph_rep::line_print (line_item item) {
   if (N(spcs)>0) cur_w = cur_w + spcs[N(spcs)-1];
   items << item->b;
   spcs  << item->spc;
+  if (is_cjk_language (env->lan)) {
+    // cout << "line item: " << item << LF;
+    items_box << is_not_skip (item);
+    items_cjk_text << is_cjk_text (item);
+  }
   item->b->x0= cur_w->def;
   item->b->y0= 0;
   cur_w =  cur_w + space (item->b->x2);
@@ -248,6 +277,84 @@ lazy_paragraph_rep::protrude (bool lf, bool rf) {
       box pro= items[i]->adjust_kerning (mode, 0.0);
       cur_w += pro->w() - items[i]->w();
       items[i]= pro;
+    }
+  }
+}
+
+void
+lazy_paragraph_rep::cjk_auto_spacing () {
+  int prev= -1;
+  int now= -1;
+  for (int i=cur_start; i<N(items); i++) {
+    if (items_box[i]) {
+      prev= now;
+      now= i;
+      items_left << prev;
+    } else {
+      items_left << -1;
+    }
+  }
+
+  prev= -1;
+  now= -1;
+  array<int> tmp= array<int>();
+  for (int i=N(items)-1; i>=cur_start; i--) {
+    if (items_box[i]) {
+      prev= now;
+      now= i;
+      tmp << prev;
+    } else {
+      tmp << -1;
+    }
+  }
+  for (int i=N(tmp)-1; i>=0; i--) {
+    items_right << tmp[i];
+  }
+
+  ASSERT (N(items) == N(items_box)
+    && N(items) == N(items_left)
+    && N(items) == N(items_right)
+    && N(items) == N(items_cjk_text),
+    "length of items must match"
+  )
+
+  bool no_cjk_flag= true;
+  for (int i=cur_start; i<N(items); i++) {
+    if (items_cjk_text[i]) {
+      no_cjk_flag= false;
+      break;
+    }
+  }
+  if (no_cjk_flag) return ;
+  
+  int first, last;
+  find_first_last_text (first, last);
+
+  for (int i=cur_start; i+1<N(items); i++) {
+    if (i != last
+        && items_cjk_text[i]                    // test if the current item is a cjk text box
+        && items_right[i]!=-1                   // test if the right item is not empty
+        && is_text (a[items_right[i]])          // test if the right item is a text box
+        && !items_cjk_text[items_right[i]]) {   // test if the right item is not a cjk text box
+      box b= items[i];
+      SI auto_space_size= b->get_leaf_font()->spc->def * 0.2;
+      box nb= b->right_auto_spacing (auto_space_size);
+      cur_w += nb->w() - items[i]->w();
+      items[i]= nb;
+    }
+  }
+
+  for (int i=cur_start+1; i<N(items); i++) {
+    if (i != first
+        && items_cjk_text[i]                    // test if the current item is a cjk text box
+        && items_left[i]!=-1                    // test if the left item is not empty
+        && is_text(a[items_left[i]])            // test if the left item is a text box
+        && !items_cjk_text[items_left[i]]) {    // test if the left item is not a cjk text box
+      box b= items[i];
+      SI auto_space_size= b->get_leaf_font()->spc->def * 0.2;
+      box nb= b->left_auto_spacing (auto_space_size);
+      cur_w += nb->w() - items[i]->w();
+      items[i]= nb;
     }
   }
 }
@@ -444,6 +551,10 @@ lazy_paragraph_rep::make_unit (string mode, SI the_width, bool break_flag) {
   if (protrusion != 0)
     protrude (protrude_left, protrude_right);
 
+  if (is_cjk_language (env->lan)) {
+    cjk_auto_spacing ();
+  }
+
   // stretching case
   if (mode == "justify" &&
       cur_w->def < the_width &&
@@ -616,6 +727,10 @@ void
 lazy_paragraph_rep::line_start () {
   items   = array<box> ();
   items_sp= array<SI> ();
+  items_box= array<bool> ();
+  items_cjk_text= array<bool> ();
+  items_left = array<int> ();
+  items_right = array<int> ();
   spcs    = array<space> ();
   fl      = array<lazy> ();
   notes   = array<line_item> ();
