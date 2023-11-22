@@ -14,6 +14,7 @@
 #include "hyphenate.hpp"
 #include "impl_language.hpp"
 #include "sys_utils.hpp"
+#include "hashset.hpp"
 
 /******************************************************************************
 * Western text languages / 8 bit charset
