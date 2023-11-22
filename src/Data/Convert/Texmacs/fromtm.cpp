@@ -16,6 +16,7 @@
 #include "vars.hpp"
 #include "drd_std.hpp"
 #include "tree_helper.hpp"
+#include "scheme.hpp"
 
 /******************************************************************************
 * Conversion of TeXmacs strings of the present format to TeXmacs trees
