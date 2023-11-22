@@ -96,14 +96,19 @@ tm_reader::read_char () {
   }
   if (pos >= N(buf)) return "";
 
-  int old_pos= pos;
-  unsigned int code= decode_from_utf8 (buf, pos);
-  if (pos-old_pos == 1) {
+  if (get_preference ("tm format with utf8", "on") == "off") {
+    pos++;
     return buf (pos-1, pos);
-  } else if (pos-old_pos == 2) {
-    return "\\<#00" * as_hexadecimal (code) * "\\>";
   } else {
-    return "\\<#" * as_hexadecimal (code) * "\\>";
+    int old_pos= pos;
+    unsigned int code= decode_from_utf8 (buf, pos);
+    if (pos-old_pos == 1) {
+      return buf (pos-1, pos);
+    } else if (pos-old_pos == 2) {
+      return "\\<#00" * as_hexadecimal (code) * "\\>";
+    } else {
+      return "\\<#" * as_hexadecimal (code) * "\\>";
+    }
   }
 }
 
@@ -112,7 +117,9 @@ tm_reader::read_next () {
   int old_pos= pos;
   string c= read_char ();
   if (c == "") return c;
-  if (N(c) == 9) return c; // c is like \<#FFFF\>
+  if (get_preference ("tm format with utf8", "on") == "on") {
+    if (N(c) == 9) return c; // c is like \<#FFFF\>
+  }
 
   switch (c[0]) {
   case '\t':
