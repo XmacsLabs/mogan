@@ -419,6 +419,118 @@ oriental_language_rep::hyphenate (
   right= s (after+1, N(s));
 }
 
+
+/******************************************************************************
+* Chinese typography
+******************************************************************************/
+
+struct chinese_language_rep: language_rep {
+  hashset<string> do_not_start; 
+  hashset<string> do_not_end;
+  chinese_language_rep (string lan_name);
+  text_property advance (tree t, int& pos);
+  array<int> get_hyphens (string s);
+  void hyphenate (string s, int after, string& left, string& right);
+};
+
+chinese_language_rep::chinese_language_rep (string lan_name):
+  language_rep (lan_name), do_not_start (), do_not_end ()
+{
+  // half width
+  do_not_start << "." << "," << ":" << ";" << "!" << "?" << "/" << "-";
+
+  auto full_width_do_not_start= array<string>();
+  full_width_do_not_start
+    << string("。") << string("，") << string("：") << string("；")
+    << string("！") << string("？") << string("、") << string("～")
+    << string("』") << string("」") << string("）") << string("】")
+    << string("》") << string("〉");
+  auto full_width_do_not_end = array<string>();
+  full_width_do_not_end
+    << string("『") << string("「") << string("（") << string("【")
+    << string("《") << string("〈");
+
+  for (int i=0; i<N(full_width_do_not_start); i++) {
+    do_not_start << utf8_to_cork(full_width_do_not_start[i]);
+  }
+  for (int i=0; i<N(full_width_do_not_end); i++) {
+    do_not_end << utf8_to_cork(full_width_do_not_end[i]);
+  }
+
+  // special full width characters
+  do_not_start << "<#201D>";  // ”
+  do_not_start << "<#2014>";  // —
+  do_not_start << "'";  // ’ <#2019>
+  do_not_start << "<centerdot>";
+ 
+  do_not_end << "<#201C>"; // “
+  do_not_end << "<#2018>"; // ‘
+}
+
+text_property
+chinese_language_rep::advance (tree t, int& pos) {
+  string s= t->label;
+  if (pos >= N(s)) return &tp_normal_rep;
+
+  if (s[pos] == ' ') {
+    pos++;
+    return &tp_space_rep;
+  }
+
+  if (s[pos] != '<') {
+    if (do_not_start->contains (s[pos])) {
+      pos++;
+      return &tp_cjk_period_rep;
+    } else {
+      while (pos < N(s) && s[pos] != ' ' && s[pos] != '<' && !do_not_start->contains(s[pos]))
+        tm_char_forwards (s, pos);
+      return &tp_cjk_no_break_rep;
+    }
+  }
+
+  // <centerdot>, <alpha>
+  if (s[pos] == '<' && !test (s, pos, "<#")) {
+    int start=pos;
+    tm_char_forwards (s, pos);
+    string c= s (start, pos);
+    if (do_not_start->contains (c)) {
+      return &tp_cjk_period_rep;
+    } else {
+      return &tp_normal_rep;
+    }
+  }
+
+  int start= pos;
+  tm_char_forwards (s, pos);
+  string c= s (start, pos);
+
+  if (do_not_start->contains (c)) {
+    return &tp_cjk_period_rep;
+  }
+  if (do_not_end->contains (c)) {
+    return &tp_cjk_no_break_rep;
+  }
+
+  return &tp_cjk_normal_rep;
+}
+
+array<int>
+chinese_language_rep::get_hyphens (string s) {
+  int i;
+  array<int> penalty (N(s)+1);
+  for (i=0; i<N(penalty); i++) penalty[i]= HYPH_INVALID;
+  return penalty;
+}
+
+void
+chinese_language_rep::hyphenate (
+  string s, int after, string& left, string& right)
+{
+  left = s (0, after+1);
+  right= s (after+1, N(s));
+}
+
+
 /******************************************************************************
 * Main interface
 ******************************************************************************/
@@ -479,13 +591,18 @@ make_oriental_language (string s) {
   return tm_new<oriental_language_rep> (s);
 }
 
+static language
+make_chinese_language (string s) {
+  return tm_new<chinese_language_rep> (s);
+}
+
 language
 text_language (string s) {
   if (language::instances -> contains (s)) return language (s);
   if (s == "american")   return make_text_language (s, "us");
   if (s == "british")    return make_text_language (s, "ukenglish");
   if (s == "bulgarian")  return make_ucs_text_language (s, "bulgarian");
-  if (s == "chinese")    return make_oriental_language (s);
+  if (s == "chinese")    return make_chinese_language(s);
   if (s == "croatian")   return make_text_language (s, "croatian");
   if (s == "czech")      return make_text_language (s, "czech");
   if (s == "danish")     return make_text_language (s, "danish");
@@ -508,7 +625,7 @@ text_language (string s) {
   if (s == "slovene")    return make_text_language (s, "slovene");
   if (s == "spanish")    return make_text_language (s, "spanish");
   if (s == "swedish")    return make_text_language (s, "swedish");
-  if (s == "taiwanese")  return make_oriental_language (s);
+  if (s == "taiwanese")  return make_chinese_language (s);
   if (s == "ukrainian")  return make_ucs_text_language (s, "ukrainian");
   if (s == "verbatim")   return tm_new<verb_language_rep> ("verbatim");
 
