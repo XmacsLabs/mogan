@@ -181,6 +181,8 @@ public:
   bool contains_rectangle (SI x1, SI y1, SI x2, SI y2);
 
   virtual box  adjust_kerning (int mode, double factor);
+  virtual box  left_auto_spacing (SI size);
+  virtual box  right_auto_spacing (SI size);
   virtual box  expand_glyphs (int mode, double factor);
   virtual void get_cell_extents (SI& l, SI& r);
   virtual box  adjust_cell_geometry (SI dx, SI dl, SI dr);

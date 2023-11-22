@@ -97,6 +97,17 @@ box_rep::adjust_kerning (int mode, double factor) {
 }
 
 box
+box_rep::left_auto_spacing (SI size) {
+  return this;
+};
+
+box
+box_rep::right_auto_spacing (SI size) {
+  return this;
+};
+
+
+box
 box_rep::expand_glyphs (int mode, double factor) {
   (void) mode; (void) factor;
   return this;
@@ -882,7 +893,38 @@ bool box::operator == (box b2) { return rep==b2.rep; }
 bool box::operator != (box b2) { return rep!=b2.rep; }
 
 box::operator tree () { return tree (*rep); }
-tm_ostream& operator << (tm_ostream& out, box b) { return out << ((tree) b); }
+tm_ostream& operator << (tm_ostream& out, box b) {
+  switch (b->get_type()) {
+    case STD_BOX:
+      out << "std: ";
+      break;
+    case STACK_BOX:
+      out << "stack: ";
+      break;
+    case CONTROL_BOX:
+      out << "control: ";
+      break;
+    case MOVE_BOX:
+      out << "move: ";
+      break;
+    case SCROLL_BOX:
+      out << "scroll: ";
+      break;
+    case TEXT_BOX:
+      out << "text: ";
+      break;
+    case SHORTER_BOX:
+      out << "shorter: ";
+      break;
+    case BIG_OP_BOX:
+      out << "big_op: ";
+      break;
+    default:
+      out << "unknown: ";
+      break;
+  }
+  return out << ((tree) b);
+}
 
 path
 descend_decode (path ip, int side) {
