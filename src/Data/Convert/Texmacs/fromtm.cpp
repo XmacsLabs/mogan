@@ -96,7 +96,7 @@ tm_reader::read_char () {
   }
   if (pos >= N(buf)) return "";
 
-  if (get_preference ("tm format with utf8", "on") == "off") {
+  if (get_preference ("tm format without utf8", "off") == "on") {
     pos++;
     return buf (pos-1, pos);
   } else {
@@ -117,7 +117,7 @@ tm_reader::read_next () {
   int old_pos= pos;
   string c= read_char ();
   if (c == "") return c;
-  if (get_preference ("tm format with utf8", "on") == "on") {
+  if (get_preference ("tm format without utf8", "off") == "off") {
     if (N(c) == 9) return c; // c is like \<#FFFF\>
   }
 
