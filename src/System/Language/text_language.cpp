@@ -545,34 +545,34 @@ chinese_language_rep::hyphenate (
 array<string>
 get_supported_languages () {
   array<string> r;
-  r << "american"
-    << "british"
-    << "bulgarian"
-    << "chinese"
-    << "croatian"
-    << "czech"
-    << "danish"
-    << "dutch"
-    << "english"
-    << "esperanto"
-    << "finnish"
-    << "french"
-    << "german"
-    << "greek"
-    << "hungarian"
-    << "italian"
-    << "japanese"
-    << "korean"
-    << "polish"
-    << "portuguese"
-    << "romanian"
-    << "russian"
-    << "slovak"
-    << "slovene"
-    << "spanish"
-    << "swedish"
-    << "taiwanese"
-    << "ukrainian";
+  r << string ("american")
+    << string ("british")
+    << string ("bulgarian")
+    << string ("chinese")
+    << string ("croatian")
+    << string ("czech")
+    << string ("danish")
+    << string ("dutch")
+    << string ("english")
+    << string ("esperanto")
+    << string ("finnish")
+    << string ("french")
+    << string ("german")
+    << string ("greek")
+    << string ("hungarian")
+    << string ("italian")
+    << string ("japanese")
+    << string ("korean")
+    << string ("polish")
+    << string ("portuguese")
+    << string ("romanian")
+    << string ("russian")
+    << string ("slovak")
+    << string ("slovene")
+    << string ("spanish")
+    << string ("swedish")
+    << string ("taiwanese")
+    << string ("ukrainian");
   return r;
 }
 
