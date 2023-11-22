@@ -14,7 +14,6 @@
 #include "hyphenate.hpp"
 #include "impl_language.hpp"
 #include "sys_utils.hpp"
-#include "hashset.hpp"
 
 /******************************************************************************
 * Western text languages / 8 bit charset
@@ -466,13 +465,13 @@ chinese_language_rep::chinese_language_rep (string lan_name):
   }
 
   // special full width characters
-  do_not_start << "<#201D>";  // ”
-  do_not_start << "<#2014>";  // —
-  do_not_start << "'";  // ’ <#2019>
-  do_not_start << "<centerdot>";
+  do_not_start << string ("<#201D>");  // ”
+  do_not_start << string ("<#2014>");  // —
+  do_not_start << string ("'");  // ’ <#2019>
+  do_not_start << string ("<centerdot>");
  
-  do_not_end << "<#201C>"; // “
-  do_not_end << "<#2018>"; // ‘
+  do_not_end << string ("<#201C>"); // “
+  do_not_end << string ("<#2018>"); // ‘
 }
 
 text_property
