@@ -101,6 +101,12 @@
   ---
   (former))
 
+(tm-menu (texmacs-popup-menu)
+  (=> "Copy to" (link clipboard-copy-export-menu))
+  (=> "Paste from" (link clipboard-paste-import-menu))
+  ---
+  (former))
+
 (menu-bind texmacs-alternative-popup-menu
   (-> "File" (link file-menu))
   (-> "Edit" (link edit-menu))
