@@ -1,4 +1,4 @@
-
+﻿
 /******************************************************************************
 * MODULE     : text_language.cpp
 * DESCRIPTION: natural textual languages
@@ -437,7 +437,8 @@ chinese_language_rep::chinese_language_rep (string lan_name):
   language_rep (lan_name), do_not_start (), do_not_end ()
 {
   // half width
-  do_not_start << "." << "," << ":" << ";" << "!" << "?" << "/" << "-";
+  do_not_start << string (".") << string (",") << string (":") << string (";")
+               << string ("!") << string ("?") << string ("/") << string ("-");
 
   auto full_width_do_not_start= array<string>();
   full_width_do_not_start
@@ -458,13 +459,13 @@ chinese_language_rep::chinese_language_rep (string lan_name):
   }
 
   // special full width characters
-  do_not_start << "<#201D>";  // ”
-  do_not_start << "<#2014>";  // —
-  do_not_start << "'";  // ’ <#2019>
-  do_not_start << "<centerdot>";
+  do_not_start << string ("<#201D>");  // ”
+  do_not_start << string ("<#2014>");  // —
+  do_not_start << string ("'");  // ’ <#2019>
+  do_not_start << string ("<centerdot>");
  
-  do_not_end << "<#201C>"; // “
-  do_not_end << "<#2018>"; // ‘
+  do_not_end << string ("<#201C>"); // “
+  do_not_end << string ("<#2018>"); // ‘
 }
 
 text_property
