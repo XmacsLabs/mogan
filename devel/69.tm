@@ -15,7 +15,10 @@
   bold font for dfn>>|<row|<cell|Bug>|<cell|<dlink|69_5>>|<cell|<value|da>>|<cell|Inconsist
   encoding to include a file with unicode
   filename>>|<row|<cell|Chore>|<cell|69_6>|<cell|<value|da>>|<cell|Prevent
-  Version-\<gtr\>Compare with from being translated>>>>>
+  Version-\<gtr\>Compare with from being translated>>|<row|<cell|Bug>|<cell|<dlink|69_7>>|<cell|<value|da>>|<cell|Inconsistent
+  CJK font size>>|<row|<cell|Bug>|<cell|<dlink|69_8>>|<cell|<value|da>>|<cell|Insufficient
+  punctuation rules for CJK>>|<row|<cell|Feature>|<cell|<dlink|69_9>>|<cell|<value|da>>|<cell|Auto
+  small spaces between Chinese text and other structure>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
