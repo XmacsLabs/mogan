@@ -747,6 +747,14 @@
   (selection-set-end)
   (clipboard-cut "primary"))
 
+(tm-define (backward-kill-word)
+  (kbd-select traverse-left)
+  (kbd-delete))
+
+(tm-define (kill-word)
+  (kbd-select traverse-right)
+  (kbd-delete))
+
 (tm-define (yank-paragraph)
   (selection-set-start)
   (go-end-paragraph)
