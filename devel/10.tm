@@ -102,6 +102,26 @@
       Windows: using Alt instead of Meta
     </cell>|<\cell>
       \;
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      10_10
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Graphics: set default unit length to 2
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      10_11
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Graphics: show grid by default for Ink Here
+    </cell>|<\cell>
+      \;
     </cell>>>>
   </wide-tabular>
 
