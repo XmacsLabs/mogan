@@ -371,12 +371,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (selector-customize?)
-  (== (get-preference "advanced font customization") "on"))
+  #f)
 
 (tm-define (selector-customize! on?)
-  (if on?
-      (set-preference "advanced font customization" "on")
-      (reset-preference "advanced font customization"))
   (refresh-now "font-customized-selector"))
 
 (tm-define (selector-customize-get specs which default)
