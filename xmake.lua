@@ -371,6 +371,7 @@ target("libmogan") do
     end
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
+    set_encodings("utf-8")
 
     add_rules("qt.static")
     on_install(function (target)
