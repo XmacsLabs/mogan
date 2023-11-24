@@ -30,6 +30,9 @@
        (load-help-article (string-append name))))))
 
 (menu-bind help-menu
+  ("Mogan" (mogan-welcome))
+  ("Planet" (xmacs-planet))
+  ---
   (if (detailed-menus?)
 	  (-> "Configuration"
 	      ("Browse" (load-help-buffer "main/config/man-configuration"))
