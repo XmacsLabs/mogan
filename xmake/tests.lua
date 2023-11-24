@@ -7,8 +7,8 @@ function add_target_cpp_test(filepath, dep)
         add_deps(dep)
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
+        set_encodings("utf-8") -- eliminate warning C4819 on msvc
         if is_plat("windows") then
-            set_encodings("utf-8") -- eliminate warning C4819 on msvc
             add_ldflags("/LTCG")
             set_runtimes("MT")
         end
