@@ -103,3 +103,6 @@
   (if (url-exists? (get-remote-planet-url))
       (load-remote-planet)
       (load-help-article "about/welcome/new-welcome")))
+
+(tm-define (load-remote-doc path)
+  (load-buffer (string-append "http://git.tmml.wiki/texmacs/doc/raw/master/" path ".en.tm")))
