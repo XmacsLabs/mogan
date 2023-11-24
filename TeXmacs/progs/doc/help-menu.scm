@@ -35,110 +35,110 @@
   ---
   (if (detailed-menus?)
 	  (-> "Configuration"
-	      ("Browse" (load-help-buffer "main/config/man-configuration"))
+	      ("Browse" (load-remote-doc "main/config/man-configuration"))
 	      ---
 	      ("User preferences"
-	       (load-help-article "main/config/man-preferences"))
+	       (load-remote-doc "main/config/man-preferences"))
 	      ("Keyboard configuration"
-	       (load-help-article "main/config/man-config-keyboard"))
+	       (load-remote-doc "main/config/man-config-keyboard"))
 	      ("Users of Cyrillic languages"
-	       (load-help-article "main/config/man-russian"))
+	       (load-remote-doc "main/config/man-russian"))
 	      ("Users of oriental languages"
-	       (load-help-article "main/config/man-oriental"))))
+	       (load-remote-doc "main/config/man-oriental"))))
   (-> "Manual"
-      ("Browse" (load-help-buffer "main/man-manual"))
+      ("Browse" (load-remote-doc "main/man-manual"))
       ---
       ("Getting started"
-       (load-help-article "main/start/man-getting-started"))
+       (load-remote-doc "main/start/man-getting-started"))
       ("Typing simple texts"
-       (load-help-article "main/text/man-text"))
+       (load-remote-doc "main/text/man-text"))
       ("Mathematical formulas"
-       (load-help-article "main/math/man-math"))
+       (load-remote-doc "main/math/man-math"))
       ("Tabular material"
-       (load-help-article "main/table/man-table"))
+       (load-remote-doc "main/table/man-table"))
       ("Automatic content generation"
-       (load-help-article "main/links/man-links"))
+       (load-remote-doc "main/links/man-links"))
       ("Creating technical pictures"
-       (load-help-article "main/graphics/man-graphics"))
+       (load-remote-doc "main/graphics/man-graphics"))
       ("Advanced layout features"
-       (load-help-article "main/layout/man-layout"))
+       (load-remote-doc "main/layout/man-layout"))
       ---
       ("Editing tools"
-       (load-help-article "main/editing/man-editing-tools"))
+       (load-remote-doc "main/editing/man-editing-tools"))
       ("Laptop presentations"
-       (load-help-article "main/beamer/man-beamer"))
+       (load-remote-doc "main/beamer/man-beamer"))
       ("TeXmacs as an interface"
-       (load-help-article "main/interface/man-itf"))
+       (load-remote-doc "main/interface/man-itf"))
       ---
       ("Writing your own style files"
-       (load-help-article "devel/style/style"))
+       (load-remote-doc "devel/style/style"))
       ("Customizing TeXmacs"
-       (load-help-article "main/scheme/man-scheme"))
+       (load-remote-doc "main/scheme/man-scheme"))
       ("The TeXmacs plug-in system"
-       (load-help-article "devel/plugin/plugins")))
+       (load-remote-doc "devel/plugin/plugins")))
   (-> "Reference guide"
-      ("Browse" (load-help-buffer "main/man-reference"))
+      ("Browse" (load-remote-doc "main/man-reference"))
       ---
       ("The TeXmacs format"
-       (load-help-article "devel/format/basics/basics"))
+       (load-remote-doc "devel/format/basics/basics"))
       ("Standard environment variables"
-       (load-help-article "devel/format/environment/environment"))
+       (load-remote-doc "devel/format/environment/environment"))
       ("TeXmacs primitives"
-       (load-help-article "devel/format/regular/regular"))
+       (load-remote-doc "devel/format/regular/regular"))
       ("Stylesheet language"
-       (load-help-article "devel/format/stylesheet/stylesheet"))
+       (load-remote-doc "devel/format/stylesheet/stylesheet"))
       ("Standard TeXmacs styles"
-       (load-help-article "main/styles/styles"))
+       (load-remote-doc "main/styles/styles"))
       ("Compatibility with other formats"
-       (load-help-article "main/convert/man-convert")))
+       (load-remote-doc "main/convert/man-convert")))
   ---
   (-> "Plug-ins"
       (link help-plugins-menu))
   (if (detailed-menus?)
       (-> "Interfacing"
-          ("Browse" (load-help-buffer "devel/interface/interface"))
+          ("Browse" (load-remote-doc "devel/interface/interface"))
           ---
           ("Introduction"
-           (load-help-article "devel/interface/interface-intro"))
+           (load-remote-doc "devel/interface/interface-intro"))
           ("Basic communication using pipes"
-           (load-help-article "devel/interface/interface-pipes"))
+           (load-remote-doc "devel/interface/interface-pipes"))
           ("Formatted and structured output"
-           (load-help-article "devel/interface/interface-nested"))
+           (load-remote-doc "devel/interface/interface-nested"))
           ("Prompts and default input"
-           (load-help-article "devel/interface/interface-channels"))
+           (load-remote-doc "devel/interface/interface-channels"))
           ("Sending commands to TeXmacs"
-           (load-help-article "devel/interface/interface-commands"))
+           (load-remote-doc "devel/interface/interface-commands"))
           ("Background evaluations"
-           (load-help-article "devel/interface/interface-background"))
+           (load-remote-doc "devel/interface/interface-background"))
           ("Mathematical and customized input"
-           (load-help-article "devel/interface/interface-input"))
+           (load-remote-doc "devel/interface/interface-input"))
           ("Tab-completion"
-           (load-help-article "devel/interface/interface-tab"))
+           (load-remote-doc "devel/interface/interface-tab"))
           ("Dynamic libraries"
-           (load-help-article "devel/interface/interface-dynlibs"))
+           (load-remote-doc "devel/interface/interface-dynlibs"))
           ("Miscellaneous features"
-           (load-help-article "devel/interface/interface-misc"))
+           (load-remote-doc "devel/interface/interface-misc"))
           ("Writing documentation"
-           (load-help-article "devel/interface/interface-documentation"))
+           (load-remote-doc "devel/interface/interface-documentation"))
           ("Plans for the future"
-           (load-help-article "devel/interface/interface-plans")))
+           (load-remote-doc "devel/interface/interface-plans")))
       (-> "Scheme extensions"
-          ("Browse" (load-help-buffer "devel/scheme/scheme"))
+          ("Browse" (load-remote-doc "devel/scheme/scheme"))
           ---
           ("Overview of the scheme extension language"
-           (load-help-article "devel/scheme/overview/scheme-overview"))
+           (load-remote-doc "devel/scheme/overview/scheme-overview"))
           ("TeXmacs extensions to scheme and utilities"
-           (load-help-article "devel/scheme/utils/scheme-utils"))
+           (load-remote-doc "devel/scheme/utils/scheme-utils"))
           ("Programming routines for editing documents"
-           (load-help-article "devel/scheme/edit/scheme-edit"))
+           (load-remote-doc "devel/scheme/edit/scheme-edit"))
           ("Program interface for buffer management"
-           (load-help-article "devel/scheme/buffer/scheme-buffer"))
+           (load-remote-doc "devel/scheme/buffer/scheme-buffer"))
           ("Scheme interface for the graphical mode"
-           (load-help-article "devel/scheme/graphics/scheme-graphics"))
+           (load-remote-doc "devel/scheme/graphics/scheme-graphics"))
           ("Customizing and extending the user interface"
-           (load-help-article "devel/scheme/gui/scheme-gui"))
+           (load-remote-doc "devel/scheme/gui/scheme-gui"))
           ("Writing TeXmacs bibliography styles"
-           (load-help-article "devel/scheme/bibliography/bibliography"))
+           (load-remote-doc "devel/scheme/bibliography/bibliography"))
           ---
           ("Browse modules documentation" (apidoc-all-modules))
           ("Browse symbols documentation" (apidoc-all-symbols)))))
