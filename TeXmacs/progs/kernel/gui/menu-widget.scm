@@ -441,21 +441,53 @@
 
 (define (make-menu-entry p style bar?)
   "Make @:menu-wide-item menu item."
+
+  ; eg. (pull-focus t (numbered-toggle t)) -> (numbered-toggle (focus-tree))
+  ; eg. (pull-focus t (alternate-toggle t)) -> (alternate-toggle (focus-tree))
+  (define (pull-focus-transform src)
+    (if (tuple? src 'pull-focus 2)
+        `(,(caaddr src) (focus-tree))
+        src))
+  
+  (define (retrieve-src p)
+   (with cmd (and (nnull? (cdr p)) (procedure? (cadr p)) (cadr p))
+     (and cmd (promise-source cmd))))
+
+  (define (create-text-widget text shortcut style)
+    (let* ((txt (if (or (not shortcut) (== shortcut ""))
+                    text
+                    (if (string? text)
+                        (string-append text " (" shortcut ")")
+                        text)))
+           (ftxt (translate txt)))
+      (widget-text ftxt style (color "black") #t)))
+
   (let ((but (make-menu-entry-sub p style bar?))
-        (label (if (tuple? (car p) 'check 3) (cadar p) (car p))))
-    (if (tuple? label 'balloon 2)
-        (let* ((text (caddr label))
-               (cmd (and (nnull? (cdr p)) (procedure? (cadr p)) (cadr p)))
-               (src (and cmd (promise-source cmd)))
-               (sh (and src (kbd-find-shortcut src #f)))
-               (txt (if (or (not sh) (== sh "")) text
-                        (if (string? text) 
-                            (string-append text " (" sh ")")
-                            text)))
-               (ftxt (translate txt))
-               (twid (widget-text ftxt style (color "black") #t)))
-          (widget-balloon but twid))
-        but)))
+        (label (car p)))
+    (cond
+     ; eg. label is (balloon (icon "tm_focus_help.xpm") "Describe tag")
+     ((tuple? label 'balloon 2)
+      (let* ((text (caddr label))
+             (src (retrieve-src p))
+             (shortcut (and src (kbd-find-shortcut src #f)))
+             (twid (create-text-widget text shortcut style)))
+        (widget-balloon but twid)))
+     ; eg. label is (check
+     ;               (balloon (icon "tm_numbered.xpm") "Toggle numbering")
+     ;               "v" #<lambda ()>)
+     ; eg. label is (check
+     ;               (balloon "Prefix by section number"
+     ;                        "Prefix numbered environments by section number")
+     ;               "v" #<lambda ()>)
+     ((and (tuple? label 'check 3)
+           (tuple? (cadr label) 'balloon 2))
+      (let* ((text (caddr (cadr label)))
+             (src (retrieve-src p))
+             (shortcut (and src
+                            (kbd-find-shortcut (pull-focus-transform src) #f)))
+             (twid (create-text-widget text shortcut style)))
+        (widget-balloon but twid)))
+     (else but))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Symbol fields
