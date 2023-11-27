@@ -418,19 +418,25 @@
      (make-menu-entry-shortcut label action opt-key)
      action)))
 
-; (pull-focus t (numbered-toggle t)) -> (numbered-toggle (focus-tree))
-; (pull-focus t (alternate-toggle t)) -> (alternate-toggle (focus-tree))
-(define (pull-focus-transform src)
-  `(,(caaddr src) (focus-tree)))
+
 
 (define (make-menu-entry p style bar?)
   "Make @:menu-wide-item menu item."
+
+  ; eg. (pull-focus t (numbered-toggle t)) -> (numbered-toggle (focus-tree))
+  ; eg. (pull-focus t (alternate-toggle t)) -> (alternate-toggle (focus-tree))
+  (define (pull-focus-transform src)
+    `(,(caaddr src) (focus-tree)))
+  
+  (define (retrieve-src p)
+   (with cmd (and (nnull? (cdr p)) (procedure? (cadr p)) (cadr p))
+     (and cmd (promise-source cmd))))
+
   (let ((but (make-menu-entry-sub p style bar?))
         (label (car p)))
     (cond ((tuple? label 'balloon 2)
            (let* ((text (caddr label))
-                  (cmd (and (nnull? (cdr p)) (procedure? (cadr p)) (cadr p)))
-                  (src (and cmd (promise-source cmd)))
+                  (src (retrieve-src p))
                   (sh (and src (kbd-find-shortcut src #f)))
                   (txt (if (or (not sh) (== sh "")) text
                            (if (string? text) 
@@ -439,10 +445,11 @@
                   (ftxt (translate txt))
                   (twid (widget-text ftxt style (color "black") #t)))
              (widget-balloon but twid)))
-          ((and (tuple? label 'check 3) (tuple? (cadr label) 'balloon 2))
+          ((and (tuple? label 'check 3)
+                (tuple? (cadr label) 'balloon 2)
+                (tuple? (cadadr label) 'icon 1))
            (let* ((text (caddr (cadr label)))
-                  (cmd (and (nnull? (cdr p)) (procedure? (cadr p)) (cadr p)))
-                  (src (and cmd (promise-source cmd)))
+                  (src (retrieve-src p))
                   (sh (and src (kbd-find-shortcut (pull-focus-transform src) #f)))
                   (txt (if (or (not sh) (== sh "")) text
                            (if (string? text)
