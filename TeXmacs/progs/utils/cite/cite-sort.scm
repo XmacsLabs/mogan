@@ -37,10 +37,16 @@
       (if (!= ret '(uninit)) ret ""))))
 
 (define (merge-contiguous new old present)
-  (let ((flush
+  (let* 
+    ((get-write (lambda (item) (car (cdadr item))))
+     (flush 
         (lambda ()
           (if (> (length present) 2)
-              (list (list (caar present) `(concat ,@(cdar present) "-" ,@(cdAr present))))
+              (list (list 
+                (caar present)
+                `(concat 
+                  ,@(map get-write present)
+                  ,@(cddar (cdar present)) "-" ,@(cddar (cdAr present)))))
               present))))
     (if (null? old)
         (if (null? present)
@@ -60,10 +66,10 @@
     merged-args))
 
 (tm-define (cite-sort args)
-  ;; get a (tuple (tuple key_1 value_1) ... (tuple key_n value_n))
+  ;; get a (tuple (concat (write "bib" key_1) (reference value_1))) ... (concat key_n value_n))
   ;; and sort it according to values.
   (:secure #t)
-  ; (display "args: " (tree->stree args))
+  ; (display* "args: " (tree->stree args))
   (let* ((args (map tree->stree (tree-children args)))
          (keys (map expand-references (map caddr args)))
          (tup (map list keys args))
