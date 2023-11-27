@@ -418,8 +418,6 @@
      (make-menu-entry-shortcut label action opt-key)
      action)))
 
-
-
 (define (make-menu-entry p style bar?)
   "Make @:menu-wide-item menu item."
 
