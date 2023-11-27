@@ -442,7 +442,7 @@
 (define (make-menu-entry p style bar?)
   "Make @:menu-wide-item menu item."
   (let ((but (make-menu-entry-sub p style bar?))
-        (label (car p)))
+        (label (if (tuple? (car p) 'check 3) (cadar p) (car p))))
     (if (tuple? label 'balloon 2)
         (let* ((text (caddr label))
                (cmd (and (nnull? (cdr p)) (procedure? (cadr p)) (cadr p)))
