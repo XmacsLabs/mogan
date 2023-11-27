@@ -96,12 +96,12 @@
 ;; Interface for contextual help
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (word-at str pos)
+(tm-define (word-at str pos)
   "Returns the word at @pos in @str, delimited by char-set:stopmark"
   (if (<= pos (string-length str))
       (let* ((beg (string-rindex (substring str 0 pos) char-set:stopmark))
              (end (string-index (substring str pos (string-length str)) char-set:stopmark)))
-        (if (== end #f) (set! end (string-length str)))
+        (if (== end #f) (set! end (string-length str)) (set! end (+ pos end)))
         (if (== beg #f) (set! beg 0) (set! beg (+ 1 beg)))
         (substring str beg end))
       ""))
