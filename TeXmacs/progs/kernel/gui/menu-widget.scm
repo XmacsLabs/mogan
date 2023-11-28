@@ -124,7 +124,14 @@
         (else (translate (kbd-system-rewrite shortcut)))))
 
 (define (kbd-find-shortcut what menu-flag?)
-  (with r (kbd-find-inv-binding what)
+  ; eg. (pull-focus t (numbered-toggle t)) -> (numbered-toggle (focus-tree))
+  ; eg. (pull-focus t (alternate-toggle t)) -> (alternate-toggle (focus-tree))
+  (define (pull-focus-transform src)
+    (if (tuple? src 'pull-focus 2)
+        `(,(caaddr src) (focus-tree))
+        src))
+
+  (with r (kbd-find-inv-binding (pull-focus-transform what))
     (when (string-contains? r "accent:")
       (set! r (string-replace r "accent:deadhat" "^"))
       (set! r (string-replace r "accent:tilde" "~"))
@@ -428,9 +435,9 @@
 
 (define (make-menu-entry-sub p style bar?)
   (receive
-      (label action opt-key opt-check)
-      (make-menu-entry-attrs (car p) (cAr p) #f #f)
-    (make-menu-entry-button
+   (label action opt-key opt-check)
+   (make-menu-entry-attrs (car p) (cAr p) #f #f)
+   (make-menu-entry-button
      (make-menu-entry-style style action)
      bar?
      (tuple? (car p) 'balloon 2)
@@ -442,16 +449,10 @@
 (define (make-menu-entry p style bar?)
   "Make @:menu-wide-item menu item."
 
-  ; eg. (pull-focus t (numbered-toggle t)) -> (numbered-toggle (focus-tree))
-  ; eg. (pull-focus t (alternate-toggle t)) -> (alternate-toggle (focus-tree))
-  (define (pull-focus-transform src)
-    (if (tuple? src 'pull-focus 2)
-        `(,(caaddr src) (focus-tree))
-        src))
-  
-  (define (retrieve-src p)
-   (with cmd (and (nnull? (cdr p)) (procedure? (cadr p)) (cadr p))
-     (and cmd (promise-source cmd))))
+  (define (retrieve-shortcut p)
+   (let* ((cmd (and (nnull? (cdr p)) (procedure? (cadr p)) (cadr p)))
+          (source (and cmd (promise-source cmd))))
+     (and source (kbd-find-shortcut source #f))))
 
   (define (create-text-widget text shortcut style)
     (let* ((txt (if (or (not shortcut) (== shortcut ""))
@@ -468,8 +469,7 @@
      ; eg. label is (balloon (icon "tm_focus_help.xpm") "Describe tag")
      ((tuple? label 'balloon 2)
       (let* ((text (caddr label))
-             (src (retrieve-src p))
-             (shortcut (and src (kbd-find-shortcut src #f)))
+             (shortcut (retrieve-shortcut p))
              (twid (create-text-widget text shortcut style)))
         (widget-balloon but twid)))
      ; eg. label is (check
@@ -482,9 +482,7 @@
      ((and (tuple? label 'check 3)
            (tuple? (cadr label) 'balloon 2))
       (let* ((text (caddr (cadr label)))
-             (src (retrieve-src p))
-             (shortcut (and src
-                            (kbd-find-shortcut (pull-focus-transform src) #f)))
+             (shortcut (retrieve-shortcut p))
              (twid (create-text-widget text shortcut style)))
         (widget-balloon but twid)))
      (else but))))
