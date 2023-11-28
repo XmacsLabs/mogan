@@ -468,6 +468,7 @@ qt_ui_element_rep::as_qaction () {
       const QKeySequence& qks = to_qkeysequence (ks);
       if (!qks.isEmpty()) {
         act->setShortcut (qks);
+        act->setShortcutVisibleInContextMenu(true);
         command key_cmd = tm_new<qt_key_command_rep> (ks);
         c= new QTMCommand (act, key_cmd);
       } else {
