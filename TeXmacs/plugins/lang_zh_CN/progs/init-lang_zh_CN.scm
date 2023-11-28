@@ -12,5 +12,4 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(when (in-chinese?)
-  (import-from (chinese-kbd)))
+(import-from (chinese-kbd))
