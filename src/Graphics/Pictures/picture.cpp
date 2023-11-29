@@ -11,7 +11,6 @@
 
 #include "renderer.hpp"
 #include "analyze.hpp"
-#include "gui.hpp"
 #include "image_files.hpp"
 #include "true_color.hpp"
 #include "colors.hpp"
@@ -19,6 +18,7 @@
 #include "file.hpp"
 #include "tm_file.hpp"
 #include "effect.hpp"
+#include "tm_timer.hpp"
 
 /******************************************************************************
 * Unique id for pictures
