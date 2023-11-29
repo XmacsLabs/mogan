@@ -41,31 +41,6 @@
  * Ad-hoc command_rep derivates for different UI elements in qt_ui_element_rep
  ******************************************************************************/
 
-/*! Ad-hoc command to be used to simulate keypresses
- 
- \sa qt_ui_element, , qt_ui_element_rep::as_qaction
- */
-
-class qt_key_command_rep: public command_rep {
-  string ks; 
-  
-public:
-  qt_key_command_rep(string ks_) : ks(ks_) { }
-  
-  void apply () {
-    if (N(ks)) { 
-      QTMWidget *w = qobject_cast<QTMWidget*>(qApp->focusWidget());
-      if (w && w->tm_widget()) {
-        if (DEBUG_QT) debug_qt << "shortcut: " << ks << LF;
-        the_gui->process_keypress (w->tm_widget(), ks, texmacs_time());
-      }
-    }
-  }
-  
-  tm_ostream& print (tm_ostream& out) { return out << "<command qt_key>"; }
-};
-
-
 /*! Ad-hoc command to be used with toggle widgets.
  
  The command associated with a qt_ui_element::toggle_widget has as a parameter the state
@@ -458,7 +433,6 @@ qt_ui_element_rep::as_qaction () {
       string   ks   = x.x4;
       int   style   = x.x5;
       
-      QTMCommand* c;
       act = qtw->as_qaction();
         /* NOTE: we install shortcuts but in QTMWidget::event() we also handle
          QEvent::ShortcutOverride, effectively disabling the shortcuts. This
@@ -469,14 +443,11 @@ qt_ui_element_rep::as_qaction () {
       if (!qks.isEmpty()) {
         act->setShortcut (qks);
         act->setShortcutVisibleInContextMenu(true);
-        command key_cmd = tm_new<qt_key_command_rep> (ks);
-        c= new QTMCommand (act, key_cmd);
-      } else {
-        c= new QTMCommand (act, cmd);
       }
-        
+
       // NOTE: this used to be a Qt::QueuedConnection, but the slot would not
       // be called if in a contextual menu
+      QTMCommand* c= new QTMCommand (act, cmd);
       QObject::connect (act, SIGNAL (triggered()), c, SLOT (apply()));    
   
       bool ok = (style & WIDGET_STYLE_INERT) == 0;
