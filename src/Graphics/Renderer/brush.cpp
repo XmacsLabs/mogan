@@ -14,12 +14,11 @@
 #include "true_color.hpp"
 #include "tm_url.hpp"
 #include "colors.hpp"
+#include "tree_analyze.hpp"
 
 #if not defined(KERNEL_L3)
 url get_current_buffer_safe ();
 #endif
-bool is_percentage (tree t, string s= "%");
-double as_percentage (tree t);
 
 /******************************************************************************
 * Equality
