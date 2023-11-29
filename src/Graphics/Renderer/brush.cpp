@@ -10,12 +10,14 @@
 ******************************************************************************/
 
 #include "renderer.hpp"
-#include "gui.hpp"
 #include "image_files.hpp"
 #include "true_color.hpp"
 #include "tm_url.hpp"
+#include "colors.hpp"
 
+#if not defined(KERNEL_L3)
 url get_current_buffer_safe ();
+#endif
 bool is_percentage (tree t, string s= "%");
 double as_percentage (tree t);
 
@@ -111,7 +113,11 @@ brush_rep::get_pattern_url () {
   url u= url_system (as_string (t[0]));
   url r= resolve_pattern (u);
   if (!is_none (r)) return r;
+#if defined(KERNEL_L3)
+  url base= url_pwd ();
+#else
   url base= get_current_buffer_safe ();
+#endif
   r= resolve (relative (base, u));
   if (!is_none (r)) return r;
   return u;

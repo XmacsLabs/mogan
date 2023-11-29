@@ -10,10 +10,10 @@
 ******************************************************************************/
 
 #include "renderer.hpp"
-#include "gui.hpp"
 #include "rectangles.hpp"
 #include "image_files.hpp"
 #include "frame.hpp"
+#include "colors.hpp"
 
 int    std_shrinkf  = 5;
 #ifdef OS_WASM
