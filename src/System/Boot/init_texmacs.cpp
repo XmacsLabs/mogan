@@ -463,24 +463,6 @@ init_misc () {
 }
 
 /******************************************************************************
-* Deprecated initializations
-******************************************************************************/
-
-static void
-init_deprecated () {
-#ifndef OS_WIN
-  // Check for Macaulay 2
-  if (get_env ("M2HOME") == "")
-    if (exists_in_path ("M2")) {
-      string where= concretize (resolve_in_path ("M2"));
-      string s    = var_eval_system ("grep 'M2HOME=' " * where);
-      string dir  = s (search_forwards ("=", s) + 1, N(s));
-      if (dir != "") set_env ("M2HOME", dir);
-    }
-#endif
-}
-
-/******************************************************************************
 * First installation
 ******************************************************************************/
 
@@ -536,8 +518,6 @@ init_texmacs () {
   init_env_vars ();
   //cout << "Initialize -- Miscellaneous\n";
   init_misc ();
-  //cout << "Initialize -- Deprecated\n";
-  init_deprecated ();
 }
 
 /******************************************************************************
