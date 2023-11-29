@@ -36,7 +36,6 @@
 #endif
 
 int  install_status   = 0;
-bool use_which        = false;
 
 extern void setup_tex (); // from Plugins/Metafont/tex_init.cpp
 extern void init_tex  (); // from Plugins/Metafont/tex_init.cpp
@@ -446,13 +445,6 @@ init_env_vars () {
 
 static void
 init_misc () {
-  // Test whether 'which' works
-#if defined(OS_MINGW) || defined(OS_WASM) || defined(OS_WIN)
-  use_which = false;
-#else
-  use_which = (var_eval_system ("which texmacs 2> /dev/null") != "");
-#endif
-
   // Set extra environment variables for Cygwin
 #ifdef OS_CYGWIN
   set_env ("CYGWIN", "check_case:strict");

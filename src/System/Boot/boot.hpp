@@ -15,7 +15,6 @@
 
 extern tree texmacs_settings;
 extern int  install_status;
-extern bool use_which;
 extern bool headless_mode;
 
 void   init_texmacs_path (int& argc, char** argv);
