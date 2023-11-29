@@ -18,6 +18,8 @@ on:
       -  'src/Plugins/Ghostscript/**.hpp'
       -  'src/Plugins/Html/**.cpp'
       -  'src/Plugins/Html/**.hpp'
+      -  'src/Plugins/Metafont/**.cpp'
+      -  'src/Plugins/Metafont/**.hpp'
       -  'src/Plugins/Xml/**.cpp'
       -  'src/Plugins/Xml/**.hpp'
       -  'src/Data/Tree/**.cpp'
