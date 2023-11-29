@@ -5,3 +5,6 @@ ${define HAVE_INTPTR_T}
 ${define HAVE_STDINT_H}
 ${define QTTEXMACS}
 ${define SANITY_CHECKS}
+
+/* Use freetype library */
+${define USE_FREETYPE}
