@@ -25,10 +25,10 @@ private slots:
 
 void
 TestFont::test_get_extents () {
-  // sys-chinese-rm-medium-right-10-600-smart
+  set_new_fonts (true);
   init_tex ();
   font fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
-  cout << fn->res_name << LF;
+  qcompare (fn->res_name, "sys-chinese-rm-medium-right-10-600-smart");
 }
 
 QTEST_MAIN (TestFont)
