@@ -10,8 +10,8 @@
  ******************************************************************************/
 
 #include "tree_helper.hpp"
-#include "modification.hpp"
 #include "analyze.hpp"
+#include "modification.hpp"
 
 tree_label
 L (modification mod) {
@@ -295,17 +295,14 @@ print_tree (tree t, int tab) {
   }
 }
 
-
 /******************************************************************************
-* Percentages and magnifications
-******************************************************************************/
+ * Percentages and magnifications
+ ******************************************************************************/
 
 bool
 is_percentage (tree t, string s) {
-  return
-    is_atomic (t) &&
-    ends (t->label, s) &&
-    is_double (t->label (0, N (t->label) - 1));
+  return is_atomic (t) && ends (t->label, s) &&
+         is_double (t->label (0, N (t->label) - 1));
 }
 
 bool
@@ -321,10 +318,16 @@ as_percentage (tree t) {
 bool
 is_magnification (string s) {
   double result;
-  if (N(s) == 0) return false;
-  for (int i=0; i<N(s); /*nop*/) {
-    if (s[i]=='*') { i++; read_double (s, i, result); }
-    else if (s[i]=='/') { i++; read_double (s, i, result); }
+  if (N (s) == 0) return false;
+  for (int i= 0; i < N (s); /*nop*/) {
+    if (s[i] == '*') {
+      i++;
+      read_double (s, i, result);
+    }
+    else if (s[i] == '/') {
+      i++;
+      read_double (s, i, result);
+    }
     else return false;
   }
   return true;
@@ -332,11 +335,19 @@ is_magnification (string s) {
 
 double
 get_magnification (string s) {
-  int i=0;
+  int    i   = 0;
   double magn= 1.0, result;
-  while (i<N(s)) {
-    if (s[i]=='*') { i++; read_double (s, i, result); magn *= result; }
-    else if (s[i]=='/') { i++; read_double (s, i, result); magn /= result; }
+  while (i < N (s)) {
+    if (s[i] == '*') {
+      i++;
+      read_double (s, i, result);
+      magn*= result;
+    }
+    else if (s[i] == '/') {
+      i++;
+      read_double (s, i, result);
+      magn/= result;
+    }
     else return magn;
   }
   return magn;

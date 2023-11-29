@@ -12,18 +12,18 @@
 #include "font.hpp"
 #include <QtTest/QtTest>
 
-class TestFont: public QObject {
+class TestFont : public QObject {
   Q_OBJECT
 
 private slots:
-  void test_get_extents();
+  void test_get_extents ();
 };
 
 void
 TestFont::test_get_extents () {
-    // sys-chinese-rm-medium-right-10-600-smart
-    font fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
-    cout << fn->res_name << LF;
+  // sys-chinese-rm-medium-right-10-600-smart
+  font fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
+  cout << fn->res_name << LF;
 }
 
 QTEST_MAIN (TestFont)
