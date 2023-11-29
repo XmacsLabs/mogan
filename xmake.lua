@@ -582,12 +582,12 @@ l3_cpp_tests = os.files("tests/L3/**_test.cpp")
 all_cpp_tests = os.files("tests/**_test.cpp")
 
 for _, filepath in ipairs(l3_cpp_tests) do
-    add_target_cpp_test(filepath, "libkernel_l3")
+    add_target_cpp_test(filepath, "libkernel_l3", RUN_ENVS)
 end
 
 for _, filepath in ipairs(all_cpp_tests) do
     if not table.contains(l3_cpp_tests, filepath) then
-        add_target_cpp_test(filepath, "libmogan")
+        add_target_cpp_test(filepath, "libmogan", RUN_ENVS)
     end
 end
 
