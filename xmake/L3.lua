@@ -36,6 +36,8 @@ local l3_files = {
     "$(projectdir)/src/System/Misc/persistent.cpp",
     "$(projectdir)/src/System/Misc/tm_sys_utils.cpp",
     "$(projectdir)/src/Texmacs/Server/tm_debug.cpp",
+    "$(projectdir)/src/Plugins/Metafont/**.cpp",
+    "$(projectdir)/src/Plugins/Freetype/**.cpp"
 }
 local l3_includedirs = {
     "src/Kernel/Types",
