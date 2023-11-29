@@ -12,7 +12,6 @@
 #ifndef PRINTER_H
 #define PRINTER_H
 #include "renderer.hpp"
-#include "gui.hpp"
 #include "hashmap.hpp"
 #include "url.hpp"
 

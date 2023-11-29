@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "tree_helper.hpp"
+#include "analyze.hpp"
 #include "modification.hpp"
 
 tree_label
@@ -292,4 +293,62 @@ print_tree (tree t, int tab) {
     for (i= 0; i < N (t); i++)
       print_tree (t[i], tab + 2);
   }
+}
+
+/******************************************************************************
+ * Percentages and magnifications
+ ******************************************************************************/
+
+bool
+is_percentage (tree t, string s) {
+  return is_atomic (t) && ends (t->label, s) &&
+         is_double (t->label (0, N (t->label) - 1));
+}
+
+bool
+is_percentage (tree t) {
+  return is_percentage (t, "%");
+}
+
+double
+as_percentage (tree t) {
+  return as_double (t->label (0, N (t->label) - 1)) / 100.0;
+}
+
+bool
+is_magnification (string s) {
+  double result;
+  if (N (s) == 0) return false;
+  for (int i= 0; i < N (s); /*nop*/) {
+    if (s[i] == '*') {
+      i++;
+      read_double (s, i, result);
+    }
+    else if (s[i] == '/') {
+      i++;
+      read_double (s, i, result);
+    }
+    else return false;
+  }
+  return true;
+}
+
+double
+get_magnification (string s) {
+  int    i   = 0;
+  double magn= 1.0, result;
+  while (i < N (s)) {
+    if (s[i] == '*') {
+      i++;
+      read_double (s, i, result);
+      magn*= result;
+    }
+    else if (s[i] == '/') {
+      i++;
+      read_double (s, i, result);
+      magn/= result;
+    }
+    else return magn;
+  }
+  return magn;
 }

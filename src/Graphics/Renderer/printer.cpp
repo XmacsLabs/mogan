@@ -22,6 +22,7 @@
 #include "link.hpp"
 #include "frame.hpp"
 #include "converter.hpp"
+#include "colors.hpp"
 
 #ifdef USE_PLUGIN_PDF
 #include "Pdf/pdf_hummus_renderer.hpp"

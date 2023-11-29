@@ -10,10 +10,11 @@
 ******************************************************************************/
 
 #include "renderer.hpp"
-#include "gui.hpp"
 #include "rectangles.hpp"
 #include "image_files.hpp"
 #include "frame.hpp"
+#include "colors.hpp"
+#include "tree_analyze.hpp"
 
 int    std_shrinkf  = 5;
 bool   retina_manual= false;
@@ -341,9 +342,6 @@ brush
 renderer_rep::get_brush () {
   return brush (get_pencil () -> get_brush ());
 }
-
-bool is_percentage (tree t, string s= "%");
-double as_percentage (tree t);
 
 void
 renderer_rep::clear_pattern (SI mx1, SI my1, SI mx2, SI my2,

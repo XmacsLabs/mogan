@@ -9,3 +9,6 @@ ${define OS_MINGW}
 ${define OS_MACOS}
 ${define OS_WIN}
 ${define OS_WASM}
+
+/* Use freetype library */
+${define USE_FREETYPE}
