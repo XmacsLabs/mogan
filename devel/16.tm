@@ -32,6 +32,30 @@
       Darcy
     </cell>|<\cell>
       Code Formatting for OSPP Students
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      16_4
+    </cell>|<\cell>
+      Pluto
+    </cell>|<\cell>
+      add linter github action
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      16_5
+    </cell>|<\cell>
+      <value|oy>
+    </cell>|<\cell>
+      Add documentation and support for archlinux to `bin/format`
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      16_6
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      bin/format on src/Plugins/Metafont
     </cell>>>>
   </wide-tabular>
 
