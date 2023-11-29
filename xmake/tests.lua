@@ -1,4 +1,4 @@
-function add_target_cpp_test(filepath, dep, RUN_ENVS)
+function add_target_cpp_test(filepath, dep)
     local testname = path.basename(filepath)
     target(testname) do
         set_enabled(not is_plat("wasm"))
@@ -43,13 +43,6 @@ function add_target_cpp_test(filepath, dep, RUN_ENVS)
                 cmd = node .. " $(buildir)/wasm/wasm32/$(mode)/" .. testname .. ".js"
                 print("> " .. cmd)
                 os.exec(cmd)
-            end)
-        else
-            on_run(function (target)
-                params={}
-                cmd = target:targetfile()
-                print("> " .. cmd)
-                os.execv(cmd, params, {envs=RUN_ENVS})
             end)
         end
     end
