@@ -34,12 +34,9 @@
 #include <QCoreApplication>
 #include <QDir>
 #endif
+#include "Metafont/load_tex.hpp"
 
 int  install_status   = 0;
-
-extern void setup_tex (); // from Plugins/Metafont/tex_init.cpp
-extern void init_tex  (); // from Plugins/Metafont/tex_init.cpp
-
 
 /******************************************************************************
  * Texmacs paths

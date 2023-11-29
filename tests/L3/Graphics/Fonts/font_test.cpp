@@ -9,21 +9,26 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "Metafont/load_tex.hpp"
+#include "base.hpp"
 #include "font.hpp"
+#include "sys_utils.hpp"
 #include <QtTest/QtTest>
 
 class TestFont : public QObject {
   Q_OBJECT
 
 private slots:
+  void init () { init_lolly (); }
   void test_get_extents ();
 };
 
 void
 TestFont::test_get_extents () {
-  // sys-chinese-rm-medium-right-10-600-smart
-  // font fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
-  // cout << fn->res_name << LF;
+  set_new_fonts (true);
+  init_tex ();
+  font fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
+  qcompare (fn->res_name, "sys-chinese-rm-medium-right-10-600-smart");
 }
 
 QTEST_MAIN (TestFont)
