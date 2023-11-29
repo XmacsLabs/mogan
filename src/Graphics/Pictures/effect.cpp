@@ -11,7 +11,7 @@
 
 #include "effect.hpp"
 #include "true_color.hpp"
-#include "gui.hpp"
+#include "colors.hpp"
 #include "matrix.hpp"
 
 /******************************************************************************

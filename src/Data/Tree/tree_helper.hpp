@@ -288,4 +288,10 @@ verbatim (tree t1) {
 string tree_as_string (tree t);
 void   print_tree (tree t, int tab= 0);
 
+bool   is_percentage (tree t, string s);
+bool   is_percentage (tree t);
+double as_percentage (tree t);
+bool   is_magnification (string s);
+double get_magnification (string s);
+
 #endif

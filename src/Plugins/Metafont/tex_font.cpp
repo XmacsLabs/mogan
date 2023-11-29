@@ -13,7 +13,8 @@
 #include "Metafont/load_tex.hpp"
 #include "translator.hpp"
 #include "iterator.hpp"
-#include "gui.hpp"
+#include "analyze.hpp"
+#include "colors.hpp"
 
 #define TEX_ANY   0
 #define TEX_EC    1

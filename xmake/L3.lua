@@ -14,6 +14,7 @@ local l3_files = {
     "$(projectdir)/src/Data/Observers/**.cpp",
     "$(projectdir)/src/Data/Scheme/**.cpp",
     "$(projectdir)/src/Data/String/**.cpp",
+    "$(projectdir)/src/Data/Convert/Generic/**.cpp",
     "$(projectdir)/src/Data/Document/new_document.cpp",
     "$(projectdir)/src/Data/Drd/**.cpp",
     "$(projectdir)/src/Data/Tree/tree_helper.cpp",
@@ -24,6 +25,8 @@ local l3_files = {
     "$(projectdir)/src/Graphics/Types/**.cpp",
     "$(projectdir)/src/Graphics/Fonts/**.cpp",
     "$(projectdir)/src/Graphics/Bitmap_fonts/**.cpp",
+    "$(projectdir)/src/Graphics/Renderer/**.cpp",
+    "$(projectdir)/src/Graphics/Pictures/**.cpp",
     "$(projectdir)/src/Scheme/L1/**.cpp",
     "$(projectdir)/src/Scheme/L2/**.cpp",
     "$(projectdir)/src/Scheme/L3/**.cpp",
@@ -32,10 +35,16 @@ local l3_files = {
     "$(projectdir)/src/System/Config/**.cpp",
     "$(projectdir)/src/System/Classes/**.cpp",
     "$(projectdir)/src/System/Files/**files.cpp",
+    "$(projectdir)/src/System/Files/tm_file.cpp",
+    "$(projectdir)/src/System/Link/tm_link.cpp",
+    "$(projectdir)/src/System/Link/dyn_link.cpp",
     "$(projectdir)/src/System/Misc/data_cache.cpp",
     "$(projectdir)/src/System/Misc/persistent.cpp",
     "$(projectdir)/src/System/Misc/tm_sys_utils.cpp",
     "$(projectdir)/src/Texmacs/Server/tm_debug.cpp",
+    "$(projectdir)/src/Plugins/Metafont/**.cpp",
+    "$(projectdir)/src/Plugins/Freetype/**.cpp",
+    "$(projectdir)/src/Plugins/Xml/**.cpp"
 }
 local l3_includedirs = {
     "src/Kernel/Types",
@@ -64,11 +73,13 @@ local l3_includedirs = {
     "src/Scheme/L3",
     "src/System/Config",
     "src/System/Language",
+    "src/System/Link",
     "src/System/Files",
     "src/System/Classes",
     "src/System/Misc",
     "src/Plugins",
     "src/Texmacs",
+    "TeXmacs/include",
 }
 
 function add_target_L3()
@@ -82,6 +93,7 @@ function add_target_L3()
 
     add_packages("s7")
     add_packages("lolly")
+    add_packages("freetype")
 
     add_includedirs("$(buildir)/L3")
     add_includedirs("$(buildir)/glue")

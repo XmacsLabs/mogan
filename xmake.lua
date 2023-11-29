@@ -175,6 +175,7 @@ target("libkernel_l3") do
         filename = "L3/config.h",
         variables = {
             QTTEXMACS = false,
+            USE_FREETYPE = true,
         }
     })
     add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
