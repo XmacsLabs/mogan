@@ -208,9 +208,8 @@ tex_font_metric_rep::execute (int* s, int n, int* buf, int* ker, int& m) {
           // cout << "  " << (char) byte1 (instr) << " != " << (char) next_char
           //      << " => pc := pc + " << (byte0 (instr)+1) << "\n";
           int skip_byte= byte0 (instr);
-          if (skip_byte >=
-              128) { // current instruction is the final instruction
-                     // cout << "  Halt\n";
+          if (skip_byte >= 128) { // current instruction is the final
+                                  // instruction cout << "  Halt\n";
             ker[bp]  = 0;
             buf[bp++]= stack[sp--];
             break;
