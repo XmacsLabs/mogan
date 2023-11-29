@@ -37,7 +37,6 @@
 
 int  install_status   = 0;
 bool use_which        = false;
-bool use_locate       = false;
 
 extern void setup_tex (); // from Plugins/Metafont/tex_init.cpp
 extern void init_tex  (); // from Plugins/Metafont/tex_init.cpp
@@ -453,8 +452,6 @@ init_misc () {
 #else
   use_which = (var_eval_system ("which texmacs 2> /dev/null") != "");
 #endif
-  //string loc= var_eval_system ("locate bin/locate 2> /dev/null");
-  //use_locate= (search_forwards ("bin/locate", loc) > 0);
 
   // Set extra environment variables for Cygwin
 #ifdef OS_CYGWIN
