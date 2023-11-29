@@ -7,7 +7,8 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|71_4>|<cell|<value|da>>|<cell|Show
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|71_5>>|<cell|<value|da>>|<cell|Failed
+  to Insert-\<gtr\>N-th root via menu>>|<row|<cell|Chore>|<cell|71_4>|<cell|<value|da>>|<cell|Show
   shortcuts in the context menu>>|<row|<cell|Chore>|<cell|71_3>|<cell|<value|da>>|<cell|Show
   shortcut for Focus-\<gtr\>Numbered>>|<row|<cell|Chore>|<cell|71_2>|<cell|<value|da>>|<cell|Show
   tooltip for (check (balloon)) icon on focus
@@ -21,7 +22,7 @@
   or any later version published by the Free Software Foundation; with no
   Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
   Texts. A copy of the license is included in the section entitled "GNU Free
-  Documentation License".>v
+  Documentation License".>
 </body>
 
 <\initial>
