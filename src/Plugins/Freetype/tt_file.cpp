@@ -119,31 +119,6 @@ tt_locate (string name) {
     //cout << "tt_locate: " << name << " -> " << u << "\n";
     if (!is_none (u)) return u;
   }
-  else if (use_locate &&
-	   // NOTE: avoiding unnecessary locates can greatly improve timings
-	   !starts (name, "ec") &&
-	   !starts (name, "la") &&
-	   !starts (name, "cm") &&
-	   !starts (name, "msam") &&
-	   !starts (name, "msbm") &&
-	   !starts (name, "bbm") &&
-	   !starts (name, "stmary") &&
-	   !starts (name, "rsfs") &&
-	   !starts (name, "grmn") &&
-	   !starts (name, "mac-")
-	   // FIXME: better caching of missed tt_locates would be better
-	   )
-    {
-      string s= eval_system ("locate", "/" * name);
-      //cout << "locate " << name << " -> " << s << "\n";
-      int start, i, n= N(s);
-      for (start=0, i=0; i<n; i++)
-	if (s[i]=='\n') {
-	  if (ends (s (start, i), name))
-	    return url (s (start, i));
-	  start= i+1;
-	}
-    }
 
   url tt_path= tt_font_path ();
   //cout << "Resolve " << name << " in " << tt_path << "\n";
