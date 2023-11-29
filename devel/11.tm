@@ -58,6 +58,14 @@
       Darcy
     </cell>|<\cell>
       Detect font paths properly on Debian
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|11_7>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Failed to render circled numbers
     </cell>>>>
   </wide-tabular>
 
