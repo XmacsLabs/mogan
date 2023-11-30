@@ -60,11 +60,11 @@
 
   <assign|sectional-sep|<macro|.<space|2spc>>>
 
-  <assign|section-font|<macro|name|<fira-font|<large|<arg|name>>>>>
+  <assign|section-font|<macro|name|<large|<arg|name>>>>
 
-  <assign|subsection-font|<macro|name|<fira-font|<arg|name>>>>
+  <assign|subsection-font|<macro|name|<arg|name>>>
 
-  <assign|subsubsection-font|<macro|name|<fira-font|<arg|name>>>>
+  <assign|subsubsection-font|<macro|name|<arg|name>>>
 
   \;
 
@@ -80,11 +80,11 @@
     </src-comment>
   </active*>
 
-  <assign|paragraph-font|<macro|name|<fira-font|<with|font-shape|italic|<arg|name>>>>>
-
-  <assign|subparagraph-font|<macro|name|<fira-font|<with|font-shape|italic|<arg|name>>>>>
-
   \;
+
+  <assign|paragraph-font|<macro|name|<with|font-shape|italic|<arg|name>>>>
+
+  <assign|subparagraph-font|<macro|name|<with|font-shape|italic|<arg|name>>>>
 
   <assign|paragraph-title|<macro|name|<style-with|src-compact|none|<sectional-short|<vspace*|0.5fn><paragraph-font|<arg|name>>>>>>
 
@@ -103,10 +103,6 @@
       Paragraphs and subparagraphs.
     </src-comment>
   </active*>
-
-  <assign|paragraph-font|<macro|name|<fira-font|<with|font-shape|italic|<arg|name>>>>>
-
-  <assign|subparagraph-font|<macro|name|<fira-font|<with|font-shape|italic|<arg|name>>>>>
 
   \;
 
