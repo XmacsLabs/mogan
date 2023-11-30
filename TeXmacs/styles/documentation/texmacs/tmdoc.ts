@@ -24,7 +24,7 @@
     </src-title>
   </active*>
 
-  <use-package|std|env|title-generic|header-article|section-article|doc|pagella-font>
+  <use-package|std|env|title-generic|header-article|section-article|doc>
 
   <\active*>
     <\src-comment>
