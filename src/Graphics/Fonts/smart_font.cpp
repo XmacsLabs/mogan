@@ -21,6 +21,8 @@ bool virtually_defined (string c, string name);
 font smart_font_bis (string f, string v, string s, string sh, int sz, int hdpi,
                      int vdpi);
 
+RESOURCE_CODE (smart_map);
+
 smart_map
 get_smart_map (tree fn) {
   string name= recompose (tuple_as_array (fn), "-");

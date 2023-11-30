@@ -9,11 +9,12 @@
  * in the root directory or <tp://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#ifndef SMART_FONT_H
-#define SMART_FONT_H
+#ifndef SMART_FONT_HPP
+#define SMART_FONT_HPP
 
 #include "analyze.hpp"
 #include "font.hpp"
+#include "resource.hpp"
 
 /******************************************************************************
  * Efficient computation of the appropriate subfont
@@ -84,8 +85,6 @@ public:
     return nr;
   }
 };
-
-RESOURCE_CODE (smart_map);
 
 struct smart_font_rep : font_rep {
   string mfam;
