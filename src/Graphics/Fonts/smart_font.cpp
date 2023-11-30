@@ -878,38 +878,48 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
   nr                         = -1;
   while (pos < N (s)) {
     if (s[pos] != '<') {
-      int c   = (int) (unsigned char) s[pos];
-      int next= chv[c];
+      int c= (int) (unsigned char) s[pos];
+
+      int fn_index= chv[c];
       if (math_kind != 0 && math_kind != 2 && is_alpha (c) &&
           (pos == 0 || !is_alpha (s[pos - 1])) &&
-          (pos + 1 == N (s) || !is_alpha (s[pos + 1])))
-        next= italic_nr;
-      else if (chv[c] == -1) next= resolve (s (pos, pos + 1));
-      if (count == 1 && nr != -1 && next == nr) {
+          (pos + 1 == N (s) || !is_alpha (s[pos + 1]))) {
+        fn_index= italic_nr;
+      }
+      else if (fn_index == -1) {
+        fn_index= resolve (s (pos, pos + 1));
+      }
+
+      if (count == 1 && nr != -1 && fn_index == nr) {
         // NOTE: rewrite strings like --- character by character if necessary
         if (sm->fn_rewr[nr] == REWRITE_SPECIAL) break;
       }
-      if (next == nr) pos++;
+      if (fn_index == nr) pos++;
       else if (nr == -1) {
         pos++;
-        nr= next;
+        nr= fn_index;
       }
       else break;
     }
     else {
       int end= pos;
       tm_char_forwards (s, end);
-      int next= cht[s (pos, end)];
-      if (next == -1) next= resolve (s (pos, end));
-      if (count == 1 && nr != -1 && next == nr) {
+      string current_c= s (pos, end);
+
+      int fn_index= cht[current_c];
+      if (fn_index == -1) {
+        fn_index= resolve (current_c);
+      }
+
+      if (count == 1 && nr != -1 && fn_index == nr) {
         if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
         if (!fn[nr]->supports (s (start, end))) break;
         pos= end;
       }
-      else if (next == nr) pos= end;
+      else if (fn_index == nr) pos= end;
       else if (nr == -1) {
         pos= end;
-        nr = next;
+        nr = fn_index;
       }
       else break;
     }
