@@ -165,6 +165,19 @@ cache_save (string buffer) {
   }
 }
 
+static void
+cache_init (string buffer) {
+  if (buffer == "font_cache.scm") {
+    url cache_file = url ("$TEXMACS_PATH/fonts/font_cache.scm");
+    string cached;
+    if (!load_string (cache_file, cached, false)) {
+      tree t= scheme_to_tree (cached);
+      for (int i=0; i<N(t)-1; i+=2)
+        cache_data (tuple (buffer, t[i]))= t[i+1];
+    }
+  }
+}
+
 void
 cache_load (string buffer) {
   if (!cache_loaded->contains (buffer)) {
@@ -175,6 +188,8 @@ cache_load (string buffer) {
       tree t= scheme_to_tree (cached);
       for (int i=0; i<N(t)-1; i+=2)
         cache_data (tuple (buffer, t[i]))= t[i+1];
+    } else {
+      cache_init (buffer);
     }
     cache_loaded->insert (buffer);
   }
