@@ -70,9 +70,7 @@
     </src-comment>
   </active*>
 
-  <assign|chapter-font|<macro|name|<fira-font|<with|font-shape|small-caps|<very-large|<arg|name>>>>>>
-
-  \;
+  <assign|chapter-font|<macro|name|<with|font-shape|small-caps|<very-large|<arg|name>>>>>
 
   <assign|chapter-title|<macro|name|<style-with|src-compact|none|<new-dpage*><new-line><style-with|src-compact|none|<sectional-centered-bold|<vspace*|2fn><chapter-font|<arg|name>><vspace|3fn>>>>>>
 
@@ -82,13 +80,13 @@
     </src-comment>
   </active*>
 
-  <assign|section-font|<macro|name|<fira-font|<large|<arg|name>>>>>
-
-  <assign|subsection-font|<macro|name|<fira-font|<arg|name>>>>
-
-  <assign|subsubsection-font|<macro|name|<fira-font|<arg|name>>>>
-
   \;
+
+  <assign|section-font|<macro|name|<large|<arg|name>>>>
+
+  <assign|subsection-font|<macro|name|<arg|name>>>
+
+  <assign|subsubsection-font|<macro|name|<arg|name>>>
 
   <assign|section-title|<macro|name|<style-with|src-compact|none|<sectional-normal-bold|<vspace*|1.25fn><section-font|<arg|name>><vspace|0.5fn>>>>>
 
@@ -102,11 +100,11 @@
     </src-comment>
   </active*>
 
-  <assign|paragraph-font|<macro|name|<fira-font|<with|font-shape|italic|<arg|name>>>>>
-
-  <assign|subparagraph-font|<macro|name|<fira-font|<with|font-shape|italic|<arg|name>>>>>
-
   \;
+
+  <assign|paragraph-font|<macro|name|<with|font-shape|italic|<arg|name>>>>
+
+  <assign|subparagraph-font|<macro|name|<with|font-shape|italic|<arg|name>>>>
 
   <assign|paragraph-title|<macro|name|<style-with|src-compact|none|<sectional-short|<vspace*|0.5fn><paragraph-font|<arg|name>>>>>>
 
