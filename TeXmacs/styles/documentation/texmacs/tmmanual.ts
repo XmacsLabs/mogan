@@ -24,7 +24,7 @@
     </src-title>
   </active*>
 
-  <use-package|tmbook|doc|pagella-font>
+  <use-package|tmbook|doc>
 
   <\active*>
     <\src-comment>
