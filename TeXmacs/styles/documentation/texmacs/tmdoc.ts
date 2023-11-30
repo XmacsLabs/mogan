@@ -98,18 +98,6 @@
 
   <assign|enunciation-name|<macro|name|<with|font-shape|small-caps|<arg|name>>>>
 
-  <\active*>
-    <\src-comment>
-      Paragraphs and subparagraphs.
-    </src-comment>
-  </active*>
-
-  \;
-
-  <assign|paragraph-title|<macro|name|<style-with|src-compact|none|<sectional-short|<vspace*|0.5fn><paragraph-font|<arg|name>>>>>>
-
-  <assign|subparagraph-title|<macro|name|<style-with|src-compact|none|<sectional-short|<vspace*|0.5fn><subparagraph-font|<arg|name>>>>>>
-
   <active*|<\src-comment>
     Typewriter font.
   </src-comment>>
