@@ -9,11 +9,11 @@
  * in the root directory or <tp://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "smart_font.hpp"
 #include "Freetype/tt_tools.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
 #include "font.hpp"
-#include "smart_font.hpp"
 #include "iterator.hpp"
 #include "translator.hpp"
 

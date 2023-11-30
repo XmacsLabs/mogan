@@ -12,8 +12,8 @@
 #ifndef SMART_FONT_H
 #define SMART_FONT_H
 
-#include "font.hpp"
 #include "analyze.hpp"
+#include "font.hpp"
 
 /******************************************************************************
  * Efficient computation of the appropriate subfont
