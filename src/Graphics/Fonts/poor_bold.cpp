@@ -1,23 +1,23 @@
 
 /******************************************************************************
-* MODULE     : poor_bold.cpp
-* DESCRIPTION: Emulation of bold fonts
-* COPYRIGHT  : (C) 2016  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : poor_bold.cpp
+ * DESCRIPTION: Emulation of bold fonts
+ * COPYRIGHT  : (C) 2016  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "font.hpp"
 #include "analyze.hpp"
+#include "font.hpp"
 #include "universal.hpp"
 
 /******************************************************************************
-* True Type fonts
-******************************************************************************/
+ * True Type fonts
+ ******************************************************************************/
 
-struct poor_bold_font_rep: font_rep {
+struct poor_bold_font_rep : font_rep {
   font   base;
   double lofat;
   double upfat;
@@ -42,35 +42,33 @@ struct poor_bold_font_rep: font_rep {
   void   advance_glyph (string s, int& pos, bool ligf);
   glyph  get_glyph (string s);
   int    index_glyph (string s, font_metric& fnm, font_glyphs& fng);
-  double get_left_slope  (string s);
+  double get_left_slope (string s);
   double get_right_slope (string s);
-  SI     get_left_correction  (string s);
-  SI     get_right_correction  (string s);
-  SI     get_lsub_correction  (string s);
-  SI     get_lsup_correction  (string s);
-  SI     get_rsub_correction  (string s);
-  SI     get_rsup_correction  (string s);
-  SI     get_wide_correction  (string s, int mode);
+  SI     get_left_correction (string s);
+  SI     get_right_correction (string s);
+  SI     get_lsub_correction (string s);
+  SI     get_lsup_correction (string s);
+  SI     get_rsub_correction (string s);
+  SI     get_rsup_correction (string s);
+  SI     get_wide_correction (string s, int mode);
 };
 
 /******************************************************************************
-* Initialization of main font parameters
-******************************************************************************/
+ * Initialization of main font parameters
+ ******************************************************************************/
 
-poor_bold_font_rep::poor_bold_font_rep (string name, font b,
-                                        double l, double h):
-  font_rep (name, b), base (b), lofat (l), upfat (h)
-{
+poor_bold_font_rep::poor_bold_font_rep (string name, font b, double l, double h)
+    : font_rep (name, b), base (b), lofat (l), upfat (h) {
   this->copy_math_pars (base);
   dlo= (SI) (lofat * wfn);
   dup= (SI) (upfat * wfn);
 
-  this->spc    = this->spc + space (dlo >> 1);
-  this->wquad += dup;
-  this->wline += vertical (dup);
+  this->spc= this->spc + space (dlo >> 1);
+  this->wquad+= dup;
+  this->wline+= vertical (dup);
 }
 
-static hashmap<string,double> bold_multiplier (1.0);
+static hashmap<string, double> bold_multiplier (1.0);
 
 static double
 get_bold_multiplier (string s) {
@@ -81,17 +79,18 @@ get_bold_multiplier (string s) {
   _1_5 << string ("#") << string ("%") << string ("&") << string ("@")
        << string ("A") << string ("B") << string ("C") << string ("D")
        << string ("G") << string ("K") << string ("P") << string ("R")
-       << string ("V") << string ("Y")
-       << string ("w");
+       << string ("V") << string ("Y") << string ("w");
   _2_0 << string ("H") << string ("M") << string ("N") << string ("W")
        << string ("m");
-  for (int i=0; i<N(_1_5); i++) bold_multiplier (_1_5[i])= 1.5;
-  for (int i=0; i<N(_2_0); i++) bold_multiplier (_2_0[i])= 2.0;
+  for (int i= 0; i < N (_1_5); i++)
+    bold_multiplier (_1_5[i])= 1.5;
+  for (int i= 0; i < N (_2_0); i++)
+    bold_multiplier (_2_0[i])= 2.0;
   array<string> accs= get_accented_list ();
-  for (int i=0; i<N(accs); i++) {
+  for (int i= 0; i < N (accs); i++) {
     string unacc= uni_unaccent_char (accs[i]);
     if (bold_multiplier->contains (unacc))
-      bold_multiplier (accs[i])= bold_multiplier [unacc];
+      bold_multiplier (accs[i])= bold_multiplier[unacc];
   }
   return bold_multiplier[s];
 }
@@ -115,8 +114,8 @@ poor_bold_font_rep::vertical (SI penw) {
 }
 
 /******************************************************************************
-* Getting extents and drawing strings
-******************************************************************************/
+ * Getting extents and drawing strings
+ ******************************************************************************/
 
 bool
 poor_bold_font_rep::supports (string s) {
@@ -126,33 +125,33 @@ poor_bold_font_rep::supports (string s) {
 void
 poor_bold_font_rep::get_extents (string s, metric& ex) {
   base->get_extents (s, ex);
-  if (N(s) == 0) return;
-  STACK_NEW_ARRAY (xpos, SI, N(s)+1);
+  if (N (s) == 0) return;
+  STACK_NEW_ARRAY (xpos, SI, N (s) + 1);
   get_xpositions (s, xpos);
-  ex->x4 += xpos[N(s)] - ex->x2;
-  ex->x2= xpos[N(s)];
+  ex->x4+= xpos[N (s)] - ex->x2;
+  ex->x2= xpos[N (s)];
   STACK_DELETE_ARRAY (xpos);
 }
 
 void
 poor_bold_font_rep::adjust_xpositions (string s, SI* xpos, bool ligf) {
-  SI dx= 0;
-  int i=0;
-  while (i < N(s)) {
+  SI  dx= 0;
+  int i = 0;
+  while (i < N (s)) {
     int start= i;
     base->advance_glyph (s, i, ligf);
-    int j= start;
-    SI delta= 0;
+    int j    = start;
+    SI  delta= 0;
     while (j < i) {
       int prev= j;
       tm_char_forwards (s, j);
       SI dpen, dtot;
       fatten (s (start, j), dpen, dtot);
       delta= dtot;
-      for (int k=prev+1; k<=j; k++)
-        xpos[k] += dx + delta;
+      for (int k= prev + 1; k <= j; k++)
+        xpos[k]+= dx + delta;
     }
-    dx += delta;
+    dx+= delta;
   }
 }
 
@@ -175,44 +174,45 @@ poor_bold_font_rep::get_xpositions (string s, SI* xpos, SI xk) {
 }
 
 void
-poor_bold_font_rep::draw_fixed (renderer ren, string s,
-                                SI x, SI y, SI* xpos, bool ligf) {
-  int i=0;
-  while (i < N(s)) {
+poor_bold_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, SI* xpos,
+                                bool ligf) {
+  int i= 0;
+  while (i < N (s)) {
     int start= i;
     base->advance_glyph (s, i, ligf);
     string ss= s (start, i);
     if (ren->is_screen) {
       font_metric fnm;
       font_glyphs fng;
-      int c= index_glyph (ss, fnm, fng);
-      if (c >= 0) ren->draw (c, fng, start==0? x: x + xpos[start], y);
+      int         c= index_glyph (ss, fnm, fng);
+      if (c >= 0) ren->draw (c, fng, start == 0 ? x : x + xpos[start], y);
     }
     else {
       SI dpen, dtot;
       fatten (ss, dpen, dtot);
       if (dpen == dtot) {
-        for (int k=0; k<=8; k++) {
-          SI dx= (k*dpen) / 8;
-          base->draw (ren, ss, x + dx + (start==0? 0: xpos[start]), y);
+        for (int k= 0; k <= 8; k++) {
+          SI dx= (k * dpen) / 8;
+          base->draw (ren, ss, x + dx + (start == 0 ? 0 : xpos[start]), y);
         }
       }
       else {
         metric ex;
         base->get_extents (ss, ex);
-        SI xw= ex->x4 - ex->x3;
-        double c= 1.0; // approximation of orig_penw / dpen
-        double eps= (c * (dtot - dpen)) / (xw + c * (dtot - dpen));
-        SI dpen2= (SI) ((1.0 - eps) * dpen);
+        SI     xw    = ex->x4 - ex->x3;
+        double c     = 1.0; // approximation of orig_penw / dpen
+        double eps   = (c * (dtot - dpen)) / (xw + c * (dtot - dpen));
+        SI     dpen2 = (SI) ((1.0 - eps) * dpen);
         double lambda= ((double) (xw + dtot - dpen2)) / ((double) xw);
-        lambda= floor (100.0 * lambda + 0.5) / 100.0;
-        //font mbase= base->magnify (lambda, 1.0);
+        lambda       = floor (100.0 * lambda + 0.5) / 100.0;
+        // font mbase= base->magnify (lambda, 1.0);
         font mbase= poor_stretched_font (base, lambda, 1.0);
-        for (int k=0; k<=8; k++) {
+        for (int k= 0; k <= 8; k++) {
           double slope= -((double) vertical (dpen)) / ((double) dpen);
-          SI dx= (k*dpen2) / 8;
-          SI dy= (SI) floor (slope * (dx - (dpen2 >> 1)));
-          mbase->draw (ren, ss, x + dx + (start==0? 0: xpos[start]), y + dy);
+          SI     dx   = (k * dpen2) / 8;
+          SI     dy   = (SI) floor (slope * (dx - (dpen2 >> 1)));
+          mbase->draw (ren, ss, x + dx + (start == 0 ? 0 : xpos[start]),
+                       y + dy);
         }
       }
     }
@@ -221,7 +221,7 @@ poor_bold_font_rep::draw_fixed (renderer ren, string s,
 
 void
 poor_bold_font_rep::draw_fixed (renderer ren, string s, SI x, SI y) {
-  STACK_NEW_ARRAY (xpos, SI, N(s)+1);
+  STACK_NEW_ARRAY (xpos, SI, N (s) + 1);
   get_xpositions (s, xpos);
   draw_fixed (ren, s, x, y, xpos, true);
   STACK_DELETE_ARRAY (xpos);
@@ -229,7 +229,7 @@ poor_bold_font_rep::draw_fixed (renderer ren, string s, SI x, SI y) {
 
 void
 poor_bold_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, bool ligf) {
-  STACK_NEW_ARRAY (xpos, SI, N(s)+1);
+  STACK_NEW_ARRAY (xpos, SI, N (s) + 1);
   get_xpositions (s, xpos, ligf);
   draw_fixed (ren, s, x, y, xpos, ligf);
   STACK_DELETE_ARRAY (xpos);
@@ -237,7 +237,7 @@ poor_bold_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, bool ligf) {
 
 void
 poor_bold_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, SI xk) {
-  STACK_NEW_ARRAY (xpos, SI, N(s)+1);
+  STACK_NEW_ARRAY (xpos, SI, N (s) + 1);
   get_xpositions (s, xpos, xk);
   draw_fixed (ren, s, x, y, xpos, false);
   STACK_DELETE_ARRAY (xpos);
@@ -249,8 +249,8 @@ poor_bold_font_rep::magnify (double zoomx, double zoomy) {
 }
 
 /******************************************************************************
-* Glyph manipulations
-******************************************************************************/
+ * Glyph manipulations
+ ******************************************************************************/
 
 void
 poor_bold_font_rep::advance_glyph (string s, int& pos, bool ligf) {
@@ -267,8 +267,7 @@ poor_bold_font_rep::get_glyph (string s) {
 }
 
 int
-poor_bold_font_rep::index_glyph (string s, font_metric& fnm,
-                                           font_glyphs& fng) {
+poor_bold_font_rep::index_glyph (string s, font_metric& fnm, font_glyphs& fng) {
   int c= base->index_glyph (s, fnm, fng);
   if (c < 0) return c;
   SI dpen, dtot;
@@ -279,8 +278,8 @@ poor_bold_font_rep::index_glyph (string s, font_metric& fnm,
 }
 
 /******************************************************************************
-* Bold correction
-******************************************************************************/
+ * Bold correction
+ ******************************************************************************/
 
 double
 poor_bold_font_rep::get_left_slope (string s) {
@@ -328,8 +327,8 @@ poor_bold_font_rep::get_wide_correction (string s, int mode) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
 font
 poor_bold_font (font base, double lofat, double upfat) {
@@ -337,7 +336,7 @@ poor_bold_font (font base, double lofat, double upfat) {
   if (upfat != lofat) name << "," << as_string (upfat);
   name << "]";
   return make (font, name,
-    tm_new<poor_bold_font_rep> (name, base, lofat, upfat));
+               tm_new<poor_bold_font_rep> (name, base, lofat, upfat));
 }
 
 font

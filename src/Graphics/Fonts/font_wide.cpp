@@ -1,28 +1,28 @@
 
 /******************************************************************************
-* MODULE     : font_wide.cpp
-* DESCRIPTION: microtypographic wide accent positioning
-* COPYRIGHT  : (C) 2017  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : font_wide.cpp
+ * DESCRIPTION: microtypographic wide accent positioning
+ * COPYRIGHT  : (C) 2017  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "font.hpp"
 #include "analyze.hpp"
+#include "font.hpp"
 
 /******************************************************************************
-* Standard corrections for upright characters
-******************************************************************************/
+ * Standard corrections for upright characters
+ ******************************************************************************/
 
 void
-adjust_pair (hashmap<string,double>& t, string prefix, string s, double dx) {
+adjust_pair (hashmap<string, double>& t, string prefix, string s, double dx) {
   adjust_pair (t, "<" * prefix * "-" * s * ">", dx);
 }
 
 void
-above_adjust_frak (hashmap<string,double>& t, double force) {
+above_adjust_frak (hashmap<string, double>& t, double force) {
   adjust_pair (t, "frak", "b", -0.04 * force);
   adjust_pair (t, "frak", "d", 0.04 * force);
   adjust_pair (t, "frak", "h", -0.04 * force);
@@ -37,7 +37,7 @@ above_adjust_frak (hashmap<string,double>& t, double force) {
 }
 
 void
-above_adjust_bbb (hashmap<string,double>& t, double force) {
+above_adjust_bbb (hashmap<string, double>& t, double force) {
   adjust_pair (t, "bbb", "b", -0.06 * force);
   adjust_pair (t, "bbb", "d", 0.06 * force);
   adjust_pair (t, "bbb", "h", -0.06 * force);
@@ -52,11 +52,11 @@ above_adjust_bbb (hashmap<string,double>& t, double force) {
 }
 
 /******************************************************************************
-* Standard corrections
-******************************************************************************/
+ * Standard corrections
+ ******************************************************************************/
 
 void
-above_adjust_std (hashmap<string,double>& t) {
+above_adjust_std (hashmap<string, double>& t) {
   adjust_pair (t, "b", -0.02);
   adjust_pair (t, "d", 0.06);
   adjust_pair (t, "h", -0.04);
@@ -97,32 +97,32 @@ above_adjust_std (hashmap<string,double>& t) {
 }
 
 void
-below_adjust_std (hashmap<string,double>& t) {
+below_adjust_std (hashmap<string, double>& t) {
   (void) t;
 }
 
 /******************************************************************************
-* Guessing further adjustments
-******************************************************************************/
+ * Guessing further adjustments
+ ******************************************************************************/
 
 void
-above_adjust_guessed (hashmap<string,double>& t) {
+above_adjust_guessed (hashmap<string, double>& t) {
   (void) t;
 }
 
 void
-below_adjust_guessed (hashmap<string,double>& t) {
+below_adjust_guessed (hashmap<string, double>& t) {
   (void) t;
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> above_guessed (0.0);
-static hashmap<string,double> below_guessed (0.0);
+static hashmap<string, double> above_guessed (0.0);
+static hashmap<string, double> below_guessed (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 above_guessed_table () {
   if (N (above_guessed) == 0) {
     above_adjust_std (above_guessed);
@@ -131,7 +131,7 @@ above_guessed_table () {
   return above_guessed;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 below_guessed_table () {
   if (N (below_guessed) == 0) {
     below_adjust_std (below_guessed);

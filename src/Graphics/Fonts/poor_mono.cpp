@@ -1,26 +1,26 @@
 
 /******************************************************************************
-* MODULE     : poor_mono.cpp
-* DESCRIPTION: Emulation of monospaced fonts
-* COPYRIGHT  : (C) 2020  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : poor_mono.cpp
+ * DESCRIPTION: Emulation of monospaced fonts
+ * COPYRIGHT  : (C) 2020  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "font.hpp"
 #include "analyze.hpp"
+#include "font.hpp"
 #include "frame.hpp"
 
 /******************************************************************************
-* True Type fonts
-******************************************************************************/
+ * True Type fonts
+ ******************************************************************************/
 
-struct poor_mono_font_rep: font_rep {
+struct poor_mono_font_rep : font_rep {
   font   base;
-  double lw;    // logical width factor
-  double phw;   // maximal physical logical width factor
+  double lw;  // logical width factor
+  double phw; // maximal physical logical width factor
   SI     mquad;
 
   poor_mono_font_rep (string name, font base, double lw, double phw);
@@ -37,25 +37,24 @@ struct poor_mono_font_rep: font_rep {
   void   advance_glyph (string s, int& pos, bool ligf);
   glyph  get_glyph (string s);
   int    index_glyph (string s, font_metric& fnm, font_glyphs& fng);
-  double get_left_slope  (string s);
+  double get_left_slope (string s);
   double get_right_slope (string s);
-  SI     get_left_correction  (string s);
+  SI     get_left_correction (string s);
   SI     get_right_correction (string s);
-  SI     get_lsub_correction  (string s);
-  SI     get_lsup_correction  (string s);
-  SI     get_rsub_correction  (string s);
-  SI     get_rsup_correction  (string s);
-  SI     get_wide_correction  (string s, int mode);
+  SI     get_lsub_correction (string s);
+  SI     get_lsup_correction (string s);
+  SI     get_rsub_correction (string s);
+  SI     get_rsup_correction (string s);
+  SI     get_wide_correction (string s, int mode);
 };
 
 /******************************************************************************
-* Initialization of main font parameters
-******************************************************************************/
+ * Initialization of main font parameters
+ ******************************************************************************/
 
-poor_mono_font_rep::poor_mono_font_rep (
-  string name, font b, double l, double ph):
-    font_rep (name, b), base (b), lw (l), phw (ph)
-{
+poor_mono_font_rep::poor_mono_font_rep (string name, font b, double l,
+                                        double ph)
+    : font_rep (name, b), base (b), lw (l), phw (ph) {
   this->copy_math_pars (base);
   wquad= (SI) (lw * base->wquad);
   mquad= (SI) (phw * base->wquad);
@@ -65,8 +64,8 @@ poor_mono_font_rep::poor_mono_font_rep (
 }
 
 /******************************************************************************
-* Getting extents and drawing strings
-******************************************************************************/
+ * Getting extents and drawing strings
+ ******************************************************************************/
 
 bool
 poor_mono_font_rep::supports (string s) {
@@ -75,18 +74,19 @@ poor_mono_font_rep::supports (string s) {
 
 void
 poor_mono_font_rep::get_extents (string s, metric& ex) {
-  SI  x= 0;
-  int i= 0;
+  SI     x= 0;
+  int    i= 0;
   metric ey;
-  ex->x1= ex->x3= ex->x2= ex->x4=0;
-  ex->y3= ex->y1= 0; ex->y4= ex->y2= yx;
-  while (i < N(s)) {
+  ex->x1= ex->x3= ex->x2= ex->x4= 0;
+  ex->y3= ex->y1= 0;
+  ex->y4= ex->y2= yx;
+  while (i < N (s)) {
     int prev= i;
     tm_char_forwards (s, i);
     base->get_extents (s (prev, i), ey);
     SI w= ey->x2 - ey->x1;
     if (w <= mquad) {
-      SI dx= x + ((wquad - w) >> 1);
+      SI dx = x + ((wquad - w) >> 1);
       ex->x1= min (ex->x1, ey->x1 + dx);
       ex->x2= max (ex->x2, ey->x2 + dx);
       ex->x3= min (ex->x3, ey->x3 + dx);
@@ -94,7 +94,7 @@ poor_mono_font_rep::get_extents (string s, metric& ex) {
     }
     else {
       double f= ((double) mquad) / ((double) w);
-      f= max (floor (f * 16.0) / 16.0, 0.01); // limit the number of factors
+      f    = max (floor (f * 16.0) / 16.0, 0.01); // limit the number of factors
       SI dx= x + ((wquad - mquad) >> 1);
       ex->x1= min (ex->x1, ((SI) (f * ey->x1)) + dx);
       ex->x2= max (ex->x2, ((SI) (f * ey->x2)) + dx);
@@ -105,7 +105,7 @@ poor_mono_font_rep::get_extents (string s, metric& ex) {
     ex->y2= max (ex->y2, ey->y2);
     ex->y3= min (ex->y3, ey->y3);
     ex->y4= max (ex->y4, ey->y4);
-    x += wquad;
+    x+= wquad;
   }
 }
 
@@ -122,14 +122,15 @@ poor_mono_font_rep::get_xpositions (string s, SI* xpos, bool lig) {
 
 void
 poor_mono_font_rep::get_xpositions (string s, SI* xpos, SI xk) {
-  SI  w= wquad + 2*xk;
+  SI  w= wquad + 2 * xk;
   SI  x= 0;
   int i= 0;
-  while (i < N(s)) {
+  while (i < N (s)) {
     int prev= i;
     tm_char_forwards (s, i);
-    x += w;
-    for (int k=prev+1; k<=i; k++) xpos[k]= x;
+    x+= w;
+    for (int k= prev + 1; k <= i; k++)
+      xpos[k]= x;
   }
 }
 
@@ -146,9 +147,9 @@ poor_mono_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, bool ligf) {
 
 void
 poor_mono_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, SI xk) {
-  int i= 0;
+  int    i= 0;
   metric ex;
-  while (i < N(s)) {
+  while (i < N (s)) {
     int prev= i;
     tm_char_forwards (s, i);
     string ss= s (prev, i);
@@ -160,13 +161,13 @@ poor_mono_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, SI xk) {
     }
     else {
       double f= ((double) mquad) / ((double) w);
-      f= max (floor (f * 16.0) / 16.0, 0.01); // limit the number of factors
+      f    = max (floor (f * 16.0) / 16.0, 0.01); // limit the number of factors
       SI dx= x + ((wquad - mquad) >> 1) + xk;
       ren->set_transformation (scaling (point (f, 1.0), point (dx, 0.0)));
       base->draw_fixed (ren, ss, 0, y);
       ren->reset_transformation ();
     }
-    x += wquad + (2*xk);
+    x+= wquad + (2 * xk);
   }
 }
 
@@ -176,8 +177,8 @@ poor_mono_font_rep::magnify (double zoomx, double zoomy) {
 }
 
 /******************************************************************************
-* Glyph manipulations
-******************************************************************************/
+ * Glyph manipulations
+ ******************************************************************************/
 
 void
 poor_mono_font_rep::advance_glyph (string s, int& pos, bool ligf) {
@@ -192,8 +193,7 @@ poor_mono_font_rep::get_glyph (string s) {
 }
 
 int
-poor_mono_font_rep::index_glyph (string s, font_metric& fnm,
-                                 font_glyphs& fng) {
+poor_mono_font_rep::index_glyph (string s, font_metric& fnm, font_glyphs& fng) {
   int c= base->index_glyph (s, fnm, fng);
   if (c < 0) return c;
   fnm= mono (fnm, wquad, mquad);
@@ -202,8 +202,8 @@ poor_mono_font_rep::index_glyph (string s, font_metric& fnm,
 }
 
 /******************************************************************************
-* Mono correction
-******************************************************************************/
+ * Mono correction
+ ******************************************************************************/
 
 double
 poor_mono_font_rep::get_left_slope (string s) {
@@ -217,32 +217,38 @@ poor_mono_font_rep::get_right_slope (string s) {
 
 SI
 poor_mono_font_rep::get_left_correction (string s) {
-  (void) s; return 0;
+  (void) s;
+  return 0;
 }
 
 SI
 poor_mono_font_rep::get_right_correction (string s) {
-  (void) s; return 0;
+  (void) s;
+  return 0;
 }
 
 SI
 poor_mono_font_rep::get_lsub_correction (string s) {
-  (void) s; return 0;
+  (void) s;
+  return 0;
 }
 
 SI
 poor_mono_font_rep::get_lsup_correction (string s) {
-  (void) s; return 0;
+  (void) s;
+  return 0;
 }
 
 SI
 poor_mono_font_rep::get_rsub_correction (string s) {
-  (void) s; return 0;
+  (void) s;
+  return 0;
 }
 
 SI
 poor_mono_font_rep::get_rsup_correction (string s) {
-  (void) s; return 0;
+  (void) s;
+  return 0;
 }
 
 SI
@@ -251,13 +257,12 @@ poor_mono_font_rep::get_wide_correction (string s, int mode) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
 font
 poor_mono_font (font base, double lw, double phw) {
-  string name=
-    "poormono[" * base->res_name *
-    "," * as_string (lw) * "," * as_string (phw) * "]";
+  string name= "poormono[" * base->res_name * "," * as_string (lw) * "," *
+               as_string (phw) * "]";
   return make (font, name, tm_new<poor_mono_font_rep> (name, base, lw, phw));
 }
