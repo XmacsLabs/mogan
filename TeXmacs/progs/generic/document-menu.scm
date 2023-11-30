@@ -17,6 +17,10 @@
         (language locale)
         (texmacs menus file-menu)))
 
+(define (main-font-name)
+  (with name (font-family-main (get-init "font"))
+    (if (== name "sys-chinese") (utf8->cork "默认字体") name)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Project menu
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1030,7 +1034,7 @@
       (-> "Encryption" (link document-encryption-menu)))
   (-> (eval (upcase-first (get-init "language")))
       (link document-language-menu))
-  (-> (eval (upcase-first (font-family-main (get-init "font"))))
+  (-> (eval (upcase-first (main-font-name)))
       (link document-short-font-menu)))
 
 (tm-menu (standard-focus-menu t)
@@ -1114,8 +1118,7 @@
     (=> (balloon (eval (upcase-first (get-init "page-type")))
                  "Paper size")
         (link document-page-size-menu))
-    (=> (balloon (eval `(verbatim ,(upcase-first
-                                    (font-family-main (get-init "font")))))
+    (=> (balloon (eval `(verbatim ,(upcase-first (main-font-name))))
                  "Main document font")
         (link document-short-font-menu))
     (=> (balloon (eval (string-append (get-init "font-base-size") "pt"))
