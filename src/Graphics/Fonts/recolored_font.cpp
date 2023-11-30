@@ -1,27 +1,27 @@
 
 /******************************************************************************
-* MODULE     : recolored_font.cpp
-* DESCRIPTION: Change the color of letters in a font
-* COPYRIGHT  : (C) 2019  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : recolored_font.cpp
+ * DESCRIPTION: Change the color of letters in a font
+ * COPYRIGHT  : (C) 2019  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "font.hpp"
 #include "analyze.hpp"
-#include "frame.hpp"
 #include "colors.hpp"
+#include "font.hpp"
+#include "frame.hpp"
 
 /******************************************************************************
-* True Type fonts
-******************************************************************************/
+ * True Type fonts
+ ******************************************************************************/
 
-struct recolored_font_rep: font_rep {
+struct recolored_font_rep : font_rep {
   font base;
   tree kind;
-  
+
   recolored_font_rep (string name, font base, tree kind);
   void change_pencil (renderer ren);
 
@@ -38,24 +38,23 @@ struct recolored_font_rep: font_rep {
   void   advance_glyph (string s, int& pos, bool ligf);
   glyph  get_glyph (string s);
   int    index_glyph (string s, font_metric& fnm, font_glyphs& fng);
-  double get_left_slope  (string s);
+  double get_left_slope (string s);
   double get_right_slope (string s);
-  SI     get_left_correction  (string s);
-  SI     get_right_correction  (string s);
-  SI     get_lsub_correction  (string s);
-  SI     get_lsup_correction  (string s);
-  SI     get_rsub_correction  (string s);
-  SI     get_rsup_correction  (string s);
-  SI     get_wide_correction  (string s, int mode);
+  SI     get_left_correction (string s);
+  SI     get_right_correction (string s);
+  SI     get_lsub_correction (string s);
+  SI     get_lsup_correction (string s);
+  SI     get_rsub_correction (string s);
+  SI     get_rsup_correction (string s);
+  SI     get_wide_correction (string s, int mode);
 };
 
 /******************************************************************************
-* Initialization of main font parameters
-******************************************************************************/
+ * Initialization of main font parameters
+ ******************************************************************************/
 
-recolored_font_rep::recolored_font_rep (string name, font b, tree k):
-  font_rep (name, b), base (b), kind (k)
-{
+recolored_font_rep::recolored_font_rep (string name, font b, tree k)
+    : font_rep (name, b), base (b), kind (k) {
   this->copy_math_pars (base);
 }
 
@@ -65,8 +64,8 @@ recolored_font_rep::change_pencil (renderer ren) {
 }
 
 /******************************************************************************
-* Getting extents and drawing strings
-******************************************************************************/
+ * Getting extents and drawing strings
+ ******************************************************************************/
 
 bool
 recolored_font_rep::supports (string s) {
@@ -123,8 +122,8 @@ recolored_font_rep::magnify (double zoomx, double zoomy) {
 }
 
 /******************************************************************************
-* Glyph manipulations
-******************************************************************************/
+ * Glyph manipulations
+ ******************************************************************************/
 
 void
 recolored_font_rep::advance_glyph (string s, int& pos, bool ligf) {
@@ -137,14 +136,13 @@ recolored_font_rep::get_glyph (string s) {
 }
 
 int
-recolored_font_rep::index_glyph (string s, font_metric& fnm,
-                                 font_glyphs& fng) {
+recolored_font_rep::index_glyph (string s, font_metric& fnm, font_glyphs& fng) {
   return base->index_glyph (s, fnm, fng);
 }
 
 /******************************************************************************
-* Microtypographical corrections
-******************************************************************************/
+ * Microtypographical corrections
+ ******************************************************************************/
 
 double
 recolored_font_rep::get_left_slope (string s) {
@@ -192,8 +190,8 @@ recolored_font_rep::get_wide_correction (string s, int mode) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
 string functional_to_string (tree t);
 

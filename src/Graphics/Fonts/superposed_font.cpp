@@ -1,27 +1,27 @@
 
 /******************************************************************************
-* MODULE     : superposed_font.cpp
-* DESCRIPTION: Superpose various fonts
-* COPYRIGHT  : (C) 2019  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : superposed_font.cpp
+ * DESCRIPTION: Superpose various fonts
+ * COPYRIGHT  : (C) 2019  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "font.hpp"
 #include "analyze.hpp"
-#include "frame.hpp"
 #include "colors.hpp"
+#include "font.hpp"
+#include "frame.hpp"
 
 /******************************************************************************
-* True Type fonts
-******************************************************************************/
+ * True Type fonts
+ ******************************************************************************/
 
-struct superposed_font_rep: font_rep {
+struct superposed_font_rep : font_rep {
   array<font> fns;
-  int ref;
-  
+  int         ref;
+
   superposed_font_rep (string name, array<font> fns, int ref);
 
   bool   supports (string c);
@@ -37,35 +37,34 @@ struct superposed_font_rep: font_rep {
   void   advance_glyph (string s, int& pos, bool ligf);
   glyph  get_glyph (string s);
   int    index_glyph (string s, font_metric& fnm, font_glyphs& fng);
-  double get_left_slope  (string s);
+  double get_left_slope (string s);
   double get_right_slope (string s);
-  SI     get_left_correction  (string s);
-  SI     get_right_correction  (string s);
-  SI     get_lsub_correction  (string s);
-  SI     get_lsup_correction  (string s);
-  SI     get_rsub_correction  (string s);
-  SI     get_rsup_correction  (string s);
-  SI     get_wide_correction  (string s, int mode);
+  SI     get_left_correction (string s);
+  SI     get_right_correction (string s);
+  SI     get_lsub_correction (string s);
+  SI     get_lsup_correction (string s);
+  SI     get_rsub_correction (string s);
+  SI     get_rsup_correction (string s);
+  SI     get_wide_correction (string s, int mode);
 };
 
 /******************************************************************************
-* Initialization of main font parameters
-******************************************************************************/
+ * Initialization of main font parameters
+ ******************************************************************************/
 
-superposed_font_rep::superposed_font_rep
-  (string name, array<font> fns2, int ref2):
-    font_rep (name, fns2[ref2]), fns (fns2), ref (ref2)
-{
+superposed_font_rep::superposed_font_rep (string name, array<font> fns2,
+                                          int ref2)
+    : font_rep (name, fns2[ref2]), fns (fns2), ref (ref2) {
   this->copy_math_pars (fns[ref]);
 }
 
 /******************************************************************************
-* Getting extents and drawing strings
-******************************************************************************/
+ * Getting extents and drawing strings
+ ******************************************************************************/
 
 bool
 superposed_font_rep::supports (string s) {
-  for (int i=0; i<N(fns); i++)
+  for (int i= 0; i < N (fns); i++)
     if (!fns[i]->supports (s)) return false;
   return true;
 }
@@ -73,7 +72,7 @@ superposed_font_rep::supports (string s) {
 void
 superposed_font_rep::get_extents (string s, metric& ex) {
   fns[0]->get_extents (s, ex);
-  for (int i=1; i<N(fns); i++) {
+  for (int i= 1; i < N (fns); i++) {
     metric ey;
     fns[i]->get_extents (s, ey);
     ex->x1= min (ex->x1, ey->x1);
@@ -104,33 +103,33 @@ superposed_font_rep::get_xpositions (string s, SI* xpos, SI xk) {
 
 void
 superposed_font_rep::draw_fixed (renderer ren, string s, SI x, SI y) {
-  for (int i=0; i<N(fns); i++)
+  for (int i= 0; i < N (fns); i++)
     fns[i]->draw_fixed (ren, s, x, y);
 }
 
 void
 superposed_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, bool lf) {
-  for (int i=0; i<N(fns); i++)
+  for (int i= 0; i < N (fns); i++)
     fns[i]->draw_fixed (ren, s, x, y, lf);
 }
 
 void
 superposed_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, SI xk) {
-  for (int i=0; i<N(fns); i++)
+  for (int i= 0; i < N (fns); i++)
     fns[i]->draw_fixed (ren, s, x, y, xk);
 }
 
 font
 superposed_font_rep::magnify (double zoomx, double zoomy) {
   array<font> mfns;
-  for (int i=0; i<N(fns); i++)
+  for (int i= 0; i < N (fns); i++)
     mfns << fns[i]->magnify (zoomx, zoomy);
   return superposed_font (mfns, ref);
 }
 
 /******************************************************************************
-* Glyph manipulations
-******************************************************************************/
+ * Glyph manipulations
+ ******************************************************************************/
 
 void
 superposed_font_rep::advance_glyph (string s, int& pos, bool ligf) {
@@ -145,14 +144,14 @@ superposed_font_rep::get_glyph (string s) {
 
 int
 superposed_font_rep::index_glyph (string s, font_metric& fnm,
-                                 font_glyphs& fng) {
+                                  font_glyphs& fng) {
   // TODO: implement superposition of bitmap fonts
   return fns[ref]->index_glyph (s, fnm, fng);
 }
 
 /******************************************************************************
-* Microtypographical corrections
-******************************************************************************/
+ * Microtypographical corrections
+ ******************************************************************************/
 
 double
 superposed_font_rep::get_left_slope (string s) {
@@ -200,13 +199,14 @@ superposed_font_rep::get_wide_correction (string s, int mode) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
 font
 superposed_font (array<font> fns, int ref) {
   string name= "superposed[" * fns[0]->res_name;
-  for (int i=1; i<N(fns); i++) name << "," << fns[i]->res_name;
+  for (int i= 1; i < N (fns); i++)
+    name << "," << fns[i]->res_name;
   name << "," << as_string (ref) << "]";
   return make (font, name, tm_new<superposed_font_rep> (name, fns, ref));
 }
