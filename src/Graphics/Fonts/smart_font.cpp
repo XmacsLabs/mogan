@@ -1024,10 +1024,11 @@ use_italic_greek (array<string> a) {
 
 int
 smart_font_rep::resolve (string c) {
-  // cout << "Resolving " << c
-  //      << " for " << mfam << ", " << family << ", " << variant
-  //      << ", " << series << ", " << shape << ", " << rshape
-  //      << "; " << fn[SUBFONT_MAIN]->res_name << "; " << math_kind << "\n";
+  if (DEBUG_VERBOSE)
+    debug_fonts << "Resolving " << c << " for " << mfam << ", " << family
+                << ", " << variant << ", " << series << ", " << shape << ", "
+                << rshape << "; " << fn[SUBFONT_MAIN]->res_name << "; "
+                << math_kind << LF;
   array<string> a= trimmed_tokenize (family, ",");
 
   if (math_kind != 0) {
