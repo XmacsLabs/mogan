@@ -936,7 +936,10 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
 
   if (attempt > 1) {
     string range= get_unicode_range (c);
-    int    a    = attempt - 1;
+    if (in_unicode_range (c, "cjk")) {
+      range= "cjk";
+    }
+    int    a= attempt - 1;
     string v;
     if (range == "") v= variant;
     else if (v == "rm") v= range;
@@ -1229,8 +1232,8 @@ smart_font_rep::initialize_font (int nr) {
   }
   else if (a[0] == "ignore") fn[nr]= fn[SUBFONT_MAIN];
   else {
-    font cfn = closest_font (a[0], a[1], a[2], a[3], sz, dpi, as_int (a[4]));
-    fn[nr]   = adjust_subfont (cfn);
+    font cfn= closest_font (a[0], a[1], a[2], a[3], sz, dpi, as_int (a[4]));
+    fn[nr]  = adjust_subfont (cfn);
   }
   // cout << "Font " << nr << ", " << a << " -> " << fn[nr]->res_name << "\n";
   if (fn[nr]->res_name == res_name) {
