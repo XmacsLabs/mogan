@@ -603,7 +603,16 @@ tex_font_rep::supports (string s) {
   case TEX_EC:
   case TEX_LA:
   case TEX_GR:
-    return N (s) == 1 || s == "<less>" || s == "<gtr>";
+    if (N (s) == 1 || s == "<less>" || s == "<gtr>") {
+      return true;
+    }
+    else if (starts (s, "<#") && N (s) == 7) {
+      int code= get_utf8_code (s);
+      return (code > 0) && (code < 256) && raw_supports ((unsigned char) code);
+    }
+    else {
+      return false;
+    }
   case TEX_CM:
   case TEX_ADOBE:
     if (N (s) != 1) return s == "<less>" || s == "<gtr>";
