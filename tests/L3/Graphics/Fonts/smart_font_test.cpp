@@ -42,6 +42,8 @@ TestSmartFont::test_resolve () {
   smart_font_rep* fn_rep= (smart_font_rep*) fn.rep;
   int             nr    = fn_rep->resolve ("1");
   qcompare (fn_rep->fn[nr]->res_name, "ec:ecrm10@600");
+  int nr2= fn_rep->resolve ("<#00E8>");
+  qcompare (fn_rep->fn[nr]->res_name, "ec:ecrm10@600");
 }
 
 QTEST_MAIN (TestSmartFont)
