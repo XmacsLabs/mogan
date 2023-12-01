@@ -1027,8 +1027,8 @@ smart_font_rep::resolve (string c) {
   if (DEBUG_VERBOSE)
     debug_fonts << "Resolving " << c << " for " << mfam << ", " << family
                 << ", " << variant << ", " << series << ", " << shape << ", "
-                << rshape << "; " << fn[SUBFONT_MAIN]->res_name << "; "
-                << math_kind << LF;
+                << rshape << ", " << sz << ", " << dpi << ", " << hdpi << "; "
+                << fn[SUBFONT_MAIN]->res_name << "; " << math_kind << LF;
   array<string> a= trimmed_tokenize (family, ",");
 
   if (math_kind != 0) {
@@ -1229,8 +1229,7 @@ smart_font_rep::initialize_font (int nr) {
   }
   else if (a[0] == "ignore") fn[nr]= fn[SUBFONT_MAIN];
   else {
-    int  ndpi= adjusted_dpi (a[0], a[1], a[2], a[3], as_int (a[4]));
-    font cfn = closest_font (a[0], a[1], a[2], a[3], sz, ndpi, as_int (a[4]));
+    font cfn = closest_font (a[0], a[1], a[2], a[3], sz, dpi, as_int (a[4]));
     fn[nr]   = adjust_subfont (cfn);
   }
   // cout << "Font " << nr << ", " << a << " -> " << fn[nr]->res_name << "\n";
