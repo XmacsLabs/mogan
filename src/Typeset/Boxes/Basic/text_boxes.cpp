@@ -35,6 +35,11 @@ class xkerning {
 
 CONCRETE_NULL_CODE(xkerning);
 
+static bool
+is_nil_or_zero (xkerning xk) {
+  return is_nil (xk) || (xk->left == 0 && xk->right == 0 && xk->padding == 0);
+}
+
 /******************************************************************************
 * Text boxes
 ******************************************************************************/
@@ -117,7 +122,7 @@ text_box_rep::adjust_kerning (int mode, double factor) {
   if (N(str) == 0) return this;
   SI pad= (SI) tm_round ((factor * fn->wfn) / 2);
   xkerning nxk (pad, 0, 0);
-  if (!is_nil (xk) && (mode & PROTRUSION_MASK) == 0) {
+  if (!is_nil_or_zero (xk) && (mode & PROTRUSION_MASK) == 0) {
     nxk->left = xk->left;
     nxk->right= xk->right;
   }
@@ -135,7 +140,7 @@ text_box_rep::adjust_kerning (int mode, double factor) {
 box
 text_box_rep::right_auto_spacing(SI size) {
   xkerning nxk (0, 0, 0);
-  if (!is_nil(xk)) {
+  if (!is_nil_or_zero (xk)) {
     nxk->left= xk->left;
     nxk->right= xk->right;
     nxk->padding = xk->padding;
@@ -147,7 +152,7 @@ text_box_rep::right_auto_spacing(SI size) {
 box
 text_box_rep::left_auto_spacing(SI size) {
   xkerning nxk (0, 0, 0);
-  if (!is_nil(xk)) {
+  if (!is_nil_or_zero (xk)) {
     nxk->left= xk->left;
     nxk->right= xk->right;
     nxk->padding= xk->padding;
@@ -167,7 +172,7 @@ void
 text_box_rep::display (renderer ren) {
   if (N(str) > 0) {
     ren->set_pencil (pen);
-    if (is_nil (xk)) fn->draw (ren, str, 0, 0);
+    if (is_nil_or_zero (xk)) fn->draw (ren, str, 0, 0);
     else fn->draw (ren, str, xk->left, 0, xk->padding);
   }
 }
