@@ -506,9 +506,6 @@
 
 (kbd-map
   (:mode in-text?)
-  ("font ^" (make-script #t #t))
-  ("font hat" (make-script #t #t))
-  ("font _" (make-script #f #t))
   ("font s" (make-with "font-family" "ss"))
   ("font t" (make-with "font-family" "tt"))
   ("font b" (make-with "font-series" "bold"))
@@ -516,9 +513,7 @@
   ("font r" (make-with "font-shape" "right"))
   ("font i" (make-with "font-shape" "italic"))
   ("font l" (make-with "font-shape" "slanted"))
-  ("font o" (make 'overline))
-  ("font p" (make-with "font-shape" "small-caps"))
-  ("font u" (make 'underline)))
+  ("font p" (make-with "font-shape" "small-caps")))
 
 (kbd-map
   (:profile macos)
