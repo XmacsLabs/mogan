@@ -573,13 +573,13 @@
   ("M-S-space" (make-space "-0.2spc")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Mac OS keymap
+;; macOS keymap
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (kbd-map
   (:profile macos)
 
-  ;; standard Mac OS keyboard shortcuts
+  ;; standard macOS keyboard shortcuts
   ("macos ;" (interactive-spell))
   ("macos ?" (interactive docgrep-in-doc))
   ("macos ," (interactive open-preferences))

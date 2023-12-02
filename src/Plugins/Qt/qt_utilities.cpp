@@ -299,7 +299,7 @@ to_qstringlist (array<string> l) {
  it's cork, but often it's utf8. For instance when the title is built in a tmfs
  title handler in scheme, it is sent to us as an utf8 string. Should we convert
  before? Another example are items in the go-menu: file names are internally
- stored using the os 8-bit encoding (UTF-8 on linux/Mac OS locale code page on
+ stored using the os 8-bit encoding (UTF-8 on linux/macOS locale code page on
  windows), but we assume that strings are sent to us for display in widgets as
  cork and thus display the wrong encoding.
 

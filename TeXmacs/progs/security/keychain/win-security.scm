@@ -2,7 +2,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; MODULE      : win-security.scm
-;; DESCRIPTION : Interface to Mac OS security software
+;; DESCRIPTION : Interface to macOS security software
 ;; COPYRIGHT   : (C) 2015  Gregoire Lecerf, Denis Raux
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
