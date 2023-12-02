@@ -160,9 +160,9 @@
   ("cutto" "std X")
   ("accent" "M-" #t)
   ("structured:cmd" "C-")
-  ("structured:move" "M-C-")
+  ("structured:move" "M-A-")
   ("structured:insert" "A-")
-  ("structured:geometry" "M-A-"))
+  ("structured:geometry" "M-C-"))
 
 (kbd-wildcards
   ("escape" "A-" #t)
