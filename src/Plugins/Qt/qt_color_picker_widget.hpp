@@ -1,7 +1,7 @@
 
 /******************************************************************************
  * MODULE     : qt_color_picker_widget.hpp
- * DESCRIPTION: 
+ * DESCRIPTION:
  * COPYRIGHT  : (C) 2010 Miguel de Benito Delgado
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
@@ -20,26 +20,25 @@
  * This implements a color picker widget, using the native dialogs where
  * available.
  *
- * The "factory" function for this widget is called color_picker_widget(), 
+ * The "factory" function for this widget is called color_picker_widget(),
  * in qt_dialogues.cpp
  *
  * Please @see qt_widget_rep for some important info.
- */ 
-class qt_color_picker_widget_rep: public qt_widget_rep { 
+ */
+class qt_color_picker_widget_rep : public qt_widget_rep {
 public:
   qt_color_picker_widget_rep (command, bool, array<tree>);
   ~qt_color_picker_widget_rep ();
-  
-  virtual void            send (slot s, blackbox val);
-  widget   plain_window_widget (string s, command q, int b);
 
-  void showDialog();
-  
+  virtual void send (slot s, blackbox val);
+  widget       plain_window_widget (string s, command q, int b);
+
+  void showDialog ();
+
 protected:
-  string            _windowTitle;
+  string  _windowTitle;
   command _commandAfterExecution;
-  bool              _pickPattern;
+  bool    _pickPattern;
 };
 
-
-#endif    // QT_COLOR_PICKER_WIDGET_HPP
+#endif // QT_COLOR_PICKER_WIDGET_HPP
