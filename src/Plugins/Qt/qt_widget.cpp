@@ -634,7 +634,7 @@ tree_view_widget (command cmd, tree data, tree actions) {
   return abstract (wid);
 }
 //// Widgets which are not strictly required by TeXmacs have void
-///implementations
+/// implementations
 
 widget
 empty_widget () {
