@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "QTMWidget.hpp"
+#include "analyze.hpp"
 #include "boot.hpp"
 #include "converter.hpp"
 #include "object_l5.hpp"
@@ -289,48 +290,50 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   if (is_nil (tmwid)) return;
   initkeymap ();
 
-  if (DEBUG_QT && DEBUG_KEYBOARD) debug_qt << "keypressed\n";
-  {
-    int                   key = event->key ();
-    Qt::KeyboardModifiers mods= event->modifiers ();
-
-    if (DEBUG_QT && DEBUG_KEYBOARD) {
-      debug_qt << "key  : " << key << LF;
-      debug_qt << "text : " << event->text ().toLatin1 ().data () << LF;
-      debug_qt << "count: " << event->text ().size () << LF;
-      debug_qt << "unic : " << event->text ().data ()[0].unicode () << LF;
-
+  int                   key = event->key ();
+  Qt::KeyboardModifiers mods= event->modifiers ();
 #if defined(OS_MINGW) || defined(OS_WIN)
-      debug_qt << "nativeScanCode: " << event->nativeScanCode () << LF;
-      debug_qt << "nativeVirtualKey: " << event->nativeVirtualKey () << LF;
-      debug_qt << "nativeModifiers: " << event->nativeModifiers () << LF;
+  /* "Qt::Key_AltGr On Windows, when the KeyDown event for this key is sent,
+   * the Ctrl+Alt modifiers are also set." (excerpt from Qt doc)
+   * However the AltGr key is used to obtain many symbols
+   * which should not be regarded as C-A- shortcuts.
+   * (e.g. \ or @ on a French keyboard)
+   *
+   * Hence, when "native modifiers" are (ControlLeft | AltRight)
+   * we clear Qt's Ctrl+Alt modifiers
+   */
+  if ((event->nativeModifiers () & (ControlLeft | AltRight)) ==
+      (ControlLeft | AltRight)) {
+    if (DEBUG_QT && DEBUG_KEYBOARD)
+      debug_qt << "assuming it's an AltGr key code" << LF;
+    mods&= ~Qt::AltModifier;
+    mods&= ~Qt::ControlModifier;
+  }
 #endif
-      if (mods & Qt::ShiftModifier) debug_qt << "shift\n";
-      if (mods & Qt::MetaModifier) debug_qt << "meta\n";
-      if (mods & Qt::ControlModifier) debug_qt << "control\n";
-      if (mods & Qt::KeypadModifier) debug_qt << "keypad\n";
-      if (mods & Qt::AltModifier) debug_qt << "alt\n";
-    }
 
-    string r;
-#if defined(OS_MINGW) || defined(OS_WIN)
-    /* "Qt::Key_AltGr On Windows, when the KeyDown event for this key is sent,
-     * the Ctrl+Alt modifiers are also set." (excerpt from Qt doc)
-     * However the AltGr key is used to obtain many symbols
-     * which should not be regarded as C-A- shortcuts.
-     * (e.g. \ or @ on a French keyboard)
-     *
-     * Hence, when "native modifiers" are (ControlLeft | AltRight)
-     * we clear Qt's Ctrl+Alt modifiers
-     */
-    if ((event->nativeModifiers () & (ControlLeft | AltRight)) ==
-        (ControlLeft | AltRight)) {
-      if (DEBUG_QT && DEBUG_KEYBOARD)
-        debug_qt << "assuming it's an AltGr key code" << LF;
-      mods&= ~Qt::AltModifier;
-      mods&= ~Qt::ControlModifier;
+  string r= "";
+  if (key < 128 && (mods & Qt::AltModifier) && !(mods & Qt::ShiftModifier) &&
+      !(mods & Qt::ControlModifier) && !(mods & Qt::MetaModifier)) {
+    char   key_c= (char) key;
+    string key_s= string (key_c);
+    if (is_upcase (key_c)) {
+      r= "A-" * string ((char) (key + 32));
     }
-#endif
+    else if (is_digit (key_c)) {
+      r= "A-" * key_s;
+    }
+    else {
+      r= "";
+    }
+  }
+  else if (key < 128 && (mods & Qt::AltModifier) &&
+           (mods & Qt::ShiftModifier) && !(mods & Qt::ControlModifier) &&
+           !(mods & Qt::MetaModifier)) {
+    char   key_c= (char) key;
+    string key_s= string (key_c);
+    r           = "A-" * key_s;
+  }
+  else { // Old keyboard handling code
     if (qtkeymap->contains (key)) {
       r= qtkeymap[key];
     }
@@ -343,18 +346,6 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
       QString        nss = event->text ();
       unsigned int   kc  = event->nativeVirtualKey ();
       unsigned short unic= nss.data ()[0].unicode ();
-      /*
-      debug_qt << "key  : " << key << LF;
-      debug_qt << "text : " << event->text().toLatin1().data() << LF;
-      debug_qt << "count: " << event->text().count() << LF;
-      if (mods & Qt::ShiftModifier) debug_qt << "shift\n";
-      if (mods & Qt::MetaModifier) debug_qt << "meta\n";
-      if (mods & Qt::ControlModifier) debug_qt << "control\n";
-      if (mods & Qt::KeypadModifier) debug_qt << "keypad\n";
-      if (mods & Qt::AltModifier) debug_qt << "alt\n";
-      cout << kc << ", " << ((mods & Qt::ShiftModifier) != 0)
-           << " -> " << unic << LF;
-      */
       if (unic > 32 && unic < 255 && (mods & Qt::ShiftModifier) != 0 &&
           (mods & Qt::ControlModifier) == 0 && (mods & Qt::AltModifier) == 0 &&
           (mods & Qt::MetaModifier) == 0)
@@ -451,7 +442,6 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
         mods&= ~Qt::ShiftModifier;
       }
     }
-    if (r == "") return;
     if (mods & Qt::ShiftModifier) r= "S-" * r;
     if (mods & Qt::AltModifier) r= "A-" * r;
       // if (mods & Qt::KeypadModifier) r= "K-" * r;
@@ -462,10 +452,11 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
     if (mods & Qt::ControlModifier) r= "C-" * r;
     if (mods & Qt::MetaModifier) r= "M-" * r; // The "Windows" key
 #endif
-
-    if (DEBUG_QT && DEBUG_KEYBOARD) debug_qt << "key press: " << r << LF;
-    the_gui->process_keypress (tm_widget (), r, texmacs_time ());
   }
+
+  if (r == "") return;
+  if (DEBUG_QT && DEBUG_KEYBOARD) debug_qt << "key press: " << r << LF;
+  the_gui->process_keypress (tm_widget (), r, texmacs_time ());
 }
 
 void
