@@ -20,6 +20,36 @@
 
 (set-variant-keys "tab" "S-tab")
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Explain prefixes
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(kbd-map
+  ("cmd" "" "TeXmacs command")
+  ("altcmd" "" "Alternate TeXmacs command")
+  ("special" "" "Special command")
+  ("structured:move" "" "Structured move")
+  ("structured:geometry" "" "Structured position or resize")
+  ("symbol" "" "Insert a TeXmacs symbol")
+  ("copyto" "" "Copy to (1, 2, 3, *:other)")
+  ("cutto" "" "Cut to (1, 2, 3, *:other)")
+  ("pastefrom" "" "Paste from (1, 2, 3, *:other)")
+  ("noop" (set-message "" ""))
+
+  ("font" "" "Change font")
+  ("executable" "" "Insert executable markup")
+  ("inactive" "" "Insert inactive markup")
+  ("script" "" "Evaluate function or insert evaluation tag")
+  ("link" "" "Linking command")
+  ("version" "" "Versioning command")
+  ("table" "" "Table command"))
+
+(kbd-map
+  (:mode in-text?)
+  ("text" "" "TeXmacs command")
+  ("text:symbol" "" "Insert a special character"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs prefixes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -175,9 +205,11 @@
   ("S-escape S-escape S-escape S-escape" "noop" #t))
 
 (kbd-map
-  ("macos" "" "MacOS command")
-  ("std" "" "MacOS command")
-  ("A-" "" "MacOS option"))
+  ("cmd" "" "macOS option")
+  ("altcmd" "" "macOS control")
+  ("macos" "" "macOS command")
+  ("std" "" "macOS command")
+  ("A-" "" "macOS option"))
 
 ) ;; end when (like-macos?)
 
@@ -320,38 +352,9 @@
   ("abovedot" "accent .")
   ("ogonek" "accent G"))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Explain prefixes
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(kbd-map
-  ("cmd" "" "TeXmacs command")
-  ("altcmd" "" "Alternate TeXmacs command")
-  ("special" "" "Special command")
-  ("structured:move" "" "Structured move")
-  ("structured:geometry" "" "Structured position or resize")
-  ("symbol" "" "Insert a TeXmacs symbol")
-  ("copyto" "" "Copy to (1, 2, 3, *:other)")
-  ("cutto" "" "Cut to (1, 2, 3, *:other)")
-  ("pastefrom" "" "Paste from (1, 2, 3, *:other)")
-  ("noop" (set-message "" ""))
-
-  ("font" "" "Change font")
-  ("executable" "" "Insert executable markup")
-  ("inactive" "" "Insert inactive markup")
-  ("script" "" "Evaluate function or insert evaluation tag")
-  ("link" "" "Linking command")
-  ("version" "" "Versioning command")
-  ("table" "" "Table command"))
-
 (kbd-map
   (:profile emacs)
   ("altcmd" "" "Alternate TeXmacs command"))
-
-(kbd-map
-  (:mode in-text?)
-  ("text" "" "TeXmacs command")
-  ("text:symbol" "" "Insert a special character"))
 
 (kbd-map
   (:mode in-math?)
