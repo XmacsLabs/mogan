@@ -63,7 +63,7 @@
   ---
   ("Search" (interactive-search))
   ("Replace" (interactive-replace))
-  (if (not (in-math?))
+  (if (and (not (os-win32?)) (not (in-math?)))
       ("Spell" (interactive-spell)))
   (if (in-math?)
       (=> "Correct" (link math-correct-menu)))
