@@ -62,6 +62,7 @@
   (". . . . ." ".....")
   ("_ _" "__")
   ("_ _ var" (make 'underline))
+  ("_ _ var var" (make 'overline))
   ("/ /" "//")
   ("/ / var" (make 'deleted))
 
