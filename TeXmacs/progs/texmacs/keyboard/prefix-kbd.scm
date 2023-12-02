@@ -152,7 +152,7 @@
 (kbd-wildcards pre
   ("macos" "M-" #t)
   ("std" "M-" #t)
-  ("cmd" "C-")
+  ("cmd" "A-")
   ("altcmd" "M-C-")
   ("special" "A-C-")
   ("extra" "M-A-")
