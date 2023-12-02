@@ -262,7 +262,8 @@
   ("altcmd ?" (make 'smart-ref))
   ("altcmd ? var" (make 'reference))
   ("altcmd ? var var" (make 'pageref)))
-  
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs keymap
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -426,52 +427,6 @@
   ("C-7" (fit-all-to-screen))
   ("C-8" (fit-to-screen))
   ("C-9" (fit-to-screen-width)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Standard cross-platform keybindings
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(kbd-map
-  (:profile std)
-
-  ;; standard cross-platform shortcuts
-  ("std a" (select-all))
-  ("std b" (toggle-bold))
-  ("std c" (kbd-copy))
-  ("std f" (interactive-search))
-  ("std i" (toggle-italic))
-  ("std n" (new-document))
-  ("std N" (new-document*))
-  ("std o" (open-document))
-  ("std L" (open-document*))
-  ("std p" (preview-buffer))
-  ("std q" (safely-quit-TeXmacs))
-  ("std R" (update-document "all"))
-  ("std s" (save-buffer))
-  ("std S" (choose-file save-buffer-as "Save TeXmacs file" "texmacs"))
-  ("std u" (toggle-underlined))
-  ("std v" (kbd-paste))
-  ("std V" (kbd-paste-verbatim))
-  ("std w" (close-document))
-  ("std W" (close-document*))
-  ("std x" (kbd-cut))
-  ("std z" (undo 0))
-  ("std Z" (redo 0))
-  ("std +" (zoom-in (sqrt (sqrt 2.0))))
-  ("std -" (zoom-out (sqrt (sqrt 2.0))))
-  ("std 0" (change-zoom-factor 1.0))
-
-  ;; not yet implemented
-  ;;("std t" (add-tab))
-  ;;("std tab" (next-tab))
-  ;;("std S-tab" (previous-tab))
-
-  ;; extras
-  ("std 7" (fit-all-to-screen))
-  ("std 8" (fit-to-screen))
-  ("std 9" (fit-to-screen-width))  
-  ("search std f" (search-next-match #t))   ;; added for convenience
-  ("search std F" (search-next-match #f)))  ;; added for convenience
 
 (kbd-map
   (:profile emacs)
@@ -836,3 +791,50 @@
   ("M-S-tab" (kbd-shift-alternate-tab))
   ("M-space" (make-space "0.2spc"))
   ("M-S-space" (make-space "-0.2spc")))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Standard cross-platform keybindings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(kbd-map
+  (:profile std)
+
+  ;; standard cross-platform shortcuts
+  ("std a" (select-all))
+  ("std b" (toggle-bold))
+  ("std c" (kbd-copy))
+  ("std f" (interactive-search))
+  ("std i" (toggle-italic))
+  ("std n" (new-document))
+  ("std N" (new-document*))
+  ("std o" (open-document))
+  ("std L" (open-document*))
+  ("std p" (preview-buffer))
+  ("std q" (safely-quit-TeXmacs))
+  ("std R" (update-document "all"))
+  ("std s" (save-buffer))
+  ("std S" (choose-file save-buffer-as "Save TeXmacs file" "texmacs"))
+  ("std u" (toggle-underlined))
+  ("std v" (kbd-paste))
+  ("std V" (kbd-paste-verbatim))
+  ("std w" (close-document))
+  ("std W" (close-document*))
+  ("std x" (kbd-cut))
+  ("std z" (undo 0))
+  ("std Z" (redo 0))
+  ("std +" (zoom-in (sqrt (sqrt 2.0))))
+  ("std -" (zoom-out (sqrt (sqrt 2.0))))
+  ("std 0" (change-zoom-factor 1.0))
+
+  ;; not yet implemented
+  ;;("std t" (add-tab))
+  ;;("std tab" (next-tab))
+  ;;("std S-tab" (previous-tab))
+
+  ;; extras
+  ("std 7" (fit-all-to-screen))
+  ("std 8" (fit-to-screen))
+  ("std 9" (fit-to-screen-width))
+  ("search std f" (search-next-match #t))   ;; added for convenience
+  ("search std F" (search-next-match #f)))  ;; added for convenience
