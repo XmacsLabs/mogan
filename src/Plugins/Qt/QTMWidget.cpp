@@ -474,12 +474,18 @@ QTMWidget::keyReleaseEvent (QKeyEvent* event) {
       if (key >= 32 && key < 128) {
         if ((mods & Qt::ShiftModifier) == 0 && key >= 65 && key <= 90) key+= 32;
         r= string ((char) key);
-        if (mods & Qt::AltModifier) {
-          r= "M-A-" * r;
-        }
-        if (mods & Qt::MetaModifier) {
-          r= "M-C-" * r;
-        }
+      }
+      else if (qtkeymap->contains (key)) {
+        r= qtkeymap[key];
+      }
+      else {
+        return;
+      }
+      if (mods & Qt::AltModifier) {
+        r= "M-A-" * r;
+      }
+      if (mods & Qt::MetaModifier) {
+        r= "M-C-" * r;
       }
       if (DEBUG_QT && DEBUG_KEYBOARD) debug_qt << "key press: " << r << LF;
       the_gui->process_keypress (tm_widget (), r, texmacs_time ());
