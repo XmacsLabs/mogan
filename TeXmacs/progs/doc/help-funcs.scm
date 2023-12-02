@@ -105,4 +105,5 @@
       (load-help-article "about/welcome/new-welcome")))
 
 (tm-define (load-remote-doc path)
-  (load-buffer (string-append "http://git.tmml.wiki/texmacs/doc/raw/master/" path ".en.tm")))
+  (with lan (string-take (language-to-locale (get-output-language)) 2)
+    (load-buffer (string-append "http://git.tmml.wiki/texmacs/doc/raw/master/" path "." lan ".tm"))))
