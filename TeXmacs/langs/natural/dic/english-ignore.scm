@@ -139,7 +139,7 @@
 ("luxi" "")
 ("mS Gothic" "")
 ("mS Mincho" "")
-("mac OS" "")
+("macOS" "")
 ("make-section error" "")
 ("marker Felt" "")
 ("mathemagix" "")

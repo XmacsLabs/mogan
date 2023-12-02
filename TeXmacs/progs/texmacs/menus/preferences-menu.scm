@@ -58,7 +58,7 @@
           ("Emacs" "emacs")
           ("Gnome" "gnome")
           ("KDE" "kde")
-          ("Mac OS" "macos")
+          ("macOS" "macos")
           ("Windows" "windows"))
 ;   (enum ("Profile" "profile")
 ;         ("Beginner" "beginner")

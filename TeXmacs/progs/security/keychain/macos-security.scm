@@ -2,7 +2,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; MODULE      : macos-security.scm
-;; DESCRIPTION : Interface to Mac OS 'security' command
+;; DESCRIPTION : Interface to macOS 'security' command
 ;; COPYRIGHT   : (C) 2015  Gregoire Lecerf
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -18,7 +18,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (system-security-error cmd out err)
-  (report-system-error "Mac OS security command failed" cmd out err))
+  (report-system-error "macOS security command failed" cmd out err))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Add generic password
