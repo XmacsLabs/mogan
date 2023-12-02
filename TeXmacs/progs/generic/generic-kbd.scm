@@ -687,7 +687,7 @@
   ("C-k" (kill-paragraph))
   ("C-l" (refresh-window))
   ("C-y" (yank-paragraph))
-  ("C-q" (make 'symbol))
+  ("A-q" (make 'symbol))
   ("C-!" (make-label))
   ("C-?" (make 'reference)))
 
