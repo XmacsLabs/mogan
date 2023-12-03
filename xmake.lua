@@ -26,7 +26,7 @@ configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
 ---
 set_project("Mogan STEM Suite")
 local TEXMACS_VERSION = "2.1.2"
-local XMACS_VERSION="1.2.0-rc9"
+local XMACS_VERSION="1.2.0-rc10"
 local CONFIG_USER = "XmacsLabs"
 local DEVEL_VERSION = TEXMACS_VERSION
 local DEVEL_RELEASE = 1
