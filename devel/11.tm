@@ -5,7 +5,7 @@
 <\body>
   <tmdoc-title|Font tuning>
 
-  Font handling is major problem for performance concerns.
+  Font handling is the major problem for performance concerns.
 
   <section|Tasks>
 
@@ -66,6 +66,38 @@
       <value|da>
     </cell>|<\cell>
       Failed to render circled numbers
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      11_8
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Faster tt_find_name via provided font_cache.scm
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      11_9
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Support bbold font using glyph index
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_10
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix rendering of letters in Unicode Latin-1 Supplement
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_11
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Enable ligature when document language is Chinese
     </cell>>>>
   </wide-tabular>
 
