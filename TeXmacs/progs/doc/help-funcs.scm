@@ -95,9 +95,7 @@
   (load-buffer (get-remote-planet-url)))
 
 (tm-define (mogan-welcome)
-  (if (url-exists? (get-remote-welcome-url))
-      (load-remote-welcome)
-      (load-help-article "about/welcome/new-welcome")))
+  (load-help-article "about/mogan/research"))
 
 (tm-define (xmacs-planet)
   (if (url-exists? (get-remote-planet-url))

@@ -30,7 +30,7 @@
        (load-help-article (string-append name))))))
 
 (menu-bind help-menu
-  ("Mogan" (mogan-welcome))
+  ("Welcome" (mogan-welcome))
   ("Planet" (xmacs-planet))
   ---
   (if (detailed-menus?)

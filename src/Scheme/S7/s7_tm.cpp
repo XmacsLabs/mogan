@@ -363,6 +363,7 @@ initialize_scheme () {
                         "    (lambda (port) (display obj port))))\n"
                         "\n"
                         "(define (texmacs-version) \"" TEXMACS_VERSION "\")\n"
+                        "(define (xmacs-version) \"" XMACS_VERSION "\")\n"
                         "(define object-stack '(()))\n"
                         ")";
 
