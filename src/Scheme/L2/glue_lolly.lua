@@ -919,6 +919,14 @@ function main()
                     "string"
                 }
             },
+            {
+                scm_name = "http-head",
+                cpp_name = "lolly::io::http_head",
+                ret_type = "tree",
+                arg_list = {
+                    "url"
+                }
+            },
         }
     }
 end
