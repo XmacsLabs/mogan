@@ -32,7 +32,10 @@
 (menu-bind help-menu
   ("Welcome" (mogan-welcome))
   ("Planet" (xmacs-planet))
+  (-> "Plugins"
+      (link help-plugins-menu))
   ---
+  (group "GNU TeXmacs online docs")
   (if (detailed-menus?)
 	  (-> "Configuration"
 	      ("Browse" (load-remote-doc "main/config/man-configuration"))
@@ -91,9 +94,6 @@
        (load-remote-doc "main/styles/styles"))
       ("Compatibility with other formats"
        (load-remote-doc "main/convert/man-convert")))
-  ---
-  (-> "Plug-ins"
-      (link help-plugins-menu))
   (if (detailed-menus?)
       (-> "Interfacing"
           ("Browse" (load-remote-doc "devel/interface/interface"))
