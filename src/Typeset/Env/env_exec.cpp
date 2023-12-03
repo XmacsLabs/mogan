@@ -13,6 +13,7 @@
 #include "convert.hpp"
 #include "file.hpp"
 #include "tm_file.hpp"
+#include "web_files.hpp"
 #include "locale.hpp"
 #include "tm_locale.hpp"
 #include "image_files.hpp"
@@ -1223,7 +1224,11 @@ edit_env_rep::exec_use_package (tree t) {
     else styp= styp | head (base_file_name);
     if (ends (as_string (t[i]), ".ts")) name= url_system (as_string (t[i]));
     else name= styp * (as_string (t[i]) * string (".ts"));
-    name= resolve (name);
+    if (is_rooted_web (name)) {
+      name= get_from_web (name);
+    } else {
+      name= resolve (name);
+    }
     //cout << as_string (t[i]) << " -> " << name << "\n";
     string doc_s;
     if (!load_string (name, doc_s, false)) {
