@@ -279,7 +279,7 @@ qt_inputs_list_widget_rep::perform_dialog () {
     QMessageBox msgBox (mainwindow);
     // sets parent widget, so that it appears at the proper location
     msgBox.setText (to_qstring (field (0)->prompt));
-    msgBox.setStandardButtons (QMessageBox::Cancel);
+    msgBox.addButton (qt_translate ("Cancel"), QMessageBox::RejectRole);
 
     // Allow any number of choices. The first one is the default.
     int                   choices= N (field (0)->proposals);
