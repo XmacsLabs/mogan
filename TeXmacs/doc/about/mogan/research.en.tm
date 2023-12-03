@@ -47,13 +47,18 @@
 
       <item>Watch the videos listed on <slink|https://mogan.app>
 
-      <item>Visit online doc in Mogan\<#FF1A\><menu|Help|Manual>
+      <item>Visit online official docs<\footnote>
+        If the interface language is English, the online official docs will
+        be in english. When the interface language is Chinese, if the docs
+        have been translated, it will show the Chinese docs, otherwise, it
+        will show the English docs. You can change the interface language via
+        <menu|Edit|Preferences|User Interface language>.
+      </footnote> in Mogan\<#FF1A\><menu|Help|Manual>
 
-      <item>Visit online doc in Mogan\<#FF1A\><menu|Help|Planet>
+      <item>Visit online community resources in
+      Mogan\<#FF1A\><menu|Help|Planet>
     </itemize>
   </itemize>
-
-  \;
 
   \;
 </body>
