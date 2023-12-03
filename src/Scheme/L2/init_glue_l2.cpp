@@ -26,7 +26,6 @@
 
 #include "scheme.hpp"
 
-using lolly::io::http_head;
 using lolly::io::http_response_label;
 
 tmscm
@@ -60,8 +59,8 @@ lolly_version () {
 
 long
 http_status_code (url u) {
-  long status_code= as<tree, long> (
-      http_response_ref (http_head (u), http_response_label::STATUS_CODE));
+  long status_code= as<tree, long> (http_response_ref (
+      lolly::io::http_head (u), http_response_label::STATUS_CODE));
   return status_code;
 }
 
