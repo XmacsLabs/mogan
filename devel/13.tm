@@ -3,7 +3,7 @@
 <style|<tuple|tmdoc|british|devel>>
 
 <\body>
-  <tmdoc-title|Lolly 1.2.x (<math|\<geqslant\>1.2.9>)>
+  <tmdoc-title|Lolly 1.2.x/1.3.x (<math|\<geqslant\>1.2.9>)>
 
   <section|Tasks>
 
@@ -74,6 +74,38 @@
       <value|da>
     </cell>|<\cell>
       Upgrade to lolly 1.2.16/1.2.17
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      13_9
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Upgrade to lolly 1.3.2
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      13_10
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Upgrade to lolly 1.3.3
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      13_11
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Upgrade to lolly 1.3.4
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      13_12
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Upgrade to lolly 1.3.5
     </cell>>>>
   </wide-tabular>
 
