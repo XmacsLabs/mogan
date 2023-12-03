@@ -18,11 +18,16 @@
 #include "base64.hpp"
 #include "file.hpp"
 #include "locale.hpp"
+#include "lolly/io/http.hpp"
+#include "lolly/io/http_response.hpp"
 #include "lolly/system/subprocess.hpp"
 #include "sys_utils.hpp"
 #include "tree.hpp"
 
 #include "scheme.hpp"
+
+using lolly::io::http_head;
+using lolly::io::http_response_label;
 
 tmscm
 blackboxP (tmscm t) {
@@ -51,6 +56,13 @@ url_ref (url u, int i) {
 string
 lolly_version () {
   return string (LOLLY_VERSION);
+}
+
+long
+http_status_code (url u) {
+  long status_code= as<tree, long> (
+      http_response_ref (http_head (u), http_response_label::STATUS_CODE));
+  return status_code;
 }
 
 #include "glue_lolly.cpp"
