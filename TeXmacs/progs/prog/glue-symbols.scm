@@ -1126,5 +1126,5 @@
 "show-meminfo"
 "edit-special"
 "xmacs-version"
-"http-head"
+"http-status-code"
 ))
