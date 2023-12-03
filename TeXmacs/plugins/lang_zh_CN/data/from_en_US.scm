@@ -1631,6 +1631,7 @@
 ("search" "查找")
 ("searching" "")
 ("secondary" "")
+("sector" "扇形")
 ("section" "节")
 ("security" "安全")
 ("see" "参见")
