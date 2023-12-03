@@ -382,16 +382,8 @@ TeXmacs_main (int argc, char** argv) {
     }
     if (install_status == 1) {
       if (DEBUG_STD) debug_boot << "Loading welcome message...\n";
-      string cmd= "(load-help-article \"about/welcome/new-welcome\")";
+      string cmd= "(load-help-article \"about/mogan/research\")";
       // FIXME: force to load welcome message into new window
-      exec_delayed (scheme_cmd (cmd));
-    }
-    else if (install_status == 2) {
-      if (DEBUG_STD) debug_boot << "Loading upgrade message...\n";
-      url    u  = "tmfs://help/plain/tm/doc/about/changes/changes-recent.en.tm";
-      string b  = scm_quote (as_string (u));
-      string cmd= "(load-buffer " * b * " " * where * ")";
-      where     = " :new-window";
       exec_delayed (scheme_cmd (cmd));
     }
     if (number_buffers () == 0) {

@@ -1125,4 +1125,5 @@
 "show-selection"
 "show-meminfo"
 "edit-special"
+"xmacs-version"
 ))

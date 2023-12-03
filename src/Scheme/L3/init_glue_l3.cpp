@@ -32,14 +32,8 @@
 
 #include "glue_drd.cpp"
 #include "glue_file.cpp"
-#include "glue_url.cpp"
-
-string
-xmacs_version () {
-  return XMACS_VERSION;
-}
-
 #include "glue_misc.cpp"
+#include "glue_url.cpp"
 
 tmscm
 observerP (tmscm t) {
