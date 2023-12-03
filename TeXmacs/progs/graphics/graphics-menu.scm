@@ -287,6 +287,7 @@
   ("Arc" (graphics-set-mode '(edit std-arc)))
   ("Sector" (graphics-set-mode '(edit sector)))
   ("Circle" (graphics-set-mode '(edit circle)))
+  ("Ellipse" (graphics-set-mode '(edit ellipse)))
   ---
   ("Text" (graphics-set-mode '(edit text-at)))
   ("Mathematics" (graphics-set-mode '(edit math-at)))
@@ -756,9 +757,6 @@
   ((check (balloon (icon "tm_carc_mode.xpm") "Insert circles")
           "v" (== (graphics-mode) '(edit circle)))
    (graphics-set-mode '(edit circle)))
-  ((check (balloon (icon "tm_ellipse_mode.xpm") "Insert Ellipse")
-          "v" (== (graphics-mode) '(edit ellipse)))
-   (graphics-set-mode '(edit ellipse)))
   /
   ((check (balloon (icon "tm_textat_mode.xpm") "Insert text")
           "v" (== (graphics-mode) '(edit text-at)))
