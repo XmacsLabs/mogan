@@ -3,7 +3,7 @@
 <style|<tuple|tmdoc|devel>>
 
 <\body>
-  <tmdoc-title|Re-organize the HELP menu>
+  <tmdoc-title|Re-organize the <menu|Help> and <menu|Developer> menu>
 
   <section|Tasks>
 
@@ -15,7 +15,11 @@
   manuals>>|<row|<cell|Bug>|<cell|<dlink|39_4>>|<cell|<value|da>>|<cell|Failed
   to render tmdoc image for remote tmdoc file>>|<row|<cell|Bug>|<cell|<dlink|39_5>>|<cell|<value|da>>|<cell|Failed
   to render the png icon in remote tmdoc>>|<row|<cell|Chore>|<cell|39_6>|<cell|<value|da>>|<cell|<scm|load-help-buffer>/<scm|load-help-article>
-  via remote doc>>>>>
+  via remote doc>>|<row|<cell|Chore>|<cell|39_7>|<cell|<value|da>>|<cell|Mogan
+  Welcome and Xmacs Planet>>|<row|<cell|Chore>|<cell|39_8>|<cell|<value|da>>|<cell|Deprecate
+  usage of pagella and fira fonts in tmdoc and
+  tmmanual>>|<row|<cell|Chore>|<cell|39_9>|<cell|<value|da>>|<cell|Add
+  release entry and templates for bug and feature>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
