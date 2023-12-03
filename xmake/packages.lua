@@ -19,7 +19,7 @@
 -- [ ] portage powered
 -- ...
 
-local LOLLY_VERSION = "1.3.2"
+local LOLLY_VERSION = "1.3.3"
 local TBOX_VERSION = "1.7.5"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
@@ -38,7 +38,7 @@ package("lolly")
         add_deps("cpr")
     end
 
-    add_versions("v" .. LOLLY_VERSION, "3c0124cda791277777e9f65123eaac48803f3576")
+    add_versions("v" .. LOLLY_VERSION, "33e3267e695e2b99900723a54ef40ff0682efdd9")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
