@@ -380,7 +380,7 @@ TeXmacs_main (int argc, char** argv) {
         i++;
       }
     }
-    if (install_status == 1) {
+    if (install_status == 1 || install_status == 2) {
       if (DEBUG_STD) debug_boot << "Loading welcome message...\n";
       string cmd= "(load-help-article \"about/mogan/research\")";
       // FIXME: force to load welcome message into new window

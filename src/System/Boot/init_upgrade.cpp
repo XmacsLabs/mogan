@@ -40,56 +40,6 @@ init_upgrade_scheme () {
 #endif
 }
 
-/******************************************************************************
-* Generate documentation about changes
-******************************************************************************/
-
-static void
-init_upgrade_doc (string install_version) {
-  url from_dir= "$TEXMACS_PATH/doc/about/changes";
-  url to= "$TEXMACS_HOME_PATH/doc/about/changes/changes-recent.en.tm";
-  string s= string_load (from_dir * "changes-pre.en.ptm");
-  if (version_inf (install_version, "0.3.3.24"))
-    s << string_load (from_dir * "changes-1.en.ptm");
-  if (version_inf_eq (install_version, "0.3.4.9"))
-    s << string_load (from_dir * "changes-2.en.ptm");
-  if (version_inf_eq (install_version, "1.0.0.4"))
-    s << string_load (from_dir * "changes-3.en.ptm");
-  if (version_inf_eq (install_version, "1.0.0.6"))
-    s << string_load (from_dir * "changes-4.en.ptm");
-  if (version_inf_eq (install_version, "1.0.0.11"))
-    s << string_load (from_dir * "changes-5.en.ptm");
-  if (version_inf_eq (install_version, "1.0.2.0"))
-    s << string_load (from_dir * "changes-6.en.ptm");
-  if (version_inf_eq (install_version, "1.0.2.6"))
-    s << string_load (from_dir * "changes-7.en.ptm");
-  if (version_inf_eq (install_version, "1.0.2.8"))
-    s << string_load (from_dir * "changes-8.en.ptm");
-  if (version_inf_eq (install_version, "1.0.3.4"))
-    s << string_load (from_dir * "changes-9.en.ptm");
-  if (version_inf_eq (install_version, "1.0.4"))
-    s << string_load (from_dir * "changes-10.en.ptm");
-  if (version_inf_eq (install_version, "1.0.5.9"))
-    s << string_load (from_dir * "changes-11.en.ptm");
-  if (version_inf_eq (install_version, "1.0.5.9"))
-    s << string_load (from_dir * "changes-12.en.ptm");
-  if (version_inf_eq (install_version, "1.0.5.9"))
-    s << string_load (from_dir * "changes-13.en.ptm");
-  if (version_inf_eq (install_version, "1.0.6.2"))
-    s << string_load (from_dir * "changes-14.en.ptm");
-  if (version_inf_eq (install_version, "1.0.7.6"))
-    s << string_load (from_dir * "changes-15.en.ptm");
-  if (version_inf_eq (install_version, "1.0.7.7"))
-    s << string_load (from_dir * "changes-16.en.ptm");
-  if (version_inf_eq (install_version, "1.0.7.8"))
-    s << string_load (from_dir * "changes-17.en.ptm");
-  if (version_inf_eq (install_version, "1.0.7.9")) {
-    s << string_load (from_dir * "changes-18.en.ptm");
-    s << string_load (from_dir * "changes-post.en.ptm");
-    save_string (to, s, false);
-  }
-  else remove (to);
-}
 
 /******************************************************************************
 * Upgrading TeXmacs
@@ -100,10 +50,10 @@ init_upgrade () {
   string install_version= get_setting ("VERSION");
 
   debug_boot << HRULE;
-  debug_boot << "Your disk contains a configuration file for TeXmacs-";
-  debug_boot << install_version << ".\n";
+  debug_boot << "Your disk contains a configuration file for Mogan Stem Suite ";
+  debug_boot << install_version << LF;
   debug_boot << "I will now perform the upgrade to version ";
-  debug_boot << TEXMACS_VERSION <<"\n";
+  debug_boot << XMACS_VERSION << LF;
   debug_boot << HRULE;
 
   url old_settings= "$TEXMACS_HOME_PATH/system" * url_wildcard ("TEX_PATHS*");
@@ -113,7 +63,6 @@ init_upgrade () {
 
   setup_texmacs ();
   init_upgrade_scheme ();
-  init_upgrade_doc (install_version);
 
   remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
   remove (get_tm_cache_path () * url_wildcard ("__*"));

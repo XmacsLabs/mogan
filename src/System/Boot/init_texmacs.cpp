@@ -458,10 +458,10 @@ init_misc () {
 void
 setup_texmacs () {
   url settings_file= "$TEXMACS_HOME_PATH/system/settings.scm";
-  debug_boot << "Welcome to TeXmacs " TEXMACS_VERSION "\n";
+  debug_boot << "Welcome to Mogan STEM Suite " << XMACS_VERSION << LF;
   debug_boot << HRULE;
 
-  set_setting ("VERSION", TEXMACS_VERSION);
+  set_setting ("VERSION", XMACS_VERSION);
   setup_tex ();
   
   string s= scheme_tree_to_block (texmacs_settings);
@@ -529,10 +529,9 @@ init_plugins () {
   }
   else texmacs_settings= block_to_scheme_tree (s);
 
-  if (get_setting ("VERSION") != TEXMACS_VERSION) {
+  if (get_setting ("VERSION") != XMACS_VERSION) {
     init_upgrade ();
-    url ch ("$TEXMACS_HOME_PATH/doc/about/changes/changes-recent.en.tm");
-    install_status= exists (ch)? 2: 0;
+    install_status= 2;
   }
   init_tex ();
 }
