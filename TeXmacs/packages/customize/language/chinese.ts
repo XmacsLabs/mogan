@@ -103,6 +103,9 @@
   <assign|render-theorem|<\macro|which|body>
     <render-enunciation|<theorem-name|<arg|which><theorem-sep>>|<arg|body>>
   </macro>>
+
+  <assign|chapter-numbered-title|<macro|title|<style-with|src-compact|none|<chapter-title|\<#7B2C\> <the-chapter> <chapter-text>
+  <vspace|1fn><new-line><arg|title>>>>>
 </body>
 
 <initial|<\collection>
