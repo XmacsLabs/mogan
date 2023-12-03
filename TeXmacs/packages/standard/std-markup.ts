@@ -30,6 +30,8 @@
 
   <assign|TeXmacs-version|<macro|<extern|texmacs-version>>>
 
+  <assign|Xmacs-version|<macro|<extern|xmacs-version>>>
+
   <assign|TeXmacs-version-release|<macro|type|<extern|texmacs-version-release*|<quote-arg|type>>>>
 
   <assign|made-by-TeXmacs|<macro|<float|footnote||<with|font-size|0.84|par-mode|justify|par-left|0cm|par-right|0cm|<active*|<move|<image|local:$TEXMACS_PATH/misc/images/tm_gnu3.ps||1fn||>|0fn|-0.2fn>><space|2spc><localize|This
