@@ -7,7 +7,15 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|71_5>>|<cell|<value|da>>|<cell|Failed
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|71_12>|<cell|<value|da>>|<cell|Prevent
+  debug options from being translated in Debug
+  menu>>|<row|<cell|Chore>|<cell|71_11>|<cell|<value|da>>|<cell|Use macOS
+  instead Mac OS>>|<row|<cell|Chore>|<cell|71_10>|<cell|<value|da>>|<cell|translate
+  cancel in user-confirm dialogue>>|<row|<cell|Chore>|<cell|71_9>|<cell|<value|da>>|<cell|adjust
+  the window size at startup on Windows>>|<row|<cell|Chore>|<cell|71_8>|<cell|<value|da>>|<cell|Prevent
+  beamer theme names from being translated>>|<row|<cell|Chore>|<cell|71_7>|<cell|<value|da>>|<cell|better
+  Shortcuts tips for copy/paste/cut on Windows>>|<row|<cell|Chore>|<cell|71_6>|<cell|<value|da>>|<cell|Display
+  sys-chinese as \<#9ED8\>\<#8BA4\>\<#5B57\>\<#4F53\>>>|<row|<cell|Bug>|<cell|<dlink|71_5>>|<cell|<value|da>>|<cell|Failed
   to Insert-\<gtr\>N-th root via menu>>|<row|<cell|Chore>|<cell|71_4>|<cell|<value|da>>|<cell|Show
   shortcuts in the context menu>>|<row|<cell|Chore>|<cell|71_3>|<cell|<value|da>>|<cell|Show
   shortcut for Focus-\<gtr\>Numbered>>|<row|<cell|Chore>|<cell|71_2>|<cell|<value|da>>|<cell|Show
