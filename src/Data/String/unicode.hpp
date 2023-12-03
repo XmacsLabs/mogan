@@ -15,7 +15,6 @@
 
 #include "string.hpp"
 
-string get_unicode_range (int code);
 string get_unicode_range (string c);
 
 #endif
