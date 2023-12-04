@@ -2,13 +2,12 @@
 ## 官方提供的安装包
 | 操作系统 | 马上下载 | MD5校验 |
 |-------|-----|--------|
-| Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/Mogan-v1.1.6-64bit-installer.exe) | 2ea3b981eca36397db3222e8485e52e7 |
-| macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/Mogan_v1.1.6.dmg) | 89ad25b821e9d0f754d569b9bfcf5077 |
-| macOS arm (>=13.1) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/Mogan_arm_v1.1.6.dmg) | b7d44f341bd202fa251125e23d5d0a64 |
-| Ubuntu 20.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/mogan-v1.1.6-ubuntu20.04.deb) | b07f95c2e083ee658a6176c5bc6dd189 |
-| Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/mogan-v1.1.6-ubuntu22.04.deb) | fe177fd88e699e4700f53f63510b7c3f |
-| UOS amd64 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/mogan-v1.1.6-uos.deb) | 64f6b3bf64082ed65014b277d4b3d481 |
-| UOS loongarch | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.1.6/mogan-v1.1.6-uos-loongarch64.deb) | 29bfc986f9291d7e478e330c5d73a66d |
+| Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0-64bit-installer.exe) | f34dd47aecf9a47fad7c4b27529ef8b4 |
+| macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0.dmg) | cb0e449ae95832c62dac7a16e4fecb9e |
+| macOS arm (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0-arm.dmg) | 0875c9f252ddacacc4b82df0f341f157 |
+| Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/mogan-research-v1.2.0-ubuntu22.04.deb) | c3357688696d060ab451de27bf9364bf |
+
+> 注意：墨砚V1.2.0无法在Windows 7上运行。
 
 从其它站点下载：
 + https://codeberg.org/XmacsLabs/mogan/releases
@@ -16,9 +15,10 @@
 + https://github.com/XmacsLabs/mogan/releases
 
 旧版本安装包：
-+ [v1.1.5 (2023/08/11)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.5)
-+ [v1.1.4 (2023/07/31)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.4)
-+ [v1.1.3 (2023/06/05)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.3)
++ [v1.1.6 (2023/09/29)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.6)
++ [v1.1.5 (2023/08/11)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.5)
++ [v1.1.4 (2023/07/31)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.4)
++ [v1.1.3 (2023/06/05)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.3)
 + [v1.1.2 (2023/04/09)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.2)
 + [v1.1.1 (2022/10/29)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.1)
 + [v1.1.0 (2022/08/31)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.0)
