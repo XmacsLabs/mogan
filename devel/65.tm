@@ -7,7 +7,8 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|65_1>|<cell|<value|da>>|<cell|Upgrade
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Chore>|<cell|65_1>|<cell|<value|da>>|<cell|Upgrade
   to Qt 6.5.3 on macOS>>|<row|<cell|Chore>|<cell|65_2>|<cell|<value|da>,
   <value|jk>>|<cell|Upgrade to Qt 6.5.3 on
   Windows>>|<row|<cell|Chore>|<cell|65_3>|<cell|<value|da>>|<cell|Set
@@ -15,7 +16,10 @@
   6>>|<row|<cell|Chore>|<cell|65_4>|<cell|<value|da>>|<cell|Upgrade to Qt 6
   on Ubuntu 22.04>>|<row|<cell|Chore>|<cell|65_5>|<cell|<value|da>>|<cell|Qt
   6: use startCommand instead of start>>|<row|<cell|Bug>|<cell|<dlink|65_6>>|<cell|<value|da>>|<cell|Qt
-  6: Failed to recognize <key|altcmd> and <key|extra>>>>>>
+  6: Failed to recognize <key|altcmd> and
+  <key|extra>>>|<row|<cell|Chore>|<cell|65_7>|<cell|<value|da>>|<cell|Use A-q
+  instead of C-q to make symbol on macOS>>|<row|<cell|Chore>|<cell|65_8>|<cell|<value|da>>|<cell|Fix
+  option- shortcuts on macOS>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
