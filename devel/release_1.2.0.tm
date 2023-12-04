@@ -9,26 +9,34 @@
 
   <tmdoc-title|Mogan Research 1.2.0>
 
+  We started 68 projects and finished 46 projects. The 22 started but not
+  finished projects has been moved to <dlink|release_1.2.1>.
+
   <section|Mogan Editor v1.2.0>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|32|32|3|3|cell-valign|b>|<cwith|33|33|1|1|cell-valign|b>|<cwith|10|10|2|2|cell-valign|c>|<cwith|5|5|2|2|cell-valign|c>|<cwith|30|30|1|1|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|34|34|3|3|cell-valign|b>|<cwith|35|35|1|1|cell-valign|b>|<cwith|12|12|2|2|cell-valign|c>|<cwith|6|6|2|2|cell-valign|c>|<cwith|32|32|1|1|cell-background|pastel
+  green>|<cwith|33|33|1|1|cell-background|pastel
   green>|<cwith|31|31|1|1|cell-background|pastel
-  green>|<cwith|29|29|1|1|cell-background|pastel
-  green>|<cwith|32|32|1|1|cell-background|pastel
-  green>|<cwith|26|26|1|1|cell-background|>|<cwith|25|25|1|1|cell-background|>|<cwith|24|24|1|1|cell-background|pastel
-  green>|<cwith|22|22|1|1|cell-background|pastel
-  green>|<cwith|16|16|1|1|cell-background|pastel
-  green>|<cwith|15|15|1|1|cell-background|pastel
-  green>|<cwith|13|13|1|1|cell-valign|c>|<cwith|11|11|1|1|cell-background|pastel
-  green>|<cwith|10|10|1|1|cell-background|pastel
+  green>|<cwith|34|34|1|1|cell-background|pastel
+  green>|<cwith|28|28|1|1|cell-background|>|<cwith|27|27|1|1|cell-background|>|<cwith|26|26|1|1|cell-background|pastel
+  green>|<cwith|24|24|1|1|cell-background|pastel
+  green>|<cwith|18|18|1|1|cell-background|pastel
+  green>|<cwith|17|17|1|1|cell-background|pastel
+  green>|<cwith|15|15|1|1|cell-valign|c>|<cwith|13|13|1|1|cell-background|pastel
+  green>|<cwith|12|12|1|1|cell-background|pastel
+  green>|<cwith|7|7|1|1|cell-background|pastel
+  green>|<cwith|6|6|1|1|cell-background|pastel
+  green>|<cwith|3|3|1|1|cell-background|pastel
   green>|<table|<row|<cell|<dlink|71>>|<cell|<value|da>>|<cell|Improvements
   on User Interface>>|<row|<cell|<dlink|70>>|<cell|<value|da>>|<cell|Syntax
   Highlight on programming languages>>|<row|<cell|<dlink|69>>|<cell|<value|da>>|<cell|Improvements
-  for Chinese users>>|<row|<cell|<dlink|68>>|<cell|<value|da>>|<cell|Improvements
-  on PDF image and conversion>>|<row|<cell|<dlink|64>>|<cell|>|<cell|Image
-  import and exports>>|<row|<cell|<dlink|63>>|<cell|>|<cell|Fixing style
+  for Chinese users in 1.2.0>>|<row|<cell|<dlink|68>>|<cell|<value|da>>|<cell|Improvements
+  on PDF image and conversion>>|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
+  format>>|<row|<cell|<dlink|64>>|<cell|<value|da>>|<cell|Image import and
+  exports>>|<row|<cell|<dlink|63>>|<cell|>|<cell|Fixing style
   corruption>>|<row|<cell|<dlink|62>>|<cell|Darcy>|<cell|Mogan STEM
-  Suite>>|<row|<cell|<dlink|59>>|<cell|Darcy>|<cell|Tuning Keyboard
+  Suite>>|<row|<cell|<dlink|61>>|<cell|Darcy>|<cell|Plugin
+  Center>>|<row|<cell|<dlink|59>>|<cell|Darcy>|<cell|Tuning Keyboard
   Shortcuts>>|<row|<cell|<dlink|57>>|<cell|Pluto>|<cell|Slim
   libmogan>>|<row|<cell|<dlink|56>>|<cell|Darcy>|<cell|Tuning cache to avoid
   corruption>>|<row|<cell|<dlink|55>>|<cell|paradisum>|<cell|tmdb

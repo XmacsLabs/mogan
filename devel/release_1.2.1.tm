@@ -18,9 +18,13 @@
 
   <section|Unfinished Projects from <dlink|release_1.2.0>>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|6|6|1|1|cell-valign|c>|<cwith|18|18|1|1|cell-valign|b>|<cwith|15|15|1|1|cell-background|pastel
-  red>|<cwith|14|14|1|1|cell-background|>|<table|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
-  format>>|<row|<cell|<dlink|61>>|<cell|Darcy>|<cell|Plugin
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|10|10|1|1|cell-valign|c>|<cwith|22|22|1|1|cell-valign|b>|<cwith|19|19|1|1|cell-background|pastel
+  red>|<cwith|18|18|1|1|cell-background|>|<table|<row|<cell|<dlink|71>>|<cell|<value|da>>|<cell|Improvements
+  on User Interface>>|<row|<cell|<dlink|70>>|<cell|<value|da>>|<cell|Syntax
+  Highlight on programming languages>>|<row|<cell|<dlink|68>>|<cell|<value|da>>|<cell|Improvements
+  on PDF image and conversion>>|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
+  format>>|<row|<cell|<dlink|62>>|<cell|Darcy>|<cell|Mogan STEM
+  Suite>>|<row|<cell|<dlink|61>>|<cell|Darcy>|<cell|Plugin
   Center>>|<row|<cell|<dlink|59>>|<cell|Darcy>|<cell|Tuning Keyboard
   Shortcuts>>|<row|<cell|<dlink|57>>|<cell|Pluto>|<cell|Slim
   libmogan>>|<row|<cell|<dlink|54>>|<cell|Pluto>|<cell|Community for Users
