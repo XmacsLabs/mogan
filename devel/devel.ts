@@ -55,7 +55,11 @@
 
   <assign|dr|<strong|Mogan Draw>>
 
-  \;
+  Links:
+
+  <assign|svn|<macro|rev|<hlink|<arg|rev>|<merge|https://svn.savannah.gnu.org/viewvc/texmacs?view=revision&sortby=rev&revision=|<arg|rev>>>>>
+
+  <assign|savannah-bug|<macro|rev|<hlink|<arg|rev>|<merge|https://savannah.gnu.org/bugs/?|<arg|rev>>>>>
 
   \;
 
