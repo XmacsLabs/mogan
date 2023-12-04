@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|chinese>>
+<style|<tuple|tmdoc|chinese|devel>>
 
 <\body>
   <tmdoc-title|\<#4E2D\>\<#6587\>\<#8BCD\>\<#5178\>>
@@ -15,7 +15,9 @@
     </cell>|<\cell>
       22_1
     </cell>|<\cell>
-      Darcy
+      v1.2.1
+    </cell>|<\cell>
+      <value|da>
     </cell>|<\cell>
       \<#4ECE\>1.1.x\<#5206\>\<#652F\>\<#5BFC\>\<#5165\>\<#4E2D\>\<#6587\>\<#8BCD\>\<#5178\>\<#6587\>\<#4EF6\>english-chinese.scm
     </cell>>|<row|<\cell>
@@ -23,7 +25,9 @@
     </cell>|<\cell>
       22_2
     </cell>|<\cell>
-      Darcy
+      v1.2.1
+    </cell>|<\cell>
+      <value|da>
     </cell>|<\cell>
       \<#6539\>\<#8FDB\>\<#8868\>\<#683C\>\<#76F8\>\<#5173\>\<#7684\>\<#8BCD\>\<#6761\>
     </cell>>|<row|<\cell>
@@ -31,7 +35,9 @@
     </cell>|<\cell>
       22_3
     </cell>|<\cell>
-      oyyko
+      v1.2.1
+    </cell>|<\cell>
+      <value|oy>
     </cell>|<\cell>
       \<#6539\>\<#8FDB\>\<#7ED8\>\<#56FE\>\<#5DE5\>\<#5177\>\<#76F8\>\<#5173\>\<#7684\>\<#8BCD\>\<#6761\>
     </cell>>|<row|<\cell>
@@ -39,9 +45,71 @@
     </cell>|<\cell>
       22_4
     </cell>|<\cell>
-      Darcy
+      \;
+    </cell>|<\cell>
+      <value|da>
     </cell>|<\cell>
       \<#6539\>\<#8FDB\>\<#5B8F\>\<#548C\>\<#5B8F\>\<#7F16\>\<#8F91\>\<#76F8\>\<#5173\>\<#7684\>\<#8BCD\>\<#6761\>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      22_5
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      \<#6539\>\<#8FDB\>PDF\<#76F8\>\<#5173\>\<#7684\>\<#8BCD\>\<#6761\>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      22_6
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Informative flags\<#7FFB\>\<#8BD1\>\<#4ECE\>\<#975E\>\<#6B63\>\<#5F0F\>\<#6807\>\<#8BB0\>\<#6539\>\<#4E3A\>\<#6307\>\<#793A\>\<#6807\>\<#7B7E\>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      22_7
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      \<#6539\>\<#8FDB\>\<#7528\>\<#6237\>\<#624B\>\<#518C\>\<#76F8\>\<#5173\>\<#7684\>\<#8BCD\>\<#6761\>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      22_8
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      \<#6539\>\<#8FDB\>\<#7248\>\<#672C\>\<#63A7\>\<#5236\>\<#76F8\>\<#5173\>\<#7684\>\<#8BCD\>\<#6761\>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      22_9
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      \<#6539\>\<#8FDB\>\<#8C03\>\<#8BD5\>\<#83DC\>\<#5355\>\<#4E2D\>\<#7684\>\<#8BCD\>\<#6761\>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      22_10
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      \<#6539\>\<#8FDB\>\<#5E7B\>\<#706F\>\<#7247\>\<#76F8\>\<#5173\>\<#8BCD\>\<#6761\>
     </cell>>>>
   </wide-tabular>
 
