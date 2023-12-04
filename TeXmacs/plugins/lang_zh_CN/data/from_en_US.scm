@@ -769,7 +769,7 @@
 ("index entry" "索引项")
 ("index level" "下标层次")
 ("index" "索引")
-("informative flags" "非正式标记")
+("informative flags" "指示标签")
 ("ink in" "上墨")
 ("ink out" "去墨")
 ("inline arguments" "行内参数")
