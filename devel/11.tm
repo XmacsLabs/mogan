@@ -98,6 +98,14 @@
       <value|da>
     </cell>|<\cell>
       Enable ligature when document language is Chinese
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_12
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix typo in initialize_virtual
     </cell>>>>
   </wide-tabular>
 

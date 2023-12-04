@@ -11,13 +11,16 @@
 
   <section|Mogan Editor v1.2.1 alpha>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|3|3|1|1|cell-valign|c>|<table|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|3|3|1|1|cell-valign|c>|<cwith|9|9|1|1|cell-valign|b>|<table|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
   format>>|<row|<cell|<dlink|61>>|<cell|Darcy>|<cell|Plugin
   Center>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
   Table>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning as
   plugin>>|<row|<cell|<dlink|38>>|<cell|Darcy>|<cell|Image formats as
   plugins>>|<row|<cell|<dlink|33>>|<cell|>|<cell|Spell checking as a
-  plugin>>|<row|<cell|<dlink|25>>|<cell|Pluto>|<cell|Add CI on Gitee>>>>>
+  plugin>>|<row|<cell|<dlink|25>>|<cell|Pluto>|<cell|Add CI on
+  Gitee>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language related
+  issues>>|<row|<cell|<dlink|5>>|<cell|Darcy>|<cell|Documentation in markdown
+  format for users and developers>>>>>
 
   <section|<TeXmacs> v2.1.2 port>
 

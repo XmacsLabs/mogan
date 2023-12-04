@@ -3,7 +3,7 @@
 <style|<tuple|tmdoc|british|devel>>
 
 <\body>
-  <tmdoc-title|Lolly 1.2.x/1.3.x (<math|\<geqslant\>1.2.9>)>
+  <tmdoc-title|Lolly 1.2.x/1.3.x for v1.2.0 (<math|\<geqslant\>1.2.9>)>
 
   <section|Tasks>
 

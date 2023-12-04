@@ -40,6 +40,14 @@
       <value|da>
     </cell>|<\cell>
       It freezes when I diff using the Rough grain
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      7_5
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Disable Edit-\<gtr\>Spell to avoid crash on Windows
     </cell>>>>
   </wide-tabular>
 

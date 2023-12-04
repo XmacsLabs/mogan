@@ -14,6 +14,9 @@
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|24|24|1|1|cell-background|pastel
   red>|<cwith|23|23|1|1|cell-background|pastel
   red>|<cwith|30|30|3|3|cell-valign|b>|<cwith|31|31|1|1|cell-valign|b>|<cwith|10|10|2|2|cell-valign|c>|<cwith|5|5|2|2|cell-valign|c>|<cwith|28|28|1|1|cell-background|pastel
+  green>|<cwith|29|29|1|1|cell-background|pastel
+  green>|<cwith|27|27|1|1|cell-background|pastel
+  green>|<cwith|30|30|1|1|cell-background|pastel
   green>|<table|<row|<cell|<dlink|71>>|<cell|<value|da>>|<cell|Improvements
   on User Interface>>|<row|<cell|<dlink|70>>|<cell|<value|da>>|<cell|Syntax
   Highlight on programming languages>>|<row|<cell|<dlink|69>>|<cell|<value|da>>|<cell|Improvements
@@ -42,7 +45,7 @@
   Dictionary>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language
   related issues>>|<row|<cell|<dlink|18>>|<cell|jinkaimori>|<cell|Embedded
   documentation issues>>|<row|<cell|<dlink|13>>|<cell|Darcy>|<cell|Lolly
-  1.2.x/1.3.x>>|<row|<cell|<dlink|11>>|<cell|Darcy>|<cell|Font
+  1.2.x/1.3.x for v1.2.0>>|<row|<cell|<dlink|11>>|<cell|Darcy>|<cell|Font
   tuning>>|<row|<cell|<dlink|7>>|<cell|Darcy>|<cell|Stability
   Issues>>|<row|<cell|<dlink|5>>|<cell|Darcy>|<cell|Documentation in markdown
   format for users and developers>>>>>
