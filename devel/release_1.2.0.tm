@@ -11,12 +11,12 @@
 
   <section|Mogan Editor v1.2.0>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|24|24|1|1|cell-background|pastel
-  red>|<cwith|23|23|1|1|cell-background|pastel
-  red>|<cwith|30|30|3|3|cell-valign|b>|<cwith|31|31|1|1|cell-valign|b>|<cwith|10|10|2|2|cell-valign|c>|<cwith|5|5|2|2|cell-valign|c>|<cwith|28|28|1|1|cell-background|pastel
-  green>|<cwith|29|29|1|1|cell-background|pastel
-  green>|<cwith|27|27|1|1|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|31|31|3|3|cell-valign|b>|<cwith|32|32|1|1|cell-valign|b>|<cwith|10|10|2|2|cell-valign|c>|<cwith|5|5|2|2|cell-valign|c>|<cwith|29|29|1|1|cell-background|pastel
   green>|<cwith|30|30|1|1|cell-background|pastel
+  green>|<cwith|28|28|1|1|cell-background|pastel
+  green>|<cwith|31|31|1|1|cell-background|pastel
+  green>|<cwith|25|25|1|1|cell-background|>|<cwith|24|24|1|1|cell-background|>|<cwith|23|23|1|1|cell-background|pastel
+  green>|<cwith|21|21|1|1|cell-background|pastel
   green>|<table|<row|<cell|<dlink|71>>|<cell|<value|da>>|<cell|Improvements
   on User Interface>>|<row|<cell|<dlink|70>>|<cell|<value|da>>|<cell|Syntax
   Highlight on programming languages>>|<row|<cell|<dlink|69>>|<cell|<value|da>>|<cell|Improvements
@@ -38,10 +38,11 @@
   converter as a plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML
   converter as a plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs
   instead of the gs binary>>|<row|<cell|<dlink|39>>|<cell|<value|da>>|<cell|Re-organize
-  the <menu|Help> and <menu|Developer> menu>>|<row|<cell|<dlink|27>>|<cell|>|<cell|Mogan
-  Draw optimization (long term)>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML
-  import and export>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan Draw
-  optimization \ (OSPP)>>|<row|<cell|<dlink|22>>|<cell|Darcy>|<cell|Chinese
+  the <menu|Help> and <menu|Developer> menu>>|<row|<cell|<dlink|27>>|<cell|Oyyko>|<cell|Mogan
+  Draw optimization (long term)>>|<row|<cell|<dlink|25>>|<cell|Pluto>|<cell|Add
+  CI on Gitee>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML import and
+  export>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan Draw optimization
+  \ (OSPP)>>|<row|<cell|<dlink|22>>|<cell|Darcy>|<cell|Chinese
   Dictionary>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language
   related issues>>|<row|<cell|<dlink|18>>|<cell|jinkaimori>|<cell|Embedded
   documentation issues>>|<row|<cell|<dlink|13>>|<cell|Darcy>|<cell|Lolly

@@ -9,18 +9,26 @@
 
   <tmdoc-title|Mogan Research 1.2.1>
 
-  <section|Mogan Editor v1.2.1 alpha>
+  <section|New Projects>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|3|3|1|1|cell-valign|c>|<cwith|9|9|1|1|cell-valign|b>|<table|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|<dlink|33>>|<cell|>|<cell|Spell
+  checking as a plugin>>|<row|<cell|<dlink|38>>|<cell|Darcy>|<cell|Image
+  formats as plugins>>>>>
+
+  <section|Unfinished Projects from <dlink|release_1.2.0>>
+
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|3|3|1|1|cell-valign|c>|<cwith|10|10|1|1|cell-valign|b>|<cwith|7|7|1|1|cell-background|pastel
+  red>|<cwith|6|6|1|1|cell-background|>|<table|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
   format>>|<row|<cell|<dlink|61>>|<cell|Darcy>|<cell|Plugin
   Center>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
   Table>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning as
-  plugin>>|<row|<cell|<dlink|38>>|<cell|Darcy>|<cell|Image formats as
-  plugins>>|<row|<cell|<dlink|33>>|<cell|>|<cell|Spell checking as a
-  plugin>>|<row|<cell|<dlink|25>>|<cell|Pluto>|<cell|Add CI on
-  Gitee>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language related
-  issues>>|<row|<cell|<dlink|5>>|<cell|Darcy>|<cell|Documentation in markdown
-  format for users and developers>>>>>
+  plugin>>|<row|<cell|<dlink|27>>|<cell|Oyyko>|<cell|Mogan Draw optimization
+  (long term)>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML import and
+  export>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan Draw optimization
+  \ (OSPP)>>|<row|<cell|<dlink|22>>|<cell|Darcy>|<cell|Chinese
+  Dictionary>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language
+  related issues>>|<row|<cell|<dlink|5>>|<cell|Darcy>|<cell|Documentation in
+  markdown format for users and developers>>>>>
 
   <section|<TeXmacs> v2.1.2 port>
 
