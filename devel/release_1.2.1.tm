@@ -13,19 +13,28 @@
 
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|<dlink|33>>|<cell|>|<cell|Spell
   checking as a plugin>>|<row|<cell|<dlink|38>>|<cell|Darcy>|<cell|Image
-  formats as plugins>>>>>
+  formats as plugins>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning as
+  plugin>>>>>
 
   <section|Unfinished Projects from <dlink|release_1.2.0>>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|3|3|1|1|cell-valign|c>|<cwith|10|10|1|1|cell-valign|b>|<cwith|7|7|1|1|cell-background|pastel
-  red>|<cwith|6|6|1|1|cell-background|>|<table|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|6|6|1|1|cell-valign|c>|<cwith|18|18|1|1|cell-valign|b>|<cwith|15|15|1|1|cell-background|pastel
+  red>|<cwith|14|14|1|1|cell-background|>|<table|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
   format>>|<row|<cell|<dlink|61>>|<cell|Darcy>|<cell|Plugin
-  Center>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
-  Table>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning as
-  plugin>>|<row|<cell|<dlink|27>>|<cell|Oyyko>|<cell|Mogan Draw optimization
-  (long term)>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML import and
-  export>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan Draw optimization
-  \ (OSPP)>>|<row|<cell|<dlink|22>>|<cell|Darcy>|<cell|Chinese
+  Center>>|<row|<cell|<dlink|59>>|<cell|Darcy>|<cell|Tuning Keyboard
+  Shortcuts>>|<row|<cell|<dlink|57>>|<cell|Pluto>|<cell|Slim
+  libmogan>>|<row|<cell|<dlink|54>>|<cell|Pluto>|<cell|Community for Users
+  and Developers>>|<row|<cell|<dlink|52>>|<cell|>|<cell|Improvements on
+  Table>>|<row|<cell|<dlink|50>>|<cell|Oyyko>|<cell|Mogan Draw app & WASM
+  (OSPP)>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle indentation
+  of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|jingkaimori>|<cell|Complete
+  the new mechanism of glue code generation>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|<LaTeX>
+  converter as a plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML
+  converter as a plugin>>|<row|<cell|<dlink|41>>|<cell|<value|da>>|<cell|Use
+  libgs instead of the gs binary>>|<row|<cell|<dlink|27>>|<cell|Oyyko>|<cell|Mogan
+  Draw optimization (long term)>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML
+  import and export>>|<row|<cell|<dlink|23>>|<cell|Oyyko>|<cell|Mogan Draw
+  optimization \ (OSPP)>>|<row|<cell|<dlink|22>>|<cell|Darcy>|<cell|Chinese
   Dictionary>>|<row|<cell|<dlink|19>>|<cell|Darcy>|<cell|Natural language
   related issues>>|<row|<cell|<dlink|5>>|<cell|Darcy>|<cell|Documentation in
   markdown format for users and developers>>>>>

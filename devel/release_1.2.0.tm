@@ -11,12 +11,16 @@
 
   <section|Mogan Editor v1.2.0>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|31|31|3|3|cell-valign|b>|<cwith|32|32|1|1|cell-valign|b>|<cwith|10|10|2|2|cell-valign|c>|<cwith|5|5|2|2|cell-valign|c>|<cwith|29|29|1|1|cell-background|pastel
-  green>|<cwith|30|30|1|1|cell-background|pastel
-  green>|<cwith|28|28|1|1|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|32|32|3|3|cell-valign|b>|<cwith|33|33|1|1|cell-valign|b>|<cwith|10|10|2|2|cell-valign|c>|<cwith|5|5|2|2|cell-valign|c>|<cwith|30|30|1|1|cell-background|pastel
   green>|<cwith|31|31|1|1|cell-background|pastel
-  green>|<cwith|25|25|1|1|cell-background|>|<cwith|24|24|1|1|cell-background|>|<cwith|23|23|1|1|cell-background|pastel
-  green>|<cwith|21|21|1|1|cell-background|pastel
+  green>|<cwith|29|29|1|1|cell-background|pastel
+  green>|<cwith|32|32|1|1|cell-background|pastel
+  green>|<cwith|26|26|1|1|cell-background|>|<cwith|25|25|1|1|cell-background|>|<cwith|24|24|1|1|cell-background|pastel
+  green>|<cwith|22|22|1|1|cell-background|pastel
+  green>|<cwith|16|16|1|1|cell-background|pastel
+  green>|<cwith|15|15|1|1|cell-background|pastel
+  green>|<cwith|13|13|1|1|cell-valign|c>|<cwith|11|11|1|1|cell-background|pastel
+  green>|<cwith|10|10|1|1|cell-background|pastel
   green>|<table|<row|<cell|<dlink|71>>|<cell|<value|da>>|<cell|Improvements
   on User Interface>>|<row|<cell|<dlink|70>>|<cell|<value|da>>|<cell|Syntax
   Highlight on programming languages>>|<row|<cell|<dlink|69>>|<cell|<value|da>>|<cell|Improvements
@@ -29,15 +33,16 @@
   libmogan>>|<row|<cell|<dlink|56>>|<cell|Darcy>|<cell|Tuning cache to avoid
   corruption>>|<row|<cell|<dlink|55>>|<cell|paradisum>|<cell|tmdb
   onboarding>>|<row|<cell|<dlink|54>>|<cell|Pluto>|<cell|Community for Users
-  and Developers>>|<row|<cell|<dlink|50>>|<cell|Oyyko>|<cell|Mogan Draw app &
-  WASM (OSPP)>>|<row|<cell|<dlink|49>>|<cell|jingkaimori>|<cell|Fine tuning
-  of xmake configuration>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|Fix
+  and Developers>>|<row|<cell|<dlink|52>>|<cell|<value|da>>|<cell|Improvements
+  on Table>>|<row|<cell|<dlink|50>>|<cell|Oyyko>|<cell|Mogan Draw app & WASM
+  (OSPP)>>|<row|<cell|<dlink|49>>|<cell|jingkaimori>|<cell|Fine tuning of
+  xmake configuration>>|<row|<cell|<dlink|47>>|<cell|jingkaimori>|<cell|Fix
   mechanism of link navigation>>|<row|<cell|<dlink|46>>|<cell|jingkaimori>|<cell|Handle
-  indentation of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|>|<cell|Complete
+  indentation of first paragraph of section>>|<row|<cell|<dlink|45>>|<cell|jingkaimori>|<cell|Complete
   the new mechanism of glue code generation>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|<LaTeX>
   converter as a plugin>>|<row|<cell|<dlink|42>>|<cell|Pluto>|<cell|HTML
-  converter as a plugin>>|<row|<cell|<dlink|41>>|<cell|>|<cell|Use libgs
-  instead of the gs binary>>|<row|<cell|<dlink|39>>|<cell|<value|da>>|<cell|Re-organize
+  converter as a plugin>>|<row|<cell|<dlink|41>>|<cell|<value|da>>|<cell|Use
+  libgs instead of the gs binary>>|<row|<cell|<dlink|39>>|<cell|<value|da>>|<cell|Re-organize
   the <menu|Help> and <menu|Developer> menu>>|<row|<cell|<dlink|27>>|<cell|Oyyko>|<cell|Mogan
   Draw optimization (long term)>>|<row|<cell|<dlink|25>>|<cell|Pluto>|<cell|Add
   CI on Gitee>>|<row|<cell|<dlink|24>>|<cell|Pluto>|<cell|HTML import and
