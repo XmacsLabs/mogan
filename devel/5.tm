@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|tmdoc>
+<style|<tuple|tmdoc|devel>>
 
 <\body>
   <tmdoc-title|Documentation in Markdown format for users and developers>
@@ -17,10 +17,22 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<table|<row|<\cell>
+    <tformat|<cwith|1|1|2|2|cell-background|pastel
+    green>|<cwith|2|2|2|2|cell-background|pastel
+    green>|<cwith|3|3|2|2|cell-background|pastel
+    green>|<cwith|6|6|2|2|cell-background|pastel
+    green>|<cwith|7|7|2|2|cell-background|pastel
+    green>|<cwith|8|8|2|2|cell-background|pastel
+    green>|<cwith|11|11|2|2|cell-background|pastel
+    green>|<cwith|12|12|2|2|cell-background|pastel
+    green>|<cwith|13|13|2|2|cell-background|pastel
+    green>|<cwith|14|14|2|2|cell-background|pastel
+    green>|<cwith|15|15|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       5_1
+    </cell>|<\cell>
+      v1.2.0
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -30,6 +42,8 @@
     </cell>|<\cell>
       5_2
     </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       build and preview website via vitepress
@@ -37,6 +51,8 @@
       Doc
     </cell>|<\cell>
       5_3
+    </cell>|<\cell>
+      v1.2.0
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -46,13 +62,17 @@
     </cell>|<\cell>
       5_4
     </cell>|<\cell>
+      \;
+    </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       Doc on the videos on Bilibili and Youtube
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
-      <todo|5_5>
+      5_5
+    </cell>|<\cell>
+      \;
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -60,7 +80,9 @@
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
-      <todo|5_6>
+      5_6
+    </cell>|<\cell>
+      v1.2.0
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -70,6 +92,8 @@
     </cell>|<\cell>
       5_7
     </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
       Oyyko
     </cell>|<\cell>
       Doc on using VSCode to help develop
@@ -78,13 +102,17 @@
     </cell>|<\cell>
       5_8
     </cell>|<\cell>
-      Darcy
+      v1.2.0
+    </cell>|<\cell>
+      <value|da>
     </cell>|<\cell>
       ChangeLog for old Mogan Editor releases
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
       5_9
+    </cell>|<\cell>
+      \;
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -94,6 +122,8 @@
     </cell>|<\cell>
       5_10
     </cell>|<\cell>
+      \;
+    </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       OSPP 2023 Info
@@ -102,9 +132,51 @@
     </cell>|<\cell>
       5_11
     </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       New contributors
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_12
+    </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Enable search for mogan.app
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_13
+    </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix dead link for contributing
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_14
+    </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Warning about xmake 2.8.3 on macOS
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_15
+    </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Update Develop_on_Linux.md for Fedora
     </cell>>>>
   </wide-tabular>
 
