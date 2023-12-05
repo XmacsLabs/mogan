@@ -53,8 +53,9 @@
     red>|<cwith|8|8|2|2|cell-background|pastel
     red>|<cwith|10|10|2|2|cell-background|pastel
     red>|<cwith|12|12|2|2|cell-background|pastel
-    green>|<cwith|14|14|2|2|cell-background|#f0f0f0>|<cwith|15|15|2|2|cell-background|#f0f0f0>|<cwith|17|17|2|2|cell-background|#f0f0f0>|<cwith|16|16|2|2|cell-background|pastel
-    red>|<cwith|18|18|2|2|cell-background|pastel red>|<table|<row|<\cell>
+    green>|<cwith|21|21|2|2|cell-background|#f0f0f0>|<cwith|22|22|2|2|cell-background|#f0f0f0>|<cwith|24|24|2|2|cell-background|#f0f0f0>|<cwith|23|23|2|2|cell-background|pastel
+    red>|<cwith|25|25|2|2|cell-background|pastel
+    red>|<cwith|14|14|2|2|cell-background|#f0f0f0>|<cwith|18|18|2|2|cell-background|#f0f0f0>|<cwith|16|16|2|2|cell-background|#f0f0f0>|<cwith|20|20|2|2|cell-background|#f0f0f0>|<table|<row|<\cell>
       SVN revision
     </cell>|<\cell>
       Status
@@ -161,6 +162,63 @@
       \;
     </cell>|<\cell>
       \;
+    </cell>>|<row|<\cell>
+      <svn|14229>
+    </cell>|<\cell>
+      discarded
+    </cell>|<\cell>
+      <dlink|24_6>
+    </cell>|<\cell>
+      fix bug #<savannah-bug|63673>: underline missing in HTML converter
+    </cell>>|<row|<\cell>
+      <text-dots>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
+      <svn|14280>
+    </cell>|<\cell>
+      discarded
+    </cell>|<\cell>
+      <dlink|63_2>
+    </cell>|<\cell>
+      Apply patch #<hlink|10339|https://savannah.gnu.org/patch/?10339>: Merge
+      contiguous indices for sorted bib items
+    </cell>>|<row|<\cell>
+      <text-dots>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
+      <svn|14283>
+    </cell>|<\cell>
+      discarded
+    </cell>|<\cell>
+      <dlink|63_2>
+    </cell>|<\cell>
+      Tweaking
+    </cell>>|<row|<\cell>
+      <text-dots>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
+      <svn|14301>
+    </cell>|<\cell>
+      discarded
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      CMake: make it work for /opt/homebrew
     </cell>>|<row|<\cell>
       <svn|14302>
     </cell>|<\cell>
