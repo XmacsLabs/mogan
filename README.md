@@ -11,7 +11,7 @@ Mogan is a structured STEM suite, and it is libre software delivered by [Xmacs L
 ## How to install
 + Download now via [Installation Guide](docs/zh/guide/Install.md)
 + Try online：
-  + [Mogan Research nightly](https://xmacslabs.github.io/mogan/research.html)
+  + [Mogan Research nightly](https://research.mogan.app)
 
 ## Getting Started
 + Visit [https://texmacs.org](https://texmacs.org) and [https://mogan.app](https://mogan.app)

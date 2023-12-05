@@ -11,7 +11,7 @@
 ## 如何安装
 + 马上下载：[安装指南](docs/zh/guide/Install.md)
 + 在线试用：
-  + [墨砚日更版](https://xmacslabs.github.io/mogan/research.html)
+  + [墨砚日更版](https://research.mogan.app)
 
 ## 如何入门
 + 访问官网：[https://texmacs.org](https://texmacs.org) 和 [https://mogan.app](https://mogan.app)

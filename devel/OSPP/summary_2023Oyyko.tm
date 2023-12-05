@@ -179,7 +179,7 @@
 
   \<#8BBE\>\<#8BA1\>\<#4E86\>\<#4EE3\>\<#7801\>\<#590D\>\<#7528\>\<#FF0C\>\<#4F7F\>\<#7528\>mogan\<#7684\>\<#4E3B\>\<#4EE3\>\<#7801\>\<#540C\>\<#65F6\>\<#652F\>\<#6301\>draw\<#548C\>research\<#4E24\>\<#4E2A\>\<#8F6F\>\<#4EF6\>\<#3002\>
 
-  \<#6700\>\<#7EC8\>\<#53EF\>\<#7528\>\<#7684\>Mogan\<#7684\>Wasm\<#7248\>\<#672C\>\<#53EF\>\<#5728\><hlink|https://xmacslabs.github.io/mogan/research.html|https://xmacslabs.github.io/mogan/research.html>\<#4E2D\>\<#770B\>\<#5230\>\<#3002\>
+  \<#6700\>\<#7EC8\>\<#53EF\>\<#7528\>\<#7684\>Mogan\<#7684\>Wasm\<#7248\>\<#672C\>\<#53EF\>\<#5728\><hlink|https://research.mogan.app|https://xmacslabs.github.io/mogan/research.html>\<#4E2D\>\<#770B\>\<#5230\>\<#3002\>
 
   <subsubsection|\<#5355\>\<#5143\>\<#6D4B\>\<#8BD5\>>
 
