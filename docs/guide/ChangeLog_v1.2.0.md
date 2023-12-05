@@ -14,19 +14,19 @@ Compared with GNU TeXmacs 2.1.2:
 + OSPP Project `Editable PDF`:
   + 新增导出PDF并将tm文档作为附件嵌入的功能
   + 可以直接使用墨干打开带有tm文档附件的PDF文档
-+ 新增墨客星球社区文档入口：帮助->墨客星球
++ New menu entry for the community: Help->Planet
 + Upgrade to Qt 6.5.3
-+ 采用S7 Scheme作为底层的Scheme脚本引擎以改进性能
-+ 采用KDE社区Breeze图标以美化用户界面
++ Adopt S7 Scheme as the Scheme engine to improve performance
++ Adopt KDE Breeze icons to beautify the UI
 + 在Windows和macOS修复大量失效或者和系统冲突的快捷键
 + 大量用户界面的细节改进：比如显示可用快捷键、调整界面翻译等等
 + 若干中文排版的重要改进：比如中英文之间自动插入很小的间隔等等
 + 若干字体相关重要改进：比如设置Linux平台默认中文字体等等
-+ 修复若干参考文献相关的错误
++ Fix several bugs for Biliography and Table
 + 调整若干默认配置项，改善用户体验
 + 修复若干导致墨干直接崩溃或者卡死的错误
-+ 按照Linux/macOS/Windows的规范调整TEXMACS_HOME_PATH的路径
-+ 移除内置文档，直接加载最新的GNU TeXmacs官方文档
++ Adjust the path of TEXMACS_HOME_PATH on Linux/macOS/Windows
++ Remove the built-in docs, load the latest GNU TeXmacs online docs
 + 实验功能：Mogan Research已经通过WASM从桌面软件变成浏览器可直接访问的应用
 
 ## Know Issues
@@ -46,11 +46,11 @@ v1.2.1将于2024/01/01发布，以解决以上问题。
 + User Interface (Project 69，71)
   + Add menu entries to copy and paste in the context menu
   + 修复数学模式下`插入->高次方根式`失效的问题
-  + 在界面和代码中使用macOS而不是Mac OS
+  + Use the term `macOS` instead of `Mac OS`
   + 退出墨干的弹出窗口中，开启对于Cancel的翻译
   + 在模式工具栏中，直接使用语言而不是国旗显示当前的文档语言
 + Editing (Project 20, 59, 71)
-  + 显示模式工具栏中下拉菜单中的快捷键
+  + Show shortcuts in the pull down menu of the focus toolbar
   + 显示模式工具栏中标号、折叠等图标的快捷键
   + 修复`插入->数学->多行公式`的快捷键提示
   + 新增用于删除一个单词`(kill-word)`的Emacs风格快捷键
@@ -66,17 +66,13 @@ v1.2.1将于2024/01/01发布，以解决以上问题。
 + Bibliography (Project 12，63)
   + 修复参考文献生成若干格式错误
   + 改进参考文件引用编号的合并
-+ Table (Project 52)
-  + 修复子表格宽度设置无效的问题
-+ Beamer (Project 6)
-  + 内置GNU TeXmacs官网的幻灯片主题资源，避免下载时间过长的问题
 + Preferences (Project 10)
   + `通用->显示询问`调整为`通过弹出窗口`
   + `其它->执行文档更新`调整为`三次`
   + 进入绘图模式（插入绘图区域或者在当前位置绘制）默认显示网格，可使用快捷键`#`切换
   + 绘图模式的网格默认单位长度从1调整为2
   + 默认开启`转换->PDF->展开幻灯片中的可折叠对象`
-+ 稳定性 (Project 7)
++ Stability (Project 7)
   + 修复内存少量泄露的问题
   + 修复将比较大的数转换为罗马数字崩溃的问题
   + 修复版本工具中使用粗粒度做文档比较崩溃的问题
