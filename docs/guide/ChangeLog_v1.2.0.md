@@ -46,7 +46,6 @@ v1.2.1 will be released on 2024/01/01 to solve the above issues.
   + Add menu entries to copy and paste in the context menu
   + 修复数学模式下`插入->高次方根式`失效的问题
   + Use the term `macOS` instead of `Mac OS`
-  + 退出墨干的弹出窗口中，开启对于Cancel的翻译
   + 在模式工具栏中，直接使用语言而不是国旗显示当前的文档语言
 + Keyboard (Project 20, 59, 71)
   + Show shortcuts in the pull down menu of the focus toolbar
