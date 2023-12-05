@@ -1,0 +1,96 @@
+# Mogan STEM Suite v1.2.0
+Since v1.2.0, Mogan Editor has been renamed to Mogan STEM Suite.
+
+Mogan STEM Suite v1.2.0:
++ Mogan Research v1.2.0
+
+Mogan Research is the only product in Mogan STEM Suite for now. And Mogan Code and Mogan Beamer will be released.
+
+## Major Changes
+Compared with GNU TeXmacs 2.1.2:
++ OSPP Project `Mogan Draw on wasm`:
+  + Improved the user experiences
+  + Make it work via wasm in web browsers
++ OSPP Project `Editable PDF`:
+  + 新增导出PDF并将tm文档作为附件嵌入的功能
+  + 可以直接使用墨干打开带有tm文档附件的PDF文档
++ 新增墨客星球社区文档入口：帮助->墨客星球
++ 升级到Qt 6.5.3
++ 采用S7 Scheme作为底层的Scheme脚本引擎以改进性能
++ 采用KDE社区Breeze图标以美化用户界面
++ 在Windows和macOS修复大量失效或者和系统冲突的快捷键
++ 大量用户界面的细节改进：比如显示可用快捷键、调整界面翻译等等
++ 若干中文排版的重要改进：比如中英文之间自动插入很小的间隔等等
++ 若干字体相关重要改进：比如设置Linux平台默认中文字体等等
++ 修复若干参考文献相关的错误
++ 调整若干默认配置项，改善用户体验
++ 修复若干导致墨干直接崩溃或者卡死的错误
++ 按照Linux/macOS/Windows的规范调整TEXMACS_HOME_PATH的路径
++ 移除内置文档，直接加载最新的GNU TeXmacs官方文档
++ 实验功能：Mogan Research已经通过WASM从桌面软件变成浏览器可直接访问的应用
+
+## Know Issues
++ 点击`工具->键盘->编辑键盘快捷键`会崩溃
++ 安装之后初次启动由于需要加载系统所有字体比较慢
++ 菜单中仍旧有部分没有翻译为中文
+
+v1.2.1将于2024/01/01发布，以解决以上问题。
+
+## Changes in detail for end users
++ 开源之夏：绘图工具（项目23，27，50）
+  + 新增绘制`椭圆`和`扇形`的功能，焦点工具栏没有配置相关图标，可以使用`插入`菜单插入
+  + 画圆的方式从三点画圆改为两点画圆
+  + 复制粘贴一个绘图对象时，新对象会在原对象的位置上少量偏移，避免重合
+  + 按下Shift再单击，效果等同于右键，方便不使用鼠标只使用触摸板的场合下绘图
+  + 旋转或者放缩时，将鼠标变成小手的形状
++ 用户界面 (项目69，71)
+  + 在右键菜单中添加了复制和粘贴的快捷方式
+  + 修复数学模式下`插入->高次方根式`失效的问题
+  + 幻灯片模式下，不翻译主题下拉菜单中的主题名
+  + 不翻译`调试`中的各种调试选项，比如`auto`，`keyboard`
+  + 不翻译`版本->对比`中的菜单项
+  + 在界面和代码中使用macOS而不是Mac OS
+  + 退出墨干的弹出窗口中，开启对于Cancel的翻译
+  + 在模式工具栏中，直接使用语言而不是国旗显示当前的文档语言
++ 快捷键（项目20, 59, 71）
+  + 显示模式工具栏中下拉菜单中的快捷键
+  + 显示模式工具栏中标号、折叠等图标的快捷键
+  + 修复`插入->数学->多行公式`的快捷键提示
+  + 新增用于删除一个单词`(kill-word)`的Emacs风格快捷键
+  + 新增`std V`（`Ctrl+Shift+v`或者`Command+Shift+v`）用于粘贴纯文本
+  + 幻灯片模式下，交换`下一个`和`下一屏`的快捷键，方便使用翻页笔展开当前屏幕的折叠内容
+  + 文本模式下，将下上标、下标、上划线、下划线的快捷键调整为Tab循环风格的快捷键
+  + 文本模式下，将列表的快捷键`Option+e`和`Option+i`改为Markdown风格的快捷键，避免和macOS系统快捷键冲突
+  + Windows平台下，`编辑`菜单中的复制、粘贴、剪切的快捷键提示改为`C-c`，`C-v`, `C-x`
+  + Linux和Windows平台下，Emacs风格的meta从Windows键调整为Alt，避免和系统快捷键冲突
+  + macOS快捷键风格中，结构化插入的快捷键前缀从Ctrl改为Option，避免和macOS系统快捷键冲突
+  + macOS快捷键风格中，将`cmd`键从`Ctrl`改为`Option`，比如`插入->节`从`Ctrl+1`变为`Option+1`
+  + macOS快捷键风格中，将插入符号的快捷键从`Ctrl+q`改为`Option+q`，避免Qt 6无法识别`Ctrl+q`的问题
++ 参考文献（项目12，63）
+  + 修复参考文献生成若干格式错误
+  + 改进参考文件引用编号的合并
++ 表格（项目52）
+  + 修复子表格宽度设置无效的问题
++ 幻灯片（项目6）
+  + 内置GNU TeXmacs官网的幻灯片主题资源，避免下载时间过长的问题
++ 用户首选项（项目10）
+  + `通用->显示询问`调整为`通过弹出窗口`
+  + `其它->执行文档更新`调整为`三次`
+  + 进入绘图模式（插入绘图区域或者在当前位置绘制）默认显示网格，可使用快捷键`#`切换
+  + 绘图模式的网格默认单位长度从1调整为2
+  + 默认开启`转换->PDF->展开幻灯片中的可折叠对象`
++ 稳定性（项目7）
+  + 修复内存少量泄露的问题
+  + 修复将比较大的数转换为罗马数字崩溃的问题
+  + 修复版本工具中使用粗粒度做文档比较崩溃的问题
+  + Linux平台下，修复错误的环境变量LC_PAPER导致崩溃的问题
+
+## Changes for Developers
++ 使用xmake 2.8.5作为构建工具，并配置了Ubuntu/macOS/Windows三个平台的CI和CD
++ 在Git仓库的devel目录下使用tm文档做项目管理，确立了Git提交信息的规范
++ 在`开发者`菜单中可以直接点击查看当前版本的项目管理，也可以直接打开错误模版和特性模版
++ Windows平台下，使用msvc而不是mingw来构建整个软件
++ HTML和LaTeX的导入导出、各种界面语言的翻译词典、编程语言的高亮初步插件化
++ TeXmacs的基础代码重构为Lolly项目作为Mogan的依赖
++ 在Lolly项目中引入tbox依赖解决棘手的字符编码以及跨平台的文件访问等问题
+
