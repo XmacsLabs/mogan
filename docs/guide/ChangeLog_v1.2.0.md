@@ -18,28 +18,27 @@ Compared with GNU TeXmacs 2.1.2:
 + Upgrade to Qt 6.5.3
 + Adopt S7 Scheme as the Scheme engine to improve performance
 + Adopt KDE Breeze icons to beautify the UI
-+ 在Windows和macOS修复大量失效或者和系统冲突的快捷键
++ Fixed many shortcuts on Windows and macOS
 + 大量用户界面的细节改进：比如显示可用快捷键、调整界面翻译等等
 + 若干中文排版的重要改进：比如中英文之间自动插入很小的间隔等等
 + 若干字体相关重要改进：比如设置Linux平台默认中文字体等等
-+ Fix several bugs for Biliography and Table
++ Several improvements for Biliography and Table
 + 调整若干默认配置项，改善用户体验
 + 修复若干导致墨干直接崩溃或者卡死的错误
 + Adjust the path of TEXMACS_HOME_PATH on Linux/macOS/Windows
 + Remove the built-in docs, load the latest GNU TeXmacs online docs
-+ 实验功能：Mogan Research已经通过WASM从桌面软件变成浏览器可直接访问的应用
++ Experimental brower-based Mogan Research on wasm
 
 ## Know Issues
 + 点击`工具->键盘->编辑键盘快捷键`会崩溃
 + 安装之后初次启动由于需要加载系统所有字体比较慢
-+ 菜单中仍旧有部分没有翻译为中文
 
 v1.2.1将于2024/01/01发布，以解决以上问题。
 
 ## Changes in detail for end users
 + OSPP：Mogan Draw on wasm (Project 23，27，50)
   + 新增绘制`椭圆`和`扇形`的功能，焦点工具栏没有配置相关图标，可以使用`插入`菜单插入
-  + 画圆的方式从三点画圆改为两点画圆
+  + Draw the circle via two points but not three points
   + 复制粘贴一个绘图对象时，新对象会在原对象的位置上少量偏移，避免重合
   + 按下Shift再单击，效果等同于右键，方便不使用鼠标只使用触摸板的场合下绘图
   + 旋转或者放缩时，将鼠标变成小手的形状
