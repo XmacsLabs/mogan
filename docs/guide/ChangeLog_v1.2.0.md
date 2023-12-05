@@ -4,7 +4,7 @@ Since v1.2.0, Mogan Editor has been renamed to Mogan STEM Suite.
 Mogan STEM Suite v1.2.0:
 + Mogan Research v1.2.0
 
-Mogan Research is the only product in Mogan STEM Suite for now. And Mogan Code and Mogan Beamer will be released.
+Mogan Research is the only product in Mogan STEM Suite for now. Mogan Code and Mogan Beamer will be released later.
 
 ## Major Changes
 Compared with GNU TeXmacs 2.1.2:
@@ -44,23 +44,23 @@ v1.2.1 will be released on 2024/01/01 to solve the above issues.
   + 旋转或者放缩时，将鼠标变成小手的形状
 + User Interface (Project 69，71)
   + Add menu entries to copy and paste in the context menu
-  + 修复数学模式下`插入->高次方根式`失效的问题
+  + Fix `Insert->N-th root`
   + Use the term `macOS` instead of `Mac OS`
-  + 在模式工具栏中，直接使用语言而不是国旗显示当前的文档语言
+  + Use the language name instead of the national flag in the focus toolbar
 + Keyboard (Project 20, 59, 71)
   + Show shortcuts in the pull down menu of the focus toolbar
   + 显示模式工具栏中标号、折叠等图标的快捷键
   + 修复`插入->数学->多行公式`的快捷键提示
-  + 新增用于删除一个单词`(kill-word)`的Emacs风格快捷键
+  + New shortcut for `(kill-word)` in Emacs style shortcuts
   + New shortcut `std V`（`Ctrl+Shift+v` or `Command+Shift+v`）to paste verbatim
   + 幻灯片模式下，交换`下一个`和`下一屏`的快捷键，方便使用翻页笔展开当前屏幕的折叠内容
   + 文本模式下，将下上标、下标、上划线、下划线的快捷键调整为Tab循环风格的快捷键
   + 文本模式下，将列表的快捷键`Option+e`和`Option+i`改为Markdown风格的快捷键，避免和macOS系统快捷键冲突
-  + Windows平台下，`编辑`菜单中的复制、粘贴、剪切的快捷键提示改为`C-c`，`C-v`, `C-x`
-  + Linux和Windows平台下，Emacs风格的meta从Windows键调整为Alt，避免和系统快捷键冲突
-  + macOS快捷键风格中，结构化插入的快捷键前缀从Ctrl改为Option，避免和macOS系统快捷键冲突
-  + macOS快捷键风格中，将`cmd`键从`Ctrl`改为`Option`，比如`插入->节`从`Ctrl+1`变为`Option+1`
-  + macOS快捷键风格中，将插入符号的快捷键从`Ctrl+q`改为`Option+q`，避免Qt 6无法识别`Ctrl+q`的问题
+  + On Windows，use `C-c`, `C-v` and `C-x` for Copy, Paste, Cut in the Edit menu
+  + On Windws and Linux, switch `meta` key from the `Win`` to `Alt`
+  + In macOS style shortcuts，结构化插入的快捷键前缀从Ctrl改为Option，避免和macOS系统快捷键冲突
+  + In macOS style shortcuts，将`cmd`键从`Ctrl`改为`Option`，比如`插入->节`从`Ctrl+1`变为`Option+1`
+  + In macOS style shortcuts，将插入符号的快捷键从`Ctrl+q`改为`Option+q`，避免Qt 6无法识别`Ctrl+q`的问题
 + Preferences (Project 10)
   + `通用->显示询问`调整为`通过弹出窗口`
   + `其它->执行文档更新`调整为`三次`
