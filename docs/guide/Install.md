@@ -1,17 +1,34 @@
 # Installation Guide
-## Official Packages
+The latest stable version is Mogan STEM Suite v1.2.0.
 
-| Operating System | Download | MD5 Checksum|
-|-------|-----|--------|
-| Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0-64bit-installer.exe) | f34dd47aecf9a47fad7c4b27529ef8b4 |
-| macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0.dmg) | cb0e449ae95832c62dac7a16e4fecb9e |
-| macOS arm (>=13) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0-arm.dmg) | 0875c9f252ddacacc4b82df0f341f157 |
-| Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/mogan-research-v1.2.0-ubuntu22.04.deb) | c3357688696d060ab451de27bf9364bf |
+## Know Issues of v1.2.0
++ Issue: No desktop shortcut created by the Windows installer
+  - Solution: Find `C:/Program Files/MoganResearch/bin/MGResearch.exe` and then launch Mogan Research or create the desktop shortcut by yourself
++ Issue: Crash on clicking `Edit->Keyboard->Edit keyboard shortcuts`
+  - Solution: wait for v1.2.1 and do not click it
++ Issue: Too slow to open Mogan Research v1.2.0 for the first installation
+  - Solution: wait for v1.2.1 and be patient
+
+Mogan STEM Suite v1.2.1 will be released around 2024/01/01.
+
+## Official Packages
+| Product | Operating System | Download | MD5 Checksum|
+|---------|-------|-----|--------|
+| Mogan Research v1.2.0 | Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0-64bit-installer.exe) | f34dd47aecf9a47fad7c4b27529ef8b4 |
+| Mogan Research v1.2.0 | macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0.dmg) | cb0e449ae95832c62dac7a16e4fecb9e |
+| Mogan Research v1.2.0 | macOS M1/M2 (>=13) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0-arm.dmg) | 0875c9f252ddacacc4b82df0f341f157 |
+| Mogan Research v1.2.0 | Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/mogan-research-v1.2.0-ubuntu22.04.deb) | c3357688696d060ab451de27bf9364bf |
+
+Mogan STEM Suite:
++ **Mogan Research** (installers on Windows/macOS/Ubuntu)
++ Mogan Code (no installer, still in development)
++ Mogan Beamer (no installer, still in development)
+
 
 Other sites to download：
-+ https://codeberg.org/XmacsLabs/mogan/releases
-+ https://gitee.com/XmacsLabs/mogan/releases
 + https://github.com/XmacsLabs/mogan/releases
++ https://gitee.com/XmacsLabs/mogan/releases
++ https://codeberg.org/XmacsLabs/mogan/releases
 
 Old releases:
 + [v1.1.6 (2023/09/29)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.5)
