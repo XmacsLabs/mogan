@@ -87,7 +87,7 @@ end
 
 
 function add_target_research_on_others()
-    set_basename("MGResearch")
+    set_basename("MoganResearch")
 
     if is_plat("windows") then
         set_optimize("smallest")

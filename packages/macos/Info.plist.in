@@ -26,7 +26,7 @@
       </dict>
     </array>
     <key>CFBundleExecutable</key>
-    <string>MGResearch</string>
+    <string>MoganResearch</string>
     <key>CFBundleIconFile</key>
     <string>new-mogan</string>
     <key>CFBundleIdentifier</key>

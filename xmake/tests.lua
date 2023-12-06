@@ -69,7 +69,7 @@ function add_target_scheme_test(filepath, INSTALL_DIR, RUN_ENVS)
             if is_plat("macosx", "linux") then
                 binary = target:deps()["research"]:targetfile()
             elseif is_plat("mingw", "windows") then
-                binary = path.join(INSTALL_DIR,"bin","MGResearch.exe")
+                binary = path.join(INSTALL_DIR,"bin","MoganResearch.exe")
             else
                 print("Unsupported plat $(plat)")
             end
@@ -104,7 +104,7 @@ function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
             if is_plat("macosx", "linux") then
                 binary = target:deps()["research"]:targetfile()
             elseif is_plat("mingw", "windows") then
-                binary = path.join(INSTALL_DIR,"bin","MGResearch.exe")
+                binary = path.join(INSTALL_DIR,"bin","MoganResearch.exe")
             else
                 print("Unsupported plat $(plat)")
             end
