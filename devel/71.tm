@@ -7,9 +7,16 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|3|6|2|2|cell-background|pastel
-  green>|<cwith|8|15|2|2|cell-background|pastel
-  green>|<table|<row|<cell|Chore>|<cell|71_15>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Search
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|7|10|2|2|cell-background|pastel
+  green>|<cwith|12|19|2|2|cell-background|pastel
+  green>|<cwith|6|6|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Chore>|<cell|71_19>|<cell|v1.2.1>|<cell|Darcy>|<cell|Better
+  icons and tooltip for preferences and render options of
+  tag>>|<row|<cell|Chore>|<cell|71_18>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Better
+  icons for content tags in the mode tool
+  bar>>|<row|<cell|Chore>|<cell|71_17>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Append
+  host for buffer names in the Go menu>>|<row|<cell|Chore>|<cell|71_16>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Add
+  a group name for debug options>>|<row|<cell|Chore>|<cell|71_15>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Search
   in Directory>>|<row|<cell|Chore>|<cell|71_14>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Append
   host for remote files in menu entries>>|<row|<cell|Chore>|<cell|71_13>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Use
   TeXmacs instead of Texmacs in the style
