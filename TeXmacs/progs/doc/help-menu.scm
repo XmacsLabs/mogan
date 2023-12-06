@@ -35,7 +35,7 @@
   (-> "Plugins"
       (link help-plugins-menu))
   ---
-  (group "GNU TeXmacs online docs")
+  (group "TeXmacs online docs")
   (if (detailed-menus?)
 	  (-> "Configuration"
 	      ("Browse" (load-remote-doc "main/config/man-configuration"))

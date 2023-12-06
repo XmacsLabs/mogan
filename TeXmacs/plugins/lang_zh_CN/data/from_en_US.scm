@@ -2,6 +2,7 @@
 ("(re)build autocompletion index" "构建/重建自动补全索引")
 ("GNU TeXmacs comes without any form of legal warranty" "GNU TeXmacs 无任何形式的法律保证")
 ("GNU TeXmacs falls under the GNU general public license" "GNU TeXmacs 使用 GNU 通用公共许可授权")
+("TeXmacs online docs" "TeXmacs在线文档")
 ("GNU FDL" "GNU自由文档许可证")
 ("Slovak" "斯洛伐克语")
 ("Slovenian" "斯洛维尼亚语")
