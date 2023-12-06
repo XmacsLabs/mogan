@@ -14,6 +14,7 @@
 (texmacs-module (texmacs menus file-menu)
   (:use
     (utils library cursor)
+    (network url)
     (texmacs texmacs tm-server)
     (texmacs texmacs tm-files)
     (texmacs menus print-widgets)))
@@ -69,10 +70,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (short-menu-name u)
-  (if (not (url-rooted-tmfs? u))
-      ;;(string-append (url->system (url-tail u)) " [" (url->system u) "]")
-      (url->system (url-tail u))
-      (tmfs-title u `(document ""))))
+  (cond ((url-rooted-tmfs? u) (tmfs-title u `(document "")))
+        ((url-rooted-web? u)
+         (string-append (url->system (url-tail u))
+                        " @ " (url-host u)))
+        (else (url->system (url-tail u)))))
 
 (define (long-menu-name u)
   (url->system u))
