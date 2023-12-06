@@ -23,21 +23,44 @@
   <section|Started Projects>
 
   <\wide-tabular>
-    <tformat|<table|<row|<cell|<dlink|22>>|<cell|Darcy>|<cell|Chinese
-    Dictionary>>>>
+    <tformat|<cwith|4|4|1|1|cell-valign|b>|<table|<row|<\cell>
+      <dlink|73>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Improvements on packagers
+    </cell>>|<row|<\cell>
+      <dlink|44>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Versioning as plugin
+    </cell>>|<row|<\cell>
+      <dlink|22>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Chinese Dictionary
+    </cell>>|<row|<\cell>
+      <dlink|5>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Documentation in markdown format for users and developers
+    </cell>>>>
   </wide-tabular>
 
   <section|Unstarted Projects from <dlink|release_1.2.0>>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|<dlink|33>>|<cell|>|<cell|Spell
-  checking as a plugin>>|<row|<cell|<dlink|38>>|<cell|Darcy>|<cell|Image
-  formats as plugins>>|<row|<cell|<dlink|44>>|<cell|>|<cell|Versioning as
-  plugin>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|1|1|cell-width|40pt>|<cwith|1|-1|1|1|cell-hmode|exact>|<cwith|3|3|1|1|cell-width|>|<cwith|3|3|1|1|cell-hmode|exact>|<cwith|1|1|1|1|cell-width|>|<cwith|1|1|1|1|cell-hmode|auto>|<table|<row|<cell|<dlink|33>>|<cell|Spell
+  checking as a plugin>>|<row|<cell|<dlink|38>>|<cell|Image formats as
+  plugins>>|<row|<cell|<dlink|44>>|<cell|Versioning as plugin>>>>>
 
   <section|Unfinished Projects from <dlink|release_1.2.0>>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|10|10|1|1|cell-valign|c>|<cwith|22|22|1|1|cell-valign|b>|<cwith|19|19|1|1|cell-background|pastel
-  red>|<cwith|18|18|1|1|cell-background|>|<table|<row|<cell|<dlink|71>>|<cell|<value|da>>|<cell|Improvements
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|11|11|1|1|cell-valign|c>|<cwith|23|23|1|1|cell-valign|b>|<cwith|20|20|1|1|cell-background|pastel
+  red>|<cwith|19|19|1|1|cell-background|>|<table|<row|<cell|<dlink|72>>|<cell|<value|da>>|<cell|Improvements
+  on sessions>>|<row|<cell|<dlink|71>>|<cell|<value|da>>|<cell|Improvements
   on User Interface>>|<row|<cell|<dlink|70>>|<cell|<value|da>>|<cell|Syntax
   Highlight on programming languages>>|<row|<cell|<dlink|68>>|<cell|<value|da>>|<cell|Improvements
   on PDF image and conversion>>|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
