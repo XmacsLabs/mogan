@@ -9,7 +9,25 @@
 
   <tmdoc-title|Mogan Research 1.2.1>
 
-  <section|New Projects>
+  The goals of Mogan Research v1.2.1:
+
+  <\itemize>
+    <item>Theme as plugins
+
+    <item>Finish several unfinished projects from release 1.2.0 and improve
+    the user experience
+
+    <item>Port revisions between GNU <TeXmacs> 2.1.2 and 2.1.3
+  </itemize>
+
+  <section|Started Projects>
+
+  <\wide-tabular>
+    <tformat|<table|<row|<cell|<dlink|22>>|<cell|Darcy>|<cell|Chinese
+    Dictionary>>>>
+  </wide-tabular>
+
+  <section|Unstarted Projects from <dlink|release_1.2.0>>
 
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|<dlink|33>>|<cell|>|<cell|Spell
   checking as a plugin>>|<row|<cell|<dlink|38>>|<cell|Darcy>|<cell|Image
@@ -43,7 +61,7 @@
   related issues>>|<row|<cell|<dlink|5>>|<cell|Darcy>|<cell|Documentation in
   markdown format for users and developers>>>>>
 
-  <section|<TeXmacs> v2.1.2 port>
+  <section|Revisions between GNU <TeXmacs> v2.1.2 and v2.1.3>
 
   <\wide-tabular>
     <tformat|<cwith|2|2|2|2|cell-background|<pattern|C:\\Users\\jingkaimori\\Documents\\Source\\mogan\\build\\packages\\app.mogan\\data\\misc\\patterns\\vintage\\granite-medium.png||>>|<cwith|3|3|2|2|cell-background|pastel
