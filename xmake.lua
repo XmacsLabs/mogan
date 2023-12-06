@@ -201,7 +201,7 @@ local INSTALL_DIR = "$(buildir)"
 if is_plat("mingw", "windows") then 
     INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/data/")
 elseif is_plat("macosx") then 
-    INSTALL_DIR = path.join("$(buildir)", "macosx/$(arch)/$(mode)/MGResearch.app/Contents/Resources/")
+    INSTALL_DIR = path.join("$(buildir)", "macosx/$(arch)/$(mode)/MoganResearch.app/Contents/Resources/")
 else 
     if os.getenv("INSTALL_DIR") == nil then 
       INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/")
@@ -495,7 +495,7 @@ target("research") do
         on_run(function (target)
             name = target:name()
             if is_plat("mingw", "windows") then
-                os.execv(target:installdir().."/bin/MGResearch.exe")
+                os.execv(target:installdir().."/bin/MoganResearch.exe")
             elseif is_plat("linux", "macosx") then
                 print("Launching " .. target:targetfile())
                 os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
