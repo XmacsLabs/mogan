@@ -341,7 +341,12 @@ compute_style_menu (url u, int kind) {
       compute_style_menu (u[2], kind);
   }
   if (is_concat (u)) {
-    string dir= upcase_first (as_string (u[1]));
+    string dir= as_string (u[1]);
+    if (dir == "texmacs") {
+      dir= "TeXmacs";
+    } else {
+      dir= upcase_first (dir);
+    }
     string sub= compute_style_menu (u[2], kind);
     if (ignore_dir (dir) || dir == "CVS" || dir == ".svn") return "";
     return "(-> \"" * dir * "\" " * sub * ")";
