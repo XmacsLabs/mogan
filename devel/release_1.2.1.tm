@@ -23,12 +23,18 @@
   <section|Started Projects>
 
   <\wide-tabular>
-    <tformat|<cwith|4|4|1|1|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|5|5|1|1|cell-valign|b>|<table|<row|<\cell>
       <dlink|73>
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
       Improvements on packagers
+    </cell>>|<row|<\cell>
+      <dlink|71>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Improvements on User Interface
     </cell>>|<row|<\cell>
       <dlink|44>
     </cell>|<\cell>
