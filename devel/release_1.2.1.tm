@@ -12,18 +12,19 @@
   The goals of Mogan Research v1.2.1:
 
   <\itemize>
-    <item>Theme as plugins
+    <item>Improve the <LaTeX> converter as a plugin
 
-    <item>Finish several unfinished projects from release 1.2.0 and improve
-    the user experience
+    <item>Improve the Chinese dictionary
 
-    <item>Port revisions between GNU <TeXmacs> 2.1.2 and 2.1.3
+    <item>Improve the Windows installer
+
+    <item>Re-add the packager for UOS
   </itemize>
 
   <section|Started Projects>
 
   <\wide-tabular>
-    <tformat|<cwith|5|5|1|1|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|6|6|1|1|cell-valign|b>|<table|<row|<\cell>
       <dlink|73>
     </cell>|<\cell>
       <value|da>
@@ -41,7 +42,8 @@
       <value|da>
     </cell>|<\cell>
       Versioning as plugin
-    </cell>>|<row|<\cell>
+    </cell>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|<LaTeX> converter as a
+    plugin>>|<row|<\cell>
       <dlink|22>
     </cell>|<\cell>
       Darcy
