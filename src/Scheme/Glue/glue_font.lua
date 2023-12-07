@@ -425,6 +425,11 @@ function main()
                     "url"
                 }
             },
+            {
+                scm_name = "freetype-version",
+                cpp_name = "freetype_version",
+                ret_type = "string",
+            },
         }
     }
 end
