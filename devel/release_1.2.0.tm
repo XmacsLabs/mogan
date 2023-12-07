@@ -9,25 +9,26 @@
 
   <tmdoc-title|Mogan Research 1.2.0>
 
-  We started 68 projects and finished 46 projects. The 22 started but not
-  finished projects has been moved to <dlink|release_1.2.1>.
+  We started 69 projects and finished 46 projects. There are 23 started but
+  not finished projects which has been moved to <dlink|release_1.2.1>.
 
   <section|Mogan Editor v1.2.0>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|34|34|3|3|cell-valign|b>|<cwith|35|35|1|1|cell-valign|b>|<cwith|12|12|2|2|cell-valign|c>|<cwith|6|6|2|2|cell-valign|c>|<cwith|32|32|1|1|cell-background|pastel
-  green>|<cwith|33|33|1|1|cell-background|pastel
-  green>|<cwith|31|31|1|1|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|35|35|3|3|cell-valign|b>|<cwith|36|36|1|1|cell-valign|b>|<cwith|13|13|2|2|cell-valign|c>|<cwith|7|7|2|2|cell-valign|c>|<cwith|33|33|1|1|cell-background|pastel
   green>|<cwith|34|34|1|1|cell-background|pastel
-  green>|<cwith|28|28|1|1|cell-background|>|<cwith|27|27|1|1|cell-background|>|<cwith|26|26|1|1|cell-background|pastel
-  green>|<cwith|24|24|1|1|cell-background|pastel
+  green>|<cwith|32|32|1|1|cell-background|pastel
+  green>|<cwith|35|35|1|1|cell-background|pastel
+  green>|<cwith|29|29|1|1|cell-background|>|<cwith|28|28|1|1|cell-background|>|<cwith|27|27|1|1|cell-background|pastel
+  green>|<cwith|25|25|1|1|cell-background|pastel
+  green>|<cwith|19|19|1|1|cell-background|pastel
   green>|<cwith|18|18|1|1|cell-background|pastel
-  green>|<cwith|17|17|1|1|cell-background|pastel
-  green>|<cwith|15|15|1|1|cell-valign|c>|<cwith|13|13|1|1|cell-background|pastel
-  green>|<cwith|12|12|1|1|cell-background|pastel
+  green>|<cwith|16|16|1|1|cell-valign|c>|<cwith|14|14|1|1|cell-background|pastel
+  green>|<cwith|13|13|1|1|cell-background|pastel
+  green>|<cwith|8|8|1|1|cell-background|pastel
   green>|<cwith|7|7|1|1|cell-background|pastel
-  green>|<cwith|6|6|1|1|cell-background|pastel
-  green>|<cwith|3|3|1|1|cell-background|pastel
-  green>|<table|<row|<cell|<dlink|71>>|<cell|<value|da>>|<cell|Improvements
+  green>|<cwith|4|4|1|1|cell-background|pastel
+  green>|<table|<row|<cell|<dlink|72>>|<cell|<value|da>>|<cell|Improvements
+  on sessions>>|<row|<cell|<dlink|71>>|<cell|<value|da>>|<cell|Improvements
   on User Interface>>|<row|<cell|<dlink|70>>|<cell|<value|da>>|<cell|Syntax
   Highlight on programming languages>>|<row|<cell|<dlink|69>>|<cell|<value|da>>|<cell|Improvements
   for Chinese users in 1.2.0>>|<row|<cell|<dlink|68>>|<cell|<value|da>>|<cell|Improvements
