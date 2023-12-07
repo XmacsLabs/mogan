@@ -103,7 +103,8 @@ load_translator (string name) {
   url u ("$TEXMACS_HOME_PATH/fonts/enc:$TEXMACS_PATH/fonts/enc", file_name);
   if (exists (u)) {
     s= string_load (u);
-  } else {
+  }
+  else {
     return load_virtual (name);
   }
 
