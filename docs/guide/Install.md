@@ -6,10 +6,12 @@ The latest stable version is Mogan STEM Suite v1.2.0.
   - Solution: Find `C:/Program Files/MoganResearch/bin/MGResearch.exe` and then launch Mogan Research or create the desktop shortcut by yourself
 + Issue: Crash on clicking `Edit->Keyboard->Edit keyboard shortcuts`
   - Solution: wait for v1.2.1 and do not click it
++ Issue: Crash on `File->Export->LaTeX`
+  - Solution: wait for v1.2.1 or use `Edit->Copy to->LaTeX` instead
 + Issue: Too slow to open Mogan Research v1.2.0 for the first installation
   - Solution: wait for v1.2.1 and be patient
 
-Mogan STEM Suite v1.2.1 will be released around 2024/01/01.
+Mogan STEM Suite v1.2.1 will be released before 2024/01/01.
 
 ## Official Packages
 | Product | Operating System | Download | MD5 Checksum|
