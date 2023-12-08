@@ -316,7 +316,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (tmfs-url-git root which)
-  (string-append "tmfs://git/" which "/" (url->tmfs-string root)))
+  (string->url (string-append "tmfs://git/" which "/" (url->tmfs-string root))))
 
 (tm-define (git-status root)
   (let* ((cmd (string-append (git-command root) " status --porcelain"))
