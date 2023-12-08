@@ -524,7 +524,7 @@
   (:synopsis "Jump to the url @u")
   (:argument opt-from "Optional path for the cursor history")
   (if (nnull? opt-from) (cursor-history-add (car opt-from)))
-  (if (string? u) (set! u (system->url u)))
+  (if (string? u) (set! u (string->url u)))
   (with (action post) (url-handlers u) 
     (action u) (post u))
   (if (nnull? opt-from) (cursor-history-add (cursor-path))))
