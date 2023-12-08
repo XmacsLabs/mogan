@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|british|devel>>
+<style|<tuple|tmdoc|devel|british>>
 
 <\body>
   <\hide-preamble>
@@ -24,7 +24,7 @@
   <section|Started Projects>
 
   <\wide-tabular>
-    <tformat|<cwith|6|6|1|1|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|9|9|1|1|cell-valign|b>|<cwith|8|8|3|3|cell-valign|b>|<cwith|7|7|1|1|cell-background|>|<cwith|8|8|1|1|cell-background|>|<table|<row|<\cell>
       <dlink|73>
     </cell>|<\cell>
       <value|da>
@@ -37,18 +37,41 @@
     </cell>|<\cell>
       Improvements on User Interface
     </cell>>|<row|<\cell>
+      <dlink|59>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Tuning Keyboard Shortcuts
+    </cell>>|<row|<\cell>
       <dlink|44>
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
       Versioning as plugin
-    </cell>>|<row|<cell|<dlink|43>>|<cell|Darcy>|<cell|<LaTeX> converter as a
-    plugin>>|<row|<\cell>
+    </cell>>|<row|<\cell>
+      <dlink|43>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      <LaTeX> converter as a plugin
+    </cell>>|<row|<\cell>
       <dlink|22>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       Chinese Dictionary
+    </cell>>|<row|<\cell>
+      <dlink|11>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Font tuning
+    </cell>>|<row|<\cell>
+      <dlink|7>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Stability Issues
     </cell>>|<row|<\cell>
       <dlink|5>
     </cell>|<\cell>
