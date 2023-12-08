@@ -331,9 +331,9 @@
                        fname
                        ($link full (utf8->cork fname)))))
         (list status file)))
-    (and (> (length ret2) 0)
-         (string-null? (cAr ret2))
-         (map convert (cDr ret2)))))
+    (when (> (length ret2) 0)
+      (map convert
+        (filter (lambda (x) (not (string-null? x))) ret2)))))
 
 (tm-define ($staged-file status file)
   (cond ((string-starts? status "A")
