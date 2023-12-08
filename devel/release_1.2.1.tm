@@ -47,7 +47,7 @@
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
-      Versioning as plugin
+      Versioning as a plugin
     </cell>>|<row|<\cell>
       <dlink|43>
     </cell>|<\cell>
