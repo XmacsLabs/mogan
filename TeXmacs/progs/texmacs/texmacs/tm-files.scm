@@ -471,11 +471,12 @@
 
 (define (load-buffer-check-permissions name opts)
   ;;(display* "load-buffer-check-permissions " name ", " opts "\n")
-  (with vname `(verbatim ,(url->system name))
+  (with path (url->system name)
     (cond ((and (not (url-test? name "f")) (url-exists? name))
-           (with msg `(concat "The file " ,vname
-                              " cannot be loaded or created")
-             (set-message msg "Load file")))
+           (with msg "The file cannot be loaded or created:\n"
+             (begin
+               (debug-message "debug-io" (string-append msg path))
+               (notify-now `(concat ,msg (verbatim ,path))))))
           ((and (url-test? name "f") (not (url-test? name "r")))
            (with msg `(concat "You do not have read access to " ,vname)
              (set-message msg "Load file")))
