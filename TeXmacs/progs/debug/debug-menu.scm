@@ -75,11 +75,8 @@
   (-> "Timings"
       ("All" (bench-print-all)))
   (-> "Memory"
-      ("Memory usage" (show-meminfo))
-      ("Collect garbage" (gc))
-      ---
-      (group "Permanent")
-      ("Show memory usage" (set! footer-hook show-memory-information))
+      ("Show memory usage in the console" (show-meminfo))
+      ("Show memory usage in the footer" (set! footer-hook show-memory-information))
       ("Garbage collection" (delayed (:idle 1000) (gc))))
   (when (debug-get "correct")
     (-> "Mathematics"
