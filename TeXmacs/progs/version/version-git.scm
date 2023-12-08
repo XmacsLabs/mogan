@@ -399,9 +399,9 @@
                NR_LOG_OPTION))
          (ret1 (eval-system cmd))
          (ret2 (string-decompose ret1 "\n\n")))
-    (and (> (length ret2) 0)
-         (string-null? (cAr ret2))
-         (map (cut string->commit-diff root <>) (cDr ret2)))))
+    (when (> (length ret2) 0)
+      (map (lambda (x) (string->commit-diff root x))
+        (filter (lambda (x) (not (string-null? x))) ret2)))))
 
 (tm-define (git-log-content root)
   (with h (git-log root)
