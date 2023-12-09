@@ -28,6 +28,7 @@ local CURL_VERSION = "8.4.0"
 local PDFHUMMUS_VERSION = "4.6.1"
 local FREETYPE_VERSION = "2.12.1"
 local QT6_VERSION = "6.5.3"
+local QTIFW_VERSION = "4.6.0"
 local S7_VERSION = "2023.04.13"
 local LIBPNG_VERSION = "1.6.37"
 local LIBJPEG_VERSION = "v9e"
@@ -68,14 +69,14 @@ function add_requires_of_mogan()
         end
     else
     -- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
-        add_requires("libiconv"..LIBICONV_VERSION, {system=false})
+        add_requires("libiconv "..LIBICONV_VERSION, {system=false})
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
     end
 
     if is_plat("mingw") or is_plat("windows") then
         add_requires("qt6widgets "..QT6_VERSION)
         if is_mode("release") then
-            add_requires("qtifw 4.6.0")
+            add_requires("qtifw "..QTIFW_VERSION)
         end
     end
 
