@@ -163,8 +163,9 @@ function add_target_research_on_others()
     if is_mode("releasedbg") then
         if is_plat("mingw", "windows") then
             add_installfiles({
-                "TeXmacs(/tests/*.tm)",
-                "TeXmacs(/tests/*.bib)",
+                "TeXmacs(/tests/tm/*.tm)",
+                "TeXmacs(/tests/tex/*.tex)",
+                "TeXmacs(/tests/bib/*.bib)",
             })
         else
             add_installfiles({

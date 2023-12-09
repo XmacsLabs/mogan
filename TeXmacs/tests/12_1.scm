@@ -6,7 +6,7 @@
   (regression-test-group
    "get-tag-name" "tag-name"
    get-tag-name utf8->cork 
-   (test "get-tag-name" "$TEXMACS_PATH/tests/12_1.bib" "数理逻辑2010汪芳庭")))
+   (test "get-tag-name" "$TEXMACS_PATH/tests/bib/12_1.bib" "数理逻辑2010汪芳庭")))
 
 (tm-define (test_12_1)
   (let ((n (+ (test-get-tag-name))))
