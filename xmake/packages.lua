@@ -19,12 +19,19 @@
 -- [ ] portage powered
 -- ...
 
+-- The following versions are adopted on macOS/Windows/ArchLinux
+-- We will use the system provided packages on Ubuntu 22.04/Debian 12/...
 local LOLLY_VERSION = "1.3.5"
 local TBOX_VERSION = "1.7.5"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
 local PDFHUMMUS_VERSION = "4.6.1"
 local FREETYPE_VERSION = "2.12.1"
+local QT6_VERSION = "6.5.3"
+local S7_VERSION = "2023.04.13"
+local LIBPNG_VERSION = "1.6.37"
+local LIBJPEG_VERSION = "v9e"
+local LIBICONV_VERSION = "1.17"
 
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
 package("lolly")
@@ -61,12 +68,12 @@ function add_requires_of_mogan()
         end
     else
     -- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
-        add_requires("libiconv 1.17", {system=false})
+        add_requires("libiconv"..LIBICONV_VERSION, {system=false})
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
     end
 
     if is_plat("mingw") or is_plat("windows") then
-        add_requires("qt6widgets 6.5.3")
+        add_requires("qt6widgets "..QT6_VERSION)
         if is_mode("release") then
             add_requires("qtifw 4.6.0")
         end
@@ -87,9 +94,9 @@ function add_requires_of_mogan()
     if not is_plat("wasm") then
         add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
         add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
-        add_requireconfs("pdfhummus.libpng", {version = "1.6.37", system = false, override=true})
-        add_requireconfs("pdfhummus.libjpeg", {version = "v9e", system = false, override=true})
+        add_requireconfs("pdfhummus.libpng", {version = LIBPNG_VERSION, system = false, override=true})
+        add_requireconfs("pdfhummus.libjpeg", {version = LIBJPEG_VERSION, system = false, override=true})
     end
 
-    add_requires("s7 2023.04.13", {system=false})
+    add_requires("s7 "..S7_VERSION, {system=false})
 end
