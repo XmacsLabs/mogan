@@ -1,7 +1,7 @@
 (inherit-modules (texmacs texmacs tm-tools))
 
 (define (test-count-characters)
-  (load-buffer "$TEXMACS_PATH/tests/17_1.tm")
+  (load-buffer "$TEXMACS_PATH/tests/tm/17_1.tm")
   (regression-test-group
    "count-characters" "result"
    count-characters :none
