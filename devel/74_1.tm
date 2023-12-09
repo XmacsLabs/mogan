@@ -3,7 +3,8 @@
 <style|<tuple|tmdoc|chinese|devel>>
 
 <\body>
-  <tmdoc-title|Failed to Insert-\<gtr\>N-th root via menu>
+  <tmdoc-title|Subscript or superscript causes underline and overline to
+  extend>
 
   <section|Bug Metadata>
 
@@ -11,7 +12,7 @@
     <item*|Reporter>jeronim on <hlink|Savannah|http://savannah.gnu.org/bugs/?60628>,
     baudoly on <hlink|Savannah|https://savannah.gnu.org/bugs/?63357>
 
-    <item*|Tester><value|jk>
+    <item*|Tester><value|jk>, <value|da>
 
     <item*|Savannah commit><svn|14231>
   </description>
@@ -36,7 +37,7 @@
 
   <overline|x><rsub|0> test
 
-  <tmdoc-copyright|2023|<value|da>>
+  <tmdoc-copyright|2023|<value|jk>>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
