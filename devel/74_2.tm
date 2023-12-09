@@ -3,16 +3,24 @@
 <style|<tuple|tmdoc|chinese|devel>>
 
 <\body>
-  <tmdoc-title|Improvements on layout engine>
+  <tmdoc-title|<chapter*|Crash on PDF export of large table - pagination>>
 
-  <section|Tasks>
+  <section|Bug Metadata>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|74_1>>|<cell|Joris>|<cell|Subscript
-  or superscript causes <markup|underline> and <markup|overline> to
-  extend>>|<row|<cell|Bug>|<cell|<dlink|74_2>>|<cell|Joris>|<cell|Crash on
-  PDF export of large table - pagination>>>>>
+  <\description>
+    <item*|Reporter>guraltsev on <hlink|Savannah|https://savannah.gnu.org/bugs/?62844>
 
-  <tmdoc-copyright|2023|Darcy>
+    <item*|Tester><value|jk>
+
+    <item*|Savannah commit><svn|14232>
+  </description>
+
+  <section|How to reproduce it>
+
+  Port <hlink|this document|https://savannah.gnu.org/bugs/download.php?file_id=53491>
+  to PDF, or change its page breaking mode to \Ppaper\Q.
+
+  <tmdoc-copyright|2023|<value|jk>>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1

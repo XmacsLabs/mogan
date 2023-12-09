@@ -131,10 +131,11 @@
     red>|<cwith|8|8|2|2|cell-background|pastel
     red>|<cwith|10|10|2|2|cell-background|pastel
     red>|<cwith|12|12|2|2|cell-background|pastel
-    green>|<cwith|23|23|2|2|cell-background|#f0f0f0>|<cwith|24|24|2|2|cell-background|#f0f0f0>|<cwith|26|26|2|2|cell-background|#f0f0f0>|<cwith|25|25|2|2|cell-background|pastel
-    red>|<cwith|27|27|2|2|cell-background|pastel
-    red>|<cwith|14|14|2|2|cell-background|#f0f0f0>|<cwith|20|20|2|2|cell-background|#f0f0f0>|<cwith|18|18|2|2|cell-background|#f0f0f0>|<cwith|22|22|2|2|cell-background|#f0f0f0>|<cwith|15|16|2|2|cell-background|pastel
-    red>|<table|<row|<\cell>
+    green>|<cwith|24|24|2|2|cell-background|#f0f0f0>|<cwith|25|25|2|2|cell-background|#f0f0f0>|<cwith|27|27|2|2|cell-background|#f0f0f0>|<cwith|26|26|2|2|cell-background|pastel
+    red>|<cwith|28|28|2|2|cell-background|pastel
+    red>|<cwith|14|14|2|2|cell-background|#f0f0f0>|<cwith|21|21|2|2|cell-background|#f0f0f0>|<cwith|19|19|2|2|cell-background|#f0f0f0>|<cwith|23|23|2|2|cell-background|#f0f0f0>|<cwith|15|16|2|2|cell-background|pastel
+    red>|<cwith|16|16|2|2|cell-background|pastel
+    green>|<cwith|17|17|2|2|cell-background|pastel red>|<table|<row|<\cell>
       SVN revision
     </cell>|<\cell>
       Status
@@ -260,12 +261,21 @@
     </cell>>|<row|<\cell>
       <svn|14231>
     </cell>|<\cell>
-      todo
+      done
     </cell>|<\cell>
       <dlink|74_1>
     </cell>|<\cell>
       Fix bug #<savannah-bug|63357>: Underlining goes on after
       \<less\>underline\<gtr\> tag end
+    </cell>>|<row|<\cell>
+      <svn|14232>
+    </cell>|<\cell>
+      todo
+    </cell>|<\cell>
+      <dlink|74_2>
+    </cell>|<\cell>
+      Fix for bug #<savannah-bug|62844>: Crash on PDF export of large table -
+      pagination
     </cell>>|<row|<\cell>
       <text-dots>
     </cell>|<\cell>
