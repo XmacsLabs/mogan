@@ -1,6 +1,6 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|chinese|devel>>
+<style|<tuple|tmdoc|devel>>
 
 <\body>
   <tmdoc-title|<chapter*|Crash on PDF export of large table - pagination>>
