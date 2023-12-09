@@ -24,7 +24,13 @@
   <section|Started Projects>
 
   <\wide-tabular>
-    <tformat|<cwith|9|9|1|1|cell-valign|b>|<cwith|8|8|3|3|cell-valign|b>|<cwith|7|7|1|1|cell-background|>|<cwith|8|8|1|1|cell-background|>|<table|<row|<\cell>
+    <tformat|<cwith|10|10|1|1|cell-valign|b>|<cwith|9|9|3|3|cell-valign|b>|<cwith|8|8|1|1|cell-background|>|<cwith|9|9|1|1|cell-background|>|<table|<row|<\cell>
+      <dlink|74>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      Improvements on layout engine
+    </cell>>|<row|<\cell>
       <dlink|73>
     </cell>|<\cell>
       <value|da>
@@ -125,9 +131,10 @@
     red>|<cwith|8|8|2|2|cell-background|pastel
     red>|<cwith|10|10|2|2|cell-background|pastel
     red>|<cwith|12|12|2|2|cell-background|pastel
-    green>|<cwith|21|21|2|2|cell-background|#f0f0f0>|<cwith|22|22|2|2|cell-background|#f0f0f0>|<cwith|24|24|2|2|cell-background|#f0f0f0>|<cwith|23|23|2|2|cell-background|pastel
-    red>|<cwith|25|25|2|2|cell-background|pastel
-    red>|<cwith|14|14|2|2|cell-background|#f0f0f0>|<cwith|18|18|2|2|cell-background|#f0f0f0>|<cwith|16|16|2|2|cell-background|#f0f0f0>|<cwith|20|20|2|2|cell-background|#f0f0f0>|<table|<row|<\cell>
+    green>|<cwith|23|23|2|2|cell-background|#f0f0f0>|<cwith|24|24|2|2|cell-background|#f0f0f0>|<cwith|26|26|2|2|cell-background|#f0f0f0>|<cwith|25|25|2|2|cell-background|pastel
+    red>|<cwith|27|27|2|2|cell-background|pastel
+    red>|<cwith|14|14|2|2|cell-background|#f0f0f0>|<cwith|20|20|2|2|cell-background|#f0f0f0>|<cwith|18|18|2|2|cell-background|#f0f0f0>|<cwith|22|22|2|2|cell-background|#f0f0f0>|<cwith|15|16|2|2|cell-background|pastel
+    red>|<table|<row|<\cell>
       SVN revision
     </cell>|<\cell>
       Status
@@ -242,6 +249,23 @@
       <dlink|24_6>
     </cell>|<\cell>
       fix bug #<savannah-bug|63673>: underline missing in HTML converter
+    </cell>>|<row|<\cell>
+      <svn|14230>
+    </cell>|<\cell>
+      todo
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      Fix problem for decorated items
+    </cell>>|<row|<\cell>
+      <svn|14231>
+    </cell>|<\cell>
+      todo
+    </cell>|<\cell>
+      <dlink|74_1>
+    </cell>|<\cell>
+      Fix bug #<savannah-bug|63357>: Underlining goes on after
+      \<less\>underline\<gtr\> tag end
     </cell>>|<row|<\cell>
       <text-dots>
     </cell>|<\cell>
