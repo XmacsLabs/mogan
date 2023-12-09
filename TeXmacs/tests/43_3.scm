@@ -7,7 +7,7 @@
   
 (define (load-latex path)
   (with path (string-append "$TEXMACS_PATH/tests/tex/" path)
-    (string-load path)))
+    (string-replace (string-load path)  "\r\n" "\n")))
 
 (define (test-export-as-latex)
   (regression-test-group
