@@ -158,9 +158,9 @@ void
 TestHummusPdfMakeAttachment::test_get_linked_file_paths () {
   array<url> attachment_0;
   attachment_0 << url ("$TEXMACS_PATH/tests/tm/29_1_1.tm");
-  string     texmacs_doc_1= string_load (url ("$TEXMACS_PATH/tests/tm/29_1_1.tm"));
-  tree       texmacs_tree_1= texmacs_to_tree (texmacs_doc_1);
-  array<url> linked_0      = get_linked_file_paths (
+  string texmacs_doc_1 = string_load (url ("$TEXMACS_PATH/tests/tm/29_1_1.tm"));
+  tree   texmacs_tree_1= texmacs_to_tree (texmacs_doc_1);
+  array<url> linked_0  = get_linked_file_paths (
       texmacs_tree_1, url ("$TEXMACS_PATH/tests/tm/29_1_1.tm"));
   QVERIFY (N (linked_0) == 0);
 
