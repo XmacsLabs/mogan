@@ -263,7 +263,7 @@
   (when (can-create-context-macro?)
     (if (symbol? l) (set! l (symbol->string l)))
     (let* ((b (current-buffer-url))
-	   (u (string-append "tmfs://aux/edit-" l))
+	   (u (string->url (string-append "tmfs://aux/edit-" l)))
 	   (packs (get-style-list))
 	   (styps (list-remove-duplicates
 		   (append packs (list "macro-editor"))))
@@ -315,7 +315,7 @@
     (position-inside-table)
     (if (symbol? l) (set! l (symbol->string l)))
     (let* ((b (current-buffer-url))
-	   (u (string-append "tmfs://aux/edit-" l))
+	   (u (string->url (string-append "tmfs://aux/edit-" l)))
 	   (packs (get-style-list))
 	   (styps (list-remove-duplicates
 		   (append packs (list "macro-editor"))))
