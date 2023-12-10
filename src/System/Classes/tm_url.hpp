@@ -15,7 +15,6 @@
 #include "tree.hpp"
 #include "tm_debug.hpp"
 
-url    tm_url (string name);
 bool   is_secure (url u);            // is u secure?
 
 /******************************************************************************

@@ -100,7 +100,7 @@ function main()
             },
             {
                 scm_name = "string->url",
-                cpp_name = "tm_url",
+                cpp_name = "url",
                 ret_type = "url",
                 arg_list = {
                     "string"
@@ -125,7 +125,7 @@ function main()
             },
             {
                 scm_name = "unix->url",
-                cpp_name = "tm_url",
+                cpp_name = "url",
                 ret_type = "url",
                 arg_list = {
                     "string"

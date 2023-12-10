@@ -76,7 +76,7 @@
 (tm-define (open-shortcuts-editor . opt)
   (:interactive #t)
   (let* ((b (current-buffer))
-         (u (string->url (string-append "tmfs://aux/edit-shortcuts")))
+         (u (string-append "tmfs://aux/edit-shortcuts"))
          (sh (if (null? opt) "" (car opt)))
          (cmd (if (or (null? opt) (null? (cdr opt))) "" (cadr opt))))
     (dialogue-window (shortcuts-editor u sh cmd)

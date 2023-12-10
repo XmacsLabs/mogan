@@ -72,7 +72,7 @@ abstract_view (tm_view vw) {
   string name= encode_url (vw->buf->buf->name);
   //cout << vw->buf->buf->name << " -> " << name << "\n";
   string nr  = as_string (vw->nr);
-  return tm_url ("tmfs://view/" * nr * "/" * name);
+  return url_system ("tmfs://view/" * nr * "/" * name);
 }
 
 tm_view

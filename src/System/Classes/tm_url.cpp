@@ -70,11 +70,6 @@
 #include "analyze.hpp"
 #include "scheme.hpp"
 
-url tm_url (string name) {
-  if (starts (name, "tmfs://")) return tmfs_url (name (7, N (name)));
-  else return url_general (name, URL_UNIX);
-}
-
 bool url_test (url name, string filter) {
     if (filter == "") return true;
   int i, n= N(filter);
