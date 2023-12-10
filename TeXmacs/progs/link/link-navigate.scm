@@ -471,8 +471,8 @@
          (default-root-disambiguator (url-expand u)))
         (else
          (with (base qry) (process-url u)
-               (if (!= "" (url->system base))
-                   (load-browse-buffer base))))))
+           (if (!= "" (url->system base))
+               (load-browse-buffer base))))))
 
 (define (tmfs-root-handler u)
   (load-browse-buffer u))
@@ -490,8 +490,8 @@
            (list http-root-handler http-post-handler))
           ((or (== root "http") (== root "https"))
            (list http-root-handler http-post-handler))
-          (else (display* "Unhandled url root: " root "\n")
-                (list default-root-handler default-post-handler)))))
+          (else
+           (list default-root-handler default-post-handler)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Actual navigation

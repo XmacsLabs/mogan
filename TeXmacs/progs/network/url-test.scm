@@ -14,6 +14,12 @@
 (texmacs-module (network url-test)
   (:use (network url)))
 
+(define (regtest-zotero-url)
+ (regression-test-group
+  "url" "url-or?"
+  url-or? :none
+  (test "case 1" "zotero://a/b/c" #f)))
+
 (define (regtest-url-host)
   (regression-test-group
    "url" "host of the url"
@@ -23,6 +29,7 @@
    (test "local file 1" "/tmp" "")))
 
 (tm-define (regtest-url)
-  (let ((n (+ (regtest-url-host))))
+  (let ((n (+ (regtest-url-host)
+              (regtest-zotero-url))))
     (display* "Total: " (object->string n) " tests.\n")
     (display "Test suite of url: ok\n")))
