@@ -7,11 +7,13 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|56_1>|<cell|Darcy>|<cell|Invalidate
-  all caches for a new release>>|<row|<cell|Chore>|<cell|56_2>|<cell|woutersj>|<cell|Fix
-  the removing of temp dirs>>|<row|<cell|Chore>|<cell|56_3>|<cell|<value|da>>|<cell|Remove
-  file_cache and doc_cache>>|<row|<cell|Chore>|<cell|56_4>|<cell|<value|da>>|<cell|Remove
-  dir_cache and stat_cache>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|-1|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Chore>|<cell|56_5>|<cell|v1.2.1>|<cell|<value|da>>|<cell|use
+  digest as cache path for ts files>>|<row|<cell|Chore>|<cell|56_4>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Remove
+  dir_cache and stat_cache>>|<row|<cell|Chore>|<cell|56_3>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Remove
+  file_cache and doc_cache>>|<row|<cell|Chore>|<cell|56_2>|<cell|v1.2.0>|<cell|woutersj>|<cell|Fix
+  the removing of temp dirs>>|<row|<cell|Chore>|<cell|56_1>|<cell|v1.2.0>|<cell|Darcy>|<cell|Invalidate
+  all caches for a new release>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 

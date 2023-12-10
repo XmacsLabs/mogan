@@ -24,7 +24,7 @@
   <section|Started Projects>
 
   <\wide-tabular>
-    <tformat|<cwith|10|10|1|1|cell-valign|b>|<cwith|9|9|3|3|cell-valign|b>|<cwith|8|8|1|1|cell-background|>|<cwith|9|9|1|1|cell-background|>|<table|<row|<\cell>
+    <tformat|<cwith|11|11|1|1|cell-valign|b>|<cwith|10|10|3|3|cell-valign|b>|<cwith|9|9|1|1|cell-background|>|<cwith|10|10|1|1|cell-background|>|<cwith|5|5|2|2|cell-valign|c>|<cwith|5|5|1|1|cell-background|>|<table|<row|<\cell>
       <dlink|74>
     </cell>|<\cell>
       \;
@@ -48,6 +48,12 @@
       Darcy
     </cell>|<\cell>
       Tuning Keyboard Shortcuts
+    </cell>>|<row|<\cell>
+      <dlink|56>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Tuning cache to avoid corruption
     </cell>>|<row|<\cell>
       <dlink|44>
     </cell>|<\cell>
