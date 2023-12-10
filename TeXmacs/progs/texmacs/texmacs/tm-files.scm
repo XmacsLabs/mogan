@@ -421,6 +421,7 @@
   (or (and (url-rooted-web? u)
            ;; FIXME: Use HTTP HEADERS to determine the real file format
            (!= (file-format u) "texmacs-file"))
+      (not (in? (url-root u) (list "tmfs" "file" "default" "blank" "ramdisc")))
       (file-of-format? u "image")
       (file-of-format? u "pdf")
       (file-of-format? u "postscript")

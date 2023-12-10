@@ -282,7 +282,7 @@ embedded_name (url name) {
   static int nr= 0;
   if (!is_none (name)) return name;
   nr++;
-  return tm_url (string ("tmfs://aux/TeXmacs-input-" * as_string (nr)));
+  return url_system (string ("tmfs://aux/TeXmacs-input-" * as_string (nr)));
 }
 
 tree

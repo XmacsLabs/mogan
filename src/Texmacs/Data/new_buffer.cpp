@@ -581,7 +581,7 @@ latex_expand (tree doc, url name) {
 
 tree
 latex_expand (tree doc) {
-  tm_view vw= concrete_view (tm_url (as_string (extract (doc, "view"))));
+  tm_view vw= concrete_view (url_system (as_string (extract (doc, "view"))));
   tree body= vw->ed->exec_latex (extract (doc, "body"));
   doc= change_doc_attr (doc, "body", body);
   return remove_doc_attr (doc, "view");

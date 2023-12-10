@@ -12,12 +12,6 @@
 
 #include "tmfs_url.hpp"
 
-tmfs_url::tmfs_url (string name)
-    : url (url_root ("tmfs") * url_get_name (name)) {}
-
-tmfs_url::tmfs_url (const char* name)
-    : url (url_root ("tmfs") * url_get_name (string (name))) {}
-
 bool
 is_tmfs_protocol (url u, string protocol) {
   return u->t == protocol ||

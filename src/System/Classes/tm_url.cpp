@@ -70,11 +70,6 @@
 #include "analyze.hpp"
 #include "scheme.hpp"
 
-url tm_url (string name) {
-  if (starts (name, "tmfs://")) return tmfs_url (name (7, N (name)));
-  else return url_general (name, URL_UNIX);
-}
-
 bool url_test (url name, string filter) {
     if (filter == "") return true;
   int i, n= N(filter);
@@ -174,11 +169,7 @@ complete (url base, url u, string filter, bool flag) {
       if (url_test (comp, filter)) return u;
       return url_none ();
     }
-    failed_error << "base  = " << base << LF;
-    failed_error << "u     = " << u << LF;
-    failed_error << "filter= " << filter << LF;
-    ASSERT (is_rooted (comp), "unrooted url");
-    TM_FAILED ("bad protocol in url");
+    return u;
   }
   if (is_root (u)) {
     // FIXME: test filter flags here
