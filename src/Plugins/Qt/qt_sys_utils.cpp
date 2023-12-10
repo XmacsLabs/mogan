@@ -34,12 +34,13 @@ qt_get_pretty_os_name () {
 
 void
 qt_open_url (url u) {
-  if (is_rooted_web (u) || is_rooted (u, "file")) {
-    QString link= to_qstring (as_string (u));
+  debug_io << "open-url\t" << u << LF;
+  if (is_local_and_single (u)) {
+    QString link= to_qstring ("file:///" * as_string (u));
     QDesktopServices::openUrl (QUrl (link));
   }
-  else if (is_local_and_single (u)) {
-    QString link= to_qstring ("file:///" * as_string (u));
+  else {
+    QString link= to_qstring (as_string (u));
     QDesktopServices::openUrl (QUrl (link));
   }
 }
