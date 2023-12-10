@@ -15,10 +15,19 @@
   (:use (network url)))
 
 (define (regtest-zotero-url)
- (regression-test-group
-  "url" "url-or?"
-  url-or? :none
-  (test "case 1" "zotero://a/b/c" #f)))
+  (regression-test-group
+   "url" "(url-or? u)"
+   url-or? :none
+   (test "case 1" "zotero://a/b/c" #f))
+  (regression-test-group
+   "url" "(url-complete u flags)"
+   (lambda (x)
+     (== (url-complete "zotero://a/b/c" x)
+         (string->url "zotero://a/b/c")))
+   :none
+   (test "r" "r" #t)
+   (test "df" "df" #t)
+   (test "rf" "rf" #t)))
 
 (define (regtest-url-host)
   (regression-test-group
