@@ -256,6 +256,9 @@ search_string (range_set& sel, string s, tree what, path p) {
 
   if (is_atomic (what)) {
     string w  = what->label;
+    if (is_empty (w)) {
+      return;
+    }
     int    pos= 0;
     while (pos < N (s)) {
       int next= tm_search_forwards (w, pos, source);
