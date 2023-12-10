@@ -419,7 +419,7 @@ concater_rep::typeset_range (tree t, path ip) {
   else {
     int size= N(t1->label);
     int start= max (0, as_int (t2));
-    int end= min (N(t1->label), as_int (t3));
+    int end= min (size, as_int (t3));
     end= max (start, end);
     if (start > size) {
       typeset_dynamic (tree (ERROR, "bad range: start pos must be less than the size"), ip);
