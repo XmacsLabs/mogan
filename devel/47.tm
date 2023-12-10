@@ -8,19 +8,33 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|2|2|cell-background|pastel
-    green>|<cwith|2|2|3|3|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|4|4|2|2|cell-background|pastel
+    green>|<cwith|3|3|4|4|cell-valign|b>|<table|<row|<\cell>
       Bug
     </cell>|<\cell>
-      <dlink|47_1>
+      <dlink|47_4>
     </cell>|<\cell>
-      <value|jk>
+      v1.2.0
     </cell>|<\cell>
-      Fix link trucation on Windows
+      <value|da>
+    </cell>|<\cell>
+      Fix open-url of protocol like mailto/zotero
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      47_3
+    </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix preview-buffer via open-url
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
       <dlink|47_2>
+    </cell>|<\cell>
+      v1.2.0
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
@@ -28,11 +42,13 @@
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
-      47_3
+      <dlink|47_1>
     </cell>|<\cell>
-      <value|da>
+      v1.2.0
     </cell>|<\cell>
-      Fix preview-buffer via open-url
+      <value|jk>
+    </cell>|<\cell>
+      Fix link trucation on Windows
     </cell>>>>
   </wide-tabular>
 

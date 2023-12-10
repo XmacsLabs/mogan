@@ -24,7 +24,7 @@
   <section|Started Projects>
 
   <\wide-tabular>
-    <tformat|<cwith|11|11|1|1|cell-valign|b>|<cwith|10|10|3|3|cell-valign|b>|<cwith|9|9|1|1|cell-background|>|<cwith|10|10|1|1|cell-background|>|<cwith|5|5|2|2|cell-valign|c>|<cwith|5|5|1|1|cell-background|>|<table|<row|<\cell>
+    <tformat|<cwith|12|12|1|1|cell-valign|b>|<cwith|11|11|3|3|cell-valign|b>|<cwith|10|10|1|1|cell-background|>|<cwith|11|11|1|1|cell-background|>|<cwith|5|5|2|2|cell-valign|c>|<cwith|5|5|1|1|cell-background|>|<cwith|6|6|1|1|cell-background|>|<table|<row|<\cell>
       <dlink|74>
     </cell>|<\cell>
       \;
@@ -54,6 +54,12 @@
       Darcy
     </cell>|<\cell>
       Tuning cache to avoid corruption
+    </cell>>|<row|<\cell>
+      <dlink|47>
+    </cell>|<\cell>
+      jingkaimori
+    </cell>|<\cell>
+      Fix mechanism of link navigation
     </cell>>|<row|<\cell>
       <dlink|44>
     </cell>|<\cell>
