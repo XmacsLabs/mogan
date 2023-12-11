@@ -120,7 +120,7 @@ cache_file_name_sub (tree t) {
 
 static string
 cache_file_name (tree t) {
-  return cache_file_name (t) * ".scm";
+  return cache_file_name_sub (t) * ".scm";
 }
 
 void
