@@ -14,7 +14,7 @@
 #include "analyze.hpp"
 #include "hashset.hpp"
 #include "scheme.hpp"
-#include "base64.hpp"
+#include "lolly/data/base64.hpp"
 #include "iterator.hpp"
 #include "fast_search.hpp"
 #include "merge_sort.hpp"
@@ -82,7 +82,7 @@ get_texmacs_attachments (string s, string& mod, tree& src, string& mtar,
   if (i<n) return false;
   string comm_enc_atts= s (bpos + N(bs), epos);
   string enc_atts= replace (comm_enc_atts, "\n %", "\n");
-  string atts= decode_base64 (enc_atts);
+  string atts= lolly::data::decode_base64 (enc_atts);
   // TODO: check integrity checksum
   string sep= "\n% Separate attachments\n";
   int spos= search_forwards (sep, 0, atts);
