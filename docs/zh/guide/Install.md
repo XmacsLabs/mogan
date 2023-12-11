@@ -5,9 +5,11 @@
 + 问题：Windows安装之后没有在桌面创建快捷方式
   - 解决方案: 找到`C:/Program Files/MoganResearch/bin/MGResearch.exe`然后启动Mogan Research或者手动创建桌面快捷方式
 + 问题：点击`编辑->快捷键->编辑键盘快捷键`直接崩溃
-  - 解决方案: 等待v1.2.1新版发布并且不要去点击这个菜单项
+  - 解决方案1: 等待v1.2.1新版发布并且不要去点击这个菜单项
+  - 解决方案2: 使用v1.2.1-rc1 https://github.com/XmacsLabs/mogan/releases/tag/v1.2.1-rc1
 + 问题：`文件->导出->LaTeX`直接崩溃
-  - 解决方案: 等待v1.2.1新版发布或者使用`编辑->复制到->LaTeX`作为替代
+  - 解决方案1: 等待v1.2.1新版发布或者使用`编辑->复制到->LaTeX`作为替代
+  - 解决方案2: 使用v1.2.1-rc1 https://github.com/XmacsLabs/mogan/releases/tag/v1.2.1-rc1
 + 问题：初次安装时，打开Mogan Research v1.2.0太慢
   - 解决方案: 等待v1.2.1新版发布并且耐心一些
 

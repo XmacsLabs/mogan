@@ -5,9 +5,11 @@ The latest stable version is Mogan STEM Suite v1.2.0.
 + Issue: No desktop shortcut created by the Windows installer
   - Solution: Find `C:/Program Files/MoganResearch/bin/MGResearch.exe` and then launch Mogan Research or create the desktop shortcut by yourself
 + Issue: Crash on clicking `Edit->Keyboard->Edit keyboard shortcuts`
-  - Solution: wait for v1.2.1 and do not click it
+  - Solution 1: wait for v1.2.1 and do not click it
+  - Solution 2: Use v1.2.1-rc1 https://github.com/XmacsLabs/mogan/releases/tag/v1.2.1-rc1
 + Issue: Crash on `File->Export->LaTeX`
-  - Solution: wait for v1.2.1 or use `Edit->Copy to->LaTeX` instead
+  - Solution 1: wait for v1.2.1 or use `Edit->Copy to->LaTeX` instead
+  - Solution 2: Use v1.2.1-rc1 https://github.com/XmacsLabs/mogan/releases/tag/v1.2.1-rc1
 + Issue: Too slow to open Mogan Research v1.2.0 for the first installation
   - Solution: wait for v1.2.1 and be patient
 
