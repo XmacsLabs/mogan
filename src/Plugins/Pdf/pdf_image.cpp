@@ -209,7 +209,7 @@ pdf_image_rep::flush (PDFWriter& pdfw) {
     name= url_none ();
   }
   else {
-    temp= url_temp (".pdf");
+    temp= url_temp ("pdf");
     // first try to work out inclusion using our own tools
     // note that we have to return since flush_raster and flush_jpg
     // already build the appopriate Form XObject into the PDF
