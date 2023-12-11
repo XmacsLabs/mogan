@@ -317,7 +317,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
     char   key_c= (char) key;
     string key_s= string (key_c);
     if (is_upcase (key_c)) {
-      r= "A-" * string ((char) (key + 32));
+      r= "A-" * string (locase (key));
     }
     else if (is_digit (key_c)) {
       r= "A-" * key_s;
@@ -472,8 +472,11 @@ QTMWidget::keyReleaseEvent (QKeyEvent* event) {
         ((mods & Qt::AltModifier) || (mods & Qt::MetaModifier))) {
       string r;
       if (key >= 32 && key < 128) {
-        if ((mods & Qt::ShiftModifier) == 0 && key >= 65 && key <= 90) key+= 32;
-        r= string ((char) key);
+        char key_c= (char) key;
+        if ((mods & Qt::ShiftModifier) == 0 && is_upcase (key_c)) {
+          key_c= locase (key_c);
+        }
+        r= string (key_c);
       }
       else if (qtkeymap->contains (key)) {
         r= qtkeymap[key];
