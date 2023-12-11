@@ -17,6 +17,8 @@
 #include "data_cache.hpp"
 #include "convert.hpp"
 #include "../../Typeset/env.hpp"
+#include "web_files.hpp"
+#include <lolly/hash/sha.hpp>
 
 /******************************************************************************
 * Global data
@@ -84,7 +86,16 @@ static string
 cache_file_name (tree t) {
   if (is_atomic (t)) {
     string s= t->label;
-    if (ends (s, ".ts")) s= s (0, N(s) - 3);
+    if (ends (s, ".ts")) {
+      url style= url_system (s);
+      if (is_rooted_web (style)) {
+        url local_style= get_from_web (s);
+        return lolly::hash::sha256_digest (local_style);
+      }
+      if (is_local_and_single (style)) {
+        return lolly::hash::sha256_digest (style)
+      }
+    }
     s= replace (s, "/", "%");
     s= replace (s, "\\", "%");
     s= replace (s, ":", "_");
