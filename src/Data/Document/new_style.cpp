@@ -18,6 +18,8 @@
 #include "convert.hpp"
 #include "../../Typeset/env.hpp"
 #include "web_files.hpp"
+#include "merge_sort.hpp"
+
 #include <lolly/hash/sha.hpp>
 
 /******************************************************************************
@@ -83,17 +85,17 @@ preprocess_style (tree st, url name) {
 ******************************************************************************/
 
 static string
-cache_file_name (tree t) {
+cache_file_name_sub (tree t) {
   if (is_atomic (t)) {
     string s= t->label;
     if (ends (s, ".ts")) {
       url style= url_system (s);
       if (is_rooted_web (style)) {
         url local_style= get_from_web (s);
-        return lolly::hash::sha256_digest (local_style);
+        return lolly::hash::sha256_hexdigest (local_style);
       }
       if (is_local_and_single (style)) {
-        return lolly::hash::sha256_digest (style)
+        return lolly::hash::sha256_hexdigest (style);
       }
     }
     s= replace (s, "/", "%");
@@ -102,12 +104,23 @@ cache_file_name (tree t) {
     return s;
   }
   else {
-    string s;
+    string ret;
+    array<string> file_name_arr;
     int i, n= N(t);
-    for (i=0; i<n; i++)
-      s << "__" << cache_file_name (t[i]);
-    return s * "__";
+    for (i=0; i<n; i++) {
+      file_name_arr << cache_file_name_sub (t[i]);
+    }
+    merge_sort (file_name_arr);
+    for (i=0; i<n; i++) {
+      ret << file_name_arr[i] << "__";
+    }
+    return ret;
   }
+}
+
+static string
+cache_file_name (tree t) {
+  return cache_file_name (t) * ".scm";
 }
 
 void
