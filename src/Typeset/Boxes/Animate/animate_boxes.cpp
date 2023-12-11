@@ -493,7 +493,7 @@ decompose_gif (url u) {
   if (!has_image_magick())
     return url_none ();
   if (!decomposed_gif->contains (u->t)) {
-    url tmp= url_temp ("");
+    url tmp= url_temp ();
     url res= glue (tmp, "_%04d.gif");
     system (imagemagick_cmd () *" +adjoin -coalesce", u, res);
     decomposed_gif (u->t)= tmp->t;
