@@ -204,6 +204,7 @@ qt_chooser_widget_rep::perform_dialog () {
 #if (defined(Q_OS_MAC)) // || defined(Q_WS_WIN)) //at least windows Xp and 7
                         // lack image preview, switch to custom dialog
   QFileDialog* dialog= new QFileDialog (NULL, caption, path);
+  dialog->setOption (QFileDialog::DontUseNativeDialog, true);
 #else
   QTMFileDialog*  dialog;
   QTMImageDialog* imgdialog= 0; // to avoid a dynamic_cast
@@ -227,6 +228,14 @@ qt_chooser_widget_rep::perform_dialog () {
     dialog->setDefaultSuffix (defaultSuffix);
     dialog->setAcceptMode (QFileDialog::AcceptSave);
     dialog->setLabelText (QFileDialog::Accept, to_qstring (translate (text)));
+    dialog->setLabelText (QFileDialog::Reject,
+                          to_qstring (translate ("Cancel")));
+    dialog->setLabelText (QFileDialog::FileName,
+                          to_qstring (translate ("File name")));
+    dialog->setLabelText (QFileDialog::FileType,
+                          to_qstring (translate ("File type")));
+    dialog->setLabelText (QFileDialog::LookIn,
+                          to_qstring (translate ("Directory")));
   }
 
 #if (QT_VERSION >= 0x040400)
