@@ -1,30 +1,30 @@
 
 /******************************************************************************
-* MODULE     : tt_tools.cpp
-* DESCRIPTION: Direct access of True Type font (independent from FreeType)
-* COPYRIGHT  : (C) 2012  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : tt_tools.cpp
+ * DESCRIPTION: Direct access of True Type font (independent from FreeType)
+ * COPYRIGHT  : (C) 2012  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "tt_tools.hpp"
-#include "tt_file.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
+#include "tt_file.hpp"
 
 #ifdef HAVE_STDINT_H
 #include <stdint.h>
-#define U8  uint8_t
+#define U8 uint8_t
 #define U16 uint16_t
 #define U32 uint32_t
 #define F32 uint32_t
 #define U64 uint64_t
 #else
-#define U8  unsigned char
+#define U8 unsigned char
 #define U16 unsigned short
 #define U32 unsigned int
 #define U64 unsigned long long int
@@ -33,19 +33,19 @@
 string strip_suffix (string name);
 
 /******************************************************************************
-* Data access
-******************************************************************************/
+ * Data access
+ ******************************************************************************/
 
 string
 get_sub (string s, int i, int j) {
-  i= min (max (i, 0), N(s));
-  j= min (max (j, 0), N(s));
+  i= min (max (i, 0), N (s));
+  j= min (max (j, 0), N (s));
   return s (i, j);
 }
 
 string
 get_tag (string s, int i) {
-  return get_sub (s, i, i+4);
+  return get_sub (s, i, i + 4);
 }
 
 U8
@@ -55,12 +55,12 @@ get_U8 (string s, int i) {
 
 U16
 get_U16 (string s, int i) {
-  return (((U16) get_U8 (s, i)) << 8) + get_U8 (s, i+1);
+  return (((U16) get_U8 (s, i)) << 8) + get_U8 (s, i + 1);
 }
 
 U32
 get_U32 (string s, int i) {
-  return (((U32) get_U16 (s, i)) << 16) + get_U16 (s, i+2);
+  return (((U32) get_U16 (s, i)) << 16) + get_U16 (s, i + 2);
 }
 
 F32
@@ -71,16 +71,16 @@ get_F32 (string s, int i) {
 string
 pack_U32 (U32 i) {
   string r;
-  r << ((char) ( i >> 24));
+  r << ((char) (i >> 24));
   r << ((char) ((i >> 16) & 255));
-  r << ((char) ((i >>  8) & 255));
-  r << ((char) ( i        & 255));
+  r << ((char) ((i >> 8) & 255));
+  r << ((char) (i & 255));
   return r;
 }
 
 /******************************************************************************
-* True Type font collections
-******************************************************************************/
+ * True Type font collections
+ ******************************************************************************/
 
 bool
 tt_is_collection (string tt) {
@@ -97,21 +97,18 @@ int
 tt_header_index (string tt, int i) {
   ASSERT (i >= 0 && i < tt_nr_fonts (tt), "index out of range");
   if (!tt_is_collection (tt)) return 0;
-  else return get_U32 (tt, 12 + 4*i);
+  else return get_U32 (tt, 12 + 4 * i);
 }
 
 /******************************************************************************
-* Font table management
-******************************************************************************/
+ * Font table management
+ ******************************************************************************/
 
 bool
 tt_correct_version (string tt, int i) {
   int h= tt_header_index (tt, i);
-  return
-    get_F32 (tt, h) == 0x00010000 ||
-    get_tag (tt, h) == "OTTO" ||
-    get_tag (tt, h) == "true" ||
-    get_tag (tt, h) == "typ1";
+  return get_F32 (tt, h) == 0x00010000 || get_tag (tt, h) == "OTTO" ||
+         get_tag (tt, h) == "true" || get_tag (tt, h) == "typ1";
 }
 
 int
@@ -141,7 +138,7 @@ string
 tt_table (string tt, int i, int k) {
   ASSERT (tt_correct_version (tt, i), "true type font expected");
   ASSERT (k >= 0 && k < tt_nr_tables (tt, i), "index out of range");
-  int h= tt_header_index (tt, i);
+  int h    = tt_header_index (tt, i);
   int start= get_U32 (tt, h + 20 + 16 * k);
   int len  = get_U32 (tt, h + 24 + 16 * k);
   return get_sub (tt, start, start + len);
@@ -149,49 +146,48 @@ tt_table (string tt, int i, int k) {
 
 string
 tt_table (string tt, int i, string tag) {
-  for (int k=0; k<tt_nr_tables (tt, i); k++)
-    if (tt_table_tag (tt, i, k) == tag)
-      return tt_table (tt, i, k);
+  for (int k= 0; k < tt_nr_tables (tt, i); k++)
+    if (tt_table_tag (tt, i, k) == tag) return tt_table (tt, i, k);
   return "";
 }
 
 /******************************************************************************
-* Extracting a subfont
-******************************************************************************/
+ * Extracting a subfont
+ ******************************************************************************/
 
 string
 tt_extract_subfont (string tt, int i) {
   if (i < 0 || i >= tt_nr_fonts (tt))
-    cout << "TeXmacs] error, invalid TrueType subfont " << i
-         << " out of " << tt_nr_fonts (tt) << "\n";
+    cout << "TeXmacs] error, invalid TrueType subfont " << i << " out of "
+         << tt_nr_fonts (tt) << "\n";
   ASSERT (i >= 0 && i < tt_nr_fonts (tt), "index out of range");
   if (!tt_is_collection (tt)) return tt;
   string r;
-  int h= tt_header_index (tt, i);
+  int    h= tt_header_index (tt, i);
   r << get_sub (tt, h, h + 12);
   int nr_tabs= tt_nr_tables (tt, i);
-  int offset= 12 + 16 * nr_tabs;
-  for (int k=0; k < nr_tabs; k++) {
+  int offset = 12 + 16 * nr_tabs;
+  for (int k= 0; k < nr_tabs; k++) {
     int taboff= h + 12 + 16 * k;
     r << get_sub (tt, taboff, taboff + 8);
     r << pack_U32 (offset);
     r << get_sub (tt, taboff + 12, taboff + 16);
     int len= get_U32 (tt, taboff + 12);
-    offset += (((len + 3) >> 2) << 2);
+    offset+= (((len + 3) >> 2) << 2);
   }
-  for (int k=0; k < nr_tabs; k++) {
+  for (int k= 0; k < nr_tabs; k++) {
     int taboff= h + 12 + 16 * k;
-    int start= get_U32 (tt, taboff + 8);
-    int len  = get_U32 (tt, taboff + 12);
-    int plen = (((len + 3) >> 2) << 2);
+    int start = get_U32 (tt, taboff + 8);
+    int len   = get_U32 (tt, taboff + 12);
+    int plen  = (((len + 3) >> 2) << 2);
     r << get_sub (tt, start, start + plen);
   }
   return r;
 }
 
 /******************************************************************************
-* Name table
-******************************************************************************/
+ * Name table
+ ******************************************************************************/
 
 int
 name_format (string nt) {
@@ -211,7 +207,7 @@ name_storage_offset (string nt) {
 string
 name_record (string nt, int i) {
   ASSERT (i >= 0 && i < name_nr_records (nt), "index out of range");
-  return get_sub (nt, 6 + 12*i, 18 + 12*i);
+  return get_sub (nt, 6 + 12 * i, 18 + 12 * i);
 }
 
 int
@@ -236,25 +232,24 @@ name_record_name_id (string nt, int i) {
 
 string
 name_record_string (string nt, int i) {
-  int off= name_storage_offset (nt);
-  string rec= name_record (nt, i);
-  int start= get_U16 (rec, 10) + off;
-  int len= get_U16 (rec, 8);
+  int    off  = name_storage_offset (nt);
+  string rec  = name_record (nt, i);
+  int    start= get_U16 (rec, 10) + off;
+  int    len  = get_U16 (rec, 8);
   return get_sub (nt, start, start + len);
 }
 
 string
 filter_english (string s) {
   string r;
-  for (int i=0; i<N(s); i++)
-    if (s[i] >= ' ' && (((unsigned int) s[i]) <= 127))
-      r << s[i];
+  for (int i= 0; i < N (s); i++)
+    if (s[i] >= ' ' && (((unsigned int) s[i]) <= 127)) r << s[i];
   return r;
 }
 
 string
 name_record_english_string (string nt, int name_id) {
-  for (int i=0; i < name_nr_records (nt); i++)
+  for (int i= 0; i < name_nr_records (nt); i++)
     if (name_record_name_id (nt, i) == name_id) {
       if ((name_record_platform_id (nt, i) == 1 &&
            name_record_language_id (nt, i) == 0) ||
@@ -276,16 +271,16 @@ name_record_shape (string nt) {
 }
 
 /******************************************************************************
-* Dump all font info to the screen
-******************************************************************************/
+ * Dump all font info to the screen
+ ******************************************************************************/
 
 void
 tt_dump (string tt) {
-  for (int i=0; i<tt_nr_fonts (tt); i++) {
+  for (int i= 0; i < tt_nr_fonts (tt); i++) {
     cout << HRULE << "Font " << i << LF << HRULE;
 
     cout << "Font tables:";
-    for (int k=0; k<tt_nr_tables (tt, i); k++)
+    for (int k= 0; k < tt_nr_tables (tt, i); k++)
       cout << " " << tt_table_tag (tt, i, k);
     cout << LF;
 
@@ -293,10 +288,10 @@ tt_dump (string tt) {
     cout << "Font family: " << name_record_family (nt) << "\n";
     cout << "Font shape: " << name_record_shape (nt) << "\n";
     cout << "Name table" << LF;
-    for (int k=0; k<name_nr_records (nt); k++)
-      cout << "  " << name_record_name_id (nt, k)
-           << " [" << name_record_language_id (nt, k)
-           << ", " << name_record_platform_id (nt, k) << "]"
+    for (int k= 0; k < name_nr_records (nt); k++)
+      cout << "  " << name_record_name_id (nt, k) << " ["
+           << name_record_language_id (nt, k) << ", "
+           << name_record_platform_id (nt, k) << "]"
            << " -> " << name_record_string (nt, k) << LF;
   }
 }
@@ -304,21 +299,20 @@ tt_dump (string tt) {
 void
 tt_dump (url u) {
   string tt;
-  if (!load_string (u, tt, false))
-    tt_dump (tt);
+  if (!load_string (u, tt, false)) tt_dump (tt);
   else cout << "file not found";
 }
 
 /******************************************************************************
-* Get the font family and available shapes
-******************************************************************************/
+ * Get the font family and available shapes
+ ******************************************************************************/
 
 void
 move_to_shape (string& fam, string& shape, string what, string by) {
   int pos= search_forwards (" " * what, 0, fam);
   if (pos < 0) return;
-  fam  = fam (0, pos) * fam (pos + N(what) + 1, N(fam));
-  if (N(by) == 0) return;
+  fam= fam (0, pos) * fam (pos + N (what) + 1, N (fam));
+  if (N (by) == 0) return;
   if (shape == "Regular") shape= by;
   else shape= by * " " * shape;
 }
@@ -326,9 +320,9 @@ move_to_shape (string& fam, string& shape, string what, string by) {
 scheme_tree
 tt_font_name (url u) {
   string tt;
-  tree r (TUPLE);
+  tree   r (TUPLE);
   if (load_string (u, tt, false)) return r;
-  for (int i=0; i < tt_nr_fonts (tt); i++) {
+  for (int i= 0; i < tt_nr_fonts (tt); i++) {
     if (!tt_correct_version (tt, i)) return tree (TUPLE);
     string nt = tt_table (tt, i, "name");
     string fam= name_record_family (nt);
@@ -363,12 +357,13 @@ tt_font_name (url u) {
     move_to_shape (fam, sh, "Italic", "Italic");
     move_to_shape (fam, sh, "Oblique", "Oblique");
 
-    while (fam != "" && !is_alpha (fam[0])) fam= fam (1, N(fam));
+    while (fam != "" && !is_alpha (fam[0]))
+      fam= fam (1, N (fam));
     if (upcase_all (fam) == fam) fam= locase_all (fam);
     fam= upcase_first (fam);
-    if (starts (fam, "STIX")) fam= "Stix" * fam (4, N(fam));
+    if (starts (fam, "STIX")) fam= "Stix" * fam (4, N (fam));
     // End normalization of family name
-    
+
     r << tuple (fam, sh);
   }
   return r;
@@ -381,9 +376,9 @@ tt_unpack (string s) {
   if (!exists (dir)) mkdir (dir);
   url name= dir * url (s * ".ttf");
   if (exists (name)) return name;
-  //cout << "Extracting " << name << "\n";
+  // cout << "Extracting " << name << "\n";
   int i= as_int (suffix (url (s)));
-  s= strip_suffix (s);
+  s    = strip_suffix (s);
   url u= tt_font_find (s);
   if (is_none (u)) return url_none ();
   string ttc;
