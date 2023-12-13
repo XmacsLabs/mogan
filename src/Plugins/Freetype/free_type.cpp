@@ -10,10 +10,8 @@
  ******************************************************************************/
 
 #include "free_type.hpp"
-#include "config.h"
 #include "tm_debug.hpp"
 
-#ifdef USE_FREETYPE
 #include "dyn_link.hpp"
 
 static bool ft_initialized= false;
@@ -88,16 +86,3 @@ bool
 ft_present () {
   return !ft_initialize ();
 }
-
-#else
-
-bool
-ft_initialize () {
-  return true;
-}
-bool
-ft_present () {
-  return false;
-}
-
-#endif

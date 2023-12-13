@@ -15,8 +15,6 @@
 #include "bitmap_font.hpp"
 #include "hashmap.hpp"
 
-#ifdef USE_FREETYPE
-
 RESOURCE (tt_face);
 
 struct tt_face_rep : rep<tt_face> {
@@ -52,7 +50,5 @@ struct tt_font_glyphs_rep : font_glyphs_rep {
 tt_face     load_tt_face (string name);
 font_metric tt_font_metric (string family, int size, int hdpi, int vdpi);
 // font_glyphs tt_font_glyphs (string family, int size, int hdpi, int vdpi);
-
-#endif // USE_FREETYPE
 
 #endif // defined TT_FACE_H
