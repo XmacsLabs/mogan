@@ -35,7 +35,7 @@ Other sites to download：
 + https://codeberg.org/XmacsLabs/mogan/releases
 
 Old releases:
-+ [v1.1.6 (2023/09/29)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.5)
++ [v1.1.6 (2023/09/29)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.6)
 + [v1.1.5 (2023/08/11)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.5)
 + [v1.1.4 (2023/07/31)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.4)
 + [v1.1.3 (2023/06/05)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.3)
