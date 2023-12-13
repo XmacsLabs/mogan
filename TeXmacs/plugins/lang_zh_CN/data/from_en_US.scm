@@ -1277,6 +1277,7 @@
 ("notation" "记法")
 ("note" "注记")
 ("notebook" "笔记本")
+("notification" "提示")
 ("november" "")
 ("number equation" "编号方程")
 ("number of columns" "栏数")
