@@ -245,7 +245,7 @@ tm_frame_rep::interactive (object fun, scheme_tree p) {
   }
   else if (get_preference ("interactive questions") == "popup" ||
            N(p) > 1 ||
-	   (is_aux_buffer (get_current_buffer_safe ()) &&
+           (is_aux_buffer (get_current_buffer_safe ()) &&
             !is_rooted_tmfs (get_current_buffer_safe (), "part"))) {
     int i, n= N(p);
     array<string> prompts (n);
