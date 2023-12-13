@@ -17,8 +17,6 @@
 #include "converter.hpp"
 #include "font.hpp"
 
-#ifdef USE_FREETYPE
-
 #define std_dpi 600
 #define std_pixel (std_shrinkf * 256)
 #define ROUND(l) ((l * hdpi + (std_dpi >> 1)) / std_dpi)
@@ -975,15 +973,3 @@ font
 unicode_font (string family, int size, int dpi) {
   return unicode_font (family, size, dpi, dpi);
 }
-
-#else
-
-font
-unicode_font (string family, int size, int dpi) {
-  string name= "unicode:" * family * as_string (size) * "@" * as_string (dpi);
-  failed_error << "Font name= " << name << "\n";
-  TM_FAILED ("true type support was disabled");
-  return font ();
-}
-
-#endif

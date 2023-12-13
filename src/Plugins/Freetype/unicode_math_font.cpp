@@ -13,8 +13,6 @@
 #include "converter.hpp"
 #include "font.hpp"
 
-#ifdef USE_FREETYPE
-
 /******************************************************************************
  * True Type fonts
  ******************************************************************************/
@@ -339,16 +337,3 @@ unicode_math_font (font up, font it, font bup, font bit, font fb) {
   return make (font, name,
                tm_new<unicode_math_font_rep> (name, up, it, bup, bit, fb));
 }
-
-#else
-
-font
-unicode_math_font (font up, font it, font bup, font bit, font fb) {
-  string name= "unimath[" * up->res_name * "," * it->res_name * "," *
-               bup->res_name * "," * bit->res_name * "," * fb->res_name * "]";
-  failed_error << "Font name= " << name << "\n";
-  TM_FAILED ("true type support was disabled");
-  return font ();
-}
-
-#endif
