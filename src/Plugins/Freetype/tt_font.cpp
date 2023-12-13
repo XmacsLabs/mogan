@@ -12,7 +12,6 @@
 #include "Freetype/free_type.hpp"
 #include "Freetype/tt_face.hpp"
 #include "Freetype/tt_file.hpp"
-#include "config.h"
 #include "font.hpp"
 #include "tm_debug.hpp"
 

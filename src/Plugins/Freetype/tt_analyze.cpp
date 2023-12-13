@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
-#include "config.h"
 #include "font.hpp"
 #include "tt_face.hpp"
 

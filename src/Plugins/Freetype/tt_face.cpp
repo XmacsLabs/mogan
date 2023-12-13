@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "tt_face.hpp"
-#include "config.h"
 #include "font.hpp"
 #include "tm_debug.hpp"
 #include "tm_timer.hpp"
