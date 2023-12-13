@@ -2156,6 +2156,7 @@
 ("yellow" "黄色")
 ("yes" "是")
 ("you can also obtain" "")
+("you do not have write access for" "没有写权限")
 ("your document is back in its original state" "")
 ("your first interface" "")
 ("your language" "使用语言")
