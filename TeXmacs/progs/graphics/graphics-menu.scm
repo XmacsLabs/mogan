@@ -1125,7 +1125,7 @@
     (group "Fill color:")
     (with col (object-get-property "fill-color")
       (assuming (in? col (list "" "none" "default" "mixed"))
-        (=> (eval (if (== "mixed") col "none"))
+        (=> (eval (if (== col "mixed") col "none"))
             (link doc-at-fill-color-menu)))
       (assuming (nin? col (list "" "none" "default" "mixed"))
         (=> (color col #f #f 25 17)
