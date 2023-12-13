@@ -188,11 +188,11 @@
 (define (cannot-write? name action)
   (with vname `(verbatim ,(url->system name))
     (cond ((and (not (url-test? name "f")) (url-exists? name))
-           (with msg "The file cannot be created:"
+           (with msg "The file cannot be created:<br>"
              (notify-now `(concat ,msg ,vname)))
            #t)
           ((and (url-test? name "f") (not (url-test? name "w")))
-           (with msg "You do not have write access for:"
+           (with msg "You do not have write access for:<br>"
              (notify-now `(concat ,msg ,vname)))
            #t)
           (else #f))))
@@ -474,7 +474,7 @@
   ;;(display* "load-buffer-check-permissions " name ", " opts "\n")
   (with path (url->system name)
     (cond ((and (not (url-test? name "f")) (url-exists? name))
-           (with msg "The file cannot be loaded or created:\n"
+           (with msg "The file cannot be loaded or created:<br>"
              (begin
                (debug-message "debug-io" (string-append msg path))
                (notify-now `(concat ,msg (verbatim ,path))))))
