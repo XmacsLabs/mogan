@@ -357,8 +357,9 @@
 
 (define (add-menu-entry-balloon but style action)
   (with txt (search-balloon-help action)
-    (if (not txt) but
-        (with bal (widget-text txt style (color "black") #t)
+    (if (not txt)
+        but
+        (with bal (widget-text (translate txt) style (color "black") #t)
           (widget-balloon but bal)))))
 
 (define (make-menu-entry-button style bar? bal? check label short action)
