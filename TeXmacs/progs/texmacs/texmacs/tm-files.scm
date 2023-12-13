@@ -188,12 +188,12 @@
 (define (cannot-write? name action)
   (with vname `(verbatim ,(url->system name))
     (cond ((and (not (url-test? name "f")) (url-exists? name))
-           (with msg `(concat "The file " ,vname " cannot be created")
-             (set-message msg action))
+           (with msg "The file cannot be created:"
+             (notify-now `(concat ,msg ,vname)))
            #t)
           ((and (url-test? name "f") (not (url-test? name "w")))
-           (with msg `(concat "You do not have write access for " ,vname)
-             (set-message msg action))
+           (with msg "You do not have write access for:"
+             (notify-now `(concat ,msg ,vname)))
            #t)
           (else #f))))
 
