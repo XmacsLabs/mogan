@@ -292,6 +292,7 @@ font unicode_math_font (font up, font it, font bup, font bit, font fb);
 font rubber_unicode_font (font base);
 font rubber_stix_font (font base);
 font rubber_assemble_font (font base);
+font tt_font (string family, int size, int dpi);
 
 #else
 
