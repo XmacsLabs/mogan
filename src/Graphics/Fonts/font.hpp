@@ -163,7 +163,6 @@ string default_korean_font_name ();
 font error_font (font fn);
 font virtual_font (font base, string fam, int sz, int hdpi, int vdpi, bool ext);
 font virtual_enhance_font (font base, string virt);
-font tt_font (string family, int size, int dpi);
 font rubber_font (font base);
 bool use_poor_rubber (font fn);
 font poor_rubber_font (font base);
@@ -337,6 +336,13 @@ rubber_assemble_font (font base) {
   return font ();
 }
 
+inline font
+tt_font (string family, int size, int dpi) {
+  string name= "tt:" * family * as_string (size) * "@" * as_string (dpi);
+  failed_error << "Font name= " << name << "\n";
+  TM_FAILED ("true type support was disabled");
+  return font ();
+}
 #endif // defined USE_FREETYPE
 
 #endif // defined FONT_H
