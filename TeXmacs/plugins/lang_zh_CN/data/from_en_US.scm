@@ -607,6 +607,7 @@
 ("figure" "图")
 ("file name" "文件名")
 ("file not found" "无此文件")
+("file type" "文件类型")
 ("file" "文件")
 ("files of type" "文件类型")
 ("fill color" "填充色")
