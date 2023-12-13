@@ -221,6 +221,7 @@ qt_chooser_widget_rep::perform_dialog () {
     dialog->setFileMode (QFileDialog::ExistingFile);
   else dialog->setFileMode (QFileDialog::AnyFile);
 
+  // set label text for accept: Save or Open
   if (prompt != "") {
     string text= prompt;
     if (ends (text, ":")) text= text (0, N (text) - 1);
@@ -228,14 +229,9 @@ qt_chooser_widget_rep::perform_dialog () {
     dialog->setDefaultSuffix (defaultSuffix);
     dialog->setAcceptMode (QFileDialog::AcceptSave);
     dialog->setLabelText (QFileDialog::Accept, to_qstring (translate (text)));
-    dialog->setLabelText (QFileDialog::Reject,
-                          to_qstring (translate ("Cancel")));
-    dialog->setLabelText (QFileDialog::FileName,
-                          to_qstring (translate ("File name")));
-    dialog->setLabelText (QFileDialog::FileType,
-                          to_qstring (translate ("File type")));
-    dialog->setLabelText (QFileDialog::LookIn,
-                          to_qstring (translate ("Directory")));
+  }
+  else {
+    dialog->setLabelText (QFileDialog::Accept, to_qstring (translate ("Open")));
   }
 
   if (type != "directory") {
@@ -244,6 +240,14 @@ qt_chooser_widget_rep::perform_dialog () {
     filters << to_qstring (translate ("All files (*)"));
     dialog->setNameFilters (filters);
   }
+
+  dialog->setLabelText (QFileDialog::Reject, to_qstring (translate ("Cancel")));
+  dialog->setLabelText (QFileDialog::FileName,
+                        to_qstring (translate ("File name")));
+  dialog->setLabelText (QFileDialog::FileType,
+                        to_qstring (translate ("File type")));
+  dialog->setLabelText (QFileDialog::LookIn,
+                        to_qstring (translate ("Directory")));
 
   dialog->updateGeometry ();
   QSize  sz = dialog->sizeHint ();
