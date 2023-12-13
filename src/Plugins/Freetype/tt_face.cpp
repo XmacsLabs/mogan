@@ -16,8 +16,6 @@
 #include "tm_url.hpp"
 #include "tt_file.hpp"
 
-#ifdef USE_FREETYPE
-
 RESOURCE_CODE (tt_face);
 
 /******************************************************************************
@@ -218,5 +216,3 @@ tt_font_glyphs (string family, int size, int hdpi, int vdpi) {
   return make (font_glyphs, name,
                tm_new<tt_font_glyphs_rep> (name, family, size, hdpi, vdpi));
 }
-
-#endif // USE_FREETYPE

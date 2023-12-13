@@ -13,8 +13,6 @@
 #include "font.hpp"
 #include "tt_face.hpp"
 
-#ifdef USE_FREETYPE
-
 array<int>    build_range (int start, int end);
 string        height_trace (font_metric fnm, array<int> cs);
 array<int>    decode_trace (string s);
@@ -629,5 +627,3 @@ double
 get_up_pen_height (array<string> a) {
   return 0.0;
 }
-
-#endif // USE_FREETYPE

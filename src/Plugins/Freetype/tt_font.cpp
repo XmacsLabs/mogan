@@ -15,8 +15,6 @@
 #include "font.hpp"
 #include "tm_debug.hpp"
 
-#ifdef USE_FREETYPE
-
 #define std_dpi 600
 #define std_pixel (std_shrinkf * 256)
 #define ROUND(l) ((l * hdpi + (std_dpi >> 1)) / std_dpi)
@@ -252,5 +250,3 @@ tt_font (string family, int size, int dpi) {
   TM_FAILED ("true type support was disabled");
   return font ();
 }
-
-#endif
