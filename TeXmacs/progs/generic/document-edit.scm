@@ -74,7 +74,8 @@
 (tm-define (init-interactive-env var)
   (:interactive #t)
   (interactive (lambda (s) (set-init-env var s))
-    (list (or (logic-ref env-var-description% var) var) "string"
+    (list (or (logic-ref env-var-description% var) var)
+          "string"
           (get-init-env var))))
 
 (tm-define (test-init-true? var)

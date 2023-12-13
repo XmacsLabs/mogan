@@ -322,8 +322,11 @@ qt_inputs_list_widget_rep::perform_dialog () {
     for (int i= 0; i < N (children) - 1; ++i)
       QWidget::setTabOrder (widgets[i], widgets[i + 1]);
 
-    QDialogButtonBox* buttonBox= new QDialogButtonBox (
-        QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &d);
+    QDialogButtonBox* buttonBox= new QDialogButtonBox (&d);
+    buttonBox->addButton (qt_translate ("Ok"), QDialogButtonBox::AcceptRole);
+    buttonBox->addButton (qt_translate ("Cancel"),
+                          QDialogButtonBox::RejectRole);
+    buttonBox->setOrientation (Qt::Horizontal);
     QObject::connect (buttonBox, SIGNAL (accepted ()), &d, SLOT (accept ()));
     QObject::connect (buttonBox, SIGNAL (rejected ()), &d, SLOT (reject ()));
     vl->addWidget (buttonBox);
