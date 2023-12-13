@@ -683,7 +683,7 @@
     (assuming (graphics-mode-attribute? (graphics-mode) "line-width")
       (-> "Line width" (link graphics-line-width-menu)))
     (assuming (graphics-mode-attribute? (graphics-mode) "dash-style")
-      (-> "Line dashes" (link graphics-dash-menu)))
+      (-> "Line styles" (link graphics-dash-menu)))
     (assuming
         (or (graphics-mode-attribute? (graphics-mode) "arrow-begin")
             (graphics-mode-attribute? (graphics-mode) "arrow-end"))
