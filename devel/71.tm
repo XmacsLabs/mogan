@@ -7,23 +7,27 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|7|10|2|2|cell-background|pastel
-  green>|<cwith|12|19|2|2|cell-background|pastel
-  green>|<cwith|6|6|2|2|cell-background|pastel
-  green>|<table|<row|<cell|Chore>|<cell|71_19>|<cell|v1.2.1>|<cell|Darcy>|<cell|Better
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|9|12|2|2|cell-background|pastel
+  green>|<cwith|14|21|2|2|cell-background|pastel
+  green>|<cwith|8|8|2|2|cell-background|pastel
+  green>|<cwith|2|2|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Chore>|<cell|71_21>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Search
+  in Directory or recent files>>|<row|<cell|Chore>|<cell|71_20>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Do
+  not use native file dialog on macOS and translate label
+  text>>|<row|<cell|Chore>|<cell|71_19>|<cell|v1.2.1>|<cell|Darcy>|<cell|Better
   icons and tooltip for preferences and render options of
   tag>>|<row|<cell|Chore>|<cell|71_18>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Better
   icons for content tags in the mode tool
   bar>>|<row|<cell|Chore>|<cell|71_17>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Append
-  host for buffer names in the Go menu>>|<row|<cell|Chore>|<cell|71_16>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Add
-  a group name for debug options>>|<row|<cell|Chore>|<cell|71_15>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Search
-  in Directory>>|<row|<cell|Chore>|<cell|71_14>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Append
+  host for buffer names in the Go menu>>|<row|<cell|Chore>|<cell|71_16>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Translate
+  the dialog via <scm|notify-now>>>|<row|<cell|Chore>|<cell|71_15>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Prompt
+  when saving to the read only file>>|<row|<cell|Chore>|<cell|71_14>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Append
   host for remote files in menu entries>>|<row|<cell|Chore>|<cell|71_13>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Use
   TeXmacs instead of Texmacs in the style
   menu>>|<row|<cell|Chore>|<cell|71_12>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Prevent
   debug options from being translated in Debug
   menu>>|<row|<cell|Chore>|<cell|71_11>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Use
-  macOS instead Mac OS>>|<row|<cell|Chore>|<cell|71_10>|<cell|v1.2.0>|<cell|<value|da>>|<cell|translate
+  macOS instead Mac OS>>|<row|<cell|Chore>|<cell|71_10>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Translate
   cancel in user-confirm dialogue>>|<row|<cell|Chore>|<cell|71_9>|<cell|>|<cell|<value|da>>|<cell|adjust
   the window size at startup on Windows>>|<row|<cell|Chore>|<cell|71_8>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Prevent
   beamer theme names from being translated>>|<row|<cell|Chore>|<cell|71_7>|<cell|v1.2.0>|<cell|<value|da>>|<cell|better
