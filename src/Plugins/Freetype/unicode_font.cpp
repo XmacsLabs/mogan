@@ -13,7 +13,6 @@
 #include "Freetype/tt_face.hpp"
 #include "Freetype/tt_file.hpp"
 #include "analyze.hpp"
-#include "config.h"
 #include "converter.hpp"
 #include "font.hpp"
 
