@@ -12,11 +12,8 @@
 #include "Freetype/free_type.hpp"
 #include "Freetype/tt_face.hpp"
 #include "Freetype/tt_file.hpp"
-#include "config.h"
 #include "font.hpp"
 #include "tm_debug.hpp"
-
-#ifdef USE_FREETYPE
 
 #define std_dpi 600
 #define std_pixel (std_shrinkf * 256)
@@ -243,15 +240,3 @@ font
 tt_font (string family, int size, int dpi) {
   return tt_font (family, size, dpi, dpi);
 }
-
-#else
-
-font
-tt_font (string family, int size, int dpi) {
-  string name= "tt:" * family * as_string (size) * "@" * as_string (dpi);
-  failed_error << "Font name= " << name << "\n";
-  TM_FAILED ("true type support was disabled");
-  return font ();
-}
-
-#endif

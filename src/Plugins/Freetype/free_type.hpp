@@ -13,9 +13,6 @@
 #define FREE_TYPE_H
 #include "tree.hpp"
 
-bool ft_initialize ();
-bool ft_present ();
-
 #ifdef USE_FREETYPE
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -37,6 +34,20 @@ extern FT_Error (*ft_render_glyph) (FT_GlyphSlot   slot,
 extern FT_Error (*ft_get_kerning) (FT_Face face, FT_UInt left_glyph,
                                    FT_UInt right_glyph, FT_UInt kern_mode,
                                    FT_Vector* akerning);
+
+bool ft_initialize ();
+bool ft_present ();
+
+#else
+
+inline bool
+ft_initialize () {
+  return true;
+}
+inline bool
+ft_present () {
+  return false;
+}
 
 #endif
 

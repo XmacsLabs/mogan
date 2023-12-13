@@ -163,12 +163,6 @@ string default_korean_font_name ();
 font error_font (font fn);
 font virtual_font (font base, string fam, int sz, int hdpi, int vdpi, bool ext);
 font virtual_enhance_font (font base, string virt);
-font tt_font (string family, int size, int dpi);
-font unicode_font (string family, int size, int dpi);
-font unicode_math_font (font up, font it, font bup, font bit, font fb);
-font rubber_unicode_font (font base);
-font rubber_stix_font (font base);
-font rubber_assemble_font (font base);
 font rubber_font (font base);
 bool use_poor_rubber (font fn);
 font poor_rubber_font (font base);
@@ -290,5 +284,66 @@ array<string> patch_font (array<string> v, array<string> w, bool decode= true);
 array<string> apply_substitutions (array<string> v);
 string        main_family (string f);
 bool          use_macos_fonts ();
+
+#ifdef USE_FREETYPE
+
+font unicode_font (string family, int size, int dpi);
+font unicode_math_font (font up, font it, font bup, font bit, font fb);
+font rubber_unicode_font (font base);
+font rubber_stix_font (font base);
+font rubber_assemble_font (font base);
+font tt_font (string family, int size, int dpi);
+
+#else
+
+inline font
+unicode_font (string family, int size, int dpi) {
+  string name= "unicode:" * family * as_string (size) * "@" * as_string (dpi);
+  failed_error << "Font name= " << name << "\n";
+  TM_FAILED ("true type support was disabled");
+  return font ();
+}
+
+inline font
+unicode_math_font (font up, font it, font bup, font bit, font fb) {
+  string name= "unimath[" * up->res_name * "," * it->res_name * "," *
+               bup->res_name * "," * bit->res_name * "," * fb->res_name * "]";
+  failed_error << "Font name= " << name << "\n";
+  TM_FAILED ("true type support was disabled");
+  return font ();
+}
+
+inline font
+rubber_unicode_font (font base) {
+  string name= "rubberunicode[" * base->res_name * "]";
+  failed_error << "Font name= " << name << "\n";
+  TM_FAILED ("true type support was disabled");
+  return font ();
+}
+
+inline font
+rubber_stix_font (font base) {
+  string name= "rubberstix[" * base->res_name * "]";
+  failed_error << "Font name= " << name << "\n";
+  TM_FAILED ("true type support was disabled");
+  return font ();
+}
+
+font
+rubber_assemble_font (font base) {
+  string name= "rubberunicode[" * base->res_name * "]";
+  failed_error << "Font name= " << name << "\n";
+  TM_FAILED ("true type support was disabled");
+  return font ();
+}
+
+inline font
+tt_font (string family, int size, int dpi) {
+  string name= "tt:" * family * as_string (size) * "@" * as_string (dpi);
+  failed_error << "Font name= " << name << "\n";
+  TM_FAILED ("true type support was disabled");
+  return font ();
+}
+#endif // defined USE_FREETYPE
 
 #endif // defined FONT_H

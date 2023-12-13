@@ -9,11 +9,8 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "config.h"
 #include "converter.hpp"
 #include "font.hpp"
-
-#ifdef USE_FREETYPE
 
 bool supports_big_operators (string res_name); // from poor_rubber.cpp
 
@@ -365,15 +362,3 @@ rubber_unicode_font (font base) {
   string name= "rubberunicode[" * base->res_name * "]";
   return make (font, name, tm_new<rubber_unicode_font_rep> (name, base));
 }
-
-#else
-
-font
-rubber_unicode_font (font base) {
-  string name= "rubberunicode[" * base->res_name * "]";
-  failed_error << "Font name= " << name << "\n";
-  TM_FAILED ("true type support was disabled");
-  return font ();
-}
-
-#endif

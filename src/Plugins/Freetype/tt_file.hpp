@@ -13,7 +13,6 @@
 #define TT_FILE_H
 
 #include "bitmap_font.hpp"
-#include "config.h"
 #include "url.hpp"
 
 url    tt_font_path ();

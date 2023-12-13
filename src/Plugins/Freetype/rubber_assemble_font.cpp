@@ -9,12 +9,9 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "config.h"
 #include "converter.hpp"
 #include "font.hpp"
 #include "translator.hpp"
-
-#ifdef USE_FREETYPE
 
 /******************************************************************************
  * True Type fonts
@@ -182,15 +179,3 @@ rubber_assemble_font (font base) {
   string name= "rubberassemble[" * base->res_name * "]";
   return make (font, name, tm_new<rubber_assemble_font_rep> (name, base));
 }
-
-#else
-
-font
-rubber_assemble_font (font base) {
-  string name= "rubberunicode[" * base->res_name * "]";
-  failed_error << "Font name= " << name << "\n";
-  TM_FAILED ("true type support was disabled");
-  return font ();
-}
-
-#endif
