@@ -467,7 +467,6 @@ find_best_approximation (tree ff) {
 
 void
 font_database_collect (url u) {
-  bench_start ("collect " * as_string (u));
   if (is_none (u))
     ;
   else if (is_or (u)) {
@@ -475,12 +474,14 @@ font_database_collect (url u) {
     font_database_collect (u[2]);
   }
   else if (is_directory (u)) {
+    bench_start ("font dir " * as_string (u));
     bool          err;
     array<string> a= read_directory (u, err);
     for (int i= 0; i < N (a); i++) {
       if (!starts (a[i], ".")) {
         if (ends (a[i], ".ttf") || ends (a[i], ".ttc") || ends (a[i], ".otf") ||
             ends (a[i], ".tfm")) {
+          bench_start ("font " * a[i]);
           for (int j= 0; j < 65536; j++) {
             int  sz= file_size (u * a[i]);
             tree ff= tuple (a[i], as_string (j), as_string (sz));
@@ -504,15 +505,17 @@ font_database_collect (url u) {
             }
             else break;
           }
+          bench_end ("font " * a[i], 30);
         }
       }
     }
+    bench_end ("font dir " * as_string (u));
   }
-  bench_end ("collect " * as_string (u));
 }
 
 void
 font_database_filter () {
+  bench_start ("font_database_filter");
   new_font_table = hashmap<tree, tree> (UNINIT);
   back_font_table= hashmap<tree, tree> (UNINIT);
   build_back_table ();
@@ -521,6 +524,7 @@ font_database_filter () {
   font_table     = new_font_table;
   new_font_table = hashmap<tree, tree> (UNINIT);
   back_font_table= hashmap<tree, tree> (UNINIT);
+  bench_end ("font_database_filter");
 }
 
 void

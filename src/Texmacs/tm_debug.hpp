@@ -231,8 +231,9 @@ inline void bench_reset (string task) {
   lolly::system::timer_reset (task);
 }
 inline void bench_end (string task, uint32_t threshold=0) {
-  lolly::system::timer_end (task);
+  lolly::system::timer_cumul (task);
   lolly::system::bench_print (std_bench, task, threshold);
+  lolly::system::timer_reset (task);
 }
 
 #endif // defined TM_DEBUG_H
