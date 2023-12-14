@@ -251,6 +251,13 @@ qt_chooser_widget_rep::perform_dialog () {
   dialog->setLabelText (QFileDialog::LookIn,
                         to_qstring (translate ("Directory")));
 
+#ifdef OS_MACOS
+  // If the current directory is root, we should reset it to home
+  if ((dialog->directory ()).isRoot ()) {
+    dialog->setDirectory (QDir::home ());
+  }
+#endif
+
   dialog->updateGeometry ();
   QSize  sz = dialog->sizeHint ();
   QPoint pos= to_qpoint (position);
