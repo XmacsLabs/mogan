@@ -19,8 +19,8 @@
 #include "font.hpp"
 #include "iterator.hpp"
 #include "merge_sort.hpp"
-#include "tm_file.hpp"
 #include "tm_debug.hpp"
+#include "tm_file.hpp"
 #include "tm_timer.hpp"
 
 void                 font_database_filter_features ();
@@ -479,8 +479,8 @@ font_database_collect (url u) {
     array<string> a= read_directory (u, err);
     for (int i= 0; i < N (a); i++) {
       if (!starts (a[i], ".")) {
-        if (ends (a[i], ".ttf") || ends (a[i], ".ttc") ||
-            ends (a[i], ".otf") || ends (a[i], ".tfm")) {
+        if (ends (a[i], ".ttf") || ends (a[i], ".ttc") || ends (a[i], ".otf") ||
+            ends (a[i], ".tfm")) {
           for (int j= 0; j < 65536; j++) {
             int  sz= file_size (u * a[i]);
             tree ff= tuple (a[i], as_string (j), as_string (sz));
@@ -508,7 +508,7 @@ font_database_collect (url u) {
       }
     }
   }
-  bench_end (std_bench, "collect " * as_string (u));
+  bench_end ("collect " * as_string (u));
 }
 
 void
