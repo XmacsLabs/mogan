@@ -508,13 +508,9 @@ font_database_collect (url u) {
     array<string> a= read_directory (u, err);
     for (int i= 0; i < N (a); i++) {
       if (!starts (a[i], ".")) {
-        string        suf             = suffix (a[i]);
-        array<string> allowed_suffixes= array<string> ();
-        allowed_suffixes << "ttf"
-                         << "ttc"
-                         << "otf"
-                         << "tfm";
-        if (contains (suf, allowed_suffixes)) {
+        string        suf    = suffix (a[i]);
+        array<string> allowed= array<string> ("ttf", "ttc", "otf", "tfm");
+        if (contains (suf, allowed)) {
           font_collect (u, a[i]);
         }
       }
