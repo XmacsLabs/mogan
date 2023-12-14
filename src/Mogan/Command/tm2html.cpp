@@ -22,6 +22,7 @@
 #ifdef STACK_SIZE
 #include <sys/resource.h>
 #endif
+#include <lolly/system/timer.hpp>
 
 #include "../app_type.hpp"
 #include "boot.hpp"
@@ -189,7 +190,7 @@ TeXmacs_main (int argc, char** argv) {
     open_window ();
   }
 
-  if (DEBUG_BENCH) bench_print (std_bench);
+  if (DEBUG_BENCH) lolly::system::bench_print (std_bench);
   bench_reset ("initialize texmacs");
   bench_reset ("initialize plugins");
   bench_reset ("initialize scheme");

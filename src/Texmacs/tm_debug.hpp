@@ -1,6 +1,8 @@
 #ifndef TM_DEBUG_H
 #define TM_DEBUG_H
+
 #include "string.hpp"
+#include "lolly/system/timer.hpp"
 
 /**
  * @brief Enumeration of debugging flags.
@@ -218,5 +220,20 @@ extern tm_ostream io_warning;
 extern tm_ostream widkit_warning;
 extern tm_ostream bibtex_warning;
 extern tm_ostream std_bench;
+
+inline void bench_start (string task) {
+  lolly::system::timer_start (task);
+}
+inline void bench_cumul (string task) {
+  lolly::system::timer_cumul (task);
+}
+inline void bench_reset (string task) {
+  lolly::system::timer_reset (task);
+}
+inline void bench_end (string task, uint32_t threshold=0, tm_ostream& ostream=std_bench) {
+  lolly::system::timer_cumul (task);
+  lolly::system::bench_print (ostream, task, threshold);
+  lolly::system::timer_reset (task);
+}
 
 #endif // defined TM_DEBUG_H
