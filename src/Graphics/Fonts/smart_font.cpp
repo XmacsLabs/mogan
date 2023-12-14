@@ -791,44 +791,54 @@ is_italic_font (string master) {
   return contains (string ("italic"), master_features (master));
 }
 
+static bool
+is_wanted (string c, string family, array<string> rules, array<string> given) {
+  for (int i= 0; i < N (rules); i++) {
+    if (is_empty (rules[i])) continue;
+    bool          ok= false;
+    array<string> v = tokenize (rules[i], "|");
+    for (int j= 0; j < N (v); j++) {
+      string wanted= locase_all (v[j]);
+      if (is_empty (wanted)) ok= true;
+      else if (contains (wanted, given)) ok= true;
+      else if (in_unicode_range (c, wanted)) ok= true;
+      else if (wanted == substitute_math_letter (c, 2)) ok= true;
+      else if (wanted == c) ok= true;
+      else if (in_collection (c, wanted)) ok= true;
+      else if (N (wanted) > 0 && wanted[0] == '!' && !in_collection (c, wanted))
+        ok= true;
+      else {
+        array<string> w= tokenize (v[j], ":");
+        if (N (w) == 1) w << w[0];
+        if (N (w) == 2) {
+          int code = get_utf8_code (c);
+          int start= get_utf8_code (w[0]);
+          int end  = get_utf8_code (w[1]);
+          if (code != -1 && code >= start && code <= end) ok= true;
+        }
+      }
+    }
+    if (!ok) return false;
+  }
+  return true;
+}
+
 int
 smart_font_rep::resolve (string c, string fam, int attempt) {
-  if (DEBUG_VERBOSE)
+  if (DEBUG_VERBOSE) {
     debug_fonts << "Resolve " << c << " in " << fam << ", attempt " << attempt
                 << LF;
+  }
   array<string> a= trimmed_tokenize (fam, "=");
   if (N (a) >= 2) {
     array<string> given= logical_font (family, variant, series, rshape);
     fam                = a[1];
     array<string> b    = tokenize (a[0], " ");
-    for (int i= 0; i < N (b); i++) {
-      if (b[i] == "") continue;
-      bool          ok= false;
-      array<string> v = tokenize (b[i], "|");
-      for (int j= 0; j < N (v); j++) {
-        string wanted= locase_all (v[j]);
-        if (wanted == "") ok= true;
-        else if (contains (wanted, given)) ok= true;
-        else if (in_unicode_range (c, wanted)) ok= true;
-        else if (wanted == substitute_math_letter (c, 2)) ok= true;
-        else if (wanted == c) ok= true;
-        else if (in_collection (c, wanted)) ok= true;
-        else if (N (wanted) > 0 && wanted[0] == '!' &&
-                 !in_collection (c, wanted))
-          ok= true;
-        else {
-          array<string> w= tokenize (v[j], ":");
-          if (N (w) == 1) w << w[0];
-          if (N (w) == 2) {
-            int code = get_utf8_code (c);
-            int start= get_utf8_code (w[0]);
-            int end  = get_utf8_code (w[1]);
-            if (code != -1 && code >= start && code <= end) ok= true;
-          }
-        }
-      }
-      if (!ok) return -1;
+    bool          ok   = is_wanted (c, fam, b, given);
+    if (!ok) {
+      return -1;
     }
+
     fam= tex_gyre_fix (fam, series, shape);
     fam= kepler_fix (fam, series, shape);
     // fam= stix_fix (fam, series, shape);
