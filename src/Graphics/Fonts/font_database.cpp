@@ -20,6 +20,8 @@
 #include "iterator.hpp"
 #include "merge_sort.hpp"
 #include "tm_file.hpp"
+#include "tm_debug.hpp"
+#include "tm_timer.hpp"
 
 void                 font_database_filter_features ();
 void                 font_database_filter_characteristics ();
@@ -459,13 +461,13 @@ find_best_approximation (tree ff) {
       }
     }
   }
-  cout << "TeXmacs] approximating font " << ff << " ~> " << best << "\n";
   if (N (best) >= 2) return best;
   return ff (0, 2);
 }
 
 void
 font_database_collect (url u) {
+  bench_start ("collect " * as_string (u));
   if (is_none (u))
     ;
   else if (is_or (u)) {
@@ -475,10 +477,10 @@ font_database_collect (url u) {
   else if (is_directory (u)) {
     bool          err;
     array<string> a= read_directory (u, err);
-    for (int i= 0; i < N (a); i++)
-      if (!starts (a[i], "."))
-        if (ends (a[i], ".ttf") || ends (a[i], ".ttc") || ends (a[i], ".otf") ||
-            ends (a[i], ".tfm"))
+    for (int i= 0; i < N (a); i++) {
+      if (!starts (a[i], ".")) {
+        if (ends (a[i], ".ttf") || ends (a[i], ".ttc") ||
+            ends (a[i], ".otf") || ends (a[i], ".tfm")) {
           for (int j= 0; j < 65536; j++) {
             int  sz= file_size (u * a[i]);
             tree ff= tuple (a[i], as_string (j), as_string (sz));
@@ -502,7 +504,11 @@ font_database_collect (url u) {
             }
             else break;
           }
+        }
+      }
+    }
   }
+  bench_end (std_bench, "collect " * as_string (u));
 }
 
 void
