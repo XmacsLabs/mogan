@@ -28,6 +28,7 @@ private slots:
     init_tex ();
   }
   void test_resolve ();
+  void test_resolve_first_attempt ();
 };
 
 void
@@ -45,6 +46,19 @@ TestSmartFont::test_resolve () {
 
   int nr2= fn_rep->resolve (utf8_to_cork ("è"));
   qcompare (fn_rep->fn[nr2]->res_name, "ec:ecrm10@600");
+}
+
+void
+TestSmartFont::test_resolve_first_attempt () {
+  auto which_arr= array<string> ();
+  which_arr << string ("roman") << string ("rm") << string ("medium")
+            << string ("right") << string ("$s") << string ("$d");
+  tree by= tuple (tree ("ec"), tree ("ecrm"), tree ("$s"), tree ("$d"));
+  font_rule (as_tree (which_arr), by);
+  font   fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
+  string c = utf8_to_cork ("中");
+  smart_font_rep* fn_rep= (smart_font_rep*) fn.rep;
+  QCOMPARE (fn_rep->resolve (c, "cjk=Songti SC", 1), -1);
 }
 
 QTEST_MAIN (TestSmartFont)
