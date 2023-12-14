@@ -474,10 +474,6 @@ font_collect (url dir, string font_name) {
     if (!back_font_table->contains (ff) &&
         back_font_table->contains (ff (0, 2))) {
       ff= find_best_approximation (ff);
-      if (j != 0 && N (tt_font_name (dir * font_name)) <= j) {
-        cout << "TeXmacs] ignore " << ff << " and higher subfonts\n";
-        break;
-      }
     }
     if (back_font_table->contains (ff)) {
       tree keys= back_font_table[ff];
