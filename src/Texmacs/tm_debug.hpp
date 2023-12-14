@@ -230,9 +230,9 @@ inline void bench_cumul (string task) {
 inline void bench_reset (string task) {
   lolly::system::timer_reset (task);
 }
-inline void bench_end (string task, uint32_t threshold=0) {
+inline void bench_end (string task, uint32_t threshold=0, tm_ostream& ostream=std_bench) {
   lolly::system::timer_cumul (task);
-  lolly::system::bench_print (std_bench, task, threshold);
+  lolly::system::bench_print (ostream, task, threshold);
   lolly::system::timer_reset (task);
 }
 

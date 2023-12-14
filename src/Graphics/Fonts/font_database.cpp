@@ -491,7 +491,7 @@ font_collect (url dir, string font_name) {
     }
     else break;
   }
-  bench_end ("font " * font_name, 30);
+  bench_end ("font " * font_name, 30, cout);
 }
 
 void
