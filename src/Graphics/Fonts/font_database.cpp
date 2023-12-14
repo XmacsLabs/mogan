@@ -525,9 +525,7 @@ font_database_filter () {
   new_font_table = hashmap<tree, tree> (UNINIT);
   back_font_table= hashmap<tree, tree> (UNINIT);
   build_back_table ();
-  if (os_macos ()) {
-    font_collect (url ("/System/Library/Fonts/Supplemental"), "Songti.ttc");
-  }
+  font_database_collect (tt_font_path ());
   font_database_collect (tfm_font_path ());
   font_table     = new_font_table;
   new_font_table = hashmap<tree, tree> (UNINIT);
