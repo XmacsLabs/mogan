@@ -515,7 +515,7 @@ font_database_collect (url u) {
         }
       }
     }
-    bench_end ("font dir " * as_string (u));
+    bench_end ("font dir " * as_string (u), 30);
   }
 }
 
