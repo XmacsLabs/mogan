@@ -13,7 +13,7 @@
 #include "analyze.hpp"
 #include "font.hpp"
 #include "hashmap.hpp"
-#include "tm_timer.hpp"
+#include "tm_debug.hpp"
 #include "tree.hpp"
 
 hashmap<string, tree> font_conversion ("rule");

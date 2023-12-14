@@ -21,7 +21,7 @@
 
 -- The following versions are adopted on macOS/Windows/ArchLinux
 -- We will use the system provided packages on Ubuntu 22.04/Debian 12/...
-local LOLLY_VERSION = "1.3.9"
+local LOLLY_VERSION = "1.3.10"
 local TBOX_VERSION = "1.7.5"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
@@ -47,7 +47,7 @@ package("lolly")
         add_deps("cpr")
     end
 
-    add_versions("v" .. LOLLY_VERSION, "924955871a203f19b004841fc19b474ea4ccebc0")
+    add_versions("v" .. LOLLY_VERSION, "6751c26bb0fb2e1cfab9a8d6f899c701783ad2d7")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
