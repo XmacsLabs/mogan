@@ -15,6 +15,7 @@
 #include "converter.hpp"
 #include "font.hpp"
 #include "iterator.hpp"
+#include "lolly/data/unicode.hpp"
 #include "translator.hpp"
 #include "unicode.hpp"
 
@@ -371,10 +372,10 @@ main_family (string f) {
 static bool
 in_unicode_range (string c, string range) {
   string uc= strict_cork_to_utf8 (c);
-  if (N (uc) == 0) return "";
+  if (N (uc) == 0) return false;
   int    pos = 0;
   int    code= decode_from_utf8 (uc, pos);
-  string got = get_unicode_range (code);
+  string got = lolly::data::unicode_get_range (code);
   if (range == got) return range != "";
   if (range == "cjk" &&
       (got == "hangul" || got == "hiragana" || got == "enclosed_alphanumerics"))
