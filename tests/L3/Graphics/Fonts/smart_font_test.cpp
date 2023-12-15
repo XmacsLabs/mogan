@@ -58,8 +58,8 @@ TestSmartFont::test_resolve_first_attempt () {
   // sys-chinese-rm-bold-small-caps-16-600-smart
   font   fn= smart_font ("sys-chinese", "rm", "bold", "small-caps", 16, 600);
   string c = utf8_to_cork ("中");
-  smart_font_rep* fn_rep  = (smart_font_rep*) fn.rep;
-  int             fn_index= fn_rep->resolve (c, "cjk=Songti SC", 1);
+  smart_font_rep* fn_rep= (smart_font_rep*) fn.rep;
+  int fn_index= fn_rep->resolve (c, "cjk=" * default_chinese_font_name (), 1);
   QCOMPARE (fn_index, 2);
 }
 
