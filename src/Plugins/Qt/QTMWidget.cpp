@@ -442,6 +442,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
         mods&= ~Qt::ShiftModifier;
       }
     }
+    if (is_empty (r)) return;
     if (mods & Qt::ShiftModifier) r= "S-" * r;
     if (mods & Qt::AltModifier) r= "A-" * r;
       // if (mods & Qt::KeypadModifier) r= "K-" * r;
@@ -454,7 +455,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
 #endif
   }
 
-  if (r == "") return;
+  if (is_empty (r)) return;
   if (DEBUG_QT && DEBUG_KEYBOARD) debug_qt << "key press: " << r << LF;
   the_gui->process_keypress (tm_widget (), r, texmacs_time ());
 }
