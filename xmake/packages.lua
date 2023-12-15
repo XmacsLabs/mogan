@@ -60,6 +60,24 @@ end
 
 
 function add_requires_of_mogan()
+    -- package: lolly
+    set_configvar("LOLLY_VERSION", LOLLY_VERSION)
+    add_requires("lolly", {system=false})
+    tbox_configs = {hash=true, ["force-utf8"]=true}
+    add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
+    add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
+
+    -- package: libcurl
+    if is_plat("linux") and using_apt() then
+        add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+        add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
+    else
+        add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
+    end
+
+    -- package: s7
+    add_requires("s7 "..S7_VERSION, {system=false})
+
     -- package: qt6widgets
     if is_plat("mingw") or is_plat("windows") then
         add_requires("qt6widgets "..QT6_VERSION)
@@ -72,7 +90,25 @@ function add_requires_of_mogan()
     set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
     if not is_plat("wasm") then
         add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+    end
+
+    -- package: libpng
+    if is_plat("linux") and using_apt() then
+        add_requires("apt::libpng-dev", {alias="libpng"})
+        add_requireconfs("pdfhummus.libpng", {system = true, override=true})
+    else
         add_requireconfs("pdfhummus.libpng", {version = LIBPNG_VERSION, system = false, override=true})
+    end
+
+    -- package: libjpeg
+    if is_plat("linux") and using_apt() then
+        if linuxos.name() == "ubuntu" then
+            add_requires("apt::libjpeg-turbo8-dev", {alias="libjpeg"})
+        else
+            add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
+        end
+        add_requireconfs("pdfhummus.libjpeg", {system = true, override=true})
+    else
         add_requireconfs("pdfhummus.libjpeg", {version = LIBJPEG_VERSION, system = false, override=true})
     end
 
@@ -94,13 +130,4 @@ function add_requires_of_mogan()
     if is_plat("linux") then
         add_requires("fontconfig", {system = true})
     end
-
-    set_configvar("LOLLY_VERSION", LOLLY_VERSION)
-    add_requires("lolly", {system=false})
-    tbox_configs = {hash=true, ["force-utf8"]=true}
-    add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
-    add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
-    add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
-
-    add_requires("s7 "..S7_VERSION, {system=false})
 end
