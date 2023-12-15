@@ -31,6 +31,7 @@ function add_target_tm2html()
 
     if is_plat("windows") then
         set_optimize("smallest");
+        set_runtimes("MT")
     end
 
     if is_mode("debug", "releasedbg") and is_plat("mingw", "windows") then
