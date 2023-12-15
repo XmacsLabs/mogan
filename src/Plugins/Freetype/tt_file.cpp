@@ -157,8 +157,10 @@ bool
 tt_font_exists (string name) {
   // cout << "tt_font_exists? " << name << "\n";
   if (tt_fonts->contains (name)) return tt_fonts[name] == "yes";
+  bench_start ("tt_font_exists " * name);
   bool yes       = !is_none (tt_font_find (name));
   tt_fonts (name)= yes ? string ("yes") : string ("no");
+  bench_end ("tt_font_exists " * name, 30);
   return yes;
 }
 
