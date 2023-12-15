@@ -25,7 +25,6 @@ class TestSmartFont : public QObject {
 private slots:
   void init () {
     init_lolly ();
-    init_texmacs_home_path ();
     set_new_fonts (true);
     init_tex ();
   }
@@ -60,7 +59,9 @@ TestSmartFont::test_resolve_first_attempt () {
   string c = utf8_to_cork ("中");
   smart_font_rep* fn_rep  = (smart_font_rep*) fn.rep;
   int             fn_index= fn_rep->resolve (c, "cjk=Songti SC", 1);
-  qcompare (fn_rep->fn[fn_index]->res_name, "unicode:Songti.116@600-smallcapsed");
+  QCOMPARE (fn_index, 2);
+  qcompare (fn_rep->fn[fn_index]->res_name,
+            "unicode:Songti.116@600-smallcapsed");
 }
 
 QTEST_MAIN (TestSmartFont)
