@@ -474,7 +474,7 @@ immediate_options (int argc, char** argv) {
 #if defined(OS_MINGW) || defined(OS_WIN)
   if (get_env ("HOME") == "") set_env ("HOME", get_env ("USERPROFILE"));
 #endif
-  init_texmacs_home_path (argc, argv);
+  init_texmacs_home_path ();
   if (is_empty (get_env ("TEXMACS_HOME_PATH"))) return;
   for (int i= 1; i < argc; i++) {
     string s= argv[i];

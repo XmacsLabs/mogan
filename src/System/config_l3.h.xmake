@@ -12,3 +12,7 @@ ${define OS_WASM}
 
 /* Use freetype library */
 ${define USE_FREETYPE}
+${define USE_FONTCONFIG}
+
+/* Link freetype library with TeXmacs */
+#define LINKED_FREETYPE 1

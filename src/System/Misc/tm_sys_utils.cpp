@@ -81,6 +81,28 @@ get_texmacs_home_path () {
   return url_system (path);
 }
 
+void
+init_texmacs_home_path () {
+  if (!is_empty (get_env ("TEXMACS_HOME_PATH"))) return;
+
+  if (os_mingw () || os_win ()) {
+    set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\XmacsLabs");
+  } else if (os_macos ()) {
+    set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/Library/Application Support/XmacsLabs");
+  } else if (os_wasm ()) {
+    set_env ("TEXMACS_HOME_PATH", "/.XmacsLabs");
+  } else {
+#if defined(OS_HAIKU)
+    set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/config/settings/TeXmacs");
+#else
+    string xdg_data_home= get_env ("XDG_DATA_HOME");
+    if (is_empty (xdg_data_home))
+      xdg_data_home= get_env ("HOME") * "/.local/share";
+    set_env ("TEXMACS_HOME_PATH", xdg_data_home * "/XmacsLabs");
+#endif
+  }
+}
+
 url
 get_tm_cache_path () {
 #if defined(OS_WIN) || defined(OS_MINGW)
