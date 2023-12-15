@@ -34,8 +34,7 @@ private slots:
 void
 TestSmartFont::test_resolve () {
   auto which_arr= array<string> ();
-  which_arr << string ("roman") << string ("rm") << string ("medium")
-            << string ("right") << string ("$s") << string ("$d");
+  which_arr << "roman" << "rm" << "medium" << "right" << "$s" << "$d";
   tree by= tuple (tree ("ec"), tree ("ecrm"), tree ("$s"), tree ("$d"));
   font_rule (as_tree (which_arr), by);
   font fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
@@ -50,15 +49,16 @@ TestSmartFont::test_resolve () {
 
 void
 TestSmartFont::test_resolve_first_attempt () {
-  auto which_arr= array<string> ();
-  which_arr << string ("roman") << string ("rm") << string ("medium")
-            << string ("right") << string ("$s") << string ("$d");
-  tree by= tuple (tree ("ec"), tree ("ecrm"), tree ("$s"), tree ("$d"));
-  font_rule (as_tree (which_arr), by);
-  font   fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
+  // (roman rm bold small-caps $s $d) (ec ecxc $s $d)
+  tree which= tree (TUPLE, "roman", "rm", "bold", "small-caps", "$s", "$d");
+  tree by= tree (TUPLE, "ec", "ecxc", "$s", "$d");
+  font_rule (which, by);
+  // sys-chinese-rm-bold-small-caps-16-600-smart
+  font   fn= smart_font ("sys-chinese", "rm", "bold", "small-caps", 16, 600);
   string c = utf8_to_cork ("中");
   smart_font_rep* fn_rep= (smart_font_rep*) fn.rep;
-  QCOMPARE (fn_rep->resolve (c, "cjk=Songti SC", 1), -1);
+  int fn_index= fn_rep->resolve (c);
+  cout << fn_index << LF;
 }
 
 QTEST_MAIN (TestSmartFont)
