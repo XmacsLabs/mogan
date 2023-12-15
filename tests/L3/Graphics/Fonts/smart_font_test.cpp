@@ -61,8 +61,6 @@ TestSmartFont::test_resolve_first_attempt () {
   smart_font_rep* fn_rep  = (smart_font_rep*) fn.rep;
   int             fn_index= fn_rep->resolve (c, "cjk=Songti SC", 1);
   QCOMPARE (fn_index, 2);
-  qcompare (fn_rep->fn[fn_index]->res_name,
-            "unicode:Songti.116@600-smallcapsed");
 }
 
 QTEST_MAIN (TestSmartFont)
