@@ -60,7 +60,17 @@ package_end()
 
 
 function add_requires_of_mogan()
-    if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
+    -- package: pdfhummus
+    set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
+    if not is_plat("wasm") then
+        add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+        add_requireconfs("pdfhummus.libpng", {version = LIBPNG_VERSION, system = false, override=true})
+        add_requireconfs("pdfhummus.libjpeg", {version = LIBJPEG_VERSION, system = false, override=true})
+    end
+
+    -- package: freetype
+    if is_plat("linux") and (linuxos.name() == "ubuntu"
+      or linuxos.name() == "debian" or linuxos.name() == "uos") then
         -- config package name for freetype on UOS
         if linuxos.name() == "uos" then
             add_requires("apt::libfreetype6-dev", {alias="freetype"})
@@ -71,6 +81,7 @@ function add_requires_of_mogan()
     -- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
         add_requires("libiconv "..LIBICONV_VERSION, {system=false})
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
+        add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
     end
 
     if is_plat("mingw") or is_plat("windows") then
@@ -90,14 +101,6 @@ function add_requires_of_mogan()
     add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
     add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
     add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
-
-    set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
-    if not is_plat("wasm") then
-        add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
-        add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
-        add_requireconfs("pdfhummus.libpng", {version = LIBPNG_VERSION, system = false, override=true})
-        add_requireconfs("pdfhummus.libjpeg", {version = LIBJPEG_VERSION, system = false, override=true})
-    end
 
     add_requires("s7 "..S7_VERSION, {system=false})
 end
