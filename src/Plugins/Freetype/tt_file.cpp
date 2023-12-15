@@ -14,6 +14,7 @@
 #include "analyze.hpp"
 #include "data_cache.hpp"
 #include "file.hpp"
+#include "font.hpp"
 #include "hashmap.hpp"
 #include "preferences.hpp"
 #include "scheme.hpp"
@@ -126,6 +127,22 @@ tt_font_find_sub (string name) {
   // cout << "tt_font_find " << name << "\n";
   url u= tt_unpack (name);
   if (!is_none (u)) return u;
+
+  if (font_database_rev_contains (name * ".ttf")) {
+    u= tt_locate (name * ".ttf");
+    if (!is_none (u)) return u;
+  }
+
+  if (font_database_rev_contains (name * ".ttc")) {
+    u= tt_locate (name * ".ttc");
+    if (!is_none (u)) return u;
+  }
+
+  if (font_database_rev_contains (name * ".otf")) {
+    u= tt_locate (name * ".otf");
+    if (!is_none (u)) return u;
+  }
+
   u= tt_locate (name * ".pfb");
   // if (!is_none (u)) cout << name << " -> " << u << "\n";
   if (!is_none (u)) return u;

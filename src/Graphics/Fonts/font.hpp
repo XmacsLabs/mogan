@@ -254,6 +254,7 @@ array<string> font_database_search (string fam, string var, string series,
                                     string shape);
 array<string> font_database_characteristics (string family, string style);
 tree          font_database_substitutions (string family);
+bool          font_database_rev_contains (string font_file_name);
 
 // Font selection
 tree          array_as_tuple (array<string> a);
