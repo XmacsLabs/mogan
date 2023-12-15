@@ -13,12 +13,6 @@
 -- Dependencies: Platform|Package Manager
 --
 
--- GNU/Linux variants
--- [x] APT powered
--- [ ] pacman powered
--- [ ] portage powered
--- ...
-
 -- The following versions are adopted on macOS/Windows/ArchLinux
 -- We will use the system provided packages on Ubuntu 22.04/Debian 12/...
 local LOLLY_VERSION = "1.3.10"
@@ -58,8 +52,22 @@ package("lolly")
     end)
 package_end()
 
+function using_apt ()
+    return linuxos.name() == "debian"
+           or linuxos.name() == "ubuntu"
+           or linuxos.name() == "uos"
+end
+
 
 function add_requires_of_mogan()
+    -- package: qt6widgets
+    if is_plat("mingw") or is_plat("windows") then
+        add_requires("qt6widgets "..QT6_VERSION)
+        if is_mode("release") then
+            add_requires("qtifw "..QTIFW_VERSION)
+        end
+    end
+
     -- package: pdfhummus
     set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
     if not is_plat("wasm") then
@@ -69,8 +77,7 @@ function add_requires_of_mogan()
     end
 
     -- package: freetype
-    if is_plat("linux") and (linuxos.name() == "ubuntu"
-      or linuxos.name() == "debian" or linuxos.name() == "uos") then
+    if is_plat("linux") and using_apt() then
         -- config package name for freetype on UOS
         if linuxos.name() == "uos" then
             add_requires("apt::libfreetype6-dev", {alias="freetype"})
@@ -82,13 +89,6 @@ function add_requires_of_mogan()
         add_requires("libiconv "..LIBICONV_VERSION, {system=false})
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
         add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
-    end
-
-    if is_plat("mingw") or is_plat("windows") then
-        add_requires("qt6widgets "..QT6_VERSION)
-        if is_mode("release") then
-            add_requires("qtifw "..QTIFW_VERSION)
-        end
     end
 
     if is_plat("linux") then

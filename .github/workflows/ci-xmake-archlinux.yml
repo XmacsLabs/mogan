@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo pacman -Syyu --noconfirm --needed
-          sudo pacman -S --noconfirm --needed qt6-base qt6-svg libpng zlib libjpeg curl python libxext xmake unzip
+          sudo pacman -S --noconfirm --needed qt6-base qt6-svg libpng zlib libjpeg curl python libxext xmake unzip noto-fonts-cjk
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
