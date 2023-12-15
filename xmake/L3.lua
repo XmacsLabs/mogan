@@ -94,6 +94,9 @@ function add_target_L3()
     add_packages("s7")
     add_packages("lolly")
     add_packages("freetype")
+    if is_plat("linux") then
+        add_packages("fontconfig")
+    end
 
     add_includedirs("$(buildir)/L3")
     add_includedirs("$(buildir)/glue")

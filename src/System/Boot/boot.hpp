@@ -18,7 +18,6 @@ extern int  install_status;
 extern bool headless_mode;
 
 void   init_texmacs_path (int& argc, char** argv);
-void   init_texmacs_home_path (int& argc, char** argv);
 void   init_upgrade ();
 void   init_texmacs ();
 void   init_plugins ();

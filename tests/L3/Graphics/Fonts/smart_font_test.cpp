@@ -15,6 +15,7 @@
 #include "font.hpp"
 #include "smart_font.hpp"
 #include "sys_utils.hpp"
+#include "tm_sys_utils.hpp"
 #include "tree_helper.hpp"
 #include <QtTest/QtTest>
 
@@ -24,19 +25,20 @@ class TestSmartFont : public QObject {
 private slots:
   void init () {
     init_lolly ();
+    init_texmacs_home_path ();
     set_new_fonts (true);
     init_tex ();
   }
   void test_resolve ();
+  void test_resolve_first_attempt ();
 };
 
 void
 TestSmartFont::test_resolve () {
-  auto which_arr= array<string> ();
-  which_arr << string ("roman") << string ("rm") << string ("medium")
-            << string ("right") << string ("$s") << string ("$d");
-  tree by= tuple (tree ("ec"), tree ("ecrm"), tree ("$s"), tree ("$d"));
-  font_rule (as_tree (which_arr), by);
+  // ((roman rm medium right $s $d) (ec ecrm $s $d))
+  tree which= tree (TUPLE, "roman", "rm", "medium", "right", "$s", "$d");
+  tree by   = tree (TUPLE, "ec", "ecrm", "$s", "$d");
+  font_rule (which, by);
   font fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
   qcompare (fn->res_name, "sys-chinese-rm-medium-right-10-600-smart");
   smart_font_rep* fn_rep= (smart_font_rep*) fn.rep;
@@ -45,6 +47,20 @@ TestSmartFont::test_resolve () {
 
   int nr2= fn_rep->resolve (utf8_to_cork ("è"));
   qcompare (fn_rep->fn[nr2]->res_name, "ec:ecrm10@600");
+}
+
+void
+TestSmartFont::test_resolve_first_attempt () {
+  // (roman rm bold small-caps $s $d) (ec ecxc $s $d)
+  tree which= tree (TUPLE, "roman", "rm", "bold", "small-caps", "$s", "$d");
+  tree by   = tree (TUPLE, "ec", "ecxc", "$s", "$d");
+  font_rule (which, by);
+  // sys-chinese-rm-bold-small-caps-16-600-smart
+  font   fn= smart_font ("sys-chinese", "rm", "bold", "small-caps", 16, 600);
+  string c = utf8_to_cork ("中");
+  smart_font_rep* fn_rep= (smart_font_rep*) fn.rep;
+  int fn_index= fn_rep->resolve (c, "cjk=" * default_chinese_font_name (), 1);
+  QCOMPARE (fn_index, 2);
 }
 
 QTEST_MAIN (TestSmartFont)
