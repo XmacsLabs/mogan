@@ -97,20 +97,9 @@ init_texmacs_path (int& argc, char** argv) {
   // Mac bundle environment initialization
   // We set some environment variables when the executable
   // is in a .app bundle on MacOSX
-  if (is_empty (current_texmacs_path))
+  if (is_empty (current_texmacs_path)) {
     set_env ("TEXMACS_PATH", as_string (exedir * "../Resources/share/Xmacs"));
-  // cout << get_env("PATH") * ":" * as_string(url("$PWD") * argv[0]
-  //  * "../../Resources/share/TeXmacs/bin") << LF;
-  if (exists ("/bin/bash")) {
-    string shell_env= var_eval_system ("PATH='' /bin/bash -l -c 'echo $PATH'");
-    set_env ("PATH", get_env ("PATH") * ":" * shell_env * ":" *
-                         as_string (exedir * "../Resources/share/TeXmacs/bin"));
   }
-  else {
-    set_env ("PATH", get_env ("PATH") * ":" *
-                         as_string (exedir * "../Resources/share/TeXmacs/bin"));
-  }
-  // system("set");
 #endif
 
 #if defined(OS_MINGW) || defined(OS_WIN)
