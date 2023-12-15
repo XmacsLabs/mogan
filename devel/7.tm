@@ -48,6 +48,22 @@
       <value|da>
     </cell>|<\cell>
       Disable Edit-\<gtr\>Spell to avoid crash on Windows
+    </cell>>|<row|<\cell>
+      <text-dots>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|7_9>
+    </cell>|<\cell>
+      Joris
+    </cell>|<\cell>
+      Certain semantic selections crash the editor
     </cell>>>>
   </wide-tabular>
 
