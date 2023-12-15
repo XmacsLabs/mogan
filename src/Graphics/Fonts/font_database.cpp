@@ -467,10 +467,11 @@ find_best_approximation (tree ff) {
 
 static void
 font_collect (url dir, string font_name) {
-  bench_start ("font " * font_name);
-  for (int j= 0; j < 65536; j++) {
+  int       i;
+  const int MAX_SUBFONTS= 512;
+  for (i= 0; i < MAX_SUBFONTS; i++) {
     int  sz= file_size (dir * font_name);
-    tree ff= tuple (font_name, as_string (j), as_string (sz));
+    tree ff= tuple (font_name, as_string (i), as_string (sz));
     if (!back_font_table->contains (ff) &&
         back_font_table->contains (ff (0, 2))) {
       ff= find_best_approximation (ff);
@@ -480,14 +481,20 @@ font_collect (url dir, string font_name) {
       for (int j= 0; j < N (keys); j++) {
         tree key= keys[j];
         tree im (TUPLE);
-        if (new_font_table->contains (key)) im= new_font_table[key];
+        if (new_font_table->contains (key)) {
+          im= new_font_table[key];
+        }
         tuple_insert (im, ff);
         new_font_table (key)= im;
       }
     }
     else break;
   }
-  bench_end ("font " * font_name, 30, cout);
+  if (i == MAX_SUBFONTS) {
+    debug_fonts << "collecting " << font_name
+                << " reaches the number of max subfonts limit " << MAX_SUBFONTS
+                << LF;
+  }
 }
 
 void
