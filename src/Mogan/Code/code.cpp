@@ -399,7 +399,7 @@ TeXmacs_main (int argc, char** argv) {
 
 void
 immediate_options (int argc, char** argv) {
-  init_texmacs_home_path (argc, argv);
+  init_texmacs_home_path ();
   if (is_empty (get_env ("TEXMACS_HOME_PATH"))) return;
 
   for (int i= 1; i < argc; i++) {
