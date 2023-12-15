@@ -60,21 +60,6 @@ end
 
 
 function add_requires_of_mogan()
-    -- package: lolly
-    set_configvar("LOLLY_VERSION", LOLLY_VERSION)
-    add_requires("lolly", {system=false})
-    tbox_configs = {hash=true, ["force-utf8"]=true}
-    add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
-    add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
-
-    -- package: libcurl
-    if is_plat("linux") and using_apt() then
-        add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-        add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
-    else
-        add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
-    end
-
     -- package: s7
     add_requires("s7 "..S7_VERSION, {system=false})
 
@@ -84,6 +69,30 @@ function add_requires_of_mogan()
         if is_mode("release") then
             add_requires("qtifw "..QTIFW_VERSION)
         end
+    end
+
+    -- package: lolly
+    set_configvar("LOLLY_VERSION", LOLLY_VERSION)
+    add_requires("lolly", {system=false})
+    tbox_configs = {hash=true, ["force-utf8"]=true}
+    add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
+    add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
+
+    -- package: libcurl
+    if is_plat("linux") and using_apt() and (not linuxos.name() == "uos") then
+        if linuxos.name() == "uos" then
+            add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
+        else
+            add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+            add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
+        end
+    else
+        add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
+    end
+
+    -- package: fontconfig
+    if is_plat("linux") then
+        add_requires("fontconfig", {system = true})
     end
 
     -- package: pdfhummus
@@ -125,9 +134,5 @@ function add_requires_of_mogan()
         add_requires("libiconv "..LIBICONV_VERSION, {system=false})
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
         add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
-    end
-
-    if is_plat("linux") then
-        add_requires("fontconfig", {system = true})
     end
 end
