@@ -15,15 +15,15 @@
 
 -- The following versions are adopted on macOS/Windows/ArchLinux
 -- We will use the system provided packages on Ubuntu 22.04/Debian 12/...
+local S7_VERSION = "2023.04.13"
+local QT6_VERSION = "6.5.3"
+local QTIFW_VERSION = "4.6.0"
 local LOLLY_VERSION = "1.3.10"
 local TBOX_VERSION = "1.7.5"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
 local PDFHUMMUS_VERSION = "4.6.1"
 local FREETYPE_VERSION = "2.12.1"
-local QT6_VERSION = "6.5.3"
-local QTIFW_VERSION = "4.6.0"
-local S7_VERSION = "2023.04.13"
 local LIBPNG_VERSION = "1.6.37"
 local LIBJPEG_VERSION = "v9e"
 local LIBICONV_VERSION = "1.17"
@@ -96,6 +96,9 @@ function add_requires_of_mogan()
     end
 
     -- package: pdfhummus
+    if linuxos.name() == "uos" then
+        PDFHUMMUS_VERSION = "4.5.3"
+    end
     set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
     if not is_plat("wasm") then
         add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
