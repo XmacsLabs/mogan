@@ -176,6 +176,7 @@ target("libkernel_l3") do
         variables = {
             QTTEXMACS = false,
             USE_FREETYPE = true,
+            USE_FONTCONFIG = is_plat("linux"),
         }
     })
     add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
