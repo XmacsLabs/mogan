@@ -8,3 +8,6 @@ ${define SANITY_CHECKS}
 
 /* Use freetype library */
 ${define USE_FREETYPE}
+
+/* Link freetype library with TeXmacs */
+#define LINKED_FREETYPE 1
