@@ -25,6 +25,7 @@ class TestSmartFont : public QObject {
 private slots:
   void init () {
     init_lolly ();
+    init_texmacs_home_path ();
     set_new_fonts (true);
     init_tex ();
   }
