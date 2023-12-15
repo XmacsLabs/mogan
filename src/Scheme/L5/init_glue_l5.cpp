@@ -285,7 +285,8 @@ bench_print_all () {
 #include "Freetype/tt_file.hpp"
 #include "Metafont/tex_files.hpp"
 #include "font.hpp"
-#include <freetype/freetype.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 string
 freetype_version () {
