@@ -93,6 +93,7 @@ tt_font_path () {
 
 static url
 tt_locate (string name) {
+  bench_start ("tt_locate " * name);
   if (ends (name, ".pfb")) {
     /*
     if (starts (name, "rpag")) name= "uag" * name (4, N (name) - 4) * "8a.pfb";
@@ -108,12 +109,16 @@ tt_locate (string name) {
     */
     url u= resolve_tex (name);
     // cout << "tt_locate: " << name << " -> " << u << "\n";
-    if (!is_none (u)) return u;
+    if (!is_none (u)) {
+      bench_end ("tt_locate " * name, 10);
+      return u;
+    }
   }
-
-  url tt_path= tt_font_path ();
   // cout << "Resolve " << name << " in " << tt_path << "\n";
-  return resolve (tt_path * name);
+  url tt_path= tt_font_path ();
+  url u      = resolve (tt_path * name);
+  bench_end ("tt_locate " * name, 10);
+  return u;
 }
 
 url
@@ -160,7 +165,7 @@ tt_font_exists (string name) {
   bench_start ("tt_font_exists " * name);
   bool yes       = !is_none (tt_font_find (name));
   tt_fonts (name)= yes ? string ("yes") : string ("no");
-  bench_end ("tt_font_exists " * name, 30);
+  bench_end ("tt_font_exists " * name, 10);
   return yes;
 }
 
