@@ -15,15 +15,15 @@
 
 -- The following versions are adopted on macOS/Windows/ArchLinux
 -- We will use the system provided packages on Ubuntu 22.04/Debian 12/...
+local S7_VERSION = "2023.04.13"
+local QT6_VERSION = "6.5.3"
+local QTIFW_VERSION = "4.6.0"
 local LOLLY_VERSION = "1.3.10"
 local TBOX_VERSION = "1.7.5"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
 local PDFHUMMUS_VERSION = "4.6.1"
 local FREETYPE_VERSION = "2.12.1"
-local QT6_VERSION = "6.5.3"
-local QTIFW_VERSION = "4.6.0"
-local S7_VERSION = "2023.04.13"
 local LIBPNG_VERSION = "1.6.37"
 local LIBJPEG_VERSION = "v9e"
 local LIBICONV_VERSION = "1.17"
@@ -60,21 +60,6 @@ end
 
 
 function add_requires_of_mogan()
-    -- package: lolly
-    set_configvar("LOLLY_VERSION", LOLLY_VERSION)
-    add_requires("lolly", {system=false})
-    tbox_configs = {hash=true, ["force-utf8"]=true}
-    add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
-    add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
-
-    -- package: libcurl
-    if is_plat("linux") and using_apt() then
-        add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-        add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
-    else
-        add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
-    end
-
     -- package: s7
     add_requires("s7 "..S7_VERSION, {system=false})
 
@@ -86,7 +71,34 @@ function add_requires_of_mogan()
         end
     end
 
+    -- package: lolly
+    set_configvar("LOLLY_VERSION", LOLLY_VERSION)
+    add_requires("lolly", {system=false})
+    tbox_configs = {hash=true, ["force-utf8"]=true}
+    add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
+    add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
+
+    -- package: libcurl
+    if is_plat("linux") and using_apt() and (not linuxos.name() == "uos") then
+        if linuxos.name() == "uos" then
+            add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
+        else
+            add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+            add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
+        end
+    else
+        add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
+    end
+
+    -- package: fontconfig
+    if is_plat("linux") then
+        add_requires("fontconfig", {system = true})
+    end
+
     -- package: pdfhummus
+    if linuxos.name() == "uos" then
+        PDFHUMMUS_VERSION = "4.5.3"
+    end
     set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
     if not is_plat("wasm") then
         add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
@@ -125,9 +137,5 @@ function add_requires_of_mogan()
         add_requires("libiconv "..LIBICONV_VERSION, {system=false})
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
         add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
-    end
-
-    if is_plat("linux") then
-        add_requires("fontconfig", {system = true})
     end
 end
