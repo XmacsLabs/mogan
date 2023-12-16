@@ -323,8 +323,6 @@
       ("Apple Gothic" (init-font "apple-gothic")))
   (if (font-exists-in-tt? "FandolSong-Regular")
       ("FandolSong" (init-font "FandolSong")))
-  (if (font-exists-in-tt? "fireflysung")
-      ("Fireflysung" (init-font "fireflysung")))
   (if (font-exists-in-tt? "wqy-microhei")
       ("MicroHei" (init-font "wqy-microhei")))
   (if (font-exists-in-tt? "MS Mincho")
