@@ -787,15 +787,15 @@ virtual_font_rep::compile_bis (scheme_tree t, metric& ex) {
 
   if (is_tuple (t, "junc-left", 2) && is_double (t[2])) {
     glyph gl1= compile (t[1], ex);
-    SI  w = (SI) (as_double (t[2]) * (ex->x2 - ex->x1));
-    int jw= max (w / PIXEL, 0);
+    SI    w  = (SI) (as_double (t[2]) * (ex->x2 - ex->x1));
+    int   jw = max (w / PIXEL, 0);
     return junc_left (compile (t[1], ex), jw);
   }
 
   if (is_tuple (t, "junc-right", 2) && is_double (t[2])) {
     glyph gl1= compile (t[1], ex);
-    SI  w = (SI) (as_double (t[2]) * (ex->x2 - ex->x1));
-    int jw= max (w / PIXEL, 0);
+    SI    w  = (SI) (as_double (t[2]) * (ex->x2 - ex->x1));
+    int   jw = max (w / PIXEL, 0);
     return junc_right (compile (t[1], ex), jw);
   }
 
