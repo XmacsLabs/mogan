@@ -167,10 +167,10 @@ tt_locate_pfb (string name) {
 static url
 tt_fast_locate (string name) {
   array<string> suffixes;
-  suffixes << "ttf"
-           << "ttc"
-           << "otf"
-           << "dfont";
+  suffixes << string("ttf")
+           << string("ttc")
+           << string("otf")
+           << string("dfont");
   for (int i= 0; i < N (suffixes); i++) {
     if (tt_font_locations->contains (name * "." * suffixes[i])) {
       return tt_font_locations[name * "." * suffixes[i]];
