@@ -7,11 +7,19 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|9|12|2|2|cell-background|pastel
-  green>|<cwith|14|21|2|2|cell-background|pastel
-  green>|<cwith|8|8|2|2|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|13|16|2|2|cell-background|pastel
+  green>|<cwith|18|25|2|2|cell-background|pastel
+  green>|<cwith|12|12|2|2|cell-background|pastel
+  green>|<cwith|6|6|2|2|cell-background|pastel
   green>|<cwith|2|2|2|2|cell-background|pastel
-  green>|<table|<row|<cell|Chore>|<cell|71_21>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Search
+  green>|<cwith|4|4|2|2|cell-background|pastel
+  green>|<cwith|11|11|2|2|cell-background|pastel
+  green>|<cwith|10|10|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Chore>|<cell|71_25>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Tuning
+  the startup command line message>>|<row|<cell|Chore>|<cell|71_24>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Improve
+  experimental-preferences-widget>>|<row|<cell|Chore>|<cell|71_23>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Tuning
+  the default path of <menu|File|Open>>>|<row|<cell|Chore>|<cell|71_22>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Translate
+  the tooltip of the menu entries>>|<row|<cell|Chore>|<cell|71_21>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Search
   in Directory or recent files>>|<row|<cell|Chore>|<cell|71_20>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Do
   not use native file dialog on macOS and translate label
   text>>|<row|<cell|Chore>|<cell|71_19>|<cell|v1.2.1>|<cell|Darcy>|<cell|Better
