@@ -118,8 +118,9 @@ load_user_preferences () {
   url prefs_file= "$TEXMACS_HOME_PATH/system/preferences.scm";
   string s;
   tree p (TUPLE);
-  if (!load_string (prefs_file, s, false))
-    p= block_to_scheme_tree (s);
+  if (exists (prefs_file)) {
+    p= block_to_scheme_tree (string_load (prefs_file));
+  }
   while (is_func (p, TUPLE, 1)) p= p[0];
   for (int i=0; i<N(p); i++)
     if (is_func (p[i], TUPLE, 2) &&
