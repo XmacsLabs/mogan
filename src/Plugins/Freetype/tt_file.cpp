@@ -67,16 +67,6 @@ tt_font_search_path () {
   }
   ret= ret | url ("$TEXMACS_HOME_PATH/fonts/truetype") |
        url ("$TEXMACS_PATH/fonts/truetype");
-#ifdef _FONTCONFIG_H_
-  FcConfig*  config  = FcInitLoadConfig ();
-  FcStrList* fontdirs= FcConfigGetFontDirs (config);
-  FcChar8*   fontdir = NULL;
-
-  FcStrListFirst (fontdirs);
-  while (fontdir= FcStrListNext (fontdirs)) {
-    ret= ret | url_system ((char*) fontdir);
-  }
-#endif
   if (os_win () || os_mingw ()) {
     ret= ret | url ("$windir/Fonts");
   }
@@ -99,11 +89,17 @@ tt_font_search_path () {
          url ("/usr/local/texlive/2022/texmf-dist/fonts/truetype");
   }
   else {
-    ret= ret | url ("$HOME/.fonts") | url ("/usr/share/fonts/opentype") |
-         url ("/usr/share/fonts/truetype") |
-         url ("/usr/local/share/fonts/opentype") |
-         url ("/usr/local/share/fonts/truetype") |
-         url ("/usr/share/texlive/texmf-dist/fonts/opentype") |
+#ifdef _FONTCONFIG_H_
+    FcConfig*  config  = FcInitLoadConfig ();
+    FcStrList* fontdirs= FcConfigGetFontDirs (config);
+    FcChar8*   fontdir = NULL;
+
+    FcStrListFirst (fontdirs);
+    while (fontdir= FcStrListNext (fontdirs)) {
+      ret= ret | url_system ((char*) fontdir);
+    }
+#endif
+    ret= ret | url ("/usr/share/texlive/texmf-dist/fonts/opentype") |
          url ("/usr/share/texlive/texmf-dist/fonts/truetype");
   }
   return ret;
@@ -172,10 +168,7 @@ tt_locate_pfb (string name) {
 static url
 tt_fast_locate (string name) {
   array<string> suffixes;
-  suffixes << string("ttf")
-           << string("ttc")
-           << string("otf")
-           << string("dfont");
+  suffixes << string ("ttf") << string ("ttc") << string ("otf");
   for (int i= 0; i < N (suffixes); i++) {
     if (tt_font_locations->contains (name * "." * suffixes[i])) {
       return tt_font_locations[name * "." * suffixes[i]];
