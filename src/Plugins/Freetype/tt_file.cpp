@@ -53,6 +53,9 @@ tt_extend_font_path (url u) {
 
 url
 tt_font_search_path () {
+  // NOTICE: the order of the search path here is very important
+  // Please use ret= ret | u to append the url, the former appended url will
+  // precede the latter appended url
   url    ret= url_none ();
   string xtt= get_env ("TEXMACS_FONT_PATH");
   if (!is_empty (xtt)) {
@@ -62,6 +65,8 @@ tt_font_search_path () {
   if (!is_empty (ximp)) {
     ret= ret | url_system (ximp);
   }
+  ret= ret | url ("$TEXMACS_HOME_PATH/fonts/truetype") |
+       url ("$TEXMACS_PATH/fonts/truetype");
 #ifdef _FONTCONFIG_H_
   FcConfig*  config  = FcInitLoadConfig ();
   FcStrList* fontdirs= FcConfigGetFontDirs (config);
@@ -72,8 +77,6 @@ tt_font_search_path () {
     ret= ret | url_system ((char*) fontdir);
   }
 #endif
-  ret= ret | url ("$TEXMACS_HOME_PATH/fonts/truetype") |
-       url ("$TEXMACS_PATH/fonts/truetype");
   if (os_win () || os_mingw ()) {
     ret= ret | url ("$windir/Fonts");
   }
@@ -116,17 +119,19 @@ tt_font_path () {
 
 static void
 tt_locate_all () {
-  url suffixes = url ("*.ttf") | url ("*.ttc") | url ("*.otf") | url (".dfont");
+  url suffixes = url ("*.ttf") | url ("*.ttc") | url ("*.otf");
   url all_fonts= expand (complete (tt_font_path () * suffixes));
   url iter     = all_fonts;
   while (is_or (iter)) {
-    url    font_u                       = iter[1];
-    string name_with_suffix             = as_string (tail (font_u));
-    string name                         = basename (font_u);
-    tt_font_locations (name_with_suffix)= font_u;
-    tt_fonts->insert (name);
+    url font_u= iter[1];
+    // eg. (basename.ttf, url(/path/to/basename.ttf))
+    tt_font_locations (as_string (tail (font_u)))= font_u;
+    tt_fonts->insert (basename (font_u));
     iter= iter[2];
   }
+  url font_last                                   = iter;
+  tt_font_locations (as_string (tail (font_last)))= font_last;
+  tt_fonts->insert (basename (font_last));
 }
 
 array<url>
