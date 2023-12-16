@@ -12,6 +12,7 @@
 #include "Metafont/load_tex.hpp"
 #include "base.hpp"
 #include "converter.hpp"
+#include "data_cache.hpp"
 #include "font.hpp"
 #include "smart_font.hpp"
 #include "sys_utils.hpp"
@@ -26,6 +27,7 @@ private slots:
   void init () {
     init_lolly ();
     init_texmacs_home_path ();
+    cache_initialize ();
     init_tex ();
   }
   void test_resolve ();

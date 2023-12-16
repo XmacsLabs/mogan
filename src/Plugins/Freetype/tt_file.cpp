@@ -107,14 +107,15 @@ tt_font_search_path () {
 
 url
 tt_font_path () {
-  bench_start ("tt_font_path");
   url xu= search_sub_dirs (tt_font_search_path ());
-  bench_end ("tt_font_path");
   return xu;
 }
 
 static void
 tt_locate_all () {
+  if (N (tt_font_locations) > 0) return;
+
+  bench_start ("tt_locate_all");
   url suffixes = url ("*.ttf") | url ("*.ttc") | url ("*.otf");
   url all_fonts= expand (complete (tt_font_path () * suffixes));
   url iter     = all_fonts;
@@ -123,19 +124,23 @@ tt_locate_all () {
     // eg. (basename.ttf, url(/path/to/basename.ttf))
     tt_font_locations (as_string (tail (font_u)))= font_u;
     tt_fonts->insert (basename (font_u));
+    cache_set ("font_cache.scm", "ttf:" * basename (font_u),
+               as_string (font_u));
     iter= iter[2];
   }
   url font_last                                   = iter;
   tt_font_locations (as_string (tail (font_last)))= font_last;
   tt_fonts->insert (basename (font_last));
+  cache_set ("font_cache.scm", "ttf:" * basename (font_last),
+             as_string (font_last));
+  cache_memorize ();
+  bench_end ("tt_locate_all");
 }
 
 array<url>
 tt_font_paths () {
-  int num_of_fonts= N (tt_font_locations);
-  if (num_of_fonts == 0) {
-    tt_locate_all ();
-  }
+  tt_locate_all ();
+
   array<url>       ret;
   iterator<string> it= iterate (tt_font_locations);
   while (it->busy ()) {
@@ -183,10 +188,6 @@ tt_font_find_sub (string name) {
   if (!is_none (u)) return u;
 
   if (font_database_exists (name)) {
-    // Init the fonts location at startup
-    int num_of_fonts= N (tt_font_locations);
-    if (num_of_fonts == 0) tt_locate_all ();
-
     return tt_fast_locate (name);
   }
   else {
@@ -209,6 +210,8 @@ tt_font_find (string name) {
     if (exists (u)) return u;
     cache_reset ("font_cache.scm", s);
   }
+
+  tt_locate_all ();
 
   url r= tt_font_find_sub (name);
   if (is_none (r)) cache_set ("font_cache.scm", s, "");
