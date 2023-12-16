@@ -398,22 +398,6 @@
   ("footnote" "Insert a footnote" (make 'footnote))
   ("input" "Include a document" (make 'include)))
 
-(when (not (get-boolean-preference "new style fonts"))
-  (kbd-commands
-    ("cal" "Use calligraphic font" (make-with "math-font" "cal"))
-    ("frak" "Use fraktur font" (make-with "math-font" "Euler"))
-    ("Bbb" "Use blackboard bold font" (make-with "math-font" "Bbb*"))
-    ("mathcal" "Use calligraphic font" (make-with "math-font" "cal"))
-    ("mathfrak" "Use fraktur font" (make-with "math-font" "Euler"))
-    ("mathbb" "Use blackboard math font" (make-with "math-font" "Bbb*"))
-    ("mathrm" "Use roman font family" (make-with "math-font-family" "rm"))
-    ("mathtt" "Use typewriter font family" (make-with "math-font-family" "tt"))
-    ("mathsf" "Use sans serif font family" (make-with "math-font-family" "ss"))
-    ("mathmd" "Use medium font series" (make-with "math-font-series" "medium"))
-    ("mathbf" "Use bold font series" (make-with "math-font-series" "bold"))
-    ("mathup" "Use right font shape" (make-with "math-font-shape" "right"))
-    ("mathit" "Use italic font shape" (make-with "math-font-shape" "italic"))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Extensions to LaTeX
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
