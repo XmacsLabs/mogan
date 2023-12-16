@@ -485,9 +485,8 @@ init_plugins () {
   url settings_path= "$TEXMACS_HOME_PATH/system/settings.scm";
 
   install_status= 0;
-  string s;
   if (exists (settings_path)) {
-    s= string_load (settings_path)
+    string s= string_load (settings_path);
     texmacs_settings= block_to_scheme_tree (s);
   } else {
     setup_texmacs ();
