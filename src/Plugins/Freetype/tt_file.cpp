@@ -28,6 +28,7 @@
 #endif
 
 static hashmap<string, string> tt_fonts ("no");
+static hashmap<string, string> tt_fonts_location;
 
 url
 add_to_path (url u, url d) {
@@ -50,13 +51,16 @@ tt_extend_font_path (url u) {
 }
 
 url
-tt_font_path () {
-  bench_start ("tt_font_path");
-  url    xu = url_none ();
+tt_font_search_path () {
+  url    ret= url_none ();
   string xtt= get_env ("TEXMACS_FONT_PATH");
-  if (!is_empty (xtt)) xu= search_sub_dirs (xtt);
+  if (!is_empty (xtt)) {
+    ret= ret | url (xtt);
+  }
   string ximp= get_preference ("imported fonts", "");
-  if (!is_empty (ximp)) xu= xu | search_sub_dirs (url_system (ximp));
+  if (!is_empty (ximp)) {
+    ret= ret | url_system (ximp);
+  }
 #ifdef _FONTCONFIG_H_
   FcConfig*  config  = FcInitLoadConfig ();
   FcStrList* fontdirs= FcConfigGetFontDirs (config);
@@ -64,41 +68,46 @@ tt_font_path () {
 
   FcStrListFirst (fontdirs);
   while (fontdir= FcStrListNext (fontdirs)) {
-    xu= xu | search_sub_dirs ((char*) fontdir);
+    ret= ret | url_system ((char*) fontdir);
   }
 #endif
-  xu= xu | search_sub_dirs ("$TEXMACS_HOME_PATH/fonts/truetype") |
-      search_sub_dirs ("$TEXMACS_PATH/fonts/truetype") |
-#if defined(OS_MINGW) || defined(OS_WIN)
-      search_sub_dirs ("$windir/Fonts");
-#elif defined OS_MACOS
-      search_sub_dirs ("$HOME/Library/Fonts") |
-      search_sub_dirs ("/Library/Fonts") |
-      search_sub_dirs ("/Library/Application Support/Apple/Fonts/iLife") |
-      search_sub_dirs ("/Library/Application Support/Apple/Fonts/iWork") |
-      search_sub_dirs ("/System/Library/Fonts") |
-      search_sub_dirs (
-          "/System/Library/PrivateFrameworks/FontServices.framework/"
-          "Versions/A/Resources/Fonts/ApplicationSupport") |
-      search_sub_dirs ("/opt/local/share/texmf-texlive/fonts/opentype") |
-      search_sub_dirs ("/opt/local/share/texmf-texlive/fonts/truetype") |
-      search_sub_dirs ("/opt/local/share/texmf-texlive-dist/fonts/opentype") |
-      search_sub_dirs ("/opt/local/share/texmf-texlive-dist/fonts/truetype") |
-      search_sub_dirs ("/usr/local/texlive/2020/texmf-dist/fonts/opentype") |
-      search_sub_dirs ("/usr/local/texlive/2020/texmf-dist/fonts/truetype") |
-      search_sub_dirs ("/usr/local/texlive/2021/texmf-dist/fonts/opentype") |
-      search_sub_dirs ("/usr/local/texlive/2021/texmf-dist/fonts/truetype") |
-      search_sub_dirs ("/usr/local/texlive/2022/texmf-dist/fonts/opentype") |
-      search_sub_dirs ("/usr/local/texlive/2022/texmf-dist/fonts/truetype");
-#else
-      search_sub_dirs ("$HOME/.fonts") |
-      search_sub_dirs ("/usr/share/fonts/opentype") |
-      search_sub_dirs ("/usr/share/fonts/truetype") |
-      search_sub_dirs ("/usr/local/share/fonts/opentype") |
-      search_sub_dirs ("/usr/local/share/fonts/truetype") |
-      search_sub_dirs ("/usr/share/texlive/texmf-dist/fonts/opentype") |
-      search_sub_dirs ("/usr/share/texlive/texmf-dist/fonts/truetype");
-#endif
+  ret= ret | url ("$TEXMACS_HOME_PATH/fonts/truetype") |
+       url ("$TEXMACS_PATH/fonts/truetype");
+  if (os_win () || os_mingw ()) {
+    ret= ret | url ("$windir/Fonts");
+  }
+  else if (os_macos ()) {
+    ret= ret | url ("$HOME/Library/Fonts") | url ("/Library/Fonts") |
+         url ("/Library/Application Support/Apple/Fonts/iLife") |
+         url ("/Library/Application Support/Apple/Fonts/iWork") |
+         url ("/System/Library/Fonts") |
+         url ("/System/Library/PrivateFrameworks/FontServices.framework/"
+              "Versions/A/Resources/Fonts/ApplicationSupport") |
+         url ("/opt/local/share/texmf-texlive/fonts/opentype") |
+         url ("/opt/local/share/texmf-texlive/fonts/truetype") |
+         url ("/opt/local/share/texmf-texlive-dist/fonts/opentype") |
+         url ("/opt/local/share/texmf-texlive-dist/fonts/truetype") |
+         url ("/usr/local/texlive/2020/texmf-dist/fonts/opentype") |
+         url ("/usr/local/texlive/2020/texmf-dist/fonts/truetype") |
+         url ("/usr/local/texlive/2021/texmf-dist/fonts/opentype") |
+         url ("/usr/local/texlive/2021/texmf-dist/fonts/truetype") |
+         url ("/usr/local/texlive/2022/texmf-dist/fonts/opentype") |
+         url ("/usr/local/texlive/2022/texmf-dist/fonts/truetype");
+  }
+  else {
+    ret= ret | url ("$HOME/.fonts") | url ("/usr/share/fonts/opentype") |
+         url ("/usr/share/fonts/truetype") |
+         url ("/usr/local/share/fonts/opentype") |
+         url ("/usr/local/share/fonts/truetype") |
+         url ("/usr/share/texlive/texmf-dist/fonts/opentype") |
+         url ("/usr/share/texlive/texmf-dist/fonts/truetype");
+  }
+}
+
+url
+tt_font_path () {
+  bench_start ("tt_font_path");
+  url xu= search_sub_dirs (tt_font_search_path ());
   bench_end ("tt_font_path");
   return xu;
 }
