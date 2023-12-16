@@ -116,7 +116,6 @@ get_user_preference (string var, string val) {
 void
 load_user_preferences () {
   url prefs_file= "$TEXMACS_HOME_PATH/system/preferences.scm";
-  string s;
   tree p (TUPLE);
   if (exists (prefs_file)) {
     p= block_to_scheme_tree (string_load (prefs_file));
