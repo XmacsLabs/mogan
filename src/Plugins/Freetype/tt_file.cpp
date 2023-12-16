@@ -123,7 +123,6 @@ tt_locate_all () {
     url    font_u          = iter[1];
     string name_with_suffix= as_string (tail (font_u));
     string name            = basename (font_u);
-    cout << name_with_suffix << LF;
     tt_fonts_location (name_with_suffix)= font_u;
     tt_fonts->insert (name);
     iter= iter[2];
