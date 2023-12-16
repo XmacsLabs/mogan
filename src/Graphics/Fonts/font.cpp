@@ -632,7 +632,6 @@ default_korean_font_name () {
   if (tt_font_exists ("batang")) return "Batang";
 #endif
 
-  if (tt_font_exists ("unbatang")) return "UnBatang";
   if (tt_font_exists ("UnBatang")) return "UnBatang";
   if (tt_font_exists ("Gulim")) return "gulim";
   return "roman";
