@@ -32,19 +32,6 @@ function main()
                 ret_type = "string"
             },
             {
-                scm_name = "set-new-fonts",
-                cpp_name = "set_new_fonts",
-                ret_type = "void",
-                arg_list = {
-                    "bool"
-                }
-            },
-            {
-                scm_name = "new-fonts?",
-                cpp_name = "get_new_fonts",
-                ret_type = "bool"
-            },
-            {
                 scm_name = "font-database-build",
                 cpp_name = "font_database_build",
                 ret_type = "void",

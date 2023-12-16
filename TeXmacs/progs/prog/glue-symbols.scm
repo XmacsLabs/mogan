@@ -133,8 +133,6 @@
 "mark-new"
 "glyph-register"
 "glyph-recognize"
-"set-new-fonts"
-"new-fonts?"
 "tmtm-eqnumber->nonumber"
 "busy-versioning?"
 "players-set-elapsed"

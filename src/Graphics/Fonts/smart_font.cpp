@@ -1582,11 +1582,6 @@ smart_font_rep::get_wide_correction (string s, int mode) {
 font
 smart_font_bis (string family, string variant, string series, string shape,
                 int sz, int hdpi, int vdpi) {
-  if (!new_fonts) {
-    font fn= find_font (family, variant, series, shape, sz, vdpi);
-    if (hdpi == vdpi) return fn;
-    return fn->magnify (((double) hdpi) / ((double) vdpi), 1.0);
-  }
   string name= family * "-" * variant * "-" * series * "-" * shape * "-" *
                as_string (sz) * "-" * as_string (vdpi) * "-smart";
   if (hdpi != vdpi)
@@ -1653,7 +1648,6 @@ font
 smart_font (string family, string variant, string series, string shape,
             string tfam, string tvar, string tser, string tsh, int sz,
             int dpi) {
-  if (!new_fonts) return find_font (family, variant, series, shape, sz, dpi);
   if (tfam == "roman") tfam= family;
   if (variant != "mr") {
     if (variant == "ms") tvar= "ss";

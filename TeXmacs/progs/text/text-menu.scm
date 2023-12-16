@@ -23,11 +23,7 @@
 
 (menu-bind full-text-format-menu
   (group "Font")
-  (if (new-fonts?)
-      ;;(link new-text-font-menu))
-      (link text-font-menu))
-  (if (not (new-fonts?))
-      (link text-font-menu))
+  (link text-font-menu)
   (if (simple-menus?)
       (-> "Color" (link color-menu)))
   (if (detailed-menus?)
@@ -43,10 +39,7 @@
     (link page-menu)))
 
 (menu-bind compressed-text-format-menu
-  (if (new-fonts?)
-      ("Font" (open-font-selector)))
-  (if (not (new-fonts?))
-      (-> "Font" (link text-font-menu)))
+  ("Font" (interactive open-font-selector))
   ("Paragraph" (open-paragraph-format))
   (when (in-main-flow?)
     ("Page" (open-page-format)))

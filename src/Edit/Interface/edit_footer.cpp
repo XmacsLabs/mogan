@@ -47,7 +47,7 @@ edit_interface_rep::set_left_footer () {
   else if (as_string (get_init_value (MODE_LANGUAGE (mode))) != lan)
     s << " " << lan;
   else s << " " << mode;
-  if ((mode == "text") || (mode == "src") || new_fonts) {
+  if ((mode == "text") || (mode == "src")) {
     s << " " << verbatim (main_family (get_env_string (FONT)));
     append_left_footer (s, FONT_FAMILY);
     s << " " << as_string ((int) ((base_sz+0.5)*sz));

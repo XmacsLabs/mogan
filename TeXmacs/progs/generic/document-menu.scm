@@ -432,9 +432,9 @@
       ---
       (link document-short-chinese-font-menu))
   ---
-  (if (and (new-fonts?) (use-popups?))
+  (if (use-popups?)
       ("Other" (open-document-font-selector)))
-  (if (not (and (new-fonts?) (use-popups?)))
+  (if (not (use-popups?))
       (-> "Other" (link document-font-menu))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -881,10 +881,7 @@
       ("Preferences" (open-source-tree-preferences)))
   (-> "Update" (link document-update-menu))
   ---
-  (if (new-fonts?)
-      ("Font" (open-document-font-selector)))
-  (if (not (new-fonts?))
-      (-> "Font" (link document-full-font-menu)))
+  ("Font" (interactive open-document-font-selector))
   ("Paragraph" (open-document-paragraph-format))
   ("Page" (open-document-page-format))
   ("Metadata" (open-document-metadata))

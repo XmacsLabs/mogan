@@ -64,11 +64,7 @@
 
 (menu-bind full-math-format-menu
   (group "Font")
-  (if (new-fonts?)
-      ;;(link new-math-font-menu))
-      (link math-font-menu))
-  (if (not (new-fonts?))
-      (link math-font-menu))
+  (link math-font-menu)
   (if (simple-menus?)
       (-> "Color" (link color-menu)))
   (if (detailed-menus?)
@@ -80,10 +76,7 @@
   (link math-special-format-menu))
 
 (menu-bind compressed-math-format-menu
-  (if (new-fonts?)
-      ("Font" (open-font-selector)))
-  (if (not (new-fonts?))
-      (-> "Font" (link math-font-menu)))
+  ("Font" (interactive open-font-selector))
   (when (inside? 'table)
       ("Cell" (open-cell-properties))
       ("Table" (open-table-properties)))

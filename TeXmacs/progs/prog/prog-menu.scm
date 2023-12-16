@@ -29,11 +29,7 @@
 
 (menu-bind full-prog-format-menu
   (group "Font")
-  (if (new-fonts?)
-      ;;(link new-prog-font-menu))
-      (link prog-font-menu))
-  (if (not (new-fonts?))
-      (link prog-font-menu))
+  (link prog-font-menu)
   (if (simple-menus?)
       (-> "Color" (link color-menu)))
   (if (detailed-menus?)
@@ -49,10 +45,7 @@
     (link page-menu)))
 
 (menu-bind compressed-prog-format-menu
-  (if (new-fonts?)
-      ("Font" (open-font-selector)))
-  (if (not (new-fonts?))
-      (-> "Font" (link prog-font-menu)))
+  ("Font" (interactive open-font-selector))
   ("Paragraph" (open-paragraph-format))
   (when (in-main-flow?)
     ("Page" (open-page-format)))
