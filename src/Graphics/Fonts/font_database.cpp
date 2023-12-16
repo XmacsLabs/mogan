@@ -76,14 +76,15 @@ struct font_less_eq_operator {
  * Global management of the font database
  ******************************************************************************/
 
-static bool           fonts_loaded       = false;
-static bool           fonts_global_loaded= false;
-hashmap<tree, tree>   font_table (UNINIT);
-hashmap<tree, tree>   font_global_table (UNINIT);
-hashmap<tree, tree>   font_features (UNINIT);
-hashmap<tree, tree>   font_variants (UNINIT);
-hashmap<tree, tree>   font_characteristics (UNINIT);
-hashmap<string, tree> font_substitutions (UNINIT);
+static bool                    fonts_loaded       = false;
+static bool                    fonts_global_loaded= false;
+hashmap<tree, tree>            font_table (UNINIT);
+hashmap<tree, tree>            font_global_table (UNINIT);
+hashmap<tree, tree>            font_features (UNINIT);
+hashmap<tree, tree>            font_variants (UNINIT);
+hashmap<tree, tree>            font_characteristics (UNINIT);
+hashmap<string, tree>          font_substitutions (UNINIT);
+hashmap<string, array<string>> font_suffixes;
 
 void
 tuple_insert (tree& t, tree x) {
@@ -675,6 +676,56 @@ font_database_search (string family, string style) {
       }
   }
   return r;
+}
+
+static void
+font_database_load_suffixes () {
+  if (N (font_suffixes) > 0) return;
+
+  string s;
+  if (!load_string (GLOBAL_DATABASE, s, false)) {
+    tree t= block_to_scheme_tree (s);
+    for (int i= 0; i < N (t); i++)
+      if (is_func (t[i], TUPLE, 2)) {
+        tree family_style= t[i][0];
+        tree files       = t[i][1];
+        for (int j= 0; j < N (files); j++) {
+          url    file_name= url (files[j][0]->label);
+          string base_name= basename (file_name);
+          string suf      = suffix (file_name);
+          if (is_empty (suf)) continue;
+          if (font_suffixes->contains (base_name)) {
+            array<string> sufs= font_suffixes[base_name];
+            if (!contains (suf, sufs)) {
+              sufs << suf;
+              font_suffixes (base_name)= sufs;
+            }
+          }
+          else {
+            array<string> sufs= array<string> ();
+            sufs << suf;
+            font_suffixes (base_name)= sufs;
+          }
+        }
+      }
+  }
+}
+
+bool
+font_database_exists (string basename) {
+  font_database_load_suffixes ();
+  return font_suffixes->contains (basename);
+}
+
+array<string>
+font_database_suffixes (string basename) {
+  font_database_load_suffixes ();
+  if (font_suffixes->contains (basename)) {
+    return font_suffixes[basename];
+  }
+  else {
+    return array<string> ();
+  }
 }
 
 array<string>
