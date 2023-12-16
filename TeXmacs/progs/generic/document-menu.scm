@@ -385,7 +385,7 @@
           (font-exists-in-tt? "Optima")
           (font-exists-in-tt? "Papyrus"))
       ---
-      (if (font-exists-in-tt? "AmericanTypewriter")
+      (if (and (os-macos?) (font-exists-in-tt? "AmericanTypewriter"))
           ("American Typewriter" (init-font "American Typewriter")))
       (if (font-exists-in-tt? "Baskerville")
           ("Baskerville" (init-font "Baskerville")))
