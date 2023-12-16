@@ -182,15 +182,20 @@ tt_font_find_sub (string name) {
   url u= tt_unpack (name);
   if (!is_none (u)) return u;
 
-  // Init the fonts location at startup
-  int num_of_fonts= N (tt_font_locations);
-  if (num_of_fonts == 0) tt_locate_all ();
+  if (font_database_exists (name)) {
+    // Init the fonts location at startup
+    int num_of_fonts= N (tt_font_locations);
+    if (num_of_fonts == 0) tt_locate_all ();
 
-  u= tt_fast_locate (name);
-  if (!is_none (u)) return u;
-
-  u= tt_locate_pfb (name);
-  return u;
+    u= tt_fast_locate (name);
+    if (!is_none (u)) return u;
+  }
+  else {
+    // If the font is not in font database
+    // It must not be a ttf/ttc/otf/tfm font
+    u= tt_locate_pfb (name);
+    return u;
+  }
 }
 
 url
