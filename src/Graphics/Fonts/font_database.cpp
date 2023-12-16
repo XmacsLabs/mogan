@@ -460,7 +460,7 @@ static void
 font_collect (url path) {
   int       i;
   const int MAX_SUBFONTS= 512;
-  string font_name= as_string (tail (path));
+  string    font_name   = as_string (tail (path));
   for (i= 0; i < MAX_SUBFONTS; i++) {
     int  sz= file_size (path);
     tree ff= tuple (font_name, as_string (i), as_string (sz));
@@ -521,7 +521,7 @@ font_database_filter () {
   back_font_table= hashmap<tree, tree> (UNINIT);
   build_back_table ();
   array<url> paths= tt_font_paths ();
-  for (int i=0; i<N(paths); i++) {
+  for (int i= 0; i < N (paths); i++) {
     font_collect (paths[i]);
   }
   font_database_collect (tfm_font_path ());

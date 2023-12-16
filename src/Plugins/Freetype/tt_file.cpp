@@ -120,9 +120,9 @@ tt_locate_all () {
   url all_fonts= expand (complete (tt_font_path () * suffixes));
   url iter     = all_fonts;
   while (is_or (iter)) {
-    url    font_u          = iter[1];
-    string name_with_suffix= as_string (tail (font_u));
-    string name            = basename (font_u);
+    url    font_u                       = iter[1];
+    string name_with_suffix             = as_string (tail (font_u));
+    string name                         = basename (font_u);
     tt_font_locations (name_with_suffix)= font_u;
     tt_fonts->insert (name);
     iter= iter[2];
@@ -135,7 +135,7 @@ tt_font_paths () {
   if (num_of_fonts == 0) {
     tt_locate_all ();
   }
-  array<url> ret;
+  array<url>       ret;
   iterator<string> it= iterate (tt_font_locations);
   while (it->busy ()) {
     string key= it->next ();
