@@ -457,11 +457,12 @@ find_best_approximation (tree ff) {
 }
 
 static void
-font_collect (url dir, string font_name) {
+font_collect (url path) {
   int       i;
   const int MAX_SUBFONTS= 512;
+  string font_name= as_string (tail (path));
   for (i= 0; i < MAX_SUBFONTS; i++) {
-    int  sz= file_size (dir * font_name);
+    int  sz= file_size (path);
     tree ff= tuple (font_name, as_string (i), as_string (sz));
     if (!back_font_table->contains (ff) &&
         back_font_table->contains (ff (0, 2))) {
@@ -505,7 +506,7 @@ font_database_collect (url u) {
         string        suf    = suffix (a[i]);
         array<string> allowed= array<string> ("ttf", "ttc", "otf", "tfm");
         if (contains (suf, allowed)) {
-          font_collect (u, a[i]);
+          font_collect (u * a[i]);
         }
       }
     }
@@ -519,7 +520,10 @@ font_database_filter () {
   new_font_table = hashmap<tree, tree> (UNINIT);
   back_font_table= hashmap<tree, tree> (UNINIT);
   build_back_table ();
-  font_database_collect (tt_font_path ());
+  array<url> paths= tt_font_paths ();
+  for (int i=0; i<N(paths); i++) {
+    font_collect (paths[i]);
+  }
   font_database_collect (tfm_font_path ());
   font_table     = new_font_table;
   new_font_table = hashmap<tree, tree> (UNINIT);

@@ -29,7 +29,7 @@
 #endif
 
 static hashset<string>      tt_fonts;
-static hashmap<string, url> tt_fonts_location;
+static hashmap<string, url> tt_font_locations;
 
 url
 add_to_path (url u, url d) {
@@ -123,10 +123,25 @@ tt_locate_all () {
     url    font_u          = iter[1];
     string name_with_suffix= as_string (tail (font_u));
     string name            = basename (font_u);
-    tt_fonts_location (name_with_suffix)= font_u;
+    tt_font_locations (name_with_suffix)= font_u;
     tt_fonts->insert (name);
     iter= iter[2];
   }
+}
+
+array<url>
+tt_font_paths () {
+  int num_of_fonts= N (tt_font_locations);
+  if (num_of_fonts == 0) {
+    tt_locate_all ();
+  }
+  array<url> ret;
+  iterator<string> it= iterate (tt_font_locations);
+  while (it->busy ()) {
+    string key= it->next ();
+    ret << tt_font_locations[key];
+  }
+  return ret;
 }
 
 static url
@@ -157,8 +172,8 @@ tt_fast_locate (string name) {
            << "otf"
            << "dfont";
   for (int i= 0; i < N (suffixes); i++) {
-    if (tt_fonts_location->contains (name * "." * suffixes[i])) {
-      return tt_fonts_location[name * "." * suffixes[i]];
+    if (tt_font_locations->contains (name * "." * suffixes[i])) {
+      return tt_font_locations[name * "." * suffixes[i]];
     }
   }
   return url_none ();
@@ -170,7 +185,7 @@ tt_font_find_sub (string name) {
   if (!is_none (u)) return u;
 
   // Init the fonts location at startup
-  int num_of_fonts= N (tt_fonts_location);
+  int num_of_fonts= N (tt_font_locations);
   if (num_of_fonts == 0) tt_locate_all ();
 
   u= tt_fast_locate (name);
@@ -178,7 +193,7 @@ tt_font_find_sub (string name) {
 
   // Update the fonts location and search again
   tt_locate_all ();
-  if (N (tt_fonts_location) > num_of_fonts) {
+  if (N (tt_font_locations) > num_of_fonts) {
     debug_fonts << "New fonts detected and search " << name << " again" << LF;
     url u= tt_fast_locate (name);
     if (!is_none (u)) return u;
