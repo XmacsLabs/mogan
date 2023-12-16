@@ -191,6 +191,9 @@ tt_font_find_sub (string name) {
     if (!is_none (u)) return u;
   }
   else {
+    debug_fonts << "Font " << name << " does not exist in font database" << LF;
+    debug_fonts << "Please report it to us if it is a ttf/ttc/otf font!" << LF;
+    debug_fonts << "Locating it as " * name * ".pfb, might be slow :(" << LF;
     // If the font is not in font database
     // It must not be a ttf/ttc/otf/tfm font
     u= tt_locate_pfb (name);

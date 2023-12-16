@@ -687,13 +687,13 @@ font_database_load_suffixes () {
     tree t= block_to_scheme_tree (s);
     for (int i= 0; i < N (t); i++)
       if (is_func (t[i], TUPLE, 2)) {
-        // if (&ftab == &font_table)
         tree family_style= t[i][0];
         tree files       = t[i][1];
         for (int j= 0; j < N (files); j++) {
           url    file_name= url (files[j][0]->label);
           string base_name= basename (file_name);
           string suf      = suffix (file_name);
+          if (is_empty (suf)) continue;
           if (font_suffixes->contains (base_name)) {
             array<string> sufs= font_suffixes[base_name];
             if (!contains (suf, sufs)) {
