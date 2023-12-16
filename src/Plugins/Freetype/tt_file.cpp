@@ -112,6 +112,22 @@ tt_font_path () {
 }
 
 static void
+tt_locate_update_cache (url font_u) {
+  string name     = as_string (tail (font_u));
+  string base_name= basename (font_u);
+
+  if (font_database_exists (base_name)) {
+    array<string> suffixes= font_database_suffixes (base_name);
+    if (contains (suffix (font_u), suffixes)) {
+      // eg. (basename.ttf, url(/path/to/basename.ttf))
+      tt_font_locations (name)= font_u;
+      tt_fonts->insert (base_name);
+      cache_set ("font_cache.scm", "ttf:" * base_name, as_string (font_u));
+    }
+  }
+}
+
+static void
 tt_locate_all () {
   if (N (tt_font_locations) > 0) return;
 
@@ -121,18 +137,11 @@ tt_locate_all () {
   url iter     = all_fonts;
   while (is_or (iter)) {
     url font_u= iter[1];
-    // eg. (basename.ttf, url(/path/to/basename.ttf))
-    tt_font_locations (as_string (tail (font_u)))= font_u;
-    tt_fonts->insert (basename (font_u));
-    cache_set ("font_cache.scm", "ttf:" * basename (font_u),
-               as_string (font_u));
+    tt_locate_update_cache (font_u);
     iter= iter[2];
   }
-  url font_last                                   = iter;
-  tt_font_locations (as_string (tail (font_last)))= font_last;
-  tt_fonts->insert (basename (font_last));
-  cache_set ("font_cache.scm", "ttf:" * basename (font_last),
-             as_string (font_last));
+  url font_last= iter;
+  tt_locate_update_cache (font_last);
   cache_memorize ();
   bench_end ("tt_locate_all");
 }
