@@ -504,19 +504,16 @@ init_texmacs () {
 
 void
 init_plugins () {
-  url old_settings= "$TEXMACS_HOME_PATH/system/TEX_PATHS";
-  url new_settings= "$TEXMACS_HOME_PATH/system/settings.scm";
+  url settings_path= "$TEXMACS_HOME_PATH/system/settings.scm";
 
   install_status= 0;
-  string s;
-  if (load_string (new_settings, s, false)) {
-    if (load_string (old_settings, s, false)) {
-      setup_texmacs ();
-      install_status= 1;
-    }
-    else get_old_settings (s);
+  if (exists (settings_path)) {
+    string s= string_load (settings_path);
+    texmacs_settings= block_to_scheme_tree (s);
+  } else {
+    setup_texmacs ();
+    install_status= 1;
   }
-  else texmacs_settings= block_to_scheme_tree (s);
 
   if (get_setting ("VERSION") != TEXMACS_VERSION) {
     init_upgrade ();

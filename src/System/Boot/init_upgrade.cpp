@@ -106,9 +106,7 @@ init_upgrade () {
   debug_boot << TEXMACS_VERSION <<"\n";
   debug_boot << HRULE;
 
-  url old_settings= "$TEXMACS_HOME_PATH/system" * url_wildcard ("TEX_PATHS*");
   url new_settings= "$TEXMACS_HOME_PATH/system/settings.scm";
-  remove (old_settings);
   remove (new_settings);
 
   setup_texmacs ();
