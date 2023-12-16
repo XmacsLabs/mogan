@@ -189,14 +189,6 @@ tt_font_find_sub (string name) {
   u= tt_fast_locate (name);
   if (!is_none (u)) return u;
 
-  // Update the fonts location and search again
-  tt_locate_all ();
-  if (N (tt_font_locations) > num_of_fonts) {
-    debug_fonts << "New fonts detected and search " << name << " again" << LF;
-    url u= tt_fast_locate (name);
-    if (!is_none (u)) return u;
-  }
-
   u= tt_locate_pfb (name);
   return u;
 }
