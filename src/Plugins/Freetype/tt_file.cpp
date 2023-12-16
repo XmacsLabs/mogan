@@ -16,6 +16,7 @@
 #include "file.hpp"
 #include "font.hpp"
 #include "hashmap.hpp"
+#include "hashset.hpp"
 #include "preferences.hpp"
 #include "scheme.hpp"
 #include "sys_utils.hpp"
@@ -27,8 +28,8 @@
 #include <fontconfig/fontconfig.h>
 #endif
 
-static hashmap<string, string> tt_fonts ("no");
-static hashmap<string, string> tt_fonts_location;
+static hashset<string>      tt_fonts;
+static hashmap<string, url> tt_fonts_location;
 
 url
 add_to_path (url u, url d) {
@@ -102,6 +103,7 @@ tt_font_search_path () {
          url ("/usr/share/texlive/texmf-dist/fonts/opentype") |
          url ("/usr/share/texlive/texmf-dist/fonts/truetype");
   }
+  return ret;
 }
 
 url
@@ -112,69 +114,78 @@ tt_font_path () {
   return xu;
 }
 
+static void
+tt_locate_all () {
+  url suffixes = url ("*.ttf") | url ("*.ttc") | url ("*.otf") | url (".dfont");
+  url all_fonts= expand (complete (tt_font_path () * suffixes));
+  url iter     = all_fonts;
+  while (is_or (iter)) {
+    url    font_u          = iter[1];
+    string name_with_suffix= as_string (tail (font_u));
+    string name            = basename (font_u);
+    cout << name_with_suffix << LF;
+    tt_fonts_location (name_with_suffix)= font_u;
+    tt_fonts->insert (name);
+    iter= iter[2];
+  }
+}
+
 static url
-tt_locate (string name) {
-  bench_start ("tt_locate " * name);
-  if (ends (name, ".pfb")) {
-    /*
-    if (starts (name, "rpag")) name= "uag" * name (4, N (name) - 4) * "8a.pfb";
-    if (starts (name, "rpbk")) name= "ubk" * name (4, N (name) - 4) * "8a.pfb";
-    if (starts (name, "rpcr")) name= "ucr" * name (4, N (name) - 4) * "8a.pfb";
-    if (starts (name, "rphv")) name= "uhv" * name (4, N (name) - 4) * "8a.pfb";
-    if (starts (name, "rpnc")) name= "unc" * name (4, N (name) - 4) * "8a.pfb";
-    if (starts (name, "rppl")) name= "upl" * name (4, N (name) - 4) * "8a.pfb";
-    if (starts (name, "rpsy")) name= "usy" * name (4, N (name));
-    if (starts (name, "rptm")) name= "utm" * name (4, N (name) - 4) * "8a.pfb";
-    if (starts (name, "rpzc")) name= "uzc" * name (4, N (name) - 4) * "8a.pfb";
-    if (starts (name, "rpzd")) name= "uzd" * name (4, N (name));
-    */
-    url u= resolve_tex (name);
-    // cout << "tt_locate: " << name << " -> " << u << "\n";
-    if (!is_none (u)) {
-      bench_end ("tt_locate " * name, 10);
-      return u;
+tt_locate_pfb (string name) {
+  bench_start ("tt_locate_pfb " * name);
+  /*
+  if (starts (name, "rpag")) name= "uag" * name (4, N (name) - 4) * "8a.pfb";
+  if (starts (name, "rpbk")) name= "ubk" * name (4, N (name) - 4) * "8a.pfb";
+  if (starts (name, "rpcr")) name= "ucr" * name (4, N (name) - 4) * "8a.pfb";
+  if (starts (name, "rphv")) name= "uhv" * name (4, N (name) - 4) * "8a.pfb";
+  if (starts (name, "rpnc")) name= "unc" * name (4, N (name) - 4) * "8a.pfb";
+  if (starts (name, "rppl")) name= "upl" * name (4, N (name) - 4) * "8a.pfb";
+  if (starts (name, "rpsy")) name= "usy" * name (4, N (name));
+  if (starts (name, "rptm")) name= "utm" * name (4, N (name) - 4) * "8a.pfb";
+  if (starts (name, "rpzc")) name= "uzc" * name (4, N (name) - 4) * "8a.pfb";
+  if (starts (name, "rpzd")) name= "uzd" * name (4, N (name));
+  */
+  url u= resolve_tex (name * ".pfb");
+  bench_end ("tt_locate_pfb " * name, 10);
+  return u;
+}
+
+static url
+tt_fast_locate (string name) {
+  array<string> suffixes;
+  suffixes << "ttf"
+           << "ttc"
+           << "otf"
+           << "dfont";
+  for (int i= 0; i < N (suffixes); i++) {
+    if (tt_fonts_location->contains (name * "." * suffixes[i])) {
+      return tt_fonts_location[name * "." * suffixes[i]];
     }
   }
-  // cout << "Resolve " << name << " in " << tt_path << "\n";
-  url tt_path= tt_font_path ();
-  url u      = resolve (tt_path * name);
-  bench_end ("tt_locate " * name, 10);
-  return u;
+  return url_none ();
 }
 
 url
 tt_font_find_sub (string name) {
-  // cout << "tt_font_find " << name << "\n";
   url u= tt_unpack (name);
   if (!is_none (u)) return u;
 
-  if (font_database_rev_contains (name * ".ttf")) {
-    u= tt_locate (name * ".ttf");
+  // Init the fonts location at startup
+  int num_of_fonts= N (tt_fonts_location);
+  if (num_of_fonts == 0) tt_locate_all ();
+
+  u= tt_fast_locate (name);
+  if (!is_none (u)) return u;
+
+  // Update the fonts location and search again
+  tt_locate_all ();
+  if (N (tt_fonts_location) > num_of_fonts) {
+    debug_fonts << "New fonts detected and search " << name << " again" << LF;
+    url u= tt_fast_locate (name);
     if (!is_none (u)) return u;
   }
 
-  if (font_database_rev_contains (name * ".ttc")) {
-    u= tt_locate (name * ".ttc");
-    if (!is_none (u)) return u;
-  }
-
-  if (font_database_rev_contains (name * ".otf")) {
-    u= tt_locate (name * ".otf");
-    if (!is_none (u)) return u;
-  }
-
-  u= tt_locate (name * ".pfb");
-  // if (!is_none (u)) cout << name << " -> " << u << "\n";
-  if (!is_none (u)) return u;
-  u= tt_locate (name * ".ttf");
-  // if (!is_none (u)) cout << name << " -> " << u << "\n";
-  // else cout << name << " -> ???\n";
-  if (!is_none (u)) return u;
-  u= tt_locate (name * ".ttc");
-  if (!is_none (u)) return u;
-  u= tt_locate (name * ".otf");
-  if (!is_none (u)) return u;
-  u= tt_locate (name * ".dfont");
+  u= tt_locate_pfb (name);
   return u;
 }
 
@@ -198,10 +209,10 @@ tt_font_find (string name) {
 bool
 tt_font_exists (string name) {
   // cout << "tt_font_exists? " << name << "\n";
-  if (tt_fonts->contains (name)) return tt_fonts[name] == "yes";
+  if (tt_fonts->contains (name)) return true;
   bench_start ("tt_font_exists " * name);
-  bool yes       = !is_none (tt_font_find (name));
-  tt_fonts (name)= yes ? string ("yes") : string ("no");
+  bool yes= !is_none (tt_font_find (name));
+  if (yes) tt_fonts->insert (name);
   bench_end ("tt_font_exists " * name, 10);
   return yes;
 }
