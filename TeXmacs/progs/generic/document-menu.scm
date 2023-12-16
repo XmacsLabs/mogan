@@ -231,8 +231,8 @@
               ("SimYou" (init-env "font" "simyou")))
           (if (font-exists-in-tt? "ukai")
               ("UKai" (init-env "font" "ukai")))
-          (if (font-exists-in-tt? "unbatang")
-              ("Unbatang" (init-env "font" "unbatang")))
+          (if (font-exists-in-tt? "UnBatang")
+              ("UnBatang" (init-env "font" "unbatang")))
           (if (font-exists-in-tt? "uming")
               ("UMing" (init-env "font" "uming")))
           (if (font-exists-in-tt? "wqy-zenhei")
@@ -357,8 +357,8 @@
       ("Batang" (init-font "batang")))
   (if (font-exists-in-tt? "Gulim")
       ("Gulim" (init-font "gulim")))
-  (if (font-exists-in-tt? "unbatang")
-      ("Unbatang" (init-font "unbatang"))))
+  (if (font-exists-in-tt? "UnBatang")
+      ("UnBatang" (init-font "unbatang"))))
 
 (menu-bind document-short-font-menu
   ("Default" (init-default-font))
