@@ -79,9 +79,7 @@ struct font_less_eq_operator {
 static bool           fonts_loaded       = false;
 static bool           fonts_global_loaded= false;
 hashmap<tree, tree>   font_table (UNINIT);
-hashmap<string, tree> font_rev_table (UNINIT);
 hashmap<tree, tree>   font_global_table (UNINIT);
-hashmap<string, tree> font_global_rev_table (UNINIT);
 hashmap<tree, tree>   font_features (UNINIT);
 hashmap<tree, tree>   font_variants (UNINIT);
 hashmap<tree, tree>   font_characteristics (UNINIT);
@@ -95,8 +93,7 @@ tuple_insert (tree& t, tree x) {
 }
 
 void
-font_database_load_database (url u, hashmap<tree, tree>& ftab= font_table,
-                             hashmap<string, tree>& frev= font_rev_table) {
+font_database_load_database (url u, hashmap<tree, tree>& ftab= font_table) {
   if (!exists (u)) return;
   string s;
   if (!load_string (u, s, false)) {
@@ -107,9 +104,6 @@ font_database_load_database (url u, hashmap<tree, tree>& ftab= font_table,
         tree family_style  = t[i][0];
         tree files         = t[i][1];
         ftab (family_style)= files;
-        for (int j= 0; j < N (files); j++) {
-          frev (files[j][0]->label)= family_style;
-        }
       }
   }
 }
@@ -241,8 +235,7 @@ void
 font_database_global_load () {
   if (fonts_global_loaded) return;
   cout << "TeXmacs] warning, missing font, loading global substitution list\n";
-  font_database_load_database (GLOBAL_DATABASE, font_global_table,
-                               font_global_rev_table);
+  font_database_load_database (GLOBAL_DATABASE, font_global_table);
   font_database_load_features (GLOBAL_FEATURES);
   font_database_load_characteristics (GLOBAL_CHARACTERISTICS);
   font_database_load_substitutions (GLOBAL_SUBSTITUTIONS);
@@ -464,11 +457,12 @@ find_best_approximation (tree ff) {
 }
 
 static void
-font_collect (url dir, string font_name) {
+font_collect (url path) {
   int       i;
   const int MAX_SUBFONTS= 512;
+  string    font_name   = as_string (tail (path));
   for (i= 0; i < MAX_SUBFONTS; i++) {
-    int  sz= file_size (dir * font_name);
+    int  sz= file_size (path);
     tree ff= tuple (font_name, as_string (i), as_string (sz));
     if (!back_font_table->contains (ff) &&
         back_font_table->contains (ff (0, 2))) {
@@ -512,7 +506,7 @@ font_database_collect (url u) {
         string        suf    = suffix (a[i]);
         array<string> allowed= array<string> ("ttf", "ttc", "otf", "tfm");
         if (contains (suf, allowed)) {
-          font_collect (u, a[i]);
+          font_collect (u * a[i]);
         }
       }
     }
@@ -526,7 +520,10 @@ font_database_filter () {
   new_font_table = hashmap<tree, tree> (UNINIT);
   back_font_table= hashmap<tree, tree> (UNINIT);
   build_back_table ();
-  font_database_collect (tt_font_path ());
+  array<url> paths= tt_font_paths ();
+  for (int i= 0; i < N (paths); i++) {
+    font_collect (paths[i]);
+  }
   font_database_collect (tfm_font_path ());
   font_table     = new_font_table;
   new_font_table = hashmap<tree, tree> (UNINIT);
@@ -708,10 +705,4 @@ font_database_substitutions (string family) {
   font_database_load ();
   if (font_substitutions->contains (family)) return font_substitutions[family];
   else return tree (TUPLE);
-}
-
-bool
-font_database_rev_contains (string font_file_name) {
-  font_database_load ();
-  return font_rev_table->contains (font_file_name);
 }

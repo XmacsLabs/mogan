@@ -158,20 +158,23 @@ grep (string what, url u) {
 
 static void
 search_sub_dirs (url& all, url root) {
-  if (is_none (root));
-  else if (is_or (root)) {
-    search_sub_dirs (all, root[2]);
-    search_sub_dirs (all, root[1]);
-  }
-  else if (is_directory (root)) {
+  if (is_directory (root)) {
+    all= root | all;
+
     bool err= false;
     array<string> a= read_directory (root, err);
     if (!err) {
-      for (int i=N(a)-1; i>=0; i--)
-        if (N(a[i])>0 && a[i][0] != '.')
-          search_sub_dirs (all, root * a[i]);
+      for (int i=0; i<N(a); i++) {
+        url subdir= root * a[i];
+        if (is_directory (subdir)) {
+          search_sub_dirs (all, subdir);
+        }
+      }
     }
-    all= root | all;
+  }
+  else if (is_or (root)) {
+    search_sub_dirs (all, root[1]);
+    search_sub_dirs (all, root[2]);
   }
 }
 
