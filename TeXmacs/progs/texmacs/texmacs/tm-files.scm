@@ -528,7 +528,7 @@
 (tm-define (load-browse-buffer name)
   (:synopsis "Load a buffer or switch to it if already open")
   (cond ((buffer-exists? name) (switch-to-buffer name))
-        ((buffer-external? name) (load-external name))
+        ((and (buffer-external? name) (!= (url-suffix name) "tm")) (load-external name))
         ((url-rooted-web? (current-buffer)) (load-buffer name))
         (else (load-buffer name))))
 
