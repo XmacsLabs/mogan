@@ -10,9 +10,40 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|4|9|2|2|cell-background|pastel
-    green>|<cwith|7|7|2|2|cell-background|>|<cwith|10|15|2|2|cell-background|pastel
+    <tformat|<cwith|7|12|2|2|cell-background|pastel
+    green>|<cwith|10|10|2|2|cell-background|>|<cwith|13|18|2|2|cell-background|pastel
     green>|<table|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_20
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      Joris
+    </cell>|<\cell>
+      Improved junctions for virtual \<in\>, \<subset\>, <text-dots>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_19
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      Joris
+    </cell>|<\cell>
+      Tweaking for \<subset\>, \<supset\>, \<in\>, and \<ni\> for Carlito
+      font
+    </cell>>|<row|<\cell>
+      <text-dots>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
       Perf
     </cell>|<\cell>
       11_15
