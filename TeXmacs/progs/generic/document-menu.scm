@@ -17,10 +17,6 @@
         (language locale)
         (texmacs menus file-menu)))
 
-(define (main-font-name)
-  (with name (font-family-main (get-init "font"))
-    (if (== name "sys-chinese") (utf8->cork "默认字体") name)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Project menu
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -271,6 +267,11 @@
       ("Roman" (init-env "prog-font" "roman"))
       ("Times" (init-env "prog-font" "times"))))
 
+(define (font-base-size-menu-name)
+  (if (== (get-init "font-base-size") "10")
+      "Font size"
+      (string-append (get-init "font-base-size") "pt")))
+
 (menu-bind document-font-base-size-menu
   ("Default" (init-default "font-base-size"))
   ---
@@ -319,20 +320,24 @@
   (remove-font-packages))
 
 (menu-bind document-short-chinese-font-menu
-  (if (font-exists-in-tt? "AppleGothic")
-      ("Apple Gothic" (init-font "apple-gothic")))
+  (cond
+   ((os-win32?)
+    (if (font-exists-in-tt? "simkai")
+        ("SimKai" (init-font "simkai")))
+    (if (font-exists-in-tt? "simhei")
+        ("SimHei" (init-font "simhei"))))
+   ((os-macos?)
+    (if (font-exists-in-tt? "Songti")
+        ("Songti SC" (init-font "Songti"))))
+   (else
+    (if (font-exists-in-tt? "wqy-microhei")
+        ("MicroHei" (init-font "wqy-microhei")))
+    (if (font-exists-in-tt? "uming")
+        ("UMing" (init-font "uming")))
+    (if (font-exists-in-tt? "wqy-zenhei")
+        ("ZenHei" (init-font "wqy-zenhei"))))
   (if (font-exists-in-tt? "FandolSong-Regular")
-      ("FandolSong" (init-font "FandolSong")))
-  (if (font-exists-in-tt? "wqy-microhei")
-      ("MicroHei" (init-font "wqy-microhei")))
-  (if (font-exists-in-tt? "MS Mincho")
-      ("MS Mincho" (init-font "ms-mincho")))
-  (if (font-exists-in-tt? "simsun")
-      ("SimSun" (init-font "simsun")))
-  (if (font-exists-in-tt? "uming")
-      ("UMing" (init-font "uming")))
-  (if (font-exists-in-tt? "wqy-zenhei")
-      ("ZenHei" (init-font "wqy-zenhei"))))
+      ("FandolSong" (init-font "FandolSong")))))
 
 (menu-bind document-short-japanese-font-menu
   (if (font-exists-in-tt? "AppleGothic")
@@ -360,8 +365,30 @@
   (if (font-exists-in-tt? "UnBatang")
       ("UnBatang" (init-font "unbatang"))))
 
+(define (short-font-menu-name)
+  (with name (font-family-main (get-init "font"))
+    (if (== name "sys-chinese")
+        (utf8->cork "字体")
+        (upcase-first name))))
+
 (menu-bind document-short-font-menu
-  ("Default" (init-default-font))
+  (cond
+   ((and (supports-chinese?)
+         (or (== (get-init "language") "chinese")
+             (== (get-init "language") "taiwanese")))
+    ((eval (string-append "Default: " (font-family->master (default-chinese-font)))) (init-default-font))
+    ---
+    (link document-short-chinese-font-menu))
+   ((and (supports-japanese?) (== (get-init "language") "japanese"))
+    ("Default" (init-default-font))
+    ---
+    (link document-short-japanese-font-menu))
+   ((and (supports-korean?) (== (get-init "language") "korean"))
+    ("Default" (init-default-font))
+    ---
+    (link document-short-korean-font-menu))
+   (else
+    ("Default" (init-default-font))))
   ---
   ("Roman" (init-font "roman" "roman"))
   ("Stix" (init-font "stix" "math-stix"))
@@ -417,18 +444,6 @@
           ("Optima" (init-font "Optima")))
       (if (and (os-macos?) (font-exists-in-tt? "Papyrus"))
           ("Papyrus" (init-font "Papyrus"))))
-  (if (and (supports-chinese?) (== (get-init "language") "chinese"))
-      ---
-      (link document-short-chinese-font-menu))
-  (if (and (supports-japanese?) (== (get-init "language") "japanese"))
-      ---
-      (link document-short-japanese-font-menu))
-  (if (and (supports-korean?) (== (get-init "language") "korean"))
-      ---
-      (link document-short-korean-font-menu))
-  (if (and (supports-chinese?) (== (get-init "language") "taiwanese"))
-      ---
-      (link document-short-chinese-font-menu))
   ---
   (if (use-popups?)
       ("Other" (open-document-font-selector)))
@@ -1011,26 +1026,26 @@
 
 (tm-menu (focus-document-menu t)
   (group "Document")
-  (-> (eval (upcase-first (get-init "page-type")))
-      (link document-page-size-menu))
-  (-> (eval (string-append (get-init "font-base-size") " pt"))
-      (link document-font-base-size-menu))
-  (-> (eval (upcase-first (get-init-page-rendering)))
-      (link page-rendering-menu))
   (-> (eval (upcase-first (get-init "page-orientation")))
       ("Portrait" (init-page-orientation "portrait"))
       ("Landscape" (init-page-orientation "landscape")))
   (-> (eval (number-columns-text (get-init "par-columns")))
       (link document-columns-menu))
+  (-> (eval (upcase-first (get-init-page-rendering)))
+      (link page-rendering-menu))
   (-> "Layout"
       (link page-layout-menu))
-  (if (and (== (get-preference "experimental encryption") "on")
-	   (!= (get-init "encryption") ""))
-      (-> "Encryption" (link document-encryption-menu)))
+  (-> (eval (upcase-first (get-init "page-type")))
+      (link document-page-size-menu))
   (-> (eval (upcase-first (get-init "language")))
       (link document-language-menu))
-  (-> (eval (upcase-first (main-font-name)))
-      (link document-short-font-menu)))
+  (-> (eval (short-font-menu-name))
+      (link document-short-font-menu))
+  (-> (eval (font-base-size-menu-name))
+      (link document-font-base-size-menu))
+  (if (and (== (get-preference "experimental encryption") "on")
+           (!= (get-init "encryption") ""))
+      (-> "Encryption" (link document-encryption-menu))))
 
 (tm-menu (standard-focus-menu t)
   (:require (tree-is-buffer? t))
@@ -1047,18 +1062,20 @@
 
 (tm-menu (focus-style-extra-icons t)
   (:require (not (or (in-beamer?) (in-poster?))))
-  (=> (balloon (eval (basic-theme-name (current-basic-theme))) "Web theme")
+  (=> (balloon (eval (basic-theme-name (current-basic-theme))) "Document theme")
       (link basic-theme-menu))
   (assuming (!= (current-basic-theme) "plain")
     (link focus-background-color-icons)))
+
+(define (style-menu-name style)
+  (with name (if (== style "generic") "style" style)
+    (upcase-first name)))
 
 (tm-menu (focus-style-icons t)
   (minibar
     (let* ((st* (get-style-list))
            (st (if (null? st*) (list "no style") st*)))
-      ;;((balloon (eval (upcase-first (car st))) "Document style")
-      ;; (open-style-selector))
-      (=> (balloon (eval (upcase-first (car st))) "Document style")
+      (=> (balloon (eval (style-menu-name (car st))) "Document style")
           (link style-menu)
           ---
           ("Edit style" (edit-style-source))
@@ -1110,30 +1127,30 @@
 
 (tm-menu (focus-document-icons t)
   (minibar
-    (=> (balloon (eval (upcase-first (get-init "page-type")))
-                 "Paper size")
-        (link document-page-size-menu))
-    (=> (balloon (eval `(verbatim ,(upcase-first (main-font-name))))
-                 "Main document font")
-        (link document-short-font-menu))
-    (=> (balloon (eval (string-append (get-init "font-base-size") "pt"))
-                 "Font size")
-        (link document-font-base-size-menu))
     (=> (balloon (icon (eval (current-page-icon))) "Page layout")
         ("Portrait" (init-page-orientation "portrait"))
         ("Landscape" (init-page-orientation "landscape"))
         ---
         (link document-columns-menu)
         ---
-	(link page-rendering-menu)
+	    (link page-rendering-menu)
         ---
         (link page-layout-menu))
-    (if (and (== (get-preference "experimental encryption") "on")
-	     (!= (get-init "encryption") ""))
-	(=> (balloon (icon "tm_lock_open.xpm") "Encryption")
-	 (link document-encryption-menu)))
+    (=> (balloon (eval (upcase-first (get-init "page-type")))
+                 "Paper size")
+        (link document-page-size-menu))
     (=> (balloon (eval (current-language-name)) "Document language")
-        (link document-language-menu))))
+        (link document-language-menu))
+    (=> (balloon (eval (short-font-menu-name))
+                 "Main document font")
+        (link document-short-font-menu))
+    (=> (balloon (eval (font-base-size-menu-name))
+                 "Main document font size")
+        (link document-font-base-size-menu))
+    (if (and (== (get-preference "experimental encryption") "on")
+             (!= (get-init "encryption") ""))
+        (=> (balloon (icon "tm_lock_open.xpm") "Encryption")
+            (link document-encryption-menu)))))
 
 (tm-menu (standard-focus-icons t)
   (:require (tree-is-buffer? t))
