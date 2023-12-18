@@ -12,7 +12,10 @@
 #ifndef QTMFILEDIALOG_HPP
 #define QTMFILEDIALOG_HPP
 
+#include "qt_utilities.hpp"
 #include "string.hpp"
+#include "sys_utils.hpp"
+#include "tm_sys_utils.hpp"
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -24,7 +27,16 @@ public:
   QMyFileDialog (QWidget* parent= 0, const QString& caption= QString (),
                  const QString& directory= QString (),
                  const QString& filter   = QString ())
-      : QFileDialog (parent, caption, directory, filter) {}
+      : QFileDialog (parent, caption, directory, filter) {
+    // If the current directory is $TEXMACS_PATH/bin, we should reset it to home
+    if (os_win ()) {
+      url current_dir=
+          url_system (from_qstring ((this->directory ()).absolutePath ()));
+      if (current_dir == get_texmacs_path () * "bin") {
+        this->setDirectory (QDir::home ());
+      }
+    }
+  }
 };
 
 class QTMFileDialog : public QDialog {
