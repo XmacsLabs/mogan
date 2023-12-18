@@ -20,8 +20,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (basic-theme-name theme)
-  (let* ((s1 (string-replace theme "-" " ")))
-    (upcase-first s1)))
+  (with name (if (== theme "plain") "theme" theme)
+    (let ((s1 (string-replace name "-" " ")))
+      (upcase-first s1))))
 
 (menu-bind basic-theme-menu
   ("Plain" (select-default-basic-theme))

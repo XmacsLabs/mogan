@@ -1061,18 +1061,20 @@
 
 (tm-menu (focus-style-extra-icons t)
   (:require (not (or (in-beamer?) (in-poster?))))
-  (=> (balloon (eval (basic-theme-name (current-basic-theme))) "Web theme")
+  (=> (balloon (eval (basic-theme-name (current-basic-theme))) "Document theme")
       (link basic-theme-menu))
   (assuming (!= (current-basic-theme) "plain")
     (link focus-background-color-icons)))
+
+(define (style-menu-name style)
+  (with name (if (== style "generic") "style" style)
+    (upcase-first name)))
 
 (tm-menu (focus-style-icons t)
   (minibar
     (let* ((st* (get-style-list))
            (st (if (null? st*) (list "no style") st*)))
-      ;;((balloon (eval (upcase-first (car st))) "Document style")
-      ;; (open-style-selector))
-      (=> (balloon (eval (upcase-first (car st))) "Document style")
+      (=> (balloon (eval (style-menu-name (car st))) "Document style")
           (link style-menu)
           ---
           ("Edit style" (edit-style-source))
