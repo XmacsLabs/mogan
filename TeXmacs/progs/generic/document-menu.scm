@@ -19,7 +19,7 @@
 
 (define (main-font-name)
   (with name (font-family-main (get-init "font"))
-    (if (== name "sys-chinese") (utf8->cork "默认字体") name)))
+    (if (== name "sys-chinese") (utf8->cork "字体") name)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Project menu
@@ -270,6 +270,11 @@
           ("Pandora" (init-env "prog-font" "pandora")))
       ("Roman" (init-env "prog-font" "roman"))
       ("Times" (init-env "prog-font" "times"))))
+
+(define (font-base-size-menu-name)
+  (if (== (get-init "font-base-size") (get-env "font-base-size"))
+      "Font size"
+      (string-append (get-init "font-base-size") "pt")))
 
 (menu-bind document-font-base-size-menu
   ("Default" (init-default "font-base-size"))
@@ -1010,26 +1015,26 @@
 
 (tm-menu (focus-document-menu t)
   (group "Document")
-  (-> (eval (upcase-first (get-init "page-type")))
-      (link document-page-size-menu))
-  (-> (eval (string-append (get-init "font-base-size") " pt"))
-      (link document-font-base-size-menu))
-  (-> (eval (upcase-first (get-init-page-rendering)))
-      (link page-rendering-menu))
   (-> (eval (upcase-first (get-init "page-orientation")))
       ("Portrait" (init-page-orientation "portrait"))
       ("Landscape" (init-page-orientation "landscape")))
   (-> (eval (number-columns-text (get-init "par-columns")))
       (link document-columns-menu))
+  (-> (eval (upcase-first (get-init-page-rendering)))
+      (link page-rendering-menu))
   (-> "Layout"
       (link page-layout-menu))
-  (if (and (== (get-preference "experimental encryption") "on")
-	   (!= (get-init "encryption") ""))
-      (-> "Encryption" (link document-encryption-menu)))
+  (-> (eval (upcase-first (get-init "page-type")))
+      (link document-page-size-menu))
   (-> (eval (upcase-first (get-init "language")))
       (link document-language-menu))
   (-> (eval (upcase-first (main-font-name)))
-      (link document-short-font-menu)))
+      (link document-short-font-menu))
+  (-> (eval (font-base-size-menu-name))
+      (link document-font-base-size-menu))
+  (if (and (== (get-preference "experimental encryption") "on")
+           (!= (get-init "encryption") ""))
+      (-> "Encryption" (link document-encryption-menu))))
 
 (tm-menu (standard-focus-menu t)
   (:require (tree-is-buffer? t))
@@ -1106,30 +1111,30 @@
 
 (tm-menu (focus-document-icons t)
   (minibar
-    (=> (balloon (eval (upcase-first (get-init "page-type")))
-                 "Paper size")
-        (link document-page-size-menu))
-    (=> (balloon (eval `(verbatim ,(upcase-first (main-font-name))))
-                 "Main document font")
-        (link document-short-font-menu))
-    (=> (balloon (eval (string-append (get-init "font-base-size") "pt"))
-                 "Font size")
-        (link document-font-base-size-menu))
     (=> (balloon (icon (eval (current-page-icon))) "Page layout")
         ("Portrait" (init-page-orientation "portrait"))
         ("Landscape" (init-page-orientation "landscape"))
         ---
         (link document-columns-menu)
         ---
-	(link page-rendering-menu)
+	    (link page-rendering-menu)
         ---
         (link page-layout-menu))
-    (if (and (== (get-preference "experimental encryption") "on")
-	     (!= (get-init "encryption") ""))
-	(=> (balloon (icon "tm_lock_open.xpm") "Encryption")
-	 (link document-encryption-menu)))
+    (=> (balloon (eval (upcase-first (get-init "page-type")))
+                 "Paper size")
+        (link document-page-size-menu))
     (=> (balloon (eval (current-language-name)) "Document language")
-        (link document-language-menu))))
+        (link document-language-menu))
+    (=> (balloon (eval `(verbatim ,(upcase-first (main-font-name))))
+                 "Main document font")
+        (link document-short-font-menu))
+    (=> (balloon (eval (font-base-size-menu-name))
+                 "Main document font size")
+        (link document-font-base-size-menu))
+    (if (and (== (get-preference "experimental encryption") "on")
+             (!= (get-init "encryption") ""))
+        (=> (balloon (icon "tm_lock_open.xpm") "Encryption")
+            (link document-encryption-menu)))))
 
 (tm-menu (standard-focus-icons t)
   (:require (tree-is-buffer? t))
