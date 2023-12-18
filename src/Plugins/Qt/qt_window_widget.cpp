@@ -21,7 +21,9 @@
 #include "message.hpp"
 #include "tm_window.hpp"
 
+#include <QApplication>
 #include <QDockWidget>
+#include <QScreen>
 #include <QVariant>
 #include <QWidget>
 
@@ -160,7 +162,24 @@ qt_window_widget_rep::send (slot s, blackbox val) {
     if (qwid) {
       if (flag) {
         // QWidget* master = QApplication::activeWindow ();
-        qwid->show ();
+        QMainWindow* win= qobject_cast<QMainWindow*> (qwid);
+        if (win == nullptr) {
+          qwid->show ();
+        }
+        else {
+          int screen_w=
+              QApplication::primaryScreen ()->availableSize ().width ();
+          int screen_h=
+              QApplication::primaryScreen ()->availableSize ().height ();
+          double ratio=
+              (1.0 * qwid->width () * qwid->height ()) / (screen_w * screen_h);
+          if (ratio > 0.95) {
+            qwid->showMaximized ();
+          }
+          else {
+            qwid->show ();
+          }
+        }
         // qwid->activateWindow();
         // WEIRD: in Ubuntu uncommenting the above line causes the main window
         // to be opened in the background.
