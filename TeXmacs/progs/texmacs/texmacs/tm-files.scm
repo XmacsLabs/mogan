@@ -150,7 +150,7 @@
 (tm-define current-save-target (url-none))
 
 (define (buffer-notify-recent name)
-  (learn-interactive 'recent-buffer (list (cons "0" (url->unix name)))))
+  (learn-interactive 'recent-buffer (list (cons "0" (url->system name)))))
 
 (define (has-faithful-format? name)
   (in? (url-suffix name) '("tm" "ts" "tp" "stm" "tmml" "scm" "")))
