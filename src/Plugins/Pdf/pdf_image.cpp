@@ -199,7 +199,7 @@ pdf_image_rep::flush_png (PDFWriter& pdfw, url image) {
 void
 pdf_image_rep::flush (PDFWriter& pdfw) {
   url name= resolve (u);
-  if (is_none (name)) name= "$TEXMACS_PATH/misc/pixmaps/unknown.ps";
+  if (is_none (name)) name= "$TEXMACS_PATH/misc/pixmaps/unknown.png";
 
   url    temp;
   string s= suffix (name);
