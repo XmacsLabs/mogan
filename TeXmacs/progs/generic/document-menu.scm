@@ -17,10 +17,6 @@
         (language locale)
         (texmacs menus file-menu)))
 
-(define (main-font-name)
-  (with name (font-family-main (get-init "font"))
-    (if (== name "sys-chinese") (utf8->cork "字体") name)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Project menu
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -272,7 +268,7 @@
       ("Times" (init-env "prog-font" "times"))))
 
 (define (font-base-size-menu-name)
-  (if (== (get-init "font-base-size") (get-env "font-base-size"))
+  (if (== (get-init "font-base-size") "10")
       "Font size"
       (string-append (get-init "font-base-size") "pt")))
 
@@ -365,8 +361,26 @@
   (if (font-exists-in-tt? "UnBatang")
       ("UnBatang" (init-font "unbatang"))))
 
+(define (short-font-menu-name)
+  (with name (font-family-main (get-init "font"))
+    (if (== name "sys-chinese")
+        (utf8->cork "字体")
+        name)))
+
 (menu-bind document-short-font-menu
   ("Default" (init-default-font))
+  (if (and (supports-chinese?) (== (get-init "language") "chinese"))
+      ---
+      (link document-short-chinese-font-menu))
+  (if (and (supports-japanese?) (== (get-init "language") "japanese"))
+      ---
+      (link document-short-japanese-font-menu))
+  (if (and (supports-korean?) (== (get-init "language") "korean"))
+      ---
+      (link document-short-korean-font-menu))
+  (if (and (supports-chinese?) (== (get-init "language") "taiwanese"))
+      ---
+      (link document-short-chinese-font-menu))
   ---
   ("Roman" (init-font "roman" "roman"))
   ("Stix" (init-font "stix" "math-stix"))
@@ -422,18 +436,6 @@
           ("Optima" (init-font "Optima")))
       (if (and (os-macos?) (font-exists-in-tt? "Papyrus"))
           ("Papyrus" (init-font "Papyrus"))))
-  (if (and (supports-chinese?) (== (get-init "language") "chinese"))
-      ---
-      (link document-short-chinese-font-menu))
-  (if (and (supports-japanese?) (== (get-init "language") "japanese"))
-      ---
-      (link document-short-japanese-font-menu))
-  (if (and (supports-korean?) (== (get-init "language") "korean"))
-      ---
-      (link document-short-korean-font-menu))
-  (if (and (supports-chinese?) (== (get-init "language") "taiwanese"))
-      ---
-      (link document-short-chinese-font-menu))
   ---
   (if (use-popups?)
       ("Other" (open-document-font-selector)))
@@ -1028,7 +1030,7 @@
       (link document-page-size-menu))
   (-> (eval (upcase-first (get-init "language")))
       (link document-language-menu))
-  (-> (eval (upcase-first (main-font-name)))
+  (-> (eval (upcase-first (short-font-menu-name)))
       (link document-short-font-menu))
   (-> (eval (font-base-size-menu-name))
       (link document-font-base-size-menu))
@@ -1125,7 +1127,7 @@
         (link document-page-size-menu))
     (=> (balloon (eval (current-language-name)) "Document language")
         (link document-language-menu))
-    (=> (balloon (eval `(verbatim ,(upcase-first (main-font-name))))
+    (=> (balloon (eval `(verbatim ,(upcase-first (short-font-menu-name))))
                  "Main document font")
         (link document-short-font-menu))
     (=> (balloon (eval (font-base-size-menu-name))
