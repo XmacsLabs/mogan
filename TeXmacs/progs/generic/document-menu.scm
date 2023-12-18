@@ -320,20 +320,24 @@
   (remove-font-packages))
 
 (menu-bind document-short-chinese-font-menu
-  (if (font-exists-in-tt? "AppleGothic")
-      ("Apple Gothic" (init-font "apple-gothic")))
+  (cond
+   ((os-win32?)
+    (if (font-exists-in-tt? "simkai")
+        ("SimKai" (init-font "simkai")))
+    (if (font-exists-in-tt? "simhei")
+        ("SimHei" (init-font "simhei"))))
+   ((os-macos?)
+    (if (font-exists-in-tt? "Songti")
+        ("Songti SC" (init-font "Songti"))))
+   (else
+    (if (font-exists-in-tt? "wqy-microhei")
+        ("MicroHei" (init-font "wqy-microhei")))
+    (if (font-exists-in-tt? "uming")
+        ("UMing" (init-font "uming")))
+    (if (font-exists-in-tt? "wqy-zenhei")
+        ("ZenHei" (init-font "wqy-zenhei"))))
   (if (font-exists-in-tt? "FandolSong-Regular")
-      ("FandolSong" (init-font "FandolSong")))
-  (if (font-exists-in-tt? "wqy-microhei")
-      ("MicroHei" (init-font "wqy-microhei")))
-  (if (font-exists-in-tt? "MS Mincho")
-      ("MS Mincho" (init-font "ms-mincho")))
-  (if (font-exists-in-tt? "simsun")
-      ("SimSun" (init-font "simsun")))
-  (if (font-exists-in-tt? "uming")
-      ("UMing" (init-font "uming")))
-  (if (font-exists-in-tt? "wqy-zenhei")
-      ("ZenHei" (init-font "wqy-zenhei"))))
+      ("FandolSong" (init-font "FandolSong")))))
 
 (menu-bind document-short-japanese-font-menu
   (if (font-exists-in-tt? "AppleGothic")
@@ -368,19 +372,23 @@
         name)))
 
 (menu-bind document-short-font-menu
-  ("Default" (init-default-font))
-  (if (and (supports-chinese?) (== (get-init "language") "chinese"))
-      ---
-      (link document-short-chinese-font-menu))
-  (if (and (supports-japanese?) (== (get-init "language") "japanese"))
-      ---
-      (link document-short-japanese-font-menu))
-  (if (and (supports-korean?) (== (get-init "language") "korean"))
-      ---
-      (link document-short-korean-font-menu))
-  (if (and (supports-chinese?) (== (get-init "language") "taiwanese"))
-      ---
-      (link document-short-chinese-font-menu))
+  (cond
+   ((and (supports-chinese?)
+         (or (== (get-init "language") "chinese")
+             (== (get-init "language") "taiwanese")))
+    ((eval (string-append "Default: " (font-family->master (default-chinese-font)))) (init-default-font))
+    ---
+    (link document-short-chinese-font-menu))
+   ((and (supports-japanese?) (== (get-init "language") "japanese"))
+    ("Default" (init-default-font))
+    ---
+    (link document-short-japanese-font-menu))
+   ((and (supports-korean?) (== (get-init "language") "korean"))
+    ("Default" (init-default-font))
+    ---
+    (link document-short-korean-font-menu))
+   (else
+    ("Default" (init-default-font))))
   ---
   ("Roman" (init-font "roman" "roman"))
   ("Stix" (init-font "stix" "math-stix"))
@@ -1030,7 +1038,7 @@
       (link document-page-size-menu))
   (-> (eval (upcase-first (get-init "language")))
       (link document-language-menu))
-  (-> (eval (upcase-first (short-font-menu-name)))
+  (-> (eval (short-font-menu-name))
       (link document-short-font-menu))
   (-> (eval (font-base-size-menu-name))
       (link document-font-base-size-menu))
@@ -1127,7 +1135,7 @@
         (link document-page-size-menu))
     (=> (balloon (eval (current-language-name)) "Document language")
         (link document-language-menu))
-    (=> (balloon (eval `(verbatim ,(upcase-first (short-font-menu-name))))
+    (=> (balloon (eval (short-font-menu-name))
                  "Main document font")
         (link document-short-font-menu))
     (=> (balloon (eval (font-base-size-menu-name))
