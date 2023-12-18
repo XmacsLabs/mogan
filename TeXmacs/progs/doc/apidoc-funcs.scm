@@ -103,6 +103,13 @@
 
 (define module-exported-cache (make-ahash-table))
 
+(define-public macro-keywords
+  '(define-macro define-public-macro tm-define-macro))
+
+(define-public def-keywords
+  `(define-public provide-public tm-define tm-menu menu-bind tm-widget
+    ,@macro-keywords))
+
 ; HACK: we use read (copying what's done in init-texmacs.scm) until the
 ; code indexer is implemented
 (define (parse-form form f)
