@@ -188,12 +188,12 @@
 (define (cannot-write? name action)
   (with vname `(verbatim ,(url->system name))
     (cond ((and (not (url-test? name "f")) (url-exists? name))
-           (with msg "The file cannot be created:<br>"
-             (notify-now `(concat ,msg ,vname)))
+           (with msg "The file cannot be created:"
+             (notify-now `(concat ,msg "<br>" ,vname)))
            #t)
           ((and (url-test? name "f") (not (url-test? name "w")))
-           (with msg "You do not have write access for:<br>"
-             (notify-now `(concat ,msg ,vname)))
+           (with msg "You do not have write access for:"
+             (notify-now `(concat ,msg "<br>" ,vname)))
            #t)
           (else #f))))
 
@@ -454,30 +454,27 @@
 
 (define (load-buffer-load name opts)
   ;;(display* "load-buffer-load " name ", " opts "\n")
-  (with vname `(verbatim ,(url->system name))
+  (with path (url->system name)
     (cond ((buffer-exists? name)
            (load-buffer-open name opts))
           ((url-exists? name)
            (if (buffer-load name)
-               (set-message `(concat "Could not load " ,vname) "Load file")
+               (set-message `(concat "Could not load " ,path) "Load file")
                (load-buffer-open name opts)))
           (else
-            (with uname (if (string? name) (string->url name) name)
-              (buffer-set-body name '(document ""))
-              (load-buffer-open name opts)
-              (buffer-set-default-style)
-              (set-message `(concat "Could not load " ,vname
-                                    ". Created new document")
-                           "Load file"))))))
+            (with msg "The file or buffer does not exist:"
+              (begin
+                (debug-message "debug-io" (string-append msg "\n" path))
+                (notify-now `(concat ,msg "<br>" (verbatim ,path)))))))))
 
 (define (load-buffer-check-permissions name opts)
   ;;(display* "load-buffer-check-permissions " name ", " opts "\n")
   (with path (url->system name)
     (cond ((and (not (url-test? name "f")) (url-exists? name))
-           (with msg "The file cannot be loaded or created:<br>"
+           (with msg "The file cannot be loaded or created:"
              (begin
-               (debug-message "debug-io" (string-append msg path))
-               (notify-now `(concat ,msg (verbatim ,path))))))
+               (debug-message "debug-io" (string-append msg "\n" path))
+               (notify-now `(concat ,msg "<br>" (verbatim ,path))))))
           ((and (url-test? name "f") (not (url-test? name "r")))
            (with msg `(concat "You do not have read access to " ,vname)
              (set-message msg "Load file")))
@@ -512,6 +509,14 @@
           (set! name (url-append (url-pwd) name))))
   (load-buffer-check-autosave name opts))
 
+;; The load flowgraph:
+;; load-buffer
+;; -> load-buffer-main
+;;    -> load-buffer-check-autosave
+;;       -> load-buffer-check-permission
+;;           -> load-buffer-load
+;;              -> load-buffer-open
+;;       -> load-buffer-open
 (tm-define (load-buffer name . opts)
   (:argument name smart-file "File name")
   (:default  name (propose-name-buffer))
