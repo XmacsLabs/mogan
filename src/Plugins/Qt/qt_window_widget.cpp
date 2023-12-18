@@ -23,6 +23,7 @@
 
 #include <QApplication>
 #include <QDockWidget>
+#include <QScreen>
 #include <QVariant>
 #include <QWidget>
 
