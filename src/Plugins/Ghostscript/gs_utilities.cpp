@@ -28,7 +28,12 @@ gs_system () {
   url gs= url_system ("C:\\") * url_wildcard ("Program Files*") *
           url_system ("gs") * url_wildcard ("gs*") * url_system ("bin") *
           url_wildcard ("gswin*c.exe");
-  return materialize (gs);
+  if (exists (gs)) {
+    return materialize (gs);
+  }
+  else {
+    return "gs.exe";
+  }
 #else
   return "gs";
 #endif
