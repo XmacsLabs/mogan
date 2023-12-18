@@ -369,7 +369,7 @@
   (with name (font-family-main (get-init "font"))
     (if (== name "sys-chinese")
         (utf8->cork "字体")
-        name)))
+        (upcase-first name))))
 
 (menu-bind document-short-font-menu
   (cond
