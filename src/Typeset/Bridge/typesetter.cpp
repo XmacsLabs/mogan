@@ -108,9 +108,10 @@ typesetter_rep::local_end (array<page_item>& prev_l, stack_border& prev_sb) {
 static array<rectangle>
 requires_update (array<rectangle> log) {
   array<rectangle> rs;
-  for (int i=0; 2*i+1<N(log); i++) {
-    rectangle r1= log[2*i];
-    rectangle r2= log[2*i+1];
+  int log_size= N(log);
+  for (int i=0; 2*i+1<log_size; i++) {
+    rectangle r1= log[log_size-2*i-1];
+    rectangle r2= log[log_size-2*i-2];
     if (r1 == rectangle (0, 0, 0, 0)) rs << r2;
     else if (r2 == rectangle (0, 0, 0, 0)) rs << r1;
     else if (r1 != r2) rs << r2 << r1;

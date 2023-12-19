@@ -634,8 +634,7 @@ phrase_box_rep::phrase_box_rep (path ip, array<box> bs, array<SI> spc):
 phrase_box_rep::~phrase_box_rep () {
   if (logs_ptr != NULL) {
     array<rectangle>& logs= *logs_ptr;
-    logs= array<rectangle>(rectangle (0, 0, 0, 0), rectangle (ox+x3, oy+y3, ox+x4, oy+y4));
-    // cout << "  8=X " << rectangle (ox+x3, oy+y3, ox+x4, oy+y4) << "\n";
+    logs << rectangle (0, 0, 0, 0) << rectangle (ox+x3, oy+y3, ox+x4, oy+y4);
   }
 }
 
