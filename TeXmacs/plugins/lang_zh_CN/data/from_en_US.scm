@@ -1,5 +1,4 @@
 
-
 ("(re)build autocompletion index" "构建/重建自动补全索引")
 ("GNU FDL" "GNU自由文档许可证")
 ("GNU TeXmacs comes without any form of legal warranty" "GNU TeXmacs 无任何形式的法律保证")
@@ -334,7 +333,7 @@
 ("configuration" "配置")
 ("consoles" "控制台")
 ("contact" "联系")
-("content tag" "内容标记")
+("content tag" "语义标记")
 ("content" "内容")
 ("context dependent icons" "相关工具栏")
 ("continuation of" "延续")
@@ -532,7 +531,7 @@
 ("enumerate numeric" "有序列表(阿拉伯数字)")
 ("enumerate roman" "有序列表(小写罗马数字)")
 ("enumerate" "有序列表")
-("enunciation" "说明")
+("enunciation" "语义块")
 ("env" "")
 ("environment variable" "环境变量")
 ("environment" "环境")
@@ -1507,7 +1506,7 @@
 ("project" "项目")
 ("projects" "项目计划")
 ("prologue" "")
-("prominent" "突出")
+("prominent" "外观块")
 ("prompt on scripts" "")
 ("prompts and default input" "提示符和默认输入")
 ("proof" "证明")
