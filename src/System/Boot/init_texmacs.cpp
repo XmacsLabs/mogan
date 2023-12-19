@@ -92,8 +92,7 @@ init_texmacs_path (int& argc, char** argv) {
   }
 #endif
 
-#if defined(AQUATEXMACS) || defined(OS_MACOS) || \
-    (defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS))
+#if defined(AQUATEXMACS) || defined(OS_MACOS) || defined(MACOSX_EXTENSIONS)
   // Mac bundle environment initialization
   // We set some environment variables when the executable
   // is in a .app bundle on MacOSX

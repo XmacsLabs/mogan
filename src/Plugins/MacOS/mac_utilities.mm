@@ -354,11 +354,7 @@ fromHardwareWithAttributes:(NSMutableDictionary *)attributes
 		HIDRemoteMode remoteMode = kHIDRemoteModeNone;
 		NSString *remoteModeName = nil;
 
-#ifdef X11TEXMACS
-    int mode = 1;
-#else
     int mode = 2;
-#endif
 
 		switch (mode)
 		{

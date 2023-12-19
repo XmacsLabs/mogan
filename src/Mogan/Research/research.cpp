@@ -47,7 +47,7 @@ void mac_fix_paths ();
 #include "MacOS/mac_utilities.h"
 #endif
 
-#if defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS)
+#if defined(MACOSX_EXTENSIONS)
 #include "MacOS/mac_app.h"
 #endif
 
@@ -348,7 +348,7 @@ TeXmacs_main (int argc, char** argv) {
   bench_cumul ("initialize plugins");
   if (DEBUG_STD) debug_boot << "Opening display...\n";
 
-#if defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS)
+#if defined(MACOSX_EXTENSIONS)
     // init_mac_application ();
 #endif
 
@@ -423,7 +423,7 @@ TeXmacs_main (int argc, char** argv) {
   if (DEBUG_STD) debug_boot << "Closing display...\n";
   gui_close ();
 
-#if defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS)
+#if defined(MACOSX_EXTENSIONS)
   finalize_mac_application ();
 #endif
 
