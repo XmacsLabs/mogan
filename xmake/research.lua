@@ -151,7 +151,6 @@ function add_target_research_on_others()
         add_installfiles("TeXmacs/misc/images/text-x-mogan.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
         add_installfiles("TeXmacs/misc/mime/MoganResearch.desktop", {prefixdir="share/applications"})
         add_installfiles("TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
-        add_installfiles("TeXmacs/misc/pixmaps/Xmacs.xpm", {prefixdir="share/pixmaps"})
     end
   
     if is_plat("mingw", "windows") then
