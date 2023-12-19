@@ -63,7 +63,7 @@
   (group "Customizations")
   (with l (get-style-list)
     (for (pack (if (null? l) l (cdr l)))
-      (-> (eval (upcase-first pack))
+      (-> (eval `(verbatim ,pack))
           ("Edit package" (edit-package-source pack))
           ("Remove package" (remove-style-package pack)))))
   (-> "Add package"
@@ -1082,7 +1082,7 @@
           ("Other style" (interactive set-main-style)))
       (dynamic (focus-style-extra-icons t))
       (for (pack (list-filter (cdr st) (negate hidden-package?)))
-        (=> (eval pack)
+        (=> (eval `(verbatim ,pack))
             ("Edit package" (edit-package-source pack))
             ("Remove package" (remove-style-package pack)))))
     (=> (balloon (icon "tm_add.xpm") "Add style package")
