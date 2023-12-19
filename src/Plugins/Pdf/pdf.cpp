@@ -23,7 +23,7 @@ using PDFHummus::EStatusCode;
 
 string
 default_pdf_version () {
-  return "1.7";
+  return "1.4";
 }
 
 string
