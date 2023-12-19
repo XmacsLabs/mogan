@@ -76,7 +76,7 @@ tt_font_search_path () {
          url ("/Library/Application Support/Apple/Fonts/iWork") |
          url ("/System/Library/Fonts") |
          url ("/System/Library/PrivateFrameworks/FontServices.framework/"
-              "Versions/A/Resources/Fonts/ApplicationSupport") |
+              "Versions/A/Resources/Fonts") |
          url ("/opt/local/share/texmf-texlive/fonts/opentype") |
          url ("/opt/local/share/texmf-texlive/fonts/truetype") |
          url ("/opt/local/share/texmf-texlive-dist/fonts/opentype") |
