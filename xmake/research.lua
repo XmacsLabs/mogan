@@ -187,7 +187,9 @@ function add_target_research_on_others()
     after_install(function (target)
         print("after_install of target research")
         import("xmake.global")
-        global.copy_icons(target)
+        if is_plat("linux") then
+            global.copy_icons(target)
+        end
 
         if is_plat("macosx") and is_arch("arm64") then
             local app_dir = target:installdir() .. "/../../"
