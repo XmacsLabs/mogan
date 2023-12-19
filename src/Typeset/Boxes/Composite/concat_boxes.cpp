@@ -620,11 +620,11 @@ concat_box_rep::graphical_select (SI x1, SI y1, SI x2, SI y2) {
 
 class phrase_box_rep: public concat_box_rep {
 public:
-  rectangles* logs_ptr;
+  array<rectangle>* logs_ptr;
   SI          ox, oy;
   phrase_box_rep (path ip, array<box> bs, array<SI> spc);
   ~phrase_box_rep ();
-  void position_at (SI x, SI y, rectangles& change_log_ptr);
+  void position_at (SI x, SI y, array<rectangle>& change_log_ptr);
   void display (renderer ren);
 };
 
@@ -633,20 +633,22 @@ phrase_box_rep::phrase_box_rep (path ip, array<box> bs, array<SI> spc):
 
 phrase_box_rep::~phrase_box_rep () {
   if (logs_ptr != NULL) {
-    rectangles& logs= *logs_ptr;
-    logs= rectangles (rectangle (ox+x3, oy+y3, ox+x4, oy+y4), logs);
-    logs= rectangles (rectangle (0, 0, 0, 0), logs);
-    // cout << "  8=X " << rectangle (ox+x3, oy+y3, ox+x4, oy+y4) << "\n";
+    array<rectangle>& logs= *logs_ptr;
+    logs << rectangle (0, 0, 0, 0) << rectangle (ox+x3, oy+y3, ox+x4, oy+y4);
   }
 }
 
 void
-phrase_box_rep::position_at (SI x, SI y, rectangles& logs) {
+phrase_box_rep::position_at (SI x, SI y, array<rectangle>& logs) {
   x += x0; y += y0;
-  if (logs_ptr == NULL) logs= rectangles (rectangle (0, 0, 0, 0), logs);
-  else logs= rectangles (rectangle (ox+x3, oy+y3, ox+x4, oy+y4), logs);
+  if (logs_ptr == NULL) {
+    logs << rectangle (0, 0, 0, 0);
+  }
+  else {
+    logs << rectangle (ox+x3, oy+y3, ox+x4, oy+y4);
+  }
   ox= x; oy= y;
-  logs= rectangles (rectangle (ox+x3, oy+y3, ox+x4, oy+y4), logs);
+  logs << rectangle (ox+x3, oy+y3, ox+x4, oy+y4);
   logs_ptr= &logs;
 }
 

@@ -105,18 +105,18 @@ typesetter_rep::local_end (array<page_item>& prev_l, stack_border& prev_sb) {
 * Main typesetting routines
 ******************************************************************************/
 
-static rectangles
-requires_update (rectangles log) {
-  rectangles rs;
-  while (!is_nil (log)) {
-    rectangle r1= log->item;
-    rectangle r2= log->next->item;
-    if (r1 == rectangle (0, 0, 0, 0)) rs= rectangles (r2, rs);
-    else if (r2 == rectangle (0, 0, 0, 0)) rs= rectangles (r1, rs);
-    else if (r1 != r2) rs= rectangles (r1, rectangles (r2, rs));
-    log= log->next->next;
+static array<rectangle>
+requires_update (array<rectangle> log) {
+  array<rectangle> rs;
+  int log_size= N(log);
+  for (int i=0; 2*i+1<log_size; i++) {
+    rectangle r1= log[log_size-2*i-1];
+    rectangle r2= log[log_size-2*i-2];
+    if (r1 == rectangle (0, 0, 0, 0)) rs << r2;
+    else if (r2 == rectangle (0, 0, 0, 0)) rs << r1;
+    else if (r1 != r2) rs << r2 << r1;
   }
-  return reverse (rs);
+  return rs;
 }
 
 void
@@ -181,7 +181,7 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
   b->position_at (0, 0, change_log);
   change_log= requires_update (change_log);
   rectangle r (0, 0, 0, 0);
-  if (!is_nil (change_log)) r= least_upper_bound (change_log);
+  if (N(change_log) != 0) r= least_upper_bound (change_log);
   array<brush> new_bgs;
   array<rectangle> rs;
   b->collect_page_colors (new_bgs, rs);
@@ -190,7 +190,7 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
       r= least_upper_bound (r, rs[i]);
   old_bgs= new_bgs;
   x1b= r->x1; y1b= r->y1; x2b= r->x2; y2b= r->y2;
-  change_log= rectangles ();
+  change_log= array<rectangle> ();
   return b;
 }
 
