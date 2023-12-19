@@ -22,7 +22,7 @@ globals={}
 function copy_icons(target) 
   os.cp ("TeXmacs/misc/images/new-mogan.svg",
         path.join(target:installdir(), "share/icons/hicolor/scalable/apps", "MoganResearch.svg"))
-  for _,size in ipairs({32, 48, 64, 128, 256, 512}) do
+  for _,size in ipairs({16, 32, 128, 512}) do
     os.cp (
       "TeXmacs/misc/images/new-mogan-"..size..".png",
       path.join(target:installdir(), "share/icons/hicolor/", size .."x"..size, "/apps/MoganResearch.png"))
