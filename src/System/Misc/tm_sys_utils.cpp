@@ -165,8 +165,7 @@ set_printing_cmd (string cmd) {
 
 bool
 has_printing_cmd () {
-  static bool has= get_printing_cmd () != "";
-  return has;
+  return false;
 }
 
 static const char*
