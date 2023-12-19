@@ -113,9 +113,9 @@ requires_update (array<rectangle> log) {
     rectangle r2= log[2*i+1];
     if (r1 == rectangle (0, 0, 0, 0)) rs << r2;
     else if (r2 == rectangle (0, 0, 0, 0)) rs << r1;
-    else if (r1 != r2) rs << r1 << r2;
+    else if (r1 != r2) rs << r2 << r1;
   }
-  return reverse (rs);
+  return rs;
 }
 
 void
