@@ -334,14 +334,14 @@
     (if (font-exists-in-tt? "Kaiti")
         ("Kaiti SC" (init-font "Kaiti SC"))))
    (else
-    (if (font-exists-in-tt? "wqy-microhei")
-        ("MicroHei" (init-font "wqy-microhei")))
-    (if (font-exists-in-tt? "uming")
-        ("UMing" (init-font "uming")))
-    (if (font-exists-in-tt? "wqy-zenhei")
-        ("ZenHei" (init-font "wqy-zenhei"))))
-  (if (font-exists-in-tt? "FandolSong-Regular")
-      ("FandolSong" (init-font "FandolSong")))))
+    (if (font-exists-in-tt? "FandolSong-Regular")
+        ("FandolSong" (init-font "FandolSong")))
+    (if (font-exists-in-tt? "FandolHei-Regular")
+        ("FandolHei" (init-font "FandolHei")))
+    (if (font-exists-in-tt? "FandolFang-Regular")
+        ("FandolFang" (init-font "FandolFang")))
+    (if (font-exists-in-tt? "FandolKai-Regular")
+        ("FandolKai" (init-font "FandolKai"))))))
 
 (menu-bind document-short-japanese-font-menu
   (if (font-exists-in-tt? "AppleGothic")
