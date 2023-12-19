@@ -322,10 +322,12 @@
 (menu-bind document-short-chinese-font-menu
   (cond
    ((os-win32?)
-    (if (font-exists-in-tt? "simkai")
-        ("SimKai" (init-font "simkai")))
     (if (font-exists-in-tt? "simhei")
-        ("SimHei" (init-font "simhei"))))
+        ("SimHei" (init-font "simhei")))
+    (if (font-exists-in-tt? "simfang")
+        ("SimFang" (init-font "simfang")))
+    (if (font-exists-in-tt? "simkai")
+        ("SimKai" (init-font "simkai"))))
    ((os-macos?)
     (if (font-exists-in-tt? "华文黑体")
         ("STHeiti" (init-font "STHeiti")))
