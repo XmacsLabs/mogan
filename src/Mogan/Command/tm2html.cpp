@@ -48,7 +48,7 @@ void mac_fix_paths ();
 #include "MacOS/mac_utilities.h"
 #endif
 
-#if defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS)
+#if defined(MACOSX_EXTENSIONS)
 #include "MacOS/mac_app.h"
 #endif
 
@@ -207,7 +207,7 @@ TeXmacs_main (int argc, char** argv) {
   gui_start_loop ();
   gui_close ();
 
-#if defined(X11TEXMACS) && defined(MACOSX_EXTENSIONS)
+#if defined(MACOSX_EXTENSIONS)
   finalize_mac_application ();
 #endif
 

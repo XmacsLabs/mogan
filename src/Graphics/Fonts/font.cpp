@@ -495,8 +495,6 @@ error_font (font fn) {
  * System dependent fonts
  ******************************************************************************/
 
-#ifndef X11TEXMACS
-
 font
 x_font (string family, int size, int dpi) {
   (void) family;
@@ -504,8 +502,6 @@ x_font (string family, int size, int dpi) {
   (void) dpi;
   return font ();
 }
-
-#endif
 
 #ifndef QTTEXMACS
 

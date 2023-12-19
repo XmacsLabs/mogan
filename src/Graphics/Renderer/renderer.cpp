@@ -524,7 +524,6 @@ delete_renderer (renderer ren) {
 }
 
 #ifndef QTTEXMACS
-#ifndef X11TEXMACS
 
 picture
 native_picture (int w, int h, int ox, int oy) {
@@ -559,5 +558,4 @@ save_picture (url dest, picture p) {
   TM_FAILED ("not yet implemented");
 }
 
-#endif
 #endif
