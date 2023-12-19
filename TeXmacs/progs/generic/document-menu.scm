@@ -327,8 +327,12 @@
     (if (font-exists-in-tt? "simhei")
         ("SimHei" (init-font "simhei"))))
    ((os-macos?)
-    (if (font-exists-in-tt? "Songti")
-        ("Songti SC" (init-font "Songti"))))
+    (if (font-exists-in-tt? "华文黑体")
+        ("STHeiti" (init-font "STHeiti")))
+    (if (font-exists-in-tt? "华文仿宋")
+        ("STFangsong" (init-font "STFangsong")))
+    (if (font-exists-in-tt? "Kaiti")
+        ("Kaiti SC" (init-font "Kaiti SC"))))
    (else
     (if (font-exists-in-tt? "wqy-microhei")
         ("MicroHei" (init-font "wqy-microhei")))
@@ -369,7 +373,7 @@
   (with name (font-family-main (get-init "font"))
     (if (== name "sys-chinese")
         (utf8->cork "字体")
-        (upcase-first name))))
+        (upcase-first (utf8->cork name)))))
 
 (menu-bind document-short-font-menu
   (cond
