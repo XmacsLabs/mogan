@@ -147,10 +147,11 @@ function add_target_research_on_others()
     end
   
     -- install icons
-    add_installfiles("TeXmacs/misc/images/text-x-texmacs.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
-    add_installfiles("TeXmacs/misc/mime/texmacs.desktop", {prefixdir="share/applications"})
-    add_installfiles("TeXmacs/misc/mime/texmacs.xml", {prefixdir="share/mime/packages"})
-    add_installfiles("TeXmacs/misc/pixmaps/TeXmacs.xpm", {prefixdir="share/pixmaps"})
+    if is_plat("linux") then
+        add_installfiles("TeXmacs/misc/images/text-x-mogan.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
+        add_installfiles("TeXmacs/misc/mime/MoganResearch.desktop", {prefixdir="share/applications"})
+        add_installfiles("TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
+    end
   
     if is_plat("mingw", "windows") then
         add_installfiles(TeXmacs_files)
