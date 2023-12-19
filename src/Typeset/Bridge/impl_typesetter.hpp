@@ -17,7 +17,7 @@ class typesetter_rep {
 public:
   edit_env&    env;
   bridge       br;
-  array<rectangle> change_log;
+  rectangles   change_log;
   array<brush> old_bgs;
 
   array<page_item> l;      // current lines
