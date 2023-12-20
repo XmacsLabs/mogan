@@ -105,7 +105,7 @@ font_database_load_suffixes_sub (url path) {
         for (int j= 0; j < N (files); j++) {
           url    file_name= url (files[j][0]->label);
           string base_name= basename (file_name);
-          if (ends (base_name, ".TTF")) {
+          if (ends (base_name, ".TTF")) { // dirty fix on basename
             base_name= base_name (0, N (base_name) - 4);
           }
           string suf= suffix (file_name);
