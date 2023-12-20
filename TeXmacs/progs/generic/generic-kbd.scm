@@ -535,8 +535,6 @@
   ("C-insert" (kbd-copy))
   ("S-insert" (kbd-paste))
   ("S-delete" (kbd-cut))
-  ("A-left" (cursor-history-backward))
-  ("A-right" (cursor-history-forward))
 
   ("search F3" (search-next-match #t))
   ("search S-F3" (search-next-match #f))
