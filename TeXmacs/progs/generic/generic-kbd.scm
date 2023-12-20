@@ -557,6 +557,9 @@
   ("altcmd X" (interactive exec-interactive-command))
   ("altcmd $" (interactive-spell))
 
+  ("C-P" (toggle-preamble-mode))
+  ("C-O" (toggle-source-mode))
+
   ("M-A-C-home" (traverse-first))
   ("M-A-C-end" (traverse-last))
   ("M-A-C-S-home" (kbd-select traverse-first))
