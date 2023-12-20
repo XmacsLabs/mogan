@@ -19,7 +19,7 @@
     <item>\<#8BBF\>\<#95EE\>\<#5B98\>\<#7F51\>
 
     <\description>
-      <item*|GNU TeXmacs><slink|https://texmacs.org>
+      <item*|GNU <TeXmacs>><slink|https://texmacs.org>
 
       <item*|\<#58A8\>\<#5E72\>\<#7406\>\<#5DE5\>\<#5957\>\<#4EF6\>><slink|https://mogan.app>
     </description>

@@ -22,7 +22,7 @@
     <item>Visit the offical websites:
 
     <\description>
-      <item*|GNU TeXmacs><slink|https://texmacs.org>
+      <item*|GNU <TeXmacs>><slink|https://texmacs.org>
 
       <item*|Mogan STEM Suite><slink|https://mogan.app>
     </description>
