@@ -318,14 +318,7 @@ font_database_build (url u) {
   else if (is_regular (u)) {
     if (on_blacklist (as_string (tail (u)))) return;
 
-    array<string> sufs= array<string>();
-    sufs << suffix (u);
-    string base_name= basename (u);
-    if (ends (base_name, ".TTF")) base_name= base_name(0, N(base_name)-4);
-    font_suffixes (base_name)= sufs;
-
     cout << "Process " << u << "\n";
-
     scheme_tree t= tt_font_name (u);
     for (int i= 0; i < N (t); i++)
       if (is_func (t[i], TUPLE, 2) && is_atomic (t[i][0]) &&
