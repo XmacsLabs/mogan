@@ -310,10 +310,13 @@ font_database_build (url u) {
     bool          err;
     array<string> a= read_directory (u, err);
     for (int i= 0; i < N (a); i++)
-      if (!starts (a[i], "."))
-        if (ends (a[i], ".ttf") || ends (a[i], ".ttc") || ends (a[i], ".otf") ||
-            ends (a[i], ".TTF") || ends (a[i], ".TTC") || ends (a[i], ".OTF"))
+      if (!starts (a[i], ".")) {
+        array<string> allowed= array<string> ("ttf", "ttc", "otf");
+        string        suf    = locase_all (suffix (a[i]));
+        if (contains (suf, allowed)) {
           font_database_build (u * url (a[i]));
+        }
+      }
   }
   else if (is_regular (u)) {
     if (on_blacklist (as_string (tail (u)))) return;
