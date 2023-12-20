@@ -42,14 +42,25 @@ add_to_path (url u, url d) {
 
 void
 tt_extend_font_path (url u) {
-  if (!is_directory (u)) u= head (u);
+  if (!is_directory (u)) {
+    string name     = as_string (tail (u));
+    string base_name= basename (u);
+    if (ends (base_name, ".TTF")) {
+      base_name= base_name(0, N(base_name)-4);
+    }
+    tt_font_locations (name)= u;
+    tt_fonts->insert (base_name);
+
+    u= head (u);
+  }
   string old= get_preference ("imported fonts", "");
-  if (old == "") set_preference ("imported fonts", as_unix_string (u));
+  if (old == "") set_preference ("imported fonts", as_string (u));
   else {
-    url dirs= add_to_path (url_unix (old), u);
-    set_preference ("imported fonts", as_unix_string (dirs));
+    url dirs= add_to_path (url_system (old), u);
+    set_preference ("imported fonts", as_string (dirs));
   }
 }
+
 
 url
 tt_font_search_path () {
@@ -231,12 +242,12 @@ tt_font_find (string name) {
 
 bool
 tt_font_exists (string name) {
-  // cout << "tt_font_exists? " << name << "\n";
   if (tt_fonts->contains (name)) return true;
   bench_start ("tt_font_exists " * name);
   bool yes= !is_none (tt_font_find (name));
   if (yes) tt_fonts->insert (name);
   bench_end ("tt_font_exists " * name, 10);
+  cout << "tt_font_exists? \t" << name << "\t" << yes << "\n";
   return yes;
 }
 

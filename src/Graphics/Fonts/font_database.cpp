@@ -105,7 +105,10 @@ font_database_load_suffixes_sub (url path) {
         for (int j= 0; j < N (files); j++) {
           url    file_name= url (files[j][0]->label);
           string base_name= basename (file_name);
-          if (ends (base_name, ".TTF")) base_name= base_name(0, N(base_name)-4);
+          if (ends (base_name, ".TTF")) {
+            base_name= base_name(0, N(base_name)-4);
+            cout << "basename: " << base_name << LF;
+          }
           string suf      = suffix (file_name);
           if (is_empty (suf)) continue;
           if (font_suffixes->contains (base_name)) {
@@ -173,6 +176,7 @@ font_database_load_characteristics (url u) {
 
 void
 font_database_save_database (url u) {
+  cout << "save_database: " << u << LF;
   array<scheme_tree> r;
   iterator<tree>     it= iterate (font_table);
   while (it->busy ()) {
@@ -630,6 +634,7 @@ font_database_build_characteristics (bool force) {
             name= (name (0, N (name) - 4) * "." * nr * ".ttf");
           if (ends (name, ".ttf") || ends (name, ".otf") || ends (name, ".tfm") ||
               ends (name, ".TTF") || ends (name, ".OTF") || ends (name, ".TFM")) {
+            cout << "inside: " << name << LF;
             name= name (0, N (name) - 4);
             if (!tt_font_exists (name) && ends (name, "10"))
               name= name (0, N (name) - 2);
