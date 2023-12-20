@@ -141,6 +141,17 @@
 ;; Look and feel
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(define (xdg-dekstop-session)
+  (locase-all (system-getenv "XDG_SESSION_DESKTOP")))
+
+(define (default-look-and-feel)
+  (cond
+   ((os-macos?) "macos")
+   ((or (os-win32?) (os-mingw?)) "windows")
+   ((== (xdg-dekstop-session) "kde") "kde")
+   ((== (xdg-dekstop-session) "deepin") "kde")
+   (else "emacs")))
+
 (define-public (look-and-feel)
   (with s (get-preference "look and feel")
     (if (== s "default") (default-look-and-feel) s)))
