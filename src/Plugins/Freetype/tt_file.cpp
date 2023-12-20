@@ -28,6 +28,7 @@
 #include <fontconfig/fontconfig.h>
 #endif
 
+// Caching for Font in tuple (filename, path)
 // eg. (basename.ttf, url(/path/to/basename.ttf))
 static hashmap<string, url> tt_font_locations;
 // A hashset of all basename of the fonts
@@ -42,15 +43,19 @@ tt_locate_update_cache (url font_u, bool must_in_db= true) {
   }
 
   if (must_in_db && !font_database_exists (base_name)) {
+    // the font basename does not exist in font database
+    return;
+  }
+  array<string> suffixes= font_database_suffixes (base_name);
+  if (must_in_db && !contains (suffix (font_u), suffixes)) {
+    // the font basename does exist in the font database
+    // but the font suffix does not exist in the font database
     return;
   }
 
-  array<string> suffixes= font_database_suffixes (base_name);
-  if (contains (suffix (font_u), suffixes)) {
-    tt_font_locations (name)= font_u;
-    tt_fonts->insert (base_name);
-    cache_set ("font_cache.scm", "ttf:" * base_name, as_string (font_u));
-  }
+  tt_font_locations (name)= font_u;
+  tt_fonts->insert (base_name);
+  cache_set ("font_cache.scm", "ttf:" * base_name, as_string (font_u));
 }
 
 url
