@@ -113,11 +113,6 @@ function main()
                 ret_type = "url"
             },
             {
-                scm_name = "default-look-and-feel",
-                cpp_name = "default_look_and_feel",
-                ret_type = "string"
-            },
-            {
                 scm_name = "open-url",
                 cpp_name = "open_url",
                 ret_type = "void",

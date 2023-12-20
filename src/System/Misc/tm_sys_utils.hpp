@@ -35,8 +35,6 @@ bool has_printing_cmd (void);
 string get_printing_cmd (void);
 void set_printing_cmd (string cmd);
 
-const char* default_look_and_feel ();
-
 void open_url (url u);
 
 void set_wait_handler (void (*) (string, string, int));
