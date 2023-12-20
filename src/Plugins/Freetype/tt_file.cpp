@@ -231,6 +231,7 @@ tt_font_find (string name) {
     if (r == "") return url_none ();
     url u= url_system (r);
     if (exists (u)) return u;
+    // if the font does not exist, clear the cache in `font_cache.scm`
     cache_reset ("font_cache.scm", s);
   }
 
@@ -284,6 +285,7 @@ tt_find_name (string name, int size) {
   if (is_cached ("font_cache.scm", s)) {
     string r= cache_get ("font_cache.scm", s)->label;
     if (tt_font_exists (r)) return r;
+    // if the font does not exist, clear the cache in `font_cache.scm`
     cache_reset ("font_cache.scm", s);
   }
 
