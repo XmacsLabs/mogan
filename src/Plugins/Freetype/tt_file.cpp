@@ -28,8 +28,35 @@
 #include <fontconfig/fontconfig.h>
 #endif
 
-static hashset<string>      tt_fonts;
+// Caching for Font in tuple (filename, path)
+// eg. (basename.ttf, url(/path/to/basename.ttf))
 static hashmap<string, url> tt_font_locations;
+// A hashset of all basename of the fonts
+static hashset<string> tt_fonts;
+
+static void
+tt_locate_update_cache (url font_u, bool must_in_db= true) {
+  string name     = as_string (tail (font_u));
+  string base_name= basename (font_u);
+  if (ends (base_name, ".TTF")) { // dirty fix on basename
+    base_name= base_name (0, N (base_name) - 4);
+  }
+
+  if (must_in_db && !font_database_exists (base_name)) {
+    // the font basename does not exist in font database
+    return;
+  }
+  array<string> suffixes= font_database_suffixes (base_name);
+  if (must_in_db && !contains (suffix (font_u), suffixes)) {
+    // the font basename does exist in the font database
+    // but the font suffix does not exist in the font database
+    return;
+  }
+
+  tt_font_locations (name)= font_u;
+  tt_fonts->insert (base_name);
+  cache_set ("font_cache.scm", "ttf:" * base_name, as_string (font_u));
+}
 
 url
 add_to_path (url u, url d) {
@@ -42,12 +69,21 @@ add_to_path (url u, url d) {
 
 void
 tt_extend_font_path (url u) {
-  if (!is_directory (u)) u= head (u);
+  if (!is_directory (u)) {
+    // Sync font info to tt_fonts and tt_font_location
+    tt_locate_update_cache (u, false);
+
+    // Only reserve the directory part
+    u= head (u);
+  }
+  // Append the directory to the "imported fonts" preference
   string old= get_preference ("imported fonts", "");
-  if (old == "") set_preference ("imported fonts", as_unix_string (u));
+  if (is_empty (old)) {
+    set_preference ("imported fonts", as_string (u));
+  }
   else {
-    url dirs= add_to_path (url_unix (old), u);
-    set_preference ("imported fonts", as_unix_string (dirs));
+    url dirs= add_to_path (url_system (old), u);
+    set_preference ("imported fonts", as_string (dirs));
   }
 }
 
@@ -112,22 +148,6 @@ tt_font_path () {
 }
 
 static void
-tt_locate_update_cache (url font_u) {
-  string name     = as_string (tail (font_u));
-  string base_name= basename (font_u);
-
-  if (font_database_exists (base_name)) {
-    array<string> suffixes= font_database_suffixes (base_name);
-    if (contains (suffix (font_u), suffixes)) {
-      // eg. (basename.ttf, url(/path/to/basename.ttf))
-      tt_font_locations (name)= font_u;
-      tt_fonts->insert (base_name);
-      cache_set ("font_cache.scm", "ttf:" * base_name, as_string (font_u));
-    }
-  }
-}
-
-static void
 tt_locate_all () {
   if (N (tt_font_locations) > 0) return;
 
@@ -182,7 +202,8 @@ tt_locate_pfb (string name) {
 static url
 tt_fast_locate (string name) {
   array<string> suffixes;
-  suffixes << string ("ttf") << string ("ttc") << string ("otf");
+  suffixes << string ("ttf") << string ("ttc") << string ("otf")
+           << string ("TTF") << string ("TTC") << string ("OTF");
   for (int i= 0; i < N (suffixes); i++) {
     if (tt_font_locations->contains (name * "." * suffixes[i])) {
       return tt_font_locations[name * "." * suffixes[i]];
@@ -217,6 +238,7 @@ tt_font_find (string name) {
     if (r == "") return url_none ();
     url u= url_system (r);
     if (exists (u)) return u;
+    // if the font does not exist, clear the cache in `font_cache.scm`
     cache_reset ("font_cache.scm", s);
   }
 
@@ -230,7 +252,6 @@ tt_font_find (string name) {
 
 bool
 tt_font_exists (string name) {
-  // cout << "tt_font_exists? " << name << "\n";
   if (tt_fonts->contains (name)) return true;
   bench_start ("tt_font_exists " * name);
   bool yes= !is_none (tt_font_find (name));
@@ -271,6 +292,7 @@ tt_find_name (string name, int size) {
   if (is_cached ("font_cache.scm", s)) {
     string r= cache_get ("font_cache.scm", s)->label;
     if (tt_font_exists (r)) return r;
+    // if the font does not exist, clear the cache in `font_cache.scm`
     cache_reset ("font_cache.scm", s);
   }
 
