@@ -107,7 +107,6 @@ font_database_load_suffixes_sub (url path) {
           string base_name= basename (file_name);
           if (ends (base_name, ".TTF")) {
             base_name= base_name(0, N(base_name)-4);
-            cout << "basename: " << base_name << LF;
           }
           string suf      = suffix (file_name);
           if (is_empty (suf)) continue;
@@ -176,7 +175,6 @@ font_database_load_characteristics (url u) {
 
 void
 font_database_save_database (url u) {
-  cout << "save_database: " << u << LF;
   array<scheme_tree> r;
   iterator<tree>     it= iterate (font_table);
   while (it->busy ()) {
@@ -325,7 +323,6 @@ font_database_build (url u) {
     string base_name= basename (u);
     if (ends (base_name, ".TTF")) base_name= base_name(0, N(base_name)-4);
     font_suffixes (base_name)= sufs;
-    cout << base_name << LF;
 
     cout << "Process " << u << "\n";
 
@@ -623,24 +620,23 @@ font_database_build_characteristics (bool force) {
     tree key= it->next ();
     tree im = font_table[key];
     if (!(is_func (key, TUPLE) && N (key) >= 2)) continue;
-    cout << "Analyzing " << key[0] << " " << key[1] << "\n";
+    cout << "Analyzing " << key[0] << " " << key[1] << LF;
     for (int i= 0; i < N (im); i++)
       if (force || !font_characteristics->contains (key))
         if (is_func (im[i], TUPLE, 3)) {
           string name= as_string (im[i][0]);
           string nr  = as_string (im[i][1]);
-          cout << "| Processing " << name << ", " << nr << "\n";
+          cout << "| Processing " << name << ", " << nr << LF;
           if (ends (name, ".ttc") || ends (name, ".TTC"))
             name= (name (0, N (name) - 4) * "." * nr * ".ttf");
           if (ends (name, ".ttf") || ends (name, ".otf") || ends (name, ".tfm") ||
               ends (name, ".TTF") || ends (name, ".OTF") || ends (name, ".TFM")) {
-            cout << "inside: " << name << LF;
             name= name (0, N (name) - 4);
             if (!tt_font_exists (name) && ends (name, "10"))
               name= name (0, N (name) - 2);
             if (tt_font_exists (name)) {
               array<string> a= tt_analyze (name);
-              cout << name << " ~> " << a << "\n";
+              cout << name << " ~> " << a << LF;
               tree t (TUPLE, N (a));
               for (int j= 0; j < N (a); j++)
                 t[j]= a[j];

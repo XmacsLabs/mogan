@@ -247,7 +247,6 @@ tt_font_exists (string name) {
   bool yes= !is_none (tt_font_find (name));
   if (yes) tt_fonts->insert (name);
   bench_end ("tt_font_exists " * name, 10);
-  cout << "tt_font_exists? \t" << name << "\t" << yes << "\n";
   return yes;
 }
 
