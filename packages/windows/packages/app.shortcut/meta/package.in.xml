@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>Set file associations</DisplayName>
+    <Description>Set Mogan Research as default app to open tm file</Description>
+    <Version>${XMACS_VERSION}</Version>
+    <ReleaseDate>${PACKAGE_DATE}</ReleaseDate>
+    <Default>true</Default>
+    <Operations>
+        <Operation name="RegisterFileType">
+            <Argument>tm</Argument>
+            <Argument>@TargetDir@/bin/MoganResearch.exe "%1"</Argument>
+            <Argument>texmacs document style</Argument>
+            <Argument>text/plain</Argument>
+            <Argument>@TargetDir@/bin/MoganResearch.exe,8</Argument>
+        </Operation>
+    </Operations>
+</Package>
