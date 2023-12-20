@@ -46,7 +46,7 @@ tt_extend_font_path (url u) {
     string name     = as_string (tail (u));
     string base_name= basename (u);
     if (ends (base_name, ".TTF")) {
-      base_name= base_name(0, N(base_name)-4);
+      base_name= base_name (0, N (base_name) - 4);
     }
     tt_font_locations (name)= u;
     tt_fonts->insert (base_name);
@@ -60,7 +60,6 @@ tt_extend_font_path (url u) {
     set_preference ("imported fonts", as_string (dirs));
   }
 }
-
 
 url
 tt_font_search_path () {
