@@ -93,6 +93,38 @@ tuple_insert (tree& t, tree x) {
   t << x;
 }
 
+static void
+font_database_load_suffixes_sub (url path) {
+  if (exists (path)) {
+    string s= string_load (path);
+    tree t= block_to_scheme_tree (s);
+    for (int i= 0; i < N (t); i++)
+      if (is_func (t[i], TUPLE, 2)) {
+        tree family_style= t[i][0];
+        tree files       = t[i][1];
+        for (int j= 0; j < N (files); j++) {
+          url    file_name= url (files[j][0]->label);
+          string base_name= basename (file_name);
+          if (ends (base_name, ".TTF")) base_name= base_name(0, N(base_name)-4);
+          string suf      = suffix (file_name);
+          if (is_empty (suf)) continue;
+          if (font_suffixes->contains (base_name)) {
+            array<string> sufs= font_suffixes[base_name];
+            if (!contains (suf, sufs)) {
+              sufs << suf;
+              font_suffixes (base_name)= sufs;
+            }
+          }
+          else {
+            array<string> sufs= array<string> ();
+            sufs << suf;
+            font_suffixes (base_name)= sufs;
+          }
+        }
+      }
+  }
+}
+
 void
 font_database_load_database (url u, hashmap<tree, tree>& ftab= font_table) {
   if (!exists (u)) return;
@@ -215,6 +247,7 @@ font_database_load () {
     font_database_load_database (GLOBAL_DATABASE);
     font_database_filter ();
     font_database_save_database (LOCAL_DATABASE);
+    font_database_load_suffixes_sub (LOCAL_DATABASE);
   }
   font_database_load_features (LOCAL_FEATURES);
   if (N (font_features) == 0) {
@@ -248,6 +281,7 @@ font_database_save () {
   font_database_save_database (LOCAL_DATABASE);
   font_database_save_features (LOCAL_FEATURES);
   font_database_save_characteristics (LOCAL_CHARACTERISTICS);
+  font_database_load_suffixes_sub (LOCAL_DATABASE);
 }
 
 /******************************************************************************
@@ -275,12 +309,22 @@ font_database_build (url u) {
     array<string> a= read_directory (u, err);
     for (int i= 0; i < N (a); i++)
       if (!starts (a[i], "."))
-        if (ends (a[i], ".ttf") || ends (a[i], ".ttc") || ends (a[i], ".otf"))
+        if (ends (a[i], ".ttf") || ends (a[i], ".ttc") || ends (a[i], ".otf") ||
+            ends (a[i], ".TTF") || ends (a[i], ".TTC") || ends (a[i], ".OTF"))
           font_database_build (u * url (a[i]));
   }
   else if (is_regular (u)) {
     if (on_blacklist (as_string (tail (u)))) return;
+
+    array<string> sufs= array<string>();
+    sufs << suffix (u);
+    string base_name= basename (u);
+    if (ends (base_name, ".TTF")) base_name= base_name(0, N(base_name)-4);
+    font_suffixes (base_name)= sufs;
+    cout << base_name << LF;
+
     cout << "Process " << u << "\n";
+
     scheme_tree t= tt_font_name (u);
     for (int i= 0; i < N (t); i++)
       if (is_func (t[i], TUPLE, 2) && is_atomic (t[i][0]) &&
@@ -504,7 +548,7 @@ font_database_collect (url u) {
     array<string> a= read_directory (u, err);
     for (int i= 0; i < N (a); i++) {
       if (!starts (a[i], ".")) {
-        string        suf    = suffix (a[i]);
+        string        suf    = locase_all (suffix (a[i]));
         array<string> allowed= array<string> ("ttf", "ttc", "otf", "tfm");
         if (contains (suf, allowed)) {
           font_collect (u * a[i]);
@@ -582,10 +626,10 @@ font_database_build_characteristics (bool force) {
           string name= as_string (im[i][0]);
           string nr  = as_string (im[i][1]);
           cout << "| Processing " << name << ", " << nr << "\n";
-          if (ends (name, ".ttc"))
+          if (ends (name, ".ttc") || ends (name, ".TTC"))
             name= (name (0, N (name) - 4) * "." * nr * ".ttf");
-          if (ends (name, ".ttf") || ends (name, ".otf") ||
-              ends (name, ".tfm")) {
+          if (ends (name, ".ttf") || ends (name, ".otf") || ends (name, ".tfm") ||
+              ends (name, ".TTF") || ends (name, ".OTF") || ends (name, ".TFM")) {
             name= name (0, N (name) - 4);
             if (!tt_font_exists (name) && ends (name, "10"))
               name= name (0, N (name) - 2);
@@ -681,34 +725,8 @@ font_database_search (string family, string style) {
 static void
 font_database_load_suffixes () {
   if (N (font_suffixes) > 0) return;
-
-  string s;
-  if (!load_string (GLOBAL_DATABASE, s, false)) {
-    tree t= block_to_scheme_tree (s);
-    for (int i= 0; i < N (t); i++)
-      if (is_func (t[i], TUPLE, 2)) {
-        tree family_style= t[i][0];
-        tree files       = t[i][1];
-        for (int j= 0; j < N (files); j++) {
-          url    file_name= url (files[j][0]->label);
-          string base_name= basename (file_name);
-          string suf      = suffix (file_name);
-          if (is_empty (suf)) continue;
-          if (font_suffixes->contains (base_name)) {
-            array<string> sufs= font_suffixes[base_name];
-            if (!contains (suf, sufs)) {
-              sufs << suf;
-              font_suffixes (base_name)= sufs;
-            }
-          }
-          else {
-            array<string> sufs= array<string> ();
-            sufs << suf;
-            font_suffixes (base_name)= sufs;
-          }
-        }
-      }
-  }
+  font_database_load_suffixes_sub (LOCAL_DATABASE);
+  font_database_load_suffixes_sub (GLOBAL_DATABASE);
 }
 
 bool
