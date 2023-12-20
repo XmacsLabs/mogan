@@ -94,6 +94,28 @@ tuple_insert (tree& t, tree x) {
 }
 
 static void
+font_database_build_suffixes (url u) {
+  string base_name= basename (u);
+  if (ends (base_name, ".TTF")) { // dirty fix on basename
+    base_name= base_name (0, N (base_name) - 4);
+  }
+  string suf= suffix (u);
+  if (is_empty (suf)) return;
+  if (font_suffixes->contains (base_name)) {
+    array<string> sufs= font_suffixes[base_name];
+    if (!contains (suf, sufs)) {
+      sufs << suf;
+      font_suffixes (base_name)= sufs;
+    }
+  }
+  else {
+    array<string> sufs= array<string> ();
+    sufs << suf;
+    font_suffixes (base_name)= sufs;
+  }
+}
+
+static void
 font_database_load_suffixes_sub (url path) {
   if (exists (path)) {
     string s= string_load (path);
@@ -103,25 +125,8 @@ font_database_load_suffixes_sub (url path) {
         tree family_style= t[i][0];
         tree files       = t[i][1];
         for (int j= 0; j < N (files); j++) {
-          url    file_name= url (files[j][0]->label);
-          string base_name= basename (file_name);
-          if (ends (base_name, ".TTF")) { // dirty fix on basename
-            base_name= base_name (0, N (base_name) - 4);
-          }
-          string suf= suffix (file_name);
-          if (is_empty (suf)) continue;
-          if (font_suffixes->contains (base_name)) {
-            array<string> sufs= font_suffixes[base_name];
-            if (!contains (suf, sufs)) {
-              sufs << suf;
-              font_suffixes (base_name)= sufs;
-            }
-          }
-          else {
-            array<string> sufs= array<string> ();
-            sufs << suf;
-            font_suffixes (base_name)= sufs;
-          }
+          url file_name= url (files[j][0]->label);
+          font_database_build_suffixes (file_name);
         }
       }
   }
@@ -320,6 +325,8 @@ font_database_build (url u) {
   }
   else if (is_regular (u)) {
     if (on_blacklist (as_string (tail (u)))) return;
+
+    font_database_build_suffixes (u);
 
     cout << "Process " << u << "\n";
     scheme_tree t= tt_font_name (u);
