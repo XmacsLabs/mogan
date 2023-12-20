@@ -41,13 +41,15 @@ tt_locate_update_cache (url font_u, bool must_in_db= true) {
     base_name= base_name (0, N (base_name) - 4);
   }
 
-  if (must_in_db && font_database_exists (base_name)) {
-    array<string> suffixes= font_database_suffixes (base_name);
-    if (contains (suffix (font_u), suffixes)) {
-      tt_font_locations (name)= font_u;
-      tt_fonts->insert (base_name);
-      cache_set ("font_cache.scm", "ttf:" * base_name, as_string (font_u));
-    }
+  if (must_in_db && !font_database_exists (base_name)) {
+    return;
+  }
+
+  array<string> suffixes= font_database_suffixes (base_name);
+  if (contains (suffix (font_u), suffixes)) {
+    tt_font_locations (name)= font_u;
+    tt_fonts->insert (base_name);
+    cache_set ("font_cache.scm", "ttf:" * base_name, as_string (font_u));
   }
 }
 
