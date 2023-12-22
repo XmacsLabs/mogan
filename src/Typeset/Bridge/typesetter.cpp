@@ -212,10 +212,11 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
   //
   // Why not filter when appending to change_Log?
   // Because we need to reset the last_rectangle correctly.
-  // If we change the doc tree via editing, there are no changes in the last
-  // paragraph, thus the last two rects are the same, and we will not re-render
-  // the last paragraph. If we reset the document tree, we will need the last
-  // paragraph rect as described in step 1
+  // If we change the doc tree via editing and we haven't affected the last
+  // paragraph, there will be no changes in the last paragraph, thus the last
+  // two rects are the same, and we will not re-render the last paragraph. If
+  // we reset the document tree, we will need the last paragraph rect as
+  // described in step 1
   array<rectangle> filtered_log= requires_update (change_log);
   rectangle r (0, 0, 0, 0);
   if (N(change_log) != 0) r= least_upper_bound (filtered_log);
