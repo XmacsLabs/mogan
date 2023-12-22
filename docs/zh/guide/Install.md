@@ -1,34 +1,30 @@
 # 如何安装
-当前最新稳定版是墨干理工套件V1.2.0。
+当前最新稳定版是墨干理工套件V1.2.1，可以在`帮助 -> 欢迎`中检查是否有新版可用。
 
-## V1.2.0的已知问题
-+ 问题：Windows安装之后没有在桌面创建快捷方式
-  - 解决方案: 找到`C:/Program Files/MoganResearch/bin/MGResearch.exe`然后启动Mogan Research或者手动创建桌面快捷方式
-+ 问题：点击`编辑->快捷键->编辑键盘快捷键`直接崩溃
-  - 解决方案1: 等待v1.2.1新版发布并且不要去点击这个菜单项
-  - 解决方案2: 使用v1.2.1-rc1 https://github.com/XmacsLabs/mogan/releases/tag/v1.2.1-rc1
-+ 问题：`文件->导出->LaTeX`直接崩溃
-  - 解决方案1: 等待v1.2.1新版发布或者使用`编辑->复制到->LaTeX`作为替代
-  - 解决方案2: 使用v1.2.1-rc1 https://github.com/XmacsLabs/mogan/releases/tag/v1.2.1-rc1
-+ 问题：初次安装时，打开Mogan Research v1.2.0太慢
-  - 解决方案: 等待v1.2.1新版发布并且耐心一些
+## V1.2.1的已知问题
++ 使用结构化的搜索或者替换窗口时容易崩溃
+  + 解决方案：使用默认的底部搜索/替换工具栏
++ 切换到`编辑->首选项->通用->缓冲区管理->Documents in separate windows`容易崩溃
+  + 解决方案：使用默认的`Multiple documents share window`缓冲区管理选项
 
-墨干理工套件V1.2.1将于2024/01/01前发布。
+墨干理工套件V1.2.2将于2024/01/31前发布。
 
 ## 官方提供的安装包
 | 产品 | 操作系统 | 马上下载 | MD5校验 |
 |-----|-------|-----|--------|
-| 墨砚V1.2.0 | Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0-64bit-installer.exe) | f34dd47aecf9a47fad7c4b27529ef8b4 |
-| 墨砚V1.2.0 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0.dmg) | cb0e449ae95832c62dac7a16e4fecb9e |
-| 墨砚V1.2.0 | macOS arm (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/MoganResearch-v1.2.0-arm.dmg) | 0875c9f252ddacacc4b82df0f341f157 |
-| 墨砚V1.2.0 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.0/mogan-research-v1.2.0-ubuntu22.04.deb) | c3357688696d060ab451de27bf9364bf |
+| 墨砚V1.2.1 | Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.1/MoganResearch-v1.2.1-64bit-installer.exe) | 619998f9b78541520513f1d9d620c919 |
+| 墨砚V1.2.1 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.1/MoganResearch-v1.2.1.dmg) | f641259b963a4cc5b754e6972b77bddb |
+| 墨砚V1.2.1 | macOS M1/M2 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.1/MoganResearch-v1.2.1-arm.dmg) | 702f13e33157635d5527be6bd112c3ab |
+| 墨砚V1.2.1 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.1/mogan-research-v1.2.1-ubuntu22.04.deb) | fb3ac4c59f2eb257adcefefa4340f933 |
+| 墨砚V1.2.1 | UOS | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.1/mogan-research-v1.2.1-uos.deb) | 15126b1a83c4967fea2adbb2bcb7182d |
+| 墨砚V1.2.1 | UOS Loongarch | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.1/mogan-research-v1.2.1-uos-loongarch64.deb) | 8d40fcddd670f8f976f9ca3d7b95526b |
 
 墨干理工套件:
-+ 墨砚（提供Windows/macOS/Ubuntu三大平台安装包）
++ 墨砚（提供Windows/macOS/Ubuntu/UOS四大平台安装包）
 + 墨码（无安装包，正在开发中）
 + 墨板（无安装包，正在开发中）
 
-> 注意：墨砚V1.2.0无法在Windows 7上运行。
+> 注意：墨砚V1.2.1无法在Windows 7上运行。
 
 从其它站点下载：
 + https://github.com/XmacsLabs/mogan/releases
@@ -36,6 +32,7 @@
 + https://codeberg.org/XmacsLabs/mogan/releases
 
 旧版本安装包：
++ [v1.2.0 (2023/12/04)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.2.0)
 + [v1.1.6 (2023/09/29)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.6)
 + [v1.1.5 (2023/08/11)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.5)
 + [v1.1.4 (2023/07/31)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.4)
