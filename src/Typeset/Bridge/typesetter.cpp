@@ -180,8 +180,8 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
 
   // The following 3 steps calcuate the new rectangle(x1b, y1b, x2b, y2b)
 
-  // Step 1: Calculate the changed rects in pairs in change_log according to the box and last rect
-  // and then set the new last rect
+  // Step 1: Compute the changed rects in pairs in change_log according to the
+  // box and last rect and then set the new last rect
 
   // Keeps the box rectangle in pair <before, after>
   // if before is zero rect, we only need to rendered the after rect
@@ -193,25 +193,32 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
     // Scenario 1:
     // When you switch to an empty preamble, the document tree will be resetted
     // The last rectangle is the rect of the document tree before resetting
-    // We will clear the document and show the emtpy preamble, without the last rectangle
-    // we do not know the area we need to clear
+    // We will clear the document and show the emtpy preamble, without the last
+    // rectangle, we won't know the area we need to clear
     // Scenario 2:
     // In beamer style, switching from slide 1 to slide 2
     change_log << rectangle(0, 0, 0, 0);
     change_log << last_rectangle;
   }
-  // append pair of rectangles to the end of the change_log from the typesetting box
+  // append pairs of rectangles to the change_log from the typesetting box
   b->position_at (0, 0, change_log);
   // Reset the last rectangle via the bottom rectangle
   last_rectangle= change_log[N(change_log)-1];
+  cout << change_log[N(change_log)-1] << LF;
+  cout << change_log[N(change_log)-2] << LF;
 
   // Step 2: calculate the least_upper_bound from change_log
+  // Filter first and then compute the least upper bound
+  // 1. Invalid rect (0,0,0,0) are removed
+  // 2. If before equals to after in the (before, after) pair, just remove it
+  //
+  // Why not filter when appending to change_Log?
+  // Because we need to reset the last_rectangle correctly.
+  // If we change the doc tree via editing, there are no changes in the last
+  // paragraph, thus the last two rects are the same, and we will not re-render
+  // the last paragraph. If we reset the document tree, we will need the last
+  // paragraph rect as described in step 1
   array<rectangle> filtered_log= requires_update (change_log);
-  // Filtering:
-  // Invalid rect (0,0,0,0) are removed
-  // If before equals to after in the (before, after) pair, just remove it
-  // Why we need filtering? Because we need reset the last_rectangle
-
   rectangle r (0, 0, 0, 0);
   if (N(change_log) != 0) r= least_upper_bound (filtered_log);
 
