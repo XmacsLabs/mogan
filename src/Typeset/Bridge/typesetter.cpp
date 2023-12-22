@@ -204,8 +204,6 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
   b->position_at (0, 0, change_log);
   // Reset the last rectangle via the bottom rectangle
   last_rectangle= change_log[N(change_log)-1];
-  cout << change_log[N(change_log)-1] << LF;
-  cout << change_log[N(change_log)-2] << LF;
 
   // Step 2: calculate the least_upper_bound from change_log
   // Filter first and then compute the least upper bound
