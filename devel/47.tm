@@ -8,17 +8,27 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|4|4|2|2|cell-background|pastel
-    green>|<cwith|3|3|4|4|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|5|5|2|2|cell-background|pastel
+    green>|<cwith|4|4|4|4|cell-valign|b>|<table|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|47_5>
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      Joris
+    </cell>|<\cell>
+      Fix bug: Inserting "include" macro does not work from latex command
+    </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
       <dlink|47_4>
     </cell>|<\cell>
-      v1.2.0
+      v1.2.1
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
-      Fix open-url of protocol like mailto/zotero
+      Fix open-url of protocol like zotero
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>

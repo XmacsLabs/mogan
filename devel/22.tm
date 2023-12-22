@@ -11,9 +11,10 @@
 
   <\wide-tabular>
     <tformat|<cwith|1|3|2|2|cell-background|pastel
-    green>|<cwith|5|6|2|2|cell-background|pastel
-    green>|<cwith|9|9|2|2|cell-background|pastel
-    green>|<cwith|12|12|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|6|7|2|2|cell-background|pastel
+    green>|<cwith|10|10|2|2|cell-background|pastel
+    green>|<cwith|13|13|2|2|cell-background|pastel
+    green>|<cwith|3|3|2|2|cell-background|>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       22_1
@@ -43,6 +44,16 @@
       <value|oy>
     </cell>|<\cell>
       \<#6539\>\<#8FDB\>\<#7ED8\>\<#56FE\>\<#5DE5\>\<#5177\>\<#76F8\>\<#5173\>\<#7684\>\<#8BCD\>\<#6761\>
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      \;
     </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
@@ -108,7 +119,7 @@
     </cell>|<\cell>
       22_10
     </cell>|<\cell>
-      v1.2.1
+      \;
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
@@ -118,7 +129,7 @@
     </cell>|<\cell>
       22_11
     </cell>|<\cell>
-      v1.2.1
+      \;
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
@@ -138,7 +149,7 @@
     </cell>|<\cell>
       22_13
     </cell>|<\cell>
-      v1.2.1
+      \;
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
@@ -148,7 +159,7 @@
     </cell>|<\cell>
       22_14
     </cell>|<\cell>
-      v1.2.1
+      \;
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
@@ -158,7 +169,7 @@
     </cell>|<\cell>
       22_15
     </cell>|<\cell>
-      v1.2.1
+      \;
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
@@ -188,7 +199,7 @@
     </cell>|<\cell>
       22_18
     </cell>|<\cell>
-      v1.2.1
+      \;
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>

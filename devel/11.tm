@@ -10,9 +10,11 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|7|12|2|2|cell-background|pastel
-    green>|<cwith|10|10|2|2|cell-background|>|<cwith|13|18|2|2|cell-background|pastel
-    green>|<table|<row|<\cell>
+    <tformat|<cwith|9|14|2|2|cell-background|pastel
+    green>|<cwith|12|12|2|2|cell-background|>|<cwith|15|20|2|2|cell-background|pastel
+    green>|<cwith|8|8|2|2|cell-background|pastel
+    green>|<cwith|7|7|2|2|cell-background|pastel
+    green>|<cwith|6|6|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       11_20
@@ -34,15 +36,35 @@
       Tweaking for \<subset\>, \<supset\>, \<in\>, and \<ni\> for Carlito
       font
     </cell>>|<row|<\cell>
-      <text-dots>
+      Chore
     </cell>|<\cell>
-      \;
+      11_18
     </cell>|<\cell>
-      \;
+      v1.2.1
     </cell>|<\cell>
-      \;
+      <value|da>
     </cell>|<\cell>
-      \;
+      Deprecate new font styles option
+    </cell>>|<row|<\cell>
+      Perf
+    </cell>|<\cell>
+      11_17
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Speed up <cpp|tt_exists?>
+    </cell>>|<row|<\cell>
+      Perf
+    </cell>|<\cell>
+      11_16
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Speed up <cpp|font_collect>
     </cell>>|<row|<\cell>
       Perf
     </cell>|<\cell>

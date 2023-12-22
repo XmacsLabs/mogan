@@ -7,11 +7,11 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|44_1>|<cell|<value|da>>|<cell|Version:
-  Rename Global log to Global history>>|<row|<cell|Chore>|<cell|44_2>|<cell|<value|da>>|<cell|Fix
-  link to a specific version of a file>>|<row|<cell|Chore>|<cell|44_3>|<cell|<value|da>>|<cell|Fix
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|44_1>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Version:
+  Rename Global log to Global history>>|<row|<cell|Chore>|<cell|44_2>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Fix
+  link to a specific version of a file>>|<row|<cell|Chore>|<cell|44_3>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Fix
   <menu|Version|Global status> and <menu|Version|Global
-  history>>>|<row|<cell|Chore>|<cell|44_4>|<cell|<value|da>>|<cell|<menu|Version|Grain|Block>
+  history>>>|<row|<cell|Chore>|<cell|44_4>|<cell|>|<cell|>|<cell|<menu|Version|Grain|Block>
   translation collision with Block in table mode>>>>>
 
   <tmdoc-copyright|2023|Darcy>

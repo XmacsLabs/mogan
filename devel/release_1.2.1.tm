@@ -24,7 +24,9 @@
   <section|Started Projects>
 
   <\wide-tabular>
-    <tformat|<cwith|12|12|1|1|cell-valign|b>|<cwith|11|11|3|3|cell-valign|b>|<cwith|10|10|1|1|cell-background|>|<cwith|11|11|1|1|cell-background|>|<cwith|5|5|2|2|cell-valign|c>|<cwith|5|5|1|1|cell-background|>|<cwith|6|6|1|1|cell-background|>|<table|<row|<\cell>
+    <tformat|<cwith|15|15|1|1|cell-valign|b>|<cwith|14|14|3|3|cell-valign|b>|<cwith|13|13|1|1|cell-background|>|<cwith|14|14|1|1|cell-background|>|<cwith|6|6|2|2|cell-valign|c>|<cwith|6|6|1|1|cell-background|>|<cwith|7|7|1|1|cell-background|>|<cwith|11|11|1|1|cell-background|pastel
+    green>|<cwith|10|10|1|1|cell-background|pastel
+    green>|<cwith|5|5|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|74>
     </cell>|<\cell>
       \;
@@ -48,7 +50,8 @@
       Darcy
     </cell>|<\cell>
       Tuning Keyboard Shortcuts
-    </cell>>|<row|<\cell>
+    </cell>>|<row|<cell|<dlink|65>>|<cell|<value|da>>|<cell|Upgrade to Qt
+    6>>|<row|<\cell>
       <dlink|56>
     </cell>|<\cell>
       Darcy
@@ -72,6 +75,18 @@
       Darcy
     </cell>|<\cell>
       <LaTeX> converter as a plugin
+    </cell>>|<row|<\cell>
+      <dlink|39>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Re-organize the <menu|Help> and <menu|Developer> menu
+    </cell>>|<row|<\cell>
+      <dlink|34>
+    </cell>|<\cell>
+      Oyyko
+    </cell>|<\cell>
+      CICD for the website and mogan wasm
     </cell>>|<row|<\cell>
       <dlink|22>
     </cell>|<\cell>

@@ -7,9 +7,9 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|73_1>|<cell|<value|da>>|<cell|Improve
-  the windows packager>>|<row|<cell|Chore>|<cell|73_2>|<cell|<value|da>>|<cell|Improve
-  the macOS packager>>|<row|<cell|Chore>|<cell|73_3>|<cell|<value|da>>|<cell|Re-add
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|73_1>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Improve
+  the windows packager>>|<row|<cell|Chore>|<cell|73_2>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Improve
+  the macOS packager>>|<row|<cell|Chore>|<cell|73_3>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Re-add
   the UOS packager>>>>>
 
   <tmdoc-copyright|2023|Darcy>

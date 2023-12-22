@@ -13,6 +13,8 @@
     </cell>|<\cell>
       <dlink|7_1>
     </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
       Crash because of incorrect locale env
@@ -21,13 +23,27 @@
     </cell>|<\cell>
       7_2
     </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
       Use long array instead of long list to avoid stack overflow
     </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix again
+    </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
       <dlink|7_3>
+    </cell>|<\cell>
+      v1.2.0
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
@@ -37,6 +53,8 @@
     </cell>|<\cell>
       <dlink|7_4>
     </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
       It freezes when I diff using the Rough grain
@@ -45,21 +63,57 @@
     </cell>|<\cell>
       7_5
     </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
-      Disable Edit-\<gtr\>Spell to avoid crash on Windows
+      Disable <menu|Edit|Spell> to avoid crash on Windows
     </cell>>|<row|<\cell>
-      <text-dots>
-    </cell>|<\cell>
       \;
     </cell>|<\cell>
       \;
     </cell>|<\cell>
-      \;
+      v1.2.1
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Disable <menu|Edit|Spell> to avoid crash on Linux
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      7_6
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix infinite loop of search_string in Data/Tree/tree_search
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      7_7
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      primitive: fix out of range and improve error message for range
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      7_8
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix crashing caused by missing gs binary
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
       <dlink|7_9>
+    </cell>|<\cell>
+      v1.2.1
     </cell>|<\cell>
       Joris
     </cell>|<\cell>
