@@ -550,6 +550,11 @@ target("windows_installer") do
             filename = "package.xml",
         }
     )
+    add_configfiles(
+        "packages/windows/(packages/app.shortcut/meta/package.in.xml)",{
+            filename = "package.xml",
+        }
+    )
     add_installfiles({
         "packages/windows/packages/app.mogan/meta/installscript.qs",
         "LICENSE"}, {prefixdir = "packages/app.mogan/meta/"})
@@ -562,7 +567,6 @@ target("windows_installer") do
     after_install(function (target, opt)
         print("after_install of target windows_installer")
         import("core.project.config")
-        import("lib.detect.find_tool")
         local qtifw_dir = target:pkg("qtifw"):installdir()
         local binarycreator_path = path.join(qtifw_dir, "/bin/binarycreator.exe")
         -- generate windows package

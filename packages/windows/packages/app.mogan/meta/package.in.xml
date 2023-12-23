@@ -9,13 +9,4 @@
     </Licenses>
     <Default>true</Default>
     <Script>installscript.qs</Script>
-    <Operations>
-        <Operation name="RegisterFileType">
-            <Argument>tm</Argument>
-            <Argument>@TargetDir@/bin/MoganResearch.exe "%1"</Argument>
-            <Argument>texmacs document style</Argument>
-            <Argument>text/plain</Argument>
-            <Argument>@TargetDir@/bin/MoganResearch.exe,8</Argument>
-        </Operation>
-    </Operations>
 </Package>
