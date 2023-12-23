@@ -177,11 +177,52 @@ box
 typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
   x1= x1b; y1= y1b; x2=x2b; y2= y2b;
   box b= typeset ();
-  // cout << "-------------------------------------------------------------\n";
+
+  // The following 3 steps calcuate the new rectangle(x1b, y1b, x2b, y2b)
+
+  // Step 1: Compute the changed rects in pairs in change_log according to the
+  // box and last rect and then set the new last rect
+
+  // Keeps the box rectangle in pair <before, after>
+  // if before is zero rect, we only need to rendered the after rect
+  // if after is zero rect, we only need to rendered the before rect
+  // otherwize, both of them need to be re-rendered
+  array<rectangle> change_log;
+  if (last_rectangle != rectangle(0, 0, 0, 0)) {
+    // The first pair of rectangle is the last rectangle
+    // Scenario 1:
+    // When you switch to an empty preamble, the document tree will be resetted
+    // The last rectangle is the rect of the document tree before resetting
+    // We will clear the document and show the emtpy preamble, without the last
+    // rectangle, we won't know the area we need to clear
+    // Scenario 2:
+    // In beamer style, switching from slide 1 to slide 2
+    change_log << rectangle(0, 0, 0, 0);
+    change_log << last_rectangle;
+  }
+  // append pairs of rectangles to the change_log from the typesetting box
   b->position_at (0, 0, change_log);
-  change_log= requires_update (change_log);
+  // Reset the last rectangle via the bottom rectangle
+  last_rectangle= change_log[N(change_log)-1];
+
+  // Step 2: calculate the least_upper_bound from change_log
+  // Filter first and then compute the least upper bound
+  // 1. Invalid rect (0,0,0,0) are removed
+  // 2. If before equals to after in the (before, after) pair, just remove it
+  //
+  // Why not filter when appending to change_Log?
+  // Because we need to reset the last_rectangle correctly.
+  // If we change the doc tree via editing and we haven't affected the last
+  // paragraph, there will be no changes in the last paragraph, thus the last
+  // two rects are the same, and we will not re-render the last paragraph. If
+  // we reset the document tree, we will need the last paragraph rect as
+  // described in step 1
+  array<rectangle> filtered_log= requires_update (change_log);
   rectangle r (0, 0, 0, 0);
-  if (N(change_log) != 0) r= least_upper_bound (change_log);
+  if (N(change_log) != 0) r= least_upper_bound (filtered_log);
+
+  // Step 3: calculate the least_upper_bound from page colors and old_bgs
+  // and then reset the old_bgs to the new_bgs
   array<brush> new_bgs;
   array<rectangle> rs;
   b->collect_page_colors (new_bgs, rs);
@@ -189,8 +230,8 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
     if (new_bgs[i] != old_bgs[i])
       r= least_upper_bound (r, rs[i]);
   old_bgs= new_bgs;
+
   x1b= r->x1; y1b= r->y1; x2b= r->x2; y2b= r->y2;
-  change_log= array<rectangle> ();
   return b;
 }
 
