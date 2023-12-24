@@ -2,16 +2,26 @@
 当前最新稳定版是墨干理工套件v1.2.2，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
 
 ## 官方提供的安装包
-| 产品 | 操作系统 | 马上下载 | SHA256校验 |
-|-----|-------|-----|--------|
-| 墨砚v1.2.2 | Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-64bit-installer.exe) | 8b8e2cc54c64436b965417c9f76beaded181d3c4a192f2eae62189d88b754e28 |
-| 墨砚v1.2.2 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2.dmg) | 6470306b334f2da09a6be515ba2189c639954ae53333c0213074154364d137e7 |
-| 墨砚v1.2.2 | macOS M1/M2 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-arm.dmg) | ccbd7843542cd94c4a5315694c62c7f5dbdb81e66542820d649e1328c42fc8b5 |
-| 墨砚v1.2.2 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-ubuntu22.04.deb) | dc9f3d1e18afb4f27b598c8251815ad1082f14c58e6685e218965c63e6d19151 |
-| 墨砚v1.2.2 | UOS | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-uos.deb) | 9ae3f63c7b562fc51a408d97ad3f253fe11aa30a348f8212e277b3e1d5a1bc10 |
-| 墨砚v1.2.2 | UOS Loongarch | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-uos-loongarch64.deb) | 5185047d2acbf83465ec5d28406133512a7b8c6d450b70d08062b34c9dc59af1 |
+| 产品 | 操作系统 | 马上下载 |
+|-----|-------|-----|
+| 墨砚v1.2.2 | Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-64bit-installer.exe) |
+| 墨砚v1.2.2 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2.dmg) |
+| 墨砚v1.2.2 | macOS M1/M2 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-arm.dmg) |
+| 墨砚v1.2.2 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-ubuntu22.04.deb) |
+| 墨砚v1.2.2 | UOS | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-uos.deb) |
+| 墨砚v1.2.2 | UOS Loongarch | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-uos-loongarch64.deb) |
 
-墨干理工套件:
+SHA256校验码：
+```
+8b8e2cc54c64436b965417c9f76beaded181d3c4a192f2eae62189d88b754e28  MoganResearch-v1.2.2-64bit-installer.exe
+ccbd7843542cd94c4a5315694c62c7f5dbdb81e66542820d649e1328c42fc8b5  MoganResearch-v1.2.2-arm.dmg
+6470306b334f2da09a6be515ba2189c639954ae53333c0213074154364d137e7  MoganResearch-v1.2.2.dmg
+dc9f3d1e18afb4f27b598c8251815ad1082f14c58e6685e218965c63e6d19151  mogan-research-v1.2.2-ubuntu22.04.deb
+5185047d2acbf83465ec5d28406133512a7b8c6d450b70d08062b34c9dc59af1  mogan-research-v1.2.2-uos-loongarch64.deb
+9ae3f63c7b562fc51a408d97ad3f253fe11aa30a348f8212e277b3e1d5a1bc10  mogan-research-v1.2.2-uos.deb
+```
+
+墨干理工套件：
 + 墨砚（提供Windows/macOS/Ubuntu/UOS四大平台安装包）
 + 墨码（无安装包，正在开发中）
 + 墨板（无安装包，正在开发中）

@@ -2,14 +2,24 @@
 The latest stable version is Mogan STEM Suite v1.2.2, you can check if there are new releases in the `Help -> Welcome` menu entry.
 
 ## Official Packages
-| Product | Operating System | Download | SHA256 Checksum|
-|---------|-------|-----|--------|
-| Mogan Research v1.2.2 | Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-64bit-installer.exe) | 8b8e2cc54c64436b965417c9f76beaded181d3c4a192f2eae62189d88b754e28 |
-| Mogan Research v1.2.2 | macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2.dmg) | 6470306b334f2da09a6be515ba2189c639954ae53333c0213074154364d137e7 |
-| Mogan Research v1.2.2 | macOS M1/M2 (>=13) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-arm.dmg) | ccbd7843542cd94c4a5315694c62c7f5dbdb81e66542820d649e1328c42fc8b5 |
-| Mogan Research v1.2.2 | Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-ubuntu22.04.deb) | dc9f3d1e18afb4f27b598c8251815ad1082f14c58e6685e218965c63e6d19151 |
-| Mogan Research v1.2.2 | UOS | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-uos.deb) | 9ae3f63c7b562fc51a408d97ad3f253fe11aa30a348f8212e277b3e1d5a1bc10 |
-| Mogan Research v1.2.2 | UOS Loongarch | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-uos-loongarch64.deb) | 5185047d2acbf83465ec5d28406133512a7b8c6d450b70d08062b34c9dc59af1 |
+| Product | Operating System | Download |
+|---------|-------|-----|
+| Mogan Research v1.2.2 | Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-64bit-installer.exe) |
+| Mogan Research v1.2.2 | macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2.dmg) |
+| Mogan Research v1.2.2 | macOS M1/M2 (>=13) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-arm.dmg) |
+| Mogan Research v1.2.2 | Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-ubuntu22.04.deb) |
+| Mogan Research v1.2.2 | UOS | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-uos.deb) |
+| Mogan Research v1.2.2 | UOS Loongarch | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-uos-loongarch64.deb) |
+
+SHA256 checksum:
+```
+8b8e2cc54c64436b965417c9f76beaded181d3c4a192f2eae62189d88b754e28  MoganResearch-v1.2.2-64bit-installer.exe
+ccbd7843542cd94c4a5315694c62c7f5dbdb81e66542820d649e1328c42fc8b5  MoganResearch-v1.2.2-arm.dmg
+6470306b334f2da09a6be515ba2189c639954ae53333c0213074154364d137e7  MoganResearch-v1.2.2.dmg
+dc9f3d1e18afb4f27b598c8251815ad1082f14c58e6685e218965c63e6d19151  mogan-research-v1.2.2-ubuntu22.04.deb
+5185047d2acbf83465ec5d28406133512a7b8c6d450b70d08062b34c9dc59af1  mogan-research-v1.2.2-uos-loongarch64.deb
+9ae3f63c7b562fc51a408d97ad3f253fe11aa30a348f8212e277b3e1d5a1bc10  mogan-research-v1.2.2-uos.deb
+```
 
 Mogan STEM Suite:
 + **Mogan Research** (installers on Windows/macOS/Ubuntu/UOS)
