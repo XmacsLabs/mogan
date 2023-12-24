@@ -220,10 +220,6 @@
   ("search find" (search-next-match #t))
   ("search again" (search-next-match #t))
 
-  ("copyto *" (interactive clipboard-copy))
-  ("cutto *" (interactive clipboard-cut))
-  ("pastefrom *" (interactive clipboard-paste))
-
   ("table N t" (make 'tabular))
   ("table N T" (make 'tabular*))
   ("table N w" (make 'wide-tabular))
