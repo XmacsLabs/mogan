@@ -1,8 +1,8 @@
 # Installation Guide
-The latest stable version is Mogan STEM Suite v1.2.2, you can check if there are new releases in `Help -> Welcome`.
+The latest stable version is Mogan STEM Suite v1.2.2, you can check if there are new releases in the `Help -> Welcome` menu entry.
 
 ## Official Packages
-| Product | Operating System | Download | MD5 Checksum|
+| Product | Operating System | Download | SHA256 Checksum|
 |---------|-------|-----|--------|
 | Mogan Research v1.2.2 | Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-64bit-installer.exe) | 8b8e2cc54c64436b965417c9f76beaded181d3c4a192f2eae62189d88b754e28 |
 | Mogan Research v1.2.2 | macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2.dmg) | 6470306b334f2da09a6be515ba2189c639954ae53333c0213074154364d137e7 |
@@ -23,8 +23,9 @@ Other sites to download：
 + https://codeberg.org/XmacsLabs/mogan/releases
 
 Old releases:
++ [v1.2.1 (2023/12/21)](https://github.com/XmacsLabs/mogan/releases/tag/v1.2.1)
 + [v1.2.0 (2023/12/04)](https://github.com/XmacsLabs/mogan/releases/tag/v1.2.0)
-+ [v1.1.6 (2023/09/29)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.6)
++ [**v1.1.6 (2023/09/29)**](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.6)
 + [v1.1.5 (2023/08/11)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.5)
 + [v1.1.4 (2023/07/31)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.4)
 + [v1.1.3 (2023/06/05)](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.3)

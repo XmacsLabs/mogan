@@ -1,8 +1,8 @@
 # 如何安装
-当前最新稳定版是墨干理工套件v1.2.2，可以在`帮助 -> 欢迎`中检查是否有新版可用。
+当前最新稳定版是墨干理工套件v1.2.2，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
 
 ## 官方提供的安装包
-| 产品 | 操作系统 | 马上下载 | MD5校验 |
+| 产品 | 操作系统 | 马上下载 | SHA256校验 |
 |-----|-------|-----|--------|
 | 墨砚v1.2.2 | Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-64bit-installer.exe) | 8b8e2cc54c64436b965417c9f76beaded181d3c4a192f2eae62189d88b754e28 |
 | 墨砚v1.2.2 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2.dmg) | 6470306b334f2da09a6be515ba2189c639954ae53333c0213074154364d137e7 |
@@ -24,8 +24,9 @@
 + https://codeberg.org/XmacsLabs/mogan/releases
 
 旧版本安装包：
++ [v1.2.1 (2023/12/21)](https://github.com/XmacsLabs/mogan/releases/tag/v1.2.1)
 + [v1.2.0 (2023/12/04)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.2.0)
-+ [v1.1.6 (2023/09/29)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.6)
++ [**v1.1.6 (2023/09/29)**](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.6)
 + [v1.1.5 (2023/08/11)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.5)
 + [v1.1.4 (2023/07/31)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.4)
 + [v1.1.3 (2023/06/05)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.3)
