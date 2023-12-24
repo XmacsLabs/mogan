@@ -1432,6 +1432,7 @@
 ("past changes" "")
 ("paste from" "粘贴自")
 ("paste text" "粘贴文本")
+("paste verbatim" "无格式粘贴")
 ("paste" "粘贴")
 ("path" "路径")
 ("pattern" "图案")
