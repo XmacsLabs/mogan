@@ -284,7 +284,7 @@
   ("accent:cedilla" "accent C")
   ("accent:breve" "accent U")
   ("accent:invbreve" "accent A")
-  ("accent:check" "accent V")
+  ("accent:check" "v var")
   ("accent:doubleacute" "accent H")
   ("accent:abovering" "accent O")
   ("accent:abovedot" "accent .")
