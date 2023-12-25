@@ -155,7 +155,8 @@ tt_locate_all () {
   if (N (tt_font_locations) > 0) return;
 
   bench_start ("tt_locate_all");
-  url suffixes = url ("*.ttf") | url ("*.ttc") | url ("*.otf") | url ("*.TTF") | url ("*.TTC") | url ("*.OTF");
+  url suffixes= url ("*.ttf") | url ("*.ttc") | url ("*.otf") | url ("*.TTF") |
+                url ("*.TTC") | url ("*.OTF");
   url all_fonts= expand (complete (tt_font_path () * suffixes));
   url iter     = all_fonts;
   while (is_or (iter)) {
