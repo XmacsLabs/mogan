@@ -605,10 +605,8 @@ default_japanese_font_name () {
   if (tt_font_exists ("msmincho")) return "MS PMincho";
 #endif
 
-  if (tt_font_exists ("ipam")) return "IPAMincho";
-  if (tt_font_exists ("sazanami")) return "sazanami";
-  if (tt_font_exists ("ttf-japanese-gothic")) return "ttf-japanese";
-  if (tt_font_exists ("ヒラギノ明朝 ProN W6")) return "kaku";
+  if (tt_font_exists ("NotoSerifCJK-Regular")) return "Noto CJK JP";
+
   return "roman";
 }
 
