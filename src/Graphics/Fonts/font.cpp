@@ -601,8 +601,7 @@ default_japanese_font_name () {
   if (tt_font_exists ("msmincho")) return "MS PMincho";
 #endif
 
-  if (tt_font_exists ("NotoSerifCJK-Regular"))
-    return "Noto CJK JP";
+  if (tt_font_exists ("NotoSerifCJK-Regular")) return "Noto CJK JP";
 
   return "roman";
 }
