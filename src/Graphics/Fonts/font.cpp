@@ -602,7 +602,7 @@ default_japanese_font_name () {
 #endif
 
   if (tt_font_exists ("NotoSerifCJK-Regular"))
-    return "Noto Serif CJK JP";
+    return "Noto CJK JP";
 
   return "roman";
 }
