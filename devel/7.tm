@@ -8,7 +8,12 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|1|1|2|2|cell-background|pastel
+    green>|<cwith|5|5|2|2|cell-background|pastel
+    green>|<cwith|6|6|2|2|cell-background|pastel
+    green>|<cwith|2|2|2|2|cell-background|pastel
+    green>|<cwith|9|9|2|2|cell-background|pastel
+    green>|<cwith|10|10|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Bug
     </cell>|<\cell>
       <dlink|7_1>
@@ -38,6 +43,16 @@
       <value|da>
     </cell>|<\cell>
       Fix again
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      v1.2.2
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix the memory safety issue of change_log in the typesetter
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
@@ -81,7 +96,7 @@
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
-      7_6
+      <dlink|7_6>
     </cell>|<\cell>
       v1.2.1
     </cell>|<\cell>
@@ -91,7 +106,7 @@
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
-      7_7
+      <dlink|7_7>
     </cell>|<\cell>
       v1.2.1
     </cell>|<\cell>
