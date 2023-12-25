@@ -1,0 +1,10 @@
+#!/usr/bin/env elvish
+
+if (== (count $args) 0) {
+  echo "You must provide the project ID"
+  exit 1
+}
+var project_id = $args[0]
+
+git log --grep="^\\["$project_id"_" | grep "\\["$project_id"_" | cut -d'_' -f2 | sort -t ']' -k 1 -n -r
+
