@@ -137,6 +137,9 @@ tt_font_search_path () {
 #endif
     ret= ret | url ("/usr/share/texlive/texmf-dist/fonts/opentype") |
          url ("/usr/share/texlive/texmf-dist/fonts/truetype");
+    if (exists (url_system ("/usr/share/fonts/fonts-cesi"))) {
+      ret= ret | url_system ("/usr/share/fonts/fonts-cesi");
+    }
   }
   return ret;
 }
@@ -152,7 +155,8 @@ tt_locate_all () {
   if (N (tt_font_locations) > 0) return;
 
   bench_start ("tt_locate_all");
-  url suffixes = url ("*.ttf") | url ("*.ttc") | url ("*.otf");
+  url suffixes= url ("*.ttf") | url ("*.ttc") | url ("*.otf") | url ("*.TTF") |
+                url ("*.TTC") | url ("*.OTF");
   url all_fonts= expand (complete (tt_font_path () * suffixes));
   url iter     = all_fonts;
   while (is_or (iter)) {
