@@ -639,3 +639,17 @@ use_macos_fonts () {
   return false;
 #endif
 }
+
+pair<string, int>
+font_name_unpack (string font_name) {
+  int    face_index   = 0;
+  string font_basename= basename (url_system (font_name));
+
+  // Extract the subfont_index if exists
+  string face_index_str= suffix (url_system (font_name));
+  if (is_int (face_index_str)) {
+    face_index= as_int (face_index_str);
+  }
+
+  return pair (font_basename, face_index);
+}

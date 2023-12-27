@@ -177,11 +177,10 @@ find_font_bis (tree t) {
       array<string> a= font_database_search (family, variant, series, shape);
       // cout << t << " -> " << a << "\n";
       for (int i= 0; i < N (a); i++) {
-        string font_name= basename (url_system (a[i]));
-        if (is_int (suffix (url_system (font_name)))) {
-          font_name= basename (url_system (font_name));
-        }
-        if (tt_font_exists (font_name))
+        string            font_name    = basename (url_system (a[i]));
+        pair<string, int> f_pair       = font_name_unpack (font_name);
+        string            font_basename= f_pair.x1;
+        if (tt_font_exists (font_basename))
           return unicode_font (font_name, as_int (t[4]), as_int (t[5]));
       }
     }

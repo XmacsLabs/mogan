@@ -45,10 +45,13 @@ tt_face_rep::tt_face_rep (string name) : rep<tt_face> (name) {
   bad_face= true;
   if (ft_initialize ()) return;
   if (DEBUG_VERBOSE) debug_fonts << "Loading True Type font " << name << "\n";
-  url u= tt_font_find (name);
+  pair<string, int> f_pair       = font_name_unpack (name);
+  string            font_basename= f_pair.x1;
+  int               face_index   = f_pair.x2;
+  url               u            = tt_font_find (font_basename);
   if (is_none (u)) return;
   c_string _name (concretize (u));
-  if (ft_new_face (ft_library, _name, 0, &ft_face)) {
+  if (ft_new_face (ft_library, _name, face_index, &ft_face)) {
     return;
   }
   ft_select_charmap (ft_face, ft_encoding_adobe_custom);
