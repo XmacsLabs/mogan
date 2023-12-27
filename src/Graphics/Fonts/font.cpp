@@ -639,7 +639,7 @@ use_macos_fonts () {
 
 pair<string, int>
 font_name_unpack (string font_name) {
-  int face_index= 0;
+  int    face_index   = 0;
   string font_basename= basename (url_system (font_name));
 
   // Extract the subfont_index if exists
