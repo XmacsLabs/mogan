@@ -568,23 +568,21 @@ default_chinese_font_name () {
     return get_user_preference ("default chinese font name");
   }
 
+  // Noto CJK SC is the default Chinese font on all system if exists
+  if (tt_font_exists ("NotoSerifCJK-Regular")) return "Noto CJK SC";
+
+#if defined(OS_MINGW) || defined(OS_WIN)
   // Set default Chinese font for Windows
   // see: https://docs.microsoft.com/en-us/typography/fonts/windows_10_font_list
-#if defined(OS_MINGW) || defined(OS_WIN)
   if (tt_font_exists ("simsun")) return "simsun";
 #endif
 
-    // Set default Chinese font for macOS
-    // see: https://developer.apple.com/fonts/system-fonts/
 #ifdef OS_MACOS
+  // Set default Chinese font for macOS
+  // see: https://developer.apple.com/fonts/system-fonts/
   if (tt_font_exists ("Songti")) return "Songti SC";
 #endif
 
-  if (tt_font_exists ("FandolSong-Regular")) return "FandolSong";
-  if (tt_font_exists ("fireflysung")) return "fireflysung";
-  if (tt_font_exists ("uming")) return "uming";
-  if (tt_font_exists ("儷黑 Pro")) return "lihei";
-  if (tt_font_exists ("SimSun")) return "apple-simsun";
   return "roman";
 }
 
@@ -594,9 +592,11 @@ default_japanese_font_name () {
     return get_user_preference ("default japanese font name");
   }
 
+  if (tt_font_exists ("NotoSerifCJK-Regular")) return "Noto CJK JP";
+
+#ifdef OS_MACOS
   // Set default Japanese font for macOS
   // see: https://developer.apple.com/fonts/system-fonts/
-#ifdef OS_MACOS
   if (tt_font_exists ("ヒラギノ角ゴシック W3"))
     return "Hiragino Kaku Gothic ProN";
 #endif
@@ -604,8 +604,6 @@ default_japanese_font_name () {
 #if defined(OS_MINGW) || defined(OS_WIN)
   if (tt_font_exists ("msmincho")) return "MS PMincho";
 #endif
-
-  if (tt_font_exists ("NotoSerifCJK-Regular")) return "Noto CJK JP";
 
   return "roman";
 }
@@ -616,17 +614,17 @@ default_korean_font_name () {
     return get_user_preference ("default korean font name");
   }
 
+  if (tt_font_exists ("NotoSerifCJK-Regular")) return "Noto CJK KR";
+
+#ifdef OS_MACOS
   // Set default Korean font for macOS
   // see: https://developer.apple.com/fonts/system-fonts/
-#ifdef OS_MACOS
   if (tt_font_exists ("AppleSDGothicNeo")) return "Apple SD Gothic Neo";
 #endif
 
 #if defined(OS_MINGW) || defined(OS_WIN)
   if (tt_font_exists ("batang")) return "Batang";
 #endif
-
-  if (tt_font_exists ("NotoSerifCJK-Regular")) return "Noto CJK KR";
 
   return "roman";
 }
