@@ -342,9 +342,13 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   initkeymap ();
 
   int                   key     = event->key ();
-  QKeyCombination       key_comb= event->keyCombination ();
   Qt::KeyboardModifiers mods    = event->modifiers ();
   QString               nss     = event->text ();
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+  QKeyCombination       key_comb= event->keyCombination ();
+#endif
+
 #if defined(OS_MINGW) || defined(OS_WIN)
   /* "Qt::Key_AltGr On Windows, when the KeyDown event for this key is sent,
    * the Ctrl+Alt modifiers are also set." (excerpt from Qt doc)
@@ -388,12 +392,14 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
     string key_s= string (key_c);
     r           = "A-" * key_s;
   }
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
   else if (key < 128 && (mods & Qt::ControlModifier) &&
            (mods & Qt::ShiftModifier) && !(mods & Qt::AltModifier) &&
            !(mods & Qt::MetaModifier)) {
     // Ctrl+Shift+key on Windows/Linux, Command+Shift+key on macOS
     r= from_qkeysequence (QKeySequence (key_comb));
   }
+#endif
   else { // Old keyboard handling code
     if (qtkeymap->contains (key)) {
       r= qtkeymap[key];
