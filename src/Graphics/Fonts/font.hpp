@@ -13,6 +13,7 @@
 #define FONT_H
 
 #include "bitmap_font.hpp"
+#include "ntuple.hpp"
 #include "renderer.hpp"
 #include "resource.hpp"
 #include "space.hpp"
@@ -283,6 +284,16 @@ array<string> patch_font (array<string> v, array<string> w, bool decode= true);
 array<string> apply_substitutions (array<string> v);
 string        main_family (string f);
 bool          use_macos_fonts ();
+
+/**
+ * @brief Unpack font_name to a pair of font_basename and face_index
+ * @param font_name the font name (eg. Songti/Songti.1)
+ * @return A pair of font_basename and face_index
+ * For font name without the index suffix, the face_index is 0, font_basename is
+ * the same with font_name. For font name with the index suffix, the face_index
+ * is extracted, font_basename is font_name without the suffix.
+ */
+pair<string, int> font_name_unpack (string font_name);
 
 #ifdef USE_FREETYPE
 

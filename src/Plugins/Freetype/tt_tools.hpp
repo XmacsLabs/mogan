@@ -16,7 +16,6 @@
 
 void        tt_dump (url u);
 scheme_tree tt_font_name (url u);
-url         tt_unpack (string name);
 
 #ifdef USE_FREETYPE
 
