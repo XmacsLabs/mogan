@@ -11,6 +11,7 @@
 
 #include "QTMWidget.hpp"
 #include "analyze.hpp"
+#include "array.hpp"
 #include "boot.hpp"
 #include "converter.hpp"
 #include "object_l5.hpp"
@@ -285,13 +286,65 @@ get_shift_preference (char key_code) {
   return get_user_preference ("shift-" * as_string (key_code));
 }
 
+static string
+from_portable_key (string key) {
+  if (os_macos () && key == "Ctrl") {
+    return "M";
+  }
+  else if (os_macos () && key == "Meta") {
+    return "C";
+  }
+  else if (key == "Ctrl") {
+    return "C";
+  }
+  else if (key == "Meta") {
+    return "M";
+  }
+  else if (key == "Alt") {
+    return "A";
+  }
+  else if (key == "Shift") {
+    return "S";
+  }
+  else if (N (key) == 1 && is_locase (key[0])) {
+    return locase_all (key);
+  }
+  return key;
+}
+
+static string
+from_qkeysequence (QKeySequence seq) {
+  string key_seq    = from_qstring (seq.toString (QKeySequence::PortableText));
+  array<string> keys= tokenize (key_seq, "+");
+  int           size= N (keys);
+  string        last_key= keys[size - 1];
+  string        ret;
+
+  if (N (last_key) == 1 && is_alpha (last_key[0]) &&
+      contains (string ("Shift"), keys)) {
+    for (int i= 0; i < N (keys); i++) {
+      if (keys[i] != "Shift") {
+        ret << from_portable_key (keys[i]) << "-";
+      }
+    }
+  }
+  else {
+    for (int i= 0; i < N (keys); i++) {
+      ret << from_portable_key (keys[i]) << "-";
+    }
+  }
+  return ret (0, N (ret) - 1);
+}
+
 void
 QTMWidget::keyPressEvent (QKeyEvent* event) {
   if (is_nil (tmwid)) return;
   initkeymap ();
 
-  int                   key = event->key ();
-  Qt::KeyboardModifiers mods= event->modifiers ();
+  int                   key     = event->key ();
+  QKeyCombination       key_comb= event->keyCombination ();
+  Qt::KeyboardModifiers mods    = event->modifiers ();
+  QString               nss     = event->text ();
 #if defined(OS_MINGW) || defined(OS_WIN)
   /* "Qt::Key_AltGr On Windows, when the KeyDown event for this key is sent,
    * the Ctrl+Alt modifiers are also set." (excerpt from Qt doc)
@@ -314,6 +367,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   string r= "";
   if (key < 128 && (mods & Qt::AltModifier) && !(mods & Qt::ShiftModifier) &&
       !(mods & Qt::ControlModifier) && !(mods & Qt::MetaModifier)) {
+    // Alt+key on Windows/Linux, Option+key on macOS
     char   key_c= (char) key;
     string key_s= string (key_c);
     if (is_upcase (key_c)) {
@@ -329,9 +383,16 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   else if (key < 128 && (mods & Qt::AltModifier) &&
            (mods & Qt::ShiftModifier) && !(mods & Qt::ControlModifier) &&
            !(mods & Qt::MetaModifier)) {
+    // Alt+Shift+key on Windows/Linux, Option+Shift+key on macOS
     char   key_c= (char) key;
     string key_s= string (key_c);
     r           = "A-" * key_s;
+  }
+  else if (key < 128 && (mods & Qt::ControlModifier) &&
+           (mods & Qt::ShiftModifier) && !(mods & Qt::AltModifier) &&
+           !(mods & Qt::MetaModifier)) {
+    // Ctrl+Shift+key on Windows/Linux, Command+Shift+key on macOS
+    r= from_qkeysequence (QKeySequence (key_comb));
   }
   else { // Old keyboard handling code
     if (qtkeymap->contains (key)) {
@@ -343,7 +404,6 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
     }
     else {
       // We need to use text(): Alt-{5,6,7,8,9} are []|{} under MacOS, etc.
-      QString        nss = event->text ();
       unsigned int   kc  = event->nativeVirtualKey ();
       unsigned short unic= nss.data ()[0].unicode ();
       if (unic > 32 && unic < 255 && (mods & Qt::ShiftModifier) != 0 &&
