@@ -222,9 +222,11 @@ tt_font_find_sub (string font_basename) {
     return tt_fast_locate (font_basename);
   }
   else {
-    debug_fonts << "Font " << font_basename << " does not exist in font database" << LF;
+    debug_fonts << "Font " << font_basename
+                << " does not exist in font database" << LF;
     debug_fonts << "Please report it to us if it is a ttf/ttc/otf font!" << LF;
-    debug_fonts << "Locating it as " * font_basename * ".pfb, might be slow :(" << LF;
+    debug_fonts << "Locating it as " * font_basename * ".pfb, might be slow :("
+                << LF;
     // If the font is not in font database
     // It must not be a ttf/ttc/otf/tfm font
     return tt_locate_pfb (font_basename);
