@@ -18,6 +18,10 @@
 #include "tree_helper.hpp"
 #include "scheme.hpp"
 
+#include <lolly/data/numeral.hpp>
+using lolly::data::to_Hex;
+using lolly::data::from_hex;
+
 /******************************************************************************
 * Conversion of TeXmacs strings of the present format to TeXmacs trees
 ******************************************************************************/
@@ -106,9 +110,9 @@ tm_reader::read_char () {
     if (pos-old_pos == 1) {
       return buf (pos-1, pos);
     } else if (pos-old_pos == 2) {
-      return "\\<#00" * as_hexadecimal (code) * "\\>";
+      return "\\<#00" * to_Hex (code) * "\\>";
     } else {
-      return "\\<#" * as_hexadecimal (code) * "\\>";
+      return "\\<#" * to_Hex (code) * "\\>";
     }
   }
 }
@@ -293,7 +297,7 @@ tm_reader::read (bool skip_flag) {
       else if (last[N(last)-1] == '#') {
         string r;
         while ((buf[pos] != '>') && (pos+2<N(buf))) {
-          r << ((char) from_hexadecimal (buf (pos, pos+2)));
+          r << ((char) from_hex (buf (pos, pos+2)));
           pos += 2;
         }
         if (buf[pos] == '>') pos++;

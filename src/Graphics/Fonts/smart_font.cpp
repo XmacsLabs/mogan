@@ -19,6 +19,10 @@
 #include "translator.hpp"
 #include "unicode.hpp"
 
+#include <lolly/data/numeral.hpp>
+
+using lolly::data::to_Hex;
+
 bool virtually_defined (string c, string name);
 font smart_font_bis (string f, string v, string s, string sh, int sz, int hdpi,
                      int vdpi);
@@ -101,7 +105,7 @@ is_greek (string c) {
       a << i;
     a << 0x3d1 << 0x3d5 << 0x3d6 << 0x3f0 << 0x3f1 << 0x3f5;
     for (int i= 0; i < N (a); i++) {
-      string s            = upcase_all ("<#" * as_hexadecimal (a[i]) * ">");
+      string s            = "<#" * to_Hex (a[i]) * ">";
       t (s)               = true;
       t (locase_all (s))  = true;
       t (rewrite_math (s))= true;
@@ -167,8 +171,8 @@ static hashmap<string, string> substitution_font ("");
 static void
 unicode_subst (int src, int dest, int nr, string fn) {
   for (int i= 0; i < nr; i++) {
-    string csrc = upcase_all ("<#" * as_hexadecimal (src + i) * ">");
-    string cdest= upcase_all ("<#" * as_hexadecimal (dest + i) * ">");
+    string csrc = "<#" * to_Hex (src + i) * ">";
+    string cdest= "<#" * to_Hex (dest + i) * ">";
     if (dest + i < 128) cdest= string ((char) (dest + i));
     substitution_char (csrc)= cdest;
     substitution_font (csrc)= fn;
@@ -273,7 +277,7 @@ substitute_math_letter (string c, int math_kind) {
   if ((code >= 0x1d400 && code <= 0x1d7ff) ||
       (code >= 0x2100 && code <= 0x213f)) {
     init_unicode_substitution ();
-    string nc= "<#" * as_hexadecimal (code) * ">";
+    string nc= "<#" * to_Hex (code) * ">";
     string sc= substitution_char[nc];
     string sf= substitution_font[nc];
     // cout << c << " (" << nc << ") -> " << sc << ", " << sf << "\n";
@@ -294,8 +298,8 @@ static hashmap<string, string> italic_greek ("");
 static void
 unicode_subst_back (int dest, int src, int nr, hashmap<string, string>& h) {
   for (int i= 0; i < nr; i++) {
-    string csrc = upcase_all ("<#" * as_hexadecimal (src + i) * ">");
-    string cdest= upcase_all ("<#" * as_hexadecimal (dest + i) * ">");
+    string csrc = "<#" * to_Hex (src + i) * ">";
+    string cdest= "<#" * to_Hex (dest + i) * ">";
     if (src + i < 128) csrc= string ((char) (src + i));
     if (dest + i < 128) cdest= string ((char) (dest + i));
     h (csrc)= cdest;
@@ -412,7 +416,7 @@ collection_insert (string name, string c) {
   char_collections (name)->insert (c);
   int code= get_utf8_code (c);
   if (code >= 0) {
-    string uc= "<#" * upcase_all (as_hexadecimal (code)) * ">";
+    string uc= "<#" * to_Hex (code) * ">";
     if (uc != c) char_collections (name)->insert (uc);
   }
 }
@@ -443,7 +447,7 @@ init_collections () {
   collection_inherit ("latin-bold", "lowercase-latin-bold");
   collection_inherit ("latin-bold", "uppercase-latin-bold");
   for (int code= 0x380; code <= 0x3ff; code++) {
-    string uc= upcase_all ("<#" * as_hexadecimal (code) * ">");
+    string uc= "<#" * to_Hex (code) * ">";
     string gc= rewrite_math (uc);
     if (gc != uc) {
       string bgc= "<b-" * gc (1, N (gc));

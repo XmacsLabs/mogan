@@ -36,7 +36,7 @@ function main()
             },
             {
                 scm_name = "integer->hexadecimal",
-                cpp_name = "as_hexadecimal",
+                cpp_name = "lolly::data::to_Hex",
                 ret_type = "string",
                 arg_list = {
                     "int"
@@ -44,7 +44,7 @@ function main()
             },
             {
                 scm_name = "integer->padded-hexadecimal",
-                cpp_name = "as_hexadecimal",
+                cpp_name = "lolly::data::as_hexadecimal",
                 ret_type = "string",
                 arg_list = {
                     "int",
@@ -53,7 +53,7 @@ function main()
             },
             {
                 scm_name = "hexadecimal->integer",
-                cpp_name = "from_hexadecimal",
+                cpp_name = "lolly::data::from_hex",
                 ret_type = "int",
                 arg_list = {
                     "string"

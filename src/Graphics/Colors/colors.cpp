@@ -20,6 +20,13 @@
 #include "dvips_colors.hpp"
 #include "tm_debug.hpp"
 
+#include <lolly/data/numeral.hpp>
+
+using lolly::data::to_Hex;
+using lolly::data::from_hex;
+using lolly::data::as_hexadecimal;
+#define from_hexadecimal from_hex
+
 
 /******************************************************************************
 * Set up colormaps
