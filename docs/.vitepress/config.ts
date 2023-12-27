@@ -34,10 +34,6 @@ export default {
             '/zh/guide': sidebarGuideZh(),
         },
 
-        socialLinks: [
-            { icon: 'github', link: 'https://github.com/XmacsLabs/mogan' }
-        ],
-
         footer: {
             message: 'Let us enjoy exploring science and technology!',
             copyright: 'Copyright © 2022-2023 contributors of Mogan Editor'
@@ -64,6 +60,14 @@ function nav() {
             items: [
                 { text: '简体中文', link: '/zh/guide/what-is-mogan' },
                 { text: 'English', link: '/guide/what-is-mogan' },
+            ]
+        },
+        {
+            text: 'Code (Gitee/Github)',
+            items: [
+                { text: 'Codeberg', link: 'https://codeberg.org/XmacsLabs/mogan' },
+                { text: 'Gitee', link: 'https://gitee.com/XmacsLabs/mogan' },
+                { text: 'Github', link: 'https://github.com/XmacsLabs/mogan' },
             ]
         },
     ]
