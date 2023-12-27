@@ -25,6 +25,9 @@
 #include "Bibtex/bibtex.hpp"
 #endif
 
+#include <lolly/data/numeral.hpp>
+using lolly::data::from_hex;
+
 
 tree upgrade_tex (tree t);
 bool textm_class_flag= false;
@@ -386,7 +389,7 @@ codepoint_of_tree (tree t) {
   if (!starts (s, "<#") || !ends (s, ">"))
     return -1;
   s= s (2, N(s)-1);
-  return from_hexadecimal (s);
+  return from_hex (s);
 }
 
 static bool

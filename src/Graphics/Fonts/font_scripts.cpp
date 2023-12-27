@@ -12,6 +12,11 @@
 #include "analyze.hpp"
 #include "font.hpp"
 
+#include <lolly/data/numeral.hpp>
+
+using lolly::data::to_hex;
+#define as_hexadecimal to_hex
+
 /******************************************************************************
  * Helper routines for script correction tables
  ******************************************************************************/

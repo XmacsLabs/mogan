@@ -20,6 +20,11 @@
 #include "effect.hpp"
 #include "tm_timer.hpp"
 
+#include <lolly/data/numeral.hpp>
+
+using lolly::data::as_hexadecimal;
+
+
 /******************************************************************************
 * Unique id for pictures
 ******************************************************************************/

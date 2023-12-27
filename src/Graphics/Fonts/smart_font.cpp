@@ -19,6 +19,11 @@
 #include "translator.hpp"
 #include "unicode.hpp"
 
+#include <lolly/data/numeral.hpp>
+
+using lolly::data::to_hex;
+#define as_hexadecimal to_hex
+
 bool virtually_defined (string c, string name);
 font smart_font_bis (string f, string v, string s, string sh, int sz, int hdpi,
                      int vdpi);
