@@ -25,7 +25,7 @@
 #include "observers.hpp"
 
 #include <lolly/data/numeral.hpp>
-using lolly::data::to_hex;
+using lolly::data::to_Hex;
 using lolly::data::from_hex;
 using lolly::data::to_roman;
 using lolly::data::to_Roman;
@@ -1941,18 +1941,18 @@ tree
 edit_env_rep::exec_hard_id (tree t) {
   pointer ptr= (pointer) this;
   if (N(t) == 0)
-    return "%" * to_hex (ptr);
+    return "%" * to_Hex (ptr);
   else {
     t= expand (t[0], true);
     pointer tptr= (pointer) t.operator -> ();
     if (is_accessible (obtain_ip (t)))
-      return "%" * to_hex (ptr) *
-             "-" * to_hex (tptr);
+      return "%" * to_Hex (ptr) *
+             "-" * to_Hex (tptr);
     else {
       int h= hash (t);
-      return "%" * to_hex (ptr) *
-             "-" * to_hex (tptr) *
-             "-" * to_hex (h);
+      return "%" * to_Hex (ptr) *
+             "-" * to_Hex (tptr) *
+             "-" * to_Hex (h);
     }
   }
 }

@@ -21,7 +21,7 @@
 #include "tmfs_url.hpp"
 
 #include <lolly/data/numeral.hpp>
-using lolly::data::to_hex;
+using lolly::data::to_Hex;
 
 
 /******************************************************************************
@@ -42,7 +42,7 @@ make_file (int cmd, tree data, array<url> args) {
   // generate target and check names
   url make_dir= "$TEXMACS_HOME_PATH/system/make";
   int code= hash (key) & 0x7fffffff;
-  string hex= to_hex (code);
+  string hex= to_Hex (code);
   url make_target= make_dir * url (hex);
   url make_check = make_dir * url (hex * ".check");
   switch (cmd) {

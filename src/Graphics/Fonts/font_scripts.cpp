@@ -14,8 +14,7 @@
 
 #include <lolly/data/numeral.hpp>
 
-using lolly::data::to_hex;
-#define as_hexadecimal to_hex
+using lolly::data::to_Hex;
 
 /******************************************************************************
  * Helper routines for script correction tables
@@ -37,7 +36,7 @@ adjust_char (hashmap<string, double>& t, string c, double delta) {
     else if (code == 0x3d6) code= 0x1d71b; // varpi
     else code= 0;
     if (code != 0) {
-      string nc= "<#" * upcase_all (as_hexadecimal (code)) * ">";
+      string nc= "<#" * to_Hex (code) * ">";
       if (nc != c) t (nc)+= delta;
     }
   }

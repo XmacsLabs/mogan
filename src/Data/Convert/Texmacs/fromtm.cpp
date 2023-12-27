@@ -19,7 +19,7 @@
 #include "scheme.hpp"
 
 #include <lolly/data/numeral.hpp>
-using lolly::data::to_hex;
+using lolly::data::to_Hex;
 using lolly::data::from_hex;
 
 /******************************************************************************
@@ -110,9 +110,9 @@ tm_reader::read_char () {
     if (pos-old_pos == 1) {
       return buf (pos-1, pos);
     } else if (pos-old_pos == 2) {
-      return "\\<#00" * to_hex (code) * "\\>";
+      return "\\<#00" * to_Hex (code) * "\\>";
     } else {
-      return "\\<#" * to_hex (code) * "\\>";
+      return "\\<#" * to_Hex (code) * "\\>";
     }
   }
 }

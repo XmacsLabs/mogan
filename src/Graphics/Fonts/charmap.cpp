@@ -17,7 +17,7 @@
 
 using lolly::data::as_hexadecimal;
 using lolly::data::from_hex;
-using lolly::data::to_hex;
+using lolly::data::to_Hex;
 
 #define from_hexadecimal from_hex
 
@@ -102,7 +102,7 @@ ec_charmap () {
 struct range_charmap_rep : public charmap_rep {
   int start, end;
   range_charmap_rep (int start2, int end2)
-      : charmap_rep (to_hex (start2) * "--" * to_hex (end2)), start (start2),
+      : charmap_rep (to_Hex (start2) * "--" * to_Hex (end2)), start (start2),
         end (end2) {}
   inline bool between (int what, int begin, int end) {
     return what >= begin && what <= end;
@@ -122,7 +122,7 @@ struct range_charmap_rep : public charmap_rep {
 
 charmap
 range_charmap (int start, int end) {
-  string name= to_hex (start) * "--" * to_hex (end);
+  string name= to_Hex (start) * "--" * to_Hex (end);
   if (charmap::instances->contains (name)) return charmap (name);
   return make (charmap, name, tm_new<range_charmap_rep> (start, end));
 }

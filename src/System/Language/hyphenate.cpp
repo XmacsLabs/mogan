@@ -20,7 +20,7 @@
 #include <string.h>
 
 #include <lolly/data/numeral.hpp>
-using lolly::data::to_hex;
+using lolly::data::to_Hex;
 using lolly::data::from_hex;
 
 

@@ -36,7 +36,7 @@ function main()
             },
             {
                 scm_name = "integer->hexadecimal",
-                cpp_name = "lolly::data::to_hex",
+                cpp_name = "lolly::data::to_Hex",
                 ret_type = "string",
                 arg_list = {
                     "int"
