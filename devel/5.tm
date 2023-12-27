@@ -177,6 +177,36 @@
       <value|da>
     </cell>|<\cell>
       Update Develop_on_Linux.md for Fedora
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_16
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      Shynur
+    </cell>|<\cell>
+      Fix a link
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_17
+    </cell>|<\cell>
+      v1.2.1
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      <shell|bin/project> to show the project related commits
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_18
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Links to Gitee and Codeberg
     </cell>>>>
   </wide-tabular>
 
