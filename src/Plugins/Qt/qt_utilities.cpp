@@ -39,6 +39,7 @@
 #include "dictionary.hpp"
 #include "locale.hpp"
 #include "scheme.hpp"
+#include "sys_utils.hpp"
 #include "wencoding.hpp"
 
 #include "editor.hpp"
@@ -1065,4 +1066,21 @@ void
 set_standard_style_sheet (QWidget* w) {
   if (current_style_sheet != "")
     w->setStyleSheet (to_qstring (current_style_sheet));
+}
+
+string
+from_modifiers (Qt::KeyboardModifiers mods) {
+  string r;
+
+  if (mods & Qt::ShiftModifier) r= "S-" * r;
+  if (mods & Qt::AltModifier) r= "A-" * r;
+  if (os_macos ()) {
+    if (mods & Qt::MetaModifier) r= "C-" * r;    // The "Control" key
+    if (mods & Qt::ControlModifier) r= "M-" * r; // The "Command" key
+  }
+  else {
+    if (mods & Qt::ControlModifier) r= "C-" * r;
+    if (mods & Qt::MetaModifier) r= "M-" * r; // The "Windows" key
+  }
+  return r;
 }

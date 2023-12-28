@@ -165,4 +165,6 @@ tm_ostream& operator<< (tm_ostream& out, coord2 c);
     if (DEBUG_QT) debug_qt << x << " not implemented yet.\n";                  \
   }
 
+string from_modifiers (Qt::KeyboardModifiers mods);
+
 #endif // QT_UTILITIES_HPP

@@ -11,6 +11,7 @@
 
 #include "QTMWidget.hpp"
 #include "analyze.hpp"
+#include "array.hpp"
 #include "boot.hpp"
 #include "converter.hpp"
 #include "object_l5.hpp"
@@ -21,7 +22,8 @@
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 
-#include "config.h"
+#include <lolly/data/numeral.hpp>
+using lolly::data::as_hexadecimal;
 
 #include <QApplication>
 #include <QDebug>
@@ -270,28 +272,20 @@ QTMWidget::paintEvent (QPaintEvent* event) {
   }
 }
 
-void
-set_shift_preference (int key_code, char shifted) {
-  set_user_preference ("shift-" * as_string (key_code), string (shifted));
-}
-
-bool
-has_shift_preference (int key_code) {
-  return has_user_preference ("shift-" * as_string (key_code));
-}
-
-string
-get_shift_preference (char key_code) {
-  return get_user_preference ("shift-" * as_string (key_code));
+static bool
+is_printable_key (int key) {
+  // 32 is space, 127 is delete
+  return (key > 32) && (key < 127);
 }
 
 void
 QTMWidget::keyPressEvent (QKeyEvent* event) {
   if (is_nil (tmwid)) return;
-  initkeymap ();
 
   int                   key = event->key ();
+  QString               nss = event->text ();
   Qt::KeyboardModifiers mods= event->modifiers ();
+
 #if defined(OS_MINGW) || defined(OS_WIN)
   /* "Qt::Key_AltGr On Windows, when the KeyDown event for this key is sent,
    * the Ctrl+Alt modifiers are also set." (excerpt from Qt doc)
@@ -311,29 +305,78 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   }
 #endif
 
+  string mods_text= from_modifiers (mods);
+
+  // See https://doc.qt.io/qt-6/qt.html#Key-enum
+  // cout << "key:\t0x" << locase_all (as_hexadecimal (key, 8)) << LF;
+  // if (is_printable_key (key)) {
+  //   cout << "raw:\t" << mods_text << (char) key << LF;
+  // }
+  // else {
+  //   cout << "mods:\t" << mods_text << LF;
+  // }
+  // cout << "text(" << nss.count () << "):\t" << from_qstring (nss) << LF;
+  // cout << LF;
+
   string r= "";
-  if (key < 128 && (mods & Qt::AltModifier) && !(mods & Qt::ShiftModifier) &&
-      !(mods & Qt::ControlModifier) && !(mods & Qt::MetaModifier)) {
-    char   key_c= (char) key;
-    string key_s= string (key_c);
-    if (is_upcase (key_c)) {
-      r= "A-" * string (locase (key));
+  if (is_printable_key (key)) {
+    char key_original= (char) key;
+    char key_locased = locase (key);
+
+    // With CapsLock, we should use the text_key
+    unsigned short unic    = nss.data ()[0].unicode ();
+    char           text_key= (char) unic;
+
+    if (is_empty (mods_text) || mods_text == "S-") {
+      // a-z, A-Z, 0-9, and others
+      r << text_key;
     }
-    else if (is_digit (key_c)) {
-      r= "A-" * key_s;
-    }
-    else {
+    else if (is_locase (key_original)) {
+      debug_keyboard << mods_text << key_original << " should be invalid" << LF;
       r= "";
     }
+    else if (mods_text == "A-" || mods_text == "C-" || mods_text == "M-") {
+      // A-: Alt+key or Option+key
+      // C-: Ctrl+key or Ctrl+key
+      // M-: Win+key or Command+key
+      r << mods_text << key_locased;
+    }
+    else if (mods_text == "C-A-") {
+      r << mods_text << key_locased;
+    }
+    else if (mods_text == "A-S-") {
+      // A-+, A-{, A-?, ...
+      r << "A-" << key_original;
+    }
+    else if (mods_text == "C-S-") {
+      // C-+, C-{, C-?, ...
+      r << "C-" << key_original;
+    }
+    else if (mods_text == "M-S-") {
+      if (is_alpha (key_original)) {
+        // M-A, M-B, ..., M-Z
+        r << "M-" << key_original;
+      }
+      else {
+        if (os_macos ()) {
+          // M-+ for Qt 6.5 on macOS is M-S-=
+          r << "M-S-" << key_original;
+        }
+        else {
+          r << "M-" << key_original;
+        }
+      }
+    }
+    else if (mods_text == "C-A-S-") {
+      r << "C-A-" << key_original;
+    }
+    else {
+      // NOTE: Qt 6 on macOS, M-A- and M-C- is handled in keyReleaseEvent
+      r << mods_text << key_locased;
+    }
   }
-  else if (key < 128 && (mods & Qt::AltModifier) &&
-           (mods & Qt::ShiftModifier) && !(mods & Qt::ControlModifier) &&
-           !(mods & Qt::MetaModifier)) {
-    char   key_c= (char) key;
-    string key_s= string (key_c);
-    r           = "A-" * key_s;
-  }
-  else { // Old keyboard handling code
+  else {
+    initkeymap ();
     if (qtkeymap->contains (key)) {
       r= qtkeymap[key];
     }
@@ -343,120 +386,95 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
     }
     else {
       // We need to use text(): Alt-{5,6,7,8,9} are []|{} under MacOS, etc.
-      QString        nss = event->text ();
       unsigned int   kc  = event->nativeVirtualKey ();
       unsigned short unic= nss.data ()[0].unicode ();
       if (unic > 32 && unic < 255 && (mods & Qt::ShiftModifier) != 0 &&
           (mods & Qt::ControlModifier) == 0 && (mods & Qt::AltModifier) == 0 &&
           (mods & Qt::MetaModifier) == 0)
-        set_shift_preference (kc, (char) unic);
 #ifdef Q_OS_WIN
-      if ((unic > 0 && unic < 32 && key > 0 && key < 128) ||
-          (unic > 0 && unic < 255 && key > 32 &&
-           (mods & Qt::ShiftModifier) != 0 &&
-           (mods & Qt::ControlModifier) != 0)) {
+        if ((unic > 0 && unic < 32 && key > 0 && key < 128) ||
+            (unic > 0 && unic < 255 && key > 32 &&
+             (mods & Qt::ShiftModifier) != 0 &&
+             (mods & Qt::ControlModifier) != 0)) {
 #else
-      if (unic < 32 && key > 0 && key < 128) {
+        if (unic < 32 && key > 0 && key < 128) {
 #endif
-        // NOTE: For some reason, the 'shift' modifier key is not applied
-        // to 'key' when 'control' is pressed as well.  We perform some
-        // dirty hacking to figure out the right shifted variant of a key
-        // by ourselves...
-        if (is_upcase ((char) key)) {
-          if ((mods & Qt::ShiftModifier) == 0) key= (int) locase ((char) key);
+          mods&= ~Qt::ShiftModifier;
+          r= string ((char) key);
         }
-        else if (has_shift_preference (kc) && (mods & Qt::ShiftModifier) != 0 &&
-                 (mods & Qt::ControlModifier) != 0) {
-          string pref= get_shift_preference (kc);
-          if (N (pref) > 0) key= (int) (unsigned char) pref[0];
-          if (DEBUG_QT && DEBUG_KEYBOARD)
-            debug_qt << "Control+Shift " << kc << " -> " << key << LF;
-        }
-        mods&= ~Qt::ShiftModifier;
-        r= string ((char) key);
-      }
-      else {
-        switch (unic) {
-        case 96:
-          r= "`";
-          // unicode to cork conversion not appropriate for this case...
+        else {
+          switch (unic) {
+          case 96:
+            r= "`";
+            // unicode to cork conversion not appropriate for this case...
 #ifdef Q_OS_MAC
-          // CHECKME: are these two MAC exceptions really needed?
-          if (mods & Qt::AltModifier) r= "grave";
+            // CHECKME: are these two MAC exceptions really needed?
+            if (mods & Qt::AltModifier) r= "grave";
 #endif
-          break;
-        case 168:
-          r= "umlaut";
-          break;
-        case 180:
-          r= "acute";
-          break;
-          // the following combining characters should be caught by qtdeadmap
-        case 0x300:
-          r= "grave";
-          break;
-        case 0x301:
-          r= "acute";
-          break;
-        case 0x302:
-          r= "hat";
-          break;
-        case 0x308:
-          r= "umlaut";
-          break;
-        case 0x33e:
-          r= "tilde";
-          break;
-        default:
-          QByteArray buf= nss.toUtf8 ();
-          string     rr (buf.constData (), buf.size ());
-          string     tstr= utf8_to_cork (rr);
-          // HACK! The encodings defined in langs/encoding and which
-          // utf8_to_cork uses (via the converters loaded in
-          // converter_rep::load()), enclose the texmacs symbols in "< >",
-          // but this format is not used for keypresses, so we must remove
-          // them.
-          int len= N (tstr);
-          if (len >= 1 && tstr[0] == '<' && tstr[1] != '#' &&
-              tstr[len - 1] == '>')
-            r= tstr (1, len - 1);
-          else r= tstr;
-          if (r == "less") r= "<";
-          else if (r == "gtr") r= ">";
-        }
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        if (os_macos () && (mods & Qt::AltModifier)) {
-          // Alt produces many symbols in Mac keyboards: []|{} etc.
-          if ((N (r) != 1 || ((int) (unsigned char) r[0]) < 32 ||
-               ((int) (unsigned char) r[0]) >= 128) &&
-              key >= 32 && key < 128 &&
-              ((mods & (Qt::MetaModifier + Qt::ControlModifier)) == 0)) {
-            if ((mods & Qt::ShiftModifier) == 0 && key >= 65 && key <= 90)
-              key+= 32;
-            qtcomposemap (key)= r;
-            r                 = string ((char) key);
+            break;
+          case 168:
+            r= "umlaut";
+            break;
+          case 180:
+            r= "acute";
+            break;
+            // the following combining characters should be caught by qtdeadmap
+          case 0x300:
+            r= "grave";
+            break;
+          case 0x301:
+            r= "acute";
+            break;
+          case 0x302:
+            r= "hat";
+            break;
+          case 0x308:
+            r= "umlaut";
+            break;
+          case 0x33e:
+            r= "tilde";
+            break;
+          default:
+            QByteArray buf= nss.toUtf8 ();
+            string     rr (buf.constData (), buf.size ());
+            string     tstr= utf8_to_cork (rr);
+            // HACK! The encodings defined in langs/encoding and which
+            // utf8_to_cork uses (via the converters loaded in
+            // converter_rep::load()), enclose the texmacs symbols in "< >",
+            // but this format is not used for keypresses, so we must remove
+            // them.
+            int len= N (tstr);
+            if (len >= 1 && tstr[0] == '<' && tstr[1] != '#' &&
+                tstr[len - 1] == '>')
+              r= tstr (1, len - 1);
+            else r= tstr;
+            if (r == "less") r= "<";
+            else if (r == "gtr") r= ">";
           }
-          else mods&= ~Qt::AltModifier; // unset Alt
-        }
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+          if (os_macos () && (mods & Qt::AltModifier)) {
+            // Alt produces many symbols in Mac keyboards: []|{} etc.
+            if ((N (r) != 1 || ((int) (unsigned char) r[0]) < 32 ||
+                 ((int) (unsigned char) r[0]) >= 128) &&
+                key >= 32 && key < 128 &&
+                ((mods & (Qt::MetaModifier + Qt::ControlModifier)) == 0)) {
+              if ((mods & Qt::ShiftModifier) == 0 && key >= 65 && key <= 90)
+                key+= 32;
+              qtcomposemap (key)= r;
+              r                 = string ((char) key);
+            }
+            else mods&= ~Qt::AltModifier; // unset Alt
+          }
 #endif
-        mods&= ~Qt::ShiftModifier;
-      }
+          mods&= ~Qt::ShiftModifier;
+        }
     }
     if (is_empty (r)) return;
-    if (mods & Qt::ShiftModifier) r= "S-" * r;
-    if (mods & Qt::AltModifier) r= "A-" * r;
-      // if (mods & Qt::KeypadModifier) r= "K-" * r;
-#ifdef Q_OS_MAC
-    if (mods & Qt::MetaModifier) r= "C-" * r;    // The "Control" key
-    if (mods & Qt::ControlModifier) r= "M-" * r; // The "Command" key
-#else
-    if (mods & Qt::ControlModifier) r= "C-" * r;
-    if (mods & Qt::MetaModifier) r= "M-" * r; // The "Windows" key
-#endif
+    r= mods_text * r;
   }
 
   if (is_empty (r)) return;
-  if (DEBUG_QT && DEBUG_KEYBOARD) debug_qt << "key press: " << r << LF;
+  if (DEBUG_KEYBOARD) debug_qt << "key pressed: " << r << LF;
   the_gui->process_keypress (tm_widget (), r, texmacs_time ());
 }
 
@@ -464,15 +482,15 @@ void
 QTMWidget::keyReleaseEvent (QKeyEvent* event) {
   if (os_macos ()) {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    Qt::KeyboardModifiers mods= event->modifiers ();
-    int                   key = event->key ();
+    int                   key      = event->key ();
+    Qt::KeyboardModifiers mods     = event->modifiers ();
+    string                mods_text= from_modifiers (mods);
 
     // see https://bugreports.qt.io/browse/QTBUG-115525
     // This branch is only for Option-Command-x or Ctrl-Command-x
-    if ((mods & Qt::ControlModifier) &&
-        ((mods & Qt::AltModifier) || (mods & Qt::MetaModifier))) {
+    if (mods_text == "M-A-" || mods_text == "M-C-") {
       string r;
-      if (key >= 32 && key < 128) {
+      if (is_printable_key (key)) {
         char key_c= (char) key;
         if ((mods & Qt::ShiftModifier) == 0 && is_upcase (key_c)) {
           key_c= locase (key_c);
@@ -485,13 +503,8 @@ QTMWidget::keyReleaseEvent (QKeyEvent* event) {
       else {
         return;
       }
-      if (mods & Qt::AltModifier) {
-        r= "M-A-" * r;
-      }
-      if (mods & Qt::MetaModifier) {
-        r= "M-C-" * r;
-      }
-      if (DEBUG_QT && DEBUG_KEYBOARD) debug_qt << "key press: " << r << LF;
+      r= mods_text * r;
+      if (DEBUG_KEYBOARD) debug_qt << "key released: " << r << LF;
       the_gui->process_keypress (tm_widget (), r, texmacs_time ());
     }
 #endif

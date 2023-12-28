@@ -614,6 +614,7 @@
   ("macos r" (interactive-replace))
   ("macos F" (toggle-full-screen-mode))
   ("macos C-f" (toggle-full-screen-edit-mode))
+  ("macos S-=" (zoom-in (sqrt (sqrt 2.0))))
 
   ("altcmd x" (interactive footer-eval))
   ("altcmd X" (interactive exec-interactive-command))
