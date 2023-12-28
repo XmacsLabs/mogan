@@ -615,7 +615,7 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
     (void) sel_start;
     (void) sel_length;
 
-    r= r * as_string (pos) * ":" * from_qstring (preedit_string);
+    r= r * as_string (pos) * ":" * from_qstring_utf8 (preedit_string);
   }
 
   if (!is_nil (tmwid)) {
