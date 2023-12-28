@@ -323,28 +323,41 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
 
   string r= "";
   if (is_printable_key (key)) {
-    char   key_c= (char) key;
-    string key_s= string (key_c);
-    if (mods_text == "A-" || mods_text == "C-") {
+    char key_original= (char) key;
+    char key_locased = locase (key);
+
+    if (is_empty (mods_text)) {
+      // a-z, 0-9, and others
+      r= key_locased;
+    }
+    else if (mods_text == "S-") {
+      // A-Z and others
+      r= key_original;
+    }
+    else if (is_locase (key_original)) {
+      debug_keyboard << mods_text << key_original << " should be invalid" << LF;
+      r= "";
+    }
+    else if (mods_text == "A-" || mods_text == "C-") {
       // A-: Alt+key or Option+key
       // C-: Ctrl+key or Command+key
-      if (is_upcase (key_c)) {
-        r= mods_text * string (locase (key));
-      }
-      else if (is_locase (key_c)) {
-        // key code is upcased by default in Qt
-        // TODO: need to check when caps lock is activated here
-        r= "";
-      }
-      else {
-        r= mods_text * key_s;
-      }
+      r << mods_text << key_locased;
     }
     else if (mods_text == "A-S-") {
-      r= "A-S-" * key_s;
+      // A-+, A-{, A-?
+      r << "A-" << key_original;
     }
     else if (mods_text == "C-S-") {
-      r= "C-S-" * key_s;
+      if (is_alpha (key_original)) {
+        // C-A, C-B, ..., C-Z
+        r << "C-" << key_original;
+      }
+      else {
+        r << "C-S-" << key_locased;
+      }
+    }
+    else {
+      r << mods_text << key_locased;
     }
   }
   else {
@@ -457,20 +470,11 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
       }
     }
     if (is_empty (r)) return;
-    if (mods & Qt::ShiftModifier) r= "S-" * r;
-    if (mods & Qt::AltModifier) r= "A-" * r;
-      // if (mods & Qt::KeypadModifier) r= "K-" * r;
-#ifdef Q_OS_MAC
-    if (mods & Qt::MetaModifier) r= "C-" * r;    // The "Control" key
-    if (mods & Qt::ControlModifier) r= "M-" * r; // The "Command" key
-#else
-    if (mods & Qt::ControlModifier) r= "C-" * r;
-    if (mods & Qt::MetaModifier) r= "M-" * r; // The "Windows" key
-#endif
+    r= mods_text * r;
   }
 
   if (is_empty (r)) return;
-  if (DEBUG_QT && DEBUG_KEYBOARD) debug_qt << "key press: " << r << LF;
+  debug_qt << "key press: " << r << LF;
   the_gui->process_keypress (tm_widget (), r, texmacs_time ());
 }
 
