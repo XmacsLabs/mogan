@@ -101,7 +101,8 @@ tt_font_search_path () {
   ret= ret | url ("$TEXMACS_HOME_PATH/fonts/truetype") |
        url ("$TEXMACS_PATH/fonts/truetype");
   if (os_win () || os_mingw ()) {
-    ret= ret | url ("$windir/Fonts");
+    ret= ret | url_system ("$windir/Fonts") |
+         url_system ("$LOCALAPPDATA/Microsoft/Windows/Fonts");
   }
   else if (os_macos ()) {
     ret= ret | url ("$HOME/Library/Fonts") | url ("/Library/Fonts") |
