@@ -568,12 +568,12 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
       if (DEBUG_QT)
         debug_qt << "IM committing: " << commit_string.toUtf8 ().data () << LF;
       if (get_preference ("speech", "off") == "on") {
-        string s= "speech:" * from_qstring (commit_string);
-        kbdEvent (0, Qt::NoModifier, to_qstring (s));
+        string key_u8= "speech:" * from_qstring_utf8 (commit_string);
+        the_gui->process_keypress (tm_widget (), key_u8, texmacs_time ());
       }
       else {
-        for (int i= 0; i < commit_string.size (); ++i)
-          kbdEvent (0, Qt::NoModifier, commit_string[i]);
+        string key_u8= from_qstring_utf8 (commit_string);
+        the_gui->process_keypress (tm_widget (), key_u8, texmacs_time ());
       }
     }
   }

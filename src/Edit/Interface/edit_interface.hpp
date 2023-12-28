@@ -221,7 +221,13 @@ public:
   bool is_editor_widget ();
   void handle_get_size_hint (SI& w, SI& h);
   void handle_notify_resize (SI w, SI h);
-  void handle_keypress (string key, time_t t);
+  /**
+   * @brief handle keypress event
+   * 
+   * @param key pressed key or committed string from input method/speech in UTF-8
+   * @param t   current texmacs time
+   */
+  void handle_keypress (string key_u8, time_t t);
   void handle_keyboard_focus (bool has_focus, time_t t);
   void handle_mouse (string k, SI x, SI y, int m, time_t t, array<double> d);
   void handle_set_zoom_factor (double zoomf);
