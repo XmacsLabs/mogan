@@ -22,7 +22,8 @@
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 
-#include "config.h"
+#include <lolly/data/numeral.hpp>
+using lolly::data::as_hexadecimal;
 
 #include <QApplication>
 #include <QDebug>
@@ -321,14 +322,25 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   Qt::KeyboardModifiers mods     = event->modifiers ();
   string                mods_text= from_modifiers (mods);
 
+  // See https://doc.qt.io/qt-6/qt.html#Key-enum
+  // cout << "key:\t0x" << locase_all (as_hexadecimal (key, 8)) << LF;
+  // if (is_printable_key (key)) {
+  //   cout << "raw:\t" << mods_text << (char) key << LF;
+  // }
+  // else {
+  //   cout << "mods:\t" << mods_text << LF;
+  // }
+  // cout << "text(" << nss.count () << "):\t" << from_qstring (nss) << LF;
+  // cout << LF;
+
   string r= "";
   if (is_printable_key (key)) {
     char key_original= (char) key;
     char key_locased = locase (key);
 
     // With CapsLock, we should use the text_key
-    unsigned short unic= nss.data ()[0].unicode ();
-    char text_key= (char) unic;
+    unsigned short unic    = nss.data ()[0].unicode ();
+    char           text_key= (char) unic;
 
     if (is_empty (mods_text) || mods_text == "S-") {
       // a-z, A-Z, 0-9, and others
