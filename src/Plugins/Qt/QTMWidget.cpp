@@ -370,7 +370,12 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
         r << "M-" << key_original;
       }
       else {
-        r << "M-S-" << key_locased;
+        if (os_macos ()) {
+          // M-+ for Qt 6.5 on macOS is M-S-=
+          r << "M-S-" << key_original;
+        } else {
+          r << "M-" << key_original;
+        }
       }
     }
     else {
