@@ -494,7 +494,7 @@ QTMWidget::keyReleaseEvent (QKeyEvent* event) {
 
     // see https://bugreports.qt.io/browse/QTBUG-115525
     // This branch is only for Option-Command-x or Ctrl-Command-x
-    if (mods_text == "M-A" || mods_text == "M-C") {
+    if (mods_text == "M-A-" || mods_text == "M-C-") {
       string r;
       if (is_printable_key (key)) {
         char key_c= (char) key;
