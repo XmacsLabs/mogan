@@ -326,13 +326,13 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
     char key_original= (char) key;
     char key_locased = locase (key);
 
-    if (is_empty (mods_text)) {
-      // a-z, 0-9, and others
-      r= key_locased;
-    }
-    else if (mods_text == "S-") {
-      // A-Z and others
-      r= key_original;
+    // With CapsLock, we should use the text_key
+    unsigned short unic= nss.data ()[0].unicode ();
+    char text_key= (char) unic;
+
+    if (is_empty (mods_text) || mods_text == "S-") {
+      // a-z, A-Z, 0-9, and others
+      r << text_key;
     }
     else if (is_locase (key_original)) {
       debug_keyboard << mods_text << key_original << " should be invalid" << LF;
