@@ -338,25 +338,31 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
       debug_keyboard << mods_text << key_original << " should be invalid" << LF;
       r= "";
     }
-    else if (mods_text == "A-" || mods_text == "C-") {
+    else if (mods_text == "A-" || mods_text == "C-" || mods_text == "M-") {
       // A-: Alt+key or Option+key
-      // C-: Ctrl+key or Command+key
+      // C-: Ctrl+key or Ctrl+key
+      // M-: Win+key or Command+key
       r << mods_text << key_locased;
     }
     else if (mods_text == "A-S-") {
-      // A-+, A-{, A-?
+      // A-+, A-{, A-?, ...
       r << "A-" << key_original;
     }
     else if (mods_text == "C-S-") {
+      // C-+, C-{, C-?, ...
+      r << "C-" << key_original;
+    }
+    else if (mods_text == "M-S-") {
       if (is_alpha (key_original)) {
-        // C-A, C-B, ..., C-Z
-        r << "C-" << key_original;
+        // M-A, M-B, ..., M-Z
+        r << "M-" << key_original;
       }
       else {
-        r << "C-S-" << key_locased;
+        r << "M-S-" << key_locased;
       }
     }
     else {
+      // NOTE: Qt 6 on macOS, M-A- and M-C- is handled in keyReleaseEvent
       r << mods_text << key_locased;
     }
   }
