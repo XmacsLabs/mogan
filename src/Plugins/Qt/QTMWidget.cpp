@@ -286,54 +286,20 @@ get_shift_preference (char key_code) {
   return get_user_preference ("shift-" * as_string (key_code));
 }
 
-static string
-from_portable_key (string key) {
-  if (os_macos () && key == "Ctrl") {
-    return "M";
-  }
-  else if (os_macos () && key == "Meta") {
-    return "C";
-  }
-  else if (key == "Ctrl") {
-    return "C";
-  }
-  else if (key == "Meta") {
-    return "M";
-  }
-  else if (key == "Alt") {
-    return "A";
-  }
-  else if (key == "Shift") {
-    return "S";
-  }
-  else if (N (key) == 1 && is_locase (key[0])) {
-    return locase_all (key);
-  }
-  return key;
-}
+string
+from_modifiers (Qt::KeyboardModifiers mods) {
+  string r;
 
-static string
-from_qkeysequence (QKeySequence seq) {
-  string key_seq    = from_qstring (seq.toString (QKeySequence::PortableText));
-  array<string> keys= tokenize (key_seq, "+");
-  int           size= N (keys);
-  string        last_key= keys[size - 1];
-  string        ret;
-
-  if (N (last_key) == 1 && is_alpha (last_key[0]) &&
-      contains (string ("Shift"), keys)) {
-    for (int i= 0; i < N (keys); i++) {
-      if (keys[i] != "Shift") {
-        ret << from_portable_key (keys[i]) << "-";
-      }
-    }
+  if (mods & Qt::ShiftModifier) r= "S-" * r;
+  if (mods & Qt::AltModifier) r= "A-" * r;
+  if (os_macos ()) {
+    if (mods & Qt::MetaModifier) r= "C-" * r;    // The "Control" key
+    if (mods & Qt::ControlModifier) r= "M-" * r; // The "Command" key
+  } else {
+    if (mods & Qt::ControlModifier) r= "C-" * r;
+    if (mods & Qt::MetaModifier) r= "M-" * r; // The "Windows" key
   }
-  else {
-    for (int i= 0; i < N (keys); i++) {
-      ret << from_portable_key (keys[i]) << "-";
-    }
-  }
-  return ret (0, N (ret) - 1);
+  return r;
 }
 
 void
@@ -342,12 +308,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   initkeymap ();
 
   int                   key     = event->key ();
-  Qt::KeyboardModifiers mods    = event->modifiers ();
   QString               nss     = event->text ();
-
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-  QKeyCombination       key_comb= event->keyCombination ();
-#endif
 
 #if defined(OS_MINGW) || defined(OS_WIN)
   /* "Qt::Key_AltGr On Windows, when the KeyDown event for this key is sent,
@@ -368,17 +329,19 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   }
 #endif
 
+  Qt::KeyboardModifiers mods    = event->modifiers ();
+  string mods_text= from_modifiers(mods);
+
   string r= "";
-  if (key < 128 && (mods & Qt::AltModifier) && !(mods & Qt::ShiftModifier) &&
-      !(mods & Qt::ControlModifier) && !(mods & Qt::MetaModifier)) {
+  if (key < 128 && mods_text == "A-") {
     // Alt+key on Windows/Linux, Option+key on macOS
     char   key_c= (char) key;
     string key_s= string (key_c);
     if (is_upcase (key_c)) {
-      r= "A-" * string (locase (key));
+      r= mods_text * string (locase (key));
     }
     else if (is_digit (key_c)) {
-      r= "A-" * key_s;
+      r= mods_text * key_s;
     }
     else {
       r= "";
