@@ -286,29 +286,18 @@ get_shift_preference (char key_code) {
   return get_user_preference ("shift-" * as_string (key_code));
 }
 
-string
-from_modifiers (Qt::KeyboardModifiers mods) {
-  string r;
-
-  if (mods & Qt::ShiftModifier) r= "S-" * r;
-  if (mods & Qt::AltModifier) r= "A-" * r;
-  if (os_macos ()) {
-    if (mods & Qt::MetaModifier) r= "C-" * r;    // The "Control" key
-    if (mods & Qt::ControlModifier) r= "M-" * r; // The "Command" key
-  } else {
-    if (mods & Qt::ControlModifier) r= "C-" * r;
-    if (mods & Qt::MetaModifier) r= "M-" * r; // The "Windows" key
-  }
-  return r;
+static bool
+is_printable_key (int key) {
+  // 32 is space, 127 is delete
+  return (key > 32) && (key < 127);
 }
 
 void
 QTMWidget::keyPressEvent (QKeyEvent* event) {
   if (is_nil (tmwid)) return;
-  initkeymap ();
 
-  int                   key     = event->key ();
-  QString               nss     = event->text ();
+  int     key= event->key ();
+  QString nss= event->text ();
 
 #if defined(OS_MINGW) || defined(OS_WIN)
   /* "Qt::Key_AltGr On Windows, when the KeyDown event for this key is sent,
@@ -329,41 +318,37 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   }
 #endif
 
-  Qt::KeyboardModifiers mods    = event->modifiers ();
-  string mods_text= from_modifiers(mods);
+  Qt::KeyboardModifiers mods     = event->modifiers ();
+  string                mods_text= from_modifiers (mods);
 
   string r= "";
-  if (key < 128 && mods_text == "A-") {
-    // Alt+key on Windows/Linux, Option+key on macOS
+  if (is_printable_key (key)) {
     char   key_c= (char) key;
     string key_s= string (key_c);
-    if (is_upcase (key_c)) {
-      r= mods_text * string (locase (key));
+    if (mods_text == "A-" || mods_text == "C-") {
+      // A-: Alt+key or Option+key
+      // C-: Ctrl+key or Command+key
+      if (is_upcase (key_c)) {
+        r= mods_text * string (locase (key));
+      }
+      else if (is_locase (key_c)) {
+        // key code is upcased by default in Qt
+        // TODO: need to check when caps lock is activated here
+        r= "";
+      }
+      else {
+        r= mods_text * key_s;
+      }
     }
-    else if (is_digit (key_c)) {
-      r= mods_text * key_s;
+    else if (mods_text == "A-S-") {
+      r= "A-S-" * key_s;
     }
-    else {
-      r= "";
+    else if (mods_text == "C-S-") {
+      r= "C-S-" * key_s;
     }
   }
-  else if (key < 128 && (mods & Qt::AltModifier) &&
-           (mods & Qt::ShiftModifier) && !(mods & Qt::ControlModifier) &&
-           !(mods & Qt::MetaModifier)) {
-    // Alt+Shift+key on Windows/Linux, Option+Shift+key on macOS
-    char   key_c= (char) key;
-    string key_s= string (key_c);
-    r           = "A-" * key_s;
-  }
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-  else if (key < 128 && (mods & Qt::ControlModifier) &&
-           (mods & Qt::ShiftModifier) && !(mods & Qt::AltModifier) &&
-           !(mods & Qt::MetaModifier)) {
-    // Ctrl+Shift+key on Windows/Linux, Command+Shift+key on macOS
-    r= from_qkeysequence (QKeySequence (key_comb));
-  }
-#endif
-  else { // Old keyboard handling code
+  else {
+    initkeymap ();
     if (qtkeymap->contains (key)) {
       r= qtkeymap[key];
     }

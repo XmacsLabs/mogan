@@ -166,3 +166,5 @@ tm_ostream& operator<< (tm_ostream& out, coord2 c);
   }
 
 #endif // QT_UTILITIES_HPP
+
+string from_modifiers (Qt::KeyboardModifiers mods);
