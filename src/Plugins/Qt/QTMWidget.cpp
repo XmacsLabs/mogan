@@ -552,12 +552,6 @@ mouse_decode (unsigned int mstate) {
 }
 
 void
-QTMWidget::kbdEvent (int key, Qt::KeyboardModifiers mods, const QString& s) {
-  QKeyEvent ev (QEvent::KeyPress, key, mods, s);
-  keyPressEvent (&ev);
-}
-
-void
 QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
   QString const& preedit_string= event->preeditString ();
   QString const& commit_string = event->commitString ();
@@ -615,7 +609,7 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
     (void) sel_start;
     (void) sel_length;
 
-    r= r * as_string (pos) * ":" * from_qstring (preedit_string);
+    r= r * as_string (pos) * ":" * from_qstring_utf8 (preedit_string);
   }
 
   if (!is_nil (tmwid)) {
