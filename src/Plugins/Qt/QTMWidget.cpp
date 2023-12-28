@@ -480,7 +480,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   }
 
   if (is_empty (r)) return;
-  debug_qt << "key press: " << r << LF;
+  if (DEBUG_KEYBOARD) debug_qt << "key pressed: " << r << LF;
   the_gui->process_keypress (tm_widget (), r, texmacs_time ());
 }
 
@@ -488,15 +488,15 @@ void
 QTMWidget::keyReleaseEvent (QKeyEvent* event) {
   if (os_macos ()) {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    Qt::KeyboardModifiers mods= event->modifiers ();
-    int                   key = event->key ();
+    int                   key      = event->key ();
+    Qt::KeyboardModifiers mods     = event->modifiers ();
+    string                mods_text= from_modifiers (mods);
 
     // see https://bugreports.qt.io/browse/QTBUG-115525
     // This branch is only for Option-Command-x or Ctrl-Command-x
-    if ((mods & Qt::ControlModifier) &&
-        ((mods & Qt::AltModifier) || (mods & Qt::MetaModifier))) {
+    if (mods_text == "M-A" || mods_text == "M-C") {
       string r;
-      if (key >= 32 && key < 128) {
+      if (is_printable_key (key)) {
         char key_c= (char) key;
         if ((mods & Qt::ShiftModifier) == 0 && is_upcase (key_c)) {
           key_c= locase (key_c);
@@ -509,13 +509,8 @@ QTMWidget::keyReleaseEvent (QKeyEvent* event) {
       else {
         return;
       }
-      if (mods & Qt::AltModifier) {
-        r= "M-A-" * r;
-      }
-      if (mods & Qt::MetaModifier) {
-        r= "M-C-" * r;
-      }
-      if (DEBUG_QT && DEBUG_KEYBOARD) debug_qt << "key press: " << r << LF;
+      r= mods_text * r;
+      if (DEBUG_KEYBOARD) debug_qt << "key released: " << r << LF;
       the_gui->process_keypress (tm_widget (), r, texmacs_time ());
     }
 #endif
