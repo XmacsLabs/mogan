@@ -297,8 +297,9 @@ void
 QTMWidget::keyPressEvent (QKeyEvent* event) {
   if (is_nil (tmwid)) return;
 
-  int     key= event->key ();
-  QString nss= event->text ();
+  int                   key = event->key ();
+  QString               nss = event->text ();
+  Qt::KeyboardModifiers mods= event->modifiers ();
 
 #if defined(OS_MINGW) || defined(OS_WIN)
   /* "Qt::Key_AltGr On Windows, when the KeyDown event for this key is sent,
@@ -319,8 +320,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   }
 #endif
 
-  Qt::KeyboardModifiers mods     = event->modifiers ();
-  string                mods_text= from_modifiers (mods);
+  string mods_text= from_modifiers (mods);
 
   // See https://doc.qt.io/qt-6/qt.html#Key-enum
   // cout << "key:\t0x" << locase_all (as_hexadecimal (key, 8)) << LF;
