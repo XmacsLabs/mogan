@@ -22,6 +22,8 @@
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 
+#include "config.h"
+
 #include <lolly/data/numeral.hpp>
 using lolly::data::as_hexadecimal;
 
