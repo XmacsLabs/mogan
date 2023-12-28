@@ -373,7 +373,7 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
       //for (int i=0; i<N(key); i++)
       //  cout << ((int) (unsigned char) key[i]) << " ";
       //cout << "\n";
-      debug_keyboard << "Pressed " << key << " at " << t << "\n";
+      debug_keyboard << "Pressed " << key_u8 << " at " << t << "\n";
       debug_keyboard << "  Codes";
       for (int i=0; i<N(key); i++)
         debug_keyboard << " " << (unsigned int) (unsigned char) key[i];
