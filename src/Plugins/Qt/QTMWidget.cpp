@@ -552,12 +552,6 @@ mouse_decode (unsigned int mstate) {
 }
 
 void
-QTMWidget::kbdEvent (int key, Qt::KeyboardModifiers mods, const QString& s) {
-  QKeyEvent ev (QEvent::KeyPress, key, mods, s);
-  keyPressEvent (&ev);
-}
-
-void
 QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
   QString const& preedit_string= event->preeditString ();
   QString const& commit_string = event->commitString ();

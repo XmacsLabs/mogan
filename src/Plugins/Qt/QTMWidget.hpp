@@ -55,7 +55,6 @@ protected:
   virtual void focusOutEvent (QFocusEvent* event);
   virtual void keyPressEvent (QKeyEvent* event);
   virtual void keyReleaseEvent (QKeyEvent* event);
-  virtual void kbdEvent (int key, Qt::KeyboardModifiers mods, const QString& s);
   virtual void inputMethodEvent (QInputMethodEvent* event);
   virtual void mousePressEvent (QMouseEvent* event);
   virtual void mouseReleaseEvent (QMouseEvent* event);
