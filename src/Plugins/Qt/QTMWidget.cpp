@@ -22,8 +22,6 @@
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 
-#include "config.h"
-
 #include <lolly/data/numeral.hpp>
 using lolly::data::as_hexadecimal;
 
@@ -358,6 +356,9 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
       // M-: Win+key or Command+key
       r << mods_text << key_locased;
     }
+    else if (mods_text == "C-A-") {
+      r << mods_text << key_locased;
+    }
     else if (mods_text == "A-S-") {
       // A-+, A-{, A-?, ...
       r << "A-" << key_original;
@@ -380,6 +381,9 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
           r << "M-" << key_original;
         }
       }
+    }
+    else if (mods_text == "C-A-S-") {
+      r << "C-A-" << key_original;
     }
     else {
       // NOTE: Qt 6 on macOS, M-A- and M-C- is handled in keyReleaseEvent
