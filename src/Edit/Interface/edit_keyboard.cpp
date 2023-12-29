@@ -307,10 +307,18 @@ edit_interface_rep::key_press (string gkey) {
     call ("kbd-insert", "<" * key * ">");
     interrupt_shortcut ();    
   }
-  else if (DEBUG_KEYBOARD)
-    debug_keyboard
-      << "unrecognized key " << key << ". "
-      << "Undefined shortcut or key missing in the encoding files.\n";
+  else if (N(key) > 1) {
+    archive_state ();
+    call ("insert", key);
+    interrupt_shortcut ();    
+  }
+  else {
+    if (DEBUG_KEYBOARD) {
+      debug_keyboard
+        << "unrecognized key " << key << ". "
+        << "Undefined shortcut or key missing in the encoding files.\n";
+    }
+  }
 }
 
 void
