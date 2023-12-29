@@ -92,13 +92,14 @@ function add_requires_of_mogan()
 
     -- package: fontconfig
     if is_plat("linux") then
-        add_requires("fontconfig", {system = true})
+        if linuxos.name() == "uos" then
+            -- skip
+        else
+            add_requires("fontconfig", {system = true})
+        end
     end
 
     -- package: pdfhummus
-    if linuxos.name() == "uos" then
-        PDFHUMMUS_VERSION = "4.5.3"
-    end
     set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
     if not is_plat("wasm") then
         add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
@@ -128,7 +129,8 @@ function add_requires_of_mogan()
     if is_plat("linux") and using_apt() then
         -- config package name for freetype on UOS
         if linuxos.name() == "uos" then
-            add_requires("apt::libfreetype6-dev", {alias="freetype"})
+            add_requires("freetype "..FREETYPE_VERSION, {system=false})
+            add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
         else
             add_requires("apt::libfreetype-dev", {alias="freetype"})
         end

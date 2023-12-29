@@ -43,7 +43,7 @@ function add_target_research_on_wasm()
             USE_PLUGIN_HTML = true,
             NOMINMAX = is_plat("windows"),
             SIZEOF_VOID_P = 8,
-            USE_FONTCONFIG = is_plat("linux"),
+            USE_FONTCONFIG = false,
             USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
             USE_PLUGIN_GS = not is_plat("wasm"),
             GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
