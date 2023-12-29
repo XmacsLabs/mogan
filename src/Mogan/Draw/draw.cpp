@@ -416,7 +416,8 @@ immediate_options (int argc, char** argv) {
     else if (s == "-delete-style-cache")
       remove (get_tm_cache_path () * url_wildcard ("__*"));
     else if (s == "-delete-font-cache") {
-      remove (get_tm_cache_path () * url ("font") * url_wildcard ("*"));
+      remove (get_tm_cache_path () * url ("font_cache.scm"));
+      remove (get_tm_cache_path () * url ("fonts") * url_wildcard ("*"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
     }
     else if (s == "-delete-plugin-cache")

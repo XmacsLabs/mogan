@@ -81,6 +81,7 @@
 
 (tm-define (clear-font-cache)
   (:synopsis "Clear font cache under TEXMACS_HOME_PATH and local cache path.")
+  (system-remove (url-append (get-tm-cache-path) (string->url "font_cache.scm")))
   (system-remove (url-append (get-tm-cache-path) (string->url "fonts") (url-wildcard "*"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
