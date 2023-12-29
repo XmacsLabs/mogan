@@ -315,7 +315,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   // else {
   //   cout << "mods:\t" << mods_text << LF;
   // }
-  // cout << "text(" << nss.count () << "):\t" << from_qstring (nss) << LF;
+  // cout << "text(" << nss.count () << "):\t" << from_qstring_utf8 (nss) << LF;
   // cout << LF;
 
   string r= "";
@@ -377,16 +377,19 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   }
   else {
     initkeymap ();
-    if (qtkeymap->contains (key)) {
-      r= qtkeymap[key];
+    if (qtkeymap->contains (key)) { // Case 1: in qtkeymap
+      r= mods_text * qtkeymap[key];
     }
-    else if (qtdeadmap->contains (key)) {
+    else if (qtdeadmap->contains (key)) { // Case 2: in qtdeadmap
       mods&= ~Qt::ShiftModifier;
-      r= qtdeadmap[key];
+      r= mods_text * qtdeadmap[key];
     }
-    else {
+    else if (is_empty (mods_text) ||
+             mods_text == "S-") { // Case 3: Shift or not
+      r= from_qstring_utf8 (nss);
+    }
+    else { // Case 4: Unicode < 256
       // We need to use text(): Alt-{5,6,7,8,9} are []|{} under MacOS, etc.
-      unsigned int   kc  = event->nativeVirtualKey ();
       unsigned short unic= nss.data ()[0].unicode ();
       if (unic > 32 && unic < 255 && (mods & Qt::ShiftModifier) != 0 &&
           (mods & Qt::ControlModifier) == 0 && (mods & Qt::AltModifier) == 0 &&
@@ -435,21 +438,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
             r= "tilde";
             break;
           default:
-            QByteArray buf= nss.toUtf8 ();
-            string     rr (buf.constData (), buf.size ());
-            string     tstr= utf8_to_cork (rr);
-            // HACK! The encodings defined in langs/encoding and which
-            // utf8_to_cork uses (via the converters loaded in
-            // converter_rep::load()), enclose the texmacs symbols in "< >",
-            // but this format is not used for keypresses, so we must remove
-            // them.
-            int len= N (tstr);
-            if (len >= 1 && tstr[0] == '<' && tstr[1] != '#' &&
-                tstr[len - 1] == '>')
-              r= tstr (1, len - 1);
-            else r= tstr;
-            if (r == "less") r= "<";
-            else if (r == "gtr") r= ">";
+            r= from_qstring_utf8 (nss);
           }
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
           if (os_macos () && (mods & Qt::AltModifier)) {
@@ -466,11 +455,11 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
             else mods&= ~Qt::AltModifier; // unset Alt
           }
 #endif
-          mods&= ~Qt::ShiftModifier;
+          if (!is_empty (r)) {
+            r= mods_text * r;
+          }
         }
-    }
-    if (is_empty (r)) return;
-    r= mods_text * r;
+    } // Case 4: Unicode < 256 (endif)
   }
 
   if (is_empty (r)) return;
