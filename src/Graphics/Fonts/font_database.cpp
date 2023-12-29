@@ -85,6 +85,18 @@ hashmap<tree, tree>            font_variants (UNINIT);
 hashmap<tree, tree>            font_characteristics (UNINIT);
 hashmap<string, tree>          font_substitutions (UNINIT);
 hashmap<string, array<string>> font_suffixes;
+array<string> all_font_suffixes= array<string> ("ttf", "ttc", "otf", "tfm");
+array<string> all_tt_suffixes  = array<string> ("ttf", "ttc", "otf");
+
+bool
+is_font_suffix (string suffix) {
+  return contains (suffix, all_font_suffixes);
+}
+
+bool
+is_tt_font_suffix (string suffix) {
+  return contains (suffix, all_tt_suffixes);
+}
 
 void
 tuple_insert (tree& t, tree x) {
@@ -312,13 +324,12 @@ font_database_build (url u) {
     bool          err;
     array<string> a= read_directory (u, err);
     for (int i= 0; i < N (a); i++)
-      if (!starts (a[i], ".")) {
-        array<string> allowed= array<string> ("ttf", "ttc", "otf");
-        string        suf    = locase_all (suffix (a[i]));
-        if (contains (suf, allowed)) {
-          font_database_build (u * url (a[i]));
-        }
+      string file_name= a[i];
+    if (!starts (file_name, ".")) {
+      if (is_tt_font_suffix (suffix (file_name))) {
+        font_database_build (u * url (file_name));
       }
+    }
   }
   else if (is_regular (u)) {
     if (on_blacklist (as_string (tail (u)))) return;
@@ -548,11 +559,10 @@ font_database_collect (url u) {
     bool          err;
     array<string> a= read_directory (u, err);
     for (int i= 0; i < N (a); i++) {
-      if (!starts (a[i], ".")) {
-        string        suf    = locase_all (suffix (a[i]));
-        array<string> allowed= array<string> ("ttf", "ttc", "otf", "tfm");
-        if (contains (suf, allowed)) {
-          font_collect (u * a[i]);
+      string file_name= a[i];
+      if (!starts (file_name, ".")) {
+        if (is_font_suffix (suffix (file_name))) {
+          font_collect (u * file_name);
         }
       }
     }
@@ -626,12 +636,9 @@ font_database_build_characteristics (bool force) {
         if (is_func (im[i], TUPLE, 3)) {
           string name= as_string (im[i][0]);
           string nr  = as_string (im[i][1]);
+          string suf = suffix (url (name));
           cout << "| Processing " << name << ", " << nr << LF;
-          if (ends (name, ".ttc") || ends (name, ".TTC"))
-            name= (name (0, N (name) - 4) * "." * nr * ".ttf");
-          if (ends (name, ".ttf") || ends (name, ".otf") ||
-              ends (name, ".tfm") || ends (name, ".TTF") ||
-              ends (name, ".OTF") || ends (name, ".TFM")) {
+          if (is_font_suffix (suf)) {
             name= name (0, N (name) - 4);
             if (!tt_font_exists (name) && ends (name, "10"))
               name= name (0, N (name) - 2);
