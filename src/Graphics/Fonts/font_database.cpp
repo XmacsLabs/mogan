@@ -96,7 +96,7 @@ tuple_insert (tree& t, tree x) {
 static void
 font_database_build_suffixes (url u) {
   string base_name= basename (u);
-  string suf= suffix (u);
+  string suf      = suffix (u);
   if (is_empty (suf)) return;
   if (font_suffixes->contains (base_name)) {
     array<string> sufs= font_suffixes[base_name];
