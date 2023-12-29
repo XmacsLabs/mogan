@@ -32,14 +32,18 @@ static array<string> font_database_families (hashmap<tree, tree> ftab);
 #define GLOBAL_FEATURES_BIS "$TEXMACS_PATH/fonts/font-features.bis.scm"
 #define GLOBAL_CHARACTERISTICS "$TEXMACS_PATH/fonts/font-characteristics.scm"
 #define GLOBAL_SUBSTITUTIONS "$TEXMACS_PATH/fonts/font-substitutions.scm"
-#define LOCAL_DATABASE "$TEXMACS_HOME_PATH/fonts/font-database.scm"
-#define LOCAL_FEATURES "$TEXMACS_HOME_PATH/fonts/font-features.scm"
-#define LOCAL_CHARACTERISTICS                                                  \
-  "$TEXMACS_HOME_PATH/fonts/font-characteristics.scm"
-#define DELTA_DATABASE "$TEXMACS_HOME_PATH/fonts/delta-database.scm"
-#define DELTA_FEATURES "$TEXMACS_HOME_PATH/fonts/delta-features.scm"
-#define DELTA_CHARACTERISTICS                                                  \
-  "$TEXMACS_HOME_PATH/fonts/delta-characteristics.scm"
+
+#define LOCAL_DATABASE "font-database.scm"
+#define LOCAL_FEATURES "font-features.scm"
+#define LOCAL_CHARACTERISTICS "font-characteristics.scm"
+#define DELTA_DATABASE "delta-database.scm"
+#define DELTA_FEATURES "delta-features.scm"
+#define DELTA_CHARACTERISTICS "delta-characteristics.scm"
+
+url
+fontdb_local_path (string name) {
+  return get_tm_cache_path () * url ("fonts") * url (name);
+}
 
 /******************************************************************************
  * Additional comparison operators
@@ -85,6 +89,18 @@ hashmap<tree, tree>            font_variants (UNINIT);
 hashmap<tree, tree>            font_characteristics (UNINIT);
 hashmap<string, tree>          font_substitutions (UNINIT);
 hashmap<string, array<string>> font_suffixes;
+array<string> all_font_suffixes= array<string> ("ttf", "ttc", "otf", "tfm");
+array<string> all_tt_suffixes  = array<string> ("ttf", "ttc", "otf");
+
+bool
+is_font_suffix (string suffix) {
+  return contains (suffix, all_font_suffixes);
+}
+
+bool
+is_tt_font_suffix (string suffix) {
+  return contains (suffix, all_tt_suffixes);
+}
 
 void
 tuple_insert (tree& t, tree x) {
@@ -246,24 +262,26 @@ font_database_load_substitutions (url u) {
 void
 font_database_load () {
   if (fonts_loaded) return;
-  font_database_load_database (LOCAL_DATABASE);
+  font_database_load_database (fontdb_local_path (LOCAL_DATABASE));
   if (N (font_table) == 0) {
     font_database_load_database (GLOBAL_DATABASE);
     font_database_filter ();
-    font_database_save_database (LOCAL_DATABASE);
-    font_database_load_suffixes_sub (LOCAL_DATABASE);
+    font_database_save_database (fontdb_local_path (LOCAL_DATABASE));
+    font_database_load_suffixes_sub (fontdb_local_path (LOCAL_DATABASE));
   }
-  font_database_load_features (LOCAL_FEATURES);
+  font_database_load_features (fontdb_local_path (LOCAL_FEATURES));
   if (N (font_features) == 0) {
     font_database_load_features (GLOBAL_FEATURES);
     font_database_filter_features ();
-    font_database_save_features (LOCAL_FEATURES);
+    font_database_save_features (fontdb_local_path (LOCAL_FEATURES));
   }
-  font_database_load_characteristics (LOCAL_CHARACTERISTICS);
+  font_database_load_characteristics (
+      fontdb_local_path (LOCAL_CHARACTERISTICS));
   if (N (font_characteristics) == 0) {
     font_database_load_characteristics (GLOBAL_CHARACTERISTICS);
     font_database_filter_characteristics ();
-    font_database_save_characteristics (LOCAL_CHARACTERISTICS);
+    font_database_save_characteristics (
+        fontdb_local_path (LOCAL_CHARACTERISTICS));
   }
   font_database_load_substitutions (GLOBAL_SUBSTITUTIONS);
   fonts_loaded= true;
@@ -282,10 +300,11 @@ font_database_global_load () {
 
 void
 font_database_save () {
-  font_database_save_database (LOCAL_DATABASE);
-  font_database_save_features (LOCAL_FEATURES);
-  font_database_save_characteristics (LOCAL_CHARACTERISTICS);
-  font_database_load_suffixes_sub (LOCAL_DATABASE);
+  font_database_save_database (fontdb_local_path (LOCAL_DATABASE));
+  font_database_save_features (fontdb_local_path (LOCAL_FEATURES));
+  font_database_save_characteristics (
+      fontdb_local_path (LOCAL_CHARACTERISTICS));
+  font_database_load_suffixes_sub (fontdb_local_path (LOCAL_DATABASE));
 }
 
 /******************************************************************************
@@ -311,14 +330,12 @@ font_database_build (url u) {
   else if (is_directory (u)) {
     bool          err;
     array<string> a= read_directory (u, err);
-    for (int i= 0; i < N (a); i++)
-      if (!starts (a[i], ".")) {
-        array<string> allowed= array<string> ("ttf", "ttc", "otf");
-        string        suf    = locase_all (suffix (a[i]));
-        if (contains (suf, allowed)) {
-          font_database_build (u * url (a[i]));
-        }
+    for (int i= 0; i < N (a); i++) {
+      url file_name= url (a[i]);
+      if (is_tt_font_suffix (suffix (file_name))) {
+        font_database_build (u * file_name);
       }
+    }
   }
   else if (is_regular (u)) {
     if (on_blacklist (as_string (tail (u)))) return;
@@ -429,15 +446,17 @@ font_database_save_local_delta () {
   font_database_load_database (GLOBAL_DATABASE);
   font_database_load_features (GLOBAL_FEATURES);
   font_database_load_characteristics (GLOBAL_CHARACTERISTICS);
-  font_database_load_database (LOCAL_DATABASE);
-  font_database_load_features (LOCAL_FEATURES);
-  font_database_load_characteristics (LOCAL_CHARACTERISTICS);
+  font_database_load_database (fontdb_local_path (LOCAL_DATABASE));
+  font_database_load_features (fontdb_local_path (LOCAL_FEATURES));
+  font_database_load_characteristics (
+      fontdb_local_path (LOCAL_CHARACTERISTICS));
   keep_delta (font_table, old_font_table);
   keep_delta (font_features, old_font_features);
   keep_delta (font_characteristics, old_font_characteristics);
-  font_database_save_database (DELTA_DATABASE);
-  font_database_save_features (DELTA_FEATURES);
-  font_database_save_characteristics (DELTA_CHARACTERISTICS);
+  font_database_save_database (fontdb_local_path (DELTA_DATABASE));
+  font_database_save_features (fontdb_local_path (DELTA_FEATURES));
+  font_database_save_characteristics (
+      fontdb_local_path (DELTA_CHARACTERISTICS));
   font_table          = hashmap<tree, tree> (UNINIT);
   font_features       = hashmap<tree, tree> (UNINIT);
   font_variants       = hashmap<tree, tree> (UNINIT);
@@ -548,12 +567,9 @@ font_database_collect (url u) {
     bool          err;
     array<string> a= read_directory (u, err);
     for (int i= 0; i < N (a); i++) {
-      if (!starts (a[i], ".")) {
-        string        suf    = locase_all (suffix (a[i]));
-        array<string> allowed= array<string> ("ttf", "ttc", "otf", "tfm");
-        if (contains (suf, allowed)) {
-          font_collect (u * a[i]);
-        }
+      url file_name= url (a[i]);
+      if (is_font_suffix (suffix (file_name))) {
+        font_collect (u * file_name);
       }
     }
     bench_end ("font dir " * as_string (u), 30);
@@ -626,12 +642,9 @@ font_database_build_characteristics (bool force) {
         if (is_func (im[i], TUPLE, 3)) {
           string name= as_string (im[i][0]);
           string nr  = as_string (im[i][1]);
+          string suf = suffix (url (name));
           cout << "| Processing " << name << ", " << nr << LF;
-          if (ends (name, ".ttc") || ends (name, ".TTC"))
-            name= (name (0, N (name) - 4) * "." * nr * ".ttf");
-          if (ends (name, ".ttf") || ends (name, ".otf") ||
-              ends (name, ".tfm") || ends (name, ".TTF") ||
-              ends (name, ".OTF") || ends (name, ".TFM")) {
+          if (is_font_suffix (suf)) {
             name= name (0, N (name) - 4);
             if (!tt_font_exists (name) && ends (name, "10"))
               name= name (0, N (name) - 2);
@@ -678,7 +691,7 @@ font_database_families () {
 array<string>
 font_database_delta_families () {
   hashmap<tree, tree> t;
-  font_database_load_database (DELTA_DATABASE, t);
+  font_database_load_database (fontdb_local_path (DELTA_DATABASE), t);
   return font_database_families (t);
 }
 
@@ -727,7 +740,7 @@ font_database_search (string family, string style) {
 static void
 font_database_load_suffixes () {
   if (N (font_suffixes) > 0) return;
-  font_database_load_suffixes_sub (LOCAL_DATABASE);
+  font_database_load_suffixes_sub (fontdb_local_path (LOCAL_DATABASE));
   font_database_load_suffixes_sub (GLOBAL_DATABASE);
 }
 

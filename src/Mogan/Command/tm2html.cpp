@@ -268,15 +268,6 @@ immediate_options (int argc, char** argv) {
   for (int i= 1; i < argc; i++) {
     string s= argv[i];
     if ((N (s) >= 2) && (s (0, 2) == "--")) s= s (1, N (s));
-    if ((s == "-S") || (s == "-setup")) {
-      remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
-      remove (url ("$TEXMACS_HOME_PATH/fonts/font-database.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/fonts/font-features.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/fonts/font-characteristics.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
-    }
     if (s == "-headless") {
       headless_mode= true;
     }
