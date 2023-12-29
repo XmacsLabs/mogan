@@ -330,11 +330,10 @@ font_database_build (url u) {
   else if (is_directory (u)) {
     bool          err;
     array<string> a= read_directory (u, err);
-    for (int i= 0; i < N (a); i++)
-      string file_name= a[i];
-    if (!starts (file_name, ".")) {
+    for (int i= 0; i < N (a); i++) {
+      url file_name= url (a[i]);
       if (is_tt_font_suffix (suffix (file_name))) {
-        font_database_build (u * url (file_name));
+        font_database_build (u * file_name);
       }
     }
   }
@@ -568,11 +567,9 @@ font_database_collect (url u) {
     bool          err;
     array<string> a= read_directory (u, err);
     for (int i= 0; i < N (a); i++) {
-      string file_name= a[i];
-      if (!starts (file_name, ".")) {
-        if (is_font_suffix (suffix (file_name))) {
-          font_collect (u * file_name);
-        }
+      url file_name= url (a[i]);
+      if (is_font_suffix (suffix (file_name))) {
+        font_collect (u * file_name);
       }
     }
     bench_end ("font dir " * as_string (u), 30);
