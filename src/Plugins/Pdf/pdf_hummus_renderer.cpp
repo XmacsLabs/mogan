@@ -17,6 +17,7 @@
 #include "convert.hpp"
 #include "converter.hpp"
 #include "file.hpp"
+#include "font.hpp"
 #include "frame.hpp"
 #include "image_files.hpp"
 #include "iterator.hpp"
@@ -1209,25 +1210,17 @@ no_font_issues (url u) {
 
 void
 pdf_hummus_renderer_rep::make_pdf_font (string fontname) {
-  int    pos  = search_forwards (":", fontname);
-  string fname= (pos == -1 ? fontname : fontname (0, pos));
-  url    u    = url_none ();
-  {
-    // debug_convert << " try freetype " << LF;
-    u= tt_font_find (fname);
-    // debug_convert << fname << " " << u << LF;
-  }
+  int               pos          = search_forwards (":", fontname);
+  string            fname        = (pos == -1 ? fontname : fontname (0, pos));
+  pair<string, int> f_pair       = font_name_unpack (fname);
+  string            font_basename= f_pair.x1;
+  int               face_index   = f_pair.x2;
+  url               u            = tt_font_find (font_basename);
   if (!is_none (u)) {
-    int    pos  = search_forwards (".", fontname);
-    string rname= (pos == -1 ? fontname : fontname (0, pos));
-    // double fsize= font_size (fn->res_name);
-
-    // char *_rname = as_charp(fname);
     PDFUsedFont* font;
     {
-      // debug_convert << "GetFontForFile "  << u  << LF;
       c_string _u (concretize (u));
-      font= pdfWriter.GetFontForFile ((char*) _u);
+      font= pdfWriter.GetFontForFile ((char*) _u, face_index);
     }
 
     if (font != NULL && no_font_issues (u)) {
