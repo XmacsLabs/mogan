@@ -38,9 +38,6 @@ static void
 tt_locate_update_cache (url font_u, bool must_in_db= true) {
   string name     = as_string (tail (font_u));
   string base_name= basename (font_u);
-  if (ends (base_name, ".TTF")) { // dirty fix on basename
-    base_name= base_name (0, N (base_name) - 4);
-  }
 
   if (must_in_db && !font_database_exists (base_name)) {
     // the font basename does not exist in font database
