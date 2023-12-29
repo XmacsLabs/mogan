@@ -69,11 +69,10 @@
 (tm-define (clear-font-cache)
   (:synopsis "Clear font cache under TEXMACS_HOME_PATH and local cache path.")
   (system-remove (url-append (get-tm-cache-path) (string->url "font_cache.scm")))
-  (map system-remove
-    (list
-      "$TEXMACS_HOME_PATH/fonts/font-database.scm"
-      "$TEXMACS_HOME_PATH/fonts/font-features.scm"
-      "$TEXMACS_HOME_PATH/fonts/font-characteristics.scm")))
+  (map (lambda (x)
+        (system-remove (url-append (get-tm-cache-path)
+                        (url-append (string->url "fonts") (string->url x)))))
+       (list "font-database.scm" "font-features.scm" "font-characteristics.scm")))
 
 (tm-define (scan-disk-for-fonts)
   (:interactive #t)

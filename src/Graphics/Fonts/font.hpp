@@ -232,6 +232,7 @@ int  get_spacing_id (tree spacing_desc);
 tree get_spacing_desc (int spacing_id);
 
 // Font database
+url           fontdb_local_path (string name);
 void          font_database_build (url u);
 void          font_database_build_local ();
 void          font_database_extend_local (url u);

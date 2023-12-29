@@ -484,9 +484,6 @@ immediate_options (int argc, char** argv) {
       remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
       remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
       remove (get_tm_cache_path () * url_wildcard ("*"));
-      remove (url ("$TEXMACS_HOME_PATH/fonts/font-database.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/fonts/font-features.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/fonts/font-characteristics.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
     }
     else if (s == "-delete-cache")
@@ -495,9 +492,7 @@ immediate_options (int argc, char** argv) {
       remove (get_tm_cache_path () * url_wildcard ("__*"));
     else if (s == "-delete-font-cache") {
       remove (get_tm_cache_path () * url ("font_cache.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/fonts/font-database.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/fonts/font-features.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/fonts/font-characteristics.scm"));
+      remove (get_tm_cache_path () * url ("fonts") * url_wildcard ("*"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
     }
     else if (s == "-delete-plugin-cache")
