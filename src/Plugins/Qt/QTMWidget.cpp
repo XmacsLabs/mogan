@@ -437,19 +437,7 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
           default:
             QByteArray buf= nss.toUtf8 ();
             string     rr (buf.constData (), buf.size ());
-            string     tstr= utf8_to_cork (rr);
-            // HACK! The encodings defined in langs/encoding and which
-            // utf8_to_cork uses (via the converters loaded in
-            // converter_rep::load()), enclose the texmacs symbols in "< >",
-            // but this format is not used for keypresses, so we must remove
-            // them.
-            int len= N (tstr);
-            if (len >= 1 && tstr[0] == '<' && tstr[1] != '#' &&
-                tstr[len - 1] == '>')
-              r= tstr (1, len - 1);
-            else r= tstr;
-            if (r == "less") r= "<";
-            else if (r == "gtr") r= ">";
+            r= rr;
           }
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
           if (os_macos () && (mods & Qt::AltModifier)) {
@@ -466,7 +454,6 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
             else mods&= ~Qt::AltModifier; // unset Alt
           }
 #endif
-          mods&= ~Qt::ShiftModifier;
         }
     }
     if (is_empty (r)) return;
