@@ -14,6 +14,10 @@
 #include "tm_buffer.hpp"
 #include "archiver.hpp"
 
+#include <lolly/data/numeral.hpp>
+
+using lolly::data::to_Hex;
+
 #ifdef Q_OS_MAC
 extern hashmap<int,string> qtcomposemap;
 #endif
@@ -347,6 +351,9 @@ edit_interface_rep::kbd_shortcut (string cmd) {
 void
 edit_interface_rep::handle_keypress (string key_u8, time_t t) {
   string key= utf8_to_cork (key_u8);
+  if (starts (key, "<") && ends (key, ">") && !starts(key, "<#")) {
+    key= key(1, N(key)-1);
+  }
   if (is_nil (buf)) return;
   if (t > last_event) last_event= t;
   bool started= false;
@@ -381,7 +388,9 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
     string zero= "a"; zero[0]= '\0';
     string gkey= replace (key, zero, "<#0>");
     if (gkey == "<#3000>") gkey= "space";
-    if (starts (gkey, "pre-edit:"))
+    if (key_u8 == "`")
+      call ("insert", "<#2018>");
+    else if (starts (gkey, "pre-edit:"))
       call ("delayed-keyboard-press", object (gkey), object ((double) t));
     else
       call ("keyboard-press", object (gkey), object ((double) t));
