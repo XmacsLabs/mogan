@@ -130,6 +130,7 @@ function add_requires_of_mogan()
         -- config package name for freetype on UOS
         if linuxos.name() == "uos" then
             add_requires("freetype "..FREETYPE_VERSION, {system=false})
+            add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
         else
             add_requires("apt::libfreetype-dev", {alias="freetype"})
         end
