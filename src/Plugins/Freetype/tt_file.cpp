@@ -134,6 +134,9 @@ tt_font_search_path () {
     }
 #else
     ret= ret | url ("/usr/share/fonts/truetype") | url ("/usr/share/fonts/opentype");
+    if (exists (url_system ("$HOME/.local/share/fonts"))) {
+      ret= ret | url_system ("$HOME/.local/share/fonts");
+    }
 #endif
     ret= ret | url ("/usr/share/texlive/texmf-dist/fonts/opentype") |
          url ("/usr/share/texlive/texmf-dist/fonts/truetype");
