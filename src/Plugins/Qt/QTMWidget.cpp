@@ -384,7 +384,8 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
       mods&= ~Qt::ShiftModifier;
       r= mods_text * qtdeadmap[key];
     }
-    else if (key >= 256) { // Case 3: Unicode >= 256
+    else if (is_empty (mods_text) ||
+             mods_text == "S-") { // Case 3: Shift or not
       r= from_qstring_utf8 (nss);
     }
     else { // Case 4: Unicode < 256
