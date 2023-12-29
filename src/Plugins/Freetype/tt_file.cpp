@@ -133,7 +133,8 @@ tt_font_search_path () {
       ret= ret | url_system ((char*) fontdir);
     }
 #else
-    ret= ret | url ("/usr/share/fonts/truetype") | url ("/usr/share/fonts/opentype");
+    ret= ret | url ("/usr/share/fonts/truetype") |
+         url ("/usr/share/fonts/opentype");
     if (exists (url_system ("$HOME/.local/share/fonts"))) {
       ret= ret | url_system ("$HOME/.local/share/fonts");
     }
