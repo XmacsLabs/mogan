@@ -132,6 +132,8 @@ tt_font_search_path () {
     while (fontdir= FcStrListNext (fontdirs)) {
       ret= ret | url_system ((char*) fontdir);
     }
+#else
+    ret= ret | url ("/usr/share/fonts/truetype") | url ("/usr/share/fonts/opentype");
 #endif
     ret= ret | url ("/usr/share/texlive/texmf-dist/fonts/opentype") |
          url ("/usr/share/texlive/texmf-dist/fonts/truetype");

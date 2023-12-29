@@ -176,7 +176,7 @@ target("libkernel_l3") do
         variables = {
             QTTEXMACS = false,
             USE_FREETYPE = true,
-            USE_FONTCONFIG = is_plat("linux"),
+            USE_FONTCONFIG = is_plat("linux") and (not linuxos.name() == "uos"),
         }
     })
     add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
@@ -249,7 +249,7 @@ add_configfiles("src/System/config.h.xmake", {
         NOMINMAX = is_plat("windows"),
         MACOSX_EXTENSIONS = is_plat("macosx"),
         SIZEOF_VOID_P = 8,
-        USE_FONTCONFIG = is_plat("linux"),
+        USE_FONTCONFIG = is_plat("linux") and (not linuxos.name() == "uos"),
         USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
         USE_PLUGIN_GS = not is_plat("wasm"),
     }

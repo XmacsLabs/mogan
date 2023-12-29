@@ -93,7 +93,7 @@ function add_requires_of_mogan()
     -- package: fontconfig
     if is_plat("linux") then
         if linuxos.name() == "uos" then
-            add_requires("fontconfig", {system = false})
+            -- skip
         else
             add_requires("fontconfig", {system = true})
         end
