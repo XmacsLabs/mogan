@@ -80,6 +80,18 @@
 
   <\active*>
     <\src-comment>
+      Customize doc-data macro
+    </src-comment>
+  </active*>
+
+  <assign|doc-subtitle|<macro|x|<\surround|<vspace*|0.25fn>|<vspace|0.5fn>>
+    <doc-title-block|<font-magnify|1.297|<doc-title-name|\V\V<arg|x>>>>
+  </surround>>>
+
+  <assign|by-text|>
+
+  <\active*>
+    <\src-comment>
       For Algorithm and Pseudo code blocks, do not translate the underlying
       keywords when documentation language is Chinese.
 
@@ -104,8 +116,8 @@
     <render-enunciation|<theorem-name|<arg|which><theorem-sep>>|<arg|body>>
   </macro>>
 
-  <assign|chapter-numbered-title|<macro|title|<style-with|src-compact|none|<chapter-title|\<#7B2C\> <the-chapter> <chapter-text>
-  <vspace|1fn><new-line><arg|title>>>>>
+  <assign|chapter-numbered-title|<macro|title|<style-with|src-compact|none|<chapter-title|\<#7B2C\>
+  <the-chapter> <chapter-text> <vspace|1fn><new-line><arg|title>>>>>
 </body>
 
 <initial|<\collection>
