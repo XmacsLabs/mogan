@@ -81,4 +81,3 @@ v1.2.1 will be released on 2024/01/01 to solve the above issues.
 + HTML和LaTeX的导入导出、各种界面语言的翻译词典、编程语言的高亮初步插件化
 + TeXmacs的基础代码重构为Lolly项目作为Mogan的依赖
 + 在Lolly项目中引入tbox依赖解决棘手的字符编码以及跨平台的文件访问等问题
-
