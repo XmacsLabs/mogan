@@ -579,32 +579,41 @@ search_tag (tree t, string tag) {
 }
 
 static string
-search_metadata_tag (tree doc, string tag) {
-  string r;
-  tree t= search_tag (doc, tag);
-  for (int i=0; i<N(t); i++) {
-    if (N(r) != 0) r << ", ";
-    r << tree_to_verbatim (t[i], false, "cork");
+search_metadata_tag_under (tree doc, string parent, string tag) {
+  tree doc_data= search_tag_quick (doc, parent);
+  if (is_compound (doc_data)) {
+    string r;
+    tree   t= search_tag (doc, tag);
+    for (int i= 0; i < N (t); i++) {
+      if (N (r) != 0) r << ", ";
+      r << tree_to_verbatim (t[i], false, "cork");
+    }
+    return r;
   }
-  return r;
+  else {
+    return "";
+  }
 }
 
 string
 search_metadata (tree doc, string kind) {
-  tree doc_data= search_tag_quick (doc, "doc-data");
-  if (doc_data != "") {
-    if (kind == "title")
-      return search_metadata_tag (doc_data, "doc-title");
-    if (kind == "author")
-      return search_metadata_tag (doc_data, "author-name");
-  }
   if (kind == "title") {
-    tree t= search_tag_quick (doc, "tmdoc-title");
-    if (t != "") return tree_to_verbatim (t[0], false, "cork");
+    string r= search_metadata_tag_under (doc, "doc-data", "doc-title");
+    if (is_empty (r)) {
+      tree t= search_tag_quick (doc, "tmdoc-title");
+      if (t != "") return tree_to_verbatim (t[0], false, "cork");
+      else return "";
+    }
+    else {
+      return r;
+    }
   }
-  tree abstract_data= search_tag_quick (doc, "abstract-data");
-  if (!is_empty (abstract_data)) {
-    if (kind == "keyword") {
+  else if (kind == "author") {
+    return search_metadata_tag_under (doc, "doc-data", "author-name");
+  }
+  else if (kind == "keyword") {
+    tree abstract_data= search_tag_quick (doc, "abstract-data");
+    if (is_compound (abstract_data)) {
       for (int i= 0; i < N (abstract_data); i++) {
         if (is_compound (abstract_data[i], "abstract-keywords")) {
           tree abstract_keywords= abstract_data[i];
@@ -614,13 +623,17 @@ search_metadata (tree doc, string kind) {
           else {
             string r= tree_to_verbatim (abstract_keywords[0], false, "cork");
             for (int i= 1; i < N (abstract_keywords); i++) {
-              r << ", " << tree_to_verbatim (abstract_keywords[i], false, "cork");
+              r << ", "
+                << tree_to_verbatim (abstract_keywords[i], false, "cork");
             }
             return r;
           }
         }
       }
     }
+    return "";
   }
-  return "";
+  else {
+    return "";
+  }
 }

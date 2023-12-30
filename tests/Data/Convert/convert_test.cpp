@@ -1,7 +1,7 @@
 /******************************************************************************
  * MODULE     : converter_test.cpp
  * DESCRIPTION: Properties of characters and strings
- * COPYRIGHT  : (C) 2019 Darcy Shen
+ * COPYRIGHT  : (C) 2023 jingkaimori
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -30,7 +30,9 @@ TestConverter::test_search_metadata_data () {
   QTest::addColumn<string> ("title");
   QTest::addColumn<string> ("author");
   QTest::addColumn<string> ("keyword");
+  QTest::addColumn<string> ("invalid");
 
+  string empty ("");
   QTest::newRow ("regular document")
       << tree (DOCUMENT,
                compound (
@@ -48,10 +50,10 @@ TestConverter::test_search_metadata_data () {
                          compound ("abstract-keywords", "keyword 1",
                                    "keyword 2", "keyword 3")))
       << string ("Test of Metadata") << string ("author1, author2, author3")
-      << string ("keyword 1, keyword 2, keyword 3");
+      << string ("keyword 1, keyword 2, keyword 3") << empty;
   QTest::newRow ("texmacs document")
       << tree (DOCUMENT, compound ("tmdoc-title", "Test of manual title"))
-      << string ("Test of manual title") << string ("") << string ("");
+      << string ("Test of manual title") << empty << empty << empty;
 }
 
 void
@@ -60,9 +62,11 @@ TestConverter::test_search_metadata () {
   QFETCH (string, title);
   QFETCH (string, author);
   QFETCH (string, keyword);
+  QFETCH (string, invalid);
   qcompare (search_metadata (input_tree, "title"), title);
   qcompare (search_metadata (input_tree, "author"), author);
   qcompare (search_metadata (input_tree, "keyword"), keyword);
+  qcompare (search_metadata (input_tree, "invalid"), invalid);
 }
 
 QTEST_MAIN (TestConverter)
