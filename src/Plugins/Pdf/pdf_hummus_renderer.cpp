@@ -2002,7 +2002,7 @@ pdf_hummus_renderer_rep::flush_metadata () {
     info.Author= utf8_as_hummus_string (metadata["author"]);
   if (metadata->contains ("subject"))
     info.Subject= utf8_as_hummus_string (metadata["subject"]);
-  string creator = "TeXmacs " * string (TEXMACS_VERSION);
+  string creator = "Mogan " * string (XMACS_VERSION);
   string producer= creator * " + PDFHummus" * string (PDFHUMMUS_VERSION);
   info.Creator   = utf8_as_hummus_string (creator);
   info.Producer  = utf8_as_hummus_string (producer);
