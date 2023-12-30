@@ -24,7 +24,7 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|11|11|1|1|cell-valign|b>|<cwith|10|10|3|3|cell-valign|b>|<cwith|9|9|1|1|cell-background|>|<cwith|10|10|1|1|cell-background|>|<cwith|4|4|1|1|cell-background|>|<cwith|4|4|1|1|cell-hyphen|n>|<table|<row|<\cell>
+    <tformat|<cwith|12|12|1|1|cell-valign|b>|<cwith|11|11|3|3|cell-valign|b>|<cwith|10|10|1|1|cell-background|>|<cwith|11|11|1|1|cell-background|>|<cwith|4|4|1|1|cell-background|>|<cwith|4|4|1|1|cell-hyphen|n>|<table|<row|<\cell>
       <dlink|74>
     </cell>|<\cell>
       \;
@@ -46,7 +46,8 @@
       <value|da>
     </cell>|<\cell>
       Improvements for Chinese users
-    </cell>>|<row|<\cell>
+    </cell>>|<row|<cell|<dlink|68>>|<cell|<value|da>>|<cell|Improvements on
+    PDF image and conversion>>|<row|<\cell>
       <dlink|59>
     </cell>|<\cell>
       Darcy

@@ -7,11 +7,16 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|68_1>|<cell|<value|da>>|<cell|set
-  default_pdf_version to 1.7>>|<row|<cell|Chore>|<cell|68_2>|<cell|<value|da>>|<cell|Seperate
-  pdf_image from pdf_renderer>>|<row|<cell|Bug>|<cell|<dlink|68_3>>|<cell|<value|da>>|<cell|Lines
-  in images are missing in exported PDF>>|<row|<cell|Chore>|<cell|68_4>|<cell|Darcy>|<cell|Support
-  for inserting images with pdf suffix>>|<row|<cell|Chore>|<cell|68_5>|<cell|<value|da>>|<cell|Use
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|2|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|68_9>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Change
+  the producer from TeXmacs to Mogan>>|<row|<cell|Chore>|<cell|68_8>|<cell|v1.2.3>|<cell|<value|jk>>|<\cell>
+    extract keywords from abstract-data and add them to exported pdf
+  </cell>>|<row|<cell|Chore>|<cell|68_7>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Upgrade
+  to pdfhummus 4.6.1>>|<row|<cell|Chore>|<cell|68_6>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Use
+  hummus instead gs to get the pdf_version>>|<row|<cell|Chore>|<cell|68_1>|<cell|v1.2.0>|<cell|<value|da>>|<cell|set
+  default_pdf_version to 1.7>>|<row|<cell|Chore>|<cell|68_2>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Seperate
+  pdf_image from pdf_renderer>>|<row|<cell|Bug>|<cell|<dlink|68_3>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Lines
+  in images are missing in exported PDF>>|<row|<cell|Chore>|<cell|68_4>|<cell|v1.2.0>|<cell|Darcy>|<cell|Support
+  for inserting images with pdf suffix>>|<row|<cell|Chore>|<cell|68_5>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Use
   hummus instead of gs for PDF image conversion>>>>>
 
   <tmdoc-copyright|2023|Darcy>
