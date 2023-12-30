@@ -92,6 +92,10 @@ function sidebarGuide() {
                     text: 'Install',
                     link: '/guide/Install'
                 },
+                {
+                    text: 'Mogan v.s. TeXmacs',
+                    link: '/guide/Mogan_versus_TeXmacs'
+                },
             ]
         },
         {
@@ -151,6 +155,10 @@ function sidebarGuideZh() {
                 {
                     text: '如何安装？',
                     link: '/zh/guide/Install'
+                },
+                {
+                    text: '墨干 v.s. TeXmacs',
+                    link: '/zh/guide/Mogan_versus_TeXmacs'
                 },
             ]
         },
