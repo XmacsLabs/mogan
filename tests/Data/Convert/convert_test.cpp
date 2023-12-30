@@ -13,6 +13,7 @@
 #include "base.hpp"
 #include "convert.hpp"
 #include "tree_helper.hpp"
+Q_DECLARE_METATYPE(string)
 
 class TestConverter : public QObject {
   Q_OBJECT
