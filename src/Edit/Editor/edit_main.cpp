@@ -288,6 +288,7 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
     ren->set_metadata ("title", get_metadata ("title"));
     ren->set_metadata ("author", get_metadata ("author"));
     ren->set_metadata ("subject", get_metadata ("subject"));
+    ren->set_metadata ("keyword", get_metadata ("keyword"));
     for (i=start; i<end; i++) {
       tree bg= env->read (BG_COLOR);
       ren->set_background (bg);
