@@ -11,6 +11,7 @@ if (eq $platform:os windows) {
     /usr/lib/llvm-16/bin
     # archlinux clang-format is at /usr/bin
     /usr/bin
+    $E:HOME/bin
   ]
 } else {
 }
