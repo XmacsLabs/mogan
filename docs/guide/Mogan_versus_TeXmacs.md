@@ -6,6 +6,20 @@ Mogan Research as a distribution of GNU TeXmacs will try to keep the user experi
 
 In this article, we will discuss the differences of Mogan Research and GNU TeXmacs in details:
 
+## Preferences
+| Option |  Mogan Research | GNU TeXmacs|
+|--------|-----------------|------------|
+| General`->`Interactive Questions | `In pop-up windows` | `On the footer` |
+| Other`->`Document updates run | `Three times` | `Once` |
+| Convert`->`Pdf`->`Expand beamer slides | `on` | `off` |
+
+## Graphics
+| Action | Mogan Research | GNU TeXmacs |
+|--------|------------------|-----------|
+| Insert`->`Image`->`Draw image | Show grid | Do not show grid |
+| Insert`->`Image`->`Ink here | Show grid | Do not show grid |
+| Insert`->`Grid`->`Unit length | 2 | 1 |
+
 ## TEXMACS_HOME_PATH
 | OS | Mogan Research | GNU TeXmacs |
 |---------|-----|-------------|

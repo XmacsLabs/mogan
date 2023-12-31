@@ -35,7 +35,7 @@ Compared with GNU TeXmacs 2.1.2:
 
 v1.2.1 will be released on 2024/01/01 to solve the above issues.
 
-## Changes in detail for end users
+## Changes in details for end users
 + OSPP：Mogan Draw on wasm (Project 23，27，50)
   + 新增绘制`椭圆`和`扇形`的功能，焦点工具栏没有配置相关图标，可以使用`插入`菜单插入
   + Draw the circle via two points but not three points
@@ -61,12 +61,6 @@ v1.2.1 will be released on 2024/01/01 to solve the above issues.
   + In macOS style shortcuts，结构化插入的快捷键前缀从Ctrl改为Option，避免和macOS系统快捷键冲突
   + In macOS style shortcuts，将`cmd`键从`Ctrl`改为`Option`，比如`插入->节`从`Ctrl+1`变为`Option+1`
   + In macOS style shortcuts，将插入符号的快捷键从`Ctrl+q`改为`Option+q`，避免Qt 6无法识别`Ctrl+q`的问题
-+ Preferences (Project 10)
-  + `通用->显示询问`调整为`通过弹出窗口`
-  + `其它->执行文档更新`调整为`三次`
-  + 进入绘图模式（插入绘图区域或者在当前位置绘制）默认显示网格，可使用快捷键`#`切换
-  + 绘图模式的网格默认单位长度从1调整为2
-  + 默认开启`转换->PDF->展开幻灯片中的可折叠对象`
 + Stability (Project 7)
   + 修复内存少量泄露的问题
   + 修复将比较大的数转换为罗马数字崩溃的问题
