@@ -5,6 +5,8 @@
   + 新增`编辑->无格式粘贴`菜单项
   + 移除`编辑`->`复制/粘贴/剪切`的`Primary/Secondary/Ternary`菜单项
   + 修复光标在行首时概率出现（尤其是老电脑）的输入法漏字问题
+  + macOS：采用`Command+left`或者`Command+right`逐词移动
+  + 采用Markdown风格的快捷键插入hlink（`[ ] var`）和slink（`[ ] var var`）
 + 字体
   + 改进对思源宋体（Noto CJK fonts）的支持
   + 如果思源宋体可用，则默认的中日韩字体是思源宋体
