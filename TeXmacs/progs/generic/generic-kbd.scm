@@ -85,8 +85,6 @@
 
   ("structured:cmd delete" (remove-structure-upwards))
   ("structured:cmd backspace" (remove-structure-upwards))
-  ("structured:cmd left" (kbd-select-if-active traverse-left))
-  ("structured:cmd right" (kbd-select-if-active traverse-right))
   ("structured:cmd up" (kbd-select-if-active traverse-up))
   ("structured:cmd down" (kbd-select-if-active traverse-down))
   ("structured:cmd home" (kbd-select-if-active traverse-first))
@@ -476,6 +474,9 @@
   ("altcmd X" (interactive exec-interactive-command))
   ("altcmd $" (interactive-spell))
 
+  ("structured:cmd left" (kbd-select-if-active traverse-left))
+  ("structured:cmd right" (kbd-select-if-active traverse-right))
+
   ("M-A-C-home" (traverse-first))
   ("M-A-C-end" (traverse-last))
   ("M-A-C-S-home" (kbd-select traverse-first))
@@ -541,6 +542,9 @@
   ("C-P" (toggle-preamble-mode))
   ("C-O" (toggle-source-mode))
 
+  ("structured:cmd left" (kbd-select-if-active traverse-left))
+  ("structured:cmd right" (kbd-select-if-active traverse-right))
+
   ("M-A-C-home" (traverse-first))
   ("M-A-C-end" (traverse-last))
   ("M-A-C-S-home" (kbd-select traverse-first))
@@ -561,17 +565,16 @@
 (kbd-map
   (:profile macos)
 
-  ;; standard Mac OS keyboard shortcuts
+  ;; standard macOS keyboard shortcuts
   ("macos ;" (interactive-spell))
   ("macos ?" (interactive docgrep-in-doc))
-  ("macos ," (open-preferences))
   ("macos [" (cursor-history-backward))
   ("macos ]" (cursor-history-forward))
   ("macos _" (make 'nbhyph))
-  ("macos left" (kbd-start-line))
-  ("macos right" (kbd-end-line))
   ("macos up" (go-start))
   ("macos down" (go-end))
+  ("macos left" (kbd-select-if-active traverse-left))
+  ("macos right" (kbd-select-if-active traverse-right))
   ("macos S-left" (kbd-select kbd-start-line))
   ("macos S-right" (kbd-select kbd-end-line))
   ("macos S-up" (kbd-select go-start))
@@ -621,8 +624,10 @@
 
   ("A-space var" (make 'nbsp))
 
-  ;("C-a" (kbd-start-line)) ; conflict with ("text a" (make 'abbr))
-  ;("C-e" (kbd-end-line))   ; conflict with ("text e" (make-tmlist 'enumerate))
+  ("C-a" (kbd-start-line))
+  ("C-e" (kbd-end-line))
+  ("C-b" (kbd-left))
+  ("C-f" (kbd-right))
   ("C-g" (selection-cancel))
   ("C-k" (kill-paragraph))
   ("C-l" (refresh-window))
@@ -762,6 +767,9 @@
   ("altcmd x" (interactive footer-eval))
   ("altcmd X" (interactive exec-interactive-command))
   ("altcmd $" (interactive-spell))
+
+  ("structured:cmd left" (kbd-select-if-active traverse-left))
+  ("structured:cmd right" (kbd-select-if-active traverse-right))
 
   ("M-A-C-home" (traverse-first))
   ("M-A-C-end" (traverse-last))
