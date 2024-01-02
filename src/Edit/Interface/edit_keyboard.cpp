@@ -406,6 +406,9 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
     else if (key_u8 == "‘’") {
       call ("insert", "<#2018><#2019>");
     }
+    else if (key_u8 == "——") {
+      call ("insert", "<#2014><#2014>");
+    }
     else if (starts (gkey, "pre-edit:"))
       call ("delayed-keyboard-press", object (gkey), object ((double) t));
     else
