@@ -20,6 +20,7 @@ class TestQtUtilities : public QObject {
 private slots:
   void test_qt_supports ();
   void test_from_modifiers ();
+  void test_from_key_press_event ();
 };
 
 void
@@ -65,6 +66,15 @@ TestQtUtilities::test_from_modifiers () {
               "C-A-S-");
     qcompare (from_modifiers (Qt::ControlModifier | Qt::ShiftModifier), "C-S-");
     qcompare (from_modifiers (Qt::ControlModifier | Qt::MetaModifier), "M-C-");
+  }
+}
+
+void
+TestQtUtilities::test_from_key_press_event () {
+  if (os_macos ()) {
+    auto ctrl_plus= QKeyEvent (QEvent::KeyPress, (int) '=',
+                               Qt::ControlModifier | Qt::ShiftModifier, "=");
+    qcompare (from_key_press_event (&ctrl_plus), "M-S-=");
   }
 }
 
