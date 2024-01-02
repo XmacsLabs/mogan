@@ -164,22 +164,7 @@ initkeymap () {
   // map (Qt::Key_Find        , "find" );
   // map (Qt::Key_ModeSwitchFunctionKey, "modeswitch" );
 }
-#if defined(OS_MINGW) || defined(OS_WIN)
-enum WindowsNativeModifiers {
-  ShiftLeft   = 0x00000001,
-  ControlLeft = 0x00000002,
-  AltLeft     = 0x00000004,
-  MetaLeft    = 0x00000008,
-  ShiftRight  = 0x00000010,
-  ControlRight= 0x00000020,
-  AltRight    = 0x00000040,
-  MetaRight   = 0x00000080,
-  CapsLock    = 0x00000100,
-  NumLock     = 0x00000200,
-  ScrollLock  = 0x00000400,
-  ExtendedKey = 0x01000000,
-};
-#endif
+
 /******************************************************************************
  * Debugging
  ******************************************************************************/
