@@ -166,5 +166,7 @@ tm_ostream& operator<< (tm_ostream& out, coord2 c);
   }
 
 string from_modifiers (Qt::KeyboardModifiers mods);
+string from_key_press_event (QKeyEvent event);
+string from_key_release_event (QKeyEvent event);
 
 #endif // QT_UTILITIES_HPP
