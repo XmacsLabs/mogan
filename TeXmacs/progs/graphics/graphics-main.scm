@@ -817,16 +817,6 @@
               (graphics-set-property prop '(tuple "empty"))
               (graphics-set-property prop-old gr))))))
 
-(define (test-visual-grid?) (test-grid*? #t))
-(tm-define (graphics-toggle-visual-grid)
-  (:check-mark "v" test-visual-grid?)
-  (graphics-toggle-grid* #t))
-
-(define (test-logical-grid?) (test-grid*? #f))
-(tm-define (graphics-toggle-logical-grid)
-  (:check-mark "v" test-logical-grid?)
-  (graphics-toggle-grid* #f))
-
 (define (test-grid?) (and (test-grid*? #f) (test-grid*? #t)))
 (tm-define (graphics-toggle-grid)
   (:check-mark "v" test-grid?)
