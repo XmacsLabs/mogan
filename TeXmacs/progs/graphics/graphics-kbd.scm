@@ -138,8 +138,6 @@
   ("A-S-up" (graphics-decrease-vsize-fast))
   ("backspace" (graphics-kbd-remove #f))
   ("delete" (graphics-kbd-remove #t))
-  ("C-g" (graphics-toggle-logical-grid))
-  ("C-G" (graphics-toggle-visual-grid))
   ("C-2" (graphics-set-grid-aspect 'detailed 2 #t))
   ("C-3" (graphics-set-grid-aspect 'detailed 3 #t))
   ("C-4" (graphics-set-grid-aspect 'detailed 4 #t))
