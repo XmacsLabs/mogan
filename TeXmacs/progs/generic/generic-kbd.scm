@@ -174,10 +174,10 @@
   ("altcmd return" (make 'next-line))
   ("altcmd /" (make 'no-break))
 
-  ("std !" (make-label))
-  ("std ?" (make 'reference))
-  ("std ? var" (make 'eqref))
-  ("std ? var var" (make 'pageref))
+  ("C-!" (make-label))
+  ("C-?" (make 'reference))
+  ("C-? var" (make 'eqref))
+  ("C-? var var" (make 'pageref))
 
   ("extra e" (edit-focus-macro))
   ("extra r" (edit-previous-macro))
@@ -238,9 +238,9 @@
 
 (kbd-map
   (:mode in-smart-ref?)
-  ("altcmd ?" (make 'smart-ref))
-  ("altcmd ? var" (make 'reference))
-  ("altcmd ? var var" (make 'pageref)))
+  ("std ?" (make 'smart-ref))
+  ("std ? var" (make 'reference))
+  ("std ? var var" (make 'pageref)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -632,9 +632,7 @@
   ("C-k" (kill-paragraph))
   ("C-l" (refresh-window))
   ("C-y" (yank-paragraph))
-  ("A-q" (make 'symbol))
-  ("C-!" (make-label))
-  ("C-?" (make 'reference)))
+  ("A-q" (make 'symbol)))
 
 (kbd-map
   (:profile macos)
@@ -643,13 +641,6 @@
   ("C-S-tab" (kbd-shift-alternate-tab))
   ("C-space" (make-space "0.2spc"))
   ("C-S-space" (make-space "-0.2spc")))
-
-(kbd-map
-  (:profile macos)
-  (:mode in-smart-ref?)
-  ("C-?" (make 'smart-ref))
-  ("C-? var" (make 'reference))
-  ("C-? var var" (make 'pageref)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Windows keymap
