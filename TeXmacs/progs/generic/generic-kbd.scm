@@ -671,7 +671,6 @@
   ("windows e" (make 'footnote))
   ("windows F" (make 'footnote))
   ("windows h" (interactive-replace))
-  ("windows k" (make 'hlink))
   ("windows K" (toggle-small-caps))
   ("windows A-r" (make 'registered))
   ("windows A-t" (make 'trademark))
