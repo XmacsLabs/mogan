@@ -75,6 +75,8 @@
   ("* var" (make-with "font-shape" "italic"))
   ("+ var" (make-tmlist 'itemize))
   ("1 . var" (make-tmlist 'enumerate))
+  ("[ ] var" (make 'hlink))
+  ("[ ] var var" (make 'slink))
 
   ("space var" (make 'nbsp))
   ("space var var" (make-space "1em"))
