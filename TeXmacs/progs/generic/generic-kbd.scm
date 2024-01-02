@@ -470,8 +470,8 @@
   ("gnome l" (refresh-window))
   ("gnome F" (interactive-search))
 
+  ("cmd q" (make 'symbol))
   ("altcmd g" (kbd-cancel))
-  ("altcmd q" (make 'symbol))
   ("altcmd x" (interactive footer-eval))
   ("altcmd X" (interactive exec-interactive-command))
   ("altcmd $" (interactive-spell))
@@ -532,8 +532,8 @@
   ("kde l" (refresh-window))
   ("kde F" (interactive-search))
 
+  ("cmd q" (make 'symbol))
   ("altcmd g" (kbd-cancel))
-  ("altcmd q" (make 'symbol))
   ("altcmd x" (interactive footer-eval))
   ("altcmd X" (interactive exec-interactive-command))
   ("altcmd $" (interactive-spell))
@@ -758,8 +758,8 @@
   ("windows l" (refresh-window))
   ("windows =" (change-zoom-factor 1.0))
 
+  ("cmd q" (make 'symbol))
   ("altcmd g" (kbd-cancel))
-  ("altcmd q" (make 'symbol))
   ("altcmd x" (interactive footer-eval))
   ("altcmd X" (interactive exec-interactive-command))
   ("altcmd $" (interactive-spell))
