@@ -57,6 +57,18 @@
     zxcvbnm,./
   </verbatim-code>
 
+  <paragraph|Windows>
+
+  <\verbatim-code>
+    \<#2018\>1234567890-=
+
+    qwertyuiop[]\\
+
+    asdfghjkl;'
+
+    zxcvbnm,./
+  </verbatim-code>
+
   <subsubsection|Modifier: Shift>
 
   <paragraph|macOS>
@@ -72,6 +84,18 @@
   </verbatim-code>
 
   <paragraph|UOS>
+
+  <\verbatim-code>
+    ~!@#$%^&*()_+
+
+    QWERTYUIOP{}\|
+
+    ASDFGHJKL:"
+
+    ZXCVBNM\<less\>\<gtr\>?
+  </verbatim-code>
+
+  <paragraph|Windows>
 
   <\verbatim-code>
     ~!@#$%^&*()_+
@@ -101,9 +125,15 @@
     \<#FF5E\>\<#FF01\>@#\<#FFE5\>%\<ldots\>\<ldots\>&*\<#FF08\>\<#FF09\>--+{}\|\<#FF1A\>\P\Q\<#300A\>\<#300B\>\<#FF1F\>
   </verbatim-code>
 
-  <subsubsection|Special input via IM>
+  <paragraph|Windows>
 
-  <paragraph|macOS>
+  <\verbatim-code>
+    \<cdot\>1234567890-=\<#3010\>\<#3011\>\<#3001\>\<#FF1B\>'\<#FF0C\>\<#3002\>/
+
+    ~\<#FF01\>@#\<#FFE5\>%\<ldots\>\<ldots\>&*\<#FF08\>\<#FF09\>+{}\|\<#FF1A\>\P\Q\<#300A\>\<#300B\>\<#FF1F\>
+  </verbatim-code>
+
+  <subsubsection|Special input via IM>
 
   <\verbatim-code>
     ^_^ (shift+6 under IM)
@@ -137,10 +167,9 @@
 
   <key|C-delete>\<#FF0C\><key|C-backspace>\<#FF0C\><key|A-delete>\<#FF0C\><key|A-backspace>\<#FF0C\><key|A-left>\<#FF0C\><key|A-right>\<#FF0C\><key|A-up>\<#FF0C\><key|A-down>
 
-  <tree|root|leaf|leaf>
+  <tree|root|left|right>
 
-  <key|C-left>,<key|C-right> (it does not work on macOS, but it is occupied
-  by macOS system)
+  <key|C-left>,<key|C-right>
 
   This is a paragraph.
 
