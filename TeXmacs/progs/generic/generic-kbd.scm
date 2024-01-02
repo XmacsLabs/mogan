@@ -175,11 +175,11 @@
   ("altcmd ;" (make 'new-line))
   ("altcmd return" (make 'next-line))
   ("altcmd /" (make 'no-break))
-  ("altcmd !" (make-label))
-  ("altcmd ?" (make 'reference))
-  ("altcmd ? var" (make 'eqref))
-  ("altcmd ? var var" (make 'pageref))
-  ("altcmd P" (make 'pageref))
+
+  ("std !" (make-label))
+  ("std ?" (make 'reference))
+  ("std ? var" (make 'eqref))
+  ("std ? var var" (make 'pageref))
 
   ("extra e" (edit-focus-macro))
   ("extra r" (edit-previous-macro))
