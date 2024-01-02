@@ -358,11 +358,13 @@ edit_interface_rep::kbd_shortcut (string cmd) {
 
 void
 edit_interface_rep::handle_keypress (string key_u8, time_t t) {
+  if (is_nil (buf)) return;
+
   string key= utf8_to_cork (key_u8);
   if (starts (key, "<") && ends (key, ">") && !starts(key, "<#")) {
     key= key(1, N(key)-1);
   }
-  if (is_nil (buf)) return;
+
   if (t > last_event) last_event= t;
   bool started= false;
 #ifdef USE_EXCEPTIONS
@@ -398,6 +400,12 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
     if (gkey == "<#3000>") gkey= "space";
     if (key_u8 == "`")
       call ("insert", "<#2018>");
+    else if (key_u8 == "“”") {
+      call ("insert", "<#201C><#201D>");
+    }
+    else if (key_u8 == "‘’") {
+      call ("insert", "<#2018><#2019>");
+    }
     else if (starts (gkey, "pre-edit:"))
       call ("delayed-keyboard-press", object (gkey), object ((double) t));
     else
