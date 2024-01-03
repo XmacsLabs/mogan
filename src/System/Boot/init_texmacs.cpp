@@ -427,7 +427,6 @@ setup_texmacs () {
   debug_boot << HRULE;
 
   set_setting ("VERSION", XMACS_VERSION);
-  setup_tex ();
   
   string s= scheme_tree_to_block (texmacs_settings);
   //cout << "settings_t= " << texmacs_settings << "\n";
@@ -495,5 +494,6 @@ init_plugins () {
     init_upgrade ();
     install_status= 2;
   }
+  setup_tex ();
   init_tex ();
 }

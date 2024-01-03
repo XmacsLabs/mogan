@@ -30,6 +30,12 @@ static url the_pfb_path= url_none ();
  * Finding a TeX font
  ******************************************************************************/
 
+static bool
+use_kpsewhich () {
+  return get_user_preference ("texlive:fonts") == "on" &&
+         get_user_preference ("texlive:kpsewhich") == "true";
+}
+
 static string
 kpsewhich (string name) {
   string which= var_eval_system ("kpsewhich " * name);
@@ -40,7 +46,7 @@ static url
 resolve_tfm (url name) {
   url r= resolve (the_tfm_path * name);
   if (!is_none (r)) return r;
-  if (get_setting ("KPSEWHICH") == "true") {
+  if (use_kpsewhich ()) {
     string which= kpsewhich (as_string (name));
     if ((which != "") && exists (url_system (which))) return url_system (which);
     // cout << "Missed " << name << "\n";
@@ -52,13 +58,10 @@ static url
 resolve_pk (url name) {
   url r= resolve (the_pk_path * name);
   if (!is_none (r)) return r;
-#ifndef OS_WIN // The kpsewhich from MikTeX is bugged for pk fonts
-  if (get_setting ("KPSEWHICH") == "true") {
+  if (!os_win () && use_kpsewhich ()) {
     string which= kpsewhich (as_string (name));
     if ((which != "") && exists (url_system (which))) return url_system (which);
-    // cout << "Missed " << name << "\n";
   }
-#endif
   return r;
 }
 
@@ -66,12 +69,9 @@ static url
 resolve_pfb (url name) {
   url r= resolve (the_pfb_path * name);
   if (!is_none (r)) return r;
-  if (!os_win ()) { // The kpsewhich from MikTeX is bugged for pfb fonts
-    if (get_setting ("KPSEWHICH") == "true") {
-      string which= kpsewhich (as_string (name));
-      if ((which != "") && exists (url_system (which)))
-        return url_system (which);
-    }
+  if (!os_win () && use_kpsewhich ()) {
+    string which= kpsewhich (as_string (name));
+    if ((which != "") && exists (url_system (which))) return url_system (which);
   }
   return r;
 }
@@ -194,7 +194,7 @@ make_tex_pk (string name, int dpi, int design_dpi) {
 static url
 get_kpsepath (string s) {
   // FIXME: adapt to WIN32
-  if (get_setting ("KPSEPATH") != "true") return url_none ();
+  if (get_user_preference ("texlive:kpsepath") != "true") return url_none ();
   string r= var_eval_system ("kpsepath " * s);
   if (N (r) == 0) return url_none ();
 
@@ -225,9 +225,11 @@ reset_tfm_path (bool rehash) {
                 search_sub_dirs ("$TEXMACS_PATH/fonts/tfm") | "$TEX_TFM_PATH" |
                 ((tfm == "" || tfm == "{}") ? url_none () : tfm);
   if ((get_setting ("MAKETFM") != "false") ||
-      (get_setting ("TEXHASH") == "true"))
-    if (get_setting ("KPSEWHICH") != "true")
+      (get_setting ("TEXHASH") == "true")) {
+    if (get_user_preference ("texlive:kpsewhich") != "true") {
       the_tfm_path= the_tfm_path | get_kpsepath ("tfm");
+    }
+  }
   the_tfm_path= expand (factor (the_tfm_path));
 }
 
@@ -240,9 +242,11 @@ reset_pk_path (bool rehash) {
                search_sub_dirs ("$TEXMACS_PATH/fonts/pk") | "$TEX_PK_PATH" |
                (pk == "" ? url_none () : pk);
   if ((get_setting ("MAKEPK") != "false") ||
-      (get_setting ("TEXHASH") == "true"))
-    if (get_setting ("KPSEWHICH") != "true")
+      (get_setting ("TEXHASH") == "true")) {
+    if (get_user_preference ("texlive:kpsewhich") != "true") {
       the_pk_path= the_pk_path | get_kpsepath ("pk");
+    }
+  }
   the_pk_path= expand (factor (the_pk_path));
 }
 
