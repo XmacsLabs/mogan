@@ -10,11 +10,92 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|9|14|2|2|cell-background|pastel
-    green>|<cwith|12|12|2|2|cell-background|>|<cwith|15|20|2|2|cell-background|pastel
-    green>|<cwith|8|8|2|2|cell-background|pastel
-    green>|<cwith|7|7|2|2|cell-background|pastel
-    green>|<cwith|6|6|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|17|22|2|2|cell-background|pastel
+    green>|<cwith|20|20|2|2|cell-background|>|<cwith|23|28|2|2|cell-background|pastel
+    green>|<cwith|16|16|2|2|cell-background|pastel
+    green>|<cwith|15|15|2|2|cell-background|pastel
+    green>|<cwith|14|14|2|2|cell-background|pastel
+    green>|<cwith|4|13|2|2|cell-background|pastel green>|<table|<row|<\cell>
+      Perf
+    </cell>|<\cell>
+      11_28
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Speed up for type 1 fonts
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_27
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      \<#2014\>\<#2014\> is using the inccorect font
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_26
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      bold \<langle\> is using the incorrect font
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_25
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      bump to pdfhummus v4.6.2
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_24
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Use ttc directly to avoid <cpp|tt_unpack>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_23
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Support CESI font
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_22
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Set Noto CJK KR as the default Korean font
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_21
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Set Noto CJK JP as the default Japanese font
+    </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
       11_20
