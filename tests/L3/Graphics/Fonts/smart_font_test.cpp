@@ -32,6 +32,7 @@ private slots:
   }
   void test_resolve ();
   void test_resolve_first_attempt ();
+  void test_resolve_chinese_puncts ();
 };
 
 void
@@ -62,6 +63,21 @@ TestSmartFont::test_resolve_first_attempt () {
   smart_font_rep* fn_rep= (smart_font_rep*) fn.rep;
   int fn_index= fn_rep->resolve (c, "cjk=" * default_chinese_font_name (), 1);
   QCOMPARE (fn_index, 2);
+}
+
+void
+TestSmartFont::test_resolve_chinese_puncts () {
+  // sys-chinese-rm-medium-right-10-600-smart
+  font fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
+  smart_font_rep* fn_rep= (smart_font_rep*) fn.rep;
+  auto puncts= array<string> ("<#2018>", "<#2019>", // Chinese: 单引号
+                              "<#201C>", "<#201D>", // Chinese: 双引号
+                              "<#2014>" // Chinese: 破折号的一半
+  );
+  for (int i= 0; i < N (puncts); i++) {
+    int fn_index= fn_rep->resolve (puncts[1], "cjk=sys-chinese", 1);
+    QCOMPARE (fn_index, 2);
+  }
 }
 
 QTEST_MAIN (TestSmartFont)
