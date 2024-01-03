@@ -30,6 +30,12 @@ static url the_pfb_path= url_none ();
  * Finding a TeX font
  ******************************************************************************/
 
+static bool
+use_kpsewhich () {
+  return get_user_preference ("texlive:fonts") == "on" &&
+         get_user_preference ("texlive:kpsewhich") == "true";
+}
+
 static string
 kpsewhich (string name) {
   string which= var_eval_system ("kpsewhich " * name);
@@ -40,7 +46,7 @@ static url
 resolve_tfm (url name) {
   url r= resolve (the_tfm_path * name);
   if (!is_none (r)) return r;
-  if (get_user_preference ("texlive:kpsewhich") == "true") {
+  if (use_kpsewhich ()) {
     string which= kpsewhich (as_string (name));
     if ((which != "") && exists (url_system (which))) return url_system (which);
     // cout << "Missed " << name << "\n";
@@ -52,7 +58,7 @@ static url
 resolve_pk (url name) {
   url r= resolve (the_pk_path * name);
   if (!is_none (r)) return r;
-  if (!os_win () && get_user_preference ("texlive:kpsewhich") == "true") {
+  if (!os_win () && use_kpsewhich ()) {
     string which= kpsewhich (as_string (name));
     if ((which != "") && exists (url_system (which))) return url_system (which);
   }
@@ -63,7 +69,7 @@ static url
 resolve_pfb (url name) {
   url r= resolve (the_pfb_path * name);
   if (!is_none (r)) return r;
-  if (!os_win () && get_user_preference ("texlive:kpsewhich") == "true") {
+  if (!os_win () && use_kpsewhich ()) {
     string which= kpsewhich (as_string (name));
     if ((which != "") && exists (url_system (which))) return url_system (which);
   }
