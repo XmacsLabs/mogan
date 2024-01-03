@@ -7,7 +7,17 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|5|5|1|1|cell-valign|b>|<cwith|1|1|2|2|cell-halign|l>|<cwith|1|-1|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|59_1>|<cell|v1.2.0>|<cell|Darcy>|<\cell>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|10|10|1|1|cell-valign|b>|<cwith|6|6|2|2|cell-halign|l>|<cwith|1|-1|5|5|cell-hyphen|t>|<cwith|5|5|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|59_17>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
+    Fix the em-dash via pinyin IM
+  </cell>>|<row|<cell|Chore>|<cell|59_16>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
+    Switch to <key|M-left>/<key|M-right> for movement by word on macOS
+  </cell>>|<row|<cell|Chore>|<cell|59_15>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
+    Remove <key|C-g> and <key|C-G> to toggle grid, just use <key|#>
+  </cell>>|<row|<cell|Chore>|<cell|59_14>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
+    Adjust shortcuts for <menu|Insert|Link>
+  </cell>>|<row|<cell|Feature>|<cell|<dlink|59_13>>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
+    Rework on keyPressEvent and keyReleaseEvent
+  </cell>>|<row|<cell|Chore>|<cell|59_1>|<cell|v1.2.0>|<cell|Darcy>|<\cell>
     Swap the shortcuts of Preview and Preview screen
   </cell>>|<row|<cell|Bug>|<cell|<dlink|59_2>>|<cell|v1.2.0>|<cell|<value|da>>|<\cell>
     Failed to hide the app via <key|std h> on macOS
@@ -35,8 +45,6 @@
     Adjust shortcuts for pinyin vowers to avoid tab completion collision
   </cell>>|<row|<cell|Chore>|<cell|59_12>|<cell|v1.2.1>|<cell|<value|da>>|<\cell>
     Use <key|C-P> and <key|C-O> for preamble and source tree toggling on KDE
-  </cell>>|<row|<cell|Feature>|<cell|<dlink|59_13>>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
-    Rework on keyPressEvent and keyReleaseEvent
   </cell>>>>>
 
   <tmdoc-copyright|2023|Darcy>
