@@ -225,9 +225,11 @@ reset_tfm_path (bool rehash) {
                 search_sub_dirs ("$TEXMACS_PATH/fonts/tfm") | "$TEX_TFM_PATH" |
                 ((tfm == "" || tfm == "{}") ? url_none () : tfm);
   if ((get_setting ("MAKETFM") != "false") ||
-      (get_setting ("TEXHASH") == "true"))
-    if (get_setting ("KPSEWHICH") != "true")
+      (get_setting ("TEXHASH") == "true")) {
+    if (get_user_preference ("texlive:kpsewhich") != "true") {
       the_tfm_path= the_tfm_path | get_kpsepath ("tfm");
+    }
+  }
   the_tfm_path= expand (factor (the_tfm_path));
 }
 
@@ -240,9 +242,11 @@ reset_pk_path (bool rehash) {
                search_sub_dirs ("$TEXMACS_PATH/fonts/pk") | "$TEX_PK_PATH" |
                (pk == "" ? url_none () : pk);
   if ((get_setting ("MAKEPK") != "false") ||
-      (get_setting ("TEXHASH") == "true"))
-    if (get_setting ("KPSEWHICH") != "true")
+      (get_setting ("TEXHASH") == "true")) {
+    if (get_user_preference ("texlive:kpsewhich") != "true") {
       the_pk_path= the_pk_path | get_kpsepath ("pk");
+    }
+  }
   the_pk_path= expand (factor (the_pk_path));
 }
 
