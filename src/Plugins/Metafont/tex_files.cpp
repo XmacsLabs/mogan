@@ -153,7 +153,9 @@ make_tex_tfm (string name) {
 void
 make_tex_pk (string name, int dpi, int design_dpi) {
   string s;
-  int    r= 0;
+  int    r     = 0;
+  url    pk_dir= get_tm_cache_path () * "fonts/pk";
+
   if (get_setting ("MAKEPK") == "MakeTeXPK") {
     s= "MakeTeXPK " * name * " " * as_string (dpi) * " " *
        as_string (design_dpi) * " " * as_string (dpi) * "/" *
@@ -162,26 +164,24 @@ make_tex_pk (string name, int dpi, int design_dpi) {
     r= lolly::system::call (s);
   }
   if (get_setting ("MAKEPK") == "mktexpk") {
-    url pk_dir ("$TEXMACS_HOME_PATH/fonts/pk");
     s= "mktexpk " * string ("--dpi ") * as_string (dpi) * " " *
        string ("--bdpi ") * as_string (design_dpi) * " " * string ("--mag ") *
        as_string (dpi) * "/" * as_string (design_dpi) * " " *
-       string ("--destdir ") * as_string (pk_dir) * " " * name;
+       string ("--destdir ") * raw_quote (as_string (pk_dir)) * " " * name;
     if (DEBUG_VERBOSE) debug_fonts << "Executing " << s << "\n";
     r= lolly::system::call (s);
   }
   if (get_setting ("MAKEPK") == "makepk") {
-#ifdef OS_WIN
-    s= "makepk --dest-dir \"" * get_env ("$TEXMACS_HOME_PATH") *
-       "\\fonts\\pk\" " * name * " " * as_string (dpi) * " " *
-       as_string (design_dpi) * " " * as_string (dpi) * "%//" *
-       as_string (design_dpi);
-#else
-    s= "makepk --dest-dir \"" * get_env ("$TEXMACS_HOME_PATH") *
-       "\\fonts\\pk\" " * name * " " * as_string (dpi) * " " *
-       as_string (design_dpi) * " " * as_string (dpi) * "/" *
-       as_string (design_dpi);
-#endif
+    if (os_win ()) {
+      s= "makepk --dest-dir " * raw_quote (as_string (pk_dir)) * " " * name *
+         " " * as_string (dpi) * " " * as_string (design_dpi) * " " *
+         as_string (dpi) * "%//" * as_string (design_dpi);
+    }
+    else {
+      s= "makepk --dest-dir " * raw_quote (as_string (pk_dir)) * " " * name *
+         " " * as_string (dpi) * " " * as_string (design_dpi) * " " *
+         as_string (dpi) * "/" * as_string (design_dpi);
+    }
     if (DEBUG_VERBOSE) debug_fonts << "Executing " << s << "\n";
     r= lolly::system::call (s);
   }
@@ -237,7 +237,7 @@ reset_pk_path (bool rehash) {
   (void) rehash;
   // if (rehash && (get_setting ("TEXHASH") == "true")) system ("texhash");
   string pk  = get_setting ("PK");
-  the_pk_path= url_here () | search_sub_dirs ("$TEXMACS_HOME_PATH/fonts/pk") |
+  the_pk_path= url_here () | get_tm_cache_path () * "fonts/pk" |
                search_sub_dirs ("$TEXMACS_PATH/fonts/pk") | "$TEX_PK_PATH" |
                (pk == "" ? url_none () : pk);
   if ((get_setting ("MAKEPK") != "false") ||

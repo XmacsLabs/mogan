@@ -281,11 +281,12 @@ init_user_dirs () {
   make_dir ("$TEXMACS_HOME_PATH/fonts");
   make_dir ("$TEXMACS_HOME_PATH/fonts/enc");
   make_dir ("$TEXMACS_HOME_PATH/fonts/error");
-  make_dir ("$TEXMACS_HOME_PATH/fonts/pk");
   make_dir ("$TEXMACS_HOME_PATH/fonts/tfm");
   make_dir ("$TEXMACS_HOME_PATH/fonts/truetype");
   make_dir ("$TEXMACS_HOME_PATH/fonts/type1");
   make_dir ("$TEXMACS_HOME_PATH/fonts/virtual");
+  make_dir (get_tm_cache_path ());
+  make_dir (get_tm_cache_path () * "fonts/pk");
   make_dir ("$TEXMACS_HOME_PATH/langs");
   make_dir ("$TEXMACS_HOME_PATH/langs/mathematical");
   make_dir ("$TEXMACS_HOME_PATH/langs/mathematical/syntax");
@@ -304,7 +305,6 @@ init_user_dirs () {
   make_dir ("$TEXMACS_HOME_PATH/styles");
   make_dir ("$TEXMACS_HOME_PATH/system");
   make_dir ("$TEXMACS_HOME_PATH/system/bib");
-  make_dir (get_tm_cache_path ());
   make_dir ("$TEXMACS_HOME_PATH/system/database");
   make_dir ("$TEXMACS_HOME_PATH/system/database/bib");
   make_dir ("$TEXMACS_HOME_PATH/system/make");
