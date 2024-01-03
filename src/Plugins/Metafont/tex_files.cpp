@@ -20,6 +20,7 @@
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_timer.hpp"
+#include "tm_debug.hpp"
 
 static url the_tfm_path= url_none ();
 static url the_pk_path = url_none ();
@@ -95,7 +96,7 @@ resolve_tex (url name) {
     cache_reset ("font_cache.scm", s);
   }
 
-  bench_start ("resolve_tex " * name);
+  bench_start ("resolve_tex " * s);
   url u= url_none ();
   if (ends (s, "mf")) {
     u= resolve_tfm (name);
@@ -106,7 +107,7 @@ resolve_tex (url name) {
   if (ends (s, "tfm")) u= resolve_tfm (name);
   if (ends (s, "pk")) u= resolve_pk (name);
   if (ends (s, "pfb")) u= resolve_pfb (name);
-  bench_end ("resolve_tex " * name, 10);
+  bench_end ("resolve_tex " * s, 10);
 
   if (!is_none (u)) cache_set ("font_cache.scm", s, as_string (u));
   // cout << "Resolve " << name << " -> " << u << "\n";
