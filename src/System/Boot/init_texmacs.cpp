@@ -448,8 +448,7 @@ setup_texmacs () {
   debug_boot << "Welcome to TeXmacs " TEXMACS_VERSION "\n";
   debug_boot << HRULE;
 
-  set_setting ("VERSION", TEXMACS_VERSION);
-  setup_tex ();
+  set_setting ("VERSION", XMACS_VERSION);
   
   string s= scheme_tree_to_block (texmacs_settings);
   //cout << "settings_t= " << texmacs_settings << "\n";
@@ -513,10 +512,6 @@ init_plugins () {
     install_status= 1;
   }
 
-  if (get_setting ("VERSION") != TEXMACS_VERSION) {
-    init_upgrade ();
-    url ch ("$TEXMACS_HOME_PATH/doc/about/changes/changes-recent.en.tm");
-    install_status= exists (ch)? 2: 0;
-  }
+  setup_tex ();
   init_tex ();
 }

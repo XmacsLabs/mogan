@@ -813,7 +813,10 @@
                   (get-boolean-preference "gui:print dialogue"))))
       (meti (hlist // (text "DO NOT use UTF-8 for CJK in TM format"))
         (toggle (set-boolean-preference "tm format without utf8" answer)
-                (get-boolean-preference "tm format without utf8"))))))
+                (get-boolean-preference "tm format without utf8")))
+      (meti (hlist // (text "Use fonts in texlive"))
+        (toggle (set-boolean-preference "texlive:fonts" answer)
+                (get-boolean-preference "texlive:fonts"))))))
 
 (tm-widget (experimental-preferences-widget*)
   (aligned
