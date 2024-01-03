@@ -18,9 +18,9 @@
 #include "path.hpp"
 #include "preferences.hpp"
 #include "sys_utils.hpp"
+#include "tm_debug.hpp"
 #include "tm_file.hpp"
 #include "tm_timer.hpp"
-#include "tm_debug.hpp"
 
 static url the_tfm_path= url_none ();
 static url the_pk_path = url_none ();
@@ -32,9 +32,7 @@ static url the_pfb_path= url_none ();
 
 static string
 kpsewhich (string name) {
-  bench_start ("kpsewhich " * name);
   string which= var_eval_system ("kpsewhich " * name);
-  bench_end ("kpsewhich " * name);
   return which;
 }
 

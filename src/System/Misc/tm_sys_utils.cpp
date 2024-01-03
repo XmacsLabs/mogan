@@ -56,7 +56,9 @@ eval_system (string s) {
   return "";
 #else
   string result;
+  bench_start ("eval_system " * s);
   (void) lolly::system::check_output (s, result);
+  bench_end ("eval_system " * s);
   return result;
 #endif
 }
