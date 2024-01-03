@@ -189,7 +189,6 @@ tt_font_paths () {
 
 static url
 tt_locate_pfb (string name) {
-  bench_start ("tt_locate_pfb " * name);
   /*
   if (starts (name, "rpag")) name= "uag" * name (4, N (name) - 4) * "8a.pfb";
   if (starts (name, "rpbk")) name= "ubk" * name (4, N (name) - 4) * "8a.pfb";
@@ -203,7 +202,6 @@ tt_locate_pfb (string name) {
   if (starts (name, "rpzd")) name= "uzd" * name (4, N (name));
   */
   url u= resolve_tex (name * ".pfb");
-  bench_end ("tt_locate_pfb " * name, 10);
   return u;
 }
 

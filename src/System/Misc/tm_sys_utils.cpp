@@ -52,7 +52,9 @@ string get_pretty_os_name () {
 string
 eval_system (string s) {
   string result;
+  bench_start ("eval_system " * s);
   (void) lolly::system::check_output (s, result);
+  bench_end ("eval_system " * s);
   return result;
 }
 

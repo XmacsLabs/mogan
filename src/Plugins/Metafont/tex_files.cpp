@@ -18,6 +18,7 @@
 #include "path.hpp"
 #include "preferences.hpp"
 #include "sys_utils.hpp"
+#include "tm_debug.hpp"
 #include "tm_file.hpp"
 #include "tm_timer.hpp"
 
@@ -31,9 +32,7 @@ static url the_pfb_path= url_none ();
 
 static string
 kpsewhich (string name) {
-  bench_start ("kpsewhich");
   string which= var_eval_system ("kpsewhich " * name);
-  bench_cumul ("kpsewhich");
   return which;
 }
 
@@ -67,13 +66,13 @@ static url
 resolve_pfb (url name) {
   url r= resolve (the_pfb_path * name);
   if (!is_none (r)) return r;
-#ifndef OS_WIN // The kpsewhich from MikTeX is bugged for pfb fonts
-  if (get_setting ("KPSEWHICH") == "true") {
-    string which= kpsewhich (as_string (name));
-    if ((which != "") && exists (url_system (which))) return url_system (which);
-    // cout << "Missed " << name << "\n";
+  if (!os_win ()) { // The kpsewhich from MikTeX is bugged for pfb fonts
+    if (get_setting ("KPSEWHICH") == "true") {
+      string which= kpsewhich (as_string (name));
+      if ((which != "") && exists (url_system (which)))
+        return url_system (which);
+    }
   }
-#endif
   return r;
 }
 
@@ -95,18 +94,18 @@ resolve_tex (url name) {
     cache_reset ("font_cache.scm", s);
   }
 
-  bench_start ("resolve tex");
+  bench_start ("resolve_tex " * s);
   url u= url_none ();
   if (ends (s, "mf")) {
     u= resolve_tfm (name);
-#ifdef OS_WIN
-    if (is_none (u)) u= resolve_tfm (replace (s, ".mf", ".tfm"));
-#endif
+    if (os_win () && is_none (u)) {
+      u= resolve_tfm (replace (s, ".mf", ".tfm"));
+    }
   }
   if (ends (s, "tfm")) u= resolve_tfm (name);
   if (ends (s, "pk")) u= resolve_pk (name);
   if (ends (s, "pfb")) u= resolve_pfb (name);
-  bench_cumul ("resolve tex");
+  bench_end ("resolve_tex " * s, 10);
 
   if (!is_none (u)) cache_set ("font_cache.scm", s, as_string (u));
   // cout << "Resolve " << name << " -> " << u << "\n";
