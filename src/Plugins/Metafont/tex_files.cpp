@@ -166,7 +166,7 @@ make_tex_pk (string name, int dpi, int design_dpi) {
     s= "mktexpk " * string ("--dpi ") * as_string (dpi) * " " *
        string ("--bdpi ") * as_string (design_dpi) * " " * string ("--mag ") *
        as_string (dpi) * "/" * as_string (design_dpi) * " " *
-       string ("--destdir ") * as_string (pk_dir) * " " * name;
+       string ("--destdir ") * raw_quote (as_string (pk_dir)) * " " * name;
     if (DEBUG_VERBOSE) debug_fonts << "Executing " << s << "\n";
     r= lolly::system::call (s);
   }
