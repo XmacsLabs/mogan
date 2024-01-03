@@ -381,9 +381,16 @@ in_unicode_range (string c, string range) {
   int    code= decode_from_utf8 (uc, pos);
   string got = lolly::data::unicode_get_range (code);
   if (range == got) return range != "";
-  if (range == "cjk" &&
-      (got == "hangul" || got == "hiragana" || got == "enclosed_alphanumerics"))
-    return true;
+  if (range == "cjk") {
+    if (got == "hangul" || got == "hiragana" || got == "enclosed_alphanumerics")
+      return true;
+    array<string> cjk_puncts=
+        array<string> ("<#2018>", "<#2019>", // Chinese: 单引号
+                       "<#201C>", "<#201D>", // Chinese: 双引号
+                       "<#2014>"             // Chinese: 破折号的一半
+        );
+    if (contains (c, cjk_puncts)) return true;
+  }
   // There are actually two ranges (cjk/hangul) for Korean characters and
   // two ranges (cjk/hiragana) for Japanese characters
   // For example, on macOS, `sys-korean` is expanded to `cjk=Apple SD Gothic
