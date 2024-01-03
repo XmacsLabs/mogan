@@ -25,15 +25,19 @@ static void
 init_helper_binaries () {
   if (exists_in_path ("kpsepath")) {
     debug_boot << "kpsepath works with your TeX distribution\n";
-    set_setting ("KPSEPATH", "true");
+    set_user_preference ("texlive:kpsepath", "true");
   }
-  else set_setting ("KPSEPATH", "false");
+  else {
+    set_user_preference ("texlive:kpsepath", "false");
+  }
 
   if (exists_in_path ("kpsewhich")) {
     debug_boot << "kpsewhich works with your TeX distribution\n";
-    set_setting ("KPSEWHICH", "true");
+    set_user_preference ("texlive:kpsewhich", "true");
   }
-  else set_setting ("KPSEWHICH", "false");
+  else {
+    set_user_preference ("texlive:kpsewhich", "false");
+  }
 
   if (exists_in_path ("mktextfm")) {
     debug_boot << "mktextfm works with your TeX distribution\n";
@@ -140,8 +144,10 @@ init_heuristic_tex_paths () {
 void
 setup_tex () {
   remove ("$TEXMACS_HOME_PATH/fonts/font-index.scm");
-  init_helper_binaries ();
-  init_heuristic_tex_paths ();
+  if (get_user_preference ("texlive:fonts") == "on") {
+    init_helper_binaries ();
+    init_heuristic_tex_paths ();
+  }
 }
 
 void
