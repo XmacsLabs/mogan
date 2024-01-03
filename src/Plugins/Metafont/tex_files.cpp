@@ -98,9 +98,9 @@ resolve_tex (url name) {
   url u= url_none ();
   if (ends (s, "mf")) {
     u= resolve_tfm (name);
-#ifdef OS_WIN
-    if (is_none (u)) u= resolve_tfm (replace (s, ".mf", ".tfm"));
-#endif
+    if (os_win () && is_none (u)) {
+      u= resolve_tfm (replace (s, ".mf", ".tfm"));
+    }
   }
   if (ends (s, "tfm")) u= resolve_tfm (name);
   if (ends (s, "pk")) u= resolve_pk (name);
