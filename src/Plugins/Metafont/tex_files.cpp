@@ -31,9 +31,9 @@ static url the_pfb_path= url_none ();
 
 static string
 kpsewhich (string name) {
-  bench_start ("kpsewhich");
+  bench_start ("kpsewhich " * name);
   string which= var_eval_system ("kpsewhich " * name);
-  bench_cumul ("kpsewhich");
+  bench_end ("kpsewhich " * name);
   return which;
 }
 
@@ -67,13 +67,13 @@ static url
 resolve_pfb (url name) {
   url r= resolve (the_pfb_path * name);
   if (!is_none (r)) return r;
-#ifndef OS_WIN // The kpsewhich from MikTeX is bugged for pfb fonts
-  if (get_setting ("KPSEWHICH") == "true") {
-    string which= kpsewhich (as_string (name));
-    if ((which != "") && exists (url_system (which))) return url_system (which);
-    // cout << "Missed " << name << "\n";
+  if (!os_win ()) { // The kpsewhich from MikTeX is bugged for pfb fonts
+    if (get_setting ("KPSEWHICH") == "true") {
+      string which= kpsewhich (as_string (name));
+      if ((which != "") && exists (url_system (which)))
+        return url_system (which);
+    }
   }
-#endif
   return r;
 }
 
