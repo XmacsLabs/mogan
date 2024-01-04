@@ -219,15 +219,17 @@ tt_fast_locate (string name) {
 url
 tt_font_find_sub (string font_basename) {
   if (font_database_exists (font_basename)) {
-    array<string> suffixes= font_database_suffixes (font_basename);
-    for (int i= 0; i < N (suffixes); i++) {
-      string suffix= suffixes[i];
-      if (contains (suffix, tt_allowed_suffixes)) {
-        url u= tt_fast_locate (font_basename);
-        if (!is_none (u)) return u;
-      }
+    array<string> suffixes    = font_database_suffixes (font_basename);
+    bool          flag_tt_only= !contains (string ("tfm"), suffixes);
+    bool          flag_pfb    = contains (string ("tfm"), suffixes);
+    if (flag_tt_only) {
+      return tt_fast_locate (font_basename);
+    }
+    if (flag_pfb) {
+      return tt_locate_pfb (font_basename);
     }
   }
+  debug_fonts << font_basename << " is not in font database!" << LF;
   return tt_locate_pfb (font_basename);
 }
 
