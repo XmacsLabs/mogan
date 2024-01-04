@@ -756,6 +756,14 @@ function main()
                     "url"
                 }
             },
+            {
+                scm_name = "url-descendants",
+                cpp_name = "search_sub_dirs",
+                ret_type = "url",
+                arg_list = {
+                    "url",
+                }
+            },
             -- System/Files/file
             {
                 scm_name = "url-regular?",
