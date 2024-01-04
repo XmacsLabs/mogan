@@ -33,6 +33,7 @@
 static hashmap<string, url> tt_font_locations;
 // A hashset of all basename of the fonts
 static hashset<string> tt_fonts;
+static array<string>   tt_allowed_suffixes= array<string> ("ttf", "ttc", "otf");
 
 static void
 tt_locate_update_cache (url font_u, bool must_in_db= true) {
@@ -159,8 +160,13 @@ tt_locate_all () {
   if (N (tt_font_locations) > 0) return;
 
   bench_start ("tt_locate_all");
-  url suffixes= url ("*.ttf") | url ("*.ttc") | url ("*.otf") | url ("*.TTF") |
-                url ("*.TTC") | url ("*.OTF");
+  url suffixes= url_none ();
+  for (int i= 0; i < N (tt_allowed_suffixes); i++) {
+    string suffix= tt_allowed_suffixes[i];
+    string lo    = string ("*.") * suffix;
+    string up    = string ("*.") * upcase_all (suffix);
+    suffixes     = suffixes | url (lo) | url (up);
+  }
   url all_fonts= expand (complete (tt_font_path () * suffixes));
   url iter     = all_fonts;
   while (is_or (iter)) {
@@ -189,30 +195,22 @@ tt_font_paths () {
 
 static url
 tt_locate_pfb (string name) {
-  /*
-  if (starts (name, "rpag")) name= "uag" * name (4, N (name) - 4) * "8a.pfb";
-  if (starts (name, "rpbk")) name= "ubk" * name (4, N (name) - 4) * "8a.pfb";
-  if (starts (name, "rpcr")) name= "ucr" * name (4, N (name) - 4) * "8a.pfb";
-  if (starts (name, "rphv")) name= "uhv" * name (4, N (name) - 4) * "8a.pfb";
-  if (starts (name, "rpnc")) name= "unc" * name (4, N (name) - 4) * "8a.pfb";
-  if (starts (name, "rppl")) name= "upl" * name (4, N (name) - 4) * "8a.pfb";
-  if (starts (name, "rpsy")) name= "usy" * name (4, N (name));
-  if (starts (name, "rptm")) name= "utm" * name (4, N (name) - 4) * "8a.pfb";
-  if (starts (name, "rpzc")) name= "uzc" * name (4, N (name) - 4) * "8a.pfb";
-  if (starts (name, "rpzd")) name= "uzd" * name (4, N (name));
-  */
   url u= resolve_tex (name * ".pfb");
   return u;
 }
 
 static url
 tt_fast_locate (string name) {
-  array<string> suffixes;
-  suffixes << string ("ttf") << string ("ttc") << string ("otf")
-           << string ("TTF") << string ("TTC") << string ("OTF");
+  array<string> suffixes= tt_allowed_suffixes;
   for (int i= 0; i < N (suffixes); i++) {
-    if (tt_font_locations->contains (name * "." * suffixes[i])) {
-      return tt_font_locations[name * "." * suffixes[i]];
+    string suffix       = suffixes[i];
+    string font_filename= name * "." * suffix;
+    if (tt_font_locations->contains (font_filename)) {
+      return tt_font_locations[font_filename];
+    }
+    font_filename= name * "." * upcase_all (suffix);
+    if (tt_font_locations->contains (font_filename)) {
+      return tt_font_locations[font_filename];
     }
   }
   return url_none ();
@@ -221,18 +219,18 @@ tt_fast_locate (string name) {
 url
 tt_font_find_sub (string font_basename) {
   if (font_database_exists (font_basename)) {
-    return tt_fast_locate (font_basename);
+    array<string> suffixes    = font_database_suffixes (font_basename);
+    bool          flag_tt_only= !contains (string ("tfm"), suffixes);
+    bool          flag_pfb    = contains (string ("tfm"), suffixes);
+    if (flag_tt_only) {
+      return tt_fast_locate (font_basename);
+    }
+    if (flag_pfb) {
+      return tt_locate_pfb (font_basename);
+    }
   }
-  else {
-    debug_fonts << "Font " << font_basename
-                << " does not exist in font database" << LF;
-    debug_fonts << "Please report it to us if it is a ttf/ttc/otf font!" << LF;
-    debug_fonts << "Locating it as " * font_basename * ".pfb, might be slow :("
-                << LF;
-    // If the font is not in font database
-    // It must not be a ttf/ttc/otf/tfm font
-    return tt_locate_pfb (font_basename);
-  }
+  debug_fonts << font_basename << " is not in font database!" << LF;
+  return tt_locate_pfb (font_basename);
 }
 
 url
