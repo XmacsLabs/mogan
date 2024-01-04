@@ -224,7 +224,7 @@ get_kpsepath (string s) {
 void
 reset_tfm_path (bool rehash) {
   (void) rehash;
-  string tfm  = get_setting ("TFM");
+  string tfm  = get_user_preference ("texlive.tfm");
   the_tfm_path= url_here () | search_sub_dirs ("$TEXMACS_HOME_PATH/fonts/tfm") |
                 search_sub_dirs ("$TEXMACS_PATH/fonts/tfm") | "$TEX_TFM_PATH" |
                 ((tfm == "" || tfm == "{}") ? url_none () : tfm);
@@ -240,7 +240,7 @@ reset_tfm_path (bool rehash) {
 void
 reset_pk_path (bool rehash) {
   (void) rehash;
-  string pk  = get_setting ("PK");
+  string pk  = get_user_preference ("texlive.pk");
   the_pk_path= url_here () | get_tm_cache_path () * "fonts/pk" |
                search_sub_dirs ("$TEXMACS_PATH/fonts/pk") | "$TEX_PK_PATH" |
                (pk == "" ? url_none () : pk);
@@ -255,7 +255,7 @@ reset_pk_path (bool rehash) {
 
 void
 reset_pfb_path () {
-  string pfb  = get_setting ("PFB");
+  string pfb  = get_user_preference ("texlive.pfb");
   the_pfb_path= url_here () |
                 search_sub_dirs ("$TEXMACS_HOME_PATH/fonts/type1") |
                 search_sub_dirs ("$TEXMACS_PATH/fonts/type1") |

@@ -73,7 +73,6 @@ init_helper_binaries () {
   }
   else set_user_preference ("texlive.texhash", "false");
 
-  set_setting ("DPI", "600");
 }
 
 /******************************************************************************
