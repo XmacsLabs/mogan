@@ -72,7 +72,6 @@ init_helper_binaries () {
     set_user_preference ("texlive.texhash", "true");
   }
   else set_user_preference ("texlive.texhash", "false");
-
 }
 
 /******************************************************************************
@@ -126,13 +125,13 @@ init_heuristic_tex_paths () {
 #endif
 
 #ifdef OS_WIN
-  set_setting ("TFM", as_string (tfm));
-  set_setting ("PK", as_string (pk));
-  set_setting ("PFB", as_string (pfb));
+  set_user_preference ("texlive.tfm", as_string (tfm));
+  set_user_preference ("texlive.pk", as_string (pk));
+  set_user_preference ("texlive.pfb", as_string (pfb));
 #else
-  set_setting ("TFM", as_string (expand (factor (tfm))));
-  set_setting ("PK", as_string (expand (factor (pk))));
-  set_setting ("PFB", as_string (expand (factor (pfb))));
+  set_user_preference ("texlive.tfm", as_string (expand (factor (tfm))));
+  set_user_preference ("texlive.pk", as_string (expand (factor (pk))));
+  set_user_preference ("texlive.pfb", as_string (expand (factor (pfb))));
 #endif
 }
 
