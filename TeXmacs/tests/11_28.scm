@@ -16,7 +16,7 @@
        (tex-font-list)))
 
 (define (font-dump-basename)
- (map (lambda (x) (display* x) (display "\n"))
+ (map (lambda (x) (display* (string-quote (car x)) " " (string-quote (cadr x)) "\n"))
       (font-tuple-list)))
 
 (tm-define (test_11_28)

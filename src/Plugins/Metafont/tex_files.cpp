@@ -88,10 +88,10 @@ tfm_font_path () {
 url
 resolve_tex (url name) {
   string s= as_string (name);
-  if (is_cached ("font_cache.scm", s)) {
-    url u= url_system (cache_get ("font_cache.scm", s)->label);
+  if (is_cached ("font_basename.scm", s)) {
+    url u= url_system (cache_get ("font_basename.scm", s)->label);
     if (exists (u)) return u;
-    cache_reset ("font_cache.scm", s);
+    cache_reset ("font_basename.scm", s);
   }
 
   bench_start ("resolve_tex " * s);
@@ -107,7 +107,7 @@ resolve_tex (url name) {
   if (ends (s, "pfb")) u= resolve_pfb (name);
   bench_end ("resolve_tex " * s, 10);
 
-  if (!is_none (u)) cache_set ("font_cache.scm", s, as_string (u));
+  if (!is_none (u)) cache_set ("font_basename.scm", s, as_string (u));
   // cout << "Resolve " << name << " -> " << u << "\n";
   return u;
 }
