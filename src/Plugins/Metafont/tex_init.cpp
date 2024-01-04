@@ -41,39 +41,37 @@ init_helper_binaries () {
 
   if (exists_in_path ("mktextfm")) {
     debug_boot << "mktextfm works with your TeX distribution\n";
-    set_setting ("MAKETFM", "mktextfm");
+    set_user_preference ("texlive.maketfm", "mktextfm");
   }
   else if (exists_in_path ("MakeTeXTFM")) {
     debug_boot << "MakeTeXTFM works with your TeX distribution\n";
-    set_setting ("MAKETFM", "MakeTeXTFM");
+    set_user_preference ("texlive.maketfm", "MakeTeXTFM");
   }
   else if (exists_in_path ("maketfm")) {
     debug_boot << "maketfm works with your TeX distribution\n";
-    set_setting ("MAKETFM", "maketfm");
+    set_user_preference ("texlive.maketfm", "maketfm");
   }
-  else set_setting ("MAKETFM", "false");
+  else set_user_preference ("texlive.maketfm", "false");
 
   if (exists_in_path ("mktexpk")) {
     debug_boot << "mktexpk works with your TeX distribution\n";
-    set_setting ("MAKEPK", "mktexpk");
+    set_user_preference ("texlive.mktexpk", "mktexpk");
   }
   else if (exists_in_path ("MakeTeXPK")) {
     debug_boot << "MakeTeXPK works with your TeX distribution\n";
-    set_setting ("MAKEPK", "MakeTeXPK");
+    set_user_preference ("texlive.mktexpk", "MakeTeXPK");
   }
   else if (exists_in_path ("makepk")) {
     debug_boot << "makepk works with your TeX distribution\n";
-    set_setting ("MAKEPK", "makepk");
+    set_user_preference ("texlive.mktexpk", "makepk");
   }
-  else set_setting ("MAKEPK", "false");
+  else set_user_preference ("texlive.mktexpk", "false");
 
   if (exists_in_path ("texhash")) {
     debug_boot << "texhash works with your TeX distribution\n";
-    set_setting ("TEXHASH", "true");
+    set_user_preference ("texlive.texhash", "true");
   }
-  else set_setting ("TEXHASH", "false");
-
-  set_setting ("DPI", "600");
+  else set_user_preference ("texlive.texhash", "false");
 }
 
 /******************************************************************************
@@ -127,13 +125,13 @@ init_heuristic_tex_paths () {
 #endif
 
 #ifdef OS_WIN
-  set_setting ("TFM", as_string (tfm));
-  set_setting ("PK", as_string (pk));
-  set_setting ("PFB", as_string (pfb));
+  set_user_preference ("texlive.tfm", as_string (tfm));
+  set_user_preference ("texlive.pk", as_string (pk));
+  set_user_preference ("texlive.pfb", as_string (pfb));
 #else
-  set_setting ("TFM", as_string (expand (factor (tfm))));
-  set_setting ("PK", as_string (expand (factor (pk))));
-  set_setting ("PFB", as_string (expand (factor (pfb))));
+  set_user_preference ("texlive.tfm", as_string (expand (factor (tfm))));
+  set_user_preference ("texlive.pk", as_string (expand (factor (pk))));
+  set_user_preference ("texlive.pfb", as_string (expand (factor (pfb))));
 #endif
 }
 

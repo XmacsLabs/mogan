@@ -30,9 +30,14 @@ static url the_pfb_path= url_none ();
  * Finding a TeX font
  ******************************************************************************/
 
+bool
+use_texlive_fonts () {
+  return get_user_preference ("texlive:fonts") == "on";
+}
+
 static bool
 use_kpsewhich () {
-  return get_user_preference ("texlive:fonts") == "on" &&
+  return use_texlive_fonts () &&
          get_user_preference ("texlive:kpsewhich") == "true";
 }
 
@@ -125,12 +130,12 @@ void
 make_tex_tfm (string name) {
   string s;
   int    r= 0;
-  if (get_setting ("MAKETFM") == "MakeTeXTFM") {
+  if (get_user_preference ("texlive.maketfm") == "MakeTeXTFM") {
     s= "MakeTeXTFM " * name;
     if (DEBUG_VERBOSE) debug_fonts << "Executing " << s << "\n";
     r= lolly::system::call (s);
   }
-  if (get_setting ("MAKETFM") == "mktextfm") {
+  if (get_user_preference ("texlive.maketfm") == "mktextfm") {
     url tfm_dir ("$TEXMACS_HOME_PATH/fonts/tfm");
     s= "mktextfm " * string ("--destdir ") * as_string (tfm_dir) * " " * name;
     if (DEBUG_VERBOSE) debug_fonts << "Executing " << s << "\n";
@@ -139,7 +144,7 @@ make_tex_tfm (string name) {
     if (ends (name, ".tfm")) superfluous= name (0, N (name) - 4) * ".600pk";
     remove (tfm_dir * superfluous);
   }
-  if (get_setting ("MAKETFM") == "maketfm") {
+  if (get_user_preference ("texlive.maketfm") == "maketfm") {
     if (name (N (name) - 4, N (name)) == ".tfm") name= name (0, N (name) - 4);
     s= "maketfm --dest-dir \"" * get_env ("$TEXMACS_HOME_PATH") *
        "\\fonts\\tfm\" " * name;
@@ -155,14 +160,14 @@ make_tex_pk (string name, int dpi, int design_dpi) {
   int    r     = 0;
   url    pk_dir= get_tm_cache_path () * "fonts/pk";
 
-  if (get_setting ("MAKEPK") == "MakeTeXPK") {
+  if (get_user_preference ("texlive.makepk") == "MakeTeXPK") {
     s= "MakeTeXPK " * name * " " * as_string (dpi) * " " *
        as_string (design_dpi) * " " * as_string (dpi) * "/" *
        as_string (design_dpi) * " localfont";
     if (DEBUG_VERBOSE) debug_fonts << "Executing " << s << "\n";
     r= lolly::system::call (s);
   }
-  if (get_setting ("MAKEPK") == "mktexpk") {
+  if (get_user_preference ("texlive.makepk") == "mktexpk") {
     s= "mktexpk " * string ("--dpi ") * as_string (dpi) * " " *
        string ("--bdpi ") * as_string (design_dpi) * " " * string ("--mag ") *
        as_string (dpi) * "/" * as_string (design_dpi) * " " *
@@ -170,7 +175,7 @@ make_tex_pk (string name, int dpi, int design_dpi) {
     if (DEBUG_VERBOSE) debug_fonts << "Executing " << s << "\n";
     r= lolly::system::call (s);
   }
-  if (get_setting ("MAKEPK") == "makepk") {
+  if (get_user_preference ("texlive.makepk") == "makepk") {
     if (os_win ()) {
       s= "makepk --dest-dir " * raw_quote (as_string (pk_dir)) * " " * name *
          " " * as_string (dpi) * " " * as_string (design_dpi) * " " *
@@ -219,13 +224,12 @@ get_kpsepath (string s) {
 void
 reset_tfm_path (bool rehash) {
   (void) rehash;
-  // if (rehash && (get_setting ("TEXHASH") == "true")) system ("texhash");
-  string tfm  = get_setting ("TFM");
+  string tfm  = get_user_preference ("texlive.tfm");
   the_tfm_path= url_here () | search_sub_dirs ("$TEXMACS_HOME_PATH/fonts/tfm") |
                 search_sub_dirs ("$TEXMACS_PATH/fonts/tfm") | "$TEX_TFM_PATH" |
                 ((tfm == "" || tfm == "{}") ? url_none () : tfm);
-  if ((get_setting ("MAKETFM") != "false") ||
-      (get_setting ("TEXHASH") == "true")) {
+  if ((get_user_preference ("texlive.maketfm") != "false") ||
+      (get_user_preference ("texlive.texhash") == "true")) {
     if (get_user_preference ("texlive:kpsewhich") != "true") {
       the_tfm_path= the_tfm_path | get_kpsepath ("tfm");
     }
@@ -236,13 +240,12 @@ reset_tfm_path (bool rehash) {
 void
 reset_pk_path (bool rehash) {
   (void) rehash;
-  // if (rehash && (get_setting ("TEXHASH") == "true")) system ("texhash");
-  string pk  = get_setting ("PK");
+  string pk  = get_user_preference ("texlive.pk");
   the_pk_path= url_here () | get_tm_cache_path () * "fonts/pk" |
                search_sub_dirs ("$TEXMACS_PATH/fonts/pk") | "$TEX_PK_PATH" |
                (pk == "" ? url_none () : pk);
-  if ((get_setting ("MAKEPK") != "false") ||
-      (get_setting ("TEXHASH") == "true")) {
+  if ((get_user_preference ("texlive:makepk") != "false") ||
+      (get_user_preference ("texlive:texhash") == "true")) {
     if (get_user_preference ("texlive:kpsewhich") != "true") {
       the_pk_path= the_pk_path | get_kpsepath ("pk");
     }
@@ -252,7 +255,7 @@ reset_pk_path (bool rehash) {
 
 void
 reset_pfb_path () {
-  string pfb  = get_setting ("PFB");
+  string pfb  = get_user_preference ("texlive.pfb");
   the_pfb_path= url_here () |
                 search_sub_dirs ("$TEXMACS_HOME_PATH/fonts/type1") |
                 search_sub_dirs ("$TEXMACS_PATH/fonts/type1") |
