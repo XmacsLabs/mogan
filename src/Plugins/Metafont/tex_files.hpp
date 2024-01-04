@@ -21,5 +21,6 @@ void reset_pk_path (bool rehash= true);
 void reset_pfb_path ();
 url  resolve_tex (url name);
 bool exists_in_tex (url font_name);
+bool use_texlive_fonts ();
 
 #endif // defined TEX_FILES_H
