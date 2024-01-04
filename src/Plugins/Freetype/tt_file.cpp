@@ -53,7 +53,7 @@ tt_locate_update_cache (url font_u, bool must_in_db= true) {
 
   tt_font_locations (name)= font_u;
   tt_fonts->insert (base_name);
-  cache_set ("font_cache.scm", "ttf:" * base_name, as_string (font_u));
+  cache_set ("font_basename.scm", name, as_string (font_u));
 }
 
 url
