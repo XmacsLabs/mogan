@@ -236,25 +236,25 @@ tt_font_find (string font_basename) {
     }
     if (flag_truetype) {
       tt_locate_all ();
-      url u= tt_fast_locate (font_basename);
+      url    u            = tt_fast_locate (font_basename);
+      string font_filename= as_string (tail (u));
+      string font_fullpath= as_string (u);
       if (exists (u)) {
-        string font_filename= as_string (tail (u));
-        string font_fullpath= as_string (u);
         cache_set ("font_basename.scm", font_filename, font_fullpath);
+        return u;
+      }
+      else {
+        cache_reset ("font_basename.scm", font_filename);
+        return url_none ();
       }
     }
-    else {
-      // all TeXmacs-bundled tex fonts are cached
-      // locate a built-in tex font is not necessary
-    }
   }
+  // If a truetype font is not in the font database, it will not be found
+  // To support a font, we must first add it to the font database
+  // Import font is the way for user to add the font to the local font database
+  // For developer, we can add it to the global font database
 
-  if (get_user_preference ("texlive:fonts") == "on") {
-    return tt_locate_pfb (font_basename);
-  }
-  else {
-    return url_none ();
-  }
+  return tt_locate_pfb (font_basename);
 }
 
 bool
@@ -303,9 +303,9 @@ tt_find_name (string name, int size) {
     cache_reset ("font_cache.scm", s);
   }
 
-  bench_start ("tt_find_name " * name * " " * string (size));
+  bench_start ("tt_find_name " * name * " " * as_string (size));
   string r= tt_find_name_sub (name, size);
-  bench_end ("tt_find_name " * name * " " * string (size), 10);
+  bench_end ("tt_find_name " * name * " " * as_string (size), 10);
 
   if (r != "") cache_set ("font_cache.scm", s, r);
   return r;
