@@ -69,9 +69,9 @@ init_helper_binaries () {
 
   if (exists_in_path ("texhash")) {
     debug_boot << "texhash works with your TeX distribution\n";
-    set_setting ("TEXHASH", "true");
+    set_user_preference ("texlive.texhash", "true");
   }
-  else set_setting ("TEXHASH", "false");
+  else set_user_preference ("texlive.texhash", "false");
 
   set_setting ("DPI", "600");
 }

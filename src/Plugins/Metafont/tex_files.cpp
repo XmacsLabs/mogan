@@ -224,13 +224,12 @@ get_kpsepath (string s) {
 void
 reset_tfm_path (bool rehash) {
   (void) rehash;
-  // if (rehash && (get_setting ("TEXHASH") == "true")) system ("texhash");
   string tfm  = get_setting ("TFM");
   the_tfm_path= url_here () | search_sub_dirs ("$TEXMACS_HOME_PATH/fonts/tfm") |
                 search_sub_dirs ("$TEXMACS_PATH/fonts/tfm") | "$TEX_TFM_PATH" |
                 ((tfm == "" || tfm == "{}") ? url_none () : tfm);
   if ((get_user_preference ("texlive.maketfm") != "false") ||
-      (get_setting ("TEXHASH") == "true")) {
+      (get_user_preference ("texlive.texhash") == "true")) {
     if (get_user_preference ("texlive:kpsewhich") != "true") {
       the_tfm_path= the_tfm_path | get_kpsepath ("tfm");
     }
@@ -241,13 +240,12 @@ reset_tfm_path (bool rehash) {
 void
 reset_pk_path (bool rehash) {
   (void) rehash;
-  // if (rehash && (get_setting ("TEXHASH") == "true")) system ("texhash");
   string pk  = get_setting ("PK");
   the_pk_path= url_here () | get_tm_cache_path () * "fonts/pk" |
                search_sub_dirs ("$TEXMACS_PATH/fonts/pk") | "$TEX_PK_PATH" |
                (pk == "" ? url_none () : pk);
-  if ((get_user_preference ("texlive.makepk") != "false") ||
-      (get_setting ("TEXHASH") == "true")) {
+  if ((get_user_preference ("texlive:makepk") != "false") ||
+      (get_user_preference ("texlive:texhash") == "true")) {
     if (get_user_preference ("texlive:kpsewhich") != "true") {
       the_pk_path= the_pk_path | get_kpsepath ("pk");
     }
