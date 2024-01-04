@@ -299,10 +299,9 @@ tt_find_name (string name, int size) {
     cache_reset ("font_cache.scm", s);
   }
 
-  bench_start ("tt find name");
+  bench_start ("tt_find_name " * name * " " * string(size));
   string r= tt_find_name_sub (name, size);
-  // cout << name << size << " -> " << r << "\n";
-  bench_cumul ("tt find name");
+  bench_end ("tt_find_name " * name * " " * string(size), 10);
 
   if (r != "") cache_set ("font_cache.scm", s, r);
   return r;
