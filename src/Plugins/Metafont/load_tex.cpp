@@ -17,6 +17,7 @@
 #include "file.hpp"
 #include "path.hpp"
 #include "preferences.hpp"
+#include "tex_files.hpp"
 #include "tm_file.hpp"
 #include "tm_timer.hpp"
 
@@ -41,7 +42,8 @@ mag (double dpi, double size, double dsize) {
 bool
 try_tfm (string family, int size, int osize, tex_font_metric& tfm, bool make) {
   // cout << "Try tfm " << family << size << " (" << osize << ")\n";
-  make           = make && get_setting ("MAKETFM") != "false";
+  make= make && use_texlive_fonts () &&
+        get_user_preference ("texlive.maketfm") != "false";
   string name_tfm= family * as_string (osize) * ".tfm";
   if (tex_font_metric::instances->contains (name_tfm)) {
     tfm= tex_font_metric (name_tfm);
@@ -133,7 +135,7 @@ load_tex_tfm (string family, int size, int dsize, tex_font_metric& tfm) {
     if (try_tfm (family, as_int (cache_get ("font_cache.scm", var)->label),
                  size, tfm, false))
       return true;
-  if (get_setting ("MAKETFM") != "false")
+  if (get_user_preference ("texlive.maketfm") != "false")
     if (load_tex_tfm (family, size, dsize, tfm, false)) return true;
   return load_tex_tfm (family, size, dsize, tfm, true);
 }
@@ -220,7 +222,8 @@ try_pk (string family, int size, int dpi, int dsize, tex_font_metric& tfm,
       if (DEBUG_STD) debug_fonts << "Error during " << name << " loading\n";
       return false;
     }
-    if (get_setting ("MAKEPK") != "false") {
+    if (use_texlive_fonts () &&
+        get_user_preference ("texlive.makepk") != "false") {
       system_wait ("Generating font file", name);
       make_tex_pk (family * size_name, dpi, as_int (get_setting ("DPI")));
       system_wait ("");

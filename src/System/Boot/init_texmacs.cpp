@@ -449,6 +449,7 @@ setup_texmacs () {
   debug_boot << HRULE;
 
   set_setting ("VERSION", XMACS_VERSION);
+  set_setting ("DPI", "600");
   
   string s= scheme_tree_to_block (texmacs_settings);
   //cout << "settings_t= " << texmacs_settings << "\n";
