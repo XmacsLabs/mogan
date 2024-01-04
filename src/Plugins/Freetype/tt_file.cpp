@@ -222,16 +222,17 @@ tt_font_find (string font_basename) {
     bool          flag_truetype= true;
     array<string> suffixes     = font_database_suffixes (font_basename);
     for (int i= 0; i < N (suffixes); i++) {
-      string suf          = suffixes[i];
-      string font_filename= font_basename * suf;
-      if (is_cached ("font_basename.scm", font_filename)) {
-        url u=
-            url_system (cache_get ("font_basename.scm", font_filename)->label);
-        if (exists (u)) return u;
-        cache_reset ("font_basename.scm", font_filename);
-      }
+      string suf= suffixes[i];
       if (!contains (suf, tt_allowed_suffixes)) {
         flag_truetype= false;
+      }
+      if (flag_truetype) {
+        string filename= font_basename * "." * suf;
+        if (is_cached ("font_basename.scm", filename)) {
+          url u= url_system (cache_get ("font_basename.scm", filename)->label);
+          if (exists (u)) return u;
+          cache_reset ("font_basename.scm", filename);
+        }
       }
     }
     if (flag_truetype) {
