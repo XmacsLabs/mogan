@@ -18,6 +18,7 @@
 #include "file.hpp"
 #include "locale.hpp"
 #include "sys_utils.hpp"
+#include "tm_file.hpp"
 #include "tree.hpp"
 #include <lolly/data/base64.hpp>
 #include <lolly/data/numeral.hpp>

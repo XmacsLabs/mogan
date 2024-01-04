@@ -53,7 +53,7 @@ tt_locate_update_cache (url font_u, bool must_in_db= true) {
 
   tt_font_locations (name)= font_u;
   tt_fonts->insert (base_name);
-  cache_set ("font_cache.scm", "ttf:" * base_name, as_string (font_u));
+  cache_set ("font_basename.scm", name, as_string (font_u));
 }
 
 url
@@ -217,40 +217,45 @@ tt_fast_locate (string name) {
 }
 
 url
-tt_font_find_sub (string font_basename) {
+tt_font_find (string font_basename) {
   if (font_database_exists (font_basename)) {
-    array<string> suffixes    = font_database_suffixes (font_basename);
-    bool          flag_tt_only= !contains (string ("tfm"), suffixes);
-    bool          flag_pfb    = contains (string ("tfm"), suffixes);
-    if (flag_tt_only) {
-      return tt_fast_locate (font_basename);
+    bool          flag_truetype= true;
+    array<string> suffixes     = font_database_suffixes (font_basename);
+    for (int i= 0; i < N (suffixes); i++) {
+      string suf= suffixes[i];
+      if (!contains (suf, tt_allowed_suffixes)) {
+        flag_truetype= false;
+      }
+      if (flag_truetype) {
+        string filename= font_basename * "." * suf;
+        if (is_cached ("font_basename.scm", filename)) {
+          url u= url_system (cache_get ("font_basename.scm", filename)->label);
+          if (exists (u)) return u;
+          cache_reset ("font_basename.scm", filename);
+        }
+      }
     }
-    if (flag_pfb) {
-      return tt_locate_pfb (font_basename);
+    if (flag_truetype) {
+      tt_locate_all ();
+      url    u            = tt_fast_locate (font_basename);
+      string font_filename= as_string (tail (u));
+      string font_fullpath= as_string (u);
+      if (exists (u)) {
+        cache_set ("font_basename.scm", font_filename, font_fullpath);
+        return u;
+      }
+      else {
+        cache_reset ("font_basename.scm", font_filename);
+        return url_none ();
+      }
     }
   }
-  debug_fonts << font_basename << " is not in font database!" << LF;
+  // If a truetype font is not in the font database, it will not be found
+  // To support a font, we must first add it to the font database
+  // Import font is the way for user to add the font to the local font database
+  // For developer, we can add it to the global font database
+
   return tt_locate_pfb (font_basename);
-}
-
-url
-tt_font_find (string name) {
-  string s= "ttf:" * name;
-  if (is_cached ("font_cache.scm", s)) {
-    string r= cache_get ("font_cache.scm", s)->label;
-    if (r == "") return url_none ();
-    url u= url_system (r);
-    if (exists (u)) return u;
-    // if the font does not exist, clear the cache in `font_cache.scm`
-    cache_reset ("font_cache.scm", s);
-  }
-
-  tt_locate_all ();
-
-  url r= tt_font_find_sub (name);
-  if (is_none (r)) cache_set ("font_cache.scm", s, "");
-  else cache_set ("font_cache.scm", s, as_string (r));
-  return r;
 }
 
 bool
@@ -299,10 +304,9 @@ tt_find_name (string name, int size) {
     cache_reset ("font_cache.scm", s);
   }
 
-  bench_start ("tt find name");
+  bench_start ("tt_find_name " * name * " " * as_string (size));
   string r= tt_find_name_sub (name, size);
-  // cout << name << size << " -> " << r << "\n";
-  bench_cumul ("tt find name");
+  bench_end ("tt_find_name " * name * " " * as_string (size), 10);
 
   if (r != "") cache_set ("font_cache.scm", s, r);
   return r;

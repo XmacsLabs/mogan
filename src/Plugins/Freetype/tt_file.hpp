@@ -18,8 +18,8 @@
 url        tt_font_path ();
 array<url> tt_font_paths ();
 void       tt_extend_font_path (url u);
-bool       tt_font_exists (string name);
-url        tt_font_find (string name);
+bool       tt_font_exists (string font_basename);
+url        tt_font_find (string font_basename);
 string     tt_find_name (string name, int size);
 
 #ifdef USE_FREETYPE

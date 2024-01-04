@@ -131,6 +131,7 @@ font_database_build_suffixes (url u) {
 static void
 font_database_load_suffixes_sub (url path) {
   if (exists (path)) {
+    bench_start ("db_load_suffixes " * as_string (path));
     string s= string_load (path);
     tree   t= block_to_scheme_tree (s);
     for (int i= 0; i < N (t); i++)
@@ -142,6 +143,7 @@ font_database_load_suffixes_sub (url path) {
           font_database_build_suffixes (file_name);
         }
       }
+    bench_end ("db_load_suffixes " * as_string (path), 30);
   }
 }
 
