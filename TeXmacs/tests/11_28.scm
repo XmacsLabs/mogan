@@ -3,7 +3,7 @@
    (url-expand
     (url-complete
      (url-append (url-descendants "$TEXMACS_PATH/fonts")
-                 (url-or (url-wildcard ".pfb")
+                 (url-or (url-wildcard "*.pfb")
                          (url-wildcard "*.tfm")))   
      "fr"))))
 
@@ -16,8 +16,10 @@
        (tex-font-list)))
 
 (define (font-dump-basename)
+ (display* "(tuple" "\n")
  (map (lambda (x) (display* (string-quote (car x)) " " (string-quote (cadr x)) "\n"))
-      (font-tuple-list)))
+      (font-tuple-list))
+ (display* ")" "\n"))
 
 (tm-define (test_11_28)
  (noop))
