@@ -167,8 +167,8 @@ cache_save (string buffer) {
 
 static void
 cache_init (string buffer) {
-  if (buffer == "font_cache.scm") {
-    url cache_file = url ("$TEXMACS_PATH/fonts/font_cache.scm");
+  if (buffer == "font_cache.scm" || buffer == "font_basename.scm") {
+    url cache_file = url ("$TEXMACS_PATH/fonts/") * buffer;
     if (exists (cache_file)) {
       tree t= scheme_to_tree (string_load (cache_file));
       for (int i=0; i<N(t)-1; i+=2)
@@ -196,6 +196,7 @@ cache_load (string buffer) {
 void
 cache_memorize () {
   cache_save ("font_cache.scm");
+  cache_save ("font_basename.scm");
   cache_save ("validate_cache.scm");
 }
 
@@ -205,6 +206,7 @@ cache_refresh () {
   cache_loaded = hashset<string> ();
   cache_changed= hashset<string> ();
   cache_load ("font_cache.scm");
+  cache_load ("font_basename.scm");
   cache_load ("validate_cache.scm");
 }
 
