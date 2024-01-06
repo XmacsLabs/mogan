@@ -4,7 +4,9 @@ Mogan STEM Suite v1.2.1:
 
 ## Known Issues
 + It will crash easily when activating the structural search/replacing window
+  + Solution: use v1.2.2 or later version
 + It will crash easily when switching to `Edit->Preference->General->Buffer Management->Documents in separate windows`
+  + Solution: use v1.2.2 or later version
 
 ## Major Changes
 + Fixed failure of `File->Export->LaTeX` introduced in v1.2.0
@@ -21,4 +23,4 @@ Mogan STEM Suite v1.2.1:
 + Style: invalidate the style cache when a style is changed
 + Editing: Switch to the kde shortcut style for Deepin desktop and KDE desktop on Linux
 + Versioning: Fixed several bugs on Git versioning
-+ Stability：Fixed several severl bugs which will freeze or crash Mogan
++ Stability：Fixed several severe bugs which will freeze or crash Mogan
