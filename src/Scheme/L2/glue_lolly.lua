@@ -758,7 +758,7 @@ function main()
             },
             {
                 scm_name = "url-descendants",
-                cpp_name = "search_sub_dirs",
+                cpp_name = "subdirectories",
                 ret_type = "url",
                 arg_list = {
                     "url",
