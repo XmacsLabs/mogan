@@ -389,6 +389,7 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("pdfhummus")
     add_packages("s7")
+    add_packages("libgit2")
     if is_plat("linux") then
         add_packages("fontconfig")
     end
