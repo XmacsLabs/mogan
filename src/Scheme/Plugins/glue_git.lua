@@ -19,6 +19,16 @@ function main()
                 cpp_name = "libgit2_version",
                 ret_type = "string"
             },
+            {
+                scm_name = "git-load-blob",
+                cpp_name = "git_load_blob",
+                ret_type = "string",
+                arg_list = {
+                    "string",
+                    "url",
+                    "url"
+                }
+            },
         }
     }
 end
