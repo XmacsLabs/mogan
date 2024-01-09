@@ -1,7 +1,4 @@
 {
-    __meta__ = {
-        version = "1.0"
-    },
     ["linux|x86_64"] = {
         ["apt::libjpeg62-turbo-dev#31fecfc4"] = {
             version = "latest"
@@ -60,7 +57,7 @@
         ["libjpeg#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "b0f8a0654cdf3672eb65e050768bfbfb64b24210",
+                commit = "e4a467ab6e25d9afa5324cf536141660a5c1eef4",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "1.5.2"
@@ -68,18 +65,18 @@
         ["libpng#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e4a467ab6e25d9afa5324cf536141660a5c1eef4",
+                commit = "22223c3e860144e789c3c986e064369d66f37573",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "1.6.36"
         },
         ["lolly#31fecfc4"] = {
-            version = "v1.3.14"
+            version = "v1.3.15"
         },
         ["openssl#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e4a467ab6e25d9afa5324cf536141660a5c1eef4",
+                commit = "22223c3e860144e789c3c986e064369d66f37573",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "1.1.1d"
@@ -103,7 +100,7 @@
         ["pkg-config#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e4a467ab6e25d9afa5324cf536141660a5c1eef4",
+                commit = "22223c3e860144e789c3c986e064369d66f37573",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "0.29"
@@ -127,7 +124,7 @@
         ["zlib#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e4a467ab6e25d9afa5324cf536141660a5c1eef4",
+                commit = "22223c3e860144e789c3c986e064369d66f37573",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "1.2.11"
@@ -207,7 +204,7 @@
             version = "v1.6.37"
         },
         ["lolly#31fecfc4"] = {
-            version = "v1.3.14"
+            version = "v1.3.15"
         },
         ["pdfhummus 4.6.2#23149c54"] = {
             repo = {
@@ -241,6 +238,9 @@
             },
             version = "1.2.11"
         }
+    },
+    __meta__ = {
+        version = "1.0"
     },
     ["windows|x64"] = {
         ["aqt#31fecfc4"] = {
@@ -324,7 +324,7 @@
             version = "v1.6.37"
         },
         ["lolly#31fecfc4"] = {
-            version = "v1.3.14"
+            version = "v1.3.15"
         },
         ["nasm#31fecfc4"] = {
             repo = {

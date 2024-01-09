@@ -18,7 +18,7 @@
 local S7_VERSION = "2023.04.13"
 local QT6_VERSION = "6.5.3"
 local QTIFW_VERSION = "4.6.0"
-local LOLLY_VERSION = "1.3.14"
+local LOLLY_VERSION = "1.3.15"
 local TBOX_VERSION = "1.7.5"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
@@ -43,7 +43,7 @@ package("lolly")
         add_deps("cpr")
     end
 
-    add_versions("v" .. LOLLY_VERSION, "390ee763ad6898c49f036ae3b66773672806d932")
+    add_versions("v" .. LOLLY_VERSION, "a6bcf19a3944d67f2f498975cf3206a1d9482148")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
