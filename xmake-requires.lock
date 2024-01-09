@@ -1,4 +1,7 @@
 {
+    __meta__ = {
+        version = "1.0"
+    },
     ["linux|x86_64"] = {
         ["apt::libcurl4-openssl-dev#31fecfc4"] = {
             version = "latest"
@@ -188,14 +191,6 @@
             },
             version = "v1.7.1"
         },
-        ["libiconv 1.17#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "1.17"
-        },
         ["libjpeg#31fecfc4"] = {
             repo = {
                 branch = "master",
@@ -247,9 +242,6 @@
             },
             version = "1.2.11"
         }
-    },
-    __meta__ = {
-        version = "1.0"
     },
     ["windows|x64"] = {
         ["aqt#31fecfc4"] = {

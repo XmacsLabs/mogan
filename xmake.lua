@@ -389,7 +389,9 @@ target("libmogan") do
     add_tm_configure("libmogan", TM_CONFIGURE_VARS)
 
     add_packages("lolly")
-    add_packages("libiconv")
+    if not is_plat("macosx") then
+        add_packages("libiconv")
+    end
     add_packages("freetype")
     add_packages("pdfhummus")
     add_packages("s7")
@@ -402,6 +404,8 @@ target("libmogan") do
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
     elseif is_plat("windows") then
         add_syslinks("secur32", {public = true})
+    elseif is_plat("macosx") then
+        add_syslinks("iconv")
     end
     
     ---------------------------------------------------------------------------
