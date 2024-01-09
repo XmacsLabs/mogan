@@ -13,6 +13,7 @@
 #include "image_files.hpp"
 #include "true_color.hpp"
 #include "tm_url.hpp"
+#include "file.hpp"
 #include "colors.hpp"
 #include "tree_analyze.hpp"
 

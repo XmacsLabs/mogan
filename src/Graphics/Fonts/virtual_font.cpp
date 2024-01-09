@@ -275,7 +275,7 @@ virtual_font_rep::supported (scheme_tree t, bool svg) {
   if (is_tuple (t, "with", 3) && is_atomic (t[1])) {
     tree var= t[1];
     tree val= exec (t[2]);
-    return supported (replace (t[3], var, val), svg);
+    return supported (tree_replace (t[3], var, val), svg);
   }
 
   if (is_tuple (t, "or") && N (t) >= 2) {
@@ -473,7 +473,7 @@ virtual_font_rep::compile_bis (scheme_tree t, metric& ex) {
   if (is_tuple (t, "with", 3) && is_atomic (t[1])) {
     tree var= t[1];
     tree val= exec (t[2]);
-    return compile (replace (t[3], var, val), ex);
+    return compile (tree_replace (t[3], var, val), ex);
   }
 
   if (is_tuple (t, "or") && N (t) >= 2) {
@@ -1182,7 +1182,7 @@ virtual_font_rep::draw_tree (renderer ren, scheme_tree t, SI x, SI y) {
   if (is_tuple (t, "with", 3) && is_atomic (t[1])) {
     tree var= t[1];
     tree val= exec (t[2]);
-    draw_tree (ren, replace (t[3], var, val), x, y);
+    draw_tree (ren, tree_replace (t[3], var, val), x, y);
     return;
   }
 
