@@ -148,7 +148,6 @@ function add_requires_of_mogan()
     end
 
     -- package: libgit2
-    set_configvar("LIBGIT2_VERSION", LIBGIT2_VERSION)
     if is_plat ("linux") and using_apt() and (not (linuxos.name() == "uos")) then
         add_requires("apt::libgit2-dev", {alias="libgit2"})
     elseif not is_plat("wasm") then
