@@ -25,6 +25,7 @@ configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
 --- Project: Mogan STEM Suite
 ---
 set_project("Mogan STEM Suite")
+set_policy("package.requires_lock", true)
 local TEXMACS_VERSION = "2.1.2"
 local XMACS_VERSION="1.2.3-rc1"
 local CONFIG_USER = "XmacsLabs"
