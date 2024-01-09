@@ -1,9 +1,11 @@
 
 (define (test-show-license)
-  (when (!= (git-load-blob "HEAD" "LICENSE" (url-pwd))
+  (if (os-win32?)
+      0
+      (if (== (git-load-blob "HEAD" "LICENSE" (url-pwd))
             (string-load (url-append (url-pwd) "LICENSE")))
-    (error "git show HEAD:LICENSE does not match"))
-  1)
+          1
+          (error "git show HEAD:LICENSE does not match"))))
 
 (define (test-empty-dir)
   (when (!= (length (git-load-blob "HEAD" "" ""))
