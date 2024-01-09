@@ -11,6 +11,7 @@ on:
       - 'xmake.lua'
       - 'xmake/packages.lua'
       - 'xmake/research.lua'
+      - 'xmake-requires.lock'
       - '.github/workflows/ci-xmake-windows.yml'
   pull_request:
     branches: [ branch-1.2 ]
@@ -22,6 +23,7 @@ on:
       - 'xmake.lua'
       - 'xmake/packages.lua'
       - 'xmake/research.lua'
+      - 'xmake-requires.lock'
       - '.github/workflows/ci-xmake-windows.yml'
   workflow_dispatch:
 
@@ -49,13 +51,13 @@ jobs:
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
-          key: ${{ runner.os }}-windows-${{ hashFiles('**/packages.lua') }}
+          key: ${{ runner.os }}-${{ runner.arch }}-xrepo-${{ hashFiles('xmake-requires.lock') }}
       - name: cache xmake
         uses: actions/cache@v2
         with:
           path: |
             ${{ github.workspace }}/build/.build_cache
-          key: ${{ runner.os }}-windows-${{ hashFiles('**/xmake.lua') }}
+          key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('xmake-requires.lock') }}
       - name: config
         run: xmake config --policies=build.ccache --yes -vD -m releasedbg --plat=windows
       - name: build
