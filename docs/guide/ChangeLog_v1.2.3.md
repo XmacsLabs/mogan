@@ -10,3 +10,6 @@
   + Improve support on the Noto CJK fonts
   + Set default CJK fonts to Noto CJK on all platform if exists
   + Support CESI fonts
+
+## Changes for Developer
++ Use `xmake-requires.lock` to make the build system more reproducible
