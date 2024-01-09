@@ -27,6 +27,7 @@ local FREETYPE_VERSION = "2.12.1"
 local LIBPNG_VERSION = "1.6.37"
 local LIBJPEG_VERSION = "v9e"
 local LIBICONV_VERSION = "1.17"
+local LIBGIT2_VERSION = "1.7.1"
 
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
 package("lolly")
@@ -139,5 +140,11 @@ function add_requires_of_mogan()
         add_requires("libiconv "..LIBICONV_VERSION, {system=false})
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
         add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
+    end
+
+    -- package: libgit2
+    set_configvar("LIBGIT2_VERSION", LIBGIT2_VERSION)
+    if not is_plat("wasm") then
+        add_requires("libgit2 "..LIBGIT2_VERSION, {system=false})
     end
 end

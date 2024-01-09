@@ -42,6 +42,7 @@ local TM_CONFIGURE_VARS = {
     tm_stable = "Texmacs-" .. STABLE_VERSION,
     tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
     LOLLY_VERSION = LOLLY_VERSION,
+    LIBGIT2_VERSION = LIBGIT2_VERSION,
 }
 
 
@@ -252,6 +253,7 @@ add_configfiles("src/System/config.h.xmake", {
         USE_FONTCONFIG = is_plat("linux") and (not linuxos.name() == "uos"),
         USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
         USE_PLUGIN_GS = not is_plat("wasm"),
+        USE_PLUGIN_GIT = not is_plat("wasm"),
     }
 })
 
@@ -361,6 +363,7 @@ plugin_latex_preview_srcs = {"src/Plugins/LaTeX_Preview/**.cpp"}
 plugin_bibtex_srcs = { "src/Plugins/Bibtex/**.cpp" }
 plugin_openssl_srcs = { "src/Plugins/Openssl/**.cpp" }
 plugin_updater_srcs = { "src/Plugins/Updater/**.cpp" }
+plugin_git_srcs = { "src/Plugins/Git/**.cpp" }
 
 
 target("libmogan") do
@@ -389,6 +392,7 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("pdfhummus")
     add_packages("s7")
+    add_packages("libgit2")
     if is_plat("linux") then
         add_packages("fontconfig")
     end
@@ -424,6 +428,7 @@ target("libmogan") do
     add_files(plugin_xml_srcs)
     add_files(plugin_html_srcs)
     add_files(plugin_pdf_srcs)
+    add_files(plugin_git_srcs)
 
     add_mxflags("-fno-objc-arc")
     before_build(function (target)
