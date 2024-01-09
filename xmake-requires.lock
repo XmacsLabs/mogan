@@ -18,6 +18,9 @@
         ["apt::libpng-dev#31fecfc4"] = {
             version = "latest"
         },
+        ["apt::zlib1g-dev#31fecfc4"] = {
+            version = "latest"
+        },
         ["cmake#31fecfc4"] = {
             repo = {
                 branch = "master",
