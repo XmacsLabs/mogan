@@ -43,7 +43,7 @@ package("lolly")
         add_deps("cpr")
     end
 
-    add_versions("v" .. LOLLY_VERSION, "b34f44bb3a505e2e9d2897bd3cb831aaa722238d")
+    add_versions("v" .. LOLLY_VERSION, "390ee763ad6898c49f036ae3b66773672806d932")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
