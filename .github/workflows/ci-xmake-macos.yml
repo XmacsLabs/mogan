@@ -10,6 +10,7 @@ on:
       - 'xmake.lua'
       - 'xmake/packages.lua'
       - 'xmake/research.lua'
+      - 'xmake-requires.lock'
       - '.github/workflows/ci-xmake-macos.yml'
   pull_request:
     branches: [ branch-1.2 ]
@@ -20,6 +21,7 @@ on:
       - 'xmake.lua'
       - 'xmake/packages.lua'
       - 'xmake/research.lua'
+      - 'xmake-requires.lock'
       - '.github/workflows/ci-xmake-macos.yml'
 
 jobs:
@@ -37,7 +39,7 @@ jobs:
           path: |
             ${{github.workspace}}/build/.build_cache
             /Users/runner/.xmake
-          key: ${{ runner.os }}-xmake-${{ hashFiles('**/xmake.lua') }}
+          key: xmake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('xmake-requires.lock') }}
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -61,14 +63,14 @@ jobs:
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
-          key: ${{ runner.os }}-xrepo-qt${{ matrix.qt_ver }}-${{ hashFiles('**/packages.lua') }}
+          key: xrepo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('xmake-requires.lock') }}
 
       - name: cache xmake
         uses: actions/cache@v3
         with:
           path: |
             ${{ runner.workspace }}/build/.build_cache
-          key: ${{ runner.os }}-xmake-build-${{ hashFiles('**/xmake.lua') }}
+          key: xmake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('xmake-requires.lock') }}
 
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
