@@ -209,7 +209,6 @@ else
 end
 
 -- package: libgit2
-set_configvar("LIBGIT2_VERSION", LIBGIT2_VERSION)
 if not is_plat("wasm") then
     add_requires("libgit2 "..LIBGIT2_VERSION, {system=false})
 end
