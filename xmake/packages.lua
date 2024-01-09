@@ -140,7 +140,9 @@ function add_requires_of_mogan()
         end
     else
     -- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
-        add_requires("libiconv "..LIBICONV_VERSION, {system=false})
+        if not is_plat ("macosx") then
+            add_requires("libiconv "..LIBICONV_VERSION, {system=false})
+        end
         add_requires("freetype "..FREETYPE_VERSION, {system=false})
         add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
     end
