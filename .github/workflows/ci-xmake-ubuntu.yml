@@ -79,7 +79,7 @@ jobs:
           key: ${{ runner.os }}-build-qt${{ matrix.qt_ver }}-${{ hashFiles('xmake-requires.lock') }}
 
       - name: config
-        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
+        run: xmake config -vD --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
         env:
           INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
       - name: build

@@ -43,7 +43,6 @@ local TM_CONFIGURE_VARS = {
     tm_stable = "Texmacs-" .. STABLE_VERSION,
     tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
     LOLLY_VERSION = LOLLY_VERSION,
-    LIBGIT2_VERSION = LIBGIT2_VERSION,
 }
 
 
