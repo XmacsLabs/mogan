@@ -9,11 +9,13 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#ifndef PLUGIN_GIT_HPP 
+#ifndef PLUGIN_GIT_HPP
 #define PLUGIN_GIT_HPP
 
 #include "string.hpp"
+#include "url.hpp"
 
 string libgit2_version ();
+string git_load_blob (string rev, url u, url repo_u= url_none ());
 
 #endif
