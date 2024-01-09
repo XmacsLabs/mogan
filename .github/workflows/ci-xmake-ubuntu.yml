@@ -13,6 +13,7 @@ on:
       - 'xmake.lua'
       - 'xmake/packages.lua'
       - 'xmake/research.lua'
+      - 'xmake-requires.lock'
   pull_request:
     branches: [ branch-1.2 ]
     paths:
@@ -25,6 +26,7 @@ on:
       - 'xmake.lua'
       - 'xmake/packages.lua'
       - 'xmake/research.lua'
+      - 'xmake-requires.lock'
 
 jobs:
   linuxbuild:
@@ -67,14 +69,14 @@ jobs:
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages 
-          key: ${{ runner.os }}-xrepo-qt${{ matrix.qt_ver }}-${{ hashFiles('**/packages.lua') }}
+          key: ${{ runner.os }}-xrepo-qt${{ matrix.qt_ver }}-${{ hashFiles('xmake-requires.lock') }}
           
       - name: cache xmake
         uses: actions/cache@v3
         with:
           path: |
             ${{ runner.workspace }}/build/.build_cache
-          key: ${{ runner.os }}-build-qt${{ matrix.qt_ver }}-${{ hashFiles('**/xmake.lua') }}
+          key: ${{ runner.os }}-build-qt${{ matrix.qt_ver }}-${{ hashFiles('xmake-requires.lock') }}
 
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
