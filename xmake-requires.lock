@@ -1,5 +1,14 @@
 {
     ["linux|x86_64"] = {
+        ["apt::libcurl4-openssl-dev#31fecfc4"] = {
+            version = "latest"
+        },
+        ["apt::libfreetype-dev#31fecfc4"] = {
+            version = "latest"
+        },
+        ["apt::libgit2-dev#31fecfc4"] = {
+            version = "latest"
+        },
         ["apt::libjpeg62-turbo-dev#31fecfc4"] = {
             version = "latest"
         },

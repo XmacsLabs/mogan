@@ -81,7 +81,7 @@ function add_requires_of_mogan()
     add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
 
     -- package: libcurl
-    if is_plat("linux") and using_apt() and (not linuxos.name() == "uos") then
+    if is_plat("linux") and using_apt() then
         if linuxos.name() == "uos" then
             add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
         else
@@ -90,6 +90,7 @@ function add_requires_of_mogan()
         end
     else
         add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
+        add_requireconfs("lolly.cpr.libcurl.cmake", {version = CMAKE_VERSION, system = false, override=true})
     end
 
     -- package: fontconfig
@@ -105,6 +106,7 @@ function add_requires_of_mogan()
     set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
     if not is_plat("wasm") then
         add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+        add_requireconfs("pdfhummus.cmake", {version = CMAKE_VERSION, system = false, override=true})
     end
 
     -- package: libpng
@@ -145,7 +147,9 @@ function add_requires_of_mogan()
 
     -- package: libgit2
     set_configvar("LIBGIT2_VERSION", LIBGIT2_VERSION)
-    if not is_plat("wasm") then
+    if is_plat ("linux") and using_apt() and (not (linuxos.name() == "uos")) then
+        add_requires("apt::libgit2-dev", {alias="libgit2"})
+    elseif not is_plat("wasm") then
         add_requires("libgit2 "..LIBGIT2_VERSION, {system=false})
         add_requireconfs("libgit2.cmake", {version = CMAKE_VERSION, system = false, override=true})
     end
