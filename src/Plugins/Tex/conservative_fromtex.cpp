@@ -341,7 +341,7 @@ rename_arguments (tree val, tree old) {
     int a= N(old) - 1;
     for (int i=0; i<a; i++)
       if (is_atomic (val[i]) && is_atomic (old[i])) {
-        val[a]= replace (val[a], tree (ARG, val[i]), tree (ARG, old[i]));
+        val[a]= tree_replace (val[a], tree (ARG, val[i]), tree (ARG, old[i]));
         val[i]= old[i];
       }
   }
