@@ -154,4 +154,8 @@ function add_requires_of_mogan()
         add_requires("libgit2 "..LIBGIT2_VERSION, {system=false})
         add_requireconfs("libgit2.cmake", {version = CMAKE_VERSION, system = false, override=true})
     end
+
+    if is_plat ("linux") and using_apt() and (not (linuxos.name() == "uos")) then
+        add_requires ("apt::zlib1g-dev", {alias="zlib"})
+    end
 end
