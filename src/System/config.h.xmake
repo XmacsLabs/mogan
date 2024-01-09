@@ -113,6 +113,7 @@ ${define USE_PLUGIN_TEX}
 ${define USE_PLUGIN_ISPELL}
 ${define USE_PLUGIN_SPARKLE}
 ${define USE_PLUGIN_HTML}
+${define USE_PLUGIN_GIT}
 
 ${define QTPIPES}
 

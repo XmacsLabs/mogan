@@ -191,6 +191,7 @@ function using_legacy_apt ()
 end
 
 local FREETYPE_VERSION = "2.12.1"
+local LIBGIT2_VERSION = "1.7.1"
 
 -- package: s7
 add_requires("liii-s7", {system=false})
@@ -206,6 +207,13 @@ if using_legacy_apt() then
 else
     add_requires("apt::libfreetype-dev", {alias="freetype"})
 end
+
+-- package: libgit2
+set_configvar("LIBGIT2_VERSION", LIBGIT2_VERSION)
+if not is_plat("wasm") then
+    add_requires("libgit2 "..LIBGIT2_VERSION, {system=false})
+end
+
 
 local XMACS_VERSION="2025.1.0"
 
@@ -268,6 +276,7 @@ target("libmogan") do
     add_packages("liii-pdfhummus")
     add_packages("freetype")
     add_packages("liii-s7")
+    add_packages("libgit2")
 
     ---------------------------------------------------------------------------
     -- generate config files. see also:
@@ -385,6 +394,7 @@ target("libmogan") do
             "src/Plugins/Qt",
             "src/Plugins/UniversalStacktrace",
             "src/Plugins/Html",
+            "src/Plugins/Git",
             "src/Scheme",
             "src/Scheme/L1",
             "src/Scheme/L2",
@@ -447,6 +457,7 @@ target("libmogan") do
             "src/Plugins/Tex/**.cpp",
             "src/Plugins/Xml/**.cpp",
             "src/Plugins/Html/**.cpp",
+            "src/Plugins/Git/**.cpp",
             "src/Plugins/Updater/**.cpp"})
 
     add_files({
