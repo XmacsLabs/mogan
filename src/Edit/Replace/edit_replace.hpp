@@ -1,35 +1,35 @@
 
 /******************************************************************************
-* MODULE     : edit_replace.hpp
-* DESCRIPTION: the interface for TeXmacs
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : edit_replace.hpp
+ * DESCRIPTION: the interface for TeXmacs
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef EDIT_REPLACE_H
 #define EDIT_REPLACE_H
 #include "editor.hpp"
 
-class edit_replace_rep: virtual public editor_rep {
+class edit_replace_rep : virtual public editor_rep {
 protected:
-  bool        forward;       // forward search or replace ?
-  string      search_mode;   // only search matches in search_mode mode
-  string      search_lan;    // only search matches in search_lan language
-  path        search_at;     // current search position
-  path        search_end;    // position of the end of a match
-  tree        search_what;   // search tree
-  list<path>  where_stack;   // last search positions
-  tree        what_stack;    // last search trees
-  tree        replace_by;    // replace tree
-  int         nr_replaced;   // number of replaced occurrences
+  bool       forward;     // forward search or replace ?
+  string     search_mode; // only search matches in search_mode mode
+  string     search_lan;  // only search matches in search_lan language
+  path       search_at;   // current search position
+  path       search_end;  // position of the end of a match
+  tree       search_what; // search tree
+  list<path> where_stack; // last search positions
+  tree       what_stack;  // last search trees
+  tree       replace_by;  // replace tree
+  int        nr_replaced; // number of replaced occurrences
 
-  path        spell_end_p;   // spell check until here
-  string      spell_s;       // the word being checked
-  tree        spell_t;       // response of ispell
-  bool        spell_dicmod;  // insert new words in personal dictionary?
+  path   spell_end_p;  // spell check until here
+  string spell_s;      // the word being checked
+  tree   spell_t;      // response of ispell
+  bool   spell_dicmod; // insert new words in personal dictionary?
 
 protected:
   void spell_write (string s);
@@ -40,18 +40,18 @@ public:
   ~edit_replace_rep ();
 
   /* structural searching */
-  bool inside (string what);
-  bool inside (tree_label l);
-  bool inside_with (string var, string val);
+  bool   inside (string what);
+  bool   inside (tree_label l);
+  bool   inside_with (string var, string val);
   string inside_which (tree t);
-  path search_upwards (string what);
-  path search_upwards (tree_label l);
-  path search_parent_upwards (tree_label l, int& last);
-  path search_parent_upwards (tree_label l);
-  path search_upwards_with (string var, string val);
-  path search_upwards_in_set (tree t);
-  path search_previous_compound (path init, string which);
-  path search_next_compound (path init, string which);
+  path   search_upwards (string what);
+  path   search_upwards (tree_label l);
+  path   search_parent_upwards (tree_label l, int& last);
+  path   search_parent_upwards (tree_label l);
+  path   search_upwards_with (string var, string val);
+  path   search_upwards_in_set (tree t);
+  path   search_previous_compound (path init, string which);
+  path   search_next_compound (path init, string which);
 
   /* search and replace */
   path test_sub (path p, tree t);
