@@ -10,6 +10,11 @@
   + Improve support on the Noto CJK fonts
   + Set default CJK fonts to Noto CJK on all platform if exists
   + Support CESI fonts
++ Plugins
+  + Maxima: Fixed the slowness in the editing area
+  + Maxima: visit the remote online Maxima manual when click the Help icon on the focus toolbar
+  + Spell: enable `Edit->Spell` on Windows and Linux
+  + Spell: Fixed the crash on Windows when neither `hunspell` nor `aspell` is installed
 
 ## Changes for Developer
 + Use `xmake-requires.lock` to make the build system more reproducible
