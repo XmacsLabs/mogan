@@ -78,7 +78,7 @@ ispeller_rep::start () {
     // look in "program files" for system-wide install (but not found in PATH)
     url  u;
     bool testcmd;
-    if ((name == "") || (!testdic)) {
+    if (is_empty (name) || (!testdic)) {
       u      = url_system ("$PROGRAMFILES\\Hunspell\\bin\\hunspell.exe");
       testcmd= exists (u);
       if (!testcmd) {
@@ -88,7 +88,7 @@ ispeller_rep::start () {
       if (testcmd) {
         cmd = as_string (u);
         name= "Hunspell";
-        cmd = "\"" * cmd * "\" -a -i utf-8";
+        cmd = raw_quote (cmd) * " -a -i utf-8";
         if (!is_empty (locale)) cmd= cmd * " -d " * locale;
         testdic= connect_spellchecker (cmd);
       }
@@ -103,7 +103,7 @@ ispeller_rep::start () {
       if (testcmd) {
         cmd = as_string (u);
         name= "Aspell";
-        cmd = "\"" * cmd * "\" -a --encoding=utf-8";
+        cmd = raw_quote (cmd) * " -a --encoding=utf-8";
         if (!is_empty (locale)) cmd= cmd * " --language-tag=" * locale;
         testdic= connect_spellchecker (cmd);
       }
