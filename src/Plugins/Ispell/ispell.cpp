@@ -14,6 +14,7 @@
 #include "file.hpp"
 #include "locale.hpp"
 #include "resource.hpp"
+#include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_link.hpp"
 #include "tree_label.hpp"
@@ -63,66 +64,53 @@ ispeller_rep::start () {
     cmd = "hunspell";
     name= cmd;
     cmd = cmd * " -a -i utf-8";
-    if (locale != "") cmd= cmd * " -d " * locale;
+    if (!is_empty (locale)) cmd= cmd * " -d " * locale;
     testdic= connect_spellchecker (cmd);
   }
-  if ((name == "") || (!testdic))
+  if (is_empty (name) || (!testdic))
     if (exists_in_path ("aspell")) {
       cmd = "aspell";
       name= cmd;
       cmd = cmd * " -a --encoding=utf-8";
-      if (locale != "") cmd= cmd * " --language-tag=" * locale;
+      if (!is_empty (locale)) cmd= cmd * " --language-tag=" * locale;
       testdic= connect_spellchecker (cmd);
     }
-#if defined(OS_MINGW) || defined(OS_WIN)
-  // look in "program files" for system-wide install (but not found in PATH)
-  url  u;
-  bool testcmd;
-  if ((name == "") || (!testdic)) {
-    u      = url_system ("$PROGRAMFILES\\Hunspell\\bin\\hunspell.exe");
-    testcmd= exists (u);
-    if (!testcmd) {
-      u      = url_system ("$PROGRAMFILES(x86)\\Hunspell\\bin\\hunspell.exe");
+  if (os_win () || os_mingw ()) {
+    // look in "program files" for system-wide install (but not found in PATH)
+    url  u;
+    bool testcmd;
+    if (is_empty (name) || (!testdic)) {
+      u      = url_system ("$PROGRAMFILES\\Hunspell\\bin\\hunspell.exe");
       testcmd= exists (u);
+      if (!testcmd) {
+        u      = url_system ("$PROGRAMFILES(x86)\\Hunspell\\bin\\hunspell.exe");
+        testcmd= exists (u);
+      }
+      if (testcmd) {
+        cmd = as_string (u);
+        name= "Hunspell";
+        cmd = raw_quote (cmd) * " -a -i utf-8";
+        if (!is_empty (locale)) cmd= cmd * " -d " * locale;
+        testdic= connect_spellchecker (cmd);
+      }
     }
-    if (testcmd) {
-      cmd = as_string (u);
-      name= "Hunspell";
-      cmd = "\"" * cmd * "\" -a -i utf-8";
-      if (locale != "") cmd= cmd * " -d " * locale;
-      testdic= connect_spellchecker (cmd);
-    }
-  }
-  if ((name == "") || (!testdic)) {
-    u      = url_system ("$PROGRAMFILES\\Aspell\\bin\\aspell.exe");
-    testcmd= exists (u);
-    if (!testcmd) {
-      u      = url_system ("$PROGRAMFILES(x86)\\Aspell\\bin\\aspell.exe");
+    if (is_empty (name) || (!testdic)) {
+      u      = url_system ("$PROGRAMFILES\\Aspell\\bin\\aspell.exe");
       testcmd= exists (u);
-    }
-    if (testcmd) {
-      cmd = as_string (u);
-      name= "Aspell";
-      cmd = "\"" * cmd * "\" -a --encoding=utf-8";
-      if (locale != "") cmd= cmd * " --language-tag=" * locale;
-      testdic= connect_spellchecker (cmd);
-    }
-  }
-#ifdef ASPELL
-  if ((name == "") || (!testdic)) {
-    u      = url_system ("$TEXMACS_PATH\\" ASPELL "\\bin\\aspell.exe");
-    testcmd= exists (u);
-    if (testcmd) {
-      cmd = as_string (u);
-      name= "Aspell";
-      cmd = "\"" * cmd * "\" -a --encoding=utf-8";
-      if (locale != "") cmd= cmd * " --language-tag=" * locale;
-      testdic= connect_spellchecker (cmd);
+      if (!testcmd) {
+        u      = url_system ("$PROGRAMFILES(x86)\\Aspell\\bin\\aspell.exe");
+        testcmd= exists (u);
+      }
+      if (testcmd) {
+        cmd = as_string (u);
+        name= "Aspell";
+        cmd = raw_quote (cmd) * " -a --encoding=utf-8";
+        if (!is_empty (locale)) cmd= cmd * " --language-tag=" * locale;
+        testdic= connect_spellchecker (cmd);
+      }
     }
   }
-#endif
-#endif
-  if (name == "") {
+  if (is_empty (name)) {
     err= "Error: spellchecker not found in PATH (neither Aspell nor Hunspell) ";
     std_error << err << "\nCannot spellcheck\n";
     unavailable= true;
@@ -243,13 +231,15 @@ parse_ispell (string s) {
 static void
 ispell_send (string lan, string s) {
   ispeller sc= ispeller (lan);
-  if ((!is_nil (sc)) && sc->ln->alive) sc->send (s);
+  if (!is_nil (sc) && !is_nil (sc->ln) && sc->ln->alive) {
+    sc->send (s);
+  }
 }
 
 static string
 ispell_eval (string lan, string s) {
   ispeller sc= ispeller (lan);
-  if ((!is_nil (sc)) && sc->ln->alive) {
+  if (!is_nil (sc) && !is_nil (sc->ln) && sc->ln->alive) {
     sc->send (s);
     return sc->retrieve ();
   }
