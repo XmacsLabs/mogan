@@ -63,66 +63,53 @@ ispeller_rep::start () {
     cmd = "hunspell";
     name= cmd;
     cmd = cmd * " -a -i utf-8";
-    if (locale != "") cmd= cmd * " -d " * locale;
+    if (!is_empty (locale)) cmd= cmd * " -d " * locale;
     testdic= connect_spellchecker (cmd);
   }
-  if ((name == "") || (!testdic))
+  if (is_empty (name) || (!testdic))
     if (exists_in_path ("aspell")) {
       cmd = "aspell";
       name= cmd;
       cmd = cmd * " -a --encoding=utf-8";
-      if (locale != "") cmd= cmd * " --language-tag=" * locale;
+      if (!is_empty (locale)) cmd= cmd * " --language-tag=" * locale;
       testdic= connect_spellchecker (cmd);
     }
-#if defined(OS_MINGW) || defined(OS_WIN)
-  // look in "program files" for system-wide install (but not found in PATH)
-  url  u;
-  bool testcmd;
-  if ((name == "") || (!testdic)) {
-    u      = url_system ("$PROGRAMFILES\\Hunspell\\bin\\hunspell.exe");
-    testcmd= exists (u);
-    if (!testcmd) {
-      u      = url_system ("$PROGRAMFILES(x86)\\Hunspell\\bin\\hunspell.exe");
+  if (os_win () || os_mingw ()) {
+    // look in "program files" for system-wide install (but not found in PATH)
+    url  u;
+    bool testcmd;
+    if ((name == "") || (!testdic)) {
+      u      = url_system ("$PROGRAMFILES\\Hunspell\\bin\\hunspell.exe");
       testcmd= exists (u);
+      if (!testcmd) {
+        u      = url_system ("$PROGRAMFILES(x86)\\Hunspell\\bin\\hunspell.exe");
+        testcmd= exists (u);
+      }
+      if (testcmd) {
+        cmd = as_string (u);
+        name= "Hunspell";
+        cmd = "\"" * cmd * "\" -a -i utf-8";
+        if (!is_empty (locale)) cmd= cmd * " -d " * locale;
+        testdic= connect_spellchecker (cmd);
+      }
     }
-    if (testcmd) {
-      cmd = as_string (u);
-      name= "Hunspell";
-      cmd = "\"" * cmd * "\" -a -i utf-8";
-      if (locale != "") cmd= cmd * " -d " * locale;
-      testdic= connect_spellchecker (cmd);
-    }
-  }
-  if ((name == "") || (!testdic)) {
-    u      = url_system ("$PROGRAMFILES\\Aspell\\bin\\aspell.exe");
-    testcmd= exists (u);
-    if (!testcmd) {
-      u      = url_system ("$PROGRAMFILES(x86)\\Aspell\\bin\\aspell.exe");
+    if (is_empty (name) || (!testdic)) {
+      u      = url_system ("$PROGRAMFILES\\Aspell\\bin\\aspell.exe");
       testcmd= exists (u);
-    }
-    if (testcmd) {
-      cmd = as_string (u);
-      name= "Aspell";
-      cmd = "\"" * cmd * "\" -a --encoding=utf-8";
-      if (locale != "") cmd= cmd * " --language-tag=" * locale;
-      testdic= connect_spellchecker (cmd);
-    }
-  }
-#ifdef ASPELL
-  if ((name == "") || (!testdic)) {
-    u      = url_system ("$TEXMACS_PATH\\" ASPELL "\\bin\\aspell.exe");
-    testcmd= exists (u);
-    if (testcmd) {
-      cmd = as_string (u);
-      name= "Aspell";
-      cmd = "\"" * cmd * "\" -a --encoding=utf-8";
-      if (locale != "") cmd= cmd * " --language-tag=" * locale;
-      testdic= connect_spellchecker (cmd);
+      if (!testcmd) {
+        u      = url_system ("$PROGRAMFILES(x86)\\Aspell\\bin\\aspell.exe");
+        testcmd= exists (u);
+      }
+      if (testcmd) {
+        cmd = as_string (u);
+        name= "Aspell";
+        cmd = "\"" * cmd * "\" -a --encoding=utf-8";
+        if (!is_empty (locale)) cmd= cmd * " --language-tag=" * locale;
+        testdic= connect_spellchecker (cmd);
+      }
     }
   }
-#endif
-#endif
-  if (name == "") {
+  if (is_empty (name)) {
     err= "Error: spellchecker not found in PATH (neither Aspell nor Hunspell) ";
     std_error << err << "\nCannot spellcheck\n";
     unavailable= true;
