@@ -14,6 +14,7 @@
 #include "file.hpp"
 #include "locale.hpp"
 #include "resource.hpp"
+#include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_link.hpp"
 #include "tree_label.hpp"
@@ -230,13 +231,15 @@ parse_ispell (string s) {
 static void
 ispell_send (string lan, string s) {
   ispeller sc= ispeller (lan);
-  if ((!is_nil (sc)) && sc->ln->alive) sc->send (s);
+  if (!is_nil (sc) && !is_nil (sc->ln) && sc->ln->alive) {
+    sc->send (s);
+  }
 }
 
 static string
 ispell_eval (string lan, string s) {
   ispeller sc= ispeller (lan);
-  if ((!is_nil (sc)) && sc->ln->alive) {
+  if (!is_nil (sc) && !is_nil (sc->ln) && sc->ln->alive) {
     sc->send (s);
     return sc->retrieve ();
   }
