@@ -1,17 +1,17 @@
 
 /******************************************************************************
-* MODULE     : edit_spell.cpp
-* DESCRIPTION: spell checker based on ispell
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : edit_spell.cpp
+ * DESCRIPTION: spell checker based on ispell
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "analyze.hpp"
-#include "Replace/edit_replace.hpp"
 #include "Interface/edit_interface.hpp"
+#include "Replace/edit_replace.hpp"
+#include "analyze.hpp"
 
 #ifdef USE_PLUGIN_ISPELL
 #ifdef MACOSX_EXTENSIONS
@@ -26,10 +26,9 @@
 #endif
 #endif
 
-
 /******************************************************************************
-* Start and end spell checking
-******************************************************************************/
+ * Start and end spell checking
+ ******************************************************************************/
 
 void
 edit_replace_rep::spell_start () {
@@ -43,9 +42,9 @@ edit_replace_rep::spell_start () {
   }
 
   /********** initialize spell checker ***********/
-  search_mode = copy (as_string (get_env_value (MODE, spell_p)));
-  search_lan  =
-    copy (as_string (get_env_value (MODE_LANGUAGE (search_mode), spell_p)));
+  search_mode= copy (as_string (get_env_value (MODE, spell_p)));
+  search_lan=
+      copy (as_string (get_env_value (MODE_LANGUAGE (search_mode), spell_p)));
 
 #ifdef USE_PLUGIN_ISPELL
   string message= ispell_start (search_lan);
@@ -54,16 +53,16 @@ edit_replace_rep::spell_start () {
 #endif
   if (starts (message, "Error: ")) {
     spell_end ();
-    std_error << message (7, N(message)) << LF;
+    std_error << message (7, N (message)) << LF;
     set_message (message, "correct text");
     return;
   }
 
   /********** start spell checking ***********/
   set_input_mode (INPUT_SPELL);
-  forward      = true;
-  nr_replaced  = 0;
-  spell_dicmod = false;
+  forward     = true;
+  nr_replaced = 0;
+  spell_dicmod= false;
 
   spell_next ();
   if (search_at == rp)
@@ -90,8 +89,8 @@ edit_replace_rep::spell_end () {
 }
 
 /******************************************************************************
-* Find next word to be spelled
-******************************************************************************/
+ * Find next word to be spelled
+ ******************************************************************************/
 
 path
 edit_replace_rep::test_spellable (path p) {
@@ -100,9 +99,10 @@ edit_replace_rep::test_spellable (path p) {
   string s= st->label;
   int    b= last_item (p);
   int    e= b;
-  if ((e > 0) && ((is_iso_alpha (s[e-1])) || (is_digit (s[e-1])))) return p;
-  while ((e < N(s)) && (is_iso_alpha (s[e]))) e++;
-  if ((e < N(s)) && (is_digit (s[e]))) return p;
+  if ((e > 0) && ((is_iso_alpha (s[e - 1])) || (is_digit (s[e - 1])))) return p;
+  while ((e < N (s)) && (is_iso_alpha (s[e])))
+    e++;
+  if ((e < N (s)) && (is_digit (s[e]))) return p;
   if (e == b) return p;
   spell_s= s (b, e);
   return path_add (p, e - b);
@@ -110,11 +110,11 @@ edit_replace_rep::test_spellable (path p) {
 
 static string
 message_ispell (tree t) {
-  int i;
+  int    i;
   string s= "a: accept, r: replace, i: insert";
-  for (i=1; i<N(t); i++) {
+  for (i= 1; i < N (t); i++) {
     s << ", " << as_string (i) << ": " << t[i]->label;
-    if (i==9) return s << ", ...";
+    if (i == 9) return s << ", ...";
   }
   return s;
 }
@@ -122,8 +122,7 @@ message_ispell (tree t) {
 void
 edit_replace_rep::spell_next () {
   while (true) {
-    if (path_inf (spell_end_p, search_at))
-      search_at= rp;
+    if (path_inf (spell_end_p, search_at)) search_at= rp;
     if (search_at == rp) {
       spell_end ();
       return;
@@ -140,8 +139,7 @@ edit_replace_rep::spell_next () {
       }
       if (spell_t != "ok") {
         string mode= as_string (get_env_value (MODE, search_at));
-        string lan =
-          as_string (get_env_value (MODE_LANGUAGE (mode), search_at));
+        string lan= as_string (get_env_value (MODE_LANGUAGE (mode), search_at));
         if ((search_mode == mode) && (search_lan == lan)) {
           set_selection (search_at, search_end);
           notify_change (THE_SELECTION);
@@ -156,8 +154,8 @@ edit_replace_rep::spell_next () {
 }
 
 /******************************************************************************
-* Spell checking commands
-******************************************************************************/
+ * Spell checking commands
+ ******************************************************************************/
 
 void
 edit_replace_rep::spell_replace (string by) {
@@ -172,8 +170,7 @@ bool
 edit_replace_rep::spell_keypress (string s) {
   set_message ("", "");
   if (s == "space") s= " ";
-  if ((s == "C-c") || (s == "C-g") || (s == "escape"))
-    spell_end ();
+  if ((s == "C-c") || (s == "C-g") || (s == "escape")) spell_end ();
   else if ((s == "a") || (s == "A")) {
 #ifdef USE_PLUGIN_ISPELL
     ispell_accept (search_lan, spell_s);
@@ -191,7 +188,7 @@ edit_replace_rep::spell_keypress (string s) {
     step_horizontal (forward);
     spell_next ();
   }
-  else if ((N(s)==1) && (is_digit (s[0])) && (s != "0")) {
+  else if ((N (s) == 1) && (is_digit (s[0])) && (s != "0")) {
     int i= as_int (s);
     int r= as_int (spell_t[0]);
     if (i <= r) {
