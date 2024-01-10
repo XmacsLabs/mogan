@@ -12,7 +12,10 @@
   link to a specific version of a file>>|<row|<cell|Chore>|<cell|44_3>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Fix
   <menu|Version|Global status> and <menu|Version|Global
   history>>>|<row|<cell|Chore>|<cell|44_4>|<cell|>|<cell|>|<cell|<menu|Version|Grain|Block>
-  translation collision with Block in table mode>>>>>
+  translation collision with Block in table
+  mode>>|<row|<cell|Chore>|<cell|44_5>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Use
+  LIBGIT2_VERSION from libgit2>>|<row|<cell|Chore>|<cell|44_6>|<cell|v1.2.3>|<cell|<value|da>>|<cell|use
+  git-load-blob instead of git show subprocess>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
