@@ -35,7 +35,7 @@ git_load_blob (string rev, url file_u, url repo_u) {
 
   if (is_rooted (file_u)) {
     if (is_regular (file_u) && descends (file_u, repo_u)) {
-      file_u= tail (delta (repo_u, file_u));
+      file_u= (delta (repo_u, file_u))[2];
     }
     else {
       debug_io << file_u << " is not a regular file" << LF;
