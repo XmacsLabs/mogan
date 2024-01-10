@@ -3,9 +3,18 @@
   (if (os-win32?)
       0
       (if (== (git-load-blob "HEAD" "LICENSE" (url-pwd))
-            (string-load (url-append (url-pwd) "LICENSE")))
+             (string-load (url-append (url-pwd) "LICENSE")))
           1
           (error "git show HEAD:LICENSE does not match"))))
+
+(define (test-show-license-full-path)
+  (with fullpath (url-append (url-pwd) "TeXmacs/misc/pixmaps/LICENSE")
+    (if (os-win32?)
+        0
+        (if (== (git-load-blob "HEAD" fullpath (url-pwd))
+                (string-load fullpath))
+            1
+            (error "git show HEAD:TeXmacs/misc/pixmaps/LICENSE does not match")))))
 
 (define (test-empty-dir)
   (when (!= (length (git-load-blob "HEAD" "" ""))
@@ -38,6 +47,7 @@
 
 (tm-define (test_44_6)
   (let ((n (+ (test-show-license)
+              (test-show-license-full-path)
               (test-empty-dir)
               (test-not-exist-dir)
               (test-invalid-git-root)
