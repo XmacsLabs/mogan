@@ -15,8 +15,8 @@
 #include "vector.hpp"
 #include "polynomial.hpp"
 #define TMPL template<typename F, typename T>
-#define V typename properties<F>::index_type
-#define C typename properties<F>::scalar_type
+#define V typename unary_properties<F>::index_type
+#define C typename unary_properties<F>::scalar_type
 
 #define MATH_INFINITY HUGE_VAL
 
@@ -78,7 +78,7 @@ pw_function (vector<function<F,T> > v, bool jump_flag) {
 
 template<typename T> ball<vector<T> >
 as_ball (vector<ball<T> > v) {
-  typedef typename properties<T>::norm_type radius_type;
+  typedef typename unary_properties<T>::norm_type radius_type;
   int i, n= N(v);
   vector<T> c (T(0), n);
   vector<radius_type> r (radius_type(0), n);
@@ -146,7 +146,7 @@ public:
     for (i=n-2; i>=0; i--)
       sum = x * sum + ball<T> (a[i]);
     return sum; }
-  function<T,T> derive (typename properties<T>::index_type var) {
+  function<T,T> derive (typename unary_properties<T>::index_type var) {
     return polynomial_function<T> (::derive (p)); }
   tree expression () {
     return compound ("as_function", as_tree (p)); }

@@ -15,8 +15,8 @@
 #include "vector.hpp"
 #include "polynomial.hpp"
 #define TMPL template<typename F, typename T>
-#define V typename properties<F>::index_type
-#define C typename properties<F>::scalar_type
+#define V typename unary_properties<F>::index_type
+#define C typename unary_properties<F>::scalar_type
 
 TMPL class function;
 TMPL bool is_nil (function<F,T> f);
@@ -58,11 +58,11 @@ TMPL inline tm_ostream& operator << (tm_ostream& out, function<F,T> f) {
   return out << as_math_string (as_tree (f)); }
 
 TMPL
-class properties<function<F,T> > {
+class unary_properties<function<F,T> > {
 public:
-  typedef function<F,typename properties<T>::scalar_type> scalar_type;
-  typedef function<F,typename properties<T>::norm_type> norm_type;
-  typedef function<F,typename properties<T>::index_type> index_type;
+  typedef function<F,typename unary_properties<T>::scalar_type> scalar_type;
+  typedef function<F,typename unary_properties<T>::norm_type> norm_type;
+  typedef function<F,typename unary_properties<T>::index_type> index_type;
 };
 
 /******************************************************************************
@@ -89,12 +89,12 @@ class coordinate_function_rep: public function_rep<F,T> {
   T c;
 public:
   inline coordinate_function_rep (V var2, T c2): var (var2), c (c2) {}
-  inline T apply (F x) { return properties<F>::access (x, var) * c; }
+  inline T apply (F x) { return unary_properties<F>::access (x, var) * c; }
   inline ball<T> apply (ball<F> x) {
-    return properties<ball<F> >::access (x, var) * ball<T> (c, 0); }
+    return unary_properties<ball<F> >::access (x, var) * ball<T> (c, 0); }
   inline function<F,T> derive (V var2) { return var2==var? c: C(0) * c; }
   inline tree expression () {
-    return mul (as_tree (c), properties<F>::index_name (var)); }
+    return mul (as_tree (c), unary_properties<F>::index_name (var)); }
 };
 
 TMPL inline function<F,T>

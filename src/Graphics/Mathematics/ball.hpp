@@ -15,7 +15,7 @@
 #include "operators.hpp"
 #define TMPL template<typename C>
 #define BINARY_TMPL template<typename C1,typename C2>
-#define R typename properties<C>::norm_type
+#define R typename unary_properties<C>::norm_type
 #define M typename binary_properties<C1,C2>::product_type
 
 /******************************************************************************
@@ -42,15 +42,15 @@ TMPL inline tm_ostream& operator << (tm_ostream& out, const ball<C>& b) {
   return out << as_math_string (as_tree (b)); }
 
 TMPL
-class properties<ball<C> > {
+class unary_properties<ball<C> > {
 public:
-  typedef ball<typename properties<C>::scalar_type> scalar_type;
-  typedef typename properties<C>::norm_type norm_type;
-  typedef typename properties<C>::index_type index_type;
+  typedef ball<typename unary_properties<C>::scalar_type> scalar_type;
+  typedef typename unary_properties<C>::norm_type norm_type;
+  typedef typename unary_properties<C>::index_type index_type;
   static inline tree index_name (index_type i) {
-    return properties<C>::index_name (i); }
+    return unary_properties<C>::index_name (i); }
   static inline scalar_type access (ball<C> b, index_type var) {
-    return scalar_type (properties<C>::access (center (b), var), radius (b)); }
+    return scalar_type (unary_properties<C>::access (center (b), var), radius (b)); }
 };
 
 BINARY_TMPL
