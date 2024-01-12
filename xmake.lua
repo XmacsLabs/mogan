@@ -536,7 +536,11 @@ target("macos_installer") do
     after_install(function (target, opt)
         local app_dir = target:installdir() .. "/../../"
         os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
-        os.execv("hdiutil create $(buildir)/MoganResearch-v" .. XMACS_VERSION .. ".dmg -fs HFS+ -srcfolder " .. app_dir)
+        local dmg_name= "MoganResearch-v" .. XMACS_VERSION .. ".dmg"
+        if is_arch("arm64") then
+            dmg_name= "MoganResearch-v" .. XMACS_VERSION .. "-arm.dmg"
+        end
+        os.execv("hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir)
     end)
 end
 
