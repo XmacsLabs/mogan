@@ -10,7 +10,7 @@ jobs:
   macosbuild:
     strategy:
       matrix:
-        os: [macOS-latest]
+        os: [macos-12]
         arch: [arm64]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
