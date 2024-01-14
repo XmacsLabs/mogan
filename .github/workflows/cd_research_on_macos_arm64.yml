@@ -1,4 +1,4 @@
-name: CD for Mogan Research on macOS
+name: CD for Mogan Research on macOS arm64
 
 on:
   workflow_dispatch:
@@ -8,7 +8,11 @@ on:
 
 jobs:
   macosbuild:
-    runs-on: macos-11
+    strategy:
+      matrix:
+        os: [macos-12]
+        arch: [arm64]
+    runs-on: macos-12
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v2
@@ -46,3 +50,5 @@ jobs:
         with:
           prerelease: true
           files: build/MoganResearch-*.dmg
+
+
