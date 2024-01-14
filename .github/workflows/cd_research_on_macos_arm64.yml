@@ -10,9 +10,9 @@ jobs:
   macosbuild:
     strategy:
       matrix:
-        os: [macos-12]
+        os: [macOS-latest]
         arch: [arm64]
-    runs-on: macos-12
+    runs-on: macOS-latest
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v2
