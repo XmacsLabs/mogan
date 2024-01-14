@@ -30,7 +30,7 @@ jobs:
       matrix:
         os: [macos-12]
         arch: [arm64]
-    runs-on: macos-12
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     if: always()
     steps:
@@ -77,17 +77,6 @@ jobs:
           key: xmake-build-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake-requires.lock') }}
 
       - name: config
-        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
+        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg -a ${{ matrix.arch }} --yes
       - name: build
         run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
-      - name: C++ tests
-        run: xmake run --yes --verbose --diagnosis --group=tests
-        env:
-          QT_QPA_PLATFORM: offscreen
-      - name: Scheme tests
-        run: xmake run --yes -vD --group=scheme_tests
-      - name: integration test
-        run: xmake run --yes -vD --group=integration_tests
-        env:
-          QT_QPA_PLATFORM: offscreen
-

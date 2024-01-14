@@ -142,7 +142,7 @@
                 commit = "22223c3e860144e789c3c986e064369d66f37573",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
-            version = "1.2.11"
+            version = "v1.2.11"
         }
     },
     ["macosx|arm64"] = {
@@ -181,7 +181,7 @@
         ["libcurl#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
+                commit = "e0d3bd857f8fcfbebf985c1a5dc52287597babbd",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "8.4.0"
@@ -205,7 +205,7 @@
         ["libpng#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
+                commit = "e0d3bd857f8fcfbebf985c1a5dc52287597babbd",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "v1.6.37"
@@ -243,7 +243,7 @@
                 commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
-            version = "1.2.11"
+            version = "v1.2.11"
         }
     },
     ["windows|x64"] = {
@@ -424,7 +424,7 @@
                 commit = "be832f2cace05fd467886c91313ca5e7e5598dce",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
-            version = "v1.3"
+            version = "v1.2.11"
         }
     }
 }
