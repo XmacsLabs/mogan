@@ -86,7 +86,7 @@
             version = "1.6.36"
         },
         ["lolly#31fecfc4"] = {
-            version = "v1.3.15"
+            version = "v1.3.16"
         },
         ["openssl#31fecfc4"] = {
             repo = {
@@ -211,7 +211,7 @@
             version = "v1.6.37"
         },
         ["lolly#31fecfc4"] = {
-            version = "v1.3.15"
+            version = "v1.3.16"
         },
         ["pdfhummus 4.6.2#23149c54"] = {
             repo = {
@@ -328,7 +328,7 @@
             version = "v1.6.37"
         },
         ["lolly#31fecfc4"] = {
-            version = "v1.3.15"
+            version = "v1.3.16"
         },
         ["nasm#31fecfc4"] = {
             repo = {
