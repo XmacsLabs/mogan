@@ -31,7 +31,7 @@ jobs:
       - name: xmake repo --update
         run: xmake repo --update
       - name: config
-        run: xmake config -m release --arch ${{ matrix.arch }} -vD --yes
+        run: xmake config -m release -a ${{ matrix.arch }} -vD --yes
       - name: build
         run: xmake build -vD --diagnosis research
       - name: install
