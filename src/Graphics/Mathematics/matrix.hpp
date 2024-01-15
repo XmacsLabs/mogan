@@ -196,9 +196,7 @@ TMPL inline vector<T>
 operator * (matrix<T> m, vector<T> v) {
   int i, j, rows= NR (m), cols= NC (m);
   ASSERT (N (v) == cols, "dimensions don't match");
-  vector<T> prod (rows);
-  for (j=0; j<cols; j++)
-    prod[j]= T(0);
+  vector<T> prod (T(0), rows);
   for (i=0; i<rows; i++)
     for (j=0; j<cols; j++)
       prod [i] += m (i, j) * v[j];
