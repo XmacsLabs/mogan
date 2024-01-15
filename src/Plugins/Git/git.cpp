@@ -74,7 +74,7 @@ git_status_file (url file_u, url repo_u) {
   istatus= ' ';
   wstatus= ' ';
   if (status_flags == GIT_STATUS_CURRENT) {
-    return string (wstatus) * string (istatus);
+    return string (istatus) * string (wstatus);
   }
   if (status_flags & GIT_STATUS_INDEX_NEW) istatus= 'A';
   if (status_flags & GIT_STATUS_INDEX_MODIFIED) istatus= 'M';
@@ -97,7 +97,7 @@ git_status_file (url file_u, url repo_u) {
   }
 
   git_libgit2_shutdown ();
-  return string (wstatus) * string (istatus);
+  return string (istatus) * string (wstatus);
 }
 
 string
