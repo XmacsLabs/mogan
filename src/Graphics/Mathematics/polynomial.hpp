@@ -133,8 +133,9 @@ as_tree (polynomial<T> p) {
   int i, n= N(p);
   if (n == 0) return "0";
   tree sum= as_tree (p[0]);
+  tree var("x");
   for (i=1; i<n; i++)
-    sum= add (sum, mul (as_tree (p[i]), pow (tree ("x"), as_tree (i))));
+    sum= add (sum, mul (as_tree (p[i]), pow (var, as_tree (i))));
   return sum;
 }
 
