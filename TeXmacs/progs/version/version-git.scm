@@ -70,12 +70,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (buffer-status name)
-  (let* ((path (url->system name))
-         (cmd (string-append (git-command name) " status --porcelain " path))
-         (ret (eval-system cmd)))
-    (cond ((> (string-length ret) 3) (string-take ret 2))
-          ((file-exists? path) "  ")
-          (else ""))))
+  (git-status-file name (current-git-root)))
 
 (tm-define (version-status name)
   (:require (== (version-tool name) "git"))
