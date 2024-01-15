@@ -586,9 +586,6 @@ main (int argc, char** argv) {
 #ifdef ENABLE_TESTS
   test_routines ();
 #endif
-  // #ifdef EXPERIMENTAL
-  //   test_environments ();
-  // #endif
   start_scheme (argc, argv, TeXmacs_main);
 #ifdef QTTEXMACS
   if (headless_mode) delete qtmcoreapp;

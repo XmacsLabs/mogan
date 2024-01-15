@@ -137,14 +137,6 @@ end
 --
 -- Experimental options of Mogan
 --
-option("experimental")
-    set_description("Enable experimental style rewriting code")
-    set_default(false)
-    set_values(false, true)
-option_end()
-if has_config("experimental") then
-    set_configvar("EXPERIMENTAL", true)
-end
 option("sanity-checks")
     set_description("Enable sanity checks")
     set_default(false)
@@ -314,9 +306,6 @@ libmogan_headers = {
     "src/Scheme/L5",
     "src/Scheme/Plugins",
     "src/Scheme/Scheme",
-    "src/Style/Environment",
-    "src/Style/Evaluate",
-    "src/Style/Memorizer",
     "src/System",
     "src/System/Boot",
     "src/System/Classes",
