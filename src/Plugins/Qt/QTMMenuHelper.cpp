@@ -523,8 +523,15 @@ QTMLineEdit::keyPressEvent (QKeyEvent* ev) {
         (!starts (type, "spell") || last_key < 49 || last_key >= 58) &&
         (!starts (type, "spell") || last_key != 43) &&
         (ev->modifiers () & Qt::ControlModifier) == 0 &&
-        (ev->modifiers () & Qt::MetaModifier) == 0)
+        (ev->modifiers () & Qt::MetaModifier) == 0) {
       QLineEdit::keyPressEvent (ev);
+    }
+    else if ((last_key == 'C' || last_key == 'V' || last_key == 'X') &&
+             (ev->modifiers () == Qt::ControlModifier)) {
+      // M-x/M-c/M-v on macOS or C-x/C-c/C-v on Linux and Windows
+      QLineEdit::keyPressEvent (ev);
+    }
+
     string key= "none";
     string s  = from_qstring (text ());
     if (last_key >= 32 && last_key <= 126) {
