@@ -76,6 +76,7 @@ git_status_file (url file_u, url repo_u) {
   if (status_flags & GIT_STATUS_INDEX_NEW) istatus= 'A';
   if (status_flags & GIT_STATUS_INDEX_MODIFIED) istatus= 'M';
   if (status_flags & GIT_STATUS_INDEX_DELETED) istatus= 'D';
+  // dead branch because there is no rename detection in git_status_file
   if (status_flags & GIT_STATUS_INDEX_RENAMED) istatus= 'R';
   if (status_flags & GIT_STATUS_INDEX_TYPECHANGE) istatus= 'T';
 
@@ -85,6 +86,7 @@ git_status_file (url file_u, url repo_u) {
   }
   if (status_flags & GIT_STATUS_WT_MODIFIED) wstatus= 'M';
   if (status_flags & GIT_STATUS_WT_DELETED) wstatus= 'D';
+  // dead branch because there is no rename detection in git_status_file
   if (status_flags & GIT_STATUS_WT_RENAMED) wstatus= 'R';
   if (status_flags & GIT_STATUS_WT_TYPECHANGE) wstatus= 'T';
 
