@@ -51,7 +51,7 @@ check_repo_and_file (url& file_u, url& repo_u) {
 
 string
 git_status_file (url file_u, url repo_u) {
-  if (check_repo_and_file (file_u, repo_u)) return "";
+  if (!check_repo_and_file (file_u, repo_u)) return "";
 
   git_repository* repo= NULL;
   c_string        repo_c (as_string (repo_u));
@@ -102,7 +102,7 @@ git_status_file (url file_u, url repo_u) {
 
 string
 git_load_blob (string rev, url file_u, url repo_u) {
-  if (check_repo_and_file (file_u, repo_u)) return "";
+  if (!check_repo_and_file (file_u, repo_u)) return "";
 
   string          ret;
   git_repository* repo = NULL;
