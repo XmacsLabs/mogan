@@ -42,10 +42,6 @@ check_repo_and_file (url& file_u, url& repo_u) {
       return false;
     }
   }
-  if (!is_regular (repo_u * file_u)) {
-    debug_io << repo_u * file_u << " is not a regular file" << LF;
-    return false;
-  }
   return true;
 }
 
@@ -103,6 +99,11 @@ git_status_file (url file_u, url repo_u) {
 string
 git_load_blob (string rev, url file_u, url repo_u) {
   if (!check_repo_and_file (file_u, repo_u)) return "";
+
+  if (!is_regular (repo_u * file_u)) {
+    debug_io << repo_u * file_u << " is not a regular file" << LF;
+    return "";
+  }
 
   string          ret;
   git_repository* repo = NULL;
