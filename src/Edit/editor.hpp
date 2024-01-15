@@ -17,10 +17,6 @@
 #include "tree_select.hpp"
 #include "server.hpp"
 #include "drd_info.hpp"
-#ifdef EXPERIMENTAL
-#  include "../Style/Environment/environment.hpp"
-#  include "../Style/Memorizer/memorizer.hpp"
-#endif
 #include "new_data.hpp"
 
 #ifdef AQUATEXMACS
@@ -67,11 +63,6 @@ protected:
   box          eb;   // box translation of tree
   path         rp;   // path to the root of the document in et
   path         tp;   // path of cursor in tree
-#ifdef EXPERIMENTAL
-  environment  ste;  // environment for style rewriting
-  tree         cct;  // clean copy of the document tree
-  memorizer    mem;  // style converted document tree
-#endif
 
   /* exchanging information with the interface */
   virtual void      get_selection (path& start, path& end) = 0;
@@ -285,9 +276,6 @@ public:
   virtual double   divide_lengths (string l1, string l2) = 0;
   virtual void     init_update () = 0;
   virtual void     drd_update () = 0;
-#ifdef EXPERIMENTAL
-  virtual void     environment_update () = 0;
-#endif
   virtual tree     get_full_env () = 0;
   virtual bool     defined_at_cursor (string var_name) = 0;
   virtual bool     defined_at_init (string var_name) = 0;

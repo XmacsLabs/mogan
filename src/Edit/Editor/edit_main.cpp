@@ -29,10 +29,6 @@
 #include "Pdf/pdf_hummus_make_attachment.hpp"
 #endif
 
-#ifdef EXPERIMENTAL
-#include "../../Style/Memorizer/clean_copy.hpp"
-#endif
-
 #ifdef USE_PLUGIN_GS
 #include "Ghostscript/gs_utilities.hpp"
 #endif
@@ -65,10 +61,6 @@ editor_rep::is_current_editor () {
 edit_main_rep::edit_main_rep (server_rep* sv, tm_buffer buf):
   editor_rep (sv, buf), props (UNKNOWN), ed_obs (edit_observer (this))
 {
-#ifdef EXPERIMENTAL
-  cct= copy (subtree (et, rp));
-  copy_ip (subtree (et, rp), cct);
-#endif
   attach_observer (subtree (et, rp), ed_obs);
   notify_change (THE_TREE);
   tp= correct_cursor (et, rp * 0);
@@ -76,9 +68,6 @@ edit_main_rep::edit_main_rep (server_rep* sv, tm_buffer buf):
 
 edit_main_rep::~edit_main_rep () {
   detach_observer (subtree (et, rp), ed_obs);
-#ifdef EXPERIMENTAL
-  mem= memorizer ();
-#endif
 }
 
 editor

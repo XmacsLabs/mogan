@@ -590,12 +590,6 @@ main (int argc, char** argv) {
   bench_start ("initialize texmacs");
   init_texmacs ();
   bench_cumul ("initialize texmacs");
-#ifdef ENABLE_TESTS
-  test_routines ();
-#endif
-  // #ifdef EXPERIMENTAL
-  //   test_environments ();
-  // #endif
   start_scheme (argc, argv, TeXmacs_main);
 #ifdef QTTEXMACS
   if (headless_mode) delete qtmcoreapp;

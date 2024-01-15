@@ -17,9 +17,6 @@ ${define HAVE_STDINT_H}
 /* check assertions in code */
 #define DEBUG_ASSERT 1
 
-/* Enable experimental style rewriting code */
-${define EXPERIMENTAL}
-
 ${define USE_PLUGIN_GS}
 
 #ifdef USE_PLUGIN_GS

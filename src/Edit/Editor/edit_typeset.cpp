@@ -26,10 +26,6 @@
 #include "observers.hpp"
 
 
-#ifdef EXPERIMENTAL
-#include "../../Style/Environment/std_environment.hpp"
-#endif // EXPERIMENTAL
-
 //box empty_box (path ip, int x1=0, int y1=0, int x2=0, int y2=0);
 bool enable_fastenv= false;
 
@@ -353,19 +349,6 @@ edit_typeset_rep::drd_update () {
   typeset_exec_until (tp);
   drd->heuristic_init (cur[tp]);
 }
-
-#ifdef EXPERIMENTAL
-void
-edit_typeset_rep::environment_update () {
-  hashmap<string,tree> h;
-  typeset_prepare ();
-  env->assign ("base-file-name", as_string (env->base_file_name));
-  env->assign ("cur-file-name", as_string (env->cur_file_name));
-  env->assign ("secure", as_tree (env->secure));
-  env->read_env (h);
-  ::primitive (ste, h);
-}
-#endif
 
 /******************************************************************************
 * Routines for getting information

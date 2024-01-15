@@ -23,9 +23,6 @@
 #include "tree_traverse.hpp"
 #include "preferences.hpp"
 #include "observers.hpp"
-#ifdef EXPERIMENTAL
-#include "../../Style/Evaluate/evaluate_main.hpp"
-#endif
 #include "gui.hpp" // for gui_interrupted
 
 extern void (*env_next_prog)(void);
@@ -810,19 +807,6 @@ edit_interface_rep::apply_changes () {
     // check_data_integrety ();
     the_ghost_cursor()= eb->find_check_cursor (tp);
   }
-  
-#ifdef EXPERIMENTAL
-  if (env_change & THE_ENVIRONMENT)
-    environment_update ();
-  if (env_change & THE_TREE) {
-    cout << HRULE;
-    mem= evaluate (ste, cct);
-    tree rew= mem->get_tree ();
-    cout << HRULE;
-    cout << tree_to_texmacs (rew) << LF;
-    //print_tree (rew);
-  }
-#endif
   
   // cout << "Handling extents\n";
   if (env_change & (THE_TREE+THE_ENVIRONMENT+THE_EXTENTS)) {
