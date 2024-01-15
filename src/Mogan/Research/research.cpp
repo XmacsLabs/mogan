@@ -77,19 +77,6 @@ static QTMCoreApplication* qtmcoreapp= NULL;
 #endif
 
 /******************************************************************************
- * For testing
- ******************************************************************************/
-
-// #define ENABLE_TESTS
-#ifdef ENABLE_TESTS
-void
-test_routines () {
-  extern void test_math ();
-  test_math ();
-}
-#endif
-
-/******************************************************************************
  * Clean exit on segmentation faults
  ******************************************************************************/
 
@@ -583,9 +570,6 @@ main (int argc, char** argv) {
   bench_start ("initialize texmacs");
   init_texmacs ();
   bench_cumul ("initialize texmacs");
-#ifdef ENABLE_TESTS
-  test_routines ();
-#endif
   // #ifdef EXPERIMENTAL
   //   test_environments ();
   // #endif
