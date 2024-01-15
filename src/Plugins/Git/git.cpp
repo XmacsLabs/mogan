@@ -24,7 +24,8 @@ libgit2_version () {
 static void
 show_git_last_error (int error) {
   const git_error* e= git_error_last ();
-  debug_io << "Error " << error << "/" << e->klass << ": " << e->message << LF;
+  debug_io << "libgit2 error " << error << "/" << e->klass << ": " << e->message
+           << LF;
 }
 
 static bool
