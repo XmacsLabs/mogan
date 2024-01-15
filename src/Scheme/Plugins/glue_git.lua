@@ -29,6 +29,15 @@ function main()
                     "url"
                 }
             },
+            {
+                scm_name = "git-status-file",
+                cpp_name = "git_status_file",
+                ret_type = "string",
+                arg_list = {
+                    "url",
+                    "url"
+                }
+            },
         }
     }
 end

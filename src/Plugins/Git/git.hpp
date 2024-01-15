@@ -17,5 +17,6 @@
 
 string libgit2_version ();
 string git_load_blob (string rev, url u, url repo_u= url_none ());
+string git_status_file (url file_u, url repo_u);
 
 #endif
