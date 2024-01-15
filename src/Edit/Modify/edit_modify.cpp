@@ -16,10 +16,6 @@
 #include "observers.hpp"
 
 
-#ifdef EXPERIMENTAL
-#include "../../Style/Memorizer/clean_copy.hpp"
-#endif
-
 /******************************************************************************
 * Constructors and destructors
 ******************************************************************************/
@@ -254,9 +250,6 @@ edit_done (editor_rep* ed, modification mod) {
   ASSERT (ed->the_buffer_path() <= p, "invalid modification");
   if (mod->k != MOD_SET_CURSOR)
     ed->post_notify (p);
-#ifdef EXPERIMENTAL
-  copy_announce (subtree (ed->et, ed->rp), ed->cct, mod / ed->rp);
-#endif
 }
 
 void
