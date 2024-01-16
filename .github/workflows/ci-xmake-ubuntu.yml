@@ -13,7 +13,6 @@ on:
       - 'xmake.lua'
       - 'xmake/packages.lua'
       - 'xmake/research.lua'
-      - 'xmake-requires.lock'
   pull_request:
     branches: [ branch-1.2 ]
     paths:
@@ -26,7 +25,6 @@ on:
       - 'xmake.lua'
       - 'xmake/packages.lua'
       - 'xmake/research.lua'
-      - 'xmake-requires.lock'
 
 jobs:
   linuxbuild:
