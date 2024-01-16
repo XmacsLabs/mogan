@@ -124,6 +124,11 @@ get_tm_cache_path () {
   return url (string ("$TEXMACS_HOME_PATH/system/cache/") * XMACS_VERSION);
 }
 
+url
+get_tm_preference_path () {
+  return get_texmacs_home_path() * ("system/" * XMACS_VERSION * "/preferences.scm");
+}
+
 string 
 get_printing_default () {
 #if defined(OS_MINGW) || defined(OS_WIN)
