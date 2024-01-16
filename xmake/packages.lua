@@ -38,7 +38,9 @@ local LIBJPEG_VERSION = "v9e"
 local LIBICONV_VERSION = "1.17"
 local LIBGIT2_VERSION = "1.7.1"
 
-includes("3rd/zlib.lua")
+if is_plat("macosx", "linux") then
+    includes("3rd/zlib.lua")
+end
 
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
 package("lolly")
@@ -165,11 +167,6 @@ function add_requires_of_mogan()
         add_requires("apt::libgit2-dev", {alias="libgit2"})
     elseif not is_plat("wasm") then
         add_requires("libgit2 "..LIBGIT2_VERSION, {system=false})
-    end
-
-    -- package: zlib
-    if is_plat ("linux") and using_apt() then
-        add_requires ("apt::zlib1g-dev", {alias="zlib"})
     end
 
     if is_plat ("linux") and using_apt() then
