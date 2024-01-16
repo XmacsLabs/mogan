@@ -9,6 +9,7 @@ on:
       - 'tests/**'
       - 'xmake/packages.lua'
       - 'xmake.lua'
+      - 'xmake-requires.lock'
       - '.github/workflows/ci-xmake-archlinux.yml'
   pull_request:
     branches: [ branch-1.2 ]
@@ -19,6 +20,7 @@ on:
       - 'tests/**'
       - 'xmake/packages.lua'
       - 'xmake.lua'
+      - 'xmake-requires.lock'
       - '.github/workflows/ci-xmake-archlinux.yml'
 
 env:
@@ -34,7 +36,9 @@ jobs:
       - name: Install dependencies
         run: |
           sudo pacman -Syyu --noconfirm --needed
-          sudo pacman -S --noconfirm --needed qt6-base qt6-svg libpng zlib libjpeg curl python libxext xmake unzip noto-fonts-cjk
+          sudo pacman -S --noconfirm --needed qt6-base qt6-svg libpng zlib \
+            libjpeg curl python libxext xmake unzip noto-fonts-cjk \
+            fontconfig libgit2 freetype2 openssl
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -43,7 +47,7 @@ jobs:
         run: echo "XMAKE_GLOBALDIR=/tmp/xmake-global" >> $GITHUB_ENV  
 
       - name: Xrepo update
-        run: xmake repo --update --yes
+        run: xmake repo --update
 
       - name: cache packages from xrepo
         uses: actions/cache@v3
