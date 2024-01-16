@@ -366,7 +366,7 @@ qt_gui_rep::set_selection (string key, tree t, string s, string sv, string sh,
   cb->clear (mode);
 
   c_string selection (s);
-  cb->setText (QString::fromLatin1 (selection, N (s)), mode);
+  cb->setText (utf8_to_qstring (s), mode);
   QMimeData* md= new QMimeData;
 
   if (format == "verbatim" || format == "default") {
@@ -396,9 +396,12 @@ qt_gui_rep::set_selection (string key, tree t, string s, string sv, string sh,
   }
   else if (format == "latex") {
     string enc= get_preference ("texmacs->latex:encoding");
-    if (enc == "utf-8" || enc == "UTF-8" || enc == "cork")
-      md->setText (to_qstring (string (selection)));
-    else md->setText (QString::fromLatin1 (selection, N (s)));
+    if (enc == "utf-8" || enc == "UTF-8" || enc == "cork") {
+      md->setText (utf8_to_qstring (s));
+    }
+    else {
+      md->setText (QString::fromLatin1 (selection, -1));
+    }
   }
   else md->setText (QString::fromLatin1 (selection, N (s)));
   cb->setMimeData (md, mode);
