@@ -32,7 +32,7 @@
         ["cpr#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "8a066a3d045249cac9ee2454aec0ae399e41f371",
+                commit = "4008de50367abe3554f52460fc5f09a744073cec",
                 url = "https://gitee.com/tboox/xmake-repo.git"
             },
             version = "1.8.3"
@@ -79,6 +79,14 @@
         },
         ["lolly#31fecfc4"] = {
             version = "v1.3.17"
+        },
+        ["mimalloc#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "15ad332bc1573ceda1afb06fd8696c31c5e09f36",
+                url = "https://gitee.com/tboox/xmake-repo.git"
+            },
+            version = "2.1.2"
         },
         ["openssl#31fecfc4"] = {
             repo = {
