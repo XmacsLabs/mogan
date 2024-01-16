@@ -123,6 +123,9 @@ function add_requires_of_mogan()
     if is_plat("linux") and using_apt() then
         add_requires("apt::libpng-dev", {alias="libpng"})
         add_requireconfs("pdfhummus.libpng", {system = true, override=true})
+    elseif is_plat("linux") and using_pacman () then
+        add_requires("pacman::libpng", {alias="libpng"})
+        add_requireconfs("pdfhummus.libpng", {system = true, override=true})
     else
         add_requireconfs("pdfhummus.libpng", {version = LIBPNG_VERSION, system = false, override=true})
     end
@@ -148,6 +151,8 @@ function add_requires_of_mogan()
         else
             add_requires("apt::libfreetype-dev", {alias="freetype"})
         end
+    elseif is_plat("linux") and using_pacman () then
+        add_requires("pacman::freetype2", {alias="freetype"})
     else
     -- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
         if not is_plat ("macosx") then
