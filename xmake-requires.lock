@@ -15,6 +15,9 @@
         ["apt::libpng-dev#31fecfc4"] = {
             version = "latest"
         },
+        ["apt::libssl-dev#31fecfc4"] = {
+            version = "latest"
+        },
         ["apt::zlib1g-dev#31fecfc4"] = {
             version = "latest"
         },
@@ -29,10 +32,10 @@
         ["cpr#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "4008de50367abe3554f52460fc5f09a744073cec",
+                commit = "8a066a3d045249cac9ee2454aec0ae399e41f371",
                 url = "https://gitee.com/tboox/xmake-repo.git"
             },
-            version = "1.10.5"
+            version = "1.8.3"
         },
         ["freetype#31fecfc4"] = {
             repo = {
@@ -75,7 +78,7 @@
             version = "1.6.36"
         },
         ["lolly#31fecfc4"] = {
-            version = "v1.3.16"
+            version = "v1.3.17"
         },
         ["openssl#31fecfc4"] = {
             repo = {
@@ -88,7 +91,7 @@
         ["pdfhummus 4.6.2#23149c54"] = {
             repo = {
                 branch = "master",
-                commit = "bdce2febf9d26219840fe93f2e6b9ff676d565f7",
+                commit = "4008de50367abe3554f52460fc5f09a744073cec",
                 url = "https://gitee.com/tboox/xmake-repo.git"
             },
             version = "v4.6.2"
@@ -153,14 +156,6 @@
             },
             version = "3.26.4"
         },
-        ["cpr#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "22223c3e860144e789c3c986e064369d66f37573",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "1.10.5"
-        },
         ["freetype#31fecfc4"] = {
             repo = {
                 branch = "master",
@@ -210,7 +205,7 @@
             version = "1.6.36"
         },
         ["lolly#31fecfc4"] = {
-            version = "v1.3.16"
+            version = "v1.3.17"
         },
         ["openssl#31fecfc4"] = {
             repo = {
@@ -278,14 +273,6 @@
             },
             version = "3.26.4"
         },
-        ["cpr#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "1.10.5"
-        },
         ["freetype#31fecfc4"] = {
             repo = {
                 branch = "master",
@@ -335,7 +322,7 @@
             version = "v1.6.37"
         },
         ["lolly#31fecfc4"] = {
-            version = "v1.3.16"
+            version = "v1.3.17"
         },
         ["pdfhummus 4.6.2#23149c54"] = {
             repo = {
@@ -386,14 +373,6 @@
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "3.26.4"
-        },
-        ["cpr#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "92b0ee334f4c5a4857e050d8f20da8469214e3dd",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "1.10.5"
         },
         ["freetype#31fecfc4"] = {
             repo = {
@@ -452,7 +431,7 @@
             version = "v1.6.37"
         },
         ["lolly#31fecfc4"] = {
-            version = "v1.3.16"
+            version = "v1.3.17"
         },
         ["nasm#31fecfc4"] = {
             repo = {
