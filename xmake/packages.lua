@@ -82,12 +82,8 @@ function add_requires_of_mogan()
 
     -- package: libcurl
     if is_plat("linux") and using_apt() then
-        if linuxos.name() == "uos" then
-            add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
-        else
-            add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-            add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
-        end
+        add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+        add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
     else
         add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
         add_requireconfs("lolly.cpr.libcurl.cmake", {version = CMAKE_VERSION, system = false, override=true})
