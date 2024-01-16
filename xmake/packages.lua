@@ -41,12 +41,16 @@ package("lolly")
     add_deps("tbox")
     if not is_plat("wasm") then
         add_deps("cpr")
+        add_deps("mimalloc")
     end
 
     add_versions("v" .. LOLLY_VERSION, "58fac07b47f4df4a9ad8796c18f510a04afd8a97")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
+        if not is_plat("wasm") then
+            configs.malloc = "mimalloc"
+        end
         if package:config("shared") then
             configs.kind = "shared"
         end
