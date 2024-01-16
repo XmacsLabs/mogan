@@ -134,7 +134,7 @@
                 commit = "4008de50367abe3554f52460fc5f09a744073cec",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
-            version = "v1.2.11"
+            version = "1.2.11"
         }
     },
     ["linux|x86_64"] = {
@@ -378,7 +378,7 @@
                 commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
-            version = "1.2.11"
+            version = "v1.2.11"
         }
     },
     ["windows|x64"] = {
