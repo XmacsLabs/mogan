@@ -18,9 +18,9 @@
 local S7_VERSION = "2023.04.13"
 local QT6_VERSION = "6.5.3"
 local QTIFW_VERSION = "4.6.0"
-local LOLLY_VERSION = "1.3.16"
+local LOLLY_VERSION = "1.3.17"
 local TBOX_VERSION = "1.7.5"
-local CPR_VERSION = "1.10.5"
+local CPR_VERSION = "1.8.3"
 local CURL_VERSION = "8.4.0"
 local PDFHUMMUS_VERSION = "4.6.2"
 local FREETYPE_VERSION = "2.12.1"
@@ -43,7 +43,7 @@ package("lolly")
         add_deps("cpr")
     end
 
-    add_versions("v" .. LOLLY_VERSION, "e85d9c2c6196b2c02c9afcdb95135871f9afe263")
+    add_versions("v" .. LOLLY_VERSION, "58fac07b47f4df4a9ad8796c18f510a04afd8a97")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
@@ -82,12 +82,8 @@ function add_requires_of_mogan()
 
     -- package: libcurl
     if is_plat("linux") and using_apt() then
-        if linuxos.name() == "uos" then
-            add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
-        else
-            add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-            add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
-        end
+        add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+        add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
     else
         add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
         add_requireconfs("lolly.cpr.libcurl.cmake", {version = CMAKE_VERSION, system = false, override=true})
@@ -157,5 +153,9 @@ function add_requires_of_mogan()
 
     if is_plat ("linux") and using_apt() then
         add_requires ("apt::zlib1g-dev", {alias="zlib"})
+    end
+
+    if is_plat ("linux") and using_apt() then
+        add_requires ("apt::libssl-dev", {alias="openssl"})
     end
 end
