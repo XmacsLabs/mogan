@@ -10,7 +10,6 @@ on:
       - 'xmake/packages.lua'
       - 'xmake.lua'
       - '.github/workflows/ci-xmake-archlinux.yml'
-      - 'xmake-requires.lock'
   pull_request:
     branches: [ branch-1.2 ]
     paths:
@@ -21,7 +20,6 @@ on:
       - 'xmake/packages.lua'
       - 'xmake.lua'
       - '.github/workflows/ci-xmake-archlinux.yml'
-      - 'xmake-requires.lock'
 
 env:
   XMAKE_ROOT: y
