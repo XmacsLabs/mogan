@@ -55,7 +55,7 @@
         ["libjpeg#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "bdce2febf9d26219840fe93f2e6b9ff676d565f7",
+                commit = "4008de50367abe3554f52460fc5f09a744073cec",
                 url = "https://gitee.com/tboox/xmake-repo.git"
             },
             version = "1.5.2"
@@ -63,7 +63,7 @@
         ["libpng#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "bdce2febf9d26219840fe93f2e6b9ff676d565f7",
+                commit = "4008de50367abe3554f52460fc5f09a744073cec",
                 url = "https://gitee.com/tboox/xmake-repo.git"
             },
             version = "1.6.36"
@@ -74,7 +74,7 @@
         ["openssl#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "bdce2febf9d26219840fe93f2e6b9ff676d565f7",
+                commit = "4008de50367abe3554f52460fc5f09a744073cec",
                 url = "https://gitee.com/tboox/xmake-repo.git"
             },
             version = "1.1.1d"
@@ -90,7 +90,7 @@
         ["pkg-config#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "bdce2febf9d26219840fe93f2e6b9ff676d565f7",
+                commit = "4008de50367abe3554f52460fc5f09a744073cec",
                 url = "https://gitee.com/tboox/xmake-repo.git"
             },
             version = "0.29"
@@ -114,7 +114,7 @@
         ["zlib#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "bdce2febf9d26219840fe93f2e6b9ff676d565f7",
+                commit = "4008de50367abe3554f52460fc5f09a744073cec",
                 url = "https://gitee.com/tboox/xmake-repo.git"
             },
             version = "1.2.11"
