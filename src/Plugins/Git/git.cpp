@@ -28,7 +28,7 @@ show_git_last_error (int error) {
 #else
   const git_error* e= git_error_last ();
 #endif
-  debug_io << "libgit2 error " << error // << "/" << e->klass << ": " << e->message
+  debug_io << "libgit2 error " << error << "/" << e->klass << ": " << e->message
            << LF;
 }
 
