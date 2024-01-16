@@ -67,14 +67,14 @@ jobs:
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages 
-          key: ${{ runner.os }}-xrepo-qt${{ matrix.qt_ver }}-${{ hashFiles('xmake-requires.lock') }}
-          
+          key: ${{ runner.os }}-xrepo-qt${{ matrix.qt_ver }}-${{ hashFiles('**/packages.lua') }}
+
       - name: cache xmake
         uses: actions/cache@v3
         with:
           path: |
             ${{ runner.workspace }}/build/.build_cache
-          key: ${{ runner.os }}-build-qt${{ matrix.qt_ver }}-${{ hashFiles('xmake-requires.lock') }}
+          key: ${{ runner.os }}-build-qt${{ matrix.qt_ver }}-${{ hashFiles('**/packages.lua') }}
 
       - name: config
         run: xmake config -vD --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
