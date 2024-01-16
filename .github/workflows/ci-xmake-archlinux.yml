@@ -9,7 +9,6 @@ on:
       - 'tests/**'
       - 'xmake/packages.lua'
       - 'xmake.lua'
-      - 'xmake-requires.lock'
       - '.github/workflows/ci-xmake-archlinux.yml'
   pull_request:
     branches: [ branch-1.2 ]
@@ -20,7 +19,6 @@ on:
       - 'tests/**'
       - 'xmake/packages.lua'
       - 'xmake.lua'
-      - 'xmake-requires.lock'
       - '.github/workflows/ci-xmake-archlinux.yml'
 
 env:
