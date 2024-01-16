@@ -126,7 +126,7 @@ get_tm_cache_path () {
 
 url
 get_tm_preference_path () {
-  return get_texmacs_home_path() * ("system/" * XMACS_VERSION * "/preferences.scm");
+  return get_texmacs_home_path() * ("system/" * string(XMACS_VERSION) * "/preferences.scm");
 }
 
 string 
