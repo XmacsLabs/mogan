@@ -23,8 +23,12 @@ libgit2_version () {
 
 static void
 show_git_last_error (int error) {
+#if (LIBGIT2_VER_MAJOR == 0) && (LIBGIT2_VER_MINOR <= 27)
+  const git_error* e= giterr_last ();
+#else
   const git_error* e= git_error_last ();
-  debug_io << "libgit2 error " << error << "/" << e->klass << ": " << e->message
+#endif
+  debug_io << "libgit2 error " << error // << "/" << e->klass << ": " << e->message
            << LF;
 }
 
