@@ -38,6 +38,8 @@ local LIBJPEG_VERSION = "v9e"
 local LIBICONV_VERSION = "1.17"
 local LIBGIT2_VERSION = "1.7.1"
 
+includes("3rd/zlib.lua")
+
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
 package("lolly")
     set_homepage("https://github.com/XmacsLabs/lolly")
@@ -65,7 +67,6 @@ package("lolly")
         import("package.tools.xmake").install(package, configs)
     end)
 package_end()
-
 
 function add_requires_of_mogan()
     -- package: s7
