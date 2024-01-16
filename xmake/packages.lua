@@ -177,4 +177,8 @@ function add_requires_of_mogan()
     if is_plat ("linux") and using_apt() then
         add_requires ("apt::libssl-dev", {alias="openssl"})
     end
+
+    if is_plat ("linux") and using_pacman() then
+        add_requires ("pacman::mimalloc", {alias="mimalloc"})
+    end
 end
