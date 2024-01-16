@@ -142,6 +142,11 @@ tt_font_search_path () {
 #endif
     ret= ret | url ("/usr/share/texlive/texmf-dist/fonts/opentype") |
          url ("/usr/share/texlive/texmf-dist/fonts/truetype");
+    // special rules for archlinux
+    if (exists (url_system ("/usr/share/fonts/noto-cjk"))) {
+      ret= ret | url_system ("/usr/share/fonts/noto-cjk");
+    }
+    // special rules for uos
     if (exists (url_system ("/usr/share/fonts/fonts-cesi"))) {
       ret= ret | url_system ("/usr/share/fonts/fonts-cesi");
     }
