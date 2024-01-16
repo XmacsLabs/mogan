@@ -1365,7 +1365,6 @@
 ("open new window" "新开窗口")
 ("open on errors" "错误时弹出")
 ("open on warnings" "警告时弹出")
-("open preferences.scm" "打开preferences.scm文件")
 ("open symbol browser" "打开符号浏览器")
 ("open" "打开")
 ("opening" "")
