@@ -46,7 +46,7 @@ package("lolly")
     add_versions("v" .. LOLLY_VERSION, "58fac07b47f4df4a9ad8796c18f510a04afd8a97")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
-        local configs = {}
+        local configs = {"--malloc=mimalloc"}
         if package:config("shared") then
             configs.kind = "shared"
         end
