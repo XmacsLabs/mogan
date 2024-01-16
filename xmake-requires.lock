@@ -3,6 +3,9 @@
         version = "1.0"
     },
     ["linux|loongarch64"] = {
+        ["apt::libcurl4-openssl-dev#31fecfc4"] = {
+            version = "latest"
+        },
         ["apt::libgit2-dev#31fecfc4"] = {
             version = "latest"
         },
@@ -53,7 +56,7 @@
                 commit = "4008de50367abe3554f52460fc5f09a744073cec",
                 url = "https://gitee.com/tboox/xmake-repo.git"
             },
-            version = "8.4.0"
+            version = "7.64.0"
         },
         ["libjpeg#31fecfc4"] = {
             repo = {
