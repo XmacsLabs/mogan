@@ -39,34 +39,7 @@ local LIBICONV_VERSION = "1.17"
 local LIBGIT2_VERSION = "1.7.1"
 
 includes("3rd/zlib.lua")
-
--- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
-package("lolly")
-    set_homepage("https://github.com/XmacsLabs/lolly")
-    set_description("Lolly is a C++ library")
-
-    add_urls("https://github.com/XmacsLabs/lolly.git")
-    add_urls("https://gitee.com/XmacsLabs/lolly.git")
-
-    add_deps("tbox")
-    if not is_plat("wasm") then
-        add_deps("cpr")
-        add_deps("mimalloc")
-    end
-
-    add_versions("v" .. LOLLY_VERSION, "58fac07b47f4df4a9ad8796c18f510a04afd8a97")
-
-    on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
-        local configs = {}
-        if not is_plat("wasm") then
-            configs.malloc = "mimalloc"
-        end
-        if package:config("shared") then
-            configs.kind = "shared"
-        end
-        import("package.tools.xmake").install(package, configs)
-    end)
-package_end()
+includes("3rd/lolly.lua")
 
 function add_requires_of_mogan()
     -- package: s7
