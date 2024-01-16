@@ -103,12 +103,7 @@
             version = "v1.7.5"
         },
         ["zlib#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "v1.2.11"
+            version = "1.2.11"
         }
     },
     ["windows|x64"] = {
@@ -276,12 +271,7 @@
             version = "v1.7.5"
         },
         ["zlib#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "be832f2cace05fd467886c91313ca5e7e5598dce",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "v1.2.11"
+            version = "1.2.11"
         }
     }
 }
