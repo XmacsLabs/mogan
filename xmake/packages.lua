@@ -29,7 +29,7 @@ local QT6_VERSION = "6.5.3"
 local QTIFW_VERSION = "4.6.0"
 local LOLLY_VERSION = "1.3.17"
 local TBOX_VERSION = "1.7.5"
-local CPR_VERSION = "1.8.3"
+local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
 local PDFHUMMUS_VERSION = "4.6.2"
 local FREETYPE_VERSION = "2.12.1"
@@ -84,8 +84,8 @@ function add_requires_of_mogan()
     add_requires("lolly", {system=false})
     tbox_configs = {hash=true, ["force-utf8"]=true}
     add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
-    if is_plat("linux") and using_pacman() then
-       add_requireconfs("lolly.cpr", {version = "1.10.5", system = false, override=true})
+    if is_plat("linux") and linuxos.name() == "uos" then
+       add_requireconfs("lolly.cpr", {version = "1.8.3", system = false, override=true})
     else
        add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
     end

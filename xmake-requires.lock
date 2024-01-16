@@ -11,14 +11,6 @@
             },
             version = "3.26.4"
         },
-        ["cpr#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "e0d3bd857f8fcfbebf985c1a5dc52287597babbd",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "1.8.3"
-        },
         ["freetype#31fecfc4"] = {
             repo = {
                 branch = "master",
