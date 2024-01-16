@@ -196,14 +196,6 @@
             },
             version = "v1.7.1"
         },
-        ["libjpeg#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "e4a467ab6e25d9afa5324cf536141660a5c1eef4",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "1.5.2"
-        },
         ["libpng#31fecfc4"] = {
             repo = {
                 branch = "master",

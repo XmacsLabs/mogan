@@ -12,6 +12,15 @@
 --
 -- Dependencies: Platform|Package Manager
 --
+function using_apt ()
+    return linuxos.name() == "debian"
+           or linuxos.name() == "ubuntu"
+           or linuxos.name() == "uos"
+end
+
+function using_pacman ()
+    return linuxos.name() == "archlinux"
+end
 
 -- The following versions are adopted on macOS/Windows/ArchLinux
 -- We will use the system provided packages on Ubuntu 22.04/Debian 12/...
@@ -20,7 +29,11 @@ local QT6_VERSION = "6.5.3"
 local QTIFW_VERSION = "4.6.0"
 local LOLLY_VERSION = "1.3.17"
 local TBOX_VERSION = "1.7.5"
-local CPR_VERSION = "1.8.3"
+if is_plat("linux") and using_pacman () then
+    local CPR_VERSION = "1.10.5"
+else
+    local CPR_VERSION = "1.8.3"
+end
 local CURL_VERSION = "8.4.0"
 local PDFHUMMUS_VERSION = "4.6.2"
 local FREETYPE_VERSION = "2.12.1"
@@ -58,12 +71,6 @@ package("lolly")
     end)
 package_end()
 
-function using_apt ()
-    return linuxos.name() == "debian"
-           or linuxos.name() == "ubuntu"
-           or linuxos.name() == "uos"
-end
-
 
 function add_requires_of_mogan()
     -- package: s7
@@ -87,6 +94,9 @@ function add_requires_of_mogan()
     -- package: libcurl
     if is_plat("linux") and using_apt() then
         add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+        add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
+    elseif is_plat("linux") and using_pacman () then
+        add_requires("pacman::curl", {alias="libcurl"})
         add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
     else
         add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
@@ -113,6 +123,9 @@ function add_requires_of_mogan()
     if is_plat("linux") and using_apt() then
         add_requires("apt::libpng-dev", {alias="libpng"})
         add_requireconfs("pdfhummus.libpng", {system = true, override=true})
+    elseif is_plat("linux") and using_pacman () then
+        add_requires("pacman::libpng", {alias="libpng"})
+        add_requireconfs("pdfhummus.libpng", {system = true, override=true})
     else
         add_requireconfs("pdfhummus.libpng", {version = LIBPNG_VERSION, system = false, override=true})
     end
@@ -138,6 +151,8 @@ function add_requires_of_mogan()
         else
             add_requires("apt::libfreetype-dev", {alias="freetype"})
         end
+    elseif is_plat("linux") and using_pacman () then
+        add_requires("pacman::freetype2", {alias="freetype"})
     else
     -- Let xrepo manage the dependencies for macOS and other GNU/Linux distros
         if not is_plat ("macosx") then
@@ -161,5 +176,9 @@ function add_requires_of_mogan()
 
     if is_plat ("linux") and using_apt() then
         add_requires ("apt::libssl-dev", {alias="openssl"})
+    end
+
+    if is_plat ("linux") and using_pacman() then
+        add_requires ("pacman::mimalloc", {alias="mimalloc"})
     end
 end
