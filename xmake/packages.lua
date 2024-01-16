@@ -29,11 +29,7 @@ local QT6_VERSION = "6.5.3"
 local QTIFW_VERSION = "4.6.0"
 local LOLLY_VERSION = "1.3.17"
 local TBOX_VERSION = "1.7.5"
-if is_plat("linux") and using_pacman () then
-    local CPR_VERSION = "1.10.5"
-else
-    local CPR_VERSION = "1.8.3"
-end
+local CPR_VERSION = "1.8.3"
 local CURL_VERSION = "8.4.0"
 local PDFHUMMUS_VERSION = "4.6.2"
 local FREETYPE_VERSION = "2.12.1"
@@ -41,7 +37,6 @@ local LIBPNG_VERSION = "1.6.37"
 local LIBJPEG_VERSION = "v9e"
 local LIBICONV_VERSION = "1.17"
 local LIBGIT2_VERSION = "1.7.1"
-local CMAKE_VERSION = "3.26.4"
 
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
 package("lolly")
@@ -89,7 +84,11 @@ function add_requires_of_mogan()
     add_requires("lolly", {system=false})
     tbox_configs = {hash=true, ["force-utf8"]=true}
     add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
-    add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
+    if is_plat("linux") and using_pacman() then
+       add_requireconfs("lolly.cpr", {version = "1.10.5", system = false, override=true})
+    else
+       add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
+    end
 
     -- package: libcurl
     if is_plat("linux") and using_apt() then
@@ -100,7 +99,6 @@ function add_requires_of_mogan()
         add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
     else
         add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
-        add_requireconfs("lolly.cpr.libcurl.cmake", {version = CMAKE_VERSION, system = false, override=true})
     end
 
     -- package: fontconfig
@@ -116,7 +114,6 @@ function add_requires_of_mogan()
     set_configvar("PDFHUMMUS_VERSION", PDFHUMMUS_VERSION)
     if not is_plat("wasm") then
         add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
-        add_requireconfs("pdfhummus.cmake", {version = CMAKE_VERSION, system = false, override=true})
     end
 
     -- package: libpng
@@ -167,7 +164,6 @@ function add_requires_of_mogan()
         add_requires("apt::libgit2-dev", {alias="libgit2"})
     elseif not is_plat("wasm") then
         add_requires("libgit2 "..LIBGIT2_VERSION, {system=false})
-        add_requireconfs("libgit2.cmake", {version = CMAKE_VERSION, system = false, override=true})
     end
 
     if is_plat ("linux") and using_apt() then
