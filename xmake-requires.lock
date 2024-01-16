@@ -105,10 +105,10 @@
         ["zlib#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
+                commit = "15ad332bc1573ceda1afb06fd8696c31c5e09f36",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
-            version = "v1.2.11"
+            version = "1.2.11"
         }
     },
     ["windows|x64"] = {

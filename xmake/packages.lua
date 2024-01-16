@@ -166,6 +166,7 @@ function add_requires_of_mogan()
         add_requires("libgit2 "..LIBGIT2_VERSION, {system=false})
     end
 
+    -- package: zlib
     if is_plat ("linux") and using_apt() then
         add_requires ("apt::zlib1g-dev", {alias="zlib"})
     end
