@@ -38,9 +38,7 @@ local LIBJPEG_VERSION = "v9e"
 local LIBICONV_VERSION = "1.17"
 local LIBGIT2_VERSION = "1.7.1"
 
-if is_plat("macosx", "linux") then
-    includes("3rd/zlib.lua")
-end
+includes("3rd/zlib.lua")
 
 -- https://xmake.io/#/manual/package_dependencies?id=inherit-package-configuration
 package("lolly")
