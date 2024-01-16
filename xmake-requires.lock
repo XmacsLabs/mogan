@@ -273,6 +273,14 @@
             },
             version = "3.26.4"
         },
+        ["cpr#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "e0d3bd857f8fcfbebf985c1a5dc52287597babbd",
+                url = "https://gitee.com/tboox/xmake-repo.git"
+            },
+            version = "1.8.3"
+        },
         ["freetype#31fecfc4"] = {
             repo = {
                 branch = "master",
@@ -316,7 +324,7 @@
         ["libpng#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e0d3bd857f8fcfbebf985c1a5dc52287597babbd",
+                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "v1.6.37"
