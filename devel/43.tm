@@ -9,7 +9,7 @@
 
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|5|7|2|2|cell-background|pastel
   green>|<table|<row|<cell|Feature>|<cell|43_6>|<cell|>|<cell|<value|da>>|<cell|keyboard
-  shortcut to copy to <LaTeX>>>|<row|<cell|Bug>|<cell|43_5>|<cell|>|<cell|<value|da>>|<cell|messy
+  shortcut to copy to <LaTeX>>>|<row|<cell|Bug>|<cell|<dlink|43_5>>|<cell|v1.2.3>|<cell|<value|da>>|<cell|messy
   encoding when Copy several equations to
   <LaTeX>>>|<row|<cell|Feature>|<cell|43_4>|<cell|>|<cell|<value|da>>|<cell|Support
   gather and gathered in <LaTeX>>>|<row|<cell|Bug>|<cell|43_3>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Crash
@@ -19,7 +19,7 @@
   tests>>|<row|<cell|Chore>|<cell|43_1>|<cell|v1.2.0>|<cell|Darcy>|<cell|Move
   latex related scheme code to plugins/latex>>>>>
 
-  <tmdoc-copyright|2023|Darcy>
+  <tmdoc-copyright|2023-2024|Darcy>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
