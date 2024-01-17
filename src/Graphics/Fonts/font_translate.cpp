@@ -12,6 +12,7 @@
 #include "Freetype/tt_tools.hpp"
 #include "analyze.hpp"
 #include "font.hpp"
+#include "tm_debug.hpp"
 
 bool is_weight (string s);
 bool is_category (string s);
@@ -290,7 +291,14 @@ closest_font (string family, string variant, string series, string shape,
   string s= family * "-" * variant * "-" * series * "-" * shape * "-" *
             as_string (sz) * "-" * as_string (dpi) * "-" * as_string (attempt);
   if (font::instances->contains (s)) return font (s);
+  string orig_family= family;
   find_closest (family, variant, series, shape, attempt);
+  if (orig_family != family) {
+    debug_fonts << "Font substitution: " << s << LF
+      << "-> " << family * "-" * variant * "-" * series * "-" * shape << "-"
+      << as_string (sz) * "-" * as_string (dpi) * "-" * as_string (attempt)
+      << LF;
+  }
   font fn= find_font (family, variant, series, shape, sz, dpi);
   // cout << "Found " << fn->res_name << "\n";
   font::instances (s)= (pointer) fn.rep;
