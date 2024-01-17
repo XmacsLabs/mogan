@@ -223,7 +223,7 @@ void draw_keys_sub (renderer ren, rectangle r, string ns, int &base_x, int &base
     t= tuple ("apple-lucida", "ss", "medium", "right");
   }
   else {
-    t= tuple ("pagella", "rm", "medium", "right");
+    t= tuple ("roman", "ss", "medium", "right");
   }
   t << tree ("14") << tree ("600");
   font fn= find_font (t);
@@ -265,8 +265,10 @@ edit_interface_rep::draw_keys (renderer ren) {
     string ns;
     for (int i=0; i<N(rew); i++) {
       tree t= rew[i];
-      while (is_compound (t, "render-key") || is_func (t, WITH))
+      while (is_compound (t, "render-key") || is_compound (t, "localize")
+             || is_func (t, WITH)) {
         t= t[N(t)-1];
+      }
       if (is_atomic (t)) {
         if (N(ns) != 0) ns << "  ";
         if (lolly::data::is_cjk_unified_ideographs(t->label)) {
