@@ -20,7 +20,7 @@
 
 void
 edit_interface_rep::set_left_footer (tree l) {
-  SERVER (set_left_footer (translate (l)));
+  SERVER (set_left_footer (serialize (tree_translate (l, "english", "english"))));
 }
 
 void
@@ -99,7 +99,7 @@ edit_interface_rep::set_left_footer () {
 
 void
 edit_interface_rep::set_right_footer (tree r) {
-  SERVER (set_right_footer (serialize (r)));
+  SERVER (set_right_footer (serialize (tree_translate (r, "english", "english"))));
 }
 
 tree
