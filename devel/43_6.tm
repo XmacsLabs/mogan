@@ -1,0 +1,97 @@
+<TeXmacs|2.1.2>
+
+<style|<tuple|tmdoc|british>>
+
+<\body>
+  <tmdoc-title|cwith tags are not translated properly when exporting to
+  <LaTeX>>
+
+  <section|Bug Metadata>
+
+  <\itemize>
+    <item>Reporter: yzh119 on <hlink|Github|https://github.com/XmacsLabs/mogan/issues/483>
+
+    <item>Owner: Darcy Shen
+
+    <item>Tester: Darcy Shen
+  </itemize>
+
+  <section|How to reproduce it>
+
+  <\big-table|<block|<tformat|<cwith|1|1|3|3|cell-row-span|1>|<cwith|1|1|3|3|cell-col-span|1>|<cwith|2|2|1|1|cell-row-span|1>|<cwith|2|2|1|1|cell-col-span|1>|<table|<row|<cell|a>|<cell|b>|<cell|c>|<cell|d>>|<row|<cell|e>|<cell|f>|<cell|g>|<cell|h>>>>>>
+    Original
+  </big-table>
+
+  <\big-table|<tabular*|<tformat|<cwith|1|-1|1|1|cell-lborder|1ln>|<cwith|1|-1|1|1|cell-halign|l>|<cwith|1|-1|1|1|cell-rborder|1ln>|<cwith|1|-1|2|2|cell-halign|l>|<cwith|1|-1|2|2|cell-rborder|1ln>|<cwith|1|-1|3|3|cell-halign|l>|<cwith|1|-1|3|3|cell-rborder|1ln>|<cwith|1|-1|4|4|cell-halign|l>|<cwith|1|-1|4|4|cell-rborder|1ln>|<cwith|1|-1|1|-1|cell-valign|c>|<cwith|1|1|1|-1|cell-tborder|1ln>|<cwith|1|1|1|-1|cell-bborder|1ln>|<cwith|2|2|1|-1|cell-bborder|1ln>|<table|<row|<cell|a>|<cell|b>|<cell|c>|<cell|d>>|<row|<cell|e>|<cell|f>|<cell|g>|<cell|h>>>>>>
+    After joining
+  </big-table>
+
+  Converting table 1 to <LaTeX>:
+
+  <\code>
+    \\begin{tabular}{\|l\|l\|l\|l\|}
+
+    \ \ \\hline
+
+    \ \ a & b & c & d\\\\
+
+    \ \ \\hline
+
+    \ \ e & f & g & h\\\\
+
+    \ \ \\hline
+
+    \\end{tabular}
+  </code>
+
+  Converting table 2 to <LaTeX>:
+
+  <\code>
+    \\begin{tabular}{\|l\|l\|l\|l\|}
+
+    \ \ \\hline
+
+    \ \ a & b & c & d\\\\
+
+    \ \ \\hline
+
+    \ \ e & f & g & h\\\\
+
+    \ \ \\hline
+
+    \\end{tabular}
+  </code>
+
+  The expected LaTeX snippet for table 2:
+
+  <\code>
+    \\begin{tabular}{\|l\|l\|l\|l\|}
+
+    \ \ \\hline
+
+    \ \ a & b & \\multicolumn{2}{l\|}{c} \\\\
+
+    \ \ \\hline
+
+    \ \ \\multicolumn{2}{\|l}{e} & g & h\\\\
+
+    \ \ \\hline
+
+    \\end{tabular}
+  </code>
+
+  <tmdoc-copyright|2024|Darcy Shen|yzh119>
+
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this
+  document under the terms of the GNU Free Documentation License, Version 1.1
+  or any later version published by the Free Software Foundation; with no
+  Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+  Texts. A copy of the license is included in the section entitled "GNU Free
+  Documentation License".>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|papyrus>
+  </collection>
+</initial>
