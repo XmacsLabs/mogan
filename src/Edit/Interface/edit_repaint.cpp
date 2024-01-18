@@ -265,10 +265,12 @@ edit_interface_rep::draw_keys (renderer ren) {
     string ns;
     for (int i=0; i<N(rew); i++) {
       tree t= rew[i];
+      cout << "t1: " << t << LF;
       while (is_compound (t, "render-key") || is_compound (t, "localize")
              || is_func (t, WITH)) {
         t= t[N(t)-1];
       }
+      cout << "t2: " << t << LF;
       if (is_atomic (t)) {
         if (N(ns) != 0) ns << "  ";
         if (lolly::data::is_cjk_unified_ideographs(t->label)) {
