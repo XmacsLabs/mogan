@@ -268,13 +268,12 @@ edit_interface_rep::draw_keys (renderer ren) {
 
       for (int i=0; i<N(rew); i++) {
         tree t= rew[i];
-        while (is_compound (t, "render-key") || is_compound (t, "localize")
-               || is_func (t, WITH)) {
+        while (is_compound (t, "render-key") || is_func (t, WITH)) {
           t= t[N(t)-1];
         }
         if (is_atomic (t)) {
           if (N(ns) != 0) ns << "  ";
-          if (lolly::data::is_cjk_unified_ideographs(t->label)) {
+          if (lolly::data::is_cjk_unified_ideographs (t->label)) {
             draw_keys_sub (ren, r, ns, base_x, base_y);
             // Clear it after the drawing
             ns= "";
@@ -288,7 +287,7 @@ edit_interface_rep::draw_keys (renderer ren) {
       for (int i=0; i<N(kbd_shown_keys); i++) {
         if (i>0) ns << " ";
         string key= kbd_shown_keys[i];
-        if (lolly::data::is_cjk_unified_ideographs(key)) {
+        if (lolly::data::is_cjk_unified_ideographs (key)) {
           draw_keys_sub (ren, r, ns, base_x, base_y);
           // Clear it after the drawing
           ns= "";
@@ -298,7 +297,7 @@ edit_interface_rep::draw_keys (renderer ren) {
         }
       }
     }
-    if (!is_empty(ns)) {
+    if (!is_empty (ns)) {
       draw_keys_sub (ren, r, ns, base_x, base_y);
     }
   }
