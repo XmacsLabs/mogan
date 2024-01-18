@@ -288,16 +288,16 @@ find_closest (string& family, string& variant, string& series, string& shape,
 font
 closest_font (string family, string variant, string series, string shape,
               int sz, int dpi, int attempt) {
-  string s= family * "-" * variant * "-" * series * "-" * shape * "-" *
-            as_string (sz) * "-" * as_string (dpi) * "-" * as_string (attempt);
+  string extra=
+      as_string (sz) * "-" * as_string (dpi) * "-" * as_string (attempt);
+  string s= family * "-" * variant * "-" * series * "-" * shape * "-" * extra;
   if (font::instances->contains (s)) return font (s);
   string orig_family= family;
   find_closest (family, variant, series, shape, attempt);
   if (orig_family != family) {
-    debug_fonts << "Font substitution: " << s << LF
-      << "-> " << family * "-" * variant * "-" * series * "-" * shape << "-"
-      << as_string (sz) * "-" * as_string (dpi) * "-" * as_string (attempt)
-      << LF;
+    string s2=
+        family * "-" * variant * "-" * series * "-" * shape * "-" * extra;
+    debug_fonts << "Font substitution: " << s << LF << "-> " << s2 << LF;
   }
   font fn= find_font (family, variant, series, shape, sz, dpi);
   // cout << "Found " << fn->res_name << "\n";
