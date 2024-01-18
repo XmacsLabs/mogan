@@ -78,6 +78,8 @@
     (if (!= psz "a4") (init-page-type psz)))
   (with type (get-preference "page medium")
     (if (!= type "papyrus") (init-env "page-medium" type)))
+  (with type (get-preference "page screen margin")
+    (if (!= type "true") (init-env "page-screen-margin" type)))
   (when (!= (get-preference "scripting language") "none")
     (lazy-plugin-force)
     (init-env "prog-scripts" (get-preference "scripting language")))
