@@ -13,6 +13,7 @@
 #include "message.hpp"
 #include "gui.hpp" // for gui_interrupted
 #include <lolly/data/unicode.hpp>
+#include "sys_utils.hpp"
 
 extern int nr_painted;
 extern void clear_pattern_rectangles (renderer ren, rectangle m, rectangles l);
@@ -251,35 +252,49 @@ edit_interface_rep::draw_keys (renderer ren) {
     ren->clear (r->x1, r->y1, r->x2, r->y2);
     ren->set_pencil (pencil (rgb_color (0, 0, 64)));
 
-    string s;
-    for (int i=0; i<N(kbd_shown_keys); i++) {
-      if (i>0) s << " ";
-      s << kbd_shown_keys[i];
-    }
-    tree rew= get_server () -> kbd_system_rewrite (s);
-    if (!is_concat (rew)) rew= tree (CONCAT, rew);
-
     int base_x= (r->x2 - r->x1) / 3;
     int base_y= (r->y2 - r->y1) / 3;
 
     string ns;
-    for (int i=0; i<N(rew); i++) {
-      tree t= rew[i];
-      cout << "t1: " << t << LF;
-      while (is_compound (t, "render-key") || is_compound (t, "localize")
-             || is_func (t, WITH)) {
-        t= t[N(t)-1];
+    if (os_macos ()) {
+      string s;
+      for (int i=0; i<N(kbd_shown_keys); i++) {
+        if (i>0) s << " ";
+        s << kbd_shown_keys[i];
       }
-      cout << "t2: " << t << LF;
-      if (is_atomic (t)) {
-        if (N(ns) != 0) ns << "  ";
-        if (lolly::data::is_cjk_unified_ideographs(t->label)) {
+
+      tree rew= get_server () -> kbd_system_rewrite (s);
+      if (!is_concat (rew)) rew= tree (CONCAT, rew);
+
+      for (int i=0; i<N(rew); i++) {
+        tree t= rew[i];
+        while (is_compound (t, "render-key") || is_compound (t, "localize")
+               || is_func (t, WITH)) {
+          t= t[N(t)-1];
+        }
+        if (is_atomic (t)) {
+          if (N(ns) != 0) ns << "  ";
+          if (lolly::data::is_cjk_unified_ideographs(t->label)) {
+            draw_keys_sub (ren, r, ns, base_x, base_y);
+            // Clear it after the drawing
+            ns= "";
+            draw_keys_cjk (ren, r, t->label, base_x, base_y);
+          } else {
+            ns << t->label;
+          }
+        }
+      }
+    } else {
+      for (int i=0; i<N(kbd_shown_keys); i++) {
+        if (i>0) ns << " ";
+        string key= kbd_shown_keys[i];
+        if (lolly::data::is_cjk_unified_ideographs(key)) {
           draw_keys_sub (ren, r, ns, base_x, base_y);
           // Clear it after the drawing
           ns= "";
-          draw_keys_cjk (ren, r, t->label, base_x, base_y);
+          draw_keys_cjk (ren, r, key, base_x, base_y);
         } else {
-          ns << t->label;
+          ns << key;
         }
       }
     }
