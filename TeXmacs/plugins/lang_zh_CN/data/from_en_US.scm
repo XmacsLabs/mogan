@@ -1724,6 +1724,7 @@
 ("scripts not accepted" "")
 ("scripts" "脚本")
 ("search in database" "在数据库中搜索")
+("search recent documents" "搜索最近打开的文档")
 ("search results for" "")
 ("search toolbar" "搜索工具栏")
 ("search words in my documents" "")
