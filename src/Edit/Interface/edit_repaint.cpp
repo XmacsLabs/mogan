@@ -13,6 +13,7 @@
 #include "message.hpp"
 #include "gui.hpp" // for gui_interrupted
 #include <lolly/data/unicode.hpp>
+#include "sys_utils.hpp"
 
 extern int nr_painted;
 extern void clear_pattern_rectangles (renderer ren, rectangle m, rectangles l);
@@ -203,7 +204,8 @@ edit_interface_rep::draw_graphics (renderer ren) {
   }
 }
 
-void draw_keys_cjk (renderer ren, rectangle r, string ch,int &base_x, int &base_y) {
+void
+draw_keys_cjk (renderer ren, rectangle r, string ch,int &base_x, int &base_y) {
   // Only support Chinese for now
   tree t= tuple (default_chinese_font_name(), "rm", "medium", "right");
   t << tree ("14") << tree ("600");
@@ -216,14 +218,15 @@ void draw_keys_cjk (renderer ren, rectangle r, string ch,int &base_x, int &base_
   base_x= base_x + ex->x2 - ex->x1;
 }
 
-void draw_keys_sub (renderer ren, rectangle r, string ns, int &base_x, int &base_y) {
+void
+draw_keys_sub (renderer ren, rectangle r, string ns, int &base_x, int &base_y) {
   // Find the right font to use
   tree t;
   if (use_macos_fonts ()) {
     t= tuple ("apple-lucida", "ss", "medium", "right");
   }
   else {
-    t= tuple ("pagella", "rm", "medium", "right");
+    t= tuple ("dejavu", "ss", "medium", "right");
   }
   t << tree ("14") << tree ("600");
   font fn= find_font (t);
@@ -238,11 +241,56 @@ void draw_keys_sub (renderer ren, rectangle r, string ns, int &base_x, int &base
   base_x= base_x + ex->x2 - ex->x1;
 }
 
+static string
+pretty_key (string key) {
+  if (key == "backspace") return "<#232B>";
+  if (key == "capslock") return "<#21EA>";
+  if (key == "return") return "<#21A9>";
+  if (key == "delete") return "<#2326>";
+  if (key == "backspace") return "<#232B>";
+  if (key == "clear") return "<#2327>";
+  if (key == "escape") return "<#238B>";
+  if (key == "var") return "<#21E5>";
+  if (key == "tab") return "<#21E5>";
+  if (key == "left") return "<#2190>";
+  if (key == "right") return "<#2192>";
+  if (key == "up") return "<#2191>";
+  if (key == "down") return "<#2193>";
+  if (key == "home") return "<#2196>";
+  if (key == "end") return "<#2198>";
+  if (key == "pageup") return "<#21DE>";
+  if (key == "pagedown") return "<#21DF>";
+  if (key == "space") return "<#2423>";
+  if (key == "less") return "<#3C>";
+  if (key == "gtr") return "<#3E>";
+
+  if (N(key)==1 && is_upcase (key[0]))
+    return string ("<#21E7>") * upcase_all (key);
+  if (N(key)==1 && is_locase (key[0]))
+    return upcase_all (key);
+
+  if (starts (key, "S-")) {
+    return "<#21E7>" * pretty_key (key (2, N(key)));
+  }
+  if (starts (key, "C-")) {
+    return "<#2303>" * pretty_key (key (2, N(key)));
+  }
+  if (starts (key, "A-")) {
+    return "<#2325>" * pretty_key (key (2, N(key)));
+  }
+  if (starts (key, "M-")) {
+    return "<#2318>" * pretty_key (key (2, N(key)));
+  }
+
+  return key;
+}
+
 void
 edit_interface_rep::draw_keys (renderer ren) {
+  int N_shown_keys= N(kbd_shown_keys);
   if (kbd_show_keys &&
       got_focus &&
-      N(kbd_shown_keys) > 0 &&
+      N_shown_keys > 0 &&
       !is_nil (keys_rects) &&
       vy2 - vy1 > 3 * (keys_rects->item->y2 - keys_rects->item->y1)) {
     // Init renderer and rectangle
@@ -251,35 +299,28 @@ edit_interface_rep::draw_keys (renderer ren) {
     ren->clear (r->x1, r->y1, r->x2, r->y2);
     ren->set_pencil (pencil (rgb_color (0, 0, 64)));
 
-    string s;
-    for (int i=0; i<N(kbd_shown_keys); i++) {
-      if (i>0) s << " ";
-      s << kbd_shown_keys[i];
-    }
-    tree rew= get_server () -> kbd_system_rewrite (s);
-    if (!is_concat (rew)) rew= tree (CONCAT, rew);
-
     int base_x= (r->x2 - r->x1) / 3;
     int base_y= (r->y2 - r->y1) / 3;
-
     string ns;
-    for (int i=0; i<N(rew); i++) {
-      tree t= rew[i];
-      while (is_compound (t, "render-key") || is_func (t, WITH))
-        t= t[N(t)-1];
-      if (is_atomic (t)) {
-        if (N(ns) != 0) ns << "  ";
-        if (lolly::data::is_cjk_unified_ideographs(t->label)) {
-          draw_keys_sub (ren, r, ns, base_x, base_y);
-          // Clear it after the drawing
-          ns= "";
-          draw_keys_cjk (ren, r, t->label, base_x, base_y);
+    int max_shown_keys= 7;
+    for (int i=0; i<N_shown_keys; i++) {
+      string key= kbd_shown_keys[i];
+      if (lolly::data::is_cjk_unified_ideographs (key)) {
+        draw_keys_sub (ren, r, ns, base_x, base_y);
+        // Clear it after the drawing
+        ns= "";
+        draw_keys_cjk (ren, r, key, base_x, base_y);
+      } else {
+        if (N_shown_keys - i <= max_shown_keys) {
+          if (i>0 && N_shown_keys-i < max_shown_keys) ns << " ";
+          ns << pretty_key (key);
         } else {
-          ns << t->label;
+          ns= "";
         }
       }
     }
-    if (!is_empty(ns)) {
+
+    if (!is_empty (ns)) {
       draw_keys_sub (ren, r, ns, base_x, base_y);
     }
   }
