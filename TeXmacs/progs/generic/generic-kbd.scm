@@ -748,7 +748,7 @@
   ("cmd q" (make 'symbol))
   ("altcmd g" (kbd-cancel))
   ("altcmd x" (interactive footer-eval))
-  ("altcmd X" (interactive exec-interactive-command))
+  ("A-x" (interactive exec-interactive-command))
   ("altcmd $" (interactive-spell))
 
   ("structured:cmd left" (kbd-select-if-active traverse-left))
