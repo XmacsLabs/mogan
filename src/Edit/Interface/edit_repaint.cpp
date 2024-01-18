@@ -261,6 +261,8 @@ pretty_key (string key) {
   if (key == "pageup") return "<#21DE>";
   if (key == "pagedown") return "<#21DF>";
   if (key == "space") return "<#2423>";
+  if (key == "less") return "<#3C>";
+  if (key == "gtr") return "<#3E>";
 
   if (N(key)==1 && is_upcase (key[0]))
     return string ("<#21E7>") * upcase_all (key);
