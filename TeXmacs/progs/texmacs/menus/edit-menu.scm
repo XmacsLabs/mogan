@@ -85,6 +85,8 @@
           ---
           ("Other" (interactive clipboard-paste))))
   ---
+  ("Search recent documents" (interactive docgrep-in-recent))
+  ---
   (if (use-menus?)
       (-> "Preferences"
           (link preferences-menu)))
