@@ -620,7 +620,7 @@
   ("macos S-=" (zoom-in (sqrt (sqrt 2.0))))
 
   ("altcmd x" (interactive footer-eval))
-  ("altcmd X" (interactive exec-interactive-command))
+  ("A-x" (interactive exec-interactive-command))
 
   ("A-space var" (make 'nbsp))
 
