@@ -226,7 +226,7 @@ draw_keys_sub (renderer ren, rectangle r, string ns, int &base_x, int &base_y) {
     t= tuple ("apple-lucida", "ss", "medium", "right");
   }
   else {
-    t= tuple ("Noto Sans", "rm", "medium", "right");
+    t= tuple ("dejavu", "ss", "medium", "right");
   }
   t << tree ("14") << tree ("600");
   font fn= find_font (t);
@@ -241,25 +241,45 @@ draw_keys_sub (renderer ren, rectangle r, string ns, int &base_x, int &base_y) {
   base_x= base_x + ex->x2 - ex->x1;
 }
 
-static void
-draw_keys_iter (renderer ren, rectangle r, string key, int N_shown_keys, int i, string &ns, int &base_x, int &base_y) {
-  if (lolly::data::is_cjk_unified_ideographs (key)) {
-    draw_keys_sub (ren, r, ns, base_x, base_y);
-    // Clear it after the drawing
-    ns= "";
-    draw_keys_cjk (ren, r, key, base_x, base_y);
-  } else {
-    if (N_shown_keys - i <= 5) {
-      if (i>0 && N_shown_keys-i < 5) ns << " ";
-      if (key == "backspace") {
-        ns << "<#232B>" << LF;
-      } else {
-        ns << key;
-      }
-    } else {
-      ns= "";
-    }
+static string
+pretty_key (string key) {
+  if (key == "backspace") return "<#232B>";
+  if (key == "capslock") return "<#21EA>";
+  if (key == "return") return "<#21A9>";
+  if (key == "delete") return "<#2326>";
+  if (key == "backspace") return "<#232B>";
+  if (key == "clear") return "<#2327>";
+  if (key == "escape") return "<#238B>";
+  if (key == "var") return "<#21E5>";
+  if (key == "tab") return "<#21E5>";
+  if (key == "left") return "<#2190>";
+  if (key == "right") return "<#2192>";
+  if (key == "up") return "<#2191>";
+  if (key == "down") return "<#2193>";
+  if (key == "home") return "<#2196>";
+  if (key == "end") return "<#2198>";
+  if (key == "pageup") return "<#21DE>";
+  if (key == "pagedown") return "<#21DF>";
+  if (key == "space") return "<#2423>";
+
+  if (starts (key, "S-")) {
+    if (os_macos ()) return "<#21E7>" * pretty_key (key (2, N(key)));
+    else return "S-" * pretty_key (key (2, N(key)));
   }
+  if (starts (key, "C-")) {
+    if (os_macos ()) return "<#2303>" * pretty_key (key (2, N(key)));
+    else return "C-" * pretty_key (key (2, N(key)));
+  }
+  if (starts (key, "A-")) {
+    if (os_macos ()) return "<#2325>" * pretty_key (key (2, N(key)));
+    else return "A-" * pretty_key (key (2, N(key)));
+  }
+  if (starts (key, "M-")) {
+    if (os_macos ()) return "<#2318>" * pretty_key (key (2, N(key)));
+    else return "M-" * pretty_key (key (2, N(key)));
+  }
+
+  return key;
 }
 
 void
@@ -278,31 +298,22 @@ edit_interface_rep::draw_keys (renderer ren) {
 
     int base_x= (r->x2 - r->x1) / 3;
     int base_y= (r->y2 - r->y1) / 3;
-
     string ns;
-    if (os_macos ()) {
-      string s;
-      for (int i=0; i<N_shown_keys; i++) {
-        if (i>0) s << " ";
-        s << kbd_shown_keys[i];
-      }
-
-      tree rew= get_server () -> kbd_system_rewrite (s);
-      if (!is_concat (rew)) rew= tree (CONCAT, rew);
-
-      for (int i=0; i<N(rew); i++) {
-        tree t= rew[i];
-        while (is_compound (t, "render-key") || is_func (t, WITH)) {
-          t= t[N(t)-1];
+    int max_shown_keys= 7;
+    for (int i=0; i<N_shown_keys; i++) {
+      string key= kbd_shown_keys[i];
+      if (lolly::data::is_cjk_unified_ideographs (key)) {
+        draw_keys_sub (ren, r, ns, base_x, base_y);
+        // Clear it after the drawing
+        ns= "";
+        draw_keys_cjk (ren, r, key, base_x, base_y);
+      } else {
+        if (N_shown_keys - i <= max_shown_keys) {
+          if (i>0 && N_shown_keys-i < max_shown_keys) ns << " ";
+          ns << pretty_key (key);
+        } else {
+          ns= "";
         }
-        if (is_atomic (t)) {
-          draw_keys_iter (ren, r, t->label, N(rew), i, ns, base_x, base_y);
-        }
-      }
-    } else {
-      for (int i=0; i<N_shown_keys; i++) {
-        string key= kbd_shown_keys[i];
-        draw_keys_iter (ren, r, key, N_shown_keys, i, ns, base_x, base_y);
       }
     }
 
