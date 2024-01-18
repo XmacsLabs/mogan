@@ -262,21 +262,22 @@ pretty_key (string key) {
   if (key == "pagedown") return "<#21DF>";
   if (key == "space") return "<#2423>";
 
+  if (N(key)==1 && is_upcase (key[0]))
+    return string ("<#21E7>") * upcase_all (key);
+  if (N(key)==1 && is_locase (key[0]))
+    return upcase_all (key);
+
   if (starts (key, "S-")) {
-    if (os_macos ()) return "<#21E7>" * pretty_key (key (2, N(key)));
-    else return "S-" * pretty_key (key (2, N(key)));
+    return "<#21E7>" * pretty_key (key (2, N(key)));
   }
   if (starts (key, "C-")) {
-    if (os_macos ()) return "<#2303>" * pretty_key (key (2, N(key)));
-    else return "C-" * pretty_key (key (2, N(key)));
+    return "<#2303>" * pretty_key (key (2, N(key)));
   }
   if (starts (key, "A-")) {
-    if (os_macos ()) return "<#2325>" * pretty_key (key (2, N(key)));
-    else return "A-" * pretty_key (key (2, N(key)));
+    return "<#2325>" * pretty_key (key (2, N(key)));
   }
   if (starts (key, "M-")) {
-    if (os_macos ()) return "<#2318>" * pretty_key (key (2, N(key)));
-    else return "M-" * pretty_key (key (2, N(key)));
+    return "<#2318>" * pretty_key (key (2, N(key)));
   }
 
   return key;
