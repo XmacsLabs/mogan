@@ -123,6 +123,14 @@
             },
             version = "3.26.4"
         },
+        ["cpr#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "92b0ee334f4c5a4857e050d8f20da8469214e3dd",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            },
+            version = "1.10.5"
+        },
         ["freetype#31fecfc4"] = {
             repo = {
                 branch = "master",
@@ -182,6 +190,22 @@
         ["lolly#31fecfc4"] = {
             version = "v1.3.17"
         },
+        ["meson#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "e4a467ab6e25d9afa5324cf536141660a5c1eef4",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            },
+            version = "1.1.1"
+        },
+        ["mimalloc#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "e4a467ab6e25d9afa5324cf536141660a5c1eef4",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            },
+            version = "2.1.2"
+        },
         ["nasm#31fecfc4"] = {
             repo = {
                 branch = "master",
@@ -189,6 +213,14 @@
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "2.16.01"
+        },
+        ["ninja#31fecfc4"] = {
+            repo = {
+                branch = "master",
+                commit = "e4a467ab6e25d9afa5324cf536141660a5c1eef4",
+                url = "https://github.com/xmake-io/xmake-repo.git"
+            },
+            version = "1.11.1"
         },
         ["openssl#31fecfc4"] = {
             repo = {
@@ -206,13 +238,13 @@
             },
             version = "v4.6.2"
         },
-        ["pkgconf#31fecfc4"] = {
+        ["python 3.x#31fecfc4"] = {
             repo = {
                 branch = "master",
                 commit = "e4a467ab6e25d9afa5324cf536141660a5c1eef4",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
-            version = "2.0.3"
+            version = "3.11.3"
         },
         ["qt6base#31fecfc4"] = {
             repo = {
