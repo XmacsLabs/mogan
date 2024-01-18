@@ -238,14 +238,6 @@
             },
             version = "v4.6.2"
         },
-        ["pkgconf#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "be832f2cace05fd467886c91313ca5e7e5598dce",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "2.0.3"
-        },
         ["python 3.x#31fecfc4"] = {
             repo = {
                 branch = "master",
