@@ -634,14 +634,6 @@
   ("C-y" (yank-paragraph))
   ("A-q" (make 'symbol)))
 
-(kbd-map
-  (:profile macos)
-  (:require (and (not (in-prog?)) (not (in-verbatim?))))
-  ("C-tab" (kbd-alternate-tab))
-  ("C-S-tab" (kbd-shift-alternate-tab))
-  ("C-space" (make-space "0.2spc"))
-  ("C-S-space" (make-space "-0.2spc")))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Windows keymap
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

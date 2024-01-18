@@ -1362,6 +1362,10 @@ from_key_press_event (const QKeyEvent* event) {
       r << mods_text << key_locased;
     }
   }
+  else if (os_macos () && mods_text == "C-" &&
+           event->nativeVirtualKey () == 62) {
+    r= "C-tab";
+  }
   else {
     initkeymap ();
     if (qtkeymap->contains (key)) { // Case 1: in qtkeymap
