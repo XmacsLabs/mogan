@@ -24,7 +24,7 @@ end
 
 -- The following versions are adopted on macOS/Windows/ArchLinux
 -- We will use the system provided packages on Ubuntu 22.04/Debian 12/...
-local S7_VERSION = "2023.04.13"
+local S7_VERSION = "20230413"
 local QT6_VERSION = "6.5.3"
 local QTIFW_VERSION = "4.6.0"
 local LOLLY_VERSION = "1.3.17"
@@ -41,6 +41,7 @@ local LIBGIT2_VERSION = "1.7.1"
 includes("3rd/zlib.lua")
 includes("3rd/lolly.lua")
 includes("3rd/pdfhummus.lua")
+includes("3rd/s7.lua")
 
 function add_requires_of_mogan()
     -- package: s7
