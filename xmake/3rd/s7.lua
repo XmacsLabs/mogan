@@ -45,7 +45,7 @@ package("s7")
     end
 
     on_install("bsd", "cross", "cygwin", "linux", "macosx", "mingw", "msys", "wasm", "windows", function (package)
-        os.cp(path.join(package:scriptdir(), "s7_xmake.lua"), "xmake.lua")
+        os.cp("$(projectdir)/xmake/3rd/s7_xmake.lua", "xmake.lua")
         local configs = {}
         if package:config("shared") then
             configs.kind = "shared"
