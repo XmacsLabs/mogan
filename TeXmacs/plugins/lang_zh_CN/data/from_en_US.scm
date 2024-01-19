@@ -459,7 +459,7 @@
 ("disallow" "")
 ("disk" "圆盘")
 ("display style" "展示风格")
-("displayed formula" "行间公式")
+("displayed formula" "单行公式")
 ("dissociate joined cells" "分离合并的单元格")
 ("distribute unused space" "分配未使用空隙")
 ("div" "")
