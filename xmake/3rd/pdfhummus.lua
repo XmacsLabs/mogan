@@ -23,8 +23,11 @@ package("pdfhummus")
     set_description("High performance library for creating, modiyfing and parsing PDF files in C++ ")
     set_license("Apache-2.0")
 
-    add_urls("https://github.com/galkahana/PDF-Writer/archive/refs/tags/v$(version).tar.gz")
-    add_urls("https://gitee.com/XmacsLabs/pdfhummus/releases/download/v$(version)/PDF-Writer-$(version).tar.gz")
+    if get_config("download") == "github" then
+        add_urls("https://github.com/galkahana/PDF-Writer/archive/refs/tags/v$(version).tar.gz")
+    else
+        add_urls("https://gitee.com/XmacsLabs/pdfhummus/releases/download/v$(version)/PDF-Writer-$(version).tar.gz")
+    end
     add_versions("4.6.2", "0a36815ccc9d207028567f90039785c824b211169ba5da68de84d0c15455ab62")
 
     includes ("zlib.lua")

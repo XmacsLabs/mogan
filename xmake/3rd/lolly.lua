@@ -22,8 +22,11 @@ package("lolly")
     set_homepage("https://github.com/XmacsLabs/lolly")
     set_description("Lolly is a C++ library")
 
-    add_urls("https://github.com/XmacsLabs/lolly.git")
-    add_urls("https://gitee.com/XmacsLabs/lolly.git")
+    if get_config("download") == "github" then
+        add_urls("https://github.com/XmacsLabs/lolly.git")
+    else
+        add_urls("https://gitee.com/XmacsLabs/lolly.git")
+    end
 
     add_deps("tbox")
     if not is_plat("wasm") then
