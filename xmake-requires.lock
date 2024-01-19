@@ -76,13 +76,8 @@
         ["pdfhummus 4.6.2#23149c54"] = {
             version = "4.6.2"
         },
-        ["s7 2023.04.13#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "2023.04.13"
+        ["s7 20230413#31fecfc4"] = {
+            version = "20230413"
         },
         ["tbox#31fecfc4"] = {
             repo = {
@@ -249,13 +244,8 @@
             },
             version = "6.5.3"
         },
-        ["s7 2023.04.13#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "be832f2cace05fd467886c91313ca5e7e5598dce",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "2023.04.13"
+        ["s7 20230413#31fecfc4"] = {
+            version = "20230413"
         },
         ["strawberry-perl#31fecfc4"] = {
             repo = {
