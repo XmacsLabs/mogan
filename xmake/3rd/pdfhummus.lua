@@ -27,7 +27,7 @@ package("pdfhummus")
     add_urls("https://gitee.com/XmacsLabs/pdfhummus/releases/download/v$(version)/PDF-Writer-$(version).tar.gz")
     add_versions("4.6.2", "0a36815ccc9d207028567f90039785c824b211169ba5da68de84d0c15455ab62")
 
-    includes ("zlib")
+    includes ("zlib.lua")
     add_deps("freetype", "zlib", "libaesgm")
 
     add_configs("libtiff", {description = "Supporting tiff image", default = false, type = "boolean"})
