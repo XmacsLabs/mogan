@@ -203,7 +203,7 @@ qt_chooser_widget_rep::perform_dialog () {
 
 #if (defined(Q_OS_MAC)) // || defined(Q_WS_WIN)) //at least windows Xp and 7
                         // lack image preview, switch to custom dialog
-  QFileDialog* dialog= new QFileDialog (NULL, caption, path);
+  QFileDialog* dialog= new QFileDialog (this->as_qwidget (), caption, path);
 #else
   QTMFileDialog*  dialog;
   QTMImageDialog* imgdialog= 0; // to avoid a dynamic_cast
