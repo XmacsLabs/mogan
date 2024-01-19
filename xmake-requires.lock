@@ -70,13 +70,11 @@
         ["lolly#31fecfc4"] = {
             version = "v1.3.17"
         },
+        ["mimalloc#31fecfc4"] = {
+            version = "2.1.2"
+        },
         ["pdfhummus 4.6.2#23149c54"] = {
-            repo = {
-                branch = "master",
-                commit = "fa0dfd012f7ddd06660c41e4575792c20b67999d",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "v4.6.2"
+            version = "4.6.2"
         },
         ["s7 2023.04.13#31fecfc4"] = {
             repo = {
@@ -94,6 +92,9 @@
             },
             version = "v1.7.5"
         },
+        ["zlib#31fecfc4"] = {
+            version = "1.2.11"
+        }
     },
     ["windows|x64"] = {
         ["aqt#31fecfc4"] = {
@@ -211,14 +212,6 @@
             },
             version = "1.1.1-w"
         },
-        ["pdfhummus 4.6.2#23149c54"] = {
-            repo = {
-                branch = "master",
-                commit = "1f4d14948b1b00faecead19965d96c5babfe3696",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "v4.6.2"
-        },
         ["python 3.x#31fecfc4"] = {
             repo = {
                 branch = "master",
@@ -282,6 +275,6 @@
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "v1.7.5"
-        },
+        }
     }
 }
