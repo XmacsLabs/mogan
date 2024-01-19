@@ -10,6 +10,7 @@ on:
       - 'xmake.lua'
       - 'xmake/packages.lua'
       - 'xmake/research.lua'
+      - 'xmake/3rd/**'
       - 'xmake-requires.lock'
       - '.github/workflows/ci-macos-arm64.yml'
   pull_request:
@@ -21,6 +22,7 @@ on:
       - 'xmake.lua'
       - 'xmake/packages.lua'
       - 'xmake/research.lua'
+      - 'xmake/3rd/**'
       - 'xmake-requires.lock'
       - '.github/workflows/ci-macos-arm64.yml'
 
