@@ -41,6 +41,7 @@ local LIBGIT2_VERSION = "1.7.1"
 includes("3rd/zlib.lua")
 includes("3rd/lolly.lua")
 includes("3rd/pdfhummus.lua")
+includes("3rd/s7.lua")
 
 function add_requires_of_mogan()
     -- package: s7
