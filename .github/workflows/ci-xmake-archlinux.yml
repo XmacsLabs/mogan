@@ -7,8 +7,9 @@ on:
       - '!src/Plugins/Macos/**'
       - '!src/Plugins/Windows/**'
       - 'tests/**'
-      - 'xmake/packages.lua'
       - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/3rd/**'
       - '.github/workflows/ci-xmake-archlinux.yml'
   pull_request:
     branches: [ branch-1.2 ]
@@ -17,8 +18,9 @@ on:
       - '!src/Plugins/Macos/**'
       - '!src/Plugins/Windows/**'
       - 'tests/**'
-      - 'xmake/packages.lua'
       - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/3rd/**'
       - '.github/workflows/ci-xmake-archlinux.yml'
 
 env:
