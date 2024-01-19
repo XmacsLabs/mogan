@@ -9,6 +9,10 @@ package("mimalloc")
     add_versions("archive:2.1.2", "86281c918921c1007945a8a31e5ad6ae9af77e510abfec20d000dd05d15123c7")
     add_versions("git:2.1.2", "v2.1.2")
 
+    if is_plat("linux") then
+        add_extsources("pacman::mimalloc", "apt::libmimalloc-dev")
+    end
+
     add_configs("secure", {description = "Use a secured version of mimalloc", default = false, type = "boolean"})
     add_configs("rltgenrandom", {description = "Use a RtlGenRandom instead of BCrypt", default = false, type = "boolean"})
 
