@@ -67,6 +67,15 @@
             },
             version = "v1.6.37"
         },
+        ["lolly#31fecfc4"] = {
+            version = "v1.3.17"
+        },
+        ["mimalloc#31fecfc4"] = {
+            version = "2.1.2"
+        },
+        ["pdfhummus 4.6.2#23149c54"] = {
+            version = "4.6.2"
+        },
         ["s7 2023.04.13#31fecfc4"] = {
             repo = {
                 branch = "master",
