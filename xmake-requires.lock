@@ -68,15 +68,27 @@
             version = "v1.6.37"
         },
         ["lolly#31fecfc4"] = {
+            repo = {
+                url = "xmake"
+            },
             version = "v1.3.17"
         },
         ["mimalloc#31fecfc4"] = {
+            repo = {
+                url = "xmake"
+            },
             version = "2.1.2"
         },
         ["pdfhummus 4.6.2#23149c54"] = {
+            repo = {
+                url = "xmake"
+            },
             version = "4.6.2"
         },
         ["s7 20230413#31fecfc4"] = {
+            repo = {
+                url = "xmake"
+            },
             version = "20230413"
         },
         ["tbox#31fecfc4"] = {
@@ -88,6 +100,9 @@
             version = "v1.7.5"
         },
         ["zlib#31fecfc4"] = {
+            repo = {
+                url = "xmake"
+            },
             version = "1.2.11"
         }
     },
