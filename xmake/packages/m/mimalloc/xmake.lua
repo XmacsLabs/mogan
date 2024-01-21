@@ -24,23 +24,20 @@ package("mimalloc")
     set_description("mimalloc (pronounced 'me-malloc') is a general purpose allocator with excellent performance characteristics.")
     set_license("MIT")
 
-    add_configs("download", {description = "github/gitee or others", default = "github", type = "string"})
-    add_configs("secure", {description = "Use a secured version of mimalloc", default = false, type = "boolean"})
-    add_configs("rltgenrandom", {description = "Use a RtlGenRandom instead of BCrypt", default = false, type = "boolean"})
-
-    on_load(function (package)
-        if package:config("download") == "github" then
-            set_urls("https://github.com/microsoft/mimalloc/archive/v$(version).zip", {alias="archive"})
-            add_versions("archive:2.1.2", "86281c918921c1007945a8a31e5ad6ae9af77e510abfec20d000dd05d15123c7")
-        else
-            set_urls("https://gitee.com/mirrors/mimalloc.git", {alias="git"})
-            add_versions("git:2.1.2", "v2.1.2")
-        end
-    end)
+    if get_config("download") == "github" then
+        set_urls("https://github.com/microsoft/mimalloc/archive/v$(version).zip", {alias="archive"})
+        add_versions("archive:2.1.2", "86281c918921c1007945a8a31e5ad6ae9af77e510abfec20d000dd05d15123c7")
+    else
+        set_urls("https://gitee.com/mirrors/mimalloc.git", {alias="git"})
+        add_versions("git:2.1.2", "v2.1.2")
+    end
 
     if is_plat("linux") then
         add_extsources("pacman::mimalloc", "apt::libmimalloc-dev")
     end
+
+    add_configs("secure", {description = "Use a secured version of mimalloc", default = false, type = "boolean"})
+    add_configs("rltgenrandom", {description = "Use a RtlGenRandom instead of BCrypt", default = false, type = "boolean"})
 
     add_deps("cmake")
 

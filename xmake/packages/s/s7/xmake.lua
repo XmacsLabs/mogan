@@ -23,19 +23,15 @@ package("s7")
     set_homepage("https://ccrma.stanford.edu/software/snd/snd/s7.html")
     set_description("s7 is a Scheme interpreter intended as an extension language for other applications.")
 
-    add_configs("gmp", {description = "enable gmp support", default = false, type = "boolean"})
-    add_configs("download", {description = "github/gitee or others", default = "github", type = "string"})
-
-    on_load(function (package)
-        if package:config("download") == "github" then
-            add_urls("https://github.com/XmacsLabs/s7.git")
-        else
-            add_urls("https://gitee.com/XmacsLabs/s7.git")
-        end
-    end)
+    if get_config("download") == "github" then
+        add_urls("https://github.com/XmacsLabs/s7.git")
+    else
+        add_urls("https://gitee.com/XmacsLabs/s7.git")
+    end
 
     add_versions("20230413", "505f98d69be3d9c48e096d6787d2f85c27cb3924")
 
+    add_configs("gmp", {description = "enable gmp support", default = false, type = "boolean"})
 
     on_load(function (package)
         package:addenv("PATH", "bin")
