@@ -23,19 +23,21 @@ package("pdfhummus")
     set_description("High performance library for creating, modiyfing and parsing PDF files in C++ ")
     set_license("Apache-2.0")
 
-    if get_config("download") == "github" then
-        add_urls("https://github.com/galkahana/PDF-Writer/archive/refs/tags/v$(version).tar.gz")
-    else
-        add_urls("https://gitee.com/XmacsLabs/pdfhummus/releases/download/v$(version)/PDF-Writer-$(version).tar.gz")
-    end
-    add_versions("4.6.2", "0a36815ccc9d207028567f90039785c824b211169ba5da68de84d0c15455ab62")
-
-    includes ("../../z/zlib/xmake.lua")
-    add_deps("freetype", "zlib", "libaesgm")
-
     add_configs("libtiff", {description = "Supporting tiff image", default = false, type = "boolean"})
     add_configs("libjpeg", {description = "Support DCT encoding", default = false, type = "boolean"})
     add_configs("libpng", {description = "Support png image", default = false, type = "boolean"})
+
+    on_load(function (package)
+        if package:config("download") == "github" then
+            add_urls("https://github.com/galkahana/PDF-Writer/archive/refs/tags/v$(version).tar.gz")
+        else
+            add_urls("https://gitee.com/XmacsLabs/pdfhummus/releases/download/v$(version)/PDF-Writer-$(version).tar.gz")
+        end
+    end)
+
+    add_versions("4.6.2", "0a36815ccc9d207028567f90039785c824b211169ba5da68de84d0c15455ab62")
+
+    add_deps("freetype", "zlib", "libaesgm")
 
     if is_plat("linux") then
         add_syslinks("m")

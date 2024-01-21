@@ -22,16 +22,19 @@ package("lolly")
     set_homepage("https://github.com/XmacsLabs/lolly")
     set_description("Lolly is a C++ library")
 
-    if get_config("download") == "github" then
-        add_urls("https://github.com/XmacsLabs/lolly.git")
-    else
-        add_urls("https://gitee.com/XmacsLabs/lolly.git")
-    end
+    add_configs("download", {description = "github/gitee or others", default = "github", type = "string"})
+
+    on_load(function (package)
+        if package:config("download") == "github" then
+            add_urls("https://github.com/XmacsLabs/lolly.git")
+        else
+            add_urls("https://gitee.com/XmacsLabs/lolly.git")
+        end
+    end)
 
     add_deps("tbox")
     if not is_plat("wasm") then
         add_deps("cpr")
-        includes ("../../m/mimalloc/xmake.lua")
         add_deps("mimalloc")
     end
 
