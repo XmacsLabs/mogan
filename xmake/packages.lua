@@ -38,10 +38,10 @@ local LIBJPEG_VERSION = "v9e"
 local LIBICONV_VERSION = "1.17"
 local LIBGIT2_VERSION = "1.7.1"
 
-includes("3rd/zlib.lua")
-includes("3rd/lolly.lua")
-includes("3rd/pdfhummus.lua")
-includes("3rd/s7.lua")
+includes ("3rd/l/lolly/xmake.lua")
+includes ("3rd/p/pdfhummus/xmake.lua")
+includes ("3rd/s/s7/xmake.lua")
+includes ("3rd/z/zlib/xmake.lua")
 
 function add_requires_of_mogan()
     -- package: s7
