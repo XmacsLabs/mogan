@@ -93,14 +93,7 @@ end
 set_allowedmodes("releasedbg", "release", "debug")
 add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
---
--- Add packages from xrepo or platform package manager
---
-option("download")
-    set_description("set the site to download")
-    set_default("github")
-    set_values("github", "gitee")
-option_end()
+add_repositories("mogan-repo xmake")
 includes("xmake/packages.lua")
 add_requires_of_mogan()
 
