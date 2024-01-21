@@ -38,10 +38,11 @@ local LIBJPEG_VERSION = "v9e"
 local LIBICONV_VERSION = "1.17"
 local LIBGIT2_VERSION = "1.7.1"
 
-includes ("3rd/l/lolly/xmake.lua")
-includes ("3rd/p/pdfhummus/xmake.lua")
-includes ("3rd/s/s7/xmake.lua")
-includes ("3rd/z/zlib/xmake.lua")
+includes ("packages/m/mimalloc/xmake.lua")
+includes ("packages/l/lolly/xmake.lua")
+includes ("packages/p/pdfhummus/xmake.lua")
+includes ("packages/s/s7/xmake.lua")
+includes ("packages/z/zlib/xmake.lua")
 
 function add_requires_of_mogan()
     -- package: s7
@@ -56,6 +57,8 @@ function add_requires_of_mogan()
     end
 
     -- package: lolly
+    add_requires("mimalloc")
+
     set_configvar("LOLLY_VERSION", LOLLY_VERSION)
     add_requires("lolly", {system=false})
     tbox_configs = {hash=true, ["force-utf8"]=true}

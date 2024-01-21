@@ -31,7 +31,6 @@ package("lolly")
     add_deps("tbox")
     if not is_plat("wasm") then
         add_deps("cpr")
-        includes ("../../m/mimalloc/xmake.lua")
     end
 
     add_versions("v1.3.17", "58fac07b47f4df4a9ad8796c18f510a04afd8a97")
