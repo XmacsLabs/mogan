@@ -102,7 +102,6 @@ option("download")
     set_values("github", "gitee")
 option_end()
 
-add_repositories("mogan-repo xmake")
 includes("xmake/packages.lua")
 add_requires_of_mogan()
 
