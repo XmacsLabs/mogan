@@ -42,7 +42,6 @@ includes ("3rd/l/lolly/xmake.lua")
 includes ("3rd/p/pdfhummus/xmake.lua")
 includes ("3rd/s/s7/xmake.lua")
 includes ("3rd/z/zlib/xmake.lua")
-add_repositories("mogan-repo xmake")
 
 function add_requires_of_mogan()
     -- package: s7
