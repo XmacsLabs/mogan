@@ -69,6 +69,8 @@ jobs:
           aqtversion: '==3.1.*'
           py7zrversion: '==0.20.*'
           extra: '--autodesktop'
+      - name: remove gitee in xmake/packages
+        run: find xmake/packages | grep xmake.lua | xargs -I% sed -i '' '/gitee.com/d' %
       - name: config
         run: elvish bin/config_wasm
       - name: build

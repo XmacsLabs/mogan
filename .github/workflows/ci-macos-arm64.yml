@@ -78,6 +78,9 @@ jobs:
             ${{ runner.workspace }}/build/.build_cache
           key: xmake-build-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake-requires.lock') }}
 
+      - name: remove gitee in xmake/packages
+        run: find xmake/packages | grep xmake.lua | xargs -I% sed -i '' '/gitee.com/d' %
+
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg -a ${{ matrix.arch }} --yes
       - name: build

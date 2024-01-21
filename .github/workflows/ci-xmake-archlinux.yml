@@ -63,6 +63,8 @@ jobs:
             tmp/build/.build_cache
           key: archlinux-build-qt6-${{ hashFiles('**/xmake.lua') }}
 
+      - name: remove gitee in xmake/packages
+        run: find xmake/packages | grep xmake.lua | xargs -I% sed -i '' '/gitee.com/d' %
 
       - name: config
         run: xmake config -vD --policies=build.ccache -o tmp/build -m releasedbg --yes
