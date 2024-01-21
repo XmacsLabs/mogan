@@ -43,14 +43,6 @@
             },
             version = "8.4.0"
         },
-        ["libgit2 1.7.1#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "9886374ff681155238d87a525cb01af86f23562d",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "v1.7.1"
-        },
         ["libjpeg#31fecfc4"] = {
             repo = {
                 branch = "master",
@@ -124,14 +116,6 @@
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "8.4.0"
-        },
-        ["libgit2 1.7.1#31fecfc4"] = {
-            repo = {
-                branch = "master",
-                commit = "e4a467ab6e25d9afa5324cf536141660a5c1eef4",
-                url = "https://github.com/xmake-io/xmake-repo.git"
-            },
-            version = "v1.7.1"
         },
         ["libiconv 1.17#31fecfc4"] = {
             repo = {
