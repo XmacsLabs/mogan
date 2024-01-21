@@ -38,7 +38,7 @@
         ["libcurl#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
+                commit = "e0d3bd857f8fcfbebf985c1a5dc52287597babbd",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "8.4.0"
@@ -46,7 +46,7 @@
         ["libgit2 1.7.1#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
+                commit = "9886374ff681155238d87a525cb01af86f23562d",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "v1.7.1"
@@ -62,7 +62,7 @@
         ["libpng#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
+                commit = "15ad332bc1573ceda1afb06fd8696c31c5e09f36",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "v1.6.37"
