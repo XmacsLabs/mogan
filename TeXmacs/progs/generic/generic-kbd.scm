@@ -103,6 +103,8 @@
   ("structured:cmd space" (kbd-select-enlarge))
   ("structured:cmd *" (alternate-toggle (focus-tree)))
   ("structured:cmd #" (numbered-toggle (focus-tree)))
+  ("A-S-down" (variant-circulate (focus-tree) #t))
+  ("A-S-up" (variant-circulate (focus-tree) #f))
 
   ("structured:move delete" (structured-exit-right))
   ("structured:move backspace" (structured-exit-left))
@@ -630,8 +632,6 @@
   ("A-x" (interactive exec-interactive-command))
 
   ("A-space var" (make 'nbsp))
-
-  ("A-tab" (variant-circulate (focus-tree) #t))
 
   ("C-a" (kbd-start-line))
   ("C-e" (kbd-end-line))
