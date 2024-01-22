@@ -24,7 +24,19 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|13|13|1|1|cell-valign|b>|<cwith|12|12|3|3|cell-valign|b>|<cwith|11|11|1|1|cell-background|>|<cwith|12|12|1|1|cell-background|>|<cwith|4|4|1|1|cell-background|>|<cwith|4|4|1|1|cell-hyphen|n>|<cwith|7|7|1|1|cell-background|>|<table|<row|<\cell>
+    <tformat|<cwith|15|15|1|1|cell-valign|b>|<cwith|14|14|3|3|cell-valign|b>|<cwith|13|13|1|1|cell-background|>|<cwith|14|14|1|1|cell-background|>|<cwith|6|6|1|1|cell-background|>|<cwith|6|6|1|1|cell-hyphen|n>|<cwith|9|9|1|1|cell-background|>|<table|<row|<\cell>
+      <dlink|76>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Analytics and Debugging info
+    </cell>>|<row|<\cell>
+      <dlink|75>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Lolly upgrade since 1.3.11
+    </cell>>|<row|<\cell>
       <dlink|74>
     </cell>|<\cell>
       \;
