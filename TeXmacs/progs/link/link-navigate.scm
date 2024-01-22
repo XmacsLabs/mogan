@@ -492,6 +492,9 @@
 (define (http-root-handler u)
   (load-browse-buffer u))
 
+(define (local-root-handler u)
+  (load-browse-buffer u))
+
 (define (url-handlers u)
   (with root (or (and (url-rooted? u) (url-root u)) "default")
     (cond ((== root "default") 
@@ -499,7 +502,7 @@
           ((== root "tmfs") 
            (list tmfs-root-handler (lambda (x) (noop))))
           ((== root "file") ;; TODO: to be refined
-           (list http-root-handler http-post-handler))
+           (list local-root-handler (lambda (x) (noop))))
           ((or (== root "http") (== root "https"))
            (list http-root-handler http-post-handler))
           (else
@@ -525,7 +528,7 @@
   (:synopsis "Jump to the url @u")
   (:argument opt-from "Optional path for the cursor history")
   (if (nnull? opt-from) (cursor-history-add (car opt-from)))
-  (if (string? u) (set! u (string->url u)))
+  (if (string? u) (set! u (system->url u)))
   (with (action post) (url-handlers u) 
     (action u) (post u))
   (if (nnull? opt-from) (cursor-history-add (cursor-path))))

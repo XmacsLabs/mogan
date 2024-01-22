@@ -71,7 +71,7 @@
 #include "scheme.hpp"
 
 bool url_test (url name, string filter) {
-    if (filter == "") return true;
+  if (filter == "") return true;
   int i, n= N(filter);
 
   // Files from the web
@@ -112,6 +112,10 @@ bool url_test (url name, string filter) {
   // Files from the ramdisk
   if (is_ramdisc (name))
     return true;
+
+  if (is_rooted (name, "file")) {
+    name= reroot (name, "default");
+  }
 
   return is_of_type (name, filter);
 }
