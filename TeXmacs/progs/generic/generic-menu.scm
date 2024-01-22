@@ -691,7 +691,12 @@
         (inert ((eval (focus-tag-name (tree-label t))) (noop))))
       (assuming (> (length l) 1)
         (=> (balloon (eval (focus-tag-name (tree-label t)))
-                     "Structured variant")
+                     (eval
+                      (string-append "Structured variant ("
+                       (string-append (translate (kbd-system-rewrite "A-S-up"))
+                        (string-append "/"
+                         (string-append (translate (kbd-system-rewrite "A-S-down"))
+                          (string-append ")")))))))
             (dynamic (focus-variant-menu t))))))
   (dynamic (focus-tag-extra-icons t))
   (assuming (cursor-inside? t)
