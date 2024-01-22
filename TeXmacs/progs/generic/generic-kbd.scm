@@ -101,10 +101,10 @@
   ("structured:cmd S-pageup" (kbd-select traverse-previous))
   ("structured:cmd S-pagedown" (kbd-select traverse-next))
   ("structured:cmd space" (kbd-select-enlarge))
-  ("structured:cmd tab" (variant-circulate (focus-tree) #t))
-  ("structured:cmd S-tab" (variant-circulate (focus-tree) #f))
   ("structured:cmd *" (alternate-toggle (focus-tree)))
   ("structured:cmd #" (numbered-toggle (focus-tree)))
+  ("A-tab" (variant-circulate (focus-tree) #t))
+  ("A-S-tab" (variant-circulate (focus-tree) #f))
 
   ("structured:move delete" (structured-exit-right))
   ("structured:move backspace" (structured-exit-left))
