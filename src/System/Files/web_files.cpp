@@ -96,7 +96,9 @@ get_from_web (url name) {
   if (!is_empty (suf)) suf= string(".") * suf;
 
   url tmp= url_temp (suf);
-  lolly::io::download (name, tmp);
+  lolly::io::http_headers headers= lolly::io::http_headers ();
+  headers("User-Agent")= string ("Mogan/") * XMACS_VERSION * " (" * get_pretty_os_name () * "; " * get_current_cpu_arch() * ")";
+  lolly::io::download (name, tmp, headers);
 
   if (!exists (tmp)) {
     return url_none ();
