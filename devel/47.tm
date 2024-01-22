@@ -8,8 +8,28 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|5|5|2|2|cell-background|pastel
-    green>|<cwith|4|4|4|4|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|7|7|2|2|cell-background|pastel
+    green>|<cwith|6|6|4|4|cell-valign|b>|<table|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|47_7>
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Failed to visit local link in search results
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      47_6
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Failed to visit local link in remote doc
+    </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
       <dlink|47_5>
