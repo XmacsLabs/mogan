@@ -113,10 +113,6 @@ bool url_test (url name, string filter) {
   if (is_ramdisc (name))
     return true;
 
-  if (is_rooted (name, "file")) {
-    name= reroot (name, "default");
-  }
-
   return is_of_type (name, filter);
 }
 
