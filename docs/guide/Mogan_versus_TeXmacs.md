@@ -13,6 +13,14 @@ In this article, we will discuss the differences of Mogan Research and GNU TeXma
 | Other`->`Document updates run | `Three times` | `Once` |
 | Convert`->`Pdf`->`Expand beamer slides | `on` | `off` |
 
+## Shortcuts
+### Structured Variants Circling (since v1.2.3)
+Add `A-S-up` and `A-S-down` for structured variants circling.
+
+On Linux and Windows, `C-tab` and `C-S-tab` are reserved. On macOS, because we switched `structured:cmd` from `Option` to `Ctrl` and `C-tab` does not work, the shortcuts `C-tab` and `C-S-tab` do not work.
+
+> Why: `C-tab`, `C-S-tab` and `A-S-tab` do not work on macOS, see [QTBUG-12232](https://bugreports.qt.io/browse/QTBUG-12232).
+
 ## Graphics
 | Action | Mogan Research | GNU TeXmacs |
 |--------|------------------|-----------|
