@@ -398,9 +398,9 @@
   (if (and (style-has? "std-markup-dtd")
            (== (get-preference "experimental alpha") "on"))
       ---
-      ("Pastel" (make 'pastel))
-      ("Greyed" (make 'greyed))
-      ("Light" (make 'light))))
+      ("Pastel opacity" (make 'pastel))
+      ("Greyed opacity" (make 'greyed))
+      ("Light opacity" (make 'light))))
 
 (menu-bind size-tag-menu
   ("Really tiny" (make 'really-tiny))
