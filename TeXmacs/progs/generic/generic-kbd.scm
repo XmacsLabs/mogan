@@ -101,8 +101,6 @@
   ("structured:cmd S-pageup" (kbd-select traverse-previous))
   ("structured:cmd S-pagedown" (kbd-select traverse-next))
   ("structured:cmd space" (kbd-select-enlarge))
-  ("structured:cmd tab" (variant-circulate (focus-tree) #t))
-  ("structured:cmd S-tab" (variant-circulate (focus-tree) #f))
   ("structured:cmd *" (alternate-toggle (focus-tree)))
   ("structured:cmd #" (numbered-toggle (focus-tree)))
 
@@ -388,6 +386,9 @@
   ("emacs:meta [" (undo 0))
   ("emacs:meta ]" (redo 0))
 
+  ("C-tab" (variant-circulate (focus-tree) #t))
+  ("C-S-tab" (variant-circulate (focus-tree) #f))
+
   ("A-C-tab" (geometry-circulate #t))
   ("A-C-S-tab" (geometry-circulate #f))
   ("A-C-[" (geometry-slower))
@@ -474,6 +475,9 @@
   ("A-x" (interactive exec-interactive-command))
   ("altcmd $" (interactive-spell))
 
+  ("C-tab" (variant-circulate (focus-tree) #t))
+  ("C-S-tab" (variant-circulate (focus-tree) #f))
+
   ("structured:cmd left" (kbd-select-if-active traverse-left))
   ("structured:cmd right" (kbd-select-if-active traverse-right))
 
@@ -541,6 +545,9 @@
 
   ("C-P" (toggle-preamble-mode))
   ("C-O" (toggle-source-mode))
+
+  ("C-tab" (variant-circulate (focus-tree) #t))
+  ("C-S-tab" (variant-circulate (focus-tree) #f))
 
   ("structured:cmd left" (kbd-select-if-active traverse-left))
   ("structured:cmd right" (kbd-select-if-active traverse-right))
@@ -623,6 +630,8 @@
   ("A-x" (interactive exec-interactive-command))
 
   ("A-space var" (make 'nbsp))
+
+  ("A-tab" (variant-circulate (focus-tree) #t))
 
   ("C-a" (kbd-start-line))
   ("C-e" (kbd-end-line))
@@ -750,6 +759,9 @@
   ("altcmd x" (interactive footer-eval))
   ("A-x" (interactive exec-interactive-command))
   ("altcmd $" (interactive-spell))
+
+  ("C-tab" (variant-circulate (focus-tree) #t))
+  ("C-S-tab" (variant-circulate (focus-tree) #f))
 
   ("structured:cmd left" (kbd-select-if-active traverse-left))
   ("structured:cmd right" (kbd-select-if-active traverse-right))
