@@ -53,7 +53,7 @@ function add_requires_of_mogan()
     -- package: lolly
     set_configvar("LOLLY_VERSION", LOLLY_VERSION)
     add_requires("lolly", {system=false})
-    tbox_configs = {hash=true, ["force-utf8"]=true}
+    tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
     add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
     if is_plat("linux") and linuxos.name() == "uos" then
        add_requireconfs("lolly.cpr", {version = "1.8.3", system = false, override=true})
