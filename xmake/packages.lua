@@ -27,7 +27,7 @@ end
 local S7_VERSION = "20230413"
 local QT6_VERSION = "6.5.3"
 local QTIFW_VERSION = "4.6.0"
-local LOLLY_VERSION = "1.3.20"
+local LOLLY_VERSION = "1.3.21"
 local TBOX_VERSION = "1.7.5"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
@@ -53,7 +53,7 @@ function add_requires_of_mogan()
     -- package: lolly
     set_configvar("LOLLY_VERSION", LOLLY_VERSION)
     add_requires("lolly", {system=false})
-    tbox_configs = {hash=true, ["force-utf8"]=true}
+    tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
     add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
     if is_plat("linux") and linuxos.name() == "uos" then
        add_requireconfs("lolly.cpr", {version = "1.8.3", system = false, override=true})
