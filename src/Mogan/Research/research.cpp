@@ -16,6 +16,7 @@
 #endif
 #include <locale.h> // for setlocale
 #include <lolly/system/timer.hpp>
+#include <lolly/system/args.hpp>
 #include <signal.h>
 #include <sys/stat.h>
 #include <sys/types.h>
