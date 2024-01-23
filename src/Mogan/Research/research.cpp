@@ -501,6 +501,7 @@ immediate_options (int argc, char** argv) {
 int
 main (int argc, char** argv) {
   lolly::init_tbox ();
+  lolly::system::args a (argc, argv);
 
 #ifdef STACK_SIZE
   struct rlimit limit;
