@@ -535,56 +535,6 @@ target("macos_installer") do
     end)
 end
 
-target("windows_installer") do
-    set_kind("phony")
-    set_enabled(is_plat("mingw", "windows") and is_mode("release"))
-    add_packages("qtifw")
-    add_deps("research")
-    set_configvar("PACKAGE_DATE", os.date("%Y-%m-%d"))
-    set_configvar("XMACS_VERSION", XMACS_VERSION)
-    set_installdir("$(buildir)")
-
-    add_configfiles(
-        "packages/windows/(config/config.in.xml)",{
-            filename = "config.xml",
-        }
-    )
-    add_configfiles(
-        "packages/windows/(packages/app.mogan/meta/package.in.xml)",{
-            filename = "package.xml",
-        }
-    )
-    add_configfiles(
-        "packages/windows/(packages/app.shortcut/meta/package.in.xml)",{
-            filename = "package.xml",
-        }
-    )
-    add_installfiles({
-        "packages/windows/packages/app.mogan/meta/installscript.qs",
-        "LICENSE"}, {prefixdir = "packages/app.mogan/meta/"})
-    add_installfiles({
-        "TeXmacs/misc/images/new-mogan-32.png",
-        "TeXmacs/misc/images/new-mogan-512.png",
-        "packages/windows/Xmacs.ico",
-    }, {prefixdir = "config/"})
-
-    after_install(function (target, opt)
-        print("after_install of target windows_installer")
-        import("core.project.config")
-        local qtifw_dir = target:pkg("qtifw"):installdir()
-        local binarycreator_path = path.join(qtifw_dir, "/bin/binarycreator.exe")
-        -- generate windows package
-        local buildir = config.buildir()
-        local package_argv = {
-            "--config", path.join(buildir, "config/config.xml"),
-            "--packages", path.join(buildir, "packages"),
-            path.join(buildir, "MoganResearch-v"..XMACS_VERSION.."-64bit-installer.exe")
-        }
-        os.iorunv(binarycreator_path, package_argv)
-    end)
-end
-
-
 includes("xmake/tests.lua")
 -- Tests in C++
 l3_cpp_tests = os.files("tests/L3/**_test.cpp")

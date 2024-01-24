@@ -45,9 +45,6 @@ function add_requires_of_mogan()
     -- package: qt6widgets
     if is_plat("mingw") or is_plat("windows") then
         add_requires("qt6widgets "..QT6_VERSION)
-        if is_mode("release") then
-            add_requires("qtifw "..QTIFW_VERSION)
-        end
     end
 
     -- package: lolly
