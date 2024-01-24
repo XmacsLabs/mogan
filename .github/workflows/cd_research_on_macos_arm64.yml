@@ -38,7 +38,7 @@ jobs:
         run: xmake install -vD research
       - name: Generate Installer
         run: |
-          xmake install -vD macos_installer
+          xmake install -vD research_packager
       - name: Upload 
         uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}

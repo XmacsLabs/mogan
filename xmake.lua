@@ -507,7 +507,7 @@ target("research") do
     end
 end
 
-target("macos_installer") do
+target("research_packager") do
     set_enabled(is_plat("macosx") and is_mode("release"))
     set_kind("phony")
     if is_plat("macosx") then
