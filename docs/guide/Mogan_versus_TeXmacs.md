@@ -13,6 +13,16 @@ In this article, we will discuss the differences of Mogan Research and GNU TeXma
 | Other`->`Document updates run | `Three times` | `Once` |
 | Convert`->`Pdf`->`Expand beamer slides | `on` | `off` |
 
+## New Documents
+### Enable `Focus->Layout->Margins as on paper` by default
+Why:
+1. Provide experiences like new document in WPS or MS Word for new TeXmacs user
+2. `Insert->Note->Marginal note` works as expected with margins as on paper
+3. When `View->Zoom` is 100%, the default page is almost the same with the exported PDF or the printed A4 paper (actually, because there are reserved and hidden 10px on each side on screen, the screen paper is slightly smaller than the actual A4 paper)
+
+### Enable `Focus->Layout->No page numbers` by default
+Do not show page numbers to make it clean and tidy.
+
 ## Shortcuts
 ### Structured Variants Circling (since v1.2.3)
 Add `A-S-up` and `A-S-down` for structured variants circling.
