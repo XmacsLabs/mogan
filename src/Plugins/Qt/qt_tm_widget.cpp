@@ -9,12 +9,14 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include <QApplication>
 #include <QComboBox>
 #include <QDialog>
 #include <QDockWidget>
 #include <QLayoutItem>
 #include <QMainWindow>
 #include <QMenuBar>
+#include <QScreen>
 #include <QStatusBar>
 #include <QToolBar>
 #include <QToolButton>
@@ -738,8 +740,15 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
   } break;
   case SLOT_POSITION: {
     check_type<coord2> (val, s);
-    coord2 p= open_box<coord2> (val);
-    mainwindow ()->move (to_qpoint (p));
+    coord2 p           = open_box<coord2> (val);
+    QPoint pos         = to_qpoint (p);
+    int    screen_count= QGuiApplication::screens ().count ();
+    int    screen_w= QApplication::primaryScreen ()->availableSize ().width ();
+    if ((screen_count == 1 && screen_w >= pos.x ()) || (screen_count > 1)) {
+      // For only 1 screen, only move to pos.x within the screen width
+      // For multiple screens, just move it
+      mainwindow ()->move (pos);
+    }
   } break;
   case SLOT_SIZE: {
     check_type<coord2> (val, s);
