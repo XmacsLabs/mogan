@@ -16,6 +16,7 @@
 #include <QLayoutItem>
 #include <QMainWindow>
 #include <QMenuBar>
+#include <QScreen>
 #include <QStatusBar>
 #include <QToolBar>
 #include <QToolButton>
