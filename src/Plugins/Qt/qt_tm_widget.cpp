@@ -676,7 +676,7 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
     check_type<coord2> (val, s);
     coord2 p           = open_box<coord2> (val);
     QPoint pos         = to_qpoint (p);
-    int    screen_count= QApplication::screens ().count ();
+    int    screen_count= QGuiApplication::screens ().count ();
     int    screen_w= QApplication::primaryScreen ()->availableSize ().width ();
     if ((screen_count == 1 && screen_w >= pos.x ()) || (screen_count > 1)) {
       // For only 1 screen, only move to pos.x within the screen width
