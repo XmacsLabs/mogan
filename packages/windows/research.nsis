@@ -357,6 +357,8 @@ Function un.onInit
 FunctionEnd
 
 Section "Uninstall"
+  Delete "$SMPROGRAMS\${PACKAGE_NAME}.lnk"
+  Delete "$DESKTOP\${PACKAGE_NAME}.lnk"
 
   ; add uninstall commands
   ${PACKAGE_UNINSTALLCMDS}
@@ -384,6 +386,6 @@ Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite on
 
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}.lnk" "$INSTDIR\bin\${PRODUCT_NAME}.exe"
-  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\bin\${PRODUCT_NAME}.exe"
+  CreateShortCut "$SMPROGRAMS\${PACKAGE_NAME}.lnk" "$INSTDIR\bin\${PACKAGE_NAME}.exe"
+  CreateShortCut "$DESKTOP\${PACKAGE_NAME}.lnk" "$INSTDIR\bin\${PACKAGE_NAME}.exe"
 SectionEnd
