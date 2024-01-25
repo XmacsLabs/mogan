@@ -372,7 +372,7 @@ Section "File Associations" SEC02
 SectionEnd
 
 Section "Check and Install Visual C++ Redistributables" SEC03
-    ExecWait '"$INSTDIR\vc_redist.x64.exe" /install /passive /norestart'
+    ExecWait '"$INSTDIR\bin\vc_redist.x64.exe" /install /passive /norestart'
 SectionEnd
 
 Function .onInstSuccess  
