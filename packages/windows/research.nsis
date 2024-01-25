@@ -30,7 +30,7 @@ Name "${PACKAGE_NAME} - v${VERSION}"
 ; set the output file path
 OutFile "${PACKAGE_OUTPUTFILE}"
 
-InstallDir $PROGRAMFILES\${PACKAGE_INSTALL_DIR}
+InstallDir $PROGRAMFILES64\${PACKAGE_INSTALL_DIR}
 
 ; set the working directory
 !cd "${PACKAGE_WORKDIR}"
