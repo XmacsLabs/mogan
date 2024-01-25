@@ -344,7 +344,11 @@ FunctionEnd
 
 Section "Uninstall"
   Delete "$SMPROGRAMS\${PACKAGE_SHORTCUT_NAME}.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}.lnk"
   Delete "$DESKTOP\${PACKAGE_SHORTCUT_NAME}.lnk"
+
+  DeleteRegValue HKCR "Applications\MoganResearch.exe"
+  DeleteRegValue HKCR "Applications\MGResearch.exe"
 
   ; add uninstall commands
   ${PACKAGE_UNINSTALLCMDS}
@@ -361,4 +365,8 @@ Section "Create shortcuts" SEC01
 
   CreateShortCut "$SMPROGRAMS\${PACKAGE_SHORTCUT_NAME}.lnk" "$INSTDIR\bin\${PACKAGE_NAME}.exe"
   CreateShortCut "$DESKTOP\${PACKAGE_SHORTCUT_NAME}.lnk" "$INSTDIR\bin\${PACKAGE_NAME}.exe"
+SectionEnd
+
+Section "File Associations" Sec0  
+  WriteRegExpandStr HKCR "Applications\MoganResearch.exe\shell\open\command" "" '"$INSTDIR\bin\MoganResearch.exe" "%1"'
 SectionEnd
