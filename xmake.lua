@@ -542,12 +542,15 @@ end
 if is_mode ("release") then
     xpack("research") do
         set_formats("nsis")
+        set_specfile("packages/windows/research.nsis")
+        set_specvar("PACKAGE_INSTALL_DIR", "XmacsLabs/MoganResearch-"..XMACS_VERSION)
         set_version("1.2.3")
         set_title("Mogan Research")
         set_author("XmacsLabs")
         set_description("user friendly distribution of GNU TeXmacs")
         set_homepage("https://mogan.app")
         set_license("GPLv3")
+        set_licensefile("LICENSE")
         add_targets("research")
         set_iconfile("packages/windows/Xmacs.ico")
         set_bindir("bin")
