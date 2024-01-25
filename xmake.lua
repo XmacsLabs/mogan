@@ -535,6 +535,18 @@ target("research_packager") do
     end)
 end
 
+includes("@builtin/xpack")
+xpack("research") do
+    set_formats("nsis")
+    set_title("Mogan Research")
+    set_author("XmacsLabs")
+    set_description("user friendly distribution of GNU TeXmacs")
+    set_homepage("https://mogan.app")
+    set_license("GPLv3")
+    add_targets("research")
+    set_iconfile("packages/windows/Xmacs.ico")
+end
+
 includes("xmake/tests.lua")
 -- Tests in C++
 l3_cpp_tests = os.files("tests/L3/**_test.cpp")
