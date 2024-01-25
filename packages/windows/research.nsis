@@ -316,20 +316,6 @@ Section "${PACKAGE_NAME} (required)" InstallExeutable
   ${EndIf}
 SectionEnd
 
-; add the binary directory to %PATH%
-Section "Add to PATH" InstallPath
-  ${If} $NoAdmin == "false"
-    ReadRegStr $R0 ${HKLM} "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "Path"
-    ${WordReplace} $R0 ";${PACKAGE_BINDIR}" "" "+" $R1
-    WriteRegExpandStr ${HKLM} "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "Path" "$R1;${PACKAGE_BINDIR}"
-  ${Else}
-    ReadRegStr $R0 ${HKCU} "Environment" "Path"
-    ${WordReplace} $R0 ";${PACKAGE_BINDIR}" "" "+" $R1
-    WriteRegExpandStr ${HKCU} "Environment" "Path" "$R1;${PACKAGE_BINDIR}"
-  ${EndIf}
-   SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
-SectionEnd
-
 ${PACKAGE_NSIS_INSTALL_SECTIONS}
 
 ; define language strings
@@ -357,24 +343,11 @@ Function un.onInit
 FunctionEnd
 
 Section "Uninstall"
-  Delete "$SMPROGRAMS\${PACKAGE_NAME}.lnk"
-  Delete "$DESKTOP\${PACKAGE_NAME}.lnk"
+  Delete "$SMPROGRAMS\${PACKAGE_SHORTCUT_NAME}.lnk"
+  Delete "$DESKTOP\${PACKAGE_SHORTCUT_NAME}.lnk"
 
   ; add uninstall commands
   ${PACKAGE_UNINSTALLCMDS}
-
-  ; remove the binary directory from %Path%
-  ${If} $NoAdmin == "false"
-    DeleteRegKey ${HKLM} ${RegUninstall}
-    ReadRegStr $R0 ${HKLM} "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "Path"
-    ${WordReplace} $R0 ";${PACKAGE_BINDIR}" "" "+" $R1
-    WriteRegExpandStr ${HKLM} "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "Path" "$R1"
-  ${Else}
-    DeleteRegKey ${HKCU} ${RegUninstall}
-    ReadRegStr $R0 ${HKCU} "Environment" "Path"
-    ${WordReplace} $R0 ";${PACKAGE_BINDIR}" "" "+" $R1
-    WriteRegExpandStr ${HKCU} "Environment" "Path" "$R1"
-  ${EndIf}
 
   ; remove uninstall.exe
   ${unRMFileIfExists} "$InstDir\uninstall.exe"
@@ -382,10 +355,10 @@ Section "Uninstall"
 
 SectionEnd
 
-Section "MainSection" SEC01
+Section "Create shortcuts" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite on
 
-  CreateShortCut "$SMPROGRAMS\${PACKAGE_NAME}.lnk" "$INSTDIR\bin\${PACKAGE_NAME}.exe"
-  CreateShortCut "$DESKTOP\${PACKAGE_NAME}.lnk" "$INSTDIR\bin\${PACKAGE_NAME}.exe"
+  CreateShortCut "$SMPROGRAMS\${PACKAGE_SHORTCUT_NAME}.lnk" "$INSTDIR\bin\${PACKAGE_NAME}.exe"
+  CreateShortCut "$DESKTOP\${PACKAGE_SHORTCUT_NAME}.lnk" "$INSTDIR\bin\${PACKAGE_NAME}.exe"
 SectionEnd
