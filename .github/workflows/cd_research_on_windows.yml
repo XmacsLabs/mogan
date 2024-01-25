@@ -27,17 +27,17 @@ jobs:
       - name: install
         run: xmake install -vD research
       - name: Generate Installer
-        run: xmake install -vD windows_installer
+        run: xmake pack research
       - name: Upload 
         uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
           path: |
-            build/*.exe
+            build/xpack/research/*.exe
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           prerelease: true
-          files: build/*.exe
+          files: build/xpack/research/*.exe
 
