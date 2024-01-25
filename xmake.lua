@@ -93,6 +93,10 @@ end
 set_allowedmodes("releasedbg", "release", "debug")
 add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
+if is_mode("release") then
+  includes("@builtin/xpack")
+end
+
 add_repositories("mogan-repo xmake")
 includes("xmake/packages.lua")
 add_requires_of_mogan()
@@ -533,6 +537,12 @@ target("research_packager") do
         end
         os.execv("hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir)
     end)
+end
+
+if is_mode ("release") then
+    xpack("research") do
+        add_xpack_research(XMACS_VERSION)
+    end
 end
 
 includes("xmake/tests.lua")
