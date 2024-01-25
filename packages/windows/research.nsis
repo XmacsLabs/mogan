@@ -5,6 +5,17 @@
 !include "FileFunc.nsh"
 !include "UAC.nsh"
 
+; set the default installation directory
+!if "${PACKAGE_ARCH}" == "x64"
+  !define PROGRAMFILES $PROGRAMFILES64
+  !define HKLM HKLM64
+  !define HKCU HKCU64
+!else
+  !define PROGRAMFILES $PROGRAMFILES
+  !define HKLM HKLM
+  !define HKCU HKCU
+!endif
+
 ; the version information
 !define VERSION      "${PACKAGE_VERSION}"
 !if "${PACKAGE_VERSION_BUILD}" != ""
@@ -31,17 +42,6 @@ Unicode true
 SetCompressor /FINAL /SOLID lzma
 SetCompressorDictSize 64
 SetDatablockOptimize ON
-
-; set the default installation directory
-!if "${PACKAGE_ARCH}" == "x64"
-  !define PROGRAMFILES $PROGRAMFILES64
-  !define HKLM HKLM64
-  !define HKCU HKCU64
-!else
-  !define PROGRAMFILES $PROGRAMFILES
-  !define HKLM HKLM
-  !define HKCU HKCU
-!endif
 
 ; request application privileges for Windows Vista
 RequestExecutionLevel user
