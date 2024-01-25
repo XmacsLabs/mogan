@@ -347,8 +347,8 @@ Section "Uninstall"
   Delete "$SMPROGRAMS\${PRODUCT_NAME}.lnk"
   Delete "$DESKTOP\${PACKAGE_SHORTCUT_NAME}.lnk"
 
-  DeleteRegValue HKCR "Applications\MoganResearch.exe"
-  DeleteRegValue HKCR "Applications\MGResearch.exe"
+  DeleteRegKey HKCR "Applications\MoganResearch.exe"
+  DeleteRegKey HKCR "Applications\MGResearch.exe"
 
   ; add uninstall commands
   ${PACKAGE_UNINSTALLCMDS}
