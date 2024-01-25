@@ -343,11 +343,14 @@ Function un.onInit
 FunctionEnd
 
 Section "Uninstall"
+  ; delete shortcuts
   Delete "$SMPROGRAMS\${PACKAGE_SHORTCUT_NAME}.lnk"
   Delete "$DESKTOP\${PACKAGE_SHORTCUT_NAME}.lnk"
 
-  DeleteRegKey HKCR "Applications\MoganResearch.exe"
+  ; delete register key for Mogan Research v1.2.1
   DeleteRegKey HKCR "Applications\MGResearch.exe"
+  ; delete register key for Mogan Research
+  DeleteRegKey HKCR "Applications\${PACKAGE_NAME}.exe"
 
   ; add uninstall commands
   ${PACKAGE_UNINSTALLCMDS}
@@ -367,5 +370,9 @@ Section "Create shortcuts" SEC01
 SectionEnd
 
 Section "File Associations" Sec0  
-  WriteRegExpandStr HKCR "Applications\MoganResearch.exe\shell\open\command" "" '"$INSTDIR\bin\MoganResearch.exe" "%1"'
+  WriteRegExpandStr HKCR "Applications\${PACKAGE_NAME}.exe\shell\open\command" "" '"$INSTDIR\bin\${PACKAGE_NAME}.exe" "%1"'
 SectionEnd
+
+Function .onInstSuccess  
+    ExecShell "$INSTDIR\bin\${PACKAGE_NAME}.exe"  
+FunctionEnd
