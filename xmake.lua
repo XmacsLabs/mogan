@@ -93,7 +93,7 @@ end
 set_allowedmodes("releasedbg", "release", "debug")
 add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
-if is_mode("release")
+if is_mode("release") then
   includes("@builtin/xpack")
 end
 
@@ -551,6 +551,7 @@ if is_mode ("release") then
         add_targets("research")
         set_iconfile("packages/windows/Xmacs.ico")
         set_bindir("bin")
+        add_installfiles("build/packages/app.mogan/data/bin/(**)|MoganResearch.exe", {prefixdir = "bin"})
     end
 end
 
