@@ -93,6 +93,10 @@ end
 set_allowedmodes("releasedbg", "release", "debug")
 add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
+if is_mode("release")
+  includes("@builtin/xpack")
+end
+
 add_repositories("mogan-repo xmake")
 includes("xmake/packages.lua")
 add_requires_of_mogan()
@@ -535,17 +539,19 @@ target("research_packager") do
     end)
 end
 
-includes("@builtin/xpack")
-xpack("research") do
-    set_formats("nsis")
-    set_version("1.2.3")
-    set_title("Mogan Research")
-    set_author("XmacsLabs")
-    set_description("user friendly distribution of GNU TeXmacs")
-    set_homepage("https://mogan.app")
-    set_license("GPLv3")
-    add_targets("research")
-    set_iconfile("packages/windows/Xmacs.ico")
+if is_mode ("release") then
+    xpack("research") do
+        set_formats("nsis")
+        set_version("1.2.3")
+        set_title("Mogan Research")
+        set_author("XmacsLabs")
+        set_description("user friendly distribution of GNU TeXmacs")
+        set_homepage("https://mogan.app")
+        set_license("GPLv3")
+        add_targets("research")
+        set_iconfile("packages/windows/Xmacs.ico")
+        set_bindir("bin")
+    end
 end
 
 includes("xmake/tests.lua")
