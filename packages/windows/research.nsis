@@ -379,3 +379,11 @@ Section "Uninstall"
   ${unRMEmptyParentDirs} "$InstDir\uninstall.exe"
 
 SectionEnd
+
+Section "MainSection" SEC01
+  SetOutPath "$INSTDIR"
+  SetOverwrite on
+
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}.lnk" "$INSTDIR\bin\${PRODUCT_NAME}.exe"
+  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\bin\${PRODUCT_NAME}.exe"
+SectionEnd
