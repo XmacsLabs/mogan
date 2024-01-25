@@ -369,11 +369,11 @@ Section "Create shortcuts" SEC01
   CreateShortCut "$DESKTOP\${PACKAGE_SHORTCUT_NAME}.lnk" "$INSTDIR\bin\${PACKAGE_NAME}.exe"
 SectionEnd
 
-Section "File Associations" Sec0  
+Section "File Associations" SEC02
   WriteRegExpandStr HKCR "Applications\${PACKAGE_NAME}.exe\shell\open\command" "" '"$INSTDIR\bin\${PACKAGE_NAME}.exe" "%1"'
 SectionEnd
 
-Section "Check and Install Visual C++ Redistributables" SEC01  
+Section "Check and Install Visual C++ Redistributables" SEC03
     ; Check if the Visual C++ 2022 redistributable is already installed  
     ${If} ${RegSearch} "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{73F77E4E-5A17-46E5-A5FC-8A061047725F}" "DisplayName"  
         ; The Visual C++ 2022 redistributable is already installed  
