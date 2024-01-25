@@ -344,7 +344,6 @@ FunctionEnd
 
 Section "Uninstall"
   Delete "$SMPROGRAMS\${PACKAGE_SHORTCUT_NAME}.lnk"
-  Delete "$SMPROGRAMS\${PRODUCT_NAME}.lnk"
   Delete "$DESKTOP\${PACKAGE_SHORTCUT_NAME}.lnk"
 
   DeleteRegKey HKCR "Applications\MoganResearch.exe"
