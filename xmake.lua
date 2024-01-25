@@ -544,6 +544,7 @@ if is_mode ("release") then
         set_formats("nsis")
         set_specfile("packages/windows/research.nsis")
         set_specvar("PACKAGE_INSTALL_DIR", "XmacsLabs\\MoganResearch-"..XMACS_VERSION)
+        set_specvar("PACKAGE_NAME", "MoganResearch")
         set_version("1.2.3")
         set_title("Mogan Research")
         set_author("XmacsLabs")
