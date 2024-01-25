@@ -541,7 +541,7 @@ end
 
 if is_mode ("release") then
     xpack("research") do
-        add_xpack_research()
+        add_xpack_research(XMACS_VERSION)
     end
 end
 
