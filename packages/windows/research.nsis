@@ -374,5 +374,5 @@ Section "File Associations" Sec0
 SectionEnd
 
 Function .onInstSuccess  
-    ExecShell "$INSTDIR\bin\${PACKAGE_NAME}.exe"  
+    ExecShell "" "$INSTDIR\bin\${PACKAGE_NAME}.exe"  
 FunctionEnd
