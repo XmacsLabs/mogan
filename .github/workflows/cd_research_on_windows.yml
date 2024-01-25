@@ -27,7 +27,7 @@ jobs:
       - name: install
         run: xmake install -vD research
       - name: Generate Installer
-        run: xmake pack research
+        run: xmake pack --yes -vD research
       - name: Upload 
         uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
