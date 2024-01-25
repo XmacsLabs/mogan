@@ -538,6 +538,7 @@ end
 includes("@builtin/xpack")
 xpack("research") do
     set_formats("nsis")
+    set_version("1.2.3")
     set_title("Mogan Research")
     set_author("XmacsLabs")
     set_description("user friendly distribution of GNU TeXmacs")
