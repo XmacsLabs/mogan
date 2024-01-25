@@ -373,6 +373,16 @@ Section "File Associations" Sec0
   WriteRegExpandStr HKCR "Applications\${PACKAGE_NAME}.exe\shell\open\command" "" '"$INSTDIR\bin\${PACKAGE_NAME}.exe" "%1"'
 SectionEnd
 
+Section "Check and Install Visual C++ Redistributables" SEC01  
+    ; Check if the Visual C++ 2022 redistributable is already installed  
+    ${If} ${RegSearch} "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{73F77E4E-5A17-46E5-A5FC-8A061047725F}" "DisplayName"  
+        ; The Visual C++ 2022 redistributable is already installed  
+    ${Else}  
+        ; The Visual C++ 2022 redistributable is not installed, let's install it  
+        ExecWait '"$INSTDIR\vc_redist.x64.exe" /install /passive /norestart'  
+    ${EndIf}  
+SectionEnd
+
 Function .onInstSuccess  
     ExecShell "" "$INSTDIR\bin\${PACKAGE_NAME}.exe"  
 FunctionEnd
