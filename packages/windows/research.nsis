@@ -270,7 +270,7 @@ Function .onInit
   ${EndIf}
 FunctionEnd
 
-Section "${PACKAGE_NAME} (required)" InstallExeutable
+Section "${PACKAGE_NAME} (required)" InstallExecutable
 
   SectionIn RO
 
@@ -319,14 +319,12 @@ SectionEnd
 ${PACKAGE_NSIS_INSTALL_SECTIONS}
 
 ; define language strings
-LangString DESC_InstallExeutable ${LANG_ENGLISH} "${PACKAGE_DESCRIPTION}"
-LangString DESC_InstallPath ${LANG_ENGLISH} "Add ${PACKAGE_NAME} to PATH"
+LangString DESC_InstallExecutable ${LANG_ENGLISH} "${PACKAGE_DESCRIPTION}"
 ${PACKAGE_NSIS_INSTALL_DESCS}
 
 ; assign language strings to sections
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-!insertmacro MUI_DESCRIPTION_TEXT ${InstallExeutable} $(DESC_InstallExeutable)
-!insertmacro MUI_DESCRIPTION_TEXT ${InstallPath} $(DESC_InstallPath)
+!insertmacro MUI_DESCRIPTION_TEXT ${InstallExecutable} $(DESC_InstallExecutable)
 ${PACKAGE_NSIS_INSTALL_DESCRIPTION_TEXTS}
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
