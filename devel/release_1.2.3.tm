@@ -25,7 +25,7 @@
 
   <\wide-tabular>
     <tformat|<cwith|15|15|1|1|cell-valign|b>|<cwith|14|14|3|3|cell-valign|b>|<cwith|13|13|1|1|cell-background|>|<cwith|14|14|1|1|cell-background|>|<cwith|6|6|1|1|cell-background|>|<cwith|6|6|1|1|cell-hyphen|n>|<cwith|9|9|1|1|cell-background|>|<cwith|4|4|1|1|cell-background|pastel
-    green>|<table|<row|<\cell>
+    green>|<cwith|2|2|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|76>
     </cell>|<\cell>
       <value|da>
