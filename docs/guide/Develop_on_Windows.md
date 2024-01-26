@@ -55,9 +55,7 @@ xmake run --yes --verbose --diagnosis --group=keneral_tests
 xmake build research
 ```
 
-There are other binary used by mogan as optional dependencies, you can found them at [xmacslabs/mogan-dependencies](https://github.com/XmacsLabs/mogan-dependencies).
-
-### Step 5: Launch Mogan Editor
+### Step 5: Launch Mogan Research
 ``` bash
 xmake run research
 ```

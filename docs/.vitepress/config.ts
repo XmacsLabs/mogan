@@ -1,5 +1,5 @@
 export default {
-    title: 'Mogan Editor',
+    title: 'Mogan STEM Suite',
     outDir: "../website",
     locales: {
         "/": {
@@ -36,7 +36,7 @@ export default {
 
         footer: {
             message: 'Let us enjoy exploring science and technology!',
-            copyright: 'Copyright © 2022-2023 contributors of Mogan Editor'
+            copyright: 'Copyright © 2022-2023 contributors of Mogan STEM Suite'
         },
         search: {
             provider: 'local',

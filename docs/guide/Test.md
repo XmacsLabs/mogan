@@ -11,7 +11,7 @@ For Developers, there are two way of testing: Unit tests and Integration tests
 | bin/test_only [target-name] | Only run the specified C++ unit test |
 
 ### Scheme Unit Tests
-Build, install and launch Mogan Editor, and then insert the Scheme session to run the Scheme unit tests:
+Build, install and launch Mogan Research, and then insert the Scheme session to run the Scheme unit tests:
 ``` scheme
 (run-all-tests)
 ```

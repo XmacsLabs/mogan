@@ -46,7 +46,7 @@ See [How to test](Test.md)。
 xmake install research
 ```
 
-### Step 5: Launch Mogan Editor
+### Step 5: Launch Mogan Research
 ``` bash
 xmake run research
 ```
