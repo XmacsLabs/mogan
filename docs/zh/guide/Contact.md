@@ -1,15 +1,15 @@
 # 联系我们
-衷心欢迎大家通过以下方式联系我们，交流经验、提供建议或报告问题。也热情欢迎感兴趣的开发者和志愿贡献者加入墨者实验室。
+衷心欢迎大家通过以下方式联系我们，交流经验、提供建议或报告问题。也热情欢迎感兴趣的开发者和志愿贡献者加入墨客实验室。
 
 |||
 | :---: | :---: |
 墨干官网|[mogan.app](https://mogan.app)
 Bilibili|[沈浪熊猫儿](https://space.bilibili.com/28058658) 
-Gitee|[墨者实验室](https://gitee.com/XmacsLabs/) 
+Gitee|[墨客实验室](https://gitee.com/XmacsLabs/) 
 GitHub|[XmacsLabs](https://github.com/XmacsLabs)
 豆瓣小组|[GNU TeXmacs](https://www.douban.com/group/texmacs/)
 知乎|[墨干理工套件](https://www.zhihu.com/people/xmacs)
-微信公众号|墨者实验室（xmacs2020）
+微信公众号|墨客实验室（xmacs2020）
 微信群|墨客社区（通过账户 XmacsLabs 加入）
 QQ群|墨客社区（934456971）
 

@@ -5,11 +5,11 @@ You are sincerely welcome to contact us via the following ways to share your exp
 | :---: | :---: |
 Official Website of Mogan|[mogan.app](https://mogan.app)
 Bilibili|[沈浪熊猫儿](https://space.bilibili.com/28058658) 
-Gitee|[墨者实验室](https://gitee.com/XmacsLabs/)
+Gitee|[墨客实验室](https://gitee.com/XmacsLabs/)
 GitHub|[XmacsLabs](https://github.com/XmacsLabs)
 Douban Group|[GNU TeXmacs](https://www.douban.com/group/texmacs/)
 Zhihu|[墨干理工套件](https://www.zhihu.com/people/xmacs)
-WeChat Official Account|墨者实验室（xmacs2020）
+WeChat Official Account|墨客实验室（xmacs2020）
 WeChat Group|墨客社区（Join via account XmacsLabs）
 QQ Group| 墨客社区（934456971）
 
