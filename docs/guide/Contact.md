@@ -8,7 +8,7 @@ Bilibili|[沈浪熊猫儿](https://space.bilibili.com/28058658)
 Gitee|[墨者实验室](https://gitee.com/XmacsLabs/)
 GitHub|[XmacsLabs](https://github.com/XmacsLabs)
 Douban Group|[GNU TeXmacs](https://www.douban.com/group/texmacs/)
-Zhihu|[墨干编辑器](https://www.zhihu.com/people/xmacs)
+Zhihu|[墨干理工套件](https://www.zhihu.com/people/xmacs)
 WeChat Official Account|墨者实验室（xmacs2020）
 WeChat Group|墨客社区（Join via account XmacsLabs）
 QQ Group| 墨客社区（934456971）

@@ -57,9 +57,7 @@ xmake run --yes --verbose --diagnosis --group=keneral_tests
 xmake install research
 ```
 
-墨干编辑器的某些功能需要其他程序来配合。这些程序在[xmacslabs/mogan-dependencies](https://github.com/XmacsLabs/mogan-dependencies)仓库下。
-
-### 第五步：启动墨干编辑器
+### 第五步：启动墨干
 ``` bash
 xmake run research
 ```

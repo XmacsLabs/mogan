@@ -1239,7 +1239,7 @@
 ("modify cell size" "改变单元格大小")
 ("modify table border" "")
 ("modify table padding" "")
-("mogan" "墨干编辑器")
+("mogan" "墨干")
 ("mongolian" "")
 ("month" "月")
 ("more information about GNU TeXmacs can be found in the Help" "更多关于 GNU TeXmacs 的信息可查看帮助")

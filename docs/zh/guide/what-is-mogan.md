@@ -1,4 +1,4 @@
-# 什么是墨干编辑器
+# 什么是墨干
 > **让我们享受探索科学与技术的乐趣！**
 
 墨干理工套件是[墨客实验室](https://gitee.com/XmacsLabs)旗下的结构化的理工套件，包含三大自由软件产品：
@@ -14,5 +14,8 @@ GNU TeXmacs 是法国国家科学研究中心的数学家 [Joris van der Hoeven]
 ## 视频: A quick tour of GNU TeXmacs
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
 
-## 墨干的诞生
+## 墨干编辑器的诞生（2022年）
 [沈浪熊猫儿](http://texmacs.org/tmweb/contribute/team-sadhen.en.html)于2022年1月30号，在 [Massimiliano Gubinelli](http://texmacs.org/tmweb/contribute/team-massimiliano.en.html) 的 S7 Scheme 分支的基础上，发布了[墨干编辑器v1.0.0](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.0.0)，并创建了[墨客实验室](https://gitee.com/XmacsLabs)这样一个非盈利组织，旨在普及GNU TeXmacs，让所有人都能够通过 Joris van der Hoeven 创造的软件享受探索科学与技术的乐趣。
+
+## 重定位为墨干理工套件（2023年）
+从V1.2.0开始，我们将墨干编辑器重命名并重定位为墨干理工套件。

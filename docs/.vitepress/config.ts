@@ -151,7 +151,7 @@ function sidebarGuideZh() {
             text: '简介',
             collapsible: true,
             items: [
-                { text: '墨干编辑器', link: '/zh/guide/what-is-mogan' },
+                { text: '墨干', link: '/zh/guide/what-is-mogan' },
                 { text: '主要功能', link: '/zh/guide/Feature' },
                 { text: '命名', link: '/zh/guide/Name' },
             ]

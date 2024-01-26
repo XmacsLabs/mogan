@@ -39,7 +39,7 @@ xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
 xmake install research
 ```
 
-### 第五步：启动墨干编辑器
+### 第五步：启动墨干
 ``` bash
 xmake run research
 ```
