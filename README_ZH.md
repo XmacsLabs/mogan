@@ -3,15 +3,17 @@
 
 > **让我们享受探索科学与技术的乐趣！**
 
-墨干是结构化的理工套件，是[墨客实验室](https://gitee.com/XmacsLabs)旗下的自由软件：
-+ 墨砚：GNU TeXmacs的发行版之一，主要用于学术写作、书籍出版
-+ 墨码：基于GNU TeXmacs内核的代码编辑器
-+ 墨板：基于GNU TeXmacs内核的幻灯片产品
+墨干理工套件是[墨客实验室](https://gitee.com/XmacsLabs)旗下的结构化的理工套件，包含三大自由软件产品：
+| 中文名 | 英文名 | 产品定位 | 状态 |
+|-------|-------|---------|-----|
+| 墨干 | Mogan Research | 墨干是结构化的科技编辑器平台——GNU TeXmacs的发行版之一 | 成熟 |
+| 墨码 | Mogan Code | 基于GNU TeXmacs内核的代码编辑器 | 研发中 |
+| 墨板 | Mogan Beamer | 基于GNU TeXmacs内核的幻灯片产品 | 研发中 |
 
 ## 如何安装
 + 马上下载：[安装指南](docs/zh/guide/Install.md)
 + 在线试用：
-  + [墨砚日更版](https://research.mogan.app)
+  + [墨干日更版](https://research.mogan.app)
 
 ## 如何入门
 + 访问官网：[https://texmacs.org](https://texmacs.org) 和 [https://mogan.app](https://mogan.app)
