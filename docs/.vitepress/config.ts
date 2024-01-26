@@ -81,7 +81,6 @@ function sidebarGuide() {
             items: [
                 { text: 'What is Mogan?', link: '/guide/what-is-mogan' },
                 { text: 'Major Features', link: '/guide/Feature' },
-                { text: 'The Name', link: '/guide/Name' },
             ]
         },
         {
@@ -153,7 +152,6 @@ function sidebarGuideZh() {
             items: [
                 { text: '墨干', link: '/zh/guide/what-is-mogan' },
                 { text: '主要功能', link: '/zh/guide/Feature' },
-                { text: '命名', link: '/zh/guide/Name' },
             ]
         },
         {

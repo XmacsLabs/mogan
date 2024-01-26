@@ -15,5 +15,9 @@ GNU TeXmacs is a structured scientific editing platform developed since the late
 ## The birth of Mogan Editor (2022)
 [Darcy Shen](http://texmacs.org/tmweb/contribute/team-sadhen.en.html) released [Mogan Editor v1.0.0](https://github.com/XmacsLabs/mogan/releases/tag/v1.0.0) on January 30, 2022, based on [Massimiliano Gubinelli](http://texmacs.org/tmweb/contribute/team-massimiliano.en.html)'s [S7 Scheme port](https://lists.gnu.org/archive/html/texmacs-dev/2021-01/msg00009.html), and created Xmacs Labs, a non-profit organization that aims to popularize GNU TeXmacs and make it available for everyone to enjoy exploring science and technology via the excellent software developed by Joris van der Hoeven.
 
+## The Name "Mogan"
+[Darcy Shen](http://texmacs.org/tmweb/contribute/team-sadhen.en.html):
+> Mogan is named after [Mount Mogan](https://en.wikipedia.org/wiki/Mount_Mogan), a famous attraction in my hometown. 墨干(Mogan) literally means "dried ink". The word is derived from 莫干(Mogan) which is a combination of [莫(Mo) and 干(Gan)](https://en.wikipedia.org/wiki/Gan_Jiang_and_Mo_Ye).
+
 ## Repositioned as Mogan STEM Suite (2023)
 Mogan Editor has been renamed and repositioned to Mogan STEM Suite since v1.2.0.
