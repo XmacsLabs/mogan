@@ -10,12 +10,22 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|17|22|2|2|cell-background|pastel
-    green>|<cwith|20|20|2|2|cell-background|>|<cwith|23|28|2|2|cell-background|pastel
+    <tformat|<cwith|18|23|2|2|cell-background|pastel
+    green>|<cwith|21|21|2|2|cell-background|>|<cwith|24|29|2|2|cell-background|pastel
+    green>|<cwith|17|17|2|2|cell-background|pastel
     green>|<cwith|16|16|2|2|cell-background|pastel
     green>|<cwith|15|15|2|2|cell-background|pastel
-    green>|<cwith|14|14|2|2|cell-background|pastel
-    green>|<cwith|4|13|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|5|14|2|2|cell-background|pastel green>|<table|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_29
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Logging for font substituion
+    </cell>>|<row|<\cell>
       Perf
     </cell>|<\cell>
       11_28

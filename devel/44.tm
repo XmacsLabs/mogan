@@ -15,7 +15,8 @@
   translation collision with Block in table
   mode>>|<row|<cell|Chore>|<cell|44_5>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Use
   LIBGIT2_VERSION from libgit2>>|<row|<cell|Chore>|<cell|44_6>|<cell|v1.2.3>|<cell|<value|da>>|<cell|use
-  git-load-blob instead of git show subprocess>>>>>
+  git-load-blob instead of git show subprocess>>|<row|<cell|Chore>|<cell|44_7>|<cell|v1.2.3>|<cell|<value|da>>|<cell|impl
+  glue <scm|git-status-file> and re-impl <scm|buffer-status>>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 

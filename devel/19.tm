@@ -11,11 +11,13 @@
 
   <\wide-tabular>
     <tformat|<cwith|1|1|2|2|cell-valign|b>|<cwith|2|2|1|1|cell-valign|b>|<cwith|3|3|2|2|cell-valign|b>|<cwith|8|8|2|2|cell-background|pastel
-    green>|<cwith|10|10|2|2|cell-background|pastel
+    green>|<cwith|13|13|2|2|cell-background|pastel
     green>|<cwith|9|9|2|2|cell-background|pastel green>|<table|<row|<\cell>
       19_1
     </cell>|<\cell>
       Chore
+    </cell>|<\cell>
+      v1.2.0
     </cell>|<\cell>
       woutersj
     </cell>|<\cell>
@@ -25,6 +27,8 @@
     </cell>|<\cell>
       Feature
     </cell>|<\cell>
+      \;
+    </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       hyphenation patterns as part of the natural language plugin
@@ -32,6 +36,8 @@
       19_3
     </cell>|<\cell>
       Feature
+    </cell>|<\cell>
+      \;
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -41,6 +47,8 @@
     </cell>|<\cell>
       Bug
     </cell>|<\cell>
+      v1.2.0
+    </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       wrong line break of Chinese text in English doc
@@ -49,13 +57,17 @@
     </cell>|<\cell>
       Chore
     </cell>|<\cell>
+      \;
+    </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       Separate tm_locale from locale for migration to lolly
     </cell>>|<row|<\cell>
       19_6
     </cell>|<\cell>
-      Chore
+      Feature
+    </cell>|<\cell>
+      v1.2.3
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -65,13 +77,17 @@
     </cell>|<\cell>
       Chore
     </cell>|<\cell>
+      \;
+    </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       Move language-sensitive styles to language plugins
     </cell>>|<row|<\cell>
       19_8
     </cell>|<\cell>
-      Chore
+      Feature
+    </cell>|<\cell>
+      v1.2.0
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
@@ -79,15 +95,49 @@
     </cell>>|<row|<\cell>
       19_9
     </cell>|<\cell>
-      Chore
+      Feature
+    </cell>|<\cell>
+      v1.2.0
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
       Use language name but not flag
     </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Use language name in <menu|Insert|Language>
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix for interface language in the preferences widgets
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Make preferences version sensitive
+    </cell>>|<row|<\cell>
       19_10
     </cell>|<\cell>
       Chore
+    </cell>|<\cell>
+      v1.2.0
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>

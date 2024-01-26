@@ -8,7 +8,8 @@
   <section|Tasks>
 
   <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|5|7|2|2|cell-background|pastel
-  green>|<cwith|1|1|5|5|cell-hyphen|t>|<table|<row|<cell|Bug>|<cell|43_6>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
+  green>|<cwith|1|1|5|5|cell-hyphen|t>|<cwith|2|2|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Bug>|<cell|43_6>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
     cwith tags are not translated properly when exporting to <LaTeX>
   </cell>>|<row|<cell|Bug>|<cell|<dlink|43_5>>|<cell|v1.2.3>|<cell|<value|da>>|<cell|messy
   encoding when Copy several equations to

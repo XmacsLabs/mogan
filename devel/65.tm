@@ -17,7 +17,9 @@
   6: use startCommand instead of start>>|<row|<cell|Bug>|<cell|<dlink|65_6>>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Qt
   6: Failed to recognize <key|altcmd> and
   <key|extra>>>|<row|<cell|Chore>|<cell|65_7>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Use
-  A-q instead of C-q to make symbol on macOS>>|<row|<cell|Chore>|<cell|65_8>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Fix
+  A-q instead of C-q to make symbol on macOS>>|<row|<cell|>|<cell|>|<cell|>|<cell|v1.2.3>|<cell|Use
+  A-q instead M-q to make symbol on Linux and
+  Windows>>|<row|<cell|Chore>|<cell|65_8>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Fix
   option- shortcuts on macOS>>|<row|<cell|>|<cell|>|<cell|>|<cell|v1.2.1>|<cell|Fix
   bug: press option will input text>>>>>
 

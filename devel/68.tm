@@ -12,12 +12,12 @@
     extract keywords from abstract-data and add them to exported pdf
   </cell>>|<row|<cell|Chore>|<cell|68_7>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Upgrade
   to pdfhummus 4.6.1>>|<row|<cell|Chore>|<cell|68_6>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Use
-  hummus instead gs to get the pdf_version>>|<row|<cell|Chore>|<cell|68_1>|<cell|v1.2.0>|<cell|<value|da>>|<cell|set
-  default_pdf_version to 1.7>>|<row|<cell|Chore>|<cell|68_2>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Seperate
-  pdf_image from pdf_renderer>>|<row|<cell|Bug>|<cell|<dlink|68_3>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Lines
-  in images are missing in exported PDF>>|<row|<cell|Chore>|<cell|68_4>|<cell|v1.2.0>|<cell|Darcy>|<cell|Support
-  for inserting images with pdf suffix>>|<row|<cell|Chore>|<cell|68_5>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Use
-  hummus instead of gs for PDF image conversion>>>>>
+  hummus instead gs to get the pdf_version>>|<row|<cell|Chore>|<cell|68_5>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Use
+  hummus instead of gs for PDF image conversion>>|<row|<cell|Chore>|<cell|68_4>|<cell|v1.2.0>|<cell|Darcy>|<cell|Support
+  for inserting images with pdf suffix>>|<row|<cell|Bug>|<cell|<dlink|68_3>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Lines
+  in images are missing in exported PDF>>|<row|<cell|Chore>|<cell|68_2>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Seperate
+  pdf_image from pdf_renderer>>|<row|<cell|Chore>|<cell|68_1>|<cell|v1.2.0>|<cell|<value|da>>|<cell|set
+  default_pdf_version to 1.7>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 

@@ -17,6 +17,8 @@
     </cell>|<\cell>
       10_1
     </cell>|<\cell>
+      \;
+    </cell>|<\cell>
       tangdouer
     </cell>|<\cell>
       Enable Expand beamer slides for PDF export
@@ -26,6 +28,8 @@
       Feature
     </cell>|<\cell>
       <dlink|10_2>
+    </cell>|<\cell>
+      \;
     </cell>|<\cell>
       pokyux
     </cell>|<\cell>
@@ -37,6 +41,8 @@
     </cell>|<\cell>
       10_3
     </cell>|<\cell>
+      \;
+    </cell>|<\cell>
       Edmond
     </cell>|<\cell>
       Document updates should run three times
@@ -46,6 +52,8 @@
       Chore
     </cell>|<\cell>
       10_4
+    </cell>|<\cell>
+      \;
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -57,6 +65,8 @@
     </cell>|<\cell>
       10_5
     </cell>|<\cell>
+      \;
+    </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       Default to show 20 bibdb entries
@@ -66,6 +76,8 @@
       Chore
     </cell>|<\cell>
       10_6
+    </cell>|<\cell>
+      \;
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -77,6 +89,8 @@
     </cell>|<\cell>
       10_7
     </cell>|<\cell>
+      \;
+    </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       Default to pop-up interactive questions
@@ -86,6 +100,8 @@
       Chore
     </cell>|<\cell>
       10_8
+    </cell>|<\cell>
+      \;
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
@@ -97,6 +113,8 @@
     </cell>|<\cell>
       10_9
     </cell>|<\cell>
+      \;
+    </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       Windows: using Alt instead of Meta
@@ -106,6 +124,8 @@
       Chore
     </cell>|<\cell>
       10_10
+    </cell>|<\cell>
+      \;
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
@@ -117,9 +137,35 @@
     </cell>|<\cell>
       10_11
     </cell>|<\cell>
+      \;
+    </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
       Graphics: show grid by default for Ink Here
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      10_12
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Turn on Margins as on paper by default
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      10_13
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Default to No page numbers
     </cell>|<\cell>
       \;
     </cell>>>>

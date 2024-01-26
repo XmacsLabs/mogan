@@ -24,8 +24,11 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|15|15|1|1|cell-valign|b>|<cwith|14|14|3|3|cell-valign|b>|<cwith|13|13|1|1|cell-background|>|<cwith|14|14|1|1|cell-background|>|<cwith|6|6|1|1|cell-background|>|<cwith|6|6|1|1|cell-hyphen|n>|<cwith|9|9|1|1|cell-background|>|<cwith|4|4|1|1|cell-background|pastel
-    green>|<cwith|2|2|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|20|20|1|1|cell-valign|b>|<cwith|19|19|3|3|cell-valign|b>|<cwith|17|17|1|1|cell-background|>|<cwith|19|19|1|1|cell-background|>|<cwith|6|6|1|1|cell-background|>|<cwith|6|6|1|1|cell-hyphen|n>|<cwith|4|4|1|1|cell-background|pastel
+    green>|<cwith|2|2|1|1|cell-background|pastel
+    green>|<cwith|8|8|1|1|cell-background|pastel
+    green>|<cwith|11|11|1|1|cell-background|pastel
+    green>|<cwith|18|18|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|76>
     </cell>|<\cell>
       <value|da>
@@ -66,6 +69,18 @@
     </cell>|<\cell>
       Improvements on PDF image and conversion
     </cell>>|<row|<\cell>
+      <dlink|65>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Upgrade to Qt 6
+    </cell>>|<row|<\cell>
+      <dlink|61>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Plugin center
+    </cell>>|<row|<\cell>
       <dlink|59>
     </cell>|<\cell>
       Darcy
@@ -96,11 +111,29 @@
     </cell>|<\cell>
       Chinese Dictionary
     </cell>>|<row|<\cell>
+      <dlink|19>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Natual Language Related Issues
+    </cell>>|<row|<\cell>
+      <dlink|16>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Code formatting via <shell|clang-format>
+    </cell>>|<row|<\cell>
       <dlink|11>
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
       Font tuning
+    </cell>>|<row|<\cell>
+      <dlink|10>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Tuning default settings
     </cell>>|<row|<\cell>
       <dlink|7>
     </cell>|<\cell>
