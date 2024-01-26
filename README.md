@@ -3,10 +3,13 @@
 
 > **Let us enjoy exploring science and technology!**
 
-Mogan is a structured STEM suite, and it is libre software delivered by [Xmacs Labs](https://github.com/XmacsLabs).
-+ Mogan Research: one of the distribution of GNU TeXmacs, mainly for writing papers and books
-+ Mogan Code: Structured code editor based on GNU TeXmacs
-+ Mogan Beamer: Beamer-like presentation tool based on GNU TeXmacs
+Mogan is a structured STEM suite delivered by [Xmacs Labs](https://github.com/XmacsLabs) consisting of 3 libre software products:
+
+| Name | What | Status |
+|------|------|--------|
+| Mogan Research | one of the distribution of GNU TeXmacs which is a structured scientific editing platform | stable |
+| Mogan Code | Structured code editor based on the GNU TeXmacs kernel | developing |
+| Mogan Beamer | Beamer-like presentation tool based on the GNU TeXmacs kernel | developing |
 
 ## How to install
 + Download now via [Installation Guide](docs/zh/guide/Install.md)

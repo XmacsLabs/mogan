@@ -35,7 +35,7 @@ xmake build research
 ### 第四步：测试
 见[如何测试](Test.md)。
 
-### 第五步：启动墨砚
+### 第五步：启动墨干
 ``` bash
 xmake run research
 ```
