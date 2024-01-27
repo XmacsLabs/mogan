@@ -20,7 +20,7 @@
 #include "tm_file.hpp"
 
 static string
-gs_system () {
+gs_executable () {
   if (os_mingw () || os_win ()) {
     url gs= url_system ("C:\\") * url_wildcard ("Program Files*") *
             url_system ("gs") * url_wildcard ("gs*") * url_system ("bin") *
@@ -33,10 +33,10 @@ gs_system () {
     }
   }
   else if (os_macos ()) {
-    if (exists ("/opt/homebrew/bin/gs")) {
+    if (exists (url_system ("/opt/homebrew/bin/gs"))) {
       return "/opt/homebrew/bin/gs";
     }
-    if (exists ("/usr/local/bin/gs")) {
+    if (exists (url_system ("/usr/local/bin/gs"))) {
       return "/usr/local/bin/gs";
     }
     return "gs";
@@ -44,12 +44,6 @@ gs_system () {
   else {
     return "gs";
   }
-}
-
-static string
-gs_executable () {
-  static string cmd= gs_system ();
-  return cmd;
 }
 
 string
