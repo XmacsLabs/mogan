@@ -33,11 +33,10 @@ gs_executable () {
     }
   }
   else if (os_macos ()) {
-    if (exists (url_system ("/opt/homebrew/bin/gs"))) {
-      return "/opt/homebrew/bin/gs";
-    }
-    if (exists (url_system ("/usr/local/bin/gs"))) {
-      return "/usr/local/bin/gs";
+    url gs= (url ("/opt/homebrew") | url ("/usr/local")) *
+            url ("Cellar/ghostscript") * url_wildcard ("1*") * url ("bin/gs");
+    if (exists (gs)) {
+      return materialize (gs);
     }
     return "gs";
   }
@@ -276,9 +275,8 @@ gs_PDF_EmbedAllFonts (url image, url pdf) {
 
 bool
 gs_to_png (url image, url png, int w, int h) { // Achtung! w,h in pixels
-  string cmd;
-  if (DEBUG_CONVERT) debug_convert << "gs_to_png using gs" << LF;
-  cmd= gs_prefix ();
+  string cmd= gs_prefix ();
+  if (DEBUG_CONVERT) debug_convert << "gs_to_png using " << cmd << LF;
   cmd << "-dQUIET -dNOPAUSE -dBATCH -dSAFER ";
   cmd << "-sDEVICE=pngalpha -dGraphicsAlphaBits=4 -dTextAlphaBits=4 ";
   cmd << "-g" << as_string (w) << "x" << as_string (h) << " ";
