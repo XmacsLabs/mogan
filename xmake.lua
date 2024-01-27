@@ -237,8 +237,6 @@ set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 add_configfiles("src/System/config.h.xmake", {
     filename = "config.h",
     variables = {
-        GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
-        GS_LIB = "../share/ghostscript/9.06/lib:",
         NOMINMAX = is_plat("windows"),
         MACOSX_EXTENSIONS = is_plat("macosx"),
         SIZEOF_VOID_P = 8,

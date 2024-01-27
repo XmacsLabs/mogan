@@ -29,8 +29,6 @@ function add_target_code()
             USE_FONTCONFIG = is_plat("linux"),
             USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
             USE_PLUGIN_GS = false,
-            GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
-            GS_LIB = "../share/ghostscript/9.06/lib:",
             USE_FREETYPE = true,
             USE_ICONV = true,
             QTTEXMACS = true,
