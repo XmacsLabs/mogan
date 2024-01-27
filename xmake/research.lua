@@ -48,7 +48,6 @@ function add_target_research_on_wasm()
             USE_PLUGIN_GS = not is_plat("wasm"),
             GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
             GS_LIB = "../share/ghostscript/9.06/lib:",
-            GS_EXE = "",
             USE_FREETYPE = true,
             USE_ICONV = true,
             QTTEXMACS = true,

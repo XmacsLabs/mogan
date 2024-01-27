@@ -13,7 +13,6 @@ ${define HAVE_STDINT_H}
 ${define USE_PLUGIN_GS}
 
 #ifdef USE_PLUGIN_GS
-#define GS_EXE "${GS_EXE}"
 #define GS_FONTS "${GS_FONTS}"
 #define GS_LIB "${GS_LIB}"
 #endif

@@ -228,12 +228,6 @@ set_configvar("USE_PLUGIN_SPARKLE", false)
 set_configvar("USE_PLUGIN_HTML", true)
 set_configvar("TM_DYNAMIC_LINKING", false)
 
-if is_plat("mingw", "windows") then
-    set_configvar("GS_EXE", "bin/gs.exe")
-else
-    set_configvar("GS_EXE", "/usr/bin/gs")
-end
-
 if is_plat("macosx") then
     set_configvar("AQUATEXMACS", true)
 end

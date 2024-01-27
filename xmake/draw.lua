@@ -32,7 +32,6 @@ function add_target_draw()
             USE_PLUGIN_GS = false,
             GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
             GS_LIB = "../share/ghostscript/9.06/lib:",
-            GS_EXE = "",
             USE_FREETYPE = true,
             USE_ICONV = true,
             QTTEXMACS = true,
@@ -68,7 +67,6 @@ function add_target_draw()
     add_files(plugin_metafont_srcs)
     add_files(plugin_openssl_srcs)
     add_files(plugin_xml_srcs)
-    add_files(plugin_ghostscript_srcs)
     add_files("src/Mogan/Draw/draw.cpp")
 
     if is_plat("wasm") then
