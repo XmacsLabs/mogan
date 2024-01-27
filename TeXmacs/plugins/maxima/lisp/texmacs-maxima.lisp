@@ -321,7 +321,7 @@
       ;; set necessary options
       (apply '$set_draw_defaults
              (append (get-tm-draw-args options)
-                     (list '((mequal) $terminal $eps_color)
+                     (list '((mequal) $terminal $pdf)
                            (append '((mequal) $file_name) (list tmp-name)))))
       ;; create a PDF file
       (setq ret (meval1 (cons '$errcatch (list (cons fun (get-tm-draw-args args))))))
