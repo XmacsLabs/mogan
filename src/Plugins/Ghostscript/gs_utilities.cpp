@@ -9,10 +9,10 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "gs_utilities.hpp"
 #include "Pdf/pdf.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
-#include "gs_utilities.hpp"
 #include "image_files.hpp"
 #include "lolly/system/subprocess.hpp"
 #include "scheme.hpp"
@@ -31,7 +31,8 @@ gs_system () {
     else {
       return "gs.exe";
     }
-  } else if (os_macos ()) {
+  }
+  else if (os_macos ()) {
     if (exists ("/opt/homebrew/bin/gs")) {
       return "/opt/homebrew/bin/gs";
     }
@@ -39,7 +40,8 @@ gs_system () {
       return "/usr/local/bin/gs";
     }
     return "gs";
-  } else {
+  }
+  else {
     return "gs";
   }
 }
