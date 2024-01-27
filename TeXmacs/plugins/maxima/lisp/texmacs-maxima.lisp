@@ -181,12 +181,6 @@
            (if pname (delete-file pname))
            (setq p-path path)))))
 
-;; create an inline figure, based on raw PDF code
-(defun tm-out (raw_data)
- (let ((beg (string (code-char 2)))
-        (end (string (code-char 5))))
-   (concatenate 'string beg "pdf:" raw_data end)))
-
 ;; create an inline figure, based on a .pdf filename
 (defmfun $pdf_out (filename)
   ;; wait for the completion of the PDF file
