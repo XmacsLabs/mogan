@@ -228,12 +228,6 @@ set_configvar("USE_PLUGIN_SPARKLE", false)
 set_configvar("USE_PLUGIN_HTML", true)
 set_configvar("TM_DYNAMIC_LINKING", false)
 
-if is_plat("mingw", "windows") then
-    set_configvar("GS_EXE", "bin/gs.exe")
-else
-    set_configvar("GS_EXE", "/usr/bin/gs")
-end
-
 if is_plat("macosx") then
     set_configvar("AQUATEXMACS", true)
 end
@@ -243,8 +237,6 @@ set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 add_configfiles("src/System/config.h.xmake", {
     filename = "config.h",
     variables = {
-        GS_FONTS = "../share/ghostscript/fonts:/usr/share/fonts:",
-        GS_LIB = "../share/ghostscript/9.06/lib:",
         NOMINMAX = is_plat("windows"),
         MACOSX_EXTENSIONS = is_plat("macosx"),
         SIZEOF_VOID_P = 8,
