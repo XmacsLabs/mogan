@@ -11,5 +11,6 @@
 
 ### macOS
 使用`brew install ghostscript`安装。
+
 ### Linux
 使用`sudo apt install ghostscript`等方式安装。
