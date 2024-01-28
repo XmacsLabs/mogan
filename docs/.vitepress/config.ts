@@ -108,6 +108,32 @@ function sidebarGuide() {
             ]
         },
         {
+            text: 'Plugins',
+            collapsible: true,
+            items: [
+                {
+                    text: 'Introduction to Plugins',
+                    link: '/guide/Plugins.md'
+                },
+                {
+                    text: 'PDF Image plugin',
+                    link: '/guide/Plugin_Image_PDF.md'
+                },
+                {
+                    text: 'Maxima Session plugin',
+                    link: '/guide/Plugin_Session_Maxima.md'
+                },
+                {
+                    text: 'Octave Session plugin',
+                    link: '/guide/Plugin_Session_Octave.md'
+                },
+                {
+                    text: 'PDF Data plugin',
+                    link: '/guide/Plugin_Data_PDF.md'
+                },
+            ]
+        },
+        {
             text: 'ChangeLog',
             collapsible: false,
             items: [
