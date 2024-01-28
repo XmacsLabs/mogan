@@ -19,15 +19,6 @@ ${define HAVE_STDINT_H}
 
 ${define USE_PLUGIN_GS}
 
-#ifdef USE_PLUGIN_GS
-#define GS_EXE "${GS_EXE}"
-#define GS_FONTS "${GS_FONTS}"
-#define GS_LIB "${GS_LIB}"
-#endif
-
-/* Define to 1 if the system has the type `FILE'. */
-${define HAVE_FILE}
-
 /* Define to 1 if you have the <inttypes.h> header file. */
 ${define HAVE_INTTYPES_H}
 

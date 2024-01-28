@@ -9,65 +9,40 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "tm_configure.hpp"
-#ifdef USE_PLUGIN_GS
-
+#include "gs_utilities.hpp"
 #include "Pdf/pdf.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
-#include "gs_utilities.hpp"
 #include "image_files.hpp"
 #include "lolly/system/subprocess.hpp"
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 
-string
-gs_system () {
-#if defined(OS_MINGW) || defined(OS_WIN)
-  url gs= url_system ("C:\\") * url_wildcard ("Program Files*") *
-          url_system ("gs") * url_wildcard ("gs*") * url_system ("bin") *
-          url_wildcard ("gswin*c.exe");
-  if (exists (gs)) {
-    return materialize (gs);
-  }
-  else {
-    return "gs.exe";
-  }
-#else
-  return "gs";
-#endif
-}
-
-#ifdef GS_EXE
-string
-gs_embedded () {
-  string cmd; // no need to resolve each time
-
-  url tmp= url_system (get_env ("TEXMACS_PATH"));
-  url gs = tmp * url_system (GS_EXE);
-
-  if (exists (gs)) {
-    cmd= concretize (gs);
-  }
-  else {
-    cmd= gs_system ();
-  }
-  return cmd;
-}
-#endif
-
 static string
 gs_executable () {
-#ifdef GS_EXE
-  static string cmd;
-  if (N (cmd) == 0)
-    cmd= gs_embedded (); // init had to be postponed because of TEXMACS_PATH
-                         // initialization
-#else
-  static string cmd= gs_system ();
-#endif
-  return cmd;
+  if (os_mingw () || os_win ()) {
+    url gs= url_system ("C:\\") * url_wildcard ("Program Files*") *
+            url_system ("gs") * url_wildcard ("gs*") * url_system ("bin") *
+            url_wildcard ("gswin*c.exe");
+    if (exists (gs)) {
+      return materialize (gs);
+    }
+    else {
+      return "gs.exe";
+    }
+  }
+  else if (os_macos ()) {
+    url gs= (url ("/opt/homebrew") | url ("/usr/local")) *
+            url ("Cellar/ghostscript") * url_wildcard ("1*") * url ("bin/gs");
+    if (exists (gs)) {
+      return materialize (gs);
+    }
+    return "gs";
+  }
+  else {
+    return "gs";
+  }
 }
 
 string
@@ -300,9 +275,8 @@ gs_PDF_EmbedAllFonts (url image, url pdf) {
 
 bool
 gs_to_png (url image, url png, int w, int h) { // Achtung! w,h in pixels
-  string cmd;
-  if (DEBUG_CONVERT) debug_convert << "gs_to_png using gs" << LF;
-  cmd= gs_prefix ();
+  string cmd= gs_prefix ();
+  if (DEBUG_CONVERT) debug_convert << "gs_to_png using " << cmd << LF;
   cmd << "-dQUIET -dNOPAUSE -dBATCH -dSAFER ";
   cmd << "-sDEVICE=pngalpha -dGraphicsAlphaBits=4 -dTextAlphaBits=4 ";
   cmd << "-g" << as_string (w) << "x" << as_string (h) << " ";
@@ -509,4 +483,3 @@ gs_check (url doc) {
   }
   return true;
 }
-#endif
