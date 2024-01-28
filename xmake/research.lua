@@ -207,7 +207,7 @@ function add_xpack_research(XMACS_VERSION)
     set_specvar("PACKAGE_SHORTCUT_NAME", "Mogan Research")
     _, pos = string.find(XMACS_VERSION, "-")
     local XMACS_VERSION_XYZ= XMACS_VERSION
-    if not pos == nil then
+    if not (pos == nil) then
         XMACS_VERSION_XYZ= string.sub(XMACS_VERSION, 1, pos-1)
     end
     set_version(XMACS_VERSION_XYZ)
