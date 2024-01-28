@@ -397,7 +397,7 @@
 
 (tm-widget (font-family-selector)
   (vertical
-    (bold (text "Family"))
+    (bold (text "Font family"))
     ===
     (resize "300px" "350px"
       (scrollable
