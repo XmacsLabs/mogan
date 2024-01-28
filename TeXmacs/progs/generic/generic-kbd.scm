@@ -451,8 +451,6 @@
   ("gnome c" (kbd-copy))
   ("gnome v" (kbd-paste))
   ("gnome x" (kbd-cut))
-  ("A-left" (cursor-history-backward))
-  ("A-right" (cursor-history-forward))
 
   ("search F3" (search-next-match #t))
   ("search S-F3" (search-next-match #f))
@@ -475,6 +473,9 @@
   ("altcmd x" (interactive footer-eval))
   ("A-x" (interactive exec-interactive-command))
   ("altcmd $" (interactive-spell))
+
+  ("C-P" (toggle-preamble-mode))
+  ("C-O" (toggle-source-mode))
 
   ("structured:cmd left" (kbd-select-if-active traverse-left))
   ("structured:cmd right" (kbd-select-if-active traverse-right))
