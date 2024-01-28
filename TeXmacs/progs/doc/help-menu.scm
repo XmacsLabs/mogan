@@ -19,15 +19,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (plugin-documented? name)
-  (and (url-exists-in-help? (string-append name ".en.tm"))
-       (url-exists-in-help? (string-append name "-abstract.en.tm"))))
+  (url-exists-in-help? (string-append name ".en.tm")))
 
 (tm-menu (help-plugins-menu)
   (for (name (list-filter (map symbol->string (plugin-list))
                           plugin-documented?))
     (with menu-name `(verbatim ,(session-name name))
       ((eval menu-name)
-       (load-help-article (string-append name))))))
+       (load-local-plugin-doc name)))))
 
 (menu-bind help-menu
   (when (url-exists-in-help? "about/welcome/new-welcome.en.tm")

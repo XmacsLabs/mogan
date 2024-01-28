@@ -79,5 +79,52 @@
 (tm-define (load-help-online s)
   (load-help-buffer (url-append "https://www.texmacs.org/tmbrowse" s)))
 
-(tm-define (update-help-online)
-  (system "cd $TEXMACS_HOME_PATH; wget ftp://ftp.texmacs.org/pub/TeXmacs/doc/TeXmacs-doc.tar.gz -O TeXmacs-doc.tar.gz; gunzip TeXmacs-doc.tar.gz; tar -xvf TeXmacs-doc.tar; rm -f TeXmacs-doc.tar"))
+
+(define (get-remote-welcome-url)
+  (if (== (get-output-language) "chinese")
+      "http://git.tmml.wiki/XmacsLabs/planet/raw/main/doc/welcome.zh.tm"
+	  "http://git.tmml.wiki/XmacsLabs/planet/raw/main/doc/welcome.en.tm"))
+
+(define (load-remote-welcome)
+  (load-buffer (get-remote-welcome-url)))
+
+(define (get-remote-planet-url)
+  "http://git.tmml.wiki/XmacsLabs/planet/raw/main/index.tm")
+
+(define (load-remote-planet)
+  (load-buffer (get-remote-planet-url)))
+
+(tm-define (mogan-welcome)
+  (load-help-article "about/mogan/research"))
+
+(tm-define (xmacs-planet)
+  (if (url-exists? (get-remote-planet-url))
+      (load-remote-planet)
+      (load-help-article "about/welcome/new-welcome")))
+
+(tm-define (load-remote-doc path)
+  (let* ((lan (string-take (language-to-locale (get-output-language)) 2))
+         (lan_doc (string-append "http://git.tmml.wiki/texmacs/doc/raw/master/" path "." lan ".tm"))
+         (en_doc (string-append "http://git.tmml.wiki/texmacs/doc/raw/master/" path ".en.tm")))
+   (if (== (http-status-code lan_doc) 200)
+       (load-buffer lan_doc)
+       (load-buffer en_doc))))
+
+(tm-define (load-local-plugin-doc name)
+  (let* ((local_plugin_path (system->url "$TEXMACS_HOME_PATH"))
+         (plugin_path (system->url "$TEXMACS_PATH"))
+         (lan (string-take (language-to-locale (get-output-language)) 2))
+         (path (string-append "plugins/" name "/doc/" name))
+         (lan_doc
+          (url-append plugin_path (string->url (string-append path "." lan ".tm"))))
+         (local_lan_doc
+          (url-append local_plugin_path (string->url (string-append path "." lan ".tm"))))
+         (en_doc
+          (url-append plugin_path (string->url (string-append path ".en.tm"))))
+         (local_en_doc
+          (url-append local_plugin_path (string->url (string-append path ".en.tm")))))
+   (cond
+    ((url-exists? local_lan_doc) (load-buffer local_lan_doc))
+    ((url-exists? lan_doc) (load-buffer lan_doc))
+    ((url-exists? local_en_doc) (load-buffer local_en_doc))
+    (else (load-buffer en_doc)))))
