@@ -87,7 +87,7 @@
   ("cutto" "std X")
   ("structured:cmd" "C-")
   ("structured:move" "M-A-")
-  ("structured:insert" "M-")
+  ("structured:insert" "A-")
   ("structured:geometry" "M-C-"))
 
 (kbd-wildcards
