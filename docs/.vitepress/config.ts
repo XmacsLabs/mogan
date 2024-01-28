@@ -201,10 +201,9 @@ function sidebarGuideZh() {
                 {
                     text: 'PDF数据插件',
                     link: '/zh/guide/Plugin_Data_PDF.md'
-                }
+                },
             ]
-
-        }
+        },
         {
             text: '变更记录',
             collapsible: true,
