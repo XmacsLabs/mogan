@@ -150,7 +150,7 @@
    ((or (os-win32?) (os-mingw?)) "windows")
    ((== (xdg-dekstop-session) "kde") "kde")
    ((== (xdg-dekstop-session) "deepin") "kde")
-   ((== (xdg-dekstop-session) "GNOME") "gnome")
+   ((== (xdg-dekstop-session) "gnome") "gnome")
    (else "emacs")))
 
 (define-public (look-and-feel)
