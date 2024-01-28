@@ -174,16 +174,16 @@
     (assuming (and (not (string-ends? s "fns"))
                    (not (string-starts? s "0fn")))
       ---
-      ("Compact" (make 'compact))
-      ("Compressed" (make 'compressed))
-      ("Amplified" (make 'amplified))))
+      ("Compact vertical space" (make 'compact))
+      ("Compressed vertical space" (make 'compressed))
+      ("Amplified vertical space" (make 'amplified))))
   ---
-  ("Padded" (make 'padded))
-  ("Overlined" (make 'overlined))
-  ("Underlined" (make 'underlined))
-  ("Lines around" (make 'bothlined))
-  ("Framed" (make 'framed))
-  ("Ornamented" (make 'ornamented))
+  ("Padded block" (make 'padded))
+  ("Overlined block" (make 'overlined))
+  ("Underlined block" (make 'underlined))
+  ("Lines around block" (make 'bothlined))
+  ("Framed block" (make 'framed))
+  ("Ornamented block" (make 'ornamented))
   ---
   (-> "Material"
       ("Manila paper" (make* 'manila-paper "ornaments"))
