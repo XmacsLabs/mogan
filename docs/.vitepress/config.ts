@@ -179,6 +179,33 @@ function sidebarGuideZh() {
             ]
         },
         {
+            text: '插件',
+            collapsible: true,
+            items: [
+                {
+                    text: '插件概述',
+                    link: '/zh/guide/Plugins.md'
+                },
+                {
+                    text: 'PDF图像插件',
+                    link: '/zh/guide/Plugin_Image_PDF.md'
+                },
+                {
+                    text: 'Maxima会话插件',
+                    link: '/zh/guide/Plugin_Session_Maxima.md'
+                },
+                {
+                    text: 'Octave会话插件',
+                    link: '/zh/guide/Plugin_Session_Octave.md'
+                },
+                {
+                    text: 'PDF数据插件',
+                    link: '/zh/guide/Plugin_Data_PDF.md'
+                }
+            ]
+
+        }
+        {
             text: '变更记录',
             collapsible: true,
             items: [
