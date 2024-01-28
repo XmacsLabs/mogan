@@ -488,7 +488,7 @@
 
 (tm-widget (font-family-selector specs)
   (vertical
-    (bold (text "Family"))
+    (bold (text "Font family"))
     ===
     (dynamic (font-family-selector* specs))))
 
