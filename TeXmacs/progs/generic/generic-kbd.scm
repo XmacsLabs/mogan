@@ -476,6 +476,9 @@
   ("A-x" (interactive exec-interactive-command))
   ("altcmd $" (interactive-spell))
 
+  ("C-P" (toggle-preamble-mode))
+  ("C-O" (toggle-source-mode))
+
   ("structured:cmd left" (kbd-select-if-active traverse-left))
   ("structured:cmd right" (kbd-select-if-active traverse-right))
 
