@@ -16,7 +16,9 @@
 #include <signal.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#ifndef OS_WIN
 #include <unistd.h>
+#endif
 #ifdef STACK_SIZE
 #include <sys/resource.h>
 #endif
