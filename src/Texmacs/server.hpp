@@ -20,6 +20,7 @@
 #include "new_data.hpp"
 #include "scheme.hpp"
 #include "url.hpp"
+#include "widget.hpp"
 
 class editor;
 

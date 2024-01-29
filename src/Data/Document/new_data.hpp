@@ -14,6 +14,7 @@
 #define NEW_DATA_H
 #include "hashmap.hpp"
 #include "tree.hpp"
+#include "tree_helper.hpp"
 
 class new_data;
 class new_data_rep : public concrete_struct {
