@@ -1,75 +1,97 @@
 
 /******************************************************************************
-* MODULE     : line_item.cpp
-* DESCRIPTION: Control routines for typesetting paragraphs
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : line_item.cpp
+ * DESCRIPTION: Control routines for typesetting paragraphs
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "formatter.hpp"
 #include "Format/line_item.hpp"
+#include "formatter.hpp"
 
 /*****************************************************************************/
 // Routines for the line item class
 /*****************************************************************************/
 
-line_item_rep::line_item_rep (int ty2, int ot2, box b2, int pen2):
-  type (ty2), op_type (ot2), b (b2),
-  spc (0), penalty (pen2), limits (false)
-    { TM_DEBUG(line_item_count++); }
-line_item_rep::line_item_rep (int ty2, int ot2, box b2, int pen2, language l2):
-  type (ty2), op_type (ot2), b (b2),
-  spc (0), penalty (pen2), limits (false),
-  lan (l2) { TM_DEBUG(line_item_count++); }
-line_item_rep::line_item_rep (int ty2, int ot2, box b2, int pen2, tree t2):
-  type (ty2), op_type (ot2), b (b2),
-  spc (0), penalty (pen2), limits (false), t (t2)
-    { TM_DEBUG(line_item_count++); }
-line_item_rep::~line_item_rep () {
-  TM_DEBUG(line_item_count--); }
-line_item::line_item (int type, int ot_type, box b, int penalty):
-  rep (tm_new<line_item_rep> (type, ot_type, b, penalty)) {}
-line_item::line_item (int type, int ot_type, box b, int penalty, language lan):
-  rep (tm_new<line_item_rep> (type, ot_type, b, penalty, lan)) {}
-line_item::line_item (int type, int ot_type, box b, int penalty, tree t):
-  rep (tm_new<line_item_rep> (type, ot_type, b, penalty, t)) {}
-bool line_item::operator == (line_item item2) { return rep == item2.rep; }
-bool line_item::operator != (line_item item2) { return rep != item2.rep; }
+line_item_rep::line_item_rep (int ty2, int ot2, box b2, int pen2)
+    : type (ty2), op_type (ot2), b (b2), spc (0), penalty (pen2),
+      limits (false) {
+  TM_DEBUG (line_item_count++);
+}
+line_item_rep::line_item_rep (int ty2, int ot2, box b2, int pen2, language l2)
+    : type (ty2), op_type (ot2), b (b2), spc (0), penalty (pen2),
+      limits (false), lan (l2) {
+  TM_DEBUG (line_item_count++);
+}
+line_item_rep::line_item_rep (int ty2, int ot2, box b2, int pen2, tree t2)
+    : type (ty2), op_type (ot2), b (b2), spc (0), penalty (pen2),
+      limits (false), t (t2) {
+  TM_DEBUG (line_item_count++);
+}
+line_item_rep::~line_item_rep () { TM_DEBUG (line_item_count--); }
+line_item::line_item (int type, int ot_type, box b, int penalty)
+    : rep (tm_new<line_item_rep> (type, ot_type, b, penalty)) {}
+line_item::line_item (int type, int ot_type, box b, int penalty, language lan)
+    : rep (tm_new<line_item_rep> (type, ot_type, b, penalty, lan)) {}
+line_item::line_item (int type, int ot_type, box b, int penalty, tree t)
+    : rep (tm_new<line_item_rep> (type, ot_type, b, penalty, t)) {}
+bool
+line_item::operator== (line_item item2) {
+  return rep == item2.rep;
+}
+bool
+line_item::operator!= (line_item item2) {
+  return rep != item2.rep;
+}
 
 tm_ostream&
-operator << (tm_ostream& out, line_item item) {
+operator<< (tm_ostream& out, line_item item) {
   switch (item->type) {
-  case OBSOLETE_ITEM: return out << "obsolete";
-  case STD_ITEM: return out << "std";
-  case MARKER_ITEM: return out << "marker";
-  case STRING_ITEM: return out << cork_to_utf8 (item->b->get_leaf_string ());
+  case OBSOLETE_ITEM:
+    return out << "obsolete";
+  case STD_ITEM:
+    return out << "std";
+  case MARKER_ITEM:
+    return out << "marker";
+  case STRING_ITEM:
+    return out << cork_to_utf8 (item->b->get_leaf_string ());
   case LEFT_BRACKET_ITEM:
     return out << "left" << cork_to_utf8 (item->b->get_leaf_string ());
   case MIDDLE_BRACKET_ITEM:
     return out << "middle" << cork_to_utf8 (item->b->get_leaf_string ());
   case RIGHT_BRACKET_ITEM:
     return out << "right" << cork_to_utf8 (item->b->get_leaf_string ());
-  case CONTROL_ITEM: return out << "control (" << item->t << ")";
+  case CONTROL_ITEM:
+    return out << "control (" << item->t << ")";
   case FLOAT_ITEM:
     return out << "float (" << item->b->get_leaf_lazy () << ")";
   case NOTE_LINE_ITEM:
-    return out << "line_note (" << item->b->get_leaf_box ()
-               << ", " << item->t << ")";
+    return out << "line_note (" << item->b->get_leaf_box () << ", " << item->t
+               << ")";
   case NOTE_PAGE_ITEM:
-    return out << "page_note (" << item->b->get_leaf_box ()
-               << ", " << item->t << ")";
-  case LSUB_ITEM: return out << "lsub";
-  case LSUP_ITEM: return out << "lsup";
-  case RSUB_ITEM: return out << "rsub";
-  case RSUP_ITEM: return out << "rsup";
-  case GLUE_LEFT_ITEM: return out << "glue-left";
-  case GLUE_RIGHT_ITEM: return out << "glue-right";
-  case GLUE_BOTH_ITEM: return out << "glue-both";
-  case GLUE_LSUBS_ITEM: return out << "glue-lsubs";
-  case GLUE_RSUBS_ITEM: return out << "glue-rsubs";
+    return out << "page_note (" << item->b->get_leaf_box () << ", " << item->t
+               << ")";
+  case LSUB_ITEM:
+    return out << "lsub";
+  case LSUP_ITEM:
+    return out << "lsup";
+  case RSUB_ITEM:
+    return out << "rsub";
+  case RSUP_ITEM:
+    return out << "rsup";
+  case GLUE_LEFT_ITEM:
+    return out << "glue-left";
+  case GLUE_RIGHT_ITEM:
+    return out << "glue-right";
+  case GLUE_BOTH_ITEM:
+    return out << "glue-both";
+  case GLUE_LSUBS_ITEM:
+    return out << "glue-lsubs";
+  case GLUE_RSUBS_ITEM:
+    return out << "glue-rsubs";
   }
   return out << "unknown";
 }

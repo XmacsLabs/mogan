@@ -1,74 +1,74 @@
 
 /******************************************************************************
-* MODULE     : printer.hpp
-* DESCRIPTION: Windows under X
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : printer.hpp
+ * DESCRIPTION: Windows under X
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef PRINTER_H
 #define PRINTER_H
-#include "renderer.hpp"
 #include "hashmap.hpp"
+#include "renderer.hpp"
 #include "url.hpp"
 
-class printer_rep: public renderer_rep {
-  url      ps_file_name;
-  int      dpi;
-  int      nr_pages;
-  string   page_type;
-  bool     landscape;
-  double   paper_w;
-  double   paper_h;
-  int      psw;
-  int      psh;
-  bool     use_alpha;
-  string   prologue;
-  string   body;
-  int      cur_page;
-  int      linelen;
+class printer_rep : public renderer_rep {
+  url    ps_file_name;
+  int    dpi;
+  int    nr_pages;
+  string page_type;
+  bool   landscape;
+  double paper_w;
+  double paper_h;
+  int    psw;
+  int    psh;
+  bool   use_alpha;
+  string prologue;
+  string body;
+  int    cur_page;
+  int    linelen;
 
-  color    fg, bg;
-  int      opacity;
-  pencil   pen;
-  brush    bgb;
-  int      ncols;
-  SI       lw;
-  int      nwidths;
-  string   cfn;
-  int      nfonts;
-  SI       xpos, ypos;
-  bool     tex_flag;
-  tree     toc;
+  color  fg, bg;
+  int    opacity;
+  pencil pen;
+  brush  bgb;
+  int    ncols;
+  SI     lw;
+  int    nwidths;
+  string cfn;
+  int    nfonts;
+  SI     xpos, ypos;
+  bool   tex_flag;
+  tree   toc;
 
-  hashmap<string,string> defs;
-  hashmap<string,string> tex_chars;
-  hashmap<string,string> tex_width;
-  hashmap<string,string> tex_fonts;
-  hashmap<string,array<int> > tex_font_chars;
-  hashmap<string,string> metadata;
+  hashmap<string, string>     defs;
+  hashmap<string, string>     tex_chars;
+  hashmap<string, string>     tex_width;
+  hashmap<string, string>     tex_fonts;
+  hashmap<string, array<int>> tex_font_chars;
+  hashmap<string, string>     metadata;
 
 public:
-  printer_rep (url ps_file_name, int dpi, int nr_pages,
-	       string ptype, bool landsc, double paper_w, double paper_h);
+  printer_rep (url ps_file_name, int dpi, int nr_pages, string ptype,
+               bool landsc, double paper_w, double paper_h);
   ~printer_rep ();
   bool is_printer ();
   void next_page ();
 
   /*********************** subroutines for printing **************************/
 
-  void define (string comm, string defn);
-  void sep ();
-  void cr ();
-  void print (string s);
-  void print (SI x, SI y);
-  void move_to (SI x, SI y);
+  void   define (string comm, string defn);
+  void   sep ();
+  void   cr ();
+  void   print (string s);
+  void   print (SI x, SI y);
+  void   move_to (SI x, SI y);
   string define_alpha (int a);
-  void select_color (color c);
-  void select_line_width (SI w);
+  void   select_color (color c);
+  void   select_line_width (SI w);
 
   /********************* subroutines for drawing text ************************/
 
@@ -103,7 +103,7 @@ public:
   void   fill (SI x1, SI y1, SI x2, SI y2);
   void   arc (SI x1, SI y1, SI x2, SI y2, int alpha, int delta);
   void   fill_arc (SI x1, SI y1, SI x2, SI y2, int alpha, int delta);
-  void   polygon (array<SI> x, array<SI> y, bool convex=true);
+  void   polygon (array<SI> x, array<SI> y, bool convex= true);
 
   void fetch (SI x1, SI y1, SI x2, SI y2, renderer ren, SI x, SI y);
   void new_shadow (renderer& ren);
@@ -113,14 +113,14 @@ public:
   void apply_shadow (SI x1, SI y1, SI x2, SI y2);
 
   renderer shadow (picture& pic, SI x1, SI y1, SI x2, SI y2);
-  void draw_picture (picture p, SI x, SI y, int alpha);
-  void draw_scalable (scalable im, SI x, SI y, int alpha);
-  void image (string name, string eps, SI x1, SI y1, SI x2, SI y2,
-              SI w, SI h, SI x, SI y, int alpha);
+  void     draw_picture (picture p, SI x, SI y, int alpha);
+  void     draw_scalable (scalable im, SI x, SI y, int alpha);
+  void image (string name, string eps, SI x1, SI y1, SI x2, SI y2, SI w, SI h,
+              SI x, SI y, int alpha);
 };
 
 renderer printer (url ps_file_name, int dpi, int nr_pages= 1,
-		  string page_type= "a4", bool landscape= false,
-		  double paper_w= 21.0, double paper_h= 29.7);
+                  string page_type= "a4", bool landscape= false,
+                  double paper_w= 21.0, double paper_h= 29.7);
 
 #endif // defined PRINTER_H

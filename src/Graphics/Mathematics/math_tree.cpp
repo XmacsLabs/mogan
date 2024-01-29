@@ -1,20 +1,20 @@
 
 /******************************************************************************
-* MODULE     : math_tree.cpp
-* DESCRIPTION: trees as mathematical expressions
-* COPYRIGHT  : (C) 2006  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : math_tree.cpp
+ * DESCRIPTION: trees as mathematical expressions
+ * COPYRIGHT  : (C) 2006  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "tree_helper.hpp"
 #include "math_tree.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
-* Mathematical functions on trees
-******************************************************************************/
+ * Mathematical functions on trees
+ ******************************************************************************/
 
 tree
 neg (tree t) {
@@ -106,8 +106,8 @@ tan (tree t) {
 }
 
 /******************************************************************************
-* Pretty printing
-******************************************************************************/
+ * Pretty printing
+ ******************************************************************************/
 
 static void
 math_print (string& s, tree t, int level) {
@@ -147,19 +147,18 @@ math_print (string& s, tree t, int level) {
     s << "]";
   }
   else if (is_func (t, PLUS, 2) || is_func (t, MINUS, 2) ||
-	   is_func (t, TIMES, 2) || is_func (t, OVER, 2) ||
-	   is_func (t, POW, 2) || is_func (t, MINUS, 1) ||
-	   is_func (t, RSUB, 2))
-    {
-      s << "(";
-      math_print (s, t, 0);
-      s << ")";
-    }
+           is_func (t, TIMES, 2) || is_func (t, OVER, 2) ||
+           is_func (t, POW, 2) || is_func (t, MINUS, 1) ||
+           is_func (t, RSUB, 2)) {
+    s << "(";
+    math_print (s, t, 0);
+    s << ")";
+  }
   else if (is_atomic (t)) s << t->label;
   else if (is_tuple (t)) {
-    int i, n= N(t);
+    int i, n= N (t);
     s << "[ ";
-    for (i=0; i<n; i++) {
+    for (i= 0; i < n; i++) {
       if (i != 0) s << ", ";
       math_print (s, t[i], 0);
     }
@@ -167,10 +166,10 @@ math_print (string& s, tree t, int level) {
     s << "]";
   }
   else {
-    int i, n= N(t);
-    if (L(t) == MATH_SQRT) s << "sqrt (";
-    else s << as_string (L(t)) << " (";
-    for (i=0; i<n; i++) {
+    int i, n= N (t);
+    if (L (t) == MATH_SQRT) s << "sqrt (";
+    else s << as_string (L (t)) << " (";
+    for (i= 0; i < n; i++) {
       if (i != 0) s << ", ";
       math_print (s, t[i], 0);
     }

@@ -1,107 +1,104 @@
 
 /******************************************************************************
-* MODULE     : brush.cpp
-* DESCRIPTION: brushes for painting
-* COPYRIGHT  : (C) 2013  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : brush.cpp
+ * DESCRIPTION: brushes for painting
+ * COPYRIGHT  : (C) 2013  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "renderer.hpp"
-#include "image_files.hpp"
-#include "true_color.hpp"
-#include "tm_url.hpp"
-#include "file.hpp"
 #include "colors.hpp"
+#include "file.hpp"
+#include "image_files.hpp"
+#include "renderer.hpp"
+#include "tm_url.hpp"
 #include "tree_analyze.hpp"
+#include "true_color.hpp"
 
 #if not defined(KERNEL_L3)
 url get_current_buffer_safe ();
 #endif
 
 /******************************************************************************
-* Equality
-******************************************************************************/
+ * Equality
+ ******************************************************************************/
 
 bool
-operator == (const brush& a, const brush& b) {
+operator== (const brush& a, const brush& b) {
   brush_rep* ar= (brush_rep*) a.rep;
   brush_rep* br= (brush_rep*) b.rep;
-  return
-    ar->get_type () == br->get_type () &&
-    ar->get_color () == br->get_color () &&
-    ar->get_pattern () == br->get_pattern () &&
-    ar->get_alpha () == br->get_alpha ();
+  return ar->get_type () == br->get_type () &&
+         ar->get_color () == br->get_color () &&
+         ar->get_pattern () == br->get_pattern () &&
+         ar->get_alpha () == br->get_alpha ();
 }
 
 /******************************************************************************
-* No brush
-******************************************************************************/
+ * No brush
+ ******************************************************************************/
 
-class no_brush_rep: public brush_rep {
+class no_brush_rep : public brush_rep {
 public:
   no_brush_rep () {}
 
   brush_kind get_type () { return brush_none; }
-  void* get_handle () { return (void*) this; }
+  void*      get_handle () { return (void*) this; }
 
   color get_color () { return rgb_color (0, 0, 0, 0); }
-  tree get_pattern () { return ""; }
-  int get_alpha () { return 0; }
+  tree  get_pattern () { return ""; }
+  int   get_alpha () { return 0; }
 };
 
 /******************************************************************************
-* Monochrome brushes
-******************************************************************************/
+ * Monochrome brushes
+ ******************************************************************************/
 
-class color_brush_rep: public brush_rep {
+class color_brush_rep : public brush_rep {
   color c;
 
 public:
-  color_brush_rep (color c2): c (c2) {}
+  color_brush_rep (color c2) : c (c2) {}
 
   brush_kind get_type () { return brush_color; }
-  void* get_handle () { return (void*) this; }
+  void*      get_handle () { return (void*) this; }
 
   color get_color () { return c; }
-  tree get_pattern () { return ""; }
-  int get_alpha () { return 255; }
+  tree  get_pattern () { return ""; }
+  int   get_alpha () { return 255; }
 };
 
 /******************************************************************************
-* Patterns
-******************************************************************************/
+ * Patterns
+ ******************************************************************************/
 
-class pattern_brush_rep: public brush_rep {
+class pattern_brush_rep : public brush_rep {
   color c;
-  tree pattern;
-  int alpha;
+  tree  pattern;
+  int   alpha;
 
 public:
-  pattern_brush_rep (color c2, tree p, int a):
-    c (c2), pattern (p), alpha (a) {}
+  pattern_brush_rep (color c2, tree p, int a)
+      : c (c2), pattern (p), alpha (a) {}
 
   brush_kind get_type () { return brush_pattern; }
-  void* get_handle () { return (void*) this; }
+  void*      get_handle () { return (void*) this; }
 
   color get_color () { return c; }
-  tree get_pattern () { return pattern; }
-  int get_alpha () { return alpha; }
+  tree  get_pattern () { return pattern; }
+  int   get_alpha () { return alpha; }
 };
 
 url
 resolve_pattern (url im) {
-  url pats= expand (url ("$TEXMACS_PATTERN_PATH"));
+  url pats = expand (url ("$TEXMACS_PATTERN_PATH"));
   url image= resolve (im);
   if (is_none (image)) {
     if (!is_rooted (im)) image= resolve (pats * im);
     pats= subdirectories (pats);
-    if (!is_rooted (im) && is_none (image))
-      image= resolve (pats * im);
-    if (is_none (image))
-      image= resolve (pats * tail (im));
+    if (!is_rooted (im) && is_none (image)) image= resolve (pats * im);
+    if (is_none (image)) image= resolve (pats * tail (im));
   }
   return image;
 }
@@ -109,7 +106,7 @@ resolve_pattern (url im) {
 url
 brush_rep::get_pattern_url () {
   tree t= get_pattern ();
-  if (is_atomic (t) || N(t) == 0 || !is_atomic (t[0])) return url ();
+  if (is_atomic (t) || N (t) == 0 || !is_atomic (t[0])) return url ();
   url u= url_system (as_string (t[0]));
   url r= resolve_pattern (u);
   if (!is_none (r)) return r;
@@ -124,8 +121,8 @@ brush_rep::get_pattern_url () {
 }
 
 /******************************************************************************
-* Constructors
-******************************************************************************/
+ * Constructors
+ ******************************************************************************/
 
 static brush_rep*
 make_brush (bool b) {
@@ -145,22 +142,20 @@ static brush_rep*
 make_brush (tree p, int a) {
   if (is_atomic (p)) {
     string s= p->label;
-    if (s == "" || s == "none")
-      return tm_new<no_brush_rep> ();
-    else
-      return make_brush (named_color (s, a));
+    if (s == "" || s == "none") return tm_new<no_brush_rep> ();
+    else return make_brush (named_color (s, a));
   }
   else {
     color c= white;
-    if (N(p) == 4) c= named_color (as_string (p[3]), a);
+    if (N (p) == 4) c= named_color (as_string (p[3]), a);
     return tm_new<pattern_brush_rep> (c, p, a);
   }
 }
 
-//brush::brush (): rep (make_brush (white)) { INC_COUNT (rep); }
-brush::brush (color c): rep (make_brush (c)) { INC_COUNT (rep); }
-brush::brush (bool b): rep (make_brush (b)) { INC_COUNT (rep); }
-brush::brush (tree p, int a): rep (make_brush (p, a)) { INC_COUNT (rep); }
+// brush::brush (): rep (make_brush (white)) { INC_COUNT (rep); }
+brush::brush (color c) : rep (make_brush (c)) { INC_COUNT (rep); }
+brush::brush (bool b) : rep (make_brush (b)) { INC_COUNT (rep); }
+brush::brush (tree p, int a) : rep (make_brush (p, a)) { INC_COUNT (rep); }
 
 brush
 mix (brush b1, double a1, brush b2, double a2) {
@@ -174,19 +169,19 @@ mix (brush b1, double a1, brush b2, double a2) {
 }
 
 /******************************************************************************
-* Unpacking pattern data
-******************************************************************************/
+ * Unpacking pattern data
+ ******************************************************************************/
 
 void
 get_pattern_data (url& u, SI& w, SI& h, tree& eff, brush br, SI pixel) {
   // FIXME << what's about ratio and percentages wrt paper lengths?
   tree pattern= br->get_pattern ();
-  u= br->get_pattern_url ();
+  u           = br->get_pattern_url ();
   int imw_pt, imh_pt;
   image_size (u, imw_pt, imh_pt);
-  double pt= ((double) 600*PIXEL) / 72.0;
-  SI imw= (SI) (((double) imw_pt) * pt);
-  SI imh= (SI) (((double) imh_pt) * pt);
+  double pt = ((double) 600 * PIXEL) / 72.0;
+  SI     imw= (SI) (((double) imw_pt) * pt);
+  SI     imh= (SI) (((double) imh_pt) * pt);
   w= imw, h= imh;
   if (is_int (pattern[1])) w= as_int (pattern[1]);
   else if (is_percentage (pattern[1]))
@@ -198,7 +193,7 @@ get_pattern_data (url& u, SI& w, SI& h, tree& eff, brush br, SI pixel) {
     h= (SI) (as_percentage (pattern[2]) * ((double) h));
   else if (is_percentage (pattern[2], "@"))
     h= (SI) (as_percentage (pattern[2]) * ((double) w));
-  w= ((w + pixel - 1) / pixel);
-  h= ((h + pixel - 1) / pixel);
-  eff= (N(pattern) >= 4 && is_compound (pattern[3])? pattern[3]: tree (""));
+  w  = ((w + pixel - 1) / pixel);
+  h  = ((h + pixel - 1) / pixel);
+  eff= (N (pattern) >= 4 && is_compound (pattern[3]) ? pattern[3] : tree (""));
 }

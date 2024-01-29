@@ -1,13 +1,13 @@
 
 /******************************************************************************
-* MODULE     : cursor.hpp
-* DESCRIPTION: for cursor handling in TeXmacs
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : cursor.hpp
+ * DESCRIPTION: for cursor handling in TeXmacs
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef EDIT_CURSOR_H
 #define EDIT_CURSOR_H
@@ -18,11 +18,11 @@
 #define HORIZONTAL 2
 #define VERTICAL 3
 
-class edit_cursor_rep: virtual public editor_rep {
+class edit_cursor_rep : virtual public editor_rep {
 protected:
-  cursor cu;         // the cursor
-  cursor mv;         // "ghost cursor" position when moving cursor
-  int    mv_status;  // cursor status during movements
+  cursor cu;        // the cursor
+  cursor mv;        // "ghost cursor" position when moving cursor
+  int    mv_status; // cursor status during movements
 
 protected:
   cursor& the_cursor ();

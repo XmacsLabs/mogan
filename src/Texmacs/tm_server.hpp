@@ -1,29 +1,26 @@
 
 /******************************************************************************
-* MODULE     : tm_server.hpp
-* DESCRIPTION: Main current graphical interface for user applications
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : tm_server.hpp
+ * DESCRIPTION: Main current graphical interface for user applications
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef TM_SERVER_H
 #define TM_SERVER_H
-#include "tm_timer.hpp"
-#include "tm_config.hpp"
-#include "tm_buffer.hpp"
-#include "tm_frame.hpp"
-#include "tm_data.hpp"
 #include "../Mogan/app_type.hpp"
+#include "tm_buffer.hpp"
+#include "tm_config.hpp"
+#include "tm_data.hpp"
+#include "tm_frame.hpp"
+#include "tm_timer.hpp"
 
 bool is_server_started ();
 
-class tm_server_rep:
-  public tm_config_rep,
-  public tm_frame_rep
-{
+class tm_server_rep : public tm_config_rep, public tm_frame_rep {
 protected:
   double def_zoomf; // default zoom factor
 
@@ -49,7 +46,7 @@ public:
   void   typeset_update_all ();
   bool   is_yes (string s);
   void   quit ();
-  void   shell    (string s);
+  void   shell (string s);
 };
 
 #endif // defined TM_SERVER_H

@@ -10,19 +10,18 @@
 
 #include "tm_updater.hpp"
 
-class tm_winsparkle : public tm_updater
-{
+class tm_winsparkle : public tm_updater {
   bool running;
-  
-  tm_winsparkle () : tm_updater (), running (false) { }
+
+  tm_winsparkle () : tm_updater (), running (false) {}
   ~tm_winsparkle ();
   friend class tm_updater;
 
 public:
-  bool checkInBackground ();
-  bool checkInForeground ();
-  bool isRunning () const { return running; }
+  bool   checkInBackground ();
+  bool   checkInForeground ();
+  bool   isRunning () const { return running; }
   time_t lastCheck () const;
-  bool setCheckInterval (int hours);
-  bool setAppcast (url _appcast_url);
+  bool   setCheckInterval (int hours);
+  bool   setAppcast (url _appcast_url);
 };

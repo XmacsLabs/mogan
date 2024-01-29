@@ -1,21 +1,21 @@
 
 /******************************************************************************
-* MODULE     : edit_text.hpp
-* DESCRIPTION: Main routines for the manipulation of "ordinary" text
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : edit_text.hpp
+ * DESCRIPTION: Main routines for the manipulation of "ordinary" text
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef EDIT_TEXT_H
 #define EDIT_TEXT_H
 #include "editor.hpp"
 
-class edit_text_rep: virtual public editor_rep {
+class edit_text_rep : virtual public editor_rep {
 protected:
-  void correct_concat (path p, int done=0);
+  void correct_concat (path p, int done= 0);
   void correct (path p);
   bool pure_line (path p);
   bool accepts_return (path p);
@@ -49,8 +49,8 @@ public:
   void make_vspace_after (string s);
   void make_vspace_after (string smin, string sdef, string smax);
   void make_htab (string spc);
-  void make_image (string file_name, bool link,
-		   string w, string h, string x, string y);
+  void make_image (string file_name, bool link, string w, string h, string x,
+                   string y);
 };
 
 #endif // defined EDIT_TEXT_H

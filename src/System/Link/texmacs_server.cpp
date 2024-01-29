@@ -1,32 +1,32 @@
 
 /******************************************************************************
-* MODULE     : texmacs_server.cpp
-* DESCRIPTION: TeXmacs servers
-* COPYRIGHT  : (C) 2007  Joris van der Hoeven 
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : texmacs_server.cpp
+ * DESCRIPTION: TeXmacs servers
+ * COPYRIGHT  : (C) 2007  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "tm_link.hpp"
 #include "client_server.hpp"
-#include "socket_server.hpp"
 #include "scheme.hpp"
+#include "socket_server.hpp"
+#include "tm_link.hpp"
 
 #ifdef QTTEXMACS
 #include "Qt/QTMSockets.hpp"
 
 #if defined(OS_MACOS)
-  #include "MacOS/mac_utilities.h"
+#include "MacOS/mac_utilities.h"
 #endif
 
 static socket_server* the_server= NULL;
-//int socket_link::id= 0;
+// int socket_link::id= 0;
 
 /******************************************************************************
-* Server side
-******************************************************************************/
+ * Server side
+ ******************************************************************************/
 
 void
 server_start () {
@@ -37,8 +37,7 @@ server_start () {
     (void) eval ("(use-modules (server server-live))");
     the_server= tm_new<socket_server> ("", 6561);
   }
-  if (the_server->alive ())
-    cout << "TeXmacs] Server started... \n";
+  if (the_server->alive ()) cout << "TeXmacs] Server started... \n";
 #if defined(OS_MACOS)
   mac_begin_server ();
 #endif
@@ -62,7 +61,7 @@ server_started () {
 
 string
 server_read (int fd) {
-  string s(the_server->read(fd));
+  string s (the_server->read (fd));
   DBG_IOS ("in:", s);
   return s;
 }
@@ -70,22 +69,21 @@ server_read (int fd) {
 void
 server_write (int fd, string s) {
   DBG_IOS ("out:", s);
-  the_server->write (fd,s);
+  the_server->write (fd, s);
 }
 
 int
 number_of_servers () {
-  return the_server?the_server->srv_count():0;
+  return the_server ? the_server->srv_count () : 0;
 }
-
 
 #else
 
 static socket_server_rep* the_server= NULL;
 
 /******************************************************************************
-* Server side
-******************************************************************************/
+ * Server side
+ ******************************************************************************/
 
 void
 server_start () {
@@ -118,9 +116,9 @@ server_read (int fd) {
   tm_link ln= find_socket_link (fd);
   if (is_nil (ln)) return "";
   if (!ln->complete_packet (LINK_OUT)) return "";
-  bool success;
+  bool   success;
   string back= ln->read_packet (LINK_OUT, 0, success);
-  //cout << "Server read " << back << "\n";
+  // cout << "Server read " << back << "\n";
   return back;
 }
 
@@ -128,7 +126,7 @@ void
 server_write (int fd, string s) {
   tm_link ln= find_socket_link (fd);
   if (is_nil (ln)) return;
-  //cout << "Server write " << s << "\n";
+  // cout << "Server write " << s << "\n";
   ln->write_packet (s, LINK_IN);
 }
 #endif

@@ -1,17 +1,17 @@
 
 /******************************************************************************
-* MODULE     : bridge_expand_as.cpp
-* DESCRIPTION: Bridge for expand_as construct
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : bridge_expand_as.cpp
+ * DESCRIPTION: Bridge for expand_as construct
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "bridge.hpp"
 
-class bridge_expand_as_rep: public bridge_rep {
+class bridge_expand_as_rep : public bridge_rep {
 protected:
   bridge body;
 
@@ -22,7 +22,7 @@ public:
   void notify_assign (path p, tree u);
   void notify_insert (path p, tree u);
   void notify_remove (path p, int nr);
-  bool notify_macro  (int type, string var, int level, path p, tree u);
+  bool notify_macro (int type, string var, int level, path p, tree u);
   void notify_change ();
 
   void my_exec_until (path p);
@@ -30,9 +30,8 @@ public:
   void my_typeset (int desired_status);
 };
 
-bridge_expand_as_rep::bridge_expand_as_rep (typesetter ttt, tree st, path ip):
-  bridge_rep (ttt, st, ip)
-{
+bridge_expand_as_rep::bridge_expand_as_rep (typesetter ttt, tree st, path ip)
+    : bridge_rep (ttt, st, ip) {
   initialize ();
 }
 
@@ -48,8 +47,8 @@ bridge_expand_as (typesetter ttt, tree st, path ip) {
 }
 
 /******************************************************************************
-* Event notification
-******************************************************************************/
+ * Event notification
+ ******************************************************************************/
 
 void
 bridge_expand_as_rep::notify_assign (path p, tree u) {
@@ -63,7 +62,7 @@ bridge_expand_as_rep::notify_assign (path p, tree u) {
     // bool mp_flag= is_multi_paragraph (st);
     if (is_atom (p)) {
       body= make_bridge (ttt, u, descend (ip, 1));
-      st= substitute (st, 1, body->st);
+      st  = substitute (st, 1, body->st);
     }
     else {
       body->notify_assign (p->next, u);
@@ -103,9 +102,7 @@ bridge_expand_as_rep::notify_remove (path p, int nr) {
 }
 
 bool
-bridge_expand_as_rep::notify_macro 
-  (int tp, string var, int l, path p, tree u)
-{
+bridge_expand_as_rep::notify_macro (int tp, string var, int l, path p, tree u) {
   /*
   cout << "Macro argument " << var << " [action=" << tp
        << ", level=" << l << "] " << p << ", " << u << " in " << st << "\n";
@@ -125,8 +122,8 @@ bridge_expand_as_rep::notify_change () {
 }
 
 /******************************************************************************
-* Typesetting
-******************************************************************************/
+ * Typesetting
+ ******************************************************************************/
 
 void
 bridge_expand_as_rep::my_exec_until (path p) {
