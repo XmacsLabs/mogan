@@ -8,4 +8,4 @@ This is an urgent release, it fixed the crash issues related to multiple window 
 + Failed to access the Document folder on macOS
   + Solution: move documents to folders which Mogan can access
 + fraktur/blackboard bold font are rendered as Computer Modern font
-  + Solution: use v1.2.3-beta or newer version
+  + Solution: use v1.2.3 or newer version

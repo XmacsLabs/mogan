@@ -1,3 +1,12 @@
+# Mogan STEM Suite v1.2.3
+Mogan STEM Suite v1.2.3:
++ Mogan Research v1.2.3
+
+## Important Changes
++ Performance improvements
++ Many bug fixes
++ User Interface improvements
+
 ## Detailed changes that affect users
 + User Interface
   + Make `Tools->Keyboard->Show key presses` work on Windows and Linux
@@ -24,3 +33,4 @@
 
 ## Changes for Developer
 + Use `xmake-requires.lock` to make the build system more reproducible
++ the installer on macOS arm is now packaged by github action

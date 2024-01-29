@@ -8,4 +8,4 @@
 + 无法访问macOS平台的Document目录
   + 解决方案：可以暂时将Document目录中文档移动到墨干可访问的目录
 + fraktur/blackboard bold字体在数学模式下被错误渲染为Roman
-  + 解决方案：使用V1.2.3-beta及以上版本
+  + 解决方案：使用V1.2.3及以上版本
