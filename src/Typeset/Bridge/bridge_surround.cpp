@@ -1,24 +1,24 @@
 
 /******************************************************************************
-* MODULE     : bridge_surround.cpp
-* DESCRIPTION: Bridge between logical and physical paragraph surroundings
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : bridge_surround.cpp
+ * DESCRIPTION: Bridge between logical and physical paragraph surroundings
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "bridge.hpp"
 
-class bridge_surround_rep: public bridge_rep {
+class bridge_surround_rep : public bridge_rep {
 protected:
-  bridge               body;
-  hashmap<string,tree> changes_before;
+  bridge                body;
+  hashmap<string, tree> changes_before;
 
-  bool                 corrupted;
-  array<line_item>     a;
-  array<line_item>     b;
+  bool             corrupted;
+  array<line_item> a;
+  array<line_item> b;
 
 public:
   bridge_surround_rep (typesetter ttt, tree st, path ip);
@@ -27,7 +27,7 @@ public:
   void notify_assign (path p, tree u);
   void notify_insert (path p, tree u);
   void notify_remove (path p, int nr);
-  bool notify_macro  (int type, string var, int level, path p, tree u);
+  bool notify_macro (int type, string var, int level, path p, tree u);
   void notify_change ();
 
   void my_clean_links ();
@@ -36,20 +36,19 @@ public:
   void my_typeset (int desired_status);
 };
 
-bridge_surround_rep::bridge_surround_rep (typesetter ttt, tree st, path ip):
-  bridge_rep (ttt, st, ip), changes_before (UNINIT)
-{
+bridge_surround_rep::bridge_surround_rep (typesetter ttt, tree st, path ip)
+    : bridge_rep (ttt, st, ip), changes_before (UNINIT) {
   initialize ();
 }
 
 void
 bridge_surround_rep::initialize () {
-  while (N(st)<3) // hack for temporarily incorrect situations (A-backspace)
+  while (N (st) < 3) // hack for temporarily incorrect situations (A-backspace)
     st= tree (SURROUND, "") * st;
   if (is_nil (body)) body= make_bridge (ttt, st[2], descend (ip, 2));
   else replace_bridge (body, st[2], descend (ip, 2));
-  changes_before= hashmap<string,tree> (UNINIT);
-  corrupted= true;
+  changes_before= hashmap<string, tree> (UNINIT);
+  corrupted     = true;
 }
 
 bridge
@@ -58,8 +57,8 @@ bridge_surround (typesetter ttt, tree st, path ip) {
 }
 
 /******************************************************************************
-* Event notification
-******************************************************************************/
+ * Event notification
+ ******************************************************************************/
 
 void
 bridge_surround_rep::notify_assign (path p, tree u) {
@@ -73,7 +72,7 @@ bridge_surround_rep::notify_assign (path p, tree u) {
     // bool mp_flag= is_multi_paragraph (st);
     if (is_atom (p)) {
       body= make_bridge (ttt, u, descend (ip, 2));
-      st= substitute (st, 2, body->st);
+      st  = substitute (st, 2, body->st);
     }
     else {
       body->notify_assign (p->next, u);
@@ -128,19 +127,18 @@ bridge_surround_rep::notify_macro (int tp, string var, int l, path p, tree u) {
 
 void
 bridge_surround_rep::notify_change () {
-  status= CORRUPTED;
+  status   = CORRUPTED;
   corrupted= true;
   body->notify_change ();
 }
 
 /******************************************************************************
-* Typesetting
-******************************************************************************/
+ * Typesetting
+ ******************************************************************************/
 
 void
 bridge_surround_rep::my_clean_links () {
-  if (corrupted || (N(ttt->old_patch) != 0))
-    link_env= link_repository (true);
+  if (corrupted || (N (ttt->old_patch) != 0)) link_env= link_repository (true);
 }
 
 void
@@ -160,8 +158,8 @@ bridge_surround_rep::my_typeset_will_be_complete () {
 
 void
 bridge_surround_rep::my_typeset (int desired_status) {
-  if (corrupted || (N(ttt->old_patch) != 0)) {
-    hashmap<string,tree> prev_back (UNINIT);
+  if (corrupted || (N (ttt->old_patch) != 0)) {
+    hashmap<string, tree> prev_back (UNINIT);
     env->local_start (prev_back);
     /*
     cout << st[0] << "\n";

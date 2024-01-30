@@ -16,4 +16,4 @@ enum class cursor_style {
   SIZE_ALL,
 };
 
-tm_ostream& operator<<(tm_ostream& os, cursor_style cs);
+tm_ostream& operator<< (tm_ostream& os, cursor_style cs);

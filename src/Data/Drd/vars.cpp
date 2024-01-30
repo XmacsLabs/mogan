@@ -1,19 +1,19 @@
 
 /******************************************************************************
-* MODULE     : vars.cpp
-* DESCRIPTION: the environment variables
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : vars.cpp
+ * DESCRIPTION: the environment variables
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "vars.hpp"
 
 /******************************************************************************
-* Various important environment variables
-******************************************************************************/
+ * Various important environment variables
+ ******************************************************************************/
 
 string DPI ("dpi");
 string ZOOM_FACTOR ("zoom-factor");
@@ -46,8 +46,8 @@ string CORRECT_COLOR ("correct-color");
 string INCORRECT_COLOR ("incorrect-color");
 
 /******************************************************************************
-* Text properties for tex, math and prog modes
-******************************************************************************/
+ * Text properties for tex, math and prog modes
+ ******************************************************************************/
 
 string FONT ("font");
 string FONT_FAMILY ("font-family");
@@ -117,8 +117,8 @@ string ALT_KEYWORD_COLOR ("alt-keyword-color");
 string ALT_CONSTANT_COLOR ("alt-constant-color");
 
 /******************************************************************************
-* Environment variables for paragraphs
-******************************************************************************/
+ * Environment variables for paragraphs
+ ******************************************************************************/
 
 string PAR_MODE ("par-mode");
 string PAR_FLEXIBILITY ("par-flexibility");
@@ -146,8 +146,8 @@ string PAR_COLUMNS_SEP ("par-columns-sep");
 string PAR_SWELL ("par-swell");
 
 /******************************************************************************
-* Environment variables for pages
-******************************************************************************/
+ * Environment variables for pages
+ ******************************************************************************/
 
 string PAGE_MEDIUM ("page-medium");
 string PAGE_PRINTED ("page-printed");
@@ -204,8 +204,8 @@ string PAGE_MNOTE_SEP ("page-mnote-sep");
 string PAGE_MNOTE_WIDTH ("page-mnote-width");
 
 /******************************************************************************
-* Environment variables for tables
-******************************************************************************/
+ * Environment variables for tables
+ ******************************************************************************/
 
 string TABLE_WIDTH ("table-width");
 string TABLE_HEIGHT ("table-height");
@@ -231,8 +231,8 @@ string TABLE_MAX_ROWS ("table-max-rows");
 string TABLE_MAX_COLS ("table-max-cols");
 
 /******************************************************************************
-* Environment variables for cells of tables
-******************************************************************************/
+ * Environment variables for cells of tables
+ ******************************************************************************/
 
 string CELL_FORMAT ("cell-format");
 string CELL_DECORATION ("cell-decoration");
@@ -264,8 +264,8 @@ string CELL_COL_NR ("cell-col-nr");
 string CELL_SWELL ("cell-swell");
 
 /******************************************************************************
-* Environment variables for graphics
-******************************************************************************/
+ * Environment variables for graphics
+ ******************************************************************************/
 
 string GR_GEOMETRY ("gr-geometry");
 string GR_FRAME ("gr-frame");
@@ -348,8 +348,8 @@ string PEN_ENHANCE ("pen-enhance");
 string PEN_STYLE ("pen-style");
 
 /******************************************************************************
-* Environment variables for preamble mode
-******************************************************************************/
+ * Environment variables for preamble mode
+ ******************************************************************************/
 
 string SRC_STYLE ("src-style");
 string SRC_SPECIAL ("src-special");
@@ -358,8 +358,8 @@ string SRC_CLOSE ("src-close");
 string SRC_TAG_COLOR ("src-tag-color");
 
 /******************************************************************************
-* Environment variables for the graphical user interface
-******************************************************************************/
+ * Environment variables for the graphical user interface
+ ******************************************************************************/
 
 string CANVAS_TYPE ("canvas-type");
 string CANVAS_COLOR ("canvas-color");

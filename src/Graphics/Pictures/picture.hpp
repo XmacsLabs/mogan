@@ -1,95 +1,98 @@
 
 /******************************************************************************
-* MODULE     : picture.hpp
-* DESCRIPTION: Abstract graphical pictures
-* COPYRIGHT  : (C) 2013  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : picture.hpp
+ * DESCRIPTION: Abstract graphical pictures
+ * COPYRIGHT  : (C) 2013  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef PICTURE_H
 #define PICTURE_H
 #include "url.hpp"
 
 /******************************************************************************
-* The abstract picture class
-******************************************************************************/
+ * The abstract picture class
+ ******************************************************************************/
 
-enum picture_kind {
-  picture_native,
-  picture_raster,
-  picture_lazy };
+enum picture_kind { picture_native, picture_raster, picture_lazy };
 
 class picture_rep;
 class picture {
-ABSTRACT_NULL(picture);
+  ABSTRACT_NULL (picture);
 };
 
 unsigned long long int unique_picture_id ();
 
-class picture_rep: public abstract_struct {
+class picture_rep : public abstract_struct {
   unsigned long long int unique_id;
+
 protected:
   virtual color internal_smooth_pixel (double x, double y);
-  virtual color internal_get_pixel (int x, int y) = 0;
-  virtual void internal_set_pixel (int x, int y, color c) = 0;
-  virtual void internal_copy_from (int x, int y, picture src,
-                                   int x1, int y1, int x2, int y2);
-  virtual void internal_copy_to   (int x, int y, picture dest,
-                                   int x1, int y1, int x2, int y2);
+  virtual color internal_get_pixel (int x, int y)         = 0;
+  virtual void  internal_set_pixel (int x, int y, color c)= 0;
+  virtual void  internal_copy_from (int x, int y, picture src, int x1, int y1,
+                                    int x2, int y2);
+  virtual void  internal_copy_to (int x, int y, picture dest, int x1, int y1,
+                                  int x2, int y2);
 
 public:
   inline picture_rep () : unique_id (unique_picture_id ()) {}
   inline virtual ~picture_rep () {}
 
   inline unsigned long long int get_unique_id () { return unique_id; }
-  virtual picture_kind get_type () = 0;
-  virtual void* get_handle () = 0;
-  virtual url get_name ();
+  virtual picture_kind          get_type ()  = 0;
+  virtual void*                 get_handle ()= 0;
+  virtual url                   get_name ();
 
-  virtual int get_width () = 0;
-  virtual int get_height () = 0;
-  virtual int get_origin_x () = 0;
-  virtual int get_origin_y () = 0;
-  virtual void set_origin (int ox, int oy) = 0;
+  virtual int  get_width ()               = 0;
+  virtual int  get_height ()              = 0;
+  virtual int  get_origin_x ()            = 0;
+  virtual int  get_origin_y ()            = 0;
+  virtual void set_origin (int ox, int oy)= 0;
   virtual void translate_origin (int dx, int dy);
 
   inline color smooth_pixel (double x, double y) {
-    return internal_smooth_pixel (x + get_origin_x (), y + get_origin_y ()); }
+    return internal_smooth_pixel (x + get_origin_x (), y + get_origin_y ());
+  }
   inline color get_pixel (int x, int y) {
-    return internal_get_pixel (x + get_origin_x (), y + get_origin_y ()); }
-  inline void  set_pixel (int x, int y, color c) {
-    internal_set_pixel (x + get_origin_x (), y + get_origin_y (), c); }
+    return internal_get_pixel (x + get_origin_x (), y + get_origin_y ());
+  }
+  inline void set_pixel (int x, int y, color c) {
+    internal_set_pixel (x + get_origin_x (), y + get_origin_y (), c);
+  }
   inline void copy_from (picture s) {
-    internal_copy_from (0, 0, s, 0, 0, s->get_width (), s->get_height ()); }
+    internal_copy_from (0, 0, s, 0, 0, s->get_width (), s->get_height ());
+  }
   inline void copy_to (picture d) {
-    internal_copy_to (0, 0, d, 0, 0, get_width (), get_height ()); }
+    internal_copy_to (0, 0, d, 0, 0, get_width (), get_height ());
+  }
 
   friend class picture;
 };
 
-ABSTRACT_NULL_CODE(picture);
+ABSTRACT_NULL_CODE (picture);
 
 /******************************************************************************
-* Pictures on disk
-******************************************************************************/
+ * Pictures on disk
+ ******************************************************************************/
 
 picture load_picture (url u, int w, int h, tree eff, int pixel);
 picture load_xpm (url file_name);
-void picture_cache_reserve (url u, int w, int h, tree eff, int pixel);
-void picture_cache_release (url u, int w, int h, tree eff, int pixel);
-void picture_cache_clean ();
-void picture_cache_reset ();
-picture cached_load_picture (url u, int w, int h, tree eff,
-                             int pixel, bool perma= true);
-string picture_as_eps (picture pic, int dpi);
-void save_picture (url dest, picture p);
+void    picture_cache_reserve (url u, int w, int h, tree eff, int pixel);
+void    picture_cache_release (url u, int w, int h, tree eff, int pixel);
+void    picture_cache_clean ();
+void    picture_cache_reset ();
+picture cached_load_picture (url u, int w, int h, tree eff, int pixel,
+                             bool perma= true);
+string  picture_as_eps (picture pic, int dpi);
+void    save_picture (url dest, picture p);
 
 /******************************************************************************
-* Drawing on pictures and combining pictures
-******************************************************************************/
+ * Drawing on pictures and combining pictures
+ ******************************************************************************/
 
 enum composition_mode {
   compose_destination,
@@ -119,8 +122,8 @@ picture compose (array<picture> ps, composition_mode mode);
 picture mix (picture pic1, double a1, picture pic2, double a2);
 
 /******************************************************************************
-* Operations on pictures
-******************************************************************************/
+ * Operations on pictures
+ ******************************************************************************/
 
 picture shift (picture pic, double dx, double dy);
 picture magnify (picture pic, double sx, double sy);

@@ -1,49 +1,48 @@
 
 /******************************************************************************
-* MODULE     : init_upgrade.cpp
-* DESCRIPTION: initializations which are only necessary when
-*              you just upgraded your TeXmacs distribution
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : init_upgrade.cpp
+ * DESCRIPTION: initializations which are only necessary when
+ *              you just upgraded your TeXmacs distribution
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "boot.hpp"
-#include "preferences.hpp"
-#include "file.hpp"
-#include "tm_file.hpp"
-#include "path.hpp"
-#include "sys_utils.hpp"
 #include "data_cache.hpp"
+#include "file.hpp"
+#include "path.hpp"
+#include "preferences.hpp"
+#include "sys_utils.hpp"
+#include "tm_file.hpp"
 
 /******************************************************************************
-* Check for old Init.scm and Init-buffer.scm files
-******************************************************************************/
+ * Check for old Init.scm and Init-buffer.scm files
+ ******************************************************************************/
 
 static void
 init_upgrade_scheme () {
 #ifndef OS_WIN
-  url u= "$TEXMACS_HOME_PATH/progs";
+  url    u   = "$TEXMACS_HOME_PATH/progs";
   string prgs= as_string (u);
   if (exists (u * "Init.scm") && (!exists (u * "my-init-texmacs.scm"))) {
-    system ("sed 's/Init.scm/init-texmacs.scm/'", u * "Init.scm",
-	    ">", u * "my-init-texmacs.scm");
+    system ("sed 's/Init.scm/init-texmacs.scm/'", u * "Init.scm", ">",
+            u * "my-init-texmacs.scm");
     remove (u * "Init.scm");
   }
   if (exists (u * "Init-buffer.scm") && (!exists (u * "my-init-buffer.scm"))) {
     system ("sed 's/Init-buffer.scm/init-buffer.scm/'", u * "Init-buffer.scm",
-	    ">", u * "my-init-buffer.scm");
+            ">", u * "my-init-buffer.scm");
     remove (u * "Init-buffer.scm");
   }
 #endif
 }
 
-
 /******************************************************************************
-* Upgrading TeXmacs
-******************************************************************************/
+ * Upgrading TeXmacs
+ ******************************************************************************/
 
 void
 init_upgrade () {

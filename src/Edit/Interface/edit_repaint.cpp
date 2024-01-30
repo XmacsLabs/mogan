@@ -1,35 +1,33 @@
 
 /******************************************************************************
-* MODULE     : edit_repaint.cpp
-* DESCRIPTION: repaint invalid rectangles
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : edit_repaint.cpp
+ * DESCRIPTION: repaint invalid rectangles
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "Interface/edit_interface.hpp"
-#include "message.hpp"
 #include "gui.hpp" // for gui_interrupted
-#include <lolly/data/unicode.hpp>
+#include "message.hpp"
 #include "sys_utils.hpp"
+#include <lolly/data/unicode.hpp>
 
-extern int nr_painted;
+extern int  nr_painted;
 extern void clear_pattern_rectangles (renderer ren, rectangle m, rectangles l);
 extern bool animated_flag;
 
 /******************************************************************************
-* repainting the window
-******************************************************************************/
+ * repainting the window
+ ******************************************************************************/
 
 void
-edit_interface_rep::draw_background (renderer ren,
-                                     SI x1, SI y1, SI x2, SI y2) {
+edit_interface_rep::draw_background (renderer ren, SI x1, SI y1, SI x2, SI y2) {
   tree bg= get_init_value (BG_COLOR);
   ren->set_background (bg);
-  if (get_init_value (PAGE_MEDIUM) == "paper")
-    eb->clear (ren, x1, y1, x2, y2);
+  if (get_init_value (PAGE_MEDIUM) == "paper") eb->clear (ren, x1, y1, x2, y2);
   else {
     rectangle m (eb->x1, eb->y1, eb->x2, eb->y2);
     rectangle r (x1, y1, x2, y2);
@@ -41,15 +39,15 @@ edit_interface_rep::draw_background (renderer ren,
 
 void
 edit_interface_rep::draw_text (renderer ren, rectangles& l) {
-  nr_painted=0;
+  nr_painted   = 0;
   bool tp_found= false;
-  tree bg= get_init_value (BG_COLOR);
+  tree bg      = get_init_value (BG_COLOR);
   ren->set_background (bg);
   animated_flag= (texmacs_time () >= anim_next);
   if (animated_flag) anim_next= 1.0e12;
   eb->redraw (ren, eb->find_box_path (tp, tp_found), l);
   if (animated_flag) {
-    double t= max (((double) texmacs_time ()) + 25.0, eb->anim_next ());
+    double t = max (((double) texmacs_time ()) + 25.0, eb->anim_next ());
     anim_next= min (anim_next, t);
   }
 }
@@ -83,18 +81,19 @@ edit_interface_rep::draw_env (renderer ren) {
 
 void
 edit_interface_rep::draw_cursor (renderer ren) {
-  if (get_preference ("draw cursor") == "on" &&
-      !temp_invalid_cursor && (got_focus || full_screen)) {
-    cursor cu= get_cursor();
+  if (get_preference ("draw cursor") == "on" && !temp_invalid_cursor &&
+      (got_focus || full_screen)) {
+    cursor cu= get_cursor ();
     if (!inside_active_graphics ()) {
       SI dw= 0;
       if (tremble_count > 3) dw= min (tremble_count - 3, 25) * pixel;
-      cu->y1 -= 2*zpixel + dw; cu->y2 += 2*zpixel + dw;
-      SI x1= cu->ox + ((SI) (cu->y1 * cu->slope)), y1= cu->oy + cu->y1;
-      SI x2= cu->ox + ((SI) (cu->y2 * cu->slope)), y2= cu->oy + cu->y2;
+      cu->y1-= 2 * zpixel + dw;
+      cu->y2+= 2 * zpixel + dw;
+      SI     x1= cu->ox + ((SI) (cu->y1 * cu->slope)), y1= cu->oy + cu->y1;
+      SI     x2= cu->ox + ((SI) (cu->y2 * cu->slope)), y2= cu->oy + cu->y2;
       string mode= get_env_string (MODE);
       string family, series;
-      color cuc= get_env_color (CURSOR_COLOR);
+      color  cuc= get_env_color (CURSOR_COLOR);
       if (!cu->valid) cuc= green;
       else if (mode == "math") cuc= get_env_color (MATH_CURSOR_COLOR);
       ren->set_pencil (pencil (cuc, zpixel + dw));
@@ -110,21 +109,22 @@ edit_interface_rep::draw_cursor (renderer ren) {
         family= get_env_string (PROG_FONT_FAMILY);
         series= get_env_string (PROG_FONT_SERIES);
       }
-      SI lserif= (series=="bold"? 2*zpixel: zpixel) + dw;
+      SI lserif= (series == "bold" ? 2 * zpixel : zpixel) + dw;
       SI rserif= zpixel + dw;
       if (family == "ss") lserif= rserif= 0;
-      ren->line (x1-lserif, y1, x1+rserif, y1);
-      if (y1<=y2-zpixel) {
-        ren->line (x1, y1, x2, y2-zpixel);
-        if (series == "bold") ren->line (x1-zpixel, y1, x2-zpixel, y2-zpixel);
-        ren->line (x2-lserif, y2-zpixel, x2+rserif, y2-zpixel);
+      ren->line (x1 - lserif, y1, x1 + rserif, y1);
+      if (y1 <= y2 - zpixel) {
+        ren->line (x1, y1, x2, y2 - zpixel);
+        if (series == "bold")
+          ren->line (x1 - zpixel, y1, x2 - zpixel, y2 - zpixel);
+        ren->line (x2 - lserif, y2 - zpixel, x2 + rserif, y2 - zpixel);
       }
     }
   }
 }
 
 void
-edit_interface_rep::draw_surround (renderer ren, rectangle r) {          
+edit_interface_rep::draw_surround (renderer ren, rectangle r) {
   ren->set_background (tm_background);
   string medium= get_init_string (PAGE_MEDIUM);
   if (medium == "automatic") return;
@@ -149,7 +149,7 @@ edit_interface_rep::draw_selection (renderer ren, rectangle r) {
     ren->set_pencil (pencil (col, ren->pixel));
     ren->draw_rectangles (locus_rects);
   }
-  for (int i=0; i<N(alt_selection_rects); i++) {
+  for (int i= 0; i < N (alt_selection_rects); i++) {
     color col= get_env_color (MATCH_COLOR);
     ren->set_pencil (pencil (col, ren->pixel));
 #ifdef QTTEXMACS
@@ -181,22 +181,22 @@ edit_interface_rep::draw_graphics (renderer ren) {
       if (tm_curs != "none") {
         if (tm_curs == "graphics-cross") {
           ren->set_pencil (pencil (red, pixel));
-          ren->line (cu->ox, cu->oy-5*pixel, cu->ox, cu->oy+5*pixel);
-          ren->line (cu->ox-5*pixel, cu->oy, cu->ox+5*pixel, cu->oy);
+          ren->line (cu->ox, cu->oy - 5 * pixel, cu->ox, cu->oy + 5 * pixel);
+          ren->line (cu->ox - 5 * pixel, cu->oy, cu->ox + 5 * pixel, cu->oy);
         }
         else if (tm_curs == "graphics-cross-arrows") {
-          static int s= 6*pixel, a= 2*pixel;
+          static int s= 6 * pixel, a= 2 * pixel;
           ren->set_pencil (pencil (red, pixel));
-          ren->line (cu->ox, cu->oy-s, cu->ox, cu->oy+s);
-          ren->line (cu->ox-s, cu->oy, cu->ox+s, cu->oy);
-          ren->line (cu->ox, cu->oy-s,cu->ox-a, cu->oy-s+a);
-          ren->line (cu->ox, cu->oy-s, cu->ox+a, cu->oy-s+a);
-          ren->line (cu->ox, cu->oy+s, cu->ox-a, cu->oy+s-a);
-          ren->line (cu->ox, cu->oy+s, cu->ox+a, cu->oy+s-a);
-          ren->line (cu->ox-s, cu->oy, cu->ox-s+a, cu->oy+a);
-          ren->line (cu->ox-s, cu->oy, cu->ox-s+a, cu->oy-a);
-          ren->line (cu->ox+s, cu->oy, cu->ox+s-a, cu->oy+a);
-          ren->line (cu->ox+s, cu->oy, cu->ox+s-a, cu->oy-a);
+          ren->line (cu->ox, cu->oy - s, cu->ox, cu->oy + s);
+          ren->line (cu->ox - s, cu->oy, cu->ox + s, cu->oy);
+          ren->line (cu->ox, cu->oy - s, cu->ox - a, cu->oy - s + a);
+          ren->line (cu->ox, cu->oy - s, cu->ox + a, cu->oy - s + a);
+          ren->line (cu->ox, cu->oy + s, cu->ox - a, cu->oy + s - a);
+          ren->line (cu->ox, cu->oy + s, cu->ox + a, cu->oy + s - a);
+          ren->line (cu->ox - s, cu->oy, cu->ox - s + a, cu->oy + a);
+          ren->line (cu->ox - s, cu->oy, cu->ox - s + a, cu->oy - a);
+          ren->line (cu->ox + s, cu->oy, cu->ox + s - a, cu->oy + a);
+          ren->line (cu->ox + s, cu->oy, cu->ox + s - a, cu->oy - a);
         }
       }
     }
@@ -205,9 +205,9 @@ edit_interface_rep::draw_graphics (renderer ren) {
 }
 
 void
-draw_keys_cjk (renderer ren, rectangle r, string ch,int &base_x, int &base_y) {
+draw_keys_cjk (renderer ren, rectangle r, string ch, int& base_x, int& base_y) {
   // Only support Chinese for now
-  tree t= tuple (default_chinese_font_name(), "rm", "medium", "right");
+  tree t= tuple (default_chinese_font_name (), "rm", "medium", "right");
   t << tree ("14") << tree ("600");
   font fn= find_font (t);
 
@@ -219,7 +219,7 @@ draw_keys_cjk (renderer ren, rectangle r, string ch,int &base_x, int &base_y) {
 }
 
 void
-draw_keys_sub (renderer ren, rectangle r, string ns, int &base_x, int &base_y) {
+draw_keys_sub (renderer ren, rectangle r, string ns, int& base_x, int& base_y) {
   // Find the right font to use
   tree t;
   if (use_macos_fonts ()) {
@@ -264,22 +264,21 @@ pretty_key (string key) {
   if (key == "less") return "<#3C>";
   if (key == "gtr") return "<#3E>";
 
-  if (N(key)==1 && is_upcase (key[0]))
+  if (N (key) == 1 && is_upcase (key[0]))
     return string ("<#21E7>") * upcase_all (key);
-  if (N(key)==1 && is_locase (key[0]))
-    return upcase_all (key);
+  if (N (key) == 1 && is_locase (key[0])) return upcase_all (key);
 
   if (starts (key, "S-")) {
-    return "<#21E7>" * pretty_key (key (2, N(key)));
+    return "<#21E7>" * pretty_key (key (2, N (key)));
   }
   if (starts (key, "C-")) {
-    return "<#2303>" * pretty_key (key (2, N(key)));
+    return "<#2303>" * pretty_key (key (2, N (key)));
   }
   if (starts (key, "A-")) {
-    return "<#2325>" * pretty_key (key (2, N(key)));
+    return "<#2325>" * pretty_key (key (2, N (key)));
   }
   if (starts (key, "M-")) {
-    return "<#2318>" * pretty_key (key (2, N(key)));
+    return "<#2318>" * pretty_key (key (2, N (key)));
   }
 
   return key;
@@ -287,11 +286,8 @@ pretty_key (string key) {
 
 void
 edit_interface_rep::draw_keys (renderer ren) {
-  int N_shown_keys= N(kbd_shown_keys);
-  if (kbd_show_keys &&
-      got_focus &&
-      N_shown_keys > 0 &&
-      !is_nil (keys_rects) &&
+  int N_shown_keys= N (kbd_shown_keys);
+  if (kbd_show_keys && got_focus && N_shown_keys > 0 && !is_nil (keys_rects) &&
       vy2 - vy1 > 3 * (keys_rects->item->y2 - keys_rects->item->y1)) {
     // Init renderer and rectangle
     ren->set_background (rgb_color (240, 224, 208));
@@ -299,22 +295,24 @@ edit_interface_rep::draw_keys (renderer ren) {
     ren->clear (r->x1, r->y1, r->x2, r->y2);
     ren->set_pencil (pencil (rgb_color (0, 0, 64)));
 
-    int base_x= (r->x2 - r->x1) / 3;
-    int base_y= (r->y2 - r->y1) / 3;
+    int    base_x= (r->x2 - r->x1) / 3;
+    int    base_y= (r->y2 - r->y1) / 3;
     string ns;
-    int max_shown_keys= 7;
-    for (int i=0; i<N_shown_keys; i++) {
+    int    max_shown_keys= 7;
+    for (int i= 0; i < N_shown_keys; i++) {
       string key= kbd_shown_keys[i];
       if (lolly::data::is_cjk_unified_ideographs (key)) {
         draw_keys_sub (ren, r, ns, base_x, base_y);
         // Clear it after the drawing
         ns= "";
         draw_keys_cjk (ren, r, key, base_x, base_y);
-      } else {
+      }
+      else {
         if (N_shown_keys - i <= max_shown_keys) {
-          if (i>0 && N_shown_keys-i < max_shown_keys) ns << " ";
+          if (i > 0 && N_shown_keys - i < max_shown_keys) ns << " ";
           ns << pretty_key (key);
-        } else {
+        }
+        else {
           ns= "";
         }
       }
@@ -377,13 +375,13 @@ edit_interface_rep::draw_with_shadow (renderer win, rectangle r) {
     simplify (l);
     copy_always= translate (copy_always, ren->ox, ren->oy);
     while (!is_nil (copy_always)) {
-      l= rectangles (copy_always->item, l);
+      l          = rectangles (copy_always->item, l);
       copy_always= copy_always->next;
     }
     ren->reset_zoom_factor ();
 
     draw_post (win, ren, r);
-    while (!is_nil(l)) {
+    while (!is_nil (l)) {
       SI x1= ((SI) (l->item->x1 * magf)) - ren->ox - PIXEL;
       SI y1= ((SI) (l->item->y1 * magf)) - ren->oy - PIXEL;
       SI x2= ((SI) (l->item->x2 * magf)) - ren->ox + PIXEL;
@@ -397,15 +395,15 @@ edit_interface_rep::draw_with_shadow (renderer win, rectangle r) {
 
 void
 edit_interface_rep::draw_with_stored (renderer win, rectangle r) {
-  //cout << "Redraw " << (r*magf/PIXEL) << "\n";
+  // cout << "Redraw " << (r*magf/PIXEL) << "\n";
 
   /* Verify whether the backing store is still valid */
   if (!is_nil (stored_rects)) {
     SI w1, h1, w2, h2;
-    win    -> get_extents (w1, h1);
-    stored -> get_extents (w2, h2);
-    if (stored->ox != win->ox || stored->oy != win->oy ||
-        w1 != w2 || h1 != h2) {
+    win->get_extents (w1, h1);
+    stored->get_extents (w2, h2);
+    if (stored->ox != win->ox || stored->oy != win->oy || w1 != w2 ||
+        h1 != h2) {
       // cout << "x"; cout.flush ();
       stored_rects= rectangles ();
     }
@@ -428,10 +426,10 @@ edit_interface_rep::draw_with_stored (renderer win, rectangle r) {
       if (inside_active_graphics ()) {
         shadow->new_shadow (stored);
         shadow->get_shadow (stored, sr->x1, sr->y1, sr->x2, sr->y2);
-        //stored_rects= /*stored_rects |*/ rectangles (r);
+        // stored_rects= /*stored_rects |*/ rectangles (r);
         stored_rects= simplify (rectangles (r, stored_rects));
-        //cout << "Stored: " << stored_rects << "\n";
-        //cout << "M"; cout.flush ();
+        // cout << "Stored: " << stored_rects << "\n";
+        // cout << "M"; cout.flush ();
       }
       draw_post (win, shadow, r);
       win->put_shadow (shadow, sr->x1, sr->y1, sr->x2, sr->y2);
@@ -441,16 +439,18 @@ edit_interface_rep::draw_with_stored (renderer win, rectangle r) {
 }
 
 /******************************************************************************
-* event handlers
-******************************************************************************/
+ * event handlers
+ ******************************************************************************/
 
 void
 edit_interface_rep::handle_clear (renderer win, SI x1, SI y1, SI x2, SI y2) {
-  x1= (SI) (x1 / magf); y1= (SI) (y1 / magf);
-  x2= (SI) (x2 / magf); y2= (SI) (y2 / magf);
+  x1= (SI) (x1 / magf);
+  y1= (SI) (y1 / magf);
+  x2= (SI) (x2 / magf);
+  y2= (SI) (y2 / magf);
   win->set_zoom_factor (zoomf);
-  draw_background (win, max (eb->x1, x1), max (eb->y1, y1),
-                        min (eb->x2, x2), min (eb->y2, y2));
+  draw_background (win, max (eb->x1, x1), max (eb->y1, y1), min (eb->x2, x2),
+                   min (eb->y2, y2));
   draw_surround (win, rectangle (x1, y1, x2, y2));
   win->reset_zoom_factor ();
 }
@@ -477,8 +477,7 @@ edit_interface_rep::handle_repaint (renderer win, SI x1, SI y1, SI x2, SI y2) {
   */
 
   // cout << "Repainting\n";
-  draw_with_stored (win, rectangle (x1, y1, x2, y2) /magf);
-  if (last_change-last_update > 0)
-    last_change = texmacs_time ();
+  draw_with_stored (win, rectangle (x1, y1, x2, y2) / magf);
+  if (last_change - last_update > 0) last_change= texmacs_time ();
   // cout << "Repainted\n";
 }

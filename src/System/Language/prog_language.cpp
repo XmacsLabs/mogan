@@ -1,26 +1,25 @@
 
 /******************************************************************************
-* MODULE     : prog_language.cpp
-* DESCRIPTION: Parser and syntax-highlighter for programming languages
-* COPYRIGHT  : (C) 2020  Darcy Shen
-*******************************************************************************
-* This software falls under the GNU general public license and comes WITHOUT
-* ANY WARRANTY WHATSOEVER. See the file $TEXMACS_PATH/LICENSE for more details.
-* If you don't have this file, write to the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-******************************************************************************/
+ * MODULE     : prog_language.cpp
+ * DESCRIPTION: Parser and syntax-highlighter for programming languages
+ * COPYRIGHT  : (C) 2020  Darcy Shen
+ *******************************************************************************
+ * This software falls under the GNU general public license and comes WITHOUT
+ * ANY WARRANTY WHATSOEVER. See the file $TEXMACS_PATH/LICENSE for more details.
+ * If you don't have this file, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ ******************************************************************************/
 
 #include "analyze.hpp"
 #include "convert.hpp"
 #include "impl_language.hpp"
-#include "scheme.hpp"
-#include "tree_helper.hpp"
 #include "iterator.hpp"
+#include "scheme.hpp"
 #include "tm_url.hpp"
+#include "tree_helper.hpp"
 
-prog_language_rep::prog_language_rep (string name):
-  abstract_language_rep (name)
-{
+prog_language_rep::prog_language_rep (string name)
+    : abstract_language_rep (name) {
   if (DEBUG_PARSER)
     debug_packrat << "Building the " * name * " language parser" << LF;
 
@@ -47,17 +46,19 @@ prog_language_rep::prog_language_rep (string name):
 }
 
 tree
-prog_language_rep::get_parser_config(string lan, string key) {
-  string cmd = "(tm->tree (parser-feature " * raw_quote (lan) * " " * raw_quote (key) * "))";
+prog_language_rep::get_parser_config (string lan, string key) {
+  string cmd= "(tm->tree (parser-feature " * raw_quote (lan) * " " *
+              raw_quote (key) * "))";
   return as_tree (eval (cmd));
 }
 
 void
-prog_language_rep::customize_keyword (keyword_parser_rep p_keyword_parser, tree config) {
-  for (int i=0; i<N(config); i++) {
-    tree group_of_keywords= config[i];
-    string group= get_label (group_of_keywords);
-    for (int j=0; j<N(group_of_keywords); j++) {
+prog_language_rep::customize_keyword (keyword_parser_rep p_keyword_parser,
+                                      tree               config) {
+  for (int i= 0; i < N (config); i++) {
+    tree   group_of_keywords= config[i];
+    string group            = get_label (group_of_keywords);
+    for (int j= 0; j < N (group_of_keywords); j++) {
       string word= get_label (group_of_keywords[j]);
       p_keyword_parser.put (word, group);
     }
@@ -66,10 +67,10 @@ prog_language_rep::customize_keyword (keyword_parser_rep p_keyword_parser, tree 
 
 void
 prog_language_rep::customize_operator (tree config) {
-  for (int i=0; i<N(config); i++) {
-    tree group_of_opers= config[i];
-    string group= get_label (group_of_opers);
-    for (int j=0; j<N(group_of_opers); j++) {
+  for (int i= 0; i < N (config); i++) {
+    tree   group_of_opers= config[i];
+    string group         = get_label (group_of_opers);
+    for (int j= 0; j < N (group_of_opers); j++) {
       string word= get_label (group_of_opers[j]);
       operator_parser.put (tm_encode (word), group);
     }
@@ -78,36 +79,39 @@ prog_language_rep::customize_operator (tree config) {
 
 void
 prog_language_rep::customize_number (tree config) {
-  for (int i=0; i<N(config); i++) {
-    tree feature= config[i];
-    string name= get_label (feature);
+  for (int i= 0; i < N (config); i++) {
+    tree   feature= config[i];
+    string name   = get_label (feature);
     if (name == "bool_features") {
-      for (int j=0; j<N(feature); j++) {
+      for (int j= 0; j < N (feature); j++) {
         string key= get_label (feature[j]);
         number_parser.insert_bool_feature (key);
       }
-    } else if (name == "separator" && N(feature) == 1) {
+    }
+    else if (name == "separator" && N (feature) == 1) {
       string key= get_label (feature[0]);
       number_parser.support_separator (key);
-    } else if (name == "suffix") {
-      customize_keyword (number_parser.get_suffix_parser(), feature);
+    }
+    else if (name == "suffix") {
+      customize_keyword (number_parser.get_suffix_parser (), feature);
     }
   }
 }
 
 void
 prog_language_rep::customize_string (tree config) {
-  for (int i=0; i<N(config); i++) {
-    tree feature= config[i];
-    string name= get_label (feature);
+  for (int i= 0; i < N (config); i++) {
+    tree   feature= config[i];
+    string name   = get_label (feature);
     if (name == "bool_features") {
-      for (int j=0; j<N(feature); j++) {
+      for (int j= 0; j < N (feature); j++) {
         string key= get_label (feature[j]);
         escaped_char_parser.insert_bool_feature (key);
       }
-    } else if (name == "escape_sequences") {
+    }
+    else if (name == "escape_sequences") {
       array<string> escape_seq;
-      for (int j=0; j<N(feature); j++) {
+      for (int j= 0; j < N (feature); j++) {
         string key= get_label (feature[j]);
         escape_seq << key;
       }
@@ -117,21 +121,20 @@ prog_language_rep::customize_string (tree config) {
 
   string_parser.set_escaped_char_parser (escaped_char_parser);
   hashmap<string, string> pairs;
-  pairs("\"") = "\"";
-  pairs("\'")= "\'";
+  pairs ("\"")= "\"";
+  pairs ("\'")= "\'";
   string_parser.set_pairs (pairs);
-  if (DEBUG_PARSER)
-    debug_packrat << string_parser.to_string();
+  if (DEBUG_PARSER) debug_packrat << string_parser.to_string ();
 }
 
 void
 prog_language_rep::customize_comment (tree config) {
-  for (int i=0; i<N(config); i++) {
-    tree feature= config[i];
-    string label= get_label (feature);
+  for (int i= 0; i < N (config); i++) {
+    tree   feature= config[i];
+    string label  = get_label (feature);
     if (label == "inline") {
       array<string> inline_comment_starts;
-      for (int i=0; i<N(feature); i++) {
+      for (int i= 0; i < N (feature); i++) {
         inline_comment_starts << get_label (feature[i]);
       }
       inline_comment_parser.set_starts (inline_comment_starts);
@@ -139,29 +142,27 @@ prog_language_rep::customize_comment (tree config) {
   }
 }
 
-
 void
 prog_language_rep::customize_preprocessor (tree config) {
-  for (int i=0; i<N(config); i++) {
-    tree feature= config[i];
-    string name= get_label (feature);
+  for (int i= 0; i < N (config); i++) {
+    tree   feature= config[i];
+    string name   = get_label (feature);
     if (name == "directives") {
       array<string> directives;
-      for (int j=0; j<N(feature); j++) {
+      for (int j= 0; j < N (feature); j++) {
         string key= get_label (feature[j]);
         directives << key;
       }
       preprocessor_parser.set_directives (directives);
     }
   }
-  if (DEBUG_PARSER)
-    debug_packrat << preprocessor_parser.to_string();
+  if (DEBUG_PARSER) debug_packrat << preprocessor_parser.to_string ();
 }
 
 text_property
 prog_language_rep::advance (tree t, int& pos) {
   string s= t->label;
-  if (pos>=N(s)) return &tp_normal_rep;
+  if (pos >= N (s)) return &tp_normal_rep;
 
   if (string_parser.unfinished ()) {
     if (string_parser.escaped () && string_parser.parse_escaped (s, pos)) {
@@ -211,23 +212,21 @@ prog_language_rep::advance (tree t, int& pos) {
 
 array<int>
 prog_language_rep::get_hyphens (string s) {
-  int i;
-  array<int> penalty (N(s)+1);
+  int        i;
+  array<int> penalty (N (s) + 1);
   penalty[0]= HYPH_INVALID;
-  for (i=1; i<N(s); i++)
-    if (s[i-1] == '-' && is_alpha (s[i]))
-      penalty[i]= HYPH_STD;
+  for (i= 1; i < N (s); i++)
+    if (s[i - 1] == '-' && is_alpha (s[i])) penalty[i]= HYPH_STD;
     else penalty[i]= HYPH_INVALID;
   penalty[i]= HYPH_INVALID;
   return penalty;
 }
 
 void
-prog_language_rep::hyphenate (
-  string s, int after, string& left, string& right)
-{
+prog_language_rep::hyphenate (string s, int after, string& left,
+                              string& right) {
   left = s (0, after);
-  right= s (after, N(s));
+  right= s (after, N (s));
 }
 
 string
@@ -235,38 +234,43 @@ prog_language_rep::get_color (tree t, int start, int end) {
   static string none= "";
   if (start >= end) return none;
 
-
   // Coloring as multi-line comment
   if (in_comment (start, t))
     return decode_color (lan_name, encode_color ("comment"));
 
   string type= none;
-  string s= t->label;
-  
+  string s   = t->label;
+
   // Coloring as inline comment
   int pos= 0;
   while (pos <= start) {
     if (inline_comment_parser.can_parse (s, pos)) {
       return decode_color (lan_name, encode_color ("comment"));
     }
-    pos ++;
+    pos++;
   }
 
   if (current_parser == "string_parser") {
     type= "constant_string";
-  } else if (current_parser == "escaped_char_parser") {
+  }
+  else if (current_parser == "escaped_char_parser") {
     type= "constant_char";
-  } else if (current_parser == "number_parser") {
+  }
+  else if (current_parser == "number_parser") {
     type= "constant_number";
-  } else if (current_parser == "operator_parser") {
-    string oper= s(start, end);
-    type= operator_parser.get (oper);
-  } else if (current_parser == "keyword_parser") {
-    string keyword= s(start, end);
-    type= keyword_parser.get (keyword);
-  } else if (current_parser == "preprocessor_parser") {
+  }
+  else if (current_parser == "operator_parser") {
+    string oper= s (start, end);
+    type       = operator_parser.get (oper);
+  }
+  else if (current_parser == "keyword_parser") {
+    string keyword= s (start, end);
+    type          = keyword_parser.get (keyword);
+  }
+  else if (current_parser == "preprocessor_parser") {
     type= "preprocessor_directive";
-  } else {
+  }
+  else {
     type= none;
   }
 
@@ -274,30 +278,31 @@ prog_language_rep::get_color (tree t, int start, int end) {
   return decode_color (lan_name, encode_color (type));
 }
 
-bool prog_lang_exists (string s) {
-  return exists (url_system ("$TEXMACS_PATH/progs/prog/" * s * "-lang.scm"))
-   || exists (url_system ("$TEXMACS_PATH/plugins/" * s * "/progs/" * s * "-lang.scm"))
-   || exists (url_system ("$TEXMACS_PATH/plugins/code/progs/" * s * "-lang.scm"))
-   || exists (url_system ("$TEXMACS_HOME_PATH/plugins/" * s * "/progs/" * s * "-lang.scm"))
-   || exists (url_system ("$TEXMACS_HOME_PATH/plugins/code/progs/" * s * "-lang.scm"))
-   ;
+bool
+prog_lang_exists (string s) {
+  return exists (url_system ("$TEXMACS_PATH/progs/prog/" * s * "-lang.scm")) ||
+         exists (url_system ("$TEXMACS_PATH/plugins/" * s * "/progs/" * s *
+                             "-lang.scm")) ||
+         exists (url_system ("$TEXMACS_PATH/plugins/code/progs/" * s *
+                             "-lang.scm")) ||
+         exists (url_system ("$TEXMACS_HOME_PATH/plugins/" * s * "/progs/" * s *
+                             "-lang.scm")) ||
+         exists (url_system ("$TEXMACS_HOME_PATH/plugins/code/progs/" * s *
+                             "-lang.scm"));
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 language
 prog_language (string s) {
-  if (language::instances -> contains (s)) return language (s);
-  
-  if (s == "scheme")
-    return make (language, s, tm_new<scheme_language_rep> (s));
+  if (language::instances->contains (s)) return language (s);
+
+  if (s == "scheme") return make (language, s, tm_new<scheme_language_rep> (s));
   if (s == "mathemagix" || s == "mmi" || s == "caas" || s == "mmshell")
     return make (language, s, tm_new<mathemagix_language_rep> (s));
-  if (s == "scilab")
-    return make (language, s, tm_new<scilab_language_rep> (s));
-  if (s == "r")
-    return make (language, s, tm_new<r_language_rep> (s));
+  if (s == "scilab") return make (language, s, tm_new<scilab_language_rep> (s));
+  if (s == "r") return make (language, s, tm_new<r_language_rep> (s));
   if (s == "fortran")
     return make (language, s, tm_new<fortran_language_rep> (s));
 

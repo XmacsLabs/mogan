@@ -1,37 +1,36 @@
 
 /******************************************************************************
-* MODULE     : transformed.cpp
-* DESCRIPTION: Transformed spacial vector graphics
-* COPYRIGHT  : (C) 2013  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : transformed.cpp
+ * DESCRIPTION: Transformed spacial vector graphics
+ * COPYRIGHT  : (C) 2013  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "spacial.hpp"
 #include "renderer.hpp"
+#include "spacial.hpp"
 
 /******************************************************************************
-* The abstract spacial class
-******************************************************************************/
+ * The abstract spacial class
+ ******************************************************************************/
 
-class transformed_rep: public spacial_rep {
-  spacial obj;
+class transformed_rep : public spacial_rep {
+  spacial        obj;
   matrix<double> m;
-  spacial tobj;
+  spacial        tobj;
 
 public:
-  transformed_rep (spacial obj2, matrix<double> m2):
-    obj (obj2), m (m2) {}
+  transformed_rep (spacial obj2, matrix<double> m2) : obj (obj2), m (m2) {}
 
   spacial_kind get_type () { return spacial_transformed; }
-  void* get_handle () { return (void*) this; }
+  void*        get_handle () { return (void*) this; }
 
   rectangle get_extents ();
-  void draw (renderer ren);
-  spacial transform (matrix<double> m);
-  spacial enlighten (tree light);
+  void      draw (renderer ren);
+  spacial   transform (matrix<double> m);
+  spacial   enlighten (tree light);
 };
 
 spacial
@@ -40,8 +39,8 @@ transformed (spacial obj, matrix<double> m) {
 }
 
 /******************************************************************************
-* Extents, drawing and transforming
-******************************************************************************/
+ * Extents, drawing and transforming
+ ******************************************************************************/
 
 rectangle
 transformed_rep::get_extents () {

@@ -1,23 +1,23 @@
 
 /******************************************************************************
-* MODULE     : player.cpp
-* DESCRIPTION: animation players
-* COPYRIGHT  : (C) 2016  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : player.cpp
+ * DESCRIPTION: animation players
+ * COPYRIGHT  : (C) 2016  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "tree_helper.hpp"
 #include "player.hpp"
 #include "tm_timer.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
-* Basic players
-******************************************************************************/
+ * Basic players
+ ******************************************************************************/
 
-class basic_player_rep: public player_rep {
+class basic_player_rep : public player_rep {
 public:
   double started;
   double speed;
@@ -62,7 +62,7 @@ basic_player_rep::get_started () {
 void
 basic_player_rep::set_speed (double s) {
   double t= get_elapsed ();
-  speed= s;
+  speed   = s;
   set_elapsed (t);
 }
 
@@ -117,31 +117,35 @@ basic_player_rep::print (tm_ostream& out) {
 }
 
 /******************************************************************************
-* Accelerations
-******************************************************************************/
+ * Accelerations
+ ******************************************************************************/
 
-class accelerated_player_rep: public player_rep {
+class accelerated_player_rep : public player_rep {
 public:
   player base;
   double duration;
 
-  accelerated_player_rep (player base2):
-    base (base2), duration (1000.0) {}
+  accelerated_player_rep (player base2) : base (base2), duration (1000.0) {}
 
-  virtual tree   get_name () = 0;
-  virtual double transform_direct (double t) = 0;
-  virtual double transform_inverse (double t, double ref) = 0;
+  virtual tree   get_name ()                             = 0;
+  virtual double transform_direct (double t)             = 0;
+  virtual double transform_inverse (double t, double ref)= 0;
 
   double accelerate (double t) {
-    return duration * transform_direct (t / duration); }
+    return duration * transform_direct (t / duration);
+  }
   double decelerate (double t, double ref) {
-    return duration * transform_inverse (t / duration, ref / duration); }
-  
+    return duration * transform_inverse (t / duration, ref / duration);
+  }
+
   void   set_started (double t) { base->set_started (t); }
   double get_started () { return base->get_started (); }
   void   set_speed (double s) { base->set_speed (s); }
   double get_speed () { return base->get_speed (); }
-  void   set_duration (double l) { duration= l; base->set_duration (l); }
+  void   set_duration (double l) {
+    duration= l;
+    base->set_duration (l);
+  }
   double get_duration () { return duration; }
 
   bool   is_progressing ();
@@ -149,22 +153,23 @@ public:
   double get_elapsed () { return accelerate (base->get_elapsed ()); }
   double get_refresh_time (double dt);
 
-  tree   expression () {
-    return tuple (get_name (), as_tree (duration), (tree) base); }
-  void   print (tm_ostream& out) {
+  tree expression () {
+    return tuple (get_name (), as_tree (duration), (tree) base);
+  }
+  void print (tm_ostream& out) {
     out << get_name () << " (" << duration << ", ";
     base->print (out);
-    out << ")"; }
-  
+    out << ")";
+  }
+
   friend class player;
 };
 
 bool
 accelerated_player_rep::is_progressing () {
   double a0= base->get_elapsed ();
-  return
-    (accelerate (a0 + 0.001) >= accelerate (a0)) ^
-    !base->is_progressing ();
+  return (accelerate (a0 + 0.001) >= accelerate (a0)) ^
+         !base->is_progressing ();
 }
 
 double
@@ -185,9 +190,9 @@ accelerated_player_rep::get_refresh_time (double dt) {
   }
 }
 
-class reverse_player_rep: public accelerated_player_rep {
+class reverse_player_rep : public accelerated_player_rep {
 public:
-  reverse_player_rep (player base): accelerated_player_rep (base) {}
+  reverse_player_rep (player base) : accelerated_player_rep (base) {}
   tree   get_name () { return "reverse"; }
   double transform_direct (double t) { return 1.0 - t; }
   double transform_inverse (double t, double ref) { return 1.0 - t; }
@@ -199,16 +204,18 @@ reverse_player (player base) {
   return tm_new<reverse_player_rep> (base);
 }
 
-class fade_in_player_rep: public accelerated_player_rep {
+class fade_in_player_rep : public accelerated_player_rep {
 public:
-  fade_in_player_rep (player base): accelerated_player_rep (base) {}
+  fade_in_player_rep (player base) : accelerated_player_rep (base) {}
   tree   get_name () { return "fade_in"; }
   double transform_direct (double t) {
     if (t <= 0.0 || t >= 1.0) return t;
-    else return t * t; }
+    else return t * t;
+  }
   double transform_inverse (double t, double ref) {
     if (t <= 0.0 || t >= 1.0) return t;
-    else return sqrt (t); }
+    else return sqrt (t);
+  }
   player duplicate () { return fade_in_player (copy (base)); }
 };
 
@@ -217,16 +224,18 @@ fade_in_player (player base) {
   return tm_new<fade_in_player_rep> (base);
 }
 
-class fade_out_player_rep: public accelerated_player_rep {
+class fade_out_player_rep : public accelerated_player_rep {
 public:
-  fade_out_player_rep (player base): accelerated_player_rep (base) {}
+  fade_out_player_rep (player base) : accelerated_player_rep (base) {}
   tree   get_name () { return "fade_out"; }
   double transform_direct (double t) {
     if (t <= 0.0 || t >= 1.0) return t;
-    else return t * (2.0 - t); }
+    else return t * (2.0 - t);
+  }
   double transform_inverse (double t, double ref) {
     if (t <= 0.0 || t >= 1.0) return t;
-    else return 1.0 - sqrt (1.0 - t); }
+    else return 1.0 - sqrt (1.0 - t);
+  }
   player duplicate () { return fade_out_player (copy (base)); }
 };
 
@@ -235,16 +244,18 @@ fade_out_player (player base) {
   return tm_new<fade_out_player_rep> (base);
 }
 
-class faded_player_rep: public accelerated_player_rep {
+class faded_player_rep : public accelerated_player_rep {
 public:
-  faded_player_rep (player base): accelerated_player_rep (base) {}
+  faded_player_rep (player base) : accelerated_player_rep (base) {}
   tree   get_name () { return "faded"; }
   double transform_direct (double t) {
     if (t <= 0.0 || t >= 1.0) return t;
-    else return 0.5 - 0.5 * cos (3.14159265359 * t); }
+    else return 0.5 - 0.5 * cos (3.14159265359 * t);
+  }
   double transform_inverse (double t, double ref) {
     if (t <= 0.0 || t >= 1.0) return t;
-    else return acos (1.0 - 2.0 * t) / 3.14159265359; }
+    else return acos (1.0 - 2.0 * t) / 3.14159265359;
+  }
   player duplicate () { return faded_player (copy (base)); }
 };
 
@@ -253,21 +264,23 @@ faded_player (player base) {
   return tm_new<faded_player_rep> (base);
 }
 
-class bump_player_rep: public accelerated_player_rep {
+class bump_player_rep : public accelerated_player_rep {
 public:
-  bump_player_rep (player base): accelerated_player_rep (base) {}
+  bump_player_rep (player base) : accelerated_player_rep (base) {}
   tree   get_name () { return "bump"; }
   double transform_direct (double t) {
     if (t <= 0.0) return t;
     if (t >= 1.0) return 1.0 - t;
-    return 4.0 * t * (1.0 - t); }
+    return 4.0 * t * (1.0 - t);
+  }
   double transform_inverse (double t, double ref) {
     if (t >= 1.0) return 0.5;
     double r;
     if (t <= 0.0) r= t;
     else r= 0.5 * (1.0 - sqrt (1.0 - t));
     if (ref <= 0.5) return r;
-    else return 1.0 - r; }
+    else return 1.0 - r;
+  }
   player duplicate () { return bump_player (copy (base)); }
 };
 
@@ -276,18 +289,20 @@ bump_player (player base) {
   return tm_new<bump_player_rep> (base);
 }
 
-class fixed_player_rep: public accelerated_player_rep {
+class fixed_player_rep : public accelerated_player_rep {
 public:
   double position;
-  fixed_player_rep (player base, double pos):
-    accelerated_player_rep (base), position (pos) {}
+  fixed_player_rep (player base, double pos)
+      : accelerated_player_rep (base), position (pos) {}
   tree   get_name () { return tuple ("fixed", as_string (position)); }
   double transform_direct (double t) {
     (void) t;
-    return position; }
+    return position;
+  }
   double transform_inverse (double t, double ref) {
     if (t < position) return 0.0;
-    else return 1.0; }
+    else return 1.0;
+  }
   player duplicate () { return fixed_player (copy (base), position); }
 };
 
@@ -297,21 +312,22 @@ fixed_player (player base, double position) {
 }
 
 /******************************************************************************
-* Abstract players
-******************************************************************************/
+ * Abstract players
+ ******************************************************************************/
 
 int player_count= 0;
 
-player::player ():
-  rep (tm_new<basic_player_rep> ((double) texmacs_time (), 1.0)) {
-    INC_COUNT (rep); }
-
-player::player (double started, double speed):
-  rep (tm_new<basic_player_rep> (started, speed)) { INC_COUNT (rep); }
-
-player::operator tree () {
-  return rep->expression ();
+player::player ()
+    : rep (tm_new<basic_player_rep> ((double) texmacs_time (), 1.0)) {
+  INC_COUNT (rep);
 }
+
+player::player (double started, double speed)
+    : rep (tm_new<basic_player_rep> (started, speed)) {
+  INC_COUNT (rep);
+}
+
+player::operator tree () { return rep->expression (); }
 
 player
 copy (player p) {
@@ -319,17 +335,17 @@ copy (player p) {
 }
 
 bool
-operator == (player p1, player p2) {
+operator== (player p1, player p2) {
   return p1.rep == p2.rep;
 }
 
 bool
-operator != (player p1, player p2) {
+operator!= (player p1, player p2) {
   return p1.rep != p2.rep;
 }
 
 tm_ostream&
-operator << (tm_ostream& out, player p) {
+operator<< (tm_ostream& out, player p) {
   p->print (out);
   return out;
 }

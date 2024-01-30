@@ -1,44 +1,45 @@
 
 /******************************************************************************
-* MODULE     : pipe_link.cpp
-* DESCRIPTION: TeXmacs links by pipes
-* COPYRIGHT  : (C) 2000  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : pipe_link.cpp
+ * DESCRIPTION: TeXmacs links by pipes
+ * COPYRIGHT  : (C) 2000  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "basic.hpp"
-#include "tm_link.hpp"
 #include "tm_debug.hpp"
-
-#if !(defined (QTTEXMACS) && (defined (OS_MINGW) || defined (QTPIPES) || defined (OS_WIN) || defined(OS_WASM)))
-
 #include "tm_link.hpp"
-#include "socket_notifier.hpp"
-#include "sys_utils.hpp"
+
+#if !(defined(QTTEXMACS) && (defined(OS_MINGW) || defined(QTPIPES) ||          \
+                             defined(OS_WIN) || defined(OS_WASM)))
+
 #include "hashset.hpp"
 #include "iterator.hpp"
+#include "socket_notifier.hpp"
+#include "sys_utils.hpp"
+#include "tm_link.hpp"
 #include "tm_timer.hpp"
 #include <stdio.h>
 #include <string.h>
 #if defined(OS_MINGW) || defined(OS_WIN)
-//#define PATTERN WIN_PATTERN
-//#include <winsock.h>
-//#undef PATTERN
+// #define PATTERN WIN_PATTERN
+// #include <winsock.h>
+// #undef PATTERN
 #else
-#include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <unistd.h>
 #endif
 #if !defined(__APPLE__) && !defined(__FreeBSD__)
 #include <malloc.h>
 #endif
 
 hashset<pointer> pipe_link_set;
-void pipe_callback (void *obj, void *info);
-extern char **environ;
+void             pipe_callback (void* obj, void* info);
+extern char**    environ;
 
 #define STDIN 0
 #define STDOUT 1
@@ -48,24 +49,24 @@ extern char **environ;
 #define TERMCHAR '\1'
 
 /******************************************************************************
-* The pipe_link class
-******************************************************************************/
+ * The pipe_link class
+ ******************************************************************************/
 
-struct pipe_link_rep: tm_link_rep {
-  string cmd;           // command for launching the pipe
-  int    pid;           // process identifier of the child
-  int    pp_in [2];     // for data going to the child
-  int    pp_out[2];     // for data coming from the child
-  int    pp_err[2];     // for error messages coming from the child
-  int    in;            // file descriptor for data going to the child
-  int    out;           // file descriptor for data coming from the child
-  int    err;           // file descriptor for errors coming from the child
+struct pipe_link_rep : tm_link_rep {
+  string cmd;       // command for launching the pipe
+  int    pid;       // process identifier of the child
+  int    pp_in[2];  // for data going to the child
+  int    pp_out[2]; // for data coming from the child
+  int    pp_err[2]; // for error messages coming from the child
+  int    in;        // file descriptor for data going to the child
+  int    out;       // file descriptor for data coming from the child
+  int    err;       // file descriptor for errors coming from the child
 
-  string outbuf;        // pending output from plugin
-  string errbuf;        // pending errors from plugin
+  string outbuf; // pending output from plugin
+  string errbuf; // pending errors from plugin
 
   socket_notifier snout, snerr;
-  
+
 public:
   pipe_link_rep (string cmd);
   ~pipe_link_rep ();
@@ -78,17 +79,17 @@ public:
   void    interrupt ();
   void    stop ();
 
-  void    feed (int channel);
+  void feed (int channel);
 };
 
-pipe_link_rep::pipe_link_rep (string cmd2): cmd (cmd2) {
+pipe_link_rep::pipe_link_rep (string cmd2) : cmd (cmd2) {
   pipe_link_set->insert ((pointer) this);
-  in     = pp_in [0]= pp_in [1]= -1;
-  out    = pp_out[0]= pp_out[1]= -1;
-  err    = pp_err[0]= pp_err[1]= -1;
-  outbuf = "";
-  errbuf = "";
-  alive  = false;
+  in= pp_in[0]= pp_in[1]= -1;
+  out= pp_out[0]= pp_out[1]= -1;
+  err= pp_err[0]= pp_err[1]= -1;
+  outbuf                   = "";
+  errbuf                   = "";
+  alive                    = false;
 }
 
 pipe_link_rep::~pipe_link_rep () {
@@ -105,12 +106,12 @@ void
 close_all_pipes () {
 #if !defined(OS_MINGW) && !defined(OS_WIN)
   iterator<pointer> it= iterate (pipe_link_set);
-  while (it->busy()) {
-    pipe_link_rep* con= (pipe_link_rep*) it->next();
+  while (it->busy ()) {
+    pipe_link_rep* con= (pipe_link_rep*) it->next ();
     if (con->alive) {
-      if (-1 != killpg(con->pid,SIGTERM)) {
-sleep(2);
-        killpg(con->pid,SIGKILL);
+      if (-1 != killpg (con->pid, SIGTERM)) {
+        sleep (2);
+        killpg (con->pid, SIGKILL);
       }
       con->alive= false;
     }
@@ -121,25 +122,25 @@ sleep(2);
 void
 process_all_pipes () {
   iterator<pointer> it= iterate (pipe_link_set);
-  while (it->busy()) {
-    pipe_link_rep* con= (pipe_link_rep*) it->next();
+  while (it->busy ()) {
+    pipe_link_rep* con= (pipe_link_rep*) it->next ();
     if (con->alive) con->apply_command ();
   }
 }
 
 /******************************************************************************
-* Routines for pipe_links
-******************************************************************************/
+ * Routines for pipe_links
+ ******************************************************************************/
 
 #if !defined(OS_MINGW) && !defined(OS_WIN)
 void
 execute_shell (string s) {
   c_string _s (s);
-  char *argv[4];
-  argv[0] = const_cast<char*> ("sh");
-  argv[1] = const_cast<char*> ("-c");
-  argv[2] = _s;
-  argv[3] = NULL;
+  char*    argv[4];
+  argv[0]= const_cast<char*> ("sh");
+  argv[1]= const_cast<char*> ("-c");
+  argv[2]= _s;
+  argv[3]= NULL;
   execve ("/bin/sh", argv, environ);
 }
 #endif
@@ -150,50 +151,53 @@ pipe_link_rep::start () {
   if (alive) return "busy";
   if (DEBUG_AUTO) debug_io << "Launching '" << cmd << "'\n";
 
-  int e1= pipe (pp_in ); (void) e1;
-  int e2= pipe (pp_out); (void) e2;
-  int e3= pipe (pp_err); (void) e3;
+  int e1= pipe (pp_in);
+  (void) e1;
+  int e2= pipe (pp_out);
+  (void) e2;
+  int e3= pipe (pp_err);
+  (void) e3;
   pid= fork ();
-  if (pid==0) { // the child
-    setsid();
-    close (pp_in  [OUT]);
-    close (pp_out [IN ]);
-    close (pp_err [IN ]);
-    dup2  (pp_in  [IN ], STDIN );
-    close (pp_in  [IN ]);
-    dup2  (pp_out [OUT], STDOUT);
-    close (pp_out [OUT]);
-    dup2  (pp_err [OUT], STDERR);
-    close (pp_err [OUT]);
+  if (pid == 0) { // the child
+    setsid ();
+    close (pp_in[OUT]);
+    close (pp_out[IN]);
+    close (pp_err[IN]);
+    dup2 (pp_in[IN], STDIN);
+    close (pp_in[IN]);
+    dup2 (pp_out[OUT], STDOUT);
+    close (pp_out[OUT]);
+    dup2 (pp_err[OUT], STDERR);
+    close (pp_err[OUT]);
 
     execute_shell (cmd);
     exit (127);
     // exit (system (cmd) != 0);
   }
   else { // the main process
-    in = pp_in  [OUT];
-    close (pp_in [IN]);
-    out= pp_out [IN ];
-    close (pp_out [OUT]);
-    err= pp_err [IN ];
-    close (pp_err [OUT]);
+    in= pp_in[OUT];
+    close (pp_in[IN]);
+    out= pp_out[IN];
+    close (pp_out[OUT]);
+    err= pp_err[IN];
+    close (pp_err[OUT]);
 
     alive= true;
-    snout = socket_notifier (out, &pipe_callback, this, NULL);
-    snerr = socket_notifier (err, &pipe_callback, this, NULL);
+    snout= socket_notifier (out, &pipe_callback, this, NULL);
+    snerr= socket_notifier (err, &pipe_callback, this, NULL);
     add_notifier (snout);
     add_notifier (snerr);
-    
+
     if (/* !banner */ true) return "ok";
     else {
-      int r;
+      int  r;
       char outbuf[1024];
       r= ::read (out, outbuf, 1024);
       if (r == 1 && outbuf[0] == TERMCHAR) return "ok";
       alive= false;
-      if (-1 != killpg(pid,SIGTERM)) {
-        sleep(2);
-        killpg(pid,SIGKILL);
+      if (-1 != killpg (pid, SIGTERM)) {
+        sleep (2);
+        killpg (pid, SIGKILL);
       }
       wait (NULL);
       if (r == -1) return "Error: the application does not reply";
@@ -209,9 +213,9 @@ pipe_link_rep::start () {
 #if !defined(OS_MINGW) && !defined(OS_WIN)
 static string
 debug_io_string (string s) {
-  int i, n= N(s);
+  int    i, n= N (s);
   string r;
-  for (i=0; i<n; i++) {
+  for (i= 0; i < n; i++) {
     unsigned char c= (unsigned char) s[i];
     if (c == DATA_BEGIN) r << "[BEGIN]";
     else if (c == DATA_END) r << "[END]";
@@ -230,7 +234,7 @@ pipe_link_rep::write (string s, int channel) {
   if ((!alive) || (channel != LINK_IN)) return;
   if (DEBUG_IO) debug_io << "[INPUT]" << debug_io_string (s);
   c_string _s (s);
-  int err= ::write (in, _s, N(s));
+  int      err= ::write (in, _s, N (s));
   (void) err;
 #endif
 }
@@ -239,23 +243,23 @@ void
 pipe_link_rep::feed (int channel) {
 #if !defined(OS_MINGW) && !defined(OS_WIN)
   if ((!alive) || ((channel != LINK_OUT) && (channel != LINK_ERR))) return;
-  int r;
+  int  r;
   char tempout[1024];
-  if (channel == LINK_OUT) r = ::read (out, tempout, 1024);
-  else r = ::read (err, tempout, 1024);
+  if (channel == LINK_OUT) r= ::read (out, tempout, 1024);
+  else r= ::read (err, tempout, 1024);
   if (r == -1) {
     io_error << "Read failed for '" << cmd << "'\n";
     wait (NULL);
   }
   else if (r == 0) {
-    if (-1 != killpg(pid,SIGTERM)) {
-      sleep(2);
-      killpg(pid,SIGKILL);
+    if (-1 != killpg (pid, SIGTERM)) {
+      sleep (2);
+      killpg (pid, SIGKILL);
     }
 
     alive= false;
-    remove_notifier (snout);      
-    remove_notifier (snerr);      
+    remove_notifier (snout);
+    remove_notifier (snerr);
   }
   else {
     if (DEBUG_IO) debug_io << debug_io_string (string (tempout, r));
@@ -277,15 +281,15 @@ string
 pipe_link_rep::read (int channel) {
   if (channel == LINK_OUT) {
     string r= outbuf;
-    outbuf= "";
+    outbuf  = "";
     return r;
   }
   else if (channel == LINK_ERR) {
     string r= errbuf;
-    errbuf= "";
+    errbuf  = "";
     return r;
   }
-  else return string("");
+  else return string ("");
 }
 
 void
@@ -298,9 +302,9 @@ pipe_link_rep::listen (int msecs) {
     FD_SET (out, &rfds);
     FD_SET (err, &rfds);
     struct timeval tv;
-    tv.tv_sec  = msecs / 1000;
-    tv.tv_usec = 1000 * (msecs % 1000);
-    int nr= select (max (out, err) + 1, &rfds, NULL, NULL, &tv);
+    tv.tv_sec = msecs / 1000;
+    tv.tv_usec= 1000 * (msecs % 1000);
+    int nr    = select (max (out, err) + 1, &rfds, NULL, NULL, &tv);
     if (nr != 0 && FD_ISSET (out, &rfds)) feed (LINK_OUT);
     if (nr != 0 && FD_ISSET (err, &rfds)) feed (LINK_ERR);
     if (texmacs_time () - wait_until > 0) break;
@@ -319,11 +323,11 @@ void
 pipe_link_rep::stop () {
 #if !defined(OS_MINGW) && !defined(OS_WIN)
   if (!alive) return;
-  if (-1 != killpg(pid,SIGTERM)) {
-    sleep(2);
-    killpg(pid,SIGKILL);
+  if (-1 != killpg (pid, SIGTERM)) {
+    sleep (2);
+    killpg (pid, SIGKILL);
   }
-  alive= false;    
+  alive= false;
   close (in);
   alive= false;
   wait (NULL);
@@ -334,35 +338,36 @@ pipe_link_rep::stop () {
 }
 
 /******************************************************************************
-* Call back for new information on pipe
-******************************************************************************/
+ * Call back for new information on pipe
+ ******************************************************************************/
 
-void pipe_callback (void *obj, void *info) {
+void
+pipe_callback (void* obj, void* info) {
 #if !defined(OS_MINGW) && !defined(OS_WIN)
   (void) info;
-  pipe_link_rep* con= (pipe_link_rep*) obj;  
-  bool busy= true;
-  bool news= false;
+  pipe_link_rep* con = (pipe_link_rep*) obj;
+  bool           busy= true;
+  bool           news= false;
   while (busy) {
     fd_set rfds;
     FD_ZERO (&rfds);
     int max_fd= max (con->err, con->out) + 1;
     FD_SET (con->out, &rfds);
     FD_SET (con->err, &rfds);
-  
+
     struct timeval tv;
-    tv.tv_sec  = 0;
-    tv.tv_usec = 0;
+    tv.tv_sec = 0;
+    tv.tv_usec= 0;
     select (max_fd, &rfds, NULL, NULL, &tv);
 
     busy= false;
     if (con->alive && FD_ISSET (con->out, &rfds)) {
-      //cout << "pipe_callback OUT" << LF;
+      // cout << "pipe_callback OUT" << LF;
       con->feed (LINK_OUT);
       busy= news= true;
     }
     if (con->alive && FD_ISSET (con->err, &rfds)) {
-      //cout << "pipe_callback ERR" << LF;
+      // cout << "pipe_callback ERR" << LF;
       con->feed (LINK_ERR);
       busy= news= true;
     }
@@ -370,7 +375,7 @@ void pipe_callback (void *obj, void *info) {
   /* FIXME: find out the appropriate place to call the callback
      Currently, the callback is called in tm_server_rep::interpose_handler */
   if (!is_nil (con->feed_cmd) && news) {
-    //cout << "pipe_callback APPLY" << LF;
+    // cout << "pipe_callback APPLY" << LF;
     if (!is_nil (con->feed_cmd))
       con->feed_cmd->apply (); // call the data processor
   }
@@ -380,8 +385,13 @@ void pipe_callback (void *obj, void *info) {
 #endif // !(defined (QTTEXMACS) && defined (OS_MINGW))
 
 #ifdef OS_WASM
-tm_link make_pipe_link (string cmd) { return tm_link(); }
+tm_link
+make_pipe_link (string cmd) {
+  return tm_link ();
+}
 
-void close_all_pipes () {}
-void process_all_pipes () {}
+void
+close_all_pipes () {}
+void
+process_all_pipes () {}
 #endif

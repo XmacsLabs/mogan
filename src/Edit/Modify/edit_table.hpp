@@ -1,19 +1,19 @@
 
 /******************************************************************************
-* MODULE     : edit_table.hpp
-* DESCRIPTION: Editing matrices, tables and tables
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : edit_table.hpp
+ * DESCRIPTION: Editing matrices, tables and tables
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef EDIT_TABLE_H
 #define EDIT_TABLE_H
 #include "editor.hpp"
 
-class edit_table_rep: virtual public editor_rep {
+class edit_table_rep : virtual public editor_rep {
 protected:
   string cell_mode;
 
@@ -31,28 +31,26 @@ protected:
 
   // Analyzing with statements in the format
   void with_raw_read (tree with, int& i1, int& j1, int& i2, int& j2);
-  void with_decode (int nr_rows, int nr_cols,
-		    int& i1, int& j1, int& i2, int& j2);
-  void with_decode (int nr_rows, int nr_cols,
-		    int& I1, int& J1, int& I2, int& J2,
-		    int& i1, int& j1, int& i2, int& j2);
-  void with_read (tree with, int nr_rows, int nr_cols,
-		  int& i1, int& j1, int& i2, int& j2);
-  void with_read (tree with, int nr_rows, int nr_cols,
-		  int& I1, int& J1, int& I2, int& J2,
-		  int& i1, int& j1, int& i2, int& j2);
-  
+  void with_decode (int nr_rows, int nr_cols, int& i1, int& j1, int& i2,
+                    int& j2);
+  void with_decode (int nr_rows, int nr_cols, int& I1, int& J1, int& I2,
+                    int& J2, int& i1, int& j1, int& i2, int& j2);
+  void with_read (tree with, int nr_rows, int nr_cols, int& i1, int& j1,
+                  int& i2, int& j2);
+  void with_read (tree with, int nr_rows, int nr_cols, int& I1, int& J1,
+                  int& I2, int& J2, int& i1, int& j1, int& i2, int& j2);
+
   // Routines for formatting tables
   tree table_get_format (path fp);
   void table_set_format (path fp, string var, tree val);
   tree table_get_format (path fp, string var);
   void table_del_format (path fp, string var);
-  void table_set_format (path fp, int I1, int J1, int I2, int J2,
-			 string var, tree val);
+  void table_set_format (path fp, int I1, int J1, int I2, int J2, string var,
+                         tree val);
   tree table_get_format (path fp, int I1, int J1, int I2, int J2, string var);
   void table_del_format (path fp, int I1, int J1, int I2, int J2, string var);
-  void table_get_format (path fp, string var,
-			 tree** val, int nr_rows, int nr_cols);
+  void table_get_format (path fp, string var, tree** val, int nr_rows,
+                         int nr_cols);
   void table_individualize (path fp, string var);
   void table_format_center (path fp, int row, int col);
 
@@ -84,40 +82,40 @@ public:
   edit_table_rep ();
   ~edit_table_rep ();
 
-  void   make_table (int nr_rows, int nr_cols);
-  void   make_subtable (int nr_rows, int nr_cols);
-  void   destroy_table ();
-  void   table_deactivate ();
-  void   table_extract_format ();
-  void   table_insert_row (bool forward);
-  void   table_insert_column (bool forward);
-  void   table_remove_row (bool forward, bool flag= false);
-  void   table_remove_column (bool forward, bool flag= false);
-  int    table_nr_rows ();
-  int    table_nr_columns ();
+  void       make_table (int nr_rows, int nr_cols);
+  void       make_subtable (int nr_rows, int nr_cols);
+  void       destroy_table ();
+  void       table_deactivate ();
+  void       table_extract_format ();
+  void       table_insert_row (bool forward);
+  void       table_insert_column (bool forward);
+  void       table_remove_row (bool forward, bool flag= false);
+  void       table_remove_column (bool forward, bool flag= false);
+  int        table_nr_rows ();
+  int        table_nr_columns ();
   array<int> table_get_extents ();
-  void   table_set_extents (int rows, int cols);
-  int    table_which_row ();
-  int    table_which_column ();
+  void       table_set_extents (int rows, int cols);
+  int        table_which_row ();
+  int        table_which_column ();
   array<int> table_which_cells ();
-  path   table_search_cell (int row, int col);
-  void   table_go_to (int row, int col);
-  void   table_set_format (string var, tree val);
-  tree   table_get_format ();
-  string table_get_format (string var);
-  void   table_del_format (string var);
-  void   table_format_center ();
-  void   table_row_decoration (bool forward);
-  void   table_column_decoration (bool forward);
-  void   table_correct_block_content ();
-  void   table_resize_notify ();
-  void   set_cell_mode (string mode);
-  string get_cell_mode ();
-  void   cell_set_format (string var, tree val);
-  string cell_get_format (string var);
-  void   cell_del_format (string var);
+  path       table_search_cell (int row, int col);
+  void       table_go_to (int row, int col);
+  void       table_set_format (string var, tree val);
+  tree       table_get_format ();
+  string     table_get_format (string var);
+  void       table_del_format (string var);
+  void       table_format_center ();
+  void       table_row_decoration (bool forward);
+  void       table_column_decoration (bool forward);
+  void       table_correct_block_content ();
+  void       table_resize_notify ();
+  void       set_cell_mode (string mode);
+  string     get_cell_mode ();
+  void       cell_set_format (string var, tree val);
+  string     cell_get_format (string var);
+  void       cell_del_format (string var);
 
-  void   table_test ();
+  void table_test ();
 };
 
 #endif // defined EDIT_TABLE_H

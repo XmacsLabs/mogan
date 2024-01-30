@@ -1,26 +1,26 @@
 
 /******************************************************************************
-* MODULE     : formatter.cpp
-* DESCRIPTION: formatting trees in a lazy way.
-*              extra formatting done is by calling 'produce'
-*              with new formatting information as a parameter
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : formatter.cpp
+ * DESCRIPTION: formatting trees in a lazy way.
+ *              extra formatting done is by calling 'produce'
+ *              with new formatting information as a parameter
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "formatter.hpp"
 #include "Format/format.hpp"
 #include "tm_debug.hpp"
 
 int format_count= 0;
-int lazy_count= 0;
+int lazy_count  = 0;
 
 /******************************************************************************
-* Standard formatting types
-******************************************************************************/
+ * Standard formatting types
+ ******************************************************************************/
 
 format
 make_format_none () {
@@ -55,8 +55,8 @@ make_query_vstream_width (array<line_item> bef, array<line_item> aft) {
 }
 
 /******************************************************************************
-* The lazy class
-******************************************************************************/
+ * The lazy class
+ ******************************************************************************/
 
 lazy
 lazy_rep::produce (lazy_type request, format fm) {
@@ -90,8 +90,7 @@ lazy_rep::query (lazy_type request, format fm) {
 }
 
 void
-lazy_rep::propagate () {
-}
+lazy_rep::propagate () {}
 
 void
 lazy_rep::append (lazy lz) {
@@ -100,19 +99,19 @@ lazy_rep::append (lazy lz) {
   TM_FAILED ("lazy structure is not a stream");
 }
 
-struct lazy_box_rep: public lazy_rep {
+struct lazy_box_rep : public lazy_rep {
   box b;
-  lazy_box_rep (box b2): lazy_rep (LAZY_BOX, b2->ip), b (b2) {}
+  lazy_box_rep (box b2) : lazy_rep (LAZY_BOX, b2->ip), b (b2) {}
   operator tree () { return (tree) b; }
 };
 
 struct lazy_box {
-  EXTEND_NULL(lazy,lazy_box);
+  EXTEND_NULL (lazy, lazy_box);
 };
-EXTEND_NULL_CODE(lazy,lazy_box);
+EXTEND_NULL_CODE (lazy, lazy_box);
 
 lazy::operator box () {
-  lazy lz= rep->produce (LAZY_BOX, make_format_none ());
+  lazy     lz= rep->produce (LAZY_BOX, make_format_none ());
   lazy_box lb= (lazy_box) lz;
   return lb->b;
 }
