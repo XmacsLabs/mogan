@@ -28,7 +28,8 @@ Other sites to download：
 + https://gitee.com/XmacsLabs/mogan/releases
 + https://codeberg.org/XmacsLabs/mogan/releases
 
-## Recommended releases
+## Recommended old releases
+Somtimes, you may prefer an older release:
 + [**v1.1.6 (2023/09/29)**](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.6)
 
 ## GNU Guix
