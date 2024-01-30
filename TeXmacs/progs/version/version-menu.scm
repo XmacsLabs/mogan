@@ -116,5 +116,5 @@
 	("New version" (version-retain 1))))
   (-> "Grain"
       ("Detailed" (version-set-grain "detailed"))
-      ("Block" (version-set-grain "block"))
+      ("Block::version" (version-set-grain "block"))
       ("Rough" (version-set-grain "rough"))))
