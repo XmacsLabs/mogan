@@ -1,32 +1,28 @@
 # 如何安装
-当前最新稳定版是墨干理工套件v1.2.2，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
+当前最新稳定版是墨干理工套件v1.2.3，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
 
 ## 官方提供的安装包
 | 产品 | 操作系统 | 马上下载 |
 |-----|-------|-----|
-| 墨干v1.2.2 | Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-64bit-installer.exe) |
-| 墨干v1.2.2 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2.dmg) |
-| 墨干v1.2.2 | macOS M1/M2 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/MoganResearch-v1.2.2-arm.dmg) |
-| 墨干v1.2.2 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-ubuntu22.04.deb) |
-| 墨干v1.2.2 | UOS | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-uos.deb) |
-| 墨干v1.2.2 | UOS Loongarch | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.2/mogan-research-v1.2.2-uos-loongarch64.deb) |
+| 墨干v1.2.3 | Windows (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.3/MoganResearch-v1.2.3-64bit-installer.exe) |
+| 墨干v1.2.3 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.3/MoganResearch-v1.2.3.dmg) |
+| 墨干v1.2.3 | macOS M1/M2 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.3/MoganResearch-v1.2.3-arm.dmg) |
+| 墨干v1.2.3 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.3/mogan-research-v1.2.3-ubuntu22.04.deb) |
 
 SHA256校验码：
 ```
-8b8e2cc54c64436b965417c9f76beaded181d3c4a192f2eae62189d88b754e28  MoganResearch-v1.2.2-64bit-installer.exe
-ccbd7843542cd94c4a5315694c62c7f5dbdb81e66542820d649e1328c42fc8b5  MoganResearch-v1.2.2-arm.dmg
-6470306b334f2da09a6be515ba2189c639954ae53333c0213074154364d137e7  MoganResearch-v1.2.2.dmg
-dc9f3d1e18afb4f27b598c8251815ad1082f14c58e6685e218965c63e6d19151  mogan-research-v1.2.2-ubuntu22.04.deb
-5185047d2acbf83465ec5d28406133512a7b8c6d450b70d08062b34c9dc59af1  mogan-research-v1.2.2-uos-loongarch64.deb
-9ae3f63c7b562fc51a408d97ad3f253fe11aa30a348f8212e277b3e1d5a1bc10  mogan-research-v1.2.2-uos.deb
+d4559441ec2d9a608d44e69e0146ea3a3ef056e182fe17a828f67b0430d98552  MoganResearch-v1.2.3-64bit-installer.exe
+915d8413586106db360914edae75ab57760d6aca738d3896747a31715163e332  MoganResearch-v1.2.3-arm.dmg
+ae0b96a46843a95575f313a5c1bec37c9ec8d77573c383163eec97b0ad9f098a  MoganResearch-v1.2.3.dmg
+ae4683bebc119443f4803c3bf60f7eff0e9c3c3e19ce6ae8be3f1f2a9b678586  mogan-research-v1.2.3-ubuntu22.04.deb
 ```
 
 墨干理工套件：
-+ 墨干（提供Windows/macOS/Ubuntu/UOS四大平台安装包）
++ 墨干（提供Windows/macOS/Ubuntu三大平台安装包）
 + 墨码（无安装包，正在开发中）
 + 墨板（无安装包，正在开发中）
 
-> 注意：墨干v1.2.2无法在Windows 7上运行。
+> 注意：墨干v1.2.3无法在Windows 7上运行。
 
 从其它站点下载：
 + https://github.com/XmacsLabs/mogan/releases
