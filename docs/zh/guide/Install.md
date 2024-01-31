@@ -29,17 +29,9 @@ ae4683bebc119443f4803c3bf60f7eff0e9c3c3e19ce6ae8be3f1f2a9b678586  mogan-research
 + https://gitee.com/XmacsLabs/mogan/releases
 + https://codeberg.org/XmacsLabs/mogan/releases
 
-旧版本安装包：
-+ [v1.2.1 (2023/12/21)](https://github.com/XmacsLabs/mogan/releases/tag/v1.2.1)
-+ [v1.2.0 (2023/12/04)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.2.0)
+## 推荐安装的旧版
+有时候，你可能希望使用旧版，下面是一些推荐版本：
 + [**v1.1.6 (2023/09/29)**](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.6)
-+ [v1.1.5 (2023/08/11)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.5)
-+ [v1.1.4 (2023/07/31)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.4)
-+ [v1.1.3 (2023/06/05)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.3)
-+ [v1.1.2 (2023/04/09)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.2)
-+ [v1.1.1 (2022/10/29)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.1)
-+ [v1.1.0 (2022/08/31)](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.0)
-
 
 ## GNU Guix
 ```
