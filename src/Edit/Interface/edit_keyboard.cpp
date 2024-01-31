@@ -393,21 +393,27 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
       // for (int i=0; i<N(key); i++)
       //   cout << ((int) (unsigned char) key[i]) << " ";
       // cout << "\n";
-      debug_keyboard << "Pressed " << key << " at " << t << "\n";
+      debug_keyboard << "Pressed " << key_u8 << "|" << key << " at " << t << LF;
       debug_keyboard << "  Codes";
       for (int i= 0; i < N (key); i++)
         debug_keyboard << " " << (unsigned int) (unsigned char) key[i];
-      debug_keyboard << "\n";
+      debug_keyboard << LF;
     }
     // time_t t1= texmacs_time ();
     if (is_nil (eb)) apply_changes ();
     start_editing ();
-    started    = true;
+    started= true;
+
     string zero= "a";
     zero[0]    = '\0';
     string gkey= replace (key, zero, "<#0>");
     if (gkey == "<#3000>") gkey= "space";
-    if (key_u8 == "`") call ("insert", "<#2018>");
+    else if (gkey == "gtr") gkey= ">";
+    else if (gkey == "less") gkey= "<";
+
+    if (key_u8 == "`") {
+      call ("insert", "<#2018>");
+    }
     else if (key_u8 == "“”") {
       call ("insert", "<#201C><#201D>");
     }
@@ -417,9 +423,13 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
     else if (key_u8 == "——") {
       call ("insert", "<#2014><#2014>");
     }
-    else if (starts (gkey, "pre-edit:"))
+    else if (starts (gkey, "pre-edit:")) {
       call ("delayed-keyboard-press", object (gkey), object ((double) t));
-    else call ("keyboard-press", object (gkey), object ((double) t));
+    }
+    else {
+      call ("keyboard-press", object (gkey), object ((double) t));
+    }
+
     update_focus_loci ();
     if (!is_nil (focus_ids) && got_focus)
       call ("link-follow-ids", object (focus_ids), object ("focus"));
