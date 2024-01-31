@@ -8,21 +8,23 @@
   <section*|Revisions between GNU <TeXmacs> v2.1.2 and v2.1.3>
 
   <\wide-tabular>
-    <tformat|<cwith|2|2|2|2|cell-background|<pattern|C:\\Users\\jingkaimori\\Documents\\Source\\mogan\\build\\packages\\app.mogan\\data\\misc\\patterns\\vintage\\granite-medium.png||>>|<cwith|5|6|2|2|cell-background|pastel
+    <tformat|<cwith|5|6|2|2|cell-background|pastel
     red>|<cwith|4|4|2|2|cell-background|#f0f0f0>|<cwith|7|7|2|2|cell-background|#f0f0f0>|<cwith|9|9|2|2|cell-background|pastel
     green>|<cwith|10|11|2|2|cell-background|pastel
     red>|<cwith|8|8|2|2|cell-background|pastel
     red>|<cwith|10|10|2|2|cell-background|pastel
-    red>|<cwith|28|28|2|2|cell-background|#f0f0f0>|<cwith|29|29|2|2|cell-background|#f0f0f0>|<cwith|31|31|2|2|cell-background|#f0f0f0>|<cwith|30|30|2|2|cell-background|pastel
-    red>|<cwith|32|32|2|2|cell-background|pastel
-    red>|<cwith|25|25|2|2|cell-background|#f0f0f0>|<cwith|23|23|2|2|cell-background|#f0f0f0>|<cwith|27|27|2|2|cell-background|#f0f0f0>|<cwith|17|18|2|2|cell-background|pastel
-    red>|<cwith|18|18|2|2|cell-background|pastel
-    green>|<cwith|16|16|2|2|cell-background|pastel
-    green>|<cwith|19|19|2|2|cell-background|pastel
+    red>|<cwith|30|30|2|2|cell-background|#f0f0f0>|<cwith|31|31|2|2|cell-background|#f0f0f0>|<cwith|33|33|2|2|cell-background|#f0f0f0>|<cwith|32|32|2|2|cell-background|pastel
+    red>|<cwith|34|34|2|2|cell-background|pastel
+    red>|<cwith|27|27|2|2|cell-background|#f0f0f0>|<cwith|25|25|2|2|cell-background|#f0f0f0>|<cwith|29|29|2|2|cell-background|#f0f0f0>|<cwith|19|20|2|2|cell-background|pastel
+    red>|<cwith|20|20|2|2|cell-background|pastel
+    green>|<cwith|18|18|2|2|cell-background|pastel
     green>|<cwith|21|21|2|2|cell-background|pastel
+    green>|<cwith|23|23|2|2|cell-background|pastel
     green>|<cwith|12|12|2|2|cell-background|pastel
     green>|<cwith|3|3|2|2|cell-background|pastel
-    green>|<cwith|14|14|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|14|14|2|2|cell-background|pastel
+    green>|<cwith|16|16|2|2|cell-background|pastel
+    green>|<cwith|2|2|2|2|cell-background|darker grey>|<table|<row|<\cell>
       SVN revision
     </cell>|<\cell>
       Status
@@ -137,6 +139,23 @@
       <dlink|11_20>
     </cell>|<\cell>
       Improved junctions for virtual \\in, \\subset, ...
+    </cell>>|<row|<\cell>
+      <text-dots>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
+      <svn|14129>
+    </cell>|<\cell>
+      done
+    </cell>|<\cell>
+      <dlink|47_5>
+    </cell>|<\cell>
+      Fix bug #<savannah-bug|63577>: Inserting ``include'' macro does not
+      work from keyboard, only form menu
     </cell>>|<row|<\cell>
       <text-dots>
     </cell>|<\cell>
