@@ -34,10 +34,12 @@ jobs:
         with:
           path: |
             build/xpack/research/*.exe
+            build/xpack/research/*.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           prerelease: true
-          files: build/xpack/research/*.exe
-
+          files: |
+            build/xpack/research/*.exe
+            build/xpack/research/*.zip

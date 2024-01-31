@@ -200,7 +200,7 @@ function add_target_research_on_others()
 end
 
 function add_xpack_research(XMACS_VERSION)
-    set_formats("nsis")
+    set_formats("nsis", "zip")
     set_specfile("packages/windows/research.nsis")
     set_specvar("PACKAGE_INSTALL_DIR", "XmacsLabs\\MoganResearch-"..XMACS_VERSION)
     set_specvar("PACKAGE_NAME", "MoganResearch")
