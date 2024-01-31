@@ -38,8 +38,8 @@ TestDictionary::test_svg_image_size () {
   qcompare (translate_as_is (string ("!yes??")), utf8_to_cork ("!yes??"));
   qcompare (translate (string ("yes::disambig")), utf8_to_cork ("是"));
   qcompare (translate_as_is (string ("yes::disambig")), utf8_to_cork ("是"));
-  qcompare (translate (string ("translate")), utf8_to_cork ("是"));
-  qcompare (translate (string ("translate::language")), utf8_to_cork ("是"));
+  qcompare (translate (string ("block")), utf8_to_cork ("有框表格"));
+  qcompare (translate (string ("block::version")), utf8_to_cork ("段落"));
 }
 
 void
