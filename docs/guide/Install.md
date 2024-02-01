@@ -1,20 +1,22 @@
 # Installation Guide
-The latest stable version is Mogan STEM Suite v1.2.3, you can check if there are new releases in the `Help -> Welcome` menu entry.
+The latest stable version is Mogan STEM Suite v1.2.4, you can check if there are new releases in the `Help -> Welcome` menu entry.
 
 ## Official Packages
 | Product | Operating System | Download |
 |---------|-------|-----|
-| Mogan Research v1.2.3 | Windows (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.3/MoganResearch-v1.2.3-64bit-installer.exe) |
-| Mogan Research v1.2.3 | macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.3/MoganResearch-v1.2.3.dmg) |
-| Mogan Research v1.2.3 | macOS M1/M2 (>=13) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.3/MoganResearch-v1.2.3-arm.dmg) |
-| Mogan Research v1.2.3 | Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.3/mogan-research-v1.2.3-ubuntu22.04.deb) |
+| Mogan Research v1.2.4 | Windows installer (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.4/MoganResearch-v1.2.4-64bit-installer.exe) |
+| Mogan Research v1.2.4 | Windows portable (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.4/MoganResearch-v1.2.4-64bit-installer.zip) |
+| Mogan Research v1.2.4 | macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.4/MoganResearch-v1.2.4.dmg) |
+| Mogan Research v1.2.4 | macOS M1/M2 (>=13) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.4/MoganResearch-v1.2.4-arm.dmg) |
+| Mogan Research v1.2.4 | Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.4/mogan-research-v1.2.4-ubuntu22.04.deb) |
 
 SHA256 checksum:
 ```
-d4559441ec2d9a608d44e69e0146ea3a3ef056e182fe17a828f67b0430d98552  MoganResearch-v1.2.3-64bit-installer.exe
-915d8413586106db360914edae75ab57760d6aca738d3896747a31715163e332  MoganResearch-v1.2.3-arm.dmg
-ae0b96a46843a95575f313a5c1bec37c9ec8d77573c383163eec97b0ad9f098a  MoganResearch-v1.2.3.dmg
-ae4683bebc119443f4803c3bf60f7eff0e9c3c3e19ce6ae8be3f1f2a9b678586  mogan-research-v1.2.3-ubuntu22.04.deb
+c66ff1721e418ccfc8733119a970820675c16dba034fd1b599d928726f61f673  MoganResearch-v1.2.4-64bit-installer.exe
+f4a5b46a67581b864d7cf58df4d4a3c6a6bcef28c6e7419f8729bc0529cf224d  MoganResearch-v1.2.4-64bit-installer.zip
+21dabce305d35de338aa7453fcd6e146a8d3df2e6792f7617f2092c26b7bcc82  MoganResearch-v1.2.4-arm.dmg
+d80bdc9ba4d1a028ca947e1d577ba1ffae3e4bae57471d020c87262b945c4166  MoganResearch-v1.2.4.dmg
+9f95cc572a3b75f2f3d3757c2625477ec97c1361bba3dbcddf5dfe13371a00a3  mogan-research-v1.2.4-ubuntu22.04.deb
 ```
 
 Mogan STEM Suite:
@@ -29,8 +31,9 @@ Other sites to download：
 + https://codeberg.org/XmacsLabs/mogan/releases
 
 ## Recommended old releases
-Somtimes, you may prefer an older release:
-+ [**v1.1.6 (2023/09/29)**](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.6)
+Somtimes, you may prefer older releases:
++ [**v1.1.6**](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.6)
++ [**v1.1.3**](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.3)
 
 ## GNU Guix
 ```
