@@ -138,6 +138,10 @@ function sidebarGuide() {
             collapsible: false,
             items: [
                 {
+                    text: 'v1.2.4 (2024/02/01)',
+                    link: '/guide/ChangeLog_v1.2.4.md'
+                },
+                {
                     text: 'v1.2.3 (2024/01/30)',
                     link: '/guide/ChangeLog_v1.2.3.md'
                 },
@@ -238,6 +242,10 @@ function sidebarGuideZh() {
             text: '变更记录',
             collapsible: true,
             items: [
+                {
+                    text: 'v1.2.4 (2024/02/01)',
+                    link: '/zh/guide/ChangeLog_v1.2.4.md'
+                },
                 {
                     text: 'v1.2.3 (2024/01/30)',
                     link: '/zh/guide/ChangeLog_v1.2.3.md'
