@@ -1,7 +1,7 @@
 
 /******************************************************************************
  * MODULE     : dictionary_test.cpp
- * COPYRIGHT  : (C) 2019  Darcy Shen
+ * COPYRIGHT  : (C) 2024  jingkaimori
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -36,8 +36,10 @@ TestDictionary::test_string_translate () {
 
   qcompare (translate (string ("!yes??")), utf8_to_cork ("!是??"));
   qcompare (translate_as_is (string ("!yes??")), utf8_to_cork ("!yes??"));
-  qcompare (translate (string ("yes::disambig")), utf8_to_cork ("是"));
-  qcompare (translate_as_is (string ("yes::disambig")), utf8_to_cork ("是"));
+  qcompare (translate (string ("yes::no_such_disambiguation")),
+            utf8_to_cork ("是"));
+  qcompare (translate_as_is (string ("yes::no_such_disambiguation")),
+            utf8_to_cork ("是"));
   qcompare (translate (string ("block")), utf8_to_cork ("有框表格"));
   qcompare (translate (string ("block::version")), utf8_to_cork ("段落"));
 }
