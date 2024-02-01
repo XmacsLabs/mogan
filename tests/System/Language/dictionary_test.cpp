@@ -11,6 +11,7 @@
 #include "base.hpp"
 #include "converter.hpp"
 #include "dictionary.hpp"
+#include "tree_helper.hpp"
 #include <QtTest/QtTest>
 
 class TestDictionary : public QObject {
@@ -18,12 +19,11 @@ class TestDictionary : public QObject {
 
 private slots:
   void init () { init_lolly (); }
-  void test_svg_image_size ();
-  void test_image_size ();
+  void test_string_translate ();
 };
 
 void
-TestDictionary::test_svg_image_size () {
+TestDictionary::test_string_translate () {
   qcompare (translate (string ("yes"), "english", "chinese"),
             utf8_to_cork ("是"));
   qcompare (translate (string ("!yes??"), "english", "chinese"),
@@ -40,11 +40,6 @@ TestDictionary::test_svg_image_size () {
   qcompare (translate_as_is (string ("yes::disambig")), utf8_to_cork ("是"));
   qcompare (translate (string ("block")), utf8_to_cork ("有框表格"));
   qcompare (translate (string ("block::version")), utf8_to_cork ("段落"));
-}
-
-void
-TestDictionary::test_image_size () {
-
 }
 
 QTEST_MAIN (TestDictionary)
