@@ -84,10 +84,6 @@
     </src-comment>
   </active*>
 
-  <assign|doc-subtitle|<macro|x|<\surround|<vspace*|0.25fn>|<vspace|0.5fn>>
-    <doc-title-block|<font-magnify|1.297|<doc-title-name|\V\V<arg|x>>>>
-  </surround>>>
-
   <assign|by-text|>
 
   <\active*>
