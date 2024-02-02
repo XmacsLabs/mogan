@@ -26,12 +26,13 @@ configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
 ---
 set_project("Mogan STEM Suite")
 
-if is_plat ("macosx", "windows") then
-    set_policy("package.requires_lock", true)
-end
+-- only lock it in rc releases
+-- if is_plat ("macosx", "windows") then
+--     set_policy("package.requires_lock", true)
+-- end
 
 local TEXMACS_VERSION = "2.1.2"
-local XMACS_VERSION="1.2.4"
+local XMACS_VERSION="1.2.5-alpha"
 local CONFIG_USER = "XmacsLabs"
 local DEVEL_VERSION = TEXMACS_VERSION
 local DEVEL_RELEASE = 1
