@@ -8,7 +8,8 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|2|2|5|5|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|2|2|5|5|cell-valign|b>|<cwith|1|-1|2|2|cell-background|pastel
+    green>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       16_1
@@ -108,6 +109,16 @@
       <value|da>
     </cell>|<\cell>
       <shell|bin/format> on src/Plugins/Freetype
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      16_10
+    </cell>|<\cell>
+      v1.2.4
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      <verbatim|bin/format> on all cpp/hpp code
     </cell>>>>
   </wide-tabular>
 

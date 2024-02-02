@@ -7,7 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|5|5|cell-hyphen|t>|<cwith|9|9|5|5|cell-hyphen|t>|<cwith|10|10|5|5|cell-hyphen|t>|<cwith|11|11|5|5|cell-hyphen|t>|<cwith|12|12|5|5|cell-hyphen|t>|<cwith|13|13|5|5|cell-hyphen|t>|<cwith|14|14|5|5|cell-hyphen|t>|<cwith|16|16|5|5|cell-hyphen|t>|<cwith|17|17|5|5|cell-hyphen|t>|<cwith|23|23|2|2|cell-halign|l>|<cwith|23|23|5|5|cell-hyphen|t>|<cwith|22|22|5|5|cell-hyphen|t>|<cwith|21|21|5|5|cell-hyphen|t>|<cwith|20|20|5|5|cell-hyphen|t>|<cwith|19|19|1|1|cell-valign|b>|<cwith|19|19|5|5|cell-hyphen|t>|<cwith|18|18|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|59_21>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|5|5|cell-hyphen|t>|<cwith|10|10|5|5|cell-hyphen|t>|<cwith|11|11|5|5|cell-hyphen|t>|<cwith|12|12|5|5|cell-hyphen|t>|<cwith|13|13|5|5|cell-hyphen|t>|<cwith|14|14|5|5|cell-hyphen|t>|<cwith|15|15|5|5|cell-hyphen|t>|<cwith|17|17|5|5|cell-hyphen|t>|<cwith|18|18|5|5|cell-hyphen|t>|<cwith|24|24|2|2|cell-halign|l>|<cwith|24|24|5|5|cell-hyphen|t>|<cwith|23|23|5|5|cell-hyphen|t>|<cwith|22|22|5|5|cell-hyphen|t>|<cwith|21|21|5|5|cell-hyphen|t>|<cwith|20|20|1|1|cell-valign|b>|<cwith|20|20|5|5|cell-hyphen|t>|<cwith|19|19|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|59_21>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
     Tuning shortcuts on GNOME
   </cell>>|<row|<cell|Chore>|<cell|59_20>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
     Use <key|A-x> for interactive command
@@ -23,6 +23,8 @@
     Graphics: Remove <key|C-g> and <key|C-G> to toggle grid, just use <key|#>
   </cell>>|<row|<cell|Chore>|<cell|59_14>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
     Adjust shortcuts for <menu|Insert|Link>
+  </cell>>|<row|<cell|>|<cell|>|<cell|v1.2.4>|<cell|<value|da>>|<\cell>
+    Fix shortcuts containing \<less\> and \<gtr\> in math mode
   </cell>>|<row|<cell|Feature>|<cell|<dlink|59_13>>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
     Rework on keyPressEvent and keyReleaseEvent
   </cell>>|<row|<cell|Chore>|<cell|59_12>|<cell|v1.2.1>|<cell|<value|da>>|<\cell>
