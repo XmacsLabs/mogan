@@ -56,7 +56,7 @@ git_status_file (url file_u, url repo_u) {
 
   git_repository* repo= NULL;
   c_string        repo_c (as_string (repo_u));
-  c_string        file_c (as_string (file_u));
+  c_string        file_c (as_unix_string (file_u));
   int             error;
   unsigned int    status_flags;
   char            istatus, wstatus;
@@ -119,7 +119,7 @@ git_load_blob (string rev, url file_u, url repo_u) {
   const git_blob* blob = NULL;
   int             error;
   c_string        repo_c (as_string (repo_u));
-  c_string        rev_c (rev * ":" * as_string (file_u));
+  c_string        rev_c (rev * ":" * as_unix_string (file_u));
 
   git_libgit2_init ();
   error= git_repository_open (&repo, repo_c);
