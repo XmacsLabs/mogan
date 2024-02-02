@@ -43,3 +43,6 @@ doxyfile
 
 .cache/
 compile_commands.json
+
+yarn.lock
+xmake-requires.lock
