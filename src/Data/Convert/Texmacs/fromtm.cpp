@@ -372,7 +372,6 @@ texmacs_to_tree (string s) {
     return tmr.read (true);
   }
   else {
-
     tm_reader<false> tmr (s);
     return tmr.read (true);
   }
