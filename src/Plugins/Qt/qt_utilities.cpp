@@ -1277,7 +1277,8 @@ from_key_press_event (const QKeyEvent* event) {
     }
     else if (mods_text == "A-") {
       // A-: Alt+key or Option+key
-      if (os_macos () && !nss.isEmpty ()) {
+      if (os_macos () && !is_alpha (key_original) && !is_digit (key_original) &&
+          !nss.isEmpty ()) {
         r << from_qstring_utf8 (nss);
       }
       else {
