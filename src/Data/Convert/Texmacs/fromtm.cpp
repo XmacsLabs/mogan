@@ -105,7 +105,7 @@ tm_reader<format_without_utf8>::read_char () {
   }
   if (pos >= N (buf)) return "";
 
-  if (format_without_utf8) {
+  if constexpr (format_without_utf8) {
     pos++;
     return buf (pos - 1, pos);
   }
@@ -130,7 +130,7 @@ tm_reader<format_without_utf8>::read_next () {
   int    old_pos= pos;
   string c      = read_char ();
   if (c == "") return c;
-  if (!format_without_utf8) {
+  if constexpr (!format_without_utf8) {
     if (N (c) == 9) return c; // c is like \<#FFFF\>
   }
 
