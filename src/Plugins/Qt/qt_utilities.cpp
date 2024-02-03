@@ -1275,8 +1275,16 @@ from_key_press_event (const QKeyEvent* event) {
       debug_keyboard << mods_text << key_original << " should be invalid" << LF;
       r= "";
     }
-    else if (mods_text == "A-" || mods_text == "C-" || mods_text == "M-") {
+    else if (mods_text == "A-") {
       // A-: Alt+key or Option+key
+      if (os_macos () && !nss.isEmpty ()) {
+        r << from_qstring_utf8 (nss);
+      }
+      else {
+        r << mods_text << key_locased;
+      }
+    }
+    else if (mods_text == "C-" || mods_text == "M-") {
       // C-: Ctrl+key or Ctrl+key
       // M-: Win+key or Command+key
       r << mods_text << key_locased;
