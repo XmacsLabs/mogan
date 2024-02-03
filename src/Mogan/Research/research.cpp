@@ -349,10 +349,6 @@ TeXmacs_main (int argc, char** argv) {
   bench_cumul ("initialize plugins");
   if (DEBUG_STD) debug_boot << "Opening display...\n";
 
-#if defined(MACOSX_EXTENSIONS)
-    // init_mac_application ();
-#endif
-
   gui_open (argc, argv);
   set_default_font (the_default_font);
   if (DEBUG_STD) debug_boot << "Starting server...\n";
