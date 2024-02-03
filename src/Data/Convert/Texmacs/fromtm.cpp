@@ -26,7 +26,7 @@ using lolly::data::to_Hex;
  * Conversion of TeXmacs strings of the present format to TeXmacs trees
  ******************************************************************************/
 
-struct tm_reader {
+template <bool format_without_utf8> struct tm_reader {
   string               version; // document was composed using this version
   hashmap<string, int> codes;   // codes for to present version
   tree_label EXPAND_APPLY;      // APPLY (version < 0.3.3.22) or EXPAND (otherw)
@@ -56,8 +56,9 @@ struct tm_reader {
   tree   read (bool skip_flag);
 };
 
+template <bool format_without_utf8>
 int
-tm_reader::skip_blank () {
+tm_reader<format_without_utf8>::skip_blank () {
   int n= 0;
   for (; pos < N (buf); pos++) {
     if (buf[pos] == ' ') continue;
@@ -72,8 +73,9 @@ tm_reader::skip_blank () {
   return n;
 }
 
+template <bool format_without_utf8>
 string
-tm_reader::decode (string s) {
+tm_reader<format_without_utf8>::decode (string s) {
   int    i, n= N (s);
   string r;
   for (i= 0; i < n; i++)
@@ -93,8 +95,9 @@ tm_reader::decode (string s) {
   return r;
 }
 
+template <bool format_without_utf8>
 string
-tm_reader::read_char () {
+tm_reader<format_without_utf8>::read_char () {
   while (((pos + 1) < N (buf)) && (buf[pos] == '\\') &&
          (buf[pos + 1] == '\n')) {
     pos+= 2;
@@ -102,7 +105,7 @@ tm_reader::read_char () {
   }
   if (pos >= N (buf)) return "";
 
-  if (get_preference ("tm format without utf8", "off") == "on") {
+  if constexpr (format_without_utf8) {
     pos++;
     return buf (pos - 1, pos);
   }
@@ -121,12 +124,13 @@ tm_reader::read_char () {
   }
 }
 
+template <bool format_without_utf8>
 string
-tm_reader::read_next () {
+tm_reader<format_without_utf8>::read_next () {
   int    old_pos= pos;
   string c      = read_char ();
   if (c == "") return c;
-  if (get_preference ("tm format without utf8", "off") == "off") {
+  if constexpr (!format_without_utf8) {
     if (N (c) == 9) return c; // c is like \<#FFFF\>
   }
 
@@ -188,8 +192,9 @@ tm_reader::read_next () {
   return r;
 }
 
+template <bool format_without_utf8>
 string
-tm_reader::read_function_name () {
+tm_reader<format_without_utf8>::read_function_name () {
   string name= decode (read_next ());
   // cout << "==> " << name << "\n";
   while (true) {
@@ -210,8 +215,9 @@ get_collection (tree& u, tree t) {
   else if (is_compound (t)) u << t;
 }
 
+template <bool format_without_utf8>
 tree
-tm_reader::read_apply (string name, bool skip_flag) {
+tm_reader<format_without_utf8>::read_apply (string name, bool skip_flag) {
   // cout << "Read apply " << name << INDENT << LF;
   tree t (make_tree_label (name));
   if (!with_extensions) t= tree (EXPAND_APPLY, name);
@@ -260,8 +266,9 @@ flush (tree& D, tree& C, string& S, bool& spc_flag, bool& ret_flag) {
   }
 }
 
+template <bool format_without_utf8>
 tree
-tm_reader::read (bool skip_flag) {
+tm_reader<format_without_utf8>::read (bool skip_flag) {
   tree   D (DOCUMENT);
   tree   C (CONCAT);
   string S ("");
@@ -358,14 +365,30 @@ tm_reader::read (bool skip_flag) {
 
 tree
 texmacs_to_tree (string s) {
-  tm_reader tmr (s);
-  return tmr.read (true);
+  bool format_without_utf8=
+      get_preference ("tm format without utf8", "off") == "on";
+  if (format_without_utf8) {
+    tm_reader<true> tmr (s);
+    return tmr.read (true);
+  }
+  else {
+    tm_reader<false> tmr (s);
+    return tmr.read (true);
+  }
 }
 
 tree
 texmacs_to_tree (string s, string version) {
-  tm_reader tmr (s, version);
-  return tmr.read (true);
+  bool format_without_utf8=
+      get_preference ("tm format without utf8", "off") == "on";
+  if (format_without_utf8) {
+    tm_reader<true> tmr (s, version);
+    return tmr.read (true);
+  }
+  else {
+    tm_reader<false> tmr (s, version);
+    return tmr.read (true);
+  }
 }
 
 /******************************************************************************
