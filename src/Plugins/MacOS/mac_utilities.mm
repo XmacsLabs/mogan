@@ -26,15 +26,7 @@
 #undef extend
 
 #undef FAILED // restore TeXmacs definition
-#ifdef USE_EXCEPTIONS
 #define FAILED(msg) { tm_throw (msg); }
-#else
-#ifdef DEBUG_ASSERT
-#define FAILED(msg) { tm_failure (msg); assert (false); }
-#else
-#define FAILED(msg) { tm_failure (msg); }
-#endif
-#endif
 
 #ifdef QTTEXMACS
 #include <QApplication>

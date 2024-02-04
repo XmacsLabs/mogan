@@ -120,12 +120,6 @@ ${define STDC_HEADERS}
 
 ${define TM_DYNAMIC_LINKING}
 
-/* Use axel library */
-${define USE_AXEL}
-
-/* Use cairo library */
-${define USE_CAIRO}
-
 /* Use freetype library */
 ${define USE_FREETYPE}
 

@@ -324,9 +324,7 @@ edit_interface_rep::update_mouse_loci () {
     return;
   }
 
-#ifdef USE_EXCEPTIONS
   try {
-#endif
     int  old_mode= set_access_mode (DRD_ACCESS_SOURCE);
     path cp      = path_up (tree_path (path (), last_x, last_y, 0));
     set_access_mode (old_mode);
@@ -365,11 +363,9 @@ edit_interface_rep::update_mouse_loci () {
       }
     }
     if (locus_new_rects != locus_rects) notify_change (THE_LOCUS);
-#ifdef USE_EXCEPTIONS
   } catch (string msg) {
   }
   handle_exceptions ();
-#endif
 }
 
 void
@@ -720,9 +716,7 @@ edit_interface_rep::handle_mouse (string kind, SI x, SI y, int m, time_t t,
                                   array<double> data) {
   if (is_nil (buf)) return;
   bool started= false;
-#ifdef USE_EXCEPTIONS
   try {
-#endif
     if (is_nil (eb) || (env_change & (THE_TREE + THE_ENVIRONMENT)) != 0) {
       // cout << "handle_mouse in " << buf->buf->name << ", " << got_focus <<
       // LF; cout << kind << " (" << x << ", " << y << "; " << m << ", " << data
@@ -762,10 +756,8 @@ edit_interface_rep::handle_mouse (string kind, SI x, SI y, int m, time_t t,
       }
     }
     end_editing ();
-#ifdef USE_EXCEPTIONS
   } catch (string msg) {
     if (started) cancel_editing ();
   }
   handle_exceptions ();
-#endif
 }

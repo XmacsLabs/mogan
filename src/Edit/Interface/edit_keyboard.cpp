@@ -375,9 +375,7 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
 
   if (t > last_event) last_event= t;
   bool started= false;
-#ifdef USE_EXCEPTIONS
   try {
-#endif
     if (kbd_show_keys) {
       if (N (kbd_last_times) > 0 &&
           kbd_last_times[N (kbd_last_times) - 1] + kbd_erase_delay < t) {
@@ -437,7 +435,6 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
     end_editing ();
     // time_t t2= texmacs_time ();
     // if (t2 - t1 >= 10) cout << "handle_keypress took " << t2-t1 << "ms\n";
-#ifdef USE_EXCEPTIONS
   } catch (string msg) {
     if (started) {
       cancel_editing ();
@@ -445,7 +442,6 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
     }
   }
   handle_exceptions ();
-#endif
 }
 
 void drag_left_reset ();

@@ -241,18 +241,14 @@ string recognize_glyph (array_array_array_double gl);
 
 void
 protected_call (object cmd) {
-#ifdef USE_EXCEPTIONS
   try {
-#endif
     get_current_editor ()->before_menu_action ();
     call (cmd);
     get_current_editor ()->after_menu_action ();
-#ifdef USE_EXCEPTIONS
   } catch (string s) {
     get_current_editor ()->cancel_menu_action ();
   }
   handle_exceptions ();
-#endif
 }
 
 void
