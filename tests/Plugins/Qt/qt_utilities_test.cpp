@@ -75,6 +75,16 @@ TestQtUtilities::test_from_key_press_event () {
     auto ctrl_plus= QKeyEvent (QEvent::KeyPress, (int) '=',
                                Qt::ControlModifier | Qt::ShiftModifier, "=");
     qcompare (from_key_press_event (&ctrl_plus), "M-S-=");
+
+    // A-<number>
+    auto alt_1= QKeyEvent (QEvent::KeyPress, (int) '1', Qt::AltModifier, "¡");
+    qcompare (from_key_press_event (&alt_1), "A-1");
+    // A-<alpha>
+    auto alt_v= QKeyEvent (QEvent::KeyPress, (int) 'V', Qt::AltModifier, "√");
+    qcompare (from_key_press_event (&alt_v), "A-v");
+    // A-<not alpha and not number>
+    auto alt_dot= QKeyEvent (QEvent::KeyPress, (int) '.', Qt::AltModifier, "≥");
+    qcompare (from_key_press_event (&alt_dot), "≥");
   }
 }
 
