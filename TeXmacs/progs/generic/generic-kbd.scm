@@ -620,6 +620,7 @@
   ("macos r" (interactive-replace))
   ("macos F" (toggle-full-screen-mode))
   ("macos C-f" (toggle-full-screen-edit-mode))
+
   ("macos =" (zoom-in (sqrt (sqrt 2.0))))
   ("macos S-=" (zoom-in (sqrt (sqrt 2.0))))
   ("macos S-+" (zoom-in (sqrt (sqrt 2.0))))
