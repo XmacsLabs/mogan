@@ -1279,6 +1279,20 @@ from_key_press_event (const QKeyEvent* event) {
       // A-: Alt+key or Option+key
       if (os_macos () && !is_alpha (key_original) && !is_digit (key_original) &&
           !nss.isEmpty ()) {
+        // there are special rules for the key combo with Option on macOS:
+        // A-<    ->    ≤
+        // A->    ->    ≥
+        // A-6    ->    §
+        // A-p    ->    π
+        //
+        // case 1: for key which is alpha or number
+        // there are also special rules for the key combo with Option on macOS
+        // but we have defined A-1, A-2, A-v in TeXmacs
+        // for defined A-1 (¡ on macOS), we override it using the TeXmacs one
+        // for undefined A-6 (§ on macoS), we ignore it
+        //
+        // case 2: for key which is not alpha and not number: -, =, ,, ., /, ...
+        // we reserve the special rules here
         r << from_qstring_utf8 (nss);
       }
       else {
