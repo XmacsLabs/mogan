@@ -157,9 +157,6 @@ option("use-exceptions")
     set_default(false)
     set_values(false, true)
 option_end()
-if has_config("use-exceptions") then
-    set_configvar("USE_EXCEPTIONS", true)
-end
 
 --
 -- Library: L3 Kernel
