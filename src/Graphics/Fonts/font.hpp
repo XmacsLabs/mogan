@@ -17,6 +17,7 @@
 #include "renderer.hpp"
 #include "resource.hpp"
 #include "space.hpp"
+#include "tm_debug.hpp"
 
 RESOURCE (font);
 
