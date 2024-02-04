@@ -210,7 +210,8 @@ new_breaker_rep::compute_space (path b1, path b2, bool wide_part) {
   int i1= b1->item, i2= b2->item;
   if (!is_nil (b1->next)) {
     if (b2 == b1) return space (0);
-    path      nx = b1->next;
+    path nx= b1->next;
+    if (is_nil (nx->next)) return space (0);
     path      q1 = path (b1->item, nx->next->next);
     int       i0 = nx->item;
     int       j0 = nx->next->item;
