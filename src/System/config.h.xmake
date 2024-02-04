@@ -71,8 +71,6 @@ ${define SANITY_CHECKS}
 
 ${define TM_DYNAMIC_LINKING}
 
-${define USE_EXCEPTIONS}
-
 /* Use freetype library */
 ${define USE_FREETYPE}
 
