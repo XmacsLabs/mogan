@@ -133,10 +133,20 @@
       Joris
     </cell>|<\cell>
       Certain semantic selections crash the editor
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|7_10>
+    </cell>|<\cell>
+      v1.2.5
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Typesetting error when set the slide content to 2 columns
     </cell>>>>
   </wide-tabular>
 
-  <tmdoc-copyright|2023|Darcy Shen>
+  <tmdoc-copyright|2023-2024|Darcy Shen>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
