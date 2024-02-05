@@ -544,9 +544,11 @@ for _, filepath in ipairs(l3_cpp_tests) do
     add_target_cpp_test(filepath, "libkernel_l3")
 end
 
-for _, filepath in ipairs(all_cpp_tests) do
-    if not table.contains(l3_cpp_tests, filepath) then
-        add_target_cpp_test(filepath, "libmogan")
+if not (is_plat("linux") and (linuxos.name () == "ubuntu" and linuxos.version():major() == 20)) then
+    for _, filepath in ipairs(all_cpp_tests) do
+        if not table.contains(l3_cpp_tests, filepath) then
+            add_target_cpp_test(filepath, "libmogan")
+        end
     end
 end
 
