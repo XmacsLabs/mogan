@@ -30,7 +30,7 @@ on:
 
 jobs:
   linuxbuild:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     timeout-minutes: 45
     if: always()
     continue-on-error: true
