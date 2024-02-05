@@ -49,8 +49,8 @@ public:
                         bool fake= false);
   ~qt_window_widget_rep ();
 
-  virtual inline string get_nickname () { return orig_name; }
-  virtual widget        popup_window_widget (string s);
+  virtual string get_nickname () { return orig_name; }
+  virtual widget popup_window_widget (string s);
 
   virtual void     send (slot s, blackbox val);
   virtual blackbox query (slot s, int type_id);

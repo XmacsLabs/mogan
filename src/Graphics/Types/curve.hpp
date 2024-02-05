@@ -16,9 +16,9 @@
 class curve_rep : public abstract_struct {
 public:
   inline curve_rep () {}
-  inline virtual ~curve_rep () {}
+  virtual ~curve_rep () {}
 
-  inline virtual int nr_components () { return 1; }
+  virtual int nr_components () { return 1; }
   // the number of components of the curve is useful for getting
   // nice parameterizations when concatenating curves
 

@@ -39,7 +39,7 @@ public:
   inline grid_rep () {}
   inline grid_rep (array<SI> subd2, array<string> col2, point o)
       : subd (subd2), col (col2), center (o) {}
-  inline virtual ~grid_rep () {}
+  virtual ~grid_rep () {}
 
   virtual void set_aspect (tree aspect);
 

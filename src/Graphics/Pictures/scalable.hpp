@@ -31,7 +31,7 @@ class scalable {
 class scalable_rep : public abstract_struct {
 public:
   inline scalable_rep () {}
-  inline virtual ~scalable_rep () {}
+  virtual ~scalable_rep () {}
 
   virtual scalable_kind get_type ()  = 0;
   virtual void*         get_handle ()= 0;
