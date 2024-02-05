@@ -25,8 +25,10 @@ package("pdfhummus")
 
     add_urls("https://github.com/galkahana/PDF-Writer/archive/refs/tags/v$(version).tar.gz")
     add_urls("https://gitee.com/XmacsLabs/pdfhummus/releases/download/v$(version)/PDF-Writer-$(version).tar.gz")
+    add_urls("https://github.com/galkahana/PDF-Writer.git", {alias="git"})
 
     add_versions("4.6.2", "0a36815ccc9d207028567f90039785c824b211169ba5da68de84d0c15455ab62")
+    add_versions("4.6.2", "v4.6.2")
 
     add_deps("zlib", "freetype", "libaesgm")
 

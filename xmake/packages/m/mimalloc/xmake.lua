@@ -25,6 +25,7 @@ package("mimalloc")
     set_license("MIT")
 
     add_urls("https://github.com/microsoft/mimalloc/archive/v$(version).zip", {alias="archive"})
+    add_urls("https://github.com/microsoft/mimalloc.git", {alias="git"})
     add_urls("https://gitee.com/mirrors/mimalloc.git", {alias="git"})
 
     add_versions("archive:2.1.2", "86281c918921c1007945a8a31e5ad6ae9af77e510abfec20d000dd05d15123c7")
