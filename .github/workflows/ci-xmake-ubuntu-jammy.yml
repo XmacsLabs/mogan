@@ -1,4 +1,4 @@
-name: Build and Test on Ubuntu
+name: Build and Test on Ubuntu 22.04
 
 on:
   push:
