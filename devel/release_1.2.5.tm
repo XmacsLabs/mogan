@@ -12,13 +12,19 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|3|3|1|1|cell-background|>|<cwith|7|7|1|1|cell-background|>|<cwith|10|10|3|3|cell-valign|b>|<cwith|10|10|1|1|cell-background|pastel
-    green>|<table|<row|<\cell>
+    <tformat|<cwith|4|4|1|1|cell-background|>|<cwith|8|8|1|1|cell-background|>|<cwith|11|11|3|3|cell-valign|b>|<cwith|11|11|1|1|cell-background|pastel
+    green>|<cwith|2|2|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|77>
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
       Mogan Beamer
+    </cell>>|<row|<\cell>
+      <dlink|73>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Improvements on packagers
     </cell>>|<row|<\cell>
       <dlink|71>
     </cell>|<\cell>

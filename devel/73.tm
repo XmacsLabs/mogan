@@ -7,8 +7,10 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|19|19|5|5|cell-hyphen|t>|<cwith|1|-1|2|2|cell-background|pastel
-  green>|<table|<row|<cell|Chore>|<cell|73_22>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Use
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|21|21|5|5|cell-hyphen|t>|<cwith|1|-1|2|2|cell-background|pastel
+  green>|<cwith|2|2|2|2|cell-background|>|<cwith|1|1|2|2|cell-background|>|<table|<row|<cell|Chore>|<cell|73_24>|<cell|v1.2.5>|<cell|<value|da>>|<cell|packager
+  for debian bookworm>>|<row|<cell|Chore>|<cell|73_23>|<cell|v1.2.5>|<cell|<value|da>>|<cell|packager
+  for Ubuntu 20.04>>|<row|<cell|Chore>|<cell|73_22>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Use
   xpack and nsis to create the windows installer>>|<row|<cell|Chore>|<cell|73_21>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Remove
   qtifw>>|<row|<cell|Chore>|<cell|73_20>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Use
   <verbatim|libgit2> package in local repo>>|<row|<cell|Chore>|<cell|73_19>|<cell|v1.2.3>|<cell|<value|da>>|<cell|xmake:
