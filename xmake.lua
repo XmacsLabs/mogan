@@ -380,7 +380,7 @@ target("libmogan") do
     add_packages("pdfhummus")
     add_packages("s7")
     add_packages("libgit2")
-    if is_plat("linux") then
+    if is_plat("linux") and not using_legacy_apt() then
         add_packages("fontconfig")
     end
 
