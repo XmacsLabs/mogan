@@ -26,6 +26,7 @@ on:
 env:
   XMAKE_ROOT: y
   QT_QPA_PLATFORM: offscreen
+  INSTALL_DIR: tmp/build/packages/app.mogan/
 
 jobs:
   build:
@@ -41,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: |
           DEBIAN_FRONTEND=noninteractive apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y gcc git 7zip unzip build-essential \
+          DEBIAN_FRONTEND=noninteractive apt-get install -y gcc git 7zip unzip build-essential coreutils \
               fonts-noto-cjk libcurl4-openssl-dev libfreetype-dev libfontconfig-dev \
               ${{matrix.qt_pkg}} libgit2-dev zlib1g-dev libssl-dev libjpeg62-turbo-dev cmake
       - uses: actions/checkout@v3
@@ -70,27 +71,17 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ${{ runner.workspace }}/build/.build_cache
+            tmp/build/.build_cache
           key: ${{ runner.os }}-build-qt${{ matrix.qt_ver }}-${{ hashFiles('**/packages.lua') }}
 
       - name: config
-        run: xmake config -vD --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
-        env:
-          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
+        run: xmake config -vD --policies=build.ccache -o tmp/build -m releasedbg --yes
       - name: build
         run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
-        env:
-          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
       - name: test
         run: xmake run --yes -vD --group=tests
-        env:
-          QT_QPA_PLATFORM: offscreen
-          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
       - name: Scheme tests
         run: xmake run --yes -vD --group=scheme_tests
       - name: integration test
         run: xmake run --yes -vD --group=integration_tests
-        env:
-          QT_QPA_PLATFORM: offscreen
-          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
 
