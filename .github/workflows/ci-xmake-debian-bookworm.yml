@@ -42,8 +42,8 @@ jobs:
         run: |
           DEBIAN_FRONTEND=noninteractive apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y gcc git 7zip unzip \
-              fonts-noto-cjk libcurl4-openssl-dev libfreetype-dev \
-              ${{matrix.qt_pkg}} libgit2-dev zlib1g-dev libssl-dev cmake
+              fonts-noto-cjk libcurl4-openssl-dev libfreetype-dev libfontconfig-dev \
+              ${{matrix.qt_pkg}} libgit2-dev zlib1g-dev libssl-dev libjpeg62-turbo-dev cmake
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
