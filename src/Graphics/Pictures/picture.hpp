@@ -40,7 +40,7 @@ protected:
 
 public:
   inline picture_rep () : unique_id (unique_picture_id ()) {}
-  inline virtual ~picture_rep () {}
+  virtual ~picture_rep () {}
 
   inline unsigned long long int get_unique_id () { return unique_id; }
   virtual picture_kind          get_type ()  = 0;

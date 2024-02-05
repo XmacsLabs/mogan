@@ -27,23 +27,23 @@ class patch;
 class patch_rep : public abstract_struct {
 public:
   inline patch_rep () {}
-  inline virtual ~patch_rep () {}
-  virtual int                 get_type ()= 0;
-  inline virtual int          get_arity () { return 0; }
-  inline virtual patch        get_child (int i);
-  inline virtual modification get_modification () {
+  virtual ~patch_rep () {}
+  virtual int          get_type ()= 0;
+  virtual int          get_arity () { return 0; }
+  virtual patch        get_child (int i);
+  virtual modification get_modification () {
     TM_FAILED ("not a modification");
     return mod_assign (path (), "");
   }
-  inline virtual modification get_inverse () {
+  virtual modification get_inverse () {
     TM_FAILED ("not a modification");
     return mod_assign (path (), "");
   }
-  inline virtual bool get_birth () {
+  virtual bool get_birth () {
     TM_FAILED ("not a birth");
     return false;
   }
-  inline virtual double get_author () { return -1; }
+  virtual double get_author () { return -1; }
 };
 
 class patch {

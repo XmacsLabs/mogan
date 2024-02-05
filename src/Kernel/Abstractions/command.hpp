@@ -19,9 +19,9 @@ class command_rep : public abstract_struct {
 public:
   inline command_rep () { TM_DEBUG (command_count++); }
   inline virtual ~command_rep () { TM_DEBUG (command_count--); }
-  inline virtual tm_ostream& print (tm_ostream& out);
-  virtual void               apply ()= 0;
-  virtual void               apply (object args);
+  virtual tm_ostream& print (tm_ostream& out);
+  virtual void        apply ()= 0;
+  virtual void        apply (object args);
 };
 
 class command {

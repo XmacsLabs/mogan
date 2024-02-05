@@ -26,7 +26,7 @@ class pencil;
 class pencil_rep : abstract_struct {
 public:
   inline pencil_rep () {}
-  inline virtual ~pencil_rep () {}
+  virtual ~pencil_rep () {}
 
   virtual pencil_kind get_type ()  = 0;
   virtual void*       get_handle ()= 0;

@@ -26,7 +26,7 @@ class effect {
 class effect_rep : public abstract_struct {
 public:
   inline effect_rep () {}
-  inline virtual ~effect_rep () {}
+  virtual ~effect_rep () {}
 
   virtual rectangle get_logical_extents (array<rectangle> rs);
   virtual rectangle get_extents (array<rectangle> rs)    = 0;

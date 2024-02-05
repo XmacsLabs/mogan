@@ -20,7 +20,7 @@ public:
 
 public:
   inline frame_rep () { linear= false; }
-  inline virtual ~frame_rep () {}
+  virtual ~frame_rep () {}
   virtual operator tree ()= 0;
 
   virtual point direct_transform (point p) = 0;

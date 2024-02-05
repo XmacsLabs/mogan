@@ -38,8 +38,8 @@ protected:
 public:
   widget_rep ();
   virtual ~widget_rep ();
-  inline virtual void* derived_this () { return (widget_rep*) this; }
-  virtual tm_ostream&  print (tm_ostream& out);
+  inline void*        derived_this () { return (widget_rep*) this; }
+  virtual tm_ostream& print (tm_ostream& out);
 
   virtual void send (slot s, blackbox val);
   // send a message val to the slot s

@@ -43,7 +43,7 @@ private:
 public:
   edit_main_rep (server_rep* sv, tm_buffer buf);
   ~edit_main_rep ();
-  virtual inline void* derived_this () { return (edit_main_rep*) this; }
+  inline void* derived_this () { return (edit_main_rep*) this; }
 
   void        set_property (scheme_tree what, scheme_tree val);
   void        set_bool_property (string what, bool val);

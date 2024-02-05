@@ -147,7 +147,7 @@ public:
 
   qt_widget_rep (types _type= none, QWidget* _qwid= 0);
   virtual ~qt_widget_rep ();
-  virtual inline string get_nickname () { return "popup"; }
+  virtual string get_nickname () { return "popup"; }
 
   virtual widget plain_window_widget (string name, command quit, int b= 3);
   virtual widget make_popup_widget ();
@@ -295,7 +295,7 @@ public:
   virtual ~qt_headless_widget_rep () {
     if (DEBUG_QT_WIDGETS) debug_widgets << "~qt_headless_widget_rep" << LF;
   }
-  virtual inline string get_nickname () { return "headless"; }
+  inline string get_nickname () { return "headless"; }
 
   virtual widget plain_window_widget (string name, command quit, int b= 3) {
     (void) name;

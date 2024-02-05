@@ -38,7 +38,7 @@ class spacial {
 class spacial_rep : public abstract_struct {
 public:
   inline spacial_rep () {}
-  inline virtual ~spacial_rep () {}
+  virtual ~spacial_rep () {}
 
   virtual spacial_kind get_type ()  = 0;
   virtual void*        get_handle ()= 0;

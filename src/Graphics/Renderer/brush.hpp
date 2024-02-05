@@ -19,7 +19,7 @@ enum brush_kind { brush_none, brush_color, brush_pattern };
 class brush_rep : abstract_struct {
 public:
   inline brush_rep () {}
-  inline virtual ~brush_rep () {}
+  virtual ~brush_rep () {}
 
   virtual brush_kind get_type ()  = 0;
   virtual void*      get_handle ()= 0;
