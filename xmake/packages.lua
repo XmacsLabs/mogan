@@ -18,6 +18,10 @@ function using_apt ()
            or linuxos.name() == "uos"
 end
 
+function using_legacy_apt ()
+    return (linuxos.name() == "uos") or (linuxos.name () == "ubuntu" and linuxos.version():major() == 20)
+end
+
 function using_pacman ()
     return linuxos.name() == "archlinux"
 end
@@ -71,8 +75,7 @@ function add_requires_of_mogan()
 
     -- package: fontconfig
     if is_plat("linux") then
-        if linuxos.name() == "uos" then
-            -- skip
+        if using_legacy_apt() then
         else
             add_requires("fontconfig", {system = true})
         end

@@ -173,7 +173,7 @@ target("libkernel_l3") do
         variables = {
             QTTEXMACS = false,
             USE_FREETYPE = true,
-            USE_FONTCONFIG = is_plat("linux") and (not linuxos.name() == "uos"),
+            USE_FONTCONFIG = is_plat("linux") and (not using_legacy_apt()),
         }
     })
     add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
