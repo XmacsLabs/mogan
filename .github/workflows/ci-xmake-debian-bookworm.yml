@@ -41,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: |
           DEBIAN_FRONTEND=noninteractive apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y gcc git \
+          DEBIAN_FRONTEND=noninteractive apt-get install -y gcc git 7zip \
               fonts-noto-cjk libcurl4-openssl-dev libfreetype-dev \
               ${{matrix.qt_pkg}} libgit2-dev zlib1g-dev libssl-dev cmake
       - uses: actions/checkout@v3
