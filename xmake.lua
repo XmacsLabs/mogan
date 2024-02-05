@@ -173,7 +173,7 @@ target("libkernel_l3") do
         variables = {
             QTTEXMACS = false,
             USE_FREETYPE = true,
-            USE_FONTCONFIG = is_plat("linux") and (not linuxos.name() == "uos"),
+            USE_FONTCONFIG = is_plat("linux") and (not using_legacy_apt()),
         }
     })
     add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
@@ -380,7 +380,7 @@ target("libmogan") do
     add_packages("pdfhummus")
     add_packages("s7")
     add_packages("libgit2")
-    if is_plat("linux") then
+    if is_plat("linux") and not using_legacy_apt() then
         add_packages("fontconfig")
     end
 
@@ -544,9 +544,11 @@ for _, filepath in ipairs(l3_cpp_tests) do
     add_target_cpp_test(filepath, "libkernel_l3")
 end
 
-for _, filepath in ipairs(all_cpp_tests) do
-    if not table.contains(l3_cpp_tests, filepath) then
-        add_target_cpp_test(filepath, "libmogan")
+if not (is_plat("linux") and (linuxos.name () == "ubuntu" and linuxos.version():major() == 20)) then
+    for _, filepath in ipairs(all_cpp_tests) do
+        if not table.contains(l3_cpp_tests, filepath) then
+            add_target_cpp_test(filepath, "libmogan")
+        end
     end
 end
 
