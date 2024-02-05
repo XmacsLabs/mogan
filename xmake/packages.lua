@@ -52,7 +52,7 @@ function add_requires_of_mogan()
     add_requires("lolly", {system=false})
     tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
     add_requireconfs("lolly.tbox", {version = TBOX_VERSION, configs=tbox_configs, system = false, override=true})
-    if is_plat("linux") and linuxos.name() == "uos" then
+    if is_plat("linux") and (linuxos.name() == "uos" or linuxos.name() == "debian")then
        add_requireconfs("lolly.cpr", {version = "1.8.3", system = false, override=true})
     else
        add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
