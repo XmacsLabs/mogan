@@ -21,7 +21,7 @@ jobs:
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc \
               qtbase5-dev libqt5svg5-dev qt5-image-formats-plugins fonts-noto-cjk \
-              libcurl4-openssl-dev libfreetype-dev fakeroot debhelper libgit2-dev zlib1g-dev \
+              libcurl4-openssl-dev fakeroot debhelper libgit2-dev zlib1g-dev \
               libssl-dev cmake
       - uses: actions/checkout@v3
         with:
