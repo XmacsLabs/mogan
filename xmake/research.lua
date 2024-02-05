@@ -105,6 +105,17 @@ function add_target_research_on_others()
     end
 
     add_deps("libmogan")
+    if is_plat("linux") and (linuxos.name () == "ubuntu" and linuxos.version():major() == 20) then
+        add_packages("freetype", {links={}})
+        add_packages("pdfhummus", {links={}})
+        on_config(function (target)
+            local pkg= target:pkg("freetype")
+            local pkg2= target:pkg("pdfhummus")
+            target:add("links", "$(buildir)/$(plat)/$(arch)/$(mode)/libmogan.a")
+            target:add("links", pkg2:installdir() .. "/lib/libpdfhummus.a")
+            target:add("links", pkg:installdir() .. "/lib/libfreetype.a")
+        end)
+    end
     add_includedirs({
         "$(buildir)",
     })
