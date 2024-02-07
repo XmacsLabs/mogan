@@ -79,6 +79,12 @@
       Darcy
     </cell>|<\cell>
       Stability Issues
+    </cell>>|<row|<\cell>
+      <dlink|5>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      <slink|https://mogan.app>
     </cell>>>>
   </wide-tabular>
 

@@ -27,7 +27,11 @@
     green>|<cwith|12|12|2|2|cell-background|pastel
     green>|<cwith|13|13|2|2|cell-background|pastel
     green>|<cwith|14|14|2|2|cell-background|pastel
-    green>|<cwith|15|15|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|15|15|2|2|cell-background|pastel
+    green>|<cwith|20|20|2|2|cell-background|pastel
+    green>|<cwith|18|18|2|2|cell-background|pastel
+    green>|<cwith|17|17|2|2|cell-background|pastel
+    green>|<cwith|16|16|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       5_1
@@ -116,7 +120,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Roadmap for Mogan Editor v1.2.x
+      Roadmap for Mogan STEM Suite v1.2.x
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
@@ -207,10 +211,61 @@
       <value|da>
     </cell>|<\cell>
       Links to Gitee and Codeberg
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_19
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Doc: Mogan v.s. <TeXmacs>
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_20
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      \<#58A8\>\<#8005\>\<#5B9E\>\<#9A8C\>\<#5BA4\> \<rightarrow\>
+      \<#58A8\>\<#5BA2\>\<#5B9E\>\<#9A8C\>\<#5BA4\>
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_21
+    </cell>|<\cell>
+      v1.2.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Doc on plugins
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_22
+    </cell>|<\cell>
+      v1.2.5
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Language switcher
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_23
+    </cell>|<\cell>
+      v1.2.5
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Who are using Mogan?
     </cell>>>>
   </wide-tabular>
 
-  <tmdoc-copyright|2023|Darcy Shen>
+  <tmdoc-copyright|2023-2024|Darcy Shen>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
