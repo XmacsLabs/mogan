@@ -176,24 +176,35 @@ typesetter_rep::typeset () {
 
 box
 typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
-  x1   = x1b;
-  y1   = y1b;
-  x2   = x2b;
-  y2   = y2b;
+  // Keeps the box rectangle in pair <before, after>
+  // if before is zero rect, we only need to rendered the after rect
+  // if after is zero rect, we only need to rendered the before rect
+  // if before != after, both of them need to be re-rendered
+  // Before we use change_log_list for all changes, but for large TeXmacs docs,
+  // the heap memory might not be big enough for the change list. We split it to
+  // change_log and change_log_list to avoid memory issues.
+  array<rectangle> change_log;
+
+  x1= x1b;
+  y1= y1b;
+  x2= x2b;
+  y2= y2b;
+
+  // For old destroyed boxes, the change_log_list will be updated
   box b= typeset ();
 
-  // append pairs of rectangles to the change_log from the new typesetting box
-  array<rectangle> change_log;
+  // Append pairs of rectangles to the change_log from the new typesetting box
   b->position_at (0, 0, change_log, change_log_list);
   change_log= requires_update (change_log);
 
-  // append rectangles to the change_log from the destroyed old boxes
+  // Append rectangles to the change_log from the destroyed old boxes
   rectangles iter= change_log_list;
   while (!is_nil (iter)) {
     change_log << iter->item;
     iter= iter->next;
   }
-  // reset the list for the old destroyed boxes
+
+  // Reset the list for the old destroyed boxes
   change_log_list= rectangles ();
 
   rectangle r (0, 0, 0, 0);
