@@ -146,7 +146,7 @@ public:
   virtual void loci (SI x, SI y, SI d, list<string>& ids, rectangles& rs);
   virtual void display_links (renderer ren);
   virtual void position_at (SI x, SI y, array<rectangle>& logs,
-                            rectangles& logs_list);
+                            rectangle& changed);
   virtual void collect_page_numbers (hashmap<string, tree>& h, tree page);
   virtual void collect_page_colors (array<brush>& bs, array<rectangle>& rs);
   virtual path find_tag (string name);

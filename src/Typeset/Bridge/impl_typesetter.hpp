@@ -29,7 +29,7 @@ public:
   bool                  paper;
 
 private:
-  rectangles change_log_list;
+  rectangle changed_least_upper_bound;
 
 public:
   typesetter_rep (edit_env& env, tree et, path ip);

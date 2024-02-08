@@ -708,29 +708,33 @@ cell_box_rep::post_display (renderer& ren) {
 
 class remember_box_rep : public change_box_rep {
 public:
-  rectangles* logs_ptr;
-  SI          ox, oy;
+  rectangle* changed_ptr;
+  SI         ox, oy;
 
 public:
   inline remember_box_rep (path ip, box b)
-      : change_box_rep (ip, true), logs_ptr (NULL) {
+      : change_box_rep (ip, true), changed_ptr (NULL) {
     insert (b, 0, 0);
     position ();
     finalize ();
   }
   inline ~remember_box_rep () {
-    if (logs_ptr != NULL) {
-      rectangles& logs= *logs_ptr;
-      logs= rectangles (rectangle (ox + x3, oy + y3, ox + x4, oy + y4), logs);
-      logs= rectangles (rectangle (0, 0, 0, 0), logs);
-      // cout << "  8=X " << rectangle (ox+x3, oy+y3, ox+x4, oy+y4) << "\n";
+    if (changed_ptr != nullptr) {
+      rectangle& changed  = *changed_ptr;
+      rectangle  this_rect= rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
+      if (!is_zero (changed)) {
+        changed= least_upper_bound (changed, this_rect);
+      }
+      else {
+        changed= this_rect;
+      }
     }
   }
   inline void position_at (SI x, SI y, array<rectangle>& logs,
-                           rectangles& logs_list) {
+                           rectangle& changed) {
     x+= x0;
     y+= y0;
-    if (logs_ptr == nullptr) {
+    if (changed_ptr == nullptr) {
       logs << rectangle (0, 0, 0, 0);
     }
     else {
@@ -739,7 +743,7 @@ public:
     ox= x;
     oy= y;
     logs << rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
-    logs_ptr= &logs_list;
+    changed_ptr= &changed;
   }
   inline void display (renderer ren) { ren->apply_shadow (x1, y1, x2, y2); }
 };

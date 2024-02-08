@@ -935,12 +935,12 @@ box_rep::display_links (renderer ren) {
 
 void
 box_rep::position_at (SI x, SI y, array<rectangle>& change_log,
-                      rectangles& logs_list) {
+                      rectangle& changed) {
   int i, n= subnr ();
   x+= x0;
   y+= y0;
   for (i= 0; i < n; i++)
-    subbox (i)->position_at (x, y, change_log, logs_list);
+    subbox (i)->position_at (x, y, change_log, changed);
 }
 
 void

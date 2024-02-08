@@ -624,30 +624,36 @@ concat_box_rep::graphical_select (SI x1, SI y1, SI x2, SI y2) {
 
 class phrase_box_rep : public concat_box_rep {
 public:
-  rectangles* logs_ptr;
-  SI          ox, oy;
+  rectangle* changed_ptr;
+  SI         ox, oy;
   phrase_box_rep (path ip, array<box> bs, array<SI> spc);
   ~phrase_box_rep ();
-  void position_at (SI x, SI y, array<rectangle>& logs, rectangles& logs_list);
+  void position_at (SI x, SI y, array<rectangle>& logs, rectangle& changed);
   void display (renderer ren);
 };
 
 phrase_box_rep::phrase_box_rep (path ip, array<box> bs, array<SI> spc)
-    : concat_box_rep (ip, bs, spc, false), logs_ptr (nullptr) {}
+    : concat_box_rep (ip, bs, spc, false), changed_ptr (nullptr) {}
 
 phrase_box_rep::~phrase_box_rep () {
-  if (logs_ptr != nullptr) {
-    rectangles& logs= *logs_ptr;
-    logs= rectangles (rectangle (ox + x3, oy + y3, ox + x4, oy + y4), logs);
+  if (changed_ptr != nullptr) {
+    rectangle& changed  = *changed_ptr;
+    rectangle  this_rect= rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
+    if (!is_zero (changed)) {
+      changed= least_upper_bound (changed, this_rect);
+    }
+    else {
+      changed= this_rect;
+    }
   }
 }
 
 void
 phrase_box_rep::position_at (SI x, SI y, array<rectangle>& logs,
-                             rectangles& logs_list) {
+                             rectangle& changed) {
   x+= x0;
   y+= y0;
-  if (logs_ptr == nullptr) {
+  if (changed_ptr == nullptr) {
     logs << rectangle (0, 0, 0, 0);
   }
   else {
@@ -656,7 +662,7 @@ phrase_box_rep::position_at (SI x, SI y, array<rectangle>& logs,
   ox= x;
   oy= y;
   logs << rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
-  logs_ptr= &logs_list;
+  changed_ptr= &changed;
 }
 
 void
