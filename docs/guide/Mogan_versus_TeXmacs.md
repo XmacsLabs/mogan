@@ -37,6 +37,15 @@ Why:
 Do not show page numbers to make it clean and tidy.
 
 ## Shortcuts
+### Structured Key Prefix: `structured:cmd` and `structured:insert`
+Structured command key prefix is for toggling the foldable, toggling the numbered, structured moving, structured deleting and structured selecting.
+
+On Windows and Linux, we switched the structured command key prefix from `Alt` to `Ctrl`, the structured insert prefix from `Meta` to `Alt`.
+
+On macOS, we switched the structured command key prefix from `Option` to `Ctrl`, the structured insert prefix from `Ctrl` to `Option`.
+
+> Why：to avoid the collision with the system shortcuts. For example, `Meta+Left` is Windows system shortcuts, `Ctrl+Left` is the macOS system shortcuts。
+
 ### Structured Variants Circling (since v1.2.3)
 Add `A-S-up` and `A-S-down` for structured variants circling.
 
