@@ -15,10 +15,10 @@
 
 class typesetter_rep {
 public:
-  edit_env&    env;
-  bridge       br;
-  rectangle    last_rectangle;
-  array<brush> old_bgs;
+  edit_env&        env;
+  bridge           br;
+  array<rectangle> change_log;
+  array<brush>     old_bgs;
 
   array<page_item> l;  // current lines
   stack_border     sb; // border properties
