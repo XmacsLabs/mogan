@@ -935,7 +935,7 @@ box_rep::display_links (renderer ren) {
 
 void
 box_rep::position_at (SI x, SI y, array<rectangle>& change_log,
-                      rectangle& changed) {
+                      std::shared_ptr<rectangle> changed) {
   int i, n= subnr ();
   x+= x0;
   y+= y0;

@@ -12,6 +12,8 @@
 #ifndef IMPL_TYPESETTER_H
 #define IMPL_TYPESETTER_H
 #include "Bridge/bridge.hpp"
+#include "rectangles.hpp"
+#include <memory>
 
 class typesetter_rep {
 public:
@@ -29,7 +31,7 @@ public:
   bool                  paper;
 
 private:
-  rectangle changed_least_upper_bound;
+  std::shared_ptr<rectangle> changed_ptr;
 
 public:
   typesetter_rep (edit_env& env, tree et, path ip);

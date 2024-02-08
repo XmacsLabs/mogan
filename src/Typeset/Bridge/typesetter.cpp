@@ -186,7 +186,10 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
 
   // Append pairs of rectangles to the change_log from the new typesetting box
   array<rectangle> change_log;
-  b->position_at (0, 0, change_log, changed_least_upper_bound);
+  if (changed_ptr == nullptr) {
+    changed_ptr= std::make_shared<rectangle> ();
+  }
+  b->position_at (0, 0, change_log, changed_ptr);
 
   // Keeps the box rectangle in pair <before, after>
   // if before is zero rect, we only need to rendered the after rect
@@ -195,11 +198,11 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
   change_log= requires_update (change_log);
 
   // Append the least upper bound to the change_log from the destroyed old boxes
-  if (!is_zero (changed_least_upper_bound)) {
-    change_log << changed_least_upper_bound;
+  if (!is_zero (*changed_ptr)) {
+    change_log << *changed_ptr;
   }
   // Reset the least upper bound for the old destroyed boxes
-  changed_least_upper_bound= rectangle (0, 0, 0, 0);
+  (*changed_ptr)= rectangle (0, 0, 0, 0);
 
   rectangle r (0, 0, 0, 0);
   if (N (change_log) != 0) r= least_upper_bound (change_log);

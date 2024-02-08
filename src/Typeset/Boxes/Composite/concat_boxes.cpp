@@ -624,11 +624,12 @@ concat_box_rep::graphical_select (SI x1, SI y1, SI x2, SI y2) {
 
 class phrase_box_rep : public concat_box_rep {
 public:
-  rectangle* changed_ptr;
-  SI         ox, oy;
+  std::shared_ptr<rectangle> changed_ptr;
+  SI                         ox, oy;
   phrase_box_rep (path ip, array<box> bs, array<SI> spc);
   ~phrase_box_rep ();
-  void position_at (SI x, SI y, array<rectangle>& logs, rectangle& changed);
+  void position_at (SI x, SI y, array<rectangle>& logs,
+                    std::shared_ptr<rectangle> changed);
   void display (renderer ren);
 };
 
@@ -650,7 +651,7 @@ phrase_box_rep::~phrase_box_rep () {
 
 void
 phrase_box_rep::position_at (SI x, SI y, array<rectangle>& logs,
-                             rectangle& changed) {
+                             std::shared_ptr<rectangle> changed) {
   x+= x0;
   y+= y0;
   if (changed_ptr == nullptr) {
@@ -662,7 +663,7 @@ phrase_box_rep::position_at (SI x, SI y, array<rectangle>& logs,
   ox= x;
   oy= y;
   logs << rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
-  changed_ptr= &changed;
+  changed_ptr= changed;
 }
 
 void

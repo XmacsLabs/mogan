@@ -708,8 +708,8 @@ cell_box_rep::post_display (renderer& ren) {
 
 class remember_box_rep : public change_box_rep {
 public:
-  rectangle* changed_ptr;
-  SI         ox, oy;
+  std::shared_ptr<rectangle> changed_ptr;
+  SI                         ox, oy;
 
 public:
   inline remember_box_rep (path ip, box b)
@@ -731,7 +731,7 @@ public:
     }
   }
   inline void position_at (SI x, SI y, array<rectangle>& logs,
-                           rectangle& changed) {
+                           std::shared_ptr<rectangle> changed) {
     x+= x0;
     y+= y0;
     if (changed_ptr == nullptr) {
@@ -743,7 +743,7 @@ public:
     ox= x;
     oy= y;
     logs << rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
-    changed_ptr= &changed;
+    changed_ptr= changed;
   }
   inline void display (renderer ren) { ren->apply_shadow (x1, y1, x2, y2); }
 };
