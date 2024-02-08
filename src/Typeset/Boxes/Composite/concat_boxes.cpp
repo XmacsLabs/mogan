@@ -638,13 +638,13 @@ phrase_box_rep::phrase_box_rep (path ip, array<box> bs, array<SI> spc)
 
 phrase_box_rep::~phrase_box_rep () {
   if (changed_ptr != nullptr) {
-    rectangle& changed  = *changed_ptr;
-    rectangle  this_rect= rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
-    if (!is_zero (changed)) {
-      changed= least_upper_bound (changed, this_rect);
+    rectangle& changed_rect= *changed_ptr;
+    rectangle  this_rect   = rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
+    if (!is_zero (changed_rect)) {
+      changed_rect= least_upper_bound (changed_rect, this_rect);
     }
     else {
-      changed= this_rect;
+      changed_rect= this_rect;
     }
   }
 }

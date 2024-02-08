@@ -186,9 +186,6 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
 
   // Append pairs of rectangles to the change_log from the new typesetting box
   array<rectangle> change_log;
-  if (changed_ptr == nullptr) {
-    changed_ptr= std::make_shared<rectangle> ();
-  }
   b->position_at (0, 0, change_log, changed_ptr);
 
   // Keeps the box rectangle in pair <before, after>

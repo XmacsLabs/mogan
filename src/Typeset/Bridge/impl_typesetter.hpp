@@ -31,7 +31,7 @@ public:
   bool                  paper;
 
 private:
-  std::shared_ptr<rectangle> changed_ptr;
+  std::shared_ptr<rectangle> changed_ptr= std::make_shared<rectangle> ();
 
 public:
   typesetter_rep (edit_env& env, tree et, path ip);
