@@ -15,10 +15,9 @@
 
 class typesetter_rep {
 public:
-  edit_env&        env;
-  bridge           br;
-  array<rectangle> change_log;
-  array<brush>     old_bgs;
+  edit_env&    env;
+  bridge       br;
+  array<brush> old_bgs;
 
   array<page_item> l;  // current lines
   stack_border     sb; // border properties
@@ -28,6 +27,9 @@ public:
   SI                    x1, y1, x2, y2;
   hashmap<string, tree> old_patch;
   bool                  paper;
+
+private:
+  rectangles change_log_list;
 
 public:
   typesetter_rep (edit_env& env, tree et, path ip);

@@ -182,9 +182,20 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
   y2   = y2b;
   box b= typeset ();
 
-  // append pairs of rectangles to the change_log from the typesetting box
-  b->position_at (0, 0, change_log);
+  // append pairs of rectangles to the change_log from the new typesetting box
+  array<rectangle> change_log;
+  b->position_at (0, 0, change_log, change_log_list);
   change_log= requires_update (change_log);
+
+  // append rectangles to the change_log from the destroyed old boxes
+  rectangles iter= change_log_list;
+  while (!is_nil (iter)) {
+    change_log << iter->item;
+    iter= iter->next;
+  }
+  // reset the list for the old destroyed boxes
+  change_log_list= rectangles ();
+
   rectangle r (0, 0, 0, 0);
   if (N (change_log) != 0) r= least_upper_bound (change_log);
 
@@ -195,11 +206,10 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
     if (new_bgs[i] != old_bgs[i]) r= least_upper_bound (r, rs[i]);
   old_bgs= new_bgs;
 
-  x1b       = r->x1;
-  y1b       = r->y1;
-  x2b       = r->x2;
-  y2b       = r->y2;
-  change_log= array<rectangle> ();
+  x1b= r->x1;
+  y1b= r->y1;
+  x2b= r->x2;
+  y2b= r->y2;
   return b;
 }
 

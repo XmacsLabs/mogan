@@ -726,16 +726,20 @@ public:
       // cout << "  8=X " << rectangle (ox+x3, oy+y3, ox+x4, oy+y4) << "\n";
     }
   }
-  inline void position_at (SI x, SI y, rectangles& logs) {
+  inline void position_at (SI x, SI y, array<rectangle>& logs,
+                           rectangles& logs_list) {
     x+= x0;
     y+= y0;
-    if (logs_ptr == NULL) logs= rectangles (rectangle (0, 0, 0, 0), logs);
-    else
-      logs= rectangles (rectangle (ox + x3, oy + y3, ox + x4, oy + y4), logs);
-    ox      = x;
-    oy      = y;
-    logs    = rectangles (rectangle (ox + x3, oy + y3, ox + x4, oy + y4), logs);
-    logs_ptr= &logs;
+    if (logs_ptr == nullptr) {
+      logs << rectangle (0, 0, 0, 0);
+    }
+    else {
+      logs << rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
+    }
+    ox= x;
+    oy= y;
+    logs << rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
+    logs_ptr= &logs_list;
   }
   inline void display (renderer ren) { ren->apply_shadow (x1, y1, x2, y2); }
 };
