@@ -211,8 +211,6 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
     if (new_bgs[i] != old_bgs[i]) r= least_upper_bound (r, rs[i]);
   old_bgs= new_bgs;
 
-  cout << r << LF;
-
   x1b= r->x1;
   y1b= r->y1;
   x2b= r->x2;
