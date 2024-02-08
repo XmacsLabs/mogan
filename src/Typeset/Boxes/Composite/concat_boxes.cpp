@@ -624,10 +624,10 @@ concat_box_rep::graphical_select (SI x1, SI y1, SI x2, SI y2) {
 
 class phrase_box_rep : public concat_box_rep {
 public:
-  bool              first_logs_flag= true;
   array<rectangle>* logs_ptr;
   SI                ox, oy;
   phrase_box_rep (path ip, array<box> bs, array<SI> spc);
+  ~phrase_box_rep ();
   void position_at (SI x, SI y, array<rectangle>& change_log_ptr);
   void display (renderer ren);
 };
@@ -635,11 +635,19 @@ public:
 phrase_box_rep::phrase_box_rep (path ip, array<box> bs, array<SI> spc)
     : concat_box_rep (ip, bs, spc, false), logs_ptr (NULL) {}
 
+phrase_box_rep::~phrase_box_rep () {
+  if (logs_ptr != NULL) {
+    array<rectangle>& logs= *logs_ptr;
+    logs << rectangle (0, 0, 0, 0)
+         << rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
+  }
+}
+
 void
 phrase_box_rep::position_at (SI x, SI y, array<rectangle>& logs) {
   x+= x0;
   y+= y0;
-  if (first_logs_flag) {
+  if (logs_ptr == NULL) {
     logs << rectangle (0, 0, 0, 0);
   }
   else {
@@ -648,7 +656,7 @@ phrase_box_rep::position_at (SI x, SI y, array<rectangle>& logs) {
   ox= x;
   oy= y;
   logs << rectangle (ox + x3, oy + y3, ox + x4, oy + y4);
-  first_logs_flag= false;
+  logs_ptr= &logs;
 }
 
 void
