@@ -6,6 +6,19 @@ Mogan Research as a distribution of GNU TeXmacs will try to keep the user experi
 
 In this article, we will discuss the differences of Mogan Research and GNU TeXmacs in details:
 
+## In one table
+| | GNU TeXmacs | Mogan Research |
+|--|------------|----------------|
+| Release Cycle | not fixed | monthly |
+| Performance | slow | fast |
+| UI Style | retro style | modern style | 
+| Shortcuts | some of them do not work | 99% of them work fine |
+| Qt Framework | mainly in Qt 4 (some in Qt 5) | mainly in Qt 6 (some in Qt 5) |
+| Scheme Engine | GNU Guile 1.8.x | S7 Scheme |
+| Code Repository | SVN (Savannah) | Git (Codeberg/Gitee/Github) |
+| Build Tool | GNU Autotools | xmake | 
+| Lead by | Joris van der Hoeven (Mathematician) | Darcy Shen (Software Engineer) |
+
 ## Preferences
 | Option |  Mogan Research | GNU TeXmacs|
 |--------|-----------------|------------|

@@ -6,6 +6,20 @@
 
 本文着重强调墨干（Mogan Research）和GNU TeXmacs这两个同类产品的区别：
 
+## 一表以蔽之
+|  | GNU TeXmacs | 墨干 |
+|--|------------|----------------|
+| 发布周期 | 不固定 | 一个月至少一个版本 |
+| 性能 | 慢 | 快 |
+| 界面风格 | 复古风格 | 现代风格 | 
+| Shortcuts | many of them do not work | 99% of them work fine |
+| Qt框架 | 主要是Qt 4 (个别是Qt 5) | 主要是Qt 6 (个别是Qt 5) |
+| Scheme引擎 | GNU Guile 1.8.x | S7 Scheme |
+| 代码仓库 | SVN (Savannah) | Git (Codeberg/Gitee/Github) |
+| 构建工具 | GNU Autotools | xmake | 
+| 主导者 | Joris van der Hoeven (数学家) | 沈浪熊猫儿 (软件工程师) |
+
+
 ## 首选项
 | 选项 | 墨干 | GNU TeXmacs|
 |--------|-----------------|------------|
