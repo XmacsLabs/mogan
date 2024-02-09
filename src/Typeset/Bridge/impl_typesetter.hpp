@@ -12,13 +12,14 @@
 #ifndef IMPL_TYPESETTER_H
 #define IMPL_TYPESETTER_H
 #include "Bridge/bridge.hpp"
+#include "rectangles.hpp"
+#include <memory>
 
 class typesetter_rep {
 public:
-  edit_env&        env;
-  bridge           br;
-  array<rectangle> change_log;
-  array<brush>     old_bgs;
+  edit_env&    env;
+  bridge       br;
+  array<brush> old_bgs;
 
   array<page_item> l;  // current lines
   stack_border     sb; // border properties
@@ -28,6 +29,9 @@ public:
   SI                    x1, y1, x2, y2;
   hashmap<string, tree> old_patch;
   bool                  paper;
+
+private:
+  std::shared_ptr<rectangle> changed_ptr= std::make_shared<rectangle> ();
 
 public:
   typesetter_rep (edit_env& env, tree et, path ip);
