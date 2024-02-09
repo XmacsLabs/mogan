@@ -176,15 +176,31 @@ typesetter_rep::typeset () {
 
 box
 typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
-  x1   = x1b;
-  y1   = y1b;
-  x2   = x2b;
-  y2   = y2b;
+  x1= x1b;
+  y1= y1b;
+  x2= x2b;
+  y2= y2b;
+
+  // For old destroyed boxes, the changed_least_upper_bound will be updated
   box b= typeset ();
 
-  // append pairs of rectangles to the change_log from the typesetting box
-  b->position_at (0, 0, change_log);
+  // Append pairs of rectangles to the change_log from the new typesetting box
+  array<rectangle> change_log;
+  b->position_at (0, 0, change_log, changed_ptr);
+
+  // Keeps the box rectangle in pair <before, after>
+  // if before is zero rect, we only need to rendered the after rect
+  // if after is zero rect, we only need to rendered the before rect
+  // if before != after, both of them need to be re-rendered
   change_log= requires_update (change_log);
+
+  // Append the least upper bound to the change_log from the destroyed old boxes
+  if (!is_zero (*changed_ptr)) {
+    change_log << *changed_ptr;
+  }
+  // Reset the least upper bound for the old destroyed boxes
+  (*changed_ptr)= rectangle (0, 0, 0, 0);
+
   rectangle r (0, 0, 0, 0);
   if (N (change_log) != 0) r= least_upper_bound (change_log);
 
@@ -195,11 +211,10 @@ typesetter_rep::typeset (SI& x1b, SI& y1b, SI& x2b, SI& y2b) {
     if (new_bgs[i] != old_bgs[i]) r= least_upper_bound (r, rs[i]);
   old_bgs= new_bgs;
 
-  x1b       = r->x1;
-  y1b       = r->y1;
-  x2b       = r->x2;
-  y2b       = r->y2;
-  change_log= array<rectangle> ();
+  x1b= r->x1;
+  y1b= r->y1;
+  x2b= r->x2;
+  y2b= r->y2;
   return b;
 }
 
