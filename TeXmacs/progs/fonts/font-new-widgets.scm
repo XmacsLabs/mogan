@@ -704,3 +704,9 @@
          (setter (prefixed-init-multi prefix)))
     (selector-initialize-font getter)
     (dialogue-window (font-selector #t) setter "Font selector")))
+
+(tm-define (short-font-menu-name)
+  (with name (font-family-main (get-init "font"))
+    (if (== name "sys-chinese")
+        (utf8->cork "字体")
+        (upcase-first (utf8->cork name)))))

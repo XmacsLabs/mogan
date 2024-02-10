@@ -15,7 +15,8 @@
   (:use (generic document-edit)
         (generic generic-menu)
         (language locale)
-        (texmacs menus file-menu)))
+        (texmacs menus file-menu)
+        (fonts font-new-widgets)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Project menu
@@ -370,12 +371,6 @@
       ("Gulim" (init-font "gulim")))
   (if (font-exists-in-tt? "UnBatang")
       ("UnBatang" (init-font "unbatang"))))
-
-(define (short-font-menu-name)
-  (with name (font-family-main (get-init "font"))
-    (if (== name "sys-chinese")
-        (utf8->cork "字体")
-        (upcase-first (utf8->cork name)))))
 
 (menu-bind document-short-font-menu
   (cond
