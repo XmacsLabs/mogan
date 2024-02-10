@@ -892,3 +892,9 @@
              (setter (prefixed-init-multi prefix)))
         (open-font-tool "Font selector" getter setter #t))
       (open-document-other-font-selector prefix-window)))
+
+(tm-define (short-font-menu-name)
+  (with name (font-family-main (get-init "font"))
+    (if (== name "sys-chinese")
+        (utf8->cork "字体")
+        (upcase-first (utf8->cork name)))))
