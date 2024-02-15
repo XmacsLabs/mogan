@@ -12,7 +12,7 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|4|4|1|1|cell-background|>|<cwith|8|8|1|1|cell-background|>|<cwith|11|11|3|3|cell-valign|b>|<cwith|11|11|1|1|cell-background|pastel
+    <tformat|<cwith|4|4|1|1|cell-background|>|<cwith|9|9|1|1|cell-background|>|<cwith|12|12|3|3|cell-valign|b>|<cwith|12|12|1|1|cell-background|pastel
     green>|<cwith|2|2|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|77>
     </cell>|<\cell>
@@ -37,7 +37,8 @@
       <value|da>
     </cell>|<\cell>
       Improvements for Chinese users in 1.2.0
-    </cell>>|<row|<\cell>
+    </cell>>|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU
+    format>>|<row|<\cell>
       <dlink|59>
     </cell>|<\cell>
       Darcy

@@ -7,14 +7,16 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|66_1>|<cell|<value|da>>|<cell|L2
-  with Scheme on lolly only and merge L1 glues ito L3
-  glues>>|<row|<cell|Chore>|<cell|66_2>|<cell|<value|da>>|<cell|Adding more
-  source code to L3>>|<row|<cell|Chore>|<cell|66_3>|<cell|<value|da>>|<cell|TMU
-  1.0.0: identical to TM format>>|<row|<cell|Chore>|<cell|66_4>|<cell|<value|da>>|<cell|TMU
-  1.0.1: Use unicode for CJK>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Perf>|<cell|66_6>|<cell|1.2.5>|<cell|<value|da>>|<cell|improve
+  speed of totm>>|<row|<cell|>|<cell|>|<cell|1.2.5>|<cell|<value|da>>|<cell|improve
+  speed of fromtm by remove N(s) in loop>>|<row|<cell|Perf>|<cell|66_5>|<cell|1.2.5>|<cell|<value|jk>>|<cell|improve
+  speed of fromtm by template>>|<row|<cell|Chore>|<cell|66_4>|<cell|>|<cell|<value|da>>|<cell|TMU
+  1.0.1: Use unicode for CJK>>|<row|<cell|Chore>|<cell|66_3>|<cell|>|<cell|<value|da>>|<cell|TMU
+  1.0.0: identical to TM format>>|<row|<cell|Chore>|<cell|66_2>|<cell|>|<cell|<value|da>>|<cell|Adding
+  more source code to L3>>|<row|<cell|Chore>|<cell|66_1>|<cell|>|<cell|<value|da>>|<cell|L2
+  with Scheme on lolly only and merge L1 glues ito L3 glues>>>>>
 
-  <tmdoc-copyright|2023|Darcy>
+  <tmdoc-copyright|2023\U2024|Darcy|jinkaimori>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
