@@ -59,8 +59,8 @@ template <bool format_without_utf8> struct tm_reader {
 template <bool format_without_utf8>
 int
 tm_reader<format_without_utf8>::skip_blank () {
-  int n= 0;
-  for (; pos < N (buf); pos++) {
+  int n= 0, buf_N= N (buf);
+  for (; pos < buf_N; pos++) {
     if (buf[pos] == ' ') continue;
     if (buf[pos] == '\t') continue;
     if (buf[pos] == '\r') continue;
@@ -98,12 +98,12 @@ tm_reader<format_without_utf8>::decode (string s) {
 template <bool format_without_utf8>
 string
 tm_reader<format_without_utf8>::read_char () {
-  while (((pos + 1) < N (buf)) && (buf[pos] == '\\') &&
-         (buf[pos + 1] == '\n')) {
+  int buf_N= N (buf);
+  while (((pos + 1) < buf_N) && (buf[pos] == '\\') && (buf[pos + 1] == '\n')) {
     pos+= 2;
     skip_spaces (buf, pos);
   }
-  if (pos >= N (buf)) return "";
+  if (pos >= buf_N) return "";
 
   if constexpr (format_without_utf8) {
     pos++;
@@ -167,13 +167,14 @@ tm_reader<format_without_utf8>::read_next () {
   }
 
   string r;
-  pos= old_pos;
+  pos      = old_pos;
+  int buf_N= N (buf);
   while (true) {
     old_pos= pos;
     c      = read_char ();
     if (c == "") return r;
     else if (c == "\\") {
-      if ((pos < N (buf)) && (buf[pos] == '\\') && backslash_ok) {
+      if ((pos < buf_N) && (buf[pos] == '\\') && backslash_ok) {
         r << c << "\\";
         pos++;
       }
@@ -208,8 +209,8 @@ tm_reader<format_without_utf8>::read_function_name () {
 static void
 get_collection (tree& u, tree t) {
   if (is_func (t, COLLECTION) || is_func (t, DOCUMENT) || is_func (t, CONCAT)) {
-    int i;
-    for (i= 0; i < N (t); i++)
+    int i, n= N (t);
+    for (i= 0; i < n; i++)
       get_collection (u, t[i]);
   }
   else if (is_compound (t)) u << t;
@@ -228,7 +229,8 @@ tm_reader<format_without_utf8>::read_apply (string name, bool skip_flag) {
   }
 
   bool closed= !skip_flag;
-  while (pos < N (buf)) {
+  int  buf_N = N (buf);
+  while (pos < buf_N) {
     // cout << "last= " << last << LF;
     bool sub_flag= (skip_flag) && ((last == "") || (last[N (last) - 1] != '|'));
     if (sub_flag) (void) skip_blank ();
@@ -274,6 +276,9 @@ tm_reader<format_without_utf8>::read (bool skip_flag) {
   string S ("");
   bool   spc_flag= false;
   bool   ret_flag= false;
+  int    buf_N   = N (buf);
+
+  bench_start ("fromtm_reader_" * as_string (buf_N));
 
   while (true) {
     last= read_next ();
@@ -304,7 +309,7 @@ tm_reader<format_without_utf8>::read (bool skip_flag) {
       }
       else if (last[N (last) - 1] == '#') {
         string r;
-        while ((buf[pos] != '>') && (pos + 2 < N (buf))) {
+        while ((buf[pos] != '>') && (pos + 2 < buf_N)) {
           r << ((char) from_hex (buf (pos, pos + 2)));
           pos+= 2;
         }
@@ -354,6 +359,7 @@ tm_reader<format_without_utf8>::read (bool skip_flag) {
   if (N (C) == 1) D << C[0];
   else if (N (C) > 1) D << C;
   // cout << "*** " << D << "\n";
+  bench_end ("fromtm_reader_" * as_string (buf_N), 1);
   if (N (D) == 0) return "";
   if (N (D) == 1) {
     if (!skip_flag) return D[0];
@@ -433,8 +439,8 @@ texmacs_document_to_tree (string s) {
   }
 
   if (starts (s, "<TeXmacs|")) {
-    int i;
-    for (i= 9; i < N (s); i++)
+    int i, n= N (s);
+    for (i= 9; i < n; i++)
       if (s[i] == '>') break;
     string version= s (9, i);
     tree   doc    = texmacs_to_tree (s, version);
@@ -557,7 +563,8 @@ search_tag_quick (tree t, string tag) {
   if (!(is_func (t, DOCUMENT) || is_func (t, CONCAT) || is_func (t, SURROUND) ||
         is_func (t, WITH)))
     return "";
-  for (int i= 0; i < N (t); i++) {
+  int n= N (t);
+  for (int i= 0; i < n; i++) {
     tree r= search_tag_quick (t[i], tag);
     if (r != "") return r;
   }
@@ -570,7 +577,8 @@ search_tag (tree t, string tag) {
   else if (is_compound (t, tag, 1)) return tuple (t[0]);
   else {
     tree r (TUPLE);
-    for (int i= 0; i < N (t); i++) {
+    int  n= N (t);
+    for (int i= 0; i < n; i++) {
       tree f= search_tag (t[i], tag);
       r << A (f);
     }
@@ -583,9 +591,10 @@ search_metadata_tag_under (tree doc, string parent, string tag) {
   tree doc_data= search_tag_quick (doc, parent);
   if (is_compound (doc_data)) {
     string r;
-    tree   t= search_tag (doc, tag);
-    for (int i= 0; i < N (t); i++) {
-      if (N (r) != 0) r << ", ";
+    tree   t  = search_tag (doc, tag);
+    int    t_N= N (t), r_N= N (r);
+    for (int i= 0; i < t_N; i++) {
+      if (r_N != 0) r << ", ";
       r << tree_to_verbatim (t[i], false, "cork");
     }
     return r;
