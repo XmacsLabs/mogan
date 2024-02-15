@@ -407,6 +407,7 @@ is_expand (tree t, string s, int n) {
 
 tree
 texmacs_document_to_tree (string s) {
+  bench_start ("tmdoc_to_tree_" * as_string (N (s)));
   tree error (ERROR, "bad format or data");
   if (starts (s, "edit") || starts (s, "TeXmacs") ||
       starts (s, "\\(\\)(TeXmacs")) {
@@ -448,6 +449,7 @@ texmacs_document_to_tree (string s) {
       d << A (doc);
       doc= d;
     }
+    bench_end ("tmdoc_to_tree_" * as_string (N (s)), 100);
     return upgrade (doc, version);
   }
   return error;
