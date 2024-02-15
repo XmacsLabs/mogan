@@ -592,9 +592,9 @@ search_metadata_tag_under (tree doc, string parent, string tag) {
   if (is_compound (doc_data)) {
     string r;
     tree   t  = search_tag (doc, tag);
-    int    t_N= N (t), r_N= N (r);
+    int    t_N= N (t);
     for (int i= 0; i < t_N; i++) {
-      if (r_N != 0) r << ", ";
+      if (N (r) != 0) r << ", ";
       r << tree_to_verbatim (t[i], false, "cork");
     }
     return r;
