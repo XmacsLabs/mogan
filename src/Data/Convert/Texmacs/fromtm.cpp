@@ -278,8 +278,6 @@ tm_reader<format_without_utf8>::read (bool skip_flag) {
   bool   ret_flag= false;
   int    buf_N   = N (buf);
 
-  bench_start ("fromtm_reader_" * as_string (buf_N));
-
   while (true) {
     last= read_next ();
     // cout << "--> " << last << "\n";
@@ -359,7 +357,6 @@ tm_reader<format_without_utf8>::read (bool skip_flag) {
   if (N (C) == 1) D << C[0];
   else if (N (C) > 1) D << C;
   // cout << "*** " << D << "\n";
-  bench_end ("fromtm_reader_" * as_string (buf_N), 1);
   if (N (D) == 0) return "";
   if (N (D) == 1) {
     if (!skip_flag) return D[0];
