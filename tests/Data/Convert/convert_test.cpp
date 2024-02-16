@@ -12,16 +12,23 @@
 
 #include "base.hpp"
 #include "convert.hpp"
+#include "file.hpp"
 #include "tree_helper.hpp"
 Q_DECLARE_METATYPE (tree)
 Q_DECLARE_METATYPE (string)
+Q_DECLARE_METATYPE (url)
 
 class TestConverter : public QObject {
   Q_OBJECT
 
 private slots:
+  void initTestCase () { init_lolly (); }
   void test_search_metadata_data ();
   void test_search_metadata ();
+  void test_texmacs_to_tree_data ();
+  void test_texmacs_to_tree ();
+  void test_texmacs_to_tree_bench_data ();
+  void test_texmacs_to_tree_bench ();
 };
 
 void
@@ -67,6 +74,40 @@ TestConverter::test_search_metadata () {
   qcompare (search_metadata (input_tree, "author"), author);
   qcompare (search_metadata (input_tree, "keyword"), keyword);
   qcompare (search_metadata (input_tree, "invalid"), invalid);
+}
+
+void
+TestConverter::test_texmacs_to_tree_data () {
+  QTest::addColumn<string> ("input_string");
+  QTest::addColumn<tree> ("output");
+
+  QTest::newRow ("pure string") << string ("text") << tree (DOCUMENT, "text");
+  QTest::newRow ("escaped string")
+      << string ("tex\\\\t") << tree (DOCUMENT, "tex\\t");
+  QTest::newRow ("non escaped trailing slash")
+      << string ("text\\") << tree (DOCUMENT, "text\\");
+}
+void
+TestConverter::test_texmacs_to_tree () {
+  QFETCH (string, input_string);
+  QFETCH (tree, output);
+  QCOMPARE (texmacs_to_tree (input_string), output);
+}
+
+void
+TestConverter::test_texmacs_to_tree_bench_data () {
+  QTest::addColumn<string> ("file_name");
+  url tm_base ("$TEXMACS_PATH/tests/tm/");
+  QTest::newRow ("29_1_1.tm") << string ("$TEXMACS_PATH/tests/tm/29_1_1.tm");
+  QTest::newRow ("46_3.tm") << string ("$TEXMACS_PATH/tests/tm/46_3.tm");
+  QTest::newRow ("64_1.tm") << string ("$TEXMACS_PATH/tests/tm/64_1.tm");
+}
+void
+TestConverter::test_texmacs_to_tree_bench () {
+  QFETCH (string, file_name);
+  string file_content;
+  load_string (file_name, file_content, true);
+  QBENCHMARK { texmacs_to_tree (file_content); };
 }
 
 QTEST_MAIN (TestConverter)

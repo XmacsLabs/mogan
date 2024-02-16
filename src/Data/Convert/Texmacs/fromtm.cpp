@@ -95,6 +95,7 @@ tm_reader<format_without_utf8>::decode (string s) {
       else r << s[i];
     }
     else r << s[i];
+  // if r[n-2] is not slash, i==n-1 and r[n-1] is not visited
   if (i < n) {
     r << s[i];
   }
