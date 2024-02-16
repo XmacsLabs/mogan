@@ -76,14 +76,13 @@ tm_reader<format_without_utf8>::skip_blank () {
 template <bool format_without_utf8>
 string
 tm_reader<format_without_utf8>::decode (string s) {
-  int n    = N (s);
   int start= index_of (s, '\\');
-  if (start == -1 || start == n - 1) return s;
+  if (start == -1) return s;
 
   int    n= N (s);
   string r= s (0, start);
   for (int i= start; i < n; i++)
-    if (s[i] == '\\') {
+    if (((i + 1) < n) && (s[i] == '\\')) {
       i++;
       if (s[i] == ';')
         ;
