@@ -205,6 +205,10 @@ picture_is_cached (url file_name, int w, int h, tree eff, int pixel) {
   (void) pixel;
   tree key= tuple (file_name->t, as_string (w), as_string (h), eff);
   if (!picture_cache->contains (key)) return false;
+  if (descends (file_name, get_texmacs_path ())) {
+    // For picture under $TEXMACS_PATH, do not check the timestamp
+    return true;
+  }
   int loaded= last_modified (file_name);
   int cached= picture_stamp[key];
   if (cached >= loaded) return true;

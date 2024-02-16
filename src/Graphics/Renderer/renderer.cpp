@@ -14,6 +14,7 @@
 #include "frame.hpp"
 #include "image_files.hpp"
 #include "rectangles.hpp"
+#include "tm_debug.hpp"
 #include "tree_analyze.hpp"
 
 int    std_shrinkf  = 5;
@@ -442,14 +443,17 @@ renderer_rep::clear_pattern (SI mx1, SI my1, SI mx2, SI my2, SI x1, SI y1,
     tree eff= "";
     if (N (pattern) == 4 && is_compound (pattern[3])) eff= pattern[3];
     scalable im= load_scalable_image (u, w + dw, h + dh, eff, pixel);
+    if (DEBUG_BENCH) bench_start (as_string (u));
     for (int i= ((x1 + sx) / w) - 1; i <= ((x2 + sx) / w) + 1; i++)
       for (int j= ((y1 + sy) / h) - 1; j <= ((y2 + sy) / h) + 1; j++) {
         SI X1= i * w - sx, Y1= j * h - sy;
         SI X2= (i + 1) * w - sx, Y2= (j + 1) * h - sy;
         if (X1 + dw < x2 && X2 - dw > x1 && Y1 + dh < y2 && Y2 - dh > y1)
-          if (X1 < cx2 && X2 > cx1 && Y1 < cy2 && Y2 > cy1)
+          if (X1 < cx2 && X2 > cx1 && Y1 < cy2 && Y2 > cy1) {
             draw_scalable (im, X1, Y1, pattern_alpha);
+          }
       }
+    if (DEBUG_BENCH) bench_end (as_string (u), 30);
     set_clipping (cx1, cy1, cx2, cy2, true);
   }
   else clear (x1, y1, x2, y2);
