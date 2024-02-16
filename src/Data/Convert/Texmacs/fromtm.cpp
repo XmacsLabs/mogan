@@ -81,8 +81,8 @@ tm_reader<format_without_utf8>::decode (string s) {
 
   int    n= N (s);
   string r= s (0, start);
-  for (int i= start; i < n; i++)
-    if (((i + 1) < n) && (s[i] == '\\')) {
+  for (int i= start; i < n - 1; i++)
+    if (s[i] == '\\') {
       i++;
       if (s[i] == ';')
         ;
@@ -95,6 +95,10 @@ tm_reader<format_without_utf8>::decode (string s) {
       else r << s[i];
     }
     else r << s[i];
+  if (i < n) {
+    r << s[i];
+  }
+
   return r;
 }
 
