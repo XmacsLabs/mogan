@@ -79,7 +79,7 @@ tm_reader<format_without_utf8>::decode (string s) {
   int start= index_of (s, '\\');
   if (start == -1) return s;
 
-  int    n_minus_one= N (s) - 1, i= start;
+  int    n= N (s), n_minus_one= n - 1, i= start;
   string r= s (0, start);
   for (; i < n_minus_one; i++)
     if (s[i] == '\\') {
