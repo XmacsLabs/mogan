@@ -32,7 +32,7 @@ TestTMFile::test_load_ramdisc () {
 void
 TestTMFile::test_search_sub_dirs () {
   url u= url_system ("$TEXMACS_PATH/doc") | url_system ("$TEXMACS_PATH/langs");
-  QVERIFY (is_or (search_sub_dirs(u)));
+  QVERIFY (is_or (search_sub_dirs (u)));
 }
 
 QTEST_MAIN (TestTMFile)

@@ -15,7 +15,7 @@
 #include "url.hpp"
 #include <QtTest/QtTest>
 
-class TestTMURL: public QObject {
+class TestTMURL : public QObject {
   Q_OBJECT
 
 private slots:
@@ -25,10 +25,12 @@ private slots:
 
 void
 TestTMURL::test_complete () {
-    url u= url_system ("/tmp") | url_system ("/usr");
-    cout << complete (u, "dr") << LF;
+  // url u= url_system ("/tmp") | url_system ("/usr");
+  // cout << complete (u, "dr") << LF;
+  if (!os_win ()) {
+    QVERIFY (url_system ("/tmp") == complete (url_system ("/tmp"), "dr"));
+  }
 }
 
 QTEST_MAIN (TestTMURL)
 #include "tm_url_test.moc"
-
