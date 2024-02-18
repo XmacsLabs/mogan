@@ -9,6 +9,7 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
+#include "cork.hpp"
 #include "hyphenate.hpp"
 #include "impl_language.hpp"
 #include "iterator.hpp"

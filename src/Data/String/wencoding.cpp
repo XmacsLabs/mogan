@@ -11,6 +11,7 @@
 
 #include "wencoding.hpp"
 #include "converter.hpp"
+#include "cork.hpp"
 #include "locale.hpp"
 
 static char controls[32]= {

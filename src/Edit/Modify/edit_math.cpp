@@ -11,6 +11,7 @@
 
 #include "edit_math.hpp"
 #include "analyze.hpp"
+#include "cork.hpp"
 #include "tree_observer.hpp"
 
 /******************************************************************************

@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "cork.hpp"
+#include "analyze.hpp"
 
 bool
 contains_unicode_char (string s) {

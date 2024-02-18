@@ -16,6 +16,7 @@
 #include "config.h"
 #include "connect.hpp"
 #include "convert.hpp"
+#include "cork.hpp"
 #include "dictionary.hpp"
 #include "drd_std.hpp"
 #include "file.hpp"

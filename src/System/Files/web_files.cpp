@@ -16,6 +16,7 @@
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 
+#include "cork.hpp"
 #include "scheme.hpp"
 #include "tmfs_url.hpp"
 

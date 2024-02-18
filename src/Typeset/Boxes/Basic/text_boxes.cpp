@@ -12,6 +12,7 @@
 #include "Boxes/construct.hpp"
 #include "analyze.hpp"
 #include "boxes.hpp"
+#include "cork.hpp"
 #include "font.hpp"
 
 /******************************************************************************

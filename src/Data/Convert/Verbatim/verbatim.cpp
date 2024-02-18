@@ -12,6 +12,7 @@
 #include "analyze.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
+#include "cork.hpp"
 #include "drd_std.hpp"
 #include "locale.hpp"
 #include "tree_helper.hpp"

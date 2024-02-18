@@ -12,6 +12,7 @@
 #include "LaTeX_Preview/latex_preview.hpp"
 #include "Tex/convert_tex.hpp"
 #include "Tex/tex.hpp"
+#include "cork.hpp"
 #include "font.hpp"
 #include "metadata.hpp"
 #include "scheme.hpp"

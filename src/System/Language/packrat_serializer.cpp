@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
+#include "cork.hpp"
 #include "drd_std.hpp"
 #include "packrat_parser.hpp"
 #include "tree_helper.hpp"

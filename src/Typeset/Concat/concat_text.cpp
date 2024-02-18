@@ -11,6 +11,7 @@
 
 #include "analyze.hpp"
 #include "concater.hpp"
+#include "cork.hpp"
 #include "formatter.hpp"
 #include "preferences.hpp"
 

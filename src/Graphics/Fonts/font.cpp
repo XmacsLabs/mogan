@@ -13,6 +13,7 @@
 #include "Freetype/tt_file.hpp"
 #include "colors.hpp"
 #include "convert.hpp"
+#include "cork.hpp"
 #include "dictionary.hpp"
 #include "file.hpp"
 #include "iterator.hpp"

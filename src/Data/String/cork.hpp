@@ -12,6 +12,9 @@
 #ifndef TM_CORK_H
 #define TM_CORK_H
 
+#include "array.hpp"
+#include "string.hpp"
+
 /**
  * @brief Encodes a string by converting special characters to TeXmacs encoding.
  *
