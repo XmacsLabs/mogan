@@ -30,6 +30,7 @@ package("lolly")
     add_versions("1.3.20", "v1.3.20")
     add_versions("1.3.21", "v1.3.21")
     add_versions("1.3.22", "v1.3.22")
+    add_versions("1.3.23", "v1.3.23")
 
     add_deps("tbox")
     if not is_plat("wasm") then

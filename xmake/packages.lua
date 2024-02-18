@@ -31,7 +31,7 @@ end
 local S7_VERSION = "20230413"
 local QT6_VERSION = "6.5.3"
 local QTIFW_VERSION = "4.6.0"
-local LOLLY_VERSION = "1.3.22"
+local LOLLY_VERSION = "1.3.23"
 local TBOX_VERSION = "1.7.5"
 local CPR_VERSION = "1.10.5"
 local CURL_VERSION = "8.4.0"
