@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
+#include "cork.hpp"
 #include "edit_text.hpp"
 #include "tree_observer.hpp"
 #include "tree_traverse.hpp"

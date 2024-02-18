@@ -12,6 +12,7 @@
 #include "edit_main.hpp"
 #include "connect.hpp"
 #include "convert.hpp"
+#include "cork.hpp"
 #include "drd_std.hpp"
 #include "image_files.hpp"
 #include "iterator.hpp"

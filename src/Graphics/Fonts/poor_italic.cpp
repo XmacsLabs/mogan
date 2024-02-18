@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
+#include "cork.hpp"
 #include "font.hpp"
 #include "frame.hpp"
 

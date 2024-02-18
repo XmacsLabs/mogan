@@ -11,6 +11,7 @@
 
 #include "charmap.hpp"
 #include "analyze.hpp"
+#include "cork.hpp"
 #include "translator.hpp"
 
 #include <lolly/data/numeral.hpp>

@@ -14,6 +14,7 @@
 #include "Freetype/tt_file.hpp"
 #include "analyze.hpp"
 #include "converter.hpp"
+#include "cork.hpp"
 #include "font.hpp"
 
 #include <lolly/data/numeral.hpp>

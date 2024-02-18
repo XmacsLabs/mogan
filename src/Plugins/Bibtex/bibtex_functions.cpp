@@ -12,6 +12,7 @@
 #include "bibtex_functions.hpp"
 #include "Tex/tex.hpp"
 #include "converter.hpp"
+#include "cork.hpp"
 #include "tm_block.hpp"
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"

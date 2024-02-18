@@ -11,6 +11,7 @@
 
 #include "connect.hpp"
 #include "convert.hpp"
+#include "cork.hpp"
 #include "dictionary.hpp"
 #include "edit_interface.hpp"
 

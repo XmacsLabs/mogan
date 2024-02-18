@@ -67,6 +67,7 @@ http_status_code (url u) {
   return status_code;
 }
 
+#include "cork.hpp"
 #include "glue_lolly.cpp"
 
 void
