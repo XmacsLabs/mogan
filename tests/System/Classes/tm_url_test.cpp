@@ -1,7 +1,7 @@
 
 /******************************************************************************
- * MODULE     : tm_file_test.cpp
- * COPYRIGHT  : (C) 2019  Darcy Shen
+ * MODULE     : tm_url_test.cpp
+ * COPYRIGHT  : (C) 2024  Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -10,30 +10,27 @@
 
 #include "base.hpp"
 #include "sys_utils.hpp"
-#include "tm_file.hpp"
+#include "tm_sys_utils.hpp"
+#include "tm_url.hpp"
 #include "url.hpp"
 #include <QtTest/QtTest>
 
-class TestTMFile : public QObject {
+class TestTMURL : public QObject {
   Q_OBJECT
 
 private slots:
   void init () { init_lolly (); }
-  void test_load_ramdisc ();
-  void test_search_sub_dirs ();
+  void test_complete ();
 };
 
 void
-TestTMFile::test_load_ramdisc () {
-  url u1= url_ramdisc ("content") * url ("sample_file.txt");
-  qcompare (tm_string_load (u1), "content");
+TestTMURL::test_complete () {
+  // url u= url_system ("/tmp") | url_system ("/usr");
+  // cout << complete (u, "dr") << LF;
+  if (!os_win ()) {
+    QVERIFY (url_system ("/tmp") == complete (url_system ("/tmp"), "dr"));
+  }
 }
 
-void
-TestTMFile::test_search_sub_dirs () {
-  url u= url_system ("$TEXMACS_PATH/doc") | url_system ("$TEXMACS_PATH/langs");
-  QVERIFY (is_or (search_sub_dirs (u)));
-}
-
-QTEST_MAIN (TestTMFile)
-#include "tm_file_test.moc"
+QTEST_MAIN (TestTMURL)
+#include "tm_url_test.moc"
