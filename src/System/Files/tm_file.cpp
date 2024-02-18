@@ -188,8 +188,6 @@ search_sub_dirs (url& all, url root) {
 url
 search_sub_dirs (url root) {
   url all= url_none ();
-  // cout << "Search in " << root << " -> " << expand (complete (root, "dr")) <<
-  // LF;
   search_sub_dirs (all, expand (complete (root, "dr")));
   return all;
 }
