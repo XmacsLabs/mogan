@@ -25,6 +25,7 @@
 
 #include <lolly/data/numeral.hpp>
 using lolly::data::from_hex;
+using lolly::data::to_hanzi;
 using lolly::data::to_Hex;
 using lolly::data::to_roman;
 using lolly::data::to_Roman;
@@ -1561,6 +1562,7 @@ edit_env_rep::exec_number (tree t) {
   if (s2 == "Roman") return to_Roman (nr);
   if (s2 == "alpha") return alpha_nr (nr);
   if (s2 == "Alpha") return Alpha_nr (nr);
+  if (s2 == "hanzi") return utf8_to_cork (to_hanzi (nr));
   if (s2 == "fnsymbol")
     return tree (WITH, MODE, "math", tree (RIGID, fnsymbol_nr (nr)));
   return tree (ERROR, "bad number");

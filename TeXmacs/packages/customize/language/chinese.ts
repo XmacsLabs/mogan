@@ -112,8 +112,14 @@
     <render-enunciation|<theorem-name|<arg|which><theorem-sep>>|<arg|body>>
   </macro>>
 
-  <assign|chapter-numbered-title|<macro|title|<style-with|src-compact|none|<chapter-title|\<#7B2C\>
-  <the-chapter> <chapter-text> <vspace|1fn><new-line><arg|title>>>>>
+  \;
+
+  <assign|chapter-numbered-title|<macro|title|<style-with|src-compact|none|<chapter-title|\<#7B2C\> <the-chapter> <chapter-text>
+  <vspace|1fn><new-line><arg|title>>>>>
+
+  \;
+
+  <assign|part-numbered-title|<macro|name|<part-title-sub|<htab|0fn>\<#7B2C\> <the-part> <part-text><htab|0fn><vspace|0.1pag><new-line><htab|0fn><arg|name><htab|0fn>>>>
 </body>
 
 <initial|<\collection>
