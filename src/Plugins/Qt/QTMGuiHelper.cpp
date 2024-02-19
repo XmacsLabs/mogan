@@ -37,7 +37,7 @@ QTMGuiHelper::eventFilter (QObject* obj, QEvent* event) {
   if (event->type () == QEvent::FileOpen) {
     static bool     new_window_flag= false;
     QFileOpenEvent* openEvent      = static_cast<QFileOpenEvent*> (event);
-    string          s= from_qstring (openEvent->file ().toUtf8 ());
+    string          s= from_qstring_utf8 (openEvent->file ().toUtf8 ());
     if (!is_empty (s)) {
       // qDebug ("File Open Event %s", s);
       const char* win= new_window_flag ? ":new-window" : ":current-window";
