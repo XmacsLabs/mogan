@@ -472,9 +472,6 @@
       (link document-font-base-size-menu))
   (=> (balloon (icon (eval (current-page-icon))) "Page layout")
       (link page-rendering-menu))
-  (assuming (focus-has-preferences? t)
-    (=> (balloon (icon "tm_focus_prefs.xpm") "Preferences for tag")
-	(dynamic (focus-preferences-menu t))))
   ((balloon (icon "tm_focus_help.xpm") "Describe tag")
    (focus-help)))
 
