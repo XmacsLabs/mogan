@@ -896,5 +896,5 @@
 (tm-define (short-font-menu-name)
   (with name (font-family-main (get-init "font"))
     (if (== name "sys-chinese")
-        (translate "font")
+        (translate "Font")
         (upcase-first (utf8->cork name)))))
