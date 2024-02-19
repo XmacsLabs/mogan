@@ -119,9 +119,7 @@
 
   \;
 
-  <assign|display-part|<macro|nr|<number|<arg|nr>|hanzi>>>
-
-  <assign|part-numbered-title|<macro|name|<part-title-sub|<htab|0fn>\<#7B2C\><the-part><part-text><htab|0fn><vspace|0.1pag><new-line><htab|0fn><arg|name><htab|0fn>>>>
+  <assign|part-numbered-title|<macro|name|<part-title-sub|<htab|0fn>\<#7B2C\> <the-part> <part-text><htab|0fn><vspace|0.1pag><new-line><htab|0fn><arg|name><htab|0fn>>>>
 </body>
 
 <initial|<\collection>
