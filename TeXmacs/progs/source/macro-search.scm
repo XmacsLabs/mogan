@@ -37,16 +37,16 @@
 (define (collect-options-sub def t)
   ;;(display* "Collect sub " def "\n")
   (cond ((tree-atomic? def) (list))
-	((and (tree-is? def 'compound) (tree-atomic? (tree-ref def 0)))
+        ((and (tree-is? def 'compound) (tree-atomic? (tree-ref def 0)))
          (let* ((c (tree-children def))
                 (l (string->symbol (tree->string (car c))))
                 (u (tm->tree (cons l (cdr c)))))
            (collect-options-sub u t)))
-	(else
-          (let* ((head (collect-options (symbol->string (tree-label def)) t))
-                 (tail (map (cut collect-options-sub <> t)
-                            (tree-children def))))
-            (list-remove-duplicates (apply append (cons head tail)))))))
+        (else
+         (let* ((head (collect-options (symbol->string (tree-label def)) t))
+                (tail (map (cut collect-options-sub <> t)
+                           (tree-children def))))
+           (list-remove-duplicates (apply append (cons head tail)))))))
 
 (define (append-options l1 l2)
   (cond ((not l1) l2)
@@ -59,11 +59,11 @@
     (ahash-set! t l '())
     (ahash-set! t l
       (with std (standard-options (string->symbol l))
-	(append-options std
-			(with def (get-init-tree l)
-			  (if (tree-in? def '(macro xmacro))
-			      (collect-options-sub def t)
-			      (list)))))))
+        (append-options std
+          (with def (get-init-tree l)
+            (if (tree-in? def '(macro xmacro))
+                (collect-options-sub def t)
+                (list)))))))
   (ahash-ref t l))
 
 (tm-define (search-options l)
