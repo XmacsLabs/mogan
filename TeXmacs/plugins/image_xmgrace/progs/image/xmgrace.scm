@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-image.scm
-;; DESCRIPTION : various Image plugins
+;; MODULE      : xmgrace.scm
+;; DESCRIPTION : xmgrace Image plugin
 ;; COPYRIGHT   : (C) 2024  Darcy Shen
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,5 +11,12 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (image)
-  (:use (image pdf)))
+(texmacs-module (image xmgrace))
+
+(define-format xmgrace
+  (:name "Xmgrace")
+  (:suffix "agr" "xmgr"))
+
+(converter xmgrace-file postscript-document
+  (:require (url-exists-in-path? "xmgrace"))
+  (:shell "xmgrace" "-noask -hardcopy -hdevice EPS -printfile" to from))

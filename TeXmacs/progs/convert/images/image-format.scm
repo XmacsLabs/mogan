@@ -64,14 +64,6 @@
   (:require (url-exists-in-path? "ps2pdf"))
   (:shell "ps2pdf" from to))
 
-(define-format xmgrace
-  (:name "Xmgrace")
-  (:suffix "agr" "xmgr"))
-
-(converter xmgrace-file postscript-file
-  (:require (url-exists-in-path? "xmgrace"))
-  (:shell "xmgrace" "-noask -hardcopy -hdevice EPS -printfile" to from))
-
 (define-format svg
    (:name "Svg")
    (:suffix "svg"))
