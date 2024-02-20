@@ -13,18 +13,6 @@
 
 (texmacs-module (convert images image-format))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Helper functions for testing available converters
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(tm-define (has-convert?)
-  (and (not (os-mingw?)) ;; avoid name collision wrt Windows native command
-       (url-exists-in-path? "convert")))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Helper functions for conversions
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (define-preferences
   ("texmacs->image:raster-resolution" "300" noop))
 
@@ -118,10 +106,6 @@
 (define-format ppm
   (:name "Ppm")
   (:suffix "ppm"))
-
-(converter ppm-file gif-file
-  (:require (has-convert?))
-  (:shell "convert" from to))
 
 (define-format gif
   (:name "Gif")
