@@ -17,7 +17,7 @@
   (cond ((os-macos?)
          (list "/opt/homebrew/bin/convert"
                "/usr/local/bin/convert"))
-        ((os-win?)
+        ((os-win32?)
          (list ))
         (else
          (list "/usr/bin/convert"))))

@@ -17,7 +17,7 @@
   (cond ((os-macos?)
          (list "/opt/homebrew/bin/pdftocairo"
                "/usr/local/bin/pdftocairo"))
-        ((os-win?)
+        ((os-win32?)
          (list ))
         (else
          (list "/usr/bin/pdftocairo"))))

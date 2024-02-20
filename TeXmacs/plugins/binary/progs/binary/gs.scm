@@ -17,7 +17,7 @@
   (cond ((os-macos?)
          (list "/opt/homebrew/Cellar/ghostscript/1*/bin/gs"
                "/usr/local/Cellar/ghostscript/1*/bin/gs"))
-        ((os-win?)
+        ((os-win32?)
          (list ))
         (else
          (list "/usr/bin/gs"))))
