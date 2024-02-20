@@ -93,18 +93,6 @@
                  (not (url-exists-in-path? "inkscape"))))
     (:function-with-options rsvg-convert))
 
-(define-format geogebra
-  (:name "Geogebra")
-  (:suffix "ggb"))
-
-(converter geogebra-file postscript-file
-  (:require (url-exists-in-path? "geogebra"))
-  (:shell "geogebra" "--export=" to "--dpi=600" from))
-
-(converter geogebra-file svg-file
-  (:require (url-exists-in-path? "geogebra"))
-  (:shell "geogebra" "--export=" to "--dpi=600" from))
-
 (converter svg-file postscript-document
   (:require (qt5-or-later-gui?))
   (:function image->psdoc))
@@ -160,7 +148,3 @@
 
 (converter png-file postscript-document
   (:function image->psdoc))
-
-(converter geogebra-file png-file
-  (:require (url-exists-in-path? "geogebra"))
-  (:shell "geogebra" "--export=" to "--dpi=600" from))
