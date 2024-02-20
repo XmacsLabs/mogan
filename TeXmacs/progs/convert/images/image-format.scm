@@ -97,10 +97,6 @@
   (:name "Xpm")
   (:suffix "xpm"))
 
-(converter xpm-file ppm-file
-  (:require (has-convert?))
-  (:shell "convert" from to))
-
 (define-format jpeg
   (:name "Jpeg")
   (:suffix "jpg" "jpeg"))
