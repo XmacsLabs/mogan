@@ -311,10 +311,11 @@
 (define-public (list-find l pred?)
   "Applies @pred? on elements of @l until it evaluates to true."
   (let next ((l l))
-    (if (null? l) #f
-	(if (pred? (car l))
-	    (car l)
-	    (next (cdr l))))))
+    (if (null? l)
+        #f
+        (if (pred? (car l))
+            (car l)
+            (next (cdr l))))))
 
 (define-public (list-find-index l pred?)
   "Find first index in @l which matches @pred"

@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (convert images init-images))
+(texmacs-module (convert images image-format))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Helper functions for testing available converters
@@ -20,18 +20,6 @@
 (tm-define (has-convert?)
   (and (not (os-mingw?)) ;; avoid name collision wrt Windows native command
        (url-exists-in-path? "convert")))
-
-(tm-define (has-pdftocairo?)
-  (url-exists-in-path? "pdftocairo"))
-
-(tm-define (gs-binary)
-  (let* ((n1 "$TEXMACS_PATH\\bin\\gs.exe;c:\\Program F*\\gs\\gs*\\gswin*c.exe")
-         (n2 "$TEXMACS_PATH/bin/gs:gs")
-         (name (if (os-mingw?) n1 n2)))
-    (url->system (url-resolve-in-path name))))
-
-(tm-define (has-gs?)
-  (url-exists? (gs-binary)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Helper functions for conversions
@@ -56,54 +44,6 @@
     (system-2 (string-append cmd " -f " fm " -d " res " -o ") dest x)
     (if (url-exists? dest) dest #f)))
 
-(tm-define (pdf-file->pdftocairo-raster x opts)
-  (let* ((dest (assoc-ref opts 'dest))
-         (fullname (url-concretize dest))
-         (fm (url-format fullname))
-         (transp (if (== fm "png") "-transp " ""))
-         (suffix (url-suffix fullname))
-         (name (string-drop-right fullname (+ 1 (string-length suffix))))
-         (res (get-raster-resolution opts))
-	 (cmd (get-shell-command "pdftocairo")))
-    ;;(display (string-append cmd " -singlefile " transp "-" fm " -r " res " " x " "  name))
-    (system-2 (string-append cmd " -singlefile " transp "-" fm " -r " res)
-	      x name)
-    (if (url-exists? dest) dest #f)))
-
-(tm-define (pdf-file->imagemagick-raster x opts)
-  (let* ((dest (assoc-ref opts 'dest))
-         (res (get-raster-resolution opts)))
-    ;;(display (string-append "convert -density " res " " x " "  dest))
-    (system-2 (string-append "convert -density " res) x dest)
-    ;; NOTE: changing the resolution to 300 (the default) causes a problem
-    ;; when converting TeXmacs documents to Html with formulas as images:
-    ;; the formulas appear way too large...
-    ;;(system-2 (string-append "convert ") x dest)
-    (if (url-exists? dest) dest #f)))
-
-(tm-define (gs-convert x opts)
-  ;; many options for pdf->ps/eps see http://tex.stackexchange.com/a/20884
-  ;; this one does a better rendering than pdf2ps (also based on gs):
-  (let* ((dest (assoc-ref opts 'dest))
-	 (gs (gs-binary)))
-    (system-2 (string-append gs " -q -dNOCACHE -dUseCropBox -dNOPAUSE -dBATCH -dSAFER -sDEVICE=eps2write -sOutputFile=") dest x))
-  ;; problem: 
-  ;; eps2write available starting with gs  9.14 (2014-03-26)
-  ;; epswrite removed in gs 9.16 (2015-03-30)
-  )
-
-(tm-define (pdf-file->gs-raster x opts)
-  (let* ((dest (assoc-ref opts 'dest))
-         (res (get-raster-resolution opts))
-	 (gs (gs-binary)))
-    (evaluate-system (list gs "-dBATCH" "-dNOPAUSE" "-dQUIET" "-dSAFER"
-                           "-dNOPROMPT" "-sDEVICE=pngalpha"
-                           (string-append "-r" res)
-                           (string-append "-sOutputFile="
-                                          (url-concretize dest))
-                           (url-concretize x)) '() '() '(1 2))
-    (if (url-exists? dest) dest #f)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Graphical document and geometric image formats
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -119,10 +59,6 @@
 ;;(converter pdf-file postscript-file
 ;;  (:require (url-exists-in-path? "pdf2ps"))
 ;;  (:shell "pdf2ps" from to))
-
-(converter pdf-file postscript-file
-  (:require (or (os-mingw?) (url-exists-in-path? "gs")))
-  (:function-with-options gs-convert))
 
 (converter postscript-file pdf-file
   (:require (url-exists-in-path? "ps2pdf"))
@@ -168,22 +104,6 @@
 (converter geogebra-file svg-file
   (:require (url-exists-in-path? "geogebra"))
   (:shell "geogebra" "--export=" to "--dpi=600" from))
-
-;;(converter pdf-file postscript-document
-;;  (:require (has-pdftocairo?))
-;;  (:shell "pdftocairo" "-eps" from to))
-;;
-;;(converter pdf-file postscript-file
-;;  (:require (has-pdftocairo?))
-;;  (:shell "pdftocairo" "-eps" from to))
-
-(converter pdf-file svg-file
-  (:require (has-pdftocairo?))
-  (:shell "pdftocairo" "-origpagesizes -nocrop -nocenter -svg" from to))
-  
-(converter pdf-file svg-file
-  (:require (url-exists-in-path? "pdf2svg"))
-  (:shell "pdf2svg" from to))
 
 (converter svg-file postscript-document
   (:require (qt5-or-later-gui?))
@@ -263,50 +183,3 @@
 
 (converter pnm-file postscript-document
   (:function image->psdoc))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; From vector graphics to bitmaps
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(converter pdf-file png-file
-  (:require (has-convert?))
-  (:function-with-options pdf-file->imagemagick-raster)
-  ;;(:option "texmacs->image:raster-resolution" "300")
-  )
-  
-(converter pdf-file jpeg-file
-  (:require (has-convert?))
-  (:function-with-options pdf-file->imagemagick-raster)
-  ;;(:option "texmacs->image:raster-resolution" "300")
-  )
- 
-(converter pdf-file tif-file
-  (:require (has-convert?))
-  (:function-with-options pdf-file->imagemagick-raster)
-  ;;(:option "texmacs->image:raster-resolution" "300")
-  )
-
-(converter pdf-file png-file
-  (:require (has-pdftocairo?))
-  (:function-with-options pdf-file->pdftocairo-raster)
-  ;;(:option "texmacs->image:raster-resolution" "450")
-  ;;if this is set it overrides the preference widget settings
-  )
-
-(converter pdf-file jpeg-file
-  (:require (has-pdftocairo?))
-  (:function-with-options pdf-file->pdftocairo-raster)
-  ;;(:option "texmacs->image:raster-resolution" "300")
-  )
-
-(converter pdf-file png-file
-  (:require (has-gs?))
-  (:function-with-options pdf-file->gs-raster))
-  
-(converter pdf-file jpeg-file
-  (:require (has-gs?))
-  (:function-with-options pdf-file->gs-raster))
- 
-(converter pdf-file tif-file
-  (:require (has-gs?))
-  (:function-with-options pdf-file->gs-raster))

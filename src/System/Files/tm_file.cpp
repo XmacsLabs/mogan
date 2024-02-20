@@ -61,12 +61,15 @@ tm_load_string (url u, string& s, bool fatal) {
 
 void
 system (string which, url u1) {
-  lolly::system::call (which * " " * sys_concretize (u1));
+  string cmd= which * " " * sys_concretize (u1);
+  debug_io << "call: " << cmd << LF;
+  lolly::system::call (cmd);
 }
 void
 system (string which, url u1, url u2) {
-  lolly::system::call (which * " " * sys_concretize (u1) * " " *
-                       sys_concretize (u2));
+  string cmd= which * " " * sys_concretize (u1) * " " * sys_concretize (u2);
+  debug_io << "call: " << cmd << LF;
+  lolly::system::call (cmd);
 }
 void
 system (string which, url u1, const char* post) {
