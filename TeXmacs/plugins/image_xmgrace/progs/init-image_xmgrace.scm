@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-image.scm
-;; DESCRIPTION : various Image plugins
+;; MODULE      : init-xmgrace.scm
+;; DESCRIPTION : xmgrace Image plugin
 ;; COPYRIGHT   : (C) 2024  Darcy Shen
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,5 +11,5 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (image)
-  (:use (image pdf)))
+
+(lazy-format (image xmgrace) xmgrace)
