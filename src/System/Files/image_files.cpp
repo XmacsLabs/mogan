@@ -450,11 +450,10 @@ image_to_eps (url image, url eps, int w_pt, int h_pt, int dpi) {
     qt_image_to_eps (image, eps, w_pt, h_pt, dpi);
     return;
   }
-  // if ((s != "svg") && (s != "pnm") && call_scm_converter(image, eps)) return;
-  // if s is in {"jpg","jpeg","tif","gif","png","pnm"} then scheme converters
-  // would return the call here (see init_images.scm) causing an infinite loop.
-  // Except pnm,the others are treated by qt. NO LONGER TRUE with QT5 (depends
-  // on qt plugins) -- disabling this dangerous call
+  if ((s != "svg") && call_scm_converter (image, eps)) return;
+    // if s is in {"jpg","jpeg","tif","gif","png"} then scheme converters
+    // would return the call here (see init_images.scm) causing an infinite
+    // loop. Except pnm,the others are treated by qt.
 #endif
   call_imagemagick_convert (image, eps, w_pt, h_pt, dpi);
 }
