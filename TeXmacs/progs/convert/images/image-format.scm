@@ -128,10 +128,6 @@
 (converter jpeg-file postscript-document
   (:function image->psdoc))
 
-(converter jpeg-file pnm-file
-  (:require (has-convert?))
-  (:shell "convert" from to))
-
 (define-format tif
   (:name "Tif")
   (:suffix "tif" "tiff"))
@@ -154,10 +150,6 @@
 (converter gif-file postscript-document
   (:function image->psdoc))
 
-(converter gif-file pnm-file
-  (:require (has-convert?))
-  (:shell "convert" from to))
-
 (define-format png
   (:name "Png")
   (:suffix "png"))
@@ -165,17 +157,6 @@
 (converter png-file postscript-document
   (:function image->psdoc))
 
-(converter png-file pnm-file
-  (:require (has-convert?))
-  (:shell "convert" from to))
-
 (converter geogebra-file png-file
   (:require (url-exists-in-path? "geogebra"))
   (:shell "geogebra" "--export=" to "--dpi=600" from))
-
-(define-format pnm
-  (:name "Pnm")
-  (:suffix "pnm"))
-
-(converter pnm-file postscript-document
-  (:function image->psdoc))
