@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-pdf.scm
-;; DESCRIPTION : setup pdf converters
+;; MODULE      : init-data_pdf.scm
+;; DESCRIPTION : PDF Data Plugin
 ;; COPYRIGHT   : (C) 2023  tangdouer
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -9,8 +9,8 @@
 ;; in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(texmacs-module (pdf-format))
 
+(texmacs-module (plugins data pdf))
 
 (define (pdf->texmacs x . opts)
   (let* ((tem-dir (url-temp-dir))
@@ -24,7 +24,6 @@
         (begin
           (notify-now "Can not extract attachments from PDF")
           (texmacs-error "pdf" "Can not extract attachments from PDF")))))
-
 
 (converter pdf-document texmacs-tree
   (:function pdf->texmacs))

@@ -21,24 +21,9 @@
 
 static string
 gs_executable () {
-  if (os_mingw () || os_win ()) {
-    url gs= url_system ("C:\\") * url_wildcard ("Program Files*") *
-            url_system ("gs") * url_wildcard ("gs*") * url_system ("bin") *
-            url_wildcard ("gswin*c.exe");
-    if (exists (gs)) {
-      return materialize (gs);
-    }
-    else {
-      return "gs.exe";
-    }
-  }
-  else if (os_macos ()) {
-    url gs= (url ("/opt/homebrew") | url ("/usr/local")) *
-            url ("Cellar/ghostscript") * url_wildcard ("1*") * url ("bin/gs");
-    if (exists (gs)) {
-      return materialize (gs);
-    }
-    return "gs";
+  url gs_url= as_url (eval ("(find-binary-gs)"));
+  if (!is_none (gs_url)) {
+    return as_string (gs_url);
   }
   else {
     return "gs";

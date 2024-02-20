@@ -319,7 +319,7 @@
 (lazy-format (convert rewrite init-rewrite) texmacs verbatim)
 (lazy-format (convert tmml init-tmml) tmml)
 (lazy-format (convert html init-html) html)
-(lazy-format (convert images init-images)
+(lazy-format (convert images image-format)
              postscript pdf xmgrace svg xpm jpeg ppm gif png pnm)
 (lazy-define (convert images tmimage)
              export-selection-as-graphics clipboard-copy-image)
