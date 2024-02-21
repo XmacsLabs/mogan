@@ -120,7 +120,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-menu (import-menu flag?)
-  (with l (converters-to-special "texmacs-file" "-file" #f)
+  (with l (filter (lambda (x) (not (in? x (image-formats))))
+                  (converters-to-special "texmacs-file" "-file" #f))
     (for (fm l)
       (let* ((name (format-get-name fm))
              (load-text (string-append "Load " (string-downcase name) " file"))
