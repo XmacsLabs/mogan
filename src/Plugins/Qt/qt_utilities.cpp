@@ -21,25 +21,31 @@
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QTextCodec>
 #endif
-#include <QApplication>
 #include <QHash>
-#include <QImageReader>
 #include <QKeySequence>
-#include <QPrintDialog>
-#include <QPrinter>
 #include <QStringList>
 
+#ifdef USE_QT_PRINTER
+#include <QPrintDialog>
+#include <QPrinter>
+#endif
+
+#include <QApplication>
+#include <QImageReader>
+
 #include "colors.hpp"
+
 #include "converter.hpp"
 #include "cork.hpp"
 #include "dictionary.hpp"
-#include "editor.hpp"
 #include "locale.hpp"
-#include "new_view.hpp" // get_current_editor()
-#include "qt_gui.hpp"   // gui_maximal_extents()
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "wencoding.hpp"
+
+#include "editor.hpp"
+#include "new_view.hpp" // get_current_editor()
+#include "qt_gui.hpp"   // gui_maximal_extents()
 
 #include <lolly/data/numeral.hpp>
 using lolly::data::as_hexadecimal;
@@ -606,6 +612,7 @@ qt_convert_image (url image, url dest, int w, int h) { // w, h in pixels
   }
 }
 
+#ifdef USE_QT_PRINTER
 void
 qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
   // use a QPrinter to output raster images to eps or pdf
@@ -678,6 +685,14 @@ qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
     p.end ();
   }
 }
+#else
+void
+qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
+  if (DEBUG_CONVERT)
+    debug_convert << "NOT SUPPORTED: qt_image_to_eps_or_pdf " << image << " -> "
+                  << outfile << LF;
+}
+#endif // defined(USE_QT_PRINTER)
 
 void
 qt_image_to_eps (url image, url outfile, int w_pt, int h_pt, int dpi) {
@@ -931,6 +946,8 @@ qt_pretty_time (int t) {
   return from_qstring (s);
 }
 
+#ifdef USE_QT_PRINTER
+#ifndef _MBD_EXPERIMENTAL_PRINTER_WIDGET // this is in qt_printer_widget
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #define PAPER(fmt)                                                             \
   case QPrinter::fmt:                                                          \
@@ -940,7 +957,6 @@ qt_pretty_time (int t) {
   case QPageSize::fmt:                                                         \
     return "fmt"
 #endif
-
 static string
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 qt_papersize_to_string (QPrinter::PaperSize sz) {
@@ -1007,6 +1023,15 @@ qt_print (bool& to_file, bool& landscape, string& pname, url& filename,
   }
   return false;
 }
+
+#endif //(not defined) _MBD_EXPERIMENTAL_PRINTER_WIDGET
+#else
+bool
+qt_print (bool& to_file, bool& landscape, string& pname, url& filename,
+          string& first, string& last, string& paper_type) {
+  return false;
+}
+#endif // defined(USE_QT_PRINTER)
 
 #ifdef OS_MACOS
 
