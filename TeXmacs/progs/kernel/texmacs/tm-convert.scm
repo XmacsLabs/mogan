@@ -150,7 +150,7 @@
          (to (if (and last? dest) dest (url-glue (url-temp) suf)))
          (cmd (if (or (os-win32?) (os-mingw?)) (escape-shell (converter-shell-cmd l from to))
              (converter-shell-cmd l from to))))
-    ;;(display* "shell: " cmd "\n")
+    (debug-message "io" (string-append "shell: " cmd "\n"))
     (system cmd)
     (if (url-exists? to) to #f)))
 
