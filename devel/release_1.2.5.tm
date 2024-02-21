@@ -12,9 +12,12 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|5|5|1|1|cell-background|>|<cwith|11|11|1|1|cell-background|>|<cwith|14|14|3|3|cell-valign|b>|<cwith|14|14|1|1|cell-background|pastel
+    <tformat|<cwith|5|5|1|1|cell-background|>|<cwith|13|13|1|1|cell-background|>|<cwith|16|16|3|3|cell-valign|b>|<cwith|16|16|1|1|cell-background|pastel
     green>|<cwith|3|3|1|1|cell-background|pastel
-    green>|<cwith|2|2|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|2|2|1|1|cell-background|pastel
+    green>|<cwith|8|8|2|2|cell-valign|c>|<cwith|8|8|1|1|cell-background|pastel
+    green>|<cwith|12|12|1|1|cell-background|pastel
+    green>|<cwith|6|6|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|77>
     </cell>|<\cell>
       <value|da>
@@ -45,11 +48,23 @@
     </cell>|<\cell>
       Improvements for Chinese users in 1.2.x
     </cell>>|<row|<\cell>
+      <dlink|68>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Improvements on PDF/Postscript image and conversion
+    </cell>>|<row|<\cell>
       <dlink|66>
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
       TMU format
+    </cell>>|<row|<\cell>
+      <dlink|64>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Image import and exports
     </cell>>|<row|<\cell>
       <dlink|59>
     </cell>|<\cell>
