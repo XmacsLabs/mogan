@@ -1,7 +1,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-image_pdf.scm
+;; MODULE      : pdf.scm
 ;; DESCRIPTION : PDF Image plugin
 ;; COPYRIGHT   : (C) 2003  Joris van der Hoeven
 ;;                   2024  Darcy Shen

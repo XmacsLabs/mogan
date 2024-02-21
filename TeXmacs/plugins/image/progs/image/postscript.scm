@@ -1,9 +1,10 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-image.scm
-;; DESCRIPTION : various Image plugins
-;; COPYRIGHT   : (C) 2024  Darcy Shen
+;; MODULE      : postscript.scm
+;; DESCRIPTION : Postscript Image plugin
+;; COPYRIGHT   : (C) 2003  Joris van der Hoeven
+;;                   2024  Darcy Shen
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
 ;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -11,10 +12,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (image)
-  (:use (image gif)
-        (image jpeg)
-        (image pdf)
-        (image png)
-        (image postscript)
-        (image tif)))
+(texmacs-module (image postscript))
+
+(converter postscript-file pdf-file
+  (:require (url-exists-in-path? "ps2pdf"))
+  (:shell "ps2pdf" from to))

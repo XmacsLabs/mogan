@@ -44,14 +44,6 @@
   (:name "Pdf")
   (:suffix "pdf"))
 
-;;(converter pdf-file postscript-file
-;;  (:require (url-exists-in-path? "pdf2ps"))
-;;  (:shell "pdf2ps" from to))
-
-(converter postscript-file pdf-file
-  (:require (url-exists-in-path? "ps2pdf"))
-  (:shell "ps2pdf" from to))
-
 (define-format svg
    (:name "Svg")
    (:suffix "svg"))
@@ -89,19 +81,9 @@
   (:name "Jpeg")
   (:suffix "jpg" "jpeg"))
 
-(converter jpeg-file postscript-document
-  (:function image->psdoc))
-
 (define-format tif
   (:name "Tif")
   (:suffix "tif" "tiff"))
-
-(converter tif-file postscript-document
-  (:function image->psdoc))
-  
-(converter tif-file png-file
-  (:require (has-convert?))
-  (:shell "convert" from to))
 
 (define-format ppm
   (:name "Ppm")
@@ -111,12 +93,6 @@
   (:name "Gif")
   (:suffix "gif"))
 
-(converter gif-file postscript-document
-  (:function image->psdoc))
-
 (define-format png
   (:name "Png")
   (:suffix "png"))
-
-(converter png-file postscript-document
-  (:function image->psdoc))
