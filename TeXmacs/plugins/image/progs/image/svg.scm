@@ -13,23 +13,23 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (image svg)
-  (:use (binary rsvg-convert)))
+  (:use (binary rsvg-convert)
+        (binary inkscape)))
 
 (converter svg-file postscript-file
-  (:require (url-exists-in-path? "inkscape"))
-  (:shell "inkscape" "-z" "-f" from "-P" to))
+  (:require (has-binary-inkscape?))
+  (:shell ,(find-binary-inkscape) "-z" "-f" from "-P" to))
 
 (converter svg-file pdf-file
-  (:require (url-exists-in-path? "inkscape"))
-  (:shell "inkscape" "-z" "-f" from "-A" to))
+  (:require (has-binary-inkscape?))
+  (:shell ,(find-binary-inkscape) "-z" "-f" from "-A" to))
 
 (converter svg-file png-file
-  (:require (url-exists-in-path? "inkscape"))
-  (:shell "inkscape" "-z" "-d" "600" from "--export-png" to))
+  (:require (has-binary-inkscape))
+  (:shell ,(find-binary-inkscape) "-z" "-d" "600" from "--export-png" to))
 
 (converter svg-file png-file
-  (:require (and (has-binary-rsvg-convert?)
-                 (not (url-exists-in-path? "inkscape"))))
+  (:require (has-binary-rsvg-convert?))
     (:function-with-options svg2png-by-rsvg-convert))
 
 (converter svg-file postscript-document
