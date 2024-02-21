@@ -419,51 +419,14 @@ wrap_qt_supports (url image) {
 #endif
 }
 
-void
-image_to_eps (url image, url eps, int w_pt, int h_pt, int dpi) {
-  if (DEBUG_CONVERT) debug_convert << "image_to_eps ...";
-  /* if ((suffix (eps) != "eps") && (suffix (eps) != "ps")) {
-     std_warning << concretize (eps) << " has no .eps or .ps suffix\n";
-     }
-  */
-  string s= suffix (image);
-  // First try to preserve "vectorialness"
-
-  // Note: since inkscape would most likely be the prog called to
-  // translate svg we could at no additional cost allow other
-  // vector formats supported by inkscape : ai, svgz, cdr, wmf ...
-  if ((s == "svg") && !wrap_qt_supports (image) &&
-      (call_scm_converter (image, eps)))
-    return;
-
-#ifdef USE_PLUGIN_GS
-  if (gs_supports (image)) {
-    if (DEBUG_CONVERT) debug_convert << " using gs" << LF;
-    gs_to_eps (image, eps);
-    return;
-  }
-#endif
-  // converters below will yield only raster images.
-#ifdef QTTEXMACS
-  if (qt_supports (image)) {
-    if (DEBUG_CONVERT) debug_convert << " using qt" << LF;
-    qt_image_to_eps (image, eps, w_pt, h_pt, dpi);
-    return;
-  }
-  if ((s != "svg") && call_scm_converter (image, eps)) return;
-    // if s is in {"jpg","jpeg","tif","gif","png"} then scheme converters
-    // would return the call here (see init_images.scm) causing an infinite
-    // loop. Except pnm,the others are treated by qt.
-#endif
-  call_imagemagick_convert (image, eps, w_pt, h_pt, dpi);
-}
-
 string
 image_to_psdoc (url image) {
   if (DEBUG_CONVERT) debug_convert << "image_to_psdoc " << image << LF;
 
   url psfile= url_temp ("eps");
-  image_to_eps (image, psfile);
+  if (!call_scm_converter (image, psfile)) {
+    convert_error << "Failed to convert " << suffix (image) << " to eps" << LF;
+  }
   string psdoc;
   load_string (psfile, psdoc, false);
   remove (psfile);

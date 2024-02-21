@@ -14,15 +14,8 @@
 
 (texmacs-module (image svg)
   (:use (binary rsvg-convert)
-        (binary inkscape)))
-
-(converter svg-file postscript-file
-  (:require (has-binary-inkscape?))
-  (:shell ,(url->system (find-binary-inkscape)) "-z" "-f" from "-P" to))
-
-(converter svg-file pdf-file
-  (:require (has-binary-inkscape?))
-  (:shell ,(url->system (find-binary-inkscape)) "-z" "-f" from "-A" to))
+        (binary inkscape)
+        (binary convert)))
 
 (converter svg-file png-file
   (:require (has-binary-inkscape?))
@@ -32,5 +25,28 @@
   (:require (has-binary-rsvg-convert?))
     (:function-with-options svg2png-by-rsvg-convert))
 
-(converter svg-file postscript-document
-  (:function image->psdoc))
+;; svg -> pdf (the latter one which meets the requirements will work)
+(converter svg-file pdf-file
+  (:require (has-binary-convert?))
+  (:shell ,(url->system (find-binary-convert)) from to))
+
+(converter svg-file pdf-file
+  (:require (has-binary-rsvg-convert?))
+  (:shell ,(url->system (find-binary-rsvg-convert)) "-f pdf" "-o" to from ))
+
+(converter svg-file pdf-file
+  (:require (has-binary-inkscape?))
+  (:shell ,(url->system (find-binary-inkscape)) from "-o" to))
+
+;; svg -> postscript (the latter one which meets the requirements will work)
+(converter svg-file postscript-file
+  (:require (has-binary-convert?))
+  (:shell ,(url->system (find-binary-convert)) from to))
+
+(converter svg-file postscript-file
+  (:require (has-binary-rsvg-convert?))
+  (:shell ,(url->system (find-binary-rsvg-convert)) "-f eps" "-o" to from ))
+
+(converter svg-file postscript-file
+  (:require (has-binary-inkscape?))
+  (:shell ,(url->system (find-binary-inkscape)) from "-o" to))
