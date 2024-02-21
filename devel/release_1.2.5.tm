@@ -12,7 +12,7 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|5|5|1|1|cell-background|>|<cwith|10|10|1|1|cell-background|>|<cwith|13|13|3|3|cell-valign|b>|<cwith|13|13|1|1|cell-background|pastel
+    <tformat|<cwith|5|5|1|1|cell-background|>|<cwith|11|11|1|1|cell-background|>|<cwith|14|14|3|3|cell-valign|b>|<cwith|14|14|1|1|cell-background|pastel
     green>|<cwith|3|3|1|1|cell-background|pastel
     green>|<cwith|2|2|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|77>
@@ -68,6 +68,12 @@
       Darcy
     </cell>|<\cell>
       <LaTeX> converter as a plugin
+    </cell>>|<row|<\cell>
+      <dlink|38>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Image formats as plugins
     </cell>>|<row|<\cell>
       <dlink|23>
     </cell>|<\cell>

@@ -8,7 +8,55 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|2|2|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|7|7|2|2|cell-valign|b>|<table|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      38_7
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      SVG image format as a plugin
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      38_6
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      various image plugins: gif/jpeg/png/postscript/tif
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      38_5
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Cleaning for the ppm/xpm image format
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      38_4
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      xmgrace image format as a plugin
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      38_3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Deprecate the geogebra format
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      38_2
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      PDF image format as a plugin
+    </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
       38_1
@@ -16,42 +64,10 @@
       Darcy
     </cell>|<\cell>
       SVG image format as a plugin
-    </cell>>|<row|<\cell>
-      Chore
-    </cell>|<\cell>
-      38_2
-    </cell>|<\cell>
-      \;
-    </cell>|<\cell>
-      PDF image format as a plugin
-    </cell>>|<row|<\cell>
-      Chore
-    </cell>|<\cell>
-      38_3
-    </cell>|<\cell>
-      \;
-    </cell>|<\cell>
-      Postscript image format as a plugin
-    </cell>>|<row|<\cell>
-      Chore
-    </cell>|<\cell>
-      38_4
-    </cell>|<\cell>
-      \;
-    </cell>|<\cell>
-      TIFF image format as a plugin
-    </cell>>|<row|<\cell>
-      Chore
-    </cell>|<\cell>
-      38_5
-    </cell>|<\cell>
-      \;
-    </cell>|<\cell>
-      JPEG image format as a plugin
     </cell>>>>
   </wide-tabular>
 
-  <tmdoc-copyright|2023|Darcy Shen|jingkaimori>
+  <tmdoc-copyright|2023\U2024|Darcy Shen|jingkaimori>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
