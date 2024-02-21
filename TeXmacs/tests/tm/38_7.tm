@@ -3,7 +3,7 @@
 <style|<tuple|generic|no-page-numbers|chinese>>
 
 <\body>
-  \;
+  <image|../../misc/images/new-mogan.svg|213pt|213pt||>
 
   <section|rsvg-convert Binary Plugin >
 
@@ -27,6 +27,28 @@
     </input>
   </session>
 
+  <section|inkscape Binary Plugin>
+
+  <slink|$TEXMACS_PATH/plugins/binary/progs/binary/inkscape.scm>
+
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (find-binary-inkscape)
+    <|unfolded-io>
+      \<less\>url /Applications/Inkscape.app/Contents/MacOS/inkscape\<gtr\>
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (has-binary-inkscape?)
+    <|unfolded-io>
+      #t
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
   \;
 </body>
 
@@ -40,6 +62,9 @@
 <\references>
   <\collection>
     <associate|auto-1|<tuple|1|1>>
+    <associate|auto-2|<tuple|2|?>>
+    <associate|part:|<tuple|?|?>>
+    <associate|part:../../misc/images/new-mogan.svg|<tuple|?|?>>
   </collection>
 </references>
 
