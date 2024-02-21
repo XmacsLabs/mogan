@@ -18,15 +18,15 @@
 
 (converter svg-file postscript-file
   (:require (has-binary-inkscape?))
-  (:shell ,(find-binary-inkscape) "-z" "-f" from "-P" to))
+  (:shell ,(url->system (find-binary-inkscape)) "-z" "-f" from "-P" to))
 
 (converter svg-file pdf-file
   (:require (has-binary-inkscape?))
-  (:shell ,(find-binary-inkscape) "-z" "-f" from "-A" to))
+  (:shell ,(url->system (find-binary-inkscape)) "-z" "-f" from "-A" to))
 
 (converter svg-file png-file
   (:require (has-binary-inkscape?))
-  (:shell ,(find-binary-inkscape) "-z" "-d" "600" from "--export-png" to))
+  (:shell ,(url->system (find-binary-inkscape)) "-z" "-d" "600" from "--export-png" to))
 
 (converter svg-file png-file
   (:require (has-binary-rsvg-convert?))
