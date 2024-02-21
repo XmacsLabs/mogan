@@ -1,10 +1,19 @@
-(tm-define (rsvg-convert x opts)
-  (let* ((dest (assoc-ref opts 'dest))
-         (fm (url-format (url-concretize dest)))
-         (res (get-raster-resolution opts))
-	 (cmd (get-shell-command "rsvg-convert")))
-    (system-2 (string-append cmd " -f " fm " -d " res " -o ") dest x)
-    (if (url-exists? dest) dest #f)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; MODULE      : svg.scm
+;; DESCRIPTION : SVG Image plugin
+;; COPYRIGHT   : (C) 2003  Joris van der Hoeven
+;;                   2024  Darcy Shen
+;;
+;; This software falls under the GNU general public license version 3 or later.
+;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+;; in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(texmacs-module (image svg)
+  (:use (binary rsvg-convert)))
 
 (converter svg-file postscript-file
   (:require (url-exists-in-path? "inkscape"))
@@ -19,11 +28,9 @@
   (:shell "inkscape" "-z" "-d" "600" from "--export-png" to))
 
 (converter svg-file png-file
-  (:require (and (url-exists-in-path? "rsvg-convert")
+  (:require (and (has-binary-rsvg-convert?)
                  (not (url-exists-in-path? "inkscape"))))
-    (:function-with-options rsvg-convert))
+    (:function-with-options svg2png-by-rsvg-convert))
 
 (converter svg-file postscript-document
-  (:require (qt5-or-later-gui?))
   (:function image->psdoc))
- 

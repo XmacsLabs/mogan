@@ -17,4 +17,5 @@
         (image pdf)
         (image png)
         (image postscript)
+        (image svg)
         (image tif)))
