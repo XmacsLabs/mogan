@@ -155,7 +155,7 @@
   (and (tree? t) (tree-is? t 'errput)))
 
 (tm-define (scheme-eval t mode)
-  (let* ((s (cork->utf8 (texmacs->code t "iso-8859-1")))
+  (let* ((s (texmacs->code t "utf-8"))
          (r (eval-string-with-catch s)))
     (cond ((and (tree? r) (error-tree? r) (session-scheme-trees?))
            (tree-copy r))
