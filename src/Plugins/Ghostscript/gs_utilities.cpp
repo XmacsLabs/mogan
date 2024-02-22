@@ -21,6 +21,7 @@
 
 static string
 gs_executable () {
+  eval ("(use-modules (binary gs))");
   url gs_url= as_url (eval ("(find-binary-gs)"));
   if (!is_none (gs_url)) {
     return as_string (gs_url);

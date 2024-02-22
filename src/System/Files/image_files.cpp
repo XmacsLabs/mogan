@@ -436,13 +436,6 @@ image_to_pdf (url image, url pdf, int w_pt, int h_pt, int dpi) {
   if ((s == "svg") && !wrap_qt_supports (image) &&
       call_scm_converter (image, pdf))
     return;
-#ifdef USE_PLUGIN_GS
-  if (gs_supports (image)) {
-    if (DEBUG_CONVERT) debug_convert << " using gs " << LF;
-    gs_to_pdf (image, pdf, w_pt, h_pt);
-    return;
-  }
-#endif
   // converters below will yield only raster images.
 #ifdef QTTEXMACS
   if (qt_supports (image)) {
