@@ -76,9 +76,9 @@
              (string-append " -sOutputFile=" (url->system to) " ")
              (string-append " -c " (string-quote gs-inline))
              (string-append " -f " (url->system from) " ")
-             (string-append " -c " (string-quote " grestore "))))))
+             (string-append " -c " (string-quote " grestore ")))))
     (debug-message "io" (string-append cmd "\n"))
-    (check-stdout cmd))
+    (check-stdout cmd)))
   
 
 (tm-define (gs-convert x opts)
