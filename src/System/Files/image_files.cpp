@@ -427,25 +427,11 @@ image_to_psdoc (url image) {
   return psdoc;
 }
 
-// mostly the same code as image_to_eps
 void
-image_to_pdf (url image, url pdf, int w_pt, int h_pt, int dpi) {
-  if (DEBUG_CONVERT) debug_convert << "image_to_pdf ... ";
-  string s= suffix (image);
-  // First try to preserve "vectorialness"
-  if ((s == "svg") && !wrap_qt_supports (image) &&
-      call_scm_converter (image, pdf))
-    return;
-  // converters below will yield only raster images.
-#ifdef QTTEXMACS
-  if (qt_supports (image)) {
-    if (DEBUG_CONVERT) debug_convert << " using qt " << LF;
-    qt_image_to_pdf (image, pdf, w_pt, h_pt, dpi);
-    return;
+image_to_pdf (url image, url pdf) {
+  if (!call_scm_converter (image, pdf)) {
+    convert_error << "Failed to convert " << suffix (image) << "to pdf" << LF;
   }
-#endif
-  if ((s != "svg") && call_scm_converter (image, pdf)) return;
-  call_imagemagick_convert (image, pdf, w_pt, h_pt, dpi);
 }
 
 void

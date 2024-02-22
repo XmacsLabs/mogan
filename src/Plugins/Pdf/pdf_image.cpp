@@ -220,16 +220,7 @@ pdf_image_rep::flush (PDFWriter& pdfw) {
     if (s == "png")
       if (flush_png (pdfw, name)) return;
 #endif
-    // other formats we generate a pdf (with available converters) that we'll
-    // embbed
-    image_to_pdf (name, temp, w, h, 300);
-    // the 300 dpi setting is the maximum dpi of raster images that will be
-    // generated: images that are to dense will de downsampled to keep file
-    // small (other are not up-sampled) dpi DOES NOT apply for vector images
-    // that we know how to handle : eps, svg(if inkscape present)
-    //
-    // TODO: make the max dpi setting smarter (printer resolution, preference
-    // ...)
+    image_to_pdf (name, temp);
   }
   EStatusCode      status= PDFHummus::eFailure;
   DocumentContext& dc    = pdfw.GetDocumentContext ();

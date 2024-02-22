@@ -26,7 +26,7 @@ string        ps_load (url image, bool conv= true);
 void          image_size (url image, int& w, int& h);
 void          pdf_image_size (url image, int& w, int& h);
 void          svg_image_size (url image, int& w, int& h);
-void   image_to_pdf (url image, url eps, int w_pt= 0, int h_pt= 0, int dpi= 0);
+void   image_to_pdf (url image, url eps);
 string image_to_psdoc (url image);
 void   image_to_png (url image, url png, int w= 0, int h= 0);
 bool   call_scm_converter (url image, url dest);
