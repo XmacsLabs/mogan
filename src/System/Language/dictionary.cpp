@@ -69,8 +69,8 @@ dictionary_rep::load (string from, string to) {
   if (DEBUG_CONVERT) debug_convert << "Loading " << fname << LF;
   string to_locale_tag  = language_to_locale (to);
   string from_locale_tag= language_to_locale (from);
-  string path_to_dic= string ("plugins/lang_") * to_locale_tag * "/data/from_" *
-                      from_locale_tag * ".scm";
+  string path_to_dic    = string ("plugins/lang/dic/") * from_locale_tag * "/" *
+                      to_locale_tag * ".scm";
   url u2= get_texmacs_home_path () * path_to_dic |
           get_texmacs_path () * path_to_dic;
   load (expand (complete (u2)));
