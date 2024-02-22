@@ -32,7 +32,11 @@ gs_executable () {
 
 string
 gs_prefix () {
-  return string ("\"") * gs_executable () * string ("\"") * string (" ");
+  if (os_win ()) {
+    return raw_quote (gs_executable ()) * string ("\"") * string (" ");
+  } else {
+    return gs_executable () * string (" ");
+  }
 }
 
 static double
