@@ -35,7 +35,11 @@
 (tm-define (gs-ps-image-size u)
   (let* ((out (check-stderr (string-append
            (url->system (find-binary-gs))
-           " -dQUIET " " -dNOPAUSE " " -dBATCH " " -dSAFER " " -sDEVICE=bbox "
+           " -dQUIET "
+           " -dNOPAUSE "
+           " -dBATCH "
+           " -dSAFER "
+           " -sDEVICE=bbox "
            (url->system u))))
          (l (filter (lambda (x) (string-starts? x "%%BoundingBox: "))
                 (string-split out #\newline)))
