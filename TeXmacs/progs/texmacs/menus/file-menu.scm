@@ -255,8 +255,6 @@
           (notify-now "Can not extract attachments from PDF")
           (texmacs-error "pdf" "Can not extract attachments from PDF")))))
 
-
-
 (menu-bind file-menu
   ("New" (new-document))
   ("Load" (open-document))
