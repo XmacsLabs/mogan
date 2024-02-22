@@ -173,7 +173,7 @@
 
 (define (tr-file language)
   (let* ((locale_tag (language-to-locale language))
-         (lang_dic_file (string-append "plugins/lang_" locale_tag "/data/from_en_US.scm"))
+         (lang_dic_file (string-append "plugins/lang/dic/en_US/" locale_tag ".scm"))
          (candidates
           (url-or (url-append (get-texmacs-home-path) lang_dic_file)
                   (url-append (get-texmacs-path) lang_dic_file)))
