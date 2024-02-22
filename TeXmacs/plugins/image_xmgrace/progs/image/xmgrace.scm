@@ -20,3 +20,7 @@
 (converter xmgrace-file postscript-document
   (:require (url-exists-in-path? "xmgrace"))
   (:shell "xmgrace" "-noask -hardcopy -hdevice EPS -printfile" to from))
+
+(converter xmgrace-file png-file
+  (:require (url-exists-in-path? "xmgrace"))
+  (:shell "xmgrace" "-noask -hardcopy -hdevice PNG -printfile" to from))
