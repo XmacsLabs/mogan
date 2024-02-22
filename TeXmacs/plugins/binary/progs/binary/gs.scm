@@ -32,6 +32,39 @@
 (tm-define (has-binary-gs?)
   (not (url-none? (find-binary-gs))))
 
+(tm-define (gs-ps-image-size u)
+  (let* ((out (check-stderr (string-append
+           (url->system (find-binary-gs))
+           " -dQUIET -dNOPAUSE -dBATCH -dSAFER -sDEVICE=bbox "
+           (url->system u))))
+         (l (filter (lambda (x) (string-starts? x "%%BoundingBox: "))
+                (string-split out #\newline)))
+         (box (and (> (length l) 0)
+               (string-drop (car l) (length "%%BoundingBox: "))))
+         (fbox (and (> (length box) 0) (map string->float (string-split box #\space)))))
+    (and (== (length fbox) 4)
+         (list (floor (first fbox))
+               (floor (second fbox))
+               (ceiling (third fbox))
+               (ceiling (fourth fbox))))))
+
+(tm-define (gs-ps-to-pdf from to)
+  (with box (gs-ps-image-size from)
+    (with cmd (string-append (url->system (find-binary-gs))
+          " -dQUIET -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite"
+          " -dAutoRotatePages=/None -dCompatibilityLevel=1.4"
+          " -sOutputFile=" (url->system to)
+          " -c " (string-quote (string-append
+                   " << /PageSize [ "
+                   (number->string (- (first box) (second box)))
+                   " " (number->string (- (third box) (fourth box)))
+                   "] >> setpagedevice gsave  0 0 translate 1 1 scale "))
+          " -f " (url->system from)
+          " -c " (string-quote " grestore "))
+      (debug-message "io" (string-append cmd "\n"))
+      (system cmd))))
+  
+
 (tm-define (gs-convert x opts)
   ;; many options for pdf->ps/eps see http://tex.stackexchange.com/a/20884
   ;; this one does a better rendering than pdf2ps (also based on gs):
