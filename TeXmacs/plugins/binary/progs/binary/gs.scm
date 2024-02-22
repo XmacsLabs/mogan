@@ -43,10 +43,10 @@
                (string-drop (car l) (length "%%BoundingBox: "))))
          (fbox (and (> (length box) 0) (map string->float (string-split box #\space)))))
     (and (== (length fbox) 4)
-         (list (floor (first fbox))
-               (floor (second fbox))
-               (ceiling (third fbox))
-               (ceiling (fourth fbox))))))
+         (list (floor (first fbox)) ;; x1
+               (floor (second fbox)) ;; y1
+               (ceiling (third fbox)) ;; x2
+               (ceiling (fourth fbox)))))) ;; y2
 
 (tm-define (gs-ps-to-pdf from to)
   (with box (gs-ps-image-size from)
@@ -56,13 +56,17 @@
           " -sOutputFile=" (url->system to)
           " -c " (string-quote (string-append
                    " << /PageSize [ "
-                   (number->string (- (first box) (second box)))
-                   " " (number->string (- (third box) (fourth box)))
-                   "] >> setpagedevice gsave  0 0 translate 1 1 scale "))
+                   (number->string (- (third box) (first box)))
+                   " " (number->string (- (fourth box) (second box)))
+                   "]"
+                   " >> setpagedevice gsave "
+                   (number->string (- (first box))) " " 
+                   (number->string (- (second box)))
+                   " translate 1 1 scale "))
           " -f " (url->system from)
           " -c " (string-quote " grestore "))
       (debug-message "io" (string-append cmd "\n"))
-      (system cmd))))
+      (check-stdout cmd))))
   
 
 (tm-define (gs-convert x opts)
