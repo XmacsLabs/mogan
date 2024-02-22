@@ -35,7 +35,7 @@
 (tm-define (gs-ps-image-size u)
   (let* ((out (check-stderr (string-append
            (url->system (find-binary-gs))
-           " -dQUIET -dNOPAUSE -dBATCH -dSAFER -sDEVICE=bbox "
+           " -dQUIET " " -dNOPAUSE " " -dBATCH " " -dSAFER " " -sDEVICE=bbox "
            (url->system u))))
          (l (filter (lambda (x) (string-starts? x "%%BoundingBox: "))
                 (string-split out #\newline)))
@@ -49,24 +49,32 @@
                (ceiling (fourth fbox)))))) ;; y2
 
 (tm-define (gs-ps-to-pdf from to)
-  (with box (gs-ps-image-size from)
-    (with cmd (string-append (url->system (find-binary-gs))
-          " -dQUIET -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite"
-          " -dAutoRotatePages=/None -dCompatibilityLevel=1.4"
-          " -sOutputFile=" (url->system to)
-          " -c " (string-quote (string-append
-                   " << /PageSize [ "
-                   (number->string (- (third box) (first box)))
-                   " " (number->string (- (fourth box) (second box)))
-                   "]"
-                   " >> setpagedevice gsave "
-                   (number->string (- (first box))) " " 
-                   (number->string (- (second box)))
-                   " translate 1 1 scale "))
-          " -f " (url->system from)
-          " -c " (string-quote " grestore "))
-      (debug-message "io" (string-append cmd "\n"))
-      (check-stdout cmd))))
+  (let* ((box (gs-ps-image-size from))
+         (w (number->string (- (third box) (first box))))
+         (h (number->string (- (fourth box) (second box))))
+         (offset-x (number->string (- (first box))))
+         (offset-y (number->string (- (second box))))
+         (gs-inline
+           (string-append
+             "<< /PageSize [ " w " " h " ] >> setpagedevice gsave "
+             offset-x " " offset-y " translate "
+             "1 1 scale"))
+         (cmd
+           (string-append
+             (url->system (find-binary-gs))
+             " -dQUIET "
+             " -dNOPAUSE "
+             " -dBATCH "
+             " -dSAFER "
+             " -sDEVICE=pdfwrite "
+             " -dAutoRotatePages=/None "
+             " -dCompatibilityLevel=1.4 "
+             (string-append " -sOutputFile=" (url->system to) " ")
+             (string-append " -c " (string-quote gs-inline))
+             (string-append " -f " (url->system from) " ")
+             (string-append " -c " (string-quote " grestore "))))))
+    (debug-message "io" (string-append cmd "\n"))
+    (check-stdout cmd))
   
 
 (tm-define (gs-convert x opts)
