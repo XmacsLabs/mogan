@@ -33,7 +33,7 @@ gs_executable () {
 string
 gs_prefix () {
   if (os_win ()) {
-    return raw_quote (gs_executable ()) * string ("\"") * string (" ");
+    return raw_quote (gs_executable ()) * string (" ");
   } else {
     return gs_executable () * string (" ");
   }
