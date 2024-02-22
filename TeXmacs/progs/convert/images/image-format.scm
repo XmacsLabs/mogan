@@ -63,3 +63,7 @@
 (define-format png
   (:name "Png")
   (:suffix "png"))
+
+(define-format webp
+  (:name "WebP")
+  (:suffix "webp"))

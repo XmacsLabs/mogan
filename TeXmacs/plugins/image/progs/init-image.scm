@@ -18,4 +18,5 @@
         (image png)
         (image postscript)
         (image svg)
-        (image tif)))
+        (image tif)
+        (image webp)))
