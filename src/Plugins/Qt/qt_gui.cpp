@@ -191,7 +191,7 @@ qt_gui_rep::qt_gui_rep (int& argc, char** argv)
   if (!use_native_menubar) {
     qApp->setAttribute (Qt::AA_DontUseNativeMenuBar);
   }
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
   QFont font= qApp->font ();
   font.setStyleStrategy (QFont::PreferAntialias);
   font.setHintingPreference (QFont::PreferFullHinting);
