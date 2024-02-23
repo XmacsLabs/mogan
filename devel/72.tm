@@ -7,7 +7,8 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|72_1>|<cell|<value|da>>|<cell|Fix
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|72_2>>|<cell|<value|da>>|<cell|Fail
+  to render CJK characters in scheme session>>|<row|<cell|Bug>|<cell|72_1>|<cell|<value|da>>|<cell|Fix
   auto-completion in scheme session>>>>>
 
   <tmdoc-copyright|2023|Darcy>
