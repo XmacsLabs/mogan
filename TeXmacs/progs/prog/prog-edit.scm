@@ -74,7 +74,7 @@
 
 (define-preferences
   ("prog:automatic brackets" "off" notify-auto-close-brackets)
-  ("prog:highlight brackets" "off" notify-highlight-brackets)
+  ("prog:highlight brackets" "on" notify-highlight-brackets)
   ("prog:select brackets" "off" notify-select-brackets))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
