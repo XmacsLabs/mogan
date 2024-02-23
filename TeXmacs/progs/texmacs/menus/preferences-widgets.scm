@@ -584,8 +584,6 @@
    (eval `(define-preference-names "texmacs->image:format" ,@valid-image-format-list))
    (cadr (apply map list valid-image-format-list))))
 
-(define (supports-inkscape?) (url-exists-in-path? "inkscape"))
-
 (tm-widget (image-preferences-widget)
   ======
   (bold (text "TeXmacs -> Image"))
@@ -600,19 +598,7 @@
       (enum (set-pretty-preference "texmacs->image:format" answer)
             (pretty-format-list)
             (get-pretty-preference "texmacs->image:format")
-            "8em")))
-  ====== ======
-  (bold (text "Image -> TeXmacs"))
-  ===
-  (aligned
-    (meti
-      (when (supports-inkscape?)
-        (hlist // (text "Use Inkscape for conversion from SVG")))
-      (when (supports-inkscape?)
-        (toggle (set-boolean-preference
-                 "image->texmacs:svg-prefer-inkscape" answer)
-                (get-boolean-preference
-                 "image->texmacs:svg-prefer-inkscape"))))))
+            "8em"))))
 
 ;; All converters ----------
 
