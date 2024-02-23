@@ -17,7 +17,7 @@
   (cond ((os-macos?)
          (list "/Applications/Inkscape.app/Contents/MacOS/inkscape"))
         ((os-win32?)
-         (list ))
+         (list "C:\\Program Files*\\Inkscape\\bin\\inkscape.exe"))
         (else
          (list "/usr/bin/inkscape"))))
 
