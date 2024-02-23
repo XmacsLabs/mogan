@@ -439,9 +439,7 @@ image_to_pdf (url image, url pdf, int w_pt, int h_pt, int dpi) {
   if (DEBUG_CONVERT) debug_convert << "image_to_pdf ... ";
   string s= suffix (image);
   // First try to preserve "vectorialness"
-  if ((s == "svg") && !wrap_qt_supports (image) &&
-      call_scm_converter (image, pdf))
-    return;
+  if ((s == "svg") && call_scm_converter (image, pdf)) return;
 #ifdef USE_PLUGIN_GS
   if (gs_supports (image)) {
     if (DEBUG_CONVERT) debug_convert << " using gs " << LF;
