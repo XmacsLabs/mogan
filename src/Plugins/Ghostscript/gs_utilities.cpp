@@ -303,8 +303,12 @@ gs_to_png (url image, url png, int w, int h) { // Achtung! w,h in pixels
         << " translate gsave \"  -f " << sys_concretize (image)
         << " -c \" grestore \"";
   }
-  string ans= eval_system (cmd);
-  if (DEBUG_CONVERT) debug_convert << cmd << LF << "answer :" << ans << LF;
+  if (os_win () || os_mingw ()) {
+    lolly::system::call (cmd);
+  }
+  else {
+    std::system (c_string (cmd));
+  }
   if (!exists (png)) {
     convert_error << "gs_to_png failed for " << image << LF;
     return false;
@@ -375,7 +379,12 @@ gs_to_pdf (url image, url pdf, int w, int h) {
       << as_string (scale_x) << " " << as_string (scale_y) << " scale \"";
   cmd << " -f " << sys_concretize (image);
   cmd << " -c \" grestore \"  ";
-  std::system (c_string (cmd));
+  if (os_win () || os_mingw ()) {
+    lolly::system::call (cmd);
+  }
+  else {
+    std::system (c_string (cmd));
+  }
   if (DEBUG_CONVERT)
     debug_convert << cmd << LF << "pdf generated? " << exists (pdf) << LF;
 }
@@ -406,7 +415,12 @@ gs_to_pdf (url doc, url pdf, bool landscape, double paper_h, double paper_w) {
   // so we add some PS code to override the PDF document title with
   // the name of the PDF file.
 
-  lolly::system::call (cmd);
+  if (os_win () || os_mingw ()) {
+    lolly::system::call (cmd);
+  }
+  else {
+    std::system (as_charp (cmd));
+  }
   if (DEBUG_CONVERT)
     debug_convert << cmd << LF << "pdf generated? " << exists (pdf) << LF;
 }
