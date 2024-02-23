@@ -446,30 +446,3 @@ tm_gs (url image) {
   cmd << sys_concretize (image);
   lolly::system::call (cmd);
 }
-
-bool
-gs_check (url doc) {
-  if (!exists (gs_executable ()) && !exists_in_path (gs_executable ()))
-    return true;
-  array<string> cmd;
-  cmd << gs_executable ();
-  cmd << string ("-dNOPAUSE");
-  cmd << string ("-dBATCH");
-  if (gs_version () < 10) cmd << string ("-dDEBUG");
-  cmd << string ("-sDEVICE=nullpage");
-  cmd << concretize (doc);
-  array<int> out;
-  out << 1;
-  out << 2;
-  // cout << "cmd= " << cmd << LF;
-  array<string> ret=
-      evaluate_system (cmd, array<int> (), array<string> (), out);
-  // cout << "ret= " << ret << LF;
-  if (ret[0] != "0" || ret[2] != "") {
-    // convert_error << ret[1] << LF;
-    convert_error << "for file " << doc << LF;
-    convert_error << ret[2] << LF;
-    return false;
-  }
-  return true;
-}

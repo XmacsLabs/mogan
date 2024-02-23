@@ -66,10 +66,7 @@
   (set-printer-dpi val))
 
 (define-preferences
-  ("native pdf" "on" noop)
-  ("native postscript" "on" noop)
   ("texmacs->pdf:expand slides" "on" noop)
-  ("texmacs->pdf:check" "off" noop)
   ("preview command" "default" notify-preview-command)
   ("printing command" (get-default-printing-command) notify-printing-command)
   ("paper type" (get-default-paper-size) notify-paper-type)

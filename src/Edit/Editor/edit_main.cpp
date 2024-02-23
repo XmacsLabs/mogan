@@ -176,24 +176,6 @@ edit_main_rep::get_metadata (string kind) {
 string printing_dpi ("600");
 string printing_on ("a4");
 
-bool
-use_pdf () {
-#ifdef USE_PLUGIN_PDF
-  return get_preference ("native pdf", "on") == "on";
-#else
-  return false;
-#endif
-}
-
-bool
-use_ps () {
-#ifdef USE_PLUGIN_PDF
-  return get_preference ("native postscript", "on") == "on";
-#else
-  return true;
-#endif
-}
-
 int
 edit_main_rep::nr_pages () {
   string medium= env->get_string (PAGE_MEDIUM);
@@ -210,11 +192,6 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
   bool ps  = (suffix (name) == "ps");
   bool pdf = (suffix (name) == "pdf");
   url  orig= resolve (name, "");
-
-#ifdef USE_PLUGIN_GS
-  if (!use_pdf () && pdf) name= url_temp ("ps");
-  if (!use_ps () && ps) name= url_temp ("pdf");
-#endif
 
   string medium= env->get_string (PAGE_MEDIUM);
   if (conform && (medium != "paper")) conform= false;
@@ -286,23 +263,6 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
     }
   }
   tm_delete (ren);
-
-#ifdef USE_PLUGIN_GS
-  if (!use_pdf () && pdf) {
-    gs_to_pdf (name, orig, landsc, h / cm, w / cm);
-    ::remove (name);
-  }
-  if (!use_ps () && ps) {
-    gs_to_ps (name, orig, landsc, h / cm, w / cm);
-    ::remove (name);
-  }
-  if (ps || pdf)
-    if (get_preference ("texmacs->pdf:check", "off") == "on") {
-      // system_wait ("Checking exported file for correctness", "please wait");
-      //  FIXME: the wait message often causes a crash, currently
-      gs_check (orig);
-    }
-#endif
 }
 
 void
@@ -313,12 +273,7 @@ edit_main_rep::print_to_file (url name, string first, string last) {
 
 void
 edit_main_rep::print_buffer (string first, string last) {
-  url target;
-#if defined(OS_MINGW) || defined(OS_WIN)
-  target= use_pdf () ? url_temp ("pdf") : url_temp ("ps");
-#else
-  target= url_temp ("ps");
-#endif
+  url target= url_temp ("pdf");
   print_doc (target, false, as_int (first), as_int (last));
   system (get_printing_cmd (), target); // Send the document to the printer
   set_message ("Done printing", "print buffer");
@@ -366,7 +321,6 @@ edit_main_rep::print_snippet (url name, tree t, bool conserve_preamble) {
   bitmap= false;
 #endif
   bool ps= (s == "ps" || s == "eps");
-  if (use_pdf ()) ps= (ps || s == "pdf");
 
   typeset_prepare ();
   int  dpi          = as_int (printing_dpi);
@@ -387,7 +341,7 @@ edit_main_rep::print_snippet (url name, tree t, bool conserve_preamble) {
     if (bitmap) make_raster_image (name, b, 5.0);
     else if (ps) make_eps (name, b, dpi);
     else {
-      url temp= url_temp (use_pdf () ? "pdf" : "eps");
+      url temp= url_temp ("pdf");
       make_eps (temp, b, dpi);
       ::remove (name);
       if (!call_scm_converter (temp, name)) {

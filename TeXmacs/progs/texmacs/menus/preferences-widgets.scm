@@ -563,21 +563,9 @@
   (bold (text "TeXmacs -> Pdf/Postscript"))
   ===
   (aligned
-    (assuming (supports-native-pdf?)
-      (meti (hlist // (text "Produce Pdf using native export filter"))
-        (toggle (set-boolean-preference "native pdf" answer)
-                (get-boolean-preference "native pdf"))))
-    (assuming (supports-ghostscript?)
-      (meti (hlist // (text "Produce Postscript using native export filter"))
-        (toggle (set-boolean-preference "native postscript" answer)
-                (get-boolean-preference "native postscript"))))
     (meti (hlist // (text "Expand beamer slides"))
       (toggle (set-boolean-preference "texmacs->pdf:expand slides" answer)
-              (get-boolean-preference "texmacs->pdf:expand slides")))
-    (assuming (supports-native-pdf?)
-      (meti (hlist // (text "Check exported Pdf files for correctness"))
-        (toggle (set-boolean-preference "texmacs->pdf:check" answer)
-                (get-boolean-preference "texmacs->pdf:check")))))
+              (get-boolean-preference "texmacs->pdf:expand slides"))))
   (assuming (supports-native-pdf?)
     (aligned
       (item (text "Pdf version number:")
