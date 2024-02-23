@@ -212,6 +212,12 @@ handle_speech (string s) {
   last_uttering= texmacs_time ();
 }
 
+static bool
+is_combo_shortcuts (string key) {
+  return starts (key, "A-") || starts (key, "S-") || starts (key, "C-") ||
+         starts (key, "M-");
+}
+
 void
 edit_interface_rep::key_press (string gkey) {
   string zero= "a";
@@ -316,7 +322,7 @@ edit_interface_rep::key_press (string gkey) {
     call ("kbd-insert", "<" * key * ">");
     interrupt_shortcut ();
   }
-  else if (N (key) > 1) {
+  else if (N (key) > 1 && !is_combo_shortcuts (key)) {
     archive_state ();
     call ("insert", key);
     interrupt_shortcut ();
