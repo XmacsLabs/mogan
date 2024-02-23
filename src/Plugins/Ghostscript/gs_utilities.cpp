@@ -21,6 +21,7 @@
 
 static string
 gs_executable () {
+  eval ("(use-modules (binary gs))");
   url gs_url= as_url (eval ("(find-binary-gs)"));
   if (!is_none (gs_url)) {
     return as_string (gs_url);
@@ -32,7 +33,12 @@ gs_executable () {
 
 string
 gs_prefix () {
-  return string ("\"") * gs_executable () * string ("\"") * string (" ");
+  if (os_win ()) {
+    return raw_quote (gs_executable ()) * string (" ");
+  }
+  else {
+    return gs_executable () * string (" ");
+  }
 }
 
 static double
@@ -99,7 +105,7 @@ gs_image_size (url image, int& w_pt, int& h_pt) {
         //  real eps pages with proper bounding boxes have been recognized
         //  before this and will have their BoundingBox respected
         cmd << sys_concretize (image);
-        buf= eval_system (cmd);
+        lolly::system::check_stderr (cmd, buf);
         if (DEBUG_CONVERT)
           debug_convert << "gs cmd :" << cmd << LF << "answer :" << buf;
         ok= ps_read_bbox (buf, x1, y1, x2, y2);
@@ -369,8 +375,7 @@ gs_to_pdf (url image, url pdf, int w, int h) {
       << as_string (scale_x) << " " << as_string (scale_y) << " scale \"";
   cmd << " -f " << sys_concretize (image);
   cmd << " -c \" grestore \"  ";
-  // debug_convert << cmd << LF;
-  lolly::system::call (cmd);
+  std::system (c_string (cmd));
   if (DEBUG_CONVERT)
     debug_convert << cmd << LF << "pdf generated? " << exists (pdf) << LF;
 }
