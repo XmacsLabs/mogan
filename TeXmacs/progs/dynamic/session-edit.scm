@@ -139,7 +139,7 @@
 
 (define (var-object->string t)
   (with s (object->string t)
-    (if (== s "#<unspecified>") "" (replace-newline (string->tmstring s)))))
+    (if (== s "#<unspecified>") "" (replace-newline (utf8->cork s)))))
 
 (define (eval-string-with-catch s)
   (catch #t
