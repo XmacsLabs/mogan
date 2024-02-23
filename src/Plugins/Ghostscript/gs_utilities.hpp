@@ -29,7 +29,6 @@ void   gs_to_pdf (url image, url pdf, int w_pt,
 void gs_to_pdf (url doc, url pdf, bool landsc, double paper_h, double paper_w);
 bool gs_PDF_EmbedAllFonts (url image, url pdf);
 void gs_to_ps (url doc, url ps, bool landsc, double paper_h, double paper_w);
-bool gs_check (url doc);
 void tm_gs (url image);
 
 #endif // USE_PLUGIN_GS
