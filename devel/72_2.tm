@@ -21,13 +21,13 @@
     <\unfolded-io|Scheme] >
       (define zh "\<#4E2D\>\<#6587\>")
     <|unfolded-io>
-      "ф╕нц\\x96;\\x87;"
+      \<#4E2D\>\<#6587\>
     </unfolded-io>
 
     <\unfolded-io|Scheme] >
       zh
     <|unfolded-io>
-      "ф╕нц\\x96;\\x87;"
+      \<#4E2D\>\<#6587\>
     </unfolded-io>
 
     <\unfolded-io|Scheme] >
@@ -42,6 +42,12 @@
       4
     </unfolded-io>
 
+    <\unfolded-io|Scheme] >
+      (define (\<#6C42\>\<#5E73\>\<#65B9\> x) (* x x))
+    <|unfolded-io>
+      \<#6C42\>\<#5E73\>\<#65B9\>
+    </unfolded-io>
+
     <\input|Scheme] >
       \;
     </input>
@@ -51,9 +57,15 @@
 
   <subsection|The root cause>
 
+  The routine <scm|scheme-eval> failed to render CJK characters.
+
   <subsection|How to fix it>
 
+  Fix it via the special cases.
+
   <subsection|How to test it>
+
+  see How to reproduce it.
 
   <tmdoc-copyright|2024|<value|da>>
 
