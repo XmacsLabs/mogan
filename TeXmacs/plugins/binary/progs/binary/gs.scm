@@ -18,7 +18,7 @@
          (list "/opt/homebrew/Cellar/ghostscript/1*/bin/gs"
                "/usr/local/Cellar/ghostscript/1*/bin/gs"))
         ((os-win32?)
-         (list ))
+         (list "C:\\Program Files*\\gs\\gs*\\bin\\gswin*c.exe"))
         (else
          (list "/usr/bin/gs"))))
 
