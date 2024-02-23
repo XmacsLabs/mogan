@@ -168,6 +168,7 @@
           ((session-scheme-math?)
            (with m (cas->stree r)
                  (if (tm? m) (tree 'math (tm->tree m)) (var-object->string r))))
+          ((string? r) (utf8->cork r))
           (else (var-object->string r)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
