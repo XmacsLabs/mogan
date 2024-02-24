@@ -1,5 +1,0 @@
-# Maxima会话插件
-## 安装
-Maxima会话插件依赖于[PDF图像插件](Plugin_Image_PDF.md)，请先按照文档安装Ghostscript，然后查看`帮助->插件->Maxima`以确保文档中的绘图可以正确渲染。
-
-## 文档：请查看`帮助->插件->Maxima`

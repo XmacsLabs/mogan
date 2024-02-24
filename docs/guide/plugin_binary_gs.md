@@ -1,7 +1,9 @@
-# PDF Image Plugin
-The renderer of Mogan doesn't support PDF images. Such PDF images are usually PDF vector graphics, made by third-party software (such as exporting to PDF vector graphics in Octave or Maxima).
-
-When Mogan renders PDF images, it relies on Ghostscript to convert PDF images to PNG images. Therefore, this plugin requires users to manually install Ghostscript.
+# Ghostscript Binary Plugin
++ Executable Name：gs
++ Plugin Source：
+  - [Codeberg](https://codeberg.org/XmacsLabs/mogan/src/branch/branch-1.2/TeXmacs/plugins/binary/progs/binary/gs.scm)
+  - [Gitee](https://gitee.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/binary/progs/binary/gs.scm)
+  - [Github](https://github.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/binary/progs/binary/gs.scm)
 
 ## How to install Ghostscript
 ### Windows

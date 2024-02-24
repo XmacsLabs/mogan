@@ -63,7 +63,7 @@ On Linux and Windows, `C-tab` and `C-S-tab` are reserved. On macOS, because we s
 ## Plugins
 Most plugins in GNU TeXmacs are no longer built-in in Mogan Research. Only the Maxima Session plugin and the Octave Session plugin are built-in in Mogan Research.
 
-The concepts of plugins are extended in Mogan Research, see [Introduction to Plugins](Plugins.md), for example, natural languages specific dictionaries and styles are maintained as Language plugins.
+The concepts of plugins are extended in Mogan Research, see [Introduction to Plugins](plugins.md), for example, natural languages specific dictionaries and styles are maintained as Language plugins.
 
 And Plugin Center will be available later for Mogan users to install the community plugins.
 
