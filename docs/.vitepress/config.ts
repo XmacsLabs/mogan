@@ -116,6 +116,10 @@ function sidebarGuide() {
                     link: '/guide/plugins.md'
                 },
                 {
+                    text: 'Ghostscript Binary Plugin',
+                    link: '/guide/plugin_binary_gs.md'
+                },
+                {
                     text: 'PDF Image plugin',
                     link: '/guide/plugin_image_pdf.md'
                 },
@@ -219,6 +223,10 @@ function sidebarGuideZh() {
                 {
                     text: '插件概述',
                     link: '/zh/guide/plugins.md'
+                },
+                {
+                    text: 'Ghostscript二进制插件',
+                    link: '/zh/guide/plugin_binary_gs.md'
                 },
                 {
                     text: 'PDF图像插件',
