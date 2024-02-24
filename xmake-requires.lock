@@ -7,7 +7,7 @@
             repo = {
                 branch = "master",
                 commit = "15ad332bc1573ceda1afb06fd8696c31c5e09f36",
-                url = "https://gitee.com/tboox/xmake-repo.git"
+                url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "3.26.4"
         },
@@ -27,7 +27,7 @@
             repo = {
                 branch = "master",
                 commit = "15ad332bc1573ceda1afb06fd8696c31c5e09f36",
-                url = "https://gitee.com/tboox/xmake-repo.git"
+                url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "2013.1.1"
         },
@@ -35,7 +35,7 @@
             repo = {
                 branch = "master",
                 commit = "15ad332bc1573ceda1afb06fd8696c31c5e09f36",
-                url = "https://gitee.com/tboox/xmake-repo.git"
+                url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "8.4.0"
         },
@@ -49,7 +49,7 @@
             repo = {
                 branch = "master",
                 commit = "15ad332bc1573ceda1afb06fd8696c31c5e09f36",
-                url = "https://gitee.com/tboox/xmake-repo.git"
+                url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "v9e"
         },
@@ -57,7 +57,7 @@
             repo = {
                 branch = "master",
                 commit = "15ad332bc1573ceda1afb06fd8696c31c5e09f36",
-                url = "https://gitee.com/tboox/xmake-repo.git"
+                url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "v1.6.37"
         },
@@ -89,7 +89,7 @@
             repo = {
                 branch = "master",
                 commit = "15ad332bc1573ceda1afb06fd8696c31c5e09f36",
-                url = "https://gitee.com/tboox/xmake-repo.git"
+                url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "v1.7.5"
         },

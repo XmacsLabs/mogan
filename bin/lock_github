@@ -1,0 +1,4 @@
+#!/usr/bin/env elvish
+
+sed -i '' 's|gitee.com/tboox/xmake-repo.git|github.com/xmake-io/xmake-repo.git|g' xmake-requires.lock
+
