@@ -6,7 +6,7 @@
         ["cmake#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
+                commit = "15ad332bc1573ceda1afb06fd8696c31c5e09f36",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "3.26.4"
@@ -61,8 +61,8 @@
         ["libpng#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "e6867621fe3fc79693657c95209dc400ea2181ce",
-                url = "https://github.com/xmake-io/xmake-repo.git"
+                commit = "15ad332bc1573ceda1afb06fd8696c31c5e09f36",
+                url = "https://gitee.com/tboox/xmake-repo.git"
             },
             version = "v1.6.37"
         },
