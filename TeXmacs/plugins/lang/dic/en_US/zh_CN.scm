@@ -1441,7 +1441,7 @@
 ("panorama" "全景")
 ("paper size" "页面尺寸")
 ("paper type" "页面类型")
-("paper" "")
+("paper" "纸张")
 ("papyrus" "莎草纸")
 ("paragraph mode" "")
 ("paragraph width" "段落宽度")
