@@ -12,12 +12,21 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|6|6|1|1|cell-background|>|<cwith|14|14|1|1|cell-background|>|<cwith|17|17|3|3|cell-valign|b>|<cwith|17|17|1|1|cell-background|pastel
+    <tformat|<cwith|7|7|1|1|cell-background|>|<cwith|21|21|3|3|cell-valign|b>|<cwith|21|21|1|1|cell-background|pastel
+    green>|<cwith|4|4|1|1|cell-background|pastel
     green>|<cwith|3|3|1|1|cell-background|pastel
-    green>|<cwith|2|2|1|1|cell-background|pastel
-    green>|<cwith|9|9|2|2|cell-valign|c>|<cwith|9|9|1|1|cell-background|pastel
-    green>|<cwith|13|13|1|1|cell-background|pastel
-    green>|<cwith|7|7|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|10|10|2|2|cell-valign|c>|<cwith|10|10|1|1|cell-background|pastel
+    green>|<cwith|16|16|1|1|cell-background|pastel
+    green>|<cwith|8|8|1|1|cell-background|pastel
+    green>|<cwith|12|12|1|1|cell-background|pastel
+    green>|<cwith|20|20|1|1|cell-background|pastel
+    green>|<cwith|17|17|1|1|cell-background|pastel green>|<table|<row|<\cell>
+      <dlink|78>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Improve C++ code via warnings and static checking
+    </cell>>|<row|<\cell>
       <dlink|77>
     </cell>|<\cell>
       <value|da>
@@ -35,8 +44,13 @@
       <value|da>
     </cell>|<\cell>
       Improvements on packagers
-    </cell>>|<row|<cell|<dlink|72>>|<cell|<value|da>>|<cell|Improvements on
-    sessions>>|<row|<\cell>
+    </cell>>|<row|<\cell>
+      <dlink|72>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Improvements on sessions
+    </cell>>|<row|<\cell>
       <dlink|71>
     </cell>|<\cell>
       <value|da>
@@ -73,11 +87,23 @@
     </cell>|<\cell>
       Tuning Keyboard Shortcuts
     </cell>>|<row|<\cell>
+      <dlink|48>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Mogan Code on wasm and preparation
+    </cell>>|<row|<\cell>
       <dlink|44>
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
       Versioning as a plugin
+    </cell>>|<row|<\cell>
+      <dlink|41>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Ghostscript binary plugin
     </cell>>|<row|<\cell>
       <dlink|43>
     </cell>|<\cell>
@@ -91,11 +117,11 @@
     </cell>|<\cell>
       Image formats as plugins
     </cell>>|<row|<\cell>
-      <dlink|23>
+      <dlink|29>
     </cell>|<\cell>
-      Oyyko
+      tangdouer
     </cell>|<\cell>
-      Mogan Draw optimization \ (OSPP)
+      OSPP PDF Project
     </cell>>|<row|<\cell>
       <dlink|22>
     </cell>|<\cell>
@@ -108,6 +134,12 @@
       <value|da>
     </cell>|<\cell>
       Natual Language Related Issues
+    </cell>>|<row|<\cell>
+      <dlink|11>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Font tuning
     </cell>>|<row|<\cell>
       <dlink|7>
     </cell>|<\cell>
