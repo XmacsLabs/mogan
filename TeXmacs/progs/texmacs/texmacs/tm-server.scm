@@ -131,7 +131,8 @@
   ("open console on warnings" "on" noop)
   ("gui:line-input:autocommit" "on" noop)
   ("use native menubar" (get-default-native-menubar) noop)
-  ("use unified toolbar" (get-default-unified-toolbar) noop))
+  ("use unified toolbar" (get-default-unified-toolbar) noop)
+  ("tm format without utf8" "on" noop))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Properties of some built-in routines
