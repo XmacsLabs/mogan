@@ -113,23 +113,23 @@ function sidebarGuide() {
             items: [
                 {
                     text: 'Introduction to Plugins',
-                    link: '/guide/Plugins.md'
+                    link: '/guide/plugins.md'
                 },
                 {
                     text: 'PDF Image plugin',
-                    link: '/guide/Plugin_Image_PDF.md'
+                    link: '/guide/plugin_image_pdf.md'
                 },
                 {
                     text: 'Maxima Session plugin',
-                    link: '/guide/Plugin_Session_Maxima.md'
+                    link: '/guide/plugin_session_maxima.md'
                 },
                 {
                     text: 'Octave Session plugin',
-                    link: '/guide/Plugin_Session_Octave.md'
+                    link: '/guide/plugin_session_octave.md'
                 },
                 {
                     text: 'PDF Data plugin',
-                    link: '/guide/Plugin_Data_PDF.md'
+                    link: '/guide/plugin_data_pdf.md'
                 },
             ]
         },
@@ -218,23 +218,23 @@ function sidebarGuideZh() {
             items: [
                 {
                     text: '插件概述',
-                    link: '/zh/guide/Plugins.md'
+                    link: '/zh/guide/plugins.md'
                 },
                 {
                     text: 'PDF图像插件',
-                    link: '/zh/guide/Plugin_Image_PDF.md'
+                    link: '/zh/guide/plugin_image_pdf.md'
                 },
                 {
                     text: 'Maxima会话插件',
-                    link: '/zh/guide/Plugin_Session_Maxima.md'
+                    link: '/zh/guide/plugin_session_maxima.md'
                 },
                 {
                     text: 'Octave会话插件',
-                    link: '/zh/guide/Plugin_Session_Octave.md'
+                    link: '/zh/guide/plugin_session_octave.md'
                 },
                 {
                     text: 'PDF数据插件',
-                    link: '/zh/guide/Plugin_Data_PDF.md'
+                    link: '/zh/guide/plugin_data_pdf.md'
                 },
             ]
         },
