@@ -31,10 +31,7 @@
 #include "qt_simple_widget.hpp"
 #include "qt_utilities.hpp"
 #include "qt_window_widget.hpp"
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-// see https://doc.qt.io/qt-6/widgets-changes-qt6.html
-#include <QDesktopWidget>
-#endif
+#include <QApplication>
 #include <QBuffer>
 #include <QByteArray>
 #include <QClipboard>
@@ -50,10 +47,6 @@
 #include <QStackedLayout>
 #include <QTranslator>
 #include <QUrl>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QDesktopWidget>
-#endif
-#include <QApplication>
 
 #include "QTMGuiHelper.hpp"
 #include "QTMWidget.hpp"

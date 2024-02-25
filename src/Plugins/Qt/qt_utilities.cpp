@@ -15,14 +15,11 @@
 
 #include <QCoreApplication>
 #include <QDateTime>
+#include <QHash>
 #include <QImage>
+#include <QKeySequence>
 #include <QLocale>
 #include <QPainter>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QTextCodec>
-#endif
-#include <QHash>
-#include <QKeySequence>
 #include <QStringList>
 
 #ifdef USE_QT_PRINTER
@@ -622,11 +619,7 @@ qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
     debug_convert << "qt_image_to_eps_or_pdf " << image << " -> " << outfile
                   << LF;
   QPrinter printer;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  printer.setOrientation (QPrinter::Portrait);
-#else
   printer.setPageOrientation (QPageLayout::Portrait);
-#endif
   if (suffix (outfile) == "eps") {
     // note that PostScriptFormat is gone in Qt5. a substitute?:
     // http://soft.proindependent.com/eps/
@@ -650,12 +643,8 @@ qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
       << "dpi set: " << printer.resolution() <<LF;
     */
     if (dpi > 0 && w_pt > 0 && h_pt > 0) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-      printer.setPaperSize (QSizeF (w_pt, h_pt), QPrinter::Point); // in points
-#else
       // see https://doc.qt.io/qt-5/qprinter-obsolete.html#setPaperSize
       printer.setPageSize (QPageSize (QSizeF (w_pt, h_pt), QPageSize::Point));
-#endif
       // w_pt and h_pt are dimensions in points (and there are 72 points per
       // inch)
       int ww= w_pt * dpi / 72;
@@ -669,16 +658,10 @@ qt_image_to_pdf (url image, url outfile, int w_pt, int h_pt, int dpi) {
         debug_convert << "dpi asked: " << dpi
                       << " ; actual dpi set: " << printer.resolution () << LF;
     }
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    else
-      printer.setPaperSize (QSizeF (im.width (), im.height ()),
-                            QPrinter::DevicePixel);
-#else
     // FIXME: how to set the unit QPrinter::DevicePixel
     else
       printer.setPageSize (
           QPageSize (QSizeF (im.width (), im.height ()), QPageSize::Point));
-#endif
     QPainter p;
     p.begin (&printer);
     p.drawImage (0, 0, im);
@@ -821,32 +804,18 @@ qt_get_date (string lan, string fm) {
 
 string
 qt_pretty_time (int t) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  QDateTime dt= QDateTime::fromTime_t (t);
-#else
   QDateTime dt= QDateTime::fromSecsSinceEpoch (t);
-#endif
-  QString s= dt.toString ();
+  QString   s = dt.toString ();
   return from_qstring (s);
 }
 
 #ifdef USE_QT_PRINTER
 #ifndef _MBD_EXPERIMENTAL_PRINTER_WIDGET // this is in qt_printer_widget
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#define PAPER(fmt)                                                             \
-  case QPrinter::fmt:                                                          \
-    return "fmt"
-#else
 #define PAPER(fmt)                                                             \
   case QPageSize::fmt:                                                         \
     return "fmt"
-#endif
 static string
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-qt_papersize_to_string (QPrinter::PaperSize sz) {
-#else
 qt_papersize_to_string (QPageSize::PageSizeId sz) {
-#endif
   switch (sz) {
     PAPER (A0);
     PAPER (A1);
@@ -888,15 +857,10 @@ qt_print (bool& to_file, bool& landscape, string& pname, url& filename,
     to_file = !(qprinter->outputFileName ().isNull ());
     pname   = from_qstring (qprinter->printerName ());
     filename= from_qstring (qprinter->outputFileName ());
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    landscape = (qprinter->orientation () == QPrinter::Landscape);
-    paper_type= qt_papersize_to_string (qprinter->paperSize ());
-#else
     landscape=
         (qprinter->pageLayout ().orientation () == QPageLayout::Landscape);
     paper_type=
         qt_papersize_to_string (qprinter->pageLayout ().pageSize ().id ());
-#endif
     if (qprinter->printRange () == QPrinter::PageRange) {
       first= qprinter->fromPage ();
       last = qprinter->toPage ();
@@ -1288,21 +1252,6 @@ from_key_press_event (const QKeyEvent* event) {
           default:
             r= from_qstring_utf8 (nss);
           }
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-          if (os_macos () && (mods & Qt::AltModifier)) {
-            // Alt produces many symbols in Mac keyboards: []|{} etc.
-            if ((N (r) != 1 || ((int) (unsigned char) r[0]) < 32 ||
-                 ((int) (unsigned char) r[0]) >= 128) &&
-                key >= 32 && key < 128 &&
-                ((mods & (Qt::MetaModifier + Qt::ControlModifier)) == 0)) {
-              if ((mods & Qt::ShiftModifier) == 0 && key >= 65 && key <= 90)
-                key+= 32;
-              qtcomposemap (key)= r;
-              r                 = string ((char) key);
-            }
-            else mods&= ~Qt::AltModifier; // unset Alt
-          }
-#endif
           if (!is_empty (r)) {
             r= mods_text * r;
           }
@@ -1317,7 +1266,6 @@ from_key_release_event (const QKeyEvent* event) {
   string r;
 
   if (os_macos ()) {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     int                   key      = event->key ();
     Qt::KeyboardModifiers mods     = event->modifiers ();
     string                mods_text= from_modifiers (mods);
@@ -1340,7 +1288,6 @@ from_key_release_event (const QKeyEvent* event) {
       }
       r= mods_text * r;
     }
-#endif
   }
 
   return r;
