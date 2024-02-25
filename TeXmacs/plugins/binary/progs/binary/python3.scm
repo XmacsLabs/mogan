@@ -19,7 +19,7 @@
                "/opt/homebrew/bin/python3"
                "/usr/local/bin/python3"))
         ((os-win32?)
-         (list ))
+         (list "$LOCALAPPDATA/Programs/Python/Python3*/python.exe"))
         (else
          (list "/usr/bin/python3"))))
 
