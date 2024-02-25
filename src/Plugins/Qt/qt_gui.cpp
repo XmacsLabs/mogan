@@ -184,25 +184,18 @@ qt_gui_rep::qt_gui_rep (int& argc, char** argv)
   if (!use_native_menubar) {
     qApp->setAttribute (Qt::AA_DontUseNativeMenuBar);
   }
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
   QFont font= qApp->font ();
   font.setStyleStrategy (QFont::PreferAntialias);
   font.setHintingPreference (QFont::PreferFullHinting);
-#endif
 }
 
 /* important routines */
 void
 qt_gui_rep::get_extents (SI& width, SI& height) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  coord2 size= headless_mode ? coord2 (480, 320)
-                             : from_qsize (QApplication::desktop ()->size ());
-#else
   coord2 size=
       headless_mode
           ? coord2 (480, 320)
           : from_qsize (QApplication::primaryScreen ()->availableSize ());
-#endif
   width = size.x1;
   height= size.x2;
 }
@@ -488,12 +481,6 @@ qt_gui_rep::show_wait_indicator (widget w, string message, string arg) {
     waitWindow->close ();
   }
   qApp->processEvents ();
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  // see https://doc.qt.io/qt-5/qcoreapplication-obsolete.html#flush
-  QApplication::flush ();
-#else
-
-#endif
   wid->qwid->activateWindow ();
   send_keyboard_focus (wid);
   // next time we do update the dialog will disappear
