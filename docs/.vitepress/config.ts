@@ -229,8 +229,16 @@ function sidebarGuideZh() {
                     link: '/zh/guide/plugin_binary_gs.md'
                 },
                 {
+                    text: 'Inkscape二进制插件',
+                    link: 'zh/guide/plugin_binary_inkscape.md'
+                },
+                {
                     text: 'PDF图像插件',
                     link: '/zh/guide/plugin_image_pdf.md'
+                },
+                {
+                    text: 'SVG图像插件',
+                    link: '/zh/guide/plugin_image_svg.md'
                 },
                 {
                     text: 'Maxima会话插件',
