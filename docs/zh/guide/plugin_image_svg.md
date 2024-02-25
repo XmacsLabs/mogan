@@ -15,5 +15,3 @@ SVG图像插件是单文件插件，源代码如下所示：
 + https://codeberg.org/XmacsLabs/mogan/src/branch/branch-1.2/TeXmacs/plugins/image/progs/image/svg.scm
 + https://gitee.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/image/progs/image/svg.scm
 + https://github.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/image/progs/image/svg.scm 
-
-请参考[插件概述](plugins.md)中的图像插件一节。

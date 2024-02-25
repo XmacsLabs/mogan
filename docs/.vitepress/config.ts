@@ -77,7 +77,6 @@ function sidebarGuide() {
     return [
         {
             text: 'Introduction',
-            collapsible: true,
             items: [
                 { text: 'What is Mogan?', link: '/guide/what-is-mogan' },
                 { text: 'Major Features', link: '/guide/Feature' },
@@ -85,7 +84,6 @@ function sidebarGuide() {
         },
         {
             text: 'Getting Started',
-            collapsible: true,
             items: [
                 {
                     text: 'Install',
@@ -99,7 +97,6 @@ function sidebarGuide() {
         },
         {
             text: 'Community',
-            collapsible: true,
             items: [
                 {
                     text: 'Contact us',
@@ -108,21 +105,42 @@ function sidebarGuide() {
             ]
         },
         {
-            text: 'Plugins',
-            collapsible: true,
+            text: 'Plugin System',
             items: [
                 {
                     text: 'Introduction to Plugins',
                     link: '/guide/plugins.md'
                 },
                 {
-                    text: 'Ghostscript Binary Plugin',
+                    text: 'Binary Plugin',
+                    link: '/guide/plugin_binary.md'
+                },
+            ],
+        },
+        {
+            text: 'Builtin Plugins',
+            collapsed: true,
+            items: [
+                {
+                    text: 'Ghostscript Binary plugin',
                     link: '/guide/plugin_binary_gs.md'
+                },
+                {
+                    text: 'Inkscape Binary plugin',
+                    link: '/guide/plugin_binary_inkscape.md'
+                },
+                {
+                    text: 'rsvg-convert Binary plugin',
+                    link: '/guide/plugin_binary_rsvg_convert.md'
                 },
                 {
                     text: 'PDF Image plugin',
                     link: '/guide/plugin_image_pdf.md'
                 },
+                {
+                    text: 'SVG Image plugin',
+                    link: '/guide/plugin_image_svg.md'
+                },                
                 {
                     text: 'Maxima Session plugin',
                     link: '/guide/plugin_session_maxima.md'
@@ -135,11 +153,11 @@ function sidebarGuide() {
                     text: 'PDF Data plugin',
                     link: '/guide/plugin_data_pdf.md'
                 },
-            ]
+            ],
         },
         {
             text: 'ChangeLog',
-            collapsible: false,
+            collapsed: true,
             items: [
                 {
                     text: 'v1.2.4 (2024/02/01)',
@@ -186,7 +204,6 @@ function sidebarGuideZh() {
     return [
         {
             text: '简介',
-            collapsible: true,
             items: [
                 { text: '墨干', link: '/zh/guide/what-is-mogan' },
                 { text: '主要功能', link: '/zh/guide/Feature' },
@@ -194,7 +211,6 @@ function sidebarGuideZh() {
         },
         {
             text: '如何入门',
-            collapsible: true,
             items: [
                 {
                     text: '如何安装？',
@@ -208,7 +224,6 @@ function sidebarGuideZh() {
         },
         {
             text: '社区',
-            collapsible: true,
             items: [
                 {
                     text: '联系我们',
@@ -217,20 +232,33 @@ function sidebarGuideZh() {
             ]
         },
         {
-            text: '插件',
-            collapsible: true,
+            text: '插件体系',
             items: [
                 {
                     text: '插件概述',
                     link: '/zh/guide/plugins.md'
                 },
                 {
+                    text: '二进制插件',
+                    link: '/zh/guide/plugin_binary.md'
+                },
+            ]
+        },
+        {
+            text: "内置插件",
+            collapsed: true,
+            items: [
+                {
                     text: 'Ghostscript二进制插件',
                     link: '/zh/guide/plugin_binary_gs.md'
                 },
                 {
                     text: 'Inkscape二进制插件',
-                    link: 'zh/guide/plugin_binary_inkscape.md'
+                    link: '/zh/guide/plugin_binary_inkscape.md'
+                },
+                {
+                    text: 'rsvg-convert二进制插件',
+                    link: '/zh/guide/plugin_binary_rsvg_convert.md'
                 },
                 {
                     text: 'PDF图像插件',
@@ -252,11 +280,11 @@ function sidebarGuideZh() {
                     text: 'PDF数据插件',
                     link: '/zh/guide/plugin_data_pdf.md'
                 },
-            ]
+            ],
         },
         {
             text: '变更记录',
-            collapsible: true,
+            collapsed: true,
             items: [
                 {
                     text: 'v1.2.4 (2024/02/01)',
