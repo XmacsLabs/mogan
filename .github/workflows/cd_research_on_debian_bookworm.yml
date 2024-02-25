@@ -1,0 +1,68 @@
+name: CD for Mogan Research on Debian bookworm
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+env:
+  XMAKE_ROOT: y
+  QT_QPA_PLATFORM: offscreen
+  INSTALL_DIR: tmp/build/packages/app.mogan/
+
+jobs:
+  build:
+    container: debian:bookworm
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+        - qt_pkg:  qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins
+          qt_ver: 5
+    steps:
+      - name: Install dependencies
+        run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y gcc git 7zip unzip curl build-essential \
+              fonts-noto-cjk libcurl4-openssl-dev libfreetype-dev libfontconfig-dev \
+              ${{matrix.qt_pkg}} libgit2-dev zlib1g-dev libssl-dev libjpeg62-turbo-dev cmake
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: git add safe directory
+        run: git config --global --add safe.directory '*'
+
+      - name: set XMAKE_GLOBALDIR
+        run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
+
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.8.6
+          actions-cache-folder: '.xmake-cache'
+
+      - name: xmake repo --update
+        run: xmake repo --update
+
+      - name: Write release version
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          VERSION=${VERSION//\//}
+          echo Version: $VERSION
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Generate Installer
+        run: |
+          packages/debian/package.sh
+          cp ../mogan*.deb mogan-research-v${VERSION}-debian12.deb
+      - name: Upload 
+        uses: actions/upload-artifact@v3
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        with:
+          path: mogan-*.deb
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          prerelease: true
+          files: mogan-*.deb
