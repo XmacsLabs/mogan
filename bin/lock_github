@@ -1,4 +1,10 @@
 #!/usr/bin/env elvish
 
-sed -i '' 's|gitee.com/tboox/xmake-repo.git|github.com/xmake-io/xmake-repo.git|g' xmake-requires.lock
+use platform
+
+if $platform:is-windows {
+  sed -i 's|gitee.com/tboox/xmake-repo.git|github.com/xmake-io/xmake-repo.git|g' xmake-requires.lock
+} else {
+  sed -i '' 's|gitee.com/tboox/xmake-repo.git|github.com/xmake-io/xmake-repo.git|g' xmake-requires.lock
+}
 
