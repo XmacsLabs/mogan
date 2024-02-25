@@ -130,6 +130,10 @@ function sidebarGuide() {
                     link: '/guide/plugin_binary_inkscape.md'
                 },
                 {
+                    text: 'Python3 Binary plugin',
+                    link: '/guide/plugin_binary_python3.md'
+                },
+                {
                     text: 'rsvg-convert Binary plugin',
                     link: '/guide/plugin_binary_rsvg_convert.md'
                 },
@@ -255,6 +259,10 @@ function sidebarGuideZh() {
                 {
                     text: 'Inkscape二进制插件',
                     link: '/zh/guide/plugin_binary_inkscape.md'
+                },
+                {
+                    text: 'Python3二进制插件',
+                    link: '/zh/guide/plugin_binary_python3.md'
                 },
                 {
                     text: 'rsvg-convert二进制插件',
