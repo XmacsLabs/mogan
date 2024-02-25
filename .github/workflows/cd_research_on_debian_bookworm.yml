@@ -18,15 +18,16 @@ jobs:
       fail-fast: true
       matrix:
         include:
-        - qt_pkg:  qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins
-          qt_ver: 5
+        - qt_pkg: qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins
+          qt_ver: 6
     steps:
       - name: Install dependencies
         run: |
           DEBIAN_FRONTEND=noninteractive apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y gcc git 7zip unzip curl build-essential \
               fonts-noto-cjk libcurl4-openssl-dev libfreetype-dev libfontconfig-dev \
-              ${{matrix.qt_pkg}} libgit2-dev zlib1g-dev libssl-dev libjpeg62-turbo-dev cmake
+              ${{matrix.qt_pkg}} libgit2-dev zlib1g-dev libssl-dev libjpeg62-turbo-dev cmake \
+              fakeroot debhelper
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
