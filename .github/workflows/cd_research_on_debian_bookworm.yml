@@ -45,16 +45,10 @@ jobs:
       - name: xmake repo --update
         run: xmake repo --update
 
-      - name: Write release version
-        run: |
-          VERSION=${GITHUB_REF_NAME#v}
-          VERSION=${VERSION//\//}
-          echo Version: $VERSION
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Generate Installer
         run: |
           packages/debian/package.sh
-          cp ../mogan*.deb mogan-research-v${VERSION}-debian12.deb
+          cp ../mogan*.deb mogan-research-v1.2.5-debian12.deb
       - name: Upload 
         uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
