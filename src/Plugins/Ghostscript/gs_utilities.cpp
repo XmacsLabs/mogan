@@ -233,38 +233,6 @@ gs_PDFimage_size (url image, int& w_pt, int& h_pt) {
 }
 
 bool
-gs_PDF_EmbedAllFonts (url image, url pdf) {
-  if (DEBUG_CONVERT) debug_convert << "gs_PDF_EmbedAllFonts" << LF;
-  if (!exists (image)) return false;
-  array<string> cmd;
-  cmd << gs_executable ();
-  cmd << string ("-dNOPAUSE");
-  cmd << string ("-dBATCH");
-  cmd << string ("-dQUIET");
-  cmd << string ("-dSAFER");
-  cmd << string ("-sDEVICE=pdfwrite");
-  cmd << string ("-dPDFSETTINGS=/prepress");
-  cmd << string ("-dEmbedAllFonts=true");
-  cmd << string ("-dCompatibilityLevel=") * pdf_version ();
-  cmd << string ("-sOutputFile=") * concretize (pdf);
-  cmd << concretize (image);
-  // cout << cmd << LF;
-  array<int> out;
-  out << 1;
-  out << 2;
-  array<string> ret=
-      evaluate_system (cmd, array<int> (), array<string> (), out);
-  // cout << "ret= " << ret << LF;
-  if (ret[0] != "0" || ret[2] != "") {
-    convert_warning << "cannot embed all fonts for file " << image << LF;
-    convert_warning << ret[1] << LF;
-    convert_warning << ret[2] << LF;
-    return false;
-  }
-  return true;
-}
-
-bool
 gs_to_png (url image, url png, int w, int h) { // Achtung! w,h in pixels
   string cmd= gs_prefix ();
   if (DEBUG_CONVERT) debug_convert << "gs_to_png using " << cmd << LF;

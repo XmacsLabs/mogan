@@ -21,7 +21,6 @@ string gs_prefix ();
 string eps_device ();
 bool   gs_supports (url image);
 void   gs_image_size (url image, int& w_pt, int& h_pt);
-bool   gs_PDFimage_size (url image, int& w_pt, int& h_pt);
 bool   gs_to_png (url image, url png, int w_px, int h_px);
 void   gs_to_eps (url image, url eps);
 bool   gs_PDF_EmbedAllFonts (url image, url pdf);
