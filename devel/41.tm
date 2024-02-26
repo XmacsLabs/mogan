@@ -3,17 +3,20 @@
 <style|<tuple|tmdoc|devel>>
 
 <\body>
-  <tmdoc-title|Use libgs instead of the gs binary>
+  <tmdoc-title|Ghostscript binary plugin>
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|2|4|4|cell-halign|l>|<cwith|2|2|4|4|cell-valign|b>|<table|<row|<cell|Chore>|<cell|41_1>|<cell|<value|da>>|<cell|Use
-  png instead of ps for unknown image>>|<row|<cell|Chore>|<cell|41_2>|<cell|<value|da>>|<cell|Fix
-  ps_load from ramdisc url>>|<row|<cell|Chore>|<cell|41_3>|<cell|<value|da>>|<cell|scheme
-  glue: <scm|use-plugin-gs>>>|<row|<cell|Chore>|<cell|41_4>|<cell|<value|da>>|<cell|clang-format
-  the Ghostscript C++ plugin>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|6|6|5|5|cell-halign|l>|<cwith|6|6|5|5|cell-valign|b>|<table|<row|<cell|Chore>|<cell|41_7>|<cell|v1.2.6>|<cell|<value|da>>|<cell|gs:
+  implement eps2pdf via scheme>>|<row|<cell|Chore>|<cell|41_6>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Fix
+  gs binary on macOS>>|<row|<cell|Chore>|<cell|41_5>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Fix
+  gs_to_png on macOS>>|<row|<cell|Chore>|<cell|41_4>|<cell|v1.2.0>|<cell|<value|da>>|<cell|clang-format
+  the Ghostscript C++ plugin>>|<row|<cell|Chore>|<cell|41_3>|<cell|v1.2.0>|<cell|<value|da>>|<cell|scheme
+  glue: <scm|use-plugin-gs>>>|<row|<cell|Chore>|<cell|41_2>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Fix
+  ps_load from ramdisc url>>|<row|<cell|Chore>|<cell|41_1>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Use
+  png instead of ps for unknown image>>>>>
 
-  <tmdoc-copyright|2023|Darcy>
+  <tmdoc-copyright|2023\U2024|Darcy>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
