@@ -26,7 +26,7 @@
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
-      7_2
+      <dlink|7_2>
     </cell>|<\cell>
       v1.2.0
     </cell>|<\cell>
