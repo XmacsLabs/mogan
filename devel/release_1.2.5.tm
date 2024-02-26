@@ -12,15 +12,15 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|7|7|1|1|cell-background|>|<cwith|21|21|3|3|cell-valign|b>|<cwith|21|21|1|1|cell-background|pastel
+    <tformat|<cwith|7|7|1|1|cell-background|>|<cwith|20|20|3|3|cell-valign|b>|<cwith|20|20|1|1|cell-background|pastel
     green>|<cwith|4|4|1|1|cell-background|pastel
     green>|<cwith|3|3|1|1|cell-background|pastel
     green>|<cwith|10|10|2|2|cell-valign|c>|<cwith|10|10|1|1|cell-background|pastel
-    green>|<cwith|16|16|1|1|cell-background|pastel
+    green>|<cwith|15|15|1|1|cell-background|pastel
     green>|<cwith|8|8|1|1|cell-background|pastel
     green>|<cwith|12|12|1|1|cell-background|pastel
-    green>|<cwith|20|20|1|1|cell-background|pastel
-    green>|<cwith|17|17|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|19|19|1|1|cell-background|pastel
+    green>|<cwith|16|16|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|78>
     </cell>|<\cell>
       <value|da>
@@ -104,12 +104,6 @@
       <value|da>
     </cell>|<\cell>
       Ghostscript binary plugin
-    </cell>>|<row|<\cell>
-      <dlink|43>
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      <LaTeX> converter as a plugin
     </cell>>|<row|<\cell>
       <dlink|38>
     </cell>|<\cell>

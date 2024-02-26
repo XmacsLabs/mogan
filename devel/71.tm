@@ -7,21 +7,22 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|21|24|2|2|cell-background|pastel
-  green>|<cwith|27|35|2|2|cell-background|pastel
-  green>|<cwith|20|20|2|2|cell-background|pastel
-  green>|<cwith|13|13|2|2|cell-background|pastel
-  green>|<cwith|9|9|2|2|cell-background|pastel
-  green>|<cwith|11|11|2|2|cell-background|pastel
-  green>|<cwith|19|19|2|2|cell-background|pastel
-  green>|<cwith|18|18|2|2|cell-background|pastel
-  green>|<cwith|26|26|2|2|cell-background|pastel
-  green>|<cwith|4|6|2|2|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|22|25|2|2|cell-background|pastel
+  green>|<cwith|28|36|2|2|cell-background|pastel
+  green>|<cwith|21|21|2|2|cell-background|pastel
+  green>|<cwith|14|14|2|2|cell-background|pastel
   green>|<cwith|10|10|2|2|cell-background|pastel
-  green>|<cwith|7|7|2|2|cell-background|pastel
-  green>|<cwith|3|3|2|2|cell-background|pastel
   green>|<cwith|12|12|2|2|cell-background|pastel
-  green>|<table|<row|<cell|Bug>|<cell|71_32>|<cell|v1.2.3>|<cell|<value|da>>|<cell|For
+  green>|<cwith|20|20|2|2|cell-background|pastel
+  green>|<cwith|19|19|2|2|cell-background|pastel
+  green>|<cwith|27|27|2|2|cell-background|pastel
+  green>|<cwith|5|7|2|2|cell-background|pastel
+  green>|<cwith|11|11|2|2|cell-background|pastel
+  green>|<cwith|8|8|2|2|cell-background|pastel
+  green>|<cwith|4|4|2|2|cell-background|pastel
+  green>|<cwith|13|13|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Bug>|<cell|71_33>|<cell|v1.2.3>|<cell|<value|da>>|<cell|UI:
+  use anti-alias font for Qt>>|<row|<cell|Bug>|<cell|71_32>|<cell|v1.2.3>|<cell|<value|da>>|<cell|For
   only one screen, do not move out of the screen
   width>>|<row|<cell|Bug>|<cell|71_31>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Fix
   crash when launching in the second monitor on

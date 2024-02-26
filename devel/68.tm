@@ -7,7 +7,10 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|2|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|68_9>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Change
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|3|3|5|5|cell-hyphen|t>|<cwith|1|1|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|68_10>|<cell|v1.2.5>|<cell|<value|da>>|<\cell>
+    Deprecate preferences of native pdf/native
+    postscript/texmacs-\<gtr\>pdf:check
+  </cell>>|<row|<cell|Chore>|<cell|68_9>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Change
   the producer from TeXmacs to Mogan>>|<row|<cell|Chore>|<cell|68_8>|<cell|v1.2.3>|<cell|<value|jk>>|<\cell>
     extract keywords from abstract-data and add them to exported pdf
   </cell>>|<row|<cell|Chore>|<cell|68_7>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Upgrade

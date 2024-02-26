@@ -7,9 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Perf>|<cell|66_6>|<cell|1.2.5>|<cell|<value|da>>|<cell|improve
-  speed of totm>>|<row|<cell|>|<cell|>|<cell|1.2.5>|<cell|<value|da>>|<cell|improve
-  speed of fromtm by remove N(s) in loop>>|<row|<cell|Perf>|<cell|66_5>|<cell|1.2.5>|<cell|<value|jk>>|<cell|improve
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Perf>|<cell|66_5>|<cell|1.2.5>|<cell|<value|jk>>|<cell|improve
   speed of fromtm by template>>|<row|<cell|Chore>|<cell|66_4>|<cell|>|<cell|<value|da>>|<cell|TMU
   1.0.1: Use unicode for CJK>>|<row|<cell|Chore>|<cell|66_3>|<cell|>|<cell|<value|da>>|<cell|TMU
   1.0.0: identical to TM format>>|<row|<cell|Chore>|<cell|66_2>|<cell|>|<cell|<value|da>>|<cell|Adding

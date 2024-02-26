@@ -7,7 +7,13 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|5|5|cell-hyphen|t>|<cwith|10|10|5|5|cell-hyphen|t>|<cwith|11|11|5|5|cell-hyphen|t>|<cwith|12|12|5|5|cell-hyphen|t>|<cwith|13|13|5|5|cell-hyphen|t>|<cwith|14|14|5|5|cell-hyphen|t>|<cwith|15|15|5|5|cell-hyphen|t>|<cwith|17|17|5|5|cell-hyphen|t>|<cwith|18|18|5|5|cell-hyphen|t>|<cwith|24|24|2|2|cell-halign|l>|<cwith|24|24|5|5|cell-hyphen|t>|<cwith|23|23|5|5|cell-hyphen|t>|<cwith|22|22|5|5|cell-hyphen|t>|<cwith|21|21|5|5|cell-hyphen|t>|<cwith|20|20|1|1|cell-valign|b>|<cwith|20|20|5|5|cell-hyphen|t>|<cwith|19|19|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|59_21>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|5|5|cell-hyphen|t>|<cwith|13|13|5|5|cell-hyphen|t>|<cwith|14|14|5|5|cell-hyphen|t>|<cwith|15|15|5|5|cell-hyphen|t>|<cwith|16|16|5|5|cell-hyphen|t>|<cwith|17|17|5|5|cell-hyphen|t>|<cwith|18|18|5|5|cell-hyphen|t>|<cwith|20|20|5|5|cell-hyphen|t>|<cwith|21|21|5|5|cell-hyphen|t>|<cwith|27|27|2|2|cell-halign|l>|<cwith|27|27|5|5|cell-hyphen|t>|<cwith|26|26|5|5|cell-hyphen|t>|<cwith|25|25|5|5|cell-hyphen|t>|<cwith|24|24|5|5|cell-hyphen|t>|<cwith|23|23|1|1|cell-valign|b>|<cwith|23|23|5|5|cell-hyphen|t>|<cwith|22|22|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|59_24>|<cell|v1.2.5>|<cell|<value|da>>|<\cell>
+    Fix unexpected commit of unrecognized shortcuts
+  </cell>>|<row|<cell|Chore>|<cell|59_23>|<cell|v1.2.5>|<cell|<value|da>>|<\cell>
+    macOS: Command +/- with/without shift to zoom in/out
+  </cell>>|<row|<cell|Chore>|<cell|59_22>|<cell|v1.2.5>|<cell|<value|da>>|<\cell>
+    macOS: Fix shortcuts of option with non-alphanum keys
+  </cell>>|<row|<cell|Chore>|<cell|59_21>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
     Tuning shortcuts on GNOME
   </cell>>|<row|<cell|Chore>|<cell|59_20>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
     Use <key|A-x> for interactive command

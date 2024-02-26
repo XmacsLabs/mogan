@@ -22,6 +22,9 @@
     use git-load-blob instead of git show subprocess
   </cell>>|<row|<cell|Chore>|<cell|44_7>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
     impl glue <scm|git-status-file> and re-impl <scm|buffer-status>
+  </cell>>|<row|<cell|Bug>|<cell|44_8>|<cell|v1.2.5>|<cell|<value|da>>|<\cell>
+    Fix the viewer of the history version in Version-\<gtr\>History on
+    Windows
   </cell>>>>>
 
   <tmdoc-copyright|2023|Darcy>

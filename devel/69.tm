@@ -7,7 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|69_1>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Book:
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|12|12|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|69_1>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Book:
   chapter from \<#7AE0\>1 to \<#7B2C\>1\<#7AE0\>>>|<row|<cell|Chore>|<cell|69_2>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Chinese:
   cite* should not use italic font>>|<row|<cell|Chore>|<cell|69_3>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Chinese:
   do not use italic font for the render-theorem
@@ -20,7 +20,10 @@
   punctuation rules for CJK>>|<row|<cell|Feature>|<cell|<dlink|69_9>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Auto
   small spaces between Chinese text and other
   structure>>|<row|<cell|Chore>|<cell|69_10>|<cell|v1.2.3>|<cell|<value|jk>>|<cell|improve
-  doc-data in chinese document>>>>>
+  doc-data in chinese document>>|<row|<cell|Feature>|<cell|69_11>|<cell|v1.2.5>|<cell|<value|da>>|<cell|Support
+  hanzi for the number primitive>>|<row|<cell|Bug>|<cell|69_12>|<cell|v1.2.5>|<cell|<value|da>>|<\cell>
+    Fix open file via double click with unicode/CJK name on macOS
+  </cell>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 

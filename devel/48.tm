@@ -123,10 +123,18 @@
       Darcy
     </cell>|<\cell>
       Separate Mogan Research from xmake.lua
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|48_15>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Code: fix copy/paste unicode in scheme code block
     </cell>>>>
   </wide-tabular>
 
-  <tmdoc-copyright|2023|Darcy Shen|jingkaimori>
+  <tmdoc-copyright|2023\U2024|Darcy Shen|jingkaimori>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
