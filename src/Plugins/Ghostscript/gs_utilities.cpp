@@ -353,42 +353,6 @@ gs_to_eps (url image,
   gs_fix_bbox (eps, 0, 0, bx2 - bx1, by2 - by1);
 }
 
-// This conversion is appropriate for printed pages
-void
-gs_to_pdf (url doc, url pdf, bool landscape, double paper_h, double paper_w) {
-  if (DEBUG_CONVERT) debug_convert << "(ps page) gs_to_pdf" << LF;
-  string cmd= gs_prefix ();
-  cmd << "-dQUIET -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite ";
-  cmd << "-dCompatibilityLevel=" << pdf_version () << " ";
-  if (landscape)
-    cmd << "-dDEVICEWIDTHPOINTS=" << as_string ((int) (28.36 * paper_h + 0.5))
-        << " -dDEVICEHEIGHTPOINTS="
-        << as_string ((int) (28.36 * paper_w + 0.5));
-  else
-    cmd << "-dDEVICEWIDTHPOINTS=" << as_string ((int) (28.36 * paper_w + 0.5))
-        << " -dDEVICEHEIGHTPOINTS="
-        << as_string ((int) (28.36 * paper_h + 0.5));
-
-  cmd << " -sOutputFile=" << sys_concretize (pdf) << " ";
-  cmd << sys_concretize (doc);
-  cmd << " -c \"[ /Title (" << as_string (tail (pdf))
-      << ") /DOCINFO pdfmark\" ";
-
-  // NOTE: when converting from ps to pdf the title of the document is
-  // incorrectly referring to the name of the temporary file
-  // so we add some PS code to override the PDF document title with
-  // the name of the PDF file.
-
-  if (os_win () || os_mingw ()) {
-    lolly::system::call (cmd);
-  }
-  else {
-    std::system (as_charp (cmd));
-  }
-  if (DEBUG_CONVERT)
-    debug_convert << cmd << LF << "pdf generated? " << exists (pdf) << LF;
-}
-
 void
 gs_to_ps (url doc, url ps, bool landscape, double paper_h, double paper_w) {
   if (DEBUG_CONVERT) debug_convert << "gs_to_ps" << LF;
