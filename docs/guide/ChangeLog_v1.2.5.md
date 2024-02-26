@@ -25,10 +25,12 @@ This release is for bug fixes and user experience improvements.
   + Improve the speed of rendering Pine beamer theme
 + PDF Import
   + Add `File->Import->PDF with embedded document...` instead of `File->Open` the "editable" PDF document
++ Version Control
+  + Fix the viewer of the history version in Version->History on Windows
 + Image plugins
   + Improve the support for Postscript image format
   + Improve the support for SVG image format
-+ Git version plugin
-  + Fix the viewer of the history version in Version->History on Windows
-+ Scheme Session plugin
++ Session plugin
   + Fix the encoding of CJK characters before and after scheme-eval
++ Code plugin
+  + Re-add the syntax highlighter for Python

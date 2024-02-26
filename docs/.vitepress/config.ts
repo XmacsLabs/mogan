@@ -164,6 +164,10 @@ function sidebarGuide() {
             collapsed: true,
             items: [
                 {
+                    text: 'v1.2.5 LTS (2024/02/27)',
+                    link: '/guide/ChangeLog_v1.2.5.md'
+                },
+                {
                     text: 'v1.2.4 (2024/02/01)',
                     link: '/guide/ChangeLog_v1.2.4.md'
                 },
@@ -195,10 +199,6 @@ function sidebarGuide() {
                     text: 'v1.1.4 (2023/07/31)',
                     link: '/guide/ChangeLog_v1.1.4.md'
                 },
-        //         {
-        //             text: 'v1.1.3',
-        //             link: '/guide/ChangeLog_v1.1.3.md'
-        //         },
              ]
         },
     ]
@@ -294,6 +294,10 @@ function sidebarGuideZh() {
             text: '变更记录',
             collapsed: true,
             items: [
+                {
+                    text: 'v1.2.5 LTS (2024/02/27)',
+                    link: '/zh/guide/ChangeLog_v1.2.5.md'
+                },
                 {
                     text: 'v1.2.4 (2024/02/01)',
                     link: '/zh/guide/ChangeLog_v1.2.4.md'
