@@ -233,38 +233,6 @@ gs_PDFimage_size (url image, int& w_pt, int& h_pt) {
 }
 
 bool
-gs_PDF_EmbedAllFonts (url image, url pdf) {
-  if (DEBUG_CONVERT) debug_convert << "gs_PDF_EmbedAllFonts" << LF;
-  if (!exists (image)) return false;
-  array<string> cmd;
-  cmd << gs_executable ();
-  cmd << string ("-dNOPAUSE");
-  cmd << string ("-dBATCH");
-  cmd << string ("-dQUIET");
-  cmd << string ("-dSAFER");
-  cmd << string ("-sDEVICE=pdfwrite");
-  cmd << string ("-dPDFSETTINGS=/prepress");
-  cmd << string ("-dEmbedAllFonts=true");
-  cmd << string ("-dCompatibilityLevel=") * pdf_version ();
-  cmd << string ("-sOutputFile=") * concretize (pdf);
-  cmd << concretize (image);
-  // cout << cmd << LF;
-  array<int> out;
-  out << 1;
-  out << 2;
-  array<string> ret=
-      evaluate_system (cmd, array<int> (), array<string> (), out);
-  // cout << "ret= " << ret << LF;
-  if (ret[0] != "0" || ret[2] != "") {
-    convert_warning << "cannot embed all fonts for file " << image << LF;
-    convert_warning << ret[1] << LF;
-    convert_warning << ret[2] << LF;
-    return false;
-  }
-  return true;
-}
-
-bool
 gs_to_png (url image, url png, int w, int h) { // Achtung! w,h in pixels
   string cmd= gs_prefix ();
   if (DEBUG_CONVERT) debug_convert << "gs_to_png using " << cmd << LF;
@@ -351,78 +319,6 @@ gs_to_eps (url image,
   // their own, possibly changing the original margins/aspect ratio defined by
   // the pdf CropBox|MediaBox here were restore the original size.
   gs_fix_bbox (eps, 0, 0, bx2 - bx1, by2 - by1);
-}
-
-// This conversion is appropriate for eps images
-// (originally implemented in pdf_image_rep::flush)
-void
-gs_to_pdf (url image, url pdf, int w, int h) {
-  string cmd;
-  if (DEBUG_CONVERT) debug_convert << "(eps) gs_to_pdf" << LF;
-  string s= suffix (image);
-  // take care of properly handling the bounding box
-  // the resulting pdf image will always start at 0,0.
-
-  int bx1, by1, bx2, by2; // bounding box
-  ps_bounding_box (image, bx1, by1, bx2, by2);
-  double scale_x= w / ((double) (bx2 - bx1));
-  double scale_y= h / ((double) (by2 - by1));
-
-  cmd= gs_prefix ();
-  cmd << " -dQUIET -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite ";
-  cmd << "-dAutoRotatePages=/None ";
-  cmd << "-dCompatibilityLevel=" << pdf_version () << " ";
-  cmd << " -sOutputFile=" << sys_concretize (pdf) << " ";
-  cmd << " -c \" << /PageSize [ " << as_string (bx2 - bx1) << " "
-      << as_string (by2 - by1) << " ] >> setpagedevice gsave  "
-      << as_string (-bx1) << " " << as_string (-by1) << " translate "
-      << as_string (scale_x) << " " << as_string (scale_y) << " scale \"";
-  cmd << " -f " << sys_concretize (image);
-  cmd << " -c \" grestore \"  ";
-  if (os_win () || os_mingw ()) {
-    lolly::system::call (cmd);
-  }
-  else {
-    std::system (c_string (cmd));
-  }
-  if (DEBUG_CONVERT)
-    debug_convert << cmd << LF << "pdf generated? " << exists (pdf) << LF;
-}
-
-// This conversion is appropriate for printed pages
-void
-gs_to_pdf (url doc, url pdf, bool landscape, double paper_h, double paper_w) {
-  if (DEBUG_CONVERT) debug_convert << "(ps page) gs_to_pdf" << LF;
-  string cmd= gs_prefix ();
-  cmd << "-dQUIET -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite ";
-  cmd << "-dCompatibilityLevel=" << pdf_version () << " ";
-  if (landscape)
-    cmd << "-dDEVICEWIDTHPOINTS=" << as_string ((int) (28.36 * paper_h + 0.5))
-        << " -dDEVICEHEIGHTPOINTS="
-        << as_string ((int) (28.36 * paper_w + 0.5));
-  else
-    cmd << "-dDEVICEWIDTHPOINTS=" << as_string ((int) (28.36 * paper_w + 0.5))
-        << " -dDEVICEHEIGHTPOINTS="
-        << as_string ((int) (28.36 * paper_h + 0.5));
-
-  cmd << " -sOutputFile=" << sys_concretize (pdf) << " ";
-  cmd << sys_concretize (doc);
-  cmd << " -c \"[ /Title (" << as_string (tail (pdf))
-      << ") /DOCINFO pdfmark\" ";
-
-  // NOTE: when converting from ps to pdf the title of the document is
-  // incorrectly referring to the name of the temporary file
-  // so we add some PS code to override the PDF document title with
-  // the name of the PDF file.
-
-  if (os_win () || os_mingw ()) {
-    lolly::system::call (cmd);
-  }
-  else {
-    std::system (as_charp (cmd));
-  }
-  if (DEBUG_CONVERT)
-    debug_convert << cmd << LF << "pdf generated? " << exists (pdf) << LF;
 }
 
 void

@@ -32,6 +32,59 @@
 (tm-define (has-binary-gs?)
   (not (url-none? (find-binary-gs))))
 
+(tm-define (version-binary-gs)
+  (with ret (check-stdout (string-append (url->system (find-binary-gs)) " --version"))
+    ret))
+
+(tm-define (gs-ps-image-size u)
+  (let* ((out (check-stderr (string-append
+           (url->system (find-binary-gs))
+           " -dQUIET "
+           " -dNOPAUSE "
+           " -dBATCH "
+           " -dSAFER "
+           " -sDEVICE=bbox "
+           (url->system u))))
+         (l (filter (lambda (x) (string-starts? x "%%BoundingBox: "))
+                (string-split out #\newline)))
+         (box (and (> (length l) 0)
+               (string-drop (car l) (length "%%BoundingBox: "))))
+         (fbox (and (> (length box) 0) (map string->float (string-split box #\space)))))
+    (and (== (length fbox) 4)
+         (list (floor (first fbox)) ;; x1
+               (floor (second fbox)) ;; y1
+               (ceiling (third fbox)) ;; x2
+               (ceiling (fourth fbox)))))) ;; y2
+
+(tm-define (gs-eps-to-pdf from opts)
+  (let* ((to (assoc-ref opts 'dest))
+         (box (gs-ps-image-size from))
+         (w (number->string (- (third box) (first box))))
+         (h (number->string (- (fourth box) (second box))))
+         (offset-x (number->string (- (first box))))
+         (offset-y (number->string (- (second box))))
+         (gs-inline
+           (string-append
+             "<< /PageSize [ " w " " h " ] >> setpagedevice gsave "
+             offset-x " " offset-y " translate "
+             "1 1 scale"))
+         (cmd
+           (string-append
+             (url->system (find-binary-gs))
+             " -dQUIET "
+             " -dNOPAUSE "
+             " -dBATCH "
+             " -dSAFER "
+             " -sDEVICE=pdfwrite "
+             " -dAutoRotatePages=/None "
+             " -dCompatibilityLevel=1.4 "
+             (string-append " -sOutputFile=" (url->system to) " ")
+             (string-append " -c " (string-quote gs-inline))
+             (string-append " -f " (url->system from) " ")
+             (string-append " -c " (string-quote " grestore ")))))
+    (debug-message "io" (string-append "call: " cmd "\n"))
+    (system cmd)))
+
 (tm-define (gs-convert x opts)
   ;; many options for pdf->ps/eps see http://tex.stackexchange.com/a/20884
   ;; this one does a better rendering than pdf2ps (also based on gs):

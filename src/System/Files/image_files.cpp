@@ -439,15 +439,8 @@ image_to_pdf (url image, url pdf, int w_pt, int h_pt, int dpi) {
   if (DEBUG_CONVERT) debug_convert << "image_to_pdf ... ";
   string s= suffix (image);
   // First try to preserve "vectorialness"
-  if ((s == "svg") && call_scm_converter (image, pdf)) return;
-#ifdef USE_PLUGIN_GS
-  if (gs_supports (image)) {
-    if (DEBUG_CONVERT) debug_convert << " using gs " << LF;
-    gs_to_pdf (image, pdf, w_pt, h_pt);
-    return;
-  }
-#endif
-  // converters below will yield only raster images.
+  if ((s == "svg" || s == "eps") && call_scm_converter (image, pdf)) return;
+    // converters below will yield only raster images.
 #ifdef QTTEXMACS
   if (qt_supports (image)) {
     if (DEBUG_CONVERT) debug_convert << " using qt " << LF;
