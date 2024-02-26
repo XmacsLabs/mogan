@@ -15,5 +15,5 @@
 (texmacs-module (image postscript))
 
 (converter postscript-file pdf-file
-  (:require (url-exists-in-path? "ps2pdf"))
-  (:shell "ps2pdf" from to))
+  (:require (has-binary-gs?))
+  (:function-with-options gs-eps-to-pdf))
