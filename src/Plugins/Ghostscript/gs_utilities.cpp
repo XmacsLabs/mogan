@@ -353,42 +353,6 @@ gs_to_eps (url image,
   gs_fix_bbox (eps, 0, 0, bx2 - bx1, by2 - by1);
 }
 
-// This conversion is appropriate for eps images
-// (originally implemented in pdf_image_rep::flush)
-void
-gs_to_pdf (url image, url pdf, int w, int h) {
-  string cmd;
-  if (DEBUG_CONVERT) debug_convert << "(eps) gs_to_pdf" << LF;
-  string s= suffix (image);
-  // take care of properly handling the bounding box
-  // the resulting pdf image will always start at 0,0.
-
-  int bx1, by1, bx2, by2; // bounding box
-  ps_bounding_box (image, bx1, by1, bx2, by2);
-  double scale_x= w / ((double) (bx2 - bx1));
-  double scale_y= h / ((double) (by2 - by1));
-
-  cmd= gs_prefix ();
-  cmd << " -dQUIET -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite ";
-  cmd << "-dAutoRotatePages=/None ";
-  cmd << "-dCompatibilityLevel=" << pdf_version () << " ";
-  cmd << " -sOutputFile=" << sys_concretize (pdf) << " ";
-  cmd << " -c \" << /PageSize [ " << as_string (bx2 - bx1) << " "
-      << as_string (by2 - by1) << " ] >> setpagedevice gsave  "
-      << as_string (-bx1) << " " << as_string (-by1) << " translate "
-      << as_string (scale_x) << " " << as_string (scale_y) << " scale \"";
-  cmd << " -f " << sys_concretize (image);
-  cmd << " -c \" grestore \"  ";
-  if (os_win () || os_mingw ()) {
-    lolly::system::call (cmd);
-  }
-  else {
-    std::system (c_string (cmd));
-  }
-  if (DEBUG_CONVERT)
-    debug_convert << cmd << LF << "pdf generated? " << exists (pdf) << LF;
-}
-
 // This conversion is appropriate for printed pages
 void
 gs_to_pdf (url doc, url pdf, bool landscape, double paper_h, double paper_w) {
