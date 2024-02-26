@@ -306,15 +306,10 @@ QTMStyle::drawPrimitive (PrimitiveElement element, const QStyleOption* opt,
                          QPainter* p, const QWidget* widget) const {
   //  if (element == QStyle::PE_FrameStatusBarItem) return;
   switch (element) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  case PE_FrameStatusBar:
-    return;
-#else
   // Use PE_FrameStatusBarItem instead.
   // see https://doc.qt.io/qt-5/qstyle.html
   case PE_FrameStatusBarItem:
     return;
-#endif
   case PE_PanelButtonTool:
     if ((opt->state & (State_Sunken | State_On))) {
       qtmDrawShadeRoundPanel (

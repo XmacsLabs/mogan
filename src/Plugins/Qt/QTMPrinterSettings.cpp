@@ -16,11 +16,7 @@
 #include <QPrinter>
 #include <QPrinterInfo>
 #include <QProcess>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QRegExp>
-#else
 #include <QRegularExpression>
-#endif
 /*!
  *
  */
@@ -47,16 +43,10 @@ QTMPrinterSettings::getFromQPrinter (const QPrinter& from) {
   printerName= from.printerName ();
   fileName   = from.outputFileName ();
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  orientation=
-      (from.orientation () == QPrinter::Landscape) ? Landscape : Portrait;
-  paperSize= qtPaperSizeToQString (from.paperSize ());
-#else
-  orientation= (from.pageLayout ().orientation () == QPageLayout::Landscape)
-                   ? Landscape
-                   : Portrait;
-  paperSize  = qtPaperSizeToQString (from.pageLayout ().pageSize ().id ());
-#endif
+  orientation  = (from.pageLayout ().orientation () == QPageLayout::Landscape)
+                     ? Landscape
+                     : Portrait;
+  paperSize    = qtPaperSizeToQString (from.pageLayout ().pageSize ().id ());
   dpi          = from.resolution ();
   firstPage    = from.fromPage ();
   lastPage     = from.toPage ();
@@ -74,18 +64,12 @@ void
 QTMPrinterSettings::setToQPrinter (QPrinter& to) const {
   to.setResolution (dpi);
   to.setFromTo (firstPage, lastPage);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  to.setOrientation ((orientation == Landscape) ? QPrinter::Landscape
-                                                : QPrinter::Portrait);
-  to.setPaperSize (qStringToQtPaperSize (paperSize));
-#else
   QPageLayout pageLayout= to.pageLayout ();
   pageLayout.setOrientation ((orientation == Landscape)
                                  ? QPageLayout::Landscape
                                  : QPageLayout::Portrait);
   pageLayout.setPageSize (qStringToQtPaperSize (paperSize));
   to.setPageLayout (pageLayout);
-#endif
   to.setOutputFileName (fileName);
   to.setCopyCount (copyCount);
   to.setCollateCopies (collateCopies);
@@ -97,17 +81,10 @@ QTMPrinterSettings::setToQPrinter (QPrinter& to) const {
  * representation. Massimiliano's code.
  */
 QString
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-QTMPrinterSettings::qtPaperSizeToQString (const QPrinter::PaperSize _size) {
-#define PAPER(fmt)                                                             \
-  case QPrinter::fmt:                                                          \
-    return "fmt"
-#else
 QTMPrinterSettings::qtPaperSizeToQString (const QPageSize::PageSizeId _size) {
 #define PAPER(fmt)                                                             \
   case QPageSize::fmt:                                                         \
     return "fmt"
-#endif
   switch (_size) {
     PAPER (A0);
     PAPER (A1);
@@ -140,19 +117,10 @@ QTMPrinterSettings::qtPaperSizeToQString (const QPageSize::PageSizeId _size) {
 /*!
  * Just for internal use, converts a string to QPrinter::PaperSize.
  */
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-QPrinter::PaperSize
-#else
 QPageSize::PageSizeId
-#endif
 QTMPrinterSettings::qStringToQtPaperSize (const QString& _size) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#define PAPER(fmt)                                                             \
-  if (_size == "fmt") return QPrinter::fmt
-#else
 #define PAPER(fmt)                                                             \
   if (_size == "fmt") return QPageSize::PageSizeId::fmt
-#endif
   PAPER (A0);
   PAPER (A1);
   PAPER (A2);
@@ -175,11 +143,7 @@ QTMPrinterSettings::qStringToQtPaperSize (const QString& _size) {
   PAPER (B9);
   PAPER (B10);
   PAPER (Letter);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  return QPrinter::A4; // Default
-#else
   return QPageSize::PageSizeId::A4; // Default
-#endif
 #undef PAPER
 }
 
@@ -195,11 +159,7 @@ QStringList
 QTMPrinterSettings::getChoices (DriverChoices _which, int& _default) {
   QStringList _ret;
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  QString::SplitBehavior behavior= QString::SkipEmptyParts;
-#else
   Qt::SplitBehavior behavior= Qt::SkipEmptyParts;
-#endif
   switch (_which) {
   case PageSize:
     _ret= printerOptions["PageSize"].split (" ", behavior);
@@ -280,27 +240,14 @@ CupsQTMPrinterSettings::systemCommandFinished (
     emit doneReading ();
     return;
   }
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  QRegExp rx (
-      "^(\\w+)/(.+):(.*)$"); // Param/Param desc: val1 val2 *default val4
-  rx.setMinimal (true);      // Non-greedy matching
-#else
   QRegularExpression rx ("^(\\w+)/(.+):(.*)$");
   rx.setPatternOptions (QRegularExpression::InvertedGreedinessOption);
-#endif
   QList<QByteArray> _lines=
       configProgram->readAllStandardOutput ().split ('\n');
   foreach (QString _line, _lines) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    if (rx.indexIn (_line) == -1) // No matches?
-      continue;
-    // Store for further parsing later, see QTMPrinterSettings::getChoices()
-    printerOptions[rx.cap (1)]= rx.cap (3);
-#else
     QRegularExpressionMatch match= rx.match (_line);
     if (!match.hasMatch ()) continue;
     printerOptions[match.captured (1)]= match.captured (3);
-#endif
   }
   emit doneReading ();
 }
@@ -412,24 +359,13 @@ CupsQTMPrinterSettings::availablePrinters () {
   stat.start ("lpstat -a");
   if (!stat.waitForFinished (2000)) // 2 sec.
     return _ret;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  QRegExp rx ("^(\\S+) +.*$");
-  rx.setMinimal (true);
-#else
   QRegularExpression rx ("^(\\S+) +.*$");
   rx.setPatternOptions (QRegularExpression::InvertedGreedinessOption);
-#endif
   QList<QByteArray> _lines= stat.readAllStandardOutput ().split ('\n');
   foreach (QString _line, _lines) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    if (rx.indexIn (_line) == -1) // No matches?
-      continue;
-    _ret << QPair<QString, QString> (rx.cap (1), rx.cap (1));
-#else
     QRegularExpressionMatch match= rx.match (_line);
     if (!match.hasMatch ()) continue;
     _ret << QPair<QString, QString> (match.captured (1), match.captured (1));
-#endif
   }
   return _ret;
 }
@@ -564,13 +500,6 @@ WinQTMPrinterSettings::systemCommandFinished (int                  exitCode,
     // Parse special lines after the DC_ENUMRESOLUTIONS : (see below)
     if (resolutionsCounter > 0) {
       --resolutionsCounter;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-      QRegExp rx2 ("^.*x=(\\d)+.*y=(\\d)+.*$");
-      rx2.setMinimal (true);
-      if (rx2.indexIn (_line) > -1)
-        printerOptions["Resolution"]+=
-            QString ("%1x%2dpi ").arg (rx2.cap (1)).arg (rx2.cap (2));
-#else
       QRegularExpression rx2 ("^.*x=(\\d)+.*y=(\\d)+.*$");
       rx2.setPatternOptions (QRegularExpression::InvertedGreedinessOption);
       QRegularExpressionMatch match= rx2.match (_line);
@@ -579,7 +508,6 @@ WinQTMPrinterSettings::systemCommandFinished (int                  exitCode,
                                            .arg (match.captured (1))
                                            .arg (match.captured (2));
       }
-#endif
       continue;
     }
 
@@ -591,12 +519,6 @@ WinQTMPrinterSettings::systemCommandFinished (int                  exitCode,
 
     // Parse special lines after PAPER SIZES FROM THE DEVMODE :
     if (readingSizes) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-      QRegExp rx2 ("^.*mm *(\\w)+.*$"); // [ 0]   215.90  279.40 mm  Letter
-      rx2.setMinimal (true);
-      if (rx2.indexIn (_line) > -1) printerOptions["PaperSize"]+= rx2.cap (1);
-      continue;
-#else
       QRegularExpression rx2 ("^.*mm *(\\w)+.*$");
       rx2.setPatternOptions (QRegularExpression::InvertedGreedinessOption);
       QRegularExpressionMatch match= rx2.match (_line);
@@ -604,16 +526,8 @@ WinQTMPrinterSettings::systemCommandFinished (int                  exitCode,
         printerOptions["PaperSize"]+= match.captured (1);
       }
       continue;
-#endif
     }
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QRegExp rx ("^ *DC_(\\w+) *(\\w+) *$"); // DC_SOMETHING    <num>
-    rx.setMinimal (true);                   // Non-greedy matching
-    if (rx.indexIn (_line) == -1)           // No matches?
-      continue;
-    QStringList capt= rx.capturedTexts ();
-#else
     QRegularExpression rx2 ("^ *DC_(\\w+) *(\\w+) *$");
     rx2.setPatternOptions (QRegularExpression::InvertedGreedinessOption);
     QRegularExpressionMatch match= rx2.match (_line);
@@ -621,7 +535,6 @@ WinQTMPrinterSettings::systemCommandFinished (int                  exitCode,
       continue;
     }
     QStringList capt= match.capturedTexts ();
-#endif
     if (capt.size () != 3) // We are only interested in some options.
       continue;
 
