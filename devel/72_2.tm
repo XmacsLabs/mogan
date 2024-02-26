@@ -18,35 +18,29 @@
   <section|How to reproduce it>
 
   <\session|scheme|default>
-    <\unfolded-io|Scheme] >
+    <\input|Scheme] >
       (define zh "\<#4E2D\>\<#6587\>")
-    <|unfolded-io>
-      \<#4E2D\>\<#6587\>
-    </unfolded-io>
+    </input>
 
-    <\unfolded-io|Scheme] >
+    <\input|Scheme] >
       zh
-    <|unfolded-io>
-      \<#4E2D\>\<#6587\>
-    </unfolded-io>
+    </input>
 
-    <\unfolded-io|Scheme] >
+    <\input|Scheme] >
       (define \<#8FB9\>\<#957F\> 4)
-    <|unfolded-io>
-      4
-    </unfolded-io>
+    </input>
 
-    <\unfolded-io|Scheme] >
+    <\input|Scheme] >
       \<#8FB9\>\<#957F\>
-    <|unfolded-io>
-      4
-    </unfolded-io>
+    </input>
 
-    <\unfolded-io|Scheme] >
+    <\input|Scheme] >
       (define (\<#6C42\>\<#5E73\>\<#65B9\> x) (* x x))
-    <|unfolded-io>
-      \<#6C42\>\<#5E73\>\<#65B9\>
-    </unfolded-io>
+    </input>
+
+    <\input|Scheme] >
+      (\<#6C42\>\<#5E73\>\<#65B9\>\<#6839\> 2)
+    </input>
 
     <\input|Scheme] >
       \;
