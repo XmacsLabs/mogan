@@ -1288,7 +1288,7 @@ from_key_press_event (const QKeyEvent* event) {
       unsigned short unic= nss.data ()[0].unicode ();
       if (unic > 32 && unic < 255 && (mods & Qt::ShiftModifier) != 0 &&
           (mods & Qt::ControlModifier) == 0 && (mods & Qt::AltModifier) == 0 &&
-          (mods & Qt::MetaModifier) == 0)
+          (mods & Qt::MetaModifier) == 0) {
 #ifdef Q_OS_WIN
         if ((unic > 0 && unic < 32 && key > 0 && key < 128) ||
             (unic > 0 && unic < 255 && key > 32 &&
@@ -1354,6 +1354,7 @@ from_key_press_event (const QKeyEvent* event) {
             r= mods_text * r;
           }
         }
+      }
     } // Case 4: Unicode < 256 (endif)
   }
   return r;
