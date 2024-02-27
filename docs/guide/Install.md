@@ -9,7 +9,7 @@ The latest stable version is Mogan STEM Suite v1.2.5, you can check if there are
 | Mogan Research v1.2.5 | macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/MoganResearch-v1.2.5.dmg) |
 | Mogan Research v1.2.5 | macOS M1/M2 (>=13) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/MoganResearch-v1.2.5-arm.dmg) |
 | Mogan Research v1.2.5 | Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/mogan-research-v1.2.5-ubuntu22.04.deb) |
-| 墨干v1.2.5 | Debian 12 | [⏬ Download](http://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/mogan-research-v1.2.5-debian12.deb) |
+| Mogan Research v1.2.5 | Debian 12 | [⏬ Download](http://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/mogan-research-v1.2.5-debian12.deb) |
 
 SHA256 checksum:
 ```
@@ -32,11 +32,6 @@ Other sites to download：
 + https://github.com/XmacsLabs/mogan/releases
 + https://gitee.com/XmacsLabs/mogan/releases
 + https://codeberg.org/XmacsLabs/mogan/releases
-
-## Recommended old releases
-Somtimes, you may prefer older releases:
-+ [**v1.1.6**](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.6)
-+ [**v1.1.3**](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.3)
 
 ## GNU Guix
 ```

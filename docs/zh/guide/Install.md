@@ -34,11 +34,6 @@ a147c7630b99592f77437172de3245e11f930bff23c61c622d0a03a4b0104daa  mogan-research
 + https://gitee.com/XmacsLabs/mogan/releases
 + https://codeberg.org/XmacsLabs/mogan/releases
 
-## 推荐安装的旧版
-有时候，你可能希望使用旧版，下面是一些推荐版本：
-+ [**v1.1.6**](https://gitee.com/XmacsLabs/mogan/releases/tag/v1.1.6)
-+ [**v1.1.3**](https://github.com/XmacsLabs/mogan/releases/tag/v1.1.3)
-
 ## GNU Guix
 ```
 guix install mogan
