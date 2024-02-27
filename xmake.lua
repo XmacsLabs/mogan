@@ -13,13 +13,9 @@ set_xmakever("2.8.5")
 
 -- Check CXX Types/Includes/Funcs
 includes("@builtin/check")
-configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
 configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
 configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
 configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
-configvar_check_cxxincludes("HAVE_SYS_STAT_H", "sys/stat.h")
-configvar_check_cxxincludes("HAVE_SYS_TYPES_H", "sys/types.h")
-configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
 
 ---
 --- Project: Mogan STEM Suite
