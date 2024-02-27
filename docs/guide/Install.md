@@ -1,5 +1,5 @@
 # Installation Guide
-The latest stable version is Mogan STEM Suite v1.2.5, you can check if there are new releases in the `Help -> Welcome` menu entry.
+The latest stable version is Mogan STEM Suite v1.2.5 LTS, you can check if there are new releases in the `Help -> Welcome` menu entry.
 
 ## Official Packages
 | Product | Operating System | Download |

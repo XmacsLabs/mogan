@@ -1,5 +1,5 @@
 # 如何安装
-当前最新稳定版是墨干理工套件v1.2.5，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
+当前最新稳定版是墨干理工套件 V1.2.5 LTS，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
 
 ## 官方提供的安装包
 | 产品 | 操作系统 | 马上下载 |
@@ -9,7 +9,7 @@
 | 墨干v1.2.5 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/MoganResearch-v1.2.5.dmg) |
 | 墨干v1.2.5 | macOS M1/M2 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/MoganResearch-v1.2.5-arm.dmg) |
 | 墨干v1.2.5 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/mogan-research-v1.2.5-ubuntu22.04.deb) |
-| 墨干v1.2.5 | debian 12 | [⏬ 下载](http://mirrors.ustc.edu.cn/github-release/xmacslabs/mogan/v1.2.5/mogan-research-v1.2.5-debian12.deb) |
+| 墨干v1.2.5 | Debian 12 | [⏬ 下载](http://mirrors.ustc.edu.cn/github-release/xmacslabs/mogan/v1.2.5/mogan-research-v1.2.5-debian12.deb) |
 
 SHA256校验码：
 ```
