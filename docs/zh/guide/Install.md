@@ -8,6 +8,7 @@
 | 墨干v1.2.5 | Windows便携版 (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/MoganResearch-v1.2.5-64bit-installer.zip) |
 | 墨干v1.2.5 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/MoganResearch-v1.2.5.dmg) |
 | 墨干v1.2.5 | macOS M1/M2 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/MoganResearch-v1.2.5-arm.dmg) |
+| 墨干v1.2.5 | Ubuntu 20.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/mogan-research-v1.2.5-ubuntu20.04.deb) |
 | 墨干v1.2.5 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/mogan-research-v1.2.5-ubuntu22.04.deb) |
 | 墨干v1.2.5 | Debian 12 | [⏬ 下载](http://mirrors.ustc.edu.cn/github-release/xmacslabs/mogan/v1.2.5/mogan-research-v1.2.5-debian12.deb) |
 
