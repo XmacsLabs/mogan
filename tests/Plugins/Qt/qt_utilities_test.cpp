@@ -28,6 +28,9 @@ TestQtUtilities::test_qt_supports () {
 #ifdef QTTEXMACS
   QVERIFY (qt_supports (url ("x.svg")));
   QVERIFY (qt_supports (url ("x.png")));
+  QVERIFY (!qt_supports (url ("x.eps")));
+  QVERIFY (!qt_supports (url ("x.ps")));
+  QVERIFY (!qt_supports (url ("x.pdf")));
 #endif
 }
 
