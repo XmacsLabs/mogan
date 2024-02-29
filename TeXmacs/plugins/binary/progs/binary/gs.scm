@@ -85,6 +85,34 @@
     (debug-message "io" (string-append "call: " cmd "\n"))
     (system cmd)))
 
+(tm-define (gs-eps-to-png from opts)
+  (let* ((to (assoc-ref opts 'dest))
+         (box (gs-ps-image-size from))
+         (w (number->string (- (third box) (first box))))
+         (h (number->string (- (fourth box) (second box))))
+         (offset-x (number->string (- (first box))))
+         (offset-y (number->string (- (second box))))
+         (gs-inline
+           (string-append offset-x " " offset-y " translate gsave "))
+         (cmd (string-append
+                (string-append
+                  (url->system (find-binary-gs))
+                  " -dQUIET "
+                  " -dNOPAUSE "
+                  " -dBATCH "
+                  " -dSAFER "
+                  " -sDEVICE=pngalpha "
+                  " -dGraphicsAlphaBits=4 "
+                  " -dTextAlphaBits=4 ";
+                  (string-append " -sOutputFile=" (url->system to) " ")
+                  (string-append " -g" w "x" h " ")
+                  " -r72x72 "
+                  (string-append " -c " (string-quote gs-inline))
+                  (string-append " -f " (url->system from) " ")
+                  (string-append " -c " (string-quote " grestore "))))))
+    (debug-message "io" (string-append cmd " " w " " h "\n"))
+    (system cmd)))
+
 (tm-define (gs-convert x opts)
   ;; many options for pdf->ps/eps see http://tex.stackexchange.com/a/20884
   ;; this one does a better rendering than pdf2ps (also based on gs):
