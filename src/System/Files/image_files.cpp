@@ -467,13 +467,7 @@ image_to_png (url image, url png, int w, int h) { // IN PIXEL UNITS!
     return;
   }
 #endif
-#ifdef USE_PLUGIN_GS
-  if (gs_supports (image)) {
-    if (DEBUG_CONVERT) debug_convert << " using gs " << LF;
-    if (gs_to_png (image, png, w, h)) return;
-  }
-#endif
-  if (call_scm_converter (image, png)) return;
+  if (call_scm_converter (image, png, w, h)) return;
   call_imagemagick_convert (image, png, w, h);
   if (!exists (png)) {
     convert_error << image << " could not be converted to png" << LF;
@@ -482,11 +476,13 @@ image_to_png (url image, url png, int w, int h) { // IN PIXEL UNITS!
 }
 
 bool
-call_scm_converter (url image, url dest) {
+call_scm_converter (url image, url dest, int w, int h) {
   if (DEBUG_CONVERT) debug_convert << " using scm" << LF;
   if (as_bool (call ("file-converter-exists?", "x." * suffix (image),
                      "x." * suffix (dest)))) {
-    call ("file-convert", object (image), object (dest));
+    call ("file-convert", object (image), object (dest),
+          cons (symbol_object ("width"), object (w)),
+          cons (symbol_object ("height"), object (h)));
     bool success= exists (dest);
     if (success && DEBUG_CONVERT)
       debug_convert << "scm file-convert " << concretize (image) << " -> "
