@@ -86,10 +86,18 @@
     (system cmd)))
 
 (tm-define (gs-eps-to-png from opts)
+  (display* opts "\n")
   (let* ((to (assoc-ref opts 'dest))
+         (opt_w (assoc-ref opts 'width))
+         (opt_h (assoc-ref opts 'height))
          (box (gs-ps-image-size from))
-         (w (number->string (- (third box) (first box))))
-         (h (number->string (- (fourth box) (second box))))
+         (box_w (- (third box) (first box)))
+         (box_h (- (fourth box) (second box)))
+         (width (if (and opt_w (!= opt_w 0)) opt_w box_w))
+         (height (if (and opt_h (!= opt_h 0)) opt_h box_w))
+         (page_size_in_px (string-append " -g" (number->string width) "x" (number->string height)))
+         (resolution_in_px (string-append " -r" (number->string (/ (* width 72.0) box_w)) "x"
+                                                (number->string (/ (* height 72.0) box_h)) " "))
          (offset-x (number->string (- (first box))))
          (offset-y (number->string (- (second box))))
          (gs-inline
@@ -105,12 +113,12 @@
                   " -dGraphicsAlphaBits=4 "
                   " -dTextAlphaBits=4 ";
                   (string-append " -sOutputFile=" (url->system to) " ")
-                  (string-append " -g" w "x" h " ")
-                  " -r72x72 "
+                  page_size_in_px
+                  resolution_in_px
                   (string-append " -c " (string-quote gs-inline))
                   (string-append " -f " (url->system from) " ")
                   (string-append " -c " (string-quote " grestore "))))))
-    (debug-message "io" (string-append cmd " " w " " h "\n"))
+    (debug-message "io" (string-append cmd "\n"))
     (system cmd)))
 
 (tm-define (gs-convert x opts)
