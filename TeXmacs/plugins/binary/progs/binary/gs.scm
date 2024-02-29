@@ -86,7 +86,6 @@
     (system cmd)))
 
 (tm-define (gs-eps-to-png from opts)
-  (display* opts "\n")
   (let* ((to (assoc-ref opts 'dest))
          (opt_w (assoc-ref opts 'width))
          (opt_h (assoc-ref opts 'height))
