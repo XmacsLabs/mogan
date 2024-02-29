@@ -448,8 +448,9 @@ end
 
 
 includes("xmake/code.lua")
-if is_plat("wasm", "linux") then
+if is_plat("wasm", "linux", "windows") then
     target("code") do
+        set_installdir(INSTALL_DIR)
         set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
         add_tm_configure("code", TM_CONFIGURE_VARS)
         add_target_code()

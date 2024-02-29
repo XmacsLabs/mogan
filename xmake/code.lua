@@ -10,6 +10,10 @@
 
 function add_target_code()
     set_languages("c++17")
+    set_encodings("utf-8")
+    if is_plat("windows") then
+        set_runtimes("MT")
+    end
 
     build_glue_on_config()
     add_configfiles("src/System/config.h.xmake", {
@@ -22,15 +26,15 @@ function add_target_code()
             USE_PLUGIN_TEX = false,
             USE_PLUGIN_ISPELL = false,
             USE_PLUGIN_HTML = false,
-            QTPIPES = is_plat("linux"),
-            USE_QT_PRINTER = is_plat("linux"),
+            QTPIPES = not is_plat("wasm"),
+            USE_QT_PRINTER = not is_plat("wasm"),
             NOMINMAX = is_plat("windows"),
             SIZEOF_VOID_P = 8,
             USE_FONTCONFIG = is_plat("linux"),
             USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
             USE_PLUGIN_GS = false,
             USE_FREETYPE = true,
-            USE_ICONV = true,
+            USE_ICONV = is_plat("wasm"),
             QTTEXMACS = true,
         }
     })
@@ -69,6 +73,9 @@ function add_target_code()
 
     if is_plat("wasm") then
         add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
+    elseif is_plat("windows") then
+        add_ldflags("/LTCG")
+        add_syslinks("secur32", "shell32", {public = true})
     end
 
     before_build(function (target)
