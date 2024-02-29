@@ -12,11 +12,11 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|3|3|1|1|cell-background|>|<cwith|6|6|2|2|cell-valign|c>|<cwith|6|6|1|1|cell-background|pastel
-    green>|<cwith|11|11|1|1|cell-background|pastel
-    green>|<cwith|15|15|1|1|cell-background|pastel
+    <tformat|<cwith|4|4|1|1|cell-background|>|<cwith|7|7|2|2|cell-valign|c>|<cwith|7|7|1|1|cell-background|pastel
     green>|<cwith|12|12|1|1|cell-background|pastel
-    green>|<cwith|5|5|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|16|16|1|1|cell-background|pastel
+    green>|<cwith|13|13|1|1|cell-background|pastel
+    green>|<cwith|6|6|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|77>
     </cell>|<\cell>
       <value|da>
@@ -28,6 +28,12 @@
       <value|da>
     </cell>|<\cell>
       Improvements on User Interface
+    </cell>>|<row|<\cell>
+      <dlink|70>
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      Mogan Code
     </cell>>|<row|<\cell>
       <dlink|69>
     </cell>|<\cell>
