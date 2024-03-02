@@ -11,7 +11,7 @@
 
   Before the small ps image
 
-  <image|../eps/41_7.eps|200pt|||>
+  <image|../PDF/41_5.pdf|200pt|||>
 
   After the small ps image
 </body>
