@@ -87,6 +87,16 @@ pdfhummus_version () {
 
 #ifdef USE_PLUGIN_PDF
 #include "Pdf/pdf_hummus_extract_attachment.hpp"
+#include "Pdf/pdf_hummus_make_attachment.hpp"
+#include "Pdf/pdf_image.hpp"
+
+array<int>
+pdfhummus_image_size (url pdf_image) {
+  int w= 0, h= 0;
+  hummus_pdf_image_size (pdf_image, w, h);
+  return array (w, h);
+}
+
 #include "glue_pdf.cpp"
 #endif
 

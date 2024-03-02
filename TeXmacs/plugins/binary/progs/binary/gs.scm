@@ -120,25 +120,32 @@
     (debug-message "io" (string-append cmd "\n"))
     (system cmd)))
 
-(tm-define (gs-convert x opts)
-  ;; many options for pdf->ps/eps see http://tex.stackexchange.com/a/20884
-  ;; this one does a better rendering than pdf2ps (also based on gs):
-  (let* ((dest (assoc-ref opts 'dest))
-         (gs (url->system (gs-binary))))
-    (system-2 (string-append gs " -q -dNOCACHE -dUseCropBox -dNOPAUSE -dBATCH -dSAFER -sDEVICE=eps2write -sOutputFile=") dest x))
-  ;; problem: 
-  ;; eps2write available starting with gs  9.14 (2014-03-26)
-  ;; epswrite removed in gs 9.16 (2015-03-30)
-  )
-
-(tm-define (pdf-file->gs-raster x opts)
-  (let* ((dest (assoc-ref opts 'dest))
-         (res (get-raster-resolution opts))
-         (gs (url->system (gs-binary))))
-    (evaluate-system (list gs "-dBATCH" "-dNOPAUSE" "-dQUIET" "-dSAFER"
-                           "-dNOPROMPT" "-sDEVICE=pngalpha"
-                           (string-append "-r" res)
-                           (string-append "-sOutputFile="
-                                          (url-concretize dest))
-                           (url-concretize x)) '() '() '(1 2))
-    (if (url-exists? dest) dest #f)))
+(tm-define (gs-pdf-to-png from opts)
+  (let* ((to (assoc-ref opts 'dest))
+         (opt_w (assoc-ref opts 'width))
+         (opt_h (assoc-ref opts 'height))
+         (image_size (pdf-image-size from))
+         (box_w (first image_size))
+         (box_h (second image_size))
+         (width (if (and opt_w (!= opt_w 0)) opt_w box_w))
+         (height (if (and opt_h (!= opt_h 0)) opt_h box_w))
+         (page_size_in_px (string-append " -g" (number->string width) "x" (number->string height)))
+         (resolution_in_px (string-append " -r" (number->string (/ (* width 72.0) box_w)) "x"
+                                                (number->string (/ (* height 72.0) box_h)) " "))
+         (cmd (string-append
+                (string-append
+                  (url->system (find-binary-gs))
+                  " -dQUIET "
+                  " -dNOPAUSE "
+                  " -dBATCH "
+                  " -dSAFER "
+                  " -sDEVICE=pngalpha "
+                  " -dGraphicsAlphaBits=4 "
+                  " -dTextAlphaBits=4 "
+                  " -dUseCropBox "
+                  (string-append " -sOutputFile=" (url->system to) " ")
+                  page_size_in_px
+                  resolution_in_px
+                  (url->system from)))))
+    (debug-message "io" (string-append cmd "\n"))
+    (system cmd)))
