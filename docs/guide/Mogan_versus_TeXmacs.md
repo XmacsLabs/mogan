@@ -53,6 +53,9 @@ On Linux and Windows, `C-tab` and `C-S-tab` are reserved. On macOS, because we s
 
 > Why: `C-tab`, `C-S-tab` and `A-S-tab` do not work on macOS, see [QTBUG-12232](https://bugreports.qt.io/browse/QTBUG-12232).
 
+### ESC key
+The ESC is used for producing equivalents for the modifier keys in GNU TeXmacs. But in Mogan, it is a normal key. And later, the ESC may be used in the Vim plugin for Mogan. If the shortcuts in Mogan is conflicated with the OS system shortucts, we should regard it as a bug and fix it by changing the shortcut but not using the ESC key.
+
 ## Graphics
 | Action | Mogan Research | GNU TeXmacs |
 |--------|------------------|-----------|

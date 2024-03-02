@@ -55,6 +55,8 @@
 
 > 为什么：因为`C-tab`/`C-S-tab`/`A-S-tab`这三个快捷键在macOS平台不可用，详见[QTBUG-12232](https://bugreports.qt.io/browse/QTBUG-12232)。
 
+### ESC键
+在TeXmacs中，ESC键可用于模拟修饰键（比如Ctrl/Alt），但是在墨干中，ESC键是普通的按键，无法用于模拟修饰键。未来，ESC键或许可以被用于墨干的Vim插件。如果墨干中的快捷键和操作系统的内置快捷键冲突，我们会认为这是一个错误，会通过更改此类快捷键的方式修复错误，而不是用ESC键来规避错误。
 
 ## 绘图模式
 | 菜单项 | 墨干 | GNU TeXmacs |
