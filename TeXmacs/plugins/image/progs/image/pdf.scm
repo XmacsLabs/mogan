@@ -29,12 +29,6 @@
   (:require (has-binary-pdftocairo?))
   (:shell ,(url->system (find-binary-pdftocairo)) "-origpagesizes -nocrop -nocenter -svg" from to))
 
-(converter pdf-file png-file
-  (:require (has-binary-pdftocairo?))
-  (:function-with-options pdf-file->pdftocairo-raster)
-  ;;(:option "texmacs->image:raster-resolution" "450")
-  ;;if this is set it overrides the preference widget settings
-  )
 
 (converter pdf-file jpeg-file
   (:require (has-binary-pdftocairo?))
@@ -54,12 +48,6 @@
 ;; Convert PDF to other formats via ImageMagick
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(converter pdf-file png-file
-  (:require (has-binary-convert?))
-  (:function-with-options pdf-file->imagemagick-raster)
-  ;;(:option "texmacs->image:raster-resolution" "300")
-  )
-  
 (converter pdf-file jpeg-file
   (:require (has-binary-convert?))
   (:function-with-options pdf-file->imagemagick-raster)
@@ -75,19 +63,28 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Convert PDF to other formats via Ghostscript
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; 
+; (converter pdf-file jpeg-file
+;   (:require (has-binary-gs?))
+;   (:function-with-options pdf-file->gs-raster))
+; 
+; (converter pdf-file tif-file
+;   (:require (has-binary-gs?))
+;   (:function-with-options pdf-file->gs-raster))
+; 
+; (converter pdf-file postscript-file
+;   (:require (has-binary-gs?))
+;   (:function-with-options gs-convert))
+
+; pdf -> png (the latter one works)
+(converter pdf-file png-file
+  (:require (has-binary-convert?))
+  (:function-with-options pdf-file->imagemagick-raster))
+  
+(converter pdf-file png-file
+  (:require (has-binary-pdftocairo?))
+  (:function-with-options pdf-file->pdftocairo-raster))
 
 (converter pdf-file png-file
   (:require (has-binary-gs?))
-  (:function-with-options pdf-file->gs-raster))
-
-(converter pdf-file jpeg-file
-  (:require (has-binary-gs?))
-  (:function-with-options pdf-file->gs-raster))
-
-(converter pdf-file tif-file
-  (:require (has-binary-gs?))
-  (:function-with-options pdf-file->gs-raster))
-
-(converter pdf-file postscript-file
-  (:require (has-binary-gs?))
-  (:function-with-options gs-convert))
+  (:function-with-options gs-pdf-to-png))
