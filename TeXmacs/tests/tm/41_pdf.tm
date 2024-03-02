@@ -17,13 +17,13 @@
 
   Before the big ps image:
 
-  <image|../PDF/41_5.pdf|380pt|316pt||>
+  <image|../PDF/38_2.pdf||||>
 
   After the big ps image.
 
   Before the small ps image
 
-  <image|../PDF/41_5.pdf|200pt|||>
+  <image|../PDF/38_2.pdf|100pt|||>
 
   After the small ps image
 </body>
