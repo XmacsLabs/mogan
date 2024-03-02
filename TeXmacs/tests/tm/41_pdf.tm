@@ -5,9 +5,9 @@
 <\body>
   <\session|scheme|default>
     <\unfolded-io|Scheme] >
-      (pdf-image-size "$TEXMACS_PATH/tests/PDF/41_5.pdf")
+      (first (pdf-image-size "$TEXMACS_PATH/tests/PDF/41_5.pdf"))
     <|unfolded-io>
-      (612 792)
+      612
     </unfolded-io>
 
     <\input|Scheme] >

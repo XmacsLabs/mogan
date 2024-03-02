@@ -124,18 +124,14 @@
   (let* ((to (assoc-ref opts 'dest))
          (opt_w (assoc-ref opts 'width))
          (opt_h (assoc-ref opts 'height))
-         (box (gs-ps-image-size from))
-         (box_w (- (third box) (first box)))
-         (box_h (- (fourth box) (second box)))
+         (image_size (pdf-image-size from))
+         (box_w (first image_size))
+         (box_h (second image_size))
          (width (if (and opt_w (!= opt_w 0)) opt_w box_w))
          (height (if (and opt_h (!= opt_h 0)) opt_h box_w))
          (page_size_in_px (string-append " -g" (number->string width) "x" (number->string height)))
          (resolution_in_px (string-append " -r" (number->string (/ (* width 72.0) box_w)) "x"
                                                 (number->string (/ (* height 72.0) box_h)) " "))
-         (offset-x (number->string (- (first box))))
-         (offset-y (number->string (- (second box))))
-         (gs-inline
-           (string-append offset-x " " offset-y " translate gsave "))
          (cmd (string-append
                 (string-append
                   (url->system (find-binary-gs))
@@ -145,12 +141,11 @@
                   " -dSAFER "
                   " -sDEVICE=pngalpha "
                   " -dGraphicsAlphaBits=4 "
-                  " -dTextAlphaBits=4 ";
+                  " -dTextAlphaBits=4 "
+                  " -dUseCropBox "
                   (string-append " -sOutputFile=" (url->system to) " ")
                   page_size_in_px
                   resolution_in_px
-                  (string-append " -c " (string-quote gs-inline))
-                  (string-append " -f " (url->system from) " ")
-                  (string-append " -c " (string-quote " grestore "))))))
+                  (url->system from)))))
     (debug-message "io" (string-append cmd "\n"))
     (system cmd)))
