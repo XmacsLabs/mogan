@@ -322,7 +322,7 @@ edit_interface_rep::key_press (string gkey) {
     call ("kbd-insert", "<" * key * ">");
     interrupt_shortcut ();
   }
-  else if (N (key) > 1 && !is_combo_shortcuts (key)) {
+  else if (N (key) > 1 && !is_combo_shortcuts (key) && key != "escape") {
     archive_state ();
     call ("insert", key);
     interrupt_shortcut ();
