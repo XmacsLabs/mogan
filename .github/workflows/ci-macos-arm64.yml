@@ -2,7 +2,7 @@ name: Build and Test on macOS arm64
 
 on:
   push:
-    branches: [ branch-1.2 ]
+    branches: [ lts-125 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Windows/**'
@@ -14,7 +14,7 @@ on:
       - 'xmake-requires.lock'
       - '.github/workflows/ci-macos-arm64.yml'
   pull_request:
-    branches: [ branch-1.2 ]
+    branches: [ lts-125 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Windows/**'

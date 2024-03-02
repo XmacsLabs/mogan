@@ -1,7 +1,7 @@
 name: Build on Debian bookworm
 on:
   push:
-    branches: [ branch-1.2 ]
+    branches: [ lts-125 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Macos/**'
@@ -12,7 +12,7 @@ on:
       - 'xmake/packages/**'
       - '.github/workflows/ci-xmake-debian-bookworm.yml'
   pull_request:
-    branches: [ branch-1.2 ]
+    branches: [ lts-125 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Macos/**'

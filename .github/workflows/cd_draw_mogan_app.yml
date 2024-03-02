@@ -3,7 +3,7 @@ name: draw.mogan.app
 on:
   workflow_dispatch:
   pull_request:
-    branches: [ branch-1.2 ]
+    branches: [ lts-125 ]
     paths:
       - '.github/workflows/cd_draw_mogan_app.yml'
       - 'xmake/draw.lua'
@@ -12,7 +12,7 @@ on:
       - 'TeXmacs/progs/init-draw.scm'
       - 'TeXmacs/progs/graphics/**'
   push:
-    branches: [ branch-1.2 ]
+    branches: [ lts-125 ]
     paths:
       - '.github/workflows/cd_draw_mogan_app.yml'
       - 'xmake/draw.lua'

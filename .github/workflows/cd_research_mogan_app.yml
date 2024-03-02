@@ -2,7 +2,7 @@ name: research.mogan.app
 
 on:
   push:
-    branches: [ branch-1.2 ]
+    branches: [ lts-125 ]
     paths:
       - '.github/workflows/cd_research_mogan_app.yml'
       - 'src/**'

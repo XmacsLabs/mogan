@@ -2,7 +2,7 @@ name: mogan.app
 
 on:
   push:
-    branches: [ branch-1.2 ]
+    branches: [ lts-125 ]
     paths:
       - '.github/workflows/cd_mogan_app.yml'
       - 'docs/**'

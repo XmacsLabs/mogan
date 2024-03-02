@@ -2,7 +2,7 @@ name: Lint
 
 on:
   pull_request:
-    branches: [ branch-1.2 ]
+    branches: [ lts-125 ]
     paths:
       -  'tests/**.cpp'
       -  'tests/**.hpp'

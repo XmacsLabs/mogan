@@ -2,7 +2,7 @@ name: Build and Test on Ubuntu 20.04
 
 on:
   push:
-    branches: [ branch-1.2 ]
+    branches: [ lts-125 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Macos/**'
@@ -15,7 +15,7 @@ on:
       - 'xmake/research.lua'
       - 'xmake/packages/**'
   pull_request:
-    branches: [ branch-1.2 ]
+    branches: [ lts-125 ]
     paths:
       - 'src/**'
       - '!src/Plugins/Macos/**'
