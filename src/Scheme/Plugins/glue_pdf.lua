@@ -69,6 +69,14 @@ function main()
                     "url"
                 }
             },
+            {
+                scm_name = "pdf-image-size",
+                cpp_name = "pdfhummus_image_size",
+                ret_type = "array_int",
+                arg_list = {
+                    "url"
+                }
+            },
         }
     }
 end

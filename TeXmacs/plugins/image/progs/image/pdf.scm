@@ -63,18 +63,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Convert PDF to other formats via Ghostscript
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(converter pdf-file jpeg-file
-  (:require (has-binary-gs?))
-  (:function-with-options pdf-file->gs-raster))
-
-(converter pdf-file tif-file
-  (:require (has-binary-gs?))
-  (:function-with-options pdf-file->gs-raster))
-
-(converter pdf-file postscript-file
-  (:require (has-binary-gs?))
-  (:function-with-options gs-convert))
+; 
+; (converter pdf-file jpeg-file
+;   (:require (has-binary-gs?))
+;   (:function-with-options pdf-file->gs-raster))
+; 
+; (converter pdf-file tif-file
+;   (:require (has-binary-gs?))
+;   (:function-with-options pdf-file->gs-raster))
+; 
+; (converter pdf-file postscript-file
+;   (:require (has-binary-gs?))
+;   (:function-with-options gs-convert))
 
 ; pdf -> png (the latter one works)
 (converter pdf-file png-file
@@ -87,4 +87,4 @@
 
 (converter pdf-file png-file
   (:require (has-binary-gs?))
-  (:function-with-options pdf-file->gs-raster))
+  (:function-with-options gs-pdf-to-png))
