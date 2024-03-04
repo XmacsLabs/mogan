@@ -12,7 +12,7 @@ function add_target_beamer()
         variables = {
             MACOSX_EXTENSIONS = is_plat("macosx"),
             USE_PLUGIN_PDF = true,
-            USE_PLUGIN_BIBTEX = true,
+            USE_PLUGIN_BIBTEX = false,
             USE_PLUGIN_LATEX_PREVIEW = true,
             USE_PLUGIN_TEX = true,
             USE_PLUGIN_ISPELL = true,
@@ -59,7 +59,6 @@ function add_target_beamer()
         add_includedirs("src/Plugins/MacOS", {public = true})
         add_files(plugin_macos_srcs)
     end
-    add_files(plugin_bibtex_srcs)
     add_files(plugin_database_srcs)
     add_files(plugin_qt_srcs)
     add_files(plugin_freetype_srcs)
