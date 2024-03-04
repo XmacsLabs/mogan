@@ -24,12 +24,12 @@
 
 (tm-menu (scheme-contextual-menu)
   (let* ((word (cursor-word))
-         (str1 (replace "Help with \"%1\"" word))
-         (str2 (replace "Definition of \"%1\"" word)))
+         (str1 (string-append (translate "Help with ") (raw-quote word)))
+         (str2 (string-append (translate "Definition of ") (raw-quote word))))
     (if (!= word "")
-        ((eval str1) (scheme-popup-help word)))
+        ((eval `(verbatim ,str1)) (scheme-popup-help word)))
     (if (!= word "")
-        ((eval str2) (scheme-go-to-definition word)))))
+        ((eval `(verbatim ,str2)) (scheme-go-to-definition word)))))
 
 (menu-bind scheme-menu
   (if (in-prog-scheme?)
