@@ -205,7 +205,6 @@
 ("blackletter" "黑色字母")
 ("blank column" "空列")
 ("blank row" "空行")
-("block::version" "段落")
 ("block content" "空白内容")
 ("block of code" "代码块")
 ("block" "有框表格")
