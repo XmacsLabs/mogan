@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 1
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.8.6
+          xmake-version: v2.8.7
           actions-cache-folder: ${{ matrix.ubuntu_ver }}-xmake-cache
       - name: Write release version
         run: |
