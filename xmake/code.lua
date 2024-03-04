@@ -36,6 +36,7 @@ function add_target_code()
             USE_FREETYPE = true,
             USE_ICONV = is_plat("wasm"),
             QTTEXMACS = true,
+            APP_MOGAN_CODE = true,
         }
     })
 

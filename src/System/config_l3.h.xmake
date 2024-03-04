@@ -12,3 +12,5 @@ ${define USE_FONTCONFIG}
 
 /* Link freetype library with TeXmacs */
 #define LINKED_FREETYPE 1
+
+${define APP_MOGAN_RESEARCH}

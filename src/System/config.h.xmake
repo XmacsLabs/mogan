@@ -77,3 +77,9 @@ ${define USE_FONTCONFIG}
 ${define USE_ICONV}
 
 ${define USE_STACK_TRACE}
+
+${define APP_MOGAN_BEAMER}
+${define APP_MOGAN_CODE}
+${define APP_MOGAN_DRAW}
+${define APP_MOGAN_RESEARCH}
+${define APP_MOGAN_TM2HTML}

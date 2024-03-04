@@ -78,11 +78,6 @@ static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
 #endif
 
-string
-mogan_app_id () {
-  return "beamer";
-}
-
 /******************************************************************************
  * Clean exit on segmentation faults
  ******************************************************************************/
