@@ -63,6 +63,11 @@ static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
 #endif
 
+string
+mogan_app_id () {
+  return "draw";
+}
+
 /******************************************************************************
  * Clean exit on segmentation faults
  ******************************************************************************/

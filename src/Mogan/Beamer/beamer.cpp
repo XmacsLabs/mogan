@@ -25,7 +25,7 @@
 #include <sys/resource.h>
 #endif
 
-#include "../app_type.hpp"
+#include "app_type.hpp"
 #include "boot.hpp"
 #include "data_cache.hpp"
 #include "file.hpp"
@@ -77,6 +77,11 @@ void   server_start ();
 static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
 #endif
+
+string
+mogan_app_id () {
+  return "beamer";
+}
 
 /******************************************************************************
  * Clean exit on segmentation faults

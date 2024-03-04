@@ -65,6 +65,11 @@ static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
 #endif
 
+string
+mogan_app_id () {
+  return "code";
+}
+
 /******************************************************************************
  * Clean exit on segmentation faults
  ******************************************************************************/

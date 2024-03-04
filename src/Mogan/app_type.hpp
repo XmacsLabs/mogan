@@ -12,6 +12,10 @@
 #ifndef APP_TYPE_H
 #define APP_TYPE_H
 
+#include "string.hpp"
+
 enum class app_type { BEAMER, DRAW, CODE, RESEARCH, TM2HTML };
+
+string mogan_app_id ();
 
 #endif
