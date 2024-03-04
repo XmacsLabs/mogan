@@ -175,8 +175,8 @@ TeXmacs_main (int argc, char** argv) {
         cout << "\n";
         cout << "TeXmacs version " << TEXMACS_VERSION << LF;
         cout << TEXMACS_COPYRIGHT << LF << LF;
-        cout << "Mogan Research version " << XMACS_VERSION << LF;
-        cout << "(c) 2022-2023 by Mogan Developers" << LF << LF;
+        cout << "Mogan Beamer version " << XMACS_VERSION << LF;
+        cout << "(c) 2022-2024 by Mogan Developers" << LF << LF;
         exit (0);
       }
       else if ((s == "-p") || (s == "-path")) {
