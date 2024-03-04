@@ -16,26 +16,4 @@
 
 enum class app_type { BEAMER, DRAW, CODE, RESEARCH, TM2HTML };
 
-string mogan_app_id () {
-#ifdef APP_MOGAN_RESEARCH
-  return "research";
-#endif
-
-#ifdef APP_MOGAN_BEAMER
-  return "beamer";
-#endif
-
-#ifdef APP_MOGAN_CODE
-  return "code";
-#endif
-
-#ifdef APP_MOGAN_DRAW
-  return "draw";
-#endif
-
-#ifdef APP_MOGAN_TM2HTML
-  return "tm2html";
-#endif
-}
-
 #endif
