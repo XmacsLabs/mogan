@@ -170,6 +170,7 @@ target("libkernel_l3") do
             QTTEXMACS = false,
             USE_FREETYPE = true,
             USE_FONTCONFIG = is_plat("linux") and (not using_legacy_apt()),
+            APP_MOGAN_RESEARCH = true,
         }
     })
     add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
@@ -238,6 +239,7 @@ add_configfiles("src/System/config.h.xmake", {
         USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
         USE_PLUGIN_GS = not is_plat("wasm"),
         USE_PLUGIN_GIT = not is_plat("wasm"),
+        APP_MOGAN_RESEARCH = true,
     }
 })
 
@@ -460,11 +462,9 @@ end
 if is_plat("macosx", "windows") then
     includes("xmake/beamer.lua")
     target("beamer") do
-        set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
         set_installdir(INSTALL_DIR)
-        set_configdir(INSTALL_DIR)
-        set_configvar("DEVEL_VERSION", DEVEL_VERSION)
-        set_configvar("XMACS_VERSION", XMACS_VERSION)
+        set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
+        add_tm_configure("beamer", TM_CONFIGURE_VARS)
         add_target_beamer ()
         on_run(function (target)
             name = target:name()

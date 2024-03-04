@@ -24,7 +24,6 @@
 #endif
 #include <lolly/system/timer.hpp>
 
-#include "../app_type.hpp"
 #include "boot.hpp"
 #include "data_cache.hpp"
 #include "file.hpp"
@@ -145,7 +144,7 @@ TeXmacs_main (int argc, char** argv) {
 
   gui_open (argc, argv);
   set_default_font (the_default_font);
-  server sv (app_type::TM2HTML);
+  server sv;
   string where= "";
   for (i= 1; i < argc; i++) {
     if (argv[i] == NULL) break;

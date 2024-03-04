@@ -28,6 +28,35 @@
 int script_status= 1;
 
 string
+mogan_app_id () {
+#ifdef APP_MOGAN_RESEARCH
+  return "research";
+#endif
+
+#ifdef APP_MOGAN_BEAMER
+  return "beamer";
+#endif
+
+#ifdef APP_MOGAN_CODE
+  return "code";
+#endif
+
+#ifdef APP_MOGAN_DRAW
+  return "draw";
+#endif
+
+#ifdef APP_MOGAN_TM2HTML
+  return "tm2html";
+#endif
+}
+
+static string
+app_dir () {
+  if (mogan_app_id () == "research") return "XmacsLabs";
+  return string ("app.mogan.") * mogan_app_id ();
+}
+
+string
 get_current_cpu_arch () {
 #ifdef QTTEXMACS
   return qt_get_current_cpu_arch ();
@@ -123,14 +152,14 @@ init_texmacs_home_path () {
   if (!is_empty (get_env ("TEXMACS_HOME_PATH"))) return;
 
   if (os_mingw () || os_win ()) {
-    set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\XmacsLabs");
+    set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\" * app_dir ());
   }
   else if (os_macos ()) {
     set_env ("TEXMACS_HOME_PATH",
-             get_env ("HOME") * "/Library/Application Support/XmacsLabs");
+             get_env ("HOME") * "/Library/Application Support/" * app_dir ());
   }
   else if (os_wasm ()) {
-    set_env ("TEXMACS_HOME_PATH", "/.XmacsLabs");
+    set_env ("TEXMACS_HOME_PATH", string ("/.") * app_dir ());
   }
   else {
 #if defined(OS_HAIKU)
@@ -140,7 +169,7 @@ init_texmacs_home_path () {
     string xdg_data_home= get_env ("XDG_DATA_HOME");
     if (is_empty (xdg_data_home))
       xdg_data_home= get_env ("HOME") * "/.local/share";
-    set_env ("TEXMACS_HOME_PATH", xdg_data_home * "/XmacsLabs");
+    set_env ("TEXMACS_HOME_PATH", xdg_data_home * "/" * app_dir ());
 #endif
   }
 }
@@ -148,13 +177,16 @@ init_texmacs_home_path () {
 url
 get_tm_cache_path () {
 #if defined(OS_WIN) || defined(OS_MINGW)
-  return url (string ("$LOCALAPPDATA/XmacsLabs/system/cache/") * XMACS_VERSION);
+  return url (string ("$LOCALAPPDATA") * "/" * app_dir () * "/system/cache/" *
+              XMACS_VERSION);
 #endif
 #if defined(OS_MACOS)
-  return url (string ("$HOME/Library/Caches/XmacsLabs/") * XMACS_VERSION);
+  return url (string ("$HOME/Library/Caches/") * app_dir () * "/" *
+              XMACS_VERSION);
 #endif
 #if defined(OS_LINUX)
-  return url (string ("$XDG_CACHE_HOME/XmacsLabs/") * XMACS_VERSION);
+  return url (string ("$XDG_CACHE_HOME") * "/" * app_dir () * "/" *
+              XMACS_VERSION);
 #endif
   return url (string ("$TEXMACS_HOME_PATH/system/cache/") * XMACS_VERSION);
 }

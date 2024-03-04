@@ -11,7 +11,7 @@
 
 #ifndef TM_SERVER_H
 #define TM_SERVER_H
-#include "../Mogan/app_type.hpp"
+
 #include "tm_buffer.hpp"
 #include "tm_config.hpp"
 #include "tm_data.hpp"
@@ -25,7 +25,7 @@ protected:
   double def_zoomf; // default zoom factor
 
 public:
-  tm_server_rep (app_type app);
+  tm_server_rep ();
   ~tm_server_rep ();
   server_rep* get_server ();
 

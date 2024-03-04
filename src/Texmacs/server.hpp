@@ -11,7 +11,7 @@
 
 #ifndef SERVER_H
 #define SERVER_H
-#include "../Mogan/app_type.hpp"
+
 #include "Data/new_buffer.hpp"
 #include "Data/new_project.hpp"
 #include "Data/new_view.hpp"
@@ -114,7 +114,7 @@ public:
 
 class server {
   ABSTRACT (server);
-  server (app_type app);
+  server ();
 };
 ABSTRACT_CODE (server);
 

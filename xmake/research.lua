@@ -49,6 +49,7 @@ function add_target_research_on_wasm()
             USE_FREETYPE = true,
             USE_ICONV = true,
             QTTEXMACS = true,
+            APP_MOGAN_RESEARCH = true,
         }
     })
     

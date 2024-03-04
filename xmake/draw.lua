@@ -33,6 +33,7 @@ function add_target_draw()
             USE_FREETYPE = true,
             USE_ICONV = true,
             QTTEXMACS = true,
+            APP_MOGAN_DRAW = true,
         }
     })
     add_packages("lolly")

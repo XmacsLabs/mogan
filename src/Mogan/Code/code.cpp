@@ -24,7 +24,6 @@
 #endif
 #include <lolly/system/timer.hpp>
 
-#include "app_type.hpp"
 #include "boot.hpp"
 #include "data_cache.hpp"
 #include "file.hpp"
@@ -312,7 +311,7 @@ TeXmacs_main (int argc, char** argv) {
   set_default_font (the_default_font);
   if (DEBUG_STD) debug_boot << "Starting server...\n";
   { // opening scope for server sv
-    server sv (app_type::CODE);
+    server sv;
     string where= "";
     for (i= 1; i < argc; i++) {
       if (argv[i] == NULL) break;
