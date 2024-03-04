@@ -61,7 +61,6 @@ function add_target_beamer()
     if is_plat("mingw", "windows") then
         add_installfiles(TeXmacs_files)
     else
-        add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
         add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
     end
 
