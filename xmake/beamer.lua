@@ -29,9 +29,6 @@ function add_target_beamer()
     end)
     add_files("src/Mogan/Beamer/beamer.cpp")
 
-    if is_plat("linux") then
-        add_rpathdirs("@executable_path/../lib")
-    end
     if not is_plat("windows") then
         add_syslinks("pthread")
     end
