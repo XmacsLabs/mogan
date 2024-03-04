@@ -6,7 +6,7 @@ function add_target_beamer()
         set_runtimes("MT")
     end
 
-    if is_mode("debug", "releasedbg") and is_plat("mingw", "windows") then
+    if is_mode("debug", "releasedbg") and is_plat("windows") then
         add_rules("qt.console")
     else
         add_rules("qt.widgetapp")
@@ -15,7 +15,7 @@ function add_target_beamer()
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
 
     add_packages("lolly")
-    if is_plat("mingw", "windows") then
+    if is_plat("windows") then
         add_packages("qt6widgets")
     end
 
@@ -58,7 +58,7 @@ function add_target_beamer()
         })
     end
   
-    if is_plat("mingw", "windows") then
+    if is_plat("windows") then
         add_installfiles(TeXmacs_files)
     else
         add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
@@ -66,7 +66,7 @@ function add_target_beamer()
 
     -- install tm files for testing purpose
     if is_mode("releasedbg") then
-        if is_plat("mingw", "windows") then
+        if is_plat("windows") then
             add_installfiles({
                 "TeXmacs(/tests/tm/*.tm)",
                 "TeXmacs(/tests/tex/*.tex)",
@@ -83,9 +83,6 @@ function add_target_beamer()
     -- deploy necessary dll
     if is_plat("windows") then
         set_values("qt.deploy.flags", {"-printsupport", "--no-opengl-sw", "--no-translations"})
-    elseif is_plat("mingw") then
-        -- qt on mingw provides debug dll only, without "d" suffix.
-        set_values("qt.deploy.flags", {"-printsupport", "--no-opengl-sw", "--no-translations", "--debug"})
     end
 
     after_install(function (target)
