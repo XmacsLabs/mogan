@@ -115,6 +115,7 @@
 ;;(display "Booting main TeXmacs functionality\n")
 (use-modules (texmacs texmacs tm-server) (texmacs texmacs tm-view)
              (texmacs texmacs tm-files) (texmacs texmacs tm-print))
+(use-modules (app beamer buffer))
 (use-modules (texmacs keyboard config-kbd))
 (lazy-keyboard (texmacs keyboard prefix-kbd) always?)
 (lazy-keyboard (texmacs keyboard latex-kbd) always?)
