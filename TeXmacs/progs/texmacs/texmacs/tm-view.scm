@@ -145,9 +145,9 @@
       (begin
         (init-env "info-flag" saved-informative-flags)
         (full-screen-mode #f #f)
-	(restore-zoom (get-init-page-rendering)))
+        (restore-zoom (get-init-page-rendering)))
       (begin
-	(save-zoom (get-init-page-rendering))
+        (save-zoom (get-init-page-rendering))
         (set! saved-informative-flags (get-init "info-flag"))
         (init-env "info-flag" "none")
         (full-screen-mode #t #f)
@@ -157,7 +157,7 @@
   (:synopsis "Toggle full screen edit mode")
   (:check-mark "v" full-screen-edit?)
   (let* ((old (full-screen?))
-	 (new (not (full-screen-edit?))))
+         (new (not (full-screen-edit?))))
     (when (and (not old) new)
       (save-zoom (get-init-page-rendering)))
     (full-screen-mode new new)
