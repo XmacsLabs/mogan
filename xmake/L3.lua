@@ -79,7 +79,6 @@ local l3_includedirs = {
     "src/System/Misc",
     "src/Plugins",
     "src/Texmacs",
-    "src/Mogan",
     "TeXmacs/include",
 }
 
