@@ -144,7 +144,7 @@ TeXmacs_main (int argc, char** argv) {
 
   gui_open (argc, argv);
   set_default_font (the_default_font);
-  server sv ();
+  server sv;
   string where= "";
   for (i= 1; i < argc; i++) {
     if (argv[i] == NULL) break;
