@@ -31,7 +31,7 @@ int script_status= 1;
 static string
 app_dir () {
   if (mogan_app_id () == "research") return "XmacsLabs";
-  return string ("app.") * mogan_app_id ();
+  return string ("app.mogan.") * mogan_app_id ();
 }
 
 string
