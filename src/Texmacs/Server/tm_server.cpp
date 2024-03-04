@@ -41,7 +41,10 @@ string  my_init_cmds   = "";
 void
 init_app (app_type app) {
   if (is_none (tm_init_file)) {
-    if (app == app_type::CODE) {
+    if (app == app_type::BEAMER) {
+      tm_init_file= "$TEXMACS_PATH/progs/init-beamer.scm";
+    }
+    else if (app == app_type::CODE) {
       tm_init_file= "$TEXMACS_PATH/progs/init-code.scm";
     }
     else if (app == app_type::DRAW) {

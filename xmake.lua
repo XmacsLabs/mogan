@@ -468,8 +468,8 @@ target("beamer") do
     on_run(function (target)
         name = target:name()
         if is_plat("mingw", "windows") then
-            os.execv(target:installdir().."/bin/MoganResearch.exe")
-        elseif is_plat("linux", "macosx") then
+            os.execv(target:installdir().."/bin/MoganBeamer.exe")
+        elseif is_plat("macosx") then
             print("Launching " .. target:targetfile())
             os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
         else
