@@ -17,7 +17,6 @@
 #include "tm_debug.hpp"
 #include "tm_file.hpp"
 #include "url.hpp"
-#include <string_view>
 
 #if defined(OS_MINGW) || defined(OS_WIN)
 #include "Windows/win_sys_utils.hpp"
