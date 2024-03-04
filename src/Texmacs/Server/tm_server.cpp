@@ -41,21 +41,9 @@ string  my_init_cmds   = "";
 void
 init_app (app_type app) {
   if (is_none (tm_init_file)) {
-    if (app == app_type::BEAMER) {
-      tm_init_file= "$TEXMACS_PATH/progs/init-beamer.scm";
-    }
-    else if (app == app_type::CODE) {
-      tm_init_file= "$TEXMACS_PATH/progs/init-code.scm";
-    }
-    else if (app == app_type::DRAW) {
-      tm_init_file= "$TEXMACS_PATH/progs/init-draw.scm";
-    }
-    else if (app == app_type::RESEARCH) {
-      tm_init_file= "$TEXMACS_PATH/progs/init-research.scm";
-    }
-    else if (app == app_type::TM2HTML) {
-      tm_init_file= "$TEXMACS_PATH/progs/init-tm2html.scm";
-    }
+    string path;
+    path << "$TEXMACS_PATH/progs/init-" << mogan_app_id () << ".scm";
+    tm_init_file= url_system (path);
   }
   exec_file (tm_init_file);
   if (is_none (my_init_file))
