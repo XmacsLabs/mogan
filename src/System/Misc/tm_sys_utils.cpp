@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "tm_sys_utils.hpp"
-#include "app_type.hpp"
 #include "file.hpp"
 #include "lolly/system/subprocess.hpp"
 #include "sys_utils.hpp"

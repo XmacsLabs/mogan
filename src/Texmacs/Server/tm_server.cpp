@@ -39,7 +39,7 @@ string  my_init_cmds   = "";
  ******************************************************************************/
 
 void
-init_app (app_type app) {
+init_app () {
   if (is_none (tm_init_file)) {
     string path;
     path << "$TEXMACS_PATH/progs/init-" << mogan_app_id () << ".scm";
@@ -118,13 +118,13 @@ gui_set_output_language (string lan) {
 server_rep::server_rep () {}
 server_rep::~server_rep () {}
 
-tm_server_rep::tm_server_rep (app_type app) : def_zoomf (1.0) {
+tm_server_rep::tm_server_rep () : def_zoomf (1.0) {
   the_server= tm_new<server> (this);
   initialize_scheme ();
   gui_interpose (texmacs_interpose_handler);
   set_wait_handler (texmacs_wait_handler);
 
-  init_app (app);
+  init_app ();
 
 #ifdef OS_GNU_LINUX
   return; // in order to avoid segmentation faults
@@ -134,7 +134,7 @@ tm_server_rep::tm_server_rep (app_type app) : def_zoomf (1.0) {
 }
 
 tm_server_rep::~tm_server_rep () {}
-server::server (app_type app) : rep (tm_new<tm_server_rep> (app)) {}
+server::server () : rep (tm_new<tm_server_rep> (app)) {}
 server_rep*
 tm_server_rep::get_server () {
   return this;
