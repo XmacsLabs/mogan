@@ -164,7 +164,6 @@ function add_target_research_on_others()
     if is_plat("mingw", "windows") then
         add_installfiles(TeXmacs_files)
     else
-        add_installfiles("misc/scripts/tm_gs", {prefixdir="share/Xmacs/bin"})
         add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
     end
 
