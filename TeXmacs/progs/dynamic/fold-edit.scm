@@ -1080,7 +1080,7 @@
 (tm-define (init-page-rendering s)
   (:require (or (inside? 'screens) (inside? 'slideshow)))
   (with o (get-init-page-rendering)
-    (when (and (expand-slides? s) (not (expand-slides? o)))
+    (when (and (expand-slides? s) (inside? 'screens))
       (screens-show-all))
     (when (and (not (expand-slides? s)) (expand-slides? o))
       (screens-show-this))
