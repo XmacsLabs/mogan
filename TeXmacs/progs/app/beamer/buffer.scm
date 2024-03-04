@@ -1,0 +1,18 @@
+(texmacs-module (app beamer buffer))
+
+(tm-define (buffer-set-default-style)
+  (init-style "beamer")
+  (add-style-package "no-page-numbers")
+  (with lan (get-preference "language")
+    (if (!= lan "english") (set-document-language lan)))
+  (with psz (get-printer-paper-type)
+    (if (!= psz "a4") (init-page-type psz)))
+  (with type (get-preference "page medium")
+    (if (!= type "papyrus") (init-env "page-medium" type)))
+  (with type (get-preference "page screen margin")
+    (if (!= type "true") (init-env "page-screen-margin" type)))
+  (when (!= (get-preference "scripting language") "none")
+    (lazy-plugin-force)
+    (init-env "prog-scripts" (get-preference "scripting language")))
+  (buffer-pretend-saved (current-buffer)))
+
