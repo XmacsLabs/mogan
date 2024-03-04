@@ -134,7 +134,7 @@ tm_server_rep::tm_server_rep () : def_zoomf (1.0) {
 }
 
 tm_server_rep::~tm_server_rep () {}
-server::server () : rep (tm_new<tm_server_rep> (app)) {}
+server::server () : rep (tm_new<tm_server_rep> ()) {}
 server_rep*
 tm_server_rep::get_server () {
   return this;
