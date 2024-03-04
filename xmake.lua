@@ -457,25 +457,27 @@ if is_plat("wasm", "linux", "windows") then
     end
 end
 
-includes("xmake/beamer.lua")
-target("beamer") do
-    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
-    set_installdir(INSTALL_DIR)
-    set_configdir(INSTALL_DIR)
-    set_configvar("DEVEL_VERSION", DEVEL_VERSION)
-    set_configvar("XMACS_VERSION", XMACS_VERSION)
-    add_target_beamer ()
-    on_run(function (target)
-        name = target:name()
-        if is_plat("mingw", "windows") then
-            os.execv(target:installdir().."/bin/MoganBeamer.exe")
-        elseif is_plat("macosx") then
-            print("Launching " .. target:targetfile())
-            os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
-        else
-            print("Unsupported plat $(plat)")
-        end
-    end)
+if is_plat("macosx", "windows") then
+    includes("xmake/beamer.lua")
+    target("beamer") do
+        set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
+        set_installdir(INSTALL_DIR)
+        set_configdir(INSTALL_DIR)
+        set_configvar("DEVEL_VERSION", DEVEL_VERSION)
+        set_configvar("XMACS_VERSION", XMACS_VERSION)
+        add_target_beamer ()
+        on_run(function (target)
+            name = target:name()
+            if is_plat("mingw", "windows") then
+                os.execv(target:installdir().."/bin/MoganBeamer.exe")
+            elseif is_plat("macosx") then
+                print("Launching " .. target:targetfile())
+                os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
+            else
+                print("Unsupported plat $(plat)")
+            end
+        end)
+    end
 end
 
 if is_plat("mingw", "windows") then
