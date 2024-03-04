@@ -12,11 +12,12 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (app beamer buffer))
+(texmacs-module (app beamer buffer)
+  (:use (dynamic fold-menu)))
 
 (tm-define (buffer-set-default-style)
   (init-style "beamer")
-  (add-style-package "no-page-numbers")
+  (make-screens)
   (with lan (get-preference "language")
     (if (!= lan "english") (set-document-language lan)))
   (with psz (get-printer-paper-type)
