@@ -9,7 +9,7 @@
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
-set_xmakever("2.8.5")
+set_xmakever("2.8.7")
 
 -- Check CXX Types/Includes/Funcs
 includes("@builtin/check")
