@@ -12,6 +12,6 @@
 #ifndef APP_TYPE_H
 #define APP_TYPE_H
 
-enum class app_type { DRAW, CODE, RESEARCH, TM2HTML };
+enum class app_type { BEAMER, DRAW, CODE, RESEARCH, TM2HTML };
 
 #endif
