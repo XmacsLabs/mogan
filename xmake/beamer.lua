@@ -1,5 +1,23 @@
+local beamer_files = {
+        "TeXmacs(/doc/**)",
+        "TeXmacs(/fonts/**)",
+        "TeXmacs(/langs/**)",
+        "TeXmacs(/misc/**)",
+        "TeXmacs(/packages/**)",
+        "TeXmacs(/progs/**)",
+        "TeXmacs(/styles/**)",
+        "TeXmacs(/texts/**)",
+        "TeXmacs/COPYING", -- copying files are different
+        "TeXmacs/INSTALL",
+        "LICENSE", -- license files are same
+        "TeXmacs/README",
+        "TeXmacs/TEX_FONTS",
+        "TeXmacs(/plugins/**)" -- plugin files
+}
+
 function add_target_beamer()
     set_basename("MoganBeamer")
+    set_encodings("utf-8")
 
     if is_plat("windows") then
         set_optimize("smallest")
@@ -48,6 +66,7 @@ function add_target_beamer()
         add_packages("libiconv")
     end
     if is_plat("windows") then
+        add_syslinks("secur32", "shell32", {public = true})
         add_packages("qt6widgets")
     end
 
@@ -102,9 +121,9 @@ function add_target_beamer()
     end
   
     if is_plat("windows") then
-        add_installfiles(TeXmacs_files)
+        add_installfiles(beamer_files)
     else
-        add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
+        add_installfiles(beamer_files, {prefixdir="share/Xmacs"})
     end
 
     -- install tm files for testing purpose
