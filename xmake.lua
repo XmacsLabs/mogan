@@ -257,36 +257,6 @@ libmogan_headers = {
     "src/Mogan"
 }
 
-plugin_qt_srcs_on_wasm = {
-    "src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp|qt_printer_widget.cpp",
-    "src/Plugins/Qt/*.hpp|QTMPipeLink.hpp|QTMPrintDialog.hpp|QTMPrinterSettings.hpp",
-}
-plugin_qt_srcs = {
-    "src/Plugins/Qt/**.cpp",
-    "src/Plugins/Qt/**.hpp"
-}
-plugin_macos_srcs = {
-    "src/Plugins/MacOS/HIDRemote.m",
-    "src/Plugins/MacOS/mac_spellservice.mm",
-    "src/Plugins/MacOS/mac_utilities.mm",
-    "src/Plugins/MacOS/mac_app.mm"
-}
-plugin_pdf_srcs = { "src/Plugins/Pdf/**.cpp" }
-plugin_xml_srcs = { "src/Plugins/Xml/**.cpp" }
-plugin_html_srcs = { "src/Plugins/Html/**.cpp" }
-plugin_database_srcs = { "src/Plugins/Database/**.cpp" }
-plugin_freetype_srcs = { "src/Plugins/Freetype/**.cpp" }
-plugin_metafont_srcs = { "src/Plugins/Metafont/**.cpp" }
-plugin_ghostscript_srcs = { "src/Plugins/Ghostscript/**.cpp" }
-plugin_ispell_srcs = { "src/Plugins/Ispell/**.cpp" }
-plugin_tex_srcs = {"src/Plugins/Tex/**.cpp"}
-plugin_latex_preview_srcs = {"src/Plugins/LaTeX_Preview/**.cpp"}
-plugin_bibtex_srcs = { "src/Plugins/Bibtex/**.cpp" }
-plugin_openssl_srcs = { "src/Plugins/Openssl/**.cpp" }
-plugin_updater_srcs = { "src/Plugins/Updater/**.cpp" }
-plugin_git_srcs = { "src/Plugins/Git/**.cpp" }
-
-
 target("libmogan") do
     set_enabled(not is_plat ("wasm"))
     set_basename("mogan")
