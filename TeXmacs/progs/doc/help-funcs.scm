@@ -97,6 +97,15 @@
 (tm-define (mogan-welcome)
   (load-help-article "about/mogan/research"))
 
+(tm-define (mogan-beamer-welcome)
+  (let* ((lan (string-take (language-to-locale (get-output-language)) 2))
+         (path (string-append "$TEXMACS_PATH/doc/about/mogan/beamer." lan ".tm"))
+         (en_doc (string-append "$TEXMACS_PATH/doc/about/mogan/beamer.en.tm")))
+    (if (url-exists? path)
+        (load-buffer (system->url path))
+        (load-buffer (system->url en_doc)))
+    (delayed (:idle 25) (fit-to-screen-width))))
+
 (tm-define (xmacs-planet)
   (if (url-exists? (get-remote-planet-url))
       (load-remote-planet)

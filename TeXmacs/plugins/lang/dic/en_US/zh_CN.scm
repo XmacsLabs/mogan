@@ -675,7 +675,7 @@
 ("fold comments" "折叠所有批注")
 ("fold input field" "折叠输入区域")
 ("fold" "折叠")
-("folded" "")
+("folded" "已折叠")
 ("font base size" "字体基本大小")
 ("font customization" "定制字体")
 ("font dpi" "字体 dpi")
