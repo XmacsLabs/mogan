@@ -468,6 +468,13 @@ init_texmacs () {
   init_misc ();
 }
 
+void
+load_welcome_doc () {
+  if (DEBUG_STD) debug_boot << "Loading welcome message...\n";
+  string cmd= "(mogan-welcome)";
+  exec_delayed (scheme_cmd (cmd));
+}
+
 /******************************************************************************
  * Initialization of built-in plug-ins
  ******************************************************************************/
