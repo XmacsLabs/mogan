@@ -18,6 +18,7 @@
 #include "language.hpp"
 #include "merge_sort.hpp"
 #include "preferences.hpp"
+#include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #ifdef OS_WIN
