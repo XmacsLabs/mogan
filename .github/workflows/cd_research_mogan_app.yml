@@ -7,7 +7,10 @@ on:
       - '.github/workflows/cd_research_mogan_app.yml'
       - 'src/**'
       - '!src/Plugins/Macos/**'
-      - '**.lua'
+      - 'xmake.lua'
+      - 'xmake/research.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/packages/**'
       - bin/config_wasm
       - 'site/research.mogan.app/**'
   workflow_dispatch:
