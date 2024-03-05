@@ -1,3 +1,15 @@
+-------------------------------------------------------------------------------
+--
+-- MODULE      : beamer.lua
+-- DESCRIPTION : Xmake config file for Mogan Beamer
+-- COPYRIGHT   : (C) 2024  Darcy Shen
+--
+-- This software falls under the GNU general public license version 3 or later.
+-- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+-- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+
+includes ("vars.lua")
+
 local beamer_files = {
         "TeXmacs(/doc/**)",
         "TeXmacs(/fonts/**)",
@@ -16,8 +28,20 @@ local beamer_files = {
 }
 
 function add_target_beamer()
+    if is_plat("windows") then 
+        set_installdir("$(buildir)/packages/beamer/data/")
+    elseif is_plat("macosx") then 
+        set_installdir("$(buildir)/$(plat)/$(arch)/$(mode)/MoganBeamer.app/Contents/Resources/")
+    end
+
+    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
     set_basename("MoganBeamer")
     set_encodings("utf-8")
+
+    add_configfiles("$(projectdir)/src/System/tm_configure.hpp.xmake", {
+        filename = "beamer/tm_configure.hpp",
+        variables = TM_CONFIGURE_VARS
+    })
 
     if is_plat("windows") then
         set_optimize("smallest")
@@ -158,6 +182,18 @@ function add_target_beamer()
             os.rm(app_dir .. "Contents/Frameworks/QtQml.framework")
             os.rm(app_dir .. "Contents/Frameworks/QtQuick.framework")
             os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
+        end
+    end)
+
+    on_run(function (target)
+        name = target:name()
+        if is_plat("windows") then
+            os.execv(target:installdir().."/bin/MoganBeamer.exe")
+        elseif is_plat("macosx") then
+            print("Launching " .. target:targetfile())
+            os.execv(target:targetfile(), {}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
+        else
+            print("Unsupported plat $(plat)")
         end
     end)
 end
