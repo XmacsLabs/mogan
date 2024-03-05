@@ -367,21 +367,7 @@ end
 if is_plat("macosx", "windows") then
     includes("xmake/beamer.lua")
     target("beamer") do
-        set_installdir(INSTALL_DIR)
-        set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
-        add_tm_configure("beamer", TM_CONFIGURE_VARS)
         add_target_beamer ()
-        on_run(function (target)
-            name = target:name()
-            if is_plat("windows") then
-                os.execv(target:installdir().."/bin/MoganBeamer.exe")
-            elseif is_plat("macosx") then
-                print("Launching " .. target:targetfile())
-                os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
-            else
-                print("Unsupported plat $(plat)")
-            end
-        end)
     end
 end
 

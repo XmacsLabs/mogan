@@ -16,8 +16,20 @@ local beamer_files = {
 }
 
 function add_target_beamer()
+    if is_plat("windows") then 
+        set_installdir("$(buildir)/packages/beamer/data/")
+    elseif is_plat("macosx") then 
+        set_installdir("$(buildir)/$(plat)/$(arch)/$(mode)/MoganBeamer.app/Contents/Resources/")
+    end
+
+    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
     set_basename("MoganBeamer")
     set_encodings("utf-8")
+
+    add_configfiles("$(projectdir)/src/System/tm_configure.hpp.xmake", {
+        filename = "$(buildir)/beamer/tm_configure.hpp",
+        variables = TM_CONFIGURE_VARS
+    })
 
     if is_plat("windows") then
         set_optimize("smallest")
@@ -158,6 +170,18 @@ function add_target_beamer()
             os.rm(app_dir .. "Contents/Frameworks/QtQml.framework")
             os.rm(app_dir .. "Contents/Frameworks/QtQuick.framework")
             os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
+        end
+    end)
+
+    on_run(function (target)
+        name = target:name()
+        if is_plat("windows") then
+            os.execv(target:installdir().."/bin/MoganBeamer.exe")
+        elseif is_plat("macosx") then
+            print("Launching " .. target:targetfile())
+            os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
+        else
+            print("Unsupported plat $(plat)")
         end
     end)
 end
