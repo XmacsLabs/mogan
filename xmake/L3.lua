@@ -2,11 +2,13 @@
 --
 -- MODULE      : L3.lua
 -- DESCRIPTION : Xmake config file for the L3 Kernel
--- COPYRIGHT   : (C) 2022-2023  Darcy Shen
+-- COPYRIGHT   : (C) 2022-2024  Darcy Shen
 --
 -- This software falls under the GNU general public license version 3 or later.
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+
+includes("vars.lua")
 
 local l3_files = {
     "$(projectdir)/src/Kernel/**.cpp",
@@ -83,8 +85,35 @@ local l3_includedirs = {
 }
 
 function add_target_L3()
+    ---------------------------------------------------------------------------
+    -- generate config files. see also:
+    --    * https://github.com/xmake-io/xmake/issues/320
+    --    * https://github.com/xmake-io/xmake/issues/342
+    ---------------------------------------------------------------------------
+    add_configfiles("$(projectdir)/src/System/config_l3.h.xmake", {
+        filename = "L3/config.h",
+        variables = {
+            QTTEXMACS = false,
+            USE_FREETYPE = true,
+            USE_FONTCONFIG = is_plat("linux") and (not using_legacy_apt()),
+            APP_MOGAN_RESEARCH = true,
+        }
+    })
+    add_configfiles("$(projectdir)/src/System/tm_configure_l3.hpp.xmake", {
+        filename = "L3/tm_configure.hpp",
+        variables = {
+            CONFIG_USER = CONFIG_USER,
+            CONFIG_OS = CONFIG_OS,
+            VERSION = TEXMACS_VERSION,
+            LOLLY_VERSION = LOLLY_VERSION,
+            XMACS_VERSION = XMACS_VERSION,
+            TEXMACS_VERSION = TEXMACS_VERSION,
+        }
+    })
+
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
+    set_encodings("utf-8")
 
     set_kind("static")
     set_group("kernel_l3")

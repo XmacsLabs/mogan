@@ -3,7 +3,11 @@ function add_target_cpp_test(filepath, dep)
     target(testname) do
         set_enabled(not is_plat("wasm"))
         add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
-        set_group("tests")
+        if dep == "libkernel_l3" then
+            set_group("kernel_l3_tests")
+        else
+            set_group("tests")
+        end
         add_deps(dep)
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
