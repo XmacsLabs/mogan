@@ -1,3 +1,15 @@
+-------------------------------------------------------------------------------
+--
+-- MODULE      : beamer.lua
+-- DESCRIPTION : Xmake config file for Mogan Beamer
+-- COPYRIGHT   : (C) 2024  Darcy Shen
+--
+-- This software falls under the GNU general public license version 3 or later.
+-- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+-- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+
+includes ("vars.lua")
+
 local beamer_files = {
         "TeXmacs(/doc/**)",
         "TeXmacs(/fonts/**)",
@@ -179,7 +191,7 @@ function add_target_beamer()
             os.execv(target:installdir().."/bin/MoganBeamer.exe")
         elseif is_plat("macosx") then
             print("Launching " .. target:targetfile())
-            os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
+            os.execv(target:targetfile(), {}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
         else
             print("Unsupported plat $(plat)")
         end
