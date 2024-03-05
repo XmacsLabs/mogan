@@ -7,7 +7,6 @@
 #define XMACS_VERSION "${XMACS_VERSION}"
 #define TEXMACS_VERSION "${TEXMACS_VERSION}"
 
-${define OS_MINGW}
 ${define OS_GNU_LINUX}
 ${define OS_MACOS}
 ${define OS_WIN}

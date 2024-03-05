@@ -47,7 +47,7 @@ local TM_CONFIGURE_VARS = {
 }
 
 
-set_allowedplats("wasm", "linux", "macosx", "mingw", "windows") 
+set_allowedplats("wasm", "linux", "macosx", "windows") 
 
 if is_plat("wasm") then
     set_configvar("OS_WASM", true)
@@ -64,22 +64,12 @@ if is_plat("macosx") then
 else
     set_configvar("OS_MACOS", false)
 end
-if is_plat("mingw") then
-    set_configvar("OS_MINGW", true)
-else
-    set_configvar("OS_MINGW", false)
-end
 if is_plat("windows") then
     set_configvar("OS_WIN", true)
 else
     set_configvar("OS_WIN", false)
 end
 
-
-if is_plat("mingw") and is_host("windows") then
-    add_requires("mingw-w64 11.2.0")
-    set_toolchains("mingw@mingw-w64")
-end
 
 if is_plat("wasm") then
     add_requires("emscripten 3.1.25")
@@ -193,7 +183,7 @@ end
 set_configvar("QTTEXMACS", 1)
 
 local INSTALL_DIR = "$(buildir)"
-if is_plat("mingw", "windows") then 
+if is_plat("windows") then 
     INSTALL_DIR = path.join("$(buildir)", "packages/app.mogan/data/")
 elseif is_plat("macosx") then 
     INSTALL_DIR = path.join("$(buildir)", "macosx/$(arch)/$(mode)/MoganResearch.app/Contents/Resources/")
@@ -236,7 +226,7 @@ add_configfiles("src/System/config.h.xmake", {
         MACOSX_EXTENSIONS = is_plat("macosx"),
         SIZEOF_VOID_P = 8,
         USE_FONTCONFIG = is_plat("linux") and (not linuxos.name() == "uos"),
-        USE_STACK_TRACE = (not is_plat("mingw")) and (not is_plat("wasm")) and (not is_plat("windows")),
+        USE_STACK_TRACE = (not is_plat("wasm")) and (not is_plat("windows")),
         USE_PLUGIN_GS = not is_plat("wasm"),
         USE_PLUGIN_GIT = not is_plat("wasm"),
         APP_MOGAN_RESEARCH = true,
@@ -382,9 +372,7 @@ target("libmogan") do
         add_packages("fontconfig")
     end
 
-    if is_plat("mingw") then
-        add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
-    elseif is_plat("windows") then
+    if is_plat("windows") then
         add_syslinks("secur32", "shell32", {public = true})
     elseif is_plat("macosx") then
         add_syslinks("iconv")
@@ -468,7 +456,7 @@ if is_plat("macosx", "windows") then
         add_target_beamer ()
         on_run(function (target)
             name = target:name()
-            if is_plat("mingw", "windows") then
+            if is_plat("windows") then
                 os.execv(target:installdir().."/bin/MoganBeamer.exe")
             elseif is_plat("macosx") then
                 print("Launching " .. target:targetfile())
@@ -480,7 +468,7 @@ if is_plat("macosx", "windows") then
     end
 end
 
-if is_plat("mingw", "windows") then
+if is_plat("windows") then
     target("research_windows_icon") do
         set_version(XMACS_VERSION)
         set_kind("object")
@@ -508,7 +496,7 @@ target("research") do
         add_target_research_on_others()
         on_run(function (target)
             name = target:name()
-            if is_plat("mingw", "windows") then
+            if is_plat("windows") then
                 os.execv(target:installdir().."/bin/MoganResearch.exe")
             elseif is_plat("linux", "macosx") then
                 print("Launching " .. target:targetfile())
