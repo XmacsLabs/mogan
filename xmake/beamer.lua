@@ -27,7 +27,7 @@ function add_target_beamer()
     set_encodings("utf-8")
 
     add_configfiles("$(projectdir)/src/System/tm_configure.hpp.xmake", {
-        filename = "$(buildir)/beamer/tm_configure.hpp",
+        filename = "beamer/tm_configure.hpp",
         variables = TM_CONFIGURE_VARS
     })
 
