@@ -11,46 +11,16 @@
 
 set_xmakever("2.8.7")
 
--- Check CXX Types/Includes/Funcs
-includes("@builtin/check")
-configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
-configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
-configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
+-- mode
+set_allowedmodes("releasedbg", "release", "debug")
+add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
----
---- Project: Mogan STEM Suite
----
-set_project("Mogan STEM Suite")
-
--- only lock it in rc releases
--- if is_plat ("macosx", "windows") then
---     set_policy("package.requires_lock", true)
--- end
-
-local TEXMACS_VERSION = "2.1.2"
-local XMACS_VERSION="1.2.6-alpha"
-local CONFIG_USER = "XmacsLabs"
-local DEVEL_VERSION = TEXMACS_VERSION
-local DEVEL_RELEASE = 1
-local STABLE_VERSION = TEXMACS_VERSION
-local STABLE_RELEASE = 1
-
-local TM_CONFIGURE_VARS = {
-    CONFIG_USER = CONFIG_USER,
-    TEXMACS_VERSION = TEXMACS_VERSION,
-    XMACS_VERSION = XMACS_VERSION,
-    tm_devel = "Texmacs-" .. DEVEL_VERSION,
-    tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
-    tm_stable = "Texmacs-" .. STABLE_VERSION,
-    tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
-    LOLLY_VERSION = LOLLY_VERSION,
-}
-
-
+-- plat
 set_allowedplats("wasm", "linux", "macosx", "windows") 
-
 if is_plat("wasm") then
     set_configvar("OS_WASM", true)
+    add_requires("emscripten 3.1.25")
+    set_toolchains("emcc@emscripten")
 else
     set_configvar("OS_WASM", false)
 end
@@ -70,22 +40,46 @@ else
     set_configvar("OS_WIN", false)
 end
 
-
-if is_plat("wasm") then
-    add_requires("emscripten 3.1.25")
-    set_toolchains("emcc@emscripten")
-end
-
--- add releasedbg, debug and release modes.
-set_allowedmodes("releasedbg", "release", "debug")
-add_rules("mode.releasedbg", "mode.release", "mode.debug")
+-- check compilers and standard libraries
+includes("@builtin/check")
+configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
+configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
+configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
 
 if is_mode("release") then
   includes("@builtin/xpack")
 end
 
-add_repositories("mogan-repo xmake")
+includes("xmake/vars.lua")
 includes("xmake/packages.lua")
+
+---
+--- Project: Mogan STEM Suite
+---
+set_project("Mogan STEM Suite")
+
+--
+-- Experimental options of Mogan
+--
+option("sanity-checks")
+    set_description("Enable sanity checks")
+    set_default(false)
+    set_values(false, true)
+option_end()
+if has_config("sanity-checks") then
+    set_configvar("SANITY_CHECKS", true)
+end
+option("use-exceptions")
+    set_description("Use C++ exception mechanism")
+    set_default(false)
+    set_values(false, true)
+option_end()
+
+-- only lock it in rc releases
+-- if is_plat ("macosx", "windows") then
+--     set_policy("package.requires_lock", true)
+-- end
+add_repositories("mogan-repo xmake")
 add_requires_of_mogan()
 
 function build_glue_on_config()
@@ -128,57 +122,12 @@ function add_tm_configure(target_name, variables)
 end
 
 --
--- Experimental options of Mogan
---
-option("sanity-checks")
-    set_description("Enable sanity checks")
-    set_default(false)
-    set_values(false, true)
-option_end()
-if has_config("sanity-checks") then
-    set_configvar("SANITY_CHECKS", true)
-end
-option("use-exceptions")
-    set_description("Use C++ exception mechanism")
-    set_default(false)
-    set_values(false, true)
-option_end()
-
---
 -- Library: L3 Kernel
 --
 includes ("xmake/L3.lua")
 target("libkernel_l3") do
-    ---------------------------------------------------------------------------
-    -- generate config files. see also:
-    --    * https://github.com/xmake-io/xmake/issues/320
-    --    * https://github.com/xmake-io/xmake/issues/342
-    ---------------------------------------------------------------------------
-    add_configfiles("src/System/config_l3.h.xmake", {
-        filename = "L3/config.h",
-        variables = {
-            QTTEXMACS = false,
-            USE_FREETYPE = true,
-            USE_FONTCONFIG = is_plat("linux") and (not using_legacy_apt()),
-            APP_MOGAN_RESEARCH = true,
-        }
-    })
-    add_configfiles("src/System/tm_configure_l3.hpp.xmake", {
-        filename = "L3/tm_configure.hpp",
-        variables = {
-            CONFIG_USER = CONFIG_USER,
-            CONFIG_OS = CONFIG_OS,
-            VERSION = TEXMACS_VERSION,
-            LOLLY_VERSION = LOLLY_VERSION,
-            XMACS_VERSION = XMACS_VERSION,
-            TEXMACS_VERSION = TEXMACS_VERSION,
-        }
-    })
-
     add_target_L3()
 end
-
-
 
 set_configvar("QTTEXMACS", 1)
 
@@ -194,7 +143,6 @@ else
       INSTALL_DIR = os.getenv("INSTALL_DIR")
     end
 end
-local RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
 
 if not is_plat("wasm") then
     set_configvar("QTPIPES", 1)
@@ -309,36 +257,6 @@ libmogan_headers = {
     "src/Mogan"
 }
 
-plugin_qt_srcs_on_wasm = {
-    "src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp|qt_printer_widget.cpp",
-    "src/Plugins/Qt/*.hpp|QTMPipeLink.hpp|QTMPrintDialog.hpp|QTMPrinterSettings.hpp",
-}
-plugin_qt_srcs = {
-    "src/Plugins/Qt/**.cpp",
-    "src/Plugins/Qt/**.hpp"
-}
-plugin_macos_srcs = {
-    "src/Plugins/MacOS/HIDRemote.m",
-    "src/Plugins/MacOS/mac_spellservice.mm",
-    "src/Plugins/MacOS/mac_utilities.mm",
-    "src/Plugins/MacOS/mac_app.mm"
-}
-plugin_pdf_srcs = { "src/Plugins/Pdf/**.cpp" }
-plugin_xml_srcs = { "src/Plugins/Xml/**.cpp" }
-plugin_html_srcs = { "src/Plugins/Html/**.cpp" }
-plugin_database_srcs = { "src/Plugins/Database/**.cpp" }
-plugin_freetype_srcs = { "src/Plugins/Freetype/**.cpp" }
-plugin_metafont_srcs = { "src/Plugins/Metafont/**.cpp" }
-plugin_ghostscript_srcs = { "src/Plugins/Ghostscript/**.cpp" }
-plugin_ispell_srcs = { "src/Plugins/Ispell/**.cpp" }
-plugin_tex_srcs = {"src/Plugins/Tex/**.cpp"}
-plugin_latex_preview_srcs = {"src/Plugins/LaTeX_Preview/**.cpp"}
-plugin_bibtex_srcs = { "src/Plugins/Bibtex/**.cpp" }
-plugin_openssl_srcs = { "src/Plugins/Openssl/**.cpp" }
-plugin_updater_srcs = { "src/Plugins/Updater/**.cpp" }
-plugin_git_srcs = { "src/Plugins/Git/**.cpp" }
-
-
 target("libmogan") do
     set_enabled(not is_plat ("wasm"))
     set_basename("mogan")
@@ -413,8 +331,8 @@ target("libmogan") do
 end 
 
 
-includes("xmake/tm2html.lua")
 if not is_plat("wasm") then
+    includes("xmake/tm2html.lua")
     target ("tm2html") do
         set_version(XMACS_VERSION)
         set_installdir(INSTALL_DIR)
@@ -426,9 +344,8 @@ if not is_plat("wasm") then
     end
 end
 
-
-includes("xmake/draw.lua")
 if is_plat("wasm", "linux") then
+    includes("xmake/draw.lua")
     target("draw") do
         set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
         add_tm_configure("draw", TM_CONFIGURE_VARS)
@@ -437,8 +354,8 @@ if is_plat("wasm", "linux") then
 end
 
 
-includes("xmake/code.lua")
 if is_plat("wasm", "linux", "windows") then
+    includes("xmake/code.lua")
     target("code") do
         set_installdir(INSTALL_DIR)
         set_version(XMACS_VERSION, {build = "%Y-%m-%d"})

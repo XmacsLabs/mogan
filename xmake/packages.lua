@@ -9,6 +9,8 @@
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
+includes("vars.lua")
+
 --
 -- Dependencies: Platform|Package Manager
 --
@@ -25,22 +27,6 @@ end
 function using_pacman ()
     return linuxos.name() == "archlinux"
 end
-
--- The following versions are adopted on macOS/Windows/ArchLinux
--- We will use the system provided packages on Ubuntu 22.04/Debian 12/...
-local S7_VERSION = "20230413"
-local QT6_VERSION = "6.5.3"
-local QTIFW_VERSION = "4.6.0"
-local LOLLY_VERSION = "1.3.25"
-local TBOX_VERSION = "1.7.5"
-local CPR_VERSION = "1.10.5"
-local CURL_VERSION = "8.4.0"
-local PDFHUMMUS_VERSION = "4.6.2"
-local FREETYPE_VERSION = "2.12.1"
-local LIBPNG_VERSION = "1.6.37"
-local LIBJPEG_VERSION = "v9e"
-local LIBICONV_VERSION = "1.17"
-local LIBGIT2_VERSION = "1.7.1"
 
 function add_requires_of_mogan()
     -- package: s7
