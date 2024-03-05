@@ -26,7 +26,6 @@
 #define TM_STABLE "${tm_stable}"
 #define TM_STABLE_RELEASE "${tm_stable_release}"
 
-${define OS_MINGW}
 ${define OS_GNU_LINUX}
 ${define OS_MACOS}
 ${define OS_WIN}
