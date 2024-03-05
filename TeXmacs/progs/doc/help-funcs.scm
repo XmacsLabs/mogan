@@ -94,10 +94,7 @@
 (define (load-remote-planet)
   (load-buffer (get-remote-planet-url)))
 
-(tm-define (mogan-welcome)
-  (load-help-article "about/mogan/research"))
-
-(tm-define (mogan-beamer-welcome)
+(define (mogan-beamer-welcome)
   (let* ((lan (string-take (language-to-locale (get-output-language)) 2))
          (path (string-append "$TEXMACS_PATH/doc/about/mogan/beamer." lan ".tm"))
          (en_doc (string-append "$TEXMACS_PATH/doc/about/mogan/beamer.en.tm")))
@@ -105,6 +102,10 @@
         (load-buffer (system->url path))
         (load-buffer (system->url en_doc)))
     (delayed (:idle 25) (fit-to-screen-width))))
+
+(tm-define (mogan-welcome)
+  (cond ((== (mogan-app-id) "beamer") (mogan-beamer-welcome))
+        (else (load-help-article "about/mogan/research"))))
 
 (tm-define (xmacs-planet)
   (if (url-exists? (get-remote-planet-url))

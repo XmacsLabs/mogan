@@ -18,6 +18,7 @@
 #include "language.hpp"
 #include "merge_sort.hpp"
 #include "preferences.hpp"
+#include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #ifdef OS_WIN
@@ -466,6 +467,13 @@ init_texmacs () {
   init_env_vars ();
   // cout << "Initialize -- Miscellaneous\n";
   init_misc ();
+}
+
+void
+load_welcome_doc () {
+  if (DEBUG_STD) debug_boot << "Loading welcome message...\n";
+  string cmd= "(mogan-welcome)";
+  exec_delayed (scheme_cmd (cmd));
 }
 
 /******************************************************************************

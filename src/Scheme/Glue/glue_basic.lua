@@ -1901,7 +1901,11 @@ function main()
                     "array_url"
                 }
             },
-            
+            {
+                scm_name = "mogan-app-id",
+                cpp_name = "mogan_app_id",
+                ret_type = "string",
+            },
         }
     }
 end

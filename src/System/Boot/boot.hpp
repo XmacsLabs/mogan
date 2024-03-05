@@ -23,6 +23,7 @@ void init_texmacs ();
 void init_plugins ();
 void setup_texmacs ();
 void release_boot_lock ();
+void load_welcome_doc ();
 
 scheme_tree plugin_list ();
 

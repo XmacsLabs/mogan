@@ -366,10 +366,7 @@ TeXmacs_main (int argc, char** argv) {
       }
     }
     if (install_status == 1 || install_status == 2) {
-      if (DEBUG_STD) debug_boot << "Loading welcome message...\n";
-      string cmd= "(mogan-beamer-welcome)";
-      // FIXME: force to load welcome message into new window
-      exec_delayed (scheme_cmd (cmd));
+      load_welcome_doc ();
     }
     if (number_buffers () == 0) {
       if (DEBUG_STD) debug_boot << "Creating 'no name' buffer...\n";
