@@ -50,31 +50,107 @@ TM_CONFIGURE_VARS = {
 RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
 
 -- Source Code
+libmogan_headers = {
+    "$(projectdir)/src/Data/Convert",
+    "$(projectdir)/src/Data/Document",
+    "$(projectdir)/src/Data/Drd",
+    "$(projectdir)/src/Data/History",
+    "$(projectdir)/src/Data/Observers",
+    "$(projectdir)/src/Data/Parser",
+    "$(projectdir)/src/Data/Scheme",
+    "$(projectdir)/src/Data/String",
+    "$(projectdir)/src/Data/Tree",
+    "$(projectdir)/src/Edit",
+    "$(projectdir)/src/Edit/Editor",
+    "$(projectdir)/src/Edit/Interface",
+    "$(projectdir)/src/Edit/Modify",
+    "$(projectdir)/src/Edit/Process",
+    "$(projectdir)/src/Edit/Replace",
+    "$(projectdir)/src/Graphics/Bitmap_fonts",
+    "$(projectdir)/src/Graphics/Colors",
+    "$(projectdir)/src/Graphics/Fonts",
+    "$(projectdir)/src/Graphics/Gui",
+    "$(projectdir)/src/Graphics/Handwriting",
+    "$(projectdir)/src/Graphics/Mathematics",
+    "$(projectdir)/src/Graphics/Pictures",
+    "$(projectdir)/src/Graphics/Renderer",
+    "$(projectdir)/src/Graphics/Spacial",
+    "$(projectdir)/src/Graphics/Types",
+    "$(projectdir)/src/Kernel/Abstractions",
+    "$(projectdir)/src/Kernel/Types",
+    "$(projectdir)/src/Plugins",
+    "$(projectdir)/src/Scheme",
+    "$(projectdir)/src/Scheme/S7",
+    "$(projectdir)/src/Scheme/L1",
+    "$(projectdir)/src/Scheme/L2",
+    "$(projectdir)/src/Scheme/L3",
+    "$(projectdir)/src/Scheme/L4",
+    "$(projectdir)/src/Scheme/L5",
+    "$(projectdir)/src/Scheme/Plugins",
+    "$(projectdir)/src/Scheme/Scheme",
+    "$(projectdir)/src/System",
+    "$(projectdir)/src/System/Boot",
+    "$(projectdir)/src/System/Classes",
+    "$(projectdir)/src/System/Config",
+    "$(projectdir)/src/System/Files",
+    "$(projectdir)/src/System/Language",
+    "$(projectdir)/src/System/Link",
+    "$(projectdir)/src/System/Misc",
+    "$(projectdir)/src/Texmacs",
+    "$(projectdir)/src/Texmacs/Data",
+    "$(projectdir)/src/Typeset",
+    "$(projectdir)/src/Typeset/Bridge",
+    "$(projectdir)/src/Typeset/Concat",
+    "$(projectdir)/src/Typeset/Page",
+    "$(buildir)/glue",
+    "$(projectdir)/TeXmacs/include",
+}
+
+libmogan_srcs = {
+    "$(projectdir)/src/Data/**.cpp",
+    "$(projectdir)/src/Edit/**.cpp",
+    "$(projectdir)/src/Graphics/**.cpp",
+    "$(projectdir)/src/Kernel/**.cpp",
+    "$(projectdir)/src/Scheme/Scheme/**.cpp",
+    "$(projectdir)/src/Scheme/S7/**.cpp",
+    "$(projectdir)/src/Scheme/L1/**.cpp",
+    "$(projectdir)/src/Scheme/L2/**.cpp",
+    "$(projectdir)/src/Scheme/L3/**.cpp",
+    "$(projectdir)/src/Scheme/L4/**.cpp",
+    "$(projectdir)/src/Scheme/L5/**.cpp",
+    "$(projectdir)/src/Scheme/Plugins/**.cpp",
+    "$(projectdir)/src/System/**.cpp",
+    "$(projectdir)/src/Texmacs/Data/**.cpp",
+    "$(projectdir)/src/Texmacs/Server/**.cpp",
+    "$(projectdir)/src/Texmacs/Window/**.cpp",
+    "$(projectdir)/src/Typeset/**.cpp",
+}
+
 plugin_qt_srcs_on_wasm = {
-    "src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp|qt_printer_widget.cpp",
-    "src/Plugins/Qt/*.hpp|QTMPipeLink.hpp|QTMPrintDialog.hpp|QTMPrinterSettings.hpp",
+    "$(projectdir)/src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp|qt_printer_widget.cpp",
+    "$(projectdir)/src/Plugins/Qt/*.hpp|QTMPipeLink.hpp|QTMPrintDialog.hpp|QTMPrinterSettings.hpp",
 }
 plugin_qt_srcs = {
-    "src/Plugins/Qt/**.cpp",
-    "src/Plugins/Qt/**.hpp"
+    "$(projectdir)/src/Plugins/Qt/**.cpp",
+    "$(projectdir)/src/Plugins/Qt/**.hpp"
 }
 plugin_macos_srcs = {
-    "src/Plugins/MacOS/HIDRemote.m",
-    "src/Plugins/MacOS/mac_spellservice.mm",
-    "src/Plugins/MacOS/mac_utilities.mm",
-    "src/Plugins/MacOS/mac_app.mm"
+    "$(projectdir)/src/Plugins/MacOS/HIDRemote.m",
+    "$(projectdir)/src/Plugins/MacOS/mac_spellservice.mm",
+    "$(projectdir)/src/Plugins/MacOS/mac_utilities.mm",
+    "$(projectdir)/src/Plugins/MacOS/mac_app.mm"
 }
-plugin_pdf_srcs = { "src/Plugins/Pdf/**.cpp" }
-plugin_xml_srcs = { "src/Plugins/Xml/**.cpp" }
-plugin_html_srcs = { "src/Plugins/Html/**.cpp" }
-plugin_database_srcs = { "src/Plugins/Database/**.cpp" }
-plugin_freetype_srcs = { "src/Plugins/Freetype/**.cpp" }
-plugin_metafont_srcs = { "src/Plugins/Metafont/**.cpp" }
-plugin_ghostscript_srcs = { "src/Plugins/Ghostscript/**.cpp" }
-plugin_ispell_srcs = { "src/Plugins/Ispell/**.cpp" }
-plugin_tex_srcs = {"src/Plugins/Tex/**.cpp"}
-plugin_latex_preview_srcs = {"src/Plugins/LaTeX_Preview/**.cpp"}
-plugin_bibtex_srcs = { "src/Plugins/Bibtex/**.cpp" }
-plugin_openssl_srcs = { "src/Plugins/Openssl/**.cpp" }
-plugin_updater_srcs = { "src/Plugins/Updater/**.cpp" }
-plugin_git_srcs = { "src/Plugins/Git/**.cpp" }
+plugin_pdf_srcs = { "$(projectdir)/src/Plugins/Pdf/**.cpp" }
+plugin_xml_srcs = { "$(projectdir)/src/Plugins/Xml/**.cpp" }
+plugin_html_srcs = { "$(projectdir)/src/Plugins/Html/**.cpp" }
+plugin_database_srcs = { "$(projectdir)/src/Plugins/Database/**.cpp" }
+plugin_freetype_srcs = { "$(projectdir)/src/Plugins/Freetype/**.cpp" }
+plugin_metafont_srcs = { "$(projectdir)/src/Plugins/Metafont/**.cpp" }
+plugin_ghostscript_srcs = { "$(projectdir)/src/Plugins/Ghostscript/**.cpp" }
+plugin_ispell_srcs = { "$(projectdir)/src/Plugins/Ispell/**.cpp" }
+plugin_tex_srcs = { "$(projectdir)/src/Plugins/Tex/**.cpp" }
+plugin_latex_preview_srcs = { "$(projectdir)/src/Plugins/LaTeX_Preview/**.cpp" }
+plugin_bibtex_srcs = { "$(projectdir)/src/Plugins/Bibtex/**.cpp" }
+plugin_openssl_srcs = { "$(projectdir)/src/Plugins/Openssl/**.cpp" }
+plugin_updater_srcs = { "$(projectdir)/src/Plugins/Updater/**.cpp" }
+plugin_git_srcs = { "$(projectdir)/src/Plugins/Git/**.cpp" }

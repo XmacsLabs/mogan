@@ -11,23 +11,42 @@
 includes ("vars.lua")
 
 local beamer_files = {
-        "TeXmacs(/doc/**)",
-        "TeXmacs(/fonts/**)",
-        "TeXmacs(/langs/**)",
-        "TeXmacs(/misc/**)",
-        "TeXmacs(/packages/**)",
-        "TeXmacs(/progs/**)",
-        "TeXmacs(/styles/**)",
-        "TeXmacs(/texts/**)",
-        "TeXmacs/COPYING", -- copying files are different
-        "TeXmacs/INSTALL",
-        "LICENSE", -- license files are same
-        "TeXmacs/README",
-        "TeXmacs/TEX_FONTS",
-        "TeXmacs(/plugins/**)" -- plugin files
+    "$(projectdir)/TeXmacs(/doc/**)",
+    "$(projectdir)/TeXmacs(/fonts/**)",
+    "$(projectdir)/TeXmacs(/langs/**)",
+    "$(projectdir)/TeXmacs(/misc/**)",
+    "$(projectdir)/TeXmacs(/packages/**)",
+    "$(projectdir)/TeXmacs(/progs/**)",
+    "$(projectdir)/TeXmacs(/styles/**)",
+    "$(projectdir)/TeXmacs(/texts/**)",
+    "$(projectdir)/TeXmacs/COPYING", -- copying files are different
+    "$(projectdir)/TeXmacs/INSTALL",
+    "$(projectdir)/LICENSE", -- license files are same
+    "$(projectdir)/TeXmacs/README",
+    "$(projectdir)/TeXmacs/TEX_FONTS",
+    "$(projectdir)/TeXmacs(/plugins/**)" -- plugin files
 }
 
-function add_target_beamer()
+if is_plat("windows") then
+    target("beamer_windows_icon") do
+        set_version(XMACS_VERSION)
+        set_kind("object")
+        add_configfiles("$(projectdir)/packages/windows/beamer.rc.in", {
+            filename = "beamer/resource.rc"
+        })
+        add_configfiles("$(projectdir)/packages/windows/beamer.ico", {
+            filename = "beamer/beamer.ico",
+            onlycopy = true
+        })
+        add_files("$(buildir)/beamer/resource.rc")
+    end
+end
+
+target("beamer") do
+    if is_plat("windows") and is_mode("release") then
+        add_deps("beamer_windows_icon")
+    end
+
     if is_plat("windows") then 
         set_installdir("$(buildir)/packages/beamer/data/")
     elseif is_plat("macosx") then 
@@ -49,7 +68,7 @@ function add_target_beamer()
     end
 
     build_glue_on_config()
-    add_configfiles("src/System/config.h.xmake", {
+    add_configfiles("$(projectdir)/src/System/config.h.xmake", {
         filename = "beamer/config.h",
         variables = {
             MACOSX_EXTENSIONS = is_plat("macosx"),
@@ -122,7 +141,7 @@ function add_target_beamer()
         target:add("forceincludes", path.absolute("$(buildir)/beamer/config.h"))
         target:add("forceincludes", path.absolute("$(buildir)/beamer/tm_configure.hpp"))
     end)
-    add_files("src/Mogan/Beamer/beamer.cpp")
+    add_files("$(projectdir)/src/Mogan/Beamer/beamer.cpp")
 
     if not is_plat("windows") then
         add_syslinks("pthread")
@@ -173,7 +192,6 @@ function add_target_beamer()
 
     after_install(function (target)
         print("after_install of target beamer")
-        import("xmake.global")
 
         if is_plat("macosx") and is_arch("arm64") then
             local app_dir = target:installdir() .. "/../../"
