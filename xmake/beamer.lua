@@ -137,7 +137,7 @@ function add_target_beamer()
     -- package metadata
     if is_plat("macosx") then
         add_installfiles({
-            "packages/macos/new-mogan.icns",
+            "packages/macos/beamer.icns",
             "packages/macos/TeXmacs-document.icns",
             "src/Plugins/Cocoa/(English.lproj/**)",
             "src/Plugins/Cocoa/(zh_CN.lproj/**)"
