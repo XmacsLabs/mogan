@@ -118,7 +118,7 @@ target("beamer") do
     add_files(libmogan_srcs)
 
     if is_plat("macosx") then
-        add_includedirs("src/Plugins/MacOS", {public = true})
+        add_includedirs("$(projectdir)/src/Plugins/MacOS", {public = true})
         add_files(plugin_macos_srcs)
     end
     add_files(plugin_database_srcs)
@@ -156,10 +156,10 @@ target("beamer") do
     -- package metadata
     if is_plat("macosx") then
         add_installfiles({
-            "packages/macos/beamer.icns",
-            "packages/macos/TeXmacs-document.icns",
-            "src/Plugins/Cocoa/(English.lproj/**)",
-            "src/Plugins/Cocoa/(zh_CN.lproj/**)"
+            "$(projectdir)/packages/macos/beamer.icns",
+            "$(projectdir)/packages/macos/TeXmacs-document.icns",
+            "$(projectdir)/src/Plugins/Cocoa/(English.lproj/**)",
+            "$(projectdir)/src/Plugins/Cocoa/(zh_CN.lproj/**)"
         })
     end
   
@@ -167,22 +167,6 @@ target("beamer") do
         add_installfiles(beamer_files)
     else
         add_installfiles(beamer_files, {prefixdir="share/Xmacs"})
-    end
-
-    -- install tm files for testing purpose
-    if is_mode("releasedbg") then
-        if is_plat("windows") then
-            add_installfiles({
-                "TeXmacs(/tests/tm/*.tm)",
-                "TeXmacs(/tests/tex/*.tex)",
-                "TeXmacs(/tests/bib/*.bib)",
-            })
-        else
-            add_installfiles({
-                "TeXmacs(/tests/*.tm)",
-                "TeXmacs(/tests/*.bib)",
-            }, {prefixdir="share/Xmacs"})
-        end
     end
 
     -- deploy necessary dll
