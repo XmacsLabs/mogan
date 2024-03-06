@@ -555,7 +555,7 @@ main (int argc, char** argv) {
 #ifdef QTTEXMACS
   if (!headless_mode) {
     // it this really necessary? Should be set in the metadata.
-    qtmapp->set_window_icon ("/misc/images/new-mogan-512.png");
+    qtmapp->set_window_icon ("/misc/images/beamer-512.png");
   }
 #endif
   // cout << "Bench  ] Started TeXmacs\n";
