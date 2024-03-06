@@ -181,82 +181,6 @@ add_configfiles("src/System/config.h.xmake", {
     }
 })
 
-libmogan_srcs = {
-    "src/Data/**.cpp",
-    "src/Edit/**.cpp",
-    "src/Graphics/**.cpp",
-    "src/Kernel/**.cpp",
-    "src/Scheme/Scheme/**.cpp",
-    "src/Scheme/S7/**.cpp",
-    "src/Scheme/L1/**.cpp",
-    "src/Scheme/L2/**.cpp",
-    "src/Scheme/L3/**.cpp",
-    "src/Scheme/L4/**.cpp",
-    "src/Scheme/L5/**.cpp",
-    "src/Scheme/Plugins/**.cpp",
-    "src/System/**.cpp",
-    "src/Texmacs/Data/**.cpp",
-    "src/Texmacs/Server/**.cpp",
-    "src/Texmacs/Window/**.cpp",
-    "src/Typeset/**.cpp",
-}
-libmogan_headers = {
-    "src/Data/Convert",
-    "src/Data/Document",
-    "src/Data/Drd",
-    "src/Data/History",
-    "src/Data/Observers",
-    "src/Data/Parser",
-    "src/Data/Scheme",
-    "src/Data/String",
-    "src/Data/Tree",
-    "src/Edit",
-    "src/Edit/Editor",
-    "src/Edit/Interface",
-    "src/Edit/Modify",
-    "src/Edit/Process",
-    "src/Edit/Replace",
-    "src/Graphics/Bitmap_fonts",
-    "src/Graphics/Colors",
-    "src/Graphics/Fonts",
-    "src/Graphics/Gui",
-    "src/Graphics/Handwriting",
-    "src/Graphics/Mathematics",
-    "src/Graphics/Pictures",
-    "src/Graphics/Renderer",
-    "src/Graphics/Spacial",
-    "src/Graphics/Types",
-    "src/Kernel/Abstractions",
-    "src/Kernel/Types",
-    "src/Plugins",
-    "src/Scheme",
-    "src/Scheme/S7",
-    "src/Scheme/L1",
-    "src/Scheme/L2",
-    "src/Scheme/L3",
-    "src/Scheme/L4",
-    "src/Scheme/L5",
-    "src/Scheme/Plugins",
-    "src/Scheme/Scheme",
-    "src/System",
-    "src/System/Boot",
-    "src/System/Classes",
-    "src/System/Config",
-    "src/System/Files",
-    "src/System/Language",
-    "src/System/Link",
-    "src/System/Misc",
-    "src/Texmacs",
-    "src/Texmacs/Data",
-    "src/Typeset",
-    "src/Typeset/Bridge",
-    "src/Typeset/Concat",
-    "src/Typeset/Page",
-    "$(buildir)/glue",
-    "TeXmacs/include",
-    "src/Mogan"
-}
-
 target("libmogan") do
     set_enabled(not is_plat ("wasm"))
     set_basename("mogan")
@@ -366,9 +290,6 @@ end
 
 if is_plat("macosx", "windows") then
     includes("xmake/beamer.lua")
-    target("beamer") do
-        add_target_beamer ()
-    end
 end
 
 if is_plat("windows") then
