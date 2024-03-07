@@ -210,8 +210,8 @@ function add_target_research_on_others()
 
     after_install(function (target)
         print("after_install of target research")
-        import("xmake.global")
         if is_plat("linux") then
+            import("global")
             global.copy_icons(target)
         end
 
