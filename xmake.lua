@@ -3,7 +3,7 @@
 -- MODULE      : xmake.lua
 -- DESCRIPTION : Xmake config file for Mogan STEM Suite
 -- COPYRIGHT   : (C) 2022-2023  jingkaimori
---                   2022-2023  Darcy Shen
+--                   2022-2024  Darcy Shen
 --
 -- This software falls under the GNU general public license version 3 or later.
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -47,7 +47,7 @@ configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
 configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
 
 if is_mode("release") then
-  includes("@builtin/xpack")
+    includes("@builtin/xpack")
 end
 
 includes("xmake/vars.lua")
@@ -288,83 +288,15 @@ if is_plat("wasm", "linux", "windows") then
     end
 end
 
+-- Mogan Beamer
 if is_plat("macosx", "windows") then
     includes("xmake/beamer.lua")
 end
 
-if is_plat("windows") then
-    target("research_windows_icon") do
-        set_version(XMACS_VERSION)
-        set_kind("object")
-        add_configfiles("$(projectdir)/packages/windows/resource.rc.in", {
-            filename = "resource.rc"
-        })
-        add_configfiles("$(projectdir)/packages/windows/Xmacs.ico", {
-            onlycopy = true
-        })
-        add_files("$(buildir)/resource.rc")
-    end
-end
 
+-- Mogan Research
 includes("xmake/research.lua")
-target("research") do
-    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
-    if is_plat("wasm") then
-        add_tm_configure("research", TM_CONFIGURE_VARS)
-        add_target_research_on_wasm()
-    else
-        set_installdir(INSTALL_DIR)
-        set_configdir(INSTALL_DIR)
-        set_configvar("DEVEL_VERSION", DEVEL_VERSION)
-        set_configvar("XMACS_VERSION", XMACS_VERSION)
-        add_target_research_on_others()
-        on_run(function (target)
-            name = target:name()
-            if is_plat("windows") then
-                os.execv(target:installdir().."/bin/MoganResearch.exe")
-            elseif is_plat("linux", "macosx") then
-                print("Launching " .. target:targetfile())
-                os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
-            else
-                print("Unsupported plat $(plat)")
-            end
-        end)
-    end
-end
 
-target("research_packager") do
-    set_enabled(is_plat("macosx") and is_mode("release"))
-    set_kind("phony")
-    if is_plat("macosx") then
-        set_configvar("XMACS_VERSION", XMACS_VERSION)
-        set_configvar("APPCAST", "")
-        set_configvar("OSXVERMIN", "")
-        add_configfiles("$(projectdir)/packages/macos/Info.plist.in", {
-            filename = "Info.plist",
-            pattern = "@(.-)@",
-        })
-    end
-    set_installdir(INSTALL_DIR)
-    if is_plat("macosx") then
-        add_deps("research")
-    end
-
-    after_install(function (target, opt)
-        local app_dir = target:installdir() .. "/../../"
-        os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
-        local dmg_name= "MoganResearch-v" .. XMACS_VERSION .. ".dmg"
-        if is_arch("arm64") then
-            dmg_name= "MoganResearch-v" .. XMACS_VERSION .. "-arm.dmg"
-        end
-        os.execv("hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir)
-    end)
-end
-
-if is_mode ("release") then
-    xpack("research") do
-        add_xpack_research(XMACS_VERSION)
-    end
-end
 
 includes("xmake/tests.lua")
 -- Tests in C++
