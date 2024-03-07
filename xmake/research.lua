@@ -49,7 +49,7 @@ function add_target_research_on_wasm()
     })
 
     build_glue_on_config()
-    add_configfiles("src/System/config.h.xmake", {
+    add_configfiles("$(projectdir)/src/System/config.h.xmake", {
         filename = "research/config.h",
         variables = {
             MACOSX_EXTENSIONS = is_plat("macosx"),
@@ -91,7 +91,7 @@ function add_target_research_on_wasm()
     add_files(plugin_openssl_srcs)
     add_files(plugin_xml_srcs)
     add_files(plugin_html_srcs)
-    add_files("src/Mogan/Research/research.cpp")
+    add_files("$(projectdir)/src/Mogan/Research/research.cpp")
     
     add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
     
@@ -195,9 +195,9 @@ function add_target_research_on_others()
   
     -- install icons
     if is_plat("linux") then
-        add_installfiles("TeXmacs/misc/images/text-x-mogan.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
-        add_installfiles("TeXmacs/misc/mime/MoganResearch.desktop", {prefixdir="share/applications"})
-        add_installfiles("TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
+        add_installfiles("$(projectdir)/TeXmacs/misc/images/text-x-mogan.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
+        add_installfiles("$(projectdir)/TeXmacs/misc/mime/MoganResearch.desktop", {prefixdir="share/applications"})
+        add_installfiles("$(projectdir)/TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
     end
   
     if is_plat("mingw", "windows") then
@@ -210,9 +210,9 @@ function add_target_research_on_others()
     if is_mode("releasedbg") then
         if is_plat("mingw", "windows") then
             add_installfiles({
-                "TeXmacs(/tests/tm/*.tm)",
-                "TeXmacs(/tests/tex/*.tex)",
-                "TeXmacs(/tests/bib/*.bib)",
+                "$(projectdir)/TeXmacs(/tests/tm/*.tm)",
+                "$(projectdir)/TeXmacs(/tests/tex/*.tex)",
+                "$(projectdir)/TeXmacs(/tests/bib/*.bib)",
             })
         else
             add_installfiles({
