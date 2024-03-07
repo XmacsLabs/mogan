@@ -9,7 +9,6 @@
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
-
 local research_files = {
     "$(projectdir)/TeXmacs(/doc/**)",
     "$(projectdir)/TeXmacs(/fonts/**)",
@@ -43,6 +42,11 @@ end
 
 function add_target_research_on_wasm()
     set_languages("c++17")
+
+    add_configfiles("$(projectdir)/src/System/tm_configure.hpp.xmake", {
+        filename = "research/tm_configure.hpp",
+        variables = TM_CONFIGURE_VARS
+    })
 
     build_glue_on_config()
     add_configfiles("src/System/config.h.xmake", {
@@ -100,6 +104,24 @@ end
 
 function add_target_research_on_others()
     set_basename("MoganResearch")
+
+    local install_dir = "$(buildir)"
+    if is_plat("windows") then
+        install_dir = path.join("$(buildir)", "packages/app.mogan/data/")
+    elseif is_plat("macosx") then
+        install_dir = path.join("$(buildir)", "macosx/$(arch)/$(mode)/MoganResearch.app/Contents/Resources/")
+    else
+        if os.getenv("INSTALL_DIR") == nil then
+            install_dir = path.join("$(buildir)", "packages/app.mogan/")
+        else
+            install_dir = os.getenv("INSTALL_DIR")
+        end
+    end
+    set_installdir(install_dir)
+    set_configdir(install_dir)
+
+    set_configvar("DEVEL_VERSION", DEVEL_VERSION)
+    set_configvar("XMACS_VERSION", XMACS_VERSION)
 
     if is_plat("windows") then
         set_optimize("smallest")
@@ -224,34 +246,27 @@ function add_target_research_on_others()
             os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
         end
     end)
+
+    on_run(function (target)
+        name = target:name()
+        if is_plat("windows") then
+            os.execv(target:installdir().."/bin/MoganResearch.exe")
+        elseif is_plat("linux", "macosx") then
+            print("Launching " .. target:targetfile())
+            os.execv(target:targetfile(), {}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
+        else
+            print("Unsupported plat $(plat)")
+        end
+    end)
 end
 
 
 target("research") do
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
     if is_plat("wasm") then
-        add_configfiles("$(projectdir)/src/System/tm_configure.hpp.xmake", {
-            filename = "research/tm_configure.hpp",
-            variables = TM_CONFIGURE_VARS
-        })
         add_target_research_on_wasm()
     else
-        set_installdir(INSTALL_DIR)
-        set_configdir(INSTALL_DIR)
-        set_configvar("DEVEL_VERSION", DEVEL_VERSION)
-        set_configvar("XMACS_VERSION", XMACS_VERSION)
         add_target_research_on_others()
-        on_run(function (target)
-            name = target:name()
-            if is_plat("windows") then
-                os.execv(target:installdir().."/bin/MoganResearch.exe")
-            elseif is_plat("linux", "macosx") then
-                print("Launching " .. target:targetfile())
-                os.execv(target:targetfile(), {}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
-            else
-                print("Unsupported plat $(plat)")
-            end
-        end)
     end
 end
 
