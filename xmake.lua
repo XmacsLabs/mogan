@@ -47,7 +47,7 @@ configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
 configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
 
 if is_mode("release") then
-  includes("@builtin/xpack")
+    includes("@builtin/xpack")
 end
 
 includes("xmake/vars.lua")
@@ -317,12 +317,6 @@ target("research") do
                 print("Unsupported plat $(plat)")
             end
         end)
-    end
-end
-
-if is_mode ("release") then
-    xpack("research") do
-        add_xpack_research(XMACS_VERSION)
     end
 end
 
