@@ -288,24 +288,12 @@ if is_plat("wasm", "linux", "windows") then
     end
 end
 
+-- Mogan Beamer
 if is_plat("macosx", "windows") then
     includes("xmake/beamer.lua")
 end
 
-if is_plat("windows") then
-    target("research_windows_icon") do
-        set_version(XMACS_VERSION)
-        set_kind("object")
-        add_configfiles("$(projectdir)/packages/windows/resource.rc.in", {
-            filename = "resource.rc"
-        })
-        add_configfiles("$(projectdir)/packages/windows/Xmacs.ico", {
-            onlycopy = true
-        })
-        add_files("$(buildir)/resource.rc")
-    end
-end
-
+-- Mogan Research
 includes("xmake/research.lua")
 target("research") do
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
@@ -324,40 +312,12 @@ target("research") do
                 os.execv(target:installdir().."/bin/MoganResearch.exe")
             elseif is_plat("linux", "macosx") then
                 print("Launching " .. target:targetfile())
-                os.execv(target:targetfile(), {}, {envs=RUN_ENVS})
+                os.execv(target:targetfile(), {}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
             else
                 print("Unsupported plat $(plat)")
             end
         end)
     end
-end
-
-target("research_packager") do
-    set_enabled(is_plat("macosx") and is_mode("release"))
-    set_kind("phony")
-    if is_plat("macosx") then
-        set_configvar("XMACS_VERSION", XMACS_VERSION)
-        set_configvar("APPCAST", "")
-        set_configvar("OSXVERMIN", "")
-        add_configfiles("$(projectdir)/packages/macos/Info.plist.in", {
-            filename = "Info.plist",
-            pattern = "@(.-)@",
-        })
-    end
-    set_installdir(INSTALL_DIR)
-    if is_plat("macosx") then
-        add_deps("research")
-    end
-
-    after_install(function (target, opt)
-        local app_dir = target:installdir() .. "/../../"
-        os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
-        local dmg_name= "MoganResearch-v" .. XMACS_VERSION .. ".dmg"
-        if is_arch("arm64") then
-            dmg_name= "MoganResearch-v" .. XMACS_VERSION .. "-arm.dmg"
-        end
-        os.execv("hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir)
-    end)
 end
 
 if is_mode ("release") then

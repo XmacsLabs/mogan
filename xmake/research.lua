@@ -10,7 +10,7 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 
-local TeXmacs_files = {
+local research_files = {
         "TeXmacs(/doc/**)",
         "TeXmacs(/fonts/**)",
         "TeXmacs(/langs/**)",
@@ -26,6 +26,20 @@ local TeXmacs_files = {
         "TeXmacs/TEX_FONTS",
         "TeXmacs(/plugins/**)" -- plugin files
 }
+
+if is_plat("windows") then
+    target("research_windows_icon") do
+        set_version(XMACS_VERSION)
+        set_kind("object")
+        add_configfiles("$(projectdir)/packages/windows/resource.rc.in", {
+            filename = "resource.rc"
+        })
+        add_configfiles("$(projectdir)/packages/windows/Xmacs.ico", {
+            onlycopy = true
+        })
+        add_files("$(buildir)/resource.rc")
+    end
+end
 
 function add_target_research_on_wasm()
     set_languages("c++17")
@@ -163,9 +177,9 @@ function add_target_research_on_others()
     end
   
     if is_plat("mingw", "windows") then
-        add_installfiles(TeXmacs_files)
+        add_installfiles(research_files)
     else
-        add_installfiles(TeXmacs_files, {prefixdir="share/Xmacs"})
+        add_installfiles(research_files, {prefixdir="share/Xmacs"})
     end
 
     -- install tm files for testing purpose
@@ -237,5 +251,32 @@ function add_xpack_research(XMACS_VERSION)
         if is_plat("windows") then
             package:set("basename", "MoganResearch-v" .. XMACS_VERSION .. "-64bit-installer")
         end
+    end)
+end
+
+target("research_packager") do
+    set_enabled(is_plat("macosx") and is_mode("release"))
+    set_kind("phony")
+
+    add_deps("research")
+
+    set_configvar("XMACS_VERSION", XMACS_VERSION)
+    set_configvar("APPCAST", "")
+    set_configvar("OSXVERMIN", "")
+    add_configfiles("$(projectdir)/packages/macos/Info.plist.in", {
+        filename = "Info.plist",
+        pattern = "@(.-)@",
+    })
+
+    set_installdir(path.join("$(buildir)", "macosx/$(arch)/$(mode)/MoganResearch.app/Contents/Resources/"))
+
+    after_install(function (target, opt)
+        local app_dir = target:installdir() .. "/../../"
+        os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
+        local dmg_name= "MoganResearch-v" .. XMACS_VERSION .. ".dmg"
+        if is_arch("arm64") then
+            dmg_name= "MoganResearch-v" .. XMACS_VERSION .. "-arm.dmg"
+        end
+        os.execv("hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir)
     end)
 end
