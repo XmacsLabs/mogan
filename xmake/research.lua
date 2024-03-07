@@ -320,13 +320,14 @@ target("research_packager") do
 
     set_installdir(path.join("$(buildir)", "macosx/$(arch)/$(mode)/MoganResearch.app/Contents/Resources/"))
 
+    local dmg_name= "MoganResearch-v" .. XMACS_VERSION .. ".dmg"
+    if is_arch("arm64") then
+        dmg_name= "MoganResearch-v" .. XMACS_VERSION .. "-arm.dmg"
+    end
+
     after_install(function (target, opt)
         local app_dir = target:installdir() .. "/../../"
         os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
-        local dmg_name= "MoganResearch-v" .. XMACS_VERSION .. ".dmg"
-        if is_arch("arm64") then
-            dmg_name= "MoganResearch-v" .. XMACS_VERSION .. "-arm.dmg"
-        end
         os.execv("hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir)
     end)
 end
