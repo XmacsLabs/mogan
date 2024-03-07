@@ -154,10 +154,12 @@ function add_target_research_on_others()
     set_configvar("PACKAGE", "Mogan Research")
 
     -- install man.1 manual file
-    add_configfiles("(misc/man/texmacs.1.in)", {
-        filename = "texmacs.1",
-        pattern = "@([^\n]-)@",
-    })
+    if is_plat("linux") then
+        add_configfiles("(misc/man/texmacs.1.in)", {
+            filename = "texmacs.1",
+            pattern = "@([^\n]-)@",
+        })
+    end
 
     -- package metadata
     if is_plat("macosx") then
