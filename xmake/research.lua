@@ -3,7 +3,7 @@
 -- MODULE      : research.lua
 -- DESCRIPTION : Xmake config file for Mogan Research
 -- COPYRIGHT   : (C) 2022-2023  jingkaimori
---                   2022-2023  Darcy Shen
+--                   2022-2024  Darcy Shen
 --
 -- This software falls under the GNU general public license version 3 or later.
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -11,20 +11,20 @@
 
 
 local research_files = {
-        "TeXmacs(/doc/**)",
-        "TeXmacs(/fonts/**)",
-        "TeXmacs(/langs/**)",
-        "TeXmacs(/misc/**)",
-        "TeXmacs(/packages/**)",
-        "TeXmacs(/progs/**)",
-        "TeXmacs(/styles/**)",
-        "TeXmacs(/texts/**)",
-        "TeXmacs/COPYING", -- copying files are different
-        "TeXmacs/INSTALL",
-        "LICENSE", -- license files are same
-        "TeXmacs/README",
-        "TeXmacs/TEX_FONTS",
-        "TeXmacs(/plugins/**)" -- plugin files
+    "$(projectdir)/TeXmacs(/doc/**)",
+    "$(projectdir)/TeXmacs(/fonts/**)",
+    "$(projectdir)/TeXmacs(/langs/**)",
+    "$(projectdir)/TeXmacs(/misc/**)",
+    "$(projectdir)/TeXmacs(/packages/**)",
+    "$(projectdir)/TeXmacs(/progs/**)",
+    "$(projectdir)/TeXmacs(/styles/**)",
+    "$(projectdir)/TeXmacs(/texts/**)",
+    "$(projectdir)/TeXmacs/COPYING", -- copying files are different
+    "$(projectdir)/TeXmacs/INSTALL",
+    "$(projectdir)/LICENSE", -- license files are same
+    "$(projectdir)/TeXmacs/README",
+    "$(projectdir)/TeXmacs/TEX_FONTS",
+    "$(projectdir)/TeXmacs(/plugins/**)" -- plugin files
 }
 
 if is_plat("windows") then
@@ -138,7 +138,7 @@ function add_target_research_on_others()
         target:add("forceincludes", path.absolute("$(buildir)/config.h"))
         target:add("forceincludes", path.absolute("$(buildir)/tm_configure.hpp"))
     end)
-    add_files("src/Mogan/Research/research.cpp")
+    add_files("$(projectdir)/src/Mogan/Research/research.cpp")
 
     if is_plat("linux") then
         add_rpathdirs("@executable_path/../lib")
@@ -162,10 +162,10 @@ function add_target_research_on_others()
     -- package metadata
     if is_plat("macosx") then
         add_installfiles({
-            "packages/macos/new-mogan.icns",
-            "packages/macos/TeXmacs-document.icns",
-            "src/Plugins/Cocoa/(English.lproj/**)",
-            "src/Plugins/Cocoa/(zh_CN.lproj/**)"
+            "$(projectdir)/packages/macos/new-mogan.icns",
+            "$(projectdir)/packages/macos/TeXmacs-document.icns",
+            "$(projectdir)/src/Plugins/Cocoa/(English.lproj/**)",
+            "$(projectdir)/src/Plugins/Cocoa/(zh_CN.lproj/**)"
         })
     end
   
@@ -192,8 +192,8 @@ function add_target_research_on_others()
             })
         else
             add_installfiles({
-                "TeXmacs(/tests/*.tm)",
-                "TeXmacs(/tests/*.bib)",
+                "$(projectdir)/TeXmacs(/tests/*.tm)",
+                "$(projectdir)/TeXmacs(/tests/*.bib)",
             }, {prefixdir="share/Xmacs"})
         end
     end
@@ -223,6 +223,36 @@ function add_target_research_on_others()
         end
     end)
 end
+
+
+target("research") do
+    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
+    if is_plat("wasm") then
+        add_configfiles("$(projectdir)/src/System/tm_configure.hpp.xmake", {
+            filename = "research/tm_configure.hpp",
+            variables = TM_CONFIGURE_VARS
+        })
+        add_target_research_on_wasm()
+    else
+        set_installdir(INSTALL_DIR)
+        set_configdir(INSTALL_DIR)
+        set_configvar("DEVEL_VERSION", DEVEL_VERSION)
+        set_configvar("XMACS_VERSION", XMACS_VERSION)
+        add_target_research_on_others()
+        on_run(function (target)
+            name = target:name()
+            if is_plat("windows") then
+                os.execv(target:installdir().."/bin/MoganResearch.exe")
+            elseif is_plat("linux", "macosx") then
+                print("Launching " .. target:targetfile())
+                os.execv(target:targetfile(), {}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
+            else
+                print("Unsupported plat $(plat)")
+            end
+        end)
+    end
+end
+
 
 if is_mode("release") then
 xpack("research") do
@@ -255,6 +285,7 @@ xpack("research") do
     end)
 end
 end
+
 
 target("research_packager") do
     set_enabled(is_plat("macosx") and is_mode("release"))

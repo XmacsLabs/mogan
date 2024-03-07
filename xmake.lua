@@ -3,7 +3,7 @@
 -- MODULE      : xmake.lua
 -- DESCRIPTION : Xmake config file for Mogan STEM Suite
 -- COPYRIGHT   : (C) 2022-2023  jingkaimori
---                   2022-2023  Darcy Shen
+--                   2022-2024  Darcy Shen
 --
 -- This software falls under the GNU general public license version 3 or later.
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -293,32 +293,10 @@ if is_plat("macosx", "windows") then
     includes("xmake/beamer.lua")
 end
 
+
 -- Mogan Research
 includes("xmake/research.lua")
-target("research") do
-    set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
-    if is_plat("wasm") then
-        add_tm_configure("research", TM_CONFIGURE_VARS)
-        add_target_research_on_wasm()
-    else
-        set_installdir(INSTALL_DIR)
-        set_configdir(INSTALL_DIR)
-        set_configvar("DEVEL_VERSION", DEVEL_VERSION)
-        set_configvar("XMACS_VERSION", XMACS_VERSION)
-        add_target_research_on_others()
-        on_run(function (target)
-            name = target:name()
-            if is_plat("windows") then
-                os.execv(target:installdir().."/bin/MoganResearch.exe")
-            elseif is_plat("linux", "macosx") then
-                print("Launching " .. target:targetfile())
-                os.execv(target:targetfile(), {}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
-            else
-                print("Unsupported plat $(plat)")
-            end
-        end)
-    end
-end
+
 
 includes("xmake/tests.lua")
 -- Tests in C++
