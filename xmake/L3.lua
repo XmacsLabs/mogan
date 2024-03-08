@@ -121,7 +121,7 @@ function add_target_L3()
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
     add_packages("s7")
-    add_packages("lolly")
+    add_packages("moebius")
     add_packages("freetype")
     if is_plat("linux") then
         add_packages("fontconfig")

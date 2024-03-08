@@ -71,7 +71,7 @@ function add_target_research_on_wasm()
         }
     })
     
-    add_packages("lolly")
+    add_packages("moebius")
     add_packages("freetype")
     add_packages("s7")
     add_rules("qt.widgetapp_static")
@@ -136,7 +136,7 @@ function add_target_research_on_others()
 
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
 
-    add_packages("lolly")
+    add_packages("moebius")
     if is_plat("mingw", "windows") then
         add_packages("qt6widgets")
     end

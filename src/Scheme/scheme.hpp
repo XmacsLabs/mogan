@@ -16,6 +16,7 @@
 #include "path.hpp"
 #include "tree.hpp"
 #include "url.hpp"
+#include "modification.hpp"
 
 class patch;
 

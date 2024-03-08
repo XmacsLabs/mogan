@@ -47,6 +47,7 @@ function add_requires_of_mogan()
     else
        add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
     end
+    add_requires("moebius", {system=false})
 
     -- package: libcurl
     if is_plat("linux") and using_apt() then
