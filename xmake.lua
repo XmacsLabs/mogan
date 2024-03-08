@@ -12,8 +12,8 @@
 set_xmakever("2.8.7")
 
 -- mode
-set_allowedmodes("releasedbg", "release", "debug")
-add_rules("mode.releasedbg", "mode.release", "mode.debug")
+set_allowedmodes("releasedbg", "release", "debug", "profile")
+add_rules("mode.releasedbg", "mode.release", "mode.debug", "mode.profile")
 
 -- plat
 set_allowedplats("wasm", "linux", "macosx", "windows") 
