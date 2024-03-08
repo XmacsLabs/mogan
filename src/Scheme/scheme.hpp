@@ -13,10 +13,10 @@
 #define SCHEME_HH
 
 #include "command.hpp"
+#include "modification.hpp"
 #include "path.hpp"
 #include "tree.hpp"
 #include "url.hpp"
-#include "modification.hpp"
 
 class patch;
 
