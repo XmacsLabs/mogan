@@ -52,6 +52,55 @@ function add_target_cpp_test(filepath, dep)
     end
 end
 
+function add_target_cpp_bench(filepath, dep)
+    local testname = path.basename(filepath)
+    target(testname) do
+        set_enabled(not is_plat("wasm"))
+        add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
+        set_group("bench")
+        add_deps(dep)
+        set_languages("c++17")
+        set_policy("check.auto_ignore_flags", false)
+        set_encodings("utf-8") -- eliminate warning C4819 on msvc
+        if is_plat("windows") then
+            add_ldflags("/LTCG")
+            set_runtimes("MT")
+        end
+        if is_plat("windows", "mingw") then
+            add_syslinks("secur32")
+        end
+        add_rules("qt.console")
+        add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtTest")
+        if not is_plat("windows") then
+            add_syslinks("pthread")
+        end
+        if is_plat ("mingw") then
+            add_packages("mingw-w64")
+        end
+        add_packages("s7")
+        add_packages("lolly")
+        add_packages("pdfhummus")
+
+        add_includedirs(libmogan_headers)
+        add_includedirs("tests/Base")
+        add_files(filepath)
+        add_files(filepath, {rules = "qt.moc"})
+        add_files("tests/Base/base.cpp")
+        before_build(function (target)
+            target:add("forceincludes", path.absolute("$(buildir)/config.h"))
+        end)
+
+        if is_plat("wasm") then
+            on_run(function (target)
+                node = os.getenv("EMSDK_NODE")
+                cmd = node .. " $(buildir)/wasm/wasm32/$(mode)/" .. testname .. ".js"
+                print("> " .. cmd)
+                os.exec(cmd)
+            end)
+        end
+    end
+end
+
 function add_target_scheme_test(filepath, INSTALL_DIR, RUN_ENVS)
     local testname = path.basename(filepath)
     target(testname) do
