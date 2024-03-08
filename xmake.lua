@@ -302,9 +302,14 @@ includes("xmake/tests.lua")
 -- Tests in C++
 l3_cpp_tests = os.files("tests/L3/**_test.cpp")
 all_cpp_tests = os.files("tests/**_test.cpp")
+cpp_benches = os.files("bench/**_bench.cpp")
 
 for _, filepath in ipairs(l3_cpp_tests) do
     add_target_cpp_test(filepath, "libkernel_l3")
+end
+
+for _, filepath in ipairs(cpp_benches) do
+    add_target_cpp_bench(filepath, "libmogan")
 end
 
 if not (is_plat("linux") and (linuxos.name () == "ubuntu" and linuxos.version():major() == 20)) then

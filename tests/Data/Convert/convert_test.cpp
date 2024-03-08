@@ -20,8 +20,11 @@ class TestConverter : public QObject {
   Q_OBJECT
 
 private slots:
+  void initTestCase () { init_lolly (); }
   void test_search_metadata_data ();
   void test_search_metadata ();
+  void test_texmacs_to_tree_data ();
+  void test_texmacs_to_tree ();
 };
 
 void
@@ -67,6 +70,24 @@ TestConverter::test_search_metadata () {
   qcompare (search_metadata (input_tree, "author"), author);
   qcompare (search_metadata (input_tree, "keyword"), keyword);
   qcompare (search_metadata (input_tree, "invalid"), invalid);
+}
+
+void
+TestConverter::test_texmacs_to_tree_data () {
+  QTest::addColumn<string> ("input_string");
+  QTest::addColumn<tree> ("output");
+
+  QTest::newRow ("pure string") << string ("text") << tree (DOCUMENT, "text");
+  QTest::newRow ("escaped string")
+      << string ("tex\\\\t") << tree (DOCUMENT, "tex\\t");
+  QTest::newRow ("non escaped trailing slash")
+      << string ("text\\") << tree (DOCUMENT, "text\\");
+}
+void
+TestConverter::test_texmacs_to_tree () {
+  QFETCH (string, input_string);
+  QFETCH (tree, output);
+  QCOMPARE (texmacs_to_tree (input_string), output);
 }
 
 QTEST_MAIN (TestConverter)
