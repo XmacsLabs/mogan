@@ -12,6 +12,7 @@
 #ifndef TT_TOOLS_H
 #define TT_TOOLS_H
 
+#include "tree.hpp"
 #include "url.hpp"
 
 void        tt_dump (url u);
