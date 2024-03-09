@@ -265,12 +265,12 @@ ps_read_bbox (string buf, int& x1, int& y1, int& x2, int& y2) {
 }
 
 void
-set_imgbox_cache (tree t, int w, int h, int xmin, int ymin) {
+set_imgbox_cache (url_tree t, int w, int h, int xmin, int ymin) {
   img_box (t)= imgbox{w, h, xmin, ymin};
 }
 
 void
-clear_imgbox_cache (tree t) {
+clear_imgbox_cache (url_tree t) {
   img_box->reset (t);
 }
 /******************************************************************************
