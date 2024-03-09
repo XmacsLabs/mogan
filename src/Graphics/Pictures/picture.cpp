@@ -18,8 +18,8 @@
 #include "renderer.hpp"
 #include "tm_file.hpp"
 #include "tm_timer.hpp"
-#include "true_color.hpp"
 #include "tree_helper.hpp"
+#include "true_color.hpp"
 
 #include <lolly/data/numeral.hpp>
 
