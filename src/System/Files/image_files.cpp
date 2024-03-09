@@ -55,7 +55,7 @@ typedef struct {
   int xmin;
   int ymin;
 } imgbox;
-hashmap<tree, imgbox> img_box;
+hashmap<url_tree, imgbox> img_box;
 // cache for storing image sizes
 // (for ps/eps we also store the image offset so that we have the full bbox
 // info)
@@ -206,7 +206,7 @@ ps_load (url image, bool conv) {
 bool
 ps_bounding_box (url image, int& x1, int& y1, int& x2, int& y2,
                  bool set_default) {
-  tree lookup= image->t;
+  url_tree lookup= image->t;
   if (img_box->contains (lookup)) {
     imgbox box= img_box[lookup];
     x1        = box.xmin;

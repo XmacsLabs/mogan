@@ -11,7 +11,9 @@
 
 #ifndef PICTURE_H
 #define PICTURE_H
+
 #include "url.hpp"
+#include "tree.hpp"
 
 /******************************************************************************
  * The abstract picture class
