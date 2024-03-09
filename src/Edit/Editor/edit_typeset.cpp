@@ -1107,7 +1107,7 @@ edit_typeset_rep::typeset_invalidate_players (path p, bool reattach) {
   if (rp <= p) {
     tree     t= subtree (et, p);
     blackbox bb;
-    bool     ok= t->obs->get_contents (ADDENDUM_PLAYER, bb);
+    bool     ok= t->data->get_contents (ADDENDUM_PLAYER, bb);
     if (ok) {
       if (reattach) tree_addendum_delete (t, ADDENDUM_PLAYER);
       typeset_invalidate (p);

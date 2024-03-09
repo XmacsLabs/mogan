@@ -103,9 +103,9 @@ bool
 tree_pointer_rep::set_tree (tree t) {
   if (ptr != inside (t)) {
     tree ref (ptr);
-    remove_observer (ref->obs, observer (this));
+    remove_observer (ref->data, observer (this));
     ptr= inside (t);
-    insert_observer (t->obs, observer (this));
+    insert_observer (t->data, observer (this));
   }
   return true;
 }
@@ -186,9 +186,9 @@ tree_pointer_rep::notify_insert_node (tree& ref, int pos) {
   (void) ref;
   (void) pos;
   if (flag) {
-    remove_observer (ref[pos]->obs, observer (this));
+    remove_observer (ref[pos]->data, observer (this));
     ptr= inside (ref);
-    insert_observer (ref->obs, observer (this));
+    insert_observer (ref->data, observer (this));
   }
   // cout << "position -> " << obtain_position (observer (this)) << "\n";
 }

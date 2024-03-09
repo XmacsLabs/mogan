@@ -27,7 +27,7 @@ has_player (path ip) {
   if (!has_subtree (the_et, p)) return false;
   tree     t= subtree (the_et, p);
   blackbox bb;
-  return t->obs->get_contents (ADDENDUM_PLAYER, bb);
+  return t->data->get_contents (ADDENDUM_PLAYER, bb);
 }
 
 player
@@ -36,7 +36,7 @@ get_player (path ip) {
   if (has_subtree (the_et, p)) {
     tree     t= subtree (the_et, p);
     blackbox bb;
-    bool     ok= t->obs->get_contents (ADDENDUM_PLAYER, bb);
+    bool     ok= t->data->get_contents (ADDENDUM_PLAYER, bb);
     if (ok) return open_box<player> (bb);
   }
   return player ();
@@ -49,7 +49,7 @@ search_animation_ip (path ip) {
   if (has_subtree (the_et, p)) {
     tree     t= subtree (the_et, p);
     blackbox bb;
-    bool     ok= t->obs->get_contents (ADDENDUM_PLAYER, bb);
+    bool     ok= t->data->get_contents (ADDENDUM_PLAYER, bb);
     if (ok) return ip;
   }
   return search_animation_ip (ip->next);
@@ -269,7 +269,7 @@ concater_rep::typeset_video (tree t, path ip) {
 void
 players_set_elapsed (tree t, double el) {
   blackbox bb;
-  bool     ok= t->obs->get_contents (ADDENDUM_PLAYER, bb);
+  bool     ok= t->data->get_contents (ADDENDUM_PLAYER, bb);
   if (ok) {
     player pl= open_box<player> (bb);
     pl->set_elapsed (el);
@@ -284,7 +284,7 @@ players_set_elapsed (tree t, double el) {
 void
 players_set_speed (tree t, double sp) {
   blackbox bb;
-  bool     ok= t->obs->get_contents (ADDENDUM_PLAYER, bb);
+  bool     ok= t->data->get_contents (ADDENDUM_PLAYER, bb);
   if (ok) {
     player pl= open_box<player> (bb);
     pl->set_speed (sp);
