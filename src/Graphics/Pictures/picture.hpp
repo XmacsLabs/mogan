@@ -81,13 +81,13 @@ ABSTRACT_NULL_CODE (picture);
  * Pictures on disk
  ******************************************************************************/
 
-picture load_picture (url u, int w, int h, url_tree eff, int pixel);
+picture load_picture (url u, int w, int h, tree eff, int pixel);
 picture load_xpm (url file_name);
-void    picture_cache_reserve (url u, int w, int h, url_tree eff, int pixel);
-void    picture_cache_release (url u, int w, int h, url_tree eff, int pixel);
+void    picture_cache_reserve (url u, int w, int h, tree eff, int pixel);
+void    picture_cache_release (url u, int w, int h, tree eff, int pixel);
 void    picture_cache_clean ();
 void    picture_cache_reset ();
-picture cached_load_picture (url u, int w, int h, url_tree eff, int pixel,
+picture cached_load_picture (url u, int w, int h, tree eff, int pixel,
                              bool perma= true);
 string  picture_as_eps (picture pic, int dpi);
 void    save_picture (url dest, picture p);

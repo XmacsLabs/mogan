@@ -64,14 +64,14 @@ hashmap<url_tree, imgbox> img_box;
  * Loading xpm pixmaps
  ******************************************************************************/
 
-url_tree
+tree
 xpm_load (url u) {
   string s;
   load_string ("$TEXMACS_PIXMAP_PATH" * u, s, false);
   if (s == "") load_string ("$TEXMACS_PATH/misc/pixmaps/TeXmacs.xpm", s, true);
 
-  int      i, j;
-  url_tree t (TUPLE);
+  int  i, j;
+  tree t (URL_TUPLE);
   for (i= 0; i < N (s); i++)
     if (s[i] == '\x22') {
       i++;
