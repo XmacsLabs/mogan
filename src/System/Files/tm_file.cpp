@@ -117,9 +117,9 @@ file_format (url u) {
  * Grepping of strings with heavy caching
  ******************************************************************************/
 
-hashmap<tree, tree>   grep_cache (url_none ()->t);
+hashmap<tree, tree>   grep_cache (as_tree (url_none ()));
 hashmap<tree, string> grep_load_cache ("");
-hashmap<tree, tree>   grep_complete_cache (url_none ()->t);
+hashmap<tree, tree>   grep_complete_cache (as_tree (url_none ()));
 
 static bool
 bad_url (url u) {
@@ -130,13 +130,14 @@ bad_url (url u) {
 
 string
 grep_load (url u) {
-  if (!grep_load_cache->contains (u->t)) {
+  tree key= as_tree (u);
+  if (!grep_load_cache->contains (key)) {
     // cout << "Loading " << u << "\n";
     string s;
     if (load_string (u, s, false)) s= "";
-    grep_load_cache (u->t)= s;
+    grep_load_cache (key)= s;
   }
-  return grep_load_cache[u->t];
+  return grep_load_cache[key];
 }
 
 url
@@ -152,12 +153,13 @@ grep_sub (string what, url u) {
 
 url
 grep (string what, url u) {
-  tree key= tuple (what, u->t);
+  tree u_tree= as_tree (u);
+  tree key   = tuple (what, u_tree);
   if (!grep_cache->contains (key)) {
-    if (!grep_complete_cache->contains (u->t))
-      grep_complete_cache (u->t)= expand (complete (u))->t;
-    url found       = grep_sub (what, as_url (grep_complete_cache[u->t]));
-    grep_cache (key)= found->t;
+    if (!grep_complete_cache->contains (u_tree))
+      grep_complete_cache (u_tree)= as_tree (expand (complete (u)));
+    url found       = grep_sub (what, as_url (grep_complete_cache[u_tree]));
+    grep_cache (key)= as_tree (found);
   }
   return as_url (grep_cache[key]);
 }
@@ -219,25 +221,26 @@ var_read_directory (url u) {
 url
 search_file_in (url u, string name) {
   // cout << "Search in " << u << ", " << name << LF;
-  if (!dir_stamp->contains (u->t) ||
-      texmacs_time () - dir_stamp[u->t] > 10000) {
-    dir_is_dir->reset (u->t);
-    dir_contents->reset (u->t);
+  tree u_tree= as_tree (u);
+  if (!dir_stamp->contains (u_tree) ||
+      texmacs_time () - dir_stamp[u_tree] > 10000) {
+    dir_is_dir->reset (u_tree);
+    dir_contents->reset (u_tree);
   }
-  dir_stamp (u->t)= texmacs_time ();
+  dir_stamp (u_tree)= texmacs_time ();
 
-  if (!dir_is_dir->contains (u->t)) dir_is_dir (u->t)= is_directory (u);
-  if (!dir_is_dir[u->t]) {
+  if (!dir_is_dir->contains (u_tree)) dir_is_dir (u_tree)= is_directory (u);
+  if (!dir_is_dir[u_tree]) {
     if (as_string (tail (u)) == name) return u;
     return url_none ();
   }
 
-  if (!dir_contents->contains (u->t)) {
-    array<string> d    = var_read_directory (u);
-    dir_contents (u->t)= d;
+  if (!dir_contents->contains (u_tree)) {
+    array<string> d      = var_read_directory (u);
+    dir_contents (u_tree)= d;
   }
 
-  array<string> d= dir_contents[u->t];
+  array<string> d= dir_contents[u_tree];
   for (int i= 0; i < N (d); i++) {
     url f= search_file_in (u * d[i], name);
     if (!is_none (f)) return f;

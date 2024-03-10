@@ -48,7 +48,6 @@ local l3_files = {
 local l3_includedirs = {
     "src/Kernel/Types",
     "src/Kernel/Abstractions",
-    "src/Data/Drd",
     "src/Data/Document",
     "src/Data/History",
     "src/Data/Observers",
