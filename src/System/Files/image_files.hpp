@@ -12,8 +12,8 @@
 #ifndef IMAGE_FILES_H
 #define IMAGE_FILES_H
 
-#include "tree.hpp"
 #include "url.hpp"
+#include "tree.hpp"
 
 tree          xpm_load (url file_name);
 void          xpm_size (url file_name, int& w, int& h);
@@ -22,12 +22,12 @@ array<SI>     xpm_hotspot (tree t);
 bool          ps_bounding_box (url image, int& x1, int& y1, int& x2, int& y2,
                                bool set_default= true);
 bool          ps_read_bbox (string buf, int& x1, int& y1, int& x2, int& y2);
-void   set_imgbox_cache (url_tree t, int w, int h, int xmin= 0, int ymin= 0);
-void   clear_imgbox_cache (url_tree t);
-string ps_load (url image, bool conv= true);
-void   image_size (url image, int& w, int& h);
-void   pdf_image_size (url image, int& w, int& h);
-void   svg_image_size (url image, int& w, int& h);
+void          set_imgbox_cache (url_tree t, int w, int h, int xmin= 0, int ymin= 0);
+void          clear_imgbox_cache (url_tree t);
+string        ps_load (url image, bool conv= true);
+void          image_size (url image, int& w, int& h);
+void          pdf_image_size (url image, int& w, int& h);
+void          svg_image_size (url image, int& w, int& h);
 void   image_to_pdf (url image, url eps, int w_pt= 0, int h_pt= 0, int dpi= 0);
 string image_to_psdoc (url image);
 void   image_to_png (url image, url png, int w= 0, int h= 0);
