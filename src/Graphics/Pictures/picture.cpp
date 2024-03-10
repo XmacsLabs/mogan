@@ -145,23 +145,26 @@ error_picture (int w, int h) {
  * Cached pictured loading
  ******************************************************************************/
 
-static hashmap<tree, int>     picture_count (0);
-static hashmap<tree, int>     picture_blacklist (0);
-static hashmap<tree, picture> picture_cache;
-static hashmap<tree, int> picture_stamp (-(int) (((unsigned int) (-1)) >> 1));
+static hashmap<url_tree, int>     picture_count (0);
+static hashmap<url_tree, int>     picture_blacklist (0);
+static hashmap<url_tree, picture> picture_cache;
+static hashmap<url_tree, int> picture_stamp (-(int) (((unsigned int) (-1)) >>
+                                                     1));
 
 void
-picture_cache_reserve (url file_name, int w, int h, tree eff, int pixel) {
+picture_cache_reserve (url file_name, int w, int h, url_tree eff, int pixel) {
   (void) pixel;
-  tree key= tuple (file_name->t, as_string (w), as_string (h), eff);
+  url_tree key=
+      url_tree (TUPLE, file_name->t, as_string (w), as_string (h), eff);
   picture_count (key)++;
   // cout << key << " -> " << picture_count[key] << "\n";
 }
 
 void
-picture_cache_release (url file_name, int w, int h, tree eff, int pixel) {
+picture_cache_release (url file_name, int w, int h, url_tree eff, int pixel) {
   (void) pixel;
-  tree key= tuple (file_name->t, as_string (w), as_string (h), eff);
+  url_tree key=
+      url_tree (TUPLE, file_name->t, as_string (w), as_string (h), eff);
   picture_count (key)--;
   // cout << key << " -> " << picture_count[key] << "\n";
   if (picture_count[key] <= 0) picture_blacklist (key)++;
@@ -173,9 +176,9 @@ picture_cache_clean () {
   if (texmacs_time () - last_gc <= 60000) return;
   last_gc= texmacs_time ();
 
-  iterator<tree> it= iterate (picture_blacklist);
+  iterator<url_tree> it= iterate (picture_blacklist);
   while (it->busy ()) {
-    tree key= it->next ();
+    url_tree key= it->next ();
     if (picture_count[key] <= 0) {
       picture_count->reset (key);
       picture_cache->reset (key);
@@ -183,7 +186,7 @@ picture_cache_clean () {
       // cout << "Removed " << key << "\n";
     }
   }
-  picture_blacklist= hashmap<tree, int> ();
+  picture_blacklist= hashmap<url_tree, int> ();
 }
 
 #ifdef QTTEXMACS
@@ -192,9 +195,9 @@ void qt_clean_picture_cache ();
 
 void
 picture_cache_reset () {
-  picture_blacklist= hashmap<tree, int> ();
-  picture_cache    = hashmap<tree, picture> ();
-  picture_stamp    = hashmap<tree, int> ();
+  picture_blacklist= hashmap<url_tree, int> ();
+  picture_cache    = hashmap<url_tree, picture> ();
+  picture_stamp    = hashmap<url_tree, int> ();
 #ifdef QTTEXMACS
   qt_clean_picture_cache ();
 #endif
@@ -203,7 +206,8 @@ picture_cache_reset () {
 static bool
 picture_is_cached (url file_name, int w, int h, tree eff, int pixel) {
   (void) pixel;
-  tree key= tuple (file_name->t, as_string (w), as_string (h), eff);
+  url_tree key=
+      url_tree (TUPLE, file_name->t, as_string (w), as_string (h), eff);
   if (!picture_cache->contains (key)) return false;
   if (descends (file_name, get_texmacs_path ())) {
     // For picture under $TEXMACS_PATH, do not check the timestamp
@@ -221,9 +225,10 @@ picture_is_cached (url file_name, int w, int h, tree eff, int pixel) {
 }
 
 picture
-cached_load_picture (url file_name, int w, int h, tree eff, int pixel,
+cached_load_picture (url_tree file_name, int w, int h, tree eff, int pixel,
                      bool permanent) {
-  tree key= tuple (file_name->t, as_string (w), as_string (h), eff);
+  url_tree key=
+      url_tree (TUPLE, file_name->t, as_string (w), as_string (h), eff);
   if (picture_is_cached (file_name, w, h, eff, pixel))
     return picture_cache[key];
   // cout << "Loading " << key << "\n";
@@ -254,7 +259,7 @@ load_xpm (url file_name) {
 
 #else
 
-  tree t= xpm_load (file_name);
+  url_tree t= xpm_load (file_name);
 
   // get main info
   int    ok, i= 0, j, k, w, h, c, b, x, y;
