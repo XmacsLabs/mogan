@@ -56,8 +56,8 @@ struct perlin_rep : rep<perlin> {
 
 RESOURCE_CODE (perlin);
 
-perlin
-perlin_generator (long lSeed) {
+static perlin
+perlin_generator (int64_t lSeed) {
   string name= "perlin-" * as_string (lSeed);
   if (perlin::instances->contains (name)) return perlin (name);
   return tm_new<perlin_rep> (name, lSeed);

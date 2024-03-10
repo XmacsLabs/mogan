@@ -11,6 +11,7 @@
 function add_target_tm2html()
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     add_packages("lolly")
+    add_packages("moebius")
     add_deps("libmogan")
     add_includedirs({
         "$(buildir)",

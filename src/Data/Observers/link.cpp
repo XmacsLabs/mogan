@@ -143,8 +143,8 @@ get_ids (list<observer> l) {
 
 list<string>
 get_ids (tree t) {
-  if (is_nil (t->obs)) return list<string> ();
-  list<observer> l= t->obs->get_tree_pointers ();
+  if (is_nil (t->data)) return list<string> ();
+  list<observer> l= t->data->get_tree_pointers ();
   return reverse (get_ids (l));
 }
 

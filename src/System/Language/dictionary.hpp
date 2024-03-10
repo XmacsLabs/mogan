@@ -11,7 +11,9 @@
 
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
+
 #include "resource.hpp"
+#include "tree.hpp"
 #include "url.hpp"
 
 RESOURCE (dictionary);

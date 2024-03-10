@@ -11,6 +11,8 @@
 
 #ifndef BOOT_H
 #define BOOT_H
+
+#include "tree.hpp"
 #include "url.hpp"
 
 extern tree texmacs_settings;

@@ -558,8 +558,8 @@ main (int argc, char** argv) {
   }
 #endif
   // cout << "Bench  ] Started TeXmacs\n";
-  the_et     = tuple ();
-  the_et->obs= ip_observer (path ());
+  the_et      = tuple ();
+  the_et->data= ip_observer (path ());
   cache_initialize ();
   bench_start ("initialize texmacs");
   init_texmacs ();

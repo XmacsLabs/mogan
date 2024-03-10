@@ -50,14 +50,14 @@ edit_interface_rep::set_left_footer () {
     s << " " << lan;
   else s << " " << mode;
   if ((mode == "text") || (mode == "src")) {
-    s << " " << verbatim (main_family (get_env_string (FONT)));
+    s << tree (" ") << verbatim (main_family (get_env_string (FONT)));
     append_left_footer (s, FONT_FAMILY);
-    s << " " << as_string ((int) ((base_sz + 0.5) * sz));
+    s << tree (" ") << as_string ((int) ((base_sz + 0.5) * sz));
     append_left_footer (s, FONT_SERIES);
     append_left_footer (s, FONT_SHAPE);
   }
   else if (mode == "math") {
-    s << " " << verbatim (get_env_string (MATH_FONT));
+    s << tree (" ") << verbatim (get_env_string (MATH_FONT));
     append_left_footer (s, MATH_FONT_FAMILY);
     s << " " << as_string ((int) ((base_sz + 0.5) * sz));
     append_left_footer (s, MATH_FONT_SERIES);
@@ -66,7 +66,7 @@ edit_interface_rep::set_left_footer () {
   else if (mode == "prog") {
     string session_name= get_env_string (PROG_SESSION);
     if (session_name != "default") s << "-" << session_name;
-    s << " " << verbatim (get_env_string (PROG_FONT));
+    s << tree (" ") << verbatim (get_env_string (PROG_FONT));
     append_left_footer (s, PROG_FONT_FAMILY);
     s << " " << as_string ((int) ((base_sz + 0.5) * sz));
     append_left_footer (s, PROG_FONT_SERIES);

@@ -19,7 +19,7 @@ STABLE_VERSION = TEXMACS_VERSION
 STABLE_RELEASE = 1
 
 -- XmacsLabs dependencies
-LOLLY_VERSION = "1.4.0"
+LOLLY_VERSION = "1.4.7"
 
 -- Third-party dependencies
 S7_VERSION = "20230413"
@@ -53,7 +53,6 @@ RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
 libmogan_headers = {
     "$(projectdir)/src/Data/Convert",
     "$(projectdir)/src/Data/Document",
-    "$(projectdir)/src/Data/Drd",
     "$(projectdir)/src/Data/History",
     "$(projectdir)/src/Data/Observers",
     "$(projectdir)/src/Data/Parser",

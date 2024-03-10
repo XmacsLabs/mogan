@@ -12,6 +12,7 @@
 #ifndef BIBTEX_H
 #define BIBTEX_H
 
+#include "tree.hpp"
 #include "url.hpp"
 
 tree   parse_bib (string s);

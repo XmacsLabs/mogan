@@ -18,9 +18,6 @@ local l3_files = {
     "$(projectdir)/src/Data/String/**.cpp",
     "$(projectdir)/src/Data/Convert/Generic/**.cpp",
     "$(projectdir)/src/Data/Document/new_document.cpp",
-    "$(projectdir)/src/Data/Drd/**.cpp",
-    "$(projectdir)/src/Data/Tree/tree_helper.cpp",
-    "$(projectdir)/src/Data/Tree/tree_label.cpp",
     "$(projectdir)/src/Data/Tree/tree_cursor.cpp",
     "$(projectdir)/src/Data/Tree/tree_observer.cpp",
     "$(projectdir)/src/Graphics/Colors/**.cpp",
@@ -51,7 +48,6 @@ local l3_files = {
 local l3_includedirs = {
     "src/Kernel/Types",
     "src/Kernel/Abstractions",
-    "src/Data/Drd",
     "src/Data/Document",
     "src/Data/History",
     "src/Data/Observers",
@@ -121,7 +117,7 @@ function add_target_L3()
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
 
     add_packages("s7")
-    add_packages("lolly")
+    add_packages("moebius")
     add_packages("freetype")
     if is_plat("linux") then
         add_packages("fontconfig")

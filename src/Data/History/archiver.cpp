@@ -14,6 +14,7 @@
 #include "iterator.hpp"
 #include "observers.hpp"
 #include "tm_debug.hpp"
+#include "tree.hpp"
 #include "tree_observer.hpp"
 
 extern tree             the_et;

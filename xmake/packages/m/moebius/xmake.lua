@@ -1,4 +1,4 @@
---! package lolly
+--! package moebius
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -18,29 +18,22 @@
 -- @file        lolly.lua
 --
 
-package("lolly")
-    set_homepage("https://github.com/XmacsLabs/lolly")
+package("moebius")
+    set_homepage("https://github.com/XmacsLabs/moebius")
     set_description("Lolly is a C++ library")
 
-    add_urls("https://github.com/XmacsLabs/lolly.git")
-    add_urls("https://gitee.com/XmacsLabs/lolly.git")
-    add_versions("1.4.7", "v1.4.7")
+    add_urls("https://github.com/XmacsLabs/moebius.git")
+    add_urls("https://gitee.com/XmacsLabs/moebius.git")
+    add_versions("0.1.6", "v0.1.6")
 
-    add_deps("tbox")
-    if not is_plat("wasm") then
-        add_deps("cpr")
-        add_deps("mimalloc")
-    end
-
+    add_deps("lolly")
 
     on_install("linux", "macosx", "mingw", "wasm", "windows", function (package)
         local configs = {}
-        if not is_plat("wasm") then
-            configs.malloc = "mimalloc"
-        end
         if package:config("shared") then
             configs.kind = "shared"
         end
         import("package.tools.xmake").install(package, configs)
     end)
 package_end()
+

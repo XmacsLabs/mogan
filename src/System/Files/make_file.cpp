@@ -35,7 +35,7 @@ make_file (int cmd, tree data, array<url> args) {
   tree key (TUPLE, as_string (cmd), data);
   for (int i= 0; i < N (args); i++)
     key << as_string (args[i]);
-  if (make_cache->contains (key)) return as_url (make_cache[key]);
+  if (make_cache->contains (key)) return as_url (as_url_tree (make_cache[key]));
 
   // generate target and check names
   url    make_dir   = "$TEXMACS_HOME_PATH/system/make";

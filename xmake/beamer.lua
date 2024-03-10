@@ -100,7 +100,7 @@ target("beamer") do
 
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
 
-    add_packages("lolly")
+    add_packages("moebius")
     add_packages("freetype")
     add_packages("s7")
     add_packages("pdfhummus")

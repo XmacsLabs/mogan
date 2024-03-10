@@ -40,7 +40,7 @@ function add_target_code()
         }
     })
 
-    add_packages("lolly")
+    add_packages("moebius")
     add_packages("freetype")
     add_packages("s7")
     if is_plat("wasm") then

@@ -102,7 +102,7 @@ TestDatabaseBasicFunciton::test_remove_field () {
   // clean and write to disk
   keep_history (test_db, true);
   keep_history (test_db, false);
-  db_index->reset (url (test_db)->t);
+  db_index->reset (as_tree (url (test_db)));
 
   array<string> s1=
       get_field (test_db, "remove", "no1", (double) get_sec_time ());
@@ -158,7 +158,7 @@ TestDatabaseBasicFunciton::test_remove_entry () {
   // clean and write to disk
   keep_history (test_db, true);
   keep_history (test_db, false);
-  db_index->reset (url (test_db)->t);
+  db_index->reset (as_tree (url (test_db)));
 
   remove_entry (test_db, "Japan", (double) get_sec_time ());
   remove_entry (test_db, "USA", (double) get_sec_time ());

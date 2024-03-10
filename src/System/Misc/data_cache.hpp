@@ -11,6 +11,8 @@
 
 #ifndef DATA_CACHE_H
 #define DATA_CACHE_H
+
+#include "tree.hpp"
 #include "url.hpp"
 
 void cache_set (string buffer, tree key, tree im);
