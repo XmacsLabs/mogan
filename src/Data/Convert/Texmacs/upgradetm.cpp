@@ -17,6 +17,7 @@
 #include "merge_sort.hpp"
 #include "path.hpp"
 #include "scheme.hpp"
+#include "tree.hpp"
 #include "tree_correct.hpp"
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
@@ -1756,7 +1757,7 @@ upgrade_session (tree t) {
   else if (is_expand (t, "session", 3)) {
     tree u= tree (EXPAND, "session", t[3]);
     tree w= tree (WITH);
-    w << PROG_LANGUAGE << t[1] << PROG_SESSION << t[2] << u;
+    w << tree (PROG_LANGUAGE) << t[1] << tree (PROG_SESSION) << t[2] << u;
     return w;
   }
   else {
@@ -3129,9 +3130,9 @@ upgrade_scheme_doc (tree t) {
   else if (is_compound (t, "explain-scm-fun") ||
            is_compound (t, "explain-scm-macro")) {
     tree r (CONCAT);
-    r << "(" << t[0];
+    r << tree ("(") << t[0];
     for (int i= 1; i < N (t); i++)
-      r << " " << t[i];
+      r << tree (" ") << t[i];
     r << ")";
     return compound ("scm", simplify_concat (r));
   }

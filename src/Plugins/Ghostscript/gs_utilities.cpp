@@ -113,7 +113,7 @@ gs_image_size (url image, int& w_pt, int& h_pt) {
       if (ok) {
         w_pt= x2 - x1;
         h_pt= y2 - y1;
-        set_imgbox_cache (image->t, w_pt, h_pt, x1, y1);
+        set_imgbox_cache (as_tree (image), w_pt, h_pt, x1, y1);
       }
     }
   }
@@ -149,7 +149,7 @@ gs_fix_bbox (url eps, int x1, int y1, int x2, int y2) {
         debug_convert << "restored bbox : "
                       << ps_read_bbox (outbuf, x1, y1, x2, y2) << LF;
     }
-    set_imgbox_cache (eps->t, x2 - x1, y2 - y1, x1, y1);
+    set_imgbox_cache (as_tree (eps), x2 - x1, y2 - y1, x1, y1);
   }
 }
 

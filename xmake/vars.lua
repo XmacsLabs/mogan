@@ -53,7 +53,6 @@ RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
 libmogan_headers = {
     "$(projectdir)/src/Data/Convert",
     "$(projectdir)/src/Data/Document",
-    "$(projectdir)/src/Data/Drd",
     "$(projectdir)/src/Data/History",
     "$(projectdir)/src/Data/Observers",
     "$(projectdir)/src/Data/Parser",

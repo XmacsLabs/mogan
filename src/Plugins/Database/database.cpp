@@ -278,12 +278,13 @@ hashmap<tree, int> db_index;
 
 database
 get_database (url u) {
+  tree key= as_tree (u);
   check_for_updates ();
-  if (!db_index->contains (u->t)) {
-    db_index (u->t)= N (dbs);
+  if (!db_index->contains (key)) {
+    db_index (key)= N (dbs);
     dbs << database (u);
   }
-  return dbs[db_index[u->t]];
+  return dbs[db_index[key]];
 }
 
 void
