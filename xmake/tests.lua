@@ -79,6 +79,7 @@ function add_target_cpp_bench(filepath, dep)
         end
         add_packages("s7")
         add_packages("lolly")
+        add_packages("moebius")
         add_packages("pdfhummus")
 
         add_includedirs(libmogan_headers)
