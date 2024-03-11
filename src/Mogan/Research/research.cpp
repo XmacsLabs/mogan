@@ -52,9 +52,8 @@ void mac_fix_paths ();
 #endif
 
 extern string original_path;
-
-extern tree the_et;
-extern bool headless_mode;
+extern tree   the_et;
+extern bool   headless_mode;
 
 #ifdef QTTEXMACS
 static QTMApplication*     qtmapp    = NULL;
@@ -214,10 +213,8 @@ main (int argc, char** argv) {
   if (!headless_mode) {
     // it this really necessary? Should be set in the metadata.
     qtmapp->set_window_icon ("/misc/images/new-mogan-512.png");
+    init_style_sheet (qtmapp);
   }
-#endif
-#ifdef QTTEXMACS
-  if (!headless_mode) init_style_sheet (qtmapp);
 #endif
 
   // cout << "Bench  ] Started TeXmacs\n";

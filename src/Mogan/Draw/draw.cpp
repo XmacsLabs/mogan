@@ -38,28 +38,14 @@
 #endif
 
 extern string original_path;
-
-extern tree the_et;
-extern bool texmacs_started;
-extern bool headless_mode;
-
-void server_start ();
+extern tree   the_et;
+extern bool   headless_mode;
 
 #ifdef QTTEXMACS
 // Qt application infrastructure
 static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
 #endif
-
-/******************************************************************************
- * Clean exit on segmentation faults
- ******************************************************************************/
-
-void
-clean_exit_on_segfault (int sig_num) {
-  (void) sig_num;
-  TM_FAILED ("segmentation fault");
-}
 
 /******************************************************************************
  * Main program
@@ -153,7 +139,11 @@ main (int argc, char** argv) {
 #endif
   init_texmacs_path (argc, argv);
 #ifdef QTTEXMACS
-  if (!headless_mode) qtmapp->set_window_icon ("/misc/images/texmacs-512.png");
+  if (!headless_mode) {
+    // it this really necessary? Should be set in the metadata.
+    qtmapp->set_window_icon ("/misc/images/new-mogan-512.png");
+    init_style_sheet (qtmapp);
+  }
 #endif
   // cout << "Bench  ] Started TeXmacs\n";
   the_et      = tuple ();
