@@ -839,9 +839,5 @@ TeXmacs_main (int argc, char** argv) {
   if (DEBUG_STD) debug_boot << "Closing display...\n";
   gui_close ();
 
-#if defined(MACOSX_EXTENSIONS)
-  finalize_mac_application ();
-#endif
-
   if (DEBUG_STD) debug_boot << "Good bye...\n";
 }

@@ -47,10 +47,6 @@ void mac_fix_paths ();
 #include "MacOS/mac_utilities.h"
 #endif
 
-#if defined(MACOSX_EXTENSIONS)
-#include "MacOS/mac_app.h"
-#endif
-
 extern string original_path;
 extern tree   the_et;
 extern bool   headless_mode;
