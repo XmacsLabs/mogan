@@ -12,10 +12,10 @@
 #include "packrat_parser.hpp"
 #include "analyze.hpp"
 #include "cork.hpp"
-#include "drd_std.hpp"
 #include "language.hpp" //(en|de)code_color
 #include "observers.hpp"
 #include "tm_debug.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
 

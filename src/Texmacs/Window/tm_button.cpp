@@ -33,10 +33,10 @@
 #include "Format/format.hpp"
 #include "convert.hpp"
 #include "drd_info.hpp"
-#include "drd_std.hpp"
 #include "formatter.hpp"
 #include "gui.hpp"
 #include "new_style.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 void use_modules (tree t);
 

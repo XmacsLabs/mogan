@@ -12,7 +12,6 @@
 #include "dictionary.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
-#include "drd_std.hpp"
 #include "file.hpp"
 #include "font.hpp"
 #include "gui.hpp"
@@ -20,6 +19,7 @@
 #include "locale.hpp"
 #include "scheme.hpp"
 #include "universal.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 #include <moebius/data/scheme.hpp>
 

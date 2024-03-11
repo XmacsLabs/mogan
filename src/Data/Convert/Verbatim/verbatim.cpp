@@ -13,10 +13,10 @@
 #include "convert.hpp"
 #include "converter.hpp"
 #include "cork.hpp"
-#include "drd_std.hpp"
 #include "locale.hpp"
 #include "tree_helper.hpp"
 #include "wencoding.hpp"
+#include <moebius/drd/drd_std.hpp>
 #include <moebius/vars.hpp>
 
 using namespace moebius;

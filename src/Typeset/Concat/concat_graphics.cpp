@@ -12,11 +12,11 @@
 #include "Boxes/graphics.hpp"
 #include "analyze.hpp"
 #include "concater.hpp"
-#include "drd_std.hpp"
 #include "hashset.hpp"
 #include "matrix.hpp"
 #include "scheme.hpp"
 #include "tm_debug.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
 

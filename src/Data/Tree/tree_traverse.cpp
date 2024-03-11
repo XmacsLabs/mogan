@@ -13,10 +13,10 @@
 #include "analyze.hpp"
 #include "cork.hpp"
 #include "drd_mode.hpp"
-#include "drd_std.hpp"
 #include "hashset.hpp"
 #include "scheme.hpp"
 #include "tree_helper.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
 

@@ -12,8 +12,8 @@
 #ifndef TREE_ANALYZE_H
 #define TREE_ANALYZE_H
 #include "analyze.hpp"
-#include "drd_std.hpp"
 #include "language.hpp"
+#include <moebius/drd/drd_std.hpp>
 #include <moebius/vars.hpp>
 
 /******************************************************************************

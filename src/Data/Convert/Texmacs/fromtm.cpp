@@ -12,10 +12,10 @@
 
 #include "convert.hpp"
 #include "converter.hpp"
-#include "drd_std.hpp"
 #include "path.hpp"
 #include "scheme.hpp"
 #include "tree_helper.hpp"
+#include <moebius/drd/drd_std.hpp>
 #include <moebius/vars.hpp>
 
 #include <lolly/data/numeral.hpp>

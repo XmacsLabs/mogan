@@ -13,7 +13,7 @@
 #include "Replace/edit_replace.hpp"
 #include "analyze.hpp"
 #include "drd_mode.hpp"
-#include "drd_std.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
 

@@ -11,13 +11,13 @@
 
 #include "tm_window.hpp"
 #include "dictionary.hpp"
-#include "drd_std.hpp"
 #include "iterator.hpp"
 #include "merge_sort.hpp"
 #include "message.hpp"
 #include "preferences.hpp"
 #include "tm_data.hpp"
 #include "tm_url.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
 

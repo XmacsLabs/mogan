@@ -12,7 +12,6 @@
 #include "analyze.hpp"
 #include "boot.hpp"
 #include "convert.hpp"
-#include "drd_std.hpp"
 #include "file.hpp"
 #include "language.hpp"
 #include "merge_sort.hpp"
@@ -20,6 +19,7 @@
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
+#include <moebius/drd/drd_std.hpp>
 #ifdef OS_WIN
 #include <process.h>
 #else

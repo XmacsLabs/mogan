@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 #include "bridge.hpp"
-#include "drd_std.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 tree insert_at (tree, path, tree);
 tree remove_at (tree, path, int);

@@ -13,8 +13,8 @@
 #include "analyze.hpp"
 #include "cork.hpp"
 #include "drd_mode.hpp"
-#include "drd_std.hpp"
 #include "tree_helper.hpp"
+#include <moebius/drd/drd_std.hpp>
 #include <moebius/vars.hpp>
 
 using namespace moebius;

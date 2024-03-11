@@ -11,7 +11,7 @@
 
 #ifndef TREE_MODIFY_H
 #define TREE_MODIFY_H
-#include "drd_std.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 tree simplify_concat (tree t);
 tree simplify_document (tree t);

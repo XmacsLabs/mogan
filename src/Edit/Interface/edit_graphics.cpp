@@ -13,11 +13,11 @@
 #include "Boxes/graphics.hpp"
 #include "Bridge/impl_typesetter.hpp"
 #include "curve.hpp"
-#include "drd_std.hpp"
 #include "edit_interface.hpp"
 #include "scheme.hpp"
 #include "server.hpp"
 #include "tree_observer.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
 extern tree the_et;
