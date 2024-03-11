@@ -26,7 +26,7 @@ private slots:
 
 void
 TestQueryXML::test_find_first_element_by_name () {
-  init_std_drd ();
+  moebius::drd::init_std_drd ();
   string svg_content= "<svg xmlns=\"http://www.w3.org/2000/svg\"\
 class=\"railroad-diagram\" width=\"521\" height=\"110\" viewBox=\"0 0 521 110\">\
 </svg>";
