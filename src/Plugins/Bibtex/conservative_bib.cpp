@@ -11,6 +11,7 @@
 
 #include "analyze.hpp"
 #include "convert.hpp"
+#include "converter.hpp"
 #include "iterator.hpp"
 #include "scheme.hpp"
 #include "tree_helper.hpp"

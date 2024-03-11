@@ -12,6 +12,7 @@
 #include "xml.hpp"
 #include "analyze.hpp"
 #include "convert.hpp"
+#include "converter.hpp"
 #include "scheme.hpp"
 
 /******************************************************************************

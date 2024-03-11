@@ -20,6 +20,8 @@
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
+
+#include <signal.h>
 #ifdef OS_WIN
 #include <process.h>
 #else
@@ -51,6 +53,7 @@ extern url    tm_init_file;
 extern url    tm_init_buffer_file;
 extern string my_init_cmds;
 extern bool   char_clip;
+extern bool   texmacs_started;
 
 string extra_init_cmd;
 bool   disable_error_recovery= false;
@@ -59,8 +62,20 @@ bool   start_server_flag     = false;
 int install_status= 0;
 
 #ifdef QTTEXMACS
-static QTMApplication* qtmapp= NULL;
+extern QTMApplication* qtmapp;
 #endif
+
+void server_start ();
+
+/******************************************************************************
+ * Clean exit on segmentation faults
+ ******************************************************************************/
+
+void
+clean_exit_on_segfault (int sig_num) {
+  (void) sig_num;
+  TM_FAILED ("segmentation fault");
+}
 
 /******************************************************************************
  * Texmacs paths

@@ -28,6 +28,10 @@
 #include <QString>
 #include <QStringList>
 
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::scm_quote;
+
 /*!
   \param _cmd  Scheme closure to execute after the dialog is closed.
   \param _type What kind of dialog to show. Can be one of "image", "directory",

@@ -17,7 +17,7 @@
 #include <locale.h> // for setlocale
 #include <lolly/system/args.hpp>
 #include <lolly/system/timer.hpp>
-#include <signal.h>
+
 #include <sys/stat.h>
 #include <sys/types.h>
 #ifdef STACK_SIZE
@@ -54,26 +54,14 @@ void mac_fix_paths ();
 extern string original_path;
 
 extern tree the_et;
-extern bool texmacs_started;
 extern bool headless_mode;
 
 string extra_init_cmd;
-void   server_start ();
 
 #ifdef QTTEXMACS
-extern QTMApplication*     qtmapp;
+static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
 #endif
-
-/******************************************************************************
- * Clean exit on segmentation faults
- ******************************************************************************/
-
-void
-clean_exit_on_segfault (int sig_num) {
-  (void) sig_num;
-  TM_FAILED ("segmentation fault");
-}
 
 /******************************************************************************
  * Main program
