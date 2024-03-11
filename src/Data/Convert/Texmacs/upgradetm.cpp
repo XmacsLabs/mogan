@@ -12,7 +12,6 @@
 #include "convert.hpp"
 #include "converter.hpp"
 #include "cork.hpp"
-#include "drd_std.hpp"
 #include "hashset.hpp"
 #include "merge_sort.hpp"
 #include "path.hpp"
@@ -21,10 +20,14 @@
 #include "tree_correct.hpp"
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
+
+#include <moebius/drd/drd_std.hpp>
 #include <moebius/vars.hpp>
 #include <stdio.h>
 
 using namespace moebius;
+using moebius::drd::STD_CODE;
+using moebius::drd::std_drd;
 
 static bool upgrade_tex_flag= false;
 double      get_magnification (string s);

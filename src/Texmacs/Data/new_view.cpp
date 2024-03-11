@@ -11,7 +11,6 @@
 
 #include "convert.hpp"
 #include "dictionary.hpp"
-#include "drd_std.hpp"
 #include "file.hpp"
 #include "message.hpp"
 #include "new_document.hpp"
@@ -20,11 +19,14 @@
 #include "tm_url.hpp"
 #include "web_files.hpp"
 
+#include <moebius/drd/drd_std.hpp>
+
 #if defined(OS_MINGW) || defined(OS_WIN)
 #define WINPATHS
 #endif
 
 using namespace moebius;
+using moebius::drd::the_drd;
 
 /******************************************************************************
  * Associating URLs to views

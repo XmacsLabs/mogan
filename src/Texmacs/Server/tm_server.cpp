@@ -18,7 +18,6 @@
 #include "convert.hpp"
 #include "cork.hpp"
 #include "dictionary.hpp"
-#include "drd_std.hpp"
 #include "file.hpp"
 #include "lolly/system/subprocess.hpp"
 #include "new_style.hpp"
@@ -26,6 +25,7 @@
 #include "sys_utils.hpp"
 #include "tm_link.hpp"
 #include "tm_sys_utils.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 server* the_server     = NULL;
 bool    texmacs_started= false;

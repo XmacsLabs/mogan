@@ -11,11 +11,13 @@
 
 #include "analyze.hpp"
 #include "cork.hpp"
-#include "drd_std.hpp"
 #include "packrat_parser.hpp"
 #include "tree_helper.hpp"
 
+#include <moebius/drd/drd_std.hpp>
+
 using namespace moebius;
+using moebius::drd::the_drd;
 
 /******************************************************************************
  * Useful subroutines

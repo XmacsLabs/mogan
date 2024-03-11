@@ -14,9 +14,9 @@
 #include "Xml/xml.hpp"
 #include "base.hpp"
 #include "convert.hpp"
-#include "drd_std.hpp"
 #include "sys_utils.hpp"
 #include "tree_helper.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 class TestParseXML : public QObject {
   Q_OBJECT

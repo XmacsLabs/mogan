@@ -10,13 +10,14 @@
  ******************************************************************************/
 
 #include "tree_modify.hpp"
-#include "drd_std.hpp"
 #include "observers.hpp"
 #include "path.hpp"
 #include "tree_helper.hpp"
 #include "tree_observer.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
+using moebius::drd::the_drd;
 
 extern tree the_et;
 

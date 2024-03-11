@@ -12,7 +12,6 @@
 #include "convert.hpp"
 #include "cork.hpp"
 #include "dictionary.hpp"
-#include "drd_mode.hpp"
 #include "env.hpp"
 #include "file.hpp"
 #include "image_files.hpp"
@@ -26,11 +25,14 @@
 #include "web_files.hpp"
 
 #include <lolly/data/numeral.hpp>
+#include <moebius/drd/drd_mode.hpp>
+
 using lolly::data::from_hex;
 using lolly::data::to_hanzi;
 using lolly::data::to_Hex;
 using lolly::data::to_roman;
 using lolly::data::to_Roman;
+using moebius::drd::drd_encode_type;
 
 extern int  script_status;
 extern tree with_package_definitions (string package, tree body);

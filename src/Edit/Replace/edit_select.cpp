@@ -13,13 +13,17 @@
 #include "Interface/edit_interface.hpp"
 #include "convert.hpp"
 #include "cork.hpp"
-#include "drd_mode.hpp"
 #include "packrat.hpp"
 #include "tree_modify.hpp"
 #include "tree_observer.hpp"
 #include "tree_select.hpp"
 
+#include <moebius/drd/drd_mode.hpp>
+
 using namespace moebius;
+using moebius::drd::drd_env_read;
+using moebius::drd::get_access_mode;
+using moebius::drd::set_access_mode;
 
 /******************************************************************************
  * Internationalization

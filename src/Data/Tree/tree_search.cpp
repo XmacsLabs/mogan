@@ -12,11 +12,12 @@
 #include "tree_search.hpp"
 #include "analyze.hpp"
 #include "cork.hpp"
-#include "drd_mode.hpp"
 #include "preferences.hpp"
 #include "tree_helper.hpp"
+#include <moebius/drd/drd_mode.hpp>
 
 using namespace moebius;
+using moebius::drd::get_access_mode;
 
 int  search_max_hits            = 1000000;
 bool blank_match_flag           = false;
