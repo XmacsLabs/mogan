@@ -24,7 +24,7 @@ package("moebius")
 
     add_urls("https://github.com/XmacsLabs/moebius.git")
     add_urls("https://gitee.com/XmacsLabs/moebius.git")
-    add_versions("0.1.12", "v0.1.12")
+    add_versions("0.1.13", "v0.1.13")
 
     add_deps("lolly")
 
