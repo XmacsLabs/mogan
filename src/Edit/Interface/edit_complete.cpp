@@ -19,7 +19,10 @@
 #include "observers.hpp"
 #include "tree_observer.hpp"
 
+#include <moebius/data/scheme.hpp>
+
 using namespace moebius;
+using moebius::data::scm_quote;
 
 /******************************************************************************
  * Finding completions in text

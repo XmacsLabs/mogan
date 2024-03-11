@@ -20,8 +20,10 @@
 #include "tm_timer.hpp"
 
 #include <moebius/drd/drd_mode.hpp>
+#include <moebius/data/scheme.hpp>
 
 using namespace moebius;
+using moebius::data::scm_quote;
 using moebius::drd::set_access_mode;
 
 void disable_double_clicks ();
