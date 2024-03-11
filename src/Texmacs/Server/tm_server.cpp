@@ -21,6 +21,7 @@
 #include "file.hpp"
 #include "lolly/system/subprocess.hpp"
 #include "new_style.hpp"
+#include "s7_blackbox.hpp"
 #include "socket_notifier.hpp"
 #include "sys_utils.hpp"
 #include "tm_link.hpp"
@@ -120,7 +121,7 @@ server_rep::~server_rep () {}
 
 tm_server_rep::tm_server_rep () : def_zoomf (1.0) {
   the_server= tm_new<server> (this);
-  initialize_scheme ();
+  initialize_smobs (initialize_scheme ());
   gui_interpose (texmacs_interpose_handler);
   set_wait_handler (texmacs_wait_handler);
 

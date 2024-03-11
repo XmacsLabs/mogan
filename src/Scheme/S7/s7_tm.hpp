@@ -24,9 +24,10 @@ typedef s7_pointer tmscm;
 // the global scheme interpreter state
 extern s7_scheme* tm_s7;
 
-bool     tmscm_is_blackbox (tmscm obj);
-tmscm    blackbox_to_tmscm (blackbox b);
-blackbox tmscm_to_blackbox (tmscm obj);
+bool       tmscm_is_blackbox (tmscm obj);
+tmscm      blackbox_to_tmscm (blackbox b);
+blackbox   tmscm_to_blackbox (tmscm obj);
+s7_pointer blackbox_is_equal (s7_scheme* sc, s7_pointer args);
 
 inline tmscm
 tmscm_null () {

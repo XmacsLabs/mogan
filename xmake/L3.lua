@@ -28,7 +28,7 @@ local l3_files = {
     "$(projectdir)/src/Scheme/L1/**.cpp",
     "$(projectdir)/src/Scheme/L2/**.cpp",
     "$(projectdir)/src/Scheme/L3/**.cpp",
-    "$(projectdir)/src/Scheme/S7/**.cpp",
+    "$(projectdir)/src/Scheme/S7/s7_tm.cpp",
     "$(projectdir)/src/Scheme/Scheme/object.cpp",
     "$(projectdir)/src/System/Config/**.cpp",
     "$(projectdir)/src/System/Classes/**.cpp",
