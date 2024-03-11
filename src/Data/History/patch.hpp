@@ -11,6 +11,7 @@
 
 #ifndef PATCH_H
 #define PATCH_H
+
 #include "modification.hpp"
 
 #define PATCH_MODIFICATION 0
@@ -141,7 +142,6 @@ get_author (patch p) {
 
 bool is_applicable (patch p, tree t);
 tree clean_apply (patch p, tree t);
-void apply (patch p, tree& t);
 
 modification invert (modification m, tree t);
 bool         commute (modification m1, modification m2);
