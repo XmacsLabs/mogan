@@ -56,7 +56,6 @@ libmogan_headers = {
     "$(projectdir)/src/Data/History",
     "$(projectdir)/src/Data/Observers",
     "$(projectdir)/src/Data/Parser",
-    "$(projectdir)/src/Data/Scheme",
     "$(projectdir)/src/Data/String",
     "$(projectdir)/src/Data/Tree",
     "$(projectdir)/src/Edit",

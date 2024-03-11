@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
-#include "block.hpp"
 #include "boot.hpp"
 #include "convert.hpp"
 #include "drd_std.hpp"
@@ -36,6 +35,10 @@
 #include <QDir>
 #endif
 #include "Metafont/load_tex.hpp"
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::block_to_scheme_tree;
+using moebius::data::scheme_tree_to_block;
 
 int install_status= 0;
 

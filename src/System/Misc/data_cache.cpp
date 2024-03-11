@@ -13,9 +13,12 @@
 #include "file.hpp"
 #include "iterator.hpp"
 #include "sys_utils.hpp"
-#include "tm_block.hpp"
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::scheme_to_tree;
+using moebius::data::tree_to_scheme;
 
 /******************************************************************************
  * Caching routines

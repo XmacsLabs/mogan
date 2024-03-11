@@ -13,7 +13,10 @@
 #include "convert.hpp"
 #include "cork.hpp"
 #include "font.hpp"
-#include "tm_block.hpp"
+
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::tree_to_scheme;
 
 /******************************************************************************
  * The compound font class

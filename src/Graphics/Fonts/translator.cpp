@@ -11,12 +11,15 @@
 
 #include "translator.hpp"
 #include "analyze.hpp"
-#include "block.hpp"
 #include "convert.hpp"
 #include "file.hpp"
 #include "iterator.hpp"
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
+
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::string_to_scheme_tree;
 
 RESOURCE_CODE (translator);
 
