@@ -50,7 +50,6 @@ local l3_includedirs = {
     "src/Data/Document",
     "src/Data/History",
     "src/Data/Observers",
-    "src/Data/Scheme",
     "src/Data/String",
     "src/Data/Tree",
     "src/Data/Convert",
