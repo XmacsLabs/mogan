@@ -15,7 +15,6 @@
 #include "object_l3.hpp"
 #include "s7_tm.hpp"
 
-#include "drd_mode.hpp"
 #include "file.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
@@ -29,6 +28,7 @@
 #include "tree_cursor.hpp"
 #include "tree_observer.hpp"
 #include "url.hpp"
+#include <moebius/drd/drd_mode.hpp>
 
 #include "glue_drd.cpp"
 #include "glue_file.cpp"

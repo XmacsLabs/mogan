@@ -12,7 +12,7 @@
 #include "Interface/edit_interface.hpp"
 #include "Replace/edit_replace.hpp"
 #include "analyze.hpp"
-#include "drd_mode.hpp"
+#include <moebius/drd/drd_mode.hpp>
 #include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;

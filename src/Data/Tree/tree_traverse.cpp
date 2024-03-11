@@ -12,10 +12,10 @@
 #include "tree_traverse.hpp"
 #include "analyze.hpp"
 #include "cork.hpp"
-#include "drd_mode.hpp"
 #include "hashset.hpp"
 #include "scheme.hpp"
 #include "tree_helper.hpp"
+#include <moebius/drd/drd_mode.hpp>
 #include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;

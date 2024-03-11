@@ -12,8 +12,8 @@
 #include "tree_cursor.hpp"
 #include "analyze.hpp"
 #include "cork.hpp"
-#include "drd_mode.hpp"
 #include "tree_helper.hpp"
+#include <moebius/drd/drd_mode.hpp>
 #include <moebius/drd/drd_std.hpp>
 #include <moebius/vars.hpp>
 

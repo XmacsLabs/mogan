@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
-#include "drd_mode.hpp"
 #include "edit_interface.hpp"
 #include "link.hpp"
 #include "message.hpp"
@@ -19,6 +18,7 @@
 #include "qnamespace.h"
 #include "tm_buffer.hpp"
 #include "tm_timer.hpp"
+#include <moebius/drd/drd_mode.hpp>
 
 using namespace moebius;
 

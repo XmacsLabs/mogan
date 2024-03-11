@@ -12,7 +12,6 @@
 #include "convert.hpp"
 #include "cork.hpp"
 #include "dictionary.hpp"
-#include "drd_mode.hpp"
 #include "env.hpp"
 #include "file.hpp"
 #include "image_files.hpp"
@@ -24,6 +23,7 @@
 #include "tm_locale.hpp"
 #include "typesetter.hpp"
 #include "web_files.hpp"
+#include <moebius/drd/drd_mode.hpp>
 
 #include <lolly/data/numeral.hpp>
 using lolly::data::from_hex;

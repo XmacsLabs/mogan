@@ -13,11 +13,11 @@
 #include "Interface/edit_interface.hpp"
 #include "convert.hpp"
 #include "cork.hpp"
-#include "drd_mode.hpp"
 #include "packrat.hpp"
 #include "tree_modify.hpp"
 #include "tree_observer.hpp"
 #include "tree_select.hpp"
+#include <moebius/drd/drd_mode.hpp>
 
 using namespace moebius;
 

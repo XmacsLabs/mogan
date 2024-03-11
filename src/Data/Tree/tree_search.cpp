@@ -12,9 +12,9 @@
 #include "tree_search.hpp"
 #include "analyze.hpp"
 #include "cork.hpp"
-#include "drd_mode.hpp"
 #include "preferences.hpp"
 #include "tree_helper.hpp"
+#include <moebius/drd/drd_mode.hpp>
 
 using namespace moebius;
 

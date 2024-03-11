@@ -12,11 +12,11 @@
 #include "edit_cursor.hpp"
 #include "analyze.hpp"
 #include "cork.hpp"
-#include "drd_mode.hpp"
 #include "iterator.hpp"
 #include "observers.hpp"
 #include "tm_buffer.hpp"
 #include "tree_traverse.hpp"
+#include <moebius/drd/drd_mode.hpp>
 
 /******************************************************************************
  * Constructor and destructor

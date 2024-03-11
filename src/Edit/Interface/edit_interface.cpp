@@ -13,7 +13,6 @@
 #include "Metafont/tex_files.hpp"
 #include "convert.hpp"
 #include "data_cache.hpp"
-#include "drd_mode.hpp"
 #include "file.hpp"
 #include "gui.hpp" // for gui_interrupted
 #include "message.hpp"
@@ -22,6 +21,7 @@
 #include "server.hpp"
 #include "tm_window.hpp"
 #include "tree_traverse.hpp"
+#include <moebius/drd/drd_mode.hpp>
 #include <moebius/drd/drd_std.hpp>
 #include <moebius/tree_label.hpp>
 
