@@ -13,8 +13,6 @@
 
 #include "array.hpp"
 #include "blackbox.hpp"
-#include "config.h"
-#include "tm_configure.hpp"
 
 #include <s7.h>
 
