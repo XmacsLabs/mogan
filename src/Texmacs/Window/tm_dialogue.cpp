@@ -18,9 +18,11 @@
 #include "tm_frame.hpp"
 #include "tm_window.hpp"
 #include "tmfs_url.hpp"
+
 #include <moebius/data/scheme.hpp>
 
 using moebius::data::scheme_tree_to_tree;
+using moebius::data::scm_unquote;
 
 /******************************************************************************
  * Dialogues

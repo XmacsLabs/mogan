@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
+#include "converter.hpp"
 #include "cork.hpp"
 #include "hyphenate.hpp"
 #include "impl_language.hpp"

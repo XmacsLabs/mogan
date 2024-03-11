@@ -40,6 +40,9 @@
 #include "qt_menu.hpp"
 #include "qt_simple_widget.hpp"
 #include "qt_window_widget.hpp"
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::scm_quote;
 
 int menu_count= 0; // zero if no menu is currently being displayed
 list<qt_tm_widget_rep*> waiting_widgets;

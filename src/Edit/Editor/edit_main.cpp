@@ -12,6 +12,7 @@
 #include "edit_main.hpp"
 #include "connect.hpp"
 #include "convert.hpp"
+#include "converter.hpp"
 #include "cork.hpp"
 #include "image_files.hpp"
 #include "iterator.hpp"
@@ -23,6 +24,7 @@
 #include "tm_file.hpp"
 #include "tree_observer.hpp"
 #include "typesetter.hpp"
+
 #include <moebius/drd/drd_std.hpp>
 #include <setjmp.h>
 

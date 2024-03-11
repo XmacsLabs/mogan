@@ -28,5 +28,6 @@ void release_boot_lock ();
 void load_welcome_doc ();
 
 scheme_tree plugin_list ();
+void        TeXmacs_main (int argc, char** argv);
 
 #endif // defined BOOT_H

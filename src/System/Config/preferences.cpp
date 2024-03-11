@@ -21,6 +21,8 @@
 #include <moebius/data/scheme.hpp>
 
 using moebius::data::block_to_scheme_tree;
+using moebius::data::scm_quote;
+using moebius::data::scm_unquote;
 
 tree texmacs_settings= tuple ();
 
