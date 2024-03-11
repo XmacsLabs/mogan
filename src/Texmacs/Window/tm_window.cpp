@@ -17,9 +17,11 @@
 #include "preferences.hpp"
 #include "tm_data.hpp"
 #include "tm_url.hpp"
+
 #include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
+using moebius::drd::the_drd;
 
 int geometry_w= 800, geometry_h= 600;
 int geometry_x= 0, geometry_y= 0;

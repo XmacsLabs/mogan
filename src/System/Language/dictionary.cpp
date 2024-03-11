@@ -19,12 +19,13 @@
 #include "locale.hpp"
 #include "scheme.hpp"
 #include "universal.hpp"
-#include <moebius/drd/drd_std.hpp>
 
 #include <moebius/data/scheme.hpp>
+#include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
 using moebius::data::block_to_scheme_tree;
+using moebius::drd::the_drd;
 
 RESOURCE_CODE (dictionary);
 

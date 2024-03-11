@@ -19,7 +19,6 @@
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
-#include <moebius/drd/drd_std.hpp>
 #ifdef OS_WIN
 #include <process.h>
 #else
@@ -35,10 +34,13 @@
 #include <QDir>
 #endif
 #include "Metafont/load_tex.hpp"
+
 #include <moebius/data/scheme.hpp>
+#include <moebius/drd/drd_std.hpp>
 
 using moebius::data::block_to_scheme_tree;
 using moebius::data::scheme_tree_to_block;
+using moebius::drd::init_std_drd;
 
 int install_status= 0;
 

@@ -21,9 +21,13 @@
 #include "server.hpp"
 #include "tm_window.hpp"
 #include "tree_traverse.hpp"
+
 #include <moebius/drd/drd_mode.hpp>
 #include <moebius/drd/drd_std.hpp>
 #include <moebius/tree_label.hpp>
+
+using moebius::drd::set_access_mode;
+using moebius::drd::the_drd;
 
 extern void (*env_next_prog) (void);
 extern void set_snap_mode (tree t);

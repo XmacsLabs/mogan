@@ -16,9 +16,11 @@
 #include "matrix.hpp"
 #include "scheme.hpp"
 #include "tm_debug.hpp"
+
 #include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
+using moebius::drd::the_drd;
 
 #define BEGIN_MAGNIFY                                                          \
   tree new_mag= as_string (env->magn * env->mgfy);                             \

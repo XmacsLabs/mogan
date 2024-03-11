@@ -23,14 +23,16 @@
 #include "tm_locale.hpp"
 #include "typesetter.hpp"
 #include "web_files.hpp"
-#include <moebius/drd/drd_mode.hpp>
 
 #include <lolly/data/numeral.hpp>
+#include <moebius/drd/drd_mode.hpp>
+
 using lolly::data::from_hex;
 using lolly::data::to_hanzi;
 using lolly::data::to_Hex;
 using lolly::data::to_roman;
 using lolly::data::to_Roman;
+using moebius::drd::drd_encode_type;
 
 extern int  script_status;
 extern tree with_package_definitions (string package, tree body);

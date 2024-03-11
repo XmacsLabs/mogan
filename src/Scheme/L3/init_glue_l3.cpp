@@ -28,7 +28,10 @@
 #include "tree_cursor.hpp"
 #include "tree_observer.hpp"
 #include "url.hpp"
+
 #include <moebius/drd/drd_mode.hpp>
+using moebius::drd::get_access_mode;
+using moebius::drd::set_access_mode;
 
 #include "glue_drd.cpp"
 #include "glue_file.cpp"
