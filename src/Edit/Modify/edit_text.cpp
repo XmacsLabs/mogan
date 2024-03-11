@@ -11,6 +11,7 @@
 
 #include "edit_text.hpp"
 #include "analyze.hpp"
+#include "converter.hpp"
 #include "file.hpp"
 #include "scheme.hpp"
 #include "tm_file.hpp"

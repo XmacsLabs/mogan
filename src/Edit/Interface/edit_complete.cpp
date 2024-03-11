@@ -23,6 +23,7 @@
 
 using namespace moebius;
 using moebius::data::scm_quote;
+using moebius::data::scm_unquote;
 
 /******************************************************************************
  * Finding completions in text

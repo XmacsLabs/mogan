@@ -12,6 +12,7 @@
 #include "analyze.hpp"
 #include "boot.hpp"
 #include "convert.hpp"
+#include "editor.hpp"
 #include "file.hpp"
 #include "language.hpp"
 #include "merge_sort.hpp"
@@ -29,6 +30,7 @@
 #include <time.h>
 #endif
 #ifdef QTTEXMACS
+#include "Qt/QTMApplication.hpp"
 #include "Qt/qt_utilities.hpp"
 #include <QCoreApplication>
 #include <QDir>
@@ -40,9 +42,25 @@
 
 using moebius::data::block_to_scheme_tree;
 using moebius::data::scheme_tree_to_block;
+using moebius::data::scm_quote;
 using moebius::drd::init_std_drd;
 
+extern int    geometry_w, geometry_h;
+extern int    geometry_x, geometry_y;
+extern url    tm_init_file;
+extern url    tm_init_buffer_file;
+extern string my_init_cmds;
+extern bool   char_clip;
+
+string extra_init_cmd;
+bool   disable_error_recovery= false;
+bool   start_server_flag     = false;
+
 int install_status= 0;
+
+#ifdef QTTEXMACS
+static QTMApplication* qtmapp= NULL;
+#endif
 
 /******************************************************************************
  * Texmacs paths

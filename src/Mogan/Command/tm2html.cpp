@@ -51,22 +51,12 @@ void mac_fix_paths ();
 #include "MacOS/mac_app.h"
 #endif
 
-extern bool char_clip;
-
-extern url    tm_init_file;
-extern url    tm_init_buffer_file;
-extern string my_init_cmds;
 extern string original_path;
-
-extern int geometry_w, geometry_h;
-extern int geometry_x, geometry_y;
 
 extern tree the_et;
 extern bool texmacs_started;
 extern bool headless_mode;
 
-bool   disable_error_recovery= false;
-bool   start_server_flag     = false;
 string extra_init_cmd;
 void   server_start ();
 

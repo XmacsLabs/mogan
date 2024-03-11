@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "boxes.hpp"
+#include "converter.hpp"
 #include "file.hpp"
 #include "formatter.hpp"
 #include "merge_sort.hpp"
