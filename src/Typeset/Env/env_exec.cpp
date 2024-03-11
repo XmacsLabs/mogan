@@ -343,7 +343,7 @@ edit_env_rep::exec (tree t) {
     return exec_range (t);
   case NUMBER:
     return exec_number (t);
-  case _DATE:
+  case DATE:
     return exec_date (t);
   case TRANSLATE:
     return exec_translate (t);
@@ -511,7 +511,7 @@ edit_env_rep::exec (tree t) {
   case ANIM_PORTION:
     return exec_anim_portion ();
 
-  case _POINT:
+  case POINT:
     return exec_point (t);
 
   case EFF_MOVE:
@@ -2083,7 +2083,7 @@ edit_env_rep::exec_pattern (tree t) {
 tree
 edit_env_rep::exec_point (tree t) {
   int  i, n= N (t);
-  tree u (_POINT, n);
+  tree u (POINT, n);
   for (i= 0; i < n; i++)
     u[i]= exec (t[i]);
   if (n == 0 || is_double (u[0])) return u;
@@ -2550,7 +2550,7 @@ edit_env_rep::exec_until (tree t, path p, string var, int level) {
   case LENGTH:
   case RANGE:
   case NUMBER:
-  case _DATE:
+  case DATE:
   case TRANSLATE:
   case FIND_FILE:
   case FIND_FILE_UPWARDS:

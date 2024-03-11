@@ -1509,7 +1509,7 @@ upgrade_title (tree t, tree& tit, tree& auth, tree& meta) {
     doc << A (tit);
     doc << A (auth);
     doc << A (meta);
-    doc << tree (EXPAND, "title-date", tree (_DATE, ""));
+    doc << tree (EXPAND, "title-date", tree (DATE, ""));
     return tree (EXPAND, "make-title", doc);
   }
 
@@ -3709,7 +3709,7 @@ replace_magnification (tree& t, string var, string repl) {
   tree body= t[N (t) - 1];
   if (find_attr (t, var))
     if (is_func (body, GRAPHICS) || is_func (body, GR_GROUP) ||
-        is_func (body, TEXT_AT) || is_func (body, _POINT) ||
+        is_func (body, TEXT_AT) || is_func (body, POINT) ||
         is_func (body, LINE) || is_func (body, CLINE) ||
         is_func (body, SPLINE) || is_func (body, CSPLINE) ||
         is_func (body, ARC) || is_func (body, CARC) ||

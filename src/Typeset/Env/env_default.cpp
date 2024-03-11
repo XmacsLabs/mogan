@@ -439,7 +439,7 @@ initialize_default_env () {
   env ("phantom-float")=
       tree (MACRO, "type", "pos",
             tree (CONCAT, tree (FLAG, "float", "brown"),
-                  tree (_FLOAT, tree (ARG, "type"), tree (ARG, "pos"),
+                  tree (FLOAT, tree (ARG, "type"), tree (ARG, "pos"),
                         tree (DOCUMENT))));
 
   /* syntactic highlighting */

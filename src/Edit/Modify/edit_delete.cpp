@@ -85,7 +85,7 @@ edit_text_rep::remove_text_sub (bool forward) {
     if ((forward && (last >= rix)) || ((!forward) && (last == 0))) {
       if (rp < p) {
         tree u= subtree (et, path_up (p));
-        if (is_func (u, _FLOAT) || is_func (u, WITH) ||
+        if (is_func (u, FLOAT) || is_func (u, WITH) ||
             is_func (u, STYLE_WITH) || is_func (u, VAR_STYLE_WITH) ||
             is_func (u, LOCUS) || is_func (u, INCLUDE) || is_extension (u)) {
           if (is_extension (u) && (N (u) > 1)) {
@@ -100,7 +100,7 @@ edit_text_rep::remove_text_sub (bool forward) {
             }
           }
           if (t == tree (DOCUMENT, "")) {
-            if (is_func (u, _FLOAT) || is_compound (u, "footnote", 1) ||
+            if (is_func (u, FLOAT) || is_compound (u, "footnote", 1) ||
                 is_compound (u, "footnote-anchor", 2) ||
                 is_compound (u, "note-footnote") ||
                 is_compound (u, "note-footnote*") ||

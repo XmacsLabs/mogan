@@ -330,7 +330,7 @@ edit_graphics_rep::adjust (point p) {
 
 tree
 edit_graphics_rep::find_point (point p) {
-  return tree (_POINT, as_string (p[0]), as_string (p[1]));
+  return tree (POINT, as_string (p[0]), as_string (p[1]));
 }
 
 bool
