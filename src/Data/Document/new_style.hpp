@@ -11,9 +11,13 @@
 
 #ifndef NEW_STYLE_H
 #define NEW_STYLE_H
+
 #include "scheme.hpp"
 #include "url.hpp"
+
 #include <moebius/drd/drd_std.hpp>
+
+using moebius::drd::drd_info;
 
 tree preprocess_style (tree st, url name);
 

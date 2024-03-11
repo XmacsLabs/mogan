@@ -20,6 +20,9 @@
 #include <moebius/vars.hpp>
 
 using namespace moebius;
+using moebius::drd::drd_env_read;
+using moebius::drd::std_drd;
+using moebius::drd::the_drd;
 
 /******************************************************************************
  * TeXmacs to verbatim

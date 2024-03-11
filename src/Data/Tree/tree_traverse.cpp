@@ -15,10 +15,14 @@
 #include "hashset.hpp"
 #include "scheme.hpp"
 #include "tree_helper.hpp"
+
 #include <moebius/drd/drd_mode.hpp>
 #include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
+using moebius::drd::drd_decode_type;
+using moebius::drd::set_access_mode;
+using moebius::drd::the_drd;
 
 /******************************************************************************
  * Accessability

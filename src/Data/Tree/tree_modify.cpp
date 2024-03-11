@@ -17,6 +17,7 @@
 #include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
+using moebius::drd::the_drd;
 
 extern tree the_et;
 

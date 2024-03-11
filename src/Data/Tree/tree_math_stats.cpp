@@ -17,6 +17,7 @@
 #include "tree_helper.hpp"
 
 using namespace moebius;
+using moebius::drd::the_drd;
 
 /******************************************************************************
  * Compile statistics

@@ -17,6 +17,7 @@
 #include <moebius/drd/drd_mode.hpp>
 
 using namespace moebius;
+using moebius::drd::get_access_mode;
 
 int  search_max_hits            = 1000000;
 bool blank_match_flag           = false;

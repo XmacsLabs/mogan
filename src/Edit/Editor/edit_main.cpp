@@ -41,6 +41,7 @@
 #endif
 
 using namespace moebius;
+using moebius::drd::std_drd;
 
 /******************************************************************************
  * Constructors and destructor

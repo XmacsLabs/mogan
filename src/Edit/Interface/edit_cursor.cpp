@@ -16,7 +16,11 @@
 #include "observers.hpp"
 #include "tm_buffer.hpp"
 #include "tree_traverse.hpp"
+
 #include <moebius/drd/drd_mode.hpp>
+
+using moebius::drd::get_access_mode;
+using moebius::drd::set_access_mode;
 
 /******************************************************************************
  * Constructor and destructor

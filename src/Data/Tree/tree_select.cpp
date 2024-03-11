@@ -16,6 +16,7 @@
 #include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
+using moebius::drd::the_drd;
 
 path closest_up (tree t, path p);
 

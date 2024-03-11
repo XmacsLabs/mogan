@@ -25,6 +25,9 @@
 using namespace moebius;
 using moebius::data::scheme_to_tree;
 using moebius::data::tree_to_scheme;
+using moebius::drd::init_std_drd;
+using moebius::drd::std_drd;
+using moebius::drd::the_drd;
 
 /******************************************************************************
  * Global data

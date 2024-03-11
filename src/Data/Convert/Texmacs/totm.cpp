@@ -11,12 +11,13 @@
 
 #include "convert.hpp"
 #include "tree_helper.hpp"
-#include <moebius/drd/drd_std.hpp>
 
 #include <lolly/data/numeral.hpp>
-using lolly::data::as_hexadecimal;
+#include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
+using lolly::data::as_hexadecimal;
+using moebius::drd::std_contains;
 
 /******************************************************************************
  * Conversion of TeXmacs trees to the present TeXmacs string format

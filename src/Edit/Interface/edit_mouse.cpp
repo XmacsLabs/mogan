@@ -18,9 +18,11 @@
 #include "qnamespace.h"
 #include "tm_buffer.hpp"
 #include "tm_timer.hpp"
+
 #include <moebius/drd/drd_mode.hpp>
 
 using namespace moebius;
+using moebius::drd::set_access_mode;
 
 void disable_double_clicks ();
 
