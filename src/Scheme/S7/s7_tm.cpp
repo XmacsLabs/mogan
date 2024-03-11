@@ -10,12 +10,10 @@
  ******************************************************************************/
 
 #include "s7_tm.hpp"
-#include "../Scheme/glue.hpp"
 #include "blackbox.hpp"
 #include "file.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
-#include "tm_debug.hpp"
 #include "tm_timer.hpp"
 
 #ifdef OS_WIN
@@ -58,7 +56,6 @@ tmscm
 eval_scheme_file (string file) {
   // static int cumul= 0;
   // timer tm;
-  if (DEBUG_STD) debug_std << "Evaluating " << file << "...\n";
   c_string _file (file);
   tmscm    result= s7_load_with_environment (tm_s7, _file, user_env);
   // int extra= tm->watch (); cumul += extra;
@@ -205,7 +202,6 @@ tmscm_to_symbol (tmscm s) {
  * Compatibility
  ******************************************************************************/
 
-#ifndef KERNEL_L3
 static s7_pointer
 g_current_time (s7_scheme* sc, s7_pointer args) {
   s7_int res;
@@ -222,7 +218,6 @@ g_getpid (s7_scheme* sc, s7_pointer args) {
 
   return (s7_make_integer (sc, (s7_int) getpid ()));
 }
-#endif
 
 void
 initialize_compat () {
@@ -271,9 +266,6 @@ initialize_scheme () {
   s7_eval_c_string (tm_s7, init_prg);
   initialize_compat ();
   blackbox_tag= s7_make_c_type (tm_s7, "blackbox");
-#ifndef KERNEL_L3
-  initialize_glue ();
-#endif
   object_stack= s7_name_to_value (tm_s7, "object-stack");
   return blackbox_tag;
 }

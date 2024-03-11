@@ -19,6 +19,7 @@
 #include "cork.hpp"
 #include "dictionary.hpp"
 #include "file.hpp"
+#include "glue.hpp"
 #include "lolly/system/subprocess.hpp"
 #include "new_style.hpp"
 #include "s7_blackbox.hpp"
@@ -125,6 +126,7 @@ server_rep::~server_rep () {}
 tm_server_rep::tm_server_rep (app_type app) : def_zoomf (1.0) {
   the_server= tm_new<server> (this);
   initialize_smobs (initialize_scheme ());
+  initialize_glue ();
   gui_interpose (texmacs_interpose_handler);
   set_wait_handler (texmacs_wait_handler);
 
