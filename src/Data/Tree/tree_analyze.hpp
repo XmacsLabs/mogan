@@ -14,7 +14,7 @@
 #include "analyze.hpp"
 #include "drd_std.hpp"
 #include "language.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
 
 /******************************************************************************
  * Concatenations and with-like structures

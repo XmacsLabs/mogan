@@ -11,8 +11,8 @@
 
 #include "modification.hpp"
 #include "patch.hpp"
-#include "tree_label.hpp"
 #include <QtTest/QtTest>
+#include <moebius/tree_label.hpp>
 
 #include <iostream>
 

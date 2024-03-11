@@ -19,7 +19,7 @@
 #include "tree_helper.hpp"
 #include "tree_search.hpp"
 #include "universal.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
 
 using namespace moebius;
 

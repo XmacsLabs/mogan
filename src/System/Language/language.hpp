@@ -18,7 +18,10 @@
 #include "array.hpp"
 #include "resource.hpp"
 #include "space.hpp"
-#include "tree_label.hpp"
+
+#include <moebius/tree_label.hpp>
+
+using moebius::tree_label;
 
 RESOURCE (language);
 
