@@ -14,7 +14,6 @@
 #include "file.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
-#include "tm_debug.hpp"
 #include "tm_timer.hpp"
 
 #ifdef OS_WIN
@@ -57,7 +56,6 @@ tmscm
 eval_scheme_file (string file) {
   // static int cumul= 0;
   // timer tm;
-  if (DEBUG_STD) debug_std << "Evaluating " << file << "...\n";
   c_string _file (file);
   tmscm    result= s7_load_with_environment (tm_s7, _file, user_env);
   // int extra= tm->watch (); cumul += extra;
