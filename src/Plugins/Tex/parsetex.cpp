@@ -15,6 +15,8 @@
 #include "tree_helper.hpp"
 #include "wencoding.hpp"
 
+using namespace moebius;
+
 extern bool textm_class_flag;
 
 tree   latex_symbol_to_tree (string s);

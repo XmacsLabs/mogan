@@ -16,6 +16,8 @@
 #include "tree_helper.hpp"
 #include "wencoding.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Break bibtex files into individual chunks, alternating comments and entries
  ******************************************************************************/

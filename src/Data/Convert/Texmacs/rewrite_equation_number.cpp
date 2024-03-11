@@ -14,6 +14,8 @@
 #include "tree.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 #define cmp compound
 #define is_cmp is_compound
 

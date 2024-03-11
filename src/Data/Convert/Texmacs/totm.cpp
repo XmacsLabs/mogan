@@ -16,6 +16,8 @@
 #include <lolly/data/numeral.hpp>
 using lolly::data::as_hexadecimal;
 
+using namespace moebius;
+
 /******************************************************************************
  * Conversion of TeXmacs trees to the present TeXmacs string format
  ******************************************************************************/

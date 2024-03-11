@@ -19,6 +19,8 @@
 #include "tm_link.hpp"
 #include "tree_label.hpp"
 
+using namespace moebius;
+
 string ispell_encode (string lan, string s);
 string ispell_decode (string lan, string s);
 

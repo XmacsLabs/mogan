@@ -17,6 +17,9 @@
 #include "vpenalty.hpp"
 
 #include "merge_sort.hpp"
+
+using namespace moebius;
+
 void     sort (pagelet& pg);
 vpenalty as_vpenalty (SI diff);
 

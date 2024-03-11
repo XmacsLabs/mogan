@@ -24,6 +24,8 @@
 #include "tree_modify.hpp"
 #include "vars.hpp"
 
+using namespace moebius;
+
 #define STATUS_NORMAL 0
 #define STATUS_ESCAPE 1
 #define STATUS_BEGIN 2

@@ -13,6 +13,9 @@
 
 #include "analyze.hpp"
 #include "concater.hpp"
+
+using namespace moebius;
+
 SI italic_correction (box, box);
 
 /******************************************************************************

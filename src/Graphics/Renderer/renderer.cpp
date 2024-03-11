@@ -17,6 +17,8 @@
 #include "tm_debug.hpp"
 #include "tree_analyze.hpp"
 
+using namespace moebius;
+
 int std_shrinkf= 5;
 #ifdef OS_WASM
 bool   retina_manual= true;

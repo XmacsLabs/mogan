@@ -22,6 +22,8 @@
 #include "tree_observer.hpp"
 #include "web_files.hpp"
 
+using namespace moebius;
+
 array<tm_buffer> bufs;
 
 string propose_title (string old_title, url u, tree doc);

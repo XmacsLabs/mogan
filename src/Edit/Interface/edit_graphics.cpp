@@ -19,6 +19,7 @@
 #include "server.hpp"
 #include "tree_observer.hpp"
 
+using namespace moebius;
 extern tree the_et;
 
 /******************************************************************************

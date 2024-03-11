@@ -12,6 +12,8 @@
 #include "Tex/convert_tex.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 #ifndef METADATA_H
 #define METADATA_H
 

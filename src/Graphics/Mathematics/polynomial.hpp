@@ -82,7 +82,7 @@ public:
   typedef typename unary_properties<T>::norm_type norm_type;
   typedef int                                     index_type;
   static inline tree                              index_name (index_type i) {
-    return tree (RSUB, "x", as_string (i + 1));
+    return tree (moebius::RSUB, "x", as_string (i + 1));
   }
   static inline scalar_type access (polynomial<T> p, index_type var) {
     return p[var];

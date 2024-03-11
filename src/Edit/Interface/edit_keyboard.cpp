@@ -17,6 +17,8 @@
 
 #include <lolly/data/numeral.hpp>
 
+using namespace moebius;
+
 using lolly::data::to_Hex;
 
 #ifdef Q_OS_MAC

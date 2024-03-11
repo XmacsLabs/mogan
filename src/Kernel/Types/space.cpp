@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "space.hpp"
+#include "tree_helper.hpp"
 #include "tree_label.hpp"
 
 /******************************************************************************
@@ -31,8 +32,8 @@ space::space (SI min, SI def, SI max) {
 space::space (SI def) { rep= tm_new<space_rep> (def); }
 
 space::operator tree () {
-  return tree (TUPLE, as_string (rep->min), as_string (rep->def),
-               as_string (rep->max));
+  return tuple (as_string (rep->min), as_string (rep->def),
+                as_string (rep->max));
 }
 
 /******************************************************************************

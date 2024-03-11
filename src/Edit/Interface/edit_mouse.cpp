@@ -20,6 +20,8 @@
 #include "tm_buffer.hpp"
 #include "tm_timer.hpp"
 
+using namespace moebius;
+
 void disable_double_clicks ();
 
 /******************************************************************************

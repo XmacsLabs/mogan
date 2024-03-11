@@ -19,6 +19,8 @@
 #include "observers.hpp"
 #include "tree_observer.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Finding completions in text
  ******************************************************************************/
