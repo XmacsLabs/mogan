@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "s7_tm.hpp"
-#include "../Scheme/glue.hpp"
 #include "blackbox.hpp"
 #include "file.hpp"
 #include "object_l1.hpp"
@@ -205,7 +204,6 @@ tmscm_to_symbol (tmscm s) {
  * Compatibility
  ******************************************************************************/
 
-#ifndef KERNEL_L3
 static s7_pointer
 g_current_time (s7_scheme* sc, s7_pointer args) {
   s7_int res;
@@ -222,7 +220,6 @@ g_getpid (s7_scheme* sc, s7_pointer args) {
 
   return (s7_make_integer (sc, (s7_int) getpid ()));
 }
-#endif
 
 void
 initialize_compat () {
@@ -272,9 +269,6 @@ initialize_scheme () {
   s7_eval_c_string (tm_s7, init_prg);
   initialize_compat ();
   blackbox_tag= s7_make_c_type (tm_s7, "blackbox");
-#ifndef KERNEL_L3
-  initialize_glue ();
-#endif
   object_stack= s7_name_to_value (tm_s7, "object-stack");
   return blackbox_tag;
 }
