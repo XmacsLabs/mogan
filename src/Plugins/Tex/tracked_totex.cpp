@@ -16,13 +16,15 @@
 #include "file.hpp"
 #include "hashset.hpp"
 #include "iterator.hpp"
-#include "lolly/data/base64.hpp"
 #include "scheme.hpp"
-#include "tm_block.hpp"
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
 
+#include <lolly/data/base64.hpp>
+#include <moebius/data/scheme.hpp>
+
 using namespace moebius;
+using moebius::data::tree_to_scheme;
 
 tree latex_expand (tree doc);
 

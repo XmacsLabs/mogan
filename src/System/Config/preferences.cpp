@@ -11,13 +11,16 @@
 
 #include "preferences.hpp"
 #include "analyze.hpp"
-#include "block.hpp"
 #include "file.hpp"
 #include "iterator.hpp"
 #include "merge_sort.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
+
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::block_to_scheme_tree;
 
 tree texmacs_settings= tuple ();
 

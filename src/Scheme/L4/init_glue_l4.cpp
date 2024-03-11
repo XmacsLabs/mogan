@@ -16,7 +16,6 @@
 #include "object_l2.hpp"
 #include "observers.hpp"
 #include "s7_tm.hpp"
-#include "tm_block.hpp"
 #include "tree_analyze.hpp"
 #include "tree_correct.hpp"
 #include "tree_helper.hpp"
@@ -25,6 +24,13 @@
 #include "tree_observer.hpp"
 #include "tree_search.hpp"
 #include "tree_traverse.hpp"
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::scheme_document_to_tree;
+using moebius::data::scheme_to_tree;
+using moebius::data::scheme_tree_to_tree;
+using moebius::data::tree_to_scheme;
+using moebius::data::tree_to_scheme_tree;
 
 tree
 coerce_string_tree (string s) {

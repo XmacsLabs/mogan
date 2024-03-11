@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "dictionary.hpp"
-#include "block.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
 #include "drd_std.hpp"
@@ -22,7 +21,10 @@
 #include "scheme.hpp"
 #include "universal.hpp"
 
+#include <moebius/data/scheme.hpp>
+
 using namespace moebius;
+using moebius::data::block_to_scheme_tree;
 
 RESOURCE_CODE (dictionary);
 

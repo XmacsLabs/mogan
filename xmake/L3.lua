@@ -14,7 +14,6 @@ local l3_files = {
     "$(projectdir)/src/Kernel/**.cpp",
     "$(projectdir)/src/Data/History/**.cpp",
     "$(projectdir)/src/Data/Observers/**.cpp",
-    "$(projectdir)/src/Data/Scheme/**.cpp",
     "$(projectdir)/src/Data/String/**.cpp",
     "$(projectdir)/src/Data/Convert/Generic/**.cpp",
     "$(projectdir)/src/Data/Document/new_document.cpp",

@@ -14,9 +14,9 @@
 #include "file.hpp"
 #include "hashmap.hpp"
 #include "image_files.hpp"
+#include "moebius/data/scheme.hpp"
 #include "path.hpp"
 #include "scheme.hpp"
-#include "tm_block.hpp"
 #include "tm_file.hpp"
 #include "tm_link.hpp"
 #include "tree.hpp"
@@ -25,6 +25,7 @@
 #include "vars.hpp"
 
 using namespace moebius;
+using moebius::data::scheme_to_tree;
 
 #define STATUS_NORMAL 0
 #define STATUS_ESCAPE 1

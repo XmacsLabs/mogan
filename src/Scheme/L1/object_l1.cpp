@@ -13,7 +13,9 @@
 #include "analyze.hpp"
 #include "object.hpp"
 #include "scheme.hpp"
-#include "tm_block.hpp"
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::tree_to_scheme_tree;
 
 /******************************************************************************
  * Trees

@@ -12,11 +12,14 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "block.hpp"
 #include "convert.hpp"
 #include "cork.hpp"
 #include "font.hpp"
 #include "translator.hpp"
+
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::scheme_tree_to_string;
 
 bool
 operator== (font fn1, font fn2) {

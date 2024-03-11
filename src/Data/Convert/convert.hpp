@@ -53,10 +53,6 @@ tree                 nonumber_to_eqnumber (tree t);
 tree                 eqnumber_to_nonumber (tree t);
 string               search_metadata (tree doc, string kind);
 
-/*** Scheme ***/
-tree scheme_tree_to_tree (scheme_tree t, string version);
-tree scheme_document_to_tree (string s);
-
 /*** Verbatim ***/
 string tree_to_verbatim (tree t, bool wrap= false, string enc= "default");
 tree   verbatim_to_tree (string s, bool wrap= false, string enc= "default");
