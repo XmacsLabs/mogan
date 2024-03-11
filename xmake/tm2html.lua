@@ -41,10 +41,6 @@ function add_target_tm2html()
         add_rules("qt.widgetapp")
     end
 
-    if is_plat("macosx") then
-        add_frameworks("QtMacExtras")
-    end
-
     if is_plat("linux") then
         add_rpathdirs("@executable_path/../lib")
     end
