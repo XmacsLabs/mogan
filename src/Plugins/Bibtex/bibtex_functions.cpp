@@ -15,8 +15,8 @@
 #include "cork.hpp"
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
-#include "vars.hpp"
 #include <moebius/data/scheme.hpp>
+#include <moebius/vars.hpp>
 
 using namespace moebius;
 using moebius::data::scheme_tree_to_tree;

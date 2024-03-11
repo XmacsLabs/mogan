@@ -10,7 +10,9 @@
  ******************************************************************************/
 
 #include "hashmap.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
+
+using namespace moebius;
 
 static bool                    page_data_base_initizalized= false;
 static hashmap<string, string> page_data_base ("");

@@ -14,7 +14,7 @@
 #include "analyze.hpp"
 #include "file.hpp"
 #include "observers.hpp"
-#include "tree_label.hpp"
+#include <moebius/tree_label.hpp>
 
 #include <lolly/data/unicode.hpp>
 

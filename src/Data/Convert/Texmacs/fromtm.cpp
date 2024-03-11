@@ -16,7 +16,7 @@
 #include "path.hpp"
 #include "scheme.hpp"
 #include "tree_helper.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
 
 #include <lolly/data/numeral.hpp>
 using lolly::data::from_hex;

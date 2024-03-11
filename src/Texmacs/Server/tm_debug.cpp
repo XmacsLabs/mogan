@@ -15,7 +15,7 @@
 #include "analyze.hpp"
 #include "string.hpp"
 #include "tm_sys_utils.hpp"
-#include "tree_label.hpp"
+#include <moebius/tree_label.hpp>
 
 #ifndef KERNEL_L3
 #include "tm_link.hpp"

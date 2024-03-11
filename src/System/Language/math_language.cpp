@@ -17,6 +17,10 @@
 #include "packrat_grammar.hpp"
 #include "tree_helper.hpp"
 
+#include <moebius/tree_label.hpp>
+
+using moebius::make_tree_label;
+
 /******************************************************************************
  * Mathematical languages
  ******************************************************************************/

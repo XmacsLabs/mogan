@@ -12,7 +12,7 @@
 #include "env.hpp"
 #include "merge_sort.hpp"
 #include "scheme.hpp"
-#include "tree_label.hpp"
+#include <moebius/tree_label.hpp>
 
 /******************************************************************************
  * Main execution

@@ -21,7 +21,7 @@
 #include "tree_correct.hpp"
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
 #include <stdio.h>
 
 using namespace moebius;

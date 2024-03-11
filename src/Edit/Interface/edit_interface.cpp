@@ -22,8 +22,8 @@
 #include "preferences.hpp"
 #include "server.hpp"
 #include "tm_window.hpp"
-#include "tree_label.hpp"
 #include "tree_traverse.hpp"
+#include <moebius/tree_label.hpp>
 
 extern void (*env_next_prog) (void);
 extern void set_snap_mode (tree t);

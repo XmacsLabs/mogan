@@ -22,7 +22,7 @@
 #include "path.hpp"
 #include "player.hpp"
 #include "url.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
 
 using namespace moebius;
 

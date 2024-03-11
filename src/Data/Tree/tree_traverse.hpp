@@ -14,7 +14,10 @@
 
 #include "tree.hpp"
 #include "tree_cursor.hpp"
-#include "tree_label.hpp"
+
+#include <moebius/tree_label.hpp>
+
+using moebius::tree_label;
 
 bool        is_macro (tree_label l);
 bool        is_parameter (tree_label l);

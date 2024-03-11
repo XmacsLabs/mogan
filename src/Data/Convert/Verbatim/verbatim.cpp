@@ -16,8 +16,8 @@
 #include "drd_std.hpp"
 #include "locale.hpp"
 #include "tree_helper.hpp"
-#include "vars.hpp"
 #include "wencoding.hpp"
+#include <moebius/vars.hpp>
 
 using namespace moebius;
 

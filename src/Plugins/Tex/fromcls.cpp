@@ -12,7 +12,7 @@
 #include "Tex/convert_tex.hpp"
 #include "Tex/tex.hpp"
 #include "tree_helper.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
 
 using namespace moebius;
 

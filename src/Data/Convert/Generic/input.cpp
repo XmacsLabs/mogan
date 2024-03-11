@@ -22,7 +22,7 @@
 #include "tree.hpp"
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
 
 using namespace moebius;
 using moebius::data::scheme_to_tree;
