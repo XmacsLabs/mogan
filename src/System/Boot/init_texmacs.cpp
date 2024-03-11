@@ -61,10 +61,6 @@ bool   start_server_flag     = false;
 
 int install_status= 0;
 
-#ifdef QTTEXMACS
-extern QTMApplication* qtmapp;
-#endif
-
 void server_start ();
 
 /******************************************************************************
@@ -828,10 +824,6 @@ TeXmacs_main (int argc, char** argv) {
     bench_reset ("initialize texmacs");
     bench_reset ("initialize plugins");
     bench_reset ("initialize scheme");
-
-#ifdef QTTEXMACS
-    if (!headless_mode) init_style_sheet (qtmapp);
-#endif
 
     if (DEBUG_STD) debug_boot << "Starting event loop...\n";
     texmacs_started= true;

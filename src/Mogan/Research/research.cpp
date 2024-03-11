@@ -56,8 +56,6 @@ extern string original_path;
 extern tree the_et;
 extern bool headless_mode;
 
-string extra_init_cmd;
-
 #ifdef QTTEXMACS
 static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
@@ -218,6 +216,10 @@ main (int argc, char** argv) {
     qtmapp->set_window_icon ("/misc/images/new-mogan-512.png");
   }
 #endif
+#ifdef QTTEXMACS
+  if (!headless_mode) init_style_sheet (qtmapp);
+#endif
+
   // cout << "Bench  ] Started TeXmacs\n";
   the_et      = tuple ();
   the_et->data= ip_observer (path ());
