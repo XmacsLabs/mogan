@@ -16,6 +16,8 @@
 
 #include <iostream>
 
+using namespace moebius;
+
 class TestCommute : public QObject {
   Q_OBJECT
 
