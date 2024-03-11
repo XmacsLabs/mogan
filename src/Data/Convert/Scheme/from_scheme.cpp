@@ -17,6 +17,8 @@
 #include "tm_block.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Converting scheme trees to trees
  ******************************************************************************/

@@ -18,6 +18,8 @@
 #include "scheme.hpp"
 #include "tm_debug.hpp"
 
+using namespace moebius;
+
 #define BEGIN_MAGNIFY                                                          \
   tree new_mag= as_string (env->magn * env->mgfy);                             \
   tree old_mfy= env->local_begin (MAGNIFY, "1");                               \

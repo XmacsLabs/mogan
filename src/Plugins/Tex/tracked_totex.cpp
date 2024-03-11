@@ -22,6 +22,8 @@
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 tree latex_expand (tree doc);
 
 /******************************************************************************

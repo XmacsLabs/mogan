@@ -13,6 +13,8 @@
 #include "tree_helper.hpp"
 #include "vars.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Hacks for HTML import from Open Office
  ******************************************************************************/

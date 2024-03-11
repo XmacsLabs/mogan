@@ -47,28 +47,28 @@ template <typename T>
 T
 parse_as (tree t) {
   switch (L (t)) {
-  case PLUS:
+  case moebius::PLUS:
     return parse_as<T> (t[0]) + parse_as<T> (t[1]);
-  case MINUS:
+  case moebius::MINUS:
     if (N (t) == 1) return -parse_as<T> (t[0]);
     else return parse_as<T> (t[0]) - parse_as<T> (t[1]);
-  case TIMES:
+  case moebius::TIMES:
     return parse_as<T> (t[0]) * parse_as<T> (t[1]);
-  case OVER:
+  case moebius::OVER:
     return parse_as<T> (t[0]) / parse_as<T> (t[1]);
-  case MATH_SQRT:
+  case moebius::MATH_SQRT:
     return sqrt (parse_as<T> (t[0]));
-  case EXP:
+  case moebius::EXP:
     return exp (parse_as<T> (t[0]));
-  case LOG:
+  case moebius::LOG:
     return log (parse_as<T> (t[0]));
-  case POW:
+  case moebius::POW:
     return pow (parse_as<T> (t[0]), parse_as<T> (t[1]));
-  case COS:
+  case moebius::COS:
     return cos (parse_as<T> (t[0]));
-  case SIN:
+  case moebius::SIN:
     return sin (parse_as<T> (t[0]));
-  case TAN:
+  case moebius::TAN:
     return tan (parse_as<T> (t[0]));
   default: {
     T result;

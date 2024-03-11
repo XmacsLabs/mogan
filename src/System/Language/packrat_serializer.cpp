@@ -15,6 +15,8 @@
 #include "packrat_parser.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Useful subroutines
  ******************************************************************************/

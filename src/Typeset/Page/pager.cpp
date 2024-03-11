@@ -12,6 +12,8 @@
 #include "pager.hpp"
 #include "Boxes/construct.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Routines for the pager class
  ******************************************************************************/

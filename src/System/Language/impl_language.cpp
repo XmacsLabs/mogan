@@ -13,6 +13,7 @@
 #include "observers.hpp"
 #include "path.hpp"
 
+using namespace moebius;
 extern tree the_et;
 
 /*

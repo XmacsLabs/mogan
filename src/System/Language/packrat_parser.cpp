@@ -17,6 +17,8 @@
 #include "observers.hpp"
 #include "tm_debug.hpp"
 
+using namespace moebius;
+
 extern tree the_et;
 
 /******************************************************************************

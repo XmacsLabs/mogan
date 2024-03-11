@@ -684,7 +684,7 @@ search_font (array<string> v, bool require_exact, array<string> avoid) {
 
 array<string>
 search_font (array<string> v, int attempt) {
-  static hashmap<tree, tree> cache (UNINIT);
+  static hashmap<tree, tree> cache (moebius::UNINIT);
   tree                       key= array_as_tuple (v);
   key << as_string (attempt);
   if (cache->contains (key)) return tuple_as_array (cache[key]);

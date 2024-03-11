@@ -20,6 +20,8 @@
 #include "tm_file.hpp"
 #include "tree_label.hpp"
 
+using namespace moebius;
+
 tree   latex_expand (tree doc, url name);
 bool   tracked_tree_to_latex_document (tree, object, string&, string&);
 string latex_unmark (string, hashset<path>, hashmap<int, array<path>>&);

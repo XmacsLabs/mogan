@@ -17,6 +17,8 @@
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Computing scores for words in a file
  ******************************************************************************/

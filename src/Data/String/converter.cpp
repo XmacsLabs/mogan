@@ -20,6 +20,8 @@
 
 #include <lolly/data/numeral.hpp>
 
+using namespace moebius;
+
 using lolly::data::from_hex;
 using lolly::data::to_Hex;
 #define as_hexadecimal to_Hex

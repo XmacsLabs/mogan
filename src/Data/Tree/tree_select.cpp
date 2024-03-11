@@ -15,6 +15,8 @@
 #include "drd_std.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 path closest_up (tree t, path p);
 
 /******************************************************************************

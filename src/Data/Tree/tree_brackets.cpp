@@ -15,6 +15,8 @@
 #include "tree_correct.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 static array<tree> upgrade_brackets (array<tree> a, int level);
 
 /******************************************************************************

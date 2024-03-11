@@ -20,6 +20,8 @@
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Typesetting executable markup
  ******************************************************************************/

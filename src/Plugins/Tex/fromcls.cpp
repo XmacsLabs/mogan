@@ -14,6 +14,8 @@
 #include "tree_helper.hpp"
 #include "vars.hpp"
 
+using namespace moebius;
+
 extern bool textm_class_flag;
 
 /******************************************************************************
