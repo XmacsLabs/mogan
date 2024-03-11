@@ -16,6 +16,9 @@
 #include "tree_helper.hpp"
 
 #include <QtTest/QtTest>
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::scm_quote;
 
 extern hashmap<tree, int> db_index;
 

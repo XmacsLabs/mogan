@@ -9,6 +9,7 @@
  ******************************************************************************/
 
 #include "boot.hpp"
+#include "converter.hpp"
 #include "url.hpp"
 #include "mac_utilities.h"
 #include "tm_timer.hpp"
