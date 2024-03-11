@@ -255,19 +255,6 @@ target("libmogan") do
 end 
 
 
-if not is_plat("wasm") then
-    includes("xmake/tm2html.lua")
-    target ("tm2html") do
-        set_version(XMACS_VERSION)
-        set_installdir(INSTALL_DIR)
-        set_configdir(INSTALL_DIR)
-        set_configvar("DEVEL_VERSION", DEVEL_VERSION)
-        set_configvar("PACKAGE", "Mogan Research")
-        set_configvar("XMACS_VERSION", XMACS_VERSION)
-        add_target_tm2html()
-    end
-end
-
 if is_plat("wasm", "linux") then
     includes("xmake/draw.lua")
     target("draw") do
