@@ -182,15 +182,15 @@ spacial
 triangulated_rep::enlighten (tree light) {
   array<color> cs2;
   (void) light;
-  if (is_func (light, LIGHT_DIFFUSE, 3) && is_func (light[0], _POINT) &&
+  if (is_func (light, LIGHT_DIFFUSE, 3) && is_func (light[0], POINT) &&
       is_atomic (light[1]) && is_atomic (light[2])) {
     point p = as_point (light[0]);
     color c1= named_color (as_string (light[1]));
     color c2= named_color (as_string (light[2]));
     cs2     = diffuse_light (ts, cs, p, c1, c2);
   }
-  else if (is_func (light, LIGHT_SPECULAR, 3) && is_func (light[0], _POINT) &&
-           is_func (light[1], _POINT) && is_atomic (light[2])) {
+  else if (is_func (light, LIGHT_SPECULAR, 3) && is_func (light[0], POINT) &&
+           is_func (light[1], POINT) && is_atomic (light[2])) {
     point p1= as_point (light[0]);
     point p2= as_point (light[1]);
     color c = named_color (as_string (light[2]));

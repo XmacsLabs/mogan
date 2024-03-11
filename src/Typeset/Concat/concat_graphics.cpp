@@ -148,7 +148,7 @@ concater_rep::typeset_superpose (tree t, path ip) {
 bool
 is_transformation (tree t) {
   if (is_tuple (t, "rotation", 1) && is_double (t[1])) return true;
-  if (is_tuple (t, "rotation", 2) && is_func (t[1], _POINT, 2) &&
+  if (is_tuple (t, "rotation", 2) && is_func (t[1], POINT, 2) &&
       is_double (t[1][0]) && is_double (t[1][1]) && is_double (t[2]))
     return true;
   if (is_tuple (t, "scaling", 2) && is_double (t[1]) && is_double (t[2]))
@@ -889,7 +889,7 @@ concater_rep::typeset_graphical (array<box>& bs, tree t, path ip) {
 
 static point
 as_point_3d (tree t) {
-  if (is_func (t, _POINT, 3) && is_point (t)) return as_point (t);
+  if (is_func (t, POINT, 3) && is_point (t)) return as_point (t);
   else return point ();
 }
 

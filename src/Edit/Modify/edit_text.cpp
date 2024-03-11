@@ -116,7 +116,7 @@ edit_text_rep::accepts_return (path p) {
   tree st= subtree (et, path_up (p));
   return is_document (st) ||
          (is_func (st, SURROUND, 3) && (last_item (p) == 2)) ||
-         (is_func (st, _FLOAT) && (last_item (p) == (N (st) - 1))) ||
+         (is_func (st, FLOAT) && (last_item (p) == (N (st) - 1))) ||
          (is_func (st, DATOMS) && (last_item (p) == (N (st) - 1)) &&
           pure_line (p)) ||
          (is_func (st, MACRO) && (last_item (p) == (N (st) - 1))) ||
