@@ -22,6 +22,7 @@
 #include "promise.hpp"
 #include "tm_timer.hpp"
 #include "tm_url.hpp"
+#include "scheme.hpp"
 
 /******************************************************************************
  * The object representation class
