@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "cork.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 #include "tree_analyze.hpp"
 #include "tree_correct.hpp"

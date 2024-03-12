@@ -14,6 +14,7 @@
 #include "convert.hpp"
 #include "file.hpp"
 #include "merge_sort.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 #include "tm_buffer.hpp"
 #include "tm_file.hpp"

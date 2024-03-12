@@ -17,6 +17,7 @@
 #include "gui.hpp"
 #include "iterator.hpp"
 #include "locale.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 #include "universal.hpp"
 

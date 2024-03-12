@@ -12,6 +12,7 @@
 
 #include "pdf.hpp"
 #include "file.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 #include "tm_debug.hpp"
 

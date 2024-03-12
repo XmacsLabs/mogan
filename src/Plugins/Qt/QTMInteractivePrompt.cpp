@@ -13,6 +13,7 @@
 
 #include "QTMInteractivePrompt.hpp"
 #include "QTMStyle.hpp"
+#include "preferences.hpp"
 #include "qt_widget.hpp"
 #include <QHBoxLayout>
 #include <QLabel>

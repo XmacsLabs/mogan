@@ -25,4 +25,9 @@ void   reset_user_preference (string var);
 void   load_user_preferences ();
 void   save_user_preferences ();
 
+void   notify_preferences_booted ();
+void   set_preference (string var, string val);
+void   notify_preference (string var);
+string get_preference (string var, string def= "default");
+
 #endif

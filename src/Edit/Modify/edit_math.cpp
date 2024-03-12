@@ -12,6 +12,7 @@
 #include "edit_math.hpp"
 #include "analyze.hpp"
 #include "cork.hpp"
+#include "preferences.hpp"
 #include "tree_observer.hpp"
 
 using namespace moebius;

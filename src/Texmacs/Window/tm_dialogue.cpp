@@ -14,6 +14,7 @@
 #include "dictionary.hpp"
 #include "file.hpp"
 #include "message.hpp"
+#include "preferences.hpp"
 #include "tm_file.hpp"
 #include "tm_frame.hpp"
 #include "tm_window.hpp"

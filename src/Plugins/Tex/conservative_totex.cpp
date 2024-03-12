@@ -14,6 +14,7 @@
 #include "analyze.hpp"
 #include "hashset.hpp"
 #include "iterator.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"

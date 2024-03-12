@@ -15,6 +15,7 @@
 #include "iterator.hpp"
 #include "observers.hpp"
 #include "packrat.hpp"
+#include "preferences.hpp"
 #include "tree_helper.hpp"
 #include "universal.hpp"
 

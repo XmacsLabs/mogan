@@ -17,6 +17,7 @@
 #include "image_files.hpp"
 #include "moebius/data/scheme.hpp"
 #include "path.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 #include "tm_file.hpp"
 #include "tm_link.hpp"

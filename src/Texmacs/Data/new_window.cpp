@@ -14,6 +14,7 @@
 #include "file.hpp"
 #include "message.hpp"
 #include "new_document.hpp"
+#include "preferences.hpp"
 #include "tm_data.hpp"
 #include "tm_link.hpp"
 #include "web_files.hpp"
