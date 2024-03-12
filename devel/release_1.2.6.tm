@@ -12,11 +12,11 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|6|6|1|1|cell-background|>|<cwith|9|9|2|2|cell-valign|c>|<cwith|9|9|1|1|cell-background|pastel
-    green>|<cwith|14|14|1|1|cell-background|pastel
-    green>|<cwith|18|18|1|1|cell-background|pastel
+    <tformat|<cwith|7|7|1|1|cell-background|>|<cwith|10|10|2|2|cell-valign|c>|<cwith|10|10|1|1|cell-background|pastel
     green>|<cwith|15|15|1|1|cell-background|pastel
-    green>|<cwith|8|8|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|19|19|1|1|cell-background|pastel
+    green>|<cwith|16|16|1|1|cell-background|pastel
+    green>|<cwith|9|9|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|77>
     </cell>|<\cell>
       <value|da>
@@ -34,6 +34,12 @@
       <value|da>
     </cell>|<\cell>
       Improvements on packagers
+    </cell>>|<row|<\cell>
+      <dlink|72>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      \;
     </cell>>|<row|<\cell>
       <dlink|71>
     </cell>|<\cell>

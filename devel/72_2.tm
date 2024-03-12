@@ -18,29 +18,48 @@
   <section|How to reproduce it>
 
   <\session|scheme|default>
-    <\input|Scheme] >
+    <\unfolded-io|Scheme] >
       (define zh "\<#4E2D\>\<#6587\>")
-    </input>
+    <|unfolded-io>
+      \<#4E2D\>\<#6587\>
+    </unfolded-io>
 
-    <\input|Scheme] >
+    <\unfolded-io|Scheme] >
       zh
-    </input>
+    <|unfolded-io>
+      \<#4E2D\>\<#6587\>
+    </unfolded-io>
 
-    <\input|Scheme] >
+    <\unfolded-io|Scheme] >
       (define \<#8FB9\>\<#957F\> 4)
-    </input>
+    <|unfolded-io>
+      4
+    </unfolded-io>
 
-    <\input|Scheme] >
+    <\unfolded-io|Scheme] >
       \<#8FB9\>\<#957F\>
-    </input>
+    <|unfolded-io>
+      4
+    </unfolded-io>
 
-    <\input|Scheme] >
+    <\unfolded-io|Scheme] >
       (define (\<#6C42\>\<#5E73\>\<#65B9\> x) (* x x))
-    </input>
+    <|unfolded-io>
+      \<#6C42\>\<#5E73\>\<#65B9\>
+    </unfolded-io>
 
-    <\input|Scheme] >
-      (\<#6C42\>\<#5E73\>\<#65B9\>\<#6839\> 2)
-    </input>
+    <\unfolded-io|Scheme] >
+      (\<#6C42\>\<#5E73\>\<#65B9\>\<#6839\> 2) ; the error message is wrong,
+      we have to fix in S7
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      `(1 2 3)
+    <|unfolded-io>
+      (1 2 3)
+    </unfolded-io>
 
     <\input|Scheme] >
       \;
