@@ -25,13 +25,7 @@
   ("\"" (insert-quote))
   ("\" var" "\"")
   ("- var" (make 'nbhyph))
-  ("<" "<less>")
-  (">" "<gtr>")
-  ("< var" "")
-  ("> var" "")
-  ("`" "<#2018>")
   ("'" (insert-apostrophe #f))
-  ("` var" "`")
   ("' var" (insert-apostrophe #t))
 
   ("< <" "")
