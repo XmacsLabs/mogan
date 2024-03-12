@@ -36,10 +36,12 @@
 #include "QTMInteractivePrompt.hpp"
 #include "QTMStyle.hpp" // qtstyle()
 #include "QTMWindow.hpp"
+#include "preferences.hpp"
 #include "qt_dialogues.hpp"
 #include "qt_menu.hpp"
 #include "qt_simple_widget.hpp"
 #include "qt_window_widget.hpp"
+
 #include <moebius/data/scheme.hpp>
 
 using moebius::data::scm_quote;

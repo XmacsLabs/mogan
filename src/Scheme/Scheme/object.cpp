@@ -517,38 +517,6 @@ call (object fun, array<object> a) {
 }
 
 /******************************************************************************
- * User preferences
- ******************************************************************************/
-
-static bool preferences_ok= false;
-
-void
-notify_preferences_booted () {
-  preferences_ok= true;
-}
-
-void
-set_preference (string var, string val) {
-  if (!preferences_ok) set_user_preference (var, val);
-  else (void) call ("set-preference", var, val);
-}
-
-void
-notify_preference (string var) {
-  if (preferences_ok) (void) call ("notify-preference", var);
-}
-
-string
-get_preference (string var, string def) {
-  if (!preferences_ok) return get_user_preference (var, def);
-  else {
-    string pref= as_string (call ("get-preference", var));
-    if (pref == "default") return def;
-    else return pref;
-  }
-}
-
-/******************************************************************************
  * Delayed evaluation
  ******************************************************************************/
 

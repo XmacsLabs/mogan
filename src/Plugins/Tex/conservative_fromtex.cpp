@@ -16,6 +16,7 @@
 #include "hashset.hpp"
 #include "iterator.hpp"
 #include "merge_sort.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 #include "tree_helper.hpp"
 

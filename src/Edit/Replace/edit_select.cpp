@@ -14,6 +14,7 @@
 #include "convert.hpp"
 #include "cork.hpp"
 #include "packrat.hpp"
+#include "preferences.hpp"
 #include "tree_modify.hpp"
 #include "tree_observer.hpp"
 #include "tree_select.hpp"

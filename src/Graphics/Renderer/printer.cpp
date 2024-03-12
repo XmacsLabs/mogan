@@ -21,6 +21,7 @@
 #include "iterator.hpp"
 #include "link.hpp"
 #include "merge_sort.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 
 #ifdef USE_PLUGIN_PDF

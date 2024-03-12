@@ -16,6 +16,7 @@
 #include "file.hpp"
 #include "hashset.hpp"
 #include "iterator.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 #include "tm_file.hpp"
 #include "tree_helper.hpp"

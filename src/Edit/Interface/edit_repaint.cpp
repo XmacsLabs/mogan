@@ -12,7 +12,9 @@
 #include "Interface/edit_interface.hpp"
 #include "gui.hpp" // for gui_interrupted
 #include "message.hpp"
+#include "preferences.hpp"
 #include "sys_utils.hpp"
+
 #include <lolly/data/unicode.hpp>
 
 extern int  nr_painted;
