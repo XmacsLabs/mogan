@@ -7,8 +7,15 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|21|21|5|5|cell-hyphen|t>|<cwith|1|-1|2|2|cell-background|pastel
-  green>|<cwith|2|2|2|2|cell-background|>|<cwith|1|1|2|2|cell-background|>|<table|<row|<cell|Chore>|<cell|73_24>|<cell|v1.2.5>|<cell|<value|da>>|<cell|packager
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|27|27|5|5|cell-hyphen|t>|<cwith|1|-1|2|2|cell-background|pastel
+  green>|<cwith|6|6|2|2|cell-background|>|<cwith|1|5|2|2|cell-background|>|<cwith|7|8|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Chore>|<cell|73_30>|<cell|v1.2.6>|<cell|<value|jk>>|<cell|xmake:
+  add the profile mode>>|<row|<cell|Chore>|<cell|73_29>|<cell|v1.2.6>|<cell|<value|da>>|<cell|xmake:
+  Rework on Mogan Research>>|<row|<cell|Chore>|<cell|73_28>|<cell|v1.2.6>|<cell|<value|da>>|<cell|xmake:
+  rework on the beamer target>>|<row|<cell|Chore>|<cell|73_27>|<cell|v1.2.6>|<cell|<value|da>>|<cell|xmake:
+  maintain variables in vars.lua>>|<row|<cell|Chore>|<cell|73_26>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Deprecate
+  the support for the mingw plat>>|<row|<cell|Chore>|<cell|73_25>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Upgrade
+  to xmake 2.8.7 for CICD>>|<row|<cell|Chore>|<cell|73_24>|<cell|v1.2.5>|<cell|<value|da>>|<cell|packager
   for debian bookworm>>|<row|<cell|Chore>|<cell|73_23>|<cell|v1.2.5>|<cell|<value|da>>|<cell|packager
   for Ubuntu 20.04>>|<row|<cell|Chore>|<cell|73_22>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Use
   xpack and nsis to create the windows installer>>|<row|<cell|Chore>|<cell|73_21>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Remove
