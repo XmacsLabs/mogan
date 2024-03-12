@@ -16,11 +16,9 @@
 #include "object_l3.hpp"
 
 #include "array.hpp"
-#include "config.h"
 #include "list.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
-#include "preferences.hpp"
 #include "promise.hpp"
 #include "tm_timer.hpp"
 #include "tm_url.hpp"
