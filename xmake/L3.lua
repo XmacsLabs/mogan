@@ -61,7 +61,6 @@ local l3_includedirs = {
     "src/Scheme",
     "src/Scheme/Scheme",
     "src/Scheme/S7",
-    "src/Scheme/L1",
     "src/Scheme/L2",
     "src/Scheme/L3",
     "src/System/Config",
