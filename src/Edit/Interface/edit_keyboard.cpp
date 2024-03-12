@@ -420,7 +420,7 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
     else if (gkey == "less") gkey= "<";
 
     if (key_u8 == "`") {
-      call ("insert", "<#2018>");
+      call ("keyboard-press", object (key_u8), object ((double) t));
     }
     else if (key_u8 == "“”") {
       call ("insert", "<#201C><#201D>");
