@@ -19,7 +19,7 @@ STABLE_VERSION = TEXMACS_VERSION
 STABLE_RELEASE = 1
 
 -- XmacsLabs dependencies
-LOLLY_VERSION = "1.4.10"
+LOLLY_VERSION = "1.4.11"
 
 -- Third-party dependencies
 S7_VERSION = "20230413"
@@ -79,7 +79,6 @@ libmogan_headers = {
     "$(projectdir)/src/Plugins",
     "$(projectdir)/src/Scheme",
     "$(projectdir)/src/Scheme/S7",
-    "$(projectdir)/src/Scheme/L1",
     "$(projectdir)/src/Scheme/L2",
     "$(projectdir)/src/Scheme/L3",
     "$(projectdir)/src/Scheme/L4",
@@ -111,7 +110,6 @@ libmogan_srcs = {
     "$(projectdir)/src/Kernel/**.cpp",
     "$(projectdir)/src/Scheme/Scheme/**.cpp",
     "$(projectdir)/src/Scheme/S7/**.cpp",
-    "$(projectdir)/src/Scheme/L1/**.cpp",
     "$(projectdir)/src/Scheme/L2/**.cpp",
     "$(projectdir)/src/Scheme/L3/**.cpp",
     "$(projectdir)/src/Scheme/L4/**.cpp",
