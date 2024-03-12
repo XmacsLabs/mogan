@@ -137,7 +137,7 @@ tm_server_rep::tm_server_rep () : def_zoomf (1.0) {
                         "(define (xmacs-version) \"" XMACS_VERSION "\")\n"
                         "(define object-stack '(()))\n"
                         ")";
-  eval_scheme (init_prg);
+  eval_scheme_root (init_prg);
   initialize_smobs (initialize_scheme ());
   initialize_glue ();
   gui_interpose (texmacs_interpose_handler);
