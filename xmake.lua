@@ -276,7 +276,7 @@ end
 
 
 -- Mogan Code
-if is_plat("macos", "windows") then
+if is_plat("macosx", "windows") then
     includes("xmake/code.lua")
 end
 

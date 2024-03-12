@@ -145,7 +145,7 @@ target("code") do
     end
 
     after_install(function (target)
-        print("after_install of target beamer")
+        print("after_install of target code")
 
         if is_plat("macosx") and is_arch("arm64") then
             local app_dir = target:installdir() .. "/../../"
