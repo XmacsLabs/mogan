@@ -44,10 +44,6 @@ mogan_app_id () {
 #ifdef APP_MOGAN_DRAW
   return "draw";
 #endif
-
-#ifdef APP_MOGAN_TM2HTML
-  return "tm2html";
-#endif
 }
 
 static string
