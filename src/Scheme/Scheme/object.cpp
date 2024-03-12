@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "object.hpp"
-#include "glue.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
 #include "object_l3.hpp"
@@ -20,9 +19,8 @@
 #include "modification.hpp"
 #include "patch.hpp"
 #include "promise.hpp"
-#include "tm_timer.hpp"
-#include "tm_url.hpp"
 #include "scheme.hpp"
+#include "tm_timer.hpp"
 
 /******************************************************************************
  * The object representation class
@@ -417,7 +415,7 @@ eval_file (string name) {
 }
 bool
 exec_file (url u) {
-  object ret= eval_file (materialize (u));
+  object ret= eval_file (as_string (u));
   return ret != object ("#<unspecified>");
 }
 
