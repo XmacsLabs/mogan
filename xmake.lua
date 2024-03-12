@@ -265,15 +265,9 @@ if is_plat("wasm", "linux") then
 end
 
 
-if is_plat("wasm", "linux", "windows") then
-    includes("xmake/code.lua")
-    target("code") do
-        set_installdir(INSTALL_DIR)
-        set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
-        add_tm_configure("code", TM_CONFIGURE_VARS)
-        add_target_code()
-    end
-end
+-- Mogan Research
+includes("xmake/research.lua")
+
 
 -- Mogan Beamer
 if is_plat("macosx", "windows") then
@@ -281,8 +275,10 @@ if is_plat("macosx", "windows") then
 end
 
 
--- Mogan Research
-includes("xmake/research.lua")
+-- Mogan Code
+if is_plat("macos", "windows") then
+    includes("xmake/code.lua")
+end
 
 
 includes("xmake/tests.lua")
