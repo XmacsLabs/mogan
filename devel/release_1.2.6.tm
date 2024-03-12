@@ -12,16 +12,28 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|4|4|1|1|cell-background|>|<cwith|7|7|2|2|cell-valign|c>|<cwith|7|7|1|1|cell-background|pastel
-    green>|<cwith|12|12|1|1|cell-background|pastel
-    green>|<cwith|16|16|1|1|cell-background|pastel
-    green>|<cwith|13|13|1|1|cell-background|pastel
-    green>|<cwith|6|6|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|6|6|1|1|cell-background|>|<cwith|9|9|2|2|cell-valign|c>|<cwith|9|9|1|1|cell-background|pastel
+    green>|<cwith|14|14|1|1|cell-background|pastel
+    green>|<cwith|18|18|1|1|cell-background|pastel
+    green>|<cwith|15|15|1|1|cell-background|pastel
+    green>|<cwith|8|8|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|77>
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
       Mogan Beamer
+    </cell>>|<row|<\cell>
+      <dlink|75>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Lolly and Moebius
+    </cell>>|<row|<\cell>
+      <dlink|73>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Improvements on packagers
     </cell>>|<row|<\cell>
       <dlink|71>
     </cell>|<\cell>
