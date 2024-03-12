@@ -25,8 +25,6 @@
   ("\"" (insert-quote))
   ("\" var" "\"")
   ("- var" (make 'nbhyph))
-  ("< var" "")
-  ("> var" "")
   ("'" (insert-apostrophe #f))
   ("' var" (insert-apostrophe #t))
 
