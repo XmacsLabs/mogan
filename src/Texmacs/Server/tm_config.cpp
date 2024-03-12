@@ -12,6 +12,7 @@
 #include "tm_config.hpp"
 #include "analyze.hpp"
 #include "converter.hpp"
+#include "preferences.hpp"
 #include "tree_modify.hpp"
 
 #ifdef Q_OS_MAC

@@ -36,6 +36,7 @@
 #include "cork.hpp"
 #include "dictionary.hpp"
 #include "locale.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "wencoding.hpp"

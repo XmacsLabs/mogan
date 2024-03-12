@@ -13,6 +13,7 @@
 #include "convert.hpp"
 #include "converter.hpp"
 #include "iterator.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 #include "tree_helper.hpp"
 #include "wencoding.hpp"
