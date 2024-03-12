@@ -265,8 +265,10 @@ get_new_view (url name) {
     tm_init_buffer_file= "$TEXMACS_PATH/progs/init-buffer.scm";
   if (is_none (my_init_buffer_file))
     my_init_buffer_file= "$TEXMACS_HOME_PATH/progs/my-init-buffer.scm";
-  if (exists (tm_init_buffer_file)) exec_file (tm_init_buffer_file);
-  if (exists (my_init_buffer_file)) exec_file (my_init_buffer_file);
+  if (exists (tm_init_buffer_file))
+    exec_file (materialize (tm_init_buffer_file));
+  if (exists (my_init_buffer_file))
+    exec_file (materialize (my_init_buffer_file));
   set_current_view (temp);
 
   // cout << "View created " << abstract_view (vw) << "\n";

@@ -463,6 +463,7 @@ target("liii") do
 
     add_rules("qt.widgetapp")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
+    add_packages("liii-s7")
     add_packages("lolly")
     add_packages("moebius")
     add_deps("libmogan")

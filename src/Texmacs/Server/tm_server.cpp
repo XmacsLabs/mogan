@@ -50,11 +50,11 @@ init_app (app_type app) {
       tm_init_file= "$TEXMACS_PATH/progs/init-research.scm";
     }
   }
-  exec_file (tm_init_file);
+  exec_file (materialize (tm_init_file));
   if (is_none (my_init_file))
     my_init_file= "$TEXMACS_HOME_PATH/progs/my-init-texmacs.scm";
   bench_start ("initialize scheme");
-  if (exists (my_init_file)) exec_file (my_init_file);
+  if (exists (my_init_file)) exec_file (materialize (my_init_file));
   bench_cumul ("initialize scheme");
   if (my_init_cmds != "") {
     my_init_cmds= "(begin" * my_init_cmds * ")";

@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "object.hpp"
-#include "glue.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
 #include "object_l3.hpp"
@@ -20,8 +19,8 @@
 #include "modification.hpp"
 #include "patch.hpp"
 #include "promise.hpp"
+#include "scheme.hpp"
 #include "tm_timer.hpp"
-#include "tm_url.hpp"
 
 /******************************************************************************
  * The object representation class
@@ -429,7 +428,7 @@ eval_file (string name) {
 }
 bool
 exec_file (url u) {
-  object ret= eval_file (materialize (u));
+  object ret= eval_file (as_string (u));
   return ret != object ("#<unspecified>");
 }
 
@@ -526,54 +525,3 @@ call (object fun, array<object> a) {
   return tmscm_to_object (
       call_scheme (object_to_tmscm (fun), array_lookup (a)));
 }
-
-/******************************************************************************
- * Delayed evaluation
- ******************************************************************************/
-
-#ifndef QTTEXMACS
-static array<object> delayed_queue;
-static array<time_t> start_queue;
-
-void
-exec_delayed (object cmd) {
-  delayed_queue << cmd;
-  start_queue << (((time_t) texmacs_time ()) - 1000000000);
-}
-
-void
-exec_delayed_pause (object cmd) {
-  delayed_queue << cmd;
-  start_queue << ((time_t) texmacs_time ());
-}
-
-void
-exec_pending_commands () {
-  array<object> a= delayed_queue;
-  array<time_t> b= start_queue;
-  delayed_queue  = array<object> (0);
-  start_queue    = array<time_t> (0);
-  int i, n= N (a);
-  for (i= 0; i < n; i++) {
-    time_t now= (time_t) texmacs_time ();
-    if ((now - b[i]) >= 0) {
-      object obj= call (a[i]);
-      if (is_int (obj) && (now - b[i] < 1000000000)) {
-        // cout << "pause= " << obj << "\n";
-        delayed_queue << a[i];
-        start_queue << (now + as_int (obj));
-      }
-    }
-    else {
-      delayed_queue << a[i];
-      start_queue << b[i];
-    }
-  }
-}
-
-void
-clear_pending_commands () {
-  delayed_queue= array<object> (0);
-  start_queue  = array<time_t> (0);
-}
-#endif // QTTEXMACS
