@@ -12,51 +12,10 @@
 #ifndef SCHEME_HH
 #define SCHEME_HH
 
-#include "command.hpp"
-#include "modification.hpp"
-#include "path.hpp"
-#include "tree.hpp"
-#include "url.hpp"
-
-class patch;
+#include "object.hpp"
 
 void start_scheme (int argc, char** argv, void (*call_back) (int, char**));
 int  initialize_scheme ();
-
-class object_rep : concrete_struct {
-  friend class object;
-};
-
-class tmscm_object_rep;
-
-class object {
-public:
-  CONCRETE (object);
-  object ();
-  object (tmscm_object_rep* o);
-  object (void*);  // left intentionally undefined to inhibith implicit
-                   // conversion of pointers to bool
-  object (bool b); // implicit conversion to bool is dangerous!!! (all pointers
-                   // match this conversion)
-  object (int i);
-  object (double x);
-  object (const char* s);
-  object (string s);
-  object (tree t);
-  object (list<string> l);
-  object (list<tree> l);
-  object (path p);
-  object (url u);
-  object (array<double> a);
-  object (modification m);
-  object (patch p);
-};
-CONCRETE_CODE (object);
-
-tm_ostream& operator<< (tm_ostream& out, object obj);
-bool        operator== (object obj1, object obj2);
-bool        operator!= (object obj1, object obj2);
-int         hash (object obj);
 
 object null_object ();
 object list_object (object obj1);

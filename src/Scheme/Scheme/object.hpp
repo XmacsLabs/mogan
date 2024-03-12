@@ -12,10 +12,44 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include "scheme.hpp" // interface to texmacs
-// #include "../Tiny/tinytmscm_tm.hpp" // interface to TinyScheme
-// #include "../Guile/guile_tm.hpp" // interface to guile
-#include "../S7/s7_tm.hpp" // interface to S7
+#include "command.hpp"
+#include "modification.hpp"
+#include "patch.hpp"
+#include "path.hpp"
+#include "tree.hpp"
+#include "url.hpp"
+
+#include "S7/s7_tm.hpp" // interface to S7
+
+class object_rep : concrete_struct {
+  friend class object;
+};
+
+class tmscm_object_rep;
+
+class object {
+public:
+  CONCRETE (object);
+  object ();
+  object (tmscm_object_rep* o);
+  object (void*);  // left intentionally undefined to inhibith implicit
+                   // conversion of pointers to bool
+  object (bool b); // implicit conversion to bool is dangerous!!! (all pointers
+                   // match this conversion)
+  object (int i);
+  object (double x);
+  object (const char* s);
+  object (string s);
+  object (tree t);
+  object (list<string> l);
+  object (list<tree> l);
+  object (path p);
+  object (url u);
+  object (array<double> a);
+  object (modification m);
+  object (patch p);
+};
+CONCRETE_CODE (object);
 
 class tmscm_object_rep : public object_rep {
   tmscm handle;
@@ -39,5 +73,10 @@ inline object
 tmscm_to_object (tmscm obj) {
   return tm_new<tmscm_object_rep> (obj);
 }
+
+tm_ostream& operator<< (tm_ostream& out, object obj);
+bool        operator== (object obj1, object obj2);
+bool        operator!= (object obj1, object obj2);
+int         hash (object obj);
 
 #endif // defined OBJECT_H

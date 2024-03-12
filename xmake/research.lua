@@ -140,6 +140,7 @@ function add_target_research_on_others()
     if is_plat("mingw", "windows") then
         add_packages("qt6widgets")
     end
+    add_packages("s7")
 
     add_deps("libmogan")
     if is_plat("linux") and (linuxos.name () == "ubuntu" and linuxos.version():major() == 20) then

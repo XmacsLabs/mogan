@@ -47,11 +47,11 @@ init_app () {
     path << "$TEXMACS_PATH/progs/init-" << mogan_app_id () << ".scm";
     tm_init_file= url_system (path);
   }
-  exec_file (tm_init_file);
+  exec_file (materialize (tm_init_file));
   if (is_none (my_init_file))
     my_init_file= "$TEXMACS_HOME_PATH/progs/my-init-texmacs.scm";
   bench_start ("initialize scheme");
-  if (exists (my_init_file)) exec_file (my_init_file);
+  if (exists (my_init_file)) exec_file (materialize (my_init_file));
   bench_cumul ("initialize scheme");
   if (my_init_cmds != "") {
     my_init_cmds= "(begin" * my_init_cmds * ")";
