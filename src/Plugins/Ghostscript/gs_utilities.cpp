@@ -232,58 +232,6 @@ gs_PDFimage_size (url image, int& w_pt, int& h_pt) {
   return true;
 }
 
-bool
-gs_to_png (url image, url png, int w, int h) { // Achtung! w,h in pixels
-  string cmd= gs_prefix ();
-  if (DEBUG_CONVERT) debug_convert << "gs_to_png using " << cmd << LF;
-  cmd << "-dQUIET -dNOPAUSE -dBATCH -dSAFER ";
-  cmd << "-sDEVICE=pngalpha -dGraphicsAlphaBits=4 -dTextAlphaBits=4 ";
-  cmd << "-g" << as_string (w) << "x" << as_string (h) << " ";
-  cmd << "-sOutputFile=" << sys_concretize (png) << " ";
-  int bbw, bbh;
-  int rw, rh;
-  int bx1, by1, bx2, by2;
-  if (suffix (image) == "pdf") image_size (image, bbw, bbh);
-  // don't call gs_PDFimage_size
-  // in order to benefit from caching
-  else {
-    ps_bounding_box (image, bx1, by1, bx2, by2); // same comment
-    bbw= bx2 - bx1;
-    bbh= by2 - by1;
-  }
-  rw= (w * 72) / bbw;
-  rh= (h * 72) / bbh;
-  cmd << "-r" << as_string (rw) << "x" << as_string (rh) << " ";
-
-  if (DEBUG_CONVERT)
-    debug_convert << "w=" << w << " h=" << h << LF << "bbw=" << bbw
-                  << " bbh=" << bbh << LF << " res =" << rw << " * " << rh
-                  << LF;
-
-  if (suffix (image) == "pdf") {
-    cmd << "-dUseCropBox "; // old gs versions (<9.0 ?) fail if CropBox not
-                            // explicitly defined
-    cmd << sys_concretize (image);
-  }
-  else {
-    // don't use -dEPSCrop which works incorrectly if (bx1 != 0 || by1 != 0)
-    cmd << "-c \" " << as_string (-bx1) << " " << as_string (-by1)
-        << " translate gsave \"  -f " << sys_concretize (image)
-        << " -c \" grestore \"";
-  }
-  if (os_win () || os_mingw ()) {
-    lolly::system::call (cmd);
-  }
-  else {
-    std::system (c_string (cmd));
-  }
-  if (!exists (png)) {
-    convert_error << "gs_to_png failed for " << image << LF;
-    return false;
-  }
-  return true;
-}
-
 void
 gs_to_eps (url image,
            url eps) { // this should be used mostly for pdf->eps conversion.
