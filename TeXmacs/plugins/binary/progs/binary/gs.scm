@@ -44,7 +44,7 @@
            " -dBATCH "
            " -dSAFER "
            " -sDEVICE=bbox "
-           (url->system u))))
+           (url-sys-concretize u))))
          (l (filter (lambda (x) (string-starts? x "%%BoundingBox: "))
                 (string-split out #\newline)))
          (box (and (> (length l) 0)
@@ -80,7 +80,7 @@
              " -dCompatibilityLevel=1.4 "
              (string-append " -sOutputFile=" (url->system to) " ")
              (string-append " -c " (string-quote gs-inline))
-             (string-append " -f " (url->system from) " ")
+             (string-append " -f " (url-sys-concretize from) " ")
              (string-append " -c " (string-quote " grestore ")))))
     (debug-message "io" (string-append "call: " cmd "\n"))
     (system cmd)))
