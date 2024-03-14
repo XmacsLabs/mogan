@@ -2,15 +2,45 @@ export default {
     title: 'Mogan STEM Suite',
     outDir: "../website",
     locales: {
-        "/": {
-            lang: 'en-US',
+        root: {
+            label: 'English',
+            lang: 'en',
             title: 'Mogan STEM Suite',
             description: 'libre STEM suite for exploring science and technology',
+            themeConfig: {
+                siteTitle: 'Mogan',
+                nav: nav(),
+                sidebar: {
+                    '/guide': sidebarGuide(),
+                },
+                footer: {
+                    message: 'Let us enjoy exploring science and technology!',
+                    copyright: 'Copyright © 2022-2024 Mogan Contributors'
+                },
+                search: {
+                    provider: 'local',
+                }
+            }
         },
-        "/zh/": {
-            lang: 'zh-CN',
-            title: '墨干理工套件',
-            description: '用于探索科学与技术的理工套件',
+        zh: {
+          label: '简体中文',
+          lang: 'zh',
+          title: '墨干理工套件',
+          description: '用于探索科学与技术的自由的理工套件',
+          themeConfig: {
+              siteTitle: '墨干',
+              nav: navZh(),
+              sidebar: {
+                  '/zh/guide': sidebarGuideZh(),
+              },
+              footer: {
+                  message: '享受探索科学与技术的乐趣！',
+                  copyright: '版权所有 © 2022-2024 墨干贡献者'
+              },
+              search: {
+                  provider: 'local',
+              }
+          }
         },
     },
 
@@ -18,30 +48,6 @@ export default {
     ignoreDeadLinks: false,
     head: [],
 
-    themeConfig: {
-        siteTitle: 'Mogan STEM Suite',
-        locales: {
-            '/': {
-                selectLanguageName: 'English',
-            },
-            '/zh/': {
-                selectLanguageName: '简体中文',
-            },
-        },
-        nav: nav(),
-        sidebar: {
-            '/guide': sidebarGuide(),
-            '/zh/guide': sidebarGuideZh(),
-        },
-
-        footer: {
-            message: 'Let us enjoy exploring science and technology!',
-            copyright: 'Copyright © 2022-2023 contributors of Mogan STEM Suite'
-        },
-        search: {
-            provider: 'local',
-        }
-    }
 }
 
 function nav() {
@@ -56,14 +62,29 @@ function nav() {
             link: 'http://forum.texmacs.cn/'
         },
         {
-            text: 'Language',
+            text: 'Code (Gitee/Github)',
             items: [
-                { text: '简体中文', link: '/zh/guide/what-is-mogan' },
-                { text: 'English', link: '/guide/what-is-mogan' },
+                { text: 'Codeberg', link: 'https://codeberg.org/XmacsLabs/mogan' },
+                { text: 'Gitee', link: 'https://gitee.com/XmacsLabs/mogan' },
+                { text: 'Github', link: 'https://github.com/XmacsLabs/mogan' },
             ]
         },
+    ]
+}
+
+function navZh() {
+    return [
         {
-            text: 'Code (Gitee/Github)',
+            text: '指南',
+            link: '/guide/what-is-mogan',
+            activeMatch: '/guide/'
+        },
+        {
+            text: '论坛',
+            link: 'http://forum.texmacs.cn/'
+        },
+        {
+            text: '代码 (Gitee/Github)',
             items: [
                 { text: 'Codeberg', link: 'https://codeberg.org/XmacsLabs/mogan' },
                 { text: 'Gitee', link: 'https://gitee.com/XmacsLabs/mogan' },
