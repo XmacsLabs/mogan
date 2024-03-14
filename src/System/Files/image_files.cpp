@@ -183,7 +183,7 @@ string
 ps_load (url image, bool conv) {
   if (DEBUG_CONVERT) debug_convert << "ps_load " << image << LF;
 
-  url name= resolve (image);
+  url name= sys_concretize (image);
   if (is_none (name)) name= "$TEXMACS_PATH/misc/pixmaps/unknown.png";
 
   if (is_ramdisc (name)) name= get_from_ramdisc (name);

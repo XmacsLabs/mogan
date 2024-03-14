@@ -44,7 +44,7 @@
            " -dBATCH "
            " -dSAFER "
            " -sDEVICE=bbox "
-           (url->system u))))
+           (url-sys-concretize u))))
          (l (filter (lambda (x) (string-starts? x "%%BoundingBox: "))
                 (string-split out #\newline)))
          (box (and (> (length l) 0)
@@ -80,7 +80,7 @@
              " -dCompatibilityLevel=1.4 "
              (string-append " -sOutputFile=" (url->system to) " ")
              (string-append " -c " (string-quote gs-inline))
-             (string-append " -f " (url->system from) " ")
+             (string-append " -f " (url-sys-concretize from) " ")
              (string-append " -c " (string-quote " grestore ")))))
     (debug-message "io" (string-append "call: " cmd "\n"))
     (system cmd)))
@@ -95,12 +95,12 @@
          (width (if (and opt_w (!= opt_w 0)) opt_w box_w))
          (height (if (and opt_h (!= opt_h 0)) opt_h box_w))
          (page_size_in_px (string-append " -g" (number->string width) "x" (number->string height)))
-         (resolution_in_px (string-append " -r" (number->string (/ (* width 72.0) box_w)) "x"
-                                                (number->string (/ (* height 72.0) box_h)) " "))
+         (resolution_in_px (string-append " -r" (number->string (round (/ (* width 72.0) box_w))) "x"
+                                                (number->string (round (/ (* height 72.0) box_h))) " "))
          (offset-x (number->string (- (first box))))
          (offset-y (number->string (- (second box))))
          (gs-inline
-           (string-append offset-x " " offset-y " translate gsave "))
+           (string-append " " offset-x " " offset-y " translate gsave "))
          (cmd (string-append
                 (string-append
                   (url->system (find-binary-gs))
@@ -111,11 +111,11 @@
                   " -sDEVICE=pngalpha "
                   " -dGraphicsAlphaBits=4 "
                   " -dTextAlphaBits=4 ";
-                  (string-append " -sOutputFile=" (url->system to) " ")
                   page_size_in_px
+                  (string-append " -sOutputFile=" (url->system to) " ")
                   resolution_in_px
                   (string-append " -c " (string-quote gs-inline))
-                  (string-append " -f " (url->system from) " ")
+                  (string-append " -f " (url-sys-concretize from) " ")
                   (string-append " -c " (string-quote " grestore "))))))
     (debug-message "io" (string-append cmd "\n"))
     (system cmd)))

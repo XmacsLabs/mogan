@@ -90,8 +90,8 @@ gs_image_size (url image, int& w_pt, int& h_pt) {
   else {
     if (DEBUG_CONVERT) debug_convert << "gs eps image size :" << LF;
     int    x1, y1, x2, y2;
-    string buf;
-    ok= !load_string (image, buf, false);
+    string buf= ps_load (image, false);
+    ok        = (N (buf) > 0);
     if (ok) {
       // try finding Bounding box in file:
       ok= ps_read_bbox (buf, x1, y1, x2, y2);
