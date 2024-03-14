@@ -105,8 +105,8 @@ ManifestDPIAware true
 !define RegUninstall "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PACKAGE_NAME}"
 
 ; set product information
-VIProductVersion                         "${VERSION}.0"
-VIFileVersion                            "${VERSION}.0"
+VIProductVersion                         "${VERSION}"
+VIFileVersion                            "${VERSION}"
 VIAddVersionKey /LANG=0 ProductName      "${PACKAGE_NAME}"
 VIAddVersionKey /LANG=0 Comments         "${PACKAGE_DESCRIPTION}"
 VIAddVersionKey /LANG=0 CompanyName      "${PACKAGE_COMPANY}"

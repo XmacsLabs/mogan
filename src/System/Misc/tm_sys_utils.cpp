@@ -145,24 +145,33 @@ init_texmacs_home_path () {
   }
 }
 
+string xmacs_lts_version() {
+  array<string> parts= tokenize (string (XMACS_VERSION), ".");
+  if (N(parts) >= 4) {
+    return parts[0] * "." * parts[1] * "." * parts[2];
+  } else {
+    return XMACS_VERSION;
+  }
+}
+
 url
 get_tm_cache_path () {
 #if defined(OS_WIN) || defined(OS_MINGW)
-  return url (string ("$LOCALAPPDATA/XmacsLabs/system/cache/") * XMACS_VERSION);
+  return url (string ("$LOCALAPPDATA/XmacsLabs/system/cache/") * xmacs_lts_version ());
 #endif
 #if defined(OS_MACOS)
-  return url (string ("$HOME/Library/Caches/XmacsLabs/") * XMACS_VERSION);
+  return url (string ("$HOME/Library/Caches/XmacsLabs/") * xmacs_lts_version ());
 #endif
 #if defined(OS_LINUX)
-  return url (string ("$XDG_CACHE_HOME/XmacsLabs/") * XMACS_VERSION);
+  return url (string ("$XDG_CACHE_HOME/XmacsLabs/") * xmacs_lts_version ());
 #endif
-  return url (string ("$TEXMACS_HOME_PATH/system/cache/") * XMACS_VERSION);
+  return url (string ("$TEXMACS_HOME_PATH/system/cache/") * xmacs_lts_version ());
 }
 
 url
 get_tm_preference_path () {
   return get_texmacs_home_path () *
-         ("system/" * string (XMACS_VERSION) * "/preferences.scm");
+         ("system/" * xmacs_lts_version () * "/preferences.scm");
 }
 
 string
