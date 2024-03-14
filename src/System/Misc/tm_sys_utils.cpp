@@ -145,11 +145,13 @@ init_texmacs_home_path () {
   }
 }
 
-string xmacs_lts_version() {
+string
+xmacs_lts_version () {
   array<string> parts= tokenize (string (XMACS_VERSION), ".");
-  if (N(parts) >= 4) {
+  if (N (parts) >= 4) {
     return parts[0] * "." * parts[1] * "." * parts[2];
-  } else {
+  }
+  else {
     return XMACS_VERSION;
   }
 }
@@ -157,15 +159,18 @@ string xmacs_lts_version() {
 url
 get_tm_cache_path () {
 #if defined(OS_WIN) || defined(OS_MINGW)
-  return url (string ("$LOCALAPPDATA/XmacsLabs/system/cache/") * xmacs_lts_version ());
+  return url (string ("$LOCALAPPDATA/XmacsLabs/system/cache/") *
+              xmacs_lts_version ());
 #endif
 #if defined(OS_MACOS)
-  return url (string ("$HOME/Library/Caches/XmacsLabs/") * xmacs_lts_version ());
+  return url (string ("$HOME/Library/Caches/XmacsLabs/") *
+              xmacs_lts_version ());
 #endif
 #if defined(OS_LINUX)
   return url (string ("$XDG_CACHE_HOME/XmacsLabs/") * xmacs_lts_version ());
 #endif
-  return url (string ("$TEXMACS_HOME_PATH/system/cache/") * xmacs_lts_version ());
+  return url (string ("$TEXMACS_HOME_PATH/system/cache/") *
+              xmacs_lts_version ());
 }
 
 url
