@@ -1,3 +1,5 @@
+#!/usr/bin/env elvish
+
 yarn docs:build
 
 cp site/mogan.app/CNAME website/
