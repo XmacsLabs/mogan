@@ -4,7 +4,19 @@ Mogan STEM Suite v1.2.5 LTS:
 
 This release is for bug fixes and user experience improvements.
 
-## Detailed changes that affect users
+## Notable changes in v1.2.5.1
++ Shortcuts
+  + Fix for the unexpected commit of the ESC key
+  + Fix the keyboard insert of backtick (For the SICP Open Course)
++ User Interface
+  + Fix messy UI style of `View->Full screen mode`
++ Beamer mode
+  + Add the slidemove plugin authored by [@woutersj](https://github.com/woutersj) to adjust the orders of the slides
++ Scheme session
+  + Fix encoding of `scheme-eval` (For the SICP Open Course)
+
+
+## Notable changes in v1.2.5
 + Installers
   + Official deb installer for Ubuntu 20.04
   + Official deb installer for Debian 12 (bookworm)
