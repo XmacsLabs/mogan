@@ -120,6 +120,14 @@ function sidebarGuide() {
             text: 'Community',
             items: [
                 {
+                    text: 'OSPP 2024',
+                    link: '/guide/OSPP_2024.md'
+                },
+                {
+                    text: 'OSPP 2023',
+                    link: '/guide/OSPP_2023.md'
+                },
+                {
                     text: 'Contact us',
                     link: '/guide/Contact'
                 },
