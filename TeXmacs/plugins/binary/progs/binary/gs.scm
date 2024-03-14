@@ -146,6 +146,6 @@
                   (string-append " -sOutputFile=" (url->system to) " ")
                   page_size_in_px
                   resolution_in_px
-                  (url->system from)))))
+                  (url-sys-concretize from)))))
     (debug-message "io" (string-append cmd "\n"))
     (system cmd)))
