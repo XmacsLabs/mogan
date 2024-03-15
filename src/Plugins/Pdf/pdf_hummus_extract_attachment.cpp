@@ -32,7 +32,6 @@
 using namespace PDFHummus;
 using namespace IOBasicTypes;
 
-
 bool
 extract_attachments_from_pdf (url pdf_path, list<url>& names) {
   EStatusCode status= PDFHummus::eSuccess;
@@ -50,28 +49,34 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
         parser.QueryDictionaryObject (parser.GetTrailer (), "Root"));
     // return 0;
     if (!catalog) {
-      if (DEBUG_CONVERT) debug_convert << "Can't find catalog. fail\n";
+      if (DEBUG_CONVERT) debug_convert << "Can't find catalog. fail" << LF;
       status= PDFHummus::eFailure;
       break;
     }
 
     PDFObjectCastPtr<PDFDictionary> d_1 (catalog->QueryDirectObject ("Names"));
     if (!d_1) {
-      if (DEBUG_CONVERT) debug_convert << "Can't find Names dictionary. fail\n";
+      if (DEBUG_CONVERT)
+        debug_convert << "Can't find Names dictionary. fail" << LF;
       status= PDFHummus::eFailure;
       break;
     }
 
-    PDFObjectCastPtr<PDFDictionary> d_2 (d_1->QueryDirectObject ("EmbeddedFiles"));
+    PDFObjectCastPtr<PDFDictionary> d_2 (
+        d_1->QueryDirectObject ("EmbeddedFiles"));
     if (!d_2) {
-      if (DEBUG_CONVERT) debug_convert << "Can't find /Names/EmbeddedFiles dictionary. fail\n";
+      if (DEBUG_CONVERT)
+        debug_convert << "Can't find /Names/EmbeddedFiles dictionary. fail"
+                      << LF;
       status= PDFHummus::eFailure;
       break;
     }
 
     PDFObjectCastPtr<PDFArray> arr (d_2->QueryDirectObject ("Names"));
     if (!arr) {
-      if (DEBUG_CONVERT) debug_convert << "Can't find /Names/EmbeddedFiles/Names array. fail\n";
+      if (DEBUG_CONVERT)
+        debug_convert << "Can't find /Names/EmbeddedFiles/Names array. fail"
+                      << LF;
       status= PDFHummus::eFailure;
       break;
     }
@@ -79,12 +84,12 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
     unsigned long n= arr->GetLength ();
     // Every two elements in the array represent an attachment
     if (n == 0) {
-      if (DEBUG_CONVERT) debug_convert << "arr->GetLength () is 0\n";
+      if (DEBUG_CONVERT) debug_convert << "arr->GetLength () is 0" << LF;
       status= PDFHummus::eFailure;
       break;
     }
     if (n & 1) {
-      if (DEBUG_CONVERT) debug_convert << "arr->GetLength () is wrong\n";
+      if (DEBUG_CONVERT) debug_convert << "arr->GetLength () is wrong" << LF;
       status= PDFHummus::eFailure;
       break;
     }
@@ -92,27 +97,28 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
       PDFObjectCastPtr<PDFLiteralString> name (arr->QueryObject (i));
       if (!name) {
         if (DEBUG_CONVERT)
-          debug_convert << "Can't find arr->QueryObject (" << i << ")\n";
+          debug_convert << "Can't find arr->QueryObject (" << i << ")" << LF;
         status= PDFHummus::eFailure;
         break;
       }
       PDFObjectCastPtr<PDFDictionary> arr_d1 (arr->QueryObject (i + 1));
       if (!arr_d1) {
         if (DEBUG_CONVERT)
-          debug_convert << "Can't find arr->QueryObject (" << i + 1 << ")\n";
+          debug_convert << "Can't find arr->QueryObject (" << i + 1 << ")"
+                        << LF;
         status= PDFHummus::eFailure;
         break;
       }
       PDFObjectCastPtr<PDFDictionary> arr_d2 (arr_d1->QueryDirectObject ("EF"));
       if (!arr_d2) {
-        if (DEBUG_CONVERT) debug_convert << "Can't find arr_d2\n";
+        if (DEBUG_CONVERT) debug_convert << "Can't find arr_d2" << LF;
         status= PDFHummus::eFailure;
         break;
       }
       PDFObjectCastPtr<PDFStreamInput> stream (
           parser.QueryDictionaryObject (arr_d2.GetPtr (), "F"));
       if (!stream) {
-        if (DEBUG_CONVERT) debug_convert << "Can't find stream\n";
+        if (DEBUG_CONVERT) debug_convert << "Can't find stream" << LF;
         status= PDFHummus::eFailure;
         break;
       }
@@ -121,7 +127,7 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
       IByteReader* streamReader=
           parser.CreateInputStreamReader (stream.GetPtr ());
       if (!streamReader) {
-        if (DEBUG_CONVERT) debug_convert << "Can't find streamReader\n";
+        if (DEBUG_CONVERT) debug_convert << "Can't find streamReader" << LF;
         status= PDFHummus::eFailure;
         break;
       }
@@ -141,7 +147,7 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
           (IByteWriter*) attachment_file.GetOutputStream ());
       status= copy_help.CopyToOutputStream (streamReader);
       if (status != PDFHummus::eSuccess) {
-        if (DEBUG_CONVERT) debug_convert << "Can't CopyToOutputStream\n";
+        if (DEBUG_CONVERT) debug_convert << "Can't CopyToOutputStream" << LF;
         break;
       }
       status= attachment_file.CloseFile ();
@@ -211,22 +217,22 @@ get_url_image_or_include_tree (tree t, url path) {
     if (!exists (pre_url)) {
       pre_url= relative (path, pre_url);
       if (!exists (pre_url)) {
-        if (DEBUG_CONVERT) debug_convert << pre_url << " do not exist\n" << LF;
+        if (DEBUG_CONVERT) debug_convert << pre_url << " do not exist" << LF;
       }
     }
     return pre_url;
   }
   else {
-    if (is_func(t, moebius::INCLUDE) && (DEBUG_CONVERT))
-      debug_convert << t << " include tree format wrong\n" << LF;
+    if ((DEBUG_CONVERT) && is_func (t, moebius::INCLUDE))
+      debug_convert << t << " include tree format wrong" << LF;
   }
-  return url ();
+  return url_none ();
 }
 
 // Pass in a tree with style label.
 // return a actual ts file url
 static url
-get_actural_style_url (string style_name, url path) {
+get_actual_style_url (string style_name, url path) {
   url style_file;
   if (!is_internal_style (style_name)) {
     style_file= glue (url (style_name), ".ts");
@@ -234,7 +240,7 @@ get_actural_style_url (string style_name, url path) {
       style_file= relative (path, style_file);
       if (!exists (style_file)) {
         if (DEBUG_CONVERT) debug_convert << style_file << "do not exist" << LF;
-        style_file= url ();
+        style_file= url_none ();
       }
     }
   }
@@ -249,8 +255,8 @@ get_url_style_tree (tree t, url path) {
   if (N (t) == 0) return style_file;
   if (get_label (t[0]) == "tuple") {
     for (int i= 0; i < N (t[0]); i++) {
-      url style_url= get_actural_style_url (get_label (t[0][i]), path);
-      if (style_url != url ()) style_file << style_url;
+      url style_url= get_actual_style_url (get_label (t[0][i]), path);
+      if (!is_none (style_url)) style_file << style_url;
     }
   }
   else {
@@ -259,8 +265,8 @@ get_url_style_tree (tree t, url path) {
         debug_convert << get_label (t[0]) << "is not atomic tree" << LF;
       return style_file;
     }
-    url style_url= get_actural_style_url (get_label (t[0]), path);
-    if (style_url != url ()) style_file << style_url;
+    url style_url= get_actual_style_url (get_label (t[0]), path);
+    if (!is_none (style_url)) style_file << style_url;
   }
   return style_file;
 }
@@ -299,7 +305,7 @@ replace_url_image_or_include_tree (tree t, url path) {
     if (!exists (pre_url)) {
       pre_url= relative (path, pre_url);
       if (!exists (pre_url)) {
-        if (DEBUG_CONVERT) debug_convert << pre_url << " do not exist\n" << LF;
+        if (DEBUG_CONVERT) debug_convert << pre_url << " do not exist" << LF;
       }
     }
     string name= as_string (tail (pre_url));
@@ -309,8 +315,8 @@ replace_url_image_or_include_tree (tree t, url path) {
     t[0]->label= string (name);
   }
   else {
-    if (is_func(t, moebius::INCLUDE) && (DEBUG_CONVERT))
-      debug_convert << t << " include tree format wrong\n" << LF;
+    if ((DEBUG_CONVERT) && is_func (t, moebius::INCLUDE))
+      debug_convert << t << " include tree format wrong" << LF;
   }
   return t;
 }
