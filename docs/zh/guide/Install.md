@@ -1,26 +1,26 @@
 # 如何安装
-当前最新稳定版是墨干理工套件 V1.2.5 LTS，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
+当前最新稳定版是墨干理工套件 v1.2.5.1 LTS，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
 
 ## 官方提供的安装包
 | 产品 | 操作系统 | 马上下载 |
 |-----|-------|-----|
-| 墨干v1.2.5 | Windows安装包 (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/MoganResearch-v1.2.5-64bit-installer.exe) |
-| 墨干v1.2.5 | Windows便携版 (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/MoganResearch-v1.2.5-64bit-installer.zip) |
-| 墨干v1.2.5 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/MoganResearch-v1.2.5.dmg) |
-| 墨干v1.2.5 | macOS M1/M2 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/MoganResearch-v1.2.5-arm.dmg) |
-| 墨干v1.2.5 | Ubuntu 20.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/mogan-research-v1.2.5-ubuntu20.04.deb) |
-| 墨干v1.2.5 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5/mogan-research-v1.2.5-ubuntu22.04.deb) |
-| 墨干v1.2.5 | Debian 12 | [⏬ 下载](http://mirrors.ustc.edu.cn/github-release/xmacslabs/mogan/v1.2.5/mogan-research-v1.2.5-debian12.deb) |
+| 墨干v1.2.5.1 | Windows安装包 (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1-64bit-installer.exe) |
+| 墨干v1.2.5.1 | Windows便携版 (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1-64bit-installer.zip) |
+| 墨干v1.2.5.1 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1.dmg) |
+| 墨干v1.2.5.1 | macOS M1/M2 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1-arm.dmg) |
+| 墨干v1.2.5.1 | Ubuntu 20.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/mogan-research-v1.2.5.1-ubuntu20.04.deb) |
+| 墨干v1.2.5.1 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/mogan-research-v1.2.5.1-ubuntu22.04.deb) |
+| 墨干v1.2.5.1 | Debian 12 | [⏬ 下载](http://mirrors.ustc.edu.cn/github-release/xmacslabs/mogan/v1.2.5.1/mogan-research-v1.2.5.1-debian12.deb) |
 
 SHA256校验码：
 ```
-f4d485b2add98b8d9618b2a82ba3f6720fad78fcdefc91eb6263d3cb4c39a370  MoganResearch-v1.2.5-64bit-installer.exe
-456219c8ca3db8ceac4a5a9f47385d56405f06c32a09d3ffd9acc7ba34d35ac9  MoganResearch-v1.2.5-64bit-installer.zip
-8164c4e7766c72a0010d7db7abd62d338d8ede7aca22bc5550391937d7d301f5  MoganResearch-v1.2.5-arm.dmg
-361354aad2a5de93d22508bb784c0e940a43d28d559dda79803499f4fb3c0dc6  MoganResearch-v1.2.5.dmg
-498c232ec032d41d8cfa3edc10814ff7a0015818fe43fe8542f9807e2ec04b18  mogan-research-v1.2.5-debian12.deb
-558ad6a1dd4f384d33b0dfed9a1171ebcccdb71f417173a2f0f010d838c35dbf  mogan-research-v1.2.5-ubuntu20.04.deb
-a147c7630b99592f77437172de3245e11f930bff23c61c622d0a03a4b0104daa  mogan-research-v1.2.5-ubuntu22.04.deb
+e3713e1506c85dd4ff01b0565f70228486e95ff10ab67379cf0eb1c897c5aa3a  MoganResearch-v1.2.5.1-64bit-installer.exe
+f05ef94ac913e7c11a5a3cefa604b5d56c7608b2613b6a7967d64d57a82cf476  MoganResearch-v1.2.5.1-64bit-installer.zip
+3cb7d2417345889ad9c8eb66fce52b2168b4189c237a45d02a4c6e3bba19c3d3  MoganResearch-v1.2.5.1-arm.dmg
+a2c78e59562924a19d9f744c25efa9d3cc07a105600f2798c40f8994096fe354  MoganResearch-v1.2.5.1.dmg
+bb18f3db6de640ef79fa243b394340aaae9ba2f7147bfa48b417e46b1d77cf0a  mogan-research-v1.2.5.1-debian12.deb
+b5c84b633c8642522c6ba04c2a8e91dc171e04f8bb922f751a969bd3e8f564ea  mogan-research-v1.2.5.1-ubuntu20.04.deb
+a79d7899147a8c8e4cb14b2d77d87208db1ee5f408872ce3f31d9e9e0a4fbb80  mogan-research-v1.2.5.1-ubuntu22.04.deb
 ```
 
 墨干理工套件：
@@ -28,7 +28,7 @@ a147c7630b99592f77437172de3245e11f930bff23c61c622d0a03a4b0104daa  mogan-research
 + 墨码（无安装包，正在开发中）
 + 墨板（无安装包，正在开发中）
 
-> 注意：墨干v1.2.5无法在Windows 7上运行。
+> 注意：墨干v1.2.5.1无法在Windows 7上运行。
 
 从其它站点下载：
 + https://github.com/XmacsLabs/mogan/releases
