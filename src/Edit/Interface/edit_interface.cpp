@@ -692,9 +692,10 @@ edit_interface_rep::apply_changes () {
   }
 
   if (env_change == 0) {
-    if (last_change - last_update > 0 &&
-        idle_time (INTERRUPTED_EVENT) >= 1000 / 6)
-      update_menus ();
+    int delta= last_change - last_update;
+    if (delta > 0 && idle_time (INTERRUPTED_EVENT) >= 1000 / 6) {
+      notify_change (THE_MENUS);
+    }
     if (new_visible == last_visible) return;
   }
 
