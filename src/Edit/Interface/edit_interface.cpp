@@ -747,8 +747,8 @@ edit_interface_rep::apply_changes () {
     }
   }
 
-  // cout << "Handling selection\n";
   if (env_change & (THE_TREE + THE_ENVIRONMENT + THE_SELECTION)) {
+    cout << "Handling selection\n";
     if (!is_nil (selection_rects)) {
       invalidate (selection_rects);
       if (!selection_active_any ()) {
@@ -766,11 +766,14 @@ edit_interface_rep::apply_changes () {
     }
   }
 
-  // cout << "Handling environment\n";
-  if (env_change & THE_ENVIRONMENT) typeset_invalidate_all ();
+  if (env_change & THE_ENVIRONMENT) {
+    // cout << "Handling environment\n";
+    notify_change (THE_MENUS);
+    typeset_invalidate_all ();
+  }
 
-  // cout << "Handling tree\n";
   if (env_change & (THE_TREE + THE_ENVIRONMENT)) {
+    cout << "Handling tree\n";
     typeset_invalidate_env ();
     SI x1, y1, x2, y2;
     typeset (x1, y1, x2, y2);
@@ -779,8 +782,8 @@ edit_interface_rep::apply_changes () {
     the_ghost_cursor ()= eb->find_check_cursor (tp);
   }
 
-  // cout << "Handling extents\n";
   if (env_change & (THE_TREE + THE_ENVIRONMENT + THE_EXTENTS)) {
+    cout << "Handling extents\n";
     string medium= get_init_string (PAGE_MEDIUM);
     SI     ex1   = (SI) (((double) eb->x1) * magf);
     SI     ey1   = (SI) (((double) eb->y1) * magf);
@@ -803,10 +806,10 @@ edit_interface_rep::apply_changes () {
     // set_extents (eb->x1, eb->y1, eb->x2, eb->y2);
   }
 
-  // cout << "Cursor\n";
   temp_invalid_cursor= false;
   if (env_change & (THE_TREE + THE_ENVIRONMENT + THE_EXTENTS + THE_CURSOR +
                     THE_SELECTION + THE_FOCUS)) {
+    cout << "Cursor\n";
     int THE_CURSOR_BAK= env_change & THE_CURSOR;
     go_to_here ();
     env_change= (env_change & (~THE_CURSOR)) | THE_CURSOR_BAK;
@@ -897,8 +900,8 @@ edit_interface_rep::apply_changes () {
     invalidate_graphical_object ();
   }
 
-  // cout << "Handling selection\n";
   if (env_change & THE_SELECTION) {
+    cout << "Handling selection\n";
     if (selection_active_any ()) {
       table_selection= selection_active_table ();
       selection sel;
@@ -912,8 +915,8 @@ edit_interface_rep::apply_changes () {
     }
   }
 
-  // cout << "Handling alternative selection\n";
   if ((env_change & THE_SELECTION) || new_visible != last_visible) {
+    cout << "Handling alternative selection\n";
     range_set alt_sel= append (get_alt_selection ("alternate"),
                                get_alt_selection ("brackets"));
     if (!is_empty (alt_sel)) {
@@ -938,8 +941,8 @@ edit_interface_rep::apply_changes () {
     }
   }
 
-  // cout << "Handling locus highlighting\n";
   if (env_change & (THE_TREE + THE_ENVIRONMENT + THE_EXTENTS)) {
+    cout << "Handling locus highlighting\n";
     update_mouse_loci ();
     update_focus_loci ();
   }
