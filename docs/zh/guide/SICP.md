@@ -7,20 +7,51 @@
 
 如果您已经学会编程了，《零基础SICP》公开课仍旧值得您花时间观看和学习，您可以通过练习题来判断是否可以直接跳过其中的一些课程。
 
+## 课件和软件
 在墨干中点击`帮助->墨客星球`，可以找到《零基础SICP》的讲义、课件、练习、勘误等信息。
 
-相关资料：
+本课程提供的资料：
 + 交互式SICP：https://gitee.com/XmacsLabs/interactive-sicp
   - 本公开课所使用的讲义，源自SICP网页版，由墨客实验室手动整理为TeXmacs文档
   - 该仓库中每一课的讲义和练习以单独的TeXmacs文档存在
-+ S7 Scheme Binary: https://gitee.com/XmacsLabs/s7-scheme-binary
-  - 本课程所使用的S7 Scheme解释器
-  - S7 Scheme官网：https://ccrma.stanford.edu/software/s7/
-+ SICP官网：https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html
-+ SICP中文译本：[《计算机程序的构造和解释》](https://book.douban.com/subject/1148282/)
-+ 南京大学的SICP课程主页：https://cs.nju.edu.cn/xyfeng/teaching/SICP/index.htm
-+ MIT的SICP课程：https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/syllabus/
++ 墨干理工套件：https://mogan.app
++ S7 Scheme解释器安装包: https://gitee.com/XmacsLabs/s7-scheme-binary
++ S7 Scheme官网：https://ccrma.stanford.edu/software/s7/
 
+相关资料：
++ 南京大学的[SICP课程主页](https://cs.nju.edu.cn/xyfeng/teaching/SICP/index.htm)
++ Berkeley的[CS 61A: 计算机程序的构造和解释](https://cs61a.org)
++ MIT的[SICP课程](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/syllabus/)
++ SICP中文译本：[《计算机程序的构造和解释》](https://book.douban.com/subject/1148282/)
++ SICP课本官网：https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html
+
+## 第5课：时空复杂度
++ B站回放：https://www.bilibili.com/video/BV1N1421Q78o/
++ 操作系统：UOS 1060 (龙芯3A5000)
++ 墨干版本：v1.2.5.1
+
+MathAgape（人类）总结的视频内容：
++ `00:12` 介绍我们的官方主页，这里汇总零基础SICP公开课的所有信息：https://mogan.app/zh/guide/SICP.html
++ `02:48` 源起杂谈：南京大学的SICP课程（冯新宇）
++ `10:46` 本课开始
++ `11:54` 什么是正则？
++ `15:42` Θ记法、增长阶
+  - `18:00` 算法导论对 Θ、O、Ω 的形式化定义
++ `20:22` 链表（list）的底层原理
+  - `27:30` 求链表长度/链表中最小值的时间复杂度
+  - `31:46` 【练习1:优化 list-min】
++ `34:38` range（n）
+  - `37:58` 【练习2:用 cons 实现 append】
++ `43:32` 求幂算法
+  - `44:14` 应用序展开，递归，延迟计算，栈，空间复杂度
++ `1:02:04` 求幂算法优化方案
++ `1:14:34` 最大公约数
+  - `1:16:30` 【练习3:证明欧几里得算法的复杂度为Θ(log n) 】
++ `1:18:14` 总结
+  - `1:24:30` 【练习4:找到最优化的斐波那契数列，实验看看它在3s内能算到的最大值】
++ `1:30:04` 排序算法
+  - `1:30:26` 不可变结构（immutable）
+  - `1:32:42` 冒泡排序
 
 ## 第4.2课：递归与迭代 习题1.11~1.13
 + B站回放：https://www.bilibili.com/video/BV14t421L7Pg/
