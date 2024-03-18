@@ -53,13 +53,23 @@ export default {
 function nav() {
     return [
         {
+            text: '《零基础SICP》🔥',
+            link: '/zh/guide/SICP',
+            activeMatch: '/sicp/'
+        },
+        {
+            text: 'OSPP 2024🔥',
+            link: '/guide/OSPP_2024',
+            activeMatch: '/ospp/'
+        },
+        {
             text: 'Guide',
             link: '/guide/what-is-mogan',
             activeMatch: '/guide/'
         },
         {
             text: 'Forum',
-            link: 'http://forum.texmacs.cn/'
+            link: 'http://forum.texmacs.cn'
         },
         {
             text: 'Code (Gitee/Github)',
@@ -75,13 +85,23 @@ function nav() {
 function navZh() {
     return [
         {
+            text: '《零基础SICP》🔥',
+            link: '/zh/guide/SICP',
+            activeMatch: '/sicp/'
+        },
+        {
+            text: '开源之夏2024🔥',
+            link: '/guide/OSPP_2024',
+            activeMatch: '/ospp/'
+        },
+        {
             text: '指南',
-            link: '/guide/what-is-mogan',
+            link: '/zh/guide/what-is-mogan',
             activeMatch: '/guide/'
         },
         {
             text: '论坛',
-            link: 'http://forum.texmacs.cn/'
+            link: 'http://forum.texmacs.cn'
         },
         {
             text: '代码 (Gitee/Github)',
