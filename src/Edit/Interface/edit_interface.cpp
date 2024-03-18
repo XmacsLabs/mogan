@@ -692,11 +692,13 @@ edit_interface_rep::apply_changes () {
   }
 
   if (env_change == 0) {
+    if (new_visible == last_visible) {
+      return;
+    }
     int delta= last_change - last_update;
     if (delta > 0 && idle_time (INTERRUPTED_EVENT) >= 1000 / 6) {
-      notify_change (THE_MENUS);
+      update_menus ();
     }
-    if (new_visible == last_visible) return;
   }
 
   // cout << "Applying changes " << env_change << " to " << get_name() << "\n";
