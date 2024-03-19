@@ -17,6 +17,8 @@
 
 #include <lolly/data/unicode.hpp>
 
+using namespace moebius;
+
 extern int  nr_painted;
 extern void clear_pattern_rectangles (renderer ren, rectangle m, rectangles l);
 extern bool animated_flag;

@@ -19,6 +19,8 @@
 #include "packrat.hpp"
 #include "tm_debug.hpp"
 
+using namespace moebius;
+
 array<line_item> typeset_marker (edit_env env, path ip);
 array<line_item> typeset_concat (edit_env, tree t, path ip);
 array<line_item> join (array<line_item> a, array<line_item> b);

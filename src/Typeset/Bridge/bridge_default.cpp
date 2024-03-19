@@ -11,6 +11,8 @@
 
 #include "bridge.hpp"
 
+using namespace moebius;
+
 class bridge_default_rep : public bridge_rep {
 public:
   bridge_default_rep (typesetter ttt, tree st, path ip);

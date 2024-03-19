@@ -20,8 +20,6 @@
 #include "Stack/stacker.hpp"
 #include "typesetter.hpp"
 
-using namespace moebius;
-
 #define VALID_MASK 1
 #define CORRUPTED 0
 #define PROCESSED 1

@@ -14,6 +14,8 @@
 #include "metadata.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 static bool
 is_springer_titlenote (tree t) {
   return is_tuple (t, "\\thanks", 1) || is_tuple (t, "\\tmnote", 1);

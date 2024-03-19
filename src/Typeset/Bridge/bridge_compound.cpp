@@ -14,6 +14,7 @@
 #include <moebius/drd/drd_std.hpp>
 
 using moebius::drd::the_drd;
+using namespace moebius;
 
 tree insert_at (tree, path, tree);
 tree remove_at (tree, path, int);

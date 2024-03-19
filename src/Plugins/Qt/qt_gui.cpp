@@ -77,6 +77,8 @@ Q_IMPORT_PLUGIN (QWindowsIntegrationPlugin)
 Q_IMPORT_PLUGIN (QCocoaIntegrationPlugin)
 #endif
 
+using namespace moebius;
+
 qt_gui_rep* the_gui   = NULL;
 int         nr_windows= 0; // FIXME: fake variable, referenced in tm_server
 

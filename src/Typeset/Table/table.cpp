@@ -14,6 +14,8 @@
 #include "Format/format.hpp"
 #include "analyze.hpp"
 
+using namespace moebius;
+
 lazy make_lazy_paragraph (edit_env env, array<box> bs, path ip);
 
 /******************************************************************************

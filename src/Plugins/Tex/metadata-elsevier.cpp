@@ -14,6 +14,8 @@
 #include "metadata.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 static bool
 is_elsevier_note_ref (tree t) {
   return is_tuple (t, "\\tnoteref") || is_tuple (t, "\\fnref") ||

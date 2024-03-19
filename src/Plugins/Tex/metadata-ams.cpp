@@ -14,6 +14,8 @@
 #include "metadata.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 tree
 collect_metadata_ams (tree t) {
   int  i, n= N (t);

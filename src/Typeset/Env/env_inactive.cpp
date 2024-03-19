@@ -11,6 +11,8 @@
 
 #include "env.hpp"
 
+using namespace moebius;
+
 static tree
 subvar (tree var, int i) {
   tree svar= copy (var);

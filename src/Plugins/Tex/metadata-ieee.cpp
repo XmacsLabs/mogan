@@ -14,6 +14,8 @@
 #include "metadata.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 static bool
 is_and (tree t, int& i) {
   bool b= N (t) > i + 4 && t[i] == "a" && t[i + 1] == "n" && t[i + 2] == "d" &&

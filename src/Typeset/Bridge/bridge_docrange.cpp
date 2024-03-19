@@ -20,6 +20,8 @@
 #include "bridge.hpp"
 #include "tm_debug.hpp"
 
+using namespace moebius;
+
 #define ACC_THRESHOLD 32
 
 /******************************************************************************
