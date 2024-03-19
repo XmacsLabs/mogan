@@ -12,6 +12,8 @@
 #include "Bridge/impl_typesetter.hpp"
 #include "iterator.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Constructor and destructor
  ******************************************************************************/

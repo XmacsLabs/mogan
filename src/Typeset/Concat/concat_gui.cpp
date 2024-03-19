@@ -14,6 +14,8 @@
 #include "concater.hpp"
 #include "formatter.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Old-style resize function
  ******************************************************************************/

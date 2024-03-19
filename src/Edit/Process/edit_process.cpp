@@ -25,6 +25,8 @@
 #include "Bibtex/bibtex_functions.hpp"
 #endif
 
+using namespace moebius;
+
 /******************************************************************************
  * Constructors and destructors
  ******************************************************************************/

@@ -33,6 +33,7 @@ using lolly::data::to_Hex;
 using lolly::data::to_roman;
 using lolly::data::to_Roman;
 using moebius::drd::drd_encode_type;
+using namespace moebius;
 
 extern int  script_status;
 extern tree with_package_definitions (string package, tree body);

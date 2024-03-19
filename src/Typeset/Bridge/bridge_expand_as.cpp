@@ -11,6 +11,8 @@
 
 #include "bridge.hpp"
 
+using namespace moebius;
+
 class bridge_expand_as_rep : public bridge_rep {
 protected:
   bridge body;

@@ -17,6 +17,8 @@
 #include "Stack/stacker.hpp"
 #include "analyze.hpp"
 
+using namespace moebius;
+
 box surround (edit_env env, box b, path ip, array<line_item> l,
               array<line_item> r, format fm);
 

@@ -11,6 +11,8 @@
 
 #include "bridge.hpp"
 
+using namespace moebius;
+
 class bridge_formatting_rep : public bridge_rep {
 protected:
   string v;

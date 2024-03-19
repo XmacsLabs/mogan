@@ -13,6 +13,9 @@
 #include "Line/lazy_vstream.hpp"
 #include "Boxes/construct.hpp"
 #include "Line/lazy_paragraph.hpp"
+
+using namespace moebius;
+
 array<line_item> typeset_concat_or_table (edit_env env, tree t, path ip);
 
 lazy_vstream_rep::lazy_vstream_rep (path ip, tree channel2, array<page_item> l2,

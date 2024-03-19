@@ -13,6 +13,8 @@
 #include "Format/line_item.hpp"
 #define PEN DI
 
+using namespace moebius;
+
 /******************************************************************************
  * Information about the best line breaks
  ******************************************************************************/

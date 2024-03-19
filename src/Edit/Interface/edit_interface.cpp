@@ -28,6 +28,7 @@
 
 using moebius::drd::set_access_mode;
 using moebius::drd::the_drd;
+using namespace moebius;
 
 extern void (*env_next_prog) (void);
 extern void set_snap_mode (tree t);

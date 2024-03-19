@@ -24,7 +24,6 @@
 #include <moebius/drd/drd_info.hpp>
 #include <moebius/vars.hpp>
 
-using namespace moebius;
 using moebius::drd::drd_info;
 
 #define DECORATION (-1)
@@ -483,9 +482,9 @@ public:
     update (s);
   }
   inline tree local_begin_script () {
-    return local_begin (MATH_LEVEL, as_string (index_level + 1));
+    return local_begin (moebius::MATH_LEVEL, as_string (index_level + 1));
   }
-  inline void local_end_script (tree t) { local_end (MATH_LEVEL, t); }
+  inline void local_end_script (tree t) { local_end (moebius::MATH_LEVEL, t); }
   inline void assign (string s, tree t) {
     tree& val= env (s);
     t        = exec (t);

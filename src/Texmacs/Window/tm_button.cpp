@@ -40,6 +40,7 @@
 #include <moebius/drd/drd_std.hpp>
 
 using moebius::drd::std_drd;
+using namespace moebius;
 
 void use_modules (tree t);
 

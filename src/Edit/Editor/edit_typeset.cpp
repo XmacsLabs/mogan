@@ -25,6 +25,8 @@
 #include "tree_observer.hpp"
 #include <climits>
 
+using namespace moebius;
+
 // box empty_box (path ip, int x1=0, int y1=0, int x2=0, int y2=0);
 bool enable_fastenv= false;
 

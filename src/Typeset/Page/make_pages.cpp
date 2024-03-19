@@ -16,6 +16,8 @@
 #include "pager.hpp"
 #include "tm_debug.hpp"
 
+using namespace moebius;
+
 box format_stack (path ip, array<box> bx, array<space> ht, SI height,
                   bool may_stretch);
 #include "Boxes/construct.hpp"

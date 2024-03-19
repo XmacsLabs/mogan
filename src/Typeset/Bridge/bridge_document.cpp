@@ -11,6 +11,8 @@
 
 #include "bridge.hpp"
 
+using namespace moebius;
+
 bridge bridge_docrange (typesetter ttt, tree st, path ip, array<bridge>& brs,
                         int begin, int end, bool divide);
 

@@ -11,6 +11,8 @@
 
 #include "env.hpp"
 
+using namespace moebius;
+
 /*static*/ hashmap<string, tree> default_env (UNINIT);
 
 /*static*/ void
