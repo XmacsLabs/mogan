@@ -13,6 +13,8 @@
 #include "Boxes/construct.hpp"
 #include "observers.hpp"
 
+using namespace moebius;
+
 bridge bridge_document (typesetter, tree, path);
 bridge bridge_surround (typesetter, tree, path);
 bridge bridge_hidden (typesetter, tree, path);

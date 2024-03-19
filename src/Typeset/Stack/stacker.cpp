@@ -12,6 +12,8 @@
 #include "Stack/stacker.hpp"
 #include "Boxes/construct.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Constructors and basic routines for stackers
  ******************************************************************************/

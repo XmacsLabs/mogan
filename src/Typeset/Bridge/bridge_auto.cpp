@@ -11,6 +11,8 @@
 
 #include "bridge.hpp"
 
+using namespace moebius;
+
 tree insert_at (tree, path, tree);
 tree remove_at (tree, path, int);
 

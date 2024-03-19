@@ -15,6 +15,8 @@
 #include "page_type.hpp"
 #include "typesetter.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Retrieving the page size
  ******************************************************************************/

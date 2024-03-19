@@ -14,6 +14,8 @@
 #include "Tex/tex.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 array<tree>
 tokenize_concat (tree t, array<tree> a, bool keep) {
   if (!is_concat (t)) return array<tree> ();

@@ -19,6 +19,8 @@ extern hashmap<string, tree> default_env;
 void                         initialize_default_env ();
 #include "page_type.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Initialization
  ******************************************************************************/

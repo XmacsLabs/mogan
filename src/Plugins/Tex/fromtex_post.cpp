@@ -25,6 +25,7 @@
 #include <moebius/vars.hpp>
 
 using moebius::drd::std_drd;
+using namespace moebius;
 
 #ifdef USE_PLUGIN_BIBTEX
 #include "Bibtex/bibtex.hpp"

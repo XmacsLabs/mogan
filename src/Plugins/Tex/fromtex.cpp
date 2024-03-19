@@ -28,6 +28,7 @@
 
 #include <lolly/data/numeral.hpp>
 using lolly::data::from_hex;
+using namespace moebius;
 
 tree upgrade_tex (tree t);
 bool textm_class_flag= false;

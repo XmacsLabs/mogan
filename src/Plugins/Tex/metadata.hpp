@@ -12,10 +12,10 @@
 #include "Tex/convert_tex.hpp"
 #include "tree_helper.hpp"
 
-using namespace moebius;
-
 #ifndef METADATA_H
 #define METADATA_H
+
+using moebius::APPLY;
 
 tree        collect_abstract_data (tree u);
 array<tree> collect_metadata_latex (tree t,

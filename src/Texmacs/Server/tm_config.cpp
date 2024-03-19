@@ -19,6 +19,8 @@
 extern hashmap<int, string> qtcomposemap;
 #endif
 
+using namespace moebius;
+
 /******************************************************************************
  * Constructor and destructor
  ******************************************************************************/

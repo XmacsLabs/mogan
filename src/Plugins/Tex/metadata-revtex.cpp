@@ -14,6 +14,8 @@
 #include "metadata.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 static bool
 revtex_contains_noaffiliation (tree t) {
   for (int i= 0; i < N (t); i++)
