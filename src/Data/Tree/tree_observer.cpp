@@ -483,7 +483,6 @@ apply (tree& ref, modification mod) {
   if (busy_modifying) raw_apply (ref, mod);
   else if (is_busy) {
     if (ip_attached (ip) && !busy_path (p)) {
-      // cout << "Postpone " << (reverse (ip) * mod) << "\n";
       busy_paths= busy_paths * p;
       upcoming  = upcoming * (reverse (ip) * mod);
     }
@@ -495,9 +494,9 @@ apply (tree& ref, modification mod) {
       busy_paths= list<path> (p);
       upcoming  = list<modification> (reverse (ip) * mod);
       while (!is_nil (upcoming)) {
-        // cout << "Handle " << upcoming->item << "\n";
+        cout << "Handle " << upcoming->item << "\n";
         raw_apply (the_et, upcoming->item);
-        // cout << "Done " << upcoming->item << "\n";
+        cout << "Done " << upcoming->item << "\n";
         upcoming= upcoming->next;
       }
       busy_paths= list<path> ();
