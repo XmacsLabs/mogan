@@ -480,7 +480,8 @@ remove_space (tree& t) {
   if (arity (t) == 0) return;
   if (is_compound (t[N (t) - 1])) return;
   string s= t[N (t) - 1]->label;
-  if ((N (s) > 0) && (s[N (s) - 1] == ' ')) t[N (t) - 1]= s (0, N (s) - 1);
+  if ((N (s) > 0) && (s[N (s) - 1] == ' '))
+    t[N (t) - 1]= string (s (0, N (s) - 1));
 }
 
 static void
@@ -958,9 +959,10 @@ finalize_sections (tree t) {
           else u= u (2, N (u));
         }
         if (is_atomic (u) && starts (u->label, " "))
-          u= u->label (1, N (u->label));
+          u= string (u->label (1, N (u->label)));
         if (is_concat (u) && is_atomic (u[0]) && starts (u[0]->label, " "))
-          u= tree (CONCAT, u[0]->label (1, N (u[0]->label))) * u (1, N (u));
+          u= tree (CONCAT, string (u[0]->label (1, N (u[0]->label)))) *
+             u (1, N (u));
         r << u;
       }
       else r << u;
@@ -997,7 +999,7 @@ textm_algorithm_break_after (tree t) {
   string var;
   if (is_func (t, APPLY, 2)) {
     var= "\\" * as_string (t[0]);
-    var= (var[N (var) - 1] == '*') ? var (0, N (var) - 1) : var;
+    var= (var[N (var) - 1] == '*') ? string (var (0, N (var) - 1)) : var;
   }
   return (
       (is_func (t, END) &&

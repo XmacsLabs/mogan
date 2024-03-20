@@ -109,7 +109,7 @@ immediate_options (int argc, char** argv) {
   init_texmacs_home_path ();
   if (is_empty (get_env ("TEXMACS_HOME_PATH"))) return;
   for (int i= 1; i < argc; i++) {
-    string s= argv[i];
+    string s= as_string (argv[i]);
     if ((N (s) >= 2) && (s (0, 2) == "--")) s= s (1, N (s));
     if ((s == "-S") || (s == "-setup")) {
       remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));

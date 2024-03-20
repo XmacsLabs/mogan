@@ -272,7 +272,7 @@ clean_op (tree t) {
   if (!is_atomic (t)) return t;
   string s= t->label;
   if (starts (s, "<big-") && ends (s, ">") && !is_digit (s[N (s) - 2]))
-    return tree (BIG, s (5, N (s) - 1));
+    return tree (BIG, string (s (5, N (s) - 1)));
   return t;
 }
 
@@ -285,8 +285,10 @@ clean_mathml (tree t) {
     tm_char_backwards (s, pos);
     if (pos >= 0 && pos < N (s) && starts (s (pos, N (s)), "<big-") &&
         !is_digit (s[N (s) - 2])) {
-      if (pos == 0) return tree (BIG, s (5, N (s) - 1));
-      else return tree (CONCAT, s (0, pos), tree (BIG, s (pos + 5, N (s) - 1)));
+      if (pos == 0) return tree (BIG, string (s (5, N (s) - 1)));
+      else
+        return tree (CONCAT, string (s (0, pos)),
+                     tree (BIG, string (s (pos + 5, N (s) - 1))));
     }
     return t;
   }

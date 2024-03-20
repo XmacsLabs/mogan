@@ -149,7 +149,7 @@ test_macro (string s, int i, string name) {
 
 bool
 test_env (string s, int i, string name, bool end= false) {
-  string tok = end ? "\\end" : "\\begin";
+  string tok = as_string (end ? "\\end" : "\\begin");
   int    step= end ? 4 : 6;
   if (!test_macro (s, i, tok)) return false;
   while (i < N (s) && s[i] == ' ')
@@ -327,7 +327,7 @@ latex_parser::parse (string s, int& i, string stop, int change) {
         int start= i - 1;
         while ((i < N (s)) && (s[i] == '\''))
           i++;
-        t << tuple ("\\prime", s (start, i));
+        t << tuple ("\\prime", string (s (start, i)));
       }
       else {
         t << s (i - 1, i);
@@ -606,13 +606,13 @@ latex_parser::parse_backslash (string s, int& i, int change) {
       i++;
     if ((i == n) || (s[i] != '{')) {
       latex_error (s, i, "begin or end which environment ?");
-      return s (start, i);
+      return string (s (start, i));
     }
     i++;
     start= i;
     while ((i < n) && (s[i] != '}'))
       i++;
-    r= r * "-" * s (start, i);
+    r= r * "-" * string (s (start, i));
     if (i < n) i++;
   }
   return parse_command (s, i, r, change);
@@ -663,11 +663,11 @@ latex_parser::parse_symbol (string s, int& i) {
   }
   if (s[i] == '#' && i + 1 < N (s) && is_digit (s[i + 1])) {
     i+= 2;
-    return s (start, i);
+    return string (s (start, i));
   }
   if (s[i] != '\\') {
     i++;
-    return s (start, i);
+    return string (s (start, i));
   }
   i++;
   if (i == N (s)) return tree (TUPLE, "\\backslash");
@@ -684,7 +684,7 @@ latex_parser::parse_symbol (string s, int& i) {
     lf= 'N';
     i++;
   }
-  return tree (TUPLE, s (start, end));
+  return tree (TUPLE, string (s (start, end)));
 }
 
 static bool
@@ -989,7 +989,7 @@ latex_parser::parse_command (string s, int& i, string cmd, int change) {
     if (args == "") t= tree (TUPLE, "\\def", name, st);
     else t= tree (TUPLE, "\\def*", name, args, st);
     u           = copy (t);
-    u[N (u) - 1]= s (start, i);
+    u[N (u) - 1]= string (s (start, i));
   }
   else {
     /************************ retrieve arguments
@@ -1302,8 +1302,9 @@ latex_parser::parse_command (string s, int& i, string cmd, int change) {
     string code= orig_cmd * s (begin_parse, i);
     code       = verbatim_escape (code);
     if (command_type ("!mode") == "math")
-      t= tuple ("\\latex_preview", cmd (1, N (cmd)), compound ("text", code));
-    else t= tuple ("\\latex_preview", cmd (1, N (cmd)), code);
+      t= tuple ("\\latex_preview", string (cmd (1, N (cmd))),
+                compound ("text", code));
+    else t= tuple ("\\latex_preview", string (cmd (1, N (cmd))), code);
   }
 
   if (mbox_flag) command_type ("!mode")= "math";
@@ -1478,7 +1479,7 @@ latex_parser::parse_length_name (string s, int& i) {
     i++;
     while (i < N (s) && is_tex_alpha (s[i]))
       i++;
-    return s (start, i);
+    return string (s (start, i));
   }
   else return "";
 }
@@ -1511,11 +1512,11 @@ latex_parser::parse_verbatim (string s, int& i, string end, string env) {
     i++;
   i+= e;
   if (N (env) > 0 && env[0] == '\\') {
-    return tree (TUPLE, env, s (start, i - e));
+    return tree (TUPLE, env, string (s (start, i - e)));
   }
   else if (N (env) > 0) {
     string begin= "\\begin-" * env, endenv= "\\end-" * env;
-    return tree (CONCAT, tree (TUPLE, begin), s (start, i - e),
+    return tree (CONCAT, tree (TUPLE, begin), string (s (start, i - e)),
                  tree (TUPLE, endenv));
   }
   else return "";
@@ -1701,7 +1702,7 @@ latex_parser::parse (string s, int change) {
       while ((i < n) && is_space (s[i]))
         i++;
       if (test (s, i, "%%%%%%%%%% Start TeXmacs macros\n")) {
-        a << s (start, i);
+        a << string (s (start, i));
         while ((i < n) && (!test (s, i, "%%%%%%%%%% End TeXmacs macros\n")))
           i++;
         i+= 30;
@@ -1720,11 +1721,11 @@ latex_parser::parse (string s, int change) {
                  test_macro (s, i, "\\nextbib") ||
                  test_macro (s, i, "\\newcommand") ||
                  test_macro (s, i, "\\def")))) {
-        a << s (start, i);
+        a << string (s (start, i));
         start= i;
         while (i < n && test_macro (s, i, "\\nextbib")) {
           i+= 10;
-          a << s (start, i);
+          a << string (s (start, i));
           start= i;
         }
       }
@@ -1762,7 +1763,7 @@ latex_parser::parse (string s, int change) {
     }
     else if ((i == 0 || s[i - 1] != '\\') && s[i] == '{') count++;
     else if ((i == 0 || s[i - 1] != '\\') && s[i] == '}') count--;
-  a << s (start, i);
+  a << string (s (start, i));
 
   // We now parse each of the pieces
   tree t (CONCAT);

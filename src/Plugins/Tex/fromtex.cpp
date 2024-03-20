@@ -778,7 +778,7 @@ latex_symbol_to_tree (string s) {
         (command_type ("!mode") != "math"))
       return "...";
     if (s == "\n") return tree (APPLY, "!emptyline");
-    if (latex_type ('\\' * s) == "command") {
+    if (latex_type (as_string ('\\') * s) == "command") {
       if (s == " ") return " ";
       if (s == "-") return "";
       if (s == "/") return "";
@@ -1159,7 +1159,7 @@ latex_symbol_to_tree (string s) {
     if (s == "og") return "\x13 "; // open guillemets (French)
     if (s == "fg") return "\x14";  // close guillemets (French)
     if (latex_type (s) == "big-symbol") {
-      if (s (0, 3) == "big") return tree (BIG, s (3, N (s)));
+      if (s (0, 3) == "big") return tree (BIG, string (s (3, N (s))));
       else return tree (BIG, s);
     }
 
@@ -1202,7 +1202,7 @@ latex_symbol_to_tree (string s) {
       if (s == "begin-sol") return tree (BEGIN, "solution");
       if (s == "begin-ans") return tree (BEGIN, "answer");
       if (s == "begin-acks") return tree (BEGIN, "acknowledgments");
-      return tree (BEGIN, s (6, N (s)));
+      return tree (BEGIN, string (s (6, N (s))));
     }
     if ((N (s) > 4) && (s (0, 4) == "end-")) {
       if (s == "end-th") return tree (END, "theorem");
@@ -1232,7 +1232,7 @@ latex_symbol_to_tree (string s) {
       if (s == "end-sol") return tree (END, "solution");
       if (s == "end-ans") return tree (END, "answer");
       if (s == "end-acks") return tree (END, "acknowledgments");
-      return tree (END, s (4, N (s)));
+      return tree (END, string (s (4, N (s))));
     }
 
     if (starts (s, "#") && s != "#") {
@@ -1242,7 +1242,7 @@ latex_symbol_to_tree (string s) {
     return tree (APPLY, s);
   }
   if ((N (s) == 2) && (s[0] == '#') && is_digit (s[1]))
-    return tree (APPLY, s (1, 2));
+    return tree (APPLY, string (s (1, 2)));
   if (s == "&") return tree (FORMAT, "line separator");
   return copy (s);
 }
@@ -2614,7 +2614,7 @@ latex_command_to_tree (tree t) {
         }
     if (is_compound (key, "natbib-triple", 3)) {
       while (is_atomic (key[1]) && ends (key[1]->label, " "))
-        key[1]= key[1]->label (0, N (key[1]->label) - 1);
+        key[1]= string (key[1]->label (0, N (key[1]->label) - 1));
       if (is_atomic (key[1]) && ends (key[1]->label, " et"))
         key[1]= key[1]->label * " al.";
     }
@@ -2834,8 +2834,9 @@ latex_command_to_tree (tree t) {
   if (L (t) == IMAGE) return t;
   int    i;
   string s= t[0]->label;
-  tree   r (APPLY, s (1, N (s)));
-  if ((N (s) > 7) && (s (0, 7) == "\\begin-")) r= tree (BEGIN, s (7, N (s)));
+  tree   r (APPLY, string (s (1, N (s))));
+  if ((N (s) > 7) && (s (0, 7) == "\\begin-"))
+    r= tree (BEGIN, string (s (7, N (s))));
   for (i= 1; i < N (t); i++)
     r << l2e (t[i]);
   return r;

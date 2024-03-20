@@ -87,7 +87,7 @@ latex_remove_fmt (string s) {
         i++;
       }
       if (cut) {
-        s= s (0, start) * '\n' * s (i + 1, n);
+        s= string (s (0, start)) * "\n" * string (s (i + 1, n));
         n= N (s);
       }
     }
