@@ -294,7 +294,7 @@ xpm_color (string s) {
 static void
 populates_colorhash_from_rgb_record (rgb_record* rec, colorhash ch) {
   while (strcmp (rec->name, "") != 0) {
-    string name (locase_all (rec->name));
+    string name (locase_all (as_string (rec->name)));
     color  col= rgb_color (rec->r, rec->g, rec->b);
 
     if (DEBUG_STD && ch->contains (name) && ch[name] != col) {
@@ -309,7 +309,7 @@ populates_colorhash_from_rgb_record (rgb_record* rec, colorhash ch) {
 static void
 populates_colorhash_from_cmyk_record (cmyk_record* rec, colorhash ch) {
   while (strcmp (rec->name, "") != 0) {
-    string name (locase_all (rec->name));
+    string name (locase_all (as_string (rec->name)));
     color  col= cmyk_color (rec->c, rec->m, rec->y, rec->k);
 
     if (DEBUG_STD && ch->contains (name) && ch[name] != col) {

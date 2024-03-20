@@ -304,8 +304,8 @@ raw_split (tree& ref, int pos, int at) {
   if (!is_nil (ref->data)) ref->data->announce (ref, mod);
   tree t= ref[pos], t1, t2;
   if (is_atomic (ref[pos])) {
-    t1= ref[pos]->label (0, at);
-    t2= ref[pos]->label (at, N (ref[pos]->label));
+    t1= string (ref[pos]->label (0, at));
+    t2= string (ref[pos]->label (at, N (ref[pos]->label)));
   }
   else {
     t1= ref[pos](0, at);
