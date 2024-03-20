@@ -81,12 +81,7 @@ ispeller_rep::start () {
   // Try hunspell first
   url binary_hunspell= find_binary_hunspell ();
   if (!is_none (binary_hunspell)) {
-    if (os_win ()) {
-      cmd= raw_quote (as_string (binary_hunspell));
-    }
-    else {
-      cmd= as_string (binary_hunspell);
-    }
+    cmd= sys_concretize (binary_hunspell);
     cmd << " -a -i utf-8";
     name= "Hunspell";
     if (!is_empty (locale)) {
@@ -99,12 +94,7 @@ ispeller_rep::start () {
   if (is_empty (name) || (!testdic)) {
     url binary_aspell= find_binary_aspell ();
     if (!is_none (binary_aspell)) {
-      if (os_win ()) {
-        cmd= raw_quote (as_string (binary_aspell));
-      }
-      else {
-        cmd= as_string (binary_aspell);
-      }
+      cmd = sys_concretize (binary_aspell);
       name= "Aspell";
       cmd = cmd * " -a --encoding=utf-8";
       if (!is_empty (locale)) cmd= cmd * " --language-tag=" * locale;
