@@ -213,7 +213,7 @@ function sidebarGuide() {
             collapsed: true,
             items: [
                 {
-                    text: 'v1.2.5 LTS (2024/02/27)',
+                    text: 'v1.2.5.x LTS',
                     link: '/guide/ChangeLog_v1.2.5.md'
                 },
                 {
@@ -348,7 +348,7 @@ function sidebarGuideZh() {
             collapsed: true,
             items: [
                 {
-                    text: 'v1.2.5 LTS (2024/02/27)',
+                    text: 'v1.2.5.x LTS',
                     link: '/zh/guide/ChangeLog_v1.2.5.md'
                 },
                 {

@@ -4,7 +4,7 @@ Mogan STEM Suite v1.2.5 LTS:
 
 This release is for bug fixes and user experience improvements.
 
-## Notable changes in v1.2.5.1
+## Notable changes in v1.2.5.1 (2024/03/14)
 + Shortcuts
   + Fix for the unexpected commit of the ESC key
   + Fix the keyboard insert of backtick (For the SICP Open Course)
@@ -16,7 +16,7 @@ This release is for bug fixes and user experience improvements.
   + Fix encoding of `scheme-eval` (For the SICP Open Course)
 
 
-## Notable changes in v1.2.5
+## Notable changes in v1.2.5 (2024/02/27)
 + Installers
   + Official deb installer for Ubuntu 20.04
   + Official deb installer for Debian 12 (bookworm)
