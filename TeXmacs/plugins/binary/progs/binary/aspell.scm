@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : hunspell.scm
-;; DESCRIPTION : Hunspell Binary plugin
+;; MODULE      : aspell.scm
+;; DESCRIPTION : aspell Binary plugin
 ;; COPYRIGHT   : (C) 2024  Darcy Shen
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,23 +11,24 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary hunspell))
+(texmacs-module (binary aspell))
 
-(define (hunspell-binary-candidates)
+(define (aspell-binary-candidates)
   (cond ((os-macos?)
-         (list "/opt/homebrew/bin/hunspell"
-               "/usr/local/bin/hunspell"))
+         (list "/opt/homebrew/bin/aspell"
+               "/usr/local/bin/aspell"))
         ((os-win32?)
          (list ))
         (else
-         (list "/usr/bin/hunspell"))))
+         (list "/usr/bin/aspell"))))
 
-(tm-define (find-binary-hunspell)
-  (:synopsis "Find the url to the convert binary, return (url-none) if not found")
-  (with u (or (list-find (hunspell-binary-candidates)
+(tm-define (find-binary-aspell)
+  (:synopsis "Find the url to the aspell binary, return (url-none) if not found")
+  (with u (or (list-find (aspell-binary-candidates)
                 (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "hunspell"))
+              (url-resolve-in-path "aspell"))
     (url-resolve u "r")))
 
-(tm-define (has-binary-hunspell?)
-  (not (url-none? (find-binary-hunspell))))
+(tm-define (has-binary-aspell?)
+  (not (url-none? (find-binary-aspell))))
+
