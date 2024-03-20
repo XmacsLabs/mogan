@@ -1,8 +1,10 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|generic|no-page-numbers|chinese>>
+<style|<tuple|generic|no-page-numbers|british>>
 
 <\body>
+  Helllo
+
   <\session|scheme|default>
     <\unfolded-io|Scheme] >
       (use-modules (binary hunspell))
