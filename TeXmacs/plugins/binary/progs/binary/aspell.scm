@@ -18,7 +18,7 @@
          (list "/opt/homebrew/bin/aspell"
                "/usr/local/bin/aspell"))
         ((os-win32?)
-         (list ))
+         (list "$USERPROFILE\\scoop\\apps\\aspell\\current\\bin\\aspell.exe"))
         (else
          (list "/usr/bin/aspell"))))
 
