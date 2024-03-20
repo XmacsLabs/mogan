@@ -18,6 +18,7 @@
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_link.hpp"
+#include "scheme.hpp"
 
 #include <moebius/tree_label.hpp>
 
@@ -68,6 +69,7 @@ ispeller_rep::ispeller_rep (string lan2) : rep<ispeller> (lan2), lan (lan2) {}
 // connect to spell checker with the desired dictionnary
 string
 ispeller_rep::start () {
+  cout << "spell checker start" << LF;
   if (!is_nil (ln)) {
     if (ln->alive) return "ok";
     if (unavailable) return "Error: not available";
@@ -91,6 +93,7 @@ ispeller_rep::start () {
     if (!is_empty (locale)) {
       cmd << " -d " << locale;
     }
+    cout << cmd << LF;
     testdic= connect_spellchecker (cmd);
   }
 
