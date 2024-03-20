@@ -125,7 +125,7 @@ tree_report (tree t, path p) {
  ******************************************************************************/
 
 string
-get_crash_report (const char* msg) {
+get_crash_report (string msg) {
   string r;
   r << "Error message:\n  " << msg << "\n"
 #if defined(KERNEL_L3)
@@ -141,7 +141,7 @@ get_crash_report (const char* msg) {
 }
 
 void
-tm_failure (const char* msg) {
+tm_failure (string msg) {
   if (rescue_mode) {
     fprintf (stderr, "\nTeXmacs] Fatal unrecoverable error, %s\n", msg);
 #ifdef DEBUG_ASSERT

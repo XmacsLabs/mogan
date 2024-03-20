@@ -34,8 +34,8 @@ sys_concretize (url u1) {
 
 void system (string which, url u1);
 void system (string which, url u1, url u2);
-void system (string which, url u1, const char* post);
-void system (string which, url u1, const char* sep, url u2);
+void system (string which, url u1, string post);
+void system (string which, url u1, string sep, url u2);
 inline string
 eval_system (string which, url u1) {
   return eval_system (which * " " * escape_sh (concretize (u1)));

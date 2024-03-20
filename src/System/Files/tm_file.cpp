@@ -74,11 +74,11 @@ system (string which, url u1, url u2) {
   lolly::system::call (cmd);
 }
 void
-system (string which, url u1, const char* post) {
+system (string which, url u1, string post) {
   lolly::system::call (which * " " * sys_concretize (u1) * " " * post);
 }
 void
-system (string which, url u1, const char* sep, url u2) {
+system (string which, url u1, string sep, url u2) {
   lolly::system::call (which * " " * sys_concretize (u1) * " " * sep * " " *
                        sys_concretize (u2));
 }

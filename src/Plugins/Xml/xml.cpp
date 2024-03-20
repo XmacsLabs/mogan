@@ -113,7 +113,7 @@ tm_to_xml_cdata (string s) {
       else {
         if (r != "") a << object (r);
         a << cons (symbol_object ("tm-sym"),
-                   cons (ss (1, N (ss) - 1), null_object ()));
+                   cons (string (ss (1, N (ss) - 1)), null_object ()));
         r= "";
       }
     }
