@@ -451,7 +451,7 @@ cyrillic_subset_in_t2a_to_code_point (string input) {
     else {
       tmp= apply (conv, input[i]);
       if (tmp == string (input[i])) r << tmp;
-      else r << '<' * tmp * '>';
+      else r << '<' << tmp << '>';
     }
   }
   return r;
@@ -580,7 +580,7 @@ apply (iconv_converter& conv, string input) {
       return input;
     }
     size_t used_out= out_cursor - out_cp;
-    result << string (out_cp, used_out);
+    result << lolly::data::lolly_string_view (used_out, (char*) out_cp);
     out_counter+= used_out;
     expansion= max ((double) out_counter / (in_cursor - in_cp), 1.0) + 0.1;
   }
@@ -891,7 +891,7 @@ utf8_to_hex_entities (string s) {
   for (i= 0; i < n;) {
     unsigned char c= s[i];
     if ((0x80 & c) == 0 || ((0xF8 & c) == 0xF8)) {
-      result << c;
+      result << as_string (c);
       i++;
     }
     else {

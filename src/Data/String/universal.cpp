@@ -401,7 +401,7 @@ fill_bis (array<int> a, int start, int kind) {
     if (a[i] != -1) {
       int    code= start + i;
       string c;
-      c << ((unsigned char) code);
+      c << as_string (((unsigned char) code));
       string v= utf8_to_cork (encode_as_utf8 (a[i]));
       if (kind == 0) accented_list << c;
       if (kind == 0) unaccent_table (c)= v;

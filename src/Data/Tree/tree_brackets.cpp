@@ -517,7 +517,7 @@ downgrade_bracket (tree t, bool large) {
   string s= t->label;
   if (large) {
     if (t == "<nobracket>") return tree (".");
-    if (starts (s, "<") && ends (s, ">")) return s (1, N (s) - 1);
+    if (starts (s, "<") && ends (s, ">")) return string (s (1, N (s) - 1));
   }
   else if (s == "<nobracket>") return "";
   return t;
@@ -622,7 +622,7 @@ move_brackets_sub (tree t, bool in) {
                         a << tree (s (0, 1));
                         c[i]    = compound ("math", concat_recompose (a));
                         c[i]    = upgrade_brackets (c[i]);
-                        c[i + 1]= s (1, N (s));
+                        c[i + 1]= string (s (1, N (s)));
                         r       = move_brackets_sub (concat_recompose (c), in);
                         search  = false;
                       }
@@ -650,7 +650,7 @@ move_brackets_sub (tree t, bool in) {
                         a            = append (tree (s (l - 1, l)), a);
                         c[i]         = compound ("math", concat_recompose (a));
                         c[i]         = upgrade_brackets (c[i]);
-                        c[i - 1]     = s (0, l - 1);
+                        c[i - 1]     = string (s (0, l - 1));
                         r     = move_brackets_sub (concat_recompose (c), in);
                         search= false;
                       }

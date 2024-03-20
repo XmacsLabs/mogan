@@ -53,7 +53,6 @@ int debug_off ();
  * @param status The new state of the debugging output.
  */
 void debug_on (int status);
-class string;
 
 /**
  * @brief Function used to set the debugging flag for a given string.

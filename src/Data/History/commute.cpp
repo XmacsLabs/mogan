@@ -24,7 +24,7 @@ insert_length (tree t) {
 
 static tree
 insert_range (tree t, int i, int len) {
-  if (is_atomic (t)) return t->label (i, i + len);
+  if (is_atomic (t)) return string (t->label (i, i + len));
   else return t (i, i + len);
 }
 

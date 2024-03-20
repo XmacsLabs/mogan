@@ -93,7 +93,7 @@ tm_reader<format_without_utf8>::decode (string s) {
       else if (s[i] == 'r') r << '\r';
       else if (s[i] == 'n') r << '\n';
       else if (s[i] == '\\') r << '\\';
-      else if ((s[i] >= '@') && (s[i] < '`')) r << (s[i] - '@');
+      else if ((s[i] >= '@') && (s[i] < '`')) r << as_string (s[i] - '@');
       else r << s[i];
     }
     else r << s[i];
