@@ -15,6 +15,7 @@
 #include "file.hpp"
 #include "locale.hpp"
 #include "resource.hpp"
+#include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_link.hpp"
