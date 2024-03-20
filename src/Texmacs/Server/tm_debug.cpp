@@ -125,9 +125,9 @@ tree_report (tree t, path p) {
  ******************************************************************************/
 
 string
-get_crash_report (string msg) {
+get_crash_report (const char* msg) {
   string r;
-  r << "Error message:\n  " << msg << "\n"
+  r << "Error message:\n  " << as_string (msg) << "\n"
 #if defined(KERNEL_L3)
     << "\n"
     << get_system_information ();
@@ -141,7 +141,7 @@ get_crash_report (string msg) {
 }
 
 void
-tm_failure (string msg) {
+tm_failure (const char* msg) {
   if (rescue_mode) {
     fprintf (stderr, "\nTeXmacs] Fatal unrecoverable error, %s\n", msg);
 #ifdef DEBUG_ASSERT
@@ -150,7 +150,7 @@ tm_failure (string msg) {
     exit (1);
   }
   rescue_mode= true;
-  cerr << "\nTeXmacs] Fatal error, " << msg << "\n";
+  cerr << "\nTeXmacs] Fatal error, " << as_string (msg) << "\n";
 
   // cerr << "Saving crash report...\n";
   string report= get_crash_report (msg);
@@ -316,7 +316,7 @@ debug_ostream_rep::clear () {
 void
 debug_ostream_rep::write (const char* s) {
 #if !defined(KERNEL_L3)
-  debug_message (channel, s);
+  debug_message (channel, as_string (s));
 #endif
 }
 

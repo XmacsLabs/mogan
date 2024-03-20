@@ -68,11 +68,12 @@ void
 QTMPipeLink::feedBuf (ProcessChannel channel) {
   setReadChannel (channel);
   QByteArray tempout= QIODevice::readAll ();
-  if (channel == QProcess::StandardOutput) outbuf << tempout.constData ();
-  else errbuf << tempout.constData ();
+  if (channel == QProcess::StandardOutput)
+    outbuf << as_string (tempout.constData ());
+  else errbuf << as_string (tempout.constData ());
   if (DEBUG_IO)
     debug_io << "[OUTPUT " << channel << "]"
-             << debug_io_string (tempout.constData ()) << "\n";
+             << debug_io_string (tempout.constData ()) << LF;
 }
 
 bool

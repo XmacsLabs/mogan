@@ -492,7 +492,7 @@ printer_rep::generate_tex_fonts () {
     int    i, d, l;
     string name= tex_fonts[fn_name], ttf;
     int    pos = search_forwards (".", fn_name);
-    string root= (pos == -1 ? fn_name : fn_name (0, pos));
+    string root= (pos == -1 ? fn_name : string (fn_name (0, pos)));
 #ifndef OS_WIN // we need pfbtopfa
     if ((pos != -1) && ends (fn_name, "tt")) {
       int pos2= search_backwards (":", fn_name);

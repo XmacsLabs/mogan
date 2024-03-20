@@ -70,7 +70,7 @@ hyphen_normalize (string s) {
   string r (0);
   for (i= 0; i < N (s); i++)
     if ((i + 3 < N (s)) && (s[i] == '^') && (s[i + 1] == '^')) {
-      r << from_hex (s (i + 2, i + 4));
+      r << string (from_hex (s (i + 2, i + 4)));
       i+= 3;
     }
     else r << s[i];

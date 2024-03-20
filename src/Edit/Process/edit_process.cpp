@@ -197,8 +197,8 @@ edit_process_rep::generate_bibliography (string bib, string style,
       tree   te= bib_entries (parse_bib (sbib), bib_t);
       object ot= tree_to_stree (te);
       eval ("(use-modules (bibtex " * style (3, N (style)) * "))");
-      t= stree_to_tree (
-          call (string ("bib-process"), bib, style (3, N (style)), ot));
+      t= stree_to_tree (call ("bib-process", object (bib),
+                              string (style (3, N (style))), ot));
     }
     else t= bibtex_run (bib, style, bib_file, bib_t);
     t= arrange_bib (t);

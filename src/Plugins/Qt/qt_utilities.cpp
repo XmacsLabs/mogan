@@ -464,7 +464,7 @@ string
 from_qstring_utf8 (const QString& s) {
   QByteArray  arr = s.toUtf8 ();
   const char* cstr= arr.constData ();
-  return string ((char*) cstr);
+  return as_string (cstr);
 }
 
 // This should provide better lookup times
@@ -764,7 +764,7 @@ qt_translate (const string& s) {
 
 string
 qt_application_directory () {
-  return string (
+  return as_string (
       QCoreApplication::applicationDirPath ().toLatin1 ().constData ());
   // This is used to set $TEXMACS_PATH
   // in Windows TeXmacs cannot run if this path contains unicode characters

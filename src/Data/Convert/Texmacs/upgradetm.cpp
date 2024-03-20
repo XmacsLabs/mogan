@@ -9,6 +9,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "array.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
 #include "cork.hpp"
@@ -16,6 +17,7 @@
 #include "merge_sort.hpp"
 #include "path.hpp"
 #include "scheme.hpp"
+#include "string.hpp"
 #include "tree.hpp"
 #include "tree_correct.hpp"
 #include "tree_helper.hpp"
@@ -2314,225 +2316,225 @@ upgrade_use_package (tree t) {
  * Normalize names of tags in the style files
  ******************************************************************************/
 
-static charp style_rename[]= {"thelabel",
-                              "the-label",
+static string style_rename[]= {"thelabel",
+                               "the-label",
 
-                              "leftflush",
-                              "left-flush",
-                              "rightflush",
-                              "right-flush",
-                              "mathord",
-                              "math-ord",
-                              "mathopen",
-                              "math-open",
-                              "mathclose",
-                              "math-close",
-                              "mathpunct",
-                              "math-punct",
-                              "mathbin",
-                              "math-bin",
-                              "mathrel",
-                              "math-rel",
-                              "mathop",
-                              "math-op",
-                              "thetoc",
-                              "the-toc",
-                              "theidx",
-                              "the-idx",
-                              "thegly",
-                              "the-gly",
-                              "theitem",
-                              "the-item",
-                              "tocnr",
-                              "toc-nr",
-                              "idxnr",
-                              "idx-nr",
-                              "glynr",
-                              "gly-nr",
-                              "itemnr",
-                              "item-nr",
-                              "itemname",
-                              "item-name",
-                              "newitemize",
-                              "new-itemize",
-                              "newenumerate",
-                              "new-enumerate",
-                              "newdescription",
-                              "new-description",
+                               "leftflush",
+                               "left-flush",
+                               "rightflush",
+                               "right-flush",
+                               "mathord",
+                               "math-ord",
+                               "mathopen",
+                               "math-open",
+                               "mathclose",
+                               "math-close",
+                               "mathpunct",
+                               "math-punct",
+                               "mathbin",
+                               "math-bin",
+                               "mathrel",
+                               "math-rel",
+                               "mathop",
+                               "math-op",
+                               "thetoc",
+                               "the-toc",
+                               "theidx",
+                               "the-idx",
+                               "thegly",
+                               "the-gly",
+                               "theitem",
+                               "the-item",
+                               "tocnr",
+                               "toc-nr",
+                               "idxnr",
+                               "idx-nr",
+                               "glynr",
+                               "gly-nr",
+                               "itemnr",
+                               "item-nr",
+                               "itemname",
+                               "item-name",
+                               "newitemize",
+                               "new-itemize",
+                               "newenumerate",
+                               "new-enumerate",
+                               "newdescription",
+                               "new-description",
 
-                              "nextnumber",
-                              "next-number",
-                              "eqnumber",
-                              "eq-number",
-                              "leqnumber",
-                              "leq-number",
-                              "reqnumber",
-                              "req-number",
-                              "nonumber",
-                              "no-number",
-                              "thefootnote",
-                              "the-footnote",
-                              "theequation",
-                              "the-equation",
-                              "thetheorem",
-                              "the-theorem",
-                              "theproposition",
-                              "the-proposition",
-                              "thelemma",
-                              "the-lemma",
-                              "thecorollary",
-                              "the-corollary",
-                              "theaxiom",
-                              "the-axiom",
-                              "thedefinition",
-                              "the-definition",
-                              "thenotation",
-                              "the-notation",
-                              "theconjecture",
-                              "the-conjecture",
-                              "theremark",
-                              "the-remark",
-                              "theexample",
-                              "the-example",
-                              "thenote",
-                              "the-note",
-                              "thewarning",
-                              "the-warning",
-                              "theconvention",
-                              "the-convention",
-                              "theacknowledgments",
-                              "the-acknowledgments",
-                              "theexercise",
-                              "the-exercise",
-                              "theproblem",
-                              "the-problem",
-                              "thefigure",
-                              "the-figure",
-                              "thetable",
-                              "the-table",
-                              "footnotenr",
-                              "footnote-nr",
-                              "equationnr",
-                              "equation-nr",
-                              "theoremnr",
-                              "theorem-nr",
-                              "propositionnr",
-                              "proposition-nr",
-                              "lemmanr",
-                              "lemma-nr",
-                              "corollarynr",
-                              "corollary-nr",
-                              "axiomnr",
-                              "axiom-nr",
-                              "definitionnr",
-                              "definition-nr",
-                              "notationnr",
-                              "notation-nr",
-                              "conjecturenr",
-                              "conjecture-nr",
-                              "remarknr",
-                              "remark-nr",
-                              "examplenr",
-                              "example-nr",
-                              "notenr",
-                              "note-nr",
-                              "warningnr",
-                              "warning-nr",
-                              "conventionnr",
-                              "convention-nr",
-                              "acknowledgmentsnr",
-                              "acknowledgments-nr",
-                              "exercisenr",
-                              "exercise-nr",
-                              "problemnr",
-                              "problem-nr",
-                              "figurenr",
-                              "figure-nr",
-                              "tablenr",
-                              "table-nr",
-                              "theoremname",
-                              "theorem-name",
-                              "figurename",
-                              "figure-name",
-                              "exercisename",
-                              "exercise-name",
-                              "theoremsep",
-                              "theorem-sep",
-                              "figuresep",
-                              "figure-sep",
-                              "exercisesep",
-                              "exercise-sep",
-                              "footnotesep",
-                              "footnote-sep",
-                              "newtheorem",
-                              "new-theorem",
-                              "newremark",
-                              "new-remark",
-                              "newexercise",
-                              "new-exercise",
-                              "newfigure",
-                              "new-figure",
+                               "nextnumber",
+                               "next-number",
+                               "eqnumber",
+                               "eq-number",
+                               "leqnumber",
+                               "leq-number",
+                               "reqnumber",
+                               "req-number",
+                               "nonumber",
+                               "no-number",
+                               "thefootnote",
+                               "the-footnote",
+                               "theequation",
+                               "the-equation",
+                               "thetheorem",
+                               "the-theorem",
+                               "theproposition",
+                               "the-proposition",
+                               "thelemma",
+                               "the-lemma",
+                               "thecorollary",
+                               "the-corollary",
+                               "theaxiom",
+                               "the-axiom",
+                               "thedefinition",
+                               "the-definition",
+                               "thenotation",
+                               "the-notation",
+                               "theconjecture",
+                               "the-conjecture",
+                               "theremark",
+                               "the-remark",
+                               "theexample",
+                               "the-example",
+                               "thenote",
+                               "the-note",
+                               "thewarning",
+                               "the-warning",
+                               "theconvention",
+                               "the-convention",
+                               "theacknowledgments",
+                               "the-acknowledgments",
+                               "theexercise",
+                               "the-exercise",
+                               "theproblem",
+                               "the-problem",
+                               "thefigure",
+                               "the-figure",
+                               "thetable",
+                               "the-table",
+                               "footnotenr",
+                               "footnote-nr",
+                               "equationnr",
+                               "equation-nr",
+                               "theoremnr",
+                               "theorem-nr",
+                               "propositionnr",
+                               "proposition-nr",
+                               "lemmanr",
+                               "lemma-nr",
+                               "corollarynr",
+                               "corollary-nr",
+                               "axiomnr",
+                               "axiom-nr",
+                               "definitionnr",
+                               "definition-nr",
+                               "notationnr",
+                               "notation-nr",
+                               "conjecturenr",
+                               "conjecture-nr",
+                               "remarknr",
+                               "remark-nr",
+                               "examplenr",
+                               "example-nr",
+                               "notenr",
+                               "note-nr",
+                               "warningnr",
+                               "warning-nr",
+                               "conventionnr",
+                               "convention-nr",
+                               "acknowledgmentsnr",
+                               "acknowledgments-nr",
+                               "exercisenr",
+                               "exercise-nr",
+                               "problemnr",
+                               "problem-nr",
+                               "figurenr",
+                               "figure-nr",
+                               "tablenr",
+                               "table-nr",
+                               "theoremname",
+                               "theorem-name",
+                               "figurename",
+                               "figure-name",
+                               "exercisename",
+                               "exercise-name",
+                               "theoremsep",
+                               "theorem-sep",
+                               "figuresep",
+                               "figure-sep",
+                               "exercisesep",
+                               "exercise-sep",
+                               "footnotesep",
+                               "footnote-sep",
+                               "newtheorem",
+                               "new-theorem",
+                               "newremark",
+                               "new-remark",
+                               "newexercise",
+                               "new-exercise",
+                               "newfigure",
+                               "new-figure",
 
-                              "theprefix",
-                              "the-prefix",
-                              "thechapter",
-                              "the-chapter",
-                              "theappendix",
-                              "the-appendix",
-                              "thesection",
-                              "the-section",
-                              "thesubsection",
-                              "the-subsection",
-                              "thesubsubsection",
-                              "the-subsubsection",
-                              "theparagraph",
-                              "the-paragraph",
-                              "thesubparagraph",
-                              "the-subparagraph",
-                              "chapternr",
-                              "chapter-nr",
-                              "appendixnr",
-                              "appendix-nr",
-                              "sectionnr",
-                              "section-nr",
-                              "subsectionnr",
-                              "subsection-nr",
-                              "subsubsectionnr",
-                              "subsubsection-nr",
-                              "paragraphnr",
-                              "paragraph-nr",
-                              "subparagraphnr",
-                              "subparagraph-nr",
-                              "sectionsep",
-                              "section-sep",
-                              "subsectionsep",
-                              "subsection-sep",
-                              "subsubsectionsep",
-                              "subsubsection-sep",
+                               "theprefix",
+                               "the-prefix",
+                               "thechapter",
+                               "the-chapter",
+                               "theappendix",
+                               "the-appendix",
+                               "thesection",
+                               "the-section",
+                               "thesubsection",
+                               "the-subsection",
+                               "thesubsubsection",
+                               "the-subsubsection",
+                               "theparagraph",
+                               "the-paragraph",
+                               "thesubparagraph",
+                               "the-subparagraph",
+                               "chapternr",
+                               "chapter-nr",
+                               "appendixnr",
+                               "appendix-nr",
+                               "sectionnr",
+                               "section-nr",
+                               "subsectionnr",
+                               "subsection-nr",
+                               "subsubsectionnr",
+                               "subsubsection-nr",
+                               "paragraphnr",
+                               "paragraph-nr",
+                               "subparagraphnr",
+                               "subparagraph-nr",
+                               "sectionsep",
+                               "section-sep",
+                               "subsectionsep",
+                               "subsection-sep",
+                               "subsubsectionsep",
+                               "subsubsection-sep",
 
-                              "theorem*",
-                              "render-theorem",
-                              "remark*",
-                              "render-remark",
-                              "exercise*",
-                              "render-exercise",
-                              "proof*",
-                              "render-proof",
-                              "small-figure*",
-                              "render-small-figure",
-                              "big-figure*",
-                              "render-big-figure",
+                               "theorem*",
+                               "render-theorem",
+                               "remark*",
+                               "render-remark",
+                               "exercise*",
+                               "render-exercise",
+                               "proof*",
+                               "render-proof",
+                               "small-figure*",
+                               "render-small-figure",
+                               "big-figure*",
+                               "render-big-figure",
 
-                              "theanswer",
-                              "the-answer",
-                              "thealgorithm",
-                              "the-algorithm",
-                              "answernr",
-                              "answer-nr",
-                              "algorithmnr",
-                              "algorithm-nr",
+                               "theanswer",
+                               "the-answer",
+                               "thealgorithm",
+                               "the-algorithm",
+                               "answernr",
+                               "answer-nr",
+                               "algorithmnr",
+                               "algorithm-nr",
 
-                              ""};
+                               ""};
 
 static hashmap<string, string> style_rename_table ("?");
 
@@ -2576,7 +2578,7 @@ upgrade_item_punct (tree t) {
       if (is_atomic (item)) {
         string s= item->label;
         if (ends (s, ".") || ends (s, ":") || ends (s, " "))
-          item= s (0, N (s) - 1);
+          item= string (s (0, N (s) - 1));
       }
       else if (is_concat (item) && is_atomic (item[N (item) - 1])) {
         string s= item[N (item) - 1]->label;
@@ -3202,12 +3204,12 @@ upgrade_session (tree t, tree lan, tree ses) {
         bool m = is_compound (t[i][1], "math", 1);
         tree in= (m ? t[i][1][0] : t[i][1]);
         if ((i + 1) < n && is_compound (t[i + 1], "output", 1)) {
-          const char* op= (m ? "unfolded-io-math" : "unfolded-io");
+          string op= as_string (m ? "unfolded-io-math" : "unfolded-io");
           r << compound (op, t[i][0], in, t[i + 1][0]);
           i++;
         }
         else {
-          const char* op= (m ? "input-math" : "input");
+          string op= as_string (m ? "input-math" : "input");
           r << compound (op, t[i][0], in);
         }
       }
@@ -4136,160 +4138,67 @@ upgrade_subsession (tree t, bool in_session= false) {
 
 static hashset<string> std_textual_envs;
 
-static array<string>&
-operator<< (array<string>& a, const char* s) {
-  return a << string (s);
-}
+// static array<string>&
+// operator<< (array<string>& a, char* x) {
+//   return a << as_string (x);
+// }
 
 static bool
 is_std_textual_env (string s) {
   if (N (std_textual_envs) == 0) {
-    array<string> a;
-    a << "part"
-      << "chapter"
-      << "section"
-      << "subsection"
-      << "subsubsection"
-      << "paragraph"
-      << "subparagraph"
-      << "appendix"
-      << "part*"
-      << "chapter*"
-      << "section*"
-      << "subsection*"
-      << "subsubsection*"
-      << "paragraph*"
-      << "subparagraph*"
-      << "appendix*"
-      << "abstract"
-      << "theorem"
-      << "proposition"
-      << "lemma"
-      << "corollary"
-      << "proof"
-      << "axiom"
-      << "definition"
-      << "notation"
-      << "conjecture"
-      << "remark"
-      << "note"
-      << "example"
-      << "exercise"
-      << "warning"
-      << "convention"
-      << "theorem*"
-      << "proposition*"
-      << "lemma*"
-      << "corollary*"
-      << "proof*"
-      << "axiom*"
-      << "definition*"
-      << "notation*"
-      << "conjecture*"
-      << "remark*"
-      << "note*"
-      << "example*"
-      << "exercise*"
-      << "warning*"
-      << "convention*"
-      << "acknowledgments"
-      << "quote"
-      << "quotation"
-      << "verse"
-      << "indent"
-      << "compact"
-      << "jump-in"
-      << "algorithm"
-      << "body"
-      << "render-code"
-      << "center"
-      << "left-aligned"
-      << "right-aligned"
-      << "small-table"
-      << "big-table"
-      << "small-figure"
-      << "big-figure"
-      << "tabular"
-      << "tabular*"
-      << "block"
-      << "block*"
-      << "descriptive-table"
-      << "description"
-      << "itemize"
-      << "enumerate"
-      << "bibliography"
-      << "bib-list"
-      << "thebibliography"
-      << "bib-field"
-      << "bib-entry"
-      << "db-field"
-      << "db-entry"
-      << "itemize-minus"
-      << "enumerate-roman"
-      << "enumerate-alpha"
-      << "strong"
-      << "em"
-      << "dfn"
-      << "sample"
-      << "name"
-      << "person"
-      << "cite*"
-      << "abbr"
-      << "acronym"
-      << "really-tiny"
-      << "tiny"
-      << "very-small"
-      << "small"
-      << "flat-size"
-      << "normal-size"
-      << "large"
-      << "very-large"
-      << "huge"
-      << "really-huge"
-      << "underline"
-      << "overline"
-      << "pastel"
-      << "greyed"
-      << "light"
-      << "british"
-      << "bulgarian"
-      << "chinese"
-      << "croatian"
-      << "czech"
-      << "danish"
-      << "dutch"
-      << "english"
-      << "finnish"
-      << "french"
-      << "german"
-      << "greek"
-      << "hungarian"
-      << "italian"
-      << "japanese"
-      << "korean"
-      << "polish"
-      << "portuguese"
-      << "romanian"
-      << "russian"
-      << "slovak"
-      << "slovene"
-      << "spanish"
-      << "swedish"
-      << "taiwanese"
-      << "ukrainian"
-      << "switch"
-      << "screens"
-      << "tiny-switch"
-      << "shown"
-      << "hidden"
-      << "shown*"
-      << "hidden*"
-      << "unroll"
-      << "unroll-compressed"
-      << "unroll-phantoms"
-      << "unroll-greyed"
-      << "folded"
-      << "unfolded";
+    auto a= array<string> ();
+    a << string ("part") << string ("chapter") << string ("section")
+      << string ("subsection") << string ("subsubsection")
+      << string ("paragraph") << string ("subparagraph") << string ("appendix")
+      << string ("part*") << string ("chapter*") << string ("section*")
+      << string ("subsection*") << string ("subsubsection*")
+      << string ("paragraph*") << string ("subparagraph*")
+      << string ("appendix*") << string ("abstract") << string ("theorem")
+      << string ("proposition") << string ("lemma") << string ("corollary")
+      << string ("proof") << string ("axiom") << string ("definition")
+      << string ("notation") << string ("conjecture") << string ("remark")
+      << string ("note") << string ("example") << string ("exercise")
+      << string ("warning") << string ("convention") << string ("theorem*")
+      << string ("proposition*") << string ("lemma*") << string ("corollary*")
+      << string ("proof*") << string ("axiom*") << string ("definition*")
+      << string ("notation*") << string ("conjecture*") << string ("remark*")
+      << string ("note*") << string ("example*") << string ("exercise*")
+      << string ("warning*") << string ("convention*")
+      << string ("acknowledgments") << string ("quote") << string ("quotation")
+      << string ("verse") << string ("indent") << string ("compact")
+      << string ("jump-in") << string ("algorithm") << string ("body")
+      << string ("render-code") << string ("center") << string ("left-aligned")
+      << string ("right-aligned") << string ("small-table")
+      << string ("big-table") << string ("small-figure")
+      << string ("big-figure") << string ("tabular") << string ("tabular*")
+      << string ("block") << string ("block*") << string ("descriptive-table")
+      << string ("description") << string ("itemize") << string ("enumerate")
+      << string ("bibliography") << string ("bib-list")
+      << string ("thebibliography") << string ("bib-field")
+      << string ("bib-entry") << string ("db-field") << string ("db-entry")
+      << string ("itemize-minus") << string ("enumerate-roman")
+      << string ("enumerate-alpha") << string ("strong") << string ("em")
+      << string ("dfn") << string ("sample") << string ("name")
+      << string ("person") << string ("cite*") << string ("abbr")
+      << string ("acronym") << string ("really-tiny") << string ("tiny")
+      << string ("very-small") << string ("small") << string ("flat-size")
+      << string ("normal-size") << string ("large") << string ("very-large")
+      << string ("huge") << string ("really-huge") << string ("underline")
+      << string ("overline") << string ("pastel") << string ("greyed")
+      << string ("light") << string ("british") << string ("bulgarian")
+      << string ("chinese") << string ("croatian") << string ("czech")
+      << string ("danish") << string ("dutch") << string ("english")
+      << string ("finnish") << string ("french") << string ("german")
+      << string ("greek") << string ("hungarian") << string ("italian")
+      << string ("japanese") << string ("korean") << string ("polish")
+      << string ("portuguese") << string ("romanian") << string ("russian")
+      << string ("slovak") << string ("slovene") << string ("spanish")
+      << string ("swedish") << string ("taiwanese") << string ("ukrainian")
+      << string ("switch") << string ("screens") << string ("tiny-switch")
+      << string ("shown") << string ("hidden") << string ("shown*")
+      << string ("hidden*") << string ("unroll") << string ("unroll-compressed")
+      << string ("unroll-phantoms") << string ("unroll-greyed")
+      << string ("folded") << string ("unfolded");
     for (int i= 0; i < N (a); i++)
       std_textual_envs->insert (a[i]);
   }
@@ -4360,7 +4269,7 @@ upgrade_quotes (tree t) {
  * Upgrade ancient
  ******************************************************************************/
 
-static charp equation_tags[]= {
+static string equation_tags[]= {
     "equation",   "equation*", "eqnarray", "eqnarray*", "leqnarray",
     "leqnarray*", "align",     "align*",   "falign",    "falign*",
     "aligned",    "aligned*",  "multline", "multline*", "gather",
@@ -4371,7 +4280,7 @@ is_equation_env (tree t) {
   if (is_atomic (t) || N (t) != 1) return false;
   static hashset<tree_label> H;
   if (N (H) == 0)
-    for (int i= 0; equation_tags[i][0] != '\0'; i++)
+    for (int i= 0; !is_empty (equation_tags[i]); i++)
       H->insert (as_tree_label (equation_tags[i]));
   return H->contains (L (t));
 }

@@ -154,7 +154,7 @@ tag_email (string s) {
       while (ends (ss, "."))
         ss= ss (0, N (ss) - 1);
       tree it (WITH, FONT_FAMILY, "tt", ss);
-      tree cc (CONCAT, s (0, start), it, s (end, N (s)));
+      tree cc (CONCAT, string (s (0, start)), it, string (s (end, N (s))));
       return simplify_concat (cc);
     }
   }

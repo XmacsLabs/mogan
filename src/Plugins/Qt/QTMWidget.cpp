@@ -555,27 +555,37 @@ QTMWidget::dropEvent (QDropEvent* event) {
     string w, h;
     qt_pretty_image_size (ww, hh, w, h);
     tree t (IMAGE,
-            tree (RAW_DATA, string (buf.constData (), buf.size ()), "png"), w,
-            h, "", "");
+            tree (RAW_DATA,
+                  (string) lolly::data::lolly_string_view (buf.size (),
+                                                           buf.constData ()),
+                  "png"),
+            w, h, "", "");
     doc << t;
   }
   else if (md->hasFormat ("application/postscript")) {
     buf= md->data ("application/postscript");
     tree t (IMAGE,
-            tree (RAW_DATA, string (buf.constData (), buf.size ()), "ps"), "",
-            "", "", "");
+            tree (RAW_DATA,
+                  (string) lolly::data::lolly_string_view (buf.size (),
+                                                           buf.constData ()),
+                  "ps"),
+            "", "", "", "");
     doc << t;
   }
   else if (md->hasFormat ("application/pdf")) {
     buf= md->data ("application/pdf");
     tree t (IMAGE,
-            tree (RAW_DATA, string (buf.constData (), buf.size ()), "pdf"), "",
-            "", "", "");
+            tree (RAW_DATA,
+                  (string) lolly::data::lolly_string_view (buf.size (),
+                                                           buf.constData ()),
+                  "pdf"),
+            "", "", "", "");
     doc << t;
   }
   else if (md->hasText ()) {
     buf= md->text ().toUtf8 ();
-    doc << string (buf.constData (), buf.size ());
+    doc << (string) lolly::data::lolly_string_view (buf.size (),
+                                                    buf.constData ());
   }
 
   if (N (doc) > 0) {

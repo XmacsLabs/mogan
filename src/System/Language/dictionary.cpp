@@ -205,7 +205,7 @@ translate (string s) {
 
 string
 translate (const char* s) {
-  return translate (string (s), "english", out_lan);
+  return translate (as_string (s), string ("english"), out_lan);
 }
 
 void
@@ -248,8 +248,8 @@ translate_replace (tree t, string from, string to, int n= 1) {
     if (l < 0) return t;
     int  r = l + N (arg);
     tree r1= tree_translate (t[1], from, to);
-    tree r2= translate_replace (tuple (s (r, N (s))) * t (2, N (t)), from, to,
-                                n + 1);
+    tree r2= translate_replace (tuple (string (s (r, N (s)))) * t (2, N (t)),
+                                from, to, n + 1);
     s      = s (0, l);
     if (is_atomic (r1)) {
       if (is_atomic (r2)) return s * r1->label * r2->label;

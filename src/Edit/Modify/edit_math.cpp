@@ -98,8 +98,8 @@ edit_math_rep::make_script (bool sup, bool right) {
     }
     insert_tree (tree (s, ""), path (0, 0));
     set_message ("move to the right when finished",
-                 (char*) (sup ? (right ? "superscript" : "left superscript")
-                              : (right ? "subscript" : "left subscript")));
+                 as_string (sup ? (right ? "superscript" : "left superscript")
+                                : (right ? "subscript" : "left subscript")));
   }
 }
 

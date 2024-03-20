@@ -246,7 +246,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   if (!owns && md->hasFormat ("application/x-texmacs-pid")) {
     buf= md->data ("application/x-texmacs-pid");
     if (!(buf.isEmpty ())) {
-      owns= string (buf.constData (), buf.size ()) ==
+      owns= lolly::data::lolly_string_view (buf.size (), buf.constData ()) ==
             as_string ((int64_t) QCoreApplication::applicationPid ());
     }
   }
@@ -300,7 +300,8 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
     if (md->hasFormat ("plain/text")) buf= md->data ("plain/text").data ();
     else buf= md->text ().toUtf8 ();
   }
-  if (!(buf.isEmpty ())) s << string (buf.constData (), buf.size ());
+  if (!(buf.isEmpty ()))
+    s << lolly::data::lolly_string_view (buf.size (), buf.constData ());
   if (input_format == "html-snippet" && seems_buggy_html_paste (s))
     s= correct_buggy_html_paste (s);
   if (input_format != "picture" && seems_buggy_paste (s))

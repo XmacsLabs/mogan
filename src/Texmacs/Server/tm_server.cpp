@@ -128,15 +128,15 @@ tm_server_rep::tm_server_rep () : def_zoomf (1.0) {
   // #ifdef DEBUG_ON
   //  "(debug-enable 'backtrace)\n"
   // #endif
-  const char* init_prg= "(begin \n"
-                        "(define (display-to-string obj)\n"
-                        "  (call-with-output-string\n"
-                        "    (lambda (port) (display obj port))))\n"
-                        "\n"
-                        "(define (texmacs-version) \"" TEXMACS_VERSION "\")\n"
-                        "(define (xmacs-version) \"" XMACS_VERSION "\")\n"
-                        "(define object-stack '(()))\n"
-                        ")";
+  string init_prg= "(begin \n"
+                   "(define (display-to-string obj)\n"
+                   "  (call-with-output-string\n"
+                   "    (lambda (port) (display obj port))))\n"
+                   "\n"
+                   "(define (texmacs-version) \"" TEXMACS_VERSION "\")\n"
+                   "(define (xmacs-version) \"" XMACS_VERSION "\")\n"
+                   "(define object-stack '(()))\n"
+                   ")";
   eval_scheme_root (init_prg);
   initialize_smobs (initialize_scheme ());
   initialize_glue ();

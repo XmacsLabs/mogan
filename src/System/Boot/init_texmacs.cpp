@@ -547,7 +547,7 @@ TeXmacs_main (int argc, char** argv) {
     if (argv[i][0] == '\0') argc= i;
     else if (((argv[i][0] == '-') || (argv[i][0] == '+')) &&
              (argv[i][1] != '\0')) {
-      string s= argv[i];
+      string s= as_string (argv[i]);
       if ((N (s) >= 2) && (s (0, 2) == "--")) s= s (1, N (s));
       if ((s == "-s") || (s == "-silent")) flag= false;
       else if ((s == "-V") || (s == "-verbose"))
@@ -579,12 +579,12 @@ TeXmacs_main (int argc, char** argv) {
       else if (s == "-disable-error-recovery") disable_error_recovery= true;
       else if ((s == "-fn") || (s == "-font")) {
         i++;
-        if (i < argc) the_default_font= argv[i];
+        if (i < argc) the_default_font= as_string (argv[i]);
       }
       else if ((s == "-g") || (s == "-geometry")) {
         i++;
         if (i < argc) {
-          string g= argv[i];
+          string g= as_string (argv[i]);
           int    j= 0, j1, j2, j3;
           for (j= 0; j < N (g); j++)
             if (g[j] == 'x') break;
@@ -611,11 +611,11 @@ TeXmacs_main (int argc, char** argv) {
       }
       else if ((s == "-b") || (s == "-initialize-buffer")) {
         i++;
-        if (i < argc) tm_init_buffer_file= url_system (argv[i]);
+        if (i < argc) tm_init_buffer_file= url_system (as_string (argv[i]));
       }
       else if ((s == "-i") || (s == "-initialize")) {
         i++;
-        if (i < argc) tm_init_file= url_system (argv[i]);
+        if (i < argc) tm_init_file= url_system (as_string (argv[i]));
       }
       else if ((s == "-v") || (s == "-version")) {
         cout << "\n";
@@ -671,8 +671,8 @@ TeXmacs_main (int argc, char** argv) {
       else if ((s == "-c") || (s == "-convert")) {
         i+= 2;
         if (i < argc) {
-          url in ("$PWD", argv[i - 1]);
-          url out ("$PWD", argv[i]);
+          url in ("$PWD", as_string (argv[i - 1]));
+          url out ("$PWD", as_string (argv[i]));
           my_init_cmds= my_init_cmds * " " * "(load-buffer " *
                         scm_quote (as_string (in)) * " :strict) " *
                         "(export-buffer " * scm_quote (as_string (out)) * ")";
@@ -680,7 +680,7 @@ TeXmacs_main (int argc, char** argv) {
       }
       else if ((s == "-x") || (s == "-execute")) {
         i++;
-        if (i < argc) my_init_cmds= (my_init_cmds * " ") * argv[i];
+        if (i < argc) my_init_cmds= (my_init_cmds * " ") * as_string (argv[i]);
       }
       else if (s == "-server") start_server_flag= true;
       else if (s == "-log-file") i++;
@@ -694,18 +694,18 @@ TeXmacs_main (int argc, char** argv) {
         ;
       else if (s == "-build-manual") {
         if ((++i) < argc)
-          extra_init_cmd << "(build-manual " << scm_quote (argv[i])
+          extra_init_cmd << "(build-manual " << scm_quote (as_string (argv[i]))
                          << " delayed-quit)";
       }
       else if (s == "-reference-suite") {
         if ((++i) < argc)
-          extra_init_cmd << "(build-ref-suite " << scm_quote (argv[i])
-                         << " delayed-quit)";
+          extra_init_cmd << "(build-ref-suite "
+                         << scm_quote (as_string (argv[i])) << " delayed-quit)";
       }
       else if (s == "-test-suite") {
         if ((++i) < argc)
-          extra_init_cmd << "(run-test-suite " << scm_quote (argv[i])
-                         << "delayed-quit)";
+          extra_init_cmd << "(run-test-suite "
+                         << scm_quote (as_string (argv[i])) << "delayed-quit)";
       }
       else if (starts (s, "-psn"))
         ;
@@ -791,8 +791,8 @@ TeXmacs_main (int argc, char** argv) {
     string where= "";
     for (i= 1; i < argc; i++) {
       if (argv[i] == NULL) break;
-      string s= argv[i];
-      if ((N (s) >= 2) && (s (0, 2) == "--")) s= s (1, N (s));
+      string s= as_string (argv[i]);
+      if ((N (s) >= 2) && (s (0, 2) == "--")) s= string (s (1, N (s)));
       if ((s[0] != '-') && (s[0] != '+')) {
         if (DEBUG_STD) debug_boot << "Loading " << s << "...\n";
         url u= url_system (s);

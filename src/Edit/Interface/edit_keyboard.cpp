@@ -201,7 +201,7 @@ handle_speech (string s) {
       int    j   = N (prefix);
       while (j < N (next) && next[j] == ' ')
         j++;
-      if (j < N (next)) bursts << next (j, N (next));
+      if (j < N (next)) bursts << string (next (j, N (next)));
       prefix= next;
     }
   }
@@ -209,7 +209,7 @@ handle_speech (string s) {
     int j= N (prefix);
     while (j < N (s) && s[j] == ' ')
       j++;
-    if (j < N (s)) bursts << s (j, N (s));
+    if (j < N (s)) bursts << string (s (j, N (s)));
   }
   call ("keyboard-speech", bursts);
   last_uttering= texmacs_time ();

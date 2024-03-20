@@ -287,7 +287,7 @@ close_completions (array<string> a) {
     l= j;
   }
   array<string> r;
-  r << a[0](0, l);
+  r << string (a[0](0, l));
   for (i= 0; i < n; i++)
     if (a[i] != r[N (r) - 1]) r << a[i];
   return r;
@@ -298,6 +298,6 @@ strip_completions (array<string> a, string prefix) {
   int           i, n= N (a);
   array<string> b;
   for (i= 0; i < n; i++)
-    if (starts (a[i], prefix)) b << a[i](N (prefix), N (a[i]));
+    if (starts (a[i], prefix)) b << string (a[i](N (prefix), N (a[i])));
   return b;
 }

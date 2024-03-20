@@ -213,7 +213,7 @@ edit_interface_rep::compute_operation_footer (tree st) {
       r= concat ("prime ", as_string (st[0]));
       break;
     case SQRT:
-      r= tree ((char*) ((N (st) == 1) ? "square root" : "n-th root"));
+      r= tree (as_string ((N (st) == 1) ? "square root" : "n-th root"));
       break;
     case WIDE:
       r= tree (get_accent_type (as_string (st[1])));

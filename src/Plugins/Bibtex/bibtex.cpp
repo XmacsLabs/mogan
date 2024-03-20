@@ -36,7 +36,7 @@ tree
 remove_start_space (tree t) {
   if (is_atomic (t)) {
     string s= t->label;
-    if (starts (s, " ")) return s (1, N (s));
+    if (starts (s, " ")) return string (s (1, N (s)));
     else return s;
   }
   else return t;

@@ -191,13 +191,13 @@ parse_cline (tree t) {
   j= i;
   while (j < N (s) && is_digit (s[j]))
     j++;
-  if (j < N (s)) r[0]= s (i, j);
+  if (j < N (s)) r[0]= string (s (i, j));
   while (j < N (s) && !is_digit (s[j]))
     j++;
   k= j;
   while (i < N (s) && is_digit (s[k]))
     k++;
-  if (j < N (s)) r[1]= s (j, k);
+  if (j < N (s)) r[1]= string (s (j, k));
   return r;
 }
 

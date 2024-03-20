@@ -288,7 +288,7 @@ concater_rep::typeset_above (tree t, path ip) {
   // NOTE: start dirty hack to get scripts above ... right
   if ((t[0] == "<ldots>" && env->read ("low-dots") != UNINIT) ||
       (t[0] == "<cdots>" && env->read ("center-dots") != UNINIT)) {
-    string s = (t[0] == "<ldots>" ? "," : "<cdot>");
+    string s = as_string (t[0] == "<ldots>" ? "," : "<cdot>");
     box    tb= typeset_as_concat (env, s, decorate_middle (descend (ip, 0)));
     b1       = resize_box (descend (ip, 0), b1, b1->x1, b1->y1, b1->x2, tb->y2);
   }
@@ -541,7 +541,7 @@ make_large (tree_label l, tree t) {
   if (N (s) <= 1) return tree (l, s);
   if (s[0] != '<' || s[N (s) - 1] != '>' || s == "<nobracket>")
     return tree (l, ".");
-  return tree (l, s (1, N (s) - 1));
+  return tree (l, string (s (1, N (s) - 1)));
 }
 
 void

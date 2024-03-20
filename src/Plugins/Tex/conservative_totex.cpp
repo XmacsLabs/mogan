@@ -274,7 +274,7 @@ texmacs_invarianted_replace (tree t, string src) {
   else if (is_compound (t, "ilx", 1)) {
     int b, e;
     get_range (t[0], b, e, src);
-    return compound ("!ilx", src (b, e));
+    return compound ("!ilx", string (src (b, e)));
   }
   else {
     int  i, n= N (t);

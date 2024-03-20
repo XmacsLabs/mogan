@@ -268,7 +268,7 @@ selection_compute (tree t, path start, path end) {
     if (is_nil (p1) && is_nil (p2)) {
       if (is_compound (t)) return copy (t);
       if (i1 >= i2) return "";
-      return t->label (i1, i2);
+      return string (t->label (i1, i2));
     }
     if (is_compound (t) && (!is_format (t))) return copy (t);
     if (is_nil (p1)) {

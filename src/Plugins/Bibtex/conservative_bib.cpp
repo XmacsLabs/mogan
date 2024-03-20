@@ -92,19 +92,19 @@ bib_break (string s) {
       }
       if (i >= n) break;
     }
-    a << s (start, i);
+    a << string (s (start, i));
     // cout << "---------------------------------------------------------\n";
     // cout << s (start, i);
     start= i;
     (void) bib_skip (s, i);
     bib_rewind (s, i);
     ASSERT (i > start, "strange entry in bib_break");
-    a << s (start, i);
+    a << string (s (start, i));
     // cout << "---------------------------------------------------------\n";
     // cout << s (start, i);
     start= i;
   }
-  a << s (start, n);
+  a << string (s (start, n));
   // cout << "---------------------------------------------------------\n";
   // cout << s (start, n);
   // cout << "---------------------------------------------------------\n";

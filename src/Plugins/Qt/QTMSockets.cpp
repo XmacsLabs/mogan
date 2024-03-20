@@ -75,7 +75,7 @@ string_from_socket_address (SOCKADDR_STORAGE* sock) {
   static char tmp[128];
   if (sock->ss_family == AF_INET) {
 #if defined(OS_MINGW) || defined(OS_WIN)
-    return wsoc::inet_ntoa (((SOCKADDR_IN*) sock)->sin_addr);
+    return as_string (wsoc::inet_ntoa (((SOCKADDR_IN*) sock)->sin_addr));
 #else
     if (inet_ntop (AF_INET, &(((sockaddr_in*) sock)->sin_addr), tmp,
                    sizeof (tmp)) == NULL)
@@ -260,7 +260,7 @@ socket_link::start () {
   default:
     ret= "No error message";
   }
-  return ret * " errno: " * strerror (err);
+  return ret * " errno: " * as_string (strerror (err));
 }
 
 string&
@@ -310,9 +310,9 @@ socket_link::data_set_ready (int s) {
     stop ();
   }
   else {
-    inbuf << string (data, lgdata);
+    inbuf << lolly::data::lolly_string_view (lgdata, data);
     if (DEBUG_IO) {
-      string s (data, lgdata);
+      string s = lolly::data::lolly_string_view (lgdata, data);
       bool   ok= true;
       for (int i= 0; i < N (s); i++)
         if (((int) (unsigned char) s[i]) >= 128 ||

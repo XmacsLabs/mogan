@@ -465,7 +465,8 @@ concater_rep::typeset_range (tree t, path ip) {
           tree (ERROR, "bad range: start pos must be less than the size"), ip);
     }
     path ip1= obtain_ip (t1);
-    if (is_decoration (ip1)) typeset_dynamic (t1->label (start, end), ip);
+    if (is_decoration (ip1))
+      typeset_dynamic (string (t1->label (start, end)), ip);
     else {
       marker (descend (ip, 0));
       if (env->mode == 1) typeset_text_string (t1->label, ip1, start, end);

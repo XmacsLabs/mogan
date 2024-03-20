@@ -1553,7 +1553,7 @@ edit_env_rep::exec_range (tree t) {
   int i1= max (0, as_int (t2));
   int i2= min (N (t1->label), as_int (t3));
   i2    = max (i1, i2);
-  return t1->label (i1, i2);
+  return string (t1->label (i1, i2));
 }
 
 tree
@@ -1611,7 +1611,7 @@ edit_env_rep::exec_change_case (tree t, tree nc, bool exec_flag, bool first) {
     if (s == "") return s;
     int pos= 0;
     tm_char_forwards (s, pos);
-    return s (0, pos);
+    return string (s (0, pos));
   }
   else if (is_atomic (t)) {
     string s= t->label;

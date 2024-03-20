@@ -50,7 +50,7 @@ resize (edit_env env, SI old, SI minimum, SI maximum, tree new_size) {
   }
 
   if (flag) {
-    SI arg= env->as_length (s (2, N (s)));
+    SI arg= env->as_length (string (s (2, N (s))));
     switch (s[1]) {
     case '+':
       return offset + arg;

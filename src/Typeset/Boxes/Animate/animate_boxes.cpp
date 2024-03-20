@@ -463,8 +463,8 @@ struct sound_box_rep : public anim_box_rep {
   void display (renderer ren) { (void) ren; }
 
   void play_sound () {
-    if (exists_in_path ("play")) system ("play", u, "&");
-    else if (exists_in_path ("afplay")) system ("afplay", u, "&");
+    if (exists_in_path ("play")) system ("play", u, string ("&"));
+    else if (exists_in_path ("afplay")) system ("afplay", u, string ("&"));
   }
   void pre_display (renderer& ren) {
     (void) ren;
