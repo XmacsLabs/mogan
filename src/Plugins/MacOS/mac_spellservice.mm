@@ -21,7 +21,7 @@
 static string 
 from_nsstring (NSString *s) {
   const char *cstr = [s cStringUsingEncoding:NSUTF8StringEncoding];
-  return utf8_to_cork(string((char*)cstr));
+  return utf8_to_cork(as_string ((char*)cstr));
 }
 
 
@@ -75,9 +75,9 @@ mac_init_dictionary () {
       string lan= languages[i];
       string loc= language_to_locale (lan);
       if (contains (loc, arr))
-	available_dicts (lan) = loc;
-      else if (N(loc) > 2 && contains (loc (0, 2), arr))
-	available_dicts (lan) = loc (0, 2);
+        available_dicts (lan) = loc;
+      else if (N(loc) > 2 && contains (string (loc (0, 2)), arr))
+        available_dicts (lan) = loc (0, 2);
     }
     if (DEBUG_IO)
       debug_spell << "selected dictionaries: " << available_dicts << LF;

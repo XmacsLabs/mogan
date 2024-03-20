@@ -123,10 +123,10 @@ dyn_link_rep::start () {
     char*              _message= pack->install (&TeXmacs, _init, &_errors);
     if (_errors != NULL) {
       routs= NULL;
-      ret  = "Error: " * string (_errors);
+      ret  = "Error: " * as_string (_errors);
     }
     else {
-      ret  = string (_message == NULL ? ((char*) "") : _message);
+      ret  = as_string (_message == NULL ? ((char*) "") : _message);
       alive= true;
     }
     return ret;
@@ -151,8 +151,8 @@ dyn_link_rep::write (string s, int channel) {
   c_string _s (s);
   char*    _errors= NULL;
   char*    _r     = pack->evaluate (_s, _session, &_errors);
-  ret= string (_r == NULL ? (_errors == NULL ? ((char*) "Error") : _errors)
-                          : _r);
+  ret= as_string (_r == NULL ? (_errors == NULL ? ((char*) "Error") : _errors)
+                             : _r);
   if (!is_nil (this->feed_cmd)) this->feed_cmd->apply ();
 #endif
 }

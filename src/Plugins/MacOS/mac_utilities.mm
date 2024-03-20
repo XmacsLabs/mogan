@@ -232,7 +232,7 @@ mac_cancel_menu_tracking () {
 static string 
 from_nsstring (NSString *s) {
   const char *cstr = [s cStringUsingEncoding:NSUTF8StringEncoding];
-  return utf8_to_cork(string((char*)cstr));
+  return utf8_to_cork(as_string ((char*)cstr));
 }
 
 
@@ -475,7 +475,7 @@ mac_fix_yosemite_bug() {
   
     // Find duplicate entries in the environment
   for (char** entry = *_NSGetEnviron(); *entry; ++entry) {
-    array<string> pair = tokenize (string (*entry), "=");
+    array<string> pair = tokenize (as_string (*entry), "=");
     if (N(pair) < 2) continue;
     string key = pair[0];
     if (entries->contains(key)) duplicates->insert(key);
