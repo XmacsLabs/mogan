@@ -493,27 +493,19 @@ call_scm_converter (url image, url dest, int w, int h) {
 
 bool
 has_image_magick () {
-#if defined(OS_MINGW) || defined(OS_WIN)
-  // Qt is used for converion on Windows
-  static bool has_imagemagick= false;
-#else
-  static bool has_imagemagick= exists_in_path ("convert");
-#endif
-  return has_imagemagick;
+  return !is_empty (imagemagick_cmd ());
 }
 
 string
 imagemagick_cmd () {
-  if (has_image_magick ()) {
-#if defined(OS_MINGW) || defined(OS_WIN)
-    static string image_magick_cmd=
-        sys_concretize (resolve_in_path ("convert"));
-#else
-    static string image_magick_cmd= "convert";
-#endif
-    return copy (image_magick_cmd);
+  eval ("(use-modules (binary convert))");
+  url convert_url= as_url (eval ("(find-binary-convert)"));
+  if (!is_none (convert_url)) {
+    return as_string (convert_url);
   }
-  else return "";
+  else {
+    return "";
+  }
 }
 
 void
