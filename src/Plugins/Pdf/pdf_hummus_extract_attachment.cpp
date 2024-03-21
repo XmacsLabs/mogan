@@ -132,8 +132,9 @@ extract_attachments_from_pdf (url pdf_path, list<url>& names) {
         break;
       }
 
-      url attachment_path=
-          relative (pdf_path, url (as_string (name->GetValue ().c_str ())));
+      url attachment_path= relative (
+          pdf_path,
+          url (string (lolly::data::lolly_string_view (name->GetValue ()))));
       OutputFile attachment_file;
       status= attachment_file.OpenFile (
           std::string (as_charp (as_string (attachment_path))));

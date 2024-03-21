@@ -399,9 +399,8 @@ static void
 fill_bis (array<int> a, int start, int kind) {
   for (int i= 0; i < N (a); i++)
     if (a[i] != -1) {
-      int    code= start + i;
-      string c;
-      c << as_string (((unsigned char) code));
+      char   code= start + i;
+      string c (code);
       string v= utf8_to_cork (encode_as_utf8 (a[i]));
       if (kind == 0) accented_list << c;
       if (kind == 0) unaccent_table (c)= v;

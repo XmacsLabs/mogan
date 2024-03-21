@@ -891,7 +891,7 @@ utf8_to_hex_entities (string s) {
   for (i= 0; i < n;) {
     unsigned char c= s[i];
     if ((0x80 & c) == 0 || ((0xF8 & c) == 0xF8)) {
-      result << as_string (c);
+      result << (char) c;
       i++;
     }
     else {

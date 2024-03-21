@@ -323,9 +323,9 @@ prepare_text (string s) {
     if ((s[i] == '(') || (s[i] == ')') || (s[i] == '\\')) r << '\\' << s[i];
     else if ((c <= 32) || (c >= 128)) {
       r << '\\';
-      r << as_string ('0' + (c >> 6));
-      r << as_string ('0' + ((c >> 3) & 7));
-      r << as_string ('0' + (c & 7));
+      r << (char) ('0' + (c >> 6));
+      r << (char) ('0' + ((c >> 3) & 7));
+      r << (char) ('0' + (c & 7));
     }
     else r << s[i];
   }
