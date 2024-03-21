@@ -1227,7 +1227,7 @@ pdf_hummus_renderer_rep::make_pdf_font (string fontname) {
     if (font != NULL && no_font_issues (u)) {
       native_fonts (fontname)= font;
       std::string _ps_name   = font->GetFreeTypeFont ()->GetPostscriptName ();
-      string      ps_name (as_string (_ps_name.c_str ()));
+      string      ps_name    = lolly::data::lolly_string_view (_ps_name);
       if (starts (ps_name, "EuropeanComputerModern"))
         EuropeanComputerModern_fonts->insert (fontname);
       return;
