@@ -462,7 +462,7 @@ utf8_to_qstring (const string& s) {
 
 string
 from_qstring_utf8 (const QString& s) {
-  return lolly::data::lolly_string_view<char> (s.toStdString ());
+  return as_string (s.toStdString ().c_str ());
 }
 
 // This should provide better lookup times
