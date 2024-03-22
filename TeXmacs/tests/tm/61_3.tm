@@ -168,7 +168,7 @@
     <\unfolded-io|Scheme] >
       (find-binary-convert)
     <|unfolded-io>
-      \<less\>url C:\\Users\\darcy\\scoop\\apps\\imagemagick\\current\\convert.exe\<gtr\>
+      \<less\>url C:\\Program Files\\ImageMagick-7.1.1-Q16-HDRI\\convert.exe\<gtr\>
     </unfolded-io>
 
     <\unfolded-io|Scheme] >

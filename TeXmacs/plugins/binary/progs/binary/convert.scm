@@ -19,7 +19,9 @@
          (list "/opt/homebrew/bin/convert"
                "/usr/local/bin/convert"))
         ((os-win32?)
-         (list "$USERPROFILE\\scoop\\apps\\imagemagick\\current\\convert.exe"))
+         (list 
+          "C:\\Program Files*\\ImageMagick*\\convert.exe"
+          "$USERPROFILE\\scoop\\apps\\imagemagick\\current\\convert.exe"))
         (else
          (list "/usr/bin/convert"))))
 
