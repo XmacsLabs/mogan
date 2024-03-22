@@ -172,6 +172,12 @@
     </unfolded-io>
 
     <\unfolded-io|Scheme] >
+      (find-binary () "convert")
+    <|unfolded-io>
+      \<less\>url {}\<gtr\>
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
       (use-modules (binary inkscape))
     <|unfolded-io>
       (#1=(inlet '$tmapidoc $tmapidoc 'with-remote-identifier

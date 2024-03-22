@@ -22,6 +22,6 @@
     (with u (list-find candidates (lambda (x) (url-exists? (url-resolve x "r"))))
       (and u (url-resolve u "r")))
     (with u (url-resolve-in-path (if (os-win32?) (string-append default ".exe") default))
-      (if (and (os-win32?) (url-descends? u (system->url "C:\\Windows\\System32"))))
+      (if (and (os-win32?) (url-descends? u (system->url "C:\\Windows\\System32")))
         (url-none)
-        u)))
+        u))))
