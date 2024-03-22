@@ -24,10 +24,7 @@
 
 (tm-define (find-binary-aspell)
   (:synopsis "Find the url to the aspell binary, return (url-none) if not found")
-  (with u (or (list-find (aspell-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "aspell"))
-    (url-resolve u "r")))
+  (find-binary (apsell-binary-candidates) "aspell"))
 
 (tm-define (has-binary-aspell?)
   (not (url-none? (find-binary-aspell))))

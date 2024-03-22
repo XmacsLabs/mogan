@@ -23,11 +23,8 @@
          (list "/usr/bin/hunspell"))))
 
 (tm-define (find-binary-hunspell)
-  (:synopsis "Find the url to the convert binary, return (url-none) if not found")
-  (with u (or (list-find (hunspell-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "hunspell"))
-    (url-resolve u "r")))
+  (:synopsis "Find the url to the hunspell binary, return (url-none) if not found")
+  (find-binary (hunspell-binary-candidates) "hunspell"))
 
 (tm-define (has-binary-hunspell?)
   (not (url-none? (find-binary-hunspell))))

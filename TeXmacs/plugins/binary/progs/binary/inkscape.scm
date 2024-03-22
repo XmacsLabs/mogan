@@ -23,10 +23,7 @@
 
 (tm-define (find-binary-inkscape)
   (:synopsis "Find the url to the inkscape binary, return (url-none) if not found")
-  (with u (or (list-find (inkscape-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "inkscape"))
-    (url-resolve u "r")))
+  (find-binary (inkscape-binary-candidates) "inkscape"))
 
 (tm-define (has-binary-inkscape?)
   (not (url-none? (find-binary-inkscape))))

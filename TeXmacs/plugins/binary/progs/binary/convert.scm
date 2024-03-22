@@ -24,10 +24,7 @@
 
 (tm-define (find-binary-convert)
   (:synopsis "Find the url to the convert binary, return (url-none) if not found")
-  (with u (or (list-find (convert-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "convert"))
-    (url-resolve u "r")))
+  (find-binary (convert-binary-candidates) "convert"))
 
 (tm-define (has-binary-convert?)
   (not (url-none? (find-binary-convert))))

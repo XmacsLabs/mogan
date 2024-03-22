@@ -25,10 +25,7 @@
 
 (tm-define (find-binary-python3)
   (:synopsis "Find the url to the python3 binary, return (url-none) if not found")
-  (with u (or (list-find (python3-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "python3"))
-    (url-resolve u "r")))
+  (find-binary (python3-binary-candidates) "python3"))
 
 (tm-define (has-binary-python3?)
   (not (url-none? (find-binary-python3))))
