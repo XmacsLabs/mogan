@@ -11,7 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary python3))
+(texmacs-module (binary python3)
+  (:use (binary common)))
 
 (define (python3-binary-candidates)
   (cond ((os-macos?)
@@ -25,10 +26,7 @@
 
 (tm-define (find-binary-python3)
   (:synopsis "Find the url to the python3 binary, return (url-none) if not found")
-  (with u (or (list-find (python3-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "python3"))
-    (url-resolve u "r")))
+  (find-binary (python3-binary-candidates) (if (os-win32?) "python" "python3")))
 
 (tm-define (has-binary-python3?)
   (not (url-none? (find-binary-python3))))
