@@ -18,16 +18,15 @@
          (list "/opt/homebrew/bin/identify"
                "/usr/local/bin/identify"))
         ((os-win32?)
-         (list "$USERPROFILE\\scoop\\apps\\imagemagick\\current\\identify.exe"))
+         (list 
+          "C:\\Program Files*\\ImageMagick*\\convert.exe"
+          "$USERPROFILE\\scoop\\apps\\imagemagick\\current\\identify.exe"))
         (else
          (list "/usr/bin/identify"))))
 
 (tm-define (find-binary-identify)
   (:synopsis "Find the url to the identify binary, return (url-none) if not found")
-  (with u (or (list-find (identify-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "identify"))
-    (url-resolve u "r")))
+  (find-binary (identify-binary-candidates) "identify"))
 
 (tm-define (has-binary-identify?)
   (not (url-none? (find-binary-identify))))
