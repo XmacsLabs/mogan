@@ -11,7 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary rsvg-convert))
+(texmacs-module (binary rsvg-convert)
+  (:use (binary common)))
 
 (define (rsvg-convert-binary-candidates)
   (cond ((os-macos?)

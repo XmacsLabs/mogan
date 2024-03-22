@@ -11,7 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary inkscape))
+(texmacs-module (binary inkscape)
+  (:use (binary common)))
 
 (define (inkscape-binary-candidates)
   (cond ((os-macos?)

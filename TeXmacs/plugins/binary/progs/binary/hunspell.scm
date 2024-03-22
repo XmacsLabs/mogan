@@ -11,7 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary hunspell))
+(texmacs-module (binary hunspell)
+  (:use (binary common)))
 
 (define (hunspell-binary-candidates)
   (cond ((os-macos?)

@@ -11,7 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary pdftocairo))
+(texmacs-module (binary pdftocairo)
+  (:use (binary common)))
 
 (define (pdftocairo-binary-candidates)
   (cond ((os-macos?)

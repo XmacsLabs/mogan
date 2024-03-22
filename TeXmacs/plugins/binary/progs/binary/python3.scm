@@ -11,7 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary python3))
+(texmacs-module (binary python3)
+  (:use (binary common)))
 
 (define (python3-binary-candidates)
   (cond ((os-macos?)
