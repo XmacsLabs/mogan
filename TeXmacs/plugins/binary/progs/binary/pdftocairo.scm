@@ -11,7 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary pdftocairo))
+(texmacs-module (binary pdftocairo)
+  (:use (binary common)))
 
 (define (pdftocairo-binary-candidates)
   (cond ((os-macos?)
@@ -24,10 +25,7 @@
 
 (tm-define (find-binary-pdftocairo)
   (:synopsis "Find the url to the pdftocairo binary, return (url-none) if not found")
-  (with u (or (list-find (pdftocairo-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "pdftocairo"))
-    (url-resolve u "r")))
+  (find-binary (pdftocairo-binary-candidates) "pdftocairo"))
 
 (tm-define (has-binary-pdftocairo?)
   (not (url-none? (find-binary-pdftocairo))))

@@ -11,7 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary rsvg-convert))
+(texmacs-module (binary rsvg-convert)
+  (:use (binary common)))
 
 (define (rsvg-convert-binary-candidates)
   (cond ((os-macos?)
@@ -24,10 +25,7 @@
 
 (tm-define (find-binary-rsvg-convert)
   (:synopsis "Find the url to the rsvg-convert binary, return (url-none) if not found")
-  (with u (or (list-find (rsvg-convert-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "rsvg-convert"))
-    (url-resolve u "r")))
+  (find-binary (rsvg-convert-binary-candidates) "rsvg-convert"))
 
 (tm-define (has-binary-rsvg-convert?)
   (not (url-none? (find-binary-rsvg-convert))))
