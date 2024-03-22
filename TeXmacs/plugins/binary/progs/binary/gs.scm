@@ -11,7 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary gs))
+(texmacs-module (binary gs)
+  (:use (binary common)))
 
 (define (gs-binary-candidates)
   (cond ((os-macos?)
@@ -24,10 +25,7 @@
 
 (tm-define (find-binary-gs)
   (:synopsis "Find the url to the gs binary, return (url-none) if not found")
-  (with u (or (list-find (gs-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "gs"))
-    (url-resolve u "r")))
+  (find-binary (gs-binary-candidates) "gs"))
 
 (tm-define (has-binary-gs?)
   (not (url-none? (find-binary-gs))))

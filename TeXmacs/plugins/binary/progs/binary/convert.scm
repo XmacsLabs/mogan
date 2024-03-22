@@ -2,7 +2,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; MODULE      : convert.scm
-;; DESCRIPTION : Imagemagick Binary plugin
+;; DESCRIPTION : Imagemagick Binary plugin: convert
 ;; COPYRIGHT   : (C) 2024  Darcy Shen
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,23 +11,23 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary convert))
+(texmacs-module (binary convert)
+  (:use (binary common)))
 
 (define (convert-binary-candidates)
   (cond ((os-macos?)
          (list "/opt/homebrew/bin/convert"
                "/usr/local/bin/convert"))
         ((os-win32?)
-         (list ))
+         (list 
+          "C:\\Program Files*\\ImageMagick*\\convert.exe"
+          "$USERPROFILE\\scoop\\apps\\imagemagick\\current\\convert.exe"))
         (else
          (list "/usr/bin/convert"))))
 
 (tm-define (find-binary-convert)
   (:synopsis "Find the url to the convert binary, return (url-none) if not found")
-  (with u (or (list-find (convert-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "convert"))
-    (url-resolve u "r")))
+  (find-binary (convert-binary-candidates) "convert"))
 
 (tm-define (has-binary-convert?)
   (not (url-none? (find-binary-convert))))

@@ -11,7 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary aspell))
+(texmacs-module (binary aspell)
+  (:use (binary common)))
 
 (define (aspell-binary-candidates)
   (cond ((os-macos?)
@@ -24,10 +25,7 @@
 
 (tm-define (find-binary-aspell)
   (:synopsis "Find the url to the aspell binary, return (url-none) if not found")
-  (with u (or (list-find (aspell-binary-candidates)
-                (lambda (x) (url-exists? (url-resolve x "r"))))
-              (url-resolve-in-path "aspell"))
-    (url-resolve u "r")))
+  (find-binary (aspell-binary-candidates) "aspell"))
 
 (tm-define (has-binary-aspell?)
   (not (url-none? (find-binary-aspell))))
