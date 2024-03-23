@@ -217,6 +217,28 @@ function sidebarGuide() {
             ],
         },
         {
+            text: "Get Involved",
+            collapsed: true,
+            items: [
+                {
+                    text: 'Contribution',
+                    link: '/guide/Contribution.md'
+                },
+                {
+                    text: 'Develop on Linux',
+                    link: '/guide/Develop_on_Linux.md'
+                },
+                {
+                    text: 'Develop on macOS',
+                    link: '/guide/Develop_on_macOS.md'
+                },
+                {
+                    text: 'Develop on Windows',
+                    link: '/guide/Develop_on_Windows.md'
+                }
+            ]
+        },
+        {
             text: 'ChangeLog',
             collapsed: true,
             items: [
@@ -358,6 +380,28 @@ function sidebarGuideZh() {
                     link: '/zh/guide/plugin_data_pdf.md'
                 },
             ],
+        },
+        {
+            text: "如何参与",
+            collapsed: true,
+            items: [
+                {
+                    text: '如何贡献',
+                    link: '/zh/guide/Contribution.md'
+                },
+                {
+                    text: 'Linux平台开发指南',
+                    link: '/zh/guide/Develop_on_Linux.md'
+                },
+                {
+                    text: 'macOS平台开发指南',
+                    link: '/zh/guide/Develop_on_macOS.md'
+                },
+                {
+                    text: 'Windows平台开发指南',
+                    link: '/zh/guide/Develop_on_Windows.md'
+                }
+            ]
         },
         {
             text: '变更记录',
