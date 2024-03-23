@@ -11,7 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (binary identify))
+(texmacs-module (binary identify)
+  (:use (binary common)))
 
 (define (identify-binary-candidates)
   (cond ((os-macos?)
