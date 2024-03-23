@@ -497,35 +497,23 @@ call_scm_converter (url image, url dest, int w, int h) {
  * last resort solution -- should rarely be useful.
  ******************************************************************************/
 
-bool
-has_image_magick () {
-#if defined(OS_MINGW) || defined(OS_WIN)
-  // Qt is used for converion on Windows
-  static bool has_imagemagick= false;
-#else
-  static bool has_imagemagick= exists_in_path ("convert");
-#endif
-  return has_imagemagick;
+url
+find_binary_convert () {
+  eval ("(use-modules (binary convert))");
+  return as_url (eval ("(find-binary-convert)"));
 }
 
-string
-imagemagick_cmd () {
-  if (has_image_magick ()) {
-#if defined(OS_MINGW) || defined(OS_WIN)
-    static string image_magick_cmd=
-        sys_concretize (resolve_in_path ("convert"));
-#else
-    static string image_magick_cmd= "convert";
-#endif
-    return copy (image_magick_cmd);
-  }
-  else return "";
+static url
+find_binary_identify () {
+  eval ("(use-modules (binary identify))");
+  return as_url (eval ("(find-binary-identify)"));
 }
 
 void
 call_imagemagick_convert (url image, url dest, int w_pt, int h_pt, int dpi) {
-  if (has_image_magick ()) {
-    string cmd= imagemagick_cmd ();
+  url binary_convert= find_binary_convert ();
+  if (!is_none (binary_convert)) {
+    string cmd= sys_concretize (binary_convert);
     string s  = suffix (image);
     if (s != "pdf" && s != "ps" && s != "eps" && dpi > 0 && w_pt > 0 &&
         h_pt > 0) {
@@ -544,13 +532,11 @@ call_imagemagick_convert (url image, url dest, int w_pt, int h_pt, int dpi) {
 
 bool
 imagemagick_image_size (url image, int& w, int& h, bool pt_units) {
-  if (!has_image_magick ()) return false;
+  url binary_identify= find_binary_identify ();
+  if (is_none (binary_identify)) return false;
   else {
-    string cmd= "identify"; // ImageMagick utility
-#if defined(OS_MINGW) || defined(OS_WIN)
-    cmd= sys_concretize (resolve_in_path (cmd));
-#endif
-    cmd << " -ping -format \"%w %h %x %U\\n%y\"";
+    string cmd= sys_concretize (binary_identify);
+    cmd << " -ping -format \"%w %h %x\\n%y\"";
     string sz= eval_system (cmd, image);
     int    w_px, h_px, ok= true, pos= 0;
     string unit;

@@ -7,6 +7,10 @@
 
   <image|../webp/new-mogan-512.webp|308pt|308pt||>
 
+  Here is the animated gif:
+
+  <video|../gif/thales.gif|0.5par|200px|500msec|yes>
+
   \;
 
   \;
