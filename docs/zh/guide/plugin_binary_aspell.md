@@ -5,6 +5,7 @@
   - [Gitee](https://gitee.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/binary/progs/binary/aspell.scm)
   - [Github](https://github.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/binary/progs/binary/aspell.scm)
 - 功能：支持`编辑->拼写检查`
++ 墨干：`>= v1.2.5.2`
 
 ## 如何安装 GNU Aspell
 ### Windows
