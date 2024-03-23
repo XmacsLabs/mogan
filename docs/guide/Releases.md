@@ -28,7 +28,7 @@ There are three statuses:
 
 
 ## Minor Releases
-Since v1.2.6, Mogan will be released by-monthly.
+Since v1.2.6, Mogan will be released bi-monthly.
 
 | Version | Release Manager | Release Date | Major Changes |
 |--------|---|--------------|----------------|
@@ -36,7 +36,7 @@ Since v1.2.6, Mogan will be released by-monthly.
 | v1.2.8 | |before 2024/08/01 | |
 | v1.2.7 | |before 2024/06/15 | |
 | v1.2.6 | | before 2024/04/30 | |
-| v1.2.5 LTS | Darcy |2024/02/27 | Binary plugins |
+| v1.2.5 LTS | Darcy |2024/02/27 | [Binary plugins](plugin_binary.md) |
 | |  |  | Image plugins |
 | v1.2.4 | Darcy | 2024/02/01 | Hot fix on v1.2.3 |
 | v1.2.3 | Darcy | 2024/01/30 | Support Noto CJK fonts |

@@ -276,15 +276,15 @@ function sidebarGuide() {
                 },
                 {
                     text: 'v1.1.6 (2023/09/29)',
-                    link: '/guide/ChangeLog_v1.1.6.md'
+                    link: '/guide/changelog/v1.1.6.md'
                 },
                 {
                     text: 'v1.1.5 (2023/08/11)',
-                    link: '/guide/ChangeLog_v1.1.5.md'
+                    link: '/guide/changelog/v1.1.5.md'
                 },
                 {
                     text: 'v1.1.4 (2023/07/31)',
-                    link: '/guide/ChangeLog_v1.1.4.md'
+                    link: '/guide/changelog/v1.1.4.md'
                 },
              ]
         },
@@ -449,51 +449,51 @@ function sidebarGuideZh() {
                 },
                 {
                     text: 'v1.1.6 (2023/09/29)',
-                    link: '/zh/guide/ChangeLog_v1.1.6.md'
+                    link: '/zh/guide/changelog/v1.1.6.md'
                 },
                 {
                     text: 'v1.1.5 (2023/08/11)',
-                    link: '/zh/guide/ChangeLog_v1.1.5.md'
+                    link: '/zh/guide/changelog/v1.1.5.md'
                 },
                 {
                     text: 'v1.1.4 (2023/07/31)',
-                    link: '/zh/guide/ChangeLog_v1.1.4.md'
+                    link: '/zh/guide/changelog/v1.1.4.md'
                 },
                 {
                     text: 'v1.1.3 (2023/06/05)',
-                    link: '/zh/guide/ChangeLog_v1.1.3.md'
+                    link: '/zh/guide/changelog/v1.1.3.md'
                 },
                 {
                     text: 'v1.1.2 (2023/04/09)',
-                    link: '/zh/guide/ChangeLog_v1.1.2.md'
+                    link: '/zh/guide/changelog/v1.1.2.md'
                 },
                 {
                     text: 'v1.1.1 (2022/10/31)',
-                    link: '/zh/guide/ChangeLog_v1.1.1.md'
+                    link: '/zh/guide/changelog/v1.1.1.md'
                 },
                 {
                     text: 'v1.1.0 (2022/08/31)',
-                    link: '/zh/guide/ChangeLog_v1.1.0.md'
+                    link: '/zh/guide/changelog/v1.1.0.md'
                 },
                 {
                     text: 'v1.0.4 (2022/05/28)',
-                    link: '/zh/guide/ChangeLog_v1.0.4.md'
+                    link: '/zh/guide/changelog/v1.0.4.md'
                 },
                 {
                     text: 'v1.0.3 (2022/05/15)',
-                    link: '/zh/guide/ChangeLog_v1.0.3.md'
+                    link: '/zh/guide/changelog/v1.0.3.md'
                 },
                 {
                     text: 'v1.0.2 (2022/05/04)',
-                    link: '/zh/guide/ChangeLog_v1.0.2.md'
+                    link: '/zh/guide/changelog/v1.0.2.md'
                 },
                 {
                     text: 'v1.0.1 (2022/03/26)',
-                    link: '/zh/guide/ChangeLog_v1.0.1.md'
+                    link: '/zh/guide/changelog/v1.0.1.md'
                 },
                 {
                     text: 'v1.0.0 (2022/01/31)',
-                    link: '/zh/guide/ChangeLog_v1.0.0.md'
+                    link: '/zh/guide/changelog/v1.0.0.md'
                 },
             ]
         },
