@@ -171,8 +171,16 @@ function sidebarGuide() {
             collapsed: true,
             items: [
                 {
+                    text: 'Aspell Binary plugin',
+                    link: '/guide/plugin_binary_aspell.md'
+                },
+                {
                     text: 'Ghostscript Binary plugin',
                     link: '/guide/plugin_binary_gs.md'
+                },
+                {
+                    text: 'Hunspell Binary plugin',
+                    link: '/guide/plugin_binary_hunspell.md'
                 },
                 {
                     text: 'Inkscape Binary plugin',
@@ -306,8 +314,16 @@ function sidebarGuideZh() {
             collapsed: true,
             items: [
                 {
+                    text: 'Aspell二进制插件',
+                    link: '/zh/guide/plugin_binary_aspell.md'
+                },
+                {
                     text: 'Ghostscript二进制插件',
                     link: '/zh/guide/plugin_binary_gs.md'
+                },
+                {
+                    text: 'Hunspell二进制插件',
+                    link: '/zh/guide/plugin_binary_hunspell.md'
                 },
                 {
                     text: 'Inkscape二进制插件',
