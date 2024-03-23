@@ -14,6 +14,7 @@
 #include "Files/image_files.hpp"
 #include "file.hpp"
 #include "player.hpp"
+#include "sys_utils.hpp"
 #include "tm_file.hpp"
 
 /******************************************************************************
@@ -496,11 +497,13 @@ static hashmap<tree, tree> decomposed_gif ("");
 
 static url
 decompose_gif (url u) {
-  if (!has_image_magick ()) return url_none ();
+  url binary_convert= find_binary_convert ();
+  if (is_none (binary_convert)) return url_none ();
   if (!decomposed_gif->contains (u->t)) {
-    url tmp= url_temp ();
-    url res= glue (tmp, "_%04d.gif");
-    system (imagemagick_cmd () * " +adjoin -coalesce", u, res);
+    url    tmp= url_temp ();
+    url    res= glue (tmp, "_%04d.gif");
+    string cmd= sys_concretize (binary_convert);
+    system (cmd * " +adjoin -coalesce", u, res);
     decomposed_gif (u->t)= tmp->t;
   }
   url tmp= as_url (decomposed_gif[u->t]);
