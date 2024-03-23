@@ -243,9 +243,13 @@ function sidebarGuide() {
             ]
         },
         {
-            text: 'ChangeLog',
+            text: 'Roadmap',
             collapsed: true,
             items: [
+                {
+                    text: 'Releases',
+                    link: '/guide/Releases.md'
+                },
                 {
                     text: 'v1.2.5.x LTS',
                     link: '/guide/ChangeLog_v1.2.5.md'
@@ -412,9 +416,13 @@ function sidebarGuideZh() {
             ]
         },
         {
-            text: '变更记录',
+            text: '路线图',
             collapsed: true,
             items: [
+                {
+                    text: '版本发布',
+                    link: '/zh/guide/Releases.md'
+                },
                 {
                     text: 'v1.2.5.x LTS',
                     link: '/zh/guide/ChangeLog_v1.2.5.md'
