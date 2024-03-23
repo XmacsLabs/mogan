@@ -1,7 +1,7 @@
-# 在macOS上开发
+# macOS平台开发指南
+本开发指南针对墨干理工套件中的墨干（Mogan Research）撰写，墨干理工套件中的其它组件可以参考。
 
-## 使用xmake
-### 第一步：安装xmake和xrepo
+## 第一步：安装xmake和xrepo
 对于Homebrew:
 ```
 brew install xmake qt
@@ -13,29 +13,21 @@ brew install pkg-config
 xrepo update-repo
 ```
 
-有时需要xmake使用最新的版本才能正常编译，在xmake 2.8.3中存在这个问题，后面的版本应该不会有这个问题。
-
-可以用
-```
-xmake update -s dev
-```
-来切换到最新版本
-
-### 第二步：配置
+## 第二步：配置
 ```
 xmake config --yes -c --qt=/opt/homebrew/share/qt/
 ```
 请按需调整Qt相关目录，并不一定是`/opt/homebrew/share/qt`。
 
-### 第三步：构建
+## 第三步：构建
 ```
 xmake build research
 ```
 
-### 第四步：测试
+## 第四步：测试
 见[如何测试](Test.md)。
 
-### 第五步：启动墨干
+## 第五步：启动墨干
 ``` bash
 xmake run research
 ```

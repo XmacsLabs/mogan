@@ -235,6 +235,10 @@ function sidebarGuide() {
                 {
                     text: 'Develop on Windows',
                     link: '/guide/Develop_on_Windows.md'
+                },
+                {
+                    text: 'How to test',
+                    link: '/guide/Test.md'
                 }
             ]
         },
@@ -400,6 +404,10 @@ function sidebarGuideZh() {
                 {
                     text: 'Windows平台开发指南',
                     link: '/zh/guide/Develop_on_Windows.md'
+                },
+                {
+                    text: '如何测试',
+                    link: '/zh/guide/Test.md'
                 }
             ]
         },
