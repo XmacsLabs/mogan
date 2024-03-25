@@ -357,14 +357,15 @@ pdf_raw_image_rep::flush (PDFWriter& pdfw) {
 
 void
 hummus_pdf_image_size (url image, int& w, int& h) {
-  string resolved_image= concretize (image);
+  url resolved_image= concretize_url (image);
   if (is_none (resolved_image)) {
     io_error << "Failed to concretize " << image << LF;
+    return;
   }
 
   PDFParser* parser= new PDFParser ();
   InputFile  pdfFile;
-  c_string   f (resolved_image);
+  c_string   f (as_string (resolved_image));
   pdfFile.OpenFile ((char*) f);
   EStatusCode status= parser->StartPDFParsing (pdfFile.GetInputStream ());
   if (status != PDFHummus::eFailure) {
