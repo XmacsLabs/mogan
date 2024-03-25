@@ -357,8 +357,12 @@ pdf_raw_image_rep::flush (PDFWriter& pdfw) {
 void
 hummus_pdf_image_size (url image, int& w, int& h) {
   InputFile  pdfFile;
-  PDFParser* parser= new PDFParser ();
-  pdfFile.OpenFile (as_charp (concretize (image)));
+  PDFParser* parser        = new PDFParser ();
+  c_string   resolved_image= concretize (image);
+  if (is_none (resolved_image)) {
+    io_error << "Failed to concretize " << image << LF;
+  }
+  pdfFile.OpenFile ((char*) resolved_image);
   EStatusCode status= parser->StartPDFParsing (pdfFile.GetInputStream ());
   if (status != PDFHummus::eFailure) {
     PDFPageInput pageInput (parser, parser->ParsePage (0));
@@ -368,8 +372,8 @@ hummus_pdf_image_size (url image, int& w, int& h) {
     delete (parser);
   }
   else {
-    convert_error << "pdf_hummus, failed to get image size for: " << image
-                  << LF;
+    convert_error << "pdf_hummus, failed to get image size for: "
+                  << resolved_image << LF << "resolved from " << image << LF;
     w= h= 0;
   }
 }
