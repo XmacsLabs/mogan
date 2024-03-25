@@ -3,7 +3,11 @@
 <style|generic>
 
 <\body>
-  Test remote pdf which does not exist
+  Test local pdf which does not exist:
+
+  <image|$TEXMACS_PATH/no_such.pdf|0.3par|||>
+
+  Test remote pdf which does not exist:
 
   <image|https://mogan.app/no_such.pdf|0.3par|||>
 </body>
