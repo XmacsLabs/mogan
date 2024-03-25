@@ -8,7 +8,7 @@ sudo add-apt-repository ppa:xmake-io/xmake
 sudo apt install xmake
 
 sudo apt update
-sudo apt install --yes build-essential libfontconfig1-dev qtbase5-dev libqt5svg5-dev
+sudo apt install --yes build-essential libfontconfig1-dev  qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins libcurl4-openssl-dev libfreetype-dev libgit2-dev zlib1g-dev libssl-dev
 ```
 
 有时候需要保持xrepo是最新的，以保证使用最新的依赖的构建定义
@@ -34,17 +34,12 @@ xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
 ### 第三步：测试
 见[如何测试](Test.md)。
 
-### 第四步: 安装到`build/packages/app.mogan`
-``` bash
-xmake install research
-```
-
-### 第五步：启动墨干
+### 第四步：启动墨干
 ``` bash
 xmake run research
 ```
 
-### 使用VSCode帮助代码补全
+## 使用VSCode帮助代码补全
 安装VSCode，Clangd以及VSCode的Clangd插件。
 之后在mogan文件夹执行
 ```
