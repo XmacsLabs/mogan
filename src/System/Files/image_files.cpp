@@ -462,7 +462,6 @@ image_to_png (url image, url png, int w, int h) { // IN PIXEL UNITS!
   }
 #endif
   if (call_scm_converter (image, png, w, h)) return;
-  call_imagemagick_convert (image, png, w, h);
   if (!exists (png)) {
     convert_error << image << " could not be converted to png" << LF;
     copy ("$TEXMACS_PATH/misc/pixmaps/unknown.png", png);
