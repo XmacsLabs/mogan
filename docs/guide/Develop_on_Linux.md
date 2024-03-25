@@ -1,13 +1,12 @@
 # Developing on GNU/Linux
-## Using xmake
-### Step 1: Install xmake and Qt 5
+## Step 1: Install xmake and Qt 6
 On Debian or Debian derivatives:
 ```
 sudo add-apt-repository ppa:xmake-io/xmake
 sudo apt install xmake
 
 sudo apt update
-sudo apt install --yes build-essential libfontconfig1-dev qtbase5-dev libqt5svg5-dev
+sudo apt install --yes build-essential libfontconfig1-dev  qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins libcurl4-openssl-dev libfreetype-dev libgit2-dev zlib1g-dev libssl-dev
 ```
 
 On Fedora and RHEL derivatives:
@@ -23,7 +22,7 @@ Sometimes, we need the latest xrepo:
 xrepo update-repo
 ```
 
-### Step 2: Compile
+## Step 2: Config and Build
 ``` bash
 xmake config --yes
 xmake build research
@@ -38,20 +37,15 @@ To switch to Qt 6, just:
 xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
 ```
 
-### Step 3: Run tests
+## Step 3: Run tests
 See [How to test](Test.md)。
 
-### Step 4: Install to `build/packages/app.mogan`
-``` bash
-xmake install research
-```
-
-### Step 5: Launch Mogan Research
+## Step 4: Launch Mogan Research
 ``` bash
 xmake run research
 ```
 
-### Use VSCode to help code completion
+## Use VSCode to help code completion
 Install VSCode, Clangd and the Clangd plugin for VSCode.
 Then execute in the mogan folder
 ````
