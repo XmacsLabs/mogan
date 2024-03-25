@@ -23,6 +23,7 @@
 #include "scheme.hpp"
 #include "tm_debug.hpp"
 #include "tm_url.hpp"
+#include "url.hpp"
 
 #ifdef QTTEXMACS
 #include "Qt/qt_utilities.hpp"
@@ -356,13 +357,15 @@ pdf_raw_image_rep::flush (PDFWriter& pdfw) {
 
 void
 hummus_pdf_image_size (url image, int& w, int& h) {
-  InputFile  pdfFile;
-  PDFParser* parser        = new PDFParser ();
-  c_string   resolved_image= concretize (image);
+  string resolved_image= concretize (image);
   if (is_none (resolved_image)) {
     io_error << "Failed to concretize " << image << LF;
   }
-  pdfFile.OpenFile ((char*) resolved_image);
+
+  PDFParser* parser= new PDFParser ();
+  InputFile  pdfFile;
+  c_string   f (resolved_image);
+  pdfFile.OpenFile ((char*) f);
   EStatusCode status= parser->StartPDFParsing (pdfFile.GetInputStream ());
   if (status != PDFHummus::eFailure) {
     PDFPageInput pageInput (parser, parser->ParsePage (0));
