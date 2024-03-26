@@ -8,7 +8,7 @@ sudo add-apt-repository ppa:xmake-io/xmake
 sudo apt install xmake
 
 sudo apt update
-sudo apt install --yes build-essential libfontconfig1-dev  qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins libcurl4-openssl-dev libfreetype-dev libgit2-dev zlib1g-dev libssl-dev
+sudo apt install --yes build-essential libfontconfig1-dev  qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins libcurl4-openssl-dev libfreetype-dev libgit2-dev zlib1g-dev libssl-dev libjpeg-turbo8-dev cmake
 ```
 
 有时候需要保持xrepo是最新的，以保证使用最新的依赖的构建定义
