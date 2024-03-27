@@ -21,9 +21,13 @@
 #include "scheme.hpp"
 #include "tmfs_url.hpp"
 
-#include "lolly/io/http.hpp"
+#include <lolly/io/http.hpp>
+
+using lolly::io::http_head;
+using lolly::io::http_label;
 
 #define MAX_CACHED 25
+
 static int                 web_nr= 0;
 static array<tree>         web_cache (MAX_CACHED);
 static hashmap<tree, tree> web_cache_resolve ("");
@@ -94,6 +98,14 @@ fetch_tool () {
 url
 get_from_web (url name) {
   if (!is_rooted_web (name)) return url_none ();
+
+  long status_code= open_box<long> (
+      http_response_ref (http_head (name), http_label::STATUS_CODE)->data);
+
+  if (status_code != 200) {
+    return url_none ();
+  }
+
   url res= get_cache (name);
   if (!is_none (res)) return res;
 

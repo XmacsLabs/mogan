@@ -454,21 +454,14 @@ image_to_pdf (url image, url pdf, int w_pt, int h_pt, int dpi) {
 
 void
 image_to_png (url image, url png, int w, int h) { // IN PIXEL UNITS!
-  string source_suffix= suffix (image);
-  if (DEBUG_CONVERT) debug_convert << "image_to_png ... ";
-    /* if (suffix (png) != "png") {
-       std_warning << concretize (png) << " has no .png suffix\n";
-       }
-    */
 #ifdef QTTEXMACS
   if (qt_supports (image)) {
-    if (DEBUG_CONVERT) debug_convert << " using qt " << LF;
+    if (DEBUG_CONVERT) debug_convert << "image_to_png using qt " << LF;
     qt_convert_image (image, png, w, h);
     return;
   }
 #endif
   if (call_scm_converter (image, png, w, h)) return;
-  call_imagemagick_convert (image, png, w, h);
   if (!exists (png)) {
     convert_error << image << " could not be converted to png" << LF;
     copy ("$TEXMACS_PATH/misc/pixmaps/unknown.png", png);
@@ -477,7 +470,7 @@ image_to_png (url image, url png, int w, int h) { // IN PIXEL UNITS!
 
 bool
 call_scm_converter (url image, url dest, int w, int h) {
-  if (DEBUG_CONVERT) debug_convert << " using scm" << LF;
+  if (DEBUG_CONVERT) debug_convert << "Image conversion using scm" << LF;
   if (as_bool (call ("file-converter-exists?", "x." * suffix (image),
                      "x." * suffix (dest)))) {
     call ("file-convert", object (image), object (dest),

@@ -23,6 +23,7 @@
 #include "scheme.hpp"
 #include "tm_debug.hpp"
 #include "tm_url.hpp"
+#include "url.hpp"
 
 #ifdef QTTEXMACS
 #include "Qt/qt_utilities.hpp"
@@ -356,9 +357,16 @@ pdf_raw_image_rep::flush (PDFWriter& pdfw) {
 
 void
 hummus_pdf_image_size (url image, int& w, int& h) {
-  InputFile  pdfFile;
+  url resolved_image= concretize_url (image);
+  if (is_none (resolved_image)) {
+    io_error << "Failed to concretize " << image << LF;
+    return;
+  }
+
   PDFParser* parser= new PDFParser ();
-  pdfFile.OpenFile (as_charp (concretize (image)));
+  InputFile  pdfFile;
+  c_string   f (as_string (resolved_image));
+  pdfFile.OpenFile ((char*) f);
   EStatusCode status= parser->StartPDFParsing (pdfFile.GetInputStream ());
   if (status != PDFHummus::eFailure) {
     PDFPageInput pageInput (parser, parser->ParsePage (0));
@@ -368,8 +376,8 @@ hummus_pdf_image_size (url image, int& w, int& h) {
     delete (parser);
   }
   else {
-    convert_error << "pdf_hummus, failed to get image size for: " << image
-                  << LF;
+    convert_error << "pdf_hummus, failed to get image size for: "
+                  << resolved_image << LF << "resolved from " << image << LF;
     w= h= 0;
   }
 }
