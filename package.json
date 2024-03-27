@@ -7,7 +7,7 @@
   "author": "XmacsLabs",
   "license": "MIT",
   "devDependencies": {
-    "vitepress": "^1.0.0-rc.41",
+    "vitepress": "^1.0.1",
     "vue": "^3.2.45"
   },
   "scripts": {
