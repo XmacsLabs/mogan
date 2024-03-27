@@ -1,5 +1,12 @@
 #!/usr/bin/env elvish
 
-yarn docs:build
+use platform
+
+if (eq $platform:os darwin) {
+  yarn docs:build
+} else {
+  yarnpkg docs:build
+}
 
 cp site/mogan.app/CNAME website/
+
