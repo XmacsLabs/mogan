@@ -117,15 +117,11 @@ function navZh() {
 function sidebarGuide() {
     return [
         {
-            text: 'Introduction',
+            text: 'Getting Started',
             items: [
                 { text: 'What is Mogan?', link: '/guide/what-is-mogan' },
                 { text: 'Major Features', link: '/guide/Feature' },
-            ]
-        },
-        {
-            text: 'Getting Started',
-            items: [
+                { text: 'Screenshots', link: '/guide/Screenshots'},
                 {
                     text: 'Install',
                     link: '/guide/Install'
@@ -217,7 +213,7 @@ function sidebarGuide() {
             ],
         },
         {
-            text: "Get Involved",
+            text: "Getting Involved",
             collapsed: true,
             items: [
                 {
@@ -294,15 +290,11 @@ function sidebarGuide() {
 function sidebarGuideZh() {
     return [
         {
-            text: '简介',
+            text: '入门',
             items: [
                 { text: '墨干', link: '/zh/guide/what-is-mogan' },
                 { text: '主要功能', link: '/zh/guide/Feature' },
-            ]
-        },
-        {
-            text: '如何入门',
-            items: [
+                { text: '截图', link: '/zh/guide/Screenshots'},
                 {
                     text: '如何安装？',
                     link: '/zh/guide/Install'
