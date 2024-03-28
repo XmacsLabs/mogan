@@ -31,7 +31,12 @@
     green>|<cwith|20|20|2|2|cell-background|pastel
     green>|<cwith|18|18|2|2|cell-background|pastel
     green>|<cwith|17|17|2|2|cell-background|pastel
-    green>|<cwith|16|16|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|16|16|2|2|cell-background|pastel
+    green>|<cwith|10|10|2|2|cell-background|pastel
+    green>|<cwith|19|19|2|2|cell-background|pastel
+    green>|<cwith|22|22|2|2|cell-background|pastel
+    green>|<cwith|25|25|2|2|cell-hyphen|n>|<cwith|25|25|2|2|cell-background|pastel
+    green>|<cwith|26|26|2|2|cell-background|pastel green>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       5_1
@@ -262,6 +267,64 @@
       <value|da>
     </cell>|<\cell>
       Who are using Mogan?
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_24
+    </cell>|<\cell>
+      v1.2.6
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      SICP Open Course
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<cell|5_25>|<\cell>
+      v1.2.6
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      ChangeLog/Release/Roadmap
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_26
+    </cell>|<\cell>
+      v1.2.6
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Screenshots
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_27
+    </cell>|<\cell>
+      v1.2.6
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Video tutorial for Mogan STEM Suite
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_28
+    </cell>|<\cell>
+      v1.2.6
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Enable search by algolia
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      5_29
+    </cell>|<\cell>
+      v1.2.6
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Authors of Mogan
     </cell>>>>
   </wide-tabular>
 
