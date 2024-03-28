@@ -365,7 +365,7 @@ sourcecode_to_cork (string input) {
   return output;
 }
 
-string
+string_u8
 cork_to_utf8 (string input) {
   converter conv = load_converter ("Cork", "UTF-8");
   int       start= 0, i, n= N (input);
@@ -383,7 +383,7 @@ cork_to_utf8 (string input) {
   return r;
 }
 
-string
+string_u8
 strict_cork_to_utf8 (string input) {
   converter conv = load_converter ("Strict-Cork", "UTF-8");
   int       start= 0, i, n= N (input);
@@ -420,7 +420,7 @@ cork_to_sourcecode (string input) {
 }
 
 string
-utf8_to_t2a (string input) {
+utf8_to_t2a (string_u8 input) {
   converter conv= load_converter ("UTF-8", "T2A");
   int       start, i, n= N (input);
   string    output;
@@ -479,7 +479,7 @@ code_point_to_cyrillic_subset_in_t2a (string input) {
   return r;
 }
 
-string
+string_u8
 t2a_to_utf8 (string input) {
   converter conv = load_converter ("T2A", "UTF-8");
   int       start= 0, i, n= N (input);
@@ -498,7 +498,7 @@ t2a_to_utf8 (string input) {
 }
 
 string
-utf8_to_html (string input) {
+utf8_to_html (string_u8 input) {
   converter conv= load_converter ("UTF-8", "HTML");
   string    s   = apply (conv, input);
   return utf8_to_hex_entities (s);
@@ -804,7 +804,7 @@ convert_char_entity (string s, int& start, bool& success) {
   else return "";
 }
 
-string
+string_u8
 encode_as_utf8 (unsigned int code) {
   if (/* 0x0 <= code && */ code <= 0x7F) {
     // 0x0ddddddd
@@ -838,7 +838,7 @@ encode_as_utf8 (unsigned int code) {
 }
 
 unsigned int
-decode_from_utf8 (string s, int& i) {
+decode_from_utf8 (string_u8 s, int& i) {
   unsigned char c= s[i];
   if ((0x80 & c) == 0) {
     // 0x0ddddddd
@@ -885,7 +885,7 @@ decode_from_utf8 (string s, int& i) {
 }
 
 string
-utf8_to_hex_entities (string s) {
+utf8_to_hex_entities (string_u8 s) {
   string result;
   int    i, n= N (s);
   for (i= 0; i < n;) {
@@ -907,7 +907,7 @@ utf8_to_hex_entities (string s) {
 }
 
 string
-utf8_to_utf16be_string (string s) {
+utf8_to_utf16be_string (string_u8 s) {
   string result, hex;
   int    i, n= N (s);
   for (i= 0; i < n;) {
@@ -939,7 +939,7 @@ utf8_to_utf16be_string (string s) {
 }
 
 string
-utf8_to_pdf_hex_string (string s) {
+utf8_to_pdf_hex_string (string_u8 s) {
   return "<FEFF" * utf8_to_utf16be_string (cork_to_utf8 (s)) * ">";
 }
 
