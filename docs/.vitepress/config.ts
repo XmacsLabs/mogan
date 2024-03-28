@@ -309,6 +309,10 @@ function sidebarGuideZh() {
             text: '社区',
             items: [
                 {
+                    text: '《零基础墨干》视频教程',
+                    link: '/zh/guide/Tutorial'
+                },
+                {
                     text: "《零基础SICP》公开课",
                     link: '/zh/guide/SICP'
                 },
