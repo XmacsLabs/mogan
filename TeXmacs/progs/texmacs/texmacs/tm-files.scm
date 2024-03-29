@@ -450,6 +450,11 @@
   (and-with master (and (url-rooted-tmfs? name) (tmfs-master name))
     (when (!= master name)
       (buffer-set-master name master)))
+  (when (and (in-beamer?)
+             (== (get-init-page-rendering) "book")
+             (inside? 'slideshow)
+             (> (nr-pages) 1))
+    (delayed (:idle 25) (fit-to-screen-width)))
   (noop))
 
 (define (load-buffer-load name opts)
