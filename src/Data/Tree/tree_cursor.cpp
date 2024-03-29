@@ -240,6 +240,7 @@ closest_accessible (tree t, path p, int dir) {
     }
     return path ();
   }
+  return path ();
 }
 
 path
