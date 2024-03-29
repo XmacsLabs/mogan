@@ -11,7 +11,6 @@
         <array>
           <string>stm</string>
           <string>tm</string>
-          <string>tmml</string>
         </array>
         <key>CFBundleTypeIconFile</key>
         <string>TeXmacs-document.icns</string>
