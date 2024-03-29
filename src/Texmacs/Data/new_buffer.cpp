@@ -418,7 +418,7 @@ attach_buffer_notifier (url name) {
 
 tree
 attach_subformat (tree t, url u, string fm) {
-  if ((fm == "texmacs") || (fm == "tmml") || (fm == "stm")) return t;
+  if ((fm == "texmacs") || (fm == "stm")) return t;
   if (!format_exists (fm)) return t;
 
   string s          = suffix (u);
