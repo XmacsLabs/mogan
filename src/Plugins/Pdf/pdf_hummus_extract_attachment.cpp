@@ -223,7 +223,7 @@ get_url_image_or_include_tree (tree t, url path) {
     return pre_url;
   }
   else {
-    if ((DEBUG_CONVERT) && is_func (t, moebius::INCLUDE))
+    if ((DEBUG_CONVERT) && is_func (t, INCLUDE))
       debug_convert << t << " include tree format wrong" << LF;
   }
   return url_none ();
@@ -315,7 +315,7 @@ replace_url_image_or_include_tree (tree t, url path) {
     t[0]->label= string (name);
   }
   else {
-    if ((DEBUG_CONVERT) && is_func (t, moebius::INCLUDE))
+    if ((DEBUG_CONVERT) && is_func (t, INCLUDE))
       debug_convert << t << " include tree format wrong" << LF;
   }
   return t;
