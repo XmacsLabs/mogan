@@ -54,6 +54,7 @@ struct QTMPixmapOrImage {
   QTMPixmapOrImage& operator= (const QTMPixmapOrImage& pxim) {
     if (headless_mode) *((QImage*) rep)= *((QImage*) pxim.rep);
     else *((QPixmap*) rep)= *((QPixmap*) pxim.rep);
+    return *this;
   }
   void fill (const QColor& c) {
     if (headless_mode) ((QImage*) rep)->fill (c);
