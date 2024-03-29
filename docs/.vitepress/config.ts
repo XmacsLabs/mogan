@@ -1,6 +1,11 @@
 export default {
     title: 'Mogan STEM Suite',
     outDir: "../website",
+    themeConfig: {
+        search: {
+          provider: 'local'
+        }
+    },
     locales: {
         root: {
             label: 'English',
@@ -17,9 +22,6 @@ export default {
                     message: 'Let us enjoy exploring science and technology!',
                     copyright: 'Copyright © 2022-2024 Mogan Contributors'
                 },
-                search: {
-                    provider: 'local',
-                }
             }
         },
         zh: {
@@ -37,9 +39,6 @@ export default {
                   message: '享受探索科学与技术的乐趣！',
                   copyright: '版权所有 © 2022-2024 墨干贡献者'
               },
-              search: {
-                  provider: 'local',
-              }
           }
         },
     },
