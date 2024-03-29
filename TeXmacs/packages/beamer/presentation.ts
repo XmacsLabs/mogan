@@ -46,7 +46,7 @@
     </src-comment>
   </active*>
 
-  <assign|page-type|4:3>
+  <assign|page-type|16:9>
 
   <assign|page-medium|beamer>
 
