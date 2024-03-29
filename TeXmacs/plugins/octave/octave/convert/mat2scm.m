@@ -14,13 +14,17 @@
 function ret= mat2scm (M)
   ret= "(matrix (tformat (table";
   [r,c]= size(M);
-  for i=1:r
-    ret= [ret,"(row "];
-    for j=1:c
-      ret= [ret, "(cell ", num2scm(M(i,j)), ") "];
+  if (r==0 && c == 0)
+    ret= str2scm ("[](0x0)");
+  else
+    for i=1:r
+      ret= [ret,"(row "];
+      for j=1:c
+        ret= [ret, "(cell ", num2scm(M(i,j)), ") "];
+      endfor
+      ret= [ret,") "];
     endfor
-    ret= [ret,") "];
-  endfor
-  ret= [ret,")))"];
-  ret= with_mode_math (ret, true);
+    ret= [ret,")))"];
+    ret= with_mode_math (ret, true);
+  endif
 endfunction
