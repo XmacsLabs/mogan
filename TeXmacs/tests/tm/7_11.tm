@@ -53,7 +53,13 @@
     <|input>
       flush_scheme ("(matrix (tformat (table)))")
     </input>
+
+    <\input|Octave] >
+      flush_scheme ("(tformat (table))")
+    </input>
   </session>
+
+  \;
 </body>
 
 <\initial>
