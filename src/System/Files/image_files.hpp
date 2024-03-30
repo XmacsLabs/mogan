@@ -33,8 +33,6 @@ void   image_to_pdf (url image, url eps, int w_pt= 0, int h_pt= 0, int dpi= 0);
 string image_to_psdoc (url image);
 void   image_to_png (url image, url png, int w= 0, int h= 0);
 bool   call_scm_converter (url image, url dest, int w= 0, int h= 0);
-void   call_imagemagick_convert (url image, url dest, int w_pt= 0, int h_pt= 0,
-                                 int dpi= 72);
 bool   imagemagick_image_size (url image, int& w, int& h, bool pt_units= true);
 url    find_binary_convert ();
 void   native_image_size (url image, int& w, int& h);

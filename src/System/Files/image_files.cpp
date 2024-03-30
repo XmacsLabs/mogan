@@ -449,7 +449,6 @@ image_to_pdf (url image, url pdf, int w_pt, int h_pt, int dpi) {
   }
 #endif
   if ((s != "svg") && call_scm_converter (image, pdf)) return;
-  call_imagemagick_convert (image, pdf, w_pt, h_pt, dpi);
 }
 
 void
@@ -500,27 +499,6 @@ static url
 find_binary_identify () {
   eval ("(use-modules (binary identify))");
   return as_url (eval ("(find-binary-identify)"));
-}
-
-void
-call_imagemagick_convert (url image, url dest, int w_pt, int h_pt, int dpi) {
-  url binary_convert= find_binary_convert ();
-  if (!is_none (binary_convert)) {
-    string cmd= sys_concretize (binary_convert);
-    string s  = suffix (image);
-    if (s != "pdf" && s != "ps" && s != "eps" && dpi > 0 && w_pt > 0 &&
-        h_pt > 0) {
-      int  ww= w_pt * dpi / 72; // number of pixels @dpi to make w_pt
-      int  hh= h_pt * dpi / 72;
-      int  w_px, h_px;
-      bool ok= imagemagick_image_size (image, w_px, h_px, false);
-      if (ok && (ww < w_px || hh < h_px)) {
-        // down-sample image if unecessarily large
-        cmd << " -resize " * as_string (ww) * "x" * as_string (hh) * "!";
-      }
-    }
-    system (cmd, image, dest);
-  }
 }
 
 bool

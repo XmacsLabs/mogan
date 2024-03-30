@@ -350,7 +350,6 @@ edit_main_rep::print_snippet (url name, tree t, bool conserve_preamble) {
       make_eps (temp, b, dpi);
       ::remove (name);
       if (!call_scm_converter (temp, name)) {
-        call_imagemagick_convert (temp, name);
         if (!exists (name))
           convert_error << "could not convert snippet " << temp
                         << " into :" << name << "\n";
