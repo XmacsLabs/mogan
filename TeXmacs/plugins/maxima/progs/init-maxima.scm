@@ -11,6 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-modules (binary maxima))
+
 (define (maxima-serialize lan t)
   (with s (string-drop-right (verbatim-serialize lan t) 1)
     (cond ((== s "") "0;\n")
@@ -35,7 +37,7 @@
 (plugin-add-windows-path "maxima*" "bin" #t)
 
 (plugin-configure maxima
-  (:require (or (url-exists-in-path? "maxima.bat") (url-exists-in-path? "maxima")))
+  (:require (has-binary-maxima?))
   ,@(maxima-launchers)
   (:serializer ,maxima-serialize)
   (:session "Maxima")
