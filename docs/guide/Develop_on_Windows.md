@@ -10,6 +10,7 @@ Because libgit2 requires admin console, you need to launch a admin console to ex
 ```
 xmake config --yes -vD -m releasedbg --plat=windows
 ```
+The next you run `xmake config`, it is ok to run without the admin console.
 
 ## Step 3: Build
 ``` bash

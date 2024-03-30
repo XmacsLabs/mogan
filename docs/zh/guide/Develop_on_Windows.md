@@ -6,8 +6,19 @@ scoop install xmake
 ```
 
 ## 第二步：xmake config
+第一次运行`xmake config`的时候，可能需要启动有管理员权限的Windows终端，因为libgit2需要这个权限。
+```
+xmake config --yes -vD -m releasedbg --plat=windows
+```
+后面由于已经缓存了libgit2，直接使用普通的Windows终端就可以了。
+
 ## 第三步：编译
+``` bash
+xmake build research
+```
 ## 第四步：测试
+见[如何测试](Test.md)。
+
 ## 第五步：启动墨干
 ``` bash
 xmake i research
