@@ -12,11 +12,19 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|7|7|1|1|cell-background|>|<cwith|10|10|2|2|cell-valign|c>|<cwith|10|10|1|1|cell-background|pastel
-    green>|<cwith|15|15|1|1|cell-background|pastel
+    <tformat|<cwith|8|8|1|1|cell-background|>|<cwith|12|12|2|2|cell-valign|c>|<cwith|12|12|1|1|cell-background|pastel
+    green>|<cwith|18|18|1|1|cell-background|pastel
+    green>|<cwith|22|22|1|1|cell-background|pastel
     green>|<cwith|19|19|1|1|cell-background|pastel
-    green>|<cwith|16|16|1|1|cell-background|pastel
-    green>|<cwith|9|9|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|11|11|1|1|cell-background|pastel
+    green>|<cwith|23|23|3|3|cell-valign|b>|<cwith|23|23|1|1|cell-background|pastel
+    green>|<table|<row|<\cell>
+      <dlink|78>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Improve C++ code via warnings and static checking
+    </cell>>|<row|<\cell>
       <dlink|77>
     </cell>|<\cell>
       <value|da>
@@ -59,6 +67,12 @@
     </cell>|<\cell>
       Improvements for Chinese users in 1.2.x
     </cell>>|<row|<\cell>
+      <dlink|67>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Octave plugin
+    </cell>>|<row|<\cell>
       <dlink|66>
     </cell>|<\cell>
       <value|da>
@@ -76,6 +90,12 @@
       <value|da>
     </cell>|<\cell>
       Image import and exports
+    </cell>>|<row|<\cell>
+      <dlink|60>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Maxima plugin
     </cell>>|<row|<\cell>
       <dlink|59>
     </cell>|<\cell>
@@ -130,6 +150,12 @@
       Darcy
     </cell>|<\cell>
       Font tuning
+    </cell>>|<row|<\cell>
+      <dlink|7>
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Stability Issues
     </cell>>|<row|<\cell>
       <dlink|5>
     </cell>|<\cell>

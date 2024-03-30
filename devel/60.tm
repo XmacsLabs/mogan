@@ -7,12 +7,15 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|60_1>>|<cell|<value|da>>|<cell|Make
-  it work on plat windows>>|<row|<cell|Bug>|<cell|<dlink|60_2>>|<cell|<value|da>>|<cell|Failed
-  to show maxima help menu>>|<row|<cell|Bug>|<cell|60_3>|<cell|<value|da>>|<cell|Blank
-  mode dependent icons>>|<row|<cell|Chore>|<cell|60_4>|<cell|<value|da>>|<cell|Maxima:
-  add path /opt/homebrew/opt/maxima/bin>>|<row|<cell|Chore>|<cell|60_5>|<cell|<value|da>>|<cell|Launch
-  maxima on macOS and Linux without tm_maxima>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|60_8>|<cell|v1.2.6>|<cell|<value|da>>|<cell|binary
+  plugin for maxima>>|<row|<cell|Chore>|<cell|60_7>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Maxima:
+  flush to pdf instead of ps or eps>>|<row|<cell|Chore>|<cell|60_6>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Use
+  remote maxima help instead of local help>>|<row|<cell|Chore>|<cell|60_5>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Launch
+  maxima on macOS and Linux without tm_maxima>>|<row|<cell|Chore>|<cell|60_4>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Maxima:
+  add path /opt/homebrew/opt/maxima/bin>>|<row|<cell|Bug>|<cell|60_3>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Blank
+  mode dependent icons>>|<row|<cell|Bug>|<cell|<dlink|60_2>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Failed
+  to show maxima help menu>>|<row|<cell|Bug>|<cell|<dlink|60_1>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Make
+  it work on plat windows>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 
