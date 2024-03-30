@@ -11,6 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-modules (binary octave))
+
 (define (octave-serialize lan t)
     (with u (pre-serialize lan t)
       (with s (texmacs->code (stree->tree u) "SourceCode")
@@ -42,8 +44,7 @@
   (:winpath "Octave/Octave*" "bin")
   (:winpath "Octave/Octave*" "mingw64/bin")
   (:macpath "Octave*" "Contents/Resources/usr/bin")
-  (:require (or (url-exists-in-path? "octave")
-                (url-exists-in-path? "octave-octave-app")))
+  (:require (has-binary-octave?))
   (:serializer ,octave-serialize)
   (:launch ,(octave-launcher))
   (:tab-completion #t)
