@@ -8,7 +8,7 @@ Homepage: https://mogan.app
 
 Package: mogan-research
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, qt6-qpa-plugins
 Description:  A structured editor for science and technology
 	     Mogan Research is a fork of GNU TeXmacs using S7 Scheme and Qt 5 with massive
 	     online TeXmacs documents provided by Xmacs Planet and TMML wiki.
