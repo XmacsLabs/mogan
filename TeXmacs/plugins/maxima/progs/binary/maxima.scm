@@ -21,7 +21,9 @@
         ((os-win32?)
          (list ))
         (else
-         (list "/usr/bin/maxima"))))
+         (list
+          "/usr/bin/maxima"
+          "/snap/bin/maxima"))))
 
 (tm-define (find-binary-maxima)
   (:synopsis "Find the url to the maxima binary, return (url-none) if not found")

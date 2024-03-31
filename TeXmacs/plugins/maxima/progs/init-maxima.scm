@@ -28,11 +28,8 @@
 (define (maxima-launchers)
   (if (or (os-mingw?) (os-win32?))
       `((:launch ,(string-append "maxima.bat -p " (maxima-entry))))
-      `((:launch ,(string-append "maxima -p " (maxima-entry))))))
+      `((:launch ,(string-append (url->system (find-binary-maxima)) " -p " (maxima-entry))))))
 
-(plugin-add-macos-path "Maxima*" "Contents/Resources/maxima/bin" #t)
-(plugin-add-macos-path "Maxima*" "Contents/Resources/opt/bin" #t)
-(plugin-add-macos-path "/opt/homebrew/opt" "maxima/bin" #t)
 (plugin-add-windows-path "Maxima*" "bin" #t)
 (plugin-add-windows-path "maxima*" "bin" #t)
 
