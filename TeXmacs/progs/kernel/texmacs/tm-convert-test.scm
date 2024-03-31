@@ -50,7 +50,6 @@
    (test "scilab format" "sce" "scilab")
    (test "texmacs format" "tm" "texmacs")
    (test "texmacs format" "ts" "texmacs")
-   (test "texmacs format" "tmml" "tmml")
    (test "texmacs format" "stm" "stm")
    (test "png format" "png" "png")
    (test "no such format" "no-such-format" "generic")))

@@ -155,8 +155,7 @@
            (txtgrep what (recent-file-list 50)))
           ((== type "doc")
            (docgrep what "$TEXMACS_DOC_PATH"
-            (string-append "*." lan ".tm")
-            (string-append "*." lan ".tmml")))
+            (string-append "*." lan ".tm")))
           (else
            (docgrep what "$TEXMACS_DOC_PATH" "*.en.tm")))))
 

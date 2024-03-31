@@ -105,7 +105,6 @@ string xml_name_to_tm (string s);
 string xml_unspace (string s, bool first, bool last);
 
 tree parse_xml (string s);
-tree tmml_upgrade (scheme_tree t);
 
 tree   find_first_element_by_name (tree t, string name);
 string get_attr_from_element (tree t, string name, string default_value);

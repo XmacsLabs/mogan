@@ -362,11 +362,7 @@ search_score (url u, array<string> a) {
   if (N (in) == 0) return 0;
 
   string suf= suffix (u);
-  if (suf == "tmml") {
-    for (int i= 0; i < n; i++)
-      a[i]= cork_to_utf8 (a[i]);
-  }
-  else if (suf == "tm") {
+  if (suf == "tm") {
     in= locase_all (in);
     for (int i= 0; i < n; i++)
       a[i]= locase_all (escape_cork_words (a[i]));
