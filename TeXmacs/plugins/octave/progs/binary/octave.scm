@@ -20,7 +20,9 @@
         ((os-win32?)
          (list ))
         (else
-         (list "/usr/bin/octave-cli"))))
+         (list
+          "/usr/bin/octave-cli"
+          "/snap/bin/octave-cli"))))
 
 (tm-define (find-binary-octave)
   (:synopsis "Find the url to the octave binary, return (url-none) if not found")
