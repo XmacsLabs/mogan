@@ -24,12 +24,10 @@
 (define parse-times (make-ahash-table))
 
 (define (parse-title u)
-  (with format (cond ((== (url-suffix u) "tmml") "tmml")
-                     (else "texmacs"))
-   (with t (tree-import u format)
+  (with t (tree-import u "texmacs")
     (with tt (select t '(:* (:or title doc-title tmdoc-title 
                                  tmdoc-title* tmweb-title) :%1))
-      (if (null? tt) '() (car tt))))))
+      (if (null? tt) '() (car tt)))))
 
 (tm-define (help-file-title u)
   (let ((mod-time (url-last-modified u))
@@ -51,12 +49,9 @@
   (if (and (in? (url-suffix s) '("tex" "tm")) (url-exists? s))
       s
       (let* ((lan (string-take (language-to-locale (get-output-language)) 2)) 
-             (suf-tmml (string-append "." lan ".tmml"))
              (suf (string-append "." lan ".tm"))
              (dir help-file-path))
-        (cond ((url-exists? (url-unix dir (string-append s suf-tmml)))
-               (url-resolve (url-unix dir (string-append s suf-tmml)) "r"))
-              ((url-exists? (url-unix dir (string-append s suf)))
+        (cond ((url-exists? (url-unix dir (string-append s suf)))
                (url-resolve (url-unix dir (string-append s suf)) "r"))
               ((and (!= suf ".en.tm")
                     (url-exists? (url-unix dir (string-append s ".en.tm"))))

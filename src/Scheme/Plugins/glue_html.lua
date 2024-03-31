@@ -32,14 +32,6 @@ function main()
                 }
             },
             {
-                scm_name = "upgrade-tmml",
-                cpp_name = "tmml_upgrade",
-                ret_type = "tree",
-                arg_list = {
-                    "scheme_tree"
-                }
-            },
-            {
                 scm_name = "upgrade-mathml",
                 cpp_name = "upgrade_mathml",
                 ret_type = "tree",

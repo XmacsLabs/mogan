@@ -319,7 +319,6 @@
 
 ;;(display "Booting converters\n")
 (lazy-format (convert rewrite init-rewrite) texmacs verbatim)
-(lazy-format (convert tmml init-tmml) tmml)
 (lazy-format (convert html init-html) html)
 (lazy-format (convert images image-format)
              postscript pdf svg xpm jpeg ppm gif png)
