@@ -7,21 +7,32 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|22|25|2|2|cell-background|pastel
-  green>|<cwith|28|36|2|2|cell-background|pastel
-  green>|<cwith|21|21|2|2|cell-background|pastel
-  green>|<cwith|14|14|2|2|cell-background|pastel
-  green>|<cwith|10|10|2|2|cell-background|pastel
-  green>|<cwith|12|12|2|2|cell-background|pastel
-  green>|<cwith|20|20|2|2|cell-background|pastel
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|27|30|2|2|cell-background|pastel
+  green>|<cwith|33|41|2|2|cell-background|pastel
+  green>|<cwith|26|26|2|2|cell-background|pastel
   green>|<cwith|19|19|2|2|cell-background|pastel
-  green>|<cwith|27|27|2|2|cell-background|pastel
-  green>|<cwith|5|7|2|2|cell-background|pastel
-  green>|<cwith|11|11|2|2|cell-background|pastel
-  green>|<cwith|8|8|2|2|cell-background|pastel
-  green>|<cwith|4|4|2|2|cell-background|pastel
+  green>|<cwith|15|15|2|2|cell-background|pastel
+  green>|<cwith|17|17|2|2|cell-background|pastel
+  green>|<cwith|25|25|2|2|cell-background|pastel
+  green>|<cwith|24|24|2|2|cell-background|pastel
+  green>|<cwith|32|32|2|2|cell-background|pastel
+  green>|<cwith|10|12|2|2|cell-background|pastel
+  green>|<cwith|16|16|2|2|cell-background|pastel
   green>|<cwith|13|13|2|2|cell-background|pastel
-  green>|<table|<row|<cell|Bug>|<cell|71_33>|<cell|v1.2.3>|<cell|<value|da>>|<cell|UI:
+  green>|<cwith|9|9|2|2|cell-background|pastel
+  green>|<cwith|18|18|2|2|cell-background|pastel
+  green>|<cwith|3|3|2|2|cell-background|pastel
+  green>|<cwith|4|4|2|2|cell-background|pastel
+  green>|<cwith|8|8|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Chore>|<cell|71_38>|<cell|v1.2.6>|<cell|<value|da>>|<cell|View
+  \<rightarrow\> Focus mode>>|<row|<cell|Chore>|<cell|71_37>|<cell|v1.2.6>|<cell|Darcy>|<cell|Translate
+  and fix encoding for the file related dialog>>|<row|<cell|Chore>|<cell|71_36>|<cell|v1.2.6>|<cell|<value|da>>|<cell|focus
+  tag first letter doesn't need to be upper
+  case>>|<row|<cell|Bug>|<cell|71_35>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Fix
+  wrong stylesheet of View \<rightarrow\> Full screen
+  mode>>|<row|<cell|Chore>|<cell|71_34>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Translate
+  Developer-\<gtr\>Help with/Definition of
+  properly>>|<row|<cell|Bug>|<cell|71_33>|<cell|v1.2.3>|<cell|<value|da>>|<cell|UI:
   use anti-alias font for Qt>>|<row|<cell|Bug>|<cell|71_32>|<cell|v1.2.3>|<cell|<value|da>>|<cell|For
   only one screen, do not move out of the screen
   width>>|<row|<cell|Bug>|<cell|71_31>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Fix
@@ -67,7 +78,7 @@
   tool>>|<row|<cell|Chore>|<cell|71_1>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Add
   'Copy to' and 'Paste from' into the right click menu>>>>>
 
-  <tmdoc-copyright|2023|Darcy>
+  <tmdoc-copyright|2023-2024|Darcy>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
