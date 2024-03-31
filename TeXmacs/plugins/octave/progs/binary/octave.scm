@@ -30,5 +30,8 @@
   (not (url-none? (find-binary-octave))))
 
 (tm-define (version-binary-octave)
-  (with msg (check-stdout (string-append (url->system (find-binary-octave)) " --version"))
-    (car (string-split msg #\newline))))
+  (with u (find-binary-octave)
+    (if (url-none? u)
+        ""
+        (with msg (check-stdout (string-append (url->system u) " --version"))
+          (car (string-split msg #\newline))))))
