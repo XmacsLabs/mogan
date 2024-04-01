@@ -277,7 +277,7 @@ end
 if is_mode("release") then
 xpack("research") do
     set_formats("nsis", "zip")
-    set_specfile("packages/windows/research.nsis")
+    set_specfile(path.join(os.projectdir(), "packages/windows/research.nsis"))
     set_specvar("PACKAGE_INSTALL_DIR", "XmacsLabs\\MoganResearch-"..XMACS_VERSION)
     set_specvar("PACKAGE_NAME", "MoganResearch")
     set_specvar("PACKAGE_SHORTCUT_NAME", "Mogan Research")
@@ -294,7 +294,7 @@ xpack("research") do
     set_license("GPLv3")
     set_licensefile("LICENSE")
     add_targets("research")
-    set_iconfile("packages/windows/Xmacs.ico")
+    set_iconfile(path.join(os.projectdir(), "packages/windows/Xmacs.ico"))
     set_bindir("bin")
     add_installfiles("build/packages/app.mogan/data/bin/(**)|MoganResearch.exe", {prefixdir = "bin"})
     set_basename("MoganResearch-v" .. XMACS_VERSION .. "-64bit-installer")
