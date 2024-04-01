@@ -189,8 +189,8 @@ function add_target_research_on_others()
         add_installfiles({
             "$(projectdir)/packages/macos/new-mogan.icns",
             "$(projectdir)/packages/macos/TeXmacs-document.icns",
-            "$(projectdir)/src/Plugins/Cocoa/(English.lproj/**)",
-            "$(projectdir)/src/Plugins/Cocoa/(zh_CN.lproj/**)"
+            "$(projectdir)/src/Plugins/Cocoa/(en.lproj/**)",
+            "$(projectdir)/src/Plugins/Cocoa/(zh-Hans.lproj/**)"
         })
     end
   
