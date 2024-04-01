@@ -244,7 +244,6 @@ function add_target_research_on_others()
             os.rm(app_dir .. "Contents/Frameworks/QtQmlModels.framework")
             os.rm(app_dir .. "Contents/Frameworks/QtQml.framework")
             os.rm(app_dir .. "Contents/Frameworks/QtQuick.framework")
-            os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
         end
     end)
 
@@ -329,6 +328,7 @@ target("research_packager") do
     after_install(function (target, opt)
         local app_dir = target:installdir() .. "/../../"
         os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
+        os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
         os.execv("hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir)
     end)
 end
