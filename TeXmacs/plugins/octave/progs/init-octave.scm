@@ -25,9 +25,7 @@
 
 (define (octave-launcher)
   (with boot (octave-entry)
-    (if (or (os-mingw?) (os-win32?))
-      (string-append "octave-cli -qi " boot)
-      (string-append (url->system (find-binary-octave)) " -qi " boot))))
+    (string-append (url->system (find-binary-octave)) " -qi " boot)))
 
 (plugin-configure octave
   (:require (has-binary-octave?))
