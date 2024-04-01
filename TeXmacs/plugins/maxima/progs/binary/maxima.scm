@@ -19,7 +19,7 @@
          (list "/opt/homebrew/bin/maxima"
                "/usr/local/bin/maxima"))
         ((os-win32?)
-         (list ))
+         (list "C:\\maxima-*\\bin\\maxima.bat"))
         (else
          (list
           "/usr/bin/maxima"
@@ -27,10 +27,14 @@
 
 (tm-define (find-binary-maxima)
   (:synopsis "Find the url to the maxima binary, return (url-none) if not found")
-  (find-binary (maxima-binary-candidates) "maxima"))
+  (find-binary (maxima-binary-candidates)
+    (if (or (os-win32?) (os-mingw?)) "maxima.bat" "maxima")))
 
 (tm-define (has-binary-maxima?)
   (not (url-none? (find-binary-maxima))))
 
 (tm-define (version-binary-maxima)
-  (check-stdout (string-append (url->system (find-binary-maxima)) " --version")))
+  (with u (find-binary-maxima)
+    (if (url-none? u)
+      ""
+      (check-stdout (string-append (url->system u) " --version")))))
