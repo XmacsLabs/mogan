@@ -507,7 +507,7 @@ function main()
             },
             {
                 scm_name = "url-unix",
-                cpp_name = "url",
+                cpp_name = "url_unix",
                 ret_type = "url",
                 arg_list = {
                     "string",
