@@ -11,6 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-modules (binary maxima))
+
 (define (maxima-serialize lan t)
   (with s (string-drop-right (verbatim-serialize lan t) 1)
     (cond ((== s "") "0;\n")
@@ -24,18 +26,10 @@
       (system-url->string "$TEXMACS_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")))
 
 (define (maxima-launchers)
-  (if (or (os-mingw?) (os-win32?))
-      `((:launch ,(string-append "maxima.bat -p " (maxima-entry))))
-      `((:launch ,(string-append "maxima -p " (maxima-entry))))))
-
-(plugin-add-macos-path "Maxima*" "Contents/Resources/maxima/bin" #t)
-(plugin-add-macos-path "Maxima*" "Contents/Resources/opt/bin" #t)
-(plugin-add-macos-path "/opt/homebrew/opt" "maxima/bin" #t)
-(plugin-add-windows-path "Maxima*" "bin" #t)
-(plugin-add-windows-path "maxima*" "bin" #t)
+  `((:launch ,(string-append (url->system (find-binary-maxima)) " -p " (maxima-entry)))))
 
 (plugin-configure maxima
-  (:require (or (url-exists-in-path? "maxima.bat") (url-exists-in-path? "maxima")))
+  (:require (has-binary-maxima?))
   ,@(maxima-launchers)
   (:serializer ,maxima-serialize)
   (:session "Maxima")
