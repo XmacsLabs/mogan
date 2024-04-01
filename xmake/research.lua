@@ -292,11 +292,11 @@ xpack("research") do
     set_description("user friendly distribution of GNU TeXmacs")
     set_homepage("https://mogan.app")
     set_license("GPLv3")
-    set_licensefile("LICENSE")
+    set_licensefile(path.join(os.projectdir(), "LICENSE"))
     add_targets("research")
     set_iconfile(path.join(os.projectdir(), "packages/windows/Xmacs.ico"))
     set_bindir("bin")
-    add_installfiles("build/packages/app.mogan/data/bin/(**)|MoganResearch.exe", {prefixdir = "bin"})
+    add_installfiles(path.join(os.projectdir(), "build/packages/app.mogan/data/bin/(**)|MoganResearch.exe"), {prefixdir = "bin"})
     set_basename("MoganResearch-v" .. XMACS_VERSION .. "-64bit-installer")
 end
 end
