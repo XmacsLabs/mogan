@@ -297,12 +297,7 @@ xpack("research") do
     set_iconfile("packages/windows/Xmacs.ico")
     set_bindir("bin")
     add_installfiles("build/packages/app.mogan/data/bin/(**)|MoganResearch.exe", {prefixdir = "bin"})
-
-    on_load(function (package)
-        if is_plat("windows") then
-            package:set("basename", "MoganResearch-v" .. XMACS_VERSION .. "-64bit-installer")
-        end
-    end)
+    set_basename("MoganResearch-v" .. XMACS_VERSION .. "-64bit-installer")
 end
 end
 
