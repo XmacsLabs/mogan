@@ -16,7 +16,9 @@
 
 (define (octave-binary-candidates)
   (cond ((os-macos?)
-         (list ))
+         (list
+          "/opt/homebrew/bin/octave-cli"
+          "/usr/local/bin/octave-cli"))
         ((or (os-win32?) (os-mingw?))
          (list
           "C:\\Octave\\Octave*\\mingw64\\bin\\octave-cli.exe" ; Octave 5.x
