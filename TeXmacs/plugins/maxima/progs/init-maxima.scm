@@ -28,9 +28,6 @@
 (define (maxima-launchers)
   `((:launch ,(string-append (url->system (find-binary-maxima)) " -p " (maxima-entry)))))
 
-(plugin-add-windows-path "Maxima*" "bin" #t)
-(plugin-add-windows-path "maxima*" "bin" #t)
-
 (plugin-configure maxima
   (:require (has-binary-maxima?))
   ,@(maxima-launchers)
