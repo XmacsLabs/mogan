@@ -12,6 +12,10 @@
 #include "converter.hpp"
 #include "font.hpp"
 
+#include <lolly/data/unicode.hpp>
+
+using lolly::data::decode_from_utf8;
+
 /******************************************************************************
  * True Type fonts
  ******************************************************************************/

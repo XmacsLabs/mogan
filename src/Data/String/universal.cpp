@@ -15,11 +15,14 @@
 #include "hashmap.hpp"
 
 #include <lolly/data/numeral.hpp>
+#include <lolly/data/unicode.hpp>
 
 using lolly::data::from_hex;
 using lolly::data::to_Hex;
 #define as_hexadecimal to_Hex
 #define from_hexadecimal from_hex
+
+using lolly::data::encode_as_utf8;
 
 /******************************************************************************
  * Transliteration
