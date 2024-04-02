@@ -128,8 +128,6 @@ target("code") do
     --     add_installfiles({
     --         "$(projectdir)/packages/macos/beamer.icns",
     --         "$(projectdir)/packages/macos/TeXmacs-document.icns",
-    --         "$(projectdir)/src/Plugins/Cocoa/(English.lproj/**)",
-    --         "$(projectdir)/src/Plugins/Cocoa/(zh_CN.lproj/**)"
     --     })
     -- end
   
