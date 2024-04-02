@@ -525,6 +525,7 @@ target("research_packager") do
         if is_arch("arm64") then
             dmg_name= "MoganResearch-v" .. XMACS_VERSION .. "-arm.dmg"
         end
+        os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
         os.execv("hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir)
     end)
 end

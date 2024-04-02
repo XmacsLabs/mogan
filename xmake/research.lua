@@ -204,7 +204,6 @@ function add_target_research_on_others()
             os.rm(app_dir .. "Contents/Frameworks/QtQmlModels.framework")
             os.rm(app_dir .. "Contents/Frameworks/QtQml.framework")
             os.rm(app_dir .. "Contents/Frameworks/QtQuick.framework")
-            os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
         end
     end)
 end
