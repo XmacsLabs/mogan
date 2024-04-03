@@ -2,11 +2,13 @@
 ## Math mode：several equations
 ![](../images/mogan_equation.png)
 
-## Text mode: section 1.2.2 of the 《Interactive SICP》
+## Text mode: section 1.2.2 of the [《Interactive SICP》](https://github.com/XmacsLabs/interactive-sicp)
 ![](../images/mogan_structured_text.png)
 
 ## Graphics mode: a cube
 ![](../images/mogan_cube.png)
+
+From [Drawing a simple geometrical picture with TeXmacs](https://youtu.be/baF3kpx_JSo) by Massimiliano Gubinelli.
 
 ## Beamer style: slides for SICP Open Course 05
 ![](../images/mogan_slides.png)
