@@ -25,8 +25,7 @@
           "C:\\Program Files*\\GNU Octave\\Octave*\\mingw64\\bin\\octave-cli.exe"))
         (else
          (list
-          "/usr/bin/octave-cli"
-          "/snap/bin/octave-cli"))))
+          "/usr/bin/octave-cli"))))
 
 (tm-define (find-binary-octave)
   (:synopsis "Find the url to the octave binary, return (url-none) if not found")
