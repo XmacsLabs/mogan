@@ -1244,7 +1244,7 @@
     (dialogue-window (notify-dialogue message) noop "Notification")))
 
 (tm-define (notify-restart . args)
-  (notify-now "Restart TeXmacs in order to let changes take effect"))
+  (notify-now (translate "Restart TeXmacs in order to let changes take effect")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Side tools
