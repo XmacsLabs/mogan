@@ -22,8 +22,7 @@
          (list "C:\\maxima-*\\bin\\maxima.bat"))
         (else
          (list
-          "/usr/bin/maxima"
-          "/snap/bin/maxima"))))
+          "/usr/bin/maxima"))))
 
 (tm-define (find-binary-maxima)
   (:synopsis "Find the url to the maxima binary, return (url-none) if not found")
