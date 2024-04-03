@@ -21,7 +21,9 @@
 #include "unicode.hpp"
 
 #include <lolly/data/numeral.hpp>
+#include <lolly/data/unicode.hpp>
 
+using lolly::data::decode_from_utf8;
 using lolly::data::to_Hex;
 
 bool virtually_defined (string c, string name);

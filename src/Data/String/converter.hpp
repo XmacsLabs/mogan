@@ -124,14 +124,12 @@ void hashtree_from_dictionary (hashtree<char, string> dic, string file_name,
  * and HTML/XML character entities to and from UTF-8 byte sequences.
  ***************************************************************************/
 
-int          hex_digit_to_int (unsigned char c);
-string_u8    encode_as_utf8 (unsigned int code);
-unsigned int decode_from_utf8 (string_u8 s, int& i);
-string       convert_escapes (string in, bool utf8);
-string       convert_char_entities (string s);
-string       convert_char_entity (string s, int& start, bool& success);
-string       utf8_to_hex_entities (string_u8 s);
-string       utf8_to_pdf_hex_string (string_u8 s);
-tree         convert_OTS1_symbols_to_universal_encoding (tree t);
+int    hex_digit_to_int (unsigned char c);
+string convert_escapes (string in, bool utf8);
+string convert_char_entities (string s);
+string convert_char_entity (string s, int& start, bool& success);
+string utf8_to_hex_entities (string_u8 s);
+string utf8_to_pdf_hex_string (string_u8 s);
+tree   convert_OTS1_symbols_to_universal_encoding (tree t);
 
 #endif // CONVERTER_H
