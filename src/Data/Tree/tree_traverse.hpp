@@ -68,4 +68,6 @@ bool inside_contiguous_document (tree t, path op, path oq);
 array<tree> search_sections (tree t);
 path        previous_section (tree t, path p);
 
+tree tree_utf8_to_cork (tree_u8 t);
+
 #endif // defined TREE_TRAVERSE_H

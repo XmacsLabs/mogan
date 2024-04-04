@@ -24,6 +24,7 @@
 #include "tree.hpp"
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
+#include "tree_traverse.hpp"
 
 #include <moebius/vars.hpp>
 
@@ -45,6 +46,7 @@ using moebius::data::scheme_to_tree;
 #define MODE_COMMAND 8
 #define MODE_XFORMAT 9
 #define MODE_FILE 10
+#define MODE_SCHEME_UTF8 11
 
 /******************************************************************************
  * Universal data input
@@ -76,6 +78,7 @@ texmacs_input_rep::get_mode (string s) {
   if (s == "channel") return MODE_CHANNEL;
   if (s == "command") return MODE_COMMAND;
   if (s == "file") return MODE_FILE;
+  if (s == "scheme_u8") return MODE_SCHEME_UTF8;
   if (format_exists (s)) return MODE_XFORMAT;
   return MODE_VERBATIM;
 }
@@ -238,6 +241,9 @@ texmacs_input_rep::flush (bool force) {
   case MODE_FILE:
     file_flush (force);
     break;
+  case MODE_SCHEME_UTF8:
+    scheme_u8_flush (force);
+    break;
   default:
     TM_FAILED ("invalid mode");
     break;
@@ -269,6 +275,14 @@ void
 texmacs_input_rep::scheme_flush (bool force) {
   if (force) {
     write (simplify_correct (scheme_to_tree (buf)));
+    buf= "";
+  }
+}
+
+void
+texmacs_input_rep::scheme_u8_flush (bool force) {
+  if (force) {
+    write (simplify_correct (tree_utf8_to_cork (scheme_to_tree (buf))));
     buf= "";
   }
 }
