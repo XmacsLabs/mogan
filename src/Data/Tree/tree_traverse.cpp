@@ -11,6 +11,7 @@
 
 #include "tree_traverse.hpp"
 #include "analyze.hpp"
+#include "converter.hpp"
 #include "cork.hpp"
 #include "drd_mode.hpp"
 #include "drd_std.hpp"
@@ -722,4 +723,18 @@ search_sections (tree t) {
   array<tree> a;
   search_sections (a, t);
   return a;
+}
+
+tree
+tree_utf8_to_cork (tree t) {
+  if (is_atomic (t)) {
+    return tree (utf8_to_cork (t->label));
+  }
+  else {
+    int  i, n= N (t);
+    tree t2 (t, n);
+    for (i= 0; i < n; i++)
+      t2[i]= tree_utf8_to_cork (t[i]);
+    return t2;
+  }
 }
