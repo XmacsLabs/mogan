@@ -278,7 +278,7 @@ get_linked_file_paths (tree t, url path) {
   string     label= get_label (t);
   if (label == "image" || label == "include") {
     url incl_url= get_url_image_or_include_tree (t, path);
-    if (incl_url != url ()) tm_and_linked_file << incl_url;
+    if (!is_none (incl_url)) tm_and_linked_file << incl_url;
     return tm_and_linked_file;
   }
   if (label == "style") return get_url_style_tree (t, path);
@@ -310,7 +310,7 @@ replace_url_image_or_include_tree (tree t, url path) {
       }
     }
     string name= as_string (tail (pre_url));
-    if (path != url ()) {
+    if (!is_none (path)) {
       name= as_string (relative (path, name));
     }
     t[0]->label= string (name);
@@ -341,7 +341,7 @@ repalce_url_style (tree t, url path) {
       }
     }
     string name= basename (style_url);
-    if (path != url ()) {
+    if (!is_none (path)) {
       name= as_string (relative (path, name));
     }
     t->label= name;
