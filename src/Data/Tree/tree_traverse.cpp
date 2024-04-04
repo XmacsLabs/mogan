@@ -733,12 +733,14 @@ search_sections (tree t) {
 
 tree
 tree_utf8_to_cork (tree_u8 t) {
-  if (is_atomic (t)) return tree (utf8_to_cork (t->label));
+  if (is_atomic (t)) {
+    return tree (utf8_to_cork (t->label));
+  }
   else {
     int  i, n= N (t);
     tree t2 (t, n);
     for (i= 0; i < n; i++)
-      t2[i]= copy (t[i]);
+      t2[i]= tree_utf8_to_cork (t[i]);
     return t2;
   }
 }

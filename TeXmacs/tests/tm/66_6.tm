@@ -43,7 +43,7 @@
     <|unfolded-io>
       flush_any ("scheme_u8:(frac \<#5206\>\<#5B50\> \<#5206\>\<#6BCD\>)")
     <|unfolded-io>
-      <frac|分子|分母>
+      <frac|\<#5206\>\<#5B50\>|\<#5206\>\<#6BCD\>>
     </unfolded-io>
 
     <\input>
