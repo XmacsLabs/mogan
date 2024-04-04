@@ -11,6 +11,7 @@
 
 #include "tree_traverse.hpp"
 #include "analyze.hpp"
+#include "converter.hpp"
 #include "cork.hpp"
 #include "hashset.hpp"
 #include "scheme.hpp"
