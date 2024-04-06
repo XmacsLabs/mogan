@@ -357,6 +357,7 @@
 ("convert" "转换")
 ("converters to other data formats" "到其它格式的转换器")
 ("converters" "转换器")
+("convertible" "可转换")
 ("copy text" "复制文本")
 ("copy to" "复制到")
 ("copy" "复制")
