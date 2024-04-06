@@ -4,6 +4,7 @@
 ("GNU FDL" "GNU自由文档许可证")
 ("GNU TeXmacs comes without any form of legal warranty" "GNU TeXmacs 无任何形式的法律保证")
 ("GNU TeXmacs falls under the GNU general public license" "GNU TeXmacs 使用 GNU 通用公共许可授权")
+("Restart TeXmacs in order to let changes take effect" "重启TeXmacs以使您的更改生效")
 ("SimFang" "仿宋")
 ("SimHei" "黑体")
 ("SimKai" "楷体")
