@@ -120,7 +120,7 @@
   \;
 
   We have already set the default binary path for python3 to
-  <shell|/usr/bin/python3.11>. Now, by restarting Mogan, you can insert a
+  <scm|"/usr/bin/python3.11">. Now, by restarting Mogan, you can insert a
   Python session for Python 3.11.
 
   <\session|python|default>
