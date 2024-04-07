@@ -1,4 +1,4 @@
-Binary Plugin
+# Binary Plugin
 A binary plugin is a type of plugin that is primarily used for:
 + Locating the position of executable files and determining whether they exist.
 + Invoking executable files based on actual needs and encapsulating pre-processing logic for input and post-processing logic for output.
