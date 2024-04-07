@@ -18,7 +18,10 @@
   For the complete documentation, please refer to the <hlink|Binary Plugin
   page|https://mogan.app/guide/plugins.html> on our official website. This
   document will demonstrate how to configure binary plugins through a Scheme
-  session in the form of a Scheme session.
+  session in the form of a Scheme session. Taking <shell|python3> as an
+  example, you can replace <shell|python3> with other binary plugins (such as
+  <shell|gs>) through the <menu|Edit|Replace> function. The Scheme session
+  described in this document will still be valid.
 
   <section*|Location>
 
