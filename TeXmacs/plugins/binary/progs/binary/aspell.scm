@@ -30,3 +30,5 @@
 (tm-define (has-binary-aspell?)
   (not (url-none? (find-binary-aspell))))
 
+(tm-define (version-binary-aspell)
+  (version-binary (find-binary-aspell)))

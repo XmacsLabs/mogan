@@ -32,6 +32,9 @@
 (tm-define (has-binary-convert?)
   (not (url-none? (find-binary-convert))))
 
+(tm-define (version-binary-convert)
+  (version-binary (find-binary-convert)))
+
 (tm-define (pdf-file->imagemagick-raster x opts)
   (let* ((dest (assoc-ref opts 'dest))
          (res (get-raster-resolution opts)))

@@ -29,5 +29,6 @@
            u)))))
 
 (tm-define (version-binary u)
-  (with ret (check-stdout (string-append (url->system u) " --version"))
-    ret))
+  (if (url-none? u)
+    ""
+    (check-stdout (string-append (url->system u) " --version"))))

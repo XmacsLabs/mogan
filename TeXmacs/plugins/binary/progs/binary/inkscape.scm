@@ -28,3 +28,6 @@
 
 (tm-define (has-binary-inkscape?)
   (not (url-none? (find-binary-inkscape))))
+
+(tm-define (version-binary-inkscape)
+  (version-binary (find-binary-inkscape)))
