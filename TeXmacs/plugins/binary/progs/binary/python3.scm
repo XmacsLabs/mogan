@@ -30,3 +30,6 @@
 
 (tm-define (has-binary-python3?)
   (not (url-none? (find-binary-python3))))
+
+(tm-define (version-binary-python3)
+  (version-binary (find-binary-python3)))
