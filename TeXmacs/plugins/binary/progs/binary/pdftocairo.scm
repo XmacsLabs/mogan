@@ -30,6 +30,9 @@
 (tm-define (has-binary-pdftocairo?)
   (not (url-none? (find-binary-pdftocairo))))
 
+(tm-define (version-binary-pdftocairo)
+  (version-binary (find-binary-pdftocairo)))
+
 (tm-define (pdf-file->pdftocairo-raster x opts)
   (let* ((dest (assoc-ref opts 'dest))
          (fullname (url-concretize dest))

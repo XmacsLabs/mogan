@@ -31,3 +31,6 @@
 
 (tm-define (has-binary-identify?)
   (not (url-none? (find-binary-identify))))
+
+(tm-define (version-binary-identify)
+  (version-binary (find-binary-identify)))

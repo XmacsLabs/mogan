@@ -259,6 +259,140 @@
       \;
     </input>
   </session>
+
+  <section|Version>
+
+  <\session|scheme|default>
+    <\folded-io|Scheme] >
+      (use-modules (binary aspell))
+    <|folded-io>
+      (#1=(inlet 'supports-slidemove? supports-slidemove? 'supports-python?
+      supports-python? 'python-launcher python-launcher 'python-utf8-command
+      python-utf8-command 'python-serialize python-serialize
+      'scala-snippet-\<gtr\>texmacs scala-snippet-\<gtr\>texmacs
+      'scala-\<gtr\>texmacs scala-\<gtr\>texmacs 'texmacs-\<gtr\>scala
+      texmacs-\<gtr\>scala 'python-snippet-\<gtr\>texmacs
+      python-snippet-\<gtr\>texmacs 'python-\<gtr\>texmacs
+      python-\<gtr\>texmacs 'texmacs-\<gtr\>python texmacs-\<gtr\>python
+      'julia-snippet-\<gtr\>texmacs julia-snippet-\<gtr\>texmacs ...))
+    </folded-io>
+
+    <\folded-io|Scheme] >
+      (version-binary-aspell)
+    <|folded-io>
+      @(#) International Ispell Version 3.1.20 (but really Aspell 0.60.8.1)
+    </folded-io>
+
+    <\folded-io|Scheme] >
+      (use-modules (binary convert))
+    <|folded-io>
+      (#1=(inlet 'supports-slidemove? supports-slidemove? 'supports-python?
+      supports-python? 'python-launcher python-launcher 'python-utf8-command
+      python-utf8-command 'python-serialize python-serialize
+      'scala-snippet-\<gtr\>texmacs scala-snippet-\<gtr\>texmacs
+      'scala-\<gtr\>texmacs scala-\<gtr\>texmacs 'texmacs-\<gtr\>scala
+      texmacs-\<gtr\>scala 'python-snippet-\<gtr\>texmacs
+      python-snippet-\<gtr\>texmacs 'python-\<gtr\>texmacs
+      python-\<gtr\>texmacs 'texmacs-\<gtr\>python texmacs-\<gtr\>python
+      'julia-snippet-\<gtr\>texmacs julia-snippet-\<gtr\>texmacs ...))
+    </folded-io>
+
+    <\input|Scheme] >
+      (version-binary-convert)
+    </input>
+
+    <\unfolded-io|Scheme] >
+      (use-modules (binary hunspell))
+    <|unfolded-io>
+      (#1=(inlet 'supports-slidemove? supports-slidemove? 'supports-python?
+      supports-python? 'python-launcher python-launcher 'python-utf8-command
+      python-utf8-command 'python-serialize python-serialize
+      'scala-snippet-\<gtr\>texmacs scala-snippet-\<gtr\>texmacs
+      'scala-\<gtr\>texmacs scala-\<gtr\>texmacs 'texmacs-\<gtr\>scala
+      texmacs-\<gtr\>scala 'python-snippet-\<gtr\>texmacs
+      python-snippet-\<gtr\>texmacs 'python-\<gtr\>texmacs
+      python-\<gtr\>texmacs 'texmacs-\<gtr\>python texmacs-\<gtr\>python
+      'julia-snippet-\<gtr\>texmacs julia-snippet-\<gtr\>texmacs ...))
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (version-binary-hunspell)
+    <|unfolded-io>
+      @(#) International Ispell Version 3.2.06 (but really Hunspell 1.7.2)
+    </unfolded-io>
+
+    <\folded-io|Scheme] >
+      (use-modules (binary identify))
+    <|folded-io>
+      (#1=(inlet 'supports-slidemove? supports-slidemove? 'supports-python?
+      supports-python? 'python-launcher python-launcher 'python-utf8-command
+      python-utf8-command 'python-serialize python-serialize
+      'scala-snippet-\<gtr\>texmacs scala-snippet-\<gtr\>texmacs
+      'scala-\<gtr\>texmacs scala-\<gtr\>texmacs 'texmacs-\<gtr\>scala
+      texmacs-\<gtr\>scala 'python-snippet-\<gtr\>texmacs
+      python-snippet-\<gtr\>texmacs 'python-\<gtr\>texmacs
+      python-\<gtr\>texmacs 'texmacs-\<gtr\>python texmacs-\<gtr\>python
+      'julia-snippet-\<gtr\>texmacs julia-snippet-\<gtr\>texmacs ...))
+    </folded-io>
+
+    <\input|Scheme] >
+      (version-binary-identify)
+    </input>
+
+    <\folded-io|Scheme] >
+      (use-modules (binary inkscape))
+    <|folded-io>
+      (#1=(inlet 'supports-slidemove? supports-slidemove? 'supports-python?
+      supports-python? 'python-launcher python-launcher 'python-utf8-command
+      python-utf8-command 'python-serialize python-serialize
+      'scala-snippet-\<gtr\>texmacs scala-snippet-\<gtr\>texmacs
+      'scala-\<gtr\>texmacs scala-\<gtr\>texmacs 'texmacs-\<gtr\>scala
+      texmacs-\<gtr\>scala 'python-snippet-\<gtr\>texmacs
+      python-snippet-\<gtr\>texmacs 'python-\<gtr\>texmacs
+      python-\<gtr\>texmacs 'texmacs-\<gtr\>python texmacs-\<gtr\>python
+      'julia-snippet-\<gtr\>texmacs julia-snippet-\<gtr\>texmacs ...))
+    </folded-io>
+
+    <\input|Scheme] >
+      (version-binary-inkscape)
+    </input>
+
+    <\input|Scheme] >
+      (version-binary-pdftocairo)
+    </input>
+
+    <\folded-io|Scheme] >
+      (use-modules (binary rsvg-convert))
+    <|folded-io>
+      (#1=(inlet 'supports-slidemove? supports-slidemove? 'supports-python?
+      supports-python? 'python-launcher python-launcher 'python-utf8-command
+      python-utf8-command 'python-serialize python-serialize
+      'scala-snippet-\<gtr\>texmacs scala-snippet-\<gtr\>texmacs
+      'scala-\<gtr\>texmacs scala-\<gtr\>texmacs 'texmacs-\<gtr\>scala
+      texmacs-\<gtr\>scala 'python-snippet-\<gtr\>texmacs
+      python-snippet-\<gtr\>texmacs 'python-\<gtr\>texmacs
+      python-\<gtr\>texmacs 'texmacs-\<gtr\>python texmacs-\<gtr\>python
+      'julia-snippet-\<gtr\>texmacs julia-snippet-\<gtr\>texmacs ...))
+    </folded-io>
+
+    <\input|Scheme] >
+      (version-binary-rsvg-convert)
+    </input>
+
+    <\input|Scheme] >
+      (version-binary-octave)
+    </input>
+
+    <\folded-io|Scheme] >
+      (version-binary-maxima)
+    <|folded-io>
+      Maxima 5.46.0
+    </folded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
 </body>
 
 <\initial>
@@ -273,6 +407,7 @@
     <associate|auto-2|<tuple|2|?>>
     <associate|auto-3|<tuple|3|?>>
     <associate|auto-4|<tuple|4|?>>
+    <associate|auto-5|<tuple|5|?>>
   </collection>
 </references>
 
@@ -290,6 +425,15 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Various
       other binaries> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-3><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Test
+      on the switcher for all binary plugins>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-4><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>Version>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-5><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>

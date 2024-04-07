@@ -29,3 +29,6 @@
 
 (tm-define (has-binary-hunspell?)
   (not (url-none? (find-binary-hunspell))))
+
+(tm-define (version-binary-hunspell)
+  (version-binary (find-binary-hunspell)))

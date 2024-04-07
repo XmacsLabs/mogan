@@ -30,6 +30,9 @@
 (tm-define (has-binary-rsvg-convert?)
   (not (url-none? (find-binary-rsvg-convert))))
 
+(tm-define (version-binary-rsvg-convert)
+  (version-binary (find-binary-rsvg-convert)))
+
 (tm-define (svg2png-by-rsvg-convert x opts)
   (let* ((dest (assoc-ref opts 'dest))
          (fm (url-format (url-concretize dest)))
