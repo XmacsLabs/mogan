@@ -223,6 +223,42 @@
       \;
     </input>
   </session>
+
+  <section|Test on the switcher for all binary plugins>
+
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (find-binary-python3)
+    <|unfolded-io>
+      \<less\>url /usr/bin/python3\<gtr\>
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (get-preference "plugin:binary")
+    <|unfolded-io>
+      default
+    </unfolded-io>
+
+    <\input|Scheme] >
+      (set-preference "plugin:binary" "off")
+    </input>
+
+    <\unfolded-io|Scheme] >
+      (get-preference "plugin:binary")
+    <|unfolded-io>
+      off
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (url-none? (find-binary-python3))
+    <|unfolded-io>
+      #t
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
 </body>
 
 <\initial>
@@ -236,6 +272,7 @@
     <associate|auto-1|<tuple|1|?>>
     <associate|auto-2|<tuple|2|?>>
     <associate|auto-3|<tuple|3|?>>
+    <associate|auto-4|<tuple|4|?>>
   </collection>
 </references>
 
