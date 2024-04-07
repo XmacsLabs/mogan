@@ -363,7 +363,7 @@
                  (search-next-match #t)))))))
 
 (tm-define (replace-one)
-  (and-with by (by-tree)
+  (and-with by (or (by-tree) current-replace)
     (with-buffer (master-buffer)
       (start-editing)
       (replace-next by)
@@ -371,7 +371,7 @@
     (perform-search*)))
 
 (tm-define (replace-all)
-  (and-with by (by-tree)
+  (and-with by (or (by-tree) current-replace)
     (with-buffer (master-buffer)
       (start-editing)
       (while (replace-next by)
