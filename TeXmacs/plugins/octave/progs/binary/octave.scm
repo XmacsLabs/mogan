@@ -35,7 +35,4 @@
   (not (url-none? (find-binary-octave))))
 
 (tm-define (version-binary-octave)
-  (with msg (version-binary (find-binary-octave))
-    (if (string-null? msg)
-        ""
-        (car (string-split msg #\newline)))))
+  (version-binary (find-binary-octave)))

@@ -31,7 +31,4 @@
   (not (url-none? (find-binary-hunspell))))
 
 (tm-define (version-binary-hunspell)
-  (with msg (version-binary (find-binary-hunspell))
-    (if (string-null? msg)
-        ""
-        (car (string-split msg #\newline)))))
+  (version-binary (find-binary-hunspell)))

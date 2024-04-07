@@ -301,9 +301,9 @@
       (version-binary-convert)
     </input>
 
-    <\folded-io|Scheme] >
+    <\unfolded-io|Scheme] >
       (use-modules (binary hunspell))
-    <|folded-io>
+    <|unfolded-io>
       (#1=(inlet 'supports-slidemove? supports-slidemove? 'supports-python?
       supports-python? 'python-launcher python-launcher 'python-utf8-command
       python-utf8-command 'python-serialize python-serialize
@@ -313,13 +313,13 @@
       python-snippet-\<gtr\>texmacs 'python-\<gtr\>texmacs
       python-\<gtr\>texmacs 'texmacs-\<gtr\>python texmacs-\<gtr\>python
       'julia-snippet-\<gtr\>texmacs julia-snippet-\<gtr\>texmacs ...))
-    </folded-io>
+    </unfolded-io>
 
-    <\folded-io|Scheme] >
+    <\unfolded-io|Scheme] >
       (version-binary-hunspell)
-    <|folded-io>
+    <|unfolded-io>
       @(#) International Ispell Version 3.2.06 (but really Hunspell 1.7.2)
-    </folded-io>
+    </unfolded-io>
 
     <\folded-io|Scheme] >
       (use-modules (binary identify))

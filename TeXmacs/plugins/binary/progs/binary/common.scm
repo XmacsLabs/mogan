@@ -31,4 +31,10 @@
 (tm-define (version-binary u)
   (if (url-none? u)
     ""
-    (check-stdout (string-append (url->system u) " --version"))))
+    (let*
+     ((msg (check-stdout (string-append (url->system u) " --version")))
+      (msg-l (filter (lambda (x) (not (string-null? x)))
+                 (string-split msg #\newline))))
+     (if (== (length msg-l) 0)
+         ""
+         (car msg-l)))))
