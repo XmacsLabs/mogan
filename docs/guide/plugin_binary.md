@@ -1,20 +1,44 @@
-## Binary Plugin
-The source code of binary plugins is located in `$TEXMACS_PATH/plugins/binary`. Each executable corresponds to a source code file, with the format:
+Binary Plugin
+A binary plugin is a type of plugin that is primarily used for:
++ Locating the position of executable files and determining whether they exist.
++ Invoking executable files based on actual needs and encapsulating pre-processing logic for input and post-processing logic for output.
 
+## Sharing and Exclusivity
+Shared binary plugins are primarily located in `$TEXMACS_PATH/plugins/binary`, with each executable file corresponding to a source code file:
 ```
 $TEXMACS_PATH/plugins/binary/progs/binary/<name>.scm
 ```
-
-For example, the source code for the Ghostscript command `gs` is located at:
-
+For example, the source code for Ghostscript's gs command corresponds to:
 ```
 $TEXMACS_PATH/plugins/binary/progs/binary/gs.scm
 ```
 
-If a user needs to modify the Scheme function that searches for or calls the `gs` command line, they can simply copy the above `gs.scm` file to:
-
+Exclusive binary plugins are located in:
 ```
-$TEXMACS_HOME_PATH/plugins/binary/progs/binary/gs.scm
+$TEXMACS_PATH/plugins/<name>/progs/binary/<name>.scm
+```
+For instance, the source code corresponding to the executable file for the Octave plugin is located in:
+```
+$TEXMACS_PATH/plugins/octave/progs/binary/octave.scm
 ```
 
-And then make the necessary modifications. If `gs.scm` exists under `$TEXMACS_HOME_PATH`, it will be loaded before the `gs.scm` under `$TEXMACS_PATH`.
+## Three Essential Elements
+| Function  | Purpose  |
+|---|---|
+| `(find-binary-xyz)` | Locates the position of the xyz executable file. If it does not exist, it returns `(url-none)`. |
+| `(has-binary-xyz?)` | Determines whether the xyz executable file exists. If it exists, it returns `#t`; if not, it returns `#f`. |
+| `(version-binary-xyz?)` | Returns the version of the xyz executable file. If the executable file does not exist, it returns an empty string; otherwise, it returns a string containing version information. |
+
+## Detailed Explanation of `(find-binary-xyz)`
++ If the configuration item `plugin:binary` is set to `off`, then `(find-binary-xyz)` returns `(url-none)`.
+  + If the configuration item `plugin:binary:xyz` is not `default`, it checks whether the path specified in this configuration item exists. If it does, it returns the path of the xyz executable file.
+    + If the candidate path defined in xyz.scm, `(xyz-binary-candidates)`, exists, it returns that candidate path.
+      + Finally, it searches for the xyz executable file directly in the system path.
+
+The author of the binary plugin only needs to focus on whether the implementation of `(xyz-binary-candidates)` is reasonable. The configuration item `plugin:binary` currently (1.2.5.2) only supports configuration using Scheme code such as `(set-preference "plugin:binary" "/path/to/binary/xyz")`.
+
+## Help -> Plugins -> Binaries
+By clicking "Help -> Plugins -> Binaries" in Texmacs, you can find three runnable Scheme code snippets:
+1. How to locate the path of a specific binary plugin.
+2. How to customize the path of a specific binary plugin.
+3. How to disable all binary plugins.
