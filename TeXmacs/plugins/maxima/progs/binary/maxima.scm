@@ -33,7 +33,4 @@
   (not (url-none? (find-binary-maxima))))
 
 (tm-define (version-binary-maxima)
-  (with u (find-binary-maxima)
-    (if (url-none? u)
-      ""
-      (check-stdout (string-append (url->system u) " --version")))))
+  (version-binary (find-binary-maxima)))
