@@ -27,3 +27,7 @@
          (if (and (os-win32?) (url-descends? u (system->url "C:\\Windows\\System32")))
            (url-none)
            u)))))
+
+(tm-define (version-binary u)
+  (with ret (check-stdout (string-append (url->system u) " --version"))
+    ret))

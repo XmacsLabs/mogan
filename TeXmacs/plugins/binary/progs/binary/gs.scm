@@ -31,8 +31,7 @@
   (not (url-none? (find-binary-gs))))
 
 (tm-define (version-binary-gs)
-  (with ret (check-stdout (string-append (url->system (find-binary-gs)) " --version"))
-    ret))
+  (version-binary (find-binary-gs)))
 
 (tm-define (gs-ps-image-size u)
   (let* ((out (check-stderr (string-append
