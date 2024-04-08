@@ -4,13 +4,13 @@
 ## 官方提供的安装包
 | 产品 | 操作系统 | 马上下载 |
 |-----|-------|-----|
-| 墨干v1.2.5.1 | Windows安装包 (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1-64bit-installer.exe) |
-| 墨干v1.2.5.1 | Windows便携版 (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1-64bit-installer.zip) |
-| 墨干v1.2.5.1 | macOS (>=11) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1.dmg) |
-| 墨干v1.2.5.1 | macOS M1/M2 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1-arm.dmg) |
-| 墨干v1.2.5.1 | Ubuntu 20.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/mogan-research-v1.2.5.1-ubuntu20.04.deb) |
-| 墨干v1.2.5.1 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/mogan-research-v1.2.5.1-ubuntu22.04.deb) |
-| 墨干v1.2.5.1 | Debian 12 | [⏬ 下载](http://mirrors.ustc.edu.cn/github-release/xmacslabs/mogan/v1.2.5.1/mogan-research-v1.2.5.1-debian12.deb) |
+| 墨干v1.2.5.2 | Windows安装包 (>=10)| [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.2/MoganResearch-v1.2.5.2-64bit-installer.exe) |
+| 墨干v1.2.5.2 | Windows便携版 (>=10)| [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.2/MoganResearch-v1.2.5.2-64bit-installer.zip) |
+| 墨干v1.2.5.2 | macOS (>=12) | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.2/MoganResearch-v1.2.5.2.dmg) |
+| 墨干v1.2.5.2 | macOS arm64 (>=13) | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.2/MoganResearch-v1.2.5.2-arm.dmg) |
+| 墨干v1.2.5.2 | Ubuntu 20.04 | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.2/mogan-research-v1.2.5.2-ubuntu20.04.deb) |
+| 墨干v1.2.5.2 | Ubuntu 22.04 | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.2/mogan-research-v1.2.5.2-ubuntu22.04.deb) |
+| 墨干v1.2.5.2 | Debian 12 | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.2/mogan-research-v1.2.5.2-debian12.deb) |
 
 SHA256校验码：
 ```
