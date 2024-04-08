@@ -14,8 +14,6 @@ If a slide contains a session, each paragraph in the session will execute sequen
 Defaults to 1.4. It is generally recommended not to switch the PDF version number unless there is a specific need.
 
 ## PDF -> TeXmacs
-You can use "File -> Export -> Editable PDF" to export PDFs while embedding the document as an attachment into the PDF document. Then you can use "File -> Open" to load this editable PDF.
-
-> Note: This feature only works when exporting PDF version 1.4 (which is the default).
+You can use "File -> Export -> PDF with embedded document" to export PDFs while embedding the document as an attachment into the PDF document. Then you can use "File -> Import -> PDF with embedded document" to load this PDF.
 
 The use case for this feature is when a Mogan user creates a TeXmacs document using Mogan and wants to share it with a friend who is not a Mogan user. In this case, the Mogan user can directly export the editable PDF document, share it with their friend, and if their friend has a need to edit the PDF content, they can recommend that they download Mogan.
