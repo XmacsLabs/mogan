@@ -4,23 +4,23 @@ The latest stable version is Mogan STEM Suite v1.2.5.1 LTS, you can check if the
 ## Official Packages
 | Product | Operating System | Download |
 |---------|-------|-----|
-| Mogan Research v1.2.5.1 | Windows installer (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1-64bit-installer.exe) |
-| Mogan Research v1.2.5.1 | Windows portable (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1-64bit-installer.zip) |
-| Mogan Research v1.2.5.1 | macOS (>=11) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1.dmg) |
-| Mogan Research v1.2.5.1 | macOS M1/M2 (>=13) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/MoganResearch-v1.2.5.1-arm.dmg) |
-| Mogan Research v1.2.5.1 | Ubuntu 20.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/mogan-research-v1.2.5.1-ubuntu20.04.deb) |
-| Mogan Research v1.2.5.1 | Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/mogan-research-v1.2.5.1-ubuntu22.04.deb) |
-| Mogan Research v1.2.5.1 | Debian 12 | [⏬ Download](http://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.5.1/mogan-research-v1.2.5.1-debian12.deb) |
+| Mogan Research v1.2.5.2 | Windows installer (>=10)| [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.5.2/MoganResearch-v1.2.5.2-64bit-installer.exe) |
+| Mogan Research v1.2.5.2 | Windows portable (>=10)| [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.5.2/MoganResearch-v1.2.5.2-64bit-installer.zip) |
+| Mogan Research v1.2.5.2 | macOS (>=12) | [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.5.2/MoganResearch-v1.2.5.2.dmg) |
+| Mogan Research v1.2.5.2 | macOS arm64 (>=13) | [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.5.2/MoganResearch-v1.2.5.2-arm.dmg) |
+| Mogan Research v1.2.5.2 | Ubuntu 20.04 | [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.5.2/mogan-research-v1.2.5.2-ubuntu20.04.deb) |
+| Mogan Research v1.2.5.2 | Ubuntu 22.04 | [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.5.2/mogan-research-v1.2.5.2-ubuntu22.04.deb) |
+| Mogan Research v1.2.5.2 | Debian 12 | [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.5.2/mogan-research-v1.2.5.2-debian12.deb) |
 
 SHA256 checksum:
 ```
-e3713e1506c85dd4ff01b0565f70228486e95ff10ab67379cf0eb1c897c5aa3a  MoganResearch-v1.2.5.1-64bit-installer.exe
-f05ef94ac913e7c11a5a3cefa604b5d56c7608b2613b6a7967d64d57a82cf476  MoganResearch-v1.2.5.1-64bit-installer.zip
-3cb7d2417345889ad9c8eb66fce52b2168b4189c237a45d02a4c6e3bba19c3d3  MoganResearch-v1.2.5.1-arm.dmg
-a2c78e59562924a19d9f744c25efa9d3cc07a105600f2798c40f8994096fe354  MoganResearch-v1.2.5.1.dmg
-bb18f3db6de640ef79fa243b394340aaae9ba2f7147bfa48b417e46b1d77cf0a  mogan-research-v1.2.5.1-debian12.deb
-b5c84b633c8642522c6ba04c2a8e91dc171e04f8bb922f751a969bd3e8f564ea  mogan-research-v1.2.5.1-ubuntu20.04.deb
-a79d7899147a8c8e4cb14b2d77d87208db1ee5f408872ce3f31d9e9e0a4fbb80  mogan-research-v1.2.5.1-ubuntu22.04.deb
+3329ad096911dc89374d3648d8243efff9b4242cbd333678b89ebf5e2272887b  MoganResearch-v1.2.5.2-64bit-installer.exe
+d7808e16931ae2e00b48ee5ef5987dffbd6a64956a691b84988c930a52066a00  MoganResearch-v1.2.5.2-64bit-installer.zip
+25f7241a5e535be29afa0af66bbc1e737ba684fc87518902d7755d4633fd253b  MoganResearch-v1.2.5.2-arm.dmg
+eec89670744b1d68e73ef0ca0ca731ca1ecabd99b4dc9d574cdc81b018c443ec  MoganResearch-v1.2.5.2.dmg
+2456b8998757528d34bb2cb8998463eb2f7a64ee9cfdd47552b9358c888b98a2  mogan-research-v1.2.5.2-debian12.deb
+cb66f18e9915489ec63025fcbc3a275e72f0337ddf15204e3859c34462b74301  mogan-research-v1.2.5.2-ubuntu20.04.deb
+62081650da6281b3806416c0493bbb6ef5c9755a1b4f3c3df3101c6d9ca7b582  mogan-research-v1.2.5.2-ubuntu22.04.deb
 ```
 
 Mogan STEM Suite:
