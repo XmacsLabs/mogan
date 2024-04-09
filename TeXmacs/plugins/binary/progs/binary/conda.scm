@@ -1,0 +1,34 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; MODULE      : conda.scm
+;; DESCRIPTION : conda Binary plugin
+;; COPYRIGHT   : (C) 2024  Darcy Shen
+;;
+;; This software falls under the GNU general public license version 3 or later.
+;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+;; in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(texmacs-module (binary conda)
+  (:use (binary common)))
+
+(define (conda-binary-candidates)
+  (cond ((os-macos?)
+         (list "$HOME/miniconda3/bin/conda"))
+        ((os-win32?)
+         (list ))
+        (else
+         (list "$HOME/miniconda3/bin/conda"))))
+
+(tm-define (find-binary-conda)
+  (:synopsis "Find the url to the conda binary, return (url-none) if not found")
+  (find-binary (conda-binary-candidates) "conda"))
+
+(tm-define (has-binary-conda?)
+  (not (url-none? (find-binary-conda))))
+
+(tm-define (version-binary-conda)
+  (version-binary (find-binary-conda)))
+
