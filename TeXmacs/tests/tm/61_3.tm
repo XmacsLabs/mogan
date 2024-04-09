@@ -13,7 +13,7 @@
     <\unfolded-io|Scheme] >
       (find-binary-gs)
     <|unfolded-io>
-      \<less\>url /opt/homebrew/Cellar/ghostscript/10.02.1/bin/gs\<gtr\>
+      \<less\>url /usr/bin/gs\<gtr\>
     </unfolded-io>
 
     <\input|Scheme] >
@@ -23,7 +23,7 @@
     <\unfolded-io|Scheme] >
       (find-binary-gs)
     <|unfolded-io>
-      \<less\>url /opt/homebrew/Cellar/ghostscript/10.02.1/bin/gs\<gtr\>
+      \<less\>url /bin/gs\<gtr\>
     </unfolded-io>
 
     <\input|Scheme] >
@@ -224,13 +224,73 @@
     </input>
   </session>
 
-  <section|Test on the switcher for all binary plugins>
+  <section|Test on the switcher for the specified plugin>
 
   <\session|scheme|default>
     <\unfolded-io|Scheme] >
       (find-binary-python3)
     <|unfolded-io>
       \<less\>url /usr/bin/python3\<gtr\>
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (get-preference "plugin:binary:python3")
+    <|unfolded-io>
+      default
+    </unfolded-io>
+
+    <\input|Scheme] >
+      (set-preference "plugin:binary:python3" "/usr/bin/python3.11")
+    </input>
+
+    <\unfolded-io|Scheme] >
+      (find-binary-python3)
+    <|unfolded-io>
+      \<less\>url /usr/bin/python3.11\<gtr\>
+    </unfolded-io>
+
+    <\input|Scheme] >
+      (reset-preference "plugin:binary:python3")
+    </input>
+
+    <\unfolded-io|Scheme] >
+      (find-binary-python3)
+    <|unfolded-io>
+      \<less\>url /usr/bin/python3\<gtr\>
+    </unfolded-io>
+
+    <\input|Scheme] >
+      (set-preference "plugin:binary:python3" "off")
+    </input>
+
+    <\unfolded-io|Scheme] >
+      (find-binary-python3)
+    <|unfolded-io>
+      \<less\>url {}\<gtr\>
+    </unfolded-io>
+
+    <\input|Scheme] >
+      (set-preference "plugin:binary:python3" "candidates-only")
+    </input>
+
+    <\unfolded-io|Scheme] >
+      (find-binary-python3)
+    <|unfolded-io>
+      \<less\>url /usr/bin/python3\<gtr\>
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
+  <section|Test on the switcher for all binary plugins>
+
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (find-binary-python3)
+    <|unfolded-io>
+      \<less\>url /usr/bin/python3.11\<gtr\>
     </unfolded-io>
 
     <\unfolded-io|Scheme] >
@@ -254,6 +314,10 @@
     <|unfolded-io>
       #t
     </unfolded-io>
+
+    <\input|Scheme] >
+      (reset-preference "plugin:binary")
+    </input>
 
     <\input|Scheme] >
       \;
@@ -398,42 +462,6 @@
 <\initial>
   <\collection>
     <associate|page-screen-margin|false>
+    <associate|save-aux|false>
   </collection>
 </initial>
-
-<\references>
-  <\collection>
-    <associate|auto-1|<tuple|1|?>>
-    <associate|auto-2|<tuple|2|?>>
-    <associate|auto-3|<tuple|3|?>>
-    <associate|auto-4|<tuple|4|?>>
-    <associate|auto-5|<tuple|5|?>>
-  </collection>
-</references>
-
-<\auxiliary>
-  <\collection>
-    <\associate|toc>
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Test
-      on macOS> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-1><vspace|0.5fn>
-
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Test
-      on Windows> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-2><vspace|0.5fn>
-
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Various
-      other binaries> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-3><vspace|0.5fn>
-
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Test
-      on the switcher for all binary plugins>
-      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-4><vspace|0.5fn>
-
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>Version>
-      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-5><vspace|0.5fn>
-    </associate>
-  </collection>
-</auxiliary>

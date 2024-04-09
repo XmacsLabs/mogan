@@ -13,20 +13,32 @@
 
 (texmacs-module (binary common))
 
-(tm-define (find-binary candidates default)
-  (if (== (get-preference "plugin:binary") "off")
-      (url-none)
-      (or
-       (with path (get-preference (string-append "plugin:binary:" default))
-         (and (!= path "default")
-              (with u (url-resolve path "r")
-                (if (and (url-exists? u) (url-regular? u)) u #f))))
-       (with u (list-find candidates (lambda (x) (url-exists? (url-resolve x "r"))))
-         (and u (url-resolve u "r")))
-       (with u (url-resolve-in-path (if (os-win32?) (string-append default ".exe") default))
-         (if (and (os-win32?) (url-descends? u (system->url "C:\\Windows\\System32")))
-           (url-none)
-           u)))))
+(define (find-binary-in-path name)
+  (let* ((name-exe (if (os-win32?) (string-append name ".exe") name))
+         (u (url-resolve-in-path name-exe))
+         (excluded? (and (os-win32?) (url-descends? u (system->url "C:\\Windows\\System32")))))
+    (if excluded? (url-none) u)))
+
+(define (find-binary-in-candidates candidates)
+  (with u (list-find candidates (lambda (x) (url-exists? (url-resolve x "r"))))
+    (and u (url-resolve u "r"))))
+
+(define (find-binary-in-specified path)
+  (with u (url-resolve path "r")
+    (if (and (url-exists? u) (url-regular? u))
+        u
+        #f)))
+
+(tm-define (find-binary candidates name)
+  (let* ((global-binary-opt (get-preference "plugin:binary"))
+         (this-binary-opt (get-preference (string-append "plugin:binary:" name))))
+    (cond ((== global-binary-opt "off") (url-none))
+          ((== this-binary-opt "off") (url-none))
+          ((== this-binary-opt "candidates-only") (find-binary-in-candidates candidates))
+          (else
+           (or (and (!= this-binary-opt "default") (find-binary-in-specified this-binary-opt))
+               (find-binary-in-candidates candidates)
+               (find-binary-in-path name))))))
 
 (tm-define (version-binary u)
   (if (url-none? u)
