@@ -59,14 +59,12 @@
     <\unfolded-io|Scheme] >
       (find-binary-conda)
     <|unfolded-io>
-      \<less\>url /home/da/miniconda3/bin/conda\<gtr\>
+      \<less\>url C:\\Users\\darcy\\miniconda3\\Scripts\\conda.exe\<gtr\>
     </unfolded-io>
 
-    <\unfolded-io|Scheme] >
+    <\input|Scheme] >
       (version-binary-conda)
-    <|unfolded-io>
-      conda 24.1.2
-    </unfolded-io>
+    </input>
 
     <\input|Scheme] >
       \;
@@ -74,12 +72,8 @@
   </session>
 </body>
 
-<initial|<\collection>
-</collection>>
-
-<\references>
+<\initial>
   <\collection>
-    <associate|auto-1|<tuple|1|?>>
-    <associate|auto-2|<tuple|2|?>>
+    <associate|save-aux|false>
   </collection>
-</references>
+</initial>

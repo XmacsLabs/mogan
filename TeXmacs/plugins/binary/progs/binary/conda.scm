@@ -18,7 +18,7 @@
   (cond ((os-macos?)
          (list "$HOME/miniconda3/bin/conda"))
         ((os-win32?)
-         (list ))
+         (list "$USERPROFILE/miniconda3/Scripts/conda.exe"))
         (else
          (list "$HOME/miniconda3/bin/conda"))))
 
