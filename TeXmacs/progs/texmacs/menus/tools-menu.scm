@@ -12,7 +12,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (texmacs menus tools-menu)
-  (:use (texmacs texmacs tm-tools)))
+  (:use (texmacs texmacs tm-tools)
+        (binary pdflatex)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dynamic menus for formats
@@ -57,7 +58,7 @@
       ("Pictures" (picture-gc))
       ("Plugins" (reinit-plugin-cache))
       ("Styles" (style-clear-cache)))
-  (if (url-exists-in-path? "pdflatex")
+  (if (has-binary-pdflatex?)
       (-> "LaTeX"
           (link tmtex-menu)))
   (-> "References"
