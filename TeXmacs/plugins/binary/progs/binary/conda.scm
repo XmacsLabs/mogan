@@ -33,7 +33,12 @@
   (version-binary (find-binary-conda)))
 
 (define (conda-prefix)
-  (url-append (url-append (find-binary-conda) (url-parent)) (url-parent)))
+  (url-or
+    (if (os-win32?)
+        (system->url "$USERPROFILE/.conda")
+        (system->url "$HOME/.conda"))
+    (url-append (url-append (find-binary-conda) (url-parent)) (url-parent))))
 
 (tm-define (conda-env-python-list)
-  (url->list (url-expand (url-complete (url-append (conda-prefix) "envs/*/bin/python") "fr"))))
+  (with path (if (os-win32?) "envs/*/python.exe" "envs/*/bin/python")
+    (url->list (url-expand (url-complete (url-append (conda-prefix) path) "fr")))))
