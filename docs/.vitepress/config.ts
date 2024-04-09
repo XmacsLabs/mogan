@@ -159,6 +159,10 @@ function sidebarGuide() {
                     text: 'Binary Plugin',
                     link: '/guide/plugin_binary.md'
                 },
+                {
+                    text: 'Octave Plugin',
+                    link: '/guide/plugin_octave.md'
+                },
             ],
         },
         {
@@ -200,10 +204,6 @@ function sidebarGuide() {
                 {
                     text: 'Maxima Session plugin',
                     link: '/guide/plugin_session_maxima.md'
-                },
-                {
-                    text: 'Octave Session plugin',
-                    link: '/guide/plugin_session_octave.md'
                 },
                 {
                     text: 'PDF Data plugin',
@@ -332,6 +332,10 @@ function sidebarGuideZh() {
                     text: '二进制插件',
                     link: '/zh/guide/plugin_binary.md'
                 },
+                {
+                    text: 'Octave插件',
+                    link: '/zh/guide/plugin_octave.md'
+                },
             ]
         },
         {
@@ -373,10 +377,6 @@ function sidebarGuideZh() {
                 {
                     text: 'Maxima会话插件',
                     link: '/zh/guide/plugin_session_maxima.md'
-                },
-                {
-                    text: 'Octave会话插件',
-                    link: '/zh/guide/plugin_session_octave.md'
                 },
                 {
                     text: 'PDF数据插件',

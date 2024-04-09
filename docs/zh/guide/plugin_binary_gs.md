@@ -1,9 +1,12 @@
 # Ghoscript二进制插件
-+ 可执行文件名：gs
++ 二进制标识：`gs`
 + 插件源代码：
   - [Codeberg](https://codeberg.org/XmacsLabs/mogan/src/branch/branch-1.2/TeXmacs/plugins/binary/progs/binary/gs.scm)
   - [Gitee](https://gitee.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/binary/progs/binary/gs.scm)
   - [Github](https://github.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/binary/progs/binary/gs.scm)
++ 功能：
+  - 将PS/PDF矢量图转换为PDF位图，以在墨干中渲染
+  - 将PS矢量图转换为PDF矢量图，以将TeXmacs文档导出为PDF文档
 
 ## 如何安装Ghostscript
 ### Windows
