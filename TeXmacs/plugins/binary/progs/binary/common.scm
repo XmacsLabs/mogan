@@ -20,8 +20,9 @@
 
 ; If candidates name could bin found in path, return it, otherwise, return (url-none)
 (define (find-binary-in-candidates-name candidates)
-  (with u (list-find candidates
-            (lambda (x) (url-exists? (find-binary-in-path (url->string (url-tail x))))))
+  (with u (list-find
+            (map (lambda (x) (find-binary-in-path (url->string (url-tail x)))) candidates)
+            url-exists?)
     (or u (url-none))))
 
 ; If candidates exist, return it, otherwise, return #f
