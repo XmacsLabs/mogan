@@ -32,3 +32,8 @@
 (tm-define (version-binary-conda)
   (version-binary (find-binary-conda)))
 
+(define (conda-prefix)
+  (url-append (url-append (find-binary-conda) (url-parent)) (url-parent)))
+
+(tm-define (conda-env-python-list)
+  (url->list (url-expand (url-complete (url-append (conda-prefix) "envs/*/bin/python") "fr"))))

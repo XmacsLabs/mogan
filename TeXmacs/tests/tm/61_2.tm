@@ -59,12 +59,21 @@
     <\unfolded-io|Scheme] >
       (find-binary-conda)
     <|unfolded-io>
-      \<less\>url C:\\Users\\darcy\\miniconda3\\Scripts\\conda.exe\<gtr\>
+      \<less\>url /Users/da/miniconda3/bin/conda\<gtr\>
     </unfolded-io>
 
-    <\input|Scheme] >
+    <\unfolded-io|Scheme] >
       (version-binary-conda)
-    </input>
+    <|unfolded-io>
+      conda 4.12.0
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (conda-env-python-list)
+    <|unfolded-io>
+      <errput|unbound variable conda-env-python-list in
+      (conda-env-python-list)>
+    </unfolded-io>
 
     <\input|Scheme] >
       \;
