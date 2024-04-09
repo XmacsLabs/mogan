@@ -26,7 +26,7 @@
 
 (tm-define (find-binary-python3)
   (:synopsis "Find the url to the python3 binary, return (url-none) if not found")
-  (find-binary (python3-binary-candidates) (if (os-win32?) "python" "python3")))
+  (find-binary (python3-binary-candidates) "python3"))
 
 (tm-define (has-binary-python3?)
   (not (url-none? (find-binary-python3))))
