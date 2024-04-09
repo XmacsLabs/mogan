@@ -69,36 +69,7 @@
     <\unfolded-io|Scheme] >
       (conda-env-python-list)
     <|unfolded-io>
-      ()
-    </unfolded-io>
-
-    <\unfolded-io|Scheme] >
-      (define (conda-prefix)
-
-      \ \ (url-or
-
-      \ \ \ \ (if (os-win32?)
-
-      \ \ \ \ \ \ \ \ (system-\<gtr\>url "$USERPROFILE/.conda")
-
-      \ \ \ \ \ \ \ \ (system-\<gtr\>url "$HOME/.conda"))
-
-      \ \ \ \ (url-append (url-append (find-binary-conda) (url-parent))
-      (url-parent))))
-    <|unfolded-io>
-      conda-prefix
-    </unfolded-io>
-
-    <\unfolded-io|Scheme] >
-      (conda-prefix)
-    <|unfolded-io>
-      \<less\>url C:\\Users\\darcy\\.conda;C:\\Users\\darcy\\miniconda3\<gtr\>
-    </unfolded-io>
-
-    <\unfolded-io|Scheme] >
-      (url-complete (url-append (conda-prefix) "envs/*/python.exe") "fr")
-    <|unfolded-io>
-      \<less\>url C:\\Users\\darcy\\.conda\\envs\\myenvironment\\python.exe\<gtr\>
+      (\<less\>url C:\\Users\\darcy\\.conda\\envs\\myenvironment\\python.exe\<gtr\>)
     </unfolded-io>
 
     <\input|Scheme] >
