@@ -42,3 +42,6 @@
 (tm-define (conda-env-python-list)
   (with path (if (os-win32?) "envs/*/python.exe" "envs/*/bin/python")
     (url->list (url-expand (url-complete (url-append (conda-prefix) path) "fr")))))
+
+(tm-define (conda-env-name u)
+  (url->string (url-tail (url-head (url-head u)))))
