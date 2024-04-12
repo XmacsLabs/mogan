@@ -16,7 +16,8 @@
 (use-modules
   (dynamic session-edit)
   (dynamic program-edit)
-  (binary python3))
+  (binary python3)
+  (binary conda))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -81,9 +82,34 @@
          (string->url
           "$TEXMACS_PATH/plugins/python/bin/python.pex"))))))
 
+(define (conda-launcher path)
+  (if (url-exists? "$TEXMACS_HOME_PATH/plugins/python")
+      (string-append
+       (url->system path)
+       " -X utf8 "
+       (string-quote
+        (url->string
+         (string->url
+          "$TEXMACS_HOME_PATH/plugins/python/bin/python.pex"))))
+      (string-append
+       (url->system path)
+       " -X utf8 "
+       (string-quote
+        (url->string
+         (string->url
+          "$TEXMACS_PATH/plugins/python/bin/python.pex"))))))
+
+(define (conda-launchers)
+  (map (lambda (path) (list :launch (string-append "conda_" (conda-env-name path)) (conda-launcher path)))
+       (conda-env-python-list)))
+
+(define (all-python-launchers)
+  (cons (list :launch (python-launcher))
+        (conda-launchers)))
+
 (plugin-configure python
   (:require (has-binary-python3?))
-  (:launch ,(python-launcher))
+  ,@(all-python-launchers)
   (:tab-completion #t)
   (:serializer ,python-serialize)
   (:session "Python")
