@@ -103,7 +103,7 @@
         (assuming (!= l (list "default"))
           (-> (eval menu-name)
               (for (variant l)
-                ((eval variant) (make-session name variant)))))))))
+                ((eval `(verbatim ,variant)) (make-session name variant)))))))))
 
 (menu-bind insert-session-menu
   (when (and (style-has? "std-dtd") (in-text?))
