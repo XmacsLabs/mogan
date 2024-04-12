@@ -44,4 +44,8 @@
     (url->list (url-expand (url-complete (url-append (conda-prefix) path) "fr")))))
 
 (tm-define (conda-env-name u)
-  (url->string (url-tail (url-head (url-head u)))))
+  (:synopsis "Extract the conda env name from the interpreter path")
+  (if (os-win32?)
+    (url->string (url-tail (url-head u)))
+    (url->string (url-tail (url-head (url-head u))))))
+
