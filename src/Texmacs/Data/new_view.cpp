@@ -250,11 +250,12 @@ url my_init_buffer_file= url_none ();
 
 url
 get_new_view (url name) {
-  // cout << "Creating new view " << name << "\n";
+  cout << "Creating new view " << name << "\n";
 
   create_buffer (name, tree (DOCUMENT));
   tm_buffer buf= concrete_buffer (name);
   editor    ed = new_editor (get_server ()->get_server (), buf);
+  printf("new editor %p\n",ed->derived_this ());
   tm_view   vw = tm_new<tm_view_rep> (buf, ed);
   buf->vws << vw;
   ed->set_data (buf->data);
@@ -310,6 +311,7 @@ get_recent_view (url name) {
 
 void
 delete_view (url u) {
+  cout << "delete_view " << u << LF;
   tm_view vw= concrete_view (u);
   if (vw == NULL) return;
   tm_buffer buf= vw->buf;

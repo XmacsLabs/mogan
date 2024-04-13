@@ -30,9 +30,11 @@ edit_graphics_rep::edit_graphics_rep () {
   p_x= p_y= 0.0;
   gr_x= gr_y      = 0.0;
   graphical_object= tree ();
+  printf("graphics_rep: %p\n", this);
 }
 
-edit_graphics_rep::~edit_graphics_rep () {}
+edit_graphics_rep::~edit_graphics_rep () {
+}
 
 /******************************************************************************
  * Extra subroutines for graphical selections
