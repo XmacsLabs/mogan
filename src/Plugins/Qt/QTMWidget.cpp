@@ -232,9 +232,20 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
   if (DEBUG_QT)
     debug_qt << "IM preediting :" << preedit_string.toUtf8 ().data () << LF;
 
-  string r= "pre-edit:";
-  if (!preedit_string.isEmpty ()) {
+  bool im_preedit_switch= false;
+  if (os_win () || os_macos ()) {
+    im_preedit_switch= true;
+  }
+  string im_preedit_str= get_preference ("IM:preedit");
+  if (im_preedit_str == "off") {
+    im_preedit_switch= false;
+  }
+  else if (im_preedit_str == "on") {
+    im_preedit_switch= true;
+  }
 
+  string r= "pre-edit:";
+  if (im_preedit_switch && !preedit_string.isEmpty ()) {
     // find cursor position in the preedit string
     QList<QInputMethodEvent::Attribute> const& attrs= event->attributes ();
     //    int pos = preedit_string.count();
@@ -269,7 +280,7 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
     r= r * as_string (pos) * ":" * from_qstring_utf8 (preedit_string);
   }
 
-  if (!is_nil (tmwid)) {
+  if (im_preedit_switch && !is_nil (tmwid)) {
     preediting= !preedit_string.isEmpty ();
     the_gui->process_keypress (tm_widget (), r, texmacs_time ());
   }
