@@ -132,7 +132,7 @@ public:
   /****************************** main routines ******************************/
 
   inline box_rep (path ip);
-  virtual ~box_rep ();
+  inline virtual ~box_rep ();
   void        relocate (path p, bool force= false);
   virtual box transform (frame fr);
   virtual operator tree ()= 0;
