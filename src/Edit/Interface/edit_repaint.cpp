@@ -427,11 +427,6 @@ edit_interface_rep::draw_with_stored (renderer win, rectangle r) {
     // cout << "."; cout.flush ();
     draw_with_shadow (win, r);
     if (!gui_interrupted ()) {
-      cout << "before inside active: ";
-      printf ("%p\n", this);
-      cout << is_current_editor() << LF;
-
-      
       if (inside_active_graphics ()) {
         shadow->new_shadow (stored);
         shadow->get_shadow (stored, sr->x1, sr->y1, sr->x2, sr->y2);
@@ -440,7 +435,6 @@ edit_interface_rep::draw_with_stored (renderer win, rectangle r) {
         // cout << "Stored: " << stored_rects << "\n";
         // cout << "M"; cout.flush ();
       }
-      cout << "after inside active" << LF;
       draw_post (win, shadow, r);
       win->put_shadow (shadow, sr->x1, sr->y1, sr->x2, sr->y2);
     }

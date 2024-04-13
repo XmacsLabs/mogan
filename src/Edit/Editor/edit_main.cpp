@@ -70,12 +70,9 @@ edit_main_rep::edit_main_rep (server_rep* sv, tm_buffer buf)
   attach_observer (subtree (et, rp), ed_obs);
   notify_change (THE_TREE);
   tp= correct_cursor (et, rp * 0);
-  printf("edit_main: %p\n", this);
 }
 
-edit_main_rep::~edit_main_rep () { detach_observer (subtree (et, rp), ed_obs); 
-  printf("delete edit_main %p\n", this);
-}
+edit_main_rep::~edit_main_rep () { detach_observer (subtree (et, rp), ed_obs); }
 
 editor
 new_editor (server_rep* sv, tm_buffer buf) {
