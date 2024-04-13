@@ -136,7 +136,7 @@ protected:
 public:
   editor_rep ();
   editor_rep (server_rep* sv, tm_buffer buf);
-  virtual ~editor_rep () {}
+  inline virtual ~editor_rep () {}
   bool is_current_editor ();
 
   /* public routines from edit_interface */

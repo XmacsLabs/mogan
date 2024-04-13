@@ -47,7 +47,7 @@ public:
 
 public:
   bridge_rep (typesetter ttt, tree st, path ip);
-  virtual ~bridge_rep () {}
+  inline virtual ~bridge_rep () {}
 
   virtual void notify_assign (path p, tree u)= 0;
   virtual void notify_insert (path p, tree u);
