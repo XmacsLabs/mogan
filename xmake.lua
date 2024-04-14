@@ -387,7 +387,7 @@ target("libmogan") do
     if is_plat("mingw") then
         add_syslinks("wsock32", "ws2_32", "crypt32","secur32", {public = true})
     elseif is_plat("windows") then
-        add_syslinks("secur32", "shell32", {public = true})
+	add_syslinks("secur32", "shell32", "winhttp", "rpcrt4", {public = true})
     elseif is_plat("macosx") then
         add_syslinks("iconv")
     end
