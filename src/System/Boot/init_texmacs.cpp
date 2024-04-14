@@ -70,6 +70,7 @@ void server_start ();
 void
 clean_exit_on_segfault (int sig_num) {
   (void) sig_num;
+  cerr << lolly::get_stacktrace () << LF;
   TM_FAILED ("segmentation fault");
 }
 
