@@ -119,12 +119,11 @@ function sidebarGuide() {
             text: 'Getting Started',
             items: [
                 { text: 'What is Mogan?', link: '/guide/what-is-mogan' },
-                { text: 'Major Features', link: '/guide/Feature' },
-                { text: 'Screenshots', link: '/guide/Screenshots'},
                 {
                     text: 'Install',
                     link: '/guide/Install'
                 },
+                { text: 'Screenshots', link: '/guide/Screenshots'},
                 {
                     text: 'Mogan v.s. TeXmacs',
                     link: '/guide/Mogan_versus_TeXmacs'
@@ -300,12 +299,11 @@ function sidebarGuideZh() {
             text: '入门',
             items: [
                 { text: '墨干', link: '/zh/guide/what-is-mogan' },
-                { text: '主要功能', link: '/zh/guide/Feature' },
-                { text: '截图', link: '/zh/guide/Screenshots'},
                 {
                     text: '如何安装？',
                     link: '/zh/guide/Install'
                 },
+                { text: '截图', link: '/zh/guide/Screenshots'},
                 {
                     text: '墨干 v.s. TeXmacs',
                     link: '/zh/guide/Mogan_versus_TeXmacs'
