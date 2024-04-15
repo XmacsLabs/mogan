@@ -31,9 +31,11 @@ $TEXMACS_PATH/plugins/octave/progs/binary/octave.scm
 
 ## `(find-binary-xyz)`详解
 + 如果配置项`plugin:binary`为`off`，则`(find-binary-xyz)`返回`(url-none)`
-  + 如果配置项`plugin:binary:xyz`不是`default`，则检测该配置项中的路径是否存在，如果存在，就返回xyz可执行文件的路径
-    + 如果xyz.scm定义的候选路径`(xyz-binary-candidates)`存在，则返回该候选路径
-      + 最终，直接在系统路径中查找xyz可执行文件
+  + 如果配置项`plugin:binary:xyz`是`off`，则`(find-binary-xyz)`返回`(url-none)`
+    + 如果配置项`plugin:binary:xyz`是`candidates-only`，那么只检查候选路径并返回结果
+      + 如果配置项`plugin:binary:xyz`是路径，且存在，那么返回该指定路径
+      + 检查候选路径，如果存在，则返回候选路径
+      + 按照候选路径中的可执行文件名，在系统路径中寻找相关可执行文件，如果存在，则返回该路径，如果不存在，则返回`(url_none)`
 
 二进制插件作者只需要关注`(xyz-binary-candidates)`的实现是否合理即可。配置项`plugin:binary`目前（1.2.5.2）只支持使用Scheme代码`(set-preference "plugin:binary" "/path/to/binary/xyz")`配置。
 
