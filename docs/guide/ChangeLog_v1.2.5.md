@@ -4,6 +4,12 @@ Mogan STEM Suite v1.2.5 LTS:
 
 This release is for bug fixes and user experience improvements.
 
+## Notable Changes in v1.2.5.3 (2024/04/15)
++ Bug Fixes
+  - The Python plugin now supports using virtual environments created by conda
++ Plugins
+  - Fixed the issue that using a separate window for structured replacement may cause Mogan to crash
+
 ## Notable Changes in v1.2.5.2 (2024/04/08)
 + Bug Fixes
   + Fixed the issue where single replacement and replace all functions in the bottom toolbar do not work when clicked with a mouse
