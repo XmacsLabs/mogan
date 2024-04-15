@@ -334,7 +334,7 @@ function sidebarGuideZh() {
                 },
                 {
                     text: 'Maxima插件',
-                    link: '/guide/plugin_maxima.md'
+                    link: '/zh/guide/plugin_maxima.md'
                 },
                 {
                     text: 'Octave插件',
