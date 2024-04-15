@@ -1,4 +1,6 @@
 # Octave插件
+相关教学视频：[零基础墨干08：用Octave插件学线性代数](https://www.bilibili.com/video/BV1gK421a7CK/)
+
 ## 安装
 Octave插件依赖于[Ghostscript二进制插件](plugin_binary_gs.md)，请先按照文档安装Ghostscript，然后查看`帮助->插件->Octave`以确保文档中的绘图可以正确渲染。
 

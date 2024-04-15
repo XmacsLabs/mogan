@@ -1,4 +1,5 @@
 # Octave Plugin
+Video Tutorial in Chinese：[零基础墨干08：用Octave插件学线性代数](https://www.bilibili.com/video/BV1gK421a7CK/)
 
 ## Installation
 The Octave plugin relies on the [Ghostscript Binary Plugin](plugin_binary_gs.md). Please install Ghostscript according to the documentation first and then check `Help -> Plugins -> Octave` to ensure that the plots in the documentation can be rendered correctly.
@@ -24,7 +25,7 @@ sudo apt install octave
 ## Tips
 1. Windows: The plotting functionality of Octave versions 6.x and above does not work properly in Mogan.
    + We will work on making Mogan compatible with the new versions of Octave in the future, and contributions from the community are welcome.
-2. Ubuntu: Octave installed using snap cannot be used normally in Mogan.
+2. Ubuntu: Octave installed using snap cannot work with Mogan.
    + This is due to the mechanism of snap, so it is not recommended to install Octave using snap.
 
 ## Documentation: Please check `Help -> Plugins -> Octave`
