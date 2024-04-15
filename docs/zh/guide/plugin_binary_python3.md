@@ -1,9 +1,10 @@
 # Python3二进制插件
-+ 可执行文件名：python3
++ 二进制标识：python3
 + 插件源代码：
   - [Codeberg](https://codeberg.org/XmacsLabs/mogan/src/branch/branch-1.2/TeXmacs/plugins/binary/progs/binary/python3.scm)
   - [Gitee](https://gitee.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/binary/progs/binary/python3.scm)
   - [Github](https://github.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/binary/progs/binary/python3.scm)
++ 功能：为[Python插件](plugin_python.md)定位可用的Python解释器
 
 ## 如何安装Python 3
 ### Windows
@@ -17,10 +18,4 @@
 ## 如何自定义Python解释器
 可通过自定义Python 3二进制插件的方式使用自定义的Python解释器。
 
-其中的关键在于替换`(find-binary-python3)`的实现：
-``` scheme
-(tm-define (find-binary-python3)
-  (system->url "/path/to/your/python3/interpreter"))
-```
-
-具体如何自定义Python3二进制插件，请参考文档：[二进制插件](plugin_binary.md)。
+具体如何自定义Python3二进制插件，请参考文档：[二进制插件](plugin_binary.md)，在墨干的内置文档`帮助->插件->Binary`中有详细的步骤。

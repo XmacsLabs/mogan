@@ -22,4 +22,4 @@ sudo apt install maxima
 + Ubuntu: 使用snap安装的Maxima无法在墨干中正常使用
   - 这是由snap的机制决定的，故而不建议使用snap安装Maxima
 
-## 文档：请查看`帮助->插件->Maxima`
+## 内置文档见`帮助->插件->Maxima`

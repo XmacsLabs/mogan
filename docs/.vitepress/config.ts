@@ -19,7 +19,7 @@ export default {
                     '/guide': sidebarGuide(),
                 },
                 footer: {
-                    message: 'Let us enjoy exploring science and technology!',
+                    message: 'Enjoy exploring science and technology!',
                     copyright: 'Copyright © 2022-2024 Mogan Contributors'
                 },
             }
@@ -129,6 +129,18 @@ function sidebarGuide() {
                     text: 'Mogan v.s. TeXmacs',
                     link: '/guide/Mogan_versus_TeXmacs'
                 },
+                {
+                    text: 'Maxima Plugin',
+                    link: '/guide/plugin_maxima.md'
+                },
+                {
+                    text: 'Octave Plugin',
+                    link: '/guide/plugin_octave.md'
+                },
+                {
+                    text: 'Python Plugin',
+                    link: '/guide/plugin_python.md'
+                },
             ]
         },
         {
@@ -159,14 +171,6 @@ function sidebarGuide() {
                     text: 'Binary Plugin',
                     link: '/guide/plugin_binary.md'
                 },
-                {
-                    text: 'Maxima Plugin',
-                    link: '/guide/plugin_maxima.md'
-                },
-                {
-                    text: 'Octave Plugin',
-                    link: '/guide/plugin_octave.md'
-                },
             ],
         },
         {
@@ -176,6 +180,10 @@ function sidebarGuide() {
                 {
                     text: 'Aspell Binary plugin',
                     link: '/guide/plugin_binary_aspell.md'
+                },
+                {
+                    text: 'Conda Binary plugin',
+                    link: '/guide/plugin_binary_conda.md'
                 },
                 {
                     text: 'Ghostscript Binary plugin',
@@ -302,6 +310,18 @@ function sidebarGuideZh() {
                     text: '墨干 v.s. TeXmacs',
                     link: '/zh/guide/Mogan_versus_TeXmacs'
                 },
+                {
+                    text: 'Maxima插件',
+                    link: '/zh/guide/plugin_maxima.md'
+                },
+                {
+                    text: 'Octave插件',
+                    link: '/zh/guide/plugin_octave.md'
+                },
+                {
+                    text: 'Python插件',
+                    link: '/zh/guide/plugin_python.md'
+                },
             ]
         },
         {
@@ -332,14 +352,6 @@ function sidebarGuideZh() {
                     text: '二进制插件',
                     link: '/zh/guide/plugin_binary.md'
                 },
-                {
-                    text: 'Maxima插件',
-                    link: '/zh/guide/plugin_maxima.md'
-                },
-                {
-                    text: 'Octave插件',
-                    link: '/zh/guide/plugin_octave.md'
-                },
             ]
         },
         {
@@ -349,6 +361,10 @@ function sidebarGuideZh() {
                 {
                     text: 'Aspell二进制插件',
                     link: '/zh/guide/plugin_binary_aspell.md'
+                },
+                {
+                    text: 'Conda二进制插件',
+                    link: '/zh/guide/plugin_binary_conda.md'
                 },
                 {
                     text: 'Ghostscript二进制插件',

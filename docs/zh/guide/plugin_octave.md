@@ -28,4 +28,4 @@ sudo apt install octave
 2. Ubuntu: 使用snap安装的Octave无法在墨干中正常使用
    + 这是由snap的机制决定的，故而不建议使用snap安装Octave
 
-## 文档：请查看`帮助->插件->Octave`
+## 内置文档见`帮助->插件->Octave`

@@ -24,4 +24,4 @@ sudo apt install maxima
 + Ubuntu: Maxima installed using snap cannot work with Mogan.
   - This is due to the mechanism of snap, so it is not recommended to install Maxima using snap.
 
-## Documentation: Please check `Help -> Plugins -> Maxima`
+## Check built-in Doc at `Help -> Plugins -> Maxima`

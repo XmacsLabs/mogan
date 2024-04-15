@@ -30,10 +30,12 @@ $TEXMACS_PATH/plugins/octave/progs/binary/octave.scm
 | `(version-binary-xyz?)` | Returns the version of the xyz executable file. If the executable file does not exist, it returns an empty string; otherwise, it returns a string containing version information. |
 
 ## Detailed Explanation of `(find-binary-xyz)`
-+ If the configuration item `plugin:binary` is set to `off`, then `(find-binary-xyz)` returns `(url-none)`.
-  + If the configuration item `plugin:binary:xyz` is not `default`, it checks whether the path specified in this configuration item exists. If it does, it returns the path of the xyz executable file.
-    + If the candidate path defined in xyz.scm, `(xyz-binary-candidates)`, exists, it returns that candidate path.
-      + Finally, it searches for the xyz executable file directly in the system path.
++ If the configuration item `plugin:binary` is set to `off`, then `(find-binary-xyz)` will return `(url-none)`.
+  + If the configuration item `plugin:binary:xyz` is set to `off`, then `(find-binary-xyz)` will return `(url-none)`.
+    + If the configuration item `plugin:binary:xyz` is set to `candidates-only`, it will only check the candidate paths and return the result.
+      + If the configuration item `plugin:binary:xyz` is set to a path and that path exists, it will return the specified path.
+      + Check the candidate paths. If any of them exist, return the candidate path.
+      + Search for the executable file with the name specified in the candidate paths within the system path. If it exists, return the path; otherwise, return `(url_none)`.
 
 The author of the binary plugin only needs to focus on whether the implementation of `(xyz-binary-candidates)` is reasonable. The configuration item `plugin:binary` currently (1.2.5.2) only supports configuration using Scheme code such as `(set-preference "plugin:binary" "/path/to/binary/xyz")`.
 

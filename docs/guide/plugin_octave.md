@@ -28,4 +28,4 @@ sudo apt install octave
 2. Ubuntu: Octave installed using snap cannot work with Mogan.
    + This is due to the mechanism of snap, so it is not recommended to install Octave using snap.
 
-## Documentation: Please check `Help -> Plugins -> Octave`
+## Check built-in Doc at `Help -> Plugins -> Octave`
