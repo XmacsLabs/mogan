@@ -284,11 +284,11 @@ prog_lang_exists (string s) {
   return exists (url_system ("$TEXMACS_PATH/progs/prog/" * s * "-lang.scm")) ||
          exists (url_system ("$TEXMACS_PATH/plugins/" * s * "/progs/" * s *
                              "-lang.scm")) ||
-         exists (url_system ("$TEXMACS_PATH/plugins/code/progs/" * s *
+         exists (url_system ("$TEXMACS_PATH/plugins/code/progs/code/" * s *
                              "-lang.scm")) ||
          exists (url_system ("$TEXMACS_HOME_PATH/plugins/" * s * "/progs/" * s *
                              "-lang.scm")) ||
-         exists (url_system ("$TEXMACS_HOME_PATH/plugins/code/progs/" * s *
+         exists (url_system ("$TEXMACS_HOME_PATH/plugins/code/progs/code/" * s *
                              "-lang.scm"));
 }
 
