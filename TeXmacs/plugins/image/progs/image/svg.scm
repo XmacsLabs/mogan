@@ -27,10 +27,6 @@
 
 ;; svg -> pdf (the latter one which meets the requirements will work)
 (converter svg-file pdf-file
-  (:require (has-binary-convert?))
-  (:shell ,(url->system (find-binary-convert)) from to))
-
-(converter svg-file pdf-file
   (:require (has-binary-rsvg-convert?))
   (:shell ,(url->system (find-binary-rsvg-convert)) "-f pdf" "-o" to from ))
 
@@ -39,10 +35,6 @@
   (:shell ,(url->system (find-binary-inkscape)) from "-o" to))
 
 ;; svg -> postscript (the latter one which meets the requirements will work)
-(converter svg-file postscript-file
-  (:require (has-binary-convert?))
-  (:shell ,(url->system (find-binary-convert)) from to))
-
 (converter svg-file postscript-file
   (:require (has-binary-rsvg-convert?))
   (:shell ,(url->system (find-binary-rsvg-convert)) "-f eps" "-o" to from ))
