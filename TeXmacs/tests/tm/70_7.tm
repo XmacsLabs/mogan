@@ -3,6 +3,18 @@
 <style|<tuple|generic|no-page-numbers|chinese>>
 
 <\body>
+  <section|C++>
+
+  <\cpp-code>
+    #include \<less\>stdio.h\<gtr\>
+
+    int main() {
+
+    \ \ return 0;
+
+    }
+  </cpp-code>
+
   <section|Python>
 
   <\python-code>
@@ -10,6 +22,10 @@
 
     print("hello world")
   </python-code>
+
+  \;
+
+  \;
 </body>
 
 <\initial>
@@ -22,6 +38,7 @@
 <\references>
   <\collection>
     <associate|auto-1|<tuple|1|1>>
+    <associate|auto-2|<tuple|2|?>>
   </collection>
 </references>
 
