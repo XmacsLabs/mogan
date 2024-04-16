@@ -1,10 +1,10 @@
-<TeXmacs|1.99.8>
+<TeXmacs|2.1.2>
 
 <style|<tuple|source|std>>
 
 <\body>
   <active*|<\src-title>
-    <src-package|cite-sort|1.0>
+    <src-package|cite-sort|1.0.0>
 
     <\src-purpose>
       This package contains macros for the automatic sorting of citations.
@@ -20,7 +20,7 @@
     </src-license>
   </src-title>>
 
-  <use-module|(utils cite cite-sort)>
+  <use-module|(contrib cite cite-sort)>
 
   <assign|cite-sort|<macro|body|<extern|cite-sort|<arg|body>>>>
 

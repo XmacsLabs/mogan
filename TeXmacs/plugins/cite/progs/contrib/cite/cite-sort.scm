@@ -4,6 +4,7 @@
 ;; MODULE      : cite-sort.scm
 ;; DESCRIPTION : support utilities for sorting citations
 ;; COPYRIGHT   : (C) 2013 François Poulain, Joris van der Hoeven
+;;                   2023 hammerfunctor, jingkaimori
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
 ;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -11,7 +12,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (utils cite cite-sort))
+(texmacs-module (contrib cite cite-sort))
 
 (define (compare-string s1 s2)
   (if (and (string->number s1) (string->number s2))
