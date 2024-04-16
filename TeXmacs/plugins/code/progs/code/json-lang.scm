@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (json-lang))
+(texmacs-module (code json-lang))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "json") (== key "keyword")))
