@@ -12,7 +12,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Source Code data
-(lazy-format (data code) cpp scheme python)
+(lazy-format (data code) cpp scheme)
 (lazy-format (data csv) csv)
 
 ; Image data
