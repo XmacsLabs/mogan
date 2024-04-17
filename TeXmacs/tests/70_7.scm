@@ -1,10 +1,9 @@
 (use-modules
-  (data cpp)
   (data java)
   (data julia)
   (data scala)
   (data python)
-  (data scheme))
+  (data code))
 
 (define (regtest-cpp)
   (regression-test-group
@@ -71,7 +70,6 @@
    (test "texmacs format" "tm" "texmacs")
    (test "texmacs format" "ts" "texmacs")
    (test "texmacs format" "stm" "stm")
-   (test "png format" "png" "png")
    (test "no such format" "no-such-format" "generic")))
 
 (tm-define (test_70_7)

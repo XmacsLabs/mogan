@@ -4,13 +4,13 @@
 
 <\body>
   <active*|<\src-title>
-    <compound|src-package|gnuplot|1.0>
+    <compound|src-package|julia|1.0>
 
     <\src-purpose>
-      gnuplot Language
+      julia Language
     </src-purpose>
 
-    <src-copyright|2024|Darcy Shen>
+    <src-copyright|2020-2024|Darcy Shen>
 
     <\src-license>
       This software falls under the <hlink|GNU general public license,
@@ -20,13 +20,13 @@
     </src-license>
   </src-title>>
 
-  <use-module|(data gnuplot)>
+  <use-module|(data julia)>
 
-  <assign|gnuplot|<macro|body|<with|mode|prog|prog-language|gnuplot|font-family|rm|<arg|body>>>>
+  <assign|julia|<macro|body|<with|mode|prog|prog-language|julia|font-family|rm|<arg|body>>>>
 
-  <assign|gnuplot-code|<\macro|body>
+  <assign|julia-code|<\macro|body>
     <\pseudo-code>
-      <gnuplot|<arg|body>>
+      <julia|<arg|body>>
     </pseudo-code>
   </macro>>
 </body>
@@ -37,4 +37,3 @@
     <associate|sfactor|5>
   </collection>
 </initial>
-

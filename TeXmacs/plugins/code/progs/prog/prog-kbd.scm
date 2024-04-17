@@ -17,12 +17,8 @@
         (prog scheme-tools)
         (prog prog-mode)
         (code scheme-edit)
-        (code dot-edit)
-        (code java-edit)
-        (code scala-edit)
         (code cpp-edit)
-        (code python-edit)
-        (code fortran-edit)))
+        (code python-edit)))
 
 (kbd-map
   (:mode in-prog?)

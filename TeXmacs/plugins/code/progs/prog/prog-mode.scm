@@ -29,8 +29,6 @@
   (in-prog-json% #t in-prog% in-json%)
   (in-fortran% (== (get-env "prog-language") "fortran"))
   (in-prog-fortran% #t in-prog% in-fortran%)
-  (in-scala% (== (get-env "prog-language") "scala"))
-  (in-prog-scala% #t in-prog% in-scala%)
   (in-scheme% (== (get-env "prog-language") "scheme"))
   (in-prog-scheme% #t in-prog% in-scheme%)
   (in-python% (== (get-env "prog-language") "python"))

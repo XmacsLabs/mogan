@@ -4,13 +4,13 @@
 
 <\body>
   <active*|<\src-title>
-    <compound|src-package|gnuplot|1.0>
+    <compound|src-package|json|1.0>
 
     <\src-purpose>
-      gnuplot Language
+      json Language
     </src-purpose>
 
-    <src-copyright|2024|Darcy Shen>
+    <src-copyright|2020-2024|Darcy Shen>
 
     <\src-license>
       This software falls under the <hlink|GNU general public license,
@@ -20,13 +20,13 @@
     </src-license>
   </src-title>>
 
-  <use-module|(data gnuplot)>
+  <use-module|(data json)>
 
-  <assign|gnuplot|<macro|body|<with|mode|prog|prog-language|gnuplot|font-family|rm|<arg|body>>>>
+  <assign|json|<macro|body|<with|mode|prog|prog-language|json|font-family|rm|<arg|body>>>>
 
-  <assign|gnuplot-code|<\macro|body>
+  <assign|json-code|<\macro|body>
     <\pseudo-code>
-      <gnuplot|<arg|body>>
+      <json|<arg|body>>
     </pseudo-code>
   </macro>>
 </body>
@@ -37,4 +37,3 @@
     <associate|sfactor|5>
   </collection>
 </initial>
-

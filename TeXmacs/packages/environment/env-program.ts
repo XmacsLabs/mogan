@@ -163,16 +163,8 @@
 
   <assign|c++|<macro|<name|C++>>>
 
-  <assign|mathemagix|<macro|<name|Mathemagix>>>
-
-  <assign|scilab|<macro|<name|Scilab>>>
-
-  <assign|fortran|<macro|<name|Fortran>>>
-
   <assign|python|<macro|<name|Python>>>
   
-  <assign|r|<macro|<name|R>>>
-
   <assign|shell|<macro|body|<with|mode|prog|prog-language|shell|font-family|rm|<arg|body>>>>
 
   <assign|scm|<macro|body|<with|mode|prog|prog-language|scheme|font-family|rm|<arg|body>>>>
@@ -181,16 +173,6 @@
 
   <assign|python|<macro|body|<with|mode|prog|prog-language|python|font-family|rm|<arg|body>>>>
   
-  <assign|r|<macro|body|<with|mode|prog|prog-language|r|font-family|rm|<arg|body>>>>
-
-  <assign|scilab|<macro|body|<with|mode|prog|prog-language|scilab|font-family|rm|<arg|body>>>>
-
-  <assign|fortran|<macro|body|<with|mode|prog|prog-language|fortran|font-family|rm|<arg|body>>>>
-
-  <assign|mmx|<macro|body|<with|mode|prog|prog-language|mathemagix|font-family|rm|<arg|body>>>>
-
-  <assign|octave-lang|<macro|body|<with|mode|prog|prog-language|octave|font-family|rm|<arg|body>>>>
-
   <\active*>
     <\src-comment>
       Blocks of code for standard languages
@@ -227,42 +209,12 @@
     </pseudo-code>
   </macro>>
 
-  <assign|scilab-code|<\macro|body>
-    <\pseudo-code>
-      <scilab|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
-  <assign|fortran-code|<\macro|body>
-    <\pseudo-code>
-      <fortran|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
-  <assign|octave-code|<\macro|body>
-    <\pseudo-code>
-      <octave-lang|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
   <assign|python-code|<\macro|body>
     <\pseudo-code>
       <python|<arg|body>>
     </pseudo-code>
   </macro>>
   
-  <assign|r-code|<\macro|body>
-    <\pseudo-code>
-      <r|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
-  <assign|mmx-code|<\macro|body>
-    <\pseudo-code>
-      <mmx|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
   <\active*>
     <\src-comment>
       Deprecated markup for algorithms

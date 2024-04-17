@@ -4,13 +4,13 @@
 
 <\body>
   <active*|<\src-title>
-    <compound|src-package|gnuplot|1.0>
+    <compound|src-package|javascript|1.0>
 
     <\src-purpose>
-      gnuplot Language
+      JavaScript Language
     </src-purpose>
 
-    <src-copyright|2024|Darcy Shen>
+    <src-copyright|2020-2024|Darcy Shen>
 
     <\src-license>
       This software falls under the <hlink|GNU general public license,
@@ -20,13 +20,13 @@
     </src-license>
   </src-title>>
 
-  <use-module|(data gnuplot)>
+  <use-module|(data javascript)>
 
-  <assign|gnuplot|<macro|body|<with|mode|prog|prog-language|gnuplot|font-family|rm|<arg|body>>>>
+  <assign|javascript|<macro|body|<with|mode|prog|prog-language|javascript|font-family|rm|<arg|body>>>>
 
-  <assign|gnuplot-code|<\macro|body>
+  <assign|javascript-code|<\macro|body>
     <\pseudo-code>
-      <gnuplot|<arg|body>>
+      <javascript|<arg|body>>
     </pseudo-code>
   </macro>>
 </body>
@@ -37,4 +37,3 @@
     <associate|sfactor|5>
   </collection>
 </initial>
-
