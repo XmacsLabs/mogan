@@ -18,8 +18,7 @@
         (prog prog-mode)
         (code scheme-edit)
         (code cpp-edit)
-        (code python-edit)
-        (code fortran-edit)))
+        (code python-edit)))
 
 (kbd-map
   (:mode in-prog?)
