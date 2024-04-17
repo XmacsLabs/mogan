@@ -22,10 +22,11 @@ jobs:
         node-version: 18
     - name: yarn install
       run: yarn install
-    - name: yarn docs:build
-      run: yarn docs:build
-    - name: cp CNAME
-      run: cp site/mogan.app/CNAME website/
+    - uses: elves/setup-elvish@v1
+      with:
+        elvish-version: 0.19.2
+    - name: build
+      shell: elvish bin/build_website
     - name: Deploy
       uses: s0/git-publish-subdir-action@develop
       env:
