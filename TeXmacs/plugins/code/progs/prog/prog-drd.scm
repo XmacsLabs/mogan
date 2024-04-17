@@ -19,7 +19,7 @@
   (inline-code-tag) (block-code-tag))
 
 (define-group inline-code-tag
-  verbatim scm cpp mmx r fortran octave
+  verbatim scm cpp dot-lang mmx r fortran octave
   python julia java javascript json scala scilab shell)
 
 (define-group block-code-tag
