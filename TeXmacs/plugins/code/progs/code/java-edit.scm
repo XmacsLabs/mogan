@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (prog java-edit)
+(texmacs-module (code java-edit)
   (:use (prog prog-edit)))
 
 (tm-define (get-tabstop)

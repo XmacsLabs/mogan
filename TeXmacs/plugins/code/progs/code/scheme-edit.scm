@@ -11,9 +11,10 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (prog scheme-edit)
+(texmacs-module (code scheme-edit)
   (:use (prog prog-edit)
-        (prog scheme-tools) (prog scheme-autocomplete)
+        (prog scheme-tools)
+        (prog scheme-autocomplete)
         (utils misc tm-keywords)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -196,3 +197,22 @@
   (or (tm-atomic? x)
     (and (tm-in? x '(concat document))
       (forall? textual? (tm-children x)))))
+
+(kbd-map
+  (:mode in-prog-scheme?)
+  ("(" (scheme-bracket-open "(" ")" ))
+  (")" (scheme-bracket-close "(" ")" ))
+  ("[" (scheme-bracket-open "[" "]" ))
+  ("]" (scheme-bracket-close "[" "]" ))
+  ("\"" (scheme-bracket-open "\"" "\"")))
+
+(kbd-map
+  (:require (and developer-mode? (in-prog-scheme?)))
+  ("A-F1" (scheme-popup-help (cursor-word)))
+  ("cmd A-F1" (scheme-inbuffer-help (cursor-word)))
+  ("std F1" (scheme-go-to-definition (cursor-word))))
+
+(kbd-map
+  (:require (and developer-mode? (in-prog-scheme?) 
+                 (== "scheme-file" (file-format (current-buffer-url)))))
+  ("std R" (run-scheme-file (current-buffer-url))))

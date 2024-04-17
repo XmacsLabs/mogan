@@ -10,7 +10,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (prog scala-edit)
+(texmacs-module (code scala-edit)
   (:use (prog prog-edit)))
 
 (tm-define (get-tabstop)
