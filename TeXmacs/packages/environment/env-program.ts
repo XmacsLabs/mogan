@@ -201,10 +201,6 @@
 
   <assign|mmx|<macro|body|<with|mode|prog|prog-language|mathemagix|font-family|rm|<arg|body>>>>
 
-  <assign|dot-lang|<macro|body|<with|mode|prog|prog-language|dot|font-family|rm|<arg|body>>>>
-
-  <assign|javascript-lang|<macro|body|<with|mode|prog|prog-language|javascript|font-family|rm|<arg|body>>>>
-
   <assign|json-lang|<macro|body|<with|mode|prog|prog-language|json|font-family|rm|<arg|body>>>>
 
   <assign|octave-lang|<macro|body|<with|mode|prog|prog-language|octave|font-family|rm|<arg|body>>>>
@@ -245,21 +241,9 @@
     </pseudo-code>
   </macro>>
 
-  <assign|dot-code|<\macro|body>
-    <\pseudo-code>
-      <dot-lang|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
   <assign|java-code|<\macro|body>
     <\pseudo-code>
       <java|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
-  <assign|javascript-code|<\macro|body>
-    <\pseudo-code>
-      <javascript-lang|<arg|body>>
     </pseudo-code>
   </macro>>
 
