@@ -47,6 +47,22 @@
 
   <slink|$TEXMACS_PATH/plugins/<value|code-name>/progs/code/<value|code-name>-edit.scm>
 
+  Here is a list of key bindings:
+
+  <\description>
+    <item*|<key|p s v m var>>
+
+    <\java-code>
+      public static int main() {
+
+      \ \ \ \ 
+
+      }
+    </java-code>
+  </description>
+
+  \;
+
   <tmdoc-copyright|2024|Darcy Shen>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this

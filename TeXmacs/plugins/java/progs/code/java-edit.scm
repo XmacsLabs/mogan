@@ -25,3 +25,13 @@
 (tm-define (kbd-paste)
   (:mode in-prog-java?)
   (clipboard-paste-import "java" "primary"))
+
+(kbd-map
+  (:mode in-prog-java?)
+  ("p s v m var"
+   (begin
+    (insert "public static int main() {}")
+    (go-to-previous)
+    (insert-return)
+    (insert-raw-return)
+    (go-to-previous))))
