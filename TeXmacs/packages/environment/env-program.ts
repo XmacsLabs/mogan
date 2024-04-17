@@ -183,12 +183,8 @@
 
   <assign|cpp|<macro|body|<with|mode|prog|prog-language|cpp|font-family|rm|<arg|body>>>>
 
-  <assign|java|<macro|body|<with|mode|prog|prog-language|java|font-family|rm|<arg|body>>>>
-
   <assign|python|<macro|body|<with|mode|prog|prog-language|python|font-family|rm|<arg|body>>>>
   
-  <assign|scala|<macro|body|<with|mode|prog|prog-language|scala|font-family|rm|<arg|body>>>>
-
   <assign|r|<macro|body|<with|mode|prog|prog-language|r|font-family|rm|<arg|body>>>>
 
   <assign|scilab|<macro|body|<with|mode|prog|prog-language|scilab|font-family|rm|<arg|body>>>>
@@ -235,12 +231,6 @@
     </pseudo-code>
   </macro>>
 
-  <assign|java-code|<\macro|body>
-    <\pseudo-code>
-      <java|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
   <assign|scilab-code|<\macro|body>
     <\pseudo-code>
       <scilab|<arg|body>>
@@ -268,12 +258,6 @@
   <assign|julia-code|<\macro|body>
     <\pseudo-code>
       <julia|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
-  <assign|scala-code|<\macro|body>
-    <\pseudo-code>
-      <scala|<arg|body>>
     </pseudo-code>
   </macro>>
 
