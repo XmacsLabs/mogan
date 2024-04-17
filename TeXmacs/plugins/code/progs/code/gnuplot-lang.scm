@@ -19,3 +19,9 @@
   `(,(string->symbol key)
     (keyword
       "set" "plot")))
+
+(tm-define (parser-feature lan key)
+  (:require (and (== lan "gnuplot") (== key "string")))
+  `(,(string->symbol key)
+    (bool_features)
+    (escape_sequences "\\" "\"" "'" "b" "f" "n" "r" "t")))

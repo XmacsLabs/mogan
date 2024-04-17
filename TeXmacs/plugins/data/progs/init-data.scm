@@ -15,6 +15,7 @@
 (lazy-format (data cpp) cpp)
 (lazy-format (data csv) csv)
 (lazy-format (data dot) dot)
+(lazy-format (data gnuplot) gnuplot)
 (lazy-format (data java) java)
 (lazy-format (data javascript) javascript)
 (lazy-format (data json) json)
