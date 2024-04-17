@@ -163,8 +163,6 @@
 
   <assign|c++|<macro|<name|C++>>>
 
-  <assign|java|<macro|<name|Java>>>
-
   <assign|mathemagix|<macro|<name|Mathemagix>>>
 
   <assign|scilab|<macro|<name|Scilab>>>
@@ -173,10 +171,6 @@
 
   <assign|python|<macro|<name|Python>>>
   
-  <assign|julia|<macro|<name|Julia>>>
-
-  <assign|scala|<macro|<name|Scala>>>
-
   <assign|r|<macro|<name|R>>>
 
   <assign|shell|<macro|body|<with|mode|prog|prog-language|shell|font-family|rm|<arg|body>>>>
@@ -185,14 +179,8 @@
 
   <assign|cpp|<macro|body|<with|mode|prog|prog-language|cpp|font-family|rm|<arg|body>>>>
 
-  <assign|java|<macro|body|<with|mode|prog|prog-language|java|font-family|rm|<arg|body>>>>
-
   <assign|python|<macro|body|<with|mode|prog|prog-language|python|font-family|rm|<arg|body>>>>
   
-  <assign|julia|<macro|body|<with|mode|prog|prog-language|julia|font-family|rm|<arg|body>>>>
-
-  <assign|scala|<macro|body|<with|mode|prog|prog-language|scala|font-family|rm|<arg|body>>>>
-
   <assign|r|<macro|body|<with|mode|prog|prog-language|r|font-family|rm|<arg|body>>>>
 
   <assign|scilab|<macro|body|<with|mode|prog|prog-language|scilab|font-family|rm|<arg|body>>>>
@@ -200,12 +188,6 @@
   <assign|fortran|<macro|body|<with|mode|prog|prog-language|fortran|font-family|rm|<arg|body>>>>
 
   <assign|mmx|<macro|body|<with|mode|prog|prog-language|mathemagix|font-family|rm|<arg|body>>>>
-
-  <assign|dot-lang|<macro|body|<with|mode|prog|prog-language|dot|font-family|rm|<arg|body>>>>
-
-  <assign|javascript-lang|<macro|body|<with|mode|prog|prog-language|javascript|font-family|rm|<arg|body>>>>
-
-  <assign|json-lang|<macro|body|<with|mode|prog|prog-language|json|font-family|rm|<arg|body>>>>
 
   <assign|octave-lang|<macro|body|<with|mode|prog|prog-language|octave|font-family|rm|<arg|body>>>>
 
@@ -245,30 +227,6 @@
     </pseudo-code>
   </macro>>
 
-  <assign|dot-code|<\macro|body>
-    <\pseudo-code>
-      <dot-lang|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
-  <assign|java-code|<\macro|body>
-    <\pseudo-code>
-      <java|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
-  <assign|javascript-code|<\macro|body>
-    <\pseudo-code>
-      <javascript-lang|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
-  <assign|json-code|<\macro|body>
-    <\pseudo-code>
-      <json-lang|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
   <assign|scilab-code|<\macro|body>
     <\pseudo-code>
       <scilab|<arg|body>>
@@ -293,18 +251,6 @@
     </pseudo-code>
   </macro>>
   
-  <assign|julia-code|<\macro|body>
-    <\pseudo-code>
-      <julia|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
-  <assign|scala-code|<\macro|body>
-    <\pseudo-code>
-      <scala|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
   <assign|r-code|<\macro|body>
     <\pseudo-code>
       <r|<arg|body>>
