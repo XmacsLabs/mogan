@@ -15,6 +15,7 @@
   (:use (kernel gui kbd-define)
         (utils edit selections)
         (prog scheme-tools)
+        (prog prog-mode)
         (code scheme-edit)
         (code dot-edit)
         (code java-edit)
