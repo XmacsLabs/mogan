@@ -22,3 +22,8 @@
 (lazy-format (data python) python)
 (lazy-format (data scala) scala)
 (lazy-format (data scheme) scheme)
+
+; Image data
+(lazy-format (data image)
+  postscript pdf svg
+  gif jpeg png ppm tif webp xpm)
