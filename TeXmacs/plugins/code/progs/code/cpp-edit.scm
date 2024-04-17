@@ -48,25 +48,3 @@
   ("[" (cpp-bracket-open "[" "]" ))
   ("]" (cpp-bracket-close "[" "]" ))
   ("\"" (cpp-bracket-open "\"" "\"" )))
-
-(kbd-map
-  (:mode in-prog-python?)
-  ("A-tab" (insert-tabstop))
-  ("cmd S-tab" (remove-tabstop)) ; TEMP (see above)
-  ("{" (python-bracket-open "{" "}" ))
-  ("}" (python-bracket-close "{" "}" ))
-  ("(" (python-bracket-open "(" ")" ))
-  (")" (python-bracket-close "(" ")" ))
-  ("[" (python-bracket-open "[" "]" ))
-  ("]" (python-bracket-close "[" "]" ))
-  ("\"" (python-bracket-open "\"" "\"" ))
-  ("'" (python-bracket-open "'" "'" )))
-
-(kbd-map
-  (:mode in-prog-fortran?)
-  ("(" (fortran-bracket-open "(" ")" ))
-  (")" (fortran-bracket-close "(" ")" ))
-  ("[" (fortran-bracket-open "[" "]" ))
-  ("]" (fortran-bracket-close "[" "]" ))
-  ("\"" (fortran-bracket-open "\"" "\"" ))
-  ("'" (fortran-bracket-open "'" "'" )))
