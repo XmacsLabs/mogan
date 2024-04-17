@@ -20,11 +20,11 @@
     </src-license>
   </src-title>>
 
-  <assign|javascript-lang|<macro|body|<with|mode|prog|prog-language|javascript|font-family|rm|<arg|body>>>>
+  <assign|javascript|<macro|body|<with|mode|prog|prog-language|javascript|font-family|rm|<arg|body>>>>
 
   <assign|javascript-code|<\macro|body>
     <\pseudo-code>
-      <javascript-lang|<arg|body>>
+      <javascript|<arg|body>>
     </pseudo-code>
   </macro>>
 </body>

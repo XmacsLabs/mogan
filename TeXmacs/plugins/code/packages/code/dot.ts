@@ -20,11 +20,11 @@
     </src-license>
   </src-title>>
 
-  <assign|dot-lang|<macro|body|<with|mode|prog|prog-language|dot|font-family|rm|<arg|body>>>>
+  <assign|dot|<macro|body|<with|mode|prog|prog-language|dot|font-family|rm|<arg|body>>>>
 
   <assign|dot-code|<\macro|body>
     <\pseudo-code>
-      <dot-lang|<arg|body>>
+      <dot|<arg|body>>
     </pseudo-code>
   </macro>>
 

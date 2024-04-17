@@ -24,11 +24,9 @@
 
   <assign|julia|<macro|body|<with|mode|prog|prog-language|julia|font-family|rm|<arg|body>>>>
 
-  <assign|julia-lang|<macro|body|<with|mode|prog|prog-language|julia|font-family|rm|<arg|body>>>>
-
   <assign|julia-code|<\macro|body>
     <\pseudo-code>
-      <julia-lang|<arg|body>>
+      <julia|<arg|body>>
     </pseudo-code>
   </macro>>
 </body>

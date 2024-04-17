@@ -20,11 +20,11 @@
     </src-license>
   </src-title>>
 
-  <assign|json-lang|<macro|body|<with|mode|prog|prog-language|json|font-family|rm|<arg|body>>>>
+  <assign|json|<macro|body|<with|mode|prog|prog-language|json|font-family|rm|<arg|body>>>>
 
   <assign|json-code|<\macro|body>
     <\pseudo-code>
-      <json-lang|<arg|body>>
+      <json|<arg|body>>
     </pseudo-code>
   </macro>>
 </body>

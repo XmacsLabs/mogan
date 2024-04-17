@@ -22,11 +22,9 @@
 
   <assign|java|<macro|body|<with|mode|prog|prog-language|java|font-family|rm|<arg|body>>>>
 
-  <assign|java-lang|<macro|body|<with|mode|prog|prog-language|java|font-family|rm|<arg|body>>>>
-
   <assign|java-code|<\macro|body>
     <\pseudo-code>
-      <java-lang|<arg|body>>
+      <java|<arg|body>>
     </pseudo-code>
   </macro>>
 </body>
