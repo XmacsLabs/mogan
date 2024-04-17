@@ -251,12 +251,6 @@
     </pseudo-code>
   </macro>>
   
-  <assign|julia-code|<\macro|body>
-    <\pseudo-code>
-      <julia|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
   <assign|r-code|<\macro|body>
     <\pseudo-code>
       <r|<arg|body>>
