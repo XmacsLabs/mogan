@@ -43,3 +43,5 @@ doxyfile
 
 .cache/
 compile_commands.json
+
+docs/**/plugin_binary.md
