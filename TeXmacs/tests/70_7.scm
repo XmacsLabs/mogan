@@ -1,10 +1,9 @@
 (use-modules
-  (data cpp)
   (data java)
   (data julia)
   (data scala)
   (data python)
-  (data scheme))
+  (data code))
 
 (define (regtest-cpp)
   (regression-test-group
