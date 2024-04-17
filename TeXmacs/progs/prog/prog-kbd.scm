@@ -14,14 +14,7 @@
 (texmacs-module (prog prog-kbd)
   (:use (kernel gui kbd-define)
         (utils edit selections)
-        (prog scheme-tools) 
-        (prog scheme-edit)
-        (prog dot-edit)
-        (prog java-edit)
-        (prog scala-edit)
-        (prog cpp-edit)
-        (prog python-edit)
-        (prog fortran-edit)))
+        (prog scheme-tools)))
 
 (kbd-map
   (:mode in-prog?)
@@ -56,54 +49,3 @@
   (", , var" "")
   ("- - var" "")
   ("- - - var" ""))
-
-(kbd-map
-  (:mode in-prog-scheme?)
-  ("(" (scheme-bracket-open "(" ")" ))
-  (")" (scheme-bracket-close "(" ")" ))
-  ("[" (scheme-bracket-open "[" "]" ))
-  ("]" (scheme-bracket-close "[" "]" ))
-  ("\"" (scheme-bracket-open "\"" "\"")))
-
-(kbd-map
-  (:require (and developer-mode? (in-prog-scheme?)))
-  ("A-F1" (scheme-popup-help (cursor-word)))
-  ("cmd A-F1" (scheme-inbuffer-help (cursor-word)))
-  ("std F1" (scheme-go-to-definition (cursor-word))))
-
-(kbd-map
-  (:require (and developer-mode? (in-prog-scheme?) 
-                 (== "scheme-file" (file-format (current-buffer-url)))))
-  ("std R" (run-scheme-file (current-buffer-url))))
-
-(kbd-map
-  (:mode in-prog-cpp?)
-  ("{" (cpp-bracket-open "{" "}" ))
-  ("}" (cpp-bracket-close "{" "}" ))
-  ("(" (cpp-bracket-open "(" ")" ))
-  (")" (cpp-bracket-close "(" ")" ))
-  ("[" (cpp-bracket-open "[" "]" ))
-  ("]" (cpp-bracket-close "[" "]" ))
-  ("\"" (cpp-bracket-open "\"" "\"" )))
-
-(kbd-map
-  (:mode in-prog-python?)
-  ("A-tab" (insert-tabstop))
-  ("cmd S-tab" (remove-tabstop)) ; TEMP (see above)
-  ("{" (python-bracket-open "{" "}" ))
-  ("}" (python-bracket-close "{" "}" ))
-  ("(" (python-bracket-open "(" ")" ))
-  (")" (python-bracket-close "(" ")" ))
-  ("[" (python-bracket-open "[" "]" ))
-  ("]" (python-bracket-close "[" "]" ))
-  ("\"" (python-bracket-open "\"" "\"" ))
-  ("'" (python-bracket-open "'" "'" )))
-
-(kbd-map
-  (:mode in-prog-fortran?)
-  ("(" (fortran-bracket-open "(" ")" ))
-  (")" (fortran-bracket-close "(" ")" ))
-  ("[" (fortran-bracket-open "[" "]" ))
-  ("]" (fortran-bracket-close "[" "]" ))
-  ("\"" (fortran-bracket-open "\"" "\"" ))
-  ("'" (fortran-bracket-open "'" "'" )))

@@ -15,7 +15,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (prog cpp-edit)
+(texmacs-module (code cpp-edit)
   (:use (prog prog-edit)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -38,3 +38,35 @@
   (:require prog-highlight-brackets?)
   (:mode in-prog-cpp?)
   (select-brackets-after-movement "([{" ")]}" "\\"))
+
+(kbd-map
+  (:mode in-prog-cpp?)
+  ("{" (cpp-bracket-open "{" "}" ))
+  ("}" (cpp-bracket-close "{" "}" ))
+  ("(" (cpp-bracket-open "(" ")" ))
+  (")" (cpp-bracket-close "(" ")" ))
+  ("[" (cpp-bracket-open "[" "]" ))
+  ("]" (cpp-bracket-close "[" "]" ))
+  ("\"" (cpp-bracket-open "\"" "\"" )))
+
+(kbd-map
+  (:mode in-prog-python?)
+  ("A-tab" (insert-tabstop))
+  ("cmd S-tab" (remove-tabstop)) ; TEMP (see above)
+  ("{" (python-bracket-open "{" "}" ))
+  ("}" (python-bracket-close "{" "}" ))
+  ("(" (python-bracket-open "(" ")" ))
+  (")" (python-bracket-close "(" ")" ))
+  ("[" (python-bracket-open "[" "]" ))
+  ("]" (python-bracket-close "[" "]" ))
+  ("\"" (python-bracket-open "\"" "\"" ))
+  ("'" (python-bracket-open "'" "'" )))
+
+(kbd-map
+  (:mode in-prog-fortran?)
+  ("(" (fortran-bracket-open "(" ")" ))
+  (")" (fortran-bracket-close "(" ")" ))
+  ("[" (fortran-bracket-open "[" "]" ))
+  ("]" (fortran-bracket-close "[" "]" ))
+  ("\"" (fortran-bracket-open "\"" "\"" ))
+  ("'" (fortran-bracket-open "'" "'" )))

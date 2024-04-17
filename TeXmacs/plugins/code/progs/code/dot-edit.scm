@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (prog dot-edit)
+(texmacs-module (code dot-edit)
   (:use (prog prog-edit)))
 
 (tm-define (get-tabstop)
