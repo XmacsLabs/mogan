@@ -330,8 +330,6 @@
 (lazy-format (convert latex init-latex) latex)
 (lazy-format (convert html init-html) html)
 (lazy-format (convert bibtex init-bibtex) bibtex)
-(lazy-format (convert images image-format)
-             postscript pdf svg xpm jpeg ppm gif png webp)
 (lazy-define (convert images tmimage)
              export-selection-as-graphics clipboard-copy-image)
 (lazy-define (convert rewrite init-rewrite) texmacs->code texmacs->verbatim)
