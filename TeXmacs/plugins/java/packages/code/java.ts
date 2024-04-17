@@ -21,6 +21,7 @@
   </src-title>>
 
   <use-module|(data java)>
+  <use-module|(code java-edit)>
 
   <assign|java|<macro|body|<with|mode|prog|prog-language|java|font-family|rm|<arg|body>>>>
 

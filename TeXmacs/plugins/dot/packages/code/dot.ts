@@ -21,6 +21,7 @@
   </src-title>>
 
   <use-module|(data dot)>
+  <use-module|(code dot-edit)>
 
   <assign|dot-lang|<macro|body|<with|mode|prog|prog-language|dot|font-family|rm|<arg|body>>>>
 
