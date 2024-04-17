@@ -20,6 +20,8 @@
     </src-license>
   </src-title>>
 
+  <use-module|(data dot)>
+
   <assign|dot-lang|<macro|body|<with|mode|prog|prog-language|dot|font-family|rm|<arg|body>>>>
 
   <assign|dot-code|<\macro|body>
