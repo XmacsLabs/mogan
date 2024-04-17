@@ -26,7 +26,7 @@ jobs:
       with:
         elvish-version: 0.19.2
     - name: build
-      shell: elvish bin/build_website
+      run: elvish bin/build_website
     - name: Deploy
       uses: s0/git-publish-subdir-action@develop
       env:

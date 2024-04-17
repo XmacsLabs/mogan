@@ -45,3 +45,4 @@ doxyfile
 compile_commands.json
 
 docs/**/plugin_binary.md
+docs/**/plugin_octave.md
