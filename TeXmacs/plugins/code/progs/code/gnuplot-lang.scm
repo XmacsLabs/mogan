@@ -15,7 +15,7 @@
   (:use (prog default-lang)))
 
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "dot") (== key "keyword")))
+  (:require (and (== lan "gnuplot") (== key "keyword")))
   `(,(string->symbol key)
     (keyword
       "set" "plot")))
