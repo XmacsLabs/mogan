@@ -1,9 +1,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-data.scm
-;; DESCRIPTION : various Data formats
-;; COPYRIGHT   : (C) 2024  Darcy Shen
+;; MODULE      : scala-lang.scm
+;; DESCRIPTION : Scala Language mode
+;; COPYRIGHT   : (C) 2017-2020  Darcy Shen
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
 ;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -11,11 +11,9 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; Source Code data
-(lazy-format (data code) cpp scheme python)
-(lazy-format (data csv) csv)
+(texmacs-module (code scala-mode)
+  (:use (kernel texmacs tm-modes)))
 
-; Image data
-(lazy-format (data image)
-  postscript pdf svg
-  gif jpeg png ppm tif webp xpm)
+(texmacs-modes
+  (in-scala% (== (get-env "prog-language") "scala"))
+  (in-prog-scala% #t in-prog% in-scala%))

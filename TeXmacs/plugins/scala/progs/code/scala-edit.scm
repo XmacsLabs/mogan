@@ -11,7 +11,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (code scala-edit)
-  (:use (prog prog-edit)))
+  (:use (prog prog-edit)
+        (code scala-mode)))
 
 (tm-define (get-tabstop)
   (:mode in-prog-scala?)
