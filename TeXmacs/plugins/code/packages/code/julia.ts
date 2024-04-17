@@ -20,8 +20,6 @@
     </src-license>
   </src-title>>
 
-  <assign|julia|<macro|<name|Julia>>>
-
   <assign|julia|<macro|body|<with|mode|prog|prog-language|julia|font-family|rm|<arg|body>>>>
 
   <assign|julia-code|<\macro|body>
