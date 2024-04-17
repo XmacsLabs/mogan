@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-data_json.scm
-;; DESCRIPTION : json data format
+;; MODULE      : csv.scm
+;; DESCRIPTION : CSV data format
 ;; COPYRIGHT   : (C) 2022  Darcy Shen, Joris van der Hoeven
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,32 +11,33 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(texmacs-module (data csv))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; JSON source files
+;; CSV source files
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define-format json
-  (:name "JSON")
-  (:suffix "json"))
+(define-format csv
+  (:name "CSV")
+  (:suffix "csv"))
 
-(define (texmacs->json x . opts)
+(define (texmacs->csv x . opts)
   (texmacs->verbatim x (acons "texmacs->verbatim:encoding" "SourceCode" '())))
 
-(define (json->texmacs x . opts)
+(define (csv->texmacs x . opts)
   (code->texmacs x))
 
-(define (json-snippet->texmacs x . opts)
+(define (csv-snippet->texmacs x . opts)
   (code-snippet->texmacs x))
 
-(converter texmacs-tree json-document
-  (:function texmacs->json))
+(converter texmacs-tree csv-document
+  (:function texmacs->csv))
 
-(converter json-document texmacs-tree
-  (:function json->texmacs))
+(converter csv-document texmacs-tree
+  (:function csv->texmacs))
   
-(converter texmacs-tree json-snippet
-  (:function texmacs->json))
+(converter texmacs-tree csv-snippet
+  (:function texmacs->csv))
 
-(converter json-snippet texmacs-tree
-  (:function json-snippet->texmacs))
-
+(converter csv-snippet texmacs-tree
+  (:function csv-snippet->texmacs))

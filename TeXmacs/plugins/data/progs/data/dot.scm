@@ -1,9 +1,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-prog_dot.scm
+;; MODULE      : dot.scm
 ;; DESCRIPTION : prog format for DOT
-;; COPYRIGHT   : (C) 2023  Darcy Shen, Joris van der Hoeven
+;; COPYRIGHT   : (C) 2022  Darcy Shen, Joris van der Hoeven
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
 ;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -11,6 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(texmacs-module (data dot))
 
 (define-format dot
   (:name "DOT Source Code")

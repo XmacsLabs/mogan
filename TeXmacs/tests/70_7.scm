@@ -1,19 +1,42 @@
+(use-modules
+  (data cpp)
+  (data java)
+  (data julia)
+  (data scala)
+  (data python))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; MODULE      : tm-convert-test.scm
-;; DESCRIPTION : Test suite for tm-convert
-;; COPYRIGHT   : (C) 2022  Darcy Shen
-;;
-;; This software falls under the GNU general public license version 3 or later.
-;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-;; in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define (regtest-cpp)
+  (regression-test-group
+   "cpp file suffix" "cpp format"
+   format-from-suffix :none
+   (test "*.cpp" "cpp" "cpp")
+   (test "*.hh" "hh" "cpp")
+   (test "*.hpp" "hpp" "cpp")
+   (test "*.cc" "cc" "cpp")))
 
+(define (regtest-scheme)
+  (regression-test-group
+   "scheme file suffix" "scheme format"
+   format-from-suffix :none
+   (test "*.scm" "scm" "scheme")))
 
-(texmacs-module (kernel texmacs tm-convert-test)
-  (:use (kernel texmacs tm-define)))
+(define (regtest-scala)
+  (regression-test-group
+   "scala file suffix" "scala format"
+   format-from-suffix :none
+   (test "*.scala" "scala" "scala")))
+
+(define (regtest-java)
+  (regression-test-group
+   "java file suffix" "java format"
+   format-from-suffix :none
+   (test "*.java" "java" "java")))
+
+(define (regtest-python)
+  (regression-test-group
+   "python file suffix" "python format"
+   format-from-suffix :none
+   (test "*.py" "py" "python")))
 
 (define (regtest-format?)
   (regression-test-group
@@ -44,19 +67,20 @@
    (test "cpp format" "hpp" "cpp")
    (test "cpp format" "cc" "cpp")
    (test "cpp format" "hh" "cpp")
-   (test "mathemagix format" "mmx" "mathemagix")
-   (test "mathemagix format" "mmh" "mathemagix")
-   (test "scilab format" "sci" "scilab")
-   (test "scilab format" "sce" "scilab")
    (test "texmacs format" "tm" "texmacs")
    (test "texmacs format" "ts" "texmacs")
    (test "texmacs format" "stm" "stm")
    (test "png format" "png" "png")
    (test "no such format" "no-such-format" "generic")))
 
-(tm-define (regtest-tm-convert)
-  (let ((n (+ (regtest-format?)
+(tm-define (test_70_7)
+  (let ((n (+ (regtest-cpp)
+              (regtest-java)
+              (regtest-python)
+              (regtest-scala)
+              (regtest-scheme)
+              (regtest-format?)
               (regtest-format-get-name)
               (regtest-format-from-suffix))))
     (display* "Total: " (object->string n) " tests.\n")
-    (display "Test suite of tm-convert: ok\n")))
+    (display "Test suite of 70_7: ok\n")))
