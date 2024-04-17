@@ -3,7 +3,8 @@
   (data java)
   (data julia)
   (data scala)
-  (data python))
+  (data python)
+  (data scheme))
 
 (define (regtest-cpp)
   (regression-test-group
