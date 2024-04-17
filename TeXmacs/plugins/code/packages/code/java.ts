@@ -20,8 +20,6 @@
     </src-license>
   </src-title>>
 
-  <assign|java|<macro|<name|Java>>>
-
   <assign|java|<macro|body|<with|mode|prog|prog-language|java|font-family|rm|<arg|body>>>>
 
   <assign|java-code|<\macro|body>

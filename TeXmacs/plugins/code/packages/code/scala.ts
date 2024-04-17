@@ -20,8 +20,6 @@
     </src-license>
   </src-title>>
 
-  <assign|scala|<macro|<name|Scala>>>
-
   <assign|scala|<macro|body|<with|mode|prog|prog-language|scala|font-family|rm|<arg|body>>>>
 
   <assign|scala-code|<\macro|body>
