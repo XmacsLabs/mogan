@@ -101,41 +101,6 @@ struct scheme_language_rep : language_rep {
   string        get_color (tree t, int start, int end);
 };
 
-struct mathemagix_language_rep : abstract_language_rep {
-  mathemagix_language_rep (string name);
-  text_property advance (tree t, int& pos);
-  array<int>    get_hyphens (string s);
-  void          hyphenate (string s, int after, string& left, string& right);
-  string        get_color (tree t, int start, int end);
-
-  bool belongs_to_identifier (char c);
-  void parse_identifier_or_markup (hashmap<string, string>& t, string s,
-                                   int& pos, bool postfix, bool& is_markup);
-  void parse_keyword (hashmap<string, string>& t, string s, int& pos);
-  void parse_modifier (hashmap<string, string>& t, string s, int& pos);
-  void parse_class (hashmap<string, string>& t, string s, int& pos);
-  void parse_postfix (hashmap<string, string>& t, string s, int& pos);
-  void parse_constant (hashmap<string, string>& t, string s, int& pos);
-};
-
-struct r_language_rep : abstract_language_rep {
-  r_language_rep (string name);
-  text_property advance (tree t, int& pos);
-  array<int>    get_hyphens (string s);
-  void          hyphenate (string s, int after, string& left, string& right);
-  string        get_color (tree t, int start, int end);
-
-  bool belongs_to_identifier (char c);
-  void parse_identifier (hashmap<string, string>& t, string s, int& pos);
-  void parse_identifier_or_markup (hashmap<string, string>& t, string s,
-                                   int& pos, bool postfix, bool& is_markup);
-  void parse_keyword (hashmap<string, string>& t, string s, int& pos);
-  void parse_modifier (hashmap<string, string>& t, string s, int& pos);
-  void parse_class (hashmap<string, string>& t, string s, int& pos);
-  void parse_postfix (hashmap<string, string>& t, string s, int& pos);
-  void parse_constant (hashmap<string, string>& t, string s, int& pos);
-};
-
 struct cpp_language_rep : abstract_language_rep {
   cpp_language_rep (string name);
   text_property advance (tree t, int& pos);
@@ -145,29 +110,6 @@ struct cpp_language_rep : abstract_language_rep {
 
   void   parse_preprocessing (string s, int& pos);
   string get_identifier_type (string s, int& pos);
-};
-
-struct scilab_language_rep : abstract_language_rep {
-  scilab_language_rep (string name);
-  text_property advance (tree t, int& pos);
-  array<int>    get_hyphens (string s);
-  void          hyphenate (string s, int after, string& left, string& right);
-  string        get_color (tree t, int start, int end);
-
-  bool   belongs_to_identifier (char c);
-  string parse_keywords (hashmap<string, string>& t, string s, int& pos);
-  string parse_operators (hashmap<string, string>& t, string s, int& pos);
-};
-
-struct fortran_language_rep : abstract_language_rep {
-  fortran_language_rep (string name);
-  text_property advance (tree t, int& pos);
-  array<int>    get_hyphens (string s);
-  void          hyphenate (string s, int after, string& left, string& right);
-  string        get_color (tree t, int start, int end);
-
-  string parse_keywords (hashmap<string, string>& t, string s, int& pos);
-  string parse_operators (hashmap<string, string>& t, string s, int& pos);
 };
 
 #endif // defined IMPL_LANGUAGE_H

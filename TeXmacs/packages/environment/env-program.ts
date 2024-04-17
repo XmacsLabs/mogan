@@ -165,8 +165,6 @@
 
   <assign|mathemagix|<macro|<name|Mathemagix>>>
 
-  <assign|scilab|<macro|<name|Scilab>>>
-
   <assign|fortran|<macro|<name|Fortran>>>
 
   <assign|python|<macro|<name|Python>>>
@@ -182,8 +180,6 @@
   <assign|python|<macro|body|<with|mode|prog|prog-language|python|font-family|rm|<arg|body>>>>
   
   <assign|r|<macro|body|<with|mode|prog|prog-language|r|font-family|rm|<arg|body>>>>
-
-  <assign|scilab|<macro|body|<with|mode|prog|prog-language|scilab|font-family|rm|<arg|body>>>>
 
   <assign|fortran|<macro|body|<with|mode|prog|prog-language|fortran|font-family|rm|<arg|body>>>>
 
@@ -224,12 +220,6 @@
   <assign|cpp-code|<\macro|body>
     <\pseudo-code>
       <cpp|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
-  <assign|scilab-code|<\macro|body>
-    <\pseudo-code>
-      <scilab|<arg|body>>
     </pseudo-code>
   </macro>>
 

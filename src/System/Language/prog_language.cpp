@@ -300,12 +300,6 @@ prog_language (string s) {
   if (language::instances->contains (s)) return language (s);
 
   if (s == "scheme") return make (language, s, tm_new<scheme_language_rep> (s));
-  if (s == "mathemagix" || s == "mmi" || s == "caas" || s == "mmshell")
-    return make (language, s, tm_new<mathemagix_language_rep> (s));
-  if (s == "scilab") return make (language, s, tm_new<scilab_language_rep> (s));
-  if (s == "r") return make (language, s, tm_new<r_language_rep> (s));
-  if (s == "fortran")
-    return make (language, s, tm_new<fortran_language_rep> (s));
 
   if (format_exists (s) && prog_lang_exists (s))
     return make (language, s, tm_new<prog_language_rep> (s));
