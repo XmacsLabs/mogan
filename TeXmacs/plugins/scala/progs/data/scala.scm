@@ -41,3 +41,5 @@
 
 (converter scala-snippet texmacs-tree
   (:function scala-snippet->texmacs))
+
+(lazy-format (data scala) scala)
