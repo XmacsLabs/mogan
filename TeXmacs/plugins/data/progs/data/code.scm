@@ -43,35 +43,6 @@
   (:function cpp-snippet->texmacs))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; python source files
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(define-format python
-  (:name "Python source code")
-  (:suffix "py" "pants"))
-  
-(define (texmacs->python x . opts)
-  (texmacs->verbatim x (acons "texmacs->verbatim:encoding" "SourceCode" '())))
-
-(define (python->texmacs x . opts)
-  (code->texmacs x))
-
-(define (python-snippet->texmacs x . opts)
-  (code-snippet->texmacs x))
-
-(converter texmacs-tree python-document
-  (:function texmacs->python))
-
-(converter python-document texmacs-tree
-  (:function python->texmacs))
-  
-(converter texmacs-tree python-snippet
-  (:function texmacs->python))
-
-(converter python-snippet texmacs-tree
-  (:function python-snippet->texmacs))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Scheme source files
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
