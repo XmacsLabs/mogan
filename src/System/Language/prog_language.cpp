@@ -307,7 +307,7 @@ prog_language (string s) {
   if (s == "fortran")
     return make (language, s, tm_new<fortran_language_rep> (s));
 
-  if (format_exists (s) && prog_lang_exists (s))
+  if (prog_lang_exists (s))
     return make (language, s, tm_new<prog_language_rep> (s));
 
   return make (language, s, tm_new<verb_language_rep> (s));
