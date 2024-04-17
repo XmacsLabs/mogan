@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-prog_julia.scm
-;; DESCRIPTION : prog format for Julia
+;; MODULE      : init-prog_scala.scm
+;; DESCRIPTION : prog format for Scala
 ;; COPYRIGHT   : (C) 2022  Darcy Shen, Joris van der Hoeven
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,33 +11,33 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(texmacs-module (data scala))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Julia source files
+;; Scala source files
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define-format julia
-  (:name "Julia source code")
-  (:suffix "jl"))
-  
-(define (texmacs->julia x . opts)
+(define-format scala
+  (:name "Scala source code")
+  (:suffix "scala" "sc" "sbt"))
+
+(define (texmacs->scala x . opts)
   (texmacs->verbatim x (acons "texmacs->verbatim:encoding" "SourceCode" '())))
 
-(define (julia->texmacs x . opts)
+(define (scala->texmacs x . opts)
   (code->texmacs x))
 
-(define (julia-snippet->texmacs x . opts)
+(define (scala-snippet->texmacs x . opts)
   (code-snippet->texmacs x))
 
-(converter texmacs-tree julia-document
-  (:function texmacs->julia))
+(converter texmacs-tree scala-document
+  (:function texmacs->scala))
 
-(converter julia-document texmacs-tree
-  (:function julia->texmacs))
+(converter scala-document texmacs-tree
+  (:function scala->texmacs))
   
-(converter texmacs-tree julia-snippet
-  (:function texmacs->julia))
+(converter texmacs-tree scala-snippet
+  (:function texmacs->scala))
 
-(converter julia-snippet texmacs-tree
-  (:function julia-snippet->texmacs))
-
+(converter scala-snippet texmacs-tree
+  (:function scala-snippet->texmacs))

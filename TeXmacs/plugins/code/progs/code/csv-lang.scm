@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (csv-lang)
+(texmacs-module (code csv-lang)
   (:use (prog default-lang)))
 
 (tm-define (parser-feature lan key)

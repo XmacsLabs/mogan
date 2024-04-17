@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-prog_cpp.scm
-;; DESCRIPTION : prog format for CPP
+;; MODULE      : init-prog_python.scm
+;; DESCRIPTION : prog format for Python
 ;; COPYRIGHT   : (C) 2022  Darcy Shen, Joris van der Hoeven
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,32 +11,33 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(texmacs-module (data python))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; C++ source files
+;; python source files
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define-format cpp
-  (:name "C++ source code")
-  (:suffix "cpp" "cc" "hpp" "hh"))
-
-(define (texmacs->cpp x . opts)
+(define-format python
+  (:name "Python source code")
+  (:suffix "py" "pants"))
+  
+(define (texmacs->python x . opts)
   (texmacs->verbatim x (acons "texmacs->verbatim:encoding" "SourceCode" '())))
 
-(define (cpp->texmacs x . opts)
+(define (python->texmacs x . opts)
   (code->texmacs x))
 
-(define (cpp-snippet->texmacs x . opts)
+(define (python-snippet->texmacs x . opts)
   (code-snippet->texmacs x))
 
-(converter texmacs-tree cpp-document
-  (:function texmacs->cpp))
+(converter texmacs-tree python-document
+  (:function texmacs->python))
 
-(converter cpp-document texmacs-tree
-  (:function cpp->texmacs))
+(converter python-document texmacs-tree
+  (:function python->texmacs))
   
-(converter texmacs-tree cpp-snippet
-  (:function texmacs->cpp))
+(converter texmacs-tree python-snippet
+  (:function texmacs->python))
 
-(converter cpp-snippet texmacs-tree
-  (:function cpp-snippet->texmacs))
+(converter python-snippet texmacs-tree
+  (:function python-snippet->texmacs))

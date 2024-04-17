@@ -26,7 +26,7 @@
 ; variable named where, in or isa is allowed though.
 
 
-(texmacs-module (julia-lang)
+(texmacs-module (code julia-lang)
   (:use (prog default-lang)))
 
 (tm-define (parser-feature lan key)

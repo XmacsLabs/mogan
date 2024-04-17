@@ -24,7 +24,7 @@ prog_language_rep::prog_language_rep (string name)
   if (DEBUG_PARSER)
     debug_packrat << "Building the " * name * " language parser" << LF;
 
-  string use_modules= "(use-modules (" * name * "-lang))";
+  string use_modules= "(use-modules (code " * name * "-lang))";
   eval (use_modules);
 
   tree keyword_config= get_parser_config (name, "keyword");
@@ -284,11 +284,11 @@ prog_lang_exists (string s) {
   return exists (url_system ("$TEXMACS_PATH/progs/prog/" * s * "-lang.scm")) ||
          exists (url_system ("$TEXMACS_PATH/plugins/" * s * "/progs/" * s *
                              "-lang.scm")) ||
-         exists (url_system ("$TEXMACS_PATH/plugins/code/progs/" * s *
+         exists (url_system ("$TEXMACS_PATH/plugins/code/progs/code/" * s *
                              "-lang.scm")) ||
          exists (url_system ("$TEXMACS_HOME_PATH/plugins/" * s * "/progs/" * s *
                              "-lang.scm")) ||
-         exists (url_system ("$TEXMACS_HOME_PATH/plugins/code/progs/" * s *
+         exists (url_system ("$TEXMACS_HOME_PATH/plugins/code/progs/code/" * s *
                              "-lang.scm"));
 }
 
