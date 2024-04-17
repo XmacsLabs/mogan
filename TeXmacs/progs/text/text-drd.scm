@@ -12,7 +12,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (text text-drd)
-  (:use (utils edit variants)))
+  (:use (utils edit variants)
+        (prog prog-drd)))
 
 ;; General groups
 
@@ -206,20 +207,6 @@
 (define-group algorithm-tag
   algorithm algorithm* named-algorithm
   specified-algorithm specified-algorithm* named-specified-algorithm)
-
-;; Code fragments
-
-(define-group code-tag
-  (inline-code-tag) (block-code-tag))
-
-(define-group inline-code-tag
-  verbatim scm cpp mmx r fortran octave
-  python julia java javascript json scala scilab shell)
-
-(define-group block-code-tag
-  verbatim-code scm-code cpp-code dot-code mmx-code r-code fortran-code
-  octave-code python-code julia-code java-code javascript-code json-code scala-code
-  scilab-code shell-code)
 
 ;; ornaments
 
