@@ -4,7 +4,7 @@
 
 <\body>
   <active*|<\src-title>
-    <compound|src-package|javascript|1.0>
+    <compound|src-package|dot|1.0>
 
     <\src-purpose>
       JavaScript Language
