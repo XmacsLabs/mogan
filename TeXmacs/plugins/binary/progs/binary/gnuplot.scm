@@ -19,7 +19,9 @@
          (list "/opt/homebrew/bin/gnuplot"
                "/usr/local/bin/gnuplot"))
         ((os-win32?)
-         (list "$USERPROFILE\\scoop\\apps\\gnuplot\\current\\bin\\gnuplot.exe"))
+         (list
+          "C:\\Program Files*\\gnuplot\\bin\\gnuplot.exe"
+          "$USERPROFILE\\scoop\\apps\\gnuplot\\current\\bin\\gnuplot.exe"))
         (else
          (list "/usr/bin/gnuplot"))))
 
