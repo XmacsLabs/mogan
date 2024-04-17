@@ -163,8 +163,6 @@
 
   <assign|c++|<macro|<name|C++>>>
 
-  <assign|java|<macro|<name|Java>>>
-
   <assign|mathemagix|<macro|<name|Mathemagix>>>
 
   <assign|scilab|<macro|<name|Scilab>>>
@@ -173,8 +171,6 @@
 
   <assign|python|<macro|<name|Python>>>
   
-  <assign|scala|<macro|<name|Scala>>>
-
   <assign|r|<macro|<name|R>>>
 
   <assign|shell|<macro|body|<with|mode|prog|prog-language|shell|font-family|rm|<arg|body>>>>
