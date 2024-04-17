@@ -30,8 +30,6 @@ using moebius::data::scm_quote;
 using moebius::data::scm_unquote;
 using moebius::drd::the_drd;
 
-RESOURCE_CODE (dictionary);
-
 /******************************************************************************
  * Dictionary initialization
  ******************************************************************************/

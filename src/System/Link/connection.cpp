@@ -55,7 +55,6 @@ public:
   void   interrupt ();
   void   listen ();
 };
-RESOURCE_CODE (connection);
 
 /******************************************************************************
  * Routines for connections

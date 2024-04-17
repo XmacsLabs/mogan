@@ -32,8 +32,6 @@ using moebius::data::block_to_scheme_tree;
 #define as_hexadecimal to_Hex
 #define from_hexadecimal from_hex
 
-RESOURCE_CODE (converter);
-
 /******************************************************************************
  * converter methods
  ******************************************************************************/

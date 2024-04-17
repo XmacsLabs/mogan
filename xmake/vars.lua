@@ -19,7 +19,7 @@ STABLE_VERSION = TEXMACS_VERSION
 STABLE_RELEASE = 1
 
 -- XmacsLabs dependencies
-LOLLY_VERSION = "1.4.20"
+LOLLY_VERSION = "1.4.21"
 
 -- Third-party dependencies
 S7_VERSION = "20230413"
