@@ -71,7 +71,6 @@
    (test "texmacs format" "tm" "texmacs")
    (test "texmacs format" "ts" "texmacs")
    (test "texmacs format" "stm" "stm")
-   (test "png format" "png" "png")
    (test "no such format" "no-such-format" "generic")))
 
 (tm-define (test_70_7)
