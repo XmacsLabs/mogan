@@ -1,5 +1,3 @@
-(use-modules (data scheme))
-
 (define (test-url-format)
   (regression-test-group
    "url-format" "format name"
