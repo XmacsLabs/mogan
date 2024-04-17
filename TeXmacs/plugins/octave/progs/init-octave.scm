@@ -12,6 +12,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-modules (binary octave))
+(lazy-format (data octave) octave)
 
 (define (octave-serialize lan t)
     (with u (pre-serialize lan t)
