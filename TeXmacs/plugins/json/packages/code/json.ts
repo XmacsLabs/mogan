@@ -20,6 +20,8 @@
     </src-license>
   </src-title>>
 
+  <use-module|(data json)>
+
   <assign|json|<macro|body|<with|mode|prog|prog-language|json|font-family|rm|<arg|body>>>>
 
   <assign|json-code|<\macro|body>

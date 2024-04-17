@@ -20,6 +20,8 @@
     </src-license>
   </src-title>>
 
+  <use-module|(data octave)>
+
   <assign|octave|<macro|body|<with|mode|prog|prog-language|octave|font-family|rm|<arg|body>>>>
 
   <assign|octave-code|<\macro|body>

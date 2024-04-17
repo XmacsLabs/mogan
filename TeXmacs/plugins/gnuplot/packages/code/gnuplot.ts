@@ -20,6 +20,8 @@
     </src-license>
   </src-title>>
 
+  <use-module|(data gnuplot)>
+
   <assign|gnuplot|<macro|body|<with|mode|prog|prog-language|gnuplot|font-family|rm|<arg|body>>>>
 
   <assign|gnuplot-code|<\macro|body>
