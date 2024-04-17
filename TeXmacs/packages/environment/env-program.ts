@@ -173,8 +173,6 @@
 
   <assign|python|<macro|<name|Python>>>
   
-  <assign|julia|<macro|<name|Julia>>>
-
   <assign|scala|<macro|<name|Scala>>>
 
   <assign|r|<macro|<name|R>>>
@@ -189,8 +187,6 @@
 
   <assign|python|<macro|body|<with|mode|prog|prog-language|python|font-family|rm|<arg|body>>>>
   
-  <assign|julia|<macro|body|<with|mode|prog|prog-language|julia|font-family|rm|<arg|body>>>>
-
   <assign|scala|<macro|body|<with|mode|prog|prog-language|scala|font-family|rm|<arg|body>>>>
 
   <assign|r|<macro|body|<with|mode|prog|prog-language|r|font-family|rm|<arg|body>>>>
@@ -200,8 +196,6 @@
   <assign|fortran|<macro|body|<with|mode|prog|prog-language|fortran|font-family|rm|<arg|body>>>>
 
   <assign|mmx|<macro|body|<with|mode|prog|prog-language|mathemagix|font-family|rm|<arg|body>>>>
-
-  <assign|json-lang|<macro|body|<with|mode|prog|prog-language|json|font-family|rm|<arg|body>>>>
 
   <assign|octave-lang|<macro|body|<with|mode|prog|prog-language|octave|font-family|rm|<arg|body>>>>
 
@@ -244,12 +238,6 @@
   <assign|java-code|<\macro|body>
     <\pseudo-code>
       <java|<arg|body>>
-    </pseudo-code>
-  </macro>>
-
-  <assign|json-code|<\macro|body>
-    <\pseudo-code>
-      <json-lang|<arg|body>>
     </pseudo-code>
   </macro>>
 
