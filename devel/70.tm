@@ -7,7 +7,9 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|70_5>|<cell|<value|da>>|<cell|xmake:
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Feature>|<cell|70_7>|<cell|<value|da>>|<cell|Code
+  plugins>>|<row|<cell|Chore>|<cell|70_6>|<cell|<value|jk>>|<cell|add test
+  for packrat>>|<row|<cell|Chore>|<cell|70_5>|<cell|<value|da>>|<cell|xmake:
   enable Mogan Code on windows>>|<row|<cell|Chore>|<cell|70_4>|<cell|<value|da>>|<cell|Update
   cpp language parser-feature>>|<row|<cell|Chore>|<cell|70_3>|<cell|<value|da>>|<cell|Python:
   support pants suffix>>|<row|<cell|Chore>|<cell|70_2>|<cell|<value|da>>|<cell|Code:
@@ -21,7 +23,7 @@
   or any later version published by the Free Software Foundation; with no
   Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
   Texts. A copy of the license is included in the section entitled "GNU Free
-  Documentation License".>v
+  Documentation License".>
 </body>
 
 <\initial>

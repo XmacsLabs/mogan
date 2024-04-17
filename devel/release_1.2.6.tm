@@ -57,7 +57,7 @@
     </cell>>|<row|<\cell>
       <dlink|70>
     </cell>|<\cell>
-      \;
+      <value|da>
     </cell>|<\cell>
       Mogan Code
     </cell>>|<row|<\cell>
