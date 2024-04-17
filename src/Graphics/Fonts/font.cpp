@@ -21,8 +21,6 @@
 #include "scheme.hpp"
 #include "tm_debug.hpp"
 
-RESOURCE_CODE (font);
-
 hashmap<string, double> lsub_guessed_table ();
 hashmap<string, double> lsup_guessed_table ();
 hashmap<string, double> rsub_guessed_table ();

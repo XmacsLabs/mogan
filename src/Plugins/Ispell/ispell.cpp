@@ -58,7 +58,6 @@ public:
 private:
   bool connect_spellchecker (string cmd);
 };
-RESOURCE_CODE (ispeller);
 
 /******************************************************************************
  * Routines for ispellers

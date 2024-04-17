@@ -19,8 +19,6 @@
 #include "tree_helper.hpp"
 #include "universal.hpp"
 
-RESOURCE_CODE (language);
-
 text_property_rep global_tpr;
 
 text_property_rep tp_normal_rep (TP_NORMAL);

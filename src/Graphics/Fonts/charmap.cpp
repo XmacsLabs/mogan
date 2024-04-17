@@ -22,8 +22,6 @@ using lolly::data::to_Hex;
 
 #define from_hexadecimal from_hex
 
-RESOURCE_CODE (charmap);
-
 /******************************************************************************
  * The charmap structure for finding the physical font
  ******************************************************************************/
