@@ -10,12 +10,3 @@
 ;; in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; Source Code data
-(lazy-format (data code) cpp scheme)
-(lazy-format (data csv) csv)
-
-; Image data
-(lazy-format (data image)
-  postscript pdf svg
-  gif jpeg png ppm tif webp xpm)
