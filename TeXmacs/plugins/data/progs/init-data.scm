@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-code.scm
-;; DESCRIPTION : various Code plugins
+;; MODULE      : init-data.scm
+;; DESCRIPTION : various Data formats
 ;; COPYRIGHT   : (C) 2024  Darcy Shen
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,6 +11,6 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (code)
-  (:use (code cpp-format)
-        (code dot-format)))
+(texmacs-module (data)
+  (:use (data cpp)
+        (data dot)))
