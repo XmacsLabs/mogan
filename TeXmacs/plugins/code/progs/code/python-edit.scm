@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (prog python-edit)
+(texmacs-module (code python-edit)
   (:use (prog prog-edit)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -67,3 +67,16 @@
 (tm-define (kbd-paste)
   (:mode in-prog-python?)
   (clipboard-paste-import "python" "primary"))
+
+(kbd-map
+  (:mode in-prog-python?)
+  ("A-tab" (insert-tabstop))
+  ("cmd S-tab" (remove-tabstop)) ; TEMP (see above)
+  ("{" (python-bracket-open "{" "}" ))
+  ("}" (python-bracket-close "{" "}" ))
+  ("(" (python-bracket-open "(" ")" ))
+  (")" (python-bracket-close "(" ")" ))
+  ("[" (python-bracket-open "[" "]" ))
+  ("]" (python-bracket-close "[" "]" ))
+  ("\"" (python-bracket-open "\"" "\"" ))
+  ("'" (python-bracket-open "'" "'" )))

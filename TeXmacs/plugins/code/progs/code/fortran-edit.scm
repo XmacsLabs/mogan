@@ -15,7 +15,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (prog fortran-edit)
+(texmacs-module (code fortran-edit)
   (:use (prog prog-edit)))
 
 
@@ -89,3 +89,12 @@
   ("syntax:fortran:constant_type" "#4040c0" notify-fortran-pref)
   ("syntax:fortran:constant_number" "#4040c0" notify-fortran-pref)
   ("syntax:fortran:constant_string" "dark red" notify-fortran-pref))
+
+(kbd-map
+  (:mode in-prog-fortran?)
+  ("(" (fortran-bracket-open "(" ")" ))
+  (")" (fortran-bracket-close "(" ")" ))
+  ("[" (fortran-bracket-open "[" "]" ))
+  ("]" (fortran-bracket-close "[" "]" ))
+  ("\"" (fortran-bracket-open "\"" "\"" ))
+  ("'" (fortran-bracket-open "'" "'" )))

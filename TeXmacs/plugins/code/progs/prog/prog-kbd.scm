@@ -1,0 +1,51 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; MODULE      : prog-kbd.scm
+;; DESCRIPTION : Shortcuts for program modes
+;; COPYRIGHT   : (C) 2013 Miguel de Benito Delgado
+;;
+;; This software falls under the GNU general public license version 3 or later.
+;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+;; in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(texmacs-module (prog prog-kbd)
+  (:use (kernel gui kbd-define)
+        (utils edit selections)
+        (prog scheme-tools)
+        (code scheme-edit)
+        (code dot-edit)
+        (code java-edit)
+        (code scala-edit)
+        (code cpp-edit)
+        (code python-edit)
+        (code fortran-edit)))
+
+(kbd-map
+  (:mode in-prog?)
+  ("cmd i" (program-indent #f))
+  ("cmd I" (program-indent #t)) ; TODO
+  ("cmd tab" (program-indent #f))
+  ("cmd S-tab" (program-indent #t)) ; TODO
+  ("cmd A-tab" (program-indent-all #f))
+
+  ;; override some text mode shortcuts
+  ("space var" (insert-tabstop))
+  ("space var var" (begin (insert-tabstop) (insert-tabstop)))
+  ("$" (insert "$"))
+  ("$ var" (make 'math))
+  ("\\" "\\")
+  ("\\ var" (make 'hybrid))
+  ("\"" "\"")
+  ("`" "`")
+  ("` var" "<#2018>")
+  ("'" "'")
+  ("' var" "<#2019>")
+  ("< <" "<less><less>")
+  ("> >" "<gtr><gtr>")
+  ("' '" "''")
+  ("` `" "``")
+  ("- -" "--")
+  ("- - -" "---"))
