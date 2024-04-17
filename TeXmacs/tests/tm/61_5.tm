@@ -1,8 +1,16 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|generic|no-page-numbers|chinese>>
+<style|<tuple|generic|no-page-numbers|chinese|gnuplot>>
 
 <\body>
+  <section|Syntax>
+
+  <\gnuplot-code>
+    set xxx
+
+    plot sin(x)
+  </gnuplot-code>
+
   <section|Windows>
 
   <\session|scheme|default>
@@ -14,10 +22,10 @@
       'conda-launchers conda-launchers 'conda-launcher conda-launcher
       'python-launcher python-launcher 'python-utf8-command
       python-utf8-command 'python-serialize python-serialize
-      'scala-snippet-\<gtr\>texmacs scala-snippet-\<gtr\>texmacs
-      'scala-\<gtr\>texmacs scala-\<gtr\>texmacs 'texmacs-\<gtr\>scala
-      texmacs-\<gtr\>scala 'python-snippet-\<gtr\>texmacs
-      python-snippet-\<gtr\>texmacs ...))
+      'python-snippet-\<gtr\>texmacs python-snippet-\<gtr\>texmacs
+      'python-\<gtr\>texmacs python-\<gtr\>texmacs 'texmacs-\<gtr\>python
+      texmacs-\<gtr\>python (symbol "\<#6B63\>æ\\x96;¹\<#5F62\>")
+      \<#6B63\>\<#65B9\>\<#5F62\> ...))
     </unfolded-io>
 
     <\unfolded-io|Scheme] >
@@ -48,16 +56,16 @@
       'conda-launchers conda-launchers 'conda-launcher conda-launcher
       'python-launcher python-launcher 'python-utf8-command
       python-utf8-command 'python-serialize python-serialize
-      'scala-snippet-\<gtr\>texmacs scala-snippet-\<gtr\>texmacs
-      'scala-\<gtr\>texmacs scala-\<gtr\>texmacs 'texmacs-\<gtr\>scala
-      texmacs-\<gtr\>scala 'python-snippet-\<gtr\>texmacs
-      python-snippet-\<gtr\>texmacs ...))
+      'python-snippet-\<gtr\>texmacs python-snippet-\<gtr\>texmacs
+      'python-\<gtr\>texmacs python-\<gtr\>texmacs 'texmacs-\<gtr\>python
+      texmacs-\<gtr\>python (symbol "\<#6B63\>æ\\x96;¹\<#5F62\>")
+      \<#6B63\>\<#65B9\>\<#5F62\> ...))
     </unfolded-io>
 
     <\unfolded-io|Scheme] >
       (find-binary-gnuplot)
     <|unfolded-io>
-      \<less\>url /opt/homebrew/bin/gnuplot\<gtr\>
+      \<less\>url /usr/bin/gnuplot\<gtr\>
     </unfolded-io>
 
     <\unfolded-io|Scheme] >
@@ -69,7 +77,7 @@
     <\unfolded-io|Scheme] >
       (version-binary-gnuplot)
     <|unfolded-io>
-      gnuplot 6.0 patchlevel 0
+      gnuplot 5.4 patchlevel 4
     </unfolded-io>
 
     <\input|Scheme] >
@@ -89,19 +97,24 @@
   <\collection>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-2|<tuple|2|1>>
+    <associate|auto-3|<tuple|3|1>>
   </collection>
 </references>
 
 <\auxiliary>
   <\collection>
     <\associate|toc>
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Windows>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Syntax>
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-1><vspace|0.5fn>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>macOS>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Windows>
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-2><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>macOS>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-3><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
