@@ -1,7 +1,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : dot-format.scm
+;; MODULE      : dot.scm
 ;; DESCRIPTION : prog format for DOT
 ;; COPYRIGHT   : (C) 2022  Darcy Shen, Joris van der Hoeven
 ;;

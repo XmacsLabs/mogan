@@ -1,7 +1,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : cpp-format.scm
+;; MODULE      : cpp.scm
 ;; DESCRIPTION : prog format for CPP
 ;; COPYRIGHT   : (C) 2022  Darcy Shen, Joris van der Hoeven
 ;;

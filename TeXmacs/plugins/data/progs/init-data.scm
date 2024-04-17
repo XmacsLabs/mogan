@@ -13,4 +13,11 @@
 
 (texmacs-module (data)
   (:use (data cpp)
-        (data dot)))
+        (data csv)
+        (data dot)
+        (data java)
+        (data javascript)
+        (data json)
+        (data julia)
+        (data python)
+        (data scala)))
