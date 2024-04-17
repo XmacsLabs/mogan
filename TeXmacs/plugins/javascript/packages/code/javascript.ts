@@ -20,6 +20,8 @@
     </src-license>
   </src-title>>
 
+  <use-module|(data javascript)>
+
   <assign|javascript|<macro|body|<with|mode|prog|prog-language|javascript|font-family|rm|<arg|body>>>>
 
   <assign|javascript-code|<\macro|body>
