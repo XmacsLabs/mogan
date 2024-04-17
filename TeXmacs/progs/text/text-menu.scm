@@ -219,11 +219,9 @@
   (-> "Inline code"
       ("C++" (make 'cpp))
       ("Fortran" (make 'fortran))
-      ("Java" (make 'java))
       ("Mathemagix" (make 'mmx))
       ("Python" (make 'python))
       ("R" (make 'r))
-      ("Scala" (make 'scala))
       ("Scheme" (make 'scm))
       ("Shell" (make 'shell))
       ("Scilab" (make 'scilab))
@@ -231,11 +229,9 @@
   (-> "Block of code"
       ("C++" (make 'cpp-code))
       ("Fortran" (make 'fortran-code))
-      ("Java" (make 'java-code))
       ("Mathemagix" (make 'mmx-code))
       ("Python" (make 'python-code))
       ("R" (make 'r-code))
-      ("Scala" (make 'scala-code))
       ("Scheme" (make 'scm-code))
       ("Shell" (make 'shell-code))
       ("Scilab" (make 'scilab-code))
