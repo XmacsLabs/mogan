@@ -122,10 +122,6 @@
 
   <assign|python|<macro|body|<with|mode|prog|prog-language|python|<tt-prog-font|<arg|body>>>>>
 
-  <assign|scilab|<macro|body|<with|mode|prog|prog-language|scilab|<tt-prog-font|<arg|body>>>>>
-
-  <assign|mmx|<macro|body|<with|mode|prog|prog-language|mathemagix|<tt-prog-font|<arg|body>>>>>
-
   <active*|<\src-comment>
     Hacks for the typewriter font in plug-in sessions.
   </src-comment>>

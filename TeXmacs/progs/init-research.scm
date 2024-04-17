@@ -326,6 +326,16 @@
 ;;(display* "memory: " (texmacs-memory) " bytes\n")
 
 ;;(display "Booting converters\n")
+
+; Source Code data
+(lazy-format (data code) cpp scheme)
+(lazy-format (data csv) csv)
+
+; Image data
+(lazy-format (data image)
+  postscript pdf svg
+  gif jpeg png ppm tif webp xpm)
+
 (lazy-format (convert rewrite init-rewrite) texmacs verbatim)
 (lazy-format (convert latex init-latex) latex)
 (lazy-format (convert html init-html) html)

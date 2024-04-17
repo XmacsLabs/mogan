@@ -218,23 +218,15 @@
   ---
   (-> "Inline code"
       ("C++" (make 'cpp))
-      ("Fortran" (make 'fortran))
-      ("Mathemagix" (make 'mmx))
       ("Python" (make 'python))
-      ("R" (make 'r))
       ("Scheme" (make 'scm))
       ("Shell" (make 'shell))
-      ("Scilab" (make 'scilab))
       ("Verbatim" (make 'verbatim)))
   (-> "Block of code"
       ("C++" (make 'cpp-code))
-      ("Fortran" (make 'fortran-code))
-      ("Mathemagix" (make 'mmx-code))
       ("Python" (make 'python-code))
-      ("R" (make 'r-code))
       ("Scheme" (make 'scm-code))
       ("Shell" (make 'shell-code))
-      ("Scilab" (make 'scilab-code))
       ("Verbatim" (make 'verbatim-code))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
