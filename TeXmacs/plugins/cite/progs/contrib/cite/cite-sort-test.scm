@@ -11,8 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (utils cite cite-sort-test)
-  (:use (utils cite cite-sort)))
+(texmacs-module (contrib cite cite-sort-test)
+  (:use (contrib cite cite-sort)))
 
 (define (regtest-indice-sort)
   (regression-test-group
