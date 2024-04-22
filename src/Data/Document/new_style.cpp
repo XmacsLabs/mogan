@@ -62,13 +62,22 @@ hashmap<string, bool>        hidden_packages (false);
 static url
 resolve_local_style (string style_name) {
   string pack= style_name * ".ts";
-  return resolve (url ("$TEXMACS_STYLE_PATH") * pack);
+  url    ret = resolve (url ("$TEXMACS_STYLE_PATH") * pack);
+  if (DEBUG_IO) {
+    debug_io << "Resolved local style: " << style_name << " -> " << ret << LF;
+  }
+  return ret;
 }
 
 static url
 resolve_relative_style (string style_name, url master) {
   string pack= style_name * ".ts";
-  return resolve (expand (head (master) * url_ancestor () * pack));
+  url    ret = resolve (expand (head (master) * url_ancestor () * pack));
+  if (DEBUG_IO) {
+    debug_io << "Resolved relative style: (" << style_name << ", " << master
+             << ")" << LF << "-> " << ret << LF;
+  }
+  return ret;
 }
 
 url
