@@ -32,11 +32,12 @@
     green>|<cwith|18|18|2|2|cell-background|pastel
     green>|<cwith|17|17|2|2|cell-background|pastel
     green>|<cwith|16|16|2|2|cell-background|pastel
-    green>|<cwith|10|10|2|2|cell-background|pastel
     green>|<cwith|19|19|2|2|cell-background|pastel
     green>|<cwith|22|22|2|2|cell-background|pastel
     green>|<cwith|25|25|2|2|cell-hyphen|n>|<cwith|25|25|2|2|cell-background|pastel
-    green>|<cwith|26|26|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|26|26|2|2|cell-background|pastel
+    green>|<cwith|28|28|2|2|cell-background|pastel
+    green>|<cwith|10|10|2|2|cell-background|>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       5_1
@@ -135,7 +136,7 @@
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      OSPP 2023 Info
+      Users of Mogan
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
@@ -266,7 +267,7 @@
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
-      Who are using Mogan?
+      OSPP Info
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>

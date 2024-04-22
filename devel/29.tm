@@ -70,6 +70,22 @@
       Tangdouer
     </cell>|<\cell>
       Refactor relevant code to improve code quality
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      29_8
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      File-\<gtr\>Import-\<gtr\>Pdf with embedded document
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      29_9
+    </cell>|<\cell>
+      mgubi
+    </cell>|<\cell>
+      OSPP PDF: Fix for a couple of bugs
     </cell>>>>
   </wide-tabular>
 

@@ -7,7 +7,8 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|6|6|5|5|cell-halign|l>|<cwith|6|6|5|5|cell-valign|b>|<table|<row|<cell|Chore>|<cell|41_7>|<cell|v1.2.6>|<cell|<value|da>>|<cell|gs:
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|6|6|5|5|cell-halign|l>|<cwith|6|6|5|5|cell-valign|b>|<cwith|1|-1|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Chore>|<cell|41_7>|<cell|v1.2.6>|<cell|<value|da>>|<cell|gs:
   implement eps2pdf via scheme>>|<row|<cell|Chore>|<cell|41_6>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Fix
   gs binary on macOS>>|<row|<cell|Chore>|<cell|41_5>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Fix
   gs_to_png on macOS>>|<row|<cell|Chore>|<cell|41_4>|<cell|v1.2.0>|<cell|<value|da>>|<cell|clang-format

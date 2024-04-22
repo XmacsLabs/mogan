@@ -12,13 +12,15 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|8|8|1|1|cell-background|>|<cwith|12|12|2|2|cell-valign|c>|<cwith|12|12|1|1|cell-background|pastel
-    green>|<cwith|19|19|1|1|cell-background|pastel
+    <tformat|<cwith|8|8|1|1|cell-background|>|<cwith|13|13|2|2|cell-valign|c>|<cwith|13|13|1|1|cell-background|pastel
+    green>|<cwith|22|22|1|1|cell-background|pastel
+    green>|<cwith|27|27|1|1|cell-background|pastel
     green>|<cwith|23|23|1|1|cell-background|pastel
+    green>|<cwith|12|12|1|1|cell-background|pastel
+    green>|<cwith|28|28|3|3|cell-valign|b>|<cwith|28|28|1|1|cell-background|pastel
     green>|<cwith|20|20|1|1|cell-background|pastel
-    green>|<cwith|11|11|1|1|cell-background|pastel
-    green>|<cwith|24|24|3|3|cell-valign|b>|<cwith|24|24|1|1|cell-background|pastel
-    green>|<table|<row|<\cell>
+    green>|<cwith|1|1|1|1|cell-background|>|<cwith|10|10|1|1|cell-background|pastel
+    green>|<cwith|16|16|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|78>
     </cell>|<\cell>
       <value|da>
@@ -47,7 +49,7 @@
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
-      \;
+      Improvements on sessions
     </cell>>|<row|<\cell>
       <dlink|71>
     </cell>|<\cell>
@@ -66,6 +68,12 @@
       <value|da>
     </cell>|<\cell>
       Improvements for Chinese users in 1.2.x
+    </cell>>|<row|<\cell>
+      <dlink|68>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      \;
     </cell>>|<row|<\cell>
       <dlink|67>
     </cell>|<\cell>
@@ -91,6 +99,12 @@
     </cell>|<\cell>
       Image import and exports
     </cell>>|<row|<\cell>
+      <dlink|62>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Mogan STEM Suite branding
+    </cell>>|<row|<\cell>
       <dlink|61>
     </cell>|<\cell>
       <value|da>
@@ -108,6 +122,12 @@
       Darcy
     </cell>|<\cell>
       Tuning Keyboard Shortcuts
+    </cell>>|<row|<\cell>
+      <dlink|56>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Cache System
     </cell>>|<row|<\cell>
       <dlink|44>
     </cell>|<\cell>
@@ -144,6 +164,12 @@
       Darcy
     </cell>|<\cell>
       Chinese Dictionary
+    </cell>>|<row|<\cell>
+      <dlink|20>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Editor related issues
     </cell>>|<row|<\cell>
       <dlink|19>
     </cell>|<\cell>

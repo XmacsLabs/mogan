@@ -7,9 +7,13 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|27|27|5|5|cell-hyphen|t>|<cwith|1|-1|2|2|cell-background|pastel
-  green>|<cwith|6|6|2|2|cell-background|>|<cwith|1|5|2|2|cell-background|>|<cwith|7|8|2|2|cell-background|pastel
-  green>|<table|<row|<cell|Chore>|<cell|73_30>|<cell|v1.2.6>|<cell|<value|jk>>|<cell|xmake:
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|30|30|5|5|cell-hyphen|t>|<cwith|1|-1|2|2|cell-background|pastel
+  green>|<cwith|9|9|2|2|cell-background|>|<cwith|4|8|2|2|cell-background|>|<cwith|10|11|2|2|cell-background|pastel
+  green>|<cwith|2|2|2|2|cell-background|>|<cwith|1|1|2|2|cell-background|>|<table|<row|<cell|Chore>|<cell|73_33>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Upgrade
+  CICD from macOS 11 to macOS 12>>|<row|<cell|Chore>|<cell|73_32>|<cell|v1.2.6>|<cell|<value|da>>|<cell|xmake:
+  install InfoPlist.strings for English and
+  Chinese>>|<row|<cell|Bug>|<cell|73_31>|<cell|v1.2.6>|<cell|<value|da>>|<cell|xmake:
+  fix Info.plist codesign>>|<row|<cell|Chore>|<cell|73_30>|<cell|v1.2.6>|<cell|<value|jk>>|<cell|xmake:
   add the profile mode>>|<row|<cell|Chore>|<cell|73_29>|<cell|v1.2.6>|<cell|<value|da>>|<cell|xmake:
   Rework on Mogan Research>>|<row|<cell|Chore>|<cell|73_28>|<cell|v1.2.6>|<cell|<value|da>>|<cell|xmake:
   rework on the beamer target>>|<row|<cell|Chore>|<cell|73_27>|<cell|v1.2.6>|<cell|<value|da>>|<cell|xmake:

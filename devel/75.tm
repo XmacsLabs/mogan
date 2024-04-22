@@ -10,7 +10,9 @@
 
   <section*|Tasks in Mogan 1.2.6>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|7|7|5|5|cell-hyphen|t>|<cwith|3|3|5|5|cell-hyphen|t>|<cwith|4|4|5|5|cell-hyphen|t>|<table|<row|<cell|>|<cell|>|<cell|lolly>|<cell|moebius>|<cell|>>|<row|<cell|75_19>|<cell|<value|da>>|<cell|1.4.11>|<cell|0.1.13\<rightarrow\>0.1.14>|<cell|Migrate
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|13|13|5|5|cell-hyphen|t>|<cwith|9|9|5|5|cell-hyphen|t>|<cwith|10|10|5|5|cell-hyphen|t>|<table|<row|<cell|>|<cell|>|<cell|lolly>|<cell|moebius>|<cell|>>|<row|<cell|75_25>|<cell|<value|da>>|<cell|1.4.21>|<cell|>|<cell|Deprecate
+  <cpp|RESOURCE_CODE>>>|<row|<cell|75_24>|<cell|<value|da>>|<cell|1.4.20>|<cell|0.1.18>|<cell|>>|<row|<cell|75_23>|<cell|<value|da>>|<cell|1.4.19>|<cell|>|<cell|>>|<row|<cell|75_22>|<cell|<value|da>>|<cell|1.4.18>|<cell|>|<cell|Add
+  string_u8 as an alias of string>>|<row|<cell|75_21>|<cell|<value|da>>|<cell|1.4.17>|<cell|0.1.17>|<cell|>>|<row|<cell|75_20>|<cell|<value|da>>|<cell|1.4.13>|<cell|>|<cell|>>|<row|<cell|75_19>|<cell|<value|da>>|<cell|1.4.11>|<cell|0.1.13\<rightarrow\>0.1.14>|<cell|Migrate
   S7 integration to moebius>>|<row|<cell|75_18>|<cell|<value|da>>|<cell|>|<cell|0.1.12>|<\cell>
     Put scheme format under <cpp|moebius::data>
   </cell>>|<row|<cell|75_17>|<cell|<value|da>>|<cell|>|<cell|0.1.11>|<\cell>

@@ -21,9 +21,12 @@
   A-q instead M-q to make symbol on Linux and
   Windows>>|<row|<cell|Chore>|<cell|65_8>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Fix
   option- shortcuts on macOS>>|<row|<cell|>|<cell|>|<cell|>|<cell|v1.2.1>|<cell|Fix
-  bug: press option will input text>>>>>
+  bug: press option will input text>>|<row|<cell|Chore>|<cell|65_9>|<cell|<value|da>>|<cell|v1.2.6>|<cell|Deprecate
+  Qt 5 support>>|<row|<cell|Chore>|<cell|65_10>|<cell|<value|da>>|<cell|v1.2.6>|<cell|Qt:
+  deprecate Qt::AA_UseHighDpiPixmaps>>|<row|<cell|Chore>|<cell|65_11>|<cell|<value|da>>|<cell|v1.2.6>|<cell|Qt
+  6: deprecate QVariant::canConvert(int targetTypeId)>>>>>
 
-  <tmdoc-copyright|2023|Darcy>
+  <tmdoc-copyright|2023-2024|Darcy>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
