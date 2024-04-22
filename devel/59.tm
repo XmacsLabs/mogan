@@ -7,7 +7,11 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|5|5|cell-hyphen|t>|<cwith|13|13|5|5|cell-hyphen|t>|<cwith|14|14|5|5|cell-hyphen|t>|<cwith|15|15|5|5|cell-hyphen|t>|<cwith|16|16|5|5|cell-hyphen|t>|<cwith|17|17|5|5|cell-hyphen|t>|<cwith|18|18|5|5|cell-hyphen|t>|<cwith|20|20|5|5|cell-hyphen|t>|<cwith|21|21|5|5|cell-hyphen|t>|<cwith|27|27|2|2|cell-halign|l>|<cwith|27|27|5|5|cell-hyphen|t>|<cwith|26|26|5|5|cell-hyphen|t>|<cwith|25|25|5|5|cell-hyphen|t>|<cwith|24|24|5|5|cell-hyphen|t>|<cwith|23|23|1|1|cell-valign|b>|<cwith|23|23|5|5|cell-hyphen|t>|<cwith|22|22|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|59_24>|<cell|v1.2.5>|<cell|<value|da>>|<\cell>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|5|5|cell-hyphen|t>|<cwith|15|15|5|5|cell-hyphen|t>|<cwith|16|16|5|5|cell-hyphen|t>|<cwith|17|17|5|5|cell-hyphen|t>|<cwith|18|18|5|5|cell-hyphen|t>|<cwith|19|19|5|5|cell-hyphen|t>|<cwith|20|20|5|5|cell-hyphen|t>|<cwith|22|22|5|5|cell-hyphen|t>|<cwith|23|23|5|5|cell-hyphen|t>|<cwith|29|29|2|2|cell-halign|l>|<cwith|29|29|5|5|cell-hyphen|t>|<cwith|28|28|5|5|cell-hyphen|t>|<cwith|27|27|5|5|cell-hyphen|t>|<cwith|26|26|5|5|cell-hyphen|t>|<cwith|25|25|1|1|cell-valign|b>|<cwith|25|25|5|5|cell-hyphen|t>|<cwith|24|24|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|59_26>|<cell|v1.2.6>|<cell|<value|da>>|<\cell>
+    Migrate kbd for greek symbols from text-kbd to text-kbd-utf8
+  </cell>>|<row|<cell|Chore>|<cell|59_25>|<cell|v1.2.6>|<cell|<value|da>>|<\cell>
+    Remove quosiquote related keybinding in text mode
+  </cell>>|<row|<cell|Chore>|<cell|59_24>|<cell|v1.2.5>|<cell|<value|da>>|<\cell>
     Fix unexpected commit of unrecognized shortcuts
   </cell>>|<row|<cell|Chore>|<cell|59_23>|<cell|v1.2.5>|<cell|<value|da>>|<\cell>
     macOS: Command +/- with/without shift to zoom in/out
@@ -65,7 +69,7 @@
     Swap the shortcuts of Preview and Preview screen
   </cell>>>>>
 
-  <tmdoc-copyright|2023|Darcy>
+  <tmdoc-copyright|2023-2024|Darcy>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
