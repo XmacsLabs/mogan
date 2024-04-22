@@ -24,6 +24,51 @@
 + MIT的[SICP课程](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/syllabus/)
 + SICP中文译本：[《计算机程序的构造和解释》](https://book.douban.com/subject/1148282/)
 + SICP课本官网：https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html
++ R7RS Small: https://small.r7rs.org
+
+## 第8课：
++ B站回放：https://www.bilibili.com/video/BV1eT421y7bf/
++ 操作系统：Debian 12
++ 墨干版本：v1.2.5.3
+
+MathAgape（人类）总结的视频内容
+
++ `00:11` 从本视频开始，进入 SICP 的第二章——构造数据抽象（第一章是构造函数抽象）。本视频对应的是 SICP 2.1.1～2.1.3的内容。
+
+### 有理数的抽象
++ `01:22` 有理数与分式：构造函数、选择函数、显示函数
++ `03:54` 有理数的算数运算：分式的加、减、乘、除
++ `06:55` 定义分式加：用到 let*、选择函数、构造函数，并用 gcd 处理约分
+
+### 抽象层级
++ `12:15` 接口与实现的分离
++ `16:18` 比喻：做蛋挞不必关心先有鸡还是先有蛋
++ `13:43` 答疑：浮点数？
++ `18:22` 答疑：如何让用户自然语言做计算？（NLP，Torch）
+
+### 有序对的抽象
++ `22:58` 有序对构造器、选择器
+
+### 链表的抽象
++ `26:24` 链表的构造器：()，cons；链表的选择器：car，cdr
++ `27:55` 一个特殊的构造器：list
+
+### 定义数据
++ `35:45` 定义数据的一般性步骤：确定逻辑自洽的选择函数和构造函数
++ `37:50` 例子：基于皮亚诺公理，定义自然数这种数据
+
+### 总结
++ `42:14` 为什么需要抽象层级？
++ `44:15` Scheme 原语（R7RS small）
+
+### 答疑、补充
++ `46:14` 答疑：关于书上 2.1.3 的代码
++ `51:26` 补充：链表本质是递归的嵌套的 pair，即使显示出来看起来是平铺的形式
+
+### 代码清单
++ `54:01` 中文编程与分数的排版显示是如何实现的
++ `58:04` 在构造时就化简分数
++ `59:02` 架构师与抽象层级
 
 ## 第7课：用高阶函数做抽象-lambda,let
 + B站回放：https://www.bilibili.com/video/BV16T42117es/
