@@ -13,13 +13,14 @@
 
   <\wide-tabular>
     <tformat|<cwith|8|8|1|1|cell-background|>|<cwith|12|12|2|2|cell-valign|c>|<cwith|12|12|1|1|cell-background|pastel
-    green>|<cwith|20|20|1|1|cell-background|pastel
-    green>|<cwith|24|24|1|1|cell-background|pastel
     green>|<cwith|21|21|1|1|cell-background|pastel
+    green>|<cwith|26|26|1|1|cell-background|pastel
+    green>|<cwith|22|22|1|1|cell-background|pastel
     green>|<cwith|11|11|1|1|cell-background|pastel
-    green>|<cwith|25|25|3|3|cell-valign|b>|<cwith|25|25|1|1|cell-background|pastel
-    green>|<cwith|18|18|1|1|cell-background|pastel
-    green>|<cwith|1|1|1|1|cell-background|>|<table|<row|<\cell>
+    green>|<cwith|27|27|3|3|cell-valign|b>|<cwith|27|27|1|1|cell-background|pastel
+    green>|<cwith|19|19|1|1|cell-background|pastel
+    green>|<cwith|1|1|1|1|cell-background|>|<cwith|9|9|1|1|cell-background|pastel
+    green>|<cwith|15|15|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|78>
     </cell>|<\cell>
       <value|da>
@@ -48,7 +49,7 @@
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
-      \;
+      Improvements on sessions
     </cell>>|<row|<\cell>
       <dlink|71>
     </cell>|<\cell>
@@ -91,6 +92,12 @@
       <value|da>
     </cell>|<\cell>
       Image import and exports
+    </cell>>|<row|<\cell>
+      <dlink|62>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Mogan STEM Suite branding
     </cell>>|<row|<\cell>
       <dlink|61>
     </cell>|<\cell>
@@ -151,6 +158,12 @@
       Darcy
     </cell>|<\cell>
       Chinese Dictionary
+    </cell>>|<row|<\cell>
+      <dlink|20>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Editor related issues
     </cell>>|<row|<\cell>
       <dlink|19>
     </cell>|<\cell>

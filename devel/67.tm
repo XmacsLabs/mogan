@@ -7,7 +7,9 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|67_2>|<cell|1.2.6>|<cell|<value|da>>|<cell|the
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|1|2|2|cell-background|pastel
+  green>|<cwith|2|2|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Chore>|<cell|67_2>|<cell|1.2.6>|<cell|<value|da>>|<cell|the
   octave binary plugin>>|<row|<cell|Chore>|<cell|<dlink|67_1>>|<cell|1.2.0>|<cell|<value|da>>|<cell|Make
   it work on plat windows>>>>>
 

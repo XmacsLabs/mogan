@@ -7,7 +7,9 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Perf>|<cell|66_5>|<cell|1.2.5>|<cell|<value|jk>>|<cell|improve
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|1|2|2|cell-background|pastel
+  green>|<table|<row|<cell|Feature>|<cell|66_6>|<cell|1.2.6>|<cell|<value|da>>|<cell|Protocol:
+  scheme_u8 for UTF-8 Scheme tree>>|<row|<cell|Perf>|<cell|66_5>|<cell|1.2.5>|<cell|<value|jk>>|<cell|improve
   speed of fromtm by template>>|<row|<cell|Chore>|<cell|66_4>|<cell|>|<cell|<value|da>>|<cell|TMU
   1.0.1: Use unicode for CJK>>|<row|<cell|Chore>|<cell|66_3>|<cell|>|<cell|<value|da>>|<cell|TMU
   1.0.0: identical to TM format>>|<row|<cell|Chore>|<cell|66_2>|<cell|>|<cell|<value|da>>|<cell|Adding
