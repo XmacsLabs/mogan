@@ -187,8 +187,8 @@ search_sub_dirs (url& all, url root) {
     }
   }
   else if (is_or (root)) {
-    search_sub_dirs (all, root[1]);
     search_sub_dirs (all, root[2]);
+    search_sub_dirs (all, root[1]);
   }
 }
 
