@@ -7,7 +7,8 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|3|3|5|5|cell-hyphen|t>|<cwith|1|1|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|68_10>|<cell|v1.2.5>|<cell|<value|da>>|<\cell>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|4|4|5|5|cell-hyphen|t>|<cwith|2|2|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|68_11>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Better
+  error handling for PDF images>>|<row|<cell|Chore>|<cell|68_10>|<cell|v1.2.5>|<cell|<value|da>>|<\cell>
     Deprecate preferences of native pdf/native
     postscript/texmacs-\<gtr\>pdf:check
   </cell>>|<row|<cell|Chore>|<cell|68_9>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Change

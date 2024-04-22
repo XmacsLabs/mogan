@@ -12,15 +12,15 @@
   <section|Started projects>
 
   <\wide-tabular>
-    <tformat|<cwith|8|8|1|1|cell-background|>|<cwith|12|12|2|2|cell-valign|c>|<cwith|12|12|1|1|cell-background|pastel
-    green>|<cwith|21|21|1|1|cell-background|pastel
-    green>|<cwith|26|26|1|1|cell-background|pastel
+    <tformat|<cwith|8|8|1|1|cell-background|>|<cwith|13|13|2|2|cell-valign|c>|<cwith|13|13|1|1|cell-background|pastel
     green>|<cwith|22|22|1|1|cell-background|pastel
-    green>|<cwith|11|11|1|1|cell-background|pastel
-    green>|<cwith|27|27|3|3|cell-valign|b>|<cwith|27|27|1|1|cell-background|pastel
-    green>|<cwith|19|19|1|1|cell-background|pastel
-    green>|<cwith|1|1|1|1|cell-background|>|<cwith|9|9|1|1|cell-background|pastel
-    green>|<cwith|15|15|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|27|27|1|1|cell-background|pastel
+    green>|<cwith|23|23|1|1|cell-background|pastel
+    green>|<cwith|12|12|1|1|cell-background|pastel
+    green>|<cwith|28|28|3|3|cell-valign|b>|<cwith|28|28|1|1|cell-background|pastel
+    green>|<cwith|20|20|1|1|cell-background|pastel
+    green>|<cwith|1|1|1|1|cell-background|>|<cwith|10|10|1|1|cell-background|pastel
+    green>|<cwith|16|16|1|1|cell-background|pastel green>|<table|<row|<\cell>
       <dlink|78>
     </cell>|<\cell>
       <value|da>
@@ -68,6 +68,12 @@
       <value|da>
     </cell>|<\cell>
       Improvements for Chinese users in 1.2.x
+    </cell>>|<row|<\cell>
+      <dlink|68>
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      \;
     </cell>>|<row|<\cell>
       <dlink|67>
     </cell>|<\cell>
