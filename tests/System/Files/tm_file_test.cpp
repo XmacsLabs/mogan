@@ -36,7 +36,7 @@ TestTMFile::test_search_sub_dirs () {
 
   QVERIFY (is_or (ret));
   // Make sure the order of the search result
-  QVERIFY (descends (ret[1], url_system ("$TEXMACS_PATH/doc")));
+  QVERIFY (descends (ret[1], url_system ("$TEXMACS_PATH/doc/about")));
 }
 
 QTEST_MAIN (TestTMFile)
