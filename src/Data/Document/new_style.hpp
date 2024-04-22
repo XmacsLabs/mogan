@@ -19,7 +19,7 @@
 
 using moebius::drd::drd_info;
 
-tree preprocess_style (tree st, url name);
+tree preprocess_style (tree styles, url name);
 url  resolve_style (string style_name, url master);
 
 void style_invalidate_cache ();

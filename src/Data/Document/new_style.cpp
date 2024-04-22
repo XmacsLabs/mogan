@@ -98,17 +98,17 @@ resolve_style (string style_name, url master) {
  ******************************************************************************/
 
 tree
-preprocess_style (tree st, url name) {
-  if (is_rooted_tmfs (name)) return st;
-  if (is_atomic (st)) st= tree (TUPLE, st);
-  if (!is_tuple (st)) return st;
+preprocess_style (tree styles, url name) {
+  if (is_rooted_tmfs (name)) return styles;
+  if (is_atomic (styles)) styles= tree (TUPLE, styles);
+  if (!is_tuple (styles)) return styles;
 
-  int  n= N (st);
+  int  n= N (styles);
   tree r (TUPLE, n);
   for (int i= 0; i < n; i++) {
-    r[i]= st[i];
-    if (!is_atomic (st[i])) continue;
-    string style_name    = st[i]->label;
+    r[i]= styles[i];
+    if (!is_atomic (styles[i])) continue;
+    string style_name    = styles[i]->label;
     url    resolved_style= resolve_style (style_name, name);
     if (!is_none (resolved_style)) {
       r[i]= as_string (resolved_style);
