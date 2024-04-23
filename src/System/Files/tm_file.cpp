@@ -178,7 +178,8 @@ search_sub_dirs (url& all, url root) {
     bool          err= false;
     array<string> a  = read_directory (root, err);
     if (!err) {
-      for (int i= 0; i < N (a); i++) {
+      int N_a= N (a);
+      for (int i= 0; i < N_a; i++) {
         url subdir= root * a[i];
         if (is_directory (subdir)) {
           search_sub_dirs (all, subdir);
@@ -187,8 +188,8 @@ search_sub_dirs (url& all, url root) {
     }
   }
   else if (is_or (root)) {
-    search_sub_dirs (all, root[1]);
     search_sub_dirs (all, root[2]);
+    search_sub_dirs (all, root[1]);
   }
 }
 

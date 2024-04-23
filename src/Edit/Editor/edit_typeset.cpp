@@ -312,13 +312,13 @@ use_modules (tree t) {
 }
 
 void
-edit_typeset_rep::typeset_style_use_cache (tree style) {
-  style= preprocess_style (style, buf->buf->master);
+edit_typeset_rep::typeset_style_use_cache (tree styles_orig) {
+  tree styles= preprocess_style (styles_orig, buf->buf->master);
   // cout << "Typesetting style using cache " << style << LF;
   bool                  ok;
   hashmap<string, tree> H;
   tree                  t;
-  style_get_cache (style, H, t, ok);
+  style_get_cache (styles, H, t, ok);
   if (ok) {
     env->patch_env (H);
     ok= drd->set_locals (t);
@@ -326,10 +326,10 @@ edit_typeset_rep::typeset_style_use_cache (tree style) {
   }
   if (!ok) {
     // cout << "Typeset without cache " << style << LF;
-    if (!is_tuple (style)) TM_FAILED ("tuple expected as style");
-    H  = get_style_env (style);
-    drd= get_style_drd (style);
-    style_set_cache (style, H, drd->get_locals ());
+    if (!is_tuple (styles)) TM_FAILED ("tuple expected as style");
+    H  = get_style_env (styles);
+    drd= get_style_drd (styles);
+    style_set_cache (styles, H, drd->get_locals ());
     env->patch_env (H);
     drd->set_environment (H);
   }
