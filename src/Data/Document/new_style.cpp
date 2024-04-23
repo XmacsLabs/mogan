@@ -20,6 +20,7 @@
 #include "tmfs_url.hpp"
 #include "web_files.hpp"
 
+#include <lolly/hash/md5.hpp>
 #include <lolly/hash/sha.hpp>
 
 using namespace moebius;
@@ -58,28 +59,71 @@ init_style_data () {
 extern hashmap<string, tree> style_tree_cache;
 hashmap<string, bool>        hidden_packages (false);
 
+static url
+resolve_local_style (string style_name) {
+  string pack= style_name * ".ts";
+  url    ret = resolve (url ("$TEXMACS_STYLE_PATH") * pack);
+  if (DEBUG_IO) {
+    debug_io << "Resolved local style: " << style_name << " -> " << ret << LF;
+  }
+  return ret;
+}
+
+static url
+resolve_relative_style (string style_name, url master) {
+  string pack= style_name * ".ts";
+  url    ret = resolve (expand (head (master) * url_ancestor () * pack));
+  if (DEBUG_IO) {
+    debug_io << "Resolved relative style: (" << style_name << ", " << master
+             << ")" << LF << "-> " << ret << LF;
+  }
+  return ret;
+}
+
+url
+resolve_style (string style_name, url master) {
+  bool remote= is_rooted_web (master);
+
+  // TODO: the relative style resolving should only resolve styles in the same
+  // Git repo
+  if (remote) {
+    url relative_style= resolve_relative_style (style_name, master);
+    if (!is_none (relative_style)) {
+      return relative_style;
+    }
+    return resolve_local_style (style_name);
+  }
+  else {
+    url local_style= resolve_local_style (style_name);
+    if (!is_none (local_style)) {
+      return local_style;
+    }
+    return resolve_relative_style (style_name, master);
+  }
+}
+
 /******************************************************************************
  * Modify style so as to search in all ancestor directories
  ******************************************************************************/
 
 tree
-preprocess_style (tree st, url name) {
-  if (is_rooted_tmfs (name)) return st;
-  if (is_atomic (st)) st= tree (TUPLE, st);
-  if (!is_tuple (st)) return st;
-  // if (is_rooted_web (name)) return st;
-  bool remote= is_rooted_web (name);
-  tree r (TUPLE, N (st));
-  for (int i= 0; i < N (st); i++) {
-    r[i]= st[i];
-    if (!is_atomic (st[i])) continue;
-    string pack= st[i]->label * ".ts";
-    if (!remote || is_none (resolve (url ("$TEXMACS_STYLE_PATH") * pack))) {
-      url stf= resolve (expand (head (name) * url_ancestor () * pack));
-      if (!is_none (stf)) r[i]= as_string (stf);
+preprocess_style (tree styles, url name) {
+  if (is_rooted_tmfs (name)) return styles;
+  if (is_atomic (styles)) styles= tree (TUPLE, styles);
+  if (!is_tuple (styles)) return styles;
+
+  int  n= N (styles);
+  tree r (TUPLE, n);
+  for (int i= 0; i < n; i++) {
+    r[i]= styles[i];
+    if (!is_atomic (styles[i])) continue;
+    string style_name    = styles[i]->label;
+    url    resolved_style= resolve_style (style_name, name);
+    if (!is_none (resolved_style)) {
+      r[i]= as_string (resolved_style);
     }
   }
-  // if (r != st) cout << "old: " << st << "\nnew: " << r << "\n";
+
   return r;
 }
 
@@ -123,7 +167,9 @@ cache_file_name_sub (tree t) {
 
 static string
 cache_file_name (tree t) {
-  return cache_file_name_sub (t) * ".scm";
+  url tmp= url_temp ("txt");
+  save_string (tmp, cache_file_name_sub (t));
+  return lolly::hash::md5_hexdigest (tmp) * ".scm";
 }
 
 void
