@@ -56,6 +56,8 @@ string file_format (url u);
  *
  * Here is the order of the result of search `a | b`
  * a/a1/a2 | a/a1 | a | b/ba1/ba2 | b/ba1 | b/bb1/bb2 | b/bb1 | b
+ * a/a1/a2 | a/a1 | a | b/bb1/bb2 | b/bb1 | b/ba1/ba2 | b/ba1 | b
+ * There is no order in the same directory level
  */
 url search_sub_dirs (url root);
 
