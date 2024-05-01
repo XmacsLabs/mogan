@@ -94,7 +94,7 @@
          (vec-c-q (points-sub q c))
          (m  (if (equal? r 0.0)
                 c
-                (if (> (points-cross-product-k vec-c-p vec-c-q) 0)
+                (if (< (points-cross-product-k vec-c-p vec-c-q) 0)
                   (points-add (point-times (point-get-unit (points-sub mid-p-x c)) (- r)) c)
                   (if (= (points-cross-product-k vec-c-p vec-c-q) 0)
                     ;; If cross product == 0, then the angle between vec-c-p and vec-c-q is 0 or 180.
