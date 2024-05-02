@@ -25,12 +25,6 @@
     <item>Succeed to copy the above graphics area with an extra space in the
     same paragraph
   </enumerate>
-
-  \;
-
-  \;
-
-  \;
 </body>
 
 <\initial>

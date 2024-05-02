@@ -628,11 +628,6 @@ edit_select_rep::selection_set (tree t) {
 void
 edit_select_rep::selection_copy (string key) {
   bool emacs= (get_preference ("look and feel", "default") == "emacs");
-  if (inside_active_graphics ()) {
-    tree t= as_tree (eval ("(graphics-copy)"));
-    selection_set (key, t, !emacs);
-    return;
-  }
   if (selection_active_any ()) {
     path      old_tp= tp;
     selection sel;
@@ -642,6 +637,12 @@ edit_select_rep::selection_copy (string key) {
     go_to (sel->start);
     selection_set (key, t, !emacs);
     go_to (old_tp);
+    return;
+  }
+  if (inside_active_graphics ()) {
+    tree t= as_tree (eval ("(graphics-copy)"));
+    selection_set (key, t, !emacs);
+    return;
   }
 }
 
