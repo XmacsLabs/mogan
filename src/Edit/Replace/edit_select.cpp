@@ -876,13 +876,7 @@ edit_select_rep::raw_cut (path p1, path p2) {
 
 void
 edit_select_rep::selection_cut (string key) {
-  if (inside_active_graphics ()) {
-    if (key != "none") {
-      tree t= as_tree (eval ("(graphics-cut)"));
-      selection_set (key, t);
-    }
-  }
-  else if (selection_active_any ()) {
+  if (selection_active_any ()) {
     path p1, p2;
     if (selection_active_table ()) {
       p1= start (cur_sel);
@@ -902,6 +896,12 @@ edit_select_rep::selection_cut (string key) {
       }
     }
     cut (p1, p2);
+  }
+  else if (inside_active_graphics ()) {
+    if (key != "none") {
+      tree t= as_tree (eval ("(graphics-cut)"));
+      selection_set (key, t);
+    }
   }
 }
 
