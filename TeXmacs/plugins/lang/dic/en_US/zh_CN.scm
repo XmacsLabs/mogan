@@ -672,6 +672,7 @@
 ("floating object" "浮动对象")
 ("floating table" "浮动表格")
 ("focus dependent icons" "焦点工具栏")
+("focus mode" "专注模式")
 ("focus" "焦点")
 ("fold all fields" "折叠全部区域")
 ("fold comments" "折叠所有批注")

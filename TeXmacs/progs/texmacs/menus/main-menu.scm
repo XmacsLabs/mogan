@@ -100,6 +100,15 @@
   ---
   (former))
 
+(menu-bind focus-popup-menu
+  ("Focus mode" (toggle-focus-mode)))
+
+(tm-menu (texmacs-popup-menu)
+  (:require (focus-mode?))
+  (link focus-popup-menu)
+  ---
+  (former))
+
 (tm-menu (texmacs-popup-menu)
   (=> "Copy to" (link clipboard-copy-export-menu))
   (=> "Paste from" (link clipboard-paste-import-menu))
