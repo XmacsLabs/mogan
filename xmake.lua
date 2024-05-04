@@ -32,7 +32,7 @@ if is_plat ("macosx", "windows") then
 end
 
 local TEXMACS_VERSION = "2.1.2"
-local XMACS_VERSION="1.2.5.3"
+local XMACS_VERSION="1.2.5.4"
 local CONFIG_USER = "XmacsLabs"
 local DEVEL_VERSION = TEXMACS_VERSION
 local DEVEL_RELEASE = 1
