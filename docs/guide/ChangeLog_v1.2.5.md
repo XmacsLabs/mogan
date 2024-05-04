@@ -4,14 +4,20 @@ Mogan STEM Suite v1.2.5 LTS:
 
 This release is for bug fixes and user experience improvements.
 
+## Notable Changes in v1.2.5.4 (2024/05/04)
++ Graphics mode
+  - Fix copy/cut of the whole graphics area when it was selected via mouse
++ User Interface
+  - Add `View->Focus mode` as a replacement of `View->Header bars`
+
 ## Notable Changes in v1.2.5.3 (2024/04/15)
-+ Bug Fixes
-  - The Python plugin now supports using virtual environments created by conda
 + Plugins
+  - The Python plugin now supports using virtual environments created by conda
++ Bug Fixes
   - Fixed the issue that using a separate window for structured replacement may cause Mogan to crash
 
 ## Notable Changes in v1.2.5.2 (2024/04/08)
-+ Bug Fixes
++ Bug fixes
   + Fixed the issue where single replacement and replace all functions in the bottom toolbar do not work when clicked with a mouse
   + Fixed the issue where the "File -> Export -> Editable PDF" function does not work when the PDF version is greater than 1.4
   + Fixed the layout engine error caused by executing `ones (0)` in the Octave plugin

@@ -1,26 +1,26 @@
 # 如何安装
-当前最新稳定版是墨干理工套件 v1.2.5.3 LTS，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
+当前最新稳定版是墨干理工套件 v1.2.5.4 LTS，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
 
 ## 官方提供的安装包
 | 产品 | 操作系统 | 马上下载 |
 |-----|-------|-----|
-| 墨干v1.2.5.3 | Windows安装包 (>=10)| [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.3/MoganResearch-v1.2.5.3-64bit-installer.exe) |
-| 墨干v1.2.5.3 | Windows便携版 (>=10)| [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.3/MoganResearch-v1.2.5.3-64bit-installer.zip) |
-| 墨干v1.2.5.3 | macOS (>=12) | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.3/MoganResearch-v1.2.5.3.dmg) |
-| 墨干v1.2.5.3 | macOS arm64 (>=13) | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.3/MoganResearch-v1.2.5.3-arm.dmg) |
-| 墨干v1.2.5.3 | Ubuntu 20.04 | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.3/mogan-research-v1.2.5.3-ubuntu20.04.deb) |
-| 墨干v1.2.5.3 | Ubuntu 22.04 | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.3/mogan-research-v1.2.5.3-ubuntu22.04.deb) |
-| 墨干v1.2.5.3 | Debian 12 | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.3/mogan-research-v1.2.5.3-debian12.deb) |
+| 墨干v1.2.5.4 | Windows安装包 (>=10)| [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.4/MoganResearch-v1.2.5.4-64bit-installer.exe) |
+| 墨干v1.2.5.4 | Windows便携版 (>=10)| [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.4/MoganResearch-v1.2.5.4-64bit-installer.zip) |
+| 墨干v1.2.5.4 | macOS (>=12) | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.4/MoganResearch-v1.2.5.4.dmg) |
+| 墨干v1.2.5.4 | macOS arm64 (>=13) | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.4/MoganResearch-v1.2.5.4-arm.dmg) |
+| 墨干v1.2.5.4 | Ubuntu 20.04 | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.4/mogan-research-v1.2.5.4-ubuntu20.04.deb) |
+| 墨干v1.2.5.4 | Ubuntu 22.04 | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.4/mogan-research-v1.2.5.4-ubuntu22.04.deb) |
+| 墨干v1.2.5.4 | Debian 12 | [⏬ 下载](https://gitee.com/XmacsLabs/mogan/releases/download/v1.2.5.4/mogan-research-v1.2.5.4-debian12.deb) |
 
 SHA256校验码：
 ```
-71544fa036ae941f9a5b29574f05d1120e05ea44d27ce24a9f197711741ed32a  MoganResearch-v1.2.5.3-64bit-installer.exe
-741adce5925314c9daaaeaf0c60dde691fc7737080567da1757e0884fa28dc7e  MoganResearch-v1.2.5.3-64bit-installer.zip
-7839ee6df89e4d4fb4ed03d60893dbbccedf0d45e3b5cbaaf1adfb7a01e86f9f  MoganResearch-v1.2.5.3-arm.dmg
-eb235b4013b5cb5752d465bee54b85c48466665bd16e12652c6b025e289725ed  MoganResearch-v1.2.5.3.dmg
-b5134d8bc28c2b56ab006ba90e4ef5419846fb72ff33e5daf1d294a0dcd8d308  mogan-research-v1.2.5.3-debian12.deb
-0c0736eb42bfab5d80f6c1f00a958dcae75cde659f25b662cd46eeb90c4652c2  mogan-research-v1.2.5.3-ubuntu20.04.deb
-4b0a9aaad332a2bb4fc670f1a8de588f79dae8c17ebae6202e257d2f6e8434bf  mogan-research-v1.2.5.3-ubuntu22.04.deb
+3a77620e81a00fd3879f5c6bca1a82abe158a352a439400b751823e5527f27db  MoganResearch-v1.2.5.4-64bit-installer.exe
+21f8555a3360653afc5af56908b6b24a3127a25cfec081dd3df1b013a15dda4d  MoganResearch-v1.2.5.4-64bit-installer.zip
+371ccc5fc23d6f4e59915796fc02466a702a4e7626cfcfe25090757c60ba6ab7  MoganResearch-v1.2.5.4-arm.dmg
+cabeb34ca31257e0361865bd6f46010682983c00d1288e67433670946c0f344d  MoganResearch-v1.2.5.4.dmg
+41cc47ac5bb51f87bbc52eb6b7578adc59f590d94d8b40b5edf50ed91d262905  mogan-research-v1.2.5.4-debian12.deb
+8482544117cfd5ec5cbe2d97ed55cddbda68f0443b34706129d85cce0acc4e71  mogan-research-v1.2.5.4-ubuntu20.04.deb
+d9ecf0a3486bdb86781e49bda0d83b0b7b64822126964c69f39ac0c9ef5b1f3c  mogan-research-v1.2.5.4-ubuntu22.04.deb
 ```
 
 墨干理工套件：
@@ -28,7 +28,7 @@ b5134d8bc28c2b56ab006ba90e4ef5419846fb72ff33e5daf1d294a0dcd8d308  mogan-research
 + 墨码（无安装包，正在开发中）
 + 墨板（无安装包，正在开发中）
 
-> 注意：墨干v1.2.5.3无法在Windows 7上运行。
+> 注意：墨干v1.2.5.4无法在Windows 7上运行。
 
 从其它站点下载：
 + https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/
@@ -41,17 +41,17 @@ b5134d8bc28c2b56ab006ba90e4ef5419846fb72ff33e5daf1d294a0dcd8d308  mogan-research
 ## Debian 12
 下载官方提供的deb然后：
 ```
-sudo apt install ./mogan-research-v1.2.5.3-debian12.deb
+sudo apt install ./mogan-research-v1.2.5.4-debian12.deb
 ```
 
 ## Ubuntu 20.04/Ubuntu 22.04
 下载官方提供的deb然后：
 ```
 # For ubuntu 20.04
-sudo apt install ./mogan-research-v1.2.5.3-ubuntu20.04.deb
+sudo apt install ./mogan-research-v1.2.5.4-ubuntu20.04.deb
 
 # For ubuntu 22.04
-sudo apt install ./mogan-research-v1.2.5.3-ubuntu22.04.deb
+sudo apt install ./mogan-research-v1.2.5.4-ubuntu22.04.deb
 ```
 
 ## GNU Guix
