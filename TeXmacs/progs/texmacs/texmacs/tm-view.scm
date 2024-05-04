@@ -136,6 +136,11 @@
   (with val (not (has-markup-gui?))
     (set-boolean-preference "markup gui" val)))
 
+(tm-define (toggle-focus-mode)
+  (:synopsis "Toggle focus mode.")
+  (:check-mark "v" focus-mode?)
+  (toggle-visible-header))
+
 (define saved-informative-flags "default")
 
 (tm-define (toggle-full-screen-mode)
