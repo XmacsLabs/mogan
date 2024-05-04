@@ -107,6 +107,7 @@
       ("Close window" (close-document*))
       ---)
   ("Full screen mode"  (toggle-full-screen-edit-mode))
+  ("Focus mode" (toggle-focus-mode))
   ("Presentation mode" (toggle-full-screen-mode))
   ("Show panorama" (toggle-panorama-mode))
   ("Remote control" (toggle-remote-control-mode))
@@ -131,7 +132,6 @@
 
   ("Snap to pages" (toggle-snap-to-pages))
   ---
-  ("Header bars" (toggle-visible-header))
   (when (visible-header?)
         ("Main icon bar" (toggle-visible-icon-bar 0))
         ("Mode dependent icons" (toggle-visible-icon-bar 1))

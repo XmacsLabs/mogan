@@ -263,6 +263,7 @@
   (spell-mode% (== (get-input-mode) 3))
   (complete-mode% (== (get-input-mode) 4))
   (remote-control-mode% (== remote-control-flag? #t))
+  (focus-mode% (not (visible-header?)))
   (in-cyrillic-jcuken% (cyrillic-input-method? "jcuken") in-cyrillic%)
   (in-cyrillic-translit% (cyrillic-input-method? "translit") in-cyrillic%)
   (in-cyrillic-yawerty% (cyrillic-input-method? "yawerty") in-cyrillic%)
