@@ -117,6 +117,11 @@
                (get-boolean-preference "use unified toolbar"))
       (notify-now "Restart TeXmacs to avoid potential visual artefacts"))))
 
+(tm-define (toggle-focus-mode)
+  (:synopsis "Toggle focus mode.")
+  (:check-mark "v" focus-mode?)
+  (toggle-visible-header))
+
 (define saved-informative-flags "default")
 
 (tm-define (toggle-full-screen-mode)
