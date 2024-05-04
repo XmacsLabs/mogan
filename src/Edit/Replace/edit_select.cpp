@@ -628,11 +628,6 @@ edit_select_rep::selection_set (tree t) {
 void
 edit_select_rep::selection_copy (string key) {
   bool emacs= (get_preference ("look and feel", "default") == "emacs");
-  if (inside_active_graphics ()) {
-    tree t= as_tree (eval ("(graphics-copy)"));
-    selection_set (key, t, !emacs);
-    return;
-  }
   if (selection_active_any ()) {
     path      old_tp= tp;
     selection sel;
@@ -642,6 +637,12 @@ edit_select_rep::selection_copy (string key) {
     go_to (sel->start);
     selection_set (key, t, !emacs);
     go_to (old_tp);
+    return;
+  }
+  if (inside_active_graphics ()) {
+    tree t= as_tree (eval ("(graphics-copy)"));
+    selection_set (key, t, !emacs);
+    return;
   }
 }
 
@@ -875,13 +876,7 @@ edit_select_rep::raw_cut (path p1, path p2) {
 
 void
 edit_select_rep::selection_cut (string key) {
-  if (inside_active_graphics ()) {
-    if (key != "none") {
-      tree t= as_tree (eval ("(graphics-cut)"));
-      selection_set (key, t);
-    }
-  }
-  else if (selection_active_any ()) {
+  if (selection_active_any ()) {
     path p1, p2;
     if (selection_active_table ()) {
       p1= start (cur_sel);
@@ -901,6 +896,12 @@ edit_select_rep::selection_cut (string key) {
       }
     }
     cut (p1, p2);
+  }
+  else if (inside_active_graphics ()) {
+    if (key != "none") {
+      tree t= as_tree (eval ("(graphics-cut)"));
+      selection_set (key, t);
+    }
   }
 }
 
