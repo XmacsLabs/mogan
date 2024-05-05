@@ -94,7 +94,7 @@
          (vec-c-q (points-sub q c))
          (m  (if (equal? r 0.0)
                 c
-                (if (< (points-cross-product-k vec-c-p vec-c-q) 0)
+                (if (> (points-cross-product-k vec-c-p vec-c-q) 0)
                   (points-add (point-times (point-get-unit (points-sub mid-p-x c)) (- r)) c)
                   (if (= (points-cross-product-k vec-c-p vec-c-q) 0)
                     ;; If cross product == 0, then the angle between vec-c-p and vec-c-q is 0 or 180.
@@ -105,6 +105,30 @@
                     (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
     `(arc ,p ,m ,x)))
 
+
+(define-graphics (std-arc-counterclockwise C P Q)
+  (let* ((c  (if (tm-point? C) (tree->stree C) '(point "0" "0")))
+         (p  (if (tm-point? P) (tree->stree P) c))
+         (q  (if (tm-point? Q) (tree->stree Q) p))
+         (r  (points-distance c p))
+         (x  (if (equal? r 0.0)
+                c
+                (points-add (point-times (point-get-unit (points-sub q c)) r) c)))
+         (mid-p-x (points-mid p x))
+         (vec-c-p (points-sub p c))
+         (vec-c-q (points-sub q c))
+         (m  (if (equal? r 0.0)
+                c
+                (if (< (points-cross-product-k vec-c-p vec-c-q) 0)
+                  (points-add (point-times (point-get-unit (points-sub mid-p-x c)) (- r)) c)
+                  (if (= (points-cross-product-k vec-c-p vec-c-q) 0)
+                    ;; If cross product == 0, then the angle between vec-c-p and vec-c-q is 0 or 180.
+                    ;; We should find out whether it's 0 or 180.
+                    (if (equal? (point-get-unit vec-c-p) (point-get-unit vec-c-q))
+                      x
+                      (point-rotate-90 (point-rotate-90 (point-rotate-90 vec-c-p))))
+                    (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
+    `(arc ,p ,m ,x)))
 
 (define-graphics (sector C P Q)
   (let* ((c  (if (tm-point? C) (tree->stree C) '(point "0" "0")))
@@ -128,6 +152,35 @@
         `(superpose
           (std-arc ,c ,p ,m)
           (std-arc ,c ,m ,x)
+          (with "color" "none"
+           (line ,p ,c ,x ,m ,p)))
+        `(superpose    
+          (with "color" "none"
+           (line ,p ,c ,x))
+          (arc ,p ,m ,x)))))
+
+(define-graphics (sector-counterclockwise C P Q)
+  (let* ((c  (if (tm-point? C) (tree->stree C) '(point "0" "0")))
+         (p  (if (tm-point? P) (tree->stree P) c))
+         (q  (if (tm-point? Q) (tree->stree Q) p))
+         (r  (points-distance c p))
+         (x  (if (equal? r 0.0)
+                c
+                (points-add (point-times (point-get-unit (points-sub q c)) r) c)))
+         (mid-p-x (points-mid p x))
+         (vec-c-p (points-sub p c))
+         (vec-c-q (points-sub q c))
+         (m  (if (equal? r 0.0)
+                 c
+                 (if (> (points-cross-product-k vec-c-p vec-c-q) 0)
+                     (points-add (point-times (point-get-unit (points-sub mid-p-x c)) (- r)) c)
+                     (if (= (points-cross-product-k vec-c-p vec-c-q) 0)
+                         x
+                         (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
+       (if (> (points-cross-product-k vec-c-p vec-c-q) 0)
+        `(superpose
+          (std-arc-counterclockwise ,c ,p ,m)
+          (std-arc-counterclockwise ,c ,m ,x)
           (with "color" "none"
            (line ,p ,c ,x ,m ,p)))
         `(superpose    
