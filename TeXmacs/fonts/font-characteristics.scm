@@ -896,6 +896,7 @@
 ((Futura Condensed\ Medium) (Ascii Latin mono=no sans=yes slant=0 italic=no case=mixed regular=yes ex=84 em=113 lvw=20 lhw=16 uvw=20 uhw=17 fillp=56 vcnt=63 lasprat=70 pasprat=57 loasc=166 lodes=141 dides=101))
 ((Futura Medium) (Ascii Latin mono=no sans=yes slant=0 italic=no case=mixed regular=yes ex=79 em=203 lvw=24 lhw=21 uvw=24 uhw=22 fillp=49 vcnt=53 lasprat=107 pasprat=89 loasc=177 lodes=154 dides=105))
 ((Futura Medium\ Italic) (Ascii Latin mono=no sans=yes slant=14 italic=no case=mixed regular=yes ex=77 em=210 lvw=23 lhw=18 uvw=23 uhw=23 fillp=41 vcnt=46 lasprat=110 pasprat=98 loasc=179 lodes=157 dides=106))
+((FZXiaoBiaoSong-B05S Regular) (Ascii CJK mono=no sans=no slant=0 italic=no case=mixed regular=yes ex=77 em=203 lvw=32 lhw=5 uvw=37 uhw=6 fillp=45 vcnt=43 lasprat=106 pasprat=98 loasc=150 lodes=144 dides=102))
 ((Gabriola Regular) (Ascii Latin Greek Cyrillic mono=no sans=no slant=0 italic=no case=mixed regular=yes ex=60 em=180 lvw=15 lhw=10 uvw=20 uhw=8 fillp=28 vcnt=25 lasprat=97 pasprat=98 loasc=185 lodes=171 dides=150))
 ((Gadugi Bold) (Ascii Latin mono=no sans=yes slant=0 italic=no case=mixed regular=yes ex=84 em=190 lvw=30 lhw=23 uvw=33 uhw=27 fillp=59 vcnt=57 lasprat=106 pasprat=92 loasc=150 lodes=147 dides=102))
 ((Gadugi Regular) (Ascii Latin mono=no sans=yes slant=0 italic=no case=mixed regular=yes ex=84 em=178 lvw=16 lhw=13 uvw=16 uhw=14 fillp=39 vcnt=34 lasprat=98 pasprat=80 loasc=150 lodes=147 dides=102))

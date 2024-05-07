@@ -310,6 +310,7 @@
 (FreeSerif Free)
 (FreeSerifb Freeb)
 (Futura Futura SansSerif)
+(FZXiaoBiaoSong-B05S FZXiaoBiaoSong-B05S Bold)
 (Gabriola Gabriola)
 (Gadugi Gadugi)
 (Galberik Galberik Wide Italic Attached)
