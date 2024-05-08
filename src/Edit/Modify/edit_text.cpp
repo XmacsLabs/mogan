@@ -387,7 +387,7 @@ edit_text_rep::make_image (string file_name, bool link, string w, string h,
       set_message (concat ("File '", vim, "' is not an image"), "make image");
       return;
     }
-    t << tuple (tree (RAW_DATA, s), as_string (tail (image)));
+    t << tuple (tree (RAW_DATA, s), utf8_to_cork (as_string (tail (image))));
   }
   t << tree (w) << tree (h) << tree (x) << tree (y);
   insert_tree (t);
