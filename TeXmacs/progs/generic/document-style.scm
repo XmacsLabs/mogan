@@ -319,8 +319,6 @@
   ("captions-above"     "Place captions above figures and tables")
 
   ("doc"                "Rich collection of markup for writing documentation")
-  ("doxygen"            "Package for mixing TeXmacs and doxygen documentation")
-  ("poorman-doxygen"    "Replacement for 'doxygen' when lacking support")
 
   ("allouche"           "Example macro package by David Allouche")
   ("bpr"                "Example macro package for Basu/Pollack/Roy book")
