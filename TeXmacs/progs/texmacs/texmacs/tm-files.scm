@@ -186,7 +186,7 @@
             (save-buffer-save name opts))))))
 
 (define (cannot-write? name action)
-  (with vname `(verbatim ,(url->system name))
+  (with vname `(verbatim ,(utf8->cork (url->system name)))
     (cond ((and (not (url-test? name "f")) (url-exists? name))
            (with msg "The file cannot be created:"
              (notify-now `(concat ,msg "<br>" ,vname)))
@@ -201,7 +201,7 @@
   ;;(display* "save-buffer-check-permissions " name "\n")
   (set! current-save-source name)
   (set! current-save-target name)
-  (with vname `(verbatim ,(url->system name))
+  (with vname `(verbatim ,(utf8->cork (url->system name)))
     (cond ((url-scratch? name)
            (choose-file
              (lambda (x) (apply save-buffer-as-main (cons x opts)))
@@ -371,7 +371,7 @@
              (url-autosave name "~"))
     ;;(display* "Autosave " name "\n")
     ;; FIXME: incorrectly autosaves after cursor movements only
-    (let* ((vname `(verbatim ,(url->system name)))
+    (let* ((vname `(verbatim ,(utf8->cork (url->system name))))
            (suffix (if (rescue-mode?) "#" "~"))
            (aname (url-autosave name suffix))
            (fm (url-format name)))
@@ -459,27 +459,29 @@
 
 (define (load-buffer-load name opts)
   ;;(display* "load-buffer-load " name ", " opts "\n")
-  (with path (url->system name)
+  (let* ((path (url->system name))
+         (vname `(verbatim ,(utf8->cork path))))
     (cond ((buffer-exists? name)
            (load-buffer-open name opts))
           ((url-exists? name)
            (if (buffer-load name)
-               (set-message `(concat "Could not load " ,path) "Load file")
+               (set-message `(concat "Could not load " ,vname) "Load file")
                (load-buffer-open name opts)))
           (else
             (with msg "The file or buffer does not exist:"
               (begin
                 (debug-message "debug-io" (string-append msg "\n" path))
-                (notify-now `(concat ,msg "<br>" (verbatim ,path)))))))))
+                (notify-now `(concat ,msg "<br>" ,vname))))))))
 
 (define (load-buffer-check-permissions name opts)
   ;;(display* "load-buffer-check-permissions " name ", " opts "\n")
-  (with path (url->system name)
+  (let* ((path (url->system name))
+         (vname `(verbatim ,(utf8->cork path))))
     (cond ((and (not (url-test? name "f")) (url-exists? name))
            (with msg "The file cannot be loaded or created:"
              (begin
                (debug-message "debug-io" (string-append msg "\n" path))
-               (notify-now `(concat ,msg "<br>" (verbatim ,path))))))
+               (notify-now `(concat ,msg "<br>" ,vname)))))
           ((and (url-test? name "f") (not (url-test? name "r")))
            (with msg `(concat "You do not have read access to " ,vname)
              (set-message msg "Load file")))
@@ -585,7 +587,7 @@
 
 (define (import-buffer-check-permissions name fm opts)
   ;;(display* "import-buffer-check-permissions " name ", " fm "\n")
-  (with vname `(verbatim ,(url->system name))
+  (with vname `(verbatim ,(utf8->cork (url->system name)))
     (cond ((not (url-test? name "f"))
            (with msg `(concat "The file " ,vname " does not exist")
              (set-message msg "Import file")))
