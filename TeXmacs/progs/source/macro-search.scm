@@ -19,6 +19,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define tag-options-table (make-ahash-table))
+(define tag-parameters-table (make-ahash-table))
 
 (tm-define (standard-options l) #f)
 
@@ -178,18 +179,17 @@
             ;;(display* "Std= " std "\n")
             (for (x std)
               (ahash-set! v x #t)))
-	  (with def (get-init-tree l)
+          (with def (get-init-tree l)
             ;;(display* "  Def= " def "\n")
-	    (cond ((tree-is? def 'uninit) (noop))
-		  ((tree-in? def '(macro xmacro))
-		   (collect-parameters-sub def v t))
-		  (else (ahash-set! v l #t))))))))
+            (cond ((tree-is? def 'uninit) (noop))
+                  ((tree-in? def '(macro xmacro))
+                   (collect-parameters-sub def v t))
+                  (else (ahash-set! v l #t))))))))
 
 (tm-define (search-parameters l)
-  (if (symbol? l) (set! l (symbol->string l)))
-  (let* ((v (make-ahash-table))
-	 (t (make-ahash-table)))
-    (collect-parameters l v t)
+  (let* ((label (if (symbol? l) (symbol->string l) l))
+         (v (make-ahash-table)))
+    (collect-parameters label v tag-parameters-table)
     (sort (ahash-set->list v) string<=?)))
 
 (tm-define (search-tag-parameters t)
