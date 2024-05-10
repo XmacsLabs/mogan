@@ -18,6 +18,9 @@
 ;; Routines for subsequent customization
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(define tag-options-table (make-ahash-table))
+(define tag-parameters-table (make-ahash-table))
+
 (tm-define (standard-options l) #f)
 
 (tm-define (standard-parameters l) #f)
@@ -55,7 +58,7 @@
 
 (define (collect-options l t)
   (when (not (ahash-ref t l))
-    ;;(display* "Collect " l "\n")
+    ;;(display* "collect-options " l "\n")
     (ahash-set! t l '())
     (ahash-set! t l
       (with std (standard-options (string->symbol l))
@@ -67,10 +70,9 @@
   (ahash-ref t l))
 
 (tm-define (search-options l)
-  (if (symbol? l) (set! l (symbol->string l)))
-  (with t (make-ahash-table)
-    (collect-options l t)
-    (ahash-ref t l)))
+  (with label (if (symbol? l) (symbol->string l) l)
+    (collect-options label tag-options-table)
+    (ahash-ref tag-options-table label)))
 
 (tm-define (search-tag-options t)
   (search-options (tree-label t)))
@@ -169,26 +171,24 @@
 
 (define (collect-parameters l v t)
   (when (not (ahash-ref t l))
-    ;;(display* "Collect " l "\n")
+    ;;(display* "collect-parameters " l "\n")
     (ahash-set! t l #t)
     (with std (standard-parameters l)
       (if std
           (begin
             ;;(display* "Std= " std "\n")
-            (for (x std)
-              (ahash-set! v x #t)))
-	  (with def (get-init-tree l)
+            (for (x std) (ahash-set! v x #t)))
+          (with def (get-init-tree l)
             ;;(display* "  Def= " def "\n")
-	    (cond ((tree-is? def 'uninit) (noop))
-		  ((tree-in? def '(macro xmacro))
-		   (collect-parameters-sub def v t))
-		  (else (ahash-set! v l #t))))))))
+            (cond ((tree-is? def 'uninit) (noop))
+                  ((tree-in? def '(macro xmacro))
+                   (collect-parameters-sub def v t))
+                  (else (ahash-set! v l #t))))))))
 
 (tm-define (search-parameters l)
-  (if (symbol? l) (set! l (symbol->string l)))
-  (let* ((v (make-ahash-table))
-	 (t (make-ahash-table)))
-    (collect-parameters l v t)
+  (let* ((label (if (symbol? l) (symbol->string l) l))
+         (v (make-ahash-table)))
+    (collect-parameters label v tag-parameters-table)
     (sort (ahash-set->list v) string<=?)))
 
 (tm-define (search-tag-parameters t)
