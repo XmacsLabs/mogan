@@ -171,7 +171,7 @@
 
 (define (collect-parameters l v t)
   (when (not (ahash-ref t l))
-    (display* "collect-parameters " l "\n")
+    ;;(display* "collect-parameters " l "\n")
     (ahash-set! t l #t)
     (with std (standard-parameters l)
       (if std
