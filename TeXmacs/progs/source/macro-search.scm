@@ -18,6 +18,8 @@
 ;; Routines for subsequent customization
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(define tag-options-table (make-ahash-table))
+
 (tm-define (standard-options l) #f)
 
 (tm-define (standard-parameters l) #f)
@@ -67,10 +69,9 @@
   (ahash-ref t l))
 
 (tm-define (search-options l)
-  (if (symbol? l) (set! l (symbol->string l)))
-  (with t (make-ahash-table)
-    (collect-options l t)
-    (ahash-ref t l)))
+  (with label (if (symbol? l) (symbol->string l) l)
+    (collect-options label tag-options-table)
+    (ahash-ref tag-options-table label)))
 
 (tm-define (search-tag-options t)
   (search-options (tree-label t)))
