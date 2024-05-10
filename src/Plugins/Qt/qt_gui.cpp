@@ -887,7 +887,10 @@ qt_gui_rep::update () {
   if (interrupted) needing_update= true;
   if (!headless_mode && nr_windows == 0) qApp->quit ();
 
-  time_t delay= delayed_commands.lapse - texmacs_time ();
+  time_t delay= std_delay;
+  if (delayed_commands.wait) {
+    delay= delayed_commands.lapse - texmacs_time ();
+  }
   if (needing_update) delay= 0;
   else delay= std::max ((time_t) 0, std::min (std_delay, delay));
   if (postpone_treatment) delay= 9; // NOTE: force occasional display
