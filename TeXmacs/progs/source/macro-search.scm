@@ -57,7 +57,7 @@
 
 (define (collect-options l t)
   (when (not (ahash-ref t l))
-    ;;(display* "Collect " l "\n")
+    ;;(display* "collect-options " l "\n")
     (ahash-set! t l '())
     (ahash-set! t l
       (with std (standard-options (string->symbol l))
@@ -170,7 +170,7 @@
 
 (define (collect-parameters l v t)
   (when (not (ahash-ref t l))
-    ;;(display* "Collect " l "\n")
+    (display* "collect-parameters " l "\n")
     (ahash-set! t l #t)
     (with std (standard-parameters l)
       (if std
