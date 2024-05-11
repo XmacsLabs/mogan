@@ -1,7 +1,7 @@
 /*****************************************************************************
  * MODULE     : wencoding_test.cpp
  * DESCRIPTION: Tests on wencoding
- * COPYRIGHT  : (C) 2019-2023  ATQlove
+ * COPYRIGHT  : (C) 2019-2024  ATQlove
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
