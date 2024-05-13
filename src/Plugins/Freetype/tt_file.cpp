@@ -69,8 +69,8 @@ add_to_path (url u, url d) {
 url
 tt_add_to_font_path (url u) {
   if (!is_directory (u)) {
-    url font_path= get_tm_cache_path () * url("fonts") * url("truetype") *
-      (lolly::hash::md5_hexdigest (u) * "." * suffix(u));
+    url font_path= get_tm_cache_path () * url ("fonts") * url ("truetype") *
+                   (lolly::hash::md5_hexdigest (u) * "." * suffix (u));
     if (u != font_path) {
       copy (u, font_path);
     }
@@ -93,6 +93,7 @@ tt_font_search_path () {
   }
   ret= ret | url ("$TEXMACS_HOME_PATH/fonts/truetype") |
        url ("$TEXMACS_PATH/fonts/truetype");
+  ret= ret | (get_tm_cache_path () * "fonts" * "truetype");
   if (os_win () || os_mingw ()) {
     ret= ret | url_system ("$windir/Fonts");
   }
