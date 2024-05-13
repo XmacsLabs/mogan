@@ -231,7 +231,7 @@ tt_font_find (string font_basename) {
     array<string> suffixes     = font_database_suffixes (font_basename);
     for (int i= 0; i < N (suffixes); i++) {
       string suf= suffixes[i];
-      if (!contains (suf, tt_allowed_suffixes)) {
+      if (!contains (locase_all (suf), tt_allowed_suffixes)) {
         flag_truetype= false;
       }
       if (flag_truetype) {
