@@ -27,6 +27,7 @@
 #ifdef USE_FONTCONFIG
 #include <fontconfig/fontconfig.h>
 #endif
+#include <lolly/hash/md5.hpp>
 
 // Caching for Font in tuple (filename, path)
 // eg. (basename.ttf, url(/path/to/basename.ttf))
@@ -65,24 +66,19 @@ add_to_path (url u, url d) {
   return u | d;
 }
 
-void
-tt_extend_font_path (url u) {
+url
+tt_add_to_font_path (url u) {
   if (!is_directory (u)) {
+    url font_path= get_tm_cache_path () * url("fonts") * url("truetype") *
+      (lolly::hash::md5_hexdigest (u) * "." * suffix(u));
+    if (u != font_path) {
+      copy (u, font_path);
+    }
     // Sync font info to tt_fonts and tt_font_location
-    tt_locate_update_cache (u, false);
-
-    // Only reserve the directory part
-    u= head (u);
+    tt_locate_update_cache (font_path, false);
+    return font_path;
   }
-  // Append the directory to the "imported fonts" preference
-  string old= get_preference ("imported fonts", "");
-  if (is_empty (old)) {
-    set_preference ("imported fonts", as_string (u));
-  }
-  else {
-    url dirs= add_to_path (url_system (old), u);
-    set_preference ("imported fonts", as_string (dirs));
-  }
+  return url_none ();
 }
 
 url
@@ -95,15 +91,10 @@ tt_font_search_path () {
   if (!is_empty (xtt)) {
     ret= ret | url (xtt);
   }
-  string ximp= get_preference ("imported fonts", "");
-  if (!is_empty (ximp)) {
-    ret= ret | url_system (ximp);
-  }
   ret= ret | url ("$TEXMACS_HOME_PATH/fonts/truetype") |
        url ("$TEXMACS_PATH/fonts/truetype");
   if (os_win () || os_mingw ()) {
-    ret= ret | url_system ("$windir/Fonts") |
-         url_system ("$LOCALAPPDATA/Microsoft/Windows/Fonts");
+    ret= ret | url_system ("$windir/Fonts");
   }
   else if (os_macos ()) {
     ret= ret | url ("$HOME/Library/Fonts") | url ("/Library/Fonts") |

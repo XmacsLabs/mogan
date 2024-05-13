@@ -273,6 +273,7 @@ font_database_load () {
   if (N (font_table) == 0) {
     font_database_load_database (GLOBAL_DATABASE);
     font_database_filter ();
+    font_database_extend (search_sub_dirs (get_tm_cache_path () * url("fonts/truetype")));
     font_database_save_database (fontdb_local_path (LOCAL_DATABASE));
     font_database_load_suffixes_sub (fontdb_local_path (LOCAL_DATABASE));
   }
@@ -389,12 +390,23 @@ font_database_build_local () {
 
 void
 font_database_extend_local (url u) {
-  tt_extend_font_path (u);
+  url new_u= tt_add_to_font_path (u);
   font_database_load ();
-  font_database_build (u);
+  font_database_build (new_u);
   font_database_build_characteristics (false);
   font_database_guess_features ();
   font_database_save ();
+}
+
+void
+font_database_extend (url u) {
+  if (is_none (u))
+    ;
+  else if (is_or (u)) {
+    font_database_extend (u[1]);
+    font_database_extend (u[2]);
+  }
+  if (is_regular (u)) font_database_extend_local (u);
 }
 
 void

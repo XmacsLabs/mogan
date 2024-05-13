@@ -896,8 +896,6 @@
 ((Futura Condensed\ Medium) ((Futura.ttc 2 321740) (Futura.ttc 2 288740) (Futura.ttc 2 315748) (Futura.ttc 3 486592) (Futura.ttc 3 488604)))
 ((Futura Medium) ((Futura.ttc 0 321740) (Futura.ttc 0 288740) (Futura.ttc 0 315748) (Futura.ttc 0 486592) (Futura.ttc 0 488604)))
 ((Futura Medium\ Italic) ((Futura.ttc 1 321740) (Futura.ttc 1 288740) (Futura.ttc 1 315748) (Futura.ttc 1 486592) (Futura.ttc 1 488604)))
-((FZXiaoBiaoSong-B05S Regular) ((方正小标宋简.ttf 0 3835244)))
-((FZXiaoBiaoSong-B05S Regular) ((方正小标宋简.TTF 0 3835244)))
 ((Gabriola Regular) ((Gabriola.ttf 0 1806004)))
 ((Gadugi Bold) ((gadugib.ttf 0 244912)))
 ((Gadugi Regular) ((gadugi.ttf 0 247240)))
