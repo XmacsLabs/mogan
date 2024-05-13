@@ -401,13 +401,13 @@ font_database_extend_local (url u) {
 
 void
 font_database_extend (url u) {
-  if (is_none (u))
-    ;
-  else if (is_or (u)) {
+  if (is_or (u)) {
     font_database_extend (u[1]);
     font_database_extend (u[2]);
   }
-  if (is_regular (u)) font_database_extend_local (u);
+  else if (is_regular (u)) {
+    font_database_extend_local (u);
+  }
 }
 
 void

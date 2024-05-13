@@ -72,6 +72,7 @@ tt_add_to_font_path (url u) {
     url font_path= get_tm_cache_path () * url ("fonts") * url ("truetype") *
                    (lolly::hash::md5_hexdigest (u) * "." * suffix (u));
     if (u != font_path) {
+      if (exists (font_path)) remove (font_path);
       copy (u, font_path);
     }
     // Sync font info to tt_fonts and tt_font_location
