@@ -182,7 +182,7 @@ qt_image_renderer_rep::qt_image_renderer_rep (picture p, double zoom)
 
   qt_picture_rep* handle= (qt_picture_rep*) pict->get_handle ();
   QImage&         im (handle->pict);
-  im.fill (QColor (0, 0, 0, 0));
+  im.fill (QColor (255, 255, 255, 0));
   painter->begin (&im);
 }
 
