@@ -273,7 +273,7 @@ font_database_load () {
   if (N (font_table) == 0) {
     font_database_load_database (GLOBAL_DATABASE);
     font_database_filter ();
-    font_database_extend (
+    font_database_extend_local (
         search_sub_dirs (get_texmacs_home_path () * url ("fonts/truetype")));
     font_database_save_database (fontdb_local_path (LOCAL_DATABASE));
     font_database_load_suffixes_sub (fontdb_local_path (LOCAL_DATABASE));
@@ -391,23 +391,29 @@ font_database_build_local () {
 
 void
 font_database_extend_local (url u) {
-  url new_u= tt_add_to_font_path (u);
-  font_database_load ();
-  font_database_build (new_u);
+  array<url> all_fonts;
+  if (is_regular (u)) {
+    all_fonts << u;
+  }
+  else if (is_directory (u)) {
+    bool          err= false;
+    array<string> a  = read_directory (u, err);
+    int           a_N= N (a);
+    for (int i= 0; i < a_N; i++) {
+      all_fonts << u * a[i];
+    }
+  }
+
+  int all_fonts_N= N (all_fonts);
+  if (all_fonts_N <= 0) return;
+  for (int i= 0; i < all_fonts_N; i++) {
+    url new_u= tt_add_to_font_path (all_fonts[i]);
+    font_database_load ();
+    font_database_build (new_u);
+  }
   font_database_build_characteristics (false);
   font_database_guess_features ();
   font_database_save ();
-}
-
-void
-font_database_extend (url u) {
-  if (is_or (u)) {
-    font_database_extend (u[1]);
-    font_database_extend (u[2]);
-  }
-  else if (is_regular (u)) {
-    font_database_extend_local (u);
-  }
 }
 
 void

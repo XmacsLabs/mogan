@@ -236,7 +236,6 @@ url           fontdb_local_path (string name);
 void          font_database_build (url u);
 void          font_database_build_local ();
 void          font_database_extend_local (url u);
-void          font_database_extend (url u);
 void          font_database_build_global ();
 void          font_database_build_global (url u);
 void          font_database_build_characteristics (bool force);
