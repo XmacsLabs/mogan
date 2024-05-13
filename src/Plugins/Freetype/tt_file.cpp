@@ -69,7 +69,7 @@ add_to_path (url u, url d) {
 url
 tt_add_to_font_path (url u) {
   if (!is_directory (u)) {
-    url font_path= get_tm_cache_path () * url ("fonts") * url ("truetype") *
+    url font_path= get_texmacs_home_path () * url ("fonts") * url ("truetype") *
                    (lolly::hash::md5_hexdigest (u) * "." * suffix (u));
     if (u != font_path) {
       if (exists (font_path)) remove (font_path);

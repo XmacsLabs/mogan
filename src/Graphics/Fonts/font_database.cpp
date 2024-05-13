@@ -274,7 +274,7 @@ font_database_load () {
     font_database_load_database (GLOBAL_DATABASE);
     font_database_filter ();
     font_database_extend (
-        search_sub_dirs (get_tm_cache_path () * url ("fonts/truetype")));
+        search_sub_dirs (get_texmacs_home_path () * url ("fonts/truetype")));
     font_database_save_database (fontdb_local_path (LOCAL_DATABASE));
     font_database_load_suffixes_sub (fontdb_local_path (LOCAL_DATABASE));
   }
