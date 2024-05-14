@@ -24,16 +24,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (url-temp-ext ext)
-;; temporary files with extensions
+  ;; temporary files with extensions
   (url-glue (url-temp) (string-append "." ext)))
 
 (if (not (defined? 'string-contains)) ; for s7
     (define (string-contains ss s)
-       (string-position s ss)))
-       
+            (string-position s ss)))
+
 (define (debug . args)
   (when (debug-get "convert")
-     (apply display* args))) 
+        (apply display* args)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; commodity functions for tree manipulations
@@ -56,15 +56,15 @@
   (remove-node! node))
 
 (define (selection-trim-ending) ; code from text-edit.scm
-              (if (selection-active-any?)
-               (with st (selection-tree)
-                  (if (and (not  (tree-atomic? st ))
-                          (tree-empty? (tree-ref st :last)))
-                   (begin
-                     (selection-set
-                        (selection-get-start)
-                        (path-previous (root-tree) (selection-get-end)))
-                     (selection-trim-ending))))))
+  (if (selection-active-any?)
+      (with st (selection-tree)
+        (if (and (not (tree-atomic? st))
+                 (tree-empty? (tree-ref st :last)))
+          (begin
+            (selection-set
+              (selection-get-start)
+              (path-previous (root-tree) (selection-get-end)))
+            (selection-trim-ending))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Main functions needed for making reeditable svg
@@ -194,17 +194,16 @@
   (:returns "nothing")
   ;;the format of the graphics is set in the preferences
   (if (not (qt-gui?))
-    (set-message "Qt GUI only, sorry. Use \"Export selection...\"" "")
-    (if (not (selection-active-any?))
-      (set-message "no selection!" "")
-      (let* ((format (get-preference "texmacs->image:format"))
-             (tmpurl (url-temp-ext format)))
-          (export-selection-as-graphics tmpurl)
-        ;; first generate an image file
-          (graphics-file-to-clipboard tmpurl)
-        ;; place that image on the clipboard
-          (system-remove tmpurl)
-    ))))
+      (set-message "Qt GUI only, sorry. Use \"Export selection...\"" "")
+      (if (not (selection-active-any?))
+          (set-message "no selection!" "")
+          (let* ((format (get-preference "texmacs->image:format"))
+                 (tmpurl (url-temp-ext format)))
+            (export-selection-as-graphics tmpurl)
+            ;; first generate an image file
+            (graphics-file-to-clipboard tmpurl)
+            ;; place that image on the clipboard
+            (system-remove tmpurl)))))
 
 (tm-define (export-selection-as-graphics myurl)
   (:synopsis "Generates graphics format of the current selection")
@@ -218,27 +217,31 @@
   ;; the image should ideally reproduce what is on the screen, including line breaks if any 
  (if (not (selection-active-any?)) (set-message "no selection!" "")
    (begin 
+
+    ;; Check the suffix of the URL
     (if (== (url-suffix myurl) "")
       (with format (get-preference "texmacs->image:format")
         (show-message (string-append "No file extension specified, defaulting to " format) "No image format given" )
         (with suffix (format-default-suffix format)
           (set! myurl (url-glue myurl (string-append "." suffix))))))
   
+    ;; Check the converter from PDF to suffix format
     (with suffix (url-suffix myurl)
       (when (not (file-converter-exists? "x.pdf" (string-append "y." suffix)))
         (show-message (string-append "Sorry, pdf to " suffix " converter is missing. Generating pdf instead") "Image format not available" )
         (let* ((sufl (string-length suffix))
-              (surl (url->string myurl))
-              (sl (string-length surl)))
+               (surl (url->string myurl))
+               (sl (string-length surl)))
           (set! myurl (string->url (string-append (substring surl (- sl sufl) sl) "pdf"))))))
 
-; TODO Handle when output file already exists (presently we overwritte without warning)
+    ;; TODO Handle when output file already exists (presently we overwritte without warning)
 
     (selection-trim-ending)
+
     (let*
      ((suffix (url-suffix myurl))
-;; step 1 prepare and typeset selection
-;; if selection is inside inline or display math preserve inline/display style
+      ;; step 1 prepare and typeset selection
+      ;; if selection is inside inline or display math preserve inline/display style
       (issomemath (nnot (match? (tree->stree (selection-tree) ) 
                     '(:or (equation* :*) (equation :*) (eqnarray :*) (eqnarray* :*) (math :*) (align :*) (align* :*))) ))
       (inmath (== (tree->string (get-env-tree-at "mode" (selection-get-start))) "math"))
@@ -250,24 +253,26 @@
                        (selection-tree)) 
           (inmath
              (if indisplaymath
-               (begin (debug "selection tree is in display math \n" )
+               (begin
+                 (debug "selection tree is in display math \n")
                  (stree->tree `(equation* ,(selection-tree))))
-               (begin (debug "selection tree is in inline math \n" )
+               (begin
+                 (debug "selection tree is in inline math \n")
                  (stree->tree `(math ,(selection-tree))))))
           (else (debug "selection not purely math \n") (selection-tree))))
-;; is selection wider than 1par (and needs linebreaks and or hyphenation)?
+      ;; is selection wider than 1par (and needs linebreaks and or hyphenation)?
       (maxwidth (length-decode "1par"))
       (partmpt (string-append (number->string maxwidth) "tmpt"))
       (parcm (length-add  "0cm" partmpt))
       ;; get-page-width return dimension in the cpp "SI" unit which seems to be == "10tmpt"
-;; output scale of image?
+      ;; output scale of image?
       ;(str-scale  (get-preference "texmacs->image:scale"))
       ;(scale (string->number str-scale))
 
-;; We compute the baseline position only if it's a single-line content
-;; (this excludes selections begining with 'document)
-;; If the selection is eqnarray or similar compute it only if the table
-;; has a single row
+      ;; We compute the baseline position only if it's a single-line content
+      ;; (this excludes selections begining with 'document)
+      ;; If the selection is eqnarray or similar compute it only if the table
+      ;; has a single row
       (iseqnarray (nnot (match? (tree->stree tm-fragment) 
                     '(:or (eqnarray :*) (eqnarray* :*) (align :*) (align* :*)))))
       (table-t (if iseqnarray (tree-ref (selection-tree) :* 'table) #f))
@@ -281,24 +286,25 @@
       (rawwidthOK (< rawwidth maxwidth))
       (needbaseline 
         (if (match? (tree->stree tm-fragment) '(document :*)) 
-          #f   
-         (if iseqnarray 
-           (if (and simpleeqnarray rawwidthOK) #t #f)
-           rawwidthOK)))
+            #f
+            (if iseqnarray
+                (if (and simpleeqnarray rawwidthOK) #t #f)
+                rawwidthOK)))
 
-;; the baseline calculation is relative to the size of the background frame
-;; poppler puts a background frame in the svg image only if not fully transparent (otherwise no)
-;; (during svg postprocessing  we'll set the opacity of the background to 0)  
+      ;; the baseline calculation is relative to the size of the background frame
+      ;; poppler puts a background frame in the svg image only if not fully transparent (otherwise no)
+      ;; (during svg postprocessing  we'll set the opacity of the background to 0)
       (fillcolor (if (and needbaseline (== suffix "svg")) "#ffffff02" "#ffffff00")) ; either slightly opaque or fully transparent white
 
-;; if selection is an equation array, make table width minimal to avoid wide white frame
+      ;; if selection is an equation array, make table width minimal to avoid wide white frame
       (tm-fragment1 
         (if iseqnarray 
           (with tfmt (tree-ref tm-fragment :* 'tformat)
              (tree-insert tfmt 0 '((twith "table-hmode" "min")))
              tm-fragment)
           tm-fragment))
-;because of bug #63404 we can't simply always use document-at for formating 
+
+      ;because of bug #63404 we can't simply always use document-at for formating
       (tm-fragment-formated
         (if needbaseline
           ;; if needbaseline insert fragment in table having a background
@@ -325,23 +331,17 @@
                 "doc-at-hmode" ,(if (or iseqnarray indisplaymath inmath)  "min" "exact") ;
                 ;"doc-at-valign" "base"
                 "doc-at-padding" "0spc"
-                (document-at (document ,tm-fragment1) (point "0par" "0")))
-        ))
+                (document-at (document ,tm-fragment1) (point "0par" "0")))))
 
-;; step 2 generate output according to desired output format
+      ;; step 2 generate output according to desired output format
+      (extents (print-snippet myurl (stree->tree tm-fragment-formated) #t))
+      ;; compute relative position of baseline from returned box dimensions  see tmhtml.scm
+      (height (- (fourth extents) (second extents)))
+      (relbaseline (if needbaseline (number->string (exact->inexact (/ (- (sixth extents)) height))) "0.0"))) ; end of let* defs
 
-    (extents (print-snippet myurl (stree->tree tm-fragment-formated) #t)); scale))
-;; compute relative position of baseline from returned box dimensions  see tmhtml.scm
-    (height (- (fourth extents) (second extents)))
-    (relbaseline (if needbaseline (number->string (exact->inexact (/ (- (sixth extents)) height))) "0.0"))
-           ); end of let* defs
-
-      (system-remove tmppng)
-      (if (== suffix "svg")
-        (begin 
-         (debug "relbaseline= " relbaseline "\n")
-         (refactor-svg myurl tm-fragment relbaseline))
-         ;; modify svg, embedding texmacs code
-        )
-
-    ))))
+     (system-remove tmppng)
+     (if (== suffix "svg")
+         (begin
+          ;; modify svg, embedding texmacs code
+          (debug "relbaseline= " relbaseline "\n")
+          (refactor-svg myurl tm-fragment relbaseline)))))))

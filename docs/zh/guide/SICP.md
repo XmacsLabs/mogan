@@ -20,6 +20,8 @@
 
 相关资料：
 + 南京大学的[SICP课程主页](https://cs.nju.edu.cn/xyfeng/teaching/SICP/index.htm)
++ 北京大学的[SICP课程主页](https://www.math.pku.edu.cn/teachers/qiuzy/progtech/)
++ 新加坡国立大学的[SICP课程主页](https://www.comp.nus.edu.sg/~cs1101s/)
 + Berkeley的[CS 61A: 计算机程序的构造和解释](https://cs61a.org)
 + MIT的[SICP课程](https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/pages/syllabus/)
 + SICP中文译本：[《计算机程序的构造和解释》](https://book.douban.com/subject/1148282/)
