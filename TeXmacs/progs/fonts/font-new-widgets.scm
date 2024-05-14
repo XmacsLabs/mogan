@@ -663,7 +663,7 @@
           ("Advanced"
            (dialogue-window font-customization-dialog
                             noop "Advanced font selector")) // //)
-        ("Import" (choose-file font-import "Import font" "")) // //
+        ("Import" (choose-file font-import "Import font" "font")) // //
         (if flag?
             ("Reset"
              (begin
