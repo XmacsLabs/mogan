@@ -22,12 +22,11 @@
 
   <assign|s7-prompt-color|dark green>
 
-  \ <assign|s7-input|<\macro|prompt|body>
+  <assign|s7-input|<\macro|prompt|body>
     <\with|generic-prompt-color|<value|s7-prompt-color>|generic-input-color|<value|scheme-input-color>>
       <generic-input|<arg|prompt>|<arg|body>>
     </with>
   </macro>>
-</body>
 
 <\initial>
   <\collection>
