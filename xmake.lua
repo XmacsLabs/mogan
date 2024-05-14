@@ -76,9 +76,9 @@ option("use-exceptions")
 option_end()
 
 -- only lock it in rc releases
--- if is_plat ("macosx", "windows") then
---     set_policy("package.requires_lock", true)
--- end
+if is_plat ("macosx", "windows") then
+    set_policy("package.requires_lock", true)
+end
 add_repositories("mogan-repo xmake")
 add_requires_of_mogan()
 
@@ -173,7 +173,7 @@ add_configfiles("src/System/config.h.xmake", {
         NOMINMAX = is_plat("windows"),
         MACOSX_EXTENSIONS = is_plat("macosx"),
         SIZEOF_VOID_P = 8,
-        USE_FONTCONFIG = is_plat("linux") and (not linuxos.name() == "uos"),
+        USE_FONTCONFIG = is_plat("linux"),
         USE_STACK_TRACE = (not is_plat("wasm")) and (not is_plat("windows")),
         USE_PLUGIN_GS = not is_plat("wasm"),
         USE_PLUGIN_GIT = not is_plat("wasm"),

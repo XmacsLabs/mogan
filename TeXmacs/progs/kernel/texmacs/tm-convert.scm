@@ -465,6 +465,7 @@
         ((== fm "sound")
          '("au" "cdr" "cvs" "dat" "gsm" "ogg" "snd" "voc" "wav"))
         ((== fm "animation") '("gif"))
+        ((== fm "font") '("ttf" "otf" "ttc"))
         (else (format-get-suffixes-sub fm))))
 
 (define-public (format-get-suffixes* fm)
