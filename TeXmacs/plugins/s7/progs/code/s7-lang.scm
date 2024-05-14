@@ -22,7 +22,7 @@
     (declare_type "define" "set!" "lambda" "define-macro")
     ;(declare_module "pkg")
     (keyword
-     "let" "and" "or" "not")
+     "let")
     (keyword_math
      "sinh" "cosh" "tanh" "asinh" "acosh" "atanh" "expt" "sqrt"
      "logior" "logxor" "logand" "lognot" "logbit?" "ash" "integer-decode-float"
@@ -35,7 +35,7 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "operator")))
   `(,(string->symbol key)
-    (operator "=" "+" "-" "*" "/" )
+    (operator "and" "or" "not" "=" "+" "-" "*" "/" )
     (operator_special "@" "," "'" "`")
     ;(operator_field ".")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
