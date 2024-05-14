@@ -42,7 +42,9 @@ flush_prompt (string prompt) {
 
 int
 main (int argc, char** argv) {
-  flush_verbatim ("S7 Scheme Session\n");
+  std::stringstream welcome;
+  welcome << "S7 Scheme " << S7_VERSION << " (" << S7_DATE << ")\n";
+  flush_verbatim (welcome.str());
   flush_prompt ("> ");
 
   s7_scheme* sc;

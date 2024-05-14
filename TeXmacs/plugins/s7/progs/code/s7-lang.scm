@@ -18,26 +18,28 @@
   (:require (and (== lan "s7") (== key "keyword")))
   `(,(string->symbol key)
     (constant
-      "#t" "#f" "pi")
-    (declare_type "define" "set!" "lambda" "define-macro")
-    ;(declare_module "pkg")
+     "#t" "#f" "pi")
+    (declare_type
+     "define" "set!" "lambda" "define-macro" "procedure-source" "define-constant")
     (keyword
-     "let")
+     "let" "bignum" "string->number" "number->string" "string?" "length"
+     "append" "map" "for-each" "list")
     (keyword_math
      "sinh" "cosh" "tanh" "asinh" "acosh" "atanh" "expt" "sqrt"
      "logior" "logxor" "logand" "lognot" "logbit?" "ash" "integer-decode-float"
-     "random" "nan?" "infinite?" "nan" "nan-payload")
+     "random" "nan?" "infinite?" "nan" "nan-payload"
+     "exact?" "rational?" "rationalize" "floor?" "remainder" "modulo" "lcm" "log"
+     "complex" "integer?")
     (keyword_conditional
       "if" "cond" "else")
     (keyword_control
-      "begin")))
+      "begin" "error" "catch" "throw")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "operator")))
   `(,(string->symbol key)
     (operator "and" "or" "not" "=" "+" "-" "*" "/" )
     (operator_special "@" "," "'" "`")
-    ;(operator_field ".")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
 
 (define (s7-number-suffix)
