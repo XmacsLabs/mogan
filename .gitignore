@@ -46,3 +46,6 @@ compile_commands.json
 
 docs/**/plugin_binary.md
 docs/**/plugin_octave.md
+
+# Binary of the S7 plugin
+tm_s7
