@@ -10,6 +10,7 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 includes ("vars.lua")
+includes ("tm_s7.lua")
 
 local research_files = {
     "$(projectdir)/TeXmacs(/doc/**)",
@@ -264,6 +265,7 @@ end
 
 
 target("research") do
+    add_deps("tm_s7")
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
     if is_plat("wasm") then
         add_target_research_on_wasm()

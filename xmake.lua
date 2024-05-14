@@ -264,9 +264,6 @@ if is_plat("wasm", "linux") then
     end
 end
 
--- S7 plugin
-includes("xmake/tm_s7.lua")
-
 -- Mogan Research
 includes("xmake/research.lua")
 
