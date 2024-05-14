@@ -117,7 +117,7 @@
 ;; Run all tests and display results
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(tm-define (run-all-widget-tests)
+(tm-define (regtest-menu-demo)
   (let ((results (list (regtest-widget1)
                        (regtest-widget2)
                        (regtest-widget3)
