@@ -11,19 +11,18 @@ sudo apt install --yes build-essential libfontconfig1-dev  qt6-base-dev libqt6sv
 
 On Fedora and RHEL derivatives:
 ```
-sudo dnf update
-sudo dnf groupinstall "C Development Tools and Libraries"
-sudo dnf install git wget unzip glibc-static libstdc++-static qt5-qtbase-devel qt5-qtsvg-devel fontconfig-devel
-wget https://xmake.io/shget.text -O - | bash #install xmake
+sudo dnf update -y
+sudo dnf groupinstall -y "C Development Tools and Libraries"
+sudo dnf install -y git xmake unzip libgit2-devel fontconfig-devel libstdc++-static glibc-static qt5-qtbase-devel qt5-qtsvg-devel
 ```
 
 Sometimes, we need the latest xrepo:
-``` bash
+```
 xrepo update-repo
 ```
 
 ## Step 2: Config and Build
-``` bash
+```
 xmake config --yes
 xmake build research
 ```
@@ -41,7 +40,7 @@ xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
 See [How to test](Test.md)。
 
 ## Step 4: Launch Mogan Research
-``` bash
+```
 xmake run research
 ```
 
