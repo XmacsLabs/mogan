@@ -19,17 +19,23 @@
   `(,(string->symbol key)
     (constant
       "#t" "#f" "pi")
-    (declare_type "define" "set!" "lambda")
+    (declare_type "define" "set!" "lambda" "define-macro")
     ;(declare_module "pkg")
+    (keyword
+     "let" "and" "or" "not")
+    (keyword_math
+     "sinh" "cosh" "tanh" "asinh" "acosh" "atanh" "expt" "sqrt"
+     "logior" "logxor" "logand" "lognot" "logbit?" "ash" "integer-decode-float"
+     "random" "nan?" "infinite?" "nan" "nan-payload")
     (keyword_conditional
-      "if")))
-    ;(keyword_control
-    ;  "catch" "try")))
+      "if" "cond" "else")
+    (keyword_control
+      "begin")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "operator")))
   `(,(string->symbol key)
-    (operator ";" ":" "=" "+" "-")
+    (operator "=" "+" "-" "*" "/" )
     (operator_special "@" "," "'" "`")
     ;(operator_field ".")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
@@ -53,7 +59,8 @@
     (bool_features 
      "hex_with_8_bits" "hex_with_16_bits"
      "hex_with_32_bits" "octal_upto_3_digits")
-    (escape_sequences "\\" "\"" "a" "b" "f" "n" "r" "t" "v")))
+    (escape_sequences "\\" "\"" "a" "b" "f" "n" "r" "t" "v")
+    (pairs "\"")))
 
 ; See: https://s7.org/doc/v6.1.0/Single-Line-Comments.html
 (tm-define (parser-feature lan key)
@@ -67,10 +74,11 @@
 (define-preferences
   ("syntax:s7:none" "red" notify-s7-syntax)
   ("syntax:s7:comment" "brown" notify-s7-syntax)
-  ("syntax:s7:keyword" "#309090" notify-s7-syntax)
+  ("syntax:s7:declare_type" "#309090" notify-s7-syntax)
   ("syntax:s7:error" "dark red" notify-s7-syntax)
   ("syntax:s7:constant_number" "#4040c0" notify-s7-syntax)
   ("syntax:s7:constant_string" "dark grey" notify-s7-syntax)
   ("syntax:s7:constant_char" "#333333" notify-s7-syntax)
+  ("syntax:s7:operator_special" "dark magenta" notify-s7-syntax)
   ("syntax:s7:variable_identifier" "#204080" notify-s7-syntax)
   ("syntax:s7:declare_category" "#d030d0" notify-s7-syntax))
