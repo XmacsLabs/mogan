@@ -101,29 +101,39 @@ prog_language_rep::customize_number (tree config) {
 
 void
 prog_language_rep::customize_string (tree config) {
-  for (int i= 0; i < N (config); i++) {
-    tree   feature= config[i];
-    string name   = get_label (feature);
+  hashmap<string, string> pairs;
+  int                     config_N= N (config);
+  for (int i= 0; i < config_N; i++) {
+    tree   feature  = config[i];
+    string name     = get_label (feature);
+    int    feature_N= N (feature);
     if (name == "bool_features") {
-      for (int j= 0; j < N (feature); j++) {
+      for (int j= 0; j < feature_N; j++) {
         string key= get_label (feature[j]);
         escaped_char_parser.insert_bool_feature (key);
       }
     }
     else if (name == "escape_sequences") {
       array<string> escape_seq;
-      for (int j= 0; j < N (feature); j++) {
+      for (int j= 0; j < feature_N; j++) {
         string key= get_label (feature[j]);
         escape_seq << key;
       }
       escaped_char_parser.set_sequences (escape_seq);
     }
+    else if (name == "pairs") {
+      for (int j= 0; j < feature_N; j++) {
+        string key = get_label (feature[j]);
+        pairs (key)= key;
+      }
+    }
   }
 
   string_parser.set_escaped_char_parser (escaped_char_parser);
-  hashmap<string, string> pairs;
-  pairs ("\"")= "\"";
-  pairs ("\'")= "\'";
+  if (N (pairs) == 0) {
+    pairs ("\"")= "\"";
+    pairs ("\'")= "\'";
+  }
   string_parser.set_pairs (pairs);
   if (DEBUG_PARSER) debug_packrat << string_parser.to_string ();
 }
