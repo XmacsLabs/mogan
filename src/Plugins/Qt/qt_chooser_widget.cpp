@@ -176,6 +176,9 @@ qt_chooser_widget_rep::set_type (const string& _type) {
   else if (_type == "image") {
     nameFilter= to_qstring (translate ("Image file"));
   }
+  else if (_type == "font") {
+    nameFilter= to_qstring (translate ("Font file"));
+  }
   else {
     if (DEBUG_STD)
       debug_widgets << "qt_chooser_widget: IGNORING unknown format " << _type
