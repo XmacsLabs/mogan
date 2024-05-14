@@ -20,12 +20,11 @@
     (constant
      "#t" "#f" "pi")
     (declare_type
-     "define" "set!" "lambda" "define-macro" "procedure-source" "define-constant")
+     "define" "set!" "lambda" "define-macro" "define-constant" "let")
     (keyword
-     "let" "bignum" "string->number" "number->string" "string?" "length"
-     "append" "map" "for-each" "list")
-    (keyword_math
-     "sinh" "cosh" "tanh" "asinh" "acosh" "atanh" "expt" "sqrt"
+     "bignum" "string->number" "number->string" "string?" "length"
+     "append" "map" "for-each" "list" "cons" "cdr"  "procedure-source"
+     "sin" "cos" "sinh" "cosh" "tanh" "asinh" "acosh" "atanh" "expt" "sqrt"
      "logior" "logxor" "logand" "lognot" "logbit?" "ash" "integer-decode-float"
      "random" "nan?" "infinite?" "nan" "nan-payload"
      "exact?" "rational?" "rationalize" "floor?" "remainder" "modulo" "lcm" "log"
@@ -77,6 +76,9 @@
   ("syntax:s7:none" "red" notify-s7-syntax)
   ("syntax:s7:comment" "brown" notify-s7-syntax)
   ("syntax:s7:declare_type" "#309090" notify-s7-syntax)
+  ("syntax:s7:keyword_conditional" "#309090" notify-s7-syntax)
+  ("syntax:s7:keyword_control" "#309090" notify-s7-syntax)
+  ("syntax:s7:keyword" "#204080" notify-s7-syntax)
   ("syntax:s7:error" "dark red" notify-s7-syntax)
   ("syntax:s7:constant_number" "#4040c0" notify-s7-syntax)
   ("syntax:s7:constant_string" "dark grey" notify-s7-syntax)
