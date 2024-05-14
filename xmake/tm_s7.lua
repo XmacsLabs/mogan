@@ -12,4 +12,6 @@ target ("tm_s7") do
     set_targetdir("$(projectdir)/TeXmacs/plugins/s7/bin/")
     add_files ("$(projectdir)/TeXmacs/plugins/s7/src/tm_s7.cpp")
     add_packages("s7")
+    on_install(function (target)
+    end)
 end
