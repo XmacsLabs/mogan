@@ -17,10 +17,10 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "keyword")))
   `(,(string->symbol key)
-    (constant
-     "#t" "#f" "pi")
+    (extra_chars "?" "-" "!" "*" ">" "=" "<")
+    (constant "pi")
     (declare_type
-     "define" "set!" "lambda" "define-macro" "define-constant" "let")
+     "define" "set!" "lambda" "define-macro" "define-constant" "let" "let*")
     (keyword
      "eq?" "bignum" "length" "append" "procedure-source"
      ; SRFI-1: List constructors
@@ -97,14 +97,12 @@
 
 (define (s7-number-suffix)
   `(suffix
-    (imaginary "j" "J")))
+    (imaginary "i")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "number")))
   `(,(string->symbol key)
-    (bool_features
-     "prefix_0x" "prefix_0b"
-     "sci_notation")
+    (bool_features "prefix_#")
     (separator "_")
     ,(s7-number-suffix)))
 
