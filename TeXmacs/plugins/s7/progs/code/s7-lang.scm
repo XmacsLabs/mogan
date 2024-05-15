@@ -20,7 +20,7 @@
     (extra_chars "?" "-" "!" "*" ">" "=" "<")
     (constant "pi")
     (declare_type
-     "define" "set!" "lambda" "define-macro" "define-constant" "let")
+     "define" "set!" "lambda" "define-macro" "define-constant" "let" "let*")
     (keyword
      "eq?" "bignum" "length" "append" "procedure-source"
      ; SRFI-1: List constructors
