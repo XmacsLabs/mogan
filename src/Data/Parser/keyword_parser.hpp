@@ -35,11 +35,13 @@ public:
   }
 
   void use_keywords_of_lang (string lang_code);
+  void insert_extra_char (char extra_char);
 
 private:
   void                    do_parse (string s, int& pos);
   hashmap<string, string> keyword_group;
   string                  current_keyword;
+  array<char>             extra_chars;
 };
 
 #endif

@@ -12,6 +12,7 @@
 
 #include "analyze.hpp"
 #include "convert.hpp"
+#include "converter.hpp"
 #include "cork.hpp"
 #include "impl_language.hpp"
 #include "iterator.hpp"
@@ -56,12 +57,25 @@ prog_language_rep::get_parser_config (string lan, string key) {
 void
 prog_language_rep::customize_keyword (keyword_parser_rep p_keyword_parser,
                                       tree               config) {
-  for (int i= 0; i < N (config); i++) {
-    tree   group_of_keywords= config[i];
-    string group            = get_label (group_of_keywords);
-    for (int j= 0; j < N (group_of_keywords); j++) {
-      string word= get_label (group_of_keywords[j]);
-      p_keyword_parser.put (word, group);
+  int config_N= N (config);
+  for (int i= 0; i < config_N; i++) {
+    tree   group_of_keywords  = config[i];
+    int    group_of_keywords_N= N (group_of_keywords);
+    string group              = get_label (group_of_keywords);
+    if (group == "extra_chars") {
+      for (int j= 0; j < group_of_keywords_N; j++) {
+        string extra_char= get_label (group_of_keywords[j]);
+        if (N (extra_char) == 1) {
+          p_keyword_parser.insert_extra_char (extra_char[0]);
+        }
+      }
+    }
+    else {
+      for (int j= 0; j < group_of_keywords_N; j++) {
+        string word= get_label (group_of_keywords[j]);
+        // number->string is actually number-<gtr>string
+        p_keyword_parser.put (utf8_to_cork (word), group);
+      }
     }
   }
 }
@@ -202,12 +216,12 @@ prog_language_rep::advance (tree t, int& pos) {
     current_parser= number_parser.get_parser_name ();
     return &tp_normal_rep;
   }
-  if (operator_parser.parse (s, pos)) {
-    current_parser= operator_parser.get_parser_name ();
-    return &tp_normal_rep;
-  }
   if (keyword_parser.parse (s, pos)) {
     current_parser= keyword_parser.get_parser_name ();
+    return &tp_normal_rep;
+  }
+  if (operator_parser.parse (s, pos)) {
+    current_parser= operator_parser.get_parser_name ();
     return &tp_normal_rep;
   }
   if (identifier_parser.parse (s, pos)) {
