@@ -73,6 +73,7 @@ prog_language_rep::customize_keyword (keyword_parser_rep p_keyword_parser,
     else {
       for (int j= 0; j < group_of_keywords_N; j++) {
         string word= get_label (group_of_keywords[j]);
+        // number->string is actually number-<gtr>string
         p_keyword_parser.put (utf8_to_cork (word), group);
       }
     }

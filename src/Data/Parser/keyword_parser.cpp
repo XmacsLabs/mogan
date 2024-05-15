@@ -32,6 +32,7 @@ bool
 read_keyword (string s, int& i, string& result, array<char> extras) {
   int opos= i;
   int s_N = N (s);
+  // a keyword must start with alpha
   if (i < s_N && is_alpha (s[i])) i++;
   while (i < s_N && (is_alpha (s[i]) || contains (s[i], extras))) {
     i++;
@@ -70,6 +71,7 @@ keyword_parser_rep::use_keywords_of_lang (string lang_code) {
     int    group_words_N= N (group_words);
     for (int j= 0; j < group_words_N; j++) {
       string word= get_label (group_words[j]);
+      // number->string is actually number-<gtr>string
       put (utf8_to_cork (word), group);
     }
   }
