@@ -20,6 +20,10 @@
     </src-license>
   </src-title>>
 
+  <use-module|(data s7)>
+
+  <use-module|(code s7-edit)>
+
   <assign|s7-prompt-color|dark green>
 
   <assign|s7-input|<\macro|prompt|body>
@@ -27,9 +31,7 @@
       <generic-input|<arg|prompt>|<arg|body>>
     </with>
   </macro>>
+</body>
 
-<\initial>
-  <\collection>
-    <associate|preamble|true>
-  </collection>
-</initial>
+<initial|<\collection>
+</collection>>
