@@ -11,6 +11,7 @@
 
 #include "keyword_parser.hpp"
 #include "analyze.hpp"
+#include "converter.hpp"
 #include "iterator.hpp"
 #include "scheme.hpp"
 #include "tree.hpp"
@@ -19,12 +20,31 @@
 keyword_parser_rep::keyword_parser_rep () {
   current_keyword= "";
   keyword_group  = hashmap<string, string> ();
+  extra_chars    = array<char> ();
+}
+
+void
+keyword_parser_rep::insert_extra_char (char extra_char) {
+  extra_chars << extra_char;
+}
+
+bool
+read_keyword (string s, int& i, string& result, array<char> extras) {
+  int opos= i;
+  int s_N = N (s);
+  if (i < s_N && is_alpha (s[i])) i++;
+  while (i < s_N && (is_alpha (s[i]) || contains (s[i], extras))) {
+    i++;
+  }
+  result= s (opos, i);
+  return i > opos;
 }
 
 bool
 keyword_parser_rep::can_parse (string s, int pos) {
   string word;
-  bool   hit= read_word (s, pos, word) && keyword_group->contains (word);
+  bool   hit= read_keyword (s, pos, word, extra_chars) &&
+            keyword_group->contains (word);
   if (hit) current_keyword= word;
   return hit;
 }
@@ -43,12 +63,14 @@ keyword_parser_rep::use_keywords_of_lang (string lang_code) {
   list<tree> l= as_list_tree (eval (get_list_of_keywords_tree));
   if (DEBUG_PARSER)
     debug_packrat << "Keywords definition of [" << lang_code << "] loaded!\n";
-  for (int i= 0; i < N (l); i++) {
-    tree   group_words= l[i];
-    string group      = get_label (group_words);
-    for (int j= 0; j < N (group_words); j++) {
+  int l_N= N (l);
+  for (int i= 0; i < l_N; i++) {
+    tree   group_words  = l[i];
+    string group        = get_label (group_words);
+    int    group_words_N= N (group_words);
+    for (int j= 0; j < group_words_N; j++) {
       string word= get_label (group_words[j]);
-      put (word, group);
+      put (utf8_to_cork (word), group);
     }
   }
 }

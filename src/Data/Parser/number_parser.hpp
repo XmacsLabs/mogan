@@ -21,6 +21,7 @@ public:
   string PREFIX_0B;
   string PREFIX_0O;
   string PREFIX_0X;
+  string PREFIX_HASH;
   string NO_SUFFIX_WITH_BOX;
   string SCIENTIFIC_NOTATION;
 
@@ -54,6 +55,12 @@ public:
   inline void support_prefix_0x (bool param) {
     if (param) insert_bool_feature (PREFIX_0X);
     else remove_bool_feature (PREFIX_0X);
+  }
+
+  inline bool prefix_hash () { return bool_features->contains (PREFIX_HASH); }
+  inline void support_prefix_hash (bool param) {
+    if (param) insert_bool_feature (PREFIX_HASH);
+    else remove_bool_feature (PREFIX_HASH);
   }
 
   inline bool no_suffix_with_box () {
@@ -92,9 +99,9 @@ private:
 
   void do_parse (string s, int& pos);
 
-  bool can_parse_prefix_0b (string s, int pos);
-  bool can_parse_prefix_0o (string s, int pos);
-  bool can_parse_prefix_0x (string s, int pos);
+  bool can_parse_prefix_b (string s, int pos);
+  bool can_parse_prefix_o (string s, int pos);
+  bool can_parse_prefix_x (string s, int pos);
 
   void parse_binary (string s, int& pos);
   void parse_hex (string s, int& pos);
