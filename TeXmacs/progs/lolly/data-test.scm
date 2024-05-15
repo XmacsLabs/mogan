@@ -21,7 +21,53 @@
    (test "integer->hexadecimal 10" 10 "A")
    (test "integer->hexadecimal 255" 255 "FF")))
 
+(define (regtest-int-to-padded-hex)
+  (regression-test-group
+    "int" "padded-hex"
+    (lambda (args) (apply integer->padded-hexadecimal args)) :none
+    (test "integer->padded-hexadecimal 1 4" '(1 4) "0001")
+    (test "integer->padded-hexadecimal 10 4" '(10 4) "000A")
+    (test "integer->padded-hexadecimal 100 4" '(100 4) "0064")
+    (test-fails "integer->padded-hexadecimal 255 4" '(255 4) "AA")
+  )
+)
+
+(define (regtest-hex-to-int)
+  (regression-test-group
+    "hex" "int"
+    hexadecimal->integer :none
+    (test "hexadecimal->integer 1" "1" 1)
+    (test "hexadecimal->integer 0x05" "0x05" 5)
+    (test "hexadecimal->integer 00F6" "00F6" 246)
+    (test-fails "hexadecimal->integer 255" "255" "597")
+  )
+)
+
+(define (regtest-encode-base64)
+  (regression-test-group
+    "encode-base64" "encode"
+    encode-base64 :none
+    (test "encode-base64 abc" "abc" "YWJj")
+    (test "encode-base64 123456" "123456" "MTIzNDU2")
+    (test "encode-base64 what" "what" "d2hhdA==")
+  )
+)
+
+(define (regtest-decode-base64)
+  (regression-test-group
+    "decode-base64" "decode"
+    decode-base64 :none
+    (test "decode-base64 YWJj" "YWJj" "abc")
+    (test "decode-base64 MTIzNDU2" "MTIzNDU2" "123456")
+    (test "decode-base64 d2hhdA==" "d2hhdA==" "what")
+  )
+)
+
 (tm-define (regtest-data)
-  (let ((n (+ (regtest-int-to-hex))))
+  (let ((n (+ (regtest-int-to-hex)
+              (regtest-int-to-padded-hex)
+              (regtest-hex-to-int)
+              (regtest-encode-base64)
+              (regtest-decode-base64))))
     (display* "Total: " (object->string n) " tests.\n")
-    (display "Test suite of url: ok\n")))
+    (display "Test suite of lolly::data: ok\n")))
