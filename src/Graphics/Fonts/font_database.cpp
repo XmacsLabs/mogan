@@ -400,7 +400,10 @@ font_database_extend_local (url u) {
     array<string> a  = read_directory (u, err);
     int           a_N= N (a);
     for (int i= 0; i < a_N; i++) {
-      all_fonts << u * a[i];
+      if (N (a[i]) == 36) {
+        // Only extend font with md5 digest name
+        all_fonts << u * a[i];
+      }
     }
   }
 
