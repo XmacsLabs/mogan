@@ -46,5 +46,4 @@
   (")" (s7-bracket-close "(" ")" ))
   ("[" (s7-bracket-open "[" "]" ))
   ("]" (s7-bracket-close "[" "]" ))
-  ("\"" (s7-bracket-open "\"" "\"" ))
-  ("'" (s7-bracket-open "'" "'" )))
+  ("\"" (s7-bracket-open "\"" "\"" )))

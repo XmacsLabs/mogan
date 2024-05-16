@@ -20,9 +20,12 @@
     (extra_chars "?" "-" "!" "*" ">" "=" "<")
     (constant "pi")
     (declare_type
-     "define" "set!" "lambda" "define-macro" "define-constant" "let" "let*")
+     "define" "defined?" "set!" "lambda" "define-macro"
+     "define-constant" "let" "let*" "apply" "eval"
+     "load" "eval" "eval-string" "values")
     (keyword
-     "eq?" "bignum" "length" "append" "procedure-source"
+     "eq?" "equal?" "equivalent?" "help" "display"
+     "bignum" "length" "append" "procedure-source"
      ; SRFI-1: List constructors
      "list" "cons" "xcons" "cons*" "make-list"
      "list-tabulate" "list-copy" "circular-list" "iota"
@@ -30,7 +33,7 @@
      "pair?" "null?" "proper-list?" "circular-list?" "dotted-list?"
      "not-pair?" "null-list?" "list=" "list?"
      ; SRFI-1: List selectors
-     "car" "cdr" "caar" "cadr" "list-ref"
+     "car" "cdr" "caar" "cadr" "cdar" "list-ref"
      "first" "second" "third" "fourth" "fifth"
      "take" "drop" "take-right" "drop-right" "last"
      ; SRFI-1: MISC
@@ -82,7 +85,14 @@
      "sqrt" "expt" "make-rectangular" "make-polar" "magnitude"
      "angle" "exact->inexact" "inexact->exact" "string->number" "number->string"
      ; MISC
-     "integer-decode-float" "random" "nan?" "nan" "nan-payload")
+     "integer-decode-float" "random" "nan?" "nan" "nan-payload"
+     "make-vector" "vector-length" "vector" "format" "object->string"
+     "vector-set!" "immutable!" "immutable?" "make-hash-table" "hash-table"
+     "hash-table?" "hash-table-ref" "hash-table-set!" "hash-table-entries" "hash-code")
+    (keyword_error
+     "syntax-error" "wrong-type-arg" "immutable-error" "out-of-range" "division-by-zero"
+     "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
+     "bad-result")
     (keyword_conditional
      "if" "cond" "else")
     (keyword_control
@@ -131,7 +141,7 @@
   ("syntax:s7:keyword_conditional" "#309090" notify-s7-syntax)
   ("syntax:s7:keyword_control" "#309090" notify-s7-syntax)
   ("syntax:s7:keyword" "#204080" notify-s7-syntax)
-  ("syntax:s7:error" "dark red" notify-s7-syntax)
+  ("syntax:s7:keyword_error" "dark red" notify-s7-syntax)
   ("syntax:s7:constant_number" "#4040c0" notify-s7-syntax)
   ("syntax:s7:constant_string" "dark grey" notify-s7-syntax)
   ("syntax:s7:constant_char" "#333333" notify-s7-syntax)
