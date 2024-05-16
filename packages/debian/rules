@@ -13,7 +13,7 @@ export DH_VERBOSE=1
 	dh $@ --parallel
 
 override_dh_auto_configure:
-	xmake config -m release --yes --root
+	xmake config -m release --yes --qt=/usr/lib/qt6 --root
 
 override_dh_auto_build:
 	xmake build --yes -vD --root research
