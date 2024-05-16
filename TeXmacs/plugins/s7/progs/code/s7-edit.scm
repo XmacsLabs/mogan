@@ -37,3 +37,14 @@
   (:require prog-highlight-brackets?)
   (:mode in-prog-s7?)
   (select-brackets-after-movement "([{" ")]}" "\\"))
+
+(kbd-map
+  (:mode in-prog-s7?)
+  ("{" (s7-bracket-open "{" "}" ))
+  ("}" (s7-bracket-close "{" "}" ))
+  ("(" (s7-bracket-open "(" ")" ))
+  (")" (s7-bracket-close "(" ")" ))
+  ("[" (s7-bracket-open "[" "]" ))
+  ("]" (s7-bracket-close "[" "]" ))
+  ("\"" (s7-bracket-open "\"" "\"" ))
+  ("'" (s7-bracket-open "'" "'" )))

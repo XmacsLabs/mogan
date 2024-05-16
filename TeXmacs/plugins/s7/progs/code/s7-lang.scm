@@ -28,7 +28,7 @@
      "list-tabulate" "list-copy" "circular-list" "iota"
      ; SRFI-1: List predicates
      "pair?" "null?" "proper-list?" "circular-list?" "dotted-list?"
-     "not-pair?" "null-list?" "list="
+     "not-pair?" "null-list?" "list=" "list?"
      ; SRFI-1: List selectors
      "car" "cdr" "caar" "cadr" "list-ref"
      "first" "second" "third" "fourth" "fifth"
