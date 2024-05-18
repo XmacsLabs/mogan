@@ -1,0 +1,95 @@
+name: CI on Ubuntu 24.04
+
+on:
+  push:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'TeXmacs/tests/**'
+      - '.github/workflows/ci-xmake-ubuntu-noble.yml'
+      - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/research.lua'
+      - 'xmake/packages/**'
+  pull_request:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'TeXmacs/tests/**'
+      - '.github/workflows/ci-xmake-ubuntu-noble.yml'
+      - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/research.lua'
+      - 'xmake/packages/**'
+
+jobs:
+  linuxbuild:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    if: always()
+    continue-on-error: true
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+        - qt_pkg: qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins
+          qt_ver: 6
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc \
+              fonts-noto-cjk libcurl4-openssl-dev libfreetype-dev \
+              ${{matrix.qt_pkg}} libgit2-dev zlib1g-dev libssl-dev cmake \
+              libmimalloc-dev xmake libjpeg-dev libfontconfig-dev
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: set XMAKE_GLOBALDIR
+        run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
+
+      - name: xmake repo --update
+        run: xmake repo --update
+
+      - name: cache packages from xrepo
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages 
+          key: ${{ runner.os }}-xrepo-qt${{ matrix.qt_ver }}-${{ hashFiles('**/packages.lua') }}
+
+      - name: cache xmake
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ runner.workspace }}/build/.build_cache
+          key: ${{ runner.os }}-build-qt${{ matrix.qt_ver }}-${{ hashFiles('**/packages.lua') }}
+
+      - name: config
+        run: xmake config -vD --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
+        env:
+          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
+      - name: build
+        run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
+        env:
+          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
+      - name: test
+        run: xmake run --yes -vD --group=tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
+      - name: Scheme tests
+        run: xmake run --yes -vD --group=scheme_tests
+      - name: integration test
+        run: xmake run --yes -vD --group=integration_tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+          INSTALL_DIR: ${{ runner.workspace }}/build/packages/app.mogan/
+
