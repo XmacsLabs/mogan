@@ -1,0 +1,53 @@
+name: CD for Mogan Research on Ubuntu 24.04
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  linuxbuild:
+    strategy:
+      matrix:
+        include:
+          - ubuntu_ver: 24.04
+    runs-on: ubuntu-${{ matrix.ubuntu_ver }}
+    timeout-minutes: 45
+    if: always()
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc \
+              qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins fonts-noto-cjk \
+              libcurl4-openssl-dev libfreetype-dev fakeroot debhelper libgit2-dev zlib1g-dev \
+              libssl-dev cmake  libjpeg-dev libfontconfig-dev
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.8.7
+          actions-cache-folder: ${{ matrix.ubuntu_ver }}-xmake-cache
+      - name: Write release version
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          VERSION=${VERSION//\//}
+          echo Version: $VERSION
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Generate Installer
+        run: |
+          packages/debian/package.sh
+          cp ../mogan*.deb mogan-research-v${VERSION}-ubuntu${{ matrix.ubuntu_ver }}.deb
+      - name: Upload 
+        uses: actions/upload-artifact@v3
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        with:
+          path: mogan-*.deb
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          prerelease: true
+          files: mogan-*.deb
