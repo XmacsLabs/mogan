@@ -22,7 +22,7 @@ jobs:
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y gcc \
               qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins fonts-noto-cjk \
               libcurl4-openssl-dev libfreetype-dev fakeroot debhelper libgit2-dev zlib1g-dev \
-              libssl-dev cmake  libjpeg-dev libfontconfig-dev
+              libssl-dev cmake libjpeg-dev libfontconfig-dev build-essential
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
