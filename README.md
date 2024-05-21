@@ -12,7 +12,7 @@ Mogan is a structured STEM suite delivered by [Xmacs Labs](https://github.com/Xm
 | Mogan Beamer | Beamer-like presentation tool based on the GNU TeXmacs kernel | developing |
 
 ## How to install
-+ Download now via [Installation Guide](docs/zh/guide/Install.md)
++ Download now via [Installation Guide](docs/guide/Install.md)
 + Try online：
   + [Mogan Research nightly](https://research.mogan.app)
 
