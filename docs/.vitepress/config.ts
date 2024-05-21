@@ -253,6 +253,10 @@ function sidebarGuide() {
                     link: '/guide/Releases.md'
                 },
                 {
+                    text: 'v1.2.6 (2024/05/21)',
+                    link: '/guide/changelog/v1.2.6.md'
+                },
+                {
                     text: 'v1.2.5.x LTS',
                     link: '/guide/ChangeLog_v1.2.5.md'
                 },
@@ -431,6 +435,10 @@ function sidebarGuideZh() {
                 {
                     text: '版本发布',
                     link: '/zh/guide/Releases.md'
+                },
+                {
+                    text: 'v1.2.6 (2024/05/21)',
+                    link: '/zh/guide/changelog/v1.2.6.md'
                 },
                 {
                     text: 'v1.2.5.x LTS',
