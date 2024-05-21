@@ -32,10 +32,11 @@ Since v1.2.6, Mogan will be released bi-monthly.
 
 | Version | Release Manager | Release Date | Major Changes |
 |--------|---|--------------|----------------|
-| v1.2.9 LTS | | around 2024/08/25 | |
-| v1.2.8 | |before 2024/08/01 | |
-| v1.2.7 | |before 2024/06/15 | |
-| v1.2.6 | | before 2024/04/30 | |
+| v1.2.9 LTS | | around 2024/08/22 | |
+| v1.2.8 | | around 2024/08/08 | |
+| v1.2.7 | | around 2024/06/27 | |
+| v1.2.6 | | 2024/05/21 | Code plugins |
+| | | | Style plugins |
 | v1.2.5 LTS | Darcy |2024/02/27 | [Binary plugins](plugin_binary.md) |
 | |  |  | Image plugins |
 | v1.2.4 | Darcy | 2024/02/01 | Hot fix on v1.2.3 |
