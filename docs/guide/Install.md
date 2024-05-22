@@ -8,7 +8,7 @@ The latest stable version is Mogan STEM Suite v1.2.6, you can check if there are
 | Mogan Research v1.2.6 | Windows portable (>=10)| [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.6/MoganResearch-v1.2.6-64bit-installer.zip) |
 | Mogan Research v1.2.6 | macOS (>=12) | [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.6/MoganResearch-v1.2.6.dmg) |
 | Mogan Research v1.2.6 | macOS arm64 (>=13) | [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.6/MoganResearch-v1.2.6-arm.dmg) |
-| Mogan Research v1.2.6 | Ubuntu 20.04 | [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.6/mogan-research-v1.2.6-ubuntu20.04.deb) |
+| Mogan Research v1.2.6 | Ubuntu 24.04 | [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.6/mogan-research-v1.2.6-ubuntu24.04.deb) |
 | Mogan Research v1.2.6 | Ubuntu 22.04 | [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.6/mogan-research-v1.2.6-ubuntu22.04.deb) |
 | Mogan Research v1.2.6 | Debian 12 | [⏬ Download](https://github.com/XmacsLabs/mogan/releases/download/v1.2.6/mogan-research-v1.2.6-debian12.deb) |
 
