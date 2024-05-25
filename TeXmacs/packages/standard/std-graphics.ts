@@ -72,6 +72,8 @@
 
   <assign|sector|<macro|p1|p2|p3|<extern|sector|<arg|p1>|<arg|p2>|<arg|p3>>>>
 
+  <assign|sector-counterclockwise|<macro|p1|p2|p3|<extern|sector-counterclockwise|<arg|p1>|<arg|p2>|<arg|p3>>>>
+
 
   <assign|arrow-with-text|<macro|p1|p2|t|<extern|arrow-with-text|<arg|p1>|<arg|p2>|<quote-arg|t>>>>
 

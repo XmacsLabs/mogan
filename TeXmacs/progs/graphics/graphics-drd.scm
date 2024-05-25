@@ -30,7 +30,7 @@
   line spline bezier smooth arc std-arc std-arc-counterclockwise)
 
 (define-group graphical-closed-curve-tag
-  cline cspline cbezier csmooth carc oval circle ellipse sector)
+  cline cspline cbezier csmooth carc oval circle ellipse sector sector-counterclockwise)
 
 (define-group graphical-curve-tag
   (graphical-open-curve-tag) (graphical-closed-curve-tag))
