@@ -10,12 +10,32 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|18|23|2|2|cell-background|pastel
-    green>|<cwith|21|21|2|2|cell-background|>|<cwith|24|29|2|2|cell-background|pastel
+    <tformat|<cwith|20|25|2|2|cell-background|pastel
+    green>|<cwith|23|23|2|2|cell-background|>|<cwith|26|31|2|2|cell-background|pastel
+    green>|<cwith|19|19|2|2|cell-background|pastel
+    green>|<cwith|18|18|2|2|cell-background|pastel
     green>|<cwith|17|17|2|2|cell-background|pastel
-    green>|<cwith|16|16|2|2|cell-background|pastel
-    green>|<cwith|15|15|2|2|cell-background|pastel
-    green>|<cwith|5|14|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    green>|<cwith|7|16|2|2|cell-background|pastel green>|<table|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      11_31
+    </cell>|<\cell>
+      v1.2.6
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Add support for FZXiaoBiaoSong-B05S and new mechanism on font importing
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_30
+    </cell>|<\cell>
+      v1.2.6
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Font: update database and characteristics for PingFang
+    </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
       11_29

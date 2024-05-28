@@ -7,9 +7,12 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|30|30|5|5|cell-hyphen|t>|<cwith|1|-1|2|2|cell-background|pastel
-  green>|<cwith|9|9|2|2|cell-background|>|<cwith|4|8|2|2|cell-background|>|<cwith|10|11|2|2|cell-background|pastel
-  green>|<cwith|2|2|2|2|cell-background|>|<cwith|1|1|2|2|cell-background|>|<table|<row|<cell|Chore>|<cell|73_33>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Upgrade
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|31|31|5|5|cell-hyphen|t>|<cwith|1|-1|2|2|cell-background|pastel
+  green>|<cwith|10|10|2|2|cell-background|>|<cwith|5|9|2|2|cell-background|>|<cwith|11|12|2|2|cell-background|pastel
+  green>|<cwith|3|3|2|2|cell-background|>|<cwith|2|2|2|2|cell-background|>|<cwith|1|1|2|2|cell-background|pastel
+  green>|<cwith|9|9|2|2|cell-background|pastel
+  red>|<table|<row|<cell|Chore>|<cell|73_34>|<cell|v1.2.6>|<cell|<value|da>>|<cell|CICD
+  on Ubuntu 24.04>>|<row|<cell|Chore>|<cell|73_33>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Upgrade
   CICD from macOS 11 to macOS 12>>|<row|<cell|Chore>|<cell|73_32>|<cell|v1.2.6>|<cell|<value|da>>|<cell|xmake:
   install InfoPlist.strings for English and
   Chinese>>|<row|<cell|Bug>|<cell|73_31>|<cell|v1.2.6>|<cell|<value|da>>|<cell|xmake:

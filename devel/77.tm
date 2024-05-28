@@ -7,7 +7,12 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|10|10|2|2|cell-background|>|<cwith|4|4|5|5|cell-hyphen|t>|<cwith|10|10|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|77_10>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Beamer:
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|13|13|2|2|cell-background|>|<cwith|7|7|5|5|cell-hyphen|t>|<cwith|13|13|5|5|cell-hyphen|t>|<cwith|2|2|5|5|cell-hyphen|t>|<cwith|1|1|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|77_13>|<cell|v1.2.6>|<cell|<value|da>>|<\cell>
+    Beamer: <scm|fit-to-screen-width> after entering presentation-mode
+  </cell>>|<row|<cell|Chore>|<cell|77_12>|<cell|v1.2.6>|<cell|<value|da>>|<\cell>
+    Default: page-type defaults to 16:9 when switching to beamer style
+  </cell>>|<row|<cell|Feature>|<cell|77_11>|<cell|v1.2.6>|<cell|<value|da>>|<cell|icons
+  for Mogan Beamer>>|<row|<cell|Chore>|<cell|77_10>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Beamer:
   the welcome slides for new users>>|<row|<cell|Chore>|<cell|77_9>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Beamer:
   switch to book and <scm|fit-to-screen-width>>>|<row|<cell|Feature>|<cell|77_8>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Beamer:
   add slidemove plugin>>|<row|<cell|Chore>|<cell|77_7>|<cell|v1.2.6>|<cell|<value|da>>|<\cell>

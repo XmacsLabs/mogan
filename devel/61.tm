@@ -7,7 +7,11 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Feature>|<cell|61_3>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Binary
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Feature>|<cell|61_7>|<cell|v1.2.6>|<cell|<value|da>>|<cell|S7:
+  a brand new scheme plugin>>|<row|<cell|Chore>|<cell|61_6>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Code:
+  dot code plugin>>|<row|<cell|Chore>|<cell|61_5>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Binary:
+  gnuplot binary plugin>>|<row|<cell|Feature>|<cell|61_4>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Style:
+  physics v1.0.0>>|<row|<cell|Feature>|<cell|61_3>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Binary
   plugins>>|<row|<cell|Chore>|<cell|61_2>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Rework
   on the Python plugin>>|<row|<cell|Feature>|<cell|61_1>|<cell|v1.2.0>|<cell|Darcy>|<cell|Move
   the folder plugins to TeXmacs/plugins>>>>>
