@@ -34,7 +34,11 @@
 
   <assign|std-arc|<macro|p1|p2|p3|<extern|std-arc|<arg|p1>|<arg|p2>|<arg|p3>>>>
 
+  <assign|std-arc-counterclockwise|<macro|p1|p2|p3|<extern|std-arc-counterclockwise|<arg|p1>|<arg|p2>|<arg|p3>>>>
+
   <assign|sector|<macro|p1|p2|p3|<extern|sector|<arg|p1>|<arg|p2>|<arg|p3>>>>
+
+  <assign|sector-counterclockwise|<macro|p1|p2|p3|<extern|sector-counterclockwise|<arg|p1>|<arg|p2>|<arg|p3>>>>
 
   <\active*>
     <\src-comment>

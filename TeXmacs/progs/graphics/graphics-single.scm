@@ -62,7 +62,7 @@
   (:require (== tag 'point))
   (object-set! `(point ,x ,y) 'new))
 
-(define new-gr-tags (list 'circle 'ellipse 'std-arc 'sector))
+(define new-gr-tags (list 'circle 'ellipse 'std-arc 'sector 'std-arc-counterclockwise 'sector-counterclockwise))
 
 (tm-define (object_create tag x y)
   (:require (or (in? tag gr-tags-curves) 
