@@ -81,7 +81,8 @@
 ;; Then we will find a point M, M is in the middle of arc P to X.
 ;; r is the radius
 ;; Enter three points. The first is the center of the circle and the second is the starting point of the arc. Draw a straight line through the third point and the center of the circle. The intersection of the straight line and the circle is the end point of the arc. Use clockwise method.
-(define-graphics (std-arc C P Q)
+;; when clockwise param is >, we got the clockwise arc. If it is <, we got the counterclockwise arc.
+(define (std-arc-helper C P Q clockwise)
   (let* ((c  (if (tm-point? C) (tree->stree C) '(point "0" "0")))
          (p  (if (tm-point? P) (tree->stree P) c))
          (q  (if (tm-point? Q) (tree->stree Q) p))
@@ -94,7 +95,7 @@
          (vec-c-q (points-sub q c))
          (m  (if (equal? r 0.0)
                 c
-                (if (> (points-cross-product-k vec-c-p vec-c-q) 0)
+                (if (clockwise (points-cross-product-k vec-c-p vec-c-q) 0)
                   (points-add (point-times (point-get-unit (points-sub mid-p-x c)) (- r)) c)
                   (if (= (points-cross-product-k vec-c-p vec-c-q) 0)
                     ;; If cross product == 0, then the angle between vec-c-p and vec-c-q is 0 or 180.
@@ -104,6 +105,56 @@
                       (point-rotate-90 (point-rotate-90 (point-rotate-90 vec-c-p))))
                     (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
     `(arc ,p ,m ,x)))
+
+
+(define-graphics (std-arc C P Q)
+  (std-arc-helper C P Q >))
+
+
+(define-graphics (std-arc-counterclockwise C P Q)
+  (std-arc-helper C P Q <))
+
+
+(define-graphics (sector-helper C P Q clockwise)
+  (let* ((c  (if (tm-point? C) (tree->stree C) '(point "0" "0")))
+         (p  (if (tm-point? P) (tree->stree P) c))
+         (q  (if (tm-point? Q) (tree->stree Q) p))
+         (r  (points-distance c p))
+         (x  (if (equal? r 0.0)
+                c
+                (points-add (point-times (point-get-unit (points-sub q c)) r) c)))
+         (mid-p-x (points-mid p x))
+         (vec-c-p (points-sub p c))
+         (vec-c-q (points-sub q c))
+         (m  (if (equal? r 0.0)
+                 c
+                 (if (clockwise (points-cross-product-k vec-c-p vec-c-q) 0)
+                     (points-add (point-times (point-get-unit (points-sub mid-p-x c)) (- r)) c)
+                     (if (= (points-cross-product-k vec-c-p vec-c-q) 0)
+                         x
+                         (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
+       (if (clockwise (points-cross-product-k vec-c-p vec-c-q) 0)
+         (if (eq? clockwise >)
+            `(superpose
+              (std-arc ,c ,p ,m)
+              (std-arc ,c ,m ,x)
+              (with "color" "none"
+               (line ,p ,c ,x ,m ,p)))
+             `(superpose
+              (std-arc-counterclockwise ,c ,p ,m)
+              (std-arc-counterclockwise ,c ,m ,x)
+              (with "color" "none"
+               (line ,p ,c ,x ,m ,p))))
+        `(superpose    
+          (with "color" "none"
+           (line ,p ,c ,x))
+          (arc ,p ,m ,x)))))
+
+(define-graphics (sector C P Q)
+  (sector-helper C P Q >))
+
+(define-graphics (sector-counterclockwise C P Q)
+  (sector-helper C P Q <))
 
 (define-graphics (three-points-circle P1 P2 P3)
   (let* ((p1 (if (tm-point? P1) P1 '(point "0" "0")))
