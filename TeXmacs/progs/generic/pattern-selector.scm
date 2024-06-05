@@ -190,8 +190,9 @@
                      (set-name (url->unix (car c)))))))
     (hlist
       (enum (set-name (url->unix answer))
-            (list (url->system name) "")
-            (url->system name) "15em")
+            (list `(verbatim ,(url->system name)) "")
+            `(verbatim ,(url->system name))
+            "15em")
       // // //
       ((icon "tm_find.xpm")
        (cond ((and (not global-picture?) (not global-gradient?))
