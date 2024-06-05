@@ -37,7 +37,7 @@
     (if (nnull? (search-chunk-types (buffer-tree)))
         (-> "Next chunk"
             (for (name (search-chunk-types (buffer-tree)))
-              ((eval name) (insert-next-chunk name)))
+              ((eval `(verbatim ,name)) (insert-next-chunk name)))
             ---
             ("Other" (interactive insert-next-chunk))))
     (if (null? (search-chunk-types (buffer-tree)))
@@ -45,7 +45,7 @@
     (if (nnull? (search-chunk-types (buffer-tree)))
         (-> "Reference"
             (for (name (search-chunk-types (buffer-tree)))
-              ((eval name) (insert `(chunk-ref ,name))))
+              ((eval `(verbatim ,name)) (insert `(chunk-ref ,name))))
             ---
             ("Other" (make 'chunk-ref)))))
   ---
