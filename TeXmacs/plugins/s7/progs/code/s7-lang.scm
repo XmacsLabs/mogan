@@ -14,9 +14,6 @@
 (texmacs-module (code s7-lang)
   (:use (prog default-lang)))
 
-(define (srfi-8)
-  (list "receive"))
-
 (define (srfi-1)
   (list
     ; SRFI-1: List constructors
@@ -42,6 +39,33 @@
     ; SRFI-1: Deletion
     "delete" "delete-duplicates"))
 
+(define (srfi-8)
+  (list "call-with-values" "receive"))
+
+(define (srfi-13)
+  (list
+    ; SRFI-13: String predicates
+    "string?" "string-null?" "string-every" "string-any"
+    ; SRFI-13: String constructors
+    "make-string" "string" "string-tabulate"
+    ; SRFI-13: List & String Conversion
+    "string->list" "list->string" "reverse-list->string" "string-join"
+    ; SRFI-13: String selection
+    "string-length" "string-ref" "string-copy" "substring" "string-copy!"
+    "string-take" "string-take-right" "string-drop" "string-drop-right" "string-pad"
+    "string-pad-right" "string-trim" "string-trim-right" "string-trim-both"
+    ; SRFI-13: String comparison
+    "string-compare" "string=" "string<>"
+    ; SRFI-13: String Prefixes & Suffixes
+    "string-prefix?" "string-suffix?"
+    ; SRFI-13: String searching
+    "string-index" "string-index-right" "string-skip" "string-skip-right" "string-count"
+    "string-contains"
+    ; SRFI-13: String insertion and parsing
+    "string-replace" "string-tokenize"
+    ; SRFI-13: Filtering & Deleting
+    "string-filter" "string-delete"))
+
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "keyword")))
   `(,(string->symbol key)
@@ -54,30 +78,9 @@
     (keyword
      "eq?" "equal?" "equivalent?" "help" "display"
      "quote" "quasiquote" "unquote"
-     ,@(srfi-1)
-     ,@(srfi-8)
      "bignum" "length" "append" "procedure-source"
-     ; SRFI-13: String predicates
-     "string?" "string-null?" "string-every" "string-any"
-     ; SRFI-13: String constructors
-     "make-string" "string" "string-tabulate"
-     ; SRFI-13: List & String Conversion
-     "string->list" "list->string" "reverse-list->string" "string-join"
-     ; SRFI-13: String selection
-     "string-length" "string-ref" "string-copy" "substring" "string-copy!"
-     "string-take" "string-take-right" "string-drop" "string-drop-right" "string-pad"
-     "string-pad-right" "string-trim" "string-trim-right" "string-trim-both"
-     ; SRFI-13: String comparison
-     "string-compare" "string=" "string<>"
-     ; SRFI-13: String Prefixes & Suffixes
-     "string-prefix?" "string-suffix?"
-     ; SRFI-13: String searching
-     "string-index" "string-index-right" "string-skip" "string-skip-right" "string-count"
-     "string-contains"
-     ; SRFI-13: String insertion and parsing
-     "string-replace" "string-tokenize"
-     ; SRFI-13: Filtering & Deleting
-     "string-filter" "string-delete"
+     ,@(srfi-1) ,@(srfi-8) ,@(srfi-13)
+
      ; SRFI-60: Integers as Bits
      "logand" "logior" "logxor" "lognot" "logand"
      "logbit?" "ash"
