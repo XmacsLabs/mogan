@@ -206,8 +206,9 @@
                      (set-name key (url->unix (car c)))))))
     (hlist
       (enum (set-name key (url->unix answer))
-            (list (url->system name) "")
-            (url->system name) "15em")
+            (list `(verbatim ,(url->system name)) "")
+            `(verbatim ,(url->system name))
+            "15em")
       // // //
       ((icon "tm_find.xpm")
        (cond ((pattern? key)
