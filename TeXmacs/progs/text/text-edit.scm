@@ -387,7 +387,7 @@
               (else (make 'item))))))
 
 (tm-define (kbd-enter t shift?)
-  (:require (list-context? t))
+  (:require (and (list-context? t) (not (in-prog?))))
   (if shift? (make-return-after) (make-item)))
 
 (tm-define (kbd-enter t shift?)
