@@ -22,4 +22,5 @@ clang-format -i tests/**/*.cpp
 clang-format -i tests/**/*.hpp
 clang-format -i src/**/*.cpp
 clang-format -i src/**/*.hpp
+clang-format -i TeXmacs/plugins/**/*.cpp
 

@@ -264,7 +264,7 @@
     <|unfolded-io>
       (random 1.0)
     <|unfolded-io>
-      0.5606284330786007
+      0.848072511242711
     </unfolded-io>
 
     <\unfolded-io>
@@ -272,7 +272,7 @@
     <|unfolded-io>
       (random 3/4)
     <|unfolded-io>
-      120413/340517
+      477221/1610063
     </unfolded-io>
 
     <\input>
@@ -344,7 +344,7 @@
     <|unfolded-io>
       (define test-tb (hash-table 'a 1 'b 2))
     <|unfolded-io>
-      (hash-table 'b 2 'a 1)
+      (hash-table 'a 1 'b 2)
     </unfolded-io>
 
     <\unfolded-io>
