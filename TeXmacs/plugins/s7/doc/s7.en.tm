@@ -480,6 +480,132 @@
     </input>
   </session>
 
+  <paragraph|IO and other OS functions>
+
+  <\session|s7|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (directory? "/tmp")
+    <|unfolded-io>
+      #t
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (file-exists? "/tmp")
+    <|unfolded-io>
+      #t
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (getenv "HOME")
+    <|unfolded-io>
+      "/home/da"
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  <paragraph|errors>
+
+  <\session|s7|default>
+    <\output>
+      S7 Scheme 10.6 (14-Apr-2023)
+    </output>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (abs 1 2)
+    <|unfolded-io>
+      wrong-number-of-args
+
+      <\errput>
+        \;
+
+        ;abs: too many arguments: (abs 1 2)
+
+        ; (abs 1 2)
+
+        \;
+      </errput>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (catch 'wrong-number-of-args
+
+      \ \ \ \ (lambda () \ \ \ \ ; code protected by the catch
+
+      \ \ \ \ \ \ (abs 1 2))
+
+      \ \ \ \ (lambda args \ \ ; the error handler
+
+      \ \ \ \ \ \ (apply format #t (cadr args))))
+    <|unfolded-io>
+      abs: too many arguments: (abs 1 2)"abs: too many arguments: (abs 1 2)"
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (catch 'division-by-zero
+
+      \ \ \ \ (lambda () (/ 1.0 0.0))
+
+      \ \ \ \ (lambda args (string-\<gtr\>number "+inf.0")))
+    <|unfolded-io>
+      +inf.0
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  <paragraph|autoload>
+
+  <\session|s7|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (load "test.scm")
+    <|unfolded-io>
+      io-error
+
+      <\errput>
+        \;
+
+        ;load: No such file or directory "test.scm"
+
+        ; (load "test.scm")
+
+        ; ((abs 1 2))
+
+        ; ((abs 1 2))
+
+        \;
+      </errput>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
   <paragraph|define-constant>
 
   <\session|s7|default>

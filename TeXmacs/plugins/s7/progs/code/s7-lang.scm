@@ -14,6 +14,34 @@
 (texmacs-module (code s7-lang)
   (:use (prog default-lang)))
 
+(define (srfi-8)
+  (list "receive"))
+
+(define (srfi-1)
+  (list
+    ; SRFI-1: List constructors
+    "list" "cons" "xcons" "cons*" "make-list"
+    "list-tabulate" "list-copy" "circular-list" "iota"
+    ; SRFI-1: List predicates
+    "pair?" "null?" "proper-list?" "circular-list?" "dotted-list?"
+    "not-pair?" "null-list?" "list=" "list?"
+    ; SRFI-1: List selectors
+    "car" "cdr" "caar" "cadr" "cdar" "list-ref"
+    "first" "second" "third" "fourth" "fifth"
+    "take" "drop" "take-right" "drop-right" "last"
+    ; SRFI-1: MISC
+    "concatenate" "reverse" "append-reverse" "zip" "count"
+    ; SRFI-1: fold, unfold, map
+    "fold" "fold-right" "reduce" "reduce-right" "map"
+    "unfold" "unfold-right" "for-each" "map-in-order"
+    ; SRFI-1: Filtering & Parititioning
+    "filter" "parition" "remove"
+    ; SRFI-1: Searching
+    "find" "find-tail" "take-while" "drop-while" "span"
+    "any" "every" "list-index" "member" "memq" "memv"
+    ; SRFI-1: Deletion
+    "delete" "delete-duplicates"))
+
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "keyword")))
   `(,(string->symbol key)
@@ -25,29 +53,10 @@
      "load" "eval" "eval-string" "values")
     (keyword
      "eq?" "equal?" "equivalent?" "help" "display"
+     "quote" "quasiquote" "unquote"
+     ,@(srfi-1)
+     ,@(srfi-8)
      "bignum" "length" "append" "procedure-source"
-     ; SRFI-1: List constructors
-     "list" "cons" "xcons" "cons*" "make-list"
-     "list-tabulate" "list-copy" "circular-list" "iota"
-     ; SRFI-1: List predicates
-     "pair?" "null?" "proper-list?" "circular-list?" "dotted-list?"
-     "not-pair?" "null-list?" "list=" "list?"
-     ; SRFI-1: List selectors
-     "car" "cdr" "caar" "cadr" "cdar" "list-ref"
-     "first" "second" "third" "fourth" "fifth"
-     "take" "drop" "take-right" "drop-right" "last"
-     ; SRFI-1: MISC
-     "concatenate" "reverse" "append-reverse" "zip" "count"
-     ; SRFI-1: fold, unfold, map
-     "fold" "fold-right" "reduce" "reduce-right" "map"
-     "unfold" "unfold-right" "for-each" "map-in-order"
-     ; SRFI-1: Filtering & Parititioning
-     "filter" "parition" "remove"
-     ; SRFI-1: Searching
-     "find" "find-tail" "take-while" "drop-while" "span"
-     "any" "every" "list-index" "member" "memq" "memv"
-     ; SRFI-1: Deletion
-     "delete" "delete-duplicates"
      ; SRFI-13: String predicates
      "string?" "string-null?" "string-every" "string-any"
      ; SRFI-13: String constructors
@@ -92,7 +101,7 @@
     (keyword_error
      "syntax-error" "wrong-type-arg" "immutable-error" "out-of-range" "division-by-zero"
      "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
-     "bad-result")
+     "bad-result" "no-catch" "wrong-number-of-args" "io-error")
     (keyword_conditional
      "if" "cond" "else")
     (keyword_control
@@ -146,5 +155,6 @@
   ("syntax:s7:constant_string" "dark grey" notify-s7-syntax)
   ("syntax:s7:constant_char" "#333333" notify-s7-syntax)
   ("syntax:s7:operator_special" "dark magenta" notify-s7-syntax)
+  ("syntax:s7:operator_openclose" "dark" notify-s7-syntax)
   ("syntax:s7:variable_identifier" "#204080" notify-s7-syntax)
   ("syntax:s7:declare_category" "#d030d0" notify-s7-syntax))
