@@ -15,7 +15,7 @@
 
 (define (s7-serialize lan t)
   (with u (pre-serialize lan t)
-    (with s (texmacs->code (stree->tree u) "SourceCode")
+    (with s (texmacs->code (stree->tree u) "cork")
       (string-append s "\n<EOF>\n"))))
 
 (define (s7-launcher)
