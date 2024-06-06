@@ -9,6 +9,7 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 target ("tm_s7") do
+    set_languages("c++17")
     set_targetdir("$(projectdir)/TeXmacs/plugins/s7/bin/")
     add_files ("$(projectdir)/TeXmacs/plugins/s7/src/tm_s7.cpp")
     add_packages("s7")
