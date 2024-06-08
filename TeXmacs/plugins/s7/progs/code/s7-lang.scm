@@ -66,11 +66,26 @@
     ; SRFI-13: Filtering & Deleting
     "string-filter" "string-delete"))
 
+(define (srfi-70)
+  (list
+    ; SRFI-70: Numbers
+    "number?" "complex?" "real?" "rational?" "integer?"
+    "exact?" "inexact?" "finite?" "infinite?" "zero?"
+    "positive?" "negative?" "odd?" "even?" "floor?"
+    "max" "min" "abs" "quotient" "remainder" "modulo"
+    "gcd" "lcm" "numerator" "denominator" "floor"
+    "ceiling" "truncate" "round" "rationalize"
+    "expt" "log" "complex" "real-part" "imag-part"
+    "sin" "cos" "tan" "asin" "acos" "atan"
+    "sinh" "cosh" "tanh" "asinh" "acosh" "atanh"
+    "sqrt" "expt" "make-rectangular" "make-polar" "magnitude"
+    "angle" "exact->inexact" "inexact->exact" "string->number" "number->string"))
+
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "keyword")))
   `(,(string->symbol key)
     (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<")
-    (constant "pi" "+inf.0" "-inf.0")
+    (constant "pi" "+inf.0" "-inf.0" "+nan.0")
     (declare_type
      "define" "defined?" "set!" "lambda" "define-macro"
      "define-constant" "let" "let*" "apply" "eval"
@@ -79,23 +94,12 @@
      "eq?" "equal?" "equivalent?" "help" "display"
      "quote" "quasiquote" "unquote"
      "bignum" "length" "append" "procedure-source"
-     ,@(srfi-1) ,@(srfi-8) ,@(srfi-13)
+
+     ,@(srfi-1) ,@(srfi-8) ,@(srfi-13) ,@(srfi-70)
 
      ; SRFI-60: Integers as Bits
      "logand" "logior" "logxor" "lognot" "logand"
      "logbit?" "ash"
-     ; SRFI-70: Numbers
-     "number?" "complex?" "real?" "rational?" "integer?"
-     "exact?" "inexact?" "finite?" "infinite?" "zero?"
-     "positive?" "negative?" "odd?" "even?" "floor?"
-     "max" "min" "abs" "quotient" "remainder" "modulo"
-     "gcd" "lcm" "numerator" "denominator" "floor"
-     "ceiling" "truncate" "round" "rationalize"
-     "expt" "log" "complex" "real-part" "imag-part"
-     "sin" "cos" "tan" "asin" "acos" "atan"
-     "sinh" "cosh" "tanh" "asinh" "acosh" "atanh"
-     "sqrt" "expt" "make-rectangular" "make-polar" "magnitude"
-     "angle" "exact->inexact" "inexact->exact" "string->number" "number->string"
      ; MISC
      "integer-decode-float" "random" "nan?" "nan" "nan-payload"
      "make-vector" "vector-length" "vector" "format" "object->string"
@@ -104,7 +108,7 @@
     (keyword_error
      "syntax-error" "wrong-type-arg" "immutable-error" "out-of-range" "division-by-zero"
      "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
-     "bad-result" "no-catch" "wrong-number-of-args" "io-error")
+     "bad-result" "no-catch" "wrong-number-of-args" "io-error" "bignum-error")
     (keyword_conditional
      "if" "cond" "else")
     (keyword_control
