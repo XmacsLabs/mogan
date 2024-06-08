@@ -26,6 +26,14 @@
 
   <assign|s7-prompt-color|dark green>
 
+  <assign|scm|<macro|body|<with|mode|prog|prog-language|s7|font-family|rm|<arg|body>>>>
+
+  <assign|scm-code|<\macro|body>
+    <\pseudo-code>
+      <scm|<arg|body>>
+    </pseudo-code>
+  </macro>>
+
   <assign|s7-input|<\macro|prompt|body>
     <\with|generic-prompt-color|<value|s7-prompt-color>|generic-input-color|<value|scheme-input-color>>
       <generic-input|<arg|prompt>|<arg|body>>
