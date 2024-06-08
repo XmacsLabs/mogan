@@ -32,9 +32,11 @@ bool
 read_keyword (string s, int& i, string& result, array<char> extras) {
   int opos= i;
   int s_N = N (s);
-  // a keyword must start with alpha
-  if (i < s_N && is_alpha (s[i])) i++;
-  while (i < s_N && (is_alpha (s[i]) || contains (s[i], extras))) {
+  // a keyword must start with alpha or start with extra chars
+  if (i < s_N && (is_alpha (s[i] || contains (s[i], extras)))) i++;
+  // a keyword is consist of alpha/number/extra chars
+  while (i < s_N &&
+         (is_alpha (s[i]) || is_digit (s[i]) || contains (s[i], extras))) {
     i++;
   }
   result= s (opos, i);
