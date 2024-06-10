@@ -84,8 +84,8 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "keyword")))
   `(,(string->symbol key)
-    (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<")
-    (constant "pi" "+inf.0" "-inf.0" "+nan.0")
+    (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
+    (constant "pi" "+inf.0" "-inf.0" "+nan.0" "#t" "#true" "#f" "#false")
     (declare_type
      "define" "defined?" "set!" "lambda" "define-macro"
      "define-constant" "let" "let*" "apply" "eval"
