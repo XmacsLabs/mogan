@@ -73,10 +73,6 @@ number_parser_rep::can_parse (string s, int pos) {
   // check on len >= 2
   if (pos + 1 < N (s)) {
     if (s[pos] == '.' && is_digit (s[pos + 1])) return true;
-    // for #t and #f
-    if (prefix_hash () && s[pos] == '#' &&
-        (s[pos + 1] == 't' || s[pos + 1] == 'f'))
-      return true;
   }
   // finally, check on len >= 1
   return pos < N (s) && is_digit (s[pos]);

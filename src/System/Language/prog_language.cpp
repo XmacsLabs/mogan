@@ -212,12 +212,12 @@ prog_language_rep::advance (tree t, int& pos) {
     current_parser= string_parser.get_parser_name ();
     return &tp_normal_rep;
   }
-  if (number_parser.parse (s, pos)) {
-    current_parser= number_parser.get_parser_name ();
-    return &tp_normal_rep;
-  }
   if (keyword_parser.parse (s, pos)) {
     current_parser= keyword_parser.get_parser_name ();
+    return &tp_normal_rep;
+  }
+  if (number_parser.parse (s, pos)) {
+    current_parser= number_parser.get_parser_name ();
     return &tp_normal_rep;
   }
   if (operator_parser.parse (s, pos)) {
