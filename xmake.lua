@@ -253,3 +253,44 @@ target("liii") do
         end
     end)
 end 
+
+function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
+    local testname = path.basename(filepath)
+    target(testname) do
+        set_enabled(not is_plat("wasm"))
+        set_kind("phony")
+        set_group("integration_tests")
+        add_deps("liii")
+        on_run(function (target)
+            name = target:name()
+            test_name = "(test_"..name..")"
+            print("------------------------------------------------------")
+            print("Executing: " .. test_name)
+            params = {
+                "-headless",
+                "-b", path.join("TeXmacs","tests",name..".scm"),
+                "-x", test_name,
+                "-q"
+            }
+            if is_plat("macosx", "linux") then
+                binary = target:deps()["liii"]:targetfile()
+            elseif is_plat("mingw", "windows") then
+                binary = path.join(INSTALL_DIR,"bin","MoganResearch.exe")
+            else
+                print("Unsupported plat $(plat)")
+            end
+            cmd = binary
+            if is_plat("macosx", "linux") then
+                os.execv(cmd, params, {envs=RUN_ENVS})
+            else
+                os.execv(cmd, params)
+            end
+        end)
+    end
+end
+
+-- Integration tests
+RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
+for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
+    add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
+end

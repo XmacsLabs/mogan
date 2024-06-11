@@ -2450,11 +2450,11 @@ pdf_hummus_renderer_rep::flush_metadata () {
   TrailerInformation& trailerInfo= documentContext.GetTrailerInformation();
   InfoDictionary& info= trailerInfo.GetInfo();
   if (metadata->contains ("title"))
-    info.Title= as_hummus_string (metadata ["title"]);
+    info.Title= utf8_as_hummus_string (metadata ["title"]);
   if (metadata->contains ("author"))
-    info.Author= as_hummus_string (metadata ["author"]);
+    info.Author= utf8_as_hummus_string (metadata ["author"]);
   if (metadata->contains ("subject"))
-    info.Subject= as_hummus_string (metadata ["subject"]);
+    info.Subject= utf8_as_hummus_string (metadata ["subject"]);
   string creator= "TeXmacs " * string (TEXMACS_VERSION);
   string producer= creator * " + Hummus 4.0";
   info.Creator= utf8_as_hummus_string (creator);
