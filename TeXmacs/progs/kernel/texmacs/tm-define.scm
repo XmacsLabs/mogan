@@ -160,6 +160,11 @@
   (set! cur-props (cons `(',(ca*adr decl) ,which ',opt) cur-props))
   decl))
 
+(define (define-property . l) (lambda (opt decl)
+  (for (which l)
+    (set! cur-props (cons `(',(ca*adr decl) ,which ',opt) cur-props)))
+   decl))
+
 (define (define-property* which) (lambda (opt decl)
   (set! cur-props (cons `(',(ca*adr decl) ,which (list ,@opt)) cur-props))
   decl))
