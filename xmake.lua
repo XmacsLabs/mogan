@@ -28,7 +28,14 @@ set_allowedplats("linux")
 set_allowedmodes("releasedbg", "release", "debug")
 add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
+add_repositories("liii-repo xmake")
+
 PDFHUMMUS_VERSION = "4.6.2"
+S7_VERSION = "20240516"
+
+-- package: s7
+add_requires("s7 "..S7_VERSION, {system=false})
+
 add_requires("apt::libpng-dev", {alias="libpng"})
 add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
 add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
@@ -73,6 +80,7 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("sqlite3")
     add_packages("pdfhummus")
+    add_packages("s7")
 
     ---------------------------------------------------------------------------
     -- generate config files. see also:
@@ -207,7 +215,6 @@ target("libmogan") do
             "src/Kernel/**.cpp",
             "src/Scheme/Scheme/**.cpp",
             "src/Scheme/S7/**.cpp",
-            "src/Scheme/S7/*.c",
             "src/System/**.cpp",
             "src/Texmacs/Data/**.cpp",
             "src/Texmacs/Server/**.cpp",
