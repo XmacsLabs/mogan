@@ -34,7 +34,6 @@
 #include "analyze.hpp"
 #include "hashmap.hpp"
 #include "scheme.hpp"
-#include "Imlib2/imlib2.hpp"
 
 #ifdef MACOSX_EXTENSIONS
 #include "MacOS/mac_images.h"
@@ -331,13 +330,6 @@ image_size_sub (url image, int& w, int& h) { // returns w,h in units of pt (1/72
 #ifdef QTTEXMACS
   if (qt_supports (image)) { // native support by Qt : most bitmaps & svg
     qt_image_size (image, w, h);
-    return;
-  }
-#endif
-#ifdef USE_IMLIB2
-  if (imlib2_supports (image)) {
-    imlib2_image_size (image, w, h);
-    if (DEBUG_CONVERT) debug_convert << "image_size imlib2 : " << w << " x " << h << "\n";
     return;
   }
 #endif
