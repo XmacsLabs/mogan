@@ -33,6 +33,7 @@ bool is_newer (url which, url than);
 int  file_size (url u);
 int  last_modified (url u, bool cache_flag= true);
 url  url_temp_dir ();
+url  url_temp_dir_sub ();
 url  url_temp (string suffix= "");
 url  url_numbered (url dir, string prefix, string postfix, int i=1);
 url  url_scratch (string prefix="no_name_", string postfix=".tm", int i=1);
@@ -63,11 +64,14 @@ void copy (url from, url to);
 void remove (url what);
 void append_to (url what, url to);
 void mkdir (url dir);
+void make_dir (url which);
 void rmdir (url what);
 void change_mode (url u, int mode);
 void ps2pdf (url u1, url u2);
 
+#ifndef KERNEL_L2
 int search_score (url u, array<string> a);
+#endif
 
 url search_sub_dirs (url root);
 array<string> file_completions (url search, url dir);

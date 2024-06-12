@@ -17,8 +17,11 @@
 #include "merge_sort.hpp"
 #include "data_cache.hpp"
 #include "web_files.hpp"
+
+#ifndef KERNEL_L2
 #include "scheme.hpp"
 #include "convert.hpp"
+#endif
 
 #include <stddef.h>
 #include <stdio.h>
@@ -35,6 +38,8 @@
 #include <dirent.h>
 #define struct_stat struct stat
 #endif
+
+string main_tmp_dir= "$TEXMACS_HOME_PATH/system/tmp";
 
 /******************************************************************************
 * New style loading and saving
@@ -344,11 +349,15 @@ is_of_type (url name, string filter) {
       case 'd': return false;
       case 'l': return false;
       case 'r':
+#ifndef KERNEL_L2
         if (!as_bool (call ("tmfs-permission?", name, "read")))
+#endif
           return false;
         break;
       case 'w':
+#ifndef KERNEL_L2
         if (!as_bool (call ("tmfs-permission?", name, "write")))
+#endif
           return false;
         break;
       case 'x': return false;
@@ -464,6 +473,38 @@ url_temp (string suffix) {
 }
 
 url
+url_temp_dir_sub () {
+#ifdef OS_MINGW
+  static url tmp_dir=
+    url_system (main_tmp_dir) * url_system (as_string (time (NULL)));
+#else
+  static url tmp_dir=
+    url_system (main_tmp_dir) * url_system (as_string ((int) getpid ()));
+#endif
+  return (tmp_dir);
+}
+
+void
+make_dir (url which) {
+  if (is_none(which))
+    return ;
+  if (!is_directory (which)) {
+    make_dir (head (which));
+    mkdir (which);
+  }
+}
+
+url
+url_temp_dir () {
+  static url u;
+  if (u == url_none()) {
+    u= url_temp_dir_sub ();
+    make_dir (u);
+  }
+  return u;
+}
+
+url
 url_numbered (url dir, string prefix, string postfix, int i) {
   if (!exists (dir)) mkdir (dir);
   for (; true; i++) {
@@ -486,9 +527,14 @@ is_scratch (url u) {
 
 string
 file_format (url u) {
-  if (is_rooted_tmfs (u))
+#ifdef KERNEL_L2
+  return "texmacs-file";
+#else
+  if (is_rooted_tmfs (u)) {
     return as_string (call ("tmfs-format", object (u)));
+  }
   else return suffix_to_format (suffix (u));
+#endif
 }
 
 /******************************************************************************
@@ -822,6 +868,7 @@ escape_cork_words (string s) {
   return r;
 }
 
+#ifndef KERNEL_L2
 int
 search_score (url u, array<string> a) {
   int n= N(a);
@@ -852,6 +899,7 @@ search_score (url u, array<string> a) {
   }
   return score;
 }
+#endif
 
 /******************************************************************************
 * Finding recursive non hidden subdirectories of a given directory

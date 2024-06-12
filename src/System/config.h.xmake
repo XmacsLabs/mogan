@@ -10,6 +10,15 @@ ${define HAVE_INTPTR_T}
 ${define HAVE_STDINT_H}
 
 
+/* L2 Kernel */
+
+/* Define to 1 if the system has the type `time_t'. */
+${define HAVE_TIME_T}
+
+/* Define to 1 if you have the `gettimeofday' function. */
+${define HAVE_GETTIMEOFDAY}
+
+
 /* check assertions in code */
 #define DEBUG_ASSERT 1
 
@@ -27,9 +36,6 @@ ${define EXPERIMENTAL}
 
 /* Define to 1 if the system has the type `FILE'. */
 ${define HAVE_FILE}
-
-/* Define to 1 if you have the `gettimeofday' function. */
-${define HAVE_GETTIMEOFDAY}
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 ${define HAVE_INTTYPES_H}
@@ -54,9 +60,6 @@ ${define HAVE_SYS_STAT_H}
 
 /* Define to 1 if you have the <sys/types.h> header file. */
 ${define HAVE_SYS_TYPES_H}
-
-/* Define to 1 if the system has the type `time_t'. */
-${define HAVE_TIME_T}
 
 /* Define to 1 if you have the <unistd.h> header file. */
 ${define HAVE_UNISTD_H}

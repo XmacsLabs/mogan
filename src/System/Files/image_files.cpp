@@ -27,13 +27,16 @@
 ******************************************************************************/
 
 #include "file.hpp"
-#include "convert.hpp"
 #include "image_files.hpp"
 #include "web_files.hpp"
 #include "sys_utils.hpp"
 #include "analyze.hpp"
 #include "hashmap.hpp"
+
+#ifndef KERNEL_L2
 #include "scheme.hpp"
+#include "convert.hpp"
+#endif
 
 #ifdef QTTEXMACS
 #include "Qt/qt_utilities.hpp"
@@ -363,6 +366,9 @@ svg_image_size (url image, int& w, int& h) {
   string content;
   bool err= load_string (image, content, false);
   if (!err) {
+#ifdef KERNEL_L2
+      tm_failure("Unsupported code path in Kernel Level 2");
+#else
     tree t= parse_xml (content);
     tree result= find_first_element_by_name (t, "svg");
     string width= get_attr_from_element (result, "width", "");
@@ -371,6 +377,7 @@ svg_image_size (url image, int& w, int& h) {
     int try_height= parse_xml_length (height);
     if (try_width > 0) w= try_width;
     if (try_height > 0) h= try_height;
+#endif
   }
 }
  
@@ -496,6 +503,7 @@ image_to_png (url image, url png, int w, int h) {// IN PIXEL UNITS!
 
 bool
 call_scm_converter(url image, url dest) {
+#ifndef KERNEL_L2
   if (DEBUG_CONVERT) debug_convert << " using scm" <<LF;
   if (as_bool (call ("file-converter-exists?",
                      "x." * suffix (image),
@@ -507,6 +515,7 @@ call_scm_converter(url image, url dest) {
                     << " -> " << concretize (dest) << LF;
     return success;
   }
+#endif
   return false;
 }
 

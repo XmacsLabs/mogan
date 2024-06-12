@@ -179,6 +179,7 @@ target("libmogan") do
             "src/Graphics/Spacial",
             "src/Graphics/Types",
             "src/Kernel/Abstractions",
+            "src/Kernel/Algorithms",
             "src/Kernel/Containers",
             "src/Kernel/Types",
             "src/Plugins",
