@@ -84,4 +84,6 @@ CONCRETE (archiver);
 };
 CONCRETE_CODE (archiver);
 
+void archive_announce (archiver_rep* buf, modification mod);
+
 #endif // defined ARCHIVER_H

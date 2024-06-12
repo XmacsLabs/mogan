@@ -16,6 +16,7 @@
 #include "block.hpp"
 #include "merge_sort.hpp"
 #include "iterator.hpp"
+#include "tree_helper.hpp"
 
 tree texmacs_settings = tuple ();
 

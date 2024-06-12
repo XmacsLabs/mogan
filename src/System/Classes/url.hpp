@@ -11,6 +11,7 @@
 
 #ifndef URL_H
 #define URL_H
+
 #include "tree.hpp"
 #include "tm_debug.hpp"
 
@@ -18,6 +19,8 @@
 #define URL_UNIX 1
 #define URL_STANDARD 2
 #define URL_CLEAN_UNIX 3
+
+#define URL_TUPLE 245
 
 /******************************************************************************
 * The url data type
@@ -64,7 +67,7 @@ url url_system (string dir, string name);
 url url_standard (string name);
 url url_standard (string dir, string name);
 
-inline url url_none () { return as_url (tuple ("none")); }
+url url_none (); 
 inline url url_here () { return as_url (tree (".")); }
 inline url url_parent () { return as_url (tree ("..")); }
 inline url url_ancestor () { return as_url (tree ("...")); }
@@ -88,27 +91,21 @@ inline url url_parent (url u) { return u * url_parent (); }
 * predicates
 ******************************************************************************/
 
-inline bool is_none (url u) { return is_tuple (u->t, "none", 0); }
-inline bool is_here (url u) { return u->t == "."; }
-inline bool is_parent (url u) { return u->t == ".."; }
-inline bool is_ancestor (url u) { return u->t == "..."; }
-inline bool is_atomic (url u) { return is_atomic (u->t); }
-inline bool is_concat (url u) { return is_tuple (u->t, "concat", 2); }
-inline bool is_or (url u) { return is_tuple (u->t, "or", 2); }
-inline bool is_root (url u) {
-  return is_tuple (u->t, "root") && (N(u->t) >= 2); }
-inline bool is_root (url u, string s) {
-  return is_root (u) && (u[1]->t->label == s); }
-inline bool is_root_web (url u) {
-  return is_root (u, "http") || is_root (u, "https") || is_root (u, "ftp") ||
-         is_root (u, "blank"); }
-inline bool is_root_tmfs (url u) { return is_root (u, "tmfs"); }
-inline bool is_root_blank (url u) { return is_root (u, "blank"); }
-inline bool is_wildcard (url u) { return is_tuple (u->t, "wildcard"); }
-inline bool is_wildcard (url u, int n) {
-  return is_tuple (u->t, "wildcard", n); }
-inline bool is_pseudo_atomic (url u) {
-  return is_atomic (u->t) || is_tuple (u->t, "wildcard", 1); }
+bool is_none (url u);
+bool is_here (url u);
+bool is_parent (url u);
+bool is_ancestor (url u);
+bool is_atomic (url u);
+bool is_concat (url u);
+bool is_or (url u);
+bool is_root (url u);
+bool is_root (url u, string s);
+bool is_root_web (url u);
+bool is_root_tmfs (url u);
+bool is_root_blank (url u);
+bool is_wildcard (url u);
+bool is_wildcard (url u, int n);
+bool is_pseudo_atomic (url u);
 
 bool is_rooted (url u);
 bool is_rooted (url u, string protocol);

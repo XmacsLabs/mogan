@@ -644,11 +644,6 @@
   (tmdb-get-completions get_completions (array_string url string))
   (tmdb-get-name-completions get_name_completions (array_string url string))
 
-  ;; SQL interface
-  (supports-sql? sqlite3_present (bool))
-  (sql-exec sql_exec (scheme_tree url string))
-  (sql-quote sql_quote (string string))
-
   ;; TeXmacs servers and clients
   (server-start server_start (void))
   (server-stop server_stop (void))

@@ -104,7 +104,7 @@ class QTMTreeModel : public QAbstractItemModel {
     // NOTE: for some reason using hashmap was resulting in overwritten values.
     // The very same code with QHash works ok. ?!?!
     //typedef hashmap<tree_label, hashmap <int, int> > roles_t;
-  typedef QHash<tree_label, QHash<int, int> > roles_t;
+  typedef QHash<int, QHash<int, int> > roles_t;
   
   tree_rep* _t_rep;  //!< Our data. Must be tree_rep* or we have a cycle!
   roles_t   _roles;  //!< Where in the data tree each data role is.

@@ -13,12 +13,13 @@
 #include "Format/page_item.hpp"
 #include "Format/stack_border.hpp"
 #include "pager.hpp"
+#include "new_breaker.hpp"
+
 box format_stack (path ip, array<box> bx, array<space> ht, SI height,
 		  bool may_stretch);
 #include "Boxes/construct.hpp"
 array<page_item> sub (array<page_item> l, path p, path q);
 page_item access (array<page_item> l, path p);
-space as_space (tree t);
 skeleton break_pages (array<page_item> l, space ph, int qual,
 		      space fn_sep, space fnote_sep, space float_sep,
                       font fn, int first_page);

@@ -73,7 +73,7 @@ xpm_load (url u) {
   if (s == "") load_string ("$TEXMACS_PATH/misc/pixmaps/TeXmacs.xpm", s, true);
 
   int i, j;
-  tree t (TUPLE);
+  tree t (URL_TUPLE);
   for (i=0; i<N(s); i++)
     if (s[i]=='\x22') {
       i++;

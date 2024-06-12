@@ -11,7 +11,10 @@
 
 #ifndef PLAYER_H
 #define PLAYER_H
+
 #include "tree.hpp"
+
+#define ADDENDUM_PLAYER     1
 
 class player;
 extern int player_count;

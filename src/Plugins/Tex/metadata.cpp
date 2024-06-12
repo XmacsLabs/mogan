@@ -12,6 +12,7 @@
 #include "Tex/tex.hpp"
 #include "Tex/convert_tex.hpp"
 #include "metadata.hpp"
+#include "tree_helper.hpp"
 
 array<tree>
 tokenize_concat (tree t, array<tree> a, bool keep) {

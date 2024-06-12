@@ -12,6 +12,7 @@
 #include "Database/database.hpp"
 #include "analyze.hpp"
 #include "merge_sort.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Lexicographical sorting of tuples

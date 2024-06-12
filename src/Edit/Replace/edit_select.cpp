@@ -14,7 +14,9 @@
 #include "convert.hpp"
 #include "packrat.hpp"
 #include "tree_select.hpp"
+#include "tree_modify.hpp"
 #include "drd_mode.hpp"
+#include "tree_observer.hpp"
 
 /******************************************************************************
 * Internationalization

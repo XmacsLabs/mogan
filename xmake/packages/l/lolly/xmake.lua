@@ -23,7 +23,7 @@ package("lolly")
     set_description("Lolly is a C++ library")
 
     add_urls("https://gitee.com/XmacsLabs/lolly.git")
-    add_versions("0.99.5", "v0.99.5")
+    add_versions("1.1.0", "v1.1.0")
 
     on_install("linux", "macosx", "mingw", "wasm", function (package)
         local configs = {}

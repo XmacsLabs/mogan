@@ -190,16 +190,8 @@ function main()
                 ret_type = "int"
             },
             {
-                scm_name = "bench-print",
-                cpp_name = "bench_print",
-                ret_type = "void",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
                 scm_name = "bench-print-all",
-                cpp_name = "bench_print",
+                cpp_name = "bench_print_all",
                 ret_type = "void"
             },
             {

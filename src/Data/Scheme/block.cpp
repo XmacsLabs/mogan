@@ -14,6 +14,7 @@
 #include "analyze.hpp"
 #include "drd_std.hpp"
 #include "tm_debug.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
  * Handling escape characters

@@ -12,6 +12,7 @@
 
 #include "rectangles.hpp"
 #include "tree.hpp"
+#include "tree_label.hpp"
 
 /******************************************************************************
 * Routines for rectangles

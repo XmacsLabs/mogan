@@ -21,6 +21,7 @@
 #include "message.hpp"
 #include "tree_traverse.hpp"
 #include "preferences.hpp"
+#include "observers.hpp"
 #ifdef EXPERIMENTAL
 #include "../../Style/Evaluate/evaluate_main.hpp"
 #endif

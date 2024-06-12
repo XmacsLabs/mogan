@@ -11,6 +11,8 @@
 #include "analyze.hpp"
 #include "impl_language.hpp"
 #include "path.hpp"
+#include "observers.hpp"
+
 
 extern tree the_et;
 

@@ -13,6 +13,8 @@
 #include "concater.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
+#include "observers.hpp"
+
 
 /******************************************************************************
 * Printing items

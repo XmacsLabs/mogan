@@ -80,6 +80,55 @@
 #define URL_SEPARATOR ':'
 #endif
 
+
+static inline tree tuple () {
+  return tree (URL_TUPLE); }
+static inline tree tuple (tree t1) {
+  return tree (URL_TUPLE, t1); }
+static inline tree tuple (tree t1, tree t2) {
+  return tree (URL_TUPLE, t1, t2); }
+static inline tree tuple (tree t1, tree t2, tree t3) {
+  return tree (URL_TUPLE, t1, t2, t3); }
+static inline tree tuple (tree t1, tree t2, tree t3, tree t4) {
+  return tree (URL_TUPLE, t1, t2, t3, t4); }
+static inline tree tuple (tree t1, tree t2, tree t3, tree t4, tree t5) {
+  return tree (URL_TUPLE, t1, t2, t3, t4, t5); }
+
+static inline bool is_tuple (tree t) {
+  return (t->op == URL_TUPLE); }
+static inline bool is_tuple (tree t, string s) {
+  return (t->op == URL_TUPLE) && (N(t) >= 1) && (t[0] == s); }
+static inline bool is_tuple (tree t, const char* s) {
+  return (t->op == URL_TUPLE) && (N(t) >= 1) && (t[0] == s); }
+static inline bool is_tuple (tree t, string s, int n) {
+  return (t->op == URL_TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
+static inline bool is_tuple (tree t, const char* s, int n) {
+  return (t->op == URL_TUPLE) && (N(t) == (n+1)) && (t[0] == s); }
+
+url url_none () { return as_url (tuple ("none")); }
+bool is_none (url u) { return is_tuple (u->t, "none", 0); }
+bool is_here (url u) { return u->t == "."; }
+bool is_parent (url u) { return u->t == ".."; }
+bool is_ancestor (url u) { return u->t == "..."; }
+bool is_atomic (url u) { return is_atomic (u->t); }
+bool is_concat (url u) { return is_tuple (u->t, "concat", 2); }
+bool is_or (url u) { return is_tuple (u->t, "or", 2); }
+bool is_root (url u) {
+  return is_tuple (u->t, "root") && (N(u->t) >= 2); }
+bool is_root (url u, string s) {
+  return is_root (u) && (u[1]->t->label == s); }
+bool is_root_web (url u) {
+  return is_root (u, "http") || is_root (u, "https") || is_root (u, "ftp") ||
+         is_root (u, "blank"); }
+bool is_root_tmfs (url u) { return is_root (u, "tmfs"); }
+bool is_root_blank (url u) { return is_root (u, "blank"); }
+bool is_wildcard (url u) { return is_tuple (u->t, "wildcard"); }
+bool is_wildcard (url u, int n) {
+  return is_tuple (u->t, "wildcard", n); }
+bool is_pseudo_atomic (url u) {
+  return is_atomic (u->t) || is_tuple (u->t, "wildcard", 1); }
+
+
 /******************************************************************************
 * Unrooted url constructors
 ******************************************************************************/

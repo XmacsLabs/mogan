@@ -19,6 +19,8 @@
 #include "typesetter.hpp"
 #include "drd_mode.hpp"
 #include "dictionary.hpp"
+#include "observers.hpp"
+
 
 extern int script_status;
 extern tree with_package_definitions (string package, tree body);

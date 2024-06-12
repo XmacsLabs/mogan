@@ -18,7 +18,9 @@
 #include <stdio.h>
 #include "scheme.hpp"
 #include "tree_correct.hpp"
+#include "tree_modify.hpp"
 #include "merge_sort.hpp"
+#include "tree_helper.hpp"
 
 static bool upgrade_tex_flag= false;
 double get_magnification (string s);

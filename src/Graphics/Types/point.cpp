@@ -11,6 +11,7 @@
 
 #include "point.hpp"
 #include "math_util.hpp"
+#include "tree_helper.hpp"
 
 point
 operator - (point p) {

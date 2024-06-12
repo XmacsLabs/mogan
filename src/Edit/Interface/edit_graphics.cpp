@@ -17,6 +17,8 @@
 #include "Boxes/graphics.hpp"
 #include "Bridge/impl_typesetter.hpp"
 #include "drd_std.hpp"
+#include "tree_observer.hpp"
+
 
 extern tree the_et;
 

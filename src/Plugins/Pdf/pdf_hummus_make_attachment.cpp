@@ -19,6 +19,7 @@
 #include "PDFWriter/SafeBufferMacrosDefs.h"
 #include "PDFWriter/Trace.h"
 #include "file.hpp"
+#include "tree_helper.hpp"
 
 using namespace PDFHummus;
 using namespace IOBasicTypes;

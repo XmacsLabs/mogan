@@ -12,6 +12,7 @@
 #include "mingw_sys_utils.hpp"
 #include "analyze.hpp"
 #include "tm_timer.hpp"
+#include "tm_debug.hpp"
 #include "spawn.hpp"
 #include "Windows/win-utf8-compat.hpp"
 

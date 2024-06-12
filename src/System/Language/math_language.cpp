@@ -15,6 +15,7 @@
 #include "file.hpp"
 #include "iterator.hpp"
 #include "packrat_grammar.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Mathematical languages

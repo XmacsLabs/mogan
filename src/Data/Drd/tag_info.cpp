@@ -11,6 +11,7 @@
 
 #include "tag_info.hpp"
 #include "hashmap.hpp"
+#include "tree_helper.hpp"
 
 #define get_bits(which,nr) which=i&((1<<nr)-1);i=i>>nr
 #define set_bits(which,nr) i+=((int)which)<<offset;offset+=nr

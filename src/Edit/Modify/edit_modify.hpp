@@ -66,4 +66,5 @@ public:
   path position_get (observer o);
 };
 
+
 #endif // defined EDIT_MODIFY_H

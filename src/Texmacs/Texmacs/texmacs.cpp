@@ -9,6 +9,7 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "tm_configure.hpp"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -27,6 +28,7 @@
 #include "tm_timer.hpp"
 #include "data_cache.hpp"
 #include "tm_window.hpp"
+#include "observers.hpp"
 #ifdef AQUATEXMACS
 void mac_fix_paths ();
 #endif
@@ -533,7 +535,7 @@ TeXmacs_main (int argc, char** argv) {
     open_window ();
   }
 
-  bench_print ();
+  bench_print (std_bench);
   bench_reset ("initialize texmacs");
   bench_reset ("initialize plugins");
   bench_reset ("initialize scheme");

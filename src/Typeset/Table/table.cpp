@@ -881,7 +881,7 @@ table_rep::finish () {
         y  << C->y1;
         ha << C->halign;
         if (N(ha) == 0) ext_flag= false;
-        else if (ha[0] != 'l' && ha[0] != 'c' && ha[0] != 'r') ext_flag= false;
+        else if (ha[0] != "l" && ha[0] != "c" && ha[0] != "r") ext_flag= false;
       }
       else ext_flag= false;
 

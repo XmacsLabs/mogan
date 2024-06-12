@@ -14,9 +14,11 @@
 
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
+
 #include "space.hpp"
 #include "array.hpp"
 #include "resource.hpp"
+#include "tree_label.hpp"
 
 RESOURCE(language);
 

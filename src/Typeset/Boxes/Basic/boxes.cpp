@@ -16,6 +16,8 @@
 #include "file.hpp"
 #include "merge_sort.hpp"
 #include "player.hpp"
+#include "observers.hpp"
+
 
 extern tree the_et;
 

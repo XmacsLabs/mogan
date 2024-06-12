@@ -17,6 +17,8 @@
 #include "merge_sort.hpp"
 #include "data_cache.hpp"
 #include "web_files.hpp"
+#include "tree_label.hpp"
+#include "tree_helper.hpp"
 
 #if !(defined(KERNEL_L2) || defined(KERNEL_L3))
 #include "scheme.hpp"
@@ -34,6 +36,7 @@
 #include <string.h>  // strerror
 #if defined (OS_MINGW)
 #include "Windows/win-utf8-compat.hpp"
+#include <time.h>
 #else
 #include <dirent.h>
 #define struct_stat struct stat

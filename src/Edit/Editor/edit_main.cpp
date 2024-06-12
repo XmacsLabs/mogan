@@ -22,6 +22,9 @@
 #include <setjmp.h>
 #include "image_files.hpp"
 #include "iterator.hpp"
+#include "tree_observer.hpp"
+#include "observers.hpp"
+
 
 #ifdef EXPERIMENTAL
 #include "../../Style/Memorizer/clean_copy.hpp"

@@ -15,6 +15,7 @@
 #include "tm_link.hpp"
 #include "convert.hpp"
 #include "locale.hpp"
+#include "tree_label.hpp"
 
 string ispell_encode (string lan, string s);
 string ispell_decode (string lan, string s);

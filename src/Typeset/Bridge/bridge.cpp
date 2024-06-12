@@ -11,6 +11,8 @@
 
 #include "bridge.hpp"
 #include "Boxes/construct.hpp"
+#include "observers.hpp"
+
 
 bridge bridge_document (typesetter, tree, path);
 bridge bridge_surround (typesetter, tree, path);

@@ -12,6 +12,7 @@
 #include "Tex/tex.hpp"
 #include "convert.hpp"
 #include "metadata.hpp"
+#include "tree_helper.hpp"
 
 static bool
 revtex_contains_noaffiliation (tree t) {

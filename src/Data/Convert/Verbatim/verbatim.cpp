@@ -16,6 +16,7 @@
 #include "vars.hpp"
 #include "drd_std.hpp"
 #include "analyze.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * TeXmacs to verbatim

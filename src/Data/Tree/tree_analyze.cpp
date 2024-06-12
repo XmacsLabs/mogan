@@ -1,39 +1,41 @@
 
 /******************************************************************************
-* MODULE     : tree_analyze.cpp
-* DESCRIPTION: routines for analyzing trees
-* COPYRIGHT  : (C) 2010  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : tree_analyze.cpp
+ * DESCRIPTION: routines for analyzing trees
+ * COPYRIGHT  : (C) 2010  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "tree_analyze.hpp"
 #include "convert.hpp"
+#include "tree_helper.hpp"
 
 drd_info get_style_drd (tree style);
 
 /******************************************************************************
-* Tokenize mathematical concats and recomposition
-******************************************************************************/
+ * Tokenize mathematical concats and recomposition
+ ******************************************************************************/
 
 array<tree>
 concat_tokenize (tree t) {
   static language lan= math_language ("std-math");
-  array<tree> r;
+  array<tree>     r;
   if (is_atomic (t)) {
     int i= 0;
-    while (i<N(t->label)) {
+    while (i < N (t->label)) {
       int start= i;
       (void) lan->advance (t, i);
       r << tree (t->label (start, i));
     }
   }
   else if (is_concat (t))
-    for (int i=0; i<N(t); i++)
+    for (int i= 0; i < N (t); i++)
       r << concat_tokenize (t[i]);
-  else if (is_func (t, BIG, 1) && t[0] == "."); // NOTE: discard old <big|.>
+  else if (is_func (t, BIG, 1) && t[0] == ".")
+    ; // NOTE: discard old <big|.>
   else r << t;
   return r;
 }
@@ -41,10 +43,11 @@ concat_tokenize (tree t) {
 array<tree>
 concat_decompose (tree t) {
   array<tree> r;
-  if (t == "");
+  if (t == "")
+    ;
   else if (is_atomic (t)) r << t;
   else if (is_concat (t))
-    for (int i=0; i<N(t); i++)
+    for (int i= 0; i < N (t); i++)
       r << concat_decompose (t[i]);
   else r << t;
   return r;
@@ -53,8 +56,8 @@ concat_decompose (tree t) {
 tree
 concat_recompose (array<tree> a) {
   array<tree> r;
-  string s;
-  for (int i=0; i<N(a); i++)
+  string      s;
+  for (int i= 0; i < N (a); i++)
     if (is_atomic (a[i])) s << a[i]->label;
     else {
       if (s != "") r << tree (s);
@@ -62,14 +65,14 @@ concat_recompose (array<tree> a) {
       s= "";
     }
   if (s != "") r << tree (s);
-  if (N(r) == 0) return "";
-  else if (N(r) == 1) return r[0];
+  if (N (r) == 0) return "";
+  else if (N (r) == 1) return r[0];
   else return tree (CONCAT, r);
 }
 
 /******************************************************************************
-* Subroutines for WITH-like macros
-******************************************************************************/
+ * Subroutines for WITH-like macros
+ ******************************************************************************/
 
 bool
 is_with_like (tree t) {
@@ -78,13 +81,13 @@ is_with_like (tree t) {
 
 tree&
 with_body (tree w) {
-  return w[N(w)-1];
+  return w[N (w) - 1];
 }
 
 bool
 with_same_type (tree w1, tree w2) {
   ASSERT (is_with_like (w1) && is_with_like (w2), "with-like trees expected");
-  return w1 (0, N(w1)-1) == w2 (0, N(w2)-1);
+  return w1 (0, N (w1) - 1) == w2 (0, N (w2) - 1);
 }
 
 bool
@@ -94,8 +97,8 @@ with_similar_type (tree w1, tree w2) {
     return is_compound (w2, "math") || is_compound (w2, "text");
   if (!is_func (w1, WITH) || !is_func (w2, WITH))
     return with_same_type (w1, w2);
-  if (N(w1) != N(w2)) return false;
-  for (int i=0; i<N(w1)-1; i+=2)
+  if (N (w1) != N (w2)) return false;
+  for (int i= 0; i < N (w1) - 1; i+= 2)
     if (w1[i] != w2[i]) return false;
   return true;
 }
@@ -103,10 +106,11 @@ with_similar_type (tree w1, tree w2) {
 array<tree>
 with_decompose (tree w, tree t) {
   array<tree> r;
-  if (t == "");
+  if (t == "")
+    ;
   else if (is_atomic (t)) r << t;
   else if (is_concat (t))
-    for (int i=0; i<N(t); i++)
+    for (int i= 0; i < N (t); i++)
       r << with_decompose (w, t[i]);
   else if (is_with_like (t) && with_same_type (w, t))
     r << with_decompose (w, with_body (t));
@@ -116,19 +120,19 @@ with_decompose (tree w, tree t) {
 
 tree
 with_recompose (tree w, array<tree> a) {
-  tree r= w (0, N(w));
+  tree r       = w (0, N (w));
   with_body (r)= concat_recompose (a);
   return r;
 }
 
 /******************************************************************************
-* Determine symbol type
-******************************************************************************/
+ * Determine symbol type
+ ******************************************************************************/
 
 int
 symbol_type (tree t) {
   static language lan= math_language ("std-math");
-  tree r= the_drd->get_syntax (t);
+  tree            r  = the_drd->get_syntax (t);
   if (r != UNINIT) {
     if (is_compound (t, "text")) return SYMBOL_SKIP;
     else if (is_compound (t, "eq-number")) return SYMBOL_SKIP;
@@ -137,7 +141,7 @@ symbol_type (tree t) {
     else return symbol_type (r);
   }
   else if (is_atomic (t)) {
-    int pos= 0;
+    int           pos = 0;
     text_property prop= lan->advance (t, pos);
     switch (prop->op_type) {
     case OP_UNKNOWN:
@@ -168,7 +172,7 @@ symbol_type (tree t) {
       return SYMBOL_BASIC;
     }
   }
-  else switch (L(t)) {
+  else switch (L (t)) {
     case HSPACE:
     case VAR_VSPACE:
     case VSPACE:
@@ -196,43 +200,43 @@ symbol_type (tree t) {
     case WITH:
     case STYLE_WITH:
     case VAR_STYLE_WITH:
-      if (N(t) == 0) return SYMBOL_SKIP;
-      return symbol_type (t[N(t)-1]);
+      if (N (t) == 0) return SYMBOL_SKIP;
+      return symbol_type (t[N (t) - 1]);
     case LABEL:
       return SYMBOL_SKIP;
 
     default:
       return SYMBOL_BASIC;
-  }
+    }
 }
 
 array<int>
 symbol_types (array<tree> a) {
-  array<int> tp (N(a));
-  for (int i=0; i<N(a); i++)
+  array<int> tp (N (a));
+  for (int i= 0; i < N (a); i++)
     tp[i]= symbol_type (a[i]);
   return tp;
 }
 
 /******************************************************************************
-* Determine symbol priority
-******************************************************************************/
+ * Determine symbol priority
+ ******************************************************************************/
 
-#define PRIORITY_SEPARATOR          0
-#define PRIORITY_ASSIGN             1
-#define PRIORITY_FLUX               2
-#define PRIORITY_MODELS             3
-#define PRIORITY_IMPLY              4
-#define PRIORITY_OR                 5
-#define PRIORITY_AND                6
-#define PRIORITY_RELATION           7
-#define PRIORITY_ARROW              8
-#define PRIORITY_UNION              9
-#define PRIORITY_INTERSECTION      10
-#define PRIORITY_PLUS              11
-#define PRIORITY_TIMES             12
-#define PRIORITY_POWER             13
-#define PRIORITY_RADICAL           14
+#define PRIORITY_SEPARATOR 0
+#define PRIORITY_ASSIGN 1
+#define PRIORITY_FLUX 2
+#define PRIORITY_MODELS 3
+#define PRIORITY_IMPLY 4
+#define PRIORITY_OR 5
+#define PRIORITY_AND 6
+#define PRIORITY_RELATION 7
+#define PRIORITY_ARROW 8
+#define PRIORITY_UNION 9
+#define PRIORITY_INTERSECTION 10
+#define PRIORITY_PLUS 11
+#define PRIORITY_TIMES 12
+#define PRIORITY_POWER 13
+#define PRIORITY_RADICAL 14
 
 int
 symbol_priority (tree t) {
@@ -292,15 +296,15 @@ symbol_priority (tree t) {
 
 array<int>
 symbol_priorities (array<tree> a) {
-  array<int> tp (N(a));
-  for (int i=0; i<N(a); i++)
+  array<int> tp (N (a));
+  for (int i= 0; i < N (a); i++)
     tp[i]= symbol_priority (a[i]);
   return tp;
 }
 
 /******************************************************************************
-* Further routines
-******************************************************************************/
+ * Further routines
+ ******************************************************************************/
 
 bool
 is_correctable_child (tree t, int i, bool noaround) {
@@ -318,16 +322,12 @@ is_correctable_child (tree t, int i, bool noaround) {
       return false;
     }
   }
-  else if (is_atomic (t[i]) ||
-	   (noaround && is_func (t[i], AROUND)) ||
-	   (noaround && is_func (t[i], VAR_AROUND)) ||
-	   (noaround && is_func (t[i], BIG_AROUND)) ||
-	   is_func (t[i], LEFT) ||
-	   is_func (t[i], MID) ||
-	   is_func (t[i], RIGHT) ||
-	   is_func (t[i], BIG) ||
-	   is_compound (t[i], "bl") ||
-	   is_compound (t[i], "br"))
+  else if (is_atomic (t[i]) || (noaround && is_func (t[i], AROUND)) ||
+           (noaround && is_func (t[i], VAR_AROUND)) ||
+           (noaround && is_func (t[i], BIG_AROUND)) || is_func (t[i], LEFT) ||
+           is_func (t[i], MID) || is_func (t[i], RIGHT) ||
+           is_func (t[i], BIG) || is_compound (t[i], "bl") ||
+           is_compound (t[i], "br"))
     return false;
   else return true;
 }
@@ -337,16 +337,17 @@ trim_spaces_right (tree t) {
   if (is_atomic (t)) return trim_spaces_right (as_string (t));
   else if (is_concat (t)) {
     tree l;
-    int end;
-    for (end= N(t)-1; end >= 0; end--) {
+    int  end;
+    for (end= N (t) - 1; end >= 0; end--) {
       l= trim_spaces_right (t[end]);
       if (l != "") break;
     }
-    tree r= tree (L(t));
-    for (int i=0; i<end; i++) r << t[i];
+    tree r= tree (L (t));
+    for (int i= 0; i < end; i++)
+      r << t[i];
     if (end >= 0) r << l;
-    if (N(r) == 0) return "";
-    else if (N(r) == 1) return r[0];
+    if (N (r) == 0) return "";
+    else if (N (r) == 1) return r[0];
     else return r;
   }
   else return t;
@@ -357,16 +358,17 @@ trim_spaces_left (tree t) {
   if (is_atomic (t)) return trim_spaces_left (as_string (t));
   else if (is_concat (t)) {
     tree l;
-    int start;
-    for (start= 0; start < N(t); start++) {
+    int  start;
+    for (start= 0; start < N (t); start++) {
       l= trim_spaces_left (t[start]);
       if (l != "") break;
     }
-    tree r= tree (L(t));
-    if (start < N(t)) r << l;
-    for (int i=start+1; i<N(t); i++) r << t[i];
-    if (N(r) == 0) return "";
-    else if (N(r) == 1) return r[0];
+    tree r= tree (L (t));
+    if (start < N (t)) r << l;
+    for (int i= start + 1; i < N (t); i++)
+      r << t[i];
+    if (N (r) == 0) return "";
+    else if (N (r) == 1) return r[0];
     else return r;
   }
   else return t;

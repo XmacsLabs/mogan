@@ -14,6 +14,7 @@
 #include "hashmap.hpp"
 #include "iterator.hpp"
 #include "file.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Computing scores for words in a file

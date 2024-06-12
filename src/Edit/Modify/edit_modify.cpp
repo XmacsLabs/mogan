@@ -12,6 +12,10 @@
 #include "modification.hpp"
 #include "edit_modify.hpp"
 #include "tm_window.hpp"
+#include "tree_observer.hpp"
+#include "observers.hpp"
+
+
 #ifdef EXPERIMENTAL
 #include "../../Style/Memorizer/clean_copy.hpp"
 #endif

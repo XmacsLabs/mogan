@@ -35,7 +35,7 @@ S7_VERSION = "20240516"
 
 -- package: s7
 add_requires("s7 "..S7_VERSION, {system=false})
-add_requires("lolly 0.99.5", {system=false})
+add_requires("lolly 1.1.0", {system=false})
 
 add_requires("apt::libpng-dev", {alias="libpng"})
 add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
@@ -279,7 +279,6 @@ target("libmogan") do
             "src/Plugins/Metafont/**.cpp",
             "src/Plugins/LaTeX_Preview/**.cpp",
             "src/Plugins/Openssl/**.cpp",
-            "src/Plugins/Sqlite3/**.cpp",
             "src/Plugins/Tex/**.cpp",
             "src/Plugins/Xml/**.cpp",
             "src/Plugins/Updater/**.cpp"})

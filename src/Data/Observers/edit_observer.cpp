@@ -1,74 +1,76 @@
 
 /******************************************************************************
-* MODULE     : edit_observer.cpp
-* DESCRIPTION: Persistently attach editors to trees
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* An inverse path observer maintains the inverse path of the position
-* of the corresponding tree with respect to the global meta-tree.
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : edit_observer.cpp
+ * DESCRIPTION: Persistently attach editors to trees
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * An inverse path observer maintains the inverse path of the position
+ * of the corresponding tree with respect to the global meta-tree.
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "modification.hpp"
+#include "observers.hpp"
 
 /******************************************************************************
-* Definition of the edit_observer_rep class
-******************************************************************************/
+ * Definition of the edit_observer_rep class
+ ******************************************************************************/
 
-class edit_observer_rep: public observer_rep {
+class edit_observer_rep : public observer_rep {
   editor_rep* ed;
+
 public:
-  edit_observer_rep (editor_rep* ed2): ed (ed2) {}
-  int get_type () { return OBSERVER_EDIT; }
+  edit_observer_rep (editor_rep* ed2) : ed (ed2) {}
+  int         get_type () { return OBSERVER_EDIT; }
   tm_ostream& print (tm_ostream& out) { return out << " editor<" << ed << ">"; }
 
   void announce (tree& ref, modification mod);
-  void done     (tree& ref, modification mod);
-  void touched  (tree& ref, path p);
+  void done (tree& ref, modification mod);
+  void touched (tree& ref, path p);
 
-  void reattach           (tree& ref, tree t);
-  void notify_assign      (tree& ref, tree t);
-  void notify_var_split   (tree& ref, tree t1, tree t2);
-  void notify_var_join    (tree& ref, tree t, int offset);
+  void reattach (tree& ref, tree t);
+  void notify_assign (tree& ref, tree t);
+  void notify_var_split (tree& ref, tree t1, tree t2);
+  void notify_var_join (tree& ref, tree t, int offset);
   void notify_remove_node (tree& ref, int pos);
-  void notify_detach      (tree& ref, tree closest, bool right);
+  void notify_detach (tree& ref, tree closest, bool right);
 };
 
 /******************************************************************************
-* Call back routines for announcements
-******************************************************************************/
+ * Call back routines for announcements
+ ******************************************************************************/
 
 void
 edit_observer_rep::announce (tree& ref, modification mod) {
-  //cout << "Editor " << mod << "\n";
+  // cout << "Editor " << mod << "\n";
   if (ip_attached (obtain_ip (ref)))
     edit_announce (ed, reverse (obtain_ip (ref)) * mod);
 }
 
 void
 edit_observer_rep::done (tree& ref, modification mod) {
-  //cout << "Done " << mod->p << "\n";
+  // cout << "Done " << mod->p << "\n";
   if (ip_attached (obtain_ip (ref)))
     edit_done (ed, reverse (obtain_ip (ref)) * mod);
 }
 
 void
 edit_observer_rep::touched (tree& ref, path p) {
-  //cout << "Touched " << p << "\n";
+  // cout << "Touched " << p << "\n";
   if (ip_attached (obtain_ip (ref)))
     edit_touch (ed, reverse (obtain_ip (ref)) * p);
 }
 
 /******************************************************************************
-* Reattach when necessary
-******************************************************************************/
+ * Reattach when necessary
+ ******************************************************************************/
 
 void
 edit_observer_rep::reattach (tree& ref, tree t) {
-  if (ref.rep != t.rep) {
+  if (!strong_equal (ref, t)) {
     remove_observer (ref->obs, observer (this));
     insert_observer (t->obs, observer (this));
   }
@@ -87,7 +89,8 @@ edit_observer_rep::notify_var_split (tree& ref, tree t1, tree t2) {
 
 void
 edit_observer_rep::notify_var_join (tree& ref, tree t, int offset) {
-  (void) ref; (void) offset;
+  (void) ref;
+  (void) offset;
   reattach (ref, t);
 }
 
@@ -103,15 +106,15 @@ edit_observer_rep::notify_detach (tree& ref, tree closest, bool right) {
 }
 
 /******************************************************************************
-* Creation of edit_observers
-******************************************************************************/
+ * Creation of edit_observers
+ ******************************************************************************/
 
 observer
 edit_observer (editor_rep* ed) {
   return tm_new<edit_observer_rep> (ed);
 }
 
-observer
+static observer
 search_type (observer o, int type) {
   if (is_nil (o)) return o;
   if (o->get_type () == type) return o;

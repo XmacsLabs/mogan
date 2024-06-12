@@ -10,10 +10,12 @@
 ******************************************************************************/
 
 #include "block.hpp"
+#include "tree_modify.hpp"
 #include "bibtex_functions.hpp"
 #include "converter.hpp"
 #include "vars.hpp"
 #include "Tex/tex.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Helper functions

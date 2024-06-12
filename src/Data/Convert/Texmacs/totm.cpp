@@ -11,6 +11,7 @@
 
 #include "convert.hpp"
 #include "drd_std.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Conversion of TeXmacs trees to the present TeXmacs string format

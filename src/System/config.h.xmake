@@ -147,6 +147,4 @@ ${define USE_IMLIB2}
 
 ${define USE_SPARKLE}
 
-${define USE_SQLITE3}
-
 ${define USE_STACK_TRACE}

@@ -27,6 +27,7 @@
 #include "frame.hpp"
 #include "Ghostscript/gs_utilities.hpp" // for gs_prefix
 #include "wencoding.hpp"
+#include "tree_helper.hpp"
 
 #ifdef QT_CORE_LIB
 #include <QtCore>

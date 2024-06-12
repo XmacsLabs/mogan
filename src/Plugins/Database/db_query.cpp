@@ -11,6 +11,7 @@
 
 #include "Database/database.hpp"
 #include "analyze.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * Fast filtering of lines which satisfy a list of constraints

@@ -21,6 +21,11 @@
 #include "new_style.hpp"
 #include "iterator.hpp"
 #include "merge_sort.hpp"
+#include "tree_modify.hpp"
+#include "tree_observer.hpp"
+#include "observers.hpp"
+
+
 #ifdef EXPERIMENTAL
 #include "../../Style/Environment/std_environment.hpp"
 #endif // EXPERIMENTAL
@@ -356,7 +361,7 @@ edit_typeset_rep::environment_update () {
   typeset_prepare ();
   env->assign ("base-file-name", as_string (env->base_file_name));
   env->assign ("cur-file-name", as_string (env->cur_file_name));
-  env->assign ("secure", bool_as_tree (env->secure));
+  env->assign ("secure", as_tree (env->secure));
   env->read_env (h);
   ::primitive (ste, h);
 }
@@ -990,7 +995,7 @@ edit_typeset_rep::typeset_sub (SI& x1, SI& y1, SI& x2, SI& y2) {
   }
   handle_exceptions ();
 #endif
-  bench_end ("typeset");
+  bench_end (std_bench, "typeset");
   //time_t t2= texmacs_time ();
   //if (t2 - t1 >= 10) cout << "typeset took " << t2-t1 << "ms\n";
   picture_cache_clean ();

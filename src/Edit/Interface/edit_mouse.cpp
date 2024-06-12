@@ -17,6 +17,7 @@
 #include "analyze.hpp"
 #include "drd_mode.hpp"
 #include "message.hpp"
+#include "observers.hpp"
 
 
 void disable_double_clicks ();

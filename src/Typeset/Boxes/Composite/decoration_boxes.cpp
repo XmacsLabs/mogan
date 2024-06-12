@@ -12,6 +12,8 @@
 #include "Boxes/composite.hpp"
 #include "Boxes/construct.hpp"
 #include "scheme.hpp"
+#include "observers.hpp"
+
 
 bool in_presentation_mode ();
 

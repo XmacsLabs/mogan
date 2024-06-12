@@ -13,6 +13,9 @@
 #include "file.hpp"
 #include "analyze.hpp"
 #include "scheme.hpp"
+#include "tree_modify.hpp"
+#include "tree_observer.hpp"
+
 
 /******************************************************************************
 * Constructors and destructors

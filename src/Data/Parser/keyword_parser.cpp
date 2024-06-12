@@ -14,6 +14,7 @@
 #include "analyze.hpp"
 #include "tree.hpp"
 #include "scheme.hpp"
+#include "tree_helper.hpp"
 
 keyword_parser_rep::keyword_parser_rep () {
   current_keyword= "";

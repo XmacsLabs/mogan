@@ -137,7 +137,7 @@ get_current_editor () {
     TM_FAILED ("Current view is NULL");
     notify_delete_view (u);
     array<url> history = get_all_views();
-    if (as_tree (history) == NULL || N(history) == 0)
+    if (as_tree (history) == as_tree (NULL) || N(history) == 0)
       TM_FAILED ("View history is empty")
     return view_to_editor (history[N(history)-1]);
   }

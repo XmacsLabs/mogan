@@ -11,7 +11,9 @@
 
 #ifndef PACKRAT_PARSER_H
 #define PACKRAT_PARSER_H
+
 #include "packrat_grammar.hpp"
+#include "tree_helper.hpp"
 
 #define PACKRAT_UNDEFINED ((C) (-2))
 #define PACKRAT_FAILED    ((C) (-1))

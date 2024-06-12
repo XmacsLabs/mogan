@@ -15,10 +15,11 @@
 #include "merge_sort.hpp"
 #include "Bibtex/bibtex.hpp"
 #include "Bibtex/bibtex_functions.hpp"
-#include "Sqlite3/sqlite3.hpp"
 #include "file.hpp"
 #include "convert.hpp"
 #include "scheme.hpp"
+#include "tree_observer.hpp"
+
 
 /******************************************************************************
 * Constructors and destructors

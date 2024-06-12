@@ -11,7 +11,9 @@
 
 #ifndef DRD_INFO_H
 #define DRD_INFO_H
+
 #include "tree.hpp"
+#include "tree_label.hpp"
 #include "rel_hashmap.hpp"
 #include "tag_info.hpp"
 

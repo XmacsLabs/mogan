@@ -9,7 +9,11 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "tree_helper.hpp"
 #include "new_document.hpp"
+#include "tree_observer.hpp"
+#include "observers.hpp"
+
 
 /******************************************************************************
 * Management of all edit trees

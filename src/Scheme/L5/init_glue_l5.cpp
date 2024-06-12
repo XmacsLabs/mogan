@@ -22,8 +22,11 @@
 #include "editor.hpp"
 #include "iterator.hpp"
 #include "locale.hpp"
+#include "observers.hpp"
 #include "preferences.hpp"
 #include "promise.hpp"
+#include "tm_debug.hpp"
+#include "tree_observer.hpp"
 #include "universal.hpp"
 #include "widget.hpp"
 
@@ -248,6 +251,11 @@ protected_call (object cmd) {
   }
   handle_exceptions ();
 #endif
+}
+
+void
+bench_print_all () {
+  bench_print (std_bench);
 }
 
 /******************************************************************************

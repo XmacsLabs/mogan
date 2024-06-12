@@ -20,6 +20,8 @@
 #include "patch.hpp"
 #include "path.hpp"
 #include "tree.hpp"
+#include "tree_cursor.hpp"
+#include "tree_observer.hpp"
 
 tree
 var_apply (tree &t, modification m) {

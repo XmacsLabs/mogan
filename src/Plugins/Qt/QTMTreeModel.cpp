@@ -13,7 +13,7 @@
 #include "QTMTreeModel.hpp"
 
 #include "path.hpp"
-#include "observer.hpp"
+#include "observers.hpp"
 #include "modification.hpp"
 
 #include "qt_utilities.hpp"
@@ -52,7 +52,7 @@ QTMTreeModel::instance (const tree& data, const tree& roles, QObject* parent) {
  the QTMTreeModel.
  */
 QTMTreeModel::QTMTreeModel (const tree& data, const tree& roles, QObject* p)
-: QAbstractItemModel (p), _t_rep (data.rep) {
+: QAbstractItemModel (p), _t_rep (inside (data)) {
   tree t = tree (_t_rep);
   parse_roles (roles);
   const path& ip = obtain_ip (t);
@@ -70,7 +70,7 @@ QTMTreeModel::~QTMTreeModel () {
 
 inline int
 QTMTreeModel::row_offset (const tree& t) const {
-  return _roles[L(const_cast<tree&>(t))][NumberOfArguments];
+  return _roles[(inside (t))->op][NumberOfArguments];
 }
 
 tree
@@ -86,10 +86,10 @@ QTMTreeModel::index_from_item (const tree& tref) const {
   path ip = obtain_ip (t);
   if (ipath_has_parent (ip)) {
     path   p = reverse (ip->next) / reverse (obtain_ip (_t));// Look one item up
-    if (is_nil (p)) return createIndex (ip->item, 0, t.rep); // parent is root?
+    if (is_nil (p)) return createIndex (ip->item, 0, inside (t)); // parent is root?
     tree& pt = subtree (_t, p);                              // pt is the parent
     int  row = ip->item - row_offset (pt);
-    return createIndex (row, 0, t.rep);
+    return createIndex (row, 0, inside (t));
   }
   return QModelIndex();
 }
@@ -107,7 +107,7 @@ QTMTreeModel::index (int row, int column, const QModelIndex& parent) const {
   tree t = item_from_index (parent);
 
   if (is_compound (t) && row + row_offset(t) < N(t))
-    return createIndex (row, column, t[row + row_offset(t)].rep);
+    return createIndex (row, column, inside (t[row + row_offset(t)]));
   else
     return QModelIndex();
 }
@@ -146,8 +146,8 @@ QVariant
 QTMTreeModel::data (const QModelIndex& index, int role) const {
   const tree& tref = item_from_index (index);
   tree& t = const_cast<tree&> (tref);
-  int pos = _roles.contains(L(t)) && _roles[L(t)].contains(role)
-              ? _roles[L(t)][role] : -1;
+  int pos = _roles.contains(t->op) && _roles[t->op].contains(role)
+              ? _roles[t->op][role] : -1;
   if (role >= TMUserRole && pos > -1 && !is_atomic (t) && N(t) >= pos && 
       is_atomic (t[pos]))
     return QVariant (to_qstring (t[pos]->label));
@@ -231,7 +231,7 @@ QTMTreeModel::parse_roles (const tree& roles) {
   
   for (int i = 0; i < N(roles); ++i) {
     if (is_compound (r[i])) {
-      tree_label tag = L(r[i]);
+      int tag = r[i]->op;
       _roles[tag][NumberOfArguments] = N(r[i]);
       for (int j = 0; j < N(r[i]); ++j) {
         ASSERT (is_atomic (r[i][j]), "QTMTreeModel: bad format declaration");

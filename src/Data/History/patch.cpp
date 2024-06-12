@@ -10,6 +10,9 @@
 ******************************************************************************/
 
 #include "patch.hpp"
+#include "tree_cursor.hpp"
+#include "tree_observer.hpp"
+
 
 int insert_length (tree t);
 

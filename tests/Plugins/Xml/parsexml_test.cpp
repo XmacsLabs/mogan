@@ -14,6 +14,7 @@
 #include "Xml/xml.hpp"
 #include "convert.hpp"
 #include "drd_std.hpp"
+#include "tree_helper.hpp"
 
 class TestParseXML : public QObject {
   Q_OBJECT
