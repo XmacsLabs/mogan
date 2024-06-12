@@ -13,6 +13,7 @@
 #define TIMER_H
 #include "string.hpp"
 #include "tm_configure.hpp"
+#include "tm_debug.hpp"
 
 #ifndef __FreeBSD__
 #ifndef HAVE_TIME_T

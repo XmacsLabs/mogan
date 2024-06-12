@@ -82,43 +82,6 @@ public:
 extern tm_ostream& cout;
 extern tm_ostream& cerr;
 
-extern tm_ostream std_error;
-extern tm_ostream failed_error;
-extern tm_ostream boot_error;
-extern tm_ostream widkit_error;
-extern tm_ostream qt_error;
-extern tm_ostream font_error;
-extern tm_ostream convert_error;
-extern tm_ostream io_error;
-extern tm_ostream bibtex_error;
-
-extern tm_ostream std_warning;
-extern tm_ostream convert_warning;
-extern tm_ostream typeset_warning;
-extern tm_ostream io_warning;
-extern tm_ostream widkit_warning;
-extern tm_ostream bibtex_warning;
-
-extern tm_ostream debug_std;
-extern tm_ostream debug_qt;
-extern tm_ostream debug_aqua;
-extern tm_ostream debug_widgets;
-extern tm_ostream debug_fonts;
-extern tm_ostream debug_convert;
-extern tm_ostream debug_typeset;
-extern tm_ostream debug_edit;
-extern tm_ostream debug_packrat;
-extern tm_ostream debug_history;
-extern tm_ostream debug_keyboard;
-extern tm_ostream debug_automatic;
-extern tm_ostream debug_boot;
-extern tm_ostream debug_events;
-extern tm_ostream debug_shell;
-extern tm_ostream debug_io;
-extern tm_ostream debug_spell;
-extern tm_ostream debug_updater;
-
-extern tm_ostream std_bench;
 
 tm_ostream string_ostream (string& buf);
 

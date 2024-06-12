@@ -13,6 +13,7 @@
 #include "analyze.hpp"
 #include "drd_std.hpp"
 #include "language.hpp" //(en|de)code_color
+#include "tm_debug.hpp"
 
 extern tree the_et;
 bool packrat_invalid_colors= false;

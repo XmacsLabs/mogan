@@ -292,7 +292,7 @@ tag_info::tag_info (int a, int x, int am, int cm, bool frozen) {
 
 tag_info::tag_info (tree t) {
   if ((!is_func (t, TUPLE)) || (N(t)<2) || (L(t[1]) != TUPLE)) {
-    failed_error << "t= " << t << "\n";
+    cerr << "t= " << t << "\n";
     FAILED ("bad tag_info");
   }
   parent_info pi (t[0]);
@@ -484,13 +484,13 @@ child_info&
 tag_info::operator () (int child, int n) {
   int index= rep->get_index (child, n);
   if (index < 0 || index >= N(rep->ci)) {
-    failed_error << "child       = " << child << "\n";
-    failed_error << "out of      = " << n << "\n";
-    failed_error << "child_mode  = " << rep->pi.child_mode << "\n";
-    failed_error << "arity_mode  = " << rep->pi.arity_mode << "\n";
-    failed_error << "arity_base  = " << rep->pi.arity_base << "\n";
-    failed_error << "arity_extra = " << rep->pi.arity_extra << "\n";
-    failed_error << "N(ci)       = " << N(rep->ci) << "\n";
+    cerr << "child       = " << child << "\n";
+    cerr << "out of      = " << n << "\n";
+    cerr << "child_mode  = " << rep->pi.child_mode << "\n";
+    cerr << "arity_mode  = " << rep->pi.arity_mode << "\n";
+    cerr << "arity_base  = " << rep->pi.arity_base << "\n";
+    cerr << "arity_extra = " << rep->pi.arity_extra << "\n";
+    cerr << "N(ci)       = " << N(rep->ci) << "\n";
     FAILED ("index out of range");
   }
   return rep->ci [index];

@@ -12,6 +12,7 @@
 #include "config.h"
 #include "free_type.hpp"
 #include "dyn_link.hpp"
+#include "tm_debug.hpp"
 
 #ifdef USE_FREETYPE
 

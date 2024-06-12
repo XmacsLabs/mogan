@@ -16,6 +16,8 @@
 #include "iterator.hpp"
 #include "file.hpp"
 #include "convert.hpp"
+#include "scheme.hpp"
+#include "dictionary.hpp"
 
 RESOURCE_CODE(font);
 
@@ -643,4 +645,18 @@ default_korean_font_name () {
   if (tt_font_exists ("AppleGothic")) return "apple-gothic";
   if (tt_font_exists ("Gulim")) return "gulim";
   return "roman";
+}
+
+bool
+use_macos_fonts () {
+#ifdef OS_MACOS
+  if (gui_is_qt ()) return true;
+  string s= get_preference ("look and feel");
+  if (s != "default" && s != "macos") return false;
+  string l= get_output_language ();
+  if (l == "bulgarian" || l == "russian" || l == "ukrainian") return false;
+  return tt_font_exists ("LucidaGrande");
+#else
+  return false;
+#endif
 }

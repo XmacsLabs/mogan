@@ -159,7 +159,7 @@ subtree (tree& t, path p) {
   else
     if (N(t) > p->item) return subtree (t[p->item], p->next);
     else {
-      std_warning << "The required path does not exist\n";
+      cout << "The required path does not exist\n";
       return t;
     }
 }

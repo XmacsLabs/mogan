@@ -179,3 +179,180 @@ tm_failure (const char* msg) {
   clear_pending_commands ();
   //exit (1);
 }
+
+
+/******************************************************************************
+* debugging messages
+******************************************************************************/
+
+tree debug_messages (TUPLE);
+bool debug_lf_flag= false;
+extern bool texmacs_started;
+
+void
+debug_message_sub (string channel, string msg) {
+  if (occurs ("\n", msg)) {
+    int pos= search_forwards ("\n", 0, msg);
+    debug_message_sub (channel, msg (0, pos));
+    debug_lf_flag= true;
+    cout << "\n";
+    if (pos+1 < N(msg))
+      debug_message_sub (channel, msg (pos+1, N(msg)));
+  }
+  else {
+    int n= N(debug_messages);
+    if (!debug_lf_flag && n>0 && is_tuple (debug_messages[n-1], channel)) {
+      tree *t= &(debug_messages[n-1][1]);
+      *t= (*t)->label * msg;
+      cout << msg;
+    }
+    else {
+      debug_messages << tuple (channel, msg, "");
+      debug_lf_flag= false;
+      if (channel != "debug-boot") {
+        cout << "TeXmacs] ";
+        if (channel != "debug-automatic" &&
+            channel != "boot-error")
+          cout << channel << ", ";
+      }
+      cout << msg;
+    }
+  }
+}
+
+void
+debug_message (string channel, string msg) {
+  debug_message_sub (channel, msg);
+  if (texmacs_started && channel != "debug-widgets")
+    call ("notify-debug-message", object (channel));
+}
+
+void
+debug_formatted (string channel, tree msg) {
+  int n= N(debug_messages);
+  if (n>0 && is_tuple (debug_messages[n-1], channel)) {
+    debug_messages[n-1][2]= msg;
+    if (texmacs_started && channel != "debug-widgets")
+      call ("notify-debug-message", object (channel));
+  }
+}
+
+tree
+get_debug_messages (string kind, int max_number) {
+  tree m (TUPLE);
+  for (int i=N(debug_messages)-1; i>=0; i--) {
+    tree t= debug_messages[i];
+    if (!is_func (t, TUPLE, 3) || !is_atomic (t[0])) continue;
+    string s= t[0]->label;
+    if (kind == "Debugging console" ||
+        ends (s, "-error") ||
+        ends (s, "-warning"))
+      m << t;
+    if (N(m) >= max_number) break;
+  }
+  tree r (TUPLE);
+  for (int i=N(m)-1; i>=0; i--) r << m[i];
+  return r;
+}
+
+void
+clear_debug_messages (string channel) {
+  tree r= tree (TUPLE);
+  for (int i=0; i<N(debug_messages); i++)
+    if (is_func (debug_messages[i], TUPLE, 3) &&
+        debug_messages[i][0] != channel)
+      r << debug_messages[i];
+  debug_messages= r;
+  debug_lf_flag = false;
+}
+
+void
+clear_debug_messages () {
+  debug_messages= tree (TUPLE);
+  debug_lf_flag = false;
+}
+
+/******************************************************************************
+* Streams for debugging purposes
+******************************************************************************/
+
+class debug_ostream_rep: public tm_ostream_rep {
+public:
+  string channel;
+
+public:
+  debug_ostream_rep (string channel);
+  ~debug_ostream_rep ();
+
+  bool is_writable () const;
+  void write (const char*);
+  void write (tree t);
+  void clear ();
+};
+
+debug_ostream_rep::debug_ostream_rep (string channel2): channel (channel2) {}
+debug_ostream_rep::~debug_ostream_rep () {}
+
+bool
+debug_ostream_rep::is_writable () const {
+  return true;
+}
+
+void
+debug_ostream_rep::clear () {
+  clear_debug_messages (channel);
+}
+
+void
+debug_ostream_rep::write (const char* s) {
+  debug_message (channel, s);
+}
+
+void
+debug_ostream_rep::write (tree t) {
+  debug_formatted (channel, t);
+}
+
+tm_ostream
+debug_ostream (string channel) {
+  return (tm_ostream_rep*) tm_new<debug_ostream_rep> (channel);
+}
+
+tm_ostream std_error       = debug_ostream ("std-error");
+tm_ostream failed_error    = debug_ostream ("failed-error");
+tm_ostream boot_error      = debug_ostream ("boot-error");
+tm_ostream qt_error        = debug_ostream ("qt-error");
+tm_ostream widkit_error    = debug_ostream ("widkit-error");
+tm_ostream aqua_error      = debug_ostream ("aqua-error");
+tm_ostream font_error      = debug_ostream ("font-error");
+tm_ostream convert_error   = debug_ostream ("convert-error");
+tm_ostream bibtex_error    = debug_ostream ("bibtex-error");
+tm_ostream io_error        = debug_ostream ("io-error");
+
+tm_ostream std_warning     = debug_ostream ("std-warning");
+tm_ostream convert_warning = debug_ostream ("convert-warning");
+tm_ostream typeset_warning = debug_ostream ("typeset-warning");
+tm_ostream io_warning      = debug_ostream ("io-warning");
+tm_ostream widkit_warning  = debug_ostream ("widkit-warning");
+tm_ostream bibtex_warning  = debug_ostream ("bibtex-warning");
+
+tm_ostream debug_std       = debug_ostream ("debug-std");
+tm_ostream debug_qt        = debug_ostream ("debug-qt");
+tm_ostream debug_aqua      = debug_ostream ("debug-aqua");
+tm_ostream debug_widgets   = debug_ostream ("debug-widgets");
+tm_ostream debug_fonts     = debug_ostream ("debug-fonts");
+tm_ostream debug_convert   = debug_ostream ("debug-convert");
+tm_ostream debug_typeset   = debug_ostream ("debug-typeset");
+tm_ostream debug_edit      = debug_ostream ("debug-edit");
+tm_ostream debug_packrat   = debug_ostream ("debug-packrat");
+tm_ostream debug_history   = debug_ostream ("debug-history");
+tm_ostream debug_keyboard  = debug_ostream ("debug-keyboard");
+tm_ostream debug_automatic = debug_ostream ("debug-automatic");
+tm_ostream debug_boot      = debug_ostream ("debug-boot");
+tm_ostream debug_events    = debug_ostream ("debug-events");
+tm_ostream debug_shell     = debug_ostream ("debug-shell");
+tm_ostream debug_io        = debug_ostream ("debug-io");
+tm_ostream debug_spell     = debug_ostream ("debug-spell");
+tm_ostream debug_updater   = debug_ostream ("debug-updater");
+
+tm_ostream std_bench       = debug_ostream ("std-bench");

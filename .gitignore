@@ -3,7 +3,6 @@
 *.[oa]
 *.exe
 *.pyc
-bin/
 build
 .kdev4
 *.kdev4

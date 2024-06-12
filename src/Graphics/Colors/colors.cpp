@@ -18,6 +18,7 @@
 #include "svg_colors.hpp"
 #include "xc_colors.hpp"
 #include "dvips_colors.hpp"
+#include "tm_debug.hpp"
 
 
 /******************************************************************************

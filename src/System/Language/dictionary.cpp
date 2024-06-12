@@ -17,6 +17,7 @@
 #include "drd_std.hpp"
 #include "scheme.hpp"
 #include "iterator.hpp"
+#include "font.hpp"
 
 RESOURCE_CODE(dictionary);
 

@@ -1,4 +1,14 @@
-/* src/System/config.h.cmake */
+/* L1 Kernel */
+${define QTTEXMACS}
+${define SANITY_CHECKS}
+${define OS_MINGW}
+
+/* Define to 1 if the system has the type `intptr_t'. */
+${define HAVE_INTPTR_T}
+
+/* Define to 1 if you have the <stdint.h> header file. */
+${define HAVE_STDINT_H}
+
 
 /* check assertions in code */
 #define DEBUG_ASSERT 1
@@ -21,9 +31,6 @@ ${define HAVE_FILE}
 /* Define to 1 if you have the `gettimeofday' function. */
 ${define HAVE_GETTIMEOFDAY}
 
-/* Define to 1 if the system has the type `intptr_t'. */
-${define HAVE_INTPTR_T}
-
 /* Define to 1 if you have the <inttypes.h> header file. */
 ${define HAVE_INTTYPES_H}
 
@@ -32,9 +39,6 @@ ${define HAVE_MEMORY_H}
 
 /* Define to 1 if you have the <pty.h> header file. */
 ${define HAVE_PTY_H}
-
-/* Define to 1 if you have the <stdint.h> header file. */
-${define HAVE_STDINT_H}
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 ${define HAVE_STDLIB_H}
@@ -82,8 +86,6 @@ ${define MACOSX_EXTENSIONS}
 
 ${define OS_MACOS}
 
-${define OS_MINGW}
-
 ${define PDFHUMMUS_NO_TIFF}
 
 /* Disable fast memory allocator */
@@ -107,8 +109,6 @@ ${define NO_FAST_ALLOC}
 #define PACKAGE_VERSION ""
 
 ${define PDF_RENDERER}
-
-${define QTTEXMACS}
 
 ${define QTPIPES}
 

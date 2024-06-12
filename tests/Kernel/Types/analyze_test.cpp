@@ -12,6 +12,7 @@
 
 #include <QtTest/QtTest>
 #include "analyze.hpp"
+#include "base.hpp"
 
 class TestAnalyze: public QObject {
   Q_OBJECT
@@ -84,38 +85,38 @@ TestAnalyze::test_string_union () {
 
 void
 TestAnalyze::test_scm_quote () {
-  QCOMPARE (as_charp (scm_quote ("a")), "\"a\"");
-  QCOMPARE (as_charp (scm_quote ("")), "\"\"");
-  QCOMPARE (as_charp (scm_quote ("\\")), "\"\\\\\"");
+  qcompare (scm_quote ("a"), "\"a\"");
+  qcompare (scm_quote (""), "\"\"");
+  qcompare (scm_quote ("\\"), "\"\\\\\"");
 }
 
 void
 TestAnalyze::test_scm_unquote() {
-  QCOMPARE (as_charp (scm_unquote("\"\"")), "");
-  QCOMPARE (as_charp (scm_unquote("\"abc\"")), "abc");
-  QCOMPARE (as_charp (scm_unquote("abc")), "abc");
-  QCOMPARE (as_charp (scm_unquote("")), "");
-  QCOMPARE (as_charp (scm_unquote("\"\\\\\"")), "\\");
+  qcompare (scm_unquote("\"\""), "");
+  qcompare (scm_unquote("\"abc\""), "abc");
+  qcompare (scm_unquote("abc"), "abc");
+  qcompare (scm_unquote(""), "");
+  qcompare (scm_unquote("\"\\\\\""), "\\");
 }
 
 void
 TestAnalyze::test_raw_quote () {
-  QCOMPARE (as_charp (raw_quote ("a")), "\"a\"");
-  QCOMPARE (as_charp (raw_quote ("")), "\"\"");
+  qcompare (raw_quote ("a"), "\"a\"");
+  qcompare (raw_quote (""), "\"\"");
 }
 
 void
 TestAnalyze::test_raw_unquote () {
-  QCOMPARE (as_charp (raw_unquote ("\"a\"")), "a");
-  QCOMPARE (as_charp (raw_unquote ("\"a")), "\"a");
-  QCOMPARE (as_charp (raw_unquote ("a\"")), "a\"");
-  QCOMPARE (as_charp (raw_unquote ("")), "");
-  QCOMPARE (as_charp (raw_unquote ("a")), "a");
+  qcompare (raw_unquote ("\"a\""), "a");
+  qcompare (raw_unquote ("\"a"), "\"a");
+  qcompare (raw_unquote ("a\""), "a\"");
+  qcompare (raw_unquote (""), "");
+  qcompare (raw_unquote ("a"), "a");
 }
 
 void
 TestAnalyze::test_unescape_guile () {
-  QCOMPARE (as_charp (unescape_guile ("\\\\")), "\\\\\\\\");
+  qcompare (unescape_guile ("\\\\"), "\\\\\\\\");
 }
 
 void
@@ -138,7 +139,7 @@ TestAnalyze::test_read_word () {
   string word;
   int i=0;
   QVERIFY (read_word ("hello123", i, word));
-  QCOMPARE (as_charp (word), "hello");
+  qcompare (word, "hello");
   QCOMPARE (i, 5);
 
   i=0;

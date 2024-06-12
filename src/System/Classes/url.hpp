@@ -12,6 +12,7 @@
 #ifndef URL_H
 #define URL_H
 #include "tree.hpp"
+#include "tm_debug.hpp"
 
 #define URL_SYSTEM 0
 #define URL_UNIX 1

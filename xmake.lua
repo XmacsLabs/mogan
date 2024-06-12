@@ -147,6 +147,7 @@ target("libmogan") do
                 tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
                 tm_stable = "Texmacs-" .. STABLE_VERSION,
                 tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
+                PDFHUMMUS_VERSION = PDFHUMMUS_VERSION,
                 }})
 
     ---------------------------------------------------------------------------
@@ -194,8 +195,10 @@ target("libmogan") do
             "src/System/Boot",
             "src/System/Classes",
             "src/System/Files",
+            "src/System/IO",
             "src/System/Language",
             "src/System/Link",
+            "src/System/Memory",
             "src/System/Misc",
             "src/Texmacs",
             "src/Texmacs/Data",

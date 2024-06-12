@@ -11,6 +11,7 @@
 #include <QtTest/QtTest>
 
 #include "converter.hpp"
+#include "base.hpp"
 
 class TestConverter: public QObject {
   Q_OBJECT
@@ -20,9 +21,9 @@ private slots:
 };
 
 void TestConverter::test_utf8_to_cork() {
-  QCOMPARE (as_charp (utf8_to_cork ("中")), "<#4E2D>");
-  QCOMPARE (as_charp (utf8_to_cork ("“")), "\x10");
-  QCOMPARE (as_charp (utf8_to_cork("”")), "\x11");
+  qcompare (utf8_to_cork ("中"), "<#4E2D>");
+  qcompare (utf8_to_cork ("“"), "\x10");
+  qcompare (utf8_to_cork("”"), "\x11");
 }
 
 QTEST_MAIN(TestConverter)

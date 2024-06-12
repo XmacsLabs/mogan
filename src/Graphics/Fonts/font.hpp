@@ -283,5 +283,6 @@ array<string> search_font_styles (string s, array<string> v);
 array<string> patch_font (array<string> v, array<string> w, bool decode= true);
 array<string> apply_substitutions (array<string> v);
 string main_family (string f);
+bool use_macos_fonts ();
 
 #endif // defined FONT_H

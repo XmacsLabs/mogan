@@ -15,6 +15,7 @@
 #include "analyze.hpp"
 #include "frame.hpp"
 #include "iterator.hpp"
+#include "tm_debug.hpp"
 
 int get_utf8_code (string c);
 

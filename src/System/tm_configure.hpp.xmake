@@ -19,6 +19,7 @@
 #define TEXMACS_SOURCES ""
 #define OS_@CONFIG_OS@
 
+// L1 Kernel
 @define CONFIG_LARGE_POINTER@
 
 #ifdef CONFIG_LARGE_POINTER
@@ -34,6 +35,15 @@
 // WORD_LENGTH more than power of 2
 #define MAX_FAST 260 
 #endif
+
+
+@CONFIG_STD_SETENV@
+
+#define TEXMACS_VERSION "@VERSION@"
+#define XMACS_VERSION "@XMACS_VERSION@"
+#define TEXMACS_SOURCES ""
+#define OS_@CONFIG_OS@
+#define PDFHUMMUS_VERSION "@PDFHUMMUS_VERSION@"
 
 #define BUILD_USER "@CONFIG_USER@"
 #define BUILD_DATE "@CONFIG_DATE@"

@@ -11,6 +11,7 @@
 
 #include <QtTest/QtTest>
 
+#include "base.hpp"
 #include "convert.hpp"
 #include "Xml/xml.cpp"
 
@@ -19,8 +20,8 @@ class TestXML: public QObject {
 
 private:
   void assert_tm_and_xml_name (string tm_name, string xml_name) {
-    QCOMPARE (as_charp (xml_name_to_tm (xml_name)), as_charp (tm_name));
-    QCOMPARE (as_charp (tm_to_xml_name (tm_name)), as_charp (xml_name));
+    qcompare (xml_name_to_tm (xml_name), tm_name);
+    qcompare (tm_to_xml_name (tm_name), xml_name);
   }
 private slots:
   void test_is_xml_name();
