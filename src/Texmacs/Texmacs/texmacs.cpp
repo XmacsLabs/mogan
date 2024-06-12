@@ -21,6 +21,7 @@
 
 #include "tm_ostream.hpp"
 #include "boot.hpp"
+#include "preferences.hpp"
 #include "file.hpp"
 #include "server.hpp"
 #include "tm_timer.hpp"

@@ -12,7 +12,6 @@
 
 function main()
     return {
-        group_name = "glue_path",
         binding_object = "",
         initializer_name = "initialize_glue_path",
         glues = {
@@ -73,127 +72,6 @@ function main()
             {
                 scm_name = "path-end",
                 cpp_name = "end",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path"
-                }
-            },
-            {
-                scm_name = "path-next",
-                cpp_name = "next_valid",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path"
-                }
-            },
-            {
-                scm_name = "path-previous",
-                cpp_name = "previous_valid",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path"
-                }
-            },
-            {
-                scm_name = "path-next-word",
-                cpp_name = "next_word",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path"
-                }
-            },
-            {
-                scm_name = "path-previous-word",
-                cpp_name = "previous_word",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path"
-                }
-            },
-            {
-                scm_name = "path-next-node",
-                cpp_name = "next_node",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path"
-                }
-            },
-            {
-                scm_name = "path-previous-node",
-                cpp_name = "previous_node",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path"
-                }
-            },
-            {
-                scm_name = "path-next-tag",
-                cpp_name = "next_tag",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path",
-                    "scheme_tree"
-                }
-            },
-            {
-                scm_name = "path-previous-tag",
-                cpp_name = "previous_tag",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path",
-                    "scheme_tree"
-                }
-            },
-            {
-                scm_name = "path-next-tag-same-argument",
-                cpp_name = "next_tag_same_argument",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path",
-                    "scheme_tree"
-                }
-            },
-            {
-                scm_name = "path-previous-tag-same-argument",
-                cpp_name = "previous_tag_same_argument",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path",
-                    "scheme_tree"
-                }
-            },
-            {
-                scm_name = "path-next-argument",
-                cpp_name = "next_argument",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path"
-                }
-            },
-            {
-                scm_name = "path-previous-argument",
-                cpp_name = "previous_argument",
-                ret_type = "path",
-                arg_list = {
-                    "content",
-                    "path"
-                }
-            },
-            {
-                scm_name = "path-previous-section",
-                cpp_name = "previous_section",
                 ret_type = "path",
                 arg_list = {
                     "content",

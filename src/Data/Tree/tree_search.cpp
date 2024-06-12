@@ -11,7 +11,7 @@
 
 #include "tree_search.hpp"
 #include "analyze.hpp"
-#include "boot.hpp"
+#include "preferences.hpp"
 #include "drd_mode.hpp"
 
 int  search_max_hits= 1000000;

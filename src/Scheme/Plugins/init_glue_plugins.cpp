@@ -10,16 +10,16 @@
  ******************************************************************************/
 
 #include "init_glue_plugins.hpp"
+#include "object.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
-#include "object.hpp"
 #include "s7_tm.hpp"
 
 #include "Updater/tm_updater.hpp"
 #include "glue_updater.cpp"
 
-#include "Tex/tex.hpp"
 #include "LaTeX_Preview/latex_preview.hpp"
+#include "Tex/tex.hpp"
 #include "glue_tex.cpp"
 
 #include "Bibtex/bibtex.hpp"
@@ -31,7 +31,6 @@
 
 #include "Xml/xml.hpp"
 #include "glue_xml.cpp"
-
 
 bool
 supports_native_pdf () {
@@ -51,10 +50,8 @@ supports_ghostscript () {
 #endif
 }
 
-
-#include "glue_pdf.cpp"
 #include "glue_ghostscript.cpp"
-
+#include "glue_pdf.cpp"
 
 void
 initialize_glue_plugins () {
@@ -66,4 +63,3 @@ initialize_glue_plugins () {
   initialize_glue_updater ();
   initialize_glue_xml ();
 }
-

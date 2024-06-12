@@ -9,13 +9,69 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "boot.hpp"
+#include "preferences.hpp"
 #include "file.hpp"
 #include "sys_utils.hpp"
 #include "analyze.hpp"
-#include "convert.hpp"
+#include "block.hpp"
 #include "merge_sort.hpp"
 #include "iterator.hpp"
+
+tree texmacs_settings = tuple ();
+
+/******************************************************************************
+* Old style settings files
+******************************************************************************/
+
+static string
+line_read (string s, int& i) {
+  int start= i, n= N(s);
+  for (start=i; i<n; i++)
+    if (s[i]=='\n') break;
+  string r= s (start, i);
+  if (i<n) i++;
+  return r;
+}
+
+void
+get_old_settings (string s) {
+  int i= 0, j;
+  while (i<N(s)) {
+    string l= line_read (s, i);
+    for (j=0; j<N(l); j++)
+      if (l[j] == '=') {
+        string left = l (0, j);
+        while ((j<N(l)) && ((l[j]=='=') || (l[j]==' '))) j++;
+        string right= l (j, N(l));
+        set_setting (left, right);
+      }
+  }
+}
+
+/******************************************************************************
+* Subroutines for the TeXmacs settings
+******************************************************************************/
+
+string
+get_setting (string var, string def) {
+  int i, n= N (texmacs_settings);
+  for (i=0; i<n; i++)
+    if (is_tuple (texmacs_settings[i], var, 1)) {
+      return scm_unquote (as_string (texmacs_settings[i][1]));
+    }
+  return def;
+}
+
+void
+set_setting (string var, string val) {
+  int i, n= N (texmacs_settings);
+  for (i=0; i<n; i++)
+    if (is_tuple (texmacs_settings[i], var, 1)) {
+      texmacs_settings[i][1]= scm_quote (val);
+      return;
+    }
+  texmacs_settings << tuple (var, scm_quote (val));
+}
 
 /******************************************************************************
 * Changing the user preferences

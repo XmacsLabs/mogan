@@ -9,7 +9,7 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "boot.hpp"
+#include "preferences.hpp"
 #include "file.hpp"
 #include "path.hpp"
 #include "sys_utils.hpp"

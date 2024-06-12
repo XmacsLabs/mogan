@@ -12,7 +12,7 @@
 #include "Line/lazy_vstream.hpp"
 #include "vpenalty.hpp"
 #include "skeleton.hpp"
-#include "boot.hpp"
+#include "preferences.hpp"
 
 #include "merge_sort.hpp"
 void sort (pagelet& pg);

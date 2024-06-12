@@ -10,10 +10,12 @@
 ******************************************************************************/
 
 #include "boot.hpp"
+#include "preferences.hpp"
 #include "file.hpp"
 #include "sys_utils.hpp"
 #include "analyze.hpp"
 #include "convert.hpp"
+#include "block.hpp"
 #include "merge_sort.hpp"
 #include "drd_std.hpp"
 #include "language.hpp"
@@ -24,7 +26,6 @@
 #endif
 
 extern string main_tmp_dir;
-tree texmacs_settings = tuple ();
 int  install_status   = 0;
 bool use_which        = false;
 bool use_locate       = false;
@@ -342,31 +343,6 @@ init_deprecated () {
       if (dir != "") set_env ("M2HOME", dir);
     }
 #endif
-}
-
-/******************************************************************************
-* Subroutines for the TeXmacs settings
-******************************************************************************/
-
-string
-get_setting (string var, string def) {
-  int i, n= N (texmacs_settings);
-  for (i=0; i<n; i++)
-    if (is_tuple (texmacs_settings[i], var, 1)) {
-      return scm_unquote (as_string (texmacs_settings[i][1]));
-    }
-  return def;
-}
-
-void
-set_setting (string var, string val) {
-  int i, n= N (texmacs_settings);
-  for (i=0; i<n; i++)
-    if (is_tuple (texmacs_settings[i], var, 1)) {
-      texmacs_settings[i][1]= scm_quote (val);
-      return;
-    }
-  texmacs_settings << tuple (var, scm_quote (val));
 }
 
 /******************************************************************************

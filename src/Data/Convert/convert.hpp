@@ -54,15 +54,7 @@ tree   eqnumber_to_nonumber (tree t);
 string search_metadata (tree doc, string kind);
 
 /*** Scheme ***/
-string scheme_tree_to_string (scheme_tree t);
-string scheme_tree_to_block (scheme_tree t);
-scheme_tree tree_to_scheme_tree (tree t);
-string tree_to_scheme (tree t);
-scheme_tree string_to_scheme_tree (string s);
-scheme_tree block_to_scheme_tree  (string s);
-tree   scheme_tree_to_tree (scheme_tree t);
 tree   scheme_tree_to_tree (scheme_tree t, string version);
-tree   scheme_to_tree (string s);
 tree   scheme_document_to_tree (string s);
 
 /*** Verbatim ***/

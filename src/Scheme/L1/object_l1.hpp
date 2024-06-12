@@ -44,26 +44,17 @@
 #define TMSCM_ASSERT_OBJECT(a, b, c)
 // no check
 
-tmscm
-tree_to_tmscm (tree t);
-tmscm
-tree_label_to_tmscm (tree_label l);
-tmscm
-scheme_tree_to_tmscm (scheme_tree t);
+tmscm tree_to_tmscm (tree t);
+tmscm tree_label_to_tmscm (tree_label l);
+tmscm scheme_tree_to_tmscm (scheme_tree t);
 
-tree
-tmscm_to_tree (tmscm obj);
-content
-tmscm_to_content (tmscm obj);
-tree_label
-tmscm_to_tree_label (tmscm p);
-scheme_tree
-tmscm_to_scheme_tree (tmscm p);
+tree        tmscm_to_tree (tmscm obj);
+content     tmscm_to_content (tmscm obj);
+tree_label  tmscm_to_tree_label (tmscm p);
+scheme_tree tmscm_to_scheme_tree (tmscm p);
 
-bool
-tmscm_is_tree (tmscm obj);
-bool
-tmscm_is_content (tmscm p);
+bool tmscm_is_tree (tmscm obj);
+bool tmscm_is_content (tmscm p);
 
 #define TMSCM_ASSERT_TREE(t, arg, rout)                                        \
   TMSCM_ASSERT (tmscm_is_tree (t), t, arg, rout)
@@ -76,57 +67,34 @@ tmscm_is_content (tmscm p);
 typedef list<string> list_string;
 typedef list<tree>   list_tree;
 
-tmscm
-list_string_to_tmscm (list<string> l);
-tmscm
-list_tree_to_tmscm (list<tree> l);
+tmscm list_string_to_tmscm (list<string> l);
+tmscm list_tree_to_tmscm (list<tree> l);
 
-list<string>
-tmscm_to_list_string (tmscm obj);
-list<tree>
-tmscm_to_list_tree (tmscm obj);
+list<string> tmscm_to_list_string (tmscm obj);
+list<tree>   tmscm_to_list_tree (tmscm obj);
 
-bool
-tmscm_is_list_string (tmscm obj);
-bool
-tmscm_is_list_tree (tmscm obj);
+bool tmscm_is_list_string (tmscm obj);
+bool tmscm_is_list_tree (tmscm obj);
 
 #define TMSCM_ASSERT_LIST_STRING(p, arg, rout)                                 \
   TMSCM_ASSERT (tmscm_is_list_string (p), p, arg, rout)
 #define TMSCM_ASSERT_LIST_TREE(p, arg, rout)                                   \
   TMSCM_ASSERT (tmscm_is_list_tree (p), p, arg, rout)
 
-tmscm
-command_to_tmscm (command o);
-tmscm
-observer_to_tmscm (observer o);
-tmscm
-path_to_tmscm (path p);
-tmscm
-modification_to_tmscm (modification m);
+tmscm command_to_tmscm (command o);
+tmscm path_to_tmscm (path p);
+tmscm modification_to_tmscm (modification m);
 
-command
-tmscm_to_command (tmscm o);
-observer
-tmscm_to_observer (tmscm obj);
-path
-tmscm_to_path (tmscm obj);
-modification
-tmscm_to_modification (tmscm obj);
+command      tmscm_to_command (tmscm o);
+path         tmscm_to_path (tmscm obj);
+modification tmscm_to_modification (tmscm obj);
 
-bool
-tmscm_is_command (tmscm u);
-bool
-tmscm_is_observer (tmscm o);
-bool
-tmscm_is_path (tmscm obj);
-bool
-tmscm_is_modification (tmscm obj);
+bool tmscm_is_command (tmscm u);
+bool tmscm_is_path (tmscm obj);
+bool tmscm_is_modification (tmscm obj);
 
 #define TMSCM_ASSERT_COMMAND(o, arg, rout)                                     \
   TMSCM_ASSERT (tmscm_is_command (o), o, arg, rout)
-#define TMSCM_ASSERT_OBSERVER(o, arg, rout)                                    \
-  TMSCM_ASSERT (tmscm_is_observer (o), o, arg, rout)
 #define TMSCM_ASSERT_PATH(p, arg, rout)                                        \
   TMSCM_ASSERT (tmscm_is_path (p), p, arg, rout)
 #define TMSCM_ASSERT_MODIFICATION(m, arg, rout)                                \
@@ -140,50 +108,29 @@ typedef array<double>               array_double;
 typedef array<array<double>>        array_array_double;
 typedef array<array<array<double>>> array_array_array_double;
 
-tmscm
-array_int_to_tmscm (array<int> a);
-tmscm
-array_double_to_tmscm (array<double> a);
-tmscm
-array_array_double_to_tmscm (array<array_double> a);
-tmscm
-array_array_array_double_to_tmscm (array<array_array_double> a);
-tmscm
-array_string_to_tmscm (array<string> a);
-tmscm
-array_tree_to_tmscm (array<tree> a);
-tmscm
-array_path_to_tmscm (array<path> a);
+tmscm array_int_to_tmscm (array<int> a);
+tmscm array_double_to_tmscm (array<double> a);
+tmscm array_array_double_to_tmscm (array<array_double> a);
+tmscm array_array_array_double_to_tmscm (array<array_array_double> a);
+tmscm array_string_to_tmscm (array<string> a);
+tmscm array_tree_to_tmscm (array<tree> a);
+tmscm array_path_to_tmscm (array<path> a);
 
-array<int>
-tmscm_to_array_int (tmscm p);
-array<double>
-tmscm_to_array_double (tmscm p);
-array<array_double>
-tmscm_to_array_array_double (tmscm p);
-array<array_array_double>
-tmscm_to_array_array_array_double (tmscm p);
-array<string>
-tmscm_to_array_string (tmscm p);
-array<tree>
-tmscm_to_array_tree (tmscm p);
-array<path>
-tmscm_to_array_path (tmscm p);
+array<int>                tmscm_to_array_int (tmscm p);
+array<double>             tmscm_to_array_double (tmscm p);
+array<array_double>       tmscm_to_array_array_double (tmscm p);
+array<array_array_double> tmscm_to_array_array_array_double (tmscm p);
+array<string>             tmscm_to_array_string (tmscm p);
+array<tree>               tmscm_to_array_tree (tmscm p);
+array<path>               tmscm_to_array_path (tmscm p);
 
-bool
-tmscm_is_array_int (tmscm p);
-bool
-tmscm_is_array_double (tmscm p);
-bool
-tmscm_is_array_array_double (tmscm p);
-bool
-tmscm_is_array_array_array_double (tmscm p);
-bool
-tmscm_is_array_string (tmscm p);
-bool
-tmscm_is_array_tree (tmscm p);
-bool
-tmscm_is_array_path (tmscm p);
+bool tmscm_is_array_int (tmscm p);
+bool tmscm_is_array_double (tmscm p);
+bool tmscm_is_array_array_double (tmscm p);
+bool tmscm_is_array_array_array_double (tmscm p);
+bool tmscm_is_array_string (tmscm p);
+bool tmscm_is_array_tree (tmscm p);
+bool tmscm_is_array_path (tmscm p);
 
 #define TMSCM_ASSERT_ARRAY_INT(p, arg, rout)                                   \
   TMSCM_ASSERT (tmscm_is_array_int (p), p, arg, rout)

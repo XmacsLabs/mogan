@@ -12,6 +12,7 @@
 #include "dictionary.hpp"
 #include "file.hpp"
 #include "convert.hpp"
+#include "block.hpp"
 #include "converter.hpp"
 #include "universal.hpp"
 #include "drd_std.hpp"

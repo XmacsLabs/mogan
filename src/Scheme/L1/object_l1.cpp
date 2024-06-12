@@ -11,7 +11,7 @@
 
 #include "object_l1.hpp"
 #include "analyze.hpp"
-#include "convert.hpp"
+#include "block.hpp"
 #include "object.hpp"
 #include "scheme.hpp"
 
@@ -155,26 +155,6 @@ command_to_tmscm (command o) {
 command
 tmscm_to_command (tmscm o) {
   return open_box<command> (tmscm_to_blackbox (o));
-}
-
-/******************************************************************************
- * Observers
- ******************************************************************************/
-
-bool
-tmscm_is_observer (tmscm o) {
-  return (tmscm_is_blackbox (o) &&
-          (type_box (tmscm_to_blackbox (o)) == type_helper<observer>::id));
-}
-
-tmscm
-observer_to_tmscm (observer o) {
-  return blackbox_to_tmscm (close_box<observer> (o));
-}
-
-observer
-tmscm_to_observer (tmscm obj) {
-  return open_box<observer> (tmscm_to_blackbox (obj));
 }
 
 /******************************************************************************

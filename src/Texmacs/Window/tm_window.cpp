@@ -15,7 +15,7 @@
 #include "dictionary.hpp"
 #include "merge_sort.hpp"
 #include "iterator.hpp"
-#include "boot.hpp"
+#include "preferences.hpp"
 #include "drd_std.hpp"
 
 int geometry_w= 800, geometry_h= 600;

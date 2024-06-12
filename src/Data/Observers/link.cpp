@@ -13,7 +13,7 @@
 #include "link.hpp"
 #include "iterator.hpp"
 #include "vars.hpp"
-#include "boot.hpp"
+#include "preferences.hpp"
 
 hashmap<string,list<observer> > id_resolve;
 hashmap<observer,list<string> > pointer_resolve;

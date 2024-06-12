@@ -15,6 +15,7 @@
 #include "font.hpp"
 #include "translator.hpp"
 #include "convert.hpp"
+#include "block.hpp"
 
 bool operator == (font fn1, font fn2) { return fn1.rep == fn2.rep; }
 bool operator != (font fn1, font fn2) { return fn1.rep == fn2.rep; }

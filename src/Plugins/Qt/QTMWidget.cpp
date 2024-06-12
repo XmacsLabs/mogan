@@ -15,6 +15,8 @@
 #include "qt_simple_widget.hpp"
 #include "converter.hpp"
 #include "boot.hpp"
+#include "preferences.hpp"
+#include "object_l5.hpp"
 #include "scheme.hpp"
 
 #include "config.h"

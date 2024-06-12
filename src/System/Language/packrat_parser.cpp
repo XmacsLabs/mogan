@@ -16,7 +16,6 @@
 #include "tm_debug.hpp"
 
 extern tree the_et;
-bool packrat_invalid_colors= false;
 
 /******************************************************************************
 * Constructor

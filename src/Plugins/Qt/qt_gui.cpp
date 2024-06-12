@@ -22,7 +22,7 @@
 #include "scheme.hpp"
 #include "tm_window.hpp"
 #include "new_window.hpp"
-#include "boot.hpp"
+#include "preferences.hpp"
 
 #include "qt_gui.hpp"
 #include "qt_utilities.hpp"

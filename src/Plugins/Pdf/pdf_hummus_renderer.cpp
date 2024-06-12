@@ -13,6 +13,7 @@
 #include "Metafont/tex_files.hpp"
 #include "Freetype/tt_file.hpp"
 #include "file.hpp"
+#include "block.hpp"
 #include "image_files.hpp"
 #include "analyze.hpp"
 #include "iterator.hpp"
