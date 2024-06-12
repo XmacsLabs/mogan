@@ -136,7 +136,7 @@ latex_load_image (url image) {
   load_string (image, s, false);
   if (s == "") {
     dbg ("Could not load " * as_string (image));
-    return array<tree> ();
+    return as_tree (array<tree> ());
   }
   int width, height;
   gs_image_size (image, width, height);

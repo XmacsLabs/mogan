@@ -128,7 +128,7 @@ load_string (url u, string& s, bool fatal) {
     string err_msg = string("Failed to load file: ") * as_string (u);
     if (fatal) {
       failed_error << err_msg << LF;
-      FAILED ("file not readable");
+      TM_FAILED ("file not readable");
     }
     //else debug_io << err_msg << LF;
   }
@@ -147,7 +147,7 @@ save_string (url u, string s, bool fatal) {
     bool err= save_to_server (u, s);
     if (err && fatal) {
       failed_error << "File name= " << as_string (u) << "\n";
-      FAILED ("file not writeable");
+      TM_FAILED ("file not writeable");
     }
     return err;
   }
@@ -205,7 +205,7 @@ save_string (url u, string s, bool fatal) {
 
   if (err && fatal) {
     failed_error << "File name= " << as_string (u) << "\n";
-    FAILED ("file not writeable");
+    TM_FAILED ("file not writeable");
   }
   return err;
 }
@@ -216,7 +216,7 @@ void string_save (string s, url u) {
 
 bool
 append_string (url u, string s, bool fatal) {
-  if (is_rooted_tmfs (u)) FAILED ("file not appendable");
+  if (is_rooted_tmfs (u)) TM_FAILED ("file not appendable");
 
   // cout << "Save " << u << LF;
   url r= u;
@@ -262,7 +262,7 @@ append_string (url u, string s, bool fatal) {
 
   if (err && fatal) {
     failed_error << "File name= " << as_string (u) << "\n";
-    FAILED ("file not appendable");
+    TM_FAILED ("file not appendable");
   }
   return err;
 }

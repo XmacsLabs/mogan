@@ -841,7 +841,7 @@ edit_select_rep::raw_cut (path p1, path p2) {
     failed_error << "p = " << p << "\n";
     failed_error << "p1= " << p1 << "\n";
     failed_error << "p2= " << p2 << "\n";
-    FAILED ("invalid cut");
+    TM_FAILED ("invalid cut");
   }
 
   if (is_atomic (t)) {
@@ -855,7 +855,7 @@ edit_select_rep::raw_cut (path p1, path p2) {
       failed_error << "p = " << p << "\n";
       failed_error << "p1= " << p1 << "\n";
       failed_error << "p2= " << p2 << "\n";
-      FAILED ("invalid object cut");
+      TM_FAILED ("invalid object cut");
     }
     assign (p, "");
   }

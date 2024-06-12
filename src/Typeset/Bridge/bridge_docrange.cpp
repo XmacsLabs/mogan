@@ -145,7 +145,7 @@ bridge_docrange_rep::notify_insert (path p, tree u) {
   ASSERT (!is_nil (p), "erroneous nil path");
   if (p->item > end) {
     failed_error << "Notify insert " << u << " at " << p << "\n";
-    FAILED ("out of range");
+    TM_FAILED ("out of range");
   }
   if (p->item >= begin) status= CORRUPTED;
   else begin += N(u);
@@ -201,7 +201,7 @@ bridge_docrange_rep::notify_remove (path p, int nr) {
 bool
 bridge_docrange_rep::notify_macro (int type, string v, int l, path p, tree u) {
   (void) type; (void) v; (void) l; (void) p; (void) u;
-  FAILED ("method should never be called");
+  TM_FAILED ("method should never be called");
   return false;
 }
 

@@ -16,6 +16,7 @@
 #include "metadata.hpp"
 #include "scheme.hpp"
 #include "vars.hpp"
+#include "tree_analyze.hpp"
 #include "tree_correct.hpp"
 #include "url.hpp"
 

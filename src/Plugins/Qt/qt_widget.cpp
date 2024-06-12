@@ -210,7 +210,7 @@ qt_widget_rep::plain_window_widget (string name, command quit, int border) {
       win->setLayout (l); // And the QLayout to the QTMPlainWindow.
       l->addWidget (qw);  // qw now belongs to the QWidget with the layout (win)
     } else {
-      FAILED ("attempt to create a window around a nil QWidget");
+      TM_FAILED ("attempt to create a window around a nil QWidget");
     }
   }
   

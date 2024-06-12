@@ -55,7 +55,7 @@ operator << (tm_ostream& out, modification mod) {
   case MOD_SET_CURSOR:
     return out << "set_cursor (" << root (mod)
 	       << ", " << index (mod) << ", " << mod->t << ")";
-  default: FAILED ("invalid modification type");
+  default: TM_FAILED ("invalid modification type");
     return out;
   }
 }
@@ -76,7 +76,7 @@ root (modification mod) {
   case MOD_INSERT_NODE: return path_up (mod->p);
   case MOD_REMOVE_NODE: return path_up (mod->p);
   case MOD_SET_CURSOR: return path_up (mod->p);
-  default: FAILED ("invalid modification type");
+  default: TM_FAILED ("invalid modification type");
   }
   return path ();
 }
@@ -90,7 +90,7 @@ index (modification mod) {
   case MOD_JOIN: return last_item (mod->p);
   case MOD_REMOVE_NODE: return last_item (mod->p);
   case MOD_SET_CURSOR: return last_item (mod->p);
-  default: FAILED ("invalid modification type");
+  default: TM_FAILED ("invalid modification type");
   }
   return 0;
 }
@@ -101,7 +101,7 @@ argument (modification mod) {
   case MOD_REMOVE: return last_item (mod->p);
   case MOD_SPLIT: return last_item (mod->p);
   case MOD_INSERT_NODE: return last_item (mod->p);
-  default: FAILED ("invalid modification type");
+  default: TM_FAILED ("invalid modification type");
   }
   return 0;
 }
@@ -143,7 +143,7 @@ get_type (modification mod) {
   case MOD_INSERT_NODE: return "insert-node";
   case MOD_REMOVE_NODE: return "remove-node";
   case MOD_SET_CURSOR: return "set-cursor";
-  default: FAILED ("invalid modification type");
+  default: TM_FAILED ("invalid modification type");
   }
   return "none";
 }
@@ -260,7 +260,7 @@ clean_assign (tree t, path p, tree u) {
   if (is_nil (p)) return copy (u);
   else {
     int i, j= p->item, n= N(t);
-    if (j >= n) FAILED("clean_remove(): Invalid path."); //return copy(u);  // FIXME? check whether this is the right return value.
+    if (j >= n) TM_FAILED ("clean_remove(): Invalid path."); //return copy(u);  // FIXME? check whether this is the right return value.
     tree r (t, n);
     for (i=0; i<j; i++) r[i]= t[i];
     r[j]= clean_assign (t[j], p->next, u);
@@ -298,7 +298,7 @@ clean_remove (tree t, path p, int nr) {
   if (is_nil (p->next) && is_atomic (t)) {
     string s= t->label;
     if (N(s) < p->item+nr)
-      FAILED ("clean_remove: Invalid remove from atomic tree");
+      TM_FAILED ("clean_remove: Invalid remove from atomic tree");
     return s (0, p->item) * s (p->item+nr, N(s));
   }
   else if (is_nil (p->next)) {
@@ -310,7 +310,7 @@ clean_remove (tree t, path p, int nr) {
   }
   else {
     int i, j= p->item, n= N(t);
-    if (j >= n) FAILED ("clean_remove: Invalid path"); //return t;  // FIXME? check whether this is the right return value.
+    if (j >= n) TM_FAILED ("clean_remove: Invalid path"); //return t;  // FIXME? check whether this is the right return value.
     tree r (t, n);
     for (i=0; i<j; i++) r[i]= t[i];
     r[j]= clean_remove (t[j], p->next, nr);
@@ -463,7 +463,7 @@ clean_apply (tree t, modification mod) {
   case MOD_SET_CURSOR:
     return clean_set_cursor (t, mod->p, mod->t);
   default:
-    FAILED ("invalid modification type");
+    TM_FAILED ("invalid modification type");
     return "";
   }
 }

@@ -369,8 +369,8 @@ texmacs_merge_preamble (tree newt, tree oldt) {
   }
 
   // Merge initial settings of environment variables
-  hashmap<string,tree> oldi (UNINIT, extract (oldt, "initial"));
-  hashmap<string,tree> newi (UNINIT, extract (newt, "initial"));
+  hashmap<string,tree> oldi= tree_hashmap (UNINIT, extract (oldt, "initial"));
+  hashmap<string,tree> newi= tree_hashmap (UNINIT, extract (newt, "initial"));
   oldi->join (newi);
   newt= change_doc_attr (newt, "initial", make_collection (oldi));
 

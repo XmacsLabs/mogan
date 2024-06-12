@@ -11,6 +11,7 @@
 
 #include "edit_interface.hpp"
 #include "hashset.hpp"
+#include "iterator.hpp"
 #include "analyze.hpp"
 #include "connect.hpp"
 #include "dictionary.hpp"
@@ -228,7 +229,7 @@ edit_interface_rep::custom_complete (tree r) {
 
 array<string>
 as_completions (hashset<string> h) {
-  tree t= (tree) h;
+  tree t= as_tree (h);
   int i, n= N(t);
   array<string> a (n);
   for (i=0; i<n; i++) a[i]= t[i]->label;

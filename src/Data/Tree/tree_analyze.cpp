@@ -331,3 +331,48 @@ is_correctable_child (tree t, int i, bool noaround) {
     return false;
   else return true;
 }
+
+tree
+trim_spaces_right (tree t) {
+  if (is_atomic (t)) return trim_spaces_right (as_string (t));
+  else if (is_concat (t)) {
+    tree l;
+    int end;
+    for (end= N(t)-1; end >= 0; end--) {
+      l= trim_spaces_right (t[end]);
+      if (l != "") break;
+    }
+    tree r= tree (L(t));
+    for (int i=0; i<end; i++) r << t[i];
+    if (end >= 0) r << l;
+    if (N(r) == 0) return "";
+    else if (N(r) == 1) return r[0];
+    else return r;
+  }
+  else return t;
+}
+
+tree
+trim_spaces_left (tree t) {
+  if (is_atomic (t)) return trim_spaces_left (as_string (t));
+  else if (is_concat (t)) {
+    tree l;
+    int start;
+    for (start= 0; start < N(t); start++) {
+      l= trim_spaces_left (t[start]);
+      if (l != "") break;
+    }
+    tree r= tree (L(t));
+    if (start < N(t)) r << l;
+    for (int i=start+1; i<N(t); i++) r << t[i];
+    if (N(r) == 0) return "";
+    else if (N(r) == 1) return r[0];
+    else return r;
+  }
+  else return t;
+}
+
+tree
+trim_spaces (tree t) {
+  return trim_spaces_left (trim_spaces_right (t));
+}

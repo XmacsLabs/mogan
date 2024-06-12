@@ -109,7 +109,8 @@ struct an_scaling_rep: public frame_rep {
   point shift;
   an_scaling_rep (point m, point s): magnify (m), shift (s) { linear= true; }
   operator tree () {
-    return tuple ("scale", as_string (magnify), as_tree (shift)); }
+    return tuple ("scale", as_string (as_tree (magnify)), as_tree (shift));
+  }
   point direct_transform (point p) { return shift + magnify * p; }
   point inverse_transform (point p) { return (p - shift) / magnify; }
   point jacobian (point p, point v, bool &error) {
@@ -161,7 +162,8 @@ struct slanting_rep: public frame_rep {
   double slant;
   slanting_rep (point c, double s): center (c), slant (s) { linear= true; }
   operator tree () {
-    return tuple ("slanting", as_string (center), as_string (slant)); }
+    return tuple ("slanting", as_string (as_tree (center)), as_string (slant));
+  }
   point direct_transform (point p) {
     return slanted (p - center,  slant) + center; }
   point inverse_transform (point p) {
@@ -225,13 +227,13 @@ struct affine_2D_rep: public frame_rep {
     q= m * q;
     return point (q[0], q[1]); }
   point inverse_transform (point p) {
-    FAILED ("not yet implemented");
+    TM_FAILED ("not yet implemented");
     return p; }
   point jacobian (point p, point v, bool &error) {
     (void) p; error= false; return j * v; }
   point jacobian_of_inverse (point p, point v, bool &error) {
     (void) p; (void) v; (void) error;
-    FAILED ("not yet implemented");
+    TM_FAILED ("not yet implemented");
     return p;}
   double direct_bound (point p, double eps) { (void) p; return eps; }
   double inverse_bound (point p, double eps) { (void) p; return eps; }
@@ -257,11 +259,11 @@ struct bend_frame_rep: public frame_rep {
     return point (p[0], p[1] - fun (p[0])); }
   point jacobian (point p, point v, bool &error) {
     (void) p; (void) v; (void) error;
-    FAILED ("not yet implemented");
+    TM_FAILED ("not yet implemented");
     return p; }
   point jacobian_of_inverse (point p, point v, bool &error) {
     (void) p; (void) v; (void) error;
-    FAILED ("not yet implemented");
+    TM_FAILED ("not yet implemented");
     return p; }
   double direct_bound (point p, double eps) { (void) p; return eps; }
   double inverse_bound (point p, double eps) { (void) p; return eps; }
@@ -300,7 +302,7 @@ struct compound_frame_rep: public frame_rep {
   }
   point jacobian_of_inverse (point p, point v, bool &error) {
     (void) p; (void) v; (void) error;
-    FAILED ("not yet implemented");
+    TM_FAILED ("not yet implemented");
     return p;
   }
   double direct_bound (point p, double eps) {

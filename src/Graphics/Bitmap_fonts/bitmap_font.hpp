@@ -11,7 +11,9 @@
 
 #ifndef BITMAP_FONT_H
 #define BITMAP_FONT_H
+
 #include "resource.hpp"
+#include "tree.hpp"
 
 class frame;
 

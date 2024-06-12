@@ -103,7 +103,7 @@ xpm_size (url u, int& w, int& h) {
   ok= read_int (s, i, h) && ok;
   if (!ok) {
     failed_error << "File name= " << file_name << "\n";
-    FAILED ("invalid xpm");
+    TM_FAILED ("invalid xpm");
   }
 }
 

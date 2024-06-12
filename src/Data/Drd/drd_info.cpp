@@ -429,7 +429,7 @@ drd_info_rep::get_syntax (tree t, path p) {
         tree val= "";
         if (i < N(t)) {
           if (p == path (-1)) val= t[i];
-          else val= tree (QUASI, t[i], (tree) (p * i));
+          else val= tree (QUASI, t[i], as_tree (p * i));
         }
         tab (var)= val;
       }

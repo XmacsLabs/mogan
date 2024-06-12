@@ -367,7 +367,7 @@ font
 rubber_unicode_font (font base) {
   string name= "rubberunicode[" * base->res_name * "]";
   failed_error << "Font name= " << name << "\n";
-  FAILED ("true type support was disabled");
+  TM_FAILED ("true type support was disabled");
   return font ();
 }
 

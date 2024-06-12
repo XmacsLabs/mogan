@@ -11,6 +11,8 @@
 
 #ifndef EDITOR_H
 #define EDITOR_H
+
+#include "config.h"
 #include "typesetter.hpp"
 #include "tree_select.hpp"
 #ifdef AQUATEXMACS

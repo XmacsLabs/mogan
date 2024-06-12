@@ -228,7 +228,7 @@ cursor
 stack_box_rep::find_cursor (path bp) {
   cursor cu= composite_box_rep::find_cursor (bp);
   int i= bp->item, j1, j2, n= N(bs);
-  if (is_atom (bp)) i= (bp == 0? 0: N(bs)-1);
+  if (is_atom (bp)) i= (as_tree (bp) == 0? 0: N(bs)-1);
   if (bs[i]->h() != 0) return cu;
   for (j1= i-1; j1>=0; j1--)
     if (bs[j1]->h () != 0) break;

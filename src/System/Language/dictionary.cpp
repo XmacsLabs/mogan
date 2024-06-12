@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "dictionary.hpp"
+#include "gui.hpp"
 #include "file.hpp"
 #include "convert.hpp"
 #include "block.hpp"

@@ -378,7 +378,7 @@ font_rep::var_get_extents (string s, metric& ex) {
 void
 font_rep::var_get_xpositions (string s, SI* xpos) {
   (void) s; (void) xpos;
-  FAILED ("not yet implemented");
+  TM_FAILED ("not yet implemented");
 }
 
 void
@@ -412,7 +412,7 @@ font_rep::get_glyph (string s) {
   if (get_glyph_fatal) {
     failed_error << "glyph name: " << s << "\n";
     failed_error << "font      : " << res_name << "\n";    
-    FAILED ("no bitmap available");
+    TM_FAILED ("no bitmap available");
   }
   else {
     cout << "TeXmacs] warning, no bitmap available for " << s << "\n";
@@ -429,7 +429,7 @@ font_rep::index_glyph (string s, font_metric& fnm, font_glyphs& fng) {
   if (get_glyph_fatal) {
     failed_error << "glyph name: " << s << "\n";
     failed_error << "font      : " << res_name << "\n";    
-    FAILED ("no bitmap available");
+    TM_FAILED ("no bitmap available");
   }
   else {
     cout << "TeXmacs] warning, no glyph index available for " << s << "\n";

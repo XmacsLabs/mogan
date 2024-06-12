@@ -92,7 +92,7 @@ tm_errput (string s) {
 void
 cpp_error () {
   // char *np= 0; *np= 1;
-  FAILED ("an error occurred");
+  TM_FAILED ("an error occurred");
 }
 
 array<int>

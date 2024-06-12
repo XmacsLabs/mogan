@@ -654,7 +654,7 @@ edit_env_rep::expand_morph (tree t) {
       string s= as_nice_string (a[i]);
       double old_portion= anim_portion;
       anim_portion= a[i];
-      tree frame= animate (a);
+      tree frame= animate (as_tree (a));
       anim_portion= old_portion;
       r << tuple (s, frame);
     }

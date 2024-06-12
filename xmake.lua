@@ -35,6 +35,7 @@ S7_VERSION = "20240516"
 
 -- package: s7
 add_requires("s7 "..S7_VERSION, {system=false})
+add_requires("lolly 0.99.5", {system=false})
 
 add_requires("apt::libpng-dev", {alias="libpng"})
 add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
@@ -108,6 +109,7 @@ target("libmogan") do
     add_packages("sqlite3")
     add_packages("pdfhummus")
     add_packages("s7")
+    add_packages("lolly")
 
     ---------------------------------------------------------------------------
     -- generate config files. see also:
@@ -166,6 +168,7 @@ target("libmogan") do
             filename = "tm_configure.hpp",
             pattern = "@(.-)@",
             variables = {
+                TEXMACS_VERSION = TEXMACS_VERSION,
                 XMACS_VERSION = XMACS_VERSION,
                 CONFIG_USER = os.getenv("USER") or "unknown",
                 CONFIG_DATE = os.time(),
@@ -288,6 +291,7 @@ target("libmogan") do
         "src/Plugins/Qt/**.hpp"})
 
     add_mxflags("-fno-objc-arc")
+    add_cxxflags("-include src/System/tm_configure.hpp")
     add_cxxflags("-include src/System/config.h")
 end 
 
@@ -296,6 +300,7 @@ target("liii") do
 
     add_rules("qt.widgetapp_static")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
+    add_packages("lolly")
     add_deps("libmogan")
     add_files("src/Texmacs/Texmacs/texmacs.cpp")
 

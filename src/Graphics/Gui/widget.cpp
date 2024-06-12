@@ -178,27 +178,27 @@ widget_rep::deconnect (slot s, widget w2, slot s2) {
 void
 widget_rep::send (slot s, blackbox val) {
   (void) s; (void) val;
-  FAILED ("no default implementation");
+  TM_FAILED ("no default implementation");
 }
 
 blackbox
 widget_rep::query (slot s, int type_id) {
   (void) s; (void) type_id;
-  FAILED ("no default implementation");
+  TM_FAILED ("no default implementation");
   return blackbox ();
 }
 
 widget
 widget_rep::read (slot s, blackbox index) {
   (void) s; (void) index;
-  FAILED ("no default implementation");
+  TM_FAILED ("no default implementation");
   return widget ();
 }
 
 void
 widget_rep::write (slot s, blackbox index, widget w) {
   (void) s; (void) index; (void) w;
-  FAILED ("no default implementation");
+  TM_FAILED ("no default implementation");
 }
 
 void

@@ -214,7 +214,7 @@ pager_rep::papyrus_make () {
                  env->fn, env->first_page);
   if (N(sk) != 1) {
     failed_error << "Number of pages: " << N(sk) << "\n";
-    FAILED ("unexpected situation");
+    TM_FAILED ("unexpected situation");
   }
 
   box sb= pages_format (sk[0]);

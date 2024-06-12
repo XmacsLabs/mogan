@@ -12,6 +12,7 @@
 #include "generic_tree.hpp"
 #include "drd_std.hpp"
 #include "hashset.hpp"
+#include "iterator.hpp"
 
 /******************************************************************************
 * Main routines for trees

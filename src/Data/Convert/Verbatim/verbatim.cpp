@@ -168,7 +168,7 @@ static string
 as_verbatim (tree t, bool wrap) {
   if (!is_snippet (t)) {
     tree init= extract (t, "initial");
-    hashmap<string,tree> h (UNINIT, init);
+    hashmap<string,tree> h= tree_hashmap(UNINIT, init);
     if (h[MODE] == "prog" || h[FONT_FAMILY] == "tt") wrap= false;
     t= extract (t, "body");
   }

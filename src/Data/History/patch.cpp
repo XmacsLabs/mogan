@@ -208,7 +208,7 @@ operator == (patch p1, patch p2) {
   case PATCH_AUTHOR:
     return get_author (p1) == get_author (p2) && p1[0] == p2[0];
   default:
-    FAILED ("unsupported patch type");
+    TM_FAILED ("unsupported patch type");
   }
   return false;
 }
@@ -251,7 +251,7 @@ operator << (tm_ostream& out, patch p) {
     out << UNINDENT;
     break;
   default:
-    FAILED ("unsupported patch type");
+    TM_FAILED ("unsupported patch type");
   }
   return out;
 }
@@ -274,7 +274,7 @@ copy (patch p) {
   case PATCH_AUTHOR:
     return patch (get_author (p), copy (p[0]));
   default:
-    FAILED ("unsupported patch type");
+    TM_FAILED ("unsupported patch type");
   }
   return p;
 }
@@ -303,7 +303,7 @@ is_applicable (patch p, tree t) {
   case PATCH_BIRTH:
     return true;
   default:
-    FAILED ("unsupported patch type");
+    TM_FAILED ("unsupported patch type");
     return false;
   }
 }
@@ -323,7 +323,7 @@ clean_apply (patch p, tree t) {
   case PATCH_BIRTH:
     return t;
   default:
-    FAILED ("unsupported patch type");
+    TM_FAILED ("unsupported patch type");
     return t;
   }
 }
@@ -344,7 +344,7 @@ apply (patch p, tree& t) {
   case PATCH_BIRTH:
     break;
   default:
-    FAILED ("unsupported patch type");
+    TM_FAILED ("unsupported patch type");
   }
 }
 
@@ -374,7 +374,7 @@ invert (patch p, tree t) {
   case PATCH_AUTHOR:
     return patch (get_author (p), invert (p[0], t));
   default:
-    FAILED ("unsupported patch type");
+    TM_FAILED ("unsupported patch type");
     return patch ();
   }
 }
@@ -408,7 +408,7 @@ possible_inverse (modification m1, modification m2) {
   case MOD_SET_CURSOR:
     return m1 == m2;
   default:
-    FAILED ("invalid situation");
+    TM_FAILED ("invalid situation");
     return false;
   }
 }
@@ -491,7 +491,7 @@ swap (patch& p1, patch& p2, double a1, double a2) {
       p2= patch (m2, i2);
       return r && v && possible_inverse (m1, i1) && possible_inverse (m2, i2);
     }
-  FAILED ("invalid situation");
+  TM_FAILED ("invalid situation");
   return false;
 }
 
@@ -706,7 +706,7 @@ cursor_hint (modification m, tree t) {
   case MOD_SET_CURSOR:
     return path ();
   default:
-    FAILED ("unexpected situation");
+    TM_FAILED ("unexpected situation");
     return path ();
   }
 }
@@ -729,7 +729,7 @@ cursor_hint (patch p, tree t) {
   case PATCH_BIRTH:
     return path ();
   default:
-    FAILED ("unsupported patch type");
+    TM_FAILED ("unsupported patch type");
   }
   return path ();
 }
@@ -760,7 +760,7 @@ remove_set_cursor (patch p) {
       else return patch (get_author (p), q);
     }
   default:
-    FAILED ("unsupported patch type");
+    TM_FAILED ("unsupported patch type");
   }
   return p;
 }

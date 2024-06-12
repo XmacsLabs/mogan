@@ -293,7 +293,7 @@ tag_info::tag_info (int a, int x, int am, int cm, bool frozen) {
 tag_info::tag_info (tree t) {
   if ((!is_func (t, TUPLE)) || (N(t)<2) || (L(t[1]) != TUPLE)) {
     cerr << "t= " << t << "\n";
-    FAILED ("bad tag_info");
+    TM_FAILED ("bad tag_info");
   }
   parent_info pi (t[0]);
   int i, n= N(t[1]);
@@ -304,8 +304,8 @@ tag_info::tag_info (tree t) {
 }
 
 tag_info::operator tree () {
-  if (rep->extra == "") return tree (TUPLE, (tree) rep->pi, (tree) rep->ci);
-  else return tree (TUPLE, (tree) rep->pi, (tree) rep->ci, rep->extra);
+  if (rep->extra == "") return tree (TUPLE, as_tree (rep->pi), as_tree (rep->ci));
+  else return tree (TUPLE, as_tree (rep->pi), as_tree (rep->ci), rep->extra);
 }
 
 /******************************************************************************
@@ -491,7 +491,7 @@ tag_info::operator () (int child, int n) {
     cerr << "arity_base  = " << rep->pi.arity_base << "\n";
     cerr << "arity_extra = " << rep->pi.arity_extra << "\n";
     cerr << "N(ci)       = " << N(rep->ci) << "\n";
-    FAILED ("index out of range");
+    TM_FAILED ("index out of range");
   }
   return rep->ci [index];
 }

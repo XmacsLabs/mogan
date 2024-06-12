@@ -55,11 +55,11 @@ tree
 detach_data (tree doc, new_data& data) {
   data->project= extract (doc, "project");
   data->style  = extract (doc, "style");
-  data->init   = hashmap<string,tree> (UNINIT, extract (doc, "initial"));
-  data->fin    = hashmap<string,tree> (UNINIT, extract (doc, "final"));
-  data->ref    = hashmap<string,tree> (UNINIT, extract (doc, "references"));
-  data->aux    = hashmap<string,tree> (UNINIT, extract (doc, "auxiliary"));
-  data->att    = hashmap<string,tree> (UNINIT, extract (doc, "attachments"));
+  data->init   = tree_hashmap (UNINIT, extract (doc, "initial"));
+  data->fin    = tree_hashmap (UNINIT, extract (doc, "final"));
+  data->ref    = tree_hashmap (UNINIT, extract (doc, "references"));
+  data->aux    = tree_hashmap (UNINIT, extract (doc, "auxiliary"));
+  data->att    = tree_hashmap (UNINIT, extract (doc, "attachments"));
   //tree links= extract (doc, "links");
   //if (N (links) != 0)
   //  (void) call ("register-link-locations", object (u), object (links));

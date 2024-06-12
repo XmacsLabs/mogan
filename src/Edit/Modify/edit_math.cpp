@@ -87,8 +87,8 @@ edit_math_rep::make_script (bool sup, bool right) {
     tree   t= subtree (et, p);
     bool   flag;
 
-    if (is_format (p))
-      FAILED ("bad cursor position");
+    if (is_format (as_tree (p)))
+      TM_FAILED ("bad cursor position");
     if (t == "" && is_script (subtree (et, path_up (p))))
       return;
     if (is_script (t, flag) && (flag==right) && (L(t)==s)) {

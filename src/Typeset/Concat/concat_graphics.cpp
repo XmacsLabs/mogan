@@ -190,7 +190,7 @@ get_transformation (tree t) {
     return linear_2D (m);
   }
   failed_error << "t= " << t << LF;
-  FAILED ("transformation expected");
+  TM_FAILED ("transformation expected");
   return frame ();
 }
 

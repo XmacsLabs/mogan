@@ -167,7 +167,7 @@ struct join_charmap_rep: public charmap_rep {
       if (ch >= sum && ch < sum+p) return ja[i] -> child (i-sum);
       sum += p;
     }
-    FAILED ("bad child");
+    TM_FAILED ("bad child");
     return this;
   }
   void lookup (string s, int& ch, string& r) {

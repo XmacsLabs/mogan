@@ -30,7 +30,7 @@ edit_text_rep::correct_concat (path p, int done) {
   tree t (subtree (et, p));
   if (L(t) != CONCAT) {
     failed_error << "The tree was '" << t << "'\n";
-    FAILED ("concat expected");
+    TM_FAILED ("concat expected");
   }
 
   int i, n= N(t);
@@ -149,7 +149,7 @@ edit_text_rep::insert_return () {
 void
 edit_text_rep::remove_return (path p) {
   if (!is_document (subtree (et, path_up (p))))
-    FAILED ("parent is not a document");
+    TM_FAILED ("parent is not a document");
 
   if (!is_concat (subtree (et, p)))
     insert_node (p * 0, CONCAT);

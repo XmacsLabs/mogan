@@ -690,7 +690,7 @@ qt_gui_rep::process_queued_events (int max) {
         break;
         
       default:
-        FAILED ("Unexpected queued event");
+        TM_FAILED ("Unexpected queued event");
     }
     switch (ev.x1) {
       case qp_type::QP_COMMAND:

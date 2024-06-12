@@ -16,6 +16,21 @@ function main()
         initializer_name = "initialize_glue_widget",
         glues = {
             {
+                scm_name = "x-gui?",
+                cpp_name = "gui_is_x",
+                ret_type = "bool"
+            },
+            {
+                scm_name = "qt-gui?",
+                cpp_name = "gui_is_qt",
+                ret_type = "bool"
+            },
+            {
+                scm_name = "gui-version",
+                cpp_name = "gui_version",
+                ret_type = "string"
+            },
+            {
                 scm_name = "widget-printer",
                 cpp_name = "printer_widget",
                 ret_type = "widget",

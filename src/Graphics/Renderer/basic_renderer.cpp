@@ -11,6 +11,17 @@
 
 #if (defined(QTTEXMACS) || defined(AQUATEXMACS))
 
+#ifdef HAVE_INTPTR_T
+#ifdef HAVE_INTTYPES_H
+#include <inttypes.h>
+#endif
+#ifdef HAVE_STDINT_H
+#include <stdint.h>
+#endif
+#else
+typedef long intptr_t;
+#endif
+
 #include "basic_renderer.hpp"
 #include "analyze.hpp"
 #include "gui.hpp" // for INTERRUPT_EVENT, INTERRUPTED_EVENT

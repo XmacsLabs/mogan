@@ -20,13 +20,13 @@ int memorizer_count= 0;
 
 void
 memorizer_rep::compute () {
-  FAILED ("memorizer can't compute its own output");
+  TM_FAILED ("memorizer can't compute its own output");
 }
 
 void
 memorizer_rep::set_children (memorizer* a, int n) {
   (void) a; (void) n;
-  FAILED ("not a compound memorizer");
+  TM_FAILED ("not a compound memorizer");
 }
 
 void
@@ -38,24 +38,24 @@ memorizer_rep::get_children (memorizer*& a, int& n) {
 void
 memorizer_rep::set_environment (environment env) {
   (void) env;
-  FAILED ("not an environment memorizer");
+  TM_FAILED ("not an environment memorizer");
 }
 
 environment
 memorizer_rep::get_environment () {
-  FAILED ("not an environment memorizer");
+  TM_FAILED ("not an environment memorizer");
   return environment ();
 }
 
 void
 memorizer_rep::set_tree (tree t) {
   (void) t;
-  FAILED ("not a tree memorizer");
+  TM_FAILED ("not a tree memorizer");
 }
 
 tree
 memorizer_rep::get_tree () {
-  FAILED ("not a tree memorizer");
+  TM_FAILED ("not a tree memorizer");
   return "";
 }
 
@@ -282,7 +282,7 @@ bigmem_remove (memorizer_ptr ptr) {
       //cout << LF;
       return;
     }
-  FAILED ("pointer not found");
+  TM_FAILED ("pointer not found");
 }
 
 memorizer::memorizer (memorizer_rep* ptr) {

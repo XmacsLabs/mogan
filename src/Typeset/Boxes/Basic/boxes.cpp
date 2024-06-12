@@ -102,13 +102,13 @@ box_rep::expand_glyphs (int mode, double factor) {
 void
 box_rep::get_cell_extents (SI& l, SI& r) {
   (void) l; (void) r;
-  FAILED ("cell box expected");
+  TM_FAILED ("cell box expected");
 }
 
 box
 box_rep::adjust_cell_geometry (SI dx, SI dl, SI dr) {
   (void) dx; (void) dl; (void) dr;
-  FAILED ("cell box expected");
+  TM_FAILED ("cell box expected");
   return this;
 }
 
@@ -443,63 +443,63 @@ box_rep::get_info (tree in) {
 int
 box_rep::get_leaf_left_pos () {
   failed_error << "The box is " << box (this) << "\n";
-  FAILED ("this box is not textual");
+  TM_FAILED ("this box is not textual");
   return 0;
 }
 
 int
 box_rep::get_leaf_right_pos () {
   failed_error << "The box is " << box (this) << "\n";
-  FAILED ("this box is not textual");
+  TM_FAILED ("this box is not textual");
   return 0;
 }
 
 string
 box_rep::get_leaf_string () {
   failed_error << "The box is " << box (this) << "\n";
-  FAILED ("this box is not textual");
+  TM_FAILED ("this box is not textual");
   return "";
 }
 
 font
 box_rep::get_leaf_font () {
   failed_error << "The box is " << box (this) << "\n";
-  FAILED ("this box is not textual");
+  TM_FAILED ("this box is not textual");
   return font ();
 }
 
 pencil
 box_rep::get_leaf_pencil () {
   failed_error << "The box is " << box (this) << "\n";
-  FAILED ("this box is not textual");
+  TM_FAILED ("this box is not textual");
   return pencil (false);
 }
 
 language
 box_rep::get_leaf_language () {
   failed_error << "The box is " << box (this) << "\n";
-  FAILED ("this box is not textual");
+  TM_FAILED ("this box is not textual");
   return language ();
 }
 
 tree
 box_rep::get_leaf_tree () {
   failed_error << "The box is " << box (this) << "\n";
-  FAILED ("no tree attached to this box");
+  TM_FAILED ("no tree attached to this box");
   return "";
 }
 
 box
 box_rep::get_leaf_box () {
   failed_error << "The box is " << box (this) << "\n";
-  FAILED ("no box attached to this box");
+  TM_FAILED ("no box attached to this box");
   return box ();
 }
 
 lazy
 box_rep::get_leaf_lazy () {
   failed_error << "The box is " << box (this) << "\n";
-  FAILED ("no lazy attached to this box");
+  TM_FAILED ("no lazy attached to this box");
   return lazy ();
 }
 
@@ -742,7 +742,7 @@ as_tree (gr_selections sels) {
   array<array<path> > res (n);
   for (i=0; i<n; i++)
     res[i]= sels[i]->cp;
-  return (tree) res;
+  return as_tree (res);
 }
 
 /******************************************************************************

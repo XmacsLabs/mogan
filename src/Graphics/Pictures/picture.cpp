@@ -29,7 +29,7 @@ unique_picture_id () {
   n++;
   if (n == (-((unsigned long long int) 1))) {
     failed_error << "Unique id overflow for pictures" << LF;
-    FAILED ("Unique id overflow for pictures");
+    TM_FAILED ("Unique id overflow for pictures");
   }
   return n;
 }
@@ -260,7 +260,7 @@ load_xpm (url file_name) {
   ok= read_int (s, i, b) && ok;
   if ((!ok) || (N(t)<(c+1)) || (c<=0)) {
     failed_error << "file_name= " << file_name << "\n";
-    FAILED ("invalid xpm");
+    TM_FAILED ("invalid xpm");
   }
 
   // setup colors

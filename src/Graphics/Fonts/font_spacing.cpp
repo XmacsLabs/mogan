@@ -165,7 +165,7 @@ font_rep::get_spacing_entry (int mode, tree t, int i) {
     else if (t == "default" || t == "old") return space (0);
     return get_spacing_entry (mode, t, i, "middle");
   default:
-    FAILED ("unimplemented type of space");
+    TM_FAILED ("unimplemented type of space");
   }
 }
 
@@ -208,6 +208,6 @@ font_rep::get_spacing_val (int mode, tree t) {
     if (mode == 0) return get_spacing_val (mode, t[1]);
     if (mode >  0) return get_spacing_val (mode, t[2]);
   }
-  FAILED ("invalid font spacing");
+  TM_FAILED ("invalid font spacing");
   return space (0);
 }

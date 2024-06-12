@@ -11,7 +11,9 @@
 
 #ifndef CHARMAP_H
 #define CHARMAP_H
+
 #include "resource.hpp"
+#include "tree.hpp"
 
 RESOURCE(charmap);
 

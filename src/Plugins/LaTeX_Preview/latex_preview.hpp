@@ -13,6 +13,7 @@
 #define LATEX_PREVIEW_H
 
 #include "array.hpp"
+#include "tree.hpp"
 
 array<tree> latex_preview (string s, tree t);
 void set_latex_command (string cmd);

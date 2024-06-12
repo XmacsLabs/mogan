@@ -117,7 +117,7 @@ style_set_cache (tree style, hashmap<string,tree> H, tree t) {
   sd->style_drd   (copy (style))= t;
   url name ("$TEXMACS_HOME_PATH/system/cache", cache_file_name (style));
   if (!exists (name)) {
-    save_string (name, tree_to_scheme (tuple ((tree) H, t)));
+    save_string (name, tree_to_scheme (tuple (as_tree (H), t)));
     // cout << "saved " << name << LF;
   }
 }
@@ -138,7 +138,7 @@ style_get_cache (tree style, hashmap<string,tree>& H, tree& t, bool& f) {
     if (exists (name) && (!load_string (name, s, false))) {
       //cout << "loaded " << name << LF;
       tree p= scheme_to_tree (s);
-      H= hashmap<string,tree> (UNINIT, p[0]);
+      H= tree_hashmap (UNINIT, p[0]);
       t= p[1];
       sd->style_cache (copy (style))= H;
       sd->style_drd   (copy (style))= t;

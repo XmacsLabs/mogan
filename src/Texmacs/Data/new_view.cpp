@@ -134,11 +134,11 @@ get_current_editor () {
   url u= get_current_view();
   tm_view vw= concrete_view (u);
   if (vw == NULL) { // HACK: shouldn't happen!
-    FAILED ("Current view is NULL");
+    TM_FAILED ("Current view is NULL");
     notify_delete_view (u);
     array<url> history = get_all_views();
-    if (history == NULL || N(history) == 0)
-      FAILED("View history is empty")
+    if (as_tree (history) == NULL || N(history) == 0)
+      TM_FAILED ("View history is empty")
     return view_to_editor (history[N(history)-1]);
   }
   return vw->ed;
@@ -174,7 +174,7 @@ view_to_editor (url u) {
   if (vw == NULL) {
     notify_delete_view (u); // HACK: returns to valid (?) state.
     failed_error << "View is " << u << "\n";
-    FAILED ("View admits no editor");
+    TM_FAILED ("View admits no editor");
   }
   return vw->ed;
 }
@@ -439,7 +439,7 @@ focus_on_editor (editor ed) {
   std_warning << "Warning: editor no longer exists, "
               << "may indicate synchronization error\n";
   //failed_error << "Name of buffer: " << ed->buf->buf->name << "\n";
-  //FAILED ("invalid situation");
+  //TM_FAILED ("invalid situation");
 }
 
 bool

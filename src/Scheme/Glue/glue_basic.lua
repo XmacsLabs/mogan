@@ -42,21 +42,6 @@ function main()
                 ret_type = "bool"
             },
             {
-                scm_name = "x-gui?",
-                cpp_name = "gui_is_x",
-                ret_type = "bool"
-            },
-            {
-                scm_name = "qt-gui?",
-                cpp_name = "gui_is_qt",
-                ret_type = "bool"
-            },
-            {
-                scm_name = "gui-version",
-                cpp_name = "gui_version",
-                ret_type = "string"
-            },
-            {
                 scm_name = "get-retina-factor",
                 cpp_name = "get_retina_factor",
                 ret_type = "int"

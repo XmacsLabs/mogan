@@ -311,7 +311,7 @@ try_latex_export (tree doc, object opts, url src, url dest) {
       << tree (latex_error_position (err))
       << tree (latex_error_extra (err));
     if (pos >= 0) t << as_tree (pos);
-    if (!is_nil (p) && has_subtree (b, p)) t << ((tree) p);
+    if (!is_nil (p) && has_subtree (b, p)) t << (as_tree (p));
     r << t;
   }
   return r;

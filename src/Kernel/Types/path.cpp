@@ -12,6 +12,7 @@
 
 #include "path.hpp"
 #include "analyze.hpp"
+#include "tree.hpp"
 
 /******************************************************************************
 * General routines on paths
@@ -130,7 +131,7 @@ path
 operator / (path p, path q) {
   if (is_nil (q)) return p;
   else if (is_nil (p) || (p->item != q->item)) {
-    FAILED ("path did not start with required path"); }
+    TM_FAILED ("path did not start with required path"); }
   else return p->next / q->next;
   return path (); // NOT REACHED
 }
