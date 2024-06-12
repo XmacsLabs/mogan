@@ -78,7 +78,9 @@ url url_wildcard (string name);       // string with * wildcards
 url operator * (url u1, url u2);      // concatenation of url with rootless url
 url operator * (url u1, const char* name);
 url operator * (url u1, string name);
+url url_concat (url u1, url u2);
 url operator | (url u1, url u2);      // disjunction of urls like in file paths
+url url_or (url u1, url u2);
 
 inline url url_parent (url u) { return u * url_parent (); }
 

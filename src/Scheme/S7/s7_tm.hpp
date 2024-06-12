@@ -15,7 +15,7 @@
 #include "blackbox.hpp"
 #include "array.hpp"
 
-#include "s7.h"
+#include <s7.h>
 
 // the type of scheme objects
 typedef s7_pointer tmscm;

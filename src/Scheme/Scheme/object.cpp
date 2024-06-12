@@ -9,6 +9,8 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "object_l1.hpp"
+#include "object_l2.hpp"
 #include "object.hpp"
 #include "glue.hpp"
 
@@ -132,9 +134,7 @@ bool is_int (object obj) { return tmscm_is_int (object_to_tmscm (obj)); }
 bool is_double (object obj) { return tmscm_is_double (object_to_tmscm (obj)); }
 bool is_string (object obj) { return tmscm_is_string (object_to_tmscm (obj)); }
 bool is_symbol (object obj) { return tmscm_is_symbol (object_to_tmscm (obj)); }
-bool is_tree (object obj) { return tmscm_is_tree (object_to_tmscm (obj)); }
 bool is_path (object obj) { return tmscm_is_path (object_to_tmscm (obj)); }
-bool is_url (object obj) { return tmscm_is_url (object_to_tmscm (obj)); }
 bool is_array_double (object obj) {
   return tmscm_is_array_double (object_to_tmscm (obj)); }
 bool is_widget (object obj) { return tmscm_is_widget (object_to_tmscm (obj)); }
@@ -206,12 +206,6 @@ as_symbol (object obj) {
   return tmscm_to_symbol (s);
 }
 
-tree
-as_tree (object obj) {
-  tmscm t= object_to_tmscm (obj);
-  if (!tmscm_is_tree (t)) return tree ();
-  return tmscm_to_tree (t);
-}
 
 scheme_tree
 as_tmscm_tree (object obj) {
@@ -249,13 +243,6 @@ as_array_object (object obj) {
     obj= cdr (obj);
   }
   return ret;
-}
-
-url
-as_url (object obj) {
-  tmscm t= object_to_tmscm (obj);
-  if (!tmscm_is_url (t)) return url ("");
-  return tmscm_to_url (t);
 }
 
 array<double>
