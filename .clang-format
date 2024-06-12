@@ -1,0 +1,11 @@
+SpaceBeforeAssignmentOperators: false
+SpaceBeforeParens: Always
+AlwaysBreakAfterReturnType: TopLevel
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+SpaceAfterCStyleCast: true
+AllowShortFunctionsOnASingleLine: All
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeElse: true

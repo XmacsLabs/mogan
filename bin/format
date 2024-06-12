@@ -1,0 +1,27 @@
+#!/usr/bin/env elvish
+
+use platform
+
+if (eq $platform:os windows) {
+  set paths = [
+    ~/scoop/apps/llvm/16.0.6/bin
+  ]
+} elif (eq $platform:os linux) {
+  set paths = [
+    /usr/lib/llvm-16/bin
+    # archlinux clang-format is at /usr/bin
+    /usr/bin
+    $E:HOME/bin
+  ]
+} else {
+}
+
+clang-format --version
+
+clang-format -i tests/**/*.cpp
+clang-format -i tests/**/*.hpp
+# clang-format -i src/**/*.cpp
+# clang-format -i src/**/*.hpp
+# clang-format -i TeXmacs/plugins/**/*.cpp
+
+
