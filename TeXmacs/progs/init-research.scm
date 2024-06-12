@@ -1,7 +1,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-texmacs-s7.scm
+;; MODULE      : init-research.scm
 ;; DESCRIPTION : This is the standard TeXmacs initialization file (S7)
 ;; COPYRIGHT   : (C) 1999-2020  Joris van der Hoeven & Massimiliano Gubinelli
 ;;

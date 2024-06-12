@@ -301,7 +301,7 @@ target("liii") do
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     add_packages("lolly")
     add_deps("libmogan")
-    add_files("src/Texmacs/Texmacs/texmacs.cpp")
+    add_files("src/Mogan/Research/research.cpp")
 
     on_run(function (target)
         name = target:name()
