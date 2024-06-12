@@ -35,7 +35,7 @@
 
 #ifndef KERNEL_L2
 #include "scheme.hpp"
-#include "convert.hpp"
+#include "Xml/xml.hpp"
 #endif
 
 #ifdef QTTEXMACS

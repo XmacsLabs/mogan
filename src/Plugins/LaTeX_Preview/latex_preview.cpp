@@ -9,6 +9,7 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
+#include "Tex/tex.hpp"
 #include "LaTeX_Preview/latex_preview.hpp"
 #include "Ghostscript/gs_utilities.hpp"
 #include "Tex/convert_tex.hpp"

@@ -12,6 +12,7 @@
 #include "bibtex_functions.hpp"
 #include "converter.hpp"
 #include "vars.hpp"
+#include "Tex/tex.hpp"
 
 /******************************************************************************
 * Helper functions

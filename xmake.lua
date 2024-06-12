@@ -216,6 +216,8 @@ target("libmogan") do
             "src/Scheme",
             "src/Scheme/L1",
             "src/Scheme/L2",
+            "src/Scheme/L3",
+            "src/Scheme/Plugins",
             "src/Scheme/S7",
             "src/Scheme/Scheme",
             "src/Style/Environment",
@@ -251,6 +253,8 @@ target("libmogan") do
             "src/Scheme/S7/**.cpp",
             "src/Scheme/L1/**.cpp",
             "src/Scheme/L2/**.cpp",
+            "src/Scheme/L3/**.cpp",
+            "src/Scheme/Plugins/**.cpp",
             "src/System/**.cpp",
             "src/Texmacs/Data/**.cpp",
             "src/Texmacs/Server/**.cpp",
@@ -266,6 +270,8 @@ target("libmogan") do
             "src/Plugins/LaTeX_Preview/**.cpp",
             "src/Plugins/Openssl/**.cpp",
             "src/Plugins/Sqlite3/**.cpp",
+            "src/Plugins/Tex/**.cpp",
+            "src/Plugins/Xml/**.cpp",
             "src/Plugins/Updater/**.cpp"})
 
     add_files("src/Plugins/Unix/**.cpp")

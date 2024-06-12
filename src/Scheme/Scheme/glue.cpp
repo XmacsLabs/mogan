@@ -12,29 +12,22 @@
 #include "glue.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
-#include "glue_l1.hpp"
-#include "glue_l2.hpp"
+#include "init_glue_l1.hpp"
+#include "init_glue_l2.hpp"
+#include "init_glue_l3.hpp"
+#include "init_glue_plugins.hpp"
 
 #include "promise.hpp"
-#include "tree.hpp"
-#include "drd_mode.hpp"
-#include "tree_search.hpp"
-#include "modification.hpp"
-#include "patch.hpp"
 
 #include "boxes.hpp"
 #include "editor.hpp"
 #include "universal.hpp"
-#include "convert.hpp"
-#include "file.hpp"
 #include "locale.hpp"
 #include "iterator.hpp"
 #include "Freetype/tt_tools.hpp"
 #include "Database/database.hpp"
 #include "Sqlite3/sqlite3.hpp"
 #include "Updater/tm_updater.hpp"
-
-#define content tree
 
 #if 0
 template<class T> tmscm box_to_tmscm (T o) {
@@ -124,24 +117,6 @@ get_bounding_rectangle (tree t) {
 }
 
 bool
-supports_native_pdf () {
-#ifdef PDF_RENDERER
-  return true;
-#else
-  return false;
-#endif
-}
-
-bool
-supports_ghostscript () {
-#ifdef USE_GS
-  return true;
-#else
-  return false;
-#endif
-}
-
-bool
 is_busy_versioning () {
   return busy_versioning;
 }
@@ -167,165 +142,6 @@ cout_buffer () {
 string
 cout_unbuffer () {
   return cout.unbuffer ();
-}
-
-tree
-coerce_string_tree (string s) {
-  return s;
-}
-
-string
-coerce_tree_string (tree t) {
-  return as_string (t);
-}
-
-tree
-tree_ref (tree t, int i) {
-  return t[i];
-}
-
-tree
-tree_set (tree t, int i, tree u) {
-  t[i]= u;
-  return u;
-}
-
-tree
-tree_range (tree t, int i, int j) {
-  return t(i,j);
-}
-
-tree
-tree_append (tree t1, tree t2) {
-  return t1 * t2;
-}
-
-bool
-tree_active (tree t) {
-  path ip= obtain_ip (t);
-  return is_nil (ip) || last_item (ip) != DETACHED;
-}
-
-tree
-tree_child_insert (tree t, int pos, tree x) {
-  //cout << "t= " << t << "\n";
-  //cout << "x= " << x << "\n";
-  int i, n= N(t);
-  tree r (t, n+1);
-  for (i=0; i<pos; i++) r[i]= t[i];
-  r[pos]= x;
-  for (i=pos; i<n; i++) r[i+1]= t[i];
-  return r;
-}
-
-/******************************************************************************
-* Document modification routines
-******************************************************************************/
-
-extern tree the_et;
-
-tree
-tree_assign (tree r, tree t) {
-  path ip= copy (obtain_ip (r));
-  if (ip_attached (ip)) {
-    assign (reverse (ip), copy (t));
-    return subtree (the_et, reverse (ip));
-  }
-  else {
-    assign (r, copy (t));
-    return r;
-  }
-}
-
-tree
-tree_insert (tree r, int pos, tree t) {
-  path ip= copy (obtain_ip (r));
-  if (ip_attached (ip)) {
-    insert (reverse (path (pos, ip)), copy (t));
-    return subtree (the_et, reverse (ip));
-  }
-  else {
-    insert (r, pos, copy (t));
-    return r;
-  }
-}
-
-tree
-tree_remove (tree r, int pos, int nr) {
-  path ip= copy (obtain_ip (r));
-  if (ip_attached (ip)) {
-    remove (reverse (path (pos, ip)), nr);
-    return subtree (the_et, reverse (ip));
-  }
-  else {
-    remove (r, pos, nr);
-    return r;
-  }
-}
-
-tree
-tree_split (tree r, int pos, int at) {
-  path ip= copy (obtain_ip (r));
-  if (ip_attached (ip)) {
-    split (reverse (path (at, pos, ip)));
-    return subtree (the_et, reverse (ip));
-  }
-  else {
-    split (r, pos, at);
-    return r;
-  }
-}
-
-tree
-tree_join (tree r, int pos) {
-  path ip= copy (obtain_ip (r));
-  if (ip_attached (ip)) {
-    join (reverse (path (pos, ip)));
-    return subtree (the_et, reverse (ip));
-  }
-  else {
-    join (r, pos);
-    return r;
-  }
-}
-
-tree
-tree_assign_node (tree r, tree_label op) {
-  path ip= copy (obtain_ip (r));
-  if (ip_attached (ip)) {
-    assign_node (reverse (ip), op);
-    return subtree (the_et, reverse (ip));
-  }
-  else {
-    assign_node (r, op);
-    return r;
-  }
-}
-
-tree
-tree_insert_node (tree r, int pos, tree t) {
-  path ip= copy (obtain_ip (r));
-  if (ip_attached (ip)) {
-    insert_node (reverse (path (pos, ip)), copy (t));
-    return subtree (the_et, reverse (ip));
-  }
-  else {
-    insert_node (r, pos, copy (t));
-    return r;
-  }
-}
-
-tree
-tree_remove_node (tree r, int pos) {
-  path ip= copy (obtain_ip (r));
-  if (ip_attached (ip)) {
-    remove_node (reverse (path (pos, ip)));
-    return subtree (the_et, reverse (ip));
-  }
-  else {
-    remove_node (r, pos);
-    return r;
-  }
 }
 
 /******************************************************************************
@@ -378,66 +194,12 @@ tmscm_to_promise_widget (tmscm o) {
 }
 
 
-void string_save (string s, url u) { (void) save_string (u, s); }
-string string_load (url u) {
-  string s; (void) load_string (u, s, false); return s; }
-void string_append_to_file (string s, url u) { (void) append_string (u, s); }
-url url_ref (url u, int i) { return u[i]; }
-
-
-tree
-var_apply (tree& t, modification m) {
-  apply (t, copy (m));
-  return t;
-}
-
-tree
-var_clean_apply (tree& t, modification m) {
-  return clean_apply (t, copy (m));
-}
-
-/******************************************************************************
-* Patch
-******************************************************************************/
-
 bool
-tmscm_is_patch (tmscm p) {
-  return (tmscm_is_blackbox (p) &&
-	  (type_box (tmscm_to_blackbox(p)) == type_helper<patch>::id))
-    || (tmscm_is_string (p));
+tree_active (tree t) {
+  path ip= obtain_ip (t);
+  return is_nil (ip) || last_item (ip) != DETACHED;
 }
 
-tmscm 
-patch_to_tmscm (patch p) {
-  return blackbox_to_tmscm (close_box<patch> (p));
-}
-
-patch
-tmscm_to_patch (tmscm obj) {
-  return open_box<patch> (tmscm_to_blackbox (obj));
-}
-
-tmscm 
-patchP (tmscm t) {
-  bool b= tmscm_is_patch (t);
-  return bool_to_tmscm (b);
-}
-
-patch
-branch_patch (array<patch> a) {
-  return patch (true, a);
-}
-
-tree
-var_clean_apply (tree t, patch p) {
-  return clean_apply (copy (p), t);
-}
-
-tree
-var_apply (tree& t, patch p) {
-  apply (copy (p), t);
-  return t;
-}
 
 /******************************************************************************
 * Table types
@@ -490,7 +252,6 @@ TMSCM_ASSERT (tmscm_is_solution(p), p, arg, rout)
 #define solution_to_tmscm table_string_string_to_tmscm
 #define tmscm_to_solution tmscm_to_table_string_string
 
-typedef array<patch> array_patch;
 typedef array<widget> array_widget;
 
 static bool
@@ -522,35 +283,6 @@ tmscm_to_array_widget (tmscm p) {
   return a;
 }
 
-static bool
-tmscm_is_array_patch (tmscm p) {
-  if (tmscm_is_null (p)) return true;
-  else return tmscm_is_pair (p) &&
-    tmscm_is_patch (tmscm_car (p)) &&
-    tmscm_is_array_patch (tmscm_cdr (p));
-}
-
-
-#define TMSCM_ASSERT_ARRAY_PATCH(p,arg,rout) \
-TMSCM_ASSERT (tmscm_is_array_patch (p), p, arg, rout)
-
-/* static */ tmscm 
-array_patch_to_tmscm (array<patch> a) {
-  int i, n= N(a);
-  tmscm p= tmscm_null ();
-  for (i=n-1; i>=0; i--) p= tmscm_cons (patch_to_tmscm (a[i]), p);
-  return p;
-}
-
-/* static */ array<patch>
-tmscm_to_array_patch (tmscm p) {
-  array<patch> a;
-  while (!tmscm_is_null (p)) {
-    a << tmscm_to_patch (tmscm_car (p));
-    p= tmscm_cdr (p);
-  }
-  return a;
-}
 
 void register_glyph (string s, array_array_array_double gl);
 string recognize_glyph (array_array_array_double gl);
@@ -564,37 +296,25 @@ string recognize_glyph (array_array_array_double gl);
 #include "boot.hpp"
 #include "connect.hpp"
 #include "convert.hpp"
-#include "file.hpp"
 #include "image_files.hpp"
 #include "web_files.hpp"
-#include "sys_utils.hpp"
 #include "client_server.hpp"
-#include "analyze.hpp"
 #include "wencoding.hpp"
-#include "base64.hpp"
-#include "tree_traverse.hpp"
-#include "tree_analyze.hpp"
-#include "tree_correct.hpp"
-#include "tree_modify.hpp"
-#include "tree_math_stats.hpp"
 #include "tm_frame.hpp"
 #include "Concat/concater.hpp"
 #include "converter.hpp"
 #include "tm_timer.hpp"
-#include "Metafont/tex_files.hpp"
-#include "Freetype/tt_file.hpp"
-#include "LaTeX_Preview/latex_preview.hpp"
-#include "Bibtex/bibtex.hpp"
-#include "Bibtex/bibtex_functions.hpp"
 #include "link.hpp"
 #include "dictionary.hpp"
-#include "patch.hpp"
 #include "packrat.hpp"
 #include "new_style.hpp"
-#include "persistent.hpp"
 
-#include "Pdf/pdf_hummus_extract_attachment.hpp"
-#include "Pdf/pdf_hummus_make_attachment.hpp"
+#include "font.hpp"
+#include "Freetype/tt_file.hpp"
+#include "Metafont/tex_files.hpp"
+#include "glue_font.cpp"
+
+#include "glue_widget.cpp"
 
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
@@ -602,11 +322,13 @@ string recognize_glyph (array_array_array_double gl);
 
 void
 initialize_glue () {
-  tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
-  
   initialize_glue_l1 ();
   initialize_glue_l2 ();
+  initialize_glue_l3 ();
+  initialize_glue_font ();
+  initialize_glue_widget ();
   initialize_glue_basic ();
   initialize_glue_editor ();
   initialize_glue_server ();
+  initialize_glue_plugins ();
 }

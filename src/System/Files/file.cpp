@@ -135,6 +135,12 @@ load_string (url u, string& s, bool fatal) {
   return err;
 }
 
+string string_load (url u) {
+  string s;
+  (void) load_string (u, s, false);
+  return s;
+}
+
 bool
 save_string (url u, string s, bool fatal) {
   if (is_rooted_tmfs (u)) {
@@ -204,6 +210,10 @@ save_string (url u, string s, bool fatal) {
   return err;
 }
 
+void string_save (string s, url u) {
+  (void) save_string (u, s);
+}
+
 bool
 append_string (url u, string s, bool fatal) {
   if (is_rooted_tmfs (u)) FAILED ("file not appendable");
@@ -255,6 +265,10 @@ append_string (url u, string s, bool fatal) {
     FAILED ("file not appendable");
   }
   return err;
+}
+
+void string_append_to_file (string s, url u) {
+  (void) append_string (u, s);
 }
 
 /******************************************************************************

@@ -12,6 +12,7 @@
 #include <locale.h>
 
 #include "convert.hpp"
+#include "Xml/xml.hpp"
 #include "iterator.hpp"
 #include "dictionary.hpp"
 #include "file.hpp" // added for copy_as_graphics

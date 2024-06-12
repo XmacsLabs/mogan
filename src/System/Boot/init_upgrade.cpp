@@ -71,13 +71,6 @@ init_upgrade_scheme () {
 * Generate documentation about changes
 ******************************************************************************/
 
-static string
-string_load (url u) {
-  string s;
-  (void) load_string (u, s, false);
-  return s;
-}
-
 static void
 init_upgrade_doc (string install_version) {
   url from_dir= "$TEXMACS_PATH/doc/about/changes";

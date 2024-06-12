@@ -1,4 +1,3 @@
-
 /******************************************************************************
 * MODULE     : convert.hpp
 * DESCRIPTION: various conversion routines
@@ -70,63 +69,7 @@ tree   scheme_document_to_tree (string s);
 string tree_to_verbatim (tree t, bool wrap= false, string enc= "default");
 tree   verbatim_to_tree (string s, bool wrap= false, string enc= "default");
 tree   verbatim_document_to_tree (string s, bool w= false, string e= "default");
-
-/*** Latex ***/
-tree   parse_latex (string s, bool change= false, bool as_pic= false);
-tree   parse_latex_document (string s, bool change= false, bool as_pic= false);
-tree   latex_to_tree (tree t);
-tree   latex_document_to_tree (string s, bool as_pic= false);
-tree   latex_class_document_to_tree (string s);
-string latex_verbarg_to_string (tree t);
-string get_latex_style (tree t);
-string string_arg (tree t, bool u= false);
-array<tree> tokenize_concat (tree t, array<tree> a, bool keep= false);
 bool   is_verbatim (tree t);
-int    latex_search_forwards (string s, int pos, string in);
-int    latex_search_forwards (string s, string in);
-tree   tracked_latex_to_texmacs (string s, bool as_pic);
-string conservative_texmacs_to_latex (tree doc, object opts);
-string tracked_texmacs_to_latex (tree doc, object opts);
-tree   conservative_latex_to_texmacs (string s, bool as_pic);
-int    get_line_number (string s, int pos);
-int    get_column_number (string s, int pos);
-tree   try_latex_export (tree doc, object opts, url src, url dest);
-int    number_latex_errors (url log);
-tree   get_latex_errors (url log);
-int    number_latex_pages (url log);
-tree   postprocess_metadata (tree t);
-
-/*** Xml / Html / Mathml ***/
-string old_tm_to_xml_cdata (string s);
-object tm_to_xml_cdata (string s);
-string old_xml_cdata_to_tm (string s);
-string tm_to_xml_name (string s);
-string xml_name_to_tm (string s);
-string xml_unspace (string s, bool first, bool last);
-
-tree   parse_xml (string s);
-tree   parse_plain_html (string s);
-tree   parse_html (string s);
-tree   clean_html (tree t);
-tree   tmml_upgrade (scheme_tree t);
-tree   upgrade_mathml (tree t);
-tree   retrieve_mathjax (int id);
-
-tree   find_first_element_by_name (tree t, string name);
-string get_attr_from_element (tree t, string name, string default_value);
-int    parse_xml_length (string length);
-
-/*** BibTeX ***/
-tree   parse_bib (string s);
-tree   conservative_bib_import (string olds, tree oldt, string news);
-string conservative_bib_export (tree oldt, string olds, tree newt);
-
-/*** Post corrections ***/
-bool   seems_buggy_html_paste (string s);
-string correct_buggy_html_paste (string s);
-bool   seems_buggy_paste (string s);
-string correct_buggy_paste (string s);
-tree   default_with_simplify (tree t);
 
 /*** Coq ***/
 tree vernac_to_tree (string s);
