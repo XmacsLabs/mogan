@@ -1,7 +1,7 @@
 # Mogan STEM Suite / [墨干理工套件](README_ZH.md)
 ![GPL v3](http://www.gnu.org/graphics/gplv3-127x51.png)
 
-> **Let us enjoy exploring science and technology!**
+> **Enjoy exploring science and technology!**
 
 Mogan is a structured STEM suite delivered by [Xmacs Labs](https://github.com/XmacsLabs) consisting of 3 libre software products:
 
