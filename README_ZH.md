@@ -1,7 +1,7 @@
 # 墨干理工套件 / [Mogan STEM Suite](README.md)
 ![GPL v3](http://www.gnu.org/graphics/gplv3-127x51.png)
 
-> **让我们享受探索科学与技术的乐趣！**
+> **享受探索科学与技术的乐趣！**
 
 墨干理工套件是[墨客实验室](https://gitee.com/XmacsLabs)旗下的结构化的理工套件，包含三大自由软件产品：
 | 中文名 | 英文名 | 产品定位 | 状态 |
