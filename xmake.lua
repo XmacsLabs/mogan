@@ -30,18 +30,28 @@ add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
 add_repositories("liii-repo xmake")
 
+function using_legacy_apt ()
+    return (linuxos.name() == "uos") or (linuxos.name () == "ubuntu" and linuxos.version():major() == 20)
+end
+
 PDFHUMMUS_VERSION = "4.6.2"
 S7_VERSION = "20240516"
+local FREETYPE_VERSION = "2.12.1"
 
 -- package: s7
 add_requires("s7 "..S7_VERSION, {system=false})
 add_requires("lolly 1.1.0", {system=false})
 
+add_requires("libjpeg")
 add_requires("apt::libpng-dev", {alias="libpng"})
-add_requires("apt::libjpeg62-turbo-dev", {alias="libjpeg"})
 add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-add_requires("apt::libfreetype-dev", {alias="freetype"})
 add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+if using_legacy_apt() then
+    add_requires("freetype "..FREETYPE_VERSION, {system=false})
+    add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
+else
+    add_requires("apt::libfreetype-dev", {alias="freetype"})
+end
 
 local XMACS_VERSION="2025.1.0"
 
@@ -100,16 +110,10 @@ target("libmogan") do
     set_configvar("LINKED_CAIRO", false)
     set_configvar("LINKED_IMLIB2", false)
 
-    add_packages("libpng")
-    add_packages("libiconv")
-    add_packages("zlib")
-    add_packages("libjpeg")
-    add_packages("libcurl")
-    add_packages("freetype")
-    add_packages("sqlite3")
-    add_packages("pdfhummus")
-    add_packages("s7")
     add_packages("lolly")
+    add_packages("pdfhummus")
+    add_packages("freetype")
+    add_packages("s7")
 
     ---------------------------------------------------------------------------
     -- generate config files. see also:
@@ -297,10 +301,14 @@ end
 target("liii") do 
     set_filename("LiiiSTEM")
 
-    add_rules("qt.widgetapp_static")
+    add_rules("qt.widgetapp")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     add_packages("lolly")
+    if is_plat("linux") then
+        add_rpathdirs("@executable_path/../lib")
+    end
     add_deps("libmogan")
+    add_syslinks("pthread")
     add_files("src/Mogan/Research/research.cpp")
 
     on_run(function (target)
