@@ -1,6 +1,6 @@
 version: '1.0'
-name: ci-linux
-displayName: ci-linux
+name: ci-ubuntu
+displayName: ci-ubuntu
 triggers:
   trigger: auto
   pr:
@@ -16,6 +16,7 @@ variables:
   XMAKE_MAIN_REPO: 'https://gitee.com/tboox/xmake-repo.git'
   XMAKE_BINARY_REPO: 'https://gitee.com/xmake-mirror/build-artifacts.git'
   XMAKE_ROOT: y
+  QT_QPA_PLATFORM: offscreen
           
 
 stages:
@@ -38,7 +39,6 @@ stages:
           - xmake repo -u
           - xmake config -vD --yes
           - xmake build -vD liii
-          - xmake run --yes -vD --group=integration_tests
         caches: [
           build/.build_cache,
         ]

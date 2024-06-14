@@ -304,11 +304,8 @@ target("liii") do
     add_rules("qt.widgetapp")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     add_packages("lolly")
-    if is_plat("linux") then
-        add_rpathdirs("@executable_path/../lib")
-    end
     add_deps("libmogan")
-    add_syslinks("pthread")
+    add_syslinks("pthread", "dl", "m")
     add_files("src/Mogan/Research/research.cpp")
 
     on_run(function (target)
