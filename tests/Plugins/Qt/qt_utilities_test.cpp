@@ -21,6 +21,7 @@ private slots:
   void test_qt_supports ();
   void test_from_modifiers ();
   void test_from_key_press_event ();
+  void test_unit_test_function ();
 };
 
 void
@@ -90,6 +91,15 @@ TestQtUtilities::test_from_key_press_event () {
     qcompare (from_key_press_event (&alt_dot), "≥");
   }
 }
+
+void
+TestQtUtilities::test_unit_test_function () {
+  QVERIFY(additional_function(2) == 4);
+  QVERIFY(additional_function(3) == 9);
+  QVERIFY(additional_function(0) == 0);
+  QVERIFY(additional_function(-1) == 1);
+}
+
 
 QTEST_MAIN (TestQtUtilities)
 #include "qt_utilities_test.moc"

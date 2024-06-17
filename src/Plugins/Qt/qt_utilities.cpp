@@ -1294,3 +1294,7 @@ from_key_release_event (const QKeyEvent* event) {
 
   return r;
 }
+
+int unit_test_function(int x) {
+    return x * x;
+}

@@ -165,4 +165,7 @@ string from_modifiers (Qt::KeyboardModifiers mods);
 string from_key_press_event (const QKeyEvent* event);
 string from_key_release_event (const QKeyEvent* event);
 
+
+int unit_test_function(int x);
+
 #endif // QT_UTILITIES_HPP
