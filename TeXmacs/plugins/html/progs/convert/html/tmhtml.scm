@@ -1413,11 +1413,12 @@
 
 (define (tmhtml-ornament-get-env-style)
   (let* ((l0 (hash-map->list tmhtml-env))
-         (l1 (filter (lambda (x)
-                       (and (list>0? (car x))
-                            (cadr x)
-                            (string-starts? "#:ornament-"
-                                            (object->string (caar x))))) l0))
+         (l1 (filter
+               (lambda (x)
+                 (and (list>0? (car x))
+                      (cadr x)
+                      (string-starts? (object->string (caar x)) ":ornament-")))
+               l0))
          (l2   (map car l1))
          (args (map cadr l1))
          (funs (map cAr l2))
