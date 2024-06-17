@@ -1406,13 +1406,19 @@
                         ,@(if w `((width ,w)) '())
                         ,@(if h `((height ,h)) '()))))))))
 
+(define-public (hash-map->list h)
+  (map (lambda (x)
+         (list (car x) (cdr x)))
+    (map values h)))
+
 (define (tmhtml-ornament-get-env-style)
-  (let* ((l0 (hash-map->list list tmhtml-env))
-         (l1 (filter (lambda (x)
-                       (and (list>0? (car x))
-                            (cadr x)
-                            (string-prefix? "#:ornament-"
-                                            (object->string (caar x))))) l0))
+  (let* ((l0 (hash-map->list tmhtml-env))
+         (l1 (filter
+               (lambda (x)
+                 (and (list>0? (car x))
+                      (cadr x)
+                      (string-starts? (object->string (caar x)) ":ornament-")))
+               l0))
          (l2   (map car l1))
          (args (map cadr l1))
          (funs (map cAr l2))
