@@ -1416,7 +1416,7 @@
          (l1 (filter (lambda (x)
                        (and (list>0? (car x))
                             (cadr x)
-                            (string-prefix? "#:ornament-"
+                            (string-starts? "#:ornament-"
                                             (object->string (caar x))))) l0))
          (l2   (map car l1))
          (args (map cadr l1))
