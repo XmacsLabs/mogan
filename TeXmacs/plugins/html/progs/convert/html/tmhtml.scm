@@ -1407,7 +1407,9 @@
                         ,@(if h `((height ,h)) '()))))))))
 
 (define (tmhtml-ornament-get-env-style)
-  (let* ((l0 (hash-map->list list tmhtml-env))
+  (display* "tmhtml-env:\n" tmhtml-env "\n")
+  (display* "list:\n" (ahash-table->list tmhtml-env) "\n")
+  (let* ((l0 (ahash-table->list tmhtml-env))
          (l1 (filter (lambda (x)
                        (and (list>0? (car x))
                             (cadr x)
