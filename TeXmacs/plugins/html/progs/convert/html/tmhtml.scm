@@ -1406,10 +1406,13 @@
                         ,@(if w `((width ,w)) '())
                         ,@(if h `((height ,h)) '()))))))))
 
+(define-public (hash-map->list h)
+  (map (lambda (x)
+         (list (car x) (cdr x)))
+    (map values h)))
+
 (define (tmhtml-ornament-get-env-style)
-  (display* "tmhtml-env:\n" tmhtml-env "\n")
-  (display* "list:\n" (ahash-table->list tmhtml-env) "\n")
-  (let* ((l0 (ahash-table->list tmhtml-env))
+  (let* ((l0 (hash-map->list tmhtml-env))
          (l1 (filter (lambda (x)
                        (and (list>0? (car x))
                             (cadr x)
