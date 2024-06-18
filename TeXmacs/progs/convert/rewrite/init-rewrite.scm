@@ -48,30 +48,6 @@
   (:function serialize-texmacs-snippet))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Scheme format for TeXmacs (no information loss)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(define (stm-recognizes? s)
-  (and (string? s) (string-starts? s "(document (TeXmacs")))
-
-(define-format stm
-  (:name "TeXmacs Scheme")
-  (:suffix "stm")
-  (:must-recognize stm-recognizes?))
-
-(converter texmacs-tree stm-document
-  (:function texmacs->stm))
-
-(converter stm-document texmacs-tree
-  (:function stm->texmacs))
-
-(converter texmacs-tree stm-snippet
-  (:function texmacs->stm))
-
-(converter stm-snippet texmacs-tree
-  (:function stm-snippet->texmacs))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Generic source files
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
