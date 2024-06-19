@@ -1,6 +1,6 @@
 
 /******************************************************************************
- * MODULE     : from_TMU.cpp
+ * MODULE     : from_tmu.cpp
  * DESCRIPTION: Convertion from the TMU format
  * COPYRIGHT  : (C) 1999  Joris van der Hoeven
  *                  2024  Darcy Shen
