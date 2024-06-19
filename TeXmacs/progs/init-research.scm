@@ -338,6 +338,7 @@
 
 (lazy-format (convert rewrite init-rewrite) texmacs verbatim)
 (lazy-format (data stm) stm)
+(lazy-format (data mgs) mgs)
 (lazy-format (convert latex init-latex) latex)
 (lazy-format (convert html init-html) html)
 (lazy-format (convert bibtex init-bibtex) bibtex)
