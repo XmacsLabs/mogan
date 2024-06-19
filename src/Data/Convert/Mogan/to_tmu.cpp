@@ -348,6 +348,10 @@ tree_to_tmu (tree t) {
         r[i]   = copy (t[i]);
         r[i][0]= style;
       }
+      else if (is_compound (t[i], "TeXmacs")) {
+        string texmacs_version= as_string (t[i][0]);
+        r[i]= compound ("TMU", tuple (TMU_VERSION, texmacs_version));
+      }
       else r[i]= t[i];
     }
     t= r;
