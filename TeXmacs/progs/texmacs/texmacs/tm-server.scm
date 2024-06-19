@@ -132,7 +132,6 @@
   ("gui:line-input:autocommit" "on" noop)
   ("use native menubar" (get-default-native-menubar) noop)
   ("use unified toolbar" (get-default-unified-toolbar) noop)
-  ("tm format without utf8" "on" noop)
   ("texmacs->image:format" "png" noop))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
