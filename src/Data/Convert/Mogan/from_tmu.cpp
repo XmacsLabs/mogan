@@ -34,18 +34,16 @@ using namespace moebius;
 struct tmu_reader {
   string               version; // document was composed using this version
   hashmap<string, int> codes;   // codes for to present version
-  tree_label EXPAND_APPLY;      // APPLY (version < 0.3.3.22) or EXPAND (otherw)
-  bool       backslash_ok;      // true for versions >= 1.0.1.23
-  string     buf;               // the string being read from
-  int        pos;               // the current position of the reader
-  string     last;              // last read string
+  string               buf;     // the string being read from
+  int                  pos;     // the current position of the reader
+  string               last;    // last read string
 
   tmu_reader (string buf2)
-      : version (TEXMACS_VERSION), codes (STD_CODE), EXPAND_APPLY (EXPAND),
-        backslash_ok (true), buf (buf2), pos (0), last ("") {}
+      : version (TEXMACS_VERSION), codes (STD_CODE), buf (buf2), pos (0),
+        last ("") {}
   tmu_reader (string buf2, string version2)
-      : version (version2), codes (get_codes (version)), EXPAND_APPLY (EXPAND),
-        backslash_ok (true), buf (buf2), pos (0), last ("") {}
+      : version (version2), codes (get_codes (version)), buf (buf2), pos (0),
+        last ("") {}
 
   int    skip_blank ();
   string decode (string s);
@@ -149,7 +147,7 @@ tmu_reader::read_next () {
     c      = read_char ();
     if (c == "") return r;
     else if (c == "\\") {
-      if ((pos < N (buf)) && (buf[pos] == '\\') && backslash_ok) {
+      if ((pos < N (buf)) && (buf[pos] == '\\')) {
         r << c << "\\";
         pos++;
       }
