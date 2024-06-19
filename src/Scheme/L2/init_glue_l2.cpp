@@ -15,7 +15,6 @@
 #include "s7_tm.hpp"
 
 #include "analyze.hpp"
-#include "converter.hpp"
 #include "file.hpp"
 #include "locale.hpp"
 #include "sys_utils.hpp"
@@ -24,16 +23,14 @@
 
 #include <lolly/data/base64.hpp>
 #include <lolly/data/numeral.hpp>
+#include <lolly/data/unicode.hpp>
 #include <lolly/io/http.hpp>
 #include <lolly/system/subprocess.hpp>
-#include <moebius/data/scheme.hpp>
 
 #include "scheme.hpp"
 
 using lolly::io::http_head;
 using lolly::io::http_label;
-using moebius::data::scm_quote;
-using moebius::data::scm_unquote;
 
 tmscm
 blackboxP (tmscm t) {
