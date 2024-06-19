@@ -794,6 +794,14 @@ function main()
                     "string"
                 }
             },
+            {
+                scm_name = "uint32->utf8",
+                cpp_name = "lolly::data::encode_as_utf8",
+                ret_type = "string",
+                arg_list = {
+                    "int"
+                }
+            },
             -- lolly/system
             {
                 scm_name = "system",

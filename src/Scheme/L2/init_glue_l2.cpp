@@ -23,6 +23,7 @@
 
 #include <lolly/data/base64.hpp>
 #include <lolly/data/numeral.hpp>
+#include <lolly/data/unicode.hpp>
 #include <lolly/io/http.hpp>
 #include <lolly/system/subprocess.hpp>
 
