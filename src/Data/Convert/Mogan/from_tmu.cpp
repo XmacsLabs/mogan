@@ -36,19 +36,16 @@ struct tmu_reader {
   hashmap<string, int> codes;   // codes for to present version
   tree_label EXPAND_APPLY;      // APPLY (version < 0.3.3.22) or EXPAND (otherw)
   bool       backslash_ok;      // true for versions >= 1.0.1.23
-  bool       with_extensions;   // true for versions >= 1.0.2.4
   string     buf;               // the string being read from
   int        pos;               // the current position of the reader
   string     last;              // last read string
 
   tmu_reader (string buf2)
       : version (TEXMACS_VERSION), codes (STD_CODE), EXPAND_APPLY (EXPAND),
-        backslash_ok (true), with_extensions (true), buf (buf2), pos (0),
-        last ("") {}
+        backslash_ok (true), buf (buf2), pos (0), last ("") {}
   tmu_reader (string buf2, string version2)
       : version (version2), codes (get_codes (version)), EXPAND_APPLY (EXPAND),
-        backslash_ok (true), with_extensions (true), buf (buf2), pos (0),
-        last ("") {}
+        backslash_ok (true), buf (buf2), pos (0), last ("") {}
 
   int    skip_blank ();
   string decode (string s);
@@ -197,7 +194,6 @@ tree
 tmu_reader::read_apply (string name, bool skip_flag) {
   // cout << "Read apply " << name << INDENT << LF;
   tree t (make_tree_label (name));
-  if (!with_extensions) t= tree (EXPAND_APPLY, name);
   if (codes->contains (name)) {
     // cout << "  " << name << " -> " << as_string ((tree_label) codes [name])
     // << "\n";
@@ -304,7 +300,6 @@ tmu_reader::read (bool skip_flag) {
         }
         else {
           tree t (make_tree_label (name));
-          if (!with_extensions) t= tree (EXPAND_APPLY, name);
           if (codes->contains (name)) {
             // cout << name << " -> " << as_string ((tree_label) codes [name])
             // << "\n";
