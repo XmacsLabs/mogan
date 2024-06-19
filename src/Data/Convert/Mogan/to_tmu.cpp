@@ -1,8 +1,9 @@
 
 /******************************************************************************
- * MODULE     : totm.cpp
- * DESCRIPTION: conversion of TeXmacs trees to the TeXmacs file format
+ * MODULE     : to_tmu.cpp
+ * DESCRIPTION: conversion of TeXmacs trees to the TMU file format
  * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *                  2024  Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -92,23 +93,11 @@ tmu_writer::flush () {
     else
       for (i= 0; i < n;) {
         if (((i + 1) < n) && (tmp[i] == '\\') && (tmp[i + 1] == ' ')) {
-          /* not nice when searching text in a .tm file
-          if (xpos >= 76) {
-            buf << "\\";
-            cr ();
-          }
-          */
           buf << "\\ ";
           xpos+= 2;
           i+= 2;
         }
         else {
-          /* not nice when searching text in a .tm file
-          if (xpos >= 77) {
-            buf << "\\";
-            cr ();
-          }
-          */
           buf << tmp[i];
           xpos++;
           i++;
@@ -184,10 +173,11 @@ tmu_writer::write (string s, bool flag, bool encode_space) {
 
 void
 tmu_writer::br (int indent) {
-  int i;
   flush ();
   tab+= indent;
-  for (i= N (buf) - 1; i >= 0; i--) {
+  int i;
+  int buf_N= N (buf);
+  for (i= buf_N - 1; i >= 0; i--) {
     if (buf[i] == '\n') return;
     if (buf[i] != ' ') {
       cr ();
@@ -281,8 +271,9 @@ tmu_writer::write (tree t) {
   switch (L (t)) {
   case RAW_DATA: {
     write ("<#", false);
-    string s= as_string (t[0]);
-    for (i= 0; i < N (s); i++)
+    string s  = as_string (t[0]);
+    int    s_N= N (s);
+    for (i= 0; i < s_N; i++)
       write (as_hexadecimal ((unsigned char) s[i], 2), false);
     write (">", false);
     break;
