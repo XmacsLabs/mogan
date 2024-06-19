@@ -1,9 +1,9 @@
 
 /******************************************************************************
- * MODULE     : fromtm.cpp
- * DESCRIPTION: conversion from the TeXmacs file format to TeXmacs trees
- *              older versions are automatically converted into the present one
+ * MODULE     : from_tmu.cpp
+ * DESCRIPTION: Convertion from the TMU format
  * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *                  2024  Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -56,8 +56,8 @@ struct tmu_reader {
 
 int
 tmu_reader::skip_blank () {
-  int n= 0;
-  for (; pos < N (buf); pos++) {
+  int n= 0, buf_N= N (buf);
+  for (; pos < buf_N; pos++) {
     if (buf[pos] == ' ') continue;
     if (buf[pos] == '\t') continue;
     if (buf[pos] == '\r') continue;
@@ -93,18 +93,19 @@ tmu_reader::decode (string s) {
 
 string
 tmu_reader::read_char () {
-  while (((pos + 1) < N (buf)) && (buf[pos] == '\\') &&
-         (buf[pos + 1] == '\n')) {
+  int buf_N= N (buf);
+  while (((pos + 1) < buf_N) && (buf[pos] == '\\') && (buf[pos + 1] == '\n')) {
     pos+= 2;
     skip_spaces (buf, pos);
   }
-  if (pos >= N (buf)) return "";
+  if (pos >= buf_N) return "";
   pos++;
   return buf (pos - 1, pos);
 }
 
 string
 tmu_reader::read_next () {
+  int    buf_N  = N (buf);
   int    old_pos= pos;
   string c      = read_char ();
   if (c == "") return c;
@@ -147,7 +148,7 @@ tmu_reader::read_next () {
     c      = read_char ();
     if (c == "") return r;
     else if (c == "\\") {
-      if ((pos < N (buf)) && (buf[pos] == '\\')) {
+      if ((pos < buf_N) && (buf[pos] == '\\')) {
         r << c << "\\";
         pos++;
       }
@@ -181,9 +182,9 @@ tmu_reader::read_function_name () {
 static void
 get_collection (tree& u, tree t) {
   if (is_func (t, COLLECTION) || is_func (t, DOCUMENT) || is_func (t, CONCAT)) {
-    int i;
-    for (i= 0; i < N (t); i++)
-      get_collection (u, t[i]);
+    for (const auto t_i : t) {
+      get_collection (u, t_i);
+    }
   }
   else if (is_compound (t)) u << t;
 }
@@ -199,7 +200,8 @@ tmu_reader::read_apply (string name, bool skip_flag) {
   }
 
   bool closed= !skip_flag;
-  while (pos < N (buf)) {
+  int  buf_N = N (buf);
+  while (pos < buf_N) {
     // cout << "last= " << last << LF;
     bool sub_flag= (skip_flag) && ((last == "") || (last[N (last) - 1] != '|'));
     if (sub_flag) (void) skip_blank ();
@@ -239,6 +241,7 @@ flush (tree& D, tree& C, string& S, bool& spc_flag, bool& ret_flag) {
 
 tree
 tmu_reader::read (bool skip_flag) {
+  int    buf_N= N (buf);
   tree   D (DOCUMENT);
   tree   C (CONCAT);
   string S ("");
@@ -253,28 +256,29 @@ tmu_reader::read (bool skip_flag) {
     if (last == ">") break;
 
     if (last[0] == '<') {
-      if (last[N (last) - 1] == '\\') {
+      char tail_char_of_last= last[N (last) - 1];
+      if (tail_char_of_last == '\\') {
         flush (D, C, S, spc_flag, ret_flag);
         string name= read_function_name ();
         if (last == ">") last= "\\>";
         else last= "\\|";
         C << read_apply (name, true);
       }
-      else if (last[N (last) - 1] == '|') {
+      else if (tail_char_of_last == '|') {
         (void) read_function_name ();
         if (last == ">") last= "|>";
         else last= "||";
         break;
       }
-      else if (last[N (last) - 1] == '/') {
+      else if (tail_char_of_last == '/') {
         (void) read_function_name ();
         if (last == ">") last= "/>";
         else last= "/|";
         break;
       }
-      else if (last[N (last) - 1] == '#') {
+      else if (tail_char_of_last == '#') {
         string r;
-        while ((buf[pos] != '>') && (pos + 2 < N (buf))) {
+        while ((buf[pos] != '>') && (pos + 2 < buf_N)) {
           r << ((char) from_hex (buf (pos, pos + 2)));
           pos+= 2;
         }
