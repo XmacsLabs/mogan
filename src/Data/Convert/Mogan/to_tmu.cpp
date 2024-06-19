@@ -19,6 +19,8 @@ using namespace moebius;
 using lolly::data::as_hexadecimal;
 using moebius::drd::std_contains;
 
+const string TMU_VERSION= "1.0.1";
+
 /******************************************************************************
  * Conversion of TeXmacs trees to the present TeXmacs string format
  ******************************************************************************/
@@ -337,9 +339,9 @@ tmu_writer::write (tree t) {
 string
 tree_to_tmu (tree t) {
   if (!is_snippet (t)) {
-    int  i, n= N (t);
-    tree r (t, n);
-    for (i= 0; i < n; i++)
+    int  t_N= N (t);
+    tree r (t, t_N);
+    for (int i= 0; i < t_N; i++) {
       if (is_compound (t[i], "style", 1)) {
         tree style= t[i][0];
         if (is_func (style, TUPLE, 1)) style= style[0];
@@ -347,6 +349,7 @@ tree_to_tmu (tree t) {
         r[i][0]= style;
       }
       else r[i]= t[i];
+    }
     t= r;
   }
 
