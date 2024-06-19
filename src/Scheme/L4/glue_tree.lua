@@ -928,6 +928,22 @@ function main()
                     "path"
                 }
             },
+            {
+                scm_name = "cork-tree->utf8-tree",
+                cpp_name = "tree_cork_to_utf8",
+                ret_type = "tree",
+                arg_list = {
+                    "tree"
+                }
+            },
+            {
+                scm_name = "utf8-tree->cork-tree",
+                cpp_name = "tree_utf8_to_cork",
+                ret_type = "tree",
+                arg_list = {
+                    "tree"
+                }
+            },
         }
     }
 end

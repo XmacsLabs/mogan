@@ -737,10 +737,24 @@ tree_utf8_to_cork (tree_u8 t) {
     return tree (utf8_to_cork (t->label));
   }
   else {
-    int  i, n= N (t);
-    tree t2 (t, n);
-    for (i= 0; i < n; i++)
+    int  t_N= N (t);
+    tree t2 (t, t_N);
+    for (int i= 0; i < t_N; i++)
       t2[i]= tree_utf8_to_cork (t[i]);
+    return t2;
+  }
+}
+
+tree_u8
+tree_cork_to_utf8 (tree t) {
+  if (is_atomic (t)) {
+    return tree (cork_to_utf8 (t->label));
+  }
+  else {
+    int  t_N= N (t);
+    tree t2 (t, t_N);
+    for (int i= 0; i < t_N; i++)
+      t2[i]= tree_cork_to_utf8 (t[i]);
     return t2;
   }
 }
