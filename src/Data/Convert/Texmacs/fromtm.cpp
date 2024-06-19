@@ -11,10 +11,8 @@
  ******************************************************************************/
 
 #include "convert.hpp"
-#include "converter.hpp"
 #include "path.hpp"
 #include "preferences.hpp"
-#include "scheme.hpp"
 #include "tree_helper.hpp"
 
 #include <lolly/data/numeral.hpp>
@@ -108,24 +106,8 @@ tm_reader::read_char () {
     skip_spaces (buf, pos);
   }
   if (pos >= N (buf)) return "";
-
-  if (get_preference ("tm format without utf8", "off") == "on") {
-    pos++;
-    return buf (pos - 1, pos);
-  }
-  else {
-    int      old_pos= pos;
-    uint32_t code   = decode_from_utf8 (buf, pos);
-    if (pos - old_pos == 1) {
-      return buf (pos - 1, pos);
-    }
-    else if (pos - old_pos == 2) {
-      return "\\<#00" * to_Hex (code) * "\\>";
-    }
-    else {
-      return "\\<#" * to_Hex (code) * "\\>";
-    }
-  }
+  pos++;
+  return buf (pos - 1, pos);
 }
 
 string
@@ -133,10 +115,6 @@ tm_reader::read_next () {
   int    old_pos= pos;
   string c      = read_char ();
   if (c == "") return c;
-  if (get_preference ("tm format without utf8", "off") == "off") {
-    if (N (c) == 9) return c; // c is like \<#FFFF\>
-  }
-
   switch (c[0]) {
   case '\t':
   case '\n':
