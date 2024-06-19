@@ -26,17 +26,22 @@
   (:must-recognize mgs-recognizes?))
 
 (define (texmacs->mgs t)
-)
+  (texmacs->stm (cork-tree->u8-tree t)))
+
+(define (mgs->texmacs text)
+  (u8-tree->cork-tree (stm->texmacs text)))
+
+(define (mgs-snippet->texmacs text)
+  (u8-tree->cork-tree (stm-snippet->texmacs text)))
 
 (converter texmacs-tree mgs-document
-  (:function texmacs->stm))
+  (:function texmacs->mgs))
 
 (converter mgs-document texmacs-tree
-  (:function stm->texmacs))
+  (:function mgs->texmacs))
 
 (converter texmacs-tree mgs-snippet
-  (:function texmacs->stm))
+  (:function texmacs->mgs))
 
 (converter mgs-snippet texmacs-tree
-  (:function stm-snippet->texmacs))
-
+  (:function mgs-snippet->texmacs))
