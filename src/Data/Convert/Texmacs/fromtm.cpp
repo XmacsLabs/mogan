@@ -373,7 +373,7 @@ tm_reader<format_without_utf8>::read (bool skip_flag) {
 tree
 texmacs_to_tree (string s) {
   bool format_without_utf8=
-      get_preference ("tm format without utf8", "on") == "on";
+      get_preference ("tm format without utf8", "off") == "on";
   if (format_without_utf8) {
     tm_reader<true> tmr (s);
     return tmr.read (true);
@@ -387,7 +387,7 @@ texmacs_to_tree (string s) {
 tree
 texmacs_to_tree (string s, string version) {
   bool format_without_utf8=
-      get_preference ("tm format without utf8", "on") == "on";
+      get_preference ("tm format without utf8", "off") == "on";
   if (format_without_utf8) {
     tm_reader<true> tmr (s, version);
     return tmr.read (true);
