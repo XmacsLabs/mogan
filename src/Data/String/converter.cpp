@@ -29,7 +29,6 @@ using lolly::data::from_hex;
 using lolly::data::to_Hex;
 using moebius::data::block_to_scheme_tree;
 
-#define as_hexadecimal to_Hex
 #define from_hexadecimal from_hex
 
 /******************************************************************************
@@ -322,7 +321,7 @@ convert_utf8_to_LaTeX (string input) {
         if (code == 10) output << "-";
         else {
           output << r;
-          cout << "TeXmacs] non ascii character <#" << as_hexadecimal (code)
+          cout << "TeXmacs] non ascii character <#" << to_Hex (code)
                << "> on output: " << unicode
                << "\nLaTeX output may not compile.\n";
           // output << "(error)";
@@ -344,7 +343,7 @@ utf8_to_cork (string input) {
     unsigned int code= decode_from_utf8 (input, i);
     string       s   = input (start, i);
     string       r   = apply (conv, s);
-    if (r == s && code >= 256) r= "<#" * as_hexadecimal (code) * ">";
+    if (r == s && code >= 256) r= "<#" * to_Hex (code) * ">";
     output << r;
   }
   return output;
@@ -360,7 +359,7 @@ sourcecode_to_cork (string input) {
     unsigned int code= decode_from_utf8 (input, i);
     string       s   = input (start, i);
     string       r   = apply (conv, s);
-    if (r == s && code >= 256) r= "<#" * as_hexadecimal (code) * ">";
+    if (r == s && code >= 256) r= "<#" * to_Hex (code) * ">";
     output << r;
   }
   return output;
@@ -430,7 +429,7 @@ utf8_to_t2a (string_u8 input) {
     unsigned int code= decode_from_utf8 (input, i);
     string       s   = input (start, i);
     string       r   = apply (conv, s);
-    if (r == s && code >= 256) r= "<#" * as_hexadecimal (code) * ">";
+    if (r == s && code >= 256) r= "<#" * to_Hex (code) * ">";
     output << r;
   }
   return output;
@@ -817,7 +816,7 @@ utf8_to_hex_entities (string_u8 s) {
     }
     else {
       unsigned int code= decode_from_utf8 (s, i);
-      string       hex = as_hexadecimal (code);
+      string       hex = to_Hex (code);
       while (N (hex) < 4)
         hex= "0" * hex;
       // cout << "entity: " << hex << " (" << code << ")\n";
@@ -839,18 +838,18 @@ utf8_to_utf16be_string (string_u8 s) {
       unsigned int code2= code - 0x10000;
       unsigned int w1   = 0xD800 + (code2 >> 10);
       unsigned int w2   = 0xDC00 + (code2 & 0x3FF);
-      hex               = as_hexadecimal (w1);
+      hex               = to_Hex (w1);
       while (N (hex) < 4)
         hex= "0" * hex;
       result << hex;
-      hex= as_hexadecimal (w2);
+      hex= to_Hex (w2);
       while (N (hex) < 4)
         hex= "0" * hex;
       result << hex;
     }
     else {
       // basic planes
-      string hex= as_hexadecimal (code);
+      string hex= to_Hex (code);
       while (N (hex) < 4)
         hex= "0" * hex;
       result << hex;
