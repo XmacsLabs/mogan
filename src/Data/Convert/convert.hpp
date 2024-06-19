@@ -53,6 +53,11 @@ tree                 nonumber_to_eqnumber (tree t);
 tree                 eqnumber_to_nonumber (tree t);
 string               search_metadata (tree doc, string kind);
 
+/*** TMU ***/
+tree   tmu_to_tree (string s);
+tree   tmu_document_to_tree (string s);
+string tree_to_tmu (tree t);
+
 /*** Verbatim ***/
 string tree_to_verbatim (tree t, bool wrap= false, string enc= "default");
 tree   verbatim_to_tree (string s, bool wrap= false, string enc= "default");
