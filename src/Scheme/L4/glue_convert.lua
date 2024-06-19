@@ -48,6 +48,30 @@ function main()
                 }
             },
             {
+                scm_name = "parse-tmu",
+                cpp_name = "tmu_document_to_tree",
+                ret_type = "tree",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "serialize-tmu",
+                cpp_name = "tree_to_tmu",
+                ret_type = "string",
+                arg_list = {
+                    "tree"
+                }
+            },
+            {
+                scm_name = "parse-tmu-snippet",
+                cpp_name = "tmu_to_tree",
+                ret_type = "tree",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
                 scm_name = "texmacs->stm",
                 cpp_name = "tree_to_scheme",
                 ret_type = "string",
