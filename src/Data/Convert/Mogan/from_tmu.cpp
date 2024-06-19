@@ -361,22 +361,27 @@ tree
 tmu_document_to_tree (string s) {
   tree error (ERROR, "bad format or data");
 
-  if (starts (s, "<TeXmacs|")) {
-    int i;
-    for (i= 9; i < N (s); i++)
-      if (s[i] == '>') break;
-    string version= s (9, i);
-    tree   doc    = tmu_to_tree (s, version);
+  if (starts (s, "<TMU|<tuple|")) {
+    int           i              = index_of (s, '>');
+    string        version_tuple  = s (N ("<TMU|<tuple|"), i);
+    array<string> version_arr    = tokenize (version_tuple, "|");
+    string        tmu_version    = version_arr[0];
+    string        texmacs_version= version_arr[1];
+    tree          doc            = tmu_to_tree (s, texmacs_version);
+
     if (is_compound (doc, "TeXmacs", 1) || is_expand (doc, "TeXmacs", 1) ||
         is_apply (doc, "TeXmacs", 1))
       doc= tree (DOCUMENT, doc);
+
     if (!is_document (doc)) return error;
+
     if (N (doc) == 0 || !is_compound (doc[0], "TeXmacs", 1)) {
       tree d (DOCUMENT);
-      d << compound ("TeXmacs", version);
+      d << compound ("TeXmacs", texmacs_version);
       d << A (doc);
       doc= d;
     }
+
     return doc;
   }
   return error;
