@@ -15,6 +15,8 @@
 #include "object_l3.hpp"
 #include "s7_tm.hpp"
 
+#include "converter.hpp"
+#include "cork.hpp"
 #include "file.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
@@ -30,7 +32,11 @@
 #include "tree_patch.hpp"
 #include "url.hpp"
 
+#include <moebius/data/scheme.hpp>
 #include <moebius/drd/drd_mode.hpp>
+
+using moebius::data::scm_quote;
+using moebius::data::scm_unquote;
 using moebius::drd::get_access_mode;
 using moebius::drd::set_access_mode;
 
@@ -98,8 +104,8 @@ patchP (tmscm t) {
 }
 
 #include "glue_modification.cpp"
+#include "glue_moebius.cpp"
 #include "glue_patch.cpp"
-#include "glue_path.cpp"
 
 void
 initialize_glue_l3 () {
@@ -112,7 +118,7 @@ initialize_glue_l3 () {
   initialize_glue_url ();
   initialize_glue_file ();
   initialize_glue_misc ();
-  initialize_glue_path ();
   initialize_glue_modification ();
+  initialize_glue_moebius ();
   initialize_glue_patch ();
 }
