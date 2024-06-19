@@ -203,20 +203,6 @@ tmu_writer::apply (string func, array<tree> args) {
   last= i;
 
   if (last >= 0) {
-    /*
-    tag ("<\\", func, ">");
-    for (i=0; i<n; i++) {
-      if (is_empty (args[i])) br ();
-      else {
-        br (2);
-        write (args[i]);
-        br (-2);
-      }
-      if (i<(n-1)) tag ("<|", func, ">");
-    }
-    tag ("</", func, ">");
-    */
-
     for (i= 0; i <= n; i++) {
       bool flag=
           (i < n) && (is_document (args[i]) || is_func (args[i], COLLECTION));

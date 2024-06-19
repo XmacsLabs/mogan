@@ -256,26 +256,27 @@ tmu_reader::read (bool skip_flag) {
     if (last == ">") break;
 
     if (last[0] == '<') {
-      if (last[N (last) - 1] == '\\') {
+      char tail_char_of_last= last[N (last) - 1];
+      if (tail_char_of_last == '\\') {
         flush (D, C, S, spc_flag, ret_flag);
         string name= read_function_name ();
         if (last == ">") last= "\\>";
         else last= "\\|";
         C << read_apply (name, true);
       }
-      else if (last[N (last) - 1] == '|') {
+      else if (tail_char_of_last == '|') {
         (void) read_function_name ();
         if (last == ">") last= "|>";
         else last= "||";
         break;
       }
-      else if (last[N (last) - 1] == '/') {
+      else if (tail_char_of_last == '/') {
         (void) read_function_name ();
         if (last == ">") last= "/>";
         else last= "/|";
         break;
       }
-      else if (last[N (last) - 1] == '#') {
+      else if (tail_char_of_last == '#') {
         string r;
         while ((buf[pos] != '>') && (pos + 2 < buf_N)) {
           r << ((char) from_hex (buf (pos, pos + 2)));
