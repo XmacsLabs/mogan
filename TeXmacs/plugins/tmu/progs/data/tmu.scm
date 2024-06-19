@@ -17,14 +17,23 @@
   (:name "TMU")
   (:suffix "tmu" "tsu"))
 
+(define (texmacs->tmu t)
+  (serialize-tmu (cork-tree->utf8-tree t)))
+
+(define (tmu->texmacs t)
+  (utf8-tree->cork-tree (parse-tmu t)))
+
+(define (tmu-snippet->texmacs t)
+  (utf8-tree->cork-tree (parse-tmu-snippet t)))
+
 (converter tmu-document texmacs-tree
-  (:function parse-tmu))
+  (:function tmu->texmacs))
 
 (converter texmacs-tree tmu-document
-  (:function serialize-tmu))
+  (:function texmacs->tmu))
 
 (converter tmu-snippet texmacs-tree
-  (:function parse-tmu-snippet))
+  (:function tmu-snippet->texmacs))
 
 (converter texmacs-tree tmu-snippet
-  (:function serialize-tmu))
+  (:function texmacs->tmu))
