@@ -46,11 +46,9 @@ struct tmu_reader {
         backslash_ok (true), with_extensions (true), buf (buf2), pos (0),
         last ("") {}
   tmu_reader (string buf2, string version2)
-      : version (version2), codes (get_codes (version)),
-        EXPAND_APPLY (version_inf (version, "0.3.3.22") ? APPLY : EXPAND),
-        backslash_ok (version_inf (version, "1.0.1.23") ? false : true),
-        with_extensions (version_inf (version, "1.0.2.4") ? false : true),
-        buf (buf2), pos (0), last ("") {}
+      : version (version2), codes (get_codes (version)), EXPAND_APPLY (EXPAND),
+        backslash_ok (true), with_extensions (true), buf (buf2), pos (0),
+        last ("") {}
 
   int    skip_blank ();
   string decode (string s);
@@ -335,7 +333,6 @@ tmu_reader::read (bool skip_flag) {
   if (N (D) == 0) return "";
   if (N (D) == 1) {
     if (!skip_flag) return D[0];
-    if (version_inf_eq (version, "0.3.4.10")) return D[0];
     if (is_func (D[0], COLLECTION)) return D[0];
   }
   return D;
@@ -370,29 +367,6 @@ is_expand (tree t, string s, int n) {
 tree
 tmu_document_to_tree (string s) {
   tree error (ERROR, "bad format or data");
-  if (starts (s, "edit") || starts (s, "TeXmacs") ||
-      starts (s, "\\(\\)(TeXmacs")) {
-    string version= "0.0.0.0";
-    tree   t      = string_to_tree (s, version);
-    if (is_tuple (t) && (N (t) > 0)) t= t (1, N (t));
-    int n= arity (t);
-
-    tree doc (DOCUMENT);
-    doc << compound ("TeXmacs", version);
-    if (n < 3) return error;
-    else if (n < 4)
-      doc << compound ("body", t[2]) << compound ("style", t[0])
-          << compound ("initial", t[1]);
-    else if (n < 7)
-      doc << compound ("body", t[0]) << compound ("style", t[1])
-          << compound ("initial", t[2]) << compound ("references", t[3]);
-    else
-      doc << compound ("body", t[0]) << compound ("project", t[1])
-          << compound ("style", t[2]) << compound ("initial", t[3])
-          << compound ("final", t[4]) << compound ("references", t[5])
-          << compound ("auxiliary", t[6]);
-    return upgrade (doc, version);
-  }
 
   if (starts (s, "<TeXmacs|")) {
     int i;
@@ -410,7 +384,7 @@ tmu_document_to_tree (string s) {
       d << A (doc);
       doc= d;
     }
-    return upgrade (doc, version);
+    return doc;
   }
   return error;
 }
