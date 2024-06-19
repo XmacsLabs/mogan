@@ -19,7 +19,8 @@ using namespace moebius;
 using lolly::data::as_hexadecimal;
 using moebius::drd::std_contains;
 
-const string TMU_VERSION= "1.0.1";
+const string TMU_VERSION    = "1.0.1";
+const int    MAX_PARA_LENGTH= 65535;
 
 /******************************************************************************
  * Conversion of TeXmacs trees to the present TeXmacs string format
@@ -72,7 +73,7 @@ void
 tmu_writer::flush () {
   int i, m= N (spc), n= N (tmp);
   if ((m + n) == 0) return;
-  if ((xpos + m + n) < 78) {
+  if ((xpos + m + n) < MAX_PARA_LENGTH) {
     buf << spc << tmp;
     xpos+= m + n;
   }
@@ -84,7 +85,7 @@ tmu_writer::flush () {
         xpos++;
       }
     }
-    if ((xpos + n) < 78) {
+    if ((xpos + n) < MAX_PARA_LENGTH) {
       buf << tmp;
       xpos+= n;
     }
