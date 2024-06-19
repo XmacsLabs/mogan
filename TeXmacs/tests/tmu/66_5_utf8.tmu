@@ -1,0 +1,14 @@
+<TMU|<tuple|1.0.1|2.1.2>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  地球智造，惠及全球
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|papyrus>
+    <associate|page-screen-margin|true>
+  </collection>
+</initial>
