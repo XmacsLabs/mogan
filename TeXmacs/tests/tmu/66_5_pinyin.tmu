@@ -1,0 +1,21 @@
+<TMU|<tuple|1.0.1|2.1.2>>
+
+<style|<tuple|generic|no-page-numbers|chinese>>
+
+<\body>
+  ā á ǎ à
+
+  ē é ě è
+
+  ī í ǐ ì
+
+  ō ó ǒ ò
+
+  ū ú ǔ ù
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
