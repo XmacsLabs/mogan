@@ -21,6 +21,20 @@ TEST_CASE ("tm_encode") {
   string_eq (tm_encode (""), "");
 }
 
+TEST_CASE ("tm_var_encode") {
+  string_eq (tm_var_encode ("<>"), "<less><gtr>");
+  string_eq (tm_var_encode ("<#ABCD>"), "<#ABCD>");
+  string_eq (tm_encode ("abc"), "abc");
+  string_eq (tm_encode (""), "");
+}
+
+TEST_CASE ("tm_decode") {
+  string_eq (tm_decode ("<less><gtr>"), "<>");
+  string_eq (tm_decode ("<#ABCD>"), "<#ABCD>");
+  string_eq (tm_decode ("abc"), "abc");
+  string_eq (tm_decode (""), "");
+}
+
 TEST_CASE ("tm_length") {
   string_eq (tm_string_length (""), 0);
   string_eq (tm_string_length ("<#ABCD>"), 1);

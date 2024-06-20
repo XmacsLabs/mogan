@@ -328,6 +328,26 @@ is_applicable (tree t) {
           (L (t) == moebius::XMACRO));
 }
 
+inline bool
+is_apply (tree t) {
+  return (L (t) == moebius::APPLY);
+}
+
+inline bool
+is_apply (tree t, string s) {
+  return (L (t) == moebius::APPLY) && (N (t) >= 1) && (t[0] == s);
+}
+
+inline bool
+is_apply (tree t, string s, int n) {
+  return (L (t) == moebius::APPLY) && (N (t) == (n + 1)) && (t[0] == s);
+}
+
+inline bool
+is_expand (tree t, string s, int n) {
+  return (L (t) == moebius::EXPAND) && (N (t) == n + 1) && (t[0] == s);
+}
+
 tree freeze (tree t);
 inline tree
 verbatim (tree t1) {

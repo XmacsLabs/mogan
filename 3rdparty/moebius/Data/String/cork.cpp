@@ -39,28 +39,6 @@ tm_encode (string s) {
 }
 
 string
-tm_decode (string s) {
-  // TeXmacs encoding to verbatim
-  int    i;
-  string r;
-  for (i= 0; i < N (s); i++) {
-    if (s[i] == '<') {
-      int j;
-      for (j= i + 1; j < N (s); j++)
-        if (s[j] == '>') break;
-      if (j < N (s)) j++;
-      if (s (i, j) == "<less>") r << "<";
-      else if (s (i, j) == "<gtr>") r << ">";
-      else if (i + 7 == j && s[i + 1] == '#' && s[j - 1] == '>') r << s (i, j);
-      i= j - 1;
-      if (s[i] != '>') return r;
-    }
-    else if (s[i] != '>') r << s[i];
-  }
-  return r;
-}
-
-string
 tm_var_encode (string s) {
   int    i, n= N (s);
   string r;
@@ -75,6 +53,28 @@ tm_var_encode (string s) {
     }
     else if (s[i] == '>') r << "<gtr>";
     else r << s[i];
+  }
+  return r;
+}
+
+string
+tm_decode (string s) {
+  // TeXmacs encoding to verbatim
+  string r;
+  int    s_N= N (s);
+  for (int i= 0; i < s_N; i++) {
+    if (s[i] == '<') {
+      int j;
+      for (j= i + 1; j < s_N; j++)
+        if (s[j] == '>') break;
+      if (j < s_N) j++;
+      if (s (i, j) == "<less>") r << "<";
+      else if (s (i, j) == "<gtr>") r << ">";
+      else if (i + 7 == j && s[i + 1] == '#' && s[j - 1] == '>') r << s (i, j);
+      i= j - 1;
+      if (s[i] != '>') return r;
+    }
+    else if (s[i] != '>') r << s[i];
   }
   return r;
 }
