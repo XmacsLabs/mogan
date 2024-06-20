@@ -356,6 +356,7 @@ utf8_to_hash_cork (string input) {
   for (i= 0; i < n;) {
     start            = i;
     unsigned int code= decode_from_utf8 (input, i);
+    string       r;
     if (code >= 256) r= "<#" * to_Hex (code) * ">";
     else r= input (start, i);
     output << r;
