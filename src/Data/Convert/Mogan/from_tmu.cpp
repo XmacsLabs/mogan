@@ -99,8 +99,10 @@ tmu_reader::read_char () {
     skip_spaces (buf, pos);
   }
   if (pos >= buf_N) return "";
-  pos++;
-  return buf (pos - 1, pos);
+
+  int start_pos= pos;
+  decode_from_utf8 (buf, pos);
+  return buf (start_pos, pos);
 }
 
 string
