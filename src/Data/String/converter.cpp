@@ -350,6 +350,20 @@ utf8_to_cork (string input) {
 }
 
 string
+utf8_to_hash_cork (string input) {
+  int    start, i, n= N (input);
+  string output;
+  for (i= 0; i < n;) {
+    start            = i;
+    unsigned int code= decode_from_utf8 (input, i);
+    if (code >= 256) r= "<#" * to_Hex (code) * ">";
+    else r= input (start, i);
+    output << r;
+  }
+  return output;
+}
+
+string
 sourcecode_to_cork (string input) {
   converter conv= load_converter ("SourceCode", "Cork");
   int       start, i, n= N (input);
@@ -380,6 +394,24 @@ cork_to_utf8 (string input) {
       start= i + 1;
     }
   r << apply (conv, input (start, n));
+  return r;
+}
+
+string_u8
+hash_cork_to_utf8 (string input) {
+  int    start= 0, i, n= N (input);
+  string r;
+  for (i= 0; i < n; i++) {
+    if (input[i] == '<' && i + 1 < n && input[i + 1] == '#') {
+      r << input (start, i);
+      start= i= i + 2;
+      while (i < n && input[i] != '>')
+        i++;
+      r << encode_as_utf8 (from_hexadecimal (input (start, i)));
+      start= i + 1;
+    }
+  }
+  r << input (start, n);
   return r;
 }
 
