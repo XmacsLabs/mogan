@@ -10,12 +10,9 @@
  ******************************************************************************/
 
 #include "Tex/convert_tex.hpp"
-#include "tree_helper.hpp"
 
 #ifndef METADATA_H
 #define METADATA_H
-
-using moebius::APPLY;
 
 tree        collect_abstract_data (tree u);
 array<tree> collect_metadata_latex (tree t,
@@ -34,30 +31,5 @@ bool        is_metadata (tree u);
 bool        is_metadata_env (tree u);
 tree        filter_spaces (tree t, bool& spaced);
 array<tree> filter_spaces (array<tree> a, bool& spaced);
-
-/******************************************************************************
- * Usefull APPLY tag
- ******************************************************************************/
-
-inline bool
-is_apply (tree t) {
-  return (L (t) == APPLY);
-}
-inline bool
-is_apply (tree t, string s) {
-  return (L (t) == APPLY) && (N (t) >= 1) && (t[0] == s);
-}
-inline bool
-is_apply (tree t, const char* s) {
-  return (L (t) == APPLY) && (N (t) >= 1) && (t[0] == s);
-}
-inline bool
-is_apply (tree t, string s, int n) {
-  return (L (t) == APPLY) && (N (t) == (n + 1)) && (t[0] == s);
-}
-inline bool
-is_apply (tree t, const char* s, int n) {
-  return (L (t) == APPLY) && (N (t) == (n + 1)) && (t[0] == s);
-}
 
 #endif // defined METADATA_H

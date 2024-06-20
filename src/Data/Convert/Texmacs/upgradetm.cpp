@@ -339,13 +339,13 @@ get_codes (string version) {
  ******************************************************************************/
 
 static bool
-is_expand (tree t) {
+is_expands (tree t) {
   return ((L (t) == EXPAND) || (L (t) == VAR_EXPAND) || (L (t) == HIDE_EXPAND));
 }
 
 static bool
-is_expand (tree t, string s, int n) {
-  return is_expand (t) && (N (t) == n + 1) && (t[0] == s);
+is_expands (tree t, string s, int n) {
+  return is_expands (t) && (N (t) == n + 1) && (t[0] == s);
 }
 
 /******************************************************************************
@@ -1444,7 +1444,7 @@ upgrade_split (tree t, bool eq= false) {
 static tree
 upgrade_project (tree t) {
   if (is_atomic (t)) return t;
-  else if (is_expand (t, "include-document", 1))
+  else if (is_expands (t, "include-document", 1))
     return tree (VAR_INCLUDE, t[1]);
   else {
     int  i, n= N (t);
@@ -1537,7 +1537,7 @@ static void
 upgrade_cas_search (tree t, tree& style) {
   if (is_atomic (t))
     ;
-  else if (is_expand (t, "session", 3)) {
+  else if (is_expands (t, "session", 3)) {
     if (!is_atomic (t[1])) return;
     string l= copy (t[1]->label);
     if (l == "scheme") return;
@@ -1689,8 +1689,8 @@ upgrade_mod_symbols (tree t) {
 static tree
 upgrade_menus_in_help (tree t) {
   if (is_atomic (t)) return t;
-  if (is_expand (t, "menu", 1) || is_expand (t, "submenu", 2) ||
-      is_expand (t, "subsubmenu", 3) || is_expand (t, "subsubsubmenu", 4)) {
+  if (is_expands (t, "menu", 1) || is_expands (t, "submenu", 2) ||
+      is_expands (t, "subsubmenu", 3) || is_expands (t, "subsubsubmenu", 4)) {
     int  i, n= N (t);
     tree r (APPLY, n);
     r[0]= "menu";
@@ -1740,7 +1740,7 @@ upgrade_capitalize_menus (tree t) {
 static tree
 upgrade_traverse_branch (tree t) {
   if (is_atomic (t)) return t;
-  else if (is_expand (t, "branch", 3) ||
+  else if (is_expands (t, "branch", 3) ||
            (is_func (t, APPLY, 4) && (t[0] == "branch")))
     return tree (APPLY, t[0], t[1], t[3]);
   else {
@@ -1759,7 +1759,7 @@ upgrade_traverse_branch (tree t) {
 static tree
 upgrade_session (tree t) {
   if (is_atomic (t)) return t;
-  else if (is_expand (t, "session", 3)) {
+  else if (is_expands (t, "session", 3)) {
     tree u= tree (EXPAND, "session", t[3]);
     tree w= tree (WITH);
     w << tree (PROG_LANGUAGE) << t[1] << tree (PROG_SESSION) << t[2] << u;
@@ -1843,7 +1843,7 @@ upgrade_xexpand (tree t) {
   else {
     int  i, n= N (t);
     tree r (t, n);
-    if (is_expand (t)) r= tree (COMPOUND, n);
+    if (is_expands (t)) r= tree (COMPOUND, n);
     for (i= 0; i < n; i++)
       r[i]= upgrade_xexpand (t[i]);
     return r;
