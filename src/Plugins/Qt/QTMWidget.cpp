@@ -222,11 +222,8 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
   if (DEBUG_QT)
     debug_qt << "IM preediting :" << preedit_string.toUtf8 ().data () << LF;
 
-  bool im_preedit_switch= false;
-  if (os_win () || os_macos ()) {
-    im_preedit_switch= true;
-  }
-  string im_preedit_str= get_preference ("IM:preedit");
+  bool   im_preedit_switch= true;
+  string im_preedit_str   = get_preference ("IM:preedit");
   if (im_preedit_str == "off") {
     im_preedit_switch= false;
   }
