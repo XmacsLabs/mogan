@@ -154,8 +154,6 @@ tmu_writer::write (string s, bool flag, bool encode_space) {
         else if (c == '<') tmp << "\\<";
         else if (c == '|') tmp << "\\|";
         else if (c == '>') tmp << "\\>";
-        else if (c == '\34') tmp << c;
-        else if (((unsigned char) c) < ' ') tmp << '\\' << (c + '@');
         else tmp << c;
         spc_flag= false;
         ret_flag= false;
