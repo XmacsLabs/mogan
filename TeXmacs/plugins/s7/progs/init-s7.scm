@@ -14,9 +14,10 @@
 (lazy-format (data s7) s7)
 
 (define (s7-serialize lan t)
-  (with u (pre-serialize lan t)
-    (with s (texmacs->code (stree->tree u) "SourceCode")
-      (string-append s "\n<EOF>\n"))))
+  (let* ((u (pre-serialize lan t))
+         (cork-s (texmacs->code (stree->tree u) "Cork"))
+         (s (tmstring->string cork-s)))
+    (string-append s "\n<EOF>\n")))
 
 (define (s7-launcher)
   "tm_s7")

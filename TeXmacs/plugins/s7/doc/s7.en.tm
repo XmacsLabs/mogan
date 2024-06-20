@@ -12,6 +12,102 @@
   separated process, as a result, infinite loop in S7 Scheme session will not
   freeze Mogan while infinite loop in Scheme session will freeze Mogan.
 
+  Here are snippets which only works in the S7 Scheme session:
+
+  <paragraph|unicode support>
+
+  The string literal in S7 Scheme does not support Unicode. In the S7 Scheme
+  session, we use the cork encoding as a workaround.
+
+  <\scm-code>
+    <block|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Scheme
+    Code>|<cell|Actual Scheme Code>>|<row|<cell|'\<#4E2D\>\<#6587\>>|<cell|'\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>>>|<row|<cell|(length
+    "\<#4E2D\>\<#6587\>")>|<cell|(length "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>")>>>>>
+  </scm-code>
+
+  <\session|s7|default>
+    <\output>
+      S7 Scheme 10.6 (14-Apr-2023)
+    </output>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      '\<#4E2D\>\<#6587\>
+    <|unfolded-io>
+      \<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      '\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
+    <|unfolded-io>
+      \<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (length "\<#4E2D\>\<#6587\>")
+    <|unfolded-io>
+      14
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (length "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>")
+    <|unfolded-io>
+      14
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  <paragraph|special rules for rendering>
+
+  For Scheme snippets starting with the markup
+  <markup|document>\<#3001\><markup|math>\<#3001\><markup|equation*>\<#3001\><markup|align>\<#3001\><markup|with>\<#3001\><markup|graphics>:
+
+  <\session|s7|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      `(document (frac "\<#5206\>\<#5B50\>" "\<#5206\>\<#6BCD\>"))
+    <|unfolded-io>
+      <frac|\<#5206\>\<#5B50\>|\<#5206\>\<#6BCD\>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      `(math (frac "1" "2"))
+    <|unfolded-io>
+      <math|<frac|1|2>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      `(with "color" "red" "Hello")
+    <|unfolded-io>
+      <with|color|red|Hello>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  \;
+
   Here are code snippets from <slink|https://ccrma.stanford.edu/software/s7/s7.html>.
 
   <paragraph|help>
@@ -264,7 +360,7 @@
     <|unfolded-io>
       (random 1.0)
     <|unfolded-io>
-      0.848072511242711
+      0.27911546200969206
     </unfolded-io>
 
     <\unfolded-io>
@@ -272,7 +368,7 @@
     <|unfolded-io>
       (random 3/4)
     <|unfolded-io>
-      477221/1610063
+      208571/373317
     </unfolded-io>
 
     <\input>
@@ -591,10 +687,6 @@
 
         ; (load "test.scm")
 
-        ; ((abs 1 2))
-
-        ; ((abs 1 2))
-
         \;
       </errput>
     </unfolded-io>
@@ -631,6 +723,10 @@
 
         ; (vector-set! v 0 23)
 
+        ; ((/ 1.0 0.0))
+
+        ; ((/ 1.0 0.0))
+
         \;
       </errput>
     </unfolded-io>
@@ -665,9 +761,9 @@
 
         ; (set! var 1)
 
-        ; (+ 1 2)
+        ; ((/ 1.0 0.0))
 
-        ; (+ 1 2)
+        ; ((/ 1.0 0.0))
 
         \;
       </errput>
@@ -689,9 +785,9 @@
 
         ; (set! var 1)
 
-        ; (+ 1 2)
+        ; ((/ 1.0 0.0))
 
-        ; (+ 1 2)
+        ; ((/ 1.0 0.0))
 
         \;
       </errput>
