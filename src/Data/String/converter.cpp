@@ -136,6 +136,18 @@ converter_rep::load () {
                               true);
     ht= dic;
   }
+
+  if (from == "Hash-Cork" && to == "UTF-8") {
+    hashtree<char, string> dic;
+    hashtree_from_dictionary (dic, "corktounicode", BIT2BIT, UTF8, false);
+    ht= dic;
+  }
+  else if (from == "UTF-8" && to == "Hash-Cork") {
+    hashtree<char, string> dic;
+    hashtree_from_dictionary (dic, "corktounicode", UTF8, BIT2BIT, true);
+    ht= dic;
+  }
+
   if (from == "Strict-Cork" && to == "UTF-8") {
     hashtree<char, string> dic;
     hashtree_from_dictionary (dic, "corktounicode", BIT2BIT, UTF8, false);
@@ -351,14 +363,15 @@ utf8_to_cork (string input) {
 
 string
 utf8_to_hash_cork (string input) {
-  int    start, i, n= N (input);
-  string output;
+  converter conv= load_converter ("UTF-8", "Hash-Cork");
+  int       start, i, n= N (input);
+  string    output;
   for (i= 0; i < n;) {
     start            = i;
     unsigned int code= decode_from_utf8 (input, i);
-    string       r;
-    if (code >= 256) r= "<#" * to_Hex (code) * ">";
-    else r= input (start, i);
+    string       s   = input (start, i);
+    string       r   = apply (conv, s);
+    if (r == s && code >= 256) r= "<#" * to_Hex (code) * ">";
     output << r;
   }
   return output;
@@ -400,19 +413,19 @@ cork_to_utf8 (string input) {
 
 string_u8
 hash_cork_to_utf8 (string input) {
-  int    start= 0, i, n= N (input);
-  string r;
-  for (i= 0; i < n; i++) {
+  converter conv = load_converter ("Hash-Cork", "UTF-8");
+  int       start= 0, i, n= N (input);
+  string    r;
+  for (i= 0; i < n; i++)
     if (input[i] == '<' && i + 1 < n && input[i + 1] == '#') {
-      r << input (start, i);
+      r << apply (conv, input (start, i));
       start= i= i + 2;
       while (i < n && input[i] != '>')
         i++;
       r << encode_as_utf8 (from_hexadecimal (input (start, i)));
       start= i + 1;
     }
-  }
-  r << input (start, n);
+  r << apply (conv, input (start, n));
   return r;
 }
 
