@@ -734,7 +734,7 @@ search_sections (tree t) {
 tree
 tree_utf8_to_cork (tree_u8 t) {
   if (is_atomic (t)) {
-    return tree (utf8_to_cork (t->label));
+    return tree (utf8_to_hash_cork (t->label));
   }
   else {
     int  t_N= N (t);
@@ -748,7 +748,7 @@ tree_utf8_to_cork (tree_u8 t) {
 tree_u8
 tree_cork_to_utf8 (tree t) {
   if (is_atomic (t)) {
-    return tree (cork_to_utf8 (t->label));
+    return tree (hash_cork_to_utf8 (t->label));
   }
   else {
     int  t_N= N (t);
