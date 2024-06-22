@@ -1,0 +1,35 @@
+<TMU|<tuple|1.0.1|2.1.2>>
+
+<style|<tuple|tmdoc|devel|british>>
+
+<\body>
+  <tmdoc-title|Failed to render circled numbers>
+
+  <section|Bug Metadata>
+
+  <\itemize>
+    <item>Reporter: <value|da>
+
+    <item>Owner: <value|da>
+
+    <item>Tester: <value|da>
+  </itemize>
+
+  <section|How to reproduce it>
+
+  It failed to render in Column 2. When we set the font to Songti SC, it renders ok.
+
+  <\big-table|<tabular|<tformat|<cwith|1|-1|3|3|font|Songti SC>|<table|<row|<cell|1>|<cell|①>|<cell|①>>|<row|<cell|2>|<cell|②>|<cell|②>>|<row|<cell|3>|<cell|③>|<cell|③>>|<row|<cell|4>|<cell|④>|<cell|④>>|<row|<cell|5>|<cell|⑤>|<cell|⑤>>|<row|<cell|6>|<cell|⑥>|<cell|⑥>>|<row|<cell|7>|<cell|⑦>|<cell|⑦>>|<row|<cell|8>|<cell|⑧>|<cell|⑧>>|<row|<cell|9>|<cell|⑨>|<cell|⑨>>|<row|<cell|10>|<cell|⑩>|<cell|⑩>>>>>>
+    Circled numbers
+  </big-table>
+
+  <tmdoc-copyright|2023|<value|da>>
+
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|papyrus>
+  </collection>
+</initial>

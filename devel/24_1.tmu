@@ -1,0 +1,27 @@
+<TMU|<tuple|1.0.1|2.1.2>>
+
+<style|<tuple|tmdoc|british|devel>>
+
+<\body>
+  <tmdoc-title|html import and export>
+
+  <section|gibberish encoding for html title>
+
+  <space|2em>在文档《2021年全国新高考I卷数学试题》中，标题可能采用了非内置的字体？导致了输出html时的乱码问题。
+
+  <space|2em>由于我未能复现这个bug（用内置字体输出html导致乱码），所以我暂时无法修复这个bug。
+
+  <section|<code*|\\underline><nbsp>missing in HTML converter>
+
+  <space|2em>参考自issue：https://github.com/XmacsLabs/mogan/issues/499
+
+  <space|2em>文档中的<underline|hello>在导出为html时缺失下划线，推测需要判断文档是否含有”<inactive|<hybrid|underline>>”宏然后在导出html时加上\<less\>u\<gtr\>标签。
+
+  <space|2em>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+  </collection>
+</initial>

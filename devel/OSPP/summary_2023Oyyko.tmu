@@ -1,0 +1,241 @@
+<TMU|<tuple|1.0.1|2.1.2>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <doc-data|<doc-title|Mogan Draw on Wasm of OSPP>>
+
+  学生：张佳(zhangjia2001@ustc.edu Github: Oyyko)
+
+  导师：沈达(da@liii.pro, sadhen@zoho.com.cn, Github: darcy-shen)
+
+  时间：2023年
+
+  项目地址：
+
+  \<bullet\> \ Github: https://github.com/XmacsLabs/mogan
+
+  \<bullet\> \ Gitee: https://gitee.com/XmacsLabs/mogan
+
+  \<bullet\> \ Codeberg: https://codeberg.org/XmacsLabs/mogan
+
+  <section|项目信息 >
+
+  <subsection|Mogan>\ 
+
+  首先介绍Mogan, Mogan是GNU TeXmacs的一个发行版。它是一个结构化编辑器，可以方便的输入数学公式、定理环境等。墨干编辑器是墨客实验室旗下的结构化编辑器。GNU TeXmacs 是法国国家科学研究中心的数学家Joris van der Hoeven从上世纪九十年代末开始研发的一款结构化编辑器，旨在利用直观易用的图形界面编写高质量的技术文档，效果可达到与 LaTeX 相同的水准。目前它的主要用户集中于中小学教师及高校科研人员。Mogan是一款开源免费的科学编辑平台，旨在使用所见即所得的界面创建精美的技术文档。可用作计算机代数、数值分析、统计等领域许多系统的图形前端。它提供了一个统一且用户友好的框架，用于编辑具有不同类型内容的结构化文档：文本、数学、图形、交互式内容、幻灯片等。其渲染引擎使用高质量的排版算法来生成具有专业外观的文档，这些文档可以打印出来或从笔记本电脑上呈现。<with|font-series|bold|这篇文档就是用Mogan编写并导出为Pdf的。>
+
+  <subsection|Mogan Draw >
+
+  Mogan本身具有绘图功能。我在这次开源之夏中主要做两方面的事情，一方面是改进已有的绘图功能，改善用户体验。这包括设计新的feature并实现，以及修复一些困扰用户已久的bug。另一方面把Mogan Draw搬运到Wasm平台上，从而实现一打开浏览器即可使用，增加了Mogan Draw使用的便利性。
+
+  Mogan draw的绘图功能包括绘制多边形，圆形，折线，箭头等。我在此基础上做了修复和改进。并引入了更多可以绘制的图形。
+
+  <subsection|工作安排>\ 
+
+  我主要在Github平台上提交我的代码。和导师通过微信以及github平台交流。以PR的方式提交代码。
+
+  <subsection|方案描述>
+
+  我把我的工作内容分为三个部分。
+
+  首先是修复一些顽固的难以修复的、困扰老用户很久的bug。关于这些bug，首先需要复现，然后找出原因，之后进行设计修复。
+
+  其次是设计新的feature并实现。设计新feature建立在对于用户的调研之上。mogan有广泛的用户群，有一个社区来让用户们互相交流。
+
+  然后是进行wasm迁移工作。需要学习相关技术并调研相关实现。
+
+  <section|项目进度>
+
+  <subsection|项目编号>
+
+  在Mogan开发中，我们对工作内容进行了分解和编号。在提交PR的时候，会以编号开头来编辑PR信息。我将这次OSPP的项目命名为23号。因此下属的子任务为23_xx这种格式。
+
+  <subsection|已完成工作>
+
+  <subsubsection|Feature>
+
+  以下为已增加的Feature
+
+  <\wide-block>
+    <tformat|<table|<row|<\cell>
+      Feature 描述
+    </cell>|<\cell>
+      编号
+    </cell>>|<row|<\cell>
+      增加绘制椭圆功能
+    </cell>|<\cell>
+      23_1
+    </cell>>|<row|<\cell>
+      Shift+左键模拟右键点击
+    </cell>|<\cell>
+      23_7
+    </cell>>|<row|<\cell>
+      进入move模式后自动取消选中
+    </cell>|<\cell>
+      23_8
+    </cell>>|<row|<\cell>
+      优化中文翻译
+    </cell>|<\cell>
+      23_9
+    </cell>>|<row|<\cell>
+      复制后原地粘贴进行位移
+    </cell>|<\cell>
+      23_11
+    </cell>>|<row|<\cell>
+      优化图标位置
+    </cell>|<\cell>
+      23_12
+    </cell>>|<row|<\cell>
+      进入move模式后光标样式改变
+    </cell>|<\cell>
+      23_14
+    </cell>>|<row|<\cell>
+      重复点击以退出当前模式
+    </cell>|<\cell>
+      23_20
+    </cell>>|<row|<\cell>
+      使用圆心和圆上一点画圆
+    </cell>|<\cell>
+      23_23
+    </cell>>|<row|<\cell>
+      新的光标设置方式
+    </cell>|<\cell>
+      23_24
+    </cell>>|<row|<\cell>
+      优化程序初始化方式
+    </cell>|<\cell>
+      23_26
+    </cell>>|<row|<\cell>
+      在Zoom、Rotate模拟下改变光标样式
+    </cell>|<\cell>
+      23_28
+    </cell>>|<row|<\cell>
+      使用含圆心的3个点画圆弧
+    </cell>|<\cell>
+      23_27
+    </cell>>>>
+  </wide-block>
+
+  <subsubsection|Bug>
+
+  以下为已修复的Bug
+
+  <\wide-block>
+    <tformat|<table|<row|<\cell>
+      Bug 描述
+    </cell>|<\cell>
+      编号
+    </cell>>|<row|<\cell>
+      使用带文字箭头时，远距离跳转（严重bug）
+    </cell>|<\cell>
+      23_21
+    </cell>>|<row|<\cell>
+      右下角提示文字翻译错误
+    </cell>|<\cell>
+      23_25
+    </cell>>>>
+  </wide-block>
+
+  以下为经过充分调查发现不是bug而是软件Feature未被用户理解或用户误操作导致的内容
+
+  <\wide-block>
+    <tformat|<table|<row|<\cell>
+      内容描述
+    </cell>|<\cell>
+      编号
+    </cell>>|<row|<\cell>
+      移动后snap功能无法重新吸附整数点
+    </cell>|<\cell>
+      23_2
+    </cell>>|<row|<\cell>
+      PDF和PNG导出后有锯齿
+    </cell>|<\cell>
+      23_3
+    </cell>>|<row|<\cell>
+      选中对象后无法移动对象而是移动画布
+    </cell>|<\cell>
+      23_4
+    </cell>>|<row|<\cell>
+      重新设置模拟的文本居中设置
+    </cell>|<\cell>
+      23_15
+    </cell>>>>
+  </wide-block>
+
+  <subsubsection|Wasm>
+
+  在Wasm方面进行一些探索。例如在<hlink|https://github.com/XmacsLabs/xmake-qt-wasm|https://github.com/XmacsLabs/xmake-qt-wasm>这个玩具项目中探索了编译到Wasm的方式。
+
+  设计了Mogan draw的入口文件，包括C++入口和scheme初始化文件。
+
+  设计了代码复用，使用mogan的主代码同时支持draw和research两个软件。
+
+  最终可用的Mogan的Wasm版本可在<hlink|https://research.mogan.app|https://xmacslabs.github.io/mogan/research.html>中看到。
+
+  <subsubsection|单元测试>
+
+  为许多缺少单元测试的环节增加了单元测试文件。使得软件整体更稳定，开发更流畅。
+
+  <subsubsection|量化>
+
+  截至目前（2023年9月29日），在Github上提交了58个PR，成功合并了50个PR。可以在<hlink|<hlink|这里|https://github.com/XmacsLabs/mogan/pulls?q=is%3Apr+is%3Aclosed+author%3AOyyko+is%3Amerged>|https://github.com/XmacsLabs/mogan/pulls?q=is%3Apr+is%3Aclosed+author%3AOyyko+is%3Amerged>看到。
+
+  <subsection|遇到的问题以及解决方案>
+
+  首先是对于scheme语言的不熟悉问题，我的方法是找本scheme的书先学会掌握scheme语言。之后再继续mogan的开发。
+
+  其次是对于复杂的bug需要深入代码中去调查，需要观看很多代码。经常看到第10个的时候已经忘了最开始自己要做什么。我的解决方法是用一张A4纸记录相关的信息。然后逐步排查，一点点找到关键部分。
+
+  然后是Mogan代码库较大，代码较多，之间的逻辑关系难以解答。我的解决方法是把自己的探索之后得到的结论写成文章，发表到博客中，这样自己日后可以再次观看，也可以方便其他开发mogan的小伙伴。
+
+  <subsection|后续工作安排>
+
+  在OSPP之后，我将继续在mogan社区做开源开发者。日后的工作计划是进一步完善mogan draw的相关功能。修复一些在OSPP期间因为时间原因没有来得及修复的顽固bug。增加更多用户需要的新功能等。
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|1|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-10|<tuple|2.2.2|?|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-11|<tuple|2.2.3|?|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-12|<tuple|2.2.4|?|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-13|<tuple|2.2.5|?|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-14|<tuple|2.3|?|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-15|<tuple|2.4|?|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-2|<tuple|1.1|1|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-3|<tuple|1.2|1|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-4|<tuple|1.3|1|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-5|<tuple|1.4|1|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-6|<tuple|2|1|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-7|<tuple|2.1|1|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-8|<tuple|2.2|?|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+    <associate|auto-9|<tuple|2.2.1|?|../../../../.TeXmacs/texts/scratch/no_name_3.tm>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>项目信息 > <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|1.1<space|2spc>Mogan <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2>>
+
+      <with|par-left|<quote|1tab>|1.2<space|2spc>Mogan Draw \ <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-3>>
+
+      <with|par-left|<quote|1tab>|1.3<space|2spc>工作安排 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4>>
+
+      <with|par-left|<quote|1tab>|1.4<space|2spc>方案描述 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>项目进度> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-6><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|2.1<space|2spc>已完成工作 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-7>>
+    </associate>
+  </collection>
+</auxiliary>

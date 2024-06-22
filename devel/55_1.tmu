@@ -1,0 +1,59 @@
+<TMU|<tuple|1.0.1|2.1.2>>
+
+<style|<tuple|tmdoc|chinese>>
+
+<\body>
+  <tmdoc-title|Add Evaluation For Database>
+
+  <section|元数据>
+
+  <\description>
+    <item*|编写>paradisuman
+  </description>
+
+  <section|描述>
+
+  <subsection|增删改查>
+
+  在public函数中，database使用set_field来加入一对数据，或者修改一对数据。get_field获取某id和attribute已知的数据。remove_field删除数据。而get_attributes获取某id的所有attribute。
+
+  set_entry，get_entry，remove_entry和上述类似，不过是对多组数据进行增删查改。
+
+  <subsection|查询>
+
+  database使用query进行查询，返回符合条件的ids。query会调用ansatz，它会根据时间复杂度判断是否进行encode_constraint以及根据database创建时间剔除不合法值。
+
+  query接着会调用filter，他会筛选出val和attr相符合的相关id。之后更具每对数据的时间进一步筛选。最后将查询结果排序返回。
+
+  <subsection|索引>
+
+  每次往数据库插入数据时，如果不是"contributor"，会调用indexate插入索引。
+
+  索引会在query中使用，每次进行query时，会检查tree中元素是否名为contains和completes的元组，并且检查他们是否被quoted且为atomic，如果都满足会为他们生成关键字，并附上“keywords”。
+
+  在之后encode_constraint中，会据此调用索引，使用encode_keywords_constraint函数进行解码，返回约束。
+
+  <subsection|排序>
+
+  排序是用于将查询的结果进行排序，首先他会根据“order”，atomic，quoted，以及atom_encode是否包含相关label进行筛选，如果没有筛选出任何结果，就直接返回ids，否则调用build_sort_tuples构建，之后用lex_sort排序后构建返回。
+
+  <subsection|落盘>
+
+  在一个数据更新后，会调用notify相关函数，例如插入调用notify_extended_field，它会将最新插入数据的相关信息（包括DB_CREATE_FIELD标识，id，attr，val和创建时间）全部加入到pending中缓存。
+
+  当外部调用sync_databases（tm_server.cpp的interpose_handler会调用它）时，sync_databases检查pending是否为空，如果不为空，分为两种情况。第一种情况数据包含历史信息，并且历史信息不超过所有信息的一半，就用purge落盘，否则，会将之前的数据库压缩新建一个数据库，并且将信息保存在其中，然后再调用purge落盘。
+
+  purge函数时是用于落盘的。落盘都会随机生成一个url并且创建新文件落盘。也分两种情况，第一种如果pending大小小于4096，就会直接用save_string将pending落盘，否则会将loaded（数据库初始化会将数据库内容通过load_string加载到loaded中，之前落盘失败会也存入loaded）和pending合并落盘。如果落盘失败会删除url，pending存入loaded，更新start_pending值和time_stamp值，结束函数。
+
+  \;
+
+  <tmdoc-copyright|2023|paradisuman>
+
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+  </collection>
+</initial>
