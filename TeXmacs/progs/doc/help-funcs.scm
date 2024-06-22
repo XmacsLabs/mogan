@@ -46,7 +46,7 @@
                        (list (url-exists? (url-unix help-file-path s))))))))
 
 (define (url-resolve-help s)
-  (if (and (in? (url-suffix s) '("tex" "tm")) (url-exists? s))
+  (if (and (in? (url-suffix s) '("tex" "tm" "tmu")) (url-exists? s))
       s
       (let* ((lan (string-take (language-to-locale (get-output-language)) 2)) 
              (suf (string-append "." lan ".tm"))
@@ -91,16 +91,26 @@
 
 (define (mogan-beamer-welcome)
   (let* ((lan (string-take (language-to-locale (get-output-language)) 2))
-         (path (string-append "$TEXMACS_PATH/doc/about/mogan/beamer." lan ".tm"))
-         (en_doc (string-append "$TEXMACS_PATH/doc/about/mogan/beamer.en.tm")))
+         (path (string-append "$TEXMACS_PATH/doc/about/mogan/beamer." lan ".tmu"))
+         (en_doc (string-append "$TEXMACS_PATH/doc/about/mogan/beamer.en.tmu")))
     (if (url-exists? path)
         (load-buffer (system->url path))
         (load-buffer (system->url en_doc)))
     (delayed (:idle 25) (fit-to-screen-width))))
 
+(define (mogan-research-welcome)
+  (let* ((lan (string-take (language-to-locale (get-output-language)) 2))
+         (path (string-append "$TEXMACS_PATH/doc/about/mogan/research." lan ".tmu"))
+         (en_doc (string-append "$TEXMACS_PATH/doc/about/mogan/research.en.tmu")))
+    (if (url-exists? path)
+        (load-buffer (system->url path))
+        (load-buffer (system->url en_doc)))))
+
 (tm-define (mogan-welcome)
-  (cond ((== (mogan-app-id) "beamer") (mogan-beamer-welcome))
-        (else (load-help-article "about/mogan/research"))))
+  (cond ((== (mogan-app-id) "beamer")
+         (mogan-beamer-welcome))
+        (else
+         (mogan-research-welcome))))
 
 (tm-define (xmacs-planet)
   (if (url-exists? (get-remote-planet-url))

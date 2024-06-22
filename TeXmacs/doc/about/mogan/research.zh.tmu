@@ -1,0 +1,54 @@
+<TMU|<tuple|1.0.1|2.1.2>>
+
+<style|<tuple|tmdoc|chinese>>
+
+<\body>
+  <tmdoc-title|欢迎使用墨干>
+
+  墨干（Mogan Research）是GNU <TeXmacs>的发行版之一，是<name|墨客实验室>旗下的自由软件，是墨干理工套件中的一部分。
+
+  <with|framed-color|pastel magenta|ornament-border|0ln|ornament-color|pastel yellow|<\ornamented>
+    您正在使用墨干<strong|v<Xmacs-version>>，当前最新稳定版是<strong|v<include|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/latest_version.tm>>，可访问<slink|https://mogan.app>下载最新稳定版。
+  </ornamented>>
+
+  <section*|如何入门>
+
+  <\itemize>
+    <item>访问官网
+
+    <\description>
+      <item*|GNU <TeXmacs>><slink|https://texmacs.org>
+
+      <item*|墨干理工套件><slink|https://mogan.app>
+    </description>
+
+    <item>观看视频<hlink|《A Quick tour of <TeXmacs>》|https://www.bilibili.com/video/BV1bo4y1D7wN/>（五分钟）
+
+    <item>阅读在线文档<hlink|《Getting started with <TeXmacs>》|http://git.tmml.wiki/texmacs/doc/raw/branch/master/about/welcome/start.en.tm>（三十分钟）
+
+    <item>阅读书籍<hlink|《The Jolly Writer》|https://www.scypress.com/book_info.html>，系统学习GNU <TeXmacs>的捷径
+
+    <item>更多入门资料
+
+    <\itemize>
+      <item>通过焦点工具栏的<icon|tm_focus_help_x4.png>或者菜单项<menu|Focus|Describe>查看上下文帮助
+
+      <item>观看墨干官网提供的入门系列视频
+
+      <item>在软件内访问在线官方文档<\footnote>
+        当墨干的界面语言是中文时，帮助菜单下的文档默认会显示中文文档，当中文文档不存在（比如没有被翻译）的时候，则会显示英文文档。可以通过菜单项<menu|Edit|Preferences|User interface language>更改界面语言。
+      </footnote>：<menu|Help|Manual>
+
+      <item>在软件内访问在线社区文档：<menu|Help|Planet>
+    </itemize>
+  </itemize>
+
+  \;
+
+  \;
+
+  \;
+</body>
+
+<initial|<\collection>
+</collection>>
