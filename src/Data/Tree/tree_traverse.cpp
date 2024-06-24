@@ -19,6 +19,7 @@
 
 #include <moebius/drd/drd_mode.hpp>
 #include <moebius/drd/drd_std.hpp>
+#include <moebius/tree_label.hpp>
 
 using namespace moebius;
 using moebius::drd::drd_decode_type;
@@ -736,12 +737,15 @@ tree_utf8_to_cork (tree_u8 t) {
   if (is_atomic (t)) {
     return tree (utf8_to_hash_cork (t->label));
   }
-  else {
+  else if (!is_func (t, RAW_DATA)) {
     int  t_N= N (t);
     tree t2 (t, t_N);
     for (int i= 0; i < t_N; i++)
       t2[i]= tree_utf8_to_cork (t[i]);
     return t2;
+  }
+  else {
+    return t;
   }
 }
 
@@ -750,11 +754,14 @@ tree_cork_to_utf8 (tree t) {
   if (is_atomic (t)) {
     return tree (hash_cork_to_utf8 (t->label));
   }
-  else {
+  else if (!is_func (t, RAW_DATA)) {
     int  t_N= N (t);
     tree t2 (t, t_N);
     for (int i= 0; i < t_N; i++)
       t2[i]= tree_cork_to_utf8 (t[i]);
     return t2;
+  }
+  else {
+    return t;
   }
 }
