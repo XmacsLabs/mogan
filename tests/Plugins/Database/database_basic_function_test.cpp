@@ -260,8 +260,8 @@ TestDatabaseBasicFunciton::test_query () {
 }
 
 void
-TestDatabaseBasicFunciton::test_get_completions() {
-  url test_db = url_temp("db7");
+TestDatabaseBasicFunciton::test_get_completions () {
+  url test_db= url_temp ("db7");
 
   string val1[1]= {"abcd"};
   string val2[1]= {"5678"};
@@ -274,15 +274,16 @@ TestDatabaseBasicFunciton::test_get_completions() {
   set_field (test_db, "completion", "sample3", array<string> (val3, 1),
              (double) get_sec_time ());
 
-  strings completions_for_val1 = get_completions(test_db, "abcd");
-  string expected_completions_for_val1[2] = {"abcd", "abcd5678"};
-  QVERIFY(completions_for_val1 == array<string>(expected_completions_for_val1, 2));
+  strings completions_for_val1            = get_completions (test_db, "abcd");
+  string  expected_completions_for_val1[2]= {"abcd", "abcd5678"};
+  QVERIFY (completions_for_val1 ==
+           array<string> (expected_completions_for_val1, 2));
 
-  strings completions_for_val2 = get_completions(test_db, "5");
-  QVERIFY(completions_for_val2 == array<string>(val2, 1));
+  strings completions_for_val2= get_completions (test_db, "5");
+  QVERIFY (completions_for_val2 == array<string> (val2, 1));
 
-  strings completions_for_val3 = get_completions(test_db, "abcd5");
-  QVERIFY(completions_for_val3 == array<string>(val3, 1));
+  strings completions_for_val3= get_completions (test_db, "abcd5");
+  QVERIFY (completions_for_val3 == array<string> (val3, 1));
 }
 
 QTEST_MAIN (TestDatabaseBasicFunciton)
