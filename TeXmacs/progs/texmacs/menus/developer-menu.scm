@@ -28,23 +28,9 @@
 ;; save empty file & reload so that it is recognized as scheme code, not plain tm doc  
       (begin (buffer-save u) (revert-buffer-revert))))
 
-(define (xmacs-major-version)
-  (let* ((parts (string-split (xmacs-version) #\.))
-         (part1 (car parts))
-         (part2 (cadr parts)))
-   (string-append part1 "." part2)))
-
-(tm-define (load-devel-doc name)
-  (load-buffer (string-append "http://git.tmml.wiki/XmacsLabs/mogan/raw/branch/branch-" (xmacs-major-version) "/devel/" name ".tm")))
-
 (menu-bind developer-menu
   (group "Scheme")
   (link scheme-menu)
-  ---
-  (group "Project")
-  ("Project management" (load-devel-doc (string-append "release_" (car (string-split (xmacs-version) #\-)))))
-  ("Feature template" (load-devel-doc "feature"))
-  ("Bug template" (load-devel-doc "bug"))
   ---
   (group "Translations")
   (link translations-menu)
