@@ -39,7 +39,7 @@ struct tmu_reader {
   string               last;    // last read string
 
   tmu_reader (string buf2)
-      : version (TEXMACS_VERSION), codes (STD_CODE), buf (buf2), pos (0),
+      : version (XMACS_VERSION), codes (STD_CODE), buf (buf2), pos (0),
         last ("") {}
   tmu_reader (string buf2, string version2)
       : version (version2), codes (get_codes (version)), buf (buf2), pos (0),
@@ -356,12 +356,12 @@ tmu_document_to_tree (string s) {
   tree error (ERROR, "bad format or data");
 
   if (starts (s, "<TMU|<tuple|")) {
-    int           i              = index_of (s, '>');
-    string        version_tuple  = s (N ("<TMU|<tuple|"), i);
-    array<string> version_arr    = tokenize (version_tuple, "|");
-    string        tmu_version    = version_arr[0];
-    string        texmacs_version= version_arr[1];
-    tree          doc            = tmu_to_tree (s, texmacs_version);
+    int           i            = index_of (s, '>');
+    string        version_tuple= s (N ("<TMU|<tuple|"), i);
+    array<string> version_arr  = tokenize (version_tuple, "|");
+    string        tmu_version  = version_arr[0];
+    string        xmacs_version= version_arr[1];
+    tree          doc          = tmu_to_tree (s, xmacs_version);
 
     if (is_compound (doc, "TeXmacs", 1) || is_expand (doc, "TeXmacs", 1) ||
         is_apply (doc, "TeXmacs", 1))
@@ -371,7 +371,7 @@ tmu_document_to_tree (string s) {
 
     if (N (doc) == 0 || !is_compound (doc[0], "TeXmacs", 1)) {
       tree d (DOCUMENT);
-      d << compound ("TeXmacs", texmacs_version);
+      d << compound ("TeXmacs", string (TEXMACS_VERSION));
       d << A (doc);
       doc= d;
     }
