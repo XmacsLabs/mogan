@@ -8,78 +8,14 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|11|11|2|2|cell-valign|b>|<cwith|1|-1|1|1|cell-background|pastel green>|<cwith|10|10|1|1|cell-background|pastel green>|<cwith|9|9|1|1|cell-background|pastel green>|<cwith|8|8|1|1|cell-background|pastel green>|<cwith|7|7|1|1|cell-background|pastel green>|<cwith|6|6|1|1|cell-background|pastel green>|<cwith|5|5|1|1|cell-background|pastel green>|<cwith|4|4|1|1|cell-background|pastel green>|<table|<row|<\cell>
-      20_11
-    </cell>|<\cell>
-      Chore
-    </cell>|<\cell>
-      <value|da>
-    </cell>|<\cell>
-      Editor: kbd-enter should not make-item when in-prog? is <scm|#t>
-    </cell>>|<row|<\cell>
-      20_10
-    </cell>|<\cell>
-      Bug
-    </cell>|<\cell>
-      <value|da>
-    </cell>|<\cell>
-      Fix Edit-\<gtr\>Copy to-\<gtr\>Image by setting texmacs-\<gtr\>image:format to png
-    </cell>>|<row|<\cell>
-      20_9
-    </cell>|<\cell>
-      Bug
-    </cell>|<\cell>
-      <value|da>
-    </cell>|<\cell>
-      Replace: fix replace-one and replace-all on replace-toolbar
-    </cell>>|<row|<\cell>
-      <dlink|20_8>
-    </cell>|<\cell>
-      Bug
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Failed to insert full-width punctuation via input method
-    </cell>>|<row|<\cell>
-      20_7
-    </cell>|<\cell>
-      Bug
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      CJK encoding of the buffer in <verbatim|tmfs://grep>
-    </cell>>|<row|<\cell>
-      <dlink|20_6>
-    </cell>|<\cell>
-      Feature
-    </cell>|<\cell>
-      woutersj
-    </cell>|<\cell>
-      Search <TeXmacs> docs in a folder
-    </cell>>|<row|<\cell>
-      20_5
+    <tformat|<cwith|1|1|2|2|cell-valign|b>|<cwith|1|-1|1|1|cell-background|pastel green>|<table|<row|<\cell>
+      20_1
     </cell>|<\cell>
       Chore
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Doc: fix broken link in main/config/man-config-keyboard
-    </cell>>|<row|<\cell>
-      20_4
-    </cell>|<\cell>
-      Chore
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Dic_zh: shortcut related Chinese translation
-    </cell>>|<row|<\cell>
-      20_3
-    </cell>|<\cell>
-      Chore
-    </cell>|<\cell>
-      Darcy
-    </cell>|<\cell>
-      Use Quit instead of OK for Keyboard Editor
+      Show key presses for CJK characters
     </cell>>|<row|<\cell>
       20_2
     </cell>|<\cell>
@@ -89,13 +25,53 @@
     </cell>|<\cell>
       UI: adjust the height of the shortcut editor
     </cell>>|<row|<\cell>
-      20_1
+      20_3
     </cell>|<\cell>
       Chore
     </cell>|<\cell>
       Darcy
     </cell>|<\cell>
-      Show key presses for CJK characters
+      Use Quit instead of OK for Keyboard Editor
+    </cell>>|<row|<\cell>
+      20_4
+    </cell>|<\cell>
+      Chore
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Dic_zh: shortcut related Chinese translation
+    </cell>>|<row|<\cell>
+      20_5
+    </cell>|<\cell>
+      Chore
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Doc: fix broken link in main/config/man-config-keyboard
+    </cell>>|<row|<\cell>
+      <dlink|20_6>
+    </cell>|<\cell>
+      Feature
+    </cell>|<\cell>
+      woutersj
+    </cell>|<\cell>
+      Search <TeXmacs> docs in a folder
+    </cell>>|<row|<\cell>
+      20_7
+    </cell>|<\cell>
+      Bug
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      CJK encoding of the buffer in <verbatim|tmfs://grep>
+    </cell>>|<row|<\cell>
+      <dlink|20_8>
+    </cell>|<\cell>
+      Bug
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Failed to insert full-width punctuation via input method
     </cell>>>>
   </wide-tabular>
 

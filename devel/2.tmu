@@ -146,14 +146,6 @@
       Darcy
     </cell>|<\cell>
       Remove legacy glue generator based on guile
-    </cell>>|<row|<\cell>
-      Bug
-    </cell>|<\cell>
-      2_18
-    </cell>|<\cell>
-      <value|da>
-    </cell>|<\cell>
-      S7: Fix tm-\<gtr\>html with ornament
     </cell>>>>
   </wide-tabular>
 

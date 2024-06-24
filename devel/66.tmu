@@ -5,13 +5,9 @@
 <\body>
   <tmdoc-title|TMU format>
 
-  <\warning*>
-    Task <verbatim|66_4> and task <verbatim|66_5> are for TMU 1.0.1.
-  </warning*>
-
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|2|2|2|cell-background|pastel green>|<cwith|1|1|2|2|cell-background|pastel green>|<cwith|3|3|2|2|cell-background|pastel green>|<cwith|5|5|2|2|cell-background|pastel green>|<cwith|6|6|2|2|cell-background|pastel green>|<cwith|7|7|2|2|cell-background|pastel green>|<cwith|8|8|2|2|cell-background|pastel green>|<table|<row|<cell|Feature>|<cell|66_7>|<cell|1.2.7>|<cell|<value|da>>|<cell|Mogan Scheme (.mgs) format>>|<row|<cell|Feature>|<cell|66_6>|<cell|1.2.6>|<cell|<value|da>>|<cell|Protocol: scheme_u8 for UTF-8 Scheme tree>>|<row|<cell|Feature>|<cell|66_5>|<cell|1.2.7>|<cell|<value|da>>|<cell|TMU 1.0.1: Deprecate the TM format with CJK support>>|<row|<cell|>|<cell|>|<cell|>|<cell|<value|jk>>|<cell|>>|<row|<cell|Feature>|<cell|66_4>|<cell|1.2.7>|<cell|<value|da>>|<cell|TMU 1.0.1: Use unicode for CJK>>|<row|<cell|Chore>|<cell|66_3>|<cell|>|<cell|<value|da>>|<cell|TMU 1.0.0: identical to TM format>>|<row|<cell|Chore>|<cell|66_2>|<cell|>|<cell|<value|da>>|<cell|Adding more source code to L3>>|<row|<cell|Chore>|<cell|66_1>|<cell|>|<cell|<value|da>>|<cell|L2 with Scheme on lolly only and merge L1 glues ito L3 glues>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|1|2|2|cell-background|pastel green>|<table|<row|<cell|Feature>|<cell|66_6>|<cell|1.2.6>|<cell|<value|da>>|<cell|Protocol: scheme_u8 for UTF-8 Scheme tree>>|<row|<cell|Perf>|<cell|66_5>|<cell|1.2.5>|<cell|<value|jk>>|<cell|improve speed of fromtm by template>>|<row|<cell|Chore>|<cell|66_4>|<cell|>|<cell|<value|da>>|<cell|TMU 1.0.1: Use unicode for CJK>>|<row|<cell|Chore>|<cell|66_3>|<cell|>|<cell|<value|da>>|<cell|TMU 1.0.0: identical to TM format>>|<row|<cell|Chore>|<cell|66_2>|<cell|>|<cell|<value|da>>|<cell|Adding more source code to L3>>|<row|<cell|Chore>|<cell|66_1>|<cell|>|<cell|<value|da>>|<cell|L2 with Scheme on lolly only and merge L1 glues ito L3 glues>>>>>
 
   <tmdoc-copyright|2023–2024|Darcy|jinkaimori>
 
