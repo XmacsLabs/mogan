@@ -35,7 +35,7 @@
    (string-append part1 "." part2)))
 
 (tm-define (load-devel-doc name)
-  (load-buffer (string-append "http://git.tmml.wiki/XmacsLabs/mogan/raw/branch/branch-" (xmacs-major-version) "/devel/" name ".tmu")))
+  (load-buffer (string-append "http://git.tmml.wiki/XmacsLabs/mogan/raw/branch/branch-" (xmacs-major-version) "/devel/" name ".tm")))
 
 (menu-bind developer-menu
   (group "Scheme")
