@@ -12,6 +12,7 @@
 #include "git.hpp"
 #include "file.hpp"
 #include "tm_debug.hpp"
+#include "tm_file.hpp"
 
 #include <git2.h>
 #include <git2/status.h>
@@ -39,7 +40,8 @@ check_repo_and_file (url& file_u, url& repo_u) {
     return false;
   }
   if (is_rooted (file_u)) {
-    if (is_regular (file_u) && descends (file_u, repo_u)) {
+    if ((is_regular (file_u) || !exists (file_u)) &&
+        descends (file_u, repo_u)) {
       file_u= (delta (repo_u, file_u))[2];
     }
     else {
@@ -107,7 +109,7 @@ string
 git_load_blob (string rev, url file_u, url repo_u) {
   if (!check_repo_and_file (file_u, repo_u)) return "";
 
-  if (!is_regular (repo_u * file_u)) {
+  if (exists (repo_u * file_u) && !is_regular (repo_u * file_u)) {
     debug_io << repo_u * file_u << " is not a regular file" << LF;
     return "";
   }
