@@ -19,7 +19,7 @@
     </src-comment>
   </active*>
 
-  <assign|dlink|<macro|name|<hlink|[<arg|name>]|<merge|<arg|name>|.tm>>>>
+  <assign|dlink|<macro|name|<hlink|[<arg|name>]|<merge|<arg|name>|.tmu>>>>
 
   Task Type:
 
