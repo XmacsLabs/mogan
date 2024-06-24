@@ -1,0 +1,37 @@
+<TeXmacs|2.1.2>
+
+<style|<tuple|tmdoc|devel>>
+
+<\body>
+  <tmdoc-title|<chapter*|Crash on PDF export of large table - pagination>>
+
+  <section|Bug Metadata>
+
+  <\description>
+    <item*|Reporter>guraltsev on <hlink|Savannah|https://savannah.gnu.org/bugs/?62844>
+
+    <item*|Tester><value|jk>
+
+    <item*|Savannah commit><svn|14232>
+  </description>
+
+  <section|How to reproduce it>
+
+  Port <hlink|this document|https://savannah.gnu.org/bugs/download.php?file_id=53491>
+  to PDF, or change its page breaking mode to \Ppaper\Q.
+
+  <tmdoc-copyright|2023|<value|jk>>
+
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this
+  document under the terms of the GNU Free Documentation License, Version 1.1
+  or any later version published by the Free Software Foundation; with no
+  Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+  Texts. A copy of the license is included in the section entitled "GNU Free
+  Documentation License".>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+  </collection>
+</initial>
