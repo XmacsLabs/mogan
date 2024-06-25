@@ -86,11 +86,14 @@ main (int argc, char** argv) {
   flush_verbatim (welcome.str ());
   flush_prompt ("> ");
 
+  const char*       env_key  = "TEXMACS_PATH";
+  const char*       env_value= getenv (env_key);
+  std::stringstream load_path;
+  load_path << env_value << "/plugins/s7/progs/srfi";
+
   s7_scheme* sc;
   sc= s7_init ();
-#ifdef S7_LOAD_PATH
-  s7_add_to_load_path (sc, S7_LOAD_PATH);
-#endif
+  s7_add_to_load_path (sc, load_path.str ().c_str ());
 
   while (true) {
     string first_line;
