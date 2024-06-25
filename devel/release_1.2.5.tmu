@@ -144,15 +144,15 @@
   <section|Old releases>
 
   <\itemize>
-    <item><hlink|Release v1.2.4|release_1.2.4.tm>
+    <item><hlink|Release v1.2.4|release_1.2.4.tmu>
 
-    <item><hlink|Release v1.2.3|release_1.2.3.tm>
+    <item><hlink|Release v1.2.3|release_1.2.3.tmu>
 
-    <item><hlink|Release v1.2.2|release_1.2.2.tm>
+    <item><hlink|Release v1.2.2|release_1.2.2.tmu>
 
-    <item><hlink|Release v1.2.1|release_1.2.1.tm>
+    <item><hlink|Release v1.2.1|release_1.2.1.tmu>
 
-    <item><hlink|Release v1.2.0|release_1.2.0.tm>
+    <item><hlink|Release v1.2.0|release_1.2.0.tmu>
   </itemize>
 
   <section|Port from GNU <TeXmacs>>

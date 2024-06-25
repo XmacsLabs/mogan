@@ -148,9 +148,9 @@
   <section|Old releases>
 
   <\itemize>
-    <item><hlink|Release v1.2.1|release_1.2.1.tm>
+    <item><hlink|Release v1.2.1|release_1.2.1.tmu>
 
-    <item><hlink|Release v1.2.0|release_1.2.0.tm>
+    <item><hlink|Release v1.2.0|release_1.2.0.tmu>
   </itemize>
 
   <section|Port from GNU <TeXmacs>>
