@@ -32,6 +32,7 @@ private slots:
   void test_remove_entry ();
   void test_get_attributes ();
   void test_query ();
+  void test_get_completions ();
 };
 
 void
@@ -256,6 +257,33 @@ TestDatabaseBasicFunciton::test_query () {
   QVERIFY (a4 == array<string> ("query1", "query2"));
   string ans1[1]= {"query1"};
   QVERIFY (a5 == array<string> (ans1, 1));
+}
+
+void
+TestDatabaseBasicFunciton::test_get_completions () {
+  url test_db= url_temp ("db7");
+
+  string val1[1]= {"abcd"};
+  string val2[1]= {"5678"};
+  string val3[1]= {"abcd5678"};
+
+  set_field (test_db, "completion", "sample1", array<string> (val1, 1),
+             (double) get_sec_time ());
+  set_field (test_db, "completion", "sample2", array<string> (val2, 1),
+             (double) get_sec_time ());
+  set_field (test_db, "completion", "sample3", array<string> (val3, 1),
+             (double) get_sec_time ());
+
+  strings completions_for_val1            = get_completions (test_db, "abcd");
+  string  expected_completions_for_val1[2]= {"abcd", "abcd5678"};
+  QVERIFY (completions_for_val1 ==
+           array<string> (expected_completions_for_val1, 2));
+
+  strings completions_for_val2= get_completions (test_db, "5");
+  QVERIFY (completions_for_val2 == array<string> (val2, 1));
+
+  strings completions_for_val3= get_completions (test_db, "abcd5");
+  QVERIFY (completions_for_val3 == array<string> (val3, 1));
 }
 
 QTEST_MAIN (TestDatabaseBasicFunciton)
