@@ -81,6 +81,9 @@
     "sqrt" "expt" "make-rectangular" "make-polar" "magnitude"
     "angle" "exact->inexact" "inexact->exact" "string->number" "number->string"))
 
+(define (srfi-78)
+  (list "check" "check-set-mode!" "check-report" "check-reset!"))
+
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "keyword")))
   `(,(string->symbol key)
@@ -89,13 +92,13 @@
     (declare_type
      "define" "defined?" "set!" "lambda" "define-macro"
      "define-constant" "let" "let*" "apply" "eval"
-     "load" "eval" "eval-string" "values")
+     "load" "eval" "eval-string" "values" "autoload" "require")
     (keyword
      "eq?" "equal?" "equivalent?" "help" "display"
      "quote" "quasiquote" "unquote"
      "bignum" "length" "append" "procedure-source"
 
-     ,@(srfi-1) ,@(srfi-8) ,@(srfi-13) ,@(srfi-70)
+     ,@(srfi-1) ,@(srfi-8) ,@(srfi-13) ,@(srfi-70) ,@(srfi-78)
 
      ; SRFI-60: Integers as Bits
      "logand" "logior" "logxor" "lognot" "logand"
@@ -110,14 +113,14 @@
      "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
      "bad-result" "no-catch" "wrong-number-of-args" "io-error" "bignum-error")
     (keyword_conditional
-     "if" "cond" "else")
+     "if" "cond" "else" "case")
     (keyword_control
      "begin" "error" "catch" "throw")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "operator")))
   `(,(string->symbol key)
-    (operator "and" "or" "not" "=" "+" "-" "*" "/" )
+    (operator "and" "or" "not" "=" "+" "-" "*" "/" "=>")
     (operator_special "@" "," "'" "`")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
 

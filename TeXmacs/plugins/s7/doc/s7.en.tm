@@ -106,6 +106,47 @@
     </input>
   </session>
 
+  <paragraph|SRFI>
+
+  SRFI implementation for S7 Scheme will be built-in for the S7 Scheme
+  session. Here is the concise guide to load the SRFIs.
+
+  <\session|s7|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (autoload 'srfi-78 "srfi-78.scm")
+    <|unfolded-io>
+      "srfi-78.scm"
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (require 'srfi-78)
+    <|unfolded-io>
+      #t
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (check (+ 1 2) =\<gtr\> 3)
+    <|unfolded-io>
+      \;
+
+      (+ 1 2) =\<gtr\> 3 ; correct
+
+      1
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
   \;
 
   Here are code snippets from <slink|https://ccrma.stanford.edu/software/s7/s7.html>.
