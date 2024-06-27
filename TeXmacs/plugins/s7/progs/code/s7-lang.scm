@@ -16,6 +16,7 @@
 
 (define (srfi-1)
   (list
+    "srfi-1" ; List Library
     ; SRFI-1: List constructors
     "list" "cons" "xcons" "cons*" "make-list"
     "list-tabulate" "list-copy" "circular-list" "iota"
@@ -23,8 +24,9 @@
     "pair?" "null?" "proper-list?" "circular-list?" "dotted-list?"
     "not-pair?" "null-list?" "list=" "list?"
     ; SRFI-1: List selectors
-    "car" "cdr" "caar" "cadr" "cdar" "list-ref"
+    "car" "cdr" "caar" "cadr" "caddr" "cdar" "list-ref"
     "first" "second" "third" "fourth" "fifth"
+    "sixth" "seventh" "eighth" "ninth" "tenth"
     "take" "drop" "take-right" "drop-right" "last"
     ; SRFI-1: MISC
     "concatenate" "reverse" "append-reverse" "zip" "count"
@@ -32,7 +34,7 @@
     "fold" "fold-right" "reduce" "reduce-right" "map"
     "unfold" "unfold-right" "for-each" "map-in-order"
     ; SRFI-1: Filtering & Parititioning
-    "filter" "parition" "remove"
+    "filter" "partition" "remove"
     ; SRFI-1: Searching
     "find" "find-tail" "take-while" "drop-while" "span"
     "any" "every" "list-index" "member" "memq" "memv"
@@ -40,10 +42,13 @@
     "delete" "delete-duplicates"))
 
 (define (srfi-8)
-  (list "call-with-values" "receive"))
+  (list
+    "srfi-8"
+    "call-with-values" "receive"))
 
 (define (srfi-13)
   (list
+    "srfi-13" ; String Library
     ; SRFI-13: String predicates
     "string?" "string-null?" "string-every" "string-any"
     ; SRFI-13: String constructors
@@ -68,7 +73,7 @@
 
 (define (srfi-70)
   (list
-    ; SRFI-70: Numbers
+    "srfi-70" ; Numbers
     "number?" "complex?" "real?" "rational?" "integer?"
     "exact?" "inexact?" "finite?" "infinite?" "zero?"
     "positive?" "negative?" "odd?" "even?" "floor?"
@@ -82,7 +87,9 @@
     "angle" "exact->inexact" "inexact->exact" "string->number" "number->string"))
 
 (define (srfi-78)
-  (list "check" "check-set-mode!" "check-report" "check-reset!"))
+  (list
+    "srfi-78" ; Light-weighted Test framework
+    "check" "check-set-mode!" "check-report" "check-reset!"))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "keyword")))
@@ -92,7 +99,7 @@
     (declare_type
      "define" "defined?" "set!" "lambda" "define-macro"
      "define-constant" "let" "let*" "apply" "eval"
-     "load" "eval" "eval-string" "values" "autoload" "require")
+     "load" "eval" "eval-string" "values" "autoload" "require" "provide")
     (keyword
      "eq?" "equal?" "equivalent?" "help" "display"
      "quote" "quasiquote" "unquote"
@@ -120,7 +127,7 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "s7") (== key "operator")))
   `(,(string->symbol key)
-    (operator "and" "or" "not" "=" "+" "-" "*" "/" "=>")
+    (operator "and" "or" "not" "=" "+" "-" "*" "/" "=>" "->")
     (operator_special "@" "," "'" "`")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
 

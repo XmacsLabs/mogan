@@ -147,7 +147,13 @@
     </input>
   </session>
 
-  \;
+  <\description>
+    <item*|SRFI 1><slink|$TEXMACS_PATH/plugins/s7/progs/srfi/srfi-1.scm>
+
+    <item*|SRFI 8><slink|$TEXMACS_PATH/plugins/s7/progs/srfi/srfi-8.scm>
+
+    <item*|SRFI 78><slink|$TEXMACS_PATH/plugins/s7/progs/srfi/srfi-78.scm>
+  </description>
 
   Here are code snippets from <slink|https://ccrma.stanford.edu/software/s7/s7.html>.
 

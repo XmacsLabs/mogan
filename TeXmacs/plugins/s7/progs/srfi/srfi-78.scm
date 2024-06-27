@@ -34,7 +34,7 @@
 ;
 ; Naming convention "check:<identifier>" is used only internally.
 ;
-; Copyright (c) 2024 Da @ Liii Network Inc.
+; Copyright (c) 2024 The S7 SRFI Authors
 ; Follow the same License as the original one
 
 (provide 'srfi-78)
