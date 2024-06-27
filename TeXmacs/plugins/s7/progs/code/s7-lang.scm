@@ -24,7 +24,9 @@
     "pair?" "null?" "proper-list?" "circular-list?" "dotted-list?"
     "not-pair?" "null-list?" "list=" "list?"
     ; SRFI-1: List selectors
-    "car" "cdr" "caar" "cadr" "caddr" "cdar" "list-ref"
+    "car" "caar" "cdar" "cadr" "caddr" "cadddr"
+    "cdr" "cddr" "cdddr" "cddddr"
+    "list-ref"
     "first" "second" "third" "fourth" "fifth"
     "sixth" "seventh" "eighth" "ninth" "tenth"
     "take" "drop" "take-right" "drop-right" "last"
@@ -66,6 +68,9 @@
     ; SRFI-13: String searching
     "string-index" "string-index-right" "string-skip" "string-skip-right" "string-count"
     "string-contains"
+    "string-reverse" "string-append"
+    ; SRFI-13: Functional programming
+    "string-map" "string-fold" "string-fold-right" "string-for-each" "string-for-each-index"
     ; SRFI-13: String insertion and parsing
     "string-replace" "string-tokenize"
     ; SRFI-13: Filtering & Deleting
@@ -95,7 +100,12 @@
   (:require (and (== lan "s7") (== key "keyword")))
   `(,(string->symbol key)
     (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
-    (constant "pi" "+inf.0" "-inf.0" "+nan.0" "#t" "#true" "#f" "#false")
+    (constant
+      "pi" "+inf.0" "-inf.0" "+nan.0" "#t" "#true" "#f" "#false"
+      "*stdin*" "*stdout*" "*stderr*"
+      "*load-hook*" "*autoload-hook*" "*error-hook*" "*read-error-hook*"
+      "*rootlet-redefinition-hook*" "*unbound-variable-hook*"
+      "*missing-close-paren-hook*")
     (declare_type
      "define" "defined?" "set!" "lambda" "define-macro"
      "define-constant" "let" "let*" "apply" "eval"
@@ -104,6 +114,10 @@
      "eq?" "equal?" "equivalent?" "help" "display"
      "quote" "quasiquote" "unquote"
      "bignum" "length" "append" "procedure-source"
+
+     ; S7 built-ins
+     "*load-path*" "*s7*" "*features*" "*libraries*"
+     "*cload-directory*" "*#readers*"
 
      ,@(srfi-1) ,@(srfi-8) ,@(srfi-13) ,@(srfi-70) ,@(srfi-78)
 
