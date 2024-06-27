@@ -28,6 +28,69 @@
 + SICP课本官网：https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html
 + R7RS Small: https://small.r7rs.org
 
+## 第12课：集合、列表和二叉树
++ B站回放：https://www.bilibili.com/video/BV1sr421F7Pz/?spm_id_from=333.999.0.0&vd_source=316078287b560136fdb78e5901a17e4f
+
+## 番外：创业中…(｡･ω･｡)ﾉ 菜鸟的第一台Linux笔记本
++ B站观看：https://www.bilibili.com/video/BV1h1421r7xd/?spm_id_from=333.999.0.0&vd_source=316078287b560136fdb78e5901a17e4f
++ 趣味创业故事短片
+
+## 第11课：符号数据和符号求导
++ B站回放：https://www.bilibili.com/video/BV1r7421Z7p9/?spm_id_from=333.999.0.0&vd_source=316078287b560136fdb78e5901a17e4f
+
++ `00:31` 回顾：通过定义一组逻辑自洽的选择函数和构造函数，定义数据（以有理数为例）。
++ `01:47` 辨析：列表 & 单向链表 LISP = list processing
++ `11:15` 回顾：语法糖衣
++ `16:04` 定义符号数据——构造函数 quote
++ `17:59` 自面量在（单次）引用之后，还是自面量。符号在引用之后，则变成了符号数据。
++ `24:02` 定义符号数据——选择函数 unquote
++ `27:09` 定义符号数据——参数为列表的构造函数
++ `31:34` 定义符号数据——在列表中理解选择函数（quote、unquote、quasiquote 综合实例）
++ `36:16` 比喻：quote是失重，unquote是加重器，quasiquote是允许里面放加重器的失重器；quasiquote 可译为准引用
++ `39:29` eval 对符号数据求值
++ `40:22` 实例：分子分母计算
++ `49:08` 用符号数据可以延迟计算
++ `42:46` 应用符号数据（实例：符号求导；符号数据可用于构造符号计算系统）
++ `50:08` 预告：打造硅基e老师
+
+## 第10课：函数式编程三板斧-map, filter, fold
++ B站回放：https://www.bilibili.com/video/BV1YZ421x7Vm/?spm_id_from=333.999.0.0&vd_source=316078287b560136fdb78e5901a17e4f
+
+### 本期主要内容
++ `01:15` 围绕链表（list）结构讨论函数式编程三板斧（映射、过滤、折叠）和衍生算子描述数据处理逻辑，0基础学习软件工程师的底层逻辑
+
+### （复习）定义数据：list
++ `02:17` list 的构造器：cons、空链表
++ `03:52` list 的选择器：car、cdr、cadr
++ `05:26` list 访问链表的第n个元素（list-ref）
++ `09:43` list 的性质：length、list?、eq?、null?
++ 勘误：list? 无法自己实现，是scheme解释器提供的，和 interger? 类似
+
+### 三板斧之映射：map
++ `17:12` map 是可以接受函数作为参数的高阶函数
+
+### 三板斧之过滤：filter
++ `19:58` filter 在 S7 是没有的，但在 SRFI 中有定义
++ `21:00` filter 的应用
++ `24:32` filter 的实现
++ `25:37` 教学代码的漏洞
+
+### 三板斧之折叠：fold 和 fold-right
++ `29:21` fold 的应用，fold 与 fold-right 的区别
++ `31:01` fold 与 fold-right 的实现
++ `34:10` 可视化理解 fold 与 fold-right
+
+### 衍生算子：flatmap
++ `43:06` flatmap 的应用，与 map 对比
++ `46:44` 在 Scheme 实现类似 Scala 的 flatten
+
+### 衍生算子：map / filter / flatmap
++ `48:21` 三板斧应用实例：全排列
+
+### 总结
++ `54:13` 本课总结
++ `55:39` SRFI
+
 ## 第9课：创办一家一周工作四天的公司
 + B站回放：https://www.bilibili.com/video/BV1AH4y157T4/
 + 操作系统：Debian 12
