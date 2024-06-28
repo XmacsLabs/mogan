@@ -1,8 +1,8 @@
 
 /******************************************************************************
  * MODULE     : string_parser_test.cpp
- * DESCRIPTION: Properties of Keyword Parser
- * COPYRIGHT  : (C) 2024  UnbSky
+ * DESCRIPTION: Properties of String Parser
+ * COPYRIGHT  : (C) 2024 UnbSky
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
