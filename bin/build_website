@@ -4,8 +4,6 @@ use platform
 
 cp TeXmacs/plugins/binary/README.md docs/guide/plugin_binary.md
 cp TeXmacs/plugins/binary/README_ZH.md docs/zh/guide/plugin_binary.md
-cp TeXmacs/plugins/octave/README.md docs/guide/plugin_octave.md
-cp TeXmacs/plugins/octave/README_ZH.md docs/zh/guide/plugin_octave.md
 
 if (eq $platform:os darwin) {
   yarn docs:build
