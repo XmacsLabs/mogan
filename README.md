@@ -29,6 +29,8 @@ Mogan is a structured STEM suite delivered by [Xmacs Labs](https://github.com/Xm
 ## Contributing as User or Developer
 Please review the [Contribution guide](CONTRIBUTING.md) for information on how to get started contributing to Mogan.
 
+You can join our discord by https://discord.gg/QzE3K6rvYn.
+
 ### Contributors
 <table>
   <tr>
