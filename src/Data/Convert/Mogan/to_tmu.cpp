@@ -17,30 +17,27 @@
 #include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
-using lolly::data::as_hexadecimal;
+using lolly::data::binary_to_hexadecimal;
 using moebius::drd::std_contains;
 
-const string TMU_VERSION    = "1.0.1";
-const int    MAX_PARA_LENGTH= 65535;
+const string TMU_VERSION= "1.0.1";
 
 /******************************************************************************
  * Conversion of TeXmacs trees to the present TeXmacs string format
  ******************************************************************************/
 
 struct tmu_writer {
-  string buf;  // the resulting string
-  string spc;  // "" or " "
-  string tmp;  // not yet flushed characters
-  int    mode; // normal: 0, verbatim: 1, mathematics: 2
+  string buf; // the resulting string
+  string spc; // "" or " "
+  string tmp; // not yet flushed characters
 
   int  tab;      // number of tabs after CR
-  int  xpos;     // current horizontal position in buf
   bool spc_flag; // true if last printed character was a space or CR
   bool ret_flag; // true if last printed character was a CR
 
   tmu_writer ()
-      : buf (""), spc (""), tmp (""), mode (0), tab (0), xpos (0),
-        spc_flag (true), ret_flag (true) {}
+      : buf (""), spc (""), tmp (""), tab (0), spc_flag (true),
+        ret_flag (true) {}
 
   void cr ();
   void flush ();
@@ -67,43 +64,13 @@ tmu_writer::cr () {
   buf << '\n';
   for (i= 0; i < min (tab, 20); i++)
     buf << ' ';
-  xpos= min (tab, 20);
 }
 
 void
 tmu_writer::flush () {
   int i, m= N (spc), n= N (tmp);
   if ((m + n) == 0) return;
-  if ((xpos + m + n) < MAX_PARA_LENGTH) {
-    buf << spc << tmp;
-    xpos+= m + n;
-  }
-  else {
-    if (spc == " ") {
-      if (xpos > 40) cr ();
-      else {
-        buf << " ";
-        xpos++;
-      }
-    }
-    if ((xpos + n) < MAX_PARA_LENGTH) {
-      buf << tmp;
-      xpos+= n;
-    }
-    else
-      for (i= 0; i < n;) {
-        if (((i + 1) < n) && (tmp[i] == '\\') && (tmp[i + 1] == ' ')) {
-          buf << "\\ ";
-          xpos+= 2;
-          i+= 2;
-        }
-        else {
-          buf << tmp[i];
-          xpos++;
-          i++;
-        }
-      }
-  }
+  buf << spc << tmp;
   spc= "";
   tmp= "";
 }
@@ -255,10 +222,8 @@ tmu_writer::write (tree t) {
   switch (L (t)) {
   case RAW_DATA: {
     write ("<#", false);
-    string s  = as_string (t[0]);
-    int    s_N= N (s);
-    for (i= 0; i < s_N; i++)
-      write (as_hexadecimal ((unsigned char) s[i], 2), false);
+    string s= as_string (t[0]);
+    write (binary_to_hexadecimal (s), false);
     write (">", false);
     break;
   }
