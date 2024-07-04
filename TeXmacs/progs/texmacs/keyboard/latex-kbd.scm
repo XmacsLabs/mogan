@@ -111,7 +111,7 @@
   "shortparallel" "smallsetminus" "thicksim" "thickapprox"
   "approxeq" "succapprox" "precapprox" "curvearrowleft"
   "curvearrowright" "digamma" "varkappa" "hslash"
-  "hbar" "backepsilon"
+  "hbar" "backepsilon" "varparallel" "nvarparallel"
   
   "mapsto" "longmapsto" "longrightarrow" "longleftarrow"
   "longleftrightarrow" "longRightarrow" "longLeftarrow"
