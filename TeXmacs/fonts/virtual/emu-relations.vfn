@@ -82,4 +82,7 @@
   (nVvDash (with d (+ (sep-equal) (width verbar))
              (join (reslash (crop slash) (crop VvDash)) (d 0 VvDash))))
   (nDashVv (with d (+ (sep-equal) (width verbar))
-             (join DashVv (d 0 (reslash (crop slash) (crop DashVv)))))))
+             (join DashVv (d 0 (reslash (crop slash) (crop DashVv))))))
+  (varparallel (with d (+ (sep-equal) (width verbar))
+           (join slash (d 0 slash))))
+  (nvarparallel (join varparallel (rotate (hor-scale minus varparallel) 0.32))))

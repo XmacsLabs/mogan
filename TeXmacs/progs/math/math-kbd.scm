@@ -409,6 +409,8 @@
   ("symbol | | /" "<nparallel>")
   ("symbol | | var" "<shortparallel>")
   ("symbol | | var /" "<nshortparallel>")
+  ("symbol | | var var" "<varparallel>")
+  ("symbol | | var var /" "<nvarparallel>")
 
   ("math:small (" (math-bracket-open "(" ")" #f))
   ("math:small ( var" (math-bracket-open "<nobracket>" "<nobracket>" #f))
@@ -1397,6 +1399,8 @@
   ("| | var var /" "<nparallel>")
   ("| | var var var" "<shortparallel>")
   ("| | var var var /" "<nshortparallel>")
+  ("| | var var var var" "<varparallel>")
+  ("| | var var var var /" "<nvarparallel>")
   ("| | | var" "<interleave>")
 
   ("| - var" "<vdash>")
@@ -1595,6 +1599,8 @@
   ("math:misc | | /" "<nparallel>")
   ("math:misc | | var" "<shortparallel>")
   ("math:misc | | var /" "<nshortparallel>")
+  ("math:misc | | var var" "<varparallel>")
+  ("math:misc | | var var /" "<nvarparallel>")
 
   ("math:greek a" "<alpha>")
   ("math:greek b" "<beta>")

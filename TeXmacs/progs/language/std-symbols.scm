@@ -106,6 +106,7 @@
     "<subsetsim>" "<supsetsim>" "<doteq>" "<propto>" "<varpropto>"
     "<perp>" "<bowtie>" "<Join>" "<smile>" "<frown>" "<signchange>"
     "<parallel>" "<shortparallel>" "<nparallel>" "<nshortparallel>"
+    "<varparallel>" "<nvarparallel>"
     "<shortmid>" "<nshortmid>" "<nmid>" "<divides>" "<ndivides>"
 
     "<approxeq>" "<backsim>" "<backsimeq>"
