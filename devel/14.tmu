@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.1|1.2.7>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -25,22 +25,34 @@
 
   The deadline of Student Registration is <with|font-series|bold|June 3 15:00 UTC+8>, and the deadline of Project Application is <with|font-series|bold|June 4 18:00 UTC+8>. I suggest that you should register and apply <with|font-series|bold|at least one day before the deadline>, because the OSPP system might not be stable on the deadline day.
 
-  <section|OSPP 2023>
-
-  For analyze_test and tree_test, there are existing unit tests. Here are the command line to build and test:
-
-  <\shell-code>
-    bin/test_only tree_test
-
-    bin/test_only analyze_test
-  </shell-code>
-
-  <cpp|tree> and <cpp|rectangle> are two important C++ class for the Mogan Draw OSPP project. The functions in <shell|analyze.cpp> are widely used for string manipulation.
-
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|-1|2|2|cell-background|pastel green>|<cwith|9|9|2|2|cell-background|pastel green>|<cwith|8|8|2|2|cell-background|pastel green>|<cwith|7|7|2|2|cell-background|pastel green>|<cwith|6|6|2|2|cell-background|pastel green>|<cwith|5|5|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|1|-1|2|2|cell-background|pastel green>|<cwith|12|12|2|2|cell-background|pastel green>|<cwith|11|11|2|2|cell-background|pastel green>|<cwith|10|10|2|2|cell-background|pastel green>|<cwith|9|9|2|2|cell-background|pastel green>|<cwith|8|8|2|2|cell-background|pastel green>|<table|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      14_13
+    </cell>|<\cell>
+      KeShih
+    </cell>|<\cell>
+      Add varparallel and nvarparallel
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      14_12
+    </cell>|<\cell>
+      UnbSky
+    </cell>|<\cell>
+      Added test cases for src/Data/Parser/string_parser.cpp
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      14_11
+    </cell>|<\cell>
+      rachelxhoot
+    </cell>|<\cell>
+      Add a unit test for get_completions() in TestDatabaseBasicFunction
+    </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
       14_10
@@ -122,6 +134,18 @@
       several (\<gtr\>3) unit tests for <cpp|tree>
     </cell>>>>
   </wide-tabular>
+
+  <section|OSPP 2023>
+
+  For analyze_test and tree_test, there are existing unit tests. Here are the command line to build and test:
+
+  <\shell-code>
+    bin/test_only tree_test
+
+    bin/test_only analyze_test
+  </shell-code>
+
+  <cpp|tree> and <cpp|rectangle> are two important C++ class for the Mogan Draw OSPP project. The functions in <shell|analyze.cpp> are widely used for string manipulation.
 
   \;
 </body>

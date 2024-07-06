@@ -1,0 +1,47 @@
+<TMU|<tuple|1.0.1|1.2.7>>
+
+<style|<tuple|tmdoc|devel|british>>
+
+<\body>
+  <\hide-preamble>
+    \;
+  </hide-preamble>
+
+  <tmdoc-title|Mogan Research v1.2.8>
+
+  <section|Started projects>
+
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|<dlink|81>>|<cell|Minzihao>|<cell|OSPP 2024 Multiple Tabs>>|<row|<cell|<dlink|80>>|<cell|KeShih>|<cell|OSPP 2024 OpenType math font support>>|<row|<cell|<dlink|70>>|<cell|UnbSky>|<cell|OSPP 2024 Syntax Highlighting for PLs>>|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU format>>|<row|<cell|<dlink|61>>|<cell|<value|da>>|<cell|Plugin Center>>|<row|<cell|<dlink|54>>|<cell|Community>|<cell|Community for users and developers>>|<row|<cell|<dlink|24>>|<cell|ATQlove>|<cell|OSPP 2024 HTML>>|<row|<cell|<dlink|19>>|<cell|<value|da>>|<cell|Natural language related issues>>|<row|<cell|<dlink|14>>|<cell|OSPP Students>|<cell|OSPP 2024 Onboarding>>|<row|<cell|<dlink|5>>|<cell|<value|da>>|<cell|Documentation for users and developers>>>>>
+
+  <section|Old releases>
+
+  <\itemize>
+    <item><hlink|Release v1.2.7|release_1.2.7.tmu>
+
+    <item><hlink|Release v1.2.6|release_1.2.6.tmu>
+
+    <item><hlink|Release v1.2.5|release_1.2.5.tmu>
+
+    <item><hlink|Release v1.2.4|release_1.2.4.tmu>
+
+    <item><hlink|Release v1.2.3|release_1.2.3.tmu>
+
+    <item><hlink|Release v1.2.2|release_1.2.2.tmu>
+
+    <item><hlink|Release v1.2.1|release_1.2.1.tmu>
+
+    <item><hlink|Release v1.2.0|release_1.2.0.tmu>
+  </itemize>
+
+  <section|Port from GNU <TeXmacs>>
+
+  see <dlink|texmacs>
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|preamble|false>
+  </collection>
+</initial>
