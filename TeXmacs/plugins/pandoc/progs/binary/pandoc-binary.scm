@@ -16,8 +16,7 @@
 (define (pandoc-binary-candidates)
   (cond ((os-macos?)
          (list "/usr/local/bin/pandoc"
-               "/opt/homebrew/bin/pandoc"
-               "/usr/bin/pandoc"))
+               "/opt/homebrew/bin/pandoc"))
         ((os-win32?)
          (list "C:\\Program Files\\Pandoc\\pandoc.exe"
                "$LOCALAPPDATA\\Pandoc\\pandoc.exe"))
