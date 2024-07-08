@@ -85,7 +85,7 @@ is_vertical_space (tree t) {
 
 bool
 might_not_be_typesetted (tree t) {
-  return is_compound(t) && N (t) > 0 && ((is_func (t, TUPLE) && t[0] == "\\\\") ||
+  return N (t) > 0 && ((is_func (t, TUPLE) && t[0] == "\\\\") ||
                        (is_func (t, TUPLE) && t[0] == "\\author") ||
                        (is_func (t, TUPLE) && t[0] == "\\begin-document") ||
                        (is_func (t, TUPLE) && t[0] == "\\begingroup") ||
