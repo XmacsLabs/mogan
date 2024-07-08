@@ -1294,7 +1294,6 @@ upgrade_table (tree t) {
 
 static tree
 upgrade_split (tree t, bool eq= false) {
-  int i, n= N (t);
   if (is_atomic (t)) return t;
   else if (is_func (t, SURROUND, 3) && is_func (t[0], SPLIT)) {
     tree u= t[2];
@@ -1305,7 +1304,7 @@ upgrade_split (tree t, bool eq= false) {
   else if (is_func (t, SURROUND, 3) && is_concat (t[0])) {
     tree r (CONCAT);
     tree split ("");
-    for (i= 0; i < N (t[0]); i++)
+    for (int i= 0; i < N (t[0]); i++)
       if (is_func (t[0][i], SPLIT)) split= t[0][i];
       else r << t[0][i];
     tree u= t[2];
@@ -1321,6 +1320,7 @@ upgrade_split (tree t, bool eq= false) {
     tree r (CONCAT);
     tree split ("");
     int  nr_rows= 1, nr_cols= 1, sep= 1;
+    int  i, n= N (t);
     for (i= 0; i < n; i++)
       if (is_func (t[i], SPLIT)) split= t[i];
       else {
@@ -1403,6 +1403,7 @@ upgrade_split (tree t, bool eq= false) {
     return tf;
   }
   else {
+    int  n= N (t);
     tree r (t, n);
     if (n == 1 || is_func (t, EXPAND, 2)) {
       string s= as_string (L (t));
@@ -1431,7 +1432,7 @@ upgrade_split (tree t, bool eq= false) {
         return r;
       }
     }
-    for (i= 0; i < n; i++)
+    for (int i= 0; i < n; i++)
       r[i]= upgrade_split (t[i]);
     return r;
   }

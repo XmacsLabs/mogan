@@ -2103,7 +2103,7 @@ merge_successive_withs (tree t, bool force_concat= false) {
   }
   else {
     for (i= 0; i < n; i++) {
-      if (N (t[i]) > 0 && is_func (t[i], WITH)) {
+      if (is_compound (t[i]) && N (t[i]) > 0 && is_func (t[i], WITH)) {
         tree with = t[i](0, N (t[i]) - 1);
         int  start= i++;
         while (i < n && N (t[i]) > 0 && is_func (t[i], WITH) &&
