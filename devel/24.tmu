@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.2|1.2.8-alpha2>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -48,6 +48,54 @@
       Pluto
     </cell>|<\cell>
       \ tm2html tool on terminal
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <dlink|24_6>
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      \ Change HTML output from XHTML to HTML5
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <dlink|24_7>
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      \ Cover various input styles (book, beamer .etc)
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <dlink|24_8>
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      \ Improved MathML Generation
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <dlink|24_9>
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      \ Add pandoc binary plugin
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <dlink|24_10>
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      \ Add docx data plugin
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      <dlink|24_11>
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      \ Github Pages continuous delivery for the planet
     </cell>>>>
   </wide-tabular>
 
