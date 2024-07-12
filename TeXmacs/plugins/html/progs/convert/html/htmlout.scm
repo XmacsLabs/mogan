@@ -86,12 +86,15 @@
   (with ll (ahash-table->list (list->ahash-table l))
     (htmlout-text "<" (symbol->string s))
     (for-each htmlout-tag ll)
-    (htmlout-text ">")
+    (if (member s '(meta link img input br hr))
+        (htmlout-text " />")
+        (htmlout-text ">"))
     (htmlout-indent s 2)))
 
 (define (htmlout-close s)
-  (htmlout-indent-close s -2)
-  (htmlout-text "</" (symbol->string s) ">"))
+  (unless (member s '(meta link img input br hr))
+    (htmlout-indent-close s -2)
+    (htmlout-text "</" (symbol->string s) ">")))
 
 (define (htmlout-args-sub l big?)
   (if (nnull? l)
@@ -109,13 +112,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (htmlout-doctype l)
-  (define (helper x)
-    (if (string? x) (string-append "\"" x "\"") (symbol->string x)))
-  (let* ((l1 (map (lambda (x) (list " " (helper x))) l))
-         (l2 (apply append l1))
-         (l3 (append '("<!DOCTYPE") l2 '(">"))))
-    (apply output-lf-verbatim l3)
-    (output-lf)))
+  (output-lf-verbatim "<!DOCTYPE html>")
+  (output-lf))
 
 (define (htmlout x)
   (cond ((string? x) (htmlout-text x))
@@ -130,7 +128,7 @@
         ((func? x '*DOCTYPE*)
          (htmlout-doctype (cdr x)))
         ((== x '(br))
-         (htmlout-text "<br />"))
+         (htmlout-text "<br>"))
         ((null? (cdr x))
          (htmlout-open (car x))
          (htmlout-close (car x)))
