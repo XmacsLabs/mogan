@@ -236,7 +236,11 @@ edit_text_rep::insert_tree (tree t, path p_in_t) {
     go_to (correct_cursor (et, p * p_in_t));
   }
   else {
+    bench_start ("branch");
+    bench_start ("prepare_for_insert");
     path p= prepare_for_insert ();
+    bench_end ("prepare_for_insert");
+    bench_start ("insert");
     if (!is_concat (t)) {
       t     = tree (CONCAT, t);
       p_in_t= path (0, p_in_t);
@@ -244,7 +248,11 @@ edit_text_rep::insert_tree (tree t, path p_in_t) {
     insert (p, t);
     path q= path_add (p, p_in_t->item) * p_in_t->next;
     go_to (correct_cursor (et, q));
+    bench_end ("insert");
+    bench_start ("correct_concat");
     correct_concat (path_up (p));
+    bench_end ("correct_concat");
+    bench_end ("branch");
   }
 }
 
