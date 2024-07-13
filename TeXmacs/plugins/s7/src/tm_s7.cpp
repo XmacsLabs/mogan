@@ -13,7 +13,7 @@ using std::string;
 
 #include "s7.h"
 
-char* str_r7rs_define_library=
+string str_r7rs_define_library=
     "(define-macro (define-library libname . body) ; |(lib name)| -> "
     "environment\n"
     "  `(define ,(symbol (object->string libname))\n"
@@ -33,7 +33,7 @@ char* str_r7rs_define_library=
     "                         (values)\n"
     "                         entry))\n"
     "                   (curlet))))))\n";
-char* str_r7rs_library_filename=
+string str_r7rs_library_filename=
     "(unless (defined? 'r7rs-import-library-filename)\n"
     "  (define (r7rs-import-library-filename libs)\n"
     "    (when (pair? libs)\n"
@@ -52,7 +52,7 @@ char* str_r7rs_library_filename=
     "        (unless (member lib-filename (*s7* 'file-names))\n"
     "          (load lib-filename)))\n"
     "      (r7rs-import-library-filename (cdr libs)))))\n";
-char* str_r7rs_import=
+string str_r7rs_import=
     "(define-macro (import . libs)\n"
     "  `(begin\n"
     "     (r7rs-import-library-filename ',libs)\n"
@@ -194,6 +194,10 @@ main (int argc, char** argv) {
 
   s7_scheme* sc;
   sc= s7_init ();
+  s7_eval_c_string (sc, str_r7rs_define_library.c_str ());
+  s7_eval_c_string (sc, str_r7rs_library_filename.c_str ());
+  s7_eval_c_string (sc, str_r7rs_import.c_str ());
+
   s7_add_to_load_path (sc, load_path.str ().c_str ());
 
   while (true) {
