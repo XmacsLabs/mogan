@@ -1,0 +1,21 @@
+<TMU|<tuple|1.0.2|1.2.8-alpha>>
+
+<style|<tuple|generic|no-page-numbers|doc>>
+
+<\body>
+  <\description>
+    <item*|<compound|markup|varparallel>>eg. <math|m\<varparallel\>n>
+
+    shortcut <key|\| \| var var var var>
+
+    <item*|<markup|nvarparallel>>eg. <math|m\<nvarparallel\>n>
+
+    shortcut <key|\| \| var var var var />
+  </description>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
