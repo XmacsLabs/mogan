@@ -80,7 +80,6 @@ tmu_reader::decode (string s) {
       if (s[i] == ';')
         ;
       else if (s[i] == 't') r << '\t';
-      else if (s[i] == 'r') r << '\r';
       else if (s[i] == '\\') r << '\\';
       else r << s[i];
     }
