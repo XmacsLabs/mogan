@@ -26,7 +26,7 @@ package("s7")
     add_urls("https://github.com/XmacsLabs/s7.git")
     add_urls("https://gitee.com/XmacsLabs/s7.git")
 
-    add_versions("20230516", "20240516")
+    add_versions("20230526", "20230526")
 
     add_configs("gmp", {description = "enable gmp support", default = false, type = "boolean"})
 
