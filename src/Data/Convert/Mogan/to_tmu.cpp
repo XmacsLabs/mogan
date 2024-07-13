@@ -116,7 +116,6 @@ tmu_writer::write (string s, bool flag, bool encode_space) {
         if (c == ' ') tmp << "\\ ";
         else if (c == '\n') tmp << "\\n";
         else if (c == '\t') tmp << "\\t";
-        else if (c == '\0') tmp << "\\0";
         else if (c == '\\') tmp << "\\\\";
         else if (c == '<') tmp << "\\<";
         else if (c == '|') tmp << "\\|";
