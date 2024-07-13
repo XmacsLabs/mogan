@@ -37,11 +37,9 @@
 ; Copyright (c) 2024 The S7 SRFI Authors
 ; Follow the same License as the original one
 
-(provide 'srfi-78)
-(provide 'check)
-(provide 'check-set-mode!)
-(provide 'check-report)
-(provide 'check-reset!)
+(define-library (srfi srfi-78)
+(export check check:proc check-set-mode! check-report check-reset!)
+(begin
 
 (define check:write write)
 
@@ -157,4 +155,7 @@
 
 (define-macro (check expr => expected)
   `(check:proc ',expr (lambda () ,expr) equal? ,expected))
+
+) ; end of begin
+) ; end of define-library
 
