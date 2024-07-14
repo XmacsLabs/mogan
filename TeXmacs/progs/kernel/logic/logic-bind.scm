@@ -18,7 +18,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-public (free-variable name)
-  (list 'quote name))
+  (list '#_quote name))
 
 (define-public (free-variable? expr)
   "Is the expression @expr a free variable?"
