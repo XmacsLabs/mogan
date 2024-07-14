@@ -33,10 +33,6 @@
   ((descends% 'x 'z) (child% 'x 'y) (descends% 'y 'z)))
 
 
-;; (logic-query (child% 'x Opa))
-;; (logic-query (descends% 'x 'y))
-;; (logic-query (descends% 'x 'y) (daughter% Joleen Opa))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Addional assumptions <-> creating modules
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -53,7 +49,34 @@
   ((descends% 'x 'z) (child% 'x 'y) (descends% 'y 'z)))
 
 ;; (logic-query (child% 'x Opa))
+;; (logic-query (descends% 'x 'y))
+;; (logic-query (descends% 'x 'y) (daughter% Joleen Opa))
+;; (logic-query (child% 'x Opa))
 ;; (logic-query (child% 'x Opa) family%)
 
+(define (regtest-logic-rules)
+  (check
+    (logic-query (child% 'x Opa))
+    =>
+    '(((x . Piet)) ((x . Geeske)) ((x . Jekke)))))
+
+(define (test-doc) (display 'test-doc))
+(define (test-concat) (display 'test-concat))
+(define (test-href) (display 'test-href))
+
+(logic-dispatcher test-dispatcher%
+  (doc test-doc)
+  (concat test-concat)
+  (href test-href))
+
+(logic-rules
+  ((test-methods% 'x 'y) (test-dispatcher% 'x 'y)))
+
+(define (regtest-logic-dispatcher)
+  (check (logic-ref test-methods% 'doc)
+    =>
+    test-doc))
+
 (tm-define (regtest-logic)
-  (display (logic-query (child% 'x Opa))))
+  (regtest-logic-rules)
+  (regtest-logic-dispatcher))
