@@ -38,7 +38,7 @@
 ; Follow the same License as the original one
 
 (define-library (srfi srfi-78)
-(export check check:proc check-set-mode! check-report check-reset!)
+(export check check:proc check-set-mode! check-report check-reset! check-failed?)
 (begin
 
 (define check:write write)
@@ -59,6 +59,11 @@
 
 (define check:correct #f)
 (define check:failed   #f)
+
+(define (check-failed?)
+  (if check:failed 
+    (> (length check:failed) 0)
+    #f))
 
 (define (check-reset!)
   (set! check:correct 0)
