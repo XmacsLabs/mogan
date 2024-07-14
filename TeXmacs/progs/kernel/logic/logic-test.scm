@@ -27,11 +27,10 @@
   ((son% Piet Opa))
   ((daughter% Geeske Opa))
   ((daughter% Jekke Opa))
-  ((child% 'x 'y) (son% 'x 'y))
-  ((child% 'x 'y) (daughter% 'x 'y))
+  ((child% 'x 'y) (son% 'x 'y)) ; x is the son of y => x is the child of y
+  ((child% 'x 'y) (daughter% 'x 'y)) ; x is the daughter of y => x is the child of y
   ((descends% 'x 'y) (child% 'x 'y))
   ((descends% 'x 'z) (child% 'x 'y) (descends% 'y 'z)))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Addional assumptions <-> creating modules
@@ -56,7 +55,7 @@
 
 (define (regtest-logic-rules)
   (check
-    (logic-query (child% 'x Opa))
+    (logic-query (child% 'x Opa)) ; who is the child of Opa
     =>
     '(((x . Piet)) ((x . Geeske)) ((x . Jekke)))))
 
@@ -74,6 +73,9 @@
 
 (define (regtest-logic-dispatcher)
   (check (logic-ref test-methods% 'doc)
+    =>
+    test-doc)
+  (check (logic-ref test-dispatcher% 'doc)
     =>
     test-doc))
 
