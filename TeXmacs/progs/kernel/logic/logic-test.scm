@@ -53,11 +53,10 @@
 ;; (logic-query (child% 'x Opa))
 ;; (logic-query (child% 'x Opa) family%)
 
-(define (regtest-logic-rules)
-  (check
-    (logic-query (child% 'x Opa)) ; who is the child of Opa
-    =>
-    '(((x . Piet)) ((x . Geeske)) ((x . Jekke)))))
+(check
+  (logic-query (child% 'x Opa)) ; who is the child of Opa
+  =>
+  '(((x . Piet)) ((x . Geeske)) ((x . Jekke))))
 
 (define (test-doc) (display 'test-doc))
 (define (test-concat) (display 'test-concat))
@@ -71,17 +70,15 @@
 (logic-rules
   ((test-methods% 'x 'y) (test-dispatcher% 'x 'y)))
 
-(define (regtest-logic-dispatcher)
-  (check (logic-ref test-methods% 'doc)
-    =>
-    test-doc)
-  (check (logic-ref test-dispatcher% 'doc)
-    =>
-    test-doc))
+(check (logic-ref test-methods% 'doc)
+  =>
+  test-doc)
+
+(check (logic-ref test-dispatcher% 'doc)
+  =>
+  test-doc)
 
 (tm-define (regtest-logic)
-  (regtest-logic-rules)
-  (regtest-logic-dispatcher)
   (check-report)
   (if (check-failed?)
-    (display "check failed!\n")))
+    (exit -1)))
