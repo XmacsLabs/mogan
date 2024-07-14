@@ -14,9 +14,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (kernel logic logic-test)
-  (:use (kernel logic logic-rules) (kernel logic logic-query)))
+  (:use (kernel logic logic-bind)
+        (kernel logic logic-rules)
+        (kernel logic logic-query)))
 
 (import (srfi srfi-78))
+
+(check (free-variable? ''x) => #t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Examples of rules

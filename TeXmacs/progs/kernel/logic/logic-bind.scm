@@ -22,7 +22,9 @@
 
 (define-public (free-variable? expr)
   "Is the expression @expr a free variable?"
-  (and (list? expr) (= (length expr) 2) (== (car expr) 'quote)))
+  (and (list? expr)
+       (= (length expr) 2)
+       (== (car expr) '#_quote)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Binding variables
