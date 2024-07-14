@@ -1,0 +1,13 @@
+<TMU|<tuple|1.0.2|1.2.8-alpha>>
+
+<style|<tuple|generic|no-page-numbers>>
+
+<\body>
+  First line:\r
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

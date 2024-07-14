@@ -111,21 +111,75 @@
   SRFI implementation for S7 Scheme will be built-in for the S7 Scheme
   session. Here is the concise guide to load the SRFIs.
 
+  <\wide-tabular>
+    <tformat|<table|<row|<\cell>
+      <hlink|R7RS|$TEXMACS_PATH/plugins/s7/scheme/case-lambda.scm>
+    </cell>|<\cell>
+      case-lambda
+    </cell>|<\cell>
+      <scm|(import (scheme case-lambda))>
+    </cell>>|<row|<\cell>
+      <hlink|SRFI 1|$TEXMACS_PATH/plugins/s7/srfi/srfi-1.scm>
+    </cell>|<\cell>
+      List Library
+    </cell>|<\cell>
+      <scm|(import (srfi srfi-1))>
+    </cell>>|<row|<\cell>
+      <hlink|SRFI 8|$TEXMACS_PATH/plugins/s7/srfi/srfi-8.scm>
+    </cell>|<\cell>
+      receive: Binding to multiple values
+    </cell>|<\cell>
+      <scm|(import (srfi srfi-8))>
+    </cell>>|<row|<\cell>
+      <hlink|SRFI 9|$TEXMACS_PATH/plugins/s7/srfi/srfi-9.scm>
+    </cell>|<\cell>
+      Defining Record Types
+    </cell>|<\cell>
+      <scm|(import (srfi srfi-9))>
+    </cell>>|<row|<\cell>
+      <hlink|SRFI 16|$TEXMACS_PATH/plugins/s7/srfi/srfi-16.scm>
+    </cell>|<\cell>
+      Syntax for procedures of variable arity
+    </cell>|<\cell>
+      <scm|(import (srfi srfi-16))>
+    </cell>>|<row|<\cell>
+      <hlink|SRFI 39|$TEXMACS_PATH/plugins/s7/srfi/srfi-39.scm>
+    </cell>|<\cell>
+      Parameter objects
+    </cell>|<\cell>
+      <scm|(import (srfi srfi-39))>
+    </cell>>|<row|<\cell>
+      <hlink|SRFI 78|$TEXMACS_PATH/plugins/s7/srfi/srfi-78.scm>
+    </cell>|<\cell>
+      Lightweight testing
+    </cell>|<\cell>
+      <scm|(import (srfi srfi-78))>
+    </cell>>>>
+  </wide-tabular>
+
   <\session|s7|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (autoload 'srfi-78 "srfi-78.scm")
+      (import (srfi srfi-1))
     <|unfolded-io>
-      "srfi-78.scm"
+      (rootlet)
     </unfolded-io>
 
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (require 'srfi-78)
+      (reduce + 0 (list 1 2 3))
     <|unfolded-io>
-      #t
+      6
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (import (srfi srfi-78))
+    <|unfolded-io>
+      (rootlet)
     </unfolded-io>
 
     <\unfolded-io>
@@ -146,14 +200,6 @@
       \;
     </input>
   </session>
-
-  <\description>
-    <item*|SRFI 1><slink|$TEXMACS_PATH/plugins/s7/progs/srfi/srfi-1.scm>
-
-    <item*|SRFI 8><slink|$TEXMACS_PATH/plugins/s7/progs/srfi/srfi-8.scm>
-
-    <item*|SRFI 78><slink|$TEXMACS_PATH/plugins/s7/progs/srfi/srfi-78.scm>
-  </description>
 
   Here are code snippets from <slink|https://ccrma.stanford.edu/software/s7/s7.html>.
 

@@ -14,11 +14,7 @@
 ; under the License.
 ;
 
-(provide 'srfi-8)
-(provide 'receive)
-
-(define-macro (receive formals expression . body)
-  `(call-with-values
-    (lambda () (values ,expression))
-    (lambda ,formals ,@body)))
+(define-library (srfi srfi-16)
+  (import (scheme case-lambda))
+  (export case-lambda))
 

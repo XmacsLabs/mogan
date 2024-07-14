@@ -79,10 +79,6 @@ tmu_reader::decode (string s) {
       i++;
       if (s[i] == ';')
         ;
-      else if (s[i] == '0') r << '\0';
-      else if (s[i] == 't') r << '\t';
-      else if (s[i] == 'r') r << '\r';
-      else if (s[i] == 'n') r << '\n';
       else if (s[i] == '\\') r << '\\';
       else r << s[i];
     }
