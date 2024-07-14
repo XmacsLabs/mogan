@@ -16,19 +16,22 @@
 (texmacs-module (kernel logic logic-test)
   (:use (kernel logic logic-rules) (kernel logic logic-query)))
 
+(import (srfi srfi-78))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Examples of rules
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (logic-rules
-  ((sun% Joris Piet))
-  ((sun% Piet Opa))
+  ((son% Joris Piet))
+  ((son% Piet Opa))
   ((daughter% Geeske Opa))
   ((daughter% Jekke Opa))
-  ((child% 'x 'y) (sun% 'x 'y))
+  ((child% 'x 'y) (son% 'x 'y))
   ((child% 'x 'y) (daughter% 'x 'y))
   ((descends% 'x 'y) (child% 'x 'y))
   ((descends% 'x 'z) (child% 'x 'y) (descends% 'y 'z)))
+
 
 ;; (logic-query (child% 'x Opa))
 ;; (logic-query (descends% 'x 'y))
@@ -40,14 +43,17 @@
 
 (logic-rules
   (assume family%) ; added to constraints for all rules below
-  ((sun% Joris Piet))
-  ((sun% Piet Opa))
+  ((son% Joris Piet))
+  ((son% Piet Opa))
   ((daughter% Geeske Opa))
   ((daughter% Jekke Opa))
-  ((child% 'x 'y) (sun% 'x 'y))
+  ((child% 'x 'y) (son% 'x 'y))
   ((child% 'x 'y) (daughter% 'x 'y))
   ((descends% 'x 'y) (child% 'x 'y))
   ((descends% 'x 'z) (child% 'x 'y) (descends% 'y 'z)))
 
 ;; (logic-query (child% 'x Opa))
 ;; (logic-query (child% 'x Opa) family%)
+
+(tm-define (regtest-logic)
+  (display (logic-query (child% 'x Opa))))
