@@ -82,5 +82,6 @@
 (tm-define (regtest-logic)
   (regtest-logic-rules)
   (regtest-logic-dispatcher)
+  (check-report)
   (if (check-failed?)
     (display "check failed!\n")))
