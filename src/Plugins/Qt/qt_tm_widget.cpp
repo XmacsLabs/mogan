@@ -122,12 +122,14 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   visibility[5]= (mask & 32) == 32;   // footer
   visibility[6]= (mask & 64) == 64;   // side tools #0
   visibility[7]= (mask & 128) == 128; // bottom tools
+  visibility[8]= (mask & 256) == 256; // tab page bar
 
 #ifdef OS_WASM
   visibility[1]= false; // main
   visibility[2]= false; // mode
   visibility[3]= false; // focus
   visibility[4]= false; // user
+  visibility[8]= false; // tab page bar
 #endif
 
   // general setup for main window
@@ -201,6 +203,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
   bottomTools= new QDockWidget ("bottom tools", mw);
   sideTools  = new QDockWidget ("side tools", 0);
+  tabToolBar = new QTMTabPageBar ("tab toolbar", mw);
   // HACK: Wrap the dock in a "fake" window widget (last parameter = true) to
   // have clicks report the right position.
   static int cnt      = 0;
@@ -215,6 +218,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     userToolBar->setStyle (qtmstyle ());
     sideTools->setStyle (qtmstyle ());
     bottomTools->setStyle (qtmstyle ());
+    tabToolBar->setStyle (qtmstyle ());
   }
 
   {
@@ -244,11 +248,13 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   mainToolBar->setFixedHeight (toolbarHeight + 8 * retina_icons);
   modeToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
   focusToolBar->setFixedHeight (toolbarHeight);
+  tabToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
 #else
   int toolbarHeight= 30;
   mainToolBar->setFixedHeight (toolbarHeight + 8);
   modeToolBar->setFixedHeight (toolbarHeight + 4);
   focusToolBar->setFixedHeight (toolbarHeight);
+  tabToolBar->setFixedHeight (toolbarHeight + 4);
 #endif
   if (tm_style_sheet != "") {
     double scale= retina_scale;
@@ -258,6 +264,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     mainToolBar->setFixedHeight (h1);
     modeToolBar->setFixedHeight (h2);
     focusToolBar->setFixedHeight (h3);
+    tabToolBar->setFixedHeight (h2);
   }
 
   QWidget* cw= new QWidget ();
@@ -283,6 +290,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   userToolBar->setObjectName ("userToolBar");
   bottomTools->setObjectName ("bottomTools");
   sideTools->setObjectName ("sideTools");
+  tabToolBar->setObjectName ("tabToolBar");
 
 #ifdef UNIFIED_TOOLBAR
 
@@ -321,6 +329,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     r2->setVisible (true);
     r2->setAutoFillBackground (true);
 
+    // TODO: handle tabToolBar
     bl->insertWidget (0, modeToolBar);
     bl->insertWidget (1, rulerWidget);
     bl->insertWidget (2, focusToolBar);
@@ -343,6 +352,8 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
 #else
   mw->addToolBar (mainToolBar);
+  mw->addToolBarBreak ();
+  mw->addToolBar (tabToolBar);
   mw->addToolBarBreak ();
   mw->addToolBar (modeToolBar);
   mw->addToolBarBreak ();
@@ -383,6 +394,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   userToolBar->setVisible (false);
   sideTools->setVisible (false);
   bottomTools->setVisible (false);
+  tabToolBar->setVisible (false);
   mainwindow ()->statusBar ()->setVisible (true);
 #ifndef Q_OS_MAC
   mainwindow ()->menuBar ()->setVisible (false);
@@ -452,6 +464,7 @@ qt_tm_widget_rep::update_visibility () {
   bool old_userVisibility  = userToolBar->isVisible ();
   bool old_sideVisibility  = sideTools->isVisible ();
   bool old_bottomVisibility= bottomTools->isVisible ();
+  bool old_tabVisibility   = tabToolBar->isVisible ();
   bool old_statusVisibility= mainwindow ()->statusBar ()->isVisible ();
 
   bool new_mainVisibility  = visibility[1] && visibility[0];
@@ -461,6 +474,7 @@ qt_tm_widget_rep::update_visibility () {
   bool new_statusVisibility= visibility[5];
   bool new_sideVisibility  = visibility[6];
   bool new_bottomVisibility= visibility[7];
+  bool new_tabVisibility   = visibility[8] && visibility[0];
 
   if (XOR (old_mainVisibility, new_mainVisibility))
     mainToolBar->setVisible (new_mainVisibility);
@@ -474,6 +488,8 @@ qt_tm_widget_rep::update_visibility () {
     sideTools->setVisible (new_sideVisibility);
   if (XOR (old_bottomVisibility, new_bottomVisibility))
     bottomTools->setVisible (new_bottomVisibility);
+  if (XOR (old_tabVisibility, new_tabVisibility))
+    tabToolBar->setVisible (new_tabVisibility);
   if (XOR (old_statusVisibility, new_statusVisibility))
     mainwindow ()->statusBar ()->setVisible (new_statusVisibility);
 
@@ -634,6 +650,11 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
     visibility[7]= open_box<bool> (val);
     update_visibility ();
   } break;
+  case SLOT_TAB_PAGES_VISIBILITY: {
+    check_type<bool> (val, s);
+    visibility[8]= open_box<bool> (val);
+    update_visibility ();
+  } break;
 
   case SLOT_LEFT_FOOTER: {
     check_type<string> (val, s);
@@ -757,6 +778,9 @@ qt_tm_widget_rep::query (slot s, int type_id) {
   case SLOT_BOTTOM_TOOLS_VISIBILITY:
     check_type_id<bool> (type_id, s);
     return close_box<bool> (visibility[7]);
+  case SLOT_TAB_PAGES_VISIBILITY:
+    check_type_id<bool> (type_id, s);
+    return close_box<bool> (visibility[8]);
 
   case SLOT_INTERACTIVE_INPUT: {
     check_type_id<string> (type_id, s);
@@ -862,6 +886,18 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       QList<QAction*>* list= main_icons_widget->get_qactionlist ();
       if (list) {
         replaceButtons (mainToolBar, list);
+        update_visibility ();
+      }
+    }
+    break;
+
+  case SLOT_TAB_PAGES:
+    check_type_void (index, s);
+    {
+      tab_bar_widget       = concrete (w);
+      QList<QAction*>* list= tab_bar_widget->get_qactionlist ();
+      if (list) {
+        replaceButtons (tabToolBar, list);
         update_visibility ();
       }
     }
@@ -1046,6 +1082,7 @@ qt_tm_embedded_widget_rep::send (slot s, blackbox val) {
   case SLOT_FOOTER_VISIBILITY:
   case SLOT_SIDE_TOOLS_VISIBILITY:
   case SLOT_BOTTOM_TOOLS_VISIBILITY:
+  case SLOT_TAB_PAGES_VISIBILITY:
   case SLOT_LEFT_FOOTER:
   case SLOT_RIGHT_FOOTER:
   case SLOT_SCROLLBARS_VISIBILITY:
@@ -1099,6 +1136,7 @@ qt_tm_embedded_widget_rep::query (slot s, int type_id) {
   case SLOT_FOOTER_VISIBILITY:
   case SLOT_SIDE_TOOLS_VISIBILITY:
   case SLOT_BOTTOM_TOOLS_VISIBILITY:
+  case SLOT_TAB_PAGES_VISIBILITY:
     check_type_id<bool> (type_id, s);
     return close_box<bool> (false);
 
@@ -1148,6 +1186,7 @@ qt_tm_embedded_widget_rep::write (slot s, blackbox index, widget w) {
   case SLOT_USER_ICONS:
   case SLOT_SIDE_TOOLS:
   case SLOT_BOTTOM_TOOLS:
+  case SLOT_TAB_PAGES:
   case SLOT_INTERACTIVE_INPUT:
   case SLOT_INTERACTIVE_PROMPT:
   default:

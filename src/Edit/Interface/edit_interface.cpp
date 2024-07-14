@@ -109,6 +109,7 @@ edit_interface_rep::resume () {
   SERVER (menu_icons (1, "(horizontal (link texmacs-mode-icons))"));
   SERVER (menu_icons (2, "(horizontal (link texmacs-focus-icons))"));
   SERVER (menu_icons (3, "(horizontal (link texmacs-extra-icons))"));
+  SERVER (menu_icons (4, "(horizontal (link texmacs-tab-pages))"));
   array<url> a= buffer_to_windows (buf->buf->name);
   if (N (a) > 0) {
     string win= "(string->url \"" * as_string (a[0]) * "\")";
@@ -602,6 +603,7 @@ edit_interface_rep::update_menus () {
   SERVER (menu_icons (1, "(horizontal (link texmacs-mode-icons))"));
   SERVER (menu_icons (2, "(horizontal (link texmacs-focus-icons))"));
   SERVER (menu_icons (3, "(horizontal (link texmacs-extra-icons))"));
+  SERVER (menu_icons (4, "(horizontal (link texmacs-tab-pages))"));
   array<url> a= buffer_to_windows (buf->buf->name);
   if (N (a) > 0) {
     string win= "(string->url \"" * as_string (a[0]) * "\")";

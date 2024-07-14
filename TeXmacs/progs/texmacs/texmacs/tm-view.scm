@@ -28,7 +28,9 @@
         ((== var "focus dependent icons")
          (show-icon-bar 2 (== val "on")))
         ((== var "user provided icons")
-         (show-icon-bar 3 (== val "on")))))
+         (show-icon-bar 3 (== val "on")))
+        ((== var "tab bar")
+         (show-icon-bar 4 (== val "on")))))
 
 (define (notify-status-bar var val)
   (show-footer (== val "on")))
@@ -49,6 +51,7 @@
 (define-preferences
   ("header" "on" notify-header)
   ("main icon bar" "on" notify-icon-bar)
+  ("tab bar" "off" notify-icon-bar)
   ("mode dependent icons" "on" notify-icon-bar)
   ("focus dependent icons" "on" notify-icon-bar)
   ("user provided icons" "off" notify-icon-bar)
@@ -109,7 +112,8 @@
          (var (cond ((== n 0) "main icon bar")
                     ((== n 1) "mode dependent icons")
                     ((== n 2) "focus dependent icons")
-                    ((== n 3) "user provided icons"))))
+                    ((== n 3) "user provided icons")
+                    ((== n 4) "tab bar"))))
     (if (== (windows-number) 1)
         (set-boolean-preference var val)
         (show-icon-bar n val))

@@ -128,6 +128,7 @@
 (lazy-menu (texmacs menus preferences-menu) preferences-menu page-setup-menu)
 (lazy-menu (texmacs menus preferences-widgets) open-preferences)
 (use-modules (texmacs menus main-menu))
+(use-modules (texmacs menus tabpage-menu))
 (lazy-define (texmacs menus file-menu) recent-file-list recent-directory-list)
 (lazy-define (texmacs menus view-menu) set-bottom-bar test-bottom-bar?)
 (tm-define (notify-set-attachment name key val) (noop))
