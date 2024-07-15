@@ -142,6 +142,7 @@
   ---
   (when (visible-header?)
         ("Main icon bar" (toggle-visible-icon-bar 0))
+        ("Tab bar" (toggle-visible-icon-bar 4))
         ("Mode dependent icons" (toggle-visible-icon-bar 1))
         ("Focus dependent icons" (toggle-visible-icon-bar 2))
         ("User provided icons" (toggle-visible-icon-bar 3)))

@@ -114,16 +114,25 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   main_widget= concrete (::glue_widget (true, true, 1, 1));
 
   // decode mask
-  visibility[0]= (mask & 1) == 1;     // header
-  visibility[1]= (mask & 2) == 2;     // main
-  visibility[2]= (mask & 4) == 4;     // mode
-  visibility[3]= (mask & 8) == 8;     // focus
-  visibility[4]= (mask & 16) == 16;   // user
-  visibility[5]= (mask & 32) == 32;   // footer
-  visibility[6]= (mask & 64) == 64;   // right side tools
-  visibility[7]= (mask & 128) == 128; // left side tools
-  visibility[8]= (mask & 256) == 256; // bottom tools
-  visibility[9]= (mask & 512) == 512; // extra bottom tools
+  visibility[0]= (mask & 1) == 1;       // header
+  visibility[1]= (mask & 2) == 2;       // main
+  visibility[2]= (mask & 4) == 4;       // mode
+  visibility[3]= (mask & 8) == 8;       // focus
+  visibility[4]= (mask & 16) == 16;     // user
+  visibility[5]= (mask & 32) == 32;     // footer
+  visibility[6]= (mask & 64) == 64;     // right side tools
+  visibility[7]= (mask & 128) == 128;   // left side tools
+  visibility[8]= (mask & 256) == 256;   // bottom tools
+  visibility[9]= (mask & 512) == 512;   // extra bottom tools
+  visibility[8]= (mask & 1024) == 1024; // tab page bar
+
+#ifdef OS_WASM
+  visibility[1]= false; // main
+  visibility[2]= false; // mode
+  visibility[3]= false; // focus
+  visibility[4]= false; // user
+  visibility[8]= false;
+#endif
 
   // general setup for main window
 
@@ -199,6 +208,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   extraTools = new QDockWidget ("extra tools", mw);
   sideTools  = new QDockWidget ("side tools", 0);
   leftTools  = new QDockWidget ("left tools", 0);
+  tabToolBar = new QTMTabPageBar ("tab toolbar", mw);
   // HACK: Wrap the dock in a "fake" window widget (last parameter = true) to
   // have clicks report the right position.
   static int cnt      = 0;
@@ -215,6 +225,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     leftTools->setStyle (qtmstyle ());
     bottomTools->setStyle (qtmstyle ());
     extraTools->setStyle (qtmstyle ());
+    tabToolBar->setStyle (qtmstyle ());
   }
 
   {
@@ -245,11 +256,13 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   mainToolBar->setFixedHeight (toolbarHeight + 8 * retina_icons);
   modeToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
   focusToolBar->setFixedHeight (toolbarHeight);
+  tabToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
 #else
   int toolbarHeight= 30;
   mainToolBar->setFixedHeight (toolbarHeight + 8);
   modeToolBar->setFixedHeight (toolbarHeight + 4);
   focusToolBar->setFixedHeight (toolbarHeight);
+  tabToolBar->setFixedHeight (toolbarHeight + 4);
 #endif
 #else
 #ifdef Q_OS_MAC
@@ -284,6 +297,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     mainToolBar->setFixedHeight (h1);
     modeToolBar->setFixedHeight (h2);
     focusToolBar->setFixedHeight (h3);
+    tabToolBar->setFixedHeight (h2);
   }
 
   QWidget* cw= new QWidget ();
@@ -311,6 +325,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   extraTools->setObjectName ("extraTools");
   sideTools->setObjectName ("sideTools");
   leftTools->setObjectName ("leftTools");
+  tabToolBar->setObjectName ("tabToolBar");
 
 #ifdef UNIFIED_TOOLBAR
 
@@ -349,6 +364,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     r2->setVisible (true);
     r2->setAutoFillBackground (true);
 
+    // TODO: handle tabToolBar
     bl->insertWidget (0, modeToolBar);
     bl->insertWidget (1, rulerWidget);
     bl->insertWidget (2, focusToolBar);
@@ -371,6 +387,8 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
 #else
   mw->addToolBar (mainToolBar);
+  mw->addToolBarBreak ();
+  mw->addToolBar (tabToolBar);
   mw->addToolBarBreak ();
   mw->addToolBar (modeToolBar);
   mw->addToolBarBreak ();
@@ -428,6 +446,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   leftTools->setVisible (false);
   bottomTools->setVisible (false);
   extraTools->setVisible (false);
+  tabToolBar->setVisible (false);
   mainwindow ()->statusBar ()->setVisible (true);
 #ifndef Q_OS_MAC
   mainwindow ()->menuBar ()->setVisible (false);
@@ -499,6 +518,7 @@ qt_tm_widget_rep::update_visibility () {
   bool old_leftVisibility  = leftTools->isVisible ();
   bool old_bottomVisibility= bottomTools->isVisible ();
   bool old_extraVisibility = extraTools->isVisible ();
+  bool old_tabVisibility   = tabToolBar->isVisible ();
   bool old_statusVisibility= mainwindow ()->statusBar ()->isVisible ();
 
   bool new_mainVisibility  = visibility[1] && visibility[0];
@@ -510,6 +530,7 @@ qt_tm_widget_rep::update_visibility () {
   bool new_leftVisibility  = visibility[7];
   bool new_bottomVisibility= visibility[8];
   bool new_extraVisibility = visibility[9];
+  bool new_tabVisibility   = visibility[10] && visibility[0];
 
   if (XOR (old_mainVisibility, new_mainVisibility))
     mainToolBar->setVisible (new_mainVisibility);
@@ -527,6 +548,8 @@ qt_tm_widget_rep::update_visibility () {
     bottomTools->setVisible (new_bottomVisibility);
   if (XOR (old_extraVisibility, new_extraVisibility))
     extraTools->setVisible (new_extraVisibility);
+  if (XOR (old_tabVisibility, new_tabVisibility))
+    tabToolBar->setVisible (new_tabVisibility);
   if (XOR (old_statusVisibility, new_statusVisibility))
     mainwindow ()->statusBar ()->setVisible (new_statusVisibility);
 
@@ -691,10 +714,15 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
     check_type<bool> (val, s);
     visibility[8]= open_box<bool> (val);
     update_visibility ();
-  } break;
+  }
   case SLOT_EXTRA_TOOLS_VISIBILITY: {
     check_type<bool> (val, s);
     visibility[9]= open_box<bool> (val);
+    update_visibility ();
+  } break;
+  case SLOT_TAB_PAGES_VISIBILITY: {
+    check_type<bool> (val, s);
+    visibility[10]= open_box<bool> (val);
     update_visibility ();
   } break;
 
@@ -739,9 +767,7 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
     check_type<string> (val, s);
     string file= open_box<string> (val);
     if (DEBUG_QT_WIDGETS) debug_widgets << "\tFile: " << file << LF;
-#if (QT_VERSION >= 0x040400)
     mainwindow ()->setWindowFilePath (utf8_to_qstring (file));
-#endif
   } break;
   case SLOT_POSITION: {
     check_type<coord2> (val, s);
@@ -823,6 +849,9 @@ qt_tm_widget_rep::query (slot s, int type_id) {
   case SLOT_LEFT_TOOLS_VISIBILITY:
     check_type_id<bool> (type_id, s);
     return close_box<bool> (visibility[7]);
+  case SLOT_TAB_PAGES_VISIBILITY:
+    check_type_id<bool> (type_id, s);
+    return close_box<bool> (visibility[8]);
 
   case SLOT_BOTTOM_TOOLS_VISIBILITY:
     check_type_id<bool> (type_id, s);
@@ -954,6 +983,18 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       QList<QAction*>* list= main_icons_widget->get_qactionlist ();
       if (list) {
         replaceButtons (mainToolBar, list);
+        update_visibility ();
+      }
+    }
+    break;
+
+  case SLOT_TAB_PAGES:
+    check_type_void (index, s);
+    {
+      tab_bar_widget       = concrete (w);
+      QList<QAction*>* list= tab_bar_widget->get_qactionlist ();
+      if (list) {
+        replaceButtons (tabToolBar, list);
         update_visibility ();
       }
     }
@@ -1196,6 +1237,7 @@ qt_tm_embedded_widget_rep::send (slot s, blackbox val) {
   case SLOT_LEFT_TOOLS_VISIBILITY:
   case SLOT_BOTTOM_TOOLS_VISIBILITY:
   case SLOT_EXTRA_TOOLS_VISIBILITY:
+  case SLOT_TAB_PAGES_VISIBILITY:
   case SLOT_LEFT_FOOTER:
   case SLOT_RIGHT_FOOTER:
   case SLOT_SCROLLBARS_VISIBILITY:
@@ -1251,6 +1293,7 @@ qt_tm_embedded_widget_rep::query (slot s, int type_id) {
   case SLOT_LEFT_TOOLS_VISIBILITY:
   case SLOT_BOTTOM_TOOLS_VISIBILITY:
   case SLOT_EXTRA_TOOLS_VISIBILITY:
+  case SLOT_TAB_PAGES_VISIBILITY:
     check_type_id<bool> (type_id, s);
     return close_box<bool> (false);
 
@@ -1302,6 +1345,7 @@ qt_tm_embedded_widget_rep::write (slot s, blackbox index, widget w) {
   case SLOT_LEFT_TOOLS:
   case SLOT_BOTTOM_TOOLS:
   case SLOT_EXTRA_TOOLS:
+  case SLOT_TAB_PAGES:
   case SLOT_INTERACTIVE_INPUT:
   case SLOT_INTERACTIVE_PROMPT:
   default:
