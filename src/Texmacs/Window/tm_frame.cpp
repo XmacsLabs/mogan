@@ -14,6 +14,8 @@
 #include "object_l5.hpp"
 #include "tm_window.hpp"
 
+#define NUM_TOOLBARS 4
+
 /******************************************************************************
  * Constructor and destructor
  ******************************************************************************/
@@ -114,7 +116,7 @@ tm_frame_rep::menu_main (string menu) {
 
 void
 tm_frame_rep::menu_icons (int which, string menu) {
-  if ((which < 0) || (which > 4) || (!has_current_view ())) return;
+  if ((which < 0) || (which > NUM_TOOLBARS) || (!has_current_view ())) return;
   concrete_window ()->menu_icons (which, menu);
 }
 
@@ -138,7 +140,7 @@ tm_frame_rep::show_header (bool flag) {
 
 void
 tm_frame_rep::show_icon_bar (int which, bool flag) {
-  if ((which < 0) || (which > 4) || (!has_current_view ())) return;
+  if ((which < 0) || (which > NUM_TOOLBARS) || (!has_current_view ())) return;
   concrete_window ()->set_icon_bar_flag (which, flag);
 }
 
@@ -167,7 +169,7 @@ tm_frame_rep::visible_header () {
 
 bool
 tm_frame_rep::visible_icon_bar (int which) {
-  if ((which < 0) || (which > 4)) return false;
+  if ((which < 0) || (which > NUM_TOOLBARS)) return false;
   return concrete_window ()->get_icon_bar_flag (which);
 }
 
