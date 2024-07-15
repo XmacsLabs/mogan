@@ -210,10 +210,6 @@ tmu_writer::apply (string func, array<tree> args) {
   }
 }
 
-static bool is_tree_in_prog (tree t) {
-  return N (t) == 1 && L(t[0]) == DOCUMENT && the_drd->get_attribute(L(t), "prog") == "true";
-}
-
 void
 tmu_writer::write_prog (tree t) {
   string func= as_string (L (t));
@@ -224,12 +220,13 @@ tmu_writer::write_prog (tree t) {
   write (">", false);
   write ("\n", false);
 
-  tree doc= t[0];
-  int doc_N= N(doc);
-  for (int i=0; i<doc_N; i++) {
+  tree doc  = t[0];
+  int  doc_N= N (doc);
+  for (int i= 0; i < doc_N; i++) {
     if (is_atomic (doc[i])) {
       write (tree_to_verbatim (doc[i]->label), false);
-    } else {
+    }
+    else {
       write (doc[i]);
     }
     write ("\n", false);
@@ -237,14 +234,13 @@ tmu_writer::write_prog (tree t) {
 
   // __</python-code>
   // _ means spaces, the number is controlled by tab
-  for (int i=0;i<tab;i++) {
+  for (int i= 0; i < tab; i++) {
     write (" ", false);
   }
   write ("</", false);
   write (func, true, true);
   write (">", false);
 }
-
 
 void
 tmu_writer::write (tree t) {
@@ -305,7 +301,8 @@ tmu_writer::write (tree t) {
   default:
     if (is_tree_in_prog (t)) {
       write_prog (t);
-    } else {
+    }
+    else {
       apply (as_string (L (t)), A (t));
     }
     break;

@@ -54,6 +54,12 @@ tree                 eqnumber_to_nonumber (tree t);
 string               search_metadata (tree doc, string kind);
 
 /*** TMU ***/
+inline bool
+is_tree_in_prog (tree t) {
+  return N (t) == 1 && L (t[0]) == DOCUMENT &&
+         the_drd->get_attribute (L (t), "prog") == "true";
+}
+
 tree   tmu_to_tree (string s);
 tree   tmu_document_to_tree (string s);
 string tree_to_tmu (tree t);
