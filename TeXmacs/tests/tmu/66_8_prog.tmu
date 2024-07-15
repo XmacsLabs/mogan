@@ -1,0 +1,28 @@
+<TMU|<tuple|1.0.2|1.2.8-alpha2>>
+
+<style|<tuple|generic|no-page-numbers|chinese>>
+
+<\body>
+  开始
+
+  <\python-code>
+import os
+def less(a, b):<label|hello>
+    return a <= b
+  </python-code>
+
+  结束
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|hello|<tuple|?|?>>
+  </collection>
+</references>
