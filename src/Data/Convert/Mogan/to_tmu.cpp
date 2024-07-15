@@ -298,7 +298,7 @@ tmu_writer::write (tree t) {
     tag ("</", as_string (COLLECTION), ">");
     break;
   default:
-    if (is_tree_in_prog (t)) {
+    if (is_tree_in_prog (t) && N (t) == 1 && L (t[0]) == moebius::DOCUMENT) {
       write_prog (t);
     }
     else {
