@@ -19,7 +19,6 @@
 using namespace moebius;
 using lolly::data::binary_to_hexadecimal;
 using moebius::drd::std_contains;
-using moebius::drd::the_drd;
 
 const string TMU_VERSION= "1.0.2";
 

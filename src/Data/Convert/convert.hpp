@@ -15,6 +15,8 @@
 #include "hashmap.hpp"
 #include "tree.hpp"
 #include "url.hpp"
+#include "tree_helper.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 class object;
 
@@ -56,8 +58,8 @@ string               search_metadata (tree doc, string kind);
 /*** TMU ***/
 inline bool
 is_tree_in_prog (tree t) {
-  return N (t) == 1 && L (t[0]) == DOCUMENT &&
-         the_drd->get_attribute (L (t), "prog") == "true";
+  return N (t) == 1 && L (t[0]) == moebius::DOCUMENT &&
+    moebius::drd::the_drd->get_attribute (L (t), "prog") == "true";
 }
 
 tree   tmu_to_tree (string s);
