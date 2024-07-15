@@ -410,6 +410,7 @@ tm_window_rep::menu_icons (int which, string menu) {
     else if (which == 1) set_mode_icons (wid, w);
     else if (which == 2) set_focus_icons (wid, w);
     else if (which == 3) set_user_icons (wid, w);
+    else if (which == 4) set_tab_pages (wid, w);
   }
 }
 
@@ -442,6 +443,7 @@ tm_window_rep::set_icon_bar_flag (int which, bool flag) {
   else if (which == 1) set_mode_icons_visibility (wid, flag);
   else if (which == 2) set_focus_icons_visibility (wid, flag);
   else if (which == 3) set_user_icons_visibility (wid, flag);
+  else if (which == 4) set_tab_pages_visibility (wid, flag);
 }
 
 void
@@ -465,6 +467,7 @@ tm_window_rep::get_icon_bar_flag (int which) {
   else if (which == 1) return get_mode_icons_visibility (wid);
   else if (which == 2) return get_focus_icons_visibility (wid);
   else if (which == 3) return get_user_icons_visibility (wid);
+  else if (which == 4) return get_tab_pages_visibility (wid);
   else return false;
 }
 
