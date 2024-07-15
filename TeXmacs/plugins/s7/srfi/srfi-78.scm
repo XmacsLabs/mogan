@@ -41,7 +41,7 @@
 (export check check:proc check-set-mode! check-report check-reset! check-failed?)
 (begin
 
-(define check:write write)
+(define check:write display)
 
 (define check:mode #f)
 
