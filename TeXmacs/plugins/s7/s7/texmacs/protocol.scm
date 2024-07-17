@@ -15,7 +15,7 @@
 ;
 
 (define-library (texmacs protocol)
-(export flush-verbatim)
+(export data-begin data-end daa-escape flush-verbatim)
 (begin
 
 (define (data-begin)
