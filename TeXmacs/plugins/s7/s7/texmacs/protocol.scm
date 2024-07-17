@@ -15,7 +15,8 @@
 ;
 
 (define-library (texmacs protocol)
-(export data-begin data-end daa-escape flush-verbatim)
+(export data-begin data-end data-escape 
+        flush-verbatim flush-prompt flush-scheme)
 (begin
 
 (define (data-begin)
@@ -28,11 +29,19 @@
 (define (data-escape)
   (write (integer->char 27)))
 
-(define (flush-verbatim msg)
+(define (flush-any msg)
   (data-begin)
-  (display "verbatim:")
   (display msg)
   (data-end))
+
+(define (flush-verbatim msg)
+  (flush-any (append "verbatim:" msg)))
+
+(define (flush-scheme msg)
+  (flush-any (append "scheme:" msg)))
+
+(define (flush-prompt msg)
+  (flush-any (append "prompt#" msg)))
 
 ) ; end of begin
 ) ; end of define-library

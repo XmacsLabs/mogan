@@ -29,9 +29,28 @@
 
   (read-code ""))
 
+
+(define (s7-print obj)
+  (define (s7-dquote s)
+    (append "\"\\\"" s "\\\"\""))
+
+  (define (s7-quote s)
+    (append "\"" s "\""))
+
+  (define (build-s7-result obj)
+    (let ((output
+           (cond ((string? obj)
+                  (s7-dquote obj))
+                 ((number? obj)
+                  (s7-quote (number->string obj)))
+                 (else (append "\"todo\"")))))
+      (append "(s7-result " output ")")))
+
+  (flush-scheme (build-s7-result obj)))
+
 (define (eval-and-print code)
   (let ((result (eval-string code)))
-    (if result (flush-verbatim result))))
+    (if result (s7-print result))))
 
 (define (read-eval-print)
   (let ((code (s7-read-code)))
@@ -40,6 +59,7 @@
       (eval-and-print code))))
 
 (define (s7-welcome)
+  (flush-prompt "> ")
   (flush-verbatim
     (append "S7 Scheme: " (substring (*s7* 'version) 3))))
 
