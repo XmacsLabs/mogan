@@ -37,13 +37,17 @@
   (define (s7-quote s)
     (append "\"" s "\""))
 
+  (define (write-to-string obj)
+    (let ((port (open-output-string)))
+      (write obj port)
+      (get-output-string port)))
+
   (define (build-s7-result obj)
-    (let ((output
+    (let ((output 
            (cond ((string? obj)
                   (s7-dquote obj))
-                 ((number? obj)
-                  (s7-quote (number->string obj)))
-                 (else (append "\"todo\"")))))
+                 (else
+                  (s7-quote (write-to-string obj))))))
       (append "(s7-result " output ")")))
 
   (flush-scheme (build-s7-result obj)))
