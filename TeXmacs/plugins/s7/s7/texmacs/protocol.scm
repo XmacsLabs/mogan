@@ -15,8 +15,9 @@
 ;
 
 (define-library (texmacs protocol)
-(export (flush-verbatim))
+(export flush-verbatim)
 (begin
+
 (define (data-begin)
   (display (integer->char 2)))
 
@@ -33,5 +34,5 @@
   (display msg)
   (data-end))
 
-)
-)
+) ; end of begin
+) ; end of define-library

@@ -15,36 +15,38 @@
 ;
 
 (set! *load-path*
-  (cons (append (getenv "TEXMACS_HOME_PATH") "plugins/s7/s7")
+  (cons (append (getenv "TEXMACS_PATH") "/plugins/s7/s7")
         *load-path*))
 
 (import (texmacs protocol))
+
+(define (s7-read-code)
+  (define (read-code code)
+    (let ((line (read-line)))
+      (if (string=? line "<EOF>\n")
+          code
+          (read-code (append code line)))))
+
+  (read-code ""))
+
+(define (eval-and-print code)
+  (let ((result (eval-string code)))
+    (if result (flush-verbatim result))))
+
+(define (read-eval-print)
+  (let ((code (s7-read-code)))
+    (if (string=? code "")
+      #t
+      (eval-and-print code))))
 
 (define (s7-welcome)
   (flush-verbatim
     (append "S7 Scheme: " (substring (*s7* 'version) 3))))
 
-(define (eval-and-print line)
-  (let ((result (eval-string line)))
-    (if result
-      (begin 
-        (display "<=\n")
-        (display "=> ")
-        (display result)
-        (display "<=\n")))))
-
-(define (read-eval-print)
-  (let ((line (read-line *stdin*)))
-    (cond 
-      ((string=? line "\n")
-       #t)
-      (else
-       (eval-and-print line)
-       #t))))
-
-(define (loop)
+(define (s7-repl)
   (if (read-eval-print)
-      (loop)
+      (s7-repl)
       (display "Bye!\n")))
 
 (s7-welcome)
+(s7-repl)
