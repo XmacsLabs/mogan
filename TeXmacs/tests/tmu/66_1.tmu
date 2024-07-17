@@ -11,6 +11,22 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
+      #t
+    <|unfolded-io>
+      <s7-result|#t>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      #f
+    <|unfolded-io>
+      <s7-result|#f>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
       1
     <|unfolded-io>
       <s7-result|1>
@@ -61,14 +77,12 @@
     <|unfolded-io>
       (string-join (list "a" "bc"))
     <|unfolded-io>
-      <s7-result|"abc">
-    </unfolded-io>
+      <\errput>
+        unbound-variable
 
-    <\input>
-      \<gtr\>\ 
-    <|input>
-      \;
-    </input>
+        unbound variable string-join in (string-join (list "a" "bc"))
+      </errput>
+    </unfolded-io>
   </session>
 </body>
 

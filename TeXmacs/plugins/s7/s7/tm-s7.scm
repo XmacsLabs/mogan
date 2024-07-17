@@ -27,55 +27,63 @@
     (append "S7 Scheme: " (substring (*s7* 'version) 3))))
 
 (define (s7-repl)
+  (define (s7-read-code)
+    (define (read-code code)
+      (let ((line (read-line)))
+        (if (string=? line "<EOF>\n")
+            code
+            (read-code (append code line)))))
+  
+    (read-code ""))
+
+  (define (string-join l)
+    (cond ((null? l) "")
+          ((= (length l) 1) (car l))
+          (else
+            (append
+              (car l)
+              (string-join (cdr l))))))
+
+  (define (escape-string str)
+    (string-join
+      (map (lambda (char)
+             (if (char=? char #\")
+                 (string #\\ #\")
+                 (if (char=? char #\\)
+                     (string #\\ #\\)
+                     (string char))))
+           (string->list str))))
+
+  (define (s7-quote s)
+    (append "\"" (escape-string s) "\""))
+
+  (define (build-s7-result obj)
+    (let ((output (object->string obj)))
+      (append "(s7-result " (s7-quote output) ")")))
+
+  (define (s7-print obj)
+    (flush-scheme (build-s7-result obj)))
+
+  (define (eval-and-print code)
+    (catch #t
+      (lambda ()
+        (s7-print (eval-string code (rootlet))))
+      (lambda args
+        (begin
+          (flush-scheme
+            (append "(errput (document "
+              (s7-quote (symbol->string (car args)))
+              (s7-quote (apply format #f (cadr args)))
+              "))"))))))
+
   (define (read-eval-print)
-    (define (s7-read-code)
-      (define (read-code code)
-        (let ((line (read-line)))
-          (if (string=? line "<EOF>\n")
-              code
-              (read-code (append code line)))))
-    
-      (read-code ""))
-
-    (define (eval-and-print code)
-      (define (s7-print obj)
-        (define (build-s7-result obj)
-          (define (s7-quote s)
-            (define (string-join l)
-              (cond ((null? l) "")
-                    ((= (length l) 1) (car l))
-                    (else
-                      (append
-                        (car l)
-                        (string-join (cdr l))))))
-            (define (escape-string str)
-              (string-join
-                (map (lambda (char)
-                       (if (char=? char #\")
-                           (string #\\ #\")
-                           (if (char=? char #\\)
-                               (string #\\ #\\)
-                               (string char))))
-                     (string->list str))))
-          
-            (append "\"" (escape-string s) "\""))
-
-          (let ((output (object->string obj)))
-            (append "(s7-result " (s7-quote output) ")")))
-      
-        (flush-scheme (build-s7-result obj)))
-
-      (let ((result (eval-string code (rootlet))))
-        (if result (s7-print result))))
-
     (let ((code (s7-read-code)))
       (if (string=? code "")
         #t
         (eval-and-print code))))
 
-  (if (read-eval-print)
-      (s7-repl)
-      (display "Bye!\n")))
+  (begin (read-eval-print)
+         (s7-repl)))
 
 (s7-welcome)
 (s7-repl)
