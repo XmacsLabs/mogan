@@ -38,7 +38,9 @@
 ; Follow the same License as the original one
 
 (define-library (srfi srfi-78)
-(export check check:proc check-set-mode! check-report check-reset! check-failed?)
+(export check check-set-mode! check-report check-reset!
+        check-passed? check-failed?
+        check:proc)
 (begin
 
 (define check:write display)
@@ -57,17 +59,12 @@
 
 (check-set-mode! 'report)
 
-(define check:correct #f)
-(define check:failed   #f)
-
-(define (check-failed?)
-  (if check:failed 
-    (> (length check:failed) 0)
-    #f))
+(define check:correct 0)
+(define check:failed '())
 
 (define (check-reset!)
   (set! check:correct 0)
-  (set! check:failed   '()))
+  (set! check:failed '()))
 
 (define (check:add-correct!)
   (set! check:correct (+ check:correct 1)))
@@ -76,8 +73,6 @@
   (set! check:failed
         (cons (list expression actual-result expected-result)
               check:failed)))
-
-(check-reset!)
 
 (define (check:report-expression expression)
   (newline)
@@ -127,6 +122,9 @@
 (define (check-passed? expected-total-count)
   (and (= (length check:failed) 0)
        (= check:correct expected-total-count)))
+
+(define (check-failed?)
+  (>= (length check:failed) 1))
 
 (define (check:proc expression thunk equal expected-result)
   (case check:mode
