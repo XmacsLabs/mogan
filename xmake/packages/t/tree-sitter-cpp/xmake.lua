@@ -35,3 +35,7 @@ package("tree-sitter-cpp")
         end
         import("package.tools.xmake").install(package, configs)
     end)
+
+    on_test(function (package)
+        assert(package:has_cfuncs("tree_sitter_cpp", {includes = "tree-sitter-cpp.h"}))
+    end) 
