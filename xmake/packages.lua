@@ -31,6 +31,12 @@ end
 function add_requires_of_mogan()
     -- package: s7
     add_requires("s7 "..S7_VERSION, {system=false})
+    
+    -- package: tree-sitter
+    add_requires("tree-sitter "..TREESITTER_VERSION, {system=false})
+
+    -- package: tree-sitter-cpp
+    add_requires("tree-sitter-cpp "..TREESITTER_CPP_VERSION, {system=false})
 
     -- package: qt6widgets
     if is_plat("mingw") or is_plat("windows") then
