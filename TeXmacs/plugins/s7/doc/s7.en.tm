@@ -584,7 +584,11 @@
     <|unfolded-io>
       (values 1 2 3)
     <|unfolded-io>
-      (1 2 3)
+      <\errput>
+        wrong-number-of-args
+
+        s7-print: too many arguments: 2
+      </errput>
     </unfolded-io>
 
     <\unfolded-io>
