@@ -14,7 +14,7 @@
 ; under the License.
 ;
 
-(define-library (scheme base)
+(define-library (texmacs protocol)
 (export (flush-verbatim))
 (begin
 (define (data-begin)
