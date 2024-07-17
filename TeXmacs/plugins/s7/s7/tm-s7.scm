@@ -27,6 +27,31 @@
     (append "S7 Scheme: " (substring (*s7* 'version) 3))))
 
 (define (s7-repl)
+  ; SRFI 1
+  (define (find pred l)
+    (cond ((null? l) #f)
+          ((pred (car l)) (car l)) 
+          (else (find pred (cdr l)))))
+
+  ; SRFI 13
+  (define (string-join l)
+    (cond ((null? l) "")
+          ((= (length l) 1) (car l))
+          (else
+            (append
+              (car l)
+              (string-join (cdr l))))))
+
+  (define (string-prefix? prefix str)
+    (let* ((prefix-len (length prefix))
+           (str-len (length str)))
+      (and (<= prefix-len str-len)
+           (let loop ((i 0))
+             (or (= i prefix-len)
+                 (and (char=? (string-ref prefix i)
+                              (string-ref str i))
+                      (loop (+ i 1))))))))
+
   (define (s7-read-code)
     (define (read-code code)
       (let ((line (read-line)))
@@ -35,14 +60,6 @@
             (read-code (append code line)))))
   
     (read-code ""))
-
-  (define (string-join l)
-    (cond ((null? l) "")
-          ((= (length l) 1) (car l))
-          (else
-            (append
-              (car l)
-              (string-join (cdr l))))))
 
   (define (escape-string str)
     (string-join
@@ -58,11 +75,16 @@
     (append "\"" (escape-string s) "\""))
 
   (define (build-s7-result obj)
-    (let ((output (object->string obj)))
-      (append "(s7-result " (s7-quote output) ")")))
+    (let ((output (object->string obj))
+          (leadings (list "(document" "(math" "(equation*" "(align" "(with" "(graphics")))
+      (if (find (lambda (x) (string-prefix? x output)) leadings)
+          output
+          (append "(s7-result " (s7-quote output) ")"))))
 
   (define (s7-print obj)
-    (flush-scheme (build-s7-result obj)))
+    (if (eq? obj #<unspecified>)
+      (flush-scheme "")
+      (flush-scheme (build-s7-result obj))))
 
   (define (eval-and-print code)
     (catch #t

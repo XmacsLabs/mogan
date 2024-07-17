@@ -14,7 +14,7 @@
 
   Here are snippets which only works in the S7 Scheme session:
 
-  <paragraph|unicode support>
+  <paragraph|Unicode Support>
 
   The string literal in S7 Scheme does not support Unicode. In the S7 Scheme
   session, we use the cork encoding as a workaround.
@@ -69,7 +69,7 @@
     </input>
   </session>
 
-  <paragraph|special rules for rendering>
+  <paragraph|Special Rules for Rendering>
 
   For Scheme snippets starting with the markup
   <markup|document>\<#3001\><markup|math>\<#3001\><markup|equation*>\<#3001\><markup|align>\<#3001\><markup|with>\<#3001\><markup|graphics>:
@@ -80,7 +80,7 @@
     <|unfolded-io>
       `(document (frac "\<#5206\>\<#5B50\>" "\<#5206\>\<#6BCD\>"))
     <|unfolded-io>
-      <s7-result|(document (frac "\<#5206\>\<#5B50\>" "\<#5206\>\<#6BCD\>"))>
+      <frac|\<#5206\>\<#5B50\>|\<#5206\>\<#6BCD\>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -88,7 +88,7 @@
     <|unfolded-io>
       `(math (frac "1" "2"))
     <|unfolded-io>
-      <s7-result|(math (frac "1" "2"))>
+      <math|<frac|1|2>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -96,7 +96,44 @@
     <|unfolded-io>
       `(with "color" "red" "Hello")
     <|unfolded-io>
-      <s7-result|(with "color" "red" "Hello")>
+      <with|color|red|Hello>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  <paragraph|Side Effect and Eval Result>
+
+  Eval result is rendered in green background. Side effect is in normal white
+  background.
+
+  <\session|s7|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (begin (display "Hello") (newline) (+ 1 2))
+    <|unfolded-io>
+      Hello
+
+      <s7-result|3>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (for-each (lambda (x) (display x) (newline))
+
+      \ \ (list 1 2 3))
+    <|unfolded-io>
+      1
+
+      2
+
+      3
     </unfolded-io>
 
     <\input>

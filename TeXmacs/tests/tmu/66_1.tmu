@@ -83,6 +83,12 @@
         unbound variable string-join in (string-join (list "a" "bc"))
       </errput>
     </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
   </session>
 </body>
 
