@@ -190,7 +190,7 @@ main (int argc, char** argv) {
   const char*       env_key  = "TEXMACS_PATH";
   const char*       env_value= getenv (env_key);
   std::stringstream load_path;
-  load_path << env_value << "/plugins/s7/";
+  load_path << env_value << "/plugins/s7/s7";
 
   s7_scheme* sc;
   sc= s7_init ();
