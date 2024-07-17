@@ -35,7 +35,32 @@
     <|unfolded-io>
       '\<#4E2D\>\<#6587\>
     <|unfolded-io>
-      \<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
+      <\errput>
+        \;
+
+        ;unbound variable null-list? in (cond ((null-list? l) "") ((= (length
+        l) 1) (car l)) (else (append (car l) (string-join (cdr l)))))
+
+        ; \ \ \ (cond ((null-list? l) "") ((=...
+
+        ; \ \ \ /home/da/git/mogan/TeXmacs/plugins/s7/s7/tm-s7.scm, line 45,
+        position: 1298
+
+        ; string-join: (cond ((null-list? l) "") ((... ; l: ("\<less\>" "#"
+        "4" "E" ...)
+
+        ; string-join: (((null-list? l) "") ((= (le...
+
+        ; s7-quote: (append "\\"" (escape-string s) ... ; s:
+        "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>"
+
+        ; build-s7-result: (append "(s7-result " (s... ; output:
+        "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>"
+
+        \;
+      </errput>
+
+      <script-busy>
     </unfolded-io>
 
     <\unfolded-io>
@@ -43,7 +68,7 @@
     <|unfolded-io>
       '\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
     <|unfolded-io>
-      \<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
+      <s7-result|\<#4E2D\>\<#6587\>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -51,7 +76,7 @@
     <|unfolded-io>
       (length "\<#4E2D\>\<#6587\>")
     <|unfolded-io>
-      14
+      <s7-result|14>
     </unfolded-io>
 
     <\unfolded-io>
@@ -59,7 +84,7 @@
     <|unfolded-io>
       (length "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>")
     <|unfolded-io>
-      14
+      <s7-result|14>
     </unfolded-io>
 
     <\input>
@@ -80,7 +105,7 @@
     <|unfolded-io>
       `(document (frac "\<#5206\>\<#5B50\>" "\<#5206\>\<#6BCD\>"))
     <|unfolded-io>
-      <frac|\<#5206\>\<#5B50\>|\<#5206\>\<#6BCD\>>
+      <s7-result|(document (frac "\<#5206\>\<#5B50\>" "\<#5206\>\<#6BCD\>"))>
     </unfolded-io>
 
     <\unfolded-io>
@@ -88,7 +113,7 @@
     <|unfolded-io>
       `(math (frac "1" "2"))
     <|unfolded-io>
-      <math|<frac|1|2>>
+      <s7-result|(math (frac "1" "2"))>
     </unfolded-io>
 
     <\unfolded-io>
@@ -96,7 +121,7 @@
     <|unfolded-io>
       `(with "color" "red" "Hello")
     <|unfolded-io>
-      <with|color|red|Hello>
+      <s7-result|(with "color" "red" "Hello")>
     </unfolded-io>
 
     <\input>
@@ -163,7 +188,7 @@
     <|unfolded-io>
       (import (srfi srfi-1))
     <|unfolded-io>
-      (rootlet)
+      <s7-result|(rootlet)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -171,7 +196,7 @@
     <|unfolded-io>
       (reduce + 0 (list 1 2 3))
     <|unfolded-io>
-      6
+      <s7-result|6>
     </unfolded-io>
 
     <\unfolded-io>
@@ -179,7 +204,7 @@
     <|unfolded-io>
       (import (srfi srfi-78))
     <|unfolded-io>
-      (rootlet)
+      <s7-result|(rootlet)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -191,7 +216,7 @@
 
       (+ 1 2) =\<gtr\> 3 ; correct
 
-      1
+      <s7-result|1>
     </unfolded-io>
 
     <\input>

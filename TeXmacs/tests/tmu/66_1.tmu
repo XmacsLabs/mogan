@@ -1,0 +1,80 @@
+<TMU|<tuple|1.0.2|1.2.8-alpha2>>
+
+<style|<tuple|generic|no-page-numbers|chinese|s7>>
+
+<\body>
+  <\session|s7|default>
+    <\output>
+      S7 Scheme: 10.11, 2-July-2024
+    </output>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      1
+    <|unfolded-io>
+      <s7-result|1>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      1.2
+    <|unfolded-io>
+      <s7-result|1.2>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      "abc"
+    <|unfolded-io>
+      <s7-result|"abc">
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      #\\a
+    <|unfolded-io>
+      <s7-result|#\\a>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (list 1 2 3)
+    <|unfolded-io>
+      <s7-result|(1 2 3)>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (list "A" "a")
+    <|unfolded-io>
+      <s7-result|("A" "a")>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (string-join (list "a" "bc"))
+    <|unfolded-io>
+      <s7-result|"abc">
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

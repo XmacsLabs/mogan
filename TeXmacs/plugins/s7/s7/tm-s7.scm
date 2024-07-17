@@ -20,47 +20,6 @@
 
 (import (texmacs protocol))
 
-(define (s7-read-code)
-  (define (read-code code)
-    (let ((line (read-line)))
-      (if (string=? line "<EOF>\n")
-          code
-          (read-code (append code line)))))
-
-  (read-code ""))
-
-
-(define (s7-print obj)
-  (define (s7-dquote s)
-    (append "\"\\\"" s "\\\"\""))
-
-  (define (s7-quote s)
-    (append "\"" s "\""))
-
-  (define (write-to-string obj)
-    (let ((port (open-output-string)))
-      (write obj port)
-      (get-output-string port)))
-
-  (define (build-s7-result obj)
-    (let ((output 
-           (cond ((string? obj)
-                  (s7-dquote obj))
-                 (else
-                  (s7-quote (write-to-string obj))))))
-      (append "(s7-result " output ")")))
-
-  (flush-scheme (build-s7-result obj)))
-
-(define (eval-and-print code)
-  (let ((result (eval-string code)))
-    (if result (s7-print result))))
-
-(define (read-eval-print)
-  (let ((code (s7-read-code)))
-    (if (string=? code "")
-      #t
-      (eval-and-print code))))
 
 (define (s7-welcome)
   (flush-prompt "> ")
@@ -68,6 +27,52 @@
     (append "S7 Scheme: " (substring (*s7* 'version) 3))))
 
 (define (s7-repl)
+  (define (read-eval-print)
+    (define (s7-read-code)
+      (define (read-code code)
+        (let ((line (read-line)))
+          (if (string=? line "<EOF>\n")
+              code
+              (read-code (append code line)))))
+    
+      (read-code ""))
+
+    (define (eval-and-print code)
+      (define (s7-print obj)
+        (define (build-s7-result obj)
+          (define (s7-quote s)
+            (define (string-join l)
+              (cond ((null? l) "")
+                    ((= (length l) 1) (car l))
+                    (else
+                      (append
+                        (car l)
+                        (string-join (cdr l))))))
+            (define (escape-string str)
+              (string-join
+                (map (lambda (char)
+                       (if (char=? char #\")
+                           (string #\\ #\")
+                           (if (char=? char #\\)
+                               (string #\\ #\\)
+                               (string char))))
+                     (string->list str))))
+          
+            (append "\"" (escape-string s) "\""))
+
+          (let ((output (object->string obj)))
+            (append "(s7-result " (s7-quote output) ")")))
+      
+        (flush-scheme (build-s7-result obj)))
+
+      (let ((result (eval-string code (rootlet))))
+        (if result (s7-print result))))
+
+    (let ((code (s7-read-code)))
+      (if (string=? code "")
+        #t
+        (eval-and-print code))))
+
   (if (read-eval-print)
       (s7-repl)
       (display "Bye!\n")))
