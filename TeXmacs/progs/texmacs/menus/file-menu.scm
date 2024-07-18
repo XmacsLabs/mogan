@@ -47,6 +47,10 @@
          (l2 (list-sort l1 buffer-more-recent?)))
     (sublist l2 0 (min (length l2) nr))))
 
+(tm-define (buffer-menu-unsorted-list nr)
+  (let* ((l1 (list-filter (buffer-list) buffer-in-menu?)))
+    (sublist l1 0 (min (length l1) nr))))
+
 (tm-define (buffer-go-menu)
   (let* ((l1 (list-difference (buffer-menu-list 15) (linked-file-list)))
          (l2 (map window->buffer (window-list)))
