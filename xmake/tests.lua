@@ -28,6 +28,8 @@ function add_target_cpp_test(filepath, dep)
             add_packages("mingw-w64")
         end
         add_packages("s7")
+        add_packages("tree-sitter")
+        add_packages("tree-sitter-cpp")
         add_packages("moebius")
         add_packages("pdfhummus")
 
@@ -78,6 +80,8 @@ function add_target_cpp_bench(filepath, dep)
             add_packages("mingw-w64")
         end
         add_packages("s7")
+        add_packages("tree-sitter")
+        add_packages("tree-sitter-cpp")
         add_packages("lolly")
         add_packages("moebius")
         add_packages("pdfhummus")
