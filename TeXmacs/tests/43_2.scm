@@ -1,3 +1,18 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; MODULE      : 43_2.scm
+;; DESCRIPTION : Test for 43_2
+;; COPYRIGHT   : (C) 2023-2024  Darcy Shen
+;;
+;; This software falls under the GNU general public license version 3 or later.
+;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+;; in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(import (srfi srfi-78))
+
 (define (export-as-latex-and-load path)
   (with path (string-append "$TEXMACS_PATH/tests/tm/" path)
     (with tmpfile (url-temp)
@@ -9,13 +24,12 @@
   (with path (string-append "$TEXMACS_PATH/tests/tex/" path)
     (string-replace (string-load path)  "\r\n" "\n")))
 
-(define (test-export-as-latex)
-  (regression-test-group
-   "export to latex and load as string" "load as string"
-   export-as-latex-and-load load-latex
-   (test "test tm" "43_2.tm" "43_2.tex")))
-
 (tm-define (test_43_2)
-  (let ((n (+ (test-export-as-latex))))
-    (display* "Total: " (object->string n) " tests.\n")
-    (display "Test suite of 43_2: ok\n")))
+  (check
+    (export-as-latex-and-load "43_2.tm")
+    =>
+    (load-latex "43_2.tex"))
+
+  (check-report)
+  (if (check-failed?)
+    (exit -1)))

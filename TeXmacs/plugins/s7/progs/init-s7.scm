@@ -20,7 +20,8 @@
     (string-append s "\n<EOF>\n")))
 
 (define (s7-launcher)
-  "tm_s7")
+  (string-append "tm_s7" " " (url->system (get-texmacs-path))
+    "/plugins/s7/s7/tm-s7.scm"))
 
 (plugin-configure s7
   (:require (url-exists-in-path? "tm_s7"))
