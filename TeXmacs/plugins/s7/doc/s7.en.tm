@@ -14,7 +14,7 @@
 
   Here are snippets which only works in the S7 Scheme session:
 
-  <paragraph|unicode support>
+  <paragraph|Unicode Support>
 
   The string literal in S7 Scheme does not support Unicode. In the S7 Scheme
   session, we use the cork encoding as a workaround.
@@ -35,7 +35,7 @@
     <|unfolded-io>
       '\<#4E2D\>\<#6587\>
     <|unfolded-io>
-      \<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
+      <s7-result|\<#4E2D\>\<#6587\>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -43,7 +43,7 @@
     <|unfolded-io>
       '\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
     <|unfolded-io>
-      \<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
+      <s7-result|\<#4E2D\>\<#6587\>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -51,7 +51,7 @@
     <|unfolded-io>
       (length "\<#4E2D\>\<#6587\>")
     <|unfolded-io>
-      14
+      <s7-result|14>
     </unfolded-io>
 
     <\unfolded-io>
@@ -59,7 +59,7 @@
     <|unfolded-io>
       (length "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>")
     <|unfolded-io>
-      14
+      <s7-result|14>
     </unfolded-io>
 
     <\input>
@@ -69,7 +69,7 @@
     </input>
   </session>
 
-  <paragraph|special rules for rendering>
+  <paragraph|Special Rules for Rendering>
 
   For Scheme snippets starting with the markup
   <markup|document>\<#3001\><markup|math>\<#3001\><markup|equation*>\<#3001\><markup|align>\<#3001\><markup|with>\<#3001\><markup|graphics>:
@@ -97,6 +97,43 @@
       `(with "color" "red" "Hello")
     <|unfolded-io>
       <with|color|red|Hello>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  <paragraph|Side Effect and Eval Result>
+
+  Eval result is rendered in green background. Side effect is in normal white
+  background.
+
+  <\session|s7|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (begin (display "Hello") (newline) (+ 1 2))
+    <|unfolded-io>
+      Hello
+
+      <s7-result|3>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (for-each (lambda (x) (display x) (newline))
+
+      \ \ (list 1 2 3))
+    <|unfolded-io>
+      1
+
+      2
+
+      3
     </unfolded-io>
 
     <\input>
@@ -163,7 +200,7 @@
     <|unfolded-io>
       (import (srfi srfi-1))
     <|unfolded-io>
-      (rootlet)
+      <s7-result|(rootlet)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -171,7 +208,7 @@
     <|unfolded-io>
       (reduce + 0 (list 1 2 3))
     <|unfolded-io>
-      6
+      <s7-result|6>
     </unfolded-io>
 
     <\unfolded-io>
@@ -179,7 +216,7 @@
     <|unfolded-io>
       (import (srfi srfi-78))
     <|unfolded-io>
-      (rootlet)
+      <s7-result|(rootlet)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -191,7 +228,7 @@
 
       (+ 1 2) =\<gtr\> 3 ; correct
 
-      1
+      <s7-result|1>
     </unfolded-io>
 
     <\input>
@@ -211,7 +248,7 @@
     <|unfolded-io>
       (help 'equal?)
     <|unfolded-io>
-      "(equal? obj1 obj2) returns #t if obj1 is equal to obj2"
+      <s7-result|"(equal? obj1 obj2) returns #t if obj1 is equal to obj2">
     </unfolded-io>
 
     <\unfolded-io>
@@ -219,7 +256,8 @@
     <|unfolded-io>
       (help 'cdar)
     <|unfolded-io>
-      "(cdar lst) returns (cdr (car lst)): (cdar '((1 2 3))) -\<gtr\> '(2 3)"
+      <s7-result|"(cdar lst) returns (cdr (car lst)): (cdar '((1 2 3))) -\>
+      '(2 3)">
     </unfolded-io>
 
     <\input>
@@ -237,7 +275,7 @@
     <|unfolded-io>
       (eq? () ())
     <|unfolded-io>
-      #t
+      <s7-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -245,7 +283,7 @@
     <|unfolded-io>
       (eq? 2 2.0)
     <|unfolded-io>
-      #f
+      <s7-result|#f>
     </unfolded-io>
 
     <\unfolded-io>
@@ -253,7 +291,7 @@
     <|unfolded-io>
       (equal? 2 2.0)
     <|unfolded-io>
-      #f
+      <s7-result|#f>
     </unfolded-io>
 
     <\unfolded-io>
@@ -261,7 +299,7 @@
     <|unfolded-io>
       (equivalent? 2 2.0)
     <|unfolded-io>
-      #t
+      <s7-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -269,7 +307,7 @@
     <|unfolded-io>
       (equivalent? .1 1/10)
     <|unfolded-io>
-      #t
+      <s7-result|#t>
     </unfolded-io>
 
     <\input>
@@ -291,7 +329,7 @@
     <|unfolded-io>
       pi
     <|unfolded-io>
-      3.141592653589793
+      <s7-result|pi>
     </unfolded-io>
 
     <\unfolded-io>
@@ -299,7 +337,7 @@
     <|unfolded-io>
       (*s7* 'bignum-precision)
     <|unfolded-io>
-      128
+      <s7-result|128>
     </unfolded-io>
 
     <\unfolded-io>
@@ -307,7 +345,7 @@
     <|unfolded-io>
       (set! (*s7* 'bignum-precision) 256)
     <|unfolded-io>
-      256
+      <s7-result|256>
     </unfolded-io>
 
     <\unfolded-io>
@@ -315,7 +353,7 @@
     <|unfolded-io>
       pi
     <|unfolded-io>
-      3.141592653589793
+      <s7-result|pi>
     </unfolded-io>
 
     <\unfolded-io>
@@ -323,7 +361,7 @@
     <|unfolded-io>
       (bignum "123456789123456789")
     <|unfolded-io>
-      123456789123456789
+      <s7-result|123456789123456789>
     </unfolded-io>
 
     <\unfolded-io>
@@ -331,7 +369,7 @@
     <|unfolded-io>
       (bignum "1.123123123123123123123123123")
     <|unfolded-io>
-      1.1231231231231231
+      <s7-result|1.1231231231231231>
     </unfolded-io>
 
     <\input>
@@ -349,7 +387,7 @@
     <|unfolded-io>
       (exact? 1.0)
     <|unfolded-io>
-      #f
+      <s7-result|#f>
     </unfolded-io>
 
     <\unfolded-io>
@@ -357,7 +395,7 @@
     <|unfolded-io>
       (rational? 1.5)
     <|unfolded-io>
-      #f
+      <s7-result|#f>
     </unfolded-io>
 
     <\unfolded-io>
@@ -365,7 +403,7 @@
     <|unfolded-io>
       (floor 1.4)
     <|unfolded-io>
-      1
+      <s7-result|1>
     </unfolded-io>
 
     <\unfolded-io>
@@ -373,7 +411,7 @@
     <|unfolded-io>
       (remainder 2.4 1)
     <|unfolded-io>
-      0.3999999999999999
+      <s7-result|0.3999999999999999>
     </unfolded-io>
 
     <\unfolded-io>
@@ -381,7 +419,7 @@
     <|unfolded-io>
       (modulo 1.4 1.0)
     <|unfolded-io>
-      0.3999999999999999
+      <s7-result|0.3999999999999999>
     </unfolded-io>
 
     <\unfolded-io>
@@ -389,7 +427,7 @@
     <|unfolded-io>
       (lcm 3/4 1/6)
     <|unfolded-io>
-      3/2
+      <s7-result|3/2>
     </unfolded-io>
 
     <\unfolded-io>
@@ -397,7 +435,7 @@
     <|unfolded-io>
       (log 8 2)
     <|unfolded-io>
-      3
+      <s7-result|3>
     </unfolded-io>
 
     <\unfolded-io>
@@ -405,7 +443,7 @@
     <|unfolded-io>
       (number-\<gtr\>string 0.5 2)
     <|unfolded-io>
-      "0.1"
+      <s7-result|"0.1">
     </unfolded-io>
 
     <\unfolded-io>
@@ -413,7 +451,7 @@
     <|unfolded-io>
       (string-\<gtr\>number "0.1" 2)
     <|unfolded-io>
-      0.5
+      <s7-result|0.5>
     </unfolded-io>
 
     <\unfolded-io>
@@ -421,7 +459,7 @@
     <|unfolded-io>
       (rationalize 1.5)
     <|unfolded-io>
-      3/2
+      <s7-result|3/2>
     </unfolded-io>
 
     <\unfolded-io>
@@ -429,7 +467,7 @@
     <|unfolded-io>
       (complex 1/2 0)
     <|unfolded-io>
-      1/2
+      <s7-result|1/2>
     </unfolded-io>
 
     <\unfolded-io>
@@ -437,7 +475,7 @@
     <|unfolded-io>
       (logbit? 6 1)
     <|unfolded-io>
-      #t
+      <s7-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -445,7 +483,7 @@
     <|unfolded-io>
       (random 0)
     <|unfolded-io>
-      0
+      <s7-result|0>
     </unfolded-io>
 
     <\unfolded-io>
@@ -453,7 +491,7 @@
     <|unfolded-io>
       (random 1.0)
     <|unfolded-io>
-      0.27911546200969206
+      <s7-result|0.4550541097362356>
     </unfolded-io>
 
     <\unfolded-io>
@@ -461,7 +499,7 @@
     <|unfolded-io>
       (random 3/4)
     <|unfolded-io>
-      208571/373317
+      <s7-result|380585/1487509>
     </unfolded-io>
 
     <\input>
@@ -479,7 +517,7 @@
     <|unfolded-io>
       (define v (make-vector '(2 3) 1.0))
     <|unfolded-io>
-      #2d((1.0 1.0 1.0) (1.0 1.0 1.0))
+      <s7-result|#2d((1.0 1.0 1.0) (1.0 1.0 1.0))>
     </unfolded-io>
 
     <\unfolded-io>
@@ -487,7 +525,7 @@
     <|unfolded-io>
       (set! (v 0 1) 2.0)
     <|unfolded-io>
-      2.0
+      <s7-result|2.0>
     </unfolded-io>
 
     <\unfolded-io>
@@ -495,7 +533,7 @@
     <|unfolded-io>
       (v 0 1)
     <|unfolded-io>
-      2.0
+      <s7-result|2.0>
     </unfolded-io>
 
     <\unfolded-io>
@@ -503,7 +541,7 @@
     <|unfolded-io>
       (vector-length v)
     <|unfolded-io>
-      6
+      <s7-result|6>
     </unfolded-io>
 
     <\input>
@@ -525,7 +563,7 @@
 
       \ \ (ht "hi"))
     <|unfolded-io>
-      123
+      <s7-result|123>
     </unfolded-io>
 
     <\unfolded-io>
@@ -533,7 +571,7 @@
     <|unfolded-io>
       (define test-tb (hash-table 'a 1 'b 2))
     <|unfolded-io>
-      (hash-table 'a 1 'b 2)
+      <s7-result|(hash-table 'b 2 'a 1)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -541,7 +579,7 @@
     <|unfolded-io>
       (hash-table? test-tb)
     <|unfolded-io>
-      #t
+      <s7-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -549,7 +587,7 @@
     <|unfolded-io>
       (hash-table-ref test-tb 'a)
     <|unfolded-io>
-      1
+      <s7-result|1>
     </unfolded-io>
 
     <\unfolded-io>
@@ -557,7 +595,7 @@
     <|unfolded-io>
       (hash-table-entries test-tb)
     <|unfolded-io>
-      2
+      <s7-result|2>
     </unfolded-io>
 
     <\input>
@@ -575,7 +613,7 @@
     <|unfolded-io>
       (+ (values 1 2 3) 4)
     <|unfolded-io>
-      10
+      <s7-result|10>
     </unfolded-io>
 
     <\unfolded-io>
@@ -583,7 +621,11 @@
     <|unfolded-io>
       (values 1 2 3)
     <|unfolded-io>
-      (1 2 3)
+      <\errput>
+        wrong-number-of-args
+
+        s7-print: too many arguments: 2
+      </errput>
     </unfolded-io>
 
     <\unfolded-io>
@@ -591,7 +633,7 @@
     <|unfolded-io>
       ((lambda (a b) (+ a b)) 1 2)
     <|unfolded-io>
-      3
+      <s7-result|3>
     </unfolded-io>
 
     <\unfolded-io>
@@ -599,7 +641,7 @@
     <|unfolded-io>
       ((lambda (a b) (+ a b)) (values 1 2))
     <|unfolded-io>
-      3
+      <s7-result|3>
     </unfolded-io>
 
     <\input>
@@ -617,7 +659,7 @@
     <|unfolded-io>
       (object-\<gtr\>string "hiho")
     <|unfolded-io>
-      "\\"hiho\\""
+      <s7-result|""hiho"">
     </unfolded-io>
 
     <\unfolded-io>
@@ -625,7 +667,7 @@
     <|unfolded-io>
       (format #f "~S" "hiho")
     <|unfolded-io>
-      "\\"hiho\\""
+      <s7-result|""hiho"">
     </unfolded-io>
 
     <\unfolded-io>
@@ -633,7 +675,7 @@
     <|unfolded-io>
       (format #f "~A ~D ~F" 'hi 123 3.14)
     <|unfolded-io>
-      "hi 123 3.140000"
+      <s7-result|"hi 123 3.140000">
     </unfolded-io>
 
     <\input>
@@ -651,7 +693,7 @@
     <|unfolded-io>
       (eval '(+ 1 2))
     <|unfolded-io>
-      3
+      <s7-result|3>
     </unfolded-io>
 
     <\unfolded-io>
@@ -659,7 +701,7 @@
     <|unfolded-io>
       (eval-string "(+ 1 2)")
     <|unfolded-io>
-      3
+      <s7-result|3>
     </unfolded-io>
 
     <\input>
@@ -677,7 +719,7 @@
     <|unfolded-io>
       (directory? "/tmp")
     <|unfolded-io>
-      #t
+      <s7-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -685,7 +727,7 @@
     <|unfolded-io>
       (file-exists? "/tmp")
     <|unfolded-io>
-      #t
+      <s7-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -693,7 +735,7 @@
     <|unfolded-io>
       (getenv "HOME")
     <|unfolded-io>
-      "/home/da"
+      <s7-result|"/home/da">
     </unfolded-io>
 
     <\input>
@@ -715,16 +757,10 @@
     <|unfolded-io>
       (abs 1 2)
     <|unfolded-io>
-      wrong-number-of-args
-
       <\errput>
-        \;
+        wrong-number-of-args
 
-        ;abs: too many arguments: (abs 1 2)
-
-        ; (abs 1 2)
-
-        \;
+        abs: too many arguments: (abs 1 2)
       </errput>
     </unfolded-io>
 
@@ -741,7 +777,8 @@
 
       \ \ \ \ \ \ (apply format #t (cadr args))))
     <|unfolded-io>
-      abs: too many arguments: (abs 1 2)"abs: too many arguments: (abs 1 2)"
+      abs: too many arguments: (abs 1 2)<s7-result|"abs: too many arguments:
+      (abs 1 2)">
     </unfolded-io>
 
     <\unfolded-io>
@@ -753,7 +790,7 @@
 
       \ \ \ \ (lambda args (string-\<gtr\>number "+inf.0")))
     <|unfolded-io>
-      +inf.0
+      <s7-result|+inf.0>
     </unfolded-io>
 
     <\input>
@@ -771,16 +808,10 @@
     <|unfolded-io>
       (load "test.scm")
     <|unfolded-io>
-      io-error
-
       <\errput>
-        \;
+        io-error
 
-        ;load: No such file or directory "test.scm"
-
-        ; (load "test.scm")
-
-        \;
+        load: No such file or directory "test.scm"
       </errput>
     </unfolded-io>
 
@@ -799,7 +830,7 @@
     <|unfolded-io>
       (define v (immutable! (vector 1 2 3)))
     <|unfolded-io>
-      #(1 2 3)
+      <s7-result|#(1 2 3)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -807,20 +838,10 @@
     <|unfolded-io>
       (vector-set! v 0 23)
     <|unfolded-io>
-      immutable-error
-
       <\errput>
-        \;
+        immutable-error
 
-        ;can't vector-set! #(1 2 3) (it is immutable)
-
-        ; (vector-set! v 0 23)
-
-        ; ((/ 1.0 0.0))
-
-        ; ((/ 1.0 0.0))
-
-        \;
+        can't vector-set! #(1 2 3) (it is immutable)
       </errput>
     </unfolded-io>
 
@@ -829,7 +850,7 @@
     <|unfolded-io>
       (immutable? v)
     <|unfolded-io>
-      #t
+      <s7-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -837,7 +858,7 @@
     <|unfolded-io>
       (define-constant var 32)
     <|unfolded-io>
-      32
+      <s7-result|32>
     </unfolded-io>
 
     <\unfolded-io>
@@ -845,20 +866,10 @@
     <|unfolded-io>
       (set! var 1)
     <|unfolded-io>
-      syntax-error
-
       <\errput>
-        \;
+        immutable-error
 
-        ;set!: can't alter constant's value: var in (set! var 1)
-
-        ; (set! var 1)
-
-        ; ((/ 1.0 0.0))
-
-        ; ((/ 1.0 0.0))
-
-        \;
+        can't set! var (it is immutable)
       </errput>
     </unfolded-io>
 
@@ -867,22 +878,10 @@
     <|unfolded-io>
       (let ((var 1)) var)
     <|unfolded-io>
-      wrong-type-arg
-
       <\errput>
-        \;
+        wrong-type-arg
 
-        ;let: can't bind an immutable object: ((var 1))
-
-        ; (let ((var 1)) var)
-
-        ; (set! var 1)
-
-        ; ((/ 1.0 0.0))
-
-        ; ((/ 1.0 0.0))
-
-        \;
+        let: can't bind an immutable object: ((var 1))
       </errput>
     </unfolded-io>
 

@@ -1,19 +1,18 @@
 /* 0-clause BSD */
 
-/* Adapted from repl.c in the s7 official repo */
+/* gcc -o repl repl.c s7.o -Wl,-export-dynamic -lm -I. -ldl */
 
-#include <iostream>
-#include <sstream>
-#include <unordered_set>
-#include <vector>
-
-using std::cout;
-using std::flush;
-using std::string;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#ifndef _MSC_VER
+#include <errno.h>
+#include <unistd.h>
+#endif
 
 #include "s7.h"
 
-string str_r7rs_define_library=
+char* str_r7rs_define_library=
     "(define-macro (define-library libname . body) ; |(lib name)| -> "
     "environment\n"
     "  `(define ,(symbol (object->string libname))\n"
@@ -33,7 +32,7 @@ string str_r7rs_define_library=
     "                         (values)\n"
     "                         entry))\n"
     "                   (curlet))))))\n";
-string str_r7rs_library_filename=
+char* str_r7rs_library_filename=
     "(unless (defined? 'r7rs-import-library-filename)\n"
     "  (define (r7rs-import-library-filename libs)\n"
     "    (when (pair? libs)\n"
@@ -52,7 +51,7 @@ string str_r7rs_library_filename=
     "        (unless (member lib-filename (*s7* 'file-names))\n"
     "          (load lib-filename)))\n"
     "      (r7rs-import-library-filename (cdr libs)))))\n";
-string str_r7rs_import=
+char* str_r7rs_import=
     "(define-macro (import . libs)\n"
     "  `(begin\n"
     "     (r7rs-import-library-filename ',libs)\n"
@@ -114,121 +113,31 @@ string str_r7rs_import=
     "                          (symbol->value sym))))))\n"
     "              libs))))\n";
 
-#define DATA_BEGIN ((char) 2)
-#define DATA_END ((char) 5)
-#define DATA_ESCAPE ((char) 27)
-
-void
-data_begin () {
-  cout << DATA_BEGIN;
-}
-
-void
-data_end () {
-  cout << DATA_END << flush;
-}
-
-void
-flush_scheme (string msg) {
-  data_begin ();
-  cout << "scheme:" << msg;
-  data_end ();
-}
-
-void
-flush_verbatim (string msg) {
-  data_begin ();
-  cout << "verbatim:" << msg;
-  data_end ();
-}
-
-void
-flush_prompt (string prompt) {
-  data_begin ();
-  cout << "prompt#" << prompt;
-  data_end ();
-}
-
-string
-getBeforeSpace (const string& str) {
-  size_t pos= str.find (' ');
-  if (pos == string::npos) {
-    return str;
-  }
-  return str.substr (0, pos);
-}
-
-std::string::size_type
-findBegin (const std::string& s) {
-  std::string::size_type pos= s.find_first_not_of (" \t\n\r\f\v");
-  return (pos == std::string::npos) ? s.length () : pos;
-}
-
-std::string::size_type
-findEnd (const std::string& s) {
-  std::string::size_type pos= s.find_last_not_of (" \t\n\r\f\v");
-  return (pos == std::string::npos) ? 0 : pos + 1;
-}
-
-std::string
-trim (const std::string& s) {
-  std::string::size_type left = findBegin (s);
-  std::string::size_type right= findEnd (s);
-  return s.substr (left, right - left);
-}
-
 int
 main (int argc, char** argv) {
-  std::unordered_set<std::string> scheme_headers= {
-      "(document", "(math", "(equation*", "(align", "(with", "(graphics"};
-
-  std::stringstream welcome;
-  welcome << "S7 Scheme " << S7_VERSION << " (" << S7_DATE << ")\n";
-  flush_verbatim (welcome.str ());
-  flush_prompt ("> ");
-
-  const char*       env_key  = "TEXMACS_PATH";
-  const char*       env_value= getenv (env_key);
-  std::stringstream load_path;
-  load_path << env_value << "/plugins/s7/s7";
-
   s7_scheme* sc;
+
   sc= s7_init ();
-  s7_eval_c_string (sc, str_r7rs_define_library.c_str ());
-  s7_eval_c_string (sc, str_r7rs_library_filename.c_str ());
-  s7_eval_c_string (sc, str_r7rs_import.c_str ());
-
-  s7_add_to_load_path (sc, load_path.str ().c_str ());
-
-  while (true) {
-    string first_line;
-    std::getline (std::cin, first_line);
-    std::vector<string> lines;
-    lines.push_back (first_line);
-    std::stringstream ss;
-    string            line= first_line;
-    while (line != "<EOF>") {
-      ss << line << "\n";
-      line= "";
-      std::getline (std::cin, line);
+  s7_eval_c_string (sc, str_r7rs_define_library);
+  s7_eval_c_string (sc, str_r7rs_library_filename);
+  s7_eval_c_string (sc, str_r7rs_import);
+  if (argc >= 2) {
+    if (strcmp (argv[1], "-e") == 0) /* repl -e '(+ 1 2)' */
+    {
+      s7_pointer x;
+      x= s7_eval_c_string (sc, argv[2]);
+      fprintf (stdout, "%s\n", s7_object_to_c_string (sc, x));
+      return (0);
     }
-    s7_pointer x     = s7_eval_c_string (sc, ss.str ().c_str ());
-    string     result= s7_object_to_c_string (sc, x);
-    if (result.size () == 0) {
-      flush_verbatim ("");
+    if (strcmp (argv[1], "--version") == 0) {
+      fprintf (stdout, "s7: %s, %s\n", S7_VERSION, S7_DATE);
+      return (0);
     }
-    else {
-      string trimmed= trim (result);
-      string head   = getBeforeSpace (trimmed);
-      if (trimmed[trimmed.size () - 1] == ')' &&
-          scheme_headers.find (head) != scheme_headers.end ()) {
-        flush_scheme (trimmed);
-      }
-      else {
-        flush_verbatim (result);
-      }
+    errno= 0;
+    if (!s7_load (sc, argv[1])) {
+      fprintf (stderr, "%s: %s\n", strerror (errno), argv[1]);
+      return (2);
     }
   }
-
-  return 0;
+  return (0);
 }

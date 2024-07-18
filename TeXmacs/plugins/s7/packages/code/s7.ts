@@ -39,6 +39,15 @@
       <generic-input|<arg|prompt>|<arg|body>>
     </with>
   </macro>>
+
+  \;
+
+  <assign|s7-result|<\macro|body>
+    <with|ornament-border|0ln|ornament-hpadding|0spc|padding-above|0fn|padding-below|0fn|ornament-color|pastel
+    green|<\ornamented>
+      <arg|body>
+    </ornamented>>
+  </macro>>
 </body>
 
 <initial|<\collection>
