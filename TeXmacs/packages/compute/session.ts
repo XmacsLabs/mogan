@@ -1,4 +1,4 @@
-<TeXmacs|1.99.19>
+<TeXmacs|2.1.2>
 
 <style|source>
 
@@ -66,7 +66,7 @@
     </src-comment>
   </active*>
 
-  <assign|input|<macro|prompt|body|<with|font-family|rm|<style-with|src-compact|none|<compound|<style-with|src-compact|none|<if|<provides|<merge|<value|prog-language>|-input>>|<merge|<value|prog-language>|-input>|generic-input>>|<with|mode|prog|<arg|prompt>>|<with|mode|prog|<arg|body>>>>>>>
+  <assign|input|<macro|prompt|body|<with|font-family|rm|<style-with|src-compact|none|<compound|<style-with|src-compact|none|<if|<provides|<merge|<value|prog-language>|-input>>|<merge|<value|prog-language>|-input>|generic-input>>|<with|mode|prog|<arg|prompt>>|<arg|body>>>>>>
 
   <assign|input-math|<\macro|prompt|in>
     <input|<arg|prompt>|<math|<arg|in>>>
@@ -76,7 +76,7 @@
 
   <assign|generic-input|<\macro|prompt|body>
     <tabular|<tformat|<twith|table-width|1par>|<cwith|1|1|2|2|cell-hpart|1>|<cwith|1|1|1|1|cell-lsep|0fn>|<cwith|1|1|1|1|cell-rsep|0fn>|<cwith|1|1|2|2|cell-lsep|0fn>|<cwith|1|1|2|2|cell-rsep|0fn>|<cwith|1|1|2|2|cell-hyphen|t>|<twith|table-hyphen|y>|<table|<row|<cell|<id-function|<with|color|<value|generic-prompt-color>|<arg|prompt>>>>|<\cell>
-      <with|color|<value|generic-input-color>|math-display|true|<arg|body>>
+      <with|color|<value|generic-input-color>|mode|prog|math-display|true|<arg|body>>
     </cell>>>>>
   </macro>>
 
@@ -92,14 +92,14 @@
     </src-comment>
   </active*>
 
-  <assign|output|<macro|body|<with|mode|prog|<style-with|src-compact|none|<compound|<style-with|src-compact|none|<if|<provides|<merge|<value|prog-language>|-output>>|<merge|<value|prog-language>|-output>|generic-output>>|<arg|body>>>>>>
+  <assign|output|<macro|body|<style-with|src-compact|none|<compound|<style-with|src-compact|none|<if|<provides|<merge|<value|prog-language>|-output>>|<merge|<value|prog-language>|-output>|generic-output>>|<arg|body>>>>>
 
   <assign|generic-output*|<macro|body|<with|par-mode|justify|par-flexibility|2.0|par-hyphen|normal|math-display|true|par-swell|1ex|math-frac-limit|<value|session-frac-limit>|math-table-limit|<value|session-table-limit>|<arg|body>>>>
 
   <assign|generic-output|<\macro|body>
     <\padded>
       <\indent>
-        <generic-output*|<arg|body>>
+        <generic-output*|<with|mode|prog|<arg|body>>>
       </indent>
     </padded>
   </macro>>
