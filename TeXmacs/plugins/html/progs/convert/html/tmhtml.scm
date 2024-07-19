@@ -260,12 +260,12 @@
         (for (src (cdr (with-extract* doc "html-extra-javascript-src")))
           (with script `(h:script (@ (language "javascript")
                                      (src ,src)
-                                     (defer "<implicit>")))
+                                     (defer "defer"))) ;; change to HTML5 header
             (set! xhead (append xhead (list script))))))
     (if (tm-func? (with-extract* doc "html-extra-javascript") 'tuple)
         (for (code (cdr (with-extract* doc "html-extra-javascript")))
           (with script `(h:script (@ (language "javascript")
-                                     (defer "<implicit>")) ,code)
+                                     (defer "defer")) ,code)  ;; change to HTML5 header
             (set! xhead (append xhead (list script))))))
     (if tmhtml-mathjax?
         (let* ((site "https://cdn.jsdelivr.net/")
@@ -283,31 +283,22 @@
     `(h:html
       (h:head
        (h:title ,@(tmhtml title))
-       (h:meta (@ (name "generator")
-                  (content ,(string-append "TeXmacs " (texmacs-version)))))
+       (h:meta (@ (content ,(string-append "TeXmacs " (texmacs-version)))  ;; change to HTML5 header
+                  (name "generator")))
        ,css
-       ,@xhead)
+       ,@xhead
+       (h:script (@ (type "text/javascript"))    ;; For Google HTML5 validator
+                 "var clickTag = 'http://www.example.com';
+                  function handleClick() {
+                      window.open(clickTag);
+                  }"))
       (h:body ,@body))))
 
 (define (tmhtml-finalize-document top)
   ;; @top must be a node produced by tmhtml-file
   "Prepare a XML document for serialization"
-  (define xmlns-attrs
-    '((xmlns "http://www.w3.org/1999/xhtml")
-      (xmlns:m "http://www.w3.org/1998/Math/MathML")
-      (xmlns:x "https://www.texmacs.org/2002/extensions")))
-  (define doctype-list
-    (let ((html       "-//W3C//DTD XHTML 1.1//EN")
-          (mathml     "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN")
-          (html-drd   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd")
-          (mathml-drd (string-append
-                        "http://www.w3.org/2002/04/xhtml-math-svg/"
-                        "xhtml-math-svg.dtd")))
-      (if tmhtml-mathml? (list mathml mathml-drd) (list html html-drd))))
-  `(*TOP* (*PI* xml "version=\"1.0\" encoding=\"UTF-8\"")
-          (*DOCTYPE* html PUBLIC ,@doctype-list)
-          ,((cut sxml-set-attrs <> xmlns-attrs)
-            (sxml-strip-ns-prefix "h" (sxml-strip-ns-prefix "m" top)))))
+    `(*TOP* (*DOCTYPE* html)  ;; change to HTML5 header
+          ,(sxml-strip-ns-prefix "h" (sxml-strip-ns-prefix "m" top))))
 
 (define (tmhtml-finalize-selection l)
   ;; @l is a nodeset produced by any handler _but_ tmhtml-file
@@ -1402,9 +1393,9 @@
                  (w (tmlength->htmllength (second l) #f))
                  (h (tmlength->htmllength (third l) #f)))
             `((h:img (@ (class "image")
-                        (src ,s)
                         ,@(if w `((width ,w)) '())
-                        ,@(if h `((height ,h)) '()))))))))
+                        ,@(if h `((height ,h)) '())
+                        (src ,s))))))))
 
 (define-public (hash-map->list h)
   (map (lambda (x)
@@ -1564,7 +1555,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (tmhtml-doc-title-block l)
-  `((h:table (@ (class "title-block"))
+  ;; use <header> instead of <div>
+  `((h:header (@ (class "title-block"))
              (h:tr (h:td ,@(tmhtml (car l)))))))
 
 (define (tmhtml-equation* l)
@@ -1778,7 +1770,8 @@
       `("&copy;" " " ,@(tmhtml (car l))
         " " ,@(tmhtml (cadr l))
         ,@(tmhtml-tmdoc-copyright* (cddr l)))
-    (list `(h:div (@ (class "tmdoc-copyright")) ,@content))))
+    ;; use <footer> instead of <div>
+    (list `(h:footer (@ (class "tmdoc-copyright")) ,@content))))
 
 (define (tmhtml-tmdoc-license l)
   (list `(h:div (@ (class "tmdoc-license")) ,@(tmhtml (car l)))))
