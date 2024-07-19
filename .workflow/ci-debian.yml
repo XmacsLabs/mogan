@@ -1,0 +1,75 @@
+version: '1.0'
+name: ci-debian
+displayName: ci-debian
+triggers:
+  trigger: auto
+  pr:
+    branches:
+      prefix:
+        - main
+  push:
+    branches:
+      precise:
+        - main
+
+variables:
+  XMAKE_MAIN_REPO: https://gitee.com/tboox/xmake-repo.git
+  XMAKE_BINARY_REPO: https://gitee.com/xmake-mirror/build-artifacts.git
+  XMAKE_ROOT: 'y'
+  QT_QPA_PLATFORM: offscreen
+
+stages:
+  - name: build_and_test
+    displayName: 构建并测试
+    strategy: naturally
+    trigger: auto
+    executor: []
+    steps:
+      - step: shell@agent
+        name: git_clone
+        displayName: git_clone
+        hostGroupID:
+          ID: liii
+          hostID:
+            - 257a349b-e83e-4985-87ac-f7325cecf2fd
+        script:
+          - test -e /tmp/stem || git clone git@gitee.com:LiiiLabs/stem.git /tmp/stem
+          - cd /tmp/stem && git pull origin main
+          - test -e /tmp/stem_${GITEE_SOURCE_COMMIT} || git clone /tmp/stem /tmp/stem_${GITEE_SOURCE_COMMIT}
+          - cd /tmp/stem_${GITEE_SOURCE_COMMIT}
+          - git remote add gitee git@gitee.com:LiiiLabs/stem.git
+          - git fetch gitee
+          - git checkout ${GITEE_SOURCE_COMMIT}
+        notify: []
+        strategy:
+          retry: '0'
+      - step: shell@agent
+        name: xmake_config
+        displayName: xmake_config
+        hostGroupID:
+          ID: liii
+          hostID:
+            - 257a349b-e83e-4985-87ac-f7325cecf2fd
+        script:
+          - xmake --version
+          - cd /tmp/stem_${GITEE_SOURCE_COMMIT}
+          - xmake config -vD --yes
+        notify: []
+        strategy:
+          retry: '0'
+        dependsOn: git_clone
+      - step: shell@agent
+        name: xmake_build
+        displayName: xmake_build
+        hostGroupID:
+          ID: liii
+          hostID:
+            - 257a349b-e83e-4985-87ac-f7325cecf2fd
+        script:
+          - cd /tmp/stem_${GITEE_SOURCE_COMMIT}
+          - xmake build -vD liii
+          - rm -rf /tmp/stem_${GITEE_SOURCE_COMMIT}
+        notify: []
+        strategy:
+          retry: '0'
+        dependsOn: xmake_config
