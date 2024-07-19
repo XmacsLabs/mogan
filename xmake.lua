@@ -2,8 +2,8 @@
 --
 -- MODULE      : xmake.lua
 -- DESCRIPTION : Xmake config file for TeXmacs
--- COPYRIGHT   : (C) 2022  jingkaimori
---                   2022  Darcy Shen
+-- COPYRIGHT   : (C) 2022       jingkaimori
+--                   2022-2024  Darcy Shen
 --
 -- This software falls under the GNU general public license version 3 or later.
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -35,7 +35,7 @@ function using_legacy_apt ()
 end
 
 PDFHUMMUS_VERSION = "4.6.2"
-S7_VERSION = "20240516"
+S7_VERSION = "20240702"
 local FREETYPE_VERSION = "2.12.1"
 
 -- package: s7
