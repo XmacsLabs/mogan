@@ -109,13 +109,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (htmlout-doctype l)
-  (define (helper x)
-    (if (string? x) (string-append "\"" x "\"") (symbol->string x)))
-  (let* ((l1 (map (lambda (x) (list " " (helper x))) l))
-         (l2 (apply append l1))
-         (l3 (append '("<!DOCTYPE") l2 '(">"))))
-    (apply output-lf-verbatim l3)
-    (output-lf)))
+  (output-lf-verbatim "<!DOCTYPE html>")  ; change to HTML5 Header
+  (output-lf))
 
 (define (htmlout x)
   (cond ((string? x) (htmlout-text x))
