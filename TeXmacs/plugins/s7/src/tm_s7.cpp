@@ -2,6 +2,7 @@
 
 /* gcc -o repl repl.c s7.o -Wl,-export-dynamic -lm -I. -ldl */
 
+#include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -116,8 +117,8 @@ char* str_r7rs_import=
 int
 main (int argc, char** argv) {
   s7_scheme* sc;
-
   sc= s7_init ();
+
   s7_eval_c_string (sc, str_r7rs_define_library);
   s7_eval_c_string (sc, str_r7rs_library_filename);
   s7_eval_c_string (sc, str_r7rs_import);
@@ -134,9 +135,22 @@ main (int argc, char** argv) {
       return (0);
     }
     errno= 0;
-    if (!s7_load (sc, argv[1])) {
-      fprintf (stderr, "%s: %s\n", strerror (errno), argv[1]);
-      return (2);
+    if (strcmp (argv[1], "--texmacs") == 0) {
+      const char*       env_key  = "TEXMACS_PATH";
+      const char*       env_value= getenv (env_key);
+      std::stringstream load_path;
+      load_path << env_value << "/plugins/s7/s7/";
+      s7_add_to_load_path (sc, load_path.str ().c_str ());
+      if (!s7_load (sc, argv[2])) {
+        fprintf (stderr, "%s: %s\n", strerror (errno), argv[2]);
+        return (2);
+      }
+    }
+    else {
+      if (!s7_load (sc, argv[1])) {
+        fprintf (stderr, "%s: %s\n", strerror (errno), argv[1]);
+        return (2);
+      }
     }
   }
   return (0);

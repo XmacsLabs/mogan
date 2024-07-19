@@ -14,12 +14,7 @@
 ; under the License.
 ;
 
-(set! *load-path*
-  (cons (append (getenv "TEXMACS_PATH") "/plugins/s7/s7")
-        *load-path*))
-
 (import (texmacs protocol))
-
 
 (define (s7-welcome)
   (flush-prompt "> ")

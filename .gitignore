@@ -1,6 +1,7 @@
 # binary files
 *.so
 *.[oa]
+*.pdb
 *.exe
 *.pyc
 build
