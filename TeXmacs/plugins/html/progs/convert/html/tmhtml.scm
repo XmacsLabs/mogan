@@ -285,6 +285,7 @@
        (h:title ,@(tmhtml title))
        (h:meta (@ (name "generator")
                   (content ,(string-append "TeXmacs " (texmacs-version)))))
+       (h:meta (@ (charset "UTF-8")))
        ,css
        ,@xhead)
       (h:body ,@body))))

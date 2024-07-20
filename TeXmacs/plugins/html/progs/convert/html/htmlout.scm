@@ -86,12 +86,15 @@
   (with ll (ahash-table->list (list->ahash-table l))
     (htmlout-text "<" (symbol->string s))
     (for-each htmlout-tag ll)
-    (htmlout-text ">")
+    (if (member s '(meta link img input br hr)) ;;Change <meta> tag to self-close
+        (htmlout-text " />")
+        (htmlout-text ">"))
     (htmlout-indent s 2)))
 
 (define (htmlout-close s)
-  (htmlout-indent-close s -2)
-  (htmlout-text "</" (symbol->string s) ">"))
+  (unless (member s '(meta link img input br hr)) ;;Change <meta> tag to self-close
+    (htmlout-indent-close s -2)
+    (htmlout-text "</" (symbol->string s) ">"))) 
 
 (define (htmlout-args-sub l big?)
   (if (nnull? l)
