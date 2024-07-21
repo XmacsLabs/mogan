@@ -16,4 +16,11 @@
         (texmacs menus file-menu)))
 
 (tm-menu (texmacs-tab-pages)
-)
+  (for (buf (buffer-menu-unsorted-list 99)) ; buf is the url
+    (let* ((title  (buffer-get-title buf))
+        (title*    (if (== title "") (url->system (url-tail buf)) title))
+        (mod?      (buffer-modified? buf))
+        (tab-title (string-append title* (if mod? " *" "")))
+        (doc-path  (url->system buf)))
+      ((balloon (eval tab-title) (eval doc-path)) (switch-to-buffer* buf))
+    )))
