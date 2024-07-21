@@ -61,6 +61,9 @@
                 (cons (car opts) (cadr opts)))
     (ahash-ref session-math-input key)))
 
+(tm-define (session-enable-math-input lan ses)
+  (ahash-set! session-math-input (cons lan ses) #t))
+
 (tm-define (toggle-session-math-input)
   (:synopsis "Toggle mathematical input in sessions.")
   (:check-mark "v" session-math-input?)
