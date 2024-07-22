@@ -59,9 +59,9 @@ You can join our discord by https://discord.gg/QzE3K6rvYn.
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/KeShih"><img src="https://avatars.githubusercontent.com/u/109031129?v=4" width="50px;" alt=""/><br /><sub><b>Ke Shi</b></sub></a><br />💻</td>
-    <td align="center"><a href="https://github.com/ATQlove"><img src="https://avatars.githubusercontent.com/u/72239395?v=4" width="50px;" alt=""/><br /><sub><b>Ke Shi</b></sub></a><br />💻</td>
-    <td align="center"><a href="https://github.com/Minzihao"><img src="https://avatars.githubusercontent.com/u/85984526?v=4" width="50px;" alt=""/><br /><sub><b>Ke Shi</b></sub></a><br />💻</td>
-    <td align="center"><a href="https://github.com/UnbSky"><img src="https://avatars.githubusercontent.com/u/74008999?v=4" width="50px;" alt=""/><br /><sub><b>Ke Shi</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/ATQlove"><img src="https://avatars.githubusercontent.com/u/72239395?v=4" width="50px;" alt=""/><br /><sub><b>ATQlove</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/Minzihao"><img src="https://avatars.githubusercontent.com/u/85984526?v=4" width="50px;" alt=""/><br /><sub><b>Minzihao</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/UnbSky"><img src="https://avatars.githubusercontent.com/u/74008999?v=4" width="50px;" alt=""/><br /><sub><b>UnbSky</b></sub></a><br />💻</td>
   </tr>
 </table>
 
