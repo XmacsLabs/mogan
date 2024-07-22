@@ -20,6 +20,8 @@
 
 (define (guile-launcher)
   (string-append (url->system (find-binary-guile))
+    " -L "
+    (string-append (url->system (get-texmacs-path)) "/plugins/guile/guile")
     " "
     (url->system (get-texmacs-path))
     "/plugins/guile/guile/tm-guile.scm"))

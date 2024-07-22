@@ -16,26 +16,26 @@
 
 (define-module (texmacs protocol))
 
-(define (data-begin)
+(define-public (data-begin)
   (display (integer->char 2)))
 
-(define (data-end)
+(define-public (data-end)
   (display (integer->char 5))
-  (flush-output-port))
+  (force-output))
 
-(define (data-escape)
+(define-public (data-escape)
   (write (integer->char 27)))
 
-(define (flush-any msg)
+(define-public (flush-any msg)
   (data-begin)
   (display msg)
   (data-end))
 
-(define (flush-verbatim msg)
-  (flush-any (append "verbatim:" msg)))
+(define-public (flush-verbatim msg)
+  (flush-any (string-append "verbatim:" msg)))
 
-(define (flush-scheme msg)
-  (flush-any (append "scheme:" msg)))
+(define-public (flush-scheme msg)
+  (flush-any (string-append "scheme:" msg)))
 
-(define (flush-prompt msg)
-  (flush-any (append "prompt#" msg)))
+(define-public (flush-prompt msg)
+  (flush-any (string-append "prompt#" msg)))
