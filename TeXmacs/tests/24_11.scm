@@ -69,6 +69,9 @@
 
 
    ;; Group 2: Self-closing tags with attributes
+   ;; Tests for tags with attributes omit attributes in expected output because
+   ;; htmlout-open-tags and htmlout-close only handle tag opening/closing.
+   ;; Attributes are managed separately and have not been modified, so this test suite doesn't include attributes.
    ;; area
    (lambda ()
      (set! *output* "")  ; Reset output
@@ -200,3 +203,4 @@
   (if (check-failed?)
     (exit -1))
     (display "Test suite of 24_11 end\n"))
+    
