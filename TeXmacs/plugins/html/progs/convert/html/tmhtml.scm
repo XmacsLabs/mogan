@@ -284,7 +284,8 @@
       (h:head
        (h:title ,@(tmhtml title))
        (h:meta (@ (name "generator")
-                  (content ,(string-append "TeXmacs " (texmacs-version)))))
+                  (content ,(string-append "MoganSTEMSuite " (xmacs-version)))))
+       (h:meta (@ (charset "UTF-8")))
        ,css
        ,@xhead)
       (h:body ,@body))))

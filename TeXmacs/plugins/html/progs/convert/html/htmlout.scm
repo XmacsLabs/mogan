@@ -86,12 +86,21 @@
   (with ll (ahash-table->list (list->ahash-table l))
     (htmlout-text "<" (symbol->string s))
     (for-each htmlout-tag ll)
-    (htmlout-text ">")
+    ;; If tag is a self-closing (void) element according to HTML5 spec, close it with "/>"
+    ;; "Void elements only have a start tag; end tags must not be specified for void elements."
+    ;; Reference: HTML5 spec, section 13.1.2 - Elements (https://html.spec.whatwg.org/multipage/syntax.html#void-elements)
+    (if (member s '(area base br col embed hr img input link meta source track wbr))
+        (htmlout-text " />")
+        (htmlout-text ">"))
     (htmlout-indent s 2)))
 
 (define (htmlout-close s)
-  (htmlout-indent-close s -2)
-  (htmlout-text "</" (symbol->string s) ">"))
+  ;; Do not close the tag if it is a self-closing (void) element
+  ;; Reference: HTML5 spec, section 13.1.2 - Elements (https://html.spec.whatwg.org/multipage/syntax.html#void-elements)
+  (if (not (member s '(area base br col embed hr img input link meta source track wbr)))
+      (begin
+        (htmlout-indent-close s -2)
+        (htmlout-text "</" (symbol->string s) ">"))))
 
 (define (htmlout-args-sub l big?)
   (if (nnull? l)
