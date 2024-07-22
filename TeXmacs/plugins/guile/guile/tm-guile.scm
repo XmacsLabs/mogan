@@ -19,6 +19,6 @@
 (define (guile-welcome)
   (flush-prompt "> ")
   (flush-verbatim
-    (string-append "GNU Guile: " (version))))
+    (string-append "GNU Guile (" (version) ") session by XmacsLabs")))
 
 (guile-welcome)
