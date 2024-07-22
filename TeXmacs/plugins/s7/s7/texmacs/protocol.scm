@@ -35,13 +35,13 @@
   (data-end))
 
 (define (flush-verbatim msg)
-  (flush-any (append "verbatim:" msg)))
+  (flush-any (string-append "verbatim:" msg)))
 
 (define (flush-scheme msg)
-  (flush-any (append "scheme:" msg)))
+  (flush-any (string-append "scheme:" msg)))
 
 (define (flush-prompt msg)
-  (flush-any (append "prompt#" msg)))
+  (flush-any (string-append "prompt#" msg)))
 
 ) ; end of begin
 ) ; end of define-library

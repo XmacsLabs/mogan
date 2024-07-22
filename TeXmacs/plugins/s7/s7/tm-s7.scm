@@ -19,7 +19,7 @@
 (define (s7-welcome)
   (flush-prompt "> ")
   (flush-verbatim
-    (append "S7 Scheme: " (substring (*s7* 'version) 3))))
+    (string-append "S7 Scheme: " (substring (*s7* 'version) 3))))
 
 (define (s7-repl)
   ; SRFI 1
@@ -33,7 +33,7 @@
     (cond ((null? l) "")
           ((= (length l) 1) (car l))
           (else
-            (append
+            (string-append
               (car l)
               (string-join (cdr l))))))
 
@@ -52,7 +52,7 @@
       (let ((line (read-line)))
         (if (string=? line "<EOF>\n")
             code
-            (read-code (append code line)))))
+            (read-code (string-append code line)))))
   
     (read-code ""))
 
@@ -67,14 +67,14 @@
            (string->list str))))
 
   (define (s7-quote s)
-    (append "\"" (escape-string s) "\""))
+    (string-append "\"" (escape-string s) "\""))
 
   (define (build-s7-result obj)
     (let ((output (object->string obj))
           (leadings (list "(document" "(math" "(equation*" "(align" "(with" "(graphics")))
       (if (find (lambda (x) (string-prefix? x output)) leadings)
           output
-          (append "(s7-result " (s7-quote output) ")"))))
+          (string-append "(s7-result " (s7-quote output) ")"))))
 
   (define (s7-print obj)
     (if (eq? obj #<unspecified>)
@@ -88,7 +88,7 @@
       (lambda args
         (begin
           (flush-scheme
-            (append "(errput (document "
+            (string-append "(errput (document "
               (s7-quote (symbol->string (car args)))
               (s7-quote (apply format #f (cadr args)))
               "))"))))))
