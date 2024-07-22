@@ -11,26 +11,21 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-modules
-  (binary tm_guile))
-
-(lazy-format (data guile) guile)
+(use-modules (binary guile))
 
 (define (guile-serialize lan t)
   (let* ((u (pre-serialize lan t))
-         (cork-s (texmacs->code (stree->tree u) "Cork"))
-         (s (tmstring->string cork-s)))
+         (s (texmacs->code (stree->tree u) "utf-8")))
     (string-append s "\n<EOF>\n")))
 
 (define (guile-launcher)
   (string-append (url->system (find-binary-guile))
-    " --texmacs "
+    " "
     (url->system (get-texmacs-path))
     "/plugins/guile/guile/tm-guile.scm"))
 
 (plugin-configure guile
-  (:require (has-binary-tm_guile?))
+  (:require (has-binary-guile?))
   (:launch ,(guile-launcher))
   (:serializer ,guile-serialize)
-  (:session "S7 Scheme"))
-
+  (:session "GNU Guile"))
