@@ -13,6 +13,11 @@
 
 (use-modules (binary chez))
 
+(define (chez-serialize lan t)
+  (let* ((u (pre-serialize lan t))
+         (s (texmacs->code (stree->tree u) "utf-8")))
+    (string-append s "\n<EOF>\n")))
+
 (define (chez-launcher)
   (string-append (url->system (find-binary-chez))
     " --libdirs "
@@ -24,4 +29,5 @@
 (plugin-configure chez
   (:require (has-binary-chez?))
   (:launch ,(chez-launcher))
+  (:serializer ,chez-serialize)
   (:session "Chez Scheme"))
