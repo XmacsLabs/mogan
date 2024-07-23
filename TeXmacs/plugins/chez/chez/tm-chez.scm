@@ -17,8 +17,17 @@
 (import (texmacs protocol))
 
 (define (chez-welcome)
+  (define (string-join l delim)
+    (cond ((null-list? l) "")
+          ((= (length l) 1) (car l))
+          (else
+            (string-append
+              (car l)
+              delim
+              (string-join (cdr l) delim)))))
+
   (flush-prompt "> ")
   (flush-verbatim
-    (string-append "Chez Scheme session by XmacsLabs")))
+    (string-append (scheme-version) " (Session made by XmacsLabs)")))
 
 (chez-welcome)
