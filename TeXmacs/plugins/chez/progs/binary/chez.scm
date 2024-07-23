@@ -16,8 +16,8 @@
 
 (define (chez-binary-candidates)
   (cond ((os-macos?)
-         (list "/opt/homebrew/bin/chezscheme"
-               "/usr/local/bin/chezscheme"))
+         (list "/opt/homebrew/bin/chez"
+               "/usr/local/bin/chez"))
         (else
          (list "/usr/bin/chezscheme"))))
 
