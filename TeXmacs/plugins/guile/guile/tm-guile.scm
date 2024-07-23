@@ -14,11 +14,76 @@
 ; under the License.
 ;
 
-(use-modules (texmacs protocol))
+(use-modules (texmacs protocol)
+             (ice-9 rdelim))
 
 (define (guile-welcome)
   (flush-prompt "> ")
   (flush-verbatim
     (string-append "GNU Guile (" (version) ") session by XmacsLabs")))
 
+(define (guile-repl)
+  (define (string-join l)
+    (cond ((null? l) "")
+          ((= (length l) 1) (car l))
+          (else
+            (string-append
+              (car l)
+              ""
+              (string-join (cdr l) "")))))
+
+  (define (guile-read-code)
+    (define (read-code code)
+      (let ((line (read-line)))
+        (if (string=? line "<EOF>")
+            code
+            (read-code (string-append code line)))))
+
+    (read-code ""))
+
+  (define (escape-string str)
+    (string-join
+      (map (lambda (char)
+             (if (char=? char #\")
+                 (string #\\ #\")
+                 (if (char=? char #\\)
+                     (string #\\ #\\)
+                     (string char))))
+           (string->list str))))
+
+  (define (guile-quote s)
+    (string-append "\"" (escape-string s) "\""))
+
+  (define (build-guile-result obj)
+    (let ((output (object->string obj)))
+      (string-append "(guile-result " (guile-quote output) ")")))
+
+  (define (guile-print obj)
+    (if (unspecified? obj)
+      (flush-scheme "")
+      (flush-scheme (build-guile-result obj))))
+
+  (define (eval-and-print code)
+    (guile-print (eval-string code)))
+    ;(catch #t
+    ;  (lambda ()
+    ;    (guile-print (eval-string code (rootlet))))
+    ;  (lambda args
+    ;    (begin
+    ;      (flush-scheme
+    ;        (string-append "(errput (document "
+    ;          (guile-quote (symbol->string (car args)))
+    ;          (guile-quote (apply format #f (cadr args)))
+    ;          "))"))))))
+
+  (define (read-eval-print)
+    (let ((code (guile-read-code)))
+      (if (string=? code "")
+        #t
+        (eval-and-print code))))
+
+  (begin (read-eval-print)
+         (guile-repl)))
+
 (guile-welcome)
+(guile-repl)
