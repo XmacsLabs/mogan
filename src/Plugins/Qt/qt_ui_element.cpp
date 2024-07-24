@@ -522,6 +522,19 @@ qt_ui_element_rep::as_qaction () {
     }
     break;
 
+  case tab_page_widget: {
+    typedef quartet<url, widget, widget, bool> T;
+    T                                          x= open_box<T> (load);
+    QTMTabPage* tab= new QTMTabPage (x.x1, concrete (x.x2)->as_qaction (),
+                                     concrete (x.x3)->as_qaction (), x.x4);
+    // use QTMTabPageAction to wrap the QTMTabPage(QWidget type)
+    // then we take out the QTMTabPage and add it to the QTMTabPageBar
+    // see the definition of QTMTabPageAction why we're using it
+    QWidgetAction* a= new QWidgetAction (nullptr);
+    a->setDefaultWidget (tab);
+    act= a;
+  } break;
+
   default:
     TM_FAILED (c_string ("qt_ui_element: unknown type for as_qaction, " *
                          type_as_string ()));

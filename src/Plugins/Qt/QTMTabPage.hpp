@@ -11,8 +11,33 @@
 #ifndef QTMTABPAGE_HPP
 #define QTMTABPAGE_HPP
 
+#include <QMouseEvent>
 #include <QToolBar>
+#include <QToolButton>
+#include <basic.hpp>
+#include <scheme.hpp>
 
+/*! QTMTabPage is used to build a widget for tab page.
+ */
+class QTMTabPage : public QToolButton {
+  Q_OBJECT
+  QToolButton* closeBtn;
+
+public:
+  const url bufferUrl;
+
+public:
+  explicit QTMTabPage (url u, QAction* title, QAction* button, bool active);
+
+protected:
+  virtual void resizeEvent (QResizeEvent* e) override;
+};
+
+/*! QTMTabPageBar is used to wrap the QTMTabPageContainer.
+In order to:
+1. Add this to the QMainWindow as QToolBar, just like the main icon toolbar;
+2. Support dragging and docking like the main icon toolbar.
+ */
 class QTMTabPageBar : public QToolBar {
 public:
   explicit QTMTabPageBar (const QString& title, QWidget* parent)

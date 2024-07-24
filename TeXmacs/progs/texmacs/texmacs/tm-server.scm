@@ -179,6 +179,15 @@
              (when answ (buffer-close (current-buffer))))))
         (else (buffer-close (current-buffer)))))
 
+(tm-define (safely-kill-buffer-by-url tgt-buffer)
+  (cond ((buffer-embedded? tgt-buffer)
+         (alt-windows-delete (alt-window-search tgt-buffer)))
+        ((buffer-modified? tgt-buffer)
+         (user-confirm "The document has not been saved. Really close it?" #f  
+           (lambda (answ)
+             (when answ (buffer-close tgt-buffer)))))
+        (else (buffer-close tgt-buffer))))
+
 (define (do-kill-window)
   (with buf (current-buffer)
     (kill-window (current-window))

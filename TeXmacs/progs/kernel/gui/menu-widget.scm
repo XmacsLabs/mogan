@@ -91,7 +91,8 @@
     (promise :%1)
     (ink :%1)
     (:menu-item-list)))
-  (:menu-item-list (:repeat :menu-item)))
+  (:menu-item-list (:repeat :menu-item))
+  (:tab-page (tab-page :%4)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Menu utilities
@@ -467,6 +468,21 @@
         (widget-balloon but twid)))
      (else but))))
 
+(define (make-tab-page p style bar?)
+  ;(display* "make-tab-page: " p "\n")
+  (let* ((args  (cdar p))
+         (url   (first args))      ; url
+         (title (second args))     ; widget
+         (close-btn (third args))  ; widget
+         (active?   (fourth args)) ; bool
+        )
+    (widget-tab-page
+      url
+      (car (make-menu-items title style bar?))
+      (car (make-menu-items close-btn style bar?))
+      active?
+    )))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Symbol fields
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -758,6 +774,8 @@
                    ((cadr result) p style bar?))))
             ((match? (car p) ':menu-wide-label)
              (list (make-menu-entry p style bar?)))
+            ((match? (car p) ':tab-page)
+             (list (make-tab-page p style bar?)))
             (else
              (make-menu-items-list p style bar?)))
       (cond ((== p '---) (list (make-menu-hsep)))
