@@ -79,17 +79,20 @@
     (let ([p (open-string-input-port str)])
       (eval (get-datum p))))
 
+  (define (condition->string obj)
+    (let ((port (open-output-string)));
+      (display-condition obj port)
+      (get-output-string port)))
+
   (define (eval-and-print code)
-    (chez-print (eval-string code)))
-    ;(catch #t
-    ;  (lambda ()
-    ;  (lambda args
-    ;    (begin
-    ;      (flush-scheme
-    ;        (string-append "(errput (document "
-    ;          (chez-quote (symbol->string (car args)))
-    ;          (chez-quote (apply format #f (cadr args)))
-    ;          "))"))))))
+    (guard (ex
+            (else
+              (flush-scheme
+                (string-append
+                  "(errput (document "
+                  (chez-quote (condition->string ex))
+                  "))"))))
+      (chez-print (eval-string code))))
 
   (define (read-eval-print)
     (let ((code (chez-read-code)))
