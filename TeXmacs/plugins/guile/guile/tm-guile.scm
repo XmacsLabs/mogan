@@ -23,14 +23,13 @@
     (string-append "GNU Guile (" (version) ") session by XmacsLabs")))
 
 (define (guile-repl)
-  (define (string-join l)
+  (define (string-concat l)
     (cond ((null? l) "")
           ((= (length l) 1) (car l))
           (else
             (string-append
               (car l)
-              ""
-              (string-join (cdr l) "")))))
+              (string-concat (cdr l))))))
 
   (define (guile-read-code)
     (define (read-code code)
@@ -42,7 +41,7 @@
     (read-code ""))
 
   (define (escape-string str)
-    (string-join
+    (string-concat
       (map (lambda (char)
              (if (char=? char #\")
                  (string #\\ #\")
@@ -64,17 +63,19 @@
       (flush-scheme (build-guile-result obj))))
 
   (define (eval-and-print code)
-    (guile-print (eval-string code)))
-    ;(catch #t
-    ;  (lambda ()
-    ;    (guile-print (eval-string code (rootlet))))
-    ;  (lambda args
-    ;    (begin
-    ;      (flush-scheme
-    ;        (string-append "(errput (document "
-    ;          (guile-quote (symbol->string (car args)))
-    ;          (guile-quote (apply format #f (cadr args)))
-    ;          "))"))))))
+    (catch #t
+      (lambda ()
+        (guile-print (eval-string code)))
+      (lambda (key . args)
+        (begin
+          (flush-scheme
+            (string-append "(errput (document "
+              (guile-quote (symbol->string key))
+              (guile-quote (car args))
+              (if (and (>= (length args) 2) (string? (cadr args)))
+                  (guile-quote (cadr args))
+                  "")
+              "))"))))))
 
   (define (read-eval-print)
     (let ((code (guile-read-code)))
