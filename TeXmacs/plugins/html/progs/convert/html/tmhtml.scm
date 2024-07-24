@@ -284,7 +284,8 @@
       (h:head
        (h:title ,@(tmhtml title))
        (h:meta (@ (name "generator")
-                  (content ,(string-append "TeXmacs " (texmacs-version)))))
+                  (content ,(string-append "MoganSTEMSuite " (xmacs-version)))))
+       (h:meta (@ (charset "UTF-8")))
        ,css
        ,@xhead)
       (h:body ,@body))))
@@ -292,22 +293,8 @@
 (define (tmhtml-finalize-document top)
   ;; @top must be a node produced by tmhtml-file
   "Prepare a XML document for serialization"
-  (define xmlns-attrs
-    '((xmlns "http://www.w3.org/1999/xhtml")
-      (xmlns:m "http://www.w3.org/1998/Math/MathML")
-      (xmlns:x "https://www.texmacs.org/2002/extensions")))
-  (define doctype-list
-    (let ((html       "-//W3C//DTD XHTML 1.1//EN")
-          (mathml     "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN")
-          (html-drd   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd")
-          (mathml-drd (string-append
-                        "http://www.w3.org/2002/04/xhtml-math-svg/"
-                        "xhtml-math-svg.dtd")))
-      (if tmhtml-mathml? (list mathml mathml-drd) (list html html-drd))))
-  `(*TOP* (*PI* xml "version=\"1.0\" encoding=\"UTF-8\"")
-          (*DOCTYPE* html PUBLIC ,@doctype-list)
-          ,((cut sxml-set-attrs <> xmlns-attrs)
-            (sxml-strip-ns-prefix "h" (sxml-strip-ns-prefix "m" top)))))
+    `(*TOP* (*DOCTYPE* html)  ;; change to HTML5 header
+          ,(sxml-strip-ns-prefix "h" (sxml-strip-ns-prefix "m" top))))
 
 (define (tmhtml-finalize-selection l)
   ;; @l is a nodeset produced by any handler _but_ tmhtml-file

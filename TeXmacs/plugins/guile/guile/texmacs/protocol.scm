@@ -14,34 +14,28 @@
 ; under the License.
 ;
 
-(define-library (texmacs protocol)
-(export data-begin data-end data-escape 
-        flush-verbatim flush-prompt flush-scheme)
-(begin
+(define-module (texmacs protocol))
 
-(define (data-begin)
+(define-public (data-begin)
   (display (integer->char 2)))
 
-(define (data-end)
+(define-public (data-end)
   (display (integer->char 5))
-  (flush-output-port))
+  (force-output))
 
-(define (data-escape)
+(define-public (data-escape)
   (write (integer->char 27)))
 
-(define (flush-any msg)
+(define-public (flush-any msg)
   (data-begin)
   (display msg)
   (data-end))
 
-(define (flush-verbatim msg)
+(define-public (flush-verbatim msg)
   (flush-any (string-append "verbatim:" msg)))
 
-(define (flush-scheme msg)
+(define-public (flush-scheme msg)
   (flush-any (string-append "scheme:" msg)))
 
-(define (flush-prompt msg)
+(define-public (flush-prompt msg)
   (flush-any (string-append "prompt#" msg)))
-
-) ; end of begin
-) ; end of define-library

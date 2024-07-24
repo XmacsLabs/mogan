@@ -24,12 +24,9 @@
   (with path (string-append "$TEXMACS_PATH/tests/tex/" path)
     (string-replace (string-load path)  "\r\n" "\n")))
 
-(tm-define (test_43_2)
-  (check
-    (export-as-latex-and-load "43_2.tm")
-    =>
-    (load-latex "43_2.tex"))
-
+(define (test_43_2)
+  (let ((exported (export-as-latex-and-load "43_2.tm"))
+        (expected (load-latex "43_2.tex")))
+    (check exported => expected))
   (check-report)
-  (if (check-failed?)
-    (exit -1)))
+  (if (check-failed?) (exit -1)))

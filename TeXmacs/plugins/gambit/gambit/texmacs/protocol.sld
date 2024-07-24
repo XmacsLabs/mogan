@@ -15,10 +15,11 @@
 ;
 
 (define-library (texmacs protocol)
-(export data-begin data-end data-escape 
+(export data-begin data-end data-escape
         flush-verbatim flush-prompt flush-scheme)
+(import (scheme base)
+        (scheme write))
 (begin
-
 (define (data-begin)
   (display (integer->char 2)))
 

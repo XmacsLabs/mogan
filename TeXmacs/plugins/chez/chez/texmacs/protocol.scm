@@ -14,10 +14,10 @@
 ; under the License.
 ;
 
-(define-library (texmacs protocol)
-(export data-begin data-end data-escape 
+(library (texmacs protocol (1))
+(export data-begin data-end data-escape
         flush-verbatim flush-prompt flush-scheme)
-(begin
+(import (chezscheme))
 
 (define (data-begin)
   (display (integer->char 2)))
@@ -43,5 +43,4 @@
 (define (flush-prompt msg)
   (flush-any (string-append "prompt#" msg)))
 
-) ; end of begin
-) ; end of define-library
+) ; end of library

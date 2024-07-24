@@ -11,6 +11,9 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-modules
+  (binary tm_s7))
+
 (lazy-format (data s7) s7)
 
 (define (s7-serialize lan t)
@@ -20,11 +23,13 @@
     (string-append s "\n<EOF>\n")))
 
 (define (s7-launcher)
-  (string-append "tm_s7" " " (url->system (get-texmacs-path))
+  (string-append (url->system (find-binary-tm_s7))
+    " --texmacs "
+    (url->system (get-texmacs-path))
     "/plugins/s7/s7/tm-s7.scm"))
 
 (plugin-configure s7
-  (:require (url-exists-in-path? "tm_s7"))
+  (:require (has-binary-tm_s7?))
   (:launch ,(s7-launcher))
   (:serializer ,s7-serialize)
   (:session "S7 Scheme"))
