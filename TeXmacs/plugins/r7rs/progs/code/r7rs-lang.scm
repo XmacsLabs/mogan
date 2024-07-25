@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : goldfish-lang.scm
-;; DESCRIPTION : the S7 Scheme Language
+;; MODULE      : r7rs-lang.scm
+;; DESCRIPTION : the Scheme Language defined in R7RS
 ;; COPYRIGHT   : (C) 2024  Darcy Shen
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (code goldfish-lang)
+(texmacs-module (code r7rs-lang)
   (:use (prog default-lang)))
 
 (define (srfi-1)
@@ -97,7 +97,7 @@
     "check" "check-set-mode!" "check-report" "check-reset!"))
 
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "goldfish") (== key "keyword")))
+  (:require (and (== lan "r7rs") (== key "keyword")))
   `(,(string->symbol key)
     (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
     (constant
@@ -116,7 +116,7 @@
      "bignum" "length" "append" "procedure-source"
 
      ; S7 built-ins
-     "*load-path*" "*goldfish*" "*features*" "*libraries*"
+     "*load-path*" "*r7rs*" "*features*" "*libraries*"
      "*cload-directory*" "*#readers*"
 
      ,@(srfi-1) ,@(srfi-8) ,@(srfi-13) ,@(srfi-70) ,@(srfi-78)
@@ -139,25 +139,25 @@
      "begin" "error" "catch" "throw")))
 
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "goldfish") (== key "operator")))
+  (:require (and (== lan "r7rs") (== key "operator")))
   `(,(string->symbol key)
     (operator "and" "or" "not" "=" "+" "-" "*" "/" "=>" "->")
     (operator_special "@" "," "'" "`")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
 
-(define (goldfish-number-suffix)
+(define (r7rs-number-suffix)
   `(suffix
     (imaginary "i")))
 
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "goldfish") (== key "number")))
+  (:require (and (== lan "r7rs") (== key "number")))
   `(,(string->symbol key)
     (bool_features "prefix_#")
     (separator "_")
-    ,(goldfish-number-suffix)))
+    ,(r7rs-number-suffix)))
 
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "goldfish") (== key "string")))
+  (:require (and (== lan "r7rs") (== key "string")))
   `(,(string->symbol key)
     (bool_features 
      "hex_with_8_bits" "hex_with_16_bits"
@@ -165,27 +165,27 @@
     (escape_sequences "\\" "\"" "a" "b" "f" "n" "r" "t" "v")
     (pairs "\"")))
 
-; See: https://goldfish.org/doc/v6.1.0/Single-Line-Comments.html
+; See: https://r7rs.org/doc/v6.1.0/Single-Line-Comments.html
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "goldfish") (== key "comment")))
+  (:require (and (== lan "r7rs") (== key "comment")))
   `(,(string->symbol key)
     (inline ";")))
 
-(define (notify-goldfish-syntax var val)
-  (syntax-read-preferences "goldfish"))
+(define (notify-r7rs-syntax var val)
+  (syntax-read-preferences "r7rs"))
 
 (define-preferences
-  ("syntax:goldfish:none" "red" notify-goldfish-syntax)
-  ("syntax:goldfish:comment" "brown" notify-goldfish-syntax)
-  ("syntax:goldfish:declare_type" "#309090" notify-goldfish-syntax)
-  ("syntax:goldfish:keyword_conditional" "#309090" notify-goldfish-syntax)
-  ("syntax:goldfish:keyword_control" "#309090" notify-goldfish-syntax)
-  ("syntax:goldfish:keyword" "#204080" notify-goldfish-syntax)
-  ("syntax:goldfish:keyword_error" "dark red" notify-goldfish-syntax)
-  ("syntax:goldfish:constant_number" "#4040c0" notify-goldfish-syntax)
-  ("syntax:goldfish:constant_string" "dark grey" notify-goldfish-syntax)
-  ("syntax:goldfish:constant_char" "#333333" notify-goldfish-syntax)
-  ("syntax:goldfish:operator_special" "dark magenta" notify-goldfish-syntax)
-  ("syntax:goldfish:operator_openclose" "dark" notify-goldfish-syntax)
-  ("syntax:goldfish:variable_identifier" "#204080" notify-goldfish-syntax)
-  ("syntax:goldfish:declare_category" "#d030d0" notify-goldfish-syntax))
+  ("syntax:r7rs:none" "red" notify-r7rs-syntax)
+  ("syntax:r7rs:comment" "brown" notify-r7rs-syntax)
+  ("syntax:r7rs:declare_type" "#309090" notify-r7rs-syntax)
+  ("syntax:r7rs:keyword_conditional" "#309090" notify-r7rs-syntax)
+  ("syntax:r7rs:keyword_control" "#309090" notify-r7rs-syntax)
+  ("syntax:r7rs:keyword" "#204080" notify-r7rs-syntax)
+  ("syntax:r7rs:keyword_error" "dark red" notify-r7rs-syntax)
+  ("syntax:r7rs:constant_number" "#4040c0" notify-r7rs-syntax)
+  ("syntax:r7rs:constant_string" "dark grey" notify-r7rs-syntax)
+  ("syntax:r7rs:constant_char" "#333333" notify-r7rs-syntax)
+  ("syntax:r7rs:operator_special" "dark magenta" notify-r7rs-syntax)
+  ("syntax:r7rs:operator_openclose" "dark" notify-r7rs-syntax)
+  ("syntax:r7rs:variable_identifier" "#204080" notify-r7rs-syntax)
+  ("syntax:r7rs:declare_category" "#d030d0" notify-r7rs-syntax))
