@@ -75,6 +75,11 @@
     ; SRFI-13: Filtering & Deleting
     "string-filter" "string-delete"))
 
+(tm-define (srfi-60-keywords)
+  (list
+    "logand" "logior" "logxor" "lognot" "logand"
+     "logbit?" "ash"))
+
 (tm-define (srfi-70-keywords)
   (list
     "srfi-70" ; Numbers
