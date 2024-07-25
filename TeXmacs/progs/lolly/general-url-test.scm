@@ -10,7 +10,6 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (lolly generalURL-test))
 (import (srfi srfi-78))
 
 ;; Test function for URL descendants
@@ -21,9 +20,7 @@
        (display "Debugging descendants list:\n")
        (display descendants)
        (check
-        (not (null? descendants))
-        =>
-        #t))))
+        (not (null? descendants)) => #t))))
 
 ;; Test function for URL or operation
 (define (regtest-url-or)
@@ -31,35 +28,25 @@
           (url2 (string->url "$TEXMACS_PATH/tests"))
           (combined-url (url-or url1 url2)))
      (check
-      (or (url-exists? combined-url) (null? combined-url))
-      =>
-      #t)
+      (or (url-exists? combined-url) (null? combined-url)) => #t)
      (check
-      (url-exists? url1)
-      =>
-      #t)
+      (url-exists? url1) => #t)
      (check
-      (url-exists? url2)
-      =>
-      #t)))
+      (url-exists? url2) => #t)))
 
 ;; Test function for URL expand operation
 (define (regtest-url-expand)
    (let ((input-url (string->url (string-append "$TEXMACS_PATH" "/path_not_exists"))))
      ;; Check if the expanded URL does not exist
      (check
-      (url-exists? (url-expand input-url))
-      =>
-      #f)))
+      (url-exists? (url-expand input-url)) => #f)))
 
 ;; Test function for URL complete operation
 (define (regtest-url-complete)
    ;; Complete a URL and check its existence
    (let ((complete-url (url-complete (string->url "$TEXMACS_PATH") "/tests")))
      (check
-      (url-exists? complete-url)
-      =>
-      #t)))
+      (url-exists? complete-url) => #t)))
 
 ;; Test function for URL existence
 (define (regtest-url-exists)
@@ -67,16 +54,12 @@
          (non-existing-url (string->url "nonexistentpath")))
      ;; Check if existing URL exists
      (check
-      (url-exists? existing-url)
-      =>
-      #t)
+      (url-exists? existing-url) => #t)
      ;; Check if non-existing URL does not exist
      (check
-      (not (url-exists? non-existing-url))
-      =>
-      #t)))
+      (not (url-exists? non-existing-url)) => #t)))
 
-(tm-define (regtest-general-url)
+(define (regtest-general-url)
   (regtest-url-descendants)
   (regtest-url-or)
   (regtest-url-expand)
