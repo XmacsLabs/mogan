@@ -18,19 +18,24 @@
          (s (texmacs->code (stree->tree u) "utf-8")))
     (string-append s "\n<EOF>\n")))
 
+(define (chez-booter)
+  (if (not (os-win32?))
+      ""
+      (string-append " --boot "
+        (string-quote
+          (string-append
+            (url->system
+              (url-append
+                (url-append
+                  (url-append (find-binary-chez) (url-parent))
+                  (url-parent))
+                (url-parent)))
+        "/boot/a6nt/scheme.boot")))))
+
 (define (chez-launcher)
   (string-append
     (string-quote (url->system (find-binary-chez)))
-    " --boot "
-    (string-quote
-      (string-append
-        (url->system
-          (url-append
-            (url-append
-              (url-append (find-binary-chez) (url-parent))
-              (url-parent))
-            (url-parent)))
-        "/boot/a6nt/scheme.boot"))
+    (chez-booter)
     " --libdirs "
     (string-quote
       (string-append (url->system (get-texmacs-path))
