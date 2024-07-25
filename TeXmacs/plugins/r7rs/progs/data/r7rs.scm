@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : goldfish.scm
-;; DESCRIPTION : prog format for goldfish
+;; MODULE      : r7rs.scm
+;; DESCRIPTION : prog format for r7rs
 ;; COPYRIGHT   : (C) 2022  Darcy Shen, Joris van der Hoeven
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,33 +11,33 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (data goldfish))
+(texmacs-module (data r7rs))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; goldfish source files
+;; r7rs source files
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define-format goldfish
-  (:name "S7 source code")
-  (:suffix "scm"))
+(define-format r7rs
+  (:name "R7RS source code")
+  (:suffix "scm" ".sld" ".ss"))
   
-(define (texmacs->goldfish x . opts)
+(define (texmacs->r7rs x . opts)
   (texmacs->verbatim x (acons "texmacs->verbatim:encoding" "SourceCode" '())))
 
-(define (goldfish->texmacs x . opts)
+(define (r7rs->texmacs x . opts)
   (code->texmacs x))
 
-(define (goldfish-snippet->texmacs x . opts)
+(define (r7rs-snippet->texmacs x . opts)
   (code-snippet->texmacs x))
 
-(converter texmacs-tree goldfish-document
-  (:function texmacs->goldfish))
+(converter texmacs-tree r7rs-document
+  (:function texmacs->r7rs))
 
-(converter goldfish-document texmacs-tree
-  (:function goldfish->texmacs))
+(converter r7rs-document texmacs-tree
+  (:function r7rs->texmacs))
   
-(converter texmacs-tree goldfish-snippet
-  (:function texmacs->goldfish))
+(converter texmacs-tree r7rs-snippet
+  (:function texmacs->r7rs))
 
-(converter goldfish-snippet texmacs-tree
-  (:function goldfish-snippet->texmacs))
+(converter r7rs-snippet texmacs-tree
+  (:function r7rs-snippet->texmacs))
