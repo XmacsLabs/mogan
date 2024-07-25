@@ -21,12 +21,9 @@
     (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
     (constant ,@(r7rs-keywords-constant))
     (keyword ,@(r7rs-keywords-others))
-    (declare_type
-     "define" "define-record-type" "define-syntax" "define-values" "set!" "lambda" "let" "let*" "apply" "eval" "environment" "load" "values")
-    (keyword_conditional
-     "if" "cond" "else" "case" "when")
-    (keyword_control
-     "begin" "error" "guard")))
+    (declare_type ,@(r7rs-keywords-define))
+    (keyword_conditional ,@(r7rs-keywords-branch))
+    (keyword_control ,@(r7rs-keywords-exception))))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "r7rs") (== key "operator")))
