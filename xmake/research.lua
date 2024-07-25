@@ -10,7 +10,7 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 includes ("vars.lua")
-includes ("tm_s7.lua")
+includes ("goldfish.lua")
 
 local research_files = {
     "$(projectdir)/TeXmacs(/doc/**)",
