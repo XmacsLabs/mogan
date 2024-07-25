@@ -33,6 +33,41 @@
   (map symbol->string
     '(caaaar caaadr caaar caadar caaddr caadr cadaar cadadr cadar caddar cadddr caddr cdaaar cdaadr cdaar cdadar cdaddr cdadr cddaar cddadr cddar cdddar cddddr cdddr)))
 
+(define (r7rs-scheme-eval)
+  (map symbol->string '(eval environment)))
+
+(define (r7rs-scheme-file)
+  (map symbol->string
+    '(call-with-input-file call-with-output-file delete-file file-exists? open-binary-input-file open-binary-output-file open-input-file open-output-file with-input-from-file with-output-to-file)))
+
+(define (r7rs-scheme-inexact)
+  (map symbol->string '(acos asin atan cos exp finite? infinite? log nan? sin sqrt tan)))
+
+(define (r7rs-scheme-lazy)
+  (map symbol->string '(delay delay-force force make-promise promise?)))
+
+(define (r7rs-scheme-load)
+  (map symbol->string '(load)))
+
+(define (r7rs-scheme-process-context)
+  (map symbol->string
+    '(command-line emergency-exit exit get-environment-variable get-environment-variables)))
+
+(define (r7rs-scheme-read)
+  (map symbol->string '(read)))
+
+(define (r7rs-scheme-repl)
+  (map symbol->string
+    '(interaction-environment)))
+
+(define (r7rs-scheme-time)
+  (map symbol->string
+    '(current-jiffy current-second jiffies-per-second)))
+
+(define (r7rs-scheme-write)
+  (map symbol->string
+    '(display write write-shared write-simple)))
+
 (tm-define (parser-feature lan key)
   (:require (and (== lan "r7rs") (== key "keyword")))
   `(,(string->symbol key)
@@ -49,8 +84,10 @@
      "load" "eval" "eval-string" "values" "autoload" "require" "provide")
     (keyword
      ,@(r7rs-scheme-base) ,@(r7rs-scheme-case-lambda) ,@(r7rs-scheme-char)
-     ,@(r7rs-scheme-complex) ,@(r7rs-scheme-CxR)
-    )
+     ,@(r7rs-scheme-complex) ,@(r7rs-scheme-CxR) ,@(r7rs-scheme-eval)
+     ,@(r7rs-scheme-file) ,@(r7rs-scheme-inexact) ,@(r7rs-scheme-lazy)
+     ,@(r7rs-scheme-load) ,@(r7rs-scheme-process-context) ,@(r7rs-scheme-read)
+     ,@(r7rs-scheme-repl) ,@(r7rs-scheme-time) ,@(r7rs-scheme-write))
     (keyword_error
      "syntax-error" "wrong-type-arg" "immutable-error" "out-of-range" "division-by-zero"
      "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
