@@ -14,87 +14,24 @@
 (texmacs-module (code r7rs-lang)
   (:use (prog default-lang)))
 
-(define (srfi-1)
-  (list
-    "srfi-1" ; List Library
-    ; SRFI-1: List constructors
-    "list" "cons" "xcons" "cons*" "make-list"
-    "list-tabulate" "list-copy" "circular-list" "iota"
-    ; SRFI-1: List predicates
-    "pair?" "null?" "proper-list?" "circular-list?" "dotted-list?"
-    "not-pair?" "null-list?" "list=" "list?"
-    ; SRFI-1: List selectors
-    "car" "caar" "cdar" "cadr" "caddr" "cadddr"
-    "cdr" "cddr" "cdddr" "cddddr"
-    "list-ref"
-    "first" "second" "third" "fourth" "fifth"
-    "sixth" "seventh" "eighth" "ninth" "tenth"
-    "take" "drop" "take-right" "drop-right" "last"
-    ; SRFI-1: MISC
-    "concatenate" "reverse" "append-reverse" "zip" "count"
-    ; SRFI-1: fold, unfold, map
-    "fold" "fold-right" "reduce" "reduce-right" "map"
-    "unfold" "unfold-right" "for-each" "map-in-order"
-    ; SRFI-1: Filtering & Parititioning
-    "filter" "partition" "remove"
-    ; SRFI-1: Searching
-    "find" "find-tail" "take-while" "drop-while" "span"
-    "any" "every" "list-index" "member" "memq" "memv"
-    ; SRFI-1: Deletion
-    "delete" "delete-duplicates"))
+(define (r7rs-scheme-base)
+  (map symbol->string
+    '(abs and append apply assoc assq assv begin binary-port? boolean=? boolean? bytevector bytevector-append bytevector-copy bytevector-copy! bytevector-length bytevector-u8-ref bytevector-u8-set! bytevector? caar cadr call-with-current-continuation call-with-port call-with-values call/cc car case cdar cddr cdr ceiling char->integer char-ready? char<=? char<? char=? char>=? char>? char? close-input-port close-output-port close-port complex? cond cond-expand cons current-error-port current-input-port current-output-port define define-record-type define-syntax define-values denominator do dynamic-wind else eof-object eof-object? eq? equal? eqv? error error-object-irritants error-object-message error-object? even? exact exact-integer-sqrt exact-integer? exact? expt features file-error? floor floor-quotient floor-remainder floor/ flush-output-port for-each gcd get-output-bytevector get-output-string guard if include include-ci inexact inexact? input-port-open? input-port? integer->char integer? lambda lcm length let let* let*-values let-syntax let-values letrec letrec* letrec-syntax list list->string list->vector list-copy list-ref list-set! list-tail list? make-bytevector make-list make-parameter make-string make-vector map max member memq memv min modulo negative? newline not null? number->string number? numerator odd? open-input-bytevector open-input-string open-output-bytevector open-output-string or output-port-open? output-port? pair? parameterize peek-char peek-u8 port? positive? procedure? quasiquote quote quotient raise raise-continuable rational? rationalize read-bytevector read-bytevector! read-char read-error? read-line read-string read-u8 real? remainder reverse round set! set-car! set-cdr! sin sqrt string string->list string->number string->symbol string->utf8 string->vector string-append string-copy string-copy! string-fill! string-for-each string-length string-map string-ref string-set! string<=? string<? string=? string>=? string>? string? substring symbol->string symbol=? symbol? syntax-error syntax-rules textual-port? truncate truncate-quotient truncate-remainder truncate/ u8-ready? unless unquote unquote-splicing utf8->string values vector vector->list vector->string vector-append vector-copy vector-copy! vector-fill! vector-for-each vector-length vector-map vector-ref vector-set! vector? when with-exception-handler write-bytevector write-char write-string write-u8 zero?)))
 
-(define (srfi-8)
-  (list
-    "srfi-8"
-    "call-with-values" "receive"))
+(define (r7rs-scheme-case-lambda)
+  (map symbol->string '(case-lambda)))
 
-(define (srfi-13)
-  (list
-    "srfi-13" ; String Library
-    ; SRFI-13: String predicates
-    "string?" "string-null?" "string-every" "string-any"
-    ; SRFI-13: String constructors
-    "make-string" "string" "string-tabulate"
-    ; SRFI-13: List & String Conversion
-    "string->list" "list->string" "reverse-list->string" "string-join"
-    ; SRFI-13: String selection
-    "string-length" "string-ref" "string-copy" "substring" "string-copy!"
-    "string-take" "string-take-right" "string-drop" "string-drop-right" "string-pad"
-    "string-pad-right" "string-trim" "string-trim-right" "string-trim-both"
-    ; SRFI-13: String comparison
-    "string-compare" "string=" "string<>"
-    ; SRFI-13: String Prefixes & Suffixes
-    "string-prefix?" "string-suffix?"
-    ; SRFI-13: String searching
-    "string-index" "string-index-right" "string-skip" "string-skip-right" "string-count"
-    "string-contains"
-    "string-reverse" "string-append"
-    ; SRFI-13: Functional programming
-    "string-map" "string-fold" "string-fold-right" "string-for-each" "string-for-each-index"
-    ; SRFI-13: String insertion and parsing
-    "string-replace" "string-tokenize"
-    ; SRFI-13: Filtering & Deleting
-    "string-filter" "string-delete"))
+(define (r7rs-scheme-char)
+  (map symbol->string
+    '(char-alphabetic? char-ci<=? char-ci<? char-ci=? char-ci>=? char-ci>? char-downcase char-foldcase char-lower-case? char-numeric? char-upcase char-upper-case? char-whitespace? digit-value string-ci<=? string-ci<? string-ci=? string-ci>=? string-ci>? string-downcase string-foldcase string-upcase)))
 
-(define (srfi-70)
-  (list
-    "srfi-70" ; Numbers
-    "number?" "complex?" "real?" "rational?" "integer?"
-    "exact?" "inexact?" "finite?" "infinite?" "zero?"
-    "positive?" "negative?" "odd?" "even?" "floor?"
-    "max" "min" "abs" "quotient" "remainder" "modulo"
-    "gcd" "lcm" "numerator" "denominator" "floor"
-    "ceiling" "truncate" "round" "rationalize"
-    "expt" "log" "complex" "real-part" "imag-part"
-    "sin" "cos" "tan" "asin" "acos" "atan"
-    "sinh" "cosh" "tanh" "asinh" "acosh" "atanh"
-    "sqrt" "expt" "make-rectangular" "make-polar" "magnitude"
-    "angle" "exact->inexact" "inexact->exact" "string->number" "number->string"))
+(define (r7rs-scheme-complex)
+  (map symbol->string
+    '(angle imag-part magnitude make-polar make-rectangular real-part)))
 
-(define (srfi-78)
-  (list
-    "srfi-78" ; Light-weighted Test framework
-    "check" "check-set-mode!" "check-report" "check-reset!"))
+(define (r7rs-scheme-CxR)
+  (map symbol->string
+    '(caaaar caaadr caaar caadar caaddr caadr cadaar cadadr cadar caddar cadddr caddr cdaaar cdaadr cdaar cdadar cdaddr cdadr cddaar cddadr cddar cdddar cddddr cdddr)))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "r7rs") (== key "keyword")))
@@ -111,24 +48,9 @@
      "define-constant" "let" "let*" "apply" "eval"
      "load" "eval" "eval-string" "values" "autoload" "require" "provide")
     (keyword
-     "eq?" "equal?" "equivalent?" "help" "display"
-     "quote" "quasiquote" "unquote"
-     "bignum" "length" "append" "procedure-source"
-
-     ; S7 built-ins
-     "*load-path*" "*r7rs*" "*features*" "*libraries*"
-     "*cload-directory*" "*#readers*"
-
-     ,@(srfi-1) ,@(srfi-8) ,@(srfi-13) ,@(srfi-70) ,@(srfi-78)
-
-     ; SRFI-60: Integers as Bits
-     "logand" "logior" "logxor" "lognot" "logand"
-     "logbit?" "ash"
-     ; MISC
-     "integer-decode-float" "random" "nan?" "nan" "nan-payload"
-     "make-vector" "vector-length" "vector" "format" "object->string"
-     "vector-set!" "immutable!" "immutable?" "make-hash-table" "hash-table"
-     "hash-table?" "hash-table-ref" "hash-table-set!" "hash-table-entries" "hash-code")
+     ,@(r7rs-scheme-base) ,@(r7rs-scheme-case-lambda) ,@(r7rs-scheme-char)
+     ,@(r7rs-scheme-complex) ,@(r7rs-scheme-CxR)
+    )
     (keyword_error
      "syntax-error" "wrong-type-arg" "immutable-error" "out-of-range" "division-by-zero"
      "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
