@@ -20,6 +20,10 @@
     </src-license>
   </src-title>>
 
+  <use-module|(data r7rs)>
+
+  <use-module|(code r7rs-edit)>
+
   <assign|goldfish-prompt-color|dark green>
 
   <assign|goldfish-input|<\macro|prompt|body>

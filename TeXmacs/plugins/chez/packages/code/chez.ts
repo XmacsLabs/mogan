@@ -20,23 +20,17 @@
     </src-license>
   </src-title>>
 
+  <use-module|(data r7rs)>
+
+  <use-module|(code r7rs-edit)>
+
   <assign|chez-prompt-color|dark green>
-
-  <assign|scm|<macro|body|<with|mode|prog|prog-language|chez|font-family|rm|<arg|body>>>>
-
-  <assign|scm-code|<\macro|body>
-    <\pseudo-code>
-      <scm|<arg|body>>
-    </pseudo-code>
-  </macro>>
 
   <assign|chez-input|<\macro|prompt|body>
     <\with|generic-prompt-color|<value|chez-prompt-color>|generic-input-color|<value|scheme-input-color>>
-      <generic-input|<arg|prompt>|<arg|body>>
+      <generic-input|<arg|prompt>|<with|prog-language|r7rs|<arg|body>>>
     </with>
   </macro>>
-
-  \;
 
   <assign|chez-result|<\macro|body>
     <with|ornament-border|0ln|ornament-hpadding|0spc|padding-above|0fn|padding-below|0fn|ornament-color|pastel
