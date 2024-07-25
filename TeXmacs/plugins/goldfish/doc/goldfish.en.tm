@@ -3,21 +3,21 @@
 <style|<tuple|tmdoc|old-spacing|old-dots|old-lengths|goldfish>>
 
 <\body>
-  <tmdoc-title|The S7 Scheme plugin>
+  <tmdoc-title|The Goldfish Scheme plugin>
 
-  <hlink|S7|https://ccrma.stanford.edu/software/goldfish/> is a Scheme interpreter.
-  To insert a S7 Scheme session, just click <menu|Insert|Session|S7 Scheme>.
-  The Scheme session is for interacting with Mogan and the S7 Scheme session
-  is for interacting with S7 Scheme. S7 Scheme session is running in a
-  separated process, as a result, infinite loop in S7 Scheme session will not
-  freeze Mogan while infinite loop in Scheme session will freeze Mogan.
+  Goldfish Scheme is based on <hlink|S7|https://ccrma.stanford.edu/software/goldfish/>
+  Scheme. To insert a Goldfish Scheme session, just click
+  <menu|Insert|Session|S7 Scheme>. The Scheme session is for interacting with
+  Mogan. Goldfish Scheme session is running in a separated process, as a
+  result, infinite loop in Goldfish Scheme session will not freeze Mogan
+  while infinite loop in Scheme session will freeze Mogan.
 
-  Here are snippets which only works in the S7 Scheme session:
+  Here are snippets which only works in the Goldfish Scheme session:
 
   <paragraph|Unicode Support>
 
-  The string literal in S7 Scheme does not support Unicode. In the S7 Scheme
-  session, we use the cork encoding as a workaround.
+  The string literal in Goldfish Scheme does not support Unicode. In the
+  Goldfish Scheme session, we use the cork encoding as a workaround.
 
   <\scm-code>
     <block|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Scheme
@@ -27,7 +27,7 @@
 
   <\session|goldfish|default>
     <\output>
-      S7 Scheme 10.6 (14-Apr-2023)
+      Goldfish Scheme (based on S7 Scheme 10.11, 2-July-2024)
     </output>
 
     <\unfolded-io>
@@ -145,8 +145,8 @@
 
   <paragraph|SRFI>
 
-  SRFI implementation for S7 Scheme will be built-in for the S7 Scheme
-  session. Here is the concise guide to load the SRFIs.
+  SRFI implementation for Goldfish Scheme will be built-in for the Goldfish
+  Scheme session. Here is the concise guide to load the SRFIs.
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
@@ -248,7 +248,8 @@
     <|unfolded-io>
       (help 'equal?)
     <|unfolded-io>
-      <goldfish-result|"(equal? obj1 obj2) returns #t if obj1 is equal to obj2">
+      <goldfish-result|"(equal? obj1 obj2) returns #t if obj1 is equal to
+      obj2">
     </unfolded-io>
 
     <\unfolded-io>
@@ -256,8 +257,8 @@
     <|unfolded-io>
       (help 'cdar)
     <|unfolded-io>
-      <goldfish-result|"(cdar lst) returns (cdr (car lst)): (cdar '((1 2 3))) -\>
-      '(2 3)">
+      <goldfish-result|"(cdar lst) returns (cdr (car lst)): (cdar '((1 2 3)))
+      -\> '(2 3)">
     </unfolded-io>
 
     <\input>
@@ -320,16 +321,12 @@
   <paragraph|multiprecision arithmetic>
 
   <\session|goldfish|default>
-    <\output>
-      S7 Scheme 10.6 (14-Apr-2023)
-    </output>
-
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      pi
+      (* 1.0 pi)
     <|unfolded-io>
-      <goldfish-result|pi>
+      <goldfish-result|3.141592653589793>
     </unfolded-io>
 
     <\unfolded-io>
@@ -351,9 +348,9 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      pi
+      (* 1.0 pi)
     <|unfolded-io>
-      <goldfish-result|pi>
+      <goldfish-result|3.141592653589793>
     </unfolded-io>
 
     <\unfolded-io>
@@ -777,8 +774,8 @@
 
       \ \ \ \ \ \ (apply format #t (cadr args))))
     <|unfolded-io>
-      abs: too many arguments: (abs 1 2)<goldfish-result|"abs: too many arguments:
-      (abs 1 2)">
+      abs: too many arguments: (abs 1 2)<goldfish-result|"abs: too many
+      arguments: (abs 1 2)">
     </unfolded-io>
 
     <\unfolded-io>

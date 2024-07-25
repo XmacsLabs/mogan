@@ -74,7 +74,7 @@
           (leadings (list "(document" "(math" "(equation*" "(align" "(with" "(graphics")))
       (if (find (lambda (x) (string-prefix? x output)) leadings)
           output
-          (string-append "(goldfish-result " (s7-quote output) ")"))))
+          (string-append "(goldfish-result " (goldfish-quote output) ")"))))
 
   (define (goldfish-print obj)
     (if (eq? obj #<unspecified>)
