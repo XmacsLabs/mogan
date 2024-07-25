@@ -527,9 +527,6 @@ qt_ui_element_rep::as_qaction () {
     T                                          x= open_box<T> (load);
     QTMTabPage* tab= new QTMTabPage (x.x1, concrete (x.x2)->as_qaction (),
                                      concrete (x.x3)->as_qaction (), x.x4);
-    // use QTMTabPageAction to wrap the QTMTabPage(QWidget type)
-    // then we take out the QTMTabPage and add it to the QTMTabPageBar
-    // see the definition of QTMTabPageAction why we're using it
     QWidgetAction* a= new QWidgetAction (nullptr);
     a->setDefaultWidget (tab);
     act= a;

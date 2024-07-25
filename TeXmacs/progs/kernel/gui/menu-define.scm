@@ -382,7 +382,7 @@
   `($form-toggle ,@(cdr x)))
 
 (define (gui-make-tab-page x)
-  (require-format x '(tab-page :%4))
+  (require-format x '(tab-page :%4)) ; :%4 means requiring 4 parameters
   `($tab-page ,@(map gui-make (cdr x))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

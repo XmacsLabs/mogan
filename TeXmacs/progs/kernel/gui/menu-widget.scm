@@ -92,7 +92,8 @@
     (ink :%1)
     (:menu-item-list)))
   (:menu-item-list (:repeat :menu-item))
-  (:tab-page (tab-page :%4)))
+  (:tab-page (tab-page :%4)) ; :%4 means requiring 4 parameters
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Menu utilities
@@ -468,9 +469,19 @@
         (widget-balloon but twid)))
      (else but))))
 
-(define (make-tab-page p style bar?)
-  ;(display* "make-tab-page: " p "\n")
-  (let* ((args  (cdar p))
+(define (make-tab-page entry-data style bar?)
+  ; eg. 
+  ; entry-data is ((tab-page
+  ;                  <url>
+  ;                  ((balloon "doc-title" "doc-path") #<lambda ()>)
+  ;                  ((balloon (icon "tm_cancel.xpm") "Close") #<lambda ()>)
+  ;                  #t
+  ;               ))
+  ; style is 0, an integer value indicates theme or color style
+  ; bar? is #t, a bool value indicates whether the item is placed in the menu bar
+
+  ; (display* "make-tab-page: " entry-data "\n" style "\n" bar? "\n")
+  (let* ((args  (cdar entry-data))
          (url   (first args))      ; url
          (title (second args))     ; widget
          (close-btn (third args))  ; widget

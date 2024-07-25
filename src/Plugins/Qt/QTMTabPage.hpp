@@ -27,7 +27,8 @@ public:
   const url bufferUrl;
 
 public:
-  explicit QTMTabPage (url u, QAction* title, QAction* button, bool active);
+  explicit QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
+                       bool p_isActive);
 
 protected:
   virtual void resizeEvent (QResizeEvent* e) override;
@@ -40,8 +41,8 @@ In order to:
  */
 class QTMTabPageBar : public QToolBar {
 public:
-  explicit QTMTabPageBar (const QString& title, QWidget* parent)
-      : QToolBar (title, parent) {}
+  explicit QTMTabPageBar (const QString& p_title, QWidget* p_parent)
+      : QToolBar (p_title, p_parent) {}
 };
 
 #endif // QTMTABPAGE_HPP

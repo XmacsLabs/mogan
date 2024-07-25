@@ -634,10 +634,9 @@ tree_view_widget (command cmd, tree data, tree actions) {
   return abstract (wid);
 }
 widget
-tab_page_widget (url u, widget title, widget button, bool active) {
-  if (headless_mode) return headless_widget (); // can this work ?
+tab_page_widget (url u, widget title, widget close_btn, bool is_active) {
   qt_widget wid= qt_ui_element_rep::create (qt_widget_rep::tab_page_widget, u,
-                                            title, button, active);
+                                            title, close_btn, is_active);
   return abstract (wid);
 }
 //// Widgets which are not strictly required by TeXmacs have void
