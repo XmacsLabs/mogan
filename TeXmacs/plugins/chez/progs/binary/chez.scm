@@ -18,6 +18,8 @@
   (cond ((os-macos?)
          (list "/opt/homebrew/bin/chez"
                "/usr/local/bin/chez"))
+        ((os-win32?)
+         (list "C:\\Program Files*\\Chez Scheme*\\bin\\a6nt\\scheme.exe"))
         (else
          (list "/usr/bin/chezscheme"))))
 

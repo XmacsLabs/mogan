@@ -19,12 +19,26 @@
     (string-append s "\n<EOF>\n")))
 
 (define (chez-launcher)
-  (string-append (url->system (find-binary-chez))
+  (string-append
+    (string-quote (url->system (find-binary-chez)))
+    " --boot "
+    (string-quote
+      (string-append
+        (url->system
+          (url-append
+            (url-append
+              (url-append (find-binary-chez) (url-parent))
+              (url-parent))
+            (url-parent)))
+        "/boot/a6nt/scheme.boot"))
     " --libdirs "
-    (string-append (url->system (get-texmacs-path)) "/plugins/chez/chez")
+    (string-quote
+      (string-append (url->system (get-texmacs-path))
+                     "/plugins/chez/chez"))
     " --script "
-    (url->system (get-texmacs-path))
-    "/plugins/chez/chez/tm-chez.scm"))
+    (string-quote
+      (string-append (url->system (get-texmacs-path))
+                     "/plugins/chez/chez/tm-chez.scm"))))
 
 (plugin-configure chez
   (:require (has-binary-chez?))
