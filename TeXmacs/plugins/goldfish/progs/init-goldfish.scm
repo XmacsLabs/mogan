@@ -13,7 +13,7 @@
 
 (use-modules (binary goldfish))
 
-(lazy-format (data goldfish) goldfish)
+(lazy-format (data r7rs) r7rs)
 
 (define (goldfish-serialize lan t)
   (let* ((u (pre-serialize lan t))
