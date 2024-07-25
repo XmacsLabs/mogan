@@ -270,7 +270,7 @@ end
 
 
 target("research") do
-    add_deps("tm_s7")
+    add_deps("goldfish")
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
     if is_plat("wasm") then
         add_target_research_on_wasm()
