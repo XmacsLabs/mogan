@@ -1,7 +1,5 @@
 /* 0-clause BSD */
 
-/* gcc -o repl repl.c goldfish.o -Wl,-export-dynamic -lm -I. -ldl */
-
 #include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
