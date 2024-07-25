@@ -29,4 +29,11 @@
   (not (url-none? (find-binary-gambit))))
 
 (tm-define (version-binary-gambit)
-  (version-binary (find-binary-gambit)))
+  (when (has-binary-gambit?)
+    (let*
+     ((msg (check-stdout (string-append (url->system (find-binary-gambit)) " -v")))
+      (msg-l (filter (lambda (x) (not (string-null? x)))
+                 (string-split msg #\space))))
+     (if (== (length msg-l) 0)
+         ""
+         (car msg-l)))))
