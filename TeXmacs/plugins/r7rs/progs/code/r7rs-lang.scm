@@ -87,7 +87,7 @@
     (keyword_conditional
      "if" "cond" "else" "case" "when")
     (keyword_control
-     "begin" "error" "catch" "throw" "guard")))
+     "begin" "error" "guard")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "r7rs") (== key "operator")))
