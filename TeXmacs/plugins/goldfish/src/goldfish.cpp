@@ -11,7 +11,7 @@
 #include <unistd.h>
 #endif
 
-#include "goldfish.h"
+#include "s7.h"
 
 char* str_r7rs_define_library=
     "(define-macro (define-library libname . body) ; |(lib name)| -> "
