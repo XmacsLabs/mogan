@@ -47,5 +47,5 @@ compile_commands.json
 
 docs/**/plugin_binary.md
 
-# Binary of the S7 plugin
-tm_s7
+# Binary of the goldfish plugin
+TeXmacs/plugins/goldfish/bin/goldfish
