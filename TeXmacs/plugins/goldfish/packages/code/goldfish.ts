@@ -20,7 +20,7 @@
     </src-license>
   </src-title>>
 
-  <use-module|(data r7rs)>
+  <use-module|(data goldfish)>
 
   <use-module|(code goldfish-edit)>
 
@@ -28,11 +28,9 @@
 
   <assign|goldfish-input|<\macro|prompt|body>
     <\with|generic-prompt-color|<value|goldfish-prompt-color>|generic-input-color|<value|scheme-input-color>>
-      <generic-input|<arg|prompt>|<with|prog-language|r7rs|<arg|body>>>
+      <generic-input|<arg|prompt>|<arg|body>>
     </with>
   </macro>>
-
-  \;
 
   <assign|goldfish-result|<\macro|body>
     <with|ornament-border|0ln|ornament-hpadding|0spc|padding-above|0fn|padding-below|0fn|ornament-color|pastel

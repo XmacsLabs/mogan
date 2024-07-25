@@ -71,7 +71,7 @@
   (list "if" "cond" "else" "case" "when"))
 
 (tm-define (r7rs-keywords-define)
-  (list "define" "define-record-type" "define-syntax" "define-values" "set!" "lambda" "let" "let*" "apply" "eval" "environment" "load" "values" "begin"))
+  (list "define" "define-record-type" "define-syntax" "define-values" "set!" "lambda" "let" "let*" "apply" "eval" "environment" "load" "values" "begin" "import" "export" "define-library"))
 
 (tm-define (r7rs-keywords-exception)
   (list "error" "guard" "with-exception-handler"))

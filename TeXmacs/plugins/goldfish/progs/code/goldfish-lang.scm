@@ -21,16 +21,16 @@
   `(,(string->symbol key)
     (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
     (constant
-      ,@(r7rs-keyword-constant)
+      ,@(r7rs-keywords-constant)
       "pi" "*stdin*" "*stdout*" "*stderr*"
       "*load-hook*" "*autoload-hook*" "*error-hook*" "*read-error-hook*"
       "*rootlet-redefinition-hook*" "*unbound-variable-hook*"
       "*missing-close-paren-hook*")
     (declare_type
-      ,@(r7rs-keyword-define)
+      ,@(r7rs-keywords-define)
       "defined?" "define-macro" "define-constant" "autoload" "require" "provide" "define*" "lambda*")
     (keyword
-      ,@(r7rs-keyword-others) ,@(srfi-1-keywords) ,@(srfi-8-keywords) ,@(srfi-13-keywords) ,@(srfi-60-keywords) ,@(srfi-78-keywords)
+      ,@(r7rs-keywords-others) ,@(srfi-1-keywords) ,@(srfi-8-keywords) ,@(srfi-13-keywords) ,@(srfi-60-keywords) ,@(srfi-78-keywords)
 
       ; S7 built-ins
       "*load-path*" "*goldfish*" "*features*" "*libraries*"
