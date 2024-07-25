@@ -47,7 +47,7 @@
     "srfi-8"
     "call-with-values" "receive"))
 
-(define (srfi-13)
+(tm-define (srfi-13-keywords)
   (list
     "srfi-13" ; String Library
     ; SRFI-13: String predicates
