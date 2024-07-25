@@ -19,7 +19,7 @@
 (define (goldfish-welcome)
   (flush-prompt "> ")
   (flush-verbatim
-    (string-append "S7 Scheme: " (substring (*s7* 'version) 3))))
+    (string-append "Goldfish Scheme (based on S7 Scheme " (substring (*s7* 'version) 3) ")")))
 
 (define (goldfish-repl)
   ; SRFI 1
