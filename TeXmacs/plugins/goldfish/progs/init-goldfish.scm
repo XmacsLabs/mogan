@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : init-s7.scm
-;; DESCRIPTION : Initialize S7 plugin
+;; MODULE      : init-goldfish.scm
+;; DESCRIPTION : Initialize Goldfish plugin
 ;; COPYRIGHT   : (C) 2024   Darcy Shen
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,25 +11,24 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-modules
-  (binary tm_s7))
+(use-modules (binary goldfish))
 
-(lazy-format (data s7) s7)
+(lazy-format (data goldfish) goldfish)
 
-(define (s7-serialize lan t)
+(define (goldfish-serialize lan t)
   (let* ((u (pre-serialize lan t))
          (cork-s (texmacs->code (stree->tree u) "Cork"))
          (s (tmstring->string cork-s)))
     (string-append s "\n<EOF>\n")))
 
-(define (s7-launcher)
-  (string-append (url->system (find-binary-tm_s7))
+(define (goldfish-launcher)
+  (string-append (url->system (find-binary-goldfish))
     " --texmacs "
     (url->system (get-texmacs-path))
-    "/plugins/s7/s7/tm-s7.scm"))
+    "/plugins/goldfish/goldfish/tm-goldfish.scm"))
 
-(plugin-configure s7
-  (:require (has-binary-tm_s7?))
-  (:launch ,(s7-launcher))
-  (:serializer ,s7-serialize)
-  (:session "S7 Scheme"))
+(plugin-configure goldfish
+  (:require (has-binary-goldfish?))
+  (:launch ,(goldfish-launcher))
+  (:serializer ,goldfish-serialize)
+  (:session "Goldfish Scheme"))

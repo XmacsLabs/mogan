@@ -1,7 +1,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : s7-lang.scm
+;; MODULE      : goldfish-lang.scm
 ;; DESCRIPTION : the S7 Scheme Language
 ;; COPYRIGHT   : (C) 2024  Darcy Shen
 ;;
@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (code s7-lang)
+(texmacs-module (code goldfish-lang)
   (:use (prog default-lang)))
 
 (define (srfi-1)
@@ -97,7 +97,7 @@
     "check" "check-set-mode!" "check-report" "check-reset!"))
 
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "s7") (== key "keyword")))
+  (:require (and (== lan "goldfish") (== key "keyword")))
   `(,(string->symbol key)
     (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
     (constant
@@ -116,7 +116,7 @@
      "bignum" "length" "append" "procedure-source"
 
      ; S7 built-ins
-     "*load-path*" "*s7*" "*features*" "*libraries*"
+     "*load-path*" "*goldfish*" "*features*" "*libraries*"
      "*cload-directory*" "*#readers*"
 
      ,@(srfi-1) ,@(srfi-8) ,@(srfi-13) ,@(srfi-70) ,@(srfi-78)
@@ -139,25 +139,25 @@
      "begin" "error" "catch" "throw")))
 
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "s7") (== key "operator")))
+  (:require (and (== lan "goldfish") (== key "operator")))
   `(,(string->symbol key)
     (operator "and" "or" "not" "=" "+" "-" "*" "/" "=>" "->")
     (operator_special "@" "," "'" "`")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
 
-(define (s7-number-suffix)
+(define (goldfish-number-suffix)
   `(suffix
     (imaginary "i")))
 
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "s7") (== key "number")))
+  (:require (and (== lan "goldfish") (== key "number")))
   `(,(string->symbol key)
     (bool_features "prefix_#")
     (separator "_")
-    ,(s7-number-suffix)))
+    ,(goldfish-number-suffix)))
 
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "s7") (== key "string")))
+  (:require (and (== lan "goldfish") (== key "string")))
   `(,(string->symbol key)
     (bool_features 
      "hex_with_8_bits" "hex_with_16_bits"
@@ -165,27 +165,27 @@
     (escape_sequences "\\" "\"" "a" "b" "f" "n" "r" "t" "v")
     (pairs "\"")))
 
-; See: https://s7.org/doc/v6.1.0/Single-Line-Comments.html
+; See: https://goldfish.org/doc/v6.1.0/Single-Line-Comments.html
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "s7") (== key "comment")))
+  (:require (and (== lan "goldfish") (== key "comment")))
   `(,(string->symbol key)
     (inline ";")))
 
-(define (notify-s7-syntax var val)
-  (syntax-read-preferences "s7"))
+(define (notify-goldfish-syntax var val)
+  (syntax-read-preferences "goldfish"))
 
 (define-preferences
-  ("syntax:s7:none" "red" notify-s7-syntax)
-  ("syntax:s7:comment" "brown" notify-s7-syntax)
-  ("syntax:s7:declare_type" "#309090" notify-s7-syntax)
-  ("syntax:s7:keyword_conditional" "#309090" notify-s7-syntax)
-  ("syntax:s7:keyword_control" "#309090" notify-s7-syntax)
-  ("syntax:s7:keyword" "#204080" notify-s7-syntax)
-  ("syntax:s7:keyword_error" "dark red" notify-s7-syntax)
-  ("syntax:s7:constant_number" "#4040c0" notify-s7-syntax)
-  ("syntax:s7:constant_string" "dark grey" notify-s7-syntax)
-  ("syntax:s7:constant_char" "#333333" notify-s7-syntax)
-  ("syntax:s7:operator_special" "dark magenta" notify-s7-syntax)
-  ("syntax:s7:operator_openclose" "dark" notify-s7-syntax)
-  ("syntax:s7:variable_identifier" "#204080" notify-s7-syntax)
-  ("syntax:s7:declare_category" "#d030d0" notify-s7-syntax))
+  ("syntax:goldfish:none" "red" notify-goldfish-syntax)
+  ("syntax:goldfish:comment" "brown" notify-goldfish-syntax)
+  ("syntax:goldfish:declare_type" "#309090" notify-goldfish-syntax)
+  ("syntax:goldfish:keyword_conditional" "#309090" notify-goldfish-syntax)
+  ("syntax:goldfish:keyword_control" "#309090" notify-goldfish-syntax)
+  ("syntax:goldfish:keyword" "#204080" notify-goldfish-syntax)
+  ("syntax:goldfish:keyword_error" "dark red" notify-goldfish-syntax)
+  ("syntax:goldfish:constant_number" "#4040c0" notify-goldfish-syntax)
+  ("syntax:goldfish:constant_string" "dark grey" notify-goldfish-syntax)
+  ("syntax:goldfish:constant_char" "#333333" notify-goldfish-syntax)
+  ("syntax:goldfish:operator_special" "dark magenta" notify-goldfish-syntax)
+  ("syntax:goldfish:operator_openclose" "dark" notify-goldfish-syntax)
+  ("syntax:goldfish:variable_identifier" "#204080" notify-goldfish-syntax)
+  ("syntax:goldfish:declare_category" "#d030d0" notify-goldfish-syntax))

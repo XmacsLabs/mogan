@@ -1,7 +1,5 @@
 /* 0-clause BSD */
 
-/* gcc -o repl repl.c s7.o -Wl,-export-dynamic -lm -I. -ldl */
-
 #include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -139,7 +137,7 @@ main (int argc, char** argv) {
       const char*       env_key  = "TEXMACS_PATH";
       const char*       env_value= getenv (env_key);
       std::stringstream load_path;
-      load_path << env_value << "/plugins/s7/s7/";
+      load_path << env_value << "/plugins/goldfish/goldfish/";
       s7_add_to_load_path (sc, load_path.str ().c_str ());
       if (!s7_load (sc, argv[2])) {
         fprintf (stderr, "%s: %s\n", strerror (errno), argv[2]);
@@ -153,5 +151,5 @@ main (int argc, char** argv) {
       }
     }
   }
-  return (0);
+  return 0;
 }
