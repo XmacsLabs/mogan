@@ -22,7 +22,7 @@
 
   <use-module|(data r7rs)>
 
-  <use-module|(code r7rs-edit)>
+  <use-module|(code chez-edit)>
 
   <assign|chez-prompt-color|dark green>
 

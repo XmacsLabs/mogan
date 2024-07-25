@@ -22,7 +22,7 @@
 
   <use-module|(data r7rs)>
 
-  <use-module|(code r7rs-edit)>
+  <use-module|(code guile-edit)>
 
   <assign|guile-prompt-color|dark green>
 
