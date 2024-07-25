@@ -24,7 +24,7 @@
 
   <assign|goldfish-input|<\macro|prompt|body>
     <\with|generic-prompt-color|<value|goldfish-prompt-color>|generic-input-color|<value|scheme-input-color>>
-      <generic-input|<arg|prompt>|<arg|body>>
+      <generic-input|<arg|prompt>|<with|prog-language|r7rs|<arg|body>>>
     </with>
   </macro>>
 
