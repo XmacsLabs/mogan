@@ -26,7 +26,8 @@
     (string-append (url->system (get-texmacs-path)) "/plugins/gambit/gambit/tm-gambit.scm")))
 
 (plugin-configure gambit
-  (:require (has-binary-gambit?))
+  (:require (and (has-binary-gambit?)
+                 (== (version-binary-gambit) "v4.9.5")))
   (:launch ,(gambit-launcher))
   (:serializer ,gambit-serialize)
   (:session "Gambit Scheme"))
