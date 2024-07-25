@@ -22,7 +22,7 @@
     (string-append s "\n<EOF>\n")))
 
 (define (goldfish-launcher)
-  (string-append (url->system (find-binary-tm_goldfish))
+  (string-append (url->system (find-binary-goldfish))
     " --texmacs "
     (url->system (get-texmacs-path))
     "/plugins/goldfish/goldfish/tm-goldfish.scm"))
