@@ -16,12 +16,12 @@
 
 (import (texmacs protocol))
 
-(define (s7-welcome)
+(define (goldfish-welcome)
   (flush-prompt "> ")
   (flush-verbatim
-    (string-append "S7 Scheme: " (substring (*s7* 'version) 3))))
+    (string-append "S7 Scheme: " (substring (*goldfish* 'version) 3))))
 
-(define (s7-repl)
+(define (goldfish-repl)
   ; SRFI 1
   (define (find pred l)
     (cond ((null? l) #f)
@@ -47,7 +47,7 @@
                               (string-ref str i))
                       (loop (+ i 1))))))))
 
-  (define (s7-read-code)
+  (define (goldfish-read-code)
     (define (read-code code)
       (let ((line (read-line)))
         (if (string=? line "<EOF>\n")
@@ -66,41 +66,41 @@
                      (string char))))
            (string->list str))))
 
-  (define (s7-quote s)
+  (define (goldfish-quote s)
     (string-append "\"" (escape-string s) "\""))
 
-  (define (build-s7-result obj)
+  (define (build-goldfish-result obj)
     (let ((output (object->string obj))
           (leadings (list "(document" "(math" "(equation*" "(align" "(with" "(graphics")))
       (if (find (lambda (x) (string-prefix? x output)) leadings)
           output
-          (string-append "(s7-result " (s7-quote output) ")"))))
+          (string-append "(goldfish-result " (s7-quote output) ")"))))
 
-  (define (s7-print obj)
+  (define (goldfish-print obj)
     (if (eq? obj #<unspecified>)
       (flush-scheme "")
-      (flush-scheme (build-s7-result obj))))
+      (flush-scheme (build-goldfish-result obj))))
 
   (define (eval-and-print code)
     (catch #t
       (lambda ()
-        (s7-print (eval-string code (rootlet))))
+        (goldfish-print (eval-string code (rootlet))))
       (lambda args
         (begin
           (flush-scheme
             (string-append "(errput (document "
-              (s7-quote (symbol->string (car args)))
-              (s7-quote (apply format #f (cadr args)))
+              (goldfish-quote (symbol->string (car args)))
+              (goldfish-quote (apply format #f (cadr args)))
               "))"))))))
 
   (define (read-eval-print)
-    (let ((code (s7-read-code)))
+    (let ((code (goldfish-read-code)))
       (if (string=? code "")
         #t
         (eval-and-print code))))
 
   (begin (read-eval-print)
-         (s7-repl)))
+         (goldfish-repl)))
 
-(s7-welcome)
-(s7-repl)
+(goldfish-welcome)
+(goldfish-repl)

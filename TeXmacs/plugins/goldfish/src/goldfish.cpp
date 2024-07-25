@@ -1,6 +1,6 @@
 /* 0-clause BSD */
 
-/* gcc -o repl repl.c s7.o -Wl,-export-dynamic -lm -I. -ldl */
+/* gcc -o repl repl.c goldfish.o -Wl,-export-dynamic -lm -I. -ldl */
 
 #include <sstream>
 #include <stdio.h>
@@ -11,7 +11,7 @@
 #include <unistd.h>
 #endif
 
-#include "s7.h"
+#include "goldfish.h"
 
 char* str_r7rs_define_library=
     "(define-macro (define-library libname . body) ; |(lib name)| -> "
@@ -49,7 +49,7 @@ char* str_r7rs_library_filename=
     "                                (begin\n"
     "                                  (set! name (string-append name \"/\"))\n"
     "                                  (loop (cdr lib) name))))))\n"
-    "        (unless (member lib-filename (*s7* 'file-names))\n"
+    "        (unless (member lib-filename (*goldfish* 'file-names))\n"
     "          (load lib-filename)))\n"
     "      (r7rs-import-library-filename (cdr libs)))))\n";
 char* str_r7rs_import=
@@ -116,22 +116,22 @@ char* str_r7rs_import=
 
 int
 main (int argc, char** argv) {
-  s7_scheme* sc;
-  sc= s7_init ();
+  goldfish_scheme* sc;
+  sc= goldfish_init ();
 
-  s7_eval_c_string (sc, str_r7rs_define_library);
-  s7_eval_c_string (sc, str_r7rs_library_filename);
-  s7_eval_c_string (sc, str_r7rs_import);
+  goldfish_eval_c_string (sc, str_r7rs_define_library);
+  goldfish_eval_c_string (sc, str_r7rs_library_filename);
+  goldfish_eval_c_string (sc, str_r7rs_import);
   if (argc >= 2) {
     if (strcmp (argv[1], "-e") == 0) /* repl -e '(+ 1 2)' */
     {
-      s7_pointer x;
-      x= s7_eval_c_string (sc, argv[2]);
-      fprintf (stdout, "%s\n", s7_object_to_c_string (sc, x));
+      goldfish_pointer x;
+      x= goldfish_eval_c_string (sc, argv[2]);
+      fprintf (stdout, "%s\n", goldfish_object_to_c_string (sc, x));
       return (0);
     }
     if (strcmp (argv[1], "--version") == 0) {
-      fprintf (stdout, "s7: %s, %s\n", S7_VERSION, S7_DATE);
+      fprintf (stdout, "goldfish: %s, %s\n", S7_VERSION, S7_DATE);
       return (0);
     }
     errno= 0;
@@ -139,15 +139,15 @@ main (int argc, char** argv) {
       const char*       env_key  = "TEXMACS_PATH";
       const char*       env_value= getenv (env_key);
       std::stringstream load_path;
-      load_path << env_value << "/plugins/s7/s7/";
-      s7_add_to_load_path (sc, load_path.str ().c_str ());
-      if (!s7_load (sc, argv[2])) {
+      load_path << env_value << "/plugins/goldfish/s7/";
+      goldfish_add_to_load_path (sc, load_path.str ().c_str ());
+      if (!goldfish_load (sc, argv[2])) {
         fprintf (stderr, "%s: %s\n", strerror (errno), argv[2]);
         return (2);
       }
     }
     else {
-      if (!s7_load (sc, argv[1])) {
+      if (!goldfish_load (sc, argv[1])) {
         fprintf (stderr, "%s: %s\n", strerror (errno), argv[1]);
         return (2);
       }

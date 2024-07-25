@@ -1,11 +1,11 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|old-spacing|old-dots|old-lengths|s7>>
+<style|<tuple|tmdoc|old-spacing|old-dots|old-lengths|goldfish>>
 
 <\body>
   <tmdoc-title|The S7 Scheme plugin>
 
-  <hlink|S7|https://ccrma.stanford.edu/software/s7/> is a Scheme interpreter.
+  <hlink|S7|https://ccrma.stanford.edu/software/goldfish/> is a Scheme interpreter.
   To insert a S7 Scheme session, just click <menu|Insert|Session|S7 Scheme>.
   The Scheme session is for interacting with Mogan and the S7 Scheme session
   is for interacting with S7 Scheme. S7 Scheme session is running in a
@@ -25,7 +25,7 @@
     "\<#4E2D\>\<#6587\>")>|<cell|(length "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>")>>>>>
   </scm-code>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\output>
       S7 Scheme 10.6 (14-Apr-2023)
     </output>
@@ -35,7 +35,7 @@
     <|unfolded-io>
       '\<#4E2D\>\<#6587\>
     <|unfolded-io>
-      <s7-result|\<#4E2D\>\<#6587\>>
+      <goldfish-result|\<#4E2D\>\<#6587\>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -43,7 +43,7 @@
     <|unfolded-io>
       '\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
     <|unfolded-io>
-      <s7-result|\<#4E2D\>\<#6587\>>
+      <goldfish-result|\<#4E2D\>\<#6587\>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -51,7 +51,7 @@
     <|unfolded-io>
       (length "\<#4E2D\>\<#6587\>")
     <|unfolded-io>
-      <s7-result|14>
+      <goldfish-result|14>
     </unfolded-io>
 
     <\unfolded-io>
@@ -59,7 +59,7 @@
     <|unfolded-io>
       (length "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>")
     <|unfolded-io>
-      <s7-result|14>
+      <goldfish-result|14>
     </unfolded-io>
 
     <\input>
@@ -74,7 +74,7 @@
   For Scheme snippets starting with the markup
   <markup|document>\<#3001\><markup|math>\<#3001\><markup|equation*>\<#3001\><markup|align>\<#3001\><markup|with>\<#3001\><markup|graphics>:
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
@@ -111,7 +111,7 @@
   Eval result is rendered in green background. Side effect is in normal white
   background.
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
@@ -119,7 +119,7 @@
     <|unfolded-io>
       Hello
 
-      <s7-result|3>
+      <goldfish-result|3>
     </unfolded-io>
 
     <\unfolded-io>
@@ -150,43 +150,43 @@
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
-      <hlink|R7RS|$TEXMACS_PATH/plugins/s7/scheme/case-lambda.scm>
+      <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/scheme/case-lambda.scm>
     </cell>|<\cell>
       case-lambda
     </cell>|<\cell>
       <scm|(import (scheme case-lambda))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 1|$TEXMACS_PATH/plugins/s7/srfi/srfi-1.scm>
+      <hlink|SRFI 1|$TEXMACS_PATH/plugins/goldfish/srfi/srfi-1.scm>
     </cell>|<\cell>
       List Library
     </cell>|<\cell>
       <scm|(import (srfi srfi-1))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 8|$TEXMACS_PATH/plugins/s7/srfi/srfi-8.scm>
+      <hlink|SRFI 8|$TEXMACS_PATH/plugins/goldfish/srfi/srfi-8.scm>
     </cell>|<\cell>
       receive: Binding to multiple values
     </cell>|<\cell>
       <scm|(import (srfi srfi-8))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 9|$TEXMACS_PATH/plugins/s7/srfi/srfi-9.scm>
+      <hlink|SRFI 9|$TEXMACS_PATH/plugins/goldfish/srfi/srfi-9.scm>
     </cell>|<\cell>
       Defining Record Types
     </cell>|<\cell>
       <scm|(import (srfi srfi-9))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 16|$TEXMACS_PATH/plugins/s7/srfi/srfi-16.scm>
+      <hlink|SRFI 16|$TEXMACS_PATH/plugins/goldfish/srfi/srfi-16.scm>
     </cell>|<\cell>
       Syntax for procedures of variable arity
     </cell>|<\cell>
       <scm|(import (srfi srfi-16))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 39|$TEXMACS_PATH/plugins/s7/srfi/srfi-39.scm>
+      <hlink|SRFI 39|$TEXMACS_PATH/plugins/goldfish/srfi/srfi-39.scm>
     </cell>|<\cell>
       Parameter objects
     </cell>|<\cell>
       <scm|(import (srfi srfi-39))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 78|$TEXMACS_PATH/plugins/s7/srfi/srfi-78.scm>
+      <hlink|SRFI 78|$TEXMACS_PATH/plugins/goldfish/srfi/srfi-78.scm>
     </cell>|<\cell>
       Lightweight testing
     </cell>|<\cell>
@@ -194,13 +194,13 @@
     </cell>>>>
   </wide-tabular>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
       (import (srfi srfi-1))
     <|unfolded-io>
-      <s7-result|(rootlet)>
+      <goldfish-result|(rootlet)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -208,7 +208,7 @@
     <|unfolded-io>
       (reduce + 0 (list 1 2 3))
     <|unfolded-io>
-      <s7-result|6>
+      <goldfish-result|6>
     </unfolded-io>
 
     <\unfolded-io>
@@ -216,7 +216,7 @@
     <|unfolded-io>
       (import (srfi srfi-78))
     <|unfolded-io>
-      <s7-result|(rootlet)>
+      <goldfish-result|(rootlet)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -228,7 +228,7 @@
 
       (+ 1 2) =\<gtr\> 3 ; correct
 
-      <s7-result|1>
+      <goldfish-result|1>
     </unfolded-io>
 
     <\input>
@@ -238,17 +238,17 @@
     </input>
   </session>
 
-  Here are code snippets from <slink|https://ccrma.stanford.edu/software/s7/s7.html>.
+  Here are code snippets from <slink|https://ccrma.stanford.edu/software/goldfish/s7.html>.
 
   <paragraph|help>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
       (help 'equal?)
     <|unfolded-io>
-      <s7-result|"(equal? obj1 obj2) returns #t if obj1 is equal to obj2">
+      <goldfish-result|"(equal? obj1 obj2) returns #t if obj1 is equal to obj2">
     </unfolded-io>
 
     <\unfolded-io>
@@ -256,7 +256,7 @@
     <|unfolded-io>
       (help 'cdar)
     <|unfolded-io>
-      <s7-result|"(cdar lst) returns (cdr (car lst)): (cdar '((1 2 3))) -\>
+      <goldfish-result|"(cdar lst) returns (cdr (car lst)): (cdar '((1 2 3))) -\>
       '(2 3)">
     </unfolded-io>
 
@@ -269,13 +269,13 @@
 
   <paragraph|equality>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
       (eq? () ())
     <|unfolded-io>
-      <s7-result|#t>
+      <goldfish-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -283,7 +283,7 @@
     <|unfolded-io>
       (eq? 2 2.0)
     <|unfolded-io>
-      <s7-result|#f>
+      <goldfish-result|#f>
     </unfolded-io>
 
     <\unfolded-io>
@@ -291,7 +291,7 @@
     <|unfolded-io>
       (equal? 2 2.0)
     <|unfolded-io>
-      <s7-result|#f>
+      <goldfish-result|#f>
     </unfolded-io>
 
     <\unfolded-io>
@@ -299,7 +299,7 @@
     <|unfolded-io>
       (equivalent? 2 2.0)
     <|unfolded-io>
-      <s7-result|#t>
+      <goldfish-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -307,7 +307,7 @@
     <|unfolded-io>
       (equivalent? .1 1/10)
     <|unfolded-io>
-      <s7-result|#t>
+      <goldfish-result|#t>
     </unfolded-io>
 
     <\input>
@@ -319,7 +319,7 @@
 
   <paragraph|multiprecision arithmetic>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\output>
       S7 Scheme 10.6 (14-Apr-2023)
     </output>
@@ -329,23 +329,23 @@
     <|unfolded-io>
       pi
     <|unfolded-io>
-      <s7-result|pi>
+      <goldfish-result|pi>
     </unfolded-io>
 
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (*s7* 'bignum-precision)
+      (*goldfish* 'bignum-precision)
     <|unfolded-io>
-      <s7-result|128>
+      <goldfish-result|128>
     </unfolded-io>
 
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (set! (*s7* 'bignum-precision) 256)
+      (set! (*goldfish* 'bignum-precision) 256)
     <|unfolded-io>
-      <s7-result|256>
+      <goldfish-result|256>
     </unfolded-io>
 
     <\unfolded-io>
@@ -353,7 +353,7 @@
     <|unfolded-io>
       pi
     <|unfolded-io>
-      <s7-result|pi>
+      <goldfish-result|pi>
     </unfolded-io>
 
     <\unfolded-io>
@@ -361,7 +361,7 @@
     <|unfolded-io>
       (bignum "123456789123456789")
     <|unfolded-io>
-      <s7-result|123456789123456789>
+      <goldfish-result|123456789123456789>
     </unfolded-io>
 
     <\unfolded-io>
@@ -369,7 +369,7 @@
     <|unfolded-io>
       (bignum "1.123123123123123123123123123")
     <|unfolded-io>
-      <s7-result|1.1231231231231231>
+      <goldfish-result|1.1231231231231231>
     </unfolded-io>
 
     <\input>
@@ -381,13 +381,13 @@
 
   <paragraph|math functions>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
       (exact? 1.0)
     <|unfolded-io>
-      <s7-result|#f>
+      <goldfish-result|#f>
     </unfolded-io>
 
     <\unfolded-io>
@@ -395,7 +395,7 @@
     <|unfolded-io>
       (rational? 1.5)
     <|unfolded-io>
-      <s7-result|#f>
+      <goldfish-result|#f>
     </unfolded-io>
 
     <\unfolded-io>
@@ -403,7 +403,7 @@
     <|unfolded-io>
       (floor 1.4)
     <|unfolded-io>
-      <s7-result|1>
+      <goldfish-result|1>
     </unfolded-io>
 
     <\unfolded-io>
@@ -411,7 +411,7 @@
     <|unfolded-io>
       (remainder 2.4 1)
     <|unfolded-io>
-      <s7-result|0.3999999999999999>
+      <goldfish-result|0.3999999999999999>
     </unfolded-io>
 
     <\unfolded-io>
@@ -419,7 +419,7 @@
     <|unfolded-io>
       (modulo 1.4 1.0)
     <|unfolded-io>
-      <s7-result|0.3999999999999999>
+      <goldfish-result|0.3999999999999999>
     </unfolded-io>
 
     <\unfolded-io>
@@ -427,7 +427,7 @@
     <|unfolded-io>
       (lcm 3/4 1/6)
     <|unfolded-io>
-      <s7-result|3/2>
+      <goldfish-result|3/2>
     </unfolded-io>
 
     <\unfolded-io>
@@ -435,7 +435,7 @@
     <|unfolded-io>
       (log 8 2)
     <|unfolded-io>
-      <s7-result|3>
+      <goldfish-result|3>
     </unfolded-io>
 
     <\unfolded-io>
@@ -443,7 +443,7 @@
     <|unfolded-io>
       (number-\<gtr\>string 0.5 2)
     <|unfolded-io>
-      <s7-result|"0.1">
+      <goldfish-result|"0.1">
     </unfolded-io>
 
     <\unfolded-io>
@@ -451,7 +451,7 @@
     <|unfolded-io>
       (string-\<gtr\>number "0.1" 2)
     <|unfolded-io>
-      <s7-result|0.5>
+      <goldfish-result|0.5>
     </unfolded-io>
 
     <\unfolded-io>
@@ -459,7 +459,7 @@
     <|unfolded-io>
       (rationalize 1.5)
     <|unfolded-io>
-      <s7-result|3/2>
+      <goldfish-result|3/2>
     </unfolded-io>
 
     <\unfolded-io>
@@ -467,7 +467,7 @@
     <|unfolded-io>
       (complex 1/2 0)
     <|unfolded-io>
-      <s7-result|1/2>
+      <goldfish-result|1/2>
     </unfolded-io>
 
     <\unfolded-io>
@@ -475,7 +475,7 @@
     <|unfolded-io>
       (logbit? 6 1)
     <|unfolded-io>
-      <s7-result|#t>
+      <goldfish-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -483,7 +483,7 @@
     <|unfolded-io>
       (random 0)
     <|unfolded-io>
-      <s7-result|0>
+      <goldfish-result|0>
     </unfolded-io>
 
     <\unfolded-io>
@@ -491,7 +491,7 @@
     <|unfolded-io>
       (random 1.0)
     <|unfolded-io>
-      <s7-result|0.4550541097362356>
+      <goldfish-result|0.4550541097362356>
     </unfolded-io>
 
     <\unfolded-io>
@@ -499,7 +499,7 @@
     <|unfolded-io>
       (random 3/4)
     <|unfolded-io>
-      <s7-result|380585/1487509>
+      <goldfish-result|380585/1487509>
     </unfolded-io>
 
     <\input>
@@ -511,13 +511,13 @@
 
   <paragraph|multidimensional vectors>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
       (define v (make-vector '(2 3) 1.0))
     <|unfolded-io>
-      <s7-result|#2d((1.0 1.0 1.0) (1.0 1.0 1.0))>
+      <goldfish-result|#2d((1.0 1.0 1.0) (1.0 1.0 1.0))>
     </unfolded-io>
 
     <\unfolded-io>
@@ -525,7 +525,7 @@
     <|unfolded-io>
       (set! (v 0 1) 2.0)
     <|unfolded-io>
-      <s7-result|2.0>
+      <goldfish-result|2.0>
     </unfolded-io>
 
     <\unfolded-io>
@@ -533,7 +533,7 @@
     <|unfolded-io>
       (v 0 1)
     <|unfolded-io>
-      <s7-result|2.0>
+      <goldfish-result|2.0>
     </unfolded-io>
 
     <\unfolded-io>
@@ -541,7 +541,7 @@
     <|unfolded-io>
       (vector-length v)
     <|unfolded-io>
-      <s7-result|6>
+      <goldfish-result|6>
     </unfolded-io>
 
     <\input>
@@ -553,7 +553,7 @@
 
   <paragraph|hash-tables>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
@@ -563,7 +563,7 @@
 
       \ \ (ht "hi"))
     <|unfolded-io>
-      <s7-result|123>
+      <goldfish-result|123>
     </unfolded-io>
 
     <\unfolded-io>
@@ -571,7 +571,7 @@
     <|unfolded-io>
       (define test-tb (hash-table 'a 1 'b 2))
     <|unfolded-io>
-      <s7-result|(hash-table 'b 2 'a 1)>
+      <goldfish-result|(hash-table 'b 2 'a 1)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -579,7 +579,7 @@
     <|unfolded-io>
       (hash-table? test-tb)
     <|unfolded-io>
-      <s7-result|#t>
+      <goldfish-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -587,7 +587,7 @@
     <|unfolded-io>
       (hash-table-ref test-tb 'a)
     <|unfolded-io>
-      <s7-result|1>
+      <goldfish-result|1>
     </unfolded-io>
 
     <\unfolded-io>
@@ -595,7 +595,7 @@
     <|unfolded-io>
       (hash-table-entries test-tb)
     <|unfolded-io>
-      <s7-result|2>
+      <goldfish-result|2>
     </unfolded-io>
 
     <\input>
@@ -607,13 +607,13 @@
 
   <paragraph|multiple-values>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
       (+ (values 1 2 3) 4)
     <|unfolded-io>
-      <s7-result|10>
+      <goldfish-result|10>
     </unfolded-io>
 
     <\unfolded-io>
@@ -624,7 +624,7 @@
       <\errput>
         wrong-number-of-args
 
-        s7-print: too many arguments: 2
+        goldfish-print: too many arguments: 2
       </errput>
     </unfolded-io>
 
@@ -633,7 +633,7 @@
     <|unfolded-io>
       ((lambda (a b) (+ a b)) 1 2)
     <|unfolded-io>
-      <s7-result|3>
+      <goldfish-result|3>
     </unfolded-io>
 
     <\unfolded-io>
@@ -641,7 +641,7 @@
     <|unfolded-io>
       ((lambda (a b) (+ a b)) (values 1 2))
     <|unfolded-io>
-      <s7-result|3>
+      <goldfish-result|3>
     </unfolded-io>
 
     <\input>
@@ -653,13 +653,13 @@
 
   <paragraph|format>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
       (object-\<gtr\>string "hiho")
     <|unfolded-io>
-      <s7-result|""hiho"">
+      <goldfish-result|""hiho"">
     </unfolded-io>
 
     <\unfolded-io>
@@ -667,7 +667,7 @@
     <|unfolded-io>
       (format #f "~S" "hiho")
     <|unfolded-io>
-      <s7-result|""hiho"">
+      <goldfish-result|""hiho"">
     </unfolded-io>
 
     <\unfolded-io>
@@ -675,7 +675,7 @@
     <|unfolded-io>
       (format #f "~A ~D ~F" 'hi 123 3.14)
     <|unfolded-io>
-      <s7-result|"hi 123 3.140000">
+      <goldfish-result|"hi 123 3.140000">
     </unfolded-io>
 
     <\input>
@@ -687,13 +687,13 @@
 
   <paragraph|eval>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
       (eval '(+ 1 2))
     <|unfolded-io>
-      <s7-result|3>
+      <goldfish-result|3>
     </unfolded-io>
 
     <\unfolded-io>
@@ -701,7 +701,7 @@
     <|unfolded-io>
       (eval-string "(+ 1 2)")
     <|unfolded-io>
-      <s7-result|3>
+      <goldfish-result|3>
     </unfolded-io>
 
     <\input>
@@ -713,13 +713,13 @@
 
   <paragraph|IO and other OS functions>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
       (directory? "/tmp")
     <|unfolded-io>
-      <s7-result|#t>
+      <goldfish-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -727,7 +727,7 @@
     <|unfolded-io>
       (file-exists? "/tmp")
     <|unfolded-io>
-      <s7-result|#t>
+      <goldfish-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -735,7 +735,7 @@
     <|unfolded-io>
       (getenv "HOME")
     <|unfolded-io>
-      <s7-result|"/home/da">
+      <goldfish-result|"/home/da">
     </unfolded-io>
 
     <\input>
@@ -747,7 +747,7 @@
 
   <paragraph|errors>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\output>
       S7 Scheme 10.6 (14-Apr-2023)
     </output>
@@ -777,7 +777,7 @@
 
       \ \ \ \ \ \ (apply format #t (cadr args))))
     <|unfolded-io>
-      abs: too many arguments: (abs 1 2)<s7-result|"abs: too many arguments:
+      abs: too many arguments: (abs 1 2)<goldfish-result|"abs: too many arguments:
       (abs 1 2)">
     </unfolded-io>
 
@@ -790,7 +790,7 @@
 
       \ \ \ \ (lambda args (string-\<gtr\>number "+inf.0")))
     <|unfolded-io>
-      <s7-result|+inf.0>
+      <goldfish-result|+inf.0>
     </unfolded-io>
 
     <\input>
@@ -802,7 +802,7 @@
 
   <paragraph|autoload>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
@@ -824,13 +824,13 @@
 
   <paragraph|define-constant>
 
-  <\session|s7|default>
+  <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
       (define v (immutable! (vector 1 2 3)))
     <|unfolded-io>
-      <s7-result|#(1 2 3)>
+      <goldfish-result|#(1 2 3)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -850,7 +850,7 @@
     <|unfolded-io>
       (immutable? v)
     <|unfolded-io>
-      <s7-result|#t>
+      <goldfish-result|#t>
     </unfolded-io>
 
     <\unfolded-io>
@@ -858,7 +858,7 @@
     <|unfolded-io>
       (define-constant var 32)
     <|unfolded-io>
-      <s7-result|32>
+      <goldfish-result|32>
     </unfolded-io>
 
     <\unfolded-io>

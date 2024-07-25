@@ -59,7 +59,7 @@
             (lambda () 
               ,@body) 
             (lambda (type info)
-              (if (pair? (*s7* 'catches))
+              (if (pair? (*goldfish* 'catches))
                   (lambda () (apply throw type info))
                   (car info))))))
      (cond ,@(cdr results)
