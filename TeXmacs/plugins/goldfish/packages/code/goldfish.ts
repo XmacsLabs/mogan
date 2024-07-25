@@ -4,7 +4,7 @@
 
 <\body>
   <active*|<\src-title>
-    <src-package|S7|1.0>
+    <src-package|Goldfish|1.0>
 
     <\src-purpose>
       Markup for S7 sessions.
