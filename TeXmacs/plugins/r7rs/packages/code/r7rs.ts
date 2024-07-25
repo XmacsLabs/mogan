@@ -30,7 +30,7 @@
 
   <assign|r7rs-code|<\macro|body>
     <\pseudo-code>
-      <scm|<arg|body>>
+      <r7rs|<arg|body>>
     </pseudo-code>
   </macro>>
 
