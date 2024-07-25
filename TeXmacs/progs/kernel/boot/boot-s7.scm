@@ -263,5 +263,5 @@
 	      libs))))
 
 (set! *load-path*
-  (cons (string-append (url->system (get-texmacs-path)) "/plugins/s7/s7")
+  (cons (string-append (url->system (get-texmacs-path)) "/plugins/goldfish/goldfish")
         *load-path*))
