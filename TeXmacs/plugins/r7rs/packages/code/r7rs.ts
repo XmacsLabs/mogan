@@ -4,7 +4,7 @@
 
 <\body>
   <active*|<\src-title>
-    <src-package|goldfish|1.0>
+    <src-package|r7rs|1.0>
 
     <\src-purpose>
       Markup for Scheme defined in R7RS.
@@ -22,19 +22,27 @@
 
   <use-module|(data r7rs)>
 
-  <use-module|(code goldfish-edit)>
+  <use-module|(code r7rs-edit)>
 
   <assign|goldfish-prompt-color|dark green>
 
-  <assign|goldfish-input|<\macro|prompt|body>
+  <assign|r7rs|<macro|body|<with|mode|prog|prog-language|r7rs|font-family|rm|<arg|body>>>>
+
+  <assign|r7rs-code|<\macro|body>
+    <\pseudo-code>
+      <r7rs|<arg|body>>
+    </pseudo-code>
+  </macro>>
+
+  <assign|r7rs-input|<\macro|prompt|body>
     <\with|generic-prompt-color|<value|goldfish-prompt-color>|generic-input-color|<value|scheme-input-color>>
-      <generic-input|<arg|prompt>|<with|prog-language|r7rs|<arg|body>>>
+      <generic-input|<arg|prompt>|<arg|body>>
     </with>
   </macro>>
 
   \;
 
-  <assign|goldfish-result|<\macro|body>
+  <assign|r7rs-result|<\macro|body>
     <with|ornament-border|0ln|ornament-hpadding|0spc|padding-above|0fn|padding-below|0fn|ornament-color|pastel
     green|<\ornamented>
       <arg|body>
