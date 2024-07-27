@@ -379,6 +379,10 @@
   (:synopsis "Make an ink widget")
   `(list 'ink (lambda (answer) ,cmd)))
 
+(tm-define-macro ($tab-page url title button active?)
+  (:synopsis "Make a tab page") 
+  `(list 'tab-page ,url ,title ,button ,active?))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Forms
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

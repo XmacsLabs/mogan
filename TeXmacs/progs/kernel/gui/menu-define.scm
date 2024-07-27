@@ -381,6 +381,10 @@
   (require-format x '(form-toggle :%2))
   `($form-toggle ,@(cdr x)))
 
+(define (gui-make-tab-page x)
+  (require-format x '(tab-page :%4)) ; :%4 means requiring 4 parameters
+  `($tab-page ,@(map gui-make (cdr x))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Table with Gui primitives and dispatching
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -467,7 +471,8 @@
   (form-enum ,gui-make-form-enum)
   (form-choice ,gui-make-form-choice)
   (form-choices ,gui-make-form-choices)
-  (form-toggle ,gui-make-form-toggle))
+  (form-toggle ,gui-make-form-toggle)
+  (tab-page ,gui-make-tab-page))
 
 (tm-define (gui-make x)
   ;;(display* "x= " x "\n")

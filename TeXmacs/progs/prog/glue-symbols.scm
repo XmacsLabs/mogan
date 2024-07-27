@@ -664,6 +664,7 @@
 "widget-ink"
 "widget-refresh"
 "widget-refreshable"
+"widget-tab-page"
 "object->promise-widget"
 "tree-bounding-rectangle"
 "widget-size"

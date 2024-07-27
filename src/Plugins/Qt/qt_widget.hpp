@@ -140,7 +140,8 @@ public:
     field_widget,
     filtered_choice_widget,
     tree_view_widget,
-    division_widget
+    division_widget,
+    tab_page_widget
   };
 
   types type;
@@ -207,7 +208,8 @@ public:
                                                   "field_widget",
                                                   "filtered_choice_widget",
                                                   "tree_view_widget",
-                                                  "division_widget"};
+                                                  "division_widget",
+                                                  "tab_page_widget"};
     return string (qt_widget_type_strings[type]) * "\t id: " * as_string (id);
   }
 
