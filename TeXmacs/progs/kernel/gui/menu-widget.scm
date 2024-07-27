@@ -91,7 +91,9 @@
     (promise :%1)
     (ink :%1)
     (:menu-item-list)))
-  (:menu-item-list (:repeat :menu-item)))
+  (:menu-item-list (:repeat :menu-item))
+  (:tab-page (tab-page :%4)) ; :%4 means requiring 4 parameters
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Menu utilities
@@ -467,6 +469,31 @@
         (widget-balloon but twid)))
      (else but))))
 
+(define (make-tab-page entry-data style bar?)
+  ; eg. 
+  ; entry-data is ((tab-page
+  ;                  <url>
+  ;                  ((balloon "doc-title" "doc-path") #<lambda ()>)
+  ;                  ((balloon (icon "tm_cancel.xpm") "Close") #<lambda ()>)
+  ;                  #t
+  ;               ))
+  ; style is 0, an integer value indicates theme or color style
+  ; bar? is #t, a bool value indicates whether the item is placed in the menu bar
+
+  ; (display* "make-tab-page: " entry-data "\n" style "\n" bar? "\n")
+  (let* ((args  (cdar entry-data))
+         (url   (first args))      ; url
+         (title (second args))     ; widget
+         (close-btn (third args))  ; widget
+         (active?   (fourth args)) ; bool
+        )
+    (widget-tab-page
+      url
+      (car (make-menu-items title style bar?))
+      (car (make-menu-items close-btn style bar?))
+      active?
+    )))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Symbol fields
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -758,6 +785,8 @@
                    ((cadr result) p style bar?))))
             ((match? (car p) ':menu-wide-label)
              (list (make-menu-entry p style bar?)))
+            ((match? (car p) ':tab-page)
+             (list (make-tab-page p style bar?)))
             (else
              (make-menu-items-list p style bar?)))
       (cond ((== p '---) (list (make-menu-hsep)))

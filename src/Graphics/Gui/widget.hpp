@@ -193,6 +193,9 @@ widget choice_widget (command cb, array<string> vals, string val, string filt);
 widget tree_view_widget (command cmd, tree data, tree data_roles);
 // A widget with a tree view which observes the data and updates automatically
 
+widget tab_page_widget (url u, widget title, widget close_btn, bool is_active);
+// a tab page widget with doc title and close button
+
 /******************************************************************************
  * Other widgets
  ******************************************************************************/

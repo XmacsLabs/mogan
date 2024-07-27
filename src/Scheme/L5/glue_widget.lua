@@ -455,6 +455,17 @@ function main()
                     "widget"
                 }
             },
+            {
+                scm_name = "widget-tab-page",
+                cpp_name = "tab_page_widget",
+                ret_type = "widget",
+                arg_list = {
+                    "url",
+                    "widget",
+                    "widget",
+                    "bool"
+                }
+            }
         }
     }
 end
