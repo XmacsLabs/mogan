@@ -11,18 +11,20 @@
 
 #include "QTMTabPage.hpp"
 
+#define MIN_TAB_PAGE_WIDTH 150
+
 /******************************************************************************
  * QTMTabPage
  ******************************************************************************/
 
 QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
                         bool p_isActive)
-    : bufferUrl (p_url) {
+    : m_bufferUrl (p_url) {
   p_title->setCheckable (p_isActive);
   p_title->setChecked (p_isActive);
-  closeBtn= new QToolButton (this);
-  closeBtn->setDefaultAction (p_closeBtn);
-  closeBtn->setFixedSize (20, 20); // position will be updated in resizeEvent
+  m_closeBtn= new QToolButton (this);
+  m_closeBtn->setDefaultAction (p_closeBtn);
+  m_closeBtn->setFixedSize (20, 20); // position will be updated in resizeEvent
 
   setStyleSheet (
       "QToolButton{ padding: 0 26px; }"); // reserve space for closeBtn
@@ -31,10 +33,95 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
 
 void
 QTMTabPage::resizeEvent (QResizeEvent* e) {
-  int w= closeBtn->width ();
-  int h= closeBtn->height ();
+  int w= m_closeBtn->width ();
+  int h= m_closeBtn->height ();
   int x= e->size ().width () - w - 8;
   int y= e->size ().height () / 2 - h / 2;
 
-  closeBtn->setGeometry (x, y, w, h);
+  m_closeBtn->setGeometry (x, y, w, h);
+}
+
+/******************************************************************************
+ * QTMTabPageContainer
+ ******************************************************************************/
+
+QTMTabPageContainer::QTMTabPageContainer (QWidget* p_parent)
+    : QWidget (p_parent) {
+  setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
+}
+
+QTMTabPageContainer::~QTMTabPageContainer () { removeAll (); }
+
+void
+QTMTabPageContainer::replaceTabPages (QList<QAction*>& p_src) {
+  removeAll ();            // remove  old tabs
+  extractTabPages (p_src); // extract new tabs
+
+  const int windowWidth= this->width ();
+  int       rowCount   = 0;
+  int       accumWidth = 0;
+  int       accumTab   = 0;
+
+  for (int i= 0; i < m_tabPageList.size (); ++i) {
+    QTMTabPage* tab= m_tabPageList[i];
+    tab->setParent (this);
+
+    QSize tabSize = tab->minimumSizeHint ();
+    int   tabWidth= max (MIN_TAB_PAGE_WIDTH, tabSize.width ());
+    if (accumWidth + tabWidth >= windowWidth) {
+      rowCount+= 1;
+      accumWidth= 0;
+      accumTab  = 0;
+    }
+    tab->setGeometry (accumWidth - accumTab, rowCount * m_rowHeight - rowCount,
+                      tabWidth, m_rowHeight);
+    accumWidth+= tabWidth;
+    accumTab+= 1;
+  }
+
+  adjustHeight (rowCount);
+}
+
+void
+QTMTabPageContainer::removeAll () {
+  for (int i= 0; i < m_tabPageList.size (); ++i) {
+    delete m_tabPageList[i];
+  }
+  m_tabPageList.clear ();
+}
+
+void
+QTMTabPageContainer::extractTabPages (QList<QAction*>& p_src) {
+  for (int i= 0; i < p_src.size (); ++i) {
+    // see the definition of QTMTabPageAction why we're using it
+    QTMTabPageAction* carrier= qobject_cast<QTMTabPageAction*> (p_src[i]);
+    ASSERT (carrier, "QTMTabPageAction expected")
+
+    QTMTabPage* tab= qobject_cast<QTMTabPage*> (carrier->m_widget);
+    m_tabPageList.append (tab);
+
+    delete carrier; // we don't need it anymore
+  }
+}
+
+void
+QTMTabPageContainer::adjustHeight (int p_rowCount) {
+  int h= m_rowHeight * (p_rowCount + 1);
+  // parentWidget's resizeEvent() will resize me
+  parentWidget ()->setFixedHeight (h - p_rowCount + 2);
+}
+
+/******************************************************************************
+ * QTMTabPageBar
+ ******************************************************************************/
+
+QTMTabPageBar::QTMTabPageBar (const QString& p_title, QWidget* p_parent)
+    : QToolBar (p_title, p_parent) {
+  m_container= new QTMTabPageContainer (this);
+}
+
+void
+QTMTabPageBar::resizeEvent (QResizeEvent* e) {
+  QSize size= e->size ();
+  m_container->setGeometry (7, 0, size.width (), size.height () - 1);
 }
