@@ -133,12 +133,12 @@ function sidebarGuide() {
                     link: '/guide/plugin_maxima.md'
                 },
                 {
-                    text: 'Octave Plugin',
-                    link: '/guide/plugin_octave.md'
-                },
-                {
                     text: 'Python Plugin',
                     link: '/guide/plugin_python.md'
+                },
+                {
+                    text: 'Goldfish Scheme Plugin'
+                    link: '/guide/plugin_goldfish.md'
                 },
             ]
         },
@@ -317,12 +317,12 @@ function sidebarGuideZh() {
                     link: '/zh/guide/plugin_maxima.md'
                 },
                 {
-                    text: 'Octave插件',
-                    link: '/zh/guide/plugin_octave.md'
-                },
-                {
                     text: 'Python插件',
                     link: '/zh/guide/plugin_python.md'
+                },
+                {
+                    text: '金鱼Scheme插件'
+                    link: '/zh/guide/plugin_goldfish.md'
                 },
             ]
         },
