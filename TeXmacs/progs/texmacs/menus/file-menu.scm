@@ -181,7 +181,7 @@
 
 (menu-bind save-menu
   ("Save" (save-buffer))
-  ("Save as" (choose-file save-buffer-as "Save TeXmacs file" "tmu"))
+  ("Save as" (choose-file save-buffer-as "Save TeXmacs file" "texmacs"))
   ---
   (link export-top-menu)
   ---
@@ -270,7 +270,7 @@
         ("Clear menu" (forget-interactive "recent-buffer"))))
   ---
   ("Save" (save-buffer))
-  ("Save as" (choose-file save-buffer-as "Save TeXmacs file" "tmu"))
+  ("Save as" (choose-file save-buffer-as "Save TeXmacs file" "texmacs"))
   ---
   (link print-menu)
   ---
