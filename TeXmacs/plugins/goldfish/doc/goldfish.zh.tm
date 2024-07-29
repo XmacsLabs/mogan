@@ -1,27 +1,22 @@
 <TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|old-spacing|old-dots|old-lengths|goldfish>>
+<style|<tuple|tmdoc|old-spacing|old-dots|old-lengths|goldfish|chinese>>
 
 <\body>
-  <tmdoc-title|The Goldfish Scheme plugin>
+  <tmdoc-title|\<#91D1\>\<#9C7C\>Scheme\<#63D2\>\<#4EF6\>>
 
-  Goldfish Scheme is based on <hlink|S7|https://ccrma.stanford.edu/software/goldfish/>
-  Scheme. To insert a Goldfish Scheme session, just click
-  <menu|Insert|Session|S7 Scheme>. Goldfish Scheme session is running in a
-  separated process, as a result, infinite loop in Goldfish Scheme session
-  will not freeze Mogan while infinite loop in Scheme session will freeze
-  Mogan.
+  \<#91D1\>\<#9C7C\>Scheme\<#662F\>\<#57FA\>\<#4E8E\>S7
+  Scheme\<#5B9E\>\<#73B0\>\<#7684\>Scheme\<#89E3\>\<#91CA\>\<#5668\>\<#3002\>\<#901A\>\<#8FC7\><menu|Insert|Session|Goldfish
+  Scheme>\<#5C31\>\<#53EF\>\<#4EE5\>\<#63D2\>\<#5165\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#3002\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#548C\>\<#58A8\>\<#5E72\>\<#662F\>\<#8FD0\>\<#884C\>\<#5728\>\<#4E0D\>\<#540C\>\<#7684\>\<#64CD\>\<#4F5C\>\<#7CFB\>\<#7EDF\>\<#8FDB\>\<#7A0B\>\<#4E2D\>\<#7684\>\<#FF0C\>\<#6545\>\<#800C\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#7684\>\<#6B7B\>\<#5FAA\>\<#73AF\>\<#5E76\>\<#4E0D\>\<#4F1A\>\<#5BFC\>\<#81F4\>\<#58A8\>\<#5E72\>\<#5361\>\<#6B7B\>\<#FF0C\>\<#7136\>\<#800C\>\<#9ED8\>\<#8BA4\>\<#7684\>Scheme\<#4F1A\>\<#8BDD\>\<#4E2D\>\<#8FD0\>\<#884C\>\<#6B7B\>\<#5FAA\>\<#73AF\>\<#662F\>\<#80FD\>\<#5BFC\>\<#81F4\>\<#58A8\>\<#5E72\>\<#5361\>\<#6B7B\>\<#7684\>\<#3002\>\<#58A8\>\<#5E72\>\<#7406\>\<#5DE5\>\<#5957\>\<#4EF6\>\<#4E2D\>\<#7684\>\<#91D1\>\<#9C7C\>Scheme\<#662F\>\<#91D1\>\<#9C7C\>Scheme\<#89E3\>\<#91CA\>\<#5668\>\<#7684\>\<#793E\>\<#533A\>\<#7248\>\<#FF0C\>\<#4E09\>\<#9CA4\>\<#7406\>\<#5DE5\>\<#5957\>\<#4EF6\>\<#4E2D\>\<#7684\>\<#91D1\>\<#9C7C\>Scheme\<#662F\>\<#5546\>\<#4E1A\>\<#7248\>\<#3002\>
 
-  Here are snippets which only works in the Goldfish Scheme session:
+  \<#4E0B\>\<#9762\>\<#662F\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#7684\>\<#4E00\>\<#4E9B\>\<#7279\>\<#6027\>\<#FF1A\>
 
-  <paragraph|Unicode Support>
+  <paragraph|Unicode\<#652F\>\<#6301\>>
 
-  The string literal in Goldfish Scheme does not support Unicode. In the
-  Goldfish Scheme session, we use the cork encoding as a workaround.
+  \<#91D1\>\<#9C7C\>Scheme\<#89E3\>\<#91CA\>\<#5668\>\<#7684\>\<#5B57\>\<#7B26\>\<#4E32\>\<#5B57\>\<#9762\>\<#91CF\>\<#5E76\>\<#4E0D\>\<#652F\>\<#6301\>Unicode\<#3002\>\<#5728\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#4E2D\>\<#FF0C\>\<#5728\>\<#6211\>\<#4EEC\>\<#5B9E\>\<#9645\>\<#6267\>\<#884C\>\<#7684\>Scheme\<#4EE3\>\<#7801\>\<#4E2D\>\<#FF0C\>\<#4E2D\>\<#6587\>\<#5B9E\>\<#9645\>\<#4E0A\>\<#88AB\>\<#8F6C\>\<#5316\>\<#6210\>\<#4E86\>Cork\<#7F16\>\<#7801\>\<#3002\>
 
   <\scm-code>
-    <block|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Scheme
-    Code>|<cell|Actual Scheme Code>>|<row|<cell|'\<#4E2D\>\<#6587\>>|<cell|'\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>>>|<row|<cell|(length
+    <block|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Scheme\<#4EE3\>\<#7801\>>|<cell|\<#5B9E\>\<#9645\>\<#8FD0\>\<#884C\>\<#7684\>Scheme\<#4EE3\>\<#7801\>>>|<row|<cell|'\<#4E2D\>\<#6587\>>|<cell|'\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>>>|<row|<cell|(length
     "\<#4E2D\>\<#6587\>")>|<cell|(length "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>")>>>>>
   </scm-code>
 
@@ -69,10 +64,9 @@
     </input>
   </session>
 
-  <paragraph|Special Rules for Rendering>
+  <paragraph|\<#7279\>\<#6B8A\>\<#7684\>\<#6E32\>\<#67D3\>\<#89C4\>\<#5219\>>
 
-  For Scheme snippets starting with the markup
-  <markup|document>\<#3001\><markup|math>\<#3001\><markup|equation*>\<#3001\><markup|align>\<#3001\><markup|with>\<#3001\><markup|graphics>:
+  \<#58A8\>\<#5E72\>\<#7684\>\<#6587\>\<#6863\>\<#672C\>\<#8D28\>\<#4E0A\>\<#662F\>Scheme\<#4EE3\>\<#7801\>\<#FF0C\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#7684\>\<#6C42\>\<#503C\>\<#7ED3\>\<#679C\>\<#FF0C\>\<#5982\>\<#679C\>\<#4EE5\><markup|document>\<#3001\><markup|math>\<#3001\><markup|equation*>\<#3001\><markup|align>\<#3001\><markup|with>\<#3001\><markup|graphics>\<#5F00\>\<#5934\>\<#FF0C\>\<#90A3\>\<#4E48\>\<#4F1A\>\<#88AB\>\<#6E32\>\<#67D3\>\<#4E3A\>\<#58A8\>\<#5E72\>\<#6587\>\<#6863\>\<#7247\>\<#6BB5\>\<#FF1A\>
 
   <\session|goldfish|default>
     <\unfolded-io>
@@ -106,10 +100,9 @@
     </input>
   </session>
 
-  <paragraph|Side Effect and Eval Result>
+  <paragraph|\<#526F\>\<#4F5C\>\<#7528\>\<#548C\>\<#6C42\>\<#503C\>\<#7ED3\>\<#679C\>>
 
-  Eval result is rendered in green background. Side effect is in normal white
-  background.
+  \<#6C42\>\<#503C\>\<#7ED3\>\<#679C\>\<#4EE5\>\<#6D45\>\<#7EFF\>\<#8272\>\<#7684\>\<#80CC\>\<#666F\>\<#8272\>\<#6807\>\<#6CE8\>\<#3002\>\<#526F\>\<#4F5C\>\<#7528\>\<#7684\>\<#80CC\>\<#666F\>\<#8272\>\<#662F\>\<#6587\>\<#6863\>\<#7684\>\<#80CC\>\<#666F\>\<#8272\>\<#FF0C\>\<#901A\>\<#5E38\>\<#662F\>\<#767D\>\<#8272\>\<#3002\>
 
   <\session|goldfish|default>
     <\unfolded-io>
@@ -145,68 +138,68 @@
 
   <paragraph|SRFI>
 
-  SRFI implementation for Goldfish Scheme will be built-in for the Goldfish
-  Scheme session. Here is the concise guide to load the SRFIs.
+  SRFI\<#7684\>\<#5B9E\>\<#73B0\>\<#662F\>\<#91D1\>\<#9C7C\>Scheme\<#548C\>S7
+  Scheme\<#7684\>\<#663E\>\<#8457\>\<#533A\>\<#522B\>\<#4E4B\>\<#4E00\>\<#FF0C\>\<#5728\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#4E2D\>\<#FF0C\>\<#6211\>\<#4EEC\>\<#53EF\>\<#4EE5\>\<#4F7F\>\<#7528\>\<#4E0B\>\<#8868\>\<#4E2D\>\<#7684\>SRFI\<#5B9E\>\<#73B0\>\<#3002\>
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
       <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/goldfish/scheme/base.scm>
     </cell>|<\cell>
-      R7RS base library
+      R7RS\<#57FA\>\<#7840\>\<#5E93\>
     </cell>|<\cell>
       <scm|(import (scheme base))>
     </cell>>|<row|<\cell>
       <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/goldfish/scheme/case-lambda.scm>
     </cell>|<\cell>
-      R7RS case-lambda
+      \<#63D0\>\<#4F9B\>case-lambda
     </cell>|<\cell>
       <scm|(import (scheme case-lambda))>
     </cell>>|<row|<\cell>
       <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/goldfish/scheme/file.scm>
     </cell>|<\cell>
-      R7RS file library
+      R7RS\<#6587\>\<#4EF6\>\<#64CD\>\<#4F5C\>
     </cell>|<\cell>
       <scm|(import (scheme file))>
     </cell>>|<row|<\cell>
       <hlink|SRFI 1|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-1.scm>
     </cell>|<\cell>
-      List Library
+      \<#5217\>\<#8868\>\<#51FD\>\<#6570\>\<#5E93\>
     </cell>|<\cell>
       <scm|(import (srfi srfi-1))>
     </cell>>|<row|<\cell>
       <hlink|SRFI 8|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-8.scm>
     </cell>|<\cell>
-      Provide <scm|receive>
+      \<#63D0\>\<#4F9B\><scm|receive>
     </cell>|<\cell>
       <scm|(import (srfi srfi-8))>
     </cell>>|<row|<\cell>
       <hlink|SRFI 9|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-9.scm>
     </cell>|<\cell>
-      Provide <scm|define-record-type>
+      \<#63D0\>\<#4F9B\><scm|define-record-type>
     </cell>|<\cell>
       <scm|(import (srfi srfi-9))>
     </cell>>|<row|<\cell>
       <hlink|SRFI 13|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-13.scm>
     </cell>|<\cell>
-      String Library
+      \<#5B57\>\<#7B26\>\<#4E32\>\<#51FD\>\<#6570\>\<#5E93\>
     </cell>|<\cell>
       <scm|(import (srfi srfi-13))>
     </cell>>|<row|<\cell>
       <hlink|SRFI 16|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-16.scm>
     </cell>|<\cell>
-      Provide <scm|case-lambda>
+      \<#63D0\>\<#4F9B\><code*|case-lambda>
     </cell>|<\cell>
       <scm|(import (srfi srfi-16))>
     </cell>>|<row|<\cell>
       <hlink|SRFI 39|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-39.scm>
     </cell>|<\cell>
-      Parameter objects
+      \<#53C2\>\<#6570\>\<#5316\>\<#5BF9\>\<#8C61\>
     </cell>|<\cell>
       <scm|(import (srfi srfi-39))>
     </cell>>|<row|<\cell>
       <hlink|SRFI 78|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-78.scm>
     </cell>|<\cell>
-      Lightweight testing
+      \<#8F7B\>\<#91CF\>\<#7EA7\>\<#6D4B\>\<#8BD5\>\<#6846\>\<#67B6\>
     </cell>|<\cell>
       <scm|(import (srfi srfi-78))>
     </cell>>>>
@@ -256,7 +249,8 @@
     </input>
   </session>
 
-  Here are code snippets from <slink|https://ccrma.stanford.edu/software/s7/s7.html>.
+  \<#4E0B\>\<#6587\>\<#7684\>\<#4EE3\>\<#7801\>\<#7247\>\<#6BB5\>\<#6765\>\<#81EA\>\<#4E8E\><hlink|S7
+  Scheme\<#7684\>\<#5B98\>\<#7F51\>|https://ccrma.stanford.edu/software/s7/s7.html>\<#3002\>
 
   <paragraph|help>
 
@@ -907,7 +901,7 @@
     </input>
   </session>
 
-  <tmdoc-copyright|2024|Darcy Shen>
+  <tmdoc-copyright|2024|\<#6C88\>\<#8FBE\>>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
