@@ -10,7 +10,9 @@
   <menu|Insert|Session|S7 Scheme>. Goldfish Scheme session is running in a
   separated process, as a result, infinite loop in Goldfish Scheme session
   will not freeze Mogan while infinite loop in Scheme session will freeze
-  Mogan.
+  Mogan. The Goldfish Scheme session in Mogan STEM Suite is using the
+  Goldfish Scheme Community, the Goldfish Scheme session in Liii STEM Suite
+  is using the Goldfish Scheme Enterprise.
 
   Here are snippets which only works in the Goldfish Scheme session:
 
