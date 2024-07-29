@@ -43,8 +43,9 @@
 
 ;; Test function for URL complete operation
 (define (regtest-url-complete)
-   ;; Complete a URL and check its existence
-   (let ((complete-url (url-complete (string->url "$TEXMACS_PATH") "/tests")))
+      ;; complete the URL based on the specified filter "fr" to find matching file resources.
+      ;; "fr": "File Resource."  "dr": "Directory Resource." "r": "Resource.(including files & directories)" 
+   (let ((complete-url (url-complete (string->url "$TEXMACS_PATH") "dr")))
      (check
       (url-exists? complete-url) => #t)))
 
