@@ -24,7 +24,7 @@
 (define (goldfish-launcher)
   (string-append
     (string-quote (url->system (find-binary-goldfish)))
-    " --texmacs "
+    " "
     (string-quote
       (string-append (url->system (get-texmacs-path))
                      "/plugins/goldfish/goldfish/tm-goldfish.scm"))))
