@@ -6,6 +6,7 @@ on:
     paths:
       - 'src/**'
       - '!src/Plugins/Windows/**'
+      - 'TeXmacs/plugins/goldfish/src/*'
       - 'tests/**'
       - 'xmake.lua'
       - 'xmake/packages.lua'
@@ -18,6 +19,7 @@ on:
     paths:
       - 'src/**'
       - '!src/Plugins/Windows/**'
+      - 'TeXmacs/plugins/goldfish/src/*'
       - 'tests/**'
       - 'xmake.lua'
       - 'xmake/packages.lua'
