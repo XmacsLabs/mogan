@@ -11,6 +11,7 @@
 
 #include "QTMTabPage.hpp"
 
+// The minimum width of a single tab page (in pixels).
 #define MIN_TAB_PAGE_WIDTH 150
 
 /******************************************************************************
@@ -50,11 +51,11 @@ QTMTabPageContainer::QTMTabPageContainer (QWidget* p_parent)
   setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
 
-QTMTabPageContainer::~QTMTabPageContainer () { removeAll (); }
+QTMTabPageContainer::~QTMTabPageContainer () { removeAllTabPages (); }
 
 void
-QTMTabPageContainer::replaceTabPages (QList<QAction*>& p_src) {
-  removeAll ();            // remove  old tabs
+QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
+  removeAllTabPages ();    // remove  old tabs
   extractTabPages (p_src); // extract new tabs
 
   const int windowWidth= this->width ();
@@ -83,7 +84,7 @@ QTMTabPageContainer::replaceTabPages (QList<QAction*>& p_src) {
 }
 
 void
-QTMTabPageContainer::removeAll () {
+QTMTabPageContainer::removeAllTabPages () {
   for (int i= 0; i < m_tabPageList.size (); ++i) {
     delete m_tabPageList[i];
   }
@@ -91,14 +92,15 @@ QTMTabPageContainer::removeAll () {
 }
 
 void
-QTMTabPageContainer::extractTabPages (QList<QAction*>& p_src) {
-  for (int i= 0; i < p_src.size (); ++i) {
+QTMTabPageContainer::extractTabPages (QList<QAction*>* p_src) {
+  if (!p_src) return;
+  for (int i= 0; i < p_src->size (); ++i) {
     // see the definition of QTMTabPageAction why we're using it
-    QTMTabPageAction* carrier= qobject_cast<QTMTabPageAction*> (p_src[i]);
+    QTMTabPageAction* carrier= qobject_cast<QTMTabPageAction*> ((*p_src)[i]);
     ASSERT (carrier, "QTMTabPageAction expected")
 
     QTMTabPage* tab= qobject_cast<QTMTabPage*> (carrier->m_widget);
-    m_tabPageList.append (tab);
+    if (tab) m_tabPageList.append (tab);
 
     delete carrier; // we don't need it anymore
   }
@@ -108,7 +110,7 @@ void
 QTMTabPageContainer::adjustHeight (int p_rowCount) {
   int h= m_rowHeight * (p_rowCount + 1);
   // parentWidget's resizeEvent() will resize me
-  parentWidget ()->setFixedHeight (h - p_rowCount + 2);
+  parentWidget ()->setFixedHeight (h - p_rowCount + 1);
 }
 
 /******************************************************************************
@@ -121,7 +123,20 @@ QTMTabPageBar::QTMTabPageBar (const QString& p_title, QWidget* p_parent)
 }
 
 void
+QTMTabPageBar::replaceTabPages (QList<QAction*>* p_src) {
+  setUpdatesEnabled (false);
+  bool visible= this->isVisible ();
+  if (visible) hide (); // TRICK: to avoid flicker of the dest widget
+
+  m_container->replaceTabPages (p_src);
+
+  if (visible) show (); // TRICK: see above
+  setUpdatesEnabled (true);
+}
+
+void
 QTMTabPageBar::resizeEvent (QResizeEvent* e) {
   QSize size= e->size ();
-  m_container->setGeometry (7, 0, size.width (), size.height () - 1);
+  // Reserve 7px space on the left for the handle of QToolbar
+  m_container->setGeometry (7, 0, size.width (), size.height ());
 }

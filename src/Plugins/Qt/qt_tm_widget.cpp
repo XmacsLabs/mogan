@@ -89,20 +89,6 @@ replaceButtons (QToolBar* dest, QList<QAction*>* src) {
   dest->setUpdatesEnabled (true);
 }
 
-static void
-replaceTabPages (QTMTabPageBar* dest, QList<QAction*>* src) {
-  if (src == NULL || dest == NULL)
-    TM_FAILED ("replaceTabPages expects valid objects");
-  dest->setUpdatesEnabled (false);
-  bool visible= dest->isVisible ();
-  if (visible) dest->hide (); // TRICK: to avoid flicker of the dest widget
-
-  dest->replaceTabPages (*src);
-
-  if (visible) dest->show (); // TRICK: see above
-  dest->setUpdatesEnabled (true);
-}
-
 void
 QTMInteractiveInputHelper::commit (int result) {
   if (wid && result == QDialog::Accepted) {
@@ -911,7 +897,7 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       tab_bar_widget       = concrete (w);
       QList<QAction*>* list= tab_bar_widget->get_qactionlist ();
       if (list) {
-        replaceTabPages (tabToolBar, list);
+        tabToolBar->replaceTabPages (list);
         update_visibility ();
       }
     }

@@ -62,11 +62,11 @@ public:
   ~QTMTabPageContainer ();
 
   inline void setRowHeight (int p_height) { m_rowHeight= p_height; }
-  void        replaceTabPages (QList<QAction*>& p_src);
+  void        replaceTabPages (QList<QAction*>* p_src);
 
 protected:
-  void removeAll ();
-  void extractTabPages (QList<QAction*>& p_src);
+  void removeAllTabPages ();
+  void extractTabPages (QList<QAction*>* p_src);
   void adjustHeight (int p_rowCount);
 };
 
@@ -85,9 +85,7 @@ public:
     m_container->setRowHeight (p_height);
   }
 
-  inline void replaceTabPages (QList<QAction*>& p_src) {
-    m_container->replaceTabPages (p_src);
-  }
+  void replaceTabPages (QList<QAction*>* p_src);
 
 protected:
   virtual void resizeEvent (QResizeEvent* e) override;
