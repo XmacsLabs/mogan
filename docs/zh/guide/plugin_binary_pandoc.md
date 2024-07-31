@@ -5,7 +5,7 @@
   - [Gitee](https://gitee.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/binary/progs/binary/pandoc.scm)
   - [Github](https://github.com/XmacsLabs/mogan/blob/branch-1.2/TeXmacs/plugins/binary/progs/binary/pandoc.scm)
 - 功能：支持`文档转换->导出到多种格式`
-+ 墨干：`>= v1.2.5.2`
++ 墨干：`>= v1.2.8`
 
 ## 如何安装 Pandoc
 ### Windows
@@ -22,4 +22,7 @@ winget install --source winget --exact --id JohnMacFarlane.Pandoc
 使用`brew install pandoc`安装。
 
 ### Linux
-没有一键安装方法，请参考：[Pandoc官网](https://pandoc.org/installing.html)
+在Debian bookworm中，使用如下命令安装：
+```
+sudo apt install pandoc
+```
