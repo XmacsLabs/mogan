@@ -35,8 +35,8 @@ main (int argc, char** argv) {
 
   s7_scheme* sc;
   sc= s7_init ();
-  s7_load (sc, gf_boot.c_str ());
-  s7_add_to_load_path (sc, gf_lib.c_str ());
+  s7_load (sc, gf_boot.string ().c_str ());
+  s7_add_to_load_path (sc, gf_lib.string ().c_str ());
 
   if (argc >= 2) {
     if (strcmp (argv[1], "-e") == 0) /* repl -e '(+ 1 2)' */
