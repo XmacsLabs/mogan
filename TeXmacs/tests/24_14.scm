@@ -1,5 +1,7 @@
 (define (tm->html tm-file html-file)
+  (display* "load-buffer: " tm-file "\n")
   (load-buffer tm-file)
+  (display* "buffer-loaded: " tm-file "\n")
   (export-buffer-main (current-buffer) (html-file) "html" ()))
 
 (define (test_24_14)
