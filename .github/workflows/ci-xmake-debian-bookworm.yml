@@ -34,18 +34,14 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: true
-      matrix:
-        include:
-        - qt_pkg:  qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins
-          qt_ver: 6
     steps:
       - name: Install dependencies
         run: |
           DEBIAN_FRONTEND=noninteractive apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y gcc git 7zip unzip curl build-essential \
               fonts-noto-cjk libcurl4-openssl-dev libfreetype-dev libfontconfig-dev \
-              ${{matrix.qt_pkg}} libgit2-dev zlib1g-dev libssl-dev libjpeg62-turbo-dev cmake \
-              libmimalloc-dev
+              libmimalloc-dev libgit2-dev zlib1g-dev libssl-dev libjpeg62-turbo-dev cmake \
+              qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -69,14 +65,14 @@ jobs:
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages 
-          key: ${{ runner.os }}-xrepo-qt${{ matrix.qt_ver }}-${{ hashFiles('**/packages.lua') }}
+          key: ${{ runner.os }}-xrepo-qt6-${{ hashFiles('**/packages.lua') }}
 
       - name: cache xmake
         uses: actions/cache@v3
         with:
           path: |
             tmp/build/.build_cache
-          key: ${{ runner.os }}-build-qt${{ matrix.qt_ver }}-${{ hashFiles('**/packages.lua') }}
+          key: ${{ runner.os }}-build-qt6-${{ hashFiles('**/packages.lua') }}
 
       - name: config
         run: xmake config -vD --policies=build.ccache -o tmp/build -m releasedbg --yes
