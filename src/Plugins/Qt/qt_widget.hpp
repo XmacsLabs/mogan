@@ -328,6 +328,15 @@ public:
       check_type_id<int> (type_id, s);
       return close_box<int> (id++);
     }
+    case SLOT_MAIN_ICONS_VISIBILITY: {
+      return close_box<bool> (false);
+    }
+    case SLOT_POSITION: {
+      return close_box<coord2> (coord2 (0, 0));
+    }
+    case SLOT_SIZE: {
+      return close_box<coord2> (coord2 (800, 600));
+    }
     default:
       return qt_widget_rep::query (s, type_id);
     }
