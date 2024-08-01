@@ -1,0 +1,23 @@
+<TMU|<tuple|1.0.2|1.2.8-rc1>>
+
+<style|<tuple|beamer|no-page-numbers|chinese>>
+
+<\body>
+  <screens|<\shown>
+    ā
+
+    á
+
+    ǎ
+
+    à
+  </shown>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|font-base-size|24>
+    <associate|page-medium|beamer>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
