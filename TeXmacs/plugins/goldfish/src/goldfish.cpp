@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+
+#include <chrono>
 #include <filesystem>
 #include <iostream>
 #include <sstream>
@@ -16,6 +18,24 @@
 
 using std::filesystem::exists;
 using std::filesystem::path;
+
+static s7_pointer
+g_current_second (s7_scheme* sc, s7_pointer args) {
+  auto now= std::chrono::system_clock::now ();
+  // TODO: use std::chrono::tai_clock::now() when using C++ 20
+  auto      now_duration= now.time_since_epoch ();
+  double    ts          = std::chrono::duration<double> (now_duration).count ();
+  s7_double res         = ts;
+  return s7_make_real (sc, res);
+}
+
+static void
+glue_scheme_time (s7_scheme* sc) {
+  s7_pointer cur_env= s7_curlet (sc);
+  s7_define (sc, cur_env, s7_make_symbol (sc, "current-second"),
+             s7_make_typed_function (sc, "current-second", g_current_second, 0,
+                                     0, false, "current-second", NULL));
+}
 
 int
 main (int argc, char** argv) {
@@ -35,8 +55,10 @@ main (int argc, char** argv) {
 
   s7_scheme* sc;
   sc= s7_init ();
-  s7_load (sc, gf_boot.c_str ());
-  s7_add_to_load_path (sc, gf_lib.c_str ());
+  s7_load (sc, gf_boot.string ().c_str ());
+  s7_add_to_load_path (sc, gf_lib.string ().c_str ());
+
+  glue_scheme_time (sc);
 
   if (argc >= 2) {
     if (strcmp (argv[1], "-e") == 0) /* repl -e '(+ 1 2)' */

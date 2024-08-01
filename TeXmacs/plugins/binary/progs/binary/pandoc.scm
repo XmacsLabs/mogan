@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : pandoc-binary.scm
+;; MODULE      : pandoc.scm
 ;; DESCRIPTION : Pandoc Binary plugin
 ;; COPYRIGHT   : (C) 2024  ATQlove
 ;;

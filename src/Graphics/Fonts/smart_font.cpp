@@ -794,8 +794,9 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
   if (nr < 0) return;
   if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
   if (sm->fn_rewr[nr] != REWRITE_NONE) r= rewrite (r, sm->fn_rewr[nr]);
-  if (DEBUG_VERBOSE)
-    debug_fonts << "Got " << r << " in " << fn[nr]->res_name << LF;
+  if (DEBUG_STD)
+    debug_fonts << "Physical font of " << cork_to_utf8 (r) << " is "
+                << fn[nr]->res_name << LF;
 }
 
 bool
@@ -1051,11 +1052,12 @@ use_italic_greek (array<string> a) {
 
 int
 smart_font_rep::resolve (string c) {
-  if (DEBUG_VERBOSE)
-    debug_fonts << "Resolving " << c << " for " << mfam << ", " << family
-                << ", " << variant << ", " << series << ", " << shape << ", "
-                << rshape << ", " << sz << ", " << dpi << ", " << hdpi << "; "
-                << fn[SUBFONT_MAIN]->res_name << "; " << math_kind << LF;
+  if (DEBUG_STD) {
+    debug_fonts << "Logical font of " << cork_to_utf8 (c) << " is "
+                << this->res_name << LF;
+    debug_fonts << "Main subfont of " << cork_to_utf8 (c) << " is "
+                << fn[SUBFONT_MAIN]->res_name << LF;
+  }
   array<string> a= trimmed_tokenize (family, ",");
 
   if (math_kind != 0) {

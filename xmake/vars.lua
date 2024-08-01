@@ -11,7 +11,7 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 TEXMACS_VERSION = "2.1.2"
-XMACS_VERSION="1.2.8-rc1"
+XMACS_VERSION="1.2.8-rc2"
 CONFIG_USER = "XmacsLabs"
 DEVEL_VERSION = TEXMACS_VERSION
 DEVEL_RELEASE = 1
@@ -19,7 +19,7 @@ STABLE_VERSION = TEXMACS_VERSION
 STABLE_RELEASE = 1
 
 -- XmacsLabs dependencies
-LOLLY_VERSION = "1.4.27"
+LOLLY_VERSION = "1.4.26"
 
 -- Third-party dependencies
 S7_VERSION = "20240702"
