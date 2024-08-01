@@ -139,12 +139,12 @@
 
 (tm-define (embed-image t)
   (when (and (linked-image-context? t) (tree-atomic? (tree-ref t 0)))
-    (let* ((f (tm->string (tm-ref t 0)))
+    (let* ((f (cork->utf8 (tm->string (tm-ref t 0))))
            (u (url-relative (current-buffer) f))
            (s (url-suffix f)))
       (when (url-exists? u)
         (let* ((data (string-load u))
-               (raw `(tuple (raw-data ,data) ,(url->string (url-tail f)))))
+               (raw `(tuple (raw-data ,data) ,(utf8->cork (url->string (url-tail f))))))
           (tree-set t 0 raw))))))
 
 (tm-define (embed-images t)
