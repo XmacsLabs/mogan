@@ -21,10 +21,10 @@
  */
 class QTMTabPage : public QToolButton {
   Q_OBJECT
-  QToolButton* closeBtn;
+  QToolButton* m_closeBtn;
 
 public:
-  const url bufferUrl;
+  const url m_bufferUrl;
 
 public:
   explicit QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
@@ -34,15 +34,61 @@ protected:
   virtual void resizeEvent (QResizeEvent* e) override;
 };
 
+/*! QTMTabPageAction is used as a carrier of QTMTabPage widget.
+Why:
+If we use the QWidgetAction, once we call setDefaultWidget,
+we can't take out the defaultWidget from QWidgetAction, because
+when we delete the QWidgetAction, the defaultWidget will also be
+deleted. You can see this behavior in the source code of QWidgetAction.
+ */
+class QTMTabPageAction : public QAction {
+  Q_OBJECT
+public:
+  explicit QTMTabPageAction (QWidget* p_widget) : m_widget (p_widget) {}
+  QWidget* const m_widget;
+};
+
+/*! QTMTabPageContainer is used to build the container for QTMTabPage.
+In order to:
+1. Support multi-line display for numerous tab pages;
+2. Support drag-and-drop to sort tab page
+ */
+class QTMTabPageContainer : public QWidget {
+  QList<QTMTabPage*> m_tabPageList;
+  int                m_rowHeight= 0;
+
+public:
+  explicit QTMTabPageContainer (QWidget* p_parent);
+  ~QTMTabPageContainer ();
+
+  inline void setRowHeight (int p_height) { m_rowHeight= p_height; }
+  void        replaceTabPages (QList<QAction*>* p_src);
+
+protected:
+  void removeAllTabPages ();
+  void extractTabPages (QList<QAction*>* p_src);
+  void adjustHeight (int p_rowCount);
+};
+
 /*! QTMTabPageBar is used to wrap the QTMTabPageContainer.
 In order to:
 1. Add this to the QMainWindow as QToolBar, just like the main icon toolbar;
 2. Support dragging and docking like the main icon toolbar.
  */
 class QTMTabPageBar : public QToolBar {
+  QTMTabPageContainer* m_container;
+
 public:
-  explicit QTMTabPageBar (const QString& p_title, QWidget* p_parent)
-      : QToolBar (p_title, p_parent) {}
+  explicit QTMTabPageBar (const QString& p_title, QWidget* p_parent);
+
+  inline void setRowHeight (int p_height) {
+    m_container->setRowHeight (p_height);
+  }
+
+  void replaceTabPages (QList<QAction*>* p_src);
+
+protected:
+  virtual void resizeEvent (QResizeEvent* e) override;
 };
 
 #endif // QTMTABPAGE_HPP

@@ -248,13 +248,13 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   mainToolBar->setFixedHeight (toolbarHeight + 8 * retina_icons);
   modeToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
   focusToolBar->setFixedHeight (toolbarHeight);
-  tabToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
+  tabToolBar->setRowHeight (toolbarHeight + 4 * retina_icons);
 #else
   int toolbarHeight= 30;
   mainToolBar->setFixedHeight (toolbarHeight + 8);
   modeToolBar->setFixedHeight (toolbarHeight + 4);
   focusToolBar->setFixedHeight (toolbarHeight);
-  tabToolBar->setFixedHeight (toolbarHeight + 4);
+  tabToolBar->setRowHeight (toolbarHeight + 4);
 #endif
   if (tm_style_sheet != "") {
     double scale= retina_scale;
@@ -264,7 +264,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     mainToolBar->setFixedHeight (h1);
     modeToolBar->setFixedHeight (h2);
     focusToolBar->setFixedHeight (h3);
-    tabToolBar->setFixedHeight (h2);
+    tabToolBar->setRowHeight (h2);
   }
 
   QWidget* cw= new QWidget ();
@@ -897,7 +897,7 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       tab_bar_widget       = concrete (w);
       QList<QAction*>* list= tab_bar_widget->get_qactionlist ();
       if (list) {
-        replaceButtons (tabToolBar, list);
+        tabToolBar->replaceTabPages (list);
         update_visibility ();
       }
     }
