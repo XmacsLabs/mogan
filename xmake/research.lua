@@ -256,7 +256,7 @@ function add_target_research_on_others()
             os.execv(target:installdir().."/bin/MoganResearch.exe")
         elseif is_plat("linux", "macosx") then
             print("Launching " .. target:targetfile())
-            os.execv(target:targetfile(), {}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
+            os.execv(target:targetfile(), {"-d"}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
         else
             print("Unsupported plat $(plat)")
         end
