@@ -1,0 +1,50 @@
+<TMU|<tuple|1.0.2|1.2.8-rc2>>
+
+<style|<tuple|generic|no-page-numbers|chinese>>
+
+<\body>
+  Here is the logical font for the symbols: sys-chinese-rm-medium-right-10-600-smart
+
+  <\wide-tabular>
+    <tformat|<table|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      physical
+    </cell>>|<row|<\cell>
+      ā
+    </cell>|<\cell>
+      <verbatim|unicode:texgyrepagella-regular24@2010>
+    </cell>>|<row|<\cell>
+      á
+    </cell>|<\cell>
+      <verbatim|ec:ecrm10@2010>
+    </cell>>|<row|<\cell>
+      ǎ
+    </cell>|<\cell>
+      <verbatim|unicode:texgyrepagella-regular24@2010>
+    </cell>>|<row|<\cell>
+      à
+    </cell>|<\cell>
+      <verbatim|ec:ecrm10@2010>
+    </cell>>>>
+  </wide-tabular>
+
+  The number after <verbatim|@> depends on the scale factor
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-height|auto>
+    <associate|page-screen-margin|false>
+    <associate|page-type|a4>
+    <associate|page-width|auto>
+  </collection>
+</initial>
