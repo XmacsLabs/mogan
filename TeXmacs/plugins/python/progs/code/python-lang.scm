@@ -17,9 +17,10 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "python") (== key "keyword")))
   `(,(string->symbol key)
+    (extra_chars "_")
     (constant
       "Ellipsis" "False" "None" "NotImplemented" "True" "__debug__" "__import__" "abs"
-      "all" "any" "apply" "ascii" "basestring" "bin" "bool" "buffer"
+      "all" "any" "apply" "ascii" "basestring" "bin" "bool" "buffer" "__main__"
       "bytearray" "bytes" "callable" "chr" "classmethod" "cmp" "coerce" "compile"
       "complex" "delattr" "dict" "dir" "divmod" "enumerate" "eval" "execfile"
       "file" "filter" "float" "format" "frozenset" "getattr" "globals" "hasattr"
@@ -43,7 +44,7 @@
     (declare_module "import")
     (declare_type "class")
     (keyword
-      "as" "del" "from" "global" "in" "is" "with")
+      "and" "not" "or" "as" "del" "from" "global" "in" "is" "with")
     (keyword_conditional
       "break" "continue" "elif" "else" "for" "if" "while")
     (keyword_control
@@ -54,7 +55,6 @@
   (:require (and (== lan "python") (== key "operator")))
   `(,(string->symbol key)
     (operator
-      "and" "not" "or"
       "+" "-" "/" "*" "**" "//" "%" "|" "&" "^"
       "<<" ">>" "==" "!=" "<>" "<" ">" "<=" ">="
       "=" "+=" "-=" "/=" "*=" "%=" "|=" "&=" "^="

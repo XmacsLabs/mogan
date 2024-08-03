@@ -1,0 +1,110 @@
+<TMU|<tuple|1.0.2|1.2.8-rc3>>
+
+<style|<tuple|generic|no-page-numbers|chinese|goldfish|r7rs>>
+
+<\body>
+  For Python
+
+  <\python-code>
+    def and_xxx:
+
+    \ \ \ \ return "and_xxx"
+
+    \ \ \ \ 
+
+    # Here are some of the keywords
+
+    __import__
+
+    __debug__
+
+    __main__
+
+    \;
+  </python-code>
+
+  For Goldfish
+
+  <\goldfish-code>
+    (+ 1 2)
+
+    (\<gtr\> 1 2)
+
+    (\<less\> 1 2)
+
+    (* 1 2)
+
+    (/ 1 2)
+
+    (= 1 2)
+
+    (\<gtr\>= 1 2)
+
+    (\<less\>= 1 2)
+
+    (define x-define 1)
+
+    (define ?define 1)
+
+    'read-error
+
+    \;
+
+    define-x
+
+    x-define
+
+    \;
+
+    definex
+
+    xdefine
+  </goldfish-code>
+
+  For R7RS
+
+  <\r7rs-code>
+    (+ 1 2)
+
+    (\<gtr\> 1 2)
+
+    (\<less\> 1 2)
+
+    (* 1 2)
+
+    (/ 1 2)
+
+    (= 1 2)
+
+    (\<gtr\>= 1 2)
+
+    (\<less\>= 1 2)
+
+    (define x-define 1)
+
+    (define ?define 1)
+
+    'read-error
+
+    \;
+
+    define-x
+
+    x-define
+
+    \;
+
+    definex
+
+    xdefine
+  </r7rs-code>
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

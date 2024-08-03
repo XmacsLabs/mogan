@@ -20,12 +20,14 @@ identifier_parser_rep::identifier_parser_rep () {
 
 void
 identifier_parser_rep::set_start_chars (array<char> p_chars) {
-  start_chars= p_chars;
+  start_chars->resize (0);
+  start_chars << p_chars;
 }
 
 void
 identifier_parser_rep::set_extra_chars (array<char> p_chars) {
-  extra_chars= p_chars;
+  extra_chars->resize (0);
+  extra_chars << p_chars;
 }
 
 bool
