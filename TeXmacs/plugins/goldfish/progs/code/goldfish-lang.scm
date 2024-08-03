@@ -97,7 +97,6 @@
   ("syntax:goldfish:keyword_conditional" "#309090" notify-goldfish-syntax)
   ("syntax:goldfish:keyword_control" "#309090" notify-goldfish-syntax)
   ("syntax:goldfish:keyword" "#204080" notify-goldfish-syntax)
-  ("syntax:goldfish:keyword_operator" "#8b008b" notify-goldfish-syntax)
   ("syntax:goldfish:error" "red" notify-goldfish-syntax)
   ("syntax:goldfish:constant_number" "#4040c0" notify-goldfish-syntax)
   ("syntax:goldfish:constant_string" "dark grey" notify-goldfish-syntax)

@@ -19,9 +19,9 @@ class parser_rep {
 public:
   bool parse (string s, int& pos) {
     if (!can_parse (s, pos)) {
-      cout << get_parser_name () << " cannot parse:" << LF
-           << s << LF
-           << string(' ', pos) << "^" << LF;
+      // cout << get_parser_name () << " cannot parse:" << LF
+      //      << s << LF
+      //      << string(' ', pos) << "^" << LF;
       return false;
     }
 
@@ -31,10 +31,10 @@ public:
     if (pos > opos) {
       // Expressive logs for parser with start and end marked
       // Commented by default for performance
-      cout << get_parser_name() << " debugging:" << LF
-           << s << LF
-           << string(' ', opos) << "^" << LF
-           << string(' ', pos) << "^" << LF;
+      // cout << get_parser_name() << " debugging:" << LF
+      //      << s << LF
+      //      << string(' ', opos) << "^" << LF
+      //      << string(' ', pos) << "^" << LF;
       return true;
     }
     else {
