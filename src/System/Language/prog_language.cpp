@@ -84,32 +84,32 @@ prog_language_rep::customize_keyword (keyword_parser_rep p_keyword_parser,
 }
 
 void
-prog_language_rep::customize_identifier (identifier_parser_rep p_identifier_parser,
-                                      tree               config) {
+prog_language_rep::customize_identifier (
+    identifier_parser_rep p_identifier_parser, tree config) {
   int config_N= N (config);
   for (int i= 0; i < config_N; i++) {
     tree   group_of_keywords  = config[i];
     int    group_of_keywords_N= N (group_of_keywords);
     string group              = get_label (group_of_keywords);
     if (group == "extra_chars") {
-      array<char> extra_chars= array<char>();
+      array<char> extra_chars= array<char> ();
       for (int j= 0; j < group_of_keywords_N; j++) {
         string extra_char= get_label (group_of_keywords[j]);
         if (N (extra_char) == 1) {
           extra_chars << extra_char[0];
         }
       }
-      p_identifier_parser.set_extra_chars(extra_chars);
+      p_identifier_parser.set_extra_chars (extra_chars);
     }
     if (group == "start_chars") {
-      array<char> start_chars= array<char>();
+      array<char> start_chars= array<char> ();
       for (int j= 0; j < group_of_keywords_N; j++) {
         string start_char= get_label (group_of_keywords[j]);
         if (N (start_char) == 1) {
           start_chars << start_char[0];
         }
       }
-      p_identifier_parser.set_start_chars(start_chars);
+      p_identifier_parser.set_start_chars (start_chars);
     }
   }
 }
