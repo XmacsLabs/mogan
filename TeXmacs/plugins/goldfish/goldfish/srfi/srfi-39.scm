@@ -7,7 +7,7 @@
 (begin
 
 ;; parameters
-;;   goldfish has no built-in parameter objects
+;;   s7 has no built-in parameter objects
 (define* (make-parameter init converter)
   (let* ((convert (or converter (lambda (x) x)))
          (old-values ()) ; see below -- this is part of the funclet

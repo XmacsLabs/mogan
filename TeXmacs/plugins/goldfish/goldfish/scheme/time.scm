@@ -14,7 +14,16 @@
 ; under the License.
 ;
 
-(define-library (srfi srfi-16)
-  (import (scheme case-lambda))
-  (export case-lambda))
+(define-library (scheme time)
+(export current-second current-jiffy jiffies-per-second)
+(begin
 
+(define (jiffies-per-second) 1000000)
+
+(define (current-second) (g_current-second))
+
+(define (current-jiffy)
+  (round (* (current-second) (jiffies-per-second))))
+
+) ; end of begin
+) ; end of define-library
