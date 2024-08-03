@@ -16,6 +16,11 @@
         (code r7rs-keyword)
         (code srfi-keyword)))
 
+(tm-define (parse-feature lan key)
+  (:require (and (== lan "goldfish") (== key "identifier")))
+  `(,(string->symbol key)
+    (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<")))
+
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "keyword")))
   `(,(string->symbol key)

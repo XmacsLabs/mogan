@@ -11,6 +11,18 @@
     (define ?define 1)
 
     'read-error
+
+    \;
+
+    define-x
+
+    x-define
+
+    \;
+
+    definex
+
+    xdefine
   </goldfish-code>
 
   <\session|goldfish|default>

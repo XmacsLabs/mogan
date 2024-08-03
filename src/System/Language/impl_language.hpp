@@ -84,6 +84,7 @@ struct prog_language_rep : abstract_language_rep {
   string        get_color (tree t, int start, int end);
 
   void customize_keyword (keyword_parser_rep parser, tree config);
+  void customize_identifier (identifier_parser_rep parser, tree config);
   void customize_operator (tree config);
   void customize_number (tree config);
   void customize_string (tree config);
