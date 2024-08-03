@@ -20,7 +20,7 @@
   (flush-prompt "> ")
   (flush-verbatim
     (string-append
-      "Goldfish Scheme " (version) " by LiiiLabs\n"
+      "Goldfish Scheme " (version) " Community Edition by LiiiLabs\n"
       "implemented on S7 Scheme (" (substring (*s7* 'version) 3) ")")))
 
 (define (goldfish-repl)
