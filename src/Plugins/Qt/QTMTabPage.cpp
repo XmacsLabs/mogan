@@ -65,7 +65,6 @@ QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
 
   for (int i= 0; i < m_tabPageList.size (); ++i) {
     QTMTabPage* tab= m_tabPageList[i];
-    tab->setParent (this);
 
     QSize tabSize = tab->minimumSizeHint ();
     int   tabWidth= max (MIN_TAB_PAGE_WIDTH, tabSize.width ());
@@ -94,13 +93,20 @@ QTMTabPageContainer::removeAllTabPages () {
 void
 QTMTabPageContainer::extractTabPages (QList<QAction*>* p_src) {
   if (!p_src) return;
+
   for (int i= 0; i < p_src->size (); ++i) {
     // see the definition of QTMTabPageAction why we're using it
     QTMTabPageAction* carrier= qobject_cast<QTMTabPageAction*> ((*p_src)[i]);
     ASSERT (carrier, "QTMTabPageAction expected")
 
     QTMTabPage* tab= qobject_cast<QTMTabPage*> (carrier->m_widget);
-    if (tab) m_tabPageList.append (tab);
+    if (tab) {
+      tab->setParent (this);
+      m_tabPageList.append (tab);
+    }
+    else {
+      delete tab; // we don't use it so we should delete it
+    }
 
     delete carrier; // we don't need it anymore
   }
