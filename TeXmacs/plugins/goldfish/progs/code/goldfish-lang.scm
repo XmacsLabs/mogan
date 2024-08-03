@@ -28,7 +28,7 @@
       "*missing-close-paren-hook*")
     (declare_type
       ,@(r7rs-keywords-define)
-      "defined?" "define-macro" "define-constant" "autoload" "require" "provide" "define*" "lambda*")
+      "defined?" "define-macro" "define-constant" "autoload" "require" "provide" "define*" "lambda*" "eval-string")
     (keyword
       ,@(r7rs-keywords-others) ,@(srfi-1-keywords) ,@(srfi-8-keywords) ,@(srfi-13-keywords) ,@(srfi-60-keywords) ,@(srfi-78-keywords)
 
@@ -36,7 +36,8 @@
       "*load-path*" "*goldfish*" "*features*" "*libraries*"
       "*cload-directory*" "*#readers*"
 
-      "help" "bignum" "append" "procedure-source"
+      "equivalent?" "complex" "directory?" "getenv"
+      "help" "bignum" "append" "copy" "procedure-source"
 
       ; MISC
       "integer-decode-float" "random" "nan" "nan-payload" "format" "object->string" "immutable!" "immutable?" "make-hash-table" "hash-table" "hash-table?" "hash-table-ref" "hash-table-set!" "hash-table-entries" "hash-code")
@@ -45,7 +46,7 @@
       "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
       "bad-result" "no-catch" "wrong-number-of-args" "io-error" "bignum-error")
     (keyword_conditional ,@(r7rs-keywords-branch))
-    (keyword_control ,@(r7rs-keywords-exception))))
+    (keyword_control ,@(r7rs-keywords-exception) "catch")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "operator")))
