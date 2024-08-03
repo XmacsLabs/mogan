@@ -251,7 +251,6 @@ initialize_color_encodings () {
   language_rep::color_encoding ("keyword")               = 50;
   language_rep::color_encoding ("keyword_conditional")   = 51;
   language_rep::color_encoding ("keyword_control")       = 52;
-  language_rep::color_encoding ("keyword_operator")      = 53;
 }
 
 void
@@ -307,8 +306,6 @@ initialize_color_decodings (string lan_name) {
   lan->color_decoding (51)=
       get_preference (pfx * "keyword_conditional", "#309090");
   lan->color_decoding (52)= get_preference (pfx * "keyword_control", "#000080");
-  lan->color_decoding (53)=
-      get_preference (pfx * "keyword_operator", "#8b008b");
 }
 
 int
