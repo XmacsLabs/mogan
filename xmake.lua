@@ -76,9 +76,9 @@ option("use-exceptions")
 option_end()
 
 -- only lock it in rc releases
--- if is_plat ("macosx", "windows") then
---     set_policy("package.requires_lock", true)
--- end
+if is_plat ("macosx", "windows") then
+    set_policy("package.requires_lock", true)
+end
 add_repositories("mogan-repo xmake")
 add_requires_of_mogan()
 
