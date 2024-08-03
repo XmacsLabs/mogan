@@ -170,6 +170,12 @@
     </cell>|<\cell>
       <scm|(import (scheme file))>
     </cell>>|<row|<\cell>
+      <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/goldfish/scheme/time.scm>
+    </cell>|<\cell>
+      R7RS time library
+    </cell>|<\cell>
+      <scm|(import (scheme time))>
+    </cell>>|<row|<\cell>
       <hlink|SRFI 1|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-1.scm>
     </cell>|<\cell>
       List Library

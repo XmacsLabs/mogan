@@ -161,6 +161,12 @@
     </cell>|<\cell>
       <scm|(import (scheme file))>
     </cell>>|<row|<\cell>
+      <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/goldfish/scheme/time.scm>
+    </cell>|<\cell>
+      R7RS\<#65F6\>\<#95F4\>\<#5E93\>
+    </cell>|<\cell>
+      <scm|(import (scheme time))>
+    </cell>>|<row|<\cell>
       <hlink|SRFI 1|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-1.scm>
     </cell>|<\cell>
       \<#5217\>\<#8868\>\<#51FD\>\<#6570\>\<#5E93\>
