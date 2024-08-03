@@ -57,7 +57,7 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "operator")))
   `(,(string->symbol key)
-    (operator "=" "+" "-" "*" "/" "=>" "->")
+    (operator "=" "+" "-" "*" "/" "=>" "->" ">" "<" ">=" "<=")
     (operator_special "@" "," "'" "`")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
 
