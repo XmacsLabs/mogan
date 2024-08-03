@@ -16,6 +16,12 @@
         (code r7rs-keyword)))
 
 (tm-define (parser-feature lan key)
+  (:require (and (== lan "r7rs") (== key "identifier")))
+  `(,(string->symbol key)
+    (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
+    (start_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")))
+
+(tm-define (parser-feature lan key)
   (:require (and (== lan "r7rs") (== key "keyword")))
   `(,(string->symbol key)
     (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
@@ -28,7 +34,7 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "r7rs") (== key "operator")))
   `(,(string->symbol key)
-    (operator "and" "or" "not" "=" "+" "-" "*" "/" "=>" "->")
+    (operator "=" "+" "-" "*" "/" "=>" "->" ">" "<" ">=" "<=")
     (operator_special "@" "," "'" "`")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
 
