@@ -6,6 +6,16 @@
   <\goldfish-code>
     (+ 1 2)
 
+    (\<gtr\> 1 2)
+
+    (\<less\> 1 2)
+
+    (* 1 2)
+
+    (/ 1 2)
+
+    (= 1 2)
+
     (define x-define 1)
 
     (define ?define 1)

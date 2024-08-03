@@ -20,12 +20,14 @@ identifier_parser_rep::identifier_parser_rep () {
 
 void
 identifier_parser_rep::set_start_chars (array<char> p_chars) {
-  start_chars= p_chars;
+  start_chars->resize (0);
+  start_chars << p_chars;
 }
 
 void
 identifier_parser_rep::set_extra_chars (array<char> p_chars) {
-  extra_chars= p_chars;
+  extra_chars->resize (0);
+  extra_chars << p_chars;
 }
 
 bool
@@ -39,11 +41,14 @@ identifier_parser_rep::can_parse (string s, int pos) {
 
 inline bool
 is_valid (char c, array<char> chars) {
+  cout << "c: " << c << LF;
+  cout << "chars: " << chars << LF;
   return is_digit (c) || is_alpha (c) || contains (c, chars);
 }
 
 void
 identifier_parser_rep::do_parse (string s, int& pos) {
+  cout << "s[pos]: " << s[pos] << LF;
   while (pos < N (s) && is_valid (s[pos], extra_chars)) {
     pos= pos + 1;
   }

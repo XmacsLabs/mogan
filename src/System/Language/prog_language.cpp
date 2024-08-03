@@ -103,6 +103,16 @@ prog_language_rep::customize_identifier (identifier_parser_rep p_identifier_pars
       }
       p_identifier_parser.set_extra_chars(extra_chars);
     }
+    if (group == "start_chars") {
+      array<char> start_chars= array<char>();
+      for (int j= 0; j < group_of_keywords_N; j++) {
+        string start_char= get_label (group_of_keywords[j]);
+        if (N (start_char) == 1) {
+          start_chars << start_char[0];
+        }
+      }
+      p_identifier_parser.set_start_chars(start_chars);
+    }
   }
 }
 

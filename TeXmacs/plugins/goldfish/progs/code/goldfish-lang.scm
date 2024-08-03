@@ -19,8 +19,8 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "identifier")))
   `(,(string->symbol key)
-    (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<")
-    (start_chars "?" "+" "-" "." "!" "*" ">" "=" "<")))
+    (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
+    (start_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "keyword")))
@@ -52,12 +52,12 @@
       "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
       "bad-result" "no-catch" "wrong-number-of-args" "io-error" "bignum-error")
     (keyword_conditional ,@(r7rs-keywords-branch))
-    (keyword_control ,@(r7rs-keywords-exception) "catch")
-    (keyword_operator "=" "+" "-" "*" "/" "=>" "->")))
+    (keyword_control ,@(r7rs-keywords-exception) "catch")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "operator")))
   `(,(string->symbol key)
+    (operator "=" "+" "-" "*" "/" "=>" "->")
     (operator_special "@" "," "'" "`")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
 
