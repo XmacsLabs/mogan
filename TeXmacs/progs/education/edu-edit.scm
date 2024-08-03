@@ -314,7 +314,7 @@
 
 (tm-define (structured-insert-vertical t downwards?)
   (:require (mc-context? t))
-  (insert-mc-field t forwards?))
+  (insert-mc-field t downwards?))
 
 (define (remove-mc-field t forwards? structured?)
   (let* ((i (tree-down-index t))
@@ -353,7 +353,7 @@
 
 (tm-define (structured-remove-vertical t downwards?)
   (:require (mc-context? t))
-  (remove-mc-field t forwards? #t))
+  (remove-mc-field t downwards? #t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Toggling buttons
