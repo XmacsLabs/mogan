@@ -14,28 +14,16 @@
 ; under the License.
 ;
 
-(define-module (texmacs protocol))
+(define-library (scheme time)
+(export current-second current-jiffy jiffies-per-second)
+(begin
 
-(define-public (data-begin)
-  (display (integer->char 2)))
+(define (jiffies-per-second) 1000000)
 
-(define-public (data-end)
-  (display (integer->char 5))
-  (force-output))
+(define (current-second) (g_current-second))
 
-(define-public (data-escape)
-  (write (integer->char 27)))
+(define (current-jiffy)
+  (round (* (current-second) (jiffies-per-second))))
 
-(define-public (flush-any msg)
-  (data-begin)
-  (display msg)
-  (data-end))
-
-(define-public (flush-verbatim msg)
-  (flush-any (string-append "verbatim:" msg)))
-
-(define-public (flush-scheme msg)
-  (flush-any (string-append "scheme:" msg)))
-
-(define-public (flush-prompt msg)
-  (flush-any (string-append "prompt#" msg)))
+) ; end of begin
+) ; end of define-library

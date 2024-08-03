@@ -29,6 +29,7 @@
     "first" "second" "third" "fourth" "fifth"
     "sixth" "seventh" "eighth" "ninth" "tenth"
     "take" "drop" "take-right" "drop-right" "last"
+    "last-pair"
     ; SRFI-1: MISC
     "concatenate" "reverse" "append-reverse" "zip" "count"
     ; SRFI-1: fold, unfold, map

@@ -1,5 +1,5 @@
 ;
-; Copyright (C) 2024 The S7 SRFI Authors
+; Copyright (C) 2024 The Goldfish Scheme Authors
 ;
 ; Licensed under the Apache License, Version 2.0 (the "License");
 ; you may not use this file except in compliance with the License.
@@ -19,6 +19,9 @@
   square
   ; String
   string-copy
+  ; Vector
+  vector->string
+  string->vector
   ; Input and Output
   call-with-port port? binary-port? textual-port?
   input-port-open? output-port-open?
@@ -42,6 +45,20 @@
          (substring str (car start_end) (cadr start_end)))
         (else (error 'wrong-number-of-args))))
 
+; 0-clause BSD
+; Bill Schottstaedt
+; from S7 source repo: r7rs.scm
+(define* (vector->string v (start 0) end) 
+  (let ((stop (or end (length v)))) 
+    (copy v (make-string (- stop start)) start stop)))
+
+; 0-clause BSD
+; Bill Schottstaedt
+; from S7 source repo: r7rs.scm
+(define* (string->vector s (start 0) end)
+  (let ((stop (or end (length s)))) 
+    (copy s (make-vector (- stop start)) start stop)))
+
 (define (string-map p . args) (apply string (apply map p args)))
 
 (define (vector-map p . args) (apply vector (apply map p args)))
@@ -59,7 +76,7 @@
             (lambda () 
               ,@body) 
             (lambda (type info)
-              (if (pair? (*goldfish* 'catches))
+              (if (pair? (*s7* 'catches))
                   (lambda () (apply throw type info))
                   (car info))))))
      (cond ,@(cdr results)

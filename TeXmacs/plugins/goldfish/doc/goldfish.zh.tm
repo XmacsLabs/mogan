@@ -5,7 +5,7 @@
 <\body>
   <tmdoc-title|\<#91D1\>\<#9C7C\>Scheme\<#63D2\>\<#4EF6\>>
 
-  \<#91D1\>\<#9C7C\>Scheme\<#662F\>\<#57FA\>\<#4E8E\>S7
+  <hlink|\<#91D1\>\<#9C7C\>Scheme|https://gitee.com/LiiiLabs/goldfish>\<#662F\>\<#57FA\>\<#4E8E\>S7
   Scheme\<#5B9E\>\<#73B0\>\<#7684\>Scheme\<#89E3\>\<#91CA\>\<#5668\>\<#3002\>\<#901A\>\<#8FC7\><menu|Insert|Session|Goldfish
   Scheme>\<#5C31\>\<#53EF\>\<#4EE5\>\<#63D2\>\<#5165\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#3002\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#548C\>\<#58A8\>\<#5E72\>\<#662F\>\<#8FD0\>\<#884C\>\<#5728\>\<#4E0D\>\<#540C\>\<#7684\>\<#64CD\>\<#4F5C\>\<#7CFB\>\<#7EDF\>\<#8FDB\>\<#7A0B\>\<#4E2D\>\<#7684\>\<#FF0C\>\<#6545\>\<#800C\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#7684\>\<#6B7B\>\<#5FAA\>\<#73AF\>\<#5E76\>\<#4E0D\>\<#4F1A\>\<#5BFC\>\<#81F4\>\<#58A8\>\<#5E72\>\<#5361\>\<#6B7B\>\<#FF0C\>\<#7136\>\<#800C\>\<#9ED8\>\<#8BA4\>\<#7684\>Scheme\<#4F1A\>\<#8BDD\>\<#4E2D\>\<#8FD0\>\<#884C\>\<#6B7B\>\<#5FAA\>\<#73AF\>\<#662F\>\<#80FD\>\<#5BFC\>\<#81F4\>\<#58A8\>\<#5E72\>\<#5361\>\<#6B7B\>\<#7684\>\<#3002\>\<#58A8\>\<#5E72\>\<#7406\>\<#5DE5\>\<#5957\>\<#4EF6\>\<#4E2D\>\<#7684\>\<#91D1\>\<#9C7C\>Scheme\<#662F\>\<#91D1\>\<#9C7C\>Scheme\<#89E3\>\<#91CA\>\<#5668\>\<#7684\>\<#793E\>\<#533A\>\<#7248\>\<#FF0C\>\<#4E09\>\<#9CA4\>\<#7406\>\<#5DE5\>\<#5957\>\<#4EF6\>\<#4E2D\>\<#7684\>\<#91D1\>\<#9C7C\>Scheme\<#662F\>\<#5546\>\<#4E1A\>\<#7248\>\<#3002\>
 
@@ -160,6 +160,12 @@
       R7RS\<#6587\>\<#4EF6\>\<#64CD\>\<#4F5C\>
     </cell>|<\cell>
       <scm|(import (scheme file))>
+    </cell>>|<row|<\cell>
+      <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/goldfish/scheme/time.scm>
+    </cell>|<\cell>
+      R7RS\<#65F6\>\<#95F4\>\<#5E93\>
+    </cell>|<\cell>
+      <scm|(import (scheme time))>
     </cell>>|<row|<\cell>
       <hlink|SRFI 1|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-1.scm>
     </cell>|<\cell>

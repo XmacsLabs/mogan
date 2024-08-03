@@ -5,14 +5,15 @@
 <\body>
   <tmdoc-title|The Goldfish Scheme plugin>
 
-  Goldfish Scheme is based on <hlink|S7|https://ccrma.stanford.edu/software/goldfish/>
-  Scheme. To insert a Goldfish Scheme session, just click
-  <menu|Insert|Session|S7 Scheme>. Goldfish Scheme session is running in a
-  separated process, as a result, infinite loop in Goldfish Scheme session
-  will not freeze Mogan while infinite loop in Scheme session will freeze
-  Mogan. The Goldfish Scheme session in Mogan STEM Suite is using the
-  Goldfish Scheme Community, the Goldfish Scheme session in Liii STEM Suite
-  is using the Goldfish Scheme Enterprise.
+  <hlink|Goldfish Scheme|https://github.com/LiiiLabs/goldfish> is based on
+  <hlink|S7|https://ccrma.stanford.edu/software/goldfish/> Scheme. To insert
+  a Goldfish Scheme session, just click <menu|Insert|Session|S7 Scheme>.
+  Goldfish Scheme session is running in a separated process, as a result,
+  infinite loop in Goldfish Scheme session will not freeze Mogan while
+  infinite loop in Scheme session will freeze Mogan. The Goldfish Scheme
+  session in Mogan STEM Suite is using the Goldfish Scheme Community Edition,
+  the Goldfish Scheme session in Liii STEM Suite is using the Goldfish Scheme
+  Enterprise Edition.
 
   Here are snippets which only works in the Goldfish Scheme session:
 
@@ -169,6 +170,12 @@
       R7RS file library
     </cell>|<\cell>
       <scm|(import (scheme file))>
+    </cell>>|<row|<\cell>
+      <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/goldfish/scheme/time.scm>
+    </cell>|<\cell>
+      R7RS time library
+    </cell>|<\cell>
+      <scm|(import (scheme time))>
     </cell>>|<row|<\cell>
       <hlink|SRFI 1|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-1.scm>
     </cell>|<\cell>

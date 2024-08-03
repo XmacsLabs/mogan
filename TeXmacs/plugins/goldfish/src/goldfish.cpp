@@ -1,82 +1,128 @@
-/* 0-clause BSD */
+//
+// Copyright (C) 2024 The Goldfish Scheme Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations
+// under the License.
+//
 
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
+#include "goldfish.hpp"
+#include "s7.h"
 
-#include <chrono>
 #include <filesystem>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
-#ifndef _MSC_VER
-#include <errno.h>
-#include <unistd.h>
-#endif
-
-#include <s7.h>
-
+using std::cerr;
+using std::cout;
+using std::endl;
+using std::string;
+using std::vector;
 using std::filesystem::exists;
 using std::filesystem::path;
 
-static s7_pointer
-g_current_second (s7_scheme* sc, s7_pointer args) {
-  auto now= std::chrono::system_clock::now ();
-  // TODO: use std::chrono::tai_clock::now() when using C++ 20
-  auto      now_duration= now.time_since_epoch ();
-  double    ts          = std::chrono::duration<double> (now_duration).count ();
-  s7_double res         = ts;
-  return s7_make_real (sc, res);
+void
+display_help () {
+  cout << "Goldfish Scheme " << goldfish_version << " by LiiiLabs" << endl;
+  cout << "--version\t"
+       << "display version" << endl;
+  cout << "-e       \t"
+       << "-e '(+ 1 2)'" << endl;
+  cout << "-l FILE  \t"
+       << "Load the scheme code on path" << endl;
+  cout << "FILE     \t"
+       << "Load the scheme code on path and print the evaluated result" << endl;
 }
 
-static void
-glue_scheme_time (s7_scheme* sc) {
-  s7_pointer cur_env= s7_curlet (sc);
-  s7_define (sc, cur_env, s7_make_symbol (sc, "current-second"),
-             s7_make_typed_function (sc, "current-second", g_current_second, 0,
-                                     0, false, "current-second", NULL));
+void
+display_version () {
+  cout << "Goldfish Scheme " << goldfish_version << " by LiiiLabs" << endl;
+  cout << "based on S7 Scheme " << S7_VERSION << " (" << S7_DATE << ")" << endl;
+}
+
+void
+display_for_invalid_options () {
+  cerr << "Invalid command line options!" << endl << endl;
+  display_help ();
+}
+
+void
+goldfish_eval_file (s7_scheme* sc, string path, bool quiet) {
+  s7_pointer result= s7_load (sc, path.c_str ());
+  if (!result) {
+    cerr << "Failed to load " << path << endl;
+    exit (-1);
+  }
+  if (!quiet) {
+    cout << path << " => " << s7_object_to_c_string (sc, result) << endl;
+  }
+}
+
+void
+goldfish_eval_code (s7_scheme* sc, string code) {
+  s7_pointer x= s7_eval_c_string (sc, code.c_str ());
+  cout << s7_object_to_c_string (sc, x) << endl;
 }
 
 int
 main (int argc, char** argv) {
-  const path gf_root=
-      std::filesystem::path (argv[0]).parent_path ().parent_path ();
+  // Check if the standard library and boot.scm exists
+  const path gf_root= path (argv[0]).parent_path ().parent_path ();
   const path gf_lib = gf_root / "goldfish";
   const path gf_boot= gf_lib / "scheme" / "boot.scm";
-
   if (!exists (gf_lib)) {
-    std::cerr
-        << "The load path for Goldfish Scheme Standard Library does not exist"
-        << std::endl;
+    cerr << "The load path for Goldfish Scheme Standard Library does not exist"
+         << endl;
+    exit (-1);
   }
-  if (!exists (gf_root)) {
-    std::cerr << "The boot.scm for Goldfish Scheme does not exist" << std::endl;
+  if (!exists (gf_boot)) {
+    cerr << "The boot.scm for Goldfish Scheme does not exist" << endl;
+    exit (-1);
   }
 
+  // Init the underlying S7 Scheme and add the load_path
   s7_scheme* sc;
   sc= s7_init ();
   s7_load (sc, gf_boot.string ().c_str ());
   s7_add_to_load_path (sc, gf_lib.string ().c_str ());
 
+  // Glues
+  glue_goldfish (sc);
   glue_scheme_time (sc);
 
-  if (argc >= 2) {
-    if (strcmp (argv[1], "-e") == 0) /* repl -e '(+ 1 2)' */
-    {
-      s7_pointer x;
-      x= s7_eval_c_string (sc, argv[2]);
-      fprintf (stdout, "%s\n", s7_object_to_c_string (sc, x));
-      return (0);
+  // Command options
+  vector<string> args (argv + 1, argv + argc);
+  if (args.size () == 0) {
+    display_help ();
+  }
+  else if (args.size () == 1 && args[0].size () > 0 && args[0][0] == '-') {
+    if (args[0] == "--version") {
+      display_version ();
     }
-    if (strcmp (argv[1], "--version") == 0) {
-      fprintf (stdout, "s7: %s, %s\n", S7_VERSION, S7_DATE);
-      return (0);
+    else {
+      display_for_invalid_options ();
     }
-    errno= 0;
-    if (!s7_load (sc, argv[1])) {
-      fprintf (stderr, "%s: %s\n", strerror (errno), argv[1]);
-      return (2);
-    }
+  }
+  else if (args.size () == 2 && args[0] == "-e") {
+    goldfish_eval_code (sc, args[1]);
+  }
+  else if (args.size () == 2 && args[0] == "-l") {
+    goldfish_eval_file (sc, args[1], true);
+  }
+  else if (args.size () == 1 && args[0].size () > 0 && args[0][0] != '-') {
+    goldfish_eval_file (sc, args[0], false);
+  }
+  else {
+    display_for_invalid_options ();
   }
   return 0;
 }
