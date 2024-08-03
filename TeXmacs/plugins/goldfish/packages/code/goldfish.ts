@@ -26,6 +26,14 @@
 
   <assign|goldfish-prompt-color|dark green>
 
+  <assign|goldfish-lang|<macro|body|<with|mode|prog|prog-language|goldfish|font-family|rm|<arg|body>>>>
+
+  <assign|goldfish-code|<\macro|body>
+    <\pseudo-code>
+      <goldfish-lang|<arg|body>>
+    </pseudo-code>
+  </macro>>
+
   <assign|goldfish-input|<\macro|prompt|body>
     <\with|generic-prompt-color|<value|goldfish-prompt-color>|generic-input-color|<value|scheme-input-color>>
       <generic-input|<arg|prompt>|<arg|body>>
