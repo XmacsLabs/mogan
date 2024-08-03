@@ -17,6 +17,12 @@
         (code srfi-keyword)))
 
 (tm-define (parser-feature lan key)
+  (:require (and (== lan "goldfish") (== key "identifier")))
+  `(,(string->symbol key)
+    (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
+    (start_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")))
+
+(tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "keyword")))
   `(,(string->symbol key)
     (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
@@ -41,7 +47,7 @@
 
       ; MISC
       "integer-decode-float" "random" "nan" "nan-payload" "format" "object->string" "immutable!" "immutable?" "make-hash-table" "hash-table" "hash-table?" "hash-table-ref" "hash-table-set!" "hash-table-entries" "hash-code")
-    (keyword_error
+    (error
       "syntax-error" "wrong-type-arg" "immutable-error" "out-of-range" "division-by-zero"
       "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
       "bad-result" "no-catch" "wrong-number-of-args" "io-error" "bignum-error")
@@ -51,7 +57,7 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "operator")))
   `(,(string->symbol key)
-    (operator "=" "+" "-" "*" "/" "=>" "->")
+    (operator "=" "+" "-" "*" "/" "=>" "->" ">" "<" ">=" "<=")
     (operator_special "@" "," "'" "`")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
 
@@ -91,7 +97,7 @@
   ("syntax:goldfish:keyword_conditional" "#309090" notify-goldfish-syntax)
   ("syntax:goldfish:keyword_control" "#309090" notify-goldfish-syntax)
   ("syntax:goldfish:keyword" "#204080" notify-goldfish-syntax)
-  ("syntax:goldfish:keyword_error" "dark red" notify-goldfish-syntax)
+  ("syntax:goldfish:error" "red" notify-goldfish-syntax)
   ("syntax:goldfish:constant_number" "#4040c0" notify-goldfish-syntax)
   ("syntax:goldfish:constant_string" "dark grey" notify-goldfish-syntax)
   ("syntax:goldfish:constant_char" "#333333" notify-goldfish-syntax)

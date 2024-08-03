@@ -31,6 +31,9 @@ prog_language_rep::prog_language_rep (string name)
   tree keyword_config= get_parser_config (name, "keyword");
   customize_keyword (keyword_parser, keyword_config);
 
+  tree identifier_config= get_parser_config (name, "identifier");
+  customize_identifier (identifier_parser, identifier_config);
+
   tree operator_config= get_parser_config (name, "operator");
   customize_operator (operator_config);
 
@@ -76,6 +79,37 @@ prog_language_rep::customize_keyword (keyword_parser_rep p_keyword_parser,
         // number->string is actually number-<gtr>string
         p_keyword_parser.put (utf8_to_cork (word), group);
       }
+    }
+  }
+}
+
+void
+prog_language_rep::customize_identifier (
+    identifier_parser_rep p_identifier_parser, tree config) {
+  int config_N= N (config);
+  for (int i= 0; i < config_N; i++) {
+    tree   group_of_keywords  = config[i];
+    int    group_of_keywords_N= N (group_of_keywords);
+    string group              = get_label (group_of_keywords);
+    if (group == "extra_chars") {
+      array<char> extra_chars= array<char> ();
+      for (int j= 0; j < group_of_keywords_N; j++) {
+        string extra_char= get_label (group_of_keywords[j]);
+        if (N (extra_char) == 1) {
+          extra_chars << extra_char[0];
+        }
+      }
+      p_identifier_parser.set_extra_chars (extra_chars);
+    }
+    if (group == "start_chars") {
+      array<char> start_chars= array<char> ();
+      for (int j= 0; j < group_of_keywords_N; j++) {
+        string start_char= get_label (group_of_keywords[j]);
+        if (N (start_char) == 1) {
+          start_chars << start_char[0];
+        }
+      }
+      p_identifier_parser.set_start_chars (start_chars);
     }
   }
 }

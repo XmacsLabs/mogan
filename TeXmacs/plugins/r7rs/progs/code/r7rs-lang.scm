@@ -16,6 +16,12 @@
         (code r7rs-keyword)))
 
 (tm-define (parser-feature lan key)
+  (:require (and (== lan "r7rs") (== key "identifier")))
+  `(,(string->symbol key)
+    (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
+    (start_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")))
+
+(tm-define (parser-feature lan key)
   (:require (and (== lan "r7rs") (== key "keyword")))
   `(,(string->symbol key)
     (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
@@ -28,7 +34,7 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "r7rs") (== key "operator")))
   `(,(string->symbol key)
-    (operator "and" "or" "not" "=" "+" "-" "*" "/" "=>" "->")
+    (operator "=" "+" "-" "*" "/" "=>" "->" ">" "<" ">=" "<=")
     (operator_special "@" "," "'" "`")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
 
@@ -68,7 +74,6 @@
   ("syntax:r7rs:keyword_conditional" "#309090" notify-r7rs-syntax)
   ("syntax:r7rs:keyword_control" "#309090" notify-r7rs-syntax)
   ("syntax:r7rs:keyword" "#204080" notify-r7rs-syntax)
-  ("syntax:r7rs:keyword_error" "dark red" notify-r7rs-syntax)
   ("syntax:r7rs:constant_number" "#4040c0" notify-r7rs-syntax)
   ("syntax:r7rs:constant_string" "dark grey" notify-r7rs-syntax)
   ("syntax:r7rs:constant_char" "#333333" notify-r7rs-syntax)
