@@ -68,7 +68,6 @@
   ("syntax:r7rs:keyword_conditional" "#309090" notify-r7rs-syntax)
   ("syntax:r7rs:keyword_control" "#309090" notify-r7rs-syntax)
   ("syntax:r7rs:keyword" "#204080" notify-r7rs-syntax)
-  ("syntax:r7rs:keyword_error" "dark red" notify-r7rs-syntax)
   ("syntax:r7rs:constant_number" "#4040c0" notify-r7rs-syntax)
   ("syntax:r7rs:constant_string" "dark grey" notify-r7rs-syntax)
   ("syntax:r7rs:constant_char" "#333333" notify-r7rs-syntax)
