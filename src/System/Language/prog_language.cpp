@@ -22,7 +22,6 @@
 
 prog_language_rep::prog_language_rep (string name)
     : abstract_language_rep (name) {
-  if (DEBUG_PARSER)
     debug_packrat << "Building the " * name * " language parser" << LF;
 
   string use_modules= "(use-modules (code " * name * "-lang))";
@@ -54,6 +53,7 @@ tree
 prog_language_rep::get_parser_config (string lan, string key) {
   string cmd= "(tm->tree (parser-feature " * raw_quote (lan) * " " *
               raw_quote (key) * "))";
+  cout << "cmd\n" << cmd << LF;
   return as_tree (eval (cmd));
 }
 
@@ -87,10 +87,12 @@ void
 prog_language_rep::customize_identifier (identifier_parser_rep p_identifier_parser,
                                       tree               config) {
   int config_N= N (config);
+  cout << "identi: " << config_N << LF;
   for (int i= 0; i < config_N; i++) {
     tree   group_of_keywords  = config[i];
     int    group_of_keywords_N= N (group_of_keywords);
     string group              = get_label (group_of_keywords);
+    cout << "group: " << group << LF;
     if (group == "extra_chars") {
       array<char> extra_chars= array<char>();
       for (int j= 0; j < group_of_keywords_N; j++) {

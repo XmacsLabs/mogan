@@ -25,6 +25,18 @@
     xdefine
   </goldfish-code>
 
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (parser-feature "goldfish" "identifier")
+    <|unfolded-io>
+      (identifier (extra_chars "?" "+" "-" "." "!" "*" "\<gtr\>" "=" "\<less\>") (start_chars "?" "+" "-" "." "!" "*" "\<gtr\>" "=" "\<less\>"))
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
   <\session|goldfish|default>
     <\output>
       Goldfish Scheme 17.10.0 Community Edition by LiiiLabs
