@@ -38,7 +38,8 @@ jobs:
           sudo pacman -Syyu --noconfirm --needed
           sudo pacman -S --noconfirm --needed qt6-base qt6-svg libpng zlib \
             libjpeg curl python libxext xmake unzip noto-fonts-cjk \
-            fontconfig libgit2 freetype2 openssl git mimalloc cmake
+            fontconfig libgit2 freetype2 openssl git mimalloc cmake \
+            pandoc
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
