@@ -128,7 +128,7 @@ QTMTabPageContainer::extractTabPages (QList<QAction*>* p_src) {
       m_tabPageList.append (tab);
     }
     else {
-      delete tab; // we don't use it so we should delete it
+      delete carrier->m_widget; // we don't use it so we should delete it
     }
 
     delete carrier; // we don't need it anymore
