@@ -9,6 +9,7 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 target ("goldfish") do
+    set_enabled(not is_plat("wasm"))
     set_languages("c++17")
     set_targetdir("$(projectdir)/TeXmacs/plugins/goldfish/bin/")
     add_files ("$(projectdir)/TeXmacs/plugins/goldfish/src/goldfish.cpp")
