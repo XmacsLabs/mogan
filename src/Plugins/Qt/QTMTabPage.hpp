@@ -43,6 +43,7 @@ deleted. You can see this behavior in the source code of QWidgetAction.
  */
 class QTMTabPageAction : public QAction {
   Q_OBJECT
+
 public:
   explicit QTMTabPageAction (QWidget* p_widget) : m_widget (p_widget) {}
   QWidget* const m_widget;
@@ -64,7 +65,7 @@ public:
   inline void setRowHeight (int p_height) { m_rowHeight= p_height; }
   void        replaceTabPages (QList<QAction*>* p_src);
 
-protected:
+private:
   void removeAllTabPages ();
   void extractTabPages (QList<QAction*>* p_src);
   void adjustHeight (int p_rowCount);
