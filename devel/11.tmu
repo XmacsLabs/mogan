@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.2|1.2.8>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -10,7 +10,27 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|20|25|2|2|cell-background|pastel green>|<cwith|23|23|2|2|cell-background|>|<cwith|26|31|2|2|cell-background|pastel green>|<cwith|19|19|2|2|cell-background|pastel green>|<cwith|18|18|2|2|cell-background|pastel green>|<cwith|17|17|2|2|cell-background|pastel green>|<cwith|7|16|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|22|27|2|2|cell-background|pastel green>|<cwith|25|25|2|2|cell-background|>|<cwith|28|33|2|2|cell-background|pastel green>|<cwith|21|21|2|2|cell-background|pastel green>|<cwith|20|20|2|2|cell-background|pastel green>|<cwith|19|19|2|2|cell-background|pastel green>|<cwith|9|18|2|2|cell-background|pastel green>|<table|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_33
+    </cell>|<\cell>
+      v1.2.8
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Font: put crucial logging in the std channel
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      11_32
+    </cell>|<\cell>
+      v1.2.8
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Font: test doc for pinyin in generic and beamer
+    </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
       11_31

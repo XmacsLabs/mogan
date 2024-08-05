@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|1.2.7>>
+<TMU|<tuple|1.0.2|1.2.8>>
 
 <style|<tuple|tmdoc|devel|british>>
 
@@ -11,7 +11,7 @@
 
   <section|Started projects>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|<dlink|81>>|<cell|Minzihao>|<cell|OSPP 2024 Multiple Tabs>>|<row|<cell|<dlink|80>>|<cell|KeShih>|<cell|OSPP 2024 OpenType math font support>>|<row|<cell|<dlink|70>>|<cell|UnbSky>|<cell|OSPP 2024 Syntax Highlighting for PLs>>|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU format>>|<row|<cell|<dlink|61>>|<cell|<value|da>>|<cell|Plugin Center>>|<row|<cell|<dlink|54>>|<cell|Community>|<cell|Community for users and developers>>|<row|<cell|<dlink|24>>|<cell|ATQlove>|<cell|OSPP 2024 HTML>>|<row|<cell|<dlink|19>>|<cell|<value|da>>|<cell|Natural language related issues>>|<row|<cell|<dlink|14>>|<cell|OSPP Students>|<cell|OSPP 2024 Onboarding>>|<row|<cell|<dlink|5>>|<cell|<value|da>>|<cell|Documentation for users and developers>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|<dlink|81>>|<cell|Minzihao>|<cell|OSPP 2024 Multiple Tabs>>|<row|<cell|<dlink|80>>|<cell|KeShih>|<cell|OSPP 2024 OpenType math font support>>|<row|<cell|<dlink|70>>|<cell|UnbSky>|<cell|OSPP 2024 Syntax Highlighting for PLs>>|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU format>>|<row|<cell|<dlink|64>>|<cell|<value|jk>>|<cell|Image imports and exports>>|<row|<cell|<dlink|61>>|<cell|<value|da>>|<cell|Plugin Center>>|<row|<cell|<dlink|54>>|<cell|Community>|<cell|Community for users and developers>>|<row|<cell|<dlink|24>>|<cell|ATQlove>|<cell|OSPP 2024 HTML>>|<row|<cell|<dlink|14>>|<cell|OSPP Students>|<cell|OSPP 2024 Onboarding>>|<row|<cell|<dlink|11>>|<cell|<value|da>>|<cell|Font tuning>>|<row|<cell|<dlink|5>>|<cell|<value|da>>|<cell|Documentation for users and developers>>>>>
 
   <section|Old releases>
 

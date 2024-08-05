@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.2|1.2.8>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -9,37 +9,69 @@
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
-      Bug
+      Feature
     </cell>|<\cell>
-      <dlink|24_1>
+      24_15
     </cell>|<\cell>
-      Pluto
+      ATQlove
     </cell>|<\cell>
-      \ gibberish encoding for html title
-    </cell>>|<row|<\cell>
-      Plugin
-    </cell>|<\cell>
-      <dlink|24_2>
-    </cell>|<\cell>
-      Pluto
-    </cell>|<\cell>
-      \ use html export as a Plugin
+      Add docx converter & test
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
-      <dlink|24_3>
+      24_14
     </cell>|<\cell>
-      Pluto
+      <value|da>
     </cell>|<\cell>
-      \ Fix: Failed to convert title to HTML\ 
+      Qt: Fix unhandled slots in headless mode
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      24_13
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      Doc: pandoc binary plugin
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      24_11
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      HTML: Add encoding & self-close tags
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      24_10
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      HTML5: Change header
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      24_8
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      Add pandoc binary plugin
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      24_7
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Pure format on plugins/html
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
-      <dlink|24_4>
+      24_6
     </cell>|<\cell>
       Pluto
     </cell>|<\cell>
-      \ Fix: tmweb-convert-file-dir bug & Support Integration test
+      fix underline missing bug
     </cell>>|<row|<\cell>
       Bug
     </cell>|<\cell>
@@ -47,7 +79,39 @@
     </cell>|<\cell>
       Pluto
     </cell>|<\cell>
-      \ tm2html tool on terminal
+      tm2html tool on terminal
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|24_4>
+    </cell>|<\cell>
+      Pluto
+    </cell>|<\cell>
+      Fix: tmweb-convert-file-dir bug & Support Integration test
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|24_3>
+    </cell>|<\cell>
+      Pluto
+    </cell>|<\cell>
+      Fix: Failed to convert title to HTML\ 
+    </cell>>|<row|<\cell>
+      Plugin
+    </cell>|<\cell>
+      <dlink|24_2>
+    </cell>|<\cell>
+      Pluto
+    </cell>|<\cell>
+      use html export as a Plugin
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      <dlink|24_1>
+    </cell>|<\cell>
+      Pluto
+    </cell>|<\cell>
+      gibberish encoding for html title
     </cell>>>>
   </wide-tabular>
 
