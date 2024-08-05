@@ -10,7 +10,9 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 includes ("vars.lua")
-includes ("goldfish.lua")
+if is_plat("wasm")
+    includes ("goldfish.lua")
+end
 
 local research_files = {
     "$(projectdir)/TeXmacs(/doc/**)",
@@ -265,7 +267,9 @@ end
 
 
 target("research") do
-    add_deps("goldfish")
+    if is_plat("wasm")
+        add_deps("goldfish")
+    end
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
     if is_plat("wasm") then
         add_target_research_on_wasm()
