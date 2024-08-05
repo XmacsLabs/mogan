@@ -10,7 +10,7 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 includes ("vars.lua")
-if is_plat("wasm")
+if not is_plat("wasm") then
     includes ("goldfish.lua")
 end
 
@@ -267,7 +267,7 @@ end
 
 
 target("research") do
-    if is_plat("wasm")
+    if not is_plat("wasm") then
         add_deps("goldfish")
     end
     set_version(XMACS_VERSION, {build = "%Y-%m-%d"})
