@@ -16,6 +16,7 @@
 
 (define-library (liii os)
 (export os-call os-arch os-type os-windows? os-linux? os-macos? os-temp-dir)
+(import (scheme process-context))
 (begin
 
 (define (os-call command)
@@ -41,6 +42,9 @@
 
 (define (os-temp-dir)
   (g_os-temp-dir))
+
+(define (getenv key)
+  (get-environment-variable key))
 
 ) ; end of begin
 ) ; end of define-library

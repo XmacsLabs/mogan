@@ -20,6 +20,7 @@
 #include <s7.h>
 #include <string>
 #include <tbox/tbox.h>
+#include <vector>
 
 #if !defined(_MSC_VER)
 #include <errno.h>
@@ -29,6 +30,8 @@
 const int patch_version= 1;                // Goldfish Patch Version
 const int minor_version= S7_MAJOR_VERSION; // S7 Major Version
 const int major_version= 17;               // C++ Standard version
+
+static auto command_args= std::vector<std::string> ();
 
 const std::string goldfish_version=
     std::to_string (major_version)
@@ -154,16 +157,33 @@ f_get_environment_variable (s7_scheme* sc, s7_pointer args) {
   }
 }
 
+static s7_pointer
+f_command_line (s7_scheme* sc, s7_pointer args) {
+  s7_pointer ret = s7_nil (sc);
+  int        size= command_args.size ();
+  for (int i= size - 1; i >= 0; i--) {
+    ret= s7_cons (sc, s7_make_string (sc, command_args[i].c_str ()), ret);
+  }
+  return ret;
+}
+
 inline void
 glue_scheme_process_context (s7_scheme* sc) {
-  s7_pointer  cur_env                   = s7_curlet (sc);
+  s7_pointer cur_env= s7_curlet (sc);
+
   const char* s_get_environment_variable= "g_get-environment-variable";
   const char* d_get_environment_variable=
       "(g_get-environemt-variable string) => string";
+  const char* s_command_line= "g_command-line";
+  const char* d_command_line= "(g_command-line) => string";
+
   s7_define (sc, cur_env, s7_make_symbol (sc, s_get_environment_variable),
              s7_make_typed_function (sc, s_get_environment_variable,
                                      f_get_environment_variable, 1, 0, false,
                                      d_get_environment_variable, NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_command_line),
+             s7_make_typed_function (sc, s_command_line, f_command_line, 0, 0,
+                                     false, d_command_line, NULL));
 }
 
 // Glue for (liii os)

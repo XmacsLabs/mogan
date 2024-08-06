@@ -93,6 +93,10 @@ main (int argc, char** argv) {
     cerr << "The boot.scm for Goldfish Scheme does not exist" << endl;
     exit (-1);
   }
+  vector<string> all_args (argv, argv + argc);
+  for (string arg : all_args) {
+    command_args.push_back (arg);
+  }
 
   // Init the underlying S7 Scheme and add the load_path
   s7_scheme* sc;
