@@ -16,7 +16,7 @@
 
 (define-library (texmacs protocol)
 (export data-begin data-end data-escape 
-        flush-verbatim flush-prompt flush-scheme)
+        flush-verbatim flush-prompt flush-scheme flush-file)
 (begin
 
 (define (data-begin)
@@ -42,6 +42,9 @@
 
 (define (flush-prompt msg)
   (flush-any (string-append "prompt#" msg)))
+
+(define (flush-file path)
+  (flush-any (string-append "file:" path)))
 
 ) ; end of begin
 ) ; end of define-library
