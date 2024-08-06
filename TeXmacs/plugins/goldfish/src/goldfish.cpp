@@ -130,11 +130,11 @@ main (int argc, char** argv) {
   else if (args.size () == 2 && args[0] == "-e") {
     goldfish_eval_code (sc, args[1]);
   }
-  else if (args.size () == 2 && args[0] == "-l") {
-    goldfish_eval_file (sc, args[1], true);
-  }
   else if (args.size () == 1 && args[0].size () > 0 && args[0][0] != '-') {
     goldfish_eval_file (sc, args[0], false);
+  }
+  else if (args.size () >= 2 && args[0] == "-l") {
+    goldfish_eval_file (sc, args[1], true);
   }
   else {
     display_for_invalid_options ();
