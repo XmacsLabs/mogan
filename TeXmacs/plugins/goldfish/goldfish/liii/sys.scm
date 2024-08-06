@@ -14,15 +14,12 @@
 ; under the License.
 ;
 
-(define-library (scheme process-context)
-(export get-environment-variable command-line)
+(define-library (liii sys)
+(export argv)
+(import (scheme process-context))
 (begin
 
-(define (get-environment-variable key)
-  (g_get-environment-variable key))
-
-(define (command-line)
-  (g_command-line))
+(define (argv) (command-line))
 
 ) ; end of begin
 ) ; end of define-library
