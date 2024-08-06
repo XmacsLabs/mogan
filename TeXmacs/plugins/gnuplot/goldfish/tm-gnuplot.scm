@@ -16,14 +16,17 @@
 
 (import (texmacs protocol)
         (liii os)
-        (liii uuid))
+        (liii uuid)
+        (liii sys)
+        (srfi srfi-1))
 
 (define (gnuplot-welcome)
-  (flush-prompt "> ")
-  (flush-verbatim
-    (string-append
-      "Gnuplot session by XmacsLabs\n"
-      "implemented on Goldfish Scheme (" (version) ")")))
+  (let ((format (last (argv))))
+    (flush-prompt (string-append format "] "))
+    (flush-verbatim
+      (string-append
+        "Gnuplot session by XmacsLabs\n"
+        "implemented on Goldfish Scheme (" (version) ")"))))
 
 (define (gnuplot-read-code)
   (define (read-code code)
@@ -35,7 +38,17 @@
   (read-code ""))
 
 (define (gen-temp-path)
-  (string-append (os-temp-dir) "/" (uuid4)))
+  (mkdir (string-append (os-temp-dir) "/gnuplot"))
+  (string-append (os-temp-dir) "/gnuplot/" (uuid4)))
+
+(define (gen-eps-precode eps-path)
+  (string-append
+   "reset\n"
+   "set terminal postscript eps enhanced\n"
+   "set output\n"
+   "set output '" eps-path "'\n"
+   "set size 1,1\n"
+   "set autoscale\n"))
 
 (define (gen-png-precode png-path)
   (string-append
@@ -45,22 +58,39 @@
     "set output '" png-path "'\n"
     "set size 1,1\n"))
 
-(define (gnuplot-dump-code code-path png-path code)
+(define (gen-svg-precode svg-path)
+  (string-append
+    "reset\n"
+    "set terminal svg enhanced\n"
+    "set output\n"
+    "set output '" svg-path "'\n"
+    "set size 1,1\n"
+    "set autoscale\n"))
+
+(define (gen-precode format path)
+  (cond ((string=? format "png") (gen-png-precode path))
+        ((string=? format "svg") (gen-svg-precode path))
+        ((string=? format "eps") (gen-eps-precode path))
+        (else (error 'wrong-args))))
+
+(define (gnuplot-dump-code code-path image-format image-path code)
   (with-output-to-file code-path
     (lambda ()
-      (display (gen-png-precode png-path))
+      (display (gen-precode image-format image-path))
       (display code))))
 
 (define (gnuplot-plot code-path)
-  (os-call (string-append "gnuplot" " " "-c" " " code-path)))
+  (let ((cmd (fourth (argv))))
+    (os-call (string-append cmd " " "-c" " " code-path))))
 
 (define (eval-and-print code)
-  (let* ((temp-path (gen-temp-path))
-         (png-path (string-append temp-path ".png"))
+  (let* ((format (last (argv)))
+         (temp-path (gen-temp-path))
+         (image-path (string-append temp-path "." format))
          (code-path (string-append temp-path ".gnuplot")))
-    (gnuplot-dump-code code-path png-path code)
+    (gnuplot-dump-code code-path format image-path code)
     (gnuplot-plot code-path)
-    (flush-file png-path)))
+    (flush-file image-path)))
 
 (define (read-eval-print)
   (let ((code (gnuplot-read-code)))

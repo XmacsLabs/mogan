@@ -26,6 +26,8 @@
   (string-append
     (string-quote (url->system (find-binary-goldfish)))
     " "
+    "-l"
+    " "
     (string-quote
       (string-append (url->system (get-texmacs-path))
                      "/plugins/gnuplot/goldfish/tm-gnuplot.scm"))
@@ -35,16 +37,16 @@
     image-format))
 
 (define (gnuplot-launchers)
-  (cons (list :launch (gen-launcher "png"))
-    (list
-      ;(when (has-binary-gs?)
-      ;  (list :launch "eps" (gen-launcher "eps")))
-      (list :launch "svg" (gen-launcher "svg"))
-      (list :launch "png" (gen-launcher "png")))))
+  (let ((l (list
+             (list :launch "svg" (gen-launcher "svg"))
+             (list :launch "png" (gen-launcher "png")))))
+    (if (has-binary-gs?)
+      (cons (list :launch "eps" (gen-launcher "eps")) l)
+      l)))
 
 (plugin-configure gnuplot
   (:require (and (has-binary-goldfish?) (has-binary-gnuplot?)))
-  (:launch ,(gen-launcher "png"))
+  ,@(gnuplot-launchers)
   (:serializer ,gnuplot-serialize)
   (:session "Gnuplot"))
 
