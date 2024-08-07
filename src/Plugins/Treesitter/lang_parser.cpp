@@ -272,9 +272,9 @@ lang_parser::do_ast_parse (string_u8 code) {
   // Tree Parse
   // time_t t1= texmacs_time ();//Parse Time Start
   const char* source_code= as_charp (code); // code
-  TSTree*     tstree   = ts_parser_parse_string (ast_parser, NULL, source_code,
-                                                 strlen (source_code));
-  TSNode      root_node= ts_tree_root_node (tstree);
+  TSTree*     tstree=
+      ts_parser_parse_string (ast_parser, NULL, source_code, N (code));
+  TSNode root_node= ts_tree_root_node (tstree);
   // time_t t2= texmacs_time ();//Parse Time Start
 
   // Tree Process
