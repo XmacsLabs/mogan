@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.2|1.2.8>>
 
 <style|<tuple|tmdoc|devel>>
 
@@ -14,7 +14,7 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|1|2|2|cell-background|pastel green>|<cwith|2|2|2|2|cell-background|pastel green>|<cwith|3|3|2|2|cell-background|pastel green>|<cwith|6|6|2|2|cell-background|pastel green>|<cwith|7|7|2|2|cell-background|pastel green>|<cwith|8|8|2|2|cell-background|pastel green>|<cwith|11|11|2|2|cell-background|pastel green>|<cwith|12|12|2|2|cell-background|pastel green>|<cwith|13|13|2|2|cell-background|pastel green>|<cwith|14|14|2|2|cell-background|pastel green>|<cwith|15|15|2|2|cell-background|pastel green>|<cwith|20|20|2|2|cell-background|pastel green>|<cwith|18|18|2|2|cell-background|pastel green>|<cwith|17|17|2|2|cell-background|pastel green>|<cwith|16|16|2|2|cell-background|pastel green>|<cwith|19|19|2|2|cell-background|pastel green>|<cwith|22|22|2|2|cell-background|pastel green>|<cwith|25|25|2|2|cell-hyphen|n>|<cwith|25|25|2|2|cell-background|pastel green>|<cwith|26|26|2|2|cell-background|pastel green>|<cwith|28|28|2|2|cell-background|pastel green>|<cwith|10|10|2|2|cell-background|>|<table|<row|<\cell>
+    <tformat|<cwith|1|1|2|2|cell-background|pastel green>|<cwith|2|2|2|2|cell-background|pastel green>|<cwith|3|3|2|2|cell-background|pastel green>|<cwith|6|6|2|2|cell-background|pastel green>|<cwith|7|7|2|2|cell-background|pastel green>|<cwith|8|8|2|2|cell-background|pastel green>|<cwith|11|11|2|2|cell-background|pastel green>|<cwith|13|13|2|2|cell-background|pastel green>|<cwith|14|14|2|2|cell-background|pastel green>|<cwith|15|15|2|2|cell-background|pastel green>|<cwith|16|16|2|2|cell-background|pastel green>|<cwith|21|21|2|2|cell-background|pastel green>|<cwith|19|19|2|2|cell-background|pastel green>|<cwith|18|18|2|2|cell-background|pastel green>|<cwith|17|17|2|2|cell-background|pastel green>|<cwith|20|20|2|2|cell-background|pastel green>|<cwith|24|24|2|2|cell-background|pastel green>|<cwith|27|27|2|2|cell-hyphen|n>|<cwith|27|27|2|2|cell-background|pastel green>|<cwith|28|28|2|2|cell-background|pastel green>|<cwith|30|30|2|2|cell-background|pastel green>|<cwith|10|10|2|2|cell-background|>|<table|<row|<\cell>
       Chore
     </cell>|<\cell>
       5_1
@@ -125,6 +125,16 @@
     </cell>|<\cell>
       New contributors
     </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      v1.2.8
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Contributors from OSPP 2024
+    </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
       5_12
@@ -225,6 +235,16 @@
     </cell>|<\cell>
       Doc on plugins
     </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      v1.2.8
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Octave plugin on longer built-in
+    </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
       5_22
@@ -297,11 +317,11 @@
     </cell>|<\cell>
       5_29
     </cell>|<\cell>
-      v1.2.6
+      v1.2.8
     </cell>|<\cell>
       <value|da>
     </cell>|<\cell>
-      Authors of Mogan
+      Goldfish Scheme plugin
     </cell>>>>
   </wide-tabular>
 

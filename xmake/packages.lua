@@ -29,6 +29,9 @@ function using_pacman ()
 end
 
 function add_requires_of_mogan()
+    tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
+    add_requires("tbox " .. TBOX_VERSION, {system=false, configs=tbox_configs})
+
     -- package: s7
     add_requires("s7 "..S7_VERSION, {system=false})
 

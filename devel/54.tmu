@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.2|1.2.8>>
 
 <style|tmdoc>
 
@@ -7,7 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|54_1>|<cell|Pluto>|<cell|Issue Template>>|<row|<cell|Chore>|<cell|54_2>|<cell|Pluto>|<cell|Pull Request Template>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|54_1>|<cell|Pluto>|<cell|Issue Template>>|<row|<cell|Chore>|<cell|54_2>|<cell|Pluto>|<cell|Pull Request Template>>|<row|<cell|Chore>|<cell|54_3>|<cell|Oyyko>|<cell|Add discord>>>>>
 
   <tmdoc-copyright|2023|Charonxin>
 

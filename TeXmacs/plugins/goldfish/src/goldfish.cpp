@@ -15,7 +15,6 @@
 //
 
 #include "goldfish.hpp"
-#include "s7.h"
 
 #include <filesystem>
 #include <iostream>
@@ -29,6 +28,12 @@ using std::string;
 using std::vector;
 using std::filesystem::exists;
 using std::filesystem::path;
+
+using goldfish::glue_goldfish;
+using goldfish::glue_liii_os;
+using goldfish::glue_liii_uuid;
+using goldfish::glue_scheme_process_context;
+using goldfish::glue_scheme_time;
 
 void
 display_help () {
@@ -88,6 +93,10 @@ main (int argc, char** argv) {
     cerr << "The boot.scm for Goldfish Scheme does not exist" << endl;
     exit (-1);
   }
+  vector<string> all_args (argv, argv + argc);
+  for (string arg : all_args) {
+    command_args.push_back (arg);
+  }
 
   // Init the underlying S7 Scheme and add the load_path
   s7_scheme* sc;
@@ -95,9 +104,15 @@ main (int argc, char** argv) {
   s7_load (sc, gf_boot.string ().c_str ());
   s7_add_to_load_path (sc, gf_lib.string ().c_str ());
 
+  // Init tbox
+  if (!tb_init (tb_null, tb_null)) exit (-1);
+
   // Glues
   glue_goldfish (sc);
   glue_scheme_time (sc);
+  glue_scheme_process_context (sc);
+  glue_liii_os (sc);
+  glue_liii_uuid (sc);
 
   // Command options
   vector<string> args (argv + 1, argv + argc);
@@ -115,11 +130,11 @@ main (int argc, char** argv) {
   else if (args.size () == 2 && args[0] == "-e") {
     goldfish_eval_code (sc, args[1]);
   }
-  else if (args.size () == 2 && args[0] == "-l") {
-    goldfish_eval_file (sc, args[1], true);
-  }
   else if (args.size () == 1 && args[0].size () > 0 && args[0][0] != '-') {
     goldfish_eval_file (sc, args[0], false);
+  }
+  else if (args.size () >= 2 && args[0] == "-l") {
+    goldfish_eval_file (sc, args[1], true);
   }
   else {
     display_for_invalid_options ();

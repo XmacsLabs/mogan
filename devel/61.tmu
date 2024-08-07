@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.2|1.2.8>>
 
 <style|<tuple|tmdoc|devel>>
 
@@ -7,7 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Chore>|<cell|61_10>|<cell|v1.2.7>|<cell|<value|da>>|<cell|Style: comment as a plugin>>|<row|<cell|Chore>|<cell|61_9>|<cell|v1.2.7>|<cell|<value|da>>|<cell|Style: literate as a plugin>>|<row|<cell|>|<cell|61_8>|<cell|>|<cell|>|<cell|>>|<row|<cell|Feature>|<cell|61_7>|<cell|v1.2.6>|<cell|<value|da>>|<cell|S7: a brand new scheme plugin>>|<row|<cell|Chore>|<cell|61_6>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Code: dot code plugin>>|<row|<cell|Chore>|<cell|61_5>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Binary: gnuplot binary plugin>>|<row|<cell|Feature>|<cell|61_4>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Style: physics v1.0.0>>|<row|<cell|Feature>|<cell|61_3>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Binary plugins>>|<row|<cell|Chore>|<cell|61_2>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Rework on the Python plugin>>|<row|<cell|Feature>|<cell|61_1>|<cell|v1.2.0>|<cell|Darcy>|<cell|Move the folder plugins to TeXmacs/plugins>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Feature>|<cell|61_16>|<cell|v1.2.8>|<cell|<value|jk>>|<cell|Education: fix typo in edu-edit>>|<row|<cell|Feature>|<cell|61_15>|<cell|v1.2.8>|<cell|<value|da>>|<cell|R7RS: code plugin>>|<row|<cell|Feature>|<cell|61_14>|<cell|v1.2.8>|<cell|<value|da>>|<cell|Gambit: new plugin>>|<row|<cell|Feature>|<cell|61_13>|<cell|v1.2.8>|<cell|<value|da>>|<cell|Chez: brand new plugin>>|<row|<cell|Feature>|<cell|61_12>|<cell|v1.2.8>|<cell|Darcy>|<cell|Guile: brand new plugin>>|<row|<cell|Feature>|<cell|61_11>|<cell|v1.2.8>|<cell|<value|da>>|<cell|Plugin: session-enable-math-input for default math input>>|<row|<cell|Chore>|<cell|61_10>|<cell|v1.2.7>|<cell|<value|da>>|<cell|Style: comment as a plugin>>|<row|<cell|Chore>|<cell|61_9>|<cell|v1.2.7>|<cell|<value|da>>|<cell|Style: literate as a plugin>>|<row|<cell|Chore>|<cell|61_8>|<cell|v1.2.8>|<cell|<value|da>>|<cell|S7: upgrade to 10.11-20240702>>|<row|<cell|Feature>|<cell|61_7>|<cell|v1.2.6>|<cell|<value|da>>|<cell|S7: a brand new scheme plugin>>|<row|<cell|>|<cell|>|<cell|v1.2.8>|<cell|<value|da>>|<cell|Goldfish: a brand new scheme plugin>>|<row|<cell|Chore>|<cell|61_6>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Code: dot code plugin>>|<row|<cell|Chore>|<cell|61_5>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Binary: gnuplot binary plugin>>|<row|<cell|Feature>|<cell|61_4>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Style: physics v1.0.0>>|<row|<cell|Feature>|<cell|61_3>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Binary plugins>>|<row|<cell|Chore>|<cell|61_2>|<cell|v1.2.3>|<cell|<value|da>>|<cell|Rework on the Python plugin>>|<row|<cell|Feature>|<cell|61_1>|<cell|v1.2.0>|<cell|Darcy>|<cell|Move the folder plugins to TeXmacs/plugins>>>>>
 
   <tmdoc-copyright|2023-2024|Darcy>
 

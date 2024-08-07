@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|1.2.7>>
+<TMU|<tuple|1.0.2|1.2.8>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -28,7 +28,23 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|1|-1|2|2|cell-background|pastel green>|<cwith|12|12|2|2|cell-background|pastel green>|<cwith|11|11|2|2|cell-background|pastel green>|<cwith|10|10|2|2|cell-background|pastel green>|<cwith|9|9|2|2|cell-background|pastel green>|<cwith|8|8|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|1|-1|2|2|cell-background|pastel green>|<cwith|14|14|2|2|cell-background|pastel green>|<cwith|13|13|2|2|cell-background|pastel green>|<cwith|12|12|2|2|cell-background|pastel green>|<cwith|11|11|2|2|cell-background|pastel green>|<cwith|10|10|2|2|cell-background|pastel green>|<table|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      14_15
+    </cell>|<\cell>
+      KeShih
+    </cell>|<\cell>
+      Add unit test for preference in Scheme
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      14_14
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      Add generic-url-test in Scheme
+    </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
       14_13

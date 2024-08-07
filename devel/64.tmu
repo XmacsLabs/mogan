@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.2|1.2.8>>
 
 <style|<tuple|tmdoc|chinese|devel>>
 
@@ -7,7 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|64_6>|<cell|v1.2.5>|<cell|<value|da>>|<cell|Failed to <menu|File|Import|SVG>>>|<row|<cell|Bug>|<cell|<dlink|64_5>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Error when rendering inserted svg image>>|<row|<cell|Chore>|<cell|64_4>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Remove support of xfig>>|<row|<cell|Bug>|<cell|<dlink|64_3>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Wrong default image size>>|<row|<cell|Bug>|<cell|<dlink|64_2>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Failed to render the web images>>|<row|<cell|Bug>|<cell|<dlink|64_1>>|<cell|v1.2.0>|<cell|Joris>|<cell|Fix cork filename when export embed image>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|64_9>|<cell|v1.2.8>|<cell|<value|jk>>|<cell|fix failing to embed linked image with unicode path>>|<row|<cell|Bug>|<cell|64_8>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Fill printed raster image with FFFFFFFF>>|<row|<cell|Bug>|<cell|64_7>|<cell|v1.2.6>|<cell|<value|da>>|<cell|Fix the encoding of the name for the inserted images>>|<row|<cell|Bug>|<cell|64_6>|<cell|v1.2.5>|<cell|<value|da>>|<cell|Failed to <menu|File|Import|SVG>>>|<row|<cell|Bug>|<cell|<dlink|64_5>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Error when rendering inserted svg image>>|<row|<cell|Chore>|<cell|64_4>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Remove support of xfig>>|<row|<cell|Bug>|<cell|<dlink|64_3>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Wrong default image size>>|<row|<cell|Bug>|<cell|<dlink|64_2>>|<cell|v1.2.0>|<cell|<value|da>>|<cell|Failed to render the web images>>|<row|<cell|Bug>|<cell|<dlink|64_1>>|<cell|v1.2.0>|<cell|Joris>|<cell|Fix cork filename when export embed image>>>>>
 
   <tmdoc-copyright|2023|Jingkaimori>
 

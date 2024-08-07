@@ -13,6 +13,7 @@ target ("goldfish") do
     set_targetdir("$(projectdir)/TeXmacs/plugins/goldfish/bin/")
     add_files ("$(projectdir)/TeXmacs/plugins/goldfish/src/goldfish.cpp")
     add_packages("s7")
+    add_packages("tbox")
     on_install(function (target)
     end)
 end
