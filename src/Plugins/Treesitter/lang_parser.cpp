@@ -168,8 +168,9 @@ lang_parser::add_single_token (string debug_tag, string token_type,
       token_types << token_type;
       token_lang_pros << token_lang_pro;
       brackets_index << 0;
+
       // cout << debug_tag << token_type << ", Code: " << token_literal << " S "
-      // << i << " E " << i+1 << "\n";
+      //      << i << " E " << i + 1 << "\n";
     }
   }
   else {
@@ -189,8 +190,9 @@ lang_parser::add_single_token (string debug_tag, string token_type,
           token_types << token_type;
           token_lang_pros << token_lang_pro;
           try_add_barckets_index (token_type);
-          // cout << debug_tag << token_type << ", Code: " << token_cache << " S
-          // " << start_pos + start << " E " << start_pos + i << "\n";
+
+          // cout << debug_tag << token_type << ", Code: " << token_cache << " S"
+          //      << start_pos + start << " E " << start_pos + i << "\n";
         }
         // Add Space
         start      = i + 1;
@@ -200,9 +202,10 @@ lang_parser::add_single_token (string debug_tag, string token_type,
         token_types << token_type;
         token_lang_pros << 0;
         brackets_index << 0;
-        // cout << debug_tag << "(Inner Space) " << token_type << ", Code: " <<
-        // "<space>" << " S " << start_pos + i << " E " << start_pos + start <<
-        // "\n";
+
+        // cout << debug_tag << "(Inner Space) " << token_type << ", Code: "
+        //      << "<space>"
+        //      << " S " << start_pos + i << " E " << start_pos + start << "\n";
       }
     }
     if (end_pos > start_pos) {
@@ -211,8 +214,9 @@ lang_parser::add_single_token (string debug_tag, string token_type,
       token_types << token_type;
       token_lang_pros << token_lang_pro;
       try_add_barckets_index (token_type);
-      // cout << debug_tag << token_type << ", Code: " << token_now << " S " <<
-      // start_pos << " E " << end_pos << "\n";
+
+      // cout << debug_tag << token_type << ", Code: " << token_now << " S "
+      //      << start_pos << " E " << end_pos << "\n";
     }
   }
 }

@@ -98,9 +98,12 @@ ast_language_rep::advance (tree t, int& pos) {
       lang_ast_parser.get_token_index () == lang_ast_parser.get_token_num ()) {
     lang_ast_parser.do_ast_parse (code);
     lang_ast_parser.set_token_start (start_index);
-    // cout << "Current Start Index:" << start_index << " " <<
-    // lang_ast_parser.get_token_index() << "\nCurrent Line:[" << s << "]\nFull
-    // Code:\n" << N(s) << " " << N(code) << " [\n" << code << "]\n";
+
+    // cout << "Current Start Index:" << start_index << " "
+    //      << lang_ast_parser.get_token_index () << "\nCurrent Line:[" << s
+    //      << "]\nFullCode:\n"
+    //      << N (s) << " " << N (code) << " [\n"
+    //      << code << "]\n";
   }
   if (pos >= N (s)) return &tp_normal_rep;
 
@@ -128,10 +131,11 @@ ast_language_rep::advance (tree t, int& pos) {
     token_type= keytoken_group[token_type];
   }
 
-  // cout << "nextpos " << pos << " |N (s) " <<  N (s) << " |token_end " <<
-  // token_end << " |nextindex " << lang_ast_parser.get_token_index()
-  // << " |maxindex " << lang_ast_parser.get_token_num() << " |tokenproperty "
-  // << token_property << " |tokentype " << token_type << "\n";
+  // cout << "nextpos " << pos << " |N (s) " << N (s) << " |token_end "
+  //      << token_end << " |nextindex " << lang_ast_parser.get_token_index ()
+  //      << " |maxindex " << lang_ast_parser.get_token_num ()
+  //      << " |tokenproperty " << token_property << " |tokentype " << token_type
+  //      << "\n";
 
   // token_property
   if (token_property == 0) {
