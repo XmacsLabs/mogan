@@ -329,18 +329,20 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     r2->setVisible (true);
     r2->setAutoFillBackground (true);
 
-    // TODO: handle tabToolBar
-    bl->insertWidget (0, modeToolBar);
-    bl->insertWidget (1, rulerWidget);
-    bl->insertWidget (2, focusToolBar);
-    bl->insertWidget (3, userToolBar);
-    bl->insertWidget (5, r2);
+    bl->insertWidget (0, tabToolBar);
+    bl->insertWidget (1, modeToolBar);
+    bl->insertWidget (2, rulerWidget);
+    bl->insertWidget (3, focusToolBar);
+    bl->insertWidget (4, userToolBar);
+    bl->insertWidget (6, r2);
 
     // mw->setContentsMargins (-2, -2, -2, -2);  // Why this?
     bar->setContentsMargins (0, 1, 0, 1);
   }
   else {
     mw->addToolBar (mainToolBar);
+    mw->addToolBarBreak ();
+    mw->addToolBar (tabToolBar);
     mw->addToolBarBreak ();
     mw->addToolBar (modeToolBar);
     mw->addToolBarBreak ();
