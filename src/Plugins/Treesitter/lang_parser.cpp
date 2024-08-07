@@ -25,8 +25,9 @@ void
 lang_parser::get_code_from_root (tree root, tree line, string& code,
                                  string_u8& code_u8, string& tag,
                                  int& start_index) {
-  for (int i= 0; i < N (root); i++) {
-    if (root[i]->op == 807) {
+  int root_N= N (root);
+  for (int i= 0; i < root_N; i++) {
+    if (root[i]->op == NBSP_OP) {
       tag= tag * as_string (N (obtain_ip (root[i])));
     }
     else {
@@ -120,7 +121,8 @@ lang_parser::collect_leaf_nodes (TSNode node, list<TSNode>& tsnodes) {
 void
 lang_parser::is_change_line_between (int start, int end, int& cl_low,
                                      int& cl_high) {
-  for (int i= 0; i < N (change_line_pos); i++) {
+  int change_line_pos_N= N (change_line_pos);
+  for (int i= 0; i < change_line_pos_N; i++) {
     if (change_line_pos[i] >= start && change_line_pos[i] < end) {
       if (change_line_pos[i] <= cl_low) cl_low= change_line_pos[i];
       if (change_line_pos[i] >= cl_high) cl_high= change_line_pos[i];
@@ -184,7 +186,8 @@ lang_parser::add_single_token (string debug_tag, string token_type,
     string token_now  = token_literal (0, end_pos - start_pos);
     string token_cache= "";
     int    start      = 0;
-    for (int i= 0; i < N (token_now); i++) {
+    int    token_now_N= N (token_now);
+    for (int i= 0; i < token_now_N; i++) {
       if (token_now[i] != ' ' && token_now[i] != '\n') {
         token_cache= token_cache * token_now[i];
       }
@@ -289,7 +292,8 @@ lang_parser::do_ast_parse (string_u8 code) {
   // Tree Process
   // time_t t3= texmacs_time ();//Process Time Start
   collect_leaf_nodes (root_node, tsnodes);
-  for (int i= 0; i < N (tsnodes); i++) {
+  int tsnodes_len= N (tsnodes);
+  for (int i= 0; i < tsnodes_len; i++) {
     const TSNode& leaf_node = tsnodes[i];
     const char*   node_type = ts_node_type (leaf_node);
     int           start_byte= ts_node_start_byte (leaf_node);
@@ -363,7 +367,8 @@ lang_parser::get_token_index () {
 
 void
 lang_parser::set_token_start (int start_index) {
-  for (int i= 0; i < N (token_starts); i++) {
+  int token_num= get_token_num ();
+  for (int i= 0; i < token_num; i++) {
     if (start_index <= token_starts[i]) {
       inner_token_index= i;
       break;

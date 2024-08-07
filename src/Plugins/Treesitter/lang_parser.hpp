@@ -16,6 +16,8 @@
 #include <tree-sitter-cpp.h>
 #include <tree_sitter/api.h>
 
+#define NBSP_OP 807
+
 class lang_parser {
 public:
   lang_parser ();

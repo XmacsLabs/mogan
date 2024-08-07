@@ -22,7 +22,8 @@
 #include "tm_url.hpp"
 #include "tree_helper.hpp"
 
-// TODO:测试用例->用scm写测试
+// TODO:Write Scheme tests
+
 ast_language_rep::ast_language_rep (string name) : language_rep (name) {
 
   ast_parser= ts_parser_new ();
@@ -70,9 +71,9 @@ ast_language_rep::customize_highlight_theme (tree config) {
     tree   group_of= config[i];
     string col     = get_label (group_of);
     for (int j= 0; j < N (group_of); j++) {
-      string tokentype= get_label (group_of[j]);
-      if (!is_empty (tokentype)) {
-        theme_group (tokentype)= col (1, N (col));
+      string token_name= get_label (group_of[j]);
+      if (!is_empty (token_name)) {
+        theme_group (token_name)= col (1, N (col));
       }
     }
   }
@@ -84,7 +85,7 @@ ast_language_rep::advance (tree t, int& pos) {
   // Jump NBSP "-" op=807
   string s= t->label;
   tree&  my_father (subtree (the_et, reverse (obtain_ip (t)->next)));
-  if (my_father->op == 807) {
+  if (my_father->op == NBSP_OP) {
     pos+= 1;
     token_type= "none";
     if (s == " ") return &tp_space_rep;
@@ -152,7 +153,8 @@ ast_language_rep::get_hyphens (string s) {
   int        i;
   array<int> penalty (N (s) + 1);
   penalty[0]= HYPH_INVALID;
-  for (i= 1; i < N (s); i++)
+  int len   = N (s);
+  for (i= 1; i < len; i++)
     if (s[i - 1] == '-' && is_alpha (s[i])) penalty[i]= HYPH_STD;
     else penalty[i]= HYPH_INVALID;
   penalty[i]= HYPH_INVALID;

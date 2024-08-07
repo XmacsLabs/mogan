@@ -278,7 +278,8 @@ prog_language_rep::get_hyphens (string s) {
   int        i;
   array<int> penalty (N (s) + 1);
   penalty[0]= HYPH_INVALID;
-  for (i= 1; i < N (s); i++)
+  int len   = N (s);
+  for (i= 1; i < len; i++)
     if (s[i - 1] == '-' && is_alpha (s[i])) penalty[i]= HYPH_STD;
     else penalty[i]= HYPH_INVALID;
   penalty[i]= HYPH_INVALID;
