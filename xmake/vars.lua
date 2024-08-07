@@ -24,6 +24,8 @@ LOLLY_VERSION = "1.4.26"
 
 -- Third-party dependencies
 S7_VERSION = "20240702"
+TREESITTER_VERSION = "0.22.6"
+TREESITTER_CPP_VERSION = "0.22.2"
 QT6_VERSION = "6.5.3"
 QTIFW_VERSION = "4.6.0"
 TBOX_VERSION = "1.7.5"
@@ -136,6 +138,10 @@ plugin_macos_srcs = {
     "$(projectdir)/src/Plugins/MacOS/mac_spellservice.mm",
     "$(projectdir)/src/Plugins/MacOS/mac_utilities.mm",
     "$(projectdir)/src/Plugins/MacOS/mac_app.mm"
+}
+plugin_treesitter_srcs = {
+    "$(projectdir)/src/Plugins/Treesitter/**.cpp",
+    "$(projectdir)/src/Plugins/Treesitter/**.hpp",
 }
 plugin_pdf_srcs = { "$(projectdir)/src/Plugins/Pdf/**.cpp" }
 plugin_xml_srcs = { "$(projectdir)/src/Plugins/Xml/**.cpp" }
