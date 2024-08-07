@@ -38,7 +38,7 @@ ast_language_rep::ast_language_rep (string name) : language_rep (name) {
   tree keytoken_config= get_parser_config (name, "keytoken");
   customize_keytokens (keytoken_config);
 
-  tree theme_config= get_parser_config (name, "white_theme");
+  tree theme_config= get_parser_config (name, "light_theme");
   customize_highlight_theme (theme_config);
 }
 

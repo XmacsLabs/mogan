@@ -27,7 +27,6 @@ prog_language_rep::prog_language_rep (string name)
     debug_packrat << "Building the " * name * " language parser" << LF;
 
   string use_modules= "(use-modules (code " * name * "-lang))";
-  // cout << use_modules << "\n";
   eval (use_modules);
 
   tree keyword_config= get_parser_config (name, "keyword");
@@ -224,7 +223,6 @@ text_property
 prog_language_rep::advance (tree t, int& pos) {
   string s= t->label;
 
-  // cout << "Current Line:" << s << "\n"; //<less>
   if (pos >= N (s)) return &tp_normal_rep;
 
   if (string_parser.unfinished ()) {
@@ -304,8 +302,6 @@ prog_language_rep::get_color (tree t, int start, int end) {
 
   string type= none;
   string s   = t->label;
-  // cout << "get_color Line:" << s << " " << start << " "<< end << " "<<
-  // current_parser << "\n"; //<less>s
 
   // Coloring as inline comment
   int pos= 0;
@@ -327,9 +323,7 @@ prog_language_rep::get_color (tree t, int start, int end) {
   }
   else if (current_parser == "operator_parser") {
     string oper= s (start, end);
-    // cout << "operator_parser:" << oper << " " << start << " " << end << "\n";
-    // //<less>s
-    type= operator_parser.get (oper);
+    type       = operator_parser.get (oper);
   }
   else if (current_parser == "keyword_parser") {
     string keyword= s (start, end);

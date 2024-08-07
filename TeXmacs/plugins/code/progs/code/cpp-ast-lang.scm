@@ -34,9 +34,9 @@
       "while" "goto" "switch" "case")
     (keyword_control
       "throw" "catch" "finally" "return" "try" "yield")
-    (string_quate
+    (string_quato
       "R\"" "\"" "'")
-    (preprocess 
+    (preprocessor 
     "#define" "#undef" "#include"
      "#if" "#ifdef" "#ifndef" "#else" "#elif" "#endif"
      "#line" "#error" "#pragma")
@@ -57,7 +57,7 @@
 ;; Preferences for syntax highlighting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "cpp-ast") (== key "white_theme")))
+  (:require (and (== lan "cpp-ast") (== key "light_theme")))
   `(,(string->symbol key)
     (C#000000 "none")
     (C#0000FF "constant")
@@ -68,11 +68,11 @@
     (C#795E26 "number_literal")
     (C#267F99 "comment" "documentation")
     (C#D16969 "punctuation")
-    (C#6A0D91 "preprocess")
+    (C#6A0D91 "preprocessor")
     (C#D7BA7D "variable" "variable_parameter" "variable_property" "variable_special")
     (C#3A9B8C "type_identifier", "namespace_identifier")
     (C#4077A3 "primitive_type" )
-    (C#D32F2F "string_content" "char_content" "string_quate", "raw_string_content")
+    (C#D32F2F "string_content" "char_content" "string_quato", "raw_string_content")
     (C#BF2C2C "escape_sequence" "system_lib_string")
     (C#5D3A1A "field_identifier")
     (C#800080 "INNER_ERROR")

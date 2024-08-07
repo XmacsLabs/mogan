@@ -1,7 +1,7 @@
 
 /******************************************************************************
  * MODULE     : impl_language.hpp
- * COPYRIGHT  : (C) 1999-2020  Joris van der Hoeven, Darcy Shen, UnbSky
+ * COPYRIGHT  : (C) 1999-2024  Joris van der Hoeven, Darcy Shen, UnbSky
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
