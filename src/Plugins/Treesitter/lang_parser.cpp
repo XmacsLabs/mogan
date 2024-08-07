@@ -75,13 +75,18 @@ lang_parser::get_code_str (tree t, int& start_index, int& hash_code) {
   string_u8 code     = "";
   get_code_from_root (parent, t, code_cork, code, tag, start_index);
 
+  //<ldots> error fix
+  //"..." (cork)->(utf-8) "…" 
+  //"…" (utf-8)->(cork) "<ldots>" 
+  code = replace(code, "…", "...");
+
   real_code_len= N (code_cork);
   if (N (code_cork) == 0 && N (t->label) >= 1) {
     code= cork_to_utf8 (t->label) * " ";
     change_line_pos << 1;
   }
   // for(int i = 0; i < N(code); i++){
-  //   cout << code[i] << " " << (int)code[i] << "\n";
+  //   cout << code[i] << " " << (int)code[i] << "\n"; 
   // }
   hash_code= (hash (code) / 2) + (hash (tag) / 2);
   if (N (code) <= 1) hash_code= 0;
