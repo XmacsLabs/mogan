@@ -76,9 +76,9 @@ lang_parser::get_code_str (tree t, int& start_index, int& hash_code) {
   get_code_from_root (parent, t, code_cork, code, tag, start_index);
 
   //<ldots> error fix
-  //"..." (cork)->(utf-8) "…" 
-  //"…" (utf-8)->(cork) "<ldots>" 
-  code = replace(code, "…", "...");
+  //"..." (cork)->(utf-8) "…"
+  //"…" (utf-8)->(cork) "<ldots>"
+  code= replace (code, "…", "...");
 
   real_code_len= N (code_cork);
   if (N (code_cork) == 0 && N (t->label) >= 1) {
@@ -86,7 +86,7 @@ lang_parser::get_code_str (tree t, int& start_index, int& hash_code) {
     change_line_pos << 1;
   }
   // for(int i = 0; i < N(code); i++){
-  //   cout << code[i] << " " << (int)code[i] << "\n"; 
+  //   cout << code[i] << " " << (int)code[i] << "\n";
   // }
   hash_code= (hash (code) / 2) + (hash (tag) / 2);
   if (N (code) <= 1) hash_code= 0;
@@ -196,8 +196,8 @@ lang_parser::add_single_token (string debug_tag, string token_type,
           token_lang_pros << token_lang_pro;
           try_add_barckets_index (token_type);
 
-          // cout << debug_tag << token_type << ", Code: " << token_cache << " S"
-          //      << start_pos + start << " E " << start_pos + i << "\n";
+          // cout << debug_tag << token_type << ", Code: " << token_cache
+          // << "S" << start_pos + start << " E " << start_pos + i << "\n";
         }
         // Add Space
         start      = i + 1;

@@ -134,7 +134,8 @@ ast_language_rep::advance (tree t, int& pos) {
   // cout << "nextpos " << pos << " |N (s) " << N (s) << " |token_end "
   //      << token_end << " |nextindex " << lang_ast_parser.get_token_index ()
   //      << " |maxindex " << lang_ast_parser.get_token_num ()
-  //      << " |tokenproperty " << token_property << " |tokentype " << token_type
+  //      << " |tokenproperty " << token_property << " |tokentype " <<
+  //      token_type
   //      << "\n";
 
   // token_property
