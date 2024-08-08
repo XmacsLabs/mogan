@@ -34,7 +34,7 @@
       "while" "goto" "switch" "case")
     (keyword_control
       "throw" "catch" "finally" "return" "try" "yield")
-    (string_quato
+    (string_quote
       "R\"" "\"" "'")
     (preprocessor 
     "#define" "#undef" "#include"
@@ -72,7 +72,7 @@
     (C#D7BA7D "variable" "variable_parameter" "variable_property" "variable_special")
     (C#3A9B8C "type_identifier", "namespace_identifier")
     (C#4077A3 "primitive_type" )
-    (C#D32F2F "string_content" "char_content" "string_quato", "raw_string_content")
+    (C#D32F2F "string_content" "char_content" "string_quote", "raw_string_content")
     (C#BF2C2C "escape_sequence" "system_lib_string")
     (C#5D3A1A "field_identifier")
     (C#800080 "INNER_ERROR")
