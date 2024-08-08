@@ -17,8 +17,9 @@
 (define-library (liii os)
 (export
   os-call os-arch os-type os-windows? os-linux? os-macos? os-temp-dir
-  mkdir getenv)
-(import (scheme process-context))
+  isdir mkdir rmdir getenv getcwd listdir)
+(import (scheme process-context)
+        (liii error))
 (begin
 
 (define (os-call command)
@@ -45,11 +46,34 @@
 (define (os-temp-dir)
   (g_os-temp-dir))
 
+(define (%check-dir-andthen path f)
+  (cond ((not (file-exists? path))
+         (file-not-found-error
+           (string-append "No such file or directory: '" path "'")))
+        ((not (isdir path))
+         (not-a-directory-error
+           (string-append "Not a directory: '" path "'")))
+        (else (f path))))
+
+(define (isdir path)
+  (g_isdir path))
+
 (define (mkdir path)
-  (g_mkdir path))
+  (if (file-exists? path)
+    (file-exists-error (string-append "File exists: '" path "'"))
+    (g_mkdir path)))
+
+(define (rmdir path)
+  (%check-dir-andthen path delete-file))
+
+(define (listdir path)
+  (%check-dir-andthen path g_listdir))
 
 (define (getenv key)
   (get-environment-variable key))
+
+(define (getcwd)
+  (g_getcwd))
 
 ) ; end of begin
 ) ; end of define-library
