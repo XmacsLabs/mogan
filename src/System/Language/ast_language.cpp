@@ -21,6 +21,9 @@
 #include "scheme.hpp"
 #include "tm_url.hpp"
 #include "tree_helper.hpp"
+#include <moebius/tree_label.hpp>
+
+using moebius::make_tree_label;
 
 // TODO:Write Scheme tests
 
@@ -86,7 +89,8 @@ ast_language_rep::advance (tree t, int& pos) {
   // Jump NBSP "- " in detail , op=807
   string s= t->label;
   tree&  my_father (subtree (the_et, reverse (obtain_ip (t)->next)));
-  if (my_father->op == NBSP_OP) {
+  tree   nbsp_tree (make_tree_label ("nbsp"));
+  if (my_father->op == nbsp_tree->op) {
     pos+= 1;
     token_type= "none";
     if (s == " ") return &tp_space_rep;
@@ -94,7 +98,8 @@ ast_language_rep::advance (tree t, int& pos) {
   }
   int       start_index= 0;
   int       code_hash  = 0;
-  string_u8 code= lang_ast_parser.get_code_str (t, start_index, code_hash);
+  string_u8 code=
+      lang_ast_parser.get_code_str (t, nbsp_tree->op, start_index, code_hash);
 
   if (lang_ast_parser.check_to_compile (code_hash) || code_hash == 0 ||
       lang_ast_parser.get_token_index () == lang_ast_parser.get_token_num ()) {

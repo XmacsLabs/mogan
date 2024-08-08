@@ -24,7 +24,7 @@
   Highlighting for bracket matching
 
   <\cpp-code>
-    //thre dots ... here
+    //three dots ... here
 
     int function(){
 

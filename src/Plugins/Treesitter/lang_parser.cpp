@@ -24,9 +24,9 @@ lang_parser::lang_parser () {
 void
 lang_parser::get_code_from_root (tree root, tree line, string& code,
                                  string_u8& code_u8, string& tag,
-                                 int& start_index) {
+                                 int& start_index, int nbsp_op) {
   for (tree child_node : root) {
-    if (child_node->op == NBSP_OP) {
+    if (child_node->op == nbsp_op) {
       // DEBUG cout for NBSP
       // cout << child_node << " " << N(child_node->label) << " [" <<
       // child_node->label << "]\n";
@@ -54,7 +54,8 @@ lang_parser::get_code_from_root (tree root, tree line, string& code,
         }
       }
       else {
-        get_code_from_root (child_node, line, code, code_u8, tag, start_index);
+        get_code_from_root (child_node, line, code, code_u8, tag, start_index,
+                            nbsp_op);
       }
     }
   }
@@ -63,7 +64,8 @@ lang_parser::get_code_from_root (tree root, tree line, string& code,
 extern tree the_et;
 
 string_u8
-lang_parser::get_code_str (tree t, int& start_index, int& hash_code) {
+lang_parser::get_code_str (tree t, int nbsp_op, int& start_index,
+                           int& hash_code) {
   change_line_pos= list<int> ();
   path father    = obtain_ip (t)->next;
   while (N (father) > 3) {
@@ -76,7 +78,7 @@ lang_parser::get_code_str (tree t, int& start_index, int& hash_code) {
   string    code_cork= "";
   string    tag      = "";
   string_u8 code     = "";
-  get_code_from_root (parent, t, code_cork, code, tag, start_index);
+  get_code_from_root (parent, t, code_cork, code, tag, start_index, nbsp_op);
 
   //<ldots> error fix
   //"..." (cork)->(utf-8) "…"
