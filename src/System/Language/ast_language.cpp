@@ -82,7 +82,7 @@ ast_language_rep::customize_highlight_theme (tree config) {
 extern tree the_et;
 text_property
 ast_language_rep::advance (tree t, int& pos) {
-  // Jump NBSP "-" op=807
+  // Jump NBSP "- " in detail , op=807
   string s= t->label;
   tree&  my_father (subtree (the_et, reverse (obtain_ip (t)->next)));
   if (my_father->op == NBSP_OP) {

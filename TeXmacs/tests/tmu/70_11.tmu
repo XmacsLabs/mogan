@@ -24,6 +24,8 @@
   Highlighting for bracket matching
 
   <\cpp-code>
+    //thre dots ... here
+
     int function(){
 
     \ \ if(a.func(b.value,c.func())){

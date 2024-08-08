@@ -25,24 +25,26 @@ void
 lang_parser::get_code_from_root (tree root, tree line, string& code,
                                  string_u8& code_u8, string& tag,
                                  int& start_index) {
-  int root_N= N (root);
-  for (int i= 0; i < root_N; i++) {
-    if (root[i]->op == NBSP_OP) {
-      tag= tag * as_string (N (obtain_ip (root[i])));
+  for (tree child_node : root) {
+    if (child_node->op == NBSP_OP) {
+      // DEBUG cout for NBSP
+      // cout << child_node << " " << N(child_node->label) << " [" <<
+      // child_node->label << "]\n";
+      tag= tag * as_string (N (obtain_ip (child_node)));
     }
     else {
-      if (is_atomic (root[i])) {
-        // cout << "Code Leaf: " << root[i] << " " << obtain_ip(root[i]) <<
-        // "\n";
-        tag    = tag * as_string (N (obtain_ip (root[i])));
-        code   = code * root[i]->label;
-        code_u8= code_u8 * cork_to_utf8 (root[i]->label);
-        if (obtain_ip (root[i]) == obtain_ip (line)) {
-          start_index= N (code) - N (root[i]->label);
+      if (is_atomic (child_node)) {
+        // cout << "Code Leaf: " << child_node << " " << obtain_ip(child_node)
+        // << "\n";
+        tag    = tag * as_string (N (obtain_ip (child_node)));
+        code   = code * child_node->label;
+        code_u8= code_u8 * cork_to_utf8 (child_node->label);
+        if (obtain_ip (child_node) == obtain_ip (line)) {
+          start_index= N (code) - N (child_node->label);
         }
         // cout << "Line Change: " <<  N(code) << "\n";
         change_line_pos << N (code);
-        if (root[i]->label == " " || N (root[i]->label) == 0) {
+        if (child_node->label == " " || N (child_node->label) == 0) {
           code   = code * " ";
           code_u8= code_u8 * " ";
         }
@@ -52,7 +54,7 @@ lang_parser::get_code_from_root (tree root, tree line, string& code,
         }
       }
       else {
-        get_code_from_root (root[i], line, code, code_u8, tag, start_index);
+        get_code_from_root (child_node, line, code, code_u8, tag, start_index);
       }
     }
   }
