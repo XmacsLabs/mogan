@@ -44,7 +44,7 @@
 
 ; nice Scala style to throw the not-implemented-error
 (define (???)
-  (error 'not-implemented-error))
+  (error 'not-implemented-error "???"))
 
 ) ; begin
 ) ; define-library
