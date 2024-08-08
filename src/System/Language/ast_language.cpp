@@ -48,7 +48,7 @@ ast_language_rep::ast_language_rep (string name) : language_rep (name) {
 
 tree
 ast_language_rep::get_parser_config (string lan, string key) {
-  string cmd= "(tm->tree (parser-feature " * raw_quote (lan) * " " *
+  string cmd= "(stree->tree (parser-feature " * raw_quote (lan) * " " *
               raw_quote (key) * "))";
   return as_tree (eval (cmd));
 }
@@ -61,6 +61,7 @@ ast_language_rep::customize_keytokens (tree config) {
     for (int j= 0; j < N (group_of); j++) {
       string word= get_label (group_of[j]);
       // word = cork_to_utf8(word);
+      cout << group << " " << word << "\n";
       if (!is_empty (word)) {
         keytoken_group (word)= group;
       }
@@ -76,8 +77,9 @@ ast_language_rep::customize_highlight_theme (tree config) {
     string col     = get_label (group_of);
     for (int j= 0; j < N (group_of); j++) {
       string token_name= get_label (group_of[j]);
+      cout << col << " " << token_name << "\n";
       if (!is_empty (token_name)) {
-        theme_group (token_name)= col (1, N (col));
+        theme_group (token_name)= col (1, N (col) - 1);
       }
     }
   }
