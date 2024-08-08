@@ -110,6 +110,7 @@ struct ast_language_rep : language_rep {
   hashmap<string, string> keytoken_group;
   hashmap<string, string> theme_group;
   string                  token_type;
+  int                     nbsp_op;
 
   ast_language_rep (string name);
   text_property advance (tree t, int& pos);

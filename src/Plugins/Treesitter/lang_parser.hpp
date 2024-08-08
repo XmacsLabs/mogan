@@ -30,8 +30,7 @@ public:
    * @param hash_code The hash value of the code string
    * @return The code string in UTF-8 format
    */
-  string_u8 get_code_str (tree t, int nbsp_op, int& start_index,
-                          int& hash_code);
+  string_u8 get_code_str (tree t, int& start_index, int& hash_code);
 
   /**
    * @brief Check if the code needs to be compiled based on its hash value.
@@ -95,8 +94,7 @@ private:
 
   void collect_leaf_nodes (TSNode node, list<TSNode>& tsnodes);
   void get_code_from_root (tree root, tree line, string& code,
-                           string_u8& code_u8, string& tag, int& start_index,
-                           int nbsp_op);
+                           string_u8& code_u8, int& start_index);
   void is_change_line_between (int start, int end, int& cl_low, int& cl_high);
   void try_add_barckets_index (string& token_type);
   void add_token (string token_type, string token_literal, int start_pos,

@@ -65,7 +65,7 @@
     ("#AF00DB" "keyword" "keyword_conditional" "keyword_control")
     ("#4B0082" "operator" "operator_special" "operator_decoration" "operator_field" "operator_openclose")
     ("#000000" "identifier")
-    ("#795E26" "number_literal")
+    ("#3030B0" "number_literal")
     ("#808080" "comment" "documentation")
     ("#D16969" "punctuation")
     ("#004000" "preprocessor")

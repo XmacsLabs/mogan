@@ -23,40 +23,29 @@ lang_parser::lang_parser () {
 
 void
 lang_parser::get_code_from_root (tree root, tree line, string& code,
-                                 string_u8& code_u8, string& tag,
-                                 int& start_index, int nbsp_op) {
+                                 string_u8& code_u8, int& start_index) {
   for (tree child_node : root) {
-    if (child_node->op == nbsp_op) {
-      // DEBUG cout for NBSP
-      // cout << child_node << " " << N(child_node->label) << " [" <<
-      // child_node->label << "]\n";
-      tag= tag * as_string (N (obtain_ip (child_node)));
-    }
-    else {
-      if (is_atomic (child_node)) {
-        // cout << "Code Leaf: " << child_node << " " << obtain_ip(child_node)
-        // << "\n";
-        tag    = tag * as_string (N (obtain_ip (child_node)));
-        code   = code * child_node->label;
-        code_u8= code_u8 * cork_to_utf8 (child_node->label);
-        if (obtain_ip (child_node) == obtain_ip (line)) {
-          start_index= N (code) - N (child_node->label);
-        }
-        // cout << "Line Change: " <<  N(code) << "\n";
-        change_line_pos << N (code);
-        if (child_node->label == " " || N (child_node->label) == 0) {
-          code   = code * " ";
-          code_u8= code_u8 * " ";
-        }
-        else {
-          code   = code * "\n";
-          code_u8= code_u8 * "\n";
-        }
+    if (is_atomic (child_node)) {
+      // cout << "Code Leaf: " << child_node << " " << obtain_ip(child_node)
+      // << "\n";
+      code << child_node->label;
+      code_u8 << cork_to_utf8 (child_node->label);
+      if (obtain_ip (child_node) == obtain_ip (line)) {
+        start_index= N (code) - N (child_node->label);
+      }
+      // cout << "Line Change: " <<  N(code) << "\n";
+      change_line_pos << N (code);
+      if (child_node->label == " " || N (child_node->label) == 0) {
+        code << " ";
+        code_u8 << " ";
       }
       else {
-        get_code_from_root (child_node, line, code, code_u8, tag, start_index,
-                            nbsp_op);
+        code << "\n";
+        code_u8 << "\n";
       }
+    }
+    else {
+      get_code_from_root (child_node, line, code, code_u8, start_index);
     }
   }
 }
@@ -64,8 +53,7 @@ lang_parser::get_code_from_root (tree root, tree line, string& code,
 extern tree the_et;
 
 string_u8
-lang_parser::get_code_str (tree t, int nbsp_op, int& start_index,
-                           int& hash_code) {
+lang_parser::get_code_str (tree t, int& start_index, int& hash_code) {
   change_line_pos= list<int> ();
   path father    = obtain_ip (t)->next;
   while (N (father) > 3) {
@@ -76,9 +64,8 @@ lang_parser::get_code_str (tree t, int nbsp_op, int& start_index,
   // IP " << father << "\n";
   start_index        = 0;
   string    code_cork= "";
-  string    tag      = "";
   string_u8 code     = "";
-  get_code_from_root (parent, t, code_cork, code, tag, start_index, nbsp_op);
+  get_code_from_root (parent, t, code_cork, code, start_index);
 
   //<ldots> error fix
   //"..." (cork)->(utf-8) "…"
@@ -93,10 +80,9 @@ lang_parser::get_code_str (tree t, int nbsp_op, int& start_index,
   // for(int i = 0; i < N(code); i++){
   //   cout << code[i] << " " << (int)code[i] << "\n";
   // }
-  hash_code= (hash (code) / 2) + (hash (tag) / 2);
-  if (N (code) <= 1) hash_code= 0;
-  // cout << "\nGen Hash Code " << hash_code << " C" << hash(code) / 2 << " T"
-  // << tag << " " << current_code_hash << "\n";
+  hash_code= hash (parent);
+  // cout << "\nGen Hash Code " << hash_code << " Current Hash Code" <<
+  // current_code_hash << "\n";
   return code;
 }
 

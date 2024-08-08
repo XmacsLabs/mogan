@@ -44,6 +44,9 @@ ast_language_rep::ast_language_rep (string name) : language_rep (name) {
 
   tree theme_config= get_parser_config (lan_name, "light_theme");
   customize_highlight_theme (theme_config);
+
+  tree nbsp_tree (make_tree_label ("nbsp"));
+  nbsp_op= nbsp_tree->op;
 }
 
 tree
@@ -86,20 +89,19 @@ ast_language_rep::customize_highlight_theme (tree config) {
 extern tree the_et;
 text_property
 ast_language_rep::advance (tree t, int& pos) {
-  // Jump NBSP "- " in detail , op=807
+  // Jump NBSP ["-"," "] in detail
   string s= t->label;
   tree&  my_father (subtree (the_et, reverse (obtain_ip (t)->next)));
-  tree   nbsp_tree (make_tree_label ("nbsp"));
-  if (my_father->op == nbsp_tree->op) {
+  if (my_father->op == nbsp_op) {
     pos+= 1;
     token_type= "none";
     if (s == " ") return &tp_space_rep;
     else return &tp_normal_rep;
   }
+
   int       start_index= 0;
   int       code_hash  = 0;
-  string_u8 code=
-      lang_ast_parser.get_code_str (t, nbsp_tree->op, start_index, code_hash);
+  string_u8 code= lang_ast_parser.get_code_str (t, start_index, code_hash);
 
   if (lang_ast_parser.check_to_compile (code_hash) || code_hash == 0 ||
       lang_ast_parser.get_token_index () == lang_ast_parser.get_token_num ()) {
