@@ -137,7 +137,7 @@ function sidebarGuide() {
                     link: '/guide/plugin_python.md'
                 },
                 {
-                    text: 'Goldfish Scheme Plugin',
+                    text: 'Goldfish Scheme',
                     link: '/guide/plugin_goldfish.md'
                 },
             ]
@@ -321,7 +321,7 @@ function sidebarGuideZh() {
                     link: '/zh/guide/plugin_python.md'
                 },
                 {
-                    text: '金鱼Scheme插件',
+                    text: '金鱼Scheme',
                     link: '/zh/guide/plugin_goldfish.md'
                 },
             ]
