@@ -1,5 +1,5 @@
 # 金鱼Scheme
-金鱼Scheme是三鲤Scheme的社区版，墨干理工套件是三鲤理工套件的社区版。
+[金鱼Scheme](https://gitee.com/LiiiLabs/goldfish)是三鲤Scheme的社区版，墨干理工套件是三鲤理工套件的社区版。
 
 金鱼Scheme作为插件内置在墨干理工套件中，Goldfish Scheme本身不提供REPL的实现，墨干理工套件中提供了Goldfish Scheme的结构化REPL。
 
