@@ -35,10 +35,11 @@ ast_language_rep::ast_language_rep (string name) : language_rep (name) {
   string use_modules= "(use-modules (code " * name * "-lang))";
   eval (use_modules);
 
-  tree keytoken_config= get_parser_config (name, "keytoken");
+  string lan_name       = name (0, N (name) - 4);
+  tree   keytoken_config= get_parser_config (lan_name, "keytoken");
   customize_keytokens (keytoken_config);
 
-  tree theme_config= get_parser_config (name, "light_theme");
+  tree theme_config= get_parser_config (lan_name, "light_theme");
   customize_highlight_theme (theme_config);
 }
 

@@ -14,7 +14,7 @@
   (:use (prog default-lang)))
 
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "cpp-ast") (== key "keytoken")))
+  (:require (and (== lan "cpp") (== key "keytoken")))
   `(,(string->symbol key)
     (constant
       "false" "true" "cout" "cin" "cerr"
@@ -57,7 +57,7 @@
 ;; Preferences for syntax highlighting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (tm-define (parser-feature lan key)
-  (:require (and (== lan "cpp-ast") (== key "light_theme")))
+  (:require (and (== lan "cpp") (== key "light_theme")))
   `(,(string->symbol key)
     (C#000000 "none")
     (C#0000FF "constant")
