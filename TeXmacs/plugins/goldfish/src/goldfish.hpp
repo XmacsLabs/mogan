@@ -41,12 +41,27 @@ const std::string goldfish_version=
         .append (std::to_string (patch_version));
 
 namespace goldfish {
+using std::string;
+using std::vector;
 using std::filesystem::create_directory;
+using std::filesystem::current_path;
+using std::filesystem::directory_iterator;
 using std::filesystem::exists;
 using std::filesystem::filesystem_error;
+using std::filesystem::is_directory;
 using std::filesystem::path;
 using std::filesystem::remove;
 using std::filesystem::temp_directory_path;
+
+inline s7_pointer
+string_vector_to_s7_vector (s7_scheme* sc, vector<string> v) {
+  int        N  = v.size ();
+  s7_pointer ret= s7_make_vector (sc, N);
+  for (int i= 0; i < N; i++) {
+    s7_vector_set (sc, ret, i, s7_make_string (sc, v[i].c_str ()));
+  }
+  return ret;
+}
 
 // Glues for Goldfish
 static s7_pointer
@@ -243,6 +258,12 @@ f_os_temp_dir (s7_scheme* sc, s7_pointer args) {
 }
 
 static s7_pointer
+f_isdir (s7_scheme* sc, s7_pointer args) {
+  const char* dir_c= s7_string (s7_car (args));
+  return s7_make_boolean (sc, is_directory (path (dir_c)));
+}
+
+static s7_pointer
 f_mkdir (s7_scheme* sc, s7_pointer args) {
   const char* dir_c= s7_string (s7_car (args));
   path        dir  = path (dir_c);
@@ -254,6 +275,24 @@ f_mkdir (s7_scheme* sc, s7_pointer args) {
                      s7_make_string (sc, ex.what ()));
   }
   return s7_make_boolean (sc, ret);
+}
+
+static s7_pointer
+f_getcwd (s7_scheme* sc, s7_pointer args) {
+  path cwd= current_path ();
+  return s7_make_string (sc, cwd.string ().c_str ());
+}
+
+static s7_pointer
+f_listdir (s7_scheme* sc, s7_pointer args) {
+  const char*    path_c= s7_string (s7_car (args));
+  path           path (path_c);
+  vector<string> entries;
+  s7_pointer     ret= s7_make_vector (sc, 0);
+  for (const auto& entry : std::filesystem::directory_iterator (path)) {
+    entries.push_back (entry.path ().filename ().string ());
+  }
+  return string_vector_to_s7_vector (sc, entries);
 }
 
 inline void
@@ -268,8 +307,14 @@ glue_liii_os (s7_scheme* sc) {
   const char* d_os_call    = "(g_os-call string) => int";
   const char* s_os_temp_dir= "g_os-temp-dir";
   const char* d_os_temp_dir= "(g_os-temp-dir) => string";
+  const char* s_isdir      = "g_isdir";
+  const char* d_isdir      = "(g_isdir string) => boolean";
   const char* s_mkdir      = "g_mkdir";
   const char* d_mkdir      = "(g_mkdir string) => boolean";
+  const char* s_listdir    = "g_listdir";
+  const char* d_listdir    = "(g_listdir) => vector";
+  const char* s_getcwd     = "g_getcwd";
+  const char* d_getcwd     = "(g_getcwd) => string";
 
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_type),
              s7_make_typed_function (sc, s_os_type, f_os_type, 0, 0, false,
@@ -283,9 +328,18 @@ glue_liii_os (s7_scheme* sc) {
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_temp_dir),
              s7_make_typed_function (sc, s_os_temp_dir, f_os_temp_dir, 0, 0,
                                      false, d_os_call, NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_isdir),
+             s7_make_typed_function (sc, s_isdir, f_isdir, 1, 0, false, d_isdir,
+                                     NULL));
   s7_define (sc, cur_env, s7_make_symbol (sc, s_mkdir),
              s7_make_typed_function (sc, s_mkdir, f_mkdir, 1, 0, false, d_mkdir,
                                      NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_listdir),
+             s7_make_typed_function (sc, s_listdir, f_listdir, 1, 0, false,
+                                     d_listdir, NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_getcwd),
+             s7_make_typed_function (sc, s_getcwd, f_getcwd, 0, 0, false,
+                                     d_getcwd, NULL));
 }
 
 static s7_pointer
