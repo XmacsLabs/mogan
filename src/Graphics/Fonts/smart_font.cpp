@@ -1612,15 +1612,15 @@ smart_font_bis (string family, string variant, string series, string shape,
   if (starts (family, "sys-")) {
     if (family == "sys-chinese") {
       string name= default_chinese_font_name ();
-      family     = "cjk=" * name * ",roman";
+      family     = "math=roman,cjk=" * name * ",roman";
     }
     if (family == "sys-japanese") {
       string name= default_japanese_font_name ();
-      family     = "cjk=" * name * ",roman";
+      family     = "math=roman,cjk=" * name * ",roman";
     }
     if (family == "sys-korean") {
       string name= default_korean_font_name ();
-      family     = "cjk=" * name * ",roman";
+      family     = "math=roman,cjk=" * name * ",roman";
     }
   }
   family= tex_gyre_fix (family, series, shape);
