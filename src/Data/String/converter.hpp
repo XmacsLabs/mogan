@@ -11,10 +11,12 @@
 
 #ifndef CONVERTER_H
 #define CONVERTER_H
+
 #include "resource.hpp"
 #include "hashtree.hpp"
 #include "file.hpp"
 #include "tree.hpp"
+
 
 enum escape_type { NOESCAPES, BIT2BIT, UTF8, ENTITY_NAME, CHAR_ENTITY };
 

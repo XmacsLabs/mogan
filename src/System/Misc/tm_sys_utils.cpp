@@ -1,7 +1,7 @@
 
 /******************************************************************************
 * MODULE     : sys_utils.cpp
-* DESCRIPTION: file handling
+* DESCRIPTION: sys utils for texmacs
 * COPYRIGHT  : (C) 1999-2016  Joris van der Hoeven, Denis Raux
 *******************************************************************************
 * This software falls under the GNU general public license version 3 or later.
@@ -9,15 +9,15 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#include "config.h"
+#include "tm_sys_utils.hpp"
 #include "sys_utils.hpp"
+#include "tm_debug.hpp"
+#include "url.hpp"
 #include "file.hpp"
-#include "tree.hpp"
-#include "parse_string.hpp"
 
 #ifdef OS_MINGW
-#include "mingw_sys_utils.hpp"
-#include "win-utf8-compat.hpp"
+#include "Windows/win_sys_utils.hpp"
+#include "Windows/win_utf8_compat.hpp"
 #else
 #include "Unix/unix_sys_utils.hpp"
 #endif
@@ -25,6 +25,7 @@
 #ifdef QTTEXMACS
 #include "Qt/qt_sys_utils.hpp"
 #endif
+
 
 int script_status = 1;
 
@@ -51,27 +52,19 @@ string get_pretty_os_name () {
 
 int
 system (string s, string& result, string& error) {
-#if defined (OS_MINGW)
-#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
+#if !defined(KERNEL_L3)
   return qt_system (s, result, error);
 #else
   return -1;
-#endif
-#else
-  return unix_system (s, result, error);
 #endif
 }
 
 int
 system (string s, string& result) {
-#if defined (OS_MINGW)
-#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
+#if !defined(KERNEL_L3)
   return qt_system (s, result);
 #else
   return -1;
-#endif
-#else
-  return unix_system (s, result);
 #endif
 }
 
@@ -86,7 +79,7 @@ system (string s) {
   }
   else {
 #if defined (OS_MINGW)
-#if !(defined(KERNEL_L2) || defined(KERNEL_L3))
+#if !defined(KERNEL_L3)
   return qt_system (s);
 #else
   return -1;
@@ -111,33 +104,6 @@ var_eval_system (string s) {
   return r;
 }
 
-string
-get_env (string var) {
-  c_string _var (var);
-  const char* _ret= getenv (_var);
-  if (_ret==NULL) {
-    if (var == "PWD") return get_env ("HOME");
-    return "";
-  }
-  string ret (_ret);
-  return ret;
-  // do not delete _ret !
-}
-
-void
-set_env (string var, string with) {
-#if defined(STD_SETENV) && !defined(OS_MINGW)
-  c_string _var  (var);
-  c_string _with (with);
-  setenv (_var, _with, 1);
-#else
-  char* _varw= as_charp (var * "=" * with);
-  (void) putenv (_varw);
-  // do not delete _varw !!!
-  // -> known memory leak, but solution more complex than it is worth
-#endif
-}
-
 url
 get_texmacs_path () {
   string tmpath= get_env ("TEXMACS_PATH");
@@ -153,21 +119,6 @@ get_texmacs_home_path () {
   if (path == "")
     path= url_system ("$HOME/.TeXmacs");
   return path;
-}
-
-array<string>
-evaluate_system (array<string> arg,
-		 array<int> fd_in, array<string> in,
-		 array<int> fd_out) {
-  array<string> out (N(fd_out));
-  array<string*> ptr (N(fd_out));
-  for (int i= 0; i < N(fd_out); i++) ptr[i]= &(out[i]);
-#ifdef OS_MINGW
-  int ret= mingw_system (arg, fd_in, in, fd_out, ptr);
-#else
-  int ret= unix_system (arg, fd_in, in, fd_out, ptr);
-#endif
-  return append (as_string (ret), out);
 }
 
 
@@ -214,52 +165,9 @@ has_printing_cmd () {
   return has;
 }
 
-string get_user_login () {
-#if OS_MINGW
-  return getenv ("USERNAME");
-#else
-  return unix_get_login ();
-#endif
-}
-
-string get_user_name () {
-#if OS_MINGW
-  return sys_utils::mingw_get_username ();
-#else // Linux and macOS
-  return unix_get_username ();
-#endif
-}
-
-bool
-os_win32 () {
-#if defined (OS_WIN32)
-  return true;
-#else
-  return false;
-#endif
-}
-
-bool
-os_mingw () {
-#ifdef OS_MINGW
-  return true;
-#else
-  return false;
-#endif
-}
-
-bool
-os_macos () {
-#if defined (OS_MACOS)
-  return true;
-#else
-  return false;
-#endif
-}
-
 static const char*
 default_look_and_feel_impl () {
-  if (os_mingw () || os_win32 ()) return "windows";
+  if (os_mingw () || os_win ()) return "windows";
   if (os_macos ()) return "macos";
   return "emacs";
 }

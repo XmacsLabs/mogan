@@ -17,6 +17,7 @@
 #include "file.hpp"
 #include "image_files.hpp"
 #include "scheme.hpp" 
+#include "sys_utils.hpp"
 
 string
 gs_system () {

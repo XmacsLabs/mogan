@@ -296,7 +296,7 @@ init_env_vars () {
                        url ("$TEXMACS_PATH/misc/themes") |
                        url ("$TEXMACS_HOME_PATH/misc/themes") |
                        plugin_path ("misc/themes"));
-#ifdef OS_WIN32
+#ifdef OS_WIN
   set_env ("TEXMACS_SOURCE_PATH", "");
 #else
   set_env ("TEXMACS_SOURCE_PATH", TEXMACS_SOURCES);
@@ -333,7 +333,7 @@ init_misc () {
 
 static void
 init_deprecated () {
-#ifndef OS_WIN32
+#ifndef OS_WIN
   // Check for Macaulay 2
   if (get_env ("M2HOME") == "")
     if (exists_in_path ("M2")) {

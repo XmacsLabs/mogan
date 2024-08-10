@@ -23,7 +23,10 @@ package("lolly")
     set_description("Lolly is a C++ library")
 
     add_urls("https://gitee.com/XmacsLabs/lolly.git")
-    add_versions("1.1.3", "v1.1.3")
+    if not is_plat("wasm") then
+        add_deps("libcurl")
+    end
+    add_versions("1.1.7", "v1.1.7")
 
     on_install("linux", "macosx", "mingw", "wasm", function (package)
         local configs = {}

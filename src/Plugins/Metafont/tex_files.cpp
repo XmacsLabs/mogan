@@ -51,7 +51,7 @@ static url
 resolve_pk (url name) {
   url r= resolve (the_pk_path * name);
   if (!is_none (r)) return r;
-#ifndef OS_WIN32 // The kpsewhich from MikTeX is bugged for pk fonts
+#ifndef OS_WIN // The kpsewhich from MikTeX is bugged for pk fonts
   if (get_setting ("KPSEWHICH") == "true") {
     string which= kpsewhich (as_string (name));
     if ((which!="") && exists (url_system (which))) return url_system (which);
@@ -65,7 +65,7 @@ static url
 resolve_pfb (url name) {
   url r= resolve (the_pfb_path * name);
   if (!is_none (r)) return r;
-#ifndef OS_WIN32 // The kpsewhich from MikTeX is bugged for pfb fonts
+#ifndef OS_WIN // The kpsewhich from MikTeX is bugged for pfb fonts
   if (get_setting ("KPSEWHICH") == "true") {
     string which= kpsewhich (as_string (name));
     if ((which!="") && exists (url_system (which))) return url_system (which);
@@ -97,7 +97,7 @@ resolve_tex (url name) {
   url u= url_none ();
   if (ends (s, "mf" )) {
     u= resolve_tfm (name);
-#ifdef OS_WIN32
+#ifdef OS_WIN
     if (is_none (u))
       u= resolve_tfm (replace (s, ".mf", ".tfm"));
 #endif
@@ -175,7 +175,7 @@ make_tex_pk (string name, int dpi, int design_dpi) {
     r= system (s);
   }
   if (get_setting ("MAKEPK") == "makepk") {
-#ifdef OS_WIN32
+#ifdef OS_WIN
     s = "makepk --dest-dir \""
       * get_env("$TEXMACS_HOME_PATH") * "\\fonts\\pk\" "
       * name * " " * as_string(dpi) * " " * as_string(design_dpi)

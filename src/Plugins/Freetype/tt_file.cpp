@@ -20,6 +20,7 @@
 #include "tm_timer.hpp"
 #include "data_cache.hpp"
 #include "scheme.hpp"
+#include "sys_utils.hpp"
 
 static hashmap<string,string> tt_fonts ("no");
 

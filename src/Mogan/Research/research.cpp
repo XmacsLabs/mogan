@@ -41,7 +41,7 @@ void mac_fix_paths ();
 #endif
 
 #ifdef OS_MINGW
-#include "win-utf8-compat.hpp"
+#include "Windows/win_utf8_compat.hpp"
 #endif
 
 #ifdef MACOSX_EXTENSIONS

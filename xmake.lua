@@ -118,7 +118,7 @@ end
 
 S7_VERSION = "20240702"
 local FREETYPE_VERSION = "2.12.1"
-local LOLLY_VERSION = "1.1.3"
+local LOLLY_VERSION = "1.1.7"
 
 -- package: s7
 add_requires("s7 "..S7_VERSION, {system=false})
@@ -337,8 +337,6 @@ target("libmogan") do
             "$(buildir)/glue"
         }, {public = true})
 
-    add_includedirs("src/Plugins/Unix", {public = true})
-
     add_files({
             "src/Data/**.cpp",
             "src/Edit/**.cpp",
@@ -369,8 +367,6 @@ target("libmogan") do
             "src/Plugins/Tex/**.cpp",
             "src/Plugins/Xml/**.cpp",
             "src/Plugins/Updater/**.cpp"})
-
-    add_files("src/Plugins/Unix/**.cpp")
 
     add_files({
         "src/Plugins/Qt/**.cpp",

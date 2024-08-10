@@ -10,13 +10,11 @@
 ******************************************************************************/
 
 #include "data_cache.hpp"
+#include "sys_utils.hpp"
 #include "file.hpp"
 #include "iterator.hpp"
 #include "tree_helper.hpp"
-
-#ifndef KERNEL_L2
 #include "tm_block.hpp"
-#endif
 
 /******************************************************************************
 * Caching routines
@@ -176,9 +174,6 @@ cache_save (string buffer) {
       }
     }
     else {
-#ifdef KERNEL_L2
-      tm_failure("Unsupported code path in Kernel Level 2");
-#else
       cached << "(tuple\n";
       while (it->busy ()) {
         tree ckey= it->next ();
@@ -188,7 +183,6 @@ cache_save (string buffer) {
         }
       }
       cached << ")";
-#endif
     }
     (void) save_string (cache_file, cached);
     cache_changed->remove (buffer);
@@ -221,13 +215,9 @@ cache_load (string buffer) {
         }
       }
       else {
-#ifdef KERNEL_L2
-        tm_failure("Unsupported code path in Kernel Level 2");
-#else
         tree t= scheme_to_tree (cached);
         for (int i=0; i<N(t)-1; i+=2)
           cache_data (tuple (buffer, t[i]))= t[i+1];
-#endif
       }
     }
     cache_loaded->insert (buffer);

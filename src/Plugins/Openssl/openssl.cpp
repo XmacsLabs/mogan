@@ -11,6 +11,7 @@
 
 #include "openssl.hpp"
 #include "file.hpp"
+#include "sys_utils.hpp"
 
 /******************************************************************************
 * OpenSSL configuration

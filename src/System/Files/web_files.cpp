@@ -15,9 +15,8 @@
 #include "analyze.hpp"
 #include "hashmap.hpp"
 
-#ifndef KERNEL_L2
 #include "scheme.hpp"
-#endif
+#include "Curl/curl.hpp"
 
 #define MAX_CACHED 25
 static int web_nr=0;
@@ -90,34 +89,20 @@ get_from_web (url name) {
   url res= get_cache (name);
   if (!is_none (res)) return res;
 
-  string tool= fetch_tool ();
-  if (tool == "") return url_none ();
-  
-  url tmp= url_temp ();
-  string tmp_s= escape_sh (concretize (tmp));
-  string cmd= "";
-  
-  if (tool == "wget") {
-    cmd= "wget --header='User-Agent: TeXmacs-" TEXMACS_VERSION "' -q";
-    cmd << " --no-check-certificate --tries=1";
-    cmd << " -O " << tmp_s << " " << escape_sh (web_encode (as_string (name)));
-  }
-  
-  if (tool == "curl") {
-    cmd= "curl --user-agent TeXmacs-" TEXMACS_VERSION;
-    cmd << " " << escape_sh (web_encode (as_string (name)));
-    cmd << " --output " << tmp_s;
-  }
+  string suf= suffix (name);
+  if (!is_empty (suf)) suf= string(".") * suf;
 
-  //cout << cmd << LF;
-  system (cmd);
-  //cout << "got " << name << " as " << tmp << LF;
+  url tmp= url_temp (suf);
+  string content= lolly::curl_get (
+    escape_sh (web_encode (as_string (name))),
+    string("TeXmacs-") * TEXMACS_VERSION);
 
-  if (file_size (url_system (tmp_s)) <= 0) {
-    remove (tmp);
-    return url_none ();
+  if (is_empty (content)) return url_none ();
+  else {
+    save_string (tmp, content);
+    set_cache (name, tmp);
+    return tmp;
   }
-  else return set_cache (name, tmp);
 }
 
 /******************************************************************************
@@ -133,16 +118,9 @@ get_from_server (url u) {
   string name= as_string (u);
   if (ends (name, "~") || ends (name, "#")) {
     if (!is_rooted_tmfs (name)) return url_none ();
-#ifdef KERNEL_L2
-      tm_failure("Unsupported code path in Kernel Level 2");
-#else
     if (!as_bool (call ("tmfs-can-autosave?", unglue (u, 1))))
       return url_none ();
-#endif
   }
-#ifdef KERNEL_L2
-      tm_failure("Unsupported code path in Kernel Level 2");
-#else
   string r= as_string (call ("tmfs-load", object (name)));
   if (r == "") return url_none ();
   url tmp= url_temp (string (".") * suffix (name));
@@ -153,18 +131,13 @@ get_from_server (url u) {
   // FIXME: certain files could be cached, but others not
   // for instance, files which are loaded in a delayed fashion
   // would always be cached as empty files, which is erroneous.
-#endif
 }
 
 bool
 save_to_server (url u, string s) {
   if (!is_rooted_tmfs (u)) return true;
   string name= as_string (u);
-#ifdef KERNEL_L2
-      tm_failure("Unsupported code path in Kernel Level 2");
-#else
   (void) call ("tmfs-save", object (name), object (s));
-#endif
   return false;
 }
 

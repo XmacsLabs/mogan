@@ -33,17 +33,11 @@
 #include "analyze.hpp"
 #include "hashmap.hpp"
 
-#ifndef KERNEL_L2
 #include "scheme.hpp"
 #include "Xml/xml.hpp"
-#endif
 
 #ifdef QTTEXMACS
 #include "Qt/qt_utilities.hpp"
-#endif
-
-#ifdef OS_WIN32
-#include <x11/xlib.h>
 #endif
 
 #ifdef USE_GS
@@ -184,7 +178,7 @@ ps_load (url image, bool conv) {
   if (is_none (name))
     name= "$TEXMACS_PATH/misc/pixmaps/unknown.ps";
 
-#ifdef OS_WIN32
+#ifdef OS_WIN
   if (is_ramdisc (name)) name= get_from_ramdisc (name);
 #endif
 
@@ -254,7 +248,7 @@ ps_read_bbox (string buf, int& x1, int& y1, int& x2, int& y2 ) {
 
 void
 set_imgbox_cache(tree t, int w, int h, int xmin, int ymin){
-    img_box (t)= (imgbox) {w, h, xmin, ymin};
+    img_box (t)= imgbox {w, h, xmin, ymin};
 }
 
 void
@@ -366,9 +360,6 @@ svg_image_size (url image, int& w, int& h) {
   string content;
   bool err= load_string (image, content, false);
   if (!err) {
-#ifdef KERNEL_L2
-      tm_failure("Unsupported code path in Kernel Level 2");
-#else
     tree t= parse_xml (content);
     tree result= find_first_element_by_name (t, "svg");
     string width= get_attr_from_element (result, "width", "");
@@ -377,7 +368,6 @@ svg_image_size (url image, int& w, int& h) {
     int try_height= parse_xml_length (height);
     if (try_width > 0) w= try_width;
     if (try_height > 0) h= try_height;
-#endif
   }
 }
  
@@ -503,7 +493,6 @@ image_to_png (url image, url png, int w, int h) {// IN PIXEL UNITS!
 
 bool
 call_scm_converter(url image, url dest) {
-#ifndef KERNEL_L2
   if (DEBUG_CONVERT) debug_convert << " using scm" <<LF;
   if (as_bool (call ("file-converter-exists?",
                      "x." * suffix (image),
@@ -515,7 +504,6 @@ call_scm_converter(url image, url dest) {
                     << " -> " << concretize (dest) << LF;
     return success;
   }
-#endif
   return false;
 }
 

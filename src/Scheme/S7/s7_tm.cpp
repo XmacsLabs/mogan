@@ -15,15 +15,16 @@
 #include "file.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
+
 #ifndef KERNEL_L3
 #include "convert.hpp" // tree_to_texmacs (should not belong here)
 #include "widget.hpp"
+#include <unistd.h> // for getpid
 #endif
+
 #ifdef HAVE_GETTIMEOFDAY
 #include <sys/time.h>
 #endif
-
-#include <unistd.h> // for getpid
 
 /******************************************************************************
  * Initialization of s7
@@ -293,6 +294,7 @@ tmscm_to_blackbox (tmscm blackbox_smob) {
  * Compatibility
  ******************************************************************************/
 
+#ifndef KERNEL_L3
 static s7_pointer
 g_current_time (s7_scheme *sc, s7_pointer args) {
   s7_int res;
@@ -317,6 +319,7 @@ g_getpid (s7_scheme *sc, s7_pointer args) {
 
   return (s7_make_integer (sc, (s7_int) getpid ()));
 }
+#endif
 
 void
 initialize_compat () {
@@ -324,6 +327,7 @@ initialize_compat () {
   s7_pointer cur_env= s7_curlet (tm_s7);
   s7_scheme *sc     = tm_s7;
 
+#ifndef KERNEL_L3
   s7_define (sc, cur_env, s7_make_symbol (tm_s7, "current-time"),
              s7_make_typed_function (sc, "current-time", g_current_time, 0, 0,
                                      false, "current-time", NULL));
@@ -333,6 +337,7 @@ initialize_compat () {
                  sc, "getpid", g_getpid, 0, 0, false, "int getpid(void)",
                  s7_make_signature (sc, 2, s7_make_symbol (sc, "integer?"),
                                     s7_t (sc))));
+#endif
 }
 
 /******************************************************************************

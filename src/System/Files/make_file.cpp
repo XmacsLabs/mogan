@@ -16,10 +16,7 @@
 #include "hashmap.hpp"
 #include "image_files.hpp"
 #include "tree_helper.hpp"
-
-#ifndef KERNEL_L2
 #include "tm_block.hpp"
-#endif
 
 /******************************************************************************
 * Make
@@ -69,9 +66,6 @@ make_file (int cmd, tree data, array<url> args) {
   if (exists (make_target) && exists (make_check)) {
     string s;
     if (!load_string (make_check, s, false)) {
-#ifdef KERNEL_L2
-      tm_failure("Unsupported code path in Kernel Level 2");
-#else
       tree old_check= scheme_to_tree (s);
       if (is_tuple (old_check) && N(old_check) == N(check)) {
         bool ok= true;
@@ -79,14 +73,9 @@ make_file (int cmd, tree data, array<url> args) {
           ok= ok && (old_check[i] == check[i]);
         if (ok) return make_target;
       }
-#endif
     }
   }
-#ifdef KERNEL_L2
-      tm_failure("Unsupported code path in Kernel Level 2");
-#else
   save_string (make_check, tree_to_scheme (check));
-#endif
   //cout << "Make " << cmd << ", " << data << ", " << args << LF;
 
   // fetch files that are not on disk
