@@ -1,0 +1,5 @@
+add_rules("mode.release", "mode.debug")
+target("aesgm")
+  set_kind("$(kind)")
+  add_files("*.c")
+  add_headerfiles("*.h")

@@ -9,19 +9,13 @@
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
-includes("@builtin/check")
-configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
-configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
-configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
-
-
 set_project("Liii STEM Suite")
 
 -- because this cpp project use variant length arrays which is not supported by
 -- msvc, this project will not support windows env.
 -- because some package is not ported to cygwin env, this project will not
 -- support cygwin env.
-set_allowedplats("linux") 
+set_allowedplats("linux")
 
 -- add releasedbg, debug and release modes for different platforms.
 -- debug mode cannot run on mingw with qt precompiled binary
@@ -30,11 +24,98 @@ add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
 add_repositories("liii-repo xmake")
 
+package("liii-libaesgm")
+    set_homepage("https://github.com/xmake-mirror/libaesgm")
+    set_description("https://repology.org/project/libaesgm/packages")
+
+    set_sourcedir(path.join(os.scriptdir(), "3rdparty/libaesgm"))
+
+    on_install("linux", "macosx", "windows", "mingw", function (package)
+        if package:is_plat("windows", "mingw") and package:is_arch("arm", "arm64") then
+            -- Windows is always little endian
+            io.replace("brg_endian.h", [[
+#elif 0     /* **** EDIT HERE IF NECESSARY **** */
+#  define PLATFORM_BYTE_ORDER IS_LITTLE_ENDIAN]], [[
+#elif 1     /* Edited: Windows ARM is little endian */
+#  define PLATFORM_BYTE_ORDER IS_LITTLE_ENDIAN]], { plain = true })
+        end
+        local configs = {}
+        if package:config("shared") then
+            configs.kind = "shared"
+        end
+        import("package.tools.xmake").install(package, configs)
+    end)
+
+    on_test(function (package)
+        assert(package:has_cfuncs("aes_init", {includes = "aes.h"}))
+    end)
+package_end()
+
+PDFHUMMUS_VERSION = "4.6.2"
+package("liii-pdfhummus")
+    set_homepage("https://www.pdfhummus.com/")
+    set_description("High performance library for creating, modiyfing and parsing PDF files in C++ ")
+    set_license("Apache-2.0")
+
+    set_sourcedir(path.join(os.scriptdir(), "3rdparty/pdfhummus"))
+
+    add_deps("zlib", "freetype", "liii-libaesgm")
+
+    add_configs("libtiff", {description = "Supporting tiff image", default = false, type = "boolean"})
+    add_configs("libjpeg", {description = "Support DCT encoding", default = false, type = "boolean"})
+    add_configs("libpng", {description = "Support png image", default = false, type = "boolean"})
+
+    if is_plat("linux") then
+        add_syslinks("m")
+    end
+
+    on_load(function (package)
+        for _, dep in ipairs({"libtiff", "libpng", "libjpeg"}) do
+            if package:config(dep) then
+                package:add("deps", dep)
+            end
+        end
+    end)
+    on_install("linux", "windows", "mingw", "macosx", function (package)
+        local configs = {}
+        if package:config("shared") then
+            configs.kind = "shared"
+        end
+        for _, dep in ipairs({"libtiff", "libpng", "libjpeg"}) do
+            if package:config(dep) then
+                configs[dep] = true
+            end
+        end
+        import("package.tools.xmake").install(package, configs)
+    end)
+
+    on_test(function (package)
+        assert(package:check_cxxsnippets({test = [[
+            #include "PDFWriter/PDFWriter.h"
+            #include <iostream>
+            using namespace std;
+            using namespace PDFHummus;
+            void test() {
+                PDFWriter pdfWriter;
+                pdfWriter.Reset();
+            }
+        ]]}, {configs = {languages = "c++11"}}))
+    end)
+package_end()
+
+
+
+includes("@builtin/check")
+configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
+configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
+configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
+
+
+
 function using_legacy_apt ()
     return (linuxos.name() == "uos") or (linuxos.name () == "ubuntu" and linuxos.version():major() == 20)
 end
 
-PDFHUMMUS_VERSION = "4.6.2"
 S7_VERSION = "20240702"
 local FREETYPE_VERSION = "2.12.1"
 
@@ -45,10 +126,10 @@ add_requires("lolly 1.1.0", {system=false})
 add_requires("libjpeg")
 add_requires("apt::libpng-dev", {alias="libpng"})
 add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-add_requires("pdfhummus "..PDFHUMMUS_VERSION, {system=false,configs={libpng=true,libjpeg=true}})
+add_requires("liii-pdfhummus", {system=false,configs={libpng=true,libjpeg=true}})
 if using_legacy_apt() then
     add_requires("freetype "..FREETYPE_VERSION, {system=false})
-    add_requireconfs("pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
+    add_requireconfs("liii-pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
 else
     add_requires("apt::libfreetype-dev", {alias="freetype"})
 end
@@ -111,7 +192,7 @@ target("libmogan") do
     set_configvar("LINKED_IMLIB2", false)
 
     add_packages("lolly")
-    add_packages("pdfhummus")
+    add_packages("liii-pdfhummus")
     add_packages("freetype")
     add_packages("s7")
 

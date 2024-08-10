@@ -2,7 +2,7 @@ version: '1.0'
 name: ci-debian
 displayName: ci-debian
 triggers:
-  trigger: auto
+  trigger: manual
   pr:
     branches:
       prefix:

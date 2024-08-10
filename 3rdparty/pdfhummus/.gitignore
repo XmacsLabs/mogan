@@ -1,0 +1,64 @@
+#all the binaries
+BUILD
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.lib
+*.pdb
+*.ilk
+BuildLog.htm
+*.obj
+*.idb
+
+_.swp
+
+#Visual Studio unwanted#
+########################
+*.user
+*.ncb
+*.suo
+*.pch
+*.dep
+*.manifest
+*.manifest.res
+*.sdf
+*.log
+*.tlog
+*.lastbuildstate
+*.ipch
+*.rc
+*.opensdf
+*.cache
+
+#XCode/OSX unwanted#
+################
+xcode/Build
+xcode/DerivedData
+.DS_Store
+
+#unwanted other sources #
+########################
+zlib-1.2.3
+tiff-3.9.4
+freetype-2.4.2
+freetype-2.4.10
+freetype-2.4.11
+jpegsr8d
+jpeg-8d
+*.gz
+Downloads
+
+# notes etc.
+etc
+
+#vscode unwanted#
+.vscode/compile_commands.json
+
+#xmake unwanted#
+################
+.xmake
