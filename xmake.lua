@@ -118,10 +118,11 @@ end
 
 S7_VERSION = "20240702"
 local FREETYPE_VERSION = "2.12.1"
+local LOLLY_VERSION = "1.1.3"
 
 -- package: s7
 add_requires("s7 "..S7_VERSION, {system=false})
-add_requires("lolly 1.1.0", {system=false})
+add_requires("lolly "..LOLLY_VERSION, {system=false})
 
 add_requires("libjpeg")
 add_requires("apt::libpng-dev", {alias="libpng"})
@@ -263,6 +264,7 @@ target("libmogan") do
                 tm_stable = "Texmacs-" .. STABLE_VERSION,
                 tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
                 PDFHUMMUS_VERSION = PDFHUMMUS_VERSION,
+                LOLLY_VERSION = LOLLY_VERSION,
                 }})
 
     ---------------------------------------------------------------------------

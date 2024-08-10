@@ -12,7 +12,7 @@
 #include "font.hpp"
 #include "charmap.hpp"
 #include "convert.hpp"
-#include "block.hpp"
+#include "tm_block.hpp"
 
 /******************************************************************************
 * The compound font class

@@ -16,8 +16,8 @@
 #include "parse_string.hpp"
 
 #ifdef OS_MINGW
-#include "Windows/mingw_sys_utils.hpp"
-#include "Windows/win-utf8-compat.hpp"
+#include "mingw_sys_utils.hpp"
+#include "win-utf8-compat.hpp"
 #else
 #include "Unix/unix_sys_utils.hpp"
 #endif

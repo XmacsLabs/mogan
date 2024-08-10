@@ -619,7 +619,6 @@ public:
   virtual void show_selection () = 0;
   virtual void show_meminfo () = 0;
   virtual void edit_special () = 0;
-  virtual void edit_test () = 0;
 
   friend class tm_window_rep;
   friend class tm_server_rep;

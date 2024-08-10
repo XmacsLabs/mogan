@@ -1133,5 +1133,4 @@
 "show-selection"
 "show-meminfo"
 "edit-special"
-"edit-test"
 ))

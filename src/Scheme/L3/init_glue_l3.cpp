@@ -56,6 +56,12 @@ patchP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
+string
+lolly_version () {
+  return string (LOLLY_VERSION);
+}
+
+#include "glue_lolly.cpp"
 #include "glue_modification.cpp"
 #include "glue_patch.cpp"
 #include "glue_path.cpp"
@@ -69,4 +75,5 @@ initialize_glue_l3 () {
   initialize_glue_path ();
   initialize_glue_modification ();
   initialize_glue_patch ();
+  initialize_glue_lolly ();
 }

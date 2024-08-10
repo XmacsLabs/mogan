@@ -8866,14 +8866,6 @@ source code.
     <scm|void>.
   </explain>
 
-  <\explain>
-    <scm|(edit-test)>
-<explain-synopsis|no synopsis>
-  <|explain>
-    Calls the <c++> function <cpp|edit_test> which returns
-    <scm|void>.
-  </explain>
-
 
   <tmdoc-copyright|2016|the <TeXmacs> team>
 

@@ -86,7 +86,6 @@
         ("Error status report" (math-status-print))
         ("Reset error counters" (math-status-reset))))
   (-> "Miscellaneous"
-      ("Test routine" (edit-test))
       ("Provoke scheme error" (oops))
       ("Provoke C++ error" (cpp-error))
       (-> "Provoke menu error"

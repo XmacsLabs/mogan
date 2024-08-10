@@ -20,6 +20,11 @@ function main()
                 cpp_name = "supports_native_pdf",
                 ret_type = "bool"
             },
+            {
+                scm_name = "pdfhummus-version",
+                cpp_name = "pdfhummus_version",
+                ret_type = "string"
+            },
         }
     }
 end

@@ -11,6 +11,7 @@
 
 #include "block.hpp"
 #include "convert.hpp"
+#include "tm_block.hpp"
 #include "analyze.hpp"
 #include "drd_std.hpp"
 #include "path.hpp"
@@ -30,6 +31,7 @@ scheme_tree_to_tree (scheme_tree t, string version) {
   if (!is_document (doc)) return error;
   return upgrade (doc, version);
 }
+
 
 /******************************************************************************
 * Converting scheme strings to trees
