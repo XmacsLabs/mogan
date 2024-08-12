@@ -1,5 +1,5 @@
 ;
-; Copyright (C) 2024 The Goldfish Scheme Authors
+; Copyright (C) 2024 The Mogan STEM Suite Authors
 ;
 ; Licensed under the Apache License, Version 2.0 (the "License");
 ; you may not use this file except in compliance with the License.
@@ -38,8 +38,10 @@
   (read-code ""))
 
 (define (gen-temp-path)
-  (mkdir (string-append (os-temp-dir) "/gnuplot"))
-  (string-append (os-temp-dir) "/gnuplot/" (uuid4)))
+  (let ((gnuplot-tmpdir (string-append (os-temp-dir) "/gnuplot")))
+    (when (not (file-exists? gnuplot-tmpdir))
+      (mkdir gnuplot-tmpdir))
+    (string-append gnuplot-tmpdir "/" (uuid4))))
 
 (define (gen-eps-precode eps-path)
   (string-append
