@@ -205,7 +205,7 @@
     (cond ((url-scratch? name)
            (choose-file
              (lambda (x) (apply save-buffer-as-main (cons x opts)))
-             "Save TeXmacs file" "texmacs"))
+             "Save TeXmacs file" "tmu"))
           ((not (buffer-exists? name))
            (with msg `(concat "The buffer " ,vname " does not exist")
              (set-message msg "Save file")))
