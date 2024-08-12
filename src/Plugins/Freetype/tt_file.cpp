@@ -93,7 +93,9 @@ tt_font_search_path () {
     ret= ret | url (xtt);
   }
   ret= ret | url ("$TEXMACS_HOME_PATH/fonts/truetype") |
-       url ("$TEXMACS_PATH/fonts/truetype");
+       url ("$TEXMACS_PATH/fonts/truetype") |
+       url ("$TEXMACS_HOME_PATH/fonts/opentype") |
+       url ("$TEXMACS_PATH/fonts/opentype");
   if (os_win () || os_mingw ()) {
     ret= ret | url_system ("$windir/Fonts");
   }
