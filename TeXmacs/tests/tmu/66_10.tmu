@@ -1,0 +1,14 @@
+<TMU|<tuple|1.0.2|1.2.9-rc1>>
+
+<style|<tuple|generic|no-page-numbers|chinese>>
+
+<\body>
+  <hlink|Click me to test|https://gitee.com/XmacsLabs/planet/raw/main/LaTeX/index.tmu>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
