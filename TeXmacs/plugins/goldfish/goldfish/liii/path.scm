@@ -14,27 +14,21 @@
 ; under the License.
 ;
 
-(define-library (liii check)
-(export check check-set-mode! check:proc
-  check-catch check-report check-failed?)
-(import (srfi srfi-78)
-        (rename (srfi srfi-78)
-          (check-report srfi-78-check-report)))
+(define-library (liii path)
+(export
+  path-dir? path-file? path-exists?
+)
+(import (liii error))
 (begin
 
-(define (check-catch error-id thunk)
-  (check
-    (catch error-id
-      (lambda () (thunk))
-      (lambda args error-id))
-    => error-id))
+(define (path-dir? path)
+  (g_isdir path))
 
-(define (check-report . msg)
-  (if (not (null? msg))
-    (begin
-      (display (car msg))))
-  (srfi-78-check-report)
-  (if (check-failed?) (exit -1)))
+(define (path-file? path)
+  (g_isfile path))
 
-) ; end of begin
-) ; end of define-library
+(define (path-exists? path)
+  (file-exists? path))
+
+)
+)
