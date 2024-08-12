@@ -15,7 +15,7 @@
 
 (define-format tmu 
   (:name "TMU")
-  (:suffix "tmu" "tsu"))
+  (:suffix "tmu"))
 
 (define (texmacs->tmu t)
   (serialize-tmu (cork-tree->utf8-tree t)))
