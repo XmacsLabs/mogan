@@ -16,7 +16,6 @@ end
 
 local research_files = {
     "$(projectdir)/TeXmacs(/doc/**)",
-    "$(projectdir)/TeXmacs(/fonts/**)",
     "$(projectdir)/TeXmacs(/langs/**)",
     "$(projectdir)/TeXmacs(/misc/**)",
     "$(projectdir)/TeXmacs(/packages/**)",
@@ -210,6 +209,17 @@ function add_target_research_on_others()
         add_installfiles(research_files)
     else
         add_installfiles(research_files, {prefixdir="share/Xmacs"})
+    end
+
+    if is_plat("linux") then
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/enc/**)")
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/tfm/**)")
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/type1/**)")
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/virtual/**)")
+        add_installfiles("$(projectdir)/TeXmacs(/*scm)")
+        add_installfiles("$(projectdir)/TeXmacs(/*LICENSE)")
+    else
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/**)")
     end
 
     -- install tm files for testing purpose
