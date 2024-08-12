@@ -18,7 +18,7 @@
 (export list-view
   take drop take-right drop-right count fold fold-right reduce reduce-right
   filter partition remove find delete take-while drop-while list-index last-pair
-  last)
+  last flatmap)
 (import (srfi srfi-1))
 (begin
 
@@ -34,6 +34,9 @@
           (else (error 'wrong-number-of-args
                        "list-view only accepts even number of args"))))
   f-inner)
+
+(define (flatmap f seq)
+  (fold-right append () (map f seq)))
 
 ) ; end of begin
 ) ; end of library
