@@ -38,8 +38,10 @@
   (read-code ""))
 
 (define (gen-temp-path)
-  (mkdir (string-append (os-temp-dir) "/gnuplot"))
-  (string-append (os-temp-dir) "/gnuplot/" (uuid4)))
+  (let ((gnuplot-tmpdir (string-append (os-temp-dir) "/gnuplot")))
+    (when (not (file-exists? gnuplot-tmpdir))
+      (mkdir gnuplot-tmpdir))
+    (string-append gnuplot-tmpdir "/" (uuid4))))
 
 (define (gen-eps-precode eps-path)
   (string-append
