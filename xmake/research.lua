@@ -216,8 +216,8 @@ function add_target_research_on_others()
         add_installfiles("$(projectdir)/TeXmacs(/fonts/tfm/**)", {prefixdir="share/Xmacs"})
         add_installfiles("$(projectdir)/TeXmacs(/fonts/type1/**)", {prefixdir="share/Xmacs"})
         add_installfiles("$(projectdir)/TeXmacs(/fonts/virtual/**)", {prefixdir="share/Xmacs"})
-        add_installfiles("$(projectdir)/TeXmacs(/*scm)", {prefixdir="share/Xmacs"})
-        add_installfiles("$(projectdir)/TeXmacs(/*LICENSE)", {prefixdir="share/Xmacs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/*scm)", {prefixdir="share/Xmacs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/*LICENSE)", {prefixdir="share/Xmacs"})
     elseif is_plat("macosx") then
         add_installfiles("$(projectdir)/TeXmacs(/fonts/**)", {prefixdir="share/Xmacs"})
     else
