@@ -27,7 +27,7 @@
   (set! auto-close-brackets? (== val "on")))
 
 (define-preferences
-  ("text spacebar" "default" ignore)
+  ("text spacebar" "allow multiple spaces" ignore)
   ("math spacebar" "default" ignore)
   ("automatic quotes" "default" notify-quoting-style)
   ("automatic brackets" "mathematics" notify-auto-close-brackets)
