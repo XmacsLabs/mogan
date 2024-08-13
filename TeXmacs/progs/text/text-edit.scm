@@ -13,10 +13,10 @@
 
 (texmacs-module (text text-edit)
   (:use (utils library tree)
-	(utils edit variants)
-	(utils edit selections)
-	(text text-drd)
-	(generic format-edit)))
+        (utils edit variants)
+        (utils edit selections)
+        (text text-drd)
+        (generic format-edit)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Style package rules
@@ -45,9 +45,9 @@
     (with brothers (map tree-label (tree-children bt))
       (and-with t (tree-ref bt :down)
         (and (tree-is? bt 'document)
-	     (match? (cursor-tree) "")
+             (match? (cursor-tree) "")
              (in? 'doc-data brothers)
-	     (not (in? 'abstract-data brothers)))))))
+             (not (in? 'abstract-data brothers)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Inserting document, author and abstract data
@@ -73,14 +73,14 @@
   (with-innermost t 'doc-data
     (with pos (1+ (tree-down-index t))
       (cond ((== l 'doc-author)
-	     (tree-insert! t pos `((,l (author-data (author-name "")))))
-	     (tree-go-to t pos 0 0 0 0))
-	    ((== l 'doc-note)
-	     (tree-insert! t pos `((,l (document ""))))
-	     (tree-go-to t pos 0 0 0))
-	    ((== l 'doc-title-options)
-	     (tree-insert! t pos `((,l))))
-	    ((in? l doc-data-inactive-tags)
+             (tree-insert! t pos `((,l (author-data (author-name "")))))
+             (tree-go-to t pos 0 0 0 0))
+            ((== l 'doc-note)
+             (tree-insert! t pos `((,l (document ""))))
+             (tree-go-to t pos 0 0 0))
+            ((== l 'doc-title-options)
+             (tree-insert! t pos `((,l))))
+            ((in? l doc-data-inactive-tags)
              (let* ((r (tree-search t (cut tree-is? <> l)))
                     (x (and (pair? r) (car r))))
                (cond ((not x)
@@ -89,19 +89,19 @@
                      (else
                       (tree-set! x `(doc-inactive ,x))
                       (tree-go-to x 0 0 :end)))))
-	    (else
-	     (tree-insert! t pos `((,l "")))
-	     (tree-go-to t pos 0 0))))))
+            (else
+             (tree-insert! t pos `((,l "")))
+             (tree-go-to t pos 0 0))))))
 
 (tm-define (make-author-data-element l)
   (with-innermost t 'author-data
     (with pos (1+ (tree-down-index t))
       (cond ((in? l '(author-affiliation author-note))
-	     (tree-insert! t pos `((,l (document ""))))
-	     (tree-go-to t pos 0 0 0))
-	    (else
-	     (tree-insert! t pos `((,l "")))
-	     (tree-go-to t pos 0 0))))))
+             (tree-insert! t pos `((,l (document ""))))
+             (tree-go-to t pos 0 0 0))
+            (else
+             (tree-insert! t pos `((,l "")))
+             (tree-go-to t pos 0 0))))))
 
 (tm-define (abstract-data-context? t)
   (tree-in? t (abstract-data-tag-list)))
@@ -117,22 +117,22 @@
 
 (tm-define (kbd-space-bar t shift?)
   (:require (and (tree-is-buffer? t) (in-text?)
-		 (!= (get-env "language") "verbatim")))
+                 (!= (get-env "language") "verbatim")))
   (let* ((b (before-cursor))
-	 (p (get-preference "text spacebar")))
+         (p (get-preference "text spacebar")))
     (cond ((== p "allow multiple spaces")
-	   (insert " "))
-	  ((and (== b " ") (== p "no multiple spaces"))
-	   (noop))
-	  ((== b " ")
-	   (remove-text #f)
-	   (make-space "1em"))
-	  ((and (tree? b) (tree-func? b 'space 1))
-	   (if (and (tree-atomic? (tree-ref b 0))
-		    (string-ends? (tree->string (tree-ref b 0)) "em"))
-	       (make-space "1em")
-	       (geometry-horizontal b #t)))
-	  (else (insert " ")))))
+           (insert " "))
+          ((and (== b " ") (== p "no multiple spaces"))
+           (noop))
+          ((== b " ")
+           (remove-text #f)
+           (make-space "1em"))
+          ((and (tree? b) (tree-func? b 'space 1))
+           (if (and (tree-atomic? (tree-ref b 0))
+                    (string-ends? (tree->string (tree-ref b 0)) "em"))
+               (make-space "1em")
+               (geometry-horizontal b #t)))
+          (else (insert " ")))))
 
 (tm-define (kbd-enter t shift?)
   (:require (tree-is? t 'title))
@@ -218,10 +218,10 @@
 
 (define (doc-data-go-to-active t i)
   (cond ((< i 0) (tree-go-to t :end))
-	((tree-in? t i (doc-title-inactive-tag-list))
-	 (doc-data-go-to-active t (- i 1)))
-	((not (cursor-inside? (tree-ref t i)))
-	 (tree-go-to t i :end))))
+        ((tree-in? t i (doc-title-inactive-tag-list))
+         (doc-data-go-to-active t (- i 1)))
+        ((not (cursor-inside? (tree-ref t i)))
+         (tree-go-to t i :end))))
 
 (tm-define (doc-data-activate-here)
   (with-innermost dd 'doc-data
@@ -233,8 +233,8 @@
   (with-innermost t 'doc-data
     (with l (cdr (tree->list t))
       (with fun (lambda (t) (or (tree-in? t (doc-title-inactive-tag-list))
-				(tree-is? t 'doc-inactive)))
-	(list-or (map fun l))))))
+                                (tree-is? t 'doc-inactive)))
+        (list-or (map fun l))))))
 
 (tm-define (doc-data-deactivated?)
   (with-innermost t 'doc-data
@@ -249,7 +249,7 @@
   (with-innermost t 'doc-data
     (with i (tree-down-index t)
       (with l (cdr (tree->list t))
-	(for-each doc-data-activate-one l))
+        (for-each doc-data-activate-one l))
       (doc-data-go-to-active t i))))
 
 (define (doc-data-deactivate-one t)
@@ -292,9 +292,9 @@
 (tm-define (previous-section)
   (with bt (buffer-tree)
     (and (cursor-inside? bt)
-	 (with bp (list-drop (cursor-path) (length (tree->path bt)))
-	   (with sp (path-previous-section bt bp)
-	     (and (!= sp bp) (path->tree (append (tree->path bt) sp))))))))
+         (with bp (list-drop (cursor-path) (length (tree->path bt)))
+           (with sp (path-previous-section bt bp)
+             (and (!= sp bp) (path->tree (append (tree->path bt) sp))))))))
 
 (tm-define (go-to-section-title)
   (and-with s (previous-section)
@@ -381,9 +381,9 @@
 (tm-define (make-item)
   (if (not (make-return-after))
       (with lab (inside-which (list-tag-list))
-	(cond ((in? lab (itemize-tag-list)) (make 'item))
-	      ((in? lab (enumerate-tag-list)) (make 'item))
-	      ((in? lab (description-tag-list)) (make 'item*))
+        (cond ((in? lab (itemize-tag-list)) (make 'item))
+              ((in? lab (enumerate-tag-list)) (make 'item))
+              ((in? lab (description-tag-list)) (make 'item*))
               (else (make 'item))))))
 
 (tm-define (kbd-enter t shift?)
@@ -613,16 +613,16 @@
 
 (tm-define (algorithm-root s)
   (cond ((symbol-ends? s '*)
-	 (algorithm-root (symbol-drop-right s 1)))
-	((symbol-starts? s 'specified-)
-	 (algorithm-root (symbol-drop s 10)))
-	((symbol-starts? s 'named-)
-	 (algorithm-root (symbol-drop s 6)))
-	(else s)))
+         (algorithm-root (symbol-drop-right s 1)))
+        ((symbol-starts? s 'specified-)
+         (algorithm-root (symbol-drop s 10)))
+        ((symbol-starts? s 'named-)
+         (algorithm-root (symbol-drop s 6)))
+        (else s)))
 
 (tm-define (algorithm-numbered? t)
   (let* ((l (tree-label t))
-	 (r (algorithm-root l)))
+         (r (algorithm-root l)))
     (in? l (list r (symbol-append 'specified- r)))))
 
 (tm-define (algorithm-named? t)
@@ -632,56 +632,56 @@
 (tm-define (algorithm-specified? t)
   (with l (tree-label t)
     (or (symbol-starts? l 'named-specified-)
-	(symbol-starts? l 'specified-))))
+        (symbol-starts? l 'specified-))))
 
 (tm-define (algorithm-toggle-number t)
   (let* ((l (tree-label t))
-	 (r (algorithm-root l)))
+         (r (algorithm-root l)))
     (if (algorithm-numbered? t)
-	(if (algorithm-specified? t)
-	    (variant-set t (symbol-append 'specified- r '*))
-	    (variant-set t (symbol-append r '*)))
-	(if (algorithm-specified? t)
-	    (variant-set t (symbol-append 'specified- r))
-	    (variant-set t r)))))
+        (if (algorithm-specified? t)
+            (variant-set t (symbol-append 'specified- r '*))
+            (variant-set t (symbol-append r '*)))
+        (if (algorithm-specified? t)
+            (variant-set t (symbol-append 'specified- r))
+            (variant-set t r)))))
 
 (tm-define (algorithm-toggle-name t)
   (let* ((l (tree-label t))
-	 (r (algorithm-root l)))
+         (r (algorithm-root l)))
     (if (algorithm-named? t)
-	(begin
-	  (if (algorithm-specified? t)
-	      (tree-assign-node! t (symbol-append 'specified- r))
-	      (tree-assign-node! t r))
-	  (tree-remove! t 0 1))
-	(begin
-	  (if (algorithm-specified? t)
-	      (tree-assign-node! t (symbol-append 'named-specified- r))
-	      (tree-assign-node! t (symbol-append 'named- r)))
-	  (tree-insert! t 0 '(""))
-	  (tree-go-to t 0 :start)))))
+        (begin
+          (if (algorithm-specified? t)
+              (tree-assign-node! t (symbol-append 'specified- r))
+              (tree-assign-node! t r))
+          (tree-remove! t 0 1))
+        (begin
+          (if (algorithm-specified? t)
+              (tree-assign-node! t (symbol-append 'named-specified- r))
+              (tree-assign-node! t (symbol-append 'named- r)))
+          (tree-insert! t 0 '(""))
+          (tree-go-to t 0 :start)))))
 
 (tm-define (algorithm-toggle-specification t)
   (let* ((l (tree-label t))
-	 (r (algorithm-root l)))
+         (r (algorithm-root l)))
     (if (algorithm-specified? t)
-	(begin
-	  (cond ((algorithm-named? t)
-		 (tree-assign-node! t (symbol-append 'named- r)))
-		((algorithm-numbered? t)
-		 (tree-assign-node! t r))
-		(else
-		 (tree-assign-node! t (symbol-append r '*))))
-	  (tree-remove! t (- (tree-arity t) 2) 1))
-	(begin
-	  (cond ((algorithm-named? t)
-		 (tree-assign-node! t (symbol-append 'named-specified- r)))
-		((algorithm-numbered? t)
-		 (tree-assign-node! t (symbol-append 'specified- r)))
-		(else
-		 (tree-assign-node! t (symbol-append 'specified- r '*))))
-	  (tree-insert! t (- (tree-arity t) 1) '((document "")))
-	  (tree-go-to t (- (tree-arity t) 2) :start)))))
+        (begin
+          (cond ((algorithm-named? t)
+                 (tree-assign-node! t (symbol-append 'named- r)))
+                ((algorithm-numbered? t)
+                 (tree-assign-node! t r))
+                (else
+                 (tree-assign-node! t (symbol-append r '*))))
+          (tree-remove! t (- (tree-arity t) 2) 1))
+        (begin
+          (cond ((algorithm-named? t)
+                 (tree-assign-node! t (symbol-append 'named-specified- r)))
+                ((algorithm-numbered? t)
+                 (tree-assign-node! t (symbol-append 'specified- r)))
+                (else
+                 (tree-assign-node! t (symbol-append 'specified- r '*))))
+          (tree-insert! t (- (tree-arity t) 1) '((document "")))
+          (tree-go-to t (- (tree-arity t) 2) :start)))))
 
 (tm-define (focus-label t)
   (:require (algorithm-context? t))
