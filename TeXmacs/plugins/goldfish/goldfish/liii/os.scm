@@ -17,7 +17,7 @@
 (define-library (liii os)
 (export
   os-call os-arch os-type os-windows? os-linux? os-macos? os-temp-dir
-  isdir mkdir rmdir getenv getcwd listdir access getlogin getpid)
+  mkdir rmdir getenv getcwd listdir access getlogin getpid)
 (import (scheme process-context)
         (liii error))
 (begin
