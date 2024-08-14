@@ -1,0 +1,30 @@
+<TMU|<tuple|1.0.3|1.2.9-rc3>>
+
+<style|<tuple|generic|no-page-numbers|french>>
+
+<\body>
+  Here is the bug:
+
+  <\theorem>
+    \;
+  </theorem>
+
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (translate-from-to "theorem" "english" "french")
+    <|unfolded-io>
+      théorème
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
