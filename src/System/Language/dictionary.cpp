@@ -60,11 +60,7 @@ dictionary_rep::load (url u) {
       if (is_quoted (l)) l= scm_unquote (l);
       string r= t[i][1]->label;
       if (is_quoted (r)) r= scm_unquote (r);
-      if (to == "chinese" || to == "japanese" || to == "korean" ||
-          to == "taiwanese" || to == "russian" || to == "ukrainian" ||
-          to == "bulgarian" || to == "german" || to == "greek" ||
-          to == "slovak")
-        r= utf8_to_cork (r);
+      r        = utf8_to_cork (r);
       table (l)= r;
     }
 }
