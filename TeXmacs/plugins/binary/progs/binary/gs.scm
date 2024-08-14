@@ -36,7 +36,16 @@
 (tm-define (version-binary-gs)
   (version-binary (find-binary-gs)))
 
-(tm-define (gs-ps-image-size u)
+(define (get-image-size-from-bbox line)
+  (let* ((box (string-drop line (length "%%BoundingBox: ")))
+         (fbox (and (> (length box) 0) (map string->float (string-split box #\space)))))
+    (and (== (length fbox) 4)
+         (list (floor (first fbox)) ;; x1
+               (floor (second fbox)) ;; y1
+               (ceiling (third fbox)) ;; x2
+               (ceiling (fourth fbox)))))) ;; y2
+
+(define (gs-image-size u)
   (let* ((out (check-stderr (string-append
            (url->system (find-binary-gs))
            " -dQUIET "
@@ -46,19 +55,21 @@
            " -sDEVICE=bbox "
            (url-sys-concretize u))))
          (l (filter (lambda (x) (string-starts? x "%%BoundingBox: "))
-                (string-split out #\newline)))
-         (box (and (> (length l) 0)
-               (string-drop (car l) (length "%%BoundingBox: "))))
-         (fbox (and (> (length box) 0) (map string->float (string-split box #\space)))))
-    (and (== (length fbox) 4)
-         (list (floor (first fbox)) ;; x1
-               (floor (second fbox)) ;; y1
-               (ceiling (third fbox)) ;; x2
-               (ceiling (fourth fbox)))))) ;; y2
+                (string-split out #\newline))))
+    (if (> (length l) 0)
+        (get-image-size-from-bbox (car l)))))
+
+(tm-define (eps-image-size u)
+  (let* ((out (string-load u))
+         (l (filter (lambda (x) (string-starts? x "%%BoundingBox: "))
+              (list-take (string-split out #\newline) 100))))
+    (when (> (length l) 0)
+      (let ((res1 (get-image-size-from-bbox (car l))))
+        (if res1 res1 (gs-image-size u))))))
 
 (tm-define (gs-eps-to-pdf from opts)
   (let* ((to (assoc-ref opts 'dest))
-         (box (gs-ps-image-size from))
+         (box (eps-image-size from))
          (w (number->string (- (third box) (first box))))
          (h (number->string (- (fourth box) (second box))))
          (offset-x (number->string (- (first box))))
@@ -89,7 +100,7 @@
   (let* ((to (assoc-ref opts 'dest))
          (opt_w (assoc-ref opts 'width))
          (opt_h (assoc-ref opts 'height))
-         (box (gs-ps-image-size from))
+         (box (eps-image-size from))
          (box_w (- (third box) (first box)))
          (box_h (- (fourth box) (second box)))
          (width (if (and opt_w (!= opt_w 0)) opt_w box_w))
