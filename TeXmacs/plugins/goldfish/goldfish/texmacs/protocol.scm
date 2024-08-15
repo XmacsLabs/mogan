@@ -15,8 +15,11 @@
 ;
 
 (define-library (texmacs protocol)
-(export data-begin data-end data-escape 
-        flush-verbatim flush-prompt flush-scheme flush-file)
+(export
+  data-begin data-end data-escape
+  flush-verbatim flush-prompt flush-scheme flush-file
+  read-paragraph-by-visible-eof
+)
 (begin
 
 (define (data-begin)
@@ -45,6 +48,15 @@
 
 (define (flush-file path)
   (flush-any (string-append "file:" path)))
+
+(define (read-paragraph-by-visible-eof)
+  (define (read-code code)
+    (let ((line (read-line)))
+      (if (string=? line "<EOF>\n")
+          code
+          (read-code (string-append code line)))))
+
+  (read-code ""))
 
 ) ; end of begin
 ) ; end of define-library
