@@ -51,7 +51,7 @@
 (define-preferences
   ("header" "on" notify-header)
   ("main icon bar" "on" notify-icon-bar)
-  ("tab bar" "off" notify-icon-bar)
+  ("tab bar" "on" notify-icon-bar)
   ("mode dependent icons" "on" notify-icon-bar)
   ("focus dependent icons" "on" notify-icon-bar)
   ("user provided icons" "off" notify-icon-bar)

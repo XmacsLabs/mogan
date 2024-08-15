@@ -51,6 +51,24 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
            [=] () { g_mostRecentlyClosedTab= m_bufferUrl; });
 }
 
+/* We can't align the text to the left of the button by QSS or other methods,
+ * so for now we achieve it by overriding the paintEvent. */
+void
+QTMTabPage::paintEvent (QPaintEvent*) {
+  QStylePainter          p (this);
+  QStyleOptionToolButton opt;
+  initStyleOption (&opt);
+  opt.text= "";                                      // don't draw the text now
+  p.drawComplexControl (QStyle::CC_ToolButton, opt); // base method
+
+  // draw the text now
+  QFontMetrics fm (opt.fontMetrics);
+  QRect        rect= fm.boundingRect (opt.rect, Qt::AlignVCenter, text ());
+  rect.moveLeft (10);
+  p.drawItemText (rect, Qt::AlignLeft, palette (), isEnabled (), text (),
+                  QPalette::ButtonText);
+}
+
 void
 QTMTabPage::resizeEvent (QResizeEvent* e) {
   int w= m_closeBtn->width ();
@@ -86,6 +104,7 @@ QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
     QTMTabPage* tab= m_tabPageList[i];
     if (g_mostRecentlyClosedTab == tab->m_bufferUrl) {
       // this tab has just been closed, don't display it
+      tab->hide();
       continue;
     }
 
