@@ -104,7 +104,7 @@ QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
     QTMTabPage* tab= m_tabPageList[i];
     if (g_mostRecentlyClosedTab == tab->m_bufferUrl) {
       // this tab has just been closed, don't display it
-      tab->hide();
+      tab->hide ();
       continue;
     }
 
