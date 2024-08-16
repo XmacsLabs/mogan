@@ -97,4 +97,9 @@
 	  <icon name="text-x-texmacs"/>
   	<generic-icon name="text-x-texmacs"/>
 	</mime-type>
+	<mime-type type="text/x-tmu-doc">
+		<comment>TMU document</comment>
+		<comment xml:lang="zh_CN">TMU文档</comment>
+		<glob pattern="*.tmu"/>
+	</mime-type>
 </mime-info>
