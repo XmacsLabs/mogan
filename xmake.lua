@@ -75,7 +75,7 @@ option("use-exceptions")
     set_values(false, true)
 option_end()
 
-only lock it in rc releases
+-- only lock it in rc releases
 if is_plat ("macosx", "windows") then
     set_policy("package.requires_lock", true)
 end
