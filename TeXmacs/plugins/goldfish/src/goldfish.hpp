@@ -261,6 +261,12 @@ f_mkdir (s7_scheme* sc, s7_pointer args) {
 }
 
 static s7_pointer
+f_chdir (s7_scheme* sc, s7_pointer args) {
+  const char* dir_c= s7_string (s7_car (args));
+  return s7_make_boolean (sc, tb_directory_current_set (dir_c));
+}
+
+static s7_pointer
 f_getcwd (s7_scheme* sc, s7_pointer args) {
   tb_char_t path[GOLDFISH_PATH_MAXN];
   tb_directory_current (path, GOLDFISH_PATH_MAXN);
@@ -343,6 +349,8 @@ glue_liii_os (s7_scheme* sc) {
   const char* d_isfile     = "(g_isfile string) => boolean";
   const char* s_mkdir      = "g_mkdir";
   const char* d_mkdir      = "(g_mkdir string) => boolean";
+  const char* s_chdir      = "g_chdir";
+  const char* d_chdir      = "(g_chdir string) => boolean";
   const char* s_listdir    = "g_listdir";
   const char* d_listdir    = "(g_listdir) => vector";
   const char* s_getcwd     = "g_getcwd";
@@ -374,6 +382,9 @@ glue_liii_os (s7_scheme* sc) {
                                      d_isfile, NULL));
   s7_define (sc, cur_env, s7_make_symbol (sc, s_mkdir),
              s7_make_typed_function (sc, s_mkdir, f_mkdir, 1, 0, false, d_mkdir,
+                                     NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_chdir),
+             s7_make_typed_function (sc, s_chdir, f_chdir, 1, 0, false, d_chdir,
                                      NULL));
   s7_define (sc, cur_env, s7_make_symbol (sc, s_listdir),
              s7_make_typed_function (sc, s_listdir, f_listdir, 1, 0, false,
