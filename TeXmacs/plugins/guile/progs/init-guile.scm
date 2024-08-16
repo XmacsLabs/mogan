@@ -30,4 +30,4 @@
   (:require (has-binary-guile?))
   (:launch ,(guile-launcher))
   (:serializer ,guile-serialize)
-  (:session "GNU Guile"))
+  (:session "Guile Scheme"))
