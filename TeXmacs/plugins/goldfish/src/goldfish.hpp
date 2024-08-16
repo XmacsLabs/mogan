@@ -37,7 +37,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.10.2"
+#define GOLDFISH_VERSION "17.10.3"
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
 static std::vector<std::string> command_args= std::vector<std::string> ();
@@ -95,7 +95,7 @@ f_current_second (s7_scheme* sc, s7_pointer args) {
   // TODO: use std::chrono::tai_clock::now() when using C++ 20
   tb_timeval_t tp= {0};
   tb_gettimeofday (&tp, tb_null);
-  s7_double res= (time_t) tp.tv_sec;
+  s7_double res= (time_t) tp.tv_sec + (tp.tv_usec / 1000000.0);
   return s7_make_real (sc, res);
 }
 
@@ -104,7 +104,7 @@ glue_scheme_time (s7_scheme* sc) {
   s7_pointer cur_env= s7_curlet (sc);
 
   const char* s_current_second= "g_current-second";
-  const char* d_current_second= "(g_current-second) => double, return the "
+  const char* d_current_second= "(g_current-second): () => double, return the "
                                 "current unix timestamp in double";
   s7_define (sc, cur_env, s7_make_symbol (sc, s_current_second),
              s7_make_typed_function (sc, s_current_second, f_current_second, 0,
@@ -261,6 +261,12 @@ f_mkdir (s7_scheme* sc, s7_pointer args) {
 }
 
 static s7_pointer
+f_chdir (s7_scheme* sc, s7_pointer args) {
+  const char* dir_c= s7_string (s7_car (args));
+  return s7_make_boolean (sc, tb_directory_current_set (dir_c));
+}
+
+static s7_pointer
 f_getcwd (s7_scheme* sc, s7_pointer args) {
   tb_char_t path[GOLDFISH_PATH_MAXN];
   tb_directory_current (path, GOLDFISH_PATH_MAXN);
@@ -343,6 +349,8 @@ glue_liii_os (s7_scheme* sc) {
   const char* d_isfile     = "(g_isfile string) => boolean";
   const char* s_mkdir      = "g_mkdir";
   const char* d_mkdir      = "(g_mkdir string) => boolean";
+  const char* s_chdir      = "g_chdir";
+  const char* d_chdir      = "(g_chdir string) => boolean";
   const char* s_listdir    = "g_listdir";
   const char* d_listdir    = "(g_listdir) => vector";
   const char* s_getcwd     = "g_getcwd";
@@ -374,6 +382,9 @@ glue_liii_os (s7_scheme* sc) {
                                      d_isfile, NULL));
   s7_define (sc, cur_env, s7_make_symbol (sc, s_mkdir),
              s7_make_typed_function (sc, s_mkdir, f_mkdir, 1, 0, false, d_mkdir,
+                                     NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_chdir),
+             s7_make_typed_function (sc, s_chdir, f_chdir, 1, 0, false, d_chdir,
                                      NULL));
   s7_define (sc, cur_env, s7_make_symbol (sc, s_listdir),
              s7_make_typed_function (sc, s_listdir, f_listdir, 1, 0, false,

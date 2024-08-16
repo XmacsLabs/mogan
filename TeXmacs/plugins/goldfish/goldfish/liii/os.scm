@@ -17,7 +17,7 @@
 (define-library (liii os)
 (export
   os-call os-arch os-type os-windows? os-linux? os-macos? os-temp-dir
-  mkdir rmdir getenv getcwd listdir access getlogin getpid)
+  mkdir chdir rmdir getenv getcwd listdir access getlogin getpid)
 (import (scheme process-context)
         (liii error))
 (begin
@@ -66,6 +66,12 @@
   (if (file-exists? path)
     (file-exists-error (string-append "File exists: '" path "'"))
     (g_mkdir path)))
+
+
+(define (chdir path)
+  (if (file-exists? path)
+    (g_chdir path)
+    (file-not-found-error (string-append "No such file or directory: '" path "'"))))
 
 (define (rmdir path)
   (%check-dir-andthen path delete-file))
