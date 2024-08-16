@@ -17,12 +17,20 @@
 (define-library (goldfish repl)
 (import (texmacs protocol)
         (liii list)
-        (liii string))
-(export goldfish-welcome goldfish-repl)
+        (liii string)
+        (liii sys))
+(export goldfish-welcome goldfish-repl is-sicp-mode?)
 (begin
 
+(define (is-sicp-mode?)
+  (and (>= (length (argv)) 3)
+       (string=? (last (argv)) "sicp")))
+
 (define (goldfish-welcome)
-  (flush-prompt "> ")
+  (if (is-sicp-mode?)
+    (flush-prompt "SICP] ")
+    (flush-prompt "> "))
+
   (flush-verbatim
     (string-append
       "Goldfish Scheme " (version) " Community Edition by LiiiLabs\n"
