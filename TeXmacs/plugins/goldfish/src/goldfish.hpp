@@ -37,7 +37,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.10.2"
+#define GOLDFISH_VERSION "17.10.3"
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
 static std::vector<std::string> command_args= std::vector<std::string> ();
@@ -95,7 +95,7 @@ f_current_second (s7_scheme* sc, s7_pointer args) {
   // TODO: use std::chrono::tai_clock::now() when using C++ 20
   tb_timeval_t tp= {0};
   tb_gettimeofday (&tp, tb_null);
-  s7_double res= (time_t) tp.tv_sec;
+  s7_double res= (time_t) tp.tv_sec + (tp.tv_usec / 1000000.0);
   return s7_make_real (sc, res);
 }
 
@@ -104,7 +104,7 @@ glue_scheme_time (s7_scheme* sc) {
   s7_pointer cur_env= s7_curlet (sc);
 
   const char* s_current_second= "g_current-second";
-  const char* d_current_second= "(g_current-second) => double, return the "
+  const char* d_current_second= "(g_current-second): () => double, return the "
                                 "current unix timestamp in double";
   s7_define (sc, cur_env, s7_make_symbol (sc, s_current_second),
              s7_make_typed_function (sc, s_current_second, f_current_second, 0,
