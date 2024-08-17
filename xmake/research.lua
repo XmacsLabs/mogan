@@ -314,7 +314,14 @@ xpack("research") do
     set_iconfile(path.join(os.projectdir(), "packages/windows/Xmacs.ico"))
     set_bindir("bin")
     add_installfiles(path.join(os.projectdir(), "build/packages/app.mogan/data/bin/(**)|MoganResearch.exe"), {prefixdir = "bin"})
-    set_basename("MoganResearch-v" .. XMACS_VERSION .. "-64bit-installer")
+    on_load(function (package)
+        local format = package:format()
+        if format == "nsis" then
+            set_basename("MoganResearch-v" .. XMACS_VERSION .. "-64bit-installer")
+        else
+            set_basename("MoganResearch-v" .. XMACS_VERSION .. "-64bit-portable")
+        end
+    end)
 end
 end
 
