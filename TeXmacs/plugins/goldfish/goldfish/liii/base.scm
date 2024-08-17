@@ -15,7 +15,7 @@
 ;
 
 (define-library (liii base)
-(export == != display* in?)
+(export == != display* in? let1)
 (begin
 
 (define == equal?)
@@ -38,6 +38,10 @@
         ((and (char? elem) (string? l))
          (in? elem (string->list l)))
         (else (error 'type-error "type mismatch"))))
+
+(define-macro (let1 name1 value1 . body)
+  `(let ((,name1 ,value1))
+     ,@body))
 
 ) ; end of begin
 )
