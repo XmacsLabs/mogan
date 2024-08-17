@@ -141,6 +141,12 @@ f_get_environment_variable (s7_scheme* sc, s7_pointer args) {
 }
 
 static s7_pointer
+f_unset_environment_variable (s7_scheme* sc, s7_pointer args) {
+  const char* env_name= s7_string (s7_car (args));
+  return s7_make_boolean (sc, tb_environment_remove (env_name));
+}
+
+static s7_pointer
 f_command_line (s7_scheme* sc, s7_pointer args) {
   s7_pointer ret = s7_nil (sc);
   int        size= command_args.size ();
@@ -361,6 +367,8 @@ glue_liii_os (s7_scheme* sc) {
   const char* d_getlogin   = "(g_getlogin) => string";
   const char* s_getpid     = "g_getpid";
   const char* d_getpid     = "(g_getpid) => integer";
+  const char* s_unsetenv   = "g_unsetenv" const char* d_unsetenv=
+      "(g_unsetenv string): string => boolean";
 
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_type),
              s7_make_typed_function (sc, s_os_type, f_os_type, 0, 0, false,
@@ -401,6 +409,9 @@ glue_liii_os (s7_scheme* sc) {
   s7_define (sc, cur_env, s7_make_symbol (sc, s_getpid),
              s7_make_typed_function (sc, s_getpid, f_getpid, 0, 0, false,
                                      d_getpid, NULL));
+  s7_define (sc, cur_env,
+             s7_make_symbol (sc, s_unsetenv, f_unset_environment_variable, 1, 0,
+                             false, d_unsetenv, NULL));
 }
 
 static s7_pointer
