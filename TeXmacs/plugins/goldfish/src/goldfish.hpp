@@ -224,6 +224,13 @@ f_os_call (s7_scheme* sc, s7_pointer args) {
 }
 
 static s7_pointer
+f_system (s7_scheme* sc, s7_pointer args) {
+  const char* cmd_c= s7_string (s7_car (args));
+  int         ret  = (int) std::system (cmd_c);
+  return s7_make_integer (sc, ret);
+}
+
+static s7_pointer
 f_os_temp_dir (s7_scheme* sc, s7_pointer args) {
   tb_char_t path[GOLDFISH_PATH_MAXN];
   tb_directory_temporary (path, GOLDFISH_PATH_MAXN);
@@ -346,7 +353,9 @@ glue_liii_os (s7_scheme* sc) {
   const char* s_os_arch    = "g_os-arch";
   const char* d_os_arch    = "(g_os-arch) => string";
   const char* s_os_call    = "g_os-call";
-  const char* d_os_call    = "(g_os-call string) => int";
+  const char* d_os_call    = "(string) => int";
+  const char* s_system     = "g_system";
+  const char* d_system     = "(string) => int";
   const char* s_os_temp_dir= "g_os-temp-dir";
   const char* d_os_temp_dir= "(g_os-temp-dir) => string";
   const char* s_isdir      = "g_isdir";
@@ -379,6 +388,9 @@ glue_liii_os (s7_scheme* sc) {
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_call),
              s7_make_typed_function (sc, s_os_call, f_os_call, 1, 0, false,
                                      d_os_call, NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_system),
+             s7_make_typed_function (sc, s_system, f_system, 1, 0, false,
+                                     d_system, NULL));
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_temp_dir),
              s7_make_typed_function (sc, s_os_temp_dir, f_os_temp_dir, 0, 0,
                                      false, d_os_call, NULL));
