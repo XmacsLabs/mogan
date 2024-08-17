@@ -317,9 +317,9 @@ xpack("research") do
     on_load(function (package)
         local format = package:format()
         if format == "nsis" then
-            set_basename("MoganResearch-v" .. XMACS_VERSION .. "-64bit-installer")
+            set_basename("MoganResearch-v" .. package:version() .. "-64bit-installer")
         else
-            set_basename("MoganResearch-v" .. XMACS_VERSION .. "-64bit-portable")
+            set_basename("MoganResearch-v" .. package:version() .. "-64bit-portable")
         end
     end)
 end
