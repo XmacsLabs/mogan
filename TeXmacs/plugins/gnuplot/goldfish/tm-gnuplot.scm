@@ -97,7 +97,9 @@
 
 (define (gnuplot-plot code-path)
   (let ((cmd (fourth (argv))))
-    (os-call (string-append (goldfish-quote cmd) " " "-c" " " code-path))))
+    (if (os-macos?)
+      (system (string-append (goldfish-quote cmd) " " "-c" " " code-path))
+      (os-call (string-append (goldfish-quote cmd) " " "-c" " " code-path)))))
 
 (define (eval-and-print code)
   (let* ((format (last (argv)))
