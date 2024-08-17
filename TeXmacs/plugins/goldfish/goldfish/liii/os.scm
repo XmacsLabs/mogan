@@ -16,14 +16,18 @@
 
 (define-library (liii os)
 (export
-  os-call os-arch os-type os-windows? os-linux? os-macos? os-temp-dir
-  mkdir chdir rmdir getenv getcwd listdir access getlogin getpid)
+  os-arch os-type os-windows? os-linux? os-macos? os-temp-dir
+  os-call system
+  mkdir chdir rmdir getenv unsetenv getcwd listdir access getlogin getpid)
 (import (scheme process-context)
         (liii error))
 (begin
 
 (define (os-call command)
   (g_os-call command))
+
+(define (system command)
+  (g_system command))
 
 (define (os-arch)
   (g_os-arch))
@@ -81,6 +85,9 @@
 
 (define (getenv key)
   (get-environment-variable key))
+
+(define (unsetenv key)
+  (g_unsetenv key))
 
 (define (getcwd)
   (g_getcwd))

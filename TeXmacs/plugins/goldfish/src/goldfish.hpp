@@ -37,7 +37,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.10.3"
+#define GOLDFISH_VERSION "17.10.4"
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
 static std::vector<std::string> command_args= std::vector<std::string> ();
@@ -141,6 +141,12 @@ f_get_environment_variable (s7_scheme* sc, s7_pointer args) {
 }
 
 static s7_pointer
+f_unset_environment_variable (s7_scheme* sc, s7_pointer args) {
+  const char* env_name= s7_string (s7_car (args));
+  return s7_make_boolean (sc, tb_environment_remove (env_name));
+}
+
+static s7_pointer
 f_command_line (s7_scheme* sc, s7_pointer args) {
   s7_pointer ret = s7_nil (sc);
   int        size= command_args.size ();
@@ -214,6 +220,13 @@ f_os_call (s7_scheme* sc, s7_pointer args) {
     wordfree (&p);
   }
 #endif
+  return s7_make_integer (sc, ret);
+}
+
+static s7_pointer
+f_system (s7_scheme* sc, s7_pointer args) {
+  const char* cmd_c= s7_string (s7_car (args));
+  int         ret  = (int) std::system (cmd_c);
   return s7_make_integer (sc, ret);
 }
 
@@ -340,7 +353,9 @@ glue_liii_os (s7_scheme* sc) {
   const char* s_os_arch    = "g_os-arch";
   const char* d_os_arch    = "(g_os-arch) => string";
   const char* s_os_call    = "g_os-call";
-  const char* d_os_call    = "(g_os-call string) => int";
+  const char* d_os_call    = "(string) => int";
+  const char* s_system     = "g_system";
+  const char* d_system     = "(string) => int";
   const char* s_os_temp_dir= "g_os-temp-dir";
   const char* d_os_temp_dir= "(g_os-temp-dir) => string";
   const char* s_isdir      = "g_isdir";
@@ -361,6 +376,8 @@ glue_liii_os (s7_scheme* sc) {
   const char* d_getlogin   = "(g_getlogin) => string";
   const char* s_getpid     = "g_getpid";
   const char* d_getpid     = "(g_getpid) => integer";
+  const char* s_unsetenv   = "g_unsetenv";
+  const char* d_unsetenv   = "(g_unsetenv string): string => boolean";
 
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_type),
              s7_make_typed_function (sc, s_os_type, f_os_type, 0, 0, false,
@@ -371,6 +388,9 @@ glue_liii_os (s7_scheme* sc) {
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_call),
              s7_make_typed_function (sc, s_os_call, f_os_call, 1, 0, false,
                                      d_os_call, NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_system),
+             s7_make_typed_function (sc, s_system, f_system, 1, 0, false,
+                                     d_system, NULL));
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_temp_dir),
              s7_make_typed_function (sc, s_os_temp_dir, f_os_temp_dir, 0, 0,
                                      false, d_os_call, NULL));
@@ -401,6 +421,10 @@ glue_liii_os (s7_scheme* sc) {
   s7_define (sc, cur_env, s7_make_symbol (sc, s_getpid),
              s7_make_typed_function (sc, s_getpid, f_getpid, 0, 0, false,
                                      d_getpid, NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_unsetenv),
+             s7_make_typed_function (sc, s_unsetenv,
+                                     f_unset_environment_variable, 1, 0, false,
+                                     d_unsetenv, NULL));
 }
 
 static s7_pointer
