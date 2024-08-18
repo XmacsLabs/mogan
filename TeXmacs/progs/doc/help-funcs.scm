@@ -84,7 +84,13 @@
   (load-buffer (get-remote-welcome-url)))
 
 (define (get-remote-planet-url)
-  "http://git.tmml.wiki/XmacsLabs/planet/raw/main/index.tm")
+  (let* ((lan (string-take (language-to-locale (get-output-language)) 2))
+         (url "http://git.tmml.wiki/XmacsLabs/planet/raw/main/")
+         (doc (string-append url "index." lan ".tmu"))
+         (en_doc (string-append url "index.en.tmu")))
+    (if (url-exists? doc)
+      doc
+      en_doc)))
 
 (define (load-remote-planet)
   (load-buffer (get-remote-planet-url)))
