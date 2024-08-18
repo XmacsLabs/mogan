@@ -28,9 +28,8 @@ using moebius::make_tree_label;
 // TODO:Write Scheme tests
 
 ast_language_rep::ast_language_rep (string name) : language_rep (name) {
-
-  ast_parser= ts_parser_new ();
-  ts_parser_set_language (ast_parser, tree_sitter_cpp ());
+  string lan_name= name (0, N (name) - 4);
+  lang_ast_parser= tm_new<lang_parser> (lan_name);
 
   if (DEBUG_PARSER)
     debug_packrat << "Building the " * name * " language parser" << LF;
@@ -38,8 +37,7 @@ ast_language_rep::ast_language_rep (string name) : language_rep (name) {
   string use_modules= "(use-modules (code " * name * "-lang))";
   eval (use_modules);
 
-  string lan_name       = name (0, N (name) - 4);
-  tree   keytoken_config= get_parser_config (lan_name, "keytoken");
+  tree keytoken_config= get_parser_config (lan_name, "keytoken");
   customize_keytokens (keytoken_config);
 
   tree theme_config= get_parser_config (lan_name, "light_theme");
@@ -99,37 +97,47 @@ ast_language_rep::advance (tree t, int& pos) {
     else return &tp_normal_rep;
   }
 
-  int       start_index= 0;
-  int       code_hash  = 0;
-  string_u8 code= lang_ast_parser.get_code_str (t, start_index, code_hash);
+  // Line Changed Check
+  if (lang_ast_parser->check_line_changed (t) ||
+      lang_ast_parser->get_token_index () ==
+          lang_ast_parser->get_token_num ()) {
+    start_index   = 0;
+    int  code_hash= 0;
+    tree root_node= lang_ast_parser->get_root_node (t, start_index, code_hash);
 
-  if (lang_ast_parser.check_to_compile (code_hash) || code_hash == 0 ||
-      lang_ast_parser.get_token_index () == lang_ast_parser.get_token_num ()) {
-    lang_ast_parser.do_ast_parse (code);
-    lang_ast_parser.set_token_start (start_index);
+    // Need Recompile Check
+    if (lang_ast_parser->check_to_compile (code_hash) || code_hash == 0 ||
+        lang_ast_parser->get_token_index () ==
+            lang_ast_parser->get_token_num ()) {
+      lang_ast_parser->do_ast_parse (root_node);
+      lang_ast_parser->set_token_start (start_index);
+      // cout << "Do AST Parse\n";
+    }
 
+    // string_u8 code= lang_ast_parser->code_string;
     // cout << "Current Start Index:" << start_index << " "
-    //      << lang_ast_parser.get_token_index () << "\nCurrent Line:[" << s
-    //      << "]\nFullCode:\n"
-    //      << N (s) << " " << N (code) << " [\n"
-    //      << code << "]\n";
+    //       << lang_ast_parser->get_token_index () << "\nCurrent Line:[" << s
+    //       << "]\nFullCode:\n"
+    //       << N (s) << " " << N (code) << " [\n"
+    //       << code << "]\n";
   }
+
   if (pos >= N (s)) return &tp_normal_rep;
 
   // Avoid Error (if the token index is incorrect, avoid throwing an error
   // directly and instead highlight the error)
-  if (lang_ast_parser.get_token_index () > lang_ast_parser.get_token_num ()) {
+  if (lang_ast_parser->get_token_index () > lang_ast_parser->get_token_num ()) {
     cout << "ERROR token index out of bounds\n";
     token_type= "INNER_ERROR";
     pos+= 1;
     return &tp_normal_rep;
   }
 
-  int token_end     = lang_ast_parser.current_token_end ();
-  int token_property= lang_ast_parser.current_token_property ();
-  int barcket_index = lang_ast_parser.current_brackets_index ();
-  token_type        = lang_ast_parser.current_token_type ();
-  lang_ast_parser.next_token ();
+  int token_end     = lang_ast_parser->current_token_end ();
+  int token_property= lang_ast_parser->current_token_property ();
+  int barcket_index = lang_ast_parser->current_brackets_index ();
+  token_type        = lang_ast_parser->current_token_type ();
+  lang_ast_parser->next_token ();
   pos= token_end - start_index;
   // Colorful Barckets
   if (barcket_index > 0) {
@@ -141,8 +149,8 @@ ast_language_rep::advance (tree t, int& pos) {
   }
 
   // cout << "nextpos " << pos << " |N (s) " << N (s) << " |token_end "
-  //      << token_end << " |nextindex " << lang_ast_parser.get_token_index ()
-  //      << " |maxindex " << lang_ast_parser.get_token_num ()
+  //      << token_end << " |nextindex " << lang_ast_parser->get_token_index ()
+  //      << " |maxindex " << lang_ast_parser->get_token_num ()
   //      << " |tokenproperty " << token_property << " |tokentype " <<
   //      token_type
   //      << "\n";

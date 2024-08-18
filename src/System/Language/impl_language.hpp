@@ -105,12 +105,12 @@ struct scheme_language_rep : language_rep {
 
 // TODO:language_rep
 struct ast_language_rep : language_rep {
-  TSParser*               ast_parser;
-  lang_parser             lang_ast_parser;
+  lang_parser*            lang_ast_parser;
   hashmap<string, string> keytoken_group;
   hashmap<string, string> theme_group;
   string                  token_type;
   int                     nbsp_op;
+  int                     start_index;
 
   ast_language_rep (string name);
   text_property advance (tree t, int& pos);

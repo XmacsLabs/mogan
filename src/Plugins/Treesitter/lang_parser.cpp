@@ -14,27 +14,102 @@
 #include "observers.hpp"
 #include "path.hpp"
 #include "tm_timer.hpp"
+#include <moebius/tree_label.hpp>
 
-lang_parser::lang_parser () {
+extern tree the_et;
+using moebius::make_tree_label;
+
+lang_parser::lang_parser (string lang) {
   // TODO: Dynamic loading of shared lib and multilingual switching
   ast_parser= ts_parser_new ();
   ts_parser_set_language (ast_parser, tree_sitter_cpp ());
+
+  tree lang_tree (make_tree_label (lang));
+  lang_op= lang_tree->op;
+
+  tree lang_code_tree (make_tree_label (lang * "-code"));
+  lang_code_op= lang_code_tree->op;
+}
+
+bool
+lang_parser::check_line_changed (tree t) {
+  // hash(t) does not take IP changes into account
+  int line_hash= hash (obtain_ip (t)) + hash (t->label) / 2;
+  // cout << "t->label: " << t->label << " obtain_ip (t): " << obtain_ip (t)
+  // <<"\n";
+  if (line_hash != current_line_hash) {
+    current_line_hash= line_hash;
+    return true;
+  }
+  return false;
+}
+
+tree
+lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
+  change_line_pos= list<int> ();
+  leaf_tree_nodes= list<tree> ();
+
+  tree root     = t;
+  path father_ip= obtain_ip (t);
+  // cout << "[Input]Father: " << father_ip << " Self:" << root << " lang_op "
+  //      << lang_op << " lang_code_op " << lang_code_op << "\n";
+  while (root->op != lang_op && root->op != lang_code_op && N (father_ip) > 1) {
+    // cout << "Father: " << father_ip << " Root:" << root << " lang_op " <<
+    // lang_op << " lang_code_op " << lang_code_op << "\n" ;
+    father_ip= father_ip->next;
+    root     = tree (subtree (the_et, reverse (father_ip)));
+  }
+  // cout << "[Result]Father: " << father_ip << " Root:" << root << " lang_op "
+  //      << lang_op << " lang_code_op " << lang_code_op << "\n";
+
+  hash_code= hash (root);
+  get_data_from_root (root, t, start_index);
+  return root;
 }
 
 void
-lang_parser::get_code_from_root (tree root, tree line, string& code,
-                                 string_u8& code_u8, int& start_index) {
+lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
   for (tree child_node : root) {
     if (is_atomic (child_node)) {
-      // cout << "Code Leaf: " << child_node << " " << obtain_ip(child_node)
-      // << "\n";
+      leaf_tree_nodes << child_node;
+      int local_start_index= 0;
+      if (N (change_line_pos) > 0)
+        local_start_index= change_line_pos[N (change_line_pos) - 1] + 1;
+      // cout << "Child: " << obtain_ip (child_node)
+      //      << " Line: " << obtain_ip (line) << " local_start_index "
+      //      << local_start_index << "\n";
+      if (obtain_ip (child_node) == obtain_ip (line)) {
+        start_index= local_start_index;
+      }
+
+      int change_index= N (child_node->label) + local_start_index;
+      // cout << "Line Change: " << change_index << "\n";
+      change_line_pos << change_index;
+    }
+    else {
+      get_data_from_root (child_node, line, start_index);
+    }
+  }
+}
+
+string_u8
+lang_parser::get_code_str (tree root) {
+  string    code_cork= "";
+  string_u8 code     = "";
+  get_code_from_root (root, code_cork, code);
+
+  //<ldots> error fix
+  code         = replace (code, "…", "...");
+  real_code_len= N (code_cork);
+  return code;
+}
+
+void
+lang_parser::get_code_from_root (tree root, string& code, string_u8& code_u8) {
+  for (tree child_node : root) {
+    if (is_atomic (child_node)) {
       code << child_node->label;
       code_u8 << cork_to_utf8 (child_node->label);
-      if (obtain_ip (child_node) == obtain_ip (line)) {
-        start_index= N (code) - N (child_node->label);
-      }
-      // cout << "Line Change: " <<  N(code) << "\n";
-      change_line_pos << N (code);
       if (child_node->label == " " || N (child_node->label) == 0) {
         code << " ";
         code_u8 << " ";
@@ -45,45 +120,9 @@ lang_parser::get_code_from_root (tree root, tree line, string& code,
       }
     }
     else {
-      get_code_from_root (child_node, line, code, code_u8, start_index);
+      get_code_from_root (child_node, code, code_u8);
     }
   }
-}
-
-extern tree the_et;
-
-string_u8
-lang_parser::get_code_str (tree t, int& start_index, int& hash_code) {
-  change_line_pos= list<int> ();
-  path father    = obtain_ip (t)->next;
-  while (N (father) > 3) {
-    father= father->next;
-  }
-  tree& parent (subtree (the_et, reverse (father)));
-  // cout << "Current Node " << t << " Current IP " << obtain_ip(t) << " Father
-  // IP " << father << "\n";
-  start_index        = 0;
-  string    code_cork= "";
-  string_u8 code     = "";
-  get_code_from_root (parent, t, code_cork, code, start_index);
-
-  //<ldots> error fix
-  //"..." (cork)->(utf-8) "…"
-  //"…" (utf-8)->(cork) "<ldots>"
-  code= replace (code, "…", "...");
-
-  real_code_len= N (code_cork);
-  if (N (code_cork) == 0 && N (t->label) >= 1) {
-    code= cork_to_utf8 (t->label) * " ";
-    change_line_pos << 1;
-  }
-  // for(int i = 0; i < N(code); i++){
-  //   cout << code[i] << " " << (int)code[i] << "\n";
-  // }
-  hash_code= hash (parent);
-  // cout << "\nGen Hash Code " << hash_code << " Current Hash Code" <<
-  // current_code_hash << "\n";
-  return code;
 }
 
 bool
@@ -189,8 +228,8 @@ lang_parser::add_single_token (string debug_tag, string token_type,
           token_lang_pros << token_lang_pro;
           try_add_barckets_index (token_type);
 
-          // cout << debug_tag << token_type << ", Code: " << token_cache
-          // << "S" << start_pos + start << " E " << start_pos + i << "\n";
+          // cout << debug_tag << token_type << ", Code: " << token_cache << "S"
+          //      << start_pos + start << " E " << start_pos + i << "\n";
         }
         // Add Space
         start      = i + 1;
@@ -256,7 +295,7 @@ lang_parser::add_token (string token_type, string token_literal, int start_pos,
 }
 
 void
-lang_parser::do_ast_parse (string_u8 code) {
+lang_parser::do_ast_parse (tree code_root) {
   fix_pos_moved      = 0;
   last_end_pos       = 0;
   inner_token_index  = 0;
@@ -272,15 +311,15 @@ lang_parser::do_ast_parse (string_u8 code) {
   brackets_index = list<int> ();
 
   // Tree Parse
-  // time_t t1= texmacs_time ();//Parse Time Start
-  const char* source_code= as_charp (code); // code
+  // time_t      t1         = texmacs_time (); // Parse Time Start
+  code_string            = get_code_str (code_root);
+  const char* source_code= as_charp (code_string); // code
   TSTree*     tstree=
-      ts_parser_parse_string (ast_parser, NULL, source_code, N (code));
+      ts_parser_parse_string (ast_parser, NULL, source_code, N (code_string));
   TSNode root_node= ts_tree_root_node (tstree);
-  // time_t t2= texmacs_time ();//Parse Time Start
+  // time_t t2       = texmacs_time (); // Parse Time End / Process Time Start
 
   // Tree Process
-  // time_t t3= texmacs_time ();//Process Time Start
   collect_leaf_nodes (root_node, tsnodes);
   int tsnodes_len= N (tsnodes);
   for (int i= 0; i < tsnodes_len; i++) {
@@ -314,8 +353,9 @@ lang_parser::do_ast_parse (string_u8 code) {
     add_token (string ("Space"), string ("<space>"), last_end_pos,
                real_code_len, 0);
   }
-  // time_t t4= texmacs_time ();//Process Time Start
-  // cout << "Parse took " << t2-t1 << "ms |Process took " << t4-t3 << "ms\n";
+  // time_t t3= texmacs_time (); // Process Time End
+  // cout << "Code Gen and Parse took " << t2 - t1 << "ms |Process took "
+  //      << t3 - t2 << "ms\n";
 
   ts_tree_delete (tstree);
 }

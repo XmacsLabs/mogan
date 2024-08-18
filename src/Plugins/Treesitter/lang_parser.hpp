@@ -18,24 +18,15 @@
 
 class lang_parser {
 public:
-  lang_parser ();
+  lang_parser (string lang);
 
-  /**
-   * @brief Retrieve the code string from a tree node.
-   *
-   * @param t The tree node
-   * @param hash_code op for nbsp node
-   * @param start_index The starting position of the node's code in the entire
-   * code segment
-   * @param hash_code The hash value of the code string
-   * @return The code string in UTF-8 format
-   */
-  string_u8 get_code_str (tree t, int& start_index, int& hash_code);
+  bool check_line_changed (tree t);
+
+  tree get_root_node (tree t, int& start_index, int& hash_code);
 
   /**
    * @brief Check if the code needs to be compiled based on its hash value.
    *
-   * @param code_hash The hash value of the code to be checked
    * @return True if the code needs to be compiled, false otherwise
    */
   bool check_to_compile (int code_hash);
@@ -45,7 +36,7 @@ public:
    *
    * @param code The code string to be parsed
    */
-  void do_ast_parse (string_u8 code);
+  void do_ast_parse (tree code_root);
 
   /**
    * @brief Set the starting position (inner_token_index) of the token based on
@@ -72,14 +63,22 @@ public:
   // Move to the next token (inner_token_index++)
   void next_token ();
 
+  string_u8 code_string;
+
 private:
   TSParser* ast_parser;
   int       current_code_hash= 0;
+  int       current_line_hash= 0;
 
   int real_code_len    = 0;
   int fix_pos_moved    = 0;
   int last_end_pos     = -1;
   int inner_token_index= 0;
+
+  int lang_code_op= 0;
+  int lang_op     = 0;
+
+  list<tree> leaf_tree_nodes;
 
   list<int>    change_line_pos;
   list<int>    token_starts;
@@ -92,9 +91,10 @@ private:
   int       large_bracket_depth= 0; // depth of {}
   list<int> brackets_index;
 
-  void collect_leaf_nodes (TSNode node, list<TSNode>& tsnodes);
-  void get_code_from_root (tree root, tree line, string& code,
-                           string_u8& code_u8, int& start_index);
+  void      get_code_from_root (tree root, string& code, string_u8& code_u8);
+  string_u8 get_code_str (tree root);
+  void      collect_leaf_nodes (TSNode node, list<TSNode>& tsnodes);
+  void      get_data_from_root (tree root, tree line, int& start_index);
   void is_change_line_between (int start, int end, int& cl_low, int& cl_high);
   void try_add_barckets_index (string& token_type);
   void add_token (string token_type, string token_literal, int start_pos,
