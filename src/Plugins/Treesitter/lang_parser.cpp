@@ -60,16 +60,16 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
 
   tree root     = t;
   path father_ip= obtain_ip (t);
-  // cout << "[Input]Father: " << father_ip << " Self:" << root << " lang_op "
+  // cout << "[Input]Father: " << father_ip << " Self:" << root << " the_et "
   //      << lang_op << " lang_code_op " << lang_code_op << "\n";
   while (root->op != lang_op && root->op != lang_code_op && N (father_ip) > 1) {
-    // cout << "Father: " << father_ip << " Root:" << root << " lang_op " <<
-    // lang_op << " lang_code_op " << lang_code_op << "\n" ;
+    // cout << "Father: " << father_ip << " Root:" << root << " the_et " <<
+    // the_et << LF;
     father_ip= father_ip->next;
     root     = tree (subtree (the_et, reverse (father_ip)));
   }
-  // cout << "[Result]Father: " << father_ip << " Root:" << root << " lang_op "
-  //      << lang_op << " lang_code_op " << lang_code_op << "\n";
+  // cout << "[Result]Father: " << father_ip << " Root:" << root << " the_et " <<
+  //   the_et << LF;
 
   hash_code= hash (root);
   get_data_from_root (root, t, start_index);
