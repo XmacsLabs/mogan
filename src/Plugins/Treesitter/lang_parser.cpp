@@ -22,13 +22,22 @@ using moebius::make_tree_label;
 lang_parser::lang_parser (string lang) {
   // TODO: Dynamic loading of shared lib and multilingual switching
   ast_parser= ts_parser_new ();
-  ts_parser_set_language (ast_parser, tree_sitter_cpp ());
+  ts_lang   = tree_sitter_cpp ();
+  ts_parser_set_language (ast_parser, ts_lang);
 
   tree lang_tree (make_tree_label (lang));
   lang_op= lang_tree->op;
 
   tree lang_code_tree (make_tree_label (lang * "-code"));
   lang_code_op= lang_code_tree->op;
+
+  barcket_symbol_list= list<TSSymbol> (); // '(', ')', '[', ']', '{', '}' ;
+  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, "(", 1, false);
+  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, ")", 1, false);
+  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, "[", 1, false);
+  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, "]", 1, false);
+  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, "{", 1, false);
+  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, "}", 1, false);
 }
 
 bool
@@ -174,28 +183,28 @@ lang_parser::is_change_line_between (int start, int end, int& cl_low,
 }
 
 void
-lang_parser::try_add_barckets_index (string& token_type) {
-  if (token_type == "(") {
+lang_parser::try_add_barckets_index (TSSymbol& token_type) {
+  if (token_type == barcket_symbol_list[0]) {
     small_bracket_depth+= 1;
     brackets_index << small_bracket_depth;
   }
-  else if (token_type == ")") {
+  else if (token_type == barcket_symbol_list[1]) {
     brackets_index << small_bracket_depth;
     small_bracket_depth-= 1;
   }
-  else if (token_type == "[") {
+  else if (token_type == barcket_symbol_list[2]) {
     mid_bracket_depth+= 1;
     brackets_index << mid_bracket_depth;
   }
-  else if (token_type == "]") {
+  else if (token_type == barcket_symbol_list[3]) {
     brackets_index << mid_bracket_depth;
     mid_bracket_depth-= 1;
   }
-  else if (token_type == "{") {
+  else if (token_type == barcket_symbol_list[4]) {
     large_bracket_depth+= 1;
     brackets_index << large_bracket_depth;
   }
-  else if (token_type == "}") {
+  else if (token_type == barcket_symbol_list[5]) {
     brackets_index << large_bracket_depth;
     large_bracket_depth-= 1;
   }
@@ -205,13 +214,13 @@ lang_parser::try_add_barckets_index (string& token_type) {
 }
 
 void
-lang_parser::add_single_token (string debug_tag, string token_type,
+lang_parser::add_single_token (string debug_tag, TSSymbol token_type,
                                string token_literal, int start_pos, int end_pos,
                                int token_lang_pro) {
   if (start_pos == end_pos) {
     return;
   }
-  if (token_type == "Space") {
+  if (token_type == SpaceSymbol) {
     for (int i= start_pos; i < end_pos; i++) {
       token_starts << i;
       token_ends << i + 1;
@@ -273,8 +282,8 @@ lang_parser::add_single_token (string debug_tag, string token_type,
 }
 
 void
-lang_parser::add_token (string token_type, string token_literal, int start_pos,
-                        int end_pos, int token_lang_pro) {
+lang_parser::add_token (TSSymbol token_type, string token_literal,
+                        int start_pos, int end_pos, int token_lang_pro) {
   // When a token spans multiple lines, it should be split into one token per
   // line
   int change_line_low = 99999;
@@ -320,7 +329,7 @@ lang_parser::do_ast_parse (tree code_root) {
 
   token_starts   = list<int> ();
   token_ends     = list<int> ();
-  token_types    = list<string> ();
+  token_types    = list<TSSymbol> ();
   token_lang_pros= list<int> ();
   brackets_index = list<int> ();
 
@@ -337,10 +346,10 @@ lang_parser::do_ast_parse (tree code_root) {
   collect_leaf_nodes (root_node, tsnodes);
   int tsnodes_len= N (tsnodes);
   for (int i= 0; i < tsnodes_len; i++) {
-    const TSNode& leaf_node = tsnodes[i];
-    const char*   node_type = ts_node_type (leaf_node);
-    int           start_byte= ts_node_start_byte (leaf_node);
-    int           end_byte  = ts_node_end_byte (leaf_node);
+    const TSNode& leaf_node  = tsnodes[i];
+    TSSymbol      node_symbol= ts_node_symbol (leaf_node);
+    int           start_byte = ts_node_start_byte (leaf_node);
+    int           end_byte   = ts_node_end_byte (leaf_node);
     string_u8 code_fragment (source_code + start_byte, end_byte - start_byte);
     string    code_fragment_cork  = utf8_to_cork (code_fragment);
     int       code_fragment_length= N (code_fragment_cork);
@@ -352,20 +361,19 @@ lang_parser::do_ast_parse (tree code_root) {
 
     // Add Front Space
     if (real_start_byte > last_end_pos && last_end_pos >= 0) {
-      add_token (string ("Space"), string ("<space>"), last_end_pos,
-                 real_start_byte, 0);
+      add_token (SpaceSymbol, string ("<space>"), last_end_pos, real_start_byte,
+                 0);
     }
 
     // Store Token Data
-    add_token (string (node_type), code_fragment_cork, real_start_byte,
-               real_end_byte, 1);
+    add_token (node_symbol, code_fragment_cork, real_start_byte, real_end_byte,
+               1);
     last_end_pos= real_end_byte;
   }
 
   // Add End Space
   if (last_end_pos < real_code_len && last_end_pos >= 0) {
-    add_token (string ("Space"), string ("<space>"), last_end_pos,
-               real_code_len, 0);
+    add_token (SpaceSymbol, string ("<space>"), last_end_pos, real_code_len, 0);
   }
   // time_t t3= texmacs_time (); // Process Time End
   // cout << "Code Gen and Parse took " << t2 - t1 << "ms |Process took "
@@ -391,7 +399,9 @@ lang_parser::current_brackets_index () {
 
 string
 lang_parser::current_token_type () {
-  return token_types[inner_token_index];
+  TSSymbol symbol= token_types[inner_token_index];
+  if (symbol == SpaceSymbol) return "Space";
+  return ts_language_symbol_name (ts_lang, symbol);
 }
 
 void

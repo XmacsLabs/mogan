@@ -15,6 +15,7 @@
 #include "tree.hpp"
 #include <tree-sitter-cpp.h>
 #include <tree_sitter/api.h>
+#define SpaceSymbol 65535
 
 class lang_parser {
 public:
@@ -66,25 +67,27 @@ public:
   string_u8 code_string;
 
 private:
-  TSParser* ast_parser;
-  int       current_code_hash= 0;
-  int       current_line_hash= 0;
+  TSParser*         ast_parser;
+  const TSLanguage* ts_lang;
+  int               current_code_hash= 0;
+  int               current_line_hash= 0;
 
   int real_code_len    = 0;
   int fix_pos_moved    = 0;
   int last_end_pos     = -1;
   int inner_token_index= 0;
 
-  int lang_code_op= 0;
-  int lang_op     = 0;
+  int            lang_code_op= 0;
+  int            lang_op     = 0;
+  list<TSSymbol> barcket_symbol_list; // '(', ')', '[', ']', '{', '}' ;
 
   list<tree> leaf_tree_nodes;
 
-  list<int>    change_line_pos;
-  list<int>    token_starts;
-  list<int>    token_ends;
-  list<string> token_types;
-  list<int>    token_lang_pros;
+  list<int>      change_line_pos;
+  list<int>      token_starts;
+  list<int>      token_ends;
+  list<TSSymbol> token_types;
+  list<int>      token_lang_pros;
 
   int       small_bracket_depth= 0; // depth of ()
   int       mid_bracket_depth  = 0; // depth of []
@@ -96,10 +99,10 @@ private:
   void      collect_leaf_nodes (TSNode node, list<TSNode>& tsnodes);
   void      get_data_from_root (tree root, tree line, int& start_index);
   void is_change_line_between (int start, int end, int& cl_low, int& cl_high);
-  void try_add_barckets_index (string& token_type);
-  void add_token (string token_type, string token_literal, int start_pos,
+  void try_add_barckets_index (TSSymbol& token_type);
+  void add_token (TSSymbol token_type, string token_literal, int start_pos,
                   int end_pos, int token_lang_pro);
-  void add_single_token (string debug_tag, string token_type,
+  void add_single_token (string debug_tag, TSSymbol token_type,
                          string token_literal, int start_pos, int end_pos,
                          int token_lang_pro);
 };
