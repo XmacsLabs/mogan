@@ -16,7 +16,6 @@
 
 (tm-define (buffer-set-default-style)
   (init-style "generic")
-  (add-style-package "no-page-numbers")
   (with lan (get-preference "language")
     (if (!= lan "english") (set-document-language lan)))
   (with psz (get-printer-paper-type)
