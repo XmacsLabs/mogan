@@ -137,7 +137,7 @@ function sidebarGuide() {
                     link: '/guide/plugin_python.md'
                 },
                 {
-                    text: 'Goldfish Scheme Plugin',
+                    text: 'Goldfish Scheme',
                     link: '/guide/plugin_goldfish.md'
                 },
             ]
@@ -253,6 +253,10 @@ function sidebarGuide() {
                     link: '/guide/Releases.md'
                 },
                 {
+                    text: 'v1.2.8 (2024/08/08)',
+                    link: '/guide/changelog/v1.2.8.md'
+                },
+                {
                     text: 'v1.2.6 (2024/05/21)',
                     link: '/guide/changelog/v1.2.6.md'
                 },
@@ -321,7 +325,7 @@ function sidebarGuideZh() {
                     link: '/zh/guide/plugin_python.md'
                 },
                 {
-                    text: '金鱼Scheme插件',
+                    text: '金鱼Scheme',
                     link: '/zh/guide/plugin_goldfish.md'
                 },
             ]
@@ -435,6 +439,10 @@ function sidebarGuideZh() {
                 {
                     text: '版本发布',
                     link: '/zh/guide/Releases.md'
+                },
+                {
+                    text: 'v1.2.8 (2024/08/08)',
+                    link: '/zh/guide/changelog/v1.2.8.md'
                 },
                 {
                     text: 'v1.2.6 (2024/05/21)',

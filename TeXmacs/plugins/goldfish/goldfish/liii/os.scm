@@ -16,13 +16,18 @@
 
 (define-library (liii os)
 (export
-  os-call os-arch os-type os-windows? os-linux? os-macos? os-temp-dir
-  mkdir getenv)
-(import (scheme process-context))
+  os-arch os-type os-windows? os-linux? os-macos? os-temp-dir
+  os-call system
+  mkdir chdir rmdir getenv unsetenv getcwd listdir access getlogin getpid)
+(import (scheme process-context)
+        (liii error))
 (begin
 
 (define (os-call command)
   (g_os-call command))
+
+(define (system command)
+  (g_system command))
 
 (define (os-arch)
   (g_os-arch))
@@ -45,11 +50,55 @@
 (define (os-temp-dir)
   (g_os-temp-dir))
 
+(define (access path mode)
+  (cond ((eq? mode 'F_OK) (g_access path 0))
+        ((eq? mode 'X_OK) (g_access path 1))
+        ((eq? mode 'W_OK) (g_access path 2))
+        ((eq? mode 'R_OK) (g_access path 4))
+        (else (error 'value-error "Allowed mode 'F_OK, 'X_OK,'W_OK, 'R_OK"))))
+
+(define (%check-dir-andthen path f)
+  (cond ((not (file-exists? path))
+         (file-not-found-error
+           (string-append "No such file or directory: '" path "'")))
+        ((not (g_isdir path))
+         (not-a-directory-error
+           (string-append "Not a directory: '" path "'")))
+        (else (f path))))
+
 (define (mkdir path)
-  (g_mkdir path))
+  (if (file-exists? path)
+    (file-exists-error (string-append "File exists: '" path "'"))
+    (g_mkdir path)))
+
+
+(define (chdir path)
+  (if (file-exists? path)
+    (g_chdir path)
+    (file-not-found-error (string-append "No such file or directory: '" path "'"))))
+
+(define (rmdir path)
+  (%check-dir-andthen path delete-file))
+
+(define (listdir path)
+  (%check-dir-andthen path g_listdir))
 
 (define (getenv key)
   (get-environment-variable key))
+
+(define (unsetenv key)
+  (g_unsetenv key))
+
+(define (getcwd)
+  (g_getcwd))
+
+(define (getlogin)
+  (if (os-windows?)
+      (getenv "USERNAME")
+      (g_getlogin)))
+
+(define (getpid)
+  (g_getpid))
 
 ) ; end of begin
 ) ; end of define-library

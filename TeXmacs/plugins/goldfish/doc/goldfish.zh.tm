@@ -208,6 +208,12 @@
       \<#8F7B\>\<#91CF\>\<#7EA7\>\<#6D4B\>\<#8BD5\>\<#6846\>\<#67B6\>
     </cell>|<\cell>
       <scm|(import (srfi srfi-78))>
+    </cell>>|<row|<\cell>
+      <hlink|SRFI 216|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-216.scm>
+    </cell>|<\cell>
+      SICP\<#517C\>\<#5BB9\>\<#5E93\>
+    </cell>|<\cell>
+      <scm|(import (srfi sicp))>
     </cell>>>>
   </wide-tabular>
 
@@ -254,6 +260,56 @@
       \;
     </input>
   </session>
+
+  \<#76F4\>\<#63A5\>\<#542F\>\<#52A8\>\<#91D1\>\<#9C7C\>Scheme\<#7684\>sicp\<#542F\>\<#52A8\>\<#5668\>\<#FF0C\>\<#53EF\>\<#4EE5\>\<#5F97\>\<#5230\>\<#548C\>SICP\<#8FD9\>\<#672C\>\<#4E66\>\<#63CF\>\<#8FF0\>\<#7684\>Scheme\<#4E00\>\<#81F4\>\<#7684\>\<#8BED\>\<#6CD5\>\<#FF1A\>
+
+  <\session|goldfish|sicp>
+    <\output>
+      Goldfish Scheme 17.10.3 Community Edition by LiiiLabs
+
+      implemented on S7 Scheme (10.12, 13-Aug-2024)
+    </output>
+
+    <\unfolded-io>
+      SICP]\ 
+    <|unfolded-io>
+      false
+    <|unfolded-io>
+      <goldfish-result|#f>
+    </unfolded-io>
+
+    <\unfolded-io>
+      SICP]\ 
+    <|unfolded-io>
+      true
+    <|unfolded-io>
+      <goldfish-result|#t>
+    </unfolded-io>
+
+    <\unfolded-io>
+      SICP]\ 
+    <|unfolded-io>
+      nil
+    <|unfolded-io>
+      <goldfish-result|()>
+    </unfolded-io>
+
+    <\unfolded-io>
+      SICP]\ 
+    <|unfolded-io>
+      (runtime)
+    <|unfolded-io>
+      <goldfish-result|1723801146625>
+    </unfolded-io>
+
+    <\input>
+      SICP]\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  \;
 
   \<#4E0B\>\<#6587\>\<#7684\>\<#4EE3\>\<#7801\>\<#7247\>\<#6BB5\>\<#6765\>\<#81EA\>\<#4E8E\><hlink|S7
   Scheme\<#7684\>\<#5B98\>\<#7F51\>|https://ccrma.stanford.edu/software/s7/s7.html>\<#3002\>

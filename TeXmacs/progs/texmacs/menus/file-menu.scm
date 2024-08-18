@@ -139,12 +139,13 @@
 
 (tm-menu (export-menu flag?)
   (with l (converters-from-special "texmacs-file" "-file" #f)
-    (for (fm l)
-      (let* ((name (format-get-name fm))
-             (save-text (string-append "Save " (string-downcase name) " file"))
-             (export-text `(concat "Export as " ,name))
-             (text (if flag? export-text name)))
-        ((eval text) (choose-file (buffer-exporter fm) save-text fm))))))
+    (with l2 (filter (lambda (x) (not (string=? x "tmu"))) l)
+      (for (fm l2)
+        (let* ((name (format-get-name fm))
+               (save-text (string-append "Save " (string-downcase name) " file"))
+               (export-text `(concat "Export as " ,name))
+               (text (if flag? export-text name)))
+          ((eval text) (choose-file (buffer-exporter fm) save-text fm)))))))
 
 (tm-define (export-top-menu) (export-menu #t))
 (tm-define (export-export-menu) (export-menu #f))
@@ -181,7 +182,7 @@
 
 (menu-bind save-menu
   ("Save" (save-buffer))
-  ("Save as" (choose-file save-buffer-as "Save TeXmacs file" "texmacs"))
+  ("Save as" (choose-file save-buffer-as "Save TeXmacs file" "tmu"))
   ---
   (link export-top-menu)
   ---
@@ -270,7 +271,7 @@
         ("Clear menu" (forget-interactive "recent-buffer"))))
   ---
   ("Save" (save-buffer))
-  ("Save as" (choose-file save-buffer-as "Save TeXmacs file" "texmacs"))
+  ("Save as" (choose-file save-buffer-as "Save TeXmacs file" "tmu"))
   ---
   (link print-menu)
   ---
@@ -281,6 +282,7 @@
   (-> "Export"
       (link export-export-menu)
       ---
+      ("TM document" (choose-file save-buffer-as "Save TeXmacs file" "texmacs"))
       ("Pdf" (choose-file wrapped-print-to-file "Save pdf file" "pdf"))
       ("Pdf with embedded document" (choose-file wrapped-print-to-pdf-embeded-with-tm "Save pdf file" "pdf"))
       ("Postscript"

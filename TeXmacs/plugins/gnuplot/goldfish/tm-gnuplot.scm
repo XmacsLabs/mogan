@@ -1,5 +1,5 @@
 ;
-; Copyright (C) 2024 The Goldfish Scheme Authors
+; Copyright (C) 2024 The Mogan STEM Suite Authors
 ;
 ; Licensed under the Apache License, Version 2.0 (the "License");
 ; you may not use this file except in compliance with the License.
@@ -18,7 +18,21 @@
         (liii os)
         (liii uuid)
         (liii sys)
-        (srfi srfi-1))
+        (srfi srfi-1)
+        (srfi srfi-13))
+
+(define (escape-string str)
+  (string-join
+    (map (lambda (char)
+           (if (char=? char #\")
+               (string #\\ #\")
+               (if (char=? char #\\)
+                   (string #\\ #\\)
+                   (string char))))
+         (string->list str))))
+
+(define (goldfish-quote s)
+  (string-append "\"" (escape-string s) "\""))
 
 (define (gnuplot-welcome)
   (let ((format (last (argv))))
@@ -38,8 +52,10 @@
   (read-code ""))
 
 (define (gen-temp-path)
-  (mkdir (string-append (os-temp-dir) "/gnuplot"))
-  (string-append (os-temp-dir) "/gnuplot/" (uuid4)))
+  (let ((gnuplot-tmpdir (string-append (os-temp-dir) "/gnuplot")))
+    (when (not (file-exists? gnuplot-tmpdir))
+      (mkdir gnuplot-tmpdir))
+    (string-append gnuplot-tmpdir "/" (uuid4))))
 
 (define (gen-eps-precode eps-path)
   (string-append
@@ -81,7 +97,9 @@
 
 (define (gnuplot-plot code-path)
   (let ((cmd (fourth (argv))))
-    (os-call (string-append cmd " " "-c" " " code-path))))
+    (if (os-macos?)
+      (system (string-append (goldfish-quote cmd) " " "-c" " " code-path))
+      (os-call (string-append (goldfish-quote cmd) " " "-c" " " code-path)))))
 
 (define (eval-and-print code)
   (let* ((format (last (argv)))

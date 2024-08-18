@@ -16,7 +16,6 @@ end
 
 local research_files = {
     "$(projectdir)/TeXmacs(/doc/**)",
-    "$(projectdir)/TeXmacs(/fonts/**)",
     "$(projectdir)/TeXmacs(/langs/**)",
     "$(projectdir)/TeXmacs(/misc/**)",
     "$(projectdir)/TeXmacs(/packages/**)",
@@ -218,6 +217,19 @@ function add_target_research_on_others()
         add_installfiles(research_files, {prefixdir="share/Xmacs"})
     end
 
+    if is_plat("linux") then
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/enc/**)", {prefixdir="share/Xmacs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/tfm/**)", {prefixdir="share/Xmacs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/type1/**)", {prefixdir="share/Xmacs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/virtual/**)", {prefixdir="share/Xmacs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/*scm)", {prefixdir="share/Xmacs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/*LICENSE)", {prefixdir="share/Xmacs"})
+    elseif is_plat("macosx") then
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/**)", {prefixdir="share/Xmacs"})
+    else
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/**)")
+    end
+
     -- install tm files for testing purpose
     if is_mode("releasedbg") then
         if is_plat("mingw", "windows") then
@@ -308,7 +320,14 @@ xpack("research") do
     set_iconfile(path.join(os.projectdir(), "packages/windows/Xmacs.ico"))
     set_bindir("bin")
     add_installfiles(path.join(os.projectdir(), "build/packages/app.mogan/data/bin/(**)|MoganResearch.exe"), {prefixdir = "bin"})
-    set_basename("MoganResearch-v" .. XMACS_VERSION .. "-64bit-installer")
+    on_load(function (package)
+        local format = package:format()
+        if format == "nsis" then
+            package:set("basename", "MoganResearch-v" .. package:version() .. "-64bit-installer")
+        else
+            package:set("basename", "MoganResearch-v" .. package:version() .. "-64bit-portable")
+        end
+    end)
 end
 end
 

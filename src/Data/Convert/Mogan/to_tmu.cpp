@@ -20,7 +20,7 @@ using namespace moebius;
 using lolly::data::binary_to_hexadecimal;
 using moebius::drd::std_contains;
 
-const string TMU_VERSION= "1.0.2";
+const string TMU_VERSION= "1.0.3";
 
 /******************************************************************************
  * Conversion of TeXmacs trees to the present TeXmacs string format
@@ -297,5 +297,6 @@ tree_to_tmu (tree t) {
   tmu_writer tmw;
   tmw.write (t);
   tmw.flush ();
+  tmw.buf << "\n"; // append an extra newline at the end of TMU file
   return tmw.buf;
 }

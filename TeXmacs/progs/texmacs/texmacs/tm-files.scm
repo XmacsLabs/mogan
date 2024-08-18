@@ -190,7 +190,7 @@
     (cond ((url-scratch? name)
            (choose-file
              (lambda (x) (apply save-buffer-as-main (cons x opts)))
-             "Save TeXmacs file" "texmacs"))
+             "Save TeXmacs file" "tmu"))
           ((not (buffer-exists? name))
            (with msg `(concat "The buffer " ,vname " does not exist")
              (set-message msg "Save file")))
@@ -397,9 +397,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (buffer-external? u)
-  (or (and (url-rooted-web? u)
-           ;; FIXME: Use HTTP HEADERS to determine the real file format
-           (!= (file-format u) "texmacs-file"))
+  (or (url-rooted-web? u)
       (not (in? (url-root u) (list "tmfs" "file" "default" "blank" "ramdisc")))
       (file-of-format? u "image")
       (file-of-format? u "pdf")
@@ -519,7 +517,10 @@
 (tm-define (load-browse-buffer name)
   (:synopsis "Load a buffer or switch to it if already open")
   (cond ((buffer-exists? name) (switch-to-buffer name))
-        ((and (buffer-external? name) (!= (url-suffix name) "tm")) (load-external name))
+        ((and (buffer-external? name)
+         (!= (url-suffix name) "tm")
+         (!= (url-suffix name) "tmu"))
+         (load-external name))
         ((url-rooted-web? (current-buffer)) (load-buffer name))
         (else (load-buffer name))))
 
