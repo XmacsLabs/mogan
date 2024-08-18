@@ -64,6 +64,14 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
 
   hash_code= hash (root);
   get_data_from_root (root, t, start_index);
+
+  // Temporary Fix
+  // Sometimes copying to the image can result in not being able to obtain the
+  // root node
+  if (N (change_line_pos) == 1 && change_line_pos[0] == 0 && N (t->label) > 0) {
+    cout << "Set Root To T\n";
+    root= t;
+  }
   return root;
 }
 
@@ -78,7 +86,7 @@ lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
       // cout << "Child: " << obtain_ip (child_node)
       //      << " Line: " << obtain_ip (line) << " local_start_index "
       //      << local_start_index << "\n";
-      if (obtain_ip (child_node) == obtain_ip (line)) {
+      if (hash (child_node) == hash (line)) {
         start_index= local_start_index;
       }
 
@@ -96,7 +104,13 @@ string_u8
 lang_parser::get_code_str (tree root) {
   string    code_cork= "";
   string_u8 code     = "";
-  get_code_from_root (root, code_cork, code);
+  if (is_atomic (root)) {
+    code_cork << root->label;
+    code << cork_to_utf8 (root->label);
+  }
+  else {
+    get_code_from_root (root, code_cork, code);
+  }
 
   //<ldots> error fix
   code         = replace (code, "…", "...");
