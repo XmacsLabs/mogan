@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.3|1.2.9-rc6>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -11,6 +11,30 @@
 
   <\wide-tabular>
     <tformat|<cwith|1|-1|2|2|cell-background|pastel green>|<table|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      10_15
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Default: set 'text spacebar' to 'allow multiple spaces'
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      10_14
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Default: turn Program bracket matching on
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
       10_1

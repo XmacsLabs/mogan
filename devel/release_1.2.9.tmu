@@ -1,0 +1,49 @@
+<TMU|<tuple|1.0.3|1.2.9-rc6>>
+
+<style|<tuple|tmdoc|devel|british>>
+
+<\body>
+  <\hide-preamble>
+    \;
+  </hide-preamble>
+
+  <tmdoc-title|Mogan Research v1.2.9>
+
+  <section|Started projects>
+
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|<dlink|81>>|<cell|Minzihao>|<cell|OSPP 2024 Multiple Tabs>>|<row|<cell|<dlink|80>>|<cell|Ke Shi>|<cell|OSPP 2024 OpenType Math font>>|<row|<cell|<dlink|66>>|<cell|<value|da>>|<cell|TMU format>>|<row|<cell|<dlink|61>>|<cell|<value|da>>|<cell|Plugin Center>>|<row|<cell|<dlink|59>>|<cell|<value|da>>|<cell|Tuning keyboard shortcuts>>|<row|<cell|<dlink|43>>|<cell|Jack Li>|<cell|LaTeX conversion>>|<row|<cell|<dlink|41>>|<cell|<value|da>>|<cell|Ghostscript plugin>>|<row|<cell|<dlink|19>>|<cell|<value|da>>|<cell|Natual Language related issues>>|<row|<cell|<dlink|11>>|<cell|<value|da>>|<cell|Font Tuning>>|<row|<cell|<dlink|10>>|<cell|<value|da>>|<cell|Tuning default settings>>|<row|<cell|<dlink|5>>|<cell|<value|da>>|<cell|https://mogan.app>>>>>
+
+  <section|Old releases>
+
+  <\itemize>
+    <item><hlink|Release v1.2.8|release_1.2.8.tmu>
+
+    <item><hlink|Release v1.2.7|release_1.2.7.tmu>
+
+    <item><hlink|Release v1.2.6|release_1.2.6.tmu>
+
+    <item><hlink|Release v1.2.5|release_1.2.5.tmu>
+
+    <item><hlink|Release v1.2.4|release_1.2.4.tmu>
+
+    <item><hlink|Release v1.2.3|release_1.2.3.tmu>
+
+    <item><hlink|Release v1.2.2|release_1.2.2.tmu>
+
+    <item><hlink|Release v1.2.1|release_1.2.1.tmu>
+
+    <item><hlink|Release v1.2.0|release_1.2.0.tmu>
+  </itemize>
+
+  <section|Port from GNU <TeXmacs>>
+
+  see <dlink|texmacs>
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|preamble|false>
+  </collection>
+</initial>
