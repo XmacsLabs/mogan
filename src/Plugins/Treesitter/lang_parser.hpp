@@ -21,13 +21,28 @@ class lang_parser {
 public:
   lang_parser (string lang);
 
+  /**
+   * @brief Check current line of code has changed or not.
+   *
+   * @return True if current line of code has changed, false otherwise
+   */
   bool check_line_changed (tree t);
 
+  /**
+   * @brief Check if the code needs to be compiled based on its hash value.
+   *
+   * @param t The tree node
+   * @param start_index The starting position of the node's code in the entire
+   * code segment
+   * @param hash_code The hash value of the code string
+   * @return The root node of code to be parsed
+   */
   tree get_root_node (tree t, int& start_index, int& hash_code);
 
   /**
    * @brief Check if the code needs to be compiled based on its hash value.
    *
+   * @param code_hash The hash code of the code root node
    * @return True if the code needs to be compiled, false otherwise
    */
   bool check_to_compile (int code_hash);
@@ -35,7 +50,7 @@ public:
   /**
    * @brief Perform AST parsing and processing on the given code string.
    *
-   * @param code The code string to be parsed
+   * @param code_root The root node of code to be parsed
    */
   void do_ast_parse (tree code_root);
 

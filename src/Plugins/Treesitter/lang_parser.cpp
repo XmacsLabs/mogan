@@ -60,16 +60,20 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
 
   tree root     = t;
   path father_ip= obtain_ip (t);
-  // cout << "[Input]Father: " << father_ip << " Self:" << root << " the_et "
-  //      << lang_op << " lang_code_op " << lang_code_op << "\n";
+  // cout << "[Input]Current: " << father_ip << " Self:" << root << "\n";
   while (root->op != lang_op && root->op != lang_code_op && N (father_ip) > 1) {
     // cout << "Father: " << father_ip << " Root:" << root << " the_et " <<
     // the_et << LF;
     father_ip= father_ip->next;
     root     = tree (subtree (the_et, reverse (father_ip)));
   }
-  // cout << "[Result]Father: " << father_ip << " Root:" << root << " the_et " <<
-  //   the_et << LF;
+  // cout << "[Result]Father: " << father_ip <<
+  // " Root: " << root <<
+  // " N(the_et):  " << N(the_et) << LF;
+
+  // if(N(the_et) > 1){
+  //   cout << the_et << LF;
+  // }
 
   hash_code= hash (root);
   get_data_from_root (root, t, start_index);
@@ -95,6 +99,8 @@ lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
       // cout << "Child: " << obtain_ip (child_node)
       //      << " Line: " << obtain_ip (line) << " local_start_index "
       //      << local_start_index << "\n";
+
+      // if (obtain_ip (child_node) == obtain_ip (line)) { //FAILED
       if (hash (child_node) == hash (line)) {
         start_index= local_start_index;
       }
