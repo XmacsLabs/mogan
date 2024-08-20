@@ -9,7 +9,7 @@
 ## 一表以蔽之
 |  | GNU TeXmacs | 墨干 |
 |--|------------|----------------|
-| 发布周期 | 不固定 | 一个月至少一个版本 |
+| 发布周期 | 约一年 | 一个月至少一个版本 |
 | 界面风格 | 复古风格 | 现代风格 | 
 | Shortcuts | some of them do not work | 99% of them work fine |
 | Scheme引擎 | Guile TeXmacs | S7 Scheme |
