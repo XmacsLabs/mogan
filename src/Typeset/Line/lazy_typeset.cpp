@@ -14,6 +14,7 @@
 #include "Format/format.hpp"
 #include "Line/lazy_vstream.hpp"
 #include "Stack/stacker.hpp"
+#include "Treesitter/lang_parser.hpp"
 #include "analyze.hpp"
 #include "observers.hpp"
 #include "packrat.hpp"
@@ -240,6 +241,9 @@ make_lazy_with (edit_env env, tree t, path ip) {
 
 lazy
 make_lazy_compound (edit_env env, tree t, path ip) {
+  lang_parser::try_set_root_node (t);
+  // if(t->op == 2244 || t->op == 988)
+  //   cout << "make_lazy_compound " << t << " " << ip << LF;
   int  d;
   tree f;
   if (L (t) == COMPOUND) {

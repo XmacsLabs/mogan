@@ -16,8 +16,46 @@
 #include "tm_timer.hpp"
 #include <moebius/tree_label.hpp>
 
-extern tree the_et;
 using moebius::make_tree_label;
+
+tree          lang_parser::root_tree;
+array<string> lang_parser::support_langs;
+array<int>    lang_parser::lang_code_ops;
+array<int>    lang_parser::lang_ops;
+int           lang_parser::concat_op;
+
+void
+lang_parser::try_set_root_node (tree t) {
+  // Init
+  if (N (support_langs) == 0) {
+    support_langs= array<string> ();
+    lang_code_ops= array<int> ();
+    lang_ops     = array<int> ();
+    support_langs << string ("cpp");
+    for (int i= 0; i < N (support_langs); i++) {
+      tree lang_tree (make_tree_label (support_langs[i]));
+      lang_ops << lang_tree->op;
+
+      tree lang_code_tree (make_tree_label (support_langs[i] * "-code"));
+      lang_code_ops << lang_code_tree->op;
+    }
+    tree concat_tree (make_tree_label ("concat_op"));
+    concat_op= concat_tree->op;
+  }
+  // Check
+  for (int i= 0; i < N (support_langs); i++) {
+    if (t->op == lang_ops[i]) {
+      if (N (t) > 0 && (t[0]->op == 0 || t[0]->op == concat_op)) {
+        root_tree= t;
+        // cout << "Set Root Tree "<< root_tree << LF;
+      }
+    }
+    if (t->op == lang_code_ops[i]) {
+      root_tree= t;
+      // cout << "Set Root Tree "<< root_tree << LF;
+    }
+  }
+}
 
 lang_parser::lang_parser (string lang) {
   // TODO: Dynamic loading of shared lib and multilingual switching
@@ -30,6 +68,8 @@ lang_parser::lang_parser (string lang) {
 
   tree lang_code_tree (make_tree_label (lang * "-code"));
   lang_code_op= lang_code_tree->op;
+
+  cout << "lang_op: " << lang_op;
 }
 
 void
@@ -67,34 +107,10 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
   change_line_pos= array<int> ();
   leaf_tree_nodes= array<tree> ();
 
-  tree root     = t;
-  path father_ip= obtain_ip (t);
-  // cout << "[Input]Current: " << father_ip << " Self:" << root << "\n";
-  while (root->op != lang_op && root->op != lang_code_op && N (father_ip) > 1) {
-    // cout << "Father: " << father_ip << " Root:" << root << " the_et " <<
-    // the_et << LF;
-    father_ip= father_ip->next;
-    root     = tree (subtree (the_et, reverse (father_ip)));
-  }
-  // cout << "[Result]Father: " << father_ip <<
-  // " Root: " << root <<
-  // " N(the_et):  " << N(the_et) << LF;
+  hash_code= hash (lang_parser::root_tree);
+  get_data_from_root (lang_parser::root_tree, t, start_index);
 
-  // if(N(the_et) > 1){
-  //   cout << the_et << LF;
-  // }
-
-  hash_code= hash (root);
-  get_data_from_root (root, t, start_index);
-
-  // Temporary Fix
-  // Sometimes copying to the image can result in not being able to obtain the
-  // root node
-  if (N (change_line_pos) == 1 && change_line_pos[0] == 0 && N (t->label) > 0) {
-    cout << "Set Root To T\n";
-    root= t;
-  }
-  return root;
+  return lang_parser::root_tree;
 }
 
 void
@@ -105,17 +121,6 @@ lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
       int local_start_index= 0;
       if (N (change_line_pos) > 0)
         local_start_index= change_line_pos[N (change_line_pos) - 1] + 1;
-      // cout << "Child: " << obtain_ip (child_node)
-      //      << " Line: " << obtain_ip (line) << " local_start_index "
-      //      << local_start_index << "\n";
-
-      /*
-      if (hash (child_node) == hash (line)) {
-      FAILED in some cases
-      if (obtain_ip (child_node) == obtain_ip (line)) {
-      FAILED When Using "Copy to Image", wrong return of obtain_ip() causing the
-      code after the first line cannot be highlighted correctly.
-      */
 
       // Temporary solution
       path chid_ip= obtain_ip (child_node);
@@ -125,6 +130,9 @@ lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
       }
       else if (obtain_ip (child_node) == obtain_ip (line)) {
         start_index= local_start_index;
+        // cout << "Child: " << child_ip
+        //    << " Line: " << line_ip << " local_start_index "
+        //    << local_start_index << "\n";
       }
 
       int change_index= N (child_node->label) + local_start_index;
