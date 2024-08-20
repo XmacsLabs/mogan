@@ -742,6 +742,9 @@ edit_env_rep::exec_drd_props (tree t) {
       else if (prop == "name") {
         if (is_atomic (val)) drd->set_attribute (l, prop, val->label);
       }
+      else if (prop == "prog") {
+        if (is_atomic (val)) drd->set_attribute (l, prop, val->label);
+      }
       else if (prop == "syntax") drd->set_syntax (l, val);
       else if (prop == "border") {
         if (val == "yes") drd->set_border (l, BORDER_YES);

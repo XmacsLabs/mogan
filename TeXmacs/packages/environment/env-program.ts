@@ -214,6 +214,8 @@
       <python|<arg|body>>
     </pseudo-code>
   </macro>>
+
+  <drd-props|python-code|prog|true>
   
   <\active*>
     <\src-comment>

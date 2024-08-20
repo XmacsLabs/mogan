@@ -47,6 +47,7 @@ struct tmu_writer {
   void br (int indent= 0);
   void tag (string before, string s, string after);
   void apply (string func, array<tree> args);
+  void write_prog (tree t);
   void write (tree t);
 };
 
@@ -209,6 +210,38 @@ tmu_writer::apply (string func, array<tree> args) {
 }
 
 void
+tmu_writer::write_prog (tree t) {
+  string func= as_string (L (t));
+
+  // <\python-code>
+  write ("<\\", false);
+  write (func, true, true);
+  write (">", false);
+  write ("\n", false);
+
+  tree doc  = t[0];
+  int  doc_N= N (doc);
+  for (int i= 0; i < doc_N; i++) {
+    if (is_atomic (doc[i])) {
+      write (tree_to_verbatim (doc[i]->label), false);
+    }
+    else {
+      write (doc[i]);
+    }
+    write ("\n", false);
+  }
+
+  // __</python-code>
+  // _ means spaces, the number is controlled by tab
+  for (int i= 0; i < tab; i++) {
+    write (" ", false);
+  }
+  write ("</", false);
+  write (func, true, true);
+  write (">", false);
+}
+
+void
 tmu_writer::write (tree t) {
   if (is_atomic (t)) {
     write (t->label);
@@ -265,7 +298,12 @@ tmu_writer::write (tree t) {
     tag ("</", as_string (COLLECTION), ">");
     break;
   default:
-    apply (as_string (L (t)), A (t));
+    if (is_tree_in_prog (t) && N (t) == 1 && L (t[0]) == moebius::DOCUMENT) {
+      write_prog (t);
+    }
+    else {
+      apply (as_string (L (t)), A (t));
+    }
     break;
   }
 }

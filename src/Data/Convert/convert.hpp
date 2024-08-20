@@ -14,7 +14,9 @@
 #include "analyze.hpp"
 #include "hashmap.hpp"
 #include "tree.hpp"
+#include "tree_helper.hpp"
 #include "url.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 class object;
 
@@ -54,6 +56,11 @@ tree                 eqnumber_to_nonumber (tree t);
 string               search_metadata (tree doc, string kind);
 
 /*** TMU ***/
+inline bool
+is_tree_in_prog (tree t) {
+  return moebius::drd::the_drd->get_attribute (L (t), "prog") == "true";
+}
+
 tree   tmu_to_tree (string s);
 tree   tmu_document_to_tree (string s);
 string tree_to_tmu (tree t);

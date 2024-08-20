@@ -50,6 +50,7 @@ struct tmu_reader {
   string read_char ();
   string read_next ();
   string read_function_name ();
+  string read_prog_line ();
   tree   read_apply (string s, bool skip_flag);
   tree   read (bool skip_flag);
 };
@@ -176,6 +177,16 @@ tmu_reader::read_function_name () {
   return name;
 }
 
+string
+tmu_reader::read_prog_line () {
+  int old_pos= pos;
+  int buf_N  = N (buf);
+  while (((pos + 1) < buf_N) && (buf[pos] != '\n')) {
+    pos++;
+  }
+  return buf (old_pos, pos);
+}
+
 static void
 get_collection (tree& u, tree t) {
   if (is_func (t, COLLECTION) || is_func (t, DOCUMENT) || is_func (t, CONCAT)) {
@@ -196,18 +207,36 @@ tmu_reader::read_apply (string name, bool skip_flag) {
     t= tree ((tree_label) codes[name]);
   }
 
-  bool closed= !skip_flag;
-  int  buf_N = N (buf);
-  while (pos < buf_N) {
-    // cout << "last= " << last << LF;
-    bool sub_flag= (skip_flag) && ((last == "") || (last[N (last) - 1] != '|'));
-    if (sub_flag) (void) skip_blank ();
-    t << read (sub_flag);
-    if ((last == "/>") || (last == "/|")) closed= true;
-    if (closed && ((last == ">") || (last == "/>"))) break;
+  int buf_N= N (buf);
+  if (is_tree_in_prog (t)) {
+    tree D (DOCUMENT);
+    while (pos < buf_N) {
+      string line= read_prog_line ();
+      if (is_empty (line)) {
+        pos++;
+        continue;
+      }
+      if (ends (line, "</" * name * ">")) {
+        break;
+      }
+      D << line;
+    }
+    t << D;
   }
-  // cout << "last= " << last << UNINDENT << LF;
-  // cout << "Done" << LF;
+  else {
+    bool closed= !skip_flag;
+    while (pos < buf_N) {
+      // cout << "last= " << last << LF;
+      bool sub_flag=
+          (skip_flag) && ((last == "") || (last[N (last) - 1] != '|'));
+      if (sub_flag) (void) skip_blank ();
+      t << read (sub_flag);
+      if ((last == "/>") || (last == "/|")) closed= true;
+      if (closed && ((last == ">") || (last == "/>"))) break;
+    }
+    // cout << "last= " << last << UNINDENT << LF;
+    // cout << "Done" << LF;
+  }
 
   if (is_func (t, COLLECTION)) {
     tree u (COLLECTION);
