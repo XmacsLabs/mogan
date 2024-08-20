@@ -240,7 +240,6 @@ void
 concater_rep::typeset_concat (tree t, path ip) {
   int i, n= N (t);
   for (i= 0; i < n; i++) {
-    cout << "concat " << i << LF;
     typeset (t[i], descend (ip, i));
   }
 }

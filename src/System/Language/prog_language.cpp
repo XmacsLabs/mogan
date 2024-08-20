@@ -220,6 +220,10 @@ prog_language_rep::customize_preprocessor (tree config) {
 
 text_property
 prog_language_rep::advance (tree t, int& pos, path ip) {
+  cout << "current ip: " << ip << LF;
+  cout << "current tree: " << t << LF;
+  cout << "parent ip: " << get_parent_ip() << LF;
+  cout << "parent tree:\n" << get_parent_tree() << LF;
   string s= t->label;
   if (pos >= N (s)) return &tp_normal_rep;
 
