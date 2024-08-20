@@ -155,14 +155,13 @@ ast_language_rep::advance (tree t, int& pos) {
 
   int      token_end     = lang_ast_parser->current_token_end ();
   int      token_property= lang_ast_parser->current_token_property ();
-  uint32_t barcket_index = lang_ast_parser->current_brackets_index ();
+  uint32_t bracket_index = lang_ast_parser->current_brackets_index ();
   token_type             = lang_ast_parser->current_token_type ();
   lang_ast_parser->next_token ();
   pos= token_end - start_index;
-  // Colorful Barckets
-  if (barcket_index > 0u) {
-    token_type=
-        token_type * as_string (barcket_index % match_group[token_type]);
+  // Colorful brackets
+  if (bracket_index > 0u) {
+    token_type << as_string (bracket_index % match_group[token_type]);
   }
   // Keyword and Operator
   if (keytoken_group->contains (token_type)) {

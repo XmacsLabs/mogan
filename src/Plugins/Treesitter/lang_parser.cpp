@@ -211,7 +211,7 @@ lang_parser::is_change_line_between (int start, int end, int& cl_low,
 }
 
 void
-lang_parser::try_add_barckets_index (TSSymbol& token_type) {
+lang_parser::try_add_brackets_index (TSSymbol& token_type) {
   for (int i= 0; i < brackets_pairs_amount; i++) {
     if (token_type == bracket_symbol_list[i << 1]) {
       brackets_depths_cache[i]+= 1;
@@ -262,7 +262,7 @@ lang_parser::add_single_token (string debug_tag, TSSymbol token_type,
           token_ends << start_pos + i;
           token_types << token_type;
           token_lang_pros << token_lang_pro;
-          try_add_barckets_index (token_type);
+          try_add_brackets_index (token_type);
 
           // cout << debug_tag << token_type << ", Code: " << token_cache << "S"
           //      << start_pos + start << " E " << start_pos + i << "\n";
@@ -286,7 +286,7 @@ lang_parser::add_single_token (string debug_tag, TSSymbol token_type,
       token_ends << end_pos;
       token_types << token_type;
       token_lang_pros << token_lang_pro;
-      try_add_barckets_index (token_type);
+      try_add_brackets_index (token_type);
 
       // cout << debug_tag << token_type << ", Code: " << token_now << " S "
       //      << start_pos << " E " << end_pos << "\n";

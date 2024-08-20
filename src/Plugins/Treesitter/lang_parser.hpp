@@ -118,7 +118,7 @@ private:
   void      collect_leaf_nodes (TSNode node, array<TSNode>& tsnodes);
   void      get_data_from_root (tree root, tree line, int& start_index);
   void is_change_line_between (int start, int end, int& cl_low, int& cl_high);
-  void try_add_barckets_index (TSSymbol& token_type);
+  void try_add_brackets_index (TSSymbol& token_type);
   void add_token (TSSymbol token_type, string token_literal, int start_pos,
                   int end_pos, int token_lang_pro);
   void add_single_token (string debug_tag, TSSymbol token_type,
