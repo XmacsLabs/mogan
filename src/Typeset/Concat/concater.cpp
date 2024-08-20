@@ -232,10 +232,6 @@ concater_rep::typeset (tree t, path ip) {
     typeset_surround (t, ip);
     break;
   case CONCAT:
-    if (env->mode == 3) {
-      env->lan->set_parent_ip (ip);
-      env->lan->set_parent_tree (t);
-    }
     typeset_concat (t, ip);
     break;
   case RIGID:
