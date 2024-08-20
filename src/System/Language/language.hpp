@@ -152,10 +152,6 @@ struct language_rep : rep<language> {
   virtual array<string> get_members (string s);
   virtual void          highlight (tree t);
   virtual string        get_color (tree t, int start, int end);
-  tree                  get_parent_tree ();
-  void                  set_parent_tree (tree t);
-  path                  get_parent_ip ();
-  void                  set_parent_ip (path ip);
 };
 
 array<string> get_supported_languages ();

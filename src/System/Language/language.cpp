@@ -210,26 +210,6 @@ language_rep::get_color (tree t, int start, int end) {
   return "";
 }
 
-tree
-language_rep::get_parent_tree () {
-  return parent_tree;
-}
-
-void
-language_rep::set_parent_tree (tree p_parent_tree) {
-  parent_tree= p_parent_tree;
-}
-
-path
-language_rep::get_parent_ip () {
-  return parent_ip;
-}
-
-void
-language_rep::set_parent_ip (path p_ip) {
-  parent_ip= p_ip;
-}
-
 /******************************************************************************
  * Encode and decode colors for syntax highlighting
  ******************************************************************************/
