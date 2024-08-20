@@ -25,7 +25,7 @@ is_sep_char (char c) {
 }
 
 text_property
-verb_language_rep::advance (tree t, int& pos) {
+verb_language_rep::advance (tree t, int& pos, path ip) {
   string s= t->label;
   if (pos == N (s)) return &tp_normal_rep;
   if (s[pos] == ' ') {

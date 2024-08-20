@@ -190,6 +190,7 @@ void
 concater_rep::typeset (tree t, path ip) {
   // cout << "Typeset " << t << "\n";
   // cout << "Typeset " << t << ", " << ip << ", " << obtain_ip (t) << "\n";
+  // cout << "L(t): " << L(t) << "\t" << to_string (L(t)) << LF;
 
   /*
   if (obtain_ip (t) != ip)

@@ -26,7 +26,7 @@ struct text_language_rep : language_rep {
   hashmap<string, string> hyphenations;
 
   text_language_rep (string lan_name, string hyph_name);
-  text_property advance (tree t, int& pos);
+  text_property advance (tree t, int& pos, path ip= path ());
   array<int>    get_hyphens (string s);
   void          hyphenate (string s, int after, string& left, string& right);
 };
@@ -37,7 +37,7 @@ text_language_rep::text_language_rep (string lan_name, string hyph_name)
 }
 
 text_property
-text_language_rep::advance (tree t, int& pos) {
+text_language_rep::advance (tree t, int& pos, path ip) {
   string s= t->label;
   if (pos >= N (s)) return &tp_normal_rep;
 
@@ -127,7 +127,7 @@ struct french_language_rep : language_rep {
   hashmap<string, string> hyphenations;
 
   french_language_rep (string lan_name, string hyph_name);
-  text_property advance (tree t, int& pos);
+  text_property advance (tree t, int& pos, path ip= path ());
   array<int>    get_hyphens (string s);
   void          hyphenate (string s, int after, string& left, string& right);
 };
@@ -143,7 +143,7 @@ is_french_punctuation (char c) {
 }
 
 text_property
-french_language_rep::advance (tree t, int& pos) {
+french_language_rep::advance (tree t, int& pos, path ip) {
   string s= t->label;
   if (pos >= N (s)) return &tp_normal_rep;
 
@@ -235,7 +235,7 @@ struct ucs_text_language_rep : language_rep {
   hashmap<string, string> hyphenations;
 
   ucs_text_language_rep (string lan_name, string hyph_name);
-  text_property advance (tree t, int& pos);
+  text_property advance (tree t, int& pos, path ip= path ());
   array<int>    get_hyphens (string s);
   void          hyphenate (string s, int after, string& left, string& right);
   bool          unicode;
@@ -247,7 +247,7 @@ ucs_text_language_rep::ucs_text_language_rep (string lan_name, string hyph_name)
 }
 
 text_property
-ucs_text_language_rep::advance (tree t, int& pos) {
+ucs_text_language_rep::advance (tree t, int& pos, path ip) {
   // TODO: replace methods is_punctuation (), is_iso_alpha () and is_numeric (),
   //       by equivalents taking into account unicode entities.
   string s= t->label;
@@ -330,7 +330,7 @@ struct oriental_language_rep : language_rep {
   hashmap<string, bool> punct;
   hashmap<string, bool> wide_punct;
   oriental_language_rep (string lan_name);
-  text_property advance (tree t, int& pos);
+  text_property advance (tree t, int& pos, path ip= path ());
   array<int>    get_hyphens (string s);
   void          hyphenate (string s, int after, string& left, string& right);
 };
@@ -394,7 +394,7 @@ oriental_language_rep::oriental_language_rep (string lan_name)
 }
 
 text_property
-oriental_language_rep::advance (tree t, int& pos) {
+oriental_language_rep::advance (tree t, int& pos, path ip) {
   string s= t->label;
   if (pos >= N (s)) return &tp_normal_rep;
 
@@ -463,7 +463,7 @@ struct chinese_language_rep : language_rep {
   hashset<string> do_not_start;
   hashset<string> do_not_end;
   chinese_language_rep (string lan_name);
-  text_property advance (tree t, int& pos);
+  text_property advance (tree t, int& pos, path ip= path ());
   array<int>    get_hyphens (string s);
   void          hyphenate (string s, int after, string& left, string& right);
 };
@@ -502,7 +502,7 @@ chinese_language_rep::chinese_language_rep (string lan_name)
 }
 
 text_property
-chinese_language_rep::advance (tree t, int& pos) {
+chinese_language_rep::advance (tree t, int& pos, path ip) {
   string s= t->label;
   if (pos >= N (s)) return &tp_normal_rep;
 

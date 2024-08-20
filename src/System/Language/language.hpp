@@ -141,9 +141,11 @@ struct language_rep : rep<language> {
   int                         hl_lan;
   static hashmap<string, int> color_encoding;
   hashmap<int, string>        color_decoding;
+  tree                        parent_tree= tree ();
+  path                        parent_ip  = path ();
 
   language_rep (string s);
-  virtual text_property advance (tree t, int& pos)                    = 0;
+  virtual text_property advance (tree t, int& pos, path ip)           = 0;
   virtual array<int>    get_hyphens (string s)                        = 0;
   virtual void   hyphenate (string s, int after, string& l, string& r)= 0;
   virtual string get_group (string s);
