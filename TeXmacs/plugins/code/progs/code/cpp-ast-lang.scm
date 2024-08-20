@@ -53,6 +53,12 @@
     (operator_field "." "::")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
 
+(tm-define (parser-feature lan key)
+  (:require (and (== lan "cpp") (== key "brackets")))
+  `(,(string->symbol key)
+    (3 "(" ")")
+    (3 "[" "]")
+    (3 "{" "}")))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Preferences for syntax highlighting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -40,6 +40,9 @@ ast_language_rep::ast_language_rep (string name) : language_rep (name) {
   tree keytoken_config= get_parser_config (lan_name, "keytoken");
   customize_keytokens (keytoken_config);
 
+  tree brackets_config= get_parser_config (lan_name, "brackets");
+  customize_brackets_match (brackets_config);
+
   tree theme_config= get_parser_config (lan_name, "light_theme");
   customize_highlight_theme (theme_config);
 
@@ -70,6 +73,23 @@ ast_language_rep::customize_keytokens (tree config) {
 }
 
 void
+ast_language_rep::customize_brackets_match (tree config) {
+  lang_ast_parser->reset_brackets_pair ();
+  match_group= hashmap<string, int> ();
+  for (int i= 0; i < N (config); i++) {
+    tree group_of= config[i];
+    int  cycle   = as_int (get_label (group_of));
+    if (N (group_of) == 2) {
+      string forward        = get_label (group_of[0]);
+      string backward       = get_label (group_of[1]);
+      match_group (forward) = cycle;
+      match_group (backward)= cycle;
+      lang_ast_parser->add_brackets_pair (forward, backward);
+    }
+  }
+}
+
+void
 ast_language_rep::customize_highlight_theme (tree config) {
   theme_group= hashmap<string, string> ();
   for (int i= 0; i < N (config); i++) {
@@ -89,8 +109,8 @@ text_property
 ast_language_rep::advance (tree t, int& pos) {
   // Jump NBSP ["-"," "] in detail
   string s= t->label;
-  tree&  my_father (subtree (the_et, reverse (obtain_ip (t)->next)));
-  if (my_father->op == nbsp_op) {
+  tree&  father_node (subtree (the_et, reverse (obtain_ip (t)->next)));
+  if (father_node->op == nbsp_op) {
     pos+= 1;
     token_type= "none";
     if (s == " ") return &tp_space_rep;
@@ -133,15 +153,16 @@ ast_language_rep::advance (tree t, int& pos) {
     return &tp_normal_rep;
   }
 
-  int token_end     = lang_ast_parser->current_token_end ();
-  int token_property= lang_ast_parser->current_token_property ();
-  int barcket_index = lang_ast_parser->current_brackets_index ();
-  token_type        = lang_ast_parser->current_token_type ();
+  int      token_end     = lang_ast_parser->current_token_end ();
+  int      token_property= lang_ast_parser->current_token_property ();
+  uint32_t barcket_index = lang_ast_parser->current_brackets_index ();
+  token_type             = lang_ast_parser->current_token_type ();
   lang_ast_parser->next_token ();
   pos= token_end - start_index;
   // Colorful Barckets
-  if (barcket_index > 0) {
-    token_type= token_type * as_string (barcket_index % 3);
+  if (barcket_index > 0u) {
+    token_type=
+        token_type * as_string (barcket_index % match_group[token_type]);
   }
   // Keyword and Operator
   if (keytoken_group->contains (token_type)) {
@@ -152,8 +173,7 @@ ast_language_rep::advance (tree t, int& pos) {
   //      << token_end << " |nextindex " << lang_ast_parser->get_token_index ()
   //      << " |maxindex " << lang_ast_parser->get_token_num ()
   //      << " |tokenproperty " << token_property << " |tokentype " <<
-  //      token_type
-  //      << "\n";
+  //      token_type << "\n";
 
   // token_property
   if (token_property == 0) {
@@ -192,8 +212,9 @@ ast_language_rep::get_color (tree t, int start, int end) {
     col= theme_group[token_type];
   }
   else {
-    // if(token_type != "Space") cout << "Unkown Theme Token Type: " <<
-    // token_type << " Token:" << t->label(start,end) << "\n";
+    // if (token_type != "Space")
+    //   cout << "Unkown Theme Token Type: " << token_type
+    //        << " Token:" << t->label (start, end) << "\n";
   }
   return col;
 }

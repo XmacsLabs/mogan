@@ -15,7 +15,7 @@
 #include "tree.hpp"
 #include <tree-sitter-cpp.h>
 #include <tree_sitter/api.h>
-#define SpaceSymbol 65535
+constexpr TSSymbol SpaceSymbol= 65535;
 
 class lang_parser {
 public:
@@ -63,12 +63,17 @@ public:
    */
   void set_token_start (int start_index);
 
-  // Get the property of the current token
+  // Reset the brackets pair match data
+  void reset_brackets_pair ();
 
-  int    current_token_property ();
-  int    current_token_end ();
-  int    current_brackets_index ();
-  string current_token_type ();
+  // Add brackets pair to the list of brackets pairs
+  void add_brackets_pair (string forward, string backward);
+
+  // Get the property of the current token
+  int      current_token_property ();
+  int      current_token_end ();
+  uint32_t current_brackets_index ();
+  string   current_token_type ();
 
   // Get the total number of tokens
   int get_token_num ();
@@ -92,26 +97,25 @@ private:
   int last_end_pos     = -1;
   int inner_token_index= 0;
 
-  int            lang_code_op= 0;
-  int            lang_op     = 0;
-  list<TSSymbol> barcket_symbol_list; // '(', ')', '[', ']', '{', '}' ;
+  int             lang_code_op= 0;
+  int             lang_op     = 0;
+  array<TSSymbol> bracket_symbol_list;
+  array<uint32_t> brackets_depths_cache;
+  int             brackets_pairs_amount= 0;
 
-  list<tree> leaf_tree_nodes;
+  array<tree> leaf_tree_nodes;
 
-  list<int>      change_line_pos;
-  list<int>      token_starts;
-  list<int>      token_ends;
-  list<TSSymbol> token_types;
-  list<int>      token_lang_pros;
+  array<int>      change_line_pos;
+  array<int>      token_starts;
+  array<int>      token_ends;
+  array<TSSymbol> token_types;
+  array<int>      token_lang_pros;
 
-  int       small_bracket_depth= 0; // depth of ()
-  int       mid_bracket_depth  = 0; // depth of []
-  int       large_bracket_depth= 0; // depth of {}
-  list<int> brackets_index;
+  array<uint32_t> brackets_index;
 
   void      get_code_from_root (tree root, string& code, string_u8& code_u8);
   string_u8 get_code_str (tree root);
-  void      collect_leaf_nodes (TSNode node, list<TSNode>& tsnodes);
+  void      collect_leaf_nodes (TSNode node, array<TSNode>& tsnodes);
   void      get_data_from_root (tree root, tree line, int& start_index);
   void is_change_line_between (int start, int end, int& cl_low, int& cl_high);
   void try_add_barckets_index (TSSymbol& token_type);

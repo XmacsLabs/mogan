@@ -30,14 +30,23 @@ lang_parser::lang_parser (string lang) {
 
   tree lang_code_tree (make_tree_label (lang * "-code"));
   lang_code_op= lang_code_tree->op;
+}
 
-  barcket_symbol_list= list<TSSymbol> (); // '(', ')', '[', ']', '{', '}' ;
-  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, "(", 1, false);
-  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, ")", 1, false);
-  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, "[", 1, false);
-  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, "]", 1, false);
-  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, "{", 1, false);
-  barcket_symbol_list << ts_language_symbol_for_name (ts_lang, "}", 1, false);
+void
+lang_parser::reset_brackets_pair () {
+  brackets_pairs_amount= 0;
+  bracket_symbol_list  = array<TSSymbol> ();
+  brackets_depths_cache= array<uint32_t> ();
+}
+
+void
+lang_parser::add_brackets_pair (string forward, string backward) {
+  bracket_symbol_list << ts_language_symbol_for_name (
+      ts_lang, c_string (forward), 1, false);
+  bracket_symbol_list << ts_language_symbol_for_name (
+      ts_lang, c_string (backward), 1, false);
+  brackets_depths_cache << 0u;
+  brackets_pairs_amount+= 1;
 }
 
 bool
@@ -55,8 +64,8 @@ lang_parser::check_line_changed (tree t) {
 
 tree
 lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
-  change_line_pos= list<int> ();
-  leaf_tree_nodes= list<tree> ();
+  change_line_pos= array<int> ();
+  leaf_tree_nodes= array<tree> ();
 
   tree root     = t;
   path father_ip= obtain_ip (t);
@@ -100,8 +109,21 @@ lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
       //      << " Line: " << obtain_ip (line) << " local_start_index "
       //      << local_start_index << "\n";
 
-      // if (obtain_ip (child_node) == obtain_ip (line)) { //FAILED
+      /*
       if (hash (child_node) == hash (line)) {
+      FAILED in some cases
+      if (obtain_ip (child_node) == obtain_ip (line)) {
+      FAILED When Using "Copy to Image", wrong return of obtain_ip() causing the
+      code after the first line cannot be highlighted correctly.
+      */
+
+      // Temporary solution
+      path chid_ip= obtain_ip (child_node);
+      path line_ip= obtain_ip (line);
+      if (N (chid_ip) != N (line_ip)) {
+        if (hash (child_node) == hash (line)) start_index= local_start_index;
+      }
+      else if (obtain_ip (child_node) == obtain_ip (line)) {
         start_index= local_start_index;
       }
 
@@ -164,7 +186,7 @@ lang_parser::check_to_compile (int hash_code) {
 }
 
 void
-lang_parser::collect_leaf_nodes (TSNode node, list<TSNode>& tsnodes) {
+lang_parser::collect_leaf_nodes (TSNode node, array<TSNode>& tsnodes) {
   uint32_t child_count= ts_node_child_count (node);
   if (child_count == 0) {
     tsnodes << node;
@@ -190,33 +212,19 @@ lang_parser::is_change_line_between (int start, int end, int& cl_low,
 
 void
 lang_parser::try_add_barckets_index (TSSymbol& token_type) {
-  if (token_type == barcket_symbol_list[0]) {
-    small_bracket_depth+= 1;
-    brackets_index << small_bracket_depth;
+  for (int i= 0; i < brackets_pairs_amount; i++) {
+    if (token_type == bracket_symbol_list[i << 1]) {
+      brackets_depths_cache[i]+= 1;
+      brackets_index << brackets_depths_cache[i];
+      return;
+    }
+    if (token_type == bracket_symbol_list[(i << 1) + 1]) {
+      brackets_index << brackets_depths_cache[i];
+      brackets_depths_cache[i]-= 1;
+      return;
+    }
   }
-  else if (token_type == barcket_symbol_list[1]) {
-    brackets_index << small_bracket_depth;
-    small_bracket_depth-= 1;
-  }
-  else if (token_type == barcket_symbol_list[2]) {
-    mid_bracket_depth+= 1;
-    brackets_index << mid_bracket_depth;
-  }
-  else if (token_type == barcket_symbol_list[3]) {
-    brackets_index << mid_bracket_depth;
-    mid_bracket_depth-= 1;
-  }
-  else if (token_type == barcket_symbol_list[4]) {
-    large_bracket_depth+= 1;
-    brackets_index << large_bracket_depth;
-  }
-  else if (token_type == barcket_symbol_list[5]) {
-    brackets_index << large_bracket_depth;
-    large_bracket_depth-= 1;
-  }
-  else {
-    brackets_index << 0;
-  }
+  brackets_index << 0u;
 }
 
 void
@@ -232,8 +240,7 @@ lang_parser::add_single_token (string debug_tag, TSSymbol token_type,
       token_ends << i + 1;
       token_types << token_type;
       token_lang_pros << token_lang_pro;
-      brackets_index << 0;
-
+      brackets_index << 0u;
       // cout << debug_tag << token_type << ", Code: " << token_literal << " S "
       //      << i << " E " << i + 1 << "\n";
     }
@@ -247,7 +254,7 @@ lang_parser::add_single_token (string debug_tag, TSSymbol token_type,
     int    token_now_N= N (token_now);
     for (int i= 0; i < token_now_N; i++) {
       if (token_now[i] != ' ' && token_now[i] != '\n') {
-        token_cache= token_cache * token_now[i];
+        token_cache << token_now[i];
       }
       else {
         if (i > start) {
@@ -267,7 +274,7 @@ lang_parser::add_single_token (string debug_tag, TSSymbol token_type,
         token_ends << start_pos + start;
         token_types << token_type;
         token_lang_pros << 0;
-        brackets_index << 0;
+        brackets_index << 0u;
 
         // cout << debug_tag << "(Inner Space) " << token_type << ", Code: "
         //      << "<space>"
@@ -325,25 +332,24 @@ lang_parser::add_token (TSSymbol token_type, string token_literal,
 
 void
 lang_parser::do_ast_parse (tree code_root) {
-  fix_pos_moved      = 0;
-  last_end_pos       = 0;
-  inner_token_index  = 0;
-  small_bracket_depth= 0;
-  mid_bracket_depth  = 0;
-  large_bracket_depth= 0;
-  list<TSNode> tsnodes;
+  fix_pos_moved    = 0;
+  last_end_pos     = 0;
+  inner_token_index= 0;
+  array<TSNode> tsnodes;
 
-  token_starts   = list<int> ();
-  token_ends     = list<int> ();
-  token_types    = list<TSSymbol> ();
-  token_lang_pros= list<int> ();
-  brackets_index = list<int> ();
+  for (int i= 0; i < brackets_pairs_amount; i++)
+    brackets_depths_cache[i]= 0u;
+  token_starts   = array<int> ();
+  token_ends     = array<int> ();
+  token_types    = array<TSSymbol> ();
+  token_lang_pros= array<int> ();
+  brackets_index = array<uint32_t> ();
 
   // Tree Parse
-  // time_t      t1         = texmacs_time (); // Parse Time Start
-  code_string            = get_code_str (code_root);
-  const char* source_code= as_charp (code_string); // code
-  TSTree*     tstree=
+  // time_t t1  = texmacs_time (); // Parse Time Start
+  code_string= get_code_str (code_root);
+  c_string source_code (code_string);
+  TSTree*  tstree=
       ts_parser_parse_string (ast_parser, NULL, source_code, N (code_string));
   TSNode root_node= ts_tree_root_node (tstree);
   // time_t t2       = texmacs_time (); // Parse Time End / Process Time Start
@@ -398,7 +404,7 @@ lang_parser::current_token_end () {
   return token_ends[inner_token_index];
 }
 
-int
+uint32_t
 lang_parser::current_brackets_index () {
   return brackets_index[inner_token_index];
 }
