@@ -9,8 +9,7 @@ In this article, we will discuss the differences of Mogan Research and GNU TeXma
 ## In one table
 | | GNU TeXmacs | Mogan Research |
 |--|------------|----------------|
-| Release Cycle | not fixed | monthly |
-| Performance | slow | fast |
+| Release Cycle | almost yearly | monthly |
 | UI Style | retro style | modern style | 
 | Shortcuts | some of them do not work | 99% of them work fine |
 | Scheme Engine | Guile TeXmacs | S7 Scheme |
