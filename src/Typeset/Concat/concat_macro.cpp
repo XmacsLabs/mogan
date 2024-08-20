@@ -80,14 +80,10 @@ concater_rep::typeset_with (tree t, path ip) {
     }
   }
 
-  cout << "typeset_with: " << LF;
   marker (descend (ip, 0));
   // for (i=0; i<k; i++) env->monitored_write_update (vars[i], newv[i]);
-  for (i= 0; i < k; i++) {
+  for (i= 0; i < k; i++)
     env->write_update (vars[i], newv[i]);
-    cout << "key:" << vars[i] << LF;
-    cout << "value: " << newv[i] << LF;
-  }
   typeset (t[n - 1], descend (ip, n - 1));
   for (i= k - 1; i >= 0; i--)
     env->write_update (vars[i], oldv[i]);
