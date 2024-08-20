@@ -331,7 +331,7 @@ decode_color (string lan_name, int c) {
 struct hyphenless_language_rep : language_rep {
   language base;
   hyphenless_language_rep (string lan_name, language lan);
-  text_property advance (tree t, int& pos, path ip);
+  text_property advance (tree t, int& pos);
   array<int>    get_hyphens (string s);
   void          hyphenate (string s, int after, string& left, string& right);
 };
@@ -340,8 +340,8 @@ hyphenless_language_rep::hyphenless_language_rep (string nm, language lan)
     : language_rep (nm), base (lan) {}
 
 text_property
-hyphenless_language_rep::advance (tree t, int& pos, path ip) {
-  return base->advance (t, pos, ip);
+hyphenless_language_rep::advance (tree t, int& pos) {
+  return base->advance (t, pos);
 }
 
 array<int>
@@ -376,7 +376,7 @@ struct ad_hoc_language_rep : language_rep {
   hashmap<string, string> hyphens;
 
   ad_hoc_language_rep (string lan_name, language lan, tree hyphs);
-  text_property advance (tree t, int& pos, path ip);
+  text_property advance (tree t, int& pos);
   array<int>    get_hyphens (string s);
   void          hyphenate (string s, int after, string& left, string& right);
 };
@@ -391,8 +391,8 @@ ad_hoc_language_rep::ad_hoc_language_rep (string nm, language lan, tree hyphs)
 }
 
 text_property
-ad_hoc_language_rep::advance (tree t, int& pos, path ip) {
-  return base->advance (t, pos, ip);
+ad_hoc_language_rep::advance (tree t, int& pos) {
+  return base->advance (t, pos);
 }
 
 array<int>
