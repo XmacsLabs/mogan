@@ -11,7 +11,7 @@
 |--|------------|----------------|
 | 发布周期 | 约一年 | 一个月至少一个版本 |
 | 界面风格 | 复古风格 | 现代风格 | 
-| Shortcuts | some of them do not work | 99% of them work fine |
+| 快捷键 | 部分失效 | 99%正常 |
 | Scheme引擎 | Guile TeXmacs | S7 Scheme |
 | 代码仓库 | SVN (Savannah) | Git (Codeberg/Gitee/Github) |
 | 构建工具 | GNU Autotools | xmake | 
@@ -51,7 +51,7 @@
 
 在Windows和Linux平台仍然保留`C-tab`和`C-S-tab`的旧快捷键。在macOS平台，由于已经将`structured:cmd`从`Option`切换为了`Ctrl`，而且`C-tab`不可用，故而旧快捷键不生效。
 
-> 为什么：因为`C-tab`/`C-S-tab`/`A-S-tab`这三个快捷键在macOS平台不可用，详见[QTBUG-12232](https://bugreports.qt.io/browse/QTBUG-12232)。(_更新_: 最新TeXmacs测试版不存在此问题。)
+> 为什么：因为`C-tab`/`C-S-tab`/`A-S-tab`这三个快捷键在macOS平台不可用，详见[QTBUG-12232](https://bugreports.qt.io/browse/QTBUG-12232)。(_更新_: 最新 TeXmacs 测试版不存在此问题。)
 
 ### ESC键
 在TeXmacs中，ESC键可用于模拟修饰键（比如Ctrl/Alt），但是在墨干中，ESC键是普通的按键，无法用于模拟修饰键。未来，ESC键或许可以被用于墨干的Vim插件。如果墨干中的快捷键和操作系统的内置快捷键冲突，我们会认为这是一个错误，会通过更改此类快捷键的方式修复错误，而不是用ESC键来规避错误。
