@@ -313,12 +313,12 @@ edit_text_rep::remove_structure (bool forward) {
     while (true) {
       if (forward) {
         pos= start;
-        (void) lan->advance (t, pos);
+        (void) lan->advance (t, pos, p);
         if (pos <= last) break;
       }
       else {
         int pos= max (start - 1, 0);
-        (void) lan->advance (t, pos);
+        (void) lan->advance (t, pos, p);
         if (pos < last) break;
       }
       end= pos;

@@ -30,7 +30,7 @@ concat_tokenize (tree t) {
     int i= 0;
     while (i < N (t->label)) {
       int start= i;
-      (void) lan->advance (t, i);
+      (void) lan->advance (t, i, path ());
       r << tree (t->label (start, i));
     }
   }
@@ -145,7 +145,7 @@ symbol_type (tree t) {
   }
   else if (is_atomic (t)) {
     int           pos = 0;
-    text_property prop= lan->advance (t, pos);
+    text_property prop= lan->advance (t, pos, path ());
     switch (prop->op_type) {
     case OP_UNKNOWN:
     case OP_TEXT:

@@ -190,6 +190,7 @@ void
 concater_rep::typeset (tree t, path ip) {
   // cout << "Typeset " << t << "\n";
   // cout << "Typeset " << t << ", " << ip << ", " << obtain_ip (t) << "\n";
+  // cout << "L(t): " << L(t) << "\t" << to_string (L(t)) << LF;
 
   /*
   if (obtain_ip (t) != ip)
@@ -231,6 +232,10 @@ concater_rep::typeset (tree t, path ip) {
     typeset_surround (t, ip);
     break;
   case CONCAT:
+    if (env->mode == 3) {
+      env->lan->set_parent_ip (ip);
+      env->lan->set_parent_tree (t);
+    }
     typeset_concat (t, ip);
     break;
   case RIGID:

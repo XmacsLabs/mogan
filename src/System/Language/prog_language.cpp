@@ -219,7 +219,7 @@ prog_language_rep::customize_preprocessor (tree config) {
 }
 
 text_property
-prog_language_rep::advance (tree t, int& pos) {
+prog_language_rep::advance (tree t, int& pos, path ip) {
   string s= t->label;
   if (pos >= N (s)) return &tp_normal_rep;
 

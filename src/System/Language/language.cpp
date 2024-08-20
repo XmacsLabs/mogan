@@ -210,6 +210,26 @@ language_rep::get_color (tree t, int start, int end) {
   return "";
 }
 
+tree
+language_rep::get_parent_tree () {
+  return parent_tree;
+}
+
+void
+language_rep::set_parent_tree (tree p_parent_tree) {
+  parent_tree= p_parent_tree;
+}
+
+path
+language_rep::get_parent_ip () {
+  return parent_ip;
+}
+
+void
+language_rep::set_parent_ip (path p_ip) {
+  parent_ip= p_ip;
+}
+
 /******************************************************************************
  * Encode and decode colors for syntax highlighting
  ******************************************************************************/
@@ -331,7 +351,7 @@ decode_color (string lan_name, int c) {
 struct hyphenless_language_rep : language_rep {
   language base;
   hyphenless_language_rep (string lan_name, language lan);
-  text_property advance (tree t, int& pos);
+  text_property advance (tree t, int& pos, path ip);
   array<int>    get_hyphens (string s);
   void          hyphenate (string s, int after, string& left, string& right);
 };
@@ -340,8 +360,8 @@ hyphenless_language_rep::hyphenless_language_rep (string nm, language lan)
     : language_rep (nm), base (lan) {}
 
 text_property
-hyphenless_language_rep::advance (tree t, int& pos) {
-  return base->advance (t, pos);
+hyphenless_language_rep::advance (tree t, int& pos, path ip) {
+  return base->advance (t, pos, ip);
 }
 
 array<int>
@@ -376,7 +396,7 @@ struct ad_hoc_language_rep : language_rep {
   hashmap<string, string> hyphens;
 
   ad_hoc_language_rep (string lan_name, language lan, tree hyphs);
-  text_property advance (tree t, int& pos);
+  text_property advance (tree t, int& pos, path ip);
   array<int>    get_hyphens (string s);
   void          hyphenate (string s, int after, string& left, string& right);
 };
@@ -391,8 +411,8 @@ ad_hoc_language_rep::ad_hoc_language_rep (string nm, language lan, tree hyphs)
 }
 
 text_property
-ad_hoc_language_rep::advance (tree t, int& pos) {
-  return base->advance (t, pos);
+ad_hoc_language_rep::advance (tree t, int& pos, path ip) {
+  return base->advance (t, pos, ip);
 }
 
 array<int>
