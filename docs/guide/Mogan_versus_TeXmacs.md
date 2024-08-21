@@ -49,7 +49,7 @@ Add `A-S-up` and `A-S-down` for structured variants circling.
 
 On Linux and Windows, `C-tab` and `C-S-tab` are reserved. On macOS, because we switched `structured:cmd` from `Option` to `Ctrl` and `C-tab` does not work, the shortcuts `C-tab` and `C-S-tab` do not work.
 
-> Why: `C-tab`, `C-S-tab` and `A-S-tab` do not work on macOS, see [QTBUG-12232](https://bugreports.qt.io/browse/QTBUG-12232). (_Update_: There is no such issue in the latest testing version of TeXmacs.)
+> Why: `C-tab`, `C-S-tab` and `A-S-tab` do not work on macOS, see [QTBUG-12232](https://bugreports.qt.io/browse/QTBUG-12232). (__Note__: This argument is __invalid__, as there is no such issue after TeXmacs has upgraded to Qt6 in the latest testing versions.)
 
 ### ESC key
 The ESC is used for producing equivalents for the modifier keys in GNU TeXmacs. But in Mogan, it is a normal key. And later, the ESC may be used in the Vim plugin for Mogan. If the shortcuts in Mogan is conflicated with the OS system shortucts, we should regard it as a bug and fix it by changing the shortcut but not using the ESC key.
