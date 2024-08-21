@@ -9,7 +9,6 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "Treesitter/lang_parser.hpp"
 #include "bridge.hpp"
 
 #include <moebius/drd/drd_std.hpp>
@@ -179,9 +178,6 @@ bridge_compound_rep::my_typeset_will_be_complete () {
 
 void
 bridge_compound_rep::my_typeset (int desired_status) {
-  lang_parser::try_set_root_node (st);
-  // if (st->op == 2244 || st->op == 988)
-  //     cout << "bridge_compound_rep::typeset :" << st << " " << ip << "\n";
   int  d;
   tree f;
   if (L (st) == COMPOUND) {

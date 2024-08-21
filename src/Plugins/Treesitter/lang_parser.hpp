@@ -86,18 +86,7 @@ public:
 
   string_u8 code_string;
 
-  static void try_set_root_node (tree t);
-
 private:
-  static tree          root_tree;
-  static array<string> support_langs;
-  static array<int>    lang_code_ops;
-  static array<int>    lang_ops;
-  static int           concat_op;
-
-  int lang_code_op= 0;
-  int lang_op     = 0;
-
   TSParser*         ast_parser;
   const TSLanguage* ts_lang;
   int               current_code_hash= 0;
@@ -108,6 +97,8 @@ private:
   int last_end_pos     = -1;
   int inner_token_index= 0;
 
+  int             lang_code_op= 0;
+  int             lang_op     = 0;
   array<TSSymbol> bracket_symbol_list;
   array<uint32_t> brackets_depths_cache;
   int             brackets_pairs_amount= 0;

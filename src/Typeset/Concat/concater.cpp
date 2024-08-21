@@ -11,7 +11,6 @@
  ******************************************************************************/
 
 #include "concater.hpp"
-#include "Treesitter/lang_parser.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
 #include "observers.hpp"
@@ -189,9 +188,6 @@ concater_rep::with_limits (int status) {
 
 void
 concater_rep::typeset (tree t, path ip) {
-  lang_parser::try_set_root_node (t);
-  // if(t->op == 2244 || t->op == 988)
-  //   cout << "concater_rep::typeset " << t << " " << ip << LF;
   // cout << "Typeset " << t << "\n";
   // cout << "Typeset " << t << ", " << ip << ", " << obtain_ip (t) << "\n";
 

@@ -107,7 +107,6 @@ ast_language_rep::customize_highlight_theme (tree config) {
 extern tree the_et;
 text_property
 ast_language_rep::advance (tree t, int& pos) {
-  // cout << "advance " << t << " " << obtain_ip (t) << "\n";
   // Jump NBSP ["-"," "] in detail
   string s= t->label;
   tree&  father_node (subtree (the_et, reverse (obtain_ip (t)->next)));
