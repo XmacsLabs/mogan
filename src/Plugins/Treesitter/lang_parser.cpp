@@ -109,21 +109,7 @@ lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
       //      << " Line: " << obtain_ip (line) << " local_start_index "
       //      << local_start_index << "\n";
 
-      /*
-      if (hash (child_node) == hash (line)) {
-      FAILED in some cases
       if (obtain_ip (child_node) == obtain_ip (line)) {
-      FAILED When Using "Copy to Image", wrong return of obtain_ip() causing the
-      code after the first line cannot be highlighted correctly.
-      */
-
-      // Temporary solution
-      path chid_ip= obtain_ip (child_node);
-      path line_ip= obtain_ip (line);
-      if (N (chid_ip) != N (line_ip)) {
-        if (hash (child_node) == hash (line)) start_index= local_start_index;
-      }
-      else if (obtain_ip (child_node) == obtain_ip (line)) {
         start_index= local_start_index;
       }
 
