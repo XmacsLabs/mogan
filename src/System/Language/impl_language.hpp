@@ -1,7 +1,7 @@
 
 /******************************************************************************
  * MODULE     : impl_language.hpp
- * COPYRIGHT  : (C) 1999-2020  Joris van der Hoeven, Darcy Shen
+ * COPYRIGHT  : (C) 1999-2024  Joris van der Hoeven, Darcy Shen, UnbSky
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -11,6 +11,7 @@
 #ifndef IMPL_LANGUAGE_H
 #define IMPL_LANGUAGE_H
 
+#include "Treesitter/lang_parser.hpp"
 #include "blanks_parser.hpp"
 #include "escaped_char_parser.hpp"
 #include "identifier_parser.hpp"
@@ -100,6 +101,28 @@ struct scheme_language_rep : language_rep {
   array<int>    get_hyphens (string s);
   void          hyphenate (string s, int after, string& left, string& right);
   string        get_color (tree t, int start, int end);
+};
+
+// TODO:language_rep
+struct ast_language_rep : language_rep {
+  lang_parser*            lang_ast_parser;
+  hashmap<string, string> keytoken_group;
+  hashmap<string, string> theme_group;
+  hashmap<string, int>    match_group;
+  string                  token_type;
+  int                     nbsp_op;
+  int                     start_index;
+
+  ast_language_rep (string name);
+  text_property advance (tree t, int& pos);
+  array<int>    get_hyphens (string s);
+  void          hyphenate (string s, int after, string& left, string& right);
+  string        get_color (tree t, int start, int end);
+
+  tree get_parser_config (string lan, string key);
+  void customize_keytokens (tree config);
+  void customize_highlight_theme (tree config);
+  void customize_brackets_match (tree config);
 };
 
 struct cpp_language_rep : abstract_language_rep {

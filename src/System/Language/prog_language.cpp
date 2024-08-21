@@ -16,6 +16,7 @@
 #include "cork.hpp"
 #include "impl_language.hpp"
 #include "iterator.hpp"
+#include "preferences.hpp"
 #include "scheme.hpp"
 #include "tm_url.hpp"
 #include "tree_helper.hpp"
@@ -274,7 +275,8 @@ prog_language_rep::get_hyphens (string s) {
   int        i;
   array<int> penalty (N (s) + 1);
   penalty[0]= HYPH_INVALID;
-  for (i= 1; i < N (s); i++)
+  int len   = N (s);
+  for (i= 1; i < len; i++)
     if (s[i - 1] == '-' && is_alpha (s[i])) penalty[i]= HYPH_STD;
     else penalty[i]= HYPH_INVALID;
   penalty[i]= HYPH_INVALID;
@@ -355,6 +357,15 @@ prog_lang_exists (string s) {
  ******************************************************************************/
 language
 prog_language (string s) {
+  string use_ast= get_user_preference ("ast-syntax-highlighting");
+  // cout << "Load prog_language " << s << " use_ast: " << use_ast << "\n";
+  if (use_ast == "on") {
+    if (language::instances->contains (s * "-ast"))
+      return language (s * "-ast");
+    if (format_exists (s) && prog_lang_exists (s * "-ast"))
+      return make (language, s * "-ast", tm_new<ast_language_rep> (s * "-ast"));
+  }
+
   if (language::instances->contains (s)) return language (s);
 
   if (s == "scheme") return make (language, s, tm_new<scheme_language_rep> (s));
