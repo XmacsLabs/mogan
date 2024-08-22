@@ -83,9 +83,9 @@
                ((char-alphabetic? (string-ref s 0)) `(h:var ,s))
                (else s)))
         ((string-starts? s "<cal-")
-         `(h:font (@ (face "Zapf Chancery")) ,(tmhtml-sub-token s 5)))
+        `(h:span (@ (style "font-family: 'Zapf Chancery'")) ,(tmhtml-sub-token s 5)))
         ((string-starts? s "<b-cal-")
-         `(h:u (h:font (@ (face "Zapf Chancery")) ,(tmhtml-sub-token s 7))))
+        `(h:u (h:span (@ (style "font-family: 'Zapf Chancery'")) ,(tmhtml-sub-token s 7))))
         ((string-starts? s "<frak-")
          `(h:u ,(tmhtml-sub-token s 6)))
         ((string-starts? s "<bbb-") `(h:u (h:b ,(tmhtml-sub-token s 5))))
@@ -930,7 +930,8 @@
     (tmhtml arg)))
 
 (define (tmhtml-with-color val arg)
-  `((h:font (@ (color ,(tmcolor->htmlcolor val))) ,@(tmhtml arg))))
+  `((h:span (@ (style ,(string-append "color: " (tmcolor->htmlcolor val))))
+            ,@(tmhtml arg))))
 
 (define (font-size-string->number str)
   (if (string=? str "")
@@ -940,14 +941,8 @@
 (define (tmhtml-with-font-size val arg)
   (ahash-with tmhtml-env :mag val
     (let* ((x (* (font-size-string->number val) 100))
-           (c (string-append "font-size: " (number->string x) "%"))
-           (s (cond ((< x 1) "-4") ((< x 55) "-4") ((< x 65) "-3")
-                    ((< x 75) "-2") ((< x 95) "-1") ((< x 115) "0")
-                    ((< x 135) "+1") ((< x 155) "+2") ((< x 185) "+3")
-                    ((< x 225) "+4") ((< x 500) "+5") (else "+5"))))
-      (cond (tmhtml-css? `((h:font (@ (style ,c)) ,@(tmhtml arg))))
-            (s `((h:font (@ (size ,s)) ,@(tmhtml arg))))
-            (else (tmhtml arg))))))
+           (c (string-append "font-size: " (number->string x) "%")))
+      `((h:span (@ (style ,c)) ,@(tmhtml arg))))))
 
 (define (tmhtml-with-block style arg)
   (with r (tmhtml (blockify arg))
