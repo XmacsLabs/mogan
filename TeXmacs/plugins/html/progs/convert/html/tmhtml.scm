@@ -930,7 +930,8 @@
     (tmhtml arg)))
 
 (define (tmhtml-with-color val arg)
-  `((h:font (@ (color ,(tmcolor->htmlcolor val))) ,@(tmhtml arg))))
+  `((h:span (@ (style ,(string-append "color: " (tmcolor->htmlcolor val))))
+            ,@(tmhtml arg))))
 
 (define (font-size-string->number str)
   (if (string=? str "")
