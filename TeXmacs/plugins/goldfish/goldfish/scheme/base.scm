@@ -16,6 +16,7 @@
 
 (define-library (scheme base)
 (export
+  let-values
   square
   ; String
   string-copy
@@ -35,6 +36,39 @@
   ; Exception
   raise guard read-error? file-error?)
 (begin
+
+; 0-clause BSD
+; Bill Schottstaedt
+; from S7 source repo: r7rs.scm
+(define-macro (let-values vars . body)
+  (if (and (pair? vars)
+           (pair? (car vars))
+           (null? (cdar vars)))
+      `((lambda ,(caar vars)
+          ,@body)
+        ,(cadar vars))
+      `(with-let
+        (apply sublet (curlet)
+          (list
+            ,@(map
+               (lambda (v)
+                 `((lambda ,(car v)
+                     (values ,@(map (lambda (name)
+                       (values (symbol->keyword name) name))
+                         (let args->proper-list ((args (car v)))
+                           (cond ((symbol? args)
+                                  (list args))
+                                 ((not (pair? args))
+                                  args)
+                                 ((pair? (car args))
+                                  (cons (caar args)
+                                        (args->proper-list (cdr args))))
+                                 (else
+                                  (cons (car args)
+                                        (args->proper-list (cdr args)))))))))
+                   ,(cadr v)))
+                vars)))
+        ,@body)))
 
 (define (square x) (* x x))
 
@@ -86,6 +120,8 @@
             (begin
               (vector-set! to to-i (vector-ref from from-i))
               (loop (+ to-i 1) (+ from-i 1)))))))
+
+(define vector-fill! fill!)
 
 (define (string-map p . args) (apply string (apply map p args)))
 
