@@ -19,7 +19,7 @@
   take drop take-right drop-right count fold fold-right
   reduce reduce-right filter partition remove find
   delete delete-duplicates
-  take-while drop-while list-index
+  take-while drop-while list-index any every
   last-pair last)
 (begin
 
@@ -183,6 +183,16 @@
           (if (pred (car l))
               index
               (loop (+ index 1) (cdr l))))))
+
+(define (any pred? l)
+  (cond ((null? l) #f)
+        ((pred? (car l)) #t)
+        (else (any pred? (cdr l)))))
+
+(define (every pred? l)
+  (cond ((null? l) #t)
+        ((not (pred? (car l))) #f)
+        (else (every pred? (cdr l)))))
 
 (define (%extract-maybe-equal maybe-equal)
   (let ((my-equal (if (null-list? maybe-equal)
