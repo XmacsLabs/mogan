@@ -80,6 +80,7 @@ function add_target_research_on_wasm()
     add_packages("s7")
     add_packages("tree-sitter")
     add_packages("tree-sitter-cpp")
+    add_packages("tree-sitter-scheme")
 
     add_rules("qt.widgetapp_static")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QWasmIntegrationPlugin")
@@ -151,6 +152,7 @@ function add_target_research_on_others()
     add_packages("s7")
     add_packages("tree-sitter")
     add_packages("tree-sitter-cpp")
+    add_packages("tree-sitter-scheme")
 
     add_deps("libmogan")
     if is_plat("linux") and (linuxos.name () == "ubuntu" and linuxos.version():major() == 20) then

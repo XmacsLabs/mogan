@@ -103,12 +103,12 @@ struct scheme_language_rep : language_rep {
   string        get_color (tree t, int start, int end);
 };
 
-// TODO:language_rep
 struct ast_language_rep : language_rep {
   lang_parser*            lang_ast_parser;
   hashmap<string, string> keytoken_group;
   hashmap<string, string> theme_group;
   hashmap<string, int>    match_group;
+  hashset<string>         tokenize_set;
   string                  token_type;
   int                     nbsp_op;
   int                     start_index;
@@ -123,6 +123,7 @@ struct ast_language_rep : language_rep {
   void customize_keytokens (tree config);
   void customize_highlight_theme (tree config);
   void customize_brackets_match (tree config);
+  void customize_special_symbol (tree config);
 };
 
 struct cpp_language_rep : abstract_language_rep {

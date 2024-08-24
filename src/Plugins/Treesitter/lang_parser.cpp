@@ -22,7 +22,10 @@ using moebius::make_tree_label;
 lang_parser::lang_parser (string lang) {
   // TODO: Dynamic loading of shared lib and multilingual switching
   ast_parser= ts_parser_new ();
-  ts_lang   = tree_sitter_cpp ();
+  if (lang == "cpp") ts_lang= tree_sitter_cpp ();
+  if (lang == "scheme") ts_lang= tree_sitter_scheme ();
+  // cout << lang << " parser created\n";
+
   ts_parser_set_language (ast_parser, ts_lang);
 
   tree lang_tree (make_tree_label (lang));
@@ -47,6 +50,17 @@ lang_parser::add_brackets_pair (string forward, string backward) {
       ts_lang, c_string (backward), 1, false);
   brackets_depths_cache << 0u;
   brackets_pairs_amount+= 1;
+}
+
+void
+lang_parser::reset_intercept_symbols () {
+  intercept_symbol_set= hashset<TSSymbol> ();
+}
+
+void
+lang_parser::add_intercept_symbols (string intercept_type) {
+  intercept_symbol_set->insert (ts_language_symbol_for_name (
+      ts_lang, c_string (intercept_type), N (intercept_type), true));
 }
 
 bool
@@ -174,6 +188,11 @@ lang_parser::check_to_compile (int hash_code) {
 void
 lang_parser::collect_leaf_nodes (TSNode node, array<TSNode>& tsnodes) {
   uint32_t child_count= ts_node_child_count (node);
+  TSSymbol node_symbol= ts_node_symbol (node);
+  if (intercept_symbol_set->contains (node_symbol)) {
+    tsnodes << node;
+    return;
+  }
   if (child_count == 0) {
     tsnodes << node;
   }
@@ -359,8 +378,7 @@ lang_parser::do_ast_parse (tree code_root) {
 
     // Add Front Space
     if (real_start_byte > last_end_pos && last_end_pos >= 0) {
-      add_token (SpaceSymbol, string ("<space>"), last_end_pos, real_start_byte,
-                 0);
+      add_token (SpaceSymbol, string (""), last_end_pos, real_start_byte, 0);
     }
 
     // Store Token Data
@@ -371,7 +389,7 @@ lang_parser::do_ast_parse (tree code_root) {
 
   // Add End Space
   if (last_end_pos < real_code_len && last_end_pos >= 0) {
-    add_token (SpaceSymbol, string ("<space>"), last_end_pos, real_code_len, 0);
+    add_token (SpaceSymbol, string (""), last_end_pos, real_code_len, 0);
   }
   // time_t t3= texmacs_time (); // Process Time End
   // cout << "Code Gen and Parse took " << t2 - t1 << "ms |Process took "

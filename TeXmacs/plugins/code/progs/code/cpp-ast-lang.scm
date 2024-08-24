@@ -59,6 +59,11 @@
     (3 "(" ")")
     (3 "[" "]")
     (3 "{" "}")))
+
+(tm-define (parser-feature lan key)
+  (:require (and (== lan "cpp") (== key "special_symbol")))
+  `(,(string->symbol key)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Preferences for syntax highlighting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
