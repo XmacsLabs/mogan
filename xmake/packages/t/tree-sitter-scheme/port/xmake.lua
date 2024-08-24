@@ -21,6 +21,5 @@
 add_rules("mode.debug", "mode.release")
 target("tree-sitter-scheme")
     set_kind("$(kind)")
-    add_includedirs("src")
     add_files("src/parser.c")
-    add_headerfiles("bindings/tree-sitter-scheme.h")
+    add_headerfiles("bindings/c/tree-sitter-scheme.h")

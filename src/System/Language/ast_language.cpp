@@ -239,9 +239,9 @@ ast_language_rep::get_color (tree t, int start, int end) {
     col= theme_group[token_type];
   }
   else {
-    // if (token_type != "Space")
-    //   cout << "Unkown Theme Token Type: " << token_type
-    //        << " Token:" << t->label (start, end) << "\n";
+    if (token_type != "Space")
+      cout << "Unkown Theme Token Type: " << token_type
+           << " Token:" << t->label (start, end) << "\n";
   }
   return col;
 }

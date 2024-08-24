@@ -102,7 +102,8 @@
       "lazy-menu" "lazy-keyboard" "lazy-define" "lazy-define-macro" "lazy-initialize"  
       "lazy-format" "lazy-language" "lazy-input-converter" "lazy-tmfs-handler"  
       "$if")
-    (operator "{" "[" "(" ")" "]" "}" "'")))
+    (operator "{" "[" "(" ")" "]" "}" "'" ",")
+    (string_quote "\"")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "scheme") (== key "brackets")))
@@ -114,8 +115,7 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "scheme") (== key "special_symbol")))
   `(,(string->symbol key)
-    (intercept "string")
-    (tokenize "symbol")))
+    (tokenize "symbol" "first_symbol")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Preferences for syntax highlighting
@@ -124,16 +124,18 @@
   (:require (and (== lan "scheme") (== key "light_theme")))
   `(,(string->symbol key)
     ("#000000" "none")
-    ("#4DA899" 
+    ("#458C85" 
       "nullary-keywords" "unary-keywords" "unary-definitions"  
       "binary-keywords" "ternary-keywords" "quaternary-keywords"  
-      "other-keywords" "unary-definitions" "operator")
+      "other-keywords" "unary-definitions")
     ("#000000" 
       "unary-no-highlight" "binary-no-highlight")
-    ("#000000" "symbol")
-    ("#795E26" "number")
+    ("#0000AB" "first_symbol")
+    ("#000000" "symbol"  "operator")
+    ("#795E26" "number" "boolean")
     ("#267F99" "comment")
-    ("#D32F2F" "string")
+    ("#D32F2F" "string_content" "string_quote" "character")
+    ("#BF2C2C" "escape_sequence")
     ("#006400" "(0" ")0" "[0" "]0" "{0" "}0")
     ("#00008B" "(1" ")1" "[1" "]1" "{1" "}1")
     ("#654321" "(2" ")2" "[2" "]2" "{2" "}2")))
