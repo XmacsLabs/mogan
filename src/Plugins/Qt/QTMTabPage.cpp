@@ -39,16 +39,58 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
     : m_bufferUrl (p_url) {
   p_title->setCheckable (p_isActive);
   p_title->setChecked (p_isActive);
+  setDefaultAction (p_title);
+
   m_closeBtn= new QToolButton (this);
   m_closeBtn->setDefaultAction (p_closeBtn);
   m_closeBtn->setFixedSize (20, 20); // position will be updated in resizeEvent
-
-  setStyleSheet (
-      "QToolButton{ padding: 0 26px; }"); // reserve space for closeBtn
-  setDefaultAction (p_title);
-
   connect (m_closeBtn, &QToolButton::clicked, this,
            [=] () { g_mostRecentlyClosedTab= m_bufferUrl; });
+
+  QString qss, bgColor, bgColorHover, borderColor, borderColorTop;
+
+#ifdef Q_OS_WINDOWS
+  bgColor       = "#C7C8C9";
+  bgColorHover  = "#F5F5F5";
+  borderColor   = "#A6A6A6";
+  borderColorTop= "#3DAEE9";
+#endif
+
+#ifdef Q_OS_LINUX
+  bgColor       = "#C7C8C9";
+  bgColorHover  = "#EFF0F1";
+  borderColor   = "#A6A6A6";
+  borderColorTop= "#3DAEE9";
+#endif
+
+  qss+= QString ("QTMTabPage{ padding: 0 26px; border-radius: 0px; "
+                 "background-color: %1; }")
+            .arg (bgColor);
+  qss+=
+      QString ("QTMTabPage:hover{ background-color: %1; }").arg (bgColorHover);
+  qss+= QString (
+            "QTMTabPage:checked{ background-color: %1; border-top: 3px solid "
+            "%2; border-left: 1px solid %3; border-right: 1px solid %4; }")
+            .arg (bgColorHover, borderColorTop, borderColor, borderColor);
+  setStyleSheet (qss);
+}
+
+/* We can't align the text to the left of the button by QSS or other methods,
+ * so for now we achieve it by overriding the paintEvent. */
+void
+QTMTabPage::paintEvent (QPaintEvent*) {
+  QStylePainter          p (this);
+  QStyleOptionToolButton opt;
+  initStyleOption (&opt);
+  opt.text= "";                                      // don't draw the text now
+  p.drawComplexControl (QStyle::CC_ToolButton, opt); // base method
+
+  // draw the text now
+  QFontMetrics fm (opt.fontMetrics);
+  QRect        rect= fm.boundingRect (opt.rect, Qt::AlignVCenter, text ());
+  rect.moveLeft (10);
+  p.drawItemText (rect, Qt::AlignLeft, palette (), isEnabled (), text (),
+                  QPalette::ButtonText);
 }
 
 void
@@ -86,6 +128,7 @@ QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
     QTMTabPage* tab= m_tabPageList[i];
     if (g_mostRecentlyClosedTab == tab->m_bufferUrl) {
       // this tab has just been closed, don't display it
+      tab->hide ();
       continue;
     }
 
@@ -96,8 +139,8 @@ QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
       accumWidth= 0;
       accumTab  = 0;
     }
-    tab->setGeometry (accumWidth - accumTab, rowCount * m_rowHeight - rowCount,
-                      tabWidth, m_rowHeight);
+    tab->setGeometry (accumWidth, rowCount * m_rowHeight, tabWidth,
+                      m_rowHeight);
     accumWidth+= tabWidth;
     accumTab+= 1;
   }
@@ -139,7 +182,7 @@ void
 QTMTabPageContainer::adjustHeight (int p_rowCount) {
   int h= m_rowHeight * (p_rowCount + 1);
   // parentWidget's resizeEvent() will resize me
-  parentWidget ()->setFixedHeight (h - p_rowCount + 1);
+  parentWidget ()->setFixedHeight (h + 2);
 }
 
 /******************************************************************************
@@ -167,5 +210,5 @@ void
 QTMTabPageBar::resizeEvent (QResizeEvent* e) {
   QSize size= e->size ();
   // Reserve 7px space on the left for the handle of QToolbar
-  m_container->setGeometry (7, 0, size.width (), size.height ());
+  m_container->setGeometry (7, 0, size.width (), size.height () - 2);
 }

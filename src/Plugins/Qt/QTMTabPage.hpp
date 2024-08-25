@@ -12,6 +12,8 @@
 #define QTMTABPAGE_HPP
 
 #include <QMouseEvent>
+#include <QStyleOptionToolButton>
+#include <QStylePainter>
 #include <QToolBar>
 #include <QToolButton>
 #include <basic.hpp>
@@ -29,6 +31,7 @@ public:
 public:
   explicit QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
                        bool p_isActive);
+  virtual void paintEvent (QPaintEvent*) override;
 
 protected:
   virtual void resizeEvent (QResizeEvent* e) override;
