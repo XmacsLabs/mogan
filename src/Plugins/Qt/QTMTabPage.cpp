@@ -57,7 +57,7 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
   borderColorTop= "#3DAEE9";
 #endif
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_LINUX || Q_OS_MAC
   bgColor       = "#C7C8C9";
   bgColorHover  = "#EFF0F1";
   borderColor   = "#A6A6A6";
@@ -73,9 +73,10 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
             "QTMTabPage:checked{ background-color: %1; border-top: 3px solid "
             "%2; border-left: 1px solid %3; border-right: 1px solid %4; }")
             .arg (bgColorHover, borderColorTop, borderColor, borderColor);
-  qss+= "#closeBtn{ background-color: transparent; }";
+  qss+= "#closeBtn{ background-color: transparent; border-radius: 0px; }";
   qss+= "#closeBtn:hover{ border-radius: 10px; color: #ffffff; "
         "background-color: #E49AA2; }";
+  qss+= "#closeBtn:pressed{ padding: 0px; }";
   setStyleSheet (qss);
 }
 
