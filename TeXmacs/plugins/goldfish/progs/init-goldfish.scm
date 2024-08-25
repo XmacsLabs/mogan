@@ -29,8 +29,19 @@
       (string-append (url->system (get-texmacs-path))
                      "/plugins/goldfish/goldfish/tm-goldfish.scm"))))
 
+(define (goldfish-launcher-sicp)
+  (string-append
+    (string-quote (url->system (find-binary-goldfish)))
+    " "
+    (string-quote
+      (string-append (url->system (get-texmacs-path))
+                     "/plugins/goldfish/goldfish/tm-goldfish.scm"))
+    " "
+    "sicp"))
+
 (plugin-configure goldfish
   (:require (has-binary-goldfish?))
   (:launch ,(goldfish-launcher))
+  (:launch "sicp" ,(goldfish-launcher-sicp))
   (:serializer ,goldfish-serialize)
   (:session "Goldfish Scheme"))

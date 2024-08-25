@@ -16,6 +16,11 @@
         (code r7rs-keyword)
         (code srfi-keyword)))
 
+(define (liii-keywords)
+  '("==" "!=" "in?" "display*" "list-view" "argv"
+    "mkdir" "chdir" "rmdir" "getcwd" "listdir" "getenv" "putenv" "unsetenv"
+    "getlogin" "getpid" "access" "system" "os-linux?" "os-macos?" "os-windows?"))
+
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "identifier")))
   `(,(string->symbol key)
@@ -34,19 +39,23 @@
       "*missing-close-paren-hook*")
     (declare_type
       ,@(r7rs-keywords-define)
-      "defined?" "define-macro" "define-constant" "autoload" "require" "provide" "define*" "lambda*" "eval-string")
+      "defined?" "define-macro" "define-constant" "autoload" "require"
+      "provide" "define*" "lambda*" "eval-string" "let1")
     (keyword
       ,@(r7rs-keywords-others) ,@(srfi-1-keywords) ,@(srfi-8-keywords) ,@(srfi-13-keywords) ,@(srfi-60-keywords) ,@(srfi-78-keywords)
+      ,@(liii-keywords)
 
       ; S7 built-ins
       "*load-path*" "*goldfish*" "*features*" "*libraries*"
       "*cload-directory*" "*#readers*"
+      "with-input-from-string" "with-output-to-string"
 
       "equivalent?" "complex" "directory?" "getenv"
       "help" "bignum" "append" "copy" "procedure-source"
 
       ; MISC
-      "integer-decode-float" "random" "nan" "nan-payload" "format" "object->string" "immutable!" "immutable?" "make-hash-table" "hash-table" "hash-table?" "hash-table-ref" "hash-table-set!" "hash-table-entries" "hash-code")
+      "integer-decode-float" "random" "nan" "nan-payload" "format" "object->string" "immutable!" "immutable?" "make-hash-table" "hash-table" "hash-table?" "hash-table-ref" "hash-table-set!" "hash-table-entries" "hash-code"
+      )
     (error
       "syntax-error" "wrong-type-arg" "immutable-error" "out-of-range" "division-by-zero"
       "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"

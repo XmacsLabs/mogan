@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.3|1.2.9-rc6>>
 
 <style|<tuple|tmdoc|devel>>
 
@@ -7,7 +7,11 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|5|5|cell-hyphen|t>|<cwith|15|15|5|5|cell-hyphen|t>|<cwith|16|16|5|5|cell-hyphen|t>|<cwith|17|17|5|5|cell-hyphen|t>|<cwith|18|18|5|5|cell-hyphen|t>|<cwith|19|19|5|5|cell-hyphen|t>|<cwith|20|20|5|5|cell-hyphen|t>|<cwith|22|22|5|5|cell-hyphen|t>|<cwith|23|23|5|5|cell-hyphen|t>|<cwith|29|29|2|2|cell-halign|l>|<cwith|29|29|5|5|cell-hyphen|t>|<cwith|28|28|5|5|cell-hyphen|t>|<cwith|27|27|5|5|cell-hyphen|t>|<cwith|26|26|5|5|cell-hyphen|t>|<cwith|25|25|1|1|cell-valign|b>|<cwith|25|25|5|5|cell-hyphen|t>|<cwith|24|24|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|59_26>|<cell|v1.2.6>|<cell|<value|da>>|<\cell>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|5|5|cell-hyphen|t>|<cwith|17|17|5|5|cell-hyphen|t>|<cwith|18|18|5|5|cell-hyphen|t>|<cwith|19|19|5|5|cell-hyphen|t>|<cwith|20|20|5|5|cell-hyphen|t>|<cwith|21|21|5|5|cell-hyphen|t>|<cwith|22|22|5|5|cell-hyphen|t>|<cwith|24|24|5|5|cell-hyphen|t>|<cwith|25|25|5|5|cell-hyphen|t>|<cwith|31|31|2|2|cell-halign|l>|<cwith|31|31|5|5|cell-hyphen|t>|<cwith|30|30|5|5|cell-hyphen|t>|<cwith|29|29|5|5|cell-hyphen|t>|<cwith|28|28|5|5|cell-hyphen|t>|<cwith|27|27|1|1|cell-valign|b>|<cwith|27|27|5|5|cell-hyphen|t>|<cwith|26|26|5|5|cell-hyphen|t>|<table|<row|<cell|Bug>|<cell|59_28>|<cell|v1.2.9>|<cell|<value|da>>|<\cell>
+    Disable math:small [ ] to avoid Edit Undo/Redo in Emacs
+  </cell>>|<row|<cell|Chore>|<cell|59_27>|<cell|v1.2.9>|<cell|<value|da>>|<\cell>
+    Pure format on TeXmacs/progs/text/text-edit.scm
+  </cell>>|<row|<cell|Chore>|<cell|59_26>|<cell|v1.2.6>|<cell|<value|da>>|<\cell>
     Migrate kbd for greek symbols from text-kbd to text-kbd-utf8
   </cell>>|<row|<cell|Chore>|<cell|59_25>|<cell|v1.2.6>|<cell|<value|da>>|<\cell>
     Remove quosiquote related keybinding in text mode

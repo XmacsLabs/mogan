@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.3|1.2.9-rc6>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -10,7 +10,7 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|3|3|2|2|cell-background|pastel green>|<cwith|4|4|2|2|cell-background|pastel green>|<cwith|8|8|2|2|cell-background|pastel green>|<cwith|13|13|2|2|cell-valign|b>|<cwith|14|14|1|1|cell-valign|b>|<cwith|15|15|2|2|cell-valign|b>|<table|<row|<\cell>
+    <tformat|<cwith|3|3|2|2|cell-background|pastel green>|<cwith|4|4|2|2|cell-background|pastel green>|<cwith|8|8|2|2|cell-background|pastel green>|<cwith|14|14|2|2|cell-valign|b>|<cwith|15|15|1|1|cell-valign|b>|<cwith|16|16|2|2|cell-valign|b>|<table|<row|<\cell>
       19_12
     </cell>|<\cell>
       Feature
@@ -90,6 +90,16 @@
       <value|da>
     </cell>|<\cell>
       Use utf-8 for all language dic
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      v1.2.9
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Language dic: fix for the UTF-8 encoding change
     </cell>>|<row|<\cell>
       19_7
     </cell>|<\cell>

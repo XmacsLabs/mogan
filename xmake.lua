@@ -209,6 +209,9 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("pdfhummus")
     add_packages("s7")
+    add_packages("tree-sitter")
+    add_packages("tree-sitter-cpp")
+    
     add_packages("libgit2")
     if is_plat("linux") and not using_legacy_apt() then
         add_packages("fontconfig")
@@ -244,6 +247,7 @@ target("libmogan") do
     add_files(plugin_updater_srcs)
     add_files(plugin_xml_srcs)
     add_files(plugin_html_srcs)
+    add_files(plugin_treesitter_srcs)
     add_files(plugin_pdf_srcs)
     add_files(plugin_git_srcs)
 

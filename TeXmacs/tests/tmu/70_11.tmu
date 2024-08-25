@@ -1,0 +1,102 @@
+<TMU|<tuple|1.0.2|1.2.9-rc1>>
+
+<style|<tuple|generic|no-page-numbers|british>>
+
+<\body>
+  Highlighting for multiline strings and escape characters
+
+  <\cpp-code>
+    //string
+
+    string s = "\\"I am\\
+
+    a corss-line\\
+
+    string \\n\\n\\"";
+
+    //raw string
+
+    string s = R"(I am
+
+    a corss-line " (raw string) ")";
+  </cpp-code>
+
+  Highlighting for bracket matching
+
+  <\cpp-code>
+    //three dots ... here
+
+    int function(){
+
+    \ \ if(a.func(b.value,c.func())){
+
+    \ \ \ \ if(d \<gtr\> f) return 0;
+
+    \ \ }
+
+    \ \ return 1;
+
+    }
+  </cpp-code>
+
+  Differentiated highlighting for different types (e.g. user-defined and built-in)
+
+  <\cpp-code>
+    int integer_value = 0;
+
+    float float_value = 0.0f;
+
+    list\<less\>int\<gtr\> int_list = {1, 2, 3, 4, 5};
+
+    hashmap\<less\>int, string\<gtr\> = hash_map\<less\>int, string\<gtr\> ();
+
+    tree sub_tree = subtree (et, p);
+
+    classA::class_value = 0;
+  </cpp-code>
+
+  Real-world C++ code highlighting examples
+
+  <\cpp-code>
+    #include "impl_language.hpp"
+
+    void
+
+    ast_language_rep::customize_keytokens (tree config) {
+
+    \ \ for (int i= 0; i \<less\> N (config); i++) {
+
+    \ \ \ \ tree \ \ group_of= config[i];
+
+    \ \ \ \ string group \ \ = get_label (group_of);
+
+    \ \ \ \ for (int j= 0; j \<less\> N (group_of); j++) {
+
+    \ \ \ \ \ \ string word= get_label (group_of[j]);
+
+    \ \ \ \ \ \ // word = cork_to_utf8(word);
+
+    \ \ \ \ \ \ if (!is_empty (word)) {
+
+    \ \ \ \ \ \ \ \ keytoken_group (word)= group;
+
+    \ \ \ \ \ \ }
+
+    \ \ \ \ }
+
+    \ \ }
+
+    }
+  </cpp-code>
+
+  \;
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

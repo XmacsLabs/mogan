@@ -16,12 +16,15 @@
 
 (define-library (scheme base)
 (export
+  let-values
   square
   ; String
   string-copy
   ; Vector
   vector->string
   string->vector
+  vector-copy
+  vector-copy!
   ; Input and Output
   call-with-port port? binary-port? textual-port?
   input-port-open? output-port-open?
@@ -33,6 +36,39 @@
   ; Exception
   raise guard read-error? file-error?)
 (begin
+
+; 0-clause BSD
+; Bill Schottstaedt
+; from S7 source repo: r7rs.scm
+(define-macro (let-values vars . body)
+  (if (and (pair? vars)
+           (pair? (car vars))
+           (null? (cdar vars)))
+      `((lambda ,(caar vars)
+          ,@body)
+        ,(cadar vars))
+      `(with-let
+        (apply sublet (curlet)
+          (list
+            ,@(map
+               (lambda (v)
+                 `((lambda ,(car v)
+                     (values ,@(map (lambda (name)
+                       (values (symbol->keyword name) name))
+                         (let args->proper-list ((args (car v)))
+                           (cond ((symbol? args)
+                                  (list args))
+                                 ((not (pair? args))
+                                  args)
+                                 ((pair? (car args))
+                                  (cons (caar args)
+                                        (args->proper-list (cdr args))))
+                                 (else
+                                  (cons (car args)
+                                        (args->proper-list (cdr args)))))))))
+                   ,(cadr v)))
+                vars)))
+        ,@body)))
 
 (define (square x) (* x x))
 
@@ -58,6 +94,34 @@
 (define* (string->vector s (start 0) end)
   (let ((stop (or end (length s)))) 
     (copy s (make-vector (- stop start)) start stop)))
+
+(define* (vector-copy v (start 0) (end (vector-length v)))
+  (if (or (> start end) (> end (vector-length v)))
+      (error 'out-of-range "vector-copy")
+      (let ((new-v (make-vector (- end start))))
+        (let loop ((i start) (j 0))
+          (if (>= i end)
+              new-v
+              (begin
+                (vector-set! new-v j (vector-ref v i))
+                (loop (+ i 1) (+ j 1))))))))
+
+(define* (vector-copy! to at from (start 0) (end (vector-length from)))
+  (if (or (< at 0)
+          (> start (vector-length from))
+          (< end 0)
+          (> end (vector-length from))
+          (> start end)
+          (> (+ at (- end start)) (vector-length to)))
+      (error 'out-of-range "vector-copy!")
+      (let loop ((to-i at) (from-i start))
+        (if (>= from-i end)
+            to
+            (begin
+              (vector-set! to to-i (vector-ref from from-i))
+              (loop (+ to-i 1) (+ from-i 1)))))))
+
+(define vector-fill! fill!)
 
 (define (string-map p . args) (apply string (apply map p args)))
 

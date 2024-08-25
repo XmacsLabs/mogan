@@ -18,7 +18,21 @@
         (liii os)
         (liii uuid)
         (liii sys)
-        (srfi srfi-1))
+        (srfi srfi-1)
+        (srfi srfi-13))
+
+(define (escape-string str)
+  (string-join
+    (map (lambda (char)
+           (if (char=? char #\")
+               (string #\\ #\")
+               (if (char=? char #\\)
+                   (string #\\ #\\)
+                   (string char))))
+         (string->list str))))
+
+(define (goldfish-quote s)
+  (string-append "\"" (escape-string s) "\""))
 
 (define (gnuplot-welcome)
   (let ((format (last (argv))))
@@ -83,7 +97,9 @@
 
 (define (gnuplot-plot code-path)
   (let ((cmd (fourth (argv))))
-    (os-call (string-append cmd " " "-c" " " code-path))))
+    (if (os-macos?)
+      (system (string-append (goldfish-quote cmd) " " "-c" " " code-path))
+      (os-call (string-append (goldfish-quote cmd) " " "-c" " " code-path)))))
 
 (define (eval-and-print code)
   (let* ((format (last (argv)))

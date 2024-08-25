@@ -319,6 +319,9 @@ edit_main_rep::print_snippet (url name, tree t, bool conserve_preamble) {
   if (conserve_preamble)
     if (is_document (buft) && is_compound (buft[0], "hide-preamble"))
       t= tree (SURROUND, buft[0], "", t);
+  path temp_root= new_document ();
+  temp_root << 0;
+  assign (subtree (et, temp_root), copy (t));
 
   string s= suffix (name);
   bool   bitmap=
@@ -337,7 +340,7 @@ edit_main_rep::print_snippet (url name, tree t, bool conserve_preamble) {
     env->write (INFO_FLAG, "none");
   env->style_init_env ();
   env->update ();
-  box b= typeset_as_box (env, t, path ());
+  box b= typeset_as_box (env, t, reverse (temp_root));
   env->write (DPI, old_dpi);
   env->write (INFO_FLAG, old_info_flag);
   env->style_init_env ();
@@ -361,6 +364,8 @@ edit_main_rep::print_snippet (url name, tree t, bool conserve_preamble) {
   array<int> a;
   a << b->x3 << b->y3 << b->x4 << b->y4 << b->x1 << b->y1 << b->x2 << b->y2;
   a << env->get_int (FONT_BASE_SIZE) << dpi;
+
+  delete_document (path_up (temp_root));
   return a;
 }
 

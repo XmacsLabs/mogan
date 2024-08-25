@@ -78,6 +78,9 @@ function add_target_research_on_wasm()
     add_packages("moebius")
     add_packages("freetype")
     add_packages("s7")
+    add_packages("tree-sitter")
+    add_packages("tree-sitter-cpp")
+
     add_rules("qt.widgetapp_static")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtSvg", "QWasmIntegrationPlugin")
     
@@ -95,6 +98,7 @@ function add_target_research_on_wasm()
     add_files(plugin_openssl_srcs)
     add_files(plugin_xml_srcs)
     add_files(plugin_html_srcs)
+    add_files(plugin_treesitter_srcs)
     add_files("$(projectdir)/src/Mogan/Research/research.cpp")
     
     add_ldflags("-s --preload-file $(projectdir)/TeXmacs@TeXmacs", {force = true})
@@ -145,6 +149,8 @@ function add_target_research_on_others()
         add_packages("qt6widgets")
     end
     add_packages("s7")
+    add_packages("tree-sitter")
+    add_packages("tree-sitter-cpp")
 
     add_deps("libmogan")
     if is_plat("linux") and (linuxos.name () == "ubuntu" and linuxos.version():major() == 20) then
@@ -314,7 +320,14 @@ xpack("research") do
     set_iconfile(path.join(os.projectdir(), "packages/windows/Xmacs.ico"))
     set_bindir("bin")
     add_installfiles(path.join(os.projectdir(), "build/packages/app.mogan/data/bin/(**)|MoganResearch.exe"), {prefixdir = "bin"})
-    set_basename("MoganResearch-v" .. XMACS_VERSION .. "-64bit-installer")
+    on_load(function (package)
+        local format = package:format()
+        if format == "nsis" then
+            package:set("basename", "MoganResearch-v" .. package:version() .. "-64bit-installer")
+        else
+            package:set("basename", "MoganResearch-v" .. package:version() .. "-64bit-portable")
+        end
+    end)
 end
 end
 

@@ -37,7 +37,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.10.2"
+#define GOLDFISH_VERSION "17.10.5-rc1"
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
 static std::vector<std::string> command_args= std::vector<std::string> ();
@@ -95,7 +95,7 @@ f_current_second (s7_scheme* sc, s7_pointer args) {
   // TODO: use std::chrono::tai_clock::now() when using C++ 20
   tb_timeval_t tp= {0};
   tb_gettimeofday (&tp, tb_null);
-  s7_double res= (time_t) tp.tv_sec;
+  s7_double res= (time_t) tp.tv_sec + (tp.tv_usec / 1000000.0);
   return s7_make_real (sc, res);
 }
 
@@ -104,7 +104,7 @@ glue_scheme_time (s7_scheme* sc) {
   s7_pointer cur_env= s7_curlet (sc);
 
   const char* s_current_second= "g_current-second";
-  const char* d_current_second= "(g_current-second) => double, return the "
+  const char* d_current_second= "(g_current-second): () => double, return the "
                                 "current unix timestamp in double";
   s7_define (sc, cur_env, s7_make_symbol (sc, s_current_second),
              s7_make_typed_function (sc, s_current_second, f_current_second, 0,
@@ -138,6 +138,12 @@ f_get_environment_variable (s7_scheme* sc, s7_pointer args) {
   else {
     return s7_make_string (sc, ret.substr (0, ret.size () - 1).c_str ());
   }
+}
+
+static s7_pointer
+f_unset_environment_variable (s7_scheme* sc, s7_pointer args) {
+  const char* env_name= s7_string (s7_car (args));
+  return s7_make_boolean (sc, tb_environment_remove (env_name));
 }
 
 static s7_pointer
@@ -218,6 +224,13 @@ f_os_call (s7_scheme* sc, s7_pointer args) {
 }
 
 static s7_pointer
+f_system (s7_scheme* sc, s7_pointer args) {
+  const char* cmd_c= s7_string (s7_car (args));
+  int         ret  = (int) std::system (cmd_c);
+  return s7_make_integer (sc, ret);
+}
+
+static s7_pointer
 f_os_temp_dir (s7_scheme* sc, s7_pointer args) {
   tb_char_t path[GOLDFISH_PATH_MAXN];
   tb_directory_temporary (path, GOLDFISH_PATH_MAXN);
@@ -258,6 +271,12 @@ static s7_pointer
 f_mkdir (s7_scheme* sc, s7_pointer args) {
   const char* dir_c= s7_string (s7_car (args));
   return s7_make_boolean (sc, tb_directory_create (dir_c));
+}
+
+static s7_pointer
+f_chdir (s7_scheme* sc, s7_pointer args) {
+  const char* dir_c= s7_string (s7_car (args));
+  return s7_make_boolean (sc, tb_directory_current_set (dir_c));
 }
 
 static s7_pointer
@@ -334,7 +353,9 @@ glue_liii_os (s7_scheme* sc) {
   const char* s_os_arch    = "g_os-arch";
   const char* d_os_arch    = "(g_os-arch) => string";
   const char* s_os_call    = "g_os-call";
-  const char* d_os_call    = "(g_os-call string) => int";
+  const char* d_os_call    = "(string) => int";
+  const char* s_system     = "g_system";
+  const char* d_system     = "(string) => int";
   const char* s_os_temp_dir= "g_os-temp-dir";
   const char* d_os_temp_dir= "(g_os-temp-dir) => string";
   const char* s_isdir      = "g_isdir";
@@ -343,6 +364,8 @@ glue_liii_os (s7_scheme* sc) {
   const char* d_isfile     = "(g_isfile string) => boolean";
   const char* s_mkdir      = "g_mkdir";
   const char* d_mkdir      = "(g_mkdir string) => boolean";
+  const char* s_chdir      = "g_chdir";
+  const char* d_chdir      = "(g_chdir string) => boolean";
   const char* s_listdir    = "g_listdir";
   const char* d_listdir    = "(g_listdir) => vector";
   const char* s_getcwd     = "g_getcwd";
@@ -353,6 +376,8 @@ glue_liii_os (s7_scheme* sc) {
   const char* d_getlogin   = "(g_getlogin) => string";
   const char* s_getpid     = "g_getpid";
   const char* d_getpid     = "(g_getpid) => integer";
+  const char* s_unsetenv   = "g_unsetenv";
+  const char* d_unsetenv   = "(g_unsetenv string): string => boolean";
 
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_type),
              s7_make_typed_function (sc, s_os_type, f_os_type, 0, 0, false,
@@ -363,6 +388,9 @@ glue_liii_os (s7_scheme* sc) {
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_call),
              s7_make_typed_function (sc, s_os_call, f_os_call, 1, 0, false,
                                      d_os_call, NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_system),
+             s7_make_typed_function (sc, s_system, f_system, 1, 0, false,
+                                     d_system, NULL));
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_temp_dir),
              s7_make_typed_function (sc, s_os_temp_dir, f_os_temp_dir, 0, 0,
                                      false, d_os_call, NULL));
@@ -374,6 +402,9 @@ glue_liii_os (s7_scheme* sc) {
                                      d_isfile, NULL));
   s7_define (sc, cur_env, s7_make_symbol (sc, s_mkdir),
              s7_make_typed_function (sc, s_mkdir, f_mkdir, 1, 0, false, d_mkdir,
+                                     NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_chdir),
+             s7_make_typed_function (sc, s_chdir, f_chdir, 1, 0, false, d_chdir,
                                      NULL));
   s7_define (sc, cur_env, s7_make_symbol (sc, s_listdir),
              s7_make_typed_function (sc, s_listdir, f_listdir, 1, 0, false,
@@ -390,6 +421,10 @@ glue_liii_os (s7_scheme* sc) {
   s7_define (sc, cur_env, s7_make_symbol (sc, s_getpid),
              s7_make_typed_function (sc, s_getpid, f_getpid, 0, 0, false,
                                      d_getpid, NULL));
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_unsetenv),
+             s7_make_typed_function (sc, s_unsetenv,
+                                     f_unset_environment_variable, 1, 0, false,
+                                     d_unsetenv, NULL));
 }
 
 static s7_pointer

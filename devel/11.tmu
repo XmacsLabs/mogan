@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.2|1.2.8>>
+<TMU|<tuple|1.0.3|1.2.9-rc6>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -10,7 +10,17 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|22|27|2|2|cell-background|pastel green>|<cwith|25|25|2|2|cell-background|>|<cwith|28|33|2|2|cell-background|pastel green>|<cwith|21|21|2|2|cell-background|pastel green>|<cwith|20|20|2|2|cell-background|pastel green>|<cwith|19|19|2|2|cell-background|pastel green>|<cwith|9|18|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|23|28|2|2|cell-background|pastel green>|<cwith|26|26|2|2|cell-background|>|<cwith|29|34|2|2|cell-background|pastel green>|<cwith|22|22|2|2|cell-background|pastel green>|<cwith|21|21|2|2|cell-background|pastel green>|<cwith|20|20|2|2|cell-background|pastel green>|<cwith|10|19|2|2|cell-background|pastel green>|<table|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      11_34
+    </cell>|<\cell>
+      v1.2.9
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Font: make Noto CJK fonts built-in on macOS and Windows
+    </cell>>|<row|<\cell>
       Chore
     </cell>|<\cell>
       11_33

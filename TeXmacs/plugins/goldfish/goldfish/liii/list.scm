@@ -15,18 +15,35 @@
 ;
 
 (define-library (liii list)
-(export list-view
-  take drop take-right drop-right count fold fold-right reduce reduce-right
-  filter partition remove find delete take-while drop-while list-index last-pair
-  last flatmap)
+(export
+  ; SRFI 1: Constructors
+  circular-list iota
+  ; SRFI 1: Predicates
+  null-list? circular-list?
+  ; SRFI 1: Selectors
+  first second third fourth fifth sixth seventh eighth ninth tenth
+  take drop take-right drop-right
+  last-pair last
+  ; SRFI 1: fold, unfold & map
+  count fold fold-right reduce reduce-right
+  filter partition remove
+  ; SRFI 1: Searching
+  find any every list-index
+  take-while drop-while
+  ; SRFI 1: deleting
+  delete
+  ; Liii List extensions
+  list-view flatmap
+  list-null? list-not-null? not-null-list?
+)
 (import (srfi srfi-1))
 (begin
 
-(define (list-view . scheme-list)
+(define (list-view scheme-list)
   (define (f-inner . funcs)
     (cond ((null? funcs) scheme-list)
           ((= (length funcs) 2)
-           (apply list-view ((car funcs) (cadr funcs) scheme-list)))
+           (list-view ((car funcs) (cadr funcs) scheme-list)))
           ((even? (length funcs))
            (apply
              (f-inner (car funcs) (cadr funcs))
@@ -37,6 +54,23 @@
 
 (define (flatmap f seq)
   (fold-right append () (map f seq)))
+
+; the opposite of null-list?
+(define (not-null-list? l)
+  (cond ((pair? l)
+         (or (null? (cdr l)) (pair? (cdr l))))
+        ((null? l) #f)
+        (else
+         (error 'type-error "type mismatch"))))
+
+; no exception version of null-list?
+(define (list-null? l)
+  (and (not (pair? l)) (null? l)))
+
+; no exception version of not-null-list?
+(define (list-not-null? l)
+  (and (pair? l)
+       (or (null? (cdr l)) (pair? (cdr l)))))
 
 ) ; end of begin
 ) ; end of library

@@ -85,13 +85,13 @@
             },
             version = "4.6.2"
         },
-        ["s7 20240702#31fecfc4"] = {
+        ["s7 20240813#31fecfc4"] = {
             repo = {
                 url = "xmake"
             },
-            version = "20240702"
+            version = "20240813"
         },
-        ["tbox#31fecfc4"] = {
+        ["tbox 1.7.5#d3521844"] = {
             repo = {
                 branch = "master",
                 commit = "8ae62d92005d3fee84b3477fc06183d33ef36584",
