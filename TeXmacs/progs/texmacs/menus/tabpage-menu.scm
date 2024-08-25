@@ -26,6 +26,6 @@
       (tab-page
         (eval buf)
         ((balloon (eval `(verbatim ,tab-title)) (eval `(verbatim ,doc-path))) (switch-to-buffer* buf))
-        ((balloon (icon "tm_cancel.xpm") "Close") (safely-kill-buffer-by-url buf))
+        ((balloon "⨉" "Close") (safely-kill-buffer-by-url buf))
         (eval active?)
       ))))

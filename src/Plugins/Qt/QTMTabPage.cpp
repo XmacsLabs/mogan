@@ -42,6 +42,7 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
   setDefaultAction (p_title);
 
   m_closeBtn= new QToolButton (this);
+  m_closeBtn->setObjectName ("closeBtn");
   m_closeBtn->setDefaultAction (p_closeBtn);
   m_closeBtn->setFixedSize (20, 20); // position will be updated in resizeEvent
   connect (m_closeBtn, &QToolButton::clicked, this,
@@ -72,6 +73,9 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
             "QTMTabPage:checked{ background-color: %1; border-top: 3px solid "
             "%2; border-left: 1px solid %3; border-right: 1px solid %4; }")
             .arg (bgColorHover, borderColorTop, borderColor, borderColor);
+  qss+= "#closeBtn{ background-color: transparent; }";
+  qss+= "#closeBtn:hover{ border-radius: 10px; color: #ffffff; "
+        "background-color: #E49AA2; }";
   setStyleSheet (qss);
 }
 
