@@ -142,7 +142,7 @@ tm_server_rep::tm_server_rep () : def_zoomf (1.0) {
   eval_scheme_root (init_prg);
   initialize_smobs (initialize_scheme ());
   initialize_glue ();
-
+  goldfish::glue_for_community_edition (tm_s7);
   gui_interpose (texmacs_interpose_handler);
   set_wait_handler (texmacs_wait_handler);
 
