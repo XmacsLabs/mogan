@@ -104,6 +104,7 @@ libmogan_headers = {
     "$(projectdir)/src/Typeset/Page",
     "$(buildir)/glue",
     "$(projectdir)/TeXmacs/include",
+    "$(projectdir)/TeXmacs/plugins/goldfish/src",
 }
 
 libmogan_srcs = {
