@@ -15,12 +15,22 @@
         (texmacs texmacs tm-files)
         (network url)))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DOCX format defination
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-format docx
+  (:name "docx")
+  (:suffix "docx"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Function to export TeXmacs document to DOCX using Pandoc
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (export-to-docx input-file output-file)
   (:synopsis "Export TeXmacs document to DOCX format using Pandoc")
+  (display "Come in to export-to-docx.\n")
   (let* ((base-dir (url-head input-file))
          (html-file-url (url-glue (url-head output-file) ".html")))
     ;; First, export the document to HTML
@@ -61,6 +71,6 @@
 ;; Converter for exporting TeXmacs files to DOCX
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(converter texmacs-file docx-file
+(converter texmacs-tree docx-document
   (:require (has-binary-pandoc?))
-  (:function-with-options export-to-docx))
+  (:function export-to-docx))
