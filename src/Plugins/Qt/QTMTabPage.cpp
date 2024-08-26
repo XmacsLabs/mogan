@@ -48,36 +48,7 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
   connect (m_closeBtn, &QToolButton::clicked, this,
            [=] () { g_mostRecentlyClosedTab= m_bufferUrl; });
 
-  QString qss, bgColor, bgColorHover, borderColor, borderColorTop;
-
-#ifdef Q_OS_WINDOWS
-  bgColor       = "#C7C8C9";
-  bgColorHover  = "#F5F5F5";
-  borderColor   = "#A6A6A6";
-  borderColorTop= "#3DAEE9";
-#endif
-
-#ifdef Q_OS_LINUX || Q_OS_MAC
-  bgColor       = "#C7C8C9";
-  bgColorHover  = "#EFF0F1";
-  borderColor   = "#A6A6A6";
-  borderColorTop= "#3DAEE9";
-#endif
-
-  qss+= QString ("QTMTabPage{ padding: 0 26px; border-radius: 0px; "
-                 "background-color: %1; }")
-            .arg (bgColor);
-  qss+=
-      QString ("QTMTabPage:hover{ background-color: %1; }").arg (bgColorHover);
-  qss+= QString (
-            "QTMTabPage:checked{ background-color: %1; border-top: 3px solid "
-            "%2; border-left: 1px solid %3; border-right: 1px solid %4; }")
-            .arg (bgColorHover, borderColorTop, borderColor, borderColor);
-  qss+= "#closeBtn{ background-color: transparent; border-radius: 0px; }";
-  qss+= "#closeBtn:hover{ border-radius: 10px; color: #ffffff; "
-        "background-color: #E49AA2; }";
-  qss+= "#closeBtn:pressed{ padding: 0px; }";
-  setStyleSheet (qss);
+  setupStyle ();
 }
 
 /* We can't align the text to the left of the button by QSS or other methods,
@@ -106,6 +77,42 @@ QTMTabPage::resizeEvent (QResizeEvent* e) {
   int y= e->size ().height () / 2 - h / 2;
 
   m_closeBtn->setGeometry (x, y, w, h);
+}
+
+void
+QTMTabPage::setupStyle () {
+  QString qss, bg_color, bg_color_hover, border_color, border_color_top;
+
+#ifdef Q_OS_WINDOWS
+  bg_color        = "#C7C8C9";
+  bg_color_hover  = "#F5F5F5";
+  border_color    = "#A6A6A6";
+  border_color_top= "#3DAEE9";
+#endif
+
+#if defined(Q_OS_LINUX) || defined(Q_OS_MAC)
+  bg_color        = "#C7C8C9";
+  bg_color_hover  = "#EFF0F1";
+  border_color    = "#A6A6A6";
+  border_color_top= "#3DAEE9";
+#endif
+
+  qss+= QString ("QTMTabPage{ padding: 0 26px; border-radius: 0px; "
+                 "background-color: %1; }")
+            .arg (bg_color);
+  qss+= QString ("QTMTabPage:hover{ background-color: %1; }")
+            .arg (bg_color_hover);
+  qss+= QString (
+            "QTMTabPage:checked{ background-color: %1; border-top: 3px solid "
+            "%2; border-left: 1px solid %3; border-right: 1px solid %4; }")
+            .arg (bg_color_hover, border_color_top, border_color, border_color);
+
+  qss+= "#closeBtn{ background-color: transparent; border-radius: 0px; "
+        "padding: 0px; }";
+  qss+= "#closeBtn:hover{ border-radius: 10px; color: #ffffff; "
+        "background-color: #E49AA2; }";
+
+  setStyleSheet (qss);
 }
 
 /******************************************************************************
