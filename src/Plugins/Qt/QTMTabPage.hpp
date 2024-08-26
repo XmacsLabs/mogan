@@ -36,8 +36,8 @@ public:
 protected:
   virtual void resizeEvent (QResizeEvent* e) override;
 
-  private:
-  void setupStyle();
+private:
+  void setupStyle ();
 };
 
 /*! QTMTabPageAction is used as a carrier of QTMTabPage widget.
