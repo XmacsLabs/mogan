@@ -11,7 +11,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (code scheme-ast-lang)
-  (:use (prog default-lang)))
+  (:use (code default-ast-lang)))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "scheme") (== key "keytoken")))
@@ -104,13 +104,6 @@
       "$if")
     (operator "{" "[" "(" ")" "]" "}" "'" ",")
     (string_quote "\"")))
-
-(tm-define (parser-feature lan key)
-  (:require (and (== lan "scheme") (== key "brackets")))
-  `(,(string->symbol key)
-    (3 "(" ")")
-    (3 "[" "]")
-    (3 "{" "}")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "scheme") (== key "special_symbol")))

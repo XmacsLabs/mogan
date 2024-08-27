@@ -62,11 +62,10 @@ ast_language_rep::get_parser_config (string lan, string key) {
 
 void
 ast_language_rep::customize_keytokens (tree config) {
-  for (int i= 0; i < N (config); i++) {
-    tree   group_of= config[i];
-    string group   = get_label (group_of);
-    for (int j= 0; j < N (group_of); j++) {
-      string word= get_label (group_of[j]);
+  for (tree group_of : config) {
+    string group= get_label (group_of);
+    for (tree data_list : group_of) {
+      string word= get_label (data_list);
       // word = cork_to_utf8(word);
       if (!is_empty (word)) {
         keytoken_group (word)= group;
@@ -79,9 +78,8 @@ void
 ast_language_rep::customize_brackets_match (tree config) {
   lang_ast_parser->reset_brackets_pair ();
   match_group= hashmap<string, int> ();
-  for (int i= 0; i < N (config); i++) {
-    tree group_of= config[i];
-    int  cycle   = as_int (get_label (group_of));
+  for (tree group_of : config) {
+    int cycle= as_int (get_label (group_of));
     if (N (group_of) == 2) {
       string forward        = get_label (group_of[0]);
       string backward       = get_label (group_of[1]);
@@ -95,11 +93,10 @@ ast_language_rep::customize_brackets_match (tree config) {
 void
 ast_language_rep::customize_highlight_theme (tree config) {
   theme_group= hashmap<string, string> ();
-  for (int i= 0; i < N (config); i++) {
-    tree   group_of= config[i];
-    string col     = get_label (group_of);
-    for (int j= 0; j < N (group_of); j++) {
-      string token_name= get_label (group_of[j]);
+  for (tree group_of : config) {
+    string col= get_label (group_of);
+    for (tree data_list : group_of) {
+      string token_name= get_label (data_list);
       if (!is_empty (token_name)) {
         theme_group (token_name)= col (1, N (col) - 1);
       }
@@ -111,11 +108,10 @@ void
 ast_language_rep::customize_special_symbol (tree config) {
   lang_ast_parser->reset_intercept_symbols ();
   tokenize_set= hashset<string> ();
-  for (int i= 0; i < N (config); i++) {
-    tree   group_of    = config[i];
+  for (tree group_of : config) {
     string special_type= get_label (group_of);
-    for (int j= 0; j < N (group_of); j++) {
-      string symbol_name= get_label (group_of[j]);
+    for (tree data_list : group_of) {
+      string symbol_name= get_label (data_list);
       if (special_type == "intercept")
         lang_ast_parser->add_intercept_symbols (symbol_name);
       if (special_type == "tokenize") tokenize_set->insert (symbol_name);

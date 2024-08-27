@@ -11,7 +11,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (code cpp-ast-lang)
-  (:use (prog default-lang)))
+  (:use (code default-ast-lang)))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "cpp") (== key "keytoken")))
@@ -52,17 +52,6 @@
     (operator_decoration "@")
     (operator_field "." "::")
     (operator_openclose "{" "[" "(" ")" "]" "}")))
-
-(tm-define (parser-feature lan key)
-  (:require (and (== lan "cpp") (== key "brackets")))
-  `(,(string->symbol key)
-    (3 "(" ")")
-    (3 "[" "]")
-    (3 "{" "}")))
-
-(tm-define (parser-feature lan key)
-  (:require (and (== lan "cpp") (== key "special_symbol")))
-  `(,(string->symbol key)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Preferences for syntax highlighting
