@@ -59,7 +59,10 @@
     (error
       "syntax-error" "wrong-type-arg" "immutable-error" "out-of-range" "division-by-zero"
       "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
-      "bad-result" "no-catch" "wrong-number-of-args" "io-error" "bignum-error")
+      "bad-result" "no-catch" "wrong-number-of-args" "io-error" "bignum-error"
+      ; (liii error)
+      "os-error" "file-not-found-error" "not-a-directory-error" "file-exists-error" "timeout-error"
+      "type-error" "value-error" "???" "not-implemented-error")
     (keyword_conditional ,@(r7rs-keywords-branch))
     (keyword_control ,@(r7rs-keywords-exception) "catch")))
 
