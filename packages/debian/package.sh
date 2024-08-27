@@ -8,7 +8,7 @@ fi
 
 APP_HOME="$(cd "${FWDIR}/../.."; pwd)"
 
-VERSION="1.2.9.1-rc1"
+VERSION="1.2.9.1"
 
 ln -s $APP_HOME/packages/debian $APP_HOME/debian
 cp $APP_HOME/debian/control.in $APP_HOME/debian/control
