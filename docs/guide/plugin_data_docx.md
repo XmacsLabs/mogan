@@ -1,8 +1,8 @@
 # docx Data Plugin
 ## TeXmacs -> docx
-The option to export to docx can be found in `Edit -> Preferences -> Converters -> docx`.
+Export method: The option to export to docx is in `File->Export->docx`.
 
-### Prerequisite: `Pandoc`
-The process of converting a TeXmacs document to a docx document relies on the third-party application `Pandoc`. If `Pandoc` is not available in the environment during export, an error will occur, and the export will fail.
+### Prerequisite: `pandoc`
+The process of converting a TeXmacs document to a docx document relies on the third-party application `pandoc`. If `pandoc` is not available in the environment during export, an error will occur, and the export will fail.
 
-For information on installing the `Pandoc` plugin, please refer to [Pandoc Binary Plugin](./plugin_binary_pandoc.md).
+For information on installing the `pandoc` plugin, please refer to [Pandoc Binary Plugin](./plugin_binary_pandoc.md).
