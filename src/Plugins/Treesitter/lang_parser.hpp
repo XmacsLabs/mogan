@@ -17,7 +17,7 @@
 #include <tree-sitter-cpp.h>
 #include <tree-sitter-scheme.h>
 #include <tree_sitter/api.h>
-constexpr TSSymbol SpaceSymbol= 65535;
+constexpr TSSymbol SpaceSymbol= 65534;
 
 class lang_parser {
 public:
@@ -71,12 +71,6 @@ public:
   // Add brackets pair to the list of brackets pairs
   void add_brackets_pair (string forward, string backward);
 
-  // Reset the intercept symbols
-  void reset_intercept_symbols ();
-
-  // Add intercept type to the list of intercept symbols
-  void add_intercept_symbols (string intercept_type);
-
   // Get the property of the current token
   int      current_token_property ();
   int      current_token_end ();
@@ -105,12 +99,11 @@ private:
   int last_end_pos     = -1;
   int inner_token_index= 0;
 
-  int               lang_code_op= 0;
-  int               lang_op     = 0;
-  array<TSSymbol>   bracket_symbol_list;
-  hashset<TSSymbol> intercept_symbol_set;
-  array<uint32_t>   brackets_depths_cache;
-  int               brackets_pairs_amount= 0;
+  int             lang_code_op= 0;
+  int             lang_op     = 0;
+  array<TSSymbol> bracket_symbol_list;
+  array<uint32_t> brackets_depths_cache;
+  int             brackets_pairs_amount= 0;
 
   array<tree> leaf_tree_nodes;
 

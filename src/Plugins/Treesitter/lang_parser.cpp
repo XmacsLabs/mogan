@@ -52,17 +52,6 @@ lang_parser::add_brackets_pair (string forward, string backward) {
   brackets_pairs_amount+= 1;
 }
 
-void
-lang_parser::reset_intercept_symbols () {
-  intercept_symbol_set= hashset<TSSymbol> ();
-}
-
-void
-lang_parser::add_intercept_symbols (string intercept_type) {
-  intercept_symbol_set->insert (ts_language_symbol_for_name (
-      ts_lang, c_string (intercept_type), N (intercept_type), true));
-}
-
 bool
 lang_parser::check_line_changed (tree t) {
   // hash(t) does not take IP changes into account
@@ -188,11 +177,6 @@ lang_parser::check_to_compile (int hash_code) {
 void
 lang_parser::collect_leaf_nodes (TSNode node, array<TSNode>& tsnodes) {
   uint32_t child_count= ts_node_child_count (node);
-  TSSymbol node_symbol= ts_node_symbol (node);
-  if (intercept_symbol_set->contains (node_symbol)) {
-    tsnodes << node;
-    return;
-  }
   if (child_count == 0) {
     tsnodes << node;
   }

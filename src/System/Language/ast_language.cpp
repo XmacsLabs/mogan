@@ -106,14 +106,11 @@ ast_language_rep::customize_highlight_theme (tree config) {
 
 void
 ast_language_rep::customize_special_symbol (tree config) {
-  lang_ast_parser->reset_intercept_symbols ();
   tokenize_set= hashset<string> ();
   for (tree group_of : config) {
     string special_type= get_label (group_of);
     for (tree data_list : group_of) {
       string symbol_name= get_label (data_list);
-      if (special_type == "intercept")
-        lang_ast_parser->add_intercept_symbols (symbol_name);
       if (special_type == "tokenize") tokenize_set->insert (symbol_name);
     }
   }
