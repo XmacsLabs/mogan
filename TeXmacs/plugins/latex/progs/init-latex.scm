@@ -12,4 +12,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(lazy-format (data latex) latex)
+(lazy-format (data bibtex) bibtex)
+
 (import-from (latex-kbd))
