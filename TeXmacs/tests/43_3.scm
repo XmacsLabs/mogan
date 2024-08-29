@@ -1,3 +1,5 @@
+(load "./TeXmacs/plugins/latex/progs/init-latex.scm")
+
 (define (export-as-latex-and-load path)
   (with path (string-append "$TEXMACS_PATH/tests/tm/" path)
     (with tmpfile (url-temp)
