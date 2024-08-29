@@ -41,6 +41,9 @@ function add_requires_of_mogan()
     -- package: tree-sitter-cpp
     add_requires("tree-sitter-cpp "..TREESITTER_CPP_VERSION, {configs = {shared = false}, system=false})
 
+    -- package: tree-sitter-scheme
+    add_requires("tree-sitter-scheme "..TREESITTER_SCHEME_VERSION, {configs = {shared = false}, system=false})
+
     -- package: qt6widgets
     if is_plat("mingw") or is_plat("windows") then
         add_requires("qt6widgets "..QT6_VERSION)

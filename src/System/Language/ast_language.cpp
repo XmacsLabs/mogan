@@ -46,6 +46,9 @@ ast_language_rep::ast_language_rep (string name) : language_rep (name) {
   tree theme_config= get_parser_config (lan_name, "light_theme");
   customize_highlight_theme (theme_config);
 
+  tree special_symbol_config= get_parser_config (lan_name, "special_symbol");
+  customize_special_symbol (special_symbol_config);
+
   tree nbsp_tree (make_tree_label ("nbsp"));
   nbsp_op= nbsp_tree->op;
 }
@@ -59,11 +62,10 @@ ast_language_rep::get_parser_config (string lan, string key) {
 
 void
 ast_language_rep::customize_keytokens (tree config) {
-  for (int i= 0; i < N (config); i++) {
-    tree   group_of= config[i];
-    string group   = get_label (group_of);
-    for (int j= 0; j < N (group_of); j++) {
-      string word= get_label (group_of[j]);
+  for (tree group_of : config) {
+    string group= get_label (group_of);
+    for (tree data_list : group_of) {
+      string word= get_label (data_list);
       // word = cork_to_utf8(word);
       if (!is_empty (word)) {
         keytoken_group (word)= group;
@@ -76,9 +78,8 @@ void
 ast_language_rep::customize_brackets_match (tree config) {
   lang_ast_parser->reset_brackets_pair ();
   match_group= hashmap<string, int> ();
-  for (int i= 0; i < N (config); i++) {
-    tree group_of= config[i];
-    int  cycle   = as_int (get_label (group_of));
+  for (tree group_of : config) {
+    int cycle= as_int (get_label (group_of));
     if (N (group_of) == 2) {
       string forward        = get_label (group_of[0]);
       string backward       = get_label (group_of[1]);
@@ -92,14 +93,25 @@ ast_language_rep::customize_brackets_match (tree config) {
 void
 ast_language_rep::customize_highlight_theme (tree config) {
   theme_group= hashmap<string, string> ();
-  for (int i= 0; i < N (config); i++) {
-    tree   group_of= config[i];
-    string col     = get_label (group_of);
-    for (int j= 0; j < N (group_of); j++) {
-      string token_name= get_label (group_of[j]);
+  for (tree group_of : config) {
+    string col= get_label (group_of);
+    for (tree data_list : group_of) {
+      string token_name= get_label (data_list);
       if (!is_empty (token_name)) {
         theme_group (token_name)= col (1, N (col) - 1);
       }
+    }
+  }
+}
+
+void
+ast_language_rep::customize_special_symbol (tree config) {
+  tokenize_set= hashset<string> ();
+  for (tree group_of : config) {
+    string special_type= get_label (group_of);
+    for (tree data_list : group_of) {
+      string symbol_name= get_label (data_list);
+      if (special_type == "tokenize") tokenize_set->insert (symbol_name);
     }
   }
 }
@@ -158,16 +170,24 @@ ast_language_rep::advance (tree t, int& pos) {
   uint32_t bracket_index = lang_ast_parser->current_brackets_index ();
   token_type             = lang_ast_parser->current_token_type ();
   lang_ast_parser->next_token ();
-  pos= token_end - start_index;
   // Colorful brackets
   if (bracket_index > 0u) {
     token_type=
         token_type * as_string (bracket_index % match_group[token_type]);
   }
+  // Symbol (symbol in scheme)
+  if (tokenize_set->contains (token_type)) {
+    string token= s (pos, token_end - start_index);
+    // cout << token << LF;
+    if (keytoken_group->contains (token)) {
+      token_type= keytoken_group[token];
+    }
+  }
   // Keyword and Operator
-  if (keytoken_group->contains (token_type)) {
+  else if (keytoken_group->contains (token_type)) {
     token_type= keytoken_group[token_type];
   }
+  pos= token_end - start_index;
 
   // cout << "nextpos " << pos << " |N (s) " << N (s) << " |token_end "
   //      << token_end << " |nextindex " << lang_ast_parser->get_token_index ()

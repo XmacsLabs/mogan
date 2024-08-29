@@ -211,6 +211,7 @@ target("libmogan") do
     add_packages("s7")
     add_packages("tree-sitter")
     add_packages("tree-sitter-cpp")
+    add_packages("tree-sitter-scheme")
     
     add_packages("libgit2")
     if is_plat("linux") and not using_legacy_apt() then

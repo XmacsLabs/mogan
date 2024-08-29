@@ -12,10 +12,12 @@
 #define LANG_PARSER_H
 
 #include "array.hpp"
+#include "hashset.hpp"
 #include "tree.hpp"
 #include <tree-sitter-cpp.h>
+#include <tree-sitter-scheme.h>
 #include <tree_sitter/api.h>
-constexpr TSSymbol SpaceSymbol= 65535;
+constexpr TSSymbol SpaceSymbol= 65534;
 
 class lang_parser {
 public:
