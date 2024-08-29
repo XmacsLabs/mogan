@@ -340,7 +340,7 @@
 (lazy-format (data stm) stm)
 (lazy-format (data tmu) tmu)
 (lazy-format (data docx) docx)
-(lazy-format (convert latex init-latex) latex)
+(lazy-format (data latex) latex)
 (lazy-format (convert html init-html) html)
 (lazy-format (convert bibtex init-bibtex) bibtex)
 (lazy-define (convert images tmimage)

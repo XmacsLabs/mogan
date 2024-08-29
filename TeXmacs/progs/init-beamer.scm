@@ -325,7 +325,7 @@
 
 ;;(display "Booting converters\n")
 (lazy-format (convert rewrite init-rewrite) texmacs verbatim)
-(lazy-format (convert latex init-latex) latex)
+(lazy-format (data latex) latex)
 (lazy-format (convert html init-html) html)
 (lazy-format (convert bibtex init-bibtex) bibtex)
 (lazy-define (convert images tmimage)
