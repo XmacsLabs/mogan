@@ -11,7 +11,7 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 TEXMACS_VERSION = "2.1.2"
-XMACS_VERSION="1.2.9"
+XMACS_VERSION="1.2.9.1-rc2"
 CONFIG_USER = "XmacsLabs"
 DEVEL_VERSION = TEXMACS_VERSION
 DEVEL_RELEASE = 1
@@ -105,6 +105,7 @@ libmogan_headers = {
     "$(projectdir)/src/Typeset/Page",
     "$(buildir)/glue",
     "$(projectdir)/TeXmacs/include",
+    "$(projectdir)/TeXmacs/plugins/goldfish/src",
 }
 
 libmogan_srcs = {

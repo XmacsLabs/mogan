@@ -848,8 +848,12 @@
 (define (get-verbatim-section-title s indent?)
   `(verbatim ,(tm/section-get-title-string s indent?)))
 
+(define (all-sections)
+  (list-filter (tree-search-sections (buffer-tree))
+    (lambda (x) (not (equal? (tree-label x) 'subparagraph)))))
+
 (tm-menu (focus-section-menu)
-  (for (s (tree-search-sections (buffer-tree)))
+  (for (s (all-sections))
     ((eval (get-verbatim-section-title s #t))
      (when (and (tree->path s) (section-context? s))
        (tree-go-to s 0 :end)))))

@@ -15,36 +15,37 @@
 ;
 
 ; see https://docs.python.org/3/library/exceptions.html#exception-hierarchy
-
 (define-library (liii error)
 (export ???
   os-error file-not-found-error not-a-directory-error file-exists-error
   timeout-error
   type-error value-error)
-(import (scheme process-context))
 (begin
 
-(define (os-error msg)
-  (error 'os-error msg))
+(define (os-error . args)
+  (apply error (cons 'os-error args)))
 
-(define (file-not-found-error msg)
-  (error 'file-not-found-error msg))
+(define (file-not-found-error . args)
+  (apply error (cons 'file-not-found-error args)))
 
-(define (not-a-directory-error msg)
-  (error 'not-a-directory-error msg))
+(define (not-a-directory-error . args)
+  (apply error (cons 'not-a-directory-error args)))
 
-(define (file-exists-error msg)
-  (error 'file-exists-error msg))
+(define (file-exists-error . args)
+  (apply error (cons 'file-exists-error args)))
 
-(define (timeout-error args)
-  (apply (cons 'timeout-error args) error))
+(define (timeout-error . args)
+  (apply error (cons 'timeout-error args)))
 
-(define (type-error args)
-  (apply (cons 'type-error args) error))
+(define (type-error . args)
+  (apply error (cons 'type-error args)))
 
-; nice Scala style to throw the not-implemented-error
+(define (value-error . args)
+  (apply error (cons 'value-error args)))
+
 (define (???)
   (error 'not-implemented-error "???"))
 
 ) ; begin
 ) ; define-library
+

@@ -15,7 +15,7 @@
 ;
 
 (define-library (liii base)
-(export == != display* in? let1)
+(export == != display* in? let1 compose identity)
 (begin
 
 (define == equal?)
@@ -43,5 +43,14 @@
   `(let ((,name1 ,value1))
      ,@body))
 
+(define identity (lambda (x) x))
+
+(define (compose . fs)
+  (if (null? fs)
+      (lambda (x) x)
+      (lambda (x)
+        ((car fs) ((apply compose (cdr fs)) x)))))
+  
 ) ; end of begin
-)
+) ; end of define-library
+
