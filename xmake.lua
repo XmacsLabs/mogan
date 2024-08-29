@@ -24,6 +24,25 @@ add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
 add_repositories("liii-repo xmake")
 
+LOLLY_VERSION= "1.1.7"
+package("liii-lolly")
+    set_homepage("https://github.com/XmacsLabs/lolly")
+    set_description("Lolly is a C++ library")
+
+    set_sourcedir(path.join(os.scriptdir(), "3rdparty/lolly"))
+    if not is_plat("wasm") then
+        add_deps("libcurl")
+    end
+
+    on_install("linux", "macosx", "mingw", "wasm", function (package)
+        local configs = {}
+        if package:config("shared") then
+            configs.kind = "shared"
+        end
+        import("package.tools.xmake").install(package, configs)
+    end)
+package_end()
+
 S7_VERSION = "20240702"
 package("liii-s7")
     set_homepage("https://ccrma.stanford.edu/software/snd/snd/s7.html")
@@ -165,11 +184,10 @@ function using_legacy_apt ()
 end
 
 local FREETYPE_VERSION = "2.12.1"
-local LOLLY_VERSION = "1.1.7"
 
 -- package: s7
 add_requires("liii-s7", {system=false})
-add_requires("lolly "..LOLLY_VERSION, {system=false})
+add_requires("liii-lolly", {system=false})
 
 add_requires("libjpeg")
 add_requires("apt::libpng-dev", {alias="libpng"})
@@ -239,7 +257,7 @@ target("libmogan") do
     set_configvar("LINKED_CAIRO", false)
     set_configvar("LINKED_IMLIB2", false)
 
-    add_packages("lolly")
+    add_packages("liii-lolly")
     add_packages("liii-pdfhummus")
     add_packages("freetype")
     add_packages("liii-s7")
@@ -429,7 +447,7 @@ target("liii") do
 
     add_rules("qt.widgetapp")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
-    add_packages("lolly")
+    add_packages("liii-lolly")
     add_deps("libmogan")
     add_syslinks("pthread", "dl", "m")
     add_files("src/Mogan/Research/research.cpp")

@@ -1,0 +1,19 @@
+#!/usr/bin/env elvish
+
+use platform
+
+
+var pkg_info = (xrepo fetch --json emscripten | from-json)
+var emsdk_path = $pkg_info[0][artifacts][installdir]
+set-env EMSDK $emsdk_path
+
+
+if $platform:is-windows {
+    set-env EMSDK_NODE $emsdk_path/node/16.20.0_64bit/bin/node.exe
+} elif $platform:is-unix {
+    set-env EMSDK_NODE $emsdk_path/node/16.20.0_64bit/bin/node
+}
+
+
+xmake run
+

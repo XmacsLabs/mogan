@@ -1,0 +1,27 @@
+${define HAVE_INTPTR_T}
+${define HAVE_STDINT_H}
+${define HAVE_INTTYPES_H}
+${define HAVE_TIME_T}
+${define HAVE_GETTIMEOFDAY}
+${define __FreeBSD__}
+
+#ifdef HAVE_INTPTR_T
+#ifdef HAVE_INTTYPES_H
+#include <inttypes.h>
+#endif
+#ifdef HAVE_STDINT_H
+#include <stdint.h>
+#endif
+#else
+typedef long intptr_t;
+#endif
+
+${define SANITY_CHECKS}
+${define OS_MINGW}
+${define OS_WIN}
+${define OS_SUN}
+${define OS_MACOS}
+${define OS_WASM}
+
+${define MIMALLOC}
+${define JEMALLOC}
