@@ -103,7 +103,7 @@
       "lazy-format" "lazy-language" "lazy-input-converter" "lazy-tmfs-handler"  
       "$if")
     (normal-brackets "{" "[" "(" ")" "]" "}")
-    (operator "'" "," "#," "#'" ",@" "#,@" "#!")
+    (operator "'" "," "#," "#'" ",@" "#,@" "#!" "#;")
     (string_quote "\"")))
 
 (tm-define (parser-feature lan key)
@@ -125,7 +125,7 @@
     ("#000000" 
       "unary-no-highlight" "binary-no-highlight")
     ("#0000AB" "first_symbol")
-    ("#000000" "symbol"  "operator" "normal-brackets")
+    ("#000000" "symbol"  "operator" "normal-brackets" "vector_tag" "byte_vector_tag")
     ("#795E26" "number" "boolean")
     ("#267F99" "comment" "block_comment")
     ("#D32F2F" "string_content" "string_quote" "character")

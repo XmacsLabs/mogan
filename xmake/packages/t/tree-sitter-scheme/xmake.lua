@@ -25,6 +25,7 @@ package("tree-sitter-scheme")
     add_urls("https://github.com/UnbSky/tree-sitter-scheme/archive/refs/tags/v$(version).zip")
 
     add_versions("0.6.1", "9724cfb9a12289cea6d33a918202f6f27563acbe35942ecb677a2a9e2999b2c6")
+    add_versions("0.6.2", "f76dc3db5b429df92dc08b8243af2c9296aea7b84272391ce2182b40ac8d1d58")
 
     on_install(function(package)
         os.cp(path.join(package:scriptdir(), "port", "xmake.lua"), "xmake.lua")
