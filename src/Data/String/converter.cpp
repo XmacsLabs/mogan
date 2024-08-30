@@ -863,17 +863,19 @@ utf8_to_hex_entities (string_u8 s) {
     else {
       unsigned int code= decode_from_utf8 (s, i);
 
-      // If the code is within the Unicode range of the Chinese character, the original character is added directly.
-      if ((code >= 0x4e00 && code <= 0x9fff) ||  // commonly used Chinese characters
-          (code >= 0x3400 && code <= 0x4dbf) ||  // Extension A
+      // If the code is within the Unicode range of the Chinese character, the
+      // original character is added directly.
+      if ((code >= 0x4e00 &&
+           code <= 0x9fff) || // commonly used Chinese characters
+          (code >= 0x3400 && code <= 0x4dbf) ||   // Extension A
           (code >= 0x20000 && code <= 0x2a6df)) { // Extension B
-        int char_length = (code >= 0x10000) ? 4 : 3;
-        for (int j = 0; j < char_length; ++j) {
+        int char_length= (code >= 0x10000) ? 4 : 3;
+        for (int j= 0; j < char_length; ++j) {
           result << s[i - char_length + j];
         }
-      } 
+      }
       else {
-        string hex = to_Hex (code);
+        string hex= to_Hex (code);
         while (N (hex) < 4)
           hex= "0" * hex;
         // cout << "entity: " << hex << " (" << code << ")\n";
