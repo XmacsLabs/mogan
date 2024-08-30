@@ -25,6 +25,7 @@ lang_parser::lang_parser (string lang, string lang_id) {
   if (lang_id == "cpp") ts_lang= tree_sitter_cpp ();
   else if (lang_id == "scheme") ts_lang= tree_sitter_scheme ();
   else {
+    // TODO: A fallback tree sitter impl is needed
     ts_lang= tree_sitter_scheme ();
   }
   // cout << lang << " parser created\n";
