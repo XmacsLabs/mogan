@@ -305,7 +305,8 @@ lang_parser::add_token (TSSymbol token_type, string token_literal,
       add_single_token ("(Before Cross)Node type: ", token_type, token_literal,
                         start_1, end_1, token_lang_pro);
     }
-    if (end_1 + 1 < start_2 && !(end_1+1 == start_pos && start_2==end_pos)) {
+    if (end_1 + 1 < start_2 &&
+        !(end_1 + 1 == start_pos && start_2 == end_pos)) {
       // cout << "Mid Split\n";
       add_token (token_type,
                  token_literal (end_1 - start_1 + 1, N (token_literal)),

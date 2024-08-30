@@ -30,8 +30,8 @@ using moebius::make_tree_label;
 ast_language_rep::ast_language_rep (string name) : language_rep (name) {
   string lan_name= name (0, N (name) - 4);
 
-  // if (DEBUG_PARSER)
-  debug_packrat << "Building the " * name * " language parser" << LF;
+  if (DEBUG_PARSER)
+    debug_packrat << "Building the " * name * " language parser" << LF;
 
   string use_modules= "(use-modules (code " * name * "-lang))";
   eval (use_modules);
