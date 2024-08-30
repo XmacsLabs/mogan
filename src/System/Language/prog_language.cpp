@@ -352,18 +352,33 @@ prog_lang_exists (string s) {
                              "-lang.scm"));
 }
 
+bool
+ast_prog_lang_exists (string s) {
+  return exists (
+             url_system ("$TEXMACS_PATH/progs/prog/" * s * "-ast-lang.scm")) ||
+         exists (url_system ("$TEXMACS_PATH/plugins/" * s * "/progs/code/" * s *
+                             "-ast-lang.scm")) ||
+         exists (url_system ("$TEXMACS_PATH/plugins/code/progs/code/" * s *
+                             "-ast-lang.scm")) ||
+         exists (url_system ("$TEXMACS_HOME_PATH/plugins/" * s *
+                             "/progs/code/" * s * "-ast-lang.scm")) ||
+         exists (url_system ("$TEXMACS_HOME_PATH/plugins/code/progs/code/" * s *
+                             "-ast-lang.scm"));
+}
+
 /******************************************************************************
  * Interface
  ******************************************************************************/
 language
 prog_language (string s) {
   string use_ast= get_user_preference ("ast-syntax-highlighting");
-  // cout << "Load prog_language " << s << " use_ast: " << use_ast << "\n";
   if (use_ast == "on") {
+    // cout << "Load prog_language " << s << " use_ast: " << use_ast << "\n";
     if (language::instances->contains (s * "-ast"))
       return language (s * "-ast");
-    if (format_exists (s) && prog_lang_exists (s * "-ast"))
+    if (format_exists (s) && ast_prog_lang_exists (s)) {
       return make (language, s * "-ast", tm_new<ast_language_rep> (s * "-ast"));
+    }
   }
 
   if (language::instances->contains (s)) return language (s);
@@ -372,6 +387,9 @@ prog_language (string s) {
 
   if (format_exists (s) && prog_lang_exists (s))
     return make (language, s, tm_new<prog_language_rep> (s));
+
+  if (format_exists (s) && ast_prog_lang_exists (s))
+    return make (language, s * "-ast", tm_new<ast_language_rep> (s * "-ast"));
 
   return make (language, s, tm_new<verb_language_rep> (s));
 }

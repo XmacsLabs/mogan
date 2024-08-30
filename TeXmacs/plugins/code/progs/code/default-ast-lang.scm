@@ -17,6 +17,11 @@
   `(,(string->symbol key)))
 
 (tm-define (parser-feature lan key)
+  (:require (== key "id"))
+  `(,(string->symbol key)
+    ,lan))
+
+(tm-define (parser-feature lan key)
   (:require (== key "special_symbol"))
   `(,(string->symbol key)))
 
