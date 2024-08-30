@@ -389,8 +389,7 @@ prog_language (string s) {
     return make (language, s, tm_new<prog_language_rep> (s));
 
   if (format_exists (s) && ast_prog_lang_exists (s))
-    return make (language, s * "-ast",
-                 tm_new<ast_prog_language_rep> (s * "-ast"));
+    return make (language, s * "-ast", tm_new<ast_language_rep> (s * "-ast"));
 
   return make (language, s, tm_new<verb_language_rep> (s));
 }
