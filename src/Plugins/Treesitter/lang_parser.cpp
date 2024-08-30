@@ -19,11 +19,14 @@
 extern tree the_et;
 using moebius::make_tree_label;
 
-lang_parser::lang_parser (string lang) {
+lang_parser::lang_parser (string lang, string lang_id) {
   // TODO: Dynamic loading of shared lib and multilingual switching
   ast_parser= ts_parser_new ();
-  if (lang == "cpp") ts_lang= tree_sitter_cpp ();
-  if (lang == "scheme") ts_lang= tree_sitter_scheme ();
+  if (lang_id == "cpp") ts_lang= tree_sitter_cpp ();
+  else if (lang_id == "scheme") ts_lang= tree_sitter_scheme ();
+  else {
+    ts_lang= tree_sitter_scheme ();
+  }
   // cout << lang << " parser created\n";
 
   ts_parser_set_language (ast_parser, ts_lang);

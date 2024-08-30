@@ -29,13 +29,21 @@ using moebius::make_tree_label;
 
 ast_language_rep::ast_language_rep (string name) : language_rep (name) {
   string lan_name= name (0, N (name) - 4);
-  lang_ast_parser= tm_new<lang_parser> (lan_name);
 
-  if (DEBUG_PARSER)
-    debug_packrat << "Building the " * name * " language parser" << LF;
+  // if (DEBUG_PARSER)
+  debug_packrat << "Building the " * name * " language parser" << LF;
 
   string use_modules= "(use-modules (code " * name * "-lang))";
   eval (use_modules);
+
+  tree lang_id_config= get_parser_config (lan_name, "id");
+  if (N (lang_id_config) > 0) {
+    string lang_id = get_label (lang_id_config[0]);
+    lang_ast_parser= tm_new<lang_parser> (lan_name, lang_id);
+  }
+  else {
+    lang_ast_parser= tm_new<lang_parser> (lan_name, lan_name);
+  }
 
   tree keytoken_config= get_parser_config (lan_name, "keytoken");
   customize_keytokens (keytoken_config);
