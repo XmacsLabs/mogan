@@ -547,7 +547,39 @@ string
 utf8_to_html (string_u8 input) {
   converter conv= load_converter ("UTF-8", "HTML");
   string    s   = apply (conv, input);
-  return utf8_to_hex_entities (s);
+
+  bool should_convert_to_hex= true; // Transcoding is required by default
+
+  // Iterate over the string and check if it contains CJK characters
+  for (int i= 0; i < N (s);) {
+    unsigned int code= decode_from_utf8 (s, i);
+
+    // Determining whether a character is a CJK character
+    if ((code >= 0x4e00 &&
+         code <= 0x9fff) || // commonly used Chinese characters
+        (code >= 0x3400 && code <= 0x4dbf) ||   // CJK extension A
+        (code >= 0x20000 && code <= 0x2a6df) || // CJK extension B
+        (code >= 0x2A700 && code <= 0x2B73F) || // CJK extension C
+        (code >= 0x2B740 && code <= 0x2B81F) || // CJK extension D
+        (code >= 0x2B820 && code <= 0x2CEAF) || // CJK extension E
+        (code >= 0x2CEB0 && code <= 0x2EBEF) || // CJK extension F
+        (code >= 0xF900 && code <= 0xFAFF) ||   // CJK-compatible characters
+        (code >= 0xAC00 && code <= 0xD7AF) ||   // Korean alphabet
+        (code >= 0x3040 && code <= 0x309F) ||   // Japanese hiragana
+        (code >= 0x30A0 && code <= 0x30FF) ||   // Japanese katakana
+        (code >= 0xFF00 && code <= 0xFFEF)) {   // full-point punctuation
+      should_convert_to_hex= false;
+      break;
+    }
+  }
+
+  // Based on the result, decide whether to call utf8_to_hex_entities or not
+  if (should_convert_to_hex) {
+    return utf8_to_hex_entities (s);
+  }
+  else {
+    return s;
+  }
 }
 
 string
@@ -862,25 +894,11 @@ utf8_to_hex_entities (string_u8 s) {
     }
     else {
       unsigned int code= decode_from_utf8 (s, i);
-
-      // If the code is within the Unicode range of the Chinese character, the
-      // original character is added directly.
-      if ((code >= 0x4e00 &&
-           code <= 0x9fff) || // commonly used Chinese characters
-          (code >= 0x3400 && code <= 0x4dbf) ||   // Extension A
-          (code >= 0x20000 && code <= 0x2a6df)) { // Extension B
-        int char_length= (code >= 0x10000) ? 4 : 3;
-        for (int j= 0; j < char_length; ++j) {
-          result << s[i - char_length + j];
-        }
-      }
-      else {
-        string hex= to_Hex (code);
-        while (N (hex) < 4)
-          hex= "0" * hex;
-        // cout << "entity: " << hex << " (" << code << ")\n";
-        result << "&#x" << hex << ";";
-      }
+      string       hex = to_Hex (code);
+      while (N (hex) < 4)
+        hex= "0" * hex;
+      // cout << "entity: " << hex << " (" << code << ")\n";
+      result << "&#x" << hex << ";";
     }
   }
   return result;
