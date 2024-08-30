@@ -62,7 +62,11 @@
       "os-error" "file-not-found-error" "not-a-directory-error" "file-exists-error" "timeout-error"
       "type-error" "value-error" "???" "not-implemented-error")
     (keyword_conditional ,@(r7rs-keywords-branch))
-    (keyword_control ,@(r7rs-keywords-exception) "catch")))
+    (keyword_control ,@(r7rs-keywords-exception) "catch")
+    ; the following 3 lines is required
+    (normal-brackets "{" "[" "(" ")" "]" "}")
+    (operator "'" "," "#," "#'" ",@" "#,@" "#!" "#;")
+    (string_quote "\"")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "special_symbol")))
@@ -78,13 +82,17 @@
     ("#000000" "none")
     ("#4040c0" "constant")
     ("#204080" "keyword")
-    ("#30909" "keyword_conditional" "keyword_control" "declare_type")
+    ("#309090" "keyword_conditional" "keyword_control" "declare_type")
     ("#0000AB" "first_symbol")
     ("#4040c0" "number" "boolean")
-    ("#267F99" "comment" "block_comment")
+    ("brown" "comment" "block_comment")
     ("#D32F2F" "string_content" "string_quote" "character")
     ("#BF2C2C" "escape_sequence")
-    ("#800080" "error")
+    ("red" "error")
+    ; the following two line is required, it is related to the tree sitter scheme impl
+    ("#000000" "symbol"  "operator" "normal-brackets" "vector_tag" "byte_vector_tag")
+    ("#800080" "ERROR")
+    ; rainbow delimiter
     ("#006400" "(0" ")0" "[0" "]0" "{0" "}0")
     ("#00008B" "(1" ")1" "[1" "]1" "{1" "}1")
     ("#654321" "(2" ")2" "[2" "]2" "{2" "}2")))
