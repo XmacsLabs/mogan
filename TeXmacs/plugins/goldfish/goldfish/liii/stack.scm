@@ -21,7 +21,9 @@
 (export
  stack
  stack? stack-empty?
- stack-top stack-push! stack-pop!
+ stack-size stack-top
+ stack-push! stack-pop!
+ stack->list
 )
 (begin
 
@@ -33,6 +35,7 @@
 (define (%stack-check-parameter st)
   (when (not (stack? st))
     (error 'type-error "Parameter st is not a stack")))
+
 (define (stack . l)
   (if (null? l)
       (make-stack '())
@@ -41,6 +44,10 @@
 (define (stack-empty? st)
   (%stack-check-parameter st)
   (null? (get-data st)))
+
+(define (stack-size st)
+  (%stack-check-parameter st)
+  (length (get-data st)))
 
 (define (stack-top st)
   (%stack-check-parameter st)
@@ -57,6 +64,10 @@
   (let1 data (get-data st)
     (set-data! st (cdr data))
     (car data)))
+
+(define (stack->list st)
+  (%stack-check-parameter st)
+  (get-data st))
 
 ) ; end of begin
 ) ; end of library

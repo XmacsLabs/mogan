@@ -15,6 +15,7 @@
 ;
 
 (define-library (srfi srfi-125)
+(import (srfi srfi-1))
 (export
   make-hash-table, hash-table, hash-table-unfold, alist->hash-table
   hash-table? hash-table-contains? hash-table-empty? hash-table=?
@@ -27,6 +28,12 @@
 )
 (begin
 
+(define (assert-hash-table-type ht f)
+  (when (not (hash-table? ht))
+    (error 'type-error f "this parameter must be typed as hash-table")))
+
+(define hash-table-set-s7 hash-table-set!)
+
 (define (hash-table-contains? ht key)
   (not (not (hash-table-ref ht key))))
 
@@ -36,7 +43,49 @@
 (define (hash-table=? ht1 ht2)
   (equal? ht1 ht2))
 
+(define-macro (hash-table-ref/default ht key default)
+  `(or (hash-table-ref ,ht ,key)
+        ,default))
+
+(define (hash-table-set! ht . rest)
+  (assert-hash-table-type ht hash-table-set!)
+  (let1 len (length rest)
+    (when (or (odd? len) (zero? len))
+      (error 'wrong-number-of-args len "but must be even and non-zero"))
+    
+    (hash-table-set-s7 ht (car rest) (cadr rest))
+    (when (> len 2)
+          (apply hash-table-set! (cons ht (cddr rest))))))
+
+(define (hash-table-delete! ht key . keys)
+  (assert-hash-table-type ht hash-table-delete!)
+  (let1 all-keys (cons key keys)
+    (length
+      (filter
+        (lambda (x)
+          (if (hash-table-contains? ht x)
+              (begin
+                (hash-table-set-s7 ht x #f)
+                #t)
+              #f))
+        all-keys))))
+
+(define (hash-table-update! ht key value)
+  (hash-table-set! ht key value))
+
+(define (hash-table-clear! ht)
+  (for-each
+    (lambda (key)
+      (hash-table-set! ht key #f))
+    (hash-table-keys ht)))
+
 (define hash-table-size hash-table-entries)
+
+(define (hash-table-keys ht)
+  (map car (map values ht)))
+
+(define (hash-table-values ht)
+  (map cdr (map values ht)))
 
 (define (hash-table->alist table)
   (map values table))

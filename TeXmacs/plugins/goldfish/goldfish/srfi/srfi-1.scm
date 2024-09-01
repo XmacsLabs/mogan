@@ -109,6 +109,8 @@
         (lp (cdr lis) (if (pred (car lis)) (+ i 1) i)))))
 
 (define (fold f initial l)
+  (when (not (procedure? f))
+    (error 'type-error "The first param must be a procedure"))
   (if (null? l)
       initial
       (fold f
