@@ -845,12 +845,55 @@
   (:require (== l "appendix-prefix"))
   #f)
 
-(define (get-verbatim-section-title s indent?)
-  `(verbatim ,(tm/section-get-title-string s indent?)))
+(define (is-current-tree t)
+  (== (tree->path t) (tree->path (focus-tree))))
 
-(define (all-sections)
-  (list-filter (tree-search-sections (buffer-tree))
-    (lambda (x) (not (equal? (tree-label x) 'subparagraph)))))
+(define (is-top-level t)
+  (in? (tree-label t) '(chapter part)))
+
+(define (get-verbatim-section-title s indent?)
+  (if (is-current-tree s)
+    `(verbatim ,(string-append (tm/section-get-title-string s indent?) "        <="))
+    `(verbatim ,(tm/section-get-title-string s indent?))))
+
+(define (section-list->nested l result)
+  (cond ((null? l) result)
+        ((null? result)
+         (section-list->nested
+           (cdr l)
+           (list (list (car l)))))
+        ((is-top-level (car l))
+         (section-list->nested
+           (cdr l)
+           (cons (list (car l)) result)))
+        ((and (not (is-top-level (car l)))
+              (is-top-level (car (car result))))
+         (section-list->nested
+           (cdr l)
+           (cons (append (car result) (list (car l)))
+                 (cdr result))))
+        (else
+         (section-list->nested
+           (cdr l)
+           (cons (list (car l))
+                 result)))))
+
+(tm-define (nested->filtered l result)
+  (cond ((null? l) result)
+        ((list-any is-current-tree (car l))
+         (nested->filtered (cdr l) (append (car l) result)))
+        (else
+         (nested->filtered (cdr l) (append (list-filter (car l) is-top-level) result)))))
+
+; If the number of sections bigger than 42
+; we will only reserve chapter/part outside the focus
+(tm-define (all-sections)
+  (with l1 (list-filter (tree-search-sections (buffer-tree))
+             (lambda (x) (not (equal? (tree-label x) 'subparagraph))))
+    (if (<= (length l1) 42)
+        l1
+        (with l2 (section-list->nested l1 '())
+                 (nested->filtered l2 '())))))
 
 (tm-menu (focus-section-menu)
   (for (s (all-sections))
