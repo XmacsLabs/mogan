@@ -1,0 +1,792 @@
+<TMU|<tuple|1.0.3|1.2.9>>
+
+<style|<tuple|generic|no-page-numbers|chinese>>
+
+<\body>
+  <doc-data|<doc-title|OpenType MATH Table>>
+
+  <\table-of-contents|toc>
+    <vspace*|1fn><with|font-series|bold|math-font-series|bold|1<space|2spc>总览> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+
+    <vspace*|1fn><with|font-series|bold|math-font-series|bold|2<space|2spc>数据结构> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-3><vspace|0.5fn>
+
+    <with|par-left|1tab|2.1<space|2spc>版本号 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4>>
+
+    <with|par-left|1tab|2.2<space|2spc>数学常数表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5>>
+
+    <with|par-left|2tab|2.2.1<space|2spc>辅助数据结构 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-6>>
+
+    <with|par-left|1tab|2.3<space|2spc>数学字形表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-7>>
+
+    <with|par-left|2tab|2.3.1<space|2spc>斜体校正表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-8>>
+
+    <with|par-left|2tab|2.3.2<space|2spc>顶部重音附着表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-9>>
+
+    <with|par-left|2tab|2.3.3<space|2spc>扩展字形覆盖表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-10>>
+
+    <with|par-left|2tab|2.3.4<space|2spc>字距调整信息表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-11>>
+
+    <with|par-left|1tab|2.4<space|2spc>数学变体表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-12>>
+
+    <with|par-left|2tab|2.4.1<space|2spc>最小连接器重叠 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-13>>
+
+    <with|par-left|2tab|2.4.2<space|2spc>字形构造表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-14>>
+
+    <with|par-left|2tab|2.4.3<space|2spc>字形组装表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-15>>
+
+    <vspace*|1fn><with|font-series|bold|math-font-series|bold|3<space|2spc>解析> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-16><vspace|0.5fn>
+
+    <with|par-left|1tab|3.1<space|2spc>解析表头 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-17>>
+
+    <with|par-left|1tab|3.2<space|2spc>解析常量表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-18>>
+
+    <with|par-left|2tab|3.2.1<space|2spc>(辅助)解析MathValueRecord <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-19>>
+
+    <with|par-left|1tab|3.3<space|2spc>解析字形表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-20>>
+
+    <with|par-left|2tab|3.3.1<space|2spc>(辅助)解析覆盖表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-21>>
+
+    <with|par-left|2tab|3.3.2<space|2spc>解析斜体纠正表和顶部重音附着表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-22>>
+
+    <with|par-left|2tab|3.3.3<space|2spc>解析拓展字形覆盖表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-23>>
+
+    <with|par-left|2tab|3.3.4<space|2spc>解析字距调整信息表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-24>>
+
+    <with|par-left|1tab|3.4<space|2spc>解析数学变体表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-25>>
+
+    <with|par-left|2tab|3.4.1<space|2spc>解析变体字形ID和前进度量数组 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-26>>
+
+    <with|par-left|2tab|3.4.2<space|2spc>解析字形组装表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-27>>
+  </table-of-contents>
+
+  <section|总览>
+
+  OpenType规范<slink|>中可以将数据分为两类，一类是有效的表项信息，而另一类是偏移量，用于解析时寻址查找。数学表的格式呈现为表套表，下图将总览数学表以及其和子表的嵌套关系，以下嵌套关系会将数学表规范中的偏移量替换为对应的表或表项，只有解析数学表的过程中会使用到偏移量信息。
+
+  <\big-figure>
+    <\wide-block>
+      <tformat|<table|<\row>
+        majorVersion
+      </row|<\cell>
+        主版本号
+      </cell>>|<\row>
+        minorVersion
+      </row|<\cell>
+        副版本号
+      </cell>>|<row|<\cell>
+        mathConstants
+      </cell>|<\cell>
+        数学常数表
+      </cell>>|<row|<\cell>
+        MathGlyphInfo table
+      </cell>|<\cell>
+        数学字形表
+
+        <\wide-block>
+          <tformat|<table|<row|<\cell>
+            ItalicsCorrection
+          </cell>|<\cell>
+            斜体矫正表
+          </cell>>|<row|<\cell>
+            TopAccentAttachment
+          </cell>|<\cell>
+            顶部重音附着表
+          </cell>>|<row|<\cell>
+            extendedShape
+          </cell>|<\cell>
+            扩展形状覆盖表
+          </cell>>|<row|<\cell>
+            mathKernInfo
+          </cell>|<\cell>
+            字距调整信息表
+          </cell>>>>
+        </wide-block>
+      </cell>>|<row|<\cell>
+        mathVariants
+      </cell>|<\cell>
+        数学变体表
+
+        <\wide-block>
+          <tformat|<table|<row|<\cell>
+            minConnectorOverlap
+          </cell>|<\cell>
+            最小连接器重叠
+          </cell>>|<row|<\cell>
+            vertGlyphConstruction
+          </cell>|<\cell>
+            垂直字形构造表
+
+            <\wide-block>
+              <tformat|<table|<row|<\cell>
+                GlyphVariantRecord
+              </cell>|<\cell>
+                字形变体记录表
+              </cell>>|<row|<\cell>
+                GlyphAssembly
+              </cell>|<\cell>
+                字形组装表
+              </cell>>>>
+            </wide-block>
+          </cell>>|<row|<\cell>
+            horizGlyphConstruction
+          </cell>|<\cell>
+            水平字形构造表，结构同上
+          </cell>>>>
+        </wide-block>
+      </cell>>>>
+    </wide-block>
+  <|big-figure>
+    数学表总览<label|math-table>
+  </big-figure>
+
+  <section|数据结构>
+
+  本节的结构为自顶向下，从数学表开始，逐个分解各个子表项。在具体数据结构设计上，出于遍历，会将一些嵌套的子表直接放在顶层成员中。
+
+  <\cpp-code>
+    struct ot_mathtable_rep : concrete_struct {
+
+    \ \ unsigned int \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ majorVersion, minorVersion;
+
+    \ \ MathConstantsTable \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ constants_table;
+
+    \ \ unsigned int \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ minConnectorOverlap;
+
+    \ \ hashmap\<less\>unsigned int, MathValueRecord\<gtr\> \ \ \ \ italics_correction;
+
+    \ \ hashmap\<less\>unsigned int, MathValueRecord\<gtr\> \ \ \ \ top_accent;
+
+    \ \ hashset\<less\>unsigned int\<gtr\> \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ extended_shape_coverage;
+
+    \ \ hashmap\<less\>unsigned int, MathKernInfoRecord\<gtr\> \ math_kern_info;
+
+    \ \ hashmap\<less\>unsigned int, array\<less\>unsigned int\<gtr\>\<gtr\> ver_glyph_variants;
+
+    \ \ hashmap\<less\>unsigned int, array\<less\>unsigned int\<gtr\>\<gtr\> ver_glyph_variants_adv;
+
+    \ \ hashmap\<less\>unsigned int, array\<less\>unsigned int\<gtr\>\<gtr\> hor_glyph_variants;
+
+    \ \ hashmap\<less\>unsigned int, array\<less\>unsigned int\<gtr\>\<gtr\> hor_glyph_variants_adv;
+
+    \ \ hashmap\<less\>unsigned int, GlyphAssembly\<gtr\> \ \ \ \ \ \ ver_glyph_assembly;
+
+    \ \ hashmap\<less\>unsigned int, GlyphAssembly\<gtr\> \ \ \ \ \ \ hor_glyph_assembly;
+
+    };
+  </cpp-code>
+
+  在OpenType规范中，数学表中任何数值都是由16位无符号整数(uint16)或者整数(int16)构成。在C++标准中，int和unsigned int都至少为16位，且主流实现中都是32位，完全足够容纳16位的数据。在数据结构设计中，我们会用unsigned int和int分别表示uint16和int16，而在解析代码中，可能会存在用int去表示一个uint16的量的情况，由于int足够大，这也是合理的。
+
+  <subsection|版本号>
+
+  主版本号为uint16应当为1，副版本号为uint16应当为0。
+
+  <subsection|数学常数表><label|sec:math-con>
+
+  按照字节排布顺序，数学常数表包含了两个int16、两个int16、51个MathValueRecord和一个int16。
+
+  <\cpp-code>
+    struct MathConstantsTable {
+
+    \ \ int \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ scriptPercentScaleDown;
+
+    \ \ int \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ scriptScriptPercentScaleDown;
+
+    \ \ unsigned int \ \ \ \ \ \ \ \ \ \ delimitedSubFormulaMinHeight;
+
+    \ \ unsigned int \ \ \ \ \ \ \ \ \ \ displayOperatorMinHeight;
+
+    \ \ array\<less\>MathValueRecord\<gtr\> records;
+
+    \ \ int \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ radicalDegreeBottomRaisePercent;
+
+    \ \ MathConstantsTable () : records (otmathConstantsRecordsEnd){};
+
+    };
+  </cpp-code>
+
+  其中51个MathValueRecord将通过枚举MathConstantRecordEnum进行定位查找，对应数据存储在数组records中。枚举的最后一个元素是otmathConstantsRecordsEnd，表示数组的长度51。
+
+  <subsubsection|辅助数据结构>
+
+  这里我们首次提及MathValueRecord数据结构，在规范中，MathValueRecord包含一个uint16记录数值value和指向设备表的偏移量deviceOffset(可能为空，此时不含设备表)，因此MathValueRecord被设计为：
+
+  <\cpp-code>
+    struct MathValueRecord {
+
+    \ \ int \ \ \ \ \ \ \ \ value;
+
+    \ \ bool \ \ \ \ \ \ \ hasDevice;
+
+    \ \ DeviceTable deviceTable;
+
+    \ \ MathValueRecord () : hasDevice (false) {}
+
+    };
+  </cpp-code>
+
+  其中用一个bool变量表示是否含有设备表。设备表包含了四个uint16变量，其结构如下，我并不清楚设备表的用处，为了数学表解析完整起见将其保留：
+
+  <\cpp-code>
+    struct DeviceTable {
+
+    \ \ unsigned int startSize;
+
+    \ \ unsigned int endSize;
+
+    \ \ unsigned int deltaFormat;
+
+    \ \ unsigned int deltaValues;
+
+    };
+  </cpp-code>
+
+  <subsection|数学字形表>
+
+  字形表分为四个子表，我们将直接把四个子表平铺在数学表中。
+
+  <subsubsection|斜体校正表>
+
+  <\cpp-code>
+    hashmap\<less\>unsigned int, MathValueRecord\<gtr\> italics_correction;
+  </cpp-code>
+
+  斜体校正表用一个哈希表存储，其键为一个无符号整数，为字形ID，值为<cpp|MathValueRecord>。
+
+  <subsubsection|顶部重音附着表>
+
+  <\cpp-code>
+    hashmap\<less\>unsigned int, MathValueRecord\<gtr\> top_accent;
+  </cpp-code>
+
+  结构同斜体校正表。
+
+  <\subsubsection>
+    扩展字形覆盖表
+  </subsubsection>
+
+  <\cpp-code>
+    hashset\<less\>unsigned int\<gtr\> extended_shape_coverage;
+  </cpp-code>
+
+  此表记录了具有扩展形状的字形ID，含义为允许字形在垂直方向上拓展，使用一个集合记录。
+
+  <subsubsection|字距调整信息表>
+
+  <\cpp-code>
+    hashmap\<less\>unsigned int, MathKernInfoRecord\<gtr\> math_kern_info;
+  </cpp-code>
+
+  字距调整信息表用于改善上下标的字距调整，具体来说是高度调整。字距调整信息表中存储了四个角的上下标的字距调整表(可能不存在，用bool变量标识)，因此设计数据结构如下：
+
+  <\cpp-code>
+    struct MathKernInfoRecord {
+
+    \ \ MathKernTable topRight;
+
+    \ \ MathKernTable topLeft;
+
+    \ \ MathKernTable bottomRight;
+
+    \ \ MathKernTable bottomLeft;
+
+    \ \ bool \ \ \ \ \ \ \ \ \ hasTopRight;
+
+    \ \ bool \ \ \ \ \ \ \ \ \ hasTopLeft;
+
+    \ \ bool \ \ \ \ \ \ \ \ \ hasBottomRight;
+
+    \ \ bool \ \ \ \ \ \ \ \ \ hasBottomLeft;
+
+    }
+  </cpp-code>
+
+  而字距调整表中首先是一个uint16，表示字距发生变化的高度数量heightCount。接下来是长度为<cpp|>heightCount的MathValueRecord数组，存储了heightCount个调整值发生变化的高度，高度是递增的。上述高度划分了heightCount+1个区间，调整表中最后就是长度为heightCount+1的MathValueRecord数组，记录在各个区间内对应的高度调整数值。
+
+  然后是长度为heightCount+1的MathValueRecord数组。数据结构设计如下：
+
+  <\cpp-code>
+    struct MathKernTable {
+
+    \ \ unsigned int \ \ \ \ \ \ \ \ \ \ heightCount;
+
+    \ \ array\<less\>MathValueRecord\<gtr\> correctionHeight;
+
+    \ \ array\<less\>MathValueRecord\<gtr\> kernValues;
+
+    };
+  </cpp-code>
+
+  <subsection|数学变体表>
+
+  数学变体表中的所有内容也将直接平铺在数学表中。
+
+  <subsubsection|最小连接器重叠>
+
+  <\cpp-code>
+    unsigned int minConnectorOverlap;
+  </cpp-code>
+
+  一个无符号整数，即在字形构建过程中连接字形的最小重叠量，以设计单位(design units)为单位，也可将其视为一个数学表常量。
+
+  <subsubsection|字形构造表>
+
+  在规范中，字形构造表的实际内容被MathGlyphVariantRecord数据结构描述。一个字形ID对应一个此Record数组，一个Record包含variantGlyph和advanceMeasurement两个uint16，前者为变体的字形ID，后者为变体高度(水平方向应为宽度)的前进度量(设计单位)。由于结构非常简单，这里没有对Record进行封装，而是直接用对两个成员构建哈希表。这里以垂直方向为例，<cpp|ver_glyph_variants>键为字形ID，值为变体的字形ID数组，<cpp|ver_glyph_variants_adv>键为字形ID，值为变体的前进度量数组，两个数组的内容按索引一一对应。
+
+  <\cpp-code>
+    hashmap\<less\>unsigned int, array\<less\>unsigned int\<gtr\>\<gtr\> ver_glyph_variants;
+
+    hashmap\<less\>unsigned int, array\<less\>unsigned int\<gtr\>\<gtr\> ver_glyph_variants_adv;
+  </cpp-code>
+
+  <subsubsection|字形组装表>
+
+  <\cpp-code>
+    hashmap\<less\>unsigned int, GlyphAssembly\<gtr\> \ \ \ \ \ \ ver_glyph_assembly;
+
+    hashmap\<less\>unsigned int, GlyphAssembly\<gtr\> \ \ \ \ \ \ hor_glyph_assembly;
+  </cpp-code>
+
+  字形组装表描述了如何从多个简单字形部件组装成一个特定的字形，两个表分别记录了从垂直方向和水平方向(生长方向)上的组装的字形。这里用hashmap存储，键为字形ID，值为<cpp|GlyphAssembly>结构体，其包含了一个斜体纠正记录和一个记录字形部件的数组。
+
+  <\cpp-code>
+    struct GlyphAssembly {
+
+    \ \ MathValueRecord \ \ \ \ \ \ \ italicsCorrection;
+
+    \ \ array\<less\>GlyphPartRecord\<gtr\> partRecords;
+
+    };
+  </cpp-code>
+
+  组装的过程是在生长方向上根据偏移量连续绘制。字形部件包含了五个uint16，第一个是字形ID，第二、三个为连接器的两端长度，连接器用于相邻字形在其正交方向(如垂直方向拼接时，连接器接触面为水平方向)的拼接，相邻的连接器可以重叠来进行字形组合，但重叠不应小于<cpp|minConnectorOverlap>，若值为0表示一端不存在连接器。
+
+  <\cpp-code>
+    struct GlyphPartRecord {
+
+    \ \ unsigned int glyphID;
+
+    \ \ unsigned int startConnectorLength;
+
+    \ \ unsigned int endConnectorLength;
+
+    \ \ unsigned int fullAdvance;
+
+    \ \ unsigned int partFlags;
+
+    };
+  </cpp-code>
+
+  其中<cpp|fullAdvance>表示字形在生长方向上的前进度量，<cpp|partFlags>当且仅当其值为1时有意义，表示这个部分可以跳过或者重复使用(如不同长度的箭头需要使用)。
+
+  <section|解析>
+
+  数学表的解析是一个相当繁琐复杂的过程，需参考规范<slink|https://learn.microsoft.com/en-us/typography/opentype/spec/math>。本章将从数学表在规范中的文件表示形式，解析到我们上一章所提出的数学表数据结构。如果没有特别标注，所有数据默认连续排布的，数据类型uint16和int16都是2字节。解析数学表的入口是<cpp|parse_mathtable>，偏移量单位为字节，偏移量分为相对偏移量和绝对偏移量，相对偏移量是指相对于父表头的偏移量，而绝对偏移量是相对于数学表头的偏移量，从数学表中直接解析获得的偏移量都是相对偏移量。
+
+  <subsection|解析表头>
+
+  从数学表起始偏移量0开始，定义了5个uint16的量。前两个为主版本号和副版本号，后三个对应了数学表中常数、字形和变体三个大子表的的偏移量。
+
+  <\cpp-code>
+    \ \ // MATH Header
+
+    \ \ table-\<gtr\>majorVersion \ \ \ = get_U16 (tt, 0);
+
+    \ \ table-\<gtr\>minorVersion \ \ \ = get_U16 (tt, 2);
+
+    \ \ int mathConstantsOffset= get_U16 (tt, 4);
+
+    \ \ int mathGlyphInfoOffset= get_U16 (tt, 6);
+
+    \ \ int mathVariantsOffset = get_U16 (tt, 8);
+  </cpp-code>
+
+  按照规范，主版本必须为1，副版本必须为0。
+
+  <subsection|解析常量表>
+
+  常量表从<cpp|mathConstantsOffset>偏移量开始，常量表在空间上由2个int16、2个uint16、51个MathValueRecord和一个int16连续组合而成。其中一个MathValueRecord包含一个值int16和一个偏移量uint16。
+
+  <subsubsection|(辅助)解析MathValueRecord>
+
+  MathValueRecord占用4个字节，前两个字节为值<cpp|value>，后二个字节为设备表偏移量<cpp|deviceOffset>，这个偏移量可能为0，表示设备表不存在。设备表的偏移量为相对Record所在父表的偏移量，所以只靠绝对偏移量是不够的，我们需要父表偏移量<cpp|parent_table_offset>和Record相对父表的偏移量<cpp|record_offset>。
+
+  故Record的绝对偏移量为<cpp|parent_table_offset + record_offset>，而设备表的绝对偏移量为<cpp|parent_table_offset + deviceOffset>，其中设备表包含4个int16。
+
+  <\cpp-code>
+    \ \ //...
+
+    \ \ int \ \ \ \ \ \ \ \ \ \ \ \ value= get_S16 (tt, parent_table_offset + record_offset);
+
+    \ \ unsigned int \ \ \ deviceOffset=
+
+    \ \ \ \ \ \ get_U16 (tt, parent_table_offset + record_offset + 2);
+
+    \ \ if (deviceOffset \<gtr\> 0) {
+
+    \ \ \ \ int \ \ \ \ \ \ \ \ \ deviceAbsOffset= parent_table_offset + deviceOffset;
+
+    \ \ \ \ unsigned int startSize \ \ \ \ \ = get_U16 (tt, deviceAbsOffset);
+
+    \ \ \ \ unsigned int endSize \ \ \ \ \ \ \ = get_U16 (tt, deviceAbsOffset + 2);
+
+    \ \ \ \ unsigned int deltaFormat \ \ \ = get_U16 (tt, deviceAbsOffset + 4);
+
+    \ \ \ \ unsigned int deltaValues \ \ \ = get_U16 (tt, deviceAbsOffset + 6);
+
+    \ \ //...
+  </cpp-code>
+
+  <subsection|解析字形表>
+
+  字形表从<cpp|mathGlyphInfoOffset>偏移量开始，解析字形表包含4个偏移量，对应四个子表。
+
+  <\cpp-code>
+    \ \ // MathGlyphInfo table
+
+    \ \ int mathItalicsCorrectionInfoOffset= get_U16 (tt, mathGlyphInfoOffset + 0);
+
+    \ \ int mathTopAccentAttachmentOffset \ = get_U16 (tt, mathGlyphInfoOffset + 2);
+
+    \ \ int extendedShapeCoverageOffset \ \ \ = get_U16 (tt, mathGlyphInfoOffset + 4);
+
+    \ \ int mathKernInfoOffset \ \ \ \ \ \ \ \ \ \ \ \ = get_U16 (tt, mathGlyphInfoOffset + 6);
+  </cpp-code>
+
+  <subsubsection|(辅助)解析覆盖表>
+
+  覆盖表的是一个字形ID的数组，用表示被一张表中所影响的字形ID。覆盖表有两个格式，第一种比较直接，首先是一个uint16表示格式(此时为1)，然后是一个uint16表示字形的数量，最后就是相应的一个字形ID数组(uint16数组)。定义函数<cpp|parse_coverage_table>进行解析。
+
+  <\cpp-code>
+    \ \ 
+
+    static array\<less\>unsigned int\<gtr\>
+
+    parse_coverage_table (const string& tt, int offset) {
+
+    \ \ int \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ format= get_U16 (tt, offset);
+
+    \ \ array\<less\>unsigned int\<gtr\> coverage;
+
+    \ \ if (format == 1) {
+
+    \ \ \ \ unsigned int glyphCount= get_U16 (tt, offset + 2);
+
+    \ \ \ \ for (unsigned int i= 0; i \<less\> glyphCount; i++) {
+
+    \ \ \ \ \ \ unsigned int glyphID= get_U16 (tt, offset + 4 + 2 * i);
+
+    \ \ \ \ \ \ coverage \<less\>\<less\> glyphID;
+
+    \ \ \ \ }
+
+    \ \ }
+  </cpp-code>
+
+  第二种格式可以理解为稀疏化存储，第二个uint16将表示范围的计数，而接下来是范围的数组。每个范围包含3个uint16，前两个为起始和终止的字形ID，第三个表示起始ID在整个覆盖表中的索引，这个数据在解析过程中自然可以得到，可以不使用。
+
+  <\cpp-code>
+    else if (format == 2) {
+
+    \ \ \ \ unsigned int rangeCount= get_U16 (tt, offset + 2);
+
+    \ \ \ \ for (unsigned int i= 0; i \<less\> rangeCount; i++) {
+
+    \ \ \ \ \ \ unsigned int startGlyphID= get_U16 (tt, offset + 4 + 6 * i);
+
+    \ \ \ \ \ \ unsigned int endGlyphID \ = get_U16 (tt, offset + 4 + 6 * i + 2);
+
+    \ \ \ \ \ \ for (unsigned int glyphID= startGlyphID; glyphID \<less\>= endGlyphID;
+
+    \ \ \ \ \ \ \ \ \ \ \ glyphID++) {
+
+    \ \ \ \ \ \ \ \ coverage \<less\>\<less\> glyphID;
+
+    \ \ \ \ \ \ }
+
+    \ \ \ \ }
+
+    \ \ }
+  </cpp-code>
+
+  <subsubsection|解析斜体纠正表和顶部重音附着表>
+
+  这两个表结构是相同的，我们以解析斜体纠正表为例，其绝对偏移量为<cpp|mathGlyphInfoOffset + mathKernInfoOffset>。第一个值为uint16，指向覆盖表的偏移量，第二个uint16是MathValueRecord记录的数量(和覆盖表大小一定相等)，然后是对应长度的MathValueRecord的数组。覆盖表中的字形ID和Record数组中的记录按顺序一一对应，因此可用下列函数解析：
+
+  <\cpp-code>
+    static void
+
+    parse_record_with_coverage (
+
+    \ \ \ \ const string& tt, int parent_table_offset, int coverage_offset,
+
+    \ \ \ \ int record_offset, hashmap\<less\>unsigned int, MathValueRecord\<gtr\>& record_map) {
+
+    \ \ int coverage_abs_offset \ \ \ \ = parent_table_offset + coverage_offset;
+
+    \ \ array\<less\>unsigned int\<gtr\> coverage= parse_coverage_table (tt,\ 
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ coverage_abs_offset);
+
+    \ \ int \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ record_abs_offset= parent_table_offset + record_offset;
+
+    \ \ for (unsigned int i= 0; i \<less\> N (coverage); i++) {
+
+    \ \ \ \ unsigned int glyphID= coverage[i];
+
+    \ \ \ \ record_map (glyphID)=
+
+    \ \ \ \ \ \ \ \ parse_math_record (tt, parent_table_offset, record_offset + 4 * i);
+
+    \ \ }
+
+    }
+  </cpp-code>
+
+  <subsubsection|解析拓展字形覆盖表>
+
+  当拓展字形覆盖表的偏移量<cpp|extendedShapeCoverageOffset>非0时，此覆盖表存在，绝对偏移量为<cpp|mathGlyphInfoOffset + extendedShapeCoverageOffset>，直接调用解析覆盖表的函数即可，然后将其转换为一个集合用于查询使用。
+
+  <\cpp-code>
+    \ \ if (extendedShapeCoverageOffset \<gtr\> 0) {
+
+    \ \ \ \ auto extendedShapeCoverage= parse_coverage_table (
+
+    \ \ \ \ \ \ \ \ tt, mathGlyphInfoOffset + extendedShapeCoverageOffset);
+
+    \ \ \ \ for (int i= 0; i \<less\> N (extendedShapeCoverage); i++) {
+
+    \ \ \ \ \ \ unsigned int glyphID= extendedShapeCoverage[i];
+
+    \ \ \ \ \ \ table-\<gtr\>extended_shape_coverage-\<gtr\>insert (glyphID);
+
+    \ \ \ \ }
+
+    \ \ }
+  </cpp-code>
+
+  <subsubsection|解析字距调整信息表>
+
+  此表的绝对偏移量<cpp|mathGlyphInfoOffset + mathKernInfoOffset>。这个表首先是两个uint16，第一个是对应的覆盖表的偏移量<cpp|mathKernCoverageOffset>，第二个是字距调整信息表中记录的数量(必与覆盖表大小相等)，接着是对应长度的<cpp|MathKernInfoRecord>数组。解析过程就是先去解析覆盖表，然后对应覆盖表逐个解析此Record，我们考虑如何解析这个Record。
+
+  一个Record存储了四个uint16偏移量，为对应字形右上、左上、右下和左下方向的字距调整表，注意偏移量可能为0，表示不存在这个表。按照设计，字距调整表中存储了一个uint16为heightCount和长度分别为heightCount的MathValueRecord数组correctionHeight和heightCount+1的MathValueRecord数组kernValues。因此Record的解析代码如下：
+
+  <\cpp-code>
+    static MathKernTable
+
+    parse_math_kern_table (const string& tt, int offset) {
+
+    \ \ unsigned int \ heightCount= get_U16 (tt, offset);
+
+    \ \ MathKernTable kern (heightCount);
+
+    \ \ for (unsigned int i= 0; i \<less\> heightCount; i++) {
+
+    \ \ \ \ kern.correctionHeight[i]= parse_math_record (tt, offset, 2 + 4 * i);
+
+    \ \ }
+
+    \ \ for (unsigned int i= 0; i \<less\> heightCount + 1; i++) {
+
+    \ \ \ \ kern.kernValues[i]=
+
+    \ \ \ \ \ \ \ \ parse_math_record (tt, offset, 2 + 4 * heightCount + 4 * i);
+
+    \ \ }
+
+    \ \ return kern;
+
+    }
+  </cpp-code>
+
+  <subsection|解析数学变体表>
+
+  数学变体表的偏移量是<cpp|mathVariantsOffset>，首先是一个uint16，为常量<cpp|minConnectorOverlap>，接下来为两个uint16，为垂直和水平两个变体方向的字形覆盖表的偏移量<cpp|vertGlyphCoverageOffset>和<cpp|horizGlyphCoverageOffset>，然后是两个uint16表示垂直和水平字形的计数(和对应覆盖表大小必相等)，最后是两个方向上对应长度的偏移量数组，指向对应数学字形的构造表。
+
+  <\cpp-code>
+    \ \ // math variants
+
+    \ \ table-\<gtr\>minConnectorOverlap= get_U16 (tt, mathVariantsOffset + 0);
+
+    \ \ int vertGlyphCoverageOffset=
+
+    \ \ \ \ \ \ mathVariantsOffset + get_U16 (tt, mathVariantsOffset + 2);
+
+    \ \ int horizGlyphCoverageOffset=
+
+    \ \ \ \ \ \ mathVariantsOffset + get_U16 (tt, mathVariantsOffset + 4);
+
+    \ \ int vertGlyphCount = get_U16 (tt, mathVariantsOffset + 6);
+
+    \ \ int horizGlyphCount= get_U16 (tt, mathVariantsOffset + 8);
+  </cpp-code>
+
+  字形构造表中首先是字形组装表的偏移量<cpp|glyphAssemblyOffset>(可能为0，表示不存在这个表)。然后是一个uint16，表示变体的数量<cpp|variantCount>，最后是对应数量的MathGlyphVariantRecord表，记录变体信息。而该Record中包含两个uint16，第一个为变体字形的ID，第二个为变体字形都在变体方向上的前进度量，我们将其拆分成两个数组进行存储。因此一个字形会对应一个字形组装表，一个变体字形ID数组和一个前进度量数组。
+
+  解析变体表的入口是<cpp|parse_variants>，核心逻辑是去解析覆盖表然后通过<cpp|parse_construction>去解析构造表，而解析构造表的任务就是解析两个数组和字形组装表。
+
+  <subsubsection|解析变体字形ID和前进度量数组>
+
+  这一部分非常简单。
+
+  <\cpp-code>
+    // MathGlyphVariantRecord
+
+    \ \ for (unsigned int i= 0; i \<less\> variantCount; i++) {
+
+    \ \ \ \ unsigned int mathGlyphVariantGlyph=
+
+    \ \ \ \ \ \ \ \ get_U16 (tt, construction_offset + 4 + 4 * i);
+
+    \ \ \ \ unsigned int mathGlyphVariantAdvanceMeasurement=
+
+    \ \ \ \ \ \ \ \ get_U16 (tt, construction_offset + 4 + 4 * i + 2);
+
+    \ \ \ \ variantGlyph \<less\>\<less\> mathGlyphVariantGlyph;
+
+    \ \ \ \ advanceMeasurement \<less\>\<less\> mathGlyphVariantAdvanceMeasurement;
+
+    \ \ }
+  </cpp-code>
+
+  <subsubsection|解析字形组装表>
+
+  字形组装表中首先是一个记录斜体纠正的MathValueRecord，然后是一个uint16表示组装部件的个数，最后是一个GlyphPart记录数组，描述组装部件信息，逐个解析即可。
+
+  <\cpp-code>
+    \ \ \ \ int glyphAssemblyAbsOffset= construction_offset + glyphAssemblyOffset;
+
+    \ \ \ \ assembly.italicsCorrection=
+
+    \ \ \ \ \ \ \ \ parse_math_record (tt, glyphAssemblyAbsOffset, 0);
+
+    \ \ \ \ unsigned int partCount= get_U16 (tt, glyphAssemblyAbsOffset + 4);
+
+    \ \ \ \ // GlyphPart records
+
+    \ \ \ \ for (int j= 0, offset= 6; j \<less\> partCount; j++) {
+
+    \ \ \ \ \ \ array\<less\>unsigned int\<gtr\> part (5);
+
+    \ \ \ \ \ \ for (int k= 0; k \<less\> 5; k++, offset+= 2) {
+
+    \ \ \ \ \ \ \ \ part[k]=
+
+    \ \ \ \ \ \ \ \ \ \ \ \ get_U16 (tt, construction_offset + glyphAssemblyOffset + offset);
+
+    \ \ \ \ \ \ }
+
+    \ \ \ \ \ \ assembly.partRecords \<less\>\<less\> GlyphPartRecord{part[0], part[1], part[2],
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ part[3], part[4]};
+
+    \ \ \ \ }
+  </cpp-code>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+    <associate|par-hyphen|normal>
+    <associate|par-mode|left>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-10|<tuple|2.3.3|3>>
+    <associate|auto-11|<tuple|2.3.4|4>>
+    <associate|auto-12|<tuple|2.4|4>>
+    <associate|auto-13|<tuple|2.4.1|4>>
+    <associate|auto-14|<tuple|2.4.2|4>>
+    <associate|auto-15|<tuple|2.4.3|4>>
+    <associate|auto-16|<tuple|3|5>>
+    <associate|auto-17|<tuple|3.1|5>>
+    <associate|auto-18|<tuple|3.2|5>>
+    <associate|auto-19|<tuple|3.2.1|6>>
+    <associate|auto-2|<tuple|1|2>>
+    <associate|auto-20|<tuple|3.3|6>>
+    <associate|auto-21|<tuple|3.3.1|6>>
+    <associate|auto-22|<tuple|3.3.2|7>>
+    <associate|auto-23|<tuple|3.3.3|7>>
+    <associate|auto-24|<tuple|3.3.4|7>>
+    <associate|auto-25|<tuple|3.4|8>>
+    <associate|auto-26|<tuple|3.4.1|8>>
+    <associate|auto-27|<tuple|3.4.2|8>>
+    <associate|auto-28|<tuple|4|?>>
+    <associate|auto-3|<tuple|2|2>>
+    <associate|auto-4|<tuple|2.1|2>>
+    <associate|auto-5|<tuple|2.2|2>>
+    <associate|auto-6|<tuple|2.2.1|3>>
+    <associate|auto-7|<tuple|2.3|3>>
+    <associate|auto-8|<tuple|2.3.1|3>>
+    <associate|auto-9|<tuple|2.3.2|3>>
+    <associate|math-table|<tuple|1|2>>
+    <associate|sec:math-con|<tuple|2.2|2>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|figure>
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1>|>
+        数学表总览
+      </surround>|<pageref|auto-2>>
+    </associate>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>总览> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>数据结构> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-3><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|2.1<space|2spc>版本号 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4>>
+
+      <with|par-left|<quote|1tab>|2.2<space|2spc>数学常数表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5>>
+
+      <with|par-left|<quote|2tab>|2.2.1<space|2spc>辅助数据结构 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-6>>
+
+      <with|par-left|<quote|1tab>|2.3<space|2spc>数学字形表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-7>>
+
+      <with|par-left|<quote|2tab>|2.3.1<space|2spc>斜体校正表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-8>>
+
+      <with|par-left|<quote|2tab>|2.3.2<space|2spc>顶部重音附着表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-9>>
+
+      <with|par-left|<quote|2tab>|2.3.3<space|2spc>扩展字形覆盖表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-10>>
+
+      <with|par-left|<quote|2tab>|2.3.4<space|2spc>字距调整信息表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-11>>
+
+      <with|par-left|<quote|1tab>|2.4<space|2spc>数学变体表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-12>>
+
+      <with|par-left|<quote|2tab>|2.4.1<space|2spc>最小连接器重叠 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-13>>
+
+      <with|par-left|<quote|2tab>|2.4.2<space|2spc>字形构造表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-14>>
+
+      <with|par-left|<quote|2tab>|2.4.3<space|2spc>字形组装表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-15>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>解析> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-16><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|3.1<space|2spc>解析表头 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-17>>
+
+      <with|par-left|<quote|1tab>|3.2<space|2spc>解析常量表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-18>>
+
+      <with|par-left|<quote|2tab>|3.2.1<space|2spc>(辅助)解析MathValueRecord <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-19>>
+
+      <with|par-left|<quote|1tab>|3.3<space|2spc>解析字形表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-20>>
+
+      <with|par-left|<quote|2tab>|3.3.1<space|2spc>(辅助)解析覆盖表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-21>>
+
+      <with|par-left|<quote|2tab>|3.3.2<space|2spc>解析斜体纠正表和顶部重音附着表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-22>>
+
+      <with|par-left|<quote|2tab>|3.3.3<space|2spc>解析拓展字形覆盖表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-23>>
+
+      <with|par-left|<quote|2tab>|3.3.4<space|2spc>解析字距调整信息表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-24>>
+
+      <with|par-left|<quote|1tab>|3.4<space|2spc>解析数学变体表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-25>>
+
+      <with|par-left|<quote|2tab>|3.4.1<space|2spc>解析变体字形ID和前进度量数组 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-26>>
+
+      <with|par-left|<quote|2tab>|3.4.2<space|2spc>解析字形组装表 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-27>>
+    </associate>
+  </collection>
+</auxiliary>
