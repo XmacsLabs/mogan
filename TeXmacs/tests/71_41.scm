@@ -40,5 +40,6 @@
     => '("chapter current" "section 1.1" "section 1.2" "chapter 2")))
 
 (define (test_71_41)
+  (check-set-mode! 'report-failed)
   (test)
   (check-report))
