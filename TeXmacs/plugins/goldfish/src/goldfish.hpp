@@ -37,7 +37,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.10.5-rc1"
+#define GOLDFISH_VERSION "17.10.5"
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
 static std::vector<std::string> command_args= std::vector<std::string> ();
