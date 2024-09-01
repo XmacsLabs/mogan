@@ -845,6 +845,7 @@
   (:require (== l "appendix-prefix"))
   #f)
 
+
 (define (is-current-tree t)
   (== (tree->path t) (tree->path (focus-tree))))
 
@@ -856,44 +857,47 @@
     `(verbatim ,(string-append (tm/section-get-title-string s indent?) "        <="))
     `(verbatim ,(tm/section-get-title-string s indent?))))
 
-(define (section-list->nested l result)
-  (cond ((null? l) result)
-        ((null? result)
-         (section-list->nested
-           (cdr l)
-           (list (list (car l)))))
-        ((is-top-level (car l))
-         (section-list->nested
-           (cdr l)
-           (cons (list (car l)) result)))
-        ((and (not (is-top-level (car l)))
-              (is-top-level (car (car result))))
-         (section-list->nested
-           (cdr l)
-           (cons (append (car result) (list (car l)))
-                 (cdr result))))
-        (else
-         (section-list->nested
-           (cdr l)
-           (cons (list (car l))
-                 result)))))
+(define (filter-sections l f-is-current-tree f-is-top-level)
+  (define (section-list->nested l result)
+    (cond ((null? l) result)
+          ((null? result)
+           (section-list->nested
+             (cdr l)
+             (list (list (car l)))))
+          ((f-is-top-level (car l))
+           (section-list->nested
+             (cdr l)
+             (cons (list (car l)) result)))
+          ((and (not (f-is-top-level (car l)))
+                (f-is-top-level (car (car result))))
+           (section-list->nested
+             (cdr l)
+             (cons (append (car result) (list (car l)))
+                   (cdr result))))
+          (else
+           (section-list->nested
+             (cdr l)
+             (cons (list (car l))
+                   result)))))
+  
+  (define (nested->filtered l result)
+    (cond ((null? l) result)
+          ((list-any f-is-current-tree (car l))
+           (nested->filtered (cdr l) (append (car l) result)))
+          (else
+           (nested->filtered (cdr l) (append (list-filter (car l) f-is-top-level) result)))))
 
-(tm-define (nested->filtered l result)
-  (cond ((null? l) result)
-        ((list-any is-current-tree (car l))
-         (nested->filtered (cdr l) (append (car l) result)))
-        (else
-         (nested->filtered (cdr l) (append (list-filter (car l) is-top-level) result)))))
+  (with l2 (section-list->nested l '())
+    (nested->filtered l2 '())))
 
 ; If the number of sections bigger than 42
 ; we will only reserve chapter/part outside the focus
-(tm-define (all-sections)
+(define (all-sections)
   (with l1 (list-filter (tree-search-sections (buffer-tree))
              (lambda (x) (not (equal? (tree-label x) 'subparagraph))))
     (if (<= (length l1) 42)
         l1
-        (with l2 (section-list->nested l1 '())
-                 (nested->filtered l2 '())))))
+        (filter-sections l1 is-current-tree is-top-level))))
 
 (tm-menu (focus-section-menu)
   (for (s (all-sections))
