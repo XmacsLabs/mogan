@@ -1971,6 +1971,7 @@
 ("system environment variables" "")
 ("tab" "")
 ("tab" "制表符")
+("tab bar" "标签页工具栏")
 ("tab-completion" "用制表符自动补全")
 ("table command" "")
 ("table height" "表格高度")
