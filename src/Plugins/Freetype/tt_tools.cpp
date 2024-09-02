@@ -482,7 +482,7 @@ parse_variants (const string& tt, int var_offset, int coverage_offset,
     array<unsigned int> adv;
     GlyphAssembly       assembly;
     bool                has_assemply= parse_construction (
-                       tt, var_offset + glyphConstructionOffset, variants, adv, assembly);
+        tt, var_offset + glyphConstructionOffset, variants, adv, assembly);
     glyph_variants (glyph)    = variants;
     glyph_variants_adv (glyph)= adv;
     if (has_assemply) {
