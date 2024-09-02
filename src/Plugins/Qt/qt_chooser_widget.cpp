@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "qt_chooser_widget.hpp"
-#include "QTMFileDialog.hpp"
 #include "analyze.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
@@ -208,17 +207,7 @@ qt_chooser_widget_rep::perform_dialog () {
   c_string tmp (directory * "/" * file);
   QString  path= QString::fromUtf8 (tmp, -1);
 
-#if (defined(Q_OS_MAC)) // || defined(Q_WS_WIN)) //at least windows Xp and 7
-                        // lack image preview, switch to custom dialog
   QFileDialog* dialog= new QFileDialog (this->as_qwidget (), caption, path);
-#else
-  QTMFileDialog*  dialog;
-  QTMImageDialog* imgdialog= 0; // to avoid a dynamic_cast
-
-  if (type == "image")
-    dialog= imgdialog= new QTMImageDialog (NULL, caption, path);
-  else dialog= new QTMFileDialog (NULL, caption, path);
-#endif
 
   dialog->setViewMode (QFileDialog::Detail);
   if (type == "directory") dialog->setFileMode (QFileDialog::Directory);
@@ -288,11 +277,6 @@ qt_chooser_widget_rep::perform_dialog () {
       string imname= from_qstring_utf8 (imqstring);
       file         = "(system->url " * scm_quote (imname) * ")";
       if (type == "image") {
-#if !defined(Q_OS_MAC) // && !defined(Q_WS_WIN)   //at least windows Xp and 7
-                       // lack image preview, switch to custom dialog
-        file= "(list " * file * imgdialog->getParamsAsString () *
-              ")"; // set image size from preview
-#else              // MacOs only now
         /*
         QPixmap pic (fileNames.first()); // Qt can't eps & pdf in windows.
         string params;
@@ -333,7 +317,6 @@ qt_chooser_widget_rep::perform_dialog () {
                << ""
                << "\""; // yps ??
         file= "(list " * file * " " * params * ")";
-#endif
       }
     }
   }
