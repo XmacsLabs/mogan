@@ -21,11 +21,11 @@ private slots:
   void test_horizontal_glyph_assembly ();
 };
 /*
-Verification data for Asana-Math.otf (https://ctan.org/tex-archive/fonts/Asana-Math)
-derived from fontforge (math table data)
-and python package fontTools.ttLib (translates the glyph name to glyph ID).
-In the comments, the glyph name is used to identify the glyph.
-In the test, the glyph ID is used to identify the glyph.
+Verification data for Asana-Math.otf
+(https://ctan.org/tex-archive/fonts/Asana-Math) derived from fontforge (math
+table data) and python package fontTools.ttLib (translates the glyph name to
+glyph ID). In the comments, the glyph name is used to identify the glyph. In the
+test, the glyph ID is used to identify the glyph.
 */
 void
 TestOpenTypeMathTableParse::init () {
