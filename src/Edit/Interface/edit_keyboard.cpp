@@ -422,6 +422,9 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
     if (key_u8 == "`") {
       call ("keyboard-press", object (key_u8), object ((double) t));
     }
+    else if (key_u8 == "M-`") {
+      call ("keyboard-press", object (key_u8), object ((double) t));
+    }
     else if (key_u8 == "“”") {
       call ("insert", "<#201C><#201D>");
     }
