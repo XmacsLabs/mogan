@@ -342,37 +342,45 @@ tm_config_rep::kbd_system_rewrite (string s) {
   bool cs= (get_preference ("case sensitive shortcuts") == "on");
   system_kbd_initialize (system_kbd_decode);
   int start= 0, i;
-  for (i= 0; i <= N (s); i++)
-    if (i == N (s) || s[i] == ' ') {
+  int s_N  = N (s);
+  for (i= 0; i <= s_N; i++) {
+    if (i == s_N || s[i] == ' ') {
       string ss= s (start, i);
       string rr= kbd_system_prevails (ss);
-      if (rr != ss)
-        return kbd_system_rewrite (s (0, start) * rr * s (i, N (s)));
+      if (rr != ss) {
+        return kbd_system_rewrite (s (0, start) * rr * s (i, s_N));
+      }
       start= i + 1;
     }
+  }
 
   tree k (CONCAT);
   tree r (CONCAT);
   start= i= 0;
-  while (true)
-    if (i == N (s) || s[i] == '-' || s[i] == ' ') {
-      if (i < N (s) && s[i] == '-') i++;
+  while (true) {
+    if (i == s_N || s[i] == '-' || s[i] == ' ') {
+      if (i < s_N && s[i] == '-') i++;
       string ss= s (start, i);
-      if (system_kbd_decode->contains (ss)) r << system_kbd_decode[ss];
+      if (system_kbd_decode->contains (ss)) {
+        r << system_kbd_decode[ss];
+      }
       else if (N (ss) == 1 && (use_macos_fonts () || gui_is_qt ()) && !cs) {
         if (is_locase (ss[0])) r << upcase_all (ss);
         else if (is_upcase (ss[0])) r << system_kbd_decode ("S-") << ss;
         else r << ss;
       }
-      else r << ss;
-      if (i == N (s) || s[i] == ' ') {
+      else {
+        r << ss;
+      }
+      if (i == s_N || s[i] == ' ') {
         k << kbd_render (simplify_concat (r));
         r= tree (CONCAT);
-        if (i == N (s)) break;
+        if (i == s_N) break;
         i++;
       }
       start= i;
     }
     else i++;
+  }
   return simplify_concat (k);
 }
