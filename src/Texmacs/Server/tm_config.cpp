@@ -269,23 +269,23 @@ system_kbd_initialize (hashmap<string, tree>& h) {
     h ("A-")       = localize ("Alt::keyboard", true);
     h ("M-")       = localize ("Meta::keyboard", true);
     h ("H-")       = localize ("Hyper::keyboard", true);
-    h ("windows")  = localize ("Windows");
-    h ("capslock") = localize ("Capslock");
-    h ("return")   = localize ("Return");
-    h ("delete")   = localize ("Delete");
-    h ("backspace")= localize ("Backspace");
-    h ("escape")   = localize ("Escape");
-    h ("space")    = localize ("Space");
-    h ("var")      = localize ("Tab");
-    h ("tab")      = localize ("Tab");
+    h ("windows")  = localize ("Windows::keyboard");
+    h ("capslock") = localize ("Capslock::keyboard");
+    h ("return")   = localize ("Return::keyboard");
+    h ("delete")   = localize ("Delete::keyboard");
+    h ("backspace")= localize ("Backspace::keyboard");
+    h ("escape")   = localize ("Escape::keyboard");
+    h ("space")    = localize ("Space::keyboard");
+    h ("var")      = localize ("Tab::keyboard");
+    h ("tab")      = localize ("Tab::keyboard");
     h ("left")     = mathop ("<leftarrow>");
     h ("right")    = mathop ("<rightarrow>");
     h ("up")       = mathop ("<uparrow>");
     h ("down")     = mathop ("<downarrow>");
-    h ("home")     = localize ("Home");
-    h ("end")      = localize ("End");
-    h ("pageup")   = localize ("PageUp");
-    h ("pagedown") = localize ("PageDown");
+    h ("home")     = localize ("Home::keyboard");
+    h ("end")      = localize ("End::keyboard");
+    h ("pageup")   = localize ("PageUp::keyboard");
+    h ("pagedown") = localize ("PageDown::keyboard");
     h ("section")  = "\237";
   }
   else {
