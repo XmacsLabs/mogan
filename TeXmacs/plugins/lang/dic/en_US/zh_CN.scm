@@ -1232,7 +1232,7 @@
 ("messy" "")
 ("meta data" "元数据")
 ("meta key" "")
-("meta" "win")
+("meta::keyboard" "")
 ("metadata" "元数据")
 ("metafont and available type" "优先使用 Metafont 字体")
 ("metafont bitmaps only" "仅只使用 Metafont 字体")
