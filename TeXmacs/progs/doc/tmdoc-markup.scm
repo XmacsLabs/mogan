@@ -26,11 +26,6 @@
 
 (tm-define (tmdoc-key s)
   (:secure #t)
-  (when (string? s)
-    (display* s "\n")
-    (display* (kbd-system-rewrite s) "\n")
-    )
-
   (lazy-keyboard-force #t)
   (cond ((string? s)
          (let* ((s2 (kbd-pre-rewrite s))
