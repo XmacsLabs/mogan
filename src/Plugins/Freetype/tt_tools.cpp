@@ -473,8 +473,9 @@ parse_variants (const string& tt, int var_offset, int coverage_offset,
                 hashmap<unsigned int, array<unsigned int>>& glyph_variants_adv,
                 hashmap<unsigned int, GlyphAssembly>&       glyph_assembly) {
 
-  auto coverage= parse_coverage_table (tt, coverage_offset);
-  for (unsigned int i= 0; i < N (coverage); i++) {
+  auto coverage  = parse_coverage_table (tt, coverage_offset);
+  int  coverage_N= N (coverage);
+  for (unsigned int i= 0; i < coverage_N; i++) {
     unsigned int glyph= coverage[i];
     unsigned int glyphConstructionOffset=
         get_U16 (tt, construction_offset + 2 * i);
@@ -512,8 +513,9 @@ parse_math_kern_info_table (const string& tt, int offset,
                             hashmap<unsigned int, MathKernInfoRecord>& table) {
   unsigned int mathKernCoverageOffset= get_U16 (tt, offset);
   // unsigned int mathKernCount          = get_U16 (tt, offset + 2);
-  auto coverage= parse_coverage_table (tt, offset + mathKernCoverageOffset);
-  for (unsigned int i= 0; i < N (coverage); i++) {
+  auto coverage  = parse_coverage_table (tt, offset + mathKernCoverageOffset);
+  int  coverage_N= N (coverage);
+  for (unsigned int i= 0; i < coverage_N; i++) {
     unsigned int       glyphID= coverage[i];
     MathKernInfoRecord record;
     unsigned int       topRightMathKernOffset= get_U16 (tt, offset + 4 + 8 * i);
@@ -554,7 +556,8 @@ parse_record_with_coverage (
   int coverage_abs_offset     = parent_table_offset + coverage_offset;
   array<unsigned int> coverage= parse_coverage_table (tt, coverage_abs_offset);
   int                 record_abs_offset= parent_table_offset + record_offset;
-  for (unsigned int i= 0; i < N (coverage); i++) {
+  int                 coverage_N       = N (coverage);
+  for (unsigned int i= 0; i < coverage_N; i++) {
     unsigned int glyphID= coverage[i];
     record_map (glyphID)=
         parse_math_record (tt, parent_table_offset, record_offset + 4 * i);
@@ -635,8 +638,7 @@ parse_mathtable (const string& buf) {
   if (extendedShapeCoverageOffset > 0) {
     auto extendedShapeCoverage= parse_coverage_table (
         tt, mathGlyphInfoOffset + extendedShapeCoverageOffset);
-    for (int i= 0; i < N (extendedShapeCoverage); i++) {
-      unsigned int glyphID= extendedShapeCoverage[i];
+    for (auto glyphID : extendedShapeCoverage) {
       table->extended_shape_coverage->insert (glyphID);
     }
   }
