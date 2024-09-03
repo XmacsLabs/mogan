@@ -12,6 +12,7 @@
 #ifndef TT_TOOLS_H
 #define TT_TOOLS_H
 
+#include "hashset.hpp"
 #include "tree.hpp"
 #include "url.hpp"
 
@@ -76,5 +77,152 @@ get_up_pen_height (array<string> a) {
 }
 
 #endif
+
+/******************************************************************************
+ * OpenType MATH table
+ ******************************************************************************/
+// e OpenType MATH table is not implemented.
+// see https://docs.microsoft.com/en-gb/typography/opentype/spec/math
+
+// index of the MathConstantsTable.records
+enum MathConstantRecordEnum {
+  mathLeading,
+  axisHeight,
+  accentBaseHeight,
+  flattenedAccentBaseHeight,
+  subscriptShiftDown,
+  subscriptTopMax,
+  subscriptBaselineDropMin,
+  superscriptShiftUp,
+  superscriptShiftUpCramped,
+  superscriptBottomMin,
+  superscriptBaselineDropMax,
+  subSuperscriptGapMin,
+  superscriptBottomMaxWithSubscript,
+  spaceAfterScript,
+  upperLimitGapMin,
+  upperLimitBaselineRiseMin,
+  lowerLimitGapMin,
+  lowerLimitBaselineDropMin,
+  stackTopShiftUp,
+  stackTopDisplayStyleShiftUp,
+  stackBottomShiftDown,
+  stackBottomDisplayStyleShiftDown,
+  stackGapMin,
+  stackDisplayStyleGapMin,
+  stretchStackTopShiftUp,
+  stretchStackBottomShiftDown,
+  stretchStackGapAboveMin,
+  stretchStackGapBelowMin,
+  fractionNumeratorShiftUp,
+  fractionNumeratorDisplayStyleShiftUp,
+  fractionDenominatorShiftDown,
+  fractionDenominatorDisplayStyleShiftDown,
+  fractionNumeratorGapMin,
+  fractionNumDisplayStyleGapMin,
+  fractionRuleThickness,
+  fractionDenominatorGapMin,
+  fractionDenomDisplayStyleGapMin,
+  skewedFractionHorizontalGap,
+  skewedFractionVerticalGap,
+  overbarVerticalGap,
+  overbarRuleThickness,
+  overbarExtraAscender,
+  underbarVerticalGap,
+  underbarRuleThickness,
+  underbarExtraDescender,
+  radicalVerticalGap,
+  radicalDisplayStyleVerticalGap,
+  radicalRuleThickness,
+  radicalExtraAscender,
+  radicalKernBeforeDegree,
+  radicalKernAfterDegree,
+  otmathConstantsRecordsEnd // keep at the end
+};
+
+struct DeviceTable {
+  unsigned int startSize;
+  unsigned int endSize;
+  unsigned int deltaFormat;
+  unsigned int deltaValues;
+};
+
+struct MathValueRecord {
+  int         value;
+  bool        hasDevice;
+  DeviceTable deviceTable;
+  MathValueRecord () : hasDevice (false) {}
+};
+
+struct MathConstantsTable {
+  int                    scriptPercentScaleDown;
+  int                    scriptScriptPercentScaleDown;
+  unsigned int           delimitedSubFormulaMinHeight;
+  unsigned int           displayOperatorMinHeight;
+  array<MathValueRecord> records;
+  int                    radicalDegreeBottomRaisePercent;
+  MathConstantsTable () : records (otmathConstantsRecordsEnd){};
+};
+
+struct MathKernTable {
+  unsigned int           heightCount;
+  array<MathValueRecord> correctionHeight;
+  array<MathValueRecord> kernValues;
+  MathKernTable ()= default;
+  MathKernTable (unsigned int h)
+      : heightCount (h), correctionHeight (h), kernValues (h + 1) {}
+};
+
+struct MathKernInfoRecord {
+  MathKernTable topRight;
+  MathKernTable topLeft;
+  MathKernTable bottomRight;
+  MathKernTable bottomLeft;
+  bool          hasTopRight;
+  bool          hasTopLeft;
+  bool          hasBottomRight;
+  bool          hasBottomLeft;
+  MathKernInfoRecord ()
+      : hasTopRight (false), hasTopLeft (false), hasBottomRight (false),
+        hasBottomLeft (false) {}
+};
+
+struct GlyphPartRecord {
+  unsigned int glyphID;
+  unsigned int startConnectorLength;
+  unsigned int endConnectorLength;
+  unsigned int fullAdvance;
+  unsigned int partFlags;
+};
+
+struct GlyphAssembly {
+  MathValueRecord        italicsCorrection;
+  array<GlyphPartRecord> partRecords;
+};
+
+struct ot_mathtable_rep : concrete_struct {
+  unsigned int                               majorVersion, minorVersion;
+  MathConstantsTable                         constants_table;
+  unsigned int                               minConnectorOverlap;
+  hashmap<unsigned int, MathValueRecord>     italics_correction;
+  hashmap<unsigned int, MathValueRecord>     top_accent;
+  hashset<unsigned int>                      extended_shape_coverage;
+  hashmap<unsigned int, MathKernInfoRecord>  math_kern_info;
+  hashmap<unsigned int, array<unsigned int>> ver_glyph_variants;
+  hashmap<unsigned int, array<unsigned int>> ver_glyph_variants_adv;
+  hashmap<unsigned int, array<unsigned int>> hor_glyph_variants;
+  hashmap<unsigned int, array<unsigned int>> hor_glyph_variants_adv;
+  hashmap<unsigned int, GlyphAssembly>       ver_glyph_assembly;
+  hashmap<unsigned int, GlyphAssembly>       hor_glyph_assembly;
+};
+
+struct ot_mathtable {
+  CONCRETE_NULL (ot_mathtable);
+  ot_mathtable (ot_mathtable_rep* rep2) : rep (rep2) {}
+};
+CONCRETE_NULL_CODE (ot_mathtable);
+
+ot_mathtable parse_mathtable (const string& buf);
+ot_mathtable parse_mathtable (url u);
 
 #endif // TT_TOOLS_H
