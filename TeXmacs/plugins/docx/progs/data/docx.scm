@@ -11,6 +11,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (import (liii uuid))
+(import (liii os))
+
 (texmacs-module (data docx)
   (:use (binary pandoc)
         (texmacs texmacs tm-files)
@@ -34,21 +36,26 @@
          (temp-name (string-append "/" (uuid4)))  
          (temp-dir (string-append (url->string (url-temp-dir)) temp-name))
          (html-temp-url (system->url (string-append temp-dir ".html")))
-         (docx-temp-url (system->url (string-append temp-dir ".docx"))))
+         (docx-temp-url (system->url (string-append temp-dir ".docx")))
+         (html-dir (url-head (url->string html-temp-url))) ;; get dir of html-temp-url
+         (html-dir-str (url->string html-dir)))
     ;; First, export the document to HTML
-    (string-save (serialize-html (texmacs->html t opt)) html-temp-url)
+    (export-buffer-main (current-buffer) html-temp-url "html" ())
     ;; Then, use Pandoc to convert the HTML to DOCX
     (if (has-binary-pandoc?)
-        (let ((cmd (string-append (url->string (find-binary-pandoc))
-                                  " -f html -t docx "
+        (begin
+        (chdir html-dir-str)
+        (let ((cmd (string-append "\"" (url->string (find-binary-pandoc)) "\""
+                                  " "
                                   (url->string html-temp-url)
                                   " -o "
                                   (url->string docx-temp-url))))
+          ; (display cmd) ;; For debugging
           (system cmd)
           (with result (string-load docx-temp-url)
             (system-remove html-temp-url)
             (system-remove docx-temp-url)
-            result)
+            result))
           ;; Delete the intermediate HTML file
           ) ;; Expected:$TEXMACS_PATH/tests/tm.html")
         (error "Pandoc binary not found"))))
