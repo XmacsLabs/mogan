@@ -134,10 +134,10 @@
   ---
   (when (visible-header?)
         ("Main icon bar" (toggle-visible-icon-bar 0))
-        ("Tab bar" (toggle-visible-icon-bar 4))
         ("Mode dependent icons" (toggle-visible-icon-bar 1))
         ("Focus dependent icons" (toggle-visible-icon-bar 2))
         ("User provided icons" (toggle-visible-icon-bar 3)))
+  (if (not (window-per-buffer?)) ("Tab bar" (toggle-visible-icon-bar 4)))
   ("Status bar" (toggle-visible-footer))
   (if (with-developer-tool?)
       ("Side tools" (toggle-visible-side-tools 0)))
