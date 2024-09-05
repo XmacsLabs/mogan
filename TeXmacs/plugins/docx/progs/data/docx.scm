@@ -69,6 +69,6 @@
   (:function-with-options texmacs-tree->docx-string)
   (:option "texmacs->html:css" "on")
   (:option "texmacs->html:mathjax" "off")
-  (:option "texmacs->html:mathml" "off")
-  (:option "texmacs->html:images" "on")
+  (:option "texmacs->html:mathml" "on")
+  (:option "texmacs->html:images" "off")
   (:option "texmacs->html:css-stylesheet" "---"))
