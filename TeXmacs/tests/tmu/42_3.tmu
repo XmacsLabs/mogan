@@ -1,0 +1,16 @@
+<TMU|<tuple|1.0.3|1.2.9.1-rc2>>
+
+<style|<tuple|generic|british>>
+
+<\body>
+  <\equation*>
+    <frac|<sqrt|c>|a+b>
+  </equation*>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

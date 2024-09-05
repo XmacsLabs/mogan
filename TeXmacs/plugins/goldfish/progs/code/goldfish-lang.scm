@@ -14,12 +14,8 @@
 (texmacs-module (code goldfish-lang)
   (:use (prog default-lang)
         (code r7rs-keyword)
-        (code srfi-keyword)))
-
-(define (liii-keywords)
-  '("==" "!=" "in?" "display*" "list-view" "argv"
-    "mkdir" "chdir" "rmdir" "getcwd" "listdir" "getenv" "putenv" "unsetenv"
-    "getlogin" "getpid" "access" "system" "os-linux?" "os-macos?" "os-windows?"))
+        (code srfi-keyword)
+        (code liii-keyword)))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "identifier")))
@@ -30,7 +26,7 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "keyword")))
   `(,(string->symbol key)
-    (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#")
+    (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#" "/")
     (constant
       ,@(r7rs-keywords-constant)
       "pi" "*stdin*" "*stdout*" "*stderr*"
@@ -39,10 +35,10 @@
       "*missing-close-paren-hook*")
     (declare_type
       ,@(r7rs-keywords-define)
-      "defined?" "define-macro" "define-constant" "autoload" "require"
-      "provide" "define*" "lambda*" "eval-string" "let1")
+      ,@(liii-keywords-define))
     (keyword
-      ,@(r7rs-keywords-others) ,@(srfi-1-keywords) ,@(srfi-8-keywords) ,@(srfi-13-keywords) ,@(srfi-60-keywords) ,@(srfi-78-keywords)
+      ,@(r7rs-keywords-others) ,@(srfi-1-keywords) ,@(srfi-8-keywords) ,@(srfi-13-keywords) ,@(srfi-60-keywords)
+      ,@(srfi-78-keywords) ,@(srfi-125-keywords) ,@(srfi-133-keywords)
       ,@(liii-keywords)
 
       ; S7 built-ins
@@ -59,7 +55,8 @@
     (error
       "syntax-error" "wrong-type-arg" "immutable-error" "out-of-range" "division-by-zero"
       "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
-      "bad-result" "no-catch" "wrong-number-of-args" "io-error" "bignum-error")
+      "bad-result" "no-catch" "wrong-number-of-args" "io-error" "bignum-error"
+      ,@(liii-keywords-error))
     (keyword_conditional ,@(r7rs-keywords-branch))
     (keyword_control ,@(r7rs-keywords-exception) "catch")))
 

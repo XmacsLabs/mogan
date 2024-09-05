@@ -10,57 +10,65 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(import (liii uuid))
+(import (liii os))
+
 (texmacs-module (data docx)
   (:use (binary pandoc)
         (texmacs texmacs tm-files)
         (network url)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DOCX format defination
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-format docx
+  (:name "docx")
+  (:suffix "docx"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Function to export TeXmacs document to DOCX using Pandoc
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(tm-define (export-to-docx input-file output-file)
+(tm-define (texmacs-tree->docx-string t opt)
   (:synopsis "Export TeXmacs document to DOCX format using Pandoc")
-  (let* ((base-dir (url-head input-file))
-         (html-file-url (url-glue (url-head output-file) ".html")))
+  (let* (
+         (temp-name (string-append "/" (uuid4)))  
+         (temp-dir (string-append (url->string (url-temp-dir)) temp-name))
+         (html-temp-url (system->url (string-append temp-dir ".html")))
+         (docx-temp-url (system->url (string-append temp-dir ".docx")))
+         (html-dir (url-head (url->string html-temp-url))) ;; get dir of html-temp-url
+         (html-dir-str (url->string html-dir)))
     ;; First, export the document to HTML
-    (tm->html input-file html-file-url)
+    (export-buffer-main (current-buffer) html-temp-url "html" ())
     ;; Then, use Pandoc to convert the HTML to DOCX
     (if (has-binary-pandoc?)
-        (let ((cmd (string-append (url->string (find-binary-pandoc))
-                                  " -f html -t docx "
-                                  (url->string html-file-url)
+        (begin
+        (chdir html-dir-str)
+        (let ((cmd (string-append "\"" (url->string (find-binary-pandoc)) "\""
+                                  " "
+                                  (url->string html-temp-url)
                                   " -o "
-                                  (url->string output-file))))
+                                  (url->string docx-temp-url))))
+          ; (display cmd) ;; For debugging
           (system cmd)
+          (with result (string-load docx-temp-url)
+            (system-remove html-temp-url)
+            (system-remove docx-temp-url)
+            result))
           ;; Delete the intermediate HTML file
-        (system-remove html-file-url)) ;; Expected:$TEXMACS_PATH/tests/tm.html")
+          ) ;; Expected:$TEXMACS_PATH/tests/tm.html")
         (error "Pandoc binary not found"))))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Helper function to export tm/tmu to HTML
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(tm-define (tm->html tm-file-url html-file-url)
-  ; Step 1: load the tm file
-  (display* "load-buffer: " tm-file-url "\n")
-  (load-buffer tm-file-url)
-  ; it will crash when loading the buffer in beamer style before this pull request
-  (display* "buffer-loaded: " tm-file-url "\n")
-
-  ; Step 2: cleaning for the html file url
-  (when (url-exists? html-file-url) (system-remove html-file-url))
-
-  ; Step 3: Export the buffer to the html file url
-  (display* "export buffer to: " html-file-url)
-  (export-buffer-main (current-buffer) html-file-url "html" ())
-  #t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Converter for exporting TeXmacs files to DOCX
+;; Converter for exporting TeXmacs tree to DOCX string
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(converter texmacs-file docx-file
+(converter texmacs-tree docx-document
   (:require (has-binary-pandoc?))
-  (:function-with-options export-to-docx))
+  (:function-with-options texmacs-tree->docx-string)
+  (:option "texmacs->html:css" "on")
+  (:option "texmacs->html:mathjax" "off")
+  (:option "texmacs->html:mathml" "off")
+  (:option "texmacs->html:images" "on")
+  (:option "texmacs->html:css-stylesheet" "---"))

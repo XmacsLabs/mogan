@@ -719,9 +719,10 @@ void
 search_sections (array<tree>& a, tree t) {
   if (is_atomic (t)) return;
   else if (N (t) == 1 && section_tags->contains (L (t))) a << t;
-  else if (section_traverse_tags->contains (L (t)))
-    for (int i= 0; i < N (t); i++)
-      search_sections (a, t[i]);
+  else if (section_traverse_tags->contains (L (t))) {
+    for (tree subtree : t)
+      search_sections (a, subtree);
+  }
 }
 
 array<tree>

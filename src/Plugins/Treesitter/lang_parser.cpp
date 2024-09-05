@@ -19,10 +19,17 @@
 extern tree the_et;
 using moebius::make_tree_label;
 
-lang_parser::lang_parser (string lang) {
+lang_parser::lang_parser (string lang, string lang_id) {
   // TODO: Dynamic loading of shared lib and multilingual switching
   ast_parser= ts_parser_new ();
-  ts_lang   = tree_sitter_cpp ();
+  if (lang_id == "cpp") ts_lang= tree_sitter_cpp ();
+  else if (lang_id == "scheme") ts_lang= tree_sitter_scheme ();
+  else {
+    // TODO: A fallback tree sitter impl is needed
+    ts_lang= tree_sitter_scheme ();
+  }
+  // cout << lang << " parser created\n";
+
   ts_parser_set_language (ast_parser, ts_lang);
 
   tree lang_tree (make_tree_label (lang));
@@ -298,7 +305,8 @@ lang_parser::add_token (TSSymbol token_type, string token_literal,
       add_single_token ("(Before Cross)Node type: ", token_type, token_literal,
                         start_1, end_1, token_lang_pro);
     }
-    if (end_1 + 1 < start_2) {
+    if (end_1 + 1 < start_2 &&
+        !(end_1 + 1 == start_pos && start_2 == end_pos)) {
       // cout << "Mid Split\n";
       add_token (token_type,
                  token_literal (end_1 - start_1 + 1, N (token_literal)),
@@ -359,8 +367,7 @@ lang_parser::do_ast_parse (tree code_root) {
 
     // Add Front Space
     if (real_start_byte > last_end_pos && last_end_pos >= 0) {
-      add_token (SpaceSymbol, string ("<space>"), last_end_pos, real_start_byte,
-                 0);
+      add_token (SpaceSymbol, string (""), last_end_pos, real_start_byte, 0);
     }
 
     // Store Token Data
@@ -371,7 +378,7 @@ lang_parser::do_ast_parse (tree code_root) {
 
   // Add End Space
   if (last_end_pos < real_code_len && last_end_pos >= 0) {
-    add_token (SpaceSymbol, string ("<space>"), last_end_pos, real_code_len, 0);
+    add_token (SpaceSymbol, string (""), last_end_pos, real_code_len, 0);
   }
   // time_t t3= texmacs_time (); // Process Time End
   // cout << "Code Gen and Parse took " << t2 - t1 << "ms |Process took "

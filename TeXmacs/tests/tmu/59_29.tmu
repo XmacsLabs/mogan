@@ -1,0 +1,30 @@
+<TMU|<tuple|1.0.3|1.2.9.1>>
+
+<style|<tuple|generic|chinese|doc>>
+
+<\body>
+  In Chinese language
+
+  <key|M->
+
+  <key|space>
+
+  <key|delete>
+
+  In English language
+
+  <\british>
+    <key|M->
+
+    <key|space>
+
+    <key|delete>
+  </british>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

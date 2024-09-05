@@ -100,3 +100,21 @@
   (list
     "srfi-78" ; Light-weighted Test framework
     "check" "check-set-mode!" "check-report" "check-reset!"))
+
+(tm-define (srfi-125-keywords)
+  (map symbol->string
+    '(make-hash-table hash-table hash-table-unfold alist->hash-table
+      hash-table? hash-table-contains? hash-table-empty? hash-table=?
+      hash-table-mutable?
+      hash-table-ref hash-table-ref/default
+      hash-table-set! hash-table-delete! hash-table-intern! hash-table-update!
+      hash-table-update!/default hash-table-pop! hash-table-clear!
+      hash-table-size hash-table-keys hash-table-values hash-table-entries
+      hash-table-find hash-table-count)))
+
+(tm-define (srfi-133-keywords)
+  (map symbol->string
+    '(vector-empty? vector-count
+      vector-any vector-every vector-copy vector-copy!
+      vector-index vector-index-right vector-partition
+      vector-swap!)))

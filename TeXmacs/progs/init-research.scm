@@ -118,7 +118,6 @@
 (use-modules (app research buffer))
 (use-modules (texmacs keyboard config-kbd))
 (lazy-keyboard (texmacs keyboard prefix-kbd) always?)
-(lazy-keyboard (texmacs keyboard latex-kbd) always?)
 (lazy-menu (texmacs menus file-menu) file-menu go-menu
            new-file-menu load-menu save-menu
            print-menu print-menu-inline close-menu)
@@ -339,9 +338,8 @@
 (lazy-format (data mgs) mgs)
 (lazy-format (data stm) stm)
 (lazy-format (data tmu) tmu)
-(lazy-format (convert latex init-latex) latex)
-(lazy-format (convert html init-html) html)
-(lazy-format (convert bibtex init-bibtex) bibtex)
+(lazy-format (data docx) docx)
+(lazy-format (data html) html)
 (lazy-define (convert images tmimage)
              export-selection-as-graphics clipboard-copy-image)
 (lazy-define (convert rewrite init-rewrite) texmacs->code texmacs->verbatim)

@@ -109,7 +109,9 @@
             (latex-preamble doc-misc style lan init colors colormaps)
           (output-verbatim "\\documentclass")
           (output-verbatim tm-style-options)
-          (output-verbatim "{" style* "}\n")
+          (if (== (cAr lan) "chinese")
+            (output-verbatim "[UTF8]{ctexart}\n")
+            (output-verbatim "{" style* "}\n"))
           (with main-lang (cAr lan)
             (cond ((== main-lang "korean")
                    (output-verbatim "\\usepackage{hangul}\n"))
@@ -117,10 +119,7 @@
                    (with opt (cond ((== main-lang "japanese")  "{min}")
                                    ((== main-lang "chineset") "{bsmi}")
                                    ((== main-lang "chinese")   "{gbsn}"))
-                     (set! post-begin
-                       (string-append "\\begin{CJK*}{UTF8}" opt "\n"))
-                     (set! pre-end "\n\\end{CJK*}")
-                     (output-verbatim "\\usepackage{CJK}\n")))
+                     '()))
                   (else
                     (cond ((or (uses-cyrillic? doc-preamble)
                                (uses-cyrillic? doc-body))

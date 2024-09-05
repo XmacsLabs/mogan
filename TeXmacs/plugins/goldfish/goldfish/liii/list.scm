@@ -55,7 +55,6 @@
 (define (flatmap f seq)
   (fold-right append () (map f seq)))
 
-; the opposite of null-list?
 (define (not-null-list? l)
   (cond ((pair? l)
          (or (null? (cdr l)) (pair? (cdr l))))
@@ -63,11 +62,9 @@
         (else
          (error 'type-error "type mismatch"))))
 
-; no exception version of null-list?
 (define (list-null? l)
   (and (not (pair? l)) (null? l)))
 
-; no exception version of not-null-list?
 (define (list-not-null? l)
   (and (pair? l)
        (or (null? (cdr l)) (pair? (cdr l)))))
