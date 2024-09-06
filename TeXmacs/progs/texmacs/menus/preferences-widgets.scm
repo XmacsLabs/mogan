@@ -26,6 +26,14 @@
     (when (!= new old)
       (notify-restart))))
 
+(define (on-buffer-management-changed pretty-val)
+  (let ((can-use-tabbar? (== pretty-val "Multiple documents share window")))
+    (begin
+      (set-boolean-preference "tab bar" can-use-tabbar?)
+      (show-icon-bar 4 can-use-tabbar?)
+      (set-pretty-preference "buffer management" pretty-val)
+    )))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Appearance preferences
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -92,7 +100,7 @@
             (get-pretty-preference "detailed menus")
             "18em"))
     (item (text "Buffer management:")
-      (enum (set-pretty-preference "buffer management" answer)
+      (enum (on-buffer-management-changed answer)
             '("Documents in separate windows"
               "Multiple documents share window")
             (get-pretty-preference "buffer management")
