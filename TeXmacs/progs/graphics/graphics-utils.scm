@@ -759,6 +759,12 @@
   `(point ,(f2s (/ (point-get-x pt) f))
           ,(f2s (/ (point-get-y pt) f))))
 
+; Rotate 90 degrees. input (x,y) output (-y,x)
+; anti-clockwise
+(tm-define (point-rotate-90 pt)
+  `(point ,(f2s (- (point-get-y pt)))
+          ,(f2s (point-get-x pt))))
+
 (tm-define (points-mid P1 P2)
   (point-div (points-add P1 P2) 2))
 
