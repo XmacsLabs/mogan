@@ -62,11 +62,12 @@
   (:require (== tag 'point))
   (object-set! `(point ,x ,y) 'new))
 
+(define new-gr-tags (list 'circle 'ellipse 'std-arc))
+
 (tm-define (object_create tag x y)
   (:require (or (in? tag gr-tags-curves) 
                 (or (in? tag gr-tags-user)
-                    (or (== tag 'circle)
-                        (== tag 'ellipse)))))
+                    (in? tag new-gr-tags))))
   (with o (graphics-enrich `(,tag (point ,x ,y) (point ,x ,y)))
     (graphics-store-state 'start-create)
     (set! current-point-no 1)

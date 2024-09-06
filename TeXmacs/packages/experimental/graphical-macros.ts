@@ -32,6 +32,8 @@
 
   <assign|circle|<macro|p1|p2|<extern|circle|<arg|p1>|<arg|p2>>>>
 
+  <assign|std-arc|<macro|p1|p2|p3|<extern|std-arc|<arg|p1>|<arg|p2>|<arg|p3>>>>
+
   <\active*>
     <\src-comment>
       Electrical.
@@ -47,6 +49,8 @@
   <assign|resistor|<macro|p1|p2|p3|<extern|resistor|<arg|p1>|<arg|p2>|<arg|p3>>>>
 
   <assign|three-points-circle|<macro|p1|p2|p3|<extern|three-points-circle|<arg|p1>|<arg|p2>|<arg|p3>>>>
+
+  <assign|three-points-arc|<macro|p1|p2|p3|<extern|three-points-arc|<arg|p1>|<arg|p2>|<arg|p3>>>>
 
   <\active*>
     <\src-comment>
