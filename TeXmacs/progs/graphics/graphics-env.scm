@@ -485,17 +485,21 @@
   (set-cursor-style-origin style)
   (set! the-current-cursor-style style))
 
+;; modes in which the cursor should become hand-style, see graphics-main.scm too.
+(define hand-modes '((tuple "group-edit" "move") 
+                     (tuple "group-edit" "rotate") 
+                     (tuple "group-edit" "zoom")))
 
 (tm-define (set-sticky-point-true)
-  (set-cursor-style-if-in-move-mode "closehand")
+  (set-cursor-style-if-in-hand-modes "closehand")
   (set! sticky-point #t))
 
 (tm-define (set-sticky-point-false)
-  (set-cursor-style-if-in-move-mode "openhand")
+  (set-cursor-style-if-in-hand-modes "openhand")
   (set! sticky-point #f))
 
-(tm-define (set-cursor-style-if-in-move-mode style)
-  (if (== (graphics-get-property "gr-mode") '(tuple "group-edit" "move"))
+(tm-define (set-cursor-style-if-in-hand-modes style)
+  (if (not (eq? (member (graphics-get-property "gr-mode") hand-modes) #f))
     (set-cursor-style style)))
 
 (tm-define (set-cursor-style-now)
