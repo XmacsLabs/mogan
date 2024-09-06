@@ -278,13 +278,23 @@
            (cons (cons name (cons type props))
                  (build-interactive-args fun (cdr l) (+ nr 1) learned?))))))
 
+(tm-define (tm-interactive-new fun args)
+  ;;(display* "interactive " fun ", " args "\n")
+  (if (side-tools?)
+      (begin
+        (tool-select :transient-bottom (list 'interactive-tool fun args))
+        (delayed
+          (:pause 500)
+          (keyboard-focus-on "interactive-0")))
+      (tm-interactive fun args)))
+
 (tm-define (interactive fun . args)
   (:synopsis "Call @fun with interactively specified arguments @args")
   (:interactive #t)
   (lazy-define-force fun)
   (if (null? args) (set! args (compute-interactive-args fun)))
   (with fun-args (build-interactive-args fun args 0 #t)
-    (tm-interactive-hook fun fun-args)))
+    (tm-interactive-new fun fun-args)))
 
 (tm-define (interactive-title fun)
   (let* ((val (property fun :synopsis))

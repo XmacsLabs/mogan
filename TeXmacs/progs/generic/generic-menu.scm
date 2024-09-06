@@ -937,18 +937,6 @@
                       (hlist ("Ok" (interactive-ok ',win ',fun ',args)) >>>))
                     )))))))))
 
-(tm-define (tm-interactive-new fun args)
-  ;;(display* "interactive " fun ", " args "\n")
-  (if (side-tools?)
-      (begin
-        (tool-select :transient-bottom (list 'interactive-tool fun args))
-        (delayed
-          (:pause 500)
-          (keyboard-focus-on "interactive-0")))
-      (tm-interactive fun args)))
-
-(set! tm-interactive-hook tm-interactive-new)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Immediately load document-menu
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
