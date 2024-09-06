@@ -18,6 +18,14 @@
 #include "string.hpp"
 #include "sys_utils.hpp"
 #include "url.hpp"
+#include "renderer.hpp"
+
+#include <QApplication>
+#include <QScreen>
+
+#if (QT_VERSION < 0x060000)
+#include <QGuiApplication>
+#endif
 
 void init_palette (QApplication* app);
 void init_style_sheet (QApplication* app);
@@ -116,6 +124,18 @@ public:
     QApplication (argc, argv) {
       init_palette (this);
       init_style_sheet (this);
+      QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
+#if (QT_VERSION < 0x060000)
+      if (!retina_manual) {
+        qreal ratio  = QGuiApplication::primaryScreen()->devicePixelRatio ();
+        retina_factor= qRound (ratio - 0.1);
+      }
+#else
+      if (!retina_manual) {
+        qreal ratio  = QApplication::primaryScreen ()->devicePixelRatio ();
+        retina_factor= qRound (ratio - 0.1);
+      }
+#endif
     }
 
   void set_window_icon (string icon_path) {
