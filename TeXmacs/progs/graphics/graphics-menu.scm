@@ -286,6 +286,7 @@
       ("Closed bezier" (graphics-set-mode '(edit cbezier))))
   ("Arc" (graphics-set-mode '(edit arc)))
   ("Circle" (graphics-set-mode '(edit circle)))
+  ("Ellipse" (graphics-set-mode '(edit ellipse)))
   ---
   ("Text" (graphics-set-mode '(edit text-at)))
   ("Mathematics" (graphics-set-mode '(edit math-at)))
@@ -985,6 +986,7 @@
         ((== s '(edit csmooth)) "closed smooth")
         ((== s '(edit arc)) "arc")
         ((== s '(edit circle)) "circle")
+        ((== s '(edit ellipse)) "ellipse")
         ((== s '(edit text-at)) "text")
         ((== s '(edit math-at)) "mathematics")
         ((== s '(edit document-at)) "long text")

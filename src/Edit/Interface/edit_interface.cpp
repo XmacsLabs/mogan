@@ -19,6 +19,7 @@
 #include "drd_std.hpp"
 #include "drd_mode.hpp"
 #include "message.hpp"
+#include "tree_label.hpp"
 #include "tree_traverse.hpp"
 #include "preferences.hpp"
 #include "observers.hpp"
@@ -483,7 +484,7 @@ is_graphical (tree t) {
   return
     is_func (t, _POINT) ||
     is_func (t, LINE) || is_func (t, CLINE) ||
-    is_func (t, ARC) || is_func (t, CARC) ||
+    is_func (t, ARC) || is_func (t, CARC) || is_func(t, ELLIPSE) ||
     is_func (t, SPLINE) || is_func (t, CSPLINE) ||
     is_func (t, BEZIER) || is_func (t, CBEZIER) ||
     is_func (t, SMOOTH) || is_func (t, CSMOOTH) ||

@@ -27,10 +27,10 @@
   point)
 
 (define-group graphical-open-curve-tag
-  line spline bezier smooth arc)
+  line spline bezier smooth arc std-arc)
 
 (define-group graphical-closed-curve-tag
-  cline cspline cbezier csmooth carc)
+  cline cspline cbezier csmooth carc oval circle ellipse)
 
 (define-group graphical-curve-tag
   (graphical-open-curve-tag) (graphical-closed-curve-tag))

@@ -80,6 +80,7 @@ curve spline (array<point> a, array<path> cip, bool close= false,
 curve bezier (array<point> a);
 curve poly_bezier (array<point> a, array<path> cip, bool simple, bool closed);
 curve arc (array<point> a, array<path> cip, bool close= false);
+curve ellipse (array<point> a, array<path> cip, bool close= true);
 curve compound (array<curve> cs);
 curve invert (curve c);
 curve part (curve c, double start, double end);

@@ -452,6 +452,7 @@
 ("edition" "版本")
 ("education" "教育")
 ("elsevier" "爱思唯尔")
+("ellipse" "椭圆")
 ("email" "电子邮件")
 ("emphasize" "强调")
 ("emphasize text" "强调文本")

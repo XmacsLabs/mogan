@@ -12,6 +12,7 @@
 #include "env.hpp"
 #include "scheme.hpp"
 #include "merge_sort.hpp"
+#include "tree_label.hpp"
 
 /******************************************************************************
 * Main execution
@@ -381,7 +382,7 @@ tree
 complete (tree t0, tree t1) {
   tree_label l= L(t0);
   if (l == CLINE || l == CARC || l == CSPLINE ||
-      l == CBEZIER || l == CSMOOTH) {
+      l == CBEZIER || l == CSMOOTH || l == ELLIPSE) {
     tree r= complete_sub (t0 * t0 (0, 1), t1 * t1 (0, 1));
     return r (0, N(r)-1);
   }

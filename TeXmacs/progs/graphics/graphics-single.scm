@@ -63,11 +63,10 @@
   (object-set! `(point ,x ,y) 'new))
 
 (tm-define (object_create tag x y)
-  (:require (== tag 'circle))
-  (object-set! `(circle ,x ,y) 'new))
-
-(tm-define (object_create tag x y)
-  (:require (or (in? tag gr-tags-curves) (in? tag gr-tags-user)))
+  (:require (or (in? tag gr-tags-curves) 
+                (or (in? tag gr-tags-user)
+                    (or (== tag 'circle)
+                        (== tag 'ellipse)))))
   (with o (graphics-enrich `(,tag (point ,x ,y) (point ,x ,y)))
     (graphics-store-state 'start-create)
     (set! current-point-no 1)
@@ -240,6 +239,7 @@
 
 (define (edit-insert x y)
   (edit-clean-up)
+  ; (display* "[DEBUG] Edit Insert")
   (object_create (cadr (graphics-mode)) x y))
 
 (define (start-move)

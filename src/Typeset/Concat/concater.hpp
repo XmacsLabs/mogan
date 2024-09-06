@@ -164,6 +164,7 @@ class concater_rep {
   array<box> typeset_line_arrows (path ip);
   void typeset_line (tree t, path ip, bool close);
   void typeset_arc (tree t, path ip, bool close);
+  void typeset_ellipse (tree t, path ip, bool close);
   void typeset_spline (tree t, path ip, bool close);
   void typeset_var_spline (tree t, path ip);
   void typeset_cspline (tree t, path ip);
