@@ -46,9 +46,8 @@
       (tmfs-autosave u suf)
       (and (or (url-scratch? u)
                (url-test? u "fw")
-               (and (not (url-exists? u))
-                    (url-test? u "c")))
-           (url-glue u suf))))
+               (not (url-exists? u))
+           (url-glue u suf)))))
 
 (tm-define (url-wrap u)
   (and (url-rooted-tmfs? u)
@@ -189,7 +188,7 @@
 
 (define (cannot-write? name action)
   (with vname `(verbatim ,(url->system name))
-    (cond ((and (not (url-test? name "f")) (not (url-test? name "c")))
+    (cond ((and (not (url-test? name "f")) (url-exists? name))
            (with msg `(concat "The file " ,vname " cannot be created")
              (set-message msg action))
            #t)
@@ -485,7 +484,7 @@
 (define (load-buffer-check-permissions name opts)
   ;;(display* "load-buffer-check-permissions " name ", " opts "\n")
   (with vname `(verbatim ,(url->system name))
-    (cond ((and (not (url-test? name "f")) (not (url-test? name "c")))
+    (cond ((and (not (url-test? name "f")) (url-exists? name))
            (with msg `(concat "The file " ,vname
                               " cannot be loaded or created")
              (set-message msg "Load file")))
