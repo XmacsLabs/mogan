@@ -1,4 +1,4 @@
-<TeXmacs|1.0.3.4>
+<TeXmacs|2.1.2>
 
 <style|source>
 
@@ -16,11 +16,10 @@
       </src-copyright>
 
       <\src-license>
-        This software falls under the <hlink|GNU general public
-        license, version 3 or later|$TEXMACS_PATH/LICENSE>.
-        It comes WITHOUT ANY WARRANTY WHATSOEVER.
-        You should have received a copy of the license which the software.
-        If not, see <hlink|http://www.gnu.org/licenses/gpl-3.0.html|http://www.gnu.org/licenses/gpl-3.0.html>.
+        This software falls under the <hlink|GNU general public license,
+        version 3 or later|$TEXMACS_PATH/LICENSE>. It comes WITHOUT ANY
+        WARRANTY WHATSOEVER. You should have received a copy of the license
+        which the software. If not, see <hlink|http://www.gnu.org/licenses/gpl-3.0.html|http://www.gnu.org/licenses/gpl-3.0.html>.
       </src-license>
     </src-title>
   </active*>
@@ -59,9 +58,9 @@
 
   <assign|verbatim|<macro|body|<style-with|src-compact|none|<surround|<vspace*|0.5fn><no-page-break*>|<vspace|0.5fn><no-indent*>|<with|font-family|tt|language|verbatim|<arg|body>>>>>>
 
-  <assign|big-figure|<macro|fig|cap|<style-with|src-compact|none|<surround|<style-with|src-compact|none|<vspace*|1fn><no-indent><assign|figure-nr|<plus|<figure-nr>|1>><assign|the-label|<prefix><figure-nr>>>|<style-with|src-compact|none|<vspace|1fn><no-indent*>>|<tabular*|<tformat|<twith|table-width|1par>|<cwith|3|3|1|1|cell-hyphen|t>|<cwith|1|-1|1|-1|cell-lsep|0spc>|<cwith|1|-1|1|-1|cell-rsep|0spc>|<cwith|2|2|1|1|cell-height|0.5fn>|<table|<row|<cell|<arg|fig>>>|<row|<cell|>>|<row|<\cell>
+  <assign|big-figure|<macro|fig|cap|<style-with|src-compact|none|<surround|<style-with|src-compact|none|<vspace*|1fn><no-indent><assign|figure-nr|<plus|<figure-nr>|1>><set-binding|<prefix><figure-nr>>>|<style-with|src-compact|none|<vspace|1fn><no-indent*>>|<tabular*|<tformat|<twith|table-width|1par>|<cwith|3|3|1|1|cell-hyphen|t>|<cwith|1|-1|1|-1|cell-lsep|0spc>|<cwith|1|-1|1|-1|cell-rsep|0spc>|<cwith|2|2|1|1|cell-height|0.5fn>|<table|<row|<cell|<arg|fig>>>|<row|<cell|>>|<row|<\cell>
     <with|font-size|0.84|<surround|<with|font-series|bold|<localize|Figure>
-    <prefix><figure-nr>. >||<arg|cap>>>
+    <figure-nr>. >||<arg|cap>>>
   </cell>>>>>>>>>
 
   \;
@@ -69,18 +68,6 @@
 
 <\initial>
   <\collection>
-    <associate|page-bot|30mm>
-    <associate|page-even|30mm>
-    <associate|page-odd|30mm>
-    <associate|page-reduce-bot|15mm>
-    <associate|page-reduce-left|25mm>
-    <associate|page-reduce-right|25mm>
-    <associate|page-reduce-top|15mm>
-    <associate|page-right|30mm>
-    <associate|page-top|30mm>
-    <associate|page-type|a4>
-    <associate|par-width|150mm>
     <associate|preamble|true>
-    <associate|sfactor|4>
   </collection>
 </initial>
