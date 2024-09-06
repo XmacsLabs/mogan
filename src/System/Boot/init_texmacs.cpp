@@ -20,7 +20,11 @@
 #include "merge_sort.hpp"
 #include "drd_std.hpp"
 #include "language.hpp"
+#ifdef OS_WIN
+#include <process.h>
+#else
 #include <unistd.h>
+#endif
 #ifdef OS_MINGW
 #include <time.h>
 #include <direct.h>
@@ -88,7 +92,7 @@ plugin_list () {
 
 static void
 init_main_paths () {
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   if (is_none (get_env_path ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "/TeXmacs"))) {
 #else
   if (is_none (get_env_path ("TEXMACS_HOME_PATH", "~/.TeXmacs"))) {
@@ -217,7 +221,7 @@ static void
 init_env_vars () {
   // Handle binary, library and guile paths for plugins
   url bin_path= get_env_path ("PATH") | plugin_path ("bin");
-#if defined (OS_MINGW) || defined (OS_MACOS)
+#if defined(OS_MINGW) || defined(OS_WIN)
   bin_path= bin_path | url ("$TEXMACS_PATH/bin");
   if (has_user_preference ("manual path"))
     bin_path= url_system (get_user_preference ("manual path")) | bin_path;
@@ -293,7 +297,7 @@ init_env_vars () {
 static void
 init_misc () {
   // Test whether 'which' works
-#if defined(OS_MINGW) || defined(OS_WASM)
+#if defined(OS_MINGW) || defined(OS_WASM) || defined(OS_WIN)
   use_which = false;
 #else
   use_which = (var_eval_system ("which texmacs 2> /dev/null") != "");

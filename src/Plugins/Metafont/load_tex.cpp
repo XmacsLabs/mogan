@@ -20,10 +20,6 @@
 #include "tm_file.hpp"
 #include "file.hpp"
 
-#ifdef OS_WIN
-#include <x11/xlib.h>
-#endif
-
 /*
  For certain LaTeX fonts, it is possible to have non integer font sizes, 
  by multiplying the font size by 100. For instance, larm10 would be equivalent
@@ -331,7 +327,6 @@ load_tex (string family, int size, int dpi, int dsize,
     string name= family * as_string (size) * "@" * as_string (dpi);
     failed_error << "Could not open font " << name << "\nLoading default" << LF;
     cout << "Could not load font...\nLoading default" << LF;
-    XNoTexWarn();
     if (load_tex_tfm ("ecrm", 10, 10, tfm) &&
 	load_tex_pk ("ecrm", 10, 600, 10, tfm, pk))
       {

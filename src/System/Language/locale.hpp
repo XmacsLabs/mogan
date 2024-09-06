@@ -19,7 +19,7 @@ string language_to_locale (string s);
 string language_to_local_ISO_charset (string s);
 string get_locale_language ();
 string get_locale_charset ();
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
 namespace win32 {
   string get_date (string lan, string fm);
 }

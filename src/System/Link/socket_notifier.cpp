@@ -12,7 +12,7 @@
 
 #include "config.h"
 
-#ifndef OS_MINGW
+#if !defined(OS_MINGW) && !defined(OS_WIN)
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/wait.h>
@@ -49,7 +49,7 @@ remove_notifier (socket_notifier sn)  {
 
 void 
 perform_select () {
-#ifndef OS_MINGW
+#if !defined(OS_MINGW) && !defined(OS_WIN)
   //FIXME: this can be optimizied
   while (true) {
     fd_set rfds;

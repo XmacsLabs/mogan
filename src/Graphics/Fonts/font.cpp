@@ -584,7 +584,7 @@ default_chinese_font_name () {
 
   // Set default Chinese font for Windows
   // see: https://docs.microsoft.com/en-us/typography/fonts/windows_10_font_list
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   if (tt_font_exists ("simsun")) return "simsun";
 #endif
 
@@ -614,7 +614,7 @@ default_japanese_font_name () {
   if (tt_font_exists ("ヒラギノ角ゴシック W3")) return "Hiragino Kaku Gothic ProN";
 #endif
 
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   if (tt_font_exists ("msmincho")) return "MS PMincho";
 #endif
 
@@ -637,7 +637,7 @@ default_korean_font_name () {
   if (tt_font_exists ("AppleSDGothicNeo")) return "Apple SD Gothic Neo";
 #endif
 
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   if (tt_font_exists ("batang")) return "Batang";
 #endif
 

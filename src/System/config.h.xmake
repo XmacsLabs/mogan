@@ -4,6 +4,7 @@ ${define SANITY_CHECKS}
 ${define OS_MINGW}
 ${define OS_GNU_LINUX}
 ${define OS_MACOS}
+${define OS_WIN}
 ${define OS_WASM}
 
 
@@ -85,6 +86,9 @@ ${define PDFHUMMUS_NO_TIFF}
 
 /* Disable fast memory allocator */
 ${define NO_FAST_ALLOC}
+
+/* Disable builtin min max macro on windows */
+${define NOMINMAX}
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT ""

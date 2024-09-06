@@ -11,11 +11,13 @@
 
 #include "tm_configure.hpp"
 #include <fcntl.h>
+#ifndef OS_WIN
+#include <unistd.h>
+#endif
 #include <locale.h> // for setlocale
 #include <signal.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <unistd.h>
 #ifdef STACK_SIZE
 #include <sys/resource.h>
 #endif
@@ -174,7 +176,7 @@ TeXmacs_init_paths (int& argc, char** argv) {
   // system("set");
 #endif
 
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   // Win bundle environment initialization
   // TEXMACS_PATH is set by assuming that the executable is in TeXmacs/bin/
   // HOME is set to USERPROFILE
@@ -597,7 +599,7 @@ boot_hacks () {
 void
 immediate_options (int argc, char** argv) {
   if (get_env ("TEXMACS_HOME_PATH") == "")
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   {
     if (get_env ("HOME") == "") set_env ("HOME", get_env ("USERPROFILE"));
     set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\TeXmacs");
@@ -704,7 +706,7 @@ main (int argc, char** argv) {
   else if (theme == "dark")
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-dark.css";
   else if (theme != "") tm_style_sheet= theme;
-#ifndef OS_MINGW
+#if !defined(OS_MINGW) && !defined(OS_WIN)
   set_env ("LC_NUMERIC", "POSIX");
 #ifndef OS_MACOS
 #ifndef OS_WASM

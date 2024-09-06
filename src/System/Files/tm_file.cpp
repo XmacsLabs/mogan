@@ -29,7 +29,9 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-#ifndef OS_WIN
+#ifdef OS_WIN
+#include <process.h>
+#else
 #include <sys/file.h>
 #include <unistd.h>
 #endif
@@ -39,7 +41,6 @@
 
 #if defined (OS_MINGW) || defined (OS_WIN)
 #include <time.h>
-#include <dirent.h>
 #else
 #include <dirent.h>
 #endif
@@ -85,7 +86,7 @@ load_string (url u, string& s, bool fatal) {
     bench_start ("load file");
     c_string _name (name);
     // cout << "OPEN :" << _name << LF;
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
     FILE* fin= fopen (_name, "rb");
 #else
     FILE* fin= fopen (_name, "r");
@@ -113,7 +114,7 @@ load_string (url u, string& s, bool fatal) {
       }
       if (err) {
         std_warning << "Seek failed for " << as_string (u) << "\n";
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
 #else
         flock (fd, LOCK_UN);
 #endif
@@ -125,7 +126,7 @@ load_string (url u, string& s, bool fatal) {
       s->resize (size);
       int read= fread (&(s[0]), 1, size, fin);
       if (read < size) s->resize (read);
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
 #else
       flock (fd, LOCK_UN);
 #endif
@@ -175,7 +176,7 @@ save_string (url u, string s, bool fatal) {
     string name= concretize (r);
     {
       c_string _name (name);
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
       FILE* fout= fopen (_name, "wb");
 #else
       FILE* fout= fopen (_name, "r+");
@@ -200,7 +201,7 @@ save_string (url u, string s, bool fatal) {
         int i, n= N(s);
         for (i=0; i<n; i++)
           fputc (s[i], fout);
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
 #else
         flock (fd, LOCK_UN);
 #endif
@@ -241,7 +242,7 @@ append_string (url u, string s, bool fatal) {
     string name= concretize (r);
     {
       c_string _name (name);
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
       FILE* fout= fopen (_name, "ab");
 #else
       FILE* fout= fopen (_name, "a");
@@ -263,7 +264,7 @@ append_string (url u, string s, bool fatal) {
         int i, n= N(s);
         for (i=0; i<n; i++)
           fputc (s[i], fout);
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
 #else
         flock (fd, LOCK_UN);
 #endif

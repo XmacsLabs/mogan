@@ -16,7 +16,7 @@
 #include "file.hpp"
 #include "tm_file.hpp"
 
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
 #include "Windows/win_sys_utils.hpp"
 #endif
 
@@ -50,7 +50,7 @@ string get_pretty_os_name () {
 
 int
 system (string s, string& result, string& error) {
-#ifdef OS_WASM
+#if defined(OS_MINGW) || defined(OS_WIN)
   return -1;
 #else
   return qt_system (s, result, error);
@@ -100,7 +100,7 @@ get_texmacs_home_path () {
 
 string 
 get_printing_default () {
-#if defined (OS_MINGW)
+#if defined(OS_MINGW) || defined(OS_WIN)
   url embedded ("$TEXMACS_PATH/bin/SumatraPDF.exe");
   if (exists (embedded))
     return sys_concretize (embedded) * " -print-dialog -exit-when-done";

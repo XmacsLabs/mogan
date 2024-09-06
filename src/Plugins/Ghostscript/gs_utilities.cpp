@@ -22,7 +22,7 @@
 
 string
 gs_system () {
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   url gs= url_system ("C:\\") * url_wildcard ("Program Files*") * url_system ("gs") * url_wildcard ("gs*")* url_system ("bin") * url_wildcard ("gswin*c.exe");
   return materialize (gs);
 #else

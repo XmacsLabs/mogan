@@ -21,7 +21,11 @@
 #ifndef KERNEL_L3
 #include "convert.hpp" // tree_to_texmacs (should not belong here)
 #include "widget.hpp"
+#ifdef OS_WIN
+#include <process.h>
+#else
 #include <unistd.h> // for getpid
+#endif
 #endif
 
 /******************************************************************************

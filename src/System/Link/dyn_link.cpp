@@ -13,7 +13,7 @@
 #include "url.hpp"
 #include "hashmap.hpp"
 #include "tm_debug.hpp"
-#ifndef OS_MINGW
+#if !defined(OS_MINGW) && !defined(OS_WIN)
 #include <dlfcn.h>
 #endif
 #include <TeXmacs.h>
@@ -26,7 +26,7 @@ static hashmap<string,pointer> dyn_linked (NULL);
 
 string
 symbol_install (string lib, string symb, pointer& f) {
-#if (defined (TM_DYNAMIC_LINKING) && !defined(OS_MINGW))
+#if (defined (TM_DYNAMIC_LINKING) && !(defined(OS_MINGW) || defined(OS_WIN)))
   // f becomes NULL in case of failure
   // status message returned
   string out;
@@ -69,7 +69,7 @@ symbol_install (string lib, string symb, pointer& f) {
 
 string
 symbols_install (string lib, string* symb, pointer* f, int n) {
-#ifndef OS_MINGW
+#if !defined(OS_MINGW) && !defined(OS_WIN)
   int i;
   for (i=0; i<n; i++) f[i]= NULL;
   for (i=0; i<n; i++) {
@@ -108,7 +108,7 @@ static TeXmacs_exports_1 TeXmacs= {
 
 string
 dyn_link_rep::start () {
-#ifndef OS_MINGW
+#if !defined(OS_MINGW) && !defined(OS_WIN)
   string name= lib * ":" * symbol * "-package";
   if (dyn_linked->contains (name))
     routs= dyn_linked [name];
@@ -142,7 +142,7 @@ dyn_link_rep::start () {
 
 void
 dyn_link_rep::write (string s, int channel) {
-#ifndef OS_MINGW
+#if !defined(OS_MINGW) && !defined(OS_WIN)
   if ((!alive) || (channel != LINK_IN)) return;
   if (routs==NULL) {
     failed_error << "Library= " << lib << "\n";

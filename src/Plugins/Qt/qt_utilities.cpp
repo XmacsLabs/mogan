@@ -1064,7 +1064,7 @@ init_style_sheet (QApplication* app) {
 #else
     ss= replace (ss, "Nomac", "");
 #endif
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
     ss= replace (ss, "Mingw", "");
 #endif
 #ifdef OS_GNU_LINUX

@@ -15,7 +15,7 @@
 
 #if defined (OS_MACOS) && defined (USE_SPARKLE)
 #include "tm_sparkle.hpp"
-#elif defined (OS_MINGW) && defined (USE_SPARKLE)
+#elif (defined (OS_MINGW) || defined (OS_WIN)) && defined (USE_SPARKLE)
 #include "tm_winsparkle.hpp"
 #endif
 
@@ -27,7 +27,7 @@ tm_updater* tm_updater::instance ()
   if (! _instance) {
     #if defined (OS_MACOS) && defined (USE_SPARKLE)
       _instance = new tm_sparkle ();
-    #elif defined (OS_MINGW) && defined (USE_SPARKLE)
+    #elif (defined (OS_MINGW) || defined (OS_WIN)) && defined (USE_SPARKLE)
       _instance = new tm_winsparkle ();
     #else
       _instance = new tm_updater ();
@@ -46,7 +46,7 @@ bool updater_supported ()
 {
   #if defined (OS_MACOS) && defined (USE_SPARKLE)
     return true;
-  #elif defined (OS_MINGW) && defined (USE_SPARKLE)
+  #elif (defined (OS_MINGW) || defined (OS_WIN)) && defined (USE_SPARKLE)
     return true;
   #endif
     return false;

@@ -19,7 +19,11 @@
 #endif
 #endif
 
-#ifdef OS_MINGW
+#if defined(OS_WIN)
+#define NOGDI
+#include <windows.h>
+#include <winnls.h>
+#elif defined(OS_MINGW)
 #include <winnls.h>
 #endif
 
@@ -44,7 +48,7 @@
 * Locales
 ******************************************************************************/
 
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
 const string
 windows_locale_to_language () {
   static string language;
@@ -189,7 +193,7 @@ language_to_local_ISO_charset (string s) {
 
 string
 get_locale_language () {
-#if OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   return windows_locale_to_language ();
 #else
   string env_lan= get_env ("LC_ALL");
@@ -266,7 +270,7 @@ simplify_date (string s) {
 
 string
 get_date (string lan, string fm) {
-//#ifdef OS_MINGW
+//#if defined(OS_MINGW) || defined(OS_WIN)
 //  return win32::get_date(lan, fm);
   if (invalid_format (fm)) {
     if ((lan == "british") || (lan == "english") || (lan == "american"))

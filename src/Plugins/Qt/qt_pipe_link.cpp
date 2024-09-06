@@ -12,7 +12,7 @@
 #include "basic.hpp"
 #include "tm_debug.hpp"
 
-#if defined (QTTEXMACS) && (defined (OS_MINGW) || defined (QTPIPES))
+#if defined (QTTEXMACS) && (defined (OS_MINGW) || defined (OS_WIN) || defined (QTPIPES))
 
 #include "tm_link.hpp"
 #include "QTMPipeLink.hpp"
@@ -22,7 +22,7 @@
 
 #include <sys/types.h>
 #include <signal.h>
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
 #else
 #  include <sys/wait.h>
 #endif
@@ -144,7 +144,7 @@ qt_pipe_link_rep::is_readable (int channel) {
 void
 qt_pipe_link_rep::interrupt () {
   if (!alive) return;
-#ifdef OS_MINGW
+#if defined(OS_MINGW) || defined(OS_WIN)
   // Not implemented
   qt_error << "SIGINT not implemented on Windows\n";
 #else
@@ -205,4 +205,4 @@ process_all_pipes () {
   }
 }
 
-#endif // defined (QTTEXMACS) && defined (OS_MINGW)
+#endif // defined (QTTEXMACS) && (defined (OS_MINGW) || defined (OS_WIN) || defined (QTPIPES))
