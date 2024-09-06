@@ -1,0 +1,22 @@
+<TMU|<tuple|1.0.3|1.2.9.1>>
+
+<style|<tuple|manual|british>>
+
+<\body>
+  <\big-figure|the figure>
+    \;
+  </big-figure>
+
+  In Chinese
+
+  <chinese|<\big-figure|图片>
+    \;
+  </big-figure>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
