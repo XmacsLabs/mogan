@@ -238,7 +238,6 @@
   ("prog" "cmd" #t)
 
   ("font" "altcmd f")
-  ("executable" "altcmd e")
   ("inactive" "altcmd i")
   ("link" "altcmd l")
   ("version" "altcmd #")
