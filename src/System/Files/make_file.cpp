@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "web_files.hpp"
 #include "sys_utils.hpp"
 #include "analyze.hpp"

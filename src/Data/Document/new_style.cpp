@@ -12,6 +12,7 @@
 #include "tm_block.hpp"
 #include "new_style.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "tmfs_url.hpp"
 #include "data_cache.hpp"
 #include "convert.hpp"

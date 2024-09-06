@@ -11,6 +11,7 @@
 
 #include "Database/database.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 
 #define DB_CREATE_ATOM   1
 #define DB_CREATE_FIELD  2

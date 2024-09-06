@@ -19,6 +19,7 @@
 #include "vars.hpp"
 #include "image_files.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "tree_modify.hpp"
 #include "tree_helper.hpp"
 

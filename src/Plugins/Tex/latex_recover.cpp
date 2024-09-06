@@ -14,6 +14,7 @@
 #include "analyze.hpp"
 #include "iterator.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "scheme.hpp"
 #include "tree_label.hpp"
 

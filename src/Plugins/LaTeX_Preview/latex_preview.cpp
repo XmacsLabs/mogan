@@ -15,6 +15,7 @@
 #include "Tex/convert_tex.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "sys_utils.hpp"
 #include "tree_helper.hpp"
 

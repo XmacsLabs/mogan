@@ -14,6 +14,7 @@
 #include "tm_debug.hpp"
 #include "url.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 
 #ifdef OS_MINGW
 #include "Windows/win_sys_utils.hpp"
@@ -50,20 +51,12 @@ string get_pretty_os_name () {
 
 int
 system (string s, string& result, string& error) {
-#if !defined(KERNEL_L3)
   return qt_system (s, result, error);
-#else
-  return -1;
-#endif
 }
 
 int
 system (string s, string& result) {
-#if !defined(KERNEL_L3)
   return qt_system (s, result);
-#else
-  return -1;
-#endif
 }
 
 string

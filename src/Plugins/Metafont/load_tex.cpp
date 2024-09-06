@@ -17,6 +17,8 @@
 #include "Freetype/tt_file.hpp"
 #include "tm_timer.hpp"
 #include "data_cache.hpp"
+#include "tm_file.hpp"
+#include "file.hpp"
 
 #ifdef OS_WIN
 #include <x11/xlib.h>

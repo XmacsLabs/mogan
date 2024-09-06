@@ -12,6 +12,7 @@
 #include "font.hpp"
 #include "iterator.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "convert.hpp"
 #include "block.hpp"
 #include "merge_sort.hpp"

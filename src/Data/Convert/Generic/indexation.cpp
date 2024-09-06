@@ -14,6 +14,7 @@
 #include "hashmap.hpp"
 #include "iterator.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "tree_helper.hpp"
 
 /******************************************************************************

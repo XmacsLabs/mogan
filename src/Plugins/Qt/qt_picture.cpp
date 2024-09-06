@@ -14,6 +14,7 @@
 #include "image_files.hpp"
 #include "qt_utilities.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "image_files.hpp"
 #include "scheme.hpp"
 #include "frame.hpp"

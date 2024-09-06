@@ -12,6 +12,7 @@
 #include "tt_file.hpp"
 #include "tt_tools.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "boot.hpp"
 #include "preferences.hpp"
 #include "analyze.hpp"

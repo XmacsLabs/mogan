@@ -12,6 +12,7 @@
 #include "boot.hpp"
 #include "preferences.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "sys_utils.hpp"
 #include "analyze.hpp"
 #include "convert.hpp"

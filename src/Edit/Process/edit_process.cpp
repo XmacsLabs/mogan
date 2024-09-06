@@ -16,6 +16,7 @@
 #include "Bibtex/bibtex.hpp"
 #include "Bibtex/bibtex_functions.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "convert.hpp"
 #include "scheme.hpp"
 #include "tree_observer.hpp"

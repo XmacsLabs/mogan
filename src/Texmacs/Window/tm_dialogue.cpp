@@ -14,6 +14,7 @@
 #include "convert.hpp"
 #include "tm_block.hpp"
 #include "file.hpp"
+#include "tm_file.hpp"
 #include "analyze.hpp"
 #include "message.hpp"
 #include "dictionary.hpp"
