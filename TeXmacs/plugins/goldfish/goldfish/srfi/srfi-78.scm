@@ -98,27 +98,6 @@
   (check:write expected-result)
   (newline))
 
-(define (check-report)
-  (if (>= check:mode 1)
-      (begin
-        (newline)
-        (display "; *** checks *** : ")
-        (display check:correct)
-        (display " correct, ")
-        (display (length check:failed))
-        (display " failed.")
-        (if (or (null? check:failed) (<= check:mode 1))
-            (newline)
-            (let* ((w (car (reverse check:failed)))
-                   (expression (car w))
-                   (actual-result (cadr w))
-                   (expected-result (caddr w)))                  
-              (display " First failed example:")
-              (newline)
-              (check:report-expression expression)
-              (check:report-actual-result actual-result)
-              (check:report-failed expected-result))))))
-
 (define (check-passed? expected-total-count)
   (and (= (length check:failed) 0)
        (= check:correct expected-total-count)))
@@ -158,6 +137,27 @@
 
 (define-macro (check expr => expected)
   `(check:proc ',expr (lambda () ,expr) equal? ,expected))
+
+(define (check-report)
+  (if (>= check:mode 1)
+      (begin
+        (newline)
+        (display "; *** checks *** : ")
+        (display check:correct)
+        (display " correct, ")
+        (display (length check:failed))
+        (display " failed.")
+        (if (or (null? check:failed) (<= check:mode 1))
+            (newline)
+            (let* ((w (car (reverse check:failed)))
+                   (expression (car w))
+                   (actual-result (cadr w))
+                   (expected-result (caddr w)))
+              (display " First failed example:")
+              (newline)
+              (check:report-expression expression)
+              (check:report-actual-result actual-result)
+              (check:report-failed expected-result))))))
 
 ) ; end of begin
 ) ; end of define-library

@@ -57,7 +57,7 @@
            params-l)
           ((> (length params-l) 2)
            (error 'wrong-number-of-args "optional params in string-join"))
-          (else (error 'wrong-type-arg "optional params in string-join"))))
+          (else (error 'type-error "optional params in string-join"))))
   
   (define (string-join-sub l delim)
     (cond ((null-list? l) "")
@@ -76,13 +76,13 @@
       ('infix ret)
       ('strict-infix
        (if (null-list? l)
-           (error 'wrong-type-arg "empty list not allowed")
+           (error 'value-error "empty list not allowed")
            ret))
       ('suffix
         (if (null-list? l) "" (string-append ret delim)))
       ('prefix
         (if (null-list? l) "" (string-append delim ret)))
-      (else (error 'wrong-type-arg "invalid grammer")))))
+      (else (error 'value-error "invalid grammer")))))
 
 (define (string-null? str)
   (and (string? str) 

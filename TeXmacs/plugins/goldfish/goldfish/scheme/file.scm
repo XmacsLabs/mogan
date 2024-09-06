@@ -19,6 +19,7 @@
 (begin
   
 (define open-binary-input-file open-input-file)
+
 (define open-binary-output-file open-output-file)
 
 ) ; end of begin

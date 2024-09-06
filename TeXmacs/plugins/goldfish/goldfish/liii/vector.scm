@@ -14,20 +14,24 @@
 ; under the License.
 ;
 
-(define-library (liii hash-table)
-(import (srfi srfi-125)
-        (srfi srfi-128))
+(define-library (liii vector)
+
 (export
-  make-hash-table hash-table hash-table-unfold alist->hash-table
-  hash-table? hash-table-contains? hash-table-empty? hash-table=?
-  hash-table-mutable?
-  hash-table-ref hash-table-ref/default
-  hash-table-set! hash-table-delete! hash-table-intern! hash-table-update!
-  hash-table-update!/default hash-table-pop! hash-table-clear!
-  hash-table-size hash-table-keys hash-table-values hash-table-entries
-  hash-table-find hash-table-count
-)
+  ; S7 Scheme built-in
+  make-vector vector vector-length vector-ref vector-set! vector->list list->vector
+  ; from (scheme base)
+  vector-copy vector-fill! vector-copy! vector->string string->vector
+  vector-map vector-for-each
+  ; from (srfi srfi-133)
+  vector-empty?
+  vector-count
+  vector-any vector-every vector-copy vector-copy!
+  vector-index vector-index-right vector-partition
+  vector-swap!)
+(import (srfi srfi-133)
+        (scheme base))
 (begin
+
 ) ; end of begin
-) ; end of library
+) ; end of define-library
 

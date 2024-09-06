@@ -23,16 +23,6 @@
                 (check-report srfi-78-check-report)))
 (begin
 
-(define (check-report . msg)
-  (if (not (null? msg))
-    (begin
-      (display (car msg))))
-  (srfi-78-check-report)
-  (if (check-failed?) (exit -1)))
-
-(define-macro (test left right)
-  `(check ,left => ,right))
-
 (define-macro (check-true body)
   `(check ,body => #t))
 
@@ -46,6 +36,16 @@
       (lambda args ,error-id))
       => ,error-id))
 
+(define-macro (test left right)
+  `(check ,left => ,right))
+
+(define (check-report . msg)
+  (if (not (null? msg))
+    (begin
+      (display (car msg))))
+  (srfi-78-check-report)
+  (if (check-failed?) (exit -1)))
 
 ) ; end of begin
 ) ; end of define-library
+

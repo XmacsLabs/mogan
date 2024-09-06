@@ -17,7 +17,7 @@
 (define-library (srfi srfi-125)
 (import (srfi srfi-1))
 (export
-  make-hash-table, hash-table, hash-table-unfold, alist->hash-table
+  make-hash-table hash-table hash-table-unfold alist->hash-table
   hash-table? hash-table-contains? hash-table-empty? hash-table=?
   hash-table-mutable?
   hash-table-ref hash-table-ref/default
@@ -32,7 +32,16 @@
   (when (not (hash-table? ht))
     (error 'type-error f "this parameter must be typed as hash-table")))
 
-(define hash-table-set-s7 hash-table-set!)
+(define s7-hash-table-set! hash-table-set!)
+(define s7-make-hash-table make-hash-table)
+
+(define (make-hash-table . args)
+  (cond ((null? args) (s7-make-hash-table))
+        ((comparator? (car args))
+         (let* ((equiv (comparator-equality-predicate (car args)))
+                (hash-func (comparator-hash-function (car args))))
+           (s7-make-hash-table 8 (cons equiv hash-func) (cons #t #t))))
+        (else (type-error "make-hash-table"))))
 
 (define (hash-table-contains? ht key)
   (not (not (hash-table-ref ht key))))
@@ -53,7 +62,7 @@
     (when (or (odd? len) (zero? len))
       (error 'wrong-number-of-args len "but must be even and non-zero"))
     
-    (hash-table-set-s7 ht (car rest) (cadr rest))
+    (s7-hash-table-set! ht (car rest) (cadr rest))
     (when (> len 2)
           (apply hash-table-set! (cons ht (cddr rest))))))
 
@@ -65,7 +74,7 @@
         (lambda (x)
           (if (hash-table-contains? ht x)
               (begin
-                (hash-table-set-s7 ht x #f)
+                (s7-hash-table-set! ht x #f)
                 #t)
               #f))
         all-keys))))

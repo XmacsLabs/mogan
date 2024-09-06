@@ -12,6 +12,7 @@
 ;;; Follow the same License as the original one
 
 (define-library (srfi srfi-1)
+(import (liii error))
 (export
   circular-list iota circular-list? null-list?
   first second third fourth fifth
@@ -30,10 +31,11 @@
       (set-cdr! (list-tail lst (- (length lst) 1)) lst))))
 
 ; 0 clause BSD, from S7 repo stuff.scm
-(define* (iota n (start 0) (incr 1)) 
-  (if (or (not (integer? n)) (< n 0))
-    (error 'wrong-type-arg
-           "iota length ~A should be a non-negative integer" n))
+(define* (iota n (start 0) (incr 1))
+  (when (not (integer? n))
+    (type-error "iota: n must be a integer"))
+  (when (< n 0)
+    (value-error "iota: n must be postive but received ~d" n))
   (let ((lst (make-list n)))
     (do ((p lst (cdr p))
          (i start (+ i incr)))
@@ -230,3 +232,4 @@
 
 ) ; end of begin
 ) ; end of define-library
+

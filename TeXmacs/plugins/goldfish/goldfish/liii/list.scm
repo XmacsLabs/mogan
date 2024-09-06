@@ -16,6 +16,8 @@
 
 (define-library (liii list)
 (export
+  ; S7 built-in
+  cons car cdr map for-each
   ; SRFI 1: Constructors
   circular-list iota
   ; SRFI 1: Predicates
@@ -35,19 +37,36 @@
   ; Liii List extensions
   list-view flatmap
   list-null? list-not-null? not-null-list?
+  length=?
 )
-(import (srfi srfi-1))
+(import (srfi srfi-1)
+        (liii error))
 (begin
 
+(define (length=? x scheme-list)
+  (when (< x 0)
+    (value-error "length=?: expected non-negative integer x but received ~d" x))
+  (cond ((and (= x 0) (null? scheme-list)) #t)
+        ((or (= x 0) (null? scheme-list)) #f)
+        (else (length=? (- x 1) (cdr scheme-list)))))
+
 (define (list-view scheme-list)
+  (define (f-inner-reducer scheme-list filter filter-func rest-funcs)
+    (cond ((null? rest-funcs) (list-view (filter filter-func scheme-list)))
+          (else
+           (f-inner-reducer (filter filter-func scheme-list)
+                            (car rest-funcs)
+                            (cadr rest-funcs)
+                            (cddr rest-funcs)))))
   (define (f-inner . funcs)
     (cond ((null? funcs) scheme-list)
-          ((= (length funcs) 2)
+          ((length=? 2 funcs)
            (list-view ((car funcs) (cadr funcs) scheme-list)))
           ((even? (length funcs))
-           (apply
-             (f-inner (car funcs) (cadr funcs))
-             (cddr funcs)))
+           (f-inner-reducer scheme-list
+                            (car funcs)
+                            (cadr funcs)
+                            (cddr funcs)))
           (else (error 'wrong-number-of-args
                        "list-view only accepts even number of args"))))
   f-inner)

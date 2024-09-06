@@ -19,13 +19,12 @@
   let-values
   define-record-type
   square
+  boolean=?
   ; String
   string-copy
   ; Vector
-  vector->string
-  string->vector
-  vector-copy
-  vector-copy!
+  vector->string string->vector
+  vector-copy vector-copy! vector-fill!
   ; Input and Output
   call-with-port port? binary-port? textual-port?
   input-port-open? output-port-open?
@@ -106,64 +105,16 @@
 
 (define (square x) (* x x))
 
-(define (string-copy str . start_end)
-  (cond ((null? start_end)
-         (substring str 0))
-        ((= (length start_end) 1)
-          (substring str (car start_end)))
-        ((= (length start_end) 2)
-         (substring str (car start_end) (cadr start_end)))
-        (else (error 'wrong-number-of-args))))
-
-; 0-clause BSD
-; Bill Schottstaedt
-; from S7 source repo: r7rs.scm
-(define* (vector->string v (start 0) end) 
-  (let ((stop (or end (length v)))) 
-    (copy v (make-string (- stop start)) start stop)))
-
-; 0-clause BSD
-; Bill Schottstaedt
-; from S7 source repo: r7rs.scm
-(define* (string->vector s (start 0) end)
-  (let ((stop (or end (length s)))) 
-    (copy s (make-vector (- stop start)) start stop)))
-
-(define* (vector-copy v (start 0) (end (vector-length v)))
-  (if (or (> start end) (> end (vector-length v)))
-      (error 'out-of-range "vector-copy")
-      (let ((new-v (make-vector (- end start))))
-        (let loop ((i start) (j 0))
-          (if (>= i end)
-              new-v
-              (begin
-                (vector-set! new-v j (vector-ref v i))
-                (loop (+ i 1) (+ j 1))))))))
-
-(define* (vector-copy! to at from (start 0) (end (vector-length from)))
-  (if (or (< at 0)
-          (> start (vector-length from))
-          (< end 0)
-          (> end (vector-length from))
-          (> start end)
-          (> (+ at (- end start)) (vector-length to)))
-      (error 'out-of-range "vector-copy!")
-      (let loop ((to-i at) (from-i start))
-        (if (>= from-i end)
-            to
-            (begin
-              (vector-set! to to-i (vector-ref from from-i))
-              (loop (+ to-i 1) (+ from-i 1)))))))
-
-(define vector-fill! fill!)
-
-(define (string-map p . args) (apply string (apply map p args)))
-
-(define (vector-map p . args) (apply vector (apply map p args)))
-
-(define string-for-each for-each)
-
-(define vector-for-each for-each)
+(define (boolean=? obj1 obj2 . rest)
+  (define (same-boolean obj rest)
+    (if (null? rest)
+        #t
+        (and (equal? obj (car rest))
+             (same-boolean obj (cdr rest)))))
+  (cond ((not (boolean? obj1)) #f)
+        ((not (boolean? obj2)) #f)
+        ((not (equal? obj1 obj2)) #f)
+        (else (same-boolean obj1 rest))))
 
 (define (raise . args)
   (apply throw #t args))
@@ -193,10 +144,13 @@
     res))
 
 (define (port? p) (or (input-port? p) (output-port? p)))
-(define binary-port? port?)
+
 (define textual-port? port?)
 
+(define binary-port? port?)
+
 (define (input-port-open? p) (not (port-closed? p)))
+
 (define (output-port-open? p) (not (port-closed? p)))
 
 (define (close-port p)
@@ -206,5 +160,65 @@
 
 (define (eof-object) #<eof>)
 
+(define (string-copy str . start_end)
+  (cond ((null? start_end)
+         (substring str 0))
+        ((= (length start_end) 1)
+          (substring str (car start_end)))
+        ((= (length start_end) 2)
+         (substring str (car start_end) (cadr start_end)))
+        (else (error 'wrong-number-of-args))))
+
+(define (string-map p . args) (apply string (apply map p args)))
+
+(define string-for-each for-each)
+
+(define* (vector-copy v (start 0) (end (vector-length v)))
+  (if (or (> start end) (> end (vector-length v)))
+      (error 'out-of-range "vector-copy")
+      (let ((new-v (make-vector (- end start))))
+        (let loop ((i start) (j 0))
+          (if (>= i end)
+              new-v
+              (begin
+                (vector-set! new-v j (vector-ref v i))
+                (loop (+ i 1) (+ j 1))))))))
+
+(define (vector-map p . args) (apply vector (apply map p args)))
+
+(define vector-for-each for-each)
+
+(define vector-fill! fill!)
+
+(define* (vector-copy! to at from (start 0) (end (vector-length from)))
+  (if (or (< at 0)
+          (> start (vector-length from))
+          (< end 0)
+          (> end (vector-length from))
+          (> start end)
+          (> (+ at (- end start)) (vector-length to)))
+      (error 'out-of-range "vector-copy!")
+      (let loop ((to-i at) (from-i start))
+        (if (>= from-i end)
+            to
+            (begin
+              (vector-set! to to-i (vector-ref from from-i))
+              (loop (+ to-i 1) (+ from-i 1)))))))
+
+; 0-clause BSD
+; Bill Schottstaedt
+; from S7 source repo: r7rs.scm
+(define* (vector->string v (start 0) end) 
+  (let ((stop (or end (length v)))) 
+    (copy v (make-string (- stop start)) start stop)))
+
+; 0-clause BSD
+; Bill Schottstaedt
+; from S7 source repo: r7rs.scm
+(define* (string->vector s (start 0) end)
+  (let ((stop (or end (length s)))) 
+    (copy s (make-vector (- stop start)) start stop)))
+
 ) ; end of begin
 ) ; end of define-library
+

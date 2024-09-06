@@ -16,7 +16,12 @@
 
 (define-library (liii string)
 (export
-  string-null? string-copy string-join
+  ; S7 built-in
+  string? string-ref string-length
+  ; from (scheme base)
+  string-copy string-for-each string-map
+  ; from (srfi srfi-13)
+  string-null? string-join
   string-every string-any
   string-take string-take-right string-drop string-drop-right
   string-pad string-pad-right
@@ -28,8 +33,9 @@
   string-tokenize
 )
 (import (srfi srfi-13)
-        (srfi srfi-1)
+        (scheme base)
         (liii error))
 (begin
 ) ; end of begin
 ) ; end of library
+
