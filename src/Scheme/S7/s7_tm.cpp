@@ -16,15 +16,12 @@
 #include "object_l1.hpp"
 #include "object_l2.hpp"
 #include "tm_debug.hpp"
+#include "tm_timer.hpp"
 
 #ifndef KERNEL_L3
 #include "convert.hpp" // tree_to_texmacs (should not belong here)
 #include "widget.hpp"
 #include <unistd.h> // for getpid
-#endif
-
-#ifdef HAVE_GETTIMEOFDAY
-#include <sys/time.h>
 #endif
 
 /******************************************************************************
@@ -300,15 +297,7 @@ static s7_pointer
 g_current_time (s7_scheme *sc, s7_pointer args) {
   s7_int res;
 
-#ifdef HAVE_GETTIMEOFDAY
-  struct timeval tp;
-  gettimeofday (&tp, NULL);
-  res= tp.tv_sec;
-#else
-  timeb tb;
-  ftime (&tb);
-  res= tb.time;
-#endif
+  res= get_sec_time ();
 
   return s7_make_integer (sc, res);
 }

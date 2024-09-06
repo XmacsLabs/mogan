@@ -15,41 +15,44 @@
 #include "merge_sort.hpp"
 #include "tm_ostream.hpp"
 
-static hashmap<string, int> timing_level (0);
-static hashmap<string, int> timing_nr (0);
-static hashmap<string, int> timing_cumul (0);
-static hashmap<string, int> timing_last (0);
+#include "tbox/tbox.h"
+
+static hashmap<string, long> timing_level (0);
+static hashmap<string, long> timing_nr (0);
+static hashmap<string, long> timing_cumul (0);
+static hashmap<string, long> timing_last (0);
 
 /******************************************************************************
  * Getting the time
  ******************************************************************************/
+time_t
+get_sec_time () {
+  tb_timeval_t tp= {0};
+  tb_gettimeofday (&tp, tb_null);
+  return (time_t) tp.tv_sec;
+}
+
+time_t
+get_usec_time () {
+  tb_timeval_t tp= {0};
+  tb_gettimeofday (&tp, tb_null);
+  return (time_t) tp.tv_usec;
+}
 
 time_t
 raw_time () {
-#ifdef HAVE_GETTIMEOFDAY
-  struct timeval tp;
-  gettimeofday (&tp, NULL);
+  tb_timeval_t tp= {0};
+  tb_gettimeofday (&tp, tb_null);
   return (time_t) ((tp.tv_sec * 1000) + (tp.tv_usec / 1000));
-#else
-  timeb tb;
-  ftime (&tb);
-  return (time_t) ((tb.time * 1000) + tb.millitm);
-#endif
 }
 
 static time_t start_time= raw_time ();
 
 time_t
 texmacs_time () {
-#ifdef HAVE_GETTIMEOFDAY
-  struct timeval tp;
-  gettimeofday (&tp, NULL);
+  tb_timeval_t tp= {0};
+  tb_gettimeofday (&tp, tb_null);
   return ((time_t) ((tp.tv_sec * 1000) + (tp.tv_usec / 1000))) - start_time;
-#else
-  timeb tb;
-  ftime (&tb);
-  return ((time_t) ((tb.time * 1000) + tb.millitm)) - start_time;
-#endif
 }
 
 /******************************************************************************
@@ -59,7 +62,7 @@ texmacs_time () {
 void
 bench_start (string task) {
   // start timer for a given type of task
-  if (timing_level[task] == 0) timing_last (task)= (int) texmacs_time ();
+  if (timing_level[task] == 0) timing_last (task)= (long) texmacs_time ();
   timing_level (task)++;
 }
 
@@ -68,7 +71,7 @@ bench_cumul (string task) {
   // end timer for a given type of task, but don't reset timer
   timing_level (task)--;
   if (timing_level[task] == 0) {
-    int ms= ((int) texmacs_time ()) - timing_last (task);
+    long ms= ((long) texmacs_time ()) - timing_last (task);
     timing_nr (task)++;
     timing_cumul (task)+= ms;
     timing_last->reset (task);
@@ -96,7 +99,7 @@ void
 bench_print (tm_ostream& ostream, string task) {
   // print timing for a given type of task
   if (DEBUG_BENCH) {
-    int nr= timing_nr[task];
+    long nr= timing_nr[task];
     ostream << "Task '" << task << "' took " << timing_cumul[task] << " ms";
     if (nr > 1) ostream << " (" << nr << " invocations)";
     ostream << LF;
@@ -104,7 +107,7 @@ bench_print (tm_ostream& ostream, string task) {
 }
 
 static array<string>
-collect (hashmap<string, int> h) {
+collect (hashmap<string, long> h) {
   array<string>    a;
   iterator<string> it= iterate (h);
   while (it->busy ())

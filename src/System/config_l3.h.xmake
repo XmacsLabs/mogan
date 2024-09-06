@@ -1,5 +1,4 @@
 #define KERNEL_L3
-#define LOLLY_VERSION "@LOLLY_VERSION@"
 
 /* L1 Kernel */
 ${define HAVE_INTPTR_T}
@@ -9,7 +8,4 @@ ${define SANITY_CHECKS}
 ${define OS_MINGW}
 ${define OS_MACOS}
 ${define OS_WIN}
-
-/* L2 Kernel */
-${define HAVE_TIME_T}
-${define HAVE_GETTIMEOFDAY}
+${define OS_WASM}

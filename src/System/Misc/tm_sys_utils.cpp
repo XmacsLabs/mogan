@@ -50,12 +50,20 @@ string get_pretty_os_name () {
 
 int
 system (string s, string& result, string& error) {
+#ifdef OS_WASM
+  return -1;
+#else
   return qt_system (s, result, error);
+#endif
 }
 
 int
 system (string s, string& result) {
+#ifdef OS_WASM
+  return -1;
+#else
   return qt_system (s, result);
+#endif
 }
 
 string

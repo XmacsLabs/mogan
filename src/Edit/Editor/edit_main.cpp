@@ -25,6 +25,9 @@
 #include "tree_observer.hpp"
 #include "observers.hpp"
 
+#ifdef USE_PLUGIN_PDF
+#include "Pdf/pdf_hummus_make_attachment.hpp"
+#endif
 
 #ifdef EXPERIMENTAL
 #include "../../Style/Memorizer/clean_copy.hpp"
@@ -190,7 +193,7 @@ string printing_on ("a4");
 
 bool
 use_pdf () {
-#ifdef PDF_RENDERER
+#ifdef USE_PLUGIN_PDF
   return get_preference ("native pdf", "on") == "on";
 #else
   return false;
@@ -199,7 +202,7 @@ use_pdf () {
 
 bool
 use_ps () {
-#ifdef PDF_RENDERER
+#ifdef USE_PLUGIN_PDF
   return get_preference ("native postscript", "on") == "on";
 #else
   return true;

@@ -31,6 +31,14 @@ set_latex_command (string cmd) {
   latex_command= cmd;
 }
 
+#ifdef OS_WASM
+array<tree>
+latex_preview (string s, tree t) {
+  dbg ("LaTeX preview disabled in WASM");
+  return array<tree>();
+}
+#else
+
 bool
 latex_present () {
   return exists_in_path (latex_command);
@@ -245,3 +253,4 @@ latex_preview (string s, tree t) {
   latex_clean_tmp_directory (wdir);
   return r;
 } 
+#endif // OS_WASM

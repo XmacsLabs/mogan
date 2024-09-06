@@ -10,8 +10,9 @@
 ******************************************************************************/
 
 #include "basic.hpp"
+#include "tm_link.hpp"
 
-#if !(defined (QTTEXMACS) && (defined (OS_MINGW) || defined (QTPIPES)))
+#if !(defined (QTTEXMACS) && (defined (OS_MINGW) || defined (QTPIPES) || defined(OS_WASM)))
 
 #include "tm_link.hpp"
 #include "socket_notifier.hpp"
@@ -376,3 +377,10 @@ void pipe_callback (void *obj, void *info) {
 }
 
 #endif // !(defined (QTTEXMACS) && defined (OS_MINGW))
+
+#ifdef OS_WASM
+tm_link make_pipe_link (string cmd) { return tm_link(); }
+
+void close_all_pipes () {}
+void process_all_pipes () {}
+#endif

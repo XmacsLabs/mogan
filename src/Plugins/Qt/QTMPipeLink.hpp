@@ -44,4 +44,3 @@ public:
 };
 
 #endif // QTM_PIPE_LINK
-

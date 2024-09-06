@@ -13,6 +13,7 @@ triggers:
         - main
 
 variables:
+  XMAKE_MAIN_REPO: 'https://gitee.com/tboox/xmake-repo.git'
   XMAKE_BINARY_REPO: 'https://gitee.com/xmake-mirror/build-artifacts.git'
   XMAKE_ROOT: y
           

@@ -696,4 +696,3 @@ WinQTMPrinterSettings::availablePrinters() {
 }
 
 #endif
-

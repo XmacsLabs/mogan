@@ -45,7 +45,7 @@
 #include "Ghostscript/gs_utilities.hpp"
 #endif
 
-#ifdef PDF_RENDERER
+#ifdef USE_PLUGIN_PDF
 #include "Pdf/pdf_hummus_renderer.hpp"
 #endif
 
@@ -344,7 +344,7 @@ pdf_image_size (url image, int& w, int& h) {
 // we have two ways of finding pdf sizes
 // centralize here to ensure consistent determination;
 // prefer internal method (avoid calling gs)
-#ifdef PDF_RENDERER
+#ifdef USE_PLUGIN_PDF
   hummus_pdf_image_size (image, w, h);
   return;
 #endif

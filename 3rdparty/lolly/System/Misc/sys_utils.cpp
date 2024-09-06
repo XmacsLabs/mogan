@@ -13,7 +13,9 @@
 
 #if defined(OS_MINGW) || defined(OS_WIN)
 #include "Windows/win_sys_utils.hpp"
-#else
+#endif
+
+#if defined(OS_LINUX) || defined(OS_MACOS)
 #include "Unix/unix_sys_utils.hpp"
 #endif
 
@@ -59,8 +61,14 @@ string
 get_user_login () {
 #if defined(OS_MINGW) || defined(OS_WIN)
   return get_env ("USERNAME");
-#else
+#endif
+
+#if defined(OS_LINUX) || defined(OS_MACOS)
   return unix_get_login ();
+#endif
+
+#if defined(OS_WASM)
+  return "wasm_user";
 #endif
 }
 
@@ -70,12 +78,12 @@ get_user_name () {
   return lolly::win_get_username ();
 #endif
 
-#if defined(OS_WASM)
-  return "wasm_user_name";
-#endif
-
 #if defined(OS_LINUX) || defined(OS_MACOS)
   return unix_get_username ();
+#endif
+
+#if defined(OS_WASM)
+  return "wasm_user_name";
 #endif
 }
 
@@ -110,10 +118,14 @@ SN
 get_process_id () {
 #if defined(OS_MINGW) || defined(OS_WIN)
   return win_get_process_id ();
-#elif defined(OS_WASM)
-  return 1;
-#else
+#endif
+
+#if defined(OS_MACOS) || defined(OS_LINUX)
   return unix_get_process_id ();
+#endif
+
+#if defined(OS_WASM)
+  return 1;
 #endif
 }
 
@@ -127,10 +139,14 @@ evaluate_system (array<string> arg, array<int> fd_in, array<string> in,
 
 #if defined(OS_MINGW)
   int ret= win_system (arg, fd_in, in, fd_out, ptr);
-#elif defined(OS_WIN)
-  int               ret = -1;
-#else
+#endif
+
+#if defined(OS_LINUX) || defined(OS_MACOS)
   int ret= unix_system (arg, fd_in, in, fd_out, ptr);
+#endif
+
+#if defined(OS_WIN) || defined(OS_WASM)
+  int ret= -1;
 #endif
 
   return append (as_string (ret), out);

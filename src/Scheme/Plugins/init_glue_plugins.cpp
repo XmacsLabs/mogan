@@ -32,9 +32,10 @@
 #include "Xml/xml.hpp"
 #include "glue_xml.cpp"
 
+#ifndef OS_WASM
 bool
 supports_native_pdf () {
-#ifdef PDF_RENDERER
+#ifdef USE_PLUGIN_PDF
   return true;
 #else
   return false;
@@ -57,14 +58,17 @@ pdfhummus_version () {
 
 #include "glue_ghostscript.cpp"
 #include "glue_pdf.cpp"
+#endif
 
 void
 initialize_glue_plugins () {
   initialize_glue_bibtex ();
-  initialize_glue_ghostscript ();
-  initialize_glue_pdf ();
   initialize_glue_tex ();
   initialize_glue_tmdb ();
   initialize_glue_updater ();
   initialize_glue_xml ();
+#ifndef OS_WASM
+  initialize_glue_ghostscript ();
+  initialize_glue_pdf ();
+#endif
 }

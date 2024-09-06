@@ -18,12 +18,15 @@ analyze_test         rel_hashmap_test     tree_test
 
 ## 单元测试
 如上面显示，单元测试形如xxx_test，可以运行下列指令进行测试（运行前请进行构建，详细见[xmake](https://xmake.io)）：
+
+运行单个单元测试：
 ```
 xmake run xxx_test
+bin\test_only.bat xxx_test # on Windows
+bin/test_only xxx_test     # on Linux/macOS
 ```
 
-## 集成测试
-运行以下指令进行集成测试（运行前请进行构建，详细见[xmake](https://xmake.io)）：
+运行所有单元测试：
 ```
 xmake run --group=tests
 ```

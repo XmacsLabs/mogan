@@ -16,14 +16,17 @@ modification_test    parse_string_test    generic_tree_test
 analyze_test         rel_hashmap_test     tree_test
 ```
 
-## Unit Testing
+## Unit Tests
 As shown above, unit tests are in the format of xxx_test. You can run the following command to perform the tests (ensure you have built the code beforehand, see [xmake](https://xmake.io) for details):
+
+Run only one test:
 ```
 xmake run xxx_test
+bin\test_only.bat xxx_test # on Windows
+bin/test_only xxx_test     # on Linux/macOS
 ```
 
-## Integration Testing
-Run the following command for integration testing (make sure you have built the code beforehand, see [xmake](https://xmake.io) for details):
+Run all tests:
 ```
 xmake run --group=tests
 ```

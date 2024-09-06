@@ -2,22 +2,16 @@
 ${define QTTEXMACS}
 ${define SANITY_CHECKS}
 ${define OS_MINGW}
+${define OS_GNU_LINUX}
+${define OS_MACOS}
+${define OS_WASM}
+
 
 /* Define to 1 if the system has the type `intptr_t'. */
 ${define HAVE_INTPTR_T}
 
 /* Define to 1 if you have the <stdint.h> header file. */
 ${define HAVE_STDINT_H}
-
-
-/* L2 Kernel */
-
-/* Define to 1 if the system has the type `time_t'. */
-${define HAVE_TIME_T}
-
-/* Define to 1 if you have the `gettimeofday' function. */
-${define HAVE_GETTIMEOFDAY}
-
 
 /* check assertions in code */
 #define DEBUG_ASSERT 1
@@ -87,8 +81,6 @@ ${define LINKED_SQLITE3}
 
 ${define MACOSX_EXTENSIONS}
 
-${define OS_MACOS}
-
 ${define PDFHUMMUS_NO_TIFF}
 
 /* Disable fast memory allocator */
@@ -111,13 +103,15 @@ ${define NO_FAST_ALLOC}
 /* Define to the version of this package. */
 #define PACKAGE_VERSION ""
 
-${define PDF_RENDERER}
+${define USE_PLUGIN_PDF}
 
 ${define QTPIPES}
 
 ${define USE_QT_PRINTER}
 
 ${define USE_CURL}
+
+${define SANITY_CHECKS}
 
 #define SIZEOF_VOID_P ${SIZEOF_VOID_P} 
 

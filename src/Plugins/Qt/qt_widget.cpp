@@ -573,10 +573,18 @@ widget file_chooser_widget (command cmd, string type, string prompt) {
   if (headless_mode) return headless_widget ();
   return tm_new<qt_chooser_widget_rep> (cmd, type, prompt);
 }
+
+#if !defined (USE_QT_PRINTER)
+widget printer_widget (command cmd, url ps_pdf_file){
+    return widget();
+}
+#else
 widget printer_widget (command cmd, url ps_pdf_file) {
   if (headless_mode) return headless_widget ();
   return tm_new<qt_printer_widget_rep> (cmd, ps_pdf_file);
 }
+#endif
+
 widget texmacs_widget (int mask, command quit) {
   if (headless_mode) return headless_widget ();
   if (mask) return tm_new<qt_tm_widget_rep> (mask, quit);

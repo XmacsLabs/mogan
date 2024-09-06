@@ -24,7 +24,7 @@ add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
 add_repositories("liii-repo xmake")
 
-LOLLY_VERSION= "1.2.3"
+LOLLY_VERSION= "1.2.4"
 package("liii-lolly")
     set_homepage("https://github.com/XmacsLabs/lolly")
     set_description("Lolly is a C++ library")

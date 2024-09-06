@@ -5,40 +5,35 @@
  *  \date   2023
  */
 #include "a_lolly_test.hpp"
+#include "analyze.hpp"
+#include "string.hpp"
 #include "tm_timer.hpp"
 
-#include <cstring>
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "tbox/tbox.h"
 
 int
-get_timing_cumul (string rep) {
-  auto              out= as_charp (rep);
-  std::stringstream ss (out);
-  std::string       token;
+get_timing_cumul (string out) {
+  // out: Task 'task1' took 0 ms
+  // out: Task 'task2' took 12 ms
+  int  pos= 0;
+  int  result;
+  auto tokens= tokenize (out, " took ");
 
-  while (ss >> token) {
-    if (std::isdigit (token[0]) ||
-        (token[0] == '-' && std::isdigit (token[1]))) {
-      return std::stoi (token);
-    }
-  }
+  read_int (tokens[1], pos, result);
+  return result;
 }
 
 int
-get_timing_nr (string rep) {
-  auto              out= as_charp (rep);
-  std::stringstream ss (out);
-  std::string       token;
+get_timing_nr (string out) {
+  // out: Task 'task1' took 0 ms (0 invocations)
+  // out: Task 'task2' took 12 ms (1 invocations)
+  int  pos= 0;
+  int  result;
+  auto tokens= tokenize (out, " (");
 
-  while (ss >> token) {
-    if (token[0] == '(') {
-      std::string token1= token.substr (1);
-      return std::stoi (token1);
-    }
-  }
-  return -1;
+  if (N (tokens) == 1) return -1;
+  if (read_int (tokens[1], pos, result) == false) return -1;
+  return result;
 }
 
 bool
@@ -67,6 +62,26 @@ to_zero (tm_ostream& out) {
     }
   }
   return ans;
+}
+
+TEST_CASE ("if time_t and long 64 bit") { CHECK (sizeof (time_t) == 8); }
+
+TEST_CASE ("function get_sec_time") {
+  tb_timeval_t tp= {0};
+  tb_gettimeofday (&tp, tb_null);
+  time_t t1= tp.tv_sec;
+  time_t t2= get_sec_time ();
+
+  CHECK (t2 >= t1);
+}
+
+TEST_CASE ("function get_usec_time") {
+  tb_timeval_t tp= {0};
+  tb_gettimeofday (&tp, tb_null);
+  time_t t1= tp.tv_usec;
+  time_t t2= get_usec_time ();
+
+  CHECK (t2 >= t1);
 }
 
 TEST_CASE ("function raw_time") {
