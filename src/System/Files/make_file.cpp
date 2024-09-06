@@ -17,6 +17,7 @@
 #include "image_files.hpp"
 #include "tree_helper.hpp"
 #include "tm_block.hpp"
+#include "tmfs_url.hpp"
 
 /******************************************************************************
 * Make

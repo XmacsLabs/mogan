@@ -16,6 +16,7 @@
 #include "analyze.hpp"
 #include "scheme.hpp"
 #include "matrix.hpp"
+#include "tm_debug.hpp"
 
 #define BEGIN_MAGNIFY                                           \
   tree new_mag= as_string (env->magn * env->mgfy);              \

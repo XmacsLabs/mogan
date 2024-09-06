@@ -11,7 +11,10 @@
 
 #ifndef FILE_H
 #define FILE_H
+
 #include "url.hpp"
+#include "tm_url.hpp"
+#include "sys_utils.hpp"
 #include "tm_sys_utils.hpp"
 #include "analyze.hpp"
 
@@ -51,13 +54,13 @@ inline string sys_concretize (url u1) {
   return escape_sh (concretize (u1)); }
 
 inline void system (string which, url u1) {
-  system (which * " " * sys_concretize (u1)); }
+  lolly::system (which * " " * sys_concretize (u1)); }
 inline void system (string which, url u1, url u2) {
-  system (which * " " * sys_concretize (u1) * " " * sys_concretize (u2)); }
+  lolly::system (which * " " * sys_concretize (u1) * " " * sys_concretize (u2)); }
 inline void system (string which, url u1, const char* post) {
-  system (which * " " * sys_concretize (u1) * " " * post); }
+  lolly::system (which * " " * sys_concretize (u1) * " " * post); }
 inline void system (string which, url u1, const char* sep, url u2) {
-  system (which * " " * sys_concretize (u1) * " " * sep *
+  lolly::system (which * " " * sys_concretize (u1) * " " * sep *
 	          " " * sys_concretize (u2)); }
 inline string eval_system (string which, url u1) {
   return eval_system (which * " " * escape_sh (concretize (u1))); }

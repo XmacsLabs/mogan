@@ -276,7 +276,7 @@ try_latex_export (tree doc, object opts, url src, url dest) {
     "cd " * sys_concretize (head (dest)) *
     "; pdflatex -interaction=batchmode " * as_system_string (tail (dest));
   //cout << cmd << LF;
-  system (cmd);
+  lolly::system (cmd);
   url log= glue (unglue (dest, N (suffix (dest))), "log");
   tree errs= get_latex_errors (log);
   tree r (TUPLE);

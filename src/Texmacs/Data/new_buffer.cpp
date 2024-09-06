@@ -19,6 +19,7 @@
 #include "new_document.hpp"
 #include "merge_sort.hpp"
 #include "tree_observer.hpp"
+#include "tmfs_url.hpp"
 
 
 array<tm_buffer> bufs;

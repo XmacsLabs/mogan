@@ -1,0 +1,4 @@
+.xmake/
+build/
+.vscode/
+doxyfile

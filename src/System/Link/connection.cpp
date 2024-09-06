@@ -25,6 +25,7 @@
 #include "Generic/input.hpp"
 #include "gui.hpp"
 #include "tree_helper.hpp"
+#include "tm_debug.hpp"
 
 static tree connection_retrieve (string name, string session);
 

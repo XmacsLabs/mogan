@@ -21,9 +21,11 @@
 #include "patch.hpp"
 #include "path.hpp"
 #include "sys_utils.hpp"
+#include "tmfs_url.hpp"
 #include "tree.hpp"
 #include "tree_cursor.hpp"
 #include "tree_observer.hpp"
+#include "url.hpp"
 
 tree
 var_apply (tree &t, modification m) {
@@ -56,6 +58,11 @@ tmscm
 patchP (tmscm t) {
   bool b= tmscm_is_patch (t);
   return bool_to_tmscm (b);
+}
+
+url
+url_ref (url u, int i) {
+  return u[i];
 }
 
 string

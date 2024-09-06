@@ -14,6 +14,8 @@
 #include "tt_face.hpp"
 #include "tt_file.hpp"
 #include "tm_timer.hpp"
+#include "tm_debug.hpp"
+#include "tm_url.hpp"
 
 #ifdef USE_FREETYPE
 

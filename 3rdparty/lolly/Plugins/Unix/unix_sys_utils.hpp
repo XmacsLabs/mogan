@@ -15,8 +15,6 @@
 #include "array.hpp"
 #include "string.hpp"
 
-int unix_system (string);
-
 int unix_system (array<string> arg, array<int> fd_in, array<string> str_in,
                  array<int> fd_out, array<string*> str_out);
 

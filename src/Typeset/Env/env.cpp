@@ -11,6 +11,8 @@
 
 #include "env.hpp"
 #include "iterator.hpp"
+#include "tm_url.hpp"
+
 extern hashmap<string,int> default_var_type;
 void initialize_default_var_type ();
 extern hashmap<string,tree> default_env;

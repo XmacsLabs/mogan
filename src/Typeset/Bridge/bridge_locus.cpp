@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "bridge.hpp"
+#include "tm_debug.hpp"
 
 class bridge_locus_rep: public bridge_rep {
 protected:

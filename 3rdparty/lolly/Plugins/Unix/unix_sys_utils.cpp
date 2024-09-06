@@ -21,13 +21,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int
-unix_system (string s) {
-  c_string _s (s * " > /dev/null 2>&1");
-  int      ret= system (_s);
-  return ret;
-}
-
 /******************************************************************************
  * Evaluation via specified file descriptors
  ******************************************************************************/

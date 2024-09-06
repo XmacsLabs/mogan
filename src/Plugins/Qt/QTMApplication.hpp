@@ -18,6 +18,7 @@
 #include "string.hpp"
 #include "sys_utils.hpp"
 #include "url.hpp"
+#include "tm_url.hpp"
 #include "renderer.hpp"
 
 #include <QApplication>

@@ -1,0 +1,49 @@
+version: '1.0'
+name: ci-mingw
+displayName: ci-mingw
+triggers:
+  trigger: auto
+  pr:
+    branches:
+      precise:
+        - main
+  push:
+    branches:
+      precise:
+        - main
+
+variables:
+  XMAKE_MAIN_REPO: 'https://gitee.com/XmacsLabs/xmake-repo.git'
+  XMAKE_BINARY_REPO: 'https://gitee.com/xmake-mirror/build-artifacts.git'
+  XMAKE_ROOT: y
+          
+
+stages:
+  - name: build_and_test
+    displayName: build_and_test
+    strategy: fast
+    trigger: auto
+    executor: []
+    steps:
+      - step: build@gcc
+        name: build
+        displayName: Build and Test
+        gccVersion: '9.4'
+        commands:
+          - apt-get update
+          - apt-get install -y software-properties-common 
+          - /usr/bin/add-apt-repository ppa:xmake-io/xmake
+          - apt-get update
+          - apt-get install -y xmake cmake g++-mingw-w64-x86-64
+          - update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
+          - xmake repo -u
+          - xmake config -vD --plat=mingw --yes
+          - xmake build -vD liblolly
+          - xmake --yes -vD --group=tests -j 1 build
+        caches: [
+          build/.build_cache,
+        ]
+        notify: []
+        strategy:
+          retry: '0'
+          stepTimeout: 30

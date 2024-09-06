@@ -10,6 +10,7 @@
 ******************************************************************************/
 
 #include "file.hpp"
+#include "tmfs_url.hpp"
 #include "sys_utils.hpp"
 #include "analyze.hpp"
 #include "hashmap.hpp"

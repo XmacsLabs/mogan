@@ -23,6 +23,7 @@
 #include "socket_notifier.hpp"
 #include "sys_utils.hpp"
 #include "tm_link.hpp"
+#include "sys_utils.hpp"
 
 server* the_server     = NULL;
 bool    texmacs_started= false;
@@ -287,5 +288,5 @@ tm_server_rep::quit () {
 
 void
 tm_server_rep::shell (string s) {
-  system (s);
+  lolly::system (s);
 }

@@ -8,6 +8,11 @@ if is_plat("mingw") and is_host("windows") then
     set_toolchains("mingw@mingw-w64")
 end
 
+if is_plat("wasm") then
+    add_requires("emscripten")
+    set_toolchains("emcc@emscripten")
+end
+
 includes("check_cxxtypes.lua")
 configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
 configvar_check_cxxtypes("HAVE_TIME_T", "time_t", {includes = {"memory"}})
@@ -27,6 +32,7 @@ configvar_check_cxxsnippets(
         static_assert(sizeof(void*) == 8, "");]])
 
 --- require packages
+add_requires("tbox dev", {system=false, micro=true})
 add_requires("doctest 2.4.11", {system=false})
 if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
     add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
@@ -69,6 +75,7 @@ local lolly_includedirs = {
     "Data/String",
     "Data/Scheme",
     "System/Classes",
+    "System/Files",
     "System/IO",
     "System/Memory",
     "System/Misc",
@@ -89,6 +96,7 @@ target("liblolly") do
     set_basename("lolly")
 
     --- dependent packages
+    add_packages("tbox")
     if not is_plat("wasm") then
         add_packages("libcurl")
         add_includedirs("Plugins/Curl")
@@ -153,7 +161,6 @@ target("liblolly") do
     add_headerfiles("Data/String/(*.hpp)")
     add_headerfiles("Data/Scheme/(*.hpp)")
     add_headerfiles("Plugins/Curl/(*.hpp)", {prefixdir = "Curl"})
-    add_headerfiles("Plugins/Unix/(*.hpp)", {prefixdir = "Unix"})
     add_headerfiles("Plugins/Windows/(*.hpp)", {prefixdir = "Windows"})
     add_includedirs(lolly_includedirs)
     add_files(lolly_files)
@@ -169,6 +176,7 @@ function add_test_target(filepath)
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
 
+        add_packages("tbox")
         add_packages("doctest")
         if not is_plat("wasm") then
             add_packages("libcurl")
@@ -176,6 +184,14 @@ function add_test_target(filepath)
 
         if is_plat("linux") then
             add_syslinks("stdc++", "m")
+        end
+
+        if is_plat("windows") then
+            add_ldflags("/LTCG")
+        end
+
+        if is_plat("windows") or is_plat("mingw") then
+            add_syslinks("secur32")
         end
 
         add_includedirs("$(buildir)/L1")
