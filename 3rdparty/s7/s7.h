@@ -1,10 +1,10 @@
 #ifndef S7_H
 #define S7_H
 
-#define S7_VERSION "10.11"
-#define S7_DATE "2-July-2024"
+#define S7_VERSION "10.12"
+#define S7_DATE "16-Aug-2024"
 #define S7_MAJOR_VERSION 10
-#define S7_MINOR_VERSION 11
+#define S7_MINOR_VERSION 12
 
 #include <stdint.h>           /* for int64_t */
 
@@ -508,6 +508,9 @@ s7_pointer s7_make_function(s7_scheme *sc, const char *name, s7_function fnc, s7
 s7_pointer s7_make_safe_function(s7_scheme *sc, const char *name, s7_function fnc, s7_int required_args, s7_int optional_args, bool rest_arg, const char *doc);
 s7_pointer s7_make_typed_function(s7_scheme *sc, const char *name, s7_function f,
 				  s7_int required_args, s7_int optional_args, bool rest_arg, const char *doc, s7_pointer signature);
+s7_pointer s7_make_typed_function_with_environment(s7_scheme *sc, const char *name, s7_function f,
+						   s7_int required_args, s7_int optional_args, bool rest_arg, const char *doc, 
+						   s7_pointer signature, s7_pointer let);
 
 /* arglist or body possibly unsafe: */
 s7_pointer s7_define_function(s7_scheme *sc, const char *name, s7_function fnc, s7_int required_args, s7_int optional_args, bool rest_arg, const char *doc);
@@ -908,6 +911,7 @@ bool s7_is_bignum(s7_pointer obj);
  *
  *        s7 changes
  *
+ * 2-July:    s7_make_typed_function_with_environment.
  * 31-May:    *s7* 'symbol-printer and 'symbol-quote?.
  * 24-May:    symbol-initial-value, s7_symbol_initial_value, and setters.
  * 24-Apr:    port-string.

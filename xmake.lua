@@ -43,7 +43,7 @@ package("liii-lolly")
     end)
 package_end()
 
-S7_VERSION = "20240702"
+S7_VERSION = "20240816"
 package("liii-s7")
     set_homepage("https://ccrma.stanford.edu/software/snd/snd/s7.html")
     set_description("s7 is a Scheme interpreter intended as an extension language for other applications.")
