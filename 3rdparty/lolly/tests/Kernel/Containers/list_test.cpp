@@ -9,10 +9,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-
-#include "doctest/doctest.h"
-
+#include "a_lolly_test.hpp"
 #include "list.hpp"
 #include "string.hpp"
 

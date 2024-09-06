@@ -103,7 +103,7 @@ bool is_rooted_blank (url u);
 
 /******************************************************************************
  * url routines by label
- * + "" (empty string): ./../...
+ * + "" (empty string): ., .., ..., /, /tmp
  * + none: invalid url
  * + root: the url http://gnu.org yields (concat (root "http") "gnu.org");
  * + concat: a/b/c is represented as (concat "a" (concat "b" "c"));
@@ -192,10 +192,7 @@ url url_system (string dir, string name);
 url url_standard (string name);
 url url_standard (string dir, string name);
 
-inline url
-url_pwd () {
-  return url_system ("$PWD");
-}
+url url_pwd ();
 
 url url_ramdisc (string contents); // ramdisc with contents contents
 

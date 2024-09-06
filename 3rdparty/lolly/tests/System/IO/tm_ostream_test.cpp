@@ -5,9 +5,7 @@
  *  \date   2023
  */
 
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-
-#include "doctest/doctest.h"
+#include "a_lolly_test.hpp"
 #include "string.hpp"
 #include "tm_ostream.hpp"
 
@@ -179,4 +177,11 @@ TEST_CASE ("operator <<") {
     t1 << val;
     CHECK (test_same (t1, "Hello, world!"));
   }
+}
+
+TEST_CASE ("cout/cerr") {
+  cout << "Lolly" << LF;
+  cout << "棒棒糖" << LF;
+  cerr << "Lolly" << LF;
+  cerr << "棒棒糖" << LF;
 }

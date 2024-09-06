@@ -12,19 +12,12 @@
 #include "url.hpp"
 #include "analyze.hpp"
 #include "sys_utils.hpp"
+#include "tbox/tbox.h"
 #include "tmfs_url.hpp"
 #include <ctype.h>
 
 #if defined(OS_MINGW) || defined(OS_WIN)
 #define WINPATHS
-#endif
-
-#ifdef WINPATHS
-#define URL_CONCATER '\\'
-#define URL_SEPARATOR ';'
-#else
-#define URL_CONCATER '/'
-#define URL_SEPARATOR ':'
 #endif
 
 static tree
@@ -287,6 +280,17 @@ url_standard (string name) {
 url
 url_standard (string dir, string name) {
   return url_standard (dir) * url_standard (name);
+}
+
+url
+url_pwd () {
+  char path[TB_PATH_MAXN];
+  if (tb_directory_current (path, TB_PATH_MAXN)) {
+    return url_system (path);
+  }
+  else {
+    TM_FAILED ("FAILED to get pwd");
+  }
 }
 
 /******************************************************************************

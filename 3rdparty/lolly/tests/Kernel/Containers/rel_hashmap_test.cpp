@@ -1,6 +1,4 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-
-#include "doctest/doctest.h"
+#include "a_lolly_test.hpp"
 #include "rel_hashmap.hpp"
 
 TEST_CASE ("test contains") {

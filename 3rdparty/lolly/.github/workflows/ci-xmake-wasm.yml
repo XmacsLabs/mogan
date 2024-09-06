@@ -1,0 +1,94 @@
+name: Build on wasm
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Kernel/**'
+      - 'System/**'
+      - 'tests/**'
+      - '.github/workflows/ci-xmake-wasm.yml'
+      - 'xmake.lua' 
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'Kernel/**'
+      - 'System/**'
+      - 'tests/**'
+      - '.github/workflows/ci-xmake-wasm.yml'
+      - 'xmake.lua' 
+  workflow_dispatch:
+
+jobs:
+  linuxbuild:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Install dependencies
+        run: | 
+          sudo apt-get update
+          sudo apt-get install -y elvish
+      # Force xmake to a specific folder (for cache)
+      - name: Set xmake global dir
+        run: |
+          echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/.xmake-global" >> "${{ github.env }}"
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: branch@dev
+      - name: update repo
+        run: |
+          xmake repo -u
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: cache xmake
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+            ${{ github.workspace }}/build/.build_cache
+          key: ${{ runner.os }}-wasm-${{ hashFiles('**/xmake.lua') }}
+      - name: config
+        run: xmake config --yes -p wasm -vD
+      - name: build
+        run: xmake build --yes -vD
+      - name: test
+        run: elvish bin/test_wasm
+  windowsbuild:
+    runs-on: windows-2019
+    env:
+      # Force xmake to a specific folder (for cache)
+      XMAKE_GLOBALDIR: "${{ github.workspace }}\\.xmake-global"
+    steps:
+      - name: Run the installer as administrator
+        run: |
+          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+      - name: Scoop Path
+        run: |
+          echo "C:\Users\runneradmin\scoop\shims" > $Env:GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          scoop install main/make
+          scoop install main/uutils-coreutils
+          scoop install main/elvish@0.19.1
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: branch@dev
+      - name: update repo
+        run: |
+          xrepo update-repo
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: cache packages from xrepo
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+          key: ${{ runner.os }}-wasm-${{ hashFiles('**/xmake.lua') }}
+      - name: config
+        run: xmake config --yes -p wasm -vD
+      - name: build
+        run: xmake build --yes -vD
+      - name: test
+        run: elvish bin/test_wasm
+

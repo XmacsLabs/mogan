@@ -21,12 +21,14 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+SN
+unix_get_process_id () {
+  return getpid ();
+}
+
 /******************************************************************************
  * Evaluation via specified file descriptors
  ******************************************************************************/
-
-#if !defined(OS_MINGW)
-
 extern char** environ;
 
 // exception safe mutex
@@ -306,21 +308,6 @@ unix_system (array<string> arg, array<int> fd_in, array<string> str_in,
   if (wret < 0 || WIFEXITED (status) == 0) return -1;
   return WEXITSTATUS (status);
 }
-
-#else
-
-int
-unix_system (array<string> arg, array<int> fd_in, array<string> str_in,
-             array<int> fd_out, array<string*> str_out) {
-  (void) arg;
-  (void) fd_in;
-  (void) str_in;
-  (void) fd_out;
-  (void) str_out;
-  TM_FAILED ("unsupported system call");
-}
-
-#endif
 
 string
 unix_get_login () {

@@ -200,7 +200,7 @@ picture_is_cached (url file_name, int w, int h, tree eff, int pixel) {
   (void) pixel;
   tree key= tuple (file_name->t, as_string (w), as_string (h), eff);
   if (!picture_cache->contains (key)) return false;
-  int loaded= last_modified (file_name, false);
+  int loaded= last_modified (file_name);
   int cached= picture_stamp [key];
   if (cached >= loaded) 
     return true;
@@ -221,7 +221,7 @@ cached_load_picture (url file_name, int w, int h, tree eff,
   //cout << "Loading " << key << "\n";
   picture pic= load_picture (file_name, w, h, eff, pixel);
   if (permanent || picture_count[key] > 0) {
-    int pic_modif= last_modified (file_name, false);
+    int pic_modif= last_modified (file_name);
     picture_cache (key)= pic;
     picture_stamp (key)= pic_modif;
   }

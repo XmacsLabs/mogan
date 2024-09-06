@@ -798,6 +798,103 @@ function main()
                     "url"
                 }
             },
+            -- System/Files/file
+            {
+                scm_name = "url-regular?",
+                cpp_name = "is_regular",
+                ret_type = "bool",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "url-directory?",
+                cpp_name = "is_directory",
+                ret_type = "bool",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "url-link?",
+                cpp_name = "is_symbolic_link",
+                ret_type = "bool",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "url-newer?",
+                cpp_name = "is_newer",
+                ret_type = "bool",
+                arg_list = {
+                    "url",
+                    "url"
+                }
+            },
+            {
+                scm_name = "url-size",
+                cpp_name = "file_size",
+                ret_type = "int",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "url-last-modified",
+                cpp_name = "last_modified",
+                ret_type = "int",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "url-temp",
+                cpp_name = "url_temp",
+                ret_type = "url"
+            },
+            {
+                scm_name = "system-move",
+                cpp_name = "move",
+                ret_type = "void",
+                arg_list = {
+                    "url",
+                    "url"
+                }
+            },
+            {
+                scm_name = "system-copy",
+                cpp_name = "copy",
+                ret_type = "void",
+                arg_list = {
+                    "url",
+                    "url"
+                }
+            },
+            {
+                scm_name = "system-remove",
+                cpp_name = "remove",
+                ret_type = "void",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "system-mkdir",
+                cpp_name = "mkdir",
+                ret_type = "void",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "system-rmdir",
+                cpp_name = "rmdir",
+                ret_type = "void",
+                arg_list = {
+                    "url"
+                }
+            },
         }
     }
 end

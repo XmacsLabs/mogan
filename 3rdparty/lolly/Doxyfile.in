@@ -7,7 +7,7 @@
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = @PACKAGE@
-PROJECT_NUMBER         = 0.1
+PROJECT_NUMBER         = @LOLLY_VERSION@
 PROJECT_BRIEF          =
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = @DOXYGEN_DIR@
@@ -129,7 +129,7 @@ INPUT_ENCODING         = UTF-8
 INPUT_FILE_ENCODING    =
 FILE_PATTERNS          = 
 RECURSIVE              = YES
-EXCLUDE                = 
+EXCLUDE                = doxygen-awesome-css/ build/ node_modules/
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = 
 EXCLUDE_SYMBOLS        =
@@ -169,7 +169,7 @@ HTML_FILE_EXTENSION    = .html
 HTML_HEADER            =
 HTML_FOOTER            =
 HTML_STYLESHEET        =
-HTML_EXTRA_STYLESHEET  =
+HTML_EXTRA_STYLESHEET  = @HTML_EXTRA_STYLESHEET@
 HTML_EXTRA_FILES       =
 HTML_COLORSTYLE        = AUTO_LIGHT
 HTML_COLORSTYLE_HUE    = 220

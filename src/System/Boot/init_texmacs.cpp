@@ -26,7 +26,6 @@
 #include <direct.h>
 #endif
 
-extern string main_tmp_dir;
 int  install_status   = 0;
 bool use_which        = false;
 bool use_locate       = false;
@@ -118,27 +117,13 @@ process_running (int pid) {
 static void
 clean_temp_dirs () {
   bool err= false;
+  url main_tmp_dir= url_system ("$TMP") * url (".lolly");
   array<string> a= read_directory (main_tmp_dir, err);
-#ifndef OS_MINGW
   for (int i=0; i<N(a); i++)
     if (is_int (a[i]))
       if (!process_running (as_int (a[i])))
         if (a[i] != as_string ((int) getpid ()))
-          system ("rm -rf", url (main_tmp_dir) * url (a[i]));
-#else
-  /* delete the directories after 7 days */
-  time_t ts = as_int (basename (url_temp_dir_sub ())) - (3600 * 24 * 7 );
-  for (int i=0; i<N(a); i++)     
-    if (is_int (a[i])) {
-      time_t td= as_int (a[i]);
-      if (td < ts) {
-        url cur = url (main_tmp_dir) * url (a[i]);
-        array<string> f= read_directory (cur, err);
-        for (int j=0; j<N(f); j++) remove (cur * url (f[j]));
-        rmdir (as_charp (as_string (cur)));
-      }
-    }
-#endif
+          rmdir (url (main_tmp_dir) * url (a[i]));
 }
 
 /******************************************************************************
@@ -186,9 +171,6 @@ init_user_dirs () {
   make_dir ("$TEXMACS_HOME_PATH/system/tmp");
   make_dir ("$TEXMACS_HOME_PATH/texts");
   make_dir ("$TEXMACS_HOME_PATH/users");
-  change_mode ("$TEXMACS_HOME_PATH/server", 7 << 6);
-  change_mode ("$TEXMACS_HOME_PATH/system", 7 << 6);
-  change_mode ("$TEXMACS_HOME_PATH/users", 7 << 6);
   clean_temp_dirs ();
 }
 

@@ -17,6 +17,7 @@
 
 #include "analyze.hpp"
 #include "base64.hpp"
+#include "file.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
 #include "path.hpp"

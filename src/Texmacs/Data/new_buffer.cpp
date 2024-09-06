@@ -543,9 +543,9 @@ buffer_export (url name, url dest, string fm) {
   ASSERT (vw != NULL, "view expected");
 
   if (fm == "postscript" || fm == "pdf") {
-    int old_stamp= last_modified (dest, false);
+    int old_stamp= last_modified (dest);
     vw->ed->print_to_file (dest);
-    int new_stamp= last_modified (dest, false);
+    int new_stamp= last_modified (dest);
     return new_stamp <= old_stamp;
   }
 

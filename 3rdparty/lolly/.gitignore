@@ -2,3 +2,6 @@
 build/
 .vscode/
 doxyfile
+coverage.info
+coverage/
+

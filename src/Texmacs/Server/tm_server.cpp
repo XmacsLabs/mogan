@@ -23,7 +23,7 @@
 #include "socket_notifier.hpp"
 #include "sys_utils.hpp"
 #include "tm_link.hpp"
-#include "sys_utils.hpp"
+#include "tm_sys_utils.hpp"
 
 server* the_server     = NULL;
 bool    texmacs_started= false;

@@ -13,12 +13,8 @@
 #include "fast_alloc.hpp"
 #include "string.hpp"
 
-#if (defined OS_MINGW || defined OS_WIN)
-#include "nowide/convert.hpp"
-#include "nowide/iostream.hpp"
-#include <string.h>
-FILE* fstdout;
-FILE* fstderr;
+#if defined(OS_WIN) || defined(OS_MINGW)
+#include <windows.h>
 #endif
 
 /******************************************************************************
@@ -67,10 +63,6 @@ std_ostream_rep::std_ostream_rep (char* fn)
     : file (0), is_w (false), is_mine (false) {
   file= fopen (fn, "w");
   if (file) {
-#if (defined OS_MINGW || defined OS_WIN)
-    if (strcmp (fn, "stdout") == 0) fstdout= file;
-    if (strcmp (fn, "stderr") == 0) fstderr= file;
-#endif
     is_w   = true;
     is_mine= true;
   }
@@ -82,6 +74,9 @@ std_ostream_rep::std_ostream_rep (char* fn)
 
 std_ostream_rep::std_ostream_rep (FILE* f)
     : file (0), is_w (false), is_mine (false) {
+#if defined(OS_WIN) || defined(OS_MINGW)
+  SetConsoleOutputCP (65001);
+#endif
   file= f;
   if (file) is_w= true;
   else is_w= false;
@@ -99,18 +94,7 @@ std_ostream_rep::is_writable () const {
 
 void
 std_ostream_rep::write (const char* s) {
-#if (defined OS_MINGW || defined OS_WIN)
-  if (file == fstdout) {
-    nowide::cout << s;
-    nowide::cout.flush ();
-  }
-  else if (file == fstderr) {
-    nowide::cerr << s;
-    nowide::cerr.flush ();
-  }
-  else
-#endif
-      if (file && is_w) {
+  if (file && is_w) {
     if (0 <= fprintf (file, "%s", s)) {
       const char* c= s;
       while (*c != 0 && *c != '\n')

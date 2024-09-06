@@ -13,6 +13,7 @@
 #include "file.hpp"
 #include "new_buffer.hpp"
 #include "sys_utils.hpp"
+#include "tm_debug.hpp"
 #include "tree_helper.hpp"
 
 #include "PDFWriter/InputFileStream.h"

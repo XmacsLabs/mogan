@@ -4,11 +4,8 @@
  *  \author YuanYe
  *  \date   2023
  */
-
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-
+#include "a_lolly_test.hpp"
 #include "blackbox.hpp"
-#include "doctest/doctest.h"
 #include "string.hpp"
 
 blackbox b0;

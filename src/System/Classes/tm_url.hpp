@@ -21,6 +21,7 @@ bool   is_secure (url u);            // is u secure?
 * url resolution
 ******************************************************************************/
 
+bool url_test (url u, string filter);
 url  complete (url u, string filter= "fr"); // wildcard completion
 url  resolve (url u, string filter= "fr");  // find first match only
 url  resolve_in_path (url u);               // find file in path

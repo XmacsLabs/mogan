@@ -15,6 +15,8 @@
 #include "array.hpp"
 #include "string.hpp"
 
+SN win_get_process_id ();
+
 #ifdef OS_MINGW
 int win_system (array< ::string> arg, array<int> fd_in, array< ::string> str_in,
                 array<int> fd_out, array< ::string*> str_out);

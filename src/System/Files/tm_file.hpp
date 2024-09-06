@@ -17,20 +17,14 @@
 #include "tm_url.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
+#include "tm_sys_utils.hpp"
 
 
-inline string sys_concretize (url u1) {
-  return escape_sh (concretize (u1)); }
-
-inline void system (string which, url u1) {
-  lolly::system (which * " " * sys_concretize (u1)); }
-inline void system (string which, url u1, url u2) {
-  lolly::system (which * " " * sys_concretize (u1) * " " * sys_concretize (u2)); }
-inline void system (string which, url u1, const char* post) {
-  lolly::system (which * " " * sys_concretize (u1) * " " * post); }
-inline void system (string which, url u1, const char* sep, url u2) {
-  lolly::system (which * " " * sys_concretize (u1) * " " * sep *
-	          " " * sys_concretize (u2)); }
+inline string sys_concretize (url u1) { return escape_sh (concretize (u1)); }
+void system (string which, url u1);
+void system (string which, url u1, url u2);
+void system (string which, url u1, const char* post);
+void system (string which, url u1, const char* sep, url u2);
 inline string eval_system (string which, url u1) {
   return eval_system (which * " " * escape_sh (concretize (u1))); }
 inline string eval_system (string which, url u1, url u2) {
@@ -51,10 +45,6 @@ void string_save (string s, url u);
 bool append_string (url u, string s, bool fatal= false);
 void string_append_to_file (string s, url u);
 void append_to (url what, url to);
-
-bool is_of_type (url name, string filter);
-int  file_size (url u);
-int  last_modified (url u, bool cache_flag= true);
 
 url  url_numbered (url dir, string prefix, string postfix, int i=1);
 url  url_scratch (string prefix="no_name_", string postfix=".tm", int i=1);

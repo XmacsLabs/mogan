@@ -15,6 +15,7 @@
 #include "file.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
+#include "tm_debug.hpp"
 
 #ifndef KERNEL_L3
 #include "convert.hpp" // tree_to_texmacs (should not belong here)

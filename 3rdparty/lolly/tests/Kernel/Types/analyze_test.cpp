@@ -1,7 +1,4 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-
-#include "doctest/doctest.h"
-
+#include "a_lolly_test.hpp"
 #include "analyze.hpp"
 
 TEST_CASE ("test is alpha") {
@@ -137,4 +134,9 @@ TEST_CASE ("test_is_binary_digit") {
       CHECK (!is_binary_digit (c));
     }
   }
+}
+
+TEST_CASE ("replace") {
+  CHECK_EQ (replace ("a-b", "-", "_") == "a_b", true);
+  CHECK_EQ (replace ("a-b-c", "-", "_") == "a_b_c", true);
 }

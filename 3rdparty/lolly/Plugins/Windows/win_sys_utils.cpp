@@ -12,7 +12,12 @@
 #include "win_sys_utils.hpp"
 #include "analyze.hpp"
 #include "tm_timer.hpp"
-#include "win_utf8_compat.hpp"
+#include <windows.h>
+
+SN
+win_get_process_id () {
+  return GetCurrentProcessId ();
+}
 
 #ifdef OS_MINGW
 #include "spawn.hpp"
@@ -132,15 +137,11 @@ namespace lolly {
 string
 win_get_username () {
   const int MAX_LEN= 100;
-  WCHAR     buffer[MAX_LEN];
-  DWORD     len;
-
-  // This API must be called twice, otherwise it returns an empty use name
-  GetUserNameExW (NameDisplay, buffer, &len);
-  GetUserNameExW (NameDisplay, buffer, &len);
-
+  char      buffer[MAX_LEN]; // it is in UTF-16
+  ULONG     len;
+  GetUserNameExA (NameDisplay, buffer, &len);
   if (len == 0) return string ("");
-  else return string (nowide::narrow (buffer).c_str ());
+  else return string (buffer);
 }
 
 } // namespace lolly

@@ -13,6 +13,7 @@
 #define TM_TEST_BASE_HPP
 
 #include "string.hpp"
+#include "sys_utils.hpp"
 
 void
 qcompare (string actual, string expected);

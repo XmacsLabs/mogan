@@ -14,7 +14,26 @@
 
 #include "url.hpp"
 
-bool is_directory (string path);
-bool is_directory (file_url u);
+bool is_directory (url u);
+bool is_regular (url u);
+bool is_symbolic_link (url u);
+bool is_newer (url which, url than);
+bool is_of_type (url name, string filter);
+
+int file_size (url u);
+int last_modified (url u);
+
+array<string> read_directory (url u, bool& error_flag);
+
+void mkdir (url u);
+void make_dir (url which);
+void rmdir (url u);
+
+url url_temp_dir ();
+url url_temp (string suffix= "");
+
+void remove (url u);
+void move (url u1, url u2);
+void copy (url u1, url u2);
 
 #endif

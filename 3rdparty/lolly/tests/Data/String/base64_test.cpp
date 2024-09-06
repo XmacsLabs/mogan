@@ -4,11 +4,8 @@
  *  \author charonxin
  *  \date   2023
  */
-
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-
+#include "a_lolly_test.hpp"
 #include "base64.hpp"
-#include "doctest/doctest.h"
 
 TEST_CASE ("encode base64") {
   CHECK_EQ (encode_base64 ("") == "", true);

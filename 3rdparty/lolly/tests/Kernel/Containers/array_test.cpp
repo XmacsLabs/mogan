@@ -1,7 +1,5 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-
+#include "a_lolly_test.hpp"
 #include "array.hpp"
-#include "doctest/doctest.h"
 #include "string.hpp"
 
 static array<int>

@@ -19,11 +19,13 @@
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_url.hpp"
+#include "tmfs_url.hpp"
 #include "tree.hpp"
 
 #include "glue_file.cpp"
 #include "glue_misc.cpp"
 #include "glue_url.cpp"
+#include "scheme.hpp"
 
 tmscm
 urlP (tmscm t) {
