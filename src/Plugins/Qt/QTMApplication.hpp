@@ -124,7 +124,11 @@ public:
     QApplication (argc, argv) {
       init_palette (this);
       init_style_sheet (this);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5,15,0))
       QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
+#endif
+
 #if (QT_VERSION < 0x060000)
       if (!retina_manual) {
         qreal ratio  = QGuiApplication::primaryScreen()->devicePixelRatio ();
