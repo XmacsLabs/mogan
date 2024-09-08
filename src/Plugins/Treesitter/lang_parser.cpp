@@ -14,16 +14,29 @@
 #include "observers.hpp"
 #include "path.hpp"
 #include "tm_timer.hpp"
+#include "tree_helper.hpp"
+#include <moebius/drd/drd_std.hpp>
 #include <moebius/tree_label.hpp>
+#include <moebius/vars.hpp>
+
+using namespace moebius;
+using moebius::drd::the_drd;
 
 extern tree the_et;
 using moebius::make_tree_label;
 
 lang_parser::lang_parser (string lang, string lang_id) {
   // TODO: Dynamic loading of shared lib and multilingual switching
-  ast_parser= ts_parser_new ();
-  if (lang_id == "cpp") ts_lang= tree_sitter_cpp ();
-  else if (lang_id == "scheme") ts_lang= tree_sitter_scheme ();
+  ast_parser           = ts_parser_new ();
+  string code_node_name= "scm";
+  if (lang_id == "cpp") {
+    ts_lang       = tree_sitter_cpp ();
+    code_node_name= "cpp";
+  }
+  else if (lang_id == "scheme") {
+    ts_lang       = tree_sitter_scheme ();
+    code_node_name= "scm";
+  }
   else {
     // TODO: A fallback tree sitter impl is needed
     ts_lang= tree_sitter_scheme ();
@@ -31,12 +44,6 @@ lang_parser::lang_parser (string lang, string lang_id) {
   // cout << lang << " parser created\n";
 
   ts_parser_set_language (ast_parser, ts_lang);
-
-  tree lang_tree (make_tree_label (lang));
-  lang_op= lang_tree->op;
-
-  tree lang_code_tree (make_tree_label (lang * "-code"));
-  lang_code_op= lang_code_tree->op;
 }
 
 void
@@ -74,57 +81,61 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
   change_line_pos= array<int> ();
   leaf_tree_nodes= array<tree> ();
 
-  tree root     = t;
-  path father_ip= obtain_ip (t);
-  // cout << "[Input]Current: " << father_ip << " Self:" << root << "\n";
-  while (root->op != lang_op && root->op != lang_code_op && N (father_ip) > 1) {
-    // cout << "Father: " << father_ip << " Root:" << root << " the_et " <<
-    // the_et << LF;
-    father_ip= father_ip->next;
-    root     = tree (subtree (the_et, reverse (father_ip)));
+  tree root      = t;
+  path father_ip = obtain_ip (t);
+  path last_ip   = father_ip;
+  int  tree_index= 0;
+
+  while (N (father_ip) > 1) {
+    father_ip = father_ip->next;
+    tree_index= reverse (last_ip)[N (father_ip)];
+    if (tree_index < 0) {
+      // cout << "tree_index < 0: " << tree_index << LF;
+      tree_index= 0;
+    }
+    last_ip= father_ip;
+    root   = tree (subtree (the_et, reverse (father_ip)));
+    // cout << "Father: " << father_ip << " Root:" << root << LF;
+    if (!is_atomic (root)) {
+      tree env_child= the_drd->get_env_child (root, tree_index, MODE, "");
+      // cout << "Env Child: " << env_child << " tree_index" << tree_index <<
+      // LF;
+      if (env_child == "prog") {
+        root= root[tree_index];
+        // cout << "Tree Index: " << tree_index << " Root: " << root << LF;
+        break;
+      }
+    }
   }
-  // cout << "[Result]Father: " << father_ip <<
-  // " Root: " << root <<
-  // " N(the_et):  " << N(the_et) << LF;
-
-  // if(N(the_et) > 1){
-  //   cout << the_et << LF;
+  // if(N(father_ip) == 1){
+  //   cout << "Can not meet Prog " << t << " IP:" << obtain_ip(t) << LF;
   // }
-
   hash_code= hash (root);
   get_data_from_root (root, t, start_index);
-
-  // Temporary Fix
-  // Sometimes copying to the image can result in not being able to obtain the
-  // root node
-  if (N (change_line_pos) == 1 && change_line_pos[0] == 0 && N (t->label) > 0) {
-    cout << "Set Root To T\n";
-    root= t;
-  }
   return root;
 }
 
 void
 lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
-  for (tree child_node : root) {
-    if (is_atomic (child_node)) {
-      leaf_tree_nodes << child_node;
-      int local_start_index= 0;
-      if (N (change_line_pos) > 0)
-        local_start_index= change_line_pos[N (change_line_pos) - 1] + 1;
-      // cout << "Child: " << obtain_ip (child_node)
-      //      << " Line: " << obtain_ip (line) << " local_start_index "
-      //      << local_start_index << "\n";
+  if (is_atomic (root)) {
+    leaf_tree_nodes << root;
+    int local_start_index= 0;
+    if (N (change_line_pos) > 0)
+      local_start_index= change_line_pos[N (change_line_pos) - 1] + 1;
+    // cout << "Child: " << obtain_ip (child_node)
+    //      << " Line: " << obtain_ip (line) << " local_start_index "
+    //      << local_start_index << "\n";
 
-      if (obtain_ip (child_node) == obtain_ip (line)) {
-        start_index= local_start_index;
-      }
-
-      int change_index= N (child_node->label) + local_start_index;
-      // cout << "Line Change: " << change_index << "\n";
-      change_line_pos << change_index;
+    if (obtain_ip (root) == obtain_ip (line)) {
+      start_index= local_start_index;
     }
-    else {
+
+    int change_index= N (root->label) + local_start_index;
+    // cout << "Line Change: " << change_index << "\n";
+    change_line_pos << change_index;
+  }
+  else {
+    for (tree child_node : root) {
       get_data_from_root (child_node, line, start_index);
     }
   }
@@ -150,20 +161,20 @@ lang_parser::get_code_str (tree root) {
 
 void
 lang_parser::get_code_from_root (tree root, string& code, string_u8& code_u8) {
-  for (tree child_node : root) {
-    if (is_atomic (child_node)) {
-      code << child_node->label;
-      code_u8 << cork_to_utf8 (child_node->label);
-      if (child_node->label == " " || N (child_node->label) == 0) {
-        code << " ";
-        code_u8 << " ";
-      }
-      else {
-        code << "\n";
-        code_u8 << "\n";
-      }
+  if (is_atomic (root)) {
+    code << root->label;
+    code_u8 << cork_to_utf8 (root->label);
+    if (root->label == " " || N (root->label) == 0) {
+      code << " ";
+      code_u8 << " ";
     }
     else {
+      code << "\n";
+      code_u8 << "\n";
+    }
+  }
+  else {
+    for (tree child_node : root) {
       get_code_from_root (child_node, code, code_u8);
     }
   }
@@ -274,7 +285,7 @@ lang_parser::add_single_token (string debug_tag, TSSymbol token_type,
         //      << " S " << start_pos + i << " E " << start_pos + start << "\n";
       }
     }
-    if (end_pos > start_pos) {
+    if (N (token_cache) > 0) {
       token_starts << start_pos;
       token_ends << end_pos;
       token_types << token_type;
