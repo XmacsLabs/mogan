@@ -25,23 +25,19 @@ using moebius::drd::the_drd;
 extern tree the_et;
 using moebius::make_tree_label;
 
-lang_parser::lang_parser (string lang, string lang_id) {
+lang_parser::lang_parser (string lang_id) {
   // TODO: Dynamic loading of shared lib and multilingual switching
-  ast_parser           = ts_parser_new ();
-  string code_node_name= "scm";
+  ast_parser= ts_parser_new ();
   if (lang_id == "cpp") {
-    ts_lang       = tree_sitter_cpp ();
-    code_node_name= "cpp";
+    ts_lang= tree_sitter_cpp ();
   }
   else if (lang_id == "scheme") {
-    ts_lang       = tree_sitter_scheme ();
-    code_node_name= "scm";
+    ts_lang= tree_sitter_scheme ();
   }
   else {
     // TODO: A fallback tree sitter impl is needed
     ts_lang= tree_sitter_scheme ();
   }
-  // cout << lang << " parser created\n";
 
   ts_parser_set_language (ast_parser, ts_lang);
 }

@@ -21,7 +21,7 @@ constexpr TSSymbol SpaceSymbol= 65534;
 
 class lang_parser {
 public:
-  lang_parser (string lang, string lang_id);
+  lang_parser (string lang_id);
 
   /**
    * @brief Check current line of code has changed or not.
