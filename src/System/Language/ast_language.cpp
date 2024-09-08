@@ -166,8 +166,9 @@ ast_language_rep::advance (tree t, int& pos) {
 
   // Avoid Error (if the token index is incorrect, avoid throwing an error
   // directly and instead highlight the error)
-  if (lang_ast_parser->get_token_index () > lang_ast_parser->get_token_num ()) {
-    cout << "ERROR token index out of bounds\n";
+  if (lang_ast_parser->get_token_index () >=
+      lang_ast_parser->get_token_num ()) {
+    // cout << "ERROR token index out of bounds\n";
     token_type= "INNER_ERROR";
     pos+= 1;
     return &tp_normal_rep;
