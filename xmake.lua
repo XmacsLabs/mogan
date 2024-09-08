@@ -24,6 +24,7 @@ add_rules("mode.releasedbg", "mode.release", "mode.debug")
 
 add_repositories("liii-repo xmake")
 
+TBOX_VERSION= "1.7.5"
 LOLLY_VERSION= "1.2.4"
 package("liii-lolly")
     set_homepage("https://github.com/XmacsLabs/lolly")
@@ -188,8 +189,6 @@ local FREETYPE_VERSION = "2.12.1"
 -- package: s7
 add_requires("liii-s7", {system=false})
 add_requires("liii-lolly", {system=false})
-tbox_configs = {hash=true, ["force-utf8"]=true}
-add_requireconfs("liii-lolly.tbox", {version = "1.7.5", configs=tbox_configs, system = false, override=true})
 
 add_requires("libjpeg")
 add_requires("apt::libpng-dev", {alias="libpng"})
