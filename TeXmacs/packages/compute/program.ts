@@ -1,4 +1,4 @@
-<TeXmacs|1.99.9>
+<TeXmacs|2.1.2>
 
 <style|source>
 
@@ -64,7 +64,7 @@
     </src-comment>
   </active*>
 
-  <assign|input|<macro|prompt|body|<with|font-family|rm|<style-with|src-compact|none|<compound|<style-with|src-compact|none|<if|<provides|<merge|<value|prog-language>|-input>>|<merge|<value|prog-language>|-input>|generic-input>>|<with|mode|prog|<arg|prompt>>|<with|mode|prog|<arg|body>>>>>>>
+  <assign|input|<macro|prompt|body|<with|font-family|rm|<style-with|src-compact|none|<compound|<style-with|src-compact|none|<if|<provides|<merge|<value|prog-language>|-input>>|<merge|<value|prog-language>|-input>|generic-input>>|<style-with|src-compact|none|<compound|<style-with|src-compact|none|<if|<provides|<merge|<value|prog-language>|-prompt>>|<merge|<value|prog-language>|-prompt>|generic-prompt>>|<arg|prompt>>>|<with|mode|prog|<arg|body>>>>>>>
 
   <assign|input-math|<\macro|prompt|in>
     <input|<arg|prompt>|<math|<arg|in>>>
@@ -72,11 +72,15 @@
 
   <assign|id-function|<macro|body|<arg|body>>>
 
+  <assign|generic-prompt|<macro|prompt|<with|mode|prog|<arg|prompt>>>>
+
   <assign|generic-input|<\macro|prompt|body>
     <tabular|<tformat|<twith|table-width|1par>|<cwith|1|1|2|2|cell-hpart|1>|<cwith|1|1|1|1|cell-lsep|0fn>|<cwith|1|1|1|1|cell-rsep|0fn>|<cwith|1|1|2|2|cell-lsep|0fn>|<cwith|1|1|2|2|cell-rsep|0fn>|<cwith|1|1|2|2|cell-hyphen|t>|<twith|table-hyphen|y>|<table|<row|<cell|<id-function|<with|color|<value|generic-prompt-color>|<arg|prompt>>>>|<\cell>
       <with|color|<value|generic-input-color>|math-display|true|<arg|body>>
     </cell>>>>>
   </macro>>
+
+  <assign|scheme-prompt|<macro|prompt|<with|mode|text|language|verbatim|font-family|tt|<style-with|src-compact|none|<arg|prompt>>>>>
 
   <assign|scheme-input|<\macro|prompt|body>
     <\with|generic-prompt-color|<value|scheme-prompt-color>|generic-input-color|<value|scheme-input-color>>
@@ -109,6 +113,8 @@
       <with|color|<value|generic-error-color>|<arg|body>>
     </wide-normal>
   </macro>>
+
+  <assign|scheme-errput|<macro|body|<with|mode|text|language|verbatim|font-family|tt|<generic-errput|<arg|body>>>>>
 
   <assign|timing|<macro|time|<compound|small|<htab|5mm><with|color|dark
   grey|<arg|time>>>>>
