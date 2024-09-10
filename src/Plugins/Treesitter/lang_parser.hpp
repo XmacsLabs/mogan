@@ -21,7 +21,7 @@ constexpr TSSymbol SpaceSymbol= 65534;
 
 class lang_parser {
 public:
-  lang_parser (string lang, string lang_id);
+  lang_parser (string lang_id);
 
   /**
    * @brief Check current line of code has changed or not.
@@ -99,8 +99,6 @@ private:
   int last_end_pos     = -1;
   int inner_token_index= 0;
 
-  int             lang_code_op= 0;
-  int             lang_op     = 0;
   array<TSSymbol> bracket_symbol_list;
   array<uint32_t> brackets_depths_cache;
   int             brackets_pairs_amount= 0;

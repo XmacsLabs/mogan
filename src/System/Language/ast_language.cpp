@@ -39,10 +39,10 @@ ast_language_rep::ast_language_rep (string name) : language_rep (name) {
   tree lang_id_config= get_parser_config (lan_name, "id");
   if (N (lang_id_config) > 0) {
     string lang_id = get_label (lang_id_config[0]);
-    lang_ast_parser= tm_new<lang_parser> (lan_name, lang_id);
+    lang_ast_parser= tm_new<lang_parser> (lang_id);
   }
   else {
-    lang_ast_parser= tm_new<lang_parser> (lan_name, lan_name);
+    lang_ast_parser= tm_new<lang_parser> (lan_name);
   }
 
   tree keytoken_config= get_parser_config (lan_name, "keytoken");
@@ -166,8 +166,9 @@ ast_language_rep::advance (tree t, int& pos) {
 
   // Avoid Error (if the token index is incorrect, avoid throwing an error
   // directly and instead highlight the error)
-  if (lang_ast_parser->get_token_index () > lang_ast_parser->get_token_num ()) {
-    cout << "ERROR token index out of bounds\n";
+  if (lang_ast_parser->get_token_index () >=
+      lang_ast_parser->get_token_num ()) {
+    // cout << "ERROR token index out of bounds\n";
     token_type= "INNER_ERROR";
     pos+= 1;
     return &tp_normal_rep;
