@@ -182,7 +182,7 @@ ast_language_rep::advance (tree t, int& pos) {
   // Colorful brackets
   if (bracket_index > 0u) {
     token_type=
-        token_type * as_string (bracket_index % match_group[token_type]);
+        token_type * as_string ((bracket_index - 1u) % match_group[token_type]);
   }
   // Symbol (symbol in scheme)
   if (tokenize_set->contains (token_type)) {
