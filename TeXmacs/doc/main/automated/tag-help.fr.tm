@@ -225,9 +225,9 @@
       barre de focus :
 
       <\description-long>
-        <item*|<shortcut|(kbd-select-if-active traverse-first)>,
-        <menu|Focus|First similar>, <icon|tm_similar_first.svg>>Aller vers la
-        première balise similaire à <markup|<output-string|<implied-scm|tag>>>.
+        <item*|<shortcut|(traverse-first)>, <menu|Focus|First similar>,
+        <icon|tm_similar_first.svg>>Aller vers la première balise similaire à
+        <markup|<output-string|<implied-scm|tag>>>.
 
         <item*|<shortcut|(kbd-select-if-active traverse-previous)>,
         <menu|Focus|Previous similar>, <icon|tm_similar_previous.svg>>Aller
@@ -238,9 +238,9 @@
         <menu|Focus|Next similar>, <icon|tm_similar_next.svg>>Aller vers la
         balise suivante et similaire à <markup|<output-string|<implied-scm|tag>>>.
 
-        <item*|<shortcut|(kbd-select-if-active traverse-last)>,
-        <menu|Focus|Last similar>, <icon|tm_similar_last.svg>>Aller vers la
-        dernière balise similaire à <markup|<output-string|<implied-scm|tag>>>.
+        <item*|<shortcut|(traverse-last)>, <menu|Focus|Last similar>,
+        <icon|tm_similar_last.svg>>Aller vers la dernière balise similaire à
+        <markup|<output-string|<implied-scm|tag>>>.
       </description-long>
 
       Pour plus de renseignements et d'autres raccourcis clavier utils, nous
@@ -421,5 +421,8 @@
   </block-if>
 </body>
 
-<initial|<\collection>
-</collection>>
+<\initial>
+  <\collection>
+    <associate|preamble|false>
+  </collection>
+</initial>
