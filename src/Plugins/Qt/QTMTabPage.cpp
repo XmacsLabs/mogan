@@ -40,13 +40,14 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
   p_title->setCheckable (p_isActive);
   p_title->setChecked (p_isActive);
   setDefaultAction (p_title);
-  setFocusPolicy(Qt::NoFocus); // don't steal focus from the editor (1)
+  setFocusPolicy (Qt::NoFocus); // don't steal focus from the editor (1)
 
   m_closeBtn= new QToolButton (this);
   m_closeBtn->setObjectName ("closeBtn");
   m_closeBtn->setDefaultAction (p_closeBtn);
   m_closeBtn->setFixedSize (20, 20); // position will be updated in resizeEvent
-  m_closeBtn->setFocusPolicy(Qt::NoFocus); // don't steal focus from the editor (2) (both are needed)
+  m_closeBtn->setFocusPolicy (
+      Qt::NoFocus); // don't steal focus from the editor (2) (both are needed)
   connect (m_closeBtn, &QToolButton::clicked, this,
            [=] () { g_mostRecentlyClosedTab= m_bufferUrl; });
 
