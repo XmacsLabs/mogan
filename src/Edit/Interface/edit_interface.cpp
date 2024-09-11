@@ -795,7 +795,9 @@ edit_interface_rep::apply_changes () {
   if (env_change & (THE_TREE + THE_ENVIRONMENT)) {
     typeset_invalidate_env ();
     SI x1, y1, x2, y2;
+    bench_start ("typeset " * (as_string (buf->buf->name)));
     typeset (x1, y1, x2, y2);
+    bench_end ("typeset " * (as_string (buf->buf->name)), 1000);
     invalidate (x1 - 2 * pixel, y1 - 2 * pixel, x2 + 2 * pixel, y2 + 2 * pixel);
     // check_data_integrety ();
     the_ghost_cursor ()= eb->find_check_cursor (tp);
