@@ -118,18 +118,20 @@ tuple_insert (tree& t, tree x) {
 
 static void
 font_database_build_styles (tree t) {
-  string family= t[0]->label;
-  string style = t[1]->label;
-  if (font_cache_family_to_styles->contains (family)) {
-    array<string> styles= font_cache_family_to_styles[family];
-    styles << style;
-    merge_sort_leq<string, locase_less_eq_operator> (styles);
-    font_cache_family_to_styles (family)= styles;
-  }
-  else {
-    array<string> styles= array<string> ();
-    styles << style;
-    font_cache_family_to_styles (family)= styles;
+  if (is_func (t, TUPLE, 2)) {
+    string family= t[0]->label;
+    string style = t[1]->label;
+    if (font_cache_family_to_styles->contains (family)) {
+      array<string> styles= font_cache_family_to_styles[family];
+      styles << style;
+      merge_sort_leq<string, locase_less_eq_operator> (styles);
+      font_cache_family_to_styles (family)= styles;
+    }
+    else {
+      array<string> styles= array<string> ();
+      styles << style;
+      font_cache_family_to_styles (family)= styles;
+    }
   }
 }
 
