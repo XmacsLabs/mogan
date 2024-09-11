@@ -122,6 +122,7 @@ font_database_build_styles (tree t) {
   if (font_cache_family_to_styles->contains (family)) {
     array<string> styles= font_cache_family_to_styles[family];
     styles << style;
+    merge_sort_leq<string, locase_less_eq_operator> (styles);
     font_cache_family_to_styles (family)= styles;
   }
   else {
