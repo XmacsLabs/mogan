@@ -93,6 +93,7 @@ hashmap<tree, tree>            font_features (moebius::UNINIT);
 hashmap<tree, tree>            font_variants (moebius::UNINIT);
 hashmap<tree, tree>            font_characteristics (moebius::UNINIT);
 hashmap<string, tree>          font_substitutions (moebius::UNINIT);
+hashmap<string, array<string>> font_cache_family_to_styles;
 hashmap<string, array<string>> font_suffixes;
 array<string> all_font_suffixes= array<string> ("ttf", "ttc", "otf", "tfm");
 array<string> all_tt_suffixes  = array<string> ("ttf", "ttc", "otf");
@@ -112,6 +113,22 @@ tuple_insert (tree& t, tree x) {
   for (int i= 0; i < N (t); i++)
     if (t[i] == x) return;
   t << x;
+}
+
+static void
+font_database_build_styles (tree t) {
+  string family= t[0]->label;
+  string style = t[1]->label;
+  if (font_cache_family_to_styles->contains (family)) {
+    array<string> styles= font_cache_family_to_styles[family];
+    styles << style;
+    font_cache_family_to_styles (family)= styles;
+  }
+  else {
+    array<string> styles= array<string> ();
+    styles << style;
+    font_cache_family_to_styles (family)= styles;
+  }
 }
 
 static void
@@ -164,6 +181,7 @@ font_database_load_database (url u, hashmap<tree, tree>& ftab= font_table) {
         tree family_style  = t[i][0];
         tree files         = t[i][1];
         ftab (family_style)= files;
+        font_database_build_styles (family_style);
       }
   }
 }
@@ -726,20 +744,17 @@ font_database_delta_families () {
 
 static array<string>
 font_database_styles (string family, hashmap<tree, tree> ftab) {
-  array<string>  r;
-  iterator<tree> it= iterate (ftab);
-  while (it->busy ()) {
-    tree key= it->next ();
-    if (is_func (key, TUPLE, 2) && key[0]->label == family) r << key[1]->label;
+  if (font_cache_family_to_styles->contains (family)) {
+    return font_cache_family_to_styles (family);
   }
-  merge_sort_leq<string, locase_less_eq_operator> (r);
-  return r;
+  return array<string> ();
 }
 
 array<string>
 font_database_styles (string family) {
   font_database_load ();
-  return font_database_styles (family, font_table);
+  array<string> ret= font_database_styles (family, font_table);
+  return ret;
 }
 
 array<string>
