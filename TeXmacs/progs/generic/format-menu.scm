@@ -186,6 +186,17 @@
   (assuming (== (get-preference "bitmap effects") "on")
     (-> "Graphical effects" (link text-effects-menu))))
 
+(menu-bind textual-properties-menu
+  (-> "Color" (link color-menu))
+  (if (== (get-preference "experimental alpha") "on")
+      (-> "Opacity" (link opacity-menu)))
+  (-> "Space::format" (link horizontal-space-menu))
+  (-> "Transform" (link transform-menu))
+  (-> "Specific" (link specific-menu))
+  (-> "Font effects" (link text-font-effects-menu))
+  (assuming (== (get-preference "bitmap effects") "on")
+    (-> "Graphical effects" (link text-effects-menu))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pen selection for graphical effects
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
