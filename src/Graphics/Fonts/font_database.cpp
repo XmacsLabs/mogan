@@ -110,7 +110,8 @@ is_tt_font_suffix (string suffix) {
 
 void
 tuple_insert (tree& t, tree x) {
-  for (int i= 0; i < N (t); i++)
+  int t_N= N (t);
+  for (int i= 0; i < t_N; i++)
     if (t[i] == x) return;
   t << x;
 }
@@ -155,9 +156,10 @@ static void
 font_database_load_suffixes_sub (url path) {
   if (exists (path)) {
     bench_start ("db_load_suffixes " * as_string (path));
-    string s= string_load (path);
-    tree   t= block_to_scheme_tree (s);
-    for (int i= 0; i < N (t); i++)
+    string s  = string_load (path);
+    tree   t  = block_to_scheme_tree (s);
+    int    t_N= N (t);
+    for (int i= 0; i < t_N; i++)
       if (is_func (t[i], TUPLE, 2)) {
         tree family_style= t[i][0];
         tree files       = t[i][1];
@@ -175,8 +177,9 @@ font_database_load_database (url u, hashmap<tree, tree>& ftab= font_table) {
   if (!exists (u)) return;
   string s;
   if (!load_string (u, s, false)) {
-    tree t= block_to_scheme_tree (s);
-    for (int i= 0; i < N (t); i++)
+    tree t  = block_to_scheme_tree (s);
+    int  t_N= N (t);
+    for (int i= 0; i < t_N; i++)
       if (is_func (t[i], TUPLE, 2)) {
         // if (&ftab == &font_table)
         tree family_style  = t[i][0];
@@ -192,8 +195,9 @@ font_database_load_features (url u) {
   if (!exists (u)) return;
   string s;
   if (!load_string (u, s, false)) {
-    tree t= block_to_scheme_tree (s);
-    for (int i= 0; i < N (t); i++)
+    tree t  = block_to_scheme_tree (s);
+    int  t_N= N (t);
+    for (int i= 0; i < t_N; i++)
       if (is_func (t[i], TUPLE) && (N (t[i]) >= 2)) {
         tree key           = t[i][0];
         tree im            = t[i](1, N (t[i]));
@@ -211,8 +215,9 @@ font_database_load_characteristics (url u) {
   if (!exists (u)) return;
   string s;
   if (!load_string (u, s, false)) {
-    tree t= block_to_scheme_tree (s);
-    for (int i= 0; i < N (t); i++)
+    tree t  = block_to_scheme_tree (s);
+    int  t_N= N (t);
+    for (int i= 0; i < t_N; i++)
       if (is_func (t[i], TUPLE, 2)) font_characteristics (t[i][0])= t[i][1];
   }
 }
@@ -269,8 +274,9 @@ font_database_load_substitutions (url u) {
   if (!exists (u)) return;
   string s;
   if (!load_string (u, s, false)) {
-    tree t= block_to_scheme_tree (s);
-    for (int i= 0; i < N (t); i++)
+    tree t  = block_to_scheme_tree (s);
+    int  t_N= N (t);
+    for (int i= 0; i < t_N; i++)
       if (is_func (t[i], TUPLE, 2) && is_func (t[i][0], TUPLE) &&
           is_func (t[i][1], TUPLE) && N (t[i][0]) > 0 && N (t[i][1]) > 0 &&
           is_atomic (t[i][0][0]) && is_atomic (t[i][1][0])) {
@@ -357,8 +363,9 @@ font_database_build (url u) {
   }
   else if (is_directory (u)) {
     bool          err;
-    array<string> a= read_directory (u, err);
-    for (int i= 0; i < N (a); i++) {
+    array<string> a  = read_directory (u, err);
+    int           a_N= N (a);
+    for (int i= 0; i < a_N; i++) {
       url file_name= url (a[i]);
       if (is_tt_font_suffix (suffix (file_name))) {
         font_database_build (u * file_name);
@@ -371,8 +378,9 @@ font_database_build (url u) {
     font_database_build_suffixes (u);
 
     cout << "Process " << u << "\n";
-    scheme_tree t= tt_font_name (u);
-    for (int i= 0; i < N (t); i++)
+    scheme_tree t  = tt_font_name (u);
+    int         t_N= N (t);
+    for (int i= 0; i < t_N; i++)
       if (is_func (t[i], TUPLE, 2) && is_atomic (t[i][0]) &&
           is_atomic (t[i][1])) {
         int  sz = file_size (u);
@@ -613,8 +621,9 @@ font_database_collect (url u) {
   else if (is_directory (u)) {
     bench_start ("font dir " * as_string (u));
     bool          err;
-    array<string> a= read_directory (u, err);
-    for (int i= 0; i < N (a); i++) {
+    array<string> a  = read_directory (u, err);
+    int           a_N= N (a);
+    for (int i= 0; i < a_N; i++) {
       url file_name= url (a[i]);
       if (is_font_suffix (suffix (file_name))) {
         font_collect (u * file_name);
@@ -631,8 +640,8 @@ font_database_filter () {
   back_font_table= hashmap<tree, tree> (UNINIT);
   build_back_table ();
   array<url> paths= tt_font_paths ();
-  for (int i= 0; i < N (paths); i++) {
-    font_collect (paths[i]);
+  for (url path : paths) {
+    font_collect (path);
   }
   font_database_collect (tfm_font_path ());
   font_table     = new_font_table;
