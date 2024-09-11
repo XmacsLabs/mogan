@@ -28,8 +28,8 @@ string        upgrade_family_name (string f);
 array<string>
 common (array<string> v1, array<string> v2) {
   array<string> r;
-  int v1_N= N(v1);
-  int v2_N= N(v2);
+  int           v1_N= N (v1);
+  int           v2_N= N (v2);
   for (int i= 0; i < v1_N; i++)
     for (int j= 0; j < v2_N; j++)
       if (v1[i] == v2[j]) {
@@ -42,7 +42,7 @@ common (array<string> v1, array<string> v2) {
 array<string>
 exclude (array<string> a, array<string> b) {
   array<string> r;
-  int a_N= N(a);
+  int           a_N= N (a);
   for (int i= 0; i < a_N; i++)
     if (!contains (a[i], b)) r << a[i];
   return r;
@@ -51,7 +51,7 @@ exclude (array<string> a, array<string> b) {
 array<string>
 exclude (array<string> a, string s) {
   array<string> r;
-  int a_N= N(a);
+  int           a_N= N (a);
   for (int i= 0; i < a_N; i++)
     if (a[i] != s) r << a[i];
   return r;
@@ -60,7 +60,7 @@ exclude (array<string> a, string s) {
 array<string>
 remove_duplicates (array<string> a) {
   array<string> r;
-  int a_N= N(a);
+  int           a_N= N (a);
   for (int i= 0; i < a_N; i++)
     if (!contains (a[i], r)) r << a[i];
   return r;
@@ -75,7 +75,7 @@ array<string>
 tuple_as_array (tree t) {
   ASSERT (is_func (t, TUPLE), "tuple expected");
   array<string> r;
-  int t_N= N (t);
+  int           t_N= N (t);
   for (int i= 0; i < t_N; i++) {
     ASSERT (is_atomic (t[i]), "string expected");
     r << t[i]->label;
