@@ -50,3 +50,4 @@ docs/**/plugin_binary.md
 # Binary of the goldfish plugin
 TeXmacs/plugins/goldfish/bin/goldfish
 goldfish.dSYM/
+*.sym
