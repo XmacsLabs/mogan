@@ -482,7 +482,7 @@
 
 (tm-define (geometry-vertical t down?)
   (:require (image-context? t))
-  (with inc (if down? 1 -1)
+  (with inc (if down? -1 1)
     (with-focus-after t
       (replace-empty t 2 "1h")
       (length-increase (tree-ref t 2) inc))))
