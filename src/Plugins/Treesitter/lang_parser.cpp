@@ -40,6 +40,10 @@ lang_parser::lang_parser (string lang_id) {
   }
 
   ts_parser_set_language (ast_parser, ts_lang);
+
+  // with(color, red, main), only "main" is the code part
+  tree with_tree (make_tree_label ("with"));
+  with_op= with_tree->op;
 }
 
 void
@@ -113,6 +117,9 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
 
 void
 lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
+  if (root->op == with_op) {
+    root= root[N (root) - 1];
+  }
   if (is_atomic (root)) {
     leaf_tree_nodes << root;
     int local_start_index= 0;
@@ -157,6 +164,9 @@ lang_parser::get_code_str (tree root) {
 
 void
 lang_parser::get_code_from_root (tree root, string& code, string_u8& code_u8) {
+  if (root->op == with_op) {
+    root= root[N (root) - 1];
+  }
   if (is_atomic (root)) {
     code << root->label;
     code_u8 << cork_to_utf8 (root->label);
