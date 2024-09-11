@@ -212,9 +212,9 @@ guessed_distance_families (string fam1, string fam2) {
   if (N (stys2) == 0 && fam2 != "tcx" && fam2 != "tc")
     stys2= font_database_global_styles (fam2);
   double d= 1000000.0;
-  for (int i1= 0; i1 < N (stys1); i1++)
-    for (int i2= 0; i2 < N (stys2); i2++)
-      d= min (d, guessed_distance (fam1, stys1[i1], fam2, stys2[i2]));
+  for (string sty1 : stys1)
+    for (string sty2 : stys2)
+      d= min (d, guessed_distance (fam1, sty1, fam2, sty2));
   memo (key)= d;
   return d;
 }
@@ -228,9 +228,9 @@ guessed_distance (string master1, string master2) {
   array<string> fams1= master_to_families (master1);
   array<string> fams2= master_to_families (master2);
   double        d    = 1000000.0;
-  for (int i1= 0; i1 < N (fams1); i1++)
-    for (int i2= 0; i2 < N (fams2); i2++)
-      d= min (d, guessed_distance_families (fams1[i1], fams2[i2]));
+  for (string fam1 : fams1)
+    for (string fam2 : fams2)
+      d= min (d, guessed_distance_families (fam1, fam2));
   memo (key)= d;
   // cout << "    " << master1 << ", " << master2 << " -> " << 100.0*d << "\n";
   return d;
