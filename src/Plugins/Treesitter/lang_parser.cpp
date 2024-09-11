@@ -107,9 +107,10 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
       }
     }
   }
-  // if(N(father_ip) == 1){
-  //   cout << "Can not meet Prog " << t << " IP:" << obtain_ip(t) << LF;
-  // }
+  if (N (father_ip) == 1) {
+    // cout << "Can not meet Prog " << t << " IP:" << obtain_ip(t) << LF;
+    root= t; // Set Root To Self as Fallback
+  }
   hash_code= hash (root);
   get_data_from_root (root, t, start_index);
   return root;
