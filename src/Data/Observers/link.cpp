@@ -63,14 +63,19 @@ unregister_pointer (string id, observer which) {
 
 void
 register_vertex (tree v, soft_link ln) {
-  hashset<soft_link>& l= vertex_occurrences (v);
-  l->insert (ln);
+  if (vertex_occurrences->contains(v)) {
+    hashset<soft_link>& l= vertex_occurrences (v);
+    l->insert (ln);
+  } else {
+    hashset<soft_link> l= hashset<soft_link> ();
+    l->insert(ln);
+    vertex_occurrences (v)= l;
+  }
 }
 
 void
 unregister_vertex (tree v, soft_link ln) {
   hashset<soft_link>& l= vertex_occurrences (v);
-  cout << "unvertex: " << N (l) << LF;
   l->remove (ln);
   if (N (l) == 0) vertex_occurrences->reset (v);
 }
