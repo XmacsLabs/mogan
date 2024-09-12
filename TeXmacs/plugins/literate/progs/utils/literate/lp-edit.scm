@@ -115,8 +115,8 @@
 (define (chunk-tag name)
   (string->symbol (string-append (chunk-format name) "-chunk")))
 
-(define (similar-chunk-tag name)
-  (with l (search-named-chunks name (get-all-chunks))
+(define (similar-chunk-tag name all-chunks)
+  (with l (search-named-chunks name all-chunks)
     (if (null? l) (chunk-tag name) (tree-label (car l)))))
 
 (tm-define (insert-new-chunk tag)
@@ -124,9 +124,10 @@
 
 (tm-define (insert-next-chunk name)
   (:argument name "Chunk name")
-  (with tag (similar-chunk-tag name)
-    (insert-go-to `(,tag ,name "true" "false" (document "")) '(3 0))
-    (update-chunk-states name (get-all-chunks))))
+  (with all-chunks (get-all-chunks)
+    (with tag (similar-chunk-tag name all-chunks)
+      (insert-go-to `(,tag ,name "true" "false" (document "")) '(3 0))
+      (update-chunk-states name all-chunks))))
 
 (tm-define (kbd-enter t shift?)
   (:require (and (tm-chunk? t) (cursor-inside? (tm-ref t 0))))
