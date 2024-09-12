@@ -84,8 +84,9 @@
         (tree-set (tm-ref x 2) "true")))))
 
 (tm-define (update-all-chunk-states)
-  (for (name (search-chunk-types (get-all-chunks)))
-    (update-chunk-states name)))
+  (with all-chunks (get-all-chunks)
+    (for (name (search-chunk-types all-chunks))
+    (update-chunk-states name all-chunks))))
 
 (tm-define (update-document what)
   (:require (style-has? "literate-dtd"))
@@ -125,7 +126,7 @@
   (:argument name "Chunk name")
   (with tag (similar-chunk-tag name)
     (insert-go-to `(,tag ,name "true" "false" (document "")) '(3 0))
-    (update-chunk-states name)))
+    (update-chunk-states name (get-all-chunks))))
 
 (tm-define (kbd-enter t shift?)
   (:require (and (tm-chunk? t) (cursor-inside? (tm-ref t 0))))

@@ -38,7 +38,7 @@
                (flatmap extract-lines l))))))
 
 (define (build-table t)
-  (let* ((l (search-chunks t))
+  (let* ((l (get-all-chunks))
          (ht (make-hash-table)))
     (for (c l)
       (let* ((name (tm->string (tm-ref c 0)))
