@@ -1053,7 +1053,7 @@ use_italic_greek (array<string> a) {
 
 int
 smart_font_rep::resolve (string c) {
-  if (DEBUG_STD) {
+  if (DEBUG_VERBOSE) {
     debug_fonts << "Logical font of " << cork_to_utf8 (c) << " is "
                 << this->res_name << LF;
     debug_fonts << "Main subfont of " << cork_to_utf8 (c) << " is "
