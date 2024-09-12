@@ -14,6 +14,12 @@
 (texmacs-module (utils literate lp-build)
   (:use (utils literate lp-edit)))
 
+(import (liii hash-table)
+        (liii base)
+        (liii list))
+
+(define code-table (make-hash-table))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Building the initial table (without substitutions)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -21,27 +27,28 @@
 (define (extract-lines t)
   (cond ((tm-atomic? t) (list t))
         ((tm-func? t 'document)
-         (append-map extract-lines (tm-children t)))
+         (flatmap extract-lines (tm-children t)))
         ((or (tm-func? t 'folded-newline-before 1)
              (tm-func? t 'unfolded-newline-before 1))
          (cons "" (extract-lines (tm-ref t 0))))
         ((list-or (map (cut tm-func? <> 'document) (tm-children t)))
          (with l (list-filter (tm-children t) (cut tm-func? <> 'document))
-           (append-map extract-lines l)))
+           (flatmap extract-lines l)))
         (else (list t))))
 
 (define (build-table t)
   (let* ((l (search-chunks t))
-         (t (make-ahash-table)))
+         (code-table (make-hash-table)))
     (for (c l)
       (let* ((name (tm->string (tm-ref c 0)))
-             (body (tm-ref c 3)))
-        (if (not (tm-func? body 'document))
-            (set! body `(document ,body)))
-        (let* ((old (tm-children (or (ahash-ref t name) `(document))))
-               (new (append old (extract-lines body))))
-          (ahash-set! t name `(document ,@new)))))
-    t))
+             (body0 (tm-ref c 3))
+             (body (if (not (tm-func? body0 'document))
+                       `(document ,body0)
+                       body0))
+             (old (tm-children (hash-table-ref/default code-table name `(document))))
+             (new (append old (extract-lines body))))
+        (hash-table-set! code-table name `(document ,@new))))
+    code-table))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Performing the necessary substitutions
@@ -50,7 +57,7 @@
 (define (ahash-table-split t pred?)
   (let* ((t1 (make-ahash-table))
          (t2 (make-ahash-table)))
-    (for (key (map car (ahash-table->list t)))
+    (for (key (hash-table-keys t))
       (with im (ahash-ref t key)
         (if (pred? (ahash-ref t key))
             (ahash-set! t1 key im)
@@ -169,24 +176,37 @@
 ;; Main build process
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (verbatim-table t)
-  (with r (make-ahash-table)
-    (for (key (map car (ahash-table->list t)))
-      (let* ((l (tm-children (tm->stree (ahash-ref t key))))
-             (c (map (lambda (x)
+(define (verbatim-table ht)
+  (with r (make-hash-table)
+    (for-each
+      (lambda (key-val)
+        (let* ((key (car key-val))
+               (val (cdr key-val))
+               (l (tm-children (tm->stree val)))
+               (c (map (lambda (x)
                        (texmacs->code x "SourceCode")) l))
-             (i (map (cut string-append <> "\n") c)))
-        (ahash-set! r key (apply string-append i))))
+               (i (map (cut string-append <> "\n") c))
+               (code (apply string-append i)))
+          (hash-table-set! r key code)))
+      (hash-table->alist ht))
     r))
 
-(define (write-table t dir)
-  (for (key (map car (ahash-table->list t)))
-    (when (string-contains? key ".")
-      (with target (url-append dir key)
-        (when (not (url-exists? (url-head target)))
-          (system-mkdir (url-head target)))
-        (display* "TeXmacs] Building " (url->system target) "\n")
-        (string-save (ahash-ref t key) target)))))
+(define (write-table ht dir)
+  ((list-view (hash-table->alist ht))
+    filter
+    (lambda (pair) (string-contains? (car pair) "."))
+    for-each
+    (lambda (pair)
+      (let* ((key (car pair))
+             (val (cdr pair)))
+        (with target (url-append dir key)
+          (when (not (url-exists? (url-head target)))
+            (system-mkdir (url-head target)))
+          ; Dump the code only when there are modifications
+          (when (!= (hash-table-ref/default code-table key "") val)
+            (display* "TeXmacs] Building " (url->system target) "\n")
+            (string-save val target)
+            (hash-table-set! code-table key val)))))))
 
 (define (lp-build* file dir)
   (with doc (if (buffer-exists? file)
@@ -198,9 +218,11 @@
           (write-table v dir))))))
 
 (define (lp-build file dir)
+  (bench-start "lp-build")
   (if (buffer-exists? file)
       (lp-build* file dir)
-      (lp-build-conditional file dir lp-build*)))
+      (lp-build-conditional file dir lp-build*))
+  (bench-end "lp-build"))
 
 (tm-define (lp-build-buffer)
   (update-all-chunk-states)

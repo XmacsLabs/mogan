@@ -16,6 +16,8 @@
         (generic document-edit)
         (dynamic dynamic-drd)))
 
+(import (liii list))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DRD properties
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -49,12 +51,12 @@
 (tm-define (search-chunks t)
   (cond ((tm-atomic? t) (list))
         ((tm-func? t 'document)
-         (append-map search-chunks (tm-children t)))
+         (flatmap search-chunks (tm-children t)))
         ((tm-chunk? t)
          (if (and (tm-atomic? (tm-ref t 0))) (list t) (list)))
         (else
           (with l (list-filter (tm-children t) (cut tm-func? <> 'document))
-            (append-map search-chunks l)))))
+            (flatmap search-chunks l)))))
 
 (tm-define (search-named-chunks t name)
   (with l (search-chunks t)
@@ -221,11 +223,11 @@
 
 (tm-define (search-appended t)
   (cond ((tm-atomic? t) (list))
-        ((tm-func? t 'document) (append-map search-appended (tm-children t)))
+        ((tm-func? t 'document) (flatmap search-appended (tm-children t)))
         ((tm-appended? t) (list t))
         (else
           (with l (list-filter (tm-children t) (cut tm-func? <> 'document))
-            (append-map search-appended l)))))
+            (flatmap search-appended l)))))
 
 (tm-define (search-appended-folded t)
   (list-filter (search-appended t) alternate-standard-first?))
