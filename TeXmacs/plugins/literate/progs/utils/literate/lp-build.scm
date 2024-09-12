@@ -18,6 +18,8 @@
         (liii base)
         (liii list))
 
+(define code-table (make-hash-table))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Building the initial table (without substitutions)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -183,19 +185,28 @@
                (l (tm-children (tm->stree val)))
                (c (map (lambda (x)
                        (texmacs->code x "SourceCode")) l))
-               (i (map (cut string-append <> "\n") c)))
-          (hash-table-set! r key (apply string-append i))))
+               (i (map (cut string-append <> "\n") c))
+               (code (apply string-append i)))
+          (hash-table-set! r key code)))
       (hash-table->alist ht))
     r))
 
-(define (write-table t dir)
-  (for (key (map car (ahash-table->list t)))
-    (when (string-contains? key ".")
-      (with target (url-append dir key)
-        (when (not (url-exists? (url-head target)))
-          (system-mkdir (url-head target)))
-        (display* "TeXmacs] Building " (url->system target) "\n")
-        (string-save (ahash-ref t key) target)))))
+(define (write-table ht dir)
+  ((list-view (hash-table->alist ht))
+    filter
+    (lambda (pair) (string-contains? (car pair) "."))
+    for-each
+    (lambda (pair)
+      (let* ((key (car pair))
+             (val (cdr pair)))
+        (with target (url-append dir key)
+          (when (not (url-exists? (url-head target)))
+            (system-mkdir (url-head target)))
+          ; Dump the code only when there are modifications
+          (when (!= (hash-table-ref/default code-table key "") val)
+            (display* "TeXmacs] Building " (url->system target) "\n")
+            (string-save val target)
+            (hash-table-set! code-table key val)))))))
 
 (define (lp-build* file dir)
   (with doc (if (buffer-exists? file)
