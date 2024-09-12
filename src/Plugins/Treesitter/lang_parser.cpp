@@ -95,7 +95,7 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
     if (!is_atomic (root)) {
       tree env_child= the_drd->get_env_child (root, tree_index, MODE, "");
       // tree prog_lan=
-      the_drd->get_env_child (root, tree_index, "prog-language", "");
+      // the_drd->get_env_child (root, tree_index, "prog-language", "");
       if (env_child == "prog") {
         root= root[tree_index];
         // cout << "Tree Index: " << tree_index << " Root: " << root << LF;
