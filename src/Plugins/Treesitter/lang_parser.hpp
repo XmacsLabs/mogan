@@ -99,8 +99,6 @@ private:
   int last_end_pos     = -1;
   int inner_token_index= 0;
 
-  int with_op= 0;
-
   array<TSSymbol> bracket_symbol_list;
   array<uint32_t> brackets_depths_cache;
   int             brackets_pairs_amount= 0;

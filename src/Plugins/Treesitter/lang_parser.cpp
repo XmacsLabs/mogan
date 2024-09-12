@@ -40,10 +40,6 @@ lang_parser::lang_parser (string lang_id) {
   }
 
   ts_parser_set_language (ast_parser, ts_lang);
-
-  // with(color, red, main), only "main" is the code part
-  tree with_tree (make_tree_label ("with"));
-  with_op= with_tree->op;
 }
 
 void
@@ -86,7 +82,7 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
   path last_ip   = father_ip;
   int  tree_index= 0;
 
-  while (N (father_ip) > 1) {
+  while (N (father_ip) > 0) {
     father_ip = father_ip->next;
     tree_index= reverse (last_ip)[N (father_ip)];
     if (tree_index < 0) {
@@ -107,7 +103,7 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
       }
     }
   }
-  if (N (father_ip) == 1) {
+  if (N (father_ip) == 0) {
     // cout << "Can not meet Prog " << t << " IP:" << obtain_ip(t) << LF;
     root= t; // Set Root To Self as Fallback
   }
@@ -118,7 +114,7 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
 
 void
 lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
-  if (root->op == with_op) {
+  if (root->op == moebius::WITH) {
     root= root[N (root) - 1];
   }
   if (is_atomic (root)) {
@@ -165,7 +161,7 @@ lang_parser::get_code_str (tree root) {
 
 void
 lang_parser::get_code_from_root (tree root, string& code, string_u8& code_u8) {
-  if (root->op == with_op) {
+  if (root->op == moebius::WITH) {
     root= root[N (root) - 1];
   }
   if (is_atomic (root)) {
