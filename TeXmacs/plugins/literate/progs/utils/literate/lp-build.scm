@@ -184,18 +184,15 @@
         (let* ((key (car key-val))
                (val (cdr key-val))
                (l (tm-children (tm->stree val)))
-               (c (map (lambda (x)
-                       (texmacs->code x "SourceCode")) l))
-               (i (map (cut string-append <> "\n") c))
-               (code (apply string-append i)))
-          (hash-table-set! r key code)))
+               (l-code (map (cut texmacs->code <> "SourceCode") l))
+               (l-code-nl (map (cut string-append <> "\n") l-code))
+               (s-code (apply string-append l-code-nl)))
+          (hash-table-set! r key s-code)))
       (hash-table->alist ht))
     r))
 
 (define (write-table ht dir)
   ((list-view (hash-table->alist ht))
-    filter
-    (lambda (pair) (string-contains? (car pair) "."))
     for-each
     (lambda (pair)
       (let* ((key (car pair))
