@@ -70,7 +70,7 @@ register_vertex (tree v, soft_link ln) {
 void
 unregister_vertex (tree v, soft_link ln) {
   hashset<soft_link>& l= vertex_occurrences (v);
-  cout << "unvertex: " << N(l) << LF;
+  cout << "unvertex: " << N (l) << LF;
   l->remove (ln);
   if (N (l) == 0) vertex_occurrences->reset (v);
 }
