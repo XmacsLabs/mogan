@@ -131,8 +131,7 @@
          (tag (chunk-tag name)))
     (when (!= tag 'generic-chunk)
       (tree-assign-node! t tag))
-    (tree-go-to t 3 :start)
-    (update-all-chunk-states)))
+    (tree-go-to t 3 :start)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Removing chunks
@@ -141,12 +140,10 @@
 (tm-define (kbd-remove t forwards?)
   (:require (tm-chunk? t))
   (cond ((selection-active-any?)
-         (former t forwards?)
-         (update-all-chunk-states))
+         (former t forwards?))
         ((and (tree-empty? (tm-ref t 0)) (tree-empty? (tm-ref t 3)))
          (tree-select t)
-         (clipboard-cut "nowhere")
-         (update-all-chunk-states))
+         (clipboard-cut "nowhere"))
         ((and (tree-cursor-at? t 0 :start) (not forwards?))
          (tree-go-to t :start))
         ((and (tree-cursor-at? t 0 :end) forwards?)
@@ -156,8 +153,7 @@
         ((and (tree-cursor-at? t 3 :end) forwards?)
          (tree-go-to t :end))
         ((cursor-inside? (tree-ref t 0))
-         (former t forwards?)
-         (update-all-chunk-states))
+         (former t forwards?))
         (else (former t forwards?))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
