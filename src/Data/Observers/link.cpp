@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "link.hpp"
+#include "hashset.hpp"
 #include "iterator.hpp"
 #include "modification.hpp"
 #include "observers.hpp"
@@ -20,10 +21,15 @@
 
 using namespace moebius;
 
-hashmap<string, list<observer>> id_resolve;
-hashmap<observer, list<string>> pointer_resolve;
-hashmap<tree, list<soft_link>>  vertex_occurrences;
-hashmap<string, int>            type_count (0);
+static int
+hash (soft_link l) {
+  return hash (l->t);
+}
+
+hashmap<string, list<observer>>   id_resolve;
+hashmap<observer, list<string>>   pointer_resolve;
+hashmap<tree, hashset<soft_link>> vertex_occurrences;
+hashmap<string, int>              type_count (0);
 
 static hashset<string> visited_table;
 
@@ -57,15 +63,15 @@ unregister_pointer (string id, observer which) {
 
 void
 register_vertex (tree v, soft_link ln) {
-  list<soft_link>& l= vertex_occurrences (v);
-  l                 = list<soft_link> (ln, l);
+  hashset<soft_link>& l= vertex_occurrences (v);
+  l->insert (ln);
 }
 
 void
 unregister_vertex (tree v, soft_link ln) {
-  list<soft_link>& l= vertex_occurrences (v);
-  l                 = remove (l, ln);
-  if (is_nil (l)) vertex_occurrences->reset (v);
+  hashset<soft_link>& l= vertex_occurrences (v);
+  l->remove (ln);
+  if (N (l) == 0) vertex_occurrences->reset (v);
 }
 
 void
@@ -162,9 +168,13 @@ get_trees (string id) {
 }
 
 list<tree>
-as_tree_list (list<soft_link> l) {
-  if (is_nil (l)) return list<tree> ();
-  else return list<tree> (l->item->t, as_tree_list (l->next));
+as_tree_list (hashset<soft_link> l) {
+  iterator<soft_link> it= iterate (l);
+  list<tree>          r;
+  while (it->busy ()) {
+    r= list<tree> (it->next ()->t, r);
+  }
+  return r;
 }
 
 list<tree>
