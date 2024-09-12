@@ -55,7 +55,7 @@
 (define (ahash-table-split t pred?)
   (let* ((t1 (make-ahash-table))
          (t2 (make-ahash-table)))
-    (for (key (map car (ahash-table->list t)))
+    (for (key (hash-table-keys t))
       (with im (ahash-ref t key)
         (if (pred? (ahash-ref t key))
             (ahash-set! t1 key im)
@@ -174,15 +174,18 @@
 ;; Main build process
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (verbatim-table t)
-  (with r (make-ahash-table)
-    (for (key (map car (ahash-table->list t)))
-      (let* ((l (tm-children (tm->stree (ahash-ref t key))))
-             (c (map (lambda (x)
+(define (verbatim-table ht)
+  (with r (make-hash-table)
+    (for-each
+      (lambda (key-val)
+        (let* ((key (car key-val))
+               (val (cdr key-val))
+               (l (tm-children (tm->stree val)))
+               (c (map (lambda (x)
                        (texmacs->code x "SourceCode")) l))
-             (i (map (cut string-append <> "\n") c)))
-        (ahash-set! r key (apply string-append i))))
-    r))
+               (i (map (cut string-append <> "\n") c)))
+          (hash-table-set! r key (apply string-append i))))
+      (hash-table->list ht))))
 
 (define (write-table t dir)
   (for (key (map car (ahash-table->list t)))
