@@ -17,6 +17,7 @@
 #include "font.hpp"
 #include "iterator.hpp"
 #include "lolly/data/unicode.hpp"
+#include "tm_debug.hpp"
 #include "translator.hpp"
 #include "unicode.hpp"
 
@@ -794,7 +795,7 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
   if (nr < 0) return;
   if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
   if (sm->fn_rewr[nr] != REWRITE_NONE) r= rewrite (r, sm->fn_rewr[nr]);
-  if (DEBUG_STD)
+  if (DEBUG_VERBOSE)
     debug_fonts << "Physical font of " << cork_to_utf8 (r) << " is "
                 << fn[nr]->res_name << LF;
 }

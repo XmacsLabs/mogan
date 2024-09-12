@@ -185,7 +185,7 @@
                        (texmacs->code x "SourceCode")) l))
                (i (map (cut string-append <> "\n") c)))
           (hash-table-set! r key (apply string-append i))))
-      (hash-table->list ht))))
+      (hash-table->alist ht))))
 
 (define (write-table t dir)
   (for (key (map car (ahash-table->list t)))
