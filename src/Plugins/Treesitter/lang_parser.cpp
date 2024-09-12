@@ -132,7 +132,8 @@ lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
     change_line_pos << change_index;
   }
   else {
-    for (int i= 0; i < N (root); i++) {
+    int root_N= N (root);
+    for (int i= 0; i < root_N; i++) {
       tree child_node= root[i];
       if (the_drd->is_accessible_child (root, i)) {
         // cout << "Index: " << i << " Accessible Child: " << child_node << LF;
@@ -175,7 +176,8 @@ lang_parser::get_code_from_root (tree root, string& code, string_u8& code_u8) {
     }
   }
   else {
-    for (int i= 0; i < N (root); i++) {
+    int root_N= N (root);
+    for (int i= 0; i < root_N; i++) {
       tree child_node= root[i];
       if (the_drd->is_accessible_child (root, i)) {
         // cout << "Index: " << i << " Accessible Child: " << child_node << LF;
