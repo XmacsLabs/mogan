@@ -218,9 +218,9 @@
       keyboard shortcuts, menu entries, or icons on the focus toolbar:\ 
 
       <\description-long>
-        <item*|<shortcut|(kbd-select-if-active traverse-first)>,
-        <menu|Focus|First similar>, <icon|tm_similar_first.svg>>Jump to the
-        first tag similar to <markup|<output-string|<implied-scm|tag>>>.
+        <item*|<shortcut|(traverse-first)>, <menu|Focus|First similar>,
+        <icon|tm_similar_first.svg>>Jump to the first tag similar to
+        <markup|<output-string|<implied-scm|tag>>>.
 
         <item*|<shortcut|(kbd-select-if-active traverse-previous)>,
         <menu|Focus|Previous similar>, <icon|tm_similar_previous.svg>>Jump to
@@ -230,9 +230,9 @@
         <menu|Focus|Next similar>, <icon|tm_similar_next.svg>>Jump to the
         next tag similar to <markup|<output-string|<implied-scm|tag>>>.
 
-        <item*|<shortcut|(kbd-select-if-active traverse-last)>,
-        <menu|Focus|Last similar>, <icon|tm_similar_last.svg>>Jump to the
-        last tag similar to <markup|<output-string|<implied-scm|tag>>>.
+        <item*|<shortcut|(traverse-last)>, <menu|Focus|Last similar>,
+        <icon|tm_similar_last.svg>>Jump to the last tag similar to
+        <markup|<output-string|<implied-scm|tag>>>.
       </description-long>
 
       For more information and further useful shortcuts, we refer to the
@@ -410,5 +410,8 @@
   </block-if>
 </body>
 
-<initial|<\collection>
-</collection>>
+<\initial>
+  <\collection>
+    <associate|preamble|false>
+  </collection>
+</initial>

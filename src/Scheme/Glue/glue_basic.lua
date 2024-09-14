@@ -169,6 +169,22 @@ function main()
                 ret_type = "void"
             },
             {
+                scm_name = "bench-start",
+                cpp_name = "bench_start",
+                ret_type = "void",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "bench-end",
+                cpp_name = "bench_end",
+                ret_type = "void",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
                 scm_name = "system-wait",
                 cpp_name = "system_wait",
                 ret_type = "void",

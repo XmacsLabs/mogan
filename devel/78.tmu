@@ -7,7 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|6|6|5|5|cell-hyphen|t>|<cwith|5|5|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|78_7>|<cell|<value|da>>|<cell|v1.2.6>|<cell|Minor: Fix missing return in <cpp|font_spacing>>>|<row|<cell|Chore>|<cell|78_6>|<cell|<value|jk>>|<cell|v1.2.6>|<cell|remove unnecessary cpp check>>|<row|<cell|Chore>|<cell|78_5>|<cell|<value|da>>|<cell|v1.2.6>|<cell|Avoid dangling else in src/Plugins/Qt/qt_utilities.cpp>>|<row|<cell|Chore>|<cell|78_4>|<cell|<value|da>>|<cell|v1.2.6>|<cell|Fix missing return in QTMPixmapOrImage>>|<row|<cell|Chore>|<cell|78_3>|<cell|<value|da>>|<cell|v1.2.6>|<\cell>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|7|7|5|5|cell-hyphen|t>|<cwith|6|6|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|78_8>|<cell|Yu>|<cell|v1.2.9>|<cell|Remove unused variable and unrecognized character escape>>|<row|<cell|Chore>|<cell|78_7>|<cell|<value|da>>|<cell|v1.2.6>|<cell|Minor: Fix missing return in <cpp|font_spacing>>>|<row|<cell|Chore>|<cell|78_6>|<cell|<value|jk>>|<cell|v1.2.6>|<cell|remove unnecessary cpp check>>|<row|<cell|Chore>|<cell|78_5>|<cell|<value|da>>|<cell|v1.2.6>|<cell|Avoid dangling else in src/Plugins/Qt/qt_utilities.cpp>>|<row|<cell|Chore>|<cell|78_4>|<cell|<value|da>>|<cell|v1.2.6>|<cell|Fix missing return in QTMPixmapOrImage>>|<row|<cell|Chore>|<cell|78_3>|<cell|<value|da>>|<cell|v1.2.6>|<\cell>
     Fix non-void function does not return a value in all control paths in tree_cursor
   </cell>>|<row|<cell|Chore>|<cell|78_2>|<cell|<value|da>>|<cell|v1.2.5>|<\cell>
     Gitee Scan Rule 025: Effective C++, item 30: understand the ins and outs of inlining

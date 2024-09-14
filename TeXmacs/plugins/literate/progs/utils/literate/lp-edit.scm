@@ -16,6 +16,8 @@
         (generic document-edit)
         (dynamic dynamic-drd)))
 
+(import (liii list))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DRD properties
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -46,22 +48,24 @@
 (tm-define (tm-chunk? t)
   (and (tm-in? t (chunk-tag-list)) (== (tm-arity t) 4)))
 
-(tm-define (search-chunks t)
+(define (search-chunks t)
   (cond ((tm-atomic? t) (list))
         ((tm-func? t 'document)
-         (append-map search-chunks (tm-children t)))
+         (flatmap search-chunks (tm-children t)))
         ((tm-chunk? t)
          (if (and (tm-atomic? (tm-ref t 0))) (list t) (list)))
         (else
           (with l (list-filter (tm-children t) (cut tm-func? <> 'document))
-            (append-map search-chunks l)))))
+            (flatmap search-chunks l)))))
 
-(tm-define (search-named-chunks t name)
-  (with l (search-chunks t)
-    (list-filter l (lambda (c) (== (tm->string (tm-ref c 0)) name)))))
+(tm-define (get-all-chunks)
+  (search-chunks (buffer-tree)))
 
-(tm-define (search-chunk-types t)
-  (let* ((l (search-chunks t))
+(define (search-named-chunks name all-chunks)
+  (list-filter all-chunks (lambda (c) (== (tm->string (tm-ref c 0)) name))))
+
+(tm-define (search-chunk-types all-chunks)
+  (let* ((l all-chunks)
          (r (map (lambda (c) (tm->string (tm-ref c 0))) l)))
     (list-remove-duplicates r)))
 
@@ -69,8 +73,8 @@
 ;; Maintaining states (links to previous and next chunks)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(tm-define (update-chunk-states name)
-  (with l (search-named-chunks (buffer-tree) name)
+(tm-define (update-chunk-states name all-chunks)
+  (with l (search-named-chunks name all-chunks)
     (when (nnull? l)
       (tree-set (tm-ref (car l) 1) "false")
       (for (x (cdr l))
@@ -80,8 +84,9 @@
         (tree-set (tm-ref x 2) "true")))))
 
 (tm-define (update-all-chunk-states)
-  (for (name (search-chunk-types (buffer-tree)))
-    (update-chunk-states name)))
+  (with all-chunks (get-all-chunks)
+    (for (name (search-chunk-types all-chunks))
+    (update-chunk-states name all-chunks))))
 
 (tm-define (update-document what)
   (:require (style-has? "literate-dtd"))
@@ -110,8 +115,8 @@
 (define (chunk-tag name)
   (string->symbol (string-append (chunk-format name) "-chunk")))
 
-(define (similar-chunk-tag name)
-  (with l (search-named-chunks (buffer-tree) name)
+(define (similar-chunk-tag name all-chunks)
+  (with l (search-named-chunks name all-chunks)
     (if (null? l) (chunk-tag name) (tree-label (car l)))))
 
 (tm-define (insert-new-chunk tag)
@@ -119,9 +124,10 @@
 
 (tm-define (insert-next-chunk name)
   (:argument name "Chunk name")
-  (with tag (similar-chunk-tag name)
-    (insert-go-to `(,tag ,name "true" "false" (document "")) '(3 0))
-    (update-chunk-states name)))
+  (with all-chunks (get-all-chunks)
+    (with tag (similar-chunk-tag name all-chunks)
+      (insert-go-to `(,tag ,name "true" "false" (document "")) '(3 0))
+      (update-chunk-states name all-chunks))))
 
 (tm-define (kbd-enter t shift?)
   (:require (and (tm-chunk? t) (cursor-inside? (tm-ref t 0))))
@@ -129,8 +135,7 @@
          (tag (chunk-tag name)))
     (when (!= tag 'generic-chunk)
       (tree-assign-node! t tag))
-    (tree-go-to t 3 :start)
-    (update-all-chunk-states)))
+    (tree-go-to t 3 :start)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Removing chunks
@@ -139,12 +144,10 @@
 (tm-define (kbd-remove t forwards?)
   (:require (tm-chunk? t))
   (cond ((selection-active-any?)
-         (former t forwards?)
-         (update-all-chunk-states))
+         (former t forwards?))
         ((and (tree-empty? (tm-ref t 0)) (tree-empty? (tm-ref t 3)))
          (tree-select t)
-         (clipboard-cut "nowhere")
-         (update-all-chunk-states))
+         (clipboard-cut "nowhere"))
         ((and (tree-cursor-at? t 0 :start) (not forwards?))
          (tree-go-to t :start))
         ((and (tree-cursor-at? t 0 :end) forwards?)
@@ -154,8 +157,7 @@
         ((and (tree-cursor-at? t 3 :end) forwards?)
          (tree-go-to t :end))
         ((cursor-inside? (tree-ref t 0))
-         (former t forwards?)
-         (update-all-chunk-states))
+         (former t forwards?))
         (else (former t forwards?))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -221,11 +223,11 @@
 
 (tm-define (search-appended t)
   (cond ((tm-atomic? t) (list))
-        ((tm-func? t 'document) (append-map search-appended (tm-children t)))
+        ((tm-func? t 'document) (flatmap search-appended (tm-children t)))
         ((tm-appended? t) (list t))
         (else
           (with l (list-filter (tm-children t) (cut tm-func? <> 'document))
-            (append-map search-appended l)))))
+            (flatmap search-appended l)))))
 
 (tm-define (search-appended-folded t)
   (list-filter (search-appended t) alternate-standard-first?))

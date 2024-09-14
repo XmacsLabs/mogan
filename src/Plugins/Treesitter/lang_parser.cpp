@@ -82,7 +82,7 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
   path last_ip   = father_ip;
   int  tree_index= 0;
 
-  while (N (father_ip) > 1) {
+  while (N (father_ip) > 0) {
     father_ip = father_ip->next;
     tree_index= reverse (last_ip)[N (father_ip)];
     if (tree_index < 0) {
@@ -94,8 +94,8 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
     // cout << "Father: " << father_ip << " Root:" << root << LF;
     if (!is_atomic (root)) {
       tree env_child= the_drd->get_env_child (root, tree_index, MODE, "");
-      // cout << "Env Child: " << env_child << " tree_index" << tree_index <<
-      // LF;
+      // tree prog_lan=
+      // the_drd->get_env_child (root, tree_index, "prog-language", "");
       if (env_child == "prog") {
         root= root[tree_index];
         // cout << "Tree Index: " << tree_index << " Root: " << root << LF;
@@ -103,9 +103,10 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
       }
     }
   }
-  // if(N(father_ip) == 1){
-  //   cout << "Can not meet Prog " << t << " IP:" << obtain_ip(t) << LF;
-  // }
+  if (N (father_ip) == 0) {
+    // cout << "Can not meet Prog " << t << " IP:" << obtain_ip(t) << LF;
+    root= root[tree_index]; // Set Root To Self as Fallback
+  }
   hash_code= hash (root);
   get_data_from_root (root, t, start_index);
   return root;
@@ -131,8 +132,13 @@ lang_parser::get_data_from_root (tree root, tree line, int& start_index) {
     change_line_pos << change_index;
   }
   else {
-    for (tree child_node : root) {
-      get_data_from_root (child_node, line, start_index);
+    int root_N= N (root);
+    for (int i= 0; i < root_N; i++) {
+      tree child_node= root[i];
+      if (the_drd->is_accessible_child (root, i)) {
+        // cout << "Index: " << i << " Accessible Child: " << child_node << LF;
+        get_data_from_root (child_node, line, start_index);
+      }
     }
   }
 }
@@ -170,8 +176,13 @@ lang_parser::get_code_from_root (tree root, string& code, string_u8& code_u8) {
     }
   }
   else {
-    for (tree child_node : root) {
-      get_code_from_root (child_node, code, code_u8);
+    int root_N= N (root);
+    for (int i= 0; i < root_N; i++) {
+      tree child_node= root[i];
+      if (the_drd->is_accessible_child (root, i)) {
+        // cout << "Index: " << i << " Accessible Child: " << child_node << LF;
+        get_code_from_root (child_node, code, code_u8);
+      }
     }
   }
 }
