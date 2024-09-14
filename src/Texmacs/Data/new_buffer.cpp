@@ -631,10 +631,30 @@ load_inclusion (url name) {
  ******************************************************************************/
 
 void
-swap_buffer_index (int i, int j) {
+swap (tm_buffer& a, tm_buffer& b) {
+  tm_buffer temp= a;
+  a             = b;
+  b             = temp;
+}
+
+void
+move_buffer_index (int from, int to) {
   int n= N (bufs);
-  if (i < 0 || j < 0 || i >= n || j >= n) return;
-  tm_buffer tmp= bufs[i];
-  bufs[i]      = bufs[j]; // actually swapping pointer's value
-  bufs[j]      = tmp;
+  if (from < 0 || to < 0 || from >= n || to >= n) return;
+  // tm_buffer tmp= bufs[from];
+  // bufs[from]      = bufs[to]; // actually swapping pointer's value
+  // bufs[to]      = tmp;
+
+  if (from < to) {
+    // Move element to the right
+    for (int i= from; i < to; ++i) {
+      swap (bufs[i], bufs[i + 1]);
+    }
+  }
+  else {
+    // Move element to the left
+    for (int i= from; i > to; --i) {
+      swap (bufs[i], bufs[i - 1]);
+    }
+  }
 }

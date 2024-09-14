@@ -85,6 +85,7 @@ public:
 private:
   void removeAllTabPages ();
   void extractTabPages (QList<QAction*>* p_src);
+  void arrangeTabPages ();
   void adjustHeight (int p_rowCount);
 
   // drag and drop events

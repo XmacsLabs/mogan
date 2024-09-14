@@ -1530,8 +1530,8 @@ function main()
                 }
             },
             {
-                scm_name = "swap-buffer-index",
-                cpp_name = "swap_buffer_index",
+                scm_name = "move-buffer-index",
+                cpp_name = "move_buffer_index",
                 ret_type = "void",
                 arg_list = {
                     "int",

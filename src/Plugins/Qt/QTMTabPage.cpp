@@ -164,7 +164,7 @@ QTMTabPageContainer::~QTMTabPageContainer () { removeAllTabPages (); }
 
 void
 QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
-    /* why tryLock()? see dragEnterEvent(), but you absolutely can NOT call the
+  /* why tryLock()? see dragEnterEvent(), but you absolutely can NOT call the
    * lock() method here, which will cause DEADLOCK! Because it's locked
    * in dragEnterEvent() (running on MAIN thread), so you can't call lock()
    * again on MAIN thread before it's unlocked. */
@@ -172,35 +172,7 @@ QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
 
   removeAllTabPages ();    // remove  old tabs
   extractTabPages (p_src); // extract new tabs
-
-  const int windowWidth= this->width ();
-  int       rowCount   = 0;
-  int       accumWidth = 0;
-  int       accumTab   = 0;
-
-  for (int i= 0; i < m_tabPageList.size (); ++i) {
-    QTMTabPage* tab= m_tabPageList[i];
-    if (g_mostRecentlyClosedTab == tab->m_bufferUrl) {
-      // this tab has just been closed, don't display it
-      tab->hide ();
-      continue;
-    }
-
-    QSize tabSize = tab->minimumSizeHint ();
-    int   tabWidth= max (MIN_TAB_PAGE_WIDTH, tabSize.width ());
-    if (accumWidth + tabWidth >= windowWidth) {
-      rowCount+= 1;
-      accumWidth= 0;
-      accumTab  = 0;
-    }
-    tab->setGeometry (accumWidth, rowCount * m_rowHeight, tabWidth,
-                      m_rowHeight);
-    accumWidth+= tabWidth;
-    accumTab+= 1;
-  }
-
-  g_mostRecentlyClosedTab= url (); // clear memory
-  adjustHeight (rowCount);
+  arrangeTabPages ();
 
   m_updateMutex.unlock ();
 }
@@ -235,6 +207,38 @@ QTMTabPageContainer::extractTabPages (QList<QAction*>* p_src) {
 }
 
 void
+QTMTabPageContainer::arrangeTabPages () {
+  const int windowWidth= this->width ();
+  int       rowCount   = 0;
+  int       accumWidth = 0;
+  int       accumTab   = 0;
+
+  for (int i= 0; i < m_tabPageList.size (); ++i) {
+    QTMTabPage* tab= m_tabPageList[i];
+    if (g_mostRecentlyClosedTab == tab->m_bufferUrl) {
+      // this tab has just been closed, don't display it
+      tab->hide ();
+      continue;
+    }
+
+    QSize tabSize = tab->minimumSizeHint ();
+    int   tabWidth= max (MIN_TAB_PAGE_WIDTH, tabSize.width ());
+    if (accumWidth + tabWidth >= windowWidth) {
+      rowCount+= 1;
+      accumWidth= 0;
+      accumTab  = 0;
+    }
+    tab->setGeometry (accumWidth, rowCount * m_rowHeight, tabWidth,
+                      m_rowHeight);
+    accumWidth+= tabWidth;
+    accumTab+= 1;
+  }
+
+  g_mostRecentlyClosedTab= url (); // clear memory
+  adjustHeight (rowCount);
+}
+
+void
 QTMTabPageContainer::adjustHeight (int p_rowCount) {
   int h= m_rowHeight * (p_rowCount + 1);
   // parentWidget's resizeEvent() will resize me
@@ -242,24 +246,24 @@ QTMTabPageContainer::adjustHeight (int p_rowCount) {
 }
 
 int
-QTMTabPageContainer::mapToPointing (QDropEvent* e, QPoint& m_indicator) {
+QTMTabPageContainer::mapToPointing (QDropEvent* e, QPoint& p_indicatorPos) {
   QPoint pos= e->pos ();
   for (int i= 0; i < m_tabPageList.size (); ++i) {
     QRect rect= m_tabPageList[i]->geometry ();
     if (rect.contains (pos)) {
       int x_mid= rect.x () + rect.width () / 2;
       if (pos.x () >= x_mid) {
-        m_indicator= rect.topRight ();
+        p_indicatorPos= rect.topRight ();
         if (e->source () == m_tabPageList[i]) return i;
-        else return min (i + 1, int (m_tabPageList.size () - 1));
+        else return min (i + 1, int (m_tabPageList.size ()));
       }
-      m_indicator= rect.topLeft ();
+      p_indicatorPos= rect.topLeft ();
       return i;
     }
   }
-  // no valid pointing tab, m_indicator should be displayed at the end
-  m_indicator= m_tabPageList.last ()->geometry ().topRight ();
-  return m_tabPageList.size () - 1;
+  // no valid pointing tab, p_indicatorPos should be at the end
+  p_indicatorPos= m_tabPageList.last ()->geometry ().topRight ();
+  return m_tabPageList.size ();
 }
 
 void
@@ -296,13 +300,22 @@ QTMTabPageContainer::dropEvent (QDropEvent* e) {
     e->acceptProposedAction ();
 
     QPoint _; // dummy argument
-    int    index= mapToPointing (e, _);
-    object url (m_draggingTab->m_bufferUrl);
+    int    pointingIndex= mapToPointing (e, _);
+    int    oldIndex     = m_tabPageList.indexOf (m_draggingTab);
+    int newIndex= pointingIndex > oldIndex ? pointingIndex - 1 : pointingIndex;
 
+    // update tab page positions immediately
+    if (pointingIndex != oldIndex) {
+      m_tabPageList.removeAt (oldIndex);
+      m_tabPageList.insert (newIndex, m_draggingTab);
+    }
+    arrangeTabPages ();
+
+    object url (m_draggingTab->m_bufferUrl);
     m_draggingTab= nullptr;
     m_updateMutex.unlock ();
 
-    call ("move-buffer-to-index", url, object (index));
+    call ("move-buffer-to-index", url, object (newIndex));
   }
   m_indicator->hide ();
 }
