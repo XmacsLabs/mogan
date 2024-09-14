@@ -15,6 +15,30 @@
   (:use (kernel gui menu-widget)
         (texmacs menus file-menu)))
 
+(define (index-of-buffer lst buf)
+  (let find ((lst lst) (index 0))
+    (cond
+      ((null? lst) -1)
+      ((== (car lst) buf) index)
+      (else (find (cdr lst) (+ index 1))))))
+
+(define (move-buffer i j)
+  ;; move the buffer at index i to index j
+  (if (!= i j)
+    (let ((next (if (< i j) (+ i 1) (- i 1))))
+      (swap-buffer-index i next)
+      (move-buffer next j))))
+
+(tm-define (move-buffer-to-index buf j)
+  (define (transform lst index) (- (length lst) 1 index))
+  ;; lst is the reversed buffer list of cpp buffer array
+  (let* ((lst  (buffer-menu-unsorted-list 99))
+         ;; so we need to transform the index to true index in cpp buffer array
+         (from (transform lst (index-of-buffer lst buf)))
+         (to   (transform lst j)))
+    (if (and (!= from -1) (!= from to))
+        (move-buffer from to))))
+
 (tm-menu (texmacs-tab-pages)
   (for (buf (buffer-menu-unsorted-list 99)) ; buf is the url
     (let* ((title  (buffer-get-title buf))

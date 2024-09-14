@@ -1529,7 +1529,16 @@ function main()
                     "url"
                 }
             },
-            
+            {
+                scm_name = "swap-buffer-index",
+                cpp_name = "swap_buffer_index",
+                ret_type = "void",
+                arg_list = {
+                    "int",
+                    "int"
+                }
+            },
+
             {
                 scm_name = "view-list",
                 cpp_name = "get_all_views",

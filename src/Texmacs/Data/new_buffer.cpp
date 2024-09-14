@@ -625,3 +625,16 @@ load_inclusion (url name) {
   if (!is_func (doc, ERROR)) document_inclusions (name_s)= doc;
   return doc;
 }
+
+/******************************************************************************
+ * Tab page bar related
+ ******************************************************************************/
+
+void
+swap_buffer_index (int i, int j) {
+  int n= N (bufs);
+  if (i < 0 || j < 0 || i >= n || j >= n) return;
+  tm_buffer tmp= bufs[i];
+  bufs[i]      = bufs[j]; // actually swapping pointer's value
+  bufs[j]      = tmp;
+}
