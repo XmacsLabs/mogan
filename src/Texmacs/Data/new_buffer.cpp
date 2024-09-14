@@ -641,18 +641,15 @@ void
 move_buffer_index (int from, int to) {
   int n= N (bufs);
   if (from < 0 || to < 0 || from >= n || to >= n) return;
-  // tm_buffer tmp= bufs[from];
-  // bufs[from]      = bufs[to]; // actually swapping pointer's value
-  // bufs[to]      = tmp;
 
   if (from < to) {
-    // Move element to the right
+    // Move buffer to the right
     for (int i= from; i < to; ++i) {
       swap (bufs[i], bufs[i + 1]);
     }
   }
   else {
-    // Move element to the left
+    // Move buffer to the left
     for (int i= from; i > to; --i) {
       swap (bufs[i], bufs[i - 1]);
     }
