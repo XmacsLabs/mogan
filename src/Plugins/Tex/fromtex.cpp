@@ -2632,7 +2632,7 @@ latex_command_to_tree (tree t) {
   if (is_tuple (t, "\\cases", 1)) {
     tree u= l2e (t[1]);
     tree r= tree (CONCAT);
-    r << tree (LEFT, "\{") << tree (BEGIN, "array", "lll") << u
+    r << tree (LEFT, "{") << tree (BEGIN, "array", "lll") << u
       << tree (END, "array") << tree (RIGHT, ".");
     return r;
   }

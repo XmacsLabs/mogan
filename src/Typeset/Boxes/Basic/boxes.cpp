@@ -895,7 +895,6 @@ tree
 box_rep::message (tree t, SI x, SI y, rectangles& rs) {
   (void) x;
   (void) y;
-  (void) delta;
   (void) t;
   (void) rs;
   return "";
