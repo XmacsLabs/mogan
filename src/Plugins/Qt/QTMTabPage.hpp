@@ -71,7 +71,7 @@ In order to:
 class QTMTabPageContainer : public QWidget {
   QMutex             m_updateMutex;
   QList<QTMTabPage*> m_tabPageList;
-  int                m_rowHeight= 0;
+  int                m_rowHeight  = 0;
   QTMTabPage*        m_draggingTab= nullptr;
   QFrame*            m_indicator;
 
