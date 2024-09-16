@@ -1547,7 +1547,7 @@ function main()
             },
             {
                 scm_name = "move-buffer-index",
-                cpp_name = "move_buffer_index",
+                cpp_name = "move_buffer_via_index",
                 ret_type = "void",
                 arg_list = {
                     "int",

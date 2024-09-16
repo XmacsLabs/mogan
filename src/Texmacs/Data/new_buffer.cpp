@@ -638,7 +638,7 @@ swap (tm_buffer& a, tm_buffer& b) {
 }
 
 void
-move_buffer_index (int from, int to) {
+move_buffer_via_index (int from, int to) {
   int n= N (bufs);
   if (from < 0 || to < 0 || from >= n || to >= n) return;
 

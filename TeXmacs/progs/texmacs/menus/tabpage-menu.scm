@@ -15,19 +15,14 @@
   (:use (kernel gui menu-widget)
         (texmacs menus file-menu)))
 
-(define (index-of-buffer lst buf)
-  (let find ((lst lst) (index 0))
-    (cond
-      ((null? lst) -1)
-      ((== (car lst) buf) index)
-      (else (find (cdr lst) (+ index 1))))))
+(import (only (srfi srfi-1) list-index))
 
 (tm-define (move-buffer-to-index buf j)
   (define (transform lst index) (- (length lst) 1 index))
   ;; lst is the reversed buffer list of cpp buffer array
   (let* ((lst  (buffer-menu-unsorted-list 99))
          ;; so we need to transform the index to true index in cpp buffer array
-         (from (transform lst (index-of-buffer lst buf)))
+         (from (transform lst (list-index (lambda (x) (== x buf)) lst)))
          (to   (transform lst j)))
       (move-buffer-index from to)))
 
