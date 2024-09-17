@@ -50,7 +50,7 @@
                                   (url->string html-temp-url)
                                   " -o "
                                   (url->string docx-temp-url))))
-          ; (display cmd) ;; For debugging
+          (display (string-append "debug: cmd for Pandoc: " cmd)) ;; For debugging
           (system cmd)
           (with result (string-load docx-temp-url)
             (system-remove html-temp-url)
