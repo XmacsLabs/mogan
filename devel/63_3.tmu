@@ -1,0 +1,16 @@
+<TMU|<tuple|1.0.3|1.2.9.2-rc4>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <with|marked-color|#faa|<marked|marked red>>
+
+  <with|marked-color|#afa|<marked|marked green>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

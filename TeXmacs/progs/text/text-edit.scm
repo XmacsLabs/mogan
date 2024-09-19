@@ -1023,8 +1023,10 @@
   (focus-list-search-label (tree-children t)))
 
 
-; Decorated tag
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Decorated tag
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (customizable-parameters t)
   (:require (tree-is? t 'marked))
-  (append (list (list "marked-color" "Color"))))
+  (list (list "marked-color" "Color")))
