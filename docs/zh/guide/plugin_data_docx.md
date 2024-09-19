@@ -5,4 +5,6 @@
 ### 前置必要条件：`pandoc`
 TeXmacs文档转换为docx文档的过程依赖于第三方应用`pandoc`，如果导出时环境内不包含`pandoc`，则会报错而无法导出。
 
+推荐使用安装版的pandoc而不是免安装版，以规避因PATH不同而导致的问题。
+
 关于`pandoc`插件的安装请参考 [Pandoc 二进制插件](./plugin_binary_pandoc.md)
