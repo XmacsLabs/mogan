@@ -14,6 +14,7 @@
 #include "Boxes/composite.hpp"
 #include "Boxes/construct.hpp"
 #include "analyze.hpp"
+#include "font.hpp"
 
 /******************************************************************************
  * Miscellaneous routines
@@ -62,7 +63,8 @@ italic_correction (box L, box R) {
 struct frac_box_rep : public composite_box_rep {
   font   fn, sfn;
   pencil pen;
-  frac_box_rep (path ip, box b1, box b2, font fn, font sfn, pencil pen);
+  frac_box_rep (path ip, box b1, box b2, font fn, font sfn, pencil pen,
+                bool opentype_disp);
   operator tree () { return tree (TUPLE, "frac", bs[0], bs[1]); }
   box adjust_kerning (int mode, double factor);
   box expand_glyphs (int mode, double factor);
@@ -70,7 +72,7 @@ struct frac_box_rep : public composite_box_rep {
 };
 
 frac_box_rep::frac_box_rep (path ip, box b1, box b2, font fn2, font sfn2,
-                            pencil pen2)
+                            pencil pen2, bool opentype_disp)
     : composite_box_rep (ip), fn (fn2), sfn (sfn2), pen (pen2) {
   // Italic correction does not lead to nicer results,
   // because right correction is not equilibrated w.r.t. left correction
@@ -84,10 +86,35 @@ frac_box_rep::frac_box_rep (path ip, box b1, box b2, font fn2, font sfn2,
   SI d    = sep >> 1;
 
   pencil bar_pen= pen->set_width (bar_w);
-  insert (b1, (w >> 1) - (b1->x2 >> 1), bar_y + sep + (bar_w >> 1) - b1_y);
-  insert (b2, (w >> 1) - (b2->x2 >> 1), bar_y - sep - (bar_w >> 1) - b2_y);
-  insert (line_box (decorate_middle (ip), d, 0, w - d, 0, bar_pen), 0, bar_y);
 
+  bool use_opentype=
+      (fn->math_type == MATH_TYPE_OPENTYPE) && (fn->frac_num_gap_min > 0);
+
+  if (use_opentype) {
+    SI num_gap_min   = fn->frac_num_gap_min;
+    SI den_gap_min   = fn->frac_denom_gap_min;
+    SI num_shift_up  = fn->frac_num_shift_up;
+    SI den_shift_down= fn->frac_denom_shift_down;
+
+    if (opentype_disp) {
+      num_gap_min   = fn->frac_num_disp_gap_min;
+      den_gap_min   = fn->frac_denom_disp_gap_min;
+      num_shift_up  = fn->frac_num_disp_shift_up;
+      den_shift_down= fn->frac_denom_disp_shift_down;
+    }
+
+    insert (b1, (w >> 1) - (b1->x2 >> 1),
+            max (num_shift_up, bar_y + num_gap_min + (bar_w >> 1) - b1->y1));
+    insert (b2, (w >> 1) - (b2->x2 >> 1),
+            min (-den_shift_down, bar_y - den_gap_min - (bar_w >> 1) - b2->y2));
+    insert (line_box (decorate_middle (ip), d, 0, w - d, 0, bar_pen), 0, bar_y);
+  }
+  else {
+  h:
+    insert (b1, (w >> 1) - (b1->x2 >> 1), bar_y + sep + (bar_w >> 1) - b1_y);
+    insert (b2, (w >> 1) - (b2->x2 >> 1), bar_y - sep - (bar_w >> 1) - b2_y);
+    insert (line_box (decorate_middle (ip), d, 0, w - d, 0, bar_pen), 0, bar_y);
+  }
   italic_correct (b1);
   italic_correct (b2);
   position ();
@@ -698,8 +725,9 @@ wide_box_rep::get_bracket_extents (SI& lo, SI& hi) {
  ******************************************************************************/
 
 box
-frac_box (path ip, box b1, box b2, font fn, font sfn, pencil pen) {
-  return tm_new<frac_box_rep> (ip, b1, b2, fn, sfn, pen);
+frac_box (path ip, box b1, box b2, font fn, font sfn, pencil pen,
+          bool opentype_disp) {
+  return tm_new<frac_box_rep> (ip, b1, b2, fn, sfn, pen, opentype_disp);
 }
 
 box
