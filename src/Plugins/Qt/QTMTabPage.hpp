@@ -11,7 +11,12 @@
 #ifndef QTMTABPAGE_HPP
 #define QTMTABPAGE_HPP
 
+#include <QDrag>
+#include <QDropEvent>
+#include <QFrame>
+#include <QMimeData>
 #include <QMouseEvent>
+#include <QMutex>
 #include <QStyleOptionToolButton>
 #include <QStylePainter>
 #include <QToolBar>
@@ -24,6 +29,7 @@
 class QTMTabPage : public QToolButton {
   Q_OBJECT
   QToolButton* m_closeBtn;
+  QPoint       m_dragStartPos;
 
 public:
   const url m_bufferUrl;
@@ -35,6 +41,8 @@ public:
 
 protected:
   virtual void resizeEvent (QResizeEvent* e) override;
+  virtual void mousePressEvent (QMouseEvent* e) override;
+  virtual void mouseMoveEvent (QMouseEvent* e) override;
 
 private:
   void setupStyle ();
@@ -61,8 +69,11 @@ In order to:
 2. Support drag-and-drop to sort tab page
  */
 class QTMTabPageContainer : public QWidget {
+  QMutex             m_updateMutex;
   QList<QTMTabPage*> m_tabPageList;
-  int                m_rowHeight= 0;
+  int                m_rowHeight  = 0;
+  QTMTabPage*        m_draggingTab= nullptr;
+  QFrame*            m_indicator;
 
 public:
   explicit QTMTabPageContainer (QWidget* p_parent);
@@ -74,7 +85,15 @@ public:
 private:
   void removeAllTabPages ();
   void extractTabPages (QList<QAction*>* p_src);
+  void arrangeTabPages ();
   void adjustHeight (int p_rowCount);
+
+  // drag and drop events
+  int          mapToPointing (QDropEvent* e, QPoint& m_indicator);
+  virtual void dragEnterEvent (QDragEnterEvent* e) override;
+  virtual void dragMoveEvent (QDragMoveEvent* e) override;
+  virtual void dropEvent (QDropEvent* e) override;
+  virtual void dragLeaveEvent (QDragLeaveEvent* e) override;
 };
 
 /*! QTMTabPageBar is used to wrap the QTMTabPageContainer.

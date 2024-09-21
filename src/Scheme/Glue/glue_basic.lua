@@ -1545,7 +1545,16 @@ function main()
                     "url"
                 }
             },
-            
+            {
+                scm_name = "move-buffer-index",
+                cpp_name = "move_buffer_via_index",
+                ret_type = "void",
+                arg_list = {
+                    "int",
+                    "int"
+                }
+            },
+
             {
                 scm_name = "view-list",
                 cpp_name = "get_all_views",
