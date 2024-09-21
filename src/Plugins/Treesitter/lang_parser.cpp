@@ -9,6 +9,7 @@
  ******************************************************************************/
 
 #include "lang_parser.hpp"
+#include "boxes.hpp"
 #include "converter.hpp"
 #include "list.hpp"
 #include "observers.hpp"
@@ -86,8 +87,7 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
     father_ip = father_ip->next;
     tree_index= reverse (last_ip)[N (father_ip)];
     if (tree_index < 0) {
-      // cout << "tree_index < 0: " << tree_index << LF;
-      tree_index= 0;
+      tree_index= reverse (descend_decode (last_ip, 0))[N (father_ip)];
     }
     last_ip= father_ip;
     root   = tree (subtree (the_et, reverse (father_ip)));
