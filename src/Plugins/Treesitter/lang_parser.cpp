@@ -93,10 +93,12 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
     root   = tree (subtree (the_et, reverse (father_ip)));
     // cout << "Father: " << father_ip << " Root:" << root << LF;
     if (!is_atomic (root)) {
+      // Fix some root node cannot find
       tree env_child= the_drd->get_env_child (root, tree_index, MODE, "");
-      // tree prog_lan=
-      // the_drd->get_env_child (root, tree_index, "prog-language", "");
-      if (env_child == "prog") {
+
+      tree env_child_pl=
+          the_drd->get_env_child (root, tree_index, "prog-language", "");
+      if (env_child == "prog" || N (env_child_pl) > 0) {
         root= root[tree_index];
         // cout << "Tree Index: " << tree_index << " Root: " << root << LF;
         break;
@@ -108,7 +110,15 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
     root= root[tree_index]; // Set Root To Self as Fallback
   }
   hash_code= hash (root);
+  // cout << "root " << root << " \nhash " << hash_code << LF;
+
   get_data_from_root (root, t, start_index);
+
+  // //Add this to avoid wrong hash code
+  // if(N(change_line_pos) > 0){
+  //   hash_code += change_line_pos[N(change_line_pos) - 1];
+  //   //cout << "last " << change_line_pos[N(change_line_pos) - 1] << LF;
+  // }
   return root;
 }
 
@@ -189,6 +199,7 @@ lang_parser::get_code_from_root (tree root, string& code, string_u8& code_u8) {
 
 bool
 lang_parser::check_to_compile (int hash_code) {
+  // cout << "current " << current_code_hash << " hash " << hash_code << LF;
   if (hash_code != current_code_hash) {
     current_code_hash= hash_code;
     return true;
@@ -360,6 +371,8 @@ lang_parser::do_ast_parse (tree code_root) {
   // Tree Parse
   // time_t t1  = texmacs_time (); // Parse Time Start
   code_string= get_code_str (code_root);
+  // cout << "code_string \n=========================\n" << code_string <<
+  // "=========================\n";
   c_string source_code (code_string);
   TSTree*  tstree=
       ts_parser_parse_string (ast_parser, NULL, source_code, N (code_string));
