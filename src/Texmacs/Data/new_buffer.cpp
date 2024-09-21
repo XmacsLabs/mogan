@@ -618,3 +618,33 @@ load_inclusion (url name) {
   if (!is_func (doc, ERROR)) document_inclusions (name_s)= doc;
   return doc;
 }
+
+/******************************************************************************
+ * Tab page bar related
+ ******************************************************************************/
+
+void
+swap (tm_buffer& a, tm_buffer& b) {
+  tm_buffer temp= a;
+  a             = b;
+  b             = temp;
+}
+
+void
+move_buffer_via_index (int from, int to) {
+  int n= N (bufs);
+  if (from < 0 || to < 0 || from >= n || to >= n) return;
+
+  if (from < to) {
+    // Move buffer to the right
+    for (int i= from; i < to; ++i) {
+      swap (bufs[i], bufs[i + 1]);
+    }
+  }
+  else {
+    // Move buffer to the left
+    for (int i= from; i > to; --i) {
+      swap (bufs[i], bufs[i - 1]);
+    }
+  }
+}

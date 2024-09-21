@@ -83,6 +83,36 @@ QTMTabPage::resizeEvent (QResizeEvent* e) {
 }
 
 void
+QTMTabPage::mousePressEvent (QMouseEvent* e) {
+  if (e->button () == Qt::LeftButton) {
+    m_dragStartPos= e->pos ();
+  }
+  QToolButton::mousePressEvent (e);
+}
+
+void
+QTMTabPage::mouseMoveEvent (QMouseEvent* e) {
+  if (!(e->buttons () & Qt::LeftButton)) return QToolButton::mouseMoveEvent (e);
+  if ((e->pos () - m_dragStartPos).manhattanLength () < 15) {
+    // avoid treating small movement(more like a click) as dragging
+    return QToolButton::mouseMoveEvent (e);
+  }
+  e->accept ();
+
+  QPixmap pixmap (size ());
+  render (&pixmap);
+
+  QDrag* drag= new QDrag (this);
+  // align pixmap to the topLeft of the cursor
+  drag->setHotSpot (QPoint (0, 0));
+  drag->setMimeData (new QMimeData ()); // Qt requires
+  drag->setPixmap (pixmap);
+  drag->exec (Qt::MoveAction);
+
+  setDown (false); // to avoid keeping the pressed state
+}
+
+void
 QTMTabPage::setupStyle () {
   QString qss, bg_color, bg_color_hover, border_color, border_color_top;
 
@@ -124,6 +154,12 @@ QTMTabPage::setupStyle () {
 
 QTMTabPageContainer::QTMTabPageContainer (QWidget* p_parent)
     : QWidget (p_parent) {
+  m_indicator= new QFrame (this);
+  m_indicator->setFrameShape (QFrame::VLine);
+  m_indicator->setLineWidth (2);
+  m_indicator->hide ();
+
+  setAcceptDrops (true);
   setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
 
@@ -131,37 +167,17 @@ QTMTabPageContainer::~QTMTabPageContainer () { removeAllTabPages (); }
 
 void
 QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
+  /* why tryLock()? see dragEnterEvent(), but you absolutely can NOT call the
+   * lock() method here, which will cause DEADLOCK! Because it's locked
+   * in dragEnterEvent() (running on MAIN thread), so you can't call lock()
+   * again on MAIN thread before it's unlocked. */
+  if (!m_updateMutex.tryLock ()) return;
+
   removeAllTabPages ();    // remove  old tabs
   extractTabPages (p_src); // extract new tabs
+  arrangeTabPages ();
 
-  const int windowWidth= this->width ();
-  int       rowCount   = 0;
-  int       accumWidth = 0;
-  int       accumTab   = 0;
-
-  for (int i= 0; i < m_tabPageList.size (); ++i) {
-    QTMTabPage* tab= m_tabPageList[i];
-    if (g_mostRecentlyClosedTab == tab->m_bufferUrl) {
-      // this tab has just been closed, don't display it
-      tab->hide ();
-      continue;
-    }
-
-    QSize tabSize = tab->minimumSizeHint ();
-    int   tabWidth= max (MIN_TAB_PAGE_WIDTH, tabSize.width ());
-    if (accumWidth + tabWidth >= windowWidth) {
-      rowCount+= 1;
-      accumWidth= 0;
-      accumTab  = 0;
-    }
-    tab->setGeometry (accumWidth, rowCount * m_rowHeight, tabWidth,
-                      m_rowHeight);
-    accumWidth+= tabWidth;
-    accumTab+= 1;
-  }
-
-  g_mostRecentlyClosedTab= url (); // clear memory
-  adjustHeight (rowCount);
+  m_updateMutex.unlock ();
 }
 
 void
@@ -194,10 +210,127 @@ QTMTabPageContainer::extractTabPages (QList<QAction*>* p_src) {
 }
 
 void
+QTMTabPageContainer::arrangeTabPages () {
+  const int windowWidth= this->width ();
+  int       rowCount   = 0;
+  int       accumWidth = 0;
+  int       accumTab   = 0;
+
+  for (int i= 0; i < m_tabPageList.size (); ++i) {
+    QTMTabPage* tab= m_tabPageList[i];
+    if (g_mostRecentlyClosedTab == tab->m_bufferUrl) {
+      // this tab has just been closed, don't display it
+      tab->hide ();
+      continue;
+    }
+
+    QSize tabSize = tab->minimumSizeHint ();
+    int   tabWidth= max (MIN_TAB_PAGE_WIDTH, tabSize.width ());
+    if (accumWidth + tabWidth >= windowWidth) {
+      rowCount+= 1;
+      accumWidth= 0;
+      accumTab  = 0;
+    }
+    tab->setGeometry (accumWidth, rowCount * m_rowHeight, tabWidth,
+                      m_rowHeight);
+    accumWidth+= tabWidth;
+    accumTab+= 1;
+  }
+
+  g_mostRecentlyClosedTab= url (); // clear memory
+  adjustHeight (rowCount);
+}
+
+void
 QTMTabPageContainer::adjustHeight (int p_rowCount) {
   int h= m_rowHeight * (p_rowCount + 1);
   // parentWidget's resizeEvent() will resize me
   parentWidget ()->setFixedHeight (h + 2);
+}
+
+int
+QTMTabPageContainer::mapToPointing (QDropEvent* e, QPoint& p_indicatorPos) {
+  QPoint pos= e->pos ();
+  for (int i= 0; i < m_tabPageList.size (); ++i) {
+    QRect rect= m_tabPageList[i]->geometry ();
+    if (rect.contains (pos)) {
+      int x_mid= rect.x () + rect.width () / 2;
+      if (pos.x () >= x_mid) {
+        p_indicatorPos= rect.topRight ();
+        if (e->source () == m_tabPageList[i]) return i;
+        else return min (i + 1, int (m_tabPageList.size ()));
+      }
+      p_indicatorPos= rect.topLeft ();
+      return i;
+    }
+  }
+  // no valid pointing tab, p_indicatorPos should be at the end
+  p_indicatorPos= m_tabPageList.last ()->geometry ().topRight ();
+  return m_tabPageList.size ();
+}
+
+void
+QTMTabPageContainer::dragEnterEvent (QDragEnterEvent* e) {
+  QTMTabPage* source= qobject_cast<QTMTabPage*> (e->source ());
+  if (source) {
+    /* Tab pages are updated periodically by scheme(?), even if there are no
+     * changes. So sometimes(not always) when we dragging a tab page, all the
+     * existing tab pages have been replaced. As a result, we're holding an
+     * invalid tab page pointer which causes a "segmentation fault" error.
+     * To avoid this, we need to use a mutex. */
+    m_updateMutex.lock (); // <-
+    m_draggingTab= source;
+    e->acceptProposedAction ();
+  }
+}
+
+void
+QTMTabPageContainer::dragMoveEvent (QDragMoveEvent* e) {
+  if (m_draggingTab) {
+    e->acceptProposedAction ();
+    QPoint pos;
+    mapToPointing (e, pos);
+    // display a vertical line to tell user where the tab will be inserted
+    m_indicator->setGeometry (pos.x (), pos.y (), 2, m_rowHeight);
+    m_indicator->raise ();
+    m_indicator->show ();
+  }
+}
+
+void
+QTMTabPageContainer::dropEvent (QDropEvent* e) {
+  if (m_draggingTab) {
+    e->acceptProposedAction ();
+
+    QPoint _; // dummy argument
+    int    pointingIndex= mapToPointing (e, _);
+    int    oldIndex     = m_tabPageList.indexOf (m_draggingTab);
+    int newIndex= pointingIndex > oldIndex ? pointingIndex - 1 : pointingIndex;
+
+    // update tab page positions immediately
+    if (pointingIndex != oldIndex) {
+      m_tabPageList.removeAt (oldIndex);
+      m_tabPageList.insert (newIndex, m_draggingTab);
+    }
+    arrangeTabPages ();
+
+    object url (m_draggingTab->m_bufferUrl);
+    m_draggingTab= nullptr;
+    m_updateMutex.unlock ();
+
+    call ("move-buffer-to-index", url, object (newIndex));
+  }
+  m_indicator->hide ();
+}
+
+void
+QTMTabPageContainer::dragLeaveEvent (QDragLeaveEvent* e) {
+  if (m_draggingTab) {
+    e->accept ();
+    m_draggingTab= nullptr;
+    m_updateMutex.unlock ();
+  }
+  m_indicator->hide ();
 }
 
 /******************************************************************************
