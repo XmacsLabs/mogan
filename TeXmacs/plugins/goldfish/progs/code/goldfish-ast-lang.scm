@@ -14,12 +14,8 @@
 (texmacs-module (code goldfish-ast-lang)
   (:use (code default-ast-lang)
         (code r7rs-keyword)
-        (code srfi-keyword)))
-
-(define (liii-keywords)
-  '("==" "!=" "in?" "display*" "list-view" "argv"
-    "mkdir" "chdir" "rmdir" "getcwd" "listdir" "getenv" "putenv" "unsetenv"
-    "getlogin" "getpid" "access" "system" "os-linux?" "os-macos?" "os-windows?"))
+        (code srfi-keyword)
+        (code liii-keyword)))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "id")))
@@ -36,9 +32,7 @@
       "*rootlet-redefinition-hook*" "*unbound-variable-hook*"
       "*missing-close-paren-hook*")
     (declare_type
-      ,@(r7rs-keywords-define)
-      "defined?" "define-macro" "define-constant" "autoload" "require"
-      "provide" "define*" "lambda*" "eval-string" "let1")
+      ,@(r7rs-keywords-define) ,@(liii-keywords-define))
     (keyword
       ,@(r7rs-keywords-others) ,@(srfi-1-keywords) ,@(srfi-8-keywords) ,@(srfi-13-keywords) ,@(srfi-60-keywords) ,@(srfi-78-keywords)
       ,@(liii-keywords)
@@ -58,9 +52,7 @@
       "syntax-error" "wrong-type-arg" "immutable-error" "out-of-range" "division-by-zero"
       "unbound-variable" "read-error" "format-error" "missing-method" "out-of-memory"
       "bad-result" "no-catch" "wrong-number-of-args" "io-error" "bignum-error"
-      ; (liii error)
-      "os-error" "file-not-found-error" "not-a-directory-error" "file-exists-error" "timeout-error"
-      "type-error" "value-error" "???" "not-implemented-error")
+      ,@(liii-keywords-error))
     (keyword_conditional ,@(r7rs-keywords-branch))
     (keyword_control ,@(r7rs-keywords-exception) "catch")
     ; the following 3 lines is required
@@ -93,7 +85,16 @@
     ("#000000" "symbol"  "operator" "normal-brackets" "vector_tag" "byte_vector_tag")
     ("#800080" "ERROR")
     ; rainbow delimiter
-    ("#888800" "(0" ")0" "[0" "]0" "{0" "}0")
-    ("#008700" "(1" ")1" "[1" "]1" "{1" "}1")
-    ("#3689e6" "(2" ")2" "[2" "]2" "{2" "}2")))
+    ("#ff115f" "(0" ")0" "[0" "]0" "{0" "}0")
+    ("#ff8805" "(1" ")1" "[1" "]1" "{1" "}1")
+    ("#888800" "(2" ")2" "[2" "]2" "{2" "}2")
+    ("#008700" "(3" ")3" "[3" "]3" "{3" "}3")
+    ("#3689e6" "(4" ")4" "[4" "]4" "{4" "}4")
+    ("#a100a1" "(5" ")5" "[5" "]5" "{5" "}5")))
 
+(tm-define (parser-feature lan key)
+  (:require (== key "brackets"))
+  `(,(string->symbol key)
+    (6 "(" ")")
+    (6 "[" "]")
+    (6 "{" "}")))
