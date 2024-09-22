@@ -188,11 +188,11 @@
                (l-code-nl (map (cut string-append <> "\n") l-code))
                (s-code (apply string-append l-code-nl)))
           (hash-table-set! r key s-code)))
-      (hash-table->alist ht))
+      (map values ht))
     r))
 
 (define (write-table ht dir)
-  ((list-view (hash-table->alist ht))
+  ((list-view (map values ht))
     for-each
     (lambda (pair)
       (let* ((key (car pair))
