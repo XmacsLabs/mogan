@@ -28,7 +28,7 @@
   last-pair last
   ; SRFI 1: fold, unfold & map
   count fold fold-right reduce reduce-right
-  filter partition remove
+  filter partition remove append-map
   ; SRFI 1: Searching
   find any every list-index
   take-while drop-while
@@ -71,8 +71,7 @@
                        "list-view only accepts even number of args"))))
   f-inner)
 
-(define (flatmap f seq)
-  (fold-right append () (map f seq)))
+(define flatmap append-map)
 
 (define (not-null-list? l)
   (cond ((pair? l)

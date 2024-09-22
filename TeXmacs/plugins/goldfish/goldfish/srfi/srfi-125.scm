@@ -15,7 +15,9 @@
 ;
 
 (define-library (srfi srfi-125)
-(import (srfi srfi-1))
+(import (srfi srfi-1)
+        (liii base)
+        (liii error))
 (export
   make-hash-table hash-table hash-table-unfold alist->hash-table
   hash-table? hash-table-contains? hash-table-empty? hash-table=?
@@ -24,7 +26,9 @@
   hash-table-set! hash-table-delete! hash-table-intern! hash-table-update!
   hash-table-update!/default hash-table-pop! hash-table-clear!
   hash-table-size hash-table-keys hash-table-values hash-table-entries
-  hash-table-find hash-table-count hash-table->alist
+  hash-table-find hash-table-count
+  hash-table-for-each
+  hash-table->alist
 )
 (begin
 
@@ -34,6 +38,7 @@
 
 (define s7-hash-table-set! hash-table-set!)
 (define s7-make-hash-table make-hash-table)
+(define s7-hash-table-entries hash-table-entries)
 
 (define (make-hash-table . args)
   (cond ((null? args) (s7-make-hash-table))
@@ -42,6 +47,18 @@
                 (hash-func (comparator-hash-function (car args))))
            (s7-make-hash-table 8 (cons equiv hash-func) (cons #t #t))))
         (else (type-error "make-hash-table"))))
+
+(define alist->hash-table
+  (typed-lambda ((lst list?))
+    (when (odd? (length lst))
+      (value-error "The length of lst must be even!"))
+    (let1 ht (make-hash-table)
+      (let loop ((rest lst))
+        (if (null? rest)
+            ht
+            (begin
+              (hash-table-set! ht (car rest) (cadr rest))
+              (loop (cddr rest))))))))
 
 (define (hash-table-contains? ht key)
   (not (not (hash-table-ref ht key))))
@@ -88,16 +105,36 @@
       (hash-table-set! ht key #f))
     (hash-table-keys ht)))
 
-(define hash-table-size hash-table-entries)
+(define hash-table-size s7-hash-table-entries)
 
 (define (hash-table-keys ht)
-  (map car (map values ht)))
+  (map car ht))
 
 (define (hash-table-values ht)
-  (map cdr (map values ht)))
+  (map cdr ht))
 
-(define (hash-table->alist table)
-  (map values table))
+(define hash-table-entries
+  (typed-lambda ((ht hash-table?))
+    (let ((ks (hash-table-keys ht))
+          (vs (hash-table-values ht)))
+      (values ks vs))))
+
+
+(define hash-table-count
+  (typed-lambda ((pred? procedure?) (ht hash-table?))
+    (count (lambda (x) (pred? (car x) (cdr x)))
+           (map values ht))))
+
+(define hash-table-for-each
+  (typed-lambda ((proc procedure?) (ht hash-table?))
+    (for-each (lambda (x) (proc (car x) (cdr x)))
+              ht)))
+
+(define hash-table->alist
+  (typed-lambda ((ht hash-table?))
+    (append-map
+      (lambda (x) (list (car x) (cdr x)))
+      (map values ht))))
 
 ) ; end of begin
 ) ; end of define-library

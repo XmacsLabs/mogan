@@ -12,13 +12,14 @@
 ;;; Follow the same License as the original one
 
 (define-library (srfi srfi-1)
-(import (liii error))
+(import (liii error)
+        (liii base))
 (export
   circular-list iota circular-list? null-list?
   first second third fourth fifth
   sixth seventh eighth ninth tenth
   take drop take-right drop-right count fold fold-right
-  reduce reduce-right filter partition remove find
+  reduce reduce-right append-map filter partition remove find
   delete delete-duplicates
   take-while drop-while list-index any every
   last-pair last)
@@ -137,6 +138,15 @@
         (if (pair? l)
             (f head (recur (car l) (cdr l)))
             head))))
+
+(define append-map
+  (typed-lambda ((proc procedure?) (lst list?))
+    (let loop ((rest lst)
+               (result '()))
+      (if (null? rest)
+          result
+          (loop (cdr rest)
+                (append result (proc (car rest))))))))
 
 (define (filter pred l)
   (let recur ((l l))
