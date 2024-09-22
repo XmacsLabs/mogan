@@ -19,6 +19,10 @@
   let-values
   define-record-type
   square
+  exact inexact
+  floor s7-floor ceiling s7-ceiling truncate s7-truncate round s7-round
+  floor-quotient
+  gcd lcm s7-lcm
   boolean=?
   ; String
   string-copy
@@ -102,6 +106,60 @@
                            (let-set! ,obj ',(car field) val)))))))
           fields)
        ',type)))
+
+(define exact inexact->exact)
+
+(define inexact exact->inexact)
+
+(define s7-floor floor)
+
+(define (floor x)
+  (if (inexact? x)
+      (inexact (s7-floor x))
+      (s7-floor x)))
+
+(define s7-ceiling ceiling)
+
+(define (ceiling x)
+  (if (inexact? x)
+      (inexact (s7-ceiling x))
+      (s7-ceiling x)))
+
+(define s7-truncate truncate)
+
+(define (truncate x)
+  (if (inexact? x)
+      (inexact (s7-truncate x))
+      (s7-truncate x)))
+
+(define s7-round round)
+
+(define (round x)
+  (if (inexact? x)
+      (inexact (s7-round x))
+      (s7-round x)))
+
+(define (floor-quotient x y) (floor (/ x y)))
+
+(define s7-lcm lcm)
+
+(define (lcm2 x y)
+  (cond ((and (inexact? x) (exact? y))
+         (inexact (s7-lcm (exact x) y)))
+        ((and (exact? x) (inexact? y))
+         (inexact (s7-lcm x (exact y))))
+        ((and (inexact? x) (inexact? y))
+         (inexact (s7-lcm (exact x) (exact y))))
+        (else (s7-lcm x y))))
+
+(define (lcm . args)
+  (cond ((null? args) 1)
+        ((null? (cdr args))
+         (car args))
+        ((null? (cddr args))
+         (lcm2 (car args) (cadr args)))
+        (else (apply lcm (cons (lcm (car args) (cadr args))
+                               (cddr args))))))
 
 (define (square x) (* x x))
 

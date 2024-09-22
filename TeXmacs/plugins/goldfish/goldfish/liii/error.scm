@@ -19,7 +19,7 @@
 (export ???
   os-error file-not-found-error not-a-directory-error file-exists-error
   timeout-error
-  type-error value-error)
+  type-error type-error? value-error)
 (begin
 
 (define (os-error . args)
@@ -39,6 +39,9 @@
 
 (define (type-error . args)
   (apply error (cons 'type-error args)))
+
+(define (type-error? err)
+  (in? err `(type-error wrong-type-arg)))
 
 (define (value-error . args)
   (apply error (cons 'value-error args)))
