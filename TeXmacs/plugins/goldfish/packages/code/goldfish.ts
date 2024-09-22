@@ -34,6 +34,8 @@
     </pseudo-code>
   </macro>>
 
+  <assign|goldfish-prompt|<macro|prompt|<with|mode|text|language|verbatim|font-family|tt|<style-with|src-compact|none|<arg|prompt>>>>>
+
   <assign|goldfish-input|<\macro|prompt|body>
     <\with|generic-prompt-color|<value|goldfish-prompt-color>|generic-input-color|<value|scheme-input-color>>
       <generic-input|<arg|prompt>|<arg|body>>
