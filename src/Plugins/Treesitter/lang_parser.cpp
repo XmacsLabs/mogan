@@ -9,6 +9,7 @@
  ******************************************************************************/
 
 #include "lang_parser.hpp"
+#include "boxes.hpp"
 #include "converter.hpp"
 #include "list.hpp"
 #include "observers.hpp"
@@ -86,17 +87,18 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
     father_ip = father_ip->next;
     tree_index= reverse (last_ip)[N (father_ip)];
     if (tree_index < 0) {
-      // cout << "tree_index < 0: " << tree_index << LF;
-      tree_index= 0;
+      tree_index= reverse (descend_decode (last_ip, 0))[N (father_ip)];
     }
     last_ip= father_ip;
     root   = tree (subtree (the_et, reverse (father_ip)));
     // cout << "Father: " << father_ip << " Root:" << root << LF;
     if (!is_atomic (root)) {
-      tree env_child= the_drd->get_env_child (root, tree_index, MODE, "");
-      // tree prog_lan=
-      // the_drd->get_env_child (root, tree_index, "prog-language", "");
-      if (env_child == "prog") {
+      // Fix some root node cannot find
+      tree env_child_mode= the_drd->get_env_child (root, tree_index, MODE, "");
+
+      tree env_child_pl=
+          the_drd->get_env_child (root, tree_index, moebius::PROG_LANGUAGE, "");
+      if (env_child_mode == "prog" || N (env_child_pl) > 0) {
         root= root[tree_index];
         // cout << "Tree Index: " << tree_index << " Root: " << root << LF;
         break;
@@ -105,10 +107,16 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
   }
   if (N (father_ip) == 0) {
     // cout << "Can not meet Prog " << t << " IP:" << obtain_ip(t) << LF;
-    root= root[tree_index]; // Set Root To Self as Fallback
+    root= root[tree_index];
   }
   hash_code= hash (root);
   get_data_from_root (root, t, start_index);
+
+  // //Add this to avoid wrong hash code
+  // if(N(change_line_pos) > 0){
+  //   hash_code += change_line_pos[N(change_line_pos) - 1];
+  //   //cout << "last " << change_line_pos[N(change_line_pos) - 1] << LF;
+  // }
   return root;
 }
 
@@ -189,6 +197,7 @@ lang_parser::get_code_from_root (tree root, string& code, string_u8& code_u8) {
 
 bool
 lang_parser::check_to_compile (int hash_code) {
+  // cout << "current " << current_code_hash << " hash " << hash_code << LF;
   if (hash_code != current_code_hash) {
     current_code_hash= hash_code;
     return true;
