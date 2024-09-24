@@ -112,11 +112,11 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
   hash_code= hash (root);
   get_data_from_root (root, t, start_index);
 
-  // //Add this to avoid wrong hash code
-  // if(N(change_line_pos) > 0){
-  //   hash_code += change_line_pos[N(change_line_pos) - 1];
-  //   //cout << "last " << change_line_pos[N(change_line_pos) - 1] << LF;
-  // }
+  // Add this to avoid wrong hash code
+  if (N (change_line_pos) > 0) {
+    hash_code+= change_line_pos[N (change_line_pos) - 1];
+  }
+
   return root;
 }
 
@@ -323,7 +323,7 @@ lang_parser::add_token (TSSymbol token_type, string token_literal,
   int change_line_high= -1;
   is_change_line_between (start_pos, end_pos, change_line_low,
                           change_line_high);
-  if (change_line_high > 0) {
+  if (change_line_high >= 0) {
     int start_1= start_pos;
     int end_1  = change_line_low;
     int start_2= change_line_high + 1;
