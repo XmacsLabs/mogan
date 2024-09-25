@@ -17,8 +17,7 @@
         (prog scheme-tools)
         (prog prog-mode)
         (code scheme-edit)
-        (code cpp-edit)
-        (code python-edit)))
+        (code cpp-edit)))
 
 (kbd-map
   (:mode in-prog?)

@@ -218,13 +218,11 @@
   ---
   (-> "Inline code"
       ("C++" (make 'cpp))
-      ("Python" (make 'python))
       ("Scheme" (make 'scm))
       ("Shell" (make 'shell))
       ("Verbatim" (make 'verbatim)))
   (-> "Block of code"
       ("C++" (make 'cpp-code))
-      ("Python" (make 'python-code))
       ("Scheme" (make 'scm-code))
       ("Shell" (make 'shell-code))
       ("Verbatim" (make 'verbatim-code))))
