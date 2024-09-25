@@ -34,8 +34,8 @@
 
 (texmacs-module (convert mathml mathtm)
   (:use (convert tools tmtable)
-	(convert tools sxml)
-	(convert tools xmltm)
+	(convert data sxml)
+	(convert data xmltm)
 	(convert mathml mathml-drd)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
