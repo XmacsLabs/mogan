@@ -26,6 +26,8 @@
 
   <use-module|(data python)>
 
+  <use-module|(code python-edit)>
+
   <assign|python|<macro|body|<with|mode|prog|prog-language|python|font-family|rm|<arg|body>>>>
 
   <assign|python-code|<\macro|body>
