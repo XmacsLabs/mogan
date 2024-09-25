@@ -14,6 +14,7 @@
 #include "cork.hpp"
 #include "formatter.hpp"
 #include "preferences.hpp"
+#include "tm_debug.hpp"
 
 using namespace moebius;
 
@@ -199,8 +200,8 @@ concater_rep::typeset_prog_string (tree t, path ip, int pos, int end) {
       PRINT_SPACE (tp->spc_before)
       string color  = env->lan->get_color (t, start, pos);
       string content= s (start, pos);
-      // cout << "[" << start << "," << pos << ") "
-      //      << content << " (" << color << ")" << LF;
+      debug_automatic << "[" << start << "," << pos << ") "
+           << content << " (" << color << ")" << LF;
       typeset_colored_substring (content, ip, start, color);
       penalty_min (tp->pen_after);
       PRINT_SPACE (tp->spc_after)
