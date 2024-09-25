@@ -163,8 +163,6 @@
 
   <assign|c++|<macro|<name|C++>>>
 
-  <assign|python|<macro|<name|Python>>>
-
   <assign|shell|<macro|body|<with|mode|prog|prog-language|shell|font-family|rm|<arg|body>>>>
 
   <assign|scm|<macro|body|<with|mode|prog|prog-language|scheme|font-family|rm|<arg|body>>>>
