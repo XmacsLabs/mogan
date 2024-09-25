@@ -1,0 +1,18 @@
+<TMU|<tuple|1.0.3|1.2.9.2-rc5>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <\python-code>
+    import os
+
+    os.chdir("/tmp")
+  </python-code>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
