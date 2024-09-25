@@ -1,4 +1,4 @@
-<TeXmacs|1.99.19>
+<TeXmacs|2.1.2>
 
 <style|source>
 
@@ -10,7 +10,11 @@
       Markup for Python sessions.
     </src-purpose>
 
-    <src-copyright|2021|Joris van der Hoeven>
+    <\src-copyright|2021>
+      Joris van der Hoeven
+
+      \ \ \ \ 2024 by Darcy Shen
+    </src-copyright>
 
     <\src-license>
       This software falls under the <hlink|GNU general public license,
@@ -19,6 +23,14 @@
       which the software. If not, see <hlink|http://www.gnu.org/licenses/gpl-3.0.html|http://www.gnu.org/licenses/gpl-3.0.html>.
     </src-license>
   </src-title>>
+
+  <assign|python|<macro|body|<with|mode|prog|prog-language|python|font-family|rm|<arg|body>>>>
+
+  <assign|python-code|<\macro|body>
+    <\pseudo-code>
+      <python|<arg|body>>
+    </pseudo-code>
+  </macro>>
 
   <\active*>
     <\src-comment>

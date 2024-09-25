@@ -1,4 +1,4 @@
-<TeXmacs|1.99.13>
+<TeXmacs|2.1.2>
 
 <style|<tuple|source|std>>
 
@@ -164,15 +164,13 @@
   <assign|c++|<macro|<name|C++>>>
 
   <assign|python|<macro|<name|Python>>>
-  
+
   <assign|shell|<macro|body|<with|mode|prog|prog-language|shell|font-family|rm|<arg|body>>>>
 
   <assign|scm|<macro|body|<with|mode|prog|prog-language|scheme|font-family|rm|<arg|body>>>>
 
   <assign|cpp|<macro|body|<with|mode|prog|prog-language|cpp|font-family|rm|<arg|body>>>>
 
-  <assign|python|<macro|body|<with|mode|prog|prog-language|python|font-family|rm|<arg|body>>>>
-  
   <\active*>
     <\src-comment>
       Blocks of code for standard languages
@@ -209,12 +207,6 @@
     </pseudo-code>
   </macro>>
 
-  <assign|python-code|<\macro|body>
-    <\pseudo-code>
-      <python|<arg|body>>
-    </pseudo-code>
-  </macro>>
-  
   <\active*>
     <\src-comment>
       Deprecated markup for algorithms
