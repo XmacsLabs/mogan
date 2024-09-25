@@ -348,7 +348,7 @@
 (tm-define (autosave-buffer name)
   (when (and (buffer-modified-since-autosave? name)
              (url-autosave name "~"))
-    (when (debug-get "debug-io")
+    (when (debug-get "io")
       (debug-message "debug-io" (string-append "Autosave " name "\n")))
     ;; FIXME: incorrectly autosaves after cursor movements only
     (let* ((vname `(verbatim ,(utf8->cork (url->system name))))
