@@ -18,9 +18,9 @@
         (convert tools tmlength)
         (convert tools tmtable)
         (convert tools old-tmtable)
-        (convert tools sxml)
-        (convert tools sxhtml)
-        (convert tools css)
+        (convert data sxml)
+        (convert data sxhtml)
+        (convert data css)
         (convert html htmlout)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

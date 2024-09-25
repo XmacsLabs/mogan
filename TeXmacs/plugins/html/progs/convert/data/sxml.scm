@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (convert tools sxml))
+(texmacs-module (convert data sxml))
 
 (define (as-string s)
   (cond ((symbol? s) (symbol->string s))
@@ -23,7 +23,7 @@
 (tm-define sxml-name car)
 (define sxml-attr-list! cdadr)
 
-(define (sxml-has-attr-list? e)
+(tm-define (sxml-has-attr-list? e)
   ;; Has the element e an attribute node?
   (and (pair? (cdr e))
        (pair? (cadr e))
