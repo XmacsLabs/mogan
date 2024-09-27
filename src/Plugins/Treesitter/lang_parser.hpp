@@ -91,8 +91,9 @@ public:
 private:
   TSParser*         ast_parser;
   const TSLanguage* ts_lang;
-  int               current_code_hash= 0;
-  int               current_line_hash= 0;
+  int               current_code_hash  = 0;
+  int               current_line_hash  = 0;
+  int               current_line_length= 0;
 
   int real_code_len    = 0;
   int fix_pos_moved    = 0;
