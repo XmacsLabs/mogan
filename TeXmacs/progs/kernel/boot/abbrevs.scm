@@ -70,7 +70,10 @@
   (symbol->keyword (string->symbol (string-append "%" (number->string x)))))
 
 (define-public (save-object file value)
-  (string-save (object->string value) file))
+  (string-save
+    (let-temporarily (((*s7* 'print-length) 9223372036854775807))
+      (object->string value))
+    file))
 
 (define-public (load-object file)
   (let ((r (call-with-input-file (url-materialize file "r") (lambda (port) (read port)))))
