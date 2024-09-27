@@ -27,7 +27,7 @@
   hash-table-update!/default hash-table-pop! hash-table-clear!
   hash-table-size hash-table-keys hash-table-values hash-table-entries
   hash-table-find hash-table-count
-  hash-table-for-each
+  hash-table-for-each hash-table-map->list
   hash-table->alist
 )
 (begin
@@ -129,6 +129,11 @@
   (typed-lambda ((proc procedure?) (ht hash-table?))
     (for-each (lambda (x) (proc (car x) (cdr x)))
               ht)))
+
+(define hash-table-map->list
+  (typed-lambda ((proc procedure?) (ht hash-table?))
+    (map (lambda (x) (proc (car x) (cdr x)))
+         ht)))
 
 (define hash-table->alist
   (typed-lambda ((ht hash-table?))
