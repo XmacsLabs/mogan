@@ -15,7 +15,9 @@
 ;
 
 (define-library (liii base)
-(import (scheme base))
+(import (scheme base)
+        (srfi srfi-2)
+        (srfi srfi-8))
 (export
   ; (scheme base) defined by R7RS
   let-values
@@ -41,7 +43,10 @@
   string-map vector-map string-for-each vector-for-each
   ; Exception
   raise guard read-error? file-error?
-
+  ; SRFI-2
+  and-let*
+  ; SRFI-8
+  receive
   ; Extra routines for (liii base)
   == != display* in? let1 compose identity typed-lambda
 )
