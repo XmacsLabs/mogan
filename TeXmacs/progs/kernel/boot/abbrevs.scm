@@ -76,8 +76,8 @@
     file))
 
 (define-public (load-object file)
-  (let ((r (call-with-input-file (url-materialize file "r") (lambda (port) (read port)))))
-        (if (eof-object? r) '() r)))
+  (with-input-from-string (string-load file)
+    (lambda () (read))))
 
 (define-public (persistent-ref dir key)
   (and (persistent-has? dir key)
