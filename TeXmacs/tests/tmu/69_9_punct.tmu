@@ -1,0 +1,24 @@
+<TMU|<tuple|1.0.3|1.2.9.2>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  逗号
+
+  标点符号，标点符号
+
+  标点符号中标点符号
+
+  句号
+
+  标点符号。标点符号
+
+  标点符号中标点符号
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
