@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "tt_face.hpp"
+#include "file.hpp"
 #include "font.hpp"
 #include "tm_debug.hpp"
 #include "tm_timer.hpp"
@@ -54,6 +55,17 @@ tt_face_rep::tt_face_rep (string name) : rep<tt_face> (name) {
   }
   ft_select_charmap (ft_face, ft_encoding_adobe_custom);
   bad_face= false;
+
+  // .ttf/.otf file may contain a math table
+  if (suffix (u) == "ttf" || suffix (u) == "otf") {
+    string buf;
+    if (!load_string (u, buf, false)) {
+      math_table= parse_mathtable (buf);
+    }
+    if (!is_nil (math_table) && DEBUG_STD) {
+      debug_fonts << "Math table loaded for " << name << "\n";
+    }
+  }
 }
 
 tt_face

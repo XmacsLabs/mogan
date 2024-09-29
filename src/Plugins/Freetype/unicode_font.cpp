@@ -12,6 +12,7 @@
 #include "Freetype/free_type.hpp"
 #include "Freetype/tt_face.hpp"
 #include "Freetype/tt_file.hpp"
+#include "Freetype/tt_tools.hpp"
 #include "analyze.hpp"
 #include "converter.hpp"
 #include "cork.hpp"
@@ -140,6 +141,9 @@ struct unicode_font_rep : font_rep {
 
   hashmap<string, int> native; // additional native (non unicode) characters
 
+  tt_face      math_face;
+  ot_mathtable math_table;
+
   unicode_font_rep (string name, string family, int size, int hdpi, int vdpi);
   void tex_gyre_operators ();
 
@@ -164,6 +168,9 @@ struct unicode_font_rep : font_rep {
   SI           get_rsub_correction (string s);
   SI           get_rsup_correction (string s);
   SI           get_wide_correction (string s, int mode);
+
+  SI  design_unit_to_metric (int du);
+  int metric_to_design_unit (SI m);
 };
 
 /******************************************************************************
@@ -428,6 +435,23 @@ unicode_font_rep::unicode_font_rep (string name, string family2, int size2,
       rsub_correct = rsub_fira_italic_table ();
       rsup_correct = rsup_fira_italic_table ();
       above_correct= above_fira_italic_table ();
+    }
+  }
+  else {
+    // try to get OpenType math table
+    tt_face math_face2= tt_face (family);
+    if (!is_nil (math_face2->math_table)) {
+      this->math_face = math_face2;
+      this->math_table= math_face2->math_table;
+      math_type       = MATH_TYPE_OPENTYPE;
+      upper_limit_gap_min=
+          design_unit_to_metric (math_table->constants_table[upperLimitGapMin]);
+      upper_limit_baseline_rise_min= design_unit_to_metric (
+          math_table->constants_table[upperLimitBaselineRiseMin]);
+      lower_limit_gap_min=
+          design_unit_to_metric (math_table->constants_table[lowerLimitGapMin]);
+      lower_limit_baseline_drop_min= design_unit_to_metric (
+          math_table->constants_table[lowerLimitBaselineDropMin]);
     }
   }
 }
@@ -973,6 +997,47 @@ unicode_font (string family, int size, int hdpi, int vdpi) {
   if (vdpi != hdpi) name << "x" << as_string (vdpi);
   return make (font, name,
                tm_new<unicode_font_rep> (name, family, size, hdpi, vdpi));
+}
+
+/******************************************************************************
+ * OpenType
+ ******************************************************************************/
+
+inline SI
+unicode_font_rep::design_unit_to_metric (int du) {
+  // use 'm' as a reference character
+  static int units_of_m= 0;
+  static SI  em        = 0;
+  if (units_of_m == 0) {
+    // get the design units of the width of 'm'
+    FT_UInt glyph_index= FT_Get_Char_Index (math_face->ft_face, 'm');
+    FT_Load_Glyph (math_face->ft_face, glyph_index, FT_LOAD_NO_SCALE);
+    units_of_m= math_face->ft_face->glyph->metrics.horiAdvance;
+
+    // get the width of the character 'm'
+    metric ex;
+    get_extents ("m", ex);
+    em= ex->x2 - ex->x1;
+  }
+  return (SI) ((du * em) / units_of_m);
+}
+
+inline int
+unicode_font_rep::metric_to_design_unit (SI m) {
+  static int units_of_m= 0;
+  static SI  em        = 0;
+  if (units_of_m == 0) {
+    // get the units of the character 'm'
+    FT_UInt glyph_index= FT_Get_Char_Index (math_face->ft_face, 'm');
+    FT_Load_Glyph (math_face->ft_face, glyph_index, FT_LOAD_NO_SCALE);
+    units_of_m= math_face->ft_face->glyph->metrics.horiAdvance;
+
+    // get the width of the character 'm'
+    metric ex;
+    get_extents ("m", ex);
+    em= ex->x2 - ex->x1;
+  }
+  return (int) ((m * units_of_m) / em);
 }
 
 font
