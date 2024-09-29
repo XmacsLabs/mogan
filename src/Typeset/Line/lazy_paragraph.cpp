@@ -141,8 +141,6 @@ lazy_paragraph_rep::lazy_paragraph_rep (edit_env env2, path ip)
   cjk_puncts->insert ("<#201C>");
   cjk_puncts->insert ("<#2019>"); // 单引号
   cjk_puncts->insert ("<#2018>");
-  // do_not_start << string ("<#2014>"); // —
-  // do_not_start << string ("<centerdot>");
 }
 
 lazy_paragraph_rep::~lazy_paragraph_rep () { tm_delete (sss); }
