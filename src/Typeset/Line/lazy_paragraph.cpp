@@ -273,9 +273,10 @@ lazy_paragraph_rep::protrude (bool lf, bool rf) {
 
 void
 lazy_paragraph_rep::cjk_auto_spacing () {
-  int prev= -1;
-  int now = -1;
-  for (int i= cur_start; i < N (items); i++) {
+  int prev   = -1;
+  int now    = -1;
+  int items_N= N (items);
+  for (int i= cur_start; i < items_N; i++) {
     if (items_box[i]) {
       prev= now;
       now = i;
@@ -289,7 +290,7 @@ lazy_paragraph_rep::cjk_auto_spacing () {
   prev          = -1;
   now           = -1;
   array<int> tmp= array<int> ();
-  for (int i= N (items) - 1; i >= cur_start; i--) {
+  for (int i= items_N - 1; i >= cur_start; i--) {
     if (items_box[i]) {
       prev= now;
       now = i;
@@ -299,7 +300,7 @@ lazy_paragraph_rep::cjk_auto_spacing () {
       tmp << -1;
     }
   }
-  for (int i= N (tmp) - 1; i >= 0; i--) {
+  for (int i= items_N - 1; i >= 0; i--) {
     items_right << tmp[i];
   }
 
@@ -308,7 +309,7 @@ lazy_paragraph_rep::cjk_auto_spacing () {
           "length of items must match")
 
   bool no_cjk_flag= true;
-  for (int i= cur_start; i < N (items); i++) {
+  for (int i= cur_start; i < items_N; i++) {
     if (items_cjk_text[i]) {
       no_cjk_flag= false;
       break;
@@ -319,7 +320,7 @@ lazy_paragraph_rep::cjk_auto_spacing () {
   int first, last;
   find_first_last_text (first, last);
 
-  for (int i= cur_start; i + 1 < N (items); i++) {
+  for (int i= cur_start; i + 1 < items_N; i++) {
     if (i != last &&
         items_cjk_text[i]       // test if the current item is a cjk text box
         && items_right[i] != -1 // test if the right item is not empty
@@ -334,7 +335,7 @@ lazy_paragraph_rep::cjk_auto_spacing () {
     }
   }
 
-  for (int i= cur_start + 1; i < N (items); i++) {
+  for (int i= cur_start + 1; i < items_N; i++) {
     if (i != first &&
         items_cjk_text[i]      // test if the current item is a cjk text box
         && items_left[i] != -1 // test if the left item is not empty
