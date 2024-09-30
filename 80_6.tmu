@@ -1,0 +1,20 @@
+<TMU|<tuple|1.0.3|1.2.9.2-rc5>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <\math>
+    <sqrt|1+<sqrt|2+<sqrt|3+<sqrt|4+<sqrt|5+<sqrt|6+<sqrt|7+<sqrt|8+\<cdots\>>>>>>>>>
+  </math>
+
+  <\equation*>
+    <sqrt|1+<sqrt|2+<sqrt|3+<sqrt|4+<sqrt|5+<sqrt|6+<sqrt|7+<sqrt|8+\<cdots\>>>>>>>>>
+  </equation*>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
