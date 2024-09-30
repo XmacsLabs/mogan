@@ -1,26 +1,26 @@
 # Installation Guide
-The latest stable version is Mogan STEM Suite v1.2.9, you can check if there are new releases in the `Help -> Welcome` menu entry.
+The latest stable version is Mogan STEM Suite v1.2.9.2, you can check if there are new releases in the `Help -> Welcome` menu entry.
 
 ## Official Packages
 | Product | Operating System | Download |
 |---------|-------|-----|
-| Mogan Research v1.2.9 | Windows installer (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9/MoganResearch-v1.2.9-64bit-installer.exe) |
-| Mogan Research v1.2.9 | Windows portable (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9/MoganResearch-v1.2.9-64bit-portable.zip) |
-| Mogan Research v1.2.9 | macOS arm64 (>=13) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9/MoganResearch-v1.2.9-arm.dmg) |
-| Mogan Research v1.2.9 | macOS (>=12) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9/MoganResearch-v1.2.9.dmg) |
-| Mogan Research v1.2.9 | Debian 12 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9/mogan-research-v1.2.9-debian12.deb) |
-| Mogan Research v1.2.9 | Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9/mogan-research-v1.2.9-ubuntu22.04.deb) |
-| Mogan Research v1.2.9 | Ubuntu 24.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9/mogan-research-v1.2.9-ubuntu24.04.deb) |
+| Mogan Research v1.2.9.2 | Windows installer (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/MoganResearch-v1.2.9.2-64bit-installer.exe) |
+| Mogan Research v1.2.9.2 | Windows portable (>=10)| [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/MoganResearch-v1.2.9.2-64bit-portable.zip) |
+| Mogan Research v1.2.9.2 | macOS arm64 (>=13) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/MoganResearch-v1.2.9.2-arm.dmg) |
+| Mogan Research v1.2.9.2 | macOS (>=12) | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/MoganResearch-v1.2.9.2.dmg) |
+| Mogan Research v1.2.9.2 | Debian 12 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/mogan-research-v1.2.9.2-debian12.deb) |
+| Mogan Research v1.2.9.2 | Ubuntu 22.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/mogan-research-v1.2.9.2-ubuntu22.04.deb) |
+| Mogan Research v1.2.9.2 | Ubuntu 24.04 | [⏬ Download](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/mogan-research-v1.2.9.2-ubuntu24.04.deb) |
 
 SHA256 checksum:
 ```
-ac4132447861da8e0cc94646900db11c5f2ead8d68b3b67a7517e49a32ecf4e7  MoganResearch-v1.2.9-64bit-installer.exe
-16ce3e3ea3dd7f17c3a9c621d0ff40b281240d81b1f88a1026159d52bc54622d  MoganResearch-v1.2.9-64bit-portable.zip
-bc3794c246549d67a6ee0d07b6f4c95a3685c7b6647e842a82876f31d66dd2ca  MoganResearch-v1.2.9-arm.dmg
-f12cb7d30f120a8a796b4a666068dd93c30a8c290850beb393ffd21300c4ad21  MoganResearch-v1.2.9.dmg
-30db47dfde5122fd72fd0fcee3bf5eaf0138fc8ed607a12e3d1d26122c4529f1  mogan-research-v1.2.9-debian12.deb
-09e0a6e2eaad4077109792ebcb14d9cbd67a656aa11f550263cb45c3c0cc86e4  mogan-research-v1.2.9-ubuntu22.04.deb
-f720337333f025fa31de1ffc60ad8e488049149d3fa00868b6a7ffcd0015db8b  mogan-research-v1.2.9-ubuntu24.04.deb
+700eeb39fa4f5eaba4ee8839f6a813488a8f5f758722f4fb0e1c5c0c7240a70e  MoganResearch-v1.2.9.2-64bit-installer.exe
+469f1e48e2a780345bf359157b27ef43097f3883b7f27e58041a144cc0cc990b  MoganResearch-v1.2.9.2-64bit-portable.zip
+cbca96dfc2f1073762cebf56c642964b37802b5bbe9e6bac3475cfe6962e6968  MoganResearch-v1.2.9.2-arm.dmg
+aa429c0e656ccd2309ce0bdc1e3087a605052c66c205ec3bf37f5fb812aed19e  MoganResearch-v1.2.9.2.dmg
+9266c44775e0d3539adfb9816c45a326cbb74da27ea267bba8989234b5907566  mogan-research-v1.2.9.2-debian12.deb
+04878ac96b25af8ad2ab9c2551713cef7d9e2e650460f0f2188b6f103faeb611  mogan-research-v1.2.9.2-ubuntu22.04.deb
+aab31ce801d4d9dca9abe4c4ac4f5eddcc18e16934c6e16a80831562a520b1cb  mogan-research-v1.2.9.2-ubuntu24.04.deb
 ```
 
 Mogan STEM Suite:
@@ -40,16 +40,16 @@ Here are installation steps for various system:
 ## Debian 12
 Download the official deb and then:
 ```
-sudo apt install ./mogan-research-v1.2.9-debian12.deb
+sudo apt install ./mogan-research-v1.2.9.2-debian12.deb
 ```
 ## Ubuntu 22.04/Ubuntu 24.04
 Download the official deb and then
 ```
 # For ubuntu 22.04
-sudo apt install ./mogan-research-v1.2.9-ubuntu22.04.deb
+sudo apt install ./mogan-research-v1.2.9.2-ubuntu22.04.deb
 
 # For ubuntu 24.04
-sudo apt install ./mogan-research-v1.2.9-ubuntu24.04.deb
+sudo apt install ./mogan-research-v1.2.9.2-ubuntu24.04.deb
 ```
 
 ## GNU Guix
