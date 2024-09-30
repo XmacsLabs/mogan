@@ -9,8 +9,22 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "Freetype/tt_face.hpp"
+#include "analyze.hpp"
+#include "array.hpp"
 #include "converter.hpp"
 #include "font.hpp"
+#include "hashmap.hpp"
+#include "lolly/data/numeral.hpp"
+#include "observer.hpp"
+#include "resource.hpp"
+#include "string.hpp"
+#include "translator.hpp"
+#include "unicode_font.hpp"
+#include <lolly/data/unicode.hpp>
+#include <typeinfo>
+using lolly::data::as_hexadecimal;
+using lolly::data::decode_from_utf8;
 
 bool supports_big_operators (string res_name); // from poor_rubber.cpp
 
@@ -25,12 +39,15 @@ struct rubber_unicode_font_rep : font_rep {
   array<font> subfn;
   bool        big_sums;
 
+  tt_face math_face;
+
   hashmap<string, int>    mapper;
   hashmap<string, string> rewriter;
 
-  rubber_unicode_font_rep (string name, font base);
+  rubber_unicode_font_rep (string name, font base, tt_face face= nullptr);
   font get_font (int nr);
   int  search_font_sub (string s, string& rew);
+  int  search_font_sub_opentype (string s, string& rew);
   int  search_font_cached (string s, string& rew);
   font search_font (string& s);
 
@@ -59,9 +76,10 @@ struct rubber_unicode_font_rep : font_rep {
  * Initialization of main font parameters
  ******************************************************************************/
 
-rubber_unicode_font_rep::rubber_unicode_font_rep (string name, font base2)
+rubber_unicode_font_rep::rubber_unicode_font_rep (string name, font base2,
+                                                  tt_face face)
     : font_rep (name, base2), base (base2),
-      big_flag (supports_big_operators (base2->res_name)) {
+      big_flag (supports_big_operators (base2->res_name)), math_face (face) {
   this->copy_math_pars (base);
   big_sums= false;
   if (base->supports ("<sum>")) {
@@ -71,9 +89,15 @@ rubber_unicode_font_rep::rubber_unicode_font_rep (string name, font base2)
     //<< ((double) (ex->y2-ex->y1)) / base->yx << LF;
     if ((((double) (ex->y2 - ex->y1)) / base->yx) >= 1.55) big_sums= true;
   }
-  for (int i= 0; i < 5; i++) {
+
+  for (int i= 0; i < 6; i++) {
     initialized << false;
     subfn << base;
+  }
+
+  if (base->math_type == MATH_TYPE_OPENTYPE) {
+    big_flag= true;
+    big_sums= true;
   }
 }
 
@@ -97,6 +121,10 @@ rubber_unicode_font_rep::get_font (int nr) {
   case 4:
     subfn[nr]= rubber_assemble_font (base);
     break;
+  case 5:
+    // if opentype math font fails, use default rubber font
+    subfn[nr]= font_rep::make_rubber_font (base);
+    break;
   }
   return subfn[nr];
 }
@@ -104,6 +132,77 @@ rubber_unicode_font_rep::get_font (int nr) {
 /******************************************************************************
  * Find the font
  ******************************************************************************/
+
+int
+parse_variant (string s, string& r) {
+  // cout << "parse_variant for " << s << LF;
+  int var  = 0;
+  int n    = N (s);
+  int start= search_forwards ("-", 0, s);
+  int end  = search_backwards ("-", n, s);
+  if (start == end) {
+    end= n - 1;
+    var= 0;
+  }
+  else {
+    var= max (0, as_int (s (end + 1, n)));
+  }
+  r= s (start + 1, end);
+  return var;
+}
+
+int
+rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
+  string r;
+  int    var= 0;
+  bool   ver= true; // verizontal or vertical, default is vertical
+  rew       = s;
+
+  var= parse_variant (s, r);
+
+  // there is no <big-xxx-0>
+  if (starts (s, "<big-")) {
+    var= max (0, var - 1);
+  }
+  else if (starts (s, "<wide-")) {
+    ver= false;
+  }
+
+  if (r == "") return search_font_sub (s, rew);
+
+  string uu= N (r) > 1 ? strict_cork_to_utf8 ("<" * r * ">") : r;
+
+  int          j= 0;
+  unsigned int u= decode_from_utf8 (uu, j);
+  cout << "unicode " << uu << " -> " << lolly::data::to_hex (u) << LF;
+
+  unsigned int glyphID= ft_get_char_index (math_face->ft_face, u);
+
+  cout << "search_font_sub_opentype for " << u << " -> " << glyphID << LF;
+
+  auto glyph_variants= ver ? math_face->math_table->ver_glyph_variants
+                           : math_face->math_table->hor_glyph_variants;
+
+  if (glyph_variants->contains (glyphID)) {
+    cout << "Variant for " << uu << " -> " << glyphID << LF;
+    auto& gv= glyph_variants (glyphID);
+    if (var < N (gv)) {
+      int res= gv[var];
+      // use <@XXXX> for native glyph id
+      rew= "<@" * as_hexadecimal (res, 4) * ">";
+      // cout << "OpenType variant for " << uu << " -> " << glyphID << " -> " <<
+      // rew << LF;
+      return 0;
+    }
+  }
+  // cout << "No opentype variant for " << uu << " -> " << glyphID << LF;
+
+  // try to use subfont
+  int nr= search_font_sub (s, rew);
+  // if nr == 0, failed to find the sub font from subfn[1:4]
+  // use default rubber font subfn[5]
+  return nr == 0 ? 5 : nr;
+}
 
 int
 rubber_unicode_font_rep::search_font_sub (string s, string& rew) {
@@ -172,11 +271,19 @@ rubber_unicode_font_rep::search_font_sub (string s, string& rew) {
 
 int
 rubber_unicode_font_rep::search_font_cached (string s, string& rew) {
+  // cout << "search_font_cached for " << s << LF;
   if (mapper->contains (s)) {
     rew= rewriter[s];
     return mapper[s];
   }
-  int nr      = search_font_sub (s, rew);
+  int nr= 0;
+  if (!is_nil (math_face) && !is_nil (math_face->math_table)) {
+    nr= search_font_sub_opentype (s, rew);
+  }
+  else {
+    nr= search_font_sub (s, rew);
+  }
+
   mapper (s)  = nr;
   rewriter (s)= rew;
   // cout << s << " -> " << nr << ", " << rew << LF;
@@ -279,7 +386,7 @@ rubber_unicode_font_rep::draw_fixed (renderer ren, string s, SI x, SI y,
 
 font
 rubber_unicode_font_rep::magnify (double zoomx, double zoomy) {
-  return rubber_unicode_font (base->magnify (zoomx, zoomy));
+  return rubber_unicode_font (base->magnify (zoomx, zoomy), math_face);
 }
 
 glyph
@@ -361,4 +468,10 @@ font
 rubber_unicode_font (font base) {
   string name= "rubberunicode[" * base->res_name * "]";
   return make (font, name, tm_new<rubber_unicode_font_rep> (name, base));
+}
+
+font
+rubber_unicode_font (font base, tt_face face) {
+  string name= "rubberunicode[" * base->res_name * "]";
+  return make (font, name, tm_new<rubber_unicode_font_rep> (name, base, face));
 }
