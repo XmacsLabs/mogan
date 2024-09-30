@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.3|1.2.9-rc6>>
+<TMU|<tuple|1.0.3|1.2.9.2>>
 
 <style|<tuple|tmdoc|devel>>
 
@@ -7,7 +7,17 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|5|5|cell-hyphen|t>|<cwith|17|17|5|5|cell-hyphen|t>|<cwith|18|18|5|5|cell-hyphen|t>|<cwith|19|19|5|5|cell-hyphen|t>|<cwith|20|20|5|5|cell-hyphen|t>|<cwith|21|21|5|5|cell-hyphen|t>|<cwith|22|22|5|5|cell-hyphen|t>|<cwith|24|24|5|5|cell-hyphen|t>|<cwith|25|25|5|5|cell-hyphen|t>|<cwith|31|31|2|2|cell-halign|l>|<cwith|31|31|5|5|cell-hyphen|t>|<cwith|30|30|5|5|cell-hyphen|t>|<cwith|29|29|5|5|cell-hyphen|t>|<cwith|28|28|5|5|cell-hyphen|t>|<cwith|27|27|1|1|cell-valign|b>|<cwith|27|27|5|5|cell-hyphen|t>|<cwith|26|26|5|5|cell-hyphen|t>|<table|<row|<cell|Bug>|<cell|59_28>|<cell|v1.2.9>|<cell|<value|da>>|<\cell>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|5|5|cell-hyphen|t>|<cwith|22|22|5|5|cell-hyphen|t>|<cwith|23|23|5|5|cell-hyphen|t>|<cwith|24|24|5|5|cell-hyphen|t>|<cwith|25|25|5|5|cell-hyphen|t>|<cwith|26|26|5|5|cell-hyphen|t>|<cwith|27|27|5|5|cell-hyphen|t>|<cwith|29|29|5|5|cell-hyphen|t>|<cwith|30|30|5|5|cell-hyphen|t>|<cwith|36|36|2|2|cell-halign|l>|<cwith|36|36|5|5|cell-hyphen|t>|<cwith|35|35|5|5|cell-hyphen|t>|<cwith|34|34|5|5|cell-hyphen|t>|<cwith|33|33|5|5|cell-hyphen|t>|<cwith|32|32|1|1|cell-valign|b>|<cwith|32|32|5|5|cell-hyphen|t>|<cwith|31|31|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|59_33>|<cell|v1.2.9.2>|<cell|<value|da>>|<\cell>
+    Adjust shortcuts to resize the image vertically
+  </cell>>|<row|<cell|Bug>|<cell|59_32>|<cell|v1.2.9.2>|<cell|<value|da>>|<\cell>
+    Keep the 6 digits after the period for length-increase to adjust image offset
+  </cell>>|<row|<cell|Feature>|<cell|59_31>|<cell|v1.2.9.2>|<cell|<value|da>>|<\cell>
+    Chinese: add C-m for kbd-select-enlarge
+  </cell>>|<row|<cell|Chore>|<cell|59_30>|<cell|v1.2.9.2>|<cell|<value|da>>|<\cell>
+    Deprecate the prefix kbd: executable
+  </cell>>|<row|<cell|Bug>|<cell|59_29>|<cell|v1.2.9.2>|<cell|<value|da>>|<\cell>
+    Doc: fix the rendering of the Meta key in Chinese doc
+  </cell>>|<row|<cell|Bug>|<cell|59_28>|<cell|v1.2.9>|<cell|<value|da>>|<\cell>
     Disable math:small [ ] to avoid Edit Undo/Redo in Emacs
   </cell>>|<row|<cell|Chore>|<cell|59_27>|<cell|v1.2.9>|<cell|<value|da>>|<\cell>
     Pure format on TeXmacs/progs/text/text-edit.scm
