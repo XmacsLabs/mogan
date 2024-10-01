@@ -1,0 +1,28 @@
+<TMU|<tuple|1.0.3|1.2.9.3-rc1>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  This doc is in Chinese language:
+
+  马克\<centerdot\>吐温
+
+  The following line is in English:
+
+  <english|马克\<centerdot\>吐温>
+
+  The typesetting of the english paragraph still follows the same rules of Chinese.
+
+  In math formular:
+
+  <\equation*>
+    A\<centerdot\>B
+  </equation*>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
