@@ -391,6 +391,7 @@ in_unicode_range (string c, string range) {
                        "<#201C>", "<#201D>", // Chinese: 双引号
                        "<#2014>"             // Chinese: 破折号的一半
         );
+    cjk_puncts << string ("<centerdot>");
     if (contains (c, cjk_puncts)) return true;
   }
   // There are actually two ranges (cjk/hangul) for Korean characters and
