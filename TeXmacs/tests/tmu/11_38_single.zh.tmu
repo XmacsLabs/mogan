@@ -1,9 +1,9 @@
-<TMU|<tuple|1.0.3|1.2.9.2>>
+<TMU|<tuple|1.0.3|1.2.9.3-rc1>>
 
 <style|<tuple|generic|chinese>>
 
 <\body>
-  ‘单引号'
+  左‘单引号’右
 </body>
 
 <\initial>
