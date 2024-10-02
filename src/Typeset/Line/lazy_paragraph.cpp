@@ -134,13 +134,12 @@ lazy_paragraph_rep::lazy_paragraph_rep (edit_env env2, path ip)
          << string ("》") << string ("〉");
   puncts << string ("『") << string ("「") << string ("（") << string ("【")
          << string ("《") << string ("〈");
+  puncts << string ("“") << string ("”");
   for (string punct : puncts) {
     cjk_puncts->insert (utf8_to_cork (punct));
   }
-  cjk_puncts->insert ("<#201D>"); // 双引号
-  cjk_puncts->insert ("<#201C>");
-  cjk_puncts->insert ("<#2019>"); // 单引号
-  cjk_puncts->insert ("<#2018>");
+  cjk_puncts->insert ("`");
+  cjk_puncts->insert ("<#2019>");
 }
 
 lazy_paragraph_rep::~lazy_paragraph_rep () { tm_delete (sss); }
