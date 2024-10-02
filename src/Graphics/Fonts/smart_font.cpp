@@ -391,8 +391,6 @@ is_cjk_punct (string_u8 c) {
 static bool
 in_unicode_range (string c, string range) {
   string uc= strict_cork_to_utf8 (c);
-  cout << "c: " << c << LF;
-  cout << "uc: " << uc << LF;
   if (N (uc) == 0) return false;
   int    pos = 0;
   int    code= decode_from_utf8 (uc, pos);
