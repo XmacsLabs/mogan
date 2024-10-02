@@ -375,9 +375,22 @@ main_family (string f) {
   return a[1];
 }
 
+static bool is_cjk_punct (string_u8 c) {
+  static hashset<string_u8> set;
+  if (N(set) == 0) {
+    set->insert ("“");
+    set->insert ("”");
+    set->insert ("‘");
+    set->insert ("’");
+    set->insert ("·");
+  }
+  return set->contains(c);
+}
+
 static bool
 in_unicode_range (string c, string range) {
   string uc= strict_cork_to_utf8 (c);
+  cout << "c: " << c << LF;
   cout << "uc: " << uc << LF;
   if (N (uc) == 0) return false;
   int    pos = 0;
@@ -387,15 +400,7 @@ in_unicode_range (string c, string range) {
   if (range == "cjk") {
     if (got == "hangul" || got == "hiragana" || got == "enclosed_alphanumerics")
       return true;
-    array<string> cjk_puncts=
-        array<string> ("<#2018>", "<#2019>", // Chinese: 单引号
-                       "<#201C>", "<#201D>", // Chinese: 双引号
-                       "<#2014>"             // Chinese: 破折号的一半
-        );
-    cjk_puncts << string ("<centerdot>");
-    cjk_puncts << string ((char) 0x10); // 201C in cork
-    cjk_puncts << string ((char) 0x11); // 201D in cork
-    if (contains (c, cjk_puncts)) return true;
+    return is_cjk_punct (uc);
   }
   // There are actually two ranges (cjk/hangul) for Korean characters and
   // two ranges (cjk/hiragana) for Japanese characters
