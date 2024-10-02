@@ -375,16 +375,17 @@ main_family (string f) {
   return a[1];
 }
 
-static bool is_cjk_punct (string_u8 c) {
+static bool
+is_cjk_punct (string_u8 c) {
   static hashset<string_u8> set;
-  if (N(set) == 0) {
+  if (N (set) == 0) {
     set->insert ("“");
     set->insert ("”");
     set->insert ("‘");
     set->insert ("’");
     set->insert ("·");
   }
-  return set->contains(c);
+  return set->contains (c);
 }
 
 static bool
