@@ -47,6 +47,14 @@ function main()
                     "string"
                 }
             },
+            {
+                scm_name = "strict-cork->utf8",
+                cpp_name = "strict_cork_to_utf8",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
               -- routines for strings in the TeXmacs encoding
             {
                 scm_name = "string->tmstring",
