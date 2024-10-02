@@ -3,7 +3,9 @@
 <style|<tuple|generic|chinese>>
 
 <\body>
-  左‘单引号’右
+  ‘
+
+  ‘
 </body>
 
 <\initial>

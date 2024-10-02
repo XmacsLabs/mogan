@@ -592,7 +592,7 @@ unicode_font_rep::read_unicode_char (string s, int& i) {
   }
   else {
     unsigned int c= (unsigned int) s[i++];
-    if (c >= 32 && c <= 127) return c;
+    if (c >= 32 && c <= 127 && c != 0x27 && c != 0x60) return c;
     string ss= s (i - 1, i);
     string uu= strict_cork_to_utf8 (ss);
     int    j = 0;
