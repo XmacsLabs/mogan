@@ -592,7 +592,7 @@ unicode_font_rep::read_unicode_char (string s, int& i) {
   }
   else {
     unsigned int c= (unsigned int) s[i++];
-    if (c >= 32 && c <= 127) return c;
+    if (c >= 32 && c <= 127 && c != 0x27 && c != 0x60) return c;
     string ss= s (i - 1, i);
     string uu= strict_cork_to_utf8 (ss);
     int    j = 0;
@@ -648,7 +648,7 @@ unicode_font_rep::supports (string c) {
   int          i = 0;
   unsigned int uc= read_unicode_char (c, i);
   cout << "supports: " << c << LF;
-  cout << "supports: " << uc << LF;
+  cout << "uc: " << uc << LF;
   if (uc == 0 || !fnm->exists (uc)) return false;
   if (uc >= 0x42 && uc <= 0x5a && !fnm->exists (0x41)) return false;
   if (uc >= 0x62 && uc <= 0x7a && !fnm->exists (0x61)) return false;
