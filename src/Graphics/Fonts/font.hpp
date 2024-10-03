@@ -34,6 +34,7 @@ struct font_glyphs;
 #define MATH_TYPE_NORMAL 0
 #define MATH_TYPE_STIX 1
 #define MATH_TYPE_TEX_GYRE 2
+#define MATH_TYPE_OPENTYPE 3
 
 #define START_OF_LINE 1
 #define END_OF_LINE 2
@@ -52,7 +53,7 @@ struct font_glyphs;
 
 struct font_rep : rep<font> {
   int    type;         // font type
-  int    math_type;    // For TeX Gyre math fonts and Stix
+  int    math_type;    // For TeX Gyre math fonts and Stix and OpenType
   SI     size;         // requested size
   SI     design_size;  // design size in points/256
   SI     display_size; // display size in points/PIXEL
@@ -72,6 +73,10 @@ struct font_rep : rep<font> {
   SI ysup_lo_base; // base line for supscripts
   SI ysup_hi_lim;  // upper limit for supscripts
   SI yshift;       // vertical script shift inside fractions
+
+  // only for opentype math font
+  array<int>        script_scale; /* scale percentage */
+  array<array<int>> size_cache;
 
   SI wpt;   // width of one point in font
   SI hpt;   // height of one point in font (usually wpt)
@@ -101,6 +106,8 @@ struct font_rep : rep<font> {
   font_rep (string name);
   font_rep (string name, font fn);
   void copy_math_pars (font fn);
+
+  virtual int script (int sz, int level); // only for opentype
 
   virtual bool supports (string c)               = 0;
   virtual void get_extents (string s, metric& ex)= 0;

@@ -10,11 +10,14 @@
  ******************************************************************************/
 
 #include "tt_face.hpp"
+#include "Freetype/tt_tools.hpp"
+#include "file.hpp"
 #include "font.hpp"
 #include "tm_debug.hpp"
 #include "tm_timer.hpp"
 #include "tm_url.hpp"
 #include "tt_file.hpp"
+#include "url.hpp"
 
 /******************************************************************************
  * Utilities
@@ -29,6 +32,8 @@ tt_si (int l) {
   return l << 2;
 }
 
+// copy from tt_face.cpp
+// from unicode to glyphID
 inline FT_UInt
 decode_index (FT_Face face, int i) {
   if (i < 0xc000000) return ft_get_char_index (face, i);
@@ -54,6 +59,17 @@ tt_face_rep::tt_face_rep (string name) : rep<tt_face> (name) {
   }
   ft_select_charmap (ft_face, ft_encoding_adobe_custom);
   bad_face= false;
+
+  // if filename is a .ttf/.otf file, it may contain a math table
+  if (suffix (u) == "ttf" || suffix (u) == "otf") {
+    string buf;
+    if (!load_string (u, buf, false)) {
+      mathtable= parse_mathtable (buf);
+    }
+    if (!is_nil (mathtable) && DEBUG_STD) {
+      debug_fonts << "Math table loaded for " << name << "\n";
+    }
+  }
 }
 
 tt_face

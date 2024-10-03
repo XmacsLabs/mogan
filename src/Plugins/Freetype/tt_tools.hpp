@@ -137,7 +137,12 @@ enum MathConstantRecordEnum {
   radicalExtraAscender,
   radicalKernBeforeDegree,
   radicalKernAfterDegree,
-  otmathConstantsRecordsEnd // keep at the end
+  otmathConstantsRecordsEnd, // count the number of records
+  scriptPercentScaleDown,
+  scriptScriptPercentScaleDown,
+  delimitedSubFormulaMinHeight,
+  displayOperatorMinHeight,
+  radicalDegreeBottomRaisePercent
 };
 
 struct DeviceTable {
@@ -152,6 +157,8 @@ struct MathValueRecord {
   bool        hasDevice;
   DeviceTable deviceTable;
   MathValueRecord () : hasDevice (false) {}
+  // cast to int
+  operator int () const { return value; }
 };
 
 struct MathConstantsTable {
@@ -162,6 +169,27 @@ struct MathConstantsTable {
   array<MathValueRecord> records;
   int                    radicalDegreeBottomRaisePercent;
   MathConstantsTable () : records (otmathConstantsRecordsEnd){};
+
+  // a universal interface to get the value of the math constant table
+  // some unsigned int values are cast to int
+  // make sure i is a meaningful index in MathConstantRecordEnum
+  int operator[] (int i) {
+    if (i < MathConstantRecordEnum::otmathConstantsRecordsEnd)
+      return records[i];
+    switch (i) {
+    case MathConstantRecordEnum::scriptPercentScaleDown:
+      return scriptPercentScaleDown;
+    case MathConstantRecordEnum::scriptScriptPercentScaleDown:
+      return scriptScriptPercentScaleDown;
+    case MathConstantRecordEnum::delimitedSubFormulaMinHeight:
+      return delimitedSubFormulaMinHeight;
+    case MathConstantRecordEnum::displayOperatorMinHeight:
+      return displayOperatorMinHeight;
+    case MathConstantRecordEnum::radicalDegreeBottomRaisePercent:
+      return radicalDegreeBottomRaisePercent;
+    }
+    return 0; // should never reach here
+  }
 };
 
 struct MathKernTable {
@@ -185,6 +213,9 @@ struct MathKernInfoRecord {
   MathKernInfoRecord ()
       : hasTopRight (false), hasTopLeft (false), hasBottomRight (false),
         hasBottomLeft (false) {}
+
+  bool has_kerning (bool top, bool left);
+  int  get_kerning (int height, bool top, bool left);
 };
 
 struct GlyphPartRecord {
@@ -214,6 +245,9 @@ struct ot_mathtable_rep : concrete_struct {
   hashmap<unsigned int, array<unsigned int>> hor_glyph_variants_adv;
   hashmap<unsigned int, GlyphAssembly>       ver_glyph_assembly;
   hashmap<unsigned int, GlyphAssembly>       hor_glyph_assembly;
+
+  bool has_kerning (unsigned int glyphID, bool top, bool left);
+  int  get_kerning (unsigned int glyphID, int height, bool top, bool left);
 };
 
 struct ot_mathtable {

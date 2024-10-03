@@ -11,9 +11,13 @@
 
 #include "Boxes/construct.hpp"
 #include "analyze.hpp"
+#include "array.hpp"
+#include "boxes.hpp"
 #include "env.hpp"
+#include "font.hpp"
 #include "page_type.hpp"
 #include "typesetter.hpp"
+#include <typeinfo>
 
 using namespace moebius;
 
@@ -521,6 +525,20 @@ determine_sizes (tree szt, int sz) {
 
 int
 edit_env_rep::get_script_size (int sz, int level) {
+  // try to get the script size from the opentype font
+  if (!is_nil (fn) && (fn->math_type == MATH_TYPE_OPENTYPE)) {
+    cout << "get script size from opentype, sz: " << sz << "level: " << level
+         << LF;
+    // cache the script sizes
+    for (int i= N (fn->size_cache); i <= sz; i++) {
+      array<int> a= {fn->script (i, 0), fn->script (i, 1), fn->script (i, 2)};
+      fn->size_cache << a;
+    }
+    level= min (level, 2);
+    level= max (level, 0);
+    return fn->size_cache[sz][level];
+  }
+
   while (sz >= N (size_cache)) {
     int xsz= N (size_cache);
     size_cache << determine_sizes (math_font_sizes, xsz);
