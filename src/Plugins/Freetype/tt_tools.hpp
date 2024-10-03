@@ -12,7 +12,9 @@
 #ifndef TT_TOOLS_H
 #define TT_TOOLS_H
 
+#include "basic.hpp"
 #include "hashset.hpp"
+#include "tm_debug.hpp"
 #include "tree.hpp"
 #include "url.hpp"
 
@@ -137,7 +139,12 @@ enum MathConstantRecordEnum {
   radicalExtraAscender,
   radicalKernBeforeDegree,
   radicalKernAfterDegree,
-  otmathConstantsRecordsEnd // keep at the end
+  otmathConstantsRecordsEnd, // count the number of records
+  scriptPercentScaleDown,
+  scriptScriptPercentScaleDown,
+  delimitedSubFormulaMinHeight,
+  displayOperatorMinHeight,
+  radicalDegreeBottomRaisePercent
 };
 
 struct DeviceTable {
@@ -152,6 +159,9 @@ struct MathValueRecord {
   bool        hasDevice;
   DeviceTable deviceTable;
   MathValueRecord () : hasDevice (false) {}
+
+  // cast to int
+  operator int () const { return value; }
 };
 
 struct MathConstantsTable {
@@ -161,7 +171,27 @@ struct MathConstantsTable {
   unsigned int           displayOperatorMinHeight;
   array<MathValueRecord> records;
   int                    radicalDegreeBottomRaisePercent;
-  MathConstantsTable () : records (otmathConstantsRecordsEnd){};
+  MathConstantsTable ()
+      : records (MathConstantRecordEnum::otmathConstantsRecordsEnd){};
+
+  int operator[] (int i) {
+    if (i >= 0 && i < MathConstantRecordEnum::otmathConstantsRecordsEnd)
+      return records[i];
+    switch (i) {
+    case MathConstantRecordEnum::scriptPercentScaleDown:
+      return scriptPercentScaleDown;
+    case MathConstantRecordEnum::scriptScriptPercentScaleDown:
+      return scriptScriptPercentScaleDown;
+    case MathConstantRecordEnum::delimitedSubFormulaMinHeight:
+      return delimitedSubFormulaMinHeight;
+    case MathConstantRecordEnum::displayOperatorMinHeight:
+      return displayOperatorMinHeight;
+    case MathConstantRecordEnum::radicalDegreeBottomRaisePercent:
+      return radicalDegreeBottomRaisePercent;
+    }
+    TM_FAILED ("MathConstantsTable: index out of range");
+    return 0; // should never reach here
+  }
 };
 
 struct MathKernTable {
