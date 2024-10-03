@@ -282,7 +282,7 @@ texmacs_input_rep::scheme_flush (bool force) {
 void
 texmacs_input_rep::scheme_u8_flush (bool force) {
   if (force) {
-    write (simplify_correct (tree_utf8_to_cork (scheme_to_tree (buf))));
+    write (simplify_correct (tree_utf8_to_herk (scheme_to_tree (buf))));
     buf= "";
   }
 }
