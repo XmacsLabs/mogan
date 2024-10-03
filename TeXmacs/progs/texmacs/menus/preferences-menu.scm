@@ -179,10 +179,10 @@
             (toggle ("Wrap lines"
                      "verbatim->texmacs:wrap"))
             (enum ("Encoding" "verbatim->texmacs:encoding")
+                  ("UTF-8" "utf-8")
                   ("Automated detection" "auto")
                   ("Cork" "cork")
-                  ("Iso-8859-1" "iso-8859-1")
-                  ("Utf-8" "utf-8")))
+                  ("ISO-8859-1" "iso-8859-1")))
         (-> "TeXmacs -> Image"
             (enum ("Format" "texmacs->graphics:format")
                   ("Svg" "svg")
