@@ -26,13 +26,13 @@
   (:must-recognize mgs-recognizes?))
 
 (define (texmacs->mgs t)
-  (texmacs->stm (cork-tree->utf8-tree t)))
+  (texmacs->stm (hork-tree->utf8-tree t)))
 
 (define (mgs->texmacs text)
-  (utf8-tree->cork-tree (stm->texmacs text)))
+  (utf8-tree->hork-tree (stm->texmacs text)))
 
 (define (mgs-snippet->texmacs text)
-  (utf8-tree->cork-tree (stm-snippet->texmacs text)))
+  (utf8-tree->hork-tree (stm-snippet->texmacs text)))
 
 (converter texmacs-tree mgs-document
   (:function texmacs->mgs))
