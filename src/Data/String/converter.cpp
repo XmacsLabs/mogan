@@ -362,7 +362,7 @@ utf8_to_cork (string input) {
 }
 
 string
-utf8_to_hork (string input) {
+utf8_to_herk (string input) {
   converter conv= load_converter ("UTF-8", "Hex-Cork");
   int       start, i, n= N (input);
   string    output;
@@ -412,7 +412,7 @@ cork_to_utf8 (string input) {
 }
 
 string_u8
-hork_to_utf8 (string input) {
+herk_to_utf8 (string input) {
   converter conv = load_converter ("Hex-Cork", "UTF-8");
   int       start= 0, i, n= N (input);
   string    r;

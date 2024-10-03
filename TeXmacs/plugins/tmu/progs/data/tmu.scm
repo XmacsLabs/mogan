@@ -18,13 +18,13 @@
   (:suffix "tmu"))
 
 (define (texmacs->tmu t)
-  (serialize-tmu (hork-tree->utf8-tree t)))
+  (serialize-tmu (herk-tree->utf8-tree t)))
 
 (define (tmu->texmacs t)
-  (utf8-tree->hork-tree (parse-tmu t)))
+  (utf8-tree->herk-tree (parse-tmu t)))
 
 (define (tmu-snippet->texmacs t)
-  (utf8-tree->hork-tree (parse-tmu-snippet t)))
+  (utf8-tree->herk-tree (parse-tmu-snippet t)))
 
 (converter tmu-document texmacs-tree
   (:function tmu->texmacs))

@@ -929,16 +929,16 @@ function main()
                 }
             },
             {
-                scm_name = "hork-tree->utf8-tree",
-                cpp_name = "tree_hork_to_utf8",
+                scm_name = "herk-tree->utf8-tree",
+                cpp_name = "tree_herk_to_utf8",
                 ret_type = "tree",
                 arg_list = {
                     "tree"
                 }
             },
             {
-                scm_name = "utf8-tree->hork-tree",
-                cpp_name = "tree_utf8_to_hork",
+                scm_name = "utf8-tree->herk-tree",
+                cpp_name = "tree_utf8_to_herk",
                 ret_type = "tree",
                 arg_list = {
                     "tree"

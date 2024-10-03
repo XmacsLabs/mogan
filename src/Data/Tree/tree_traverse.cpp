@@ -734,15 +734,15 @@ search_sections (tree t) {
 }
 
 tree
-tree_utf8_to_hork (tree_u8 t) {
+tree_utf8_to_herk (tree_u8 t) {
   if (is_atomic (t)) {
-    return tree (utf8_to_hork (t->label));
+    return tree (utf8_to_herk (t->label));
   }
   else if (!is_func (t, RAW_DATA)) {
     int  t_N= N (t);
     tree t2 (t, t_N);
     for (int i= 0; i < t_N; i++)
-      t2[i]= tree_utf8_to_hork (t[i]);
+      t2[i]= tree_utf8_to_herk (t[i]);
     return t2;
   }
   else {
@@ -751,15 +751,15 @@ tree_utf8_to_hork (tree_u8 t) {
 }
 
 tree_u8
-tree_hork_to_utf8 (tree t) {
+tree_herk_to_utf8 (tree t) {
   if (is_atomic (t)) {
-    return tree (hork_to_utf8 (t->label));
+    return tree (herk_to_utf8 (t->label));
   }
   else if (!is_func (t, RAW_DATA)) {
     int  t_N= N (t);
     tree t2 (t, t_N);
     for (int i= 0; i < t_N; i++)
-      t2[i]= tree_hork_to_utf8 (t[i]);
+      t2[i]= tree_herk_to_utf8 (t[i]);
     return t2;
   }
   else {
