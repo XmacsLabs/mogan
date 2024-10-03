@@ -2183,6 +2183,7 @@
 ("user provided icons" "用户工具栏")
 ("users of Cyrillic languages" "西里尔语言用户")
 ("users of oriental languages" "东方语言用户")
+("utf-8" "UTF-8")
 ("utilities" "实用")
 ("value" "")
 ("variable" "变量")

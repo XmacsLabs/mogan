@@ -519,14 +519,14 @@
   ("cork" "Cork")
   ("iso-8859-1" "Iso-8859-1")
   ("iso-8859-2" "Iso-8859-2")
-  ("utf-8" "Utf-8"))
+  ("utf-8" "UTF-8"))
 
 (define-preference-names "verbatim->texmacs:encoding"
+  ("utf-8" "UTF-8")
   ("auto" "Automatic")
   ("cork" "Cork")
-  ("iso-8859-1" "Iso-8859-1")
-  ("iso-8859-2" "Iso-8859-2")
-  ("utf-8" "Utf-8"))
+  ("iso-8859-1" "ISO-8859-1")
+  ("iso-8859-2" "ISO-8859-2"))
 
 (tm-widget (verbatim-preferences-widget)
   ======
@@ -540,7 +540,7 @@
   (aligned
     (item (text "Character encoding:")
       (enum (set-pretty-preference "texmacs->verbatim:encoding" answer)
-            '("Automatic" "Cork" "Iso-8859-1" "Iso-8859-2" "Utf-8")
+            '("Automatic" "Cork" "ISO-8859-1" "ISO-8859-2" "UTF-8")
             (get-pretty-preference "texmacs->verbatim:encoding")
             "12em")))
   ====== ======
@@ -554,7 +554,7 @@
   (aligned
     (item (text "Character encoding:")
       (enum (set-pretty-preference "verbatim->texmacs:encoding" answer)
-            '("Automatic" "Cork" "Iso-8859-1" "Iso-8859-2" "Utf-8")
+            '("UTF-8" "Automatic" "Cork" "ISO-8859-1" "ISO-8859-2")
             (get-pretty-preference "verbatim->texmacs:encoding")
             "12em"))))
 
