@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "tt_face.hpp"
+#include "analyze.hpp"
 #include "file.hpp"
 #include "font.hpp"
 #include "tm_debug.hpp"
@@ -57,7 +58,8 @@ tt_face_rep::tt_face_rep (string name) : rep<tt_face> (name) {
   bad_face= false;
 
   // .ttf/.otf file may contain a math table
-  if (suffix (u) == "ttf" || suffix (u) == "otf") {
+  string font_suffix= locase_all (suffix (u));
+  if (font_suffix == "ttf" || font_suffix == "otf") {
     string buf;
     if (!load_string (u, buf, false)) {
       math_table= parse_mathtable (buf);

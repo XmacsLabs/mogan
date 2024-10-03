@@ -12,7 +12,9 @@
 #ifndef TT_TOOLS_H
 #define TT_TOOLS_H
 
+#include "basic.hpp"
 #include "hashset.hpp"
+#include "tm_debug.hpp"
 #include "tree.hpp"
 #include "url.hpp"
 
@@ -173,7 +175,7 @@ struct MathConstantsTable {
       : records (MathConstantRecordEnum::otmathConstantsRecordsEnd){};
 
   int operator[] (int i) {
-    if (i < MathConstantRecordEnum::otmathConstantsRecordsEnd)
+    if (i >= 0 && i < MathConstantRecordEnum::otmathConstantsRecordsEnd)
       return records[i];
     switch (i) {
     case MathConstantRecordEnum::scriptPercentScaleDown:
@@ -187,6 +189,7 @@ struct MathConstantsTable {
     case MathConstantRecordEnum::radicalDegreeBottomRaisePercent:
       return radicalDegreeBottomRaisePercent;
     }
+    TM_FAILED ("MathConstantsTable: index out of range");
     return 0; // should never reach here
   }
 };
