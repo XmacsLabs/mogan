@@ -447,7 +447,7 @@ unicode_font_rep::unicode_font_rep (string name, string family2, int size2,
       this->math_face = math_face2;
       this->math_table= math_face2->math_table;
       math_type       = MATH_TYPE_OPENTYPE;
-      init_design_unit_factor();
+      init_design_unit_factor ();
       // limit boxes
       upper_limit_gap_min=
           design_unit_to_metric (math_table->constants_table[upperLimitGapMin]);
@@ -1042,18 +1042,18 @@ unicode_font_rep::init_design_unit_factor () {
   get_extents ("m", ex);
   em= ex->x2 - ex->x1;
 
-  metric_to_design_unit_factor = (double) units_of_m / (double) em;
-  design_unit_to_metric_factor = (double) em / (double) units_of_m;
+  metric_to_design_unit_factor= (double) units_of_m / (double) em;
+  design_unit_to_metric_factor= (double) em / (double) units_of_m;
 }
 
 inline SI
 unicode_font_rep::design_unit_to_metric (int du) {
-  return (SI) design_unit_to_metric_factor*du;
+  return (SI) design_unit_to_metric_factor * du;
 }
 
 inline int
 unicode_font_rep::metric_to_design_unit (SI m) {
-  return (int) metric_to_design_unit_factor*m;
+  return (int) metric_to_design_unit_factor * m;
 }
 
 font
