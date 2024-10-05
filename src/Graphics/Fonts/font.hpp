@@ -79,6 +79,15 @@ struct font_rep : rep<font> {
   SI upper_limit_baseline_rise_min;
   SI lower_limit_gap_min;
   SI lower_limit_baseline_drop_min;
+  SI frac_rule_thickness;
+  SI frac_num_shift_up;
+  SI frac_num_disp_shift_up;
+  SI frac_num_gap_min;
+  SI frac_num_disp_gap_min;
+  SI frac_denom_shift_down;
+  SI frac_denom_disp_shift_down;
+  SI frac_denom_gap_min;
+  SI frac_denom_disp_gap_min;
 
   SI wpt;   // width of one point in font
   SI hpt;   // height of one point in font (usually wpt)
