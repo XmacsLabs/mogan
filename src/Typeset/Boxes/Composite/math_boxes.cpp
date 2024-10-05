@@ -179,6 +179,8 @@ sqrt_box_rep::sqrt_box_rep (path ip, box b1, box b2, box sqrtb, font fn2,
 
   pencil rpen= pen->set_width (wline);
   insert (b1, 0, 0);
+  bool use_open_type= (fn->math_type == MATH_TYPE_OPENTYPE) &&
+                      (fn->sqrt_degree_rise_percent > 0);
   if (!is_nil (b2)) {
     SI X = -sqrtb->w ();
     SI M = X / 3;
@@ -190,6 +192,12 @@ sqrt_box_rep::sqrt_box_rep (path ip, box b1, box b2, box sqrtb, font fn2,
       else if (occurs ("ermes", fn->res_name)) Y+= (19 * bw) >> 3;
       else if (occurs ("agella", fn->res_name)) Y+= (16 * bw) >> 3;
       else Y+= (15 * bw) >> 3;
+    }
+    else if (use_open_type) {
+      Y+= fn->sqrt_degree_rise_percent * sqrtb->h () / 100;
+      M  = fn->sqrt_kern_after_degree;
+      sep= 0;
+      b2->x1-= fn->sqrt_kern_before_degree;
     }
     else {
       if (bh < 3 * bw) Y+= bh >> 1;
@@ -203,7 +211,7 @@ sqrt_box_rep::sqrt_box_rep (path ip, box b1, box b2, box sqrtb, font fn2,
   position ();
   left_justify ();
   y1-= wline;
-  y2+= wline;
+  y2+= use_open_type ? fn->sqrt_extra_ascender : wline;
   x2+= sep >> 1;
 
   right_italic_restore (b1);

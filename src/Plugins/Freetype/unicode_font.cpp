@@ -477,6 +477,21 @@ unicode_font_rep::unicode_font_rep (string name, string family2, int size2,
           math_table->constants_table[fractionDenominatorGapMin]);
       frac_denom_disp_gap_min= design_unit_to_metric (
           math_table->constants_table[fractionDenominatorGapMin]);
+      // sqrt boxes
+      sqrt_ver_gap = design_unit_to_metric (
+          math_table->constants_table[radicalVerticalGap]);
+      sqrt_ver_disp_gap = design_unit_to_metric (
+          math_table->constants_table[radicalDisplayStyleVerticalGap]);
+      sqrt_rule_thickness = design_unit_to_metric (
+          math_table->constants_table[radicalRuleThickness]);
+      sqrt_extra_ascender = design_unit_to_metric (
+          math_table->constants_table[radicalExtraAscender]);
+      sqrt_degree_rise_percent = 
+          math_table->constants_table[radicalDegreeBottomRaisePercent];
+      sqrt_kern_before_degree = design_unit_to_metric (
+          math_table->constants_table[radicalKernBeforeDegree]);
+      sqrt_kern_after_degree = design_unit_to_metric (
+          math_table->constants_table[radicalKernAfterDegree]);
     }
   }
 }

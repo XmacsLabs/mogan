@@ -1,10 +1,10 @@
-<TMU|<tuple|1.0.3|1.2.9.2-rc5>>
+<TMU|<tuple|1.0.4|1.2.9.3-rc2>>
 
 <style|<tuple|generic|chinese>>
 
 <\body>
   <\math>
-    <sqrt|1+<sqrt|2+<sqrt|3+<sqrt|4+<sqrt|5+<sqrt|6+<sqrt|7+<sqrt|8+\<cdots\>>>>>>>>>
+    <sqrt|1+<sqrt|2+<sqrt|3+<sqrt|4+<sqrt|5+<sqrt|6+<sqrt|7+<sqrt|8+\<cdots\>>>>>>>>><around*|{|<sqrt|1234|abc>|}>
   </math>
 
   <\equation*>
@@ -14,6 +14,9 @@
 
 <\initial>
   <\collection>
+    <associate|font|Asana Math>
+    <associate|font-family|rm>
+    <associate|math-font|math-dejavu>
     <associate|page-medium|paper>
     <associate|page-screen-margin|false>
   </collection>

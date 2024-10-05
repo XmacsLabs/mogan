@@ -88,6 +88,13 @@ struct font_rep : rep<font> {
   SI frac_denom_disp_shift_down;
   SI frac_denom_gap_min;
   SI frac_denom_disp_gap_min;
+  SI sqrt_ver_gap;
+  SI sqrt_ver_disp_gap;
+  SI sqrt_rule_thickness;
+  SI sqrt_extra_ascender;
+  int sqrt_degree_rise_percent;
+  SI sqrt_kern_before_degree;
+  SI sqrt_kern_after_degree;
 
   SI wpt;   // width of one point in font
   SI hpt;   // height of one point in font (usually wpt)

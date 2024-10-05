@@ -109,6 +109,13 @@ font_rep::copy_math_pars (font fn) {
   frac_denom_disp_shift_down   = fn->frac_denom_disp_shift_down;
   frac_denom_gap_min           = fn->frac_denom_gap_min;
   frac_denom_disp_gap_min      = fn->frac_denom_disp_gap_min;
+  sqrt_ver_gap                 = fn->sqrt_ver_gap;
+  sqrt_ver_disp_gap            = fn->sqrt_ver_disp_gap;
+  sqrt_rule_thickness          = fn->sqrt_rule_thickness;
+  sqrt_extra_ascender          = fn->sqrt_extra_ascender;
+  sqrt_degree_rise_percent     = fn->sqrt_degree_rise_percent;
+  sqrt_kern_before_degree      = fn->sqrt_kern_before_degree;
+  sqrt_kern_after_degree       = fn->sqrt_kern_after_degree;
 }
 
 void
