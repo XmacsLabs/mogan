@@ -110,7 +110,6 @@ frac_box_rep::frac_box_rep (path ip, box b1, box b2, font fn2, font sfn2,
     insert (line_box (decorate_middle (ip), d, 0, w - d, 0, bar_pen), 0, bar_y);
   }
   else {
-  h:
     insert (b1, (w >> 1) - (b1->x2 >> 1), bar_y + sep + (bar_w >> 1) - b1_y);
     insert (b2, (w >> 1) - (b2->x2 >> 1), bar_y - sep - (bar_w >> 1) - b2_y);
     insert (line_box (decorate_middle (ip), d, 0, w - d, 0, bar_pen), 0, bar_y);
