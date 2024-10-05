@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.2|1.2.8>>
+<TMU|<tuple|1.0.3|1.2.9.2>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -9,6 +9,78 @@
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      24_25
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      HTML: upgrade to 20240924
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      24_24
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      Refine pandoc binary and docx data plugin doc
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      24_22
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      Add documentation to remind users to use the installed version of pandoc
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      24_21
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      Set default export to docx to use MathML instead of image
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      24_20
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      Fix the problem of missing titles and images when exporting to docx
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      24_19
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      Avoid converting CJK to hexadecimal when exporting html
+    </cell>>|<row|<\cell>
+      Doc
+    </cell>|<\cell>
+      24_18
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      Documentation for the docx data plugin
+    </cell>>|<row|<\cell>
+      Feature
+    </cell>|<\cell>
+      24_17
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      docx data plugin
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      24_16
+    </cell>|<\cell>
+      ATQlove
+    </cell>|<\cell>
+      Change <markup|\<less\>font\<gtr\>> to <markup|\<less\>span\<gtr\>> (focus on color)
+    </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
       24_15

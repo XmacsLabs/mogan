@@ -37,7 +37,7 @@
   ; Liii List extensions
   list-view flatmap
   list-null? list-not-null? not-null-list?
-  length=?
+  length=? length>? length>=?
 )
 (import (srfi srfi-1)
         (liii error))
@@ -49,6 +49,20 @@
   (cond ((and (= x 0) (null? scheme-list)) #t)
         ((or (= x 0) (null? scheme-list)) #f)
         (else (length=? (- x 1) (cdr scheme-list)))))
+
+(define (length>? lst len)
+  (let loop ((lst lst)
+             (cnt 0))
+    (cond ((null? lst) (< len cnt))
+          ((pair? lst) (loop (cdr lst) (+ cnt 1)))
+          (else (< len cnt)))))
+
+(define (length>=? lst len)
+  (let loop ((lst lst)
+             (cnt 0))
+    (cond ((null? lst) (<= len cnt))
+          ((pair? lst) (loop (cdr lst) (+ cnt 1)))
+          (else (<= len cnt)))))
 
 (define (list-view scheme-list)
   (define (f-inner-reducer scheme-list filter filter-func rest-funcs)

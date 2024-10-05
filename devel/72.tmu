@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.3|1.2.9.2>>
 
 <style|<tuple|tmdoc|devel|british>>
 
@@ -7,7 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|72_2>>|<cell|<value|da>>|<cell|Fail to render CJK characters in scheme session>>|<row|<cell|Bug>|<cell|72_1>|<cell|<value|da>>|<cell|Fix auto-completion in scheme session>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|72_3>|<cell|<value|jk>>|<cell|remove improper prog mode in error output and prompt>>|<row|<cell|Bug>|<cell|<dlink|72_2>>|<cell|<value|da>>|<cell|Fail to render CJK characters in scheme session>>|<row|<cell|Bug>|<cell|72_1>|<cell|<value|da>>|<cell|Fix auto-completion in scheme session>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 

@@ -129,6 +129,10 @@ function sidebarGuide() {
                     link: '/guide/Mogan_versus_TeXmacs'
                 },
                 {
+                    text: 'DOCX Data Plugin',
+                    link: '/guide/plugin_data/docx.md'
+                },
+                {
                     text: 'Maxima Plugin',
                     link: '/guide/plugin_maxima.md'
                 },
@@ -195,6 +199,10 @@ function sidebarGuide() {
                 {
                     text: 'Inkscape Binary plugin',
                     link: '/guide/plugin_binary_inkscape.md'
+                },
+                {
+                    text: 'Pandoc Binary plugin',
+                    link: '/guide/plugin_binary_pandoc.md'
                 },
                 {
                     text: 'Python3 Binary plugin',
@@ -321,6 +329,10 @@ function sidebarGuideZh() {
                     link: '/zh/guide/Mogan_versus_TeXmacs'
                 },
                 {
+                    text: 'DOCX数据插件',
+                    link: '/zh/guide/plugin_data/docx.md'
+                },
+                {
                     text: 'Maxima插件',
                     link: '/zh/guide/plugin_maxima.md'
                 },
@@ -387,6 +399,10 @@ function sidebarGuideZh() {
                 {
                     text: 'Inkscape二进制插件',
                     link: '/zh/guide/plugin_binary_inkscape.md'
+                },
+                {
+                    text: 'Pandoc Binary plugin',
+                    link: '/zh/guide/plugin_binary_pandoc.md'
                 },
                 {
                     text: 'Python3二进制插件',

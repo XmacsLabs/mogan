@@ -26,7 +26,7 @@
   hash-table-update!/default hash-table-pop! hash-table-clear!
   hash-table-size hash-table-keys hash-table-values hash-table-entries
   hash-table-find hash-table-count
-  hash-table-for-each
+  hash-table-for-each hash-table-map->list
   hash-table->alist
 )
 (begin

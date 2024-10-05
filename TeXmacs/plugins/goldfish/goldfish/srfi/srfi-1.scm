@@ -78,10 +78,10 @@
   (cadr (cddddr (cddddr x))))
 
 (define (take l k)
-  (let recur ((l l) (k k))
+  (let loop ((l l) (k k))
     (if (zero? k) '()
         (cons (car l)
-              (recur (cdr l) (- k 1))))))
+              (loop (cdr l) (- k 1))))))
 
 (define (drop l k)
   (let iter ((l l) (k k))

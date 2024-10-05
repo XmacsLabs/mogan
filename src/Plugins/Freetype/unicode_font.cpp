@@ -12,6 +12,7 @@
 #include "Freetype/free_type.hpp"
 #include "Freetype/tt_face.hpp"
 #include "Freetype/tt_file.hpp"
+#include "Freetype/tt_tools.hpp"
 #include "analyze.hpp"
 #include "converter.hpp"
 #include "cork.hpp"
@@ -140,6 +141,9 @@ struct unicode_font_rep : font_rep {
 
   hashmap<string, int> native; // additional native (non unicode) characters
 
+  tt_face      math_face;
+  ot_mathtable math_table;
+
   unicode_font_rep (string name, string family, int size, int hdpi, int vdpi);
   void tex_gyre_operators ();
 
@@ -164,6 +168,12 @@ struct unicode_font_rep : font_rep {
   SI           get_rsub_correction (string s);
   SI           get_rsup_correction (string s);
   SI           get_wide_correction (string s, int mode);
+
+  double design_unit_to_metric_factor;
+  double metric_to_design_unit_factor;
+  void   init_design_unit_factor ();
+  SI     design_unit_to_metric (int du);
+  int    metric_to_design_unit (SI m);
 };
 
 /******************************************************************************
@@ -430,6 +440,45 @@ unicode_font_rep::unicode_font_rep (string name, string family2, int size2,
       above_correct= above_fira_italic_table ();
     }
   }
+  else {
+    // try to get OpenType math table
+    tt_face math_face2= tt_face (family);
+    if (!is_nil (math_face2->math_table)) {
+      this->math_face = math_face2;
+      this->math_table= math_face2->math_table;
+      math_type       = MATH_TYPE_OPENTYPE;
+      init_design_unit_factor ();
+      // limit boxes
+      upper_limit_gap_min=
+          design_unit_to_metric (math_table->constants_table[upperLimitGapMin]);
+      upper_limit_baseline_rise_min= design_unit_to_metric (
+          math_table->constants_table[upperLimitBaselineRiseMin]);
+      lower_limit_gap_min=
+          design_unit_to_metric (math_table->constants_table[lowerLimitGapMin]);
+      lower_limit_baseline_drop_min= design_unit_to_metric (
+          math_table->constants_table[lowerLimitBaselineDropMin]);
+      // frac boxes
+      frac_rule_thickness= design_unit_to_metric (
+          math_table->constants_table[fractionRuleThickness]);
+      frac_num_shift_up= design_unit_to_metric (
+          math_table->constants_table[fractionNumeratorShiftUp]);
+      frac_num_disp_shift_up= design_unit_to_metric (
+          math_table->constants_table[fractionNumeratorDisplayStyleShiftUp]);
+      frac_num_gap_min= design_unit_to_metric (
+          math_table->constants_table[fractionNumeratorGapMin]);
+      frac_num_disp_gap_min= design_unit_to_metric (
+          math_table->constants_table[fractionNumDisplayStyleGapMin]);
+      frac_denom_shift_down= design_unit_to_metric (
+          math_table->constants_table[fractionDenominatorShiftDown]);
+      frac_denom_disp_shift_down= design_unit_to_metric (
+          math_table
+              ->constants_table[fractionDenominatorDisplayStyleShiftDown]);
+      frac_denom_gap_min= design_unit_to_metric (
+          math_table->constants_table[fractionDenominatorGapMin]);
+      frac_denom_disp_gap_min= design_unit_to_metric (
+          math_table->constants_table[fractionDenominatorGapMin]);
+    }
+  }
 }
 
 /******************************************************************************
@@ -592,7 +641,7 @@ unicode_font_rep::read_unicode_char (string s, int& i) {
   }
   else {
     unsigned int c= (unsigned int) s[i++];
-    if (c >= 32 && c <= 127) return c;
+    if (c >= 32 && c <= 127 && c != 0x27 && c != 0x60) return c;
     string ss= s (i - 1, i);
     string uu= strict_cork_to_utf8 (ss);
     int    j = 0;
@@ -973,6 +1022,38 @@ unicode_font (string family, int size, int hdpi, int vdpi) {
   if (vdpi != hdpi) name << "x" << as_string (vdpi);
   return make (font, name,
                tm_new<unicode_font_rep> (name, family, size, hdpi, vdpi));
+}
+
+/******************************************************************************
+ * OpenType
+ ******************************************************************************/
+
+inline void
+unicode_font_rep::init_design_unit_factor () {
+  int units_of_m= 0;
+  SI  em        = 0;
+  // get the design units of the width of 'm'
+  FT_UInt glyph_index= FT_Get_Char_Index (math_face->ft_face, 'm');
+  FT_Load_Glyph (math_face->ft_face, glyph_index, FT_LOAD_NO_SCALE);
+  units_of_m= math_face->ft_face->glyph->metrics.horiAdvance;
+
+  // get the width of the character 'm'
+  metric ex;
+  get_extents ("m", ex);
+  em= ex->x2 - ex->x1;
+
+  metric_to_design_unit_factor= (double) units_of_m / (double) em;
+  design_unit_to_metric_factor= (double) em / (double) units_of_m;
+}
+
+inline SI
+unicode_font_rep::design_unit_to_metric (int du) {
+  return (SI) design_unit_to_metric_factor * du;
+}
+
+inline int
+unicode_font_rep::metric_to_design_unit (SI m) {
+  return (int) metric_to_design_unit_factor * m;
 }
 
 font

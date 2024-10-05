@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.2|1.2.8>>
+<TMU|<tuple|1.0.3|1.2.9.2>>
 
 <style|<tuple|tmdoc|esperanto|devel>>
 
@@ -7,7 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Feature>|<cell|70_10>|<cell|<value|da>>|<cell|Code: allow customization of identifier parser>>|<row|<cell|Feature>|<cell|70_9>|<cell|<value|da>>|<cell|Code: improve number_parser and keyword_parser>>|<row|<cell|Feature>|<cell|70_8>|<cell|<value|da>>|<cell|Code: add pairs to the string parser-feature>>|<row|<cell|Feature>|<cell|70_7>|<cell|<value|da>>|<cell|Code plugins>>|<row|<cell|Chore>|<cell|70_6>|<cell|<value|jk>>|<cell|add test for packrat>>|<row|<cell|Chore>|<cell|70_5>|<cell|<value|da>>|<cell|xmake: enable Mogan Code on windows>>|<row|<cell|Chore>|<cell|70_4>|<cell|<value|da>>|<cell|Update cpp language parser-feature>>|<row|<cell|Chore>|<cell|70_3>|<cell|<value|da>>|<cell|Python: support pants suffix>>|<row|<cell|Chore>|<cell|70_2>|<cell|<value|da>>|<cell|Code: enable DOT prog format>>|<row|<cell|Chore>|<cell|70_1>|<cell|<value|da>>|<cell|Code: enable javascript prog format>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|70_18>|<cell|UnbSky>|<cell|Fix wrong hash code>>|<row|<cell|Bug>|<cell|70_17>|<cell|UnbSky>|<cell|Fix some root node cannot find>>|<row|<cell|Bug>|<cell|70_16>|<cell|UnbSky>|<cell|Fix with node cause wrong root code and no prog root fallback>>|<row|<cell|Bug>|<cell|70_15>|<cell|UnbSky>|<cell|Fix rainbow brackets>>|<row|<cell|Bug>|<cell|70_14>|<cell|UnbSky>|<cell|Fix the retrieval and processing of the root node in lang>>|<row|<cell|Feature>|<cell|70_13>|<cell|Darcy>|<cell|Goldfish: use AST Syntax Highlighting>>|<row|<cell|Feature>|<cell|70_12>|<cell|UnbSky>|<cell|AST Syntax Highlighting for Scheme>>|<row|<cell|Feature>|<cell|70_11>|<cell|UnbSky>|<cell|AST Syntax Highlighting for C++>>|<row|<cell|Feature>|<cell|70_10>|<cell|<value|da>>|<cell|Code: allow customization of identifier parser>>|<row|<cell|Feature>|<cell|70_9>|<cell|<value|da>>|<cell|Code: improve number_parser and keyword_parser>>|<row|<cell|Feature>|<cell|70_8>|<cell|<value|da>>|<cell|Code: add pairs to the string parser-feature>>|<row|<cell|Feature>|<cell|70_7>|<cell|<value|da>>|<cell|Code plugins>>|<row|<cell|Chore>|<cell|70_6>|<cell|<value|jk>>|<cell|add test for packrat>>|<row|<cell|Chore>|<cell|70_5>|<cell|<value|da>>|<cell|xmake: enable Mogan Code on windows>>|<row|<cell|Chore>|<cell|70_4>|<cell|<value|da>>|<cell|Update cpp language parser-feature>>|<row|<cell|Chore>|<cell|70_3>|<cell|<value|da>>|<cell|Python: support pants suffix>>|<row|<cell|Chore>|<cell|70_2>|<cell|<value|da>>|<cell|Code: enable DOT prog format>>|<row|<cell|Chore>|<cell|70_1>|<cell|<value|da>>|<cell|Code: enable javascript prog format>>>>>
 
   <tmdoc-copyright|2023–2024|<value|da>|<value|jk>>
 

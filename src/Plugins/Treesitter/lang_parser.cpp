@@ -62,10 +62,16 @@ lang_parser::add_brackets_pair (string forward, string backward) {
 
 bool
 lang_parser::check_line_changed (tree t) {
+  int line_length= N (t->label);
+  if (line_length != current_line_length) {
+    current_line_length= line_length;
+    return true;
+  }
   // hash(t) does not take IP changes into account
-  int line_hash= hash (obtain_ip (t)) + hash (t->label) / 2;
-  // cout << "t->label: " << t->label << " obtain_ip (t): " << obtain_ip (t)
-  // <<"\n";
+  int line_hash= hash (obtain_ip (t)) ^ hash (t->label);
+  // cout << "t: [" << t << "] line_hash: " << line_hash << " hash (t->label): "
+  // << hash (t->label) << " current_line_hash: " << current_line_hash <<"\n";
+
   if (line_hash != current_line_hash) {
     current_line_hash= line_hash;
     return true;
@@ -114,7 +120,7 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
 
   // Add this to avoid wrong hash code
   if (N (change_line_pos) > 0) {
-    hash_code+= change_line_pos[N (change_line_pos) - 1];
+    hash_code^= change_line_pos[N (change_line_pos) - 1];
   }
 
   return root;

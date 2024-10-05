@@ -11,9 +11,9 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (convert tools xmltm)
-  (:use (convert tools stm) (convert tools sxml)
-	(convert tools environment) (convert tools tmconcat)))
+(texmacs-module (convert data xmltm)
+  (:use (convert tools stm) (convert data sxml)
+	      (convert tools environment) (convert tools tmconcat)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; XML namespace normalization
@@ -117,18 +117,19 @@
 (define (ns-import-name env use-default? name)
   (receive (ns-id ncname) (sxml-split-name name)
     (let ((ns-uri (cond (ns-id (environment-ref* env (string->symbol ns-id)))
-			(use-default? (environment-ref env *default*))
-			(else ""))))
+                        (use-default? (environment-ref env *default*))
+                        (else ""))))
       (string-append
-       ;; FIXME: user namespace prefix list should be extensible
-       (cond ((== ns-uri xmlns-uri-xhtml) "h:")
-	     ((== ns-uri xmlns-uri-mathml) "m:")
-	     ((== ns-uri xmlns-uri-gallina) "g:")
-	     ((== ns-uri xmlns-uri-coqml) "c:")
-	     ((== ns-uri xmlns-uri-xml) "x:")
-	     ((string-null? ns-uri) "")
-	     (else (string-append ns-uri ":")))
-       ncname))))
+        ;; FIXME: user namespace prefix list should be extensible
+        (cond ((== ns-uri xmlns-uri-xhtml) "h:")
+              ((== ns-uri xmlns-uri-mathml) "m:")
+              ((== ns-uri xmlns-uri-gallina) "g:")
+              ((== ns-uri xmlns-uri-coqml) "c:")
+              ((== ns-uri xmlns-uri-xml) "x:")
+              ((string-null? ns-uri) "")
+              ((not (string? ns-uri)) "")
+              (else (string-append ns-uri ":")))
+        ncname))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; htmltm environment
@@ -628,13 +629,13 @@
   ;; @x-pass (method) pass method
   ;; NOTE: method == (env attrlist content -> node-list)
   (cond ((string? t) (x-string env t))
-	((sxml-top-node? t) (x-pass env '() (sxml-content t)))
-	((sxml-control-node? t) '())
-	(else
-	 (receive (ns-id ncname) (sxml-split-name (sxml-name t))
-	   (cond ((sxml-meta-logic-ref ns-id (string->symbol ncname))
-		  => (cut <> env (sxml-attr-list t) (sxml-content t)))
-		 (else (x-pass env (sxml-attr-list t) (sxml-content t))))))))
+        ((sxml-top-node? t) (x-pass env '() (sxml-content t)))
+        ((sxml-control-node? t) '())
+        (else
+         (receive (ns-id ncname) (sxml-split-name (sxml-name t))
+           (cond ((and (not (string-null? ncname)) (sxml-meta-logic-ref ns-id (string->symbol ncname)))
+                  => (cut <> env (sxml-attr-list t) (sxml-content t)))
+                 (else (x-pass env (sxml-attr-list t) (sxml-content t))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Special serial constructors
