@@ -470,9 +470,9 @@ concater_rep::typeset_sqrt (tree t, path ip) {
   if (stix) lfn= rubber_font (lfn);
   SI   gap= (3 * sep >> 1);
   bool use_opentype=
-      (lfn->math_type == MATH_TYPE_OPENTYPE) && (lfn->frac_num_gap_min > 0);
+      (lfn->math_type == MATH_TYPE_OPENTYPE) && (lfn->sqrt_ver_gap > 0);
   if (use_opentype) {
-    gap= (disp ? lfn->frac_num_disp_gap_min : lfn->frac_num_gap_min) +
+    gap= (disp ? lfn->sqrt_ver_disp_gap : lfn->sqrt_ver_gap) +
          (sep >> 1);
   }
   box sqrtb= delimiter_box (decorate_left (ip), "<large-sqrt>", lfn, env->pen,
@@ -480,9 +480,6 @@ concater_rep::typeset_sqrt (tree t, path ip) {
   if (stix)
     sqrtb= shift_box (decorate_left (ip), sqrtb, -env->fn->wline / 2,
                       -env->fn->wline / 3, false, true);
-  // if (use_opentype) {
-  //   sqrtb->y2+= lfn->sqrt_extra_ascender;
-  // }
   print (sqrt_box (ip, b, ind, sqrtb, env->fn, env->pen));
 }
 
