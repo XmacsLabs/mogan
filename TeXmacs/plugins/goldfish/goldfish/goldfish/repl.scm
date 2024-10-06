@@ -18,7 +18,8 @@
 (import (texmacs protocol)
         (liii list)
         (liii string)
-        (liii sys))
+        (liii sys)
+        (liii base))
 (export goldfish-welcome goldfish-repl is-sicp-mode?)
 (begin
 

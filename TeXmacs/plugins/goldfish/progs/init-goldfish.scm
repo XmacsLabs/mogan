@@ -28,15 +28,13 @@
     (string-quote
       (string-append (url->system (get-texmacs-path))
                      "/plugins/goldfish/goldfish/tm-goldfish.scm"))
-    " "
+    " -m "
     mode))
 
 (plugin-configure goldfish
   (:require (has-binary-goldfish?))
   (:launch ,(goldfish-launch "default"))
-  (:launch "liii" ,(goldfish-launcher "liii"))
-  (:launch "sicp" ,(goldfish-launcher "sicp"))
-  (:launch "r7rs" ,(goldfish-launcher "r7rs"))
-  (:launch "s7" ,(goldfish-launcher "s7"))
+  (:launch "sicp" ,(goldfish-launch "sicp"))
+  (:launch "r7rs" ,(goldfish-launch "r7rs"))
   (:serializer ,goldfish-serialize)
   (:session "Goldfish Scheme"))
