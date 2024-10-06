@@ -408,7 +408,9 @@ qt_gui_rep::set_selection (string key, tree t, string s, string sv, string sh,
       md->setText (QString::fromLatin1 (selection, -1));
     }
   }
-  else md->setText (QString::fromLatin1 (selection, N (s)));
+  else {
+    md->setText (QString::fromUtf8 (selection, -1));
+  }
   cb->setMimeData (md, mode);
   // according to the docs, ownership of mimedata is transferred to clipboard
   // so no memory leak here
