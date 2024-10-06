@@ -14,23 +14,18 @@
 ; under the License.
 ;
 
-(define-library (liii vector)
-(import (srfi srfi-133)
-        (liii base))
+(define-library (liii bitwise)
+(import (srfi srfi-151)
+        (liii error))
 (export
-  ; S7 Scheme built-in
-  make-vector vector vector-length vector-ref vector-set! vector->list list->vector
-  ; from (scheme base)
-  vector-copy vector-fill! vector-copy! vector->string string->vector
-  vector-map vector-for-each
-  ; from (srfi srfi-133)
-  vector-empty?
-  vector-count
-  vector-any vector-every vector-copy vector-copy!
-  vector-index vector-index-right vector-partition
-  vector-swap!)
+  ; from (srfi srfi-151)
+  bitwise-not bitwise-and bitwise-ior bitwise-xor
+  arithmetic-shift
+  ; S7 built-in
+  lognot logand logior logxor
+  ash
+)
 (begin
-
 ) ; end of begin
-) ; end of define-library
+) ; end of library
 
