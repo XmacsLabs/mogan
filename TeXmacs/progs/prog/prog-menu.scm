@@ -101,3 +101,35 @@
   (if (and (in-presentation?) (not (visible-icon-bar? 0)))
     /
     (link dynamic-icons)))
+
+(menu-bind code-menu
+  ("Algorithm" (make 'algorithm))
+  ("Pseudo code" (make 'render-code))
+  ---
+  ("Indent" (make 'indent))
+  (when (not (selection-active?))
+    ("Tabbed" (make 'wide-tabbed)))
+  ---
+  (-> "Inline code"
+      ("Verbatim" (make 'verbatim))
+      ("C++" (make 'cpp))
+      ("Scheme" (make 'scm))
+      ("Shell" (make 'shell)))
+  (-> "Block of code"
+      ("Verbatim" (make 'verbatim-code))
+      ("C++" (make 'cpp-code))
+      ("Scheme" (make 'scm-code))
+      ("Shell" (make 'shell-code)))
+  ---
+  (-> "Scala"
+      (when (style-has? "scala")
+        ("Inline" (make 'scala))
+        ("Block" (make 'scala-code)))
+      (when (not (style-has? "scala"))
+        ("Activate" (add-style-package "scala"))))
+  (-> "Python"
+      (when (style-has? "python")
+        ("Inline" (make 'python))
+        ("Block" (make 'python-code)))
+      (when (not (style-has? "python"))
+        ("Activate" (add-style-package "python")))))
