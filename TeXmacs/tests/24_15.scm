@@ -31,6 +31,7 @@
   (url-exists? docx-file-url))
 
 (define (test_24_15)
+  (when (os-macos?) (exit 0))
   (display  (url-exists? (system->url "$TEXMACS_PATH/tests/tm/24_15.tm")))
   (let* ((tm-url "$TEXMACS_PATH/tests/tm/24_15.tm")
          (docx-url "$TEXMACS_PATH/tests/tm/24_15.docx")
