@@ -70,7 +70,7 @@
             (goldfish-quote (symbol->string (car args)))
             (if (and (>= (length args) 2)
                      (not (null? (cadr args))))
-              (goldfish-quote (apply format #f (cadr args)))
+              (goldfish-quote (object->string (cadr args)))
               "")
             "))"))))))
 
