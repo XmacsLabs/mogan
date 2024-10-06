@@ -15,6 +15,7 @@
   (:use (text text-edit)
         (text text-structure)
         (generic document-menu)
+        (prog prog-menu)
         (generic document-style)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -207,25 +208,6 @@
       (group "South")
       ("Drop" (make* 'drop-down "std-shadow"))
       ("Bend bottom" (make* 'half-bend-in-down "std-shadow"))))
-
-(menu-bind code-menu
-  ("Algorithm" (make 'algorithm))
-  ("Pseudo code" (make 'render-code))
-  ---
-  ("Indent" (make 'indent))
-  (when (not (selection-active?))
-    ("Tabbed" (make 'wide-tabbed)))
-  ---
-  (-> "Inline code"
-      ("C++" (make 'cpp))
-      ("Scheme" (make 'scm))
-      ("Shell" (make 'shell))
-      ("Verbatim" (make 'verbatim)))
-  (-> "Block of code"
-      ("C++" (make 'cpp-code))
-      ("Scheme" (make 'scm-code))
-      ("Shell" (make 'shell-code))
-      ("Verbatim" (make 'verbatim-code))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Notes and floating objects
