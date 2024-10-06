@@ -473,7 +473,7 @@ concater_rep::typeset_sqrt (tree t, path ip) {
       (lfn->math_type == MATH_TYPE_OPENTYPE) && (lfn->sqrt_ver_gap > 0);
   if (use_opentype) {
     gap= (disp ? lfn->sqrt_ver_disp_gap : lfn->sqrt_ver_gap) +
-         (sep >> 1);
+         (lfn->wline >> 1);
   }
   box sqrtb= delimiter_box (decorate_left (ip), "<large-sqrt>", lfn, env->pen,
                             b->y1, b->y2 + gap);
