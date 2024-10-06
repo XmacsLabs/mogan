@@ -19,7 +19,7 @@ STABLE_VERSION = TEXMACS_VERSION
 STABLE_RELEASE = 1
 
 -- XmacsLabs dependencies
-TBOX_VERSION = "1.7.5"
+TBOX_VERSION = "1.7.6"
 LOLLY_VERSION = "1.4.26"
 
 -- Third-party dependencies
