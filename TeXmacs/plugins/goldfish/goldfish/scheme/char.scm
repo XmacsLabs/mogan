@@ -14,22 +14,15 @@
 ; under the License.
 ;
 
-(define-library (liii vector)
-(import (srfi srfi-133)
-        (liii base))
+(define-library (scheme char)
 (export
-  ; S7 Scheme built-in
-  make-vector vector vector-length vector-ref vector-set! vector->list list->vector
-  ; from (scheme base)
-  vector-copy vector-fill! vector-copy! vector->string string->vector
-  vector-map vector-for-each
-  ; from (srfi srfi-133)
-  vector-empty?
-  vector-count
-  vector-any vector-every vector-copy vector-copy!
-  vector-index vector-index-right vector-partition
-  vector-swap!)
+  char-upcase char-downcase char-upper-case? char-lower-case? digit-value
+)
 (begin
+(define (digit-value ch)
+  (if (char-numeric? ch)
+      (- (char->integer ch) (char->integer #\0))
+      #f))
 
 ) ; end of begin
 ) ; end of define-library

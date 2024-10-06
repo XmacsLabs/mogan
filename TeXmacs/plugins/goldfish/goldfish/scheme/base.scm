@@ -17,18 +17,32 @@
 (define-library (scheme base)
 (export
   let-values
-  define-record-type
+  ; R7RS 5: Program Structure
+  define-values define-record-type
+  ; R7RS 6.2: Numbers
   square
   exact inexact
   floor s7-floor ceiling s7-ceiling truncate s7-truncate round s7-round
   floor-quotient
   gcd lcm s7-lcm
   boolean=?
-  ; String
+  ; R7RS 6.4: list
+  pair? cons car cdr set-car! set-cdr! caar cadr cdar cddr
+  null? list? make-list list length append reverse list-tail
+  list-ref list-set! memq memv member assq assv assoc list-copy
+  ; R7RS 6.5: Symbol
+  symbol? symbol=? string->symbol symbol->string
+  ; R7RS 6.6: Characters
+  digit-value
+  ; R7RS 6.7: String
   string-copy
-  ; Vector
+  ; R7RS 6.8: Vector
   vector->string string->vector
   vector-copy vector-copy! vector-fill!
+  ; R7RS 6.9: Bytevectors
+  bytevector? make-bytevector bytevector bytevector-length
+  bytevector-u8-ref bytevector-u8-set! bytevector-append
+  utf8->string string->utf8 u8-string-length
   ; Input and Output
   call-with-port port? binary-port? textual-port?
   input-port-open? output-port-open?
@@ -73,6 +87,11 @@
                    ,(cadr v)))
                 vars)))
         ,@body)))
+
+; 0-clause BSD by Bill Schottstaedt from S7 source repo: s7test.scm
+(define-macro (define-values vars expression)
+  `(if (not (null? ',vars))
+       (varlet (curlet) ((lambda ,vars (curlet)) ,expression))))
 
 ; 0-clause BSD by Bill Schottstaedt from S7 source repo: r7rs.scm
 (define-macro (define-record-type type make ? . fields)
@@ -174,6 +193,134 @@
         ((not (equal? obj1 obj2)) #f)
         (else (same-boolean obj1 rest))))
 
+(define (symbol=? sym1 sym2 . rest)
+  (define (same-symbol sym rest)
+    (if (null? rest)
+        #t
+        (and (eq? sym (car rest))
+             (same-symbol sym (cdr rest)))))
+  (cond ((not (symbol? sym1)) #f)
+        ((not (symbol? sym2)) #f)
+        ((not (eq? sym1 sym2)) #f)
+        (else (same-symbol sym1 rest))))
+
+(define bytevector byte-vector)
+
+(define bytevector? byte-vector?)
+
+(define make-bytevector make-byte-vector)
+
+(define bytevector-length length)
+
+(define bytevector-u8-ref byte-vector-ref)
+
+(define bytevector-u8-set! byte-vector-set!)
+
+(define bytevector-append append)
+
+(define* (bytevector-advance-u8 bv index (end (length bv)))
+  (if (>= index end)
+      index  ; Reached the end without errors, sequence is valid
+      (let ((byte (bv index)))
+        (cond
+         ;; 1-byte sequence (0xxxxxxx)
+         ((< byte #x80)
+          (+ index 1))
+           
+         ;; 2-byte sequence (110xxxxx 10xxxxxx)
+         ((< byte #xe0)
+          (if (>= (+ index 1) end)
+              index  ; Incomplete sequence
+              (let ((next-byte (bv (+ index 1))))
+                (if (not (= (logand next-byte #xc0) #x80))
+                    index  ; Invalid continuation byte
+                    (+ index 2)))))
+           
+         ;; 3-byte sequence (1110xxxx 10xxxxxx 10xxxxxx)
+         ((< byte #xf0)
+          (if (>= (+ index 2) end)
+              index  ; Incomplete sequence
+              (let ((next-byte1 (bv (+ index 1)))
+                    (next-byte2 (bv (+ index 2))))
+                (if (or (not (= (logand next-byte1 #xc0) #x80))
+                        (not (= (logand next-byte2 #xc0) #x80)))
+                    index  ; Invalid continuation byte(s)
+                    (+ index 3)))))
+           
+         ;; 4-byte sequence (11110xxx 10xxxxxx 10xxxxxx 10xxxxxx)
+         ((< byte #xf8)
+          (if (>= (+ index 3) end)
+              index  ; Incomplete sequence
+              (let ((next-byte1 (bv (+ index 1)))
+                    (next-byte2 (bv (+ index 2)))
+                    (next-byte3 (bv (+ index 3))))
+                (if (or (not (= (logand next-byte1 #xc0) #x80))
+                        (not (= (logand next-byte2 #xc0) #x80))
+                        (not (= (logand next-byte3 #xc0) #x80)))
+                    index  ; Invalid continuation byte(s)
+                    (+ index 4)))))
+         (else index)))))  ; Invalid leading byte
+
+(define (u8-string-length str)
+  (let ((bv (string->byte-vector str))
+        (N (string-length str)))
+    (let loop ((pos 0) (cnt 0))
+      (let ((next-pos (bytevector-advance-u8 bv pos N)))
+        (cond
+         ((= next-pos N)
+          (+ cnt 1))
+         ((= next-pos pos)
+          (error 'value-error "Invalid UTF-8 sequence at index: " pos))
+         (else (loop next-pos (+ cnt 1))))))))
+
+(define* (utf8->string bv (start 0) (end (bytevector-length bv)))
+  (if (or (< start 0) (> end (bytevector-length bv)) (> start end))
+      (error 'out-of-range start end)
+      (let loop ((pos start))
+        (let ((next-pos (bytevector-advance-u8 bv pos end)))
+          (cond
+           ((= next-pos end)
+            (copy bv (make-string (- end start)) start end))
+           ((= next-pos pos)
+            (error 'value-error "Invalid UTF-8 sequence at index: " pos))
+           (else
+            (loop next-pos)))))))
+
+(define* (string->utf8 str (start 0) (end #t))
+  ; start < end in this case
+  (define (string->utf8-sub str start end)
+    (let ((bv (string->byte-vector str))
+          (N (string-length str)))
+      (let loop ((pos 0) (cnt 0) (start-pos 0))
+        (let ((next-pos (bytevector-advance-u8 bv pos N)))
+          (cond
+           ((and (not (zero? start)) (zero? start-pos) (= cnt start))
+            (loop next-pos (+ cnt 1) pos))
+           ((and (integer? end) (= cnt end))
+            (copy bv (make-byte-vector (- pos start-pos)) start-pos pos))
+           ((and end (= next-pos N))
+            (copy bv (make-byte-vector (- N start-pos)) start-pos N))
+           ((= next-pos pos)
+            (error 'value-error "Invalid UTF-8 sequence at index: " pos))
+           (else
+            (loop next-pos (+ cnt 1) start-pos)))))))
+  
+  (when (not (string? str))
+    (error 'type-error "str must be string"))
+  (let ((N (u8-string-length str)))
+    (when (or (< start 0) (>= start N))
+        (error 'out-of-range
+               (string-append "start must >= 0 and < " (number->string N))))
+    (when (and (integer? end) (or (< end 0) (>= end (+ N 1))))
+          (error 'out-of-range
+                 (string-append "end must >= 0 and < " (number->string (+ N 1)))))         
+    (when (and (integer? end) (> start end))
+          (error 'out-of-range "start <= end failed" start end))
+    
+    (if (and (integer? end) (= start end))
+      (byte-vector)
+      (string->utf8-sub str start end))))
+
 (define (raise . args)
   (apply throw #t args))
 
@@ -217,6 +364,9 @@
       (close-output-port p)))
 
 (define (eof-object) #<eof>)
+
+; 0 clause BSD, from S7 repo r7rs.scm
+(define list-copy copy)
 
 (define (string-copy str . start_end)
   (cond ((null? start_end)
