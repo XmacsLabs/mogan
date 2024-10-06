@@ -20,9 +20,9 @@
 
 (menu-bind literate-menu
   (-> "First chunk"
-      ("Generic" (insert-new-chunk 'generic-chunk))
       ("Scheme" (insert-new-chunk 'scm-chunk))
       ("C++" (insert-new-chunk 'cpp-chunk))
+      ("Generic" (insert-new-chunk 'generic-chunk))
       ("Verbatim" (insert-new-chunk 'verbatim-chunk))
       ("Shell" (insert-new-chunk 'shell-chunk))
       ---
