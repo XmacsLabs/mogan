@@ -18,18 +18,16 @@
 (import (texmacs protocol)
         (liii list)
         (liii string)
-        (liii sys))
+        (liii sys)
+        (liii base))
 (export goldfish-welcome goldfish-repl is-sicp-mode?)
 (begin
 
-(define (is-sicp-mode?)
-  (and (>= (length (argv)) 3)
-       (string=? (last (argv)) "sicp")))
-
 (define (goldfish-welcome)
-  (if (is-sicp-mode?)
-    (flush-prompt "SICP] ")
-    (flush-prompt "> "))
+  (let1 mode (last (argv))
+    (if (== mode "default")
+        (flush-prompt "> ")
+        (flush-prompt (string-append (string-upcase mode) "] "))))
 
   (flush-verbatim
     (string-append

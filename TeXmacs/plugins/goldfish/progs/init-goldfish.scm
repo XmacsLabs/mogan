@@ -21,27 +21,20 @@
          (s (tmstring->string cork-s)))
     (string-append s "\n<EOF>\n")))
 
-(define (goldfish-launcher)
-  (string-append
-    (string-quote (url->system (find-binary-goldfish)))
-    " "
-    (string-quote
-      (string-append (url->system (get-texmacs-path))
-                     "/plugins/goldfish/goldfish/tm-goldfish.scm"))))
-
-(define (goldfish-launcher-sicp)
+(define (goldfish-launch mode)
   (string-append
     (string-quote (url->system (find-binary-goldfish)))
     " "
     (string-quote
       (string-append (url->system (get-texmacs-path))
                      "/plugins/goldfish/goldfish/tm-goldfish.scm"))
-    " "
-    "sicp"))
+    " -m "
+    mode))
 
 (plugin-configure goldfish
   (:require (has-binary-goldfish?))
-  (:launch ,(goldfish-launcher))
-  (:launch "sicp" ,(goldfish-launcher-sicp))
+  (:launch ,(goldfish-launch "default"))
+  (:launch "sicp" ,(goldfish-launch "sicp"))
+  (:launch "r7rs" ,(goldfish-launch "r7rs"))
   (:serializer ,goldfish-serialize)
   (:session "Goldfish Scheme"))

@@ -17,7 +17,5 @@
 (import (goldfish repl)
         (liii sys))
 
-(when (is-sicp-mode?)
-  (import (srfi sicp)))
 (goldfish-welcome)
 (goldfish-repl)
