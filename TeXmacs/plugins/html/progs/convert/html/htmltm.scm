@@ -461,7 +461,7 @@
   ;; Convert a shxml element to texmacs.
   ;; Return a list which is either null, or contains a single serial node.
   ;; All methods must use this return convention.
-  (sxml-dispatch (lambda (env t) (list (xmltm-text t)))
+  (sxml-dispatch (lambda (env t) (list (utf8->herk t)))
                  htmltm-pass env t))
 
 (define (cleanup-root env root)
