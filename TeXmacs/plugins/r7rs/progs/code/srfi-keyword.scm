@@ -63,8 +63,6 @@
     "string-pad-right" "string-trim" "string-trim-right" "string-trim-both"
     ; SRFI-13: String comparison
     "string-compare" "string=" "string<>"
-    ; SRFI-13: String Prefixes & Suffixes
-    "string-prefix?" "string-suffix?"
     ; SRFI-13: String searching
     "string-index" "string-index-right" "string-skip" "string-skip-right" "string-count"
     "string-contains"
@@ -78,8 +76,8 @@
 
 (tm-define (srfi-60-keywords)
   (list
-    "logand" "logior" "logxor" "lognot" "logand"
-     "logbit?" "ash"))
+    "bitwise-and" "bitwise-ior" "bitwise-xor" "bitwise-not"
+    "arithmetic-shift" "ash"))
 
 (tm-define (srfi-70-keywords)
   (list

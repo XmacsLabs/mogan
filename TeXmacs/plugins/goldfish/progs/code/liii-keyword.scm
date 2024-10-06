@@ -24,7 +24,11 @@
 
 (define (liii-list)
   (map symbol->string
-    '(list-view flatmap list-null? list-not-null? not-null-list?)))
+    '(list-view flatmap flatten list-null? list-not-null? not-null-list?)))
+
+(define (liii-string)
+  (map symbol->string
+    '(string-starts? string-ends? string-remove-prefix string-remove-suffix)))
 
 (define (liii-os)
   (map symbol->string
@@ -50,7 +54,8 @@
 
 
 (tm-define (liii-keywords)
-  `(,@(liii-base) ,@(liii-check) ,@(liii-list) ,@(liii-os) ,@(liii-queue)
+  `(,@(liii-base) ,@(liii-check) ,@(liii-list)
+    ,@(liii-string) ,@(liii-os) ,@(liii-queue)
     ,@(liii-stack) ,@(liii-sys) ,@(liii-uuid)))
 
 (tm-define (liii-keywords-define)
