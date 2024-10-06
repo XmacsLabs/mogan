@@ -75,26 +75,26 @@ struct font_rep : rep<font> {
   SI yshift;       // vertical script shift inside fractions
 
   // only for opentype fonts
-  SI upper_limit_gap_min;
-  SI upper_limit_baseline_rise_min;
-  SI lower_limit_gap_min;
-  SI lower_limit_baseline_drop_min;
-  SI frac_rule_thickness;
-  SI frac_num_shift_up;
-  SI frac_num_disp_shift_up;
-  SI frac_num_gap_min;
-  SI frac_num_disp_gap_min;
-  SI frac_denom_shift_down;
-  SI frac_denom_disp_shift_down;
-  SI frac_denom_gap_min;
-  SI frac_denom_disp_gap_min;
-  SI sqrt_ver_gap;
-  SI sqrt_ver_disp_gap;
-  SI sqrt_rule_thickness;
-  SI sqrt_extra_ascender;
+  SI  upper_limit_gap_min;
+  SI  upper_limit_baseline_rise_min;
+  SI  lower_limit_gap_min;
+  SI  lower_limit_baseline_drop_min;
+  SI  frac_rule_thickness;
+  SI  frac_num_shift_up;
+  SI  frac_num_disp_shift_up;
+  SI  frac_num_gap_min;
+  SI  frac_num_disp_gap_min;
+  SI  frac_denom_shift_down;
+  SI  frac_denom_disp_shift_down;
+  SI  frac_denom_gap_min;
+  SI  frac_denom_disp_gap_min;
+  SI  sqrt_ver_gap;
+  SI  sqrt_ver_disp_gap;
+  SI  sqrt_rule_thickness;
+  SI  sqrt_extra_ascender;
   int sqrt_degree_rise_percent;
-  SI sqrt_kern_before_degree;
-  SI sqrt_kern_after_degree;
+  SI  sqrt_kern_before_degree;
+  SI  sqrt_kern_after_degree;
 
   SI wpt;   // width of one point in font
   SI hpt;   // height of one point in font (usually wpt)
