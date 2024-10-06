@@ -55,9 +55,6 @@ jobs:
           target: 'desktop'
           cache: 'true'
           
-      - name: Install pandoc
-        run: brew install pandoc
-
       - name: set XMAKE_GLOBALDIR
         run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
 
