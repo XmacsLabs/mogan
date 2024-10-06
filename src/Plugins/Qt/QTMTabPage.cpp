@@ -82,35 +82,35 @@ QTMTabPage::resizeEvent (QResizeEvent* e) {
   m_closeBtn->setGeometry (x, y, w, h);
 }
 
-void
-QTMTabPage::mousePressEvent (QMouseEvent* e) {
-  if (e->button () == Qt::LeftButton) {
-    m_dragStartPos= e->pos ();
-  }
-  QToolButton::mousePressEvent (e);
-}
-
-void
-QTMTabPage::mouseMoveEvent (QMouseEvent* e) {
-  if (!(e->buttons () & Qt::LeftButton)) return QToolButton::mouseMoveEvent (e);
-  if ((e->pos () - m_dragStartPos).manhattanLength () < 15) {
-    // avoid treating small movement(more like a click) as dragging
-    return QToolButton::mouseMoveEvent (e);
-  }
-  e->accept ();
-
-  QPixmap pixmap (size ());
-  render (&pixmap);
-
-  QDrag* drag= new QDrag (this);
-  // align pixmap to the topLeft of the cursor
-  drag->setHotSpot (QPoint (0, 0));
-  drag->setMimeData (new QMimeData ()); // Qt requires
-  drag->setPixmap (pixmap);
-  drag->exec (Qt::MoveAction);
-
-  setDown (false); // to avoid keeping the pressed state
-}
+// void
+// QTMTabPage::mousePressEvent (QMouseEvent* e) {
+//   if (e->button () == Qt::LeftButton) {
+//     m_dragStartPos= e->pos ();
+//   }
+//   QToolButton::mousePressEvent (e);
+// }
+//
+// void
+// QTMTabPage::mouseMoveEvent (QMouseEvent* e) {
+//   if (!(e->buttons () & Qt::LeftButton)) return QToolButton::mouseMoveEvent
+//   (e); if ((e->pos () - m_dragStartPos).manhattanLength () < 15) {
+//     // avoid treating small movement(more like a click) as dragging
+//     return QToolButton::mouseMoveEvent (e);
+//   }
+//   e->accept ();
+//
+//   QPixmap pixmap (size ());
+//   render (&pixmap);
+//
+//   QDrag* drag= new QDrag (this);
+//   // align pixmap to the topLeft of the cursor
+//   drag->setHotSpot (QPoint (0, 0));
+//   drag->setMimeData (new QMimeData ()); // Qt requires
+//   drag->setPixmap (pixmap);
+//   drag->exec (Qt::MoveAction);
+//
+//   setDown (false); // to avoid keeping the pressed state
+// }
 
 void
 QTMTabPage::setupStyle () {
