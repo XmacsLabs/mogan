@@ -121,8 +121,15 @@
       ("Scheme" (make 'scm-code))
       ("Shell" (make 'shell-code)))
   ---
+  (-> "Scala"
+      (when (style-has? "scala")
+        ("Inline" (make 'scala))
+        ("Block" (make 'scala-code)))
+      (when (not (style-has? "scala"))
+        ("Activate" (add-style-package "scala"))))
   (-> "Python"
       (when (style-has? "python")
         ("Inline" (make 'python))
         ("Block" (make 'python-code)))
-      ("Activate" (add-style-package "python"))))
+      (when (not (style-has? "python"))
+        ("Activate" (add-style-package "python")))))

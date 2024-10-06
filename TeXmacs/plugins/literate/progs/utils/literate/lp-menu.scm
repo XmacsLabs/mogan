@@ -26,8 +26,10 @@
       ("Verbatim" (insert-new-chunk 'verbatim-chunk))
       ("Shell" (insert-new-chunk 'shell-chunk))
       ---
-      ("Scala" (insert-new-chunk 'scala-chunk))
-      ("Java" (insert-new-chunk 'java-chunk))
+      (when (style-has? "scala")
+        ("Scala" (insert-new-chunk 'scala-chunk)))
+      (when (style-has? "java")
+        ("Java" (insert-new-chunk 'java-chunk)))
       (when (style-has? "python")
         ("Python" (insert-new-chunk 'python-chunk))))
   (with all-chunks (get-all-chunks)
