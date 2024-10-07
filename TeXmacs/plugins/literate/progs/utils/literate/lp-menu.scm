@@ -26,6 +26,8 @@
       ("Verbatim" (insert-new-chunk 'verbatim-chunk))
       ("Shell" (insert-new-chunk 'shell-chunk))
       ---
+      (when (style-has? "goldfish-lang")
+        ("Goldfish" (insert-new-chunk 'goldfish-chunk)))
       (when (style-has? "scala")
         ("Scala" (insert-new-chunk 'scala-chunk)))
       (when (style-has? "java")
@@ -74,4 +76,4 @@
   (former)
   (if (style-has? "literate-dtd")
       (=> "Literate"
-	  (link literate-menu))))
+          (link literate-menu))))

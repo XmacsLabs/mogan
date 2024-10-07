@@ -121,6 +121,12 @@
       ("Scheme" (make 'scm-code))
       ("Shell" (make 'shell-code)))
   ---
+  (-> "Goldfish"
+      (when (style-has? "goldfish-lang")
+        ("Inline" (make 'goldfish-lang))
+        ("Block" (make 'goldfish-code)))
+      (when (not (style-has? "goldfish-lang"))
+        ("Activate" (add-style-package "goldfish"))))
   (-> "Scala"
       (when (style-has? "scala")
         ("Inline" (make 'scala))
