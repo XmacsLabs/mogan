@@ -808,6 +808,7 @@
 ("history" "历史")
 ("home" "主页")
 ("homepage" "主页")
+("homoglyphs" "同形异义符")
 ("horizontal alignment" "水平对齐")
 ("horizontal cell alignment" "")
 ("horizontal ink separation" "")
