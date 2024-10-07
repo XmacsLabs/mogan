@@ -866,9 +866,9 @@
       ;; TODO: please implement nice icon tabs first before
       ;; adding new tabs in the preferences widget
       ;; The tabs currently take too much horizontal space
-      ;;(icon-tab "tm_prefs_other.xpm" (text "Mathematics") ; TODO: icon
-      ;;  (centered
-      ;;    (dynamic (math-preferences-widget))))
+      (icon-tab "tm_prefs_other.xpm" (text "Mathematics")
+        (centered
+          (dynamic (math-preferences-widget))))
       (icon-tab "tm_prefs_convert.xpm" (text "Convert")
         (dynamic (conversion-preferences-widget)))
       (assuming (== (get-preference "experimental encryption") "on")
