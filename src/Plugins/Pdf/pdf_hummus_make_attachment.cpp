@@ -20,7 +20,6 @@
 #include "PDFWriter/Trace.h"
 #include "file.hpp"
 #include "tm_debug.hpp"
-#include "tmfs_url.hpp"
 using namespace PDFHummus;
 using namespace IOBasicTypes;
 
@@ -72,10 +71,10 @@ pdf_hummus_make_attachments (url pdf_path, array<url> attachment_paths,
     if (DEBUG_CONVERT) debug_convert << "N (attachment_paths) is 0" << LF;
     return false;
   }
-  for (url path : attachment_paths) {
-    if (!is_regular (path) && !is_rooted_web (path) && !is_rooted_tmfs (path)) {
+  for (int i= 0; i < N (attachment_paths); i++) {
+    if (!is_regular (attachment_paths[i])) {
       if (DEBUG_CONVERT)
-        debug_convert << path << " is not regular or web or tmfs" << LF;
+        debug_convert << attachment_paths[i] << " is not regular" << LF;
       return false;
     }
   }
