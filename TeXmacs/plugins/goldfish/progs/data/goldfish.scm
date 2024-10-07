@@ -18,7 +18,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-format goldfish
-  (:name "R7RS source code")
+  (:name "Goldfish source code")
   (:suffix "scm" ".sld" ".ss"))
 
 (define (texmacs->goldfish x . opts)
