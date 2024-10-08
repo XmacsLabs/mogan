@@ -131,6 +131,14 @@
        (load-buffer lan_doc)
        (load-buffer en_doc))))
 
+(tm-define (load-local-doc path)
+  (let* ((lan (string-take (language-to-locale (get-output-language)) 2))
+         (lan_doc (string-append (url->system (get-texmacs-path)) "/doc/" path "." lan ".tmu"))
+         (en_doc (string-append (url->system (get-texmacs-path)) "/doc/" path ".en.tmu")))
+   (if (url-exists? lan_doc)
+       (load-buffer lan_doc)
+       (load-buffer en_doc))))
+
 (tm-define (load-local-plugin-doc name)
   (let* ((local_plugin_path (system->url "$TEXMACS_HOME_PATH"))
          (plugin_path (system->url "$TEXMACS_PATH"))
