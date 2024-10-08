@@ -1,0 +1,55 @@
+<TMU|<tuple|1.0.4|1.2.9.3-rc2>>
+
+<style|<tuple|tmdoc|reduced-margins>>
+
+<\body>
+  <tmdoc-title|Planet>
+
+  Planet is a place for the community to share their Mogan documents.
+
+  <with|framed-color|pastel magenta|ornament-border|0ln|ornament-color|pastel yellow|<\ornamented>
+    You are using Mogan Research <strong|v<Xmacs-version>>, and the latest stable release is <strong|v<include|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/latest_version.tm>>, you can download the latest stable release from <slink|https://mogan.app>.
+  </ornamented>>
+
+  <section*|Visit Planet>
+
+  Click the following links and visit the planet directly in Mogan.
+
+  <\description>
+    <item*|Official><slink|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/index.en.tmu>
+
+    <item*|Mirrors>
+
+    <\itemize>
+      <item><slink|https://github.com/XmacsLabs/planet/raw/refs/heads/main/index.en.tmu>
+    </itemize>
+  </description>
+
+  The site https://planet.mogan.app will be available later for users to visit the planet via web browsers.
+
+  <section*|Share your docs with the Planet>
+
+  All documents in Planet could be found in the Git repository, we are receiving pull requests from Mogan users at Github and Gitee:
+
+  <\itemize>
+    <item><slink|https://gitee.com/XmacsLabs/planet>
+
+    <item><slink|https://github.com/XmacsLabs/planet>
+  </itemize>
+
+  Just clone the git repository, and you can visit the planet resources without network access (eg. in a spaceship :).
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-screen-margin|true>
+  </collection>
+</initial>
