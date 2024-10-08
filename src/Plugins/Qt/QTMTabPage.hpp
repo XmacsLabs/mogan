@@ -70,7 +70,7 @@ In order to:
  */
 class QTMTabPageContainer : public QWidget {
   QList<QTMTabPage*> m_tabPageList;
-  int                m_rowHeight  = 0;
+  int                m_rowHeight       = 0;
   int                m_draggingTabIndex= -1;
   QFrame*            m_indicator;
 
