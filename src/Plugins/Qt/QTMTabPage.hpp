@@ -69,7 +69,6 @@ In order to:
 2. Support drag-and-drop to sort tab page
  */
 class QTMTabPageContainer : public QWidget {
-  QMutex             m_updateMutex;
   QList<QTMTabPage*> m_tabPageList;
   int                m_rowHeight  = 0;
   int                m_draggingTabIndex= -1;

@@ -170,16 +170,9 @@ QTMTabPageContainer::~QTMTabPageContainer () { removeAllTabPages (); }
 
 void
 QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
-  /* why tryLock()? see dragEnterEvent(), but you absolutely can NOT call the
-   * lock() method here, which will cause DEADLOCK! Because it's locked
-   * in dragEnterEvent() (running on MAIN thread), so you can't call lock()
-   * again on MAIN thread before it's unlocked. */
-  if (!m_updateMutex.tryLock ()) return;
   removeAllTabPages ();    // remove  old tabs
   extractTabPages (p_src); // extract new tabs
   arrangeTabPages ();
-
-  m_updateMutex.unlock ();
 }
 
 void
@@ -281,12 +274,6 @@ QTMTabPageContainer::dragEnterEvent (QDragEnterEvent* e) {
     }
   }
   if (index != -1) {
-    /* Tab pages are updated periodically by scheme(?), even if there are no
-     * changes. So sometimes(not always) when we dragging a tab page, all the
-     * existing tab pages have been replaced. As a result, we're holding an
-     * invalid tab page pointer which causes a "segmentation fault" error.
-     * To avoid this, we need to use a mutex. */
-    m_updateMutex.lock (); // <-
     m_draggingTabIndex= index;
     e->acceptProposedAction ();
   }
@@ -324,7 +311,6 @@ QTMTabPageContainer::dropEvent (QDropEvent* e) {
     arrangeTabPages ();
 
     object url (draggingTab->m_bufferUrl);
-    m_updateMutex.unlock ();
     call ("move-buffer-to-index", url, object (newIndex));
   }
   m_indicator->hide ();
@@ -333,7 +319,6 @@ QTMTabPageContainer::dropEvent (QDropEvent* e) {
 void
 QTMTabPageContainer::dragLeaveEvent (QDragLeaveEvent* e) {
   e->accept ();
-  m_updateMutex.unlock ();
   m_indicator->hide ();
 }
 
