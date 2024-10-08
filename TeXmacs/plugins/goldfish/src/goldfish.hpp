@@ -14,6 +14,7 @@
 // under the License.
 //
 
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <s7.h>
@@ -37,7 +38,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.10.5"
+#define GOLDFISH_VERSION "17.10.7"
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
 static std::vector<std::string> command_args= std::vector<std::string> ();
@@ -457,9 +458,12 @@ static void
 display_help () {
   cout << "Goldfish Scheme " << GOLDFISH_VERSION << " by LiiiLabs" << endl;
   cout << "--version\t"
-       << "display version" << endl;
+       << "Display version" << endl;
+  cout << "-m default\t"
+       << "Allowed mode: default, liii, sicp, r7rs, s7" << endl;
   cout << "-e       \t"
-       << "-e '(+ 1 2)'" << endl;
+       << "Load the scheme code on the command line" << endl
+       << "\t\teg. -e '(begin (display `Hello) (+ 1 2))'" << endl;
   cout << "-l FILE  \t"
        << "Load the scheme code on path" << endl;
   cout << "FILE     \t"
@@ -534,11 +538,18 @@ repl_for_community_edition (int argc, char** argv) {
     command_args.push_back (all_args[i]);
   }
 
+  // zero args
+  vector<string> args (argv + 1, argv + argc);
+  if (args.size () == 0) {
+    display_help ();
+    exit (0);
+  }
+
   // Init the underlying S7 Scheme and add the load_path
   s7_scheme* sc;
   sc= s7_init ();
-  s7_load (sc, gf_boot);
   s7_add_to_load_path (sc, gf_lib);
+
   const char* errmsg= NULL;
   s7_pointer  old_port=
       s7_set_current_error_port (sc, s7_open_output_string (sc));
@@ -551,12 +562,47 @@ repl_for_community_edition (int argc, char** argv) {
   // Glues
   glue_for_community_edition (sc);
 
-  // Command options
-  vector<string> args (argv + 1, argv + argc);
-  if (args.size () == 0) {
-    display_help ();
+  // -m: Load the standard library by mode
+  string mode_flag= "-m";
+  string mode     = "default";
+  int    args_N   = args.size ();
+  int    i;
+  for (i= 0; i < args_N; i++) {
+    if (args[i] == mode_flag) {
+      break;
+    }
   }
-  else if (args.size () == 1 && args[0].size () > 0 && args[0][0] == '-') {
+  if (i < args_N && i + 1 >= args_N) {
+    cerr << "No mode specified after -m" << endl;
+    exit (-1);
+  }
+  if (i < args_N) {
+    mode= args[i + 1];
+    args.erase (args.begin () + i);
+    args.erase (args.begin () + i);
+  }
+
+  // only when it is not s7 mode, we load `boot.scm`
+  if (mode != "s7") {
+    s7_load (sc, gf_boot);
+  }
+  // import the preload standard libraries
+  if (mode == "default" || mode == "liii") {
+    s7_eval_c_string (sc, "(import (liii base) (liii error))");
+  }
+  else if (mode == "sicp") {
+    s7_eval_c_string (sc, "(import (srfi sicp))");
+  }
+  else if (mode == "r7rs") {
+    s7_eval_c_string (sc, "(import (scheme base))");
+  }
+  else {
+    cerr << "No such mode: " << mode << endl;
+    exit (-1);
+  }
+
+  // Command options
+  if (args.size () == 1 && args[0].size () > 0 && args[0][0] == '-') {
     if (args[0] == "--version") {
       display_version ();
     }

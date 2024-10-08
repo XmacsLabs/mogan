@@ -15,7 +15,8 @@
 ;
 
 (define-library (liii vector)
-
+(import (srfi srfi-133)
+        (liii base))
 (export
   ; S7 Scheme built-in
   make-vector vector vector-length vector-ref vector-set! vector->list list->vector
@@ -28,8 +29,6 @@
   vector-any vector-every vector-copy vector-copy!
   vector-index vector-index-right vector-partition
   vector-swap!)
-(import (srfi srfi-133)
-        (scheme base))
 (begin
 
 ) ; end of begin

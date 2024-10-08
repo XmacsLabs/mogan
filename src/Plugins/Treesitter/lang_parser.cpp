@@ -9,6 +9,7 @@
  ******************************************************************************/
 
 #include "lang_parser.hpp"
+#include "boxes.hpp"
 #include "converter.hpp"
 #include "list.hpp"
 #include "observers.hpp"
@@ -61,10 +62,16 @@ lang_parser::add_brackets_pair (string forward, string backward) {
 
 bool
 lang_parser::check_line_changed (tree t) {
+  int line_length= N (t->label);
+  if (line_length != current_line_length) {
+    current_line_length= line_length;
+    return true;
+  }
   // hash(t) does not take IP changes into account
-  int line_hash= hash (obtain_ip (t)) + hash (t->label) / 2;
-  // cout << "t->label: " << t->label << " obtain_ip (t): " << obtain_ip (t)
-  // <<"\n";
+  int line_hash= hash (obtain_ip (t)) ^ hash (t->label);
+  // cout << "t: [" << t << "] line_hash: " << line_hash << " hash (t->label): "
+  // << hash (t->label) << " current_line_hash: " << current_line_hash <<"\n";
+
   if (line_hash != current_line_hash) {
     current_line_hash= line_hash;
     return true;
@@ -86,17 +93,18 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
     father_ip = father_ip->next;
     tree_index= reverse (last_ip)[N (father_ip)];
     if (tree_index < 0) {
-      // cout << "tree_index < 0: " << tree_index << LF;
-      tree_index= 0;
+      tree_index= reverse (descend_decode (last_ip, 0))[N (father_ip)];
     }
     last_ip= father_ip;
     root   = tree (subtree (the_et, reverse (father_ip)));
     // cout << "Father: " << father_ip << " Root:" << root << LF;
     if (!is_atomic (root)) {
-      tree env_child= the_drd->get_env_child (root, tree_index, MODE, "");
-      // tree prog_lan=
-      // the_drd->get_env_child (root, tree_index, "prog-language", "");
-      if (env_child == "prog") {
+      // Fix some root node cannot find
+      tree env_child_mode= the_drd->get_env_child (root, tree_index, MODE, "");
+
+      tree env_child_pl=
+          the_drd->get_env_child (root, tree_index, moebius::PROG_LANGUAGE, "");
+      if (env_child_mode == "prog" || N (env_child_pl) > 0) {
         root= root[tree_index];
         // cout << "Tree Index: " << tree_index << " Root: " << root << LF;
         break;
@@ -105,10 +113,16 @@ lang_parser::get_root_node (tree t, int& start_index, int& hash_code) {
   }
   if (N (father_ip) == 0) {
     // cout << "Can not meet Prog " << t << " IP:" << obtain_ip(t) << LF;
-    root= root[tree_index]; // Set Root To Self as Fallback
+    root= root[tree_index];
   }
   hash_code= hash (root);
   get_data_from_root (root, t, start_index);
+
+  // Add this to avoid wrong hash code
+  if (N (change_line_pos) > 0) {
+    hash_code^= change_line_pos[N (change_line_pos) - 1];
+  }
+
   return root;
 }
 
@@ -189,6 +203,7 @@ lang_parser::get_code_from_root (tree root, string& code, string_u8& code_u8) {
 
 bool
 lang_parser::check_to_compile (int hash_code) {
+  // cout << "current " << current_code_hash << " hash " << hash_code << LF;
   if (hash_code != current_code_hash) {
     current_code_hash= hash_code;
     return true;
@@ -314,7 +329,7 @@ lang_parser::add_token (TSSymbol token_type, string token_literal,
   int change_line_high= -1;
   is_change_line_between (start_pos, end_pos, change_line_low,
                           change_line_high);
-  if (change_line_high > 0) {
+  if (change_line_high >= 0) {
     int start_1= start_pos;
     int end_1  = change_line_low;
     int start_2= change_line_high + 1;

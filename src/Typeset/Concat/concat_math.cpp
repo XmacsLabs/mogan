@@ -393,7 +393,7 @@ concater_rep::typeset_frac (tree t, path ip) {
   if (disp) env->local_end (MATH_DISPLAY, old);
   else env->local_end_script (old);
   if (num->w () <= env->frac_max && den->w () <= env->frac_max)
-    print (frac_box (ip, num, den, env->fn, sfn, env->pen));
+    print (frac_box (ip, num, den, env->fn, sfn, env->pen, disp));
   else typeset_wide_frac (t, ip);
 }
 

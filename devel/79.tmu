@@ -1,0 +1,21 @@
+<TMU|<tuple|1.0.3|1.2.9.2>>
+
+<style|<tuple|tmdoc|devel|british>>
+
+<\body>
+  <tmdoc-title|Performance Tuning>
+
+  <section|Tasks>
+
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Perf>|<cell|79_5>|<cell|<value|da>>|<cell|Literate: performance improvement>|<cell|>>|<row|<cell|Perf>|<cell|79_4>|<cell|<value|da>>|<cell|Minor perf improvements on font>|<cell|>>|<row|<cell|Perf>|<cell|79_3>|<cell|<value|da>>|<cell|Bench print for the typesetting of a buffer (\<gtr\> 1s)>|<cell|>>|<row|<cell|Perf>|<cell|79_2>|<cell|<value|da>>|<cell|Enable IM preedit on Linux>|<cell|>>|<row|<cell|Perf>|<cell|79_1>|<cell|<value|da>>|<cell|Properly caching to speed up search-options and search-parameters>|<cell|>>>>>
+
+  <tmdoc-copyright|2024|Darcy>
+
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+  </collection>
+</initial>

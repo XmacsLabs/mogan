@@ -18,9 +18,9 @@
         (convert tools tmlength)
         (convert tools tmtable)
         (convert tools old-tmtable)
-        (convert tools sxml)
-        (convert tools sxhtml)
-        (convert tools css)
+        (convert data sxml)
+        (convert data sxhtml)
+        (convert data css)
         (convert html htmlout)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -209,9 +209,13 @@
          (title (tmhtml-find-title doc))
          (css `(h:style (@ (type "text/css")) ,(tmhtml-css-header)))
          (xhead '())
-         (body (tmhtml doc)))
-    (set! tmhtml-site-version
-          (with-extract doc "html-site-version"))
+         ;; Use a single string for the JavaScript code block
+         (js-inline `((h:script (@ (type "text/javascript"))
+                                "(function () {\"use strict\"; window.addEventListener(\"load\", function () { var box, div, link, namespaceURI; namespaceURI = 'http://www.w3.org/1998/Math/MathML'; if (document.body.getElementsByTagNameNS(namespaceURI, 'math')[0]) { document.body.insertAdjacentHTML('afterbegin', '<div style=\\\"border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px;\\\"><math xmlns=\\\"' + namespaceURI + '\\\"><mspace height=\\\"23px\\\" width=\\\"77px\\\"></mspace></math></div>'); div = document.body.firstChild; box = div.firstChild.firstChild.getBoundingClientRect(); document.body.removeChild(div); if (Math.abs(box.height - 23) > 1 || Math.abs(box.width - 77) > 1) { link = document.createElement('link'); link.href = 'https://fred-wang.github.io/mathml.css/mathml.css'; link.rel = 'stylesheet'; document.head.appendChild(link); } } }); })();")))
+         (scripts `((h:script (@ (type "text/javascript")))
+         (h:script "document.querySelectorAll('style').forEach(style => style.remove());")))
+         (body (append scripts (tmhtml doc))))
+    
     (set! title
           (cond ((with-extract doc "html-title")
                  (with-extract doc "html-title"))
@@ -223,63 +227,24 @@
                  `(concat ,(tmhtml-force-string title)
                           " (FSF GNU project)"))
                 (else (tmhtml-force-string title))))
+
     (set! css
           (cond ((with-extract doc "html-css")
                  `(h:link (@ (rel "stylesheet")
                              (href ,(with-extract doc "html-css"))
                              (type "text/css"))))
                 (else css)))
-    (if (with-extract doc "html-head-javascript-src")
-        (let* ((src (with-extract doc "html-head-javascript-src"))
-               (script `(h:script (@ (language "javascript")
-                                     (src ,src)))))
-          (set! xhead (append xhead (list script)))))
-    (if (with-extract doc "html-head-javascript")
-        (let* ((code (with-extract doc "html-head-javascript"))
-               (script `(h:script (@ (language "javascript")) ,code)))
-          (set! xhead (append xhead (list script)))))
-    (if (with-extract doc "html-head-favicon")
-        (let* ((code (with-extract doc "html-head-favicon"))
-               (icon `(h:link (@ (rel "icon") (href ,code)))))
-          (set! xhead (append xhead (list icon)))))
-    (if (and (not (func? css 'h:link))
-             (string-ends? (get-preference "texmacs->html:css-stylesheet")
-                           ".css"))
-        (with src (get-preference "texmacs->html:css-stylesheet")
-          (with link-css `(h:link (@ (rel "stylesheet")
-                                     (href ,src)
-                                     (type "text/css")))
-            (set! xhead (append xhead (list link-css))))))
-    (if (tm-func? (with-extract* doc "html-extra-css") 'tuple)
-        (for (src (cdr (with-extract* doc "html-extra-css")))
-          (with link-css `(h:link (@ (rel "stylesheet")
-                                     (href ,src)
-                                     (type "text/css")))
-            (set! xhead (append xhead (list link-css))))))
-    (if (tm-func? (with-extract* doc "html-extra-javascript-src") 'tuple)
-        (for (src (cdr (with-extract* doc "html-extra-javascript-src")))
-          (with script `(h:script (@ (language "javascript")
-                                     (src ,src)
-                                     (defer "<implicit>")))
-            (set! xhead (append xhead (list script))))))
-    (if (tm-func? (with-extract* doc "html-extra-javascript") 'tuple)
-        (for (code (cdr (with-extract* doc "html-extra-javascript")))
-          (with script `(h:script (@ (language "javascript")
-                                     (defer "<implicit>")) ,code)
-            (set! xhead (append xhead (list script))))))
+
+    ;; Add your JS inline to the <head> section
+    (set! xhead (append xhead js-inline))
+
     (if tmhtml-mathjax?
         (let* ((site "https://cdn.jsdelivr.net/")
                (loc "npm/mathjax@3/es5/tex-mml-chtml.js")
                (src (string-append site loc))
                (script `(h:script (@ (language "javascript") (src ,src)))))
           (set! xhead (append xhead (list script)))))
-    (if (or (in? "tmdoc" styles)
-            (in? "tmweb" styles) (in? "tmweb2" styles)
-            (in? "mmxdoc" styles) (in? "magix-web" styles)
-            (in? "max-web" styles) (in? "node-web" styles))
-        (set! body (tmhtml-tmdoc-post body)))
-    (if tmhtml-css?
-        (set! body (tmhtml-css-post body)))
+
     `(h:html
       (h:head
        (h:title ,@(tmhtml title))
@@ -939,16 +904,28 @@
       (string->number str)))
 
 (define (tmhtml-with-font-size val arg)
-  (ahash-with tmhtml-env :mag val
-    (let* ((x (* (font-size-string->number val) 100))
-           (c (string-append "font-size: " (number->string x) "%"))
-           (s (cond ((< x 1) "-4") ((< x 55) "-4") ((< x 65) "-3")
-                    ((< x 75) "-2") ((< x 95) "-1") ((< x 115) "0")
-                    ((< x 135) "+1") ((< x 155) "+2") ((< x 185) "+3")
-                    ((< x 225) "+4") ((< x 500) "+5") (else "+5"))))
-      (cond (tmhtml-css? `((h:font (@ (style ,c)) ,@(tmhtml arg))))
-            (s `((h:font (@ (size ,s)) ,@(tmhtml arg))))
-            (else (tmhtml arg))))))
+  ; (display "called with val: ") (display val) (newline)
+  ; (display "called with arg: ") (display arg) (newline)
+  (let* (
+         ;; Attempt to retrieve the base font size from the environment
+         (font-base-size-str (ahash-ref tmhtml-env :font-base-size))
+         ;; Use default value 10 if not defined
+         (font-base-size (if font-base-size-str
+                             (font-size-string->number font-base-size-str)
+                             10))
+         ;; Convert the input target font size to a number
+         (target-font-size (font-size-string->number val))
+         ;; Prevent division by zero and ensure the result is a floating-point number
+         (computed-size (if (> font-base-size 0)
+                            (* (/ (exact->inexact target-font-size) (exact->inexact font-base-size)) 100)
+                            100))
+         ;; Generate font-size style string
+         (font-size-style (string-append "font-size: " (number->string computed-size) "%;"))
+        )
+    ; (display "Computed font size percentage: ") (display computed-size) (display "%") (newline)
+    ; (display "Generated font-size style: ") (display font-size-style) (newline)
+    ;; Recursively process arg and apply the style
+    `((h:span (@ (style ,font-size-style)) ,@(tmhtml arg)))))
 
 (define (tmhtml-with-block style arg)
   (with r (tmhtml (blockify arg))
@@ -985,12 +962,20 @@
 
 (define (tmhtml-with-one var val arg)
   (cond ((logic-ref tmhtml-with-cmd% (list var val)) =>
-         (lambda (w) (list (append w (tmhtml arg)))))
+         (lambda (w)
+          ;  (display (string-append "tmhtml-with-one: match (var, val) = (" var ", " val ")\n"))
+           (list (append w (tmhtml arg)))))
         ((logic-ref tmhtml-with-cmd% (list var)) =>
-         (lambda (x) (ahash-with tmhtml-env x val (tmhtml arg))))
+         (lambda (x)
+          ;  (display (string-append "tmhtml-with-one: match var = " var "\n"))
+           (ahash-with tmhtml-env x val (tmhtml arg))))
         ((logic-ref tmhtml-with-cmd% var) =>
-         (lambda (h) (h val arg)))
-        (else (tmhtml arg))))
+         (lambda (h)
+          ;  (display (string-append "tmhtml-with-one: match with var only, var = " var ", val = " val "\n"))
+           (h val arg)))
+        (else
+        ;  (display "tmhtml-with-one: no match found, processing arg directly\n")
+         (tmhtml arg))))
 
 (define (tmhtml-force-string x)
   (cond ((string? x) x)
@@ -1014,6 +999,7 @@
          (let* ((var (tmhtml-force-string (car l)))
                 (val (tmhtml-force-string (cadr l)))
                 (next (cddr l)))
+          ;  (display (string-append "tmhtml-with: var = " var ", val = " val "\n"))
            (tmhtml-with-one var val `(with ,@next))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1096,8 +1082,7 @@
            (string-append (tmhtml-suffix (substring s 0 sep))
                           (string-drop s sep)))
           ((string-ends? s ".tm")
-           (string-append (string-drop-right s 3)
-                          (if tmhtml-mathml? ".xhtml" ".html")))
+           (string-append (string-drop-right s 3) ".html"))
           ((string-ends? s ".texmacs")
            (string-append (string-drop-right s 8) ".tm"))
           (else s))))
@@ -2097,7 +2082,7 @@
   ("mode" ,tmhtml-with-mode)
   ("math-display" ,tmhtml-with-math-display)
   ("color" ,tmhtml-with-color)
-  ("font-size" ,tmhtml-with-font-size)
+  ("font-base-size" ,tmhtml-with-font-size)
   ("par-left" ,tmhtml-with-par-left)
   ("par-right" ,tmhtml-with-par-right)
   ("par-first" ,tmhtml-with-par-first)

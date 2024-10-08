@@ -1021,3 +1021,12 @@
 (tm-define (focus-label t)
   (:require (or (footnote-context? t) (figure-context? t)))
   (focus-list-search-label (tree-children t)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Decorated tag
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (customizable-parameters t)
+  (:require (tree-is? t 'marked))
+  (list (list "marked-color" "Color")))

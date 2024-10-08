@@ -1,13 +1,13 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.3|1.2.9.2>>
 
 <style|<tuple|tmdoc|chinese|devel>>
 
 <\body>
-  <tmdoc-title|Fixing style corruption>
+  <tmdoc-title|Styles>
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Bug>|<cell|<dlink|63_1>>|<cell|Joris>|<cell|Fix corruped definition of toc-5>>|<row|<cell|Feature>|<cell|<dlink|63_2>>|<cell|Zhengfei Hu>|<cell|Merge contiguous indices for sorted bib items>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Feature>|<cell|63_3>|<cell|v1.2.9.2>|<cell|<value|da>>|<cell|Add the color button for the marked tag>>|<row|<cell|Bug>|<cell|<dlink|63_1>>|<cell|>|<cell|Joris>|<cell|Fix corruped definition of toc-5>>|<row|<cell|Feature>|<cell|<dlink|63_2>>|<cell|>|<cell|Zhengfei Hu>|<cell|Merge contiguous indices for sorted bib items>>>>>
 
   <tmdoc-copyright|2023|Jingkaimori>
 

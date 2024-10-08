@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.3|1.2.9-rc6>>
+<TMU|<tuple|1.0.3|1.2.9.2>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -10,7 +10,17 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|23|28|2|2|cell-background|pastel green>|<cwith|26|26|2|2|cell-background|>|<cwith|29|34|2|2|cell-background|pastel green>|<cwith|22|22|2|2|cell-background|pastel green>|<cwith|21|21|2|2|cell-background|pastel green>|<cwith|20|20|2|2|cell-background|pastel green>|<cwith|10|19|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|24|29|2|2|cell-background|pastel green>|<cwith|27|27|2|2|cell-background|>|<cwith|30|35|2|2|cell-background|pastel green>|<cwith|23|23|2|2|cell-background|pastel green>|<cwith|22|22|2|2|cell-background|pastel green>|<cwith|21|21|2|2|cell-background|pastel green>|<cwith|11|20|2|2|cell-background|pastel green>|<table|<row|<\cell>
+      Perf
+    </cell>|<\cell>
+      11_35
+    </cell>|<\cell>
+      v1.2.9.2
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Performance tuning on font_database_styles
+    </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
       11_34

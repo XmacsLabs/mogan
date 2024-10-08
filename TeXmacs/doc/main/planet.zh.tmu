@@ -1,0 +1,47 @@
+<TMU|<tuple|1.0.4|1.2.9.3-rc2>>
+
+<style|<tuple|tmdoc|reduced-margins|chinese>>
+
+<\body>
+  <tmdoc-title|墨客星球>
+
+  墨客星球是墨客社区共享墨干文档的地方。
+
+  <with|framed-color|pastel magenta|ornament-border|0ln|ornament-color|pastel yellow|<\ornamented>
+    您正在使用墨干<strong|v<Xmacs-version>>，当前最新稳定版是<strong|v<include|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/latest_version.tm>>，可访问<slink|https://mogan.app>下载最新稳定版。
+  </ornamented>>
+
+  <section*|访问星球>
+
+  点击下方链接，直接在墨干中访问墨客星球。（建议中国大陆用户访问官方提供的链接。）
+
+  <\description>
+    <item*|官方><slink|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/index.zh.tmu>
+
+    <item*|镜像>
+
+    <\itemize>
+      <item><slink|https://github.com/XmacsLabs/planet/raw/refs/heads/main/index.zh.tmu>
+    </itemize>
+  </description>
+
+  未来可以在https://planet.mogan.app通过网页浏览器查看墨客星球中的内容。
+
+  <section*|与星球共享文档>
+
+  墨客星球中的所有文档都可以在Git仓库中找到，我们在Github和Gitee这两个平台接受墨干用户的Git合并请求。
+
+  <\itemize>
+    <item><slink|https://gitee.com/XmacsLabs/planet>
+
+    <item><slink|https://github.com/XmacsLabs/planet>
+  </itemize>
+
+  只要克隆Git仓库，无需网络连接（例如：在宇宙飞船中），你就可以访问墨客星球的里面丰富的文档。
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-screen-margin|true>
+  </collection>
+</initial>

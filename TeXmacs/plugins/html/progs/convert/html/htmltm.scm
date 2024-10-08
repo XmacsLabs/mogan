@@ -13,11 +13,15 @@
 
 (texmacs-module (convert html htmltm)
   (:use
-    (convert tools tmlength) (convert tools tmcolor)
-    (convert tools old-tmtable) (convert tools stm)
-    (convert tools sxml)  (convert tools sxhtml)
+    (convert tools tmlength)
+    (convert tools tmcolor)
+    (convert tools old-tmtable)
+    (convert tools stm)
+    (convert data sxml)
+    (convert data sxhtml)
     (convert tools environment)
-    (convert tools xmltm) (convert mathml mathtm)))
+    (convert data xmltm)
+    (convert mathml mathtm)))
 
 (define (assoc-string-ci key alist)
   (list-find alist (lambda (pair) (string-ci=? key (car pair)))))
@@ -393,14 +397,36 @@
       (htmltm-tex-image (shtml-attr-non-null a 'alt))
       (htmltm-image env a c)))
 
-(define (htmltm-wikipedia-span env a c)
-  (cond ((== (shtml-attr-non-null a 'class) "mwe-math-element")
-         (if (and (pair? c) (func? (car c) 'h:span))
-             (htmltm env (car c))
-             (htmltm-pass env a c)))
-        ((== (shtml-attr-non-null a 'class) "texhtml")
-         (list `(math ,(htmltm-args-serial env c))))
-        (else (htmltm-pass env a c))))
+(define (htmltm-span env a c)
+  (with class-value (shtml-attr-non-null a 'class)
+    (cond ((== class-value "mwe-math-element")
+           (if (and (pair? c) (func? (car c) 'h:span))
+               (htmltm env (car c))
+               (htmltm-pass env a c)))
+          ((== class-value "texhtml")
+           (list `(math ,(htmltm-args-serial env c))))
+          ; Kimi AI
+          ((and (== class-value "katex")
+                (pair? c)
+                (func? (car c) 'h:span)
+                (sxml-has-attr-list? (car c))
+                (== (shtml-attr-non-null (sxml-attr-list (car c)) 'class)
+                    "katex-mathml"))
+           (htmltm env (first c)))
+          ; Zhihu
+          ((and (== class-value "MathJax_SVG")
+                (pair? c)
+                (func? (car c) 'h:svg)
+                (>= (length (car c)) 3)
+                (func? (third (car c)) 'h:g)
+                (>= (length (third (car c))) 3)
+                (func? (third (third (car c))) 'h:use))
+           (begin
+             ; (display* "\n" (shtml-attr-non-null a 'data-mathml) "\n")
+             (htmltm env (htmltm-parse (shtml-attr-non-null a 'data-mathml)))))
+          (else
+           (begin
+            (htmltm-pass env a c))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Special rules for improving Scilab documentation rendering
@@ -435,7 +461,7 @@
   ;; Convert a shxml element to texmacs.
   ;; Return a list which is either null, or contains a single serial node.
   ;; All methods must use this return convention.
-  (sxml-dispatch (lambda (env t) (list (xmltm-text t)))
+  (sxml-dispatch (lambda (env t) (list (utf8->herk t)))
                  htmltm-pass env t))
 
 (define (cleanup-root env root)
@@ -462,7 +488,7 @@
   ;; Grouping
   (div  (handler :mixed :block  htmltm-pass))
   ;; TODO: convert 'align' attributes in div, p and headings
-  (span (handler :collapse :inline htmltm-wikipedia-span))
+  (span (handler :collapse :inline htmltm-span))
 
   ;; Headings
   (h1 (handler :mixed :block "chapter*"))

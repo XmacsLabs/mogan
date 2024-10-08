@@ -12,23 +12,24 @@
 ;;; Follow the same License as the original one
 
 (define-library (srfi srfi-1)
-(import (liii error))
+(import (liii error)
+        (liii base))
 (export
-  circular-list iota circular-list? null-list?
+  ; SRFI 1: Constructors
+  circular-list iota list-copy 
+  ; SRFI 1: Predicates
+  circular-list? null-list? proper-list? dotted-list?
+  ; SRFI 1: Selectors
   first second third fourth fifth
   sixth seventh eighth ninth tenth
   take drop take-right drop-right count fold fold-right
-  reduce reduce-right filter partition remove find
+  reduce reduce-right append-map filter partition remove find
   delete delete-duplicates
+  ; SRFI 1: Association List
+  assoc assq assv alist-cons
   take-while drop-while list-index any every
   last-pair last)
 (begin
-
-; 0 clause BSD, from S7 repo stuff.scm
-(define circular-list
-  (lambda objs
-    (let ((lst (copy objs)))
-      (set-cdr! (list-tail lst (- (length lst) 1)) lst))))
 
 ; 0 clause BSD, from S7 repo stuff.scm
 (define* (iota n (start 0) (incr 1))
@@ -42,12 +43,27 @@
       ((null? p) lst)
       (set! (car p) i))))
 
-; 0 clause BSD, from S7 repo stuff.scm
-(define circular-list?
-  (lambda (obj)
-    (catch #t
-      (lambda () (infinite? (length obj)))
-      (lambda args #f))))
+(define (proper-list? x)
+  (let loop ((x x) (lag x))
+    (if (pair? x)
+        (let ((x (cdr x)))
+          (if (pair? x)
+              (let ((x   (cdr x))
+                    (lag (cdr lag)))
+                (and (not (eq? x lag)) (loop x lag)))
+              (null? x)))
+        (null? x))))
+
+(define (dotted-list? x)
+  (let loop ((x x) (lag x))
+    (if (pair? x)
+        (let ((x (cdr x)))
+          (if (pair? x)
+              (let ((x   (cdr x))
+                    (lag (cdr lag)))
+                (and (not (eq? x lag)) (loop x lag)))
+              (not (null? x))))
+        (not (null? x)))))
 
 (define (null-list? l)
   (cond ((pair? l) #f)
@@ -77,30 +93,31 @@
   (cadr (cddddr (cddddr x))))
 
 (define (take l k)
-  (let recur ((l l) (k k))
-    (if (zero? k) '()
+  (let loop ((l l) (k k))
+    (if (zero? k)
+        '()
         (cons (car l)
-              (recur (cdr l) (- k 1))))))
+              (loop (cdr l) (- k 1))))))
 
-(define (drop l k)
-  (let iter ((l l) (k k))
-    (if (zero? k) l (iter (cdr l) (- k 1)))))
+(define drop list-tail)
 
 (define (take-right l k)
-  (let lp ((lag l)  (lead (drop l k)))
+  (let loop ((lag l)
+             (lead (drop l k)))
     (if (pair? lead)
-        (lp (cdr lag) (cdr lead))
+        (loop (cdr lag) (cdr lead))
         lag)))
 
 (define (drop-right l k)
-  (let recur ((lag l) (lead (drop l k)))
+  (let loop ((lag l) (lead (drop l k)))
     (if (pair? lead)
-        (cons (car lag) (recur (cdr lag) (cdr lead)))
+        (cons (car lag) (loop (cdr lag) (cdr lead)))
         '())))
 
 (define (last-pair l)
   (if (pair? (cdr l))
-      (last-pair (cdr l)) l))
+      (last-pair (cdr l))
+      l))
 
 (define (last l)
   (car (last-pair l)))
@@ -137,6 +154,15 @@
         (if (pair? l)
             (f head (recur (car l) (cdr l)))
             head))))
+
+(define append-map
+  (typed-lambda ((proc procedure?) (lst list?))
+    (let loop ((rest lst)
+               (result '()))
+      (if (null? rest)
+          result
+          (loop (cdr rest)
+                (append result (proc (car rest))))))))
 
 (define (filter pred l)
   (let recur ((l l))
@@ -229,6 +255,23 @@
             (if (eq? tail new-tail)
                 lis
                 (cons x new-tail)))))))
+
+(define (alist-cons key value alist)
+  (cons (cons key value) alist))
+
+(define (circular-list val1 . vals)
+  (let ((ans (cons val1 vals)))
+    (set-cdr! (last-pair ans) ans)
+    ans))
+
+(define (circular-list? x)
+  (let loop ((x x) (lag x))
+    (and (pair? x)
+         (let ((x (cdr x)))
+           (and (pair? x)
+                (let ((x   (cdr x))
+                      (lag (cdr lag)))
+                  (or (eq? x lag) (loop x lag))))))))
 
 ) ; end of begin
 ) ; end of define-library

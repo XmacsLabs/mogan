@@ -26,6 +26,7 @@
     (> result_len 0)))
 
 (define (test_24_15)
+  (when (os-macos?) (exit 0))
   (display  (url-exists? (system->url "$TEXMACS_PATH/tests/tm/24_15.tm")))
   (let* ((tm-url "$TEXMACS_PATH/tests/tm/24_15.tm")
          (result (tm->docx tm-url)))

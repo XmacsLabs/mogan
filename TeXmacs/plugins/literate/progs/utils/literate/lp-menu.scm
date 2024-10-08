@@ -20,17 +20,20 @@
 
 (menu-bind literate-menu
   (-> "First chunk"
-      ("Generic" (insert-new-chunk 'generic-chunk))
-      ---
       ("Scheme" (insert-new-chunk 'scm-chunk))
-      ("Scala" (insert-new-chunk 'scala-chunk))
       ("C++" (insert-new-chunk 'cpp-chunk))
-      ("Java" (insert-new-chunk 'java-chunk))
-      ("Mathemagix" (insert-new-chunk 'mmx-chunk))
-      ("Python" (insert-new-chunk 'python-chunk))
-      ("Scilab" (insert-new-chunk 'scilab-chunk))
+      ("Generic" (insert-new-chunk 'generic-chunk))
+      ("Verbatim" (insert-new-chunk 'verbatim-chunk))
       ("Shell" (insert-new-chunk 'shell-chunk))
-      ("Verbatim" (insert-new-chunk 'verbatim-chunk)))
+      ---
+      (when (style-has? "goldfish-lang")
+        ("Goldfish" (insert-new-chunk 'goldfish-chunk)))
+      (when (style-has? "scala")
+        ("Scala" (insert-new-chunk 'scala-chunk)))
+      (when (style-has? "java")
+        ("Java" (insert-new-chunk 'java-chunk)))
+      (when (style-has? "python")
+        ("Python" (insert-new-chunk 'python-chunk))))
   (with all-chunks (get-all-chunks)
     (when (nnull? (search-chunk-types all-chunks))
        (if (null? (search-chunk-types all-chunks))
@@ -73,4 +76,4 @@
   (former)
   (if (style-has? "literate-dtd")
       (=> "Literate"
-	  (link literate-menu))))
+          (link literate-menu))))
