@@ -30,6 +30,8 @@
  */
 url g_mostRecentlyClosedTab;
 
+url g_mostRecentlyDraggedTab;
+
 /******************************************************************************
  * QTMTabPage
  ******************************************************************************/
@@ -101,15 +103,16 @@ QTMTabPage::mouseMoveEvent (QMouseEvent* e) {
 
   QPixmap pixmap (size ());
   render (&pixmap);
+  setDown (false); // to avoid keeping the pressed state
 
-  QDrag* drag= new QDrag (this);
-  // align pixmap to the topLeft of the cursor
-  drag->setHotSpot (QPoint (0, 0));
+  g_mostRecentlyDraggedTab= m_bufferUrl;
+
+  QDrag* drag=
+      new QDrag (parent ()); // don't point to `this`, it will cause crash
+  drag->setHotSpot (QPoint (0, 0)); // align pixmap to the topLeft of the cursor
   drag->setMimeData (new QMimeData ()); // Qt requires
   drag->setPixmap (pixmap);
   drag->exec (Qt::MoveAction);
-
-  setDown (false); // to avoid keeping the pressed state
 }
 
 void
@@ -172,7 +175,6 @@ QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
    * in dragEnterEvent() (running on MAIN thread), so you can't call lock()
    * again on MAIN thread before it's unlocked. */
   if (!m_updateMutex.tryLock ()) return;
-
   removeAllTabPages ();    // remove  old tabs
   extractTabPages (p_src); // extract new tabs
   arrangeTabPages ();
@@ -271,22 +273,28 @@ QTMTabPageContainer::mapToPointing (QDropEvent* e, QPoint& p_indicatorPos) {
 
 void
 QTMTabPageContainer::dragEnterEvent (QDragEnterEvent* e) {
-  QTMTabPage* source= qobject_cast<QTMTabPage*> (e->source ());
-  if (source) {
+  int index= -1;
+  for (int i= 0; i < m_tabPageList.size (); ++i) {
+    if (m_tabPageList[i]->m_bufferUrl == g_mostRecentlyDraggedTab) {
+      index= i;
+      break;
+    }
+  }
+  if (index != -1) {
     /* Tab pages are updated periodically by scheme(?), even if there are no
      * changes. So sometimes(not always) when we dragging a tab page, all the
      * existing tab pages have been replaced. As a result, we're holding an
      * invalid tab page pointer which causes a "segmentation fault" error.
      * To avoid this, we need to use a mutex. */
     m_updateMutex.lock (); // <-
-    m_draggingTab= source;
+    m_draggingTabIndex= index;
     e->acceptProposedAction ();
   }
 }
 
 void
 QTMTabPageContainer::dragMoveEvent (QDragMoveEvent* e) {
-  if (m_draggingTab) {
+  if (m_draggingTabIndex != -1) {
     e->acceptProposedAction ();
     QPoint pos;
     mapToPointing (e, pos);
@@ -299,25 +307,24 @@ QTMTabPageContainer::dragMoveEvent (QDragMoveEvent* e) {
 
 void
 QTMTabPageContainer::dropEvent (QDropEvent* e) {
-  if (m_draggingTab) {
+  if (m_draggingTabIndex != -1) {
     e->acceptProposedAction ();
 
-    QPoint _; // dummy argument
-    int    pointingIndex= mapToPointing (e, _);
-    int    oldIndex     = m_tabPageList.indexOf (m_draggingTab);
+    QPoint      _; // dummy argument
+    int         pointingIndex= mapToPointing (e, _);
+    QTMTabPage* draggingTab  = m_tabPageList[m_draggingTabIndex];
+    int         oldIndex     = m_draggingTabIndex;
     int newIndex= pointingIndex > oldIndex ? pointingIndex - 1 : pointingIndex;
 
     // update tab page positions immediately
     if (pointingIndex != oldIndex) {
       m_tabPageList.removeAt (oldIndex);
-      m_tabPageList.insert (newIndex, m_draggingTab);
+      m_tabPageList.insert (newIndex, draggingTab);
     }
     arrangeTabPages ();
 
-    object url (m_draggingTab->m_bufferUrl);
-    m_draggingTab= nullptr;
+    object url (draggingTab->m_bufferUrl);
     m_updateMutex.unlock ();
-
     call ("move-buffer-to-index", url, object (newIndex));
   }
   m_indicator->hide ();
@@ -325,11 +332,8 @@ QTMTabPageContainer::dropEvent (QDropEvent* e) {
 
 void
 QTMTabPageContainer::dragLeaveEvent (QDragLeaveEvent* e) {
-  if (m_draggingTab) {
-    e->accept ();
-    m_draggingTab= nullptr;
-    m_updateMutex.unlock ();
-  }
+  e->accept ();
+  m_updateMutex.unlock ();
   m_indicator->hide ();
 }
 
