@@ -123,19 +123,19 @@
   ---
   (-> "Goldfish"
       (when (style-has? "goldfish-lang")
-        ("Inline" (make 'goldfish-lang))
-        ("Block" (make 'goldfish-code)))
+        ("Inline code" (make 'goldfish-lang))
+        ("Block of code" (make 'goldfish-code)))
       (when (not (style-has? "goldfish-lang"))
         ("Activate" (add-style-package "goldfish"))))
   (-> "Scala"
       (when (style-has? "scala")
-        ("Inline" (make 'scala))
-        ("Block" (make 'scala-code)))
+        ("Inline code" (make 'scala))
+        ("Block of code" (make 'scala-code)))
       (when (not (style-has? "scala"))
         ("Activate" (add-style-package "scala"))))
   (-> "Python"
       (when (style-has? "python")
-        ("Inline" (make 'python))
-        ("Block" (make 'python-code)))
+        ("Inline code" (make 'python))
+        ("Block of code" (make 'python-code)))
       (when (not (style-has? "python"))
         ("Activate" (add-style-package "python")))))
