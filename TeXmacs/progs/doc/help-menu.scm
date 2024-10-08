@@ -30,7 +30,8 @@
 
 (menu-bind help-menu
   ("Welcome" (mogan-welcome))
-  ("Planet" (xmacs-planet))
+  ("Planet" (load-local-doc "main/planet"))
+  ("Template" (load-local-doc "main/template"))
   ("Manual" (load-local-doc "main/Mogan"))
   (-> "Plugins"
       (link help-plugins-menu))
