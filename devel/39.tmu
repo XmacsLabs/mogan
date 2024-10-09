@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.4|1.2.9.3>>
 
 <style|<tuple|tmdoc|devel>>
 
@@ -7,9 +7,13 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|3|3|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|39_1>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Fix contextual doc installation>>|<row|<cell|Chore>|<cell|39_2>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Upgrade to lolly 1.2.10 to fix file url with env and tmdoc-tmimage>>|<row|<cell|Chore>|<cell|39_3>|<cell|<value|da>>|<cell|v1.2.0>|<\cell>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|3|3|5|5|cell-hyphen|t>|<cwith|2|2|5|5|cell-hyphen|t>|<cwith|10|10|5|5|cell-hyphen|t>|<table|<row|<cell|Chore>|<cell|39_1>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Fix contextual doc installation>>|<row|<cell|Chore>|<cell|39_2>|<cell|<value|da>>|<cell|v1.2.0>|<\cell>
+    Upgrade to lolly 1.2.10 to fix file url with env and tmdoc-tmimage
+  </cell>>|<row|<cell|Chore>|<cell|39_3>|<cell|<value|da>>|<cell|v1.2.0>|<\cell>
     Group GNU TeXmacs online docs and disable Help-\<gtr\>Search and Help-\<gtr\>Full manuals
-  </cell>>|<row|<cell|>|<cell|>|<cell|>|<cell|v1.2.1>|<cell|Translate the menu group: TeXmacs online docs>>|<row|<cell|Bug>|<cell|<dlink|39_4>>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Failed to render tmdoc image for remote tmdoc file>>|<row|<cell|Bug>|<cell|<dlink|39_5>>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Failed to render the png icon in remote tmdoc>>|<row|<cell|Chore>|<cell|39_6>|<cell|<value|da>>|<cell|v1.2.0>|<cell|<scm|load-help-buffer>/<scm|load-help-article> via remote doc>>|<row|<cell|Chore>|<cell|39_7>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Mogan Welcome and Xmacs Planet>>|<row|<cell|>|<cell|>|<cell|>|<cell|v1.2.1>|<cell|Use <TeXmacs> instead of plain TeXmacs in welcome doc>>|<row|<cell|Chore>|<cell|39_8>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Deprecate usage of pagella and fira fonts in tmdoc and tmmanual>>|<row|<cell|Chore>|<cell|39_9>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Add release entry and templates for bug and feature>>|<row|<cell|Chore>|<cell|39_10>|<cell|<value|da>>|<cell|v1.2.1>|<cell| Fix symbols/modules browser in the Help menu>>>>>
+  </cell>>|<row|<cell|>|<cell|>|<cell|>|<cell|v1.2.1>|<cell|Translate the menu group: TeXmacs online docs>>|<row|<cell|Bug>|<cell|<dlink|39_4>>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Failed to render tmdoc image for remote tmdoc file>>|<row|<cell|Bug>|<cell|<dlink|39_5>>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Failed to render the png icon in remote tmdoc>>|<row|<cell|Chore>|<cell|39_6>|<cell|<value|da>>|<cell|v1.2.0>|<cell|<scm|load-help-buffer>/<scm|load-help-article> via remote doc>>|<row|<cell|Chore>|<cell|39_7>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Mogan Welcome and Xmacs Planet>>|<row|<cell|>|<cell|>|<cell|>|<cell|v1.2.1>|<cell|Use <TeXmacs> instead of plain TeXmacs in welcome doc>>|<row|<cell|Chore>|<cell|39_8>|<cell|<value|da>>|<cell|v1.2.0>|<\cell>
+    Deprecate usage of pagella and fira fonts in tmdoc and tmmanual
+  </cell>>|<row|<cell|Chore>|<cell|39_9>|<cell|<value|da>>|<cell|v1.2.0>|<cell|Add release entry and templates for bug and feature>>|<row|<cell|Chore>|<cell|39_10>|<cell|<value|da>>|<cell|v1.2.1>|<cell|Fix symbols/modules browser in the Help menu>>|<row|<cell|Feature>|<cell|39_13>|<cell|<value|da>>|<cell|v1.2.9.3>|<cell|Doc: built-in manual and developer guide>>|<row|<cell|Feature>|<cell|39_14>|<cell|<value|da>>|<cell|v1.2.9.3>|<cell|Help: planet and template>>>>>
 
   <tmdoc-copyright|2023|Darcy>
 

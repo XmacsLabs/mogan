@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.4|1.2.9.3>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -80,6 +80,30 @@
       mgubi
     </cell>|<\cell>
       OSPP PDF: Fix for a couple of bugs
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      29_10
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      29_11
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Pure format on tm-print.scm
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      29_12
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix when the included file is tmfs or web
     </cell>>>>
   </wide-tabular>
 

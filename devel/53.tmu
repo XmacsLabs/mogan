@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.4|1.2.9.3>>
 
 <style|<tuple|tmdoc|devel>>
 
@@ -7,7 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|10|10|2|2|cell-valign|b>|<table|<row|<cell|Chore>|<cell|53_1>|<cell|<value|da>>|<cell|Separate url and tm_url>>|<row|<cell|Chore>|<cell|53_2>|<cell|<value|da>>|<cell|Use lolly 1.2.0 and remove url>>|<row|<cell|Chore>|<cell|53_3>|<cell|<value|da>>|<cell|Use lolly 1.2.1>>|<row|<cell|Chore>|<cell|53_4>|<cell|<value|da>>|<cell|Migrate url related routines to glue_lolly>>|<row|<cell|Chore>|<cell|53_5>|<cell|<value|da>>|<cell|Separate tm_file from file>>|<row|<cell|Chore>|<cell|53_6>|<cell|<value|da>>|<cell|Remove nowide usage in research entry>>|<row|<cell|Chore>|<cell|53_7>|<cell|<value|da>>|<cell|Migrate glue_file to glue_lolly in lolly 1.2.3>>|<row|<cell|Chore>|<cell|53_8>|<cell|<value|da>>|<cell|xmake: Keep files and headers in variables>>|<row|<cell|Chore>|<cell|53_9>|<cell|<value|da>>|<cell|Use lolly 1.2.4>>|<row|<cell|Chore>|<cell|53_10>|<cell|<value|da>>|<cell|Use lolly 1.2.5>>|<row|<cell|Chore>|<cell|53_11>|<cell|<value|da>>|<cell|Use lolly 1.2.6>>|<row|<cell|Chore>|<cell|53_12>|<cell|<tt>>|<cell|Use lolly 1.2.7>>|<row|<cell|Chore>|<cell|53_13>|<cell|Paradisum>|<cell|Use lolly 1.2.8>>>>>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|10|10|2|2|cell-valign|b>|<table|<row|<cell|Chore>|<cell|53_1>|<cell|<value|da>>|<cell|Separate url and tm_url>>|<row|<cell|Chore>|<cell|53_2>|<cell|<value|da>>|<cell|Use lolly 1.2.0 and remove url>>|<row|<cell|Chore>|<cell|53_3>|<cell|<value|da>>|<cell|Use lolly 1.2.1>>|<row|<cell|Chore>|<cell|53_4>|<cell|<value|da>>|<cell|Migrate url related routines to glue_lolly>>|<row|<cell|Chore>|<cell|53_5>|<cell|<value|da>>|<cell|Separate tm_file from file>>|<row|<cell|Chore>|<cell|53_6>|<cell|<value|da>>|<cell|Remove nowide usage in research entry>>|<row|<cell|Chore>|<cell|53_7>|<cell|<value|da>>|<cell|Migrate glue_file to glue_lolly in lolly 1.2.3>>|<row|<cell|Chore>|<cell|53_8>|<cell|<value|da>>|<cell|xmake: Keep files and headers in variables>>|<row|<cell|Chore>|<cell|53_9>|<cell|<value|da>>|<cell|Use lolly 1.2.4>>|<row|<cell|Chore>|<cell|53_10>|<cell|<value|da>>|<cell|Use lolly 1.2.5>>|<row|<cell|Chore>|<cell|53_11>|<cell|<value|da>>|<cell|Use lolly 1.2.6>>|<row|<cell|Chore>|<cell|53_12>|<cell|<tt>>|<cell|Use lolly 1.2.7>>|<row|<cell|Chore>|<cell|53_13>|<cell|Paradisum>|<cell|Use lolly 1.2.8>>|<row|<cell|Chore>|<cell|53_14>|<cell|<value|da>>|<cell|Upgrade to tbox 1.7.6>>>>>
 
   <tmdoc-copyright|2023|Darcy Shen|Paradisum>
 

@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.3|1.2.9.2>>
+<TMU|<tuple|1.0.4|1.2.9.3>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -10,7 +10,37 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|24|29|2|2|cell-background|pastel green>|<cwith|27|27|2|2|cell-background|>|<cwith|30|35|2|2|cell-background|pastel green>|<cwith|23|23|2|2|cell-background|pastel green>|<cwith|22|22|2|2|cell-background|pastel green>|<cwith|21|21|2|2|cell-background|pastel green>|<cwith|11|20|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|27|32|2|2|cell-background|pastel green>|<cwith|30|30|2|2|cell-background|>|<cwith|33|38|2|2|cell-background|pastel green>|<cwith|26|26|2|2|cell-background|pastel green>|<cwith|25|25|2|2|cell-background|pastel green>|<cwith|24|24|2|2|cell-background|pastel green>|<cwith|14|23|2|2|cell-background|pastel green>|<table|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_38
+    </cell>|<\cell>
+      v1.2.9.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix the render of single quotes in Chinese
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_37
+    </cell>|<\cell>
+      v1.2.9.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix the render of double quotes in Chinese
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_36
+    </cell>|<\cell>
+      v1.2.9.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix the render of centerdot in Chinese
+    </cell>>|<row|<\cell>
       Perf
     </cell>|<\cell>
       11_35
