@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.3|1.2.9.2>>
+<TMU|<tuple|1.0.4|1.2.9.3>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -9,6 +9,14 @@
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      24_26
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix for static web generation because mathml is enabled for html export
+    </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
       24_25
@@ -16,6 +24,14 @@
       <value|da>
     </cell>|<\cell>
       HTML: upgrade to 20240924
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      HTML: upgrade to 20241007
     </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
@@ -57,6 +73,14 @@
     </cell>|<\cell>
       Avoid converting CJK to hexadecimal when exporting html
     </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      HTML: fix encoding of copy as html snippet
+    </cell>>|<row|<\cell>
       Doc
     </cell>|<\cell>
       24_18
@@ -64,6 +88,14 @@
       ATQlove
     </cell>|<\cell>
       Documentation for the docx data plugin
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      DOCX Data plugin: visible on sidebar
     </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
