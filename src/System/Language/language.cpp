@@ -428,6 +428,7 @@ ad_hoc_language (language base, tree hyphs) {
 * Interface with spell engines and cache
 ******************************************************************************/
 
+#ifdef USE_PLUGIN_ISPELL
 #ifdef MACOSX_EXTENSIONS
 #include "MacOS/mac_spellservice.h"
 #define ispell_start mac_spell_start
@@ -437,6 +438,7 @@ ad_hoc_language (language base, tree hyphs) {
 #define ispell_done mac_spell_done
 #else
 #include "Ispell/ispell.hpp"
+#endif
 #endif
 
 static bool spell_active= false;
@@ -461,14 +463,20 @@ string
 spell_start (string lan) {
   if (spell_busy->contains (lan)) return "ok";
   spell_busy (lan)= true;
+#ifdef USE_PLUGIN_ISPELL
   return ispell_start (lan);
+#else
+  return "ok";
+#endif
 }
 
 void
 spell_done (string lan) {
   if (spell_active) return;
   spell_busy->reset (lan);
+#ifdef USE_PLUGIN_ISPELL
   ispell_done (lan);
+#endif
   hashmap<string,bool> aux (false);
   for (iterator<string> it= iterate (spell_temp); it->busy (); ) {
     string key= it->next ();
@@ -487,12 +495,20 @@ spell_check (string lan, string s) {
     if (lan == "verbatim") return "ok";
     string f= uni_Locase_all (s);
     if (f == s) {
+#ifdef USE_PLUGIN_ISPELL
       tree r= ispell_check (lan, s);
+#else
+      tree r= tree ();
+#endif
       return r;
     }
     else {
       string l= uni_locase_all (s);
+#ifdef USE_PLUGIN_ISPELL
       tree r= ispell_check (lan, l);
+#else
+      tree r= tree ();
+#endif
       if (s == uni_upcase_all (s) && is_tuple (r))
         for (int i=1; i<N(r); i++)
           if (is_atomic (r[i]))
@@ -538,7 +554,9 @@ spell_accept (string lan, string s, bool permanent) {
   string key= lan * ":" * s;
   spell_cache (key) = 1;
   if (!permanent) spell_temp (key)= 1;
+#ifdef USE_PLUGIN_ISPELL
   ispell_accept (lan, s);
+#endif
 }
 
 void
@@ -548,5 +566,7 @@ spell_insert (string lan, string s) {
   if (s != f) s= l;
   string key= lan * ":" * s;
   spell_cache (key) = 1;
+#ifdef USE_PLUGIN_ISPELL
   ispell_insert (lan, s);
+#endif
 }
