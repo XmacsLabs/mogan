@@ -38,14 +38,6 @@
     "b3" "b4" "b5" "b6"
     "ledger" "legal" "letter" "folio"))
 
-(define (get-default-paper-size-bis)
-  (with papersizefile "/etc/papersize"
-   (and (url-exists? papersizefile)
-        (with pps-port (open-input-file papersizefile)
-         (with size (read-line pps-port)
-          (close-input-port pps-port)
-          size)))))
-
 (tm-define (correct-paper-size s)
   (if (and (string? s) (in? s supported-sizes)) s "a4"))
 
@@ -53,7 +45,7 @@
   (if (and (string? s) (in? s standard-sizes)) s "user"))
 
 (tm-define (get-default-paper-size)
-  (correct-paper-size (get-default-paper-size-bis)))
+  (correct-paper-size "a4"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Printing preferences
