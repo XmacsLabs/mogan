@@ -127,7 +127,7 @@
   ("pastefrom" "std V")
   ("structured:cmd" "C-")
   ("structured:move" "M-A-")
-  ("structured:insert" "M-")
+  ("structured:insert" "A-")
   ("structured:geometry" "M-C-"))
 
 (kbd-wildcards
@@ -163,9 +163,9 @@
   ("cutto" "std X")
   ("pastefrom" "std V")
   ("accent" "M-" #t)
-  ("structured:cmd" "A-")
+  ("structured:cmd" "C-")
   ("structured:move" "M-C-")
-  ("structured:insert" "C-")
+  ("structured:insert" "A-")
   ("structured:geometry" "M-A-"))
 
 (kbd-wildcards
@@ -204,7 +204,7 @@
   ("pastefrom" "std V")
   ("structured:cmd" "C-")
   ("structured:move" "M-A-")
-  ("structured:insert" "M-")
+  ("structured:insert" "A-")
   ("structured:geometry" "M-C-"))
 
 (kbd-wildcards

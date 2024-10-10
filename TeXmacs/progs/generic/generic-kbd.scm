@@ -577,8 +577,6 @@
   ("C-insert" (kbd-copy))
   ("S-insert" (kbd-paste))
   ("S-delete" (kbd-cut))
-  ("A-left" (cursor-history-backward))
-  ("A-right" (cursor-history-forward))
 
   ("search F3" (search-next-match #t))
   ("search S-F3" (search-next-match #f))
@@ -742,8 +740,6 @@
   ("C-insert" (kbd-copy))
   ("A-F4" (close-document))
   ("A-S-F4" (close-document*))
-  ("A-left" (cursor-history-backward))
-  ("A-right" (cursor-history-forward))
 
   ("search windows g" (search-next-match #t))
   ("search windows G" (search-next-match #f))
