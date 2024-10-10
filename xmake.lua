@@ -17,6 +17,12 @@ set_project("Liii STEM Suite")
 -- support cygwin env.
 set_allowedplats("linux")
 
+if is_plat("linux") then
+    set_configvar("OS_GNU_LINUX", true)
+else
+    set_configvar("OS_GNU_LINUX", false)
+end
+
 -- add releasedbg, debug and release modes for different platforms.
 -- debug mode cannot run on mingw with qt precompiled binary
 set_allowedmodes("releasedbg", "release", "debug")

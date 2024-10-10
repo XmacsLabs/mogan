@@ -97,6 +97,23 @@ get_texmacs_home_path () {
   return path;
 }
 
+url
+get_tm_cache_path () {
+#if defined(OS_WIN) || defined(OS_MINGW)
+  return url (string ("$LOCALAPPDATA/LiiiLabs/system/cache/") * XMACS_VERSION);
+#endif
+#if defined(OS_MACOS)
+  return url (string ("$HOME/Library/Caches/LiiiLabs/") * XMACS_VERSION);
+#endif
+#if defined(OS_GNU_LINUX)
+  if (is_empty (get_env ("XDG_CACHE_HOME"))) {
+    return url (string ("$HOME/.cache/LiiiLabs/") * XMACS_VERSION);
+  } else {
+    return url (string ("$XDG_CACHE_HOME/LiiiLabs/") * XMACS_VERSION);
+  }
+#endif
+  return url (string ("$TEXMACS_HOME_PATH/system/cache/") * XMACS_VERSION);
+}
 
 string 
 get_printing_default () {

@@ -161,7 +161,7 @@ do_cache_doc (string name) {
 void
 cache_save (string buffer) {
   if (cache_changed->contains (buffer)) {
-    url cache_file= texmacs_home_path * url ("system/cache/" * buffer);
+    url cache_file= get_tm_cache_path () * url (buffer);
     string cached;
     iterator<tree> it= iterate (cache_data);
     if (buffer == "file_cache" || buffer == "doc_cache") {
@@ -193,7 +193,7 @@ cache_save (string buffer) {
 void
 cache_load (string buffer) {
   if (!cache_loaded->contains (buffer)) {
-    url cache_file = texmacs_home_path * url ("system/cache/" * buffer);
+    url cache_file= get_tm_cache_path () * url (buffer);
     //cout << "cache_file "<< cache_file << LF;
     string cached;
     if (!load_string (cache_file, cached, false)) {

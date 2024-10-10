@@ -78,7 +78,7 @@
     (if (and (!= pref "default") (url-exists? (system->url pref)))
         (system->url pref)
         (with new (persistent-file-name
-                   (unix->url "$TEXMACS_HOME_PATH/system/cache/")
+                   (get-tm-cache-path)
                    "api")
           (set-preference "doc:doc-scm-cache" (url->system new))
           new))))
@@ -89,7 +89,7 @@
     (if (and (!= pref "default") (url-exists? (system->url pref)))
         (system->url pref)
         (with new (persistent-file-name 
-                   (unix->url "$TEXMACS_HOME_PATH/system/cache/")
+                   (get-tm-cache-path)
                    "api")
           (set-preference "doc:doc-macro-cache" (url->system new))
           new))))

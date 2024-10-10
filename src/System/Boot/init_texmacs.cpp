@@ -168,7 +168,7 @@ init_user_dirs () {
   make_dir ("$TEXMACS_HOME_PATH/styles");
   make_dir ("$TEXMACS_HOME_PATH/system");
   make_dir ("$TEXMACS_HOME_PATH/system/bib");
-  make_dir ("$TEXMACS_HOME_PATH/system/cache");
+  make_dir (get_tm_cache_path ());
   make_dir ("$TEXMACS_HOME_PATH/system/database");
   make_dir ("$TEXMACS_HOME_PATH/system/database/bib");
   make_dir ("$TEXMACS_HOME_PATH/system/make");
@@ -189,7 +189,7 @@ acquire_boot_lock () {
   if (exists (lock_file)) {
     remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
     remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-    remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
+    remove (get_tm_cache_path () * url_wildcard ("*"));
     remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));    
   }
   else save_string (lock_file, "", false);

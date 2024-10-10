@@ -116,11 +116,11 @@ init_upgrade () {
   init_upgrade_doc (install_version);
 
   remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-  remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("__*"));
-  remove (url ("$TEXMACS_HOME_PATH/system/cache/dir_cache.scm"));
-  remove (url ("$TEXMACS_HOME_PATH/system/cache/doc_cache"));
-  remove (url ("$TEXMACS_HOME_PATH/system/cache/file_cache"));
-  remove (url ("$TEXMACS_HOME_PATH/system/cache/stat_cache.scm"));
+  remove (get_tm_cache_path () * url_wildcard ("__*"));
+  remove (get_tm_cache_path () * url ("dir_cache.scm"));
+  remove (get_tm_cache_path () * url ("doc_cache"));
+  remove (get_tm_cache_path () * url ("file_cache"));
+  remove (get_tm_cache_path () * url ("stat_cache.scm"));
   remove (url ("$TEXMACS_HOME_PATH/fonts/font-database.scm"));
   remove (url ("$TEXMACS_HOME_PATH/fonts/font-features.scm"));
   remove (url ("$TEXMACS_HOME_PATH/fonts/font-characteristics.scm"));

@@ -619,36 +619,36 @@ immediate_options (int argc, char** argv) {
     if ((s == "-S") || (s == "-setup")) {
       remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
       remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
+      remove (get_tm_cache_path () * url_wildcard ("*"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-database.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-features.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-characteristics.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
     }
     else if (s == "-delete-cache")
-      remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
+      remove (get_tm_cache_path () * url_wildcard ("*"));
     else if (s == "-delete-style-cache")
-      remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("__*"));
+      remove (get_tm_cache_path () * url_wildcard ("__*"));
     else if (s == "-delete-font-cache") {
-      remove (url ("$TEXMACS_HOME_PATH/system/cache/font_cache.scm"));
+      remove (get_tm_cache_path () * url ("font_cache.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-database.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-features.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/font-characteristics.scm"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
     }
     else if (s == "-delete-doc-cache") {
-      remove (url ("$TEXMACS_HOME_PATH/system/cache/doc_cache"));
-      remove (url ("$TEXMACS_HOME_PATH/system/cache/dir_cache.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/system/cache/stat_cache.scm"));
+      remove (get_tm_cache_path () * url ("doc_cache"));
+      remove (get_tm_cache_path () * url ("dir_cache.scm"));
+      remove (get_tm_cache_path () * url ("stat_cache.scm"));
     }
     else if (s == "-delete-file-cache") {
-      remove (url ("$TEXMACS_HOME_PATH/system/cache/doc_cache"));
-      remove (url ("$TEXMACS_HOME_PATH/system/cache/file_cache"));
-      remove (url ("$TEXMACS_HOME_PATH/system/cache/dir_cache.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/system/cache/stat_cache.scm"));
+      remove (get_tm_cache_path () * url ("file_cache"));
+      remove (get_tm_cache_path () * url ("doc_cache"));
+      remove (get_tm_cache_path () * url ("dir_cache.scm"));
+      remove (get_tm_cache_path () * url ("stat_cache.scm"));
     }
     else if (s == "-delete-plugin-cache")
-      remove (url ("$TEXMACS_HOME_PATH/system/cache/plugin_cache.scm"));
+      remove (get_tm_cache_path () * url ("plugin_cache.scm"));
     else if (s == "-delete-server-data")
       system ("rm -rf", url ("$TEXMACS_HOME_PATH/server"));
     else if (s == "-delete-databases") {
@@ -721,7 +721,7 @@ main (int argc, char** argv) {
     cout << "TeXmacs] Performing setup (Alt on startup)" << LF;
     remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
     remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-    remove (url ("$TEXMACS_HOME_PATH/system/cache") * url_wildcard ("*"));
+    remove (get_tm_cache_path () * url_wildcard ("*"));
     remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
   }
 #endif
