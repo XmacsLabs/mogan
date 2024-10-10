@@ -29,8 +29,8 @@
   ("ir-pause" (dynamic-traverse-buffer :next))
   ("ir-menu" (toggle-full-screen-mode))
   ("F9" (dynamic-operate-on-buffer :first))
-  ("F10" (dynamic-traverse-buffer :previous))
-  ("F11" (dynamic-traverse-buffer :next))
+  ("pageup" (dynamic-traverse-buffer :previous))
+  ("pagedown" (dynamic-traverse-buffer :next))
   ("F12" (dynamic-operate-on-buffer :last))
   ("S-F9" (dynamic-first))
   ("S-F10" (dynamic-previous))
@@ -44,5 +44,5 @@
 
 (kbd-map
   (:mode in-screens?)
-  ("pageup" (screens-switch-to :previous))
-  ("pagedown" (screens-switch-to :next)))
+  ("F10" (screens-switch-to :previous))
+  ("F11" (screens-switch-to :next)))
