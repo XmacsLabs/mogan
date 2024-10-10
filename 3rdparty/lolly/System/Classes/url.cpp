@@ -83,7 +83,7 @@ url::protocol () {
     else return ""; // if the protocol does not match, return empty protocol
   }
   else {
-    return "";
+    return "default";
   }
 }
 

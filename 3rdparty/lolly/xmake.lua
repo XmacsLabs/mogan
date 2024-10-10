@@ -16,12 +16,12 @@ if is_plat("mingw") and is_host("windows") then
 end
 
 if is_plat("wasm") then
-    add_requires("emscripten")
+    add_requires("emscripten 3.1.25")
     set_toolchains("emcc@emscripten")
 end
 
 --- require packages
-tbox_configs = {hash=true, ["force-utf8"]=true}
+tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
 add_requires("tbox", {system=false, configs=tbox_configs})
 add_requires("doctest 2.4.11", {system=false})
 if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
@@ -207,10 +207,14 @@ function add_test_target(filepath)
 
         if is_plat("wasm") then
             add_cxxflags("-s DISABLE_EXCEPTION_CATCHING=0")
+            add_ldflags("--preload-file xmake.lua")
+            add_ldflags("--preload-file tests")
             add_ldflags("-s DISABLE_EXCEPTION_CATCHING=0")
             on_run(function (target)
                 node = os.getenv("EMSDK_NODE")
-                cmd = node .. " $(buildir)/wasm/wasm32/$(mode)/" .. testname .. ".js"
+                os.cd("$(buildir)/wasm/wasm32/$(mode)/")
+                print("> cd $(buildir)/wasm/wasm32/$(mode)/")
+                cmd = node .. " " .. testname .. ".js"
                 print("> " .. cmd)
                 os.exec(cmd)
             end)
@@ -248,41 +252,24 @@ function add_test_target(filepath)
     end
 end
 
-for _, filepath in ipairs(os.files("tests/Data/**_test.cpp")) do
-    add_test_target(filepath)
-end
 
-for _, filepath in ipairs(os.files("tests/Kernel/**_test.cpp")) do
-    add_test_target(filepath)
-end
+cpp_tests_not_on_wasm = table.join(
+    os.files("tests/Plugins/Curl/**_test.cpp")
+)
+cpp_tests_on_all_plat = os.files("tests/**_test.cpp")
 
-for _, filepath in ipairs(os.files("tests/System/Classes/**_test.cpp")) do
-    add_test_target(filepath)
-end
-
-for _, filepath in ipairs(os.files("tests/System/Files/**_test.cpp")) do
+for _, filepath in ipairs(cpp_tests_not_on_wasm) do
     if not is_plat("wasm") then
         add_test_target(filepath)
     end
 end
 
-for _, filepath in ipairs(os.files("tests/System/IO/**_test.cpp")) do
-    add_test_target(filepath)
-end
-
-for _, filepath in ipairs(os.files("tests/System/Memory/**_test.cpp")) do
-    add_test_target(filepath)
-end
-
-for _, filepath in ipairs(os.files("tests/System/Misc/**_test.cpp")) do
-    add_test_target(filepath)
-end
-
-for _, filepath in ipairs(os.files("tests/Plugins/Curl/**_test.cpp")) do
-    if not is_plat("wasm") then
-        add_test_target(filepath)
+for _, filepath in ipairs(cpp_tests_on_all_plat) do
+    if not table.contains(cpp_tests_not_on_wasm, filepath) then
+        add_test_target (filepath)
     end
 end
+
 
 -- xmake plugin
 add_configfiles(

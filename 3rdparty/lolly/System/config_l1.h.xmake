@@ -1,9 +1,6 @@
 ${define HAVE_INTPTR_T}
 ${define HAVE_STDINT_H}
 ${define HAVE_INTTYPES_H}
-${define HAVE_TIME_T}
-${define HAVE_GETTIMEOFDAY}
-${define __FreeBSD__}
 
 #ifdef HAVE_INTPTR_T
 #ifdef HAVE_INTTYPES_H

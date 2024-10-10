@@ -629,7 +629,6 @@ hashtree_from_dictionary (
   hashtree<char,string> dic, string file_name, escape_type key_escape,
   escape_type val_escape, bool reverse)
 {
-  if (DEBUG_CONVERT) debug_convert << "Loading dictionary " << file_name << LF;
   string key_string, val_string, file;
   file_name = file_name * ".scm";
   if (load_string (url ("$TEXMACS_PATH/langs/encoding", file_name),
@@ -637,6 +636,9 @@ hashtree_from_dictionary (
     convert_error << "Couldn't open encoding dictionary " << file_name << LF;
     return;
   }
+  if (DEBUG_CONVERT)
+    debug_convert << "Loaded dictionary " << file_name
+                  << " with file size " << N(file) << LF;
   tree t = block_to_scheme_tree (file);
   if (!is_tuple (t)) {
     convert_error << "Malformed encoding dictionary " << file_name << LF;

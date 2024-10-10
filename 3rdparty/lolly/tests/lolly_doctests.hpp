@@ -6,6 +6,10 @@
 
 inline void
 string_eq (string left, string right) {
+  if (left != right) {
+    cout << "left : " << left << LF;
+    cout << "right: " << right << LF;
+  }
   CHECK_EQ (left == right, true);
 }
 

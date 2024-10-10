@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "base.hpp"
+#include "file.hpp"
 #include <QtTest/QtTest>
 
 #ifndef KERNEL_L1
@@ -19,4 +20,13 @@ bool headless_mode= false;
 void
 qcompare (string actual, string expected) {
   QCOMPARE (as_charp (actual), as_charp (expected));
+}
+
+void
+init_lolly () {
+  lolly::init_tbox ();
+  // for shared link, we need to load_string to warm up
+  string s;
+  load_string (url_system ("$TEXMACS_PATH/LICENSE"), s, true);
+  QVERIFY (N (s) > 0);
 }

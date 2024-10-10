@@ -17,23 +17,6 @@ function main()
         initializer_name = "initialize_glue_file",
         glues = {
             {
-                scm_name = "string-save",
-                cpp_name = "string_save",
-                ret_type = "void",
-                arg_list = {
-                    "string",
-                    "url"
-                }
-            },
-            {
-                scm_name = "string-load",
-                cpp_name = "string_load",
-                ret_type = "string",
-                arg_list = {
-                    "url"
-                }
-            },
-            {
                 scm_name = "string-append-to-file",
                 cpp_name = "string_append_to_file",
                 ret_type = "void",

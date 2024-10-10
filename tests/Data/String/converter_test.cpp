@@ -12,12 +12,13 @@
 
 #include "base.hpp"
 #include "converter.hpp"
+#include "file.hpp"
 
 class TestConverter : public QObject {
   Q_OBJECT
 
 private slots:
-  void init () { lolly::init_tbox (); };
+  void init () { init_lolly (); };
   void test_utf8_to_cork ();
 };
 

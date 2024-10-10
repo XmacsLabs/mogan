@@ -8,6 +8,9 @@
 #include "file.hpp"
 #include "tbox/tbox.h"
 
+url unix_root= url_system ("/");
+url xmake_lua= url_pwd () * "xmake.lua";
+
 url
 get_lolly_tmp () {
 #if defined(OS_WIN) || defined(OS_MINGW)
@@ -23,18 +26,16 @@ TEST_CASE ("is_directory on Windows") {
 }
 #endif
 
-#if defined(OS_LINUX)
-TEST_CASE ("is_symbolic_link on linux") {
-  CHECK (is_symbolic_link (url_system ("/usr/bin/python")));
-}
-#endif
-
 TEST_CASE ("is_directory/is_regular") {
+#if defined(OS_LINUX) || defined(OS_MACOS) || defined(OS_WASM)
+  CHECK (is_directory (unix_root));
+#endif
+  CHECK (is_directory (url_pwd () * "tests"));
+
   CHECK (is_directory (url_pwd ()));
   CHECK (!is_regular (url_pwd ()));
   CHECK (!is_symbolic_link (url_pwd ()));
 
-  url xmake_lua= url_pwd () * url ("xmake.lua");
   CHECK (!is_directory (xmake_lua));
   CHECK (is_regular (xmake_lua));
   CHECK (!is_symbolic_link (xmake_lua));
@@ -55,19 +56,15 @@ TEST_CASE ("is_newer") {
 TEST_CASE ("is_of_type") {
   CHECK (is_of_type (url_pwd (), "d"));
   CHECK (!is_of_type (url_pwd (), "f"));
-  CHECK (is_of_type (url_pwd () * url ("xmake.lua"), "fr"));
+  CHECK (is_of_type (xmake_lua, "fr"));
 #if defined(OS_MINGW) || defined(OS_WIN)
   CHECK (is_of_type (url_pwd () * url ("bin/format.bat"), "x"));
 #endif
 }
 
-TEST_CASE ("file_size") {
-  CHECK (file_size (url_pwd () * url ("xmake.lua")) > 0);
-}
+TEST_CASE ("file_size") { CHECK (file_size (xmake_lua) > 0); }
 
-TEST_CASE ("last_modified") {
-  CHECK (last_modified (url_pwd () * url ("xmake.lua")) > 0);
-}
+TEST_CASE ("last_modified") { CHECK (last_modified (xmake_lua) > 0); }
 
 TEST_CASE ("mkdir/rmdir") {
   url lolly_tmp = get_lolly_tmp ();
@@ -144,9 +141,139 @@ TEST_CASE ("url_temp") {
 
 TEST_CASE ("read_directory") {
   bool flag1= false;
-  CHECK (N (read_directory (url_pwd (), flag1)) > 0);
+  CHECK (N (read_directory (url_pwd () * "tests", flag1)) > 0);
   CHECK (!flag1); // no error
   bool flag2= false;
   CHECK (N (read_directory (url_system ("no_such_dir"), flag2)) == 0);
   CHECK (flag2); // error
+}
+
+TEST_CASE ("load empty file") {
+  url    lolly_tmp= get_lolly_tmp ();
+  url    u1       = lolly_tmp * url ("load_empty.txt");
+  string s1;
+  tb_file_create (as_charp (as_string (u1)));
+  CHECK (!load_string (u1, s1, false));
+  CHECK_EQ (s1 == string (""), true);
+}
+
+TEST_CASE ("load_string part1") {
+  url lolly_tmp= get_lolly_tmp ();
+  url u1       = lolly_tmp * url ("load_string_1.txt");
+  // can access file?
+  if (tb_file_access (as_charp (as_string (u1)), TB_FILE_MODE_RO)) {
+    while (!tb_file_remove (as_charp (as_string (u1)))) {
+      tb_sleep (1);
+    }
+  }
+  // create test file
+  if (tb_file_create (as_charp (as_string (u1)))) {
+    const char* s2    = "hello world";
+    tb_size_t   size  = strlen (s2);
+    tb_byte_t*  buffer= (tb_byte_t*) tb_malloc_bytes (size);
+    int         seek  = 0;
+    while (seek < size) {
+      tb_byte_t c = s2[seek];
+      buffer[seek]= c;
+      seek++;
+    }
+
+    auto file_ref= tb_file_init (as_charp (as_string (u1)), TB_FILE_MODE_RW);
+    tb_file_writ (file_ref, buffer, strlen (s2));
+    string s;
+    CHECK (!load_string (u1, s, false));
+    string_eq (s, string ("hello world"));
+  }
+}
+
+TEST_CASE ("load_string part2") {
+  url    lolly_tmp= get_lolly_tmp ();
+  url    u1       = url_pwd () * url ("tests/System/Files/sample_file.txt");
+  url    u2= url_pwd () * url ("tests/System/Files/sample_file_copy.txt");
+  url    u3= url_pwd () * url ("tests/System/Files/sample_file_throw.txt");
+  string s1, s2, s3;
+  CHECK (!load_string (u1, s1, false));
+  CHECK (!load_string (u2, s2, false));
+  string_eq (s1, s2);
+
+  CHECK_THROWS (load_string (u3, s3, true));
+}
+
+TEST_CASE ("load_string part3") {
+  url    u ("tests/Kernel/Containers:tests/Kernel/Types", "list_test.cpp");
+  string s;
+  load_string (u, s, false);
+  CHECK (N (s) > 0);
+}
+
+#if defined(OS_MINGW) || defined(OS_WIN)
+TEST_CASE ("load_string part 4: read only file") {
+  url    hosts= url_system ("C:\\Windows\\System32\\drivers\\etc\\hosts");
+  string s;
+  load_string (hosts, s, false);
+  CHECK (N (s) > 0);
+}
+#endif
+
+#if defined(OS_LINUX) || defined(OS_MACOS)
+TEST_CASE ("load_string part 4: read only file") {
+  url    hosts= url_system ("/etc/hosts");
+  string s;
+  load_string (hosts, s, false);
+  CHECK (N (s) > 0);
+}
+#endif
+
+TEST_CASE ("save to empty file") {
+  url    lolly_tmp= get_lolly_tmp ();
+  url    u1       = lolly_tmp * url ("save_empty.txt");
+  string s1 ("test");
+  tb_file_touch (as_charp (as_string (u1)), 0, 0);
+  CHECK (!save_string (u1, s1, false));
+  string s2;
+  CHECK (!load_string (u1, s2, false));
+  string_eq (s1, s2);
+}
+
+TEST_CASE ("save to empty file with unicode filename") {
+  url    lolly_tmp= get_lolly_tmp ();
+  url    u1       = lolly_tmp * url ("保存到空文件.txt");
+  string s1 ("测试内容");
+  tb_file_touch (as_charp (as_string (u1)), 0, 0);
+  CHECK (!save_string (u1, s1, false));
+  string s2;
+  CHECK (!load_string (u1, s2, false));
+  string_eq (s1, s2);
+}
+
+TEST_CASE ("create and save to file") {
+  url            lolly_tmp= get_lolly_tmp ();
+  url            u1       = lolly_tmp * url ("save_nonexist.txt");
+  const char*    path1    = as_charp (as_string (u1));
+  tb_file_info_t info;
+  if (tb_file_info (path1, &info)) {
+    tb_file_remove (path1);
+  };
+  string s1 ("test");
+  CHECK (!save_string (u1, s1, true));
+  string s2;
+  CHECK (!load_string (u1, s2, true));
+  string_eq (s1, s2);
+}
+
+TEST_CASE ("save to exist file") {
+  url         lolly_tmp= get_lolly_tmp ();
+  url         u1       = lolly_tmp * url ("save_exist.txt");
+  const char* path1    = as_charp (as_string (u1));
+  tb_file_touch (path1, 0, 0);
+  tb_file_ref_t file=
+      tb_file_init (path1, TB_FILE_MODE_WO | TB_FILE_MODE_TRUNC);
+  tb_file_writ (
+      file, reinterpret_cast<const tb_uint8_t*> ("longer text for test"), 20);
+  tb_file_exit (file);
+  string s1 ("test");
+  CHECK (!save_string (u1, s1, false));
+  string s2;
+  CHECK (!load_string (u1, s2, false));
+  string_eq (s1, s2);
 }

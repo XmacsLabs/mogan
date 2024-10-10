@@ -15,7 +15,7 @@
 #include "string.hpp"
 #include "sys_utils.hpp"
 
-void
-qcompare (string actual, string expected);
+void qcompare (string actual, string expected);
+void init_lolly ();
 
 #endif

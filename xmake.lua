@@ -25,7 +25,7 @@ add_rules("mode.releasedbg", "mode.release", "mode.debug")
 add_repositories("liii-repo xmake")
 
 TBOX_VERSION= "1.7.5"
-LOLLY_VERSION= "1.2.4"
+LOLLY_VERSION= "1.2.7"
 package("liii-lolly")
     set_homepage("https://github.com/XmacsLabs/lolly")
     set_description("Lolly is a C++ library")

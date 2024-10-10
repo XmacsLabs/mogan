@@ -60,7 +60,7 @@ as_url (tree t) {
 }
 
 /******************************************************************************
- * url subclasses by protocal
+ * url subclasses by protocol
  ******************************************************************************/
 class file_url : public url {
 public:

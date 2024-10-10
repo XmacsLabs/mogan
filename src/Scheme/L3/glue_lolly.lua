@@ -895,6 +895,23 @@ function main()
                     "url"
                 }
             },
+            {
+                scm_name = "string-save",
+                cpp_name = "string_save",
+                ret_type = "void",
+                arg_list = {
+                    "string",
+                    "url"
+                }
+            },
+            {
+                scm_name = "string-load",
+                cpp_name = "string_load",
+                ret_type = "string",
+                arg_list = {
+                    "url"
+                }
+            },
         }
     }
 end

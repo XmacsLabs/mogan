@@ -3,6 +3,9 @@
  * MODULE     : file.hpp
  * DESCRIPTION: file handling
  * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *                  2023  Darcy Shen
+ *                  2023  Pluto Ye
+ *                  2023  Jingkaimori
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -13,6 +16,8 @@
 #define LOLLY_FILE_H
 
 #include "url.hpp"
+
+bool is_local_and_single (url u);
 
 bool is_directory (url u);
 bool is_regular (url u);
@@ -35,5 +40,10 @@ url url_temp (string suffix= "");
 void remove (url u);
 void move (url u1, url u2);
 void copy (url u1, url u2);
+
+bool   load_string (url file_name, string& s, bool fatal);
+string string_load (url u);
+bool   save_string (url file_name, const string& s, bool fatal= false);
+void   string_save (string s, url u);
 
 #endif

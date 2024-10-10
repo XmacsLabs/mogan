@@ -24,7 +24,7 @@ private:
     qcompare (tm_to_xml_name (tm_name), xml_name);
   }
 private slots:
-  void init () { lolly::init_tbox (); }
+  void init () { init_lolly (); }
   void test_is_xml_name ();
   void tm_and_xml_name ();
 };

@@ -30,18 +30,6 @@ inline string eval_system (string which, url u1) {
 inline string eval_system (string which, url u1, url u2) {
   return eval_system (which * " " * escape_sh (concretize (u1)) * " " * escape_sh (concretize (u2))); }
 
-/**
- * Load the url to a string, and return a boolean indicator
- * @param u the url to load
- * @param s the loaded string
- * @return If there are errors, return true, else, return false
- */
-bool load_string (url file_name, string& s, bool fatal);
-string string_load (url u);
-
-bool save_string (url file_name, string s, bool fatal=false);
-void string_save (string s, url u);
-
 bool append_string (url u, string s, bool fatal= false);
 void string_append_to_file (string s, url u);
 void append_to (url what, url to);
