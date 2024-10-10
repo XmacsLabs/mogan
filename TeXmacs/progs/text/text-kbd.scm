@@ -551,8 +551,6 @@
 
   ("text a" (make 'abbr))
   ("text d" (make-tmlist 'description))
-  ("text e" (make-tmlist 'enumerate))
-  ("text i" (make-tmlist 'itemize))
   ("text m" (make 'em))
   ("text n" (make 'name))
   ("text p" (make 'samp))
