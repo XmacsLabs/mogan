@@ -418,7 +418,7 @@ concater_rep::typeset_image (tree t, path ip) {
       image= resolve (relative (env->base_file_name, ::glue (im, ".eps")));
     if (is_none (image) && suffix (im) == "")
       image= resolve (relative (env->base_file_name, ::glue (im, ".pdf")));
-    if (is_none (image)) image= "$TEXMACS_PATH/misc/pixmaps/unknown.ps";
+    if (is_none (image)) image= "$TEXMACS_PATH/misc/pixmaps/unknown.png";
   }
   else if (is_func (image_tree, TUPLE, 2) &&
 	     is_func (image_tree[0], RAW_DATA, 1) &&

@@ -177,7 +177,7 @@ ps_load (url image, bool conv) {
 
   url name= resolve (image);
   if (is_none (name))
-    name= "$TEXMACS_PATH/misc/pixmaps/unknown.ps";
+    name= "$TEXMACS_PATH/misc/pixmaps/unknown.png";
 
 #ifdef OS_WIN
   if (is_ramdisc (name)) name= get_from_ramdisc (name);
@@ -189,7 +189,7 @@ ps_load (url image, bool conv) {
   else 
     if (conv) s= image_to_psdoc (image); // call converters, then load resulting ps
     
-  if (s == "") load_string ("$TEXMACS_PATH/misc/pixmaps/unknown.ps", s, true);
+  if (s == "") load_string ("$TEXMACS_PATH/misc/pixmaps/unknown.png", s, true);
   return s;
 }
 
