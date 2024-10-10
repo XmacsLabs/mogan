@@ -301,6 +301,8 @@ target("libmogan") do
                 MACOSX_EXTENSIONS = is_plat("macosx"),
                 SIZEOF_VOID_P = 8,
                 USE_GS = true,
+                USE_PLUGIN_BIBTEX = true,
+                USE_PLUGIN_LATEX_PREVIEW = true,
                 }})
 
     if is_plat("linux") then 

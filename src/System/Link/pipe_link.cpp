@@ -11,6 +11,7 @@
 
 #include "basic.hpp"
 #include "tm_link.hpp"
+#include "tm_debug.hpp"
 
 #if !(defined (QTTEXMACS) && (defined (OS_MINGW) || defined (QTPIPES) || defined (OS_WIN) || defined(OS_WASM)))
 

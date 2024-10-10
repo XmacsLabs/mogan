@@ -22,15 +22,26 @@
 #include "Tex/tex.hpp"
 #include "glue_tex.cpp"
 
+#ifdef USE_PLUGIN_BIBTEX
 #include "Bibtex/bibtex.hpp"
 #include "Bibtex/bibtex_functions.hpp"
 #include "glue_bibtex.cpp"
+#endif
 
 #include "Database/database.hpp"
 #include "glue_tmdb.cpp"
 
 #include "Xml/xml.hpp"
 #include "glue_xml.cpp"
+
+bool
+use_plugin_bibtex () {
+#ifdef USE_PLUGIN_BIBTEX
+  return true;
+#else
+  return false;
+#endif
+}
 
 #ifndef OS_WASM
 bool
@@ -60,9 +71,14 @@ pdfhummus_version () {
 #include "glue_pdf.cpp"
 #endif
 
+#include "glue_plugin.cpp"
+
 void
 initialize_glue_plugins () {
+  initialize_glue_plugin ();
+#ifdef USE_PLUGIN_BIBTEX
   initialize_glue_bibtex ();
+#endif
   initialize_glue_tex ();
   initialize_glue_tmdb ();
   initialize_glue_updater ();

@@ -20,14 +20,13 @@ ${define HAVE_STDINT_H}
 /* Enable experimental style rewriting code */
 ${define EXPERIMENTAL}
 
-/* gs path relative to TEXMACS_PATH */
+${define USE_GS}
+
+#ifdef USE_GS
 #define GS_EXE "${GS_EXE}"
-
-/* gs fonts */
 #define GS_FONTS "${GS_FONTS}"
-
-/* gs lib */
 #define GS_LIB "${GS_LIB}"
+#endif
 
 /* Define to 1 if the system has the type `FILE'. */
 ${define HAVE_FILE}
@@ -108,6 +107,8 @@ ${define NOMINMAX}
 #define PACKAGE_VERSION ""
 
 ${define USE_PLUGIN_PDF}
+${define USE_PLUGIN_BIBTEX}
+${define USE_PLUGIN_LATEX_PREVIEW}
 
 ${define QTPIPES}
 
@@ -136,6 +137,8 @@ ${define USE_CAIRO}
 ${define USE_FREETYPE}
 
 ${define USE_GS}
+
+${define USE_FONTCONFIG}
 
 /* Use iconv library */
 ${define USE_ICONV}

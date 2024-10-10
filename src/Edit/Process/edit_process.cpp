@@ -13,14 +13,16 @@
 #include "analyze.hpp"
 #include "tm_buffer.hpp"
 #include "merge_sort.hpp"
-#include "Bibtex/bibtex.hpp"
-#include "Bibtex/bibtex_functions.hpp"
 #include "file.hpp"
 #include "tm_file.hpp"
 #include "convert.hpp"
 #include "scheme.hpp"
 #include "tree_observer.hpp"
 
+#ifdef USE_PLUGIN_BIBTEX
+#include "Bibtex/bibtex.hpp"
+#include "Bibtex/bibtex_functions.hpp"
+#endif
 
 /******************************************************************************
 * Constructors and destructors
@@ -111,6 +113,7 @@ void
 edit_process_rep::generate_bibliography (
   string bib, string style, string fname)
 {
+#ifdef USE_PLUGIN_BIBTEX
   if (N(style) == 0) style= "tm-plain";
   system_wait ("Generating bibliography, ", "please wait");
   if (DEBUG_AUTO)
@@ -219,6 +222,7 @@ edit_process_rep::generate_bibliography (
   if (is_atomic (t) && starts (t->label, "Error:"))
     set_message (t->label, "compile bibliography");
   else if (is_compound (t) && N(t) > 0) insert_tree (t);
+#endif
 }
 
 /******************************************************************************

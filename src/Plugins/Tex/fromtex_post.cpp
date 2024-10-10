@@ -12,7 +12,6 @@
 #include "LaTeX_Preview/latex_preview.hpp"
 #include "Tex/tex.hpp"
 #include "Tex/convert_tex.hpp"
-#include "Bibtex/bibtex.hpp"
 #include "metadata.hpp"
 #include "scheme.hpp"
 #include "vars.hpp"
@@ -22,6 +21,10 @@
 #include "url.hpp"
 #include "tree_helper.hpp"
 #include "tm_url.hpp"
+
+#ifdef USE_PLUGIN_BIBTEX
+#include "Bibtex/bibtex.hpp"
+#endif
 
 
 tree upgrade_tex (tree t);
@@ -1286,6 +1289,7 @@ is_preamble_command (tree t, tree& doc, string& style) {
   return false;
 }
 
+#ifdef USE_PLUGIN_BIBTEX
 bool
 is_bibliography_command (tree t, tree& doc, string& bib_style) {
   if (is_func (t, APPLY, 2)) {
@@ -1310,6 +1314,7 @@ is_bibliography_command (tree t, tree& doc, string& bib_style) {
   }
   return false;
 }
+#endif
 
 extern hashfunc<string,string> latex_std_type;
 
@@ -1338,7 +1343,9 @@ finalize_preamble (tree t, string& style, string& bib_style) {
     if (is_concat (t[i]) || is_document (t[i]))
       u << finalize_preamble (t[i], style, bib_style);
     else if (is_preamble_command (t[i], u, style));
+#ifdef USE_PLUGIN_BIBTEX
     else if (is_bibliography_command (t[i], u, bib_style));
+#endif
     else if (is_ignored_redefinition (t[i]));
     else u << t[i];
   }
