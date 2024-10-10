@@ -2849,7 +2849,6 @@
 ("tabular material" "tabelárny materiál")
 ("tag" "značka (tag)")
 ("tags with special rendering" "značky so špeciálnym vykresľovaním")
-("taiwanese" "taiwančina")
 ("tangent" "tangens")
 ("target" "cieľ")
 ("teXmacs DTD" "DTD TeXmacsu")
