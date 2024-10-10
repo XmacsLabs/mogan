@@ -56,7 +56,8 @@
         ((== val "accept all scripts") (set-script-status 2))))
 
 (define (notify-latex-command var val)
-  (set-latex-command val))
+  (if (use-plugin-tex?)
+      (set-latex-command val)))
 
 (define (notify-bibtex-command var val)
   (if (use-plugin-bibtex?)

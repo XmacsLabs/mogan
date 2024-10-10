@@ -1973,16 +1973,7 @@ concat_document_correct (tree t) {
 
 /****************************** Finalize textm *******************************/
 
-bool
-is_section (tree t) {
-  return is_compound (t, "part")     || is_compound (t, "part*")          ||
-    is_compound (t, "chapter")       || is_compound (t, "chapter*")       ||
-    is_compound (t, "section")       || is_compound (t, "section*")       ||
-    is_compound (t, "subsection")    || is_compound (t, "subsection*")    ||
-    is_compound (t, "subsubsection") || is_compound (t, "subsubsection*") ||
-    is_compound (t, "paragraph")     || is_compound (t, "paragraph*")     ||
-    is_compound (t, "subparagraph")  || is_compound (t, "subparagraph*");
-}
+bool is_section (tree t); // from cleanhtml.cpp
 
 static bool
 is_label (tree t) {

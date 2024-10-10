@@ -19,6 +19,11 @@ function main()
                 cpp_name = "use_plugin_bibtex",
                 ret_type = "bool"
             },
+            {
+                scm_name = "use-plugin-tex?",
+                cpp_name = "use_plugin_tex",
+                ret_type = "bool"
+            },
         }
     }
 end
