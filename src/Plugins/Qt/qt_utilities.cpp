@@ -207,6 +207,10 @@ to_qkeysequence (string ks) {
              << qks.toString (QKeySequence::NativeText).toLatin1().data() << LF;
     return qks;
   }
+  if (ends (r, "&")) {
+    // HACK: because Qt menu can not show the key &
+    r= r(0, N(r)-1) * "Shift+7";
+  }
   return QKeySequence (to_qstring (r));
 }
 
