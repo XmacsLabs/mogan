@@ -14,6 +14,7 @@
 #include "file.hpp"
 #include "tm_file.hpp"
 #include "locale.hpp"
+#include "tm_locale.hpp"
 #include "image_files.hpp"
 #include "scheme.hpp"
 #include "page_type.hpp"

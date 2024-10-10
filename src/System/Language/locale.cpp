@@ -40,9 +40,6 @@
 #include "sys_utils.hpp"
 #include "analyze.hpp"
 
-#ifdef QTTEXMACS
-#include "Qt/qt_utilities.hpp"
-#endif
 
 /******************************************************************************
 * Locales
@@ -231,81 +228,3 @@ get_locale_charset () {
   return charset;
 #endif
 }
-
-/******************************************************************************
-* Getting a formatted date
-******************************************************************************/
-
-#ifdef QTTEXMACS
-string
-get_date (string lan, string fm) {
-  return qt_get_date(lan, fm);
-}
-
-string
-pretty_time (int t) {
-  return qt_pretty_time (t);
-}
-#else
-
-static bool
-invalid_format (string s) {
-  if (N(s) == 0) return true;
-  for (int i=0; i<N(s); i++)
-    if (!(is_alpha (s[i]) || is_numeric (s[i]) ||
-	  s[i] == ' ' || s[i] == '%' || s[i] == '.' || s[i] == ',' ||
-	  s[i] == '+' || s[i] == '-' || s[i] == ':'))
-      return true;
-  return false;
-}
-
-static string
-simplify_date (string s) {
-  int i, n=N(s);
-  string r;
-  for (i=0; i<n; i++)
-    if ((s[i]!='0') || ((N(r)>0) && is_digit(r[N(r)-1]))) r << s[i];
-  return r;
-}
-
-string
-get_date (string lan, string fm) {
-//#if defined(OS_MINGW) || defined(OS_WIN)
-//  return win32::get_date(lan, fm);
-  if (invalid_format (fm)) {
-    if ((lan == "british") || (lan == "english") || (lan == "american"))
-      fm= "%B %d, %Y";
-    else if (lan == "german")
-      fm= "%d. %B %Y";
-    else if (lan == "chinese" || lan == "japanese" ||
-	     lan == "korean" || lan == "taiwanese")
-      {
-        string y= simplify_date (var_eval_system ("date +\"%Y\""));
-        string m= simplify_date (var_eval_system ("date +\"%m\""));
-        string d= simplify_date (var_eval_system ("date +\"%d\""));
-        if (lan == "korean")
-          return y * "<#b144> " * m * "<#c6d4> " * d * "<#c77c>";
-	      return y * "<#5e74>" * m * "<#6708>" * d * "<#65e5>";
-      }
-    else fm= "%d %B %Y";
-  }
-  lan= language_to_locale (lan);
-  string lvar= "LC_TIME";
-  if (get_env (lvar) == "") lvar= "LC_ALL";
-  if (get_env (lvar) == "") lvar= "LANG";
-  string old= get_env (lvar);
-  set_env (lvar, lan);
-  string date= simplify_date (var_eval_system ("date +\"" * fm * "\""));
-  if ((lan == "cz_CZ") || (lan == "hu_HU") || (lan == "pl_PL"))
-    date= il2_to_cork (date);
-  // if (lan == "ru_RU") date= iso_to_koi8 (date);
-  set_env (lvar, old);
-  return date;
-}
-
-string
-pretty_time (int t) {
-  return var_eval_system ("date -r " * as_string (t));
-}
-#endif
-

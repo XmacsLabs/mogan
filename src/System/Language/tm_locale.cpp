@@ -1,6 +1,6 @@
 
 /******************************************************************************
-* MODULE     : locale.hpp
+* MODULE     : tm_locale.cpp
 * DESCRIPTION: Locale related routines
 * COPYRIGHT  : (C) 1999-2019  Joris van der Hoeven, Darcy Shen
 *******************************************************************************
@@ -9,16 +9,25 @@
 * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ******************************************************************************/
 
-#ifndef LOCALE_HPP
-#define LOCALE_HPP
+#include "tm_locale.hpp"
 
-#include "string.hpp"
+#ifdef QTTEXMACS
+#include "Qt/qt_utilities.hpp"
+#endif
 
-string locale_to_language (string s);
-string language_to_locale (string s);
-string language_to_local_ISO_charset (string s);
-string get_locale_language ();
-string get_locale_charset ();
 
-#endif // LOCALE_HPP
+/******************************************************************************
+* Getting a formatted date
+******************************************************************************/
 
+#ifdef QTTEXMACS
+string
+get_date (string lan, string fm) {
+  return qt_get_date(lan, fm);
+}
+
+string
+pretty_time (int t) {
+  return qt_pretty_time (t);
+}
+#endif

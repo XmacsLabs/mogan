@@ -912,6 +912,33 @@ function main()
                     "url"
                 }
             },
+            -- System/Language/locale
+            {
+                scm_name = "get-locale-language",
+                cpp_name = "get_locale_language",
+                ret_type = "string"
+            },
+            {
+                scm_name = "get-locale-charset",
+                cpp_name = "get_locale_charset",
+                ret_type = "string"
+            },
+            {
+                scm_name = "locale-to-language",
+                cpp_name = "locale_to_language",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "language-to-locale",
+                cpp_name = "language_to_locale",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
         }
     }
 end
