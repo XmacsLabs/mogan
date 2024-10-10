@@ -19,6 +19,7 @@ extern bool use_which;
 extern bool use_locate;
 extern bool headless_mode;
 
+void   init_texmacs_path (int& argc, char** argv);
 void   init_upgrade ();
 void   init_texmacs ();
 void   init_plugins ();
