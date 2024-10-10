@@ -111,6 +111,7 @@ ${define USE_PLUGIN_BIBTEX}
 ${define USE_PLUGIN_LATEX_PREVIEW}
 ${define USE_PLUGIN_TEX}
 ${define USE_PLUGIN_ISPELL}
+${define USE_PLUGIN_SPARKLE}
 
 ${define QTPIPES}
 
@@ -149,5 +150,7 @@ ${define USE_ICONV}
 ${define USE_IMLIB2}
 
 ${define USE_SPARKLE}
+
+${define USE_PLUGIN_SPARKLE}
 
 ${define USE_STACK_TRACE}

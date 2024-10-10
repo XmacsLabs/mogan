@@ -459,7 +459,7 @@
 ;;(display* "memory: " (texmacs-memory) " bytes\n")
 
 ;;(display "Booting autoupdater\n")
-(when (updater-supported?) 
+(when (use-plugin-updater?) 
   (use-modules (utils misc updater))
   (delayed (:idle 2000) (updater-initialize)))
 (display* "time: " (- (texmacs-time) boot-start) "\n")

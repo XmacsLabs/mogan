@@ -16,11 +16,6 @@ function main()
         initializer_name = "initialize_glue_updater",
         glues = {
             {
-                scm_name = "updater-supported?",
-                cpp_name = "updater_supported",
-                ret_type = "bool"
-            },
-            {
                 scm_name = "updater-running?",
                 cpp_name = "updater_is_running",
                 ret_type = "bool"

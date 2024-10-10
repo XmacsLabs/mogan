@@ -110,7 +110,7 @@
 	    ("The TeXmacs authors"
 	     (load-help-article "about/authors/authors"))
 	    ---
-	    (when (and (updater-supported?) (not (updater-running?)))
+	    (when (and (use-plugin-updater?) (not (updater-running?)))
 		  ("Check for updates"
 		   (updater-check-foreground)))
 	    (when (url-exists-in-help? "about/changes/changes-recent")

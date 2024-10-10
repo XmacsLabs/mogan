@@ -15,9 +15,6 @@
 #include "object_l2.hpp"
 #include "s7_tm.hpp"
 
-#include "Updater/tm_updater.hpp"
-#include "glue_updater.cpp"
-
 #include "LaTeX_Preview/latex_preview.hpp"
 
 #include "Database/database.hpp"
@@ -25,6 +22,20 @@
 
 #include "Xml/xml.hpp"
 #include "glue_xml.cpp"
+
+bool
+use_plugin_updater () {
+#ifdef USE_PLUGIN_SPARKLE
+  return true;
+#else
+  return false;
+#endif
+}
+
+#ifdef USE_PLUGIN_SPARKLE
+#include "Updater/tm_updater.hpp"
+#include "glue_updater.cpp"
+#endif
 
 bool
 use_plugin_tex () {
@@ -93,8 +104,11 @@ void
 initialize_glue_plugins () {
   initialize_glue_plugin ();
   initialize_glue_tmdb ();
-  initialize_glue_updater ();
   initialize_glue_xml ();
+
+#ifdef USE_PLUGIN_SPARKLE
+  initialize_glue_updater ();
+#endif
 
 #ifdef USE_PLUGIN_BIBTEX
   initialize_glue_bibtex ();

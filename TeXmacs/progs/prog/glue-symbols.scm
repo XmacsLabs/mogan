@@ -29,7 +29,7 @@
 (tm-define (all-glued-symbols) '( 
 "texmacs-version-release"
 "version-before?"
-"updater-supported?"
+"use-plugin-updater?"
 "updater-running?"
 "updater-check-background"
 "updater-check-foreground"

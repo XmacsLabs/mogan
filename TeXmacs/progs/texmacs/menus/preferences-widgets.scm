@@ -697,12 +697,12 @@
                 (else (translate "More than 1 month ago")))))))
 
 (define (last-check-string)
-  (if (updater-supported?)
+  (if (use-plugin-updater?)
       (updater-last-check-formatted)
       "Never (unsupported)"))
 
 (define (automatic-checks-choices)
-  (if (updater-supported?)
+  (if (use-plugin-updater?)
       '("Never" "Once a day" "Once a week" "Once a month")
       '("Unsupported")))
 
@@ -759,13 +759,13 @@
             '("Once" "Twice" "Three times")
             (get-pretty-preference "document update times") 
             "12em"))
-    (assuming (updater-supported?)
+    (assuming (use-plugin-updater?)
       (item (text "Check for automatic updates:")
         (enum (set-pretty-preference "updater:interval" answer)
               (automatic-checks-choices)
               (get-pretty-preference "updater:interval")
               "12em")))
-    (assuming (updater-supported?)
+    (assuming (use-plugin-updater?)
       (item (text "Last check:") (text (last-check-string))))))
 
 (tm-widget (experimental-preferences-widget)

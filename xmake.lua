@@ -312,6 +312,7 @@ target("libmogan") do
                 USE_PLUGIN_TEX = true,
                 USE_PLUGIN_ISPELL = true,
                 USE_PLUGIN_PDF = true,
+                USE_PLUGIN_SPARKLE = false,
                 }})
 
     if is_plat("linux") then 

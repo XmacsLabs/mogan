@@ -24,6 +24,11 @@ function main()
                 cpp_name = "use_plugin_tex",
                 ret_type = "bool"
             },
+            {
+                scm_name = "use-plugin-updater?",
+                cpp_name = "use_plugin_updater",
+                ret_type = "bool"
+            }
         }
     }
 end
