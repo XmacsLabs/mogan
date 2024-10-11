@@ -372,6 +372,10 @@ utf8_to_herk (string input) {
     string       s   = input (start, i);
     string       r   = apply (conv, s);
     if (r == s && code >= 256) r= "<#" * to_Hex (code) * ">";
+    else if (N (r) >= 2) {
+      r= "<#" * to_Hex (code) * ">";
+    }
+
     output << r;
   }
   return output;
