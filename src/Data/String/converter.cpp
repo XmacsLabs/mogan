@@ -367,10 +367,10 @@ utf8_to_herk (string input) {
   int       start, i, n= N (input);
   string    output;
   for (i= 0; i < n;) {
-    start            = i;
+    start        = i;
     uint32_t code= decode_from_utf8 (input, i);
-    string       s   = input (start, i);
-    string       r   = apply (conv, s);
+    string   s   = input (start, i);
+    string   r   = apply (conv, s);
     if (r == s && (code < 32 || code >= 128)) r= "<#" * to_Hex (code) * ">";
     output << r;
   }
