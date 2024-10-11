@@ -210,6 +210,9 @@
   (check (herk->utf8 (string #\xAD)) => "ŋ")
   (check (herk->utf8 (string #\xAE)) => "ő")
   (check (herk->utf8 (string #\xAF)) => "ŕ")
+
+  (check (utf8->herk (utf8->string #u8(#xC2 #xA0))) => "<#A0>") ; U+00A0
+  (check (utf8->herk (utf8->string #u8(#xC2 #xA1))) => (string #\xBD)) ; U+00A1
 )
 
 (define (test-herk-Bx)
