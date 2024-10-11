@@ -232,7 +232,7 @@
 ("#DC"	"#DC")
 ("#DD"	"#DD")
 ("#DE"	"#DE")
-;; ("#DF" "SS") one way conversion -> unicode-cork-oneway.scm
+("#DF"  "#1E9E")
 ("#E0"	"#E0")
 ("#E1"	"#E1")
 ("#E2"	"#E2")
