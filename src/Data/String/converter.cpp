@@ -139,12 +139,12 @@ converter_rep::load () {
 
   if (from == "Hex-Cork" && to == "UTF-8") {
     hashtree<char, string> dic;
-    hashtree_from_dictionary (dic, "corktounicode", BIT2BIT, UTF8, false);
+    hashtree_from_dictionary (dic, "herktounicode", BIT2BIT, UTF8, false);
     ht= dic;
   }
   else if (from == "UTF-8" && to == "Hex-Cork") {
     hashtree<char, string> dic;
-    hashtree_from_dictionary (dic, "corktounicode", UTF8, BIT2BIT, true);
+    hashtree_from_dictionary (dic, "herktounicode", UTF8, BIT2BIT, true);
     ht= dic;
   }
 
