@@ -371,11 +371,7 @@ utf8_to_herk (string input) {
     unsigned int code= decode_from_utf8 (input, i);
     string       s   = input (start, i);
     string       r   = apply (conv, s);
-    if (r == s && code >= 256) r= "<#" * to_Hex (code) * ">";
-    else if (N (r) >= 2) {
-      r= "<#" * to_Hex (code) * ">";
-    }
-
+    if (r == s && (code < 32 || code >= 128)) r= "<#" * to_Hex (code) * ">";
     output << r;
   }
   return output;
