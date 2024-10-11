@@ -348,6 +348,8 @@
   (check (herk->utf8 (string #\xFD)) => "ý")
   (check (herk->utf8 (string #\xFE)) => "þ")
   (check (herk->utf8 (string #\xFF)) => "ß")
+
+  (check (utf8->herk (string #\xFF)) => "<#FF>")
 )
 
 (define (test-herk)
