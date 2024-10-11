@@ -352,6 +352,21 @@
   (check (utf8->herk (string #\xFF)) => "<#FF>")
 )
 
+(define (test-herk-others)
+  (check (utf8->herk "<less>") => "<less>")
+  (check (herk->utf8 "<less>") => "<less>")
+  (check (utf8->herk "<gtr>") => "<gtr>")
+  (check (herk->utf8 "<gtr>") => "<gtr>")
+
+  (check (utf8->herk "<#00FF>") => "<#00FF>")
+  (check (utf8->herk "<#0FF>") => "<#0FF>")
+  (check (utf8->herk "<#FF>") => "<#FF>")
+  (check (herk->utf8 "<#FF>") => "ÿ")
+  (check (herk->utf8 "<#0FF>") => "ÿ")
+  (check (herk->utf8 "<#00FF>") => "ÿ")
+
+  (check (herk->utf8 "<#4E2D>") => "中"))
+
 (define (test-herk)
   (test-herk-0x)
   (test-herk-1x)
@@ -368,7 +383,8 @@
   (test-herk-Cx)
   (test-herk-Dx)
   (test-herk-Ex)
-  (test-herk-Fx))
+  (test-herk-Fx)
+  (test-herk-others))
 
 (tm-define (test_66_13)
   (test-herk)
