@@ -39,6 +39,27 @@
   (check (herk->utf8 (string #\x1F)) => "ﬄ") ; U+FB04
 )
 
+(define (test-herk-2x)
+  (check (herk->utf8 (string #\x20)) => " ")
+  (check (herk->utf8 (string #\x21)) => "!")
+  (check (herk->utf8 (string #\x22)) => "\"")
+  (check (herk->utf8 (string #\x23)) => "#")
+  (check (herk->utf8 (string #\x24)) => "$")
+  (check (herk->utf8 (string #\x25)) => "%")  ; percent sign
+  ;(check (herk->utf8 (string (list #\x25 #x18))) => "‰")  ; per mille sign
+  ;(check (herk->utf8 (string (list #\x25 #x18 #x18))) => "‱")  ; per ten thousand sign
+  (check (herk->utf8 (string #\x26)) => "&")
+  (check (herk->utf8 (string #\x27)) => "'")
+  (check (herk->utf8 (string #\x28)) => "(")
+  (check (herk->utf8 (string #\x29)) => ")")
+  (check (herk->utf8 (string #\x2A)) => "*")
+  (check (herk->utf8 (string #\x2B)) => "+")
+  (check (herk->utf8 (string #\x2C)) => ",")
+  (check (herk->utf8 (string #\x2D)) => "-")
+  (check (herk->utf8 (string #\x2E)) => ".")
+  (check (herk->utf8 (string #\x2F)) => "/")
+)
+
 (define (test-herk-3x)
   (check (herk->utf8 (string #\x30)) => "0")
   (check (herk->utf8 (string #\x31)) => "1")
@@ -287,7 +308,7 @@
 (define (test-herk)
   (test-herk-0x)
   (test-herk-1x)
-  (test-herk-3x)
+  (test-herk-2x)
   (test-herk-3x)
   (test-herk-4x)
   (test-herk-5x)
