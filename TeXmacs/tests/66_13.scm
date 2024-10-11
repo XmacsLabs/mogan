@@ -1,22 +1,7 @@
 (import (liii check))
 (import (liii base))
 
-;("#00"	"#60")
-;("#01"	"#B4")
-;("#02"	"#02C6") ; modifier letter circumflex accent
-;("#03"	"#02DC") ; small tilde
-;("#04"	"#A8")
-;("#05"	"#02DD")
-;("#06"	"#02DA")
-;("#07"	"#02C7")
-;("#08"	"#02D8")
-;("#09"	"#AF")
-;("#0A"	"#02D9")
-;("#0B"	"#B8")
-;("#0C"	"#02DB")
-;("#0D"	"#201A")
-;("#0E"	"#2039")
-;("#0F"	"#203A")
+(check-set-mode! 'report-failed)
 
 (define (test-herk-0x)
   (check (herk->utf8 (string #\x00)) => "`") ; U+0060
@@ -37,8 +22,26 @@
   (check (herk->utf8 (string #\x0F)) => "›") ; U+203A
 )
 
+(define (test-herk-1x)
+  (check (herk->utf8 (string #\x10)) => "“") ; U+201C
+  (check (herk->utf8 (string #\x11)) => "”") ; U+201D
+  (check (herk->utf8 (string #\x12)) => "„") ; U+201E
+  (check (herk->utf8 (string #\x13)) => "«") ; U+00AB
+  (check (herk->utf8 (string #\x14)) => "»") ; U+00BB
+  (check (herk->utf8 (string #\x15)) => "–") ; U+2013
+  (check (herk->utf8 (string #\x16)) => "—") ; U+2014
+  (check (herk->utf8 (string #\x17)) => (utf8->string #u8(#xE2 #x81 #xA0))) ; U+2060
+  (check (herk->utf8 (string #\x19)) => "ı") ; U+0131
+  (check (herk->utf8 (string #\x1B)) => "ﬀ") ; U+FB00
+  (check (herk->utf8 (string #\x1C)) => "ﬁ") ; U+FB01
+  (check (herk->utf8 (string #\x1D)) => "ﬂ") ; U+FB02
+  (check (herk->utf8 (string #\x1E)) => "ﬃ") ; U+FB03
+  (check (herk->utf8 (string #\x1F)) => "ﬄ") ; U+FB04
+)
+
 (define (test-herk)
-  (test-herk-0x))
+  (test-herk-0x)
+  (test-herk-1x))
 
 (tm-define (test_66_13)
   (test-herk)
