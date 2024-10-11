@@ -32,9 +32,9 @@
 ("#15"	"#2013")
 ("#16"	"#2014")
 ("#17"	"#2060")
-;; ("#18" "0") ; perthousand zero -> cork-unicode-oneway.scm
+("#18" "#2080")
 ("#19"	"#0131")
-;; ("#1A" "j")   ; dotless j -> cork-unicode-oneway.scm
+("#1A" "#0237")
 ("#1B"	"#FB00")
 ("#1C"	"#FB01")
 ("#1D"	"#FB02")

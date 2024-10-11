@@ -31,7 +31,9 @@
   (check (herk->utf8 (string #\x15)) => "–") ; U+2013
   (check (herk->utf8 (string #\x16)) => "—") ; U+2014
   (check (herk->utf8 (string #\x17)) => (utf8->string #u8(#xE2 #x81 #xA0))) ; U+2060
+  (check (herk->utf8 (string #\x18)) => "₀") ; U+2080
   (check (herk->utf8 (string #\x19)) => "ı") ; U+0131
+  (check (herk->utf8 (string #\x1A)) => "ȷ") ; U+0237
   (check (herk->utf8 (string #\x1B)) => "ﬀ") ; U+FB00
   (check (herk->utf8 (string #\x1C)) => "ﬁ") ; U+FB01
   (check (herk->utf8 (string #\x1D)) => "ﬂ") ; U+FB02
@@ -46,8 +48,6 @@
   (check (herk->utf8 (string #\x23)) => "#")
   (check (herk->utf8 (string #\x24)) => "$")
   (check (herk->utf8 (string #\x25)) => "%")  ; percent sign
-  ;(check (herk->utf8 (string (list #\x25 #x18))) => "‰")  ; per mille sign
-  ;(check (herk->utf8 (string (list #\x25 #x18 #x18))) => "‱")  ; per ten thousand sign
   (check (herk->utf8 (string #\x26)) => "&")
   (check (herk->utf8 (string #\x27)) => "'")
   (check (herk->utf8 (string #\x28)) => "(")
@@ -73,7 +73,9 @@
   (check (herk->utf8 (string #\x39)) => "9")
   (check (herk->utf8 (string #\x3A)) => ":")
   (check (herk->utf8 (string #\x3B)) => ";")
+  (check (herk->utf8 (string #\x3C)) => "<")
   (check (herk->utf8 (string #\x3D)) => "=")
+  (check (herk->utf8 (string #\x3E)) => ">")
   (check (herk->utf8 (string #\x3F)) => "?")
 )
 
