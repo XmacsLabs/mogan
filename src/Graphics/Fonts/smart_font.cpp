@@ -397,7 +397,7 @@ in_unicode_range (string c, string range) {
   string got = lolly::data::unicode_get_range (code);
   if (range == got) return range != "";
   if (range == "cjk") {
-    if (got == "hangul" || got == "hiragana" || got == "enclosed_alphanumerics")
+    if (got == "hangul" || got == "hiragana" || got == "enclosed_alphanumerics" || got == "latin")
       return true;
     return is_cjk_punct (uc);
   }
@@ -750,14 +750,15 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
   int                   count= 0;
   int                   start= pos;
   nr                         = -1;
-  while (pos < N (s)) {
+  int s_N= N(s);
+  while (pos < s_N) {
     if (s[pos] != '<') {
       int c= (int) (unsigned char) s[pos];
 
       int fn_index= chv[c];
       if (math_kind != 0 && math_kind != 2 && is_alpha (c) &&
           (pos == 0 || !is_alpha (s[pos - 1])) &&
-          (pos + 1 == N (s) || !is_alpha (s[pos + 1]))) {
+          (pos + 1 == s_N || !is_alpha (s[pos + 1]))) {
         fn_index= italic_nr;
       }
       else if (fn_index == -1) {
@@ -800,12 +801,17 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
     count++;
   }
   r= s (start, pos);
+  cout << "r: " << r << LF;
   if (nr < 0) return;
   if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
+  cout << nr << LF;
+  cout << "rewrite kind: " << sm->fn_rewr[nr] << LF;
   if (sm->fn_rewr[nr] != REWRITE_NONE) r= rewrite (r, sm->fn_rewr[nr]);
-  if (DEBUG_VERBOSE)
-    debug_fonts << "Physical font of " << cork_to_utf8 (r) << " is "
-                << fn[nr]->res_name << LF;
+  if (DEBUG_VERBOSE) {
+    debug_fonts << "Physical font of [" << r << "]"
+                << "[" << herk_to_utf8 (r) << "][" << cork_to_utf8 (r) << "]"
+                << " is " << fn[nr]->res_name << LF;
+  }
 }
 
 bool
@@ -815,7 +821,13 @@ is_italic_font (string master) {
 
 static bool
 is_wanted (string c, string family, array<string> rules, array<string> given) {
-  for (int i= 0; i < N (rules); i++) {
+  cout << "is_wanted: " << LF;
+  cout << c << LF;
+  cout << rules << LF;
+  cout << given << LF;
+
+  int rules_N= N (rules);
+  for (int i= 0; i < rules_N; i++) {
     if (is_empty (rules[i])) continue;
     bool          ok= false;
     array<string> v = tokenize (rules[i], "|");
@@ -847,16 +859,15 @@ is_wanted (string c, string family, array<string> rules, array<string> given) {
 
 int
 smart_font_rep::resolve (string c, string fam, int attempt) {
-  if (DEBUG_VERBOSE) {
-    debug_fonts << "Resolve " << c << " in " << fam << ", attempt " << attempt
+  debug_fonts << "Resolve " << c << " in fam " << fam << " mfam " << mfam << ", attempt " << attempt
                 << LF;
-  }
   array<string> a= trimmed_tokenize (fam, "=");
   if (N (a) >= 2) {
     array<string> given= logical_font (family, variant, series, rshape);
     fam                = a[1];
     array<string> b    = tokenize (a[0], " ");
     bool          ok   = is_wanted (c, fam, b, given);
+    cout << "ok: " << ok << LF;
     if (!ok) {
       return -1;
     }
@@ -890,6 +901,7 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
     if (fam == "cal**" || fam == "Bbb*") ok= ok && is_alpha (c);
     if (!ok) return -1;
 
+    cout << "here" << LF;
     if (fam == mfam) {
       if (fn[SUBFONT_MAIN]->supports (c)) {
         return sm->add_char (tuple ("main"), c);
@@ -897,6 +909,7 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
     }
     else {
       font cfn= closest_font (fam, variant, series, rshape, sz, dpi, 1);
+      cout << cfn->res_name << LF;
       if (cfn->supports (c)) {
         tree key= tuple (fam, variant, series, rshape, "1");
         int  nr = sm->add_font (key, REWRITE_NONE);

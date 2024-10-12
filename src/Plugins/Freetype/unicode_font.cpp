@@ -693,9 +693,11 @@ unicode_font_rep::ligature_replace (unsigned int uc, string s, int& i) {
 
 bool
 unicode_font_rep::supports (string c) {
+  cout << "c: " << c << LF;
   if (N (c) == 0) return false;
   int          i = 0;
   unsigned int uc= read_unicode_char (c, i);
+  cout << uc << LF;
   if (uc == 0 || !fnm->exists (uc)) return false;
   if (uc >= 0x42 && uc <= 0x5a && !fnm->exists (0x41)) return false;
   if (uc >= 0x62 && uc <= 0x7a && !fnm->exists (0x61)) return false;

@@ -75,9 +75,10 @@ TestSmartFont::test_resolve_chinese_puncts () {
                               "<#2014>" // Chinese: 破折号的一半
   );
   for (int i= 0; i < N (puncts); i++) {
-    int fn_index= fn_rep->resolve (puncts[1], "cjk=sys-chinese", 1);
+    int fn_index= fn_rep->resolve (puncts[1], "cjk=Noto CJK SC", 1);
     QCOMPARE (fn_index, 2);
   }
+  cout << "result" << fn_rep->resolve("<#A0>", "cjk=Noto CJK SC", 1);
 }
 
 QTEST_MAIN (TestSmartFont)
