@@ -5,6 +5,8 @@
 
 (define (test-herk-0x)
   (check (herk->utf8 (string #\x00)) => "`") ; U+0060
+  (check (utf8->herk "`") => (string #\x00))
+
   (check (herk->utf8 (string #\x01)) => "´") ; U+00B4
   (check (herk->utf8 (string #\x02)) => "ˆ") ; U+02C6
   (check (herk->utf8 (string #\x03)) => "˜") ; U+02DC
