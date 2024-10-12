@@ -78,7 +78,7 @@ TestSmartFont::test_resolve_chinese_puncts () {
     int fn_index= fn_rep->resolve (puncts[1], "cjk=Noto CJK SC", 1);
     QCOMPARE (fn_index, 2);
   }
-  cout << "result" << fn_rep->resolve("<#A0>", "cjk=Noto CJK SC", 1);
+  cout << "result: " << fn_rep->resolve ("<#A0>", "cjk=Noto CJK SC", 1);
 }
 
 QTEST_MAIN (TestSmartFont)

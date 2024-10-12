@@ -397,7 +397,8 @@ in_unicode_range (string c, string range) {
   string got = lolly::data::unicode_get_range (code);
   if (range == got) return range != "";
   if (range == "cjk") {
-    if (got == "hangul" || got == "hiragana" || got == "enclosed_alphanumerics" || got == "latin")
+    if (got == "hangul" || got == "hiragana" ||
+        got == "enclosed_alphanumerics" || got == "latin")
       return true;
     return is_cjk_punct (uc);
   }
@@ -750,7 +751,7 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
   int                   count= 0;
   int                   start= pos;
   nr                         = -1;
-  int s_N= N(s);
+  int s_N                    = N (s);
   while (pos < s_N) {
     if (s[pos] != '<') {
       int c= (int) (unsigned char) s[pos];
@@ -851,8 +852,10 @@ is_wanted (string c, string family, array<string> rules, array<string> given) {
 
 int
 smart_font_rep::resolve (string c, string fam, int attempt) {
-  debug_fonts << "Resolve " << c << " in fam " << fam << " mfam " << mfam << ", attempt " << attempt
-                << LF;
+  if (DEBUG_VERBOSE) {
+    debug_fonts << "Resolve " << c << " in fam " << fam << " mfam " << mfam
+                << ", attempt " << attempt << LF;
+  }
   array<string> a= trimmed_tokenize (fam, "=");
   if (N (a) >= 2) {
     array<string> given= logical_font (family, variant, series, rshape);
