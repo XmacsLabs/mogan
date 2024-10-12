@@ -35,6 +35,9 @@
       (cpp-insert t)
       (cpp-insert-go-to t (path-in t opt-l))))
 
+(tm-define (u8-insert t)
+  (insert (utf8->herk t)))
+
 (define (var-make tag . opt-arity)
   (if (null? opt-arity)
       (cpp-make tag)
