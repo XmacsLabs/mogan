@@ -5,6 +5,8 @@
 
 (define (test-herk-0x)
   (check (herk->utf8 (string #\x00)) => "`") ; U+0060
+  (check (utf8->herk "`") => (string #\x00))
+
   (check (herk->utf8 (string #\x01)) => "´") ; U+00B4
   (check (herk->utf8 (string #\x02)) => "ˆ") ; U+02C6
   (check (herk->utf8 (string #\x03)) => "˜") ; U+02DC
@@ -21,24 +23,25 @@
   (check (herk->utf8 (string #\x0E)) => "‹") ; U+2039
   (check (herk->utf8 (string #\x0F)) => "›") ; U+203A
 
-  (check (herk->utf8 "<#0>") => (string #\x00))
-  (check (herk->utf8 "<#F>") => (string #\x0F))
-  (check (utf8->herk (string #\x00)) => "<#0>")
-  (check (utf8->herk (string #\x01)) => "<#1>")
-  (check (utf8->herk (string #\x02)) => "<#2>")
-  (check (utf8->herk (string #\x03)) => "<#3>")
-  (check (utf8->herk (string #\x04)) => "<#4>")
-  (check (utf8->herk (string #\x05)) => "<#5>")
-  (check (utf8->herk (string #\x06)) => "<#6>")
-  (check (utf8->herk (string #\x07)) => "<#7>")
-  (check (utf8->herk (string #\x08)) => "<#8>")
-  (check (utf8->herk (string #\x09)) => "<#9>")
-  (check (utf8->herk (string #\x0A)) => "<#A>")
-  (check (utf8->herk (string #\x0B)) => "<#B>")
-  (check (utf8->herk (string #\x0C)) => "<#C>")
-  (check (utf8->herk (string #\x0D)) => "<#D>")
-  (check (utf8->herk (string #\x0E)) => "<#E>")
-  (check (utf8->herk (string #\x0F)) => "<#F>")
+  (check (herk->utf8 "<#00>") => (string #\x00))
+  (check (herk->utf8 "<#0F>") => (string #\x0F))
+  (check (utf8->herk "<#00>") => "<#00>")
+  (check (utf8->herk (string #\x00)) => "<#00>")
+  (check (utf8->herk (string #\x01)) => "<#01>")
+  (check (utf8->herk (string #\x02)) => "<#02>")
+  (check (utf8->herk (string #\x03)) => "<#03>")
+  (check (utf8->herk (string #\x04)) => "<#04>")
+  (check (utf8->herk (string #\x05)) => "<#05>")
+  (check (utf8->herk (string #\x06)) => "<#06>")
+  (check (utf8->herk (string #\x07)) => "<#07>")
+  (check (utf8->herk (string #\x08)) => "<#08>")
+  (check (utf8->herk (string #\x09)) => "<#09>")
+  (check (utf8->herk (string #\x0A)) => "<#0A>")
+  (check (utf8->herk (string #\x0B)) => "<#0B>")
+  (check (utf8->herk (string #\x0C)) => "<#0C>")
+  (check (utf8->herk (string #\x0D)) => "<#0D>")
+  (check (utf8->herk (string #\x0E)) => "<#0E>")
+  (check (utf8->herk (string #\x0F)) => "<#0F>")
 )
 
 (define (test-herk-1x)
