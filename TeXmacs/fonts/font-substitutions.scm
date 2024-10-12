@@ -1,6 +1,7 @@
 ((FandolSong sansserif) (FandolHei))
 ((FandolSong typewriter) (FandolFang))
 ((FandolSong italic) (FandolKai))
+
 ((Hiragino\ Mincho\ Pro sansserif) (Hiragino\ Kaku\ Gothic\ Pro))
 ((Hiragino\ Mincho\ ProN sansserif) (Hiragino\ Kaku\ Gothic\ ProN))
 ((IPAMincho bold) (IPAGothic))
@@ -11,6 +12,7 @@
 ((MS\ Mincho sansserif) (MS\ Gothic))
 ((Sazanami\ Mincho bold) (Sazanami\ Gothic))
 ((Sazanami\ Mincho sansserif) (Sazanami\ Gothic))
+
 ((SimSun bold) (SimHei))
 ((SimSun sansserif) (SimHei))
 ((SimSun italic) (KaiTi_GB2312))
@@ -30,12 +32,9 @@
 ((UnBatang italic) (UnGraphic))
 ((UnBatang typewriter) (UnGungseo))
 
-((concrete cjk) (FandolSong))
-((concrete cjk) (SimSun))
-((roman cjk) (FandolSong))
-((roman cjk) (SimSun))
-((Stix cjk) (FandolSong))
-((Stix cjk) (SimSun))
+((concrete cjk) (Noto\ CJK\ SC))
+((roman cjk) (Noto\ CJK\ SC))
+((Stix cjk) (Noto\ CJK\ SC))
 
 ((Bodoni\ 72 smallcaps) (Bodoni\ 72\ Smallcaps))
 ((Bodoni\ 72\ Oldstyle smallcaps) (Bodoni\ 72\ Smallcaps))

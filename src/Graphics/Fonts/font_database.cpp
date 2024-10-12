@@ -286,11 +286,9 @@ font_database_load_substitutions (url u) {
           is_atomic (t[i][0][0]) && is_atomic (t[i][1][0])) {
         string key= t[i][0][0]->label;
         string im = t[i][1][0]->label;
-        if (N (font_database_styles (im, font_table)) != 0) {
-          if (!font_substitutions->contains (key))
-            font_substitutions (key)= tree (TUPLE);
-          font_substitutions (key) << t[i];
-        }
+        if (!font_substitutions->contains (key))
+          font_substitutions (key)= tree (TUPLE);
+        font_substitutions (key) << t[i];
       }
   }
 }
