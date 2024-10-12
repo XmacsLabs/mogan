@@ -49,7 +49,7 @@
   (check (herk->utf8 (string #\x14)) => "»") ; U+00BB
   (check (herk->utf8 (string #\x15)) => "–") ; U+2013
   (check (herk->utf8 (string #\x16)) => "—") ; U+2014
-  (check (herk->utf8 (string #\x17)) => (utf8->string #u8(#xE2 #x81 #xA0))) ; U+2060
+  (check (herk->utf8 (string #\x17)) => (utf8->string #u8(#xE2 #x80 #x8B))) ; U+200B
   (check (herk->utf8 (string #\x18)) => "₀") ; U+2080
   (check (herk->utf8 (string #\x19)) => "ı") ; U+0131
   (check (herk->utf8 (string #\x1A)) => "ȷ") ; U+0237
@@ -190,7 +190,7 @@
   (check (herk->utf8 (string #\x7C)) => "|")
   (check (herk->utf8 (string #\x7D)) => "}")
   (check (herk->utf8 (string #\x7E)) => "~")
-  (check (herk->utf8 (string #\x7F)) => "‐") ; U+2010
+  (check (herk->utf8 (string #\x7F)) => (utf8->string #u8(#xC2 #xAD))) ; U+00AD
 )
 
 (define (test-herk-8x)
