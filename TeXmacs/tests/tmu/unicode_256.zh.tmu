@@ -4,7 +4,7 @@
 
 <\body>
   <\wide-tabular>
-    <tformat|<cwith|13|13|4|4|cell-background|pastel red>|<cwith|13|13|5|5|cell-background|pastel red>|<cwith|13|13|9|9|cell-background|>|<cwith|13|13|8|8|cell-background|pastel red>|<table|<row|<\cell>
+    <tformat|<cwith|13|13|4|4|cell-background|pastel red>|<cwith|13|13|5|5|cell-background|pastel red>|<cwith|13|13|9|9|cell-background|>|<cwith|13|13|8|8|cell-background|pastel red>|<cwith|12|12|2|2|cell-background|pastel red>|<cwith|12|12|11|11|cell-background|pastel red>|<cwith|12|12|12|12|cell-background|pastel red>|<table|<row|<\cell>
       \;
     </cell>|<\cell>
       0
