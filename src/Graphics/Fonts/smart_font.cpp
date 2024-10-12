@@ -909,7 +909,6 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
         return sm->add_char (key, c);
       }
     }
-    cout << "re-checking " << c << LF;
 
     if (fam == "roman" && get_unicode_range (c) == "greek") {
       tree key= tuple ("greek", fam, variant, series, rshape);
