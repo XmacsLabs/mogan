@@ -801,11 +801,8 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
     count++;
   }
   r= s (start, pos);
-  cout << "r: " << r << LF;
   if (nr < 0) return;
   if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
-  cout << nr << LF;
-  cout << "rewrite kind: " << sm->fn_rewr[nr] << LF;
   if (sm->fn_rewr[nr] != REWRITE_NONE) r= rewrite (r, sm->fn_rewr[nr]);
   if (DEBUG_VERBOSE) {
     debug_fonts << "Physical font of [" << r << "]"
@@ -821,11 +818,6 @@ is_italic_font (string master) {
 
 static bool
 is_wanted (string c, string family, array<string> rules, array<string> given) {
-  cout << "is_wanted: " << LF;
-  cout << c << LF;
-  cout << rules << LF;
-  cout << given << LF;
-
   int rules_N= N (rules);
   for (int i= 0; i < rules_N; i++) {
     if (is_empty (rules[i])) continue;
@@ -867,7 +859,6 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
     fam                = a[1];
     array<string> b    = tokenize (a[0], " ");
     bool          ok   = is_wanted (c, fam, b, given);
-    cout << "ok: " << ok << LF;
     if (!ok) {
       return -1;
     }
@@ -901,7 +892,6 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
     if (fam == "cal**" || fam == "Bbb*") ok= ok && is_alpha (c);
     if (!ok) return -1;
 
-    cout << "here" << LF;
     if (fam == mfam) {
       if (fn[SUBFONT_MAIN]->supports (c)) {
         return sm->add_char (tuple ("main"), c);
@@ -909,7 +899,6 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
     }
     else {
       font cfn= closest_font (fam, variant, series, rshape, sz, dpi, 1);
-      cout << cfn->res_name << LF;
       if (cfn->supports (c)) {
         tree key= tuple (fam, variant, series, rshape, "1");
         int  nr = sm->add_font (key, REWRITE_NONE);
