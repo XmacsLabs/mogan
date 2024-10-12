@@ -1,6 +1,6 @@
 <TMU|<tuple|1.0.5|1.2.9.3>>
 
-<style|<tuple|generic|chinese>>
+<style|generic>
 
 <\body>
   <\wide-tabular>
@@ -109,7 +109,7 @@
     </cell>>|<row|<\cell>
       002
     </cell>|<\cell>
-      \;
+      \ 
     </cell>|<\cell>
       \;
     </cell>|<\cell>
