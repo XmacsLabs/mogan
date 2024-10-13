@@ -1,0 +1,40 @@
+<TMU|<tuple|1.0.4|1.2.9.3-rc2>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  Asana Math:
+
+  <\equation*>
+    <around*|{|<sqrt|1234|abc>|}><sqrt|1+<sqrt|2+<sqrt|3+<sqrt|4+<sqrt|5+<sqrt|6+<sqrt|7+<sqrt|8+\<cdots\>>>>>>>>>
+  </equation*>
+
+  Fira Math:
+
+  <\equation*>
+    <with|font|Fira Math|<around*|{|<sqrt|1234|abc>|}><sqrt|1+<sqrt|2+<sqrt|3+<sqrt|4+<sqrt|5+<sqrt|6+<sqrt|7+<sqrt|8+\<cdots\>>>>>>>>>>
+  </equation*>
+
+  TeX Gyre Pagella Math:
+
+  <\equation*>
+    <with|font|TeX Gyre Pagella Math|<around*|{|<sqrt|1234|abc>|}><sqrt|1+<sqrt|2+<sqrt|3+<sqrt|4+<sqrt|5+<sqrt|6+<sqrt|7+<sqrt|8+\<cdots\>>>>>>>>>>
+  </equation*>
+
+  \ TeX Gyre Schola Math:
+
+  <with|font|TeX Gyre Schola Math|<\equation*>
+    <around*|{|<sqrt|1234|abc>|}><sqrt|1+<sqrt|2+<sqrt|3+<sqrt|4+<sqrt|5+<sqrt|6+<sqrt|7+<sqrt|8+\<cdots\>>>>>>>>>
+  </equation*>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|font|Asana Math>
+    <associate|font-family|rm>
+    <associate|font-shape|italic>
+    <associate|math-font|math-dejavu>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

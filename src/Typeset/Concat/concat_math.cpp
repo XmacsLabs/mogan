@@ -11,6 +11,7 @@
 
 #include "analyze.hpp"
 #include "concater.hpp"
+#include "font.hpp"
 #include "packrat.hpp"
 
 using namespace moebius;
@@ -453,9 +454,9 @@ concater_rep::typeset_sqrt (tree t, path ip) {
     typeset_wide_sqrt (t, ip);
     return;
   }
-  box ind;
+  box  ind;
+  bool disp= env->display_style;
   if (N (t) == 2) {
-    bool disp= env->display_style;
     tree old;
     if (disp) old= env->local_begin (MATH_DISPLAY, "false");
     tree old_il= env->local_begin_script ();
@@ -467,8 +468,15 @@ concater_rep::typeset_sqrt (tree t, path ip) {
   font lfn = env->fn;
   bool stix= starts (lfn->res_name, "stix-");
   if (stix) lfn= rubber_font (lfn);
+  SI   gap= (3 * sep >> 1);
+  bool use_opentype=
+      (lfn->math_type == MATH_TYPE_OPENTYPE) && (lfn->sqrt_ver_gap > 0);
+  if (use_opentype) {
+    gap=
+        (disp ? lfn->sqrt_ver_disp_gap : lfn->sqrt_ver_gap) + (lfn->wline >> 1);
+  }
   box sqrtb= delimiter_box (decorate_left (ip), "<large-sqrt>", lfn, env->pen,
-                            b->y1, b->y2 + (3 * sep >> 1));
+                            b->y1, b->y2 + gap);
   if (stix)
     sqrtb= shift_box (decorate_left (ip), sqrtb, -env->fn->wline / 2,
                       -env->fn->wline / 3, false, true);
