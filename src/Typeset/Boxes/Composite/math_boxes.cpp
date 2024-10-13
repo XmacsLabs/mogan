@@ -177,7 +177,10 @@ sqrt_box_rep::sqrt_box_rep (path ip, box b1, box b2, box sqrtb, font fn2,
   SI by= sqrtb->y2 + dy;
   if (sqrtb->x2 - sqrtb->x4 > wline) dx-= (sqrtb->x2 - sqrtb->x4);
 
-  pencil rpen= pen->set_width (wline);
+  bool use_open_type= (fn->math_type == MATH_TYPE_OPENTYPE) &&
+                      (fn->sqrt_degree_rise_percent > 0);
+  pencil rpen= use_open_type ? pen->set_width (fn->sqrt_rule_thickness)
+                             : pen->set_width (wline);
   insert (b1, 0, 0);
   if (!is_nil (b2)) {
     SI X = -sqrtb->w ();
@@ -191,6 +194,13 @@ sqrt_box_rep::sqrt_box_rep (path ip, box b1, box b2, box sqrtb, font fn2,
       else if (occurs ("agella", fn->res_name)) Y+= (16 * bw) >> 3;
       else Y+= (15 * bw) >> 3;
     }
+    else if (use_open_type) {
+      Y+= fn->sqrt_degree_rise_percent * sqrtb->h () / 100;
+      M  = fn->sqrt_kern_after_degree;
+      sep= 0;
+      // we don't use it because it looks out of harmony
+      // b2->x1-= fn->sqrt_kern_before_degree;
+    }
     else {
       if (bh < 3 * bw) Y+= bh >> 1;
       else Y+= (bw * 3) >> 1;
@@ -203,7 +213,7 @@ sqrt_box_rep::sqrt_box_rep (path ip, box b1, box b2, box sqrtb, font fn2,
   position ();
   left_justify ();
   y1-= wline;
-  y2+= wline;
+  y2+= use_open_type ? fn->sqrt_extra_ascender : wline;
   x2+= sep >> 1;
 
   right_italic_restore (b1);
