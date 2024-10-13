@@ -1,26 +1,26 @@
 # 如何安装
-当前最新稳定版是墨干理工套件V1.2.9.2，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
+当前最新稳定版是墨干理工套件V1.2.9.5，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
 
 ## 官方提供的安装包
 | 产品 | 操作系统 | 马上下载 |
 |-----|-------|-----|
-| 墨干v1.2.9.2 | Windows安装包 (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/MoganResearch-v1.2.9.2-64bit-installer.exe) |
-| 墨干v1.2.9.2 | Windows绿色版 (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/MoganResearch-v1.2.9.2-64bit-portable.zip) |
-| 墨干v1.2.9.2 | macOS arm64 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/MoganResearch-v1.2.9.2-arm.dmg) |
-| 墨干v1.2.9.2 | macOS (>=12) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/MoganResearch-v1.2.9.2.dmg) |
-| 墨干v1.2.9.2 | Debian 12 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/mogan-research-v1.2.9.2-debian12.deb) |
-| 墨干v1.2.9.2 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/mogan-research-v1.2.9.2-ubuntu22.04.deb) |
-| 墨干v1.2.9.2 | Ubuntu 24.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.2/mogan-research-v1.2.9.2-ubuntu24.04.deb) |
+| 墨干v1.2.9.5 | Windows安装包 (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.5/MoganResearch-v1.2.9.5-64bit-installer.exe) |
+| 墨干v1.2.9.5 | Windows绿色版 (>=10)| [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.5/MoganResearch-v1.2.9.5-64bit-portable.zip) |
+| 墨干v1.2.9.5 | macOS arm64 (>=13) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.5/MoganResearch-v1.2.9.5-arm.dmg) |
+| 墨干v1.2.9.5 | macOS (>=12) | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.5/MoganResearch-v1.2.9.5.dmg) |
+| 墨干v1.2.9.5 | Debian 12 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.5/mogan-research-v1.2.9.5-debian12.deb) |
+| 墨干v1.2.9.5 | Ubuntu 22.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.5/mogan-research-v1.2.9.5-ubuntu22.04.deb) |
+| 墨干v1.2.9.5 | Ubuntu 24.04 | [⏬ 下载](https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.5/mogan-research-v1.2.9.5-ubuntu24.04.deb) |
 
 SHA256校验码：
 ```
-700eeb39fa4f5eaba4ee8839f6a813488a8f5f758722f4fb0e1c5c0c7240a70e  MoganResearch-v1.2.9.2-64bit-installer.exe
-469f1e48e2a780345bf359157b27ef43097f3883b7f27e58041a144cc0cc990b  MoganResearch-v1.2.9.2-64bit-portable.zip
-cbca96dfc2f1073762cebf56c642964b37802b5bbe9e6bac3475cfe6962e6968  MoganResearch-v1.2.9.2-arm.dmg
-aa429c0e656ccd2309ce0bdc1e3087a605052c66c205ec3bf37f5fb812aed19e  MoganResearch-v1.2.9.2.dmg
-9266c44775e0d3539adfb9816c45a326cbb74da27ea267bba8989234b5907566  mogan-research-v1.2.9.2-debian12.deb
-04878ac96b25af8ad2ab9c2551713cef7d9e2e650460f0f2188b6f103faeb611  mogan-research-v1.2.9.2-ubuntu22.04.deb
-aab31ce801d4d9dca9abe4c4ac4f5eddcc18e16934c6e16a80831562a520b1cb  mogan-research-v1.2.9.2-ubuntu24.04.deb
+26076445719ae6257153b7c1a7f08f28fe648168ba8ece77f2812768d6de0fe4  MoganResearch-v1.2.9.5-64bit-installer.exe
+4fa8de7ce8a7b6b4294f208d3d79e9a8b854f278796312bc0fa926237c4f8f95  MoganResearch-v1.2.9.5-64bit-portable.zip
+0f87be214fa4ec030585b2068c9f8066b2bb8e753c6539b37c52c6e73fcf13c9  MoganResearch-v1.2.9.5-arm.dmg
+08266def7a60ee75a6b4e0b0a21e8a2bfc3d74ed1a20f2c4a8e3b53a3b6c7c10  MoganResearch-v1.2.9.5.dmg
+e81f9dbeeb816e56c0ddb61b36757737b382d50ebc34dfe11b2042ca1eff91c7  mogan-research-v1.2.9.5-debian12.deb
+0d4ee6923dc9e527aabc12440a858d5fcce4c28d9b82c8047ab09f2e1f5b57e4  mogan-research-v1.2.9.5-ubuntu22.04.deb
+a97f622ec0b48b81e35681eecbf0619d43481f0f59a050ee6e8fa0fbc982fac5  mogan-research-v1.2.9.5-ubuntu24.04.deb
 ```
 
 墨干理工套件：
@@ -41,17 +41,17 @@ aab31ce801d4d9dca9abe4c4ac4f5eddcc18e16934c6e16a80831562a520b1cb  mogan-research
 ## Debian 12
 下载官方提供的deb然后：
 ```
-sudo apt install ./mogan-research-v1.2.9.2-debian12.deb
+sudo apt install ./mogan-research-v1.2.9.5-debian12.deb
 ```
 
 ## Ubuntu 22.04/Ubuntu 24.04
 下载官方提供的deb然后：
 ```
 # For ubuntu 22.04
-sudo apt install ./mogan-research-v1.2.9.2-ubuntu22.04.deb
+sudo apt install ./mogan-research-v1.2.9.5-ubuntu22.04.deb
 
 # For ubuntu 24.04
-sudo apt install ./mogan-research-v1.2.9.2-ubuntu24.04.deb
+sudo apt install ./mogan-research-v1.2.9.5-ubuntu24.04.deb
 ```
 
 ## GNU Guix
