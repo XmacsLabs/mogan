@@ -177,10 +177,11 @@ sqrt_box_rep::sqrt_box_rep (path ip, box b1, box b2, box sqrtb, font fn2,
   SI by= sqrtb->y2 + dy;
   if (sqrtb->x2 - sqrtb->x4 > wline) dx-= (sqrtb->x2 - sqrtb->x4);
 
-  pencil rpen= pen->set_width (wline);
-  insert (b1, 0, 0);
   bool use_open_type= (fn->math_type == MATH_TYPE_OPENTYPE) &&
                       (fn->sqrt_degree_rise_percent > 0);
+  pencil rpen= use_open_type ? pen->set_width (fn->sqrt_rule_thickness)
+                             : pen->set_width (wline);
+  insert (b1, 0, 0);
   if (!is_nil (b2)) {
     SI X = -sqrtb->w ();
     SI M = X / 3;
@@ -197,7 +198,8 @@ sqrt_box_rep::sqrt_box_rep (path ip, box b1, box b2, box sqrtb, font fn2,
       Y+= fn->sqrt_degree_rise_percent * sqrtb->h () / 100;
       M  = fn->sqrt_kern_after_degree;
       sep= 0;
-      b2->x1-= fn->sqrt_kern_before_degree;
+      // we don't use it because it looks out of harmony
+      // b2->x1-= fn->sqrt_kern_before_degree;
     }
     else {
       if (bh < 3 * bw) Y+= bh >> 1;
