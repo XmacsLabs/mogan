@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.4|1.2.9.3>>
+<TMU|<tuple|1.0.5|1.2.9.5>>
 
 <style|<tuple|tmdoc|devel|british>>
 
@@ -7,7 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|12|12|4|4|cell-hyphen|t>|<table|<row|<cell|Feature>|<cell|81_11>|<cell|Minzihao>|<cell|Implement dragging and sorting of tab pages>>|<row|<cell|>|<cell|>|<cell|<value|da>>|<cell|Disable drag and drop tabs to avoid crash>>|<row|<cell|Bug>|<cell|81_10>|<cell|Minzihao>|<cell|Fix bug: tabbar steals focus from the editor>>|<row|<cell|Feature>|<cell|81_9>|<cell|Minzihao>|<cell|Hide tabbar when user chooses 'Documents in separate windows'>>|<row|<cell|Feature>|<cell|81_8>|<cell|Minzihao>|<cell|Beautify tabbar style on linux and windows>>|<row|<cell|Bug>|<cell|81_7>|<cell|Minzihao>|<cell|Fix the display issue of the tab bar on macOS>>|<row|<cell|Feature>|<cell|81_6>|<cell|Minzihao>|<cell|Quickly hide the active tab after closing>>|<row|<cell|Chore>|<cell|81_5>|<cell|Minzihao>|<cell|Keep tab-title and doc-path of tab pages untranslated>>|<row|<cell|Feature>|<cell|81_4>|<cell|Minzihao>|<cell|Implement multi-line display for numerous tab pages>>|<row|<cell|Feature>|<cell|81_2>|<cell|Minzihao>|<cell|Enable switching between or closing documents through the tab pages>>|<row|<cell|Feature>|<cell|81_2>|<cell|Minzihao>|<cell|Display tab pages of opened documents in the tab page toolbar>>|<row|<cell|Feature>|<cell|81_1>|<cell|Minzihao>|<\cell>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|13|13|4|4|cell-hyphen|t>|<table|<row|<cell|Feature>|<cell|81_11>|<cell|Minzihao>|<cell|Implement dragging and sorting of tab pages>>|<row|<cell|>|<cell|>|<cell|<value|da>>|<cell|Disable drag and drop tabs to avoid crash>>|<row|<cell|>|<cell|>|<cell|Minzihao>|<cell|Fix the bug causing crashes when dragging tabs>>|<row|<cell|Bug>|<cell|81_10>|<cell|Minzihao>|<cell|Fix bug: tabbar steals focus from the editor>>|<row|<cell|Feature>|<cell|81_9>|<cell|Minzihao>|<cell|Hide tabbar when user chooses 'Documents in separate windows'>>|<row|<cell|Feature>|<cell|81_8>|<cell|Minzihao>|<cell|Beautify tabbar style on linux and windows>>|<row|<cell|Bug>|<cell|81_7>|<cell|Minzihao>|<cell|Fix the display issue of the tab bar on macOS>>|<row|<cell|Feature>|<cell|81_6>|<cell|Minzihao>|<cell|Quickly hide the active tab after closing>>|<row|<cell|Chore>|<cell|81_5>|<cell|Minzihao>|<cell|Keep tab-title and doc-path of tab pages untranslated>>|<row|<cell|Feature>|<cell|81_4>|<cell|Minzihao>|<cell|Implement multi-line display for numerous tab pages>>|<row|<cell|Feature>|<cell|81_2>|<cell|Minzihao>|<cell|Enable switching between or closing documents through the tab pages>>|<row|<cell|Feature>|<cell|81_2>|<cell|Minzihao>|<cell|Display tab pages of opened documents in the tab page toolbar>>|<row|<cell|Feature>|<cell|81_1>|<cell|Minzihao>|<\cell>
     Add a blank tab page toolbar to the main window (default invisible currently)
   </cell>>>>>
 
