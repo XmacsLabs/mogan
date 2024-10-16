@@ -168,6 +168,29 @@ init_texmacs_path (int& argc, char** argv) {
   }
 }
 
+void
+init_texmacs_home_path (int& argc, char** argv) {
+  if (!is_empty (get_env ("TEXMACS_HOME_PATH"))) return;
+
+  if (os_mingw () || os_win ()) {
+    set_env ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "\\LiiiLabs");
+  } else if (os_macos ()) {
+    set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/Library/Application Support/LiiiLabs");
+  } else if (os_wasm ()) {
+    set_env ("TEXMACS_HOME_PATH", "/.LiiiLabs");
+  } else {
+#if defined(OS_HAIKU)
+    set_env ("TEXMACS_HOME_PATH", get_env ("HOME") * "/config/settings/TeXmacs");
+#else
+    string xdg_data_home= get_env ("XDG_DATA_HOME");
+    if (is_empty (xdg_data_home))
+      xdg_data_home= get_env ("HOME") * "/.local/share";
+    set_env ("TEXMACS_HOME_PATH", xdg_data_home * "/LiiiLabs");
+#endif
+  }
+}
+
+
 /******************************************************************************
 * Subroutines for paths
 ******************************************************************************/
@@ -224,7 +247,7 @@ plugin_list () {
 static void
 init_main_paths () {
 #if defined(OS_MINGW) || defined(OS_WIN)
-  if (is_none (get_env_path ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "/TeXmacs"))) {
+  if (is_none (get_env_path ("TEXMACS_HOME_PATH", get_env ("APPDATA") * "/LiiiLabs"))) {
 #else
   if (is_none (get_env_path ("TEXMACS_HOME_PATH", "~/.TeXmacs"))) {
 #endif
