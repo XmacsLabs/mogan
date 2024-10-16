@@ -1,40 +1,41 @@
 
 /******************************************************************************
-* MODULE     : qt_pipe_link.cpp
-* DESCRIPTION: TeXmacs links by pipes
-* COPYRIGHT  : (C) 2000  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : qt_pipe_link.cpp
+ * DESCRIPTION: TeXmacs links by pipes
+ * COPYRIGHT  : (C) 2000  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "basic.hpp"
 #include "tm_debug.hpp"
 
-#if defined (QTTEXMACS) && (defined (OS_MINGW) || defined (OS_WIN) || defined (QTPIPES))
+#if defined(QTTEXMACS) &&                                                      \
+    (defined(OS_MINGW) || defined(OS_WIN) || defined(QTPIPES))
 
-#include "tm_link.hpp"
 #include "QTMPipeLink.hpp"
 #include "hashset.hpp"
 #include "iterator.hpp"
+#include "tm_link.hpp"
 #include "tm_timer.hpp"
 
-#include <sys/types.h>
 #include <signal.h>
+#include <sys/types.h>
 #if defined(OS_MINGW) || defined(OS_WIN)
 #else
-#  include <sys/wait.h>
+#include <sys/wait.h>
 #endif
 #include <errno.h>
 
 hashset<pointer> pipe_link_set;
 
 /******************************************************************************
-* Definition of qt_pipe_link_rep class
-******************************************************************************/
+ * Definition of qt_pipe_link_rep class
+ ******************************************************************************/
 
-struct qt_pipe_link_rep: tm_link_rep {
+struct qt_pipe_link_rep : tm_link_rep {
   QTMPipeLink PipeLink;
 
 public:
@@ -53,9 +54,9 @@ public:
 };
 
 qt_pipe_link_rep::qt_pipe_link_rep (string cmd) : PipeLink (cmd) {
-  PipeLink.feed_cmd = &feed_cmd;
+  PipeLink.feed_cmd= &feed_cmd;
   pipe_link_set->insert ((pointer) this);
-  alive = false;
+  alive= false;
 }
 
 qt_pipe_link_rep::~qt_pipe_link_rep () {
@@ -64,15 +65,14 @@ qt_pipe_link_rep::~qt_pipe_link_rep () {
 }
 
 /******************************************************************************
-* Routines for qt_pipe_links
-******************************************************************************/
+ * Routines for qt_pipe_links
+ ******************************************************************************/
 
 string
 qt_pipe_link_rep::start () {
   if (alive) return "busy";
-  if (DEBUG_AUTO)
-    debug_shell << "Launching '" << PipeLink.cmd << "'\n";
-  if (! PipeLink.launchCmd ()) {
+  if (DEBUG_AUTO) debug_shell << "Launching '" << PipeLink.cmd << "'\n";
+  if (!PipeLink.launchCmd ()) {
     if (DEBUG_AUTO)
       debug_shell << "TeXmacs] Error: cannot start '" << PipeLink.cmd << "'\n";
     return "Error: cannot start application";
@@ -86,7 +86,7 @@ qt_pipe_link_rep::write (string s, int channel) {
   if ((!alive) || (channel != LINK_IN)) return;
   if (-1 == PipeLink.writeStdin (s)) {
     io_error << "Error: cannot write to '" << PipeLink.cmd << "'\n";
-    stop();
+    stop ();
   }
 }
 
@@ -102,7 +102,7 @@ qt_pipe_link_rep::watch (int channel) {
   static string empty_string= "";
   if (channel == LINK_OUT) return PipeLink.getOutbuf ();
   else if (channel == LINK_ERR) return PipeLink.getErrbuf ();
-  else  return empty_string;
+  else return empty_string;
 }
 
 string
@@ -117,14 +117,14 @@ qt_pipe_link_rep::read (int channel) {
     PipeLink.setErrbuf ("");
     return r;
   }
-  else return string("");
+  else return string ("");
 }
 
 void
 qt_pipe_link_rep::listen (int msecs) {
   if (!alive) return;
   time_t wait_until= texmacs_time () + msecs;
-  while ((PipeLink.getOutbuf() == "") && (PipeLink.getErrbuf() == "")) {
+  while ((PipeLink.getOutbuf () == "") && (PipeLink.getErrbuf () == "")) {
     PipeLink.listenChannel (QProcess::StandardOutput, 0);
     PipeLink.listenChannel (QProcess::StandardError, 0);
     if (texmacs_time () - wait_until > 0) break;
@@ -137,8 +137,7 @@ qt_pipe_link_rep::is_readable (int channel) {
     return false;
   if (channel == LINK_OUT)
     return PipeLink.listenChannel (QProcess::StandardOutput, 0);
-  else
-    return PipeLink.listenChannel (QProcess::StandardError, 0);
+  else return PipeLink.listenChannel (QProcess::StandardError, 0);
 }
 
 void
@@ -149,20 +148,23 @@ qt_pipe_link_rep::interrupt () {
   qt_error << "SIGINT not implemented on Windows\n";
 #else
 #if QT_VERSION < 0x060000
-  Q_PID pid = PipeLink.pid ();
-  
-  // REMARK: previously there were here below a call to ::killpg which does not seems to work on MacOS
-  // I (mgubi) replaced it with ::kill which does the job. But I do not undestand the difference.
-  
-  int ret =  ::kill (pid, SIGINT);
+  Q_PID pid= PipeLink.pid ();
+
+  // REMARK: previously there were here below a call to ::killpg which does not
+  // seems to work on MacOS I (mgubi) replaced it with ::kill which does the
+  // job. But I do not undestand the difference.
+
+  int ret= ::kill (pid, SIGINT);
   if (ret == -1) {
-    qt_error << "Interrupt not successful, pid: " << pid << " return code: " << errno << "\n";
+    qt_error << "Interrupt not successful, pid: " << pid
+             << " return code: " << errno << "\n";
   }
 #else
-  uint64_t pid = PipeLink.processId ();
-  int ret =  ::kill (pid, SIGINT);
+  uint64_t pid= PipeLink.processId ();
+  int      ret= ::kill (pid, SIGINT);
   if (ret == -1) {
-    qt_error << "Interrupt not successful, pid: " << pid << " return code: " << errno << "\n";
+    qt_error << "Interrupt not successful, pid: " << pid
+             << " return code: " << errno << "\n";
   }
 #endif
 #endif
@@ -175,8 +177,8 @@ qt_pipe_link_rep::stop () {
 }
 
 /******************************************************************************
-* Main builder function for qt_pipe_links
-******************************************************************************/
+ * Main builder function for qt_pipe_links
+ ******************************************************************************/
 
 tm_link
 make_pipe_link (string cmd) {
@@ -184,14 +186,14 @@ make_pipe_link (string cmd) {
 }
 
 /******************************************************************************
-* Emergency exit for all pipes
-******************************************************************************/
+ * Emergency exit for all pipes
+ ******************************************************************************/
 
 void
 close_all_pipes () {
   iterator<pointer> it= iterate (pipe_link_set);
-  while (it->busy()) {
-    qt_pipe_link_rep* con= (qt_pipe_link_rep*) it->next();
+  while (it->busy ()) {
+    qt_pipe_link_rep* con= (qt_pipe_link_rep*) it->next ();
     if (con->alive) con->stop ();
   }
 }
@@ -199,10 +201,11 @@ close_all_pipes () {
 void
 process_all_pipes () {
   iterator<pointer> it= iterate (pipe_link_set);
-  while (it->busy()) {
-    qt_pipe_link_rep* con= (qt_pipe_link_rep*) it->next();
+  while (it->busy ()) {
+    qt_pipe_link_rep* con= (qt_pipe_link_rep*) it->next ();
     if (con->alive) con->apply_command ();
   }
 }
 
-#endif // defined (QTTEXMACS) && (defined (OS_MINGW) || defined (OS_WIN) || defined (QTPIPES))
+#endif // defined (QTTEXMACS) && (defined (OS_MINGW) || defined (OS_WIN) ||
+       // defined (QTPIPES))

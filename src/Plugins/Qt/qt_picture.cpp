@@ -1,49 +1,70 @@
- 
+
 /******************************************************************************
-* MODULE     : qt_picture.cpp
-* DESCRIPTION: QT pictures
-* COPYRIGHT  : (C) 2013 Massimiliano Gubinelli, Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : qt_picture.cpp
+ * DESCRIPTION: QT pictures
+ * COPYRIGHT  : (C) 2013 Massimiliano Gubinelli, Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "qt_picture.hpp"
 #include "analyze.hpp"
-#include "image_files.hpp"
-#include "qt_utilities.hpp"
-#include "file.hpp"
-#include "tm_file.hpp"
-#include "image_files.hpp"
-#include "scheme.hpp"
-#include "frame.hpp"
 #include "effect.hpp"
+#include "file.hpp"
+#include "frame.hpp"
+#include "image_files.hpp"
 #include "iterator.hpp"
 #include "language.hpp"
+#include "qt_utilities.hpp"
+#include "scheme.hpp"
+#include "tm_file.hpp"
 
 #include <QObject>
-#include <QWidget>
-#include <QPainter>
 #include <QPaintDevice>
+#include <QPainter>
 #include <QPixmap>
 #include <QSvgRenderer>
+#include <QWidget>
 
 /******************************************************************************
-* Abstract Qt pictures
-******************************************************************************/
+ * Abstract Qt pictures
+ ******************************************************************************/
 
-qt_picture_rep::qt_picture_rep (const QImage& im, int ox2, int oy2):
-  pict (im), w (im.width ()), h (im.height ()), ox (ox2), oy (oy2) {}
+qt_picture_rep::qt_picture_rep (const QImage& im, int ox2, int oy2)
+    : pict (im), w (im.width ()), h (im.height ()), ox (ox2), oy (oy2) {}
 
-picture_kind qt_picture_rep::get_type () { return picture_native; }
-void* qt_picture_rep::get_handle () { return (void*) this; }
+picture_kind
+qt_picture_rep::get_type () {
+  return picture_native;
+}
+void*
+qt_picture_rep::get_handle () {
+  return (void*) this;
+}
 
-int qt_picture_rep::get_width () { return w; }
-int qt_picture_rep::get_height () { return h; }
-int qt_picture_rep::get_origin_x () { return ox; }
-int qt_picture_rep::get_origin_y () { return oy; }
-void qt_picture_rep::set_origin (int ox2, int oy2) { ox= ox2; oy= oy2; }
+int
+qt_picture_rep::get_width () {
+  return w;
+}
+int
+qt_picture_rep::get_height () {
+  return h;
+}
+int
+qt_picture_rep::get_origin_x () {
+  return ox;
+}
+int
+qt_picture_rep::get_origin_y () {
+  return oy;
+}
+void
+qt_picture_rep::set_origin (int ox2, int oy2) {
+  ox= ox2;
+  oy= oy2;
+}
 
 color
 qt_picture_rep::internal_get_pixel (int x, int y) {
@@ -55,18 +76,17 @@ qt_picture_rep::internal_set_pixel (int x, int y, color c) {
   pict.setPixel (x, h - 1 - y, c);
 }
 
-
 picture
 qt_picture (const QImage& im, int ox, int oy) {
-  return (picture) tm_new<qt_picture_rep,QImage,int,int> (im, ox, oy);
+  return (picture) tm_new<qt_picture_rep, QImage, int, int> (im, ox, oy);
 }
 
 picture
 as_qt_picture (picture pic) {
   if (pic->get_type () == picture_native) return pic;
-  picture ret= qt_picture (QImage (pic->get_width (), pic->get_height (),
-                                   QImage::Format_ARGB32),
-                           pic->get_origin_x (), pic->get_origin_y ());
+  picture ret= qt_picture (
+      QImage (pic->get_width (), pic->get_height (), QImage::Format_ARGB32),
+      pic->get_origin_x (), pic->get_origin_y ());
   ret->copy_from (pic);
   return ret;
 }
@@ -78,7 +98,7 @@ as_native_picture (picture pict) {
 
 QImage*
 xpm_image (url file_name) {
-  picture p= load_xpm (file_name);
+  picture         p  = load_xpm (file_name);
   qt_picture_rep* rep= (qt_picture_rep*) p->get_handle ();
   return &(rep->pict);
 }
@@ -88,24 +108,28 @@ qt_load_icon (url file_name) {
   string base_name;
   if (ends (as_string (file_name), ".xpm")) {
     base_name= replace (as_string (file_name), ".xpm", "");
-  } else {
+  }
+  else {
     base_name= as_string (file_name);
   }
-  url svg= resolve("$TEXMACS_PIXMAP_PATH" * url_system(base_name * ".svg"));
-  url png= resolve("$TEXMACS_PIXMAP_PATH" * url_system(base_name * ".png"));
+  url svg= resolve ("$TEXMACS_PIXMAP_PATH" * url_system (base_name * ".svg"));
+  url png= resolve ("$TEXMACS_PIXMAP_PATH" * url_system (base_name * ".png"));
   if (exists (png)) {
     return QIcon (as_pixmap (*xpm_image (file_name)));
-  } else if (exists (svg)) {
+  }
+  else if (exists (svg)) {
 #ifdef OS_MINGW
     return QIcon (qt_load_svg_icon (svg));
 #else
-  if (occurs ("dark", tm_style_sheet)) {
-    return QIcon (qt_load_svg_icon (svg));
-  } else {
-    return QIcon (to_qstring (as_string (svg)));
-  }
+    if (occurs ("dark", tm_style_sheet)) {
+      return QIcon (qt_load_svg_icon (svg));
+    }
+    else {
+      return QIcon (to_qstring (as_string (svg)));
+    }
 #endif
-  } else {
+  }
+  else {
     return QIcon (as_pixmap (*xpm_image (file_name)));
   }
 }
@@ -117,9 +141,9 @@ native_picture (int w, int h, int ox, int oy) {
 
 void
 qt_renderer_rep::draw_picture (picture p, SI x, SI y, int alpha) {
-  p= as_qt_picture (p);
+  p                   = as_qt_picture (p);
   qt_picture_rep* pict= (qt_picture_rep*) p->get_handle ();
-  int x0= pict->ox, y0= pict->h - 1 - pict->oy;
+  int             x0= pict->ox, y0= pict->h - 1 - pict->oy;
   decode (x, y);
   qreal old_opacity= painter->opacity ();
   painter->setOpacity (qreal (alpha) / qreal (255));
@@ -128,15 +152,14 @@ qt_renderer_rep::draw_picture (picture p, SI x, SI y, int alpha) {
 }
 
 /******************************************************************************
-* Rendering on images
-******************************************************************************/
+ * Rendering on images
+ ******************************************************************************/
 
-qt_image_renderer_rep::qt_image_renderer_rep (picture p, double zoom):
-  qt_renderer_rep (new QPainter ()), pict (p)
-{
+qt_image_renderer_rep::qt_image_renderer_rep (picture p, double zoom)
+    : qt_renderer_rep (new QPainter ()), pict (p) {
   zoomf  = zoom;
   shrinkf= (int) tm_round (std_shrinkf / zoomf);
-  pixel  = (SI)  tm_round ((std_shrinkf * PIXEL) / zoomf);
+  pixel  = (SI) tm_round ((std_shrinkf * PIXEL) / zoomf);
   thicken= (shrinkf >> 1) * PIXEL;
 
   int pw = p->get_width ();
@@ -144,8 +167,8 @@ qt_image_renderer_rep::qt_image_renderer_rep (picture p, double zoom):
   int pox= p->get_origin_x ();
   int poy= p->get_origin_y ();
 
-  ox = pox * pixel;
-  oy = poy * pixel;
+  ox= pox * pixel;
+  oy= poy * pixel;
   /*
   cx1= 0;
   cy1= 0;
@@ -158,7 +181,7 @@ qt_image_renderer_rep::qt_image_renderer_rep (picture p, double zoom):
   cy2= 0;
 
   qt_picture_rep* handle= (qt_picture_rep*) pict->get_handle ();
-  QImage& im (handle->pict);
+  QImage&         im (handle->pict);
 #if (QT_VERSION >= 0x040800)
   im.fill (QColor (0, 0, 0, 0));
 #else
@@ -168,9 +191,9 @@ qt_image_renderer_rep::qt_image_renderer_rep (picture p, double zoom):
 }
 
 qt_image_renderer_rep::~qt_image_renderer_rep () {
-  painter->end();
+  painter->end ();
   delete painter;
-  painter = NULL;
+  painter= NULL;
 }
 
 void
@@ -189,8 +212,8 @@ picture_renderer (picture p, double zoomf) {
 }
 
 /******************************************************************************
-* Reverse video mode for icons
-******************************************************************************/
+ * Reverse video mode for icons
+ ******************************************************************************/
 
 void reverse (int& r, int& g, int& b);
 
@@ -199,10 +222,13 @@ max (const QImage& im, bool sum) {
   int r, g, b, a;
   int w= im.width (), h= im.height ();
   int m= 0;
-  for (int y=0; y<h; y++)
-    for (int x=0; x<w; x++) {
+  for (int y= 0; y < h; y++)
+    for (int x= 0; x < w; x++) {
       QRgb col= im.pixel (x, y);
-      r= qRed (col); g= qGreen (col); b= qBlue (col); a= qAlpha (col);
+      r       = qRed (col);
+      g       = qGreen (col);
+      b       = qBlue (col);
+      a       = qAlpha (col);
       if (a >= 128) {
         if (sum) m= max (m, (r + g + b) / 3);
         else m= max (m, max (r, max (g, b)));
@@ -216,17 +242,20 @@ saturate (QImage& im) {
   int m= max (im, false);
   int s= max (im, true);
   if (m == 0 || s >= 224) return;
-  double f= min (224.0 / s, 255.0 / m);
+  double  f= min (224.0 / s, 255.0 / m);
   quint16 r, g, b, a;
-  int w= im.width (), h= im.height ();
-  for (int y=0; y<h; y++)
-    for (int x=0; x<w; x++) {
+  int     w= im.width (), h= im.height ();
+  for (int y= 0; y < h; y++)
+    for (int x= 0; x < w; x++) {
       QRgb col= im.pixel (x, y);
-      r= qRed (col); g= qGreen (col); b= qBlue (col); a= qAlpha (col);
-      r= (int) floor (f * r + 0.5);
-      g= (int) floor (f * g + 0.5);
-      b= (int) floor (f * b + 0.5);
-      im.setPixel (x, y, qRgba (r, g, b, a));      
+      r       = qRed (col);
+      g       = qGreen (col);
+      b       = qBlue (col);
+      a       = qAlpha (col);
+      r       = (int) floor (f * r + 0.5);
+      g       = (int) floor (f * g + 0.5);
+      b       = (int) floor (f * b + 0.5);
+      im.setPixel (x, y, qRgba (r, g, b, a));
     }
 }
 
@@ -236,10 +265,13 @@ invert_colors (QImage& im) {
     im= im.convertToFormat (QImage::Format_ARGB32);
   int r, g, b, a;
   int w= im.width (), h= im.height ();
-  for (int y=0; y<h; y++)
-    for (int x=0; x<w; x++) {
+  for (int y= 0; y < h; y++)
+    for (int x= 0; x < w; x++) {
       QRgb col= im.pixel (x, y);
-      r= qRed (col); g= qGreen (col); b= qBlue (col); a= qAlpha (col);
+      r       = qRed (col);
+      g       = qGreen (col);
+      b       = qBlue (col);
+      a       = qAlpha (col);
       reverse (r, g, b);
       im.setPixel (x, y, qRgba (r, g, b, a));
     }
@@ -247,22 +279,22 @@ invert_colors (QImage& im) {
 
 bool
 may_transform (url file_name, const QImage& pm) {
-  string name= basename (tail (file_name));
+  string        name= basename (tail (file_name));
   array<string> lans= get_supported_languages ();
-  for (int i=0; i<N(lans); i++)
+  for (int i= 0; i < N (lans); i++)
     if (name == "tm_" * lans[i]) return false;
   (void) pm;
-  //if (pm.height() == 24) return false;
+  // if (pm.height() == 24) return false;
   return true;
 }
 
 /******************************************************************************
-* Loading pictures
-******************************************************************************/
+ * Loading pictures
+ ******************************************************************************/
 
 QImage*
 get_image_for_real (url u, int w, int h, tree eff, SI pixel) {
-  QImage *pm = NULL;
+  QImage* pm= NULL;
 
   if (suffix (u) == "svg") {
     QSvgRenderer renderer (utf8_to_qstring (concretize (u)));
@@ -270,9 +302,11 @@ get_image_for_real (url u, int w, int h, tree eff, SI pixel) {
     pm->fill (Qt::transparent);
     QPainter painter (pm);
     renderer.render (&painter);
-  } else if (qt_supports (u)) {
+  }
+  else if (qt_supports (u)) {
     pm= new QImage (utf8_to_qstring (concretize (u)));
-  } else {
+  }
+  else {
     url temp= url_temp (".png");
     image_to_png (u, temp, w, h);
     pm= new QImage (utf8_to_qstring (as_string (temp)));
@@ -281,9 +315,9 @@ get_image_for_real (url u, int w, int h, tree eff, SI pixel) {
 
   // Error Handling
   if (pm == NULL || pm->isNull ()) {
-      if (pm != NULL) delete pm;
-      cout << "TeXmacs] warning: cannot render " << concretize (u) << "\n";
-      return NULL;
+    if (pm != NULL) delete pm;
+    cout << "TeXmacs] warning: cannot render " << concretize (u) << "\n";
+    return NULL;
   }
 
   // Scaling
@@ -292,21 +326,21 @@ get_image_for_real (url u, int w, int h, tree eff, SI pixel) {
 
   // Build effect
   if (eff != "") {
-    effect e= build_effect (eff);
-    picture src= qt_picture (*pm, 0, 0);
+    effect         e  = build_effect (eff);
+    picture        src= qt_picture (*pm, 0, 0);
     array<picture> a;
     a << src;
-    picture pic= e->apply (a, pixel);
-    picture dest= as_qt_picture (pic);
-    qt_picture_rep* rep= (qt_picture_rep*) dest->get_handle ();
-    QImage *trf= (QImage*) &(rep->pict);
+    picture         pic = e->apply (a, pixel);
+    picture         dest= as_qt_picture (pic);
+    qt_picture_rep* rep = (qt_picture_rep*) dest->get_handle ();
+    QImage*         trf = (QImage*) &(rep->pict);
     delete pm;
     pm= new QImage (trf->copy ());
   }
   return pm;
 }
 
-static hashmap<tree,QImage*> qt_pic_cache;
+static hashmap<tree, QImage*> qt_pic_cache;
 
 QImage*
 get_image (url u, int w, int h, tree eff, SI pixel) {
@@ -322,12 +356,12 @@ void
 qt_clean_picture_cache () {
   iterator<tree> it= iterate (qt_pic_cache);
   while (it->busy ()) {
-    tree key= it->next ();
-    QImage* im= qt_pic_cache [key];
+    tree    key= it->next ();
+    QImage* im = qt_pic_cache[key];
     delete im;
     qt_pic_cache (key)= (QImage*) NULL;
   }
-  qt_pic_cache= hashmap<tree,QImage*> ();
+  qt_pic_cache= hashmap<tree, QImage*> ();
 }
 
 picture
@@ -340,14 +374,18 @@ load_picture (url u, int w, int h, tree eff, int pixel) {
 picture
 new_qt_load_xpm (url file_name) {
   string sss;
-  double f= 1.0;
+  double f    = 1.0;
   double scale= max (retina_scale, (double) retina_icons);
   if (suffix (file_name) == "xpm" || suffix (file_name) == "png") {
     string suf= ".png";
-    if (scale == 1.0) {}
+    if (scale == 1.0) {
+    }
     else if (scale == 2.0) suf= "_x2.png";
     else if (scale == 4.0) suf= "_x4.png";
-    else { suf= "_x4.png"; f= scale / 4.0; }
+    else {
+      suf= "_x4.png";
+      f  = scale / 4.0;
+    }
     url png_equiv= glue (unglue (file_name, 4), suf);
     load_string ("$TEXMACS_PIXMAP_PATH" * png_equiv, sss, false);
   }
@@ -360,32 +398,31 @@ new_qt_load_xpm (url file_name) {
     load_string ("$TEXMACS_PATH/misc/pixmaps/TeXmacs.xpm", sss, true);
   }
   c_string buf (sss);
-  QImage pm;
-  pm.loadFromData ((uchar*) (char*) buf, N(sss));
+  QImage   pm;
+  pm.loadFromData ((uchar*) (char*) buf, N (sss));
   if (occurs ("dark", tm_style_sheet) && may_transform (file_name, pm)) {
     invert_colors (pm);
     saturate (pm);
   }
-#if (QT_VERSION < 0x050000) && defined (Q_OS_MAC)
+#if (QT_VERSION < 0x050000) && defined(Q_OS_MAC)
   if (retina_icons == 2) {
     if (use_unified_toolbar) {
-      static bool main_icons=
-        get_preference ("main icon bar", "off") != "off";
-      if (pm.height () > 40) f *= 0.75;
-      else if (pm.height () > 32 && main_icons) f *= 0.85;
-      else if (pm.height () > 32) f *= 0.6;
-      else f *= 0.5;
+      static bool main_icons= get_preference ("main icon bar", "off") != "off";
+      if (pm.height () > 40) f*= 0.75;
+      else if (pm.height () > 32 && main_icons) f*= 0.85;
+      else if (pm.height () > 32) f*= 0.6;
+      else f*= 0.5;
     }
     else {
-      if (pm.height () > 40) f *= 1.0;
-      else if (pm.height () > 32) f *= 0.9;
-      else f *= 0.8;
+      if (pm.height () > 40) f*= 1.0;
+      else if (pm.height () > 32) f*= 0.9;
+      else f*= 0.8;
     }
   }
 #endif
   pm= pm.scaled ((int) floor (f * pm.width () + 0.5),
-                 (int) floor (f * pm.height () + 0.5),
-                 Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+                 (int) floor (f * pm.height () + 0.5), Qt::IgnoreAspectRatio,
+                 Qt::SmoothTransformation);
   return qt_picture (pm, 0, 0);
 }
 
@@ -393,22 +430,25 @@ QPixmap
 qt_load_svg_icon (url file_name) {
   string sss;
 
-  string sizeX =basename (url_parent (url_parent(file_name)));
-  QSize size;
+  string sizeX= basename (url_parent (url_parent (file_name)));
+  QSize  size;
   double scale= max (retina_scale, (double) retina_icons);
   if (sizeX == "16x16") {
-    size= QSize(int(16*scale), int(16*scale));
-  } else if (sizeX == "20x20") {
-    size= QSize(int(20*scale), int(20*scale));
-  } else if (sizeX == "24x24") {
-    size= QSize(int(24*scale), int(24*scale));
-  } else {
-    TM_FAILED("not a icon");
+    size= QSize (int (16 * scale), int (16 * scale));
+  }
+  else if (sizeX == "20x20") {
+    size= QSize (int (20 * scale), int (20 * scale));
+  }
+  else if (sizeX == "24x24") {
+    size= QSize (int (24 * scale), int (24 * scale));
+  }
+  else {
+    TM_FAILED ("not a icon");
   }
 
-  QSvgRenderer renderer (to_qstring(as_string (file_name)));
-  QImage *pm= NULL;
-  pm= new QImage (size.width(), size.height(), QImage::Format_ARGB32);
+  QSvgRenderer renderer (to_qstring (as_string (file_name)));
+  QImage*      pm= NULL;
+  pm= new QImage (size.width (), size.height (), QImage::Format_ARGB32);
   pm->fill (Qt::transparent);
   QPainter painter (pm);
   renderer.render (&painter);
@@ -435,35 +475,34 @@ qt_load_xpm (url file_name) {
     url png_equiv= glue (unglue (file_name, 3), "png");
     load_string ("$TEXMACS_PIXMAP_PATH" * png_equiv, sss, false);
   }
-  if (sss == "")
-    load_string ("$TEXMACS_PIXMAP_PATH" * file_name, sss, false);
+  if (sss == "") load_string ("$TEXMACS_PIXMAP_PATH" * file_name, sss, false);
   if (sss == "")
     load_string ("$TEXMACS_PATH/misc/pixmaps/TeXmacs.xpm", sss, true);
   c_string buf (sss);
-  QImage pm;
-  pm.loadFromData ((uchar*) (char*) buf, N(sss));
+  QImage   pm;
+  pm.loadFromData ((uchar*) (char*) buf, N (sss));
   return qt_picture (pm, 0, 0);
 }
 
 /******************************************************************************
-* Applying effects to existing pictures
-******************************************************************************/
+ * Applying effects to existing pictures
+ ******************************************************************************/
 
 void
 qt_apply_effect (tree eff, array<url> src, url dest, int w, int h) {
   array<picture> a;
-  for (int i=0; i<N(src); i++)
+  for (int i= 0; i < N (src); i++)
     a << load_picture (src[i], w, h, "", PIXEL);
-  effect  e= build_effect (eff);
-  picture t= e->apply (a, PIXEL);
-  picture q= as_qt_picture (t);
+  effect          e   = build_effect (eff);
+  picture         t   = e->apply (a, PIXEL);
+  picture         q   = as_qt_picture (t);
   qt_picture_rep* pict= (qt_picture_rep*) q->get_handle ();
   pict->pict.save (utf8_to_qstring (concretize (dest)));
 }
 
 void
 save_picture (url dest, picture p) {
-  picture q= as_qt_picture (p);
+  picture         q   = as_qt_picture (p);
   qt_picture_rep* pict= (qt_picture_rep*) q->get_handle ();
   if (exists (dest)) remove (dest);
   pict->pict.save (utf8_to_qstring (concretize (dest)));

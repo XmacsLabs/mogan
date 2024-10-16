@@ -1,93 +1,92 @@
 
 /******************************************************************************
-* MODULE     : QTMFileDialog.cpp
-* DESCRIPTION: QT file choosers
-* COPYRIGHT  : (C) 2009 David MICHEL
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : QTMFileDialog.cpp
+ * DESCRIPTION: QT file choosers
+ * COPYRIGHT  : (C) 2009 David MICHEL
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "QTMFileDialog.hpp"
-#include <QPainter>
-#include <QLineEdit>
-#include <QIntValidator>
-#include <QValidator>
-#include <QMimeData>
-#include <QUrl>
 #include <QDrag>
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <QDropEvent>
+#include <QIntValidator>
+#include <QLineEdit>
+#include <QMimeData>
+#include <QPainter>
+#include <QUrl>
+#include <QValidator>
 #if QT_VERSION >= 0x060000
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 #endif
-#include "file.hpp"
-#include "tm_file.hpp"
-#include "sys_utils.hpp"
-#include "qt_utilities.hpp"
-#include "qt_gui.hpp"
 #include "analyze.hpp"
 #include "dictionary.hpp"
+#include "file.hpp"
 #include "image_files.hpp"
+#include "qt_gui.hpp"
+#include "qt_utilities.hpp"
+#include "sys_utils.hpp"
+#include "tm_file.hpp"
 
-QTMFileDialog::QTMFileDialog (QWidget * parent, const QString & caption, 
-                              const QString & directory, const QString & filter)
-  : QDialog (parent) 
-{
+QTMFileDialog::QTMFileDialog (QWidget* parent, const QString& caption,
+                              const QString& directory, const QString& filter)
+    : QDialog (parent) {
   setWindowTitle (caption);
   hbox= new QHBoxLayout (this);
   hbox->setContentsMargins (0, 0, 0, 0);
   file= new QMyFileDialog (0, caption, directory, filter);
-  file->setOption(QFileDialog::DontUseNativeDialog, true);
+  file->setOption (QFileDialog::DontUseNativeDialog, true);
   hbox->addWidget (file);
   setLayout (hbox);
-  setAcceptDrops(true);
-  connect(file, SIGNAL(accepted()), this, SLOT(accept()));
-  connect(file, SIGNAL(finished(int)), this, SLOT(done(int)));
-  connect(file, SIGNAL(rejected()), this, SLOT(reject()));
+  setAcceptDrops (true);
+  connect (file, SIGNAL (accepted ()), this, SLOT (accept ()));
+  connect (file, SIGNAL (finished (int)), this, SLOT (done (int)));
+  connect (file, SIGNAL (rejected ()), this, SLOT (reject ()));
 }
 
-void QTMFileDialog::dragEnterEvent(QDragEnterEvent *event)
-{
-	event->acceptProposedAction();
+void
+QTMFileDialog::dragEnterEvent (QDragEnterEvent* event) {
+  event->acceptProposedAction ();
 }
 
-void QTMFileDialog::dragMoveEvent(QDragMoveEvent *event)
-{
-	event->acceptProposedAction();
+void
+QTMFileDialog::dragMoveEvent (QDragMoveEvent* event) {
+  event->acceptProposedAction ();
 }
 
-void QTMFileDialog::dropEvent(QDropEvent *event)
-{
-	const QMimeData *mimeData = event->mimeData();
-	
-	foreach (QString format, mimeData->formats()) {
-		if (format == "text/uri-list") {
-			file->selectFile(mimeData->urls().at(0).toLocalFile());
-			break;
-		}
-	}
-	
-	event->acceptProposedAction();
+void
+QTMFileDialog::dropEvent (QDropEvent* event) {
+  const QMimeData* mimeData= event->mimeData ();
+
+  foreach (QString format, mimeData->formats ()) {
+    if (format == "text/uri-list") {
+      file->selectFile (mimeData->urls ().at (0).toLocalFile ());
+      break;
+    }
+  }
+
+  event->acceptProposedAction ();
 }
 
-void QTMFileDialog::dragLeaveEvent(QDragLeaveEvent *event)
-{
-	event->accept();
+void
+QTMFileDialog::dragLeaveEvent (QDragLeaveEvent* event) {
+  event->accept ();
 }
-
 
 static QWidget*
 simple_input (string s, QLineEdit* ledit, QWidget* parent= 0) {
-  QWidget* widget= new QWidget (parent);
+  QWidget*     widget= new QWidget (parent);
   QHBoxLayout* layout= new QHBoxLayout (widget);
   layout->setContentsMargins (0, 0, 0, 0);
-//  string in_lan= get_input_language ();
-//  string out_lan= get_output_language ();
-//  QLabel* label= new QLabel (to_qstring (tm_var_encode (translate (s, in_lan, out_lan))), parent);
+  //  string in_lan= get_input_language ();
+  //  string out_lan= get_output_language ();
+  //  QLabel* label= new QLabel (to_qstring (tm_var_encode (translate (s,
+  //  in_lan, out_lan))), parent);
   QLabel* label= new QLabel (to_qstring (s), parent);
   layout->addWidget (label);
   layout->addWidget (ledit);
@@ -95,20 +94,19 @@ simple_input (string s, QLineEdit* ledit, QWidget* parent= 0) {
   return widget;
 }
 
-QTMImagePreview::QTMImagePreview (QWidget* parent)
-  : QWidget (parent) {
+QTMImagePreview::QTMImagePreview (QWidget* parent) : QWidget (parent) {
 #if QT_VERSION >= 0x060000
-  QRegularExpression rxpos("^[+]?([0-9]*[.])?[0-9]+([a-z]*|%)$");
-  //we could explicitly list all accepted lengths...
-  QValidator *validator1 = new QRegularExpressionValidator(rxpos, this);
-  QRegularExpression rx("^[+-]?([0-9]*[.])?[0-9]+([a-z]*|%)$");
-  QValidator *validator2 = new QRegularExpressionValidator(rx, this);
+  QRegularExpression rxpos ("^[+]?([0-9]*[.])?[0-9]+([a-z]*|%)$");
+  // we could explicitly list all accepted lengths...
+  QValidator*        validator1= new QRegularExpressionValidator (rxpos, this);
+  QRegularExpression rx ("^[+-]?([0-9]*[.])?[0-9]+([a-z]*|%)$");
+  QValidator*        validator2= new QRegularExpressionValidator (rx, this);
 #else
-  QRegExp rxpos("^[+]?([0-9]*[.])?[0-9]+([a-z]*|%)$");
-  //we could explicitly list all accepted lengths...
-  QValidator *validator1 = new QRegExpValidator(rxpos, this);
-  QRegExp rx("^[+-]?([0-9]*[.])?[0-9]+([a-z]*|%)$");
-  QValidator *validator2 = new QRegExpValidator(rx, this);
+  QRegExp rxpos ("^[+]?([0-9]*[.])?[0-9]+([a-z]*|%)$");
+  // we could explicitly list all accepted lengths...
+  QValidator* validator1= new QRegExpValidator (rxpos, this);
+  QRegExp     rx ("^[+-]?([0-9]*[.])?[0-9]+([a-z]*|%)$");
+  QValidator* validator2= new QRegExpValidator (rx, this);
 #endif
   QVBoxLayout* vbox= new QVBoxLayout (this);
   vbox->addStretch ();
@@ -118,18 +116,18 @@ QTMImagePreview::QTMImagePreview (QWidget* parent)
   vbox->addWidget (image);
   vbox->addSpacing (10);
   wid= new QLineEdit (this);
-  wid->setValidator(validator1);
+  wid->setValidator (validator1);
   vbox->addWidget (simple_input ("Width:", wid, this));
-  connect(wid, SIGNAL(textEdited(const QString)), this, SLOT(clear_dim()));
+  connect (wid, SIGNAL (textEdited (const QString)), this, SLOT (clear_dim ()));
   hei= new QLineEdit (this);
-  hei->setValidator(validator1);
+  hei->setValidator (validator1);
   vbox->addWidget (simple_input ("Height:", hei, this));
-  connect(hei, SIGNAL(textEdited(const QString)), this, SLOT(clear_dim()));
+  connect (hei, SIGNAL (textEdited (const QString)), this, SLOT (clear_dim ()));
   xps= new QLineEdit (this);
-  xps->setValidator(validator2);  
+  xps->setValidator (validator2);
   vbox->addWidget (simple_input ("X-position:", xps, this));
   yps= new QLineEdit (this);
-  yps->setValidator(validator2);
+  yps->setValidator (validator2);
   vbox->addWidget (simple_input ("Y-position:", yps, this));
   vbox->addStretch ();
   vbox->addStretch ();
@@ -140,17 +138,16 @@ QTMImagePreview::QTMImagePreview (QWidget* parent)
 }
 
 void
-QTMImagePreview::clear_dim(){
-BEGIN_SLOT
-  if (wid->isModified() && !(hei->isModified())) hei->setText("");
-  else if (hei->isModified() && !(wid->isModified())) wid->setText("");
-END_SLOT    
+QTMImagePreview::clear_dim () {
+  BEGIN_SLOT
+  if (wid->isModified () && !(hei->isModified ())) hei->setText ("");
+  else if (hei->isModified () && !(wid->isModified ())) wid->setText ("");
+  END_SLOT
 };
 
-
-void 
-QTMImagePreview::setImage (const QString& file) { 	  //generate thumbnail
-BEGIN_SLOT
+void
+QTMImagePreview::setImage (const QString& file) { // generate thumbnail
+  BEGIN_SLOT
   QImage img;
   wid->setText ("");
   hei->setText ("");
@@ -158,21 +155,25 @@ BEGIN_SLOT
   yps->setText ("");
 
   string localname= from_qstring_utf8 (file);
-  url image_url= url_system (localname);
-  if (DEBUG_CONVERT) debug_convert<<"image preview :["<<image_url<<"]"<<LF;
-  if (!(as_string(image_url)=="") && !is_directory(image_url) && exists(image_url) ){
-    url temp= url_temp (".png");
-    int w_pt, h_pt;
+  url    image_url= url_system (localname);
+  if (DEBUG_CONVERT)
+    debug_convert << "image preview :[" << image_url << "]" << LF;
+  if (!(as_string (image_url) == "") && !is_directory (image_url) &&
+      exists (image_url)) {
+    url    temp= url_temp (".png");
+    int    w_pt, h_pt;
     double w, h;
     image_size (image_url, w_pt, h_pt);
-    if (w_pt*h_pt !=0) { //necessary if gs returns h=v=0 (for instance 0-size pdf)
+    if (w_pt * h_pt !=
+        0) { // necessary if gs returns h=v=0 (for instance 0-size pdf)
       wid->setText (QString::number (w_pt) + "pt");
       hei->setText (QString::number (h_pt) + "pt");
       if (w_pt > h_pt) {
         w= 98;
-        h= ceil (h_pt*98/w_pt);
-      } else {
-        w= ceil (w_pt*98/h_pt);
+        h= ceil (h_pt * 98 / w_pt);
+      }
+      else {
+        w= ceil (w_pt * 98 / h_pt);
         h= 98;
       }
       // generate thumbnail:
@@ -182,8 +183,8 @@ BEGIN_SLOT
     }
   }
 
-  if (img.isNull()) {
-    QImage vide (100, 100, QImage::Format_RGB32);
+  if (img.isNull ()) {
+    QImage   vide (100, 100, QImage::Format_RGB32);
     QPainter painter;
     painter.begin (&vide);
     painter.fillRect (0, 0, 100, 100, Qt::white);
@@ -195,19 +196,21 @@ BEGIN_SLOT
     painter.drawLine (0, 99, 99, 0);
     painter.drawRect (0, 0, 99, 99);
     painter.end ();
-    image->setPixmap(QPixmap::fromImage(vide));
+    image->setPixmap (QPixmap::fromImage (vide));
   }
   else
-    image->setPixmap (QPixmap::fromImage (img.scaled (98, 98, Qt::KeepAspectRatio, Qt::FastTransformation)));
-END_SLOT
+    image->setPixmap (QPixmap::fromImage (
+        img.scaled (98, 98, Qt::KeepAspectRatio, Qt::FastTransformation)));
+  END_SLOT
 }
 
-QTMImageDialog::QTMImageDialog (QWidget* parent, const QString& caption, const QString& directory, const QString& filter)
-  : QTMFileDialog (parent, caption, directory, filter)
-{
+QTMImageDialog::QTMImageDialog (QWidget* parent, const QString& caption,
+                                const QString& directory, const QString& filter)
+    : QTMFileDialog (parent, caption, directory, filter) {
   preview= new QTMImagePreview (this);
-  hbox->insertWidget(0, preview);
-  connect(file, SIGNAL(currentChanged (const QString&)), preview, SLOT(setImage(const QString&)));
+  hbox->insertWidget (0, preview);
+  connect (file, SIGNAL (currentChanged (const QString&)), preview,
+           SLOT (setImage (const QString&)));
 }
 
 string

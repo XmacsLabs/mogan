@@ -11,22 +11,22 @@
 #ifndef QT_CHOOSER_WIDGET_HPP
 #define QT_CHOOSER_WIDGET_HPP
 
-#include "qt_widget.hpp"
 #include "qt_utilities.hpp"
+#include "qt_widget.hpp"
 
 /*!
   A file/directory chooser dialog, using native dialogs where available.
   See @link widget.cpp @endlink for an explanation of send(), query(),
   read(), etc.
  */
-class qt_chooser_widget_rep: public qt_widget_rep {
-protected:      
-  command cmd;           //!< Scheme closure to execute when the file is chosen
-  command quit;          //!< Execute when the dialog closes.
-  string type;           //!< File types to filter in the dialog
-  string prompt;         //!< Is this a "Save" dialog?
-  string win_title;      //!< Set by plain_window_widget()
-  
+class qt_chooser_widget_rep : public qt_widget_rep {
+protected:
+  command cmd;       //!< Scheme closure to execute when the file is chosen
+  command quit;      //!< Execute when the dialog closes.
+  string  type;      //!< File types to filter in the dialog
+  string  prompt;    //!< Is this a "Save" dialog?
+  string  win_title; //!< Set by plain_window_widget()
+
   string directory; //!< Set this property sending SLOT_DIRECTORY to this widget
   coord2 position;  //!< Set this property sending SLOT_POSITION to this widget
   coord2 size;      //!< Set this property sending SLOT_SIZE to this widget
@@ -37,14 +37,14 @@ protected:
 
 public:
   qt_chooser_widget_rep (command, string, string);
-  
-  virtual void send (slot s, blackbox val);
+
+  virtual void     send (slot s, blackbox val);
   virtual blackbox query (slot s, int type_id);
-  virtual widget read (slot s, blackbox index);
-  virtual widget plain_window_widget (string s, command q, int b);
-  
+  virtual widget   read (slot s, blackbox index);
+  virtual widget   plain_window_widget (string s, command q, int b);
+
   bool set_type (const string& _type);
-  void perform_dialog();
+  void perform_dialog ();
 };
 
-#endif  // QT_CHOOSER_WIDGET_HPP
+#endif // QT_CHOOSER_WIDGET_HPP

@@ -12,14 +12,14 @@
 #ifndef QTMAPPLICATION_HPP
 #define QTMAPPLICATION_HPP
 
+#include "renderer.hpp"
+#include "string.hpp"
+#include "sys_utils.hpp"
+#include "tm_url.hpp"
+#include "url.hpp"
 #include <QApplication>
 #include <QIcon>
 #include <QStyle>
-#include "string.hpp"
-#include "sys_utils.hpp"
-#include "url.hpp"
-#include "tm_url.hpp"
-#include "renderer.hpp"
 
 #include <QApplication>
 #include <QScreen>
@@ -30,9 +30,9 @@
 
 void init_palette (QApplication* app);
 void init_style_sheet (QApplication* app);
-void set_standard_style_sheet (QWidget *w);
+void set_standard_style_sheet (QWidget* w);
 
-#if defined(Q_OS_MAC) && QT_VERSION < 0x060000 
+#if defined(Q_OS_MAC) && QT_VERSION < 0x060000
 
 #include <QMacPasteboardMime>
 
@@ -45,43 +45,43 @@ void set_standard_style_sheet (QWidget *w);
 
 // (mg) I'm not sure this is the right place to have this code, but well...
 
-class QMacPasteboardMimePDF : public QMacPasteboardMime
-{
+class QMacPasteboardMimePDF : public QMacPasteboardMime {
 public:
   QMacPasteboardMimePDF ()
-    : QMacPasteboardMime (MIME_QT_CONVERTOR | MIME_ALL)
-  {}
+      : QMacPasteboardMime (MIME_QT_CONVERTOR | MIME_ALL) {}
 
-  QString convertorName() { return "PDF"; }
+  QString convertorName () { return "PDF"; }
 
-  QString flavorFor (QString const & mime)
-  {
+  QString flavorFor (QString const& mime) {
     if (mime == QLatin1String ("application/pdf"))
       return QLatin1String ("com.adobe.pdf");
-    return QString();
+    return QString ();
   }
 
-  QString mimeFor(QString flav)
-  {
+  QString mimeFor (QString flav) {
     if (flav == QLatin1String ("com.adobe.pdf"))
       return QLatin1String ("application/pdf");
     return QString ();
   }
 
-  bool canConvert(QString const & mime, QString flav)
-  { return mimeFor (flav) == mime; }
+  bool canConvert (QString const& mime, QString flav) {
+    return mimeFor (flav) == mime;
+  }
 
-  QVariant convertToMime (QString const & mime, QList<QByteArray> data, QString flav)
-  {
-    (void) flav; (void) mime;
+  QVariant convertToMime (QString const& mime, QList<QByteArray> data,
+                          QString flav) {
+    (void) flav;
+    (void) mime;
     if (data.count () > 1)
-      debug_qt << "QMacPasteboardMimePDF: Cannot handle multiple member data " << LF;
+      debug_qt << "QMacPasteboardMimePDF: Cannot handle multiple member data "
+               << LF;
     return data.first ();
   }
 
-  QList<QByteArray> convertFromMime (QString const & mime, QVariant data, QString flav)
-  {
-    (void) flav; (void) mime;
+  QList<QByteArray> convertFromMime (QString const& mime, QVariant data,
+                                     QString flav) {
+    (void) flav;
+    (void) mime;
     QList<QByteArray> ret;
     ret.append (data.toByteArray ());
     return ret;
@@ -89,59 +89,58 @@ public:
 };
 #endif
 
-
 /*
  FIXME: We would like to do the following
- 
+
  #ifdef USE_EXCEPTIONS
  class QTMApplication... blah blah
- 
+
  #else
- 
+
  typedef QApplication QTMApplication;
- 
+
  #endif
- 
+
  But MOC has trouble with conditional compilation.
  */
 
 /*! QTMApplication
- 
+
  Reimplements notify() in order to catch exceptions thrown from event handlers
  and slots.
- 
+
  NOTE: see http://qt-project.org/forums/viewthread/17731 for the reason why
  the constructor takes an int&
  */
-class QTMApplication: public QApplication {
+class QTMApplication : public QApplication {
   Q_OBJECT
 
-#if defined(Q_OS_MAC) && QT_VERSION < 0x060000 
+#if defined(Q_OS_MAC) && QT_VERSION < 0x060000
   QMacPasteboardMimePDF mac_pasteboard_mime_pdf;
 #endif
-  
-public:
-  QTMApplication (int& argc, char** argv) :
-    QApplication (argc, argv) {
-      init_palette (this);
-      init_style_sheet (this);
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5,15,0))
-      QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
+public:
+  QTMApplication (int& argc, char** argv) : QApplication (argc, argv) {
+    init_palette (this);
+    init_style_sheet (this);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy (
+        Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
 #endif
 
 #if (QT_VERSION < 0x060000)
-      if (!retina_manual) {
-        qreal ratio  = QGuiApplication::primaryScreen()->devicePixelRatio ();
-        retina_factor= qRound (ratio - 0.1);
-      }
-#else
-      if (!retina_manual) {
-        qreal ratio  = QApplication::primaryScreen ()->devicePixelRatio ();
-        retina_factor= qRound (ratio - 0.1);
-      }
-#endif
+    if (!retina_manual) {
+      qreal ratio  = QGuiApplication::primaryScreen ()->devicePixelRatio ();
+      retina_factor= qRound (ratio - 0.1);
     }
+#else
+    if (!retina_manual) {
+      qreal ratio  = QApplication::primaryScreen ()->devicePixelRatio ();
+      retina_factor= qRound (ratio - 0.1);
+    }
+#endif
+  }
 
   void set_window_icon (string icon_path) {
     url icon_url= url_system (get_env ("TEXMACS_PATH") * icon_path);
@@ -150,7 +149,8 @@ public:
       setWindowIcon (QIcon ((const char*) _icon));
     }
     else
-      std_warning << "Could not find TeXmacs icon file: " << as_string (icon_url) << LF;
+      std_warning << "Could not find TeXmacs icon file: "
+                  << as_string (icon_url) << LF;
   }
 
   /*
@@ -164,40 +164,32 @@ public:
     return QApplication::event(event);
   }
   */
-  
-  virtual bool notify (QObject* receiver, QEvent* event)
-  {
+
+  virtual bool notify (QObject* receiver, QEvent* event) {
     try {
       return QApplication::notify (receiver, event);
-    }
-    catch (string s) {
-        //c_string cs (s);
-        //tm_failure (cs);
-        //qt_error << "Thrown " << s << LF;
+    } catch (string s) {
+      // c_string cs (s);
+      // tm_failure (cs);
+      // qt_error << "Thrown " << s << LF;
       the_exception= s;
     }
     return false;
   }
-
 };
 
-class QTMCoreApplication: public QCoreApplication {
+class QTMCoreApplication : public QCoreApplication {
   Q_OBJECT
-  
+
 public:
-  QTMCoreApplication (int& argc, char** argv) :
-    QCoreApplication (argc, argv) {}
+  QTMCoreApplication (int& argc, char** argv) : QCoreApplication (argc, argv) {}
 
-  void set_window_icon (string icon_path) {
-    (void) icon_path;
-  }
+  void set_window_icon (string icon_path) { (void) icon_path; }
 
-  virtual bool notify (QObject* receiver, QEvent* event)
-  {
+  virtual bool notify (QObject* receiver, QEvent* event) {
     try {
       return QCoreApplication::notify (receiver, event);
-    }
-    catch (string s) {
+    } catch (string s) {
       qt_error << "Thrown " << s << LF;
       the_exception= s;
     }
@@ -205,4 +197,4 @@ public:
   }
 };
 
-#endif   // QTMAPPLICATION_HPP
+#endif // QTMAPPLICATION_HPP

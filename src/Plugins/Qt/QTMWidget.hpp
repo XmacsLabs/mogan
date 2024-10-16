@@ -1,58 +1,55 @@
 
 /******************************************************************************
-* MODULE     : QTMWidget.hpp
-* DESCRIPTION: QT Texmacs widget class
-* COPYRIGHT  : (C) 2008 Massimiliano Gubinelli
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : QTMWidget.hpp
+ * DESCRIPTION: QT Texmacs widget class
+ * COPYRIGHT  : (C) 2008 Massimiliano Gubinelli
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef QTMWIDGET_HPP
 #define QTMWIDGET_HPP
 
-#include "qt_widget.hpp"
 #include "QTMScrollView.hpp"
-#include <QLabel>
+#include "qt_widget.hpp"
 #include <QGesture>
 #include <QGestureEvent>
+#include <QLabel>
 
 class qt_simple_widget_rep;
 
-/*! The underlying QWidget for a qt_simple_widget_rep handles drawing for a 
+/*! The underlying QWidget for a qt_simple_widget_rep handles drawing for a
     texmacs canvas, as well as keypresses, international input methods, etc.
- 
+
  QTMWidget needs a valid qt_simple_widget_rep object to function properly, see
  set_tm_widget() for more on this.
- 
+
  */
-class QTMWidget: public QTMScrollView {
+class QTMWidget : public QTMScrollView {
   Q_OBJECT
 
-  qt_widget    tmwid;
-  QLabel*      imwidget;
-  QPoint       cursor_pos;
-  bool         preediting;
+  qt_widget tmwid;
+  QLabel*   imwidget;
+  QPoint    cursor_pos;
+  bool      preediting;
 
 public:
-
-  
-  QTMWidget (QWidget* _parent=0, qt_widget _tmwid=0);
+  QTMWidget (QWidget* _parent= 0, qt_widget _tmwid= 0);
   virtual ~QTMWidget ();
   virtual bool isEmbedded () const;
-  
-  virtual QSize	sizeHint () const;
-  virtual void scrollContentsBy (int dx, int dy);
 
-  void setCursorPos (QPoint pos) { cursor_pos = pos; }
+  virtual QSize sizeHint () const;
+  virtual void  scrollContentsBy (int dx, int dy);
+
+  void                  setCursorPos (QPoint pos) { cursor_pos= pos; }
   qt_simple_widget_rep* tm_widget () const;
-  
-  bool isPreediting () { return preediting; }
-  
-protected:
 
-  virtual bool event (QEvent *event);
+  bool isPreediting () { return preediting; }
+
+protected:
+  virtual bool event (QEvent* event);
 
   virtual void paintEvent (QPaintEvent* event);
   virtual void focusInEvent (QFocusEvent* event);
@@ -67,17 +64,16 @@ protected:
   virtual void tabletEvent (QTabletEvent* event);
 #endif
   virtual void gestureEvent (QGestureEvent* event);
-  virtual void resizeEvent (QResizeEvent *event);
-  virtual void resizeEventBis (QResizeEvent *e);
-  virtual void dragEnterEvent(QDragEnterEvent *event);
-  //virtual void dragMoveEvent (QDragMoveEvent *event);
-  virtual void dropEvent(QDropEvent *event);
+  virtual void resizeEvent (QResizeEvent* event);
+  virtual void resizeEventBis (QResizeEvent* e);
+  virtual void dragEnterEvent (QDragEnterEvent* event);
+  // virtual void dragMoveEvent (QDragMoveEvent *event);
+  virtual void dropEvent (QDropEvent* event);
 
-  virtual void wheelEvent(QWheelEvent *event);
+  virtual void     wheelEvent (QWheelEvent* event);
   virtual QVariant inputMethodQuery (Qt::InputMethodQuery query) const;
 
-  void showEvent (QShowEvent *event) override;
-
+  void showEvent (QShowEvent* event) override;
 };
 
 #endif // QTMWIDGET_HPP
