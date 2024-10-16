@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "glue.hpp"
-#include "init_glue_l1.hpp"
 #include "init_glue_l2.hpp"
 #include "init_glue_l3.hpp"
 #include "init_glue_l4.hpp"
@@ -19,7 +18,6 @@
 
 void
 initialize_glue () {
-  initialize_glue_l1 ();
   initialize_glue_l2 ();
   initialize_glue_l3 ();
   initialize_glue_l4 ();

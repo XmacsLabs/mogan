@@ -96,6 +96,14 @@ function main()
                     "array_string"
                 }
             },
+            {
+                scm_name = "string-load",
+                cpp_name = "tm_string_load",
+                ret_type = "string",
+                arg_list = {
+                    "url"
+                }
+            },
         }
     }
 end

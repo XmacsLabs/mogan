@@ -14,18 +14,27 @@
 #include "object_l2.hpp"
 #include "s7_tm.hpp"
 
+#include "analyze.hpp"
+#include "base64.hpp"
 #include "file.hpp"
-#include "persistent.hpp"
+#include "locale.hpp"
 #include "sys_utils.hpp"
-#include "tm_file.hpp"
-#include "tm_url.hpp"
-#include "tmfs_url.hpp"
 #include "tree.hpp"
 
-#include "glue_file.cpp"
-#include "glue_misc.cpp"
-#include "glue_url.cpp"
 #include "scheme.hpp"
+
+tmscm
+blackboxP (tmscm t) {
+  bool b= tmscm_is_blackbox (t);
+  return bool_to_tmscm (b);
+}
+
+tmscm
+treeP (tmscm t) {
+  bool b= tmscm_is_blackbox (t) &&
+          (type_box (tmscm_to_blackbox (t)) == type_helper<tree>::id);
+  return bool_to_tmscm (b);
+}
 
 tmscm
 urlP (tmscm t) {
@@ -33,10 +42,22 @@ urlP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
+url
+url_ref (url u, int i) {
+  return u[i];
+}
+
+string
+lolly_version () {
+  return string (LOLLY_VERSION);
+}
+
+#include "glue_lolly.cpp"
+
 void
 initialize_glue_l2 () {
+  tmscm_install_procedure ("blackbox?", blackboxP, 1, 0, 0);
+  tmscm_install_procedure ("tree?", treeP, 1, 0, 0);
   tmscm_install_procedure ("url?", urlP, 1, 0, 0);
-  initialize_glue_url ();
-  initialize_glue_file ();
-  initialize_glue_misc ();
+  initialize_glue_lolly ();
 }

@@ -99,6 +99,39 @@ function main()
                     "url"
                 }
             },
+            {
+                scm_name = "string->url",
+                cpp_name = "tm_url",
+                ret_type = "url",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "url-rooted-tmfs?",
+                cpp_name = "is_rooted_tmfs",
+                ret_type = "bool",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "url-rooted-tmfs-protocol?",
+                cpp_name = "is_rooted_tmfs",
+                ret_type = "bool",
+                arg_list = {
+                    "url",
+                    "string"
+                }
+            },
+            {
+                scm_name = "unix->url",
+                cpp_name = "tm_url",
+                ret_type = "url",
+                arg_list = {
+                    "string"
+                }
+            },
         }
     }
 end

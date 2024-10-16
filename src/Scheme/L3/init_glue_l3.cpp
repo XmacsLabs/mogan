@@ -15,13 +15,12 @@
 #include "object_l3.hpp"
 #include "s7_tm.hpp"
 
-#include "analyze.hpp"
-#include "base64.hpp"
+#include "drd_mode.hpp"
 #include "file.hpp"
-#include "locale.hpp"
 #include "modification.hpp"
 #include "patch.hpp"
 #include "path.hpp"
+#include "persistent.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_url.hpp"
@@ -30,6 +29,30 @@
 #include "tree_cursor.hpp"
 #include "tree_observer.hpp"
 #include "url.hpp"
+
+#include "glue_drd.cpp"
+#include "glue_file.cpp"
+#include "glue_misc.cpp"
+#include "glue_url.cpp"
+
+tmscm
+observerP (tmscm t) {
+  bool b= tmscm_is_blackbox (t) &&
+          (type_box (tmscm_to_blackbox (t)) == type_helper<observer>::id);
+  return bool_to_tmscm (b);
+}
+
+tmscm
+modificationP (tmscm t) {
+  bool b= tmscm_is_modification (t);
+  return bool_to_tmscm (b);
+}
+
+tmscm
+contentP (tmscm t) {
+  bool b= tmscm_is_content (t);
+  return bool_to_tmscm (b);
+}
 
 tree
 var_apply (tree &t, modification m) {
@@ -64,17 +87,6 @@ patchP (tmscm t) {
   return bool_to_tmscm (b);
 }
 
-url
-url_ref (url u, int i) {
-  return u[i];
-}
-
-string
-lolly_version () {
-  return string (LOLLY_VERSION);
-}
-
-#include "glue_lolly.cpp"
 #include "glue_modification.cpp"
 #include "glue_patch.cpp"
 #include "glue_path.cpp"
@@ -82,9 +94,15 @@ lolly_version () {
 void
 initialize_glue_l3 () {
   tmscm_install_procedure ("patch?", patchP, 1, 0, 0);
+  tmscm_install_procedure ("observer?", observerP, 1, 0, 0);
+  tmscm_install_procedure ("tm?", contentP, 1, 0, 0);
+  tmscm_install_procedure ("modification?", modificationP, 1, 0, 0);
 
+  initialize_glue_drd ();
+  initialize_glue_url ();
+  initialize_glue_file ();
+  initialize_glue_misc ();
   initialize_glue_path ();
   initialize_glue_modification ();
   initialize_glue_patch ();
-  initialize_glue_lolly ();
 }
