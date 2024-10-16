@@ -116,8 +116,8 @@
               (list "Detailed" "Folded" "Pretty")
               (db-toolbar-current-present) "6em"))))
 
-(tm-define (load-db-buffer u)
-  (load-document u)
+(tm-define (load-db-buffer path)
+  (load-document (string->url path))
   (db-show-toolbar))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

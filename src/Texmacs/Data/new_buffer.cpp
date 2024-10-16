@@ -460,7 +460,7 @@ import_tree (url u, string fm) {
   u= resolve (u, "fr");
   set_file_focus (u);
   string s;
-  if (is_none (u) || load_string (u, s, false)) return "error";
+  if (is_none (u) || tm_load_string (u, s, false)) return "error";
   return import_loaded_tree (s, u, fm);
 }
 
@@ -581,7 +581,7 @@ latex_expand (tree doc, url name) {
 
 tree
 latex_expand (tree doc) {
-  tm_view vw= concrete_view (url (as_string (extract (doc, "view"))));
+  tm_view vw= concrete_view (tm_url (as_string (extract (doc, "view"))));
   tree body= vw->ed->exec_latex (extract (doc, "body"));
   doc= change_doc_attr (doc, "body", body);
   return remove_doc_attr (doc, "view");
