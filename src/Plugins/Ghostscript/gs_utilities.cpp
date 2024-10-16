@@ -182,28 +182,6 @@ gs_fix_bbox (url eps, int x1, int y1, int x2, int y2) {
   }
 }
 
-string
-pdf_version (url image) {
-  string buf;
-  bool   ok= !load_string (image, buf, false);
-  int    n = N (buf);
-  if (!ok || n < 5 || buf (0, 5) != "%PDF-") {
-    std_error << "Cannot determine PDF version of \"" << image << "\"." << LF;
-    return default_pdf_version ();
-  }
-  int pos= 5;
-  while (n > pos && is_numeric (buf[pos]))
-    pos++;
-  string v= buf (5, pos);
-  if (!is_double (v)) {
-    std_error << "Cannot determine PDF version of \"" << image << "\"." << LF;
-    return default_pdf_version ();
-    ;
-  }
-  // cout << "PDF version found for \"" << image << "\": " << v << LF;
-  return v;
-}
-
 bool
 gs_PDFimage_size (url image, int& w_pt, int& h_pt) {
   if (DEBUG_CONVERT) debug_convert << "gs PDF image size :" << LF;

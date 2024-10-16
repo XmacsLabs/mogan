@@ -14,8 +14,27 @@
 #define PDF_H
 
 #include "string.hpp"
+#include "url.hpp"
 
+/**
+ * @brief the default PDF version when exporting to PDF specified by the user
+ *
+ * @return the default PDF version, eg. 1.7.0
+ */
 string pdf_version ();
+
+/**
+ * @brief the default PDF version when exporting to PDF
+ *
+ * @return the default PDF version, eg. 1.7.0
+ */
 string default_pdf_version ();
+
+/**
+ * @brief the pdf version adopt in the file
+ *
+ * @return the pdf version of the url
+ */
+string pdf_version (url path);
 
 #endif
