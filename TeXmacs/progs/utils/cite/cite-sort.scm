@@ -18,7 +18,12 @@
     (< (string->number s1) (string->number s2))
     (string<? s1 s2)))
 
-(define (compare-cite-keys t1 t2)
+(define (compare-string-inc? s1 s2)
+  (if (and (string->number s1) (string->number s2))
+    (== 1 (- (string->number s2) (string->number s1)))
+    #f))
+
+(define (compare-cite-keys t1 t2 comparator)
   (let*
     ((t1 (car t1))
      (t2 (car t2))
@@ -31,15 +36,37 @@
     (with ret (tree->stree (texmacs-exec key))
       (if (!= ret '(uninit)) ret ""))))
 
+(define (merge-contiguous new old present)
+  (let ((flush
+        (lambda ()
+          (if (> (length present) 2)
+              (list (list (caar present) `(concat ,@(cdar present) "-" ,@(cdAr present))))
+              present))))
+    (if (null? old)
+        (if (null? present)
+            new
+            (append new (flush)))
+        (if (null? present)
+            (merge-contiguous new (cdr old) (list (car old)))
+            (if (compare-cite-keys (cAr present) (car old) compare-string-inc?)
+                (merge-contiguous new (cdr old) (append present (list (car old))))
+                (merge-contiguous (append new (flush)) (cdr old) (list (car old))))))))
+
+(tm-define (indice-sort tup)
+  (let* ((sorted-tup 
+           (list-sort tup (lambda (s1 s2) (compare-cite-keys s1 s2 compare-string))))
+         (merged-tup (merge-contiguous '() sorted-tup '()))
+         (merged-args (map cadr merged-tup)))
+    merged-args))
+
 (tm-define (cite-sort args)
   ;; get a (tuple (tuple key_1 value_1) ... (tuple key_n value_n))
   ;; and sort it according to values.
   (:secure #t)
+  ; (display "args: " (tree->stree args))
   (let* ((args (map tree->stree (tree-children args)))
          (keys (map expand-references (map caddr args)))
          (tup (map list keys args))
-         (sorted-tup (list-sort tup compare-cite-keys))
-         ;; we should merge contiguous number series here...
-         (sorted-args (map cadr sorted-tup))
-         (ret `(concat ,@(list-intersperse sorted-args '(cite-sep)))))
+         (merged-args (indice-sort tup))
+         (ret `(concat ,@(list-intersperse merged-args '(cite-sep)))))
     ret))
