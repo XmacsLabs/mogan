@@ -1,23 +1,23 @@
 
 /******************************************************************************
-* MODULE     : poor_stretched.cpp
-* DESCRIPTION: Emulation of stretched fonts
-* COPYRIGHT  : (C) 2016  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : poor_stretched.cpp
+ * DESCRIPTION: Emulation of stretched fonts
+ * COPYRIGHT  : (C) 2016  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "font.hpp"
 #include "analyze.hpp"
+#include "font.hpp"
 #include "frame.hpp"
 
 /******************************************************************************
-* True Type fonts
-******************************************************************************/
+ * True Type fonts
+ ******************************************************************************/
 
-struct poor_stretched_font_rep: font_rep {
+struct poor_stretched_font_rep : font_rep {
   font   base;
   double factor;
 
@@ -36,32 +36,30 @@ struct poor_stretched_font_rep: font_rep {
   void   advance_glyph (string s, int& pos, bool ligf);
   glyph  get_glyph (string s);
   int    index_glyph (string s, font_metric& fnm, font_glyphs& fng);
-  double get_left_slope  (string s);
+  double get_left_slope (string s);
   double get_right_slope (string s);
-  SI     get_left_correction  (string s);
+  SI     get_left_correction (string s);
   SI     get_right_correction (string s);
-  SI     get_lsub_correction  (string s);
-  SI     get_lsup_correction  (string s);
-  SI     get_rsub_correction  (string s);
-  SI     get_rsup_correction  (string s);
-  SI     get_wide_correction  (string s, int mode);
+  SI     get_lsub_correction (string s);
+  SI     get_lsup_correction (string s);
+  SI     get_rsub_correction (string s);
+  SI     get_rsup_correction (string s);
+  SI     get_wide_correction (string s, int mode);
 };
 
 /******************************************************************************
-* Initialization of main font parameters
-******************************************************************************/
+ * Initialization of main font parameters
+ ******************************************************************************/
 
-poor_stretched_font_rep::poor_stretched_font_rep (
-  string name, font b, double f):
-    font_rep (name, b), base (b), factor (f)
-{
+poor_stretched_font_rep::poor_stretched_font_rep (string name, font b, double f)
+    : font_rep (name, b), base (b), factor (f) {
   this->copy_math_pars (base);
-  this->slope /= factor;
+  this->slope/= factor;
 }
 
 /******************************************************************************
-* Getting extents and drawing strings
-******************************************************************************/
+ * Getting extents and drawing strings
+ ******************************************************************************/
 
 bool
 poor_stretched_font_rep::supports (string s) {
@@ -74,7 +72,7 @@ poor_stretched_font_rep::get_extents (string s, metric& ex) {
   ex->y1= (SI) floor (factor * ex->y1 + 0.5);
   ex->y2= (SI) floor (factor * ex->y2 + 0.5);
   ex->y3= (SI) floor (factor * ex->y3);
-  ex->y4= (SI) ceil  (factor * ex->y4);
+  ex->y4= (SI) ceil (factor * ex->y4);
 }
 
 void
@@ -93,25 +91,25 @@ poor_stretched_font_rep::get_xpositions (string s, SI* xpos, SI xk) {
 }
 
 void
-poor_stretched_font_rep::draw_fixed (renderer ren, string s,
-                                     SI x, SI y, SI* xpos, bool ligf) {
-  int i=0;
-  while (i < N(s)) {
+poor_stretched_font_rep::draw_fixed (renderer ren, string s, SI x, SI y,
+                                     SI* xpos, bool ligf) {
+  int i= 0;
+  while (i < N (s)) {
     int start= i;
     base->advance_glyph (s, i, ligf);
-    string ss= s (start, i);
+    string      ss= s (start, i);
     font_metric fnm;
     font_glyphs fng;
-    int c= index_glyph (ss, fnm, fng);
-    //cout << "Drawing " << ss << ", " << c
-    //     << " at " << (xpos[start]/PIXEL) << "\n";
+    int         c= index_glyph (ss, fnm, fng);
+    // cout << "Drawing " << ss << ", " << c
+    //      << " at " << (xpos[start]/PIXEL) << "\n";
     if (c >= 0) {
-      //cout << fng->get (c) << "\n\n";
-      ren->draw (c, fng, start==0? x: x + xpos[start], y);
+      // cout << fng->get (c) << "\n\n";
+      ren->draw (c, fng, start == 0 ? x : x + xpos[start], y);
     }
     else {
-      ren->set_transformation (scaling (point (1.0,factor), point (0.0,0.0)));
-      base->draw_fixed (ren, ss, start==0? x: x + xpos[start], y, ligf);
+      ren->set_transformation (scaling (point (1.0, factor), point (0.0, 0.0)));
+      base->draw_fixed (ren, ss, start == 0 ? x : x + xpos[start], y, ligf);
       ren->reset_transformation ();
     }
   }
@@ -120,7 +118,7 @@ poor_stretched_font_rep::draw_fixed (renderer ren, string s,
 void
 poor_stretched_font_rep::draw_fixed (renderer ren, string s, SI x, SI y) {
   if (ren->is_screen) {
-    STACK_NEW_ARRAY (xpos, SI, N(s)+1);
+    STACK_NEW_ARRAY (xpos, SI, N (s) + 1);
     get_xpositions (s, xpos, true);
     draw_fixed (ren, s, x, y, xpos, true);
     STACK_DELETE_ARRAY (xpos);
@@ -133,9 +131,10 @@ poor_stretched_font_rep::draw_fixed (renderer ren, string s, SI x, SI y) {
 }
 
 void
-poor_stretched_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, bool ligf) {
+poor_stretched_font_rep::draw_fixed (renderer ren, string s, SI x, SI y,
+                                     bool ligf) {
   if (ren->is_screen) {
-    STACK_NEW_ARRAY (xpos, SI, N(s)+1);
+    STACK_NEW_ARRAY (xpos, SI, N (s) + 1);
     get_xpositions (s, xpos, ligf);
     draw_fixed (ren, s, x, y, xpos, ligf);
     STACK_DELETE_ARRAY (xpos);
@@ -148,9 +147,10 @@ poor_stretched_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, bool li
 }
 
 void
-poor_stretched_font_rep::draw_fixed (renderer ren, string s, SI x, SI y, SI xk) {
+poor_stretched_font_rep::draw_fixed (renderer ren, string s, SI x, SI y,
+                                     SI xk) {
   if (ren->is_screen) {
-    STACK_NEW_ARRAY (xpos, SI, N(s)+1);
+    STACK_NEW_ARRAY (xpos, SI, N (s) + 1);
     get_xpositions (s, xpos, xk);
     draw_fixed (ren, s, x, y, xpos, false);
     STACK_DELETE_ARRAY (xpos);
@@ -168,8 +168,8 @@ poor_stretched_font_rep::magnify (double zoomx, double zoomy) {
 }
 
 /******************************************************************************
-* Glyph manipulations
-******************************************************************************/
+ * Glyph manipulations
+ ******************************************************************************/
 
 void
 poor_stretched_font_rep::advance_glyph (string s, int& pos, bool ligf) {
@@ -184,7 +184,7 @@ poor_stretched_font_rep::get_glyph (string s) {
 
 int
 poor_stretched_font_rep::index_glyph (string s, font_metric& fnm,
-                                                font_glyphs& fng) {
+                                      font_glyphs& fng) {
   int c= base->index_glyph (s, fnm, fng);
   if (c < 0) return c;
   fnm= stretched (fnm, 1.0, factor);
@@ -193,8 +193,8 @@ poor_stretched_font_rep::index_glyph (string s, font_metric& fnm,
 }
 
 /******************************************************************************
-* Stretched correction
-******************************************************************************/
+ * Stretched correction
+ ******************************************************************************/
 
 double
 poor_stretched_font_rep::get_left_slope (string s) {
@@ -242,8 +242,8 @@ poor_stretched_font_rep::get_wide_correction (string s, int mode) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
 font
 poor_stretched_font (font base, double zoomx, double zoomy) {
@@ -255,9 +255,8 @@ poor_stretched_font (font base, double zoomx, double zoomy) {
   if (zoomy > 100.0) zoomy= 100.0;
   if (zoomx != 1.0)
     return poor_stretched_font (base->magnify (zoomx), 1.0, zoomy / zoomx);
-  if (zoomy == 1.0)
-    return base;
+  if (zoomy == 1.0) return base;
   string name=
-    "poorstretched[" * base->res_name * "," * as_string (zoomy) * "]";
+      "poorstretched[" * base->res_name * "," * as_string (zoomy) * "]";
   return make (font, name, tm_new<poor_stretched_font_rep> (name, base, zoomy));
 }

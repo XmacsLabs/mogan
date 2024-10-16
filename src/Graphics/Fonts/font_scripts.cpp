@@ -1,29 +1,29 @@
 
 /******************************************************************************
-* MODULE     : font_scripts.cpp
-* DESCRIPTION: microtypographic script positioning
-* COPYRIGHT  : (C) 2017  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : font_scripts.cpp
+ * DESCRIPTION: microtypographic script positioning
+ * COPYRIGHT  : (C) 2017  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "font.hpp"
 #include "analyze.hpp"
+#include "font.hpp"
 
 /******************************************************************************
-* Helper routines for script correction tables
-******************************************************************************/
+ * Helper routines for script correction tables
+ ******************************************************************************/
 
 int get_utf8_code (string c);
 
 void
-adjust_char (hashmap<string,double>& t, string c, double delta) {
-  t (c) += delta;
+adjust_char (hashmap<string, double>& t, string c, double delta) {
+  t (c)+= delta;
   int code= get_utf8_code (c);
   if (code >= 0x3b1 && code <= 0x3f5) {
-    if (code <= 0x3c9) code += 0x1d6fc - 0x3b1;
+    if (code <= 0x3c9) code+= 0x1d6fc - 0x3b1;
     else if (code == 0x3f5) code= 0x1d716; // varepsilon
     else if (code == 0x3d1) code= 0x1d717; // vartheta
     else if (code == 0x3f0) code= 0x1d718; // varkappa
@@ -33,22 +33,22 @@ adjust_char (hashmap<string,double>& t, string c, double delta) {
     else code= 0;
     if (code != 0) {
       string nc= "<#" * upcase_all (as_hexadecimal (code)) * ">";
-      if (nc != c) t (nc) += delta;
+      if (nc != c) t (nc)+= delta;
     }
   }
 }
 
 void
-adjust_pair (hashmap<string,double>& t, string c, double delta) {
+adjust_pair (hashmap<string, double>& t, string c, double delta) {
   adjust_char (t, c, delta);
-  if (N(c) == 1) c= "<b-" * c * ">";
-  else c= "<b-" * c (1, N(c));
+  if (N (c) == 1) c= "<b-" * c * ">";
+  else c= "<b-" * c (1, N (c));
   adjust_char (t, c, delta);
 }
 
 void
-adjust_integral_sub (hashmap<string,double>& t,
-                     string c, string suf, double delta) {
+adjust_integral_sub (hashmap<string, double>& t, string c, string suf,
+                     double delta) {
   adjust_char (t, "<big-" * c * "-" * suf * ">", delta);
   adjust_char (t, "<big-up" * c * "-" * suf * ">", delta);
   adjust_char (t, "<big-" * c * "lim-" * suf * ">", delta);
@@ -68,7 +68,7 @@ adjust_integral_sub (hashmap<string,double>& t,
 }
 
 void
-adjust_integral (hashmap<string,double>& t, string suf, double delta) {
+adjust_integral (hashmap<string, double>& t, string suf, double delta) {
   adjust_integral_sub (t, "int", suf, delta);
   adjust_integral_sub (t, "iint", suf, delta);
   adjust_integral_sub (t, "iiint", suf, delta);
@@ -77,18 +77,18 @@ adjust_integral (hashmap<string,double>& t, string suf, double delta) {
 }
 
 void
-adjust_contour_integral (hashmap<string,double>& t, string suf, double delta) {
+adjust_contour_integral (hashmap<string, double>& t, string suf, double delta) {
   adjust_integral_sub (t, "oint", suf, delta);
   adjust_integral_sub (t, "oiint", suf, delta);
   adjust_integral_sub (t, "oiiint", suf, delta);
 }
 
 /******************************************************************************
-* Standard corrections
-******************************************************************************/
+ * Standard corrections
+ ******************************************************************************/
 
 void
-lsub_adjust_std (hashmap<string,double>& t) {
+lsub_adjust_std (hashmap<string, double>& t) {
   adjust_pair (t, "V", 0.05);
   adjust_pair (t, "W", 0.05);
   adjust_pair (t, "Y", 0.05);
@@ -101,7 +101,7 @@ lsub_adjust_std (hashmap<string,double>& t) {
 }
 
 void
-lsup_adjust_std (hashmap<string,double>& t) {
+lsup_adjust_std (hashmap<string, double>& t) {
   adjust_pair (t, "/", 0.07);
   adjust_pair (t, "a", 0.05);
   adjust_pair (t, "c", 0.05);
@@ -133,7 +133,7 @@ lsup_adjust_std (hashmap<string,double>& t) {
 }
 
 void
-rsub_adjust_std (hashmap<string,double>& t) {
+rsub_adjust_std (hashmap<string, double>& t) {
   adjust_pair (t, "1", -0.02);
   adjust_pair (t, "J", -0.01);
   adjust_pair (t, "P", -0.02);
@@ -154,7 +154,7 @@ rsub_adjust_std (hashmap<string,double>& t) {
 }
 
 void
-rsup_adjust_std (hashmap<string,double>& t) {
+rsup_adjust_std (hashmap<string, double>& t) {
   adjust_pair (t, "1", -0.05);
   adjust_pair (t, "A", -0.05);
   adjust_pair (t, "L", -0.05);
@@ -168,20 +168,20 @@ rsup_adjust_std (hashmap<string,double>& t) {
 }
 
 /******************************************************************************
-* Adjusting arrow subscripts and superscripts
-******************************************************************************/
+ * Adjusting arrow subscripts and superscripts
+ ******************************************************************************/
 
 void
-adjust_arrow (hashmap<string,double>& t, string c, double delta) {
+adjust_arrow (hashmap<string, double>& t, string c, double delta) {
   adjust_char (t, c, delta);
-  if (N(c) <= 3 || !starts (c, "<") || !ends (c, ">")) return;
-  if (is_locase (c[1])) c= "<long" * c(1,N(c));
-  else c= "<Long" * locase_all (c(1,2)) * c(2,N(c));
+  if (N (c) <= 3 || !starts (c, "<") || !ends (c, ">")) return;
+  if (is_locase (c[1])) c= "<long" * c (1, N (c));
+  else c= "<Long" * locase_all (c (1, 2)) * c (2, N (c));
   adjust_char (t, c, delta);
 }
 
 void
-right_adjust_arrow (hashmap<string,double>& t, double delta) {
+right_adjust_arrow (hashmap<string, double>& t, double delta) {
   adjust_arrow (t, "<rightarrow>", delta);
   adjust_arrow (t, "<leftrightarrow>", delta);
   adjust_arrow (t, "<mapsto>", delta);
@@ -196,22 +196,22 @@ right_adjust_arrow (hashmap<string,double>& t, double delta) {
 }
 
 /******************************************************************************
-* Guessing further adjustments
-******************************************************************************/
+ * Guessing further adjustments
+ ******************************************************************************/
 
 void
-lsub_adjust_guessed (hashmap<string,double>& t) {
+lsub_adjust_guessed (hashmap<string, double>& t) {
   (void) t;
 }
 
 void
-lsup_adjust_guessed (hashmap<string,double>& t) {
+lsup_adjust_guessed (hashmap<string, double>& t) {
   adjust_integral (t, "1", 0.1);
   adjust_integral (t, "2", 0.1);
 }
 
 void
-rsub_adjust_guessed (hashmap<string,double>& t) {
+rsub_adjust_guessed (hashmap<string, double>& t) {
   adjust_pair (t, "/", -0.05);
   adjust_pair (t, "7", -0.1);
   adjust_pair (t, "T", -0.05);
@@ -237,7 +237,7 @@ rsub_adjust_guessed (hashmap<string,double>& t) {
 }
 
 void
-rsup_adjust_guessed (hashmap<string,double>& t) {
+rsup_adjust_guessed (hashmap<string, double>& t) {
   adjust_pair (t, "\\", -0.05);
   adjust_pair (t, "L", -0.05);
   adjust_pair (t, "<bbb-A>", -0.1);
@@ -245,15 +245,15 @@ rsup_adjust_guessed (hashmap<string,double>& t) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> lsub_guessed (0.0);
-static hashmap<string,double> lsup_guessed (0.0);
-static hashmap<string,double> rsub_guessed (0.0);
-static hashmap<string,double> rsup_guessed (0.0);
+static hashmap<string, double> lsub_guessed (0.0);
+static hashmap<string, double> lsup_guessed (0.0);
+static hashmap<string, double> rsub_guessed (0.0);
+static hashmap<string, double> rsup_guessed (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 lsub_guessed_table () {
   if (N (lsub_guessed) == 0) {
     lsub_adjust_std (lsub_guessed);
@@ -262,7 +262,7 @@ lsub_guessed_table () {
   return lsub_guessed;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 lsup_guessed_table () {
   if (N (lsup_guessed) == 0) {
     lsup_adjust_std (lsup_guessed);
@@ -271,7 +271,7 @@ lsup_guessed_table () {
   return lsup_guessed;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsub_guessed_table () {
   if (N (rsub_guessed) == 0) {
     rsub_adjust_std (rsub_guessed);
@@ -280,7 +280,7 @@ rsub_guessed_table () {
   return rsub_guessed;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsup_guessed_table () {
   if (N (rsup_guessed) == 0) {
     rsup_adjust_std (rsup_guessed);
