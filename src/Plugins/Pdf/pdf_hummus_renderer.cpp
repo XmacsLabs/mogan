@@ -18,6 +18,8 @@
 #include "analyze.hpp"
 #include "iterator.hpp"
 #include "merge_sort.hpp"
+#include "ntuple.hpp"
+#include "pdf.hpp"
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "convert.hpp"

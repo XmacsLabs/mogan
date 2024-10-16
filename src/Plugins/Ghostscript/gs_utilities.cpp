@@ -12,6 +12,7 @@
 #include "tm_configure.hpp"
 #ifdef USE_PLUGIN_GS
 
+#include "Pdf/pdf.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
 #include "gs_utilities.hpp"
@@ -179,20 +180,6 @@ gs_fix_bbox (url eps, int x1, int y1, int x2, int y2) {
     }
     set_imgbox_cache (eps->t, x2 - x1, y2 - y1, x1, y1);
   }
-}
-
-string
-default_pdf_version () {
-  return "1.4";
-}
-
-string
-pdf_version () {
-  string version= get_preference ("texmacs->pdf:version");
-  if (version == "1.4" || version == "1.5" || version == "1.6" ||
-      version == "1.7")
-    return version;
-  return default_pdf_version ();
 }
 
 string

@@ -31,8 +31,6 @@ bool gs_PDF_EmbedAllFonts (url image, url pdf);
 void gs_to_ps (url doc, url ps, bool landsc, double paper_h, double paper_w);
 bool gs_check (url doc);
 string pdf_version (url image);
-string pdf_version ();
-string default_pdf_version ();
 void   tm_gs (url image);
 
 #endif // USE_PLUGIN_GS
