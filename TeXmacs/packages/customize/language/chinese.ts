@@ -1,4 +1,4 @@
-<TeXmacs|2.1>
+<TeXmacs|2.1.2>
 
 <style|source>
 
@@ -16,6 +16,10 @@
 
     <\src-copyright|2020-2021>
       Darcy Shen
+    </src-copyright>
+
+    <\src-copyright|2023>
+      Jingkaimori
     </src-copyright>
 
     <\src-license>
@@ -61,6 +65,18 @@
       </surround>>
     </cell>>>>>>>
   </macro>>
+
+  <\active*>
+    <\src-comment>
+      Document in Chinese should indent every paragraph, though some
+      mathematics documents in Latin align the first paragraph in section to
+      the title of section.
+    </src-comment>
+  </active*>
+
+  <assign|sectional-normal|<macro|name|<wide-normal|<arg|name><no-page-break>>>>
+
+  <assign|sectional-centered|<macro|name|<wide-centered|<arg|name><no-page-break>>>>
 
   <\active*>
     <\src-comment>
