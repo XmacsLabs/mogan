@@ -14,6 +14,7 @@
 #include "basic.hpp"
 #include "string.hpp"
 #include "tm_debug.hpp"
+#include "file.hpp"
 
 #include <QProcess>
 #include <QString>
@@ -31,6 +32,11 @@ string qt_get_pretty_os_name () {
 }
 
 void qt_open_url (url u) {
-  QString link = to_qstring (as_string (u));
-  QDesktopServices::openUrl (QUrl (link));
+  if (is_rooted_web (u) || is_rooted (u, "file")) {
+    QString link = to_qstring (as_string (u));
+    QDesktopServices::openUrl (QUrl (link));
+  } else if (is_local_and_single (u)) {
+    QString link = to_qstring ("file:///" * as_string (u));
+    QDesktopServices::openUrl (QUrl (link));
+  }
 }

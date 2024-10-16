@@ -168,32 +168,10 @@
   (:proposals last  (list (number->string (get-page-count)) "")))
 
 (tm-define (preview-file u)
-  (with s (url-sys-concretize u)
-    (cond ((!= preview-command "default")
-           (shell (string-append preview-command " " s " &")))
-          ((or (os-mingw?) (os-win32?))
-           (shell (string-append "cmd /c start " s)))
-          ((os-macos?)
-           (shell (string-append "open " s)))
-          ((url-exists-in-path? "xdg-open")
-           (shell (string-append "xdg-open " s)))
-          ((url-exists-in-path? "ggv")
-           (shell (string-append "ggv " s " &")))
-          ((url-exists-in-path? "ghostview")
-           (shell (string-append "ghostview " s " &")))
-          ((url-exists-in-path? "gv")
-           (shell (string-append "gv " s " &")))
-          (else (set-message
-                 "Error: ghostview does not seem to be installed on your system"
-                 "preview")))))
+  (open-url u))
 
 (tm-define (preview-buffer)
-  (with file (system->url
-              (cond ((os-mingw?)
-                     "$TEXMACS_HOME_PATH/system/tmp/preview.pdf")
-                    ((or (os-macos?) (get-boolean-preference "native pdf"))
-                     "$TEXMACS_HOME_PATH/system/tmp/preview.pdf")
-                    (else "$TEXMACS_HOME_PATH/system/tmp/preview.ps")))
+  (with file (url-glue (url-temp) (if (supports-native-pdf?) ".pdf" ".ps"))
     (print-to-file file)
     (preview-file file)))
 
