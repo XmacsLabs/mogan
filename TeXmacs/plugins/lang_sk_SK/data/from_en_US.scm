@@ -684,7 +684,6 @@
 ("display style" "štýl zobrazenia")
 ("displayed formula" "jednoriadkový vzorec")
 ("dissociate joined cells" "rozdeliť spojené bunky")
-("distill encapsulated Pdf files" "destilovať zapuzdrené Pdf súbory")
 ("distort" "skresliť")
 ("distorted" "skreslené")
 ("distribute unused space" "rovnomerne rozložiť medzery")

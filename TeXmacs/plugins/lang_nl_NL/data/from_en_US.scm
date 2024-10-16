@@ -700,7 +700,6 @@
 ("display style" "weergavestijl")
 ("displayed formula" "weergegeven formule")
 ("dissociate joined cells" "verbonden cellen dissoci�ren")
-("distill encapsulated Pdf files" "ingekapselde PDF-bestanden destilleren")
 ("distort" "vervormen")
 ("distorted" "vervormd")
 ("distribute unused space" "verdeel ongebruikte ruimte")
