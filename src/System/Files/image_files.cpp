@@ -179,17 +179,17 @@ ps_load (url image, bool conv) {
   if (is_none (name))
     name= "$TEXMACS_PATH/misc/pixmaps/unknown.png";
 
-#ifdef OS_WIN
   if (is_ramdisc (name)) name= get_from_ramdisc (name);
-#endif
 
   string s = "", suf= suffix (image);
-  if (suf == "ps" || suf == "eps") 
-    load_string (image, s, false);
-  else 
+  if (suf == "ps" || suf == "eps") {
+    load_string (name, s, false);
+  } else {
     if (conv) s= image_to_psdoc (image); // call converters, then load resulting ps
-    
-  if (s == "") load_string ("$TEXMACS_PATH/misc/pixmaps/unknown.png", s, true);
+  }
+
+  if (is_empty (s))
+    load_string ("$TEXMACS_PATH/misc/pixmaps/unknown.png", s, true);
   return s;
 }
 
