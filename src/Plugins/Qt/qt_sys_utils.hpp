@@ -13,9 +13,11 @@
 #define QT_SYS_UTILS_H
 
 #include "string.hpp"
+#include "url.hpp"
 
 
 string qt_get_current_cpu_arch ();
 string qt_get_pretty_os_name ();
+void qt_open_url (url u);
 
 #endif // defined QT_SYS_UTILS_H

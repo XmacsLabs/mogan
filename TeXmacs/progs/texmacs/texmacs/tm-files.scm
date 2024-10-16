@@ -426,21 +426,10 @@
       (file-of-format? u "postscript")
       (file-of-format? u "generic")))
 
-(tm-define (default-open)
-  (cond ((os-macos?) "open")
-        ((or (os-mingw?) (os-win32?)) "start")
-        (else "xdg-open")))
-
 (tm-define (load-external u)
   (when (not (url-rooted? u))
     (set! u (url-relative (current-buffer) u)))
-  (cond ((not (url-rooted-web? u))
-         (system-1 (default-open) u))
-        ((or (os-mingw?) (os-win32?))
-         (system (string-append (default-open) " " (url->system u))))
-        (else
-         (system (string-append (default-open) " "
-                                (raw-quote (url->system u)))))))
+  (open-url u))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Loading buffers

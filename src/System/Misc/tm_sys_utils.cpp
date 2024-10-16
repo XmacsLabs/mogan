@@ -158,3 +158,9 @@ default_look_and_feel () {
   static const char* ret= default_look_and_feel_impl ();
   return ret;
 }
+
+void open_url (url u) {
+#ifdef QTTEXMACS
+  qt_open_url (u);
+#endif
+}

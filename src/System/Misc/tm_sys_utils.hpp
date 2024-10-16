@@ -37,4 +37,6 @@ void set_printing_cmd (string cmd);
 
 const char* default_look_and_feel ();
 
+void open_url (url u);
+
 #endif
