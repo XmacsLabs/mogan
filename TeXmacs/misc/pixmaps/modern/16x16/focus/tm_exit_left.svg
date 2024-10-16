@@ -23,7 +23,7 @@
     <linearGradient
        id="linearGradient6140">
       <stop
-         style="stop-color:#808080;stop-opacity:1;"
+         style="stop-color:#232629;stop-opacity:1;"
          offset="0"
          id="stop6142" />
       <stop
@@ -193,13 +193,13 @@
          x="6.0259871"
          y="13.020233" /></text>
     <path
-       style="fill:none;stroke:#808080;stroke-width:1.50000000000000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter9054)"
+       style="fill:none;stroke:#232629;stroke-width:1.50000000000000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter9054)"
        d="m 7,5 0,-2 8,0 0,10 -8,0 0,-2"
        id="path8903"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccc" />
     <path
-       style="fill:#7e8180;fill-opacity:1;stroke:none;stroke-width:1.50000000000000000;stroke-miterlimit:4;stroke-dasharray:none;filter:url(#filter9102)"
+       style="fill:#232629;fill-opacity:1;stroke:none;stroke-width:1.50000000000000000;stroke-miterlimit:4;stroke-dasharray:none;filter:url(#filter9102)"
        d="M 12,9 4,9 4,11 0,8 4,5 4,7 12,7 z"
        id="path8905"
        inkscape:connector-curvature="0"

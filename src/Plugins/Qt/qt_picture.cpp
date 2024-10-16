@@ -1,4 +1,4 @@
-
+ 
 /******************************************************************************
 * MODULE     : qt_picture.cpp
 * DESCRIPTION: QT pictures
@@ -81,6 +81,29 @@ xpm_image (url file_name) {
   picture p= load_xpm (file_name);
   qt_picture_rep* rep= (qt_picture_rep*) p->get_handle ();
   return &(rep->pict);
+}
+
+QIcon
+qt_load_icon (url file_name) {
+  string base_name;
+  if (ends (as_string (file_name), ".xpm")) {
+    base_name= replace (as_string (file_name), ".xpm", "");
+  } else {
+    base_name= as_string (file_name);
+  }
+  url svg= resolve("$TEXMACS_PIXMAP_PATH" * url_system(base_name * ".svg"));
+  url png= resolve("$TEXMACS_PIXMAP_PATH" * url_system(base_name * ".png"));
+  if (exists (png)) {
+    return QIcon (as_pixmap (*xpm_image (file_name)));
+  } else if (exists (svg)) {
+#ifdef OS_MINGW
+    return QIcon (qt_load_svg_icon (svg));
+#else
+   return QIcon (to_qstring (as_string (svg)));
+#endif
+  } else {
+    return QIcon (as_pixmap (*xpm_image (file_name)));
+  }
 }
 
 picture
@@ -360,6 +383,35 @@ new_qt_load_xpm (url file_name) {
                  (int) floor (f * pm.height () + 0.5),
                  Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   return qt_picture (pm, 0, 0);
+}
+
+QPixmap
+qt_load_svg_icon (url file_name) {
+  string sss;
+
+  string sizeX =basename (url_parent (url_parent(file_name)));
+  QSize size;
+  double scale= max (retina_scale, (double) retina_icons);
+  if (sizeX == "16x16") {
+    size= QSize(int(16*scale), int(16*scale));
+  } else if (sizeX == "20x20") {
+    size= QSize(int(20*scale), int(20*scale));
+  } else if (sizeX == "24x24") {
+    size= QSize(int(24*scale), int(24*scale));
+  } else {
+    TM_FAILED("not a icon");
+  }
+
+  QSvgRenderer renderer (to_qstring(as_string (file_name)));
+  QImage *pm= NULL;
+  pm= new QImage (size.width(), size.height(), QImage::Format_ARGB32);
+  pm->fill (Qt::transparent);
+  QPainter painter (pm);
+  renderer.render (&painter);
+
+  QPixmap icon (pm->size ());
+  icon.convertFromImage (*pm);
+  return icon;
 }
 
 picture

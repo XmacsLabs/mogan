@@ -12,6 +12,7 @@
 #ifndef QT_PICTURE_HPP
 #define QT_PICTURE_HPP
 
+#include <QIcon>
 #include "qt_renderer.hpp"
 
 class qt_picture_rep: public picture_rep {
@@ -38,6 +39,8 @@ public:
 QImage* get_image (url u, int w, int h, tree eff, SI pixel);
 picture qt_picture (const QImage& im, int ox, int oy);
 QImage* xpm_image (url file_name);
+QPixmap qt_load_svg_icon (url file_name);
+QIcon qt_load_icon (url file_name);
 
 class qt_image_renderer_rep: public qt_renderer_rep {
 public:

@@ -201,6 +201,8 @@ needing_update (false)
     retina_icons= get_user_preference ("retina-icons") == "on"? 2: 1;
   if (has_user_preference ("retina-scale"))
     retina_scale= as_double (get_user_preference ("retina-scale"));
+
+  qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
 }
 
 /* important routines */

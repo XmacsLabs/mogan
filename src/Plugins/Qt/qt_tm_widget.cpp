@@ -216,16 +216,14 @@ qt_tm_widget_rep::qt_tm_widget_rep(int mask, command _quit)
   
   {
     // set proper sizes for icons
-    QImage *pxm = xpm_image ("tm_new.xpm");
-    QSize sz = (pxm ? pxm->size() : QSize (24, 24));
+    double scale= max (retina_scale, (double) retina_icons);
+    QSize sz= QSize (int(24*scale), int(24*scale));
     tweak_iconbar_size (sz);
     mainToolBar->setIconSize (sz);
-    pxm = xpm_image ("tm_section.xpm");
-    sz = (pxm ? pxm->size() : QSize (20, 20));
+    sz= QSize (int(20*scale), int(20*scale));
     tweak_iconbar_size (sz);
     modeToolBar->setIconSize (sz);
-    pxm = xpm_image ("tm_add.xpm");
-    sz = (pxm ? pxm->size() : QSize (16, 16));
+    sz= QSize (int(16*scale), int(16*scale));
     tweak_iconbar_size (sz);
     focusToolBar->setIconSize (sz);
   }
