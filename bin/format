@@ -34,6 +34,8 @@ clang-format -i src/Plugins/Html/*.cpp
 clang-format -i src/Plugins/Html/*.hpp
 clang-format -i src/Plugins/Xml/*.cpp
 clang-format -i src/Plugins/Xml/*.hpp
+clang-format -i src/Plugins/Metafont/*.cpp
+clang-format -i src/Plugins/Metafont/*.hpp
 clang-format -i src/Mogan/**.cpp
 clang-format -i src/Mogan/**.hpp
 

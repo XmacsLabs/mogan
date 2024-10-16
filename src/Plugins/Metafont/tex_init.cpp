@@ -1,25 +1,25 @@
 
 /******************************************************************************
-* MODULE     : tex_init.cpp
-* DESCRIPTION: initializations for using Metafont
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : tex_init.cpp
+ * DESCRIPTION: initializations for using Metafont
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "preferences.hpp"
-#include "file.hpp"
-#include "tm_file.hpp"
-#include "path.hpp"
-#include "sys_utils.hpp"
 #include "convert.hpp"
+#include "file.hpp"
+#include "path.hpp"
+#include "preferences.hpp"
+#include "sys_utils.hpp"
 #include "tex_files.hpp"
+#include "tm_file.hpp"
 
 /******************************************************************************
-* Determine installed programs
-******************************************************************************/
+ * Determine installed programs
+ ******************************************************************************/
 
 static void
 init_helper_binaries () {
@@ -35,52 +35,52 @@ init_helper_binaries () {
   }
   else set_setting ("KPSEWHICH", "false");
 
-  if (exists_in_path ("mktextfm")) { 	 
-   debug_boot << "mktextfm works with your TeX distribution\n"; 	 
-   set_setting ("MAKETFM", "mktextfm"); 	 
-  } 	 
-  else if (exists_in_path ("MakeTeXTFM")) { 	 
-    debug_boot << "MakeTeXTFM works with your TeX distribution\n"; 	 
-    set_setting ("MAKETFM", "MakeTeXTFM"); 	 
-  } 	 
-  else if (exists_in_path ("maketfm")){ 	 
-    debug_boot << "maketfm works with your TeX distribution\n"; 	 
-    set_setting ("MAKETFM", "maketfm"); 	 
-  } 	 
+  if (exists_in_path ("mktextfm")) {
+    debug_boot << "mktextfm works with your TeX distribution\n";
+    set_setting ("MAKETFM", "mktextfm");
+  }
+  else if (exists_in_path ("MakeTeXTFM")) {
+    debug_boot << "MakeTeXTFM works with your TeX distribution\n";
+    set_setting ("MAKETFM", "MakeTeXTFM");
+  }
+  else if (exists_in_path ("maketfm")) {
+    debug_boot << "maketfm works with your TeX distribution\n";
+    set_setting ("MAKETFM", "maketfm");
+  }
   else set_setting ("MAKETFM", "false");
-  
-  if (exists_in_path ("mktexpk")) { 	 
-    debug_boot << "mktexpk works with your TeX distribution\n"; 	 
-    set_setting ("MAKEPK", "mktexpk"); 	 
-  } 	 
-  else if (exists_in_path ("MakeTeXPK")) { 	 
-    debug_boot << "MakeTeXPK works with your TeX distribution\n"; 	 
-    set_setting ("MAKEPK", "MakeTeXPK"); 	 
-  } 	 
-  else if (exists_in_path ("makepk")){ 	 
-    debug_boot << "makepk works with your TeX distribution\n"; 	 
-    set_setting ("MAKEPK", "makepk"); 	 
-  } 	 
+
+  if (exists_in_path ("mktexpk")) {
+    debug_boot << "mktexpk works with your TeX distribution\n";
+    set_setting ("MAKEPK", "mktexpk");
+  }
+  else if (exists_in_path ("MakeTeXPK")) {
+    debug_boot << "MakeTeXPK works with your TeX distribution\n";
+    set_setting ("MAKEPK", "MakeTeXPK");
+  }
+  else if (exists_in_path ("makepk")) {
+    debug_boot << "makepk works with your TeX distribution\n";
+    set_setting ("MAKEPK", "makepk");
+  }
   else set_setting ("MAKEPK", "false");
 
-  if (exists_in_path ("texhash")) { 	 
-    debug_boot << "texhash works with your TeX distribution\n"; 	 
-    set_setting ("TEXHASH", "true"); 	 
-  } 	 
+  if (exists_in_path ("texhash")) {
+    debug_boot << "texhash works with your TeX distribution\n";
+    set_setting ("TEXHASH", "true");
+  }
   else set_setting ("TEXHASH", "false");
-  
+
   set_setting ("DPI", "600");
 }
 
 /******************************************************************************
-* Heuristic determination of path with TeX files
-******************************************************************************/
+ * Heuristic determination of path with TeX files
+ ******************************************************************************/
 
 static void
 search_sub_dirs_sub (url base, url u, url& tfm, url& pk, url& pfb, int status) {
   if (is_concat (u)) {
     if (u[1] == "tfm") status= 1;
-    if (u[1] == "pk" ) status= 2;
+    if (u[1] == "pk") status= 2;
     if (u[1] == "pfb" || u[1] == "type1") status= 3;
     search_sub_dirs_sub (base * u[1], u[2], tfm, pk, pfb, status);
   }
@@ -89,8 +89,8 @@ search_sub_dirs_sub (url base, url u, url& tfm, url& pk, url& pfb, int status) {
     search_sub_dirs_sub (base, u[1], tfm, pk, pfb, status);
   }
   if ((status == 1) || (u == "tfm")) tfm= (base * u) | tfm;
-  if ((status == 2) || (u == "pk" )) pk = (base * u) | pk;
-  if ((status == 3) || (u == "pfb") || (u == "pfb")) pfb = (base * u) | pfb;
+  if ((status == 2) || (u == "pk")) pk= (base * u) | pk;
+  if ((status == 3) || (u == "pfb") || (u == "pfb")) pfb= (base * u) | pfb;
 }
 
 static void
@@ -124,18 +124,18 @@ init_heuristic_tex_paths () {
 
 #ifdef OS_WIN
   set_setting ("TFM", as_string (tfm));
-  set_setting ("PK" , as_string (pk ));
+  set_setting ("PK", as_string (pk));
   set_setting ("PFB", as_string (pfb));
 #else
   set_setting ("TFM", as_string (expand (factor (tfm))));
-  set_setting ("PK" , as_string (expand (factor (pk ))));
+  set_setting ("PK", as_string (expand (factor (pk))));
   set_setting ("PFB", as_string (expand (factor (pfb))));
 #endif
 }
 
 /******************************************************************************
-* Setting up and initializing TeX fonts
-******************************************************************************/
+ * Setting up and initializing TeX fonts
+ ******************************************************************************/
 
 void
 setup_tex () {
