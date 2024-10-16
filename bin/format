@@ -47,4 +47,4 @@ clang-format -i src/Data/Tree/**.cpp
 clang-format -i src/Data/Tree/**.hpp
 clang-format -i src/Data/Observers/**.cpp
 clang-format -i src/Data/Observers/**.hpp
-
+clang-format -i src/Data/String/unicode.*

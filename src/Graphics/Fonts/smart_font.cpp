@@ -16,6 +16,7 @@
 #include "font.hpp"
 #include "iterator.hpp"
 #include "translator.hpp"
+#include "unicode.hpp"
 
 bool virtually_defined (string c, string name);
 font smart_font_bis (string f, string v, string s, string sh, int sz, int hdpi,
@@ -367,35 +368,7 @@ main_family (string f) {
   return a[1];
 }
 
-string
-get_unicode_range (int code) {
-  if (code <= 0x7f) return "ascii";
-  else if (code >= 0x80 && code <= 0x37f) return "latin";
-  else if (code >= 0x380 && code <= 0x3ff) return "greek";
-  else if (code >= 0x400 && code <= 0x4ff) return "cyrillic";
-  else if (code >= 0x3000 && code <= 0x303f) return "cjk";
-  else if (code >= 0x4e00 && code <= 0x9fcc) return "cjk";
-  else if (code >= 0xff00 && code <= 0xffef) return "cjk";
-  else if (code >= 0x3040 && code <= 0x309F) return "hiragana";
-  else if (code >= 0xac00 && code <= 0xd7af) return "hangul";
-  else if (code >= 0x2000 && code <= 0x23ff) return "mathsymbols";
-  else if (code >= 0x2900 && code <= 0x2e7f) return "mathextra";
-  else if (code >= 0x1d400 && code <= 0x1d7ff) return "mathletters";
-  else return "";
-}
-
-string
-get_unicode_range (string c) {
-  string uc= strict_cork_to_utf8 (c);
-  if (N (uc) == 0) return "";
-  int    pos  = 0;
-  int    code = decode_from_utf8 (uc, pos);
-  string range= get_unicode_range (code);
-  if (pos == N (uc)) return range;
-  return "";
-}
-
-bool
+static bool
 in_unicode_range (string c, string range) {
   string uc= strict_cork_to_utf8 (c);
   if (N (uc) == 0) return "";
@@ -403,7 +376,9 @@ in_unicode_range (string c, string range) {
   int    code= decode_from_utf8 (uc, pos);
   string got = get_unicode_range (code);
   if (range == got) return range != "";
-  if (range == "cjk" && (got == "hangul" || got == "hiragana")) return true;
+  if (range == "cjk" &&
+      (got == "hangul" || got == "hiragana" || got == "enclosed_alphanumerics"))
+    return true;
   // There are actually two ranges (cjk/hangul) for Korean characters and
   // two ranges (cjk/hiragana) for Japanese characters
   // For example, on macOS, `sys-korean` is expanded to `cjk=Apple SD Gothic
@@ -806,7 +781,8 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
   if (nr < 0) return;
   if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
   if (sm->fn_rewr[nr] != REWRITE_NONE) r= rewrite (r, sm->fn_rewr[nr]);
-  // cout << "Got " << r << " in " << fn[nr]->res_name << "\n";
+  if (DEBUG_VERBOSE)
+    debug_fonts << "Got " << r << " in " << fn[nr]->res_name << LF;
 }
 
 bool
@@ -816,8 +792,9 @@ is_italic_font (string master) {
 
 int
 smart_font_rep::resolve (string c, string fam, int attempt) {
-  // cout << "Resolve " << c << " in " << fam << ", attempt " << attempt <<
-  // "\n";
+  if (DEBUG_VERBOSE)
+    debug_fonts << "Resolve " << c << " in " << fam << ", attempt " << attempt
+                << LF;
   array<string> a= trimmed_tokenize (fam, "=");
   if (N (a) >= 2) {
     array<string> given= logical_font (family, variant, series, rshape);
@@ -959,7 +936,10 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
 
   if (attempt > 1) {
     string range= get_unicode_range (c);
-    int    a    = attempt - 1;
+    if (in_unicode_range (c, "cjk")) {
+      range= "cjk";
+    }
+    int    a= attempt - 1;
     string v;
     if (range == "") v= variant;
     else if (v == "rm") v= range;
@@ -1252,8 +1232,8 @@ smart_font_rep::initialize_font (int nr) {
   }
   else if (a[0] == "ignore") fn[nr]= fn[SUBFONT_MAIN];
   else {
-    font cfn = closest_font (a[0], a[1], a[2], a[3], sz, dpi, as_int (a[4]));
-    fn[nr]   = adjust_subfont (cfn);
+    font cfn= closest_font (a[0], a[1], a[2], a[3], sz, dpi, as_int (a[4]));
+    fn[nr]  = adjust_subfont (cfn);
   }
   // cout << "Font " << nr << ", " << a << " -> " << fn[nr]->res_name << "\n";
   if (fn[nr]->res_name == res_name) {
