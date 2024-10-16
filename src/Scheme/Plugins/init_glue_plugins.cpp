@@ -20,6 +20,7 @@
 #include "Database/database.hpp"
 #include "glue_tmdb.cpp"
 
+#include "Html/html.hpp"
 #include "Xml/xml.hpp"
 #include "glue_xml.cpp"
 

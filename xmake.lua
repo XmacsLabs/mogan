@@ -383,6 +383,7 @@ target("libmogan") do
             "src/Plugins/Pdf",
             "src/Plugins/Qt",
             "src/Plugins/UniversalStacktrace",
+            "src/Plugins/Html",
             "src/Scheme",
             "src/Scheme/L1",
             "src/Scheme/L2",
@@ -444,6 +445,7 @@ target("libmogan") do
             "src/Plugins/Openssl/**.cpp",
             "src/Plugins/Tex/**.cpp",
             "src/Plugins/Xml/**.cpp",
+            "src/Plugins/Html/**.cpp",
             "src/Plugins/Updater/**.cpp"})
 
     add_files({
