@@ -858,8 +858,9 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
     if (!ok) return -1;
 
     if (fam == mfam) {
-      if (fn[SUBFONT_MAIN]->supports (c))
+      if (fn[SUBFONT_MAIN]->supports (c)) {
         return sm->add_char (tuple ("main"), c);
+      }
     }
     else {
       font cfn= closest_font (fam, variant, series, rshape, sz, dpi, 1);
