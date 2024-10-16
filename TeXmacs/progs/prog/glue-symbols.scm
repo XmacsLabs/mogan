@@ -577,6 +577,7 @@
 "system-mkdir"
 "system-rmdir"
 "system-setenv"
+"system-getenv"
 "system-search-score"
 "system-1"
 "system-2"
