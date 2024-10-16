@@ -419,9 +419,11 @@ qt_image_size (url image, int& w, int& h) {// w, h in points
       return false;
   }
   else {
-    w= (int) rint ((((double) im.width ())*2834)/im.dotsPerMeterX());
-    h= (int) rint ((((double) im.height())*2834)/im.dotsPerMeterY());
-    if (DEBUG_CONVERT) debug_convert <<"QT dotsPerMeter: "
+    SI pt = get_current_editor()->as_length ("1pt");
+    SI px = get_current_editor()->as_length ("1px");
+    w= (int) im.width () * px * 1.0 / pt;
+    h= (int) im.height () * px * 1.0 / pt;
+    if (DEBUG_CONVERT) debug_convert <<"QT image_size (pt): "
         <<w<<" x "<<h<<LF;
     return true;      
   }
