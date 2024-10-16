@@ -20,9 +20,13 @@
 #include "Database/database.hpp"
 #include "glue_tmdb.cpp"
 
-#include "Html/html.hpp"
 #include "Xml/xml.hpp"
 #include "glue_xml.cpp"
+
+#ifdef USE_PLUGIN_HTML
+#include "Html/html.hpp"
+#include "glue_html.cpp"
+#endif
 
 bool
 use_plugin_updater () {
@@ -106,6 +110,10 @@ initialize_glue_plugins () {
   initialize_glue_plugin ();
   initialize_glue_tmdb ();
   initialize_glue_xml ();
+
+#ifdef USE_PLUGIN_HTML
+  initialize_glue_html ();
+#endif
 
 #ifdef USE_PLUGIN_SPARKLE
   initialize_glue_updater ();
