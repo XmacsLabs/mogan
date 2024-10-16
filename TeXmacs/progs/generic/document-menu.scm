@@ -14,6 +14,7 @@
 (texmacs-module (generic document-menu)
   (:use (generic document-edit)
         (generic generic-menu)
+        (language locale)
         (texmacs menus file-menu)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -785,14 +786,14 @@
   ---
   (for (lan supported-languages)
     (when (supported-language? lan)
-      ((check (eval (upcase-first lan)) "*" (test-document-language? lan))
+      ((check (eval (language-to-language-name lan)) "*" (test-document-language? lan))
        (set-document-language lan)))))
 
-(tm-define (current-language-icon)
+(tm-define (current-language-name)
   (with lan (get-env "language")
     (if (in? lan supported-languages)
-        (string-append "tm_" lan ".xpm")
-        "tm_stateless.xpm")))
+        (language-to-language-name lan)
+        "Unknown")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; The Document -> Supported scripts menu
@@ -1133,7 +1134,7 @@
 	     (!= (get-init "encryption") ""))
 	(=> (balloon (icon "tm_lock_open.xpm") "Encryption")
 	 (link document-encryption-menu)))
-    (=> (balloon (icon (eval (current-language-icon))) "Document language")
+    (=> (balloon (eval (current-language-name)) "Document language")
         (link document-language-menu))))
 
 (tm-menu (standard-focus-icons t)

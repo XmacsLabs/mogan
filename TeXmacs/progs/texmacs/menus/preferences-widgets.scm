@@ -12,7 +12,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (texmacs menus preferences-widgets)
-  (:use (texmacs menus preferences-menu)))
+  (:use (texmacs menus preferences-menu)
+        (language locale)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Wrapper
@@ -71,9 +72,9 @@
             (get-pretty-preference "look and feel")
             "18em"))
     (item (text "User interface language:")
-      (enum (set-pretty-preference "language" answer)
-            (map upcase-first supported-languages)
-            (get-pretty-preference "language")
+      (enum (set-preference "language" (language-name-to-language answer))
+            (map language-to-language-name supported-languages)
+            (language-to-language-name (get-preference "language"))
             "18em"))
     (item (text "Complex actions:")
       (enum (set-pretty-preference "complex actions" answer)

@@ -416,7 +416,7 @@
 (menu-bind text-language-menu
   (for (lan supported-languages)
     (when (supported-language? lan)
-      ((check (eval (upcase-first lan)) "v" (test-env? "language" lan))
+      ((check (eval (language-to-language-name lan)) "v" (test-env? "language" lan))
        (make (string->symbol lan))))))
 
 (tm-menu (local-supported-scripts-menu)

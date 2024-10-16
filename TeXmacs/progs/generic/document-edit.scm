@@ -214,11 +214,12 @@
 
 (tm-define (set-document-language lan)
   (:check-mark "*" test-document-language?)
-  (let* ((old (get-style-list))
-         (rem (list-difference old supported-languages))
-         (new (append rem (if (== lan "english") (list) (list lan)))))
-    (when (!= new old)
-      (set-style-list new))))
+  (when (in? lan supported-languages)
+    (let* ((old (get-style-list))
+           (rem (list-difference old supported-languages))
+           (new (append rem (if (== lan "english") (list) (list lan)))))
+      (when (!= new old)
+        (set-style-list new)))))
 
 (define (search-env-var t which)
   (cond ((nlist? t) #f)

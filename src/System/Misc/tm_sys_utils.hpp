@@ -28,6 +28,7 @@ string var_eval_system (string s);
 url get_texmacs_path ();
 url get_texmacs_home_path ();
 url get_tm_cache_path ();
+url get_tm_preference_path ();
 
 string get_printing_default ();
 bool has_printing_cmd (void);
