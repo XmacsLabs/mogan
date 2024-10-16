@@ -15,15 +15,6 @@
 #include "config.h"
 #include "typesetter.hpp"
 #include "tree_select.hpp"
-#ifdef AQUATEXMACS
-#  include "Cocoa/aqua_simple_widget.h"
-#else
-#  ifdef QTTEXMACS
-#    include "Qt/qt_simple_widget.hpp"
-#  else
-#    include "Widkit/simple_wk_widget.hpp"
-#  endif
-#endif
 #include "server.hpp"
 #include "drd_info.hpp"
 #ifdef EXPERIMENTAL
@@ -31,6 +22,16 @@
 #  include "../Style/Memorizer/memorizer.hpp"
 #endif
 #include "new_data.hpp"
+
+#ifdef AQUATEXMACS
+#include "Cocoa/aqua_simple_widget.h"
+#endif
+
+#ifdef QTTEXMACS
+#include "Qt/qt_simple_widget.hpp"
+#endif
+
+
 #define TEXMACS_COPYRIGHT (string("(c) 1999-2020 by Joris van der Hoeven and others"))
 
 #define THE_CURSOR 1

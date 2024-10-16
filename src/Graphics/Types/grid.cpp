@@ -12,6 +12,7 @@
 #include "grid.hpp"
 #include "math_util.hpp"
 #include "curve.hpp"
+#include "tree_helper.hpp"
 
 /******************************************************************************
 * General routines

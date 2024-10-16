@@ -11,7 +11,10 @@
 
 #ifndef FONT_H
 #define FONT_H
+
 #include "space.hpp"
+#include "resource.hpp"
+#include "bitmap_font.hpp"
 #include "renderer.hpp"
 
 RESOURCE(font);

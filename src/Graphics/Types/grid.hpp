@@ -13,7 +13,6 @@
 #define GRID_H
 #include "curve.hpp"
 #include "frame.hpp"
-#include "renderer.hpp"
 
 class grid_curve_rep : public concrete_struct {
 public:
