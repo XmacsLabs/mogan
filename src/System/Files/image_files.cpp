@@ -41,7 +41,7 @@
 #include "Qt/qt_utilities.hpp"
 #endif
 
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
 #include "Ghostscript/gs_utilities.hpp"
 #endif
 
@@ -321,7 +321,7 @@ image_size_sub (url image, int& w, int& h) { // returns w,h in units of pt (1/72
     return;
   }
 #endif
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
   if (gs_supports (image)) {// this is for handling ps without explicit bbox
     gs_image_size (image, w, h);
     return;
@@ -348,7 +348,7 @@ pdf_image_size (url image, int& w, int& h) {
   hummus_pdf_image_size (image, w, h);
   return;
 #endif
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
   gs_PDFimage_size (image, w, h);
   return;
 #endif
@@ -402,7 +402,7 @@ image_to_eps (url image, url eps, int w_pt, int h_pt, int dpi) {
   if ((s == "svg") && !wrap_qt_supports (image) &&
       (call_scm_converter (image, eps))) return;
   
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
   if (gs_supports (image)) {
     if (DEBUG_CONVERT) debug_convert << " using gs" << LF;
     gs_to_eps (image, eps);
@@ -444,7 +444,7 @@ image_to_pdf (url image, url pdf, int w_pt, int h_pt, int dpi) {
   // First try to preserve "vectorialness"
   if ((s == "svg") && !wrap_qt_supports (image) &&
       call_scm_converter (image, pdf)) return;
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
   if (gs_supports (image)) {
     if (DEBUG_CONVERT) debug_convert << " using gs "<<LF;
     gs_to_pdf (image, pdf, w_pt, h_pt);
@@ -478,7 +478,7 @@ image_to_png (url image, url png, int w, int h) {// IN PIXEL UNITS!
     return;
   }
 #endif
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
   if (gs_supports (image)) {
     if (DEBUG_CONVERT) debug_convert << " using gs "<<LF;
     if (gs_to_png (image, png, w, h)) return;

@@ -10,7 +10,7 @@
 ******************************************************************************/
 
 #include "tm_configure.hpp"
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
 
 #include "gs_utilities.hpp"
 #include "analyze.hpp"

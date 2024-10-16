@@ -20,9 +20,9 @@ ${define HAVE_STDINT_H}
 /* Enable experimental style rewriting code */
 ${define EXPERIMENTAL}
 
-${define USE_GS}
+${define USE_PLUGIN_GS}
 
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
 #define GS_EXE "${GS_EXE}"
 #define GS_FONTS "${GS_FONTS}"
 #define GS_LIB "${GS_LIB}"
@@ -139,8 +139,6 @@ ${define USE_CAIRO}
 /* Use freetype library */
 ${define USE_FREETYPE}
 
-${define USE_GS}
-
 ${define USE_FONTCONFIG}
 
 /* Use iconv library */
@@ -148,8 +146,6 @@ ${define USE_ICONV}
 
 /* Use imlib2 library */
 ${define USE_IMLIB2}
-
-${define USE_SPARKLE}
 
 ${define USE_PLUGIN_SPARKLE}
 

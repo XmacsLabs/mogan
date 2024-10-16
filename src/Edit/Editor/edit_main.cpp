@@ -33,7 +33,7 @@
 #include "../../Style/Memorizer/clean_copy.hpp"
 #endif
 
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
 #include "Ghostscript/gs_utilities.hpp"
 #endif
 
@@ -226,7 +226,7 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
   bool pdf = (suffix (name) == "pdf");
   url  orig= resolve (name, "");
 
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
   if (!use_pdf () && pdf)
     name= url_temp (".ps");
   if (!use_ps () && ps)
@@ -303,7 +303,7 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
   }
   tm_delete (ren);
 
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
   if (!use_pdf () && pdf) {
     gs_to_pdf (name, orig, landsc, h/cm, w/cm);
     ::remove (name);

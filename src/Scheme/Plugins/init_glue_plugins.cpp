@@ -87,14 +87,14 @@ pdfhummus_version () {
 
 bool
 supports_ghostscript () {
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
   return true;
 #else
   return false;
 #endif
 }
 
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
 #include "glue_ghostscript.cpp"
 #endif
 
@@ -118,7 +118,7 @@ initialize_glue_plugins () {
   initialize_glue_tex ();
 #endif
 
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
   initialize_glue_ghostscript ();
 #endif
 

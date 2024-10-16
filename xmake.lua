@@ -306,7 +306,7 @@ target("libmogan") do
                 OS_MACOS = is_plat("macosx"),
                 MACOSX_EXTENSIONS = is_plat("macosx"),
                 SIZEOF_VOID_P = 8,
-                USE_GS = true,
+                USE_PLUGIN_GS = true,
                 USE_PLUGIN_BIBTEX = true,
                 USE_PLUGIN_LATEX_PREVIEW = true,
                 USE_PLUGIN_TEX = true,

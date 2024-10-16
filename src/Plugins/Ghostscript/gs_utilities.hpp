@@ -13,7 +13,7 @@
 #define GS_UTILITIES_HPP
 
 #include "tm_configure.hpp"
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
 
 #include "url.hpp"
 
@@ -34,7 +34,7 @@ string pdf_version ();
 string default_pdf_version ();
 void tm_gs (url image);
 
-#endif // USE_GS
+#endif // USE_PLUGIN_GS
 
 #endif // GS_UTILITIES_HPP
 

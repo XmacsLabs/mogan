@@ -140,7 +140,7 @@ latex_install_preview (string s, tree t, url wdir, bool dvips) {
 
 tree
 latex_load_image (url image) {
-#if defined(USE_GS)
+#if defined(USE_PLUGIN_GS)
   string s;
   tree t (IMAGE, 5);
   load_string (image, s, false);
@@ -162,7 +162,7 @@ latex_load_image (url image) {
 
 array<tree>
 latex_load_preview (url wdir, bool dvips= false) {
-#if defined(USE_GS)
+#if defined(USE_PLUGIN_GS)
   string cmdln= "cd \"" * as_string (wdir) * "\"; ";
   if (dvips) {
     cmdln << "dvips temp.dvi && "

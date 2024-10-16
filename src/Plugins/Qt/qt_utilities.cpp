@@ -42,7 +42,7 @@
 #include "editor.hpp"
 #include "new_view.hpp"  // get_current_editor()
 
-#ifdef USE_GS
+#ifdef USE_PLUGIN_GS
 #include "Ghostscript/gs_utilities.hpp"
 #endif
 
