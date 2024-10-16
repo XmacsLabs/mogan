@@ -118,8 +118,6 @@ init_upgrade () {
   remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
   remove (get_tm_cache_path () * url_wildcard ("__*"));
   remove (get_tm_cache_path () * url ("dir_cache.scm"));
-  remove (get_tm_cache_path () * url ("doc_cache"));
-  remove (get_tm_cache_path () * url ("file_cache"));
   remove (get_tm_cache_path () * url ("stat_cache.scm"));
   remove (url ("$TEXMACS_HOME_PATH/fonts/font-database.scm"));
   remove (url ("$TEXMACS_HOME_PATH/fonts/font-features.scm"));
