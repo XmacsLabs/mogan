@@ -101,3 +101,14 @@ TEST_CASE ("test contains") {
   CHECK_EQ (contains (2, five_elem), true);
   CHECK_EQ (contains (3, five_elem), true);
 }
+
+TEST_CASE ("array of string") {
+  auto arr= array<string> ();
+  arr << "Hello"
+      << "1"
+      << "2"
+      << "3";
+  CHECK (contains (string ("Hello"), arr));
+  arr << "】";
+  CHECK (contains (string ("】"), arr));
+}

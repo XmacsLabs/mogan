@@ -1136,4 +1136,6 @@
 "show-selection"
 "show-meminfo"
 "edit-special"
+"xmacs-version"
+"http-status-code"
 ))

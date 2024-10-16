@@ -27,6 +27,11 @@ namespace io {
 #ifdef OS_WASM
 
 tree
+http_head (url u) {
+  return http_response_init ();
+}
+
+tree
 http_get (url u) {
   return http_response_init ();
 }
@@ -60,6 +65,14 @@ http_get (url u) {
   string        u_str = as_string (u);
   c_string      u_cstr= c_string (u_str);
   cpr::Response r     = cpr::Get (cpr::Url{u_cstr});
+  return response_to_tree (r, u_str);
+}
+
+tree
+http_head (url u) {
+  string        u_str = as_string (u);
+  c_string      u_cstr= c_string (u_str);
+  cpr::Response r     = cpr::Head (cpr::Url{u_cstr});
   return response_to_tree (r, u_str);
 }
 

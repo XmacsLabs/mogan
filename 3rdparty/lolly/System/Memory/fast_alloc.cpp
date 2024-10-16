@@ -46,6 +46,10 @@ safe_malloc (size_t sz) {
 void*
 enlarge_malloc (size_t sz) {
   if (alloc_remains < sz) {
+    if (alloc_remains > 0) {
+      ind (alloc_mem)          = alloc_ptr (alloc_remains);
+      alloc_ptr (alloc_remains)= alloc_mem;
+    }
     alloc_mem= (char*) safe_malloc (BLOCK_SIZE);
 #ifdef DEBUG_ON
     alloc_mem_top= alloc_mem_top >= alloc_mem + BLOCK_SIZE

@@ -228,7 +228,7 @@ TEST_CASE ("read_directory") {
   CHECK (flag2); // error
 }
 
-TEST_CASE ("load empty file") {
+TEST_CASE ("load_string from empty file") {
   url    lolly_tmp= get_lolly_tmp ();
   url    u1       = lolly_tmp * url ("load_empty.txt");
   string s1;
@@ -237,7 +237,7 @@ TEST_CASE ("load empty file") {
   CHECK_EQ (s1 == string (""), true);
 }
 
-TEST_CASE ("load_string part1") {
+TEST_CASE ("load_string from newly created file") {
   url      lolly_tmp= get_lolly_tmp ();
   url      u1       = lolly_tmp * url ("load_string_1.txt");
   c_string s1 (as_string (u1));
@@ -269,7 +269,7 @@ TEST_CASE ("load_string part1") {
 
 TEST_MEMORY_LEAK_ALL
 
-TEST_CASE ("load_string part2") {
+TEST_CASE ("load_string from 3 local files and check exception") {
   url    lolly_tmp= get_lolly_tmp ();
   url    u1       = url_pwd () * url ("tests/System/Files/sample_file.txt");
   url    u2= url_pwd () * url ("tests/System/Files/sample_file_copy.txt");
@@ -284,7 +284,7 @@ TEST_CASE ("load_string part2") {
 // because exception throw, some object will not be released.
 TEST_MEMORY_LEAK_RESET
 
-TEST_CASE ("load_string part3") {
+TEST_CASE ("load_string from url with :") {
   url    u ("tests/Kernel/Containers:tests/Kernel/Types", "list_test.cpp");
   string s;
   load_string (u, s, false);
@@ -292,7 +292,7 @@ TEST_CASE ("load_string part3") {
 }
 
 #if defined(OS_MINGW) || defined(OS_WIN)
-TEST_CASE ("load_string part 4: read only file") {
+TEST_CASE ("load_string from read only file") {
   url    hosts= url_system ("C:\\Windows\\System32\\drivers\\etc\\hosts");
   string s;
   load_string (hosts, s, false);
@@ -301,7 +301,7 @@ TEST_CASE ("load_string part 4: read only file") {
 #endif
 
 #if defined(OS_LINUX) || defined(OS_MACOS)
-TEST_CASE ("load_string part 4: read only file") {
+TEST_CASE ("load_string from read only file") {
   url    hosts= url_system ("/etc/hosts");
   string s;
   load_string (hosts, s, false);

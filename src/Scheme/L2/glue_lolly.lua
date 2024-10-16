@@ -914,6 +914,14 @@ function main()
                     "string"
                 }
             },
+            {
+                scm_name = "http-status-code",
+                cpp_name = "http_status_code",
+                ret_type = "long",
+                arg_list = {
+                    "url"
+                }
+            },
         }
     }
 end

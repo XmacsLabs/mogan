@@ -1,7 +1,7 @@
 
 /******************************************************************************
- * MODULE     : http.hpp
- * DESCRIPTION: HTTP related routines
+ * MODULE     : unicode_test.cpp
+ * DESCRIPTION: tests on unicode
  * COPYRIGHT  : (C) 2023  Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
@@ -9,18 +9,13 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#pragma once
+#include "a_tbox_main.cpp"
+#include "lolly/data/unicode.hpp"
 
-#include "lolly/io/http_response.hpp"
-#include "tree.hpp"
-#include "url.hpp"
+using lolly::data::unicode_get_range;
 
-namespace lolly {
-namespace io {
-
-tree http_get (url u);
-tree http_head (url u);
-tree download (url from, url to);
-
-} // namespace io
-} // namespace lolly
+TEST_CASE ("unicode_get_range") {
+  string_eq (unicode_get_range ((int) 'a'), "ascii");
+  string_eq (unicode_get_range (0x2460), "enclosed_alphanumerics"); // ①
+  string_eq (unicode_get_range (0x24ff), "enclosed_alphanumerics"); // ⓿
+}

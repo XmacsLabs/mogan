@@ -1,7 +1,7 @@
 
 /******************************************************************************
- * MODULE     : http.hpp
- * DESCRIPTION: HTTP related routines
+ * MODULE     : unicode.hpp
+ * DESCRIPTION: Unicode support
  * COPYRIGHT  : (C) 2023  Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
@@ -11,16 +11,10 @@
 
 #pragma once
 
-#include "lolly/io/http_response.hpp"
-#include "tree.hpp"
-#include "url.hpp"
+#include "string.hpp"
 
 namespace lolly {
-namespace io {
-
-tree http_get (url u);
-tree http_head (url u);
-tree download (url from, url to);
-
-} // namespace io
+namespace data {
+string unicode_get_range (int code);
+}
 } // namespace lolly

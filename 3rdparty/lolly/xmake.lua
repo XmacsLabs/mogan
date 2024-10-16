@@ -1,16 +1,14 @@
-set_xmakever("2.8.3")
+set_xmakever("2.8.5")
 
 -- add releasedbg, debug and release modes.
 set_allowedmodes("releasedbg", "release", "debug")
 add_rules("mode.debug")
 
 set_project("lolly")
+LOLLY_VERSION= "1.3.1"
 
 set_languages("c++17")
-includes("check_cxxtypes.lua")
-includes("check_cxxincludes.lua")
-includes("check_cxxfuncs.lua")
-includes("check_cxxsnippets.lua")
+includes("@builtin/check")
 
 set_allowedplats("linux", "macosx", "mingw", "wasm", "windows")
 
@@ -26,7 +24,7 @@ end
 
 --- require packages
 tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
-add_requires("tbox", {system=false, configs=tbox_configs})
+add_requires("tbox 1.7.5", {system=false, configs=tbox_configs})
 add_requires("doctest 2.4.11", {system=false})
 option("malloc")
     set_default("standard")
@@ -266,7 +264,7 @@ add_configfiles(
         pattern = "@(.-)@",
         variables = {
             PACKAGE = "Lolly",
-            LOLLY_VERSION = "1.2.0",
+            LOLLY_VERSION = LOLLY_VERSION,
             DOXYGEN_DIR = get_config("buildir"),
             DEVEL_VERSION = DEVEL_VERSION,
             HTML_EXTRA_STYLESHEET = "doxygen-awesome-css/doxygen-awesome.css",
