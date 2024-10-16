@@ -32,6 +32,7 @@ string get_user_name ();
 bool os_win ();
 bool os_mingw ();
 bool os_macos ();
+bool os_wasm ();
 
 SN get_process_id ();
 
@@ -40,6 +41,7 @@ array<string> evaluate_system (array<string> arg, array<int> fd_in,
 namespace lolly {
 void init_tbox ();
 int  system (string s);
+int  system (string s, string& r);
 } // namespace lolly
 
 #endif // defined SYS_UTILS_H

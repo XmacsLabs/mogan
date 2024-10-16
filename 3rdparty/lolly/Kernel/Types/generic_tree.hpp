@@ -43,10 +43,10 @@ template <typename T> struct convert_helper<T, tree> {
   static inline T op (const tree& t) { return open_box<T> (as_blackbox (t)); }
 };
 
-template <typename T, typename F>
+template <typename F, typename T>
 inline T
 as (const F& t) {
-  return convert_helper<F, T>::op (t);
+  return convert_helper<T, F>::op (t);
 }
 
 #endif // defined GENERIC_TREE_H

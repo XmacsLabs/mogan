@@ -13,10 +13,10 @@
 #include "url.hpp"
 
 file_url::file_url (string name)
-    : url (url_root ("file") * url_get_name (name)) {}
+    : url (url_root ("file") * url_get_name (name, URL_SYSTEM)) {}
 
 file_url::file_url (const char* name)
-    : url (url_root ("file") * url_get_name (string (name))) {}
+    : url (url_root ("file") * url_get_name (string (name), URL_SYSTEM)) {}
 
 string
 file_url::concretize () {

@@ -1,7 +1,18 @@
 #include "a_tbox_main.cpp"
 #include "sys_utils.hpp"
 
+TEST_MEMORY_LEAK_INIT
+
 TEST_CASE ("get_process_id") { CHECK (get_process_id () >= 1); }
+
+TEST_CASE ("system with output") {
+  string result;
+  CHECK (N (result) == 0);
+  if (!os_wasm () && !os_mingw ()) {
+    lolly::system ("xmake --version", result);
+    CHECK (N (result) > 0);
+  }
+}
 
 TEST_CASE ("system") {
 #ifdef OS_WASM
@@ -32,3 +43,5 @@ TEST_CASE ("get_user_name") {
   CHECK (N (get_user_name ()) >= 0);
   // cout << get_user_name () << LF;
 }
+
+TEST_MEMORY_LEAK_ALL

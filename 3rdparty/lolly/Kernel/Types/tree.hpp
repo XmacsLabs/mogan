@@ -26,7 +26,6 @@ class tree;
 class tree_rep;
 class atomic_rep;
 class compound_rep;
-class generic_rep;
 class blackbox;
 template <class T> class iterator;
 template <class T> class hashset;
@@ -113,8 +112,6 @@ public:
   inline compound_rep (int l, array<tree> a2) : tree_rep (l), a (a2) {}
   friend class tree;
 };
-
-// generic_rep in generic_tree.hpp
 
 typedef tree scheme_tree;
 

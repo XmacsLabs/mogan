@@ -200,7 +200,7 @@ bibtex_run (string bib, string style, url bib_file, tree bib_t) {
       debug_shell << cmdln << "\n";
   }
   string log;
-  if (system (cmdln, log))
+  if (lolly::system (cmdln, log))
     bibtex_error << log << "\n";
   else {
     int pos=0;

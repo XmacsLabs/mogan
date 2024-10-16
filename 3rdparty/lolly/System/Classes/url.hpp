@@ -17,7 +17,7 @@
 #define URL_STANDARD 2
 #define URL_CLEAN_UNIX 3
 
-#define URL_TUPLE 245
+#define URL_TUPLE 247
 
 #include "string.hpp"
 #include "tree.hpp"

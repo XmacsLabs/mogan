@@ -23,6 +23,7 @@
 #include "patch.hpp"
 #include "path.hpp"
 #include "sys_utils.hpp"
+#include "tm_url.hpp"
 #include "tmfs_url.hpp"
 #include "tree.hpp"
 #include "tree_cursor.hpp"

@@ -18,6 +18,7 @@
 #include "dictionary.hpp"
 #include "new_document.hpp"
 #include "drd_std.hpp"
+#include "tm_url.hpp"
 
 #if defined(OS_MINGW) || defined(OS_WIN)
 #define WINPATHS
@@ -71,7 +72,7 @@ abstract_view (tm_view vw) {
   string name= encode_url (vw->buf->buf->name);
   //cout << vw->buf->buf->name << " -> " << name << "\n";
   string nr  = as_string (vw->nr);
-  return "tmfs://view/" * nr * "/" * name;
+  return tm_url ("tmfs://view/" * nr * "/" * name);
 }
 
 tm_view

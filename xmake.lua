@@ -31,14 +31,14 @@ add_rules("mode.releasedbg", "mode.release", "mode.debug")
 add_repositories("liii-repo xmake")
 
 TBOX_VERSION= "1.7.5"
-LOLLY_VERSION= "1.2.7"
+LOLLY_VERSION= "1.2.12"
 package("liii-lolly")
     set_homepage("https://github.com/XmacsLabs/lolly")
     set_description("Lolly is a C++ library")
 
     set_sourcedir(path.join(os.scriptdir(), "3rdparty/lolly"))
     if not is_plat("wasm") then
-        add_deps("libcurl", "tbox")
+        add_deps("libcurl", "tbox", "cpr")
     end
 
     on_install("linux", "macosx", "mingw", "wasm", function (package)

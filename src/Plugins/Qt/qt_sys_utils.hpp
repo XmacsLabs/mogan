@@ -18,15 +18,4 @@
 string qt_get_current_cpu_arch ();
 string qt_get_pretty_os_name ();
 
-/* exitcode= qt_system (command, result);
- *
- * Execute /command/ in the local command interpreter. Return all
- * data sent to stdout-stderr in /result/. We get the exit code of
- * the command in /exitcode/.
- */
-int qt_system (string);
-int qt_system (string, string&);
-int qt_system (string, string&, string&);
-
 #endif // defined QT_SYS_UTILS_H
-

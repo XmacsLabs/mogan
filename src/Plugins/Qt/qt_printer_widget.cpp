@@ -11,10 +11,10 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "sys_utils.hpp"
 #include "qt_printer_widget.hpp"
 #include "qt_utilities.hpp"      // check_type<T>
 #include "message.hpp"           // slot definitions
-#include "qt_sys_utils.hpp"      // qt_system(string)
 #include "QTMPrintDialog.hpp"
 #include "QTMPrinterSettings.hpp"
 
@@ -92,7 +92,7 @@ qt_printer_widget_rep::showDialog () {
   // Send the document to the printer
   if (DEBUG_QT_WIDGETS)
     debug_widgets << "Running print command: " << from_qstring(_cmd) << "\n";
-  qt_system(from_qstring(_cmd));  // FIXME? qt_system is synchronous (blocking!)
+  lolly::system(from_qstring(_cmd));  // FIXME? qt_system is synchronous (blocking!)
   
   // execute the scheme closure 
   if (!is_nil (commandAfterExecution))

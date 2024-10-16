@@ -30,10 +30,6 @@ inline string eval_system (string which, url u1) {
 inline string eval_system (string which, url u1, url u2) {
   return eval_system (which * " " * escape_sh (concretize (u1)) * " " * escape_sh (concretize (u2))); }
 
-bool append_string (url u, string s, bool fatal= false);
-void string_append_to_file (string s, url u);
-void append_to (url what, url to);
-
 url  url_numbered (url dir, string prefix, string postfix, int i=1);
 url  url_scratch (string prefix="no_name_", string postfix=".tm", int i=1);
 bool is_scratch (url u);

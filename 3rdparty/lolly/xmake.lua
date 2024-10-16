@@ -1,4 +1,4 @@
-set_xmakever("2.8.2")
+set_xmakever("2.8.3")
 
 set_project("lolly")
 
@@ -24,11 +24,6 @@ end
 tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
 add_requires("tbox", {system=false, configs=tbox_configs})
 add_requires("doctest 2.4.11", {system=false})
-if is_plat("linux") and (linuxos.name() == "ubuntu" or linuxos.name() == "uos") then
-    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
-elseif not is_plat("wasm") then
-    add_requires("libcurl 7.84.0", {system=false})
-end 
 option("malloc")
     set_default("standard")
     set_showmenu(true)
@@ -40,6 +35,11 @@ if is_config("malloc", "mimalloc") then
 elseif is_config("malloc", "jemalloc") then 
     add_requires("jemalloc 5.3.0", {system=false, configs={envs={LD_PRELOAD="`jemalloc-config --libdir`/libjemalloc.so.`jemalloc-config --revision`" }}})
 end
+
+if not is_plat("wasm") then
+    add_requires("cpr 1.10.5")
+end
+
 
 option("posix_thread")
     set_showmenu(false)
@@ -69,6 +69,7 @@ local lolly_files = {
     "System/**/*.cpp",
     "Data/String/**.cpp",
     "Data/Scheme/**.cpp",
+    "lolly/**/**.cpp",
 }
 local lolly_includedirs = {
     "Kernel/Abstractions",
@@ -82,18 +83,14 @@ local lolly_includedirs = {
     "System/IO",
     "System/Memory",
     "System/Misc",
-    "Plugins/Curl",
     "Plugins/Unix",
     "Plugins",
+    "$(projectdir)"
 }
 
 target("liblolly") do
     set_kind("static")
-    if is_plat("mingw") then
-        set_languages("c++11")
-    else
-        set_languages("c++98")
-    end
+    set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
     my_configvar_check()
 
@@ -101,11 +98,6 @@ target("liblolly") do
 
     --- dependent packages
     add_packages("tbox")
-    if not is_plat("wasm") then
-        add_packages("libcurl")
-        add_includedirs("Plugins/Curl")
-        add_files("Plugins/Curl/**.cpp")
-    end
     if is_config("malloc", "mimalloc") then 
         add_defines("MIMALLOC")
         add_packages("mimalloc")
@@ -113,6 +105,9 @@ target("liblolly") do
         add_defines("JEMALLOC")
         add_packages("jemalloc")
     end 
+    if not is_plat("wasm") then
+        add_packages("cpr")
+    end
 
     if is_plat("mingw", "windows") then 
         add_includedirs("Plugins/Windows")
@@ -159,10 +154,12 @@ target("liblolly") do
     add_headerfiles("System/IO/(*.hpp)")
     add_headerfiles("System/Memory/(*.hpp)")
     add_headerfiles("System/Misc/(*.hpp)")
+    add_headerfiles("System/Language/(*.hpp)")
     add_headerfiles("Data/String/(*.hpp)")
     add_headerfiles("Data/Scheme/(*.hpp)")
-    add_headerfiles("Plugins/Curl/(*.hpp)", {prefixdir = "Curl"})
     add_headerfiles("Plugins/Windows/(*.hpp)", {prefixdir = "Windows"})
+    add_headerfiles("lolly/(data/*.hpp)", {prefixdir="lolly"})
+    add_headerfiles("lolly/(io/*.hpp)", {prefixdir = "lolly"})
     add_includedirs(lolly_includedirs)
     add_files(lolly_files)
 end
@@ -182,9 +179,6 @@ function add_test_target(filepath)
         end
         add_packages("tbox")
         add_packages("doctest")
-        if not is_plat("wasm") then
-            add_packages("libcurl")
-        end
 
         if is_plat("linux") then
             add_syslinks("stdc++", "m")
@@ -253,21 +247,10 @@ function add_test_target(filepath)
 end
 
 
-cpp_tests_not_on_wasm = table.join(
-    os.files("tests/Plugins/Curl/**_test.cpp")
-)
 cpp_tests_on_all_plat = os.files("tests/**_test.cpp")
 
-for _, filepath in ipairs(cpp_tests_not_on_wasm) do
-    if not is_plat("wasm") then
-        add_test_target(filepath)
-    end
-end
-
 for _, filepath in ipairs(cpp_tests_on_all_plat) do
-    if not table.contains(cpp_tests_not_on_wasm, filepath) then
-        add_test_target (filepath)
-    end
+    add_test_target (filepath)
 end
 
 

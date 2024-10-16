@@ -23,11 +23,12 @@
 
 string
 get_env (string var) {
+  c_string             var_ (var);
   tb_size_t            size       = 0;
   string               ret        = string ("");
   tb_environment_ref_t environment= tb_environment_init ();
   if (environment) {
-    size= tb_environment_load (environment, as_charp (var));
+    size= tb_environment_load (environment, var_);
     if (size >= 1) {
       tb_for_all_if (tb_char_t const*, value, environment, value) {
         ret= ret * string (value) * URL_SEPARATOR;
@@ -49,10 +50,12 @@ set_env (string var, string with) {
   if (is_empty (with)) {
     return;
   }
+  c_string             var_ (var);
+  c_string             with_ (with);
   tb_environment_ref_t environment= tb_environment_init ();
   if (environment) {
-    tb_environment_insert (environment, as_charp (with), tb_true);
-    tb_environment_save (environment, as_charp (var));
+    tb_environment_insert (environment, with_, tb_true);
+    tb_environment_save (environment, var_);
     tb_environment_exit (environment);
   }
 }
@@ -114,6 +117,15 @@ os_macos () {
 #endif
 }
 
+bool
+os_wasm () {
+#if defined(OS_WASM)
+  return true;
+#else
+  return false;
+#endif
+}
+
 SN
 get_process_id () {
 #if defined(OS_MINGW) || defined(OS_WIN)
@@ -164,7 +176,61 @@ system (string cmd) {
   return -1;
 #else
   tb_process_attr_t attr= {0};
-  return (int) tb_process_run_cmd (as_charp (cmd), &attr);
+  c_string          cmd_ (cmd);
+  return (int) tb_process_run_cmd (cmd_, &attr);
 #endif
 }
+
+int
+system (string s, string& result) {
+  tb_long_t status= -1;
+  // init pipe files
+  tb_pipe_file_ref_t file[2]= {0};
+  if (!tb_pipe_file_init_pair (file, tb_null, 0)) {
+    return status;
+  }
+
+  // init process
+  c_string          cmd_ (s);
+  tb_process_attr_t attr  = {0};
+  attr.out.pipe           = file[1];
+  attr.outtype            = TB_PROCESS_REDIRECT_TYPE_PIPE;
+  tb_process_ref_t process= tb_process_init_cmd (cmd_, &attr);
+  if (process) {
+    // read pipe data
+    tb_size_t read= 0;
+    // TODO: should be a config here
+    tb_byte_t data[8192];
+    tb_size_t size= sizeof (data);
+    tb_bool_t wait= tb_false;
+    while (read < size) {
+      tb_long_t real= tb_pipe_file_read (file[0], data + read, size - read);
+      if (real > 0) {
+        read+= real;
+        wait= tb_false;
+      }
+      else if (!real && !wait) {
+        // wait pipe
+        tb_long_t ok= tb_pipe_file_wait (file[0], TB_PIPE_EVENT_READ, 1000);
+        tb_check_break (ok > 0);
+        wait= tb_true;
+      }
+      else break;
+    }
+
+    result= as_string ((tb_char_t*) data);
+
+    // wait process
+    tb_process_wait (process, &status, -1);
+
+    // exit process
+    tb_process_exit (process);
+  }
+
+  // exit pipe files
+  tb_pipe_file_exit (file[0]);
+  tb_pipe_file_exit (file[1]);
+  return status;
+}
+
 } // namespace lolly

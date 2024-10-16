@@ -25,6 +25,8 @@ TEST_CASE ("test for memory leaks") {
   *p_char= 'c'; // here q_char is modified to 'c'
 }
 
+TEST_MEMORY_LEAK_INIT
+
 TEST_CASE ("test basic data types") {
 
 #ifdef OS_WASM
@@ -71,3 +73,5 @@ TEST_CASE ("test class") {
   Complex* p_complex= tm_new<Complex> (35.8, 26.2);
   tm_delete (p_complex);
 }
+
+TEST_MEMORY_LEAK_ALL

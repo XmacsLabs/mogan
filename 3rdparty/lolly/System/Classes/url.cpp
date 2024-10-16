@@ -13,7 +13,6 @@
 #include "analyze.hpp"
 #include "sys_utils.hpp"
 #include "tbox/tbox.h"
-#include "tmfs_url.hpp"
 #include <ctype.h>
 
 #if defined(OS_MINGW) || defined(OS_WIN)
@@ -249,7 +248,6 @@ url_general (string name, int type= URL_SYSTEM) {
   if (starts (name, "http://")) return http_url (name (7, N (name)));
   if (starts (name, "https://")) return https_url (name (8, N (name)));
   if (starts (name, "ftp://")) return ftp_url (name (6, N (name)));
-  if (starts (name, "tmfs://")) return tmfs_url (name (7, N (name)));
   if (starts (name, "//")) return blank_url (name (2, N (name)));
   if (heuristic_is_path (name, type)) return url_path (name, type);
   if (heuristic_is_default (name, type)) return url_default (name, type);

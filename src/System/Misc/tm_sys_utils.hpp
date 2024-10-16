@@ -22,9 +22,6 @@ string get_stacktrace (unsigned int max_frames= 127);
 string get_current_cpu_arch ();
 string get_pretty_os_name ();
 
-int    system (string s, string &r);
-int    system (string s, string &r, string& e);
-
 string eval_system (string s);
 string var_eval_system (string s);
 

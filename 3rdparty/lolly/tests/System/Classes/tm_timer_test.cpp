@@ -64,6 +64,8 @@ to_zero (tm_ostream& out) {
   return ans;
 }
 
+TEST_MEMORY_LEAK_INIT
+
 TEST_CASE ("if time_t and long 64 bit") { CHECK (sizeof (time_t) == 8); }
 
 TEST_CASE ("function get_sec_time") {
@@ -103,6 +105,8 @@ TEST_CASE ("function texmacs_time") {
 
   CHECK (t2 >= t1);
 }
+
+TEST_MEMORY_LEAK_ALL
 
 TEST_CASE ("function bench_start and bench_cumul") {
   debug_set ("bench", true);
