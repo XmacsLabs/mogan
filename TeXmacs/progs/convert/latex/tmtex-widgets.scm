@@ -13,8 +13,7 @@
 
 (texmacs-module (convert latex tmtex-widgets)
   (:use (convert latex tmtex)
-        (utils library cursor)
-        (check check-master)))
+        (utils library cursor)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; The widget for examing LaTeX errors
