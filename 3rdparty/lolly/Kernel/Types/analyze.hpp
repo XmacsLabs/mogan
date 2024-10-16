@@ -11,6 +11,9 @@
 
 #ifndef ANALYZE_H
 #define ANALYZE_H
+
+#include <stdint.h>
+
 #include "array.hpp"
 #include "hashset.hpp"
 #include "ntuple.hpp"
@@ -300,7 +303,7 @@ string downgrade_math_letters (string s);
  * @param nr The integer to be converted to Roman numeral.
  * @return A string representing the Roman numeral.
  */
-string roman_nr (int nr);
+string roman_nr (int32_t nr);
 
 /**
  * @brief Generates an uppercase Roman numeral string for an integer.
@@ -308,7 +311,7 @@ string roman_nr (int nr);
  * @param nr The integer to be converted to Roman numeral.
  * @return A string representing the uppercase Roman numeral.
  */
-string Roman_nr (int nr);
+string Roman_nr (int32_t nr);
 
 /**
  * @brief Generates an alphabetic string for an integer.
@@ -333,6 +336,14 @@ string Alpha_nr (int nr);
  * @return A string representing the footnote symbol.
  */
 string fnsymbol_nr (int nr);
+
+/**
+ * @brief Generates a Chinese numeral for a given integer.
+ *
+ * @param nr The integer to be converted to a Chinese numeral.
+ * @return A string representing the Chinese numeral.
+ */
+string hanzi_nr (int32_t nr);
 
 /**
  * @brief Converts an integer to a hexadecimal string.
@@ -624,6 +635,8 @@ void parse (string s, int& pos, HI& ret);
 void parse (string s, int& pos, HN& ret);
 void parse (string s, int& pos, SI& ret);
 void parse (string s, int& pos, SI*& a, int len);
+
+int index_of (string s, char c);
 
 /**
  * Searches for a substring in a string.

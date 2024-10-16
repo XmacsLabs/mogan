@@ -15,6 +15,7 @@
 #include "qt_printer_widget.hpp"
 #include "qt_utilities.hpp"      // check_type<T>
 #include "message.hpp"           // slot definitions
+#include "lolly/system/subprocess.hpp"
 #include "QTMPrintDialog.hpp"
 #include "QTMPrinterSettings.hpp"
 
@@ -92,7 +93,7 @@ qt_printer_widget_rep::showDialog () {
   // Send the document to the printer
   if (DEBUG_QT_WIDGETS)
     debug_widgets << "Running print command: " << from_qstring(_cmd) << "\n";
-  lolly::system(from_qstring(_cmd));  // FIXME? qt_system is synchronous (blocking!)
+  lolly::system::call (from_qstring (_cmd));  // FIXME? qt_system is synchronous (blocking!)
   
   // execute the scheme closure 
   if (!is_nil (commandAfterExecution))

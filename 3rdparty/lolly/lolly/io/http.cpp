@@ -25,20 +25,25 @@ namespace lolly {
 namespace io {
 
 #ifdef OS_WASM
+
 tree
 http_get (url u) {
   return http_response_init ();
 }
-#else
+
 tree
-http_get (url u) {
-  string        u_str = as_string (u);
-  c_string      u_cstr= c_string (u_str);
-  cpr::Response r     = cpr::Get (cpr::Url{u_cstr});
-  tree          ret   = http_response_init ();
+download (url from, url to) {
+  return http_response_init ();
+}
+
+#else
+
+static tree
+response_to_tree (cpr::Response r, string url) {
+  tree ret= http_response_init ();
   http_response_set (ret, STATUS_CODE, as<long, tree> (r.status_code));
   http_response_set (ret, TEXT, tree (r.text.c_str ()));
-  http_response_set (ret, URL, tree (u_str));
+  http_response_set (ret, URL, tree (url));
   http_response_set (ret, ELAPSED, as<double, tree> (r.elapsed));
   auto hmap= hashmap<string, string> ();
   for (auto i= r.header.begin (); i != r.header.end (); i++) {
@@ -49,6 +54,27 @@ http_get (url u) {
   http_response_set (ret, HEADER, as<hashmap<string, string>, tree> (hmap));
   return ret;
 }
+
+tree
+http_get (url u) {
+  string        u_str = as_string (u);
+  c_string      u_cstr= c_string (u_str);
+  cpr::Response r     = cpr::Get (cpr::Url{u_cstr});
+  return response_to_tree (r, u_str);
+}
+
+tree
+download (url from, url to) {
+  string   from_str = as_string (from);
+  c_string from_cstr= c_string (from_str);
+  string   to_str   = as_string (to);
+  c_string to_cstr  = c_string (to_str);
+
+  std::ofstream to_stream (to_cstr, std::ios::binary);
+  cpr::Response r= cpr::Download (to_stream, cpr::Url{from_cstr});
+  return response_to_tree (r, from_str);
+}
+
 #endif
 
 } // namespace io

@@ -16,6 +16,7 @@
 #include "file.hpp"
 #include "gs_utilities.hpp"
 #include "image_files.hpp"
+#include "lolly/system/subprocess.hpp"
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
@@ -440,7 +441,7 @@ gs_to_pdf (url image, url pdf, int w, int h) {
   cmd << " -f " << sys_concretize (image);
   cmd << " -c \" grestore \"  ";
   // debug_convert << cmd << LF;
-  lolly::system (cmd);
+  lolly::system::call (cmd);
   if (DEBUG_CONVERT)
     debug_convert << cmd << LF << "pdf generated? " << exists (pdf) << LF;
 }
@@ -471,7 +472,7 @@ gs_to_pdf (url doc, url pdf, bool landscape, double paper_h, double paper_w) {
   // so we add some PS code to override the PDF document title with
   // the name of the PDF file.
 
-  lolly::system (cmd);
+  lolly::system::call (cmd);
   if (DEBUG_CONVERT)
     debug_convert << cmd << LF << "pdf generated? " << exists (pdf) << LF;
 }
@@ -499,7 +500,7 @@ gs_to_ps (url doc, url ps, bool landscape, double paper_h, double paper_w) {
   // so we add some PS code to override the PS document title with
   // the name of the PS file.
 
-  lolly::system (cmd);
+  lolly::system::call (cmd);
   if (DEBUG_CONVERT)
     debug_convert << cmd << LF << "ps generated? " << exists (ps) << LF;
 }
@@ -509,7 +510,7 @@ tm_gs (url image) {
   string cmd= gs_prefix ();
   cmd << "-q -sDEVICE=x11alpha -dBATCH -dNOPAUSE -dSAFER -dNOEPS ";
   cmd << sys_concretize (image);
-  lolly::system (cmd);
+  lolly::system::call (cmd);
 }
 
 bool

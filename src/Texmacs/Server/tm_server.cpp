@@ -24,6 +24,7 @@
 #include "sys_utils.hpp"
 #include "tm_link.hpp"
 #include "tm_sys_utils.hpp"
+#include "lolly/system/subprocess.hpp"
 
 server* the_server     = NULL;
 bool    texmacs_started= false;
@@ -290,5 +291,5 @@ tm_server_rep::quit () {
 
 void
 tm_server_rep::shell (string s) {
-  lolly::system (s);
+  lolly::system::call (s);
 }

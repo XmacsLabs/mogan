@@ -69,6 +69,31 @@ TEST_CASE ("test as bool") {
   // implicit conversion from char*
 }
 
+TEST_CASE ("as_int") {
+  SUBCASE ("normal conversion") {
+    CHECK_EQ (as_int ("1"), 1);
+    CHECK_EQ (as_int ("-1"), -1);
+    CHECK_EQ (as_int ("0"), 0);
+  }
+
+  // assuming int is 32bit
+  SUBCASE ("min and max") {
+    CHECK_EQ (as_int ("-2147483648"), -2147483648);
+    CHECK_EQ (as_int ("2147483647"), 2147483647);
+  }
+
+  SUBCASE ("int overflow") {
+    CHECK_EQ (as_int ("-2147483649"), 2147483647);
+    CHECK_EQ (as_int ("2147483648"), -2147483648);
+  }
+
+  SUBCASE ("invalid int") {
+    CHECK_EQ (as_int ("not a int"), 0);
+    CHECK_EQ (as_int ("1pt"), 1);
+    CHECK_EQ (as_int ("1.23"), 1);
+  }
+}
+
 TEST_CASE ("test as strig bool") {
   CHECK_EQ (as_string_bool (true) == string ("true"), true);
   CHECK_EQ (as_string_bool (false) == string ("false"), true);

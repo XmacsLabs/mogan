@@ -96,16 +96,11 @@ get_from_web (url name) {
   if (!is_empty (suf)) suf= string(".") * suf;
 
   url tmp= url_temp (suf);
-#ifdef OS_WASM
-  string content= "";
-#else
-  tree r= lolly::io::http_get (name);
-  string content= as_string (http_response_ref (r, lolly::io::http_response_label::TEXT));
-#endif
+  lolly::io::download (name, tmp);
 
-  if (is_empty (content)) return url_none ();
-  else {
-    save_string (tmp, content);
+  if (!exists (tmp)) {
+    return url_none ();
+  } else {
     set_cache (name, tmp);
     return tmp;
   }

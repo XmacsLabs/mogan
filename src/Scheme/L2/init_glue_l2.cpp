@@ -18,6 +18,7 @@
 #include "base64.hpp"
 #include "file.hpp"
 #include "locale.hpp"
+#include "lolly/system/subprocess.hpp"
 #include "sys_utils.hpp"
 #include "tree.hpp"
 

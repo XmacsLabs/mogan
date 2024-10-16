@@ -15,6 +15,7 @@
 #include "url.hpp"
 #include "file.hpp"
 #include "tm_file.hpp"
+#include "lolly/system/subprocess.hpp"
 
 #if defined(OS_MINGW) || defined(OS_WIN)
 #include "Windows/win_sys_utils.hpp"
@@ -51,7 +52,7 @@ string get_pretty_os_name () {
 string
 eval_system (string s) {
   string result;
-  (void) lolly::system (s, result);
+  (void) lolly::system::check_output (s, result);
   return result;
 }
 
@@ -163,4 +164,31 @@ void open_url (url u) {
 #ifdef QTTEXMACS
   qt_open_url (u);
 #endif
+}
+
+
+/******************************************************************************
+ * Error messages
+ ******************************************************************************/
+
+static void (*the_wait_handler) (string, string, int)= NULL;
+
+void
+set_wait_handler (void (*routine) (string, string, int)) {
+  the_wait_handler= routine;
+}
+
+void
+system_wait (string message, string argument, int level) {
+  if (the_wait_handler == NULL) {
+    if (DEBUG_AUTO) {
+      if (message == "") cout << "TeXmacs] Done" << LF;
+      else {
+        if (argument == "") cout << "TeXmacs] " << message << LF;
+        else cout << "TeXmacs] " << message << " " << argument << LF;
+        cout << "TeXmacs] Please wait..." << LF;
+      }
+    }
+  }
+  else the_wait_handler (message, argument, level);
 }

@@ -45,9 +45,9 @@ test_same (tm_ostream& a, string b) {
 
 string
 to_zero (tm_ostream& out) {
-  string s1     = out.unbuffer ();
-  char*  ans    = as_charp (s1);
-  char*  current= ans;
+  string   s1= out.unbuffer ();
+  c_string ans (s1);
+  char*    current= ans;
   while ((current= strstr (current, "took"))) {
     current+= strlen ("took");
     while (*current && (*current == '(')) {
@@ -61,7 +61,7 @@ to_zero (tm_ostream& out) {
       current++;
     }
   }
-  return ans;
+  return (char*) ans;
 }
 
 TEST_MEMORY_LEAK_INIT
@@ -106,10 +106,7 @@ TEST_CASE ("function texmacs_time") {
   CHECK (t2 >= t1);
 }
 
-TEST_MEMORY_LEAK_ALL
-
 TEST_CASE ("function bench_start and bench_cumul") {
-  debug_set ("bench", true);
   tm_ostream ostream;
   ostream.buffer ();
 
@@ -156,7 +153,6 @@ TEST_CASE ("function bench_start and bench_cumul") {
 }
 
 TEST_CASE ("function bench_end") {
-  debug_set ("bench", true);
   tm_ostream ostream;
   ostream.buffer ();
 
@@ -175,7 +171,6 @@ TEST_CASE ("function bench_end") {
 }
 
 TEST_CASE ("function bench_reset") {
-  debug_set ("bench", true);
   tm_ostream ostream;
   ostream.buffer ();
 
@@ -202,7 +197,6 @@ TEST_CASE ("function bench_reset") {
 }
 
 TEST_CASE ("function bench_print") {
-  debug_set ("bench", true);
   tm_ostream ostream;
   ostream.buffer ();
 
@@ -241,4 +235,11 @@ TEST_CASE ("function bench_print") {
 
     CHECK (out == b);
   }
+}
+
+TEST_CASE ("testing memory leakage of tm_timer") {
+  bench_reset ("task");
+  bench_reset ("task1");
+  bench_reset ("task2");
+  CHECK_EQ (mem_used (), mem_lolly);
 }

@@ -97,13 +97,10 @@ bench_reset (string task) {
 
 void
 bench_print (tm_ostream& ostream, string task) {
-  // print timing for a given type of task
-  if (DEBUG_BENCH) {
-    long nr= timing_nr[task];
-    ostream << "Task '" << task << "' took " << timing_cumul[task] << " ms";
-    if (nr > 1) ostream << " (" << nr << " invocations)";
-    ostream << LF;
-  }
+  long nr= timing_nr[task];
+  ostream << "Task '" << task << "' took " << timing_cumul[task] << " ms";
+  if (nr > 1) ostream << " (" << nr << " invocations)";
+  ostream << LF;
 }
 
 static array<string>

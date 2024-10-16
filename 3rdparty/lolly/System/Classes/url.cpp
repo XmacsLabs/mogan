@@ -346,7 +346,9 @@ suffix (url u) {
     string r= s (i + 1, n);
     while ((N (r) > 0) && (r[N (r) - 1] == '~' || r[N (r) - 1] == '#'))
       r= r (0, N (r) - 1);
-    return locase_all (r);
+    int found= index_of (r, '?');
+    if (found == -1) return locase_all (r);
+    else return locase_all (r (0, found));
   }
   return "";
 }

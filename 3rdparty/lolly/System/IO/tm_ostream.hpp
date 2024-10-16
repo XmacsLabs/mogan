@@ -18,6 +18,7 @@ class string;
 class tm_ostream;
 
 class tm_ostream_rep {
+public:
   int ref_count;
 
 public:

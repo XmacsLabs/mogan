@@ -1,5 +1,9 @@
 set_xmakever("2.8.3")
 
+-- add releasedbg, debug and release modes.
+set_allowedmodes("releasedbg", "release", "debug")
+add_rules("mode.debug")
+
 set_project("lolly")
 
 set_languages("c++17")
@@ -92,6 +96,7 @@ target("liblolly") do
     set_kind("static")
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
+    set_encodings("utf-8")
     my_configvar_check()
 
     set_basename("lolly")
@@ -160,6 +165,7 @@ target("liblolly") do
     add_headerfiles("Plugins/Windows/(*.hpp)", {prefixdir = "Windows"})
     add_headerfiles("lolly/(data/*.hpp)", {prefixdir="lolly"})
     add_headerfiles("lolly/(io/*.hpp)", {prefixdir = "lolly"})
+    add_headerfiles("lolly/(system/*.hpp)", {prefixdir = "lolly"})
     add_includedirs(lolly_includedirs)
     add_files(lolly_files)
 end
@@ -185,7 +191,7 @@ function add_test_target(filepath)
         end
 
         if is_plat("windows") then
-            add_cxxflags("/utf-8")
+            set_encodings("utf-8")
             add_ldflags("/LTCG")
         end
 
@@ -248,7 +254,6 @@ end
 
 
 cpp_tests_on_all_plat = os.files("tests/**_test.cpp")
-
 for _, filepath in ipairs(cpp_tests_on_all_plat) do
     add_test_target (filepath)
 end

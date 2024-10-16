@@ -1,7 +1,7 @@
 
 /******************************************************************************
- * MODULE     : http.hpp
- * DESCRIPTION: HTTP related routines
+ * MODULE     : subprocess.hpp
+ * DESCRIPTION: subprocess related routines
  * COPYRIGHT  : (C) 2023  Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
@@ -11,15 +11,11 @@
 
 #pragma once
 
-#include "lolly/io/http_response.hpp"
-#include "tree.hpp"
-#include "url.hpp"
+#include "string.hpp"
 
 namespace lolly {
-namespace io {
-
-tree http_get (url u);
-tree download (url from, url to);
-
-} // namespace io
+namespace system {
+int call (string cmd);
+int check_output (string cmd, string& result);
+} // namespace system
 } // namespace lolly

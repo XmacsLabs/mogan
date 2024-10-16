@@ -18,6 +18,7 @@
 #include "sys_utils.hpp"
 #include "scheme.hpp"
 #include "tree_label.hpp"
+#include "lolly/system/subprocess.hpp"
 
 tree latex_expand (tree doc, url name);
 bool tracked_tree_to_latex_document (tree, object, string&, string&);
@@ -278,7 +279,7 @@ try_latex_export (tree doc, object opts, url src, url dest) {
     "cd " * sys_concretize (head (dest)) *
     "; pdflatex -interaction=batchmode " * as_system_string (tail (dest));
   //cout << cmd << LF;
-  lolly::system (cmd);
+  lolly::system::call (cmd);
   url log= glue (unglue (dest, N (suffix (dest))), "log");
   tree errs= get_latex_errors (log);
   tree r (TUPLE);

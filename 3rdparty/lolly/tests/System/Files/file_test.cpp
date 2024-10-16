@@ -22,6 +22,15 @@ get_lolly_tmp () {
 #endif
 }
 
+void
+remove_if_exist (const url& u1) {
+  c_string       path1 (as_string (u1));
+  tb_file_info_t info;
+  if (tb_file_info (path1, &info)) {
+    tb_file_remove (path1);
+  };
+}
+
 TEST_MEMORY_LEAK_INIT
 
 #if defined(OS_WIN) || defined(OS_MINGW)
@@ -323,13 +332,9 @@ TEST_CASE ("save to empty file with unicode filename") {
 }
 
 TEST_CASE ("create and save to file") {
-  url            lolly_tmp= get_lolly_tmp ();
-  url            u1       = lolly_tmp * url ("save_nonexist.txt");
-  c_string       path1 (as_string (u1));
-  tb_file_info_t info;
-  if (tb_file_info (path1, &info)) {
-    tb_file_remove (path1);
-  };
+  url lolly_tmp= get_lolly_tmp ();
+  url u1       = lolly_tmp * url ("save_nonexist.txt");
+  remove_if_exist (u1);
   string s1 ("test");
   CHECK (!save_string (u1, s1, true));
   string s2;
@@ -361,6 +366,7 @@ TEST_CASE ("append to empty file") {
     url    u1= lolly_tmp * url ("append_not_exist.txt");
     string s1 ("file not exist");
     string s2;
+    remove_if_exist (u1);
 
     CHECK (!append_string (u1, s1, false));
     CHECK (!load_string (u1, s2, false));

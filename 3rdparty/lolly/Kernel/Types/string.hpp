@@ -85,9 +85,6 @@ bool     is_charp (string s);
 bool is_quoted (string s);
 bool is_id (string s);
 
-void set_wait_handler (void (*) (string, string, int));
-void system_wait (string message, string argument= "", int level= 0);
-
 /******************************************************************************
  * C-style strings with automatic memory management
  ******************************************************************************/

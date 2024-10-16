@@ -130,7 +130,7 @@ public:
 buffered_ostream_rep::buffered_ostream_rep (tm_ostream_rep* master2)
     : master (master2) {}
 
-buffered_ostream_rep::~buffered_ostream_rep () {}
+buffered_ostream_rep::~buffered_ostream_rep () { DEC_COUNT (master); }
 
 bool
 buffered_ostream_rep::is_writable () const {
@@ -191,6 +191,7 @@ tm_ostream::flush () {
 void
 tm_ostream::buffer () {
   rep= tm_new<buffered_ostream_rep> (rep);
+  INC_COUNT (rep);
 }
 
 string
@@ -198,7 +199,8 @@ tm_ostream::unbuffer () {
   buffered_ostream_rep* ptr= (buffered_ostream_rep*) rep;
   rep                      = ptr->master;
   string r                 = ptr->buf;
-  tm_delete<buffered_ostream_rep> (ptr);
+  INC_COUNT (rep);
+  DEC_COUNT (ptr);
   return r;
 }
 

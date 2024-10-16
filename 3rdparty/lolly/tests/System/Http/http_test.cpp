@@ -6,6 +6,7 @@
  */
 
 #include "a_tbox_main.cpp"
+#include "file.hpp"
 #include "generic_tree.hpp"
 #include "hashmap.hpp"
 #include "lolly/io/http.hpp"
@@ -20,5 +21,14 @@ TEST_CASE ("http::get") {
   auto hmap= as<tree, hashmap<string, string> > (http_response_ref (r, HEADER));
   string content_type= hmap ("content-type");
   string_eq (content_type, "application/json");
+#endif
+}
+
+TEST_CASE ("http::download") {
+#ifndef OS_WASM
+  url  from= url ("http://mirrors.ustc.edu.cn/gnu/GNUinfo/README");
+  url  to  = url_temp_dir () * url ("README");
+  tree r   = download (from, to);
+  CHECK (file_size (to) > 0);
 #endif
 }

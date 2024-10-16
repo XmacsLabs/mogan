@@ -170,67 +170,48 @@ init_tbox () {
   if (!tb_init (tb_null, tb_null)) exit (-1);
 }
 
-int
-system (string cmd) {
-#ifdef OS_WASM
-  return -1;
-#else
-  tb_process_attr_t attr= {0};
-  c_string          cmd_ (cmd);
-  return (int) tb_process_run_cmd (cmd_, &attr);
-#endif
-}
+string
+get_stacktrace (unsigned int max_frames) {
+  string r;
+  r << "Backtrace of C++ stack:\n";
 
-int
-system (string s, string& result) {
-  tb_long_t status= -1;
-  // init pipe files
-  tb_pipe_file_ref_t file[2]= {0};
-  if (!tb_pipe_file_init_pair (file, tb_null, 0)) {
-    return status;
+  // storage array for stack trace address data. skip the first, it is the
+  // address of this function.
+  STACK_NEW_ARRAY (addrlist, tb_pointer_t, max_frames + 1);
+
+  // retrieve current stack addresses
+  int addrlen= tb_backtrace_frames (addrlist, max_frames, 2);
+
+  if (addrlen == 0) {
+    r << "  <empty, possibly corrupt>\n";
+    STACK_DELETE_ARRAY (addrlist);
+    return r;
   }
 
-  // init process
-  c_string          cmd_ (s);
-  tb_process_attr_t attr  = {0};
-  attr.out.pipe           = file[1];
-  attr.outtype            = TB_PROCESS_REDIRECT_TYPE_PIPE;
-  tb_process_ref_t process= tb_process_init_cmd (cmd_, &attr);
-  if (process) {
-    // read pipe data
-    tb_size_t read= 0;
-    // TODO: should be a config here
-    tb_byte_t data[8192];
-    tb_size_t size= sizeof (data);
-    tb_bool_t wait= tb_false;
-    while (read < size) {
-      tb_long_t real= tb_pipe_file_read (file[0], data + read, size - read);
-      if (real > 0) {
-        read+= real;
-        wait= tb_false;
-      }
-      else if (!real && !wait) {
-        // wait pipe
-        tb_long_t ok= tb_pipe_file_wait (file[0], TB_PIPE_EVENT_READ, 1000);
-        tb_check_break (ok > 0);
-        wait= tb_true;
-      }
-      else break;
+  // resolve addresses into strings by tbox, differs under various platforms.
+  // this array must be released
+  tb_handle_t symbollist= tb_backtrace_symbols_init (addrlist, addrlen);
+
+  // allocate string which will be filled with the function name
+  char* funcname= tm_new_array<char> (1024);
+
+  // iterate over the returned symbol lines.
+  for (int i= 0; i < addrlen; i++) {
+    // print name of current stack frame
+    const char* curname=
+        tb_backtrace_symbols_name (symbollist, addrlist, addrlen, i);
+    if (curname == NULL) {
+      r << "  null\n";
     }
-
-    result= as_string ((tb_char_t*) data);
-
-    // wait process
-    tb_process_wait (process, &status, -1);
-
-    // exit process
-    tb_process_exit (process);
+    else {
+      r << "  " << string (curname) << "\n";
+    }
   }
 
-  // exit pipe files
-  tb_pipe_file_exit (file[0]);
-  tb_pipe_file_exit (file[1]);
-  return status;
+  tm_delete_array (funcname);
+  tb_backtrace_symbols_exit (symbollist);
+  STACK_DELETE_ARRAY (addrlist);
+  return r;
 }
 
 } // namespace lolly

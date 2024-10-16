@@ -24,6 +24,8 @@ test_same (tm_ostream& a, string b) {
   return sa == b;
 }
 
+TEST_MEMORY_LEAK_INIT
+
 TEST_CASE ("function is_writable") {
   tm_ostream t;
   CHECK (t->is_writable () == true);
@@ -185,3 +187,5 @@ TEST_CASE ("cout/cerr") {
   cerr << "Lolly" << LF;
   cerr << "棒棒糖" << LF;
 }
+
+TEST_MEMORY_LEAK_ALL
