@@ -9,8 +9,20 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "unicode_font.hpp"
+#include "Freetype/tt_face.hpp"
+#include "analyze.hpp"
+#include "array.hpp"
 #include "converter.hpp"
 #include "font.hpp"
+#include "hashmap.hpp"
+#include "lolly/data/numeral.hpp"
+#include "string.hpp"
+#include "translator.hpp"
+#include <lolly/data/unicode.hpp>
+#include <typeinfo>
+using lolly::data::as_hexadecimal;
+using lolly::data::decode_from_utf8;
 
 bool supports_big_operators (string res_name); // from poor_rubber.cpp
 
@@ -25,12 +37,16 @@ struct rubber_unicode_font_rep : font_rep {
   array<font> subfn;
   bool        big_sums;
 
+  tt_face    math_face;
+  translator virt;
+
   hashmap<string, int>    mapper;
   hashmap<string, string> rewriter;
 
-  rubber_unicode_font_rep (string name, font base);
+  rubber_unicode_font_rep (string name, font base, tt_face face= nullptr);
   font get_font (int nr);
   int  search_font_sub (string s, string& rew);
+  bool search_font_sub_bis (string s, string& rew, int& nr);
   int  search_font_cached (string s, string& rew);
   font search_font (string& s);
 
@@ -59,9 +75,10 @@ struct rubber_unicode_font_rep : font_rep {
  * Initialization of main font parameters
  ******************************************************************************/
 
-rubber_unicode_font_rep::rubber_unicode_font_rep (string name, font base2)
+rubber_unicode_font_rep::rubber_unicode_font_rep (string name, font base2,
+                                                  tt_face face)
     : font_rep (name, base2), base (base2),
-      big_flag (supports_big_operators (base2->res_name)) {
+      big_flag (supports_big_operators (base2->res_name)), math_face (face) {
   this->copy_math_pars (base);
   big_sums= false;
   if (base->supports ("<sum>")) {
@@ -75,6 +92,17 @@ rubber_unicode_font_rep::rubber_unicode_font_rep (string name, font base2)
     initialized << false;
     subfn << base;
   }
+
+  if (base->math_type == MATH_TYPE_OPENTYPE) {
+    cout << "rubber for open type: " << base->res_name << LF; 
+    big_flag = true;
+    big_sums = true;
+  }
+
+  // if (!is_nil (math_face) && !is_nil (math_face->math_table)) {
+  // big_flag= true;
+  // big_sums= true;
+  // }
 }
 
 font
@@ -104,6 +132,116 @@ rubber_unicode_font_rep::get_font (int nr) {
 /******************************************************************************
  * Find the font
  ******************************************************************************/
+
+int
+parse_variant (string s, string& r, string& rg) {
+  cout << "parse_variant for " << s << LF;
+  int var  = 0;
+  int n    = N (s);
+  int start= search_forwards ("-", 0, s);
+  int end  = search_backwards ("-", n, s);
+  if (start == end) {
+    end= n - 1;
+    var= 0;
+  }
+  else {
+    var= max (0, as_int (s (end + 1, n)));
+  }
+  r = s (start + 1, end);
+  rg= s (0, start);
+  return var;
+}
+
+string
+normalized_cork_to_utf8 (string s) {
+  cout << "normalized_cork_to_utf8 for " << s << LF;
+  if (N (s) < 3) return s;
+  static hashmap<string, string> mapper;
+  if (N (mapper) == 0) {
+    mapper ("<tilde>")        = "<#303>";
+    mapper ("<check>")        = "<#30C>";
+    mapper ("<bar>")          = "<#305>";
+    mapper ("<vect>")         = "<#20D7>";
+    mapper ("<breve>")        = "<#306>";
+    mapper ("<invbreve>")     = "<#311>";
+    mapper ("<punderbrace>")  = "<#23DD>";
+    mapper ("<punderbrace*>") = "<#23DD>";
+    mapper ("<underbrace>")   = "<#23DF>";
+    mapper ("<underbrace*>")  = "<#23DF>";
+    mapper ("<squnderbrace>") = "<#23B5>";
+    mapper ("<squnderbrace*>")= "<#23B5>";
+    mapper ("<poverbrace>")   = "<#23DC>";
+    mapper ("<poverbrace*>")  = "<#23DC>";
+    mapper ("<overbrace>")    = "<#23DE>";
+    mapper ("<overbrace*>")   = "<#23DE>";
+    mapper ("<sqoverbrace>")  = "<#23B4>";
+    mapper ("<sqoverbrace*>") = "<#23B4>";
+  }
+  string r= mapper->contains (s) ? mapper[s] : s;
+  return strict_cork_to_utf8 (r);
+}
+
+bool
+rubber_unicode_font_rep::search_font_sub_bis (string s, string& rew, int& nr) {
+  // look up opentype math table
+  cout << "search_font_sub_bis for " << s << LF;
+  string r;
+  string rg;
+  int    var= 0;
+  bool   hor= false; // horizontal or vertical
+  rew       = s;
+  nr        = 0;
+
+  if (starts (s, "<big-")) {
+    var= parse_variant (s, r, rg);
+    var= max (0, var - 1);
+    hor= false;
+  }
+  else if (starts (s, "<large-") || starts (s, "<mid-") ||
+           starts (s, "<right-") || starts (s, "<left-")) {
+    var= parse_variant (s, r, rg);
+    hor= true;
+  }
+  else if (starts (s, "<wide-")) {
+    var= parse_variant (s, r, rg);
+    hor= true;
+  }
+  else {
+    return false;
+  }
+
+  if(starts(s, "<large-sqrt")) {
+    hor = false;
+  }
+
+  cout << "search_font_sub_bis for " << s << " -> " << r << ", " << rg << ", " << var << LF;
+
+  if (r == "") return false;
+
+  string       uu     = normalized_cork_to_utf8 ("<" * r * ">");
+  int          j      = 0;
+  unsigned int u      = decode_from_utf8 (uu, j);
+  unsigned int glyphID= ft_get_char_index (math_face->ft_face, u);
+
+  cout << "search_font_sub_bis for " << u << " -> " << glyphID << LF;
+
+  auto variant= hor ? math_face->math_table->hor_glyph_variants
+                    : math_face->math_table->ver_glyph_variants;
+
+  if (variant->contains (glyphID)) {
+    cout << "Variant for " << uu << " -> " << glyphID << LF;
+    auto& v= variant (glyphID);
+    if (var < N (v)) {
+      auto res= v[var];
+      rew     = "<@" * as_hexadecimal (res, 4) * ">";
+      nr      = 0;
+      cout << "Variant for " << uu << " -> " << glyphID << " -> " << rew << LF;
+      return true;
+    }
+  }
+  cout << "No variant for " << uu << " -> " << glyphID << LF;
+  return false;
+}
 
 int
 rubber_unicode_font_rep::search_font_sub (string s, string& rew) {
@@ -172,11 +310,24 @@ rubber_unicode_font_rep::search_font_sub (string s, string& rew) {
 
 int
 rubber_unicode_font_rep::search_font_cached (string s, string& rew) {
+  cout << "search_font_cached for " << s << LF;
   if (mapper->contains (s)) {
     rew= rewriter[s];
     return mapper[s];
   }
-  int nr      = search_font_sub (s, rew);
+  // try opentype math table
+  int nr= 0;
+  cout << "try opentype for " << s << " with font " << res_name << LF;
+  if(is_nil (math_face)) {
+    cout << "no math face" << LF;
+  }
+  if (!is_nil (math_face) && !is_nil (math_face->math_table) &&
+      search_font_sub_bis (s, rew, nr)) {
+  }
+  else {
+    nr= search_font_sub (s, rew);
+  }
+
   mapper (s)  = nr;
   rewriter (s)= rew;
   // cout << s << " -> " << nr << ", " << rew << LF;
@@ -277,8 +428,10 @@ rubber_unicode_font_rep::draw_fixed (renderer ren, string s, SI x, SI y,
   fn->draw_fixed (ren, s, x, y, xk);
 }
 
+// font rubber_unicode_font (font base, tt_face face);
 font
 rubber_unicode_font_rep::magnify (double zoomx, double zoomy) {
+  cout << "magnify for " << base->res_name << LF;
   return rubber_unicode_font (base->magnify (zoomx, zoomy));
 }
 
@@ -360,5 +513,14 @@ rubber_unicode_font_rep::get_wide_correction (string s, int mode) {
 font
 rubber_unicode_font (font base) {
   string name= "rubberunicode[" * base->res_name * "]";
+  cout << "rubber_unicode_font for " << base->res_name << LF;
   return make (font, name, tm_new<rubber_unicode_font_rep> (name, base));
+}
+
+font
+rubber_unicode_font (font base, tt_face face) {
+  cout << "call rubber_unicode_font with math face " << base->res_name << LF;
+  string name= "rubberunicode[" * base->res_name * "]";
+  return make (font, name, tm_new<rubber_unicode_font_rep> (name, base,
+  face));
 }
