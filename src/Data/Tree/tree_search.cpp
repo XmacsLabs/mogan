@@ -255,8 +255,11 @@ search_string (range_set& sel, string s, tree what, path p) {
   string source= (case_insensitive_match_flag) ? locase_all (s) : s;
 
   if (is_atomic (what)) {
-    string w  = what->label;
-    int    pos= 0;
+    string w= what->label;
+    if (is_empty (w)) {
+      return;
+    }
+    int pos= 0;
     while (pos < N (s)) {
       int next= tm_search_forwards (w, pos, source);
       if (next < 0 || next >= N (s)) break;
