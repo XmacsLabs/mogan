@@ -1,22 +1,22 @@
 
 /******************************************************************************
-* MODULE     : adjust_fira.cpp
-* DESCRIPTION: Microtypography for the Fira font
-* COPYRIGHT  : (C) 2019  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : adjust_fira.cpp
+ * DESCRIPTION: Microtypography for the Fira font
+ * COPYRIGHT  : (C) 2019  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "font.hpp"
 
 /******************************************************************************
-* Table initialization
-******************************************************************************/
+ * Table initialization
+ ******************************************************************************/
 
 void
-lsub_adjust_fira (hashmap<string,double>& t) {
+lsub_adjust_fira (hashmap<string, double>& t) {
   adjust_pair (t, "1", 0.03);
   adjust_pair (t, "<Alpha>", -0.03);
   adjust_pair (t, "<Delta>", -0.03);
@@ -29,7 +29,7 @@ lsub_adjust_fira (hashmap<string,double>& t) {
 }
 
 void
-lsup_adjust_fira (hashmap<string,double>& t) {
+lsup_adjust_fira (hashmap<string, double>& t) {
   adjust_pair (t, "7", -0.05);
   adjust_pair (t, "<Xi>", -0.03);
   adjust_pair (t, "<Sigma>", -0.02);
@@ -39,7 +39,7 @@ lsup_adjust_fira (hashmap<string,double>& t) {
 }
 
 void
-rsub_adjust_fira (hashmap<string,double>& t) {
+rsub_adjust_fira (hashmap<string, double>& t) {
   adjust_pair (t, "1", 0.02);
   adjust_pair (t, "2", 0.03);
   adjust_pair (t, "7", -0.05);
@@ -57,7 +57,7 @@ rsub_adjust_fira (hashmap<string,double>& t) {
 }
 
 void
-rsup_adjust_fira (hashmap<string,double>& t) {
+rsup_adjust_fira (hashmap<string, double>& t) {
   adjust_pair (t, "1", 0.02);
   adjust_pair (t, "7", 0.02);
   adjust_pair (t, "<Alpha>", 0.03);
@@ -78,7 +78,7 @@ rsup_adjust_fira (hashmap<string,double>& t) {
 }
 
 void
-above_adjust_fira (hashmap<string,double>& t) {
+above_adjust_fira (hashmap<string, double>& t) {
   adjust_pair (t, "<Beta>", -0.02);
   adjust_pair (t, "<Gamma>", 0.02);
   adjust_pair (t, "<Epsilon>", 0.02);
@@ -89,16 +89,16 @@ above_adjust_fira (hashmap<string,double>& t) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> lsub_fira (0.0);
-static hashmap<string,double> lsup_fira (0.0);
-static hashmap<string,double> rsub_fira (0.0);
-static hashmap<string,double> rsup_fira (0.0);
-static hashmap<string,double> above_fira (0.0);
+static hashmap<string, double> lsub_fira (0.0);
+static hashmap<string, double> lsup_fira (0.0);
+static hashmap<string, double> rsub_fira (0.0);
+static hashmap<string, double> rsup_fira (0.0);
+static hashmap<string, double> above_fira (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 lsub_fira_table () {
   if (N (lsub_fira) == 0) {
     lsub_adjust_std (lsub_fira);
@@ -107,7 +107,7 @@ lsub_fira_table () {
   return lsub_fira;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 lsup_fira_table () {
   if (N (lsup_fira) == 0) {
     lsup_adjust_std (lsup_fira);
@@ -116,7 +116,7 @@ lsup_fira_table () {
   return lsup_fira;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsub_fira_table () {
   if (N (rsub_fira) == 0) {
     rsub_adjust_std (rsub_fira);
@@ -125,7 +125,7 @@ rsub_fira_table () {
   return rsub_fira;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsup_fira_table () {
   if (N (rsup_fira) == 0) {
     rsup_adjust_std (rsup_fira);
@@ -134,7 +134,7 @@ rsup_fira_table () {
   return rsup_fira;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 above_fira_table () {
   if (N (above_fira) == 0) {
     above_adjust_fira (above_fira);
@@ -143,11 +143,11 @@ above_fira_table () {
 }
 
 /******************************************************************************
-* Table initialization
-******************************************************************************/
+ * Table initialization
+ ******************************************************************************/
 
 void
-lsub_adjust_fira_italic (hashmap<string,double>& t) {
+lsub_adjust_fira_italic (hashmap<string, double>& t) {
   adjust_pair (t, "f", -0.05);
   adjust_pair (t, "x", -0.03);
   adjust_pair (t, "z", -0.03);
@@ -159,12 +159,12 @@ lsub_adjust_fira_italic (hashmap<string,double>& t) {
 }
 
 void
-lsup_adjust_fira_italic (hashmap<string,double>& t) {
+lsup_adjust_fira_italic (hashmap<string, double>& t) {
   adjust_pair (t, "g", -0.03);
 }
 
 void
-rsub_adjust_fira_italic (hashmap<string,double>& t) {
+rsub_adjust_fira_italic (hashmap<string, double>& t) {
   adjust_pair (t, "h", -0.02);
   adjust_pair (t, "l", 0.01);
   adjust_pair (t, "m", -0.01);
@@ -194,7 +194,7 @@ rsub_adjust_fira_italic (hashmap<string,double>& t) {
 }
 
 void
-rsup_adjust_fira_italic (hashmap<string,double>& t) {
+rsup_adjust_fira_italic (hashmap<string, double>& t) {
   adjust_pair (t, "a", 0.01);
   adjust_pair (t, "c", 0.03);
   adjust_pair (t, "e", 0.01);
@@ -254,7 +254,7 @@ rsup_adjust_fira_italic (hashmap<string,double>& t) {
 }
 
 void
-above_adjust_fira_italic (hashmap<string,double>& t) {
+above_adjust_fira_italic (hashmap<string, double>& t) {
   adjust_pair (t, "a", 0.04);
   adjust_pair (t, "b", 0.02);
   adjust_pair (t, "c", 0.03);
@@ -321,16 +321,16 @@ above_adjust_fira_italic (hashmap<string,double>& t) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> lsub_fira_italic (0.0);
-static hashmap<string,double> lsup_fira_italic (0.0);
-static hashmap<string,double> rsub_fira_italic (0.0);
-static hashmap<string,double> rsup_fira_italic (0.0);
-static hashmap<string,double> above_fira_italic (0.0);
+static hashmap<string, double> lsub_fira_italic (0.0);
+static hashmap<string, double> lsup_fira_italic (0.0);
+static hashmap<string, double> rsub_fira_italic (0.0);
+static hashmap<string, double> rsup_fira_italic (0.0);
+static hashmap<string, double> above_fira_italic (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 lsub_fira_italic_table () {
   if (N (lsub_fira_italic) == 0) {
     lsub_adjust_std (lsub_fira_italic);
@@ -339,7 +339,7 @@ lsub_fira_italic_table () {
   return lsub_fira_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 lsup_fira_italic_table () {
   if (N (lsup_fira_italic) == 0) {
     lsup_adjust_std (lsup_fira_italic);
@@ -348,7 +348,7 @@ lsup_fira_italic_table () {
   return lsup_fira_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsub_fira_italic_table () {
   if (N (rsub_fira_italic) == 0) {
     rsub_adjust_std (rsub_fira_italic);
@@ -357,7 +357,7 @@ rsub_fira_italic_table () {
   return rsub_fira_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsup_fira_italic_table () {
   if (N (rsup_fira_italic) == 0) {
     rsup_adjust_std (rsup_fira_italic);
@@ -366,7 +366,7 @@ rsup_fira_italic_table () {
   return rsup_fira_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 above_fira_italic_table () {
   if (N (above_fira_italic) == 0) {
     above_adjust_fira_italic (above_fira_italic);

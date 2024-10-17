@@ -28,6 +28,8 @@ clang-format -i src/Graphics/Types/**.hpp
 clang-format -i src/Graphics/Fonts/**.cpp
 clang-format -i src/Graphics/Fonts/**.hpp
 clang-format -i src/Typeset/Boxes/Graphics/**.cpp
+clang-format -i src/Plugins/Freetype/**.cpp
+clang-format -i src/Plugins/Freetype/**.hpp
 clang-format -i src/Plugins/Ghostscript/**.cpp
 clang-format -i src/Plugins/Ghostscript/**.hpp
 clang-format -i src/Plugins/Html/*.cpp

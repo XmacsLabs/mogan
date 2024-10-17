@@ -1,22 +1,22 @@
 
 /******************************************************************************
-* MODULE     : adjust_termes.cpp
-* DESCRIPTION: Microtypography for the TeX Gyre Termes font
-* COPYRIGHT  : (C) 2017  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : adjust_termes.cpp
+ * DESCRIPTION: Microtypography for the TeX Gyre Termes font
+ * COPYRIGHT  : (C) 2017  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "font.hpp"
 
 /******************************************************************************
-* Table initialization
-******************************************************************************/
+ * Table initialization
+ ******************************************************************************/
 
 void
-lsub_adjust_termes (hashmap<string,double>& t) {
+lsub_adjust_termes (hashmap<string, double>& t) {
   adjust_pair (t, "T", 0.02);
   adjust_pair (t, "V", 0.02);
   adjust_pair (t, "Y", 0.02);
@@ -43,7 +43,7 @@ lsub_adjust_termes (hashmap<string,double>& t) {
 }
 
 void
-lsup_adjust_termes (hashmap<string,double>& t) {
+lsup_adjust_termes (hashmap<string, double>& t) {
   adjust_pair (t, "<beta>", 0.05);
   adjust_pair (t, "<rho>", 0.02);
   adjust_pair (t, "<chi>", 0.1);
@@ -64,7 +64,7 @@ lsup_adjust_termes (hashmap<string,double>& t) {
 }
 
 void
-rsub_adjust_termes (hashmap<string,double>& t) {
+rsub_adjust_termes (hashmap<string, double>& t) {
   adjust_pair (t, "A", 0.05);
   adjust_pair (t, "I", 0.05);
   adjust_pair (t, "K", 0.05);
@@ -212,9 +212,9 @@ rsub_adjust_termes (hashmap<string,double>& t) {
   adjust_contour_integral (t, "1", -0.05);
   adjust_contour_integral (t, "2", -0.13);
 }
-  
+
 void
-rsup_adjust_termes (hashmap<string,double>& t) {
+rsup_adjust_termes (hashmap<string, double>& t) {
   adjust_pair (t, "A", -0.05);
   adjust_pair (t, "L", -0.05);
   adjust_pair (t, "g", 0.02);
@@ -315,7 +315,7 @@ rsup_adjust_termes (hashmap<string,double>& t) {
 }
 
 void
-above_adjust_termes (hashmap<string,double>& t) {
+above_adjust_termes (hashmap<string, double>& t) {
   adjust_pair (t, "b", -0.02);
   adjust_pair (t, "d", 0.06);
   adjust_pair (t, "f", -0.04);
@@ -403,16 +403,16 @@ above_adjust_termes (hashmap<string,double>& t) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> lsub_termes (0.0);
-static hashmap<string,double> lsup_termes (0.0);
-static hashmap<string,double> rsub_termes (0.0);
-static hashmap<string,double> rsup_termes (0.0);
-static hashmap<string,double> above_termes (0.0);
+static hashmap<string, double> lsub_termes (0.0);
+static hashmap<string, double> lsup_termes (0.0);
+static hashmap<string, double> rsub_termes (0.0);
+static hashmap<string, double> rsup_termes (0.0);
+static hashmap<string, double> above_termes (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 lsub_termes_table () {
   if (N (lsub_termes) == 0) {
     lsub_adjust_std (lsub_termes);
@@ -421,7 +421,7 @@ lsub_termes_table () {
   return lsub_termes;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 lsup_termes_table () {
   if (N (lsup_termes) == 0) {
     lsup_adjust_std (lsup_termes);
@@ -430,7 +430,7 @@ lsup_termes_table () {
   return lsup_termes;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsub_termes_table () {
   if (N (rsub_termes) == 0) {
     rsub_adjust_std (rsub_termes);
@@ -439,7 +439,7 @@ rsub_termes_table () {
   return rsub_termes;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsup_termes_table () {
   if (N (rsup_termes) == 0) {
     rsup_adjust_std (rsup_termes);
@@ -448,25 +448,24 @@ rsup_termes_table () {
   return rsup_termes;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 above_termes_table () {
-  if (N (above_termes) == 0)
-    above_adjust_termes (above_termes);
+  if (N (above_termes) == 0) above_adjust_termes (above_termes);
   return above_termes;
 }
 
 /******************************************************************************
-* Table initialization
-******************************************************************************/
+ * Table initialization
+ ******************************************************************************/
 
 void
-lsub_adjust_termes_italic (hashmap<string,double>& t) {
+lsub_adjust_termes_italic (hashmap<string, double>& t) {
   adjust_pair (t, "p", 0.03);
   adjust_pair (t, "U", 0.03);
 }
 
 void
-lsup_adjust_termes_italic (hashmap<string,double>& t) {
+lsup_adjust_termes_italic (hashmap<string, double>& t) {
   adjust_pair (t, "b", 0.02);
   adjust_pair (t, "B", 0.02);
   adjust_pair (t, "D", 0.02);
@@ -488,7 +487,7 @@ lsup_adjust_termes_italic (hashmap<string,double>& t) {
 }
 
 void
-rsub_adjust_termes_italic (hashmap<string,double>& t) {
+rsub_adjust_termes_italic (hashmap<string, double>& t) {
   adjust_pair (t, "A", 0.03);
   adjust_pair (t, "B", 0.01);
   adjust_pair (t, "D", 0.02);
@@ -515,9 +514,9 @@ rsub_adjust_termes_italic (hashmap<string,double>& t) {
   adjust_pair (t, "x", 0.02);
   adjust_pair (t, "z", 0.02);
 }
-  
+
 void
-rsup_adjust_termes_italic (hashmap<string,double>& t) {
+rsup_adjust_termes_italic (hashmap<string, double>& t) {
   adjust_pair (t, "B", 0.03);
   adjust_pair (t, "D", 0.02);
   adjust_pair (t, "G", 0.02);
@@ -543,7 +542,7 @@ rsup_adjust_termes_italic (hashmap<string,double>& t) {
 }
 
 void
-above_adjust_termes_italic (hashmap<string,double>& t) {
+above_adjust_termes_italic (hashmap<string, double>& t) {
   adjust_pair (t, "b", -0.02);
   adjust_pair (t, "d", 0.06);
   adjust_pair (t, "f", -0.04);
@@ -568,16 +567,16 @@ above_adjust_termes_italic (hashmap<string,double>& t) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> lsub_termes_italic (0.0);
-static hashmap<string,double> lsup_termes_italic (0.0);
-static hashmap<string,double> rsub_termes_italic (0.0);
-static hashmap<string,double> rsup_termes_italic (0.0);
-static hashmap<string,double> above_termes_italic (0.0);
+static hashmap<string, double> lsub_termes_italic (0.0);
+static hashmap<string, double> lsup_termes_italic (0.0);
+static hashmap<string, double> rsub_termes_italic (0.0);
+static hashmap<string, double> rsup_termes_italic (0.0);
+static hashmap<string, double> above_termes_italic (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 lsub_termes_italic_table () {
   if (N (lsub_termes_italic) == 0) {
     lsub_adjust_std (lsub_termes_italic);
@@ -586,7 +585,7 @@ lsub_termes_italic_table () {
   return lsub_termes_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 lsup_termes_italic_table () {
   if (N (lsup_termes_italic) == 0) {
     lsup_adjust_std (lsup_termes_italic);
@@ -595,7 +594,7 @@ lsup_termes_italic_table () {
   return lsup_termes_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsub_termes_italic_table () {
   if (N (rsub_termes_italic) == 0) {
     rsub_adjust_std (rsub_termes_italic);
@@ -604,7 +603,7 @@ rsub_termes_italic_table () {
   return rsub_termes_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsup_termes_italic_table () {
   if (N (rsup_termes_italic) == 0) {
     rsup_adjust_std (rsup_termes_italic);
@@ -613,7 +612,7 @@ rsup_termes_italic_table () {
   return rsup_termes_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 above_termes_italic_table () {
   if (N (above_termes_italic) == 0)
     above_adjust_termes_italic (above_termes_italic);

@@ -1,22 +1,22 @@
 
 /******************************************************************************
-* MODULE     : adjust_libertine.cpp
-* DESCRIPTION: Microtypography for the Linux Libertine font
-* COPYRIGHT  : (C) 2019  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : adjust_libertine.cpp
+ * DESCRIPTION: Microtypography for the Linux Libertine font
+ * COPYRIGHT  : (C) 2019  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "font.hpp"
 
 /******************************************************************************
-* Table initialization
-******************************************************************************/
+ * Table initialization
+ ******************************************************************************/
 
 void
-lsub_adjust_libertine (hashmap<string,double>& t) {
+lsub_adjust_libertine (hashmap<string, double>& t) {
   adjust_pair (t, "<Alpha>", -0.03);
   adjust_pair (t, "<Beta>", -0.03);
   adjust_pair (t, "<Gamma>", -0.03);
@@ -44,12 +44,12 @@ lsub_adjust_libertine (hashmap<string,double>& t) {
 }
 
 void
-lsup_adjust_libertine (hashmap<string,double>& t) {
+lsup_adjust_libertine (hashmap<string, double>& t) {
   (void) t;
 }
 
 void
-rsub_adjust_libertine (hashmap<string,double>& t) {
+rsub_adjust_libertine (hashmap<string, double>& t) {
   adjust_pair (t, "<Alpha>", 0.03);
   adjust_pair (t, "<Delta>", 0.02);
   adjust_pair (t, "<Eta>", 0.03);
@@ -66,7 +66,7 @@ rsub_adjust_libertine (hashmap<string,double>& t) {
 }
 
 void
-rsup_adjust_libertine (hashmap<string,double>& t) {
+rsup_adjust_libertine (hashmap<string, double>& t) {
   adjust_pair (t, "<Beta>", 0.03);
   adjust_pair (t, "<Gamma>", 0.05);
   adjust_pair (t, "<Delta>", 0.08);
@@ -90,21 +90,21 @@ rsup_adjust_libertine (hashmap<string,double>& t) {
 }
 
 void
-above_adjust_libertine (hashmap<string,double>& t) {
+above_adjust_libertine (hashmap<string, double>& t) {
   (void) t;
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> lsub_libertine (0.0);
-static hashmap<string,double> lsup_libertine (0.0);
-static hashmap<string,double> rsub_libertine (0.0);
-static hashmap<string,double> rsup_libertine (0.0);
-static hashmap<string,double> above_libertine (0.0);
+static hashmap<string, double> lsub_libertine (0.0);
+static hashmap<string, double> lsup_libertine (0.0);
+static hashmap<string, double> rsub_libertine (0.0);
+static hashmap<string, double> rsup_libertine (0.0);
+static hashmap<string, double> above_libertine (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 lsub_libertine_table () {
   if (N (lsub_libertine) == 0) {
     lsub_adjust_std (lsub_libertine);
@@ -113,7 +113,7 @@ lsub_libertine_table () {
   return lsub_libertine;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 lsup_libertine_table () {
   if (N (lsup_libertine) == 0) {
     lsup_adjust_std (lsup_libertine);
@@ -122,7 +122,7 @@ lsup_libertine_table () {
   return lsup_libertine;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsub_libertine_table () {
   if (N (rsub_libertine) == 0) {
     rsub_adjust_std (rsub_libertine);
@@ -131,7 +131,7 @@ rsub_libertine_table () {
   return rsub_libertine;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsup_libertine_table () {
   if (N (rsup_libertine) == 0) {
     rsup_adjust_std (rsup_libertine);
@@ -140,7 +140,7 @@ rsup_libertine_table () {
   return rsup_libertine;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 above_libertine_table () {
   if (N (above_libertine) == 0) {
     above_adjust_libertine (above_libertine);
@@ -149,21 +149,21 @@ above_libertine_table () {
 }
 
 /******************************************************************************
-* Table initialization
-******************************************************************************/
+ * Table initialization
+ ******************************************************************************/
 
 void
-lsub_adjust_libertine_italic (hashmap<string,double>& t) {
+lsub_adjust_libertine_italic (hashmap<string, double>& t) {
   adjust_pair (t, "T", 0.05);
 }
 
 void
-lsup_adjust_libertine_italic (hashmap<string,double>& t) {
+lsup_adjust_libertine_italic (hashmap<string, double>& t) {
   (void) t;
 }
 
 void
-rsub_adjust_libertine_italic (hashmap<string,double>& t) {
+rsub_adjust_libertine_italic (hashmap<string, double>& t) {
   adjust_pair (t, "a", 0.04);
   adjust_pair (t, "c", 0.03);
   adjust_pair (t, "d", 0.03);
@@ -221,7 +221,7 @@ rsub_adjust_libertine_italic (hashmap<string,double>& t) {
 }
 
 void
-rsup_adjust_libertine_italic (hashmap<string,double>& t) {
+rsup_adjust_libertine_italic (hashmap<string, double>& t) {
   adjust_pair (t, "b", 0.07);
   adjust_pair (t, "c", 0.05);
   adjust_pair (t, "d", 0.03);
@@ -293,7 +293,7 @@ rsup_adjust_libertine_italic (hashmap<string,double>& t) {
 }
 
 void
-above_adjust_libertine_italic (hashmap<string,double>& t) {
+above_adjust_libertine_italic (hashmap<string, double>& t) {
   adjust_pair (t, "a", 0.02);
   adjust_pair (t, "d", 0.1);
   adjust_pair (t, "f", -0.02);
@@ -321,16 +321,16 @@ above_adjust_libertine_italic (hashmap<string,double>& t) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> lsub_libertine_italic (0.0);
-static hashmap<string,double> lsup_libertine_italic (0.0);
-static hashmap<string,double> rsub_libertine_italic (0.0);
-static hashmap<string,double> rsup_libertine_italic (0.0);
-static hashmap<string,double> above_libertine_italic (0.0);
+static hashmap<string, double> lsub_libertine_italic (0.0);
+static hashmap<string, double> lsup_libertine_italic (0.0);
+static hashmap<string, double> rsub_libertine_italic (0.0);
+static hashmap<string, double> rsup_libertine_italic (0.0);
+static hashmap<string, double> above_libertine_italic (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 lsub_libertine_italic_table () {
   if (N (lsub_libertine_italic) == 0) {
     lsub_adjust_std (lsub_libertine_italic);
@@ -339,7 +339,7 @@ lsub_libertine_italic_table () {
   return lsub_libertine_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 lsup_libertine_italic_table () {
   if (N (lsup_libertine_italic) == 0) {
     lsup_adjust_std (lsup_libertine_italic);
@@ -348,7 +348,7 @@ lsup_libertine_italic_table () {
   return lsup_libertine_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsub_libertine_italic_table () {
   if (N (rsub_libertine_italic) == 0) {
     rsub_adjust_std (rsub_libertine_italic);
@@ -357,7 +357,7 @@ rsub_libertine_italic_table () {
   return rsub_libertine_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsup_libertine_italic_table () {
   if (N (rsup_libertine_italic) == 0) {
     rsup_adjust_std (rsup_libertine_italic);
@@ -366,7 +366,7 @@ rsup_libertine_italic_table () {
   return rsup_libertine_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 above_libertine_italic_table () {
   if (N (above_libertine_italic) == 0) {
     above_adjust_libertine_italic (above_libertine_italic);

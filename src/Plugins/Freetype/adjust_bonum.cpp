@@ -1,22 +1,22 @@
 
 /******************************************************************************
-* MODULE     : adjust_bonum.cpp
-* DESCRIPTION: Microtypography for the TeX Gyre Bonum font
-* COPYRIGHT  : (C) 2017  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : adjust_bonum.cpp
+ * DESCRIPTION: Microtypography for the TeX Gyre Bonum font
+ * COPYRIGHT  : (C) 2017  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "font.hpp"
 
 /******************************************************************************
-* Table initialization
-******************************************************************************/
+ * Table initialization
+ ******************************************************************************/
 
 void
-lsub_adjust_bonum (hashmap<string,double>& t) {
+lsub_adjust_bonum (hashmap<string, double>& t) {
   adjust_pair (t, "T", 0.05);
   adjust_pair (t, "U", 0.03);
   adjust_pair (t, "V", 0.03);
@@ -55,7 +55,7 @@ lsub_adjust_bonum (hashmap<string,double>& t) {
 }
 
 void
-lsup_adjust_bonum (hashmap<string,double>& t) {
+lsup_adjust_bonum (hashmap<string, double>& t) {
   for (char c= 'A'; c <= 'Z'; c++)
     adjust_pair (t, string (c), -0.03);
   for (char c= 'a'; c <= 'z'; c++)
@@ -97,7 +97,7 @@ lsup_adjust_bonum (hashmap<string,double>& t) {
 }
 
 void
-rsub_adjust_bonum (hashmap<string,double>& t) {
+rsub_adjust_bonum (hashmap<string, double>& t) {
   adjust_pair (t, "A", 0.03);
   adjust_pair (t, "F", -0.08);
   adjust_pair (t, "J", -0.03);
@@ -213,7 +213,7 @@ rsub_adjust_bonum (hashmap<string,double>& t) {
 }
 
 void
-rsup_adjust_bonum (hashmap<string,double>& t) {
+rsup_adjust_bonum (hashmap<string, double>& t) {
   for (char c= 'A'; c <= 'Z'; c++)
     adjust_pair (t, string (c), 0.03);
   for (char c= 'a'; c <= 'z'; c++)
@@ -282,7 +282,7 @@ rsup_adjust_bonum (hashmap<string,double>& t) {
 }
 
 void
-above_adjust_bonum (hashmap<string,double>& t) {
+above_adjust_bonum (hashmap<string, double>& t) {
   adjust_pair (t, "b", -0.04);
   adjust_pair (t, "d", 0.04);
   adjust_pair (t, "f", -0.06);
@@ -384,16 +384,16 @@ above_adjust_bonum (hashmap<string,double>& t) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> lsub_bonum (0.0);
-static hashmap<string,double> lsup_bonum (0.0);
-static hashmap<string,double> rsub_bonum (0.0);
-static hashmap<string,double> rsup_bonum (0.0);
-static hashmap<string,double> above_bonum (0.0);
+static hashmap<string, double> lsub_bonum (0.0);
+static hashmap<string, double> lsup_bonum (0.0);
+static hashmap<string, double> rsub_bonum (0.0);
+static hashmap<string, double> rsup_bonum (0.0);
+static hashmap<string, double> above_bonum (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 lsub_bonum_table () {
   if (N (lsub_bonum) == 0) {
     lsub_adjust_std (lsub_bonum);
@@ -402,7 +402,7 @@ lsub_bonum_table () {
   return lsub_bonum;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 lsup_bonum_table () {
   if (N (lsup_bonum) == 0) {
     lsup_adjust_std (lsup_bonum);
@@ -411,7 +411,7 @@ lsup_bonum_table () {
   return lsup_bonum;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsub_bonum_table () {
   if (N (rsub_bonum) == 0) {
     rsub_adjust_std (rsub_bonum);
@@ -420,7 +420,7 @@ rsub_bonum_table () {
   return rsub_bonum;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsup_bonum_table () {
   if (N (rsup_bonum) == 0) {
     rsup_adjust_std (rsup_bonum);
@@ -429,7 +429,7 @@ rsup_bonum_table () {
   return rsup_bonum;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 above_bonum_table () {
   if (N (above_bonum) == 0) {
     above_adjust_bonum (above_bonum);
@@ -438,15 +438,14 @@ above_bonum_table () {
 }
 
 /******************************************************************************
-* Table initialization
-******************************************************************************/
+ * Table initialization
+ ******************************************************************************/
 
 void
-lsub_adjust_bonum_italic (hashmap<string,double>& t) {
-}
+lsub_adjust_bonum_italic (hashmap<string, double>& t) {}
 
 void
-lsup_adjust_bonum_italic (hashmap<string,double>& t) {
+lsup_adjust_bonum_italic (hashmap<string, double>& t) {
   adjust_pair (t, "a", -0.02);
   adjust_pair (t, "b", 0.02);
   adjust_pair (t, "c", -0.02);
@@ -472,7 +471,7 @@ lsup_adjust_bonum_italic (hashmap<string,double>& t) {
 }
 
 void
-rsub_adjust_bonum_italic (hashmap<string,double>& t) {
+rsub_adjust_bonum_italic (hashmap<string, double>& t) {
   for (char c= 'A'; c <= 'Z'; c++)
     adjust_pair (t, string (c), 0.03);
   for (char c= 'a'; c <= 'z'; c++)
@@ -510,7 +509,7 @@ rsub_adjust_bonum_italic (hashmap<string,double>& t) {
 }
 
 void
-rsup_adjust_bonum_italic (hashmap<string,double>& t) {
+rsup_adjust_bonum_italic (hashmap<string, double>& t) {
   for (char c= 'A'; c <= 'Z'; c++)
     adjust_pair (t, string (c), 0.03);
   for (char c= 'a'; c <= 'z'; c++)
@@ -554,7 +553,7 @@ rsup_adjust_bonum_italic (hashmap<string,double>& t) {
 }
 
 void
-above_adjust_bonum_italic (hashmap<string,double>& t) {
+above_adjust_bonum_italic (hashmap<string, double>& t) {
   adjust_pair (t, "b", -0.04);
   adjust_pair (t, "d", 0.04);
   adjust_pair (t, "f", -0.06);
@@ -582,16 +581,16 @@ above_adjust_bonum_italic (hashmap<string,double>& t) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> lsub_bonum_italic (0.0);
-static hashmap<string,double> lsup_bonum_italic (0.0);
-static hashmap<string,double> rsub_bonum_italic (0.0);
-static hashmap<string,double> rsup_bonum_italic (0.0);
-static hashmap<string,double> above_bonum_italic (0.0);
+static hashmap<string, double> lsub_bonum_italic (0.0);
+static hashmap<string, double> lsup_bonum_italic (0.0);
+static hashmap<string, double> rsub_bonum_italic (0.0);
+static hashmap<string, double> rsup_bonum_italic (0.0);
+static hashmap<string, double> above_bonum_italic (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 lsub_bonum_italic_table () {
   if (N (lsub_bonum_italic) == 0) {
     lsub_adjust_std (lsub_bonum_italic);
@@ -600,7 +599,7 @@ lsub_bonum_italic_table () {
   return lsub_bonum_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 lsup_bonum_italic_table () {
   if (N (lsup_bonum_italic) == 0) {
     lsup_adjust_std (lsup_bonum_italic);
@@ -609,7 +608,7 @@ lsup_bonum_italic_table () {
   return lsup_bonum_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsub_bonum_italic_table () {
   if (N (rsub_bonum_italic) == 0) {
     rsub_adjust_std (rsub_bonum_italic);
@@ -618,7 +617,7 @@ rsub_bonum_italic_table () {
   return rsub_bonum_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsup_bonum_italic_table () {
   if (N (rsup_bonum_italic) == 0) {
     rsup_adjust_std (rsup_bonum_italic);
@@ -627,7 +626,7 @@ rsup_bonum_italic_table () {
   return rsup_bonum_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 above_bonum_italic_table () {
   if (N (above_bonum_italic) == 0) {
     above_adjust_bonum_italic (above_bonum_italic);

@@ -1,22 +1,22 @@
 
 /******************************************************************************
-* MODULE     : adjust_pagella.cpp
-* DESCRIPTION: Microtypography for the TeX Gyre Pagella font
-* COPYRIGHT  : (C) 2017  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : adjust_pagella.cpp
+ * DESCRIPTION: Microtypography for the TeX Gyre Pagella font
+ * COPYRIGHT  : (C) 2017  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "font.hpp"
 
 /******************************************************************************
-* Table initialization
-******************************************************************************/
+ * Table initialization
+ ******************************************************************************/
 
 void
-lsub_adjust_pagella (hashmap<string,double>& t) {
+lsub_adjust_pagella (hashmap<string, double>& t) {
   adjust_pair (t, "+", 0.05);
   adjust_pair (t, "-", 0.05);
   adjust_pair (t, "T", 0.03);
@@ -54,7 +54,7 @@ lsub_adjust_pagella (hashmap<string,double>& t) {
 }
 
 void
-lsup_adjust_pagella (hashmap<string,double>& t) {
+lsup_adjust_pagella (hashmap<string, double>& t) {
   adjust_pair (t, "+", 0.05);
   adjust_pair (t, "-", 0.05);
   adjust_pair (t, "b", 0.02);
@@ -90,7 +90,7 @@ lsup_adjust_pagella (hashmap<string,double>& t) {
 }
 
 void
-rsub_adjust_pagella (hashmap<string,double>& t) {
+rsub_adjust_pagella (hashmap<string, double>& t) {
   adjust_pair (t, "A", 0.02);
   adjust_pair (t, "I", 0.02);
   adjust_pair (t, "K", 0.02);
@@ -185,7 +185,7 @@ rsub_adjust_pagella (hashmap<string,double>& t) {
 }
 
 void
-rsup_adjust_pagella (hashmap<string,double>& t) {
+rsup_adjust_pagella (hashmap<string, double>& t) {
   for (char c= 'A'; c <= 'Z'; c++)
     adjust_pair (t, string (c), 0.03);
   for (char c= 'a'; c <= 'z'; c++)
@@ -338,7 +338,7 @@ rsup_adjust_pagella (hashmap<string,double>& t) {
 }
 
 void
-above_adjust_pagella (hashmap<string,double>& t) {
+above_adjust_pagella (hashmap<string, double>& t) {
   adjust_pair (t, "b", -0.02);
   adjust_pair (t, "d", 0.06);
   adjust_pair (t, "e", -0.02);
@@ -439,16 +439,16 @@ above_adjust_pagella (hashmap<string,double>& t) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> lsub_pagella (0.0);
-static hashmap<string,double> lsup_pagella (0.0);
-static hashmap<string,double> rsub_pagella (0.0);
-static hashmap<string,double> rsup_pagella (0.0);
-static hashmap<string,double> above_pagella (0.0);
+static hashmap<string, double> lsub_pagella (0.0);
+static hashmap<string, double> lsup_pagella (0.0);
+static hashmap<string, double> rsub_pagella (0.0);
+static hashmap<string, double> rsup_pagella (0.0);
+static hashmap<string, double> above_pagella (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 lsub_pagella_table () {
   if (N (lsub_pagella) == 0) {
     lsub_adjust_std (lsub_pagella);
@@ -457,7 +457,7 @@ lsub_pagella_table () {
   return lsub_pagella;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 lsup_pagella_table () {
   if (N (lsup_pagella) == 0) {
     lsup_adjust_std (lsup_pagella);
@@ -466,7 +466,7 @@ lsup_pagella_table () {
   return lsup_pagella;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsub_pagella_table () {
   if (N (rsub_pagella) == 0) {
     rsub_adjust_std (rsub_pagella);
@@ -475,7 +475,7 @@ rsub_pagella_table () {
   return rsub_pagella;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsup_pagella_table () {
   if (N (rsup_pagella) == 0) {
     rsup_adjust_std (rsup_pagella);
@@ -484,7 +484,7 @@ rsup_pagella_table () {
   return rsup_pagella;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 above_pagella_table () {
   if (N (above_pagella) == 0) {
     above_adjust_pagella (above_pagella);
@@ -493,11 +493,11 @@ above_pagella_table () {
 }
 
 /******************************************************************************
-* Table initialization
-******************************************************************************/
+ * Table initialization
+ ******************************************************************************/
 
 void
-lsub_adjust_pagella_italic (hashmap<string,double>& t) {
+lsub_adjust_pagella_italic (hashmap<string, double>& t) {
   adjust_pair (t, "f", -0.02);
   adjust_pair (t, "g", -0.02);
   adjust_pair (t, "T", 0.03);
@@ -507,7 +507,7 @@ lsub_adjust_pagella_italic (hashmap<string,double>& t) {
 }
 
 void
-lsup_adjust_pagella_italic (hashmap<string,double>& t) {
+lsup_adjust_pagella_italic (hashmap<string, double>& t) {
   adjust_pair (t, "b", 0.02);
   adjust_pair (t, "A", 0.02);
   adjust_pair (t, "B", 0.02);
@@ -524,7 +524,7 @@ lsup_adjust_pagella_italic (hashmap<string,double>& t) {
 }
 
 void
-rsub_adjust_pagella_italic (hashmap<string,double>& t) {
+rsub_adjust_pagella_italic (hashmap<string, double>& t) {
   adjust_pair (t, "D", -0.02);
   adjust_pair (t, "N", -0.02);
   adjust_pair (t, "O", -0.02);
@@ -535,7 +535,7 @@ rsub_adjust_pagella_italic (hashmap<string,double>& t) {
 }
 
 void
-rsup_adjust_pagella_italic (hashmap<string,double>& t) {
+rsup_adjust_pagella_italic (hashmap<string, double>& t) {
   for (char c= 'A'; c <= 'Z'; c++)
     adjust_pair (t, string (c), 0.03);
   for (char c= 'a'; c <= 'z'; c++)
@@ -555,7 +555,7 @@ rsup_adjust_pagella_italic (hashmap<string,double>& t) {
 }
 
 void
-above_adjust_pagella_italic (hashmap<string,double>& t) {
+above_adjust_pagella_italic (hashmap<string, double>& t) {
   adjust_pair (t, "b", -0.02);
   adjust_pair (t, "d", 0.06);
   adjust_pair (t, "e", -0.02);
@@ -590,16 +590,16 @@ above_adjust_pagella_italic (hashmap<string,double>& t) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
-static hashmap<string,double> lsub_pagella_italic (0.0);
-static hashmap<string,double> lsup_pagella_italic (0.0);
-static hashmap<string,double> rsub_pagella_italic (0.0);
-static hashmap<string,double> rsup_pagella_italic (0.0);
-static hashmap<string,double> above_pagella_italic (0.0);
+static hashmap<string, double> lsub_pagella_italic (0.0);
+static hashmap<string, double> lsup_pagella_italic (0.0);
+static hashmap<string, double> rsub_pagella_italic (0.0);
+static hashmap<string, double> rsup_pagella_italic (0.0);
+static hashmap<string, double> above_pagella_italic (0.0);
 
-hashmap<string,double>
+hashmap<string, double>
 lsub_pagella_italic_table () {
   if (N (lsub_pagella_italic) == 0) {
     lsub_adjust_std (lsub_pagella_italic);
@@ -608,7 +608,7 @@ lsub_pagella_italic_table () {
   return lsub_pagella_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 lsup_pagella_italic_table () {
   if (N (lsup_pagella_italic) == 0) {
     lsup_adjust_std (lsup_pagella_italic);
@@ -617,7 +617,7 @@ lsup_pagella_italic_table () {
   return lsup_pagella_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsub_pagella_italic_table () {
   if (N (rsub_pagella_italic) == 0) {
     rsub_adjust_std (rsub_pagella_italic);
@@ -626,7 +626,7 @@ rsub_pagella_italic_table () {
   return rsub_pagella_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 rsup_pagella_italic_table () {
   if (N (rsup_pagella_italic) == 0) {
     rsup_adjust_std (rsup_pagella_italic);
@@ -635,7 +635,7 @@ rsup_pagella_italic_table () {
   return rsup_pagella_italic;
 }
 
-hashmap<string,double>
+hashmap<string, double>
 above_pagella_italic_table () {
   if (N (above_pagella_italic) == 0) {
     above_adjust_pagella_italic (above_pagella_italic);
