@@ -9,7 +9,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "a_tbox_main.cpp"
+#include "a_lolly_test.hpp"
 #include "file.hpp"
 #include "lolly/hash/md5.hpp"
 

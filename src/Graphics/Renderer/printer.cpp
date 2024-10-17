@@ -28,6 +28,11 @@
 #include "Pdf/pdf_hummus_renderer.hpp"
 #endif
 
+#include <lolly/data/numeral.hpp>
+
+using lolly::data::as_hexadecimal;
+
+
 string PS_CLIP_PUSH ("gsave");
 string PS_CLIP_POP ("grestore");
 string PS_CLIP ("cl");

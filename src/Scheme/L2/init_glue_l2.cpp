@@ -17,12 +17,13 @@
 #include "analyze.hpp"
 #include "file.hpp"
 #include "locale.hpp"
-#include "lolly/data/base64.hpp"
-#include "lolly/io/http.hpp"
-#include "lolly/io/http_response.hpp"
-#include "lolly/system/subprocess.hpp"
 #include "sys_utils.hpp"
 #include "tree.hpp"
+#include <lolly/data/base64.hpp>
+#include <lolly/data/numeral.hpp>
+#include <lolly/io/http.hpp>
+#include <lolly/io/http_response.hpp>
+#include <lolly/system/subprocess.hpp>
 
 #include "scheme.hpp"
 

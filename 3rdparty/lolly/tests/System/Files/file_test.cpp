@@ -4,9 +4,11 @@
  *  \author Darcy
  *  \date   2019-2023
  */
-#include "a_tbox_main.cpp"
+#include "a_lolly_test.hpp"
 #include "file.hpp"
+#include "sys_utils.hpp"
 #include "tbox/tbox.h"
+#include <cstring>
 
 url unix_root= url_system ("/");
 url xmake_lua= url_pwd () * "xmake.lua";
@@ -36,6 +38,7 @@ TEST_MEMORY_LEAK_INIT
 #if defined(OS_WIN) || defined(OS_MINGW)
 TEST_CASE ("is_directory on Windows") {
   CHECK (is_directory (url_system ("C:/Windows")));
+  CHECK (is_directory (url_system ("file:///C:/Windows")));
 }
 #endif
 
@@ -46,8 +49,11 @@ TEST_CASE ("is_directory/is_regular") {
   CHECK (is_directory (url_pwd () * "tests"));
 
   CHECK (is_directory (url_pwd ()));
+  CHECK (is_directory (reroot (url_pwd (), "file")));
   CHECK (!is_regular (url_pwd ()));
+  CHECK (!is_regular (reroot (url_pwd (), "file")));
   CHECK (!is_symbolic_link (url_pwd ()));
+  CHECK (!is_symbolic_link (reroot (url_pwd (), "file")));
 
   CHECK (!is_directory (xmake_lua));
   CHECK (is_regular (xmake_lua));
@@ -68,6 +74,7 @@ TEST_CASE ("is_newer") {
 
 TEST_CASE ("is_of_type") {
   CHECK (is_of_type (url_pwd (), "d"));
+  CHECK (is_of_type (reroot (url_pwd (), "file"), "d"));
   CHECK (!is_of_type (url_pwd (), "f"));
   CHECK (is_of_type (xmake_lua, "fr"));
 #if defined(OS_MINGW) || defined(OS_WIN)
@@ -75,9 +82,15 @@ TEST_CASE ("is_of_type") {
 #endif
 }
 
-TEST_CASE ("file_size") { CHECK (file_size (xmake_lua) > 0); }
+TEST_CASE ("file_size") {
+  CHECK (file_size (xmake_lua) > 0);
+  CHECK (file_size (reroot (xmake_lua, "file")) > 0);
+}
 
-TEST_CASE ("last_modified") { CHECK (last_modified (xmake_lua) > 0); }
+TEST_CASE ("last_modified") {
+  CHECK (last_modified (xmake_lua) > 0);
+  CHECK (last_modified (reroot (xmake_lua, "file")) > 0);
+}
 
 TEST_CASE ("mkdir/rmdir") {
   url lolly_tmp = get_lolly_tmp ();
@@ -115,7 +128,7 @@ TEST_CASE ("chdir") {
 
     chdir (test_mkdir);
     url cur= url_pwd ();
-    CHECK (cur == test_mkdir);
+    url_eq (cur, test_mkdir);
 
     // restore the test dir
     chdir (old);
@@ -228,6 +241,13 @@ TEST_CASE ("read_directory") {
   CHECK (flag2); // error
 }
 
+TEST_CASE ("subdirectories") {
+  url_eq (subdirectories (url_none ()), url_none ());
+  if (!os_wasm ()) {
+    url_eq (subdirectories (url_pwd () * "bin"), url_pwd () * "bin");
+  }
+}
+
 TEST_CASE ("load_string from empty file") {
   url    lolly_tmp= get_lolly_tmp ();
   url    u1       = lolly_tmp * url ("load_empty.txt");
@@ -252,15 +272,10 @@ TEST_CASE ("load_string from newly created file") {
     const char* s2    = "hello world";
     tb_size_t   size  = strlen (s2);
     tb_byte_t*  buffer= (tb_byte_t*) tb_malloc_bytes (size);
-    int         seek  = 0;
-    while (seek < size) {
-      tb_byte_t c = s2[seek];
-      buffer[seek]= c;
-      seek++;
-    }
+    memcpy (buffer, s2, size);
 
     auto file_ref= tb_file_init (s1, TB_FILE_MODE_RW);
-    tb_file_writ (file_ref, buffer, strlen (s2));
+    tb_file_writ (file_ref, buffer, size);
     string s;
     CHECK (!load_string (u1, s, false));
     string_eq (s, string ("hello world"));

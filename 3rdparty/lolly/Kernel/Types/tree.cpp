@@ -192,14 +192,14 @@ hash (tree t) {
 }
 
 tree
-replace (tree t, tree w, tree b) {
+tree_replace (tree t, tree w, tree b) {
   if (t == w) return b;
   else if (is_atomic (t)) return t;
   else {
     int  i, n= N (t);
     tree r (t, n);
     for (i= 0; i < n; i++)
-      r[i]= replace (t[i], w, b);
+      r[i]= tree_replace (t[i], w, b);
     return r;
   }
 }

@@ -35,15 +35,6 @@ font_rule (tree which, tree by) {
  * Find a font
  ******************************************************************************/
 
-string
-strip_suffix (string name) {
-  if (occurs (".", name)) {
-    int pos= search_backwards (".", name);
-    name   = name (0, pos);
-  }
-  return name;
-}
-
 static bool
 matches (tree t, tree which, hashmap<string, tree>& H) {
   int i, n= arity (which);

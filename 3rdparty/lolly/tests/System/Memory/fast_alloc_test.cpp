@@ -1,5 +1,6 @@
 #include "a_lolly_test.hpp"
 #include "fast_alloc.hpp"
+#include "tm_timer.hpp"
 
 struct Complex {
 public:
@@ -23,51 +24,27 @@ TEST_CASE ("test for memory leaks") {
 
   char* q_char= tm_new<char> ('z'); // here p_char is modified to 'z'
 
-  *p_char= 'c'; // here q_char is modified to 'c'
+  // *p_char= 'c'; // behavior of this code is unspecified, DO NOT DO THIS!
 }
 
 TEST_MEMORY_LEAK_INIT
 
 TEST_CASE ("test basic data types") {
 
-#ifdef OS_WASM
-#define NUM 100
-#else
-#define NUM 10000
-#endif
+  char*   ch;
+  int*    in;
+  long*   lo;
+  double* dou;
 
-  char*   ch[NUM];
-  int*    in[NUM];
-  long*   lo[NUM];
-  double* dou[NUM];
+  ch = tm_new<char> ();
+  in = tm_new<int> ();
+  lo = tm_new<long> ();
+  dou= tm_new<double> ();
 
-  for (int i= 0; i < NUM; i++) { // for gprof
-    ch[i]= tm_new<char> ();
-    tm_delete (ch[i]);
-
-    in[i]= tm_new<int> ();
-    tm_delete (in[i]);
-
-    lo[i]= tm_new<long> ();
-    tm_delete (lo[i]);
-
-    dou[i]= tm_new<double> ();
-    tm_delete (dou[i]);
-  }
-
-  for (int i= 0; i < NUM; i++) {
-    ch[i] = tm_new<char> ();
-    in[i] = tm_new<int> ();
-    lo[i] = tm_new<long> ();
-    dou[i]= tm_new<double> ();
-  }
-
-  for (int i= 0; i < NUM; i++) {
-    tm_delete (ch[i]);
-    tm_delete (in[i]);
-    tm_delete (lo[i]);
-    tm_delete (dou[i]);
-  }
+  tm_delete (ch);
+  tm_delete (in);
+  tm_delete (lo);
+  tm_delete (dou);
 }
 
 TEST_CASE ("test class") {
@@ -105,6 +82,12 @@ TEST_MEMORY_LEAK_RESET
 #endif
 
 TEST_CASE ("test large bunch of tm_*_array with class") {
+
+#ifdef OS_WASM
+#define NUM 100
+#else
+#define NUM 10000
+#endif
   Complex* volume[NUM];
   for (int i= 0; i < NUM; i++) {
     volume[i]= tm_new_array<Complex> (9);

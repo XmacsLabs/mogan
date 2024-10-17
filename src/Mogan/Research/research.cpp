@@ -15,6 +15,7 @@
 #include <unistd.h>
 #endif
 #include <locale.h> // for setlocale
+#include <lolly/system/args.hpp>
 #include <lolly/system/timer.hpp>
 #include <signal.h>
 #include <sys/stat.h>
@@ -527,6 +528,7 @@ immediate_options (int argc, char** argv) {
 int
 main (int argc, char** argv) {
   lolly::init_tbox ();
+  lolly::system::args a (argc, argv);
 
 #ifdef STACK_SIZE
   struct rlimit limit;

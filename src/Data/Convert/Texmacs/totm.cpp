@@ -13,6 +13,9 @@
 #include "drd_std.hpp"
 #include "tree_helper.hpp"
 
+#include <lolly/data/numeral.hpp>
+using lolly::data::as_hexadecimal;
+
 /******************************************************************************
 * Conversion of TeXmacs trees to the present TeXmacs string format
 ******************************************************************************/

@@ -17,6 +17,13 @@
 #include <errno.h>
 #include "tree_helper.hpp"
 
+#include <lolly/data/numeral.hpp>
+
+using lolly::data::to_Hex;
+using lolly::data::from_hex;
+#define as_hexadecimal to_Hex
+#define from_hexadecimal from_hex
+
 RESOURCE_CODE (converter);
 
 /******************************************************************************

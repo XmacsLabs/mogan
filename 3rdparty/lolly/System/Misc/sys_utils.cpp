@@ -168,6 +168,7 @@ namespace lolly {
 void
 init_tbox () {
   if (!tb_init (tb_null, tb_null)) exit (-1);
+  mem_init ();
 }
 
 string

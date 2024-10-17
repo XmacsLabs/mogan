@@ -158,8 +158,8 @@ tree::operator= (tree x) {
 }
 
 inline tree::tree () : rep (tm_new<atomic_rep> (string ())) {}
-inline tree::tree (const char* s) : rep (tm_new<atomic_rep> (s)) {}
 inline tree::tree (string s) : rep (tm_new<atomic_rep> (s)) {}
+inline tree::tree (const char* s) : rep (tm_new<atomic_rep> (s)) {}
 inline tree::tree (int l, int n)
     : rep (tm_new<compound_rep> (l, array<tree> (n))) {}
 inline tree::tree (int l, array<tree> a) : rep (tm_new<compound_rep> (l, a)) {}
@@ -293,7 +293,7 @@ as_string (tree t) {
   if (is_atomic (t)) return t->label;
   else return "";
 }
-tree replace (tree t, tree w, tree b);
+tree tree_replace (tree t, tree w, tree b);
 
 /******************************************************************************
  * Miscellaneous

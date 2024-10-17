@@ -1,4 +1,4 @@
-#include "a_tbox_main.cpp"
+#include "a_lolly_test.hpp"
 #include "sys_utils.hpp"
 
 TEST_MEMORY_LEAK_INIT

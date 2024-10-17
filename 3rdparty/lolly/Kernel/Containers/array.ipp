@@ -39,12 +39,12 @@ array_rep<T>::resize (int m) {
   int mm= round_length (m, sizeof (T));
   if (mm != nn) {
     if (mm != 0) {
-      int i, k= (m < n ? m : n);
-      T*  b= tm_new_array<T> (mm);
-      for (i= 0; i < k; i++)
-        b[i]= a[i];
-      if (nn != 0) tm_delete_array (a);
-      a= b;
+      if (nn != 0) {
+        a= tm_resize_array<T> (mm, a);
+      }
+      else {
+        a= tm_new_array<T> (mm);
+      }
     }
     else {
       if (nn != 0) tm_delete_array (a);

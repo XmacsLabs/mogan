@@ -30,8 +30,6 @@
 #define U64 unsigned long long int
 #endif
 
-string strip_suffix (string name);
-
 /******************************************************************************
  * Data access
  ******************************************************************************/
@@ -382,7 +380,7 @@ tt_unpack (string s) {
 
   // Try to extract it when it does not exist
   int i= as_int (suffix (url (s)));
-  s    = strip_suffix (s);
+  // s    = strip_suffix (s);
 
   // Find the main font or just return url_none
   url main_font= tt_font_find (s);

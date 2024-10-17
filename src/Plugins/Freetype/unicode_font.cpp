@@ -16,6 +16,10 @@
 #include "converter.hpp"
 #include "font.hpp"
 
+#include <lolly/data/numeral.hpp>
+
+using lolly::data::from_hex;
+
 #define std_dpi 600
 #define std_pixel (std_shrinkf * 256)
 #define ROUND(l) ((l * hdpi + (std_dpi >> 1)) / std_dpi)
@@ -570,7 +574,7 @@ unicode_font_rep::read_unicode_char (string s, int& i) {
     }
     if (s[start] == '#') {
       start++;
-      return (unsigned int) from_hexadecimal (s (start, i++));
+      return (unsigned int) from_hex (s (start, i++));
     }
     else {
       string ss= s (start - 1, ++i);

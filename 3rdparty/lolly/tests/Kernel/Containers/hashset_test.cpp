@@ -7,6 +7,8 @@ TEST_CASE ("test contains") {
   set->insert ("Hello");
   CHECK_EQ (set->contains ("Hello"), true);
   CHECK_EQ (set->contains ("hello"), false);
+  auto empty= hashset<string> ();
+  CHECK_EQ (set->contains ("hello"), false);
 }
 
 TEST_CASE ("test init") {

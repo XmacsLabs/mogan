@@ -199,9 +199,10 @@ url url_ramdisc (string contents); // ramdisc with contents contents
 /******************************************************************************
  * operations on urls
  ******************************************************************************/
-url    head (url u);                 // keep only the directory of the file
-url    tail (url u);                 // keep only the file name without path
-string suffix (url u);               // get suffix of file
+url    head (url u);                    // keep only the directory of the file
+url    tail (url u);                    // keep only the file name without path
+string suffix (url u);                  // get suffix of file in lower case
+string suffix (url u, bool use_locase); // get suffix of file
 string basename (url u, string suf); // get basename of file with given suffix
 string basename (url u);             // get basename of file
 url    glue (url u, string s);       // glue suffix to url tail

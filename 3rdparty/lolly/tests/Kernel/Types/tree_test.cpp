@@ -134,11 +134,11 @@ TEST_CASE ("test replace") {
   tree rb= tree (1, tree (2, tree (4), tree (5)));
   tree b = tree (1, lb, rb);
 
-  a= replace (a, tree (3), tree (6));
+  a= tree_replace (a, tree (3), tree (6));
   CHECK (a == b);
-  b= replace (b, tree (4), tree (7));
+  b= tree_replace (b, tree (4), tree (7));
   CHECK (a != b);
-  b= replace (b, tree (7), tree (4));
+  b= tree_replace (b, tree (7), tree (4));
   CHECK (a == b);
 }
 

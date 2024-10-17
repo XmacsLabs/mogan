@@ -209,6 +209,24 @@ string string_union (string s1, string s2);
  */
 string string_minus (string s1, string s2);
 
+/**
+ * @brief Remove the prefix from s if matches
+ * @param s the string
+ * @param prefix the prefix
+ * @return If the prefix matches, return s with prefix removed,
+ * otherwise, return s
+ */
+string remove_prefix (string s, string prefix);
+
+/**
+ * @brief Remove the suffix from s if matches
+ * @param s the string
+ * @param prefix the suffix
+ * @return If the suffix matches, return s with suffix removed,
+ * otherwise, return s
+ */
+string remove_suffix (string s, string suffix);
+
 string utf8_to_t2a (string s);
 string t2a_to_utf8 (string s);
 string utf8_to_cork (string s);
@@ -278,22 +296,6 @@ string convert_tabs_to_spaces (string s, int w);
 string downgrade_math_letters (string s);
 
 /**
- * @brief Generates a Roman numeral string for an integer.
- *
- * @param nr The integer to be converted to Roman numeral.
- * @return A string representing the Roman numeral.
- */
-string roman_nr (int32_t nr);
-
-/**
- * @brief Generates an uppercase Roman numeral string for an integer.
- *
- * @param nr The integer to be converted to Roman numeral.
- * @return A string representing the uppercase Roman numeral.
- */
-string Roman_nr (int32_t nr);
-
-/**
  * @brief Generates an alphabetic string for an integer.
  *
  * @param nr The integer to be converted to an alphabetic string.
@@ -316,60 +318,6 @@ string Alpha_nr (int nr);
  * @return A string representing the footnote symbol.
  */
 string fnsymbol_nr (int nr);
-
-/**
- * @brief Generates a Chinese numeral for a given integer.
- *
- * @param nr The integer to be converted to a Chinese numeral.
- * @return A string representing the Chinese numeral.
- */
-string hanzi_nr (int32_t nr);
-
-/**
- * @brief Converts an 8-bit unsigned integer to a fixed-length (2) hex string.
- *
- * @param i The integer to be converted to a fixed-length hex string.
- * @return The fixed-length (2) hexadecimal string representation of the input
- * integer.
- */
-string as_hex (uint8_t i);
-
-/**
- * @brief Converts an integer to a hexadecimal string.
- *
- * @param i The integer to be converted to a hexadecimal string.
- * @return The hexadecimal string representation of the input integer.
- */
-string as_hexadecimal (int i);
-
-/**
- * @brief Converts a pointer to a hexadecimal string.
- *
- * @param ptr The pointer to be converted to a hexadecimal string.
- * @return The hexadecimal string representation of the input pointer.
- */
-string as_hexadecimal (pointer ptr);
-
-/**
- * @brief Converts an integer to a hexadecimal string with a fixed length.
- *
- * @param i The integer to be converted to a hexadecimal string.
- * @param len The length of the output hexadecimal string.
- * @return The fixed-length hexadecimal string representation of the input
- * integer.
- */
-string as_hexadecimal (int i, int length);
-
-/**
- * @brief Converts a hexadecimal string to an integer.
- *
- * This function takes a hexadecimal string as input and converts it into its
- * integer representation.
- *
- * @param s The hexadecimal string to be converted to an integer.
- * @return The integer representation of the input hexadecimal string.
- */
-int from_hexadecimal (string s);
 
 /**
  * @brief Encodes a string by converting special characters to TeXmacs encoding.

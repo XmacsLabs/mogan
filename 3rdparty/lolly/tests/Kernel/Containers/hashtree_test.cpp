@@ -1,6 +1,7 @@
 #include "a_lolly_test.hpp"
 #include "hashtree.hpp"
 #include "string.hpp"
+#include <string>
 
 TEST_CASE ("Test the add_child function") {
   hashtree<int, string> t;

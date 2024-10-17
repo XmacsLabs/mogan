@@ -28,7 +28,7 @@ call (string cmd) {
 }
 
 int
-check_output (string s, string& result) {
+check_output (string s, string& result, int64_t timeout) {
   tb_long_t status= -1;
   // init pipe files
   tb_pipe_file_ref_t file[2]= {0};
@@ -57,8 +57,15 @@ check_output (string s, string& result) {
         wait= tb_false;
       }
       else if (!real && !wait) {
-        // wait pipe
-        tb_long_t ok= tb_pipe_file_wait (file[0], TB_PIPE_EVENT_READ, 1000);
+        tb_long_t ok   = 0;
+        int       retry= 25;
+        if (read > 0) {
+          retry= 2;
+        }
+        while (retry > 0 && (ok == 0)) {
+          ok   = tb_pipe_file_wait (file[0], TB_PIPE_EVENT_READ, timeout);
+          retry= retry - 1;
+        }
         tb_check_break (ok > 0);
         wait= tb_true;
       }
@@ -68,7 +75,7 @@ check_output (string s, string& result) {
     result= as_string ((tb_char_t*) data);
 
     // wait process
-    tb_process_wait (process, &status, -1);
+    tb_process_wait (process, &status, timeout);
 
     // exit process
     tb_process_exit (process);

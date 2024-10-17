@@ -32,6 +32,9 @@
 #include "wencoding.hpp"
 #include "tree_helper.hpp"
 
+#include <lolly/data/numeral.hpp>
+using lolly::data::as_hexadecimal;
+
 #ifdef QT_CORE_LIB
 #include <QtCore>
 #endif

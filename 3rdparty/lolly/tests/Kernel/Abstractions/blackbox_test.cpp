@@ -7,6 +7,7 @@
 #include "a_lolly_test.hpp"
 #include "blackbox.hpp"
 #include "string.hpp"
+#include <climits>
 
 blackbox b0;
 blackbox b1 = close_box<SI> (-2147483648);  // int

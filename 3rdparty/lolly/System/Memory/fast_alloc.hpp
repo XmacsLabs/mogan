@@ -12,14 +12,8 @@
 #ifndef FAST_ALLOC_H
 #define FAST_ALLOC_H
 
-#include <stdlib.h>
-#ifdef MIMALLOC
-#include "mimalloc-override.h"
-#endif
-#ifdef JEMALLOC
-#include "jemalloc/jemalloc.h"
-#endif
 #include "tm_ostream.hpp"
+#include <stdlib.h>
 #define WORD_LENGTH 8
 #define WORD_LENGTH_INC 7
 #define WORD_MASK 0xfffffffffffffff8
@@ -28,37 +22,18 @@
 #define BLOCK_SIZE 65536 // should be >>> MAX_FAST
 
 /******************************************************************************
- * Globals
- ******************************************************************************/
-
-extern void*
-    alloc_table[MAX_FAST]; // Static declaration initializes with NULL's
-extern char* alloc_mem;
-#ifdef DEBUG_ON
-extern char* alloc_mem_top;
-extern char* alloc_mem_bottom;
-#endif
-bool          break_stub (void* ptr);
-extern size_t alloc_remains;
-extern int    allocated;
-extern int    large_uses;
-
-#define alloc_ptr(i) alloc_table[i]
-#define ind(ptr) (*((void**) ptr))
-
-/******************************************************************************
  * General purpose fast allocation routines
  ******************************************************************************/
 
-extern void* safe_malloc (size_t s);
-extern void* enlarge_malloc (size_t s);
 extern void* fast_alloc (size_t s);
 extern void  fast_free (void* ptr, size_t s);
+extern void* fast_realloc (void* ptr, size_t old_size, size_t new_size);
 extern void* fast_new (size_t s);
 extern void  fast_delete (void* ptr);
 
 extern int  mem_used ();
 extern void mem_info ();
+extern void mem_init ();
 void*       alloc_check (const char* msg, void* ptr, size_t* sp);
 
 /******************************************************************************
@@ -439,6 +414,21 @@ tm_new_array (int n) {
   for (int i= 0; i < n; i++, ctr++)
     (void) new ((void*) ctr) C ();
   return (C*) ptr;
+}
+template <typename C>
+inline C*
+tm_resize_array (int new_num, C* Ptr) {
+  void* old_arr    = (void*) Ptr;
+  old_arr          = (void*) (((char*) old_arr) - WORD_LENGTH);
+  int   old_num    = *((int*) old_arr);
+  void* new_arr    = fast_realloc (old_arr, old_num * sizeof (C) + WORD_LENGTH,
+                                   new_num * sizeof (C) + WORD_LENGTH);
+  *((int*) new_arr)= new_num;
+  new_arr          = (void*) (((char*) new_arr) + WORD_LENGTH);
+  C* ctr           = (C*) new_arr + old_num;
+  for (int i= old_num; i < new_num; i++, ctr++)
+    (void) new ((void*) ctr) C ();
+  return (C*) new_arr;
 }
 
 template <typename C>

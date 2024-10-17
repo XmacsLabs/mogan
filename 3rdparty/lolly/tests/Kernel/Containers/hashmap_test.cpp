@@ -1,5 +1,6 @@
 #include "a_lolly_test.hpp"
 #include "hashmap.hpp"
+#include <string>
 
 TEST_CASE ("test_resize") {
   auto hm= hashmap<int, int> (0, 10);

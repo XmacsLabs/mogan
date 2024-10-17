@@ -3,6 +3,7 @@
 
 #include "doctest/doctest.h"
 #include "string.hpp"
+#include "url.hpp"
 
 inline void
 string_eq (string left, string right) {
@@ -19,6 +20,15 @@ string_neq (string left, string right) {
     cout << "same: " << left << LF;
   }
   CHECK_EQ (left != right, true);
+}
+
+inline void
+url_eq (url left, url right) {
+  if (left != right) {
+    cout << "left : " << left << LF;
+    cout << "right: " << right << LF;
+  }
+  CHECK_EQ (left == right, true);
 }
 
 #define TEST_MEMORY_LEAK_ALL                                                   \

@@ -5,7 +5,7 @@ set_allowedmodes("releasedbg", "release", "debug")
 add_rules("mode.debug")
 
 set_project("lolly")
-LOLLY_VERSION= "1.3.1"
+LOLLY_VERSION= "1.3.21"
 
 set_languages("c++17")
 includes("@builtin/check")
@@ -22,32 +22,64 @@ if is_plat("wasm") then
     set_toolchains("emcc@emscripten")
 end
 
---- require packages
-tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
-add_requires("tbox", {system=false, configs=tbox_configs})
-add_requires("doctest 2.4.11", {system=false})
+-- Options
 option("malloc")
-    set_default("standard")
+    set_default("default")
     set_showmenu(true)
-    set_description("Enable mimalloc or jemalloc library")
-    set_values("standard", "mimalloc", "jemalloc")
+    set_description([[
+Enable mimalloc or jemalloc library.
+    - default
+    - mimalloc (on windows, linux, and macos)
+    - jemalloc (on linux)
+]])
+    if is_plat("linux") then
+        set_values("default", "mimalloc", "jemalloc")
+    elseif is_plat("wasm") then
+        set_values("default")
+    else
+        set_values("default", "mimalloc")
+    end
 option_end()
-if is_config("malloc", "mimalloc") then 
-    add_requires("mimalloc 2.1.2")
-elseif is_config("malloc", "jemalloc") then 
-    add_requires("jemalloc 5.3.0", {system=false, configs={envs={LD_PRELOAD="`jemalloc-config --libdir`/libjemalloc.so.`jemalloc-config --revision`" }}})
-end
-
-if not is_plat("wasm") then
-    add_requires("cpr 1.10.5")
-end
-
 
 option("posix_thread")
     set_showmenu(false)
     add_cxxtypes("std::mutex")
     add_cxxincludes("mutex")
 option_end()
+
+option("enable_tests")
+    set_description([[
+Enable tests or not
+    - false (default)
+    - true
+]])
+option_end()
+
+
+--- Require packages
+local TBOX_VERSION = "1.7.5"
+local DOCTEST_VERSION = "2.4.11"
+local MIMALLOC_VERSION = "2.1.2"
+local JEMALLOC_VERSION = "5.3.0"
+local CPR_VERSION = "1.10.5"
+
+tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
+add_requires("tbox ", {system=false, configs=tbox_configs})
+if has_config("enable_tests") then
+    add_requires("doctest " .. DOCTEST_VERSION, {system=false})
+    add_requires("nanobench", {system=false})
+end
+
+if is_config("malloc", "mimalloc") then 
+    add_requires("mimalloc " .. MIMALLOC_VERSION)
+elseif is_config("malloc", "jemalloc") then 
+    add_requires("jemalloc " .. JEMALLOC_VERSION, {system=false, configs={envs={LD_PRELOAD="`jemalloc-config --libdir`/libjemalloc.so.`jemalloc-config --revision`" }}})
+end
+
+if not is_plat("wasm") then
+    add_requires("cpr " .. CPR_VERSION)
+end
+
 
 function my_configvar_check()
     on_config(function (target)
@@ -68,7 +100,7 @@ end
 
 local lolly_files = {
     "Kernel/**/*.cpp",
-    "System/**/*.cpp",
+    "System/**/*.cpp|Memory/impl/*.cpp",
     "Data/String/**.cpp",
     "Data/Scheme/**.cpp",
     "lolly/**/**.cpp",
@@ -101,12 +133,14 @@ target("liblolly") do
 
     --- dependent packages
     add_packages("tbox")
-    if is_config("malloc", "mimalloc") then 
-        add_defines("MIMALLOC")
+    if is_config("malloc", "mimalloc") then
         add_packages("mimalloc")
+        add_files("System/Memory/impl/mi_malloc.cpp")
     elseif is_config("malloc", "jemalloc") then 
-        add_defines("JEMALLOC")
         add_packages("jemalloc")
+        add_files("System/Memory/impl/je_malloc.cpp")
+    else
+        add_files("System/Memory/impl/fast_alloc.cpp")
     end 
     if not is_plat("wasm") then
         add_packages("cpr")
@@ -175,7 +209,7 @@ function add_test_target(filepath)
     local testname = path.basename(filepath)
     target(testname) do 
         set_group("tests")
-        add_deps("liblolly")
+        add_deps("test_base")
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
 
@@ -195,7 +229,7 @@ function add_test_target(filepath)
         end
 
         if is_plat("windows") or is_plat("mingw") then
-            add_syslinks("secur32")
+            add_syslinks("secur32", "shell32")
         end
 
         add_includedirs("$(buildir)/L1")
@@ -206,9 +240,7 @@ function add_test_target(filepath)
 
         if is_plat("wasm") then
             add_cxxflags("-s DISABLE_EXCEPTION_CATCHING=0")
-            add_ldflags("--preload-file xmake.lua")
-            add_ldflags("--preload-file tests")
-            add_ldflags("--preload-file LICENSE")
+            set_values("wasm.preloadfiles", {"xmake.lua", "tests", "LICENSE"})
             add_ldflags("-s DISABLE_EXCEPTION_CATCHING=0")
             on_run(function (target)
                 node = os.getenv("EMSDK_NODE")
@@ -252,10 +284,116 @@ function add_test_target(filepath)
     end
 end
 
+function add_bench_target(filepath)
+    local benchname = path.basename(filepath)
+    target(benchname) do 
+        set_group("bench")
+        add_deps({"liblolly", "bench_base"})
+        set_languages("c++17")
+        set_policy("check.auto_ignore_flags", false)
+        add_packages("nanobench")
 
-cpp_tests_on_all_plat = os.files("tests/**_test.cpp")
-for _, filepath in ipairs(cpp_tests_on_all_plat) do
-    add_test_target (filepath)
+        if is_plat("mingw") then
+            add_packages("mingw-w64")
+        end
+
+        if is_plat("linux") then
+            add_syslinks("stdc++", "m")
+        end
+
+        if is_plat("windows") then
+            set_encodings("utf-8")
+            add_ldflags("/LTCG")
+        end
+
+        if is_plat("windows") or is_plat("mingw") then
+            add_syslinks("secur32", "shell32")
+        end
+
+        add_includedirs("$(buildir)/L1")
+        add_includedirs(lolly_includedirs)
+        add_includedirs("tests")
+        add_forceincludes(path.absolute("$(buildir)/L1/config.h"))
+        add_files(filepath) 
+
+        if is_plat("wasm") then
+            add_cxxflags("-s DISABLE_EXCEPTION_CATCHING=0")
+            set_values("wasm.preloadfiles", {"bench"})
+            add_ldflags("-s DISABLE_EXCEPTION_CATCHING=0")
+            on_run(function (target)
+                node = os.getenv("EMSDK_NODE")
+                os.cd(target:targetdir())
+                print("> cd " .. target:targetdir())
+                cmd = node .. " " .. benchname .. ".js"
+                print("> " .. cmd)
+                os.exec(cmd)
+            end)
+        end
+
+        if is_plat("linux", "macosx", "windows") or (is_plat ("mingw") and is_host ("windows")) then
+            on_run(function (target)
+                cmd = target:targetfile()
+                print("> " .. cmd)
+                os.exec(cmd)
+            end)
+        end
+
+        if is_plat("mingw") and is_host("linux") then
+            on_run(function (target)
+                cmd = "wine " .. target:targetfile()
+                print("> " .. cmd)
+                if not mingw_copied then
+                    mingw_copied = true
+                    os.cp("/usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll", "$(buildir)/mingw/x86_64/$(mode)/")
+                    os.cp("/usr/lib/gcc/x86_64-w64-mingw32/10-win32/libgcc_s_seh-1.dll", "$(buildir)/mingw/x86_64/$(mode)/")
+                    os.cp("/usr/lib/gcc/x86_64-w64-mingw32/10-win32/libstdc++-6.dll", "$(buildir)/mingw/x86_64/$(mode)/")
+                end
+                os.exec(cmd)
+            end)
+        end
+    end
+end
+
+if has_config("enable_tests") then
+    target("test_base")do
+        set_kind("object")
+        add_deps("liblolly")
+        set_languages("c++17")
+        set_policy("check.auto_ignore_flags", false)
+        add_packages("tbox")
+        add_packages("doctest")
+
+        if is_plat("windows") then
+            set_encodings("utf-8")
+        elseif is_plat("wasm") then
+            add_cxxflags("-s DISABLE_EXCEPTION_CATCHING=0")
+        end
+        add_includedirs("$(buildir)/L1")
+        add_includedirs(lolly_includedirs)
+        add_includedirs("tests")
+        add_forceincludes(path.absolute("$(buildir)/L1/config.h"))
+        add_files("tests/a_tbox_main.cpp")
+    end
+    target("bench_base")do
+        set_kind("object")
+        set_languages("c++17")
+        set_policy("check.auto_ignore_flags", false)
+        add_packages("nanobench")
+
+        if is_plat("windows") then
+            set_encodings("utf-8")
+        end
+        add_files("bench/nanobench.cpp")
+    end
+
+    cpp_tests_on_all_plat = os.files("tests/**_test.cpp")
+    for _, filepath in ipairs(cpp_tests_on_all_plat) do
+        add_test_target (filepath)
+    end
+    cpp_bench_on_all_plat = os.files("bench/**_bench.cpp")
+    for _, filepath in ipairs(cpp_bench_on_all_plat) do
+        add_bench_target (filepath)
+    end
 end
 
 

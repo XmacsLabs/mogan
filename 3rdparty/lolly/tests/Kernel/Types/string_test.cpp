@@ -63,34 +63,34 @@ TEST_CASE ("test as bool") {
   CHECK_EQ (as_bool (string ("#t")), true);
   CHECK_EQ (as_bool (string ("false")), false);
 
-  CHECK_EQ (as_bool ("true"), true);
-  CHECK_EQ (as_bool ("#t"), true);
-  CHECK_EQ (!as_bool ("false"), true);
+  CHECK_EQ (as_bool (string ("true")), true);
+  CHECK_EQ (as_bool (string ("#t")), true);
+  CHECK_EQ (!as_bool (string ("false")), true);
   // implicit conversion from char*
 }
 
 TEST_CASE ("as_int") {
   SUBCASE ("normal conversion") {
-    CHECK_EQ (as_int ("1"), 1);
-    CHECK_EQ (as_int ("-1"), -1);
-    CHECK_EQ (as_int ("0"), 0);
+    CHECK_EQ (as_int (string ("1")), 1);
+    CHECK_EQ (as_int (string ("-1")), -1);
+    CHECK_EQ (as_int (string ("0")), 0);
   }
 
   // assuming int is 32bit
   SUBCASE ("min and max") {
-    CHECK_EQ (as_int ("-2147483648"), -2147483648);
-    CHECK_EQ (as_int ("2147483647"), 2147483647);
+    CHECK_EQ (as_int (string ("-2147483648")), -2147483648);
+    CHECK_EQ (as_int (string ("2147483647")), 2147483647);
   }
 
   SUBCASE ("int overflow") {
-    CHECK_EQ (as_int ("-2147483649"), 2147483647);
-    CHECK_EQ (as_int ("2147483648"), -2147483648);
+    CHECK_EQ (as_int (string ("-2147483649")), 2147483647);
+    CHECK_EQ (as_int (string ("2147483648")), -2147483648);
   }
 
   SUBCASE ("invalid int") {
-    CHECK_EQ (as_int ("not a int"), 0);
-    CHECK_EQ (as_int ("1pt"), 1);
-    CHECK_EQ (as_int ("1.23"), 1);
+    CHECK_EQ (as_int (string ("not a int")), 0);
+    CHECK_EQ (as_int (string ("1pt")), 1);
+    CHECK_EQ (as_int (string ("1.23")), 1);
   }
 }
 
@@ -110,32 +110,32 @@ TEST_CASE ("test is empty") {
 }
 
 TEST_CASE ("test is bool") {
-  CHECK_EQ (is_bool ("true"), true);
-  CHECK_EQ (is_bool ("false"), true);
+  CHECK_EQ (is_bool (string ("true")), true);
+  CHECK_EQ (is_bool (string ("false")), true);
   CHECK_EQ (is_bool (string ("true")), true);
   CHECK_EQ (is_bool (string ("false")), true);
 
-  CHECK_EQ (!is_bool ("100"), true);
-  CHECK_EQ (!is_bool ("nil"), true);
+  CHECK_EQ (!is_bool (string ("100")), true);
+  CHECK_EQ (!is_bool (string ("nil")), true);
 }
 
 TEST_CASE ("test is int") {
   // Empty string is not an int
-  CHECK_EQ (!is_int (""), true);
+  CHECK_EQ (!is_int (string ("")), true);
 
   // Only 0-9 in chars are int
   for (auto i= 0; i < 256; i++) {
     char iter= (char) i;
-    if (iter >= '0' && iter <= '9') CHECK_EQ (is_int (iter), true);
-    else CHECK_EQ (!is_int (iter), true);
+    if (iter >= '0' && iter <= '9') CHECK_EQ (is_int (string (iter)), true);
+    else CHECK_EQ (!is_int (string (iter)), true);
   }
 
   // Random tests
-  CHECK_EQ (is_int ("-100"), true);
-  CHECK_EQ (is_int ("+100"), true);
-  CHECK_EQ (is_int ("100"), true);
-  CHECK_EQ (!is_int (".0"), true);
-  CHECK_EQ (!is_int ("0x09"), true);
+  CHECK_EQ (is_int (string ("-100")), true);
+  CHECK_EQ (is_int (string ("+100")), true);
+  CHECK_EQ (is_int (string ("100")), true);
+  CHECK_EQ (!is_int (string (".0")), true);
+  CHECK_EQ (!is_int (string ("0x09")), true);
 }
 
 TEST_CASE ("test is quoted") {

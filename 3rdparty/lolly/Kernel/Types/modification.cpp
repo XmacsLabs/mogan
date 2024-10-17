@@ -536,6 +536,6 @@ clean_apply (tree t, modification mod) {
     return clean_set_cursor (t, mod->p, mod->t);
   default:
     TM_FAILED ("invalid modification type");
-    return "";
+    return tree ("");
   }
 }

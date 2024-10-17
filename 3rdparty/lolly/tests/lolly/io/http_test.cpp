@@ -5,7 +5,7 @@
  *  \date   2023
  */
 
-#include "a_tbox_main.cpp"
+#include "a_lolly_test.hpp"
 #include "file.hpp"
 #include "generic_tree.hpp"
 #include "hashmap.hpp"

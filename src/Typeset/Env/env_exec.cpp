@@ -23,6 +23,12 @@
 #include "dictionary.hpp"
 #include "observers.hpp"
 
+#include <lolly/data/numeral.hpp>
+using lolly::data::to_Hex;
+using lolly::data::from_hex;
+using lolly::data::to_roman;
+using lolly::data::to_Roman;
+
 
 extern int script_status;
 extern tree with_package_definitions (string package, tree body);
@@ -1604,8 +1610,8 @@ edit_env_rep::exec_number (tree t) {
   string s2= t2->label;
   int nr= as_int (s1);
   if (s2 == "arabic") return as_string (nr);
-  if (s2 == "roman") return roman_nr (nr);
-  if (s2 == "Roman") return Roman_nr (nr);
+  if (s2 == "roman") return to_roman (nr);
+  if (s2 == "Roman") return to_Roman (nr);
   if (s2 == "alpha") return alpha_nr (nr);
   if (s2 == "Alpha") return Alpha_nr (nr);
   if (s2 == "fnsymbol")
@@ -1934,18 +1940,18 @@ tree
 edit_env_rep::exec_hard_id (tree t) {
   pointer ptr= (pointer) this;
   if (N(t) == 0)
-    return "%" * as_hexadecimal (ptr);
+    return "%" * to_Hex (ptr);
   else {
     t= expand (t[0], true);
     pointer tptr= (pointer) t.operator -> ();
     if (is_accessible (obtain_ip (t)))
-      return "%" * as_hexadecimal (ptr) *
-             "-" * as_hexadecimal (tptr);
+      return "%" * to_Hex (ptr) *
+             "-" * to_Hex (tptr);
     else {
       int h= hash (t);
-      return "%" * as_hexadecimal (ptr) *
-             "-" * as_hexadecimal (tptr) *
-             "-" * as_hexadecimal (h);
+      return "%" * to_Hex (ptr) *
+             "-" * to_Hex (tptr) *
+             "-" * to_Hex (h);
     }
   }
 }

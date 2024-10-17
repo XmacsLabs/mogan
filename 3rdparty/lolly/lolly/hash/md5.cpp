@@ -12,6 +12,7 @@
 #include "md5.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
+#include "lolly/data/numeral.hpp"
 
 #include <tbox/tbox.h>
 
@@ -49,7 +50,7 @@ md5_hexdigest (url u) {
 
     string md5_hex= string ();
     for (int i= 0; i < 16; ++i) {
-      md5_hex << as_hex (o_buffer[i]);
+      md5_hex << data::to_padded_hex (o_buffer[i]);
     }
     return md5_hex;
   }

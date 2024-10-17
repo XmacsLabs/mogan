@@ -9,6 +9,7 @@
 #include "lolly/system/timer.hpp"
 #include "string.hpp"
 #include "tm_timer.hpp"
+#include <cstring>
 
 #include "tbox/tbox.h"
 

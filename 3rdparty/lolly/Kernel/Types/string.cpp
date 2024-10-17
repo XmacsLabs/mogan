@@ -39,12 +39,12 @@ string_rep::resize (int m) {
   int mm= round_length (m);
   if (mm != nn) {
     if (mm != 0) {
-      int   i, k= (m < n ? m : n);
-      char* b= tm_new_array<char> (mm);
-      for (i= 0; i < k; i++)
-        b[i]= a[i];
-      if (nn != 0) tm_delete_array (a);
-      a= b;
+      if (nn != 0) {
+        a= tm_resize_array<char> (mm, a);
+      }
+      else {
+        a= tm_new_array<char> (mm);
+      }
     }
     else if (nn != 0) tm_delete_array (a);
   }

@@ -14,6 +14,7 @@
 #include "sha.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
+#include "lolly/data/numeral.hpp"
 #include "string.hpp"
 #include "url.hpp"
 
@@ -74,7 +75,7 @@ sha_hexdigest (url u, sha_mode mode) {
 
     string ret= string ();
     for (int i= 0; i < o_size; ++i) {
-      ret << as_hex (o_buffer[i]);
+      ret << data::to_padded_hex (o_buffer[i]);
     }
     return ret;
   }

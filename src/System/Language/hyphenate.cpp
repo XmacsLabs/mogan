@@ -19,6 +19,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <lolly/data/numeral.hpp>
+using lolly::data::to_Hex;
+using lolly::data::from_hex;
+
+
 #define MAX_SEARCH 10
 #define MAX_BUFFER_SIZE 256
 
@@ -64,7 +69,7 @@ hyphen_normalize (string s) {
   string r (0);
   for (i=0; i<N(s); i++)
     if ((i+3<N(s)) && (s[i]=='^') && (s[i+1]=='^')) {
-      r << from_hexadecimal (s (i+2, i+4));
+      r << from_hex (s (i+2, i+4));
       i+=3;
     }
     else r << s[i];

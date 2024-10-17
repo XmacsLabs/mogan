@@ -26,11 +26,19 @@ is_local_and_single (url u) {
          (protocol == "default" || protocol == "file");
 }
 
+static string
+as_local_path (url u) {
+  if (is_rooted (u, "file")) {
+    return as_string (reroot (u, "default"));
+  }
+  return as_string (u);
+}
+
 bool
 is_directory (url u) {
   if (!is_local_and_single (u)) return false;
 
-  c_string       path (as_string (u));
+  c_string       path (as_local_path (u));
   tb_file_info_t info;
   if (tb_file_info (path, &info)) {
     switch (info.type) {
@@ -49,7 +57,7 @@ bool
 is_regular (url u) {
   if (!is_local_and_single (u)) return false;
 
-  c_string       path (as_string (u));
+  c_string       path (as_local_path (u));
   tb_file_info_t info;
   if (tb_file_info (path, &info)) {
     switch (info.type) {
@@ -68,7 +76,7 @@ bool
 is_symbolic_link (url u) {
   if (!is_local_and_single (u)) return false;
 
-  c_string       path (as_string (u));
+  c_string       path (as_local_path (u));
   tb_file_info_t info;
   if (tb_file_info (path, &info)) {
     return (info.flags & TB_FILE_FLAG_LINK) != 0;
@@ -84,8 +92,8 @@ is_newer (url which, url than) {
   if (!is_local_and_single (than)) return false;
 
   tb_file_info_t info1, info2;
-  if (tb_file_info (c_string (as_string (which)), &info1) &
-      tb_file_info (c_string (as_string (than)), &info2)) {
+  if (tb_file_info (c_string (as_local_path (which)), &info1) &
+      tb_file_info (c_string (as_local_path (than)), &info2)) {
     return info1.mtime > info2.mtime;
   }
   else {
@@ -103,17 +111,17 @@ is_of_type (url name, string filter) {
   int i, n= N (filter);
 
   // Normal files
-#if defined(OS_MINGW) || defined(OS_WIN)
-  string suf;
-  if (filter == "x") {
-    suf= suffix (name);
-    if ((suf != "exe") && (suf != "bat") && (suf != "com")) {
-      name= glue (name, ".exe");
-      suf = "exe";
+  if (os_win () || os_mingw ()) {
+    string suf;
+    if (filter == "x") {
+      suf= suffix (name);
+      if ((suf != "exe") && (suf != "bat") && (suf != "com")) {
+        name= glue (name, ".exe");
+        suf = "exe";
+      }
     }
   }
-#endif
-  c_string       path (as_string (name));
+  c_string       path (as_local_path (name));
   tb_file_info_t info;
   if (!tb_file_info (path, &info)) {
     return false;
@@ -147,7 +155,7 @@ int
 file_size (url u) {
   if (!is_local_and_single (u)) return -1;
 
-  c_string       path (as_string (u));
+  c_string       path (as_local_path (u));
   tb_file_info_t info;
   if (tb_file_info (path, &info)) {
     return info.size;
@@ -161,7 +169,7 @@ int
 last_modified (url u) {
   if (!is_local_and_single (u)) return -1;
 
-  c_string       path (as_string (u));
+  c_string       path (as_local_path (u));
   tb_file_info_t info;
   if (tb_file_info (path, &info)) {
     return info.mtime;
@@ -189,7 +197,7 @@ read_directory (url u, bool& error_flag) {
     return array<string> ();
   }
 
-  c_string      path (as_string (u));
+  c_string      path (as_local_path (u));
   array<string> arr_result= array<string> ();
   error_flag              = !is_directory (u);
   if (error_flag) {
@@ -199,12 +207,27 @@ read_directory (url u, bool& error_flag) {
   return arr_result;
 }
 
+url
+subdirectories (url u) {
+  if (is_or (u)) return subdirectories (u[1]) | subdirectories (u[2]);
+  else if (is_directory (u)) {
+    url           ret= u;
+    bool          error_flag;
+    array<string> dir= read_directory (u, error_flag);
+    for (int i= 0; i < N (dir); i++)
+      if (!starts (dir[i], ".") && is_directory (u * dir[i]))
+        ret= ret | subdirectories (u * dir[i]);
+    return ret;
+  }
+  else return url_none ();
+}
+
 void
 mkdir (url u) {
   string label= u.label ();
   if (label == "none" || label == "root" || label == "wildcard") return;
   if (is_local_and_single (u)) { // label == "" or label == "concat"
-    c_string path (as_string (u));
+    c_string path (as_local_path (u));
     tb_directory_create (path);
   }
   if (is_or (u)) { // label == "or"
@@ -227,7 +250,7 @@ rmdir (url u) {
   string label= u.label ();
   if (label == "none" || label == "root" || label == "wildcard") return;
   if (is_local_and_single (u)) { // label == "" or label == "concat"
-    c_string path (as_string (u));
+    c_string path (as_local_path (u));
     tb_directory_remove (path);
   }
   if (is_or (u)) { // label == "or"
@@ -239,7 +262,7 @@ rmdir (url u) {
 void
 chdir (url u) {
   if (is_local_and_single (u)) {
-    c_string path (as_string (u));
+    c_string path (as_local_path (u));
     if (tb_directory_current_set (path) != tb_true) {
       TM_FAILED ("Failed to change the dir");
     }
@@ -285,16 +308,16 @@ url_temp_dir () {
 
 void
 move (url u1, url u2) {
-  c_string p1 (as_string (u1));
-  c_string p2 (as_string (u2));
+  c_string p1 (as_local_path (u1));
+  c_string p2 (as_local_path (u2));
 
   tb_file_rename (p1, p2);
 }
 
 void
 copy (url u1, url u2) {
-  c_string p1 (as_string (u1));
-  c_string p2 (as_string (u2));
+  c_string p1 (as_local_path (u1));
+  c_string p2 (as_local_path (u2));
 
   tb_file_copy (p1, p2, TB_FILE_COPY_LINK);
 }
@@ -304,7 +327,7 @@ remove (url u) {
   string label= u.label ();
   if (label == "none" || label == "root" || label == "wildcard") return;
   if (is_local_and_single (u)) {
-    c_string path (as_string (u));
+    c_string path (as_local_path (u));
     tb_file_remove (path);
   }
   else if (is_or (u)) { // label == "or"
@@ -360,7 +383,7 @@ cleanup_and_return_finally (const file_status& status, const url& u, bool fatal,
   if (!status.failed) {
     return false;
   }
-  cerr << "Failed to " << reason << " in [" << as_string (u) << "]" << LF;
+  cerr << "Failed to " << reason << " in [" << as_local_path (u) << "]" << LF;
   if (fatal) {
     TM_FAILED (status.error_msg);
   }
@@ -374,10 +397,8 @@ load_string_try (url u, string& s) {
   if (!is_local_and_single (u)) {
     return file_status (true, "Must be a local and single file");
   }
-  url u_target= find_the_first_exist (u);
-
-  string      name= as_string (u_target);
-  const char* path= as_charp (name);
+  url         u_target= find_the_first_exist (u);
+  const char* path    = as_charp (as_local_path (u_target));
   if (!tb_file_access (path, TB_FILE_MODE_RO)) {
     return file_status (true, "File is not readable", path);
   }
@@ -433,8 +454,7 @@ save_string_try (url u, const string& s) {
     return file_status (true, "Must be an absolute path");
   }
   url         u_target= find_the_first_exist (u);
-  string      name    = as_string (u_target);
-  const char* path    = as_charp (name);
+  const char* path    = as_charp (as_local_path (u_target));
 
   // tb_file_access cannot check TB_FILE_MODE_CREAT on windows, so create
   // directly
@@ -484,16 +504,15 @@ append_string_try (url u, const string& s) {
   if (!is_local_and_single (u)) {
     return file_status (true, "Must be a local and single file");
   }
-  url    u_target= find_the_first_exist (u);
-  string name    = as_string (u_target);
-  char*  _name   = as_charp (name);
+  url         u_target= find_the_first_exist (u);
+  const char* path    = as_charp (as_local_path (u_target));
 
   // open the file
   tb_file_ref_t fout= tb_file_init (
-      _name, TB_FILE_MODE_WO | TB_FILE_MODE_APPEND | TB_FILE_MODE_CREAT);
+      path, TB_FILE_MODE_WO | TB_FILE_MODE_APPEND | TB_FILE_MODE_CREAT);
   if (fout == NULL) {
     return file_status (true, "File to append is not found or not appendable",
-                        _name);
+                        path);
   }
 
   // lock file
@@ -501,7 +520,7 @@ append_string_try (url u, const string& s) {
   if (tb_filelock_enter (lock, TB_FILELOCK_MODE_EX) == tb_false) {
     tb_filelock_exit (lock);
     tb_file_exit (fout);
-    return file_status (true, "Fail to lock file", _name);
+    return file_status (true, "Fail to lock file", path);
   }
 
   // append string to file
@@ -514,10 +533,10 @@ append_string_try (url u, const string& s) {
   bool exit_suc= tb_file_exit (fout);
 
   if (writ_sz_equ && exit_suc && release_suc) {
-    return file_status (false, "", _name, content);
+    return file_status (false, "", path, content);
   }
   else {
-    return file_status (true, "Unexpected behavior during appending", _name,
+    return file_status (true, "Unexpected behavior during appending", path,
                         content);
   }
 }

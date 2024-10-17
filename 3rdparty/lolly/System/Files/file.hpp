@@ -29,6 +29,7 @@ int file_size (url u);
 int last_modified (url u);
 
 array<string> read_directory (url u, bool& error_flag);
+url           subdirectories (url u);
 
 void mkdir (url u);
 void make_dir (url which);
