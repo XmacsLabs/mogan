@@ -19,6 +19,8 @@ clang-format --version
 
 clang-format -i tests/**/*.cpp
 clang-format -i tests/**/*.hpp
+clang-format -i src/Edit/Replace/**.hpp
+clang-format -i src/Edit/Replace/**.cpp
 clang-format -i src/Data/Scheme/**.hpp
 clang-format -i src/Data/Scheme/**.cpp
 clang-format -i src/Scheme/**.cpp
@@ -44,6 +46,8 @@ clang-format -i src/Plugins/Xml/*.cpp
 clang-format -i src/Plugins/Xml/*.hpp
 clang-format -i src/Plugins/Git/**.cpp
 clang-format -i src/Plugins/Git/**.hpp
+clang-format -i src/Plugins/Ispell/**.cpp
+clang-format -i src/Plugins/Ispell/**.hpp
 clang-format -i src/Mogan/**.cpp
 clang-format -i src/Mogan/**.hpp
 
