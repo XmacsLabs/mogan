@@ -13,6 +13,7 @@
 #define NEW_STYLE_H
 #include "drd_std.hpp"
 #include "scheme.hpp"
+#include "url.hpp"
 
 tree preprocess_style (tree st, url name);
 

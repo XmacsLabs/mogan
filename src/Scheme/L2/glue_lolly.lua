@@ -410,23 +410,6 @@ function main()
                     "string"
                 }
             },
-            -- Data/String/base64.hpp
-            {
-                scm_name = "encode-base64",
-                cpp_name = "encode_base64",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "decode-base64",
-                cpp_name = "decode_base64",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
             -- System/Misc/sys_utils.hpp
             {
                 scm_name = "get-user-login",
@@ -477,14 +460,6 @@ function main()
                 scm_name = "system-getenv",
                 cpp_name = "get_env",
                 ret_type = "string",
-                arg_list = {
-                    "string",
-                }
-            },
-            {
-                scm_name = "system",
-                cpp_name = "lolly::system::call",
-                ret_type = "void",
                 arg_list = {
                     "string",
                 }
@@ -920,6 +895,32 @@ function main()
                 ret_type = "long",
                 arg_list = {
                     "url"
+                }
+            },
+            -- lolly/data
+            {
+                scm_name = "encode-base64",
+                cpp_name = "lolly::data::encode_base64",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "decode-base64",
+                cpp_name = "lolly::data::decode_base64",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            -- lolly/system
+            {
+                scm_name = "system",
+                cpp_name = "lolly::system::call",
+                ret_type = "void",
+                arg_list = {
+                    "string",
                 }
             },
         }

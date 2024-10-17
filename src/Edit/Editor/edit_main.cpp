@@ -228,9 +228,9 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
 
 #ifdef USE_PLUGIN_GS
   if (!use_pdf () && pdf)
-    name= url_temp (".ps");
+    name= url_temp ("ps");
   if (!use_ps () && ps)
-    name= url_temp (".pdf");
+    name= url_temp ("pdf");
 #endif
   
   string medium = env->get_string (PAGE_MEDIUM);
@@ -331,9 +331,9 @@ void
 edit_main_rep::print_buffer (string first, string last) {
   url target;
 #if defined(OS_MINGW) || defined(OS_WIN)
-  target= use_pdf ()? url_temp (".pdf"): url_temp (".ps");
+  target= use_pdf ()? url_temp ("pdf"): url_temp ("ps");
 #else
-  target= url_temp (".ps");
+  target= url_temp ("ps");
 #endif
   print_doc (target, false, as_int (first), as_int (last));
   system (get_printing_cmd (), target);  // Send the document to the printer
@@ -352,7 +352,7 @@ edit_main_rep::print_buffer (string first, string last) {
   string printer;
   string paper_type;
   if (qt_print (to_file, landscape, printer, name, first, last, paper_type)) {
-      if (!to_file) name = url_temp (".ps");
+      if (!to_file) name = url_temp ("ps");
       print_doc (name, false, as_int (first), as_int (last));
       if (!to_file) {
         string cmd = printing_cmd * " -P" * printer;
@@ -403,7 +403,7 @@ edit_main_rep::print_snippet (url name, tree t, bool conserve_preamble) {
     if (bitmap) make_raster_image (name, b, 5.0);
     else if (ps) make_eps (name, b, dpi);
     else {
-      url temp= url_temp (use_pdf ()? ".pdf": ".eps");
+      url temp= url_temp (use_pdf ()? "pdf": "eps");
       make_eps (temp, b, dpi);
       ::remove (name);
       if (!call_scm_converter (temp, name)) {

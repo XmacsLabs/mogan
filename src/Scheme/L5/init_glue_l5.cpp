@@ -11,6 +11,8 @@
 
 #include "init_glue_l5.hpp"
 
+#include <lolly/system/timer.hpp>
+
 #include "object.hpp"
 #include "object_l1.hpp"
 #include "object_l2.hpp"
@@ -255,7 +257,7 @@ protected_call (object cmd) {
 
 void
 bench_print_all () {
-  bench_print (std_bench);
+  lolly::system::bench_print (std_bench);
 }
 
 /******************************************************************************

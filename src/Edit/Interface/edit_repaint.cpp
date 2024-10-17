@@ -12,6 +12,7 @@
 #include "Interface/edit_interface.hpp"
 #include "message.hpp"
 #include "gui.hpp" // for gui_interrupted
+#include <lolly/data/unicode.hpp>
 
 extern int nr_painted;
 extern void clear_pattern_rectangles (renderer ren, rectangle m, rectangles l);
@@ -268,7 +269,7 @@ edit_interface_rep::draw_keys (renderer ren) {
         t= t[N(t)-1];
       if (is_atomic (t)) {
         if (N(ns) != 0) ns << "  ";
-        if (is_cjk_unified_ideographs(t->label)) {
+        if (lolly::data::is_cjk_unified_ideographs(t->label)) {
           draw_keys_sub (ren, r, ns, base_x, base_y);
           // Clear it after the drawing
           ns= "";

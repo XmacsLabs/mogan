@@ -1,22 +1,21 @@
 
 /******************************************************************************
- * MODULE     : tm_timer.hpp
- * DESCRIPTION: timers
- * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ * MODULE     : md5.hpp
+ * DESCRIPTION: md5 digest
+ * COPYRIGHT  : (C) 2023  Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#ifndef TIMER_H
-#define TIMER_H
+#pragma once
 
-#include <time.h>
+#include "string.hpp"
+#include "url.hpp"
 
-time_t get_sec_time ();
-time_t get_usec_time ();
-time_t raw_time ();
-time_t texmacs_time ();
-
-#endif // defined TIMER_H
+namespace lolly {
+namespace hash {
+string md5_hexdigest (url u);
+}
+} // namespace lolly

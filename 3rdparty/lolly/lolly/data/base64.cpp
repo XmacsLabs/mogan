@@ -13,6 +13,9 @@
 #include "array.hpp"
 #include "string.hpp"
 
+namespace lolly {
+namespace data {
+
 // 0 maps to 'A', 1 maps to 'B', and so on ...
 static const char int_to_b64[]=
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -100,3 +103,6 @@ decode_base64 (string s) {
   }
   return r;
 }
+
+} // namespace data
+} // namespace lolly

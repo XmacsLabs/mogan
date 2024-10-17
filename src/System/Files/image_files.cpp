@@ -431,7 +431,7 @@ string
 image_to_psdoc (url image) {
   if (DEBUG_CONVERT) debug_convert << "image_to_psdoc " << image << LF;
   
-  url psfile= url_temp (".eps");
+  url psfile= url_temp ("eps");
   image_to_eps (image, psfile);
   string psdoc;
   load_string (psfile, psdoc, false);

@@ -208,10 +208,10 @@ TEST_CASE ("copy") {
 TEST_MEMORY_LEAK_ALL
 
 TEST_CASE ("url_temp") {
-  url       tmp1= url_temp ("test");
+  url       tmp1= url_temp ("png");
   tb_hong_t time= tb_time ();
   tb_file_touch (c_string (as_string (tmp1)), time, time);
-  url tmp2= url_temp ("test");
+  url tmp2= url_temp ("png");
   CHECK_EQ (tmp1 == tmp2, false);
   CHECK (is_directory (url_temp_dir ()));
 }

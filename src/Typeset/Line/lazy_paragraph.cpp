@@ -17,6 +17,8 @@
 #include "Boxes/construct.hpp"
 #include "analyze.hpp"
 
+#include <lolly/data/unicode.hpp>
+
 array<line_item> typeset_concat (edit_env env, tree t, path ip);
 void hyphenate (line_item item, int pos, line_item& item1, line_item& item2);
 array<path>
@@ -147,7 +149,7 @@ static bool
 is_cjk_text (line_item i) {
   if (!is_text (i)) return false;
   string text = i->b->get_leaf_string ();
-  return is_cjk_unified_ideographs (text) && (text != "<#3000>");
+  return lolly::data::is_cjk_unified_ideographs (text) && (text != "<#3000>");
 }
 
 static bool

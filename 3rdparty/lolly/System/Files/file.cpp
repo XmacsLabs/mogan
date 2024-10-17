@@ -12,6 +12,7 @@
 
 #include "file.hpp"
 #include "analyze.hpp"
+#include "lolly/hash/uuid.hpp"
 #include "string.hpp"
 #include "sys_utils.hpp"
 
@@ -248,13 +249,10 @@ chdir (url u) {
 
 url
 url_temp (string suffix) {
-  tb_char_t        uuid[37];
-  const tb_char_t* ret= tb_uuid4_make_cstr (uuid, tb_null);
-  if (ret == NULL) {
-    TM_FAILED ("Failed to generate UUID");
+  string file_name= replace (lolly::hash::uuid_make (), "-", "_");
+  if (!is_empty (suffix)) {
+    file_name= file_name * string (".") * suffix;
   }
-  string file_name=
-      replace (ret, string ("-"), string ("")) * string ("_") * suffix;
   url u= url_temp_dir () * url (file_name);
   if (file_size (u) == -1) {
     return u;

@@ -24,7 +24,7 @@ end
 
 --- require packages
 tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
-add_requires("tbox 1.7.5", {system=false, configs=tbox_configs})
+add_requires("tbox", {system=false, configs=tbox_configs})
 add_requires("doctest 2.4.11", {system=false})
 option("malloc")
     set_default("standard")
@@ -162,6 +162,7 @@ target("liblolly") do
     add_headerfiles("Data/Scheme/(*.hpp)")
     add_headerfiles("Plugins/Windows/(*.hpp)", {prefixdir = "Windows"})
     add_headerfiles("lolly/(data/*.hpp)", {prefixdir="lolly"})
+    add_headerfiles("lolly/(hash/*.hpp)", {prefixdir = "lolly"})
     add_headerfiles("lolly/(io/*.hpp)", {prefixdir = "lolly"})
     add_headerfiles("lolly/(system/*.hpp)", {prefixdir = "lolly"})
     add_includedirs(lolly_includedirs)
@@ -207,6 +208,7 @@ function add_test_target(filepath)
             add_cxxflags("-s DISABLE_EXCEPTION_CATCHING=0")
             add_ldflags("--preload-file xmake.lua")
             add_ldflags("--preload-file tests")
+            add_ldflags("--preload-file LICENSE")
             add_ldflags("-s DISABLE_EXCEPTION_CATCHING=0")
             on_run(function (target)
                 node = os.getenv("EMSDK_NODE")

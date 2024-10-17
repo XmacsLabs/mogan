@@ -243,15 +243,29 @@ url_default (string name, int type= URL_SYSTEM) {
 
 url
 url_general (string name, int type= URL_SYSTEM) {
-  if (starts (name, "local:")) return file_url (name (6, N (name)));
-  if (starts (name, "file://")) return file_url (name (7, N (name)));
-  if (starts (name, "http://")) return http_url (name (7, N (name)));
-  if (starts (name, "https://")) return https_url (name (8, N (name)));
-  if (starts (name, "ftp://")) return ftp_url (name (6, N (name)));
-  if (starts (name, "//")) return blank_url (name (2, N (name)));
-  if (heuristic_is_path (name, type)) return url_path (name, type);
+  if (contains (name, "://")) {
+    array<string> tokens  = tokenize (name, "://");
+    string        protocol= tokens[0];
+    string        path    = tokens[1];
+    if (N (tokens) == 2 && is_alphanum (protocol) && N (protocol) >= 2) {
+      if (protocol == "file") return file_url (path);
+      if (protocol == "http") return http_url (path);
+      if (protocol == "https") return https_url (path);
+      if (protocol == "ftp") return ftp_url (path);
+      return url_root (tokens[0]) * url_get_name (tokens[1], type);
+    }
+  }
+  if (starts (name, "local:")) {
+    return file_url (name (6, N (name)));
+  }
+  if (starts (name, "//")) {
+    return blank_url (name (2, N (name)));
+  }
+  if (heuristic_is_path (name, type)) {
+    return url_path (name, type);
+  }
   if (heuristic_is_default (name, type)) return url_default (name, type);
-  if (heuristic_is_mingw_default (name, type))
+  if (os_mingw () && heuristic_is_mingw_default (name, type))
     return url_mingw_default (name, type);
   if (type != URL_CLEAN_UNIX) {
     if (heuristic_is_http (name)) return http_url (name);

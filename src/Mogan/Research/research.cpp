@@ -15,6 +15,7 @@
 #include <unistd.h>
 #endif
 #include <locale.h> // for setlocale
+#include <lolly/system/timer.hpp>
 #include <signal.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -399,7 +400,7 @@ TeXmacs_main (int argc, char** argv) {
       open_window ();
     }
 
-    if (DEBUG_BENCH) bench_print (std_bench);
+    if (DEBUG_BENCH) lolly::system::bench_print (std_bench);
     bench_reset ("initialize texmacs");
     bench_reset ("initialize plugins");
     bench_reset ("initialize scheme");

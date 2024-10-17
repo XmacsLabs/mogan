@@ -160,7 +160,7 @@ QTMImagePreview::setImage (const QString& file) { // generate thumbnail
     debug_convert << "image preview :[" << image_url << "]" << LF;
   if (!(as_string (image_url) == "") && !is_directory (image_url) &&
       exists (image_url)) {
-    url    temp= url_temp (".png");
+    url    temp= url_temp ("png");
     int    w_pt, h_pt;
     double w, h;
     image_size (image_url, w_pt, h_pt);

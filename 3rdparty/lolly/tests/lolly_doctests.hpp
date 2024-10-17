@@ -13,6 +13,14 @@ string_eq (string left, string right) {
   CHECK_EQ (left == right, true);
 }
 
+inline void
+string_neq (string left, string right) {
+  if (left == right) {
+    cout << "same: " << left << LF;
+  }
+  CHECK_EQ (left != right, true);
+}
+
 #define TEST_MEMORY_LEAK_ALL                                                   \
   TEST_CASE ("test memory leak above") { CHECK_EQ (mem_used (), mem_lolly); }
 

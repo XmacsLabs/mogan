@@ -1,22 +1,24 @@
 
 /******************************************************************************
- * MODULE     : tm_timer.hpp
- * DESCRIPTION: timers
- * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ * MODULE     : sha.hpp
+ * DESCRIPTION: sha digest
+ * COPYRIGHT  : (C) 2023  Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#ifndef TIMER_H
-#define TIMER_H
+#pragma once
 
-#include <time.h>
+#include "string.hpp"
+#include "url.hpp"
 
-time_t get_sec_time ();
-time_t get_usec_time ();
-time_t raw_time ();
-time_t texmacs_time ();
-
-#endif // defined TIMER_H
+namespace lolly {
+namespace hash {
+enum sha_mode : long { SHA2_224= 224, SHA2_256= 256 };
+string sha_hexdigest (url u, sha_mode mode);
+string sha224_hexdigest (url u);
+string sha256_hexdigest (url u);
+} // namespace hash
+} // namespace lolly

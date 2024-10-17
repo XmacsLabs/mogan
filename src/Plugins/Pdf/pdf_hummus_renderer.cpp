@@ -658,7 +658,7 @@ pdf_hummus_renderer_rep::register_pattern_image (brush br, SI pixel) {
 		    << " after get_image" << LF;
       return;
     }
-    url temp= url_temp (".png");
+    url temp= url_temp ("png");
     pim->save (utf8_to_qstring (concretize (temp)), "PNG");
     temp_images << temp;
     ObjectIDType image_id= pdfWriter.GetObjectsContext()
@@ -1666,7 +1666,7 @@ pdf_hummus_renderer_rep::draw_picture (picture p, SI x, SI y, int alpha) {
 #ifdef QTTEXMACS
     picture q= pdf_raster_picture (p);
     qt_picture_rep* pict= (qt_picture_rep*) q->get_handle ();
-    temp= url_temp (".png");
+    temp                = url_temp ("png");
     pict->pict.save (utf8_to_qstring (concretize (temp)), "PNG");
     temp_images << temp;	
 #else

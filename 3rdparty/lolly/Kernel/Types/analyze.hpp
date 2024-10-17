@@ -97,6 +97,8 @@ bool is_iso_upcase (char c);
  */
 bool is_alpha (string s);
 
+bool is_alphanum (string s);
+
 /**
  * @brief Checks if a string contains only lowercase alphabetic characters.
  *
@@ -122,28 +124,6 @@ bool is_iso_alpha (string s);
  * @return True if all characters in the string are numeric, otherwise false.
  */
 bool is_numeric (string s);
-
-/**
- * @brief Checks if a string contains only CJK Unified Ideographs.
- *
- * @param s The string to check.
- * @return True if all characters in the string are CJK Unified Ideographs,
- * otherwise false.
- * @note This function expects the CJK Unified Ideographs to be in a specific
- * encoded format.
- */
-bool is_cjk_unified_ideographs (string s);
-
-/**
- * @brief Checks if a string contains any CJK Unified Ideographs.
- *
- * @param s The string to check.
- * @return True if the string contains at least one CJK Unified Ideograph,
- * otherwise false.
- * @note This function expects the CJK Unified Ideographs to be in a specific
- * encoded format.
- */
-bool has_cjk_unified_ideographs (string s);
 
 /**
  * @brief Converts a lowercase character to uppercase.
@@ -344,6 +324,15 @@ string fnsymbol_nr (int nr);
  * @return A string representing the Chinese numeral.
  */
 string hanzi_nr (int32_t nr);
+
+/**
+ * @brief Converts an 8-bit unsigned integer to a fixed-length (2) hex string.
+ *
+ * @param i The integer to be converted to a fixed-length hex string.
+ * @return The fixed-length (2) hexadecimal string representation of the input
+ * integer.
+ */
+string as_hex (uint8_t i);
 
 /**
  * @brief Converts an integer to a hexadecimal string.
@@ -705,6 +694,8 @@ int count_occurrences (string what, string in);
  * @return True if the string occurs, otherwise false.
  */
 bool occurs (string what, string in);
+
+bool contains (string s, string what);
 
 /**
  * Finds the length of the longest string that is both a suffix of the first

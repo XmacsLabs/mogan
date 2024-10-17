@@ -307,7 +307,7 @@ get_image_for_real (url u, int w, int h, tree eff, SI pixel) {
     pm= new QImage (utf8_to_qstring (concretize (u)));
   }
   else {
-    url temp= url_temp (".png");
+    url temp= url_temp ("png");
     image_to_png (u, temp, w, h);
     pm= new QImage (utf8_to_qstring (as_string (temp)));
     remove (temp);

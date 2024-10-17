@@ -1,22 +1,28 @@
 
 /******************************************************************************
- * MODULE     : tm_timer.hpp
- * DESCRIPTION: timers
- * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ * MODULE     : uuid.cpp
+ * DESCRIPTION: UUID generation
+ * COPYRIGHT  : (C) 2023  Darcy Shen
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#ifndef TIMER_H
-#define TIMER_H
+#include "uuid.hpp"
 
-#include <time.h>
+#include <tbox/tbox.h>
 
-time_t get_sec_time ();
-time_t get_usec_time ();
-time_t raw_time ();
-time_t texmacs_time ();
-
-#endif // defined TIMER_H
+namespace lolly {
+namespace hash {
+string
+uuid_make () {
+  tb_char_t        uuid[37];
+  const tb_char_t* ret= tb_uuid4_make_cstr (uuid, tb_null);
+  if (ret == NULL) {
+    TM_FAILED ("Failed to generate UUID");
+  }
+  return string (ret);
+}
+} // namespace hash
+} // namespace lolly

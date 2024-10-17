@@ -19,7 +19,9 @@
 #include "font.hpp"
 #include "iterator.hpp"
 #include "merge_sort.hpp"
+#include "tm_debug.hpp"
 #include "tm_file.hpp"
+#include "tm_timer.hpp"
 
 void                 font_database_filter_features ();
 void                 font_database_filter_characteristics ();
@@ -459,9 +461,37 @@ find_best_approximation (tree ff) {
       }
     }
   }
-  cout << "TeXmacs] approximating font " << ff << " ~> " << best << "\n";
   if (N (best) >= 2) return best;
   return ff (0, 2);
+}
+
+static void
+font_collect (url dir, string font_name) {
+  bench_start ("font " * font_name);
+  for (int j= 0; j < 65536; j++) {
+    int  sz= file_size (dir * font_name);
+    tree ff= tuple (font_name, as_string (j), as_string (sz));
+    if (!back_font_table->contains (ff) &&
+        back_font_table->contains (ff (0, 2))) {
+      ff= find_best_approximation (ff);
+      if (j != 0 && N (tt_font_name (dir * font_name)) <= j) {
+        cout << "TeXmacs] ignore " << ff << " and higher subfonts\n";
+        break;
+      }
+    }
+    if (back_font_table->contains (ff)) {
+      tree keys= back_font_table[ff];
+      for (int j= 0; j < N (keys); j++) {
+        tree key= keys[j];
+        tree im (TUPLE);
+        if (new_font_table->contains (key)) im= new_font_table[key];
+        tuple_insert (im, ff);
+        new_font_table (key)= im;
+      }
+    }
+    else break;
+  }
+  bench_end ("font " * font_name, 30, cout);
 }
 
 void
@@ -473,40 +503,25 @@ font_database_collect (url u) {
     font_database_collect (u[2]);
   }
   else if (is_directory (u)) {
+    bench_start ("font dir " * as_string (u));
     bool          err;
     array<string> a= read_directory (u, err);
-    for (int i= 0; i < N (a); i++)
-      if (!starts (a[i], "."))
-        if (ends (a[i], ".ttf") || ends (a[i], ".ttc") || ends (a[i], ".otf") ||
-            ends (a[i], ".tfm"))
-          for (int j= 0; j < 65536; j++) {
-            int  sz= file_size (u * a[i]);
-            tree ff= tuple (a[i], as_string (j), as_string (sz));
-            if (!back_font_table->contains (ff) &&
-                back_font_table->contains (ff (0, 2))) {
-              ff= find_best_approximation (ff);
-              if (j != 0 && N (tt_font_name (u * a[i])) <= j) {
-                cout << "TeXmacs] ignore " << ff << " and higher subfonts\n";
-                break;
-              }
-            }
-            if (back_font_table->contains (ff)) {
-              tree keys= back_font_table[ff];
-              for (int j= 0; j < N (keys); j++) {
-                tree key= keys[j];
-                tree im (TUPLE);
-                if (new_font_table->contains (key)) im= new_font_table[key];
-                tuple_insert (im, ff);
-                new_font_table (key)= im;
-              }
-            }
-            else break;
-          }
+    for (int i= 0; i < N (a); i++) {
+      if (!starts (a[i], ".")) {
+        string        suf    = suffix (a[i]);
+        array<string> allowed= array<string> ("ttf", "ttc", "otf", "tfm");
+        if (contains (suf, allowed)) {
+          font_collect (u, a[i]);
+        }
+      }
+    }
+    bench_end ("font dir " * as_string (u), 30);
   }
 }
 
 void
 font_database_filter () {
+  bench_start ("font_database_filter");
   new_font_table = hashmap<tree, tree> (UNINIT);
   back_font_table= hashmap<tree, tree> (UNINIT);
   build_back_table ();
@@ -515,6 +530,7 @@ font_database_filter () {
   font_table     = new_font_table;
   new_font_table = hashmap<tree, tree> (UNINIT);
   back_font_table= hashmap<tree, tree> (UNINIT);
+  bench_end ("font_database_filter");
 }
 
 void

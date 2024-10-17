@@ -15,9 +15,9 @@
 #include "s7_tm.hpp"
 
 #include "analyze.hpp"
-#include "base64.hpp"
 #include "file.hpp"
 #include "locale.hpp"
+#include "lolly/data/base64.hpp"
 #include "lolly/io/http.hpp"
 #include "lolly/io/http_response.hpp"
 #include "lolly/system/subprocess.hpp"

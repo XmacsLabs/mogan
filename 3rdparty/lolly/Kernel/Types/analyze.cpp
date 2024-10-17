@@ -51,6 +51,15 @@ is_alpha (string s) {
 }
 
 bool
+is_alphanum (string s) {
+  int i;
+  if (N (s) == 0) return false;
+  for (i= 0; i < N (s); i++)
+    if (!(is_alpha (s[i]) || is_digit (s[i]))) return false;
+  return true;
+}
+
+bool
 is_locase_alpha (string s) {
   int i;
   if (N (s) == 0) return false;
@@ -75,44 +84,6 @@ is_numeric (string s) {
   for (i= 0; i < N (s); i++)
     if (!is_numeric (s[i])) return false;
   return true;
-}
-
-bool
-is_cjk_unified_ideographs (string s) {
-  int n= N (s);
-  for (int i= 0; i < n; i++)
-    if (s[i] == '<' && i + 1 < n && s[i + 1] == '#') {
-      int start= i + 2;
-      i        = i + 2;
-      while (i < n && s[i] != '>')
-        i++;
-      string r= s (start, i);
-      if ("4E00" <= r && r <= "9FBF") continue;
-      else return false;
-    }
-    else {
-      return false;
-    }
-  return true;
-}
-
-bool
-has_cjk_unified_ideographs (string s) {
-  int n= N (s);
-  for (int i= 0; i < n; i++)
-    if (s[i] == '<' && i + 1 < n && s[i + 1] == '#') {
-      int start= i + 2;
-      i        = i + 2;
-      while (i < n && s[i] != '>')
-        i++;
-      string r= s (start, i);
-      if ("4E00" <= r && r <= "9FBF") return true;
-      else continue;
-    }
-    else {
-      continue;
-    }
-  return false;
 }
 
 /******************************************************************************
@@ -679,6 +650,13 @@ hanzi_nr (int32_t nr) {
  ******************************************************************************/
 
 static const char* hex_string= "0123456789ABCDEF";
+
+string
+as_hex (uint8_t i) {
+  uint8_t i_low = i & 15;
+  uint8_t i_high= i >> 4;
+  return locase_all (string (hex_string[i_high]) * string (hex_string[i_low]));
+}
 
 string
 as_hexadecimal (int i) {
@@ -1437,6 +1415,11 @@ search_forwards (string s, string in) {
 bool
 occurs (string what, string in) {
   return search_forwards (what, 0, in) >= 0;
+}
+
+bool
+contains (string s, string what) {
+  return search_forwards (what, 0, s) >= 0;
 }
 
 int

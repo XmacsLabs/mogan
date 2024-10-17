@@ -167,4 +167,17 @@ TEST_CASE ("as_string") {
 #endif
 }
 
+TEST_CASE ("unknown protocol like zotero") {
+  url zotero_u= url_system ("zotero://select/library/items/2AIFJFS7");
+  string_eq (zotero_u.protocol (), "zotero");
+  CHECK (!is_or (zotero_u));
+
+  url tmfs_u= url_system ("tmfs://git/status");
+  string_eq (tmfs_u.protocol (), "tmfs");
+  CHECK (!is_or (tmfs_u));
+
+  url c_u= url_system ("C://Program Files/MoganResearch");
+  string_neq (c_u.protocol (), "C");
+}
+
 TEST_MEMORY_LEAK_ALL

@@ -5,7 +5,10 @@
  *  \date   2023
  */
 #include "a_lolly_test.hpp"
-#include "base64.hpp"
+#include "lolly/data/base64.hpp"
+
+using lolly::data::decode_base64;
+using lolly::data::encode_base64;
 
 TEST_CASE ("encode base64") {
   CHECK_EQ (encode_base64 ("") == "", true);

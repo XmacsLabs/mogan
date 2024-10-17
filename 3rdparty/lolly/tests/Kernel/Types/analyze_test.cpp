@@ -1,7 +1,7 @@
 #include "a_lolly_test.hpp"
 #include "analyze.hpp"
 
-TEST_CASE ("test is alpha") {
+TEST_CASE ("is_alpha") {
   for (unsigned char c= 0; c < 255; c++) {
     if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) {
       CHECK (is_alpha (c));
@@ -12,11 +12,67 @@ TEST_CASE ("test is alpha") {
   }
 }
 
-TEST_CASE ("cjk_unified_ideographs") {
-  CHECK (is_cjk_unified_ideographs ("<#4E2D>"));
-  CHECK (has_cjk_unified_ideographs ("<#4E2D>"));
-  CHECK (has_cjk_unified_ideographs ("bib-<#4E2D>"));
-  CHECK (!is_cjk_unified_ideographs ("bib-<#4E2D>"));
+TEST_CASE ("is_digit") {
+  for (unsigned char c= 0; c < 255; c++) {
+    if (c >= 48 && c <= 57) {
+      CHECK (is_digit (c));
+    }
+    else {
+      CHECK (!is_digit (c));
+    }
+  }
+}
+
+TEST_CASE ("is_space") {
+  for (unsigned char c= 0; c < 255; c++) {
+    if ((c == 9) || (c == 10) || (c == 13) || (c == 32)) {
+      CHECK (is_space (c));
+    }
+    else {
+      CHECK (!is_space (c));
+    }
+  }
+}
+
+TEST_CASE ("is_binary_digit") {
+  for (unsigned char c= 0; c < 255; c++) {
+    if ((c == '0') || (c == '1')) {
+      CHECK (is_binary_digit (c));
+    }
+    else {
+      CHECK (!is_binary_digit (c));
+    }
+  }
+}
+
+TEST_CASE ("is_alpha") {
+  CHECK (is_alpha ("a"));
+  CHECK (is_alpha ("abc"));
+  CHECK (is_alpha ("Hello"));
+  CHECK (!is_alpha ("!"));
+  CHECK (!is_alpha ("abc123"));
+  CHECK (!is_alpha (""));
+}
+
+TEST_CASE ("is_alphanum") {
+  CHECK (is_alphanum ("s3"));
+  CHECK (is_alphanum ("ipv6"));
+  CHECK (is_alphanum ("abc"));
+  CHECK (is_alphanum ("123"));
+  CHECK (!is_alphanum (""));
+  CHECK (!is_alphanum ("!"));
+}
+
+TEST_CASE ("as_hex") {
+  SUBCASE ("0~255") {
+    string_eq (as_hex ((uint8_t) 0), "00");
+    string_eq (as_hex ((uint8_t) 1), "01");
+    string_eq (as_hex ((uint8_t) 255), "ff");
+  }
+  SUBCASE ("overflow") {
+    string_eq (as_hex ((uint8_t) -1), "ff");
+    string_eq (as_hex ((uint8_t) 256), "00");
+  }
 }
 
 TEST_CASE ("test locase all") {
@@ -103,42 +159,26 @@ TEST_CASE ("test_read_word") {
   CHECK_EQ (i, 0);
 }
 
-TEST_CASE ("test_is_digit") {
-  for (unsigned char c= 0; c < 255; c++) {
-    if (c >= 48 && c <= 57) {
-      CHECK (is_digit (c));
-    }
-    else {
-      CHECK (!is_digit (c));
-    }
-  }
-}
-
-TEST_CASE ("test_is_space") {
-  for (unsigned char c= 0; c < 255; c++) {
-    if ((c == 9) || (c == 10) || (c == 13) || (c == 32)) {
-      CHECK (is_space (c));
-    }
-    else {
-      CHECK (!is_space (c));
-    }
-  }
-}
-
-TEST_CASE ("test_is_binary_digit") {
-  for (unsigned char c= 0; c < 255; c++) {
-    if ((c == '0') || (c == '1')) {
-      CHECK (is_binary_digit (c));
-    }
-    else {
-      CHECK (!is_binary_digit (c));
-    }
-  }
+TEST_CASE ("contains/occurs") {
+  CHECK (contains ("abc", "a"));
+  CHECK (contains ("abc", "ab"));
+  CHECK (contains ("abc", "bc"));
+  CHECK (!contains ("abc", "B"));
+  CHECK (contains ("", ""));
+  CHECK (contains ("abc", ""));
+  CHECK (!contains ("abc", " "));
+  CHECK (contains ("hello world", " "));
 }
 
 TEST_CASE ("replace") {
   CHECK_EQ (replace ("a-b", "-", "_") == "a_b", true);
   CHECK_EQ (replace ("a-b-c", "-", "_") == "a_b_c", true);
+}
+
+TEST_CASE ("tokenize") {
+  CHECK_EQ (tokenize ("hello world", " "), array<string> ("hello", "world"));
+  CHECK_EQ (tokenize ("zotero://select/library/items/2AIFJFS7", "://"),
+            array<string> ("zotero", "select/library/items/2AIFJFS7"));
 }
 
 TEST_CASE ("roman_nr") {

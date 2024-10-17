@@ -14,7 +14,7 @@
 #include "analyze.hpp"
 #include "hashset.hpp"
 #include "scheme.hpp"
-#include "base64.hpp"
+#include "lolly/data/base64.hpp"
 #include "iterator.hpp"
 #include "fast_search.hpp"
 #include "file.hpp"
@@ -234,7 +234,7 @@ tracked_texmacs_to_latex (tree doc, object opts) {
   post << "\n% Separate attachments\n";
   post << ms;
   // TODO: add integrity checksum
-  post= encode_base64 (post);
+  post= lolly::data::encode_base64 (post);
   s << "\n%%%%%%%%%% Begin TeXmacs source\n";
   s << "% " << replace (post, "\n", "\n% ");
   s << "\n%%%%%%%%%% End TeXmacs source\n";
