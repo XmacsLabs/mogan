@@ -12,10 +12,20 @@
 #pragma once
 
 #include "string.hpp"
+#include <stdint.h>
 
 namespace lolly {
 namespace system {
 int call (string cmd);
-int check_output (string cmd, string& result, int64_t timeout= 20);
+int check_output (string cmd, string& result, bool stderr_only,
+                  int64_t timeout);
+inline int
+check_stdout (string cmd, string& result) {
+  return check_output (cmd, result, false, 20);
+}
+inline int
+check_stderr (string cmd, string& result) {
+  return check_output (cmd, result, true, 20);
+}
 } // namespace system
 } // namespace lolly

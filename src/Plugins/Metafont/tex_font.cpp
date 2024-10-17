@@ -12,6 +12,7 @@
 #include "Metafont/load_tex.hpp"
 #include "analyze.hpp"
 #include "colors.hpp"
+#include "cork.hpp"
 #include "font.hpp"
 #include "iterator.hpp"
 #include "translator.hpp"

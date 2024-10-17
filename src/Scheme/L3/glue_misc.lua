@@ -90,6 +90,22 @@ function main()
                 }
             },
             {
+                scm_name = "check-stdout",
+                cpp_name = "check_stdout",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "check-stderr",
+                cpp_name = "check_stderr",
+                ret_type = "string",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
                 scm_name = "var-eval-system",
                 cpp_name = "var_eval_system",
                 ret_type = "string",

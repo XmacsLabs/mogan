@@ -52,9 +52,8 @@ get_pretty_os_name () {
 string
 eval_system (string s) {
   string result;
-  bench_start ("eval_system " * s);
-  (void) lolly::system::check_output (s, result);
-  bench_end ("eval_system " * s);
+  debug_io << "check_output: " << s << LF;
+  (void) lolly::system::check_stdout (s, result);
   return result;
 }
 
@@ -64,6 +63,36 @@ var_eval_system (string s) {
   while ((N (r) > 0) && (r[N (r) - 1] == '\n' || r[N (r) - 1] == '\r'))
     r= r (0, N (r) - 1);
   return r;
+}
+
+string
+check_stdout (string s) {
+#ifdef OS_WASM
+  cout << "eval_system: " << s << LF;
+  return "";
+#else
+  string r;
+  debug_io << "check_stdout: " << s << LF;
+  (void) lolly::system::check_stdout (s, r);
+  while ((N (r) > 0) && (r[N (r) - 1] == '\n' || r[N (r) - 1] == '\r'))
+    r= r (0, N (r) - 1);
+  return r;
+#endif
+}
+
+string
+check_stderr (string s) {
+#ifdef OS_WASM
+  cout << "eval_system: " << s << LF;
+  return "";
+#else
+  string r;
+  debug_io << "check_stderr: " << s << LF;
+  (void) lolly::system::check_stderr (s, r);
+  while ((N (r) > 0) && (r[N (r) - 1] == '\n' || r[N (r) - 1] == '\r'))
+    r= r (0, N (r) - 1);
+  return r;
+#endif
 }
 
 url

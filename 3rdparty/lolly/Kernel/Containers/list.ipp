@@ -77,15 +77,17 @@ operator<< (T& item, list<T>& l) {
 template <class T>
 T
 last_item (list<T> l) {
-  ASSERT (!is_nil (l), "empty path");
-  if (is_nil (l->next)) return l->item;
-  return last_item (l->next);
+  ASSERT (!is_nil (l), "last_item on nil list");
+  while (!is_nil (l->next)) {
+    l= l->next;
+  }
+  return l->item;
 }
 
 template <class T>
 T&
 access_last (list<T>& l) {
-  ASSERT (!is_nil (l), "empty path");
+  ASSERT (!is_nil (l), "access_last on nil list");
   if (is_nil (l->next)) return l->item;
   return access_last (l->next);
 }

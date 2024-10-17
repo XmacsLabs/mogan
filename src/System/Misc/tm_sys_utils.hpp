@@ -23,6 +23,8 @@ string get_pretty_os_name ();
 
 string eval_system (string s);
 string var_eval_system (string s);
+string check_stdout (string s);
+string check_stderr (string s);
 
 url  get_texmacs_path ();
 url  get_texmacs_home_path ();

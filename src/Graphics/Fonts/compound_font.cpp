@@ -11,6 +11,7 @@
 
 #include "charmap.hpp"
 #include "convert.hpp"
+#include "cork.hpp"
 #include "font.hpp"
 #include "tm_block.hpp"
 

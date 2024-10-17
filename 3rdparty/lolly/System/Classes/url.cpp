@@ -177,7 +177,7 @@ url_get_atom (string s, int type) {
       return unblank (url_system (val));
     }
   }
-  if (occurs ("*", s)) return url_wildcard (s);
+  if (contains (s, '*')) return url_wildcard (s);
 #ifdef WINPATHS
   if (N (s) == 2 && ends (s, ":"))
     s->resize (1); // remove the ':' after unit letter
@@ -187,17 +187,44 @@ url_get_atom (string s, int type) {
 
 url
 url_get_name (string s, int type, int i) {
-  char sep  = (type == URL_SYSTEM) ? URL_CONCATER : '/';
-  int  start= i, n= N (s);
-  while ((i < n) && (s[i] != sep) && (s[i] != '/')) {
-    if (s[i] == '[') skip_ipv6 (s, i);
-    else i++;
+  char      sep   = (type == URL_SYSTEM) ? URL_CONCATER : '/';
+  int       n     = N (s);
+  list<url> u_list= list<url> ();
+  while (i < n) {
+    int start= i;
+    while ((i < n) && (s[i] != sep) && (s[i] != '/')) {
+      if (s[i] == '[') skip_ipv6 (s, i);
+      else i++;
+    }
+    if (i > start) {
+      url u = url_get_atom (s (start, i), type);
+      u_list= list (u, u_list);
+    }
+    else if (i == start) {
+      i++;
+      if (i == n) {
+        u_list= list (as_url (tree ("")), u_list);
+      }
+    }
   }
-  url u= url_get_atom (s (start, i), type);
-  // url u= tree (s (start, i));
-  if (i == n) return u;
-  if (start == i) return url_get_name (s, type, i + 1);
-  return u * url_get_name (s, type, i + 1);
+
+  if (is_nil (u_list)) return as_url (tree (""));
+  url ret= u_list->item;
+  u_list = u_list->next;
+  while (!is_nil (u_list)) {
+    url u= u_list->item;
+    if (is_here (u) || (u->t == "")) {
+      // do nothing
+    }
+    else if (is_atomic (u)) {
+      ret= as_url (url_tuple ("concat", u->t, ret->t));
+    }
+    else {
+      ret= u * ret;
+    }
+    u_list= u_list->next;
+  }
+  return ret;
 }
 
 static url
@@ -542,18 +569,29 @@ factor (url u) {
 
 bool
 descends (url u, url base) {
-  if (is_or (base)) return descends (u, base[1]) || descends (u, base[2]);
-  if (is_or (u)) return descends (u[1], base) && descends (u[2], base);
   if (u == base) return true;
   if (is_concat (u) && is_atomic (base)) return u[1] == base;
-  if (is_concat (u) && is_concat (base))
-    return u[1] == base[1] && descends (u[2], base[2]);
+  if (is_concat (u) && is_concat (base)) {
+    url iter_u= u, iter_base= base;
+    while (iter_u[1] == iter_base[1]) {
+      iter_u   = iter_u[2];
+      iter_base= iter_base[2];
+      if (is_concat (iter_u) && is_concat (iter_base)) {
+        continue;
+      }
+      else {
+        return descends (iter_u, iter_base);
+      }
+    }
+    return false;
+  }
+  if (is_or (u)) return descends (u[1], base) && descends (u[2], base);
+  if (is_or (base)) return descends (u, base[1]) || descends (u, base[2]);
   return false;
 }
 
 url
 operator* (url u1, url u2) {
-  // cout << "concat " << u1->t << " * " << u2->t << "\n";
   if (is_root (u2) || (is_concat (u2) && is_root (u2[1]))) {
     if (is_concat (u1) && is_root_web (u1[1])) {
       if (is_root (u2, "default") ||

@@ -11,6 +11,7 @@
 
 #include "packrat_grammar.hpp"
 #include "analyze.hpp"
+#include "cork.hpp"
 #include "iterator.hpp"
 #include "tree_helper.hpp"
 

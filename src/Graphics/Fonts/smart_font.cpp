@@ -13,6 +13,7 @@
 #include "Freetype/tt_tools.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
+#include "cork.hpp"
 #include "font.hpp"
 #include "iterator.hpp"
 #include "lolly/data/unicode.hpp"

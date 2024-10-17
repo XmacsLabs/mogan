@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "convert.hpp"
+#include "cork.hpp"
 #include "dictionary.hpp"
 #include "drd_mode.hpp"
 #include "env.hpp"

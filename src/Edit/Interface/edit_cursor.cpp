@@ -11,6 +11,7 @@
 
 #include "edit_cursor.hpp"
 #include "analyze.hpp"
+#include "cork.hpp"
 #include "drd_mode.hpp"
 #include "iterator.hpp"
 #include "observers.hpp"

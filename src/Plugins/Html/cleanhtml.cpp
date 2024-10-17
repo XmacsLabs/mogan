@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
+#include "cork.hpp"
 #include "html.hpp"
 #include "tree_analyze.hpp"
 #include "tree_helper.hpp"

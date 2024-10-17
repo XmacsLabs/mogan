@@ -175,6 +175,18 @@ TEST_CASE ("as_string") {
   url dirs         = url ("Data") | url ("Kernel") | url ("Plugins");
   string_eq (as_string (dirs), string ("Data") * URL_SEPARATOR * "Kernel" *
                                    URL_SEPARATOR * "Plugins");
+
+  SUBCASE ("is_atomic") {
+    string_eq (as_string (url_here ()), string ("."));
+    string_eq (as_string (url_parent ()), string (".."));
+    string_eq (as_string (url_ancestor ()), string ("..."));
+  }
+
+  SUBCASE ("tree with empty string") {
+    string_eq (as_string (url ("")), "");
+    string_eq (as_string (url ("a") * url ("")), string ("a") * URL_CONCATER);
+  }
+
 #if defined(OS_MINGW) || defined(OS_WIN)
   SUBCASE ("on host windows") {
     url app_mogan= url_system ("$ProgramFiles\\Mogan");
@@ -244,9 +256,67 @@ TEST_CASE ("url_concat") {
   url_eq (url_root ("file") * url ("tmp"), url_system ("file:///tmp"));
 }
 
+TEST_CASE ("expand") {
+  if (!os_win ()) {
+    url tmp_or_usr= url ("/tmp") | url ("/usr");
+    url_eq (expand (url_pwd () * tmp_or_usr), tmp_or_usr);
+  }
+}
+
 TEST_CASE ("reroot") {
   CHECK (!is_rooted (reroot (url_system ("tmp"), "file")));
   CHECK (is_rooted (reroot (url_pwd (), "file")));
+}
+
+TEST_CASE ("descends") {
+  SUBCASE ("u == base") {
+    CHECK (descends (ustc_edu, ustc_edu));
+    CHECK (descends (texmacs_org, texmacs_org));
+    CHECK (descends (none_url, none_url));
+    CHECK (descends (file_root, file_root));
+    CHECK (descends (file_tmp, file_tmp));
+    CHECK (descends (ftp_root, ftp_root));
+    CHECK (descends (wsl_ubuntu, wsl_ubuntu));
+    CHECK (descends (unix_root, unix_root));
+    CHECK (descends (unix_root_txt, unix_root_txt));
+    CHECK (descends (unix_tmp_a, unix_tmp_a));
+    CHECK (descends (abc_url, abc_url));
+  }
+  SUBCASE ("u is concat, base is atomic") {
+    CHECK (!descends (url ("./a/b/c"), url (".")));
+    CHECK (descends (url ("../a/b/c"), url ("..")));
+    CHECK (descends (url (".../a/b/c"), url ("...")));
+  }
+  SUBCASE ("u is concat, base is concat") {
+    CHECK (descends (url ("a/b/c"), url ("a/b")));
+    CHECK (!descends (url ("a/b/c"), url ("a/b/")));
+    CHECK (descends (url ("a/b"), url ("a")));
+    CHECK (!descends (url ("a/b"), url ("a/")));
+  }
+  SUBCASE ("u or base is url_or") {
+    CHECK (descends (url ("a:b"), url ("a:b")));
+    CHECK (descends (url ("a"), url ("a:b")));
+    CHECK (descends (url ("b"), url ("a:b")));
+    CHECK (!descends (url ("a:b"), url ("a")));
+    CHECK (!descends (url ("a:b"), url ("b")));
+  }
+}
+
+TEST_CASE ("is_atomic") {
+  CHECK (is_atomic (url_here ()));
+  CHECK (is_atomic (url_parent ()));
+  CHECK (is_atomic (url_ancestor ()));
+
+  CHECK (is_atomic (url ("")));
+
+  CHECK (!is_atomic (ustc_edu));
+  CHECK (!is_atomic (url_none ()));
+  SUBCASE ("unix") {
+    if (!os_win ()) {
+      CHECK (!is_atomic (unix_root));
+      CHECK (!is_atomic (unix_tmp));
+    }
+  }
 }
 
 TEST_MEMORY_LEAK_ALL

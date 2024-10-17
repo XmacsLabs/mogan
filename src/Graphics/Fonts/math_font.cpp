@@ -14,6 +14,7 @@
 
 #include "block.hpp"
 #include "convert.hpp"
+#include "cork.hpp"
 #include "font.hpp"
 #include "translator.hpp"
 

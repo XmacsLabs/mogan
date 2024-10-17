@@ -290,6 +290,7 @@ freetype_version () {
          as_string (FREETYPE_PATCH);
 }
 
+#include "cork.hpp"
 #include "glue_basic.cpp"
 #include "glue_editor.cpp"
 #include "glue_font.cpp"

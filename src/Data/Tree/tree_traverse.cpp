@@ -11,6 +11,7 @@
 
 #include "tree_traverse.hpp"
 #include "analyze.hpp"
+#include "cork.hpp"
 #include "drd_mode.hpp"
 #include "drd_std.hpp"
 #include "hashset.hpp"

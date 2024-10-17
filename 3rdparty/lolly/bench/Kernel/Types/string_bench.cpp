@@ -22,13 +22,26 @@ main () {
     static string a ("abc"), b;
     a == b;
   });
+  bench.run ("equality of larger string", [&] {
+    static string a ("equality of larger string"),
+        b ("equality of larger strinG");
+    a == b;
+  });
   bench.run ("compare string", [&] {
     static string a ("ab"), b ("b");
     a <= b;
   });
+  bench.run ("compare larger string", [&] {
+    static string a ("compare larger string"), b ("compare LARGER string");
+    a <= b;
+  });
   bench.run ("slice string", [&] {
-    static string a ("abcde");
+    static string a ("abcdefgh");
     a (2, 3);
+  });
+  bench.run ("slice string with larger range", [&] {
+    static string a ("abcdefgh");
+    a (1, 6);
   });
   bench.minEpochIterations (40000);
   bench.run ("concat string", [&] {

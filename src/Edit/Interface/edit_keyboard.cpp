@@ -11,6 +11,7 @@
 
 #include "analyze.hpp"
 #include "archiver.hpp"
+#include "cork.hpp"
 #include "edit_interface.hpp"
 #include "tm_buffer.hpp"
 

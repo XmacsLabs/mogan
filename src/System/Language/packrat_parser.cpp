@@ -11,6 +11,7 @@
 
 #include "packrat_parser.hpp"
 #include "analyze.hpp"
+#include "cork.hpp"
 #include "drd_std.hpp"
 #include "language.hpp" //(en|de)code_color
 #include "observers.hpp"

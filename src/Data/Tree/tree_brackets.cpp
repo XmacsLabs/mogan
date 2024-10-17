@@ -9,6 +9,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "cork.hpp"
 #include "scheme.hpp"
 #include "tree_analyze.hpp"
 #include "tree_correct.hpp"

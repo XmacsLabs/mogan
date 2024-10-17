@@ -12,6 +12,7 @@
 #include "Replace/edit_select.hpp"
 #include "Interface/edit_interface.hpp"
 #include "convert.hpp"
+#include "cork.hpp"
 #include "drd_mode.hpp"
 #include "packrat.hpp"
 #include "tree_modify.hpp"

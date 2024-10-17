@@ -184,3 +184,11 @@ TEST_CASE ("tokenize") {
   CHECK_EQ (tokenize ("zotero://select/library/items/2AIFJFS7", "://"),
             array<string> ("zotero", "select/library/items/2AIFJFS7"));
 }
+
+TEST_CASE ("recompose") {
+  string_eq (recompose (array<string> ("hello", "world"), " "), "hello world");
+  string_eq (
+      recompose (array<string> ("zotero", "select/library/items/2AIFJFS7"),
+                 "://"),
+      "zotero://select/library/items/2AIFJFS7");
+}
