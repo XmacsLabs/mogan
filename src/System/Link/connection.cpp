@@ -1,48 +1,48 @@
 
 /******************************************************************************
-* MODULE     : connection.cpp
-* DESCRIPTION: TeXmacs connections
-* COPYRIGHT  : (C) 2000  Joris van der Hoeven
-*******************************************************************************
-* When the underlying link of a connection is "alive",
-* then the status of the connection is either WAITING_FOR_OUTPUT
-* (when waiting for output from the plugin) or WAITING_FOR_INPUT.
-* If the underlying link is "dead", then the status is either
-* CONNECTION_DEAD (usually) or CONNECTION_DYING (if we are still
-* waiting for some residual output from the plugin).
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : connection.cpp
+ * DESCRIPTION: TeXmacs connections
+ * COPYRIGHT  : (C) 2000  Joris van der Hoeven
+ *******************************************************************************
+ * When the underlying link of a connection is "alive",
+ * then the status of the connection is either WAITING_FOR_OUTPUT
+ * (when waiting for output from the plugin) or WAITING_FOR_INPUT.
+ * If the underlying link is "dead", then the status is either
+ * CONNECTION_DEAD (usually) or CONNECTION_DYING (if we are still
+ * waiting for some residual output from the plugin).
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "connect.hpp"
-#include "socket_notifier.hpp"
-#include "iterator.hpp"
-#include "convert.hpp"
-#include "scheme.hpp"
-#include "resource.hpp"
 #include "Generic/input.hpp"
+#include "connect.hpp"
+#include "convert.hpp"
 #include "gui.hpp"
-#include "tree_helper.hpp"
+#include "iterator.hpp"
+#include "resource.hpp"
+#include "scheme.hpp"
+#include "socket_notifier.hpp"
 #include "tm_debug.hpp"
+#include "tree_helper.hpp"
 
 static tree connection_retrieve (string name, string session);
 
 /******************************************************************************
-* The connection resource
-******************************************************************************/
+ * The connection resource
+ ******************************************************************************/
 
-RESOURCE(connection);
-struct connection_rep: rep<connection> {
-  string  name;          // name of the pipe type
-  string  session;       // name of the session
-  tm_link ln;            // the underlying link
-  int     status;        // status of the connection
-  int     prev_status;   // last notified status
-  bool    forced_eval;   // forced input evaluation without call backs
-  texmacs_input tm_in;   // texmacs input handler for data from child
-  texmacs_input tm_err;  // texmacs input handler for errors from child
+RESOURCE (connection);
+struct connection_rep : rep<connection> {
+  string        name;        // name of the pipe type
+  string        session;     // name of the session
+  tm_link       ln;          // the underlying link
+  int           status;      // status of the connection
+  int           prev_status; // last notified status
+  bool          forced_eval; // forced input evaluation without call backs
+  texmacs_input tm_in;       // texmacs input handler for data from child
+  texmacs_input tm_err;      // texmacs input handler for errors from child
 
 public:
   connection_rep (string name, string session, tm_link ln);
@@ -53,27 +53,25 @@ public:
   void   interrupt ();
   void   listen ();
 };
-RESOURCE_CODE(connection);
+RESOURCE_CODE (connection);
 
 /******************************************************************************
-* Routines for connections
-******************************************************************************/
+ * Routines for connections
+ ******************************************************************************/
 
-static void 
-connection_callback (void *obj, void* info) {
+static void
+connection_callback (void* obj, void* info) {
   (void) info;
-  //cout << "connection callback " << obj << LF;
-  connection_rep *con = (connection_rep*) obj;
+  // cout << "connection callback " << obj << LF;
+  connection_rep* con= (connection_rep*) obj;
   con->listen ();
 }
 
-
-connection_rep::connection_rep (string name2, string session2, tm_link ln2):
-  rep<connection> (name2 * "-" * session2),
-  name (name2), session (session2), ln (ln2),
-  status (CONNECTION_DEAD), prev_status (CONNECTION_DEAD),
-  forced_eval (false),
-  tm_in ("output"), tm_err ("error") {}
+connection_rep::connection_rep (string name2, string session2, tm_link ln2)
+    : rep<connection> (name2 * "-" * session2), name (name2),
+      session (session2), ln (ln2), status (CONNECTION_DEAD),
+      prev_status (CONNECTION_DEAD), forced_eval (false), tm_in ("output"),
+      tm_err ("error") {}
 
 string
 connection_rep::start (bool again) {
@@ -92,7 +90,7 @@ connection_rep::start (bool again) {
       (void) connection_retrieve (name, session);
     }
   }
-  tm_in ->bof ();
+  tm_in->bof ();
   tm_err->bof ();
   ln->set_command (command (connection_callback, this));
   return message;
@@ -101,7 +99,7 @@ connection_rep::start (bool again) {
 void
 connection_rep::write (string s) {
   ln->write (s, LINK_IN);
-  tm_in ->bof ();
+  tm_in->bof ();
   tm_err->bof ();
   status= WAITING_FOR_OUTPUT;
 }
@@ -110,8 +108,8 @@ void
 connection_rep::read (int channel) {
   if (channel == LINK_OUT) {
     string s= ln->read (LINK_OUT);
-    int i, n= N(s);
-    for (i=0; i<n; i++)
+    int    i, n= N (s);
+    for (i= 0; i < n; i++)
       if (tm_in->put (s[i])) {
         status= WAITING_FOR_INPUT;
         if (DEBUG_IO) debug_io << LF << HRULE;
@@ -119,12 +117,12 @@ connection_rep::read (int channel) {
   }
   else if (channel == LINK_ERR) {
     string s= ln->read (LINK_ERR);
-    int i, n= N(s);
-    for (i=0; i<n; i++)
+    int    i, n= N (s);
+    for (i= 0; i < n; i++)
       (void) tm_err->put (s[i]);
   }
   if (!ln->alive) {
-    tm_in ->eof ();
+    tm_in->eof ();
     tm_err->eof ();
     status= CONNECTION_DEAD;
   }
@@ -134,10 +132,9 @@ void
 connection_rep::stop () {
   if (ln->alive) {
     ln->stop ();
-    tm_in ->eof ();
+    tm_in->eof ();
     tm_err->eof ();
-    if (status == WAITING_FOR_OUTPUT)
-      status= CONNECTION_DYING;
+    if (status == WAITING_FOR_OUTPUT) status= CONNECTION_DYING;
   }
 }
 
@@ -145,33 +142,27 @@ void
 connection_rep::interrupt () {
   if (ln->alive) {
     ln->interrupt ();
-    if (status == WAITING_FOR_OUTPUT)
-      status= CONNECTION_DYING;
+    if (status == WAITING_FOR_OUTPUT) status= CONNECTION_DYING;
   }
 }
 
 /******************************************************************************
-* Handle output from extern applications
-******************************************************************************/
+ * Handle output from extern applications
+ ******************************************************************************/
 
 void
 connection_notify (connection con, string ch, tree t) {
   if (t == "") return;
-  call ("connection-notify",
-        object (con->name),
-        object (con->session),
-        object (ch),
-        object (t));
+  call ("connection-notify", object (con->name), object (con->session),
+        object (ch), object (t));
 }
 
 void
 connection_notify_status (connection con) {
   int status=
-    (con->status == CONNECTION_DYING? WAITING_FOR_OUTPUT: con->status);
+      (con->status == CONNECTION_DYING ? WAITING_FOR_OUTPUT : con->status);
   if (status == con->prev_status) return;
-  call ("connection-notify-status",
-        object (con->name),
-        object (con->session),
+  call ("connection-notify-status", object (con->name), object (con->session),
         object (status));
   con->prev_status= status;
 }
@@ -188,20 +179,20 @@ connection_rep::listen () {
     connection_notify (this, "prompt", tm_in->get ("prompt"));
     connection_notify (this, "input", tm_in->get ("input"));
     tree t= connection_handlers (name);
-    int i, n= N(t);
-    for (i=0; i<n; i++) {
+    int  i, n= N (t);
+    for (i= 0; i < n; i++) {
       tree doc= tm_in->get (t[i][0]->label);
       if (doc != "") call (t[i][1]->label, doc);
       doc= tm_err->get (t[i][0]->label);
       if (doc != "") call (t[i][1]->label, doc);
     }
   }
-  connection_notify_status (this);  
+  connection_notify_status (this);
 }
 
 /******************************************************************************
-* Connection type information
-******************************************************************************/
+ * Connection type information
+ ******************************************************************************/
 
 bool
 connection_declared (string name) {
@@ -215,15 +206,15 @@ connection_info (string name, string session) {
 
 tree
 connection_handlers (string name) {
-  static hashmap<string,tree> handlers (tuple ());
+  static hashmap<string, tree> handlers (tuple ());
   if (!handlers->contains (name))
     handlers (name)= stree_to_tree (call ("connection-get-handlers", name));
   return handlers[name];
 }
 
 /******************************************************************************
-* First part of interface (using a specific connection)
-******************************************************************************/
+ * First part of interface (using a specific connection)
+ ******************************************************************************/
 
 string
 connection_start (string name, string session, bool again) {
@@ -233,22 +224,21 @@ connection_start (string name, string session, bool again) {
 
   connection con= connection (name * "-" * session);
   if (is_nil (con)) {
-    if (DEBUG_VERBOSE)
-      debug_io << "Starting session '" << session << "'\n";
+    if (DEBUG_VERBOSE) debug_io << "Starting session '" << session << "'\n";
     tree t= connection_info (name, session);
     if (is_tuple (t, "pipe", 1)) {
       tm_link ln= make_pipe_link (t[1]->label);
-      con= tm_new<connection_rep> (name, session, ln);
+      con       = tm_new<connection_rep> (name, session, ln);
     }
 #ifndef QTTEXMACS
     else if (is_tuple (t, "socket", 2)) {
       tm_link ln= make_socket_link (t[1]->label, as_int (t[2]->label));
-      con= tm_new<connection_rep> (name, session, ln);
+      con       = tm_new<connection_rep> (name, session, ln);
     }
 #endif
     else if (is_tuple (t, "dynlink", 3)) {
       tm_link ln=
-        make_dynamic_link (t[1]->label, t[2]->label, t[3]->label, session);
+          make_dynamic_link (t[1]->label, t[2]->label, t[3]->label, session);
       con= tm_new<connection_rep> (name, session, ln);
     }
   }
@@ -316,8 +306,8 @@ connection_status (string name, string session) {
 }
 
 /******************************************************************************
-* Evaluation interface (using a specific connection)
-******************************************************************************/
+ * Evaluation interface (using a specific connection)
+ ******************************************************************************/
 
 static connection
 connection_get (string name, string session) {
@@ -341,13 +331,14 @@ connection_retrieve (string name, string session) {
     perform_select ();
 #endif
     con->forced_eval= false;
-    tree next= connection_read (name, session);
-    if (next == "");
+    tree next       = connection_read (name, session);
+    if (next == "")
+      ;
     else if (is_document (next)) doc << A (next);
     else doc << next;
     if (con->status == WAITING_FOR_INPUT) break;
   }
-  if (N(doc) == 0) return "";
+  if (N (doc) == 0) return "";
   // cout << "Retrieved " << doc << "\n";
   return doc;
 }
@@ -374,7 +365,7 @@ tree
 connection_cmd (string name, string session, string cmd) {
   // cout << "Command " << name << ", " << session << ", " << cmd << LF;
   string s= as_string (call ("format-command", name, cmd));
-  tree r= connection_eval (name, session, s);
+  tree   r= connection_eval (name, session, s);
   if (is_func (r, DOCUMENT, 1)) r= r[0];
   return r;
 }

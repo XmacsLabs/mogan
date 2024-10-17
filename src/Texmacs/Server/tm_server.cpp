@@ -19,12 +19,12 @@
 #include "dictionary.hpp"
 #include "drd_std.hpp"
 #include "file.hpp"
+#include "lolly/system/subprocess.hpp"
 #include "new_style.hpp"
 #include "socket_notifier.hpp"
 #include "sys_utils.hpp"
 #include "tm_link.hpp"
 #include "tm_sys_utils.hpp"
-#include "lolly/system/subprocess.hpp"
 
 server* the_server     = NULL;
 bool    texmacs_started= false;
@@ -36,7 +36,6 @@ string  my_init_cmds   = "";
 /******************************************************************************
  * Init applications
  ******************************************************************************/
-
 
 void
 init_app (app_type app) {
@@ -127,7 +126,7 @@ tm_server_rep::tm_server_rep (app_type app) : def_zoomf (1.0) {
   gui_interpose (texmacs_interpose_handler);
   set_wait_handler (texmacs_wait_handler);
 
-  init_app(app);
+  init_app (app);
 
 #ifdef OS_GNU_LINUX
   return; // in order to avoid segmentation faults

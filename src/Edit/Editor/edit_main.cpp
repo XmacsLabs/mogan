@@ -1,29 +1,29 @@
 
 /******************************************************************************
-* MODULE     : editor.cpp
-* DESCRIPTION: routines for the editor
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : editor.cpp
+ * DESCRIPTION: routines for the editor
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "edit_main.hpp"
-#include "tm_buffer.hpp"
-#include "tm_file.hpp"
-#include "sys_utils.hpp"
-#include "printer.hpp"
-#include "convert.hpp"
 #include "connect.hpp"
-#include "typesetter.hpp"
+#include "convert.hpp"
 #include "drd_std.hpp"
-#include "message.hpp"
-#include <setjmp.h>
 #include "image_files.hpp"
 #include "iterator.hpp"
-#include "tree_observer.hpp"
+#include "message.hpp"
 #include "observers.hpp"
+#include "printer.hpp"
+#include "sys_utils.hpp"
+#include "tm_buffer.hpp"
+#include "tm_file.hpp"
+#include "tree_observer.hpp"
+#include "typesetter.hpp"
+#include <setjmp.h>
 
 #ifdef USE_PLUGIN_PDF
 #include "Pdf/pdf_hummus_make_attachment.hpp"
@@ -39,18 +39,18 @@
 #endif
 
 /******************************************************************************
-* Constructors and destructor
-******************************************************************************/
+ * Constructors and destructor
+ ******************************************************************************/
 
-editor_rep::editor_rep ():
-  simple_widget_rep (), cvw (NULL), mvw (NULL),
-  drd (std_drd), et (the_et), rp () {
+editor_rep::editor_rep ()
+    : simple_widget_rep (), cvw (NULL), mvw (NULL), drd (std_drd), et (the_et),
+      rp () {
   cout << "TeXmacs] warning, this virtual constructor should never be called\n";
 }
 
-editor_rep::editor_rep (server_rep* sv2, tm_buffer buf2):
-  simple_widget_rep (), sv (sv2), cvw (NULL), mvw (NULL), buf (buf2),
-  drd (buf->buf->title, std_drd), et (the_et), rp (buf2->rp) {}
+editor_rep::editor_rep (server_rep* sv2, tm_buffer buf2)
+    : simple_widget_rep (), sv (sv2), cvw (NULL), mvw (NULL), buf (buf2),
+      drd (buf->buf->title, std_drd), et (the_et), rp (buf2->rp) {}
 
 bool
 editor_rep::is_current_editor () {
@@ -58,33 +58,31 @@ editor_rep::is_current_editor () {
   return ed.rep == (editor_rep*) this;
 }
 
-edit_main_rep::edit_main_rep (server_rep* sv, tm_buffer buf):
-  editor_rep (sv, buf), props (UNKNOWN), ed_obs (edit_observer (this))
-{
+edit_main_rep::edit_main_rep (server_rep* sv, tm_buffer buf)
+    : editor_rep (sv, buf), props (UNKNOWN), ed_obs (edit_observer (this)) {
   attach_observer (subtree (et, rp), ed_obs);
   notify_change (THE_TREE);
   tp= correct_cursor (et, rp * 0);
 }
 
-edit_main_rep::~edit_main_rep () {
-  detach_observer (subtree (et, rp), ed_obs);
-}
+edit_main_rep::~edit_main_rep () { detach_observer (subtree (et, rp), ed_obs); }
 
 editor
 new_editor (server_rep* sv, tm_buffer buf) {
   return tm_new<edit_main_rep> (sv, buf);
 }
 
-template<> void
+template <>
+void
 tm_delete<editor_rep> (editor_rep* ptr) {
-  void *mem= ptr->derived_this ();
-  ptr -> ~editor_rep ();
+  void* mem= ptr->derived_this ();
+  ptr->~editor_rep ();
   fast_delete (mem);
 }
 
 /******************************************************************************
-* Properties
-******************************************************************************/
+ * Properties
+ ******************************************************************************/
 
 void
 edit_main_rep::set_property (scheme_tree what, scheme_tree val) {
@@ -93,7 +91,7 @@ edit_main_rep::set_property (scheme_tree what, scheme_tree val) {
 
 void
 edit_main_rep::set_bool_property (string what, bool val) {
-  props (what)= (val? string ("true"): string ("false"));
+  props (what)= (val ? string ("true") : string ("false"));
 }
 
 void
@@ -108,27 +106,27 @@ edit_main_rep::set_string_property (string what, string val) {
 
 scheme_tree
 edit_main_rep::get_property (scheme_tree what) {
-  return props [what];
+  return props[what];
 }
 
 bool
 edit_main_rep::get_bool_property (string what) {
-  return as_bool (props [what]);
+  return as_bool (props[what]);
 }
 
 int
 edit_main_rep::get_int_property (string what) {
-  return as_int (props [what]);
+  return as_int (props[what]);
 }
 
 string
 edit_main_rep::get_string_property (string what) {
-  return as_string (props [what]);
+  return as_string (props[what]);
 }
 
 /******************************************************************************
-* Global routines
-******************************************************************************/
+ * Global routines
+ ******************************************************************************/
 
 void
 edit_main_rep::clear_buffer () {
@@ -136,16 +134,13 @@ edit_main_rep::clear_buffer () {
 }
 
 void
-edit_main_rep::new_window () {
-}
+edit_main_rep::new_window () {}
 
 void
-edit_main_rep::clone_window () {
-}
+edit_main_rep::clone_window () {}
 
 void
-edit_main_rep::tex_buffer () {
-}
+edit_main_rep::tex_buffer () {}
 
 url
 edit_main_rep::get_name () {
@@ -174,8 +169,8 @@ edit_main_rep::get_metadata (string kind) {
 }
 
 /******************************************************************************
-* Printing
-******************************************************************************/
+ * Printing
+ ******************************************************************************/
 
 string printing_dpi ("600");
 string printing_on ("a4");
@@ -200,7 +195,7 @@ use_ps () {
 
 int
 edit_main_rep::nr_pages () {
-  string medium = env->get_string (PAGE_MEDIUM);
+  string medium= env->get_string (PAGE_MEDIUM);
   if (medium == "paper") return N (eb[0]);
   typeset_prepare ();
   env->write (PAGE_MEDIUM, "paper");
@@ -216,20 +211,18 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
   url  orig= resolve (name, "");
 
 #ifdef USE_PLUGIN_GS
-  if (!use_pdf () && pdf)
-    name= url_temp ("ps");
-  if (!use_ps () && ps)
-    name= url_temp ("pdf");
+  if (!use_pdf () && pdf) name= url_temp ("ps");
+  if (!use_ps () && ps) name= url_temp ("pdf");
 #endif
-  
-  string medium = env->get_string (PAGE_MEDIUM);
+
+  string medium= env->get_string (PAGE_MEDIUM);
   if (conform && (medium != "paper")) conform= false;
-    // FIXME: better command for conform printing
+  // FIXME: better command for conform printing
 
   typeset_preamble ();
-    // FIXME: when printing several files via aux buffers,
-    // it seems that the style can be corrupted.  Why?
-  
+  // FIXME: when printing several files via aux buffers,
+  // it seems that the style can be corrupted.  Why?
+
   // Set environment variables for printing
 
   typeset_prepare ();
@@ -250,62 +243,62 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
 
   // Determine parameters for printer
 
-  string page_type = env->page_real_type;
-  double w         = env->page_real_width;
-  double h         = env->page_real_height;
-  double cm        = env->as_real_length (string ("1cm"));
-  bool   landsc    = env->page_landscape;
-  int    dpi       = as_int (printing_dpi);
-  int    start     = max (0, first-1);
-  int    end       = min (N(the_box[0]), last);
-  int    pages     = end-start;
+  string page_type= env->page_real_type;
+  double w        = env->page_real_width;
+  double h        = env->page_real_height;
+  double cm       = env->as_real_length (string ("1cm"));
+  bool   landsc   = env->page_landscape;
+  int    dpi      = as_int (printing_dpi);
+  int    start    = max (0, first - 1);
+  int    end      = min (N (the_box[0]), last);
+  int    pages    = end - start;
   if (conform) {
-    page_type= "user";
-    SI bw= the_box[0][0]->w();
-    SI bh= the_box[0][0]->h();
+    page_type = "user";
+    SI     bw = the_box[0][0]->w ();
+    SI     bh = the_box[0][0]->h ();
     string bws= as_string (bw) * "tmpt";
     string bhs= as_string (bh) * "tmpt";
-    w= env->as_length (bws);
-    h= env->as_length (bhs);
+    w         = env->as_length (bws);
+    h         = env->as_length (bhs);
   }
-  
+
   // Print pages
-  renderer ren= printer (name, dpi, pages, page_type, landsc, w/cm, h/cm);
-  
+  renderer ren= printer (name, dpi, pages, page_type, landsc, w / cm, h / cm);
+
   if (ren->is_started ()) {
     int i;
     ren->set_metadata ("title", get_metadata ("title"));
     ren->set_metadata ("author", get_metadata ("author"));
     ren->set_metadata ("subject", get_metadata ("subject"));
     ren->set_metadata ("keyword", get_metadata ("keyword"));
-    for (i=start; i<end; i++) {
+    for (i= start; i < end; i++) {
       tree bg= env->read (BG_COLOR);
       ren->set_background (bg);
       if (bg != "white" && bg != "#ffffff")
         ren->clear_pattern (0, (SI) -h, (SI) w, 0);
 
       rectangles rs;
-      the_box[0]->sx(i)= 0;
-      the_box[0]->sy(i)= 0;
+      the_box[0]->sx (i)= 0;
+      the_box[0]->sy (i)= 0;
       the_box[0][i]->redraw (ren, path (0), rs);
-      if (i<end-1) ren->next_page ();
+      if (i < end - 1) ren->next_page ();
     }
   }
   tm_delete (ren);
 
 #ifdef USE_PLUGIN_GS
   if (!use_pdf () && pdf) {
-    gs_to_pdf (name, orig, landsc, h/cm, w/cm);
+    gs_to_pdf (name, orig, landsc, h / cm, w / cm);
     ::remove (name);
   }
   if (!use_ps () && ps) {
-    gs_to_ps (name, orig, landsc, h/cm, w/cm);
+    gs_to_ps (name, orig, landsc, h / cm, w / cm);
     ::remove (name);
   }
   if (ps || pdf)
     if (get_preference ("texmacs->pdf:check", "off") == "on") {
-      //system_wait ("Checking exported file for correctness", "please wait");
-      // FIXME: the wait message often causes a crash, currently
+      // system_wait ("Checking exported file for correctness", "please wait");
+      //  FIXME: the wait message often causes a crash, currently
       gs_check (orig);
     }
 #endif
@@ -321,12 +314,12 @@ void
 edit_main_rep::print_buffer (string first, string last) {
   url target;
 #if defined(OS_MINGW) || defined(OS_WIN)
-  target= use_pdf ()? url_temp ("pdf"): url_temp ("ps");
+  target= use_pdf () ? url_temp ("pdf") : url_temp ("ps");
 #else
   target= url_temp ("ps");
 #endif
   print_doc (target, false, as_int (first), as_int (last));
-  system (get_printing_cmd (), target);  // Send the document to the printer
+  system (get_printing_cmd (), target); // Send the document to the printer
   set_message ("Done printing", "print buffer");
   ::remove (target);
 }
@@ -335,20 +328,20 @@ edit_main_rep::print_buffer (string first, string last) {
 void
 edit_main_rep::print_buffer (string first, string last) {
   // in Qt this is the main entry point to the printing subsystem.
-  // the other routines (print_to_file, ...) are overriden since all fine tuning 
+  // the other routines (print_to_file, ...) are overriden since all fine tuning
   // is made here via the Qt print dialog
-  bool to_file, landscape;
-  url name = url_none();
+  bool   to_file, landscape;
+  url    name= url_none ();
   string printer;
   string paper_type;
   if (qt_print (to_file, landscape, printer, name, first, last, paper_type)) {
-      if (!to_file) name = url_temp ("ps");
-      print_doc (name, false, as_int (first), as_int (last));
-      if (!to_file) {
-        string cmd = printing_cmd * " -P" * printer;
-        system (cmd, name);  
-        ::remove (name);
-      }
+    if (!to_file) name= url_temp ("ps");
+    print_doc (name, false, as_int (first), as_int (last));
+    if (!to_file) {
+      string cmd= printing_cmd * " -P" * printer;
+      system (cmd, name);
+      ::remove (name);
+    }
   }
 }
 #endif
@@ -366,8 +359,8 @@ edit_main_rep::print_snippet (url name, tree t, bool conserve_preamble) {
       t= tree (SURROUND, buft[0], "", t);
 
   string s= suffix (name);
-  bool bitmap=
-    (s == "png" || s == "jpg" || s == "jpeg" || s == "tif" || s == "tiff");
+  bool   bitmap=
+      (s == "png" || s == "jpg" || s == "jpeg" || s == "tif" || s == "tiff");
 #ifndef QTTEXMACS
   bitmap= false;
 #endif
@@ -375,8 +368,8 @@ edit_main_rep::print_snippet (url name, tree t, bool conserve_preamble) {
   if (use_pdf ()) ps= (ps || s == "pdf");
 
   typeset_prepare ();
-  int dpi= as_int (printing_dpi);
-  tree old_dpi= env->read (DPI);
+  int  dpi          = as_int (printing_dpi);
+  tree old_dpi      = env->read (DPI);
   tree old_info_flag= env->read (INFO_FLAG);
   env->write (DPI, printing_dpi);
   if (is_compound (old_info_flag) || !ends (old_info_flag->label, "paper"))
@@ -388,12 +381,12 @@ edit_main_rep::print_snippet (url name, tree t, bool conserve_preamble) {
   env->write (INFO_FLAG, old_info_flag);
   env->style_init_env ();
   env->update ();
-  
-  if (b->x4 - b->x3 >= 5*PIXEL && b->y4 - b->y3 >= 5*PIXEL) {
+
+  if (b->x4 - b->x3 >= 5 * PIXEL && b->y4 - b->y3 >= 5 * PIXEL) {
     if (bitmap) make_raster_image (name, b, 5.0);
     else if (ps) make_eps (name, b, dpi);
     else {
-      url temp= url_temp (use_pdf ()? "pdf": "eps");
+      url temp= url_temp (use_pdf () ? "pdf" : "eps");
       make_eps (temp, b, dpi);
       ::remove (name);
       if (!call_scm_converter (temp, name)) {
@@ -416,19 +409,19 @@ edit_main_rep::graphics_file_to_clipboard (url name) {
 #ifdef QTTEXMACS
   the_gui->put_graphics_on_clipboard (name);
   return true;
-#else 
+#else
   return false;
 #endif
 }
 
 /******************************************************************************
-* Evaluation of expressions
-******************************************************************************/
+ * Evaluation of expressions
+ ******************************************************************************/
 
 void
 edit_main_rep::footer_eval (string s) {
   // s= unslash (s); // FIXME: dirty fix; should not be necessary
-  s= tm_decode (s);
+  s       = tm_decode (s);
   string r= object_to_string (eval (s));
   set_message (verbatim (r), "evaluate expression");
 }
@@ -475,17 +468,17 @@ edit_main_rep::the_shifted_path () {
 }
 
 /******************************************************************************
-* Miscellaneous
-******************************************************************************/
+ * Miscellaneous
+ ******************************************************************************/
 
 void
 stretched_print (box b) {
-  if (N(b) == 0) cout << b << " " << reverse (b->ip) << LF;
+  if (N (b) == 0) cout << b << " " << reverse (b->ip) << LF;
   else {
     tree t= (tree) b;
-    if (is_tuple (t) && N(t) > 0) t= t[0];
+    if (is_tuple (t) && N (t) > 0) t= t[0];
     cout << t << " " << reverse (b->ip) << LF << INDENT;
-    for (int i=0; i<N(b); i++)
+    for (int i= 0; i < N (b); i++)
       stretched_print (b[i]);
     cout << UNINDENT;
   }
@@ -514,17 +507,16 @@ edit_main_rep::show_path () {
 
 void
 edit_main_rep::show_cursor () {
-  cout << "Principal cursor: "
-       << cu->ox << ", " << cu->oy << " [" << cu->delta << "], "
-       << cu->y1 << " : " << cu->y2 << ", " << cu->slope << "\n";
-  cout << "Ghost cursor    : "
-       << mv->ox << ", " << mv->oy << " [" << mv->delta << "], "
-       << mv->y1 << " : " << mv->y2 << ", " << mv->slope << "\n";
+  cout << "Principal cursor: " << cu->ox << ", " << cu->oy << " [" << cu->delta
+       << "], " << cu->y1 << " : " << cu->y2 << ", " << cu->slope << "\n";
+  cout << "Ghost cursor    : " << mv->ox << ", " << mv->oy << " [" << mv->delta
+       << "], " << mv->y1 << " : " << mv->y2 << ", " << mv->slope << "\n";
 }
 
 void
 edit_main_rep::show_selection () {
-  selection sel; selection_get (sel);
+  selection sel;
+  selection_get (sel);
   cout << "physical  selection: " << cur_sel << "\n";
   cout << "logical   selection: " << sel->start << " --- " << sel->end << "\n";
 }
@@ -535,5 +527,4 @@ edit_main_rep::show_meminfo () {
 }
 
 void
-edit_main_rep::edit_special () {
-}
+edit_main_rep::edit_special () {}

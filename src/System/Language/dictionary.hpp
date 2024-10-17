@@ -1,46 +1,46 @@
 
 /******************************************************************************
-* MODULE     : dictionary.hpp
-* DESCRIPTION: used for translations and analysing text
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : dictionary.hpp
+ * DESCRIPTION: used for translations and analysing text
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 #include "resource.hpp"
 #include "url.hpp"
 
-RESOURCE(dictionary);
+RESOURCE (dictionary);
 
 /******************************************************************************
-* The dictionary structure
-******************************************************************************/
+ * The dictionary structure
+ ******************************************************************************/
 
-struct dictionary_rep: rep<dictionary> {
-  hashmap<string,string> table;
-  string from, to;
+struct dictionary_rep : rep<dictionary> {
+  hashmap<string, string> table;
+  string                  from, to;
 
 public:
   dictionary_rep (string from, string to);
 
   void   load (url fname);
   void   load (string from, string to);
-  string translate (string s, bool guess=true);
+  string translate (string s, bool guess= true);
 
   friend dictionary load_dictionary (string from, string to);
 };
 
-string serialize (tree t);
+string     serialize (tree t);
 dictionary load_dictionary (string from, string to);
-void force_load_dictionary (string from, string to);
-void set_input_language (string s);
-string get_input_language ();
-void set_output_language (string s);
-string get_output_language ();
+void       force_load_dictionary (string from, string to);
+void       set_input_language (string s);
+string     get_input_language ();
+void       set_output_language (string s);
+string     get_output_language ();
 
 string translate (string s, string from, string to);
 string translate (string s);

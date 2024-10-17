@@ -1,54 +1,54 @@
 
 /******************************************************************************
-* MODULE     : init_upgrade.cpp
-* DESCRIPTION: initializations which are only necessary when
-*              you just upgraded your TeXmacs distribution
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : init_upgrade.cpp
+ * DESCRIPTION: initializations which are only necessary when
+ *              you just upgraded your TeXmacs distribution
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "boot.hpp"
-#include "preferences.hpp"
-#include "file.hpp"
-#include "tm_file.hpp"
-#include "path.hpp"
-#include "sys_utils.hpp"
 #include "data_cache.hpp"
+#include "file.hpp"
+#include "path.hpp"
+#include "preferences.hpp"
+#include "sys_utils.hpp"
+#include "tm_file.hpp"
 
 /******************************************************************************
-* Check for old Init.scm and Init-buffer.scm files
-******************************************************************************/
+ * Check for old Init.scm and Init-buffer.scm files
+ ******************************************************************************/
 
 static void
 init_upgrade_scheme () {
 #ifndef OS_WIN
-  url u= "$TEXMACS_HOME_PATH/progs";
+  url    u   = "$TEXMACS_HOME_PATH/progs";
   string prgs= as_string (u);
   if (exists (u * "Init.scm") && (!exists (u * "my-init-texmacs.scm"))) {
-    system ("sed 's/Init.scm/init-texmacs.scm/'", u * "Init.scm",
-	    ">", u * "my-init-texmacs.scm");
+    system ("sed 's/Init.scm/init-texmacs.scm/'", u * "Init.scm", ">",
+            u * "my-init-texmacs.scm");
     remove (u * "Init.scm");
   }
   if (exists (u * "Init-buffer.scm") && (!exists (u * "my-init-buffer.scm"))) {
     system ("sed 's/Init-buffer.scm/init-buffer.scm/'", u * "Init-buffer.scm",
-	    ">", u * "my-init-buffer.scm");
+            ">", u * "my-init-buffer.scm");
     remove (u * "Init-buffer.scm");
   }
 #endif
 }
 
 /******************************************************************************
-* Generate documentation about changes
-******************************************************************************/
+ * Generate documentation about changes
+ ******************************************************************************/
 
 static void
 init_upgrade_doc (string install_version) {
-  url from_dir= "$TEXMACS_PATH/doc/about/changes";
-  url to= "$TEXMACS_HOME_PATH/doc/about/changes/changes-recent.en.tm";
-  string s= string_load (from_dir * "changes-pre.en.ptm");
+  url    from_dir= "$TEXMACS_PATH/doc/about/changes";
+  url    to      = "$TEXMACS_HOME_PATH/doc/about/changes/changes-recent.en.tm";
+  string s       = string_load (from_dir * "changes-pre.en.ptm");
   if (version_inf (install_version, "0.3.3.24"))
     s << string_load (from_dir * "changes-1.en.ptm");
   if (version_inf_eq (install_version, "0.3.4.9"))
@@ -92,8 +92,8 @@ init_upgrade_doc (string install_version) {
 }
 
 /******************************************************************************
-* Upgrading TeXmacs
-******************************************************************************/
+ * Upgrading TeXmacs
+ ******************************************************************************/
 
 void
 init_upgrade () {
@@ -103,7 +103,7 @@ init_upgrade () {
   debug_boot << "Your disk contains a configuration file for TeXmacs-";
   debug_boot << install_version << ".\n";
   debug_boot << "I will now perform the upgrade to version ";
-  debug_boot << TEXMACS_VERSION <<"\n";
+  debug_boot << TEXMACS_VERSION << "\n";
   debug_boot << HRULE;
 
   url new_settings= "$TEXMACS_HOME_PATH/system/settings.scm";

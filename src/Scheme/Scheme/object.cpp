@@ -57,8 +57,8 @@ tmscm_object_rep::~tmscm_object_rep () {
  * Routines on objects
  ******************************************************************************/
 
-tm_ostream &
-operator<< (tm_ostream &out, object obj) {
+tm_ostream&
+operator<< (tm_ostream& out, object obj) {
   out.flush ();
   if (out == cout) call ("write", obj);
   else if (out == cerr) call ("write-err", obj);
@@ -111,9 +111,11 @@ object
 list_object (object obj1, object obj2, object obj3) {
   return cons (obj1, cons (obj2, cons (obj3, null_object ())));
 }
-object as_list_object (array<object> objs) {
+object
+as_list_object (array<object> objs) {
   object r= null_object ();
-  for (int i=N(objs)-1; i>=0; i--) r= cons (objs[i], r);
+  for (int i= N (objs) - 1; i >= 0; i--)
+    r= cons (objs[i], r);
   return r;
 }
 object
@@ -206,13 +208,13 @@ is_modification (object obj) {
  * Basic conversions
  ******************************************************************************/
 
-object::object (tmscm_object_rep *o) : rep (static_cast<object_rep *> (o)) {}
+object::object (tmscm_object_rep* o) : rep (static_cast<object_rep*> (o)) {}
 object::object () : rep (tm_new<tmscm_object_rep> (tmscm_null ())) {}
 object::object (bool b) : rep (tm_new<tmscm_object_rep> (bool_to_tmscm (b))) {}
 object::object (int i) : rep (tm_new<tmscm_object_rep> (int_to_tmscm (i))) {}
 object::object (double x)
     : rep (tm_new<tmscm_object_rep> (double_to_tmscm (x))) {}
-object::object (const char *s)
+object::object (const char* s)
     : rep (tm_new<tmscm_object_rep> (string_to_tmscm (string (s)))) {}
 object::object (string s)
     : rep (tm_new<tmscm_object_rep> (string_to_tmscm (s))) {}
@@ -351,7 +353,7 @@ object_to_string (object obj) {
 }
 
 object
-scheme_cmd (const char *s) {
+scheme_cmd (const char* s) {
   return eval ("(lambda () " * string (s) * ")");
 }
 
@@ -390,10 +392,12 @@ public:
   void apply () { (void) call_scheme (object_to_tmscm (obj)); }
   void apply (object args) {
     (void) call_scheme (object_to_tmscm (obj),
-                        array_lookup (as_array_object (args))); }
+                        array_lookup (as_array_object (args)));
+  }
   tm_ostream& print (tm_ostream& out) {
     object bis= call ("sourcify", obj);
-    return out << "<command " << bis << ">"; }
+    return out << "<command " << bis << ">";
+  }
 };
 
 command
@@ -406,7 +410,7 @@ as_command (object obj) {
  ******************************************************************************/
 
 object
-eval (const char *expr) {
+eval (const char* expr) {
   return tmscm_to_object (eval_scheme (expr));
 }
 object
@@ -432,33 +436,33 @@ exec_file (url u) {
 }
 
 object
-call (const char *fun) {
+call (const char* fun) {
   return tmscm_to_object (call_scheme (eval_scheme (fun)));
 }
 object
-call (const char *fun, object a1) {
+call (const char* fun, object a1) {
   return tmscm_to_object (
       call_scheme (eval_scheme (fun), object_to_tmscm (a1)));
 }
 object
-call (const char *fun, object a1, object a2) {
+call (const char* fun, object a1, object a2) {
   return tmscm_to_object (call_scheme (eval_scheme (fun), object_to_tmscm (a1),
                                        object_to_tmscm (a2)));
 }
 object
-call (const char *fun, object a1, object a2, object a3) {
+call (const char* fun, object a1, object a2, object a3) {
   return tmscm_to_object (call_scheme (eval_scheme (fun), object_to_tmscm (a1),
                                        object_to_tmscm (a2),
                                        object_to_tmscm (a3)));
 }
 object
-call (const char *fun, object a1, object a2, object a3, object a4) {
+call (const char* fun, object a1, object a2, object a3, object a4) {
   return tmscm_to_object (call_scheme (
       eval_scheme (fun), object_to_tmscm (a1), object_to_tmscm (a2),
       object_to_tmscm (a3), object_to_tmscm (a4)));
 }
 object
-call (const char *fun, array<object> a) {
+call (const char* fun, array<object> a) {
   return tmscm_to_object (call_scheme (eval_scheme (fun), array_lookup (a)));
 }
 

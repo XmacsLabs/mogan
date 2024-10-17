@@ -32,14 +32,14 @@
  * Initialization of s7
  ******************************************************************************/
 
-s7_scheme *tm_s7;
+s7_scheme* tm_s7;
 s7_pointer user_env;
 
 int    tm_s7_argc;
-char **tm_s7_argv;
+char** tm_s7_argv;
 
 void
-start_scheme (int argc, char **argv, void (*call_back) (int, char **)) {
+start_scheme (int argc, char** argv, void (*call_back) (int, char**)) {
   tm_s7_argc= argc;
   tm_s7_argv= argv;
 
@@ -86,11 +86,11 @@ eval_scheme (string s) {
 
 struct arg_list {
   int    n;
-  tmscm *a;
+  tmscm* a;
 };
 
 static tmscm
-TeXmacs_call_scm (arg_list *args) {
+TeXmacs_call_scm (arg_list* args) {
   int   i;
   tmscm l= s7_nil (tm_s7);
   for (i= args->n; i >= 1; i--)
@@ -180,7 +180,7 @@ string_to_tmscm (string s) {
 string
 tmscm_to_string (tmscm s) {
   s7_int      len_r= s7_string_length (s);
-  const char *_r   = s7_string (s);
+  const char* _r   = s7_string (s);
   string      r (_r, len_r);
   return r;
 }
@@ -198,7 +198,7 @@ symbol_to_tmscm (string s) {
 
 string
 tmscm_to_symbol (tmscm s) {
-  const char *_r= s7_symbol_name (s);
+  const char* _r= s7_symbol_name (s);
   string      r (_r);
   return r;
 }
@@ -210,7 +210,7 @@ tmscm_to_symbol (tmscm s) {
 static int blackbox_tag= 0;
 
 static tmscm
-blackbox_to_string (s7_scheme *sc, tmscm args) {
+blackbox_to_string (s7_scheme* sc, tmscm args) {
   // FIXME: take into account sc!
 
   tmscm blackbox_smob= s7_car (args);
@@ -252,8 +252,8 @@ blackbox_to_string (s7_scheme *sc, tmscm args) {
 }
 
 static s7_pointer
-free_blackbox (s7_scheme *sc, s7_pointer obj) {
-  blackbox *ptr= (blackbox *) s7_c_object_value (obj);
+free_blackbox (s7_scheme* sc, s7_pointer obj) {
+  blackbox* ptr= (blackbox*) s7_c_object_value (obj);
   tm_delete (ptr);
 
   // Don't remove this, segmentation error could happen :)
@@ -261,12 +261,12 @@ free_blackbox (s7_scheme *sc, s7_pointer obj) {
 }
 
 static s7_pointer
-mark_blackbox (s7_scheme *sc, s7_pointer obj) {
+mark_blackbox (s7_scheme* sc, s7_pointer obj) {
   return (NULL);
 }
 
 static s7_pointer
-blackbox_is_equal (s7_scheme *sc, s7_pointer args) {
+blackbox_is_equal (s7_scheme* sc, s7_pointer args) {
   s7_pointer p1, p2;
   p1= s7_car (args);
   p2= s7_cadr (args);
@@ -283,13 +283,12 @@ tmscm_is_blackbox (tmscm t) {
 
 tmscm
 blackbox_to_tmscm (blackbox b) {
-  return s7_make_c_object (tm_s7, blackbox_tag,
-                           (void *) (tm_new<blackbox> (b)));
+  return s7_make_c_object (tm_s7, blackbox_tag, (void*) (tm_new<blackbox> (b)));
 }
 
 blackbox
 tmscm_to_blackbox (tmscm blackbox_smob) {
-  return *((blackbox *) s7_c_object_value (blackbox_smob));
+  return *((blackbox*) s7_c_object_value (blackbox_smob));
 }
 
 /******************************************************************************
@@ -298,7 +297,7 @@ tmscm_to_blackbox (tmscm blackbox_smob) {
 
 #ifndef KERNEL_L3
 static s7_pointer
-g_current_time (s7_scheme *sc, s7_pointer args) {
+g_current_time (s7_scheme* sc, s7_pointer args) {
   s7_int res;
 
   res= get_sec_time ();
@@ -307,7 +306,7 @@ g_current_time (s7_scheme *sc, s7_pointer args) {
 }
 
 static s7_pointer
-g_getpid (s7_scheme *sc, s7_pointer args) {
+g_getpid (s7_scheme* sc, s7_pointer args) {
   // FIXME: we really have to use QCoreApplication::applicationPid()
   // for cross-platform support
 
@@ -319,7 +318,7 @@ void
 initialize_compat () {
 
   s7_pointer cur_env= s7_curlet (tm_s7);
-  s7_scheme *sc     = tm_s7;
+  s7_scheme* sc     = tm_s7;
 
 #ifndef KERNEL_L3
   s7_define (sc, cur_env, s7_make_symbol (tm_s7, "current-time"),
@@ -351,7 +350,7 @@ tmscm object_stack;
 
 void
 initialize_scheme () {
-  const char *init_prg= "(begin \n"
+  const char* init_prg= "(begin \n"
 //  "(read-set! keywords 'prefix)\n"
 //  "(read-enable 'positions)\n"
 //  "(debug-enable 'debug)\n"

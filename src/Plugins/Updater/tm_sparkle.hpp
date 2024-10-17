@@ -10,21 +10,20 @@
 
 #include "tm_updater.hpp"
 
-class tm_sparkle : public tm_updater
-{
-    // We have to hide the SUUPdater type to avoid C++/Obj-C clashes
+class tm_sparkle : public tm_updater {
+  // We have to hide the SUUPdater type to avoid C++/Obj-C clashes
   class tm_suupdater;
   tm_suupdater* updater;
 
   tm_sparkle ();
   ~tm_sparkle ();
   friend class tm_updater;
-  
+
 public:
   bool checkInBackground ();
   bool checkInForeground ();
-  
-  bool isRunning () const;
+
+  bool   isRunning () const;
   time_t lastCheck () const;
-  bool setCheckInterval (int hours);
+  bool   setCheckInterval (int hours);
 };

@@ -1,20 +1,20 @@
 
 /******************************************************************************
-* MODULE     : web_files.cpp
-* DESCRIPTION: file handling via the web
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : web_files.cpp
+ * DESCRIPTION: file handling via the web
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "file.hpp"
-#include "tm_file.hpp"
 #include "web_files.hpp"
-#include "sys_utils.hpp"
 #include "analyze.hpp"
+#include "file.hpp"
 #include "hashmap.hpp"
+#include "sys_utils.hpp"
+#include "tm_file.hpp"
 
 #include "scheme.hpp"
 #include "tmfs_url.hpp"
@@ -22,24 +22,24 @@
 #include "lolly/io/http.hpp"
 
 #define MAX_CACHED 25
-static int web_nr=0;
-static array<tree> web_cache (MAX_CACHED);
-static hashmap<tree,tree> web_cache_resolve ("");
+static int                 web_nr= 0;
+static array<tree>         web_cache (MAX_CACHED);
+static hashmap<tree, tree> web_cache_resolve ("");
 
 /******************************************************************************
-* Caching
-******************************************************************************/
+ * Caching
+ ******************************************************************************/
 
 static url
 get_cache (url name) {
   if (web_cache_resolve->contains (name->t)) {
-    int i, j;
-    tree tmp= web_cache_resolve [name->t];
-    for (i=0; i<MAX_CACHED; i++)
+    int  i, j;
+    tree tmp= web_cache_resolve[name->t];
+    for (i= 0; i < MAX_CACHED; i++)
       if (web_cache[i] == name->t) {
         // cout << name << " in cache as " << tmp << " at " << i << "\n";
-        for (j=i; ((j+1) % MAX_CACHED) != web_nr; j= (j+1) % MAX_CACHED)
-          web_cache[j]= web_cache[(j+1) % MAX_CACHED];
+        for (j= i; ((j + 1) % MAX_CACHED) != web_nr; j= (j + 1) % MAX_CACHED)
+          web_cache[j]= web_cache[(j + 1) % MAX_CACHED];
         web_cache[j]= name->t;
         break;
       }
@@ -50,16 +50,16 @@ get_cache (url name) {
 
 static url
 set_cache (url name, url tmp) {
-  web_cache_resolve->reset (web_cache [web_nr]);
-  web_cache [web_nr]= name->t;
+  web_cache_resolve->reset (web_cache[web_nr]);
+  web_cache[web_nr]          = name->t;
   web_cache_resolve (name->t)= tmp->t;
-  web_nr= (web_nr+1) % MAX_CACHED;
+  web_nr                     = (web_nr + 1) % MAX_CACHED;
   return tmp;
 }
 
 void
 web_cache_invalidate (url name) {
-  for (int i=0; i<MAX_CACHED; i++)
+  for (int i= 0; i < MAX_CACHED; i++)
     if (web_cache[i] == name->t) {
       web_cache[i]= tree ("");
       web_cache_resolve->reset (name->t);
@@ -67,8 +67,8 @@ web_cache_invalidate (url name) {
 }
 
 /******************************************************************************
-* Web files
-******************************************************************************/
+ * Web files
+ ******************************************************************************/
 
 static string
 web_encode (string s) {
@@ -77,7 +77,7 @@ web_encode (string s) {
 
 static string
 fetch_tool () {
-  static bool done= false;
+  static bool   done= false;
   static string tool= "";
   if (done) return tool;
   if (tool == "" && exists_in_path ("wget")) tool= "wget";
@@ -93,24 +93,27 @@ get_from_web (url name) {
   if (!is_none (res)) return res;
 
   string suf= suffix (name);
-  if (!is_empty (suf)) suf= string(".") * suf;
+  if (!is_empty (suf)) suf= string (".") * suf;
 
-  url tmp= url_temp (suf);
+  url                     tmp    = url_temp (suf);
   lolly::io::http_headers headers= lolly::io::http_headers ();
-  headers("User-Agent")= string ("Mogan/") * XMACS_VERSION * " (" * get_pretty_os_name () * "; " * get_current_cpu_arch() * ")";
+  headers ("User-Agent")         = string ("Mogan/") * XMACS_VERSION * " (" *
+                          get_pretty_os_name () * "; " *
+                          get_current_cpu_arch () * ")";
   lolly::io::download (name, tmp, headers);
 
   if (!exists (tmp)) {
     return url_none ();
-  } else {
+  }
+  else {
     set_cache (name, tmp);
     return tmp;
   }
 }
 
 /******************************************************************************
-* Files from a hyperlink file system
-******************************************************************************/
+ * Files from a hyperlink file system
+ ******************************************************************************/
 
 url
 get_from_server (url u) {
@@ -129,7 +132,7 @@ get_from_server (url u) {
   url tmp= url_temp (suffix (name));
   (void) save_string (tmp, r, true);
 
-  //return set_cache (u, tmp);
+  // return set_cache (u, tmp);
   return tmp;
   // FIXME: certain files could be cached, but others not
   // for instance, files which are loaded in a delayed fashion
@@ -145,8 +148,8 @@ save_to_server (url u, string s) {
 }
 
 /******************************************************************************
-* Ramdisc
-******************************************************************************/
+ * Ramdisc
+ ******************************************************************************/
 
 url
 get_from_ramdisc (url u) {

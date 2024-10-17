@@ -1,31 +1,31 @@
 
 /******************************************************************************
-* MODULE     : concater.hpp
-* DESCRIPTION: Typesetting concatenations in two stages.
-*                - produce an array of line items
-*                - handle brackets and scripts
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : concater.hpp
+ * DESCRIPTION: Typesetting concatenations in two stages.
+ *                - produce an array of line items
+ *                - handle brackets and scripts
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef CONCATER_H
 #define CONCATER_H
-#include "typesetter.hpp"
-#include "Format/line_item.hpp"
 #include "Boxes/construct.hpp"
+#include "Format/line_item.hpp"
+#include "typesetter.hpp"
 
-#define MODE_JUSTIFY   0
-#define MODE_LEFT      1
-#define MODE_CENTER    2
-#define MODE_RIGHT     3
+#define MODE_JUSTIFY 0
+#define MODE_LEFT 1
+#define MODE_CENTER 2
+#define MODE_RIGHT 3
 
 class concater_rep {
-  edit_env              env;        // the environment
-  array<line_item>      a;          // the line items
-  bool                  rigid;      // when surely not wrappable
+  edit_env         env;   // the environment
+  array<line_item> a;     // the line items
+  bool             rigid; // when surely not wrappable
 
   // useful subroutines
   void print (box b);
@@ -44,8 +44,8 @@ class concater_rep {
   // textual markup
   void typeset_substring (string s, path ip, int pos);
   void typeset_math_substring (string s, path ip, int pos, int op_type);
-  void typeset_math_macro (string s, tree_label m, path ip,
-                           int p1, int p2, int ot);
+  void typeset_math_macro (string s, tree_label m, path ip, int p1, int p2,
+                           int ot);
   void typeset_colored_substring (string s, path ip, int pos, string col);
   void typeset_text_string (tree t, path ip, int start, int end);
   void typeset_math_string (tree t, path ip, int start, int end);
@@ -74,9 +74,9 @@ class concater_rep {
   void typeset_around (tree t, path ip, bool colored);
   void typeset_large (tree t, path ip, int type, int op_type, string prefix);
   void typeset_wide_middle (tree t, path ip);
-  //void typeset_left (tree t, path ip);
-  //void typeset_middle (tree t, path ip);
-  //void typeset_right (tree t, path ip);
+  // void typeset_left (tree t, path ip);
+  // void typeset_middle (tree t, path ip);
+  // void typeset_right (tree t, path ip);
   void typeset_bigop (tree t, path ip);
   void typeset_long_arrow (tree t, path ip);
   void typeset_lprime (tree t, path ip);
@@ -151,28 +151,28 @@ class concater_rep {
   void typeset_sound (tree t, path ip);
 
   // graphical markup
-  void typeset_graphical (array<box>& bs, tree t, path ip);
-  void typeset_graphics (tree t, path ip);
-  void typeset_superpose (tree t, path ip);
-  void typeset_gr_group (tree t, path ip);
-  void typeset_gr_transform (tree t, path ip);
-  void typeset_gr_effect (tree t, path ip);
-  void typeset_text_at (tree t, path ip);
-  void typeset_math_at (tree t, path ip);
-  void typeset_document_at (tree t, path ip);
-  void typeset_point (tree t, path ip);
+  void       typeset_graphical (array<box>& bs, tree t, path ip);
+  void       typeset_graphics (tree t, path ip);
+  void       typeset_superpose (tree t, path ip);
+  void       typeset_gr_group (tree t, path ip);
+  void       typeset_gr_transform (tree t, path ip);
+  void       typeset_gr_effect (tree t, path ip);
+  void       typeset_text_at (tree t, path ip);
+  void       typeset_math_at (tree t, path ip);
+  void       typeset_document_at (tree t, path ip);
+  void       typeset_point (tree t, path ip);
   array<box> typeset_line_arrows (path ip);
-  void typeset_line (tree t, path ip, bool close);
-  void typeset_arc (tree t, path ip, bool close);
-  void typeset_ellipse (tree t, path ip, bool close);
-  void typeset_spline (tree t, path ip, bool close);
-  void typeset_var_spline (tree t, path ip);
-  void typeset_cspline (tree t, path ip);
-  void typeset_bezier (tree t, path ip);
-  void typeset_calligraphy (tree t, path ip);
-  void typeset_fill (tree t, path ip);
-  void typeset_image (tree t, path ip);
-  void typeset_graphics_3d (tree t, path ip);
+  void       typeset_line (tree t, path ip, bool close);
+  void       typeset_arc (tree t, path ip, bool close);
+  void       typeset_ellipse (tree t, path ip, bool close);
+  void       typeset_spline (tree t, path ip, bool close);
+  void       typeset_var_spline (tree t, path ip);
+  void       typeset_cspline (tree t, path ip);
+  void       typeset_bezier (tree t, path ip);
+  void       typeset_calligraphy (tree t, path ip);
+  void       typeset_fill (tree t, path ip);
+  void       typeset_image (tree t, path ip);
+  void       typeset_graphics_3d (tree t, path ip);
 
   // markup for graphical user interface
   void typeset_canvas (tree t, path ip);
@@ -210,16 +210,16 @@ public:
   friend box              typeset_as_atomic (edit_env env, tree t, path ip);
   friend array<line_item> typeset_concat (edit_env env, tree t, path ip);
   friend array<line_item> typeset_concat_range (edit_env env, tree t, path ip,
-						int i1, int i2);
+                                                int i1, int i2);
   friend array<line_item> typeset_marker (edit_env env, path ip);
 };
 
 typedef concater_rep* concater;
 
-box typeset_as_concat (edit_env env, tree t, path ip);
+box              typeset_as_concat (edit_env env, tree t, path ip);
 array<line_item> typeset_concat (edit_env env, tree t, path ip);
-array<line_item> typeset_concat_range (edit_env env, tree t, path ip,
-				       int i1, int i2);
+array<line_item> typeset_concat_range (edit_env env, tree t, path ip, int i1,
+                                       int i2);
 array<line_item> typeset_marker (edit_env env, path ip);
 
 #endif // defined CONCATER_H

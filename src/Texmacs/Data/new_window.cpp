@@ -1,30 +1,30 @@
 
 /******************************************************************************
-* MODULE     : new_window.cpp
-* DESCRIPTION: Global window management
-* COPYRIGHT  : (C) 1999-2012  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : new_window.cpp
+ * DESCRIPTION: Global window management
+ * COPYRIGHT  : (C) 1999-2012  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "tm_data.hpp"
 #include "convert.hpp"
-#include "file.hpp"
-#include "web_files.hpp"
-#include "tm_link.hpp"
-#include "message.hpp"
 #include "dictionary.hpp"
+#include "file.hpp"
+#include "message.hpp"
 #include "new_document.hpp"
+#include "tm_data.hpp"
+#include "tm_link.hpp"
+#include "web_files.hpp"
 
 /******************************************************************************
-* Manage global list of windows
-******************************************************************************/
+ * Manage global list of windows
+ ******************************************************************************/
 
-static int last_window= 1;
+static int        last_window= 1;
 static array<url> all_windows;
-extern int nr_windows;
+extern int        nr_windows;
 
 /*
 static path
@@ -45,10 +45,10 @@ create_window_id () {
 
 void
 destroy_window_id (url win) {
-  for (int i=0; i<N(all_windows); i++)
+  for (int i= 0; i < N (all_windows); i++)
     if (all_windows[i] == win) {
       all_windows= append (range (all_windows, 0, i),
-                           range (all_windows, i+1, N(all_windows)));
+                           range (all_windows, i + 1, N (all_windows)));
       return;
     }
 }
@@ -60,40 +60,41 @@ abstract_window (tm_window win) {
 }
 
 /******************************************************************************
-* Low level creation and destruction of windows
-******************************************************************************/
+ * Low level creation and destruction of windows
+ ******************************************************************************/
 
-static hashmap<url,tm_window> tm_window_table (NULL);
+static hashmap<url, tm_window> tm_window_table (NULL);
 
-class kill_window_command_rep: public command_rep {
+class kill_window_command_rep : public command_rep {
   url* id;
+
 public:
-  inline kill_window_command_rep (url* id2): id (id2) {}
+  inline kill_window_command_rep (url* id2) : id (id2) {}
   inline ~kill_window_command_rep () { tm_delete (id); }
   inline void apply () {
-    object cmd= list_object (symbol_object ("safely-kill-window"),
-                             object (*id));
-    exec_delayed (scheme_cmd (cmd)); }
-  tm_ostream& print (tm_ostream& out) {
-    return out << "<command kill_window>"; }
+    object cmd=
+        list_object (symbol_object ("safely-kill-window"), object (*id));
+    exec_delayed (scheme_cmd (cmd));
+  }
+  tm_ostream& print (tm_ostream& out) { return out << "<command kill_window>"; }
 };
 
 url
 new_window (bool map_flag= true, tree geom= "") {
   int mask= 0;
-  if (get_preference ("header") == "on") mask += 1;
-  if (get_preference ("main icon bar") == "on") mask += 2;
-  if (get_preference ("mode dependent icons") == "on") mask += 4;
-  if (get_preference ("focus dependent icons") == "on") mask += 8;
-  if (get_preference ("user provided icons") == "on") mask += 16;
-  if (get_preference ("status bar") == "on") mask += 32;
-  //if (get_preference ("side tools") == "on") mask += 64;
-  //if (get_preference ("left tools") == "on") mask += 128;
-  if (get_preference ("bottom tools") == "on") mask += 256;
-  if (get_preference ("extra tools") == "on") mask += 512;
-  url* id= tm_new<url> (url_none ());
-  command quit= tm_new<kill_window_command_rep> (id);
-  tm_window win= tm_new<tm_window_rep> (texmacs_widget (mask, quit), geom);
+  if (get_preference ("header") == "on") mask+= 1;
+  if (get_preference ("main icon bar") == "on") mask+= 2;
+  if (get_preference ("mode dependent icons") == "on") mask+= 4;
+  if (get_preference ("focus dependent icons") == "on") mask+= 8;
+  if (get_preference ("user provided icons") == "on") mask+= 16;
+  if (get_preference ("status bar") == "on") mask+= 32;
+  // if (get_preference ("side tools") == "on") mask += 64;
+  // if (get_preference ("left tools") == "on") mask += 128;
+  if (get_preference ("bottom tools") == "on") mask+= 256;
+  if (get_preference ("extra tools") == "on") mask+= 512;
+  url*      id  = tm_new<url> (url_none ());
+  command   quit= tm_new<kill_window_command_rep> (id);
+  tm_window win = tm_new<tm_window_rep> (texmacs_widget (mask, quit), geom);
   tm_window_table (win->id)= win;
   if (map_flag) win->map ();
   *id= abstract_window (win);
@@ -103,7 +104,7 @@ new_window (bool map_flag= true, tree geom= "") {
 static bool
 delete_view_from_window (url win) {
   array<url> vs= get_all_views ();
-  for (int i=0; i<N(vs); i++)
+  for (int i= 0; i < N (vs); i++)
     if (view_to_window (vs[i]) == win) {
       detach_view (vs[i]);
       // delete_view (vs[i]);
@@ -118,7 +119,8 @@ void
 delete_window (url win_u) {
   tm_window win= concrete_window (win_u);
   if (win == NULL) return;
-  while (delete_view_from_window (win_u)) {}
+  while (delete_view_from_window (win_u)) {
+  }
   win->unmap ();
   tm_window_table->reset (win->id);
   destroy_window_widget (win->win);
@@ -127,12 +129,12 @@ delete_window (url win_u) {
 
 tm_window
 concrete_window (url win) {
-  return tm_window_table [win];
+  return tm_window_table[win];
 }
 
 /******************************************************************************
-* Manage global list of windows
-******************************************************************************/
+ * Manage global list of windows
+ ******************************************************************************/
 
 array<url>
 windows_list () {
@@ -166,7 +168,7 @@ get_current_window () {
 array<url>
 buffer_to_windows (url name) {
   array<url> r, vs= buffer_to_views (name);
-  for (int i=0; i<N(vs); i++) {
+  for (int i= 0; i < N (vs); i++) {
     url win= view_to_window (vs[i]);
     if (!is_none (win)) r << win;
   }
@@ -181,9 +183,8 @@ window_to_buffer (url win) {
 url
 window_to_view (url win) {
   array<url> vs= get_all_views ();
-  for (int i=0; i<N(vs); i++)
-    if (view_to_window (vs[i]) == win)
-      return vs[i];
+  for (int i= 0; i < N (vs); i++)
+    if (view_to_window (vs[i]) == win) return vs[i];
   return url_none ();
 }
 
@@ -209,20 +210,20 @@ switch_to_window (url new_w) {
   url old_u= window_to_view (old_w);
   url new_u= window_to_view (new_w);
   if (!is_none (old_u) && !is_none (new_u)) {
-    tm_view old_vw = concrete_view (old_u);
+    tm_view old_vw= concrete_view (old_u);
     if (old_vw != NULL) {
-      //old_vw->ed->end_editing ();
+      // old_vw->ed->end_editing ();
       old_vw->ed->suspend ();
     }
   }
   if (!is_none (new_u)) {
-    tm_view new_vw = concrete_view (new_u);
-    //attach_view (new_w, new_u);
-    //set_current_view (new_u);
+    tm_view new_vw= concrete_view (new_u);
+    // attach_view (new_w, new_u);
+    // set_current_view (new_u);
     tm_window win= concrete_window (new_w);
     if (win != NULL) win->map ();
     if (new_vw != NULL) {
-      //new_vw->ed->start_editing ();
+      // new_vw->ed->start_editing ();
       new_vw->ed->resume ();
       send_keyboard_focus (new_vw->ed);
     }
@@ -230,8 +231,8 @@ switch_to_window (url new_w) {
 }
 
 /******************************************************************************
-* Other subroutines
-******************************************************************************/
+ * Other subroutines
+ ******************************************************************************/
 
 void
 create_buffer (url name, tree doc) {
@@ -241,23 +242,21 @@ create_buffer (url name, tree doc) {
 
 void
 new_buffer_in_this_window (url name, tree doc) {
-  if (is_nil (concrete_buffer (name)))
-    create_buffer (name, doc);
+  if (is_nil (concrete_buffer (name))) create_buffer (name, doc);
   switch_to_buffer (name);
 }
 
 url
 new_buffer_in_new_window (url name, tree doc, tree geom) {
-  if (is_nil (concrete_buffer (name)))
-    create_buffer (name, doc);
+  if (is_nil (concrete_buffer (name))) create_buffer (name, doc);
   url win= new_window (true, geom);
   window_set_view (win, get_passive_view (name), true);
   return win;
 }
 
 /******************************************************************************
-* Exported routines
-******************************************************************************/
+ * Exported routines
+ ******************************************************************************/
 
 url
 create_buffer () {
@@ -281,7 +280,7 @@ clone_window () {
 void
 kill_buffer (url name) {
   array<url> vs= buffer_to_views (name);
-  for (int i=0; i<N(vs); i++)
+  for (int i= 0; i < N (vs); i++)
     if (!is_none (vs[i])) {
       url prev= get_recent_view (name, false, true, false, true);
       if (is_none (prev)) {
@@ -297,7 +296,7 @@ kill_buffer (url name) {
 void
 kill_window (url wname) {
   array<url> vs= get_all_views ();
-  for (int i=0; i<N(vs); i++) {
+  for (int i= 0; i < N (vs); i++) {
     url win= view_to_window (vs[i]);
     if (!is_none (win) && win != wname) {
       set_current_view (vs[i]);
@@ -306,20 +305,19 @@ kill_window (url wname) {
       return;
     }
   }
-  if (number_of_servers () == 0) get_server () -> quit ();
+  if (number_of_servers () == 0) get_server ()->quit ();
   else delete_window (wname);
 }
 
 void
 kill_current_window_and_buffer () {
-  if (N(bufs) <= 1) get_server () -> quit();
-  url name= get_current_buffer ();
-  array<url> vs= buffer_to_views (get_current_buffer ());
-  url win= get_current_window ();
-  bool kill= true;
-  for (int i=0; i<N(vs); i++)
-    if (view_to_window (vs[i]) != win)
-      kill= false;
+  if (N (bufs) <= 1) get_server ()->quit ();
+  url        name= get_current_buffer ();
+  array<url> vs  = buffer_to_views (get_current_buffer ());
+  url        win = get_current_window ();
+  bool       kill= true;
+  for (int i= 0; i < N (vs); i++)
+    if (view_to_window (vs[i]) != win) kill= false;
   kill_window (win);
   if (kill) remove_buffer (name);
 }

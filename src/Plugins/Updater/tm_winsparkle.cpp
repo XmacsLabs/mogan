@@ -11,50 +11,49 @@
 
 #include "tm_configure.hpp"
 
-#if defined (USE_PLUGIN_SPARKLE) && (defined (OS_MINGW) || defined (OS_WIN))
+#if defined(USE_PLUGIN_SPARKLE) && (defined(OS_MINGW) || defined(OS_WIN))
 
-#include "tm_winsparkle.hpp"
 #include "string.hpp"
+#include "tm_winsparkle.hpp"
 #include <winsparkle.h>
 
-tm_winsparkle::~tm_winsparkle ()
-{
-  win_sparkle_cleanup();
-}
+tm_winsparkle::~tm_winsparkle () { win_sparkle_cleanup (); }
 
-bool tm_winsparkle::setCheckInterval (int hours)
-{
+bool
+tm_winsparkle::setCheckInterval (int hours) {
   if (running) return false;
-  interval = hours <= 0 ? 0
-    : max (MinimumCheckInterval, min (MaximumCheckInterval, hours));
+  interval= hours <= 0
+                ? 0
+                : max (MinimumCheckInterval, min (MaximumCheckInterval, hours));
   win_sparkle_set_update_check_interval (interval * 3600);
   win_sparkle_set_automatic_check_for_updates (interval > 0 ? 1 : 0);
   return true;
 }
 
-time_t tm_winsparkle::lastCheck() const
-{
-  return win_sparkle_get_last_check_time();
+time_t
+tm_winsparkle::lastCheck () const {
+  return win_sparkle_get_last_check_time ();
 }
 
-bool tm_winsparkle::checkInBackground ()
-{
+bool
+tm_winsparkle::checkInBackground () {
   // WinSparkle docs state that configuration must be finished before the first
   // call to win_sparkle_init(), so we block any further attempts to change it.
   if (running || interval <= 0) return false;
-  running = true;
-  win_sparkle_init();
-  win_sparkle_check_update_without_ui();
+  running= true;
+  win_sparkle_init ();
+  win_sparkle_check_update_without_ui ();
   return true;
 }
 
-bool tm_winsparkle::checkInForeground ()
-{
+bool
+tm_winsparkle::checkInForeground () {
   if (running) return false;
-  running = true;
-  win_sparkle_init();
-  win_sparkle_check_update_with_ui();
+  running= true;
+  win_sparkle_init ();
+  win_sparkle_check_update_with_ui ();
   return true;
 }
 
-#endif  // defined (USE_PLUGIN_SPARKLE) && (defined (OS_MINGW) || defined (OS_WIN))
+#endif // defined (USE_PLUGIN_SPARKLE) && (defined (OS_MINGW) || defined
+       // (OS_WIN))

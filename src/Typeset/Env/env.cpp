@@ -1,83 +1,76 @@
 
 /******************************************************************************
-* MODULE     : env.cpp
-* DESCRIPTION: the environment of the math_editor
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : env.cpp
+ * DESCRIPTION: the environment of the math_editor
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "env.hpp"
 #include "iterator.hpp"
 #include "tm_url.hpp"
 
-extern hashmap<string,int> default_var_type;
-void initialize_default_var_type ();
-extern hashmap<string,tree> default_env;
-void initialize_default_env ();
+extern hashmap<string, int>  default_var_type;
+void                         initialize_default_var_type ();
+extern hashmap<string, tree> default_env;
+void                         initialize_default_env ();
 #include "page_type.hpp"
 
 /******************************************************************************
-* Initialization
-******************************************************************************/
+ * Initialization
+ ******************************************************************************/
 
-edit_env_rep::edit_env_rep (drd_info& drd2,
-			    url base_file_name2,
-			    hashmap<string,tree>& local_ref2,
-			    hashmap<string,tree>& global_ref2,
-			    hashmap<string,tree>& local_aux2,
-			    hashmap<string,tree>& global_aux2,
-			    hashmap<string,tree>& local_att2,
-			    hashmap<string,tree>& global_att2):
-  drd (drd2),
-  env (UNINIT), back (UNINIT), src (path (DECORATION)),
-  var_type (default_var_type),
-  base_file_name (base_file_name2),
-  cur_file_name (base_file_name2),
-  secure (is_secure (base_file_name2)),
-  local_ref (local_ref2), global_ref (global_ref2),
-  local_aux (local_aux2), global_aux (global_aux2),
-  local_att (local_att2), global_att (global_att2),
-  missing (UNINIT), redefined (), touched (false)
-{
+edit_env_rep::edit_env_rep (drd_info& drd2, url base_file_name2,
+                            hashmap<string, tree>& local_ref2,
+                            hashmap<string, tree>& global_ref2,
+                            hashmap<string, tree>& local_aux2,
+                            hashmap<string, tree>& global_aux2,
+                            hashmap<string, tree>& local_att2,
+                            hashmap<string, tree>& global_att2)
+    : drd (drd2), env (UNINIT), back (UNINIT), src (path (DECORATION)),
+      var_type (default_var_type), base_file_name (base_file_name2),
+      cur_file_name (base_file_name2), secure (is_secure (base_file_name2)),
+      local_ref (local_ref2), global_ref (global_ref2), local_aux (local_aux2),
+      global_aux (global_aux2), local_att (local_att2),
+      global_att (global_att2), missing (UNINIT), redefined (),
+      touched (false) {
   initialize_default_env ();
   initialize_default_var_type ();
   env= copy (default_env);
   style_init_env ();
   update ();
-  complete= false;
+  complete   = false;
   recover_env= tuple ();
   anim_start= anim_end= anim_portion= 0.0;
 }
 
-edit_env::edit_env (drd_info& drd,
-		    url base_file_name,
-		    hashmap<string,tree>& local_ref,
-		    hashmap<string,tree>& global_ref,
-		    hashmap<string,tree>& local_aux,
-		    hashmap<string,tree>& global_aux,
-		    hashmap<string,tree>& local_att,
-		    hashmap<string,tree>& global_att):
-  rep (tm_new<edit_env_rep> (drd, base_file_name,
-                             local_ref, global_ref,
-                             local_aux, global_aux,
-                             local_att, global_att)) {}
+edit_env::edit_env (drd_info& drd, url base_file_name,
+                    hashmap<string, tree>& local_ref,
+                    hashmap<string, tree>& global_ref,
+                    hashmap<string, tree>& local_aux,
+                    hashmap<string, tree>& global_aux,
+                    hashmap<string, tree>& local_att,
+                    hashmap<string, tree>& global_att)
+    : rep (tm_new<edit_env_rep> (drd, base_file_name, local_ref, global_ref,
+                                 local_aux, global_aux, local_att,
+                                 global_att)) {}
 
 void
 edit_env_rep::style_init_env () {
-  dpi = get_int (DPI);
-  inch= ((double) dpi*PIXEL);
+  dpi        = get_int (DPI);
+  inch       = ((double) dpi * PIXEL);
   flexibility= get_double (PAGE_FLEXIBILITY);
-  first_page= get_double (PAGE_FIRST);
-  back= hashmap<string,tree> (UNINIT);
+  first_page = get_double (PAGE_FIRST);
+  back       = hashmap<string, tree> (UNINIT);
   update_page_pars ();
 }
 
 /******************************************************************************
-* Modification of environment variables
-******************************************************************************/
+ * Modification of environment variables
+ ******************************************************************************/
 
 /*
 void
@@ -118,10 +111,8 @@ edit_env_rep::assign (string s, tree t) {
 
 tree
 edit_env_rep::local_begin_extents (box b) {
-  tree old= tree (TUPLE,
-		  env ["w-length"], env ["h-length"],
-		  env ["l-length"], env ["b-length"],
-		  env ["r-length"], env ["t-length"]);
+  tree old= tree (TUPLE, env["w-length"], env["h-length"], env["l-length"],
+                  env["b-length"], env["r-length"], env["t-length"]);
   env ("w-length")= as_string (b->w ()) * "tmpt";
   env ("h-length")= as_string (b->h ()) * "tmpt";
   env ("l-length")= as_string (b->x1) * "tmpt";
@@ -142,8 +133,8 @@ edit_env_rep::local_end_extents (tree t) {
 }
 
 /******************************************************************************
-* Global manipulations of the environment
-******************************************************************************/
+ * Global manipulations of the environment
+ ******************************************************************************/
 
 void
 edit_env_rep::write_default_env () {
@@ -151,64 +142,63 @@ edit_env_rep::write_default_env () {
 }
 
 void
-edit_env_rep::write_env (hashmap<string,tree> user_env) {
+edit_env_rep::write_env (hashmap<string, tree> user_env) {
   env= copy (user_env);
 }
 
 void
-edit_env_rep::monitored_patch_env (hashmap<string,tree> patch) {
+edit_env_rep::monitored_patch_env (hashmap<string, tree> patch) {
   if (patch->size == 0) return;
-  int i=0, n=patch->n;
-  for (; i<n; i++) {
-    list<hashentry<string,tree> > l=patch->a[i];
-    for (; !is_nil(l); l=l->next)
+  int i= 0, n= patch->n;
+  for (; i < n; i++) {
+    list<hashentry<string, tree>> l= patch->a[i];
+    for (; !is_nil (l); l= l->next)
       monitored_write_update (l->item.key, l->item.im);
   }
 }
 
 void
-edit_env_rep::patch_env (hashmap<string,tree> patch) {
+edit_env_rep::patch_env (hashmap<string, tree> patch) {
   if (patch->size == 0) return;
-  int i=0, n=patch->n;
-  for (; i<n; i++) {
-    list<hashentry<string,tree> > l=patch->a[i];
-    for (; !is_nil(l); l=l->next)
+  int i= 0, n= patch->n;
+  for (; i < n; i++) {
+    list<hashentry<string, tree>> l= patch->a[i];
+    for (; !is_nil (l); l= l->next)
       write_update (l->item.key, l->item.im);
   }
 }
 
 void
-edit_env_rep::read_env (hashmap<string,tree>& ret) {
+edit_env_rep::read_env (hashmap<string, tree>& ret) {
   ret= copy (env);
 }
 
 void
-edit_env_rep::local_start (hashmap<string,tree>& prev_back) {
+edit_env_rep::local_start (hashmap<string, tree>& prev_back) {
   prev_back= back;
-  back= hashmap<string,tree> (UNINIT);  
+  back     = hashmap<string, tree> (UNINIT);
 }
 
 void
-edit_env_rep::local_update (hashmap<string,tree>& old_patch,
-			    hashmap<string,tree>& change)
-{
+edit_env_rep::local_update (hashmap<string, tree>& old_patch,
+                            hashmap<string, tree>& change) {
   old_patch->pre_patch (back, env);
   old_patch->post_patch (change, env);
   change= invert (back, env);
 }
 
 void
-edit_env_rep::local_end (hashmap<string,tree>& prev_back) {
-  int i=0, n=back->n;
-  for (; i<n; i++) {
-    list<hashentry<string,tree> > l=back->a[i];
-    for (; !is_nil(l); l=l->next)
+edit_env_rep::local_end (hashmap<string, tree>& prev_back) {
+  int i= 0, n= back->n;
+  for (; i < n; i++) {
+    list<hashentry<string, tree>> l= back->a[i];
+    for (; !is_nil (l); l= l->next)
       prev_back->write_back (l->item.key, back);
   }
   back= prev_back;
 }
 
 tm_ostream&
-operator << (tm_ostream& out, edit_env env) {
+operator<< (tm_ostream& out, edit_env env) {
   return out << env->env;
 }

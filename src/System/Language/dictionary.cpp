@@ -1,35 +1,36 @@
 
 /******************************************************************************
-* MODULE     : dictionary.cpp
-* DESCRIPTION: used for translations and analyzing text
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : dictionary.cpp
+ * DESCRIPTION: used for translations and analyzing text
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "dictionary.hpp"
-#include "gui.hpp"
-#include "file.hpp"
-#include "convert.hpp"
 #include "block.hpp"
+#include "convert.hpp"
 #include "converter.hpp"
-#include "universal.hpp"
 #include "drd_std.hpp"
-#include "scheme.hpp"
-#include "iterator.hpp"
+#include "file.hpp"
 #include "font.hpp"
+#include "gui.hpp"
+#include "iterator.hpp"
 #include "locale.hpp"
+#include "scheme.hpp"
+#include "universal.hpp"
 
-RESOURCE_CODE(dictionary);
+RESOURCE_CODE (dictionary);
 
 /******************************************************************************
-* Dictionary initialization
-******************************************************************************/
+ * Dictionary initialization
+ ******************************************************************************/
 
-dictionary_rep::dictionary_rep (string from2, string to2):
-  rep<dictionary> (from2 * "-" * to2), table ("?"), from (from2), to (to2) {}
+dictionary_rep::dictionary_rep (string from2, string to2)
+    : rep<dictionary> (from2 * "-" * to2), table ("?"), from (from2), to (to2) {
+}
 
 void
 dictionary_rep::load (url u) {
@@ -45,17 +46,18 @@ dictionary_rep::load (url u) {
   tree t= block_to_scheme_tree (s);
   if (!is_tuple (t)) return;
 
-  int i, n= N(t);
-  for (i=0; i<n; i++)
-    if (is_func (t[i], TUPLE, 2) &&
-        is_atomic (t[i][0]) && is_atomic (t[i][1]))
-    {
-      string l= t[i][0]->label; if (is_quoted (l)) l= scm_unquote (l);
-      string r= t[i][1]->label; if (is_quoted (r)) r= scm_unquote (r);
-      if (to == "chinese" ||  to == "japanese"  ||
-          to == "korean"  ||  to == "taiwanese" ||
-          to == "russian" ||  to == "ukrainian" || to == "bulgarian" ||
-          to == "german" || to == "greek" || to == "slovak")
+  int i, n= N (t);
+  for (i= 0; i < n; i++)
+    if (is_func (t[i], TUPLE, 2) && is_atomic (t[i][0]) &&
+        is_atomic (t[i][1])) {
+      string l= t[i][0]->label;
+      if (is_quoted (l)) l= scm_unquote (l);
+      string r= t[i][1]->label;
+      if (is_quoted (r)) r= scm_unquote (r);
+      if (to == "chinese" || to == "japanese" || to == "korean" ||
+          to == "taiwanese" || to == "russian" || to == "ukrainian" ||
+          to == "bulgarian" || to == "german" || to == "greek" ||
+          to == "slovak")
         r= utf8_to_cork (r);
       table (l)= r;
     }
@@ -63,38 +65,39 @@ dictionary_rep::load (url u) {
 
 void
 dictionary_rep::load (string from, string to) {
-  string fname = from * "-" * to * ".scm";
+  string fname= from * "-" * to * ".scm";
   if (DEBUG_CONVERT) debug_convert << "Loading " << fname << LF;
-  string to_locale_tag= language_to_locale (to);
+  string to_locale_tag  = language_to_locale (to);
   string from_locale_tag= language_to_locale (from);
-  string path_to_dic= string("plugins/lang_") * to_locale_tag * "/data/from_" * from_locale_tag * ".scm";
-  url u2= get_texmacs_home_path () * path_to_dic | get_texmacs_path () * path_to_dic;
+  string path_to_dic= string ("plugins/lang_") * to_locale_tag * "/data/from_" *
+                      from_locale_tag * ".scm";
+  url u2= get_texmacs_home_path () * path_to_dic |
+          get_texmacs_path () * path_to_dic;
   load (expand (complete (u2)));
 }
 
 dictionary
 load_dictionary (string from, string to) {
   string name= from * "-" * to;
-  if (dictionary::instances -> contains (name))
-    return dictionary (name);
+  if (dictionary::instances->contains (name)) return dictionary (name);
   dictionary dict= tm_new<dictionary_rep> (from, to);
   if (from != to) dict->load (from, to);
-  
-  if (N(dict->table) == 0) {
+
+  if (N (dict->table) == 0) {
     dictionary inv= load_dictionary (to, from);
-    for (iterator<string> it= iterate (inv->table); it->busy (); ) {
-      string key= it->next ();
-      string im = inv->table [key];
+    for (iterator<string> it= iterate (inv->table); it->busy ();) {
+      string key      = it->next ();
+      string im       = inv->table[key];
       dict->table (im)= key;
     }
   }
-  
+
   return dict;
 }
 
 /******************************************************************************
-* Translation routines
-******************************************************************************/
+ * Translation routines
+ ******************************************************************************/
 
 string
 dictionary_rep::translate (string s, bool guess) {
@@ -104,12 +107,11 @@ dictionary_rep::translate (string s, bool guess) {
     if (pos >= 0) return s (0, pos);
     return s;
   }
-  
-  //cout << "Translate <" << s << ">\n";
-  // Is s in dictionary?
-  if (table->contains (s) && table[s] != "")
-    return table[s];
-  
+
+  // cout << "Translate <" << s << ">\n";
+  //  Is s in dictionary?
+  if (table->contains (s) && table[s] != "") return table[s];
+
   // Is lowercase version of s in dictionary?
   string ls= locase_first (s);
   if (table->contains (ls) && table[ls] != "")
@@ -118,19 +120,17 @@ dictionary_rep::translate (string s, bool guess) {
   // Search for :: disambiguation patterns
   int pos= search_forwards ("::", s);
   if (pos >= 0) return translate (s (0, pos), guess);
-  
+
   // Attempt to split the string and translate its parts?
   if (!guess) return s;
-  
+
   // Remove trailing non iso_alpha characters
-  int i, n= N(s);
-  for (i=0; i<n; i++)
-    if (is_iso_alpha (s[i]))
-      break;
+  int i, n= N (s);
+  for (i= 0; i < n; i++)
+    if (is_iso_alpha (s[i])) break;
   int start= i;
-  for (i=n; i>0; i--)
-    if (is_iso_alpha (s[i-1]))
-      break;
+  for (i= n; i > 0; i--)
+    if (is_iso_alpha (s[i - 1])) break;
   int end= i;
   if (start >= n || end <= 0) return s;
   if (start != 0 || end != n) {
@@ -147,9 +147,8 @@ dictionary_rep::translate (string s, bool guess) {
   }
 
   // Break at last non iso_alpha character which is not a space
-  for (i=n; i>0; i--)
-    if (!is_iso_alpha (s[i-1]) && s[i-1] != ' ')
-      break;
+  for (i= n; i > 0; i--)
+    if (!is_iso_alpha (s[i - 1]) && s[i - 1] != ' ') break;
   if (i > 0) {
     string s1= translate (s (0, i));
     string s2= translate (s (i, n));
@@ -161,20 +160,32 @@ dictionary_rep::translate (string s, bool guess) {
 }
 
 /******************************************************************************
-* Interface
-******************************************************************************/
+ * Interface
+ ******************************************************************************/
 
 static string in_lan ("english");
 static string out_lan ("english");
 
-void set_input_language (string s) { in_lan= s; }
-string get_input_language () { return in_lan; }
-void set_output_language (string s) { out_lan= s; }
-string get_output_language () { return out_lan; }
+void
+set_input_language (string s) {
+  in_lan= s;
+}
+string
+get_input_language () {
+  return in_lan;
+}
+void
+set_output_language (string s) {
+  out_lan= s;
+}
+string
+get_output_language () {
+  return out_lan;
+}
 
 string
 translate (string s, string from, string to) {
-  if (N(from)==0) return s;
+  if (N (from) == 0) return s;
   dictionary dict= load_dictionary (from, to);
   return dict->translate (s);
 }
@@ -192,8 +203,8 @@ translate (const char* s) {
 void
 force_load_dictionary (string from, string to) {
   string name= from * "-" * to;
-  if (dictionary::instances -> contains (name))
-    dictionary::instances -> reset (name);
+  if (dictionary::instances->contains (name))
+    dictionary::instances->reset (name);
   load_dictionary (from, to);
   notify_preference ("language");
 }
@@ -210,31 +221,31 @@ translate_as_is (string s) {
 }
 
 /******************************************************************************
-* Translation of trees
-******************************************************************************/
+ * Translation of trees
+ ******************************************************************************/
 
 tree
-translate_replace (tree t, string from, string to, int n=1)
-{
-  if (N(t) < 2) return t[0];
-  
-  string s= t[0]->label;
+translate_replace (tree t, string from, string to, int n= 1) {
+  if (N (t) < 2) return t[0];
+
+  string s  = t[0]->label;
   string arg= "%" * as_string (n);
-  
+
   if (is_atomic (t[1])) {
     s= replace (s, arg, translate (t[1]->label, from, to));
-    return translate_replace (concat (s) * t(2, N(t)), from, to, n+1);
+    return translate_replace (concat (s) * t (2, N (t)), from, to, n + 1);
   }
   else {
     int l= search_forwards (arg, s);
     if (l < 0) return t;
-    int r= l + N(arg);
+    int  r = l + N (arg);
     tree r1= tree_translate (t[1], from, to);
-    tree r2= translate_replace (tuple (s (r, N(s))) * t(2, N(t)), from, to, n+1);
-    s= s(0, l);
+    tree r2= translate_replace (tuple (s (r, N (s))) * t (2, N (t)), from, to,
+                                n + 1);
+    s      = s (0, l);
     if (is_atomic (r1)) {
       if (is_atomic (r2)) return s * r1->label * r2->label;
-      else                return concat (s * r1->label, r2);
+      else return concat (s * r1->label, r2);
     }
     return concat (s, r1, r2);
   }
@@ -242,26 +253,24 @@ translate_replace (tree t, string from, string to, int n=1)
 
 tree
 tree_translate (tree t, string from, string to) {
-  //cout << "Translating " << t << " from " << from << " into " << to << "\n";
-  if (is_atomic (t))
-    return translate (t->label, from, to);
+  // cout << "Translating " << t << " from " << from << " into " << to << "\n";
+  if (is_atomic (t)) return translate (t->label, from, to);
   else if (is_compound (t, "replace")) {
     if (!is_atomic (t[0])) {
-        //cout << "tree_translate() ERROR: first child should be a string\n";
+      // cout << "tree_translate() ERROR: first child should be a string\n";
       return t;
     }
     t[0]->label= translate_as_is (t[0]->label, from, to);
     return translate_replace (t, from, to);
   }
-  else if (is_compound (t, "verbatim", 1))
-    return t[0];
+  else if (is_compound (t, "verbatim", 1)) return t[0];
   else if (is_compound (t, "localize", 1))
     return tree_translate (t[0], "english", out_lan);
   else if (is_compound (t, "render-key", 1))
     return compound ("render-key", tree_translate (t[0], from, to));
   else {
-    tree r (t, N(t));
-    for (int i=0; i<N(t); i++)
+    tree r (t, N (t));
+    for (int i= 0; i < N (t); i++)
       if (!the_drd->is_accessible_child (t, i)) r[i]= t[i];
       else r[i]= tree_translate (t[i], from, to);
     return r;
@@ -274,33 +283,30 @@ tree_translate (tree t) {
 }
 
 /******************************************************************************
-* Translate and serialize
-******************************************************************************/
+ * Translate and serialize
+ ******************************************************************************/
 
 string
 serialize (tree t) {
-  if (is_atomic (t))
-    return t->label;
+  if (is_atomic (t)) return t->label;
   else if (is_concat (t)) {
     string s;
-    for (int i=0; i<N(t); i++) {
+    for (int i= 0; i < N (t); i++) {
       tree u= t[i];
-      while (is_concat (u) && N(u) > 0) u= u[0];
+      while (is_concat (u) && N (u) > 0)
+        u= u[0];
       if (i > 0 && is_compound (u, "render-key"))
-	if (!is_atomic (t[i-1]) || !ends (t[i-1]->label, " ")) {
-	  if (use_macos_fonts () || gui_is_qt ()) s << "  ";
-	  else s << " ";
-	}
+        if (!is_atomic (t[i - 1]) || !ends (t[i - 1]->label, " ")) {
+          if (use_macos_fonts () || gui_is_qt ()) s << "  ";
+          else s << " ";
+        }
       s << serialize (t[i]);
     }
     return s;
   }
-  else if (is_compound (t, "render-key", 1))
-    return serialize (t[0]);
-  else if (is_func (t, WITH))
-    return serialize (t[N(t)-1]);
-  else if (is_compound (t, "math", 1))
-    return serialize (t[0]);
+  else if (is_compound (t, "render-key", 1)) return serialize (t[0]);
+  else if (is_func (t, WITH)) return serialize (t[N (t) - 1]);
+  else if (is_compound (t, "math", 1)) return serialize (t[0]);
   else if (is_compound (t, "op", 1)) {
     t= t[0];
     if (gui_is_qt ()) {

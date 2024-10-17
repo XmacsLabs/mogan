@@ -1,52 +1,54 @@
 
 /******************************************************************************
-* MODULE     : concat_active.cpp
-* DESCRIPTION: Typeset active markup
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : concat_active.cpp
+ * DESCRIPTION: Typeset active markup
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "concater.hpp"
-#include "file.hpp"
-#include "image_files.hpp"
-#include "sys_utils.hpp"
 #include "analyze.hpp"
-#include "scheme.hpp"
-#include "packrat.hpp"
+#include "concater.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
+#include "file.hpp"
+#include "image_files.hpp"
 #include "observers.hpp"
-
+#include "packrat.hpp"
+#include "scheme.hpp"
+#include "sys_utils.hpp"
 
 /******************************************************************************
-* Typesetting executable markup
-******************************************************************************/
+ * Typesetting executable markup
+ ******************************************************************************/
 
 void
 concater_rep::typeset_if (tree t, path ip) {
   // This method must be kept consistent with edit_env_rep::exec(tree)
   // in ../Env/env_exec.cpp
-  if ((N(t)!=2) && (N(t)!=3)) {
+  if ((N (t) != 2) && (N (t) != 3)) {
     typeset_executable (t, ip);
     return;
   }
   tree tt= env->exec (t[0]);
-  if (is_compound (tt) || ! is_bool (tt->label)) {
+  if (is_compound (tt) || !is_bool (tt->label)) {
     typeset_executable (t, ip);
     return;
   }
   marker (descend (ip, 0));
   if (as_bool (tt->label)) typeset (t[1], descend (ip, 1));
-  else if (N(t) == 3) typeset (t[2], descend (ip, 2));
+  else if (N (t) == 3) typeset (t[2], descend (ip, 2));
   marker (descend (ip, 1));
 }
 
 void
 concater_rep::typeset_var_if (tree t, path ip) {
-  if (N(t) != 2) { typeset_error (t, ip); return; }
+  if (N (t) != 2) {
+    typeset_error (t, ip);
+    return;
+  }
   tree flag= env->exec (t[0]);
   box  b   = typeset_as_concat (env, attach_right (t[1], ip));
   marker (descend (ip, 0));
@@ -59,24 +61,24 @@ void
 concater_rep::typeset_case (tree t, path ip) {
   // This method must be kept consistent with edit_env_rep::exec(tree)
   // in ../Env/env_exec.cpp
-  if (N(t)<2) {
+  if (N (t) < 2) {
     typeset_executable (t, ip);
     return;
   }
   marker (descend (ip, 0));
-  int i, n= N(t);
-  for (i=0; i<(n-1); i+=2) {
+  int i, n= N (t);
+  for (i= 0; i < (n - 1); i+= 2) {
     tree tt= env->exec (t[i]);
     if (is_compound (tt) || !is_bool (tt->label)) {
       typeset_executable (t, ip);
-      i=n;
+      i= n;
     }
     else if (as_bool (tt->label)) {
-      typeset (t[i+1], descend (ip, i+1));
-      i=n;
+      typeset (t[i + 1], descend (ip, i + 1));
+      i= n;
     }
   }
-  if (i<n) typeset (t[i], descend (ip, i));
+  if (i < n) typeset (t[i], descend (ip, i));
   marker (descend (ip, 1));
 }
 
@@ -84,18 +86,18 @@ void
 concater_rep::typeset_dynamic_case (tree t, path ip) {
   // This method must be kept consistent with edit_env_rep::exec(tree)
   // in ../Env/env_exec.cpp
-  if (N(t)<1) {
+  if (N (t) < 1) {
     typeset_executable (t, ip);
     return;
   }
-  int i, n= N(t);
+  int         i, n= N (t);
   array<tree> conds;
   array<box>  bs;
-  for (i=0; i<(n-1); i+=2) {
+  for (i= 0; i < (n - 1); i+= 2) {
     conds << env->exec (t[i]);
-    bs << typeset_as_concat (env, t[i+1], descend (ip, i+1));
+    bs << typeset_as_concat (env, t[i + 1], descend (ip, i + 1));
   }
-  if (i<n) bs << typeset_as_concat (env, t[i], descend (ip, i));
+  if (i < n) bs << typeset_as_concat (env, t[i], descend (ip, i));
   box b= case_box (ip, conds, bs);
   marker (descend (ip, 0));
   print (b);
@@ -103,23 +105,24 @@ concater_rep::typeset_dynamic_case (tree t, path ip) {
 }
 
 /******************************************************************************
-* Typesetting linking primitives
-******************************************************************************/
+ * Typesetting linking primitives
+ ******************************************************************************/
 
 bool
-build_locus (edit_env env, tree t, list<string>& ids, string& col, string &ref, string &anchor) {
-  //cout << "Typeset " << t << "\n";
-  int last= N(t)-1;
+build_locus (edit_env env, tree t, list<string>& ids, string& col, string& ref,
+             string& anchor) {
+  // cout << "Typeset " << t << "\n";
+  int  last= N (t) - 1;
   tree body= env->expand (t[last], true);
-  //cout << "Typeset " << body << "\n";
+  // cout << "Typeset " << body << "\n";
   bool accessible= is_accessible (obtain_ip (body));
-  bool visited= false;
-  ref= "";
-  anchor= "";
+  bool visited   = false;
+  ref            = "";
+  anchor         = "";
 
   if (!is_nil (env->link_env)) {
     int i, j;
-    for (i=0; i<last; i++) {
+    for (i= 0; i < last; i++) {
       tree arg= env->exec (t[i]);
       if (is_compound (arg, "id", 1)) {
         string id= as_string (arg[0]);
@@ -129,22 +132,22 @@ build_locus (edit_env env, tree t, list<string>& ids, string& col, string &ref, 
           path p= path_up (reverse (descend_decode (obtain_ip (body), 1)));
           env->link_env->insert_locus ("&" * id, get_subtree (p));
         }
-        ids= list<string> (id, ids);
+        ids    = list<string> (id, ids);
         visited= visited || has_been_visited ("id:" * id);
       }
-      else if (is_compound (arg, "link") && N(arg) >= 2) {
+      else if (is_compound (arg, "link") && N (arg) >= 2) {
         if (is_func (arg[1], ATTR)) arg= copy (arg);
-        else arg= arg (0, 1) * tree (LINK, tree (ATTR)) * arg (1, N(arg));
+        else arg= arg (0, 1) * tree (LINK, tree (ATTR)) * arg (1, N (arg));
         arg[1] << tree ("secure")
-               << (env->secure? tree ("true"): tree ("false"));
+               << (env->secure ? tree ("true") : tree ("false"));
         env->link_env->insert_link (arg);
-        for (j=2; j<N(arg); j++) {
+        for (j= 2; j < N (arg); j++) {
           if (is_compound (arg[j], "id", 1) && is_atomic (arg[j][0])) {
             anchor = cork_to_utf8 (arg[j][0]->label);
             visited= visited || has_been_visited ("id:" * anchor);
           }
           if (is_compound (arg[j], "url", 1) && is_atomic (arg[j][0])) {
-            ref = cork_to_utf8 (arg[j][0]->label);
+            ref    = cork_to_utf8 (arg[j][0]->label);
             visited= visited || has_been_visited ("url:" * ref);
           }
         }
@@ -157,17 +160,17 @@ build_locus (edit_env env, tree t, list<string>& ids, string& col, string &ref, 
               as_bool (eval ("(secure? '(" * cb * " #f #f #f))")))
             env->link_env->insert_locus (id, body, cb);
         }
-        ids= list<string> (id, ids);
+        ids    = list<string> (id, ids);
         visited= visited || has_been_visited ("id:" * id);
       }
     }
   }
 
-  bool on_paper= (env->get_string (PAGE_PRINTED) == "true");
-  bool preserve= (get_locus_rendering ("locus-on-paper") == "preserve");
-  string var= (visited? VISITED_COLOR: LOCUS_COLOR);
+  bool   on_paper   = (env->get_string (PAGE_PRINTED) == "true");
+  bool   preserve   = (get_locus_rendering ("locus-on-paper") == "preserve");
+  string var        = (visited ? VISITED_COLOR : LOCUS_COLOR);
   string current_col= env->get_string (COLOR);
-  string locus_col= env->get_string (var);
+  string locus_col  = env->get_string (var);
   if (on_paper) visited= false;
   if (locus_col == "preserve") col= current_col;
   else if (on_paper && preserve) col= current_col;
@@ -186,16 +189,16 @@ build_locus (edit_env env, tree t, list<string>& ids, string& col) {
 
 static box
 produce_concat (path ip, array<line_item> a) {
-  if (N(a) == 1) return a[0]->b;
-  int i, n=N(a);
+  if (N (a) == 1) return a[0]->b;
+  int i, n= N (a);
   if (n == 0) return empty_box (ip); // FIXME: n=0 should never happen
   array<box> items (n);
   array<SI>  spc (n);
-  if (n>0) {
-    spc[0]=0;
-    for (i=0; i<n-1; i++) {
+  if (n > 0) {
+    spc[0]= 0;
+    for (i= 0; i < n - 1; i++) {
       items[i]  = a[i]->b;
-      spc  [i+1]= a[i]->spc->def;
+      spc[i + 1]= a[i]->spc->def;
     }
     items[i]= a[i]->b;
   }
@@ -204,46 +207,49 @@ produce_concat (path ip, array<line_item> a) {
 
 void
 concater_rep::typeset_locus (tree t, path ip) {
-  if (N(t) == 0) { typeset_error (t, ip); return; }
-  int last= N(t)-1;
+  if (N (t) == 0) {
+    typeset_error (t, ip);
+    return;
+  }
+  int          last= N (t) - 1;
   list<string> ids;
-  string col, ref, anchor;
-  bool ok= build_locus (env, t, ids, col, ref, anchor);
+  string       col, ref, anchor;
+  bool         ok= build_locus (env, t, ids, col, ref, anchor);
   marker (descend (ip, 0));
   tree old= env->local_begin (COLOR, col);
-  int pos= N(a);
+  int  pos= N (a);
   typeset (t[last], descend (ip, last));
   if (!ok) {
-    path dip= decorate_middle (descend (ip, N(t) - 1));
+    path             dip= decorate_middle (descend (ip, N (t) - 1));
     array<line_item> new_a;
     array<line_item> tmp_a;
-    for (int i=pos; i<N(a); i++) {
-      if ((a[i]->type == STD_ITEM ||
-           a[i]->type == STRING_ITEM ||
+    for (int i= pos; i < N (a); i++) {
+      if ((a[i]->type == STD_ITEM || a[i]->type == STRING_ITEM ||
            a[i]->type == CONTROL_ITEM) &&
           !a[i]->limits) {
         tmp_a << a[i];
         int j= i;
         while (true) {
           j++;
-          while (j<N(a) &&
-                 a[j]->type == CONTROL_ITEM &&
-                 a[j]->spc == space(0)) j++;
-          if (j<N(a) &&
+          while (j < N (a) && a[j]->type == CONTROL_ITEM &&
+                 a[j]->spc == space (0))
+            j++;
+          if (j < N (a) &&
               (a[j]->type == RSUB_ITEM || a[j]->type == RSUP_ITEM)) {
-            while (i<j) { i++; tmp_a << a[i]; }
+            while (i < j) {
+              i++;
+              tmp_a << a[i];
+            }
           }
           else break;
         }
-        if (i+1 == N(a) ||
-            (a[i+1]->type != STD_ITEM && a[i+1]->type != STRING_ITEM) ||
-            a[i+1]->limits ||
-            a[i]->spc != space (0) ||
-            a[i]->penalty < HYPH_PANIC ||
-            a[i]->op_type != a[i+1]->op_type) {
-          path sip= (N(tmp_a)==1? a[i]->b->ip: dip);
-          box cc= produce_concat (dip, tmp_a);
-          box lb= locus_box (sip, cc, ids, env->pixel, ref, anchor);
+        if (i + 1 == N (a) ||
+            (a[i + 1]->type != STD_ITEM && a[i + 1]->type != STRING_ITEM) ||
+            a[i + 1]->limits || a[i]->spc != space (0) ||
+            a[i]->penalty < HYPH_PANIC || a[i]->op_type != a[i + 1]->op_type) {
+          path      sip= (N (tmp_a) == 1 ? a[i]->b->ip : dip);
+          box       cc = produce_concat (dip, tmp_a);
+          box       lb = locus_box (sip, cc, ids, env->pixel, ref, anchor);
           line_item item (STD_ITEM, a[i]->op_type, lb, a[i]->penalty);
           item->spc= a[i]->spc;
           new_a << item;
@@ -262,17 +268,17 @@ concater_rep::typeset_locus (tree t, path ip) {
 void
 concater_rep::typeset_set_binding (tree t, path ip) {
   tree keys= env->exec (t);
-  if (L(keys) == HIDDEN_BINDING || L(keys) == HIDDEN) {
+  if (L (keys) == HIDDEN_BINDING || L (keys) == HIDDEN) {
     keys= keys[0];
     flag ("set binding", ip, blue);
-    if (N(keys) > 0) {
+    if (N (keys) > 0) {
       path sip= ip;
-      if (N(t) >= 3 && (!is_nil (env->macro_src))) {
-	tree body= env->expand (tree (ARG, t[2]), true);
-	sip= obtain_ip (body);
+      if (N (t) >= 3 && (!is_nil (env->macro_src))) {
+        tree body= env->expand (tree (ARG, t[2]), true);
+        sip      = obtain_ip (body);
       }
       path dip= decorate_middle (sip);
-      box b= tag_box (dip, sip, empty_box (dip, 0, 0, 0, env->fn->yx), keys);
+      box  b  = tag_box (dip, sip, empty_box (dip, 0, 0, 0, env->fn->yx), keys);
       a << line_item (CONTROL_ITEM, OP_SKIP, b, HYPH_INVALID, "label");
     }
   }
@@ -285,16 +291,15 @@ remove_labels (tree t) {
   else if (is_func (t, LABEL)) return "";
   else if (is_func (t, CONCAT)) {
     tree r (CONCAT);
-    for (int i=0; i<N(t); i++)
-      if (!is_func (t, LABEL))
-        r << remove_labels (t[i]);
-    if (N(r) == 0) return "";
-    else if (N(r) == 1) return r[0];
+    for (int i= 0; i < N (t); i++)
+      if (!is_func (t, LABEL)) r << remove_labels (t[i]);
+    if (N (r) == 0) return "";
+    else if (N (r) == 1) return r[0];
     else return r;
   }
   else {
-    tree r (t, N(t));
-    for (int i=0; i<N(t); i++)
+    tree r (t, N (t));
+    for (int i= 0; i < N (t); i++)
       r[i]= remove_labels (t[i]);
     return r;
   }
@@ -302,60 +307,72 @@ remove_labels (tree t) {
 
 void
 concater_rep::typeset_write (tree t, path ip) {
-  if (N(t) != 2) { typeset_error (t, ip); return; }
+  if (N (t) != 2) {
+    typeset_error (t, ip);
+    return;
+  }
   string s= env->exec_string (t[0]);
   tree   r= remove_labels (env->exec (t[1]));
   if (env->complete) {
-    if (!env->local_aux->contains (s))
-      env->local_aux (s)= tree (DOCUMENT);
+    if (!env->local_aux->contains (s)) env->local_aux (s)= tree (DOCUMENT);
     env->local_aux (s) << r;
-  } 
+  }
   control ("write", ip);
 }
 
 void
 concater_rep::typeset_toc_notify (tree t, path ip) {
-  if (N(t) != 2) { typeset_error (t, ip); return; }
+  if (N (t) != 2) {
+    typeset_error (t, ip);
+    return;
+  }
   string kind = tree_to_verbatim (env->exec (t[0]), false, "cork");
   string title= tree_to_verbatim (env->exec (t[1]), false, "cork");
-  title= replace (title, "T_EX_MACS", "TeXmacs");
-  title= replace (title, "L^AT_EX", "LaTeX");
-  title= replace (title, "T_EX", "TeX");
-  box  b = toc_box (decorate_middle (ip), kind, title, env->fn);
+  title       = replace (title, "T_EX_MACS", "TeXmacs");
+  title       = replace (title, "L^AT_EX", "LaTeX");
+  title       = replace (title, "T_EX", "TeX");
+  box b       = toc_box (decorate_middle (ip), kind, title, env->fn);
   marker (descend (ip, 0));
   print (b);
-  marker (descend (ip, 1));  
+  marker (descend (ip, 1));
 }
 
 void
 concater_rep::typeset_relay (tree t, path ip) {
-  if (N(t) == 0) { typeset_error (t, ip); return; }
-  box b= typeset_as_concat (env, t[0], descend (ip, 0));
+  if (N (t) == 0) {
+    typeset_error (t, ip);
+    return;
+  }
+  box         b= typeset_as_concat (env, t[0], descend (ip, 0));
   array<tree> args;
-  for (int i=1; i<N(t); i++) args << env->exec (t[i]);
+  for (int i= 1; i < N (t); i++)
+    args << env->exec (t[i]);
   print (relay_box (ip, b, args));
 }
 
 /******************************************************************************
-* Typesetting other dynamic markup
-******************************************************************************/
+ * Typesetting other dynamic markup
+ ******************************************************************************/
 
 void
 concater_rep::typeset_specific (tree t, path ip) {
-  if (N(t) != 2) { typeset_error (t, ip); return; }
-  string which= env->exec_string (t[0]);
-  bool keep_size= ends (which, "*");
-  if (keep_size) which= which (0, N(which)-1);
+  if (N (t) != 2) {
+    typeset_error (t, ip);
+    return;
+  }
+  string which    = env->exec_string (t[0]);
+  bool   keep_size= ends (which, "*");
+  if (keep_size) which= which (0, N (which) - 1);
   if (which == "texmacs" || which == "image") {
     marker (descend (ip, 0));
     typeset (t[1], descend (ip, 1));
     marker (descend (ip, 1));
-    //typeset_dynamic (t[1], descend (ip, 1));
+    // typeset_dynamic (t[1], descend (ip, 1));
   }
-  else if (which == "screen" || which == "printer" ||
-           which == "even" || which == "odd") {
-    box  sb= typeset_as_concat (env, attach_middle (t[1], ip));
-    box  b = specific_box (decorate_middle (ip), sb, which, env->fn, keep_size);
+  else if (which == "screen" || which == "printer" || which == "even" ||
+           which == "odd") {
+    box sb= typeset_as_concat (env, attach_middle (t[1], ip));
+    box b = specific_box (decorate_middle (ip), sb, which, env->fn, keep_size);
     marker (descend (ip, 0));
     print (b);
     marker (descend (ip, 1));
@@ -365,57 +382,68 @@ concater_rep::typeset_specific (tree t, path ip) {
 
 void
 concater_rep::typeset_flag (tree t, path ip) {
-  if (N(t) != 2 && N(t) != 3) { typeset_error (t, ip); return; }
+  if (N (t) != 2 && N (t) != 3) {
+    typeset_error (t, ip);
+    return;
+  }
   string name= env->exec_string (t[0]);
   string col = env->exec_string (t[1]);
-  path sip= ip;
-  if ((N(t) >= 3) && (!is_nil (env->macro_src))) {
+  path   sip = ip;
+  if ((N (t) >= 3) && (!is_nil (env->macro_src))) {
     string var= env->exec_string (t[2]);
-    sip= env->macro_src->item [var];
+    sip       = env->macro_src->item[var];
   }
-  if (((N(t) == 2) || is_accessible (sip)) && (!env->read_only)) {
+  if (((N (t) == 2) || is_accessible (sip)) && (!env->read_only)) {
     marker (descend (ip, 0));
     flag_ok (name, ip, named_color (col));
-    marker (descend (ip, 1));  
+    marker (descend (ip, 1));
   }
 }
 
 void
 concater_rep::typeset_hyphenate_as (tree t, path ip) {
-  if (N(t) != 1 && N(t) != 2) { typeset_error (t, ip); return; }
+  if (N (t) != 1 && N (t) != 2) {
+    typeset_error (t, ip);
+    return;
+  }
   tree pat= env->exec (t[0]);
-  if (N(t) == 1 && !is_atomic (pat)) { typeset_error (t, ip); return; }
+  if (N (t) == 1 && !is_atomic (pat)) {
+    typeset_error (t, ip);
+    return;
+  }
   language old_lan= env->lan;
-  env->lan= ad_hoc_language (env->lan, pat);
+  env->lan        = ad_hoc_language (env->lan, pat);
   marker (descend (ip, 0));
-  if (N(t) == 1) typeset (replace (pat->label, "-", ""), decorate_middle (ip));
+  if (N (t) == 1) typeset (replace (pat->label, "-", ""), decorate_middle (ip));
   else typeset (t[1], descend (ip, 1));
   marker (descend (ip, 1));
   env->lan= old_lan;
 }
 
 /******************************************************************************
-* Typesetting images
-******************************************************************************/
+ * Typesetting images
+ ******************************************************************************/
 
-#define error_image(t) { \
-  typeset_dynamic (tree (ERROR, "bad image", t), ip); \
-  return; \
-}
+#define error_image(t)                                                         \
+  {                                                                            \
+    typeset_dynamic (tree (ERROR, "bad image", t), ip);                        \
+    return;                                                                    \
+  }
 
 void
 concater_rep::typeset_image (tree t, path ip) {
   // determine the image url
-  if (N(t) != 5) error_image ("parameters");
+  if (N (t) != 5) error_image ("parameters");
   tree image_tree= env->exec (t[0]);
-  url image= url_none ();
+  url  image     = url_none ();
   if (is_atomic (image_tree)) {
     if (N (image_tree->label) == 0)
       error_image (tree (WITH, "color", "red", "no image"));
-    url im= cork_to_utf8( image_tree->label);
+    url im= cork_to_utf8 (image_tree->label);
     if (is_rooted (im)) {
       image= im;
-    } else {
+    }
+    else {
       image= resolve (relative (env->base_file_name, im));
       image= concretize_url (image);
     }
@@ -426,8 +454,8 @@ concater_rep::typeset_image (tree t, path ip) {
     if (is_none (image)) image= "$TEXMACS_PATH/misc/pixmaps/unknown.png";
   }
   else if (is_func (image_tree, TUPLE, 2) &&
-	     is_func (image_tree[0], RAW_DATA, 1) &&
-	     is_atomic (image_tree[0][0]) && is_atomic (image_tree[1])) {
+           is_func (image_tree[0], RAW_DATA, 1) &&
+           is_atomic (image_tree[0][0]) && is_atomic (image_tree[1])) {
     image= url_ramdisc (image_tree[0][0]->label) *
            url ("image." * image_tree[1]->label);
   }
@@ -436,33 +464,36 @@ concater_rep::typeset_image (tree t, path ip) {
   // determine the original size of the image
   int iw, ih;
   image_size (image, iw, ih);
-  double pt= ((double) env->dpi*PIXEL) / 72.0;
-  SI w= (SI) (((double) iw) * pt);
-  SI h= (SI) (((double) ih) * pt);
+  double pt= ((double) env->dpi * PIXEL) / 72.0;
+  SI     w = (SI) (((double) iw) * pt);
+  SI     h = (SI) (((double) ih) * pt);
 
   // determine the width and the height
   tree old_w= env->local_begin ("w-length", as_string (w) * "tmpt");
   tree old_h= env->local_begin ("h-length", as_string (h) * "tmpt");
-  SI imw= (t[1] == ""? w: env->as_length (env->exec (t[1]), "w"));
-  SI imh= (t[2] == ""? h: env->as_length (env->exec (t[2]), "h"));
+  SI   imw  = (t[1] == "" ? w : env->as_length (env->exec (t[1]), "w"));
+  SI   imh  = (t[2] == "" ? h : env->as_length (env->exec (t[2]), "h"));
   if (t[1] == "" && t[2] != "" && ih != 0)
     imw= (SI) ((iw * ((double) imh)) / ih);
   if (t[1] != "" && t[2] == "" && iw != 0)
     imh= (SI) ((ih * ((double) imw)) / iw);
-  if (imw <= 0 || imh <= 0) { imw= w / 4; imh= h / 4; }
+  if (imw <= 0 || imh <= 0) {
+    imw= w / 4;
+    imh= h / 4;
+  }
   if (imw <= 0 || imh <= 0)
     error_image (tree (WITH, "color", "red", "null box"));
   env->local_end ("w-length", old_w);
   env->local_end ("h-length", old_h);
-  
+
   // determine the offset
-  old_w= env->local_begin ("w-length", as_string (imw) * "tmpt");
-  old_h= env->local_begin ("h-length", as_string (imh) * "tmpt");
-  SI imx= (t[3] == ""? 0: env->as_length (env->exec (t[3]), "w"));
-  SI imy= (t[4] == ""? 0: env->as_length (env->exec (t[4]), "h"));
+  old_w = env->local_begin ("w-length", as_string (imw) * "tmpt");
+  old_h = env->local_begin ("h-length", as_string (imh) * "tmpt");
+  SI imx= (t[3] == "" ? 0 : env->as_length (env->exec (t[3]), "w"));
+  SI imy= (t[4] == "" ? 0 : env->as_length (env->exec (t[4]), "h"));
   env->local_end ("w-length", old_w);
   env->local_end ("h-length", old_h);
-  
+
   // print the box
   box imb= image_box (ip, image, imw, imh, env->alpha, env->pixel);
   print (move_box (ip, imb, imx, imy, true));

@@ -69,7 +69,7 @@ class object_promise_widget_rep : public promise_rep<widget> {
 
 public:
   object_promise_widget_rep (object obj2) : obj (obj2) {}
-  tm_ostream &print (tm_ostream &out) { return out << obj; }
+  tm_ostream& print (tm_ostream& out) { return out << obj; }
   widget      eval () {
     tmscm result= call_scheme (object_to_tmscm (obj));
     if (tmscm_is_widget (result)) return tmscm_to_widget (result);

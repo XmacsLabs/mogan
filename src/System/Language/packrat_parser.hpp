@@ -1,13 +1,13 @@
 
 /******************************************************************************
-* MODULE     : packrat_parser.hpp
-* DESCRIPTION: packrat parsers
-* COPYRIGHT  : (C) 2010  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : packrat_parser.hpp
+ * DESCRIPTION: packrat parsers
+ * COPYRIGHT  : (C) 2010  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef PACKRAT_PARSER_H
 #define PACKRAT_PARSER_H
@@ -16,28 +16,28 @@
 #include "tree_helper.hpp"
 
 #define PACKRAT_UNDEFINED ((C) (-2))
-#define PACKRAT_FAILED    ((C) (-1))
+#define PACKRAT_FAILED ((C) (-1))
 
-class packrat_parser_rep: concrete_struct {
+class packrat_parser_rep : concrete_struct {
 public:
-  string                    lan_name;
+  string lan_name;
 
-  hashmap<C,array<C> >      grammar;
-  hashmap<C,tree>           productions;
-  hashmap<D,string>         properties;
+  hashmap<C, array<C>> grammar;
+  hashmap<C, tree>     productions;
+  hashmap<D, string>   properties;
 
-  tree                      current_tree;
-  string                    current_string;
-  hashmap<path,int>         current_start;
-  hashmap<path,int>         current_end;
-  hashmap<path,int>         current_path_pos;
-  hashmap<int,path>         current_pos_path;
-  C                         current_cursor;
-  int                       current_hl_lan;
+  tree               current_tree;
+  string             current_string;
+  hashmap<path, int> current_start;
+  hashmap<path, int> current_end;
+  hashmap<path, int> current_path_pos;
+  hashmap<int, path> current_pos_path;
+  C                  current_cursor;
+  int                current_hl_lan;
 
-  array<C>                  current_input;
-  hashmap<D,C>              current_cache;
-  hashmap<D,tree>           current_production;
+  array<C>         current_input;
+  hashmap<D, C>    current_cache;
+  hashmap<D, tree> current_production;
 
 protected:
   void serialize_atomic (tree t, path p);
@@ -63,8 +63,8 @@ public:
   bool is_anti_associative (C sym);
   bool is_list_like (C sym);
   bool is_selectable (C sym);
-  void context (C sym, C pos, C left, C right, int mode,
-		array<C>& kind, array<C>& begin, array<C>& end);
+  void context (C sym, C pos, C left, C right, int mode, array<C>& kind,
+                array<C>& begin, array<C>& end);
   void compress (array<C>& kind, array<C>& begin, array<C>& end);
   void highlight (tree t, path tp, path p1, path p2, int col);
   void highlight (C sym, C pos);
@@ -78,10 +78,10 @@ class packrat_parser {
 };
 CONCRETE_NULL_CODE (packrat_parser);
 
-inline packrat_parser::packrat_parser
-  (packrat_grammar gr, tree t, path t_pos):
-    rep (tm_new<packrat_parser_rep> (gr)) {
-      rep->set_input (t);
-      rep->set_cursor (t_pos); }
+inline packrat_parser::packrat_parser (packrat_grammar gr, tree t, path t_pos)
+    : rep (tm_new<packrat_parser_rep> (gr)) {
+  rep->set_input (t);
+  rep->set_cursor (t_pos);
+}
 
 #endif // PACKRAT_PARSER_H

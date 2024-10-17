@@ -26,12 +26,12 @@ class tmscm_object_rep : public object_rep {
   friend class object;
   friend tmscm                                 object_to_tmscm (object o);
   friend object                                tmscm_to_object (tmscm obj);
-  template <typename C, typename A1> friend C *tm_new (const A1 &a1);
+  template <typename C, typename A1> friend C* tm_new (const A1& a1);
 };
 
 inline tmscm
 object_to_tmscm (object o) {
-  tmscm_object_rep *oo= static_cast<tmscm_object_rep *> (o.operator->());
+  tmscm_object_rep* oo= static_cast<tmscm_object_rep*> (o.operator->());
   return tmscm_caar (oo->handle);
   // return tmscm_caar ((tmscm )o->lookup ());
 }

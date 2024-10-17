@@ -1,23 +1,23 @@
 
 /******************************************************************************
-* MODULE     : bridge_rewrite.cpp
-* DESCRIPTION: Bridge between logical and physical long macro expansions
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : bridge_rewrite.cpp
+ * DESCRIPTION: Bridge between logical and physical long macro expansions
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "bridge.hpp"
 #include "tm_debug.hpp"
 #include "tm_url.hpp"
 
 /******************************************************************************
-* The bridge_rewrite_rep class
-******************************************************************************/
+ * The bridge_rewrite_rep class
+ ******************************************************************************/
 
-class bridge_rewrite_rep: public bridge_rep {
+class bridge_rewrite_rep : public bridge_rep {
 protected:
   bridge body;
 
@@ -26,14 +26,14 @@ public:
   void initialize (tree body_t);
 
   void notify_assign (path p, tree u);
-  bool notify_macro  (int type, string var, int l, path p, tree u);
+  bool notify_macro (int type, string var, int l, path p, tree u);
   void notify_change ();
 
   void my_typeset (int desired_status);
 };
 
-bridge_rewrite_rep::bridge_rewrite_rep (typesetter ttt, tree st, path ip):
-  bridge_rep (ttt, st, ip) {}
+bridge_rewrite_rep::bridge_rewrite_rep (typesetter ttt, tree st, path ip)
+    : bridge_rep (ttt, st, ip) {}
 
 void
 bridge_rewrite_rep::initialize (tree body_t) {
@@ -47,19 +47,21 @@ bridge_rewrite (typesetter ttt, tree st, path ip) {
 }
 
 /******************************************************************************
-* Event notification
-******************************************************************************/
+ * Event notification
+ ******************************************************************************/
 
 void
 bridge_rewrite_rep::notify_assign (path p, tree u) {
   // cout << "Assign " << p << ", " << u << " in " << st << "\n";
   status= CORRUPTED;
-  st= substitute (st, p, u);
+  st    = substitute (st, p, u);
 }
 
 bool
 bridge_rewrite_rep::notify_macro (int tp, string v, int l, path p, tree u) {
-  (void) tp; (void) p; (void) u;
+  (void) tp;
+  (void) p;
+  (void) u;
   bool flag= env->depends (st, v, l);
   if (flag) status= CORRUPTED;
   return flag;
@@ -71,21 +73,21 @@ bridge_rewrite_rep::notify_change () {
 }
 
 /******************************************************************************
-* Typesetting
-******************************************************************************/
+ * Typesetting
+ ******************************************************************************/
 
 void
 bridge_rewrite_rep::my_typeset (int desired_status) {
   initialize (env->rewrite (st));
   ttt->insert_marker (st, ip);
   if (is_func (st, VAR_INCLUDE)) {
-    url save_name= env->cur_file_name;
-    url file_name= url_unix (env->exec_string (st[0]));
+    url save_name     = env->cur_file_name;
+    url file_name     = url_unix (env->exec_string (st[0]));
     env->cur_file_name= relative (env->base_file_name, file_name);
-    env->secure= is_secure (env->cur_file_name);
+    env->secure       = is_secure (env->cur_file_name);
     body->typeset (desired_status);
     env->cur_file_name= save_name;
-    env->secure= is_secure (env->cur_file_name);
+    env->secure       = is_secure (env->cur_file_name);
   }
   else body->typeset (desired_status);
 }

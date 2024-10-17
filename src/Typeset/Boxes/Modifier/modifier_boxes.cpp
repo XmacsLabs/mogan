@@ -1,30 +1,32 @@
 
 /******************************************************************************
-* MODULE     : modifier.cpp
-* DESCRIPTION: a modifier box modifies the behaviour of another box
-*              as to cursor movements etc. , but displays in the same way
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : modifier.cpp
+ * DESCRIPTION: a modifier box modifies the behaviour of another box
+ *              as to cursor movements etc. , but displays in the same way
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "Boxes/modifier.hpp"
 #include "Boxes/composite.hpp"
 #include "Boxes/construct.hpp"
+#include "Boxes/modifier.hpp"
 
 /******************************************************************************
-* Modifier boxes
-******************************************************************************/
+ * Modifier boxes
+ ******************************************************************************/
 
-modifier_box_rep::modifier_box_rep (path ip, box b2):
-  box_rep (ip), b (b2)
-{
-  x1= b->x1; y1= b->y1;
-  x2= b->x2; y2= b->y2;
-  x3= b->x3; y3= b->y3;
-  x4= b->x4; y4= b->y4;
+modifier_box_rep::modifier_box_rep (path ip, box b2) : box_rep (ip), b (b2) {
+  x1= b->x1;
+  y1= b->y1;
+  x2= b->x2;
+  y2= b->y2;
+  x3= b->x3;
+  y3= b->y3;
+  x4= b->x4;
+  y4= b->y4;
 }
 
 modifier_box_rep::~modifier_box_rep () {}
@@ -35,7 +37,8 @@ modifier_box_rep::subnr () {
 }
 
 box
-modifier_box_rep::subbox (int i) { (void) i;
+modifier_box_rep::subbox (int i) {
+  (void) i;
   return b;
 }
 
@@ -50,14 +53,13 @@ modifier_box_rep::message (tree t, SI x, SI y, rectangles& rs) {
 }
 
 void
-modifier_box_rep::loci (SI x, SI y, SI delta,
-			list<string>& ids, rectangles& rs)
-{
+modifier_box_rep::loci (SI x, SI y, SI delta, list<string>& ids,
+                        rectangles& rs) {
   return b->loci (x, y, delta, ids, rs);
 }
 
 void
-modifier_box_rep::collect_page_numbers (hashmap<string,tree>& h, tree page) {
+modifier_box_rep::collect_page_numbers (hashmap<string, tree>& h, tree page) {
   b->collect_page_numbers (h, page);
 }
 
@@ -66,44 +68,76 @@ modifier_box_rep::find_tag (string name) {
   return b->find_tag (name);
 }
 
-modifier_box_rep::operator tree () {
-  return (tree) b;
+modifier_box_rep::operator tree () { return (tree) b; }
+
+double
+modifier_box_rep::left_slope () {
+  return b->left_slope ();
+}
+double
+modifier_box_rep::right_slope () {
+  return b->right_slope ();
+}
+SI
+modifier_box_rep::left_correction () {
+  return b->left_correction ();
+}
+SI
+modifier_box_rep::right_correction () {
+  return b->right_correction ();
+}
+SI
+modifier_box_rep::lsub_correction () {
+  return b->lsub_correction ();
+}
+SI
+modifier_box_rep::lsup_correction () {
+  return b->lsup_correction ();
+}
+SI
+modifier_box_rep::rsub_correction () {
+  return b->rsub_correction ();
+}
+SI
+modifier_box_rep::rsup_correction () {
+  return b->rsup_correction ();
+}
+SI
+modifier_box_rep::sub_lo_base (int level) {
+  return b->sub_lo_base (level);
+}
+SI
+modifier_box_rep::sub_hi_lim (int level) {
+  return b->sub_hi_lim (level);
+}
+SI
+modifier_box_rep::sup_lo_lim (int level) {
+  return b->sup_lo_lim (level);
+}
+SI
+modifier_box_rep::sup_lo_base (int level) {
+  return b->sup_lo_base (level);
+}
+SI
+modifier_box_rep::sup_hi_lim (int level) {
+  return b->sup_hi_lim (level);
+}
+SI
+modifier_box_rep::wide_correction (int mode) {
+  return b->wide_correction (mode);
+}
+void
+modifier_box_rep::get_bracket_extents (SI& lo, SI& hi) {
+  b->get_bracket_extents (lo, hi);
 }
 
-double modifier_box_rep::left_slope () { return b->left_slope (); }
-double modifier_box_rep::right_slope () { return b->right_slope (); }
-SI modifier_box_rep::left_correction () { return b->left_correction (); }
-SI modifier_box_rep::right_correction () { return b->right_correction (); }
-SI modifier_box_rep::lsub_correction () {
-  return b->lsub_correction (); }
-SI modifier_box_rep::lsup_correction () {
-  return b->lsup_correction (); }
-SI modifier_box_rep::rsub_correction () {
-  return b->rsub_correction (); }
-SI modifier_box_rep::rsup_correction () {
-  return b->rsup_correction (); }
-SI modifier_box_rep::sub_lo_base (int level) {
-  return b->sub_lo_base (level); }
-SI modifier_box_rep::sub_hi_lim  (int level) {
-  return b->sub_hi_lim (level); }
-SI modifier_box_rep::sup_lo_lim  (int level) {
-  return b->sup_lo_lim (level); }
-SI modifier_box_rep::sup_lo_base (int level) {
-  return b->sup_lo_base (level); }
-SI modifier_box_rep::sup_hi_lim  (int level) {
-  return b->sup_hi_lim (level); }
-SI modifier_box_rep::wide_correction (int mode) {
-  return b->wide_correction (mode); }
-void modifier_box_rep::get_bracket_extents (SI& lo, SI& hi) {
-  b->get_bracket_extents (lo, hi); }
-
 /******************************************************************************
-* New routines concerning the cursor
-******************************************************************************/
+ * New routines concerning the cursor
+ ******************************************************************************/
 
 path
-modifier_box_rep::find_box_path (SI x, SI y, SI delta,
-                                 bool force, bool& found) {
+modifier_box_rep::find_box_path (SI x, SI y, SI delta, bool force,
+                                 bool& found) {
   return path (0, b->find_box_path (x, y, delta, force, found));
 }
 
@@ -149,41 +183,61 @@ modifier_box_rep::find_selection (path lbp, path rbp) {
 
 gr_selections
 modifier_box_rep::graphical_select (SI x, SI y, SI dist) {
-  return b->graphical_select (x- sx(0), y- sy(0), dist);
+  return b->graphical_select (x - sx (0), y - sy (0), dist);
 }
 
 gr_selections
 modifier_box_rep::graphical_select (SI x1, SI y1, SI x2, SI y2) {
-  return b->graphical_select (x1- sx(0), y1- sy(0), x2- sx(0), y2- sy(0));
+  return b->graphical_select (x1 - sx (0), y1 - sy (0), x2 - sx (0),
+                              y2 - sy (0));
 }
 
 /******************************************************************************
-* Animations
-******************************************************************************/
+ * Animations
+ ******************************************************************************/
 
-player modifier_box_rep::anim_player () { return b->anim_player (); }
-double modifier_box_rep::anim_delay () { return b->anim_delay (); }
-double modifier_box_rep::anim_duration () { return b->anim_duration (); }
-void   modifier_box_rep::anim_position (double t) { b->anim_position (t); }
-double modifier_box_rep::anim_next () { return b->anim_next (); }
-rectangles modifier_box_rep::anim_invalid () { return b->anim_invalid (); }
+player
+modifier_box_rep::anim_player () {
+  return b->anim_player ();
+}
+double
+modifier_box_rep::anim_delay () {
+  return b->anim_delay ();
+}
+double
+modifier_box_rep::anim_duration () {
+  return b->anim_duration ();
+}
+void
+modifier_box_rep::anim_position (double t) {
+  b->anim_position (t);
+}
+double
+modifier_box_rep::anim_next () {
+  return b->anim_next ();
+}
+rectangles
+modifier_box_rep::anim_invalid () {
+  return b->anim_invalid ();
+}
 
 /******************************************************************************
-* Symbol boxes
-******************************************************************************/
+ * Symbol boxes
+ ******************************************************************************/
 
-class symbol_box_rep: public modifier_box_rep {
+class symbol_box_rep : public modifier_box_rep {
   int n;
+
 public:
   symbol_box_rep (path ip, box b, int n);
-  operator tree () { return tree (TUPLE, "symbol", subbox(0)); }
-  box    adjust_kerning (int mode, double factor);
-  box    expand_glyphs (int mode, double factor);
-  path   find_box_path (SI x, SI y, SI delta, bool force, bool& found);
+  operator tree () { return tree (TUPLE, "symbol", subbox (0)); }
+  box  adjust_kerning (int mode, double factor);
+  box  expand_glyphs (int mode, double factor);
+  path find_box_path (SI x, SI y, SI delta, bool force, bool& found);
 };
 
-symbol_box_rep::symbol_box_rep (path ip, box b2, int n2):
-  modifier_box_rep (ip, b2), n (n2) {}
+symbol_box_rep::symbol_box_rep (path ip, box b2, int n2)
+    : modifier_box_rep (ip, b2), n (n2) {}
 
 box
 symbol_box_rep::adjust_kerning (int mode, double factor) {
@@ -203,24 +257,25 @@ subbox (box b, path p) {
 
 path
 symbol_box_rep::find_box_path (SI x, SI y, SI delta, bool force, bool& found) {
-  path p= modifier_box_rep::find_box_path (x, y, delta, force, found);
-  box leaf= ::subbox (box (this), path_up (p));
+  path p   = modifier_box_rep::find_box_path (x, y, delta, force, found);
+  box  leaf= ::subbox (box (this), path_up (p));
   if (is_accessible (leaf->ip) || force) {
-    if (last_item (p) <= (n>>1)) return path_up (p) * 0;
+    if (last_item (p) <= (n >> 1)) return path_up (p) * 0;
     else return path_up (p) * n;
   }
   else return p;
 }
 
 /******************************************************************************
-* Shorter boxes are used for hyphenation
-******************************************************************************/
+ * Shorter boxes are used for hyphenation
+ ******************************************************************************/
 
-class shorter_box_rep: public modifier_box_rep {
+class shorter_box_rep : public modifier_box_rep {
   int pos, len;
+
 public:
   shorter_box_rep (path ip, box b, int len);
-  operator tree () { return tuple ("shorter", subbox(0)); }
+  operator tree () { return tuple ("shorter", subbox (0)); }
   box    adjust_kerning (int mode, double factor);
   box    expand_glyphs (int mode, double factor);
   path   find_box_path (SI x, SI y, SI delta, bool force, bool& found);
@@ -235,8 +290,8 @@ public:
   SI     get_leaf_offset (string search);
 };
 
-shorter_box_rep::shorter_box_rep (path ip, box b2, int len2):
-  modifier_box_rep (ip, b2), pos (b->get_leaf_left_pos ()), len (len2) {}
+shorter_box_rep::shorter_box_rep (path ip, box b2, int len2)
+    : modifier_box_rep (ip, b2), pos (b->get_leaf_left_pos ()), len (len2) {}
 
 box
 shorter_box_rep::adjust_kerning (int mode, double factor) {
@@ -250,8 +305,8 @@ shorter_box_rep::expand_glyphs (int mode, double factor) {
 
 path
 shorter_box_rep::find_box_path (SI x, SI y, SI delta, bool force, bool& found) {
-  path p= modifier_box_rep::find_box_path (x, y, delta, force, found);
-  box leaf= ::subbox (box (this), path_up (p));
+  path p   = modifier_box_rep::find_box_path (x, y, delta, force, found);
+  box  leaf= ::subbox (box (this), path_up (p));
   if ((is_accessible (leaf->ip) || force) && (last_item (p) > len))
     return path_up (p) * len;
   else return p;
@@ -260,9 +315,9 @@ shorter_box_rep::find_box_path (SI x, SI y, SI delta, bool force, bool& found) {
 path
 shorter_box_rep::find_rip () {
   path p= modifier_box_rep::find_rip ();
-  if (is_accessible (ip) && (!is_nil(p)) && (p->item > (pos+ len)))
-    return descend (p->next, pos+ len);
-  else return p;  
+  if (is_accessible (ip) && (!is_nil (p)) && (p->item > (pos + len)))
+    return descend (p->next, pos + len);
+  else return p;
 }
 
 path
@@ -283,7 +338,7 @@ shorter_box_rep::get_leaf_left_pos () {
 
 int
 shorter_box_rep::get_leaf_right_pos () {
-  return pos+ len;
+  return pos + len;
 }
 
 string
@@ -307,21 +362,20 @@ shorter_box_rep::get_leaf_offset (string search) {
 }
 
 /******************************************************************************
-* Frozen boxes
-******************************************************************************/
+ * Frozen boxes
+ ******************************************************************************/
 
-class frozen_box_rep: public modifier_box_rep {
+class frozen_box_rep : public modifier_box_rep {
 public:
   frozen_box_rep (path ip, box b);
-  operator tree () { return tree (TUPLE, "frozen", subbox(0)); }
+  operator tree () { return tree (TUPLE, "frozen", subbox (0)); }
   box  adjust_kerning (int mode, double factor);
   box  expand_glyphs (int mode, double factor);
   path find_lip ();
   path find_rip ();
 };
 
-frozen_box_rep::frozen_box_rep (path ip, box b2):
-  modifier_box_rep (ip, b2) {}
+frozen_box_rep::frozen_box_rep (path ip, box b2) : modifier_box_rep (ip, b2) {}
 
 box
 frozen_box_rep::adjust_kerning (int mode, double factor) {
@@ -344,10 +398,10 @@ frozen_box_rep::find_rip () {
 }
 
 /******************************************************************************
-* macro expansions
-******************************************************************************/
+ * macro expansions
+ ******************************************************************************/
 
-struct macro_box_rep: public composite_box_rep {
+struct macro_box_rep : public composite_box_rep {
   font big_fn; // big character font if non nil
   int  btype;
   macro_box_rep (path ip, box b, font big_fn, int btype);
@@ -369,98 +423,142 @@ struct macro_box_rep: public composite_box_rep {
   pencil    get_leaf_pencil ();
   SI        get_leaf_offset (string search);
 
-  double left_slope () { return bs[0]->left_slope(); }
-  double right_slope () { return bs[0]->right_slope(); }
-  SI left_correction () { return bs[0]->left_correction(); }
-  SI right_correction () { return bs[0]->right_correction(); }
-  SI lsub_correction () { return bs[0]->lsub_correction(); }
-  SI lsup_correction () { return bs[0]->lsup_correction(); }
-  SI rsub_correction () { return bs[0]->rsub_correction(); }
-  SI rsup_correction () { return bs[0]->rsup_correction(); }
-  SI sub_lo_base (int l) {
+  double left_slope () { return bs[0]->left_slope (); }
+  double right_slope () { return bs[0]->right_slope (); }
+  SI     left_correction () { return bs[0]->left_correction (); }
+  SI     right_correction () { return bs[0]->right_correction (); }
+  SI     lsub_correction () { return bs[0]->lsub_correction (); }
+  SI     lsup_correction () { return bs[0]->lsup_correction (); }
+  SI     rsub_correction () { return bs[0]->rsub_correction (); }
+  SI     rsup_correction () { return bs[0]->rsup_correction (); }
+  SI     sub_lo_base (int l) {
     // second test separates small and large big operators
-    return (!is_nil (big_fn)) && ((y2-y1) <= 3*big_fn->yx)?
-      y1 - (l>0? 0: big_fn->yshift): box_rep::sub_lo_base (l); }
+    return (!is_nil (big_fn)) && ((y2 - y1) <= 3 * big_fn->yx)
+                   ? y1 - (l > 0 ? 0 : big_fn->yshift)
+                   : box_rep::sub_lo_base (l);
+  }
   SI sub_hi_lim (int l) {
     // second test separates small and large size big operators
-    return (!is_nil (big_fn)) && ((y2-y1) <= 3*big_fn->yx)?
-      y1 - (l>0? 0: big_fn->yshift) +
-        bs[0]->sub_hi_lim (l) - bs[0]->sub_lo_base (l):
-      box_rep::sub_hi_lim (l); }
+    return (!is_nil (big_fn)) && ((y2 - y1) <= 3 * big_fn->yx)
+               ? y1 - (l > 0 ? 0 : big_fn->yshift) + bs[0]->sub_hi_lim (l) -
+                     bs[0]->sub_lo_base (l)
+               : box_rep::sub_hi_lim (l);
+  }
   SI sup_lo_base (int l) {
     if (is_nil (big_fn)) return box_rep::sup_lo_base (l);
     SI syx= big_fn->yx * script (big_fn->size, 1) / big_fn->size;
-    if ((y2-y1) <= 3*big_fn->yx) syx -= (l<0? 0: big_fn->yshift);
-    return y2- syx; }
-  SI wide_correction (int mode) {
-    return bs[0]->wide_correction (mode); }
+    if ((y2 - y1) <= 3 * big_fn->yx) syx-= (l < 0 ? 0 : big_fn->yshift);
+    return y2 - syx;
+  }
+  SI   wide_correction (int mode) { return bs[0]->wide_correction (mode); }
   void get_bracket_extents (SI& lo, SI& hi) {
-    bs[0]->get_bracket_extents (lo, hi); }
+    bs[0]->get_bracket_extents (lo, hi);
+  }
 };
 
-macro_box_rep::macro_box_rep (path ip, box b, font fn, int bt):
-  composite_box_rep (ip), big_fn (fn), btype (bt) {
-    insert (b, 0, 0); position (); finalize (); }
-box macro_box_rep::adjust_kerning (int mode, double factor) {
-  return macro_box (ip, bs[0]->adjust_kerning (mode, factor), big_fn); }
-box macro_box_rep::expand_glyphs (int mode, double factor) {
-  return macro_box (ip, bs[0]->expand_glyphs (mode, factor), big_fn); }
-int macro_box_rep::find_child (SI x, SI y, SI delta, bool force) {
-  (void) x; (void) y; (void) delta; (void) force; return -1; }
-path macro_box_rep::find_box_path (SI x, SI y, SI delta, bool force, bool& f) {
-  return box_rep::find_box_path (x, y, delta, force, f); }
-path macro_box_rep::find_lip () {
-  return box_rep::find_lip (); }
-path macro_box_rep::find_rip () {
-  return box_rep::find_rip (); }
-path macro_box_rep::find_box_path (path p, bool& found) {
-  return box_rep::find_box_path (p, found); }
-path macro_box_rep::find_tree_path (path bp) {
-  return box_rep::find_tree_path (bp); }
-cursor macro_box_rep::find_cursor (path bp) {
-  return box_rep::find_cursor (bp); }
-selection macro_box_rep::find_selection (path lbp, path rbp) {
-  return box_rep::find_selection (lbp, rbp); }
-int macro_box_rep::get_type () {
-  return btype; }
-string macro_box_rep::get_leaf_string () {
-  return bs[0]->get_leaf_string (); }
-font macro_box_rep::get_leaf_font () {
-  return bs[0]->get_leaf_font (); }
-pencil macro_box_rep::get_leaf_pencil () {
-  return bs[0]->get_leaf_pencil (); }
-SI macro_box_rep::get_leaf_offset (string search) {
-  return bs[0]->get_leaf_offset (search); }
+macro_box_rep::macro_box_rep (path ip, box b, font fn, int bt)
+    : composite_box_rep (ip), big_fn (fn), btype (bt) {
+  insert (b, 0, 0);
+  position ();
+  finalize ();
+}
+box
+macro_box_rep::adjust_kerning (int mode, double factor) {
+  return macro_box (ip, bs[0]->adjust_kerning (mode, factor), big_fn);
+}
+box
+macro_box_rep::expand_glyphs (int mode, double factor) {
+  return macro_box (ip, bs[0]->expand_glyphs (mode, factor), big_fn);
+}
+int
+macro_box_rep::find_child (SI x, SI y, SI delta, bool force) {
+  (void) x;
+  (void) y;
+  (void) delta;
+  (void) force;
+  return -1;
+}
+path
+macro_box_rep::find_box_path (SI x, SI y, SI delta, bool force, bool& f) {
+  return box_rep::find_box_path (x, y, delta, force, f);
+}
+path
+macro_box_rep::find_lip () {
+  return box_rep::find_lip ();
+}
+path
+macro_box_rep::find_rip () {
+  return box_rep::find_rip ();
+}
+path
+macro_box_rep::find_box_path (path p, bool& found) {
+  return box_rep::find_box_path (p, found);
+}
+path
+macro_box_rep::find_tree_path (path bp) {
+  return box_rep::find_tree_path (bp);
+}
+cursor
+macro_box_rep::find_cursor (path bp) {
+  return box_rep::find_cursor (bp);
+}
+selection
+macro_box_rep::find_selection (path lbp, path rbp) {
+  return box_rep::find_selection (lbp, rbp);
+}
+int
+macro_box_rep::get_type () {
+  return btype;
+}
+string
+macro_box_rep::get_leaf_string () {
+  return bs[0]->get_leaf_string ();
+}
+font
+macro_box_rep::get_leaf_font () {
+  return bs[0]->get_leaf_font ();
+}
+pencil
+macro_box_rep::get_leaf_pencil () {
+  return bs[0]->get_leaf_pencil ();
+}
+SI
+macro_box_rep::get_leaf_offset (string search) {
+  return bs[0]->get_leaf_offset (search);
+}
 
-struct macro_delimiter_box_rep: public macro_box_rep {
+struct macro_delimiter_box_rep : public macro_box_rep {
   SI dy;
-  macro_delimiter_box_rep (path ip, box b, font fn, SI dy2):
-    macro_box_rep (ip, b, fn, STD_BOX), dy (dy2) {}
-  operator tree () {
-    return tree (TUPLE, "macro_delimiter", (tree) bs[0]); }
+  macro_delimiter_box_rep (path ip, box b, font fn, SI dy2)
+      : macro_box_rep (ip, b, fn, STD_BOX), dy (dy2) {}
+  operator tree () { return tree (TUPLE, "macro_delimiter", (tree) bs[0]); }
   SI sub_lo_base (int l) {
-    SI fb= l<=0? big_fn->ysub_lo_base: big_fn->ysub_lo_base + big_fn->yshift;
-    fb += min (0, dy);
-    return min (y1, max (y1 - (l>0? 0: big_fn->yshift), fb)); }
-  SI sub_hi_lim (int l) {
-    return big_fn->ysub_hi_lim + min (0, dy); }
+    SI fb=
+        l <= 0 ? big_fn->ysub_lo_base : big_fn->ysub_lo_base + big_fn->yshift;
+    fb+= min (0, dy);
+    return min (y1, max (y1 - (l > 0 ? 0 : big_fn->yshift), fb));
+  }
+  SI sub_hi_lim (int l) { return big_fn->ysub_hi_lim + min (0, dy); }
   SI sup_lo_base (int l) {
-    SI fb= l>=0? big_fn->ysup_lo_base: big_fn->ysup_lo_base - big_fn->yshift;
-    fb += max (0, dy);
+    SI fb=
+        l >= 0 ? big_fn->ysup_lo_base : big_fn->ysup_lo_base - big_fn->yshift;
+    fb+= max (0, dy);
     SI ex= big_fn->yx;
-    return max (y2 - ex, fb); }
+    return max (y2 - ex, fb);
+  }
   SI sup_hi_lim (int l) {
     SI fb= big_fn->ysup_hi_lim;
-    fb += max (0, dy);
+    fb+= max (0, dy);
     SI ex= big_fn->yx;
     if (fb + ex <= y2) return y2;
-    if (fb + (ex>>1) <= y2) return (y2+fb)>>1;
-    return fb; }
+    if (fb + (ex >> 1) <= y2) return (y2 + fb) >> 1;
+    return fb;
+  }
 };
 
 /******************************************************************************
-* box construction routines
-******************************************************************************/
+ * box construction routines
+ ******************************************************************************/
 
 box
 symbol_box (path ip, box b, int n) {

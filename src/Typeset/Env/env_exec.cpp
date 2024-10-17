@@ -1,42 +1,41 @@
 
 /******************************************************************************
-* MODULE     : env_exec.cpp
-* DESCRIPTION: evaluation of trees w.r.t. the environment
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : env_exec.cpp
+ * DESCRIPTION: evaluation of trees w.r.t. the environment
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "env.hpp"
 #include "convert.hpp"
-#include "file.hpp"
-#include "tm_file.hpp"
-#include "locale.hpp"
-#include "tm_locale.hpp"
-#include "image_files.hpp"
-#include "scheme.hpp"
-#include "page_type.hpp"
-#include "typesetter.hpp"
-#include "drd_mode.hpp"
 #include "dictionary.hpp"
+#include "drd_mode.hpp"
+#include "env.hpp"
+#include "file.hpp"
+#include "image_files.hpp"
+#include "locale.hpp"
 #include "observers.hpp"
+#include "page_type.hpp"
+#include "scheme.hpp"
+#include "tm_file.hpp"
+#include "tm_locale.hpp"
+#include "typesetter.hpp"
 
 #include <lolly/data/numeral.hpp>
-using lolly::data::to_Hex;
 using lolly::data::from_hex;
+using lolly::data::to_Hex;
 using lolly::data::to_roman;
 using lolly::data::to_Roman;
 
-
-extern int script_status;
+extern int  script_status;
 extern tree with_package_definitions (string package, tree body);
 static tree filter_style (tree t);
 
 /******************************************************************************
-* Subroutines
-******************************************************************************/
+ * Subroutines
+ ******************************************************************************/
 
 string
 edit_env_rep::exec_string (tree t) {
@@ -46,8 +45,8 @@ edit_env_rep::exec_string (tree t) {
 }
 
 /******************************************************************************
-* Rewriting (scheme-like macro expansion)
-******************************************************************************/
+ * Rewriting (scheme-like macro expansion)
+ ******************************************************************************/
 
 // Hack to transmit the current environment back to C++
 // across the Scheme level, and to maintain reentrancy.
@@ -55,106 +54,96 @@ static edit_env current_rewrite_env= edit_env ();
 
 tree
 edit_env_rep::rewrite (tree t) {
-  switch (L(t)) {
-  case EXTERN:
-    {
-      int i, n= N(t);
-      if (n < 1) return tree (ERROR, "invalid extern");
-      string fun= tm_decode(exec_string (t[0]));
-      tree r (TUPLE, n);
-      for (i=1; i<n; i++)
-	r[i]= exec (t[i]);
-      object expr= null_object ();
-      for (i=n-1; i>0; i--)
-	expr= cons (object (r[i]), expr);
-      expr= cons (string_to_object (fun), expr);
-      if (!secure && script_status < 2) {
-	if (!as_bool (call ("secure?", expr)))
-	  return tree (ERROR, "insecure script");
-      }
-      edit_env old_env= current_rewrite_env;
-      current_rewrite_env= edit_env (this);
-      object o= eval (expr);
-      current_rewrite_env= old_env;
-      return content_to_tree (o);
+  switch (L (t)) {
+  case EXTERN: {
+    int i, n= N (t);
+    if (n < 1) return tree (ERROR, "invalid extern");
+    string fun= tm_decode (exec_string (t[0]));
+    tree   r (TUPLE, n);
+    for (i= 1; i < n; i++)
+      r[i]= exec (t[i]);
+    object expr= null_object ();
+    for (i= n - 1; i > 0; i--)
+      expr= cons (object (r[i]), expr);
+    expr= cons (string_to_object (fun), expr);
+    if (!secure && script_status < 2) {
+      if (!as_bool (call ("secure?", expr)))
+        return tree (ERROR, "insecure script");
     }
-  case MAP_ARGS:
-    {
-      if (N(t) < 3 ||
-	  !(is_atomic (t[0]) && is_atomic (t[1]) && is_atomic (t[2])))
-	return tree (ERROR, "invalid map arguments");
-      if (is_nil (macro_arg) || (!macro_arg->item->contains (t[2]->label)))
-	return tree (ERROR, "map arguments " * t[2]->label);
-      tree v= macro_arg->item [t[2]->label];
-      if (is_atomic (v))
-	return tree (ERROR, "map arguments " * t[2]->label);
-      int start= 0, end= N(v);
-      if (N(t)>=4) start= as_int (exec (t[3]));
-      if (N(t)>=5) end  = as_int (exec (t[4]));
+    edit_env old_env   = current_rewrite_env;
+    current_rewrite_env= edit_env (this);
+    object o           = eval (expr);
+    current_rewrite_env= old_env;
+    return content_to_tree (o);
+  }
+  case MAP_ARGS: {
+    if (N (t) < 3 ||
+        !(is_atomic (t[0]) && is_atomic (t[1]) && is_atomic (t[2])))
+      return tree (ERROR, "invalid map arguments");
+    if (is_nil (macro_arg) || (!macro_arg->item->contains (t[2]->label)))
+      return tree (ERROR, "map arguments " * t[2]->label);
+    tree v= macro_arg->item[t[2]->label];
+    if (is_atomic (v)) return tree (ERROR, "map arguments " * t[2]->label);
+    int start= 0, end= N (v);
+    if (N (t) >= 4) start= as_int (exec (t[3]));
+    if (N (t) >= 5) end= as_int (exec (t[4]));
 
-      list<hashmap<string,tree> > old_var= macro_arg;
-      list<hashmap<string,path> > old_src= macro_src;
-      if (!is_nil (macro_arg)) macro_arg= macro_arg->next;
-      if (!is_nil (macro_src)) macro_src= macro_src->next;
+    list<hashmap<string, tree>> old_var= macro_arg;
+    list<hashmap<string, path>> old_src= macro_src;
+    if (!is_nil (macro_arg)) macro_arg= macro_arg->next;
+    if (!is_nil (macro_src)) macro_src= macro_src->next;
 
-      int i, n= max (0, end-start);
-      tree r (make_tree_label (t[1]->label), n);
-      if (t[0]->label == "identity")
-	for (i=0; i<n; i++)
-	  r[i]= tree (ARG, copy (t[2]), as_string (start+i));
-      else
-	for (i=0; i<n; i++)
-	  r[i]= tree (make_tree_label (t[0]->label),
-		      tree (ARG, copy (t[2]), as_string (start+i)),
-		      as_string (start+i));
+    int  i, n= max (0, end - start);
+    tree r (make_tree_label (t[1]->label), n);
+    if (t[0]->label == "identity")
+      for (i= 0; i < n; i++)
+        r[i]= tree (ARG, copy (t[2]), as_string (start + i));
+    else
+      for (i= 0; i < n; i++)
+        r[i]= tree (make_tree_label (t[0]->label),
+                    tree (ARG, copy (t[2]), as_string (start + i)),
+                    as_string (start + i));
 
-      macro_arg= old_var;
-      macro_src= old_src;
-      return r;
+    macro_arg= old_var;
+    macro_src= old_src;
+    return r;
+  }
+  case VAR_INCLUDE: {
+    if (N (t) == 0) return tree (ERROR, "invalid include");
+    url file_name= url_unix (cork_to_utf8 (exec_string (t[0])));
+    url file_rel = relative (base_file_name, file_name);
+    if (file_rel == base_file_name) return tree (ERROR, "invalid self include");
+    // cout << "file_name= " << as_tree (file_name) << LF;
+    return load_inclusion (file_rel);
+  }
+  case WITH_PACKAGE: {
+    if (N (t) != 2) return tree (ERROR, "invalid with-package");
+    string file_name= exec_string (t[0]);
+    return with_package_definitions (file_name, t[1]);
+  }
+  case REWRITE_INACTIVE: {
+    if (N (t) == 0 || N (t[0]) == 0)
+      return tree (ERROR, "invalid rewrite-inactive");
+    if ((!is_func (t[0], ARG)) || is_compound (t[0][0]) || is_nil (macro_arg) ||
+        (!macro_arg->item->contains (t[0][0]->label)))
+      return tree (ERROR, "invalid rewrite-inactive");
+    tree val= macro_arg->item[t[0][0]->label];
+    int  i, n= N (t[0]);
+    for (i= 1; i < n; i++) {
+      int j= as_int (t[0][i]);
+      if ((j >= 0) && (j < N (val))) val= val[j];
+      else return tree (ERROR, "invalid rewrite-inactive");
     }
-  case VAR_INCLUDE:
-    {
-      if (N(t) == 0) return tree (ERROR, "invalid include");
-      url file_name= url_unix (cork_to_utf8 (exec_string (t[0])));
-      url file_rel = relative (base_file_name, file_name);
-      if (file_rel == base_file_name)
-        return tree (ERROR, "invalid self include");
-      //cout << "file_name= " << as_tree (file_name) << LF;
-      return load_inclusion (file_rel);
-    }
-  case WITH_PACKAGE:
-    {
-      if (N(t) != 2) return tree (ERROR, "invalid with-package");
-      string file_name= exec_string (t[0]);
-      return with_package_definitions (file_name, t[1]);
-    }
-  case REWRITE_INACTIVE:
-    {
-      if (N(t) == 0 || N(t[0]) == 0)
-	return tree (ERROR, "invalid rewrite-inactive");
-      if ((!is_func (t[0], ARG)) ||
-	  is_compound (t[0][0]) ||
-	  is_nil (macro_arg) ||
-	  (!macro_arg->item->contains (t[0][0]->label)))
-	return tree (ERROR, "invalid rewrite-inactive");
-      tree val= macro_arg->item [t[0][0]->label];
-      int i, n= N(t[0]);
-      for (i=1; i<n; i++) {
-	int j= as_int (t[0][i]);
-	if ((j>=0) && (j<N(val))) val= val[j];
-	else return tree (ERROR, "invalid rewrite-inactive");
-      }
-      if (N(t) < 2)
-	return tree (ERROR, "invalid rewrite-inactive");
-      if (t[1] == "recurse") inactive_mode= INACTIVE_INLINE_RECURSE;
-      else if (t[1] == "recurse*") inactive_mode= INACTIVE_BLOCK_RECURSE;
-      else if (t[1] == "once") inactive_mode= INACTIVE_INLINE_ONCE;
-      else if (t[1] == "once*") inactive_mode= INACTIVE_BLOCK_ONCE;
-      else if (t[1] == "error") inactive_mode= INACTIVE_INLINE_ERROR;
-      else if (t[1] == "error*") inactive_mode= INACTIVE_BLOCK_ERROR;
-      else inactive_mode= INACTIVE_INLINE_RECURSE;
-      return rewrite_inactive (val, t[0]);
-    }
+    if (N (t) < 2) return tree (ERROR, "invalid rewrite-inactive");
+    if (t[1] == "recurse") inactive_mode= INACTIVE_INLINE_RECURSE;
+    else if (t[1] == "recurse*") inactive_mode= INACTIVE_BLOCK_RECURSE;
+    else if (t[1] == "once") inactive_mode= INACTIVE_INLINE_ONCE;
+    else if (t[1] == "once*") inactive_mode= INACTIVE_BLOCK_ONCE;
+    else if (t[1] == "error") inactive_mode= INACTIVE_INLINE_ERROR;
+    else if (t[1] == "error*") inactive_mode= INACTIVE_BLOCK_ERROR;
+    else inactive_mode= INACTIVE_INLINE_RECURSE;
+    return rewrite_inactive (val, t[0]);
+  }
   default:
     return t;
   }
@@ -190,22 +179,23 @@ texmacs_exec (edit_env env, tree cmd) {
 }
 
 /******************************************************************************
-* Evaluation of trees
-******************************************************************************/
+ * Evaluation of trees
+ ******************************************************************************/
 
 tree
 edit_env_rep::exec (tree t) {
   // cout << "Execute: " << t << "\n";
   if (is_atomic (t)) return t;
-  switch (L(t)) {
+  switch (L (t)) {
   case MOVE:
   case SHIFT:
   case RESIZE:
   case CLIPPED: {
-    int i, n= N(t);
+    int  i, n= N (t);
     tree r (t, n);
     r[0]= exec (t[0]);
-    for (i=1; i<n; i++) r[i]= t[i];
+    for (i= 1; i < n; i++)
+      r[i]= t[i];
     return r;
   }
   case DATOMS:
@@ -261,44 +251,34 @@ edit_env_rep::exec (tree t) {
   case SELECT_THEME:
     return exec_select_theme (t);
   case MARK:
-    if (N(t) < 2)
-      return tree (ERROR, "invalid mark");
+    if (N (t) < 2) return tree (ERROR, "invalid mark");
     return tree (MARK, copy (t[0]), exec (t[1]));
   case VAR_MARK:
-    if (N(t) < 2)
-      return tree (ERROR, "invalid mark*");
+    if (N (t) < 2) return tree (ERROR, "invalid mark*");
     return tree (VAR_MARK, copy (t[0]), exec (t[1]));
   case EXPAND_AS:
-    if (N(t) < 2)
-      return tree (ERROR, "invalid expand-as");
+    if (N (t) < 2) return tree (ERROR, "invalid expand-as");
     return exec (t[1]);
   case EVAL:
-    if (N(t) < 1)
-      return tree (ERROR, "invalid eval");
+    if (N (t) < 1) return tree (ERROR, "invalid eval");
     return exec (exec (t[0]));
   case QUOTE:
-    if (N(t) < 1)
-      return tree (ERROR, "invalid quote");
+    if (N (t) < 1) return tree (ERROR, "invalid quote");
     return t[0];
   case QUASI:
-    if (N(t) < 1)
-      return tree (ERROR, "invalid quasi");
+    if (N (t) < 1) return tree (ERROR, "invalid quasi");
     return exec (exec_quasiquoted (t[0]));
   case QUASIQUOTE:
-    if (N(t) < 1)
-      return tree (ERROR, "invalid quasiquote");
+    if (N (t) < 1) return tree (ERROR, "invalid quasiquote");
     return exec_quasiquoted (t[0]);
   case UNQUOTE:
-    if (N(t) < 1)
-      return tree (ERROR, "invalid unquote");
+    if (N (t) < 1) return tree (ERROR, "invalid unquote");
     return exec (t[0]);
   case VAR_UNQUOTE:
-    if (N(t) < 1)
-      return tree (ERROR, "invalid var-unquote");
+    if (N (t) < 1) return tree (ERROR, "invalid var-unquote");
     return exec (t[0]);
   case COPY:
-    if (N(t) < 1)
-      return tree (ERROR, "invalid copy");
+    if (N (t) < 1) return tree (ERROR, "invalid copy");
     return copy (exec (t[0]));
   case IF:
   case VAR_IF:
@@ -485,9 +465,8 @@ edit_env_rep::exec (tree t) {
     return exec (filter_style (exec (t[0])));
   case STYLE_WITH:
   case VAR_STYLE_WITH:
-    if (N(t) < 1)
-      return tree (ERROR, "invalid style-with");
-    return exec (t[N(t)-1]);
+    if (N (t) < 1) return tree (ERROR, "invalid style-with");
+    return exec (t[N (t) - 1]);
   case STYLE_ONLY:
   case VAR_STYLE_ONLY:
   case ACTIVE:
@@ -507,7 +486,7 @@ edit_env_rep::exec (tree t) {
   case HLINK:
     return exec_compound (t);
   case ACTION:
-    if (N(t) < 3) return exec_compound (t);
+    if (N (t) < 3) return exec_compound (t);
     else return exec_compound (tree (ACTION, t[0], t[1]));
   case SET_BINDING:
     return exec_set_binding (t);
@@ -574,11 +553,12 @@ edit_env_rep::exec (tree t) {
     return exec_frame_inverse (t);
 
   default:
-    if (L(t) < START_EXTENSIONS) {
-      int i, n= N(t);
+    if (L (t) < START_EXTENSIONS) {
+      int i, n= N (t);
       // cout << "Executing " << t << "\n";
       tree r (t, n);
-      for (i=0; i<n; i++) r[i]= exec (t[i]);
+      for (i= 0; i < n; i++)
+        r[i]= exec (t[i]);
       // cout << "Executed " << t << " -> " << r << "\n";
       return r;
     }
@@ -588,16 +568,17 @@ edit_env_rep::exec (tree t) {
 
 tree
 edit_env_rep::exec_formatting (tree t, string v) {
-  int i, n= N(t);
+  int i, n= N (t);
   if (is_func (t, TFORMAT, 0)) return t;
   if (n < 1) return tree (ERROR, "bad formatting");
   tree r (t, n);
-  for (i=0; i<n-1; i++) r[i]= exec (t[i]);
+  for (i= 0; i < n - 1; i++)
+    r[i]= exec (t[i]);
   tree oldv= read (v);
-  tree newv= oldv * r (0, n-1);
+  tree newv= oldv * r (0, n - 1);
   // monitored_write_update (v, newv);
   write_update (v, newv);
-  r[n-1]= exec (t[n-1]);
+  r[n - 1]= exec (t[n - 1]);
   write_update (v, oldv);
   return r;
 }
@@ -608,83 +589,89 @@ edit_env_rep::exec_table (tree t) {
   // should execute values in oldv
   // monitored_write_update (CELL_FORMAT, tree (TFORMAT));
   write_update (CELL_FORMAT, tree (TFORMAT));
-  int i, n= N(t);
+  int  i, n= N (t);
   tree r (t, n);
-  for (i=0; i<n; i++) r[i]= exec (t[i]);
+  for (i= 0; i < n; i++)
+    r[i]= exec (t[i]);
   write_update (CELL_FORMAT, oldv);
   return r;
 }
 
 tree
 edit_env_rep::exec_assign (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad assign");
+  if (N (t) != 2) return tree (ERROR, "bad assign");
   tree r= exec (t[0]);
   if (is_compound (r)) return tree (ERROR, "bad assign");
   assign (r->label, copy (t[1]));
   tree v= read (r->label);
-  if (is_atomic (v) || is_func (v, MACRO));
+  if (is_atomic (v) || is_func (v, MACRO))
+    ;
   else v= tree (QUOTE, v);
   return tree (ASSIGN, r, v);
 }
 
 tree
 edit_env_rep::exec_provide (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad provide");
+  if (N (t) != 2) return tree (ERROR, "bad provide");
   tree r= exec (t[0]);
   if (is_compound (r)) return tree (ERROR, "bad provide");
   if (provides (t->label)) return "";
   assign (r->label, copy (t[1]));
   tree v= read (r->label);
-  if (is_atomic (v) || is_func (v, MACRO));
+  if (is_atomic (v) || is_func (v, MACRO))
+    ;
   else v= tree (QUOTE, v);
   return tree (ASSIGN, r, v);
 }
 
 tree
 edit_env_rep::exec_with (tree t) {
-  int i, n= N(t), k= (n-1)>>1; // is k=0 allowed ?
-  if ((n&1) != 1) return tree (ERROR, "bad with");
-  STACK_NEW_ARRAY(vars,string,k);
-  STACK_NEW_ARRAY(oldv,tree,k);
-  STACK_NEW_ARRAY(newv,tree,k);
-  for (i=0; i<k; i++) {
-    tree var_t= exec (t[i<<1]);
+  int i, n= N (t), k= (n - 1) >> 1; // is k=0 allowed ?
+  if ((n & 1) != 1) return tree (ERROR, "bad with");
+  STACK_NEW_ARRAY (vars, string, k);
+  STACK_NEW_ARRAY (oldv, tree, k);
+  STACK_NEW_ARRAY (newv, tree, k);
+  for (i= 0; i < k; i++) {
+    tree var_t= exec (t[i << 1]);
     if (is_atomic (var_t)) {
       string var= var_t->label;
-      vars[i]= var;
-      oldv[i]= read (var);
-      newv[i]= exec (t[(i<<1)+1]);
+      vars[i]   = var;
+      oldv[i]   = read (var);
+      newv[i]   = exec (t[(i << 1) + 1]);
     }
     else {
-      STACK_DELETE_ARRAY(vars);
-      STACK_DELETE_ARRAY(oldv);
-      STACK_DELETE_ARRAY(newv);
+      STACK_DELETE_ARRAY (vars);
+      STACK_DELETE_ARRAY (oldv);
+      STACK_DELETE_ARRAY (newv);
       return tree (ERROR, "bad with");
     }
   }
 
   // for (i=0; i<k; i++) monitored_write_update (vars[i], newv[i]);
-  for (i=0; i<k; i++) write_update (vars[i], newv[i]);
-  tree r= exec (t[n-1]);
-  for (i=k-1; i>=0; i--) write_update (vars[i], oldv[i]);
+  for (i= 0; i < k; i++)
+    write_update (vars[i], newv[i]);
+  tree r= exec (t[n - 1]);
+  for (i= k - 1; i >= 0; i--)
+    write_update (vars[i], oldv[i]);
 
   tree u (WITH, n);
-  for (i=0; i<k; i++) {
-    u[i<<1]    = vars[i];
-    u[(i<<1)+1]= tree (QUOTE, newv[i]);
+  for (i= 0; i < k; i++) {
+    u[i << 1]      = vars[i];
+    u[(i << 1) + 1]= tree (QUOTE, newv[i]);
   }
-  u[n-1]= r;
-  STACK_DELETE_ARRAY(vars);
-  STACK_DELETE_ARRAY(oldv);
-  STACK_DELETE_ARRAY(newv);
+  u[n - 1]= r;
+  STACK_DELETE_ARRAY (vars);
+  STACK_DELETE_ARRAY (oldv);
+  STACK_DELETE_ARRAY (newv);
   return u;
 }
 
 tree
 edit_env_rep::exec_compound (tree t) {
-  int d; tree f;
-  if (L(t) == COMPOUND) {
-    if (N(t)<1) return tree (ERROR, "bad compound");
+  int  d;
+  tree f;
+  if (L (t) == COMPOUND) {
+    if (N (t) < 1) return tree (ERROR, "bad compound");
     d= 1;
     f= t[0];
     if (is_compound (f)) f= exec (f);
@@ -695,29 +682,29 @@ edit_env_rep::exec_compound (tree t) {
     }
   }
   else {
-    string var= as_string (L(t));
+    string var= as_string (L (t));
     if (!provides (var)) return tree (ERROR, "compound " * var);
     d= 0;
     f= read (var);
   }
 
   if (is_applicable (f)) {
-    int i, n=N(f)-1, m=N(t)-d;
-    macro_arg= list<hashmap<string,tree> > (
-      hashmap<string,tree> (UNINIT), macro_arg);
-    macro_src= list<hashmap<string,path> > (
-      hashmap<string,path> (path (DECORATION)), macro_src);
-    if (L(f) == XMACRO) {
-      if (is_atomic (f[0]))
-	macro_arg->item (f[0]->label)= t;
+    int i, n= N (f) - 1, m= N (t) - d;
+    macro_arg=
+        list<hashmap<string, tree>> (hashmap<string, tree> (UNINIT), macro_arg);
+    macro_src= list<hashmap<string, path>> (
+        hashmap<string, path> (path (DECORATION)), macro_src);
+    if (L (f) == XMACRO) {
+      if (is_atomic (f[0])) macro_arg->item (f[0]->label)= t;
     }
-    else for (i=0; i<n; i++)
-      if (is_atomic (f[i])) {
-	tree st= i<m? t[i+d]: tree (UNINIT);
-	macro_arg->item (f[i]->label)= st;
-	macro_src->item (f[i]->label)= obtain_ip (st);
-      }
-    tree r= exec (f[n]);
+    else
+      for (i= 0; i < n; i++)
+        if (is_atomic (f[i])) {
+          tree st                      = i < m ? t[i + d] : tree (UNINIT);
+          macro_arg->item (f[i]->label)= st;
+          macro_src->item (f[i]->label)= obtain_ip (st);
+        }
+    tree r   = exec (f[n]);
     macro_arg= macro_arg->next;
     macro_src= macro_src->next;
     return r;
@@ -727,127 +714,118 @@ edit_env_rep::exec_compound (tree t) {
 
 tree
 edit_env_rep::exec_drd_props (tree t) {
-  int i, n= N(t);
-  if ((n>=3) && is_atomic (t[0]))
-    for (i=1; i<n-1; i+=2) {
+  int i, n= N (t);
+  if ((n >= 3) && is_atomic (t[0]))
+    for (i= 1; i < n - 1; i+= 2) {
       if (!is_atomic (t[i])) continue;
-      string var  = t[0]->label;
-      string prop = t[i]->label;
-      tree   val  = t[i+1];
-      tree_label l= make_tree_label (var);
+      string     var = t[0]->label;
+      string     prop= t[i]->label;
+      tree       val = t[i + 1];
+      tree_label l   = make_tree_label (var);
       if (prop == "arity") {
-	if (is_tuple (val, "repeat", 2))
-	  drd->set_arity (l, as_int (val [1]), as_int (val [2]),
-			  ARITY_REPEAT, CHILD_BIFORM);
-	else if (is_tuple (val, "repeat*", 2))
-	  drd->set_arity (l, as_int (val [1]), as_int (val [2]),
-			  ARITY_VAR_REPEAT, CHILD_BIFORM);
-	else if (is_tuple (val, "options", 2))
-	  drd->set_arity (l, as_int (val [1]), as_int (val [2]),
-			  ARITY_OPTIONS, CHILD_BIFORM);
-	else
-	  drd->set_arity (l, as_int (val), 0,
-			  ARITY_NORMAL, CHILD_DETAILED);
-	drd->freeze_arity (l);
+        if (is_tuple (val, "repeat", 2))
+          drd->set_arity (l, as_int (val[1]), as_int (val[2]), ARITY_REPEAT,
+                          CHILD_BIFORM);
+        else if (is_tuple (val, "repeat*", 2))
+          drd->set_arity (l, as_int (val[1]), as_int (val[2]), ARITY_VAR_REPEAT,
+                          CHILD_BIFORM);
+        else if (is_tuple (val, "options", 2))
+          drd->set_arity (l, as_int (val[1]), as_int (val[2]), ARITY_OPTIONS,
+                          CHILD_BIFORM);
+        else drd->set_arity (l, as_int (val), 0, ARITY_NORMAL, CHILD_DETAILED);
+        drd->freeze_arity (l);
       }
       else if (prop == "name") {
-	if (is_atomic (val))
-	  drd->set_attribute (l, prop, val->label);
+        if (is_atomic (val)) drd->set_attribute (l, prop, val->label);
       }
-      else if (prop == "syntax")
-        drd->set_syntax (l, val);
+      else if (prop == "syntax") drd->set_syntax (l, val);
       else if (prop == "border") {
-	if (val == "yes") drd->set_border (l, BORDER_YES);
-	if (val == "inner") drd->set_border (l, BORDER_INNER);
-	if (val == "outer") drd->set_border (l, BORDER_OUTER);
-	if (val == "no") drd->set_border (l, BORDER_INNER);
-	drd->freeze_border (l);
+        if (val == "yes") drd->set_border (l, BORDER_YES);
+        if (val == "inner") drd->set_border (l, BORDER_INNER);
+        if (val == "outer") drd->set_border (l, BORDER_OUTER);
+        if (val == "no") drd->set_border (l, BORDER_INNER);
+        drd->freeze_border (l);
       }
       else if (prop == "with-like") {
-	if (val == "yes") drd->set_with_like (l, true);
-	if (val == "no") drd->set_with_like (l, false);
-	drd->freeze_with_like (l);
+        if (val == "yes") drd->set_with_like (l, true);
+        if (val == "no") drd->set_with_like (l, false);
+        drd->freeze_with_like (l);
       }
       else if (prop == "locals") {
-	int i, n= drd->get_nr_indices (l);
-	for (i=0; i<n; i++) {
-	  drd->set_env (l, i, val);
-	  drd->freeze_env (l, i);
-	}
+        int i, n= drd->get_nr_indices (l);
+        for (i= 0; i < n; i++) {
+          drd->set_env (l, i, val);
+          drd->freeze_env (l, i);
+        }
       }
-      else if (prop == "unaccessible" ||
-	       prop == "hidden" ||
-	       prop == "accessible")
-	{
-	  int prop_code= ACCESSIBLE_NEVER;
-	  if (prop == "hidden") prop_code= ACCESSIBLE_HIDDEN;
-	  if (prop == "accessible") prop_code= ACCESSIBLE_ALWAYS;
-	  if (val == "none") prop_code= ACCESSIBLE_NEVER;
-	  if (is_int (val)) {
-	    int i= as_int (val);
-	    drd->set_accessible (l, i, prop_code);
-	    drd->freeze_accessible (l, i);
-	  }
-	  else if (val == "none" || val == "all") {
-	    int i, n= drd->get_nr_indices (l);
-	    for (i=0; i<n; i++) {
-	      drd->set_accessible (l, i, prop_code);
-	      drd->freeze_accessible (l, i);
-	    }
-	  }
-	}
-      else if (prop == "normal-writability" ||
-               prop == "disable-writability" ||
-               prop == "enable-writability")
-	{
-	  int prop_code= WRITABILITY_NORMAL;
-	  if (prop == "disable-writability") prop_code= WRITABILITY_DISABLE;
-	  if (prop == "enable-writability") prop_code= WRITABILITY_ENABLE;
-	  if (is_int (val)) {
-	    int i= as_int (val);
-	    drd->set_writability (l, i, prop_code);
-	    drd->freeze_writability (l, i);
-	  }
-	  else if (val == "all") {
-	    int i, n= drd->get_nr_indices (l);
-	    for (i=0; i<n; i++) {
-	      drd->set_writability (l, i, prop_code);
-	      drd->freeze_writability (l, i);
-	    }
-	  }
-	}
+      else if (prop == "unaccessible" || prop == "hidden" ||
+               prop == "accessible") {
+        int prop_code= ACCESSIBLE_NEVER;
+        if (prop == "hidden") prop_code= ACCESSIBLE_HIDDEN;
+        if (prop == "accessible") prop_code= ACCESSIBLE_ALWAYS;
+        if (val == "none") prop_code= ACCESSIBLE_NEVER;
+        if (is_int (val)) {
+          int i= as_int (val);
+          drd->set_accessible (l, i, prop_code);
+          drd->freeze_accessible (l, i);
+        }
+        else if (val == "none" || val == "all") {
+          int i, n= drd->get_nr_indices (l);
+          for (i= 0; i < n; i++) {
+            drd->set_accessible (l, i, prop_code);
+            drd->freeze_accessible (l, i);
+          }
+        }
+      }
+      else if (prop == "normal-writability" || prop == "disable-writability" ||
+               prop == "enable-writability") {
+        int prop_code= WRITABILITY_NORMAL;
+        if (prop == "disable-writability") prop_code= WRITABILITY_DISABLE;
+        if (prop == "enable-writability") prop_code= WRITABILITY_ENABLE;
+        if (is_int (val)) {
+          int i= as_int (val);
+          drd->set_writability (l, i, prop_code);
+          drd->freeze_writability (l, i);
+        }
+        else if (val == "all") {
+          int i, n= drd->get_nr_indices (l);
+          for (i= 0; i < n; i++) {
+            drd->set_writability (l, i, prop_code);
+            drd->freeze_writability (l, i);
+          }
+        }
+      }
       else if (prop == "returns" && drd_encode_type (as_string (val)) >= 0) {
-	drd->set_type (l, drd_encode_type (as_string (val)));
-	drd->freeze_type (l);
+        drd->set_type (l, drd_encode_type (as_string (val)));
+        drd->freeze_type (l);
       }
-      else if (prop == "parameter" &&
-               drd_encode_type (as_string (val)) >= 0) {
+      else if (prop == "parameter" && drd_encode_type (as_string (val)) >= 0) {
         drd->set_var_type (l, VAR_PARAMETER);
-	drd->set_type (l, drd_encode_type (as_string (val)));
-	drd->freeze_var_type (l);
-	drd->freeze_type (l);
+        drd->set_type (l, drd_encode_type (as_string (val)));
+        drd->freeze_var_type (l);
+        drd->freeze_type (l);
       }
       else if (prop == "macro-parameter" &&
                drd_encode_type (as_string (val)) >= 0) {
         drd->set_var_type (l, VAR_MACRO_PARAMETER);
-	drd->set_type (l, drd_encode_type (as_string (val)));
-	drd->freeze_var_type (l);
-	drd->freeze_type (l);
+        drd->set_type (l, drd_encode_type (as_string (val)));
+        drd->freeze_var_type (l);
+        drd->freeze_type (l);
       }
       else if (drd_encode_type (prop) >= 0) {
-	int tp= drd_encode_type (prop);
-	if (is_int (val)) {
-	  int i= as_int (val);
-	  drd->set_type (l, i, tp);
-	  drd->freeze_type (l, i);
-	}
-	else if (val == "all") {
-	  int i, n= drd->get_nr_indices (l);
-	  for (i=0; i<n; i++) {
-	    drd->set_type (l, i, tp);
-	    drd->freeze_type (l, i);
-	  }
-	}
+        int tp= drd_encode_type (prop);
+        if (is_int (val)) {
+          int i= as_int (val);
+          drd->set_type (l, i, tp);
+          drd->freeze_type (l, i);
+        }
+        else if (val == "all") {
+          int i, n= drd->get_nr_indices (l);
+          for (i= 0; i < n; i++) {
+            drd->set_type (l, i, tp);
+            drd->freeze_type (l, i);
+          }
+        }
       }
     }
   return t;
@@ -855,15 +833,16 @@ edit_env_rep::exec_drd_props (tree t) {
 
 tree
 edit_env_rep::exec_provides (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad provides");
+  if (N (t) < 1) return tree (ERROR, "bad provides");
   tree r= exec (t[0]);
   if (is_compound (r)) return tree (ERROR, "bad provides");
-  if (provides (r->label)) return "true"; else return "false";
+  if (provides (r->label)) return "true";
+  else return "false";
 }
 
 tree
 edit_env_rep::exec_value (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad value");
+  if (N (t) < 1) return tree (ERROR, "bad value");
   tree r= exec (t[0]);
   if (is_compound (r)) return tree (ERROR, "bad value");
   return exec (read (r->label));
@@ -871,7 +850,7 @@ edit_env_rep::exec_value (tree t) {
 
 tree
 edit_env_rep::exec_quote_value (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad quote-value");
+  if (N (t) < 1) return tree (ERROR, "bad quote-value");
   tree r= exec (t[0]);
   if (is_compound (r)) return tree (ERROR, "bad quote-value");
   return read (r->label);
@@ -879,12 +858,12 @@ edit_env_rep::exec_quote_value (tree t) {
 
 tree
 edit_env_rep::exec_or_value (tree t) {
-  for (int i=0; i<N(t); i++) {
+  for (int i= 0; i < N (t); i++) {
     tree r= exec (t[i]);
     if (is_compound (r)) return tree (ERROR, "bad value");
     string name= r->label;
     if (provides (name))
-      if (i == N(t)-1 || L(read (name)) != UNINIT)
+      if (i == N (t) - 1 || L (read (name)) != UNINIT)
         return exec (read (r->label));
   }
   return "";
@@ -892,25 +871,30 @@ edit_env_rep::exec_or_value (tree t) {
 
 tree
 edit_env_rep::exec_arg (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad arg");
+  if (N (t) < 1) return tree (ERROR, "bad arg");
   tree r= t[0];
-  if (is_compound (r))
-    return tree (ERROR, "bad arg");
+  if (is_compound (r)) return tree (ERROR, "bad arg");
   if (is_nil (macro_arg) || (!macro_arg->item->contains (r->label)))
     return tree (ERROR, "arg " * r->label);
-  r= macro_arg->item [r->label];
-  list<hashmap<string,tree> > old_var= macro_arg;
-  list<hashmap<string,path> > old_src= macro_src;
+  r                                  = macro_arg->item[r->label];
+  list<hashmap<string, tree>> old_var= macro_arg;
+  list<hashmap<string, path>> old_src= macro_src;
   if (!is_nil (macro_arg)) macro_arg= macro_arg->next;
   if (!is_nil (macro_src)) macro_src= macro_src->next;
   bool err= false;
-  if (N(t) > 1) {
-    int i, n= N(t);
-    for (i=1; i<n; i++) {
+  if (N (t) > 1) {
+    int i, n= N (t);
+    for (i= 1; i < n; i++) {
       tree u= exec (t[i]);
-      if (!is_int (u)) { err= true; break; }
+      if (!is_int (u)) {
+        err= true;
+        break;
+      }
       int nr= as_int (u);
-      if ((!is_compound (r)) || (nr<0) || (nr>=N(r))) { err= true; break; }
+      if ((!is_compound (r)) || (nr < 0) || (nr >= N (r))) {
+        err= true;
+        break;
+      }
       r= r[nr];
     }
   }
@@ -925,28 +909,27 @@ static bool quote_substitute= false;
 
 tree
 edit_env_rep::exec_quote_arg (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad quote-arg");
+  if (N (t) < 1) return tree (ERROR, "bad quote-arg");
   tree r= t[0];
-  if (is_compound (r))
-    return tree (ERROR, "bad quote-arg");
+  if (is_compound (r)) return tree (ERROR, "bad quote-arg");
   if (is_nil (macro_arg) || (!macro_arg->item->contains (r->label)))
     return tree (ERROR, "quoted argument " * r->label);
-  r= macro_arg->item [r->label];
-  if (N(t) > 1) {
-    int i, n= N(t);
-    for (i=1; i<n; i++) {
+  r= macro_arg->item[r->label];
+  if (N (t) > 1) {
+    int i, n= N (t);
+    for (i= 1; i < n; i++) {
       tree u= exec (t[i]);
       if (!is_int (u)) break;
       int nr= as_int (u);
-      if ((!is_compound (r)) || (nr<0) || (nr>=N(r))) break;
+      if ((!is_compound (r)) || (nr < 0) || (nr >= N (r))) break;
       r= r[nr];
     }
   }
   if (quote_substitute && !is_func (r, ARG)) {
-    int i, n= N(r);
+    int  i, n= N (r);
     tree s (r, n);
-    for (i=0; i<n; i++)
-      s[i]= tree (ARG, A(t)) * tree (ARG, as_string (i));
+    for (i= 0; i < n; i++)
+      s[i]= tree (ARG, A (t)) * tree (ARG, as_string (i));
     return s;
   }
   return r;
@@ -954,32 +937,32 @@ edit_env_rep::exec_quote_arg (tree t) {
 
 tree
 edit_env_rep::exec_get_label (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad get-label");
+  if (N (t) < 1) return tree (ERROR, "bad get-label");
   tree r= exec (t[0]);
-  return copy (as_string (L(r)));
+  return copy (as_string (L (r)));
 }
 
 tree
 edit_env_rep::exec_get_arity (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad get-arity");
+  if (N (t) < 1) return tree (ERROR, "bad get-arity");
   tree r= exec (t[0]);
   return as_string (arity (r));
 }
 
 tree
 edit_env_rep::exec_eval_args (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad eval-args");
-  if(is_nil(macro_arg)) return tree(ERROR, "nil argument");
-  tree v= macro_arg->item [as_string (t[0])];
+  if (N (t) < 1) return tree (ERROR, "bad eval-args");
+  if (is_nil (macro_arg)) return tree (ERROR, "nil argument");
+  tree v= macro_arg->item[as_string (t[0])];
   if (is_atomic (v)) return tree (ERROR, "eval arguments " * t[0]->label);
-  list<hashmap<string,tree> > old_var= macro_arg;
-  list<hashmap<string,path> > old_src= macro_src;
+  list<hashmap<string, tree>> old_var= macro_arg;
+  list<hashmap<string, path>> old_src= macro_src;
   if (!is_nil (macro_arg)) macro_arg= macro_arg->next;
   if (!is_nil (macro_src)) macro_src= macro_src->next;
 
-  int i, n= N(v);
+  int  i, n= N (v);
   tree r (v, n);
-  for (i=0; i<n; i++)
+  for (i= 0; i < n; i++)
     r[i]= exec (v[i]);
 
   macro_arg= old_var;
@@ -989,11 +972,10 @@ edit_env_rep::exec_eval_args (tree t) {
 
 tree
 edit_env_rep::exec_new_theme (tree t) {
-  if (N(t)<1 || !is_atomic (t[0]))
-    return tree (ERROR, "bad new-theme");
-  string theme= t[0]->label;
+  if (N (t) < 1 || !is_atomic (t[0])) return tree (ERROR, "bad new-theme");
+  string        theme= t[0]->label;
   array<string> attrs, inhs;
-  for (int i=1; i<N(t); i++) {
+  for (int i= 1; i < N (t); i++) {
     tree x= exec (t[i]);
     if (!is_atomic (x)) return tree (ERROR, "bad variable in new-theme");
     string var= x->label;
@@ -1001,16 +983,16 @@ edit_env_rep::exec_new_theme (tree t) {
     else attrs << var;
   }
   tree val (WITH), cc (CONCAT);
-  for (int i=0; i<N(attrs); i++) {
+  for (int i= 0; i < N (attrs); i++) {
     string oldv= attrs[i];
     string newv= theme * "-" * attrs[i];
     cc << tree (ASSIGN, newv, tree (VALUE, oldv));
     val << tree (oldv) << tree (VALUE, newv);
   }
   val << tree (ARG, "body");
-  for (int i=N(inhs)-1; i>=0; i--) {
+  for (int i= N (inhs) - 1; i >= 0; i--) {
     string winh= "with-" * inhs[i];
-    val= compound (winh, val);
+    val        = compound (winh, val);
   }
   val= tree (MACRO, "body", val);
   cc << tree (ASSIGN, "with-" * theme, val);
@@ -1019,35 +1001,34 @@ edit_env_rep::exec_new_theme (tree t) {
 
 tree
 edit_env_rep::exec_copy_theme (tree t) {
-  if (N(t)<1 || !is_atomic (t[0]))
-    return tree (ERROR, "bad copy-theme");
-  string new_theme= t[0]->label;
-  tree rew (NEW_THEME, new_theme);
+  if (N (t) < 1 || !is_atomic (t[0])) return tree (ERROR, "bad copy-theme");
+  string      new_theme= t[0]->label;
+  tree        rew (NEW_THEME, new_theme);
   array<tree> a;
-  for (int k=1; k<N(t); k++) {
+  for (int k= 1; k < N (t); k++) {
     string old_theme= t[k]->label;
     if (!provides ("with-" * old_theme))
       return tree (ERROR, "missing theme '" * old_theme * "'");
     tree val= read ("with-" * old_theme);
     if (is_func (val, MACRO, 2)) val= val[1];
     while (is_compound (val, 1) && !is_func (val, WITH)) {
-      string lab= as_string (L(val));
-      if (starts (lab, "with-")) rew << tree (lab (5, N(lab)));
-      val= val[N(val)-1];
+      string lab= as_string (L (val));
+      if (starts (lab, "with-")) rew << tree (lab (5, N (lab)));
+      val= val[N (val) - 1];
     }
   }
-  for (int k=1; k<N(t); k++) {
+  for (int k= 1; k < N (t); k++) {
     string old_theme= t[k]->label;
-    tree val= read ("with-" * old_theme);
+    tree   val      = read ("with-" * old_theme);
     if (is_func (val, MACRO, 2)) val= val[1];
     while (is_compound (val, 1) && !is_func (val, WITH))
-      val= val[N(val)-1];
+      val= val[N (val) - 1];
     if (is_func (val, WITH))
-      for (int i=0; i+2<N(val); i+=2)
+      for (int i= 0; i + 2 < N (val); i+= 2)
         if (is_atomic (val[i])) {
           rew << val[i];
           string var= new_theme * "-" * val[i]->label;
-          a << tree (ASSIGN, var, val[i+1]);
+          a << tree (ASSIGN, var, val[i + 1]);
         }
   }
   rew= tree (CONCAT, rew);
@@ -1062,21 +1043,20 @@ edit_env_rep::exec_apply_theme_sub (string var) {
   val= val[1];
   tree r (CONCAT);
   while (is_compound (val, 1) && !is_func (val, WITH)) {
-    string lab= as_string (L(val));
+    string lab= as_string (L (val));
     r << exec_apply_theme_sub (lab);
   }
   if (is_func (val, WITH))
-    for (int i=0; i+2<N(val); i+=2)
-      r << exec (tree (ASSIGN, val[i], val[i+1]));
-  if (N(r) == 0) return "";
-  else if (N(r) == 1) return r[0];
+    for (int i= 0; i + 2 < N (val); i+= 2)
+      r << exec (tree (ASSIGN, val[i], val[i + 1]));
+  if (N (r) == 0) return "";
+  else if (N (r) == 1) return r[0];
   else return r;
 }
 
 tree
 edit_env_rep::exec_apply_theme (tree t) {
-  if (N(t) != 1 || !is_atomic (t[0]))
-    return tree (ERROR, "bad apply-theme");
+  if (N (t) != 1 || !is_atomic (t[0])) return tree (ERROR, "bad apply-theme");
   string theme= t[0]->label;
   if (!provides ("with-" * theme))
     return tree (ERROR, "missing theme '" * theme * "'");
@@ -1089,29 +1069,28 @@ edit_env_rep::exec_select_theme_sub (string theme, string from) {
   tree val= read ("with-" * from);
   if (is_func (val, MACRO, 2)) val= val[1];
   while (is_compound (val, 1) && !is_func (val, WITH)) {
-    string lab= as_string (L(val));
+    string lab= as_string (L (val));
     if (starts (lab, "with-"))
-      r << A(exec_select_theme_sub (theme, lab (5, N(lab))));
-    val= val[N(val)-1];
+      r << A (exec_select_theme_sub (theme, lab (5, N (lab))));
+    val= val[N (val) - 1];
   }
   if (is_func (val, WITH))
-    for (int i=0; i+2<N(val); i+=2)
+    for (int i= 0; i + 2 < N (val); i+= 2)
       if (is_atomic (val[i]))
-        r << tree (ASSIGN, theme * "-" * val[i]->label, val[i+1]);
+        r << tree (ASSIGN, theme * "-" * val[i]->label, val[i + 1]);
   return r;
 }
 
 tree
 edit_env_rep::exec_select_theme (tree t) {
-  if (N(t)<1 || !is_atomic (t[0]))
-    return tree (ERROR, "bad copy-theme");
+  if (N (t) < 1 || !is_atomic (t[0])) return tree (ERROR, "bad copy-theme");
   string theme= t[0]->label;
-  tree r (CONCAT);
-  for (int k=1; k<N(t); k++) {
+  tree   r (CONCAT);
+  for (int k= 1; k < N (t); k++) {
     string from= t[k]->label;
     if (!provides ("with-" * from))
       return tree (ERROR, "missing theme '" * from * "'");
-    r << A(exec_select_theme_sub (theme, from));
+    r << A (exec_select_theme_sub (theme, from));
   }
   return exec (r);
 }
@@ -1121,13 +1100,13 @@ edit_env_rep::exec_quasiquoted (tree t) {
   if (is_atomic (t)) return t;
   else if (is_func (t, UNQUOTE, 1)) return exec (t[0]);
   else {
-    int i, n= N(t);
-    tree r (L(t));
-    for (i=0; i<n; i++) {
+    int  i, n= N (t);
+    tree r (L (t));
+    for (i= 0; i < n; i++) {
       if (is_func (t[i], VAR_UNQUOTE, 1)) {
-	tree ins= exec (t[i]);
-	if (is_compound (ins)) r << A(ins);
-	else r << tree (ERROR, "bad unquote*");
+        tree ins= exec (t[i]);
+        if (is_compound (ins)) r << A (ins);
+        else r << tree (ERROR, "bad unquote*");
       }
       else r << exec_quasiquoted (t[i]);
     }
@@ -1140,12 +1119,11 @@ edit_env_rep::exec_if (tree t) {
   // This case must be kept consistent with
   // concater_rep::typeset_if(tree, path)
   // in ../Concat/concat_active.cpp
-  if ((N(t)!=2) && (N(t)!=3)) return tree (ERROR, "bad if");
+  if ((N (t) != 2) && (N (t) != 3)) return tree (ERROR, "bad if");
   tree tt= exec (t[0]);
-  if (is_compound (tt) || !is_bool (tt->label))
-    return tree (ERROR, "bad if");
+  if (is_compound (tt) || !is_bool (tt->label)) return tree (ERROR, "bad if");
   if (as_bool (tt->label)) return exec (t[1]);
-  if (N(t)==3) return exec (t[2]);
+  if (N (t) == 3) return exec (t[2]);
   return "";
 }
 
@@ -1154,42 +1132,42 @@ edit_env_rep::exec_case (tree t) {
   // This case must be kept consistent with
   // concater_rep::typeset_case(tree, path)
   // in ../Concat/concat_active.cpp
-  if (N(t)<2) return tree (ERROR, "bad case");
-  int i, n= N(t);
-  for (i=0; i<(n-1); i+=2) {
+  if (N (t) < 2) return tree (ERROR, "bad case");
+  int i, n= N (t);
+  for (i= 0; i < (n - 1); i+= 2) {
     tree tt= exec (t[i]);
-    if (is_compound (tt) || ! is_bool (tt->label))
+    if (is_compound (tt) || !is_bool (tt->label))
       return tree (ERROR, "bad case");
-    if (as_bool (tt->label)) return exec (t[i+1]);
+    if (as_bool (tt->label)) return exec (t[i + 1]);
   }
-  if (i<n) return exec (t[i]);
+  if (i < n) return exec (t[i]);
   return "";
 }
 
 tree
 edit_env_rep::exec_while (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad while");
+  if (N (t) != 2) return tree (ERROR, "bad while");
   tree r (CONCAT);
   while (1) {
     tree tt= exec (t[0]);
     if (is_compound (tt)) return tree (ERROR, "bad while");
-    if (! is_bool (tt->label)) return tree (ERROR, "bad while");
-    if (! as_bool(tt->label)) break;
+    if (!is_bool (tt->label)) return tree (ERROR, "bad while");
+    if (!as_bool (tt->label)) break;
     r << exec (t[1]);
   }
-  if (N(r) == 0) return "";
-  if (N(r) == 1) return r[0];
+  if (N (r) == 0) return "";
+  if (N (r) == 1) return r[0];
   return r;
 }
 
 tree
 edit_env_rep::exec_for_each (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad for-each");
+  if (N (t) != 2) return tree (ERROR, "bad for-each");
   tree fun = exec (t[0]);
   tree args= exec (t[1]);
   if (!is_tuple (args)) return tree (ERROR, "bad for-each");
-  int i, n= N(args);
-  for (i=0; i<n; i++)
+  int i, n= N (args);
+  for (i= 0; i < n; i++)
     exec (tree (COMPOUND, fun, args[i]));
   return "";
 }
@@ -1197,35 +1175,34 @@ edit_env_rep::exec_for_each (tree t) {
 static tree
 filter_style (tree t) {
   if (is_atomic (t)) return t;
-  else switch (L(t)) {
-  case STYLE_WITH:
-  case VAR_STYLE_WITH:
-    return filter_style (t[N(t)-1]);
-  case STYLE_ONLY:
-  case VAR_STYLE_ONLY:
-    if (is_atomic (t[0])) return "";
-    else return filter_style (t[0][N(t[0])-1]);
-  case ACTIVE:
-  case VAR_ACTIVE:
-  case INACTIVE:
-  case VAR_INACTIVE:
-    return filter_style (t[0]);
-  default:
-    {
-      int i, n= N(t);
+  else switch (L (t)) {
+    case STYLE_WITH:
+    case VAR_STYLE_WITH:
+      return filter_style (t[N (t) - 1]);
+    case STYLE_ONLY:
+    case VAR_STYLE_ONLY:
+      if (is_atomic (t[0])) return "";
+      else return filter_style (t[0][N (t[0]) - 1]);
+    case ACTIVE:
+    case VAR_ACTIVE:
+    case INACTIVE:
+    case VAR_INACTIVE:
+      return filter_style (t[0]);
+    default: {
+      int  i, n= N (t);
       tree r (t, n);
-      for (i=0; i<n; i++)
-	r[i]= filter_style (t[i]);
+      for (i= 0; i < n; i++)
+        r[i]= filter_style (t[i]);
       return r;
     }
-  }
+    }
 }
 
 tree
 edit_env_rep::exec_use_package (tree t) {
-  int i, n= N(t);
-  for (i=0; i<n; i++) {
-    //cout << "Package " << as_string (t[i]) << "\n";
+  int i, n= N (t);
+  for (i= 0; i < n; i++) {
+    // cout << "Package " << as_string (t[i]) << "\n";
     url name= url_none ();
     url styp= "$TEXMACS_STYLE_PATH";
     if (is_rooted (base_file_name, "default"))
@@ -1234,12 +1211,11 @@ edit_env_rep::exec_use_package (tree t) {
     if (ends (as_string (t[i]), ".ts")) name= url_system (as_string (t[i]));
     else name= styp * (as_string (t[i]) * string (".ts"));
     name= resolve (name);
-    //cout << as_string (t[i]) << " -> " << name << "\n";
+    // cout << as_string (t[i]) << " -> " << name << "\n";
     string doc_s;
     if (!load_string (name, doc_s, false)) {
       tree doc= texmacs_document_to_tree (doc_s);
-      if (is_compound (doc))
-        exec (filter_style (extract (doc, "body")));
+      if (is_compound (doc)) exec (filter_style (extract (doc, "body")));
     }
   }
   return "";
@@ -1247,8 +1223,8 @@ edit_env_rep::exec_use_package (tree t) {
 
 tree
 edit_env_rep::exec_use_module (tree t) {
-  int i, n= N(t);
-  for (i=0; i<n; i++) {
+  int i, n= N (t);
+  for (i= 0; i < n; i++) {
     string s= exec_string (t[i]);
     if (starts (s, "(")) eval ("(use-modules " * s * ")");
     else if (s != "") eval ("(plugin-initialize '" * s * ")");
@@ -1259,8 +1235,8 @@ edit_env_rep::exec_use_module (tree t) {
 
 tree
 edit_env_rep::exec_or (tree t) {
-  if (N(t) < 2) return tree (ERROR, "bad or");
-  for (int i=0; i<N(t); i++) {
+  if (N (t) < 2) return tree (ERROR, "bad or");
+  for (int i= 0; i < N (t); i++) {
     tree ti= exec (t[i]);
     if (ti != "false") return ti;
   }
@@ -1269,7 +1245,7 @@ edit_env_rep::exec_or (tree t) {
 
 tree
 edit_env_rep::exec_xor (tree t) {
-  if (N(t) != 2) return tree (ERROR, "bad xor");
+  if (N (t) != 2) return tree (ERROR, "bad xor");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
   if (is_compound (t1) || is_compound (t2)) return tree (ERROR, "bad xor");
@@ -1280,17 +1256,17 @@ edit_env_rep::exec_xor (tree t) {
 
 tree
 edit_env_rep::exec_and (tree t) {
-  if (N(t) < 2) return tree (ERROR, "bad and");
-  for (int i=0; i<N(t)-1; i++) {
+  if (N (t) < 2) return tree (ERROR, "bad and");
+  for (int i= 0; i < N (t) - 1; i++) {
     tree ti= exec (t[i]);
     if (ti == "false") return ti;
   }
-  return exec (t[N(t)-1]);
+  return exec (t[N (t) - 1]);
 }
 
 tree
 edit_env_rep::exec_not (tree t) {
-  if (N(t) != 1) return tree (ERROR, "bad not");
+  if (N (t) != 1) return tree (ERROR, "bad not");
   tree tt= exec (t[0]);
   if (tt == "false") return "true";
   else return "false";
@@ -1298,34 +1274,28 @@ edit_env_rep::exec_not (tree t) {
 
 tree
 edit_env_rep::exec_plus_minus (tree t) {
-  int i, n= N(t);
-  if (n==0) return tree (ERROR, "bad plus/minus");
+  int i, n= N (t);
+  if (n == 0) return tree (ERROR, "bad plus/minus");
   tree inc= exec (t[0]);
   if (is_double (inc)) {
     double acc= as_double (inc);
-    if ((n==1) && is_func (t, MINUS))
-      acc= -acc;
-    for (i=1; i<n; i++) {
+    if ((n == 1) && is_func (t, MINUS)) acc= -acc;
+    for (i= 1; i < n; i++) {
       tree inc= exec (t[i]);
-      if (!is_double (inc))
-	return tree (ERROR, "bad plus/minus");
-      if ((i == n-1) && is_func (t, MINUS))
-	acc -= as_double (inc);
-      else acc += as_double (inc);
+      if (!is_double (inc)) return tree (ERROR, "bad plus/minus");
+      if ((i == n - 1) && is_func (t, MINUS)) acc-= as_double (inc);
+      else acc+= as_double (inc);
     }
     return as_string (acc);
   }
   else if (is_anylen (inc)) {
     tree acc= as_tmlen (inc);
-    if ((n==1) && is_func (t, MINUS))
-      acc= tmlen_times (-1, acc);
-    for (i=1; i<n; i++) {
+    if ((n == 1) && is_func (t, MINUS)) acc= tmlen_times (-1, acc);
+    for (i= 1; i < n; i++) {
       tree inc= exec (t[i]);
-      if (!is_anylen (inc))
-	return tree (ERROR, "bad plus/minus");
+      if (!is_anylen (inc)) return tree (ERROR, "bad plus/minus");
       inc= as_tmlen (inc);
-      if ((i == n-1) && is_func (t, MINUS))
-	inc= tmlen_times (-1, inc);
+      if ((i == n - 1) && is_func (t, MINUS)) inc= tmlen_times (-1, inc);
       acc= tmlen_plus (acc, inc);
     }
     return acc;
@@ -1335,35 +1305,28 @@ edit_env_rep::exec_plus_minus (tree t) {
 
 tree
 edit_env_rep::exec_min_max (tree t) {
-  int i, n= N(t);
-  if (n==0) return tree (ERROR, "bad min/max");
+  int i, n= N (t);
+  if (n == 0) return tree (ERROR, "bad min/max");
   tree first= exec (t[0]);
   if (is_double (first)) {
     double ret= as_double (first);
-    for (i=1; i<n; i++) {
+    for (i= 1; i < n; i++) {
       tree next= exec (t[i]);
-      if (!is_double (next))
-	return tree (ERROR, "bad min/max");
-      if (is_func (t, MINIMUM))
-	ret= min (ret, as_double (next));
-      else
-	ret= max (ret, as_double (next));
+      if (!is_double (next)) return tree (ERROR, "bad min/max");
+      if (is_func (t, MINIMUM)) ret= min (ret, as_double (next));
+      else ret= max (ret, as_double (next));
     }
     return as_string (ret);
   }
   else if (is_anylen (first)) {
     tree ret= as_tmlen (first);
-    if ((n==1) && is_func (t, MINUS))
-      ret= tmlen_times (-1, ret);
-    for (i=1; i<n; i++) {
+    if ((n == 1) && is_func (t, MINUS)) ret= tmlen_times (-1, ret);
+    for (i= 1; i < n; i++) {
       tree next= exec (t[i]);
-      if (!is_anylen (next))
-	return tree (ERROR, "bad min/max");
+      if (!is_anylen (next)) return tree (ERROR, "bad min/max");
       next= as_tmlen (next);
-      if (is_func (t, MINIMUM))
-	ret= tmlen_min (ret, next);
-      else
-	ret= tmlen_max (ret, next);
+      if (is_func (t, MINIMUM)) ret= tmlen_min (ret, next);
+      else ret= tmlen_max (ret, next);
     }
     return ret;
   }
@@ -1372,44 +1335,40 @@ edit_env_rep::exec_min_max (tree t) {
 
 tree
 edit_env_rep::exec_times_over (tree t) {
-  int i, n= N(t);
-  if (n==0) return tree (ERROR, "bad times/over");
+  int i, n= N (t);
+  if (n == 0) return tree (ERROR, "bad times/over");
   tree prod= exec (t[0]);
-  if (is_double (prod));
+  if (is_double (prod))
+    ;
   else if (is_anylen (prod)) prod= as_tmlen (prod);
   else if (is_percentage (prod)) prod= as_tree (as_percentage (prod));
   else return tree (ERROR, "bad times/over");
-  if ((n==1) && is_func (t, OVER)) {
+  if ((n == 1) && is_func (t, OVER)) {
     if (is_double (prod)) return as_string (1 / as_double (prod));
     else return tree (ERROR, "bad times/over");
   }
   // cout << t << "\n";
   // cout << "  0\t" << prod << "\n";
-  for (i=1; i<n; i++) {
+  for (i= 1; i < n; i++) {
     tree mul= exec (t[i]);
     if (is_double (mul)) {
       double _mul= as_double (mul);
-      if ((i == n-1) && is_func (t, OVER))
-	_mul= 1 / _mul;
-      if (is_double (prod))
-	prod= as_string (_mul * as_double (prod));
+      if ((i == n - 1) && is_func (t, OVER)) _mul= 1 / _mul;
+      if (is_double (prod)) prod= as_string (_mul * as_double (prod));
       else prod= tmlen_times (_mul, prod);
     }
     else if (is_anylen (mul)) {
       mul= as_tmlen (mul);
-      if ((i == n-1) && is_func (t, OVER)) {
-	if (!is_func (prod, TMLEN))
-	  return tree (ERROR, "bad times/over");
-	return tmlen_over (prod, mul);
+      if ((i == n - 1) && is_func (t, OVER)) {
+        if (!is_func (prod, TMLEN)) return tree (ERROR, "bad times/over");
+        return tmlen_over (prod, mul);
       }
-      if (is_double (prod))
-	prod= tmlen_times (as_double (prod), mul);
+      if (is_double (prod)) prod= tmlen_times (as_double (prod), mul);
       else return tree (ERROR, "bad times/over");
     }
     else if (is_percentage (mul)) {
       double _mul= as_percentage (mul);
-      if (is_double (prod))
-	prod= as_string (_mul * as_double (prod));
+      if (is_double (prod)) prod= as_string (_mul * as_double (prod));
       else prod= tmlen_times (_mul, prod);
     }
     else return tree (ERROR, "bad times/over");
@@ -1421,11 +1380,10 @@ edit_env_rep::exec_times_over (tree t) {
 tree
 edit_env_rep::exec_divide (tree t) {
   /* this doesn't match the documentation */
-  if (N(t)!=2) return tree (ERROR, "bad divide");
+  if (N (t) != 2) return tree (ERROR, "bad divide");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
-  if (is_compound (t1) || is_compound (t2))
-    return tree (ERROR, "bad divide");
+  if (is_compound (t1) || is_compound (t2)) return tree (ERROR, "bad divide");
   if (is_int (t1->label) && (is_int (t2->label))) {
     int den= as_int (t2->label);
     if (den == 0) return tree (ERROR, "division by zero");
@@ -1443,11 +1401,10 @@ edit_env_rep::exec_divide (tree t) {
 
 tree
 edit_env_rep::exec_modulo (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad modulo");
+  if (N (t) != 2) return tree (ERROR, "bad modulo");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
-  if (is_compound (t1) || is_compound (t2))
-    return tree (ERROR, "bad modulo");
+  if (is_compound (t1) || is_compound (t2)) return tree (ERROR, "bad modulo");
   if (is_int (t1->label) && (is_int (t2->label))) {
     int den= as_int (t2->label);
     if (den == 0) return tree (ERROR, "modulo zero");
@@ -1467,34 +1424,31 @@ edit_env_rep::exec_modulo (tree t) {
 
 tree
 edit_env_rep::exec_math_sqrt (tree t) {
-  if (N(t)!=1) return tree (ERROR, "bad sqrt");
+  if (N (t) != 1) return tree (ERROR, "bad sqrt");
   tree t1= exec (t[0]);
-  if (is_double (t1))
-    return as_tree (sqrt (as_double (t1)));
+  if (is_double (t1)) return as_tree (sqrt (as_double (t1)));
   return tree (ERROR, "bad sqrt");
 }
 
 tree
 edit_env_rep::exec_exp (tree t) {
-  if (N(t)!=1) return tree (ERROR, "bad exp");
+  if (N (t) != 1) return tree (ERROR, "bad exp");
   tree t1= exec (t[0]);
-  if (is_double (t1))
-    return as_tree (exp (as_double (t1)));
+  if (is_double (t1)) return as_tree (exp (as_double (t1)));
   return tree (ERROR, "bad exp");
 }
 
 tree
 edit_env_rep::exec_log (tree t) {
-  if (N(t)!=1) return tree (ERROR, "bad log");
+  if (N (t) != 1) return tree (ERROR, "bad log");
   tree t1= exec (t[0]);
-  if (is_double (t1))
-    return as_tree (log (as_double (t1)));
+  if (is_double (t1)) return as_tree (log (as_double (t1)));
   return tree (ERROR, "bad log");
 }
 
 tree
 edit_env_rep::exec_pow (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad pow");
+  if (N (t) != 2) return tree (ERROR, "bad pow");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
   if (is_double (t1) && is_double (t2))
@@ -1504,62 +1458,56 @@ edit_env_rep::exec_pow (tree t) {
 
 tree
 edit_env_rep::exec_cos (tree t) {
-  if (N(t)!=1) return tree (ERROR, "bad cos");
+  if (N (t) != 1) return tree (ERROR, "bad cos");
   tree t1= exec (t[0]);
-  if (is_double (t1))
-    return as_tree (cos (as_double (t1)));
+  if (is_double (t1)) return as_tree (cos (as_double (t1)));
   return tree (ERROR, "bad cos");
 }
 
 tree
 edit_env_rep::exec_sin (tree t) {
-  if (N(t)!=1) return tree (ERROR, "bad sin");
+  if (N (t) != 1) return tree (ERROR, "bad sin");
   tree t1= exec (t[0]);
-  if (is_double (t1))
-    return as_tree (sin (as_double (t1)));
+  if (is_double (t1)) return as_tree (sin (as_double (t1)));
   return tree (ERROR, "bad sin");
 }
 
 tree
 edit_env_rep::exec_tan (tree t) {
-  if (N(t)!=1) return tree (ERROR, "bad tan");
+  if (N (t) != 1) return tree (ERROR, "bad tan");
   tree t1= exec (t[0]);
-  if (is_double (t1))
-    return as_tree (tan (as_double (t1)));
+  if (is_double (t1)) return as_tree (tan (as_double (t1)));
   return tree (ERROR, "bad tan");
 }
 
 tree
 edit_env_rep::exec_merge (tree t) {
-  int i, n= N(t);
+  int i, n= N (t);
   if (n == 0) return "";
   tree acc= exec (t[0]);
   if (is_concat (acc)) acc= tree_as_string (acc);
-  for (i=1; i<n; i++) {
+  for (i= 1; i < n; i++) {
     tree add= exec (t[i]);
     if (is_atomic (acc) &&
-	(is_atomic (add) || is_concat (add) || is_document (add)))
+        (is_atomic (add) || is_concat (add) || is_document (add)))
       acc= acc->label * tree_as_string (add);
-    else if (is_tuple (acc) && is_tuple (add))
-      acc= acc * add;
+    else if (is_tuple (acc) && is_tuple (add)) acc= acc * add;
     else if (is_func (acc, MACRO) && is_func (add, MACRO) &&
-	     (N(acc) == N(add)) &&
-	     (acc (0, N(acc)-1) == add (0, N(add)-1)))
-      {
-	tree r = copy (acc);
-	tree u1= copy (acc[N(acc)-1]);
-	tree u2= copy (add[N(add)-1]);
-	tree u (CONCAT, u1, u2);
-	if (u1 == "") u= u2;
-	else if (u2 == "") u= u1;
-	else if (is_atomic (u1) && is_atomic (u2))
-	  u= u1->label * u2->label;
-	r[N(r)-1]= u;
-	acc= r;
-      }
+             (N (acc) == N (add)) &&
+             (acc (0, N (acc) - 1) == add (0, N (add) - 1))) {
+      tree r = copy (acc);
+      tree u1= copy (acc[N (acc) - 1]);
+      tree u2= copy (add[N (add) - 1]);
+      tree u (CONCAT, u1, u2);
+      if (u1 == "") u= u2;
+      else if (u2 == "") u= u1;
+      else if (is_atomic (u1) && is_atomic (u2)) u= u1->label * u2->label;
+      r[N (r) - 1]= u;
+      acc         = r;
+    }
     else {
-      //cout << "acc= " << acc << "\n";
-      //cout << "add= " << add << "\n";
+      // cout << "acc= " << acc << "\n";
+      // cout << "add= " << add << "\n";
       return tree (ERROR, "bad merge");
     }
   }
@@ -1568,7 +1516,7 @@ edit_env_rep::exec_merge (tree t) {
 
 tree
 edit_env_rep::exec_length (tree t) {
-  if (N(t)!=1) return tree (ERROR, "bad length");
+  if (N (t) != 1) return tree (ERROR, "bad length");
   tree t1= exec (t[0]);
   if (is_compound (t1)) {
     if (is_tuple (t1)) return as_string (N (t1));
@@ -1579,7 +1527,7 @@ edit_env_rep::exec_length (tree t) {
 
 tree
 edit_env_rep::exec_range (tree t) {
-  if (N(t)!=3) return tree (ERROR, "bad range");
+  if (N (t) != 3) return tree (ERROR, "bad range");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
   tree t3= exec (t[2]);
@@ -1588,27 +1536,26 @@ edit_env_rep::exec_range (tree t) {
     if (is_tuple (t1)) {
       int i1= max (0, as_int (t2));
       int i2= min (N (t1), as_int (t3));
-      i2 = max (i1, i2);
+      i2    = max (i1, i2);
       return t1 (i1, i2);
     }
     return tree (ERROR, "bad range");
   }
   int i1= max (0, as_int (t2));
-  int i2= min (N(t1->label), as_int (t3));
-  i2 = max (i1, i2);
+  int i2= min (N (t1->label), as_int (t3));
+  i2    = max (i1, i2);
   return t1->label (i1, i2);
 }
 
 tree
 edit_env_rep::exec_number (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad number");
+  if (N (t) != 2) return tree (ERROR, "bad number");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
-  if (is_compound (t1) || is_compound (t2))
-    return tree (ERROR, "bad number");
+  if (is_compound (t1) || is_compound (t2)) return tree (ERROR, "bad number");
   string s1= t1->label;
   string s2= t2->label;
-  int nr= as_int (s1);
+  int    nr= as_int (s1);
   if (s2 == "arabic") return as_string (nr);
   if (s2 == "roman") return to_roman (nr);
   if (s2 == "Roman") return to_Roman (nr);
@@ -1621,15 +1568,15 @@ edit_env_rep::exec_number (tree t) {
 
 tree
 edit_env_rep::exec_date (tree t) {
-  if (N(t)>2) return tree (ERROR, "bad date");
+  if (N (t) > 2) return tree (ERROR, "bad date");
   string lan= get_string (LANGUAGE);
-  if (N(t) == 2) {
+  if (N (t) == 2) {
     tree u= exec (t[1]);
     if (is_compound (u)) return tree (ERROR, "bad date");
     lan= u->label;
   }
   string fm= "";
-  if (N(t) != 0) {
+  if (N (t) != 0) {
     tree u= exec (t[0]);
     if (is_compound (u)) return tree (ERROR, "bad date");
     fm= u->label;
@@ -1639,7 +1586,7 @@ edit_env_rep::exec_date (tree t) {
 
 tree
 edit_env_rep::exec_translate (tree t) {
-  if (N(t)!=3) return tree (ERROR, "bad translate");
+  if (N (t) != 3) return tree (ERROR, "bad translate");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
   tree t3= exec (t[2]);
@@ -1659,28 +1606,35 @@ edit_env_rep::exec_change_case (tree t, tree nc, bool exec_flag, bool first) {
   else if (is_atomic (t)) {
     string s= t->label;
     tree   r= copy (s);
-    int i, n= N(s);
+    int    i, n= N (s);
 
     bool all= true;
     bool up = false;
     bool lo = false;
-    if (nc == "Upcase") { all= false; up= true; }
-    else if (nc == "UPCASE") { up= true; }
-    else if (nc == "locase") { lo= true; }
+    if (nc == "Upcase") {
+      all= false;
+      up = true;
+    }
+    else if (nc == "UPCASE") {
+      up= true;
+    }
+    else if (nc == "locase") {
+      lo= true;
+    }
 
-    for (i=0; i<n; tm_char_forwards (s, i))
-      if (is_iso_alpha (s[i]) && (all || (first && (i==0)))) {
-	if (up && is_iso_locase (s[i])) r->label[i]= upcase (s[i]);
-	if (lo && is_iso_upcase (s[i])) r->label[i]= locase (s[i]);
+    for (i= 0; i < n; tm_char_forwards (s, i))
+      if (is_iso_alpha (s[i]) && (all || (first && (i == 0)))) {
+        if (up && is_iso_locase (s[i])) r->label[i]= upcase (s[i]);
+        if (lo && is_iso_upcase (s[i])) r->label[i]= locase (s[i]);
       }
     r->obs= list_observer (ip_observer (obtain_ip (t)), r->obs);
     return r;
   }
   else if (is_concat (t)) {
-    int i, n= N(t);
+    int  i, n= N (t);
     tree r (t, n);
-    for (i=0; i<n; i++)
-      r[i]= exec_change_case (t[i], nc, exec_flag, first && (i==0));
+    for (i= 0; i < n; i++)
+      r[i]= exec_change_case (t[i], nc, exec_flag, first && (i == 0));
     r->obs= list_observer (ip_observer (obtain_ip (t)), r->obs);
     return r;
   }
@@ -1692,21 +1646,20 @@ edit_env_rep::exec_change_case (tree t, tree nc, bool exec_flag, bool first) {
 
 tree
 edit_env_rep::exec_change_case (tree t) {
-  if (N(t) < 2) return tree (ERROR, "bad change case");
+  if (N (t) < 2) return tree (ERROR, "bad change case");
   return exec_change_case (t[0], exec (t[1]), false, true);
 }
 
 tree
 edit_env_rep::exec_find_file (tree t) {
-  int i, n=N(t);
+  int         i, n= N (t);
   array<tree> r (n);
-  for (i=0; i<n; i++) {
+  for (i= 0; i < n; i++) {
     r[i]= exec (t[i]);
-    if (is_compound (r[i]))
-      return tree (ERROR, "bad find file");
+    if (is_compound (r[i])) return tree (ERROR, "bad find file");
   }
-  for (i=0; i<(n-1); i++) {
-    url u= resolve (url (r[i]->label, r[n-1]->label));
+  for (i= 0; i < (n - 1); i++) {
+    url u= resolve (url (r[i]->label, r[n - 1]->label));
     if (!is_none (u)) {
       url d= delta (base_file_name, u);
       if (!is_rooted (d) && !(is_concat (d) && is_parent (d[1])))
@@ -1715,7 +1668,7 @@ edit_env_rep::exec_find_file (tree t) {
       return as_string (u);
     }
   }
-  url u= resolve (base_file_name * url_parent () * r[n-1]->label);
+  url u= resolve (base_file_name * url_parent () * r[n - 1]->label);
   if (!is_none (u)) {
     url d= delta (base_file_name, u);
     if (!is_rooted (d) && !(is_concat (d) && is_parent (d[1])))
@@ -1728,10 +1681,10 @@ edit_env_rep::exec_find_file (tree t) {
 
 tree
 edit_env_rep::exec_find_file_upwards (tree t) {
-  if (N(t) < 1) return tree (ERROR, "bad find file upwards");
-  tree name= exec (t[0]);
+  if (N (t) < 1) return tree (ERROR, "bad find file upwards");
+  tree          name= exec (t[0]);
   array<string> roots;
-  for (int i=1; i<N(t); i++) {
+  for (int i= 1; i < N (t); i++) {
     tree root= exec (t[i]);
     if (!is_atomic (name) || !is_atomic (root))
       return tree (ERROR, "bad find file upwards");
@@ -1740,9 +1693,8 @@ edit_env_rep::exec_find_file_upwards (tree t) {
   url u= search_file_upwards (base_file_name, name->label, roots);
   if (!is_none (u)) {
     url d= delta (base_file_name, u);
-    if (!is_rooted (d))
-      return as_string (d);
-    //if (is_rooted (u, "default")) u= reroot (u, "file");
+    if (!is_rooted (d)) return as_string (d);
+    // if (is_rooted (u, "default")) u= reroot (u, "file");
     return as_string (u);
   }
   return "false";
@@ -1750,18 +1702,19 @@ edit_env_rep::exec_find_file_upwards (tree t) {
 
 tree
 edit_env_rep::exec_is_tuple (tree t) {
-  if (N(t)!=1) return tree (ERROR, "bad tuple query");
-  return as_string_bool(is_tuple (exec (t[0])));
+  if (N (t) != 1) return tree (ERROR, "bad tuple query");
+  return as_string_bool (is_tuple (exec (t[0])));
 }
 
 tree
 edit_env_rep::exec_lookup (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad look up");
+  if (N (t) != 2) return tree (ERROR, "bad look up");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
   if (!(is_compound (t1) && is_int (t2))) return tree (ERROR, "bad look up");
   int i= as_int (t2);
-  if (i<0 || i>=N(t1)) return tree (ERROR, "index out of range in look up");
+  if (i < 0 || i >= N (t1))
+    return tree (ERROR, "index out of range in look up");
   return t1[i];
 }
 
@@ -1769,22 +1722,21 @@ static bool
 occurs_inside (tree w, tree t) {
   if (t == w) return true;
   if (is_atomic (t)) return false;
-  for (int i=0; i<N(t); i++)
+  for (int i= 0; i < N (t); i++)
     if (occurs_inside (w, t[i])) return true;
   return false;
 }
 
 tree
 edit_env_rep::exec_arg_recursive (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad arg");
+  if (N (t) < 1) return tree (ERROR, "bad arg");
   tree r= t[0];
-  if (is_compound (r))
-    return tree (ERROR, "bad arg");
+  if (is_compound (r)) return tree (ERROR, "bad arg");
   if (is_nil (macro_arg) || (!macro_arg->item->contains (r->label)))
     return tree (ERROR, "arg " * r->label);
-  r= macro_arg->item [r->label];
-  list<hashmap<string,tree> > old_var= macro_arg;
-  list<hashmap<string,path> > old_src= macro_src;
+  r                                  = macro_arg->item[r->label];
+  list<hashmap<string, tree>> old_var= macro_arg;
+  list<hashmap<string, path>> old_src= macro_src;
   if (!is_nil (macro_arg)) macro_arg= macro_arg->next;
   if (!is_nil (macro_src)) macro_src= macro_src->next;
   if (is_func (r, ARG, 1)) r= exec_arg_recursive (r);
@@ -1795,7 +1747,7 @@ edit_env_rep::exec_arg_recursive (tree t) {
 
 tree
 edit_env_rep::exec_occurs_inside (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad look up");
+  if (N (t) != 2) return tree (ERROR, "bad look up");
   tree t1= exec (t[0]);
   tree t2= exec_arg_recursive (tree (ARG, t[1]));
   if (occurs_inside (t1, t2)) return "true";
@@ -1804,33 +1756,32 @@ edit_env_rep::exec_occurs_inside (tree t) {
 
 tree
 edit_env_rep::exec_equal (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad equal");
+  if (N (t) != 2) return tree (ERROR, "bad equal");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
-  if (is_atomic (t1) && is_atomic (t2)
-      && is_length (t1->label) && is_length (t2->label))
+  if (is_atomic (t1) && is_atomic (t2) && is_length (t1->label) &&
+      is_length (t2->label))
     return as_string_bool (as_length (t1) == as_length (t2));
   return as_string_bool (t1 == t2);
 }
 
 tree
 edit_env_rep::exec_unequal (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad unequal");
+  if (N (t) != 2) return tree (ERROR, "bad unequal");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
-  if (is_atomic(t1) && is_atomic(t2)
-      && is_length(t1->label) && is_length(t2->label))
+  if (is_atomic (t1) && is_atomic (t2) && is_length (t1->label) &&
+      is_length (t2->label))
     return as_string_bool (as_length (t1) != as_length (t2));
   return as_string_bool (t1 != t2);
 }
 
 tree
 edit_env_rep::exec_less (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad less");
+  if (N (t) != 2) return tree (ERROR, "bad less");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
-  if (is_compound (t1) || is_compound (t2))
-    return tree (ERROR, "bad less");
+  if (is_compound (t1) || is_compound (t2)) return tree (ERROR, "bad less");
   string s1= t1->label;
   string s2= t2->label;
   if (is_double (s1) && is_double (s2))
@@ -1842,7 +1793,7 @@ edit_env_rep::exec_less (tree t) {
 
 tree
 edit_env_rep::exec_lesseq (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad less or equal");
+  if (N (t) != 2) return tree (ERROR, "bad less or equal");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
   if (is_compound (t1) || is_compound (t2))
@@ -1858,11 +1809,10 @@ edit_env_rep::exec_lesseq (tree t) {
 
 tree
 edit_env_rep::exec_greater (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad greater");
+  if (N (t) != 2) return tree (ERROR, "bad greater");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
-  if (is_compound (t1) || is_compound (t2))
-    return tree (ERROR, "bad greater");
+  if (is_compound (t1) || is_compound (t2)) return tree (ERROR, "bad greater");
   string s1= t1->label;
   string s2= t2->label;
   if (is_double (s1) && (is_double (s2)))
@@ -1874,7 +1824,7 @@ edit_env_rep::exec_greater (tree t) {
 
 tree
 edit_env_rep::exec_greatereq (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad greater or equal");
+  if (N (t) != 2) return tree (ERROR, "bad greater or equal");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
   if (is_compound (t1) || is_compound (t2))
@@ -1890,11 +1840,10 @@ edit_env_rep::exec_greatereq (tree t) {
 
 tree
 edit_env_rep::exec_blend (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad blend");
+  if (N (t) != 2) return tree (ERROR, "bad blend");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
-  if (is_compound (t1) || is_compound (t2))
-    return tree (ERROR, "bad blend");
+  if (is_compound (t1) || is_compound (t2)) return tree (ERROR, "bad blend");
   string s1= t1->label;
   string s2= t2->label;
   if (is_color_name (s1) && (is_color_name (s2))) {
@@ -1907,11 +1856,11 @@ edit_env_rep::exec_blend (tree t) {
 
 tree
 edit_env_rep::exec_rgb_color (tree t) {
-  if (N(t)!=3 && N(t)!=4) return tree (ERROR, "bad rgb-color");
+  if (N (t) != 3 && N (t) != 4) return tree (ERROR, "bad rgb-color");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
   tree t3= exec (t[2]);
-  tree t4= (N(t)==4? tree ("255"): exec (t[3]));
+  tree t4= (N (t) == 4 ? tree ("255") : exec (t[3]));
   if (!(is_int (t1) && is_int (t2) && is_int (t3) && is_int (t4)))
     return tree (ERROR, "bad rgb-color");
   color c= rgb_color (as_int (t1), as_int (t2), as_int (t3), as_int (t4));
@@ -1920,14 +1869,15 @@ edit_env_rep::exec_rgb_color (tree t) {
 
 tree
 edit_env_rep::exec_rgb_access (tree t) {
-  if (N(t)!=2) return tree (ERROR, "bad rgb-access");
+  if (N (t) != 2) return tree (ERROR, "bad rgb-access");
   tree t1= exec (t[0]);
   tree t2= exec (t[1]);
-  if (is_compound (t1) || is_compound (t2)) return tree (ERROR, "bad rgb-access");
+  if (is_compound (t1) || is_compound (t2))
+    return tree (ERROR, "bad rgb-access");
   string s1= t1->label;
   if (!(is_color_name (s1))) return tree (ERROR, "bad rgb-access");
   color c= named_color (s1);
-  int r, g, b, a;
+  int   r, g, b, a;
   get_rgb_color (c, r, g, b, a);
   if (starts (t2->label, "r") || t2->label == "0") return as_string (r);
   if (starts (t2->label, "g") || t2->label == "1") return as_string (g);
@@ -1939,99 +1889,94 @@ edit_env_rep::exec_rgb_access (tree t) {
 tree
 edit_env_rep::exec_hard_id (tree t) {
   pointer ptr= (pointer) this;
-  if (N(t) == 0)
-    return "%" * to_Hex (ptr);
+  if (N (t) == 0) return "%" * to_Hex (ptr);
   else {
-    t= expand (t[0], true);
-    pointer tptr= (pointer) t.operator -> ();
+    t           = expand (t[0], true);
+    pointer tptr= (pointer) t.operator->();
     if (is_accessible (obtain_ip (t)))
-      return "%" * to_Hex (ptr) *
-             "-" * to_Hex (tptr);
+      return "%" * to_Hex (ptr) * "-" * to_Hex (tptr);
     else {
       int h= hash (t);
-      return "%" * to_Hex (ptr) *
-             "-" * to_Hex (tptr) *
-             "-" * to_Hex (h);
+      return "%" * to_Hex (ptr) * "-" * to_Hex (tptr) * "-" * to_Hex (h);
     }
   }
 }
 
 tree
 edit_env_rep::exec_script (tree t) {
-  int i, n= N(t);
+  int i, n= N (t);
   if (n < 1) return tree (ERROR, "bad script");
   tree r (t, n);
   r[0]= exec (t[0]);
-  for (i=1; i<n; i++)
+  for (i= 1; i < n; i++)
     r[i]= exec (t[i]);
   return r;
 }
 
 tree
 edit_env_rep::exec_find_accessible (tree t) {
-  if (N(t) < 1) return tree (ERROR, "bad find-accessible");
+  if (N (t) < 1) return tree (ERROR, "bad find-accessible");
   return expand (t[0], true);
 }
 
 tree
 edit_env_rep::exec_set_binding (tree t) {
   tree keys, value;
-  if (N(t) == 1) {
+  if (N (t) == 1) {
     keys= read ("the-tags");
     if (!is_tuple (keys)) {
-      //cout << "t= " << t << "\n";
-      //cout << "keys= " << keys << "\n";
+      // cout << "t= " << t << "\n";
+      // cout << "keys= " << keys << "\n";
       return tree (ERROR, "bad set binding");
     }
-    for (int i=0; i<N(keys); i++)
+    for (int i= 0; i < N (keys); i++)
       if (!is_atomic (keys[i])) {
-	//cout << "t= " << t << "\n";
-	//cout << "keys= " << keys << "\n";
-	return tree (ERROR, "bad set binding");
+        // cout << "t= " << t << "\n";
+        // cout << "keys= " << keys << "\n";
+        return tree (ERROR, "bad set binding");
       }
     value= exec (t[0]);
     assign (string ("the-tags"), tree (TUPLE));
     assign (string ("the-label"), copy (value));
   }
-  else if (N(t) >= 2) {
+  else if (N (t) >= 2) {
     tree key= exec (t[0]);
     if (!is_atomic (key)) {
-      //cout << "t= " << t << "\n";
-      //cout << "key= " << key << "\n";
+      // cout << "t= " << t << "\n";
+      // cout << "key= " << key << "\n";
       return tree (ERROR, "bad set binding");
     }
-    keys= tuple (key);
+    keys = tuple (key);
     value= exec (t[1]);
   }
   else {
-    //cout << "t= " << t << "\n";
+    // cout << "t= " << t << "\n";
     return tree (ERROR, "bad set binding");
   }
-  //cout << t << ": " << keys << " -> " << value << "\n";
+  // cout << t << ": " << keys << " -> " << value << "\n";
 
-  for (int i=0; i<N(keys); i++) {
-    string key= keys[i]->label;
-    tree old_value= local_ref[key];
-    string part= as_string (read ("current-part"));
-    if (is_func (old_value, TUPLE) && (N(old_value) >= 2))
+  for (int i= 0; i < N (keys); i++) {
+    string key      = keys[i]->label;
+    tree   old_value= local_ref[key];
+    string part     = as_string (read ("current-part"));
+    if (is_func (old_value, TUPLE) && (N (old_value) >= 2))
       local_ref (key)= tuple (copy (value), old_value[1]);
     else local_ref (key)= tuple (copy (value), "?");
-    if (cur_file_name != base_file_name || N(part) != 0) {
+    if (cur_file_name != base_file_name || N (part) != 0) {
       string extra;
       if (cur_file_name != base_file_name)
-	extra << as_string (delta (base_file_name, cur_file_name));
-      if (N(part) != 0)
-	extra << "#" << part (1, N(part));
+        extra << as_string (delta (base_file_name, cur_file_name));
+      if (N (part) != 0) extra << "#" << part (1, N (part));
       local_ref (key) << extra;
     }
     touched (key)= true;
-    if (complete && is_tuple (old_value) && N(old_value) >= 1) {
+    if (complete && is_tuple (old_value) && N (old_value) >= 1) {
       string old_s= tree_as_string (old_value[0]);
       string new_s= tree_as_string (value);
       if (new_s != old_s && !starts (key, "auto-")) {
         redefined << tree (TUPLE, key, new_s);
-	//if (new_s == "") typeset_warning << "Redefined " << key << LF;
-	//else typeset_warning << "Redefined " << key << " as " << new_s << LF;
+        // if (new_s == "") typeset_warning << "Redefined " << key << LF;
+        // else typeset_warning << "Redefined " << key << " as " << new_s << LF;
       }
     }
   }
@@ -2040,30 +1985,30 @@ edit_env_rep::exec_set_binding (tree t) {
 
 tree
 edit_env_rep::exec_get_binding (tree t) {
-  if (N(t) != 1 && N(t) != 2) return tree (ERROR, "bad get binding");
-  string key= exec_string (t[0]);
-  tree value= local_ref->contains (key)? local_ref [key]: global_ref [key];
-  int type= (N(t) == 1? 0: as_int (exec_string (t[1])));
+  if (N (t) != 1 && N (t) != 2) return tree (ERROR, "bad get binding");
+  string key  = exec_string (t[0]);
+  tree   value= local_ref->contains (key) ? local_ref[key] : global_ref[key];
+  int    type = (N (t) == 1 ? 0 : as_int (exec_string (t[1])));
   if (type != 0 && type != 1) type= 0;
-  if (is_func (value, TUPLE) && (N(value) >= 2)) value= value[type];
+  if (is_func (value, TUPLE) && (N (value) >= 2)) value= value[type];
   else if (type == 1) value= tree (UNINIT);
   if (complete && value == tree (UNINIT))
     if (get_bool (WARN_MISSING)) {
       missing (key)= tree (GET_BINDING, key);
-      //typeset_warning << "Undefined reference " << key << LF;
+      // typeset_warning << "Undefined reference " << key << LF;
     }
-  //cout << t << ": " << key << " -> " << value << "\n";
+  // cout << t << ": " << key << " -> " << value << "\n";
   return value;
 }
 
 tree
 edit_env_rep::exec_has_binding (tree t) {
-  if (N(t) != 1 && N(t) != 2) return tree (ERROR, "bad get binding");
-  string key= exec_string (t[0]);
-  tree value= local_ref->contains (key)? local_ref [key]: global_ref [key];
-  int type= (N(t) == 1? 0: as_int (exec_string (t[1])));
+  if (N (t) != 1 && N (t) != 2) return tree (ERROR, "bad get binding");
+  string key  = exec_string (t[0]);
+  tree   value= local_ref->contains (key) ? local_ref[key] : global_ref[key];
+  int    type = (N (t) == 1 ? 0 : as_int (exec_string (t[1])));
   if (type != 0 && type != 1) type= 0;
-  if (is_func (value, TUPLE) && (N(value) >= 2)) value= value[type];
+  if (is_func (value, TUPLE) && (N (value) >= 2)) value= value[type];
   else if (type == 1) value= tree (UNINIT);
   if (value == tree (UNINIT)) return "false";
   else return "true";
@@ -2071,34 +2016,32 @@ edit_env_rep::exec_has_binding (tree t) {
 
 tree
 edit_env_rep::exec_get_attachment (tree t) {
-  if (N(t) != 1) return tree (ERROR, "bad get attachment");
-  string key= exec_string (t[0]);
-  tree value= local_att->contains (key)? local_att [key]: global_att [key];
+  if (N (t) != 1) return tree (ERROR, "bad get attachment");
+  string key  = exec_string (t[0]);
+  tree   value= local_att->contains (key) ? local_att[key] : global_att[key];
   return value;
 }
 
 tree
 edit_env_rep::exec_pattern (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad pattern");
-  if (no_patterns && N(t) == 4 && is_atomic (t[3])) return exec (t[3]);
-  url im= url_system (exec_string (t[0]));
+  if (N (t) < 1) return tree (ERROR, "bad pattern");
+  if (no_patterns && N (t) == 4 && is_atomic (t[3])) return exec (t[3]);
+  url im   = url_system (exec_string (t[0]));
   url image= resolve_pattern (relative (base_file_name, im));
   if (is_none (image)) return "white";
   int imw_pt, imh_pt;
   image_size (image, imw_pt, imh_pt);
-  double pt= ((double) dpi*PIXEL) / 72.0;
-  SI imw= (SI) (((double) imw_pt) * pt);
-  SI imh= (SI) (((double) imh_pt) * pt);
+  double pt = ((double) dpi * PIXEL) / 72.0;
+  SI     imw= (SI) (((double) imw_pt) * pt);
+  SI     imh= (SI) (((double) imh_pt) * pt);
   if (imw <= 0 || imh <= 0) return "white";
-  if (N(t)<3) return tree (ERROR, "bad pattern");
+  if (N (t) < 3) return tree (ERROR, "bad pattern");
   string w= exec_string (t[1]);
   string h= exec_string (t[2]);
-  if (is_length (w))
-    w= as_string (as_length (w));
+  if (is_length (w)) w= as_string (as_length (w));
   else if (is_magnification (w))
     w= as_string ((SI) (get_magnification (w) * ((double) imw)));
-  if (is_length (h))
-    h= as_string (as_length (h));
+  if (is_length (h)) h= as_string (as_length (h));
   else if (is_magnification (h))
     h= as_string ((SI) (get_magnification (h) * ((double) imh)));
   if (w == "" && h != "") {
@@ -2118,26 +2061,26 @@ edit_env_rep::exec_pattern (tree t) {
     h= as_string (imh);
   }
   else if ((!is_int (w) && !is_percentage (w) && !is_percentage (w, "@")) ||
-	   (!is_int (h) && !is_percentage (h) && !is_percentage (h, "@")))
+           (!is_int (h) && !is_percentage (h) && !is_percentage (h, "@")))
     return "white";
   tree r (PATTERN, as_string (image), w, h);
-  if (N(t) == 4) r << exec (t[3]);
+  if (N (t) == 4) r << exec (t[3]);
   return r;
 }
 
 tree
 edit_env_rep::exec_point (tree t) {
-  int i, n= N(t);
+  int  i, n= N (t);
   tree u (_POINT, n);
-  for (i=0; i<n; i++)
+  for (i= 0; i < n; i++)
     u[i]= exec (t[i]);
-  if (n==0 || is_double (u[0])) return u;
+  if (n == 0 || is_double (u[0])) return u;
   return as_tree (as_point (u));
 }
 
 tree
 edit_env_rep::exec_eff_move (tree t) {
-  if (N(t) < 3) return tree (ERROR, "bad eff-move");
+  if (N (t) < 3) return tree (ERROR, "bad eff-move");
   tree body= exec (t[0]);
   tree dx  = as_tree (as_eff_length (exec (t[1])));
   tree dy  = as_tree (as_eff_length (exec (t[2])));
@@ -2146,7 +2089,7 @@ edit_env_rep::exec_eff_move (tree t) {
 
 tree
 edit_env_rep::exec_eff_magnify (tree t) {
-  if (N(t) < 3) return tree (ERROR, "bad eff-magnify");
+  if (N (t) < 3) return tree (ERROR, "bad eff-magnify");
   tree body= exec (t[0]);
   tree sx  = as_tree (as_double (exec (t[1])));
   tree sy  = as_tree (as_double (exec (t[2])));
@@ -2155,7 +2098,7 @@ edit_env_rep::exec_eff_magnify (tree t) {
 
 tree
 edit_env_rep::exec_eff_bubble (tree t) {
-  if (N(t) < 3) return tree (ERROR, "bad eff-bubble");
+  if (N (t) < 3) return tree (ERROR, "bad eff-bubble");
   tree body= exec (t[0]);
   tree r   = as_tree (as_eff_length (exec (t[1])));
   tree a   = exec (t[2]);
@@ -2164,7 +2107,7 @@ edit_env_rep::exec_eff_bubble (tree t) {
 
 tree
 edit_env_rep::exec_eff_crop (tree t) {
-  if (N(t) < 5) return tree (ERROR, "bad eff-crop");
+  if (N (t) < 5) return tree (ERROR, "bad eff-crop");
   tree body= exec (t[0]);
   tree cx1 = as_tree (as_double (exec (t[1])));
   tree cy1 = as_tree (as_double (exec (t[2])));
@@ -2175,7 +2118,7 @@ edit_env_rep::exec_eff_crop (tree t) {
 
 tree
 edit_env_rep::exec_eff_turbulence (tree t) {
-  if (N(t) != 5) return tree (ERROR, "bad eff-turbulence");
+  if (N (t) != 5) return tree (ERROR, "bad eff-turbulence");
   tree body= exec (t[0]);
   tree s   = exec (t[1]);
   tree w   = as_tree (as_eff_length (exec (t[2])));
@@ -2186,7 +2129,7 @@ edit_env_rep::exec_eff_turbulence (tree t) {
 
 tree
 edit_env_rep::exec_eff_fractal_noise (tree t) {
-  if (N(t) != 5) return tree (ERROR, "bad eff-fractal-noise");
+  if (N (t) != 5) return tree (ERROR, "bad eff-fractal-noise");
   tree body= exec (t[0]);
   tree s   = exec (t[1]);
   tree w   = as_tree (as_eff_length (exec (t[2])));
@@ -2197,61 +2140,61 @@ edit_env_rep::exec_eff_fractal_noise (tree t) {
 
 tree
 edit_env_rep::exec_eff_hatch (tree t) {
-  if (N(t) < 5) return tree (ERROR, "bad eff-hatch");
+  if (N (t) < 5) return tree (ERROR, "bad eff-hatch");
   tree body= exec (t[0]);
-  tree sx = as_tree (as_int (exec (t[1])));
-  tree sy = as_tree (as_int (exec (t[2])));
-  tree fp = as_tree (as_double (exec (t[3])));
-  tree de = as_tree (as_double (exec (t[4])));
+  tree sx  = as_tree (as_int (exec (t[1])));
+  tree sy  = as_tree (as_int (exec (t[2])));
+  tree fp  = as_tree (as_double (exec (t[3])));
+  tree de  = as_tree (as_double (exec (t[4])));
   return tree (EFF_HATCH, body, sx, sy, fp, de);
 }
 
 tree
 edit_env_rep::exec_eff_dots (tree t) {
-  if (N(t) < 7) return tree (ERROR, "bad eff-dots");
+  if (N (t) < 7) return tree (ERROR, "bad eff-dots");
   tree body= exec (t[0]);
-  tree a  = as_tree (as_int (exec (t[1])));
-  tree b  = as_tree (as_int (exec (t[2])));
-  tree c  = as_tree (as_int (exec (t[3])));
-  tree d  = as_tree (as_int (exec (t[4])));
-  tree fp = as_tree (as_double (exec (t[5])));
-  tree de = as_tree (as_double (exec (t[6])));
+  tree a   = as_tree (as_int (exec (t[1])));
+  tree b   = as_tree (as_int (exec (t[2])));
+  tree c   = as_tree (as_int (exec (t[3])));
+  tree d   = as_tree (as_int (exec (t[4])));
+  tree fp  = as_tree (as_double (exec (t[5])));
+  tree de  = as_tree (as_double (exec (t[6])));
   return tree (EFF_DOTS, body, a, b, c, d, fp, de);
 }
 
 tree
 edit_env_rep::exec_eff_gaussian (tree t) {
-  if (N(t) < 1) return tree (ERROR, "bad eff-gaussian");
+  if (N (t) < 1) return tree (ERROR, "bad eff-gaussian");
   tree rx= as_tree (as_eff_length (exec (t[0])));
-  if (N(t) == 1) return tree (EFF_GAUSSIAN, as_tree (rx));
-  if (N(t) < 3) return tree (ERROR, "bad eff-gaussian");
+  if (N (t) == 1) return tree (EFF_GAUSSIAN, as_tree (rx));
+  if (N (t) < 3) return tree (ERROR, "bad eff-gaussian");
   tree ry= as_tree (as_eff_length (exec (t[1])));
   return tree (EFF_GAUSSIAN, rx, ry, exec (t[2]));
 }
 
 tree
 edit_env_rep::exec_eff_oval (tree t) {
-  if (N(t) < 1) return tree (ERROR, "bad eff-oval");
+  if (N (t) < 1) return tree (ERROR, "bad eff-oval");
   tree rx= as_tree (as_eff_length (exec (t[0])));
-  if (N(t) == 1) return tree (EFF_OVAL, as_tree (rx));
-  if (N(t) < 3) return tree (ERROR, "bad eff-oval");
+  if (N (t) == 1) return tree (EFF_OVAL, as_tree (rx));
+  if (N (t) < 3) return tree (ERROR, "bad eff-oval");
   tree ry= as_tree (as_eff_length (exec (t[1])));
   return tree (EFF_OVAL, rx, ry, exec (t[2]));
 }
 
 tree
 edit_env_rep::exec_eff_rectangular (tree t) {
-  if (N(t) < 1) return tree (ERROR, "bad eff-rectangular");
+  if (N (t) < 1) return tree (ERROR, "bad eff-rectangular");
   tree rx= as_tree (as_eff_length (exec (t[0])));
-  if (N(t) == 1) return tree (EFF_RECTANGULAR, as_tree (rx));
-  if (N(t) < 3) return tree (ERROR, "bad eff-rectangular");
+  if (N (t) == 1) return tree (EFF_RECTANGULAR, as_tree (rx));
+  if (N (t) < 3) return tree (ERROR, "bad eff-rectangular");
   tree ry= as_tree (as_eff_length (exec (t[1])));
   return tree (EFF_RECTANGULAR, rx, ry, exec (t[2]));
 }
 
 tree
 edit_env_rep::exec_eff_motion (tree t) {
-  if (N(t) < 2) return tree (ERROR, "bad eff-motion");
+  if (N (t) < 2) return tree (ERROR, "bad eff-motion");
   tree dx= as_tree (as_eff_length (exec (t[0])));
   tree dy= as_tree (as_eff_length (exec (t[1])));
   return tree (EFF_MOTION, dx, dy);
@@ -2259,7 +2202,7 @@ edit_env_rep::exec_eff_motion (tree t) {
 
 tree
 edit_env_rep::exec_eff_degrade (tree t) {
-  if (N(t) < 4) return tree (ERROR, "bad eff-degrade");
+  if (N (t) < 4) return tree (ERROR, "bad eff-degrade");
   tree b = exec (t[0]);
   tree wx= as_tree (as_eff_length (exec (t[1])));
   tree wy= as_tree (as_eff_length (exec (t[2])));
@@ -2270,7 +2213,7 @@ edit_env_rep::exec_eff_degrade (tree t) {
 
 tree
 edit_env_rep::exec_eff_distort (tree t) {
-  if (N(t) < 5) return tree (ERROR, "bad eff-distort");
+  if (N (t) < 5) return tree (ERROR, "bad eff-distort");
   tree b = exec (t[0]);
   tree wx= as_tree (as_eff_length (exec (t[1])));
   tree wy= as_tree (as_eff_length (exec (t[2])));
@@ -2281,7 +2224,7 @@ edit_env_rep::exec_eff_distort (tree t) {
 
 tree
 edit_env_rep::exec_eff_gnaw (tree t) {
-  if (N(t) < 5) return tree (ERROR, "bad eff-gnaw");
+  if (N (t) < 5) return tree (ERROR, "bad eff-gnaw");
   tree b = exec (t[0]);
   tree wx= as_tree (as_eff_length (exec (t[1])));
   tree wy= as_tree (as_eff_length (exec (t[2])));
@@ -2292,43 +2235,41 @@ edit_env_rep::exec_eff_gnaw (tree t) {
 
 tree
 edit_env_rep::exec_box_info (tree t) {
-  if (N(t)<2) return tree (ERROR, "bad box-info");
+  if (N (t) < 2) return tree (ERROR, "bad box-info");
   tree t1= t[0];
   tree t2= t[1];
-  if (!is_string (t2))
-    return tree (ERROR, "bad box info");
+  if (!is_string (t2)) return tree (ERROR, "bad box info");
   return box_info (edit_env (this), t1, as_string (t2));
 }
 
 tree
 edit_env_rep::exec_frame_direct (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad frame-direct");
+  if (N (t) < 1) return tree (ERROR, "bad frame-direct");
   tree t1= exec (t[0]);
   return as_tree (!is_nil (fr) ? fr (::as_point (t1)) : point ());
 }
 
 tree
 edit_env_rep::exec_frame_inverse (tree t) {
-  if (N(t)<1) return tree (ERROR, "bad frame-inverse");
+  if (N (t) < 1) return tree (ERROR, "bad frame-inverse");
   tree t1= exec (t[0]);
-  return as_tree (!is_nil (fr) ? fr [::as_point (t1)] : point ());
+  return as_tree (!is_nil (fr) ? fr[::as_point (t1)] : point ());
 }
 
 /******************************************************************************
-* Partial evaluation of trees
-******************************************************************************/
+ * Partial evaluation of trees
+ ******************************************************************************/
 
 void
 edit_env_rep::exec_until (tree t, path p) {
   // cout << "Execute " << t << " until " << p << "\n";
   if (is_nil (p)) return;
   if (is_atom (p)) {
-    if (p->item!=0)
-      (void) exec (t);
+    if (p->item != 0) (void) exec (t);
     return;
   }
 
-  switch (L(t)) {
+  switch (L (t)) {
   case DATOMS:
     exec_until_formatting (t, p, ATOM_DECORATIONS);
     return;
@@ -2356,7 +2297,7 @@ edit_env_rep::exec_until (tree t, path p) {
     return;
   case STYLE_WITH:
   case VAR_STYLE_WITH:
-    if (p->item == (N(t)-1)) exec_until (t[N(t)-1], p->next);
+    if (p->item == (N (t) - 1)) exec_until (t[N (t) - 1], p->next);
     return;
   case STYLE_ONLY:
   case VAR_STYLE_ONLY:
@@ -2371,9 +2312,10 @@ edit_env_rep::exec_until (tree t, path p) {
     exec_until_compound (t, p);
     return;
   default:
-    if (L(t) < START_EXTENSIONS) {
+    if (L (t) < START_EXTENSIONS) {
       int i;
-      for (i=0; i<p->item; i++) (void) exec (t[i]);
+      for (i= 0; i < p->item; i++)
+        (void) exec (t[i]);
       exec_until (t[p->item], p->next);
     }
     else exec_until_compound (t, p);
@@ -2383,12 +2325,12 @@ edit_env_rep::exec_until (tree t, path p) {
 
 void
 edit_env_rep::exec_until_formatting (tree t, path p, string v) {
-  int n= N(t);
-  if (p->item != n-1) return;
+  int n= N (t);
+  if (p->item != n - 1) return;
   tree oldv= read (v);
-  tree newv= oldv * t (0, n-1);
+  tree newv= oldv * t (0, n - 1);
   monitored_write_update (v, newv);
-  exec_until (t[n-1], p->next);
+  exec_until (t[n - 1], p->next);
 }
 
 void
@@ -2396,7 +2338,7 @@ edit_env_rep::exec_until_table (tree t, path p) {
   // should execute values in oldv
   monitored_write_update (CELL_FORMAT, tree (TFORMAT));
   int i;
-  for (i=0; i<p->item; i++)
+  for (i= 0; i < p->item; i++)
     (void) exec (t[i]);
   exec_until (t[p->item], p->next);
   return;
@@ -2404,34 +2346,36 @@ edit_env_rep::exec_until_table (tree t, path p) {
 
 void
 edit_env_rep::exec_until_with (tree t, path p) {
-  int i, n= N(t), k= (n-1)>>1; // is k=0 allowed ?
-  if (((n&1) != 1) || (p->item != n-1)) return;
-  STACK_NEW_ARRAY(vars,string,k);
-  STACK_NEW_ARRAY(newv,tree,k);
-  for (i=0; i<k; i++) {
-    tree var_t= exec (t[i<<1]);
+  int i, n= N (t), k= (n - 1) >> 1; // is k=0 allowed ?
+  if (((n & 1) != 1) || (p->item != n - 1)) return;
+  STACK_NEW_ARRAY (vars, string, k);
+  STACK_NEW_ARRAY (newv, tree, k);
+  for (i= 0; i < k; i++) {
+    tree var_t= exec (t[i << 1]);
     if (is_atomic (var_t)) {
       string var= var_t->label;
-      vars[i]= var;
-      newv[i]= exec (t[(i<<1)+1]);
+      vars[i]   = var;
+      newv[i]   = exec (t[(i << 1) + 1]);
     }
     else {
-      STACK_DELETE_ARRAY(vars);
-      STACK_DELETE_ARRAY(newv);
+      STACK_DELETE_ARRAY (vars);
+      STACK_DELETE_ARRAY (newv);
       return;
     }
   }
-  for (i=0; i<k; i++) monitored_write_update (vars[i], newv[i]);
-  exec_until (t[n-1], p->next);
-  STACK_DELETE_ARRAY(vars);
-  STACK_DELETE_ARRAY(newv);
+  for (i= 0; i < k; i++)
+    monitored_write_update (vars[i], newv[i]);
+  exec_until (t[n - 1], p->next);
+  STACK_DELETE_ARRAY (vars);
+  STACK_DELETE_ARRAY (newv);
   return;
 }
 
 void
 edit_env_rep::exec_until_compound (tree t, path p) {
-  int d; tree f;
-  if (L(t) == COMPOUND) {
+  int  d;
+  tree f;
+  if (L (t) == COMPOUND) {
     d= 1;
     f= t[0];
     if (is_compound (f)) f= exec (f);
@@ -2441,40 +2385,40 @@ edit_env_rep::exec_until_compound (tree t, path p) {
     f= read (fname);
   }
   else {
-    string fname= as_string (L(t));
+    string fname= as_string (L (t));
     if (!provides (fname)) return;
     d= 0;
     f= read (fname);
   }
 
   string var;
-  if (L(f) == XMACRO) var= f[0]->label;
+  if (L (f) == XMACRO) var= f[0]->label;
   else {
-    if ((p->item < d) || (p->item >= N(f)) ||
-	is_compound (f[p->item-d])) return;
-    var= f[p->item-d]->label;
+    if ((p->item < d) || (p->item >= N (f)) || is_compound (f[p->item - d]))
+      return;
+    var= f[p->item - d]->label;
   }
 
   if (is_applicable (f)) {
-    int i, n=N(f)-1, m=N(t)-d;
-    macro_arg= list<hashmap<string,tree> >
-      (hashmap<string,tree> (UNINIT), macro_arg);
-    macro_src= list<hashmap<string,path> >
-      (hashmap<string,path> (path (DECORATION)), macro_src);
-    if (L(f) == XMACRO) {
+    int i, n= N (f) - 1, m= N (t) - d;
+    macro_arg=
+        list<hashmap<string, tree>> (hashmap<string, tree> (UNINIT), macro_arg);
+    macro_src= list<hashmap<string, path>> (
+        hashmap<string, path> (path (DECORATION)), macro_src);
+    if (L (f) == XMACRO) {
       if (is_atomic (f[0])) {
-	macro_arg->item (f[0]->label)= t;
-	macro_src->item (f[0]->label)= obtain_ip (t);
+        macro_arg->item (f[0]->label)= t;
+        macro_src->item (f[0]->label)= obtain_ip (t);
       }
       (void) exec_until (f[n], p, var, 0);
     }
     else {
-      for (i=0; i<n; i++)
-	if (is_atomic (f[i])) {
-	  tree st= i<m? t[i+d]: tree (UNINIT);
-	  macro_arg->item (f[i]->label)= st;
-	  macro_src->item (f[i]->label)= obtain_ip (st);
-	}
+      for (i= 0; i < n; i++)
+        if (is_atomic (f[i])) {
+          tree st                      = i < m ? t[i + d] : tree (UNINIT);
+          macro_arg->item (f[i]->label)= st;
+          macro_src->item (f[i]->label)= obtain_ip (st);
+        }
       (void) exec_until (f[n], p->next, var, 0);
     }
     macro_arg= macro_arg->next;
@@ -2487,7 +2431,7 @@ edit_env_rep::exec_until (tree t, path p, string var, int level) {
   // cout << "Execute " << t << " until " << p
   //      << " inside " << var << " level " << level << "\n";
   if (is_atomic (t)) return false;
-  switch (L(t)) {
+  switch (L (t)) {
   case DATOMS:
     return exec_until_formatting (t, p, var, level, ATOM_DECORATIONS);
   case DLINES:
@@ -2513,8 +2457,8 @@ edit_env_rep::exec_until (tree t, path p, string var, int level) {
       tree r= t[0];
       if (is_compound (r)) r= exec (r);
       if (is_atomic (r) && (r->label == var)) {
-	exec_until (read (r->label), p);
-	return true;
+        exec_until (read (r->label), p);
+        return true;
       }
     }
     */
@@ -2616,7 +2560,7 @@ edit_env_rep::exec_until (tree t, path p, string var, int level) {
     return false;
   case STYLE_WITH:
   case VAR_STYLE_WITH:
-    return exec_until (t[N(t)-1], p, var, level);
+    return exec_until (t[N (t) - 1], p, var, level);
   case STYLE_ONLY:
   case VAR_STYLE_ONLY:
   case ACTIVE:
@@ -2630,11 +2574,10 @@ edit_env_rep::exec_until (tree t, path p, string var, int level) {
   case ACTION:
     return exec_until_compound (t, p, var, level);
   default:
-    if (L(t) < START_EXTENSIONS) {
-      int i, n= N(t);
-      for (i=0; i<n; i++)
-	if (exec_until (t[i], p, var, level))
-	  return true;
+    if (L (t) < START_EXTENSIONS) {
+      int i, n= N (t);
+      for (i= 0; i < n; i++)
+        if (exec_until (t[i], p, var, level)) return true;
       return false;
     }
     else return exec_until_compound (t, p, var, level);
@@ -2642,14 +2585,13 @@ edit_env_rep::exec_until (tree t, path p, string var, int level) {
 }
 
 bool
-edit_env_rep::exec_until_formatting (
-  tree t, path p, string var, int level, string v)
-{
-  int n= N(t);
+edit_env_rep::exec_until_formatting (tree t, path p, string var, int level,
+                                     string v) {
+  int  n   = N (t);
   tree oldv= read (v);
-  tree newv= oldv * t (0, n-1);
+  tree newv= oldv * t (0, n - 1);
   monitored_write_update (v, newv);
-  if (exec_until (t[n-1], p, var, level)) return true;
+  if (exec_until (t[n - 1], p, var, level)) return true;
   monitored_write_update (v, oldv);
   return false;
 }
@@ -2659,55 +2601,57 @@ edit_env_rep::exec_until_table (tree t, path p, string var, int level) {
   tree oldv= read (CELL_FORMAT);
   // should execute values in oldv
   monitored_write_update (CELL_FORMAT, tree (TFORMAT));
-  int i, n= N(t);
-  for (i=0; i<n; i++)
-    if (exec_until (t[i], p, var, level))
-      return true;
+  int i, n= N (t);
+  for (i= 0; i < n; i++)
+    if (exec_until (t[i], p, var, level)) return true;
   monitored_write_update (CELL_FORMAT, oldv);
   return false;
 }
 
 bool
 edit_env_rep::exec_until_with (tree t, path p, string var, int level) {
-  int i, n= N(t), k= (n-1)>>1; // is k=0 allowed ?
-  if ((n&1) != 1) return false;
-  STACK_NEW_ARRAY(vars,string,k);
-  STACK_NEW_ARRAY(oldv,tree,k);
-  STACK_NEW_ARRAY(newv,tree,k);
-  for (i=0; i<k; i++) {
-    tree var_t= exec (t[i<<1]);
+  int i, n= N (t), k= (n - 1) >> 1; // is k=0 allowed ?
+  if ((n & 1) != 1) return false;
+  STACK_NEW_ARRAY (vars, string, k);
+  STACK_NEW_ARRAY (oldv, tree, k);
+  STACK_NEW_ARRAY (newv, tree, k);
+  for (i= 0; i < k; i++) {
+    tree var_t= exec (t[i << 1]);
     if (is_atomic (var_t)) {
       string var= var_t->label;
-      vars[i]= var;
-      oldv[i]= read (var);
-      newv[i]= exec (t[(i<<1)+1]);
+      vars[i]   = var;
+      oldv[i]   = read (var);
+      newv[i]   = exec (t[(i << 1) + 1]);
     }
     else {
-      STACK_DELETE_ARRAY(vars);
-      STACK_DELETE_ARRAY(oldv);
-      STACK_DELETE_ARRAY(newv);
+      STACK_DELETE_ARRAY (vars);
+      STACK_DELETE_ARRAY (oldv);
+      STACK_DELETE_ARRAY (newv);
       return false;
     }
   }
 
-  for (i=0; i<k; i++) monitored_write_update (vars[i], newv[i]);
-  if (exec_until (t[n-1], p, var, level)) {
-    STACK_DELETE_ARRAY(vars);
-    STACK_DELETE_ARRAY(oldv);
-    STACK_DELETE_ARRAY(newv);
+  for (i= 0; i < k; i++)
+    monitored_write_update (vars[i], newv[i]);
+  if (exec_until (t[n - 1], p, var, level)) {
+    STACK_DELETE_ARRAY (vars);
+    STACK_DELETE_ARRAY (oldv);
+    STACK_DELETE_ARRAY (newv);
     return true;
   }
-  for (i=k-1; i>=0; i--) write_update (vars[i], oldv[i]);
-  STACK_DELETE_ARRAY(vars);
-  STACK_DELETE_ARRAY(oldv);
-  STACK_DELETE_ARRAY(newv);
+  for (i= k - 1; i >= 0; i--)
+    write_update (vars[i], oldv[i]);
+  STACK_DELETE_ARRAY (vars);
+  STACK_DELETE_ARRAY (oldv);
+  STACK_DELETE_ARRAY (newv);
   return false;
 }
 
 bool
 edit_env_rep::exec_until_compound (tree t, path p, string var, int level) {
-  int d; tree f;
-  if (L(t) == COMPOUND) {
+  int  d;
+  tree f;
+  if (L (t) == COMPOUND) {
     d= 1;
     f= t[0];
     if (is_compound (f)) f= exec (f);
@@ -2718,29 +2662,28 @@ edit_env_rep::exec_until_compound (tree t, path p, string var, int level) {
     }
   }
   else {
-    string fname= as_string (L(t));
+    string fname= as_string (L (t));
     if (!provides (fname)) return false;
     d= 0;
     f= read (fname);
   }
 
   if (is_applicable (f)) {
-    int i, n=N(f)-1, m=N(t)-d;
-    macro_arg= list<hashmap<string,tree> >
-      (hashmap<string,tree> (UNINIT), macro_arg);
-    macro_src= list<hashmap<string,path> >
-      (hashmap<string,path> (path (DECORATION)), macro_src);
-    if (L(f) == XMACRO) {
-      if (is_atomic (f[0]))
-	macro_arg->item (f[0]->label)= t;
+    int i, n= N (f) - 1, m= N (t) - d;
+    macro_arg=
+        list<hashmap<string, tree>> (hashmap<string, tree> (UNINIT), macro_arg);
+    macro_src= list<hashmap<string, path>> (
+        hashmap<string, path> (path (DECORATION)), macro_src);
+    if (L (f) == XMACRO) {
+      if (is_atomic (f[0])) macro_arg->item (f[0]->label)= t;
     }
-    for (i=0; i<n; i++)
+    for (i= 0; i < n; i++)
       if (is_atomic (f[i])) {
-	tree st= i<m? t[i+d]: tree (UNINIT);
-	macro_arg->item (f[i]->label)= st;
-	macro_src->item (f[i]->label)= obtain_ip (st);
+        tree st                      = i < m ? t[i + d] : tree (UNINIT);
+        macro_arg->item (f[i]->label)= st;
+        macro_src->item (f[i]->label)= obtain_ip (st);
       }
-    bool done= exec_until (f[n], p, var, level+1);
+    bool done= exec_until (f[n], p, var, level + 1);
     macro_arg= macro_arg->next;
     macro_src= macro_src->next;
     return done;
@@ -2753,37 +2696,42 @@ edit_env_rep::exec_until_arg (tree t, path p, string var, int level) {
   // cout << "  " << macro_arg << "\n";
   tree r= t[0];
   if (is_atomic (r) && (!is_nil (macro_arg)) &&
-      macro_arg->item->contains (r->label))
-    {
-      bool found;
-      tree arg= macro_arg->item [r->label];
-      list<hashmap<string,tree> > old_var= macro_arg;
-      list<hashmap<string,path> > old_src= macro_src;
-      if (!is_nil (macro_arg)) macro_arg= macro_arg->next;
-      if (!is_nil (macro_src)) macro_src= macro_src->next;
-      if (level == 0) {
-	found= (r->label == var);
-	if ((N(t) > 1) && found) {
-	  int i, n= N(t);
-	  for (i=1; i<n; i++) {
-	    tree u= exec (t[i]);
-	    if (!is_int (u)) { found= false; break; }
-	    int nr= as_int (u);
-	    if ((!is_compound (arg)) || (nr<0) || (nr>=N(arg)) || is_nil (p)) {
-	      found= false; break; }
-	    if (p->item != nr) found= false;
-	    arg= arg[nr];
-	    p  = p->next;
-	  }
-	}
-	if (found) exec_until (arg, p);
-	else exec (arg);
+      macro_arg->item->contains (r->label)) {
+    bool                        found;
+    tree                        arg    = macro_arg->item[r->label];
+    list<hashmap<string, tree>> old_var= macro_arg;
+    list<hashmap<string, path>> old_src= macro_src;
+    if (!is_nil (macro_arg)) macro_arg= macro_arg->next;
+    if (!is_nil (macro_src)) macro_src= macro_src->next;
+    if (level == 0) {
+      found= (r->label == var);
+      if ((N (t) > 1) && found) {
+        int i, n= N (t);
+        for (i= 1; i < n; i++) {
+          tree u= exec (t[i]);
+          if (!is_int (u)) {
+            found= false;
+            break;
+          }
+          int nr= as_int (u);
+          if ((!is_compound (arg)) || (nr < 0) || (nr >= N (arg)) ||
+              is_nil (p)) {
+            found= false;
+            break;
+          }
+          if (p->item != nr) found= false;
+          arg= arg[nr];
+          p  = p->next;
+        }
       }
-      else found= exec_until (arg, p, var, level-1);
-      macro_arg= old_var;
-      macro_src= old_src;
-      return found;
+      if (found) exec_until (arg, p);
+      else exec (arg);
     }
+    else found= exec_until (arg, p, var, level - 1);
+    macro_arg= old_var;
+    macro_src= old_src;
+    return found;
+  }
   else return false;
   /*
   cout << "  " << macro_arg << "\n";
@@ -2810,10 +2758,9 @@ edit_env_rep::exec_until_mark (tree t, path p, string var, int level) {
   if ((level == 0) && is_func (t[0], ARG) && (t[0][0] == var)) {
     // cout << "\n\tTest: " << t[0] << ", " << p << "\n";
     path q= p;
-    int i, n= N(t[0]);
-    for (i=1; (!is_nil (q)) && (i<n); i++, q= q->next)
-      if (t[0][i] != as_string (q->item))
-	break;
+    int  i, n= N (t[0]);
+    for (i= 1; (!is_nil (q)) && (i < n); i++, q= q->next)
+      if (t[0][i] != as_string (q->item)) break;
     border= (i == n) && is_atom (q);
     // FIXME: in order to be clean, we should check whether q->item
     // is on the border of the contents of the argument t[0].
@@ -2827,39 +2774,39 @@ edit_env_rep::exec_until_mark (tree t, path p, string var, int level) {
 
 bool
 edit_env_rep::exec_until_quasi (tree t, path p, string var, int level) {
-  bool old= quote_substitute;
+  bool old        = quote_substitute;
   quote_substitute= true;
-  tree u= exec_quasiquoted (t[0]);
+  tree u          = exec_quasiquoted (t[0]);
   quote_substitute= old;
   return exec_until (u, p, var, level);
 }
 
 bool
 edit_env_rep::exec_until_if (tree t, path p, string var, int level) {
-  if ((N(t)!=2) && (N(t)!=3)) return false;
+  if ((N (t) != 2) && (N (t) != 3)) return false;
   tree tt= exec (t[0]);
   if (is_compound (tt) || !is_bool (tt->label)) return false;
   if (as_bool (tt->label)) return exec_until (t[1], p, var, level);
-  if (N(t)==3) return exec_until (t[2], p, var, level);
+  if (N (t) == 3) return exec_until (t[2], p, var, level);
   return false;
 }
 
 bool
 edit_env_rep::exec_until_case (tree t, path p, string var, int level) {
-  if (N(t)<2) return false;
-  int i, n= N(t);
-  for (i=0; i<(n-1); i+=2) {
+  if (N (t) < 2) return false;
+  int i, n= N (t);
+  for (i= 0; i < (n - 1); i+= 2) {
     tree tt= exec (t[i]);
-    if (is_compound (tt) || ! is_bool (tt->label)) return false;
-    if (as_bool (tt->label)) return exec_until (t[i+1], p, var, level);
+    if (is_compound (tt) || !is_bool (tt->label)) return false;
+    if (as_bool (tt->label)) return exec_until (t[i + 1], p, var, level);
   }
-  if (i<n) return exec_until (t[i], p, var, level);
+  if (i < n) return exec_until (t[i], p, var, level);
   return false;
 }
 
 bool
 edit_env_rep::exec_until_while (tree t, path p, string var, int level) {
-  if (N(t)!=2) return false;
+  if (N (t) != 2) return false;
   while (1) {
     tree tt= exec (t[0]);
     if (is_compound (tt)) return false;
@@ -2871,55 +2818,50 @@ edit_env_rep::exec_until_while (tree t, path p, string var, int level) {
 }
 
 /******************************************************************************
-* Extra routines for macro expansion and function application
-******************************************************************************/
+ * Extra routines for macro expansion and function application
+ ******************************************************************************/
 
 tree
 edit_env_rep::expand (tree t, bool search_accessible) {
   if (is_atomic (t) || is_nil (macro_arg)) return t;
   else if (is_func (t, ARG) || is_func (t, QUOTE_ARG)) {
-    if (N(t) < 1)
-      return tree (ERROR, "bad argument application");
-    if (is_compound (t[0]))
-      return tree (ERROR, "bad argument application");
+    if (N (t) < 1) return tree (ERROR, "bad argument application");
+    if (is_compound (t[0])) return tree (ERROR, "bad argument application");
     if (!macro_arg->item->contains (t[0]->label))
       return tree (ERROR, "argument " * t[0]->label);
-    tree r= macro_arg->item [t[0]->label];
-    list<hashmap<string,tree> > old_var= macro_arg;
-    list<hashmap<string,path> > old_src= macro_src;
+    tree                        r      = macro_arg->item[t[0]->label];
+    list<hashmap<string, tree>> old_var= macro_arg;
+    list<hashmap<string, path>> old_src= macro_src;
     if (!is_nil (macro_arg)) macro_arg= macro_arg->next;
     if (!is_nil (macro_src)) macro_src= macro_src->next;
-    if (N(t) > 1) {
-      int i, n= N(t);
-      for (i=1; i<n; i++) {
-	tree u= exec (t[i]);
-	if (!is_int (u)) break;
-	int nr= as_int (u);
-	if ((!is_compound (r)) || (nr<0) || (nr>=N(r))) break;
-	r= r[nr];
+    if (N (t) > 1) {
+      int i, n= N (t);
+      for (i= 1; i < n; i++) {
+        tree u= exec (t[i]);
+        if (!is_int (u)) break;
+        int nr= as_int (u);
+        if ((!is_compound (r)) || (nr < 0) || (nr >= N (r))) break;
+        r= r[nr];
       }
     }
-    if (is_func (t, ARG))
-      r= expand (r, search_accessible);
+    if (is_func (t, ARG)) r= expand (r, search_accessible);
     macro_arg= old_var;
     macro_src= old_src;
     return r;
   }
   else if (is_func (t, EXPAND_AS, 2)) {
-    if (N(t) < 1)
-      return tree (ERROR, "bad argument application");
+    if (N (t) < 1) return tree (ERROR, "bad argument application");
     return expand (t[0], search_accessible);
-  } else if (search_accessible && is_accessible (obtain_ip (t)))
-    return t;
+  }
+  else if (search_accessible && is_accessible (obtain_ip (t))) return t;
   else {
-    int i, n= N(t);
+    int  i, n= N (t);
     tree r (t, n);
-    for (i=0; i<n; i++) {
+    for (i= 0; i < n; i++) {
       r[i]= expand (t[i], search_accessible);
-      if (search_accessible &&
-	  is_accessible (obtain_ip (r[i])) &&
-	  drd->is_accessible_child (t, i))
-	return r[i];
+      if (search_accessible && is_accessible (obtain_ip (r[i])) &&
+          drd->is_accessible_child (t, i))
+        return r[i];
     }
     if (search_accessible) return t;
     return r;
@@ -2934,32 +2876,28 @@ edit_env_rep::depends (tree t, string s, int level) {
   */
 
   if (is_atomic (t) || is_nil (macro_arg)) return false;
-  else if (is_func (t, ARG) ||
-	   is_func (t, QUOTE_ARG) ||
-	   is_func (t, MAP_ARGS) ||
-	   is_func (t, EVAL_ARGS))
-    {
-      // FIXME: this does not handle more complex dependencies,
-      // like those encountered after rewritings (VAR_INCLUDE, EXTERN, etc.)
-      tree v= (L(t) == MAP_ARGS? t[2]: t[0]);
-      if (is_compound (v)) return false;
-      if (!macro_arg->item->contains (v->label)) return false;
-      if (level == 0) return v->label == s;
-      tree r= macro_arg->item [v->label];
-      list<hashmap<string,tree> > old_var= macro_arg;
-      list<hashmap<string,path> > old_src= macro_src;
-      if (!is_nil (macro_arg)) macro_arg= macro_arg->next;
-      if (!is_nil (macro_src)) macro_src= macro_src->next;
-      bool dep= depends (r, s, level-1);
-      macro_arg= old_var;
-      macro_src= old_src;
-      return dep;
-    }
+  else if (is_func (t, ARG) || is_func (t, QUOTE_ARG) ||
+           is_func (t, MAP_ARGS) || is_func (t, EVAL_ARGS)) {
+    // FIXME: this does not handle more complex dependencies,
+    // like those encountered after rewritings (VAR_INCLUDE, EXTERN, etc.)
+    tree v= (L (t) == MAP_ARGS ? t[2] : t[0]);
+    if (is_compound (v)) return false;
+    if (!macro_arg->item->contains (v->label)) return false;
+    if (level == 0) return v->label == s;
+    tree                        r      = macro_arg->item[v->label];
+    list<hashmap<string, tree>> old_var= macro_arg;
+    list<hashmap<string, path>> old_src= macro_src;
+    if (!is_nil (macro_arg)) macro_arg= macro_arg->next;
+    if (!is_nil (macro_src)) macro_src= macro_src->next;
+    bool dep = depends (r, s, level - 1);
+    macro_arg= old_var;
+    macro_src= old_src;
+    return dep;
+  }
   else {
-    int i, n= N(t);
-    for (i=0; i<n; i++)
-      if (depends (t[i], s, level))
-	return true;
+    int i, n= N (t);
+    for (i= 0; i < n; i++)
+      if (depends (t[i], s, level)) return true;
     return false;
   }
 }

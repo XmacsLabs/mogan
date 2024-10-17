@@ -1,50 +1,49 @@
 
 /******************************************************************************
-* MODULE     : packrat_serializer.cpp
-* DESCRIPTION: serializing trees as strings
-* COPYRIGHT  : (C) 2010  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : packrat_serializer.cpp
+ * DESCRIPTION: serializing trees as strings
+ * COPYRIGHT  : (C) 2010  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "packrat_parser.hpp"
 #include "analyze.hpp"
 #include "drd_std.hpp"
+#include "packrat_parser.hpp"
 #include "tree_helper.hpp"
 
 /******************************************************************************
-* Useful subroutines
-******************************************************************************/
+ * Useful subroutines
+ ******************************************************************************/
 
 static path
 as_path (tree t) {
   ASSERT (is_tuple (t), "invalid path");
   path p;
-  int i, n= N(t);
-  for (i=n-1; i>=0; i--)
+  int  i, n= N (t);
+  for (i= n - 1; i >= 0; i--)
     p= path (as_int (t[i]), p);
   return p;
 }
 
 /******************************************************************************
-* Serialization
-******************************************************************************/
+ * Serialization
+ ******************************************************************************/
 
 void
 packrat_parser_rep::serialize_compound (tree t, path p) {
   tree r= the_drd->get_syntax (t, p);
-  if (r != UNINIT)
-    serialize (r, path (-1));
+  if (r != UNINIT) serialize (r, path (-1));
   else if (is_func (t, QUASI, 2)) {
     tree tt= t[0];
     path pp= as_path (t[1]);
     serialize (tt, pp);
   }
   else {
-    current_string << "<\\" << as_string (L(t)) << ">";
-    for (int i=0; i<N(t); i++) {
+    current_string << "<\\" << as_string (L (t)) << ">";
+    for (int i= 0; i < N (t); i++) {
       if (i != 0) current_string << "<|>";
       serialize (t[i], p * i);
     }
@@ -54,45 +53,43 @@ packrat_parser_rep::serialize_compound (tree t, path p) {
 
 void
 packrat_parser_rep::serialize (tree t, path p) {
-  if (is_nil (p) || p->item != -1)
-    current_start (p)= N(current_string);
+  if (is_nil (p) || p->item != -1) current_start (p)= N (current_string);
   if (is_atomic (t)) {
-    int begin= N(current_string);
-    int pos=0;
-    string s= t->label;
-    while (true) {  
-      if (N(current_string) != begin + pos)
+    int    begin= N (current_string);
+    int    pos  = 0;
+    string s    = t->label;
+    while (true) {
+      if (N (current_string) != begin + pos)
         if (is_nil (p) || p->item != -1) {
-          //cout << p * pos << " <-> " << N(current_string) << LF;
-          //cout << "  " << s (0, pos) << LF;
-          //cout << "  " << current_string (begin, N(current_string)) << LF;
-          current_path_pos (p * pos)= N(current_string);
-          current_pos_path (N(current_string))= p * pos;
+          // cout << p * pos << " <-> " << N(current_string) << LF;
+          // cout << "  " << s (0, pos) << LF;
+          // cout << "  " << current_string (begin, N(current_string)) << LF;
+          current_path_pos (p * pos)           = N (current_string);
+          current_pos_path (N (current_string))= p * pos;
         }
-      if (pos >= N(s)) break;
+      if (pos >= N (s)) break;
       int start= pos;
       tm_char_forwards (s, pos);
-      if (pos == start+1)
-        current_string << s[start];
+      if (pos == start + 1) current_string << s[start];
       else {
         // FIXME: where did we use this kind of syntactical substitutions?
-        tree r (UNINIT);
+        tree   r (UNINIT);
         string ss= s (start, pos);
-        if (N(ss) != 1 && existing_tree_label (ss))
+        if (N (ss) != 1 && existing_tree_label (ss))
           r= the_drd->get_syntax (as_tree_label (ss));
-        //if (r != UNINIT) cout << "Rewrite " << ss << " -> " << r << "\n";
+        // if (r != UNINIT) cout << "Rewrite " << ss << " -> " << r << "\n";
         if (r == UNINIT) current_string << ss;
         else serialize (r, path (-1));
       }
     }
   }
-  else switch (L(t)) {
+  else switch (L (t)) {
     case RAW_DATA:
       current_string << "<\\rawdata></>";
       break;
     case DOCUMENT:
     case PARA:
-      for (int i=0; i<N(t); i++) {
+      for (int i= 0; i < N (t); i++) {
         serialize (t[i], p * i);
         current_string << "\n";
       }
@@ -103,7 +100,7 @@ packrat_parser_rep::serialize (tree t, path p) {
       serialize (t[1], p * 1);
       break;
     case CONCAT:
-      for (int i=0; i<N(t); i++)
+      for (int i= 0; i < N (t); i++)
         serialize (t[i], p * i);
       break;
     case RIGID:
@@ -163,17 +160,18 @@ packrat_parser_rep::serialize (tree t, path p) {
     case TWITH:
     case CWITH:
     case CELL:
-      serialize (t[N(t)-1], p * (N(t)-1));
+      serialize (t[N (t) - 1], p * (N (t) - 1));
       break;
 
     case WITH:
-      if (t[0] == "mode" && t[1] != "math");
-      else serialize (t[N(t)-1], p * (N(t)-1));
+      if (t[0] == "mode" && t[1] != "math")
+        ;
+      else serialize (t[N (t) - 1], p * (N (t) - 1));
       break;
     case VALUE:
     case OR_VALUE: {
       tree r= the_drd->get_syntax (t);
-      //if (r != UNINIT) cout << "Rewrite " << t << " -> " << r << "\n";
+      // if (r != UNINIT) cout << "Rewrite " << t << " -> " << r << "\n";
       if (r != UNINIT) serialize (r, path (-1));
       else serialize_compound (t, p);
       break;
@@ -182,7 +180,7 @@ packrat_parser_rep::serialize (tree t, path p) {
     case STYLE_WITH:
     case VAR_STYLE_WITH:
     case LOCUS:
-      serialize (t[N(t)-1], p * (N(t)-1));
+      serialize (t[N (t) - 1], p * (N (t) - 1));
       break;
     case ID:
     case HARD_ID:
@@ -222,6 +220,5 @@ packrat_parser_rep::serialize (tree t, path p) {
       serialize_compound (t, p);
       break;
     }
-  if (is_nil (p) || p->item != -1)
-    current_end (p)= N(current_string);
+  if (is_nil (p) || p->item != -1) current_end (p)= N (current_string);
 }

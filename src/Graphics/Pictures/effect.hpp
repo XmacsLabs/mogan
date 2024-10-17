@@ -1,13 +1,13 @@
 
 /******************************************************************************
-* MODULE     : effect.hpp
-* DESCRIPTION: Graphical effects
-* COPYRIGHT  : (C) 2013  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : effect.hpp
+ * DESCRIPTION: Graphical effects
+ * COPYRIGHT  : (C) 2013  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef EFFECT_H
 #define EFFECT_H
@@ -15,31 +15,31 @@
 #include "rectangles.hpp"
 
 /******************************************************************************
-* The abstract effect class
-******************************************************************************/
+ * The abstract effect class
+ ******************************************************************************/
 
 class effect_rep;
 class effect {
-ABSTRACT_NULL(effect);
+  ABSTRACT_NULL (effect);
 };
 
-class effect_rep: public abstract_struct {
+class effect_rep : public abstract_struct {
 public:
   inline effect_rep () {}
   inline virtual ~effect_rep () {}
 
   virtual rectangle get_logical_extents (array<rectangle> rs);
-  virtual rectangle get_extents (array<rectangle> rs) = 0;
-  virtual picture apply (array<picture> pics, SI pixel) = 0;
+  virtual rectangle get_extents (array<rectangle> rs)    = 0;
+  virtual picture   apply (array<picture> pics, SI pixel)= 0;
 
   friend class effect;
 };
 
-ABSTRACT_NULL_CODE(effect);
+ABSTRACT_NULL_CODE (effect);
 
 /******************************************************************************
-* Standard effects
-******************************************************************************/
+ * Standard effects
+ ******************************************************************************/
 
 effect build_effect (tree description);
 effect argument_effect (int arg);

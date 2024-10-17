@@ -1,78 +1,79 @@
 
 /******************************************************************************
-* MODULE     : url.cpp
-* DESCRIPTION: unified resource location handling
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* The url class uses a tree representation for urls.
-* This allows us to generalize the concept of an url and allow paths and
-* patterns to be regarded as urls too. An url is either a string or a tuple
-* of one of the following types:
-*   "." -- here
-*   ".." -- parent
-*   none -- invalid url
-*   concat -- a/b/c is represented as (concat "a" (concat "b" "c"));
-*   or -- the path a:b/c is represented as (or "a" (concat "b" "c"));
-*   root -- the url http://gnu.org yields (concat (root "http") "gnu.org");
-*   wildcard -- (wildcard) corresponds to any url, (wildcard "*.tm")
-*     to all strings which end with .tm and (wildcard "*.tm" "file")
-*     to all TeXmacs files (i.e. discarding directories ending with .tm).
-*******************************************************************************
-* There are three main types of urls:
-*   - rootless urls, like a/b/c. These urls are mainly used in computations.
-*     For example, they can be appended to another url.
-*   - Standard rooted urls, like file:///usr or https://www.texmacs.org.
-*     These are the same as those used on the web.
-*   - System urls, characterized by a "default" root.
-*     These urls are similar to standard rooted urls, but they behave
-*     in a slightly different way with respect to concatenation.
-*     For instance https://www.texmacs.org/Web * file:///tmp would yield
-*     file:///tmp, where as https://www.texmacs.org/Web * /tmp yields
-*     https://www.texmacs.org/tmp
-*******************************************************************************
-* There are several formats for parsing (and printing) urls:
-*   - System format: the usual format on your operating system.
-*     On unix systems "/usr/bin:/usr/local/bin" would be a valid url
-*     representing a path and on windows systems "c:\windows;c:\TeXmacs"
-*     would be OK.
-*   - Unix format: this format forces unix-like notation even for
-*     other systems like Windows. This is convenient for url's in
-*     the source code. Unix environment variables like ~ and $TEXMACS_PATH
-*     can also be part of the url.
-*   - Standard format: the format which is used on the web.
-*     Notice that ftp://www.texmacs.org/pub and ftp://www.texmacs.org/pub/
-*     represent different urls. The second one is represented by concating
-*     on the right with an empty name.
-*******************************************************************************
-* When an explicit operation on urls need to be performed,
-* like reading a file, the url is first "resolved" into a simple url
-* with a unique name (modulo symbolic links) for the resource.
-* Next, the url is "concretized" as a file name which is understood
-* by the operating system. This may require searching the file from the web.
-* Concretized urls should be used quickly and not memorized,
-* since such names may be the names of temporary files,
-* which may be destroyed soon afterwards.
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : url.cpp
+ * DESCRIPTION: unified resource location handling
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * The url class uses a tree representation for urls.
+ * This allows us to generalize the concept of an url and allow paths and
+ * patterns to be regarded as urls too. An url is either a string or a tuple
+ * of one of the following types:
+ *   "." -- here
+ *   ".." -- parent
+ *   none -- invalid url
+ *   concat -- a/b/c is represented as (concat "a" (concat "b" "c"));
+ *   or -- the path a:b/c is represented as (or "a" (concat "b" "c"));
+ *   root -- the url http://gnu.org yields (concat (root "http") "gnu.org");
+ *   wildcard -- (wildcard) corresponds to any url, (wildcard "*.tm")
+ *     to all strings which end with .tm and (wildcard "*.tm" "file")
+ *     to all TeXmacs files (i.e. discarding directories ending with .tm).
+ *******************************************************************************
+ * There are three main types of urls:
+ *   - rootless urls, like a/b/c. These urls are mainly used in computations.
+ *     For example, they can be appended to another url.
+ *   - Standard rooted urls, like file:///usr or https://www.texmacs.org.
+ *     These are the same as those used on the web.
+ *   - System urls, characterized by a "default" root.
+ *     These urls are similar to standard rooted urls, but they behave
+ *     in a slightly different way with respect to concatenation.
+ *     For instance https://www.texmacs.org/Web * file:///tmp would yield
+ *     file:///tmp, where as https://www.texmacs.org/Web * /tmp yields
+ *     https://www.texmacs.org/tmp
+ *******************************************************************************
+ * There are several formats for parsing (and printing) urls:
+ *   - System format: the usual format on your operating system.
+ *     On unix systems "/usr/bin:/usr/local/bin" would be a valid url
+ *     representing a path and on windows systems "c:\windows;c:\TeXmacs"
+ *     would be OK.
+ *   - Unix format: this format forces unix-like notation even for
+ *     other systems like Windows. This is convenient for url's in
+ *     the source code. Unix environment variables like ~ and $TEXMACS_PATH
+ *     can also be part of the url.
+ *   - Standard format: the format which is used on the web.
+ *     Notice that ftp://www.texmacs.org/pub and ftp://www.texmacs.org/pub/
+ *     represent different urls. The second one is represented by concating
+ *     on the right with an empty name.
+ *******************************************************************************
+ * When an explicit operation on urls need to be performed,
+ * like reading a file, the url is first "resolved" into a simple url
+ * with a unique name (modulo symbolic links) for the resource.
+ * Next, the url is "concretized" as a file name which is understood
+ * by the operating system. This may require searching the file from the web.
+ * Concretized urls should be used quickly and not memorized,
+ * since such names may be the names of temporary files,
+ * which may be destroyed soon afterwards.
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "config.h"
 
-#include "url.hpp"
-#include "tmfs_url.hpp"
-#include "tm_url.hpp"
-#include "sys_utils.hpp"
-#include "web_files.hpp"
-#include "file.hpp"
-#include "tm_file.hpp"
 #include "analyze.hpp"
+#include "file.hpp"
 #include "scheme.hpp"
+#include "sys_utils.hpp"
+#include "tm_file.hpp"
+#include "tm_url.hpp"
+#include "tmfs_url.hpp"
+#include "url.hpp"
+#include "web_files.hpp"
 
-bool url_test (url name, string filter) {
+bool
+url_test (url name, string filter) {
   if (filter == "") return true;
-  int i, n= N(filter);
+  int i, n= N (filter);
 
   // Files from the web
   if (is_rooted_web (name)) {
@@ -80,38 +81,42 @@ bool url_test (url name, string filter) {
     url from_web= get_from_web (name);
     // cout << "  --> " << from_web << "\n";
     if (is_none (from_web)) return false;
-    for (i=0; i<n; i++)
+    for (i= 0; i < n; i++)
       switch (filter[i]) {
-      case 'd': return false;
-      case 'l': return false;
-      case 'w': return false;
-      case 'x': return false;
+      case 'd':
+        return false;
+      case 'l':
+        return false;
+      case 'w':
+        return false;
+      case 'x':
+        return false;
       }
     return true;
   }
 
   // Files from a remote server
   if (is_rooted_tmfs (name)) {
-    for (i=0; i<n; i++)
+    for (i= 0; i < n; i++)
       switch (filter[i]) {
-      case 'd': return false;
-      case 'l': return false;
+      case 'd':
+        return false;
+      case 'l':
+        return false;
       case 'r':
-        if (!as_bool (call ("tmfs-permission?", name, "read")))
-          return false;
+        if (!as_bool (call ("tmfs-permission?", name, "read"))) return false;
         break;
       case 'w':
-        if (!as_bool (call ("tmfs-permission?", name, "write")))
-          return false;
+        if (!as_bool (call ("tmfs-permission?", name, "write"))) return false;
         break;
-      case 'x': return false;
+      case 'x':
+        return false;
       }
     return true;
   }
 
   // Files from the ramdisk
-  if (is_ramdisc (name))
-    return true;
+  if (is_ramdisc (name)) return true;
 
   if (is_rooted (name, "file")) {
     name= reroot (name, "default");
@@ -120,10 +125,9 @@ bool url_test (url name, string filter) {
   return is_of_type (name, filter);
 }
 
-
 /******************************************************************************
-* Conversion routines for urls
-******************************************************************************/
+ * Conversion routines for urls
+ ******************************************************************************/
 
 bool
 is_secure (url u) {
@@ -131,8 +135,8 @@ is_secure (url u) {
 }
 
 /******************************************************************************
-* Url resolution and wildcard expansion
-******************************************************************************/
+ * Url resolution and wildcard expansion
+ ******************************************************************************/
 
 url complete (url base, url u, string filter, bool flag);
 
@@ -153,15 +157,15 @@ complete (url base, url sub, url u, string filter, bool flag) {
 url
 complete (url base, url u, string filter, bool flag) {
   // cout << "complete " << base << " |||| " << u << LF;
-  if (!is_rooted(u)) {
-     if (is_none (base)) return base;
-     if (is_none (u)) return u;
-     if ((!is_root (base)) && (!is_rooted_name (base))) {
-       failed_error << "base  = " << base << LF;
-       failed_error << "u     = " << u << LF;
-       failed_error << "filter= " << filter << LF;
-       TM_FAILED ("invalid base url");
-     }
+  if (!is_rooted (u)) {
+    if (is_none (base)) return base;
+    if (is_none (u)) return u;
+    if ((!is_root (base)) && (!is_rooted_name (base))) {
+      failed_error << "base  = " << base << LF;
+      failed_error << "u     = " << u << LF;
+      failed_error << "filter= " << filter << LF;
+      TM_FAILED ("invalid base url");
+    }
   }
   if (is_name (u) || (is_concat (u) && is_root (u[1]) && is_name (u[2]))) {
     url comp= base * u;
@@ -187,15 +191,14 @@ complete (url base, url u, string filter, bool flag) {
       failed_error << "filter= " << filter << LF;
       TM_FAILED ("wildcards only implemented for files");
     }
-    url ret= url_none ();
-    bool error_flag;
+    url           ret= url_none ();
+    bool          error_flag;
     array<string> dir= read_directory (base, error_flag);
-    int i, n= N(dir);
-    for (i=0; i<n; i++) {
+    int           i, n= N (dir);
+    for (i= 0; i < n; i++) {
       if ((!is_none (ret)) && flag) return ret;
       if ((dir[i] == ".") || (dir[i] == "..")) continue;
-      if (starts (dir[i], "http://") ||
-          starts (dir[i], "https://") ||
+      if (starts (dir[i], "http://") || starts (dir[i], "https://") ||
           starts (dir[i], "ftp://"))
         if (is_directory (base * dir[i])) continue;
       ret= ret | (dir[i] * complete (base * dir[i], u, filter, flag));
@@ -224,14 +227,13 @@ complete (url base, url u, string filter, bool flag) {
     }
     url ret= url_none ();
     if (is_wildcard (u, 0) && url_test (base, filter)) ret= url_here ();
-    bool error_flag;
+    bool          error_flag;
     array<string> dir= read_directory (base, error_flag);
-    int i, n= N(dir);
-    for (i=0; i<n; i++) {
+    int           i, n= N (dir);
+    for (i= 0; i < n; i++) {
       if ((!is_none (ret)) && flag) return ret;
       if ((dir[i] == ".") || (dir[i] == "..")) continue;
-      if (starts (dir[i], "http://") ||
-          starts (dir[i], "https://") ||
+      if (starts (dir[i], "http://") || starts (dir[i], "https://") ||
           starts (dir[i], "ftp://"))
         if (is_directory (base * dir[i])) continue;
       if (is_wildcard (u, 0))
@@ -257,7 +259,7 @@ complete (url u, string filter) {
   // This routine can be used in order to find all possible matches
   // for the wildcards in an url and replace the wildcards by these matches.
   // Moreover, matches are normalized (file root -> default root).
-  url r =  complete (u, filter, false);
+  url r= complete (u, filter, false);
   // cout << "complete:" << u << " filter:" << filter << " result:" << r << LF;
   return r;
 }
@@ -278,7 +280,8 @@ resolve (url u, string filter) {
 url
 resolve_in_path (url u) {
 #ifdef OS_MINGW
-  return resolve ((url_path ("$TEXMACS_PATH/bin") | url_path ("$PATH")) * u, "x");
+  return resolve ((url_path ("$TEXMACS_PATH/bin") | url_path ("$PATH")) * u,
+                  "x");
 #else
   return resolve (url_path ("$PATH") * u, "x");
 #endif
@@ -292,8 +295,8 @@ exists (url u) {
 bool
 exists_in_path (url u) {
 #ifdef OS_MINGW
-  return !is_none (resolve_in_path (url (as_string (u) * ".bat"))) ||\
-         !is_none (resolve_in_path (url (as_string (u) * ".exe"))) ||\
+  return !is_none (resolve_in_path (url (as_string (u) * ".bat"))) ||
+         !is_none (resolve_in_path (url (as_string (u) * ".exe"))) ||
          !is_none (resolve_in_path (url (as_string (u) * ".com")));
 #else
   return !is_none (resolve_in_path (u));
@@ -307,8 +310,7 @@ has_permission (url u, string filter) {
 
 static url
 descendance_sub (url u) {
-  if (is_or (u))
-    return descendance_sub (u[1]) | descendance_sub (u[2]);
+  if (is_or (u)) return descendance_sub (u[1]) | descendance_sub (u[2]);
   return complete (u, url_wildcard (), "r", false);
 }
 
@@ -320,17 +322,16 @@ descendance (url u) {
 }
 
 /******************************************************************************
-* Concretization of resolved urls
-******************************************************************************/
+ * Concretization of resolved urls
+ ******************************************************************************/
 
 url
 concretize_url (url u) {
   // This routine transforms a resolved url into a system url.
   // In the case of distant files from the web, a local copy is created.
-  if (is_rooted (u, "default") ||
-      is_rooted (u, "file") ||
+  if (is_rooted (u, "default") || is_rooted (u, "file") ||
       is_rooted (u, "blank"))
-        return reroot (u, "default");
+    return reroot (u, "default");
   if (is_rooted_web (u)) return concretize_url (get_from_web (u));
   if (is_rooted_tmfs (u)) return concretize_url (get_from_server (u));
   if (is_ramdisc (u)) return concretize_url (get_from_ramdisc (u));

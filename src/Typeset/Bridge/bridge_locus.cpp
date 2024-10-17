@@ -1,18 +1,18 @@
 
 /******************************************************************************
-* MODULE     : bridge_locus.cpp
-* DESCRIPTION: Bridge between logical and physical local enviroment changes
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : bridge_locus.cpp
+ * DESCRIPTION: Bridge between logical and physical local enviroment changes
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "bridge.hpp"
 #include "tm_debug.hpp"
 
-class bridge_locus_rep: public bridge_rep {
+class bridge_locus_rep : public bridge_rep {
 protected:
   int    last;
   bridge body;
@@ -24,7 +24,7 @@ public:
   void notify_assign (path p, tree u);
   void notify_insert (path p, tree u);
   void notify_remove (path p, int nr);
-  bool notify_macro  (int type, string var, int level, path p, tree u);
+  bool notify_macro (int type, string var, int level, path p, tree u);
   void notify_change ();
 
   void my_exec_until (path p);
@@ -32,16 +32,15 @@ public:
   void my_typeset (int desired_status);
 };
 
-bridge_locus_rep::bridge_locus_rep (typesetter ttt, tree st, path ip):
-  bridge_rep (ttt, st, ip)
-{
+bridge_locus_rep::bridge_locus_rep (typesetter ttt, tree st, path ip)
+    : bridge_rep (ttt, st, ip) {
   initialize ();
 }
 
 void
 bridge_locus_rep::initialize () {
-  last= N(st)-1;
-  if (is_nil(body)) body= make_bridge (ttt, st[last], descend (ip, last));
+  last= N (st) - 1;
+  if (is_nil (body)) body= make_bridge (ttt, st[last], descend (ip, last));
   else replace_bridge (body, st[last], descend (ip, last));
 }
 
@@ -51,8 +50,8 @@ bridge_locus (typesetter ttt, tree st, path ip) {
 }
 
 /******************************************************************************
-* Event notification
-******************************************************************************/
+ * Event notification
+ ******************************************************************************/
 
 void
 bridge_locus_rep::notify_assign (path p, tree u) {
@@ -120,8 +119,8 @@ bridge_locus_rep::notify_change () {
 }
 
 /******************************************************************************
-* Typesetting
-******************************************************************************/
+ * Typesetting
+ ******************************************************************************/
 
 void
 bridge_locus_rep::my_exec_until (path p) {
@@ -137,10 +136,11 @@ bridge_locus_rep::my_typeset_will_be_complete () {
 
 void
 bridge_locus_rep::my_typeset (int desired_status) {
-  extern bool build_locus (edit_env env, tree t, list<string>& ids, string& c);
+  extern bool  build_locus (edit_env env, tree t, list<string> & ids,
+                            string & c);
   list<string> ids;
-  string col;
-  bool ok= build_locus (env, st, ids, col);
+  string       col;
+  bool         ok= build_locus (env, st, ids, col);
   if (!ok) typeset_warning << "Ignored unaccessible loci\n";
   tree old_col= env->read (COLOR);
   env->write_update (COLOR, col);

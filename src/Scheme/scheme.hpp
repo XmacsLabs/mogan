@@ -19,7 +19,7 @@
 
 class patch;
 
-void start_scheme (int argc, char **argv, void (*call_back) (int, char **));
+void start_scheme (int argc, char** argv, void (*call_back) (int, char**));
 void initialize_scheme ();
 
 class object_rep : concrete_struct {
@@ -32,14 +32,14 @@ class object {
 public:
   CONCRETE (object);
   object ();
-  object (tmscm_object_rep *o);
-  object (void *); // left intentionally undefined to inhibith implicit
+  object (tmscm_object_rep* o);
+  object (void*);  // left intentionally undefined to inhibith implicit
                    // conversion of pointers to bool
   object (bool b); // implicit conversion to bool is dangerous!!! (all pointers
                    // match this conversion)
   object (int i);
   object (double x);
-  object (const char *s);
+  object (const char* s);
   object (string s);
   object (tree t);
   object (list<string> l);
@@ -52,7 +52,7 @@ public:
 };
 CONCRETE_CODE (object);
 
-tm_ostream &operator<< (tm_ostream &out, object obj);
+tm_ostream& operator<< (tm_ostream& out, object obj);
 bool        operator== (object obj1, object obj2);
 bool        operator!= (object obj1, object obj2);
 int         hash (object obj);
@@ -111,7 +111,7 @@ tree   stree_to_tree (object obj);
 tree   content_to_tree (object obj);
 object string_to_object (string s);
 string object_to_string (object obj);
-object scheme_cmd (const char *s);
+object scheme_cmd (const char* s);
 object scheme_cmd (string s);
 object scheme_cmd (object cmd);
 
@@ -120,7 +120,7 @@ void   set_preference (string var, string val);
 void   notify_preference (string var);
 string get_preference (string var, string def= "default");
 
-object eval (const char *expr);
+object eval (const char* expr);
 object eval (string expr);
 object eval (object expr);
 object eval_secure (string expr);
@@ -132,12 +132,12 @@ void   exec_pending_commands ();
 void   clear_pending_commands ();
 void   protected_call (object cmd);
 
-object call (const char *fun);
-object call (const char *fun, object a1);
-object call (const char *fun, object a1, object a2);
-object call (const char *fun, object a1, object a2, object a3);
-object call (const char *fun, object a1, object a2, object a3, object a4);
-object call (const char *fun, array<object> a);
+object call (const char* fun);
+object call (const char* fun, object a1);
+object call (const char* fun, object a1, object a2);
+object call (const char* fun, object a1, object a2, object a3);
+object call (const char* fun, object a1, object a2, object a3, object a4);
+object call (const char* fun, array<object> a);
 object call (string fun);
 object call (string fun, object a1);
 object call (string fun, object a1, object a2);

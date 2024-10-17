@@ -1,14 +1,14 @@
 
 /******************************************************************************
-* MODULE     : concater.cpp
-* DESCRIPTION: First pass for typesetting paragraphs;
-*              an array of line_items is created of the right types.
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : concater.cpp
+ * DESCRIPTION: First pass for typesetting paragraphs;
+ *              an array of line_items is created of the right types.
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "concater.hpp"
 #include "analyze.hpp"
@@ -18,10 +18,9 @@
 
 #include <lolly/data/unicode.hpp>
 
-
 /******************************************************************************
-* Printing items
-******************************************************************************/
+ * Printing items
+ ******************************************************************************/
 
 SI italic_correction (box left, box right);
 
@@ -45,9 +44,9 @@ void
 concater_rep::marker (path ip) {
   if (is_decoration (ip)) ip= path (0, ip);
   string fn_name= "cmr";
-  int sz= env->get_script_size (env->fn_size, env->index_level);
-  font gfn (tex_font (fn_name, sz, (int) (env->magn*env->dpi)));
-  box b= text_box (ip->next, ip->item, "", gfn, blue);
+  int    sz     = env->get_script_size (env->fn_size, env->index_level);
+  font   gfn (tex_font (fn_name, sz, (int) (env->magn * env->dpi)));
+  box    b= text_box (ip->next, ip->item, "", gfn, blue);
   a << line_item (MARKER_ITEM, OP_SKIP, b, HYPH_INVALID);
 }
 
@@ -58,43 +57,61 @@ concater_rep::ghost (string s, path ip) {
 
 void
 concater_rep::ghost (string s, path ip, color col) {
-  if ((N(s)>2) && (s[0]=='<') && (s[N(s)-1]=='>')) {
+  if ((N (s) > 2) && (s[0] == '<') && (s[N (s) - 1] == '>')) {
     ghost ("<", ip, col);
-    ghost (s (1,N(s)-1), ip, col);
+    ghost (s (1, N (s) - 1), ip, col);
     ghost (">", ip, col);
     return;
   }
-  
+
   string fn_name= "cmr";
-  if (N(s)==1) {
-    if (s[0] == '<') { fn_name= "cmsy"; s= "h"; }
-    else if (s[0] == '>') { fn_name= "cmsy"; s= "i"; }
-    else if (s[0] == '|') { fn_name= "cmsy"; s= "j"; }
-    else if (s[0] == '\\') { fn_name= "cmsy"; s= "n"; }
-    else if (s[0] == '{') { fn_name= "cmsy"; s= "f"; }
-    else if (s[0] == '}') { fn_name= "cmsy"; s= "g"; }
+  if (N (s) == 1) {
+    if (s[0] == '<') {
+      fn_name= "cmsy";
+      s      = "h";
+    }
+    else if (s[0] == '>') {
+      fn_name= "cmsy";
+      s      = "i";
+    }
+    else if (s[0] == '|') {
+      fn_name= "cmsy";
+      s      = "j";
+    }
+    else if (s[0] == '\\') {
+      fn_name= "cmsy";
+      s      = "n";
+    }
+    else if (s[0] == '{') {
+      fn_name= "cmsy";
+      s      = "f";
+    }
+    else if (s[0] == '}') {
+      fn_name= "cmsy";
+      s      = "g";
+    }
   }
-  int sz= env->get_script_size (env->fn_size, env->index_level);
-  font gfn (tex_font (fn_name, sz, (int) (env->magn*env->dpi)));
-  box b= text_box (decorate (ip), 0, s, gfn, col);
+  int        sz= env->get_script_size (env->fn_size, env->index_level);
+  font       gfn (tex_font (fn_name, sz, (int) (env->magn * env->dpi)));
+  box        b= text_box (decorate (ip), 0, s, gfn, col);
   array<box> bs (1);
   bs[0]= b;
-  a << line_item (STD_ITEM, OP_SKIP,
-                  composite_box (decorate (ip), bs), HYPH_INVALID);
+  a << line_item (STD_ITEM, OP_SKIP, composite_box (decorate (ip), bs),
+                  HYPH_INVALID);
 }
 
 void
 concater_rep::flag_ok (string s, path ip, color col) {
-  path dip = decorate_right (ip);
-  SI h= 4*env->fn->wfn/5;
-  int r, g, b, a;
+  path dip= decorate_right (ip);
+  SI   h  = 4 * env->fn->wfn / 5;
+  int  r, g, b, a;
   get_rgb_color (col, r, g, b, a);
-  //r= 255- (255 - r)/6;
-  //g= 255- (255 - g)/6;
-  //b= 255- (255 - b)/6;
-  a= a/6;
+  // r= 255- (255 - r)/6;
+  // g= 255- (255 - g)/6;
+  // b= 255- (255 - b)/6;
+  a          = a / 6;
   color light= rgb_color (r, g, b, a);
-  int info= env->info_level;
+  int   info = env->info_level;
   if (info == INFO_MINIMAL || info == INFO_SHORT || info == INFO_SHORT_PAPER) {
     box infob= info_box (dip, h, pencil (col, env->fn->wline), light);
     if (info == INFO_SHORT_PAPER) {
@@ -107,14 +124,16 @@ concater_rep::flag_ok (string s, path ip, color col) {
     }
   }
   else if (info == INFO_DETAILED || info == INFO_PAPER) {
-    int sz= env->get_script_size (env->fn_size, env->index_level+2);
+    int  sz= env->get_script_size (env->fn_size, env->index_level + 2);
     font gfn;
     if (lolly::data::has_cjk_unified_ideographs (s)) {
       gfn= smart_font (env->get_string (FONT), env->get_string (FONT_FAMILY),
-                       env->get_string (FONT_SERIES), env->get_string (FONT_SHAPE),
-                       sz, (int) (env->magn*env->dpi));
-    } else {
-      gfn= tex_font ("ecrm", sz, (int) (env->magn*env->dpi));
+                       env->get_string (FONT_SERIES),
+                       env->get_string (FONT_SHAPE), sz,
+                       (int) (env->magn * env->dpi));
+    }
+    else {
+      gfn= tex_font ("ecrm", sz, (int) (env->magn * env->dpi));
     }
     box textb= text_box (decorate (ip), 0, s, gfn, col);
     box flagb= flag_box (dip, textb, h, pencil (col, env->fn->wline), light);
@@ -131,41 +150,39 @@ concater_rep::flag_ok (string s, path ip, color col) {
 
 void
 concater_rep::flag (string s, path ip, color col) {
-  if (is_accessible (ip) && (!env->read_only))
-    flag_ok (s, ip, col);
+  if (is_accessible (ip) && (!env->read_only)) flag_ok (s, ip, col);
 }
 
 /******************************************************************************
-* Printing spaces, setting penalties and limits
-******************************************************************************/
+ * Printing spaces, setting penalties and limits
+ ******************************************************************************/
 
 void
 concater_rep::print (space spc) {
-  int n= N(a);
-  if (n==0) return;
-  a[n-1]->spc= max (spc, a[n-1]->spc);
+  int n= N (a);
+  if (n == 0) return;
+  a[n - 1]->spc= max (spc, a[n - 1]->spc);
 }
 
 void
 concater_rep::penalty_min (int p) {
-  if (N(a)>0) a[N(a)-1]->penalty = min (a[N(a)-1]->penalty, p);
+  if (N (a) > 0) a[N (a) - 1]->penalty= min (a[N (a) - 1]->penalty, p);
 }
 
 void
 concater_rep::penalty_max (int p) {
-  if (N(a)>0) a[N(a)-1]->penalty = max (a[N(a)-1]->penalty, p);
+  if (N (a) > 0) a[N (a) - 1]->penalty= max (a[N (a) - 1]->penalty, p);
 }
 
 void
 concater_rep::with_limits (int status) {
   if (env->display_style || (status == LIMITS_ALWAYS))
-    if (N(a)>0)
-      a[N(a)-1]->limits = true;
+    if (N (a) > 0) a[N (a) - 1]->limits= true;
 }
 
 /******************************************************************************
-* Typesetting generic objects
-******************************************************************************/
+ * Typesetting generic objects
+ ******************************************************************************/
 
 void
 concater_rep::typeset (tree t, path ip) {
@@ -175,24 +192,22 @@ concater_rep::typeset (tree t, path ip) {
   /*
   if (obtain_ip (t) != ip)
     cout << "TeXmacs] Wrong ip: " << t << "\n"
-	 << "       ] " << obtain_ip (t) << " -> " << ip << "\n";
+         << "       ] " << obtain_ip (t) << " -> " << ip << "\n";
   */
 
   if (!is_accessible (ip)) {
     path ip2= obtain_ip (t);
-    //if (ip2 != ip) cout << t << ", " << ip << " -> " << ip2 << "\n";
-    if (ip2 != path (DETACHED))
-      ip= ip2;
+    // if (ip2 != ip) cout << t << ", " << ip << " -> " << ip2 << "\n";
+    if (ip2 != path (DETACHED)) ip= ip2;
   }
 
-  if (env->hl_lan != 0)
-    env->lan->highlight (t);
+  if (env->hl_lan != 0) env->lan->highlight (t);
 
   if (is_atomic (t)) {
-    if      (env->mode == 1) typeset_text_string (t, ip, 0, N(t->label));
-    else if (env->mode == 2) typeset_math_string (t, ip, 0, N(t->label));
-    else if (env->mode == 3) typeset_prog_string (t, ip, 0, N(t->label));
-    else                     typeset_text_string (t, ip, 0, N(t->label));
+    if (env->mode == 1) typeset_text_string (t, ip, 0, N (t->label));
+    else if (env->mode == 2) typeset_math_string (t, ip, 0, N (t->label));
+    else if (env->mode == 3) typeset_prog_string (t, ip, 0, N (t->label));
+    else typeset_text_string (t, ip, 0, N (t->label));
     return;
   }
 
@@ -224,16 +239,16 @@ concater_rep::typeset (tree t, path ip) {
     break;
   case HIDDEN:
     //(void) env->exec (t);
-    if (N(t) != 1) typeset_error (t, ip);
+    if (N (t) != 1) typeset_error (t, ip);
     else (void) typeset_as_concat (env, t[0], descend (ip, 0));
     break;
   case FREEZE:
-    if (N(t) != 1) typeset_error (t, ip);
+    if (N (t) != 1) typeset_error (t, ip);
     else typeset (attach_middle (t[0], ip));
-    //typeset (freeze (t[0]), decorate_middle (ip));
+    // typeset (freeze (t[0]), decorate_middle (ip));
     break;
   case UNFREEZE:
-    if (N(t) != 1) typeset_error (t, ip);
+    if (N (t) != 1) typeset_error (t, ip);
     else typeset (t[0], descend (ip, 0));
     break;
   case HSPACE:
@@ -241,13 +256,13 @@ concater_rep::typeset (tree t, path ip) {
     typeset_hspace (t, ip);
     break;
   case VAR_VSPACE:
-    flag (env->drd->get_name (L(t)), ip, brown);
-    t= tree (VAR_VSPACE, env->exec (tree (TMLEN, A(t))));
+    flag (env->drd->get_name (L (t)), ip, brown);
+    t= tree (VAR_VSPACE, env->exec (tree (TMLEN, A (t))));
     control (t, ip);
     break;
   case VSPACE:
-    flag (env->drd->get_name (L(t)), ip, brown);
-    t= tree (VSPACE, env->exec (tree (TMLEN, A(t))));
+    flag (env->drd->get_name (L (t)), ip, brown);
+    t= tree (VSPACE, env->exec (tree (TMLEN, A (t))));
     control (t, ip);
     break;
   case SPACE:
@@ -255,8 +270,11 @@ concater_rep::typeset (tree t, path ip) {
     typeset_space (attach_here (t, ip));
     break;
   case HTAB:
-    if (N(t) != 1 && N(t) != 2) { typeset_error (t, ip); break; }
-    if (N(a)==0) print (empty_box (ip, 0, 0, 0, env->fn->yx));
+    if (N (t) != 1 && N (t) != 2) {
+      typeset_error (t, ip);
+      break;
+    }
+    if (N (a) == 0) print (empty_box (ip, 0, 0, 0, env->fn->yx));
     print (space (env->as_length (t[0])));
     control (t, ip);
     break;
@@ -309,24 +327,22 @@ concater_rep::typeset (tree t, path ip) {
     control (t, ip);
     break;
   case LINE_BREAK:
-    if (N(a)>0) a[N(a)-1]->penalty = 0;	
+    if (N (a) > 0) a[N (a) - 1]->penalty= 0;
     flag ("line-break", ip, brown);
     control (t, ip);
     break;
   case NEW_LINE:
-  case NEXT_LINE:
-    {
-      string name= env->drd->get_name (L(t));
-      flag (name, ip, brown);
-      control (t, ip);
-      break;
-    }
+  case NEXT_LINE: {
+    string name= env->drd->get_name (L (t));
+    flag (name, ip, brown);
+    control (t, ip);
+    break;
+  }
   case NO_BREAK:
-    if (N(a)>0) a[N(a)-1]->penalty = HYPH_INVALID;
-    if ((N(a)>1) &&
-	(a[N(a)-1]->type == STRING_ITEM) &&
-	(a[N(a)-1]->b->get_leaf_string () == ""))
-      a[N(a)-2]->penalty = HYPH_INVALID;	
+    if (N (a) > 0) a[N (a) - 1]->penalty= HYPH_INVALID;
+    if ((N (a) > 1) && (a[N (a) - 1]->type == STRING_ITEM) &&
+        (a[N (a) - 1]->b->get_leaf_string () == ""))
+      a[N (a) - 2]->penalty= HYPH_INVALID;
     flag ("no line break", ip, brown);
     control (t, ip);
     break;
@@ -357,13 +373,12 @@ concater_rep::typeset (tree t, path ip) {
   case VAR_NEW_PAGE:
   case NEW_PAGE:
   case VAR_NEW_DPAGE:
-  case NEW_DPAGE:
-    {
-      string name= env->drd->get_name (L(t));
-      flag (name, ip, brown);
-      control (t, ip);
-      break;
-    }
+  case NEW_DPAGE: {
+    string name= env->drd->get_name (L (t));
+    flag (name, ip, brown);
+    control (t, ip);
+    break;
+  }
 
   case AROUND:
   case VAR_AROUND:
@@ -428,7 +443,7 @@ concater_rep::typeset (tree t, path ip) {
     break;
 
   case TFORMAT:
-    if ((N(t)>0) && is_table (t[N(t)-1])) typeset_table (t, ip);
+    if ((N (t) > 0) && is_table (t[N (t) - 1])) typeset_table (t, ip);
     else typeset_formatting (t, ip, CELL_FORMAT);
     break;
   case TWITH:
@@ -901,18 +916,18 @@ concater_rep::typeset (tree t, path ip) {
     break;
 
   default:
-    if (L(t) < START_EXTENSIONS) print (test_box (ip));
+    if (L (t) < START_EXTENSIONS) print (test_box (ip));
     else typeset_compound (t, ip);
     break;
   }
 }
 
 /******************************************************************************
-* User interface
-******************************************************************************/
+ * User interface
+ ******************************************************************************/
 
-concater_rep::concater_rep (edit_env env2, bool rigid2):
-  env (env2), rigid (rigid2) {}
+concater_rep::concater_rep (edit_env env2, bool rigid2)
+    : env (env2), rigid (rigid2) {}
 
 array<line_item>
 typeset_concat (edit_env env, tree t, path ip) {
@@ -941,15 +956,15 @@ typeset_as_concat (edit_env env, tree t, path ip) {
   array<line_item> a= ccc->a;
   tm_delete (ccc);
 
-  int i, n=N(a);
+  int i, n= N (a);
   if (n == 0) return empty_box (ip); // FIXME: n=0 should never happen
   array<box> items (n);
   array<SI>  spc (n);
-  if (n>0) {
-    spc[0]=0;
-    for (i=0; i<n-1; i++) {
+  if (n > 0) {
+    spc[0]= 0;
+    for (i= 0; i < n - 1; i++) {
       items[i]  = a[i]->b;
-      spc  [i+1]= a[i]->spc->def;
+      spc[i + 1]= a[i]->spc->def;
     }
     items[i]= a[i]->b;
   }
@@ -966,15 +981,15 @@ typeset_as_concat (edit_env env, tree t, path ip, array<line_item>& a) {
   a= ccc->a;
   tm_delete (ccc);
 
-  int i, n=N(a);
+  int i, n= N (a);
   if (n == 0) return empty_box (ip); // FIXME: n=0 should never happen
   array<box> items (n);
   array<SI>  spc (n);
-  if (n>0) {
-    spc[0]=0;
-    for (i=0; i<n-1; i++) {
+  if (n > 0) {
+    spc[0]= 0;
+    for (i= 0; i < n - 1; i++) {
       items[i]  = a[i]->b;
-      spc  [i+1]= a[i]->spc->def;
+      spc[i + 1]= a[i]->spc->def;
     }
     items[i]= a[i]->b;
   }
@@ -987,11 +1002,10 @@ box
 typeset_as_box (edit_env env, tree t, path ip) {
   box b= typeset_as_concat (env, t, ip);
 
-  SI ox= 0;
-  int i, n=N(b);
-  for (i=0; i<n; i++)
-    if (b[i]->w() != 0)
-      ox= b[i]->x1;
+  SI  ox= 0;
+  int i, n= N (b);
+  for (i= 0; i < n; i++)
+    if (b[i]->w () != 0) ox= b[i]->x1;
 
   array<box> bs (1);
   array<SI>  xs (1);
@@ -1002,68 +1016,71 @@ typeset_as_box (edit_env env, tree t, path ip) {
   return composite_box (ip, bs, xs, ys);
 }
 
-bool build_locus (edit_env env, tree t, list<string>& ids, string& col, string &ref, string &anchor);
+bool build_locus (edit_env env, tree t, list<string>& ids, string& col,
+                  string& ref, string& anchor);
 bool build_locus (edit_env env, tree t, list<string>& ids, string& col);
 
 box
 typeset_as_atomic (edit_env env, tree t, path ip) {
   if (is_func (t, WITH)) {
-    int i, n= N(t), k= (n-1)>>1; // is k=0 allowed ?
-    if ((n&1) != 1) return empty_box (ip);
+    int i, n= N (t), k= (n - 1) >> 1; // is k=0 allowed ?
+    if ((n & 1) != 1) return empty_box (ip);
 
-    STACK_NEW_ARRAY(vars,string,k);
-    STACK_NEW_ARRAY(oldv,tree,k);
-    STACK_NEW_ARRAY(newv,tree,k);
-    for (i=0; i<k; i++) {
-      tree var_t= env->exec (t[i<<1]);
+    STACK_NEW_ARRAY (vars, string, k);
+    STACK_NEW_ARRAY (oldv, tree, k);
+    STACK_NEW_ARRAY (newv, tree, k);
+    for (i= 0; i < k; i++) {
+      tree var_t= env->exec (t[i << 1]);
       if (is_atomic (var_t)) {
-	string var= var_t->label;
-	vars[i]= var;
-	oldv[i]= env->read (var);
-	newv[i]= env->exec (t[(i<<1)+1]);
+        string var= var_t->label;
+        vars[i]   = var;
+        oldv[i]   = env->read (var);
+        newv[i]   = env->exec (t[(i << 1) + 1]);
       }
       else {
-	STACK_DELETE_ARRAY(vars);
-	STACK_DELETE_ARRAY(oldv);
-	STACK_DELETE_ARRAY(newv);
-	return empty_box (ip);
+        STACK_DELETE_ARRAY (vars);
+        STACK_DELETE_ARRAY (oldv);
+        STACK_DELETE_ARRAY (newv);
+        return empty_box (ip);
       }
     }
 
     // for (i=0; i<k; i++) env->monitored_write_update (vars[i], newv[i]);
-    for (i=0; i<k; i++) env->write_update (vars[i], newv[i]);
-    box b= typeset_as_atomic (env, t[n-1], descend (ip, n-1));
-    for (i=k-1; i>=0; i--) env->write_update (vars[i], oldv[i]);
-    STACK_DELETE_ARRAY(vars);
-    STACK_DELETE_ARRAY(oldv);
-    STACK_DELETE_ARRAY(newv);
+    for (i= 0; i < k; i++)
+      env->write_update (vars[i], newv[i]);
+    box b= typeset_as_atomic (env, t[n - 1], descend (ip, n - 1));
+    for (i= k - 1; i >= 0; i--)
+      env->write_update (vars[i], oldv[i]);
+    STACK_DELETE_ARRAY (vars);
+    STACK_DELETE_ARRAY (oldv);
+    STACK_DELETE_ARRAY (newv);
     return b;
   }
-  else if (is_func (t, LOCUS) && N(t) != 0) {
-    string ref;
-    string anchor;
-    int last= N(t)-1;
+  else if (is_func (t, LOCUS) && N (t) != 0) {
+    string       ref;
+    string       anchor;
+    int          last= N (t) - 1;
     list<string> ids;
-    string col;
+    string       col;
     (void) build_locus (env, t, ids, col, ref, anchor);
     tree old= env->local_begin (COLOR, col);
-    box b= typeset_as_atomic (env, t[last], descend (ip, last));
+    box  b  = typeset_as_atomic (env, t[last], descend (ip, last));
     env->local_end (COLOR, old);
     return b;
   }
   else {
     array<line_item> a= typeset_concat (env, t, ip);
-    if (N(a) == 1) return a[0]->b;
+    if (N (a) == 1) return a[0]->b;
 
-    int i, n=N(a);
+    int i, n= N (a);
     if (n == 0) return empty_box (ip); // FIXME: n=0 should never happen
     array<box> items (n);
     array<SI>  spc (n);
-    if (n>0) {
-      spc[0]=0;
-      for (i=0; i<n-1; i++) {
-	items[i]  = a[i]->b;
-	spc  [i+1]= a[i]->spc->def;
+    if (n > 0) {
+      spc[0]= 0;
+      for (i= 0; i < n - 1; i++) {
+        items[i]  = a[i]->b;
+        spc[i + 1]= a[i]->spc->def;
       }
       items[i]= a[i]->b;
     }
@@ -1075,24 +1092,48 @@ tree
 box_info (edit_env env, tree t, string what) {
   box b= typeset_as_atomic (env, attach_here (t, decorate ()));
 
-  tree r= tuple();
-  for (int i=0; i<N(what); i++) {
+  tree r= tuple ();
+  for (int i= 0; i < N (what); i++) {
     switch (what[i]) {
-    case 'l': r << as_string (b->x1); break;
-    case 'b': r << as_string (b->y1); break;
-    case 'r': r << as_string (b->x2); break;
-    case 't': r << as_string (b->y2); break;
-    case 'w': r << as_string (b->x2 - b->x1); break;
-    case 'h': r << as_string (b->y2 - b->y1); break;
-    case 'L': r << as_string (b->x3); break;
-    case 'B': r << as_string (b->y3); break;
-    case 'R': r << as_string (b->x4); break;
-    case 'T': r << as_string (b->y4); break;
-    case 'W': r << as_string (b->x4 - b->x3); break;
-    case 'H': r << as_string (b->y4 - b->y3); break;
+    case 'l':
+      r << as_string (b->x1);
+      break;
+    case 'b':
+      r << as_string (b->y1);
+      break;
+    case 'r':
+      r << as_string (b->x2);
+      break;
+    case 't':
+      r << as_string (b->y2);
+      break;
+    case 'w':
+      r << as_string (b->x2 - b->x1);
+      break;
+    case 'h':
+      r << as_string (b->y2 - b->y1);
+      break;
+    case 'L':
+      r << as_string (b->x3);
+      break;
+    case 'B':
+      r << as_string (b->y3);
+      break;
+    case 'R':
+      r << as_string (b->x4);
+      break;
+    case 'T':
+      r << as_string (b->y4);
+      break;
+    case 'W':
+      r << as_string (b->x4 - b->x3);
+      break;
+    case 'H':
+      r << as_string (b->y4 - b->y3);
+      break;
     case '.':
-      if (N(r)==1) return as_string (r[0]) * "tmpt";
-      else if (N(r)==0) return tree (ERROR, "No query for box-info");
+      if (N (r) == 1) return as_string (r[0]) * "tmpt";
+      else if (N (r) == 0) return tree (ERROR, "No query for box-info");
       else return tree (ERROR, "More than one query for box-info");
     }
   }

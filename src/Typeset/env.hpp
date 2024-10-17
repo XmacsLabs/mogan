@@ -1,205 +1,207 @@
 
 /******************************************************************************
-* MODULE     : env.hpp
-* DESCRIPTION: edit environment for typesetting
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : env.hpp
+ * DESCRIPTION: edit environment for typesetting
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef ENV_H
 #define ENV_H
-#include "vars.hpp"
-#include "drd_info.hpp"
-#include "gui.hpp"
-#include "font.hpp"
-#include "language.hpp"
-#include "path.hpp"
-#include "hashmap.hpp"
 #include "boxes.hpp"
-#include "url.hpp"
+#include "drd_info.hpp"
+#include "font.hpp"
 #include "frame.hpp"
+#include "gui.hpp"
+#include "hashmap.hpp"
+#include "language.hpp"
 #include "link.hpp"
+#include "path.hpp"
 #include "player.hpp"
+#include "url.hpp"
+#include "vars.hpp"
 
 #define DECORATION (-1)
 
 /******************************************************************************
-* The different types of system environment variables
-******************************************************************************/
+ * The different types of system environment variables
+ ******************************************************************************/
 
-#define Env_User               0
-#define Env_Fixed              1
-#define Env_Zoom               2
-#define Env_Magnification      3
-#define Env_Magnify            4
-#define Env_Language           5
-#define Env_Mode               6
-#define Env_Info_Level         7
-#define Env_Font               8
-#define Env_Font_Size          9
-#define Env_Font_Sizes        10
-#define Env_Index_Level       11
-#define Env_Display_Style     12
-#define Env_Math_Condensed    13
-#define Env_Vertical_Pos      14
-#define Env_Math_Nesting      15
-#define Env_Math_Width        16
-#define Env_Color             17
-#define Env_Pattern_Mode      18
-#define Env_Spacing           19
-#define Env_Paragraph         20
-#define Env_Page              21
-#define Env_Page_Extents      22
-#define Env_Preamble          23
-#define Env_Geometry          24
-#define Env_Frame             25
-#define Env_Line_Width        26
-#define Env_Grid              27
-#define Env_Grid_Aspect       28
-#define Env_Src_Style         29
-#define Env_Src_Special       30
-#define Env_Src_Compact       31
-#define Env_Src_Close         32
-#define Env_Src_Color         33
-#define Env_Point_Style       34
-#define Env_Point_Size        35
-#define Env_Dash_Style        36
-#define Env_Dash_Style_Unit   37
-#define Env_Fill_Color        38
-#define Env_Line_Arrows       39
-#define Env_Line_Portion      40
-#define Env_Text_At_Halign    41
-#define Env_Text_At_Valign    42
-#define Env_Text_At_Repulse   43
-#define Env_Doc_At_Valign     44
-
-/******************************************************************************
-* For style file editing
-******************************************************************************/
-
-#define STYLE_ANGULAR         0
-#define STYLE_SCHEME          1
-#define STYLE_LATEX           2
-#define STYLE_FUNCTIONAL      3
-
-#define SPECIAL_RAW           0
-#define SPECIAL_FORMAT        1
-#define SPECIAL_NORMAL        2
-#define SPECIAL_MAXIMAL       3
-
-#define COMPACT_ALL           0
-#define COMPACT_INLINE_ARGS   1
-#define COMPACT_INLINE_START  2
-#define COMPACT_INLINE        3
-#define COMPACT_NONE          4
-
-#define CLOSE_MINIMAL         0
-#define CLOSE_COMPACT         1
-#define CLOSE_LONG            2
-#define CLOSE_REPEAT          3
-
-#define INACTIVE_INLINE_RECURSE  0
-#define INACTIVE_INLINE_ONCE     1
-#define INACTIVE_INLINE_ERROR    2
-#define INACTIVE_BLOCK_RECURSE   3
-#define INACTIVE_BLOCK_ONCE      4
-#define INACTIVE_BLOCK_ERROR     5
+#define Env_User 0
+#define Env_Fixed 1
+#define Env_Zoom 2
+#define Env_Magnification 3
+#define Env_Magnify 4
+#define Env_Language 5
+#define Env_Mode 6
+#define Env_Info_Level 7
+#define Env_Font 8
+#define Env_Font_Size 9
+#define Env_Font_Sizes 10
+#define Env_Index_Level 11
+#define Env_Display_Style 12
+#define Env_Math_Condensed 13
+#define Env_Vertical_Pos 14
+#define Env_Math_Nesting 15
+#define Env_Math_Width 16
+#define Env_Color 17
+#define Env_Pattern_Mode 18
+#define Env_Spacing 19
+#define Env_Paragraph 20
+#define Env_Page 21
+#define Env_Page_Extents 22
+#define Env_Preamble 23
+#define Env_Geometry 24
+#define Env_Frame 25
+#define Env_Line_Width 26
+#define Env_Grid 27
+#define Env_Grid_Aspect 28
+#define Env_Src_Style 29
+#define Env_Src_Special 30
+#define Env_Src_Compact 31
+#define Env_Src_Close 32
+#define Env_Src_Color 33
+#define Env_Point_Style 34
+#define Env_Point_Size 35
+#define Env_Dash_Style 36
+#define Env_Dash_Style_Unit 37
+#define Env_Fill_Color 38
+#define Env_Line_Arrows 39
+#define Env_Line_Portion 40
+#define Env_Text_At_Halign 41
+#define Env_Text_At_Valign 42
+#define Env_Text_At_Repulse 43
+#define Env_Doc_At_Valign 44
 
 /******************************************************************************
-* Other enumerated values
-******************************************************************************/
+ * For style file editing
+ ******************************************************************************/
 
-#define INFO_NONE          0
-#define INFO_MINIMAL       1
-#define INFO_SHORT         2
-#define INFO_DETAILED      3
-#define INFO_PAPER         4
-#define INFO_SHORT_PAPER   5
+#define STYLE_ANGULAR 0
+#define STYLE_SCHEME 1
+#define STYLE_LATEX 2
+#define STYLE_FUNCTIONAL 3
+
+#define SPECIAL_RAW 0
+#define SPECIAL_FORMAT 1
+#define SPECIAL_NORMAL 2
+#define SPECIAL_MAXIMAL 3
+
+#define COMPACT_ALL 0
+#define COMPACT_INLINE_ARGS 1
+#define COMPACT_INLINE_START 2
+#define COMPACT_INLINE 3
+#define COMPACT_NONE 4
+
+#define CLOSE_MINIMAL 0
+#define CLOSE_COMPACT 1
+#define CLOSE_LONG 2
+#define CLOSE_REPEAT 3
+
+#define INACTIVE_INLINE_RECURSE 0
+#define INACTIVE_INLINE_ONCE 1
+#define INACTIVE_INLINE_ERROR 2
+#define INACTIVE_BLOCK_RECURSE 3
+#define INACTIVE_BLOCK_ONCE 4
+#define INACTIVE_BLOCK_ERROR 5
 
 /******************************************************************************
-* The edit environment
-******************************************************************************/
+ * Other enumerated values
+ ******************************************************************************/
+
+#define INFO_NONE 0
+#define INFO_MINIMAL 1
+#define INFO_SHORT 2
+#define INFO_DETAILED 3
+#define INFO_PAPER 4
+#define INFO_SHORT_PAPER 5
+
+/******************************************************************************
+ * The edit environment
+ ******************************************************************************/
 
 class edit_env;
 class ornament_parameters;
 class art_box_parameters;
-class edit_env_rep: public concrete_struct {
+class edit_env_rep : public concrete_struct {
 public:
-  drd_info&                    drd;
+  drd_info& drd;
+
 private:
-  hashmap<string,tree>         env;
-  hashmap<string,tree>         back;
+  hashmap<string, tree> env;
+  hashmap<string, tree> back;
+
 public:
-  hashmap<string,path>         src;
-  list<hashmap<string,tree> >  macro_arg;
-  list<hashmap<string,path> >  macro_src;
-  array<box>                   decorated_boxes;
+  hashmap<string, path>       src;
+  list<hashmap<string, tree>> macro_arg;
+  list<hashmap<string, path>> macro_src;
+  array<box>                  decorated_boxes;
 
-  hashmap<string,int>&         var_type;
-  url                          base_file_name;
-  url                          cur_file_name;
-  bool                         secure;
-  hashmap<string,tree>&        local_ref;
-  hashmap<string,tree>&        global_ref;
-  hashmap<string,tree>&        local_aux;
-  hashmap<string,tree>&        global_aux;
-  hashmap<string,tree>&        local_att;
-  hashmap<string,tree>&        global_att;
-  bool                         complete;    // typeset complete document ?
-  bool                         read_only;   // write-protected ?
-  hashmap<string,tree>         missing;     // missing refs
-  array<tree>                  redefined;   // redefined labels
-  hashmap<string,bool>         touched;     // touched refs
-  link_repository              link_env;    // current links
-  array<array<int> >           size_cache;  // math font size cache
-  array<rectangle>             white_zones; // text exclusion zones for curves
+  hashmap<string, int>&  var_type;
+  url                    base_file_name;
+  url                    cur_file_name;
+  bool                   secure;
+  hashmap<string, tree>& local_ref;
+  hashmap<string, tree>& global_ref;
+  hashmap<string, tree>& local_aux;
+  hashmap<string, tree>& global_aux;
+  hashmap<string, tree>& local_att;
+  hashmap<string, tree>& global_att;
+  bool                   complete;    // typeset complete document ?
+  bool                   read_only;   // write-protected ?
+  hashmap<string, tree>  missing;     // missing refs
+  array<tree>            redefined;   // redefined labels
+  hashmap<string, bool>  touched;     // touched refs
+  link_repository        link_env;    // current links
+  array<array<int>>      size_cache;  // math font size cache
+  array<rectangle>       white_zones; // text exclusion zones for curves
 
-  int          dpi;
-  double       inch;
-  double       zoomf;
-  SI           pixel;
-  double       magn;
-  double       magn_len;
-  double       mgfy;
-  double       flexibility;
-  int          first_page;
-  int          mode;
-  int          mode_op;
-  language     lan;
-  int          hl_lan;
-  font         fn;
-  int          fn_size;
-  int          index_level;
-  bool         display_style;
-  bool         math_condensed;
-  int          vert_pos;
-  SI           frac_max;
-  SI           table_max;
-  pencil       flatten_pen;
-  int          alpha;
-  pencil       pen;
-  bool         no_patterns;
-  bool         preamble;
-  int          spacing_policy;
-  tree         math_font_sizes;
-  int          nesting_level;
+  int      dpi;
+  double   inch;
+  double   zoomf;
+  SI       pixel;
+  double   magn;
+  double   magn_len;
+  double   mgfy;
+  double   flexibility;
+  int      first_page;
+  int      mode;
+  int      mode_op;
+  language lan;
+  int      hl_lan;
+  font     fn;
+  int      fn_size;
+  int      index_level;
+  bool     display_style;
+  bool     math_condensed;
+  int      vert_pos;
+  SI       frac_max;
+  SI       table_max;
+  pencil   flatten_pen;
+  int      alpha;
+  pencil   pen;
+  bool     no_patterns;
+  bool     preamble;
+  int      spacing_policy;
+  tree     math_font_sizes;
+  int      nesting_level;
 
-  int          info_level;
-  int          src_style;
-  int          src_special;
-  int          src_compact;
-  int          src_close;
-  string       src_tag_color;
-  color        src_tag_col;
-  int          inactive_mode;
-  tree         recover_env;
+  int    info_level;
+  int    src_style;
+  int    src_special;
+  int    src_compact;
+  int    src_close;
+  string src_tag_color;
+  color  src_tag_col;
+  int    inactive_mode;
+  tree   recover_env;
 
-  double       anim_start;
-  double       anim_end;
-  double       anim_portion;
+  double anim_start;
+  double anim_end;
+  double anim_portion;
 
   SI           gw;
   SI           gh;
@@ -222,27 +224,27 @@ public:
   SI           text_at_repulse;
   string       doc_at_valign;
 
-  string       page_type;
-  string       page_real_type;
-  bool         page_landscape;
-  bool         page_automatic;
-  bool         page_single;
-  bool         page_floats;
-  int          page_packet;
-  int          page_offset;
-  tree         page_border;
-  int          page_margin_mode;
-  SI           page_width;
-  SI           page_height;
-  SI           page_real_width;
-  SI           page_real_height;
-  SI           page_user_width;
-  SI           page_user_height;
-  SI           page_odd_margin;
-  SI           page_even_margin;
-  SI           page_right_margin;
-  SI           page_top_margin;
-  SI           page_bottom_margin;
+  string page_type;
+  string page_real_type;
+  bool   page_landscape;
+  bool   page_automatic;
+  bool   page_single;
+  bool   page_floats;
+  int    page_packet;
+  int    page_offset;
+  tree   page_border;
+  int    page_margin_mode;
+  SI     page_width;
+  SI     page_height;
+  SI     page_real_width;
+  SI     page_real_height;
+  SI     page_user_width;
+  SI     page_user_height;
+  SI     page_odd_margin;
+  SI     page_even_margin;
+  SI     page_right_margin;
+  SI     page_top_margin;
+  SI     page_bottom_margin;
 
 private:
   tree exec_formatting (tree t, string v);
@@ -428,21 +430,20 @@ private:
   tree rewrite_inactive (tree t, tree var);
 
 public:
-  edit_env_rep (drd_info& drd,
-		url base_file_name,
-		hashmap<string,tree>& local_ref,
-		hashmap<string,tree>& global_ref,
-		hashmap<string,tree>& local_aux,
-		hashmap<string,tree>& global_aux,
-		hashmap<string,tree>& local_att,
-		hashmap<string,tree>& global_att);
-  void   style_init_env ();
+  edit_env_rep (drd_info& drd, url base_file_name,
+                hashmap<string, tree>& local_ref,
+                hashmap<string, tree>& global_ref,
+                hashmap<string, tree>& local_aux,
+                hashmap<string, tree>& global_aux,
+                hashmap<string, tree>& local_att,
+                hashmap<string, tree>& global_att);
+  void style_init_env ();
 
   /* execution of trees and setting environment variables */
   tree   exec (tree t);
   void   exec_until (tree t, path p);
   bool   exec_until (tree t, path p, string var, int level);
-  string exec_string (tree t);        /* should be inline */
+  string exec_string (tree t); /* should be inline */
   tree   expand (tree t, bool search_accessible= false);
   bool   depends (tree t, string s, int level);
   tree   rewrite (tree t);
@@ -453,145 +454,170 @@ public:
   tree   expand_morph (tree t);
 
   inline void monitored_write (string s, tree t) {
-    back->write_back (s, env); env (s)= t; }
+    back->write_back (s, env);
+    env (s)= t;
+  }
   inline void monitored_write_update (string s, tree t) {
-    back->write_back (s, env); env (s)= t; update (s); }
+    back->write_back (s, env);
+    env (s)= t;
+    update (s);
+  }
   inline void write (string s, tree t) { env (s)= t; }
-  inline void write_update (string s, tree t) { env (s)= t; update (s); }
+  inline void write_update (string s, tree t) {
+    env (s)= t;
+    update (s);
+  }
   inline tree local_begin (string s, tree t) {
     // tree r (env [s]); monitored_write_update (s, t); return r;
-    tree& val= env (s); tree r (val); val= t; update (s); return r; }
+    tree& val= env (s);
+    tree  r (val);
+    val= t;
+    update (s);
+    return r;
+  }
   inline void local_end (string s, tree t) {
-     env (s)= t; update (s); }
+    env (s)= t;
+    update (s);
+  }
   inline tree local_begin_script () {
-    return local_begin (MATH_LEVEL, as_string (index_level+1)); }
-  inline void local_end_script (tree t) {
-    local_end (MATH_LEVEL, t); }
+    return local_begin (MATH_LEVEL, as_string (index_level + 1));
+  }
+  inline void local_end_script (tree t) { local_end (MATH_LEVEL, t); }
   inline void assign (string s, tree t) {
-    tree& val= env (s); t= exec(t); if (val != t) {
-      back->write_back (s, env); val= t; update (s); } }
+    tree& val= env (s);
+    t        = exec (t);
+    if (val != t) {
+      back->write_back (s, env);
+      val= t;
+      update (s);
+    }
+  }
   inline bool provides (string s) { return env->contains (s); }
-  inline tree read (string s) { return env [s]; }
-  tree local_begin_extents (box b);
-  void local_end_extents (tree t);
+  inline tree read (string s) { return env[s]; }
+  tree        local_begin_extents (box b);
+  void        local_end_extents (tree t);
 
   void write_default_env ();
-  void write_env (hashmap<string,tree> user_env);
-  void monitored_patch_env (hashmap<string,tree> patch);
-  void patch_env (hashmap<string,tree> patch);
-  void read_env (hashmap<string,tree>& ret);
-  void local_start (hashmap<string,tree>& prev_back);
-  void local_update (hashmap<string,tree>& oldpat, hashmap<string,tree>& chg);
-  void local_end (hashmap<string,tree>& prev_back);
+  void write_env (hashmap<string, tree> user_env);
+  void monitored_patch_env (hashmap<string, tree> patch);
+  void patch_env (hashmap<string, tree> patch);
+  void read_env (hashmap<string, tree>& ret);
+  void local_start (hashmap<string, tree>& prev_back);
+  void local_update (hashmap<string, tree>& oldpat, hashmap<string, tree>& chg);
+  void local_end (hashmap<string, tree>& prev_back);
 
   /* updating environment variables */
   ornament_parameters get_ornament_parameters ();
-  art_box_parameters get_art_box_parameters (tree t);
-  void   update_page_pars ();
-  void   get_page_pars (SI& w, SI& h, SI& ww, SI& hh,
-			SI& odd, SI& even, SI& top, SI& bottom);
-  SI     get_page_width (bool deco);
-  SI     get_pages_width (bool deco);
-  SI     get_page_height (bool deco);
-  tree   decode_arrow (tree t, string l, string h);
-  int    get_script_size (int sz, int level);
-  void   update_font ();
-  void   update_color ();
-  void   update_pattern_mode ();
-  void   update_mode ();
-  void   update_info_level ();
-  void   update_language ();
-  void   update_geometry ();
-  void   update_frame ();
-  void   update_src_style ();
-  void   update_src_special ();
-  void   update_src_compact ();
-  void   update_src_close ();
-  void   update_dash_style ();
-  void   update_dash_style_unit ();
-  void   update_line_arrows ();
-  void   update ();
-  void   update (string env_var);
+  art_box_parameters  get_art_box_parameters (tree t);
+  void                update_page_pars ();
+  void get_page_pars (SI& w, SI& h, SI& ww, SI& hh, SI& odd, SI& even, SI& top,
+                      SI& bottom);
+  SI   get_page_width (bool deco);
+  SI   get_pages_width (bool deco);
+  SI   get_page_height (bool deco);
+  tree decode_arrow (tree t, string l, string h);
+  int  get_script_size (int sz, int level);
+  void update_font ();
+  void update_color ();
+  void update_pattern_mode ();
+  void update_mode ();
+  void update_info_level ();
+  void update_language ();
+  void update_geometry ();
+  void update_frame ();
+  void update_src_style ();
+  void update_src_special ();
+  void update_src_compact ();
+  void update_src_close ();
+  void update_dash_style ();
+  void update_dash_style_unit ();
+  void update_line_arrows ();
+  void update ();
+  void update (string env_var);
 
   /* lengths */
-  bool      is_length (string s);
-  bool      is_anylen (tree t);
-  tree      tmlen_plus (tree t1, tree t2);
-  tree      tmlen_min (tree t1, tree t2);
-  tree      tmlen_max (tree t1, tree t2);
-  tree      tmlen_times (double sc, tree t);
-  tree      tmlen_over (tree t1, tree t2);
-  double    tmlen_div (tree t1, tree t2);
-  tree      tmlen_mod (tree t1, tree t2);
+  bool   is_length (string s);
+  bool   is_anylen (tree t);
+  tree   tmlen_plus (tree t1, tree t2);
+  tree   tmlen_min (tree t1, tree t2);
+  tree   tmlen_max (tree t1, tree t2);
+  tree   tmlen_times (double sc, tree t);
+  tree   tmlen_over (tree t1, tree t2);
+  double tmlen_div (tree t1, tree t2);
+  tree   tmlen_mod (tree t1, tree t2);
 
-  void      get_length_unit (string l, SI& un, string& un_str);
-  string    add_lengths (string l1, string l2);
-  string    sub_lengths (string l1, string l2);
-  string    max_lengths (string l1, string l2);
-  string    min_lengths (string l1, string l2);
-  string    multiply_length (double x, string l);
-  double    divide_lengths (string l1, string l2);
+  void   get_length_unit (string l, SI& un, string& un_str);
+  string add_lengths (string l1, string l2);
+  string sub_lengths (string l1, string l2);
+  string max_lengths (string l1, string l2);
+  string min_lengths (string l1, string l2);
+  string multiply_length (double x, string l);
+  double divide_lengths (string l1, string l2);
 
-  tree      as_tmlen (tree t);
-  SI        as_length (tree t);
-  SI        as_length (tree t, string perc);
-  SI        as_eff_length (tree t);
-  SI        as_real_length (tree t);
-  space     as_hspace (tree t);
-  space     as_vspace (tree t);
-  point     as_point (tree t);
+  tree  as_tmlen (tree t);
+  SI    as_length (tree t);
+  SI    as_length (tree t, string perc);
+  SI    as_eff_length (tree t);
+  SI    as_real_length (tree t);
+  space as_hspace (tree t);
+  space as_vspace (tree t);
+  point as_point (tree t);
 
   /* retrieving environment variables */
   inline bool get_bool (string var) {
-    tree t= env [var];
+    tree t= env[var];
     if (is_compound (t)) return false;
-    return as_bool (t->label); }
+    return as_bool (t->label);
+  }
   inline int get_int (string var) {
-    tree t= env [var];
+    tree t= env[var];
     if (is_compound (t)) return 0;
-    return as_int (t->label); }
+    return as_int (t->label);
+  }
   inline double get_double (string var) {
-    tree t= env [var];
+    tree t= env[var];
     if (is_compound (t)) return 0.0;
-    return as_double (t->label); }
+    return as_double (t->label);
+  }
   inline string get_string (string var) {
-    tree t= env [var];
+    tree t= env[var];
     if (is_compound (t)) return "";
-    return t->label; }
+    return t->label;
+  }
   inline SI get_length (string var) {
-    tree t= env [var];
-    return as_length (t); }
+    tree t= env[var];
+    return as_length (t);
+  }
   inline space get_vspace (string var) {
-    tree t= env [var];
-    return as_vspace (t); }
+    tree t= env[var];
+    return as_vspace (t);
+  }
   inline color get_color (string var) {
-    tree t= env [var];
-    return named_color (as_string (t), alpha); }
+    tree t= env[var];
+    return named_color (as_string (t), alpha);
+  }
 
   friend class edit_env;
-  friend tm_ostream& operator << (tm_ostream& out, edit_env env);
+  friend tm_ostream& operator<< (tm_ostream& out, edit_env env);
 };
 
 class edit_env {
-  CONCRETE_NULL(edit_env);
-  inline edit_env (edit_env_rep* rep2):
-    rep(rep2) { INC_COUNT_NULL (this->rep); }
-  edit_env (drd_info& drd,
-	    url base_file_name,
-	    hashmap<string,tree>& local_ref,
-	    hashmap<string,tree>& global_ref,
-	    hashmap<string,tree>& local_aux,
-	    hashmap<string,tree>& global_aux,
-	    hashmap<string,tree>& local_att,
-	    hashmap<string,tree>& global_att);
+  CONCRETE_NULL (edit_env);
+  inline edit_env (edit_env_rep* rep2) : rep (rep2) {
+    INC_COUNT_NULL (this->rep);
+  }
+  edit_env (drd_info& drd, url base_file_name, hashmap<string, tree>& local_ref,
+            hashmap<string, tree>& global_ref, hashmap<string, tree>& local_aux,
+            hashmap<string, tree>& global_aux, hashmap<string, tree>& local_att,
+            hashmap<string, tree>& global_att);
 };
-CONCRETE_NULL_CODE(edit_env);
+CONCRETE_NULL_CODE (edit_env);
 
-tm_ostream& operator << (tm_ostream& out, edit_env env);
-tree texmacs_exec (edit_env env, tree cmd);
-tree load_inclusion (url u); // implemented in tm_file.cpp
-tree tree_extents (tree t);
-int decode_alpha (string s);
+tm_ostream&   operator<< (tm_ostream& out, edit_env env);
+tree          texmacs_exec (edit_env env, tree cmd);
+tree          load_inclusion (url u); // implemented in tm_file.cpp
+tree          tree_extents (tree t);
+int           decode_alpha (string s);
 array<double> get_control_times (tree t);
 
 void set_graphical_value (tree var, tree val);

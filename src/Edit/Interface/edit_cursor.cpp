@@ -1,86 +1,89 @@
 
 /******************************************************************************
-* MODULE     : cursor.cpp
-* DESCRIPTION: cursor handling
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : cursor.cpp
+ * DESCRIPTION: cursor handling
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "edit_cursor.hpp"
+#include "analyze.hpp"
+#include "drd_mode.hpp"
 #include "iterator.hpp"
+#include "observers.hpp"
 #include "tm_buffer.hpp"
 #include "tree_traverse.hpp"
-#include "drd_mode.hpp"
-#include "analyze.hpp"
-#include "observers.hpp"
-
 
 /******************************************************************************
-* Constructor and destructor
-******************************************************************************/
+ * Constructor and destructor
+ ******************************************************************************/
 
-edit_cursor_rep::edit_cursor_rep ():
-  cu (0, 0), mv (0, 0), mv_status (0) {}
+edit_cursor_rep::edit_cursor_rep () : cu (0, 0), mv (0, 0), mv_status (0) {}
 edit_cursor_rep::~edit_cursor_rep () {}
-cursor& edit_cursor_rep::the_cursor () { return cu; }
-cursor& edit_cursor_rep::the_ghost_cursor () { return mv; }
+cursor&
+edit_cursor_rep::the_cursor () {
+  return cu;
+}
+cursor&
+edit_cursor_rep::the_ghost_cursor () {
+  return mv;
+}
 
 /******************************************************************************
-* Cursor movement
-******************************************************************************/
+ * Cursor movement
+ ******************************************************************************/
 
-#define DELTA (1<<23)
+#define DELTA (1 << 23)
 
 static bool searching_forwards;
 
-//#define old_cursor_accessible
+// #define old_cursor_accessible
 
 #ifdef old_cursor_accessible
 path
 edit_cursor_rep::make_cursor_accessible (path p, bool forwards) {
-  //time_t t1= texmacs_time ();
-  path start_p= p;
-  bool inverse= false;
-  int old_mode= get_access_mode ();
-  if (get_init_string (MODE) == "src")
-    set_access_mode (DRD_ACCESS_SOURCE);
+  // time_t t1= texmacs_time ();
+  path start_p = p;
+  bool inverse = false;
+  int  old_mode= get_access_mode ();
+  if (get_init_string (MODE) == "src") set_access_mode (DRD_ACCESS_SOURCE);
   while (!is_accessible_cursor (et, p) && !in_source ()) {
     path pp;
     ASSERT (rp <= p, "path outside document");
     p= rp * closest_inside (subtree (et, rp), p / rp);
-    if (forwards ^ inverse)
-      pp= rp * next_valid (subtree (et, rp), p / rp);
-    else
-      pp= rp * previous_valid (subtree (et, rp), p / rp);
+    if (forwards ^ inverse) pp= rp * next_valid (subtree (et, rp), p / rp);
+    else pp= rp * previous_valid (subtree (et, rp), p / rp);
     if (pp == p) {
       if (inverse) break;
-      else { p= start_p; inverse= true; }
+      else {
+        p      = start_p;
+        inverse= true;
+      }
     }
     else p= pp;
   }
   set_access_mode (old_mode);
-  //time_t t2= texmacs_time ();
-  //if (t2-t1 >= 1) cout << "made_cursor_accessible took " << t2-t1 << "ms\n";
+  // time_t t2= texmacs_time ();
+  // if (t2-t1 >= 1) cout << "made_cursor_accessible took " << t2-t1 << "ms\n";
   return p;
 }
 #else
 path
 edit_cursor_rep::make_cursor_accessible (path p, bool forwards) {
-  //time_t t1= texmacs_time ();
-  path start_p= p;
-  bool inverse= false;
-  int old_mode= get_access_mode ();
-  if (get_init_string (MODE) == "src")
-    set_access_mode (DRD_ACCESS_SOURCE);
+  // time_t t1= texmacs_time ();
+  path start_p = p;
+  bool inverse = false;
+  int  old_mode= get_access_mode ();
+  if (get_init_string (MODE) == "src") set_access_mode (DRD_ACCESS_SOURCE);
   while (!is_accessible_cursor (et, p) && !in_source ()) {
     ASSERT (rp <= p, "path outside document");
     tree st = subtree (et, rp);
     path sp = p / rp;
     path pp = sp;
-    int  dir= (forwards ^ inverse)? 1: -1;
+    int  dir= (forwards ^ inverse) ? 1 : -1;
     path cp = closest_accessible_inside (st, sp, dir);
     if (cp != sp) {
       /*
@@ -97,18 +100,21 @@ edit_cursor_rep::make_cursor_accessible (path p, bool forwards) {
       if (dir > 0) sp= next_valid (st, cp);
       else sp= previous_valid (st, cp);
     }
-    if ((dir > 0 && !path_less (pp, sp)) ||
-        (dir < 0 && !path_less (sp, pp))) {
+    if ((dir > 0 && !path_less (pp, sp)) || (dir < 0 && !path_less (sp, pp))) {
       if (inverse) {
-        p= rp * closest_accessible_inside (st, sp, forwards? 1: -1); break; }
+        p= rp * closest_accessible_inside (st, sp, forwards ? 1 : -1);
+        break;
+      }
       else {
-        p= start_p; inverse= true; }
+        p      = start_p;
+        inverse= true;
+      }
     }
     else p= rp * sp;
   }
   set_access_mode (old_mode);
-  //time_t t2= texmacs_time ();
-  //if (t2-t1 >= 1) cout << "made_cursor_accessible took " << t2-t1 << "ms\n";
+  // time_t t2= texmacs_time ();
+  // if (t2-t1 >= 1) cout << "made_cursor_accessible took " << t2-t1 << "ms\n";
   return p;
 }
 #endif
@@ -116,72 +122,74 @@ edit_cursor_rep::make_cursor_accessible (path p, bool forwards) {
 path
 edit_cursor_rep::tree_path (path sp, SI x, SI y, SI delta) {
   path stp= find_scrolled_tree_path (eb, sp, x, y, delta);
-  path p= correct_cursor (et, stp /*, searching_forwards */);
+  path p  = correct_cursor (et, stp /*, searching_forwards */);
   return make_cursor_accessible (p, searching_forwards);
 }
 
 bool
 edit_cursor_rep::cursor_move_sub (SI& x0, SI& y0, SI& d0, SI dx, SI dy) {
-  path sp= find_innermost_scroll (eb, tp);
+  path sp           = find_innermost_scroll (eb, tp);
   searching_forwards= dx == 1 || dy == -1;
 
-  int i,d;
+  int  i, d;
   path ref_p= tree_path (sp, x0, y0, d0);
   if (ref_p != tp) {
 #ifdef old_cursor_accessible
     tp= ref_p;
     return true;
 #else
-    if (!searching_forwards && path_less (tp, ref_p));
-    else if (searching_forwards && path_less (ref_p, tp));
+    if (!searching_forwards && path_less (tp, ref_p))
+      ;
+    else if (searching_forwards && path_less (ref_p, tp))
+      ;
     else {
       tp= ref_p;
       return true;
     }
 #endif
   }
-  
-  // cout << "ref_p = " << ref_p << "\n";
-  if (ref_p == tree_path (sp, x0, y0, d0+ dx*DELTA)) {
-    for (i=1; i<DELTA; i=i<<1)
-      if (ref_p != tree_path (sp, x0+ dx*i, y0+ dy*i, d0+ dx*DELTA))
-        break;
-    if (i>=DELTA) return false;
-    for (d=i>>2; d>=1; d=d>>1)
-      if (ref_p != tree_path (sp, x0+ dx*(i-d), y0+ dy*(i-d), d0+ dx*DELTA))
-        i-=d;
 
-    x0 += dx*i;
-    y0 += dy*i;
+  // cout << "ref_p = " << ref_p << "\n";
+  if (ref_p == tree_path (sp, x0, y0, d0 + dx * DELTA)) {
+    for (i= 1; i < DELTA; i= i << 1)
+      if (ref_p != tree_path (sp, x0 + dx * i, y0 + dy * i, d0 + dx * DELTA))
+        break;
+    if (i >= DELTA) return false;
+    for (d= i >> 2; d >= 1; d= d >> 1)
+      if (ref_p !=
+          tree_path (sp, x0 + dx * (i - d), y0 + dy * (i - d), d0 + dx * DELTA))
+        i-= d;
+
+    x0+= dx * i;
+    y0+= dy * i;
   }
-  
+
   // cout << "path  = " << tree_path (sp, x0, y0, d0) << "\n";
-  if (dx!=0) {
+  if (dx != 0) {
     if (ref_p == tree_path (sp, x0, y0, d0)) {
-      for (i=1; i<DELTA; i=i<<1)
-        if (ref_p != tree_path (sp, x0, y0, d0+ dx*i)) break;
-      if (i>=DELTA)
-        TM_FAILED ("inconsistent cursor handling");
-      for (d=i>>2; d>=1; d=d>>1)
-        if (ref_p != tree_path (sp, x0, y0, d0+ dx*(i-d))) i-=d;
-      d0 += dx*i;
+      for (i= 1; i < DELTA; i= i << 1)
+        if (ref_p != tree_path (sp, x0, y0, d0 + dx * i)) break;
+      if (i >= DELTA) TM_FAILED ("inconsistent cursor handling");
+      for (d= i >> 2; d >= 1; d= d >> 1)
+        if (ref_p != tree_path (sp, x0, y0, d0 + dx * (i - d))) i-= d;
+      d0+= dx * i;
     }
     else {
-      for (i=1; i<DELTA; i=i<<1)
-        if (ref_p == tree_path (sp, x0, y0, d0- dx*i)) break;
-      if (i<DELTA) {
-        for (d=i>>2; d>=1; d=d>>1)
-          if (ref_p == tree_path (sp, x0, y0, d0- dx*(i-d))) i-=d;
+      for (i= 1; i < DELTA; i= i << 1)
+        if (ref_p == tree_path (sp, x0, y0, d0 - dx * i)) break;
+      if (i < DELTA) {
+        for (d= i >> 2; d >= 1; d= d >> 1)
+          if (ref_p == tree_path (sp, x0, y0, d0 - dx * (i - d))) i-= d;
         i--;
-        d0 -= dx*i;
+        d0-= dx * i;
       }
-      else {  // exceptional case
-        ref_p= tree_path (sp, x0, y0, d0- dx*DELTA);
-        for (i=1; i<DELTA; i=i<<1)
-          if (ref_p == tree_path (sp, x0, y0, d0- dx*i)) break;
-        for (d=i>>2; d>=1; d=d>>1)
-          if (ref_p == tree_path (sp, x0, y0, d0- dx*(i-d))) i-=d;
-        d0 -= dx*i;
+      else { // exceptional case
+        ref_p= tree_path (sp, x0, y0, d0 - dx * DELTA);
+        for (i= 1; i < DELTA; i= i << 1)
+          if (ref_p == tree_path (sp, x0, y0, d0 - dx * i)) break;
+        for (d= i >> 2; d >= 1; d= d >> 1)
+          if (ref_p == tree_path (sp, x0, y0, d0 - dx * (i - d))) i-= d;
+        d0-= dx * i;
       }
     }
   }
@@ -192,26 +200,26 @@ edit_cursor_rep::cursor_move_sub (SI& x0, SI& y0, SI& d0, SI dx, SI dy) {
 
 void
 edit_cursor_rep::cursor_move (SI dx, SI dy) {
-  //time_t t1= texmacs_time ();
-  //stretched_print ((tree) eb, false);
+  // time_t t1= texmacs_time ();
+  // stretched_print ((tree) eb, false);
   cursor_move_sub (mv->ox, mv->oy, mv->delta, dx, dy);
-  //time_t t2= texmacs_time ();
-  //if (t2 - t1 >= 10) cout << "cursor_move took " << t2-t1 << "ms\n";
+  // time_t t2= texmacs_time ();
+  // if (t2 - t1 >= 10) cout << "cursor_move took " << t2-t1 << "ms\n";
 }
 
 /******************************************************************************
-* Routines affecting both the cursor and the ghost cursor
-******************************************************************************/
+ * Routines affecting both the cursor and the ghost cursor
+ ******************************************************************************/
 
 void
 edit_cursor_rep::adjust_ghost_cursor (int status) {
-  if (status==mv_status) {
-    if (status!=HORIZONTAL) {
+  if (status == mv_status) {
+    if (status != HORIZONTAL) {
       mv->ox   = cu->ox;
       mv->delta= cu->delta;
     }
-    if (status!=VERTICAL) {
-      SI dy= (cu->y1 + cu->y2) >> 1;
+    if (status != VERTICAL) {
+      SI dy = (cu->y1 + cu->y2) >> 1;
       mv->oy= cu->oy + dy;
     }
   }
@@ -220,15 +228,15 @@ edit_cursor_rep::adjust_ghost_cursor (int status) {
 void
 edit_cursor_rep::notify_cursor_moved (int status) {
   mv_status= status;
-  cu= eb->find_check_cursor (tp);
+  cu       = eb->find_check_cursor (tp);
   notify_change (THE_CURSOR);
   if (cu->valid) call ("notify-cursor-moved", object (status));
 }
 
 void
 edit_cursor_rep::go_to (SI x, SI y, bool absolute) {
-  if (has_changed (THE_TREE+THE_ENVIRONMENT)) return;
-  tp= tree_path (absolute? path (): find_innermost_scroll (eb, tp), x, y, 0);
+  if (has_changed (THE_TREE + THE_ENVIRONMENT)) return;
+  tp= tree_path (absolute ? path () : find_innermost_scroll (eb, tp), x, y, 0);
   notify_cursor_moved (CENTER);
   mv->ox   = x;
   mv->oy   = y;
@@ -237,7 +245,7 @@ edit_cursor_rep::go_to (SI x, SI y, bool absolute) {
 
 void
 edit_cursor_rep::go_left_physical () {
-  if (has_changed (THE_TREE+THE_ENVIRONMENT)) return;
+  if (has_changed (THE_TREE + THE_ENVIRONMENT)) return;
   adjust_ghost_cursor (VERTICAL);
   cursor_move (-1, 0);
   notify_cursor_moved (HORIZONTAL);
@@ -246,7 +254,7 @@ edit_cursor_rep::go_left_physical () {
 
 void
 edit_cursor_rep::go_right_physical () {
-  if (has_changed (THE_TREE+THE_ENVIRONMENT)) return;
+  if (has_changed (THE_TREE + THE_ENVIRONMENT)) return;
   adjust_ghost_cursor (VERTICAL);
   cursor_move (1, 0);
   notify_cursor_moved (HORIZONTAL);
@@ -255,9 +263,9 @@ edit_cursor_rep::go_right_physical () {
 
 void
 edit_cursor_rep::go_up () {
-  if (has_changed (THE_TREE+THE_ENVIRONMENT)) return;
+  if (has_changed (THE_TREE + THE_ENVIRONMENT)) return;
   path scroll_p= find_innermost_scroll (eb, tp);
-  path start_p= tree_path (scroll_p, -(1 << 30), 1 << 30, 0);
+  path start_p = tree_path (scroll_p, -(1 << 30), 1 << 30, 0);
   if (tp == start_p) return;
   path old_p= tp;
   adjust_ghost_cursor (HORIZONTAL);
@@ -269,9 +277,9 @@ edit_cursor_rep::go_up () {
 
 void
 edit_cursor_rep::go_down () {
-  if (has_changed (THE_TREE+THE_ENVIRONMENT)) return;
+  if (has_changed (THE_TREE + THE_ENVIRONMENT)) return;
   path scroll_p= find_innermost_scroll (eb, tp);
-  path end_p= tree_path (scroll_p, 1 << 30, -(1 << 30), 0);
+  path end_p   = tree_path (scroll_p, 1 << 30, -(1 << 30), 0);
   if (tp == end_p) return;
   path old_p= tp;
   adjust_ghost_cursor (HORIZONTAL);
@@ -283,13 +291,13 @@ edit_cursor_rep::go_down () {
 
 void
 edit_cursor_rep::go_page_up () {
-  if (has_changed (THE_TREE+THE_ENVIRONMENT)) return;
+  if (has_changed (THE_TREE + THE_ENVIRONMENT)) return;
   path sp= find_innermost_scroll (eb, tp);
   if (is_nil (sp)) go_to (mv->ox, min (mv->oy + get_visible_height (), eb->y2));
   else {
-    SI x, y, sx, sy;
+    SI        x, y, sx, sy;
     rectangle outer, inner;
-    box b= eb[path_up (sp)];
+    box       b= eb[path_up (sp)];
     find_canvas_info (eb, sp, x, y, sx, sy, outer, inner);
     go_to (mv->ox, min (mv->oy + b->h (), y + sy + inner->y2), false);
   }
@@ -298,13 +306,13 @@ edit_cursor_rep::go_page_up () {
 
 void
 edit_cursor_rep::go_page_down () {
-  if (has_changed (THE_TREE+THE_ENVIRONMENT)) return;
+  if (has_changed (THE_TREE + THE_ENVIRONMENT)) return;
   path sp= find_innermost_scroll (eb, tp);
   if (is_nil (sp)) go_to (mv->ox, max (mv->oy - get_visible_height (), eb->y1));
   else {
-    SI x, y, sx, sy;
+    SI        x, y, sx, sy;
     rectangle outer, inner;
-    box b= eb[path_up (sp)];
+    box       b= eb[path_up (sp)];
     find_canvas_info (eb, sp, x, y, sx, sy, outer, inner);
     go_to (mv->ox, max (mv->oy - b->h (), y + sy + inner->y1), false);
   }
@@ -312,12 +320,12 @@ edit_cursor_rep::go_page_down () {
 }
 
 /******************************************************************************
-* Adapt physical horizontal cursor movement to line breaking
-******************************************************************************/
+ * Adapt physical horizontal cursor movement to line breaking
+ ******************************************************************************/
 
 void
 edit_cursor_rep::go_left () {
-  if (has_changed (THE_TREE+THE_ENVIRONMENT)) return;
+  if (has_changed (THE_TREE + THE_ENVIRONMENT)) return;
   path old_tp= copy (tp);
   go_left_physical ();
   if (tp != old_tp && inside_contiguous_document (et, old_tp, tp)) return;
@@ -328,7 +336,7 @@ edit_cursor_rep::go_left () {
 
 void
 edit_cursor_rep::go_right () {
-  if (has_changed (THE_TREE+THE_ENVIRONMENT)) return;
+  if (has_changed (THE_TREE + THE_ENVIRONMENT)) return;
   path old_tp= copy (tp);
   go_right_physical ();
   if (tp != old_tp && inside_contiguous_document (et, old_tp, tp)) return;
@@ -339,9 +347,9 @@ edit_cursor_rep::go_right () {
 
 void
 edit_cursor_rep::go_start_line () {
-  if (has_changed (THE_TREE+THE_ENVIRONMENT)) return;
+  if (has_changed (THE_TREE + THE_ENVIRONMENT)) return;
   bool first_pass= true;
-  path orig_tp= copy (tp);
+  path orig_tp   = copy (tp);
   while (true) {
     cursor old_cu= copy (cu);
     cursor old_mv= copy (mv);
@@ -363,9 +371,9 @@ edit_cursor_rep::go_start_line () {
 
 void
 edit_cursor_rep::go_end_line () {
-  if (has_changed (THE_TREE+THE_ENVIRONMENT)) return;
+  if (has_changed (THE_TREE + THE_ENVIRONMENT)) return;
   bool first_pass= true;
-  path orig_tp= copy (tp);
+  path orig_tp   = copy (tp);
   while (true) {
     cursor old_cu= copy (cu);
     cursor old_mv= copy (mv);
@@ -386,35 +394,35 @@ edit_cursor_rep::go_end_line () {
 }
 
 /******************************************************************************
-* Logical cursor changes
-******************************************************************************/
+ * Logical cursor changes
+ ******************************************************************************/
 
 void
 edit_cursor_rep::adjust_cursor () {
-  path sp= find_innermost_scroll (eb, tp);
+  path   sp= find_innermost_scroll (eb, tp);
   cursor mv= copy (cu);
-  SI dx= PIXEL << 8, ddelta= 0;
-  path p= tree_path (sp, mv->ox, mv->oy, mv->delta);
+  SI     dx= PIXEL << 8, ddelta= 0;
+  path   p= tree_path (sp, mv->ox, mv->oy, mv->delta);
   if (p != tp) {
     // cout << "Cursors don't match\n";
     while (dx != 0 || ddelta != 0) {
       // cout << "  " << tp << ", " << p << "\n";
-      p= tree_path (sp, mv->ox, mv->oy, mv->delta);
-      int eps= (path_inf (p, tp)? 1: -1);
-      if (p == tp) eps= (mv->ox < cu->ox? 1: -1);
-      if (p == tp && mv->ox == cu->ox) eps= (mv->delta < cu->delta? 1: -1);
+      p      = tree_path (sp, mv->ox, mv->oy, mv->delta);
+      int eps= (path_inf (p, tp) ? 1 : -1);
+      if (p == tp) eps= (mv->ox < cu->ox ? 1 : -1);
+      if (p == tp && mv->ox == cu->ox) eps= (mv->delta < cu->delta ? 1 : -1);
       if (dx > 0) {
         if (p != tp ||
             tree_path (sp, mv->ox + eps * dx, mv->oy, mv->delta) == tp)
-          mv->ox += eps * dx;
-        dx >>= 1;
+          mv->ox+= eps * dx;
+        dx>>= 1;
         if (dx == 0) ddelta= DELTA;
       }
       else if (ddelta > 0) {
         if (p != tp ||
             tree_path (sp, mv->ox, mv->oy, mv->delta + eps * ddelta) == tp)
-          mv->delta += eps * ddelta;
-        ddelta >>= 1;
+          mv->delta+= eps * ddelta;
+        ddelta>>= 1;
       }
     }
   }
@@ -435,10 +443,9 @@ edit_cursor_rep::go_to_here () {
   if (cu->valid) adjust_cursor ();
   if (mv_status == DIRECT) {
     mv= copy (cu);
-    if (mv->slope > 0 &&
-        is_atomic (subtree (et, path_up (tp)))) {
-      mv->ox += (SI) round (mv->slope * min (mv->y1, -PIXEL));
-      mv->delta = 0;
+    if (mv->slope > 0 && is_atomic (subtree (et, path_up (tp)))) {
+      mv->ox+= (SI) round (mv->slope * min (mv->y1, -PIXEL));
+      mv->delta= 0;
     }
   }
   notify_change (THE_CURSOR);
@@ -448,17 +455,16 @@ edit_cursor_rep::go_to_here () {
 void
 edit_cursor_rep::go_to (path p) {
   if (rp <= p) {
-    //if (tp != p) cout << "Go to " << p << "\n";
-    tp= p;
+    // if (tp != p) cout << "Go to " << p << "\n";
+    tp       = p;
     mv_status= DIRECT;
-    if (!has_changed (THE_TREE+THE_ENVIRONMENT)) {
+    if (!has_changed (THE_TREE + THE_ENVIRONMENT)) {
       cu= eb->find_check_cursor (tp);
       if (cu->valid) adjust_cursor ();
       mv= copy (cu);
-      if (mv->slope > 0 &&
-          is_atomic (subtree (et, path_up (tp)))) {
-        mv->ox += (SI) round (mv->slope * min (mv->y1, -PIXEL));
-        mv->delta = 0;
+      if (mv->slope > 0 && is_atomic (subtree (et, path_up (tp)))) {
+        mv->ox+= (SI) round (mv->slope * min (mv->y1, -PIXEL));
+        mv->delta= 0;
       }
     }
     notify_change (THE_CURSOR);
@@ -539,13 +545,13 @@ edit_cursor_rep::go_end_with (string var, string val) {
 }
 
 /******************************************************************************
-* Jumping to a label
-******************************************************************************/
+ * Jumping to a label
+ ******************************************************************************/
 
 tree
 edit_cursor_rep::get_labels () {
-  tree r (TUPLE);
-  hashmap<string,tree> h= buf->data->ref;
+  tree                  r (TUPLE);
+  hashmap<string, tree> h= buf->data->ref;
   if (buf->prj != NULL) {
     h= copy (buf->prj->data->ref);
     h->join (buf->data->ref);
@@ -565,8 +571,8 @@ search_label (tree t, string which) {
   else if (is_compound (t, "tag", 2) && t[0] == which)
     return path (1, start (t[1]));
   else {
-    int i, n=N(t);
-    for (i=0; i<n; i++) {
+    int i, n= N (t);
+    for (i= 0; i < n; i++) {
       path q= search_label (t[i], which);
       if (!is_nil (q)) return path (i, q);
     }
@@ -593,22 +599,19 @@ edit_cursor_rep::search_label (string s, bool local) {
   if (!is_nil (p)) return (rp * p);
   if (!is_nil (eb)) {
     p= eb->find_tag (s);
-    if (!is_nil (p) &&
-        !is_func (subtree (et, path_up (p)), INCLUDE))
-      return p;
+    if (!is_nil (p) && !is_func (subtree (et, path_up (p)), INCLUDE)) return p;
   }
-  tree val= (buf->prj == NULL? buf->data->ref[s]: buf->prj->data->ref[s]);
-  url u;
+  tree val= (buf->prj == NULL ? buf->data->ref[s] : buf->prj->data->ref[s]);
+  url  u;
   if (is_func (val, TUPLE, 3) && is_atomic (val[2]) &&
       !starts (val[2]->label, "#"))
     u= relative (buf->buf->name, url (val[2]->label));
-  else if (buf->prj != NULL)
-    u= buf->prj->buf->name;
+  else if (buf->prj != NULL) u= buf->prj->buf->name;
   if (local || is_none (u)) return path ();
   if (u != buf->buf->name) {
     url vw= get_passive_view (u);
     if (is_none (vw)) return path ();
-    return view_to_editor (vw) -> search_label (s, true);
+    return view_to_editor (vw)->search_label (s, true);
   }
   return path ();
 }
@@ -621,12 +624,12 @@ edit_cursor_rep::go_to_label (string s) {
     show_cursor_if_hidden ();
     return;
   }
-  tree val= (buf->prj==NULL? buf->data->ref[s]: buf->prj->data->ref[s]);
+  tree val= (buf->prj == NULL ? buf->data->ref[s] : buf->prj->data->ref[s]);
   if (is_func (val, TUPLE, 3) && is_atomic (val[2])) {
     string extra= val[2]->label;
     if (starts (extra, "#")) {
       string part= extra (1, N (extra));
-      int i= search_forwards (".", part);
+      int    i   = search_forwards (".", part);
       if (i >= 0) part= part (0, i);
       string show= "(show-hidden-part " * scm_quote (part) * ")";
       string jump= "(go-to-label " * scm_quote (s) * ")";
@@ -649,78 +652,72 @@ edit_cursor_rep::go_to_label (string s) {
  ******************************************************************************/
 
 extern tree the_et;
-enum dir_t { BACKWARD = -1, FORWARD = 1 }; // don't change the values
+enum dir_t { BACKWARD= -1, FORWARD= 1 }; // don't change the values
 
-  // FIXME: UGLY and won't handle some things
+// FIXME: UGLY and won't handle some things
 static bool
 find_bracket_valid (tree t, int pos) {
-  if (pos < 0 || pos >= N(t))
-    return false;
-  if (L(t) == STRING || L(t) == DOCUMENT)
-    return true;
-  if (L(t) == CONCAT)
-    return L(t[pos]) == STRING || L(t[pos]) == CONCAT || L(t[pos]) == WITH;
-  if (L(t) == WITH)
-    return pos == N(t)-1 &&
-           (L(t[pos]) == STRING || L(t[pos]) == CONCAT || L(t[pos]) == WITH ||
-            L(t[pos]) == DOCUMENT);
-  else
-    return false;
+  if (pos < 0 || pos >= N (t)) return false;
+  if (L (t) == STRING || L (t) == DOCUMENT) return true;
+  if (L (t) == CONCAT)
+    return L (t[pos]) == STRING || L (t[pos]) == CONCAT || L (t[pos]) == WITH;
+  if (L (t) == WITH)
+    return pos == N (t) - 1 && (L (t[pos]) == STRING || L (t[pos]) == CONCAT ||
+                                L (t[pos]) == WITH || L (t[pos]) == DOCUMENT);
+  else return false;
 }
 
 static path
 find_bracket_sub (tree t, dir_t dir, const string& lbr, const string& rbr,
                   int cnt, int pos) {
-  if (pos >= 0 && pos < N(t)) {
+  if (pos >= 0 && pos < N (t)) {
     if (is_atomic (t)) {
-      void (*next) (string, int&) = (dir == FORWARD) ? tm_char_forwards
-                                                      : tm_char_backwards;
+      void (*next) (string, int&)=
+          (dir == FORWARD) ? tm_char_forwards : tm_char_backwards;
       while (true) {
-        if (test (t->label, pos, lbr))
-          --cnt;
-        else if (test (t->label, pos, rbr))
-          ++cnt;
-        if (cnt == 0)
-          return reverse (path (min (N(t), pos), obtain_ip (t)));
-        int prev = pos;
+        if (test (t->label, pos, lbr)) --cnt;
+        else if (test (t->label, pos, rbr)) ++cnt;
+        if (cnt == 0) return reverse (path (min (N (t), pos), obtain_ip (t)));
+        int prev= pos;
         next (t->label, pos);
-        if (prev == pos)
-          break;
+        if (prev == pos) break;
       }
-    } else if (find_bracket_valid (t, pos)) { // traverse child: t[pos]
-      int npos = (dir == FORWARD) ? 0 : N(t[pos])-1;
+    }
+    else if (find_bracket_valid (t, pos)) { // traverse child: t[pos]
+      int npos= (dir == FORWARD) ? 0 : N (t[pos]) - 1;
       return find_bracket_sub (t[pos], dir, lbr, rbr, cnt, npos);
-    } else {  // traverse siblings
-      int npos = pos + (int)dir;
-      if (npos >= 0 && npos < N(t))
+    }
+    else { // traverse siblings
+      int npos= pos + (int) dir;
+      if (npos >= 0 && npos < N (t))
         return find_bracket_sub (t, dir, lbr, rbr, cnt, npos);
     }
   }
-  path ip = obtain_ip (t);
-  if (is_nil (ip) || last_item (ip) < 0) return path();
-  const tree& pt = subtree (the_et, reverse (ip->next));
-  int npos = ip->item + (int)dir;
+  path ip= obtain_ip (t);
+  if (is_nil (ip) || last_item (ip) < 0) return path ();
+  const tree& pt  = subtree (the_et, reverse (ip->next));
+  int         npos= ip->item + (int) dir;
   return find_bracket_sub (pt, dir, lbr, rbr, cnt, npos);
 }
 
 path
 find_left_bracket (path p, const string& lbr, const string& rbr) {
-  if (N(lbr) == 0 || N(rbr) == 0 || is_nil (p)) return path();
+  if (N (lbr) == 0 || N (rbr) == 0 || is_nil (p)) return path ();
   const tree& pt = subtree (the_et, path_up (p));
-  int pos = reverse(p)->item;
-  string s = as_string (pt);
-  if (pos < 0 || pos > N(s)) return path();
-  int cnt = test (s, pos, rbr) ? 0 : 1;
+  int         pos= reverse (p)->item;
+  string      s  = as_string (pt);
+  if (pos < 0 || pos > N (s)) return path ();
+  int cnt= test (s, pos, rbr) ? 0 : 1;
   return find_bracket_sub (pt, BACKWARD, lbr, rbr, cnt, pos);
 }
 
 path
 find_right_bracket (path p, const string& lbr, const string& rbr) {
-  if (N(lbr) == 0 || N(rbr) == 0 || is_nil (p)) return path();
+  if (N (lbr) == 0 || N (rbr) == 0 || is_nil (p)) return path ();
   const tree& pt = subtree (the_et, path_up (p));
-  int pos = reverse(p)->item;
-  string s = as_string (pt);
-  if (pos < 0 || pos > N(s)) return path();
-  int cnt = test (s, pos, lbr) ? 0 : -1;
+  int         pos= reverse (p)->item;
+  string      s  = as_string (pt);
+  if (pos < 0 || pos > N (s)) return path ();
+  int cnt= test (s, pos, lbr) ? 0 : -1;
   return find_bracket_sub (pt, FORWARD, lbr, rbr, cnt, pos);
 }

@@ -1,17 +1,17 @@
 
 /******************************************************************************
-* MODULE     : bridge_formatting.cpp
-* DESCRIPTION: Bridge between logical and physical local enviroment changes
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : bridge_formatting.cpp
+ * DESCRIPTION: Bridge between logical and physical local enviroment changes
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "bridge.hpp"
 
-class bridge_formatting_rep: public bridge_rep {
+class bridge_formatting_rep : public bridge_rep {
 protected:
   string v;
   int    last;
@@ -24,7 +24,7 @@ public:
   void notify_assign (path p, tree u);
   void notify_insert (path p, tree u);
   void notify_remove (path p, int nr);
-  bool notify_macro  (int type, string var, int level, path p, tree u);
+  bool notify_macro (int type, string var, int level, path p, tree u);
   void notify_change ();
 
   void my_exec_until (path p);
@@ -32,17 +32,16 @@ public:
   void my_typeset (int desired_status);
 };
 
-bridge_formatting_rep::bridge_formatting_rep (
-  typesetter ttt, tree st, path ip, string v2):
-    bridge_rep (ttt, st, ip), v (v2)
-{
+bridge_formatting_rep::bridge_formatting_rep (typesetter ttt, tree st, path ip,
+                                              string v2)
+    : bridge_rep (ttt, st, ip), v (v2) {
   initialize ();
 }
 
 void
 bridge_formatting_rep::initialize () {
-  last= N(st)-1;
-  if (is_nil(body)) body= make_bridge (ttt, st[last], descend (ip, last));
+  last= N (st) - 1;
+  if (is_nil (body)) body= make_bridge (ttt, st[last], descend (ip, last));
   else replace_bridge (body, st[last], descend (ip, last));
 }
 
@@ -52,15 +51,15 @@ bridge_formatting (typesetter ttt, tree st, path ip, string v) {
 }
 
 /******************************************************************************
-* Event notification
-******************************************************************************/
+ * Event notification
+ ******************************************************************************/
 
 void
 bridge_formatting_rep::notify_assign (path p, tree u) {
   // cout << "Assign " << p << ", " << u << " in " << st << "\n";
   ASSERT (!is_nil (p) || is_func (u, TFORMAT), "nil path");
   if (is_nil (p)) {
-    st=u;
+    st= u;
     initialize ();
   }
   else {
@@ -105,9 +104,8 @@ bridge_formatting_rep::notify_remove (path p, int nr) {
 }
 
 bool
-bridge_formatting_rep::notify_macro (
-  int type, string var, int l, path p, tree u)
-{
+bridge_formatting_rep::notify_macro (int type, string var, int l, path p,
+                                     tree u) {
   bool flag= body->notify_macro (type, var, l, p, u);
   if (flag) status= CORRUPTED;
   return flag;
@@ -120,8 +118,8 @@ bridge_formatting_rep::notify_change () {
 }
 
 /******************************************************************************
-* Typesetting
-******************************************************************************/
+ * Typesetting
+ ******************************************************************************/
 
 void
 bridge_formatting_rep::my_exec_until (path p) {
@@ -145,10 +143,11 @@ bridge_formatting_rep::my_typeset (int desired_status) {
   if (v != CELL_FORMAT) ttt->insert_marker (st, ip);
   if (is_func (st, DATOMS)) {
     array<line_item> a, b;
-    box ab= empty_box (decorate (ip), 0, 0, 0, env->fn->yx);
-    box bb= empty_box (decorate (ip), 0, 0, 0, env->fn->yx);
-    a << line_item (CONTROL_ITEM, OP_SKIP, ab, HYPH_INVALID, st (0, N(st)-1));
-    b << line_item (CONTROL_ITEM, OP_SKIP, bb, HYPH_INVALID, tree (L(st)));
+    box              ab= empty_box (decorate (ip), 0, 0, 0, env->fn->yx);
+    box              bb= empty_box (decorate (ip), 0, 0, 0, env->fn->yx);
+    a << line_item (CONTROL_ITEM, OP_SKIP, ab, HYPH_INVALID,
+                    st (0, N (st) - 1));
+    b << line_item (CONTROL_ITEM, OP_SKIP, bb, HYPH_INVALID, tree (L (st)));
     if (v != CELL_FORMAT) ttt->insert_marker (st, ip);
     ttt->insert_surround (a, b);
   }

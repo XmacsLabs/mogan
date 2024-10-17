@@ -1,13 +1,13 @@
 
 /******************************************************************************
-* MODULE     : math_tree.hpp
-* DESCRIPTION: trees as mathematical expressions
-* COPYRIGHT  : (C) 2006  Joris van der Hoeven
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : math_tree.hpp
+ * DESCRIPTION: trees as mathematical expressions
+ * COPYRIGHT  : (C) 2006  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #ifndef MATH_TREE_H
 #define MATH_TREE_H
@@ -29,9 +29,11 @@ tree tan (tree t);
 
 string as_math_string (tree t);
 
-template<typename T> void
+template <typename T>
+void
 parse (tree t, T& result) {
-  (void) t; (void) result;
+  (void) t;
+  (void) result;
   TM_FAILED ("unsupported type");
 }
 
@@ -41,13 +43,14 @@ parse (tree t, double& result) {
   result= as_double (t);
 }
 
-template<typename T> T
+template <typename T>
+T
 parse_as (tree t) {
-  switch (L(t)) {
+  switch (L (t)) {
   case PLUS:
     return parse_as<T> (t[0]) + parse_as<T> (t[1]);
   case MINUS:
-    if (N(t) == 1) return -parse_as<T> (t[0]);
+    if (N (t) == 1) return -parse_as<T> (t[0]);
     else return parse_as<T> (t[0]) - parse_as<T> (t[1]);
   case TIMES:
     return parse_as<T> (t[0]) * parse_as<T> (t[1]);
@@ -67,12 +70,11 @@ parse_as (tree t) {
     return sin (parse_as<T> (t[0]));
   case TAN:
     return tan (parse_as<T> (t[0]));
-  default:
-    {
-      T result;
-      parse (t, result);
-      return result;
-    }
+  default: {
+    T result;
+    parse (t, result);
+    return result;
+  }
   }
 }
 
