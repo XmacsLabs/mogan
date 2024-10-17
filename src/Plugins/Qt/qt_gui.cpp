@@ -213,9 +213,9 @@ qt_gui_rep::get_extents (SI& width, SI& height) {
 #if QT_VERSION < 0x060000
                              : from_qsize (QApplication::desktop ()->size ());
 #else
-                              : from_qsize (
-                                    QGuiApplication::primaryScreen ()
-                                        ->size ()); // todo : improve this
+                             : from_qsize (
+                                   QGuiApplication::primaryScreen ()
+                                       ->size ()); // todo : improve this
 #endif
   width = size.x1;
   height= size.x2;

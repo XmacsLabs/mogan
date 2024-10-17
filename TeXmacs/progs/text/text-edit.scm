@@ -34,9 +34,10 @@
   (with bt (buffer-tree)
     (with brothers (map tree-label (tree-children bt))
       (and-with t (tree-ref bt :down)
-        (and (tree-is? bt 'document)
-	     (match? (cursor-tree) "")
-	     (not (in? 'doc-data brothers))
+        (and (== (cursor-path) `(0 0 0))
+             (tree-is? bt 'document)
+             (match? (cursor-tree) "")
+             (not (in? 'doc-data brothers))
              (not (style-has? "beamer-style")))))))
 
 (tm-define (document-propose-abstract?)

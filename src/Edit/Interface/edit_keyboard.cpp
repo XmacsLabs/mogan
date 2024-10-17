@@ -14,6 +14,10 @@
 #include "tm_buffer.hpp"
 #include "archiver.hpp"
 
+#include <lolly/data/numeral.hpp>
+
+using lolly::data::to_Hex;
+
 #ifdef Q_OS_MAC
 extern hashmap<int,string> qtcomposemap;
 #endif
@@ -204,9 +208,11 @@ void
 edit_interface_rep::key_press (string gkey) {
   string zero= "a"; zero[0]= '\0';
   string key= replace (gkey, "<#0>", zero);
+
   if (starts (key, "pre-edit:") &&
       speech_pre_edit &&
       ends (key, ":" * current_speech)) return;
+
   if (pre_edit_mark != 0) {
     ASSERT (sh_mark == 0, "invalid shortcut during pre-edit");
     mark_cancel (pre_edit_mark);
@@ -254,14 +260,7 @@ edit_interface_rep::key_press (string gkey) {
       pre_edit_mark= new_marker ();
       mark_start (pre_edit_mark);
       archive_state ();
-      if (get_preference ("speech", "off") == "off")
-        insert_tree (compound ("pre-edit", s), path (0, pos));
-      else {
-        //insert_tree (compound ("pre-edit", ""), path (0, 0));
-        handle_speech (s);
-        speech_pre_edit= true;
-        current_speech= s;
-      }
+      insert_tree (compound ("pre-edit", s), path (0, pos));
       return;
     }
   }
@@ -308,10 +307,18 @@ edit_interface_rep::key_press (string gkey) {
     call ("kbd-insert", "<" * key * ">");
     interrupt_shortcut ();    
   }
-  else if (DEBUG_KEYBOARD)
-    debug_keyboard
-      << "unrecognized key " << key << ". "
-      << "Undefined shortcut or key missing in the encoding files.\n";
+  else if (N(key) > 1) {
+    archive_state ();
+    call ("insert", key);
+    interrupt_shortcut ();    
+  }
+  else {
+    if (DEBUG_KEYBOARD) {
+      debug_keyboard
+        << "unrecognized key " << key << ". "
+        << "Undefined shortcut or key missing in the encoding files.\n";
+    }
+  }
 }
 
 void
@@ -350,8 +357,14 @@ edit_interface_rep::kbd_shortcut (string cmd) {
 ******************************************************************************/
 
 void
-edit_interface_rep::handle_keypress (string key, time_t t) {
+edit_interface_rep::handle_keypress (string key_u8, time_t t) {
   if (is_nil (buf)) return;
+
+  string key= utf8_to_cork (key_u8);
+  if (starts (key, "<") && ends (key, ">") && !starts(key, "<#")) {
+    key= key(1, N(key)-1);
+  }
+
   if (t > last_event) last_event= t;
   bool started= false;
 #ifdef USE_EXCEPTIONS
@@ -385,7 +398,15 @@ edit_interface_rep::handle_keypress (string key, time_t t) {
     string zero= "a"; zero[0]= '\0';
     string gkey= replace (key, zero, "<#0>");
     if (gkey == "<#3000>") gkey= "space";
-    if (starts (gkey, "pre-edit:"))
+    if (key_u8 == "`")
+      call ("insert", "<#2018>");
+    else if (key_u8 == "“”") {
+      call ("insert", "<#201C><#201D>");
+    }
+    else if (key_u8 == "‘’") {
+      call ("insert", "<#2018><#2019>");
+    }
+    else if (starts (gkey, "pre-edit:"))
       call ("delayed-keyboard-press", object (gkey), object ((double) t));
     else
       call ("keyboard-press", object (gkey), object ((double) t));
