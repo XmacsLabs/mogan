@@ -1046,8 +1046,8 @@ smart_font_rep::resolve_rubber (string c, string fam, int attempt) {
     tree key= tuple ("rubber", as_string (bnr));
     int  nr = sm->add_font (key, REWRITE_NONE);
     initialize_font (nr);
-    cout << fn[nr]->res_name << " supports " << c << "? "
-         << fn[nr]->supports (c) << LF;
+    // cout << fn[nr]->res_name << " supports " << c << "? "
+    //      << fn[nr]->supports (c) << LF;
     if (fn[nr]->supports (c)) return sm->add_char (key, c);
   }
   return -1;
