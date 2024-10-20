@@ -12,12 +12,14 @@
 #include "smart_font.hpp"
 #include "Freetype/tt_tools.hpp"
 #include "analyze.hpp"
+#include "array.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
 #include "cork.hpp"
 #include "font.hpp"
 #include "iterator.hpp"
 #include "lolly/data/unicode.hpp"
+#include "scheme.hpp"
 #include "tm_debug.hpp"
 #include "translator.hpp"
 #include "unicode.hpp"
@@ -1055,7 +1057,7 @@ smart_font_rep::resolve_rubber (string c, string fam, int attempt) {
 
 font
 smart_font_rep::make_rubber_font (font base) {
-  if (occurs ("mathlarge=", res_name) || occurs ("mathrubber=", res_name))
+  if (contains (res_name, "mathlarge=") || contains (res_name, "mathrubber="))
     return this;
   else if (fn[SUBFONT_MAIN]->math_type == MATH_TYPE_OPENTYPE)
     return fn[SUBFONT_MAIN]->make_rubber_font (base);

@@ -19,6 +19,7 @@
 #include "observer.hpp"
 #include "resource.hpp"
 #include "string.hpp"
+#include "tm_debug.hpp"
 #include "translator.hpp"
 #include "unicode_font.hpp"
 #include <lolly/data/unicode.hpp>
@@ -172,13 +173,14 @@ rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
 
   string uu= N (r) > 1 ? strict_cork_to_utf8 ("<" * r * ">") : r;
 
-  int          j= 0;
-  unsigned int u= decode_from_utf8 (uu, j);
-  cout << "unicode " << uu << " -> " << lolly::data::to_hex (u) << LF;
-
+  int          j      = 0;
+  unsigned int u      = decode_from_utf8 (uu, j);
   unsigned int glyphID= ft_get_char_index (math_face->ft_face, u);
 
-  cout << "search_font_sub_opentype for " << u << " -> " << glyphID << LF;
+  if (DEBUG_VERBOSE) {
+    cout << "unicode " << uu << " -> " << lolly::data::to_hex (u) << LF;
+    cout << "search_font_sub_opentype for " << u << " -> " << glyphID << LF;
+  }
 
   auto glyph_variants= ver ? math_face->math_table->ver_glyph_variants
                            : math_face->math_table->hor_glyph_variants;
