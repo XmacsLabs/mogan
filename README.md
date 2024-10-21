@@ -62,6 +62,7 @@ You can join our discord by https://discord.gg/QzE3K6rvYn.
     <td align="center"><a href="https://github.com/ATQlove"><img src="https://avatars.githubusercontent.com/u/72239395?v=4" width="50px;" alt=""/><br /><sub><b>ATQlove</b></sub></a><br />💻</td>
     <td align="center"><a href="https://github.com/Minzihao"><img src="https://avatars.githubusercontent.com/u/85984526?v=4" width="50px;" alt=""/><br /><sub><b>Minzihao</b></sub></a><br />💻</td>
     <td align="center"><a href="https://github.com/UnbSky"><img src="https://avatars.githubusercontent.com/u/74008999?v=4" width="50px;" alt=""/><br /><sub><b>UnbSky</b></sub></a><br />💻</td>
+    <td align="center"><a href="https://github.com/JackYansongLi"><img src="https://jackyansongli.github.io/docs/main-1.jpeg" width="50px;" alt=""/><br /><sub><b>Yansong Li</b></sub></a><br />💻</td>
   </tr>
 </table>
 
