@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.3|1.2.9-rc6>>
+<TMU|<tuple|1.0.5|1.2.9.5>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -10,7 +10,77 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|23|28|2|2|cell-background|pastel green>|<cwith|26|26|2|2|cell-background|>|<cwith|29|34|2|2|cell-background|pastel green>|<cwith|22|22|2|2|cell-background|pastel green>|<cwith|21|21|2|2|cell-background|pastel green>|<cwith|20|20|2|2|cell-background|pastel green>|<cwith|10|19|2|2|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|30|35|2|2|cell-background|pastel green>|<cwith|33|33|2|2|cell-background|>|<cwith|36|41|2|2|cell-background|pastel green>|<cwith|29|29|2|2|cell-background|pastel green>|<cwith|28|28|2|2|cell-background|pastel green>|<cwith|27|27|2|2|cell-background|pastel green>|<cwith|17|26|2|2|cell-background|pastel green>|<table|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_40
+    </cell>|<\cell>
+      v1.2.9.5
+    </cell>|<\cell>
+      Darcy
+    </cell>|<\cell>
+      Tune font substitution for roman cjk and Stix cjk
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_39
+    </cell>|<\cell>
+      v1.2.9.5
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Render unicode in the cjk font when its range is in latin
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_38
+    </cell>|<\cell>
+      v1.2.9.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix the render of single quotes in Chinese
+    </cell>>|<row|<\cell>
+      \;
+    </cell>|<\cell>
+      \;
+    </cell>|<\cell>
+      v1.2.9.5
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix chinese-kdb for `
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_37
+    </cell>|<\cell>
+      v1.2.9.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix the render of double quotes in Chinese
+    </cell>>|<row|<\cell>
+      Bug
+    </cell>|<\cell>
+      11_36
+    </cell>|<\cell>
+      v1.2.9.3
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Fix the render of centerdot in Chinese
+    </cell>>|<row|<\cell>
+      Perf
+    </cell>|<\cell>
+      11_35
+    </cell>|<\cell>
+      v1.2.9.2
+    </cell>|<\cell>
+      <value|da>
+    </cell>|<\cell>
+      Performance tuning on font_database_styles
+    </cell>>|<row|<\cell>
       Feature
     </cell>|<\cell>
       11_34

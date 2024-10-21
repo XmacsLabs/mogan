@@ -15,14 +15,13 @@
 ;
 
 (define-library (srfi srfi-133)
-
+(import (liii base))
 (export
   vector-empty?
   vector-count
   vector-any vector-every vector-copy vector-copy!
   vector-index vector-index-right vector-partition
   vector-swap!)
-(import (scheme base))
 (begin
 
 (define (vector-empty? v)

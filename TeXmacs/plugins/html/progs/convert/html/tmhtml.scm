@@ -18,9 +18,9 @@
         (convert tools tmlength)
         (convert tools tmtable)
         (convert tools old-tmtable)
-        (convert tools sxml)
-        (convert tools sxhtml)
-        (convert tools css)
+        (convert data sxml)
+        (convert data sxhtml)
+        (convert data css)
         (convert html htmlout)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1082,8 +1082,7 @@
            (string-append (tmhtml-suffix (substring s 0 sep))
                           (string-drop s sep)))
           ((string-ends? s ".tm")
-           (string-append (string-drop-right s 3)
-                          (if tmhtml-mathml? ".xhtml" ".html")))
+           (string-append (string-drop-right s 3) ".html"))
           ((string-ends? s ".texmacs")
            (string-append (string-drop-right s 8) ".tm"))
           (else s))))

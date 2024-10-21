@@ -9,14 +9,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "Freetype/free_type.hpp"
-#include "Freetype/tt_face.hpp"
-#include "Freetype/tt_file.hpp"
-#include "analyze.hpp"
-#include "converter.hpp"
-#include "cork.hpp"
-#include "font.hpp"
-
+#include "unicode_font.hpp"
 #include <lolly/data/numeral.hpp>
 #include <lolly/data/unicode.hpp>
 
@@ -125,46 +118,6 @@ hashmap<string, double> lsup_fira_italic_table ();
 hashmap<string, double> rsub_fira_italic_table ();
 hashmap<string, double> rsup_fira_italic_table ();
 hashmap<string, double> above_fira_italic_table ();
-
-/******************************************************************************
- * True Type fonts
- ******************************************************************************/
-
-struct unicode_font_rep : font_rep {
-  string      family;
-  int         hdpi;
-  int         vdpi;
-  font_metric fnm;
-  font_glyphs fng;
-  int         ligs;
-
-  hashmap<string, int> native; // additional native (non unicode) characters
-
-  unicode_font_rep (string name, string family, int size, int hdpi, int vdpi);
-  void tex_gyre_operators ();
-
-  unsigned int read_unicode_char (string s, int& i);
-  unsigned int ligature_replace (unsigned int c, string s, int& i);
-  bool         supports (string c);
-  void         get_extents (string s, metric& ex);
-  void         get_xpositions (string s, SI* xpos, bool ligf);
-  void         get_xpositions (string s, SI* xpos);
-  void         draw_fixed (renderer ren, string s, SI x, SI y, bool ligf);
-  void         draw_fixed (renderer ren, string s, SI x, SI y);
-  font         magnify (double zoomx, double zoomy);
-  void         advance_glyph (string s, int& pos, bool ligf);
-  glyph        get_glyph (string s);
-  int          index_glyph (string s, font_metric& fnm, font_glyphs& fng);
-  double       get_left_slope (string s);
-  double       get_right_slope (string s);
-  SI           get_left_correction (string s);
-  SI           get_right_correction (string s);
-  SI           get_lsub_correction (string s);
-  SI           get_lsup_correction (string s);
-  SI           get_rsub_correction (string s);
-  SI           get_rsup_correction (string s);
-  SI           get_wide_correction (string s, int mode);
-};
 
 /******************************************************************************
  * Initialization of main font parameters
@@ -430,6 +383,60 @@ unicode_font_rep::unicode_font_rep (string name, string family2, int size2,
       above_correct= above_fira_italic_table ();
     }
   }
+  else {
+    // try to get OpenType math table
+    tt_face math_face2= tt_face (family);
+    if (!is_nil (math_face2->math_table)) {
+      this->math_face = math_face2;
+      this->math_table= math_face2->math_table;
+      math_type       = MATH_TYPE_OPENTYPE;
+      init_design_unit_factor ();
+      // limit boxes
+      upper_limit_gap_min=
+          design_unit_to_metric (math_table->constants_table[upperLimitGapMin]);
+      upper_limit_baseline_rise_min= design_unit_to_metric (
+          math_table->constants_table[upperLimitBaselineRiseMin]);
+      lower_limit_gap_min=
+          design_unit_to_metric (math_table->constants_table[lowerLimitGapMin]);
+      lower_limit_baseline_drop_min= design_unit_to_metric (
+          math_table->constants_table[lowerLimitBaselineDropMin]);
+      // frac boxes
+      frac_rule_thickness= design_unit_to_metric (
+          math_table->constants_table[fractionRuleThickness]);
+      frac_num_shift_up= design_unit_to_metric (
+          math_table->constants_table[fractionNumeratorShiftUp]);
+      frac_num_disp_shift_up= design_unit_to_metric (
+          math_table->constants_table[fractionNumeratorDisplayStyleShiftUp]);
+      frac_num_gap_min= design_unit_to_metric (
+          math_table->constants_table[fractionNumeratorGapMin]);
+      frac_num_disp_gap_min= design_unit_to_metric (
+          math_table->constants_table[fractionNumDisplayStyleGapMin]);
+      frac_denom_shift_down= design_unit_to_metric (
+          math_table->constants_table[fractionDenominatorShiftDown]);
+      frac_denom_disp_shift_down= design_unit_to_metric (
+          math_table
+              ->constants_table[fractionDenominatorDisplayStyleShiftDown]);
+      frac_denom_gap_min= design_unit_to_metric (
+          math_table->constants_table[fractionDenominatorGapMin]);
+      frac_denom_disp_gap_min= design_unit_to_metric (
+          math_table->constants_table[fractionDenominatorGapMin]);
+      // sqrt boxes
+      sqrt_ver_gap= design_unit_to_metric (
+          math_table->constants_table[radicalVerticalGap]);
+      sqrt_ver_disp_gap= design_unit_to_metric (
+          math_table->constants_table[radicalDisplayStyleVerticalGap]);
+      sqrt_rule_thickness= design_unit_to_metric (
+          math_table->constants_table[radicalRuleThickness]);
+      sqrt_extra_ascender= design_unit_to_metric (
+          math_table->constants_table[radicalExtraAscender]);
+      sqrt_degree_rise_percent=
+          math_table->constants_table[radicalDegreeBottomRaisePercent];
+      sqrt_kern_before_degree= design_unit_to_metric (
+          math_table->constants_table[radicalKernBeforeDegree]);
+      sqrt_kern_after_degree= design_unit_to_metric (
+          math_table->constants_table[radicalKernAfterDegree]);
+    }
+  }
 }
 
 /******************************************************************************
@@ -579,6 +586,11 @@ unicode_font_rep::read_unicode_char (string s, int& i) {
       start++;
       return (unsigned int) from_hex (s (start, i++));
     }
+    else if (s[start] == '@') {
+      // <@XXXX> are native glyph ids generated by rubber_unicode_font
+      start++;
+      return 0xc000000 + (unsigned int) from_hex (s (start, i++));
+    }
     else {
       string ss= s (start - 1, ++i);
       string uu= strict_cork_to_utf8 (ss);
@@ -592,7 +604,7 @@ unicode_font_rep::read_unicode_char (string s, int& i) {
   }
   else {
     unsigned int c= (unsigned int) s[i++];
-    if (c >= 32 && c <= 127) return c;
+    if (c >= 32 && c <= 127 && c != 0x27 && c != 0x60) return c;
     string ss= s (i - 1, i);
     string uu= strict_cork_to_utf8 (ss);
     int    j = 0;
@@ -651,7 +663,7 @@ unicode_font_rep::supports (string c) {
   if (uc >= 0x42 && uc <= 0x5a && !fnm->exists (0x41)) return false;
   if (uc >= 0x62 && uc <= 0x7a && !fnm->exists (0x61)) return false;
   metric_struct* m= fnm->get (uc);
-  return m->x1 < m->x2 && m->y1 < m->y2;
+  return m->x1 < m->x2 && m->y1 <= m->y2;
 }
 
 void
@@ -973,6 +985,46 @@ unicode_font (string family, int size, int hdpi, int vdpi) {
   if (vdpi != hdpi) name << "x" << as_string (vdpi);
   return make (font, name,
                tm_new<unicode_font_rep> (name, family, size, hdpi, vdpi));
+}
+
+/******************************************************************************
+ * OpenType
+ ******************************************************************************/
+
+inline void
+unicode_font_rep::init_design_unit_factor () {
+  int units_of_m= 0;
+  SI  em        = 0;
+  // get the design units of the width of 'm'
+  FT_UInt glyph_index= FT_Get_Char_Index (math_face->ft_face, 'm');
+  FT_Load_Glyph (math_face->ft_face, glyph_index, FT_LOAD_NO_SCALE);
+  units_of_m= math_face->ft_face->glyph->metrics.horiAdvance;
+
+  // get the width of the character 'm'
+  metric ex;
+  get_extents ("m", ex);
+  em= ex->x2 - ex->x1;
+
+  metric_to_design_unit_factor= (double) units_of_m / (double) em;
+  design_unit_to_metric_factor= (double) em / (double) units_of_m;
+}
+
+inline SI
+unicode_font_rep::design_unit_to_metric (int du) {
+  return (SI) design_unit_to_metric_factor * du;
+}
+
+inline int
+unicode_font_rep::metric_to_design_unit (SI m) {
+  return (int) metric_to_design_unit_factor * m;
+}
+
+font
+unicode_font_rep::make_rubber_font (font base) {
+  if (!is_nil (this->math_table)) {
+    return rubber_unicode_font (this, this->math_face);
+  }
+  return font_rep::make_rubber_font (base);
 }
 
 font

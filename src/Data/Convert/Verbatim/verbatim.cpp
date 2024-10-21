@@ -296,7 +296,7 @@ un_special (string s) {
 static string
 encode (string s, string enc) {
   if (enc == "auto") return western_to_cork (s);
-  else if (enc == "utf-8") return utf8_to_cork (s);
+  else if (enc == "utf-8") return utf8_to_herk (s);
   else if (enc == "iso-8859-1") return tm_encode (s);
   else if (enc == "SourceCode") return sourcecode_to_cork (s);
   else return tm_encode (s);
@@ -306,10 +306,11 @@ tree
 verbatim_to_tree (string s, string enc) {
   s= encode (s, enc);
   int i, j;
-  for (i= 0; i < N (s); i++)
+  int s_N= N (s);
+  for (i= 0; i < s_N; i++)
     if (s[i] == '\n') {
       tree t (DOCUMENT);
-      for (i= 0, j= 0; i < N (s); i++)
+      for (i= 0, j= 0; i < s_N; i++)
         if (s[i] == '\n') {
           t << un_special (s (j, i));
           j= i + 1;

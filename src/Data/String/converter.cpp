@@ -137,14 +137,14 @@ converter_rep::load () {
     ht= dic;
   }
 
-  if (from == "Hash-Cork" && to == "UTF-8") {
+  if (from == "Hex-Cork" && to == "UTF-8") {
     hashtree<char, string> dic;
-    hashtree_from_dictionary (dic, "corktounicode", BIT2BIT, UTF8, false);
+    hashtree_from_dictionary (dic, "herktounicode", BIT2BIT, UTF8, false);
     ht= dic;
   }
-  else if (from == "UTF-8" && to == "Hash-Cork") {
+  else if (from == "UTF-8" && to == "Hex-Cork") {
     hashtree<char, string> dic;
-    hashtree_from_dictionary (dic, "corktounicode", UTF8, BIT2BIT, true);
+    hashtree_from_dictionary (dic, "herktounicode", UTF8, BIT2BIT, true);
     ht= dic;
   }
 
@@ -362,16 +362,23 @@ utf8_to_cork (string input) {
 }
 
 string
-utf8_to_hash_cork (string input) {
-  converter conv= load_converter ("UTF-8", "Hash-Cork");
+utf8_to_herk (string input) {
+  converter conv= load_converter ("UTF-8", "Hex-Cork");
   int       start, i, n= N (input);
   string    output;
   for (i= 0; i < n;) {
-    start            = i;
-    unsigned int code= decode_from_utf8 (input, i);
-    string       s   = input (start, i);
-    string       r   = apply (conv, s);
-    if (r == s && code >= 256) r= "<#" * to_Hex (code) * ">";
+    start        = i;
+    uint32_t code= decode_from_utf8 (input, i);
+    string   s   = input (start, i);
+    string   r   = apply (conv, s);
+    if (r == s) {
+      if (code < 16) {
+        r= "<#0" * to_Hex (code) * ">";
+      }
+      else if (code < 32 || code >= 128) {
+        r= "<#" * to_Hex (code) * ">";
+      }
+    }
     output << r;
   }
   return output;
@@ -412,8 +419,8 @@ cork_to_utf8 (string input) {
 }
 
 string_u8
-hash_cork_to_utf8 (string input) {
-  converter conv = load_converter ("Hash-Cork", "UTF-8");
+herk_to_utf8 (string input) {
+  converter conv = load_converter ("Hex-Cork", "UTF-8");
   int       start= 0, i, n= N (input);
   string    r;
   for (i= 0; i < n; i++)

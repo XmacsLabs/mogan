@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.3|1.2.9-rc6>>
+<TMU|<tuple|1.0.4|1.2.9.3>>
 
 <style|<tuple|tmdoc|devel>>
 
@@ -7,7 +7,7 @@
 
   <section|Tasks>
 
-  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|6|8|2|2|cell-background|pastel green>|<cwith|2|2|5|5|cell-hyphen|t>|<cwith|3|3|2|2|cell-background|pastel green>|<table|<row|<cell|Bug>|<cell|43_7>|<cell|v1.2.9>|<cell|Jack Li>|<cell|LaTeX: fix string-convert for letter ì>>|<row|<cell|Bug>|<cell|43_6>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|13|15|2|2|cell-background|pastel green>|<cwith|9|9|5|5|cell-hyphen|t>|<cwith|10|10|2|2|cell-background|pastel green>|<table|<row|<cell|Feature>|<cell|43_13>|<cell|v1.2.9.1>|<cell|<value|da>>|<cell|LaTeX: bump to 20240831>>|<row|<cell|>|<cell|>|<cell|v1.2.9.3>|<cell|<value|da>>|<cell|LaTeX: bump to 20241003>>|<row|<cell|Chore>|<cell|43_12>|<cell|v1.2.9.1>|<cell|<value|da>>|<cell|LaTeX: move article template to the latex plugin>>|<row|<cell|Chore>|<cell|43_11>|<cell|v1.2.9.1>|<cell|<value|da>>|<cell|Binary: pdflatex binary plugin>>|<row|<cell|Chore>|<cell|43_10>|<cell|v1.2.9.1>|<cell|<value|da>>|<cell|Move latex-kbd to the latex plugin>>|<row|<cell|Chore>|<cell|43_9>|<cell|v1.2.9.1>|<cell|<value|da>>|<cell|Migrate the bibtex data plugin to the latex plugin>>|<row|<cell|Chore>|<cell|43_8>|<cell|v1.2.9.1>|<cell|<value|da>>|<cell|LaTeX: data plugin folder restructure>>|<row|<cell|Bug>|<cell|43_7>|<cell|v1.2.9>|<cell|Jack Li>|<cell|LaTeX: fix string-convert for letter ì>>|<row|<cell|Bug>|<cell|43_6>|<cell|v1.2.3>|<cell|<value|da>>|<\cell>
     cwith tags are not translated properly when exporting to <LaTeX>
   </cell>>|<row|<cell|Bug>|<cell|<dlink|43_5>>|<cell|v1.2.3>|<cell|<value|da>>|<cell|messy encoding when Copy several equations to <LaTeX>>>|<row|<cell|Feature>|<cell|43_4>|<cell|>|<cell|<value|da>>|<cell|Support gather and gathered in <LaTeX>>>|<row|<cell|Bug>|<cell|43_3>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Crash when <menu|File|Export|LaTeX<text-dots>>>>|<row|<cell|Bug>|<cell|<dlink|43_2>>|<cell|v1.2.0>|<cell|Darcy>|<cell|messy encoding when <menu|Edit|Copy to|LaTeX>>>|<row|<cell|>|<cell|>|<cell|v1.2.1>|<cell|<value|da>>|<cell|Add integration tests and re-organize integration tests>>|<row|<cell|Chore>|<cell|43_1>|<cell|v1.2.0>|<cell|Darcy>|<cell|Move latex related scheme code to plugins/latex>>>>>
 

@@ -1,0 +1,14 @@
+<TMU|<tuple|1.0.5|1.2.9.3>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <nbsp>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

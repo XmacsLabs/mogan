@@ -38,14 +38,6 @@
     "b3" "b4" "b5" "b6"
     "ledger" "legal" "letter" "folio"))
 
-(define (get-default-paper-size-bis)
-  (with papersizefile "/etc/papersize"
-   (and (url-exists? papersizefile)
-        (with pps-port (open-input-file papersizefile)
-         (with size (read-line pps-port)
-          (close-input-port pps-port)
-          size)))))
-
 (tm-define (correct-paper-size s)
   (if (and (string? s) (in? s supported-sizes)) s "a4"))
 
@@ -53,7 +45,7 @@
   (if (and (string? s) (in? s standard-sizes)) s "user"))
 
 (tm-define (get-default-paper-size)
-  (correct-paper-size (get-default-paper-size-bis)))
+  (correct-paper-size "a4"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Printing preferences
@@ -115,18 +107,18 @@
         (switch-to-buffer cur)
         (buffer-close buf))
       (begin
-      (print-to-file fname)
-      (unless (attach-doc-to-exported-pdf fname)
+        (print-to-file fname)
+        (unless (attach-doc-to-exported-pdf fname)
           (notify-now "Fail to attach tm to pdf")))))
 
 (tm-define (attach-doc-to-exported-pdf fname)
   (let* ((tem-url (buffer-new))
-          (new-url (url-relative tem-url (string-append (url-basename fname) ".tm")))
-          (cur-url (current-buffer-url))
-          (cur-tree (buffer-get cur-url))
-          (linked-file (pdf-get-linked-file-paths cur-tree cur-url))
-          (linked-file-with-main (array-url-append new-url linked-file))
-          (new-tree (pdf-replace-linked-path cur-tree cur-url)))
+         (new-url (url-relative tem-url (string-append (url-basename fname) ".tm")))
+         (cur-url (current-buffer-url))
+         (cur-tree (buffer-get cur-url))
+         (linked-file (pdf-get-linked-file-paths cur-tree cur-url))
+         (linked-file-with-main (array-url-append new-url linked-file))
+         (new-tree (pdf-replace-linked-path cur-tree cur-url)))
     (buffer-rename tem-url new-url)
     (buffer-copy cur-url new-url)
     (buffer-save new-url)

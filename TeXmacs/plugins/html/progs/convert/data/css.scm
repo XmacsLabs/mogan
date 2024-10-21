@@ -11,8 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (convert tools css)
-  (:use (convert tools sxml)))
+(texmacs-module (convert data css)
+  (:use (convert data sxml)))
 
 (define (css-style-item->pair s)
   (with l (string-tokenize-by-char s #\:)

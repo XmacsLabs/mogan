@@ -12,14 +12,16 @@
 #ifndef TT_FACE_H
 #define TT_FACE_H
 #include "Freetype/free_type.hpp"
+#include "Freetype/tt_tools.hpp"
 #include "bitmap_font.hpp"
 #include "hashmap.hpp"
 
 RESOURCE (tt_face);
 
 struct tt_face_rep : rep<tt_face> {
-  bool    bad_face;
-  FT_Face ft_face;
+  bool         bad_face;
+  FT_Face      ft_face;
+  ot_mathtable math_table;
   tt_face_rep (string name);
 };
 

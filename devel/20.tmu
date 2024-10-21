@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.1|2.1.2>>
+<TMU|<tuple|1.0.3|1.2.9.2>>
 
 <style|<tuple|tmdoc|british|devel>>
 
@@ -8,7 +8,15 @@
   <section|Tasks>
 
   <\wide-tabular>
-    <tformat|<cwith|11|11|2|2|cell-valign|b>|<cwith|1|-1|1|1|cell-background|pastel green>|<cwith|10|10|1|1|cell-background|pastel green>|<cwith|9|9|1|1|cell-background|pastel green>|<cwith|8|8|1|1|cell-background|pastel green>|<cwith|7|7|1|1|cell-background|pastel green>|<cwith|6|6|1|1|cell-background|pastel green>|<cwith|5|5|1|1|cell-background|pastel green>|<cwith|4|4|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    <tformat|<cwith|12|12|2|2|cell-valign|b>|<cwith|1|-1|1|1|cell-background|pastel green>|<cwith|11|11|1|1|cell-background|pastel green>|<cwith|10|10|1|1|cell-background|pastel green>|<cwith|9|9|1|1|cell-background|pastel green>|<cwith|8|8|1|1|cell-background|pastel green>|<cwith|7|7|1|1|cell-background|pastel green>|<cwith|6|6|1|1|cell-background|pastel green>|<cwith|5|5|1|1|cell-background|pastel green>|<table|<row|<\cell>
+      20_12
+    </cell>|<\cell>
+      Bug
+    </cell>|<\cell>
+      <value|jk>
+    </cell>|<\cell>
+      fix corrupted ip(inversed path) when tree is exported to image
+    </cell>>|<row|<\cell>
       20_11
     </cell>|<\cell>
       Chore

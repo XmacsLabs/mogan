@@ -1,4 +1,4 @@
-<TeXmacs|1.99.11>
+<TeXmacs|2.1.2>
 
 <style|source>
 
@@ -95,6 +95,14 @@
     <generic-chunk|<arg|name>|<arg|prev>|<arg|next>|<\scm>
       <arg|body>
     </scm>>
+  </macro>>
+
+  <assign|goldfish-chunk|<\macro|name|prev|next|body>
+    <\generic-chunk|<arg|name>|<arg|prev>|<arg|next>>
+      <\goldfish-lang>
+        <arg|body>
+      </goldfish-lang>
+    </generic-chunk>
   </macro>>
 
   <assign|cpp-chunk|<\macro|name|prev|next|body>

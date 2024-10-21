@@ -136,10 +136,9 @@
     </input>
   </session>
 
-  <paragraph|SRFI>
+  <paragraph|\<#91D1\>\<#9C7C\>\<#6807\>\<#51C6\>\<#5E93\>>
 
-  SRFI\<#7684\>\<#5B9E\>\<#73B0\>\<#662F\>\<#91D1\>\<#9C7C\>Scheme\<#548C\>S7
-  Scheme\<#7684\>\<#663E\>\<#8457\>\<#533A\>\<#522B\>\<#4E4B\>\<#4E00\>\<#FF0C\>\<#5728\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#4E2D\>\<#FF0C\>\<#6211\>\<#4EEC\>\<#53EF\>\<#4EE5\>\<#4F7F\>\<#7528\>\<#4E0B\>\<#8868\>\<#4E2D\>\<#7684\>SRFI\<#5B9E\>\<#73B0\>\<#3002\>
+  \<#66F4\>\<#591A\>\<#6807\>\<#51C6\>\<#5E93\>\<#FF0C\>\<#8BF7\>\<#8BBF\>\<#95EE\>\<#91D1\>\<#9C7C\>Scheme\<#5B98\>\<#7F51\>\<#FF1A\><slink|https://gitee.com/LiiiLabs/goldfish>
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
@@ -167,53 +166,47 @@
     </cell>|<\cell>
       <scm|(import (scheme time))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 1|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-1.scm>
+      <hlink|(liii base)|$TEXMACS_PATH/plugins/goldfish/goldfish/liii/list.scm>
     </cell>|<\cell>
-      \<#5217\>\<#8868\>\<#51FD\>\<#6570\>\<#5E93\>
+      Liii Base Library
     </cell>|<\cell>
-      <scm|(import (srfi srfi-1))>
+      <scm|(import (liii base))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 8|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-8.scm>
+      <hlink|(liii list)|$TEXMACS_PATH/plugins/goldfish/goldfish/liii/list.scm>
     </cell>|<\cell>
-      \<#63D0\>\<#4F9B\><scm|receive>
+      Liii List Library
     </cell>|<\cell>
-      <scm|(import (srfi srfi-8))>
+      <scm|(import (liii list))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 9|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-9.scm>
+      <hlink|(liii bitwise)|$TEXMACS_PATH/plugins/goldfish/goldfish/liii/bitwise.scm>
     </cell>|<\cell>
-      \<#63D0\>\<#4F9B\><scm|define-record-type>
+      Liii Bitwise Library
     </cell>|<\cell>
-      <scm|(import (srfi srfi-9))>
+      <scm|(import (liii bitwise))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 13|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-13.scm>
+      <hlink|(liii string)|$TEXMACS_PATH/plugins/goldfish/goldfish/liii/string.scm>
     </cell>|<\cell>
-      \<#5B57\>\<#7B26\>\<#4E32\>\<#51FD\>\<#6570\>\<#5E93\>
+      Liii String Library
     </cell>|<\cell>
-      <scm|(import (srfi srfi-13))>
+      <scm|(import (liii string))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 16|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-16.scm>
+      <hlink|(liii vector)|$TEXMACS_PATH/plugins/goldfish/goldfish/liii/vector.scm>
     </cell>|<\cell>
-      \<#63D0\>\<#4F9B\><code*|case-lambda>
+      Liii Vector Library
     </cell>|<\cell>
-      <scm|(import (srfi srfi-16))>
+      <scm|(import (liii vector))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 39|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-39.scm>
+      <hlink|(liii hash-table)|$TEXMACS_PATH/plugins/goldfish/goldfish/liii/hash-table.scm>
     </cell>|<\cell>
-      \<#53C2\>\<#6570\>\<#5316\>\<#5BF9\>\<#8C61\>
+      Liii Hash Table Library
     </cell>|<\cell>
-      <scm|(import (srfi srfi-39))>
+      <scm|(import (liii hash-table))>
     </cell>>|<row|<\cell>
-      <hlink|SRFI 78|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-78.scm>
+      <hlink|(liii os)|$TEXMACS_PATH/plugins/goldfish/goldfish/liii/os.scm>
     </cell>|<\cell>
-      \<#8F7B\>\<#91CF\>\<#7EA7\>\<#6D4B\>\<#8BD5\>\<#6846\>\<#67B6\>
+      Liii OS Library
     </cell>|<\cell>
-      <scm|(import (srfi srfi-78))>
-    </cell>>|<row|<\cell>
-      <hlink|SRFI 216|$TEXMACS_PATH/plugins/goldfish/goldfish/srfi/srfi-216.scm>
-    </cell>|<\cell>
-      SICP\<#517C\>\<#5BB9\>\<#5E93\>
-    </cell>|<\cell>
-      <scm|(import (srfi sicp))>
+      <scm|(import (liii os))>
     </cell>>>>
   </wide-tabular>
 
@@ -221,7 +214,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (import (srfi srfi-1))
+      (import (liii list))
     <|unfolded-io>
       <goldfish-result|(rootlet)>
     </unfolded-io>
@@ -229,7 +222,15 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (reduce + 0 (list 1 2 3))
+      (iota 5 1)
+    <|unfolded-io>
+      <goldfish-result|(1 2 3 4 5)>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (reduce + 0 (iota 3 1))
     <|unfolded-io>
       <goldfish-result|6>
     </unfolded-io>
@@ -237,7 +238,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (import (srfi srfi-78))
+      (import (liii check))
     <|unfolded-io>
       <goldfish-result|(rootlet)>
     </unfolded-io>

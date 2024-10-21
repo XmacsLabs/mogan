@@ -1,4 +1,4 @@
-<TeXmacs|1.99.19>
+<TeXmacs|2.1.2>
 
 <style|source>
 
@@ -24,11 +24,9 @@
     </src-title>
   </active*>
 
-  <use-package|article|std-latex|two-columns|termes-font>
+  <use-package|article|std-latex|two-columns>
 
   <active*|<src-comment|Global style parameters>>
-
-  <assign|font|math=roman,termes>
 
   <assign|par-sep|0.2fn>
 

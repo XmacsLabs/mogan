@@ -29,20 +29,21 @@ struct lazy_paragraph_rep : public lazy_rep {
   stacker_rep*          sss;   // the typesetted paragraph
 
 protected:
-  array<box>   items;       // the boxes on the line in order
-  array<SI>    items_sp;    // the final spaces between boxes in lines
-  array<int>   items_left;  // the index of the previous non-empty text box item
-  array<int>   items_right; // the index of the next non-empty text box item
-  array<bool>  items_box;   // is non-empty text box item: true / false
-  array<bool>  items_cjk_text; // is non-empty text box item: true / false
-  array<space> spcs;           // the spacing between the boxes of items
-  array<lazy>  fl;             // floating insertions
-  array<line_item> notes;      // line notes
-  array<tab>       tabs;       // tabulations
-  array<tree>      decs;       // decorations of the boxes on lines
-  SI               cur_r;      // the current right offset of the last line unit
-  space            cur_w;      // the current width of the line unit
-  int              cur_start;  // index of the start of the line unit
+  array<box>  items;       // the boxes on the line in order
+  array<SI>   items_sp;    // the final spaces between boxes in lines
+  array<int>  items_left;  // the index of the previous non-empty text box item
+  array<int>  items_right; // the index of the next non-empty text box item
+  array<bool> items_box;   // is non-empty text box item: true / false
+  array<bool> items_cjk_text; // is non-empty text box item: true / false
+  hashset<string>  cjk_puncts;
+  array<space>     spcs;      // the spacing between the boxes of items
+  array<lazy>      fl;        // floating insertions
+  array<line_item> notes;     // line notes
+  array<tab>       tabs;      // tabulations
+  array<tree>      decs;      // decorations of the boxes on lines
+  SI               cur_r;     // the current right offset of the last line unit
+  space            cur_w;     // the current width of the line unit
+  int              cur_start; // index of the start of the line unit
 
   string    mode;        // justified, left, center or right
   double    flexibility; // threshold for switching to ragged mode

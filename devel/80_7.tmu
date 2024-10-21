@@ -1,0 +1,44 @@
+<TMU|<tuple|1.0.5|1.2.9.5>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  Asana Math:
+
+  <\with|font|Asana Math>
+    <\equation*>
+      <big|sum><big|int><big|iint><big|iiint><big|idotsint><big|oint><big|oiint><big|oplus><big|otimes><big|pluscup><big|interleave><around*|{|<frac||>|}> <around*|{|<frac|<frac||>|>|}><sqrt|1+<sqrt|2>>
+    </equation*>
+  </with>
+
+  Fira Math:
+
+  \;
+
+  <\equation*>
+    <with|font|Fira Math|<big|sum><big|int><big|iint><big|iiint><big|sum><big|idotsint><big|oint><big|oiint><big|oplus><big|otimes><big|pluscup><big|interleave><around*|{|<frac||>|}> <around*|{|<frac|<frac||>|>|}><sqrt|1+<sqrt|2>>>
+  </equation*>
+
+  TeX Gyre Pagella Math:
+
+  <with|font|TeX Gyre Pagella Math|<\equation*>
+    <big|sum><with|font|TeX Gyre Pagella Math|<big|iint><big|iiint><big|idotsint><big|oint><big|oiint><big|oplus><big|otimes><big|pluscup><big|interleave><around*|{|<frac||>|}> <around*|{|<frac|<frac||>|>|}><sqrt|1+<sqrt|2>>>
+  </equation*>>
+
+  \ TeX Gyre Schola Math:
+
+  <with|font|TeX Gyre Schola Math|<\equation*>
+    <big|sum><big|iint><big|iiint><big|idotsint><big|oint><big|oiint><big|oplus><big|otimes><big|pluscup><big|interleave><around*|{|<frac||>|}> <around*|{|<frac|<frac||>|>|}><sqrt|1+<sqrt|2>>
+  </equation*>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|font|roman>
+    <associate|font-family|rm>
+    <associate|font-shape|italic>
+    <associate|math-font|roman>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

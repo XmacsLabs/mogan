@@ -43,7 +43,7 @@ selection_encode (string lan, string s) {
 
 string
 selection_decode (string lan, string s) {
-  if (get_preference ("verbatim->texmacs:encoding", "auto") == "iso-8859-2" &&
+  if (get_preference ("verbatim->texmacs:encoding") == "iso-8859-2" &&
       ((lan == "croatian") || (lan == "czech") || (lan == "hungarian") ||
        (lan == "polish") || (lan == "slovak") || (lan == "slovene")))
     return il2_to_cork (s);

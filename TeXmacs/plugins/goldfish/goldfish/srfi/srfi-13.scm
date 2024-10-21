@@ -16,7 +16,7 @@
 
 (define-library (srfi srfi-13)
   (import
-    (scheme base)
+    (liii base)
     (srfi srfi-1))
   (export
     string-null? string-copy string-join
@@ -27,6 +27,7 @@
     string-prefix? string-suffix? 
     string-index string-index-right
     string-contains string-count
+    string-upcase string-downcase
     string-reverse
     string-tokenize)
 (begin
@@ -102,8 +103,7 @@
 
 (define (string-any char/pred? str . start+end)
   (define (string-any-sub pred? str)
-    (let
-      loop ((i 0) (len (string-length str)))
+    (let loop ((i 0) (len (string-length str)))
       (if (= i len)
           #f   
           (or (pred? (string-ref str i)) 
@@ -114,16 +114,31 @@
     (string-any-sub criterion str_sub)))
 
 (define (string-take str k)
-  (list->string (take (string->list str) k)))
+  (substring str 0 k))
 
 (define (string-take-right str k)
-  (list->string (take-right (string->list str) k)))
+  (let ((N (string-length str)))
+    (if (> k N)
+        (error 'out-of-range "k must be <= N" k N))
+        (substring str (- N k) N)))
 
-(define (string-drop str k)
-  (list->string (drop (string->list str) k)))
+(define string-drop
+  (typed-lambda ((str string?) (k integer?))
+    (when (< k 0)
+      (error 'out-of-range "k must be non-negative" k))
+    (let ((N (string-length str)))
+      (if (> k N)
+        (error 'out-of-range "k must be <= N" k N)
+        (substring str k N)))))
 
-(define (string-drop-right str k)
-  (list->string (drop-right (string->list str) k)))
+(define string-drop-right
+  (typed-lambda ((str string?) (k integer?))
+    (when (< k 0)
+      (error 'out-of-range "k must be non-negative" k))
+    (let ((N (string-length str)))
+      (if (> k N)
+        (error 'out-of-range "k must be <= N" k N)
+        (substring str 0 (- N k))))))
 
 (define (string-pad str len . char+start+end)
   (define (string-pad-sub str len ch)
@@ -265,6 +280,22 @@
   (let ((str-sub (%string-from-range str start+end))
         (criterion (%make-criterion char/pred?)))
     (count criterion (string->list str-sub))))
+
+(define s7-string-upcase string-upcase)
+
+(define* (string-upcase str (start 0) (end (string-length str)))
+  (let* ((left (substring str 0 start))
+         (middle (substring str start end))
+         (right (substring str end)))
+    (string-append left (s7-string-upcase middle) right)))
+
+(define s7-string-downcase string-downcase)
+
+(define* (string-downcase str (start 0) (end (string-length str)))
+  (let* ((left (substring str 0 start))
+         (middle (substring str start end))
+         (right (substring str end)))
+    (string-append left (s7-string-downcase middle) right)))
 
 (define (string-reverse str . start+end)
   (cond ((null-list? start+end)

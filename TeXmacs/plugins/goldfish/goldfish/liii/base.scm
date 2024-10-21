@@ -15,22 +15,39 @@
 ;
 
 (define-library (liii base)
-(import (scheme base))
+(import (scheme base)
+        (srfi srfi-2)
+        (srfi srfi-8))
 (export
   ; (scheme base) defined by R7RS
   let-values
-  define-record-type
+  ; R7RS 5: Program Structure
+  define-values define-record-type
+  ; R7RS 6.2: Numbers
   square
   exact inexact
   floor s7-floor ceiling s7-ceiling truncate s7-truncate round s7-round
   floor-quotient
   gcd lcm s7-lcm
+  ; R7RS 6.3: Booleans
   boolean=?
-  ; String
+  ; R7RS 6.4: list
+  pair? cons car cdr set-car! set-cdr! caar cadr cdar cddr
+  null? list? make-list list length append reverse list-tail
+  list-ref list-set! memq memv member assq assv assoc list-copy
+  ; R7RS 6.5: Symbol
+  symbol? symbol=? string->symbol symbol->string
+  ; R7RS 6.6: Characters
+  digit-value
+  ; R7RS 6.7: String
   string-copy
-  ; Vector
+  ; R7RS 6.8 Vector
   vector->string string->vector
   vector-copy vector-copy! vector-fill!
+  ; R7RS 6.9 Bytevectors
+  bytevector? make-bytevector bytevector bytevector-length
+  bytevector-u8-ref bytevector-u8-set! bytevector-append
+  utf8->string string->utf8 u8-string-length u8-substring
   ; Input and Output
   call-with-port port? binary-port? textual-port?
   input-port-open? output-port-open?
@@ -41,11 +58,17 @@
   string-map vector-map string-for-each vector-for-each
   ; Exception
   raise guard read-error? file-error?
-
+  ; SRFI-2
+  and-let*
+  ; SRFI-8
+  receive
   ; Extra routines for (liii base)
   == != display* in? let1 compose identity typed-lambda
 )
 (begin
+
+(define* (u8-substring str (start 0) (end #t))
+  (utf8->string (string->utf8 str start end)))
 
 (define == equal?)
 

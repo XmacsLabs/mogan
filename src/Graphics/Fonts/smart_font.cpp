@@ -11,12 +11,15 @@
 
 #include "smart_font.hpp"
 #include "Freetype/tt_tools.hpp"
+#include "analyze.hpp"
+#include "array.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
 #include "cork.hpp"
 #include "font.hpp"
 #include "iterator.hpp"
 #include "lolly/data/unicode.hpp"
+#include "scheme.hpp"
 #include "tm_debug.hpp"
 #include "translator.hpp"
 #include "unicode.hpp"
@@ -376,6 +379,19 @@ main_family (string f) {
 }
 
 static bool
+is_cjk_punct (string_u8 c) {
+  static hashset<string_u8> set;
+  if (N (set) == 0) {
+    set->insert ("“");
+    set->insert ("”");
+    set->insert ("‘");
+    set->insert ("’");
+    set->insert ("·");
+  }
+  return set->contains (c);
+}
+
+static bool
 in_unicode_range (string c, string range) {
   string uc= strict_cork_to_utf8 (c);
   if (N (uc) == 0) return false;
@@ -384,14 +400,10 @@ in_unicode_range (string c, string range) {
   string got = lolly::data::unicode_get_range (code);
   if (range == got) return range != "";
   if (range == "cjk") {
-    if (got == "hangul" || got == "hiragana" || got == "enclosed_alphanumerics")
+    if (got == "hangul" || got == "hiragana" ||
+        got == "enclosed_alphanumerics" || got == "latin")
       return true;
-    array<string> cjk_puncts=
-        array<string> ("<#2018>", "<#2019>", // Chinese: 单引号
-                       "<#201C>", "<#201D>", // Chinese: 双引号
-                       "<#2014>"             // Chinese: 破折号的一半
-        );
-    if (contains (c, cjk_puncts)) return true;
+    return is_cjk_punct (uc);
   }
   // There are actually two ranges (cjk/hangul) for Korean characters and
   // two ranges (cjk/hiragana) for Japanese characters
@@ -742,14 +754,15 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
   int                   count= 0;
   int                   start= pos;
   nr                         = -1;
-  while (pos < N (s)) {
+  int s_N                    = N (s);
+  while (pos < s_N) {
     if (s[pos] != '<') {
       int c= (int) (unsigned char) s[pos];
 
       int fn_index= chv[c];
       if (math_kind != 0 && math_kind != 2 && is_alpha (c) &&
           (pos == 0 || !is_alpha (s[pos - 1])) &&
-          (pos + 1 == N (s) || !is_alpha (s[pos + 1]))) {
+          (pos + 1 == s_N || !is_alpha (s[pos + 1]))) {
         fn_index= italic_nr;
       }
       else if (fn_index == -1) {
@@ -795,9 +808,11 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
   if (nr < 0) return;
   if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
   if (sm->fn_rewr[nr] != REWRITE_NONE) r= rewrite (r, sm->fn_rewr[nr]);
-  if (DEBUG_VERBOSE)
-    debug_fonts << "Physical font of " << cork_to_utf8 (r) << " is "
-                << fn[nr]->res_name << LF;
+  if (DEBUG_VERBOSE) {
+    debug_fonts << "Physical font of [" << r << "]"
+                << "[" << herk_to_utf8 (r) << "][" << cork_to_utf8 (r) << "]"
+                << " is " << fn[nr]->res_name << LF;
+  }
 }
 
 bool
@@ -807,7 +822,8 @@ is_italic_font (string master) {
 
 static bool
 is_wanted (string c, string family, array<string> rules, array<string> given) {
-  for (int i= 0; i < N (rules); i++) {
+  int rules_N= N (rules);
+  for (int i= 0; i < rules_N; i++) {
     if (is_empty (rules[i])) continue;
     bool          ok= false;
     array<string> v = tokenize (rules[i], "|");
@@ -840,8 +856,8 @@ is_wanted (string c, string family, array<string> rules, array<string> given) {
 int
 smart_font_rep::resolve (string c, string fam, int attempt) {
   if (DEBUG_VERBOSE) {
-    debug_fonts << "Resolve " << c << " in " << fam << ", attempt " << attempt
-                << LF;
+    debug_fonts << "Resolve " << c << " in fam " << fam << " mfam " << mfam
+                << ", attempt " << attempt << LF;
   }
   array<string> a= trimmed_tokenize (fam, "=");
   if (N (a) >= 2) {
@@ -998,7 +1014,7 @@ extern bool has_poor_rubber;
 
 int
 smart_font_rep::resolve_rubber (string c, string fam, int attempt) {
-  // cout << "Rubber " << c << ", " << fam << ", " << attempt << LF;
+  // cout << "Resolve rubber " << c << ", " << fam << ", " << attempt << LF;
   if (is_italic_font (mfam)) return -1;
   int l= search_forwards ("-", 0, c) + 1;
   int r= search_forwards ("-", l, c);
@@ -1032,11 +1048,20 @@ smart_font_rep::resolve_rubber (string c, string fam, int attempt) {
     tree key= tuple ("rubber", as_string (bnr));
     int  nr = sm->add_font (key, REWRITE_NONE);
     initialize_font (nr);
-    // cout << fn[nr]->res_name << " supports " << c
-    //      << "? " << fn[nr]->supports (c) << LF;
+    // cout << fn[nr]->res_name << " supports " << c << "? "
+    //      << fn[nr]->supports (c) << LF;
     if (fn[nr]->supports (c)) return sm->add_char (key, c);
   }
   return -1;
+}
+
+font
+smart_font_rep::make_rubber_font (font base) {
+  if (contains (res_name, "mathlarge=") || contains (res_name, "mathrubber="))
+    return this;
+  else if (fn[SUBFONT_MAIN]->math_type == MATH_TYPE_OPENTYPE)
+    return fn[SUBFONT_MAIN]->make_rubber_font (base);
+  return font_rep::make_rubber_font (base);
 }
 
 static bool

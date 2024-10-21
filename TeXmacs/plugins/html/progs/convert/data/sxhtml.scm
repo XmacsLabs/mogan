@@ -11,8 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (convert tools sxhtml)
-  (:use (convert tools sxml)))
+(texmacs-module (convert data sxhtml)
+  (:use (convert data sxml)))
 
 ;; TODO: rewrite the predicates using DRD
 ;; TODO: consolidate with htmltm dispatch DRD

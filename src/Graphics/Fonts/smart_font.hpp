@@ -118,6 +118,8 @@ struct smart_font_rep : font_rep {
   void initialize_font (int nr);
   int  adjusted_dpi (string fam, string var, string ser, string sh, int att);
 
+  font make_rubber_font (font base) override;
+
   bool   supports (string c);
   void   get_extents (string s, metric& ex);
   void   get_xpositions (string s, SI* xpos);
