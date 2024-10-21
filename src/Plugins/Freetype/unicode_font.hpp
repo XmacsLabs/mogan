@@ -69,4 +69,13 @@ struct unicode_font_rep : font_rep {
   int    metric_to_design_unit (SI m);
 };
 
-font rubber_unicode_font (font base, tt_face face);
+font rubber_unicode_font (font base, tt_face math_face);
+
+/**
+ * @brief Parses variant information from a cork string.
+ *
+ * @param s Input string.
+ * @param r The root of the string, for example "<big-sum-2>" -> "xxx".
+ * @return Variant number, for example "<big-sum-2>" -> 2.
+ */
+int parse_variant (string s, string& r);

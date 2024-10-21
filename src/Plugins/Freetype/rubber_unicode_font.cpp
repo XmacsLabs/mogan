@@ -23,7 +23,6 @@
 #include "translator.hpp"
 #include "unicode_font.hpp"
 #include <lolly/data/unicode.hpp>
-#include <typeinfo>
 using lolly::data::as_hexadecimal;
 using lolly::data::decode_from_utf8;
 
@@ -91,7 +90,9 @@ rubber_unicode_font_rep::rubber_unicode_font_rep (string name, font base2,
     if ((((double) (ex->y2 - ex->y1)) / base->yx) >= 1.55) big_sums= true;
   }
 
-  for (int i= 0; i < 6; i++) {
+  // number of subfonts, see get_font(int) for details
+  constexpr int subfont_N= 6;
+  for (int i= 0; i < subfont_N; i++) {
     initialized << false;
     subfn << base;
   }
@@ -137,27 +138,26 @@ rubber_unicode_font_rep::get_font (int nr) {
 int
 parse_variant (string s, string& r) {
   // cout << "parse_variant for " << s << LF;
-  int var  = 0;
-  int n    = N (s);
-  int start= search_forwards ("-", 0, s);
-  int end  = search_backwards ("-", n, s);
-  if (start == end) {
-    end= n - 1;
-    var= 0;
+  int var= 0;
+  if (!starts (s, "<") || !ends (s, ">") || N (s) < 3) return 0;
+
+  r              = s (1, N (s) - 1);
+  array<string> v= tokenize (r, "-");
+
+  if (N (v) == 3 && is_int (v[2])) {
+    var= as_int (v[2]);
+    r  = v[1];
   }
-  else {
-    var= max (0, as_int (s (end + 1, n)));
-  }
-  r= s (start + 1, end);
+
   return var;
 }
 
 int
 rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
   string r;
-  int    var= 0;
-  bool   ver= true; // verizontal or vertical, default is vertical
-  rew       = s;
+  int    var           = 0;
+  bool   using_vertical= true; // verizontal or vertical, default is vertical
+  rew                  = s;
 
   var= parse_variant (s, r);
 
@@ -166,7 +166,7 @@ rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
     var= max (0, var - 1);
   }
   else if (starts (s, "<wide-")) {
-    ver= false;
+    using_vertical= false;
   }
 
   if (r == "") return search_font_sub (s, rew);
@@ -174,19 +174,17 @@ rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
   string uu= N (r) > 1 ? strict_cork_to_utf8 ("<" * r * ">") : r;
 
   int          j      = 0;
-  unsigned int u      = decode_from_utf8 (uu, j);
+  uint32_t     u      = decode_from_utf8 (uu, j);
   unsigned int glyphID= ft_get_char_index (math_face->ft_face, u);
 
-  if (DEBUG_VERBOSE) {
-    cout << "unicode " << uu << " -> " << lolly::data::to_hex (u) << LF;
-    cout << "search_font_sub_opentype for " << u << " -> " << glyphID << LF;
-  }
+  // cout << "unicode " << uu << " -> " << lolly::data::to_hex (u) << LF;
+  // cout << "search_font_sub_opentype for " << u << " -> " << glyphID << LF;
 
-  auto glyph_variants= ver ? math_face->math_table->ver_glyph_variants
+  auto glyph_variants= using_vertical
+                           ? math_face->math_table->ver_glyph_variants
                            : math_face->math_table->hor_glyph_variants;
 
   if (glyph_variants->contains (glyphID)) {
-    cout << "Variant for " << uu << " -> " << glyphID << LF;
     auto& gv= glyph_variants (glyphID);
     if (var < N (gv)) {
       int res= gv[var];
