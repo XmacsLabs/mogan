@@ -549,8 +549,8 @@ use_poor_rubber (font fn) {
          !starts (fn->res_name, "stix-");
 }
 
-static font
-make_rubber_font (font fn) {
+font
+font_rep::make_rubber_font (font fn) {
   string name= locase_all (fn->res_name);
   if (starts (name, "stix-") || starts (name, "stix,") ||
       occurs (",stix,", name) || occurs ("math=stix", name) ||
@@ -568,7 +568,7 @@ font
 rubber_font (font base) {
   if (larger_font_table->contains (base->res_name))
     return larger_font_table (base->res_name);
-  font larger                       = make_rubber_font (base);
+  font larger                       = base->make_rubber_font (base);
   larger_font_table (base->res_name)= larger;
   return larger;
 }
