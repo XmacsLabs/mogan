@@ -11,12 +11,15 @@
 
 #include "smart_font.hpp"
 #include "Freetype/tt_tools.hpp"
+#include "analyze.hpp"
+#include "array.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
 #include "cork.hpp"
 #include "font.hpp"
 #include "iterator.hpp"
 #include "lolly/data/unicode.hpp"
+#include "scheme.hpp"
 #include "tm_debug.hpp"
 #include "translator.hpp"
 #include "unicode.hpp"
@@ -1011,7 +1014,7 @@ extern bool has_poor_rubber;
 
 int
 smart_font_rep::resolve_rubber (string c, string fam, int attempt) {
-  // cout << "Rubber " << c << ", " << fam << ", " << attempt << LF;
+  // cout << "Resolve rubber " << c << ", " << fam << ", " << attempt << LF;
   if (is_italic_font (mfam)) return -1;
   int l= search_forwards ("-", 0, c) + 1;
   int r= search_forwards ("-", l, c);
@@ -1045,11 +1048,20 @@ smart_font_rep::resolve_rubber (string c, string fam, int attempt) {
     tree key= tuple ("rubber", as_string (bnr));
     int  nr = sm->add_font (key, REWRITE_NONE);
     initialize_font (nr);
-    // cout << fn[nr]->res_name << " supports " << c
-    //      << "? " << fn[nr]->supports (c) << LF;
+    // cout << fn[nr]->res_name << " supports " << c << "? "
+    //      << fn[nr]->supports (c) << LF;
     if (fn[nr]->supports (c)) return sm->add_char (key, c);
   }
   return -1;
+}
+
+font
+smart_font_rep::make_rubber_font (font base) {
+  if (contains (res_name, "mathlarge=") || contains (res_name, "mathrubber="))
+    return this;
+  else if (fn[SUBFONT_MAIN]->math_type == MATH_TYPE_OPENTYPE)
+    return fn[SUBFONT_MAIN]->make_rubber_font (base);
+  return font_rep::make_rubber_font (base);
 }
 
 static bool
