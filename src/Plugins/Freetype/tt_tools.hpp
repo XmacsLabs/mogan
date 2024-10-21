@@ -228,6 +228,9 @@ struct GlyphPartRecord {
 struct GlyphAssembly {
   MathValueRecord        italicsCorrection;
   array<GlyphPartRecord> partRecords;
+  int                    partCount;
+
+  const GlyphPartRecord& operator[] (int i) { return partRecords[i]; }
 };
 
 struct ot_mathtable_rep : concrete_struct {

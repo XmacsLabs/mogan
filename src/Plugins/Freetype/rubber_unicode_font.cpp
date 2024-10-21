@@ -16,6 +16,7 @@
 #include "font.hpp"
 #include "hashmap.hpp"
 #include "lolly/data/numeral.hpp"
+#include "moebius/data/scheme.hpp"
 #include "observer.hpp"
 #include "resource.hpp"
 #include "string.hpp"
@@ -25,6 +26,7 @@
 #include <lolly/data/unicode.hpp>
 using lolly::data::as_hexadecimal;
 using lolly::data::decode_from_utf8;
+using moebius::data::string_to_scheme_tree;
 
 bool supports_big_operators (string res_name); // from poor_rubber.cpp
 
@@ -39,7 +41,8 @@ struct rubber_unicode_font_rep : font_rep {
   array<font> subfn;
   bool        big_sums;
 
-  tt_face math_face;
+  translator virt;
+  tt_face    math_face;
 
   hashmap<string, int>    mapper;
   hashmap<string, string> rewriter;
@@ -91,15 +94,19 @@ rubber_unicode_font_rep::rubber_unicode_font_rep (string name, font base2,
   }
 
   // number of subfonts, see get_font(int) for details
-  constexpr int subfont_N= 6;
+  constexpr int subfont_N= 7;
   for (int i= 0; i < subfont_N; i++) {
     initialized << false;
     subfn << base;
   }
 
   if (base->math_type == MATH_TYPE_OPENTYPE) {
-    big_flag= true;
-    big_sums= true;
+    big_flag    = true;
+    big_sums    = true;
+    string vname= "opentye-virtual[" * base->res_name * "]";
+    // virt       = translator (vname);
+    virt= tm_new<translator_rep> (vname);
+    virt->virt_def << tree (); // fill out the 0 glyph
   }
 }
 
@@ -126,6 +133,12 @@ rubber_unicode_font_rep::get_font (int nr) {
   case 5:
     // if opentype math font fails, use default rubber font
     subfn[nr]= font_rep::make_rubber_font (base);
+    break;
+  case 6:
+    int hdpi= (72 * base->wpt + (PIXEL / 2)) / PIXEL;
+    int vdpi= (72 * base->wpt + (PIXEL / 2)) / PIXEL;
+    subfn[nr]=
+        virtual_font (base, virt->res_name, base->size, hdpi, vdpi, false);
     break;
   }
   return subfn[nr];
@@ -177,12 +190,16 @@ rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
   uint32_t     u      = decode_from_utf8 (uu, j);
   unsigned int glyphID= ft_get_char_index (math_face->ft_face, u);
 
-  // cout << "unicode " << uu << " -> " << lolly::data::to_hex (u) << LF;
-  // cout << "search_font_sub_opentype for " << u << " -> " << glyphID << LF;
+  cout << "unicode " << uu << " -> " << lolly::data::to_hex (u) << LF;
+  cout << "search_font_sub_opentype for " << u << " -> " << glyphID << LF;
 
   auto glyph_variants= using_vertical
                            ? math_face->math_table->ver_glyph_variants
                            : math_face->math_table->hor_glyph_variants;
+
+  auto glyph_assembly= using_vertical
+                           ? math_face->math_table->ver_glyph_assembly
+                           : math_face->math_table->hor_glyph_assembly;
 
   if (glyph_variants->contains (glyphID)) {
     auto& gv= glyph_variants (glyphID);
@@ -190,9 +207,41 @@ rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
       int res= gv[var];
       // use <@XXXX> for native glyph id
       rew= "<@" * as_hexadecimal (res, 4) * ">";
-      // cout << "OpenType variant for " << uu << " -> " << glyphID << " -> " <<
-      // rew << LF;
+      cout << "OpenType variant for " << uu << " -> " << glyphID << " -> "
+           << rew << LF;
       return 0;
+    }
+  }
+  if (glyph_assembly->contains (glyphID)) {
+    string symbol= r * "-" * var;
+    string virt_glyph;
+    cout << "glyph_assembly for " << uu << " -> " << glyphID << LF;
+    if (!virt->dict->contains (symbol)) {
+      auto& gass = glyph_assembly (glyphID);
+      tree  glyph= tree ();
+      if (using_vertical && gass.partCount == 3) {
+        auto ga= gass.partRecords[0].glyphID;
+        auto gb= gass.partRecords[1].glyphID;
+        auto gc= gass.partRecords[2].glyphID;
+
+        virt_glyph= "(glue* #" * as_hexadecimal (0xc000000 + ga, 7) * " \n\
+                  (glue* (hor-take #" *
+                    as_hexadecimal (0xc000000 + gb, 7) * " 0.5 " *
+                    as_string (var) * " 0.5)\n\
+                     #" *
+                    as_hexadecimal (0xc000000 + gc, 7) * " ))";
+        glyph              = string_to_scheme_tree (virt_glyph);
+        virt->dict (symbol)= N (virt->virt_def);
+        virt->virt_def << glyph;
+        // why ?
+        if (initialized[6]) {
+          font::instances->reset (subfn[6]->res_name);
+          initialized[6]= false;
+        }
+        cout << "virt_glyph for " << uu << " -> " << glyphID << " -> "
+             << virt_glyph << LF;
+        return 6;
+      }
     }
   }
   // cout << "No opentype variant for " << uu << " -> " << glyphID << LF;

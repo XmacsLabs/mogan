@@ -59,6 +59,7 @@ struct virtual_font_rep : font_rep {
   glyph get_glyph (string s);
   int   index_glyph (string s, font_metric& fnm, font_glyphs& fng);
 
+  font make_rubber_font (font base) override;
   bool supports (string c);
   void get_extents (string s, metric& ex);
   void get_xpositions (string s, SI* xpos);
@@ -90,6 +91,11 @@ virtual_font_rep::virtual_font_rep (string name, font base, string vname,
   copy_math_pars (base_fn);
   hunit= ((size * hdpi) / 72) * PIXEL;
   vunit= ((size * vdpi) / 72) * PIXEL;
+}
+
+font
+virtual_font_rep::make_rubber_font (font base) {
+  return base_fn->make_rubber_font (base);
 }
 
 /******************************************************************************
