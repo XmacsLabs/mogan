@@ -35,7 +35,7 @@ stages:
           - sha1sum /tmp/xmake.deb | grep ac3629bd0fa66f179aef35dc00b7a1c89735651a
           - apt install /tmp/xmake.deb
           - apt-get update
-          - apt-get install -y libcurl4-openssl-dev pkg-config qtbase5-dev libqt5svg5-dev libjpeg-turbo8-dev libpng-dev
+          - apt-get install -y libcurl4-openssl-dev pkg-config qtbase5-dev libqt5svg5-dev libjpeg-turbo8-dev libpng-dev libgit2-dev
           - xmake repo -u
           - xmake config -vD --yes
           - xmake build -vD liii
