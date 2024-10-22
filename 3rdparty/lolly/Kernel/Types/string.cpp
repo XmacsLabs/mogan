@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <string>
 
 /******************************************************************************
  * Low level routines and constructors
@@ -294,11 +295,18 @@ as_string_bool (bool f) {
 }
 
 string
-as_string (int i) {
-  char buf[64];
-  sprintf (buf, "%i", i);
-  // sprintf (buf, "%i\0", i);
-  return string (buf);
+as_string (int16_t i) {
+  return string ((std::to_string (i)).c_str ());
+}
+
+string
+as_string (int32_t i) {
+  return string ((std::to_string (i)).c_str ());
+}
+
+string
+as_string (int64_t i) {
+  return string ((std::to_string (i)).c_str ());
 }
 
 string
@@ -306,26 +314,6 @@ as_string (unsigned int i) {
   char buf[64];
   sprintf (buf, "%u", i);
   // sprintf (buf, "%u\0", i);
-  return string (buf);
-}
-
-string
-as_string (long int i) {
-  char buf[64];
-  sprintf (buf, "%li", i);
-  // sprintf (buf, "%li\0", i);
-  return string (buf);
-}
-
-string
-as_string (long long int i) {
-  char buf[64];
-#if (defined OS_MINGW || defined OS_WIN)
-  sprintf (buf, "%I64d", i);
-#else
-  sprintf (buf, "%lli", i);
-#endif
-  // sprintf (buf, "%lli\0", i);
   return string (buf);
 }
 

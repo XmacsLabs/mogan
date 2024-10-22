@@ -580,8 +580,8 @@ main (int argc, char** argv) {
   if (!headless_mode) qtmapp->set_window_icon ("/misc/images/texmacs-512.png");
 #endif
   // cout << "Bench  ] Started TeXmacs\n";
-  the_et     = tuple ();
-  the_et->obs= ip_observer (path ());
+  the_et      = tuple ();
+  the_et->data= ip_observer (path ());
   cache_initialize ();
   bench_start ("initialize texmacs");
   init_texmacs ();

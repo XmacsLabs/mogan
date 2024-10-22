@@ -280,7 +280,8 @@ edit_table_rep::table_set_format (path fp, int I1, int J1, int I2, int J2,
   table_del_format (fp, I1, J1, I2, J2, var);
   tree with (CWITH);
   with << as_string (I1) << as_string (I2) << as_string (J1) << as_string (J2)
-       << var << val;
+       << var;
+  with << val;
   tree st= subtree (et, fp);
   insert (fp * (N (st) - 1), tree (TFORMAT, with));
 }
@@ -369,8 +370,8 @@ edit_table_rep::table_individualize (path fp, string var) {
           for (j= col1; j <= col2; j++) {
             tree with (CWITH);
             with << as_string (i + 1) << as_string (i + 1) << as_string (j + 1)
-                 << as_string (j + 1) << copy (st[k][4]) << copy (st[k][5])
-                 << copy (st[k][6]);
+                 << as_string (j + 1);
+            with << copy (st[k][4]) << copy (st[k][5]) << copy (st[k][6]);
             ins_format << with;
           }
         remove (fp * k, 1);
@@ -795,7 +796,8 @@ edit_table_rep::table_get_subtable (path fp, int row1, int col1, int row2,
         J2= min (max (0, j2 - col1), col2 - col1) + 1;
         tree with (CWITH);
         with << as_string (I1) << as_string (I2) << as_string (J1)
-             << as_string (J2) << copy (st[k][4]) << copy (st[k][5]);
+             << as_string (J2);
+        with << copy (st[k][4]) << copy (st[k][5]);
         sub_format << with;
       }
     }

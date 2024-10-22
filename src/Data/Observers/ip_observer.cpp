@@ -65,7 +65,7 @@ ip_observer_rep::announce (tree& ref, modification mod) {
   // cout << "Announce " << ip << ", " << p << "\n";
   if (!has_parent (ip)) return;
   tree& parent (subtree (the_et, reverse (ip->next)));
-  parent->obs->announce (parent, ip->item * mod);
+  parent->data->announce (parent, ip->item * mod);
 }
 
 void
@@ -74,7 +74,7 @@ ip_observer_rep::done (tree& ref, modification mod) {
   // cout << "Done " << ip << ", " << p << "\n";
   if (!has_parent (ip)) return;
   tree& parent (subtree (the_et, reverse (ip->next)));
-  parent->obs->done (parent, ip->item * mod);
+  parent->data->done (parent, ip->item * mod);
 }
 
 void
@@ -83,7 +83,7 @@ ip_observer_rep::touched (tree& ref, path p) {
   // cout << "Touched " << ip << ", " << p << "\n";
   if (!has_parent (ip)) return;
   tree& parent (subtree (the_et, reverse (ip->next)));
-  parent->obs->touched (parent, path (ip->item, p));
+  parent->data->touched (parent, path (ip->item, p));
 }
 
 /******************************************************************************
@@ -210,9 +210,9 @@ ip_observer_rep::set_ip (path ip2) {
 void
 attach_ip (tree& ref, path ip) {
   // cout << "Set ip of " << ref << " to " << ip << "\n";
-  if (is_nil (ref->obs) || !ref->obs->set_ip (ip)) {
+  if (is_nil (ref->data) || !ref->data->set_ip (ip)) {
     // cout << "Create ip observer " << ip << " for " << ref << "\n";
-    ref->obs= list_observer (ip_observer (ip), ref->obs);
+    ref->data= list_observer (ip_observer (ip), ref->data);
   }
   if (is_compound (ref)) {
     int i, n= N (ref);
@@ -228,14 +228,14 @@ attach_ip (tree& ref, path ip) {
 void
 detach_ip (tree& ref) {
   // cout << "Detach ip of " << ref << "\n";
-  if (!is_nil (ref->obs)) (void) ref->obs->set_ip (DETACHED);
+  if (!is_nil (ref->data)) (void) ref->data->set_ip (DETACHED);
 }
 
 path
 obtain_ip (tree& ref) {
   path ip;
-  if (is_nil (ref->obs)) return DETACHED;
-  if (!ref->obs->get_ip (ip)) return DETACHED;
+  if (is_nil (ref->data)) return DETACHED;
+  if (!ref->data->get_ip (ip)) return DETACHED;
   path p= ip;
   if (!is_nil (p)) {
     if (p->item == DETACHED) return DETACHED;

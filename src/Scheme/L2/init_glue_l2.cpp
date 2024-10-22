@@ -23,13 +23,12 @@
 #include <lolly/data/base64.hpp>
 #include <lolly/data/numeral.hpp>
 #include <lolly/io/http.hpp>
-#include <lolly/io/http_response.hpp>
 #include <lolly/system/subprocess.hpp>
 
 #include "scheme.hpp"
 
 using lolly::io::http_head;
-using lolly::io::http_response_label;
+using lolly::io::http_label;
 
 tmscm
 blackboxP (tmscm t) {
@@ -62,8 +61,8 @@ lolly_version () {
 
 long
 http_status_code (url u) {
-  long status_code= as<tree, long> (
-      http_response_ref (http_head (u), http_response_label::STATUS_CODE));
+  long status_code= open_box<long> (
+      http_response_ref (http_head (u), http_label::STATUS_CODE)->data);
   return status_code;
 }
 

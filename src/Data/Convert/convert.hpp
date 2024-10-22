@@ -13,9 +13,9 @@
 
 #include "analyze.hpp"
 #include "hashmap.hpp"
+#include "tree.hpp"
 #include "url.hpp"
 
-typedef tree scheme_tree;
 class object;
 
 /*** Miscellaneous ***/

@@ -74,10 +74,10 @@ bool
 tree_addendum_rep::set_tree (tree t) {
   if (ptr != inside (t)) {
     tree ref (ptr);
-    remove_observer (ref->obs, observer (this));
+    remove_observer (ref->data, observer (this));
     if (keep) {
       ptr= inside (t);
-      insert_observer (t->obs, observer (this));
+      insert_observer (t->data, observer (this));
     }
     // FIXME: if !keep, then is it safe to not reinsert the observer?
   }
@@ -159,9 +159,9 @@ tree_addendum_rep::notify_insert_node (tree& ref, int pos) {
   // cout << "Notify insert node " << ref << ", " << pos << "\n";
   //  NOTE: should we remove the 'false'? see also tree_pointer.cpp
   if (keep && false) {
-    remove_observer (ref[pos]->obs, observer (this));
+    remove_observer (ref[pos]->data, observer (this));
     ptr= inside (ref);
-    insert_observer (ref->obs, observer (this));
+    insert_observer (ref->data, observer (this));
   }
   // cout << "position -> " << obtain_position (observer (this)) << "\n";
 }
@@ -222,7 +222,7 @@ tree_addendum_delete (observer o, int type) {
 
 void
 tree_addendum_delete (tree t, int type) {
-  observer o      = t->obs;
+  observer o      = t->data;
   bool     deleted= tree_addendum_delete (o, type);
   if (deleted) tree_addendum_delete (t, type);
 }

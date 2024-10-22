@@ -33,8 +33,9 @@ static hashmap<tree, pointer> view_table (NULL);
 
 static int
 new_view_number (url u) {
-  view_number_table (u->t)+= 1;
-  return view_number_table[u->t];
+  tree key= as_tree (u);
+  view_number_table (key)+= 1;
+  return view_number_table[key];
 }
 
 tm_view_rep::tm_view_rep (tm_buffer buf2, editor ed2)

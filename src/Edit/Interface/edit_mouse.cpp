@@ -707,7 +707,7 @@ delayed_call_mouse_event (string kind, SI x, SI y, SI m, time_t t,
   // but is required for appropriate updating when using the X11 port
   string cmd= "(delayed (:idle 1) (mouse-event " * scm_quote (kind) * " " *
               as_string (x) * " " * as_string (y) * " " * as_string (m) * " " *
-              as_string ((long int) t) * " " * as_scm_string (d) * "))";
+              as_string ((int64_t) t) * " " * as_scm_string (d) * "))";
   eval (cmd);
 }
 

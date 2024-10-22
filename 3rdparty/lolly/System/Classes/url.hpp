@@ -19,23 +19,26 @@
 
 #define URL_TUPLE 247
 
+#include "lolly/data/lolly_tree.hpp"
 #include "string.hpp"
-#include "tree.hpp"
+
+using lolly::data::lolly_tree;
+typedef lolly_tree<int> url_tree;
 
 /******************************************************************************
  * The url data type
  ******************************************************************************/
 
 struct url_rep : concrete_struct {
-  tree t;
-  inline url_rep (tree t2) : t (t2) {}
+  url_tree t;
+  inline url_rep (url_tree t2) : t (t2) {}
 };
 
 class url {
   CONCRETE (url);
 
 private:
-  url (tree t) : rep (tm_new<url_rep> (t)) {}
+  url (url_tree t) : rep (tm_new<url_rep> (t)) {}
 
 public:
   url ();
@@ -47,15 +50,15 @@ public:
   inline url    operator[] (int i) { return url (rep->t[i]); }
   inline string label () {
     if (is_atomic (rep->t)) return string ("");
-    else return as_string (rep->t[0]);
+    else return to_string (rep->t[0]);
   };
   string     protocol ();
-  friend url as_url (tree t);
+  friend url as_url (url_tree t);
 };
 CONCRETE_CODE (url);
 
 inline url
-as_url (tree t) {
+as_url (url_tree t) {
   return url (t);
 }
 
@@ -117,17 +120,17 @@ url url_none ();
 
 inline url
 url_here () {
-  return as_url (tree ("."));
+  return as_url (url_tree ("."));
 }
 
 inline url
 url_parent () {
-  return as_url (tree (".."));
+  return as_url (url_tree (".."));
 }
 
 inline url
 url_ancestor () {
-  return as_url (tree ("..."));
+  return as_url (url_tree ("..."));
 }
 
 url url_root (string protocol);
@@ -238,10 +241,6 @@ void skip_ipv6 (string s, int& i);
 string      as_string (url u, int type= URL_SYSTEM);
 tm_ostream& operator<< (tm_ostream& out, url u);
 
-inline tree
-as_tree (url u) {
-  return tree (u->t);
-}
 inline string
 as_system_string (url u) {
   return as_string (u, URL_SYSTEM);

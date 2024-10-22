@@ -11,11 +11,9 @@
 
 #include "lolly/io/http.hpp"
 #include "analyze.hpp"
-#include "generic_tree.hpp"
 #include "hashmap.hpp"
+#include "iterator.hpp"
 #include "lolly/data/uri.hpp"
-#include "lolly/io/http_response.hpp"
-#include "tree.hpp"
 
 #ifndef OS_WASM
 #include <cpr/cpr.h>
@@ -26,39 +24,56 @@ namespace io {
 
 const char* HTTP_USER_AGENT= "User-Agent";
 
+template <typename T>
+inline http_tree
+blackbox_tree (int label, T data) {
+  http_tree ret= http_tree (label);
+  ret->data    = close_box<T> (data);
+  return ret;
+}
+
 #ifdef OS_WASM
 
-tree
+http_tree
 http_head (url u, http_headers headers) {
   return http_response_init ();
 }
 
-tree
+http_tree
 http_get (url u, http_headers headers) {
   return http_response_init ();
 }
 
-tree
+http_tree
 download (url from, url to, http_headers headers) {
   return http_response_init ();
 }
 
 #else
 
-static tree
+static http_tree
 response_to_tree (cpr::Response r, string url) {
-  tree ret= http_response_init ();
-  http_response_set (ret, STATUS_CODE, as<long, tree> (r.status_code));
-  http_response_set (ret, TEXT, tree (r.text.c_str ()));
-  http_response_set (ret, URL, tree (url));
-  http_response_set (ret, ELAPSED, as<double, tree> (r.elapsed));
+  http_tree ret= http_response_init ();
+  http_response_set (
+      ret, STATUS_CODE,
+      blackbox_tree<long> (http_label::STATUS_CODE, r.status_code));
+  http_response_set (
+      ret, TEXT,
+      blackbox_tree<string> (http_label::TEXT, string (r.text.c_str ())));
+  http_response_set (ret, URL,
+                     blackbox_tree<string> (http_label::URL, string (url)));
+  http_response_set (ret, ELAPSED,
+                     blackbox_tree<double> (http_label::ELAPSED, r.elapsed));
+
   auto hmap= hashmap<string, string> ();
   for (auto i= r.header.begin (); i != r.header.end (); i++) {
     string key  = locase_all (string (i->first.c_str ()));
     string value= string (i->second.c_str ());
     hmap (key)  = value;
   }
-  http_response_set (ret, HEADER, as<hashmap<string, string>, tree> (hmap));
+  http_tree header=
+      blackbox_tree<hashmap<string, string>> (http_label::HEADER, hmap);
+  http_response_set (ret, HEADER, header);
   return ret;
 }
 
@@ -73,7 +88,7 @@ as_cpr_header (http_headers hmap) {
   return header;
 }
 
-tree
+http_tree
 http_get (url u, http_headers headers) {
   string       u_str = as_string (u);
   c_string     u_cstr= c_string (u_str);
@@ -86,7 +101,7 @@ http_get (url u, http_headers headers) {
   return response_to_tree (r, u_str);
 }
 
-tree
+http_tree
 http_head (url u, http_headers headers) {
   string       u_str = as_string (u);
   c_string     u_cstr= c_string (u_str);
@@ -99,7 +114,7 @@ http_head (url u, http_headers headers) {
   return response_to_tree (r, u_str);
 }
 
-tree
+http_tree
 download (url from, url to, http_headers headers) {
   string   from_str = as_string (from);
   c_string from_cstr= c_string (from_str);

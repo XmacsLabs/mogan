@@ -5,7 +5,7 @@ set_allowedmodes("releasedbg", "release", "debug")
 add_rules("mode.debug")
 
 set_project("lolly")
-LOLLY_VERSION= "1.4.0"
+LOLLY_VERSION= "1.4.7"
 
 set_languages("c++17")
 includes("@builtin/check")
@@ -64,7 +64,7 @@ local JEMALLOC_VERSION = "5.3.0"
 local CPR_VERSION = "1.10.5"
 
 tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
-add_requires("tbox", {system=false, configs=tbox_configs})
+add_requires("tbox " .. TBOX_VERSION, {system=false, configs=tbox_configs})
 if has_config("enable_tests") then
     add_requires("doctest " .. DOCTEST_VERSION, {system=false})
     add_requires("nanobench", {system=false})
@@ -102,7 +102,6 @@ local lolly_files = {
     "Kernel/**/*.cpp",
     "System/**/*.cpp|Memory/impl/*.cpp",
     "Data/String/**.cpp",
-    "Data/Scheme/**.cpp",
     "lolly/**/**.cpp",
 }
 local lolly_includedirs = {
@@ -111,7 +110,6 @@ local lolly_includedirs = {
     "Kernel/Containers",
     "Kernel/Types",
     "Data/String",
-    "Data/Scheme",
     "System/Classes",
     "System/Files",
     "System/IO",

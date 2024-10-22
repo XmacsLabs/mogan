@@ -19,40 +19,41 @@
 #define WINPATHS
 #endif
 
-static tree
+static url_tree
 url_tuple (string label) {
-  return tree (URL_TUPLE, tree (label));
+  return url_tree (URL_TUPLE, url_tree (label));
 }
 
-static tree
+static url_tree
 url_tuple (string label, string value) {
-  return tree (URL_TUPLE, tree (label), tree (value));
+  return url_tree (URL_TUPLE, url_tree (label), url_tree (value));
 }
 
-static tree
+static url_tree
 url_tuple (string label, string value, string content) {
-  return tree (URL_TUPLE, tree (label), tree (value), tree (content));
+  return url_tree (URL_TUPLE, url_tree (label), url_tree (value),
+                   url_tree (content));
 }
 
-static tree
-url_tuple (string label, tree t1, tree t2) {
-  return tree (URL_TUPLE, tree (label), t1, t2);
+static url_tree
+url_tuple (string label, url_tree t1, url_tree t2) {
+  return url_tree (URL_TUPLE, url_tree (label), t1, t2);
 }
 
 static inline bool
-is_tuple (tree t, string s) {
+is_tuple (url_tree t, string s) {
   return (t->op == URL_TUPLE) && (N (t) >= 1) && (t[0] == s);
 }
 static inline bool
-is_tuple (tree t, const char* s) {
+is_tuple (url_tree t, const char* s) {
   return (t->op == URL_TUPLE) && (N (t) >= 1) && (t[0] == s);
 }
 static inline bool
-is_tuple (tree t, string s, int n) {
+is_tuple (url_tree t, string s, int n) {
   return (t->op == URL_TUPLE) && (N (t) == (n + 1)) && (t[0] == s);
 }
 static inline bool
-is_tuple (tree t, const char* s, int n) {
+is_tuple (url_tree t, const char* s, int n) {
   return (t->op == URL_TUPLE) && (N (t) == (n + 1)) && (t[0] == s);
 }
 
@@ -182,7 +183,7 @@ url_get_atom (string s, int type) {
   if (N (s) == 2 && ends (s, ":"))
     s->resize (1); // remove the ':' after unit letter
 #endif
-  return as_url (tree (s));
+  return as_url (url_tree (s));
 }
 
 url
@@ -203,12 +204,12 @@ url_get_name (string s, int type, int i) {
     else if (i == start) {
       i++;
       if (i == n) {
-        u_list= list (as_url (tree ("")), u_list);
+        u_list= list (as_url (url_tree ("")), u_list);
       }
     }
   }
 
-  if (is_nil (u_list)) return as_url (tree (""));
+  if (is_nil (u_list)) return as_url (url_tree (""));
   url ret= u_list->item;
   u_list = u_list->next;
   while (!is_nil (u_list)) {
@@ -329,6 +330,7 @@ url_pwd () {
   }
   else {
     TM_FAILED ("FAILED to get pwd");
+    return url_none ();
   }
 }
 
@@ -417,7 +419,7 @@ basename (url u) {
 
 url
 glue (url u, string s) {
-  if (is_atomic (u)) return as_url (tree (u->t->label * s));
+  if (is_atomic (u)) return as_url (url_tree (u->t->label * s));
   if (is_concat (u)) return u[1] * glue (u[2], s);
   if (is_or (u)) return glue (u[1], s) | glue (u[2], s);
   if (is_none (u)) return u;
@@ -428,7 +430,7 @@ glue (url u, string s) {
 url
 unglue (url u, int nr) {
   if (is_atomic (u))
-    return as_url (tree (u->t->label (0, max (N (u->t->label) - nr, 0))));
+    return as_url (url_tree (u->t->label (0, max (N (u->t->label) - nr, 0))));
   if (is_concat (u)) return u[1] * unglue (u[2], nr);
   if (is_or (u)) return unglue (u[1], nr) | unglue (u[2], nr);
   if (is_none (u)) return u;

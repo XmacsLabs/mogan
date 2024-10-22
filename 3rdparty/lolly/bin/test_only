@@ -1,0 +1,14 @@
+use platform
+
+if (== (count $args) 0) {
+  if (eq $platform:os windows) {
+    echo "Usage: bin\\test_only.bat [target_name]"
+  } else {
+    echo "Usage: bin/test_only [target_name]"
+  }
+  echo
+  echo "Here are all targets:"
+  xmake show -l targets
+} else {
+  xmake r $args[0]
+}

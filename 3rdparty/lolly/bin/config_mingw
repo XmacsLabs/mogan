@@ -1,0 +1,8 @@
+#!/usr/bin/env elvish
+var mingw_pkg = "mingw-w64 8.1.0"
+xrepo install -y $mingw_pkg
+
+var pkg_info = (xrepo fetch --json $mingw_pkg | from-json)
+var mingw_path = $pkg_info[0][artifacts][installdir]
+
+xmake config --policies=build.ccache --yes -vD --plat=mingw --mode=releasedbg --mingw=$mingw_path --enable_tests=true -c

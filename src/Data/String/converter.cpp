@@ -14,6 +14,7 @@
 #ifdef USE_ICONV
 #include <iconv.h>
 #endif
+#include "tree.hpp"
 #include "tree_helper.hpp"
 #include <errno.h>
 
@@ -947,18 +948,11 @@ convert_OTS1_symbols_to_universal_encoding (tree t) {
   if (N (t) == 0) {
     static tree symbols (CONCAT);
     if (N (symbols) == 0)
-      symbols << "cent"
-              << "copyright"
-              << "currency"
-              << "yen"
-              << "twosuperior"
-              << "threesuperior"
-              << "onesuperior"
-              << "mu"
-              << "onequarter"
-              << "onehalf"
-              << "threequarters"
-              << "trademark";
+      symbols << tree ("cent") << tree ("copyright") << tree ("currency")
+              << tree ("yen") << tree ("twosuperior") << tree ("threesuperior")
+              << tree ("onesuperior") << tree ("mu") << tree ("onequarter")
+              << tree ("onehalf") << tree ("threequarters")
+              << tree ("trademark");
     tree l= tree (as_string (L (t)));
     if (contains (l, A (symbols))) return "<" * as_string (L (t)) * ">";
     else if (l == "degreesign") return "<degree>";

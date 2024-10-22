@@ -651,7 +651,7 @@ pdf_hummus_renderer_rep::register_pattern_image (brush br, SI pixel) {
   SI   w, h;
   tree eff;
   get_pattern_data (u, w, h, eff, br, pixel);
-  tree key= tuple (u->t, as_string (w), as_string (h), eff);
+  tree key= tuple (as_tree (u), as_string (w), as_string (h), eff);
 
   pdf_image image_pdf;
   if (pattern_image_pool->contains (key)) image_pdf= pattern_image_pool[key];
@@ -1614,7 +1614,7 @@ pdf_hummus_renderer_rep::image (url u, double w, double h, SI x, SI y,
                                 int alpha) {
   // debug_convert << "pdf renderer, image " << u << ", " << w << " x " << h
   //		<< " + (" << x << ", " << y << ")" << LF;
-  tree      lookup= tuple (u->t);
+  tree      lookup= tuple (as_tree (u));
   pdf_image im=
       (image_pool->contains (lookup) ? image_pool[lookup] : pdf_image ());
 

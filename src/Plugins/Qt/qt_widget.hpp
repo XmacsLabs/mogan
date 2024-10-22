@@ -89,7 +89,7 @@ protected:
   array<widget> children;
 
 public:
-  long              id;
+  int64_t           id;
   QPointer<QWidget> qwid;
 
   /*! A list of all supported widget types.

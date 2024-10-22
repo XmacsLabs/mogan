@@ -11,6 +11,8 @@
 
 #ifndef IMAGE_FILES_H
 #define IMAGE_FILES_H
+
+#include "tree.hpp"
 #include "url.hpp"
 
 tree          xpm_load (url file_name);

@@ -459,7 +459,7 @@ struct sound_box_rep : public anim_box_rep {
       : anim_box_rep (ip, pl, 0.0), u (u2), last_played (-1.0) {
     y2= h;
   }
-  operator tree () { return tree (TUPLE, "sound", u->t); }
+  operator tree () { return tree (TUPLE, "sound", as_tree (u)); }
   void display (renderer ren) { (void) ren; }
 
   void play_sound () {
@@ -497,13 +497,14 @@ static hashmap<tree, tree> decomposed_gif ("");
 static url
 decompose_gif (url u) {
   if (!has_image_magick ()) return url_none ();
-  if (!decomposed_gif->contains (u->t)) {
+  tree key= as_tree (u);
+  if (!decomposed_gif->contains (key)) {
     url tmp= url_temp ();
     url res= glue (tmp, "_%04d.gif");
     system (imagemagick_cmd () * " +adjoin -coalesce", u, res);
-    decomposed_gif (u->t)= tmp->t;
+    decomposed_gif (key)= as_tree (tmp);
   }
-  url tmp= as_url (decomposed_gif[u->t]);
+  url tmp= as_url (as_url_tree (decomposed_gif[key]));
   url dir= head (tmp);
   url nam= tail (tmp);
   return expand (complete (dir * url_wildcard (as_string (nam) * "_*.gif")));

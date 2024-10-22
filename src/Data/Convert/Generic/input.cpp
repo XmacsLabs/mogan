@@ -19,6 +19,7 @@
 #include "tm_block.hpp"
 #include "tm_file.hpp"
 #include "tm_link.hpp"
+#include "tree.hpp"
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
 #include "vars.hpp"
@@ -301,8 +302,7 @@ texmacs_input_rep::ps_flush (bool force) {
       }
       else break;
     tree t (IMAGE, tuple (tree (RAW_DATA, b), "ps"));
-    t << w << h << ""
-      << "";
+    t << tree (w) << tree (h) << tree ("") << tree ("");
     write (t);
     buf= "";
   }

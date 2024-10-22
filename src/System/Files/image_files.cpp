@@ -207,7 +207,7 @@ ps_load (url image, bool conv) {
 bool
 ps_bounding_box (url image, int& x1, int& y1, int& x2, int& y2,
                  bool set_default) {
-  tree lookup= image->t;
+  tree lookup= as_tree (image);
   if (img_box->contains (lookup)) {
     imgbox box= img_box[lookup];
     x1        = box.xmin;
@@ -289,7 +289,7 @@ image_size (url image, int& w, int& h) {
   /* Get original image size (in pt units) using cached result if possible,
    * otherwise actually fetch image size and cache it.
    * Caching is super important because the typesetter calls image_size */
-  tree lookup= image->t;
+  tree lookup= as_tree (image);
   if (img_box->contains (lookup)) {
     imgbox box= img_box[lookup];
     w         = box.w;

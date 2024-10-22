@@ -39,7 +39,7 @@
 #include <QMimeData>
 #include <QUrl>
 
-static long int QTMWcounter= 0; // debugging hack
+static int64_t QTMWcounter= 0; // debugging hack
 
 /*! Constructor.
 
@@ -618,7 +618,7 @@ QTMWidget::dropEvent (QDropEvent* event) {
     else {
       tree sec (CONCAT, doc[0]);
       for (int i= 1; i < N (doc); i++)
-        sec << " " << doc[i];
+        sec << tree (" ") << doc[i];
       doc= sec;
     }
     int ticket       = drop_payload_serial++;

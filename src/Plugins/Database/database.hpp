@@ -11,8 +11,10 @@
 
 #ifndef DATABASE_H
 #define DATABASE_H
+
 #include "hashmap.hpp"
 #include "hashset.hpp"
+#include "tree.hpp"
 #include "url.hpp"
 
 /******************************************************************************

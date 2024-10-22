@@ -11,9 +11,12 @@
 
 #pragma once
 
+#include "hashmap.hpp"
+#include "lolly/data/lolly_tree.hpp"
 #include "string.hpp"
-#include "tree.hpp"
 #include <stdint.h>
+
+using lolly::data::lolly_tree;
 
 namespace lolly {
 namespace data {
@@ -30,48 +33,57 @@ enum json_label : int {
   JSON_PAIR
 };
 
+typedef lolly_tree<int> json_tree;
+
 struct json_rep : concrete_struct {
-  tree                 t;
+  json_tree            t;
   hashmap<string, int> index;
-  inline json_rep (tree p_t) : t (p_t) {}
+  inline json_rep (json_tree p_t) : t (p_t) {}
 };
 
 class json {
   CONCRETE (json);
 
 private:
-  json (tree t) : rep (tm_new<json_rep> (t)) {}
+  json (json_tree t) : rep (tm_new<json_rep> (t)) {}
 
 public:
   // empty json
-  json () { rep= tm_new<json_rep> (tree (JSON_OBJECT)); };
+  json () { rep= tm_new<json_rep> (json_tree (JSON_OBJECT)); };
 
   // primitives constructors
-  json (string value) { rep= tm_new<json_rep> (tree (value)); }
-  json (const char* value) { rep= tm_new<json_rep> (tree (string (value))); }
+  json (string value) { rep= tm_new<json_rep> (json_tree (value)); }
+  json (const char* value) {
+    rep= tm_new<json_rep> (json_tree (string (value)));
+  }
   json (bool value) {
-    rep= tm_new<json_rep> (tree (BOOL_TYPE, tree (as_string_bool (value))));
+    rep= tm_new<json_rep> (
+        json_tree (BOOL_TYPE, json_tree (as_string_bool (value))));
   }
   json (int64_t value) {
-    rep= tm_new<json_rep> (tree (INT64_TYPE, tree (as_string (value))));
+    string s= as_string (value);
+    rep     = tm_new<json_rep> (json_tree (INT64_TYPE, json_tree (s)));
   }
   json (int32_t value) {
-    rep= tm_new<json_rep> (tree (INT64_TYPE, tree (as_string (value))));
+    string s= as_string (value);
+    rep     = tm_new<json_rep> (json_tree (INT64_TYPE, json_tree (s)));
   }
   json (int16_t value) {
-    rep= tm_new<json_rep> (tree (INT64_TYPE, tree (as_string (value))));
+    string s= as_string (value);
+    rep     = tm_new<json_rep> (json_tree (INT64_TYPE, json_tree (s)));
   }
   json (double value) {
-    rep= tm_new<json_rep> (tree (DOUBLE_TYPE, tree (as_string (value))));
+    string s= as_string (value);
+    rep     = tm_new<json_rep> (json_tree (DOUBLE_TYPE, json_tree (s)));
   }
   json (array<json> value) {
-    array<tree> arr= array<tree> ();
+    array<json_tree> arr= array<json_tree> ();
     for (int i= 0; i < N (value); i++) {
       arr << value[i]->t;
     }
-    rep= tm_new<json_rep> (tree (JSON_ARRAY, arr));
+    rep= tm_new<json_rep> (json_tree (JSON_ARRAY, arr));
   }
-  static inline json json_null () { return json (tree (NULL_TYPE)); };
+  static inline json json_null () { return json (json_tree (NULL_TYPE)); };
 
   bool is_null () { return rep->t->op == NULL_TYPE; }
   bool is_string () { return rep->t->op == STRING_TYPE; }

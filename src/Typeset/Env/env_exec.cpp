@@ -1630,7 +1630,7 @@ edit_env_rep::exec_change_case (tree t, tree nc, bool exec_flag, bool first) {
         if (up && is_iso_locase (s[i])) r->label[i]= upcase (s[i]);
         if (lo && is_iso_upcase (s[i])) r->label[i]= locase (s[i]);
       }
-    r->obs= list_observer (ip_observer (obtain_ip (t)), r->obs);
+    r->data= list_observer (ip_observer (obtain_ip (t)), r->data);
     return r;
   }
   else if (is_concat (t)) {
@@ -1638,7 +1638,7 @@ edit_env_rep::exec_change_case (tree t, tree nc, bool exec_flag, bool first) {
     tree r (t, n);
     for (i= 0; i < n; i++)
       r[i]= exec_change_case (t[i], nc, exec_flag, first && (i == 0));
-    r->obs= list_observer (ip_observer (obtain_ip (t)), r->obs);
+    r->data= list_observer (ip_observer (obtain_ip (t)), r->data);
     return r;
   }
   else {

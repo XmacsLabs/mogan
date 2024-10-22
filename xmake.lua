@@ -31,25 +31,7 @@ add_rules("mode.releasedbg", "mode.release", "mode.debug")
 add_repositories("liii-repo xmake")
 
 TBOX_VERSION= "1.7.5"
-LOLLY_VERSION= "1.4.0"
-package("liii-lolly")
-    set_homepage("https://github.com/XmacsLabs/lolly")
-    set_description("Lolly is a C++ library")
-
-    set_sourcedir(path.join(os.scriptdir(), "3rdparty/lolly"))
-    if not is_plat("wasm") then
-        add_deps("libcurl", "tbox", "cpr")
-    end
-
-    on_install("linux", "macosx", "mingw", "wasm", function (package)
-        local configs = {}
-        if package:config("shared") then
-            configs.kind = "shared"
-        end
-        import("package.tools.xmake").install(package, configs)
-    end)
-package_end()
-
+LOLLY_VERSION= "1.4.7"
 S7_VERSION = "20240816"
 package("liii-s7")
     set_homepage("https://ccrma.stanford.edu/software/snd/snd/s7.html")
@@ -199,7 +181,8 @@ local LIBGIT2_VERSION = "1.7.1"
 
 -- package: s7
 add_requires("liii-s7", {system=false})
-add_requires("liii-lolly", {system=false})
+add_requires("lolly", {system=false})
+add_requires("moebius", {system=false})
 
 add_requires("libjpeg")
 add_requires("apt::libpng-dev", {alias="libpng"})
@@ -277,7 +260,8 @@ target("libmogan") do
     set_configvar("LINKED_CAIRO", false)
     set_configvar("LINKED_IMLIB2", false)
 
-    add_packages("liii-lolly")
+    add_packages("lolly")
+    add_packages("moebius")
     add_packages("liii-pdfhummus")
     add_packages("freetype")
     add_packages("liii-s7")
@@ -479,7 +463,8 @@ target("liii") do
 
     add_rules("qt.widgetapp")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
-    add_packages("liii-lolly")
+    add_packages("lolly")
+    add_packages("moebius")
     add_deps("libmogan")
     add_syslinks("pthread", "dl", "m")
     add_files("src/Mogan/Research/research.cpp")

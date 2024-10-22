@@ -11,6 +11,8 @@
 
 #ifndef PICTURE_H
 #define PICTURE_H
+
+#include "tree.hpp"
 #include "url.hpp"
 
 /******************************************************************************

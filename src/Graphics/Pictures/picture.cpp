@@ -18,6 +18,7 @@
 #include "renderer.hpp"
 #include "tm_file.hpp"
 #include "tm_timer.hpp"
+#include "tree_helper.hpp"
 #include "true_color.hpp"
 
 #include <lolly/data/numeral.hpp>
@@ -152,7 +153,7 @@ static hashmap<tree, int> picture_stamp (-(int) (((unsigned int) (-1)) >> 1));
 void
 picture_cache_reserve (url file_name, int w, int h, tree eff, int pixel) {
   (void) pixel;
-  tree key= tuple (file_name->t, as_string (w), as_string (h), eff);
+  tree key= tuple (as_tree (file_name), as_string (w), as_string (h), eff);
   picture_count (key)++;
   // cout << key << " -> " << picture_count[key] << "\n";
 }
@@ -160,7 +161,7 @@ picture_cache_reserve (url file_name, int w, int h, tree eff, int pixel) {
 void
 picture_cache_release (url file_name, int w, int h, tree eff, int pixel) {
   (void) pixel;
-  tree key= tuple (file_name->t, as_string (w), as_string (h), eff);
+  tree key= tuple (as_tree (file_name), as_string (w), as_string (h), eff);
   picture_count (key)--;
   // cout << key << " -> " << picture_count[key] << "\n";
   if (picture_count[key] <= 0) picture_blacklist (key)++;
@@ -203,7 +204,7 @@ picture_cache_reset () {
 static bool
 picture_is_cached (url file_name, int w, int h, tree eff, int pixel) {
   (void) pixel;
-  tree key= tuple (file_name->t, as_string (w), as_string (h), eff);
+  tree key= tuple (as_tree (file_name), as_string (w), as_string (h), eff);
   if (!picture_cache->contains (key)) return false;
   if (descends (file_name, get_texmacs_path ())) {
     // For picture under $TEXMACS_PATH, do not check the timestamp
@@ -223,7 +224,7 @@ picture_is_cached (url file_name, int w, int h, tree eff, int pixel) {
 picture
 cached_load_picture (url file_name, int w, int h, tree eff, int pixel,
                      bool permanent) {
-  tree key= tuple (file_name->t, as_string (w), as_string (h), eff);
+  tree key= tuple (as_tree (file_name), as_string (w), as_string (h), eff);
   if (picture_is_cached (file_name, w, h, eff, pixel))
     return picture_cache[key];
   // cout << "Loading " << key << "\n";

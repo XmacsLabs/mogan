@@ -13,6 +13,7 @@
 #ifndef STRING_H
 #define STRING_H
 #include "basic.hpp"
+#include <stdint.h>
 
 class string;
 class string_rep : concrete_struct {
@@ -69,10 +70,10 @@ long int as_long_int (string s);
 double   as_double (string s);
 char*    as_charp (string s);
 string   as_string_bool (bool f);
-string   as_string (int i);
+string   as_string (int16_t i);
+string   as_string (int32_t i);
+string   as_string (int64_t i);
 string   as_string (unsigned int i);
-string   as_string (long int i);
-string   as_string (long long int i);
 string   as_string (unsigned long int i);
 string   as_string (double x);
 string   as_string (const char* s);

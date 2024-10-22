@@ -1571,8 +1571,8 @@ latex_cref_to_tree (string s) {
   for (int i= 0; i < N (a); i++) {
     string ss= trim_spaces (a[i]);
     if (i == 0) t << compound ("nbsp");
-    else if (i == 1 && N (a) == 2) t << " and" << compound ("nbsp");
-    else if (i == N (a) - 1) t << ", and" << compound ("nbsp");
+    else if (i == 1 && N (a) == 2) t << tree (" and") << compound ("nbsp");
+    else if (i == N (a) - 1) t << tree (", and") << compound ("nbsp");
     else t << ", ";
     if (type == "Equation") t << "(";
     t << tree (REFERENCE, ss);
@@ -1852,7 +1852,7 @@ latex_command_to_tree (tree t) {
     e1 << l2e (t[4]);
     e1 << l2e (t[5]);
     e3 << tree (ARG, "body");
-    e2 << "body" << e3;
+    e2 << tree ("body") << e3;
     return concat (tree (ASSIGN, var * "*", e1), tree (ASSIGN, var, e2));
   }
 

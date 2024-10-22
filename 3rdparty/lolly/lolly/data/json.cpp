@@ -25,8 +25,8 @@ json
 json::get (string key) {
   if (is_object ()) {
     if (rep->index->contains (key)) {
-      int  i   = rep->index (key);
-      tree pair= rep->t[i];
+      int       i   = rep->index (key);
+      json_tree pair= rep->t[i];
       return json (pair[1]);
     }
   }
@@ -42,20 +42,20 @@ void
 json::set (string key, json value) {
   if (!is_object ()) return;
   if (contains (key)) {
-    int  i   = rep->index (key);
-    tree pair= rep->t[i];
-    pair[1]  = value->t;
+    int       i   = rep->index (key);
+    json_tree pair= rep->t[i];
+    pair[1]       = value->t;
   }
   else {
     rep->index (key)= arity (rep->t);
-    rep->t << tree (JSON_PAIR, key, value->t);
+    rep->t << json_tree (JSON_PAIR, key, value->t);
   }
 }
 
 // TODO: Use json escape and unescape
 string
 json::dump () {
-  tree t= this->rep->t;
+  json_tree t= this->rep->t;
   if (this->is_string ()) {
     return raw_quote (as_string (t));
   }
@@ -98,7 +98,7 @@ json::dump () {
 string
 as_string (json j) {
   if (j.is_string ()) {
-    return as_string (j->t);
+    return to_string (j->t);
   }
   TM_FAILED ("not a string");
 }

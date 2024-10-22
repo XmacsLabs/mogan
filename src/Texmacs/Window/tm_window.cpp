@@ -224,7 +224,8 @@ class close_embedded_command_rep : public command_rep {
 public:
   close_embedded_command_rep (tm_view vw2, url n2, int win2)
       : vw (vw2), name (n2), win_id (win2) {
-    window_by_name (name->t)= path (win_id, window_by_name[name->t]);
+    tree key            = as_tree (name);
+    window_by_name (key)= path (win_id, window_by_name[key]);
   }
   void        apply ();
   tm_ostream& print (tm_ostream& out) {
@@ -247,7 +248,8 @@ close_embedded_command_rep::apply () {
   tm_window win= vw->win;
   ASSERT (N (buffer_to_views (vw->buf->buf->name)) == 1,
           "invalid cloned embedded TeXmacs widget");
-  window_by_name (name->t)= remove<int> (window_by_name[name->t], win_id);
+  tree key            = as_tree (name);
+  window_by_name (key)= remove<int> (window_by_name[key], win_id);
   remove_buffer (vw->buf->buf->name);
   // cout << "Deleted buffer\n";
   tm_delete (win);
@@ -269,7 +271,7 @@ filter_existing (path wins) {
 
 path
 window_search (url name) {
-  return filter_existing (window_by_name[name->t]);
+  return filter_existing (window_by_name[as_tree (name)]);
 }
 
 bool

@@ -380,11 +380,12 @@ make_entry (tree& D, tree t, hashmap<string, tree> refs, bool rec) {
           if (!is_concat (rr)) rr= tree (CONCAT, rr, "\25", r);
           else if (is_concat (rr) && N (rr) >= 2 && rr[N (rr) - 2] == "\25")
             rr[N (rr) - 1]= r;
-          else rr << "\25" << r;
+          else rr << tree ("\25") << r;
         }
         else if (r != "") {
           if (!is_concat (rr)) rr= tree (CONCAT, rr);
-          rr << ", " << r;
+          rr << ", ";
+          rr << r;
         }
         h (l)= rr;
       }

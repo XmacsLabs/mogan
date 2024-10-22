@@ -3,6 +3,7 @@
 
 #include "lolly/system/timer.hpp"
 #include "string.hpp"
+#include "tree.hpp"
 
 /**
  * @brief Enumeration of debugging flags.
@@ -176,7 +177,6 @@ bool debug_get (string s);
 #define DEBUG_AQUA (debug (DEBUG_FLAG_QT))
 #define DEBUG_AQUA_WIDGETS (debug (DEBUG_FLAG_QT_WIDGETS))
 
-class tree;
 void debug_message (string channel, string msg);
 void debug_formatted (string channel, tree msg);
 tree get_debug_messages (string kind, int max_number);

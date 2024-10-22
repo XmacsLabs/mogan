@@ -269,7 +269,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
     buf= md->data ("application/x-texmacs-pid");
     if (!(buf.isEmpty ())) {
       owns= string (buf.constData (), buf.size ()) ==
-            as_string (QCoreApplication::applicationPid ());
+            as_string ((int64_t) QCoreApplication::applicationPid ());
     }
   }
 

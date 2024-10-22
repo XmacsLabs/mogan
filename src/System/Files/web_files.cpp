@@ -15,6 +15,7 @@
 #include "hashmap.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
+#include "tree_helper.hpp"
 
 #include "cork.hpp"
 #include "scheme.hpp"
@@ -33,37 +34,40 @@ static hashmap<tree, tree> web_cache_resolve ("");
 
 static url
 get_cache (url name) {
-  if (web_cache_resolve->contains (name->t)) {
+  tree key= as_tree (name);
+  if (web_cache_resolve->contains (key)) {
     int  i, j;
-    tree tmp= web_cache_resolve[name->t];
+    tree tmp= web_cache_resolve[key];
     for (i= 0; i < MAX_CACHED; i++)
-      if (web_cache[i] == name->t) {
+      if (web_cache[i] == key) {
         // cout << name << " in cache as " << tmp << " at " << i << "\n";
         for (j= i; ((j + 1) % MAX_CACHED) != web_nr; j= (j + 1) % MAX_CACHED)
           web_cache[j]= web_cache[(j + 1) % MAX_CACHED];
-        web_cache[j]= name->t;
+        web_cache[j]= key;
         break;
       }
-    return as_url (tmp); // url_system (tmp);
+    return as_url (as_url_tree (tmp)); // url_system (tmp);
   }
   return url_none ();
 }
 
 static url
 set_cache (url name, url tmp) {
+  tree name_tree= as_tree (name);
   web_cache_resolve->reset (web_cache[web_nr]);
-  web_cache[web_nr]          = name->t;
-  web_cache_resolve (name->t)= tmp->t;
-  web_nr                     = (web_nr + 1) % MAX_CACHED;
+  web_cache[web_nr]            = name_tree;
+  web_cache_resolve (name_tree)= as_tree (tmp);
+  web_nr                       = (web_nr + 1) % MAX_CACHED;
   return tmp;
 }
 
 void
 web_cache_invalidate (url name) {
+  tree name_tree= as_tree (name);
   for (int i= 0; i < MAX_CACHED; i++)
-    if (web_cache[i] == name->t) {
+    if (web_cache[i] == name_tree) {
       web_cache[i]= tree ("");
-      web_cache_resolve->reset (name->t);
+      web_cache_resolve->reset (name_tree);
     }
 }
 

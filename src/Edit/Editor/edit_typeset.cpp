@@ -803,23 +803,23 @@ edit_typeset_rep::exec_html (tree t, path p) {
   prefix_specific (H, "tmhtml-");
   tree w (WITH);
   tree doc_title= search_doc_title (t);
-  if (doc_title != "") w << string ("html-doc-title") << doc_title;
-  if (H->contains ("html-title")) w << string ("html-title") << H["html-title"];
-  if (H->contains ("html-css")) w << string ("html-css") << H["html-css"];
+  if (doc_title != "") w << tree ("html-doc-title") << doc_title;
+  if (H->contains ("html-title")) w << tree ("html-title") << H["html-title"];
+  if (H->contains ("html-css")) w << tree ("html-css") << H["html-css"];
   if (H->contains ("html-head-javascript"))
-    w << string ("html-head-javascript") << H["html-head-javascript"];
+    w << tree ("html-head-javascript") << H["html-head-javascript"];
   if (H->contains ("html-head-javascript-src"))
-    w << string ("html-head-javascript-src") << H["html-head-javascript-src"];
+    w << tree ("html-head-javascript-src") << H["html-head-javascript-src"];
   if (H->contains ("html-head-favicon"))
-    w << string ("html-head-favicon") << H["html-head-favicon"];
+    w << tree ("html-head-favicon") << H["html-head-favicon"];
   if (H->contains ("html-extra-css"))
-    w << string ("html-extra-css") << H["html-extra-css"];
+    w << tree ("html-extra-css") << H["html-extra-css"];
   if (H->contains ("html-extra-javascript-src"))
-    w << string ("html-extra-javascript-src") << H["html-extra-javascript-src"];
+    w << tree ("html-extra-javascript-src") << H["html-extra-javascript-src"];
   if (H->contains ("html-extra-javascript"))
-    w << string ("html-extra-javascript") << H["html-extra-javascript"];
+    w << tree ("html-extra-javascript") << H["html-extra-javascript"];
   if (H->contains ("html-site-version"))
-    w << string ("html-site-version") << H["html-site-version"];
+    w << tree ("html-site-version") << H["html-site-version"];
   if (N (w) == 0) return exec (t, H);
   else {
     w << t;
@@ -1107,7 +1107,7 @@ edit_typeset_rep::typeset_invalidate_players (path p, bool reattach) {
   if (rp <= p) {
     tree     t= subtree (et, p);
     blackbox bb;
-    bool     ok= t->obs->get_contents (ADDENDUM_PLAYER, bb);
+    bool     ok= t->data->get_contents (ADDENDUM_PLAYER, bb);
     if (ok) {
       if (reattach) tree_addendum_delete (t, ADDENDUM_PLAYER);
       typeset_invalidate (p);
