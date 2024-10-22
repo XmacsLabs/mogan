@@ -6,6 +6,8 @@
 #include "tm_debug.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 tree
 scheme_tree_to_tree (scheme_tree t, hashmap<string, int> codes, bool flag) {
   if (is_atomic (t)) return scm_unquote (t->label);

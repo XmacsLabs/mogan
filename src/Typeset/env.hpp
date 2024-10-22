@@ -24,6 +24,8 @@
 #include "url.hpp"
 #include "vars.hpp"
 
+using namespace moebius;
+
 #define DECORATION (-1)
 
 /******************************************************************************

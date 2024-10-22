@@ -14,6 +14,8 @@
 #include "tree_helper.hpp"
 #include "tree_observer.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Management of all edit trees
  ******************************************************************************/

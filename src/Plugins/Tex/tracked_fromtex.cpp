@@ -19,6 +19,8 @@
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Protect against adding markers to a LaTeX document
  ******************************************************************************/

@@ -11,6 +11,7 @@
 
 #ifndef BRIDGE_H
 #define BRIDGE_H
+
 #include "Concat/concater.hpp"
 #include "Format/page_item.hpp"
 #include "Page/pager.hpp"
@@ -18,6 +19,8 @@
 #include "Page/vpenalty.hpp"
 #include "Stack/stacker.hpp"
 #include "typesetter.hpp"
+
+using namespace moebius;
 
 #define VALID_MASK 1
 #define CORRUPTED 0

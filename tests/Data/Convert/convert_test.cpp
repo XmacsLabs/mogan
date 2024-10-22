@@ -13,6 +13,9 @@
 #include "base.hpp"
 #include "convert.hpp"
 #include "tree_helper.hpp"
+
+using namespace moebius;
+
 Q_DECLARE_METATYPE (tree)
 Q_DECLARE_METATYPE (string)
 

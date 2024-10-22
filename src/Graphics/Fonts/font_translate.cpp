@@ -14,6 +14,8 @@
 #include "font.hpp"
 #include "tm_debug.hpp"
 
+using namespace moebius;
+
 bool is_weight (string s);
 bool is_category (string s);
 bool is_glyphs (string s);

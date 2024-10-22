@@ -21,6 +21,8 @@
 #include "tm_block.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Get correspondence between subtrees when upgrading texmacs documents
  ******************************************************************************/

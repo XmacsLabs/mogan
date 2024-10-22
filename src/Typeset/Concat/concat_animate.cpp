@@ -15,6 +15,7 @@
 #include "observers.hpp"
 #include "tm_url.hpp"
 
+using namespace moebius;
 extern tree the_et;
 
 /******************************************************************************

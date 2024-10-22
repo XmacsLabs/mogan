@@ -12,6 +12,7 @@
 
 #include "rectangles.hpp"
 #include "tree.hpp"
+#include "tree_helper.hpp"
 #include "tree_label.hpp"
 
 /******************************************************************************
@@ -25,8 +26,8 @@ rectangle::rectangle (SI x1b, SI y1b, SI x2b, SI y2b)
     : rep (tm_new<rectangle_rep> (x1b, y1b, x2b, y2b)) {}
 
 rectangle::operator tree () {
-  return tree (TUPLE, as_string (rep->x1), as_string (rep->y1),
-               as_string (rep->x2), as_string (rep->y2));
+  return tuple (as_string (rep->x1), as_string (rep->y1), as_string (rep->x2),
+                as_string (rep->y2));
 }
 
 tm_ostream&

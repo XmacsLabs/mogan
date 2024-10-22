@@ -18,6 +18,10 @@
 #include "tree_label.hpp"
 #include "url.hpp"
 
+using moebius::ASSOCIATE;
+using moebius::COLLECTION;
+using moebius::TUPLE;
+
 inline tree_label
 L (tree t) {
   return static_cast<tree_label> (t->op);
@@ -166,7 +170,8 @@ tree_hashmap (tree_label init, tree t) {
   hashmap<string, tree> ret (init);
   int                   i, n= arity (t);
   for (i= 0; i < n; i++)
-    if (is_func (t[i], ASSOCIATE, 2)) ret (get_label (t[i][0]))= copy (t[i][1]);
+    if (is_func (t[i], moebius::tree_label::ASSOCIATE, 2))
+      ret (get_label (t[i][0]))= copy (t[i][1]);
   return ret;
 }
 
@@ -241,52 +246,52 @@ bool is_compound (tree t, string s, int n);
 
 inline tree
 concat () {
-  return tree (CONCAT);
+  return tree (moebius::CONCAT);
 }
 inline tree
 concat (tree t1) {
-  return tree (CONCAT, t1);
+  return tree (moebius::CONCAT, t1);
 }
 inline tree
 concat (tree t1, tree t2) {
-  return tree (CONCAT, t1, t2);
+  return tree (moebius::CONCAT, t1, t2);
 }
 inline tree
 concat (tree t1, tree t2, tree t3) {
-  return tree (CONCAT, t1, t2, t3);
+  return tree (moebius::CONCAT, t1, t2, t3);
 }
 inline tree
 concat (tree t1, tree t2, tree t3, tree t4) {
-  return tree (CONCAT, t1, t2, t3, t4);
+  return tree (moebius::CONCAT, t1, t2, t3, t4);
 }
 inline tree
 concat (tree t1, tree t2, tree t3, tree t4, tree t5) {
-  return tree (CONCAT, t1, t2, t3, t4, t5);
+  return tree (moebius::CONCAT, t1, t2, t3, t4, t5);
 }
 
 inline tree
 document () {
-  return tree (DOCUMENT);
+  return tree (moebius::DOCUMENT);
 }
 inline tree
 document (tree t1) {
-  return tree (DOCUMENT, t1);
+  return tree (moebius::DOCUMENT, t1);
 }
 inline tree
 document (tree t1, tree t2) {
-  return tree (DOCUMENT, t1, t2);
+  return tree (moebius::DOCUMENT, t1, t2);
 }
 inline tree
 document (tree t1, tree t2, tree t3) {
-  return tree (DOCUMENT, t1, t2, t3);
+  return tree (moebius::DOCUMENT, t1, t2, t3);
 }
 inline tree
 document (tree t1, tree t2, tree t3, tree t4) {
-  return tree (DOCUMENT, t1, t2, t3, t4);
+  return tree (moebius::DOCUMENT, t1, t2, t3, t4);
 }
 inline tree
 document (tree t1, tree t2, tree t3, tree t4, tree t5) {
-  return tree (DOCUMENT, t1, t2, t3, t4, t5);
+  return tree (moebius::DOCUMENT, t1, t2, t3, t4, t5);
 }
 
 bool is_document (tree t);
@@ -313,7 +318,8 @@ bool is_extension (tree t, int n);
 inline bool
 is_applicable (tree t) {
   return is_compound (t) && (N (t) >= 1) &&
-         ((L (t) == MACRO) || (L (t) == FUNC) || (L (t) == XMACRO));
+         ((L (t) == moebius::MACRO) || (L (t) == moebius::FUNC) ||
+          (L (t) == moebius::XMACRO));
 }
 
 tree freeze (tree t);

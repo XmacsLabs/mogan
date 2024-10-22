@@ -23,6 +23,8 @@
 #include "tm_file.hpp"
 #include "tm_timer.hpp"
 
+using namespace moebius;
+
 void                 font_database_filter_features ();
 void                 font_database_filter_characteristics ();
 static array<string> font_database_families (hashmap<tree, tree> ftab);
@@ -82,12 +84,12 @@ struct font_less_eq_operator {
 
 static bool                    fonts_loaded       = false;
 static bool                    fonts_global_loaded= false;
-hashmap<tree, tree>            font_table (UNINIT);
-hashmap<tree, tree>            font_global_table (UNINIT);
-hashmap<tree, tree>            font_features (UNINIT);
-hashmap<tree, tree>            font_variants (UNINIT);
-hashmap<tree, tree>            font_characteristics (UNINIT);
-hashmap<string, tree>          font_substitutions (UNINIT);
+hashmap<tree, tree>            font_table (moebius::UNINIT);
+hashmap<tree, tree>            font_global_table (moebius::UNINIT);
+hashmap<tree, tree>            font_features (moebius::UNINIT);
+hashmap<tree, tree>            font_variants (moebius::UNINIT);
+hashmap<tree, tree>            font_characteristics (moebius::UNINIT);
+hashmap<string, tree>          font_substitutions (moebius::UNINIT);
 hashmap<string, array<string>> font_suffixes;
 array<string> all_font_suffixes= array<string> ("ttf", "ttc", "otf", "tfm");
 array<string> all_tt_suffixes  = array<string> ("ttf", "ttc", "otf");
@@ -395,7 +397,7 @@ font_database_extend_local (url u) {
 void
 font_database_build_global (url u) {
   fonts_loaded= fonts_global_loaded= false;
-  font_table                       = hashmap<tree, tree> (UNINIT);
+  font_table                       = hashmap<tree, tree> (moebius::UNINIT);
   font_database_load_database (GLOBAL_DATABASE);
   font_database_load_features (GLOBAL_FEATURES);
   font_database_load_characteristics (GLOBAL_CHARACTERISTICS);
@@ -430,10 +432,10 @@ keep_delta (hashmap<tree, tree>& new_t, hashmap<tree, tree> old_t) {
 void
 font_database_save_local_delta () {
   fonts_loaded= fonts_global_loaded= false;
-  font_table                       = hashmap<tree, tree> (UNINIT);
-  font_features                    = hashmap<tree, tree> (UNINIT);
-  font_variants                    = hashmap<tree, tree> (UNINIT);
-  font_characteristics             = hashmap<tree, tree> (UNINIT);
+  font_table                       = hashmap<tree, tree> (moebius::UNINIT);
+  font_features                    = hashmap<tree, tree> (moebius::UNINIT);
+  font_variants                    = hashmap<tree, tree> (moebius::UNINIT);
+  font_characteristics             = hashmap<tree, tree> (moebius::UNINIT);
   font_database_load_database (GLOBAL_DATABASE);
   font_database_load_features (GLOBAL_FEATURES);
   font_database_load_characteristics (GLOBAL_CHARACTERISTICS);
@@ -441,10 +443,10 @@ font_database_save_local_delta () {
   hashmap<tree, tree> old_font_features       = font_features;
   hashmap<tree, tree> old_font_characteristics= font_characteristics;
   fonts_loaded= fonts_global_loaded= false;
-  font_table                       = hashmap<tree, tree> (UNINIT);
-  font_features                    = hashmap<tree, tree> (UNINIT);
-  font_variants                    = hashmap<tree, tree> (UNINIT);
-  font_characteristics             = hashmap<tree, tree> (UNINIT);
+  font_table                       = hashmap<tree, tree> (moebius::UNINIT);
+  font_features                    = hashmap<tree, tree> (moebius::UNINIT);
+  font_variants                    = hashmap<tree, tree> (moebius::UNINIT);
+  font_characteristics             = hashmap<tree, tree> (moebius::UNINIT);
   font_database_load_database (GLOBAL_DATABASE);
   font_database_load_features (GLOBAL_FEATURES);
   font_database_load_characteristics (GLOBAL_CHARACTERISTICS);

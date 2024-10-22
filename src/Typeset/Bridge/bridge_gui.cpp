@@ -14,6 +14,8 @@
 #include "analyze.hpp"
 #include "bridge.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Abstract bridge for ornaments
  ******************************************************************************/

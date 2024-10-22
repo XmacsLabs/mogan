@@ -13,6 +13,8 @@
 #include "tree_label.hpp"
 #include "vars.hpp"
 
+using namespace moebius;
+
 drd_info             std_drd ("tm");
 drd_info             the_drd= std_drd;
 hashmap<string, int> STD_CODE (UNKNOWN);

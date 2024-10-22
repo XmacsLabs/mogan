@@ -14,6 +14,8 @@
 #include "matrix.hpp"
 #include "true_color.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Default implementations of virtual routines
  ******************************************************************************/

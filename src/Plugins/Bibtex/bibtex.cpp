@@ -18,6 +18,8 @@
 #include "tree_helper.hpp"
 #include "wencoding.hpp"
 
+using namespace moebius;
+
 static string bibtex_command= "bibtex";
 
 void

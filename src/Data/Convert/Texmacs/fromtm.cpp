@@ -22,6 +22,8 @@
 using lolly::data::from_hex;
 using lolly::data::to_Hex;
 
+using namespace moebius;
+
 /******************************************************************************
  * Conversion of TeXmacs strings of the present format to TeXmacs trees
  ******************************************************************************/

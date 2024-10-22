@@ -13,6 +13,8 @@
 #include "observers.hpp"
 #include "tm_url.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Typesetting environment changes
  ******************************************************************************/

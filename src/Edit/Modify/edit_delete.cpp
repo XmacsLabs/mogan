@@ -15,6 +15,8 @@
 #include "tree_observer.hpp"
 #include "tree_traverse.hpp"
 
+using namespace moebius;
+
 bool is_empty_cell (tree t);
 
 /******************************************************************************

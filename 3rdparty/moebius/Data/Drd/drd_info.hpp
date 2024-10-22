@@ -18,6 +18,8 @@
 #include "tree.hpp"
 #include "tree_label.hpp"
 
+using moebius::UNINIT;
+
 class drd_info;
 class drd_info_rep : concrete_struct {
 public:

@@ -24,6 +24,8 @@
 #include "tm_timer.hpp"
 #include <memory>
 
+using namespace moebius;
+
 #define STD_BOX 0
 #define STACK_BOX 1
 #define CONTROL_BOX 2

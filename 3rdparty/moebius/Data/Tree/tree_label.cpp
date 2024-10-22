@@ -12,6 +12,8 @@
 #include "tree_label.hpp"
 #include "hashmap.hpp"
 
+using namespace moebius;
+
 hashmap<int, string> CONSTRUCTOR_NAME ("?");
 hashmap<string, int> CONSTRUCTOR_CODE (UNKNOWN);
 

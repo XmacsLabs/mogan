@@ -15,6 +15,8 @@
 #include "dictionary.hpp"
 #include "edit_interface.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Set left footer with information about environment variables
  ******************************************************************************/

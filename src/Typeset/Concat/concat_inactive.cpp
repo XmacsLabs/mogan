@@ -12,6 +12,8 @@
 #include "analyze.hpp"
 #include "concater.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Subroutine for syntactic coloring
  ******************************************************************************/

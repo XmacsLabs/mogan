@@ -11,6 +11,8 @@
 
 #include "bridge.hpp"
 
+using namespace moebius;
+
 class bridge_surround_rep : public bridge_rep {
 protected:
   bridge                body;

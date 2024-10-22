@@ -39,6 +39,8 @@
 #include <QMimeData>
 #include <QUrl>
 
+using namespace moebius;
+
 static int64_t QTMWcounter= 0; // debugging hack
 
 /*! Constructor.

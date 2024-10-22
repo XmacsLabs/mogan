@@ -19,6 +19,8 @@
 #include "tree_traverse.hpp"
 #include "wencoding.hpp"
 
+using namespace moebius;
+
 static string bib_current_tag= "";
 
 bool

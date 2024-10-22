@@ -14,10 +14,13 @@
 
 #include "string.hpp"
 
+#undef ERROR
+
 /******************************************************************************
  * Standard tree labels
  ******************************************************************************/
 
+namespace moebius {
 enum tree_label : int {
   STRING= 0,
   UNKNOWN,
@@ -423,15 +426,18 @@ enum tree_label : int {
   // user extensions
   START_EXTENSIONS
 };
+}
+
+using moebius::tree_label;
 
 inline tree_label
 SUB (bool right) {
-  return right ? RSUB : LSUB;
+  return right ? moebius::RSUB : moebius::LSUB;
 }
 
 inline tree_label
 SUP (bool right) {
-  return right ? RSUP : LSUP;
+  return right ? moebius::RSUP : moebius::LSUP;
 }
 
 /******************************************************************************

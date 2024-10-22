@@ -22,6 +22,8 @@
 #include "scheme.hpp"
 #include "universal.hpp"
 
+using namespace moebius;
+
 RESOURCE_CODE (dictionary);
 
 /******************************************************************************

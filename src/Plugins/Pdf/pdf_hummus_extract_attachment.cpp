@@ -31,6 +31,8 @@
 using namespace PDFHummus;
 using namespace IOBasicTypes;
 
+using namespace moebius;
+
 bool
 extract_attachments_from_pdf (url pdf_path, list<url>& names) {
   EStatusCode status= PDFHummus::eSuccess;

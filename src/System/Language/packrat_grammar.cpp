@@ -15,6 +15,8 @@
 #include "iterator.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 tree               packrat_uninit (UNINIT);
 int                packrat_nr_tokens = 256;
 int                packrat_nr_symbols= 0;

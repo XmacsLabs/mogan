@@ -10,9 +10,9 @@
 #include "moe_doctests.hpp"
 #include "string.hpp"
 #include "tm_ostream.hpp"
+#include "tree_helper.hpp"
 
-static const int UNKNOWN= 1;
-static const int TUPLE  = 245;
+using namespace moebius;
 
 TEST_CASE ("block_to_scheme_tree") {
   CHECK_EQ (block_to_scheme_tree ("(scheme parser)"),

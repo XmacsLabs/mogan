@@ -16,6 +16,8 @@
 #include "preferences.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 int  search_max_hits            = 1000000;
 bool blank_match_flag           = false;
 bool initial_match_flag         = false;

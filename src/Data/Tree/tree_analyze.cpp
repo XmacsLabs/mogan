@@ -13,6 +13,8 @@
 #include "convert.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 drd_info get_style_drd (tree style);
 
 /******************************************************************************

@@ -15,6 +15,8 @@
 #include "spacial.hpp"
 #include "true_color.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * The abstract spacial class
  ******************************************************************************/

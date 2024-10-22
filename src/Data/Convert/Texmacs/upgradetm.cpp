@@ -24,6 +24,8 @@
 #include "vars.hpp"
 #include <stdio.h>
 
+using namespace moebius;
+
 static bool upgrade_tex_flag= false;
 double      get_magnification (string s);
 

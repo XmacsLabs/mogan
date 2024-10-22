@@ -15,6 +15,9 @@
 #include "polynomial.hpp"
 #include "vector.hpp"
 #include <QtTest/QtTest>
+
+using namespace moebius;
+
 Q_DECLARE_METATYPE (tree)
 
 class TestMath : public QObject {

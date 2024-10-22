@@ -13,6 +13,8 @@
 #include "concater.hpp"
 #include "packrat.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Typesetting special mathematical symbols
  ******************************************************************************/

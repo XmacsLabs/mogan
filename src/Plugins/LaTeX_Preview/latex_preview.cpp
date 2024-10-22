@@ -20,6 +20,8 @@
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 static inline void
 dbg (string s) {
   if (DEBUG_CONVERT) debug_convert << s << LF;

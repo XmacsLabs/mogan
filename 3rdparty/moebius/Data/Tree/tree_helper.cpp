@@ -13,6 +13,8 @@
 #include "analyze.hpp"
 #include "modification.hpp"
 
+using namespace moebius;
+
 tree_label
 L (modification mod) {
   ASSERT (mod->k == MOD_ASSIGN_NODE, "assign_node modification expected");

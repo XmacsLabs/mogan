@@ -12,6 +12,8 @@
 #include "math_tree.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Mathematical functions on trees
  ******************************************************************************/

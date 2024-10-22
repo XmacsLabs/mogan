@@ -19,6 +19,8 @@
 #include "tm_data.hpp"
 #include "tm_url.hpp"
 
+using namespace moebius;
+
 int geometry_w= 800, geometry_h= 600;
 int geometry_x= 0, geometry_y= 0;
 

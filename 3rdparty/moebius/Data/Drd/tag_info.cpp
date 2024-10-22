@@ -13,6 +13,8 @@
 #include "hashmap.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 #define get_bits(which, nr)                                                    \
   which= i & ((1 << nr) - 1);                                                  \
   i    = i >> nr

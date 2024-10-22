@@ -17,13 +17,23 @@
 #include "tm_debug.hpp"
 #include "tree_analyze.hpp"
 
-int    std_shrinkf  = 5;
-bool   retina_manual= false;
-bool   retina_iman  = false;
-int    retina_factor= 1;
+using namespace moebius;
+
+int std_shrinkf= 5;
+#ifdef OS_WASM
+bool   retina_manual= true;
 int    retina_zoom  = 1;
-int    retina_icons = 1;
 double retina_scale = 1.0;
+int    retina_factor= 2;
+#else
+bool   retina_manual= false;
+int    retina_zoom  = 1;
+double retina_scale = 1.0;
+int    retina_factor= 1;
+#endif
+
+int  retina_icons= 1;
+bool retina_iman = false;
 
 int
 get_retina_factor () {

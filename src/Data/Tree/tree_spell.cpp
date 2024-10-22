@@ -21,6 +21,8 @@
 #include "universal.hpp"
 #include "vars.hpp"
 
+using namespace moebius;
+
 int                 spell_max_hits= 1000000;
 void                spell (range_set& sel, tree t, tree what, path p);
 hashset<tree_label> spell_ignore;

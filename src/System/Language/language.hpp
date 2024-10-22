@@ -106,7 +106,7 @@ struct text_property_rep {
                      int spc_after= SPC_NONE, int pen_before= 0,
                      int pen_after= HYPH_INVALID, int op_type= OP_SYMBOL,
                      int priority= 1000, int limits= LIMITS_NONE,
-                     tree_label macro= STRING);
+                     tree_label macro= moebius::STRING);
 };
 
 text_property_rep          copy (text_property_rep tpr);

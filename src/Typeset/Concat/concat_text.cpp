@@ -15,6 +15,8 @@
 #include "formatter.hpp"
 #include "preferences.hpp"
 
+using namespace moebius;
+
 lazy make_lazy_vstream (edit_env env, tree t, path ip, tree channel);
 
 /******************************************************************************

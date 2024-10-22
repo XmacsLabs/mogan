@@ -17,6 +17,8 @@
 #include "tree_modify.hpp"
 #include "tree_observer.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Constructors and destructors
  ******************************************************************************/

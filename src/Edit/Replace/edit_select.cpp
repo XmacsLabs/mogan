@@ -19,6 +19,8 @@
 #include "tree_observer.hpp"
 #include "tree_select.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Internationalization
  ******************************************************************************/

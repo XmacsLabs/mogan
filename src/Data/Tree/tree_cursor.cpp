@@ -17,6 +17,8 @@
 #include "tree_helper.hpp"
 #include "vars.hpp"
 
+using namespace moebius;
+
 /******************************************************************************
  * Finding a closest cursor inside a tree
  ******************************************************************************/

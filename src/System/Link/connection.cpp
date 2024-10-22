@@ -27,6 +27,8 @@
 #include "tm_debug.hpp"
 #include "tree_helper.hpp"
 
+using namespace moebius;
+
 static tree connection_retrieve (string name, string session);
 
 /******************************************************************************

@@ -13,14 +13,13 @@
 
 #include "block.hpp"
 #include "analyze.hpp"
+#include "tree_helper.hpp"
+
+using namespace moebius;
 
 /******************************************************************************
  * Handling escape characters
  ******************************************************************************/
-
-static int UNKNOWN= 1;
-static int TUPLE  = 247;
-
 void
 unslash (string& s, int i, int end_index, string& r, int& r_index) {
   char ch= s[i];
@@ -216,16 +215,6 @@ slash (string s) {
 /******************************************************************************
  * Converting scheme trees to strings
  ******************************************************************************/
-
-inline bool
-is_tuple (tree t) {
-  return t->op == TUPLE;
-}
-
-inline bool
-is_tuple (tree t, const char* s, int n) {
-  return (t->op == TUPLE) && (N (t) == (n + 1)) && (t[0] == s);
-}
 
 static void
 scheme_tree_to_string (string& out, scheme_tree p) {

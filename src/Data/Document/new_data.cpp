@@ -16,6 +16,8 @@
 #include "tree_helper.hpp"
 #include "vars.hpp"
 
+using namespace moebius;
+
 tree
 attach_data (tree body, new_data data, bool no_aux) {
   tree doc (DOCUMENT);

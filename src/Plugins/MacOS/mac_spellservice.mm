@@ -14,6 +14,7 @@
 #include "converter.hpp"
 #include "language.hpp"
 #include "locale.hpp"
+#include "tree_helper.hpp"
 
 #include "Cocoa/mac_cocoa.h"
 
@@ -140,7 +141,7 @@ mac_spell_check (string lan, string s) {
 		      inSpellDocumentWithTag: current_tag];
 #endif
       if ([arr count] == 0)
-        t = tree (TUPLE, "0");
+        t = tuple("0");
       else {
         NSEnumerator *enumerator = [arr objectEnumerator];
         NSString *sugg;
@@ -148,7 +149,7 @@ mac_spell_check (string lan, string s) {
         while ((sugg = (NSString*)[enumerator nextObject])) {
           a << from_nsstring (sugg);
         }
-        t= tree (TUPLE, as_string((int)[arr count]));
+        t= tuple (as_string((int)[arr count]));
         t << A (a);        
       }
     }

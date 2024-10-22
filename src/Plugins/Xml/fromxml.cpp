@@ -13,6 +13,8 @@
 #include "tree_helper.hpp"
 #include "xml.hpp"
 
+using namespace moebius;
+
 tree
 tmml_upgrade (tree doc) {
   if ((!is_tuple (doc, "document")) || (N (doc) < 2))
