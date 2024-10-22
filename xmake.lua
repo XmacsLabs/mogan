@@ -184,7 +184,11 @@ configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
 configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
 configvar_check_cxxincludes("HAVE_STDINT_H", "stdint.h")
 
-
+function using_apt ()
+    return linuxos.name() == "debian"
+           or linuxos.name() == "ubuntu"
+           or linuxos.name() == "uos"
+end
 
 function using_legacy_apt ()
     return (linuxos.name() == "uos") or (linuxos.name () == "ubuntu" and linuxos.version():major() == 20)
@@ -209,7 +213,9 @@ else
 end
 
 -- package: libgit2
-if not is_plat("wasm") then
+if is_plat ("linux") and using_apt() then
+    add_requires("apt::libgit2-dev", {alias="libgit2"})
+elseif not is_plat("wasm") then
     add_requires("libgit2 "..LIBGIT2_VERSION, {system=false})
 end
 
