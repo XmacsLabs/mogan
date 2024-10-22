@@ -7,7 +7,8 @@ package("tbox")
     add_configs("float",      {description = "Enable or disable the float type.", default = true, type = "boolean"})
     add_configs("force-utf8", {description = "Forcely regard all tb_char* as utf-8.", default = true, type = "boolean"})
     add_configs("hash",       {description = "Enable hash", default = true, type="boolean"})
-    for _, name in ipairs({"xml", "zip", "regex", "object", "charset", "database", "coroutine"}) do
+    add_configs("charset",    {description = "Enable charset", default = true, type="boolean"})
+    for _, name in ipairs({"xml", "zip", "regex", "object", "database", "coroutine"}) do
         add_configs(name, {description = "Enable the " .. name .. " module.", default = false, type = "boolean"})
     end
     for _, name in ipairs({"zlib", "mysql", "sqlite3", "openssl", "polarssl", "mbedtls", "pcre2", "pcre"}) do
