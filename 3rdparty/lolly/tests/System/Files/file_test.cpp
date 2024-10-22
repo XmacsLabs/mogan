@@ -300,7 +300,8 @@ TEST_CASE ("load_string from 3 local files and check exception") {
 TEST_MEMORY_LEAK_RESET
 
 TEST_CASE ("load_string from url with :") {
-  url    u ("tests/Kernel/Containers:tests/Kernel/Types", "list_test.cpp");
+  url u=
+      url_unix ("tests/Kernel/Containers:tests/Kernel/Types", "list_test.cpp");
   string s;
   load_string (u, s, false);
   CHECK (N (s) > 0);

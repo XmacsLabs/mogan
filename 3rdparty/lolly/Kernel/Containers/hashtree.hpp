@@ -21,7 +21,7 @@ template <class K, class V> int  N (hashtree<K, V> tree);
 template <class K, class V> bool is_nil (hashtree<K, V> tree);
 
 template <class K, class V> class hashtree_rep : concrete_struct {
-  hashmap<K, hashtree<K, V> > children;
+  hashmap<K, hashtree<K, V>> children;
 
 public:
   V label;
@@ -100,10 +100,10 @@ public:
   inline hashtree<K, V>& operator= (hashtree<K, V> x);
 
   // default constructor returns a non-NULL node, which does not have a value
-  inline hashtree () : rep (tm_new<hashtree_rep<K, V> > ()) {}
+  inline hashtree () : rep (tm_new<hashtree_rep<K, V>> ()) {}
 
   // returns a non-NULL node, that has value
-  inline hashtree (V val) : rep (tm_new<hashtree_rep<K, V> > (val)) {}
+  inline hashtree (V val) : rep (tm_new<hashtree_rep<K, V>> (val)) {}
 
   // returns this node's value
   inline hashtree_rep<K, V>* operator->(void);

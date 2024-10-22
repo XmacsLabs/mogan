@@ -18,7 +18,7 @@ TEST_CASE ("http::head") {
   tree r          = http_head ("https://httpbin.org/get");
   long status_code= as<tree, long> (http_response_ref (r, STATUS_CODE));
   CHECK_EQ (status_code, 200);
-  auto hmap= as<tree, hashmap<string, string> > (http_response_ref (r, HEADER));
+  auto hmap= as<tree, hashmap<string, string>> (http_response_ref (r, HEADER));
   string content_type= hmap ("content-type");
   string_eq (content_type, "application/json");
 #endif
@@ -29,7 +29,7 @@ TEST_CASE ("http::get") {
   tree r          = http_get ("https://httpbin.org/get");
   long status_code= as<tree, long> (http_response_ref (r, STATUS_CODE));
   CHECK_EQ (status_code, 200);
-  auto hmap= as<tree, hashmap<string, string> > (http_response_ref (r, HEADER));
+  auto hmap= as<tree, hashmap<string, string>> (http_response_ref (r, HEADER));
   string content_type= hmap ("content-type");
   string_eq (content_type, "application/json");
 #endif

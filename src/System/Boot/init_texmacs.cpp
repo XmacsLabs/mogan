@@ -205,7 +205,7 @@ get_env_path (string which, url def) {
 
 static url
 plugin_path (string which) {
-  url base= "$TEXMACS_HOME_PATH:/etc/TeXmacs:$TEXMACS_PATH:/usr/share/TeXmacs";
+  url base  = url_unix ("$TEXMACS_HOME_PATH:$TEXMACS_PATH");
   url search= base * "plugins" * url_wildcard ("*") * which;
   return expand (complete (search, "r"));
 }
@@ -348,7 +348,7 @@ release_boot_lock () {
 
 static void
 init_scheme () {
-  url guile_path= "$TEXMACS_PATH/progs:$GUILE_LOAD_PATH";
+  url guile_path= url_system ("$TEXMACS_PATH/progs");
   guile_path= guile_path | "$TEXMACS_HOME_PATH/progs" | plugin_path ("progs");
   set_env_path ("GUILE_LOAD_PATH", guile_path);
 }
@@ -373,12 +373,13 @@ init_env_vars () {
 
   // Get TeXmacs style and package paths
   url style_root= get_env_path (
-      "TEXMACS_STYLE_ROOT", "$TEXMACS_HOME_PATH/styles:$TEXMACS_PATH/styles" |
-                                plugin_path ("styles"));
-  url package_root=
-      get_env_path ("TEXMACS_PACKAGE_ROOT",
-                    "$TEXMACS_HOME_PATH/packages:$TEXMACS_PATH/packages" |
-                        plugin_path ("packages"));
+      "TEXMACS_STYLE_ROOT",
+      url_unix ("$TEXMACS_HOME_PATH/styles:$TEXMACS_PATH/styles") |
+          plugin_path ("styles"));
+  url package_root= get_env_path (
+      "TEXMACS_PACKAGE_ROOT",
+      url_unix ("$TEXMACS_HOME_PATH/packages:$TEXMACS_PATH/packages") |
+          plugin_path ("packages"));
   url all_root= style_root | package_root;
   url style_path=
       get_env_path ("TEXMACS_STYLE_PATH", search_sub_dirs (all_root));
@@ -390,10 +391,11 @@ init_env_vars () {
 
   // Get other data paths
   (void) get_env_path ("TEXMACS_FILE_PATH", text_path | style_path);
-  (void) set_env_path ("TEXMACS_DOC_PATH",
-                       get_env_path ("TEXMACS_DOC_PATH") |
-                           "$TEXMACS_HOME_PATH/doc:$TEXMACS_PATH/doc" |
-                           plugin_path ("doc"));
+  (void) set_env_path (
+      "TEXMACS_DOC_PATH",
+      get_env_path ("TEXMACS_DOC_PATH") |
+          url_unix ("$TEXMACS_HOME_PATH/doc:$TEXMACS_PATH/doc") |
+          plugin_path ("doc"));
   (void) set_env_path ("TEXMACS_SECURE_PATH",
                        get_env_path ("TEXMACS_SECURE_PATH") |
                            "$TEXMACS_PATH:$TEXMACS_HOME_PATH");

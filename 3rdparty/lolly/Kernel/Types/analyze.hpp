@@ -227,14 +227,8 @@ string remove_prefix (string s, string prefix);
  */
 string remove_suffix (string s, string suffix);
 
-string utf8_to_t2a (string s);
-string t2a_to_utf8 (string s);
 string utf8_to_cork (string s);
 string cork_to_utf8 (string s);
-string iso_to_koi8 (string s);
-string koi8_to_iso (string s);
-string iso_to_koi8uk (string s);
-string koi8uk_to_iso (string s);
 string il2_to_cork (string s);
 string cork_to_il2 (string s);
 

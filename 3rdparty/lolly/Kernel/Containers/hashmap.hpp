@@ -45,11 +45,11 @@ template <class T, class U> struct hashentry {
 };
 
 template <class T, class U> class hashmap_rep : concrete_struct {
-  int                     size; // size of hashmap (nr of entries)
-  int                     n;    // nr of keys (a power of two)
-  int                     max;  // mean number of entries per key
-  U                       init; // default entry
-  list<hashentry<T, U> >* a;    // the array of entries
+  int                    size; // size of hashmap (nr of entries)
+  int                    n;    // nr of keys (a power of two)
+  int                    max;  // mean number of entries per key
+  U                      init; // default entry
+  list<hashentry<T, U>>* a;    // the array of entries
 
 public:
   /**
@@ -63,7 +63,7 @@ public:
    */
   inline hashmap_rep<T, U> (U init2, int n2= 1, int max2= 1)
       : size (0), n (n2), max (max2), init (init2),
-        a (tm_new_array<list<hashentry<T, U> > > (n)) {}
+        a (tm_new_array<list<hashentry<T, U>>> (n)) {}
 
   /**
    * @brief Destructor for the hashmap_rep class.
@@ -182,7 +182,7 @@ template <class T, class U> class hashmap {
    * parameters.
    */
   inline hashmap ()
-      : rep (tm_new<hashmap_rep<T, U> > (type_helper<U>::init_val (), 1, 1)) {}
+      : rep (tm_new<hashmap_rep<T, U>> (type_helper<U>::init_val (), 1, 1)) {}
 
   /**
    * @brief Constructor that allows custom initial value, size, and maximum load
@@ -193,7 +193,7 @@ template <class T, class U> class hashmap {
    * @param max The maximum load factor of the hashmap.
    */
   inline hashmap (U init, int n= 1, int max= 1)
-      : rep (tm_new<hashmap_rep<T, U> > (init, n, max)) {}
+      : rep (tm_new<hashmap_rep<T, U>> (init, n, max)) {}
 
   /**
    * @brief Read-only access operator.

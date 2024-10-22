@@ -35,7 +35,7 @@ public:
    *
    */
   inline hashset_rep ()
-      : size (0), n (1), max (1), a (tm_new_array<list<T> > (1)) {}
+      : size (0), n (1), max (1), a (tm_new_array<list<T>> (1)) {}
 
   /**
    * @brief Construct a new hashset_rep object with specified values.
@@ -44,7 +44,7 @@ public:
    * @param max2 The mean number of entries per key.
    */
   inline hashset_rep (int n2, int max2= 1)
-      : size (0), n (n2), max (max2), a (tm_new_array<list<T> > (n)) {}
+      : size (0), n (n2), max (max2), a (tm_new_array<list<T>> (n)) {}
 
   /**
    * @brief Destroy the hashset_rep object.
@@ -79,7 +79,7 @@ template <class T> class hashset {
    * @param max The mean number of entries per key.
    */
   inline hashset (int n= 1, int max= 1)
-      : rep (tm_new<hashset_rep<T> > (n, max)) {}
+      : rep (tm_new<hashset_rep<T>> (n, max)) {}
 };
 CONCRETE_TEMPLATE_CODE (hashset, class, T);
 

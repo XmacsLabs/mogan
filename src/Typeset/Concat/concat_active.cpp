@@ -439,7 +439,7 @@ concater_rep::typeset_image (tree t, path ip) {
   if (is_atomic (image_tree)) {
     if (N (image_tree->label) == 0)
       error_image (tree (WITH, "color", "red", "no image"));
-    url im= cork_to_utf8 (image_tree->label);
+    url im= url_system (cork_to_utf8 (image_tree->label));
     if (is_rooted (im)) {
       image= im;
     }

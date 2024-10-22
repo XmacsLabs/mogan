@@ -58,7 +58,7 @@ merge_sort_leq (array<T>& a) {
 template <class T>
 inline void
 merge_sort (array<T>& a) {
-  merge_sort_leq<T, less_eq_operator<T> > (a);
+  merge_sort_leq<T, less_eq_operator<T>> (a);
 }
 
 /******************************************************************************
@@ -127,7 +127,7 @@ merge_sort_leq_permutation (array<T>& a) {
 template <class T>
 array<int>
 merge_sort_leq_permutation (array<T>& a) {
-  return merge_sort_leq_permutation<T, less_eq_operator<T> > (a);
+  return merge_sort_leq_permutation<T, less_eq_operator<T>> (a);
 }
 
 template <class T>

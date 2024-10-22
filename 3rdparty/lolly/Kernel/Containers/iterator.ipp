@@ -81,17 +81,17 @@ hashset_iterator_rep<T>::next () {
 template <class T>
 iterator<T>
 iterate (hashset<T> h) {
-  return tm_new<hashset_iterator_rep<T> > (h);
+  return tm_new<hashset_iterator_rep<T>> (h);
 }
 // end hashset_iterator
 
 // hashmap_iterator
 template <class T, class U>
 class hashmap_iterator_rep : public iterator_rep<T> {
-  hashmap<T, U>          h;
-  int                    i;
-  list<hashentry<T, U> > l;
-  void                   spool ();
+  hashmap<T, U>         h;
+  int                   i;
+  list<hashentry<T, U>> l;
+  void                  spool ();
 
 public:
   hashmap_iterator_rep (hashmap<T, U> h);
@@ -132,7 +132,7 @@ hashmap_iterator_rep<T, U>::next () {
 template <class T, class U>
 iterator<T>
 iterate (hashmap<T, U> h) {
-  return tm_new<hashmap_iterator_rep<T, U> > (h);
+  return tm_new<hashmap_iterator_rep<T, U>> (h);
 }
 // hashmap_iterator
 

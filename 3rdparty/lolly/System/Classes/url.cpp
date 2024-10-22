@@ -57,10 +57,10 @@ is_tuple (tree t, const char* s, int n) {
 }
 
 url::url () : rep (tm_new<url_rep> (url_tuple ("none"))) {}
-url::url (const char* name) : rep (tm_new<url_rep> (url_unix (name)->t)) {}
-url::url (string name) : rep (tm_new<url_rep> (url_unix (name)->t)) {}
+url::url (const char* name) : rep (tm_new<url_rep> (url_system (name)->t)) {}
+url::url (string name) : rep (tm_new<url_rep> (url_system (name)->t)) {}
 url::url (string path_name, string name)
-    : rep (tm_new<url_rep> (url_unix (path_name, name)->t)) {}
+    : rep (tm_new<url_rep> (url_system (path_name, name)->t)) {}
 
 string
 url::protocol () {

@@ -98,7 +98,7 @@ template <class T> class array {
   /**
    * @brief Construct a new array object with length 0.
    */
-  inline array (int n= 0) : rep (tm_new<array_rep<T> > (n)) {}
+  inline array (int n= 0) : rep (tm_new<array_rep<T>> (n)) {}
 
   /**
    * @brief Construct a new array object from a C array with specified length.

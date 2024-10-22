@@ -18,18 +18,18 @@
 
 TMPL void
 hashmap_rep<T, U>::write_back (T x, hashmap<T, U> base) {
-  int                    hv= hash (x);
-  list<hashentry<T, U> > l (a[hv & (n - 1)]);
+  int                   hv= hash (x);
+  list<hashentry<T, U>> l (a[hv & (n - 1)]);
   while (!is_nil (l)) {
     if (l->item.code == hv && l->item.key == x) return;
     l= l->next;
   }
   if (size >= n * max) resize (n << 1);
-  list<hashentry<T, U> >& rl= a[hv & (n - 1)];
-  rl                        = list<hashentry<T, U> > (H (hv, x, init), rl);
+  list<hashentry<T, U>>& rl= a[hv & (n - 1)];
+  rl                       = list<hashentry<T, U>> (H (hv, x, init), rl);
   size++;
 
-  list<hashentry<T, U> > bl (base->a[hv & (base->n - 1)]);
+  list<hashentry<T, U>> bl (base->a[hv & (base->n - 1)]);
   while (!is_nil (bl)) {
     if (bl->item.code == hv && bl->item.key == x) {
       rl->item.im= bl->item.im;
@@ -44,7 +44,7 @@ TMPL void
 hashmap_rep<T, U>::pre_patch (hashmap<T, U> patch, hashmap<T, U> base) {
   int i= 0, n= patch->n;
   for (; i < n; i++) {
-    list<hashentry<T, U> > l= patch->a[i];
+    list<hashentry<T, U>> l= patch->a[i];
     for (; !is_nil (l); l= l->next) {
       T x= l->item.key;
       U y= contains (x) ? bracket_ro (x) : l->item.im;
@@ -58,7 +58,7 @@ TMPL void
 hashmap_rep<T, U>::post_patch (hashmap<T, U> patch, hashmap<T, U> base) {
   int i= 0, n= patch->n;
   for (; i < n; i++) {
-    list<hashentry<T, U> > l= patch->a[i];
+    list<hashentry<T, U>> l= patch->a[i];
     for (; !is_nil (l); l= l->next) {
       T x= l->item.key;
       U y= l->item.im;
@@ -68,11 +68,11 @@ hashmap_rep<T, U>::post_patch (hashmap<T, U> patch, hashmap<T, U> base) {
   }
 }
 
-TMPL list<hashentry<T, U> >
-     copy_list (list<hashentry<T, U> > l) {
+TMPL list<hashentry<T, U>>
+     copy_list (list<hashentry<T, U>> l) {
   if (is_nil (l)) return l;
   else
-    return list<hashentry<T, U> > (
+    return list<hashentry<T, U>> (
         hashentry<T, U> (l->item.code, l->item.key, l->item.im),
         copy_list (l->next));
 }
@@ -92,7 +92,7 @@ TMPL hashmap<T, U>
   int           i;
   hashmap<T, U> h (base->init);
   for (i= 0; i < patch->n; i++) {
-    list<hashentry<T, U> > l (patch->a[i]);
+    list<hashentry<T, U>> l (patch->a[i]);
     while (!is_nil (l)) {
       if (l->item.im != base[l->item.key]) h (l->item.key)= l->item.im;
       l= l->next;
@@ -106,7 +106,7 @@ TMPL hashmap<T, U>
   int           i;
   hashmap<T, U> h (base->init);
   for (i= 0; i < patch->n; i++) {
-    list<hashentry<T, U> > l (patch->a[i]);
+    list<hashentry<T, U>> l (patch->a[i]);
     while (!is_nil (l)) {
       if (l->item.im != base[l->item.key]) h (l->item.key)= base[l->item.key];
       l= l->next;

@@ -46,17 +46,17 @@ operator!= (H h1, H h2) {
 
 TMPL void
 hashmap_rep<T, U>::resize (int n2) {
-  int                     i;
-  int                     oldn= n;
-  list<hashentry<T, U> >* olda= a;
-  n                           = n2;
-  a                           = tm_new_array<list<hashentry<T, U> > > (n);
+  int                    i;
+  int                    oldn= n;
+  list<hashentry<T, U>>* olda= a;
+  n                          = n2;
+  a                          = tm_new_array<list<hashentry<T, U>>> (n);
   for (i= 0; i < oldn; i++) {
-    list<hashentry<T, U> > l (olda[i]);
+    list<hashentry<T, U>> l (olda[i]);
     while (!is_nil (l)) {
-      list<hashentry<T, U> >& newl= a[hash (l->item.key) & (n - 1)];
-      newl                        = list<hashentry<T, U> > (l->item, newl);
-      l                           = l->next;
+      list<hashentry<T, U>>& newl= a[hash (l->item.key) & (n - 1)];
+      newl                       = list<hashentry<T, U>> (l->item, newl);
+      l                          = l->next;
     }
   }
   tm_delete_array (olda);
@@ -64,8 +64,8 @@ hashmap_rep<T, U>::resize (int n2) {
 
 TMPL bool
 hashmap_rep<T, U>::contains (T x) {
-  int                    hv= hash (x);
-  list<hashentry<T, U> > l (a[hv & (n - 1)]);
+  int                   hv= hash (x);
+  list<hashentry<T, U>> l (a[hv & (n - 1)]);
   while (!is_nil (l)) {
     if (l->item.code == hv && l->item.key == x) return true;
     l= l->next;
@@ -80,23 +80,23 @@ hashmap_rep<T, U>::empty () {
 
 TMPL U&
 hashmap_rep<T, U>::bracket_rw (T x) {
-  int                    hv= hash (x);
-  list<hashentry<T, U> > l (a[hv & (n - 1)]);
+  int                   hv= hash (x);
+  list<hashentry<T, U>> l (a[hv & (n - 1)]);
   while (!is_nil (l)) {
     if (l->item.code == hv && l->item.key == x) return l->item.im;
     l= l->next;
   }
   if (size >= n * max) resize (n << 1);
-  list<hashentry<T, U> >& rl= a[hv & (n - 1)];
-  rl                        = list<hashentry<T, U> > (H (hv, x, init), rl);
+  list<hashentry<T, U>>& rl= a[hv & (n - 1)];
+  rl                       = list<hashentry<T, U>> (H (hv, x, init), rl);
   size++;
   return rl->item.im;
 }
 
 TMPL U
 hashmap_rep<T, U>::bracket_ro (T x) {
-  int                    hv= hash (x);
-  list<hashentry<T, U> > l (a[hv & (n - 1)]);
+  int                   hv= hash (x);
+  list<hashentry<T, U>> l (a[hv & (n - 1)]);
   while (!is_nil (l)) {
     if (l->item.code == hv && l->item.key == x) return l->item.im;
     l= l->next;
@@ -106,8 +106,8 @@ hashmap_rep<T, U>::bracket_ro (T x) {
 
 TMPL void
 hashmap_rep<T, U>::reset (T x) {
-  int                     hv= hash (x);
-  list<hashentry<T, U> >* l = &(a[hv & (n - 1)]);
+  int                    hv= hash (x);
+  list<hashentry<T, U>>* l = &(a[hv & (n - 1)]);
   while (!is_nil (*l)) {
     if ((*l)->item.code == hv && (*l)->item.key == x) {
       *l= (*l)->next;
@@ -123,7 +123,7 @@ TMPL void
 hashmap_rep<T, U>::generate (void (*routine) (T)) {
   int i;
   for (i= 0; i < n; i++) {
-    list<hashentry<T, U> > l (a[i]);
+    list<hashentry<T, U>> l (a[i]);
     while (!is_nil (l)) {
       routine (l->item.key);
       l= l->next;
@@ -136,7 +136,7 @@ operator<< (tm_ostream& out, hashmap<T, U> h) {
   int i= 0, j= 0, n= h->n, size= h->size;
   out << "{ ";
   for (; i < n; i++) {
-    list<hashentry<T, U> > l= h->a[i];
+    list<hashentry<T, U>> l= h->a[i];
     for (; !is_nil (l); l= l->next, j++) {
       out << l->item;
       if (j != size - 1) out << ", ";
@@ -150,7 +150,7 @@ TMPL void
 hashmap_rep<T, U>::join (hashmap<T, U> h) {
   int i= 0, n= h->n;
   for (; i < n; i++) {
-    list<hashentry<T, U> > l= h->a[i];
+    list<hashentry<T, U>> l= h->a[i];
     for (; !is_nil (l); l= l->next)
       bracket_rw (l->item.key)= copy (l->item.im);
   }
@@ -161,7 +161,7 @@ operator== (hashmap<T, U> h1, hashmap<T, U> h2) {
   if (h1->size != h2->size) return false;
   int i= 0, n= h1->n;
   for (; i < n; i++) {
-    list<hashentry<T, U> > l= h1->a[i];
+    list<hashentry<T, U>> l= h1->a[i];
     for (; !is_nil (l); l= l->next)
       if (h2[l->item.key] != l->item.im) return false;
   }

@@ -18,9 +18,9 @@
 
 class string_searcher;
 class string_searcher_rep : concrete_struct {
-  string                            s;
-  array<hashmap<int, array<int> > > a;
-  array<int>                        search_sub (string what);
+  string                          s;
+  array<hashmap<int, array<int>>> a;
+  array<int>                      search_sub (string what);
 
 public:
   string_searcher_rep (string s);

@@ -70,14 +70,14 @@ rel_hashmap_rep<T, U>::merge () {
 template <class T, class U>
 void
 rel_hashmap_rep<T, U>::find_changes (hashmap<T, U>& CH) {
-  int                    i;
-  rel_hashmap<T, U>      h (item, next);
-  list<hashentry<T, U> > remove;
+  int                   i;
+  rel_hashmap<T, U>     h (item, next);
+  list<hashentry<T, U>> remove;
   for (i= 0; i < CH->n; i++) {
-    list<hashentry<T, U> > l (CH->a[i]);
+    list<hashentry<T, U>> l (CH->a[i]);
     while (!is_nil (l)) {
       if (h[l->item.key] == l->item.im)
-        remove= list<hashentry<T, U> > (l->item, remove);
+        remove= list<hashentry<T, U>> (l->item, remove);
       l= l->next;
     }
   }
@@ -90,13 +90,13 @@ rel_hashmap_rep<T, U>::find_changes (hashmap<T, U>& CH) {
 template <class T, class U>
 void
 rel_hashmap_rep<T, U>::find_differences (hashmap<T, U>& CH) {
-  int                    i;
-  list<hashentry<T, U> > add;
+  int                   i;
+  list<hashentry<T, U>> add;
   for (i= 0; i < item->n; i++) {
-    list<hashentry<T, U> > l (item->a[i]);
+    list<hashentry<T, U>> l (item->a[i]);
     while (!is_nil (l)) {
       if (!CH->contains (l->item.key))
-        add= list<hashentry<T, U> > (l->item, add);
+        add= list<hashentry<T, U>> (l->item, add);
       l= l->next;
     }
   }
@@ -112,7 +112,7 @@ void
 rel_hashmap_rep<T, U>::change (hashmap<T, U> CH) {
   int i;
   for (i= 0; i < CH->n; i++) {
-    list<hashentry<T, U> > l (CH->a[i]);
+    list<hashentry<T, U>> l (CH->a[i]);
     while (!is_nil (l)) {
       item (l->item.key)= l->item.im;
       l                 = l->next;

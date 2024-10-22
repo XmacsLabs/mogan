@@ -20,7 +20,7 @@ hashset_rep<T>::resize (int n2) {
   int      oldn= n;
   list<T>* olda= a;
   n            = n2;
-  a            = tm_new_array<list<T> > (n);
+  a            = tm_new_array<list<T>> (n);
   for (i= 0; i < oldn; i++) {
     list<T> l (olda[i]);
     while (!is_nil (l)) {

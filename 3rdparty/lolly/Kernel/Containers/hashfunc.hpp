@@ -50,7 +50,7 @@ template <class T, class U> class hashfunc {
    * @param init The initial value for the hash map.
    */
   inline hashfunc (U (*func) (T), U init)
-      : rep (tm_new<hashfunc_rep<T, U> > (func, init)) {}
+      : rep (tm_new<hashfunc_rep<T, U>> (func, init)) {}
 
   /**
    * @brief Applies the hash function to the given input.

@@ -193,22 +193,6 @@ function main()
                 }
             },
             {
-                scm_name = "utf8->t2a",
-                cpp_name = "utf8_to_t2a",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
-                scm_name = "t2a->utf8",
-                cpp_name = "t2a_to_utf8",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
                 scm_name = "utf8->cork",
                 cpp_name = "utf8_to_cork",
                 ret_type = "string",
@@ -523,7 +507,7 @@ function main()
             },
             {
                 scm_name = "url-unix",
-                cpp_name = "url",
+                cpp_name = "url_unix",
                 ret_type = "url",
                 arg_list = {
                     "string",

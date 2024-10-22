@@ -47,13 +47,13 @@ public:
 CONCRETE_NULL_TEMPLATE_2_CODE (rel_hashmap, class, T, class, U);
 #define TMPL template <class T, class U>
 TMPL inline rel_hashmap<T, U>::rel_hashmap (U init)
-    : rep (tm_new<rel_hashmap_rep<T, U> > (hashmap<T, U> (init),
-                                           rel_hashmap<T, U> ())) {}
+    : rep (tm_new<rel_hashmap_rep<T, U>> (hashmap<T, U> (init),
+                                          rel_hashmap<T, U> ())) {}
 TMPL inline rel_hashmap<T, U>::rel_hashmap (hashmap<T, U> item)
-    : rep (tm_new<rel_hashmap_rep<T, U> > (item, rel_hashmap<T, U> ())) {}
+    : rep (tm_new<rel_hashmap_rep<T, U>> (item, rel_hashmap<T, U> ())) {}
 TMPL inline rel_hashmap<T, U>::rel_hashmap (hashmap<T, U>     item,
                                             rel_hashmap<T, U> next)
-    : rep (tm_new<rel_hashmap_rep<T, U> > (item, next)) {}
+    : rep (tm_new<rel_hashmap_rep<T, U>> (item, next)) {}
 
 TMPL tm_ostream& operator<< (tm_ostream& out, rel_hashmap<T, U> H);
 #undef TMPL
