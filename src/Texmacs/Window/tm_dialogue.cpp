@@ -14,11 +14,13 @@
 #include "dictionary.hpp"
 #include "file.hpp"
 #include "message.hpp"
-#include "tm_block.hpp"
 #include "tm_file.hpp"
 #include "tm_frame.hpp"
 #include "tm_window.hpp"
 #include "tmfs_url.hpp"
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::scheme_tree_to_tree;
 
 /******************************************************************************
  * Dialogues

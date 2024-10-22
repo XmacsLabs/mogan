@@ -12,12 +12,18 @@
 #include "tree_cursor.hpp"
 #include "analyze.hpp"
 #include "cork.hpp"
-#include "drd_mode.hpp"
-#include "drd_std.hpp"
 #include "tree_helper.hpp"
-#include "vars.hpp"
+#include <moebius/drd/drd_mode.hpp>
+#include <moebius/drd/drd_std.hpp>
+#include <moebius/vars.hpp>
 
 using namespace moebius;
+using moebius::drd::get_access_mode;
+using moebius::drd::get_writable_mode;
+using moebius::drd::set_access_mode;
+using moebius::drd::set_writable_mode;
+using moebius::drd::the_drd;
+using moebius::drd::with_drd;
 
 /******************************************************************************
  * Finding a closest cursor inside a tree

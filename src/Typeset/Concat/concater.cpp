@@ -14,7 +14,7 @@
 #include "analyze.hpp"
 #include "file.hpp"
 #include "observers.hpp"
-#include "tree_label.hpp"
+#include <moebius/tree_label.hpp>
 
 #include <lolly/data/unicode.hpp>
 
@@ -298,7 +298,7 @@ concater_rep::typeset (tree t, path ip) {
   case VAR_REPEAT:
     typeset_repeat (t, ip, true);
     break;
-  case _FLOAT:
+  case FLOAT:
     typeset_float (t, ip);
     break;
   case DATOMS:
@@ -598,7 +598,7 @@ concater_rep::typeset (tree t, path ip) {
     typeset_range (t, ip);
     break;
   case NUMBER:
-  case _DATE:
+  case DATE:
   case TRANSLATE:
   case CHANGE_CASE:
   case FIND_FILE:
@@ -816,7 +816,7 @@ concater_rep::typeset (tree t, path ip) {
   case DOCUMENT_AT:
     typeset_document_at (t, ip);
     break;
-  case _POINT:
+  case POINT:
     typeset_point (t, ip);
     break;
   case LINE:

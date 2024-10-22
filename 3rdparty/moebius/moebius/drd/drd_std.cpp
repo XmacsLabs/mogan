@@ -10,14 +10,10 @@
  ******************************************************************************/
 
 #include "drd_std.hpp"
-#include "tree_label.hpp"
-#include "vars.hpp"
+#include "moebius/tree_label.hpp"
+#include "moebius/vars.hpp"
 
 using namespace moebius;
-
-drd_info             std_drd ("tm");
-drd_info             the_drd= std_drd;
-hashmap<string, int> STD_CODE (UNKNOWN);
 
 #define BIFORM CHILD_BIFORM
 #define DETAILED CHILD_DETAILED
@@ -60,6 +56,13 @@ hashmap<string, int> STD_CODE (UNKNOWN);
 #define returns_graphical() type (TYPE_GRAPHICAL)
 #define returns_constraint() type (TYPE_CONSTRAINT)
 #define returns_effect() type (TYPE_EFFECT)
+
+namespace moebius {
+namespace drd {
+
+drd_info             std_drd ("tm");
+drd_info             the_drd= std_drd;
+hashmap<string, int> STD_CODE (UNKNOWN);
 
 static tag_info
 fixed (int arity, int extra= 0, int child_mode= CHILD_UNIFORM) {
@@ -171,7 +174,7 @@ init_std_drd () {
             ->name (4, "top"));
   init (REPEAT, "repeat", fixed (1, 1, BIFORM)->accessible (0));
   init (VAR_REPEAT, "repeat*", fixed (1, 1, BIFORM)->accessible (0));
-  init (_FLOAT, "float", fixed (2, 1, BIFORM)->accessible (1));
+  init (FLOAT, "float", fixed (2, 1, BIFORM)->accessible (1));
   init (DATOMS, "datoms",
         var_repeat (1, 1, BIFORM)->accessible (1)->name ("decorate atoms"));
   // arbitrary number of macros and decorated content
@@ -357,7 +360,7 @@ init_std_drd () {
   init (COPY_THEME, "copy-theme", repeat (1, 1)->variable (0));
   init (APPLY_THEME, "apply-theme", fixed (1)->variable (0));
   init (SELECT_THEME, "select-theme", repeat (1, 1)->variable (0));
-  init (MARK, "mark", fixed (2));
+  init (MARK, "mark", fixed (1, 1, BIFORM)->accessible (1));
   init (VAR_MARK, "mark*", fixed (1, 1, BIFORM)->accessible (1));
   init (EXPAND_AS, "expand-as", fixed (2));
   init (EVAL, "eval", fixed (1)->name ("evaluate"));
@@ -418,7 +421,7 @@ init_std_drd () {
   init (LENGTH, "length", fixed (1)->returns_integer ());
   init (RANGE, "range", fixed (1, 2, BIFORM)->returns_adhoc ()->accessible (0));
   init (NUMBER, "number", fixed (2)->returns_string ()->string_type (0));
-  init (_DATE, "date", options (0, 2)->returns_string ()->string_type (0));
+  init (DATE, "date", options (0, 2)->returns_string ()->string_type (0));
   init (TRANSLATE, "translate", fixed (3)->returns_string ()->string_type (0));
   init (CHANGE_CASE, "change-case",
         fixed (1, 1, BIFORM)->accessible (0)->string_type (1));
@@ -730,7 +733,7 @@ init_std_drd () {
             ->accessible (0)
             ->regular (0)
             ->point_type (1));
-  init (_POINT, "point", repeat (1, 1)->returns_graphical ()->point_type (0));
+  init (POINT, "point", repeat (1, 1)->returns_graphical ()->point_type (0));
   init (LINE, "line", repeat (2, 1)->returns_graphical ()->point_type (0));
   init (CLINE, "cline", repeat (3, 1)->returns_graphical ()->point_type (0));
   init (ARC, "arc", fixed (3)->returns_graphical ()->point_type (0));
@@ -1479,3 +1482,6 @@ init_std_drd () {
   init_var (ORNAMENT_SUNNY_COLOR, TYPE_COLOR);
   init_var (ORNAMENT_SHADOW_COLOR, TYPE_COLOR);
 }
+
+} // namespace drd
+} // namespace moebius

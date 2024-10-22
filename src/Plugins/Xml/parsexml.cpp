@@ -9,13 +9,15 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "block.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
 #include "hashset.hpp"
 #include "parse_string.hpp"
 #include "tree_helper.hpp"
 #include "xml.hpp"
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::block_to_scheme_tree;
 
 #define xml_quote scm_quote
 // FIXME: to be checked that this is the correct quoting style

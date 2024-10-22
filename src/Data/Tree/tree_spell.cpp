@@ -11,17 +11,20 @@
 
 #include "analyze.hpp"
 #include "cork.hpp"
-#include "drd_mode.hpp"
-#include "drd_std.hpp"
 #include "hashset.hpp"
 #include "language.hpp"
 #include "preferences.hpp"
 #include "tree_helper.hpp"
 #include "tree_search.hpp"
 #include "universal.hpp"
-#include "vars.hpp"
+
+#include <moebius/drd/drd_mode.hpp>
+#include <moebius/drd/drd_std.hpp>
+#include <moebius/vars.hpp>
 
 using namespace moebius;
+using moebius::drd::get_access_mode;
+using moebius::drd::the_drd;
 
 int                 spell_max_hits= 1000000;
 void                spell (range_set& sel, tree t, tree what, path p);

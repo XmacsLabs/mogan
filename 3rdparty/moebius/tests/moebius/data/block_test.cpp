@@ -5,14 +5,19 @@
  *  \date   2024
  */
 
-#include "block.hpp"
 #include "file.hpp"
 #include "moe_doctests.hpp"
 #include "string.hpp"
 #include "tm_ostream.hpp"
 #include "tree_helper.hpp"
+#include <moebius/data/scheme.hpp>
 
 using namespace moebius;
+
+using moebius::data::block_to_scheme_tree;
+using moebius::data::scheme_tree_to_block;
+using moebius::data::scheme_tree_to_string;
+using moebius::data::string_to_scheme_tree;
 
 TEST_CASE ("block_to_scheme_tree") {
   CHECK_EQ (block_to_scheme_tree ("(scheme parser)"),

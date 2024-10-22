@@ -9,11 +9,10 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "tree_label.hpp"
+#include "moebius/tree_label.hpp"
 #include "hashmap.hpp"
 
-using namespace moebius;
-
+namespace moebius {
 hashmap<int, string> CONSTRUCTOR_NAME ("?");
 hashmap<string, int> CONSTRUCTOR_CODE (UNKNOWN);
 
@@ -43,7 +42,7 @@ make_tree_label (string s) {
  ******************************************************************************/
 
 string
-as_string (tree_label l) {
+to_string (tree_label l) {
   return CONSTRUCTOR_NAME[(int) l];
 }
 
@@ -56,3 +55,5 @@ bool
 existing_tree_label (string s) {
   return CONSTRUCTOR_CODE->contains (s);
 }
+
+} // namespace moebius

@@ -9,8 +9,9 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "tag_info.hpp"
+#include "moebius/drd/tag_info.hpp"
 #include "hashmap.hpp"
+#include "string.hpp"
 #include "tree_helper.hpp"
 
 using namespace moebius;
@@ -21,6 +22,9 @@ using namespace moebius;
 #define set_bits(which, nr)                                                    \
   i+= ((int) which) << offset;                                                 \
   offset+= nr
+
+namespace moebius {
+namespace drd {
 
 /******************************************************************************
  * Compact representation for environment changes
@@ -191,7 +195,7 @@ parent_info::operator tree () {
   set_bits (freeze_block, 1);
   set_bits (freeze_with, 1);
   set_bits (freeze_var_type, 1);
-  return as_string (i);
+  return tree (as_string (i));
 }
 
 bool
@@ -542,3 +546,6 @@ bool
 operator!= (tag_info ti1, tag_info ti2) {
   return !(ti1 == ti2);
 }
+
+} // namespace drd
+} // namespace moebius

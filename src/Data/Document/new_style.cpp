@@ -15,7 +15,7 @@
 #include "data_cache.hpp"
 #include "file.hpp"
 #include "merge_sort.hpp"
-#include "tm_block.hpp"
+#include "moebius/data/scheme.hpp"
 #include "tm_file.hpp"
 #include "tmfs_url.hpp"
 #include "web_files.hpp"
@@ -23,6 +23,11 @@
 #include <lolly/hash/sha.hpp>
 
 using namespace moebius;
+using moebius::data::scheme_to_tree;
+using moebius::data::tree_to_scheme;
+using moebius::drd::init_std_drd;
+using moebius::drd::std_drd;
+using moebius::drd::the_drd;
 
 /******************************************************************************
  * Global data

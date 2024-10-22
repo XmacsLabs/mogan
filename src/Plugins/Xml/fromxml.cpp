@@ -12,8 +12,10 @@
 #include "convert.hpp"
 #include "tree_helper.hpp"
 #include "xml.hpp"
+#include <moebius/data/scheme.hpp>
 
 using namespace moebius;
+using moebius::data::scheme_tree_to_tree;
 
 tree
 tmml_upgrade (tree doc) {

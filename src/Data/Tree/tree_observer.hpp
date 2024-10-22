@@ -3,7 +3,9 @@
 #define TREE_OBSERVER_H
 
 #include "modification.hpp"
-#include "tree_label.hpp"
+#include <moebius/tree_label.hpp>
+
+using moebius::tree_label;
 
 void stretched_print (tree t, bool ips= false, int indent= 0);
 

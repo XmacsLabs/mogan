@@ -20,7 +20,11 @@
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
 #include "url.hpp"
-#include "vars.hpp"
+
+#include <moebius/drd/drd_std.hpp>
+#include <moebius/vars.hpp>
+
+using moebius::drd::std_drd;
 
 #ifdef USE_PLUGIN_BIBTEX
 #include "Bibtex/bibtex.hpp"

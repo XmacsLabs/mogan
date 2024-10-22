@@ -15,13 +15,15 @@
 #include "fast_search.hpp"
 #include "hashset.hpp"
 #include "iterator.hpp"
-#include "lolly/data/base64.hpp"
 #include "merge_sort.hpp"
 #include "scheme.hpp"
-#include "tm_block.hpp"
 #include "tree_helper.hpp"
 
+#include <lolly/data/base64.hpp>
+#include <moebius/data/scheme.hpp>
+
 using namespace moebius;
+using moebius::data::scheme_to_tree;
 
 /******************************************************************************
  * Get correspondence between subtrees when upgrading texmacs documents

@@ -1,21 +1,24 @@
 
 /******************************************************************************
-* MODULE     : block.cpp
-* DESCRIPTION: A block of Scheme data
-* COPYRIGHT  : (C) 1999  Joris van der Hoeven
-                   2023  Darcy Shen
-                   2023  Charonxin
-*******************************************************************************
-* This software falls under the GNU general public license version 3 or later.
-* It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
-* in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
-******************************************************************************/
+ * MODULE     : to_scheme.cpp
+ * DESCRIPTION: conversion of scheme expressions to TeXmacs trees
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
-#include "block.hpp"
 #include "analyze.hpp"
+#include "moebius/data/scheme.hpp"
+#include "moebius/drd/drd_std.hpp"
+#include "path.hpp"
 #include "tree_helper.hpp"
 
-using namespace moebius;
+using moebius::TUPLE;
+
+namespace moebius {
+namespace data {
 
 /******************************************************************************
  * Handling escape characters
@@ -53,10 +56,6 @@ unslash (string& s, int i, int end_index, string& r, int& r_index) {
     ch= s[i];
   }
 }
-
-/******************************************************************************
- * Converting strings to scheme trees
- ******************************************************************************/
 
 static bool
 is_spc (char c) {
@@ -171,87 +170,73 @@ block_to_scheme_tree (string s) {
   return p;
 }
 
-/******************************************************************************
- * Handling escape characters
- ******************************************************************************/
-
-string
-slash (string s) {
-  int    i, n= N (s);
-  string r;
-  for (i= 0; i < n; i++)
-    switch (s[i]) {
-    case '(':
-    case ')':
-    case ' ':
-    case '\'':
-      if ((n < 2) || (s[0] != '\042') || (s[n - 1] != '\042')) r << "\\";
-      r << s[i];
-      break;
-    case '\\':
-      r << '\\' << s[i];
-      break;
-    case '\042':
-      if (((i == 0) && (s[n - 1] == '\042')) ||
-          ((i == (n - 1)) && (s[0] == '\042')))
-        r << s[i];
-      else r << "\\" << s[i];
-      break;
-    case ((char) 0):
-      r << "\\0";
-      break;
-    case '\t':
-      r << "\\t";
-      break;
-    case '\n':
-      r << "\\n";
-      break;
-    default:
-      r << s[i];
-    }
-  return r;
-}
-
-/******************************************************************************
- * Converting scheme trees to strings
- ******************************************************************************/
-
-static void
-scheme_tree_to_string (string& out, scheme_tree p) {
-  if (!is_tuple (p)) {
-    string s= p->label;
-    if (is_quoted (s)) out << scm_quote (raw_unquote (s));
-    else out << slash (s);
+tree
+scheme_tree_to_tree (scheme_tree t, hashmap<string, int> codes, bool flag) {
+  if (is_atomic (t)) return scm_unquote (t->label);
+  else if ((N (t) == 0) || is_compound (t[0])) {
+    return compound (
+        "errput", concat ("The tree was ", as_string (L (t)), ": ", tree (t)));
   }
   else {
-    if (is_tuple (p, "\'", 1)) {
-      out << "\'";
-      scheme_tree_to_string (out, p[1]);
+    int        i, n= N (t);
+    tree_label code= (tree_label) codes[t[0]->label];
+    if (flag) code= make_tree_label (t[0]->label);
+    if (code == UNKNOWN) {
+      tree u (EXPAND, n);
+      u[0]= copy (t[0]);
+      for (i= 1; i < n; i++)
+        u[i]= scheme_tree_to_tree (t[i], codes, flag);
+      return u;
     }
     else {
-      int i, n= N (p);
-      out << "(";
-      for (i= 0; i < n; i++) {
-        if (i > 0) out << " ";
-        scheme_tree_to_string (out, p[i]);
-      }
-      out << ")";
+      tree u (code, n - 1);
+      for (i= 1; i < n; i++)
+        u[i - 1]= scheme_tree_to_tree (t[i], codes, flag);
+      return u;
     }
   }
 }
 
-string
-scheme_tree_to_string (scheme_tree p) {
-  string out;
-  scheme_tree_to_string (out, p);
-  return out;
+tree
+scheme_tree_to_tree (scheme_tree t) {
+  return scheme_tree_to_tree (t, drd::STD_CODE, true);
 }
 
-string
-scheme_tree_to_block (scheme_tree p) {
-  string out;
-  int    i, n= N (p);
-  for (i= 0; i < n; i++)
-    out << scheme_tree_to_string (p[i]) << "\n";
-  return out;
+tree
+scheme_tree_to_tree (scheme_tree t, string version) {
+  version= scm_unquote (version);
+  tree doc, error (moebius::ERROR, "bad format or data");
+  // if (version_inf (version, "1.0.2.4"))
+  //   doc= scheme_tree_to_tree (t, get_codes (version), false);
+  // else doc= scheme_tree_to_tree (t);
+  doc= scheme_tree_to_tree (t);
+  if (!is_document (doc)) return error;
+  // return upgrade (doc, version);
+  return doc;
 }
+
+tree
+scheme_to_tree (string s) {
+  return scheme_tree_to_tree (string_to_scheme_tree (s));
+}
+
+tree
+scheme_document_to_tree (string s) {
+  tree error (moebius::ERROR, "bad format or data");
+  if (starts (s, "(document (apply \"TeXmacs\" ") ||
+      starts (s, "(document (expand \"TeXmacs\" ") ||
+      starts (s, "(document (TeXmacs ")) {
+    int i, begin= 27;
+    if (starts (s, "(document (expand \"TeXmacs\" ")) begin= 28;
+    if (starts (s, "(document (TeXmacs ")) begin= 19;
+    for (i= begin; i < N (s); i++)
+      if (s[i] == ')') break;
+    string version= s (begin, i);
+    tree   t      = string_to_scheme_tree (s);
+    return scheme_tree_to_tree (t, version);
+  }
+  return error;
+}
+
+} // namespace data
+} // namespace moebius

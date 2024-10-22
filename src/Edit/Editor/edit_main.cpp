@@ -13,7 +13,6 @@
 #include "connect.hpp"
 #include "convert.hpp"
 #include "cork.hpp"
-#include "drd_std.hpp"
 #include "image_files.hpp"
 #include "iterator.hpp"
 #include "message.hpp"
@@ -24,6 +23,7 @@
 #include "tm_file.hpp"
 #include "tree_observer.hpp"
 #include "typesetter.hpp"
+#include <moebius/drd/drd_std.hpp>
 #include <setjmp.h>
 
 #ifdef USE_PLUGIN_PDF
@@ -40,6 +40,7 @@
 #endif
 
 using namespace moebius;
+using moebius::drd::std_drd;
 
 /******************************************************************************
  * Constructors and destructor

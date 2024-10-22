@@ -13,12 +13,14 @@
 #include "Tex/tex.hpp"
 #include "converter.hpp"
 #include "cork.hpp"
-#include "tm_block.hpp"
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
-#include "vars.hpp"
+#include <moebius/data/scheme.hpp>
+#include <moebius/vars.hpp>
 
 using namespace moebius;
+using moebius::data::scheme_tree_to_tree;
+using moebius::data::tree_to_scheme_tree;
 
 /******************************************************************************
  * Helper functions

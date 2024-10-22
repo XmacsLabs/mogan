@@ -9,7 +9,10 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "drd_mode.hpp"
+#include "moebius/drd/drd_mode.hpp"
+
+namespace moebius {
+namespace drd {
 
 static int drd_access_mode  = DRD_ACCESS_NORMAL;
 static int drd_writable_mode= DRD_WRITABLE_NORMAL;
@@ -37,3 +40,6 @@ int
 get_writable_mode () {
   return drd_writable_mode;
 }
+
+} // namespace drd
+} // namespace moebius

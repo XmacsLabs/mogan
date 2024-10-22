@@ -12,13 +12,15 @@
 #include "Boxes/graphics.hpp"
 #include "analyze.hpp"
 #include "concater.hpp"
-#include "drd_std.hpp"
 #include "hashset.hpp"
 #include "matrix.hpp"
 #include "scheme.hpp"
 #include "tm_debug.hpp"
 
+#include <moebius/drd/drd_std.hpp>
+
 using namespace moebius;
+using moebius::drd::the_drd;
 
 #define BEGIN_MAGNIFY                                                          \
   tree new_mag= as_string (env->magn * env->mgfy);                             \
@@ -148,7 +150,7 @@ concater_rep::typeset_superpose (tree t, path ip) {
 bool
 is_transformation (tree t) {
   if (is_tuple (t, "rotation", 1) && is_double (t[1])) return true;
-  if (is_tuple (t, "rotation", 2) && is_func (t[1], _POINT, 2) &&
+  if (is_tuple (t, "rotation", 2) && is_func (t[1], POINT, 2) &&
       is_double (t[1][0]) && is_double (t[1][1]) && is_double (t[2]))
     return true;
   if (is_tuple (t, "scaling", 2) && is_double (t[1]) && is_double (t[2]))
@@ -889,7 +891,7 @@ concater_rep::typeset_graphical (array<box>& bs, tree t, path ip) {
 
 static point
 as_point_3d (tree t) {
-  if (is_func (t, _POINT, 3) && is_point (t)) return as_point (t);
+  if (is_func (t, POINT, 3) && is_point (t)) return as_point (t);
   else return point ();
 }
 

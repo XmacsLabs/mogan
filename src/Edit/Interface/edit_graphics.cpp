@@ -13,11 +13,11 @@
 #include "Boxes/graphics.hpp"
 #include "Bridge/impl_typesetter.hpp"
 #include "curve.hpp"
-#include "drd_std.hpp"
 #include "edit_interface.hpp"
 #include "scheme.hpp"
 #include "server.hpp"
 #include "tree_observer.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
 extern tree the_et;
@@ -330,7 +330,7 @@ edit_graphics_rep::adjust (point p) {
 
 tree
 edit_graphics_rep::find_point (point p) {
-  return tree (_POINT, as_string (p[0]), as_string (p[1]));
+  return tree (POINT, as_string (p[0]), as_string (p[1]));
 }
 
 bool

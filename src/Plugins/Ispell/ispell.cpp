@@ -17,7 +17,7 @@
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_link.hpp"
-#include "tree_label.hpp"
+#include <moebius/tree_label.hpp>
 
 using namespace moebius;
 

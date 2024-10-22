@@ -12,7 +12,6 @@
 #ifndef ENV_H
 #define ENV_H
 #include "boxes.hpp"
-#include "drd_info.hpp"
 #include "font.hpp"
 #include "frame.hpp"
 #include "gui.hpp"
@@ -22,9 +21,11 @@
 #include "path.hpp"
 #include "player.hpp"
 #include "url.hpp"
-#include "vars.hpp"
+#include <moebius/drd/drd_info.hpp>
+#include <moebius/vars.hpp>
 
 using namespace moebius;
+using moebius::drd::drd_info;
 
 #define DECORATION (-1)
 

@@ -13,11 +13,11 @@
 #define EDITOR_H
 
 #include "config.h"
-#include "drd_info.hpp"
 #include "new_data.hpp"
 #include "server.hpp"
 #include "tree_select.hpp"
 #include "typesetter.hpp"
+#include <moebius/drd/drd_info.hpp>
 
 #ifdef AQUATEXMACS
 #include "Cocoa/aqua_simple_widget.h"

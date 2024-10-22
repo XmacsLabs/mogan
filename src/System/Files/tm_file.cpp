@@ -20,9 +20,9 @@
 #include "tm_timer.hpp"
 #include "tmfs_url.hpp"
 #include "tree_helper.hpp"
-#include "tree_label.hpp"
 #include "url.hpp"
 #include "web_files.hpp"
+#include <moebius/tree_label.hpp>
 
 #include <errno.h>
 #include <stddef.h>

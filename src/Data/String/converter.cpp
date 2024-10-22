@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "converter.hpp"
-#include "block.hpp"
 #ifdef USE_ICONV
 #include <iconv.h>
 #endif
@@ -19,11 +18,14 @@
 #include <errno.h>
 
 #include <lolly/data/numeral.hpp>
+#include <moebius/data/scheme.hpp>
 
 using namespace moebius;
 
 using lolly::data::from_hex;
 using lolly::data::to_Hex;
+using moebius::data::block_to_scheme_tree;
+
 #define as_hexadecimal to_Hex
 #define from_hexadecimal from_hex
 

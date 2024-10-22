@@ -11,6 +11,7 @@
 
 #ifndef TAG_INFO_H
 #define TAG_INFO_H
+
 #include "tree.hpp"
 
 #define TYPE_INVALID -1
@@ -40,11 +41,6 @@
 #define TYPE_OBSOLETE 23
 #define TYPE_UNKNOWN 24
 #define TYPE_ERROR 25
-
-int    drd_encode (tree t);
-tree   drd_decode (int i);
-int    drd_encode_type (string s);
-string drd_decode_type (int i);
 
 /******************************************************************************
  * The parent_info class contains outer information about tags
@@ -102,32 +98,6 @@ string drd_decode_type (int i);
 #define VAR_PARAMETER 1
 #define VAR_MACRO_PARAMETER 2
 
-struct parent_info {
-  unsigned type : 5;        // the type
-  unsigned arity_mode : 2;  // arity layout
-  unsigned arity_base : 6;  // base arity (minimal arity)
-  unsigned arity_extra : 4; // extra arity (optional, repeated, etc.)
-  unsigned child_mode : 2;  // child layout
-  unsigned border_mode : 2; // is the border inaccessible?
-  unsigned block : 2;       // is a block structure?
-  unsigned with_like : 1;   // is only an environment modifier?
-  unsigned var_type : 2;    // macro, parameter or macro parameter
-  unsigned freeze_type : 1; // true => disable heuristic determination
-  unsigned freeze_arity : 1;
-  unsigned freeze_border : 1;
-  unsigned freeze_block : 1;
-  unsigned freeze_with : 1;
-  unsigned freeze_var_type : 1;
-
-  parent_info (int arity, int extra, int amode, int cmode, bool frozen= false);
-  parent_info (tree t);
-  inline ~parent_info () {}
-  operator tree ();
-  bool               operator== (const parent_info& pi);
-  bool               operator!= (const parent_info& pi);
-  friend tm_ostream& operator<< (tm_ostream& out, parent_info pi);
-};
-
 /******************************************************************************
  * The child_info class contains more detailed information about each of
  * the children of the tag.
@@ -166,6 +136,40 @@ struct parent_info {
 #define BLOCK_REQUIRE_BLOCK 0
 #define BLOCK_REQUIRE_INLINE 1
 #define BLOCK_REQUIRE_NONE 2
+
+namespace moebius {
+namespace drd {
+
+int    drd_encode (tree t);
+tree   drd_decode (int i);
+int    drd_encode_type (string s);
+string drd_decode_type (int i);
+
+struct parent_info {
+  unsigned type : 5;        // the type
+  unsigned arity_mode : 2;  // arity layout
+  unsigned arity_base : 6;  // base arity (minimal arity)
+  unsigned arity_extra : 4; // extra arity (optional, repeated, etc.)
+  unsigned child_mode : 2;  // child layout
+  unsigned border_mode : 2; // is the border inaccessible?
+  unsigned block : 2;       // is a block structure?
+  unsigned with_like : 1;   // is only an environment modifier?
+  unsigned var_type : 2;    // macro, parameter or macro parameter
+  unsigned freeze_type : 1; // true => disable heuristic determination
+  unsigned freeze_arity : 1;
+  unsigned freeze_border : 1;
+  unsigned freeze_block : 1;
+  unsigned freeze_with : 1;
+  unsigned freeze_var_type : 1;
+
+  parent_info (int arity, int extra, int amode, int cmode, bool frozen= false);
+  parent_info (tree t);
+  inline ~parent_info () {}
+  operator tree ();
+  bool               operator== (const parent_info& pi);
+  bool               operator!= (const parent_info& pi);
+  friend tm_ostream& operator<< (tm_ostream& out, parent_info pi);
+};
 
 struct child_info {
   unsigned type : 5;        // argument type
@@ -241,5 +245,7 @@ bool        operator== (tag_info ti1, tag_info ti2);
 bool        operator!= (tag_info ti1, tag_info ti2);
 tm_ostream& operator<< (tm_ostream& out, tag_info ti);
 tag_info    copy (tag_info ti);
+} // namespace drd
+} // namespace moebius
 
 #endif // defined TAG_INFO_H

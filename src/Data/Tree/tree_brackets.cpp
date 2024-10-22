@@ -16,6 +16,8 @@
 #include "tree_helper.hpp"
 
 using namespace moebius;
+using moebius::drd::the_drd;
+using moebius::drd::with_drd;
 
 static array<tree> upgrade_brackets (array<tree> a, int level);
 

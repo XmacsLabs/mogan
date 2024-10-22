@@ -13,8 +13,6 @@
 #include "Metafont/tex_files.hpp"
 #include "convert.hpp"
 #include "data_cache.hpp"
-#include "drd_mode.hpp"
-#include "drd_std.hpp"
 #include "file.hpp"
 #include "gui.hpp" // for gui_interrupted
 #include "message.hpp"
@@ -22,8 +20,14 @@
 #include "preferences.hpp"
 #include "server.hpp"
 #include "tm_window.hpp"
-#include "tree_label.hpp"
 #include "tree_traverse.hpp"
+
+#include <moebius/drd/drd_mode.hpp>
+#include <moebius/drd/drd_std.hpp>
+#include <moebius/tree_label.hpp>
+
+using moebius::drd::set_access_mode;
+using moebius::drd::the_drd;
 
 extern void (*env_next_prog) (void);
 extern void set_snap_mode (tree t);
@@ -470,7 +474,7 @@ edit_interface_rep::selection_visible () {
 
 static bool
 is_graphical (tree t) {
-  return is_func (t, _POINT) || is_func (t, LINE) || is_func (t, CLINE) ||
+  return is_func (t, POINT) || is_func (t, LINE) || is_func (t, CLINE) ||
          is_func (t, ARC) || is_func (t, CARC) || is_func (t, ELLIPSE) ||
          is_func (t, SPLINE) || is_func (t, CSPLINE) || is_func (t, BEZIER) ||
          is_func (t, CBEZIER) || is_func (t, SMOOTH) || is_func (t, CSMOOTH) ||

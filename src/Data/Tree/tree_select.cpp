@@ -12,10 +12,11 @@
 #include "tree_select.hpp"
 #include "analyze.hpp"
 #include "cork.hpp"
-#include "drd_std.hpp"
 #include "tree_helper.hpp"
+#include <moebius/drd/drd_std.hpp>
 
 using namespace moebius;
+using moebius::drd::the_drd;
 
 path closest_up (tree t, path p);
 

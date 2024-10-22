@@ -14,13 +14,19 @@
 
 #include "iterator.hpp"
 #include "modification.hpp"
+#include "moebius/tree_label.hpp"
 #include "tree.hpp"
-#include "tree_label.hpp"
 #include "url.hpp"
 
 using moebius::ASSOCIATE;
 using moebius::COLLECTION;
+using moebius::tree_label;
 using moebius::TUPLE;
+
+inline string
+as_string (tree_label l) {
+  return moebius::to_string (l);
+}
 
 inline tree_label
 L (tree t) {

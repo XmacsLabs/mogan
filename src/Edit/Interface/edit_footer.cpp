@@ -190,7 +190,7 @@ edit_interface_rep::compute_operation_footer (tree st) {
     case SPACE:
       r= concat ("space");
       break;
-    case _FLOAT:
+    case FLOAT:
       r= (is_atomic (st[0]) ? st[0]->label : string ("float"));
       break;
     case MID:
@@ -330,7 +330,7 @@ edit_interface_rep::compute_compound_footer (tree t, path p) {
   case CLIPPED:
     if (l == 0) return concat (up, "clipped ");
     else return up;
-  case _FLOAT:
+  case FLOAT:
     if (N (st) >= 1 && is_atomic (st[0]))
       return concat (up, st[0]->label * " ");
     else return concat (up, "float ");

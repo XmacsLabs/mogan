@@ -11,8 +11,11 @@
 
 #ifndef DRD_STD_H
 #define DRD_STD_H
+
 #include "drd_info.hpp"
 
+namespace moebius {
+namespace drd {
 extern drd_info             std_drd;
 extern drd_info             the_drd;
 extern hashmap<string, int> STD_CODE;
@@ -29,5 +32,7 @@ struct with_drd {
   inline with_drd (drd_info new_drd) : old_drd (the_drd) { the_drd= new_drd; }
   inline ~with_drd () { the_drd= old_drd; }
 };
+} // namespace drd
+} // namespace moebius
 
 #endif // defined DRD_STD_H

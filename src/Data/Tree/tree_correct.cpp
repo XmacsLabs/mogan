@@ -16,6 +16,9 @@
 #include "tree_helper.hpp"
 
 using namespace moebius;
+using moebius::drd::drd_env_read;
+using moebius::drd::the_drd;
+using moebius::drd::with_drd;
 
 /******************************************************************************
  * DRD based correction

@@ -9,13 +9,11 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#ifndef VARS_H
-#define VARS_H
 #include "string.hpp"
 
-/******************************************************************************
- * System environment variables
- ******************************************************************************/
+#pragma once
+
+namespace moebius {
 
 extern string DPI;
 extern string ZOOM_FACTOR;
@@ -350,5 +348,4 @@ extern string ORNAMENT_COLOR;
 extern string ORNAMENT_EXTRA_COLOR;
 extern string ORNAMENT_SUNNY_COLOR;
 extern string ORNAMENT_SHADOW_COLOR;
-
-#endif // defined VARS_H
+} // namespace moebius

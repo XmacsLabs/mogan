@@ -16,7 +16,9 @@
 #include "preferences.hpp"
 #include "tree_helper.hpp"
 #include "tree_observer.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
+
+using namespace moebius;
 
 hashmap<string, list<observer>> id_resolve;
 hashmap<observer, list<string>> pointer_resolve;

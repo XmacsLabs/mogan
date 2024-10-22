@@ -13,13 +13,16 @@
 #include "convert.hpp"
 #include "converter.hpp"
 #include "cork.hpp"
-#include "drd_std.hpp"
 #include "locale.hpp"
 #include "tree_helper.hpp"
-#include "vars.hpp"
 #include "wencoding.hpp"
+#include <moebius/drd/drd_std.hpp>
+#include <moebius/vars.hpp>
 
 using namespace moebius;
+using moebius::drd::drd_env_read;
+using moebius::drd::std_drd;
+using moebius::drd::the_drd;
 
 /******************************************************************************
  * TeXmacs to verbatim

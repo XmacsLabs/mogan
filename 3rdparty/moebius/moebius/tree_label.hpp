@@ -9,12 +9,13 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#ifndef TREE_LABEL_H
-#define TREE_LABEL_H
-
 #include "string.hpp"
 
+#pragma once
+
+#ifdef ERROR
 #undef ERROR
+#endif
 
 /******************************************************************************
  * Standard tree labels
@@ -49,7 +50,7 @@ enum tree_label : int {
   CLIPPED,
   REPEAT,
   VAR_REPEAT,
-  _FLOAT,
+  FLOAT,
   DATOMS,
   DLINES,
   DPAGES,
@@ -186,7 +187,7 @@ enum tree_label : int {
   LENGTH,
   RANGE,
   NUMBER,
-  _DATE,
+  DATE,
   TRANSLATE,
   CHANGE_CASE,
   FIND_FILE,
@@ -326,7 +327,7 @@ enum tree_label : int {
   TEXT_AT,
   MATH_AT,
   DOCUMENT_AT,
-  _POINT,
+  POINT,
   LINE,
   CLINE,
   ARC,
@@ -426,18 +427,15 @@ enum tree_label : int {
   // user extensions
   START_EXTENSIONS
 };
-}
-
-using moebius::tree_label;
 
 inline tree_label
 SUB (bool right) {
-  return right ? moebius::RSUB : moebius::LSUB;
+  return right ? RSUB : LSUB;
 }
 
 inline tree_label
 SUP (bool right) {
-  return right ? moebius::RSUP : moebius::LSUP;
+  return right ? RSUP : LSUP;
 }
 
 /******************************************************************************
@@ -446,8 +444,8 @@ SUP (bool right) {
 
 void       make_tree_label (tree_label l, string s);
 tree_label make_tree_label (string s); // for extensions
-string     as_string (tree_label l);
+string     to_string (tree_label l);
 tree_label as_tree_label (string s);
 bool       existing_tree_label (string s);
 
-#endif // defined TREE_LABEL_H
+} // namespace moebius

@@ -11,7 +11,7 @@
 
 #include "convert.hpp"
 #include "tree_helper.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
 
 using namespace moebius;
 

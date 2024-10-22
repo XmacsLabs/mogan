@@ -12,7 +12,6 @@
 #include "Freetype/tt_file.hpp"
 #include "Freetype/tt_tools.hpp"
 #include "Metafont/tex_files.hpp"
-#include "block.hpp"
 #include "convert.hpp"
 #include "data_cache.hpp"
 #include "file.hpp"
@@ -23,7 +22,11 @@
 #include "tm_file.hpp"
 #include "tm_timer.hpp"
 
+#include <moebius/data/scheme.hpp>
+
 using namespace moebius;
+using moebius::data::block_to_scheme_tree;
+using moebius::data::scheme_tree_to_block;
 
 void                 font_database_filter_features ();
 void                 font_database_filter_characteristics ();

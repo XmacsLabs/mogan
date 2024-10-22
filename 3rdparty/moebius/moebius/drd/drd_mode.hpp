@@ -20,9 +20,12 @@
 #define DRD_WRITABLE_INPUT 1
 #define DRD_WRITABLE_ANY 2
 
+namespace moebius {
+namespace drd {
 int set_access_mode (int mode);
 int get_access_mode ();
 int set_writable_mode (int mode);
 int get_writable_mode ();
-
+} // namespace drd
+} // namespace moebius
 #endif // defined DRD_MODE_H

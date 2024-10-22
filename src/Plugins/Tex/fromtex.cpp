@@ -20,7 +20,7 @@
 #include "tree_analyze.hpp"
 #include "tree_correct.hpp"
 #include "url.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
 
 #ifdef USE_PLUGIN_BIBTEX
 #include "Bibtex/bibtex.hpp"

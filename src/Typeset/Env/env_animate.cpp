@@ -12,7 +12,7 @@
 #include "env.hpp"
 #include "merge_sort.hpp"
 #include "scheme.hpp"
-#include "tree_label.hpp"
+#include <moebius/tree_label.hpp>
 
 /******************************************************************************
  * Main execution
@@ -361,9 +361,9 @@ morphable_arity (tree_label l) {
 tree
 interpolate (tree t, int i, double x) {
   if (N (t) == 1 || i >= N (t) - 1) return t[i];
-  if (!is_func (t[i], _POINT) || !is_func (t[i + 1], _POINT)) return "";
+  if (!is_func (t[i], POINT) || !is_func (t[i + 1], POINT)) return "";
   if (N (t[i]) != N (t[i + 1])) return "";
-  tree r (_POINT, N (t[i]));
+  tree r (POINT, N (t[i]));
   for (int j= 0; j < N (t[i]); j++) {
     double v= as_double (t[i][j]);
     double w= as_double (t[i + 1][j]);

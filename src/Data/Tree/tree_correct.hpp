@@ -11,7 +11,10 @@
 
 #ifndef TREE_CORRECT_H
 #define TREE_CORRECT_H
-#include "drd_std.hpp"
+
+#include <moebius/drd/drd_std.hpp>
+
+using moebius::drd::drd_info;
 
 tree drd_correct (drd_info drd, tree t);
 tree correct_concat_block (tree t);

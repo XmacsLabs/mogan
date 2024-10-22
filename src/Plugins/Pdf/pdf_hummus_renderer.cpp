@@ -14,7 +14,6 @@
 #include "Ghostscript/gs_utilities.hpp" // for gs_prefix
 #include "Metafont/tex_files.hpp"
 #include "analyze.hpp"
-#include "block.hpp"
 #include "convert.hpp"
 #include "converter.hpp"
 #include "file.hpp"
@@ -33,7 +32,9 @@
 #include "wencoding.hpp"
 
 #include <lolly/data/numeral.hpp>
+#include <moebius/data/scheme.hpp>
 using lolly::data::as_hexadecimal;
+using moebius::data::block_to_scheme_tree;
 
 #ifdef QT_CORE_LIB
 #include <QtCore>

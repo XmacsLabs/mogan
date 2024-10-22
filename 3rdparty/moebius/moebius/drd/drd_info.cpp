@@ -9,13 +9,13 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "drd_info.hpp"
+#include "moebius/drd/drd_info.hpp"
 #include "analyze.hpp"
-#include "drd_mode.hpp"
-#include "drd_std.hpp"
 #include "iterator.hpp"
+#include "moebius/drd/drd_mode.hpp"
+#include "moebius/drd/drd_std.hpp"
+#include "moebius/vars.hpp"
 #include "tree_helper.hpp"
-#include "vars.hpp"
 
 using namespace moebius;
 
@@ -23,6 +23,8 @@ using namespace moebius;
  * Constructors and basic operations
  ******************************************************************************/
 
+namespace moebius {
+namespace drd {
 drd_info_rep::drd_info_rep (string name2)
     : name (name2), info (tag_info ()), env (UNINIT) {}
 drd_info_rep::drd_info_rep (string name2, drd_info base)
@@ -1053,3 +1055,6 @@ drd_info_rep::heuristic_init (hashmap<string, tree> env2) {
   }
   // cout << "--> " << (texmacs_time ()-tt) << "ms\n";
 }
+
+} // namespace drd
+} // namespace moebius

@@ -15,7 +15,7 @@
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
 #include "universal.hpp"
-#include "vars.hpp"
+#include <moebius/vars.hpp>
 
 /******************************************************************************
  * Useful subroutines

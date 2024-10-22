@@ -11,7 +11,7 @@
 
 #include "space.hpp"
 #include "tree_helper.hpp"
-#include "tree_label.hpp"
+#include <moebius/tree_label.hpp>
 
 /******************************************************************************
  * Constructors

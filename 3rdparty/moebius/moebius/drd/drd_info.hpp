@@ -12,14 +12,17 @@
 #ifndef DRD_INFO_H
 #define DRD_INFO_H
 
+#include "moebius/tree_label.hpp"
 #include "path.hpp"
 #include "rel_hashmap.hpp"
 #include "tag_info.hpp"
 #include "tree.hpp"
-#include "tree_label.hpp"
 
+using moebius::tree_label;
 using moebius::UNINIT;
 
+namespace moebius {
+namespace drd {
 class drd_info;
 class drd_info_rep : concrete_struct {
 public:
@@ -147,5 +150,8 @@ CONCRETE_CODE (drd_info);
 tree drd_env_write (tree env, string var, tree val);
 tree drd_env_merge (tree env, tree t);
 tree drd_env_read (tree env, string var, tree val= tree (UNINIT));
+
+} // namespace drd
+} // namespace moebius
 
 #endif // defined DRD_INFO_H

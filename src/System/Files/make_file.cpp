@@ -14,14 +14,17 @@
 #include "hashmap.hpp"
 #include "image_files.hpp"
 #include "sys_utils.hpp"
-#include "tm_block.hpp"
 #include "tm_file.hpp"
 #include "tmfs_url.hpp"
 #include "tree_helper.hpp"
 #include "web_files.hpp"
 
 #include <lolly/data/numeral.hpp>
+#include <moebius/data/scheme.hpp>
+
 using lolly::data::to_Hex;
+using moebius::data::scheme_to_tree;
+using moebius::data::tree_to_scheme;
 
 /******************************************************************************
  * Make
