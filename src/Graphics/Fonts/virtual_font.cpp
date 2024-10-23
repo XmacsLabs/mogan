@@ -14,8 +14,10 @@
 #include "font.hpp"
 #include "frame.hpp"
 #include "iterator.hpp"
+#include "moebius/data/scheme.hpp"
 #include "tm_debug.hpp"
 #include "translator.hpp"
+#include "tree.hpp"
 
 int get_utf8_code (string c);
 
@@ -59,6 +61,7 @@ struct virtual_font_rep : font_rep {
   glyph get_glyph (string s);
   int   index_glyph (string s, font_metric& fnm, font_glyphs& fng);
 
+  // font make_rubber_font (font base) override;
   bool supports (string c);
   void get_extents (string s, metric& ex);
   void get_xpositions (string s, SI* xpos);
@@ -87,10 +90,29 @@ virtual_font_rep::virtual_font_rep (string name, font base, string vname,
       fnm (std_font_metric (name, tm_new_array<metric> (last), 0, last - 1)),
       fng (std_font_glyphs (name, tm_new_array<glyph> (last), 0, last - 1)),
       trm (metric_struct ()), trg (glyph ()), sup_bit (false), sup_svg (false) {
+  if (starts (vname, "opentype")) {
+    cout << "opentype virtual font " << vname << LF;
+
+    auto it= iterate (virt->dict);
+
+    while (it->busy ()) {
+      string key= it->next ();
+      cout << "key: " << key << " value: " << virt->dict (key) << LF;
+      cout << moebius::data::scheme_tree_to_string (
+                  virt->virt_def[virt->dict (key)])
+           << LF;
+    }
+  }
+
   copy_math_pars (base_fn);
   hunit= ((size * hdpi) / 72) * PIXEL;
   vunit= ((size * vdpi) / 72) * PIXEL;
 }
+
+// font
+// virtual_font_rep::make_rubber_font (font base) {
+//   return base_fn->make_rubber_font (base);
+// }
 
 /******************************************************************************
  * Execution of expressions
@@ -1136,6 +1158,11 @@ virtual_font_rep::compile_bis (scheme_tree t, metric& ex) {
 
 glyph
 virtual_font_rep::compile (scheme_tree t, metric& ex) {
+
+  if (starts(fn_name, "opentype")) {
+    cout << "compile " << moebius::data::scheme_tree_to_string(t) << LF;
+  }
+
   if (trg->contains (t)) {
     ex[0]= trm[t];
     return trg[t];

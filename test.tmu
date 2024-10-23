@@ -1,0 +1,20 @@
+<TMU|<tuple|1.0.5|1.2.9.5>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <\equation*>
+    <big|int><around*|[||]><big|sum><big|iint><big|iiint><big|idotsint><big|oint><big|oiint><big|oplus><big|otimes><big|pluscup><big|interleave><around*|{|<frac||>|}> <around*|{|<frac|<frac||>|>|}><sqrt|1+<sqrt|2>>
+  </equation*>
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|font|Asana Math>
+    <associate|font-family|rm>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
