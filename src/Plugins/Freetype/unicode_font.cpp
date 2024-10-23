@@ -10,6 +10,8 @@
  ******************************************************************************/
 
 #include "unicode_font.hpp"
+#include "analyze.hpp"
+#include "scalable.hpp"
 #include <lolly/data/numeral.hpp>
 #include <lolly/data/unicode.hpp>
 
@@ -940,6 +942,26 @@ unicode_font_rep::get_lsup_correction (string s) {
 
 SI
 unicode_font_rep::get_rsub_correction (string s) {
+  if (math_type == MATH_TYPE_OPENTYPE) {
+
+    SI r1= 0, r2= 0;
+
+    // for integral signs
+    if (get_ot_italic_correction (s, false, r1)) {
+      if (is_integral (s) || is_alt_integral (s)) {
+        r1= r1 / 2;
+      }
+      else {
+        r1= 0;
+      }
+    }
+
+    SI h= ysub_lo_base;
+    get_ot_kerning (s, h, false, false, r2);
+    SI rr = -r1 + r2;
+    cout << "get_rsub_correction for: " << s << " " << rr << LF;
+    return rr;
+  }
   SI r= global_rsub_correct;
   if (math_type == MATH_TYPE_STIX && (is_integral (s) || is_alt_integral (s)))
     ;
@@ -1025,6 +1047,86 @@ unicode_font_rep::make_rubber_font (font base) {
     return rubber_unicode_font (this, this->math_face);
   }
   return font_rep::make_rubber_font (base);
+}
+
+inline int
+decode_index (FT_Face face, int i) {
+  if (i < 0xc000000) return ft_get_char_index (face, i);
+  return i - 0xc000000;
+}
+
+unsigned int
+unicode_font_rep::get_glyphID (string s) {
+  // if (is_ot_integral (s)) {
+  //   s= "<int>";
+  // }
+  if (starts (s, "<@")) return from_hex (s (2, 6));
+  cout << "get_glyphID for: " << s << LF;
+  font_metric fm;
+  font_glyphs fg;
+  int         index= index_glyph (s, fm, fg);
+  return decode_index (math_face->ft_face, index);
+}
+
+bool
+unicode_font_rep::get_ot_italic_correction (string s, bool left, SI& r) {
+  if (math_type != MATH_TYPE_OPENTYPE || N (s) == 0) return false;
+  auto italics_correction= math_table->italics_correction;
+  int  start= 0, end= N (s);
+  if (left) {
+    end= start;
+    tm_char_forwards (s, end);
+  }
+  else {
+    start= end;
+    tm_char_backwards (s, start);
+  }
+  string ss= s (start, end);
+  cout << "Checking italic correction for " << s << " -> " << ss << LF;
+  unsigned int glyphID= get_glyphID (ss);
+
+  if (italics_correction->contains (glyphID)) {
+    int correction= italics_correction[glyphID].value;
+
+    r= design_unit_to_metric (correction);
+    return true;
+  }
+  return false;
+}
+
+bool
+unicode_font_rep::get_ot_kerning (string s, SI height, bool top, bool left,
+                                  SI& kerning) {
+  if (math_type != MATH_TYPE_OPENTYPE || N (s) == 0) return false;
+  int start= 0, end= N (s);
+  if (left) {
+    end= start;
+    tm_char_forwards (s, end);
+  }
+  else {
+    start= end;
+    tm_char_backwards (s, start);
+  }
+  string ss= s (start, end);
+
+  unsigned int glyphID= get_glyphID (ss);
+
+  if (!math_table->has_kerning (glyphID, top, left)) return false;
+
+  int kerning_unit= math_table->get_kerning (
+      glyphID, metric_to_design_unit (height), top, left);
+
+  // pick one with the smallest height (absolute value)
+  kerning= design_unit_to_metric (kerning_unit);
+
+  cout << "Kerning for " << ss << " with height: " << kerning_unit << " -> "
+       << kerning << LF;
+  return true;
+}
+
+bool
+unicode_font_rep::is_ot_integral (string s) {
+  return true;
 }
 
 font
