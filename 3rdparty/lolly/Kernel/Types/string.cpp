@@ -11,6 +11,7 @@
  ******************************************************************************/
 
 #include "string.hpp"
+#include "basic.hpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -200,15 +201,6 @@ operator<= (string s1, string s2) {
     if (s2[i] < s1[i]) return false;
   }
   return n1 <= n2;
-}
-
-tm_ostream&
-operator<< (tm_ostream& out, string a) {
-  int i, n= N (a);
-  if (n == 0) return out;
-  for (i= 0; i < n; i++)
-    out << a[i];
-  return out;
 }
 
 int

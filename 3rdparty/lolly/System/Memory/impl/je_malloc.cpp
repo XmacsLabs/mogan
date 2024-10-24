@@ -11,6 +11,7 @@
 
 #include "assert.h"
 #include "fast_alloc.hpp"
+#include "tm_ostream.hpp"
 #include <jemalloc/jemalloc.h>
 
 int mem_used ();

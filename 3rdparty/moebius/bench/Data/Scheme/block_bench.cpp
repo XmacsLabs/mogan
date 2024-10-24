@@ -5,16 +5,15 @@
  *  \date   2024
  */
 
-#include "Data/Scheme/block.hpp"
 #include "file.hpp"
+#include "moebius/data/scheme.hpp"
 #include "string.hpp"
 #include "sys_utils.hpp"
 #include <nanobench.h>
 
-static ankerl::nanobench::Bench bench;
+using namespace moebius::data;
 
-static const int UNKNOWN= 1;
-static const int TUPLE  = 245;
+static ankerl::nanobench::Bench bench;
 
 int
 main () {

@@ -13,8 +13,8 @@
 #define OUT_STREAM_HPP
 
 // #include "url.hpp"
+#include "string.hpp"
 #include <cstdio>
-class string;
 class tm_ostream;
 
 class tm_ostream_rep {
@@ -75,6 +75,8 @@ public:
   tm_ostream& operator<< (long double);
   tm_ostream& operator<< (const char*);
 };
+
+tm_ostream& operator<< (tm_ostream& out, string a);
 
 extern tm_ostream& cout;
 extern tm_ostream& cerr;

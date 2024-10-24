@@ -324,6 +324,15 @@ tm_ostream::operator<< (const char* s) {
   return *this;
 }
 
+tm_ostream&
+operator<< (tm_ostream& out, string a) {
+  int i, n= N (a);
+  if (n == 0) return out;
+  for (i= 0; i < n; i++)
+    out << a[i];
+  return out;
+}
+
 /******************************************************************************
  * Standard output streams
  ******************************************************************************/

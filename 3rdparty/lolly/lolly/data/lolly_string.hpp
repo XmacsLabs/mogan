@@ -8,7 +8,8 @@
 
 #pragma once
 
-#include "basic.hpp"
+#include "classdef.hpp"
+#include "fast_alloc.hpp"
 
 namespace lolly {
 namespace data {
@@ -19,15 +20,37 @@ template <typename T> class lolly_string;
 template <typename T> int N (lolly_string<T> a);
 template <typename T> class lolly_string_rep : concrete_struct {
   int n;
+  int a_N;
   T*  a;
 
 public:
-  inline lolly_string_rep () : n (0), a (NULL) {}
+  inline lolly_string_rep () : n (0), a_N (0), a (NULL) {}
   lolly_string_rep (int n);
   inline ~lolly_string_rep () {
     if (n != 0) tm_delete_array (a);
   }
+  /**
+   * @brief expand (or shrink) string by delta, but do not release memory when
+   * string is shrinked.
+   *
+   * @return string length before expansion
+   */
+  int expand_or_shrink_by (int delta);
+
+  /**
+   * @brief expand (or shrink) string to given length n, and try to release
+   * memory when string is shrinked.
+   *
+   * @note expand_or_shrink_by may be faster if memory space is reserved
+   */
   void resize (int n);
+
+  /**
+   * @brief reserve memory space to contain at least n word in the whole string.
+   * Do not affect length of string, and do not release memory when n is smaller
+   * than current space.
+   */
+  void reserve (int n);
 
   friend class lolly_string<T>;
   friend int N<> (lolly_string<T> a);
@@ -94,8 +117,6 @@ inline int
 N (lolly_string<T> a) {
   return a->n;
 }
-
-tm_ostream& operator<< (tm_ostream& out, lolly_string_view<char> a);
 
 template <typename T> lolly_string<T> copy (const lolly_string_view<T>& a);
 template <typename T> lolly_string<T> copy (lolly_string<T> a);

@@ -114,8 +114,11 @@ strong_equal (list<T> l1, list<T> l2) {
 template <class T>
 bool
 operator== (list<T> l1, list<T> l2) {
-  if (is_nil (l1) || is_nil (l2)) return (is_nil (l1) == is_nil (l2));
-  return (l1->item == l2->item) && (l1->next == l2->next);
+  bool l1_nil= is_nil (l1), l2_nil= is_nil (l2);
+  if (l1_nil || l2_nil) return l1_nil == l2_nil;
+  if (l1->item != l2->item) return false;
+
+  return l1->next == l2->next;
 }
 
 template <class T>
@@ -147,7 +150,13 @@ template <class T>
 int
 N (list<T> l) {
   if (is_nil (l)) return 0;
-  else return N (l->next) + 1;
+
+  int cnt= 1;
+  while (!is_nil (l->next)) {
+    cnt= cnt + 1;
+    l  = l->next;
+  }
+  return cnt;
 }
 
 template <class T>
@@ -211,7 +220,10 @@ remove (list<T> l, T what) {
 template <class T>
 bool
 contains (list<T> l, T what) {
-  return (!is_nil (l) && (l->item == what || contains (l->next, what)));
+  if (is_nil (l)) return false;
+  if (l->item == what) return true;
+
+  return contains (l->next, what);
 }
 
 #endif // defined LIST_CC

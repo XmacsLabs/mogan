@@ -33,7 +33,10 @@ local moe_includedirs = {
 local DOCTEST_VERSION = "2.4.11"
 
 add_requires("lolly")
+local tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
+add_requireconfs("lolly.tbox", {configs=tbox_configs, system = false, override=true})
 add_requires("doctest " .. DOCTEST_VERSION, {system=false})
+add_requires("nanobench", {system=false})
 add_requires("s7")
 
 
@@ -85,4 +88,47 @@ target("tests") do
             packages = "doctest",
             defines = "DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN"})
     end
+end
+
+target("bench_base")do
+    set_kind("object")
+    set_languages("c++17")
+    set_default (false)
+    set_policy("check.auto_ignore_flags", false)
+    add_packages("nanobench")
+
+    if is_plat("windows") then
+        set_encodings("utf-8")
+    end
+    add_files("bench/nanobench.cpp")
+end
+
+function add_bench_target(filepath)
+    local benchname = path.basename(filepath)
+    target(benchname) do 
+        set_group("bench")
+        set_languages("c++17")
+        set_default(false)
+        set_policy("check.auto_ignore_flags", false)
+        set_rundir("$(projectdir)")
+        add_deps({"libmoebius", "bench_base"})
+        add_packages({"nanobench", "lolly"})
+
+        if is_plat("linux") then
+            add_syslinks("stdc++", "m")
+        end
+
+        if is_plat("windows") then
+            set_encodings("utf-8")
+            add_syslinks("secur32", "shell32")
+        end
+
+        add_includedirs(moe_includedirs)
+        add_files(filepath) 
+    end
+end
+
+cpp_bench_on_all_plat = os.files("bench/**_bench.cpp")
+for _, filepath in ipairs(cpp_bench_on_all_plat) do
+    add_bench_target (filepath)
 end

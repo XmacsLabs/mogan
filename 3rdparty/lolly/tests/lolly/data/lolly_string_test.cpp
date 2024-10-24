@@ -69,3 +69,70 @@ TEST_CASE ("test append") {
   str << string_u16 (u"yz");
   CHECK_EQ (str == string_u16 (u"xyz"), true);
 }
+
+TEST_CASE ("test reserve along with append") {
+
+  SUBCASE ("reserved more space") {
+    auto str= string_u16 ();
+    str->reserve (6);
+    str << u'x';
+    CHECK_EQ (str == u"x", true);
+    str << string_u16 (u"yz");
+    CHECK_EQ (str == u"xyz", true);
+    str << string_u16 (u": larger than reserved space");
+    CHECK_EQ (str == u"xyz: larger than reserved space", true);
+  }
+  SUBCASE ("reserved the same space") {
+    auto str= string_u16 (u"abc");
+    str->reserve (3);
+    CHECK_EQ (str == u"abc", true);
+  }
+  SUBCASE ("reserved less space should take no effect") {
+    auto str= string_u16 (u"abc");
+    str->reserve (2);
+    CHECK_EQ (str == u"abc", true);
+  }
+}
+
+TEST_CASE ("test expand_or_shrink_by along with sub index") {
+
+  SUBCASE ("expand") {
+    auto str       = string_u16 (u"abc");
+    int  previous_n= str->expand_or_shrink_by (1);
+    CHECK_EQ (previous_n, 3);
+    str[3]= u'd';
+    CHECK_EQ (str == u"abcd", true);
+  }
+  SUBCASE ("shrink") {
+    auto str       = string_u16 (u"abc");
+    int  previous_n= str->expand_or_shrink_by (-1);
+    CHECK_EQ (previous_n, 3);
+    CHECK_EQ (str == u"ab", true);
+  }
+  SUBCASE ("delta 0 takes no effect") {
+    auto str       = string_u16 (u"abc");
+    int  previous_n= str->expand_or_shrink_by (0);
+    CHECK_EQ (previous_n, 3);
+    CHECK_EQ (str == u"abc", true);
+  }
+}
+
+TEST_CASE ("test resize") {
+
+  SUBCASE ("expand") {
+    auto str= string_u16 (u"abc");
+    str->resize (4);
+    str[3]= u'd';
+    CHECK_EQ (str == u"abcd", true);
+  }
+  SUBCASE ("shrink") {
+    auto str= string_u16 (u"abc");
+    str->resize (2);
+    CHECK_EQ (str == u"ab", true);
+  }
+  SUBCASE ("delta 0 takes no effect") {
+    auto str= string_u16 (u"abc");
+    str->resize (3);
+    CHECK_EQ (str == u"abc", true);
+  }
+}

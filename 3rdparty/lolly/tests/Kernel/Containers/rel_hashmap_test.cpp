@@ -47,7 +47,7 @@ TEST_CASE ("test shorten") {
   rel_hashmap<int, int> t (0);
 
   SUBCASE ("test Shorten the empty rel_hashmap") {
-    CHECK_THROWS (t->shorten ());
+    TM_CHECK_THROWS (t->shorten ());
   }
 
   SUBCASE ("test not Shorten the empty rel_hashmap") {
@@ -76,7 +76,9 @@ TEST_CASE ("test shorten") {
 TEST_CASE ("test merge") {
   rel_hashmap<int, int> t (0);
 
-  SUBCASE ("test merge the empty rel_hashmap") { CHECK_THROWS (t->merge ()); }
+  SUBCASE ("test merge the empty rel_hashmap") {
+    TM_CHECK_THROWS (t->merge ());
+  }
 
   hashmap<int, int> hm1 (0, 10);
   hm1 (1)= 10;

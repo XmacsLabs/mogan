@@ -12,7 +12,9 @@
 
 #ifndef STRING_H
 #define STRING_H
-#include "basic.hpp"
+#include "classdef.hpp"
+#include "fast_alloc.hpp"
+#include "minmax.hpp"
 #include <stdint.h>
 
 class string;
@@ -53,16 +55,15 @@ extern inline int
 N (string a) {
   return a->n;
 }
-string      copy (string a);
-tm_ostream& operator<< (tm_ostream& out, string a);
-string&     operator<< (string& a, char);
-string&     operator<< (string& a, string b);
-string      operator* (const char* a, string b);
-string      operator* (string a, string b);
-string      operator* (string a, const char* b);
-bool        operator< (string a, string b);
-bool        operator<= (string a, string b);
-int         hash (string s);
+string  copy (string a);
+string& operator<< (string& a, char);
+string& operator<< (string& a, string b);
+string  operator* (const char* a, string b);
+string  operator* (string a, string b);
+string  operator* (string a, const char* b);
+bool    operator< (string a, string b);
+bool    operator<= (string a, string b);
+int     hash (string s);
 
 bool     as_bool (string s);
 int      as_int (string s);

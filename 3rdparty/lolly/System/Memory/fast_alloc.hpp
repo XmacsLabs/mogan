@@ -12,7 +12,6 @@
 #ifndef FAST_ALLOC_H
 #define FAST_ALLOC_H
 
-#include "tm_ostream.hpp"
 #include <stdlib.h>
 #define WORD_LENGTH 8
 #define WORD_LENGTH_INC 7
