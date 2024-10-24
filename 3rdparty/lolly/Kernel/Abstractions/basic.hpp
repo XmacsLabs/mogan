@@ -45,7 +45,8 @@ typedef unsigned int           color;
  * debugging
  ******************************************************************************/
 
-#if (defined __SUNPRO_CC || defined __clang__ || defined OS_WIN)
+#if (defined __SUNPRO_CC || defined __clang__ || defined(_WIN32) ||            \
+     defined(_WIN64))
 #define STACK_NEW_ARRAY(name, T, size) T* name= tm_new_array<T> (size)
 #define STACK_DELETE_ARRAY(name) tm_delete_array (name)
 #else

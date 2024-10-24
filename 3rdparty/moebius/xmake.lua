@@ -12,6 +12,7 @@ local moe_files = {
     "Data/Tree/**.cpp",
     "Kernel/Types/**.cpp",
     "Kernel/Abstractions/**.cpp",
+    "Scheme/**.cpp",
     "moebius/**.cpp",
 }
 local moe_includedirs = {
@@ -20,6 +21,12 @@ local moe_includedirs = {
     "Data/Tree",
     "Kernel/Types",
     "Kernel/Abstractions",
+    "Scheme",
+    "Scheme/L1",
+    "Scheme/L2",
+    "Scheme/L3",
+    "Scheme/S7",
+    "Scheme/Scheme",
     "$(projectdir)",
 }
 
@@ -27,6 +34,7 @@ local DOCTEST_VERSION = "2.4.11"
 
 add_requires("lolly")
 add_requires("doctest " .. DOCTEST_VERSION, {system=false})
+add_requires("s7")
 
 
 target("libmoebius") do
@@ -39,12 +47,19 @@ target("libmoebius") do
     add_files(moe_files)
 
     add_packages("lolly")
+    add_packages("s7")
 
     add_headerfiles("Data/History/(*.hpp)")
     add_headerfiles("Data/String/(*.hpp)")
     add_headerfiles("Data/Tree/(*.hpp)")
     add_headerfiles("Kernel/Types/(*.hpp)")
     add_headerfiles("Kernel/Abstractions/(*.hpp)")
+    add_headerfiles("Scheme/(*.hpp)")
+    add_headerfiles("Scheme/L1/(*.hpp)")
+    add_headerfiles("Scheme/L2/(*.hpp)")
+    add_headerfiles("Scheme/L3/(*.hpp)")
+    add_headerfiles("Scheme/S7/(*.hpp)")
+    add_headerfiles("Scheme/Scheme/(*.hpp)")
     add_headerfiles("moebius/(data/*.hpp)", {prefixdir="moebius"})
     add_headerfiles("moebius/(drd/*.hpp)", {prefixdir="moebius"})
     add_headerfiles("moebius/(*.hpp)", {prefixdir="moebius"})

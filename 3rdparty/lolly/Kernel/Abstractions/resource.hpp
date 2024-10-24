@@ -10,6 +10,7 @@
 
 #ifndef RESOURCE_H
 #define RESOURCE_H
+
 #include "hashmap.hpp"
 #include "string.hpp"
 
@@ -31,7 +32,7 @@ public:
   inline R*                       operator->() { return rep; }
 };
 
-#ifdef OS_WIN
+#if (defined(_WIN32) || defined(_WIN64))
 #define RESOURCE(PTR)                                                          \
   struct PTR##_rep;                                                            \
   struct PTR : public resource_ptr<PTR##_rep> {                                \
@@ -50,7 +51,7 @@ public:
   }
 #endif
 
-#ifdef OS_WIN
+#if (defined(_WIN32) || defined(_WIN64))
 #define RESOURCE_CODE(PTR)                                                     \
   hashmap<string, pointer> resource_ptr<PTR##_rep>::instances (NULL);
 #else

@@ -125,6 +125,22 @@ server_rep::~server_rep () {}
 
 tm_server_rep::tm_server_rep (app_type app) : def_zoomf (1.0) {
   the_server= tm_new<server> (this);
+  //  "(read-set! keywords 'prefix)\n"
+  //  "(read-enable 'positions)\n"
+  //  "(debug-enable 'debug)\n"
+  // #ifdef DEBUG_ON
+  //  "(debug-enable 'backtrace)\n"
+  // #endif
+  const char* init_prg= "(begin \n"
+                        "(define (display-to-string obj)\n"
+                        "  (call-with-output-string\n"
+                        "    (lambda (port) (display obj port))))\n"
+                        "\n"
+                        "(define (texmacs-version) \"" TEXMACS_VERSION "\")\n"
+                        "(define (xmacs-version) \"" XMACS_VERSION "\")\n"
+                        "(define object-stack '(()))\n"
+                        ")";
+  eval_scheme_root (init_prg);
   initialize_smobs (initialize_scheme ());
   initialize_glue ();
   gui_interpose (texmacs_interpose_handler);

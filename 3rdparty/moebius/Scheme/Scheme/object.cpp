@@ -59,10 +59,7 @@ operator<< (tm_ostream& out, object obj) {
   out.flush ();
   if (out == cout) call ("write", obj);
   else if (out == cerr) call ("write-err", obj);
-  else {
-    object ret= call ("object->string", obj);
-    return out << as_string (ret);
-  }
+  else TM_FAILED ("not yet implemented");
   call ("force-output");
   return out;
 }
@@ -111,7 +108,8 @@ list_object (object obj1, object obj2, object obj3) {
 object
 as_list_object (array<object> objs) {
   object r= null_object ();
-  for (int i= N (objs) - 1; i >= 0; i--)
+  int objs_N= N (objs);
+  for (int i= objs_N - 1; i >= 0; i--)
     r= cons (objs[i], r);
   return r;
 }
@@ -391,10 +389,7 @@ public:
     (void) call_scheme (object_to_tmscm (obj),
                         array_lookup (as_array_object (args)));
   }
-  tm_ostream& print (tm_ostream& out) {
-    object bis= call ("sourcify", obj);
-    return out << "<command " << bis << ">";
-  }
+  tm_ostream& print (tm_ostream& out) { return out << obj; }
 };
 
 command

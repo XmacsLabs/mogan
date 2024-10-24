@@ -387,9 +387,7 @@ cleanup_and_return_finally (const file_status& status, const url& u, bool fatal,
   if (fatal) {
     TM_FAILED (status.error_msg);
   }
-  else {
-    return true;
-  }
+  return true;
 }
 
 file_status

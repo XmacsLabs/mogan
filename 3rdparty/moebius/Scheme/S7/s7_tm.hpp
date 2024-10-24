@@ -159,6 +159,8 @@ string tmscm_to_symbol (tmscm obj);
 
 tmscm eval_scheme_file (string name);
 tmscm eval_scheme (string s);
+tmscm eval_scheme_root (string s);
+
 tmscm call_scheme (tmscm fun);
 tmscm call_scheme (tmscm fun, tmscm a1);
 tmscm call_scheme (tmscm fun, tmscm a1, tmscm a2);

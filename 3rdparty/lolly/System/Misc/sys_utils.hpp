@@ -15,7 +15,7 @@
 #include "array.hpp"
 #include "string.hpp"
 
-#if defined(OS_MINGW) || defined(OS_WIN)
+#if defined(OS_MINGW) || defined(_WIN32) || defined(_WIN64)
 #define URL_CONCATER '\\'
 #define URL_SEPARATOR ';'
 #else

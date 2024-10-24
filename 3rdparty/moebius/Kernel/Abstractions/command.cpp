@@ -27,11 +27,6 @@ command::operator() (object args) {
   rep->apply (args);
 }
 
-void
-apply (command cmd, object args) {
-  cmd (args);
-}
-
 /******************************************************************************
  * standard commands without arguments
  ******************************************************************************/
@@ -41,8 +36,7 @@ class std_command_rep : public command_rep {
 
 public:
   std_command_rep (void (*routine) (void));
-  void        apply ();
-  tm_ostream& print (tm_ostream& out) { return out << "<command std>"; }
+  void apply ();
 };
 
 std_command_rep::std_command_rep (void (*routine2) (void))
@@ -73,7 +67,7 @@ public:
   void apply () {
     if (callback) callback (obj, info);
   }
-  tm_ostream& print (tm_ostream& out) { return out << "<command generic>"; }
+  tm_ostream& print (tm_ostream& out) { return out << "generic_command_rep"; }
 };
 
 command::command (void (*_callback) (void*, void*), void* _obj, void* _info)

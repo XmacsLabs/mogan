@@ -14,8 +14,8 @@
 #include "object.hpp"
 #include "scheme.hpp"
 
-#include <moebius/data/scheme.hpp>
-#include <moebius/tree_label.hpp>
+#include "moebius/data/scheme.hpp"
+#include "moebius/tree_label.hpp"
 
 using moebius::make_tree_label;
 using moebius::data::scm_quote;

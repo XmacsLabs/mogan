@@ -19,7 +19,7 @@
 #include "tree.hpp"
 #include "url.hpp"
 
-#include "S7/s7_tm.hpp" // interface to S7
+#include "s7_tm.hpp" // interface to S7
 
 class object_rep : concrete_struct {
   friend class object;

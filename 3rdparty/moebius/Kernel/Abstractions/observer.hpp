@@ -9,8 +9,9 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-#include "lolly/data/lolly_tree.hpp"
 #include "string.hpp"
+
+#include <lolly/data/lolly_tree.hpp>
 
 using lolly::data::lolly_tree;
 class observer;

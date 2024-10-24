@@ -14,7 +14,7 @@
 
 namespace lolly {
 namespace system {
-#if defined(OS_WIN) || defined(OS_MINGW)
+#if defined(OS_MINGW) || defined(_WIN32) || defined(_WIN64)
 class args {
 public:
   // Fix command line agruments

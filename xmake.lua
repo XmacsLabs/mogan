@@ -423,7 +423,6 @@ target("libmogan") do
             "src/Kernel/**.cpp",
             "src/Scheme/Scheme/**.cpp",
             "src/Scheme/S7/**.cpp",
-            "src/Scheme/L1/**.cpp",
             "src/Scheme/L2/**.cpp",
             "src/Scheme/L3/**.cpp",
             "src/Scheme/L4/**.cpp",
