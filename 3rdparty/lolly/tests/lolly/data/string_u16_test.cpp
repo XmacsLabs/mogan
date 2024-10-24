@@ -5,24 +5,31 @@
  *  \date   2024
  */
 
-#include "doctest/doctest.h"
-#include "lolly/data/lolly_string.hpp"
+#include "a_lolly_test.hpp"
+#include "lolly/data/string_u16.hpp"
+#include <doctest/doctest.h>
 
 using namespace lolly::data;
 
 TEST_CASE ("equality of string") {
+  CHECK_EQ (string_u16 () == string_u16 (), true);
+
   CHECK_EQ (string_u16 (u"abc") == u"abc", true);
+  CHECK_EQ (u"abc" == string_u16 (u"abc"), true);
+
   CHECK_EQ (string_u16 (u"abc") == u"", false);
+  CHECK_EQ (u"" == string_u16 (u"abc"), false);
 
   CHECK_EQ (string_u16 (u"abc") != u"abc", false);
+  CHECK_EQ (u"abc" != string_u16 (u"abc"), false);
+
   CHECK_EQ (string_u16 (u"abc") != u"", true);
+  CHECK_EQ (u"" != string_u16 (u"abc"), true);
 
   CHECK_EQ (string_u16 (u"abc") == string_u16 (u"abc"), true);
   CHECK_EQ (string_u16 (u"abc") == string_u16 (), false);
   CHECK_EQ (string_u16 (u"abc") != string_u16 (u"abc"), false);
   CHECK_EQ (string_u16 (u"abc") != string_u16 (), true);
-
-  CHECK_EQ (string_u16 () == string_u16 (), true);
 }
 
 TEST_CASE ("compare string") {
@@ -40,22 +47,28 @@ TEST_CASE ("compare string") {
 }
 
 TEST_CASE ("test slice") {
-  CHECK_EQ (string_u16 (u"abcde") (0, 0) == string_u16 (), true);
-  CHECK_EQ (string_u16 (u"abcde") (0, 1) == string_u16 (u"a"), true);
-  CHECK_EQ (string_u16 (u"abcde") (1, 3) (0, 1) == string_u16 (u"b"), true);
-  CHECK_EQ (string_u16 (u"abcde") (0, 10) == string_u16 (u"abcde"), true);
-  CHECK_EQ (string_u16 (u"abcde") (-1, 1) == string_u16 (u"a"), true);
-  CHECK_EQ (string_u16 (u"abcde") (3, 2) == string_u16 (), true);
-  CHECK_EQ (string_u16 (u"abcde") (3, -2) == string_u16 (), true);
-  CHECK_EQ (string_u16 (u"abcde") (10, 11) == string_u16 (), true);
-  CHECK_EQ (string_u16 (u"abcde") (-3, -2) == string_u16 (), true);
+  auto abcde= string_u16 (u"abcde");
+  CHECK_EQ (abcde (0, 0) == string_u16 (), true);
+  CHECK_EQ (abcde (0, 1) == string_u16 (u"a"), true);
+  CHECK_EQ (abcde (1, 3) (0, 1) == string_u16 (u"b"), true);
+  CHECK_EQ (abcde (0, 10) == string_u16 (u"abcde"), true);
+  CHECK_EQ (abcde (-1, 1) == string_u16 (u"a"), true);
+  CHECK_EQ (abcde (3, 2) == string_u16 (), true);
+  CHECK_EQ (abcde (3, -2) == string_u16 (), true);
+  CHECK_EQ (abcde (10, 11) == string_u16 (), true);
+  CHECK_EQ (abcde (-3, -2) == string_u16 (), true);
+
+  // string_view == string
+  CHECK_EQ (string_u16 (u"a") == abcde (0, 1), true);
 }
 
 TEST_CASE ("test concat") {
   CHECK_EQ (string_u16 (u"abc") * u"de" == string_u16 (u"abcde"), true);
   CHECK_EQ (string_u16 (u"abc") * string_u16 (u"de") == string_u16 (u"abcde"),
             true);
-  CHECK_EQ (u"abc" * string_u16 (u"de") == string_u16 (u"abcde"), true);
+  CHECK_EQ (string_u16 (u"abc") * string_u16 (u"Hello") (0, 2) ==
+                string_u16 (u"abcHe"),
+            true);
 }
 
 /******************************************************************************
@@ -65,9 +78,9 @@ TEST_CASE ("test concat") {
 TEST_CASE ("test append") {
   auto str= string_u16 ();
   str << u'x';
-  CHECK_EQ (str == string_u16 (u"x"), true);
+  CHECK (str == u"x");
   str << string_u16 (u"yz");
-  CHECK_EQ (str == string_u16 (u"xyz"), true);
+  CHECK (str == u"xyz");
 }
 
 TEST_CASE ("test reserve along with append") {
@@ -135,4 +148,14 @@ TEST_CASE ("test resize") {
     str->resize (3);
     CHECK_EQ (str == u"abc", true);
   }
+}
+
+TEST_CASE ("test copy") {
+  string_u16 str1= u"str1";
+  string_u16 str2= copy (str1);
+  CHECK (str1 == str2);
+  CHECK (str1.buffer () != str2.buffer ());
+
+  string_u16 str3= copy (str1 (0, 3));
+  CHECK (str3 == u"str");
 }

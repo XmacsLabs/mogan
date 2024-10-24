@@ -14,6 +14,10 @@
 #include "cork.hpp"
 #include "locale.hpp"
 
+#include <lolly/data/unicode.hpp>
+
+using lolly::data::decode_from_utf8;
+
 static char controls[32]= {
     // 0x00                   BEL BS HT LF    FF CR    0x0F
     1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1,

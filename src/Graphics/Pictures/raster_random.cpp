@@ -54,8 +54,6 @@ struct perlin_rep : rep<perlin> {
                      double fTileY, double fTileWidth, double fTileHeight);
 };
 
-RESOURCE_CODE (perlin);
-
 static perlin
 perlin_generator (int64_t lSeed) {
   string name= "perlin-" * as_string (lSeed);

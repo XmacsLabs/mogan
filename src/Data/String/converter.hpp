@@ -80,16 +80,20 @@ bool   check_encoding (string input, string encoding);
 string convert (string input, string from, string to);
 string convert_to_cork (string input, string from);
 string convert_from_cork (string input, string to);
-string utf8_to_cork (string input);
-string cork_to_utf8 (string input);
-string strict_cork_to_utf8 (string input);
+
+string_u8 cork_to_utf8 (string input);
+string_u8 strict_cork_to_utf8 (string input);
+string_u8 convert_LaTeX_to_utf8 (string input);
+
 string cork_to_sourcecode (string input);
 string sourcecode_to_cork (string input);
-string convert_utf8_to_LaTeX (string input);
-string convert_LaTeX_to_utf8 (string input);
-string utf8_to_html (string input);
-string utf8_to_t2a (string input);
-string t2a_to_utf8 (string input);
+
+string    convert_utf8_to_LaTeX (string_u8 input);
+string    utf8_to_cork (string_u8 input);
+string    utf8_to_html (string_u8 input);
+string    utf8_to_t2a (string_u8 input);
+string_u8 t2a_to_utf8 (string input);
+
 string cyrillic_subset_in_t2a_to_code_point (string input);
 string code_point_to_cyrillic_subset_in_t2a (string input);
 string cork_to_ascii (string input);
@@ -120,14 +124,12 @@ void hashtree_from_dictionary (hashtree<char, string> dic, string file_name,
  * and HTML/XML character entities to and from UTF-8 byte sequences.
  ***************************************************************************/
 
-int          hex_digit_to_int (unsigned char c);
-string       encode_as_utf8 (unsigned int code);
-unsigned int decode_from_utf8 (string s, int& i);
-string       convert_escapes (string in, bool utf8);
-string       convert_char_entities (string s);
-string       convert_char_entity (string s, int& start, bool& success);
-string       utf8_to_hex_entities (string s);
-string       utf8_to_pdf_hex_string (string s);
-tree         convert_OTS1_symbols_to_universal_encoding (tree t);
+int    hex_digit_to_int (unsigned char c);
+string convert_escapes (string in, bool utf8);
+string convert_char_entities (string s);
+string convert_char_entity (string s, int& start, bool& success);
+string utf8_to_hex_entities (string_u8 s);
+string utf8_to_pdf_hex_string (string_u8 s);
+tree   convert_OTS1_symbols_to_universal_encoding (tree t);
 
 #endif // CONVERTER_H

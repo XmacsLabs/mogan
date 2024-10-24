@@ -15,7 +15,11 @@
 #include "tree_helper.hpp"
 #include "wencoding.hpp"
 
+#include <lolly/data/unicode.hpp>
+
 using namespace moebius;
+using lolly::data::decode_from_utf8;
+using lolly::data::encode_as_utf8;
 
 extern bool textm_class_flag;
 

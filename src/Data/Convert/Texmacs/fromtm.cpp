@@ -18,9 +18,11 @@
 #include "tree_helper.hpp"
 
 #include <lolly/data/numeral.hpp>
+#include <lolly/data/unicode.hpp>
 #include <moebius/drd/drd_std.hpp>
 #include <moebius/vars.hpp>
 
+using lolly::data::decode_from_utf8;
 using lolly::data::from_hex;
 using lolly::data::to_Hex;
 using moebius::drd::STD_CODE;
@@ -115,8 +117,8 @@ tm_reader<format_without_utf8>::read_char () {
     return buf (pos - 1, pos);
   }
   else {
-    int          old_pos= pos;
-    unsigned int code   = decode_from_utf8 (buf, pos);
+    int      old_pos= pos;
+    uint32_t code   = decode_from_utf8 (buf, pos);
     if (pos - old_pos == 1) {
       return buf (pos - 1, pos);
     }

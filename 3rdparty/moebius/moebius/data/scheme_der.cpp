@@ -1,7 +1,7 @@
 
 /******************************************************************************
- * MODULE     : to_scheme.cpp
- * DESCRIPTION: conversion of scheme expressions to TeXmacs trees
+ * MODULE     : scheme_der.cpp
+ * DESCRIPTION: parse scheme formatted text into Texmacs trees
  * COPYRIGHT  : (C) 1999  Joris van der Hoeven
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.

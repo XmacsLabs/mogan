@@ -21,14 +21,14 @@
 #include "unicode.hpp"
 
 #include <lolly/data/numeral.hpp>
+#include <lolly/data/unicode.hpp>
 
+using lolly::data::decode_from_utf8;
 using lolly::data::to_Hex;
 
 bool virtually_defined (string c, string name);
 font smart_font_bis (string f, string v, string s, string sh, int sz, int hdpi,
                      int vdpi);
-
-RESOURCE_CODE (smart_map);
 
 smart_map
 get_smart_map (tree fn) {

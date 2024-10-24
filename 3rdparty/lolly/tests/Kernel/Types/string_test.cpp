@@ -74,6 +74,7 @@ TEST_CASE ("as_int") {
     CHECK_EQ (as_int (string ("1")), 1);
     CHECK_EQ (as_int (string ("-1")), -1);
     CHECK_EQ (as_int (string ("0")), 0);
+    CHECK_EQ (as_int (string ("+1")), 1);
   }
 
   // assuming int is 32bit
@@ -89,8 +90,36 @@ TEST_CASE ("as_int") {
 
   SUBCASE ("invalid int") {
     CHECK_EQ (as_int (string ("not a int")), 0);
+    CHECK_EQ (as_int (string ("++1")), 0);
     CHECK_EQ (as_int (string ("1pt")), 1);
     CHECK_EQ (as_int (string ("1.23")), 1);
+  }
+}
+
+TEST_CASE ("is_int") {
+  SUBCASE ("normal conversion") {
+    CHECK (is_int (string ("1")));
+    CHECK (is_int (string ("-1")));
+    CHECK (is_int (string ("0")));
+    CHECK (is_int (string ("+1")));
+  }
+
+  // assuming int is 32bit
+  SUBCASE ("min and max") {
+    CHECK (is_int (string ("-2147483648")));
+    CHECK (is_int (string ("2147483647")));
+  }
+
+  SUBCASE ("int overflow") {
+    CHECK (is_int (string ("-2147483649")));
+    CHECK (is_int (string ("2147483648")));
+  }
+
+  SUBCASE ("invalid int") {
+    CHECK_FALSE (is_int (string ("not a int")));
+    CHECK_FALSE (is_int (string ("++1")));
+    CHECK_FALSE (is_int (string ("1pt")));
+    CHECK_FALSE (is_int (string ("1.23")));
   }
 }
 

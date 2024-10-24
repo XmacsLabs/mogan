@@ -24,8 +24,6 @@ hashmap<string, C> packrat_tokens;
 hashmap<tree, C>   packrat_symbols;
 hashmap<C, tree>   packrat_decode (packrat_uninit);
 
-RESOURCE_CODE (packrat_grammar);
-
 /******************************************************************************
  * Encoding and decoding of tokens and symbols
  ******************************************************************************/

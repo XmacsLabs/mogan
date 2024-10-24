@@ -20,6 +20,9 @@
 #include <string.h>
 
 #include <lolly/data/numeral.hpp>
+#include <lolly/data/unicode.hpp>
+
+using lolly::data::decode_from_utf8;
 using lolly::data::from_hex;
 using lolly::data::to_Hex;
 

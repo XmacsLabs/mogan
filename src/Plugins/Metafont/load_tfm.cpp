@@ -14,8 +14,6 @@
 #include "tm_file.hpp"
 #include "tm_timer.hpp"
 
-RESOURCE_CODE (tex_font_metric);
-
 /******************************************************************************
  * Constructors and destructors for tex_font_metric
  ******************************************************************************/

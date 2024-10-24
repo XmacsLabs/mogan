@@ -14,6 +14,87 @@
 
 namespace lolly {
 namespace data {
+
+string_u8
+encode_as_utf8 (uint32_t code) {
+  if (/* 0x0 <= code && */ code <= 0x7F) {
+    // 0x0ddddddd
+    return string ((char) code);
+  }
+  else if (0x80 <= code && code <= 0x7FF) {
+    // 0x110ddddd 0x10dddddd
+    string str (2);
+    str[0]= ((code >> 6) & 0x1F) | 0xC0;
+    str[1]= (code & 0x3F) | 0x80;
+    return str;
+  }
+  else if (0x800 <= code && code <= 0xFFFF) {
+    // 0x1110dddd 0x10dddddd 0x10dddddd
+    string str (3);
+    str[0]= ((code >> 12) & 0x0F) | 0xE0;
+    str[1]= ((code >> 6) & 0x3F) | 0x80;
+    str[2]= (code & 0x3F) | 0x80;
+    return str;
+  }
+  else if (0x10000 <= code && code <= 0x1FFFFF) {
+    // 0x11110uuu 0x10zzzzzz 0x10yyyyyy 0x10xxxxxx
+    string str (4);
+    str[0]= ((code >> 18) & 0x07) | 0xF0;
+    str[1]= ((code >> 12) & 0x3F) | 0x80;
+    str[2]= ((code >> 6) & 0x3F) | 0x80;
+    str[3]= (code & 0x3F) | 0x80;
+    return str;
+  }
+  else return "";
+}
+
+uint32_t
+decode_from_utf8 (string_u8 s, int& i) {
+  unsigned char c= s[i];
+  if ((0x80 & c) == 0) {
+    // 0x0ddddddd
+    i++;
+    return (uint32_t) c;
+  }
+  uint32_t code;
+  int      trail;
+  if ((0xE0 & c) == 0xC0) {
+    // 0x110ddddd 0x10dddddd
+    trail= 1;
+    code = c & 0x1F;
+  }
+  else if ((0xF0 & c) == 0xE0) {
+    // 0x1110dddd 0x10dddddd 0x10dddddd
+    trail= 2;
+    code = c & 0x0F;
+  }
+  else if ((0xF8 & c) == 0xF0) {
+    // 0x11110dddd 0x10dddddd 0x10dddddd 0x10dddddd
+    trail= 3;
+    code = c & 0x07;
+  }
+  else {
+    // failsafe
+    // cout << "failsafe: " << c << " (" << (unsigned int)(c) << ")\n";
+    i++;
+    return (uint32_t) c;
+  }
+  int start= i - 1;
+  for (; trail > 0; trail--) {
+    i++;
+    if (i >= N (s)) i= N (s) - 1;
+    c= s[i];
+    if ((0xC0 & c) == 0x80) code= (code << 6) | (c & 0x3F);
+    else {
+      i= start + 1;
+      c= s[i++];
+      return c;
+    }
+  }
+  i++;
+  return code;
+}
+
 string
 unicode_get_range (int code) {
   if (code <= 0x7f) return "ascii";

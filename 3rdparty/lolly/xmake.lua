@@ -5,7 +5,7 @@ set_allowedmodes("releasedbg", "release", "debug")
 add_rules("mode.debug")
 
 set_project("lolly")
-LOLLY_VERSION= "1.4.17"
+LOLLY_VERSION= "1.4.21"
 
 set_languages("c++17")
 includes("@builtin/check")
@@ -213,6 +213,7 @@ function add_test_target(filepath)
         add_deps("test_base")
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
+        set_exceptions("cxx")
 
         if is_plat("mingw") then
             add_packages("mingw-w64")
@@ -357,6 +358,38 @@ function add_bench_target(filepath)
 end
 
 if has_config("enable_tests") then
+    target("example_dynamic_library") do
+        set_kind ("shared")
+        set_languages("c++17")
+        set_default (false)
+        add_files("tests/lolly/system/example_dynamic_library.cpp")
+        add_rules("utils.symbols.export_list", {
+            symbols = {"square_div_2"}})
+    end
+    target("test_dynamic_library") do
+        set_kind ("binary")
+        set_languages("c++17")
+        set_default (false)
+        add_packages("tbox")
+
+        add_deps("liblolly")
+        add_deps("example_dynamic_library", {inherit = false})
+
+        if is_plat("windows") then
+            set_encodings("utf-8")
+            add_ldflags("/LTCG")
+            add_syslinks("secur32", "shell32")
+        end
+
+        add_includedirs(lolly_includedirs)
+        add_includedirs("tests")
+        add_forceincludes(path.absolute("$(buildir)/L1/config.h"))
+        add_tests("shared_lib_test", {
+            kind = "binary",
+            files = "$(projectdir)/tests/lolly/system/shared_lib_test.cpp",
+            packages = "doctest",
+            defines = "DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN"})
+    end
     target("test_base")do
         set_kind("object")
         add_deps("liblolly")
@@ -388,7 +421,7 @@ if has_config("enable_tests") then
         add_files("bench/nanobench.cpp")
     end
 
-    cpp_tests_on_all_plat = os.files("tests/**_test.cpp")
+    cpp_tests_on_all_plat = os.files("tests/**_test.cpp|**/shared_lib_test.cpp")
     for _, filepath in ipairs(cpp_tests_on_all_plat) do
         add_test_target (filepath)
     end

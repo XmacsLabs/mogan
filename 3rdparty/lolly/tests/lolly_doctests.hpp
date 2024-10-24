@@ -2,8 +2,13 @@
 #define LOLLY_TBOX_MACROS_H
 
 #include "doctest/doctest.h"
+#include "lolly/data/string_u16.hpp"
+#include "lolly/data/string_view.hpp"
 #include "string.hpp"
 #include "url.hpp"
+
+using lolly::data::string_u16;
+using lolly::data::string_u16_view;
 
 inline void
 string_eq (string left, string right) {

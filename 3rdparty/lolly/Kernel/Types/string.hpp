@@ -14,8 +14,11 @@
 #define STRING_H
 #include "classdef.hpp"
 #include "fast_alloc.hpp"
+#include "lolly/data/string_view.hpp"
 #include "minmax.hpp"
 #include <stdint.h>
+
+using lolly::data::string_view;
 
 class string;
 class string_rep : concrete_struct {
@@ -48,6 +51,10 @@ class string {
   bool         operator== (string s);
   bool         operator!= (string s);
   string       operator() (int start, int end);
+
+  inline operator string_view<char> () {
+    return string_view<char> (rep->a, rep->n);
+  }
 };
 CONCRETE_CODE (string);
 
@@ -120,5 +127,7 @@ public:
   inline operator char* () const { return rep->value; }
 };
 CONCRETE_CODE (c_string);
+
+typedef string string_u8;
 
 #endif // defined STRING_H

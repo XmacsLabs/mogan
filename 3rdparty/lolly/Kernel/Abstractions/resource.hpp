@@ -1,12 +1,14 @@
 
-/******************************************************************************
- * MODULE     : resource.hpp
- * COPYRIGHT  : (C) 1999  Joris van der Hoeven
- *******************************************************************************
- * This software falls under the GNU general public license version 3 or later.
- * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
- * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
- ******************************************************************************/
+/** \file resource.hpp
+ *  \copyright GPLv3
+ *  \details Utils to define a class that holding its instances globally.
+ *           Instances is called "Resources", and can be looked up by a string.
+ *           Weak referrence is provided to access member of resources.
+ *  \author Joris van der Hoeven
+ *  \date   1999
+ *  \author jingkaimori
+ *  \date   2024
+ */
 
 #ifndef RESOURCE_H
 #define RESOURCE_H
@@ -14,6 +16,10 @@
 #include "hashmap.hpp"
 #include "string.hpp"
 
+/**
+ * \brief base class of resources
+ * \note no referrence counting is applied on this structure
+ */
 template <class T> struct rep {
   string res_name;
   inline rep<T> (string res_name2) : res_name (res_name2) {
@@ -27,12 +33,15 @@ protected:
   ~resource_ptr (){};
 
 public:
-  R*                              rep;
-  static hashmap<string, pointer> instances;
-  inline R*                       operator->() { return rep; }
+  R*                                     rep;
+  inline static hashmap<string, pointer> instances=
+      hashmap<string, pointer> (NULL);
+  /* C++17 feature, use inline keyword here to pack definition along with
+   declaration, instead of defining static member inside expansion
+   of RESOURCE macro.*/
+  inline R* operator->() { return rep; }
 };
 
-#if (defined(_WIN32) || defined(_WIN64))
 #define RESOURCE(PTR)                                                          \
   struct PTR##_rep;                                                            \
   struct PTR : public resource_ptr<PTR##_rep> {                                \
@@ -40,25 +49,6 @@ public:
     inline PTR (string s) { rep= (PTR##_rep*) instances[s]; }                  \
     inline ~PTR () {}                                                          \
   }
-#else
-#define RESOURCE(PTR)                                                          \
-  struct PTR##_rep;                                                            \
-  template <> hashmap<string, pointer> resource_ptr<PTR##_rep>::instances;     \
-  struct PTR : public resource_ptr<PTR##_rep> {                                \
-    inline PTR (PTR##_rep* rep2= NULL) { rep= rep2; }                          \
-    inline PTR (string s) { rep= (PTR##_rep*) instances[s]; }                  \
-    inline ~PTR () {}                                                          \
-  }
-#endif
-
-#if (defined(_WIN32) || defined(_WIN64))
-#define RESOURCE_CODE(PTR)                                                     \
-  hashmap<string, pointer> resource_ptr<PTR##_rep>::instances (NULL);
-#else
-#define RESOURCE_CODE(PTR)                                                     \
-  template <>                                                                  \
-  hashmap<string, pointer> resource_ptr<PTR##_rep>::instances (NULL);
-#endif
 
 template <class R>
 inline bool

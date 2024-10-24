@@ -15,6 +15,22 @@
 
 namespace lolly {
 namespace data {
+
+/**
+ * @brief Encode 4 bytes as string_u8
+ * @param code The 4 bytes to encode
+ * @return The UTF-8 string in string_u8
+ */
+string_u8 encode_as_utf8 (uint32_t code);
+
+/**
+ * @brief Decode string_u8 string as 4 bytes at position i
+ * @param s The string_u8 string
+ * @param i The position
+ * @return The 4 bytes in uint32_t
+ */
+uint32_t decode_from_utf8 (string_u8 s, int& i);
+
 string unicode_get_range (int code);
 
 /**

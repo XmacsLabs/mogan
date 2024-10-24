@@ -13,13 +13,15 @@
 #include "unicode.hpp"
 #include "converter.hpp"
 
+#include <lolly/data/unicode.hpp>
+
 string
 get_unicode_range (string c) {
   string uc= strict_cork_to_utf8 (c);
   if (N (uc) == 0) return "";
-  int    pos  = 0;
-  int    code = decode_from_utf8 (uc, pos);
-  string range= lolly::data::unicode_get_range (code);
+  int      pos  = 0;
+  uint32_t code = lolly::data::decode_from_utf8 (uc, pos);
+  string   range= lolly::data::unicode_get_range (code);
   if (pos == N (uc)) return range;
   return "";
 }

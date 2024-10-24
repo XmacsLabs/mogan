@@ -39,7 +39,7 @@ jobs:
           echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/.xmake-global" >> "${{ github.env }}"
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.8.5
+          xmake-version: v2.8.7
       - name: update repo
         run: xmake repo -u
       - uses: actions/checkout@v3
@@ -58,6 +58,8 @@ jobs:
       - name: build
         run: xmake build --yes -vD
       - name: test
-        run: xmake run --yes -vD --group=tests
+        run: |
+          xmake run --yes -vD --group=tests
+          xmake test -vD
       - name: benchmark
         run: xmake run --yes --group=bench
