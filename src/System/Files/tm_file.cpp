@@ -13,6 +13,7 @@
 #include "analyze.hpp"
 #include "array.hpp"
 #include "convert.hpp"
+#include "converter.hpp"
 #include "file.hpp"
 #include "lolly/system/subprocess.hpp"
 #include "scheme.hpp"
@@ -22,6 +23,7 @@
 #include "tree_helper.hpp"
 #include "url.hpp"
 #include "web_files.hpp"
+
 #include <moebius/tree_label.hpp>
 
 #include <errno.h>

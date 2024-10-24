@@ -31,7 +31,7 @@ add_rules("mode.releasedbg", "mode.release", "mode.debug")
 add_repositories("liii-repo xmake")
 
 TBOX_VERSION= "1.7.5"
-LOLLY_VERSION= "1.4.7"
+LOLLY_VERSION= "1.4.10"
 S7_VERSION = "20240816"
 package("liii-s7")
     set_homepage("https://ccrma.stanford.edu/software/snd/snd/s7.html")

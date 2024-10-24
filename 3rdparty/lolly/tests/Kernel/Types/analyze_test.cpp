@@ -105,20 +105,6 @@ TEST_CASE ("remove_suffix") {
   string_eq (remove_suffix ("a1a", "a"), "a1");
 }
 
-TEST_CASE ("test scm quote") {
-  CHECK_EQ (scm_quote ("a") == "\"a\"", true);
-  CHECK_EQ (scm_quote ("") == "\"\"", true);
-  CHECK_EQ (scm_quote ("\\") == "\"\\\\\"", true);
-}
-
-TEST_CASE ("test_scm_unquote") {
-  CHECK_EQ (scm_unquote ("\"\"") == "", true);
-  CHECK_EQ (scm_unquote ("\"abc\"") == "abc", true);
-  CHECK_EQ (scm_unquote ("abc") == "abc", true);
-  CHECK_EQ (scm_unquote ("") == "", true);
-  CHECK_EQ (scm_unquote ("\"\\\\\"") == "\\", true);
-}
-
 TEST_CASE ("test_raw_quote") {
   CHECK_EQ (raw_quote ("a") == "\"a\"", true);
   CHECK_EQ (raw_quote ("") == "\"\"", true);

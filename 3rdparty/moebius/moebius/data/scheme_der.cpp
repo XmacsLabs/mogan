@@ -20,6 +20,21 @@ using moebius::TUPLE;
 namespace moebius {
 namespace data {
 
+string
+scm_unquote (string s) {
+  if (is_quoted (s)) {
+    int    i, n= N (s);
+    string r;
+    for (i= 1; i < n - 1; i++)
+      if (s[i] == '\\' &&
+          (s[i + 1] == '\\' || (s[i + 1] == '\"' && i + 2 != n)))
+        r << s[++i];
+      else r << s[i];
+    return r;
+  }
+  else return s;
+}
+
 /******************************************************************************
  * Handling escape characters
  ******************************************************************************/

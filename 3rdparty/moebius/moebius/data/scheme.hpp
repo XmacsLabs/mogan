@@ -16,6 +16,27 @@
 namespace moebius {
 namespace data {
 
+/**
+ * @brief Convert a string to its R5RS-compliant external representation.
+ *
+ * This function escapes special characters like double quotes and backslashes.
+ *
+ * @param s The input string.
+ * @return A new string that represents the R5RS-compliant external
+ * representation.
+ */
+string scm_quote (string s);
+
+/**
+ * @brief Unquote a R5RS-compliant external string representation.
+ *
+ * This function reverses the operation performed by scm_quote.
+ *
+ * @param s The quoted string.
+ * @return The unquoted string.
+ */
+string scm_unquote (string s);
+
 /******************************************************************************
  * Scheme format deserialization
  ******************************************************************************/

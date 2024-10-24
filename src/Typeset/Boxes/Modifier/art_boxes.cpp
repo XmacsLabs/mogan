@@ -12,6 +12,7 @@
 #include "Boxes/change.hpp"
 #include "Boxes/construct.hpp"
 #include "analyze.hpp"
+#include "converter.hpp"
 #include "effect.hpp"
 #include "file.hpp"
 #include "gui.hpp"

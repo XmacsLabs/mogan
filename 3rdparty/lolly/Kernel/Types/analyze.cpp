@@ -416,44 +416,6 @@ fnsymbol_nr (int nr) {
   return r;
 }
 
-/******************************************************************************
- * Quoting
- ******************************************************************************/
-
-string
-scm_quote (string s) {
-  // R5RS compliant external string representation.
-  int    i, n= N (s);
-  string r;
-  r << '"';
-  for (i= 0; i < n; i++)
-    switch (s[i]) {
-    case '\"':
-    case '\\':
-      r << '\\' << s[i];
-      break;
-    default:
-      r << s[i];
-    }
-  r << '"';
-  return r;
-}
-
-string
-scm_unquote (string s) {
-  if (is_quoted (s)) {
-    int    i, n= N (s);
-    string r;
-    for (i= 1; i < n - 1; i++)
-      if (s[i] == '\\' &&
-          (s[i + 1] == '\\' || (s[i + 1] == '\"' && i + 2 != n)))
-        r << s[++i];
-      else r << s[i];
-    return r;
-  }
-  else return s;
-}
-
 string
 raw_quote (string s) {
   // Mark the label of a STRING tree as representing a string and not a symbol.

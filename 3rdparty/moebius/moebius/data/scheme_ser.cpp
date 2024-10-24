@@ -16,6 +16,25 @@
 namespace moebius {
 namespace data {
 
+string
+scm_quote (string s) {
+  // R5RS compliant external string representation.
+  int    i, n= N (s);
+  string r;
+  r << '"';
+  for (i= 0; i < n; i++)
+    switch (s[i]) {
+    case '\"':
+    case '\\':
+      r << '\\' << s[i];
+      break;
+    default:
+      r << s[i];
+    }
+  r << '"';
+  return r;
+}
+
 /******************************************************************************
  * Handling escape characters
  ******************************************************************************/

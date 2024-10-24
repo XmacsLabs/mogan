@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "convert.hpp"
+#include "converter.hpp"
 #include "cork.hpp"
 #include "dictionary.hpp"
 #include "env.hpp"

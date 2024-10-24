@@ -17,7 +17,23 @@ using namespace moebius;
 using moebius::data::block_to_scheme_tree;
 using moebius::data::scheme_tree_to_block;
 using moebius::data::scheme_tree_to_string;
+using moebius::data::scm_quote;
+using moebius::data::scm_unquote;
 using moebius::data::string_to_scheme_tree;
+
+TEST_CASE ("test scm quote") {
+  CHECK_EQ (scm_quote ("a") == "\"a\"", true);
+  CHECK_EQ (scm_quote ("") == "\"\"", true);
+  CHECK_EQ (scm_quote ("\\") == "\"\\\\\"", true);
+}
+
+TEST_CASE ("test_scm_unquote") {
+  CHECK_EQ (scm_unquote ("\"\"") == "", true);
+  CHECK_EQ (scm_unquote ("\"abc\"") == "abc", true);
+  CHECK_EQ (scm_unquote ("abc") == "abc", true);
+  CHECK_EQ (scm_unquote ("") == "", true);
+  CHECK_EQ (scm_unquote ("\"\\\\\"") == "\\", true);
+}
 
 TEST_CASE ("block_to_scheme_tree") {
   CHECK_EQ (block_to_scheme_tree ("(scheme parser)"),

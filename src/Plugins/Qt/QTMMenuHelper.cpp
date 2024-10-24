@@ -29,6 +29,10 @@
 #include <QKeyEvent>
 #include <QToolTip>
 
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::scm_quote;
+
 /******************************************************************************
  * QTMCommand
  ******************************************************************************/

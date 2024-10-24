@@ -25,6 +25,8 @@
 
 using namespace moebius;
 using moebius::data::block_to_scheme_tree;
+using moebius::data::scm_quote;
+using moebius::data::scm_unquote;
 using moebius::drd::the_drd;
 
 RESOURCE_CODE (dictionary);

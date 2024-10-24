@@ -14,6 +14,7 @@
 #include "Qt/qt_utilities.hpp"
 
 #include "analyze.hpp"
+#include "converter.hpp"
 #include "dictionary.hpp"
 
 #define MAGN (dpi * PIXEL / 72.0)

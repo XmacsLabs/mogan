@@ -11,12 +11,14 @@
 
 #include "Ispell/ispell.hpp"
 #include "convert.hpp"
+#include "converter.hpp"
 #include "file.hpp"
 #include "locale.hpp"
 #include "resource.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_link.hpp"
+
 #include <moebius/tree_label.hpp>
 
 using namespace moebius;

@@ -13,6 +13,11 @@
 #include "analyze.hpp"
 #include "tree_helper.hpp"
 
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::scm_quote;
+using moebius::data::scm_unquote;
+
 /******************************************************************************
  * Fast filtering of lines which satisfy a list of constraints
  ******************************************************************************/

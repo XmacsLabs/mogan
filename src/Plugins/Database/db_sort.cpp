@@ -14,6 +14,11 @@
 #include "merge_sort.hpp"
 #include "tree_helper.hpp"
 
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::scm_quote;
+using moebius::data::scm_unquote;
+
 /******************************************************************************
  * Lexicographical sorting of tuples
  ******************************************************************************/

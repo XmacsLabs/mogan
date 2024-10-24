@@ -17,8 +17,11 @@
 #include "tm_buffer.hpp"
 #include "tree_traverse.hpp"
 
+#include <moebius/data/scheme.hpp>
 #include <moebius/drd/drd_mode.hpp>
 
+using moebius::data::scm_quote;
+using moebius::data::scm_unquote;
 using moebius::drd::get_access_mode;
 using moebius::drd::set_access_mode;
 

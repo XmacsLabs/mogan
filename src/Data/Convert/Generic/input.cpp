@@ -11,6 +11,7 @@
 
 #include "Generic/input.hpp"
 #include "convert.hpp"
+#include "converter.hpp"
 #include "file.hpp"
 #include "hashmap.hpp"
 #include "image_files.hpp"
@@ -22,6 +23,7 @@
 #include "tree.hpp"
 #include "tree_helper.hpp"
 #include "tree_modify.hpp"
+
 #include <moebius/vars.hpp>
 
 using namespace moebius;

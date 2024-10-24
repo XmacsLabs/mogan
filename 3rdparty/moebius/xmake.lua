@@ -4,7 +4,7 @@ set_allowedmodes("releasedbg", "release", "debug")
 add_rules("mode.debug")
 
 set_project("moebius")
-MOEBIUS_VERSION= "0.1.0"
+MOEBIUS_VERSION= "0.1"
 
 local moe_files = {
     "Data/Tree/**.cpp",

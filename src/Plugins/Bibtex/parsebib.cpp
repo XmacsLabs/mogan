@@ -12,6 +12,7 @@
 #include "Bibtex/bibtex_functions.hpp"
 #include "analyze.hpp"
 #include "convert.hpp"
+#include "converter.hpp"
 #include "list.hpp"
 #include "tm_debug.hpp"
 #include "tree_helper.hpp"

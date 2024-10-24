@@ -17,6 +17,11 @@
 #include "tree_helper.hpp"
 #include "universal.hpp"
 
+#include <moebius/data/scheme.hpp>
+
+using moebius::data::scm_quote;
+using moebius::data::scm_unquote;
+
 #define MAX_PREFIX_LENGTH 6
 
 /******************************************************************************

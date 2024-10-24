@@ -227,8 +227,6 @@ string remove_prefix (string s, string prefix);
  */
 string remove_suffix (string s, string suffix);
 
-string utf8_to_cork (string s);
-string cork_to_utf8 (string s);
 string il2_to_cork (string s);
 string cork_to_il2 (string s);
 
@@ -296,27 +294,6 @@ string Alpha_nr (int nr);
  * @return A string representing the footnote symbol.
  */
 string fnsymbol_nr (int nr);
-
-/**
- * @brief Convert a string to its R5RS-compliant external representation.
- *
- * This function escapes special characters like double quotes and backslashes.
- *
- * @param s The input string.
- * @return A new string that represents the R5RS-compliant external
- * representation.
- */
-string scm_quote (string s);
-
-/**
- * @brief Unquote a R5RS-compliant external string representation.
- *
- * This function reverses the operation performed by scm_quote.
- *
- * @param s The quoted string.
- * @return The unquoted string.
- */
-string scm_unquote (string s);
 
 /**
  * @brief Add quotes around a string to indicate it's a string, not a symbol.

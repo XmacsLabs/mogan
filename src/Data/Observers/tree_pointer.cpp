@@ -102,7 +102,7 @@ tree_pointer_rep::get_tree (tree& t) {
 bool
 tree_pointer_rep::set_tree (tree t) {
   if (ptr != inside (t)) {
-    tree ref (ptr);
+    tree ref= tree (ptr);
     remove_observer (ref->data, observer (this));
     ptr= inside (t);
     insert_observer (t->data, observer (this));

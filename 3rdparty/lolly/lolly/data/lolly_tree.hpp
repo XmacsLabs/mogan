@@ -16,257 +16,228 @@
 namespace lolly {
 namespace data {
 
+#define CHECK_COMPOUND(t)                                                      \
+  TM_DEBUG (ASSERT (t->op != 0, "an compound tree use 0 as operator"))
+
 template <typename T> class lolly_tree;
 template <typename T> class lolly_tree_rep;
-template <typename T> class atomic_rep;
-template <typename T> class compound_rep;
 class blackbox;
 
 template <typename T> class lolly_tree {
-  lolly_tree_rep<T>* rep; // can be atomic or compound or generic
+  CONCRETE_TEMPLATE (lolly_tree, T);
+  // rep field can be atomic or compound or generic
 
-public:
+  inline lolly_tree () : rep (tm_new<lolly_tree_rep<T>> (string ())) {}
+  inline lolly_tree<T> (string l) : rep (tm_new<lolly_tree_rep<T>> (l)) {}
+  inline lolly_tree (const char* l) : rep (tm_new<lolly_tree_rep<T>> (l)) {}
+
   inline lolly_tree (lolly_tree_rep<T>* rep2) : rep (rep2) { rep->ref_count++; }
 
-  inline lolly_tree (const lolly_tree<T>& x) : rep (x.rep) { rep->ref_count++; }
-
-  inline atomic_rep<T>* operator->() {
-    // CHECK_ATOMIC (*this);
-    return static_cast<atomic_rep<T>*> (rep);
-  }
-
-  inline lolly_tree () : rep (tm_new<atomic_rep<T>> (string ())) {}
-  inline lolly_tree<T> (string l) : rep (tm_new<atomic_rep<T>> (l)) {}
-  inline lolly_tree (const char* l) : rep (tm_new<atomic_rep<T>> (l)) {}
-
   inline lolly_tree (int l, int n= 0)
-      : rep (tm_new<compound_rep<T>> (l, array<lolly_tree<T>> (n))) {}
+      : rep (tm_new<lolly_tree_rep<T>> (l, array<lolly_tree<T>> (n))) {}
 
   inline lolly_tree (int l, array<lolly_tree<T>> a)
-      : rep (tm_new<compound_rep<T>> (l, a)) {}
+      : rep (tm_new<lolly_tree_rep<T>> (l, a)) {}
 
   inline lolly_tree (lolly_tree<T> t, int n)
-      : rep (tm_new<compound_rep<T>> (t.rep->op, array<lolly_tree<T>> (n))) {
-    // CHECK_COMPOUND (t);
+      : rep (tm_new<lolly_tree_rep<T>> (t.rep->op, array<lolly_tree<T>> (n))) {
+    CHECK_COMPOUND (t);
   }
 
   inline lolly_tree (int l, lolly_tree<T> t1)
-      : rep (tm_new<compound_rep<T>> (l, array<lolly_tree<T>> (1))) {
-    (static_cast<compound_rep<T>*> (rep))->a[0]= t1;
+      : rep (tm_new<lolly_tree_rep<T>> (l, array<lolly_tree<T>> (1))) {
+    rep->a[0]= t1;
   }
 
   inline lolly_tree (int l, lolly_tree<T> t1, lolly_tree<T> t2)
-      : rep (tm_new<compound_rep<T>> (l, array<lolly_tree<T>> (2))) {
-    (static_cast<compound_rep<T>*> (rep))->a[0]= t1;
-    (static_cast<compound_rep<T>*> (rep))->a[1]= t2;
+      : rep (tm_new<lolly_tree_rep<T>> (l, array<lolly_tree<T>> (2))) {
+    rep->a[0]= t1;
+    rep->a[1]= t2;
   }
 
   inline lolly_tree (int l, lolly_tree<T> t1, lolly_tree<T> t2,
                      lolly_tree<T> t3)
-      : rep (tm_new<compound_rep<T>> (l, array<lolly_tree<T>> (3))) {
-    (static_cast<compound_rep<T>*> (rep))->a[0]= t1;
-    (static_cast<compound_rep<T>*> (rep))->a[1]= t2;
-    (static_cast<compound_rep<T>*> (rep))->a[2]= t3;
+      : rep (tm_new<lolly_tree_rep<T>> (l, array<lolly_tree<T>> (3))) {
+    rep->a[0]= t1;
+    rep->a[1]= t2;
+    rep->a[2]= t3;
   }
 
   inline lolly_tree (int l, lolly_tree<T> t1, lolly_tree<T> t2,
                      lolly_tree<T> t3, lolly_tree<T> t4)
-      : rep (tm_new<compound_rep<T>> (l, array<lolly_tree<T>> (4))) {
-    (static_cast<compound_rep<T>*> (rep))->a[0]= t1;
-    (static_cast<compound_rep<T>*> (rep))->a[1]= t2;
-    (static_cast<compound_rep<T>*> (rep))->a[2]= t3;
-    (static_cast<compound_rep<T>*> (rep))->a[3]= t4;
+      : rep (tm_new<lolly_tree_rep<T>> (l, array<lolly_tree<T>> (4))) {
+    rep->a[0]= t1;
+    rep->a[1]= t2;
+    rep->a[2]= t3;
+    rep->a[3]= t4;
   }
 
   inline lolly_tree (int l, lolly_tree<T> t1, lolly_tree<T> t2,
                      lolly_tree<T> t3, lolly_tree<T> t4, lolly_tree<T> t5)
-      : rep (tm_new<compound_rep<T>> (l, array<lolly_tree<T>> (5))) {
-    (static_cast<compound_rep<T>*> (rep))->a[0]= t1;
-    (static_cast<compound_rep<T>*> (rep))->a[1]= t2;
-    (static_cast<compound_rep<T>*> (rep))->a[2]= t3;
-    (static_cast<compound_rep<T>*> (rep))->a[3]= t4;
-    (static_cast<compound_rep<T>*> (rep))->a[4]= t5;
+      : rep (tm_new<lolly_tree_rep<T>> (l, array<lolly_tree<T>> (5))) {
+    rep->a[0]= t1;
+    rep->a[1]= t2;
+    rep->a[2]= t3;
+    rep->a[3]= t4;
+    rep->a[4]= t5;
   }
 
   inline lolly_tree (int l, lolly_tree<T> t1, lolly_tree<T> t2,
                      lolly_tree<T> t3, lolly_tree<T> t4, lolly_tree<T> t5,
                      lolly_tree<T> t6)
-      : rep (tm_new<compound_rep<T>> (l, array<lolly_tree<T>> (6))) {
-    (static_cast<compound_rep<T>*> (rep))->a[0]= t1;
-    (static_cast<compound_rep<T>*> (rep))->a[1]= t2;
-    (static_cast<compound_rep<T>*> (rep))->a[2]= t3;
-    (static_cast<compound_rep<T>*> (rep))->a[3]= t4;
-    (static_cast<compound_rep<T>*> (rep))->a[4]= t5;
-    (static_cast<compound_rep<T>*> (rep))->a[5]= t6;
+      : rep (tm_new<lolly_tree_rep<T>> (l, array<lolly_tree<T>> (6))) {
+    rep->a[0]= t1;
+    rep->a[1]= t2;
+    rep->a[2]= t3;
+    rep->a[3]= t4;
+    rep->a[4]= t5;
+    rep->a[5]= t6;
   }
 
   inline lolly_tree (int l, lolly_tree<T> t1, lolly_tree<T> t2,
                      lolly_tree<T> t3, lolly_tree<T> t4, lolly_tree<T> t5,
                      lolly_tree<T> t6, lolly_tree<T> t7)
-      : rep (tm_new<compound_rep<T>> (l, array<lolly_tree<T>> (7))) {
-    (static_cast<compound_rep<T>*> (rep))->a[0]= t1;
-    (static_cast<compound_rep<T>*> (rep))->a[1]= t2;
-    (static_cast<compound_rep<T>*> (rep))->a[2]= t3;
-    (static_cast<compound_rep<T>*> (rep))->a[3]= t4;
-    (static_cast<compound_rep<T>*> (rep))->a[4]= t5;
-    (static_cast<compound_rep<T>*> (rep))->a[5]= t6;
-    (static_cast<compound_rep<T>*> (rep))->a[6]= t7;
+      : rep (tm_new<lolly_tree_rep<T>> (l, array<lolly_tree<T>> (7))) {
+    rep->a[0]= t1;
+    rep->a[1]= t2;
+    rep->a[2]= t3;
+    rep->a[3]= t4;
+    rep->a[4]= t5;
+    rep->a[5]= t6;
+    rep->a[6]= t7;
   }
 
   inline lolly_tree (int l, lolly_tree<T> t1, lolly_tree<T> t2,
                      lolly_tree<T> t3, lolly_tree<T> t4, lolly_tree<T> t5,
                      lolly_tree<T> t6, lolly_tree<T> t7, lolly_tree<T> t8)
-      : rep (tm_new<compound_rep<T>> (l, array<lolly_tree<T>> (8))) {
-    (static_cast<compound_rep<T>*> (rep))->a[0]= t1;
-    (static_cast<compound_rep<T>*> (rep))->a[1]= t2;
-    (static_cast<compound_rep<T>*> (rep))->a[2]= t3;
-    (static_cast<compound_rep<T>*> (rep))->a[3]= t4;
-    (static_cast<compound_rep<T>*> (rep))->a[4]= t5;
-    (static_cast<compound_rep<T>*> (rep))->a[5]= t6;
-    (static_cast<compound_rep<T>*> (rep))->a[6]= t7;
-    (static_cast<compound_rep<T>*> (rep))->a[7]= t8;
-  }
-
-  lolly_tree<T>& operator= (lolly_tree<T> x) {
-    x.rep->ref_count++;
-    if ((--rep->ref_count) == 0) destroy_tree_rep (rep);
-    rep= x.rep;
-    return *this;
-  }
-
-  ~lolly_tree () {
-    if ((--rep->ref_count) == 0) {
-      destroy_tree_rep (rep);
-      rep= NULL;
-    }
+      : rep (tm_new<lolly_tree_rep<T>> (l, array<lolly_tree<T>> (8))) {
+    rep->a[0]= t1;
+    rep->a[1]= t2;
+    rep->a[2]= t3;
+    rep->a[3]= t4;
+    rep->a[4]= t5;
+    rep->a[5]= t6;
+    rep->a[6]= t7;
+    rep->a[7]= t8;
   }
 
   inline lolly_tree<T>& operator[] (int i) {
-    // CHECK_COMPOUND (*this);
-    return (static_cast<compound_rep<T>*> (rep))->a[i];
+    CHECK_COMPOUND (*this);
+    return rep->a[i];
   }
 
   inline lolly_tree<T> operator() (int start, int end) {
     lolly_tree<T> r (rep->op, end - start);
     for (int i= start; i < end; i++)
-      r[i - start]= (static_cast<compound_rep<T>*> (rep))->a[i];
+      r[i - start]= rep->a[i];
     return r;
   }
-
-  inline lolly_tree_rep<T>* inside () { return rep; }
 };
+CONCRETE_TEMPLATE_CODE (lolly_tree, typename, T)
 
 template <typename T> class lolly_tree_rep : concrete_struct {
 public:
+  // the tree_label of op=0 in TeXmacs is STRING
   int op;
   T   data;
-  inline lolly_tree_rep (int op2) : op (op2) {}
+  union {
+    string               label;
+    array<lolly_tree<T>> a;
+  };
+
+  inline lolly_tree_rep (string l) : op (0), label (l) {}
+  inline lolly_tree_rep (int l, array<lolly_tree<T>> a2) : op (l), a (a2) {}
+  inline ~lolly_tree_rep () {
+    if (op == 0) {
+      label.~string ();
+    }
+    else if (op > 0) {
+      a.~array ();
+    };
+  }
   friend class lolly_tree<T>;
 };
-
-template <typename T> class atomic_rep : public lolly_tree_rep<T> {
-public:
-  string label;
-  // the tree_label of op=0 in TeXmacs is STRING
-  inline atomic_rep (string l) : lolly_tree_rep<T> (0), label (l) {}
-  friend class lolly_tree<T>;
-};
-
-template <typename T> class compound_rep : public lolly_tree_rep<T> {
-public:
-  array<lolly_tree<T>> a;
-  inline compound_rep (int l, array<lolly_tree<T>> a2)
-      : lolly_tree_rep<T> (l), a (a2) {}
-  friend class lolly_tree<T>;
-};
-
-template <typename T>
-inline void
-destroy_tree_rep (lolly_tree_rep<T>* rep) {
-  if (((int) rep->op) == 0) tm_delete (static_cast<atomic_rep<T>*> (rep));
-  else if (((int) rep->op) > 0) tm_delete (static_cast<compound_rep<T>*> (rep));
-}
 
 template <typename T>
 inline int
 N (lolly_tree<T> t) {
-  // CHECK_COMPOUND (t);
-  return N ((static_cast<compound_rep<T>*> (t.inside ()))->a);
+  CHECK_COMPOUND (t);
+  return N (t->a);
 }
 
 template <typename T>
 inline int
 arity (lolly_tree<T> t) {
-  if (t.inside ()->op == /*STRING*/ 0) return 0;
-  else return N ((static_cast<compound_rep<T>*> (t.inside ()))->a);
+  if (t->op == /*STRING*/ 0) return 0;
+  else return N (t->a);
 }
 
 template <typename T>
 inline array<lolly_tree<T>>
 A (lolly_tree<T> t) {
-  // CHECK_COMPOUND (t);
-  return (static_cast<compound_rep<T>*> (t.inside ()))->a;
+  CHECK_COMPOUND (t);
+  return t->a;
 }
 
 template <typename T>
 inline array<lolly_tree<T>>&
 AR (lolly_tree<T> t) {
-  // CHECK_COMPOUND (t);
-  return (static_cast<compound_rep<T>*> (t.inside ()))->a;
+  CHECK_COMPOUND (t);
+  return t->a;
 }
 
 template <typename T>
 inline bool
 is_atomic (lolly_tree<T> t) {
-  return (((int) (t.inside ())->op) == 0);
+  return (t->op == 0);
 }
 
 template <typename T>
 inline bool
 is_compound (lolly_tree<T> t) {
-  return (((int) (t.inside ())->op) > /*STRING*/ 0);
+  return ((t->op) > /*STRING*/ 0);
 }
 
 template <typename T>
 inline bool
 is_generic (lolly_tree<T> t) {
-  return ((int) (t.inside ())) < 0;
+  return (t->op) < 0;
 }
 
 template <typename T>
 inline bool
 operator== (lolly_tree<T> t, int lab) {
-  return (t.inside ()->op == lab) && (N (t) == 0);
+  return (t->op == lab) && (N (t) == 0);
 }
 
 template <typename T>
 inline bool
 operator!= (lolly_tree<T> t, int lab) {
-  return (t.inside ()->op != lab) || (N (t) != 0);
+  return (t->op != lab) || (N (t) != 0);
 }
 
 template <typename T>
 inline bool
 operator== (lolly_tree<T> t, string s) {
-  return (t.inside ()->op == /*STRING*/ 0) && (t->label == s);
+  return (t->op == /*STRING*/ 0) && (t->label == s);
 }
 
 template <typename T>
 inline bool
 operator!= (lolly_tree<T> t, string s) {
-  return (t.inside ()->op != /*STRING*/ 0) || (t->label != s);
+  return (t->op != /*STRING*/ 0) || (t->label != s);
 }
 
 template <typename T>
 inline bool
 operator== (lolly_tree<T> t, const char* s) {
-  return ((t.inside ())->op == /*STRING*/ 0) && (t->label == s);
+  return (t->op == /*STRING*/ 0) && (t->label == s);
 }
 
 template <typename T>
 inline bool
 operator!= (lolly_tree<T> t, const char* s) {
-  return ((t.inside ())->op != /*STRING*/ 0) || (t->label != s);
+  return (t->op != /*STRING*/ 0) || (t->label != s);
 }
 
 template <typename T>
@@ -288,19 +259,19 @@ operator!= (lolly_tree<T> t, lolly_tree<T> u) {
 template <typename T>
 inline bool
 strong_equal (lolly_tree<T> t, lolly_tree<T> u) {
-  return t.inside () == u.inside ();
+  return t.operator->() == u.operator->();
 }
 
 template <typename T>
 inline bool
 is_func (lolly_tree<T> t, int l) {
-  return (t.inside ()->op == l) && (N (t) != 0);
+  return (t->op == l) && (N (t) != 0);
 }
 
 template <typename T>
 inline bool
 is_func (lolly_tree<T> t, int l, int i) {
-  return (t.inside ()->op == l) && (N (t) == i);
+  return (t->op == l) && (N (t) == i);
 }
 
 template <typename T>
@@ -381,16 +352,16 @@ operator* (lolly_tree<T> t1, lolly_tree<T> t2) {
 template <typename T>
 inline lolly_tree<T>&
 operator<< (lolly_tree<T>& t, lolly_tree<T> t2) {
-  // CHECK_COMPOUND (t);
-  (static_cast<compound_rep<T>*> (t.inside ()))->a << t2;
+  CHECK_COMPOUND (t);
+  t->a << t2;
   return t;
 }
 
 template <typename T>
 inline lolly_tree<T>&
 operator<< (lolly_tree<T>& t, array<lolly_tree<T>> a) {
-  // CHECK_COMPOUND (t);
-  (static_cast<compound_rep<T>*> (t.inside ()))->a << a;
+  CHECK_COMPOUND (t);
+  t->a << a;
   return t;
 }
 
