@@ -159,3 +159,13 @@ TEST_CASE ("test copy") {
   string_u16 str3= copy (str1 (0, 3));
   CHECK (str3 == u"str");
 }
+
+TEST_CASE ("test iteration") {
+  string_u16 str1         = u"s\0tr1";
+  int        expectedIndex= 0;
+  for (const auto element : str1) {
+    CHECK_EQ (element, str1[expectedIndex]);
+    ++expectedIndex;
+  }
+  CHECK_EQ (expectedIndex, N (str1));
+}

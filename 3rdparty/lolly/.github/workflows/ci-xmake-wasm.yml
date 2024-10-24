@@ -48,11 +48,11 @@ jobs:
             ${{ github.workspace }}/build/.build_cache
           key: ${{ runner.os }}-wasm-${{ hashFiles('**/xmake.lua') }}
       - name: config
-        run: xmake config --yes -p wasm -vD
+        run: xmake config --yes -p wasm -vD --enable_tests=true
       - name: build
         run: xmake build --yes -vD
       - name: test
-        run: elvish bin/test_wasm
+        run: elvish bin/test_wasm "tests/*"
   windowsbuild:
     runs-on: windows-2019
     env:
@@ -84,5 +84,5 @@ jobs:
       - name: build
         run: xmake build --yes -vD
       - name: test
-        run: elvish bin/test_wasm
+        run: elvish bin/test_wasm "tests/*"
 

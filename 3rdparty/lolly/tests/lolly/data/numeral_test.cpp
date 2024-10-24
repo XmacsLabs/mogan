@@ -155,3 +155,54 @@ TEST_CASE ("to_hex/to_Hex") {
     string_eq (to_hex (INT32_MAX + 1), "-80000000");
   }
 }
+
+TEST_CASE ("as_hexadecimal fixed") {
+  SUBCASE ("0-15 (+/-)") {
+    for (int i= 1; i < 10; i++) {
+      string_eq (as_hexadecimal (i, 1), as_string (i));
+      string_eq (as_hexadecimal (i, 1), as_string (i));
+    }
+    string_eq (as_hexadecimal (0, 1), "0");
+    string_eq (as_hexadecimal (10, 1), "A");
+    string_eq (as_hexadecimal (11, 1), "B");
+    string_eq (as_hexadecimal (12, 1), "C");
+    string_eq (as_hexadecimal (13, 1), "D");
+    string_eq (as_hexadecimal (14, 1), "E");
+    string_eq (as_hexadecimal (15, 1), "F");
+  }
+  SUBCASE ("arbitary") {
+    string_eq (as_hexadecimal (0x12, 2), "12");
+    string_eq (as_hexadecimal (0xABC, 3), "ABC");
+  }
+  SUBCASE ("max") { string_eq (as_hexadecimal (UINT32_MAX, 8), "FFFFFFFF"); }
+}
+
+TEST_CASE ("uint32_to_Hex") {
+  SUBCASE ("0-15 (+/-)") {
+    for (int i= 1; i < 10; i++) {
+      string_eq (uint32_to_Hex (i), as_string (i));
+      string_eq (uint32_to_Hex (i), as_string (i));
+    }
+    string_eq (uint32_to_Hex (0), "0");
+    string_eq (uint32_to_Hex (10), "A");
+    string_eq (uint32_to_Hex (11), "B");
+    string_eq (uint32_to_Hex (12), "C");
+    string_eq (uint32_to_Hex (13), "D");
+    string_eq (uint32_to_Hex (14), "E");
+    string_eq (uint32_to_Hex (15), "F");
+  }
+  SUBCASE ("arbitary") {
+    string_eq (uint32_to_Hex (0x12), "12");
+    string_eq (uint32_to_Hex (0xABC), "ABC");
+    string_eq (uint32_to_Hex (0x80000001), "80000001");
+  }
+  SUBCASE ("max") { string_eq (uint32_to_Hex (UINT32_MAX), "FFFFFFFF"); }
+}
+
+TEST_CASE ("binary to hexadecimal") {
+  string header_of_png;
+  header_of_png << "\xff\xd8\xff\xe0";
+  header_of_png << '\x00';
+  header_of_png << "\x10\x4A\x46\x49\x46";
+  string_eq (binary_to_hexadecimal (header_of_png), "FFD8FFE000104A464946");
+}

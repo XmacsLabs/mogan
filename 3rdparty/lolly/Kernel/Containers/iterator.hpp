@@ -37,10 +37,22 @@ public:
   virtual bool busy ()= 0;
 
   /**
-   * @brief Returns the next element of the iterator.
-   * @return The next element of the iterator.
+   * @brief Returns the current element of the iterator, and move the iterator
+   * forward
+   * @return The current element of the iterator.
    */
   virtual T next ()= 0;
+
+  /**
+   * @brief Returns the current element of the iterator.
+   * @return The current element of the iterator.
+   */
+  virtual T current ()= 0;
+
+  /**
+   * @brief Increase the iterator
+   */
+  virtual void increase ()= 0;
 
   /**
    * @brief Returns the number of elements remaining in the iterator.
@@ -56,6 +68,15 @@ public:
  */
 template <class T> struct iterator {
   ABSTRACT_TEMPLATE (iterator, T);
+  iterator<T>    begin () { return *this; };
+  std::nullptr_t end () { return nullptr; };
+  void           operator++ () { this->rep->increase (); };
+  /**
+   * @brief Returns the current element of the iterator, then move the iterator
+   * to the next element.
+   */
+  T    operator* () { return this->rep->current (); };
+  bool operator!= (std::nullptr_t) { return this->rep->busy (); }
 };
 ABSTRACT_TEMPLATE_CODE (iterator, class, T);
 

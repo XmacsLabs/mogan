@@ -185,10 +185,10 @@ operator<= (string s1, string s2) {
 
 int
 hash (string s) {
-  int i, h= 0, n= N (s);
-  for (i= 0; i < n; i++) {
+  int h= 0;
+  for (char ch : s) {
     h= (h << 9) + (h >> 23);
-    h= h + ((int) s[i]);
+    h= h + ((int) ch);
   }
   return h;
 }

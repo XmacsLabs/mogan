@@ -112,3 +112,19 @@ TEST_CASE ("array of string") {
   arr << "】";
   CHECK (contains (string ("】"), arr));
 }
+
+TEST_CASE ("test iteration") {
+  int expectedIndex= 0;
+  for (const auto element : five_elem) {
+    CHECK_EQ (element, five_elem[expectedIndex]);
+    ++expectedIndex;
+  }
+  CHECK_EQ (expectedIndex, 5);
+
+  expectedIndex= 0;
+  for (const auto element : zero_elem) {
+    CHECK_EQ (element, zero_elem[expectedIndex]);
+    ++expectedIndex;
+  }
+  CHECK_EQ (expectedIndex, 0);
+}

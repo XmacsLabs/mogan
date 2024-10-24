@@ -30,6 +30,8 @@ local moe_includedirs = {
     "$(projectdir)",
 }
 
+add_repositories("moe-repo xmake")
+
 local DOCTEST_VERSION = "2.4.11"
 
 add_requires("lolly")

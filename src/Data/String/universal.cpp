@@ -19,7 +19,6 @@
 
 using lolly::data::from_hex;
 using lolly::data::to_Hex;
-#define as_hexadecimal to_Hex
 #define from_hexadecimal from_hex
 
 using lolly::data::encode_as_utf8;
@@ -48,7 +47,7 @@ char Cork_unaccented[128]= {
 
 static void
 translit_set (int i, string s) {
-  string h                                    = as_hexadecimal (i);
+  string h                                    = to_Hex (i);
   translit_table ("<#" * locase_all (h) * ">")= s;
   translit_table ("<#" * upcase_all (h) * ">")= s;
 }
@@ -258,7 +257,7 @@ uni_locase_char (string s) {
     else if (code >= 0x460 && code <= 0x4FF) {
       if ((code & 1) == 0) code+= 1;
     }
-    return "<#" * as_hexadecimal (code) * ">";
+    return "<#" * to_Hex (code) * ">";
   }
   else {
     init_case_tables ();
@@ -311,7 +310,7 @@ uni_upcase_char (string s) {
     else if (code >= 0x460 && code <= 0x4FF) {
       if ((code & 1) == 1) code-= 1;
     }
-    return "<#" * as_hexadecimal (code) * ">";
+    return "<#" * to_Hex (code) * ">";
   }
   else {
     init_case_tables ();

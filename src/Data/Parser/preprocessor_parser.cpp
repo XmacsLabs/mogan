@@ -24,8 +24,8 @@ preprocessor_parser_rep::set_start (string start) {
 
 void
 preprocessor_parser_rep::set_directives (array<string> directives) {
-  for (int i= 0; i < N (directives); i++) {
-    m_directives << directives[i];
+  for (const string directive : directives) {
+    m_directives << directive;
   }
 }
 

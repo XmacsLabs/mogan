@@ -42,6 +42,16 @@ TEST_CASE ("test concat") {
   CHECK_EQ ("abc" * string ("de") == string ("abcde"), true);
 }
 
+TEST_CASE ("test iteration") {
+  string str1         = "s\0tr1";
+  int    expectedIndex= 0;
+  for (const auto element : str1) {
+    CHECK_EQ (element, str1[expectedIndex]);
+    ++expectedIndex;
+  }
+  CHECK_EQ (expectedIndex, N (str1));
+}
+
 /******************************************************************************
  * Modifications
  ******************************************************************************/

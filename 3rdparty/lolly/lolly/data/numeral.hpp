@@ -82,7 +82,8 @@ string to_Hex (pointer ptr);
 int from_hex (string s);
 
 /**
- * @brief Converts an integer to a hexadecimal string with a fixed length.
+ * @brief Converts an unsigned integer to a hexadecimal string with a fixed
+ * length.
  *
  * @param i The integer to be converted to a hexadecimal string.
  * @param len The length of the output hexadecimal string.
@@ -90,6 +91,22 @@ int from_hex (string s);
  * integer.
  */
 string as_hexadecimal (int i, int length);
+
+/**
+ * @brief Converts an unsigned integer to a hexadecimal string.
+ *
+ * @param i The integer to be converted to a hexadecimal string.
+ * @return The hexadecimal string representation of the input integer.
+ */
+string uint32_to_Hex (uint32_t i);
+
+/**
+ * @brief Converts a binary stream to its hexadecimal represention.
+ *
+ * @param bin The binary data to be converted to a hexadecimal string.
+ * @return The hexadecimal string representation of the input binary.
+ */
+string binary_to_hexadecimal (string bin);
 
 } // namespace data
 } // namespace lolly

@@ -154,12 +154,35 @@ to_padded_hex (uint8_t i) {
   return locase_all (to_padded_Hex (i));
 }
 
+/**
+ * @brief Handle positive number separately to avoid unnecessary check of sign.
+ * string is passed into the function as reference, thus no reference counting
+ * is performed.
+ * @tparam T unsigned integral type is expected.
+ */
+template <typename T>
+std::enable_if_t<std::conjunction_v<std::is_integral<T>, std::is_unsigned<T>>,
+                 void>
+to_Hex_positive (T i, string& s) {
+  if (i >= 16) {
+    to_Hex_positive (i >> 4, s);
+  }
+  s << hex_string[i & 15];
+}
+
 string
 to_Hex (int32_t i) {
   if (i == INT32_MIN) return "-80000000";
-  if (i < 0) return "-" * to_Hex (-i);
-  if (i < 16) return hex_string[i & 15];
-  return to_Hex (i >> 4) * hex_string[i & 15];
+  if (i < 0) {
+    string result ("-");
+    to_Hex_positive ((uint32_t) (-i), result);
+    return result;
+  }
+  else {
+    string result;
+    to_Hex_positive ((uint32_t) (i), result);
+    return result;
+  };
 }
 
 string
@@ -170,9 +193,16 @@ to_hex (int32_t i) {
 string
 to_Hex (pointer ptr) {
   intptr_t i= (intptr_t) ptr;
-  if (i < 0) return "-" * to_Hex (-i);
-  if (i < 16) return hex_string[i & 15];
-  return to_Hex (i >> 4) * hex_string[i & 15];
+  if (i < 0) {
+    string result ("-");
+    to_Hex_positive ((uintptr_t) (-i), result);
+    return result;
+  }
+  else {
+    string result;
+    to_Hex_positive ((uintptr_t) (i), result);
+    return result;
+  };
 }
 
 string
@@ -193,10 +223,102 @@ from_hex (string s) {
   return res;
 }
 
+/**
+ * @brief Handle positive number separately to avoid unnecessary check of sign.
+ * string is passed into the function as reference, thus no reference counting
+ * is performed.
+ * Because length of string s is known here, use index instead of appending
+ * operator can avoid cost of reallocation. Firstly a string of given length is
+ * constructed, then digits is filled according to index rather than appending
+ * to the tail.
+ * @tparam T unsigned integral type is expected.
+ */
+template <unsigned int cur, typename T>
+std::enable_if_t<std::conjunction_v<std::is_integral<T>, std::is_unsigned<T>>,
+                 void>
+as_hexadecimal_sub (T i, string& s) {
+  if constexpr (cur > 0) {
+    as_hexadecimal_sub<cur - 1> (i >> 4, s);
+  }
+  s[cur]= hex_string[i & 15];
+}
+
 string
 as_hexadecimal (int i, int len) {
-  if (len == 1) return hex_string[i & 15];
-  else return as_hexadecimal (i >> 4, len - 1) * hex_string[i & 15];
+  string result (len);
+  switch (len) {
+  case 1:
+    as_hexadecimal_sub<0> ((unsigned int) i, result);
+    break;
+  case 2:
+    as_hexadecimal_sub<1> ((unsigned int) i, result);
+    break;
+  case 3:
+    as_hexadecimal_sub<2> ((unsigned int) i, result);
+    break;
+  case 4:
+    as_hexadecimal_sub<3> ((unsigned int) i, result);
+    break;
+  case 5:
+    as_hexadecimal_sub<4> ((unsigned int) i, result);
+    break;
+  case 6:
+    as_hexadecimal_sub<5> ((unsigned int) i, result);
+    break;
+  case 7:
+    as_hexadecimal_sub<6> ((unsigned int) i, result);
+    break;
+  case 8:
+    as_hexadecimal_sub<7> ((unsigned int) i, result);
+    break;
+  case 9:
+    as_hexadecimal_sub<8> ((unsigned int) i, result);
+    break;
+  case 10:
+    as_hexadecimal_sub<9> ((unsigned int) i, result);
+    break;
+  case 11:
+    as_hexadecimal_sub<10> ((unsigned int) i, result);
+    break;
+  case 12:
+    as_hexadecimal_sub<11> ((unsigned int) i, result);
+    break;
+  case 13:
+    as_hexadecimal_sub<12> ((unsigned int) i, result);
+    break;
+  case 14:
+    as_hexadecimal_sub<13> ((unsigned int) i, result);
+    break;
+  case 15:
+    as_hexadecimal_sub<14> ((unsigned int) i, result);
+    break;
+  case 16:
+    as_hexadecimal_sub<15> ((unsigned int) i, result);
+    break;
+  default:
+    TM_FAILED ("len is too large");
+    break;
+  }
+  return result;
+}
+
+string
+uint32_to_Hex (uint32_t i) {
+  string result;
+  to_Hex_positive (i, result);
+  return result;
+}
+
+string
+binary_to_hexadecimal (string bin) {
+  string res ((int) (N (bin) * 2));
+  int    cur= 0;
+  for (unsigned char ch : bin) {
+    res[cur]    = hex_string[ch >> 4];
+    res[cur + 1]= hex_string[ch & 0x0f];
+    cur+= 2;
+  }
+  return res;
 }
 
 } // namespace data

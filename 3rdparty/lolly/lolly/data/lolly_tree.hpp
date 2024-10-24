@@ -132,6 +132,8 @@ template <typename T> class lolly_tree {
       r[i - start]= rep->a[i];
     return r;
   }
+  lolly_tree<T>* begin () { return rep->a.begin (); }
+  lolly_tree<T>* end () { return rep->a.end (); }
 };
 CONCRETE_TEMPLATE_CODE (lolly_tree, typename, T)
 

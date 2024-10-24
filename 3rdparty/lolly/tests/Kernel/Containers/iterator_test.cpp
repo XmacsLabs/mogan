@@ -57,6 +57,28 @@ TEST_CASE ("iterate on hashmap") {
   CHECK_EQ (a == string ("123"), true);
 }
 
+TEST_CASE ("ranged for on hashmap") {
+  SUBCASE ("ordinary") {
+    hashmap<int, int> h;
+    h (1)= 1;
+    h (2)= 4;
+    h (3)= 6;
+    string a;
+    for (auto i : iterate (h)) {
+      a= a * as_string (i);
+    }
+    string_eq (a, "123");
+  };
+  SUBCASE ("empty") {
+    hashmap<int, int> h;
+    string            a;
+    for (auto i : iterate (h)) {
+      a= a * as_string (i);
+    }
+    string_eq (a, "");
+  };
+}
+
 TEST_CASE ("iterate on hashset") {
   hashset<int> h;
   h->insert (1);
@@ -68,4 +90,26 @@ TEST_CASE ("iterate on hashset") {
     a << as_string (it->next ());
   }
   CHECK_EQ (a == string ("123"), true);
+}
+
+TEST_CASE ("ranged for on hashset") {
+  SUBCASE ("ordinary") {
+    hashset<int> h;
+    h->insert (1);
+    h->insert (2);
+    h->insert (3);
+    string a;
+    for (auto i : iterate (h)) {
+      a << as_string (i);
+    }
+    string_eq (a, "123");
+  };
+  SUBCASE ("empty") {
+    hashset<int> h;
+    string       a;
+    for (auto i : iterate (h)) {
+      a= a * as_string (i);
+    }
+    string_eq (a, "");
+  }
 }

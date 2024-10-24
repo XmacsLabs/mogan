@@ -52,6 +52,14 @@ main () {
     static string a ("abc"), b ("de");
     a << b;
   });
+  bench.run ("hash of string", [&] {
+    static string a ("accde");
+    hash (a);
+  });
+  bench.run ("hash of larger string", [&] {
+    static string a ("compare larger string ,compute hash of LARGER string");
+    hash (a);
+  });
   bench.run ("is quoted", [&] {
     static string a ("H\"ello TeXmacs\"");
     is_quoted (a);

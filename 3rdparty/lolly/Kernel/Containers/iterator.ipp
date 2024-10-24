@@ -46,6 +46,8 @@ public:
   hashset_iterator_rep<T> (hashset<T> h);
   bool busy ();
   T    next ();
+  T    current ();
+  void increase ();
 };
 
 template <class T>
@@ -79,6 +81,20 @@ hashset_iterator_rep<T>::next () {
 }
 
 template <class T>
+T
+hashset_iterator_rep<T>::current () {
+  ASSERT (busy (), "end of iterator");
+  T x (l->item);
+  return x;
+}
+
+template <class T>
+void
+hashset_iterator_rep<T>::increase () {
+  l= l->next;
+}
+
+template <class T>
 iterator<T>
 iterate (hashset<T> h) {
   return tm_new<hashset_iterator_rep<T>> (h);
@@ -97,6 +113,8 @@ public:
   hashmap_iterator_rep (hashmap<T, U> h);
   bool busy ();
   T    next ();
+  T    current ();
+  void increase ();
 };
 
 template <class T, class U>
@@ -127,6 +145,20 @@ hashmap_iterator_rep<T, U>::next () {
   T x (l->item.key);
   l= l->next;
   return x;
+}
+
+template <class T, class U>
+T
+hashmap_iterator_rep<T, U>::current () {
+  ASSERT (busy (), "end of iterator");
+  T x (l->item.key);
+  return x;
+}
+
+template <class T, class U>
+void
+hashmap_iterator_rep<T, U>::increase () {
+  l= l->next;
 }
 
 template <class T, class U>

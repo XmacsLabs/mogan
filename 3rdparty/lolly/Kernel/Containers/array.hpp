@@ -159,6 +159,9 @@ template <class T> class array {
    * @return   A reference to the element at the specified index.
    */
   inline T& operator[] (int i) { return rep->a[i]; }
+
+  T* begin () { return rep->a; }
+  T* end () { return rep->a + rep->n; }
 };
 CONCRETE_TEMPLATE_CODE (array, class, T);
 

@@ -29,12 +29,11 @@ contains_unicode_char (string s) {
 string
 tm_encode (string s) {
   // verbatim to TeXmacs encoding
-  int    i;
   string r;
-  for (i= 0; i < N (s); i++) {
-    if (s[i] == '<') r << "<less>";
-    else if (s[i] == '>') r << "<gtr>";
-    else r << s[i];
+  for (const auto ch : s) {
+    if (ch == '<') r << "<less>";
+    else if (ch == '>') r << "<gtr>";
+    else r << ch;
   }
   return r;
 }
@@ -162,8 +161,8 @@ tm_backward_access (string s, int k) {
 
 int
 tm_string_length (string s) {
-  int i= 0, pos= 0;
-  while (pos < N (s)) {
+  int i= 0, pos= 0, s_N= N (s);
+  while (pos < s_N) {
     tm_char_forwards (s, pos);
     i++;
   }
@@ -173,8 +172,8 @@ tm_string_length (string s) {
 array<string>
 tm_tokenize (string s) {
   array<string> r;
-  int           pos= 0;
-  while (pos < N (s)) {
+  int           pos= 0, s_N= N (s);
+  while (pos < s_N) {
     int start= pos;
     tm_char_forwards (s, pos);
     r << s (start, pos);
@@ -185,7 +184,8 @@ tm_tokenize (string s) {
 string
 tm_recompose (array<string> a) {
   string r;
-  for (int i= 0; i < N (a); i++)
+  int    a_N= N (a);
+  for (int i= 0; i < a_N; i++)
     r << a[i];
   return r;
 }

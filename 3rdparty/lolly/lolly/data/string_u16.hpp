@@ -80,6 +80,8 @@ class string_u16 {
     rep->resize (size);
     return rep->a;
   }
+  char16_t* begin () { return rep->a; }
+  char16_t* end () { return rep->a + rep->n; }
 
   inline operator string_u16_view () {
     return string_u16_view (rep->a, rep->n);

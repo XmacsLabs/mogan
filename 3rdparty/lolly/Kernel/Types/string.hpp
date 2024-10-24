@@ -51,6 +51,8 @@ class string {
   bool         operator== (string s);
   bool         operator!= (string s);
   string       operator() (int start, int end);
+  char*        begin () { return rep->a; }
+  char*        end () { return rep->a + rep->n; }
 
   inline operator string_view<char> () {
     return string_view<char> (rep->a, rep->n);
