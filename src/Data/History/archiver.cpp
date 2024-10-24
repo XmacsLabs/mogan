@@ -16,6 +16,7 @@
 #include "tm_debug.hpp"
 #include "tree.hpp"
 #include "tree_observer.hpp"
+#include "tree_patch.hpp"
 
 extern tree             the_et;
 array<patch>            singleton (patch p);

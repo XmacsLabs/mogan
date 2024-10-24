@@ -27,6 +27,7 @@
 #include "tree.hpp"
 #include "tree_cursor.hpp"
 #include "tree_observer.hpp"
+#include "tree_patch.hpp"
 #include "url.hpp"
 
 #include <moebius/drd/drd_mode.hpp>
