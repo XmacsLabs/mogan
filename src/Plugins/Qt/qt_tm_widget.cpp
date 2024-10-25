@@ -114,17 +114,17 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   main_widget= concrete (::glue_widget (true, true, 1, 1));
 
   // decode mask
-  visibility[0]= (mask & 1) == 1;       // header
-  visibility[1]= (mask & 2) == 2;       // main
-  visibility[2]= (mask & 4) == 4;       // mode
-  visibility[3]= (mask & 8) == 8;       // focus
-  visibility[4]= (mask & 16) == 16;     // user
-  visibility[5]= (mask & 32) == 32;     // footer
-  visibility[6]= (mask & 64) == 64;     // right side tools
-  visibility[7]= (mask & 128) == 128;   // left side tools
-  visibility[8]= (mask & 256) == 256;   // bottom tools
-  visibility[9]= (mask & 512) == 512;   // extra bottom tools
-  visibility[8]= (mask & 1024) == 1024; // tab page bar
+  visibility[0] = (mask & 1) == 1;       // header
+  visibility[1] = (mask & 2) == 2;       // main
+  visibility[2] = (mask & 4) == 4;       // mode
+  visibility[3] = (mask & 8) == 8;       // focus
+  visibility[4] = (mask & 16) == 16;     // user
+  visibility[5] = (mask & 32) == 32;     // footer
+  visibility[6] = (mask & 64) == 64;     // right side tools
+  visibility[7] = (mask & 128) == 128;   // left side tools
+  visibility[8] = (mask & 256) == 256;   // bottom tools
+  visibility[9] = (mask & 512) == 512;   // extra bottom tools
+  visibility[10]= (mask & 1024) == 1024; // tab page bar
 
 #ifdef OS_WASM
   visibility[1]= false; // main
@@ -851,9 +851,6 @@ qt_tm_widget_rep::query (slot s, int type_id) {
   case SLOT_LEFT_TOOLS_VISIBILITY:
     check_type_id<bool> (type_id, s);
     return close_box<bool> (visibility[7]);
-  case SLOT_TAB_PAGES_VISIBILITY:
-    check_type_id<bool> (type_id, s);
-    return close_box<bool> (visibility[8]);
 
   case SLOT_BOTTOM_TOOLS_VISIBILITY:
     check_type_id<bool> (type_id, s);
@@ -862,6 +859,10 @@ qt_tm_widget_rep::query (slot s, int type_id) {
   case SLOT_EXTRA_TOOLS_VISIBILITY:
     check_type_id<bool> (type_id, s);
     return close_box<bool> (visibility[9]);
+
+  case SLOT_TAB_PAGES_VISIBILITY:
+    check_type_id<bool> (type_id, s);
+    return close_box<bool> (visibility[10]);
 
   case SLOT_INTERACTIVE_INPUT: {
     check_type_id<string> (type_id, s);
