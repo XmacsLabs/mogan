@@ -171,3 +171,8 @@
 (define-macro (on-exit . cmd)
   `(set! quit-TeXmacs-scheme (lambda () ,@cmd (,quit-TeXmacs-scheme))))
 
+(set! *load-path*
+  (cons (string-append (url->system (get-texmacs-path)) "/plugins/goldfish/goldfish")
+        *load-path*))
+
+(load "scheme/boot.scm")

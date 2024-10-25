@@ -33,52 +33,6 @@ add_repositories("liii-repo xmake")
 TBOX_VERSION= "1.7.5"
 LOLLY_VERSION= "1.4.10"
 S7_VERSION = "20240816"
-package("liii-s7")
-    set_homepage("https://ccrma.stanford.edu/software/snd/snd/s7.html")
-    set_description("s7 is a Scheme interpreter intended as an extension language for other applications.")
-
-    set_sourcedir(path.join(os.scriptdir(), "3rdparty/s7"))
-
-    add_configs("gmp", {description = "enable gmp support", default = false, type = "boolean"})
-
-    on_load(function (package)
-        package:addenv("PATH", "bin")
-        if package:config("gmp") then
-            package:add("deps", "gmp")
-        end
-    end)
-
-    if is_plat("linux") then
-        add_syslinks("pthread", "dl", "m")
-    end
-
-    on_install("bsd", "cross", "cygwin", "linux", "macosx", "mingw", "msys", "wasm", "windows", function (package)
-        local configs = {}
-        if package:config("shared") then
-            configs.kind = "shared"
-        end
-        import("package.tools.xmake").install(package, configs)
-    end)
-
-    on_test(function(package)
-        assert(package:check_csnippets([[
-            static s7_pointer old_add;           /* the original "+" function for non-string cases */
-            static s7_pointer old_string_append; /* same, for "string-append" */
-
-            static s7_pointer our_add(s7_scheme *sc, s7_pointer args)
-            {
-                /* this will replace the built-in "+" operator, extending it to include strings:
-                *   (+ "hi" "ho") -> "hiho" and  (+ 3 4) -> 7
-                */
-                if ((s7_is_pair(args)) &&
-                    (s7_is_string(s7_car(args))))
-                    return(s7_apply_function(sc, old_string_append, args));
-                return(s7_apply_function(sc, old_add, args));
-            }
-        ]], {includes = "s7.h"}))
-    end)
-package_end()
-
 
 package("liii-libaesgm")
     set_homepage("https://github.com/xmake-mirror/libaesgm")
@@ -180,7 +134,8 @@ local FREETYPE_VERSION = "2.12.1"
 local LIBGIT2_VERSION = "1.7.1"
 
 -- package: s7
-add_requires("liii-s7", {system=false})
+add_requires("s7", {system=false})
+add_requires("tbox", {system=false})
 add_requires("lolly", {system=false})
 add_requires("moebius", {system=false})
 
@@ -206,6 +161,16 @@ end
 local XMACS_VERSION="2025.1.0"
 
 set_configvar("USE_FREETYPE", 1)
+
+target ("goldfish") do
+    set_languages("c++17")
+    set_targetdir("$(projectdir)/TeXmacs/plugins/goldfish/bin/")
+    add_files ("$(projectdir)/TeXmacs/plugins/goldfish/src/goldfish.cpp")
+    add_packages("s7")
+    add_packages("tbox")
+    on_install(function (target)
+    end)
+end
 
 function build_glue_on_config()
     on_config(function (target)
@@ -264,7 +229,7 @@ target("libmogan") do
     add_packages("moebius")
     add_packages("liii-pdfhummus")
     add_packages("freetype")
-    add_packages("liii-s7")
+    add_packages("s7")
     add_packages("libgit2")
 
     ---------------------------------------------------------------------------
@@ -413,7 +378,8 @@ target("libmogan") do
             "src/Typeset/Concat",
             "src/Typeset/Page",
             "TeXmacs/include",
-            "$(buildir)/glue"
+            "$(buildir)/glue",
+            "$(projectdir)/TeXmacs/plugins/goldfish/src/"
         }, {public = true})
 
     add_files({
@@ -446,7 +412,8 @@ target("libmogan") do
             "src/Plugins/Xml/**.cpp",
             "src/Plugins/Html/**.cpp",
             "src/Plugins/Git/**.cpp",
-            "src/Plugins/Updater/**.cpp"})
+            "src/Plugins/Updater/**.cpp",
+            "$(projectdir)/TeXmacs/plugins/goldfish/src/**.cpp"})
 
     add_files({
         "src/Plugins/Qt/**.cpp",
@@ -462,7 +429,7 @@ target("liii") do
 
     add_rules("qt.widgetapp")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
-    add_packages("liii-s7")
+    add_packages("s7")
     add_packages("lolly")
     add_packages("moebius")
     add_deps("libmogan")

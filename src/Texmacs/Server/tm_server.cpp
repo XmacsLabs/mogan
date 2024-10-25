@@ -20,6 +20,9 @@
 #include "dictionary.hpp"
 #include "file.hpp"
 #include "glue.hpp"
+#ifndef OS_WASM
+#include "goldfish.hpp"
+#endif
 #include "lolly/system/subprocess.hpp"
 #include "new_style.hpp"
 #include "s7_blackbox.hpp"
@@ -28,6 +31,7 @@
 #include "tm_link.hpp"
 #include "tm_sys_utils.hpp"
 #include <moebius/drd/drd_std.hpp>
+#include <s7_tm.hpp>
 
 server* the_server     = NULL;
 bool    texmacs_started= false;
@@ -143,6 +147,9 @@ tm_server_rep::tm_server_rep (app_type app) : def_zoomf (1.0) {
   eval_scheme_root (init_prg);
   initialize_smobs (initialize_scheme ());
   initialize_glue ();
+#ifndef OS_WASM
+  goldfish::glue_for_community_edition (tm_s7);
+#endif
   gui_interpose (texmacs_interpose_handler);
   set_wait_handler (texmacs_wait_handler);
 
