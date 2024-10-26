@@ -989,7 +989,7 @@ unicode_font_rep::get_rsup_correction (string s) {
 
     if (has_ic || has_kern) {
       // for integral signs, we use 2/5 of italic correction for rsup
-      if (is_ot_integral (s)) ic= (SI) (ic * 0.45);
+      if (is_ot_integral (s)) ic= (SI) (0.4 * ic);
       SI r= ic + kern;
       // cout << "get_rsup_correction for: " << s << " " << rr << LF;
       return r;

@@ -438,8 +438,8 @@ MathKernInfoRecord::get_kerning (int height, bool top, bool left) {
       }
     }
   }
-  cout << "get_kerning : height " << height << " -> " << idx << " -> "
-       << kt.kernValues[idx] << LF;
+  // cout << "get_kerning : height " << height << " -> " << idx << " -> "
+  //  << kt.kernValues[idx] << LF;
   return kt.kernValues[idx];
 }
 
