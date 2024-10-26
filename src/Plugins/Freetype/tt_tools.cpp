@@ -12,6 +12,7 @@
 #include "tt_tools.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
+#include "iterator.hpp"
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
 #include "tt_file.hpp"
@@ -372,6 +373,35 @@ tt_font_name (url u) {
  * OpenType MATH table
  ******************************************************************************/
 
+unsigned int
+ot_mathtable_rep::get_init_glyphID (unsigned int glyphID) {
+  // init cache
+  if (N (glyphID_to_init_glyphID) == 0) {
+    auto it= iterate (ver_glyph_variants);
+    while (it->busy ()) {
+      unsigned int        gid= it->next ();
+      array<unsigned int> v  = ver_glyph_variants (gid);
+      for (unsigned vid : v) {
+        glyphID_to_init_glyphID (vid)= gid;
+      }
+    }
+    it= iterate (hor_glyph_variants);
+    while (it->busy ()) {
+      unsigned int        gid= it->next ();
+      array<unsigned int> v  = hor_glyph_variants (gid);
+      for (unsigned vid : v) {
+        glyphID_to_init_glyphID (vid)= gid;
+      }
+    }
+  }
+
+  if (glyphID_to_init_glyphID->contains (glyphID)) {
+    return glyphID_to_init_glyphID (glyphID);
+  }
+
+  return glyphID;
+}
+
 bool
 MathKernInfoRecord::has_kerning (bool top, bool left) {
   return (top ? (left ? hasTopLeft : hasTopRight)
@@ -407,6 +437,8 @@ MathKernInfoRecord::get_kerning (int height, bool top, bool left) {
       }
     }
   }
+  cout << "get_kerning : height " << height << " -> " << idx << " -> "
+       << kt.kernValues[idx] << LF;
   return kt.kernValues[idx];
 }
 

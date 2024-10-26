@@ -13,6 +13,7 @@
 #define TT_TOOLS_H
 
 #include "basic.hpp"
+#include "hashmap.hpp"
 #include "hashset.hpp"
 #include "tm_debug.hpp"
 #include "tree.hpp"
@@ -215,7 +216,7 @@ struct MathKernInfoRecord {
   MathKernInfoRecord ()
       : hasTopRight (false), hasTopLeft (false), hasBottomRight (false),
         hasBottomLeft (false) {}
-        
+
   bool has_kerning (bool top, bool left);
   int  get_kerning (int height, bool top, bool left);
 };
@@ -247,6 +248,10 @@ struct ot_mathtable_rep : concrete_struct {
   hashmap<unsigned int, array<unsigned int>> hor_glyph_variants_adv;
   hashmap<unsigned int, GlyphAssembly>       ver_glyph_assembly;
   hashmap<unsigned int, GlyphAssembly>       hor_glyph_assembly;
+
+  // helper functions and data
+  hashmap<unsigned int, unsigned int> glyphID_to_init_glyphID;
+  unsigned int                        get_init_glyphID (unsigned int glyphID);
 
   bool has_kerning (unsigned int glyphID, bool top, bool left);
   int  get_kerning (unsigned int glyphID, int height, bool top, bool left);

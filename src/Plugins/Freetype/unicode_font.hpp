@@ -38,7 +38,8 @@ struct unicode_font_rep : font_rep {
   font         make_rubber_font (font base) override;
   bool get_ot_kerning (string s, SI height, bool top, bool left, SI& kerning);
   bool get_ot_italic_correction (string s, bool left, SI& r);
-  bool is_ot_integral(string s);
+  bool is_ot_integral (string s);
+  hashset<unsigned int> ot_integral;
 
   unicode_font_rep (string name, string family, int size, int hdpi, int vdpi);
   void tex_gyre_operators ();
