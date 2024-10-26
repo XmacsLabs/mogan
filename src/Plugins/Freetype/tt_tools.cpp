@@ -376,13 +376,13 @@ tt_font_name (url u) {
 unsigned int
 ot_mathtable_rep::get_init_glyphID (unsigned int glyphID) {
   // init cache
-  if (N (glyphID_to_init_glyphID) == 0) {
+  if (N (get_init_glyphID_cache) == 0) {
     auto it= iterate (ver_glyph_variants);
     while (it->busy ()) {
       unsigned int        gid= it->next ();
       array<unsigned int> v  = ver_glyph_variants (gid);
       for (unsigned vid : v) {
-        glyphID_to_init_glyphID (vid)= gid;
+        get_init_glyphID_cache (vid)= gid;
       }
     }
     it= iterate (hor_glyph_variants);
@@ -390,13 +390,14 @@ ot_mathtable_rep::get_init_glyphID (unsigned int glyphID) {
       unsigned int        gid= it->next ();
       array<unsigned int> v  = hor_glyph_variants (gid);
       for (unsigned vid : v) {
-        glyphID_to_init_glyphID (vid)= gid;
+        get_init_glyphID_cache (vid)= gid;
       }
     }
   }
 
-  if (glyphID_to_init_glyphID->contains (glyphID)) {
-    return glyphID_to_init_glyphID (glyphID);
+  // look up cache
+  if (get_init_glyphID_cache->contains (glyphID)) {
+    return get_init_glyphID_cache (glyphID);
   }
 
   return glyphID;

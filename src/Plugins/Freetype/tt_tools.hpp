@@ -250,8 +250,9 @@ struct ot_mathtable_rep : concrete_struct {
   hashmap<unsigned int, GlyphAssembly>       hor_glyph_assembly;
 
   // helper functions and data
-  hashmap<unsigned int, unsigned int> glyphID_to_init_glyphID;
-  unsigned int                        get_init_glyphID (unsigned int glyphID);
+  hashmap<unsigned int, unsigned int> get_init_glyphID_cache;
+  // for variant glyph, get the glyphID of the base glyph
+  unsigned int get_init_glyphID (unsigned int glyphID);
 
   bool has_kerning (unsigned int glyphID, bool top, bool left);
   int  get_kerning (unsigned int glyphID, int height, bool top, bool left);
