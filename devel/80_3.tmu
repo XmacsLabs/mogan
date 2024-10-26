@@ -1,0 +1,63 @@
+<TMU|<tuple|1.0.5|1.2.9.5>>
+
+<style|generic>
+
+<\body>
+  Asana Math:
+
+  <math|<big|oint><rsub|1><rsup|1><big|int><rsub|1><rsup|1><big|iint><rsub|1><rsup|1>𝑒<rsup|𝑥>dx BA<rsub|1><rsup|1> UV<rsub|1><rsup|1>ZZ<rsub|1><rsup|1>PQ<rsub|1><rsup|1>\<Omega\><rsub|1><rsup|1>\<Lambda\><rsub|1><rsup|1>\<Delta\><rsub|4><rsup|4>\<alpha\><rsub|4><rsup|4>\<b-cal-M\><rsub|4><rsup|4>𝓐<rsub|4><rsup|4>𝓥<rsup|4><rsub|4>𝓦<rsub|4><rsup|4>>
+
+  <\equation*>
+    <big|oint><rsub|1><rsup|1><big|int><rsub|1><rsup|1><big|iint><rsub|1><rsup|1>𝑒<rsup|𝑥>dx BA<rsub|1><rsup|1> UV<rsub|1><rsup|1>ZZ<rsub|1><rsup|1>PQ<rsub|1><rsup|1>\<Omega\><rsub|1><rsup|1>\<Lambda\><rsub|1><rsup|1>\<Delta\><rsub|4><rsup|4>\<alpha\><rsub|4><rsup|4>\<b-cal-M\><rsub|4><rsup|4>𝓐<rsub|4><rsup|4>𝓥<rsup|4><rsub|4>𝓦<rsub|4><rsup|4>
+  </equation*>
+
+  \;
+
+  Fira Math:
+
+  <\with|font|Fira Math>
+    <math|<big|oint><rsub|1><rsup|1><big|int><rsub|1><rsup|1><big|iint><rsub|1><rsup|1>𝑒<rsup|𝑥>dx BA<rsub|1><rsup|1> UV<rsub|1><rsup|1>ZZ<rsub|1><rsup|1>PQ<rsub|1><rsup|1>\<Omega\><rsub|1><rsup|1>\<Lambda\><rsub|1><rsup|1>\<Delta\><rsub|4><rsup|4>\<alpha\><rsub|4><rsup|4>\<b-cal-M\><rsub|4><rsup|4>𝓐<rsub|4><rsup|4>𝓥<rsup|4><rsub|4>𝓦<rsub|4><rsup|4>>
+
+    <\equation*>
+      <big|oint><rsub|1><rsup|1><big|int><rsub|1><rsup|1><big|iint><rsub|1><rsup|1>𝑒<rsup|𝑥>dx BA<rsub|1><rsup|1> UV<rsub|1><rsup|1>ZZ<rsub|1><rsup|1>PQ<rsub|1><rsup|1>\<Omega\><rsub|1><rsup|1>\<Lambda\><rsub|1><rsup|1>\<Delta\><rsub|4><rsup|4>\<alpha\><rsub|4><rsup|4>\<b-cal-M\><rsub|4><rsup|4>𝓐<rsub|4><rsup|4>𝓥<rsup|4><rsub|4>𝓦<rsub|4><rsup|4>
+    </equation*>
+  </with>
+
+  \;
+
+  TeX Gyre Pagella Math:
+
+  <\with|font|TeX Gyre Pagella Math>
+    <math|<big|oint><rsub|1><rsup|1><big|int><rsub|1><rsup|1><big|iint><rsub|1><rsup|1>𝑒<rsup|𝑥>dx BA<rsub|1><rsup|1> UV<rsub|1><rsup|1>ZZ<rsub|1><rsup|1>PQ<rsub|1><rsup|1>\<Omega\><rsub|1><rsup|1>\<Lambda\><rsub|1><rsup|1>\<Delta\><rsub|4><rsup|4>\<alpha\><rsub|4><rsup|4>\<b-cal-M\><rsub|4><rsup|4>𝓐<rsub|4><rsup|4>𝓥<rsup|4><rsub|4>𝓦<rsub|4><rsup|4>>
+
+    <\equation*>
+      <big|oint><rsub|1><rsup|1><big|int><rsub|1><rsup|1><big|iint><rsub|1><rsup|1>𝑒<rsup|𝑥>dx BA<rsub|1><rsup|1> UV<rsub|1><rsup|1>ZZ<rsub|1><rsup|1>PQ<rsub|1><rsup|1>\<Omega\><rsub|1><rsup|1>\<Lambda\><rsub|1><rsup|1>\<Delta\><rsub|4><rsup|4>\<alpha\><rsub|4><rsup|4>\<b-cal-M\><rsub|4><rsup|4>𝓐<rsub|4><rsup|4>𝓥<rsup|4><rsub|4>𝓦<rsub|4><rsup|4>
+    </equation*>
+
+    \;
+  </with>
+
+  TeX Gyre Schola Math:
+
+  <\with|font|TeX Gyre Schola Math>
+    <math|<big|oint><rsub|1><rsup|1><big|int><rsub|1><rsup|1><big|iint><rsub|1><rsup|1>𝑒<rsup|𝑥>dx BA<rsub|1><rsup|1> UV<rsub|1><rsup|1>ZZ<rsub|1><rsup|1>PQ<rsub|1><rsup|1>\<Omega\><rsub|1><rsup|1>\<Lambda\><rsub|1><rsup|1>\<Delta\><rsub|4><rsup|4>\<alpha\><rsub|4><rsup|4>\<b-cal-M\><rsub|4><rsup|4>𝓐<rsub|4><rsup|4>𝓥<rsup|4><rsub|4>𝓦<rsub|4><rsup|4>>
+
+    <\equation*>
+      <big|oint><rsub|1><rsup|1><big|int><rsub|1><rsup|1><big|iint><rsub|1><rsup|1>𝑒<rsup|𝑥>dx BA<rsub|1><rsup|1> UV<rsub|1><rsup|1>ZZ<rsub|1><rsup|1>PQ<rsub|1><rsup|1>\<Omega\><rsub|1><rsup|1>\<Lambda\><rsub|1><rsup|1>\<Delta\><rsub|4><rsup|4>\<alpha\><rsub|4><rsup|4>\<b-cal-M\><rsub|4><rsup|4>𝓐<rsub|4><rsup|4>𝓥<rsup|4><rsub|4>𝓦<rsub|4><rsup|4>
+    </equation*>
+  </with>
+
+  \;
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|font|Asana Math>
+    <associate|font-base-size|14>
+    <associate|font-family|rm>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
