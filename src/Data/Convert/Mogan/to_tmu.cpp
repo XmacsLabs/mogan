@@ -20,7 +20,7 @@ using namespace moebius;
 using lolly::data::binary_to_hexadecimal;
 using moebius::drd::std_contains;
 
-const string TMU_VERSION= "1.0.5";
+const string TMU_VERSION= "1.1.0";
 
 /******************************************************************************
  * Conversion of TeXmacs trees to the present TeXmacs string format
