@@ -31,7 +31,7 @@ add_rules("mode.releasedbg", "mode.release", "mode.debug")
 add_repositories("liii-repo xmake")
 
 TBOX_VERSION= "1.7.5"
-LOLLY_VERSION= "1.4.10"
+LOLLY_VERSION= "1.4.26"
 S7_VERSION = "20240816"
 
 package("liii-libaesgm")
@@ -158,7 +158,7 @@ elseif not is_plat("wasm") then
 end
 
 
-local XMACS_VERSION="2025.1.0"
+local XMACS_VERSION="2025.0.0"
 
 set_configvar("USE_FREETYPE", 1)
 
