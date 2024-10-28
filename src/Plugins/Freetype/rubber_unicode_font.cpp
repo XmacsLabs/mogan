@@ -309,13 +309,10 @@ rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
         font::instances->reset (subfn[6]->res_name);
         initialized[6]= false;
       }
-
-      cout << "virt_glyph for " << uu << " -> " << glyphID << " -> "
-           << virt_glyph << LF;
     }
     return 6;
   }
-  cout << "No opentype variant for " << uu << " -> " << glyphID << LF;
+  // cout << "No opentype variant for " << uu << " -> " << glyphID << LF;
 
   // try to use subfont
   int nr= search_font_sub (s, rew);
