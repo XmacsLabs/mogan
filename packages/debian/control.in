@@ -1,0 +1,24 @@
+Source: liii-stem
+Section: editors
+Priority: optional
+Maintainer: Darcy Shen <da@liii.pro>
+Build-Depends: debhelper (>= 7.0.50~)
+Standards-Version: 3.9.1
+Homepage: https://liiistem.cn
+
+Package: liii-stem
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, fonts-noto-cjk
+Description:  A structured editor for science and technology
+	     Mogan Research is a fork of GNU TeXmacs using S7 Scheme and Qt 5 with massive
+	     online TeXmacs documents provided by Xmacs Planet and TMML wiki.
+	     The software includes a text editor with support for mathematical formulas,
+	     a small technical picture editor and a tool for making presentations from
+	     a laptop. Moreover, Mogan can be used as an interface for many external
+	     systems for computer algebra, numerical analysis, statistics, etc.
+	     New presentation styles can be written by the user and new features can be
+	     added to the editor using the Scheme extension language. A native spreadsheet
+	     and tools for collaborative authoring are planned for later.
+	     Mogan runs on all major Unix platforms and Windows. Documents can be
+	     saved in TeXmacs, Xml or Scheme format and printed as Postscript or
+	     Pdf files. Converters exist for TeX/LaTeX and Html/Mathml.

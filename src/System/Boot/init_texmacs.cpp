@@ -93,8 +93,9 @@ init_texmacs_path (int& argc, char** argv) {
   string current_texmacs_path= get_env ("TEXMACS_PATH");
 
 #ifdef OS_GNU_LINUX
-  if (is_empty (current_texmacs_path) && exists (exedir * "../share/Xmacs")) {
-    set_env ("TEXMACS_PATH", as_string (exedir * "../share/Xmacs"));
+  if (is_empty (current_texmacs_path) &&
+      exists (exedir * "../share/liiilabs")) {
+    set_env ("TEXMACS_PATH", as_string (exedir * "../share/liiilabs"));
   }
 #endif
 
@@ -133,7 +134,8 @@ init_texmacs_path (int& argc, char** argv) {
   // We set some environment variables when the executable
   // is in a .app bundle on MacOSX
   if (is_empty (current_texmacs_path)) {
-    set_env ("TEXMACS_PATH", as_string (exedir * "../Resources/share/Xmacs"));
+    set_env ("TEXMACS_PATH",
+             as_string (exedir * "../Resources/share/liiilabs"));
   }
 #endif
 
@@ -157,18 +159,6 @@ init_texmacs_path (int& argc, char** argv) {
     // set_env ("PWD", get_env("HOME"));
   }
   // system("set");
-#endif
-
-#ifdef OS_HAIKU
-  // Initialization inside the Haiku package management environment
-  // TEXMACS_PATH is set relative to the executable which is in $prefix/app
-  // to $prefix/data/TeXmacs
-
-  if (is_empty (current_texmacs_path))
-    set_env ("TEXMACS_PATH", as_string (exedir * "../data/TeXmacs"));
-
-  set_env ("PATH", get_env ("PATH") * ":" *
-                       as_string (exedir * "/system/lib/TeXmacs/bin"));
 #endif
 
 #ifdef OS_WASM
@@ -241,7 +231,7 @@ static void
 init_main_paths () {
 #if defined(OS_MINGW) || defined(OS_WIN)
   if (is_none (get_env_path ("TEXMACS_HOME_PATH",
-                             get_env ("APPDATA") * "/LiiiLabs"))) {
+                             get_env ("APPDATA") * "/liiilabs"))) {
 #else
   if (is_none (get_env_path ("TEXMACS_HOME_PATH", "~/.TeXmacs"))) {
 #endif

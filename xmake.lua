@@ -424,8 +424,57 @@ target("libmogan") do
     add_cxxflags("-include src/System/config.h")
 end 
 
+local stem_files = {
+    "$(projectdir)/TeXmacs(/doc/**)",
+    "$(projectdir)/TeXmacs(/langs/**)",
+    "$(projectdir)/TeXmacs(/misc/**)",
+    "$(projectdir)/TeXmacs(/packages/**)",
+    "$(projectdir)/TeXmacs(/progs/**)",
+    "$(projectdir)/TeXmacs(/styles/**)",
+    "$(projectdir)/TeXmacs(/texts/**)",
+    "$(projectdir)/TeXmacs/COPYING", -- copying files are different
+    "$(projectdir)/TeXmacs/INSTALL",
+    "$(projectdir)/LICENSE", -- license files are same
+    "$(projectdir)/TeXmacs/README",
+    "$(projectdir)/TeXmacs/TEX_FONTS",
+    "$(projectdir)/TeXmacs(/plugins/**)" -- plugin files
+}
+
 target("liii") do 
-    set_filename("LiiiSTEM")
+    set_filename("liiistem")
+
+    local install_dir = "$(buildir)"
+    if is_plat("windows") then
+        install_dir = path.join("$(buildir)", "packages/liii/data/")
+    elseif is_plat("macosx") then
+        install_dir = path.join("$(buildir)", "macosx/$(arch)/$(mode)/LiiiSTEM.app/Contents/Resources/")
+    else
+        if os.getenv("INSTALL_DIR") == nil then
+            install_dir = path.join("$(buildir)", "packages/liii/")
+        else
+            install_dir = os.getenv("INSTALL_DIR")
+        end
+    end
+    set_installdir(install_dir)
+
+    if is_plat("windows") then
+        add_installfiles(stem_files)
+    else
+        add_installfiles(stem_files, {prefixdir="share/liiilabs"})
+    end
+
+    if is_plat("linux") then
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/enc/**)", {prefixdir="share/liiilabs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/tfm/**)", {prefixdir="share/liiilabs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/type1/**)", {prefixdir="share/liiilabs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/virtual/**)", {prefixdir="share/liiilabs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/*scm)", {prefixdir="share/liiilabs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/*LICENSE)", {prefixdir="share/liiilabs"})
+    elseif is_plat("macosx") then
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/**)", {prefixdir="share/liiilabs"})
+    else
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/**)")
+    end
 
     add_rules("qt.widgetapp")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
