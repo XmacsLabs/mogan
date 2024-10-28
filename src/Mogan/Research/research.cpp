@@ -209,7 +209,7 @@ main (int argc, char** argv) {
 #ifdef QTTEXMACS
   if (!headless_mode) {
     // it this really necessary? Should be set in the metadata.
-    qtmapp->set_window_icon ("/misc/images/texmacs-512.png");
+    qtmapp->set_window_icon ("/misc/images/liiistem-512.png");
     init_style_sheet (qtmapp);
   }
 #endif
