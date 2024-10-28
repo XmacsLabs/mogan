@@ -1,6 +1,6 @@
-<TeXmacs|1.99.13>
+<TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|automate>>
+<style|<tuple|tmdoc|automate|old-lengths>>
 
 <\body>
   <block-assign|<implied-scm|styles>|<implied-scm|(get-style-list)>>
@@ -27,7 +27,7 @@
     the items on the focus toolbar or in the <menu|Focus> menu. For instance,
     by clicking on the current style, paper size or font size, a pulldown
     menu will open from which you can modify the current setting. By clicking
-    on the <icon|tm_add.xpm> icon after the document style, you may select
+    on the <icon|tm_add.svg> icon after the document style, you may select
     additional style packages.
 
     Similarly, when clicking on the current section, a pulldown menu with all

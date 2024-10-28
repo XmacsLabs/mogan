@@ -1,6 +1,6 @@
-<TeXmacs|1.99.13>
+<TeXmacs|2.1.2>
 
-<style|<tuple|tmdoc|automate>>
+<style|<tuple|tmdoc|automate|old-lengths>>
 
 <\body>
   <block-assign|<implied-scm|t>|<implied-scm|(focus-tree)>>
@@ -71,7 +71,7 @@
         numbered> variant <markup|<output-string|<implied-scm|(symbol-toggle-number
         tag)>>>. You may toggle the numbering using the keyboard shortcut
         <shortcut|(numbered-toggle (focus-tree))>, the menu entry
-        <menu|Focus|Numbered>, or by pressing the <icon|tm_numbered.xpm> icon
+        <menu|Focus|Numbered>, or by pressing the <icon|tm_numbered.svg> icon
         on the focus toolbar.
       </block-if>
 
@@ -83,7 +83,7 @@
           tag)>>>. You may unfold the environment using the keyboard shortcut
           <shortcut|(alternate-toggle (focus-tree))>, the menu entry
           <menu|Focus|Folded>, or by pressing the
-          <icon|tm_alternate_first.xpm> icon on the focus toolbar.
+          <icon|tm_alternate_first.svg> icon on the focus toolbar.
         </block-if>
 
         <\block-if|<implied-scm|(alternate-second? t)>>
@@ -119,7 +119,7 @@
       The rendering of the <markup|<output-string|<implied-scm|tag>>> tag can
       be customized by editing the macro which defines it. This can be done
       by clicking on <menu|Edit macro> button in the <menu|Focus|Preferences>
-      menu (or in the equivalent <icon|tm_focus_prefs.xpm> icon menu on the
+      menu (or in the equivalent <icon|tm_focus_prefs.svg> icon menu on the
       focus toolbar). You may also directly edit the macro in the style file
       or package where it was defined, using <menu|Edit source>.
 
@@ -218,21 +218,21 @@
       keyboard shortcuts, menu entries, or icons on the focus toolbar:\ 
 
       <\description-long>
-        <item*|<shortcut|(kbd-select-if-active traverse-first)>,
-        <menu|Focus|First similar>, <icon|tm_similar_first.xpm>>Jump to the
-        first tag similar to <markup|<output-string|<implied-scm|tag>>>.
+        <item*|<shortcut|(traverse-first)>, <menu|Focus|First similar>,
+        <icon|tm_similar_first.svg>>Jump to the first tag similar to
+        <markup|<output-string|<implied-scm|tag>>>.
 
         <item*|<shortcut|(kbd-select-if-active traverse-previous)>,
-        <menu|Focus|Previous similar>, <icon|tm_similar_previous.xpm>>Jump to
+        <menu|Focus|Previous similar>, <icon|tm_similar_previous.svg>>Jump to
         the previous tag similar to <markup|<output-string|<implied-scm|tag>>>.
 
         <item*|<shortcut|(kbd-select-if-active traverse-next)>,
-        <menu|Focus|Next similar>, <icon|tm_similar_next.xpm>>Jump to the
+        <menu|Focus|Next similar>, <icon|tm_similar_next.svg>>Jump to the
         next tag similar to <markup|<output-string|<implied-scm|tag>>>.
 
-        <item*|<shortcut|(kbd-select-if-active traverse-last)>,
-        <menu|Focus|Last similar>, <icon|tm_similar_last.xpm>>Jump to the
-        last tag similar to <markup|<output-string|<implied-scm|tag>>>.
+        <item*|<shortcut|(traverse-last)>, <menu|Focus|Last similar>,
+        <icon|tm_similar_last.svg>>Jump to the last tag similar to
+        <markup|<output-string|<implied-scm|tag>>>.
       </description-long>
 
       For more information and further useful shortcuts, we refer to the
@@ -250,36 +250,36 @@
 
       <\description-long>
         <item*|<shortcut|(structured-insert-left)>, <menu|Focus|Insert left>,
-        <icon|tm_insert_left.xpm>>Insert a new column on the left-hand side
+        <icon|tm_insert_left.svg>>Insert a new column on the left-hand side
         of the cursor.
 
         <item*|<shortcut|(structured-insert-right)>, <menu|Focus|Insert
-        right>, <icon|tm_insert_right.xpm>>Insert a new column on the
+        right>, <icon|tm_insert_right.svg>>Insert a new column on the
         right-hand side of the cursor.
 
         <item*|<shortcut|(structured-insert-up)>, <menu|Focus|Insert above>,
-        <icon|tm_insert_up.xpm>>Insert a new row above the cursor.
+        <icon|tm_insert_up.svg>>Insert a new row above the cursor.
 
         <item*|<shortcut|(structured-insert-down)>, <menu|Focus|Insert
-        below>, <icon|tm_insert_down.xpm>>Insert a new row below the cursor.
+        below>, <icon|tm_insert_down.svg>>Insert a new row below the cursor.
       </description-long>
 
       Existing rows and columns can be removed as follows:
 
       <\description-long>
         <item*|<shortcut|(structured-remove-left)>, <menu|Focus|Remove
-        leftwards>, <icon|tm_delete_left.xpm>>Remove the column at the
+        leftwards>, <icon|tm_delete_left.svg>>Remove the column at the
         left-hand side of the cursor.
 
         <item*|<shortcut|(structured-remove-right)>, <menu|Focus|Remove
-        rightwards>, <icon|tm_delete_right.xpm>>Remove the current column and
+        rightwards>, <icon|tm_delete_right.svg>>Remove the current column and
         move to the next one.
 
-        <item*|<menu|Focus|Remove upwards>, <icon|tm_delete_up.xpm>>Remove
+        <item*|<menu|Focus|Remove upwards>, <icon|tm_delete_up.svg>>Remove
         the row above the cursor.
 
         <item*|<menu|Focus|Remove downwards>,
-        <icon|tm_delete_down.xpm>>Remove the current row and move to the one
+        <icon|tm_delete_down.svg>>Remove the current row and move to the one
         below.
       </description-long>
     </unfolded-documentation>
@@ -294,11 +294,11 @@
 
         <\description-long>
           <item*|<shortcut|(structured-insert-up)>, <menu|Focus|Insert field
-          above>, <icon|tm_insert_up.xpm>>Insert a new input field above the
+          above>, <icon|tm_insert_up.svg>>Insert a new input field above the
           cursor.
 
           <item*|<shortcut|(structured-insert-down)>, <menu|Focus|Insert
-          field below>, <icon|tm_insert_down.xpm>>Insert a new input field
+          field below>, <icon|tm_insert_down.svg>>Insert a new input field
           below the cursor.
         </description-long>
 
@@ -306,10 +306,10 @@
 
         <\description-long>
           <item*|<menu|Focus|Remove field above>,
-          <icon|tm_delete_up.xpm>>Remove the field above the cursor.
+          <icon|tm_delete_up.svg>>Remove the field above the cursor.
 
           <item*|<menu|Focus|Remove field below>,
-          <icon|tm_delete_down.xpm>>Remove the current field and move to the
+          <icon|tm_delete_down.svg>>Remove the current field and move to the
           one below.
 
           <item*|<menu|Focus|Remove banner>>Remove the start-up banner of the
@@ -331,21 +331,21 @@
           <\block-texmacs-tag|description-long>
             <\block-if|<implied-scm|(structured-horizontal? t)>>
               <inline-texmacs-tag|item*|<shortcut|(structured-insert-left)>,
-              <menu|Focus|Insert left>, <icon|tm_insert_left.xpm>>Insert a
+              <menu|Focus|Insert left>, <icon|tm_insert_left.svg>>Insert a
               new argument at the left-hand side of the cursor.
 
               <inline-texmacs-tag|item*|<shortcut|(structured-insert-right)>,
-              <menu|Focus|Insert right>, <icon|tm_insert_right.xpm>>Insert a
+              <menu|Focus|Insert right>, <icon|tm_insert_right.svg>>Insert a
               new argument at the right-hand side of the cursor.
             </block-if>
 
             <\block-if|<implied-scm|(structured-vertical? t)>>
               <inline-texmacs-tag|item*|<shortcut|(structured-insert-up)>,
-              <menu|Focus|Insert above>, <icon|tm_insert_up.xpm>>Insert a new
+              <menu|Focus|Insert above>, <icon|tm_insert_up.svg>>Insert a new
               argument above the cursor.
 
               <inline-texmacs-tag|item*|<shortcut|(structured-insert-down)>,
-              <menu|Focus|Insert below>, <icon|tm_insert_down.xpm>>Insert a
+              <menu|Focus|Insert below>, <icon|tm_insert_down.svg>>Insert a
               new argument below the cursor.
             </block-if>
           </block-texmacs-tag>
@@ -355,21 +355,21 @@
           <\block-texmacs-tag|description-long>
             <\block-if|<implied-scm|(structured-horizontal? t)>>
               <inline-texmacs-tag|item*|<shortcut|(structured-remove-left)>,
-              <menu|Focus|Remove leftwards>, <icon|tm_delete_left.xpm>>Remove
+              <menu|Focus|Remove leftwards>, <icon|tm_delete_left.svg>>Remove
               the argument at the left-hand side of the cursor.
 
               <inline-texmacs-tag|item*|<shortcut|(structured-remove-right)>,
               <menu|Focus|Remove rightwards>,
-              <icon|tm_delete_right.xpm>>Remove the current argument and move
+              <icon|tm_delete_right.svg>>Remove the current argument and move
               to the next one.
             </block-if>
 
             <\block-if|<implied-scm|(structured-vertical? t)>>
               <inline-texmacs-tag|item*|<menu|Focus|Remove upwards>,
-              <icon|tm_delete_up.xpm>>Remove the argument above the cursor.
+              <icon|tm_delete_up.svg>>Remove the argument above the cursor.
 
               <inline-texmacs-tag|item*|<menu|Focus|Remove downwards>,
-              <icon|tm_delete_down.xpm>>Remove the current argument and move
+              <icon|tm_delete_down.svg>>Remove the current argument and move
               to the one below.
             </block-if>
           </block-texmacs-tag>
@@ -392,7 +392,7 @@
       arguments are hidden: <inline-intersperse|,
       |<inline-for|<implied-scm|x>|<implied-scm|sl>|<src-arg|<output-string|<implied-scm|x>>>>>.
       In order to edit the hidden arguments, you should use <menu|Focus|Show
-      hidden> or push the <icon|tm_show_hidden.xpm> icon on the focus
+      hidden> or push the <icon|tm_show_hidden.svg> icon on the focus
       toolbar. Deactivated tags can be reactivated by pressing
       <shortcut|(kbd-return)>.
 
@@ -410,5 +410,8 @@
   </block-if>
 </body>
 
-<initial|<\collection>
-</collection>>
+<\initial>
+  <\collection>
+    <associate|preamble|false>
+  </collection>
+</initial>
