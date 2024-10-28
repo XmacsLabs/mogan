@@ -480,7 +480,7 @@ edit_typeset_rep::typeset_exec_until (path p) {
   if (has_changed (THE_TREE + THE_ENVIRONMENT))
     if (p != correct_cursor (et, rp * 0)) {
       if (DEBUG_STD) std_warning << "resynchronizing for path " << p << "\n";
-      apply_changes ();
+      // apply_changes ();
     }
   if (p == tp && inside_graphics (true) && p != closest_inside (et, p)) {
     // cout << "TeXmacs] Warning: corrected cursor\n";

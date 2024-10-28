@@ -1153,11 +1153,6 @@ virtual_font_rep::compile_bis (scheme_tree t, metric& ex) {
 
 glyph
 virtual_font_rep::compile (scheme_tree t, metric& ex) {
-
-  if (starts (fn_name, "opentype")) {
-    cout << "compile " << moebius::data::scheme_tree_to_string (t) << LF;
-  }
-
   if (trg->contains (t)) {
     ex[0]= trm[t];
     return trg[t];
