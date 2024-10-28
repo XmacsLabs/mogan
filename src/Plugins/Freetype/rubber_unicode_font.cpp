@@ -152,41 +152,18 @@ rubber_unicode_font_rep::get_font (int nr) {
  ******************************************************************************/
 
 int
-parse_variant (string s, string& r) {
-  cout << "parse_variant for " << s << LF;
-
-  if (starts (s, "<long")) {
-    r= s (5, N (s) - 1);
-    return 1;
-  }
-
-  int var= 0;
-  if (!starts (s, "<") || !ends (s, ">") || N (s) < 3) return 0;
-
-  r              = s (1, N (s) - 1);
-  array<string> v= tokenize (r, "-");
-
-  if (N (v) == 3 && is_int (v[2])) {
-    var= as_int (v[2]);
-    r  = v[1];
-  }
-
-  return var;
-}
-
-int
-parse_variant (string s, string& r, string& h) {
+parse_variant (string s, string& head, string& root) {
   // cout << "parse_variant for " << s << LF;
   int var= 0;
   if (!starts (s, "<") || !ends (s, ">") || N (s) < 3) return 0;
 
-  r              = s (1, N (s) - 1);
-  array<string> v= tokenize (r, "-");
+  root           = s (1, N (s) - 1);
+  array<string> v= tokenize (root, "-");
 
   if (N (v) == 3 && is_int (v[2])) {
-    var= as_int (v[2]);
-    r  = v[1];
-    h  = v[0];
+    var = as_int (v[2]);
+    root= v[1];
+    head= v[0];
   }
 
   return var;
@@ -214,21 +191,21 @@ glue (array<string> glyphs, bool ver) {
 
 int
 rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
-  string r, h;
+  string root, head;
   int    var           = 0;
   bool   using_vertical= true; // verizontal or vertical, default is vertical
   rew                  = s;
 
-  var= parse_variant (s, r, h);
+  var= parse_variant (s, head, root);
 
   // there is no <big-xxx-0>
   if (starts (s, "<big-")) {
     var= max (0, var - 1);
   }
 
-  if (r == "") return search_font_sub (s, rew);
+  if (root == "") return search_font_sub (s, rew);
 
-  string uu= N (r) > 1 ? strict_cork_to_utf8 ("<" * r * ">") : r;
+  string uu= N (root) > 1 ? strict_cork_to_utf8 ("<" * root * ">") : root;
 
   int          j      = 0;
   uint32_t     u      = decode_from_utf8 (uu, j);
@@ -279,7 +256,7 @@ rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
   if (has_assembly) {
     string virt_glyph;
     // <xx-xx-#>, '#' can match any variant number
-    string ss= "<" * h * "-" * r * "-#>";
+    string ss= "<" * head * "-" * root * "-#>";
     if (!virt->dict->contains (ss)) {
       auto& gass = glyph_assembly (glyphID);
       tree  glyph= tree ();
