@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "Freetype/tt_face.hpp"
+#include "Freetype/tt_tools.hpp"
 #include "analyze.hpp"
 #include "array.hpp"
 #include "converter.hpp"
@@ -42,6 +43,7 @@ struct rubber_unicode_font_rep : font_rep {
   array<font> subfn;
   bool        big_sums;
 
+  // for opentype math font
   translator virt;
   tt_face    math_face;
 
@@ -102,10 +104,10 @@ rubber_unicode_font_rep::rubber_unicode_font_rep (string name, font base2,
   }
 
   if (base->math_type == MATH_TYPE_OPENTYPE) {
-    big_flag      = true;
-    big_sums      = true;
-    string vname  = "opentype_virtual[" * base->res_name * "]";
-    virt          = tm_new<translator_rep> (vname);
+    big_flag    = true;
+    big_sums    = true;
+    string vname= "opentype_virtual[" * base->res_name * "]";
+    virt        = tm_new<translator_rep> (vname);
     // virt->virt_def= array<tree> ();
     // virt->virt_def << tree (); // fill out the 0 glyph
   }
@@ -151,7 +153,13 @@ rubber_unicode_font_rep::get_font (int nr) {
 
 int
 parse_variant (string s, string& r) {
-  // cout << "parse_variant for " << s << LF;
+  cout << "parse_variant for " << s << LF;
+
+  if (starts (s, "<long")) {
+    r= s (5, N (s) - 1);
+    return 1;
+  }
+
   int var= 0;
   if (!starts (s, "<") || !ends (s, ">") || N (s) < 3) return 0;
 
@@ -184,13 +192,24 @@ parse_variant (string s, string& r, string& h) {
   return var;
 }
 
-auto hex4= [] (int x) { return "@" * as_hexadecimal (x, 4); };
+// construct string for extender
+static string
+extend (string s, bool ver) {
+  return ver ? "(ver-take " * s * " 0.5 # 0.25)"
+             : "(hor-take " * s * " 0.5 # 0.25)";
+}
 
-string
-repeat (string s, int n) {
-  if (n == 0) return "";
-  if (n == 1) return s;
-  if (n > 1) return "(glue-above " * s * " " * repeat (s, n - 1) * " )";
+// construct string (scheme tree) from a list of glyphs
+static string
+glue (array<string> glyphs, bool ver) {
+  string gluer= ver ? "glue-above" : "glue*";
+  int    g_N  = N (glyphs);
+  if (g_N == 0) return "";
+  string result= glyphs[g_N - 1];
+  for (int i= g_N - 2; i >= 0; --i) {
+    result= "(" * gluer * " " * glyphs[i] * " " * result * ")";
+  }
+  return result;
 }
 
 int
@@ -206,9 +225,6 @@ rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
   if (starts (s, "<big-")) {
     var= max (0, var - 1);
   }
-  else if (starts (s, "<wide-")) {
-    using_vertical= false;
-  }
 
   if (r == "") return search_font_sub (s, rew);
 
@@ -218,8 +234,25 @@ rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
   uint32_t     u      = decode_from_utf8 (uu, j);
   unsigned int glyphID= ft_get_char_index (math_face->ft_face, u);
 
-  cout << "unicode " << uu << " -> " << lolly::data::to_hex (u) << LF;
-  cout << "search_font_sub_opentype for " << s << " -> " << glyphID << LF;
+  // cout << "unicode " << uu << " -> " << lolly::data::to_hex (u) << LF;
+  // cout << "search_font_sub_opentype for " << s << " -> " << glyphID << LF;
+
+  bool         has_variants= false;
+  bool         has_assembly= false;
+  ot_mathtable math_table  = math_face->math_table;
+
+  // a glyph can not be both vertical and horizontal
+  if (math_table->ver_glyph_variants->contains (glyphID)) {
+    using_vertical= true;
+    has_variants  = true;
+    // if a glyph has assembly, it must be contained in the variants table
+    has_assembly= math_table->ver_glyph_assembly->contains (glyphID);
+  }
+  else if (math_table->hor_glyph_variants->contains (glyphID)) {
+    has_variants  = true;
+    using_vertical= false;
+    has_assembly  = math_table->hor_glyph_assembly->contains (glyphID);
+  }
 
   auto glyph_variants= using_vertical
                            ? math_face->math_table->ver_glyph_variants
@@ -229,59 +262,60 @@ rubber_unicode_font_rep::search_font_sub_opentype (string s, string& rew) {
                            ? math_face->math_table->ver_glyph_assembly
                            : math_face->math_table->hor_glyph_assembly;
 
-  // if (glyph_variants->contains (glyphID)) {
-  //   auto& gv= glyph_variants (glyphID);
-  //   if (var < N (gv)) {
-  //     int res= gv[var];
-  //     // use <@XXXX> for native glyph id
-  //     rew= "<" * hex4 (res) * ">";
-  //     cout << "OpenType variant for " << uu << " -> " << glyphID << " -> "
-  //          << rew << LF;
-  //     return 0;
-  //   }
-  // }
+  // turn a number to a 4-digit hexadecimal string "@XXXX"
+  auto hex4= [] (int x) { return "@" * as_hexadecimal (x, 4); };
 
-  if (glyph_assembly->contains (glyphID)) {
-    s = s * "opentype>";
-    string virt_glyph;
-    cout << "glyph_assembly for " << s << " -> " << glyphID << LF;
-    if (!virt->dict->contains (s)) {
-
-      auto& gass = glyph_assembly (glyphID);
-      tree  glyph= tree ();
-      if (using_vertical && gass.partCount == 3) {
-
-        auto ga= hex4 (gass.partRecords[0].glyphID);
-        auto gb= hex4 (gass.partRecords[1].glyphID);
-        auto gc= hex4 (gass.partRecords[2].glyphID);
-
-        // ga= gb= gc= "sum";
-
-        virt_glyph= "(glue-above " * ga * " (glue-above (ver-take " * gb *
-                    " 0.5 " * as_string (var + 1) * " 0.25) " * gc * " ))";
-        virt_glyph= "(glue-above " * ga * " (glue-above " * repeat(gb,var+10) *  gc * " ))";
-        // virt_glyph    = repeat ("sum", var);
-        glyph         = string_to_scheme_tree (virt_glyph);
-        // virt->dict (s)= N (virt->virt_def);
-        // virt->virt_def << glyph;
-        virt->dict(s) = 0;
-        virt->virt_def = {};
-        virt->virt_def << glyph;
-        rew= s;
-        // why ?
-        
-        if (initialized[6]) {
-          // fresh the virtual font, since virt_glyph is added
-          font::instances->reset (subfn[6]->res_name);
-          initialized[6]= false;
-        }
-        cout << "virt_glyph for " << uu << " -> " << glyphID << " -> "
-             << virt_glyph << LF;
-        return 6;
-      }
+  if (has_variants) {
+    auto& gv= glyph_variants (glyphID);
+    if (var < N (gv)) {
+      int res= gv[var];
+      // use <@XXXX> for native glyph id
+      rew= "<" * hex4 (res) * ">";
+      // the unicode font itself has the variant glyph
+      return 0;
     }
   }
-  // cout << "No opentype variant for " << uu << " -> " << glyphID << LF;
+
+  if (has_assembly) {
+    string virt_glyph;
+    // <xx-xx-#>, '#' can match any variant number
+    string ss= "<" * h * "-" * r * "-#>";
+    if (!virt->dict->contains (ss)) {
+      auto& gass = glyph_assembly (glyphID);
+      tree  glyph= tree ();
+
+      array<string> glyphs;
+      for (int i= 0; i < N (gass.partRecords); i++) {
+        auto& pr= gass.partRecords[i];
+        // whether the part is a extender
+        if (pr.partFlags == 0x0001) {
+          glyphs << extend (hex4 (pr.glyphID), using_vertical);
+        }
+        else {
+          glyphs << hex4 (pr.glyphID);
+        }
+      }
+      virt_glyph= glue (glyphs, using_vertical);
+
+      glyph          = string_to_scheme_tree (virt_glyph);
+      virt->dict (ss)= N (virt->virt_def);
+      virt->virt_def << glyph;
+
+      // subfn[6] is the virtual font for opentype math font
+      // FIXME: can we only add the new glyph to the virtual font instead of
+      // reset the whole virtual font?
+      if (initialized[6]) {
+        // fresh the virtual font, since new virtual glyph is added
+        font::instances->reset (subfn[6]->res_name);
+        initialized[6]= false;
+      }
+
+      cout << "virt_glyph for " << uu << " -> " << glyphID << " -> "
+           << virt_glyph << LF;
+    }
+    return 6;
+  }
+  cout << "No opentype variant for " << uu << " -> " << glyphID << LF;
 
   // try to use subfont
   int nr= search_font_sub (s, rew);
