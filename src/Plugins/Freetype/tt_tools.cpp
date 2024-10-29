@@ -461,6 +461,7 @@ parse_construction (const string& tt, unsigned int construction_offset,
       assembly.partRecords << GlyphPartRecord{part[0], part[1], part[2],
                                               part[3], part[4]};
     }
+    assembly.partCount= partCount;
   }
   return (glyphAssemblyOffset > 0);
 }

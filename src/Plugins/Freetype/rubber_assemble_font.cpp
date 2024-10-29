@@ -1,6 +1,6 @@
 
 /******************************************************************************
- * MODULE     : rubber_unicode_font.cpp
+ * MODULE     : rubber_assemble_font.cpp
  * DESCRIPTION: Assemble rubber characters from pieces in Unicode fonts
  * COPYRIGHT  : (C) 2015  Joris van der Hoeven
  *******************************************************************************
