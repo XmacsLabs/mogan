@@ -36,10 +36,15 @@ struct unicode_font_rep : font_rep {
   tt_face      math_face;
   ot_mathtable math_table;
   font         make_rubber_font (font base) override;
+  bool get_ot_kerning (string s, SI height, bool top, bool left, SI& kerning);
+  bool get_ot_italic_correction (string s, SI& r);
+  bool is_ot_integral (string s);
+  hashset<unsigned int> ot_integral;
 
   unicode_font_rep (string name, string family, int size, int hdpi, int vdpi);
   void tex_gyre_operators ();
 
+  unsigned int get_glyphID (string s);
   unsigned int read_unicode_char (string s, int& i);
   unsigned int ligature_replace (unsigned int c, string s, int& i);
   bool         supports (string c);

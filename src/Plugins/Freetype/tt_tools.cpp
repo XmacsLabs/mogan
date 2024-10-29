@@ -12,6 +12,7 @@
 #include "tt_tools.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
+#include "iterator.hpp"
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
 #include "tt_file.hpp"
@@ -371,6 +372,90 @@ tt_font_name (url u) {
 /******************************************************************************
  * OpenType MATH table
  ******************************************************************************/
+
+unsigned int
+ot_mathtable_rep::get_init_glyphID (unsigned int glyphID) {
+  // init cache
+  if (N (get_init_glyphID_cache) == 0) {
+    auto it= iterate (ver_glyph_variants);
+    while (it->busy ()) {
+      unsigned int        gid= it->next ();
+      array<unsigned int> v  = ver_glyph_variants (gid);
+      for (unsigned vid : v) {
+        get_init_glyphID_cache (vid)= gid;
+      }
+    }
+    it= iterate (hor_glyph_variants);
+    while (it->busy ()) {
+      unsigned int        gid= it->next ();
+      array<unsigned int> v  = hor_glyph_variants (gid);
+      for (unsigned vid : v) {
+        get_init_glyphID_cache (vid)= gid;
+      }
+    }
+  }
+
+  // look up cache
+  if (get_init_glyphID_cache->contains (glyphID)) {
+    return get_init_glyphID_cache (glyphID);
+  }
+
+  return glyphID;
+}
+
+bool
+MathKernInfoRecord::has_kerning (bool top, bool left) {
+  return (top ? (left ? hasTopLeft : hasTopRight)
+              : (left ? hasBottomLeft : hasBottomRight));
+}
+
+// get the kerning value of a glyphID with a given height
+// should be called after has_kerning
+int
+MathKernInfoRecord::get_kerning (int height, bool top, bool left) {
+  MathKernTable& kt=
+      top ? (left ? topLeft : topRight) : (left ? bottomLeft : bottomRight);
+
+  int idx= 0, n= (int) kt.heightCount;
+
+  // only one kerning value
+  if (n == 0) {
+    return kt.kernValues[0];
+  }
+
+  // find the kerning value
+  if (height < kt.correctionHeight[0]) {
+    idx= 0; // below the first height entry
+  }
+  else if (height >= kt.correctionHeight[n - 1]) {
+    idx= n; // above the last height entry
+  }
+  else {
+    for (idx= 1; idx <= n - 1; idx++) {
+      if (height >= kt.correctionHeight[idx - 1] &&
+          height < kt.correctionHeight[idx]) {
+        break;
+      }
+    }
+  }
+  // cout << "get_kerning : height " << height << " -> " << idx << " -> "
+  //  << kt.kernValues[idx] << LF;
+  return kt.kernValues[idx];
+}
+
+bool
+ot_mathtable_rep::has_kerning (unsigned int glyphID, bool top, bool left) {
+  return math_kern_info->contains (glyphID) &&
+         math_kern_info (glyphID).has_kerning (top, left);
+}
+
+int
+ot_mathtable_rep::get_kerning (unsigned int glyphID, int height, bool top,
+                               bool left) {
+  // should be called after has_kerning
+  auto& record= math_kern_info (glyphID);
+  return record.get_kerning (height, top, left);
+}
 
 // a helper function to parse the coverage table
 // return an array of glyphID
