@@ -1,0 +1,422 @@
+/**
+ * Customize default theme styling by overriding CSS variables:
+ * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
+ */
+
+/**
+ * Colors
+ * -------------------------------------------------------------------------- */
+
+ :root {
+  --vp-c-brand: #4a6bfd;
+  --vp-c-brand-light: #747bff;
+  --vp-c-brand-lighter: #9499ff;
+  --vp-c-brand-lightest: #bcc0ff;
+  --vp-c-brand-dark: #535bf2;
+  --vp-c-brand-darker: #454ce1;
+  --vp-c-brand-dimm: rgba(100, 108, 255, 0.08);
+}
+
+/**
+ * Component: Button
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-button-brand-border: var(--vp-c-brand-light);
+  --vp-button-brand-text: var(--vp-c-white);
+  --vp-button-brand-bg: var(--vp-c-brand);
+  --vp-button-brand-hover-border: var(--vp-c-brand-light);
+  --vp-button-brand-hover-text: var(--vp-c-white);
+  --vp-button-brand-hover-bg: var(--vp-c-brand-light);
+  --vp-button-brand-active-border: var(--vp-c-brand-light);
+  --vp-button-brand-active-text: var(--vp-c-white);
+  --vp-button-brand-active-bg: var(--vp-button-brand-bg);
+}
+
+/**
+ * Component: Home
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    #bd34fe 30%,
+    #41d1ff
+  );
+
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #bd34fe 50%,
+    #47caff 50%
+  );
+  --vp-home-hero-image-filter: blur(40px);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --vp-home-hero-image-filter: blur(56px);
+  }
+}
+
+@media (min-width: 960px) {
+  :root {
+    --vp-home-hero-image-filter: blur(72px);
+  }
+}
+
+
+/**
+ * Component: Custom Block
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-custom-block-tip-border: var(--vp-c-brand);
+  --vp-custom-block-tip-text: var(--vp-c-brand-darker);
+  --vp-custom-block-tip-bg: var(--vp-c-brand-dimm);
+}
+
+.dark {
+  --vp-custom-block-tip-border: var(--vp-c-brand);
+  --vp-custom-block-tip-text: var(--vp-c-brand-lightest);
+  --vp-custom-block-tip-bg: var(--vp-c-brand-dimm);
+}
+
+/**
+ * Component: Algolia
+ * -------------------------------------------------------------------------- */
+
+.DocSearch {
+  --docsearch-primary-color: var(--vp-c-brand) !important;
+}
+
+/**
+ * VitePress: Custom fix
+ * -------------------------------------------------------------------------- */
+
+/*
+  Use lighter colors for links in dark mode for a11y.
+  Also specify some classes twice to have higher specificity
+  over scoped class data attribute.
+*/
+.dark .vp-doc a,
+.dark .vp-doc a > code,
+.dark .VPNavBarMenuLink.VPNavBarMenuLink:hover,
+.dark .VPNavBarMenuLink.VPNavBarMenuLink.active,
+.dark .link.link:hover,
+.dark .link.link.active,
+.dark .edit-link-button.edit-link-button,
+.dark .pager-link .title {
+  color: var(--vp-c-brand-lighter);
+}
+
+.dark .vp-doc a:hover,
+.dark .vp-doc a > code:hover {
+  color: var(--vp-c-brand-lightest);
+  opacity: 1;
+}
+
+/* Transition by color instead of opacity */
+.dark .vp-doc .custom-block a {
+  transition: color 0.25s;
+}
+
+
+.VPContent> .VPHome> .container{
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100%;
+}
+
+.VPHome table svg{
+  width: 24px;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.VPContent> .VPHome {
+  margin-bottom: 0;
+}
+
+
+.VPContent> .VPHome> .container .feature{
+ text-align: center;
+ margin: 40px;
+}
+
+.VPContent> .VPHome> .container .feature p{
+ color: #999;
+}
+
+
+
+
+/* versions table start */
+
+.vp-doc .versions table{
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  overflow-wrap: break-word;
+}
+
+
+
+.versions table th{
+   background: none;
+   border-width:0 0 1px 0;
+   border-style: solid;
+   border-color:#eee;
+}
+
+
+.versions thead tr :not(:first-child){
+   margin: 10px;
+   font-weight: bold;
+   font-size: 18px;
+
+}
+
+
+.vp-doc .versions table tr{
+   background: none;
+   border-width:0 0 1px 0;
+   border-style: solid;
+   border-color:#eee;
+}
+
+.versions table tr{
+   height: 50px;
+}
+
+.versions table tbody tr:first-child{
+   height: 20px;
+}
+
+.versions table td{
+  background: none;
+  border: none;
+  font-size:16px;
+}
+
+.versions table  td:first-child{
+  color: #999;
+  font-size:16px;
+}
+
+.versions table  td:first-child strong{
+  color: #333;
+  font-size: 16px;
+}
+
+.versions table td svg{
+  margin: -7px 0;
+}
+/* versions table end */
+
+.versions{
+  display: flex;
+  padding: 20px 0;
+  max-width: 1280px;
+}
+
+
+
+.feature-content{
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 50px;
+}
+.feature-content>h1{
+margin-bottom:30px;
+}
+.feature-content>p{
+color:#666;
+}
+.feature-list{
+  display: flex;
+  padding: 20px 0;
+  max-width: 1280px;
+}
+
+.excellent{
+  display: flex;
+  padding: 20px 0;
+  max-width: 1280px;
+}
+.excellent-list{
+  width: 46%;
+  background: #f8f9fa;
+  margin: 2%;
+  padding:30px;
+  border-radius: 15px;
+  margin-right: 15px;
+}
+.version{
+  display: flex;
+  padding: 20px 0;
+  max-width: 1280px
+}
+.version-list{
+  width: 440px;
+  background: #eeeff0;
+  padding: 20px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+.subtitle{
+  margin: 30px 0 40px;
+  color: #999;
+}
+
+
+.banner-home {
+  display: flex;
+  align-items: center;
+  margin: 60px auto;
+  width: 50%;
+  justify-content: center;
+}
+
+.banner-home img {
+  max-width: 100%;
+  border-radius: 3px;
+}
+
+.versions-qa{
+  display: flex;
+  padding: 5px 0;
+  max-width: 1280px;
+  width: 100vw;
+}
+.versions-qa-list{
+  width: 50%;
+  margin-left: 15px
+}
+.demo-content{
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 80px;
+}
+
+.aie-menu-item{
+  margin: 0 3px;
+}
+
+@media only screen and (max-width: 750px){
+.feature-list{
+  display:flex;
+  flex-direction: column;
+  padding: 20px 0;
+  max-width:100%;
+}
+
+.feature-image{
+  width:96%;
+  padding:0 2%;
+  order:2;
+
+}
+
+.feature-content{
+  width:96%;
+  padding:0 2%;
+  text-align:center;
+  order:1;
+}
+.feature-content>h1{
+  margin-bottom:10px;
+  font-size:22px;
+  line-height:20px;
+
+}
+.feature-content>p{
+  margin:6px 0;
+  font-size:14px;
+  line-height: 22px;
+}
+.excellent{
+  display: block;
+  padding: 20px 0;
+  max-width:100%;
+}
+.excellent-list{
+  width: 90%;
+  margin: 5%;
+  padding:30px;
+  border-radius: 15px;
+  margin-right: 15px;
+}
+.version{
+  display: block;
+  padding: 20px 0;
+  width: 100%;
+}
+.version-list{
+  width: 90%;
+  margin: 5%;
+  padding: 20px;
+}
+.subtitle{
+  margin: 10px 0 20px;
+  color: #999;
+}
+
+.VPContent> .VPHome> .vp-doc table{
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing:0;
+}
+th, td {
+  text-align: left;
+}
+.banner-home {
+  width: 90%;
+  margin: 30px auto;
+
+}
+.image-bg{
+  z-index:-1;
+}
+.VPHome .image-container{
+  margin: 100px auto 0;
+  width: 90%;
+  height: 320px;
+}
+.VPHome .image{
+  order:3;
+}
+.VPHome .VPHero{
+  padding:80px 28px;
+}
+.versions-qa{
+  display: flex;
+  flex-direction: column;
+  padding:0;
+  width: 100%;
+
+}
+.versions-qa-list{
+  width: 90%;
+  margin: 5px 5%;
+}
+.demo-content{
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+}
+
+.VPSocialLink:last-child{
+  background: #fff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  padding: 1px;
+  border: 1px solid #333;
+  margin-left: 8px;
+}
