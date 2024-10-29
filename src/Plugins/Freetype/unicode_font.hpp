@@ -75,7 +75,8 @@ font rubber_unicode_font (font base, tt_face math_face);
  * @brief Parses variant information from a cork string.
  *
  * @param s Input string.
- * @param r The root of the string, for example "<big-sum-2>" -> "xxx".
+ * @param h The head of the string, for example "<big-sum-2>" -> "big".
+ * @param r The root of the string, for example "<big-sum-2>" -> "sum".
  * @return Variant number, for example "<big-sum-2>" -> 2.
  */
-int parse_variant (string s, string& r);
+int parse_variant (string s, string& h, string& r);
