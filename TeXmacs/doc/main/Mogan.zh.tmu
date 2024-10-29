@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.4|1.2.9.3-rc2>>
+<TMU|<tuple|1.0.5|1.2.9.5>>
 
 <style|<tuple|book|chinese|doc|smart-ref|preview-ref>>
 
@@ -553,7 +553,7 @@
 
   <section|精通键盘><label|sec:master_keyboard><rsub|>
 
-  本节主讲快捷键，相关内容除本节外还可以参考<smart-ref|sec:config_keyboard>。
+  本节主讲快捷键，相关内容除本节外还可以参考节-<reference|sec:convention>和<smart-ref|sec:config_keyboard>。
 
   <subsection|基本前缀规则><label|section:general_prefix_rules>
 
