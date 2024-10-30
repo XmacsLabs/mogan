@@ -41,10 +41,10 @@
 (define (htmlout-big? x)
   (and (pair? x)
        (or (htmlout-big-all? (car x))
-	   (and (htmlout-big-tag? (car x))
-		(list-any
-		 (lambda (x) (and (pair? x) (htmlout-big-tag? (car x))))
-		 (cdr x))))))
+           (and (htmlout-big-tag? (car x))
+                (list-any
+                 (lambda (x) (and (pair? x) (htmlout-big-tag? (car x))))
+                 (cdr x))))))
 
 (define (htmlout-p-simplify? x)
   ;; FIXME: font should not really be in the list here
@@ -58,10 +58,10 @@
 (define (htmlout-indent* s plus close?)
   (if (not preformatted?)
       (cond ((htmlout-big-tag? s)
-	     (output-indent plus)
-	     (output-lf))
-	    ((== s 'pre)
-	     (if (not close?) (output-lf-verbatim))))))
+             (output-indent plus)
+             (output-lf))
+            ((== s 'pre)
+             (if (not close?) (output-lf-verbatim))))))
 
 (define (htmlout-indent s plus) (htmlout-indent* s plus #f))
 (define (htmlout-indent-close s plus) (htmlout-indent* s plus #t))
@@ -86,19 +86,28 @@
   (with ll (ahash-table->list (list->ahash-table l))
     (htmlout-text "<" (symbol->string s))
     (for-each htmlout-tag ll)
-    (htmlout-text ">")
+    ;; If tag is a self-closing (void) element according to HTML5 spec, close it with "/>"
+    ;; "Void elements only have a start tag; end tags must not be specified for void elements."
+    ;; Reference: HTML5 spec, section 13.1.2 - Elements (https://html.spec.whatwg.org/multipage/syntax.html#void-elements)
+    (if (member s '(area base br col embed hr img input link meta source track wbr))
+        (htmlout-text " />")
+        (htmlout-text ">"))
     (htmlout-indent s 2)))
 
 (define (htmlout-close s)
-  (htmlout-indent-close s -2)
-  (htmlout-text "</" (symbol->string s) ">"))
+  ;; Do not close the tag if it is a self-closing (void) element
+  ;; Reference: HTML5 spec, section 13.1.2 - Elements (https://html.spec.whatwg.org/multipage/syntax.html#void-elements)
+  (if (not (member s '(area base br col embed hr img input link meta source track wbr)))
+      (begin
+        (htmlout-indent-close s -2)
+        (htmlout-text "</" (symbol->string s) ">"))))
 
 (define (htmlout-args-sub l big?)
   (if (nnull? l)
       (begin
-	(htmlout (car l))
-	(if (and big? (nnull? (cdr l))) (output-lf))
-	(htmlout-args-sub (cdr l) big?))))
+        (htmlout (car l))
+        (if (and big? (nnull? (cdr l))) (output-lf))
+        (htmlout-args-sub (cdr l) big?))))
 
 (define (htmlout-args s l)
   (with big? (htmlout-big? (cons s l))
@@ -109,57 +118,52 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (htmlout-doctype l)
-  (define (helper x)
-    (if (string? x) (string-append "\"" x "\"") (symbol->string x)))
-  (let* ((l1 (map (lambda (x) (list " " (helper x))) l))
-	 (l2 (apply append l1))
-	 (l3 (append '("<!DOCTYPE") l2 '(">"))))
-    (apply output-lf-verbatim l3)
-    (output-lf)))
+  (output-lf-verbatim "<!DOCTYPE html>")  ; change to HTML5 Header
+  (output-lf))
 
 (define (htmlout x)
   (cond ((string? x) (htmlout-text x))
-	((null? x) (noop))
-	((or (func? x '!concat) (func? x '*TOP*))
-	 (for-each htmlout (cdr x)))
-	((htmlout-p-simplify? x)
-	 (htmlout (cadr x)))
-  	((func? x '*PI*)
-	 (output-lf-verbatim "<?" (symbol->string (cadr x)) " " (caddr x) "?>")
-	 (output-lf))
-	((func? x '*DOCTYPE*)
-	 (htmlout-doctype (cdr x)))
-	((== x '(br))
+        ((null? x) (noop))
+        ((or (func? x '!concat) (func? x '*TOP*))
+         (for-each htmlout (cdr x)))
+        ((htmlout-p-simplify? x)
+         (htmlout (cadr x)))
+        ((func? x '*PI*)
+         (output-lf-verbatim "<?" (symbol->string (cadr x)) " " (caddr x) "?>")
+         (output-lf))
+        ((func? x '*DOCTYPE*)
+         (htmlout-doctype (cdr x)))
+        ((== x '(br))
          (htmlout-text "<br />"))
-	((null? (cdr x))
-	 (htmlout-open (car x))
-	 (htmlout-close (car x)))
-	((not (func? (cadr x) '@))
-	 (htmlout-open (car x))
-	 (htmlout-args (car x) (cdr x))
-	 (htmlout-close (car x)))
-	(else
-	 (htmlout-open-tags (car x) (cdadr x))
-	 (update-preformatted
-	  (cdadr x)
-	  (cut htmlout-args (car x) (cddr x)))
-	 (htmlout-close (car x)))))
+        ((null? (cdr x))
+         (htmlout-open (car x))
+         (htmlout-close (car x)))
+        ((not (func? (cadr x) '@))
+         (htmlout-open (car x))
+         (htmlout-args (car x) (cdr x))
+         (htmlout-close (car x)))
+        (else
+         (htmlout-open-tags (car x) (cdadr x))
+         (update-preformatted
+          (cdadr x)
+          (cut htmlout-args (car x) (cddr x)))
+         (htmlout-close (car x)))))
 
 (define (update-preformatted atts thunk)
   (let ((saved-preformatted preformatted?)
-	(new-preformatted
-	 (cond ((assoc 'xml:space atts) =>
-		(lambda (att)
-		  (cond ((== (second att) "preserve") #t)
-			((== (second att) "default") #f)
-			(else preformatted?))))
-	       (else preformatted?))))
+        (new-preformatted
+         (cond ((assoc 'xml:space atts) =>
+                (lambda (att)
+                  (cond ((== (second att) "preserve") #t)
+                        ((== (second att) "default") #f)
+                        (else preformatted?))))
+               (else preformatted?))))
     (if (== new-preformatted saved-preformatted)
-	(thunk)
-	(dynamic-wind
-	    (lambda () (set! preformatted? new-preformatted))
-	    thunk
-	    (lambda () (set! preformatted? saved-preformatted))))))
+        (thunk)
+        (dynamic-wind
+            (lambda () (set! preformatted? new-preformatted))
+            thunk
+            (lambda () (set! preformatted? saved-preformatted))))))
 
 (tm-define (serialize-html x)
   (htmlout x)

@@ -34,8 +34,8 @@
 
 (texmacs-module (convert mathml mathtm)
   (:use (convert tools tmtable)
-	(convert tools sxml)
-	(convert tools xmltm)
+	(convert data sxml)
+	(convert data xmltm)
 	(convert mathml mathml-drd)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -615,5 +615,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (mathml->tree s)
-  (:synopsis "Convert the MathML @s into a document fragment")
+  (:synopsis "Convert the MathML @s into a document fragment.")
   (mathtm-as-serial (parse-xml s)))

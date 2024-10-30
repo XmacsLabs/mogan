@@ -343,7 +343,7 @@
 (lazy-format (data tmu) tmu)
 (lazy-format (data docx) docx)
 (lazy-format (data latex) latex)
-(lazy-format (convert html init-html) html)
+(lazy-format (data html) html)
 (lazy-format (convert bibtex init-bibtex) bibtex)
 (lazy-define (convert images tmimage)
              export-selection-as-graphics clipboard-copy-image)

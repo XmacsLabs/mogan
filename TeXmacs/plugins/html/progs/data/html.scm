@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (convert html init-html))
+(texmacs-module (data html))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Html
@@ -20,16 +20,16 @@
 (define (html-recognizes-at? s pos)
   (set! pos (format-skip-spaces s pos))
   (cond ((format-test? s pos "<html") #t)
-	((format-test? s pos "<xhtml") #t)
-	((format-test? s pos "<body") #t)
-	((format-test? s pos "<title") #t)
-	((format-test? s pos "<!doctype html") #t)
-	((format-test? s pos "<math") #t)
-	((format-test? s pos "<?xml ")
-	 (html-recognizes-at? s (format-skip-line s pos)))
-	((format-test? s pos "<!doctype ")
-	 (html-recognizes-at? s (format-skip-line s pos)))
-	(else #f)))
+        ((format-test? s pos "<xhtml") #t)
+        ((format-test? s pos "<body") #t)
+        ((format-test? s pos "<title") #t)
+        ((format-test? s pos "<!doctype html") #t)
+        ((format-test? s pos "<math") #t)
+        ((format-test? s pos "<?xml ")
+         (html-recognizes-at? s (format-skip-line s pos)))
+        ((format-test? s pos "<!doctype ")
+         (html-recognizes-at? s (format-skip-line s pos)))
+        (else #f)))
 
 (define (html-recognizes? s)
   (and (string? s) (html-recognizes-at? s 0)))
@@ -65,6 +65,6 @@
   (:function-with-options texmacs->html)
   (:option "texmacs->html:css" "on")
   (:option "texmacs->html:mathjax" "off")
-  (:option "texmacs->html:mathml" "off")
-  (:option "texmacs->html:images" "on")
+  (:option "texmacs->html:mathml" "on")
+  (:option "texmacs->html:images" "off")
   (:option "texmacs->html:css-stylesheet" "---"))

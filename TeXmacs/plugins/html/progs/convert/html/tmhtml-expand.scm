@@ -19,7 +19,7 @@
 
 (define (tmhtml-env-macro name)
   `(associate ,(symbol->string name)
-	      (xmacro "x" (eval-args "x"))))
+              (xmacro "x" (eval-args "x"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Interface
@@ -29,29 +29,26 @@
   ;; FIXME: we should use the DRD here
   `(collection
     ,@(map tmhtml-env-macro
-	   '(TeXmacs TeX LaTeX shown hrule item
-	     chapter-title section-title subsection-title subsubsection-title
-	     paragraph-title subparagraph-title
-	     itemize itemize-minus itemize-dot itemize-arrow
-	     enumerate enumerate-numeric enumerate-roman
-	     enumerate-Roman enumerate-alpha enumerate-Alpha
-	     description description-compact description-dash
-	     description-aligned description-long description-paragraphs item*
-	     strong em dfn code* samp kbd var abbr acronym
-	     verbatim code tt underline overline strike-through
-	     deleted marked fill-out
-	     hidden-title doc-title-block
-	     equation* equation-lab equations-base
+           '(TeXmacs TeX LaTeX shown hrule item
+             chapter-title section-title subsection-title subsubsection-title
+             paragraph-title subparagraph-title
+             itemize itemize-minus itemize-dot itemize-arrow
+             enumerate enumerate-numeric enumerate-roman
+             enumerate-Roman enumerate-alpha enumerate-Alpha
+             description description-compact description-dash
+             description-aligned description-long description-paragraphs item*
+         strong em dfn code* samp kbd var abbr acronym
+         verbatim code tt underline overline strike-through
+         deleted marked fill-out
+         hidden-title doc-title-block
+             equation* equation-lab equations-base
              wide-float draw-over draw-under
              html-tag html-attr
-	     html-div-style html-div-class html-style html-class
+             html-div-style html-div-class html-style html-class
              html-javascript html-javascript-src html-video
-	     web-title tmdoc-title tmdoc-flag tmdoc-license
-	     tmdoc-title* tmdoc-title** tmdoc-copyright
-	     hlink action hyper-link
-             mouse-over-balloon mouse-over-balloon*
-             hover-balloon hover-balloon*
-             popup-balloon popup-balloon*))
+             web-title tmdoc-title tmdoc-flag tmdoc-license
+             tmdoc-title* tmdoc-title** tmdoc-copyright
+             hlink action hyper-link mouse-over-balloon mouse-over-balloon*))
     ;; FIXME: should apply 'filter_style' to the environment
     ;; in an appropriate way to avoid adding the primitives below
     ,@(map tmhtml-env-macro

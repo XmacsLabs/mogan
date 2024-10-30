@@ -13,11 +13,15 @@
 
 (texmacs-module (convert html htmltm)
   (:use
-    (convert tools tmlength) (convert tools tmcolor)
-    (convert tools old-tmtable) (convert tools stm)
-    (convert tools sxml)  (convert tools sxhtml)
+    (convert tools tmlength)
+    (convert tools tmcolor)
+    (convert tools old-tmtable)
+    (convert tools stm)
+    (convert data sxml)
+    (convert data sxhtml)
     (convert tools environment)
-    (convert tools xmltm) (convert mathml mathtm)))
+    (convert data xmltm)
+    (convert mathml mathtm)))
 
 (define (assoc-string-ci key alist)
   (list-find alist (lambda (pair) (string-ci=? key (car pair)))))
@@ -28,7 +32,7 @@
 
 (define (html-color->tmcolor s)
   (let ((rgb255 (or (html-named-color->rgb255 s)
-		    (html-rgb-color->rgb255 s))))
+                    (html-rgb-color->rgb255 s))))
     (if rgb255 (rgb255->tmcolor rgb255) #f)))
 
 (define html-named-colors
@@ -41,22 +45,22 @@
 
 (define (html-named-color->rgb255 s)
   (cond ((assoc-string-ci s html-named-colors) => second)
-	(else #f)))
+        (else #f)))
 
 (define (html-rgb-color->rgb255 s)
   (let ((cs (string->list s)))
     (if (and (char=? #\# (car cs))
-	     (== 7 (length cs))
-	     (list-every char-hexadecimal? (cdr cs)))
-	(with (hash r1 r2 g1 g2 b1 b2) cs
-	  (map hexlist->integer `((,r1 ,r2) (,g1 ,g2) (,b1 ,b2))))
-	#f)))
+             (== 7 (length cs))
+             (list-every char-hexadecimal? (cdr cs)))
+        (with (hash r1 r2 g1 g2 b1 b2) cs
+          (map hexlist->integer `((,r1 ,r2) (,g1 ,g2) (,b1 ,b2))))
+        #f)))
 
 (define (hexlist->integer cs)
   (let next ((i 0) (cs cs))
     (if (pair? cs)
-	(next (+ (* 16 i) (hexadecimal-digit->integer (car cs))) (cdr cs))
-	i)))
+        (next (+ (* 16 i) (hexadecimal-digit->integer (car cs))) (cdr cs))
+        i)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tables
@@ -70,9 +74,9 @@
   ;;                @events  - no event support
   (let ((cells (table-cells env a c)))
     (if (null? cells) '() ; empty table (corner case, invalid HTML)
-	((cut table-align env a <>)
-	 (append (list (tmtable->stm (tmtable (table-formats env a c) cells)))
-		 (table-label env a))))))
+        ((cut table-align env a <>)
+         (append (list (tmtable->stm (tmtable (table-formats env a c) cells)))
+                 (table-label env a))))))
 
 (define (table-label env a)
   (let ((label (xmltm-attr->label a 'id)))
@@ -82,39 +86,39 @@
   ;; (tmhtml-env shtml-attribute-list symbol (list stm) -> (list stm))
   ;; NOTE: may be generalized to support @align for P, DIV and Hn.
   (let ((m (and-let* ((p (assoc 'align a))
-		      (list-length=2? p))
-	     (list-find '("left" "center" "right")
-			(cut string-ci=? (second p) <>)))))
+                      (list-length=2? p))
+             (list-find '("left" "center" "right")
+                        (cut string-ci=? (second p) <>)))))
     (if (not m) stms
-	(list `(document
-		(with "par-mode" ,m
-		  ,(stm-remove-unary-document
-		    (htmltm-serial (htmltm-preserve-space? env) stms))))))))
+        (list `(document
+                (with "par-mode" ,m
+                  ,(stm-remove-unary-document
+                    (htmltm-serial (htmltm-preserve-space? env) stms))))))))
 
 (define (table-formats env a c)
   ;; As a convention, global properties are placed at the end of the list.
   ;; Remember that tmtable->stm reverses the list of table formats.
   (append (table-content-formats env c)
-	  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	  ;; TODO: table cellspacing and cellpadding
-	  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	  (table-background env a) (table-borders env a c)
-	  (list (tmformat-table "cell-hyphen" "t"))
-	  (table-width env a)))
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ;; TODO: table cellspacing and cellpadding
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          (table-background env a) (table-borders env a c)
+          (list (tmformat-table "cell-hyphen" "t"))
+          (table-width env a)))
 
 (define (table-width env a)
   ;; TODO: extend the typesetter to support hyphenated cells balancing
   (let ((len (htmltm-dimension a 'width)))
     (if (tmlength-null? len)
-	(list (tmformat-frame "table-width" (tmlength 1 'par))
-	      (tmformat-frame "table-hmode" "min"))
-	(list (tmformat-frame "table-width" len)))))
+        (list (tmformat-frame "table-width" (tmlength 1 'par))
+              (tmformat-frame "table-hmode" "min"))
+        (list (tmformat-frame "table-width" len)))))
 
 (define (table-background env a)
   (or (and-let* ((html-color (shtml-attr-non-null a 'background))
-		 (tmcolor (html-color->tmcolor html-color)))
-	(list (tmformat-table "cell-background"
-				    (html-color->tmcolor color))))
+                 (tmcolor (html-color->tmcolor html-color)))
+        (list (tmformat-table "cell-background"
+                                    (html-color->tmcolor color))))
       '()))
 
 (define (table-borders env a c)
@@ -146,20 +150,20 @@
       ("rhs" ,(delay (format-frame "table-rborder")))
       ("vsides" ,(delay (format-frame "table-lborder" "table-rborder")))
       ("box" ,(delay (format-frame "table-tborder" "table-bborder"
-				   "table-lborder" "table-rborder")))
+                                   "table-lborder" "table-rborder")))
       ("border" ,(delay (format-frame "table-tborder" "table-bborder"
-				      "table-lborder" "table-rborder")))))
+                                      "table-lborder" "table-rborder")))))
   (define rules-values-alist
     `(("none" ,(delay '()))
       ("groups" ,(delay (rules-groups)))
       ("rows" ,(delay (list (tmformat-table-but-bottom
-			     "cell-bborder" (tmlength 1 'px)))))
+                             "cell-bborder" (tmlength 1 'px)))))
       ("cols" ,(delay (list (tmformat-table-but-right
-			     "cell-rborder" (tmlength 1 'px)))))
+                             "cell-rborder" (tmlength 1 'px)))))
       ("all" ,(delay (list (tmformat-table-but-bottom
-			    "cell-bborder" (tmlength 1 'px))
-			   (tmformat-table-but-right
-			    "cell-rborder" (tmlength 1 'px)))))))
+                            "cell-bborder" (tmlength 1 'px))
+                           (tmformat-table-but-right
+                            "cell-rborder" (tmlength 1 'px)))))))
 
   ;; Handle invalid values from FRAME and RULES here.
   (define (frame-value s)
@@ -169,33 +173,33 @@
     (let ((p (assoc-string-ci s rules-values-alist)))
       (if p (second p) (rules-value "all"))))
   (define (rules-groups) '()) ;;;;;;; TODO ;;;;;;;
-  (let ((rules (rules-value "none"))	; default values
-	(border 1)
-	(frame (frame-value "void")))
+  (let ((rules (rules-value "none"))    ; default values
+        (border 1)
+        (frame (frame-value "void")))
     (define (enable-bevels! n)
       (set! frame (frame-value "border"))
       (set! rules (rules-value "all"))
       (set! border n))
     (and-let* ((@border (assoc 'border a))) ; special logic for BORDER
       (if (list-length=2? @border)
-	  (let ((n (string->number (second @border))))
-	    (cond ((not n) (enable-bevels! 1)) ; invalid BORDER value
-		  ((<= n 0) (set! border 0))   ; zero border
-		  (else (enable-bevels! n))))  ; valid BORDER value
-	  (enable-bevels! 1)))		       ; empty BORDER attribute
+          (let ((n (string->number (second @border))))
+            (cond ((not n) (enable-bevels! 1)) ; invalid BORDER value
+                  ((<= n 0) (set! border 0))   ; zero border
+                  (else (enable-bevels! n))))  ; valid BORDER value
+          (enable-bevels! 1)))                 ; empty BORDER attribute
     ;; Handle invalid empty FRAME and RULES here.
     (and-let* ((@frame (assoc 'frame a)))
       (if (list-length=2? @frame)
-	  (set! frame (frame-value (second @frame)))
-	  (set! frame (frame-value "border"))))
+          (set! frame (frame-value (second @frame)))
+          (set! frame (frame-value "border"))))
     (and-let* ((@rules (assoc 'rules a)))
       (if (list-length=2? @rules)
-	  (set! rules (rules-value (second @rules)))
-	  (set! rules (rules-value "all"))))
+          (set! rules (rules-value (second @rules)))
+          (set! rules (rules-value "all"))))
     (append
      (force rules)
      (if (= border 0) '()
-	 ((force frame) (tmlength border 'px))))))
+         ((force frame) (tmlength border 'px))))))
 
 (define (table-content-formats env c)
   (sxhtml-table-fold table-content-formats/kons '() `(h:table ,@c)))
@@ -209,15 +213,15 @@
   ;; TODO: row and column attributes (beware of alignement inheritance rules).
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (cond ((eq? msg :cell)
-	 (let ((attrs (sxml-attr-list kar)))
-	   (define (span->format html-name tm-name)
-	     (let ((span (shtml-decode-span attrs html-name)))
-	       (if (= 1 span) '()
-		   (list (tmformat-cell (1+ i) (1+ j) tm-name span)))))
-	   (append (span->format 'colspan "cell-col-span")
-		   (span->format 'rowspan "cell-row-span")
-		   kdr)))
-	(else kdr)))
+         (let ((attrs (sxml-attr-list kar)))
+           (define (span->format html-name tm-name)
+             (let ((span (shtml-decode-span attrs html-name)))
+               (if (= 1 span) '()
+                   (list (tmformat-cell (1+ i) (1+ j) tm-name span)))))
+           (append (span->format 'colspan "cell-col-span")
+                   (span->format 'rowspan "cell-row-span")
+                   kdr)))
+        (else kdr)))
 
 (define (table-cells env a c)
   ;; TODO: ID attributes on table elements
@@ -225,30 +229,30 @@
     (with (nrows ncols) (sxhtml-table-dimension table)
       ((cut <> :out-table #f #f #f)
        (sxhtml-table-fold (lambda (msg i j kar kdr) (kdr msg i j kar))
-			  (cut table-cells/table ncols env '() <...>)
-			  table)))))
+                          (cut table-cells/table ncols env '() <...>)
+                          table)))))
 
 (define (table-cells/table ncols env table msg i j kar)
   (cond ((eq? msg :out-table) (reverse! table))
-	((eq? msg :in-row-group)
-	 (xpath-descend
-	  env kar
-	  (lambda (new-env)
-	    (cut table-cells/row-group ncols (list new-env env) table <...>))))
-	;; no else clause
-	))
+        ((eq? msg :in-row-group)
+         (xpath-descend
+          env kar
+          (lambda (new-env)
+            (cut table-cells/row-group ncols (list new-env env) table <...>))))
+        ;; no else clause
+        ))
 
 (define (table-cells/row-group ncols envs table msg i j kar)
   (cond ((eq? msg :out-row-group)
-	 (cut table-cells/table ncols (second envs) table <...>))
-	((eq? msg :in-row)
-	 (xpath-descend
-	  (car envs) kar
-	  (lambda (new-env)
-	    (cut table-cells/row ncols (cons new-env envs)
-		 table 0 '() <...>))))
-	;; no else clause
-	))
+         (cut table-cells/table ncols (second envs) table <...>))
+        ((eq? msg :in-row)
+         (xpath-descend
+          (car envs) kar
+          (lambda (new-env)
+            (cut table-cells/row ncols (cons new-env envs)
+                 table 0 '() <...>))))
+        ;; no else clause
+        ))
 
 (define (cons-empty-cells n row)
   (do ((row row (cons "" row))
@@ -257,22 +261,22 @@
 
 (define (table-cells/row ncols envs table next-j row msg i j kar)
   (cond ((eq? msg :out-row)
-	 (cut table-cells/row-group ncols (cdr envs)
-	      (cons (reverse! (cons-empty-cells (- ncols next-j) row))
-		    table)
-	      <...>))
-	((eq? msg :cell)
-	 (cut table-cells/row ncols envs table (1+ j)
-	      (cons (xpath-descend
-		     (car envs) kar
-		     (lambda (new-env)
-		       (htmltm-args-serial
-			new-env
-			(htmltm-space-mixed new-env (sxml-content kar)))))
-		    (cons-empty-cells (- j next-j) row))
-	      <...>))
-	;; no else clause
-	))
+         (cut table-cells/row-group ncols (cdr envs)
+              (cons (reverse! (cons-empty-cells (- ncols next-j) row))
+                    table)
+              <...>))
+        ((eq? msg :cell)
+         (cut table-cells/row ncols envs table (1+ j)
+              (cons (xpath-descend
+                     (car envs) kar
+                     (lambda (new-env)
+                       (htmltm-args-serial
+                        new-env
+                        (htmltm-space-mixed new-env (sxml-content kar)))))
+                    (cons-empty-cells (- j next-j) row))
+              <...>))
+        ;; no else clause
+        ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Specific markup
@@ -286,21 +290,21 @@
 (define (htmltm-list-item env a c)
   ;; List markers are glued by the list handler.
   (list (xmltm-label-decorate
-	 a 'id (htmltm-serial (htmltm-preserve-space? env)
-			      `((document (item)) ,@(htmltm-args env c))))))
+         a 'id (htmltm-serial (htmltm-preserve-space? env)
+                              `((document (item)) ,@(htmltm-args env c))))))
 
 (define (htmltm-quote env a c)
   ;; WARNING: this is incomplete. Texmacs should have a macro for inline
   ;; quotation which puts in quotation marks in a language sensitive manner.
   (list (xmltm-label-decorate
-	 a 'id (htmltm-serial (htmltm-preserve-space? env)
-			      `("``" ,@(htmltm-args env c) "''")))))
+         a 'id (htmltm-serial (htmltm-preserve-space? env)
+                              `("``" ,@(htmltm-args env c) "''")))))
 
 (define (htmltm-anchor env a c)
   (list (htmltm-href->hlink
-	 a (xmltm-label-decorate
-	    a 'id (xmltm-label-decorate
-		   a 'name (htmltm-args-serial env c))))))
+         a (xmltm-label-decorate
+            a 'id (xmltm-label-decorate
+                   a 'name (htmltm-args-serial env c))))))
 
 (define (htmltm-href->hlink a body)
   (let ((href (shtml-attr-non-null a 'href)))
@@ -309,43 +313,43 @@
 (define (htmltm-dimension attrs name)
   (let ((s (shtml-attr-non-null attrs name)))
     (if (not s) (tmlength)
-	(cond ((string-null? s) (tmlength))
-	      ((string->number s) => (lambda (n) (tmlength n 'px)))
-	      ((and (string-ends? s "%")
-		    (string->number (string-drop-right s 1)))
-	       => (lambda (n) (tmlength (/ n 100) 'par)))
-	      (else (tmlength))))))
+        (cond ((string-null? s) (tmlength))
+              ((string->number s) => (lambda (n) (tmlength n 'px)))
+              ((and (string-ends? s "%")
+                    (string->number (string-drop-right s 1)))
+               => (lambda (n) (tmlength (/ n 100) 'par)))
+              (else (tmlength))))))
 
 (define (htmltm-image env a c)
   (let* ((s (xmltm-url-text (or (shtml-attr-non-null a 'src) "")))
-	 (w (tmlength->string (htmltm-dimension a 'width)))
-	     (h (tmlength->string (htmltm-dimension a 'height))))
+         (w (tmlength->string (htmltm-dimension a 'width)))
+             (h (tmlength->string (htmltm-dimension a 'height))))
     (list (xmltm-label-decorate
-	   a 'id
-	   (if (not (and (string-null? w) (string-null? h)))
-	       `(image ,s ,w ,h "" "")
-	       `(image ,s "0.6383w" "" "" ""))))))
+           a 'id
+           (if (not (and (string-null? w) (string-null? h)))
+               `(image ,s ,w ,h "" "")
+               `(image ,s "0.6383w" "" "" ""))))))
 
 (define (htmltm-font env a c)
   ;; WARNING: do as old filter, but is fragile and not conformant
   (list (htmltm-with-size
-	 a (htmltm-with-color
-	    a (xmltm-label-decorate
-	       a 'id (htmltm-args-serial env c))))))
+         a (htmltm-with-color
+            a (xmltm-label-decorate
+               a 'id (htmltm-args-serial env c))))))
 
 (define (htmltm-with-size a x)
   ;; Helper for htmltm-font
   (let* ((sz (shtml-attr-non-null a 'size))
-	 (mult
-	  (assoc sz '(("-4" "0.5") ("-3" "0.6") ("-2" "0.7") ("-1" "0.8")
-		      ("+1" "1.2") ("+2" "1.4") ("+3" "1.7") ("+4" "2")))))
+         (mult
+          (assoc sz '(("-4" "0.5") ("-3" "0.6") ("-2" "0.7") ("-1" "0.8")
+                      ("+1" "1.2") ("+2" "1.4") ("+3" "1.7") ("+4" "2")))))
     (if mult `(with "font-size" ,(second mult) ,x) x)))
 
 (define (htmltm-with-color a x)
   ;; Helper for htmltm-font
   (or (and-let* ((html-color (shtml-attr-non-null a 'color))
-		 (tmcolor (html-color->tmcolor html-color)))
-	`(with "color" ,(tmcolor->stm tmcolor) ,x))
+                 (tmcolor (html-color->tmcolor html-color)))
+        `(with "color" ,(tmcolor->stm tmcolor) ,x))
       x))
 
 (define (htmltm-br env a c)
@@ -389,18 +393,40 @@
 
 (define (htmltm-wikipedia-image env a c)
   (if (and (== (shtml-attr-non-null a 'class) "tex")
-	   (shtml-attr-non-null a 'alt))
+           (shtml-attr-non-null a 'alt))
       (htmltm-tex-image (shtml-attr-non-null a 'alt))
       (htmltm-image env a c)))
 
-(define (htmltm-wikipedia-span env a c)
-  (cond ((== (shtml-attr-non-null a 'class) "mwe-math-element")
-         (if (and (pair? c) (func? (car c) 'h:span))
-             (htmltm env (car c))
-             (htmltm-pass env a c)))
-        ((== (shtml-attr-non-null a 'class) "texhtml")
-         (list `(math ,(htmltm-args-serial env c))))
-        (else (htmltm-pass env a c))))
+(define (htmltm-span env a c)
+  (with class-value (shtml-attr-non-null a 'class)
+    (cond ((== class-value "mwe-math-element")
+           (if (and (pair? c) (func? (car c) 'h:span))
+               (htmltm env (car c))
+               (htmltm-pass env a c)))
+          ((== class-value "texhtml")
+           (list `(math ,(htmltm-args-serial env c))))
+          ; Kimi AI
+          ((and (== class-value "katex")
+                (pair? c)
+                (func? (car c) 'h:span)
+                (sxml-has-attr-list? (car c))
+                (== (shtml-attr-non-null (sxml-attr-list (car c)) 'class)
+                    "katex-mathml"))
+           (htmltm env (first c)))
+          ; Zhihu
+          ((and (== class-value "MathJax_SVG")
+                (pair? c)
+                (func? (car c) 'h:svg)
+                (>= (length (car c)) 3)
+                (func? (third (car c)) 'h:g)
+                (>= (length (third (car c))) 3)
+                (func? (third (third (car c))) 'h:use))
+           (begin
+             ; (display* "\n" (shtml-attr-non-null a 'data-mathml) "\n")
+             (htmltm env (htmltm-parse (shtml-attr-non-null a 'data-mathml)))))
+          (else
+           (begin
+            (htmltm-pass env a c))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Special rules for improving Scilab documentation rendering
@@ -420,9 +446,9 @@
 (define (htmltm-pass env a c)
   (let ((l (htmltm-args env c)))
     (if (and (null? l) (not (assoc 'id a))) '()
-	(list (xmltm-label-decorate
-	       a 'id (htmltm-serial
-		      (htmltm-preserve-space? env) l))))))
+        (list (xmltm-label-decorate
+               a 'id (htmltm-serial
+                      (htmltm-preserve-space? env) l))))))
 
 (define (htmltm-args env l)
   ;; Convert the content list of an HTML element.
@@ -435,8 +461,8 @@
   ;; Convert a shxml element to texmacs.
   ;; Return a list which is either null, or contains a single serial node.
   ;; All methods must use this return convention.
-  (sxml-dispatch (lambda (env t) (list (xmltm-text t)))
-		 htmltm-pass env t))
+  (sxml-dispatch (lambda (env t) (list (utf8->herk t)))
+                 htmltm-pass env t))
 
 (define (cleanup-root env root)
   (sxml-set-content root (htmltm-space-mixed env (sxml-content root))))
@@ -447,7 +473,7 @@
   ;; FIXME: move the html initialization elsewhere for symmetry with htmltm.
   (define (sub env)
     (htmltm-serial (htmltm-preserve-space? env)
-		   (htmltm env (cleanup-root env root))))
+                   (htmltm env (cleanup-root env root))))
   (initialize-xpath
    (environment) root
    (cut initialize-htmltm <> sub)))
@@ -462,7 +488,7 @@
   ;; Grouping
   (div  (handler :mixed :block  htmltm-pass))
   ;; TODO: convert 'align' attributes in div, p and headings
-  (span (handler :collapse :inline htmltm-wikipedia-span))
+  (span (handler :collapse :inline htmltm-span))
 
   ;; Headings
   (h1 (handler :mixed :block "chapter*"))
@@ -568,7 +594,7 @@
   (form (handler :mixed :block htmltm-drop))
   ;; elements allowed only in FORM
   ((:or input button select optgroup option textarea isindex label fieldset
-	legend) htmltm-drop)
+        legend) htmltm-drop)
 
   ;;; Scripting
   (script htmltm-drop)
@@ -648,21 +674,21 @@
 (tm-define (parse-html-snippet s)
   (htmltm-parse s))
 
-(tm-define ( parse-html-documents)
+(tm-define (parse-html-document s)
   `(!file ,(htmltm-parse s)))
 
 (define (convert-html-texmacs html)
   (let* ((snippet? (not (func? html '!file 1)))
-	 (body (if snippet? html (cadr html)))
-	 (tm (html-postproc (htmltm-as-serial (sxhtml-correct-table body)))))
+         (body (if snippet? html (cadr html)))
+         (tm (html-postproc (htmltm-as-serial (sxhtml-correct-table body)))))
     (if snippet? tm
-	(let* ((aux (stm-unary-document tm))
-	       (doc (tree->stree (tree-simplify (stree->tree aux))))
-	       (body `(body ,doc))
-	       (style `(style "browser")))
-	  `(document ,body ,style)))))
+        (let* ((aux (stm-unary-document tm))
+               (doc (tree->stree (tree-simplify (stree->tree aux))))
+               (body `(body ,doc))
+               (style `(style "browser")))
+          `(document ,body ,style)))))
 
 (tm-define (html->texmacs html)
   (:type (-> stree stree))
-  (:synopsis "Convert a parsed HTML stree @t into a TeXmacs stree")
+  (:synopsis "Convert a parsed HTML stree @t into a TeXmacs stree.")
   (tree->stree (clean-html (convert-html-texmacs html))))
