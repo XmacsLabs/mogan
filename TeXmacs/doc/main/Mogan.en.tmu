@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.4|1.2.9.3-rc2>>
+<TMU|<tuple|1.0.5|1.2.9.5>>
 
 <style|<tuple|book|british|doc|preview-ref|smart-ref|python>>
 
@@ -245,7 +245,7 @@
 
   <chapter|Getting started>
 
-  <section|Conventions for this manual>
+  <section|Conventions for this manual><label|sec:general-convention>
 
   <paragraph*|Menu entries>
 
@@ -371,7 +371,7 @@
     <item*|<menu|Bibtex command>>The user may specify an alternative to <verbatim|bibtex> for the compilation of bibliographies using <BibTeX>. Notice that recent versions of <TeXmacs> integrate a<nbsp>native alternative tool for the compilation of bibliographies.
   </description>
 
-  <section|Keyboard configuration>
+  <section|Keyboard configuration><label|sec:kbd-config>
 
   The behaviour of keyboard inside <TeXmacs> depends on a few user preferences, as specified in the menu <menu|Edit|Preferences>:
 
@@ -681,7 +681,7 @@
 
   <section|Mastering the keyboard>
 
-  We recall that the section on <hlink|general conventions|../../start/man-conventions.en.tm> contains explanations on the way keyboard shortcuts are printed in this manual. It may also be useful to take a look at the section on <hlink|keyboard configuration|../../config/man-config-keyboard.en.tm>.
+  We recall that the <smart-ref|sec:general-convention> on <em|general convention> contains explanations on the way keyboard shortcuts are printed in this manual. It may also be useful to take a look at <em|<with|font-shape|italic|keyboard configuration>> mention in <smart-ref|sec:kbd-config>.
 
   <subsection|General prefix rules><label|section:general_prefix_rules>
 
