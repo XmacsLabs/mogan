@@ -21,7 +21,7 @@ hero:
 
 <div class="feature">
 
-#  Features
+# Highlighted Features
 
 
 A powerful scientific text editor for you,<br/>
@@ -40,29 +40,18 @@ Intuitive and Interactive!
 </div>
 
 <div class="feature-content">
-
-<h1>Intuitive Mathematical Formula Editing</h1>
-
-Visual operation, no coding knowledge required, you can write mathematical formulas, structured editing, efficient and intuitive.
-
+<h1>Intuitive Math Editing</h1>
+Visual operation, no coding required—compose mathematical formulas and perform structured editing with efficiency and clarity.
 </div>
 </div>
 </div>
-
-
-
-
 
 <div style="display: flex;justify-content: center">
 <div class="feature-list">
-
-
-
 <div class="feature-content">
 
 <h1>Paste LaTeX formula</h1>
-
-Copy your LaTeX code and paste it directly into the Mogan STEM Suite for a WYSIWYG (What You See Is What You Get) experience.
+Copy your LaTeX code and paste it directly into Mogan STEM Suite in a WYSIWYG way.
 </div>
 
 <div class="feature-image">
@@ -89,7 +78,7 @@ Copy your LaTeX code and paste it directly into the Mogan STEM Suite for a WYSIW
 
 <h1>Work with AI</h1>
 
-Copy answers directly from AI large models and paste them seamlessly into Mogan STEM Suite, retaining all mathematical formulas.
+Copy answers directly from GPT AI and paste them seamlessly into Mogan STEM Suite, retaining all mathematical formulas.
 
 </div>
 </div>
@@ -106,9 +95,9 @@ Copy answers directly from AI large models and paste them seamlessly into Mogan 
 
 <div class="feature-content">
 
-<h1>Supports plugins</h1>
+<h1>Versatile plugins</h1>
 
-Mogan STEM Suite supports scientific plugins such as Maxima, making it convenient for you to perform professional calculations and plotting needs.
+Mogan STEM Suite supports versatile plugins such as Maxima, making it convenient for you to compute, plot and even think.
 
 </div>
 
