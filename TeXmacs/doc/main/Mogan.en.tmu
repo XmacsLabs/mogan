@@ -681,7 +681,7 @@
 
   <section|Mastering the keyboard>
 
-  We recall that the Section <reference|sec:general-convention> on <with|font-shape|italic|general convention> contains explanations on the way keyboard shortcuts are printed in this manual. It may also be useful to take a look at <with|font-shape|italic|keyboard configuration> mention in Section <reference|sec:kbd-config>.
+  We recall that the <smart-ref|sec:general-convention> on <with|font-shape|italic|general convention> contains explanations on the way keyboard shortcuts are printed in this manual. It may also be useful to take a look at <with|font-shape|italic|keyboard configuration> mention in <smart-ref|sec:kbd-config>.
 
   <subsection|General prefix rules><label|section:general_prefix_rules>
 
