@@ -808,11 +808,12 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
   if (nr < 0) return;
   if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
   if (sm->fn_rewr[nr] != REWRITE_NONE) r= rewrite (r, sm->fn_rewr[nr]);
-  if (s_N == 1 && is_locase (s[0]) && math_kind == 0 && is_math_family(mfam))  {
+  if (s_N == 1 && is_locase (s[0]) && math_kind == 0 && is_math_family (mfam)) {
     r= "<#" * to_Hex (0x1d44e + (int) (s[0] - 'a')) * ">";
   }
   if (DEBUG_VERBOSE) {
-    debug_fonts << "Advance for font of [" << s << "] " << this->res_name << " math_kind: " << math_kind << LF;
+    debug_fonts << "Advance for font of [" << s << "] " << this->res_name
+                << " math_kind: " << math_kind << LF;
     debug_fonts << "Physical font of [" << r << "]"
                 << "[" << herk_to_utf8 (r) << "][" << cork_to_utf8 (r) << "]"
                 << " is " << fn[nr]->res_name << LF;
@@ -860,8 +861,9 @@ is_wanted (string c, string family, array<string> rules, array<string> given) {
 int
 smart_font_rep::resolve (string c, string fam, int attempt) {
   if (DEBUG_VERBOSE) {
-    debug_fonts << "Resolve " << c << " in math_kind " << math_kind << " in fam " << fam << " mfam " << mfam
-                << ", attempt " << attempt << LF;
+    debug_fonts << "Resolve " << c << " in math_kind " << math_kind
+                << " in fam " << fam << " mfam " << mfam << ", attempt "
+                << attempt << LF;
   }
   array<string> a= trimmed_tokenize (fam, "=");
   if (N (a) >= 2) {
