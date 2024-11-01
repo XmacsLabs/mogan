@@ -1707,12 +1707,15 @@ font
 smart_font (string family, string variant, string series, string shape,
             string tfam, string tvar, string tser, string tsh, int sz,
             int dpi) {
+  if (tfam == "roman" || starts (tfam, "sys-")) {
+    tfam= family;
+  }
   if (variant != "mr") {
     if (variant == "ms") tvar= "ss";
     if (variant == "mt") tvar= "tt";
   }
   if (shape == "right") tsh= "mathupright";
-  return smart_font (family, tvar, tser, tsh, sz, dpi);
+  return smart_font (tfam, tvar, tser, tsh, sz, dpi);
 }
 
 static string
