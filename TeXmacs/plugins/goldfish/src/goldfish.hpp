@@ -38,7 +38,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.10.7"
+#define GOLDFISH_VERSION "17.10.8"
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
 static std::vector<std::string> command_args= std::vector<std::string> ();
@@ -306,9 +306,21 @@ f_listdir (s7_scheme* sc, s7_pointer args) {
   tb_directory_walk (path_c, 0, tb_false, tb_directory_walk_func, &entries);
 
   int entries_N= entries.size ();
-  int path_N   = string (path_c).size ();
+  string path_s= string (path_c);
+  int path_N= path_s.size();
+  int path_slash_N= path_N;
+  char last_ch= path_s[path_N-1];
+#if defined(TB_CONFIG_OS_WINDOWS)
+  if (last_ch != '/' && last_ch != '\\') {
+    path_slash_N= path_slash_N + 1;
+  }
+#else
+  if (last_ch != '/') {
+    path_slash_N= path_slash_N + 1;
+  }
+#endif
   for (int i= 0; i < entries_N; i++) {
-    entries[i]= entries[i].substr (path_N + 1);
+    entries[i]= entries[i].substr (path_slash_N);
   }
   return string_vector_to_s7_vector (sc, entries);
 }

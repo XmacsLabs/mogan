@@ -19,13 +19,17 @@
         (liii error))
 (export
   ; from (srfi srfi-151)
-  bitwise-not bitwise-and bitwise-ior bitwise-xor
+  bitwise-not bitwise-and bitwise-ior bitwise-xor bitwise-or bitwise-nor bitwise-nand
+  bit-count
   arithmetic-shift
   ; S7 built-in
   lognot logand logior logxor
   ash
 )
 (begin
+
+(define bitwise-or bitwise-ior)
+
 ) ; end of begin
 ) ; end of library
 

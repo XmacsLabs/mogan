@@ -153,7 +153,11 @@
         ((integer? depth)
          (flatten-depth lst depth))
         (else
-         (error 'type-error "flatten: the second argument depth should be symbol `deepest' or a integer, which will be uesd as depth, but got a ~A" depth)))
+         (type-error
+          (string-append
+            "flatten: the second argument depth should be symbol "
+            "`deepest' or a integer, which will be uesd as depth,"
+            " but got a ~A") depth)))
   ) ; end of (define* (flatten))
 
 ) ; end of begin

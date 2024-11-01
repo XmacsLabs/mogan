@@ -16,7 +16,7 @@
 
 (define-library (srfi srfi-151)
 (export
-  bitwise-not bitwise-and bitwise-ior bitwise-xor
+  bitwise-not bitwise-and bitwise-ior bitwise-xor bitwise-nor bitwise-nand bit-count
   arithmetic-shift
 )
 (begin
@@ -28,6 +28,24 @@
 (define bitwise-ior logior)
 
 (define bitwise-xor logxor)
+
+(define (bitwise-nor a b)  
+        (lognot (bitwise-ior a b)))
+
+(define (bitwise-nand a b)  
+        (lognot (bitwise-and a b)))
+
+(define bit-count 
+  (typed-lambda ((i integer?))
+    (define (bit-count-positive i)
+      (let loop ((n i) (cnt 0))
+        (if (= n 0)
+            cnt
+            (loop (logand n (- n 1)) (+ cnt 1)))))
+
+    (cond ((zero? i) 0)
+          ((positive? i) (bit-count-positive i))
+          (else (bit-count-positive (lognot i))))))
 
 (define arithmetic-shift ash)
 
