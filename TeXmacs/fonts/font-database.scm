@@ -1435,7 +1435,7 @@
 ((Latin\ Modern\ Roman Bold) ((lmroman10-bold.otf 0 111240)))
 ((Latin\ Modern\ Roman Bold\ Italic) ((lmroman10-bolditalic.otf 0 118204)))
 ((Latin\ Modern\ Roman Italic) ((lmroman10-italic.otf 0 118828)))
-((Latin\ Modern\ Roman Regular) ((lmroman10-regular..otf 0 111536)))
+((Latin\ Modern\ Roman Regular) ((lmroman10-regular.otf 0 111536)))
 ((Lato Black) ((Lato-Bla.ttf 0 114588) (Lato-Black.ttf 0 114588) (Lato-Black.ttf 0 89916) (Lato-Black.ttf 0 614544)))
 ((Lato Black\ Italic) ((Lato-BlaIta.ttf 0 111616) (Lato-BlackItalic.ttf 0 111616) (Lato-BlackItalic.ttf 0 82000) (Lato-BlackItalic.ttf 0 672480)))
 ((Lato Bold) ((Lato-Bol.ttf 0 121788) (Lato-Bold.ttf 0 121788) (Lato-Bold.ttf 0 93688) (Lato-Bold.ttf 0 657188)))
