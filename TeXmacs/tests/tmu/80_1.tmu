@@ -1,0 +1,14 @@
+<TMU|<tuple|1.0.5|1.2.9.5>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <math|<around*|(|a+b|)>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|math-font|math-stix>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
