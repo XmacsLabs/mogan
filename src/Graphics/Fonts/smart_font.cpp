@@ -755,61 +755,74 @@ smart_font_rep::advance (string s, int& pos, string& r, int& nr) {
   int                   start= pos;
   nr                         = -1;
   int s_N                    = N (s);
-  while (pos < s_N) {
-    if (s[pos] != '<') {
-      int c= (int) (unsigned char) s[pos];
-
-      int fn_index= chv[c];
-      if (math_kind != 0 && math_kind != 2 && is_alpha (c) &&
-          (pos == 0 || !is_alpha (s[pos - 1])) &&
-          (pos + 1 == s_N || !is_alpha (s[pos + 1]))) {
-        fn_index= italic_nr;
-      }
-      else if (fn_index == -1) {
-        fn_index= resolve (s (pos, pos + 1));
-      }
-
-      if (count == 1 && nr != -1 && fn_index == nr) {
-        // NOTE: rewrite strings like --- character by character if necessary
-        if (sm->fn_rewr[nr] == REWRITE_SPECIAL) break;
-      }
-      if (fn_index == nr) pos++;
-      else if (nr == -1) {
-        pos++;
-        nr= fn_index;
-      }
-      else break;
+  if (s_N == 1 && pos == 0 && math_kind == 1 && ends (mfam, "Math") &&
+      is_alpha (s[0])) {
+    nr = 0;
+    pos= pos + 1;
+    if (is_locase (s[0])) {
+      r= "<#" * to_Hex (0x1d44e + (int) (s[0] - 'a')) * ">";
+    }
+    else if (is_upcase (s[0])) {
+      r= "<#" * to_Hex (0x1d434 + (int) (s[0] - 'A')) * ">";
     }
     else {
-      int end= pos;
-      tm_char_forwards (s, end);
-      string current_c= s (pos, end);
-
-      int fn_index= cht[current_c];
-      if (fn_index == -1) {
-        fn_index= resolve (current_c);
-      }
-
-      if (count == 1 && nr != -1 && fn_index == nr) {
-        if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
-        if (!fn[nr]->supports (s (start, end))) break;
-        pos= end;
-      }
-      else if (fn_index == nr) pos= end;
-      else if (nr == -1) {
-        pos= end;
-        nr = fn_index;
-      }
-      else break;
+      TM_FAILED ("invalid branch for smart_fon_rep::advance");
     }
-    count++;
   }
-  r= s (start, pos);
-  if (nr < 0) return;
-  if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
-  if (sm->fn_rewr[nr] != REWRITE_NONE) r= rewrite (r, sm->fn_rewr[nr]);
-  if (s_N == 1 && is_locase (s[0]) && math_kind == 0 && is_math_family (mfam)) {
-    r= "<#" * to_Hex (0x1d44e + (int) (s[0] - 'a')) * ">";
+  else {
+    while (pos < s_N) {
+      if (s[pos] != '<') {
+        int c= (int) (unsigned char) s[pos];
+
+        int fn_index= chv[c];
+        if (math_kind != 0 && math_kind != 2 && is_alpha (c) &&
+            (pos == 0 || !is_alpha (s[pos - 1])) &&
+            (pos + 1 == s_N || !is_alpha (s[pos + 1]))) {
+          fn_index= italic_nr;
+        }
+        else if (fn_index == -1) {
+          fn_index= resolve (s (pos, pos + 1));
+        }
+
+        if (count == 1 && nr != -1 && fn_index == nr) {
+          // NOTE: rewrite strings like --- character by character if necessary
+          if (sm->fn_rewr[nr] == REWRITE_SPECIAL) break;
+        }
+        if (fn_index == nr) pos++;
+        else if (nr == -1) {
+          pos++;
+          nr= fn_index;
+        }
+        else break;
+      }
+      else {
+        int end= pos;
+        tm_char_forwards (s, end);
+        string current_c= s (pos, end);
+
+        int fn_index= cht[current_c];
+        if (fn_index == -1) {
+          fn_index= resolve (current_c);
+        }
+
+        if (count == 1 && nr != -1 && fn_index == nr) {
+          if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
+          if (!fn[nr]->supports (s (start, end))) break;
+          pos= end;
+        }
+        else if (fn_index == nr) pos= end;
+        else if (nr == -1) {
+          pos= end;
+          nr = fn_index;
+        }
+        else break;
+      }
+      count++;
+    }
+    r= s (start, pos);
+    if (nr < 0) return;
+    if (N (fn) <= nr || is_nil (fn[nr])) initialize_font (nr);
+    if (sm->fn_rewr[nr] != REWRITE_NONE) r= rewrite (r, sm->fn_rewr[nr]);
   }
   if (DEBUG_VERBOSE) {
     debug_fonts << "Advance for font of [" << s << "] " << this->res_name
