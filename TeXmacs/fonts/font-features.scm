@@ -520,6 +520,7 @@
 (LastResort LastResort)
 (Latha Latha SansSerif)
 (Latin\ Modern\ Math Latin\ Modern\ Math)
+(Latin\ Modern\ Roman Latin\ Modern\ Roman)
 (Lato Lato SansSerif)
 (Leelawadee\ UI Leelawadee\ UI)
 (Lexend\ Deca Lexend\ Deca SansSerif)
