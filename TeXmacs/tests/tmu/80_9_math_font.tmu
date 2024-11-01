@@ -1,0 +1,17 @@
+<TMU|<tuple|1.0.5|1.2.9.5>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <\equation*>
+    a+b
+  </equation*>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|math-font|Stix Math>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
