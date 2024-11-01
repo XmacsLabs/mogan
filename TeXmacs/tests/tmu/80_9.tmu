@@ -1,0 +1,50 @@
+<TMU|<tuple|1.0.5|1.2.9.5>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <\hide-preamble>
+    \;
+  </hide-preamble>
+
+  Roman:
+
+  <\equation*>
+    a+b+ab
+  </equation*>
+
+  Stix Math:
+
+  <\equation*>
+    <with|font|Stix Math|a+b+ab>
+  </equation*>
+
+  Latin Modern Math:
+
+  <\equation*>
+    <with|font|Latin Modern Math|a+b+ab>
+  </equation*>
+
+  TeX Gyre Bonum Math:
+
+  <\equation*>
+    <with|font|TeX Gyre Bonum Math|a+b+ab>
+  </equation*>
+
+  Fira Math:
+
+  <\equation*>
+    <with|font|Fira Math|a+b+ab>
+  </equation*>
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|font|roman>
+    <associate|font-family|rm>
+    <associate|math-font|roman>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
