@@ -16,11 +16,11 @@
 
 ; override the subroutine
 (define (is-top-level2 x)
-  (string-prefix? "chapter" x))
+  (string-starts? "chapter" x))
 
 ; override the subroutine
 (define (is-current-tree2 t)
-  (string-suffix? "current" t))
+  (string-ends? "current" t))
 
 (define (test)
   (check (filter-sections
