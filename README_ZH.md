@@ -4,11 +4,11 @@
 > **享受探索科学与技术的乐趣！**
 
 墨干理工套件是[墨客实验室](https://gitee.com/XmacsLabs)旗下的结构化的理工套件，包含三大自由软件产品：
-| 中文名 | 英文名 | 产品定位 | 状态 |
-|-------|-------|---------|-----|
-| 墨干 | Mogan Research | 墨干是结构化的科技编辑器平台——GNU TeXmacs的发行版之一 | 成熟 |
-| 墨码 | Mogan Code | 基于GNU TeXmacs内核的代码编辑器 | 研发中 |
-| 墨板 | Mogan Beamer | 基于GNU TeXmacs内核的幻灯片产品 | 研发中 |
+| 中文名 | 英文名         | 产品定位                                              | 状态   |
+| ------ | -------------- | ----------------------------------------------------- | ------ |
+| 墨干   | Mogan Research | 墨干是结构化的科技编辑器平台——GNU TeXmacs的发行版之一 | 成熟   |
+| 墨码   | Mogan Code     | 基于GNU TeXmacs内核的代码编辑器                       | 研发中 |
+| 墨板   | Mogan Beamer   | 基于GNU TeXmacs内核的幻灯片产品                       | 研发中 |
 
 ## 如何安装
 + 马上下载：[安装指南](docs/zh/guide/Install.md)
@@ -27,7 +27,7 @@
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://player.bilibili.com/player.html?aid=376713018&bvid=BV1bo4y1D7wN&cid=371195201&page=1)
 
 ## 如何贡献
-请仔细阅读[贡献指南](CONTRIBUTING.md)，以了解如何开始为墨干做贡献。
+请仔细阅读[贡献指南:英文](CONTRIBUTING.md)/[贡献指南:中文](CONTRIBUTING_ZH.md)，以了解如何开始为墨干做贡献。
 
 ### 贡献者
 <table>
