@@ -21,7 +21,7 @@
   vector-count
   vector-any vector-every vector-copy vector-copy!
   vector-index vector-index-right vector-partition
-  vector-swap!)
+  vector-swap! vector-cumulate reverse-list->vector)
 (begin
 
 (define (vector-empty? v)
@@ -37,6 +37,23 @@
               (loop (+ i 1) (+ count 1)))
              (else (loop (+ i 1) count)))))
 
+; Return a new vector v-rst with same length of input vector vec.
+; Every element of the result is the result the i-th iteration of fn cumu_i vec_i.
+;   Where fn should be a procedure with 2 args.
+;   The type of knil and vector could be different.
+; In the i-th iteration, cumu_i = fn cumu_(i-1) vec_i, with cumu_0 = fn knil vec_0.
+
+(define vector-cumulate
+  (typed-lambda ((fn procedure?) knil (vec vector?))
+    (let* ((len (vector-length vec))
+           (v-rst (make-vector len)))
+      (let loop ((i 0) (lhs knil))
+           (if (= i len)
+               v-rst
+               (let1 cumu-i (fn lhs (vec i))
+                 (begin
+                   (vector-set! v-rst i cumu-i)
+                   (loop (+ 1 i) cumu-i))))))))
 ; TODO optional parameters
 (define (vector-any pred v)
   (let loop ((i 0))
@@ -88,6 +105,16 @@
     (vector-set! vec i elem-j)
     (vector-set! vec j elem-i)
     ))
+
+; Input a proper-list, return a vector with inversed order elements.
+(define reverse-list->vector
+  (typed-lambda ((lst proper-list?))
+    (let* ((len (length lst)) (v-rst (make-vector len)))
+      (let loop ((l lst) (i (- len 1)))
+        (if (null? l) v-rst
+            (begin
+              (vector-set! v-rst i (car l))
+              (loop (cdr l) (- i 1))))))))
 
 ) ; end of begin
 ) ; end of define-library

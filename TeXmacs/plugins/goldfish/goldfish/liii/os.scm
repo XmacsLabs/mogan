@@ -17,10 +17,13 @@
 (define-library (liii os)
 (export
   os-arch os-type os-windows? os-linux? os-macos? os-temp-dir
+  os-sep pathsep
   os-call system
   mkdir chdir rmdir getenv unsetenv getcwd listdir access getlogin getpid)
 (import (scheme process-context)
-        (liii error))
+        (liii base)
+        (liii error)
+        (liii string))
 (begin
 
 (define (os-call command)
@@ -47,8 +50,19 @@
   (let ((name (os-type)))
     (and name (string=? name "Darwin"))))
 
+(define (os-sep)
+  (if (os-windows?)
+    #\\
+    #\/))
+
+(define (pathsep)
+  (if (os-windows?)
+    #\;
+    #\:))
+
 (define (os-temp-dir)
-  (g_os-temp-dir))
+  (let1 temp-dir (g_os-temp-dir)
+    (string-remove-suffix temp-dir (string (os-sep)))))
 
 (define (access path mode)
   (cond ((eq? mode 'F_OK) (g_access path 0))

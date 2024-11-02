@@ -50,7 +50,7 @@
 (define (build-goldfish-result obj)
   (let ((output (object->string obj))
         (leadings (list "(document" "(math" "(equation*" "(align" "(with" "(graphics")))
-    (if (find (lambda (x) (string-prefix? x output)) leadings)
+    (if (find (lambda (x) (string-starts? x output)) leadings)
         output
         (string-append "(goldfish-result " (goldfish-quote output) ")"))))
 
