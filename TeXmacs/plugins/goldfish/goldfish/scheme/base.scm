@@ -20,12 +20,8 @@
   ; R7RS 5: Program Structure
   define-values define-record-type
   ; R7RS 6.2: Numbers
-  square
-  exact inexact
-  floor s7-floor ceiling s7-ceiling truncate s7-truncate round s7-round
-  floor-quotient
-  gcd lcm s7-lcm
-  boolean=?
+  square exact inexact floor s7-floor ceiling s7-ceiling truncate s7-truncate
+  round s7-round floor-quotient gcd lcm s7-lcm boolean=?
   ; R7RS 6.4: list
   pair? cons car cdr set-car! set-cdr! caar cadr cdar cddr
   null? list? make-list list length append reverse list-tail
@@ -37,18 +33,13 @@
   ; R7RS 6.7: String
   string-copy
   ; R7RS 6.8: Vector
-  vector->string string->vector
-  vector-copy vector-copy! vector-fill!
+  vector->string string->vector vector-copy vector-copy! vector-fill!
   ; R7RS 6.9: Bytevectors
-  bytevector? make-bytevector bytevector bytevector-length
-  bytevector-u8-ref bytevector-u8-set! bytevector-append
-  utf8->string string->utf8 u8-string-length
+  bytevector? make-bytevector bytevector bytevector-length bytevector-u8-ref
+  bytevector-u8-set! bytevector-append utf8->string string->utf8 u8-string-length
   ; Input and Output
-  call-with-port port? binary-port? textual-port?
-  input-port-open? output-port-open?
-  open-binary-input-file open-binary-output-file
-  close-port
-  eof-object
+  call-with-port port? binary-port? textual-port? input-port-open? output-port-open?
+  open-binary-input-file open-binary-output-file close-port eof-object
   ; Control flow
   string-map vector-map string-for-each vector-for-each
   ; Exception

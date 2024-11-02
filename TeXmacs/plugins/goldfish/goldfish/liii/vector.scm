@@ -28,7 +28,7 @@
   vector-count
   vector-any vector-every vector-copy vector-copy!
   vector-index vector-index-right vector-partition
-  vector-swap!)
+  vector-swap! vector-cumulate reverse-list->vector)
 (begin
 
 ) ; end of begin

@@ -26,19 +26,25 @@
   string-take string-take-right string-drop string-drop-right
   string-pad string-pad-right
   string-trim string-trim-right string-trim-both
-  string-prefix? string-suffix?
   string-index string-index-right
   string-contains string-count
   string-upcase string-downcase
   string-reverse
   string-tokenize
   ; Liii extras
+  string-starts? string-ends?
   string-remove-prefix string-remove-suffix
 )
 (import (srfi srfi-13)
         (liii base)
         (liii error))
 (begin
+
+(define (string-starts? str prefix)
+  (string-prefix? prefix str))
+
+(define (string-ends? str suffix)
+  (string-suffix? suffix str))
 
 (define string-remove-prefix
   (typed-lambda ((str string?) (prefix string?))
