@@ -52,11 +52,20 @@
 (define (liii-uuid)
   (map symbol->string '(uuid4)))
 
+(define (liii-base64)
+  (map symbol->string '(string-base64-encode bytevector-base64-encode base64-encode string-base64-decode bytevector-base64-decode base64-decode)))
+
+(define (liii-bitwise)
+  (map symbol->string '(bitwise-not bitwise-and 
+  bitwise-ior bitwise-xor bitwise-or bitwise-nor bitwise-nand
+  bit-count arithmetic-shift
+  lognot logand logior logxor
+  ash)))
 
 (tm-define (liii-keywords)
   `(,@(liii-base) ,@(liii-check) ,@(liii-list)
     ,@(liii-string) ,@(liii-os) ,@(liii-queue)
-    ,@(liii-stack) ,@(liii-sys) ,@(liii-uuid)))
+    ,@(liii-stack) ,@(liii-sys) ,@(liii-uuid) ,@(liii-base64) ,@(liii-bitwise)))
 
 (tm-define (liii-keywords-define)
   (map symbol->string
