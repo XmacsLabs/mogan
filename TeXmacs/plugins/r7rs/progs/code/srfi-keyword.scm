@@ -116,3 +116,7 @@
       vector-any vector-every vector-copy vector-copy!
       vector-index vector-index-right vector-partition
       vector-swap!)))
+
+(tm-define (srfi-151-keywords)
+  (map symbol->string
+    '(bitwise-not bitwise-and bitwise-ior bitwise-xor bitwise-or bitwise-nor bitwise-nand bit-count arithmetic-shift)))
