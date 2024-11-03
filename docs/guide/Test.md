@@ -10,6 +10,9 @@ For Developers, there are two way of testing: Unit tests and Integration tests
 | bin/test_kernel_l2          | Run C++ tests in Kernel L2           |
 | bin/test_only [target-name] | Only run the specified C++ unit test |
 
+## Scheme Tests
+For Scheme Tests
++ use `xmake run --yes -vD --group=scheme_tests` to run all Scheme tests.
 
 
 ## Integration Tests

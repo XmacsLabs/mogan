@@ -10,6 +10,9 @@
 | bin/test_kernel_l2          | 执行Kernel L2的C++测试 |
 | bin/test_only [target-name] | 只执行某一个单元测试   |
 
+## Scheme 测试
+执行Scheme测试：
++ 可以使用 `xmake run --yes -vD --group=scheme_tests` 执行所有Scheme测试.
 
 ## 集成测试
 集成测试的代码和测试文档都放在`TeXmacs/tests`这个目录下。执行集成测试前，必须构建并安装墨干到临时目录：
