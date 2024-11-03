@@ -5,11 +5,11 @@
 
 Mogan is a structured STEM suite delivered by [Xmacs Labs](https://github.com/XmacsLabs) consisting of 3 libre software products:
 
-| Name | What | Status |
-|------|------|--------|
-| Mogan Research | one of the distribution of GNU TeXmacs which is a structured scientific editing platform | stable |
-| Mogan Code | Structured code editor based on the GNU TeXmacs kernel | developing |
-| Mogan Beamer | Beamer-like presentation tool based on the GNU TeXmacs kernel | developing |
+| Name           | What                                                                                     | Status     |
+| -------------- | ---------------------------------------------------------------------------------------- | ---------- |
+| Mogan Research | one of the distribution of GNU TeXmacs which is a structured scientific editing platform | stable     |
+| Mogan Code     | Structured code editor based on the GNU TeXmacs kernel                                   | developing |
+| Mogan Beamer   | Beamer-like presentation tool based on the GNU TeXmacs kernel                            | developing |
 
 ## How to install
 + Download now via [Installation Guide](docs/guide/Install.md)
@@ -27,7 +27,7 @@ Mogan is a structured STEM suite delivered by [Xmacs Labs](https://github.com/Xm
 [![A quick tour of TeXmacs-0001](https://user-images.githubusercontent.com/32867606/198896005-72077867-bd0f-4223-9f87-099ec3815ba5.png)](https://youtu.be/H46ON2FB30U)
 
 ## Contributing as User or Developer
-Please review the [Contribution guide](CONTRIBUTING.md) for information on how to get started contributing to Mogan.
+Please review the [Contribution guide: English](CONTRIBUTING.md)/[Contribution guide: Chinese](CONTRIBUTING_ZH.md) for information on how to get started contributing to Mogan.
 
 You can join our discord by https://discord.gg/QzE3K6rvYn.
 
