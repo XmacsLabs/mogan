@@ -65,7 +65,7 @@
 (tm-define (liii-keywords)
   `(,@(liii-base) ,@(liii-check) ,@(liii-list)
     ,@(liii-string) ,@(liii-os) ,@(liii-queue)
-    ,@(liii-stack) ,@(liii-sys) ,@(liii-uuid)))
+    ,@(liii-stack) ,@(liii-sys) ,@(liii-uuid) ,@(liii-base64) ,@(liii-bitwise)))
 
 (tm-define (liii-keywords-define)
   (map symbol->string
