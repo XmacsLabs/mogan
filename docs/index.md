@@ -35,7 +35,7 @@ Intuitive and Interactive!
 
 <div class="feature-image">
 
-![](/assets/image/feature-math.png)
+![](/assets/image/feature-math-en.png)
 
 </div>
 
@@ -56,7 +56,7 @@ Copy your LaTeX code and paste it directly into Mogan STEM Suite in a WYSIWYG wa
 
 <div class="feature-image">
 
-![](/assets/image/feature-copy.png)
+![](/assets/image/feature-copy-en.png)
 
 </div>
 
@@ -70,7 +70,7 @@ Copy your LaTeX code and paste it directly into Mogan STEM Suite in a WYSIWYG wa
 
 <div class="feature-image">
 
-![](/assets/image/feature-copy-ai.png)
+![](/assets/image/feature-copy-ai-en.png)
 
 </div>
 
@@ -103,7 +103,7 @@ Mogan STEM Suite supports versatile plugins such as Maxima, making it convenient
 
 <div class="feature-image">
 
-![](/assets/image/feature-maxima.png)
+![](/assets/image/feature-maxima-en.png)
 
 </div>
 
