@@ -45,7 +45,9 @@ export default {
 
     lastUpdated: true,
     ignoreDeadLinks: false,
-    head: [],
+    head: [
+        ['link', {rel: 'icon', href: '/assets/image/favicon.png'}],
+    ],
 
 }
 
