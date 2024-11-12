@@ -43,14 +43,12 @@ jobs:
     steps:
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.9.3
+          xmake-version: v2.9.6
       - name: update repo
         run: |
           xrepo update-repo
-          
       - name: Install pandoc
         run: choco install pandoc -y
-
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
