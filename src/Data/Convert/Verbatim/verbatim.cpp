@@ -304,7 +304,10 @@ encode (string s, string enc) {
 
 tree
 verbatim_to_tree (string s, string enc) {
+  cout << "verbatim: " << LF << s << LF;
+  cout << "enc: " << enc << LF;
   s= encode (s, enc);
+  cout << "encoded: " << s << LF;
   int i, j;
   int s_N= N (s);
   for (i= 0; i < s_N; i++)

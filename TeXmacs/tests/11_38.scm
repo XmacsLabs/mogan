@@ -7,6 +7,10 @@
     (check (cork->utf8 (string-append cork_60 cork_27)) => "‘'")
     (check (strict-cork->utf8 (string-append cork_60 cork_27)) => "‘'")))
 
+(define (test-verbatim-to-tree)
+  (check (verb) => ))
+
 
 (tm-define (test_11_38)
-  (test-single-quote))
+  (test-single-quote)
+  (test-verbatim-to-tree))
