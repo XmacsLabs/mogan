@@ -47,8 +47,6 @@ jobs:
       - name: update repo
         run: |
           xrepo update-repo
-      - name: Disable precompiled package
-        run: xmake f --policies=package.precompiled:n
       - name: Install pandoc
         run: choco install pandoc -y
       - uses: actions/checkout@v3
