@@ -20,6 +20,8 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+      - name: Disable precompiled package
+        run: xmake f --policies=package.precompiled:n
       - name: config
         run: xmake config --yes -vD -m release
       - name: build
