@@ -36,7 +36,13 @@
   (check (utf8->herk (string #\x07)) => "<#07>")
   (check (utf8->herk (string #\x08)) => "<#08>")
   (check (utf8->herk (string #\x09)) => "<#09>")
+
   (check (utf8->herk (string #\x0A)) => "<#0A>")
+  (check (utf8->herk (string #\newline)) => "<#0A>")
+
+  (check (utf8->cork (string #\newline)) => "\n")
+  (check (cork->utf8 (string #\newline)) => "˙")
+
   (check (utf8->herk (string #\x0B)) => "<#0B>")
   (check (utf8->herk (string #\x0C)) => "<#0C>")
   (check (utf8->herk (string #\x0D)) => "<#0D>")
