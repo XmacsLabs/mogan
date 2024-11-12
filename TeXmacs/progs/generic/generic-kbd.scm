@@ -621,7 +621,6 @@
   ("macos F" (toggle-full-screen-mode))
   ("macos C-f" (toggle-full-screen-edit-mode))
 
-  ("macos =" (zoom-in (sqrt (sqrt 2.0))))
   ("macos S-=" (zoom-in (sqrt (sqrt 2.0))))
   ("macos S-+" (zoom-in (sqrt (sqrt 2.0))))
   ("macos S--" (zoom-out (sqrt (sqrt 2.0))))
@@ -807,6 +806,7 @@
   ("std z" (undo 0))
   ("std Z" (redo 0))
   ("std +" (zoom-in (sqrt (sqrt 2.0))))
+  ("std =" (zoom-in (sqrt (sqrt 2.0))))
   ("std -" (zoom-out (sqrt (sqrt 2.0))))
   ("std 0" (change-zoom-factor 1.0))
 
