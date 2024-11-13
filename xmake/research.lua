@@ -145,6 +145,7 @@ function add_target_research_on_others()
 
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
 
+    add_packages("cpptrace")
     add_packages("moebius")
     if is_plat("mingw", "windows") then
         add_packages("qt6widgets")

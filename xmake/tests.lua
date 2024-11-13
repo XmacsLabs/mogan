@@ -27,6 +27,7 @@ function add_target_cpp_test(filepath, dep)
         if is_plat ("mingw") then
             add_packages("mingw-w64")
         end
+        add_packages("cpptrace")
         add_packages("s7")
         add_packages("tree-sitter")
         add_packages("tree-sitter-cpp")
