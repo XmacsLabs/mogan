@@ -39,7 +39,10 @@
 #endif
 #include "Metafont/load_tex.hpp"
 
+#ifndef OS_WASM
 #include <cpptrace/cpptrace.hpp>
+#endif
+
 #include <moebius/data/scheme.hpp>
 #include <moebius/drd/drd_std.hpp>
 
@@ -71,8 +74,9 @@ void server_start ();
 void
 clean_exit_on_segfault (int sig_num) {
   (void) sig_num;
-
+#ifndef OS_WASM
   cpptrace::generate_trace ().print ();
+#endif
   TM_FAILED ("segmentation fault");
 }
 

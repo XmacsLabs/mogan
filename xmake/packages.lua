@@ -29,7 +29,9 @@ function using_pacman ()
 end
 
 function add_requires_of_mogan()
-    add_requires("cpptrace", {version = CPPTRACE_VERSION, system=false})
+    if not is_plat("wasm") then
+        add_requires("cpptrace", {version = CPPTRACE_VERSION, system=false})
+    end
 
     tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
     add_requires("tbox " .. TBOX_VERSION, {system=false, configs=tbox_configs})

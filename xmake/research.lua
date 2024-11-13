@@ -75,7 +75,6 @@ function add_target_research_on_wasm()
         }
     })
     
-    add_packages("cpptrace")
     add_packages("moebius")
     add_packages("freetype")
     add_packages("s7")
