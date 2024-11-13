@@ -816,7 +816,11 @@ unicode_font_rep::index_glyph (string s, font_metric& rm, font_glyphs& rg) {
 
 static bool
 is_math_italic (string c) {
-  if (N (c) <= 2) return false;
+  int c_N= N (c);
+  if (c_N <= 2 || c_N > 6) {
+    // the largest unicode is U+10FFFF
+    return false;
+  }
   int i   = 0;
   int code= decode_from_utf8 (strict_cork_to_utf8 (c), i);
   if (code < 0x2100 || code > 0x1d7ff) return false;
