@@ -41,6 +41,7 @@
 
 #include <moebius/data/scheme.hpp>
 #include <moebius/drd/drd_std.hpp>
+#include <cpptrace/cpptrace.hpp>
 
 using moebius::data::block_to_scheme_tree;
 using moebius::data::scheme_tree_to_block;
@@ -70,7 +71,8 @@ void server_start ();
 void
 clean_exit_on_segfault (int sig_num) {
   (void) sig_num;
-  cerr << lolly::get_stacktrace () << LF;
+
+  cpptrace::generate_trace().print();
   TM_FAILED ("segmentation fault");
 }
 
