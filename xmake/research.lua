@@ -135,6 +135,7 @@ function add_target_research_on_others()
     if is_plat("windows") then
         set_optimize("smallest")
         set_runtimes("MT")
+        add_ldflags("/STACK:16777216")
     end
 
     if is_mode("debug", "releasedbg") and is_plat("mingw", "windows") then
