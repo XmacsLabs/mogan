@@ -202,6 +202,7 @@ target("libmogan") do
     build_glue_on_config()
     add_tm_configure("libmogan", TM_CONFIGURE_VARS)
 
+    add_packages("cpptrace")
     add_packages("moebius")
     if not is_plat("macosx") then
         add_packages("libiconv")
