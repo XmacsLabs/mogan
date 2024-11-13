@@ -268,15 +268,10 @@ init_unicode_substitution () {
 
 int
 get_utf8_code (string c) {
-  int c_N= N (c);
-  if (c_N <= 2 || c_N > 6) {
-    // the largest unicode is U+10FFFF
-    return -1;
-  }
   string uc  = strict_cork_to_utf8 (c);
   int    pos = 0;
   int    code= decode_from_utf8 (uc, pos);
-  if (pos == c_N) return code;
+  if (pos == N (uc)) return code;
   else return -1;
 }
 
