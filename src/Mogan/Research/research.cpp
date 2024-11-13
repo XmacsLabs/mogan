@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "tm_configure.hpp"
+#include <cpptrace/from_current.hpp>
 #include <fcntl.h>
 #ifndef OS_WIN
 #include <unistd.h>
@@ -220,7 +221,10 @@ main (int argc, char** argv) {
   bench_start ("initialize texmacs");
   init_texmacs ();
   bench_cumul ("initialize texmacs");
-  start_scheme (argc, argv, TeXmacs_main);
+  CPPTRACE_TRY { start_scheme (argc, argv, TeXmacs_main); }
+  CPPTRACE_CATCH (const std::exception& e) {
+    cpptrace::from_current_exception ().print ();
+  }
 #ifdef QTTEXMACS
   if (headless_mode) delete qtmcoreapp;
   else delete qtmapp;
