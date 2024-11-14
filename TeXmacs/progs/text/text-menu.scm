@@ -847,8 +847,11 @@
 (define (is-current-tree t)
   (== (tree->path t) (tree->path (focus-tree))))
 
-(define (is-top-level t)
+(define (is-book-top-level t)
   (in? (tree-label t) '(chapter part)))
+
+(define (is-section-top-level t)
+  (in? (tree-label t) '(section)))
 
 (define (get-verbatim-section-title s indent?)
   (if (is-current-tree s)
@@ -891,11 +894,18 @@
 ; If the number of sections bigger than 42
 ; we will only reserve chapter/part outside the focus
 (define (all-sections)
-  (with l1 (list-filter (tree-search-sections (buffer-tree))
-             (lambda (x) (not (equal? (tree-label x) 'subparagraph))))
-    (if (<= (length l1) 42)
-        l1
-        (filter-sections l1 is-current-tree is-top-level))))
+  (let* ((raw-sections (tree-search-sections (buffer-tree)))
+         (main-sections
+          (list-filter raw-sections
+            (lambda (x) (not (equal? (tree-label x) 'subparagraph)))))
+         (book-main-sections
+          (list-filter raw-sections is-book-top-level)))
+    (cond ((<= (length main-sections) 42)
+           main-sections)
+          ((== (length book-main-sections) 0)
+           (filter-sections main-sections is-current-tree is-section-top-level))
+          (else
+           (filter-sections main-sections is-current-tree is-book-top-level)))))
 
 (tm-menu (focus-section-menu)
   (for (s (all-sections))
