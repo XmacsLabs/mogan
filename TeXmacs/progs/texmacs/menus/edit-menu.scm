@@ -58,7 +58,7 @@
 	("Copy" (kbd-copy))
 	("Cut" (kbd-cut)))
   ("Paste" (kbd-paste))
-  ("Paste verbatim" (kbd-paste-verbatim))
+  ("Magic paste" (kbd-magic-paste))
   (if (detailed-menus?)
       ("Clear" (kbd-cancel)))
   ---

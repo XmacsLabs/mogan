@@ -213,6 +213,14 @@
 (tm-define (kbd-cancel)
   (clipboard-clear "primary"))
 
+(tm-define (kbd-magic-paste)
+  (with mode (get-env "mode")
+    (cond ((== mode "prog")
+           (clipboard-paste-import "code" "primary"))
+          ((== mode "math")
+           (clipboard-paste-import "latex" "primary"))
+          (else (kbd-paste-verbatim)))))
+
 (tm-define (notify-activated t) (noop))
 (tm-define (notify-disactivated t) (noop))
 
