@@ -1170,6 +1170,7 @@
 ("macros" "宏命令")
 ("magenta" "紫红")
 ("magic" "")
+("magic paste" "魔法粘贴")
 ("magnification" "放大比例")
 ("magnified" "")
 ("main document font size" "文档字体大小")

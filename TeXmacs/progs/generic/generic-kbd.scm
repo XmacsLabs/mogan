@@ -799,7 +799,7 @@
   ("std S" (choose-file save-buffer-as "Save TeXmacs file" "tmu"))
   ("std u" (toggle-underlined))
   ("std v" (kbd-paste))
-  ("std V" (kbd-paste-verbatim))
+  ("std V" (kbd-magic-paste))
   ("std w" (close-document))
   ("std W" (close-document*))
   ("std x" (kbd-cut))
