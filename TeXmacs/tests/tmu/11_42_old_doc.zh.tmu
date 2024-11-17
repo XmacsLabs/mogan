@@ -1,0 +1,57 @@
+<TMU|<tuple|1.0.5|1.2.9.6>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <\hide-preamble>
+    \;
+  </hide-preamble>
+
+  本文档的语言为中文：中文字体采用Noto CJK SC，英文字体采用CMU Serif，代码字体采用CMU Typewriter，数学字体采用Latin Modern Math。
+
+  你好，我有一个帽衫。
+
+  你好，我有一个数学公式：
+
+  <\equation*>
+    <big|int>x\<mathd\>x=<frac|1|2>x<rsup|2>
+  </equation*>
+
+  你好，我有一段语言为英国英语的英文：
+
+  <british|"The quick brown fox jumps over the lazy dog.">
+
+  你好，我有一段语言为中文的英文：
+
+  "The quick brown fox jumps over the lazy dog."
+
+  你好，我有一段代码：
+
+  <\cpp-code>
+    #include \<less\>stdio.h\<gtr\>
+
+    int main() {
+
+    \ \ printf("Hello World\\n");
+
+    \ \ // quasiquote: `
+
+    \ \ // quote: '
+
+    \ \ return 0;
+
+    }
+  </cpp-code>
+
+  你好，我有一段Scheme代码：
+
+  <\scm-code>
+    `(foo ,bar baz)
+  </scm-code>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
