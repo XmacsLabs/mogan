@@ -105,7 +105,8 @@
       (bool_features 
        "hex_with_8_bits" "hex_with_16_bits"
        "hex_with_32_bits" "octal_upto_3_digits")
-      (escape_sequences "\\" "\"" "'" "a" "b" "f" "n" "r" "t" "v" "newline")))
+      (escape_sequences "\\" "\"" "'" "a" "b" "f" "n" "r" "t" "v" "newline")
+      (pairs "\"")))
 
 (tm-define (parser-feature lan key)
   (:require (and (== lan "julia") (== key "comment")))
