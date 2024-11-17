@@ -1,0 +1,239 @@
+<TMU|<tuple|1.0.5|1.2.9.6>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <section|Bug Metadata>
+
+  <\itemize>
+    <item>Reporter: Rui Zhang
+
+    <item>Mogan Editor Version: v1.1.1
+
+    <item>Issue: <slink|https://github.com/XmacsLabs/mogan/issues/397>
+  </itemize>
+
+  <section|Description>
+
+  <with|language|chinese|<tabular|<tformat|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|1|1|cell-width|60pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|60pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|2|2|cell-width|55pt>|<cwith|1|1|2|2|cell-hmode|exact>|<table|<row|<\cell>
+    我能吞下（玻璃）而不伤身体。
+  </cell>|<\cell>
+    我能吞下“玻璃”而不伤身体。
+  </cell>|<\cell>
+    我能吞下【玻璃】而不伤身体。
+  </cell>>>>>>
+
+  \;
+
+  Problems:
+
+  <\itemize>
+    <item>Punctuations like “, （ and 【 should not be allowed at the end of a line.
+
+    <item>Punctuations like ”, ） and 】 should not be allowed at the beginning of a line.
+  </itemize>
+
+  <subsection|Line break is prohibited between CJK if either is enclosed in an environment><\footnote>
+    See <slink|https://github.com/XmacsLabs/mogan/issues/398>
+  </footnote>
+
+  <tabular|<tformat|<cwith|2|2|1|1|cell-hyphen|t>|<cwith|2|2|1|1|cell-width|70pt>|<cwith|2|2|1|1|cell-hmode|exact>|<cwith|2|2|2|2|cell-hyphen|t>|<cwith|1|-1|2|2|cell-width|75pt>|<cwith|1|-1|2|2|cell-hmode|exact>|<cwith|2|2|3|3|cell-hyphen|t>|<cwith|1|-1|3|3|cell-width|80pt>|<cwith|1|-1|3|3|cell-hmode|exact>|<table|<row|<cell|70pt>|<cell|75pt>|<cell|80pt>>|<row|<\cell>
+    我能吞下玻璃而不伤身体。
+
+    我能吞下玻璃而<with|font-series|bold|不伤>身体。
+
+    我能吞下玻璃而<line-break><with|font-series|bold|不伤>身体。
+  </cell>|<\cell>
+    我能吞下玻璃而不伤身体。
+
+    我能吞下玻璃而<with|font-series|bold|不伤>身体。
+
+    我能吞下玻璃而<line-break><with|font-series|bold|不伤>身体。
+  </cell>|<\cell>
+    我能吞下玻璃而不伤身体。
+
+    我能吞下玻璃而<with|font-series|bold|不伤>身体。
+
+    我能吞下玻璃而<line-break><with|font-series|bold|不伤>身体。
+  </cell>>>>>
+
+  <section|Prohibition Rules for Line Start and Line End>
+
+  <\quote-env>
+    Pause or stop punctuation marks (secondary commas, commas, semicolons, colons, periods, exclamation marks, and question marks), closing quotation marks, closing parentheses, closing angle brackets, connector marks, and interpuncts should not appear at the line start. Opening quotation marks, opening parentheses, and opening angle brackets should not appear at the line end. This is the most recommended method.<\footnote>
+      See <slink|https://www.w3.org/International/clreq/#prohibition_rules_for_line_start_end>
+    </footnote>
+  </quote-env>
+
+  <paragraph|For line start>
+
+  <tabular*|<tformat|<table|<row|<cell|顿号>|<cell|逗号>|<cell|句号>|<cell|冒号>|<cell|分号>|<cell|叹号>|<cell|问号>>|<row|<cell|、>|<cell|，>|<cell|。>|<cell|：>|<cell|；>|<cell|！>|<cell|？>>>>>
+
+  <tabular|<tformat|<twith|table-halign|l>|<cwith|1|-1|1|-1|cell-halign|c>|<table|<row|<cell|连接号>|<cell|间隔号>|<cell|分隔号>>|<row|<cell|<subtable|<tformat|<table|<row|<cell|—>|<cell|->|<cell|～>>>>>>|<cell|\<centerdot\>>|<cell|/>>>>>
+
+  <tabular|<tformat|<cwith|2|2|1|1|cell-halign|c>|<cwith|1|1|2|2|cell-halign|r>|<cwith|1|1|3|3|cell-halign|r>|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|1ln>|<cwith|2|2|1|-1|cell-tborder|1ln>|<cwith|1|1|1|1|cell-lborder|0ln>|<cwith|1|1|3|3|cell-rborder|0ln>|<cwith|1|1|2|2|cell-tborder|0ln>|<cwith|2|2|2|2|cell-bborder|0ln>|<cwith|1|-1|2|2|cell-lborder|1ln>|<cwith|1|-1|1|1|cell-rborder|1ln>|<cwith|1|-1|2|2|cell-rborder|1ln>|<cwith|1|-1|3|3|cell-lborder|1ln>|<table|<row|<cell|结束引号>|<cell|结束括号>|<cell|结束书名号>>|<row|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-halign|c>|<table|<row|<cell|”>|<cell|’>|<cell|』>|<cell|」>>>>>>|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-halign|c>|<table|<row|<cell|）>|<cell|】>>>>>>|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-halign|c>|<table|<row|<cell|》>|<cell|〉>>>>>>>>>>
+
+  \;
+
+  <paragraph|For line end>
+
+  <tabular|<tformat|<cwith|2|2|1|1|cell-halign|c>|<cwith|1|1|2|2|cell-halign|r>|<cwith|1|1|3|3|cell-halign|r>|<cwith|1|1|1|-1|cell-tborder|0ln>|<cwith|1|1|1|-1|cell-bborder|1ln>|<cwith|2|2|1|-1|cell-tborder|1ln>|<cwith|1|1|1|1|cell-lborder|0ln>|<cwith|1|1|3|3|cell-rborder|0ln>|<cwith|1|1|2|2|cell-tborder|0ln>|<cwith|1|1|2|2|cell-bborder|1ln>|<cwith|2|2|2|2|cell-tborder|1ln>|<cwith|1|1|2|2|cell-lborder|1ln>|<cwith|1|1|1|1|cell-rborder|1ln>|<cwith|1|1|2|2|cell-rborder|1ln>|<cwith|1|1|3|3|cell-lborder|1ln>|<table|<row|<cell|开始引号>|<cell|开始括号>|<cell|开始书名号>>|<row|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-halign|c>|<table|<row|<cell|“>|<cell|‘>|<cell|『>|<cell|「>>>>>>|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-halign|c>|<cwith|1|1|1|1|cell-tborder|0ln>|<cwith|1|1|1|1|cell-bborder|0ln>|<cwith|1|1|1|1|cell-lborder|1ln>|<cwith|1|1|2|2|cell-tborder|0ln>|<cwith|1|1|2|2|cell-bborder|0ln>|<cwith|1|1|2|2|cell-lborder|0ln>|<cwith|1|1|1|1|cell-rborder|0ln>|<cwith|1|1|2|2|cell-rborder|1ln>|<table|<row|<cell|(>|<cell|【>>>>>>|<cell|<subtable|<tformat|<cwith|1|1|1|-1|cell-halign|c>|<table|<row|<cell|《>|<cell|〈>>>>>>>>>>
+
+  <section|More cases for the bug>
+
+  <\note>
+    The green part is ok.
+  </note>
+
+  <\note>
+    It is reproducible on GNU Linux with Noto as the default Chinese font using Mogan v1.1.2 beta1.
+  </note>
+
+  <paragraph|For line start>
+
+  \| could be at the line start.
+
+  <with|language|chinese|<tabular|<tformat|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|2|2|cell-background|pastel green>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|4|4|cell-width|50pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|50pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|5|5|cell-hyphen|t>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|6|6|cell-width|50pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|5|5|cell-width|50pt>|<cwith|1|1|5|5|cell-hmode|exact>|<cwith|1|1|7|7|cell-hyphen|t>|<cwith|1|1|7|7|cell-width|50pt>|<cwith|1|1|7|7|cell-hmode|exact>|<cwith|1|1|2|7|cell-background|pastel green>|<cwith|1|1|2|2|cell-width|50pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|1|1|cell-background|pastel green>|<table|<row|<\cell>
+    我能吞下\|玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下,玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下.玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下:玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下;玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下!玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下?玻璃而不伤身体。
+  </cell>>>>>>
+
+  \;
+
+  <with|language|chinese|<tabular|<tformat|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|1|1|cell-background|pastel green>|<cwith|1|1|1|1|cell-width|60pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|3|3|cell-width|50pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|2|2|cell-width|50pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|5|5|cell-hyphen|t>|<cwith|1|1|5|5|cell-width|50pt>|<cwith|1|1|5|5|cell-hmode|exact>|<cwith|1|1|4|4|cell-width|50pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|6|6|cell-width|50pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|1|6|cell-background|pastel green>|<cwith|1|1|7|7|cell-hyphen|t>|<cwith|1|1|7|7|cell-width|50pt>|<cwith|1|1|7|7|cell-hmode|exact>|<cwith|1|1|7|7|cell-background|pastel green>|<table|<row|<\cell>
+    我能吞下，玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下。玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下：玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下；玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下！玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下？玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下、玻璃而不伤身体。
+  </cell>>>>>>
+
+  \;
+
+  <tabular|<tformat|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|2|2|cell-width|50pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|3|3|cell-width|50pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|5|5|cell-hyphen|t>|<cwith|1|1|5|5|cell-width|50pt>|<cwith|1|1|5|5|cell-hmode|exact>|<cwith|1|1|4|4|cell-width|50pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|3|3|cell-background|pastel green>|<table|<row|<\cell>
+    我能吞下/玻璃而不伤身体。
+  </cell>|<\cell>
+    列奥纳多\<centerdot\>达\<centerdot\>芬奇
+  </cell>|<\cell>
+    我能吞下～玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下-玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下—玻璃而不伤身体。
+  </cell>>>>>
+
+  \;
+
+  <tabular|<tformat|<cwith|1|1|2|2|cell-width|60pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|2|2|cell-width|50pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|4|4|cell-width|60pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|4|4|cell-width|50pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|50pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|6|6|cell-width|60pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|5|5|cell-hyphen|t>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|6|6|cell-width|50pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|5|5|cell-width|50pt>|<cwith|1|1|5|5|cell-hmode|exact>|<cwith|1|1|8|8|cell-width|60pt>|<cwith|1|1|8|8|cell-hmode|exact>|<cwith|1|1|8|8|cell-hyphen|t>|<cwith|1|1|7|7|cell-hyphen|t>|<cwith|1|1|8|8|cell-hyphen|t>|<cwith|1|1|8|8|cell-width|50pt>|<cwith|1|1|8|8|cell-hmode|exact>|<cwith|1|1|7|7|cell-width|50pt>|<cwith|1|1|7|7|cell-hmode|exact>|<cwith|1|1|3|8|cell-background|pastel green>|<table|<row|<\cell>
+    我能吞下玻”璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下’玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下』玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下」玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下）玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下】玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下》玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下〉玻璃而不伤身体。
+  </cell>>>>>
+
+  <paragraph|For line end>
+
+  <tabular|<tformat|<cwith|1|1|2|2|cell-width|60pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|2|2|cell-hyphen|t>|<cwith|1|1|2|2|cell-width|50pt>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-width|50pt>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|4|4|cell-width|60pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|3|3|cell-hyphen|t>|<cwith|1|1|4|4|cell-hyphen|t>|<cwith|1|1|4|4|cell-width|50pt>|<cwith|1|1|4|4|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|50pt>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|6|6|cell-width|60pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|5|5|cell-hyphen|t>|<cwith|1|1|6|6|cell-hyphen|t>|<cwith|1|1|6|6|cell-width|50pt>|<cwith|1|1|6|6|cell-hmode|exact>|<cwith|1|1|5|5|cell-width|50pt>|<cwith|1|1|5|5|cell-hmode|exact>|<cwith|1|1|8|8|cell-width|60pt>|<cwith|1|1|8|8|cell-hmode|exact>|<cwith|1|1|8|8|cell-hyphen|t>|<cwith|1|1|7|7|cell-hyphen|t>|<cwith|1|1|8|8|cell-hyphen|t>|<cwith|1|1|8|8|cell-width|50pt>|<cwith|1|1|8|8|cell-hmode|exact>|<cwith|1|1|7|7|cell-width|50pt>|<cwith|1|1|7|7|cell-hmode|exact>|<table|<row|<\cell>
+    我能吞下“玻璃”而不伤身体。
+  </cell>|<\cell>
+    我能吞下‘ ’玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下『玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下「玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下（玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下【下玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下《玻璃而不伤身体。
+  </cell>|<\cell>
+    我能吞下〈玻璃而不伤身体。
+  </cell>>>>>
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-height|auto>
+    <associate|page-screen-margin|false>
+    <associate|page-type|a4>
+    <associate|page-width|auto>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|?>>
+    <associate|auto-10|<tuple|5|?>>
+    <associate|auto-2|<tuple|2|?>>
+    <associate|auto-3|<tuple|2.1|?>>
+    <associate|auto-4|<tuple|3|?>>
+    <associate|auto-5|<tuple|1|?>>
+    <associate|auto-6|<tuple|2|?>>
+    <associate|auto-7|<tuple|4|?>>
+    <associate|auto-8|<tuple|1|?>>
+    <associate|auto-9|<tuple|2|?>>
+    <associate|footnote-1|<tuple|1|?>>
+    <associate|footnote-2|<tuple|2|?>>
+    <associate|footnr-1|<tuple|1|?>>
+    <associate|footnr-2|<tuple|2|?>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>Bug Metadata> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>Description> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|2.1<space|2spc>Line break is prohibited between CJK if either is enclosed in an environment <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-3>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Prohibition Rules for Line Start and Line End> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4><vspace|0.5fn>
+
+      <with|par-left|<quote|3tab>|For line start <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5>>
+
+      <with|par-left|<quote|3tab>|For line end <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-6>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>More cases for the bug> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-7><vspace|0.5fn>
+
+      <with|par-left|<quote|3tab>|For line start <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-8>>
+
+      <with|par-left|<quote|3tab>|For line end <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-9>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>行首禁则> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-10><vspace|0.5fn>
+    </associate>
+  </collection>
+</auxiliary>
