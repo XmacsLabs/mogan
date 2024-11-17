@@ -479,10 +479,11 @@ chinese_language_rep::chinese_language_rep (string lan_name)
                           << string ("；") << string ("！") << string ("？")
                           << string ("、") << string ("～") << string ("』")
                           << string ("」") << string ("）") << string ("】")
-                          << string ("》") << string ("〉");
+                          << string ("》") << string ("〉") << string ("”");
   auto full_width_do_not_end= array<string> ();
   full_width_do_not_end << string ("『") << string ("「") << string ("（")
-                        << string ("【") << string ("《") << string ("〈");
+                        << string ("【") << string ("《") << string ("〈")
+                        << string ("“");
 
   for (int i= 0; i < N (full_width_do_not_start); i++) {
     do_not_start << utf8_to_cork (full_width_do_not_start[i]);
@@ -492,12 +493,10 @@ chinese_language_rep::chinese_language_rep (string lan_name)
   }
 
   // special full width characters
-  do_not_start << string ("<#201D>"); // ”
   do_not_start << string ("<#2014>"); // —
   do_not_start << string ("'");       // ’ <#2019>
   do_not_start << string ("<centerdot>");
 
-  do_not_end << string ("<#201C>"); // “
   do_not_end << string ("<#2018>"); // ‘
 }
 

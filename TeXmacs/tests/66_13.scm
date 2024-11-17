@@ -19,7 +19,10 @@
   (check (herk->utf8 (string #\x0A)) => "˙") ; U+02D9
   (check (herk->utf8 (string #\x0B)) => "¸") ; U+00B8
   (check (herk->utf8 (string #\x0C)) => "˛") ; U+02DB
+
   (check (herk->utf8 (string #\x0D)) => "‚") ; U+201A
+  (check (utf8->herk "‚") => (string #\x0D)) ; U+201A
+
   (check (herk->utf8 (string #\x0E)) => "‹") ; U+2039
   (check (herk->utf8 (string #\x0F)) => "›") ; U+203A
 
@@ -52,7 +55,11 @@
 
 (define (test-herk-1x)
   (check (herk->utf8 (string #\x10)) => "“") ; U+201C
+  (check (utf8->herk "“") => (string #\x10))
+
   (check (herk->utf8 (string #\x11)) => "”") ; U+201D
+  (check (utf8->herk "”") => (string #\x11)) ; U+201D
+
   (check (herk->utf8 (string #\x12)) => "„") ; U+201E
   (check (herk->utf8 (string #\x13)) => "«") ; U+00AB
   (check (herk->utf8 (string #\x14)) => "»") ; U+00BB
@@ -166,6 +173,8 @@
 
 (define (test-herk-6x)
   (check (herk->utf8 (string #\x60)) => "‘")
+  (check (utf8->herk "‘") => (string #\x60))
+
   (check (herk->utf8 (string #\x61)) => "a")
   (check (herk->utf8 (string #\x62)) => "b")
   (check (herk->utf8 (string #\x63)) => "c")
