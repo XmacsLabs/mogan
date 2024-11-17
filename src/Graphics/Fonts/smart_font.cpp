@@ -1709,9 +1709,9 @@ smart_font (string family, string variant, string series, string shape, int sz,
 }
 
 font
-smart_font (string family, string variant, string series, string shape,
-            string tfam, string tvar, string tser, string tsh, int sz,
-            int dpi) {
+math_smart_font (string family, string variant, string series, string shape,
+                 string tfam, string tvar, string tser, string tsh, int sz,
+                 int dpi) {
   if (tfam == "roman" || starts (tfam, "sys-")) {
     tfam= family;
   }
@@ -1720,6 +1720,16 @@ smart_font (string family, string variant, string series, string shape,
     if (variant == "mt") tvar= "tt";
   }
   if (shape == "right") tsh= "mathupright";
+  return smart_font (tfam, tvar, tser, tsh, sz, dpi);
+}
+
+font
+prog_smart_font (string family, string variant, string series, string shape,
+                 string tfam, string tvar, string tser, string tsh, int sz,
+                 int dpi) {
+  if (tfam == "roman" || starts (tfam, "sys-")) {
+    tfam= family;
+  }
   return smart_font (tfam, tvar, tser, tsh, sz, dpi);
 }
 
