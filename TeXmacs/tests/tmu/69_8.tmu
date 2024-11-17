@@ -1,0 +1,71 @@
+<TMU|<tuple|1.0.5|1.2.9.6>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  <section|行首禁则>
+
+  一二三四五六七八九十一二三四五六七八九十一二三
+
+  单引号
+
+  ‘一二三四五六七八九十一二三四五六七八九十一’
+
+  「一二三四五六七八九十一二三四五六七八九十一」
+
+  双引号
+
+  “一二三四五六七八九十一二三四五六七八九十一”
+
+  『一二三四五六七八九十一二三四五六七八九十一』
+
+  书名号
+
+  《一二三四五六七八九十一二三四五六七八九十一》
+
+  centerdot
+
+  ‘一二三四五六七八九十一二三四五六七八九十一\<centerdot\>二’
+
+  冒号
+
+  ‘一二三四五六七八九十一二三四五六七八九十一：二’
+
+  分号
+
+  ‘一二三四五六七八九十一二三四五六七八九十一；二’
+
+  感叹号
+
+  ‘一二三四五六七八九十一二三四五六七八九十一！二’
+
+  句号
+
+  ‘一二三四五六七八九十一二三四五六七八九十一。二’
+
+  逗号
+
+  ‘一二三四五六七八九十一二三四五六七八九十一，二’
+
+  右括号
+
+  ‘一二三四五六七八九十一二三四五六七八九十一）二’
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|font-base-size|14>
+    <associate|page-height|auto>
+    <associate|page-screen-margin|false>
+    <associate|page-type|a5>
+    <associate|page-width|auto>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|?>>
+  </collection>
+</references>

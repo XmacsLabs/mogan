@@ -479,31 +479,30 @@ chinese_language_rep::chinese_language_rep (string lan_name)
                           << string ("；") << string ("！") << string ("？")
                           << string ("、") << string ("～") << string ("』")
                           << string ("」") << string ("）") << string ("】")
-                          << string ("》") << string ("〉") << string ("”");
+                          << string ("》") << string ("〉") << string ("”")
+                          << string ("’");
   auto full_width_do_not_end= array<string> ();
   full_width_do_not_end << string ("『") << string ("「") << string ("（")
                         << string ("【") << string ("《") << string ("〈")
-                        << string ("“");
+                        << string ("“") << string ("‘");
 
   for (int i= 0; i < N (full_width_do_not_start); i++) {
-    do_not_start << utf8_to_cork (full_width_do_not_start[i]);
+    do_not_start << utf8_to_herk (full_width_do_not_start[i]);
   }
   for (int i= 0; i < N (full_width_do_not_end); i++) {
-    do_not_end << utf8_to_cork (full_width_do_not_end[i]);
+    do_not_end << utf8_to_herk (full_width_do_not_end[i]);
   }
 
   // special full width characters
   do_not_start << string ("<#2014>"); // —
-  do_not_start << string ("'");       // ’ <#2019>
   do_not_start << string ("<centerdot>");
-
-  do_not_end << string ("<#2018>"); // ‘
 }
 
 text_property
 chinese_language_rep::advance (tree t, int& pos) {
-  string s= t->label;
-  if (pos >= N (s)) return &tp_normal_rep;
+  string s  = t->label;
+  int    s_N= N (s);
+  if (pos >= s_N) return &tp_normal_rep;
 
   if (s[pos] == ' ') {
     pos++;
@@ -516,7 +515,7 @@ chinese_language_rep::advance (tree t, int& pos) {
       return &tp_cjk_period_rep;
     }
     else {
-      while (pos < N (s) && s[pos] != ' ' && s[pos] != '<' &&
+      while (pos < s_N && s[pos] != ' ' && s[pos] != '<' &&
              !do_not_start->contains (s[pos]))
         tm_char_forwards (s, pos);
       return &tp_cjk_no_break_rep;
