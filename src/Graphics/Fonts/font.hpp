@@ -232,8 +232,12 @@ font math_font (scheme_tree t, font base_fn, font error_fn, double zoomx,
 font compound_font (scheme_tree def, double zoomx, double zoomy);
 font smart_font (string family, string variant, string series, string shape,
                  int sz, int dpi);
-font smart_font (string family, string variant, string series, string shape,
-                 string tf, string tv, string tw, string ts, int sz, int dpi);
+font math_smart_font (string family, string variant, string series,
+                      string shape, string tf, string tv, string tw, string ts,
+                      int sz, int dpi);
+font prog_smart_font (string family, string variant, string series,
+                      string shape, string tf, string tv, string tw, string ts,
+                      int sz, int dpi);
 font apply_effects (font fn, string effects);
 
 int script (int sz, int level);
