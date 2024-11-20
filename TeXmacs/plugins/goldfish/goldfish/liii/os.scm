@@ -19,7 +19,8 @@
   os-arch os-type os-windows? os-linux? os-macos? os-temp-dir
   os-sep pathsep
   os-call system
-  mkdir chdir rmdir getenv unsetenv getcwd listdir access getlogin getpid)
+  mkdir chdir rmdir getenv unsetenv getcwd listdir access getlogin getpid
+  path-getsize)
 (import (scheme process-context)
         (liii base)
         (liii error)
@@ -114,5 +115,13 @@
 (define (getpid)
   (g_getpid))
 
+(define path-getsize
+  (typed-lambda ((path string?))
+    (if (not (file-exists? path))
+      (file-not-found-error
+        (string-append "No such file or directory: '" path "'"))
+      (g_path-getsize path))))
+
 ) ; end of begin
 ) ; end of define-library
+
