@@ -16,6 +16,7 @@
 
 (import (texmacs protocol)
         (liii os)
+        (liii path)
         (liii uuid)
         (liii sys)
         (liii string)
