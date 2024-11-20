@@ -22,7 +22,7 @@
   ; SRFI 1: Selectors
   first second third fourth fifth
   sixth seventh eighth ninth tenth
-  take drop take-right drop-right count fold fold-right
+  take drop take-right drop-right count fold fold-right split-at
   reduce reduce-right append-map filter partition remove find
   delete delete-duplicates
   ; SRFI 1: Association List
@@ -113,6 +113,20 @@
     (if (pair? lead)
         (cons (car lag) (loop (cdr lag) (cdr lead)))
         '())))
+
+(define (split-at lst i)
+  (when (< i 0)
+    (value-error "require a index greater than 0, but got ~A -- split-at" i))
+  (let ((result (cons #f '())))
+    (do ((j i (- j 1))
+         (rest lst (cdr rest))
+         (node result (cdr node)))
+        ((zero? j)
+         (values (cdr result) rest))
+      (when (not (pair? rest))
+        (value-error "lst length cannot be greater than i, where lst is ~A, but i is ~A-- split-at" lst i))
+      (set-cdr! node (cons (car rest) '())))))
+
 
 (define (last-pair l)
   (if (pair? (cdr l))
