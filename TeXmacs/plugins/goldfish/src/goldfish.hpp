@@ -354,12 +354,28 @@ f_getpid (s7_scheme* sc, s7_pointer args) {
 #endif
 }
 
+static s7_pointer
+f_path_getsize (s7_scheme* sc, s7_pointer args) {
+  const char*    path_c= s7_string (s7_car (args));
+  tb_file_info_t info;
+  if (tb_file_info (path_c, &info)) {
+    return s7_make_integer (sc, (int) info.size);
+  }
+  else {
+    return s7_make_integer (sc, (int) -1);
+  }
+}
+
 inline void
 glue_liii_os (s7_scheme* sc) {
   s7_pointer cur_env= s7_curlet (sc);
 
-  const char* s_os_type    = "g_os-type";
-  const char* d_os_type    = "(g_os-type) => string";
+  const char* s_os_type= "g_os-type";
+  const char* d_os_type= "(g_os-type) => string";
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_os_type),
+             s7_make_typed_function (sc, s_os_type, f_os_type, 0, 0, false,
+                                     d_os_type, NULL));
+
   const char* s_os_arch    = "g_os-arch";
   const char* d_os_arch    = "(g_os-arch) => string";
   const char* s_os_call    = "g_os-call";
@@ -386,12 +402,7 @@ glue_liii_os (s7_scheme* sc) {
   const char* d_getlogin   = "(g_getlogin) => string";
   const char* s_getpid     = "g_getpid";
   const char* d_getpid     = "(g_getpid) => integer";
-  const char* s_unsetenv   = "g_unsetenv";
-  const char* d_unsetenv   = "(g_unsetenv string): string => boolean";
 
-  s7_define (sc, cur_env, s7_make_symbol (sc, s_os_type),
-             s7_make_typed_function (sc, s_os_type, f_os_type, 0, 0, false,
-                                     d_os_type, NULL));
   s7_define (sc, cur_env, s7_make_symbol (sc, s_os_arch),
              s7_make_typed_function (sc, s_os_arch, f_os_arch, 0, 0, false,
                                      d_os_arch, NULL));
@@ -431,10 +442,19 @@ glue_liii_os (s7_scheme* sc) {
   s7_define (sc, cur_env, s7_make_symbol (sc, s_getpid),
              s7_make_typed_function (sc, s_getpid, f_getpid, 0, 0, false,
                                      d_getpid, NULL));
+
+  const char* s_unsetenv= "g_unsetenv";
+  const char* d_unsetenv= "(g_unsetenv string): string => boolean";
   s7_define (sc, cur_env, s7_make_symbol (sc, s_unsetenv),
              s7_make_typed_function (sc, s_unsetenv,
                                      f_unset_environment_variable, 1, 0, false,
                                      d_unsetenv, NULL));
+
+  const char* s_path_getsize= "g_path-getsize";
+  const char* d_path_getsize= "(g_path_getsize string): string => integer";
+  s7_define (sc, cur_env, s7_make_symbol (sc, s_path_getsize),
+             s7_make_typed_function (sc, s_unsetenv, f_path_getsize, 1, 0,
+                                     false, d_path_getsize, NULL));
 }
 
 static s7_pointer
