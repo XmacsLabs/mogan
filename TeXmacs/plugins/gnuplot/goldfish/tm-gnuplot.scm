@@ -112,7 +112,7 @@
     (list (parser 'width) (parser 'height) (parser 'output))))
   
 (define (flush-image path width height)
-  (if (file-exists? path)
+  (if (and (file-exists? path) (> (path-getsize path) 10))
     (flush-file (string-append path "?" "width=" width "&" "height=" height))
     (flush-verbatim "Failed to plot due to:")))
 
