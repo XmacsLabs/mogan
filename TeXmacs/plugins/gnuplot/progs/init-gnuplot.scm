@@ -15,7 +15,7 @@
              (binary goldfish)
              (binary gs))
 
-(lazy-format (data r7rs) r7rs)
+(lazy-format (data gnuplot) gnuplot)
 
 (define (gnuplot-serialize lan t)
   (let* ((u (pre-serialize lan t))

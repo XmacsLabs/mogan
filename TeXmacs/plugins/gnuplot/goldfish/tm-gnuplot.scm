@@ -18,8 +18,10 @@
         (liii os)
         (liii uuid)
         (liii sys)
-        (srfi srfi-1)
-        (srfi srfi-13))
+        (liii string)
+        (liii list)
+        (liii error)
+        (liii argparse))
 
 (define (escape-string str)
   (string-join
@@ -40,7 +42,7 @@
     (flush-verbatim
       (string-append
         "Gnuplot session by XmacsLabs\n"
-        "implemented on Goldfish Scheme (" (version) ")"))))
+        "implemented in Goldfish Scheme (" (version) ")"))))
 
 (define (gnuplot-read-code)
   (define (read-code code)
@@ -101,23 +103,68 @@
       (system (string-append (goldfish-quote cmd) " " "-c" " " code-path))
       (os-call (string-append (goldfish-quote cmd) " " "-c" " " code-path)))))
 
-(define (eval-and-print code)
-  (let* ((format (last (argv)))
+(define (parse-magic-line magic-line)
+  (let ((parser (make-argument-parser)))
+    (parser 'add '((name . "width") (short . "width") (default . "0.8par")))
+    (parser 'add '((name . "height") (short . "height") (default . "0px")))
+    (parser 'add '((name . "output") (short . "output") (default . "")))
+    (parser 'parse (cdr (string-tokenize magic-line)))
+    (list (parser 'width) (parser 'height) (parser 'output))))
+  
+(define (flush-image path width height)
+  (if (and (file-exists? path) (> (path-getsize path) 10))
+    (flush-file (string-append path "?" "width=" width "&" "height=" height))
+    (flush-verbatim "Failed to plot due to:")))
+
+(define (eval-and-print magic-line code)
+  (let* ((parsed (parse-magic-line magic-line))
+         (width (first parsed))
+         (height (second parsed))
+         (output (third parsed))
+         (option (last (argv)))
+         (format (if (string-null? output) option output))
          (temp-path (gen-temp-path))
          (image-path (string-append temp-path "." format))
          (code-path (string-append temp-path ".gnuplot")))
     (gnuplot-dump-code code-path format image-path code)
     (gnuplot-plot code-path)
-    (flush-file image-path)))
+    (flush-image image-path width height)))
+
+(define (split-code-and-magic-line code)
+  (if (not (string-starts? code "%"))
+      (list "" code)
+      (let1 i/false (string-index code #\newline)
+        (if (not i/false)
+            (list code "")
+            (list (substring code 0 i/false)
+                  (substring code (+ i/false 1)))))))
 
 (define (read-eval-print)
-  (let ((code (gnuplot-read-code)))
-    (if (string=? code "")
-      #t
-      (eval-and-print code))))
+  (let* ((raw-code (gnuplot-read-code))
+         (l (split-code-and-magic-line raw-code))
+         (magic-line (car l))
+         (code (cadr l)))
+    (if (string-null? code)
+      (flush-verbatim "No code provided!")
+      (eval-and-print magic-line code))))
+
+(define (safe-read-eval-print)
+  (catch #t
+    (lambda ()
+      (read-eval-print))
+    (lambda args
+      (begin
+        (flush-scheme
+          (string-append "(errput (document "
+            (goldfish-quote (symbol->string (car args)))
+            (if (and (>= (length args) 2)
+                     (not (null? (cadr args))))
+              (goldfish-quote (object->string (cadr args)))
+              "")
+            "))"))))))
 
 (define (gnuplot-repl)
-  (begin (read-eval-print)
+  (begin (safe-read-eval-print)
          (gnuplot-repl)))
 
 (gnuplot-welcome)
