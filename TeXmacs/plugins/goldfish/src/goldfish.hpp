@@ -38,7 +38,8 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.10.8"
+#define GOLDFISH_VERSION "17.11.0"
+
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
 static std::vector<std::string> command_args= std::vector<std::string> ();
@@ -60,7 +61,6 @@ string_vector_to_s7_vector (s7_scheme* sc, vector<string> v) {
   return ret;
 }
 
-// Glues for Goldfish
 static s7_pointer
 f_version (s7_scheme* sc, s7_pointer args) {
   return s7_make_string (sc, GOLDFISH_VERSION);
@@ -90,7 +90,6 @@ glue_goldfish (s7_scheme* sc) {
                                      false, d_delete_file, NULL));
 }
 
-// Glues for (scheme time)
 static s7_pointer
 f_current_second (s7_scheme* sc, s7_pointer args) {
   // TODO: use std::chrono::tai_clock::now() when using C++ 20
@@ -112,7 +111,6 @@ glue_scheme_time (s7_scheme* sc) {
                                      0, false, d_current_second, NULL));
 }
 
-// Glues for (scheme process-context)
 static s7_pointer
 f_get_environment_variable (s7_scheme* sc, s7_pointer args) {
 #ifdef _MSC_VER
@@ -142,12 +140,6 @@ f_get_environment_variable (s7_scheme* sc, s7_pointer args) {
 }
 
 static s7_pointer
-f_unset_environment_variable (s7_scheme* sc, s7_pointer args) {
-  const char* env_name= s7_string (s7_car (args));
-  return s7_make_boolean (sc, tb_environment_remove (env_name));
-}
-
-static s7_pointer
 f_command_line (s7_scheme* sc, s7_pointer args) {
   s7_pointer ret = s7_nil (sc);
   int        size= command_args.size ();
@@ -155,6 +147,12 @@ f_command_line (s7_scheme* sc, s7_pointer args) {
     ret= s7_cons (sc, s7_make_string (sc, command_args[i].c_str ()), ret);
   }
   return ret;
+}
+
+static s7_pointer
+f_unset_environment_variable (s7_scheme* sc, s7_pointer args) {
+  const char* env_name= s7_string (s7_car (args));
+  return s7_make_boolean (sc, tb_environment_remove (env_name));
 }
 
 inline void
@@ -176,7 +174,6 @@ glue_scheme_process_context (s7_scheme* sc) {
                                      false, d_command_line, NULL));
 }
 
-// Glue for (liii os)
 static s7_pointer
 f_os_type (s7_scheme* sc, s7_pointer args) {
 #ifdef TB_CONFIG_OS_LINUX
@@ -305,11 +302,11 @@ f_listdir (s7_scheme* sc, s7_pointer args) {
   s7_pointer     ret= s7_make_vector (sc, 0);
   tb_directory_walk (path_c, 0, tb_false, tb_directory_walk_func, &entries);
 
-  int entries_N= entries.size ();
-  string path_s= string (path_c);
-  int path_N= path_s.size();
-  int path_slash_N= path_N;
-  char last_ch= path_s[path_N-1];
+  int    entries_N   = entries.size ();
+  string path_s      = string (path_c);
+  int    path_N      = path_s.size ();
+  int    path_slash_N= path_N;
+  char   last_ch     = path_s[path_N - 1];
 #if defined(TB_CONFIG_OS_WINDOWS)
   if (last_ch != '/' && last_ch != '\\') {
     path_slash_N= path_slash_N + 1;
@@ -457,7 +454,7 @@ glue_liii_uuid (s7_scheme* sc) {
                                      NULL));
 }
 
-inline void
+void
 glue_for_community_edition (s7_scheme* sc) {
   glue_goldfish (sc);
   glue_scheme_time (sc);
@@ -512,6 +509,41 @@ goldfish_eval_code (s7_scheme* sc, string code) {
   cout << s7_object_to_c_string (sc, x) << endl;
 }
 
+s7_scheme*
+init_goldfish_scheme (const char* gf_lib) {
+  s7_scheme* sc= s7_init ();
+  s7_add_to_load_path (sc, gf_lib);
+
+  if (!tb_init (tb_null, tb_null)) exit (-1);
+
+  glue_for_community_edition (sc);
+  return sc;
+}
+
+void
+customize_goldfish_by_mode (s7_scheme* sc, string mode,
+                            const char* boot_file_path) {
+  if (mode != "s7") {
+    s7_load (sc, boot_file_path);
+  }
+
+  if (mode == "default" || mode == "liii") {
+    s7_eval_c_string (sc, "(import (liii base) (liii error))");
+  }
+  else if (mode == "sicp") {
+    s7_eval_c_string (sc, "(import (scheme base) (srfi sicp))");
+  }
+  else if (mode == "r7rs") {
+    s7_eval_c_string (sc, "(import (scheme base))");
+  }
+  else if (mode == "s7") {
+  }
+  else {
+    cerr << "No such mode: " << mode << endl;
+    exit (-1);
+  }
+}
+
 int
 repl_for_community_edition (int argc, char** argv) {
   // Check if the standard library and boot.scm exists
@@ -558,21 +590,13 @@ repl_for_community_edition (int argc, char** argv) {
   }
 
   // Init the underlying S7 Scheme and add the load_path
-  s7_scheme* sc;
-  sc= s7_init ();
-  s7_add_to_load_path (sc, gf_lib);
+  s7_scheme* sc= init_goldfish_scheme (gf_lib);
 
   const char* errmsg= NULL;
   s7_pointer  old_port=
       s7_set_current_error_port (sc, s7_open_output_string (sc));
   int gc_loc= -1;
   if (old_port != s7_nil (sc)) gc_loc= s7_gc_protect (sc, old_port);
-
-  // Init tbox
-  if (!tb_init (tb_null, tb_null)) exit (-1);
-
-  // Glues
-  glue_for_community_edition (sc);
 
   // -m: Load the standard library by mode
   string mode_flag= "-m";
@@ -594,24 +618,7 @@ repl_for_community_edition (int argc, char** argv) {
     args.erase (args.begin () + i);
   }
 
-  // only when it is not s7 mode, we load `boot.scm`
-  if (mode != "s7") {
-    s7_load (sc, gf_boot);
-  }
-  // import the preload standard libraries
-  if (mode == "default" || mode == "liii") {
-    s7_eval_c_string (sc, "(import (liii base) (liii error))");
-  }
-  else if (mode == "sicp") {
-    s7_eval_c_string (sc, "(import (srfi sicp))");
-  }
-  else if (mode == "r7rs") {
-    s7_eval_c_string (sc, "(import (scheme base))");
-  }
-  else {
-    cerr << "No such mode: " << mode << endl;
-    exit (-1);
-  }
+  customize_goldfish_by_mode (sc, mode, gf_boot);
 
   // Command options
   if (args.size () == 1 && args[0].size () > 0 && args[0][0] == '-') {
@@ -646,3 +653,4 @@ repl_for_community_edition (int argc, char** argv) {
 }
 
 } // namespace goldfish
+

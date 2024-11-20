@@ -18,8 +18,7 @@
 (define-library (liii error)
 (export ???
   os-error file-not-found-error not-a-directory-error file-exists-error
-  timeout-error
-  type-error type-error? value-error)
+  timeout-error type-error type-error? key-error value-error)
 (begin
 
 (define (os-error . args)
@@ -42,6 +41,9 @@
 
 (define (type-error? err)
   (in? err `(type-error wrong-type-arg)))
+
+(define (key-error . args)
+  (apply error (cons 'key-error args)))
 
 (define (value-error . args)
   (apply error (cons 'value-error args)))

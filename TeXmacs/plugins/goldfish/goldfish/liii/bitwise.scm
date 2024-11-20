@@ -20,7 +20,7 @@
 (export
   ; from (srfi srfi-151)
   bitwise-not bitwise-and bitwise-ior bitwise-xor bitwise-or bitwise-nor bitwise-nand
-  bit-count
+  bit-count bitwise-orc1 bitwise-orc2 bitwise-andc1 bitwise-andc2
   arithmetic-shift
   ; S7 built-in
   lognot logand logior logxor
