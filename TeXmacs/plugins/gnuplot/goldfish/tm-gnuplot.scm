@@ -18,6 +18,7 @@
         (liii os)
         (liii uuid)
         (liii sys)
+        (liii string)
         (srfi srfi-1)
         (srfi srfi-13))
 
@@ -100,6 +101,9 @@
     (if (os-macos?)
       (system (string-append (goldfish-quote cmd) " " "-c" " " code-path))
       (os-call (string-append (goldfish-quote cmd) " " "-c" " " code-path)))))
+
+(define (split-code-and-magic-line code)
+  (if (string-starts "")))
 
 (define (eval-and-print code)
   (let* ((format (last (argv)))
