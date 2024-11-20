@@ -42,7 +42,7 @@
     (flush-verbatim
       (string-append
         "Gnuplot session by XmacsLabs\n"
-        "implemented on Goldfish Scheme (" (version) ")"))))
+        "implemented in Goldfish Scheme (" (version) ")"))))
 
 (define (gnuplot-read-code)
   (define (read-code code)
