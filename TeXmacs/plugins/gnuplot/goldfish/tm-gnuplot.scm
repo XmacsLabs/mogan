@@ -20,6 +20,7 @@
         (liii sys)
         (liii string)
         (liii list)
+        (liii error)
         (liii argparse))
 
 (define (escape-string str)
@@ -111,7 +112,9 @@
     (list (parser 'width) (parser 'height) (parser 'output))))
   
 (define (flush-image path width height)
-  (flush-file (string-append path "?" "width=" width "&" "height=" height)))
+  (if (file-exists? path)
+    (flush-file (string-append path "?" "width=" width "&" "height=" height))
+    (flush-verbatim "Failed to plot due to:")))
 
 (define (eval-and-print magic-line code)
   (let* ((parsed (parse-magic-line magic-line))
@@ -138,15 +141,30 @@
 
 (define (read-eval-print)
   (let* ((raw-code (gnuplot-read-code))
-        (l (split-code-and-magic-line raw-code))
-        (magic-line (car l))
-        (code (cadr l)))
+         (l (split-code-and-magic-line raw-code))
+         (magic-line (car l))
+         (code (cadr l)))
     (if (string-null? code)
-      #t
+      (flush-verbatim "No code provided!")
       (eval-and-print magic-line code))))
 
+(define (safe-read-eval-print)
+  (catch #t
+    (lambda ()
+      (read-eval-print))
+    (lambda args
+      (begin
+        (flush-scheme
+          (string-append "(errput (document "
+            (goldfish-quote (symbol->string (car args)))
+            (if (and (>= (length args) 2)
+                     (not (null? (cadr args))))
+              (goldfish-quote (object->string (cadr args)))
+              "")
+            "))"))))))
+
 (define (gnuplot-repl)
-  (begin (read-eval-print)
+  (begin (safe-read-eval-print)
          (gnuplot-repl)))
 
 (gnuplot-welcome)
