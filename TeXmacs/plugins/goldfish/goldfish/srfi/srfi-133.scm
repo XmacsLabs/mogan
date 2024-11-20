@@ -21,7 +21,8 @@
   vector-count
   vector-any vector-every vector-copy vector-copy!
   vector-index vector-index-right vector-partition
-  vector-swap! vector-cumulate reverse-list->vector)
+  vector-swap! vector-cumulate reverse-list->vector
+  vector=)
 (begin
 
 (define (vector-empty? v)
@@ -29,6 +30,25 @@
     (error 'type-error "v is not a vector"))
   (zero? (vector-length v)))
 
+(define (vector= elt=? . rest)
+  (define compare2vecs
+    (typed-lambda ((cmp procedure?) (vec1 vector?) (vec2 vector?))
+       (let*  ((len1 (vector-length vec1))
+               (len2 (vector-length vec2)))
+         (if (not (= len1 len2)) #f
+             (let loop ((ilhs 0) (irhs 0) (len len1))
+                  (if (= ilhs len) #t
+                      (if (not (cmp (vec1 ilhs) (vec2 irhs))) #f 
+                          (loop (+ 1 ilhs) (+ 1 irhs) len))))))))
+  (when (not (procedure? elt=?)) (error 'type-error "elt=? should be a procedure"))
+  (if (or(null? rest) (= 1 (length rest))) #t
+      (let loop ((vec1 (car rest)) (vec2 (car (cdr rest))) (vrest (cdr (cdr rest))))
+        (let1 rst (compare2vecs elt=? vec1 vec2)
+           (when (not (boolean? rst)) (error 'type-error "elt=> should return bool"))
+           (if (compare2vecs elt=? vec1 vec2)
+               (if (null? vrest) #t
+                   (loop vec2 (car vrest) (cdr vrest)))
+               #f)))))
 ; TODO optional parameters
 (define (vector-count pred v)
   (let loop ((i 0) (count 0))

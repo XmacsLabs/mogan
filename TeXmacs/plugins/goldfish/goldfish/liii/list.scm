@@ -24,7 +24,7 @@
   null-list? circular-list? proper-list? dotted-list?
   ; SRFI 1: Selectors
   first second third fourth fifth sixth seventh eighth ninth tenth
-  take drop take-right drop-right
+  take drop take-right drop-right split-at
   last-pair last
   ; SRFI 1: fold, unfold & map
   count fold fold-right reduce reduce-right
