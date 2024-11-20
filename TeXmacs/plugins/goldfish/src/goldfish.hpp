@@ -653,4 +653,3 @@ repl_for_community_edition (int argc, char** argv) {
 }
 
 } // namespace goldfish
-

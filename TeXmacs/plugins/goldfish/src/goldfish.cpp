@@ -20,4 +20,3 @@ int
 main (int argc, char** argv) {
   return goldfish::repl_for_community_edition (argc, argv);
 }
-
