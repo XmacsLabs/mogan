@@ -13,13 +13,17 @@
 
 (texmacs-module (texmacs texmacs tm-tools))
 
+(import (scheme base))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Document statistics
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; TODO: if string in scheme represent unicode codepoint with single character 
+;;   rather than utf-8 encoding, replace u8-string-length with string-length
 (tm-define (count-characters doc)
   (with s (convert doc "texmacs-tree" "verbatim-snippet")
-    (string-length s)))
+    (u8-string-length s)))
 
 (define (compress-spaces s)
   (let* ((s1 (string-replace s "\n" " "))
