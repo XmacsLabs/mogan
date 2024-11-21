@@ -33,6 +33,9 @@ package("mimalloc")
 
     if is_plat("linux") then
         add_extsources("pacman::mimalloc", "apt::libmimalloc-dev")
+        if linuxos.name() == "fedora" then
+            add_extsources("pkgconfig::libmimalloc")
+        end
     end
 
     add_configs("secure", {description = "Use a secured version of mimalloc", default = false, type = "boolean"})
