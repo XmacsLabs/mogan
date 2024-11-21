@@ -1,0 +1,76 @@
+name: Build on Fedora
+on:
+  push:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/packages/**'
+      - '.github/workflows/ci-xmake-fedora.yml'
+  pull_request:
+    branches: [ branch-1.2 ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Windows/**'
+      - 'tests/**'
+      - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/packages/**'
+      - '.github/workflows/ci-xmake-fedora.yml'
+
+env:
+  XMAKE_ROOT: y
+  INSTALL_DIR: tmp/build/packages/app.mogan/
+  QT_QPA_PLATFORM: offscreen
+
+jobs:
+  build:
+    container: fedora:41
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo dnf update -y
+          sudo dnf install -y git xmake unzip libgit2-devel fontconfig-devel gcc g++ qt6-qtbase-devel qt6-qtsvg-devel
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: set XMAKE_GLOBALDIR
+        run: echo "XMAKE_GLOBALDIR=/tmp/xmake-global" >> $GITHUB_ENV  
+
+      - name: Xrepo update
+        run: xmake repo --update
+
+      - name: cache packages from xrepo
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages 
+          key: fedora-xrepo-qt6-${{ hashFiles('**/packages.lua') }}
+
+      - name: cache xmake
+        uses: actions/cache@v3
+        with:
+          path: |
+            tmp/build/.build_cache
+          key: fedora-build-qt6-${{ hashFiles('**/xmake.lua') }}
+
+
+      - name: config
+        run: xmake config -vD --policies=build.ccache -o tmp/build -m releasedbg --yes
+
+      - name: Build  
+        run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
+    
+      - name: C++ tests
+        run: xmake run --yes -vD --group=tests
+
+      - name: Scheme tests
+        run: xmake run --yes -vD --group=scheme_tests
+
