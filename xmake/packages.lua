@@ -106,6 +106,9 @@ function add_requires_of_mogan()
     elseif is_plat("linux") and using_pacman () then
         add_requires("pacman::libpng", {alias="libpng"})
         add_requireconfs("pdfhummus.libpng", {system = true, override=true})
+    elseif is_plat("linux") and linuxos.name() == "fedora" then
+        add_requires("pkgconfig::libpng", {alias="libpng"})
+        add_requireconfs("pdfhummus.libpng", {system = true, override=true})
     else
         add_requireconfs("pdfhummus.libpng", {version = LIBPNG_VERSION, system = false, override=true})
     end

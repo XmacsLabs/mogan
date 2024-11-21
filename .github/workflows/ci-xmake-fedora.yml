@@ -37,7 +37,7 @@ jobs:
         run: |
           sudo dnf update -y
           sudo dnf install -y git xmake unzip gcc g++ curl-devel libgit2-devel fontconfig-devel \
-            qt6-qtbase-devel qt6-qtsvg-devel mimalloc-devel
+            qt6-qtbase-devel qt6-qtsvg-devel mimalloc-devel libpng-devel
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
