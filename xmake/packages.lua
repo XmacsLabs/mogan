@@ -63,6 +63,11 @@ function add_requires_of_mogan()
     else
        add_requireconfs("lolly.cpr", {version = CPR_VERSION, system = false, override=true})
     end
+    if is_plat("linux") and linuxos.name() == "fedora" then
+       add_requireconfs("lolly.mimalloc", {system = true, override=true})
+    end
+
+    -- package: moebius
     add_requires("moebius", {system=false})
     add_requireconfs("moebius.lolly", {version = LOLLY_VERSION, system = false, override=true})
 
