@@ -34,7 +34,7 @@ package("mimalloc")
     if is_plat("linux") then
         add_extsources("pacman::mimalloc", "apt::libmimalloc-dev")
         if linuxos.name() == "fedora" then
-            add_extsources("pkgconfig::libmimalloc")
+            add_extsources("pkgconfig::mimalloc")
         end
     end
 
