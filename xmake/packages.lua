@@ -74,7 +74,7 @@ function add_requires_of_mogan()
         add_requires("pacman::curl", {alias="libcurl"})
         add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
     elseif is_plat("linux") and linuxos.name() == "fedora" then
-        add_requires("pkgconfig::curl", {alias="libcurl"})
+        add_requires("pkgconfig::libcurl", {alias="libcurl"})
         add_requireconfs("lolly.cpr.libcurl", {system = true, override=true})
     else
         add_requireconfs("lolly.cpr.libcurl", {version = CURL_VERSION, system = false, override=true})
