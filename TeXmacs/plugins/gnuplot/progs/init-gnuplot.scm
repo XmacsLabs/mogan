@@ -44,9 +44,13 @@
       (cons (list :launch "eps" (gen-launcher "eps")) l)
       l)))
 
+(define (all-gnuplot-launchers)
+  (cons (list :launch (gen-launcher "png"))
+        (gnuplot-launchers)))
+
 (plugin-configure gnuplot
   (:require (and (has-binary-goldfish?) (has-binary-gnuplot?)))
-  ,@(gnuplot-launchers)
+  ,@(all-gnuplot-launchers)
   (:serializer ,gnuplot-serialize)
   (:session "Gnuplot"))
 
