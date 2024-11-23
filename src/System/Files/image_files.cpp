@@ -32,6 +32,7 @@
 #include "hashmap.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
+#include "tm_url.hpp"
 #include "web_files.hpp"
 
 #include "Xml/xml.hpp"
@@ -447,7 +448,9 @@ image_to_pdf (url image, url pdf, int w_pt, int h_pt, int dpi) {
 }
 
 void
-image_to_png (url image, url png, int w, int h) { // IN PIXEL UNITS!
+image_to_png (url p_image, url png, int w, int h) { // IN PIXEL UNITS!
+  url image= concretize (p_image);
+
 #ifdef QTTEXMACS
   if (qt_supports (image)) {
     if (DEBUG_CONVERT) debug_convert << "image_to_png using qt " << LF;
@@ -457,7 +460,7 @@ image_to_png (url image, url png, int w, int h) { // IN PIXEL UNITS!
 #endif
   if (call_scm_converter (image, png, w, h)) return;
   if (!exists (png)) {
-    convert_error << image << " could not be converted to png" << LF;
+    convert_error << p_image << " could not be converted to png" << LF;
     copy ("$TEXMACS_PATH/misc/pixmaps/unknown.png", png);
   }
 }
