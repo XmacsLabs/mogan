@@ -14,6 +14,7 @@
 #include "file.hpp"
 #include "hashmap.hpp"
 #include "sys_utils.hpp"
+#include "tm_debug.hpp"
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
 
@@ -97,7 +98,10 @@ get_from_web (url name) {
       http_response_ref (head_res, http_label::HEADER)->data);
   string content_type= head_headers ("content-type");
 
-  if (status_code != 200) {
+  if (status_code != 200 && status_code != 403) {
+    if (DEBUG_IO) {
+      debug_io << "HEAD status code " << status_code << " " << name << LF;
+    }
     return url_none ();
   }
 
@@ -117,6 +121,9 @@ get_from_web (url name) {
                           get_pretty_os_name () * "; " *
                           get_current_cpu_arch () * ")";
   lolly::io::download (name, tmp, headers);
+  if (DEBUG_IO) {
+    debug_io << "Download from " << name << "=> " << tmp << LF;
+  }
 
   if (!exists (tmp)) {
     return url_none ();
