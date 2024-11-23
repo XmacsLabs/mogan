@@ -1727,7 +1727,7 @@ font
 prog_smart_font (string family, string variant, string series, string shape,
                  string tfam, string tvar, string tser, string tsh, int sz,
                  int dpi) {
-  if (tfam == "roman" || starts (tfam, "sys-")) {
+  if (tfam == "roman") {
     tfam= family;
   }
   return smart_font (tfam, tvar, tser, tsh, sz, dpi);
