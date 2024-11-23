@@ -252,10 +252,7 @@ function add_target_research_on_others()
 
     -- deploy necessary dll
     if is_plat("windows") then
-        set_values("qt.deploy.flags", {"-printsupport", "--no-opengl-sw", "--no-translations"})
-    elseif is_plat("mingw") then
-        -- qt on mingw provides debug dll only, without "d" suffix.
-        set_values("qt.deploy.flags", {"-printsupport", "--no-opengl-sw", "--no-translations", "--debug"})
+        set_values("qt.deploy.flags", {"-printsupport", "--no-opengl-sw", "--no-translations", "--release"})
     end
 
     after_install(function (target)
