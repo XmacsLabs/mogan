@@ -526,11 +526,12 @@ to_color (const QColor& c) {
 bool
 qt_supports (url u) {
   static QList<QByteArray> formats= QImageReader::supportedImageFormats ();
-  /*  if (DEBUG_CONVERT) {
-            debug_convert <<"QT valid formats:";
-            foreach (QString _format, formats) debug_convert <<", "<<
-    from_qstring(_format); debug_convert <<LF;
-    }	*/
+  if (DEBUG_CONVERT) {
+    debug_convert << "QT valid formats:";
+    foreach (QString _format, formats)
+      debug_convert << ", " << from_qstring (_format);
+    debug_convert << LF;
+  }
   string suf= suffix (u);
   // as of 2023, even if qt claims it can handle pdf, do not use it as it
   // produces blurry pngs see
@@ -539,6 +540,9 @@ qt_supports (url u) {
   bool ans= (bool) formats.contains ((QByteArray) as_charp (suf));
   // if (DEBUG_CONVERT) {debug_convert <<"QT valid
   // format:"<<((ans)?"yes":"no")<<LF;}
+  if (DEBUG_CONVERT) {
+    debug_convert << "QT valid format:" << ((ans) ? "yes" : "no") << LF;
+  }
   return ans;
 }
 

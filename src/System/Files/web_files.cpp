@@ -14,6 +14,7 @@
 #include "file.hpp"
 #include "hashmap.hpp"
 #include "sys_utils.hpp"
+#include "tm_debug.hpp"
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
 
@@ -24,7 +25,9 @@
 #include <lolly/io/http.hpp>
 
 using lolly::io::http_head;
+using lolly::io::http_headers;
 using lolly::io::http_label;
+using lolly::io::http_tree;
 
 #define MAX_CACHED 25
 
@@ -99,10 +102,17 @@ url
 get_from_web (url name) {
   if (!is_rooted_web (name)) return url_none ();
 
-  long status_code= open_box<long> (
-      http_response_ref (http_head (name), http_label::STATUS_CODE)->data);
+  http_tree head_res   = http_head (name);
+  long      status_code= open_box<long> (
+      http_response_ref (head_res, http_label::STATUS_CODE)->data);
+  http_headers head_headers= open_box<hashmap<string, string>> (
+      http_response_ref (head_res, http_label::HEADER)->data);
+  string content_type= head_headers ("content-type");
 
-  if (status_code != 200) {
+  if (status_code != 200 && status_code != 403) {
+    if (DEBUG_IO) {
+      debug_io << "HEAD status code " << status_code << " " << name << LF;
+    }
     return url_none ();
   }
 
@@ -110,14 +120,21 @@ get_from_web (url name) {
   if (!is_none (res)) return res;
 
   string suf= suffix (name);
-  if (!is_empty (suf)) suf= string (".") * suf;
+  if (is_empty (suf)) {
+    if (starts (content_type, "image/")) {
+      suf= replace (content_type, "image/", "");
+    }
+  }
 
-  url                     tmp    = url_temp (suf);
-  lolly::io::http_headers headers= lolly::io::http_headers ();
-  headers ("User-Agent")         = string ("Mogan/") * XMACS_VERSION * " (" *
+  url          tmp      = url_temp (suf);
+  http_headers headers  = http_headers ();
+  headers ("User-Agent")= string ("Mogan/") * XMACS_VERSION * " (" *
                           get_pretty_os_name () * "; " *
                           get_current_cpu_arch () * ")";
   lolly::io::download (name, tmp, headers);
+  if (DEBUG_IO) {
+    debug_io << "Download from " << name << "=> " << tmp << LF;
+  }
 
   if (!exists (tmp)) {
     return url_none ();
