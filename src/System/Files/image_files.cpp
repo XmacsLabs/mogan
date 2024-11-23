@@ -32,6 +32,7 @@
 #include "hashmap.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
+#include "tm_url.hpp"
 #include "web_files.hpp"
 
 #include "Xml/xml.hpp"
@@ -315,11 +316,12 @@ image_size (url image, int& w, int& h) {
 }
 
 void
-image_size_sub (url image, int& w,
+image_size_sub (url p_image, int& w,
                 int& h) { // returns w,h in units of pt (1/72 inch)
   if (DEBUG_CONVERT)
-    debug_convert << "image_size not cached for :" << image << LF;
-  string suf= suffix (image);
+    debug_convert << "image_size not cached for :" << p_image << LF;
+  url    image= concretize (p_image);
+  string suf  = suffix (image);
   if (suf == "pdf") {
     pdf_image_size (image, w, h);
     return;
@@ -358,7 +360,7 @@ image_size_sub (url image, int& w,
   }
 
   convert_error
-      << "could not determine size of '" << concretize (image) << "'\n"
+      << "could not determine size of '" << image << "'\n"
       << "you may consider :\n"
       << " - checking the file is valid,\n"
       << " - converting to a more standard format,\n"
@@ -446,7 +448,9 @@ image_to_pdf (url image, url pdf, int w_pt, int h_pt, int dpi) {
 }
 
 void
-image_to_png (url image, url png, int w, int h) { // IN PIXEL UNITS!
+image_to_png (url p_image, url png, int w, int h) { // IN PIXEL UNITS!
+  url image= concretize (p_image);
+
 #ifdef QTTEXMACS
   if (qt_supports (image)) {
     if (DEBUG_CONVERT) debug_convert << "image_to_png using qt " << LF;
@@ -456,7 +460,7 @@ image_to_png (url image, url png, int w, int h) { // IN PIXEL UNITS!
 #endif
   if (call_scm_converter (image, png, w, h)) return;
   if (!exists (png)) {
-    convert_error << image << " could not be converted to png" << LF;
+    convert_error << p_image << " could not be converted to png" << LF;
     copy ("$TEXMACS_PATH/misc/pixmaps/unknown.png", png);
   }
 }
