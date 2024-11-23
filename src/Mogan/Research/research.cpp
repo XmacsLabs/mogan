@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "tm_configure.hpp"
+#include "url.hpp"
 #include <fcntl.h>
 #ifndef OS_WIN
 #include <unistd.h>
@@ -33,9 +34,12 @@
 #include "server.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
+#include "tm_locale.hpp"
 #include "tm_ostream.hpp"
 #include "tm_timer.hpp"
+#include "tm_url.hpp"
 #include "tm_window.hpp"
+
 #ifdef AQUATEXMACS
 void mac_fix_paths ();
 #endif
@@ -103,6 +107,7 @@ immediate_options (int argc, char** argv) {
 #endif
   init_texmacs_home_path ();
   if (is_empty (get_env ("TEXMACS_HOME_PATH"))) return;
+  bool enale_logging= true;
   for (int i= 1; i < argc; i++) {
     string s= argv[i];
     if ((N (s) >= 2) && (s (0, 2) == "--")) s= s (1, N (s));
@@ -132,12 +137,20 @@ immediate_options (int argc, char** argv) {
 #ifdef QTTEXMACS
     else if (s == "-headless") headless_mode= true;
 #endif
-    else if (s == "-log-file" && i + 1 < argc) {
-      i++;
-      char*      log_file= argv[i];
-      tm_ostream logf (log_file);
-      if (!logf->is_writable ())
-        cerr << "TeXmacs] Error: could not open " << log_file << "\n";
+    else if ((s == "-d") || (s == "-debug")) {
+      enale_logging= false;
+    }
+  }
+
+  url u= url_system (string ("$TEXMACS_HOME_PATH/system/") *
+                     get_date ("english", "%Y%m%d%H") * string (".log"));
+  if (enale_logging) {
+    cout << "Logging into >> " << u << LF;
+    tm_ostream logf (c_string (concretize (u)));
+    if (!logf->is_writable ()) {
+      cerr << "TeXmacs] Error: could not open " << u << LF;
+    }
+    else {
       cout.redirect (logf);
       cerr.redirect (logf);
     }
