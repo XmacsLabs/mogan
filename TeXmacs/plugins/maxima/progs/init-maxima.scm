@@ -26,7 +26,9 @@
       (system-url->string "$TEXMACS_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")))
 
 (define (maxima-launchers)
-  `((:launch ,(string-append (url->system (find-binary-maxima)) " -p " (maxima-entry)))))
+  (if (os-win32?)
+      `((:launch ,(string-append "cmd.exe /c " (url->system (find-binary-maxima)) " -p " (maxima-entry))))
+      `((:launch ,(string-append (url->system (find-binary-maxima)) " -p " (maxima-entry))))))
 
 (plugin-configure maxima
   (:require (has-binary-maxima?))
