@@ -20,7 +20,7 @@ STABLE_RELEASE = 1
 
 -- XmacsLabs dependencies
 TBOX_VERSION = "1.7.6"
-LOLLY_VERSION = "1.4.26"
+LOLLY_VERSION = "1.4.28"
 
 -- Third-party dependencies
 CPPTRACE_VERSION = "v0.7.1"
