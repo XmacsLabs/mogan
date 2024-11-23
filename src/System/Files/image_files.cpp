@@ -315,11 +315,12 @@ image_size (url image, int& w, int& h) {
 }
 
 void
-image_size_sub (url image, int& w,
+image_size_sub (url p_image, int& w,
                 int& h) { // returns w,h in units of pt (1/72 inch)
   if (DEBUG_CONVERT)
-    debug_convert << "image_size not cached for :" << image << LF;
-  string suf= suffix (image);
+    debug_convert << "image_size not cached for :" << p_image << LF;
+  url    image= concretize (p_image);
+  string suf  = suffix (image);
   if (suf == "pdf") {
     pdf_image_size (image, w, h);
     return;
@@ -358,7 +359,7 @@ image_size_sub (url image, int& w,
   }
 
   convert_error
-      << "could not determine size of '" << concretize (image) << "'\n"
+      << "could not determine size of '" << image << "'\n"
       << "you may consider :\n"
       << " - checking the file is valid,\n"
       << " - converting to a more standard format,\n"
