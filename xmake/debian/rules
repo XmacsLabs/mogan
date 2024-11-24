@@ -18,7 +18,7 @@ build-indep:
 build: build-stamp
 build-stamp: configure-stamp
 	dh_testdir
-	xmake config -m release --yes --qt=/usr/lib/qt6 --root
+	xmake config -m release --yes --qt=/usr/lib/qt6
 	xmake build -P . -y research 
 	touch $@
 
