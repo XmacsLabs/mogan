@@ -1,4 +1,4 @@
-mogan-research (@DEVEL_VERSION@-@DEVEL_RELEASE@) unstable; urgency=low
+mogan-research (1.2.9.7-1) unstable; urgency=low
 
   * Mogan Debian Package
  -- Darcy Shen <shenda@ustc.edu>  Sun, 01 Jan 2023 23:34:00 +0800
