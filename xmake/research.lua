@@ -331,11 +331,13 @@ xpack("research") do
     add_targets("research")
 
     if is_plat("linux") then
-        if package:with_source() then
-            package:set("basename", "goldfish-$(plat)-src-v$(version)")
-        else
-            package:set("basename", "goldfish-$(plat)-$(arch)-v$(version)")
-        end
+        on_load(function (package)
+            if package:with_source() then
+                package:set("basename", "goldfish-$(plat)-src-v$(version)")
+            else
+                package:set("basename", "goldfish-$(plat)-$(arch)-v$(version)")
+            end
+        end)
     end
 
     if is_plat("windows") then
