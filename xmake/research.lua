@@ -325,7 +325,8 @@ xpack("research") do
         add_installfiles(path.join(os.projectdir(), "build/packages/app.mogan/data/bin/(**)|MoganResearch.exe"), {prefixdir = "bin"})
     end
 
-    if is_plat ("linux") then
+    if is_plat ("linux") and linuxos.name() == "debian" then
+        set_specfile("debian")
     end
 
     add_targets("research")
