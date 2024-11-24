@@ -313,7 +313,7 @@ xpack("research") do
         add_sourcefiles("xmake.lua")
     end
 
-    if is_plat("linux")
+    if is_plat("linux") then
         on_load(function (package)
             if package:with_source() then
                 package:set("basename", "goldfish-$(plat)-src-v$(version)")
