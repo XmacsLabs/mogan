@@ -300,7 +300,7 @@ end
 
 if is_mode("release") then
 xpack("research") do
-    set_formats("nsis", "zip")
+    set_formats("nsis", "zip", "deb")
     set_author("XmacsLabs")
     set_license("GPLv3")
     set_licensefile(path.join(os.projectdir(), "LICENSE"))
