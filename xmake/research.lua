@@ -301,34 +301,53 @@ end
 if is_mode("release") then
 xpack("research") do
     set_formats("nsis", "zip")
-    set_specfile(path.join(os.projectdir(), "packages/windows/research.nsis"))
-    set_specvar("PACKAGE_INSTALL_DIR", "XmacsLabs\\MoganResearch-"..XMACS_VERSION)
-    set_specvar("PACKAGE_NAME", "MoganResearch")
-    set_specvar("PACKAGE_SHORTCUT_NAME", "Mogan Research")
+    set_author("XmacsLabs")
+    set_license("GPLv3")
+    set_licensefile(path.join(os.projectdir(), "LICENSE"))
+    set_title("Mogan Research")
+    set_description("user friendly distribution of GNU TeXmacs")
+    set_homepage("https://mogan.app")
+
     _, pos = string.find(XMACS_VERSION, "-")
     local XMACS_VERSION_XYZ= XMACS_VERSION
     if not (pos == nil) then
         XMACS_VERSION_XYZ= string.sub(XMACS_VERSION, 1, pos-1)
     end
     set_version(XMACS_VERSION_XYZ)
-    set_title("Mogan Research")
-    set_author("XmacsLabs")
-    set_description("user friendly distribution of GNU TeXmacs")
-    set_homepage("https://mogan.app")
-    set_license("GPLv3")
-    set_licensefile(path.join(os.projectdir(), "LICENSE"))
+
+    if is_plat ("windows") then
+        set_specfile(path.join(os.projectdir(), "packages/windows/research.nsis"))
+        set_specvar("PACKAGE_INSTALL_DIR", "XmacsLabs\\MoganResearch-"..XMACS_VERSION)
+        set_specvar("PACKAGE_NAME", "MoganResearch")
+        set_specvar("PACKAGE_SHORTCUT_NAME", "Mogan Research")
+        set_iconfile(path.join(os.projectdir(), "packages/windows/Xmacs.ico"))
+        set_bindir("bin")
+        add_installfiles(path.join(os.projectdir(), "build/packages/app.mogan/data/bin/(**)|MoganResearch.exe"), {prefixdir = "bin"})
+    end
+
+    if is_plat ("linux") then
+    end
+
     add_targets("research")
-    set_iconfile(path.join(os.projectdir(), "packages/windows/Xmacs.ico"))
-    set_bindir("bin")
-    add_installfiles(path.join(os.projectdir(), "build/packages/app.mogan/data/bin/(**)|MoganResearch.exe"), {prefixdir = "bin"})
-    on_load(function (package)
-        local format = package:format()
-        if format == "nsis" then
-            package:set("basename", "MoganResearch-v" .. package:version() .. "-64bit-installer")
+
+    if is_plat("linux") then
+        if package:with_source() then
+            package:set("basename", "goldfish-$(plat)-src-v$(version)")
         else
-            package:set("basename", "MoganResearch-v" .. package:version() .. "-64bit-portable")
+            package:set("basename", "goldfish-$(plat)-$(arch)-v$(version)")
         end
-    end)
+    end
+
+    if is_plat("windows") then
+        on_load(function (package)
+            local format = package:format()
+            if format == "nsis" then
+                package:set("basename", "MoganResearch-v" .. package:version() .. "-64bit-installer")
+            else
+                package:set("basename", "MoganResearch-v" .. package:version() .. "-64bit-portable")
+            end
+        end)
+    end
 end
 end
 
