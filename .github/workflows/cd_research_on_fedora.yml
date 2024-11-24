@@ -32,7 +32,8 @@ jobs:
 
       - name: Generate Installer
         run: |
-          QA_RPATHS=0x0001 xmake pack -vD -f rpm research --yes
+          xmake config -m research --yes
+          QA_RPATHS=0x0001 xmake pack -vD -f rpm research
           cp build/xpack/research/x86_64/*rpm mogan-research-v1.2.9.7-rc3-fedora41.rpm
       - name: Upload 
         uses: actions/upload-artifact@v3
