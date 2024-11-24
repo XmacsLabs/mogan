@@ -2,7 +2,7 @@ Source: research
 Section: editors
 Priority: optional
 Maintainer: Darcy Shen <shenda@ustc.edu>
-Build-Depends: debhelper (>= 7.0.50~)
+Build-Depends: debhelper-compat (= 13)
 Standards-Version: 3.9.1
 Homepage: https://mogan.app
 
