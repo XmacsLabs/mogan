@@ -1,0 +1,48 @@
+name: CD for Mogan Research on Debian bookworm
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+env:
+  XMAKE_ROOT: y
+  QT_QPA_PLATFORM: offscreen
+  INSTALL_DIR: tmp/build/packages/app.mogan/
+
+jobs:
+  build:
+    container: fedora:41
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo dnf update -y
+          sudo dnf install -y git xmake unzip gcc g++ curl-devel libgit2-devel fontconfig-devel \
+            qt6-qtbase-devel qt6-qtsvg-devel mimalloc-devel libpng-devel
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: set XMAKE_GLOBALDIR
+        run: echo "XMAKE_GLOBALDIR=/tmp/xmake-global" >> $GITHUB_ENV  
+
+      - name: Xrepo update
+        run: xmake repo --update
+
+      - name: Generate Installer
+        run: |
+          QA_RPATHS=0x0001 xmake pack -vD -f rpm research
+          cp build/xpack/research/x86_64/*rpm mogan-research-v1.2.9.7-rc3-fedora41.rpm
+      - name: Upload 
+        uses: actions/upload-artifact@v3
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        with:
+          path: mogan-*.rpm
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          prerelease: true
+          files: mogan-*.rpm
+
