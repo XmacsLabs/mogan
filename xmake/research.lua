@@ -301,7 +301,7 @@ end
 if is_mode("release") then
 xpack("research") do
     set_formats("nsis", "zip", "deb")
-    set_author("XmacsLabs")
+    set_author("Darcy Shen <shenda@ustc.edu>")
     set_license("GPLv3")
     set_licensefile(path.join(os.projectdir(), "LICENSE"))
     set_title("Mogan Research")
