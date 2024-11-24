@@ -276,6 +276,69 @@ end
 -- Mogan Research
 includes("xmake/research.lua")
 
+if is_mode("release") then
+xpack("research") do
+    set_formats("nsis", "zip", "deb", "rpm", "srpm")
+    if is_plat ("linux") and linuxos.name() == "debian" then
+        set_specfile("debian")
+    end
+    set_author("Darcy Shen <shenda@ustc.edu>")
+    set_license("GPLv3")
+    set_licensefile(path.join(os.projectdir(), "LICENSE"))
+    set_title("Mogan Research")
+    set_description("user friendly distribution of GNU TeXmacs")
+    set_homepage("https://mogan.app")
+
+    _, pos = string.find(XMACS_VERSION, "-")
+    local XMACS_VERSION_XYZ= XMACS_VERSION
+    if not (pos == nil) then
+        XMACS_VERSION_XYZ= string.sub(XMACS_VERSION, 1, pos-1)
+    end
+    set_version(XMACS_VERSION_XYZ)
+
+    if is_plat ("windows") then
+        set_specfile(path.join(os.projectdir(), "packages/windows/research.nsis"))
+        set_specvar("PACKAGE_INSTALL_DIR", "XmacsLabs\\MoganResearch-"..XMACS_VERSION)
+        set_specvar("PACKAGE_NAME", "MoganResearch")
+        set_specvar("PACKAGE_SHORTCUT_NAME", "Mogan Research")
+        set_iconfile(path.join(os.projectdir(), "packages/windows/Xmacs.ico"))
+        set_bindir("bin")
+        add_installfiles(path.join(os.projectdir(), "build/packages/app.mogan/data/bin/(**)|MoganResearch.exe"), {prefixdir = "bin"})
+    end
+
+    add_targets("research")
+
+    if is_plat ("linux") and linuxos.name() == "fedora" then
+        add_sourcefiles("(src/**)")
+        add_sourcefiles("(TeXmacs/**)")
+        add_sourcefiles("(xmake/**)")
+        add_sourcefiles("(tests/**)")
+        add_sourcefiles("xmake.lua")
+    end
+
+    if is_plat("linux")
+        on_load(function (package)
+            if package:with_source() then
+                package:set("basename", "goldfish-$(plat)-src-v$(version)")
+            else
+                package:set("basename", "goldfish-$(plat)-$(arch)-v$(version)")
+            end
+        end)
+    end
+
+    if is_plat("windows") then
+        on_load(function (package)
+            local format = package:format()
+            if format == "nsis" then
+                package:set("basename", "MoganResearch-v" .. package:version() .. "-64bit-installer")
+            else
+                package:set("basename", "MoganResearch-v" .. package:version() .. "-64bit-portable")
+            end
+        end)
+    end
+end
+end
+
 
 -- Mogan Beamer
 if is_plat("macosx", "windows") then
