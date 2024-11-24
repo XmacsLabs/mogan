@@ -21,14 +21,21 @@
           (else (string-append s ";\n")))))
 
 (define (maxima-entry)
-  (if (url-exists? "$TEXMACS_HOME_PATH/plugins/maxima")
+  (raw-quote
+    (if (url-exists? "$TEXMACS_HOME_PATH/plugins/maxima")
       (system-url->string "$TEXMACS_HOME_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")
-      (system-url->string "$TEXMACS_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")))
+      (system-url->string "$TEXMACS_PATH/plugins/maxima/lisp/texmacs-maxima.lisp"))))
 
 (define (maxima-launchers)
   (if (os-win32?)
       `((:launch ,(string-append "cmd.exe /c " (url->system (find-binary-maxima)) " -p " (maxima-entry))))
       `((:launch ,(string-append (url->system (find-binary-maxima)) " -p " (maxima-entry))))))
+
+(when (and (has-binary-maxima?) (string-starts? (url->system (find-binary-maxima)) "/opt/homebrew/bin"))
+  (plugin-add-macos-path "gnuplot" "/opt/homebrew/bin" #t))
+
+(when (and (has-binary-maxima?) (string-starts? (url->system (find-binary-maxima)) "/usr/local/bin"))
+  (plugin-add-macos-path "gnuplot" "/usr/local/bin" #t))
 
 (plugin-configure maxima
   (:require (has-binary-maxima?))

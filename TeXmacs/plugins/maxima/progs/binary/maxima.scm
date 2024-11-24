@@ -17,7 +17,8 @@
 (define (maxima-binary-candidates)
   (cond ((os-macos?)
          (list "/opt/homebrew/bin/maxima"
-               "/usr/local/bin/maxima"))
+               "/usr/local/bin/maxima"
+               "/Applications/Maxima.app/Contents/Resources/opt/bin/maxima"))
         ((os-win32?)
          (list "C:\\maxima-*\\bin\\maxima.bat"))
         (else
