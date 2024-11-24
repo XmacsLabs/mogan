@@ -108,7 +108,7 @@
 
   <assign|tt-prog-font|<macro|x|<tt-font-base|<arg|x>>>>
 
-  <assign|tt-session-font|<macro|x|<with|font|typewriter=roman,pagella|<arg|x>>>>
+  <assign|tt-session-font|<macro|x|<with|font|typewriter=CMU,roman|<arg|x>>>>
 
   \;
 
