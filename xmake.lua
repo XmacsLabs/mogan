@@ -278,10 +278,7 @@ includes("xmake/research.lua")
 
 if is_mode("release") then
 xpack("research") do
-    set_formats("nsis", "zip", "deb", "rpm", "srpm")
-    if is_plat ("linux") and linuxos.name() == "debian" then
-        set_specfile("debian")
-    end
+    set_formats("nsis", "zip", "rpm", "srpm")
     set_author("Darcy Shen <shenda@ustc.edu>")
     set_license("GPLv3")
     set_licensefile(path.join(os.projectdir(), "LICENSE"))
