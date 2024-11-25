@@ -322,6 +322,6 @@ target("research_packager") do
         local app_dir = target:installdir() .. "/../../"
         os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
         os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
-        os.execv("hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir)
+        os.execv("/usr/bin/sudo /usr/bin/hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir)
     end)
 end
