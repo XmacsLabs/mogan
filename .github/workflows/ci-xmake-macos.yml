@@ -32,9 +32,9 @@ jobs:
   macosbuild:
     strategy:
       matrix:
-        os: [macos-12]
+        os: [macos-13]
         arch: [x86_64]
-    runs-on: macos-12
+    runs-on: macos-13
     timeout-minutes: 45
     if: always()
     steps:
