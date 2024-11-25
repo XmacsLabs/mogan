@@ -21,10 +21,10 @@
           (else (string-append s ";\n")))))
 
 (define (maxima-entry)
-  (raw-quote
+  (string-quote
     (if (url-exists? "$TEXMACS_HOME_PATH/plugins/maxima")
-      (system-url->string "$TEXMACS_HOME_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")
-      (system-url->string "$TEXMACS_PATH/plugins/maxima/lisp/texmacs-maxima.lisp"))))
+      (url->system "$TEXMACS_HOME_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")
+      (url->system "$TEXMACS_PATH/plugins/maxima/lisp/texmacs-maxima.lisp"))))
 
 (define (maxima-launchers)
   (if (os-win32?)
