@@ -117,6 +117,10 @@ function sidebarGuide() {
                     text: 'Install',
                     link: '/guide/Install'
                 },
+                {
+                    text: 'FAQ',
+                    link: '/guide/FAQ'
+                },
                 { text: 'Screenshots', link: '/guide/Screenshots'},
                 {
                     text: 'Mogan v.s. TeXmacs',
@@ -316,6 +320,10 @@ function sidebarGuideZh() {
                 {
                     text: '如何安装？',
                     link: '/zh/guide/Install'
+                },
+                {
+                    text: '常见问题',
+                    link: '/zh/guide/FAQ'
                 },
                 { text: '截图', link: '/zh/guide/Screenshots'},
                 {
