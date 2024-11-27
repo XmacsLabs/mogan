@@ -73,12 +73,8 @@ function nav() {
             link: 'http://forum.texmacs.cn'
         },
         {
-            text: 'Code (Gitee/Github)',
-            items: [
-                { text: 'Codeberg', link: 'https://codeberg.org/XmacsLabs/mogan' },
-                { text: 'Gitee', link: 'https://gitee.com/XmacsLabs/mogan' },
-                { text: 'Github', link: 'https://github.com/XmacsLabs/mogan' },
-            ]
+            text: 'Code',
+            link: '/guide/SourceCode'
         },
     ]
 }
@@ -105,12 +101,8 @@ function navZh() {
             link: 'http://forum.texmacs.cn'
         },
         {
-            text: '代码 (Gitee/Github)',
-            items: [
-                { text: 'Codeberg', link: 'https://codeberg.org/XmacsLabs/mogan' },
-                { text: 'Gitee', link: 'https://gitee.com/XmacsLabs/mogan' },
-                { text: 'Github', link: 'https://github.com/XmacsLabs/mogan' },
-            ]
+            text: '源代码',
+            link: '/zh/guide/SourceCode'
         },
     ]
 }
