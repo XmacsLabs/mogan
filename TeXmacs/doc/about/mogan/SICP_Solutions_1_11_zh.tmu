@@ -1,0 +1,483 @@
+<TMU|<tuple|1.0.5|1.2.9.5>>
+
+<style|<tuple|generic|reduced-margins|doc|chinese|goldfish>>
+
+<\body>
+  <doc-data|<doc-title|SICP习题详解：1.11>|<doc-author|<author-data|<author-name|<name|MathAgape>>|<author-email|nian@liii.pro>>>>
+
+  <\wide-tabular>
+    <tformat|<cwith|1|1|1|1|cell-background|pastel yellow>|<table|<row|<\cell>
+      <section|原题>
+
+      函数<math|f>由如下规则定义：如果<math|n\<less\>3>，那么<math|f<around*|(|n|)>=n>；如果<math|n\<geqslant\>3>，那么<math|f<around*|(|n|)>=f<around*|(|n-1|)>+2*f<around*|(|n-2|)>+3*f<around*|(|n-3|)>>。请写一个采用<strong|递归计算过程>计算<math|f>的过程。再写一个采用<strong|迭代计算过程>计算<math|f>的过程。（见《计算机程序的构造与解释》中文版 p.27中文版 p.27）
+
+      A function <math|f> is defined by the rule of that <math|f<around*|(|n|)>=n> if <math|n\<less\>3> and <math|f<around*|(|n|)>=f<around*|(|n-1|)>+2*f<around*|(|n-2|)>+3*f<around*|(|n-3|)>> if <math|n\<geqslant\>3>. Write a procedure that computes <math|f > by means of a <strong|recursive process>. Write a procedure that computes <math|f > by means of a <strong|iterative process>.
+    </cell>>>>
+  </wide-tabular>
+
+  \;
+
+  <section|动机>
+
+  本习题旨在初学者通过分段函数的例子，理解递归过程、递归计算过程与迭代计算过程。
+
+  <section|详解>
+
+  <subsection|用数学的格式写出分段函数>
+
+  <subsubsection|如何在墨干写分段函数？>
+
+  <\description>
+    <item*|<LaTeX>模拟><key|\\> <key|choice>
+
+    <item*|可视化操作>
+
+    分段函数的结构化文本本质是一种表格
+
+    <\enumerate-numeric>
+      <item>插入<strong|数学模式-行间公式>（<key|Alt+$>）
+
+      <item>插入<strong|选择>（<key|Alt+T> <key|tab> <key|tab> <key|tab> <key|tab>）
+
+      <item>取值范围可以通过<strong|增加右边格子>（<key|Alt+\<rightarrow\>>）的方式添加
+    </enumerate-numeric>
+  </description>
+
+  <subsubsection|把习题中叙述的分段函数写出来>
+
+  <\equation*>
+    <math|<choice|<tformat|<table|<row|<cell|f<around*|(|n|)>=n>|<cell|n\<less\>3>>|<row|<cell|f<around*|(|n|)>=f<around*|(|n-1|)>+2*f<around*|(|n-2|)>+3*f<around*|(|n-3|)>>|<cell|n\<geqslant\>3>>>>>>
+  </equation*>
+
+  <subsubsection|先自己手算一些边界条件附近的结果>
+
+  用于备用等会看看自己的代码对不对：
+
+  <\wide-tabular>
+    <tformat|<cwith|1|-1|1|-1|cell-tborder|1ln>|<cwith|1|-1|1|-1|cell-bborder|1ln>|<cwith|1|-1|1|-1|cell-lborder|1ln>|<cwith|1|-1|1|-1|cell-rborder|1ln>|<table|<row|<\cell>
+      <math|n>
+    </cell>|<\cell>
+      2
+    </cell>|<\cell>
+      3
+    </cell>|<\cell>
+      4
+    </cell>|<\cell>
+      5
+    </cell>>|<row|<\cell>
+      <math|f<around*|(|n|)>>
+    </cell>|<\cell>
+      2
+    </cell>|<\cell>
+      4
+    </cell>|<\cell>
+      11
+    </cell>|<\cell>
+      25
+    </cell>>>>
+  </wide-tabular>
+
+  \;
+
+  <subsection|把分段函数写成递归形式>
+
+  <small|先写递归，因为分段函数用scheme写成递归是非常容易的。>
+
+  <subsubsection|如何在墨干写scheme代码？>
+
+  <\description>
+    <item*|插入会话>点选菜单：<menu|Insert|Session|Goldfish Scheme|Default>；当然，你也可以直接点击<image|<tuple|<#89504E470D0A1A0A0000000D4948445200000022000000240806000000EC1EE8DF000000017352474200AECE1CE90000000467414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA864000001A8494441545847637CF1E2C57F86410098A0F480835187A08341E3108CC4BA6EC346862B97AF4079D4053ABA3A0C4101FE501E2AC0704853732BC3FE838718E4E564A122D4010F1F3D6670B4B763A8ABAD868AA002AC0EB977FF3EC3827973A022D4010949290C4A8A8A381D327412EBBF7FFF18F61F3808E5D10E1074C8C14387196AEA1A1866CC9C0D15A10D20E81047077B86D8E82886C54B97D1D43144A5918CF4549A3B86E8C44A6BC710ED1010A0A56348720808801C63626C04760C357313C90E59B97A0DC399B3E718BCBD3C18ECED6CA1A29403921C0272C4A4C953C18EA8282B65606222D91F3801D126D1D21120409469B47604081034F1F091A3347704081034D5D2C29CA1B8309FA68E00018226B3B0B0300405066038E2FDFB0F0CB76FDFC18BBF7DFB06554D18B0406992C1F61D3B19A64E9F01E5610713FA7A184C4D8CA13CFC80EC86D18B972F191E3F7E02E56107EA6AAA0C7C7C7C6036CD1A4612E2E260DFE2C3304710036897FA480483B7F13C68BA130305066F1AA12590909080B21000683F98A66B88C02C8501643EDDA3066639BAA306248DA03B020406496265600000D493D90B86A159DA0000000049454E44AE426082>|屏幕截图 2024-11-21 213945.png>|9pt|9pt||>进行插入。
+
+    <item*|什么是Goldfish Scheme？>
+
+    Goldfish Scheme是墨干理工套件底层架构之一（底层的Scheme解释器），目前已是一个独立的开源项目，旨在让Scheme和Python一样易用且实用。编程零基础也可参与，手把手带领你成为代码贡献者（甚至从如何提pr开始）。大模型时代，人人都可以是开源项目的参与者！
+
+    Goldfish Scheme 独立仓库：
+
+    <slink|https://gitee.com/LiiiLabs/goldfish>
+
+    <slink|https://github.com/LiiiLabs/goldfish>
+  </description>
+
+  <subsubsection|分步骤写出代码草稿>
+
+  <\equation*>
+    <math|<choice|<tformat|<table|<row|<cell|f<around*|(|n|)>=n>|<cell|n\<less\>3>>|<row|<cell|f<around*|(|n|)>=f<around*|(|n-1|)>+2*f<around*|(|n-2|)>+3*f<around*|(|n-3|)>>|<cell|n\<geqslant\>3>>>>>>
+  </equation*>
+
+  <paragraph|定义函数 <scm|define>>
+
+  先像下面这样定义scheme函数，因为这个分段函数有递归（recursive）和迭代（iterative）两种写法，不妨分别命名为<scm|f>和<scm|f-iter>。
+
+  <\scm-code>
+    (define (f n) \<less\>body\<gtr\>)
+  </scm-code>
+
+  <small|目前无需考虑类型，先把基本结构写出来。写完加一个条件就好了，这个留作思考题。>
+
+  <paragraph|写<scm|\<less\>body\<gtr\>>中的条件 <scm|if>>
+
+  <\scm-code>
+    (if (\<less\> n 3)
+
+    \ \ \ \ n
+
+    \ \ \ \ (+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3)))))
+  </scm-code>
+
+  <paragraph|补充<scm|define>中的<scm|\<less\>body\<gtr\>>>
+
+  <\scm-code>
+    (define (f n)
+
+    \ \ (if (\<less\> n 3)
+
+    \ \ \ \ n
+
+    \ \ \ \ (+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3))))))
+  </scm-code>
+
+  <subsubsection|把草稿写到会话并运行>
+
+  写完代码要记得按<strong|回车>，这是<strong|函数式编程>的<strong|灵魂>！（这让我想起小时候玩的劲舞团的灵魂空格）
+
+  <\session|goldfish|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define (f n)
+
+      \ \ (if (\<less\> n 3)
+
+      \ \ \ \ n
+
+      \ \ \ \ (+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3))))))
+    <|unfolded-io>
+      <goldfish-result|f>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  定义完了之后，就可以调用<scm|f>进行分段函数的运算了：
+
+  <\session|goldfish|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (f 0)
+    <|unfolded-io>
+      <goldfish-result|0>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (f 3)
+    <|unfolded-io>
+      <goldfish-result|4>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (f 5)
+    <|unfolded-io>
+      <goldfish-result|25>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  这样，就完成了分段函数的递归形式。
+
+  <subsubsection|思考题：如何防御非法参数>
+
+  上面的结构搭好之后，其实就已经完成了书上的教学要求。但实际工程中，我们要注意输入的参数是否符合预期（这里必须是自然数）。那么就需要加更多条件。这个作为习题自己写，我现在不展示了。
+
+  <subsection|把分段函数写成迭代形式>
+
+  <\equation*>
+    <math|<choice|<tformat|<table|<row|<cell|f<around*|(|n|)>=n>|<cell|n\<less\>3>>|<row|<cell|f<around*|(|n|)>=<with|color|blue|f<around*|(|n-1|)>>+2*<with|color|blue|f<around*|(|n-2|)>>+3*<with|color|blue|f<around*|(|n-3|)>>>|<cell|<math|n\<geqslant\>3>>>>>>>
+  </equation*>
+
+  <subsubsection|迭代法的基本思路>
+
+  <tiny|通过分段函数的形式，我们首先注意到：<math|n\<less\>3>时，函数的返回值是<strong|不调用函数本身>的；而<math|<math|n\<geqslant\>3>>时，函数的返回值<strong|会调用函数本身>，对于这个分段函数，分别要调用它<with|color|blue|前三个已经算出来的值>。>
+
+  <\small>
+    为了方便理解，先写一下表格：
+
+    <paragraph|当<math|n\<less\>3>：>
+
+    <\wide-tabular>
+      <tformat|<cwith|1|-1|1|-1|cell-tborder|1ln>|<cwith|1|-1|1|-1|cell-bborder|1ln>|<cwith|1|-1|1|-1|cell-lborder|1ln>|<cwith|1|-1|1|-1|cell-rborder|1ln>|<cwith|2|2|2|4|color|magenta>|<table|<row|<\cell>
+        <math|n>
+      </cell>|<\cell>
+        0
+      </cell>|<\cell>
+        1
+      </cell>|<\cell>
+        2
+      </cell>|<\cell>
+        \;
+      </cell>|<\cell>
+        \;
+      </cell>|<\cell>
+        \;
+      </cell>>|<row|<\cell>
+        <math|f<around*|(|n|)>>
+      </cell>|<\cell>
+        0
+      </cell>|<\cell>
+        1
+      </cell>|<\cell>
+        2
+      </cell>|<\cell>
+        \;
+      </cell>|<\cell>
+        \;
+      </cell>|<\cell>
+        \;
+      </cell>>>>
+    </wide-tabular>
+
+    \;
+
+    <paragraph|当<math|<math|n\<geqslant\>3>>：>
+
+    <tiny|(为了写代码方便，这里有个换元的思路，令<math|<with|color|blue|f<around*|(|n-1|)>>>、<math|<with|color|blue|f<around*|(|n-2|)>>>、<math|<with|color|blue|f<around*|(|n-3|)>>>分别为<math|<with|color|orange|a>>、<with|color|orange|<math|b>>、<with|color|orange|<math|c>>，那么<math|f<around*|(|n|)>=<with|color|dark green|a+2*b+3*c>>；这样，也可以很容易写出<math|f<around*|(|n+1|)>>)>
+
+    <\wide-tabular>
+      <tformat|<cwith|1|-1|1|-1|cell-tborder|1ln>|<cwith|1|-1|1|-1|cell-bborder|1ln>|<cwith|1|-1|1|-1|cell-lborder|1ln>|<cwith|1|-1|1|-1|cell-rborder|1ln>|<table|<row|<\cell>
+        <math|n>
+      </cell>|<\cell>
+        <math|<around*|(|n-3|)>>
+      </cell>|<\cell>
+        <math|<around*|(|n-2|)>>
+      </cell>|<\cell>
+        <math|<around*|(|n-1|)>>
+      </cell>|<\cell>
+        <math|n>
+      </cell>|<\cell>
+        <math|<around*|(|n+1|)>>
+      </cell>>|<row|<\cell>
+        <math|f<around*|(|n|)>>
+      </cell>|<\cell>
+        <with|color|orange|<math|c>>
+      </cell>|<\cell>
+        <with|color|orange|<math|b>>
+      </cell>|<\cell>
+        <with|color|orange|<math|a>>
+      </cell>|<\cell>
+        <with|color|dark green|<math|a+2*b+3*c>>
+      </cell>|<\cell>
+        \;
+      </cell>>|<row|<\cell>
+        <math|f<around*|(|n+1|)>>
+      </cell>|<\cell>
+        \;
+      </cell>|<\cell>
+        <with|color|orange|<math|c>>
+      </cell>|<\cell>
+        <with|color|orange|<math|b>>
+      </cell>|<\cell>
+        <with|color|orange|<math|a>>
+      </cell>|<\cell>
+        <with|color|dark green|<math|a+2*b+3*c>>
+      </cell>>>>
+    </wide-tabular>
+  </small>
+
+  \;
+
+  \;
+
+  通过表格辅助，可知迭代形式代码实现的关键就是定义一个带有4个参数的辅助函数<scm|f-iter-helper>：
+
+  <tiny|这里有个习惯上的trick，<math|n>写成<scm|count>，看到后面就明白了，先不解释。>
+
+  <\scm-code>
+    (define (f-iter-helper a b c count)
+
+    \ \ (if (\<less\>= count 0)
+
+    \ \ \ \ \ \ a
+
+    \ \ \ \ \ \ (f-iter-helper (+ a (* 2 b) (* 3 c)) a b (- count 1))))
+  </scm-code>
+
+  \;
+
+  然后，把这个用于实现迭代的辅助函数<scm|f-iter-helper>放到<scm|(f-iter n)>中，并在调用<scm|f-iter-helper>时赋予初始值（也就是<with|color|magenta|<math|n\<less\>3>时<math|f<around*|(|n|)>=n>的结果>）：
+
+  <\scm-code>
+    (define (f-iter n)
+
+    \ \ (if (\<less\> n 3)
+
+    \ \ \ \ \ \ n
+
+    \ \ \ \ \ \ (f-iter-helper 2 1 0 (- n 2))))
+  </scm-code>
+
+  <tiny|写到这里，之前辅助函数理的<math|n>为什么要写成<scm|count>，就好明白了，意会吧，这个很难表达，ho\<ldots\>\<ldots\>>
+
+  \;
+
+  因此，实际的可运行的代码就是：
+
+  <\session|goldfish|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define (f-iter n)
+
+      \ \ (if (\<less\> n 3)
+
+      \ \ \ \ \ \ n
+
+      \ \ \ \ \ \ (f-iter-helper 2 1 0 (- n 2))))
+    <|unfolded-io>
+      <goldfish-result|f-iter>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define (f-iter-helper a b c count)
+
+      \ \ (if (\<less\>= count 0)
+
+      \ \ \ \ \ \ a
+
+      \ \ \ \ \ \ (f-iter-helper (+ a (* 2 b) (* 3 c)) a b (- count 1))))
+    <|unfolded-io>
+      <goldfish-result|f-iter-helper>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (f-iter 6)
+    <|unfolded-io>
+      <goldfish-result|59>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  好了，这样就完成了迭代形式的分段函数代码实现。
+
+  这边给出了明晰的思路，遇到复杂的问题，也是大同小异。
+
+  <subsubsection|思考题：递归和迭代的联系与区别？>
+
+  <\enumerate>
+    <item>还记得题目开头问的是“分别写出采用<strong|递归计算过程>和<strong|迭代计算过程>计算<math|f>的过程”吗？
+
+    你能说出，“计算过程（process）”和“过程（procedure）”的区别吗？
+
+    <small|hint.1：建议仔细阅读英文版，这里中文反而容易歧义>
+
+    <small|hint.2：刚刚写的两种实现分段函数的函数<scm|f>和<scm|f-iter>，都是<strong|递归的过程>（procedure）吗？>
+
+    <item>采用<strong|递归计算过程>和<strong|迭代计算过程>都能同样计算这个分段函数，并非茴香豆的N种写法而已，事实上，它们有性能的差异。那么，从性能考虑，哪一种更优良？为什么？
+
+    \;
+  </enumerate>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|papyrus>
+    <associate|page-screen-margin|true>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-10|<tuple|插入会话|1>>
+    <associate|auto-11|<tuple|3.2.2|2>>
+    <associate|auto-12|<tuple|3.2.2.1|2>>
+    <associate|auto-13|<tuple|3.2.2.2|2>>
+    <associate|auto-14|<tuple|3.2.2.3|2>>
+    <associate|auto-15|<tuple|3.2.3|2>>
+    <associate|auto-16|<tuple|3.2.4|2>>
+    <associate|auto-17|<tuple|3.3|3>>
+    <associate|auto-18|<tuple|3.3.1|3>>
+    <associate|auto-19|<tuple|3.3.1.1|3>>
+    <associate|auto-2|<tuple|2|1>>
+    <associate|auto-20|<tuple|3.3.1.2|3>>
+    <associate|auto-21|<tuple|3.3.2|4>>
+    <associate|auto-3|<tuple|3|1>>
+    <associate|auto-4|<tuple|3.1|1>>
+    <associate|auto-5|<tuple|3.1.1|1>>
+    <associate|auto-6|<tuple|3.1.2|1>>
+    <associate|auto-7|<tuple|3.1.3|1>>
+    <associate|auto-8|<tuple|3.2|1>>
+    <associate|auto-9|<tuple|3.2.1|1>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|idx>
+      <tuple|<tuple|<with|font-family|<quote|ss>|插入>|<with|font-family|<quote|ss>|会话>|<with|font-family|<quote|ss>|Goldfish Scheme>|<with|font-family|<quote|ss>|默认>>|<pageref|auto-10>>
+    </associate>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>原题> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>动机> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>详解> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-3><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|3.1<space|2spc>用数学的格式写出分段函数 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4>>
+
+      <with|par-left|<quote|2tab>|3.1.1<space|2spc>如何在墨干写分段函数？ <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5>>
+
+      <with|par-left|<quote|2tab>|3.1.2<space|2spc>把习题中叙述的分段函数写出来 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-6>>
+
+      <with|par-left|<quote|2tab>|3.1.3<space|2spc>先自己手算一些边界条件附近的结果 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-7>>
+
+      <with|par-left|<quote|1tab>|3.2<space|2spc>把分段函数写成递归形式 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-8>>
+
+      <with|par-left|<quote|2tab>|3.2.1<space|2spc>如何在墨干写scheme代码？ <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-9>>
+
+      <with|par-left|<quote|2tab>|3.2.2<space|2spc>分步骤写出代码草稿 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-11>>
+
+      <with|par-left|<quote|3tab>|定义函数 <with|mode|<quote|prog>|prog-language|<quote|scheme>|font-family|<quote|rm>|define> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-12>>
+
+      <with|par-left|<quote|3tab>|写<with|mode|<quote|prog>|prog-language|<quote|scheme>|font-family|<quote|rm>|\<less\>body\<gtr\>>中的条件 <with|mode|<quote|prog>|prog-language|<quote|scheme>|font-family|<quote|rm>|if> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-13>>
+
+      <with|par-left|<quote|3tab>|补充<with|mode|<quote|prog>|prog-language|<quote|scheme>|font-family|<quote|rm>|define>中的<with|mode|<quote|prog>|prog-language|<quote|scheme>|font-family|<quote|rm>|\<less\>body\<gtr\>> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-14>>
+
+      <with|par-left|<quote|2tab>|3.2.3<space|2spc>把草稿写到会话并运行 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-15>>
+
+      <with|par-left|<quote|2tab>|3.2.4<space|2spc>思考题：如何防御非法参数 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-16>>
+
+      <with|par-left|<quote|1tab>|3.3<space|2spc>把分段函数写成迭代形式 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-17>>
+
+      <with|par-left|<quote|2tab>|3.3.1<space|2spc>迭代法的基本思路 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-18>>
+
+      <with|par-left|<quote|3tab>|当<with|mode|<quote|math>|n\<less\>3>： <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-19>>
+
+      <with|par-left|<quote|3tab>|当<with|mode|<quote|math>|<with|mode|<quote|math>|n\<geqslant\>3>>： <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-20>>
+
+      <with|par-left|<quote|2tab>|3.3.2<space|2spc>思考题：递归和迭代的联系与区别？ <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-21>>
+    </associate>
+  </collection>
+</auxiliary>

@@ -1,0 +1,339 @@
+<TMU|<tuple|1.0.5|1.2.9.5>>
+
+<style|<tuple|generic|reduced-margins>>
+
+<\body>
+  \;
+
+  <doc-data|<doc-title|Solutions to exercises, Chapter 1, Baby Rudin>|<doc-author|<author-data|<author-name|<name|MathAgape>>|<author-email|nian@liii.pro>>>>
+
+  <strong|<large|<\padded-center>
+    Exercise 1
+  </padded-center>>>
+
+  <space|2em>If <with|font-shape|italic|r> is rational (<with|font-shape|italic|r>\<neq\>0) and <with|font-shape|italic|x> is irrational, prove that <with|font-shape|italic|r>+<with|font-shape|italic|x> and <with|font-shape|italic|rx> are irrational.
+
+  \;
+
+  <space|2em>注意点：数学的公理化思想；域公理
+
+  \;
+
+  <strong|Proof 1>
+
+  <space|2em>Let <math|r=<frac|a|b>> . Assume <math|r+x> is rational and <math|r+x=<frac|c|d>> . ( <math|a,b,c,d> are nonzero integers )
+
+  <space|2em>Since
+
+  <\equation*>
+    <math|<frac|a|b>+x=<frac|c|d>,>
+  </equation*>
+
+  we have
+
+  <\equation*>
+    x=<frac|c|d>-<frac|a|b>=<frac|cb-ad|db>.
+  </equation*>
+
+  <space|2em>Since <math|a,b,c,d> are nonzero integers, <math|c b-a d> and <math|d b> are integers.
+
+  <space|2em>Therefore, the assumption that <math|r+x> is rational leads to the conclusion that <math|x> is rational, contrary to the claim that <math|x> is irrational.
+
+  <space|2em>Hence <math|r+x> is impossible to be rational, so it's an irrational number.
+
+  <space|2em>Similarly, we can prove that <math|r x> is irrational.
+
+  \;
+
+  \;
+
+  <strong|<strong|Proof >2>
+
+  <space|2em>Hints:
+
+  <space|2em>(1)<space|1em>the inverse of r.(see <with|font-shape|italic|r>\<neq\>0)
+
+  <space|2em>(2)<space|1em>the axioms and propositions of field.
+
+  \;
+
+  <space|2em>Use \<circ\> to replace + and <math|\<times\>>.
+
+  <space|2em>Let <with|font-shape|italic|r'> be the inverse of <with|font-shape|italic|r>. (see field axioms (A5)&(M5) )
+
+  <space|2em>Assume <with|font-shape|italic|r> \<circ\> <with|font-shape|italic|x> is rational and <with|font-shape|italic|r> \<circ\> <with|font-shape|italic|x> = <with|font-shape|italic|y>.\ 
+
+  <space|2em>Field axioms (A4)&(A5),(M4)&(M5) implies
+
+  <\equation*>
+    r\<circ\>x=y\<circ\>r\<circ\>r<rprime|'> .
+  </equation*>
+
+  <space|2em>1.14 proposition (a) AKA the cancellation law implies
+
+  <\equation*>
+    x=y\<circ\>r<rprime|'> .
+  </equation*>
+
+  <space|2em>Since <with|font-shape|italic|y> and <with|font-shape|italic|r> are rational, <with|font-shape|italic|x> is rational (see field axioms (A1)&(M1) ).\ 
+
+  <space|2em>Therefore, the assumption that <with|font-shape|italic|r\<circ\>x> is rational leads to the conclusion that <with|font-shape|italic|x> is rational, contrary to the claim that <with|font-shape|italic|x> is irrational.
+
+  <space|2em>Hence <with|font-shape|italic|r\<circ\>x> is impossible to be rational, so it's an irrational number.
+
+  \;
+
+  <strong|<large|<\padded-center>
+    Exercise 2
+  </padded-center>>>
+
+  <space|2em>Prove that there is no rational number whose square is 12.
+
+  \;
+
+  <space|2em>注意点：数理逻辑（逆否命题、反证法）；集合论
+
+  \;
+
+  <strong|<strong|<strong|Proof>> >
+
+  <space|2em>Assume there is a rational number <math|r> such that\ 
+
+  <\equation>
+    <math|r<rsup|2>=12><label|1>
+  </equation>
+
+  \;
+
+  <space|2em>We could write <math|r=<frac|m|n>> where <with|color|brown|<math|m> and <math|n> are integers that are not both divisible by 3>.\ 
+
+  <space|2em>Then (<reference|1>) implies
+
+  \ 
+
+  <\equation>
+    m<rsup|2>=2<rsup|2>\<cdot\>3n<rsup|2> <label|2>.
+  </equation>
+
+  \;
+
+  <with|color|blue|<space|2em>This shows that 3\|<math|m<rsup|2>> . Hence 3\<mid\><math|m> (if <math|><math|3\<nmid\>m>, then <math|3\<nmid\>m<rsup|2>>)>, and <with|color|orange|so <math|m<rsup|2>> is divisible by 9>. <with|color|red|It follows that the <math|>right side of (<reference|2>) is divisible by 9>,<with|color|dark green| so that 3\<mid\><math|n<rsup|2>>>, <with|color|dark yellow|which implies that 3\<mid\><math|n>>.
+
+  <space|2em>The assumption that (<reference|1>) holds thus leads to the conclusion that <underline|<with|color|green|<with|color|black|both <math|m> and <math|n> are divisible by 3>>>, contrary to <with|color|#aaf|<with|color|brown|our choice of <math|m> and <math|n>>>. Hence (<reference|1>) is impossible for rational <math|r>.
+
+  \;
+
+  <\padded-center>
+    <math|m=p<rsub|1>\<cdot\>p<rsub|2>\<ldots\>>
+
+    <with|color|blue|<math|<math|3\<mid\>m<rsup|2>\<rightarrow\><with|color|blue|3\<mid\>m> \<Leftrightarrow\>>3\<nmid\>m<math|\<rightarrow\>>3\<nmid\>m<rsup|2>>>
+
+    <with|color|orange|<math|<underline|3\<mid\>m>\<rightarrow\>9\<mid\>m<rsup|2>>>
+
+    <math|<with|color|red|9\<mid\>m<rsup|2>\<rightarrow\>9\<mid\>3n<rsup|2>>>
+
+    <with|color|dark green|<math|9\<mid\>3n<rsup|2>><math|\<rightarrow\>3\<mid\>n<rsup|2>>>
+
+    <with|color|dark yellow|<math|3\<mid\>n<rsup|2>><math|\<rightarrow\><underline|<with|color|green|<with|color|dark yellow|3\<mid\>n>>>>>
+  </padded-center>
+
+  \;
+
+  <strong|Proposition>
+
+  <space|2em>All square roots of natural numbers are irrational, other than square numbers.
+
+  \;
+
+  <strong|Proof>
+
+  <space|2em>Let <math|S> be the set of square numbers. It's clear that <math|S\<subset\>\<bbb-N\>\<subset\>\<bbb-Z\>\<subset\>\<bbb-Q\>\<subset\>\<bbb-R\>>, and
+
+  <space|2em>(a)<space|1em>If <math|x\<in\>\<bbb-Z\>>, then <math|x<rsup|2>\<in\>S>.
+
+  <space|2em>(b)<space|1em>If <math|x\<in\><around*|(|\<bbb-Q\>-\<bbb-Z\>|)>>, then <math|x<rsup|2>\<in\><around*|(|\<bbb-Q\>-\<bbb-Z\>|)>>, <math|x<rsup|2>\<nin\>\<bbb-N\>>.
+
+  <space|2em>By (a),(b), so that <math|If x<rsup|2>\<nin\>S and x<rsup|2>\<in\>\<bbb-N\> ,then x\<nin\>\<bbb-Q\>.<rsub|>>\ 
+
+  <space|2em>So that if <math|x\<in\><around*|(|\<bbb-N\>-S|)>,then <sqrt|x>\<nin\>\<bbb-Q\>.><space|1em>\<box\>
+
+  \;
+
+  <strong|<large|<\padded-center>
+    Exercise 3
+  </padded-center>>>
+
+  <space|2em>Prove Proposition 1.15.
+
+  \;
+
+  <space|2em>注意点：
+
+  <space|2em>数学的显然：形式的显然&逻辑的显然；不可以有经验上的显然
+
+  <space|2em>数学的等号：逻辑上的同一
+
+  \;
+
+  <\samp>
+    <strong|1.15<space|1em>Proposition><space|1em><with|font-shape|italic|The axioms for multiplication imply the following statements.>
+
+    <\with|font-shape|italic>
+      <space|2em>(a)<space|1em> If <math|x\<neq\>0> and <math|<with|color|blue|x*y>=<with|color|orange|x*z>> then <math|y=z>.
+
+      <space|2em>(b)<space|1em>If <math|x\<neq\>0> and <math|x*y=x*> then <math|y=1>.
+
+      <space|2em>(c)<space|1em>If <math|x\<neq\>0> and <math|x*y=1*> then <math|y=>1/x.
+
+      <space|2em>(d)<space|1em>If <math|x\<neq\>0> then <math|1/<around*|(|1/x|)>=x>.
+    </with>
+
+    <space|2em>The proof is so similar to that of Proposition 1.14 that we omit it.
+  </samp>
+
+  \;
+
+  \;
+
+  <strong|Proof>
+
+  <space|2em>If <math|x\<neq\>0> and <math|x*y=x*z>, the axioms (M) give
+
+  \;
+
+  <\equation*>
+    y=1\<cdot\>y=<around*|(|<frac|1|x>\<cdot\>x|)>\<cdot\>y=<frac|1|x>\<cdot\><around*|(|<with|color|blue|x\<cdot\>y>|)>=<frac|1|x>\<cdot\><around*|(|<with|color|blue|<with|color|orange|x\<cdot\>z>>|)>=<around*|(|<frac|1|x>\<cdot\>x|)>\<cdot\>z=1\<cdot\>z=z.
+  </equation*>
+
+  <space|2em>This proves <with|font-shape|italic|(a)>. Take <math|z=1> in <with|font-shape|italic|(a)> to obtain <with|font-shape|italic|(b)>. Take <math|z=1/x> in <with|font-shape|italic|(a)> to obtain <with|font-shape|italic|(c)>.
+
+  <space|2em>Since <math|<frac|1|x>\<cdot\>x><math|>=1, <with|font-shape|italic|(c)> (with <math|<frac|1|x>> in place of <math|x>) gives <with|font-shape|italic|(d)>.
+
+  \;
+
+  <strong|<\large>
+    <\padded-center>
+      Exercise 4
+    </padded-center>
+  </large>>
+
+  <space|2em>Let <with|font-shape|italic|E >be a <with|color||<underline|nonempty>> subset of an ordered set; suppose \<alpha\> is a lower bound of <with|font-shape|italic|E >and <with|font-shape|italic|\<beta\> >is an upper bound of <with|font-shape|italic|E. >Prove that \<alpha\> \<leqslant\> \<beta\> .
+
+  \;
+
+  <strong|Proof>
+
+  <space|2em>We know <math|\<forall\>x\<in\>E,\<alpha\>\<leqslant\>x and x\<leqslant\>\<beta\>>.
+
+  <space|2em>Since <math|<with|color||<underline|E\<neq\>\<varnothing\>>>>, there exists <math|x\<in\>E> such that <math|\<alpha\>\<leqslant\>x and x\<leqslant\>\<beta\>>, which implies \<alpha\> \<leqslant\> \<beta\>.
+
+  \;
+
+  <\padded-center>
+    <\wide-tabular>
+      <tformat|<twith|table-width|0.95par>|<cwith|1|1|1|1|cell-tborder|1ln>|<cwith|1|1|1|1|cell-bborder|1ln>|<cwith|1|1|1|1|cell-lborder|1ln>|<cwith|1|1|1|1|cell-rborder|1ln>|<twith|table-rborder|0ln>|<twith|table-rsep|0fn>|<twith|table-lsep|0par>|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|1|1|1|1|cell-lsep|0.025par>|<cwith|1|1|1|1|cell-rsep|0.025par>|<cwith|1|1|1|1|cell-tsep|0.025par>|<cwith|1|1|1|1|cell-width|>|<cwith|1|1|1|1|cell-bsep|0.04par>|<table|<row|<\cell>
+        <\padded-center>
+          ～～～～～～～～～～～～～～～～～～～～～～～ NOTES ～～～～～～～～～～～～～～～～～～～～～～～
+        </padded-center>
+
+        <\itemize-dot>
+          <item>不显然，你还证明个锤子
+
+          <item>序结构，代数结构，拓扑结构
+
+          <item>不要依赖具体的例子，小心<underline|边角案例（corner case）>
+        </itemize-dot>
+      </cell>>>>
+    </wide-tabular>
+  </padded-center>
+
+  <space|2em>
+
+  <with|gr-mode|<tuple|edit|point>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|1par|0.15par|center>|gr-grid|<tuple|cartesian|<point|0|0>|2>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|cartesian|<point|0|0>|1>|gr-arrow-end|\<gtr\>|gr-color|blue|<graphics||<with|arrow-end|\<gtr\>|<line|<point|-8|0>|<point|8.0|0.0>>>|<with|color|orange|<point|3.9|0>>|<with|color|orange|<point|5|0>>|<with|color|orange|<point|6|0>>|<with|color|dark green|<point|-6|0>>|<with|color|dark green|<point|-4|0>>|<with|color|dark green|<point|-5|0>>|<with|color|dark green|<text-at|lower bounds|<point|-6.038622833708161|-0.6023151210477578>>>|<with|color|orange|<text-at|<strong|>upper bounds|<point|3.91945363143273|-0.5543865101203863>>>|<with|color|blue|<text-at|E|<point|-0.17741103320545049|0.392737134541606>>>|<text-at|S|<point|8.300013229263131|0.0>>|<with|color|orange|<text-at|\<beta\>|<point|5|0.5>>>|<with|color|dark green|<text-at|\<alpha\>|<point|-5.093881465802355|0.4240838735282446>>>|<with|color|blue|<point|0|0>>|<with|color|blue|<point|-2|0>>|<with|color|blue|<point|-1.8|0>>|<with|color|blue|<point|-1.4|0>>|<with|color|blue|<point|-0.8|0>>|<with|color|blue|<point|0.8|0>>|<with|color|blue|<point|2|0>>|<with|color|blue|<point|1.8|0>>|<with|color|blue|<point|1.4|0>>>>
+
+  \;
+
+  <strong|<\large>
+    <\padded-center>
+      Exercise 5
+    </padded-center>
+  </large>>
+
+  <space|2em><help-balloon|Let A be a nonempty set of real numbers which is bounded below|There exists inf<math|A\<in\>\<bbb-R\>>, since \<bbb-R\> has the greatest-lower-bound property (see 1.19,<space|1em>1.11 Theorem).|left|Bottom>. <underline|Let <help-balloon|<math|-A>|The notation "<math|-A>" is a new convention. The meaning of "<math|->" is different in "<math|-A>" and "<math|-x>".|left|Bottom> be the set of all numbers <help-balloon|<math|-x>|It's the addictive invers of <math|x>.|left|Bottom>, where <math|x\<in\>A>.> Prove that\ 
+
+  <\padded-center>
+    <math|<text|inf>A=-sup<around*|(|-A|)>>
+  </padded-center>
+
+  <strong|Proof>
+
+  <space|2em>Let <help-balloon|inf<math|A=\<alpha\>>|Real number \<alpha\> is the infimum/greatest-lower-bound of A.|left|Bottom>:
+
+  \;
+
+  <\equation>
+    <with|color|blue|<help-balloon|\<alpha\> is <text|a> lower bound of A <label|3>.|<text|see 1.8 Definition (i)>|left|bottom>>
+  </equation>
+
+  <\equation>
+    <help-balloon|<with|color|dark green|If \<beta\>\<gtr\>\<alpha\> then \<beta\> is not <text|a> lower bound of A><label|4>.|<text|see 1.8 Definition (ii). <math|\<beta\>=\<alpha\>+\<varepsilon\>.>>|left|Bottom>
+  </equation>
+
+  <space|2em><help-balloon|(<reference|3>) implies that <math|<with|color|blue|\<forall\>x\<in\>A,x\<geqslant\>\<alpha\>>>.|see 1.7 Definition|left|Bottom> <underline|Since all numbers <math|-x> form <math|-A> where <math|x\<in\>A>,> <math|<with|color|blue|\<forall\>-x\<in\>-A,x\<geqslant\>\<alpha\>>>. <help-balloon|Thus <math|<with|color|blue|\<forall\>-x\<in\>-A,-x\<leqslant\>-\<alpha\>>>.|<math|x\<geqslant\>\<alpha\>\<Rightarrow\>x-x-\<alpha\>\<geqslant\>\<alpha\>-x-\<alpha\>\<Rightarrow\>-\<alpha\>\<geqslant\>-x. <around*|(|see 1.17 Definition|)>>|left|Bottom> <help-balloon|Therefore <with|color|blue|<math|\<forall\>x\<in\>-A,x\<leqslant\>-\<alpha\>>>|Simply replace "<math|-x>" with "<math|x>"|left|Bottom>. It proves that <math|-\<alpha\>> is an upper bound of <math|-A>.
+
+  <space|2em>(<reference|4>) implies that <with|color|dark green|<with|color|dark green|<math|If \<beta\>\<gtr\>\<alpha\> then <help-balloon|\<exists\>x\<in\>A,x\<less\>\<beta\>|<text|It's the negation of <math|\<forall\>x\<in\>A,x\<geqslant\>\<alpha\>>.>|left|Bottom>>>>. <underline|Since all numbers <math|-x> form <math|-A> where <math|x\<in\>A>,> <with|color|dark green|<with|color|dark green|<math|If \<beta\>\<gtr\>\<alpha\> then \<exists\>-x\<in\>-A,x\<less\>\<beta\>>>>. <help-balloon|Thus <with|color|dark green|<with|color|dark green|<math|If-\<beta\>\<less\>-\<alpha\> then \<exists\>-x\<in\>-A,-x\<gtr\>-\<beta\>>>>.|<math|\<beta\>\<gtr\>\<alpha\>\<Rightarrow\>-\<beta\>\<less\>-\<alpha\>. x\<less\>\<beta\>\<Rightarrow\>-x\<gtr\>-\<beta\>.>|left|Bottom> <help-balloon|Therefore <with|color|dark green|<with|color|dark green|<math|If-\<beta\>\<less\>-\<alpha\> then \<exists\>x\<in\>-A,x\<gtr\>-\<beta\>>>>|Simply replace "<math|-x>" with "<math|x>"|left|Bottom>. Let <math|-\<beta\>=\<gamma\>>. Hence <with|color|dark green|<with|color|dark green|<math|If\<gamma\>\<less\>-\<alpha\> then \<exists\>x\<in\>-A,x\<gtr\>\<gamma\>>>>. It proves that <math|-\<alpha\>=sup<around*|(|-A|)>>.<space|1em>\<box\>
+
+  <\padded-center>
+    <\wide-tabular>
+      <tformat|<twith|table-width|0.95par>|<cwith|1|1|1|1|cell-tborder|1ln>|<cwith|1|1|1|1|cell-bborder|1ln>|<cwith|1|1|1|1|cell-lborder|1ln>|<cwith|1|1|1|1|cell-rborder|1ln>|<twith|table-rborder|0ln>|<twith|table-rsep|0fn>|<twith|table-lsep|0par>|<cwith|1|1|1|1|cell-hyphen|t>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|1|1|1|1|cell-lsep|0.025par>|<cwith|1|1|1|1|cell-rsep|0.025par>|<cwith|1|1|1|1|cell-tsep|0.025par>|<cwith|1|1|1|1|cell-width|>|<cwith|1|1|1|1|cell-bsep|0.04par>|<table|<row|<\cell>
+        <\padded-center>
+          ～～～～～～～～～～～～～～～～～～～～～～～ NOTES ～～～～～～～～～～～～～～～～～～～～～～～
+        </padded-center>
+
+        <\itemize-dot>
+          <item>注意到 <underline|<math|-A> 与 <math|-x> 中负号的意义并不相同>\ 
+
+          <math|-x> 是 <math|x> 的加法逆元，而<help-balloon|加法逆元的唯一性|域公理(A5)|left|Bottom>构成了<underline|<math|A\<rightarrow\>-A>的<help-balloon|双射|详见第二章2.2|left|Bottom>关系>，<math|A >与<math|-A><help-balloon|等价|详见第二章2.3|left|Bottom>
+
+          <item>1.5 定义了“序”，1.12 定义了“域”，此时“序”和“域”还是孤立的概念
+
+          直到 1.17 用<help-balloon|两条规则|(i)<math|y\<less\>z\<rightarrow\>x+y\<less\>x+z>.(ii)<math|x,y\<gtr\>0\<rightarrow\>x*y\<gtr\>0.>|left|Bottom>定义了“有序域”，才把这两个概念联系起来
+        </itemize-dot>
+      </cell>>>>
+    </wide-tabular>
+  </padded-center>
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-bot|20mm>
+    <associate|page-crop-marks|>
+    <associate|page-even|10mm>
+    <associate|page-even-footer|<htab|5mm><htab|5mm>>
+    <\associate|page-even-header>
+      \;
+    </associate>
+    <associate|page-medium|paper>
+    <associate|page-odd|10mm>
+    <associate|page-odd-footer|<htab|5mm><htab|5mm>>
+    <\associate|page-odd-header>
+      \;
+    </associate>
+    <associate|page-right|10mm>
+    <associate|page-screen-margin|true>
+    <associate|page-screen-top|15mm>
+    <associate|page-shrink|1fn>
+    <associate|page-top|25mm>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|1|<tuple|1|2>>
+    <associate|2|<tuple|2|2>>
+    <associate|3|<tuple|3|5>>
+    <associate|4|<tuple|4|5>>
+  </collection>
+</references>
