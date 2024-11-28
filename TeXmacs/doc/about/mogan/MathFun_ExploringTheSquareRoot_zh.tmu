@@ -1,0 +1,236 @@
+<TMU|<tuple|1.0.5|1.2.9.5>>
+
+<style|<tuple|generic|goldfish|guile|reduced-margins|chinese>>
+
+<\body>
+  <doc-data|<doc-title|趣味数学：探索<math|<sqrt|2>>>|<doc-author|<author-data|<author-name|<name|MathAgape>>|<author-email|nian@liii.pro>>>>
+
+  \;
+
+  <section|在平面几何上发现<math|<sqrt|2>>>
+
+  <subsection|用代码画出直角三角形>
+
+  <\session|goldfish|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (draw
+
+      \ (axis-x -2 2) (axis-y -2 2)
+
+      \ (pt 0 0) (pt 1 0) (pt 1 1)
+
+      \ (triangle (pt 0 0) (pt 1 0) (pt 1 1)))
+    <|unfolded-io>
+      <with|gr-edit-grid|<tuple|cartesian|<point|0|0>|1>|gr-auto-crop|true|<graphics||<with|arrow-end|\<gtr\>|color|#a0a0a0|<line|<point|-2|0>|<point|2|0>>>|<with|arrow-end|\<gtr\>|color|#a0a0a0|<line|<point|0|-2>|<point|0|2>>>|<point|0|0>|<point|1|0>|<point|1|1>|<line|<point|0|0>|<point|1|0>|<point|1|1>|<point|0|0>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define (draw . objects)
+
+      \ \ ‘(with "gr-edit-grid" (tuple "cartesian" (point "0" "0") "1") "gr-auto-crop" "true" (graphics "" ,@objects)))
+    <|unfolded-io>
+      <goldfish-result|draw>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define (pt x y)
+
+      \ \ ‘(point ,(number-\<gtr\>string x) ,(number-\<gtr\>string y)))
+    <|unfolded-io>
+      <goldfish-result|pt>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define (axis-x x1 x2)
+
+      \ \ ‘(with "arrow-end" "\<less\>gtr\<gtr\>" "color" "#a0a0a0" (line ,(pt x1 0) ,(pt x2 0))))
+    <|unfolded-io>
+      <goldfish-result|axis-x>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define (axis-y y1 y2)
+
+      \ \ ‘(with "arrow-end" "\<less\>gtr\<gtr\>" "color" "#a0a0a0" (line ,(pt 0 y1) ,(pt 0 y2))))
+    <|unfolded-io>
+      <goldfish-result|axis-y>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define (triangle vertex1 vertex2 vertex3)
+
+      \ \ ‘(line ,vertex1 ,vertex2 ,vertex3 ,vertex1))
+    <|unfolded-io>
+      <goldfish-result|triangle>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  <subsection|用绘图工具添加圆和点>
+
+  <\session|goldfish|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (draw
+
+      \ (axis-x -2 2) (axis-y -2 2)
+
+      \ (pt 0 0) (pt 1 0) (pt 1 1)
+
+      \ (triangle (pt 0 0) (pt 1 0) (pt 1 1)))
+    <|unfolded-io>
+      <with|gr-edit-grid|<tuple|cartesian|<point|0|0>|1>|gr-auto-crop|true|gr-mode|<tuple|group-edit|edit-props>|<graphics||<with|arrow-end|\<gtr\>|color|#a0a0a0|<line|<point|-2|0>|<point|2|0>>>|<with|arrow-end|\<gtr\>|color|#a0a0a0|<line|<point|0|-2>|<point|0|2>>>|<point|0|0>|<point|1|0>|<point|1|1>|<line|<point|0|0>|<point|1|0>|<point|1|1>|<point|0|0>>|<circle|<point|0|0>|<point|1.0|1.0>>|<with|color|red|<point|1.41421|1.11022e-16>>>>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  选中图，复制到Mogan Scheme，粘贴：
+
+  <scm|(with "gr-edit-grid" (tuple "cartesian" (point "0" "0") "1") "gr-auto-crop" "true" "gr-mode" (tuple "group-edit" "edit-props") (graphics "" (with "arrow-end" "\<gtr\>" "color" "#a0a0a0" (line (point "-2" "0") (point "2" "0"))) (with "arrow-end" "\<gtr\>" "color" "#a0a0a0" (line (point "0" "-2") (point "0" "2"))) (point "0" "0") (point "1" "0") (point "1" "1") (line (point "0" "0") (point "1" "0") (point "1" "1") (point "0" "0")) (circle (point "0" "0") (point "1.0" "1.0")) (with "color" "red" (point "1.41421" "1.11022e-16"))))>
+
+  注意到红色点的横座标为1.41421
+
+  那么，这个<math|<sqrt|2>>的近似值是怎样被计算出的呢？
+
+  <section|用牛顿迭代法求<math|<sqrt|2>>的近似值>
+
+  <subsection|用脚本表格直观学习牛顿迭代法>
+
+  如果对<math|<sqrt|x>>的值有了一个猜测<math|y>，那么可以通过执行一个简单操作去得到一个更好的猜测：只需求出<math|y>和<math|<frac|x|y>>的平均值。例如要求<math|<sqrt|2>>的平方根，即<math|x=2>，假定猜测的初始值为<math|guess=1>
+
+  （试试在黄色表格上按回车！要先安装maxima！）
+
+  <calc-table|+2A43TetokzOuR2N|<numeric-dot-table|<tformat|<cwith|2|4|2|-1|cell-background|pastel yellow>|<cwith|3|5|1|1|cell-background|pastel yellow>|<table|<row|<cell|<cell-inert|a1|猜测 \ <math|guess>>>|<cell|<cell-inert|b1|求商 \ <math|<frac|x|guess>=<frac|2|guess>>>>|<cell|<cell-inert|c1|新猜测 \ <math|<frac|guess+<frac|x|guess>|2>>>>>|<row|<cell|<cell-inert|a2|1>>|<cell|<cell-output|b2|=2/a2|<math|2>>>|<cell|<cell-output|c2|=float((a2+b2)/2)|<math|1.5>>>>|<row|<cell|<cell-output|a3|=c2|<math|1.5>>>|<cell|<cell-output|b3|=2/a3|<math|1.333333333333333>>>|<cell|<cell-output|c3|=(a3+b3)/2|<math|1.416666666666667>>>>|<row|<cell|<cell-output|a4|=c3|<math|1.416666666666667>>>|<cell|<cell-output|b4|=2/a4|<math|1.411764705882353>>>|<cell|<cell-output|c4|=(a4+b4)/2|<math|1.41421568627451>>>>|<row|<cell|<cell-output|a5|=c4|<math|1.41421568627451>>>|<cell|<cell-inert|b5|<text-dots>>>|<cell|<cell-inert|c5|<text-dots>>>>>>>>
+
+  <subsection|用代码求任意精度的<math|<sqrt|2>>近似值>
+
+  <\session|goldfish|default>
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define (good-enough? guess new-guess epsilon)
+
+      \ \ (\<less\> (abs (/ (- guess new-guess) guess)) epsilon))
+    <|unfolded-io>
+      <goldfish-result|good-enough?>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define (improve x guess)
+
+      \ \ (/ (+ guess (/ x guess)) 2))
+    <|unfolded-io>
+      <goldfish-result|improve>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (define* (my-sqrt x (epsilon 0.00000001))
+
+      \ \ (let loop ((guess 1.0))
+
+      \ \ \ \ (let ((new-guess (improve x guess)))
+
+      \ \ \ \ \ \ (if (good-enough? guess new-guess epsilon)
+
+      \ \ \ \ \ \ \ \ \ \ guess
+
+      \ \ \ \ \ \ \ \ \ \ (loop new-guess)))))
+    <|unfolded-io>
+      <goldfish-result|my-sqrt>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (my-sqrt 2)
+    <|unfolded-io>
+      <goldfish-result|1.4142135623746899>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (my-sqrt 2 0.1)
+    <|unfolded-io>
+      <goldfish-result|1.5>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  <section|<math|<sqrt|2>>引发第一次数学危机>
+
+  通过<math|<sqrt|2>>，我们注意到平面几何上的连续直线与有理数集<math|\<bbb-Q\>>构成的点集不能一一对应，有理数集<math|\<bbb-Q\>>不具有直线这样的连续性，相对直线它有无数个“洞”，是不完备的。这就是数学分析这门课的开端。
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-height|auto>
+    <associate|page-screen-margin|false>
+    <associate|page-type|letter>
+    <associate|page-width|auto>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|?>>
+    <associate|auto-2|<tuple|1.1|?>>
+    <associate|auto-3|<tuple|1.2|?>>
+    <associate|auto-4|<tuple|2|?>>
+    <associate|auto-5|<tuple|2.1|?>>
+    <associate|auto-6|<tuple|2.2|?>>
+    <associate|auto-7|<tuple|3|?>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>在平面几何上发现<with|mode|<quote|math>|<sqrt|2>>> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|1.1<space|2spc>用代码画出直角三角形 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2>>
+
+      <with|par-left|<quote|1tab>|1.2<space|2spc>用绘图工具添加圆和点 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-3>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>用牛顿迭代法求<with|mode|<quote|math>|<sqrt|2>>的近似值> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|2.1<space|2spc>用脚本表格直观学习牛顿迭代法 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5>>
+
+      <with|par-left|<quote|1tab>|2.2<space|2spc>用代码求任意精度的<with|mode|<quote|math>|<sqrt|2>>近似值 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-6>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc><with|mode|<quote|math>|<sqrt|2>>引发第一次数学危机> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-7><vspace|0.5fn>
+    </associate>
+  </collection>
+</auxiliary>

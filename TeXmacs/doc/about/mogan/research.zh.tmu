@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.5|1.2.9.7-rc3>>
+<TMU|<tuple|1.0.5|1.2.9.5>>
 
 <style|<tuple|tmdoc|chinese>>
 
@@ -37,22 +37,28 @@
 
   <section*|示例文档：我能用墨干能做什么？>
 
+  你可以使用墨干强大的<strong|数学模式>、<strong|绘图插件>、<strong|编程会话>（支持Scheme、Python等语言）功能，一站式撰写丰富、直观的可交互STEM（理工科）文档：试卷、讲义、论文、幻灯片课件、习题集\<ldots\>\<ldots\>写你所想！
+
   <\description>
-    <item*|数学>你可以使用墨干强大的数学公式排版功能撰写数学试卷、讲义、论文、幻灯片课件、习题集等。
+    <item*|数学>
 
     <\itemize>
+      <item><hlink|趣味数学讲义示例（中文）|MathFun_ExploringTheSquareRoot_zh.tmu>
+
       <item><hlink|高等数学（微积分）答疑示例（中文）|Calculus_ImproperIntegralTestForConvergence_zh.tmu>
 
       <item><hlink|Baby Rudin习题详解示例（英文）|BabyRudin_Solutions_Ch_1_en.tmu>
     </itemize>
 
-    <item*|计算机>你可以使用墨干强大的交互式编程轻松学习Scheme、Python等语言。
+    <item*|计算机>
 
     <\itemize>
-      <item>MIT经典计算机教材——SICP《计算机程序的构造和解释》
+      <item>MIT经典计算机教材——SICP《计算机程序的构造和解释》配套文档
 
       <\itemize>
         <item><hlink|SICP交互式教材示例（英文）|SICP_Book_Ch_1_en.tmu>
+
+        <item><hlink|SICP幻灯片课件示例（中文）|SICP_Beamer_3.tmu>
 
         <item><hlink|SICP习题详解示例（中文）|SICP_Solutions_1_11_zh.tmu>
       </itemize>
@@ -65,10 +71,10 @@
 
   \;
 
-  <section*|快速入门：我想快速上手体验墨干！（详细文档即将上线）>
+  <section*|快速入门：我想快速上手体验墨干！（更多详细文档即将上线）>
 
   <\itemize>
-    <item>如何输入数学公式？
+    <item><hlink|如何输入数学公式？|Mogan_MathematicalFormulas_zh.tmu>
 
     <\itemize>
       <item>数学模式
@@ -99,10 +105,10 @@
 
   \;
 
-  <section*|系统学习：我要完整、深入了解墨干的功能！（详细文档即将上线）>
+  <section*|深入学习：我要完整、本质了解墨干的功能！（更多详细文档即将上线）>
 
   <\itemize>
-    <item>认识软件界面
+    <item>认识软件界面！
 
     <\itemize>
       <item>菜单栏
@@ -114,7 +120,7 @@
       <item>焦点工具栏
     </itemize>
 
-    <item>使用结构化排版
+    <item>精通结构化排版！
 
     <\itemize>
       <item>普通文本
@@ -122,24 +128,30 @@
       <item>数学文本
     </itemize>
 
-    <item>源码与宏
+    <item><hlink|玩转源码！|Mogan_SourceCode_zh.tmu>
 
     <\itemize>
-      <item>查看源码
+      <item>如何查看源码？
 
-      <item>定制宏
+      <item>如何自定义样式和模板？
+
+      <item>如何自定义快捷键？
     </itemize>
 
-    <item>完整用户手册请点选菜单：<menu|Help|Manual>
+    <item>墨干用户手册
 
-    <item><TeXmacs>与墨干诸多操作大同小异，可作参考。
+    <\itemize>
+      <item>请点选菜单：<menu|Help|Manual> 来查看，善用搜索！
+    </itemize>
+
+    <item><TeXmacs>原生教程（与墨干诸多操作大同小异，可作参考）
 
     <\itemize>
       <item>视频<hlink|《A Quick tour of <TeXmacs>》|https://www.bilibili.com/video/BV1bo4y1D7wN/>（五分钟）
 
       <item>在线文档<hlink|《Getting started with <TeXmacs>》|http://git.tmml.wiki/texmacs/doc/raw/branch/master/about/welcome/start.en.tm>（三十分钟）、
 
-      <item>书籍<hlink|《The Jolly Writer》|https://www.scypress.com/book_info.html>，系统学习GNU <TeXmacs>的捷径
+      <item>书籍<hlink|《The Jolly Writer》|https://www.scypress.com/book_info.html>，系统学习GNU <TeXmacs>的捷径！
     </itemize>
 
     <item>墨干独有功能
@@ -221,7 +233,7 @@
     <\itemize>
       <item>墨客社区QQ群：934456971
 
-      <item>豆瓣小组：<slink|https://www.douban.com/group/texmacs/>
+      <item><TeXmacs> 豆瓣小组：<slink|https://www.douban.com/group/texmacs/>
     </itemize>
 
     <item>高效的Bug汇报方式：

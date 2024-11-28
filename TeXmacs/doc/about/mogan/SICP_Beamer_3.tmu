@@ -1,0 +1,435 @@
+<TMU|<tuple|1.0.5|1.2.9.5>>
+
+<style|<tuple|beamer|no-page-numbers|chinese|python>>
+
+<\body>
+  <\hide-preamble>
+    <assign|dfn|<macro|x|<strong|<arg|x>>>>
+  </hide-preamble>
+
+  <screens|<\shown>
+    <tit|零基础SICP：第3课>
+
+    <\wide-tabular>
+      <tformat|<cwith|2|-1|1|-1|cell-height|40px>|<cwith|2|-1|1|-1|cell-vmode|exact>|<table|<row|<\cell>
+        <very-large|<\sectional-normal-bold>
+          编程的基本原理
+        </sectional-normal-bold>>
+      </cell>|<\cell>
+        <very-large|<\sectional-normal-bold>
+          Elements of Programming
+        </sectional-normal-bold>>
+      </cell>>|<row|<\cell>
+        表达式
+      </cell>|<\cell>
+        Expressions
+      </cell>>|<row|<\cell>
+        命名与环境
+      </cell>|<\cell>
+        Naming and the Evironment
+      </cell>>|<row|<\cell>
+        组合式的求值
+      </cell>|<\cell>
+        Evaluating Combinations
+      </cell>>|<row|<\cell>
+        复合函数
+      </cell>|<\cell>
+        Compound Procedures
+      </cell>>|<row|<\cell>
+        函数应用的代换模型
+      </cell>|<\cell>
+        The Subsitution Model for Procedure Application
+      </cell>>|<row|<\cell>
+        条件表达式和谓词
+      </cell>|<\cell>
+        Conditional Expressions and Predicates
+      </cell>>|<row|<\cell>
+        \;
+      </cell>|<\cell>
+        \;
+      </cell>>|<row|<\cell>
+        线性递归和迭代
+      </cell>|<\cell>
+        Linear Recursion and Iteration
+      </cell>>|<row|<\cell>
+        树形递归
+      </cell>|<\cell>
+        Tree Recursion
+      </cell>>>>
+    </wide-tabular>
+  </shown>|<\hidden>
+    <tit|条件表达式和谓词—短路运算>
+
+    <\itemize>
+      <item>应用序求值（Scheme使用的是应用序求值）
+
+      <item>正则序求值
+    </itemize>
+
+    <subparagraph|案例分析：实现求绝对值的多种方式>
+
+    <\with|par-columns|2>
+      <\equation*>
+        <around|\||x|\|>=<around*|{|<tabular|<tformat|<cwith|1|-1|1|1|cell-halign|r>|<cwith|1|-1|2|2|cell-halign|l>|<cwith|1|-1|3|3|cell-halign|l>|<table|<row|<cell|x>|<cell|<with|mode|text|if>>|<cell|x\<gtr\>0,>>|<row|<cell|0>|<cell|<with|mode|text|if>>|<cell|x=0,>>|<row|<cell|-x>|<cell|<with|mode|text|if>>|<cell|x\<less\>0.>>>>>|\<nobracket\>>
+      </equation*>
+
+      <\session|scheme|default>
+        <\unfolded-io|Scheme] >
+          (define (abs1 x)
+
+          \ \ (cond ((\<gtr\> x 0) x)
+
+          \ \ \ \ \ \ \ \ ((= x 0) 0)
+
+          \ \ \ \ \ \ \ \ (else (- x))))
+        <|unfolded-io>
+          abs1
+        </unfolded-io>
+
+        <\unfolded-io|Scheme] >
+          (define (abs2 x)
+
+          \ \ (if (\<gtr\> x 0)
+
+          \ \ \ \ \ \ x
+
+          \ \ \ \ \ \ (- x)))
+        <|unfolded-io>
+          abs2
+        </unfolded-io>
+
+        <\unfolded-io|Scheme] >
+          (define (abs3 x)
+
+          \ \ (or (and (\<gtr\> x) x) (- x)))
+        <|unfolded-io>
+          abs3
+        </unfolded-io>
+
+        <\unfolded-io|Scheme] >
+          (abs1 1)
+        <|unfolded-io>
+          1
+        </unfolded-io>
+
+        <\unfolded-io|Scheme] >
+          (abs1 -1)
+        <|unfolded-io>
+          1
+        </unfolded-io>
+
+        <\input|Scheme] >
+          \;
+        </input>
+      </session>
+    </with>
+
+    <\folded>
+      <\question>
+        为什么<scm|if>和<scm|cond>是必须的？
+      </question>
+    <|folded>
+      <\exercise>
+        使用<scm|if>实现<scm|and>和<scm|or>。
+      </exercise>
+
+      参考文档：<slink|https://www.scheme.com/tspl2d/grammar.html>
+    </folded>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|循环：求和>
+
+    <paragraph|案例分析：求和>
+
+    <\with|par-columns|2>
+      <\equation*>
+        <big|sum><rsub|i=1><rsup|n>i=1+2+\<cdots\>+n
+      </equation*>
+
+      \;
+
+      <\render-code>
+        result := 0
+
+        <algo-for|i \<leftarrow\> 1 <render-to> n|result := result + i>
+      </render-code>
+    </with>
+
+    <hrule>
+
+    <\with|par-columns|2>
+      <\session|scheme|default>
+        <\folded-io|Scheme] >
+          (define result 0)
+        <|folded-io>
+          0
+        </folded-io>
+
+        <\input|Scheme] >
+          (for (x (list 1 2 3 4))
+
+          \ \ (set! result (+ result x)))
+        </input>
+
+        <\folded-io|Scheme] >
+          result
+        <|folded-io>
+          10
+        </folded-io>
+
+        <\input|Scheme] >
+          \;
+        </input>
+      </session>
+
+      <\session|python|default>
+        <\input>
+          \<gtr\>\<gtr\>\<gtr\>\ 
+        <|input>
+          def sum_n(n):
+
+          \ \ \ \ result= 0
+
+          \ \ \ \ for i in range(n):
+
+          \ \ \ \ \ \ \ \ result= result + (i + 1)
+
+          \ \ \ \ return result
+        </input>
+
+        <\folded-io>
+          \<gtr\>\<gtr\>\<gtr\>\ 
+        <|folded-io>
+          sum_n(3)
+        <|folded-io>
+          6
+        </folded-io>
+
+        <\folded-io>
+          \<gtr\>\<gtr\>\<gtr\>\ 
+        <|folded-io>
+          list(range(3))
+        <|folded-io>
+          [0, 1, 2]
+        </folded-io>
+
+        <\input>
+          \<gtr\>\<gtr\>\<gtr\>\ 
+        <|input>
+          \;
+        </input>
+      </session>
+    </with>
+
+    <\exercise>
+      使用Scheme实现range。
+    </exercise>
+  </hidden>|<\hidden>
+    <tit|线性递归：求和>
+
+    <\session|scheme|default>
+      <\unfolded-io|Scheme] >
+        (define (sum start end)
+
+        \ \ (cond ((\<gtr\> start end) 0)
+
+        \ \ \ \ \ \ \ \ ((= start end) end)
+
+        \ \ \ \ \ \ \ \ (else (+ start (sum (+ start 1) end)))))
+
+        \;
+      <|unfolded-io>
+        sum
+      </unfolded-io>
+
+      <\unfolded-io|Scheme] >
+        (sum 2 3)
+      <|unfolded-io>
+        5
+      </unfolded-io>
+
+      <\input|Scheme] >
+        \;
+      </input>
+    </session>
+
+    <\with|par-columns|2|par-left|1fn|par-right|4fn|par-columns-sep|0fn>
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|<big|sum><rsup|100><rsub|i=1>i>|<cell|=>|<cell|1+<big|sum><rsup|100><rsub|i=2>i>>|<row|<cell|>|<cell|=>|<cell|1+<around*|(|2+<big|sum><rsub|i=3><rsup|100>i|)>>>|<row|<cell|>|<cell|=>|<cell|1+<around*|(|2+<around*|(|3+<big|sum><rsub|i=4><rsup|100>i|)>|)>>>|<row|<cell|>|<cell|=>|<cell|\<ldots\>>>|<row|<cell|>|<cell|=>|<cell|<with|math-display|false|1+<around*|(|2+\<cdots\>+<around*|(|99+<big|sum><rsub|i=100><rsup|100>i|)>|)>>>>|<row|<cell|>|<cell|=>|<cell|1+<around*|(|2+<around*|(|3+\<cdots\>+<around*|(|99+100|)>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|1+<around*|(|2+<around*|(|3+\<cdots\>+<around*|(|98+199|)>|)>|)>>>|<row|<cell|>|<cell|=>|<cell|\<ldots\>>>|<row|<cell|>|<cell|=>|<cell|1+5049>>|<row|<cell|>|<cell|=>|<cell|5050>>>>
+      </eqnarray*>
+    </with>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|树形递归：斐波那契数列>
+
+    <\folded>
+      <\equation*>
+        <with|mode|text|Fib><around*|(|n|)>=<around*|{|<tabular|<tformat|<cwith|1|-1|1|1|cell-halign|l>|<cwith|1|-1|2|2|cell-halign|l>|<table|<row|<cell|0>|<cell|<with|mode|text|if> n=0,>>|<row|<cell|1>|<cell|<with|mode|text|if> n=1,>>|<row|<cell|<with|mode|text|Fib><around*|(|n-1|)>+<with|mode|text|Fib><around*|(|n-2|)>>|<cell|<with|mode|text|otherwise>.>>>>>|\<nobracket\>>
+      </equation*>
+    <|folded>
+      <scm|<\with|par-mode|center>
+        <tree|fib 5|<tree|fib 4|<tree|fib 3|<tree|fib 2|<tree|fib 1|1>|<tree|fib 0|0>>>|<tree|fib 2|<tree|fib 1|1>|<tree|fib 0|0>>>|<tree|fib 3|<tree|fib 2|<tree|fib 1|1>|<tree|fib 0|0>>>>
+      </with>>
+    </folded>
+
+    <\session|scheme|default>
+      <\folded-io|Scheme] >
+        (define (fib n)
+
+        \ \ (cond ((= n 0) 0)
+
+        \ \ \ \ \ \ \ \ ((= n 1) 1)
+
+        \ \ \ \ \ \ \ \ (else (+ (fib (- n 1)) (fib (- n 2))))))
+      <|folded-io>
+        fib
+      </folded-io>
+
+      <\folded-io|Scheme] >
+        (fib 2)
+      <|folded-io>
+        1
+      </folded-io>
+
+      <\input|Scheme] >
+        \;
+      </input>
+    </session>
+  </hidden>|<\hidden>
+    <tit|树形递归\<rightarrow\>迭代>
+
+    <\equation*>
+      <with|mode|text|Fib><around*|(|n|)>=<around*|{|<tabular|<tformat|<cwith|1|-1|1|1|cell-halign|l>|<cwith|1|-1|2|2|cell-halign|l>|<table|<row|<cell|0>|<cell|<with|mode|text|if> n=0,>>|<row|<cell|1>|<cell|<with|mode|text|if> n=1,>>|<row|<cell|<with|mode|text|Fib><around*|(|n-1|)>+<with|mode|text|Fib><around*|(|n-2|)>>|<cell|<with|mode|text|otherwise>.>>>>>|\<nobracket\>>
+    </equation*>
+
+    <\equation*>
+      <tabular|<tformat|<table|<row|<cell|0>|<cell|1>|<cell|2>|<cell|3>|<cell|4>|<cell|5>|<cell|\<ldots\>>|<cell|n-2>|<cell|n-1>|<cell|n>>|<row|<cell|0>|<cell|1>|<cell|2>|<cell|3>|<cell|5>|<cell|8>|<cell|\<ldots\>>|<cell|f<around*|(|n-2|)>>|<cell|f<around*|(|n-1|)>>|<cell|f<around*|(|n-1|)>+f<around*|(|n-2|)>>>|<row|<cell|a<rsub|0>=0>|<cell|b<rsub|0>=1>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|a<rsub|1>=1>|<cell|b<rsub|1>=2>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|a<rsub|2>=2>|<cell|b<rsub|2>=3>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|>|<cell|>|<cell|>|<cell|a<rsub|3>=b<rsub|2>>|<cell|b<rsub|3>=a<rsub|2>+b<rsub|2>>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>>>>
+    </equation*>
+
+    <\with|par-columns|2>
+      <\algorithm>
+        <\math>
+          a<rsub|0>\<leftarrow\> 0
+
+          b <rsub|0>\<leftarrow\> 1
+
+          <\algo-for|i \<leftarrow\> 1 <render-to> n>
+            a<rsub|i> \<leftarrow\> b<rsub|i-1>
+
+            b <rsub|i>\<leftarrow\> a<rsub|i-1> + b<rsub|i-1>
+          </algo-for>
+
+          <render-result>b<rsub|n>
+        </math>
+      </algorithm>
+
+      <\algorithm>
+        a \<leftarrow\> 0
+
+        b <math|\<leftarrow\>> 1
+
+        <\algo-for|i \<leftarrow\> 1 <render-to> n>
+          old_b \<leftarrow\> b
+
+          b \<leftarrow\> a + b
+
+          a \<leftarrow\> old_b
+        </algo-for>
+
+        <render-result> b
+      </algorithm>
+    </with>
+
+    \;
+  </hidden>|<\hidden>
+    <tit|分治法：找零问题>
+
+    <\itemize>
+      <item>无限多一元纸币
+
+      <item>无限多五元纸币
+
+      <item>无限多十元纸币
+
+      <item>无限多五十元纸币
+    </itemize>
+
+    <\folded-documentation>
+      <\question>
+        \<yen\>6有几种找零方式？
+      </question>
+    <|folded-documentation>
+      \<yen\>6=6\<times\>\<yen\>1, \<yen\>6=1\<times\>\<yen\>5+1
+    </folded-documentation>
+
+    <\folded-documentation>
+      <\question>
+        \<yen\>16有几种找零方式？
+      </question>
+    <|folded-documentation>
+      \;
+    </folded-documentation>
+
+    <\folded-documentation>
+      <\question>
+        对于\<yen\>n，一共有多少种找零方式？
+      </question>
+    <|folded-documentation>
+      <\equation*>
+        f<around*|(|n,<around*|[|1,5,10,50|]>|)>=f<around*|(|n,<around*|(|1|)>|)>+f<around*|(|n,<around*|(|5|)>|)>+f<around*|(|n,<around*|(|10|)>|)>+f<around*|(|n,<around*|(|50|)>|)>+f<around*|(|n,<around*|(|1,5|)>|)>+f<around*|(|n,<around*|(|1,10|)>|)>+f<around*|(|n,<around*|(|1,50|)>|)>+f<around*|(|n,<around*|(|5,10|)>|)>+f<around*|(|n,<around*|(|5,50|)>|)>+f<around*|(|n,<around*|(|10,50|)>|)>+f<around*|(|n,<around*|(|1,5,10|)>|)>+f<around*|(|n,<around*|(|1,5,50|)>|)>+f<around*|(|n,<around*|(|5,10,50|)>|)>+f<around*|(|n,<around*|(|1,5,10,50|)>|)>
+      </equation*>
+
+      <\equation*>
+        f<around*|(|n,<around*|[|1,5,10,50|]>|)>=f<around*|(|n,<around*|[|5,10,50|]>|)>+f<around*|(|n-1,<around*|[|1,5,10,50|]>|)>
+      </equation*>
+    </folded-documentation>
+  </hidden>|<\hidden>
+    <tit|总结>
+
+    <\itemize>
+      <item>回顾应用序求值和正则序求值
+
+      <item>深入理解<scm|if>和<scm|cond>
+
+      <item>编程中最基础的概念之一：循环
+
+      <item>使用递归实现循环，基于循环理解递归
+
+      <item>实战：线性递归和树形递归
+
+      <item>技巧：将递归实现改为迭代实现
+
+      <item>抽象：利用递归解决现实中的找零问题
+    </itemize>
+  </hidden>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|info-flag|minimal>
+    <associate|marked-color|pastel yellow>
+    <associate|page-medium|beamer>
+    <associate|page-screen-margin|false>
+    <associate|par-columns|1>
+    <associate|preamble|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|?|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/SICP/slide03.tm>>
+    <associate|auto-2|<tuple|1|?|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/SICP/slide03.tm>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <with|par-left|<quote|4tab>|案例分析：实现求绝对值的多种方式 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1>>
+
+      <with|par-left|<quote|3tab>|案例分析：求和 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2>>
+    </associate>
+  </collection>
+</auxiliary>
