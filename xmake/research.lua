@@ -322,6 +322,31 @@ target("research_packager") do
         local app_dir = target:installdir() .. "/../../"
         os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
         os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
-        os.execv("/usr/bin/sudo /usr/bin/hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir)
+
+        local hdiutil_command= "/usr/bin/sudo /usr/bin/hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir
+        io.write("Execute: ")
+        print(hdiutil_command)
+        print("Remove /usr/bin/sudo if you want to package it by your own")
+
+        local maxRetries= 5
+        local retries = 0
+        while retries <= maxRetries do
+            try {
+                function ()
+                    os.execv(hdiutil_command)
+                    os.exit(0)
+                end,
+                catch {
+                    function (errors)
+                        retries = retries + 1
+                        io.write("Retrying, attempt ")
+                        print(retries)
+                        if retries > maxRetries then
+                            os.raise("Command failed after " .. maxRetries .. " retries")
+                        end
+                    end
+                }
+            }
+        end
     end)
 end
