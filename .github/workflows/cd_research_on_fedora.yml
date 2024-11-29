@@ -34,7 +34,7 @@ jobs:
         run: |
           xmake config -m release -vD --yes
           QA_RPATHS=0x0001 xmake pack -vD -f rpm research
-          cp build/xpack/research/x86_64/*rpm mogan-research-v1.2.9.7-rc6-fedora41.rpm
+          cp build/xpack/research/x86_64/*rpm mogan-research-v1.2.9.7-rc7-fedora41.rpm
       - name: Upload 
         uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
