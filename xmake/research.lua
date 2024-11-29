@@ -297,25 +297,6 @@ target("research") do
     end
 end
 
-function execWithRetry(command, args, maxRetries, retryDelay)
-    local retries = 0
-    local result
-
-    while retries <= maxRetries do
-        result = os.execute(command .. " " .. table.concat(args, " "))
-        if result then
-            return true, "Command executed successfully"
-        else
-            retries = retries + 1
-            if retries > maxRetries then
-                return false, "Command failed after " .. maxRetries .. " retries"
-            else
-                -- os.execute("sleep " .. retryDelay)
-            end
-        end
-    end
-end
-
 target("research_packager") do
     set_enabled(is_plat("macosx") and is_mode("release"))
     set_kind("phony")
@@ -341,12 +322,27 @@ target("research_packager") do
         local app_dir = target:installdir() .. "/../../"
         os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
         os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
-        hdiutil_command= "/usr/bin/sudo /usr/bin/hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir
-        local success, message= execWithRetry(hdiutil_command, {}, 5, 1)
-        if success then
-            print(message)
-        else
-            print("Error: " .. message)
+
+        local hdiutil_command= "/usr/bin/sudo /usr/bin/hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir
+        io.write("Execute: ")
+        print(hdiutil_command)
+        print("Remove /usr/bin/sudo if you want to package it by your own")
+
+        local maxRetries= 5
+        local retries = 0
+        while retries <= maxRetries do
+            result = os.execv(hdiutil_command)
+            if result then
+                return true, "Command executed successfully"
+            else
+                retries = retries + 1
+                if retries > maxRetries then
+                    return false, "Command failed after " .. maxRetries .. " retries"
+                else
+                    io.write("Retrying, attempt ")
+                    print(retries)
+                end
+            end
         end
     end)
 end
