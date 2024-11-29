@@ -331,18 +331,21 @@ target("research_packager") do
         local maxRetries= 5
         local retries = 0
         while retries <= maxRetries do
-            result = os.execv(hdiutil_command)
-            if result then
-                return true, "Command executed successfully"
-            else
-                retries = retries + 1
-                if retries > maxRetries then
-                    return false, "Command failed after " .. maxRetries .. " retries"
-                else
-                    io.write("Retrying, attempt ")
-                    print(retries)
-                end
-            end
+            try {
+                function ()
+                    os.execv(hdiutil_command)
+                end,
+                catch {
+                    function (errors)
+                        retries = retries + 1
+                        io.write("Retrying, attempt ")
+                        print(retries)
+                        if retries > maxRetries then
+                            os.raise("Command failed after " .. maxRetries .. " retries")
+                        end
+                    end
+                }
+            }
         end
     end)
 end
