@@ -334,6 +334,7 @@ target("research_packager") do
             try {
                 function ()
                     os.execv(hdiutil_command)
+                    os.exit(0)
                 end,
                 catch {
                     function (errors)
