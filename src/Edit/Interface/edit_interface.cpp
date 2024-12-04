@@ -828,6 +828,7 @@ edit_interface_rep::apply_changes () {
     if (tremble_count > 3) dw= (1 + min (tremble_count - 3, 25)) * 2 * pixel;
     SI /*P1= zpixel,*/ P2= 2 * zpixel, P3= 3 * zpixel;
     cursor             cu= get_cursor ();
+    copy_always= rectangles ();
     rectangle ocr (oc->ox + ((SI) ((oc->y1 - dw) * oc->slope)) - P3 - dw,
                    oc->oy + (oc->y1 - dw) - P3,
                    oc->ox + ((SI) ((oc->y2 + dw) * oc->slope)) + P2 + dw,
