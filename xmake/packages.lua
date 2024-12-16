@@ -31,7 +31,7 @@ end
 function add_requires_of_mogan()
     if not is_plat("wasm") then
         add_requires("cpptrace", {version = CPPTRACE_VERSION, system=false})
-        add_requires("zstd", {system = false})
+        add_requireconfs("cpptrace.libdwarf.zstd", {system = false, override=true})
     end
 
     tbox_configs = {hash=true, ["force-utf8"]=true, charset=true}
