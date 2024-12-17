@@ -28,6 +28,29 @@
 + SICP课本官网：https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html
 + R7RS Small: https://small.r7rs.org
 
+## 有基础SICP第二课
+1. [迭代求和](https://www.bilibili.com/video/BV1Z4xPeFEdz)
+2. [线性递归求和](https://www.bilibili.com/video/BV19HxTewEfz)
+3. [尾递归](https://www.bilibili.com/video/BV14Vx6e2EXY)
+4. [斐波那契数列](https://www.bilibili.com/video/BV1DqxpeTE1z)
+5. [树形递归和哈希表](https://www.bilibili.com/video/BV1KWxYeoEzk)
+6. [副作用](https://www.bilibili.com/video/BV1R84MezEa7)
+7. [函数库](https://www.bilibili.com/video/BV1x32sYvENV)
+8. [算法复杂度](https://www.bilibili.com/video/BV1SX26YQEA4)
+9. [求b的n次幂](https://www.bilibili.com/video/BV1Kc2rY7Eux)
+10. [矩阵快速幂](https://www.bilibili.com/video/BV1qJmLYwEXw)
+11. [欧几里得算法](https://www.bilibili.com/video/BV1c72oYQEzM)
+
+## 有基础SICP第一课
+1. [编程的基本原理](https://www.bilibili.com/video/BV1CobweCESn)
+2. [表达式的求值](https://www.bilibili.com/video/BV1rwbAegE1S)
+3. [命名与函数](https://www.bilibili.com/video/BV1EFtme4Esu)
+4. [代换模型](https://www.bilibili.com/video/BV1jRsye3ErU)
+5. [条件表达式和谓词](https://www.bilibili.com/video/BV1XqsXeRE39)
+6. [牛顿法求平方根](https://www.bilibili.com/video/BV1SqsqezEwn)
+7. [利用函数做抽象](https://www.bilibili.com/video/BV1wJxLeiEQ1)
+
+
 ## 第12课：集合、列表和二叉树
 + B站回放：https://www.bilibili.com/video/BV1sr421F7Pz/?spm_id_from=333.999.0.0&vd_source=316078287b560136fdb78e5901a17e4f
 
