@@ -1,10 +1,10 @@
 #ifndef S7_H
 #define S7_H
 
-#define S7_VERSION "10.12"
-#define S7_DATE "16-Aug-2024"
-#define S7_MAJOR_VERSION 10
-#define S7_MINOR_VERSION 12
+#define S7_VERSION "11.2"
+#define S7_DATE "22-Nov-2024"
+#define S7_MAJOR_VERSION 11
+#define S7_MINOR_VERSION 2
 
 #include <stdint.h>           /* for int64_t */
 
@@ -28,6 +28,24 @@ typedef double s7_double;
   #include <gmp.h>
   #include <mpfr.h>
   #include <mpc.h>
+#endif
+
+#if __TINYC__ || _MSC_VER || (__clang__ && __cplusplus)
+  /* _MSC_VER should also set HAVE_COMPLEX_NUMBERS to 0 */
+  typedef double s7_complex;
+#else
+  #if __cplusplus /* only __GNUC__ */
+    #include <complex>
+    #ifdef __GNUC__
+      typedef std::complex<double> s7_complex;
+    #else
+      using s7_complex = std::complex<double>;
+      /* sort of works in clang++ but there are many more problems */
+    #endif
+  #else
+    #include <complex.h>
+    typedef double complex s7_complex;
+  #endif
 #endif
 
 #ifdef __cplusplus
@@ -306,6 +324,7 @@ s7_int *s7_int_vector_elements(s7_pointer vec);
 uint8_t *s7_byte_vector_elements(s7_pointer vec);
 s7_double *s7_float_vector_elements(s7_pointer vec);
 bool s7_is_float_vector(s7_pointer p);                                      /* (float-vector? p) */
+bool s7_is_complex_vector(s7_pointer p);                                    /* (complex-vector? p) */
 bool s7_is_int_vector(s7_pointer p);                                        /* (int-vector? p) */
 bool s7_is_byte_vector(s7_pointer p);                                       /* (byte-vector? p) */
 
@@ -324,12 +343,20 @@ s7_double s7_float_vector_ref(s7_pointer vec, s7_int index);
 s7_double s7_float_vector_set(s7_pointer vec, s7_int index, s7_double value);
 
 s7_pointer s7_make_vector(s7_scheme *sc, s7_int len);                                 /* (make-vector len) */
+s7_pointer s7_make_normal_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info); /* make-vector but possibly multidimensional */
+s7_pointer s7_make_and_fill_vector(s7_scheme *sc, s7_int len, s7_pointer fill);       /* (make-vector len fill) */
 s7_pointer s7_make_int_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info);
 s7_pointer s7_make_byte_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info);
 s7_pointer s7_make_float_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info);
-s7_pointer s7_make_normal_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info); /* make-vector but possibly multidimensional */
 s7_pointer s7_make_float_vector_wrapper(s7_scheme *sc, s7_int len, s7_double *data, s7_int dims, s7_int *dim_info, bool free_data);
-s7_pointer s7_make_and_fill_vector(s7_scheme *sc, s7_int len, s7_pointer fill);       /* (make-vector len fill) */
+
+#if (!__TINYC__) && ((!defined(__clang__)) || (!__cplusplus))
+  s7_pointer s7_make_complex_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info);
+  s7_pointer s7_make_complex_vector_wrapper(s7_scheme *sc, s7_int len, s7_complex *data, s7_int dims, s7_int *dim_info, bool free_data);
+  s7_complex *s7_complex_vector_elements(s7_pointer vec);
+  s7_complex s7_complex_vector_ref(s7_pointer vec, s7_int index);
+  s7_complex s7_complex_vector_set(s7_pointer vec, s7_int index, s7_complex value);
+#endif
 
 void s7_vector_fill(s7_scheme *sc, s7_pointer vec, s7_pointer obj);                   /* (vector-fill! vec obj) */
 s7_pointer s7_vector_copy(s7_scheme *sc, s7_pointer old_vect);
@@ -457,7 +484,10 @@ bool s7_for_each_symbol(s7_scheme *sc, bool (*symbol_func)(const char *symbol_na
 s7_pointer s7_dynamic_wind(s7_scheme *sc, s7_pointer init, s7_pointer body, s7_pointer finish);
 
 bool s7_is_immutable(s7_pointer p);
-s7_pointer s7_immutable(s7_pointer p);
+s7_pointer s7_set_immutable(s7_scheme *sc, s7_pointer p);
+#if (!DISABLE_DEPRECATED)
+  s7_pointer s7_immutable(s7_pointer p);
+#endif
 
 void s7_define(s7_scheme *sc, s7_pointer env, s7_pointer symbol, s7_pointer value);
 bool s7_is_defined(s7_scheme *sc, const char *name);
@@ -537,6 +567,7 @@ void s7_define_function_star(s7_scheme *sc, const char *name, s7_function fnc, c
 void s7_define_safe_function_star(s7_scheme *sc, const char *name, s7_function fnc, const char *arglist, const char *doc);
 void s7_define_typed_function_star(s7_scheme *sc, const char *name, s7_function fnc, const char *arglist, const char *doc, s7_pointer signature);
 s7_pointer s7_define_macro(s7_scheme *sc, const char *name, s7_function fnc, s7_int required_args, s7_int optional_args, bool rest_arg, const char *doc);
+s7_pointer s7_define_expansion(s7_scheme *sc, const char *name, s7_function fnc, s7_int required_args, s7_int optional_args, bool rest_arg, const char *doc);
 
   /* s7_make_function creates a Scheme function object from the s7_function 'fnc'.
    *   Its name (for s7_describe_object) is 'name', it requires 'required_args' arguments,
@@ -911,6 +942,9 @@ bool s7_is_bignum(s7_pointer obj);
  *
  *        s7 changes
  *
+ * 31-Aug:    s7_define_expansion.
+ * 26-Aug:    deprecate s7_immutable and add s7_set_immutable with s7_scheme* argument.
+ * 16-Aug:    s7 complex vectors.
  * 2-July:    s7_make_typed_function_with_environment.
  * 31-May:    *s7* 'symbol-printer and 'symbol-quote?.
  * 24-May:    symbol-initial-value, s7_symbol_initial_value, and setters.
