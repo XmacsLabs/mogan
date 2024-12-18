@@ -11,6 +11,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-modules (binary maxima))
+
 (define (maxima-serialize lan t)
   (with s (string-drop-right (verbatim-serialize lan t) 1)
     (cond ((== s "") "0;\n")
@@ -19,44 +21,24 @@
           (else (string-append s ";\n")))))
 
 (define (maxima-entry)
-  (if (url-exists? "$TEXMACS_HOME_PATH/plugins/maxima")
-      (system-url->string "$TEXMACS_HOME_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")
-      (system-url->string "$TEXMACS_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")))
+  (string-quote
+    (if (url-exists? "$TEXMACS_HOME_PATH/plugins/maxima")
+      (url->system "$TEXMACS_HOME_PATH/plugins/maxima/lisp/texmacs-maxima.lisp")
+      (url->system "$TEXMACS_PATH/plugins/maxima/lisp/texmacs-maxima.lisp"))))
 
-(define (maxima-versions)
-  (map (lambda (x)
-         (string-replace (string-replace x ", lisp" "") "version " ""))
-   (filter (lambda (x) (string-starts? x "version "))
-     (string-split (var-eval-system "maxima --list-avail") #\newline))))
+(define (maxima-launchers)
+  (if (os-win32?)
+      `((:launch ,(string-append "cmd.exe /c " (url->system (find-binary-maxima)) " -p " (maxima-entry))))
+      `((:launch ,(string-append (url->system (find-binary-maxima)) " -p " (maxima-entry))))))
 
-(define (maxima-launchers) ;; returns list of launchers for each version
-  (if (os-mingw?)
-      `((:launch ,(string-append "maxima.bat -p " (maxima-entry))))
-      (with version-list (if reconfigure-flag?
-                             (maxima-versions)
-                             (plugin-versions "maxima"))
-        (if (and version-list (list? version-list) (nnull? version-list))
-            (let* ((default (car version-list))
-                   (rest (cdr version-list))
-                   (launch-default
-                    (list :launch (string-append "tm_maxima " default)))
-                   (launch-rest
-                    (map
-                     (lambda (version-name)
-                       (list :launch version-name
-                             (string-append "tm_maxima " version-name)))
-                     rest)))
-              (cons launch-default launch-rest))
-            '()))))
+(when (and (has-binary-maxima?) (string-starts? (url->system (find-binary-maxima)) "/opt/homebrew/bin"))
+  (plugin-add-macos-path "gnuplot" "/opt/homebrew/bin" #t))
 
-(plugin-add-macos-path "Maxima*" "Contents/Resources/maxima/bin" #t)
-(plugin-add-macos-path "Maxima*" "Contents/Resources/opt/bin" #t)
-(plugin-add-windows-path "Maxima*" "bin" #t)
-(plugin-add-windows-path "maxima*" "bin" #t)
+(when (and (has-binary-maxima?) (string-starts? (url->system (find-binary-maxima)) "/usr/local/bin"))
+  (plugin-add-macos-path "gnuplot" "/usr/local/bin" #t))
 
 (plugin-configure maxima
-  (:require (url-exists-in-path? "maxima"))
-  (:versions (maxima-versions))
+  (:require (has-binary-maxima?))
   ,@(maxima-launchers)
   (:serializer ,maxima-serialize)
   (:session "Maxima")

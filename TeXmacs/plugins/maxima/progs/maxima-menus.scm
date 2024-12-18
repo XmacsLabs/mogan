@@ -135,37 +135,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Additional icons
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(define (car-or-false l)
-  (if (null? l) #f
-      (car l)))
-
-(define (maxima-dirs)
-  (if (os-mingw?)
-      (map (lambda (x) (string-drop-right x 1))
-           (string-split (var-eval-system "maxima.bat -d") #\newline))
-      (string-split (var-eval-system "maxima -d") #\newline)))
-
-(define (maxima-htmldir)
-  (map (lambda (x) (string-drop x (string-length "maxima-htmldir=")))
-   (filter (lambda (x) (string-starts? x "maxima-htmldir="))
-           (maxima-dirs))))
-
-(define (maxima-help) 
-  (with htmldir (car-or-false (maxima-htmldir))
-   (define (concat-html-path html)
-     (string-append (string-append htmldir "/")
-                    html))
-   (car-or-false (filter url-exists?
-                  (map concat-html-path
-                   (list "maxima_toc.html" "maxima_0.html"))))))
-
 (menu-bind maxima-help-icons
-  (with help (maxima-help)
-   (if (and (in-maxima?) help)
-      /
-      ((balloon (icon "tm_help.xpm") "Maxima manual")
-       (load-buffer help)))))
+  (if (in-maxima?)
+    /
+    ((balloon (icon "tm_help.xpm") "Maxima manual")
+     (load-buffer "https://maxima.sourceforge.io/docs/manual/maxima_toc.html"))))
 
 (menu-bind session-help-icons
   (:require (and (in-maxima?) (in-session?)))

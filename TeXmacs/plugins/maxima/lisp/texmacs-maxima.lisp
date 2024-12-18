@@ -171,7 +171,7 @@
 
 ;; == Inline plots
 
-;; delete a previous temporary file (ps or eps)
+;; delete a previous temporary file (PDF)
 (let ((p-path) (pname))
   (defun tm-delete-file (path)
     (cond ((null p-path)
@@ -181,15 +181,9 @@
            (if pname (delete-file pname))
            (setq p-path path)))))
 
-;; create an inline figure, based on raw ps code
-(defun tm-out (raw_data)
- (let ((beg (string (code-char 2)))
-        (end (string (code-char 5))))
-   (concatenate 'string beg "ps:" raw_data end)))
-
-;; create an inline figure, based on a .ps/.eps filename
-(defmfun $ps_out (filename)
-  ;; wait for the completion of the ps file
+;; create an inline figure, based on a .pdf filename
+(defmfun $pdf_out (filename)
+  ;; wait for the completion of the PDF file
   (let ((len1) (len2 -1))
     (with-open-file (stream filename)
                     (setq len1 (file-length stream)))
@@ -198,15 +192,10 @@
           (setq len2 len1)
           (with-open-file (stream filename)
                           (setq len1 (file-length stream)))))
-  ;; delete a previous temporary file
-  (tm-delete-file filename)
-  ;; create an inline figure
-  (with-open-file (stream filename)
-                  (let ((contents (make-string (file-length stream))))
-                    (read-sequence contents stream)
-                    ;; princ does not enclose the string in quotes
-                    (princ (tm-out contents))
-                    (princ ""))))
+  (princ (code-char 2))
+  (princ "file:")
+  (princ filename)
+  (princ (code-char 5)))
 
 ;; a predefined interval of time
 (defvar tm-time-out 10.0)  ; 10.0 second
@@ -219,10 +208,10 @@
 (defun get-tm-internal-real-time ()
   (float (/ (get-internal-real-time) INTERNAL-TIME-UNITS-PER-SECOND)))
 
-;; create an inline figure with a ps file
+;; create an inline figure with a PDF file
 (defun tm-plot (fun args)
   (block nil
-    (let ((tmp-name (concatenate 'string (make-tm-temp-name) ".ps"))
+    (let ((tmp-name (concatenate 'string (make-tm-temp-name) ".pdf"))
           (d-time 0.0)
           (s-time (get-tm-internal-real-time))
           (p-format ($get_plot_option '$plot_format))
@@ -231,7 +220,7 @@
           (a-win) (ret))
       (if (boundp '*autoconf-windows*)
           (setq a-win (symbol-value '*autoconf-windows*))
-        (setq a-win (symbol-value '*autoconf-win32*)))
+          (setq a-win (symbol-value '*autoconf-win32*)))
       (if (null gp-term)
           (setq gp-term (append '((mlist) $gnuplot_term)
                                 (list (getf *plot-options* :GNUPLOT_TERM)))))
@@ -239,10 +228,10 @@
       ($set_plot_option (append '((mlist) $plot_format)
                                 (list (if (string= a-win "true")
                                           '$gnuplot
-                                        '$gnuplot_pipes))))
-      ($set_plot_option '((mlist) $gnuplot_term $ps))
+                                          '$gnuplot_pipes))))
+      ($set_plot_option '((mlist) $gnuplot_term $pdf))
       ($set_plot_option (append '((mlist) $gnuplot_out_file) (list tmp-name)))
-      ;; create a ps file
+      ;; create a PDF file
       (setq ret (meval1 (cons '$errcatch
                              (list (cons fun
                                          (remove-if #'(lambda (x) ; remove unnecessary options if they exist
@@ -255,12 +244,12 @@
                                                     args))))))
       (if gp-file                       ; restore $gnuplot_out_file
           ($set_plot_option gp-file)
-        ($remove_plot_option '$gnuplot_out_file))
+          ($remove_plot_option '$gnuplot_out_file))
       ($set_plot_option gp-term)        ; restore $gnuplot_term
       ($set_plot_option p-format)       ; restore $plot_format
       ;; return if an error occurs
       (if ($emptyp ret) (return-from nil)) 
-      ;; try to read the ps file again if it does not exist
+      ;; try to read the PDF file again if it does not exist
       (tagbody
        start
        (setq d-time (- (get-tm-internal-real-time) s-time))
@@ -271,7 +260,7 @@
                                             (t
                                              (sleep 0.1)
                                              (go start))))))
-         (funcall '$ps_out (plot-file-path tmp-name)))
+         (funcall '$pdf_out (plot-file-path tmp-name)))
        (return-from nil t)
        finish))))
 
@@ -282,17 +271,6 @@
 ;; same as plot3d, but also create an inline figure
 (defmfun $tm_plot3d (&rest args)
   (tm-plot '$plot3d args))
-
-;; same as contour_plot, but also create an inline figure
-(defmfun $tm_contour_plot (&rest args)
-  (tm-plot '$contour_plot args))
-
-;; same as implicit_plot, but also create an inline figure
-(defmfun $tm_implicit_plot (&rest args)
-  (let ((fun '$implicit_plot))
-    (if (not (functionp fun))
-        ($load "implicit_plot"))
-    (tm-plot fun args)))
 
 ;; same as julia, but also create an inline figure
 (defmfun $tm_julia (&rest args)
@@ -317,7 +295,7 @@
                               '($terminal $file_name))))
              args))
 
-;; create an inline figure with a eps file
+;; create an inline figure with a PDF file
 (defun tm-draw (fun args)
   (block nil
     (let ((tmp-name (plot-file-path (make-tm-temp-name)))
@@ -337,9 +315,9 @@
       ;; set necessary options
       (apply '$set_draw_defaults
              (append (get-tm-draw-args options)
-                     (list '((mequal) $terminal $eps_color)
+                     (list '((mequal) $terminal $pdf)
                            (append '((mequal) $file_name) (list tmp-name)))))
-      ;; create a eps file
+      ;; create a PDF file
       (setq ret (meval1 (cons '$errcatch (list (cons fun (get-tm-draw-args args))))))
       ;; restore options
       (setf (symbol-value '*user-gr-default-options*) options)
@@ -347,7 +325,7 @@
       (setf (symbol-value '$draw_renderer) renderer)
       ;; return if an error occurs
       (if ($emptyp ret) (return-from nil))
-      ;; try to read the eps file again if it does not exist
+      ;; try to read the PDF file again if it does not exist
       (tagbody
        start
        (setq d-time (- (get-tm-internal-real-time) s-time))
@@ -358,7 +336,7 @@
                                             (t
                                              (sleep 0.1)
                                              (go start))))))
-         (funcall '$ps_out (concatenate 'string tmp-name ".eps")))
+         (funcall '$pdf_out (concatenate 'string tmp-name ".pdf")))
        (return-from nil t)
        finish))))
 
