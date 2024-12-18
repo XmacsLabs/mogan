@@ -54,13 +54,13 @@ export default {
 function nav() {
     return [
         {
-            text: '《零基础SICP》🔥',
+            text: 'SICP Open Course🔥',
             link: '/zh/guide/SICP',
             activeMatch: '/sicp/'
         },
         {
-            text: 'OSPP 2024🔥',
-            link: '/guide/OSPP_2024',
+            text: 'Summer of Code🔥',
+            link: '/guide/SummerOfCode',
             activeMatch: '/ospp/'
         },
         {
@@ -82,13 +82,13 @@ function nav() {
 function navZh() {
     return [
         {
-            text: '《零基础SICP》🔥',
+            text: 'SICP公开课🔥',
             link: '/zh/guide/SICP',
             activeMatch: '/sicp/'
         },
         {
-            text: '开源之夏2024🔥',
-            link: '/guide/OSPP_2024',
+            text: '开源之夏🔥',
+            link: '/guide/SummerOfCode',
             activeMatch: '/ospp/'
         },
         {
@@ -148,12 +148,8 @@ function sidebarGuide() {
             text: 'Community',
             items: [
                 {
-                    text: 'OSPP 2024',
-                    link: '/guide/OSPP_2024.md'
-                },
-                {
-                    text: 'OSPP 2023',
-                    link: '/guide/OSPP_2023.md'
+                    text: 'Summer of Code',
+                    link: '/guide/SummerOfCode.md'
                 },
                 {
                     text: 'Contact us',
@@ -356,7 +352,7 @@ function sidebarGuideZh() {
                     link: '/zh/guide/Tutorial'
                 },
                 {
-                    text: "《零基础SICP》公开课",
+                    text: "SICP公开课",
                     link: '/zh/guide/SICP'
                 },
                 {
