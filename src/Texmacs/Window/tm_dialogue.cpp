@@ -149,7 +149,10 @@ tm_frame_rep::choose_file (object fun, string title, string type, string prompt,
       set_file (wid, as_string (u));
     }
   }
-  else set_directory (wid, ".");
+  else {
+    // The env HOME is set for Windows in research.cpp
+    set_directory (wid, as_system_string (url_system ("$HOME")));
+  }
   dialogue_start (title, wid);
   if (type == "directory") send_keyboard_focus (get_directory (dialogue_wid));
   else send_keyboard_focus (get_file (dialogue_wid));
