@@ -10,7 +10,8 @@ QWidget {
     icon-size: 16px;
 }
 
-QAbstractScrollArea, QWidget#centralWidget {
+
+QWidget#centralWidget QAbstractScrollArea {
     background: #A0A0A0;
 }
 
@@ -171,14 +172,6 @@ QListView, QTableView {
 QListView QAbstractScrollArea {
     background: #FFFFFF;
 }
-
-
-
-
-
-
-
-
 
 QComboBox {
     background: #FFFFFF;
