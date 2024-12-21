@@ -828,20 +828,23 @@ edit_interface_rep::apply_changes () {
     if (tremble_count > 3) dw= (1 + min (tremble_count - 3, 25)) * 2 * pixel;
     SI /*P1= zpixel,*/ P2= 2 * zpixel, P3= 3 * zpixel;
     cursor             cu= get_cursor ();
-    copy_always          = rectangles ();
     rectangle ocr (oc->ox + ((SI) ((oc->y1 - dw) * oc->slope)) - P3 - dw,
                    oc->oy + (oc->y1 - dw) - P3,
                    oc->ox + ((SI) ((oc->y2 + dw) * oc->slope)) + P2 + dw,
                    oc->oy + (oc->y2 + dw) + P3);
-    copy_always= rectangles (ocr, copy_always);
+    if (is_nil (copy_always) || copy_always->item != ocr) {
+      copy_always= rectangles (ocr, copy_always);
+    }
     invalidate (ocr->x1, ocr->y1, ocr->x2, ocr->y2);
     rectangle ncr (cu->ox + ((SI) ((cu->y1 - dw) * cu->slope)) - P3 - dw,
                    cu->oy + (cu->y1 - dw) - P3,
                    cu->ox + ((SI) ((cu->y2 + dw) * cu->slope)) + P2 + dw,
                    cu->oy + (cu->y2 + dw) + P3);
     invalidate (ncr->x1, ncr->y1, ncr->x2, ncr->y2);
-    copy_always= rectangles (ncr, copy_always);
-    oc         = copy (cu);
+    if (is_nil (copy_always) || copy_always->item != ncr) {
+      copy_always= rectangles (ncr, copy_always);
+    }
+    oc= copy (cu);
 
     // set hot spot in the gui
     send_cursor (this, (SI) floor (cu->ox * magf), (SI) floor (cu->oy * magf));
