@@ -42,13 +42,11 @@ export default {
           }
         },
     },
-
     lastUpdated: true,
     ignoreDeadLinks: false,
     head: [
         ['link', {rel: 'icon', href: '/favicon.png'}],
-    ],
-
+    ]
 }
 
 function nav() {
