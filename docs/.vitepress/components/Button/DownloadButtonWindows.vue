@@ -2,50 +2,65 @@
   <div>
     <button :class="$style.button" @click="showModal = true" @mouseover="hover = true" @mouseleave="hover = false">
       <div v-if="hover" :class="$style.hoverContent">
-        <img src="/images/download_lightblue.png" alt="download" :class="$style.icon">
-        <p>点击下载</p>
+        <img src="/images/download_blue.png" :alt="hoverAltText" :class="$style.icon">
+        <p>{{ hoverText }}</p>
       </div>
       
       <div v-else :class="$style.defaultContent">
-        <img src="/images/macOS_icon.png" alt="macOS" :class="$style.icon">
-        <p>macOS</p>
+        <img src="/images/windows_icon.png" :alt="defaultAltText" :class="$style.icon">
+        <p>{{ defaultText }}</p>
       </div>
     </button>
 
     <div v-if="showModal" :class="$style.modalBackdrop" @click.self="showModal = false">
       <div :class="$style.modalContent">
-        <h3>选择下载版本</h3>
-        <button :class="$style.smallButton" @click="downloadFileX64">下载 macOS (x64)</button>
-        <button :class="$style.smallButton" @click="downloadFileArm">下载 macOS (Arm64)</button>
-        <button :class="$style.closeButton" @click="showModal = false">关闭</button>
+        <h3>{{ modalTitle }}</h3>
+        <button :class="$style.smallButton" @click="downloadFile">{{ buttonText }}</button>
+        <button :class="$style.smallButton" @click="downloadFileGreen">{{ buttonGreenText }}</button>
+        <button :class="$style.closeButton" @click="showModal = false">{{ closeButtonText }}</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useRoute } from 'vitepress';
 
 const showModal = ref(false);
 const hover = ref(false);
+const route = useRoute();
+const language = computed(() => route.path.startsWith('/zh/') ? 'zh' : 'en');
 
-function downloadFileX64() {
+const hoverText = computed(() => language.value === 'zh' ? '点击下载' : 'Click to Download');
+const defaultText = computed(() => language.value === 'zh' ? 'Windows' : 'Windows');
+const hoverAltText = computed(() => language.value === 'zh' ? '下载' : 'Download');
+const defaultAltText = computed(() => language.value === 'zh' ? 'Windows' : 'Windows');
+const modalTitle = computed(() => language.value === 'zh' ? '选择下载版本' : 'Select Download Version');
+const buttonText = computed(() => language.value === 'zh' ? '下载 Windows' : 'Download Windows');
+const buttonGreenText = computed(() => language.value === 'zh' ? '下载 Windows(绿色版)' : 'Download Windows (Portable)');
+const closeButtonText = computed(() => language.value === 'zh' ? '关闭' : 'Close');
+
+const version = 'v1.2.9.7';
+
+function downloadFile() {
   const link = document.createElement('a');
-  link.href = 'https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.7/MoganResearch-v1.2.9.7.dmg';
-  link.download = '墨干v1.2.9.7';
+  link.href = `https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/${version}/MoganResearch-${version}-64bit-installer.exe`;
+  link.download = language.value === 'zh' ? `墨干${version}` : `Mogan ${version}`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
 }
 
-function downloadFileArm() {
+function downloadFileGreen() {
   const link = document.createElement('a');
-  link.href = 'https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/v1.2.9.7/MoganResearch-v1.2.9.7-arm.dmg';
-  link.download = '墨干v1.2.9.7-arm';
+  link.href = `https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/${version}/MoganResearch-${version}-64bit-portable.zip`;
+  link.download = language.value === 'zh' ? `墨干${version}` : `Mogan ${version}`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
 }
+
 </script>
 
 <style module>
@@ -101,7 +116,7 @@ function downloadFileArm() {
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  color: #A5C9F8;
+  color: #007bff;
 }
 
 .modalBackdrop {
@@ -129,7 +144,7 @@ function downloadFileArm() {
   padding: 5px 10px;
   font-size: 14px;
   color: white;
-  background-color: #A5C9F8;
+  background-color: #007bff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -149,7 +164,7 @@ function downloadFileArm() {
   padding: 5px 10px;
   font-size: 14px;
   color: white;
-  background-color: #A5C9F8;
+  background-color: #007bff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -162,5 +177,27 @@ function downloadFileArm() {
 
 .closeButton:active {
   background-color: #003f7f;
+}
+
+@media (max-width: 600px) {
+  .button {
+    width: 100px;
+    height: 100px;
+    padding: 8px;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .button p {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .hoverContent {
+    font-size: 16px;
+  }
 }
 </style>

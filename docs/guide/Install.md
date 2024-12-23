@@ -2,11 +2,10 @@
 The latest stable version is Mogan STEM Suite v1.2.9.7, you can check if there are new releases in the `Help -> Welcome` menu entry.
 
 ## Download Mogan
-
 <div class="button-container">
-  <EnDownloadButtonWindows />
-  <EnDownloadButtonMacOS />
-  <EnDownloadButtonUbuntu />
+  <DownloadButtonWindows />
+  <DownloadButtonMacOS />
+  <DownloadButtonUbuntu />
 </div>
 
 <style>
@@ -18,7 +17,7 @@ The latest stable version is Mogan STEM Suite v1.2.9.7, you can check if there a
 </style>
 
 SHA256 checksum:
-<EnSHA256Button />
+<SHA256Button />
 
 Mogan STEM Suite:
 + **Mogan Research** (installers on Windows/macOS/Ubuntu/Debian)

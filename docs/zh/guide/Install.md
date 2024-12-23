@@ -2,7 +2,6 @@
 当前最新稳定版是墨干理工套件V1.2.9.7，可以在`帮助 -> 欢迎`这个菜单项中检查是否有新版可用。
 
 ## 下载墨干
-
 <div class="button-container">
   <DownloadButtonWindows />
   <DownloadButtonMacOS />
