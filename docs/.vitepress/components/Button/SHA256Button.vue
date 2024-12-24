@@ -5,9 +5,7 @@
     <div v-if="showModal" :class="$style.modalBackdrop" @click.self="showModal = false">
       <div :class="$style.modalContent">
         <h3>{{ modalTitle }}</h3>
-        <pre>
-{{ checksums }}
-        </pre>
+        <pre>{{ checksums }}</pre>
         <button :class="$style.closeButton" @click="showModal = false">{{ closeButtonText }}</button>
       </div>
     </div>
@@ -40,63 +38,86 @@ f4bcb8d4a9bec63b158c93fc0efbc083da95de84ddf7fb84ecf56675120458e5  mogan-research
 
 <style module>
 .button {
-color: white;
-background-color: #007bff;
-padding: 10px 20px;
-border: none;
-border-radius: 5px;
-font-weight: bold;
-cursor: pointer;
-transition: background-color 0.3s, transform 0.3s;
+  color: white;
+  background-color: #007bff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .button:hover {
-background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .button:active {
-background-color: #003f7f;
-transform: scale(0.95);
+  background-color: #003f7f;
+  transform: scale(0.95);
 }
 
 .modalBackdrop {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.5);
-display: flex;
-align-items: center;
-justify-content: center;
-z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
 .modalContent {
-background: white;
-padding: 20px;
-border-radius: 10px;
-text-align: left;
-max-width: 90%;
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: left;
+  max-width: 90%;
 }
 
 .closeButton {
-margin-top: 20px;
-padding: 5px 10px;
-font-size: 14px;
-color: white;
-background-color: #ff4d4d;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-transition: background-color 0.2s;
+  margin-top: 20px;
+  padding: 5px 10px;
+  font-size: 14px;
+  color: white;
+  background-color: #ff4d4d;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .closeButton:hover {
-background-color: #cc0000;
+  background-color: #cc0000;
 }
 
 .closeButton:active {
-background-color: #990000;
+  background-color: #990000;
+}
+
+@media (prefers-color-scheme: dark) {
+  .button {
+    background-color: #333;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .modalContent {
+    background-color: #444;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  .hoverContent {
+    color: black;
+  }
+  
+  .smallButton, .closeButton {
+    color: white;
+  }
 }
 </style>

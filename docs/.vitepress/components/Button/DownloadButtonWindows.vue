@@ -60,7 +60,6 @@ function downloadFileGreen() {
   link.click();
   document.body.removeChild(link);
 }
-
 </script>
 
 <style module>
@@ -76,6 +75,7 @@ function downloadFileGreen() {
   text-align: center;
   border-radius: 10px;
   background-color: white;
+  color: #333;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, background-color 0.2s;
   cursor: pointer;
@@ -107,7 +107,6 @@ function downloadFileGreen() {
 .button p {
   margin-top: 10px;
   font-size: 16px;
-  color: #333;
 }
 
 .hoverContent {
@@ -116,7 +115,7 @@ function downloadFileGreen() {
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  color: #007bff;
+  
 }
 
 .modalBackdrop {
@@ -134,9 +133,11 @@ function downloadFileGreen() {
 
 .modalContent {
   background: white;
+  color: black;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .smallButton {
@@ -198,6 +199,28 @@ function downloadFileGreen() {
 
   .hoverContent {
     font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .button {
+    background-color: #333;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .modalContent {
+    background-color: #444;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  .hoverContent {
+    color: black;
+  }
+  
+  .smallButton, .closeButton {
+    color: white;
   }
 }
 </style>

@@ -75,6 +75,7 @@ function downloadFileArm() {
   text-align: center;
   border-radius: 10px;
   background-color: white;
+  color: #333;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, background-color 0.2s;
   cursor: pointer;
@@ -106,7 +107,6 @@ function downloadFileArm() {
 .button p {
   margin-top: 10px;
   font-size: 16px;
-  color: #333;
 }
 
 .hoverContent {
@@ -115,7 +115,6 @@ function downloadFileArm() {
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  color: #A5C9F8;
 }
 
 .modalBackdrop {
@@ -133,9 +132,11 @@ function downloadFileArm() {
 
 .modalContent {
   background: white;
+  color: black;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .smallButton {
@@ -197,6 +198,28 @@ function downloadFileArm() {
 
   .hoverContent {
     font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .button {
+    background-color: #333;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .modalContent {
+    background-color: #444;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  .hoverContent {
+    color: black;
+  }
+  
+  .smallButton, .closeButton {
+    color: white;
   }
 }
 </style>
