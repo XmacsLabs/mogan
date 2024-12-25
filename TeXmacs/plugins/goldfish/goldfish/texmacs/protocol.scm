@@ -17,7 +17,7 @@
 (define-library (texmacs protocol)
 (export
   data-begin data-end data-escape
-  flush-verbatim flush-prompt flush-scheme flush-file
+  flush-verbatim flush-prompt flush-scheme flush-scheme-u8 flush-file
   read-paragraph-by-visible-eof
 )
 (begin
@@ -42,6 +42,9 @@
 
 (define (flush-scheme msg)
   (flush-any (string-append "scheme:" msg)))
+
+(define (flush-scheme-u8 msg)
+  (flush-any (string-append "scheme_u8:" msg)))
 
 (define (flush-prompt msg)
   (flush-any (string-append "prompt#" msg)))
