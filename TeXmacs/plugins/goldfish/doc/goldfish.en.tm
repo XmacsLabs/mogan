@@ -3,6 +3,10 @@
 <style|<tuple|tmdoc|old-spacing|old-dots|old-lengths|goldfish>>
 
 <\body>
+  <\hide-preamble>
+    <assign|font|math=Latin Modern Math,cjk=Noto CJK SC,CMU>
+  </hide-preamble>
+
   <tmdoc-title|The Goldfish Scheme plugin>
 
   <hlink|Goldfish Scheme|https://github.com/LiiiLabs/goldfish> is based on
@@ -18,15 +22,6 @@
   Here are snippets which only works in the Goldfish Scheme session:
 
   <paragraph|Unicode Support>
-
-  The string literal in Goldfish Scheme does not support Unicode. In the
-  Goldfish Scheme session, we use the cork encoding as a workaround.
-
-  <\scm-code>
-    <block|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Scheme
-    Code>|<cell|Actual Scheme Code>>|<row|<cell|'\<#4E2D\>\<#6587\>>|<cell|'\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>>>|<row|<cell|(length
-    "\<#4E2D\>\<#6587\>")>|<cell|(length "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>")>>>>>
-  </scm-code>
 
   <\session|goldfish|default>
     <\output>
@@ -44,25 +39,33 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      '\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
-    <|unfolded-io>
-      <goldfish-result|\<#4E2D\>\<#6587\>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      \<gtr\>\ 
-    <|unfolded-io>
       (length "\<#4E2D\>\<#6587\>")
     <|unfolded-io>
-      <goldfish-result|14>
+      <goldfish-result|6>
     </unfolded-io>
 
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (length "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>")
+      (import (liii base))
     <|unfolded-io>
-      <goldfish-result|14>
+      <goldfish-result|(rootlet)>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (u8-string-length "\<#4E2D\>\<#6587\>")
+    <|unfolded-io>
+      <goldfish-result|2>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      "\<#4E2D\>\<#6587\>"
+    <|unfolded-io>
+      <goldfish-result|"\<#4E2D\>\<#6587\>">
     </unfolded-io>
 
     <\input>
@@ -81,7 +84,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      `(document (frac "\<#5206\>\<#5B50\>" "\<#5206\>\<#6BCD\>"))
+      \0(document (frac "\<#5206\>\<#5B50\>" "\<#5206\>\<#6BCD\>"))
     <|unfolded-io>
       <frac|\<#5206\>\<#5B50\>|\<#5206\>\<#6BCD\>>
     </unfolded-io>
@@ -89,7 +92,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      `(math (frac "1" "2"))
+      \0(math (frac "1" "2"))
     <|unfolded-io>
       <math|<frac|1|2>>
     </unfolded-io>
@@ -97,7 +100,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      `(with "color" "red" "Hello")
+      \0(with "color" "red" "Hello")
     <|unfolded-io>
       <with|color|red|Hello>
     </unfolded-io>
@@ -366,7 +369,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (*goldfish* 'bignum-precision)
+      (*s7* 'bignum-precision)
     <|unfolded-io>
       <goldfish-result|128>
     </unfolded-io>
@@ -374,7 +377,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (set! (*goldfish* 'bignum-precision) 256)
+      (set! (*s7* 'bignum-precision) 256)
     <|unfolded-io>
       <goldfish-result|256>
     </unfolded-io>
@@ -434,7 +437,7 @@
     <|unfolded-io>
       (floor 1.4)
     <|unfolded-io>
-      <goldfish-result|1>
+      <goldfish-result|1.0>
     </unfolded-io>
 
     <\unfolded-io>
@@ -522,7 +525,7 @@
     <|unfolded-io>
       (random 1.0)
     <|unfolded-io>
-      <goldfish-result|0.4550541097362356>
+      <goldfish-result|0.42902658884751455>
     </unfolded-io>
 
     <\unfolded-io>
@@ -530,7 +533,7 @@
     <|unfolded-io>
       (random 3/4)
     <|unfolded-io>
-      <goldfish-result|380585/1487509>
+      <goldfish-result|837121/2106403>
     </unfolded-io>
 
     <\input>
@@ -602,7 +605,7 @@
     <|unfolded-io>
       (define test-tb (hash-table 'a 1 'b 2))
     <|unfolded-io>
-      <goldfish-result|(hash-table 'b 2 'a 1)>
+      <goldfish-result|(hash-table 'a 1 'b 2)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -655,7 +658,7 @@
       <\errput>
         wrong-number-of-args
 
-        goldfish-print: too many arguments: 2
+        ("~S: too many arguments: ~A" goldfish-print 2)
       </errput>
     </unfolded-io>
 
@@ -748,9 +751,9 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (directory? "/tmp")
+      (import (liii os))
     <|unfolded-io>
-      <goldfish-result|#t>
+      <goldfish-result|(rootlet)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -791,7 +794,7 @@
       <\errput>
         wrong-number-of-args
 
-        abs: too many arguments: (abs 1 2)
+        ("~A: too many arguments: (~A~{~^ ~S~})" abs abs (1 2))
       </errput>
     </unfolded-io>
 
@@ -842,7 +845,7 @@
       <\errput>
         io-error
 
-        load: No such file or directory "test.scm"
+        ("~A: ~A ~S" "load" "No such file or directory" "test.scm")
       </errput>
     </unfolded-io>
 
@@ -872,7 +875,7 @@
       <\errput>
         immutable-error
 
-        can't vector-set! #(1 2 3) (it is immutable)
+        ("can't ~S ~S (it is immutable)" vector-set! #(1 2 3))
       </errput>
     </unfolded-io>
 
@@ -900,7 +903,7 @@
       <\errput>
         immutable-error
 
-        can't set! var (it is immutable)
+        ("can't ~S ~S (it is immutable)" set! var)
       </errput>
     </unfolded-io>
 
@@ -912,7 +915,7 @@
       <\errput>
         wrong-type-arg
 
-        let: can't bind an immutable object: ((var 1))
+        ("~A: can't bind an immutable object: ~S" let ((var 1)))
       </errput>
     </unfolded-io>
 

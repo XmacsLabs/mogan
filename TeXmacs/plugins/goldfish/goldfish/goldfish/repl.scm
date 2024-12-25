@@ -50,14 +50,14 @@
 (define (build-goldfish-result obj)
   (let ((output (object->string obj))
         (leadings (list "(document" "(math" "(equation*" "(align" "(with" "(graphics")))
-    (if (find (lambda (x) (string-starts? x output)) leadings)
+    (if (find (lambda (x) (string-starts? output x)) leadings)
         output
         (string-append "(goldfish-result " (goldfish-quote output) ")"))))
 
 (define (goldfish-print obj)
   (if (eq? obj #<unspecified>)
-    (flush-scheme "")
-    (flush-scheme (build-goldfish-result obj))))
+    (flush-scheme-u8 "")
+    (flush-scheme-u8 (build-goldfish-result obj))))
 
 (define (eval-and-print code)
   (catch #t
@@ -65,7 +65,7 @@
       (goldfish-print (eval-string code (rootlet))))
     (lambda args
       (begin
-        (flush-scheme
+        (flush-scheme-u8
           (string-append "(errput (document "
             (goldfish-quote (symbol->string (car args)))
             (if (and (>= (length args) 2)
