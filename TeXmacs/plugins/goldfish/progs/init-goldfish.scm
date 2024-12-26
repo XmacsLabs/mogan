@@ -17,8 +17,7 @@
 
 (define (goldfish-serialize lan t)
   (let* ((u (pre-serialize lan t))
-         (cork-s (texmacs->code (stree->tree u) "Cork"))
-         (s (tmstring->string cork-s)))
+         (s (texmacs->code (stree->tree u) "SourceCode")))
     (string-append s "\n<EOF>\n")))
 
 (define (goldfish-launch mode)

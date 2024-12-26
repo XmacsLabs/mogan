@@ -3,6 +3,10 @@
 <style|<tuple|tmdoc|old-spacing|old-dots|old-lengths|goldfish|chinese>>
 
 <\body>
+  <\hide-preamble>
+    <assign|font|math=Latin Modern Math,cjk=Noto CJK SC,CMU>
+  </hide-preamble>
+
   <tmdoc-title|\<#91D1\>\<#9C7C\>Scheme\<#63D2\>\<#4EF6\>>
 
   <hlink|\<#91D1\>\<#9C7C\>Scheme|https://gitee.com/LiiiLabs/goldfish>\<#662F\>\<#57FA\>\<#4E8E\>S7
@@ -12,13 +16,6 @@
   \<#4E0B\>\<#9762\>\<#662F\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#7684\>\<#4E00\>\<#4E9B\>\<#7279\>\<#6027\>\<#FF1A\>
 
   <paragraph|Unicode\<#652F\>\<#6301\>>
-
-  \<#91D1\>\<#9C7C\>Scheme\<#89E3\>\<#91CA\>\<#5668\>\<#7684\>\<#5B57\>\<#7B26\>\<#4E32\>\<#5B57\>\<#9762\>\<#91CF\>\<#5E76\>\<#4E0D\>\<#652F\>\<#6301\>Unicode\<#3002\>\<#5728\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#4E2D\>\<#FF0C\>\<#5728\>\<#6211\>\<#4EEC\>\<#5B9E\>\<#9645\>\<#6267\>\<#884C\>\<#7684\>Scheme\<#4EE3\>\<#7801\>\<#4E2D\>\<#FF0C\>\<#4E2D\>\<#6587\>\<#5B9E\>\<#9645\>\<#4E0A\>\<#88AB\>\<#8F6C\>\<#5316\>\<#6210\>\<#4E86\>Cork\<#7F16\>\<#7801\>\<#3002\>
-
-  <\scm-code>
-    <block|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<table|<row|<cell|Scheme\<#4EE3\>\<#7801\>>|<cell|\<#5B9E\>\<#9645\>\<#8FD0\>\<#884C\>\<#7684\>Scheme\<#4EE3\>\<#7801\>>>|<row|<cell|'\<#4E2D\>\<#6587\>>|<cell|'\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>>>|<row|<cell|(length
-    "\<#4E2D\>\<#6587\>")>|<cell|(length "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>")>>>>>
-  </scm-code>
 
   <\session|goldfish|default>
     <\output>
@@ -36,25 +33,33 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      '\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>
-    <|unfolded-io>
-      <goldfish-result|\<#4E2D\>\<#6587\>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      \<gtr\>\ 
-    <|unfolded-io>
       (length "\<#4E2D\>\<#6587\>")
     <|unfolded-io>
-      <goldfish-result|14>
+      <goldfish-result|6>
     </unfolded-io>
 
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (length "\<less\>#4E2D\<gtr\>\<less\>#6587\<gtr\>")
+      (import (liii base))
     <|unfolded-io>
-      <goldfish-result|14>
+      <goldfish-result|(rootlet)>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (u8-string-length "\<#4E2D\>\<#6587\>")
+    <|unfolded-io>
+      <goldfish-result|2>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      "\<#4E2D\>\<#6587\>"
+    <|unfolded-io>
+      <goldfish-result|"\<#4E2D\>\<#6587\>">
     </unfolded-io>
 
     <\input>
@@ -72,7 +77,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      `(document (frac "\<#5206\>\<#5B50\>" "\<#5206\>\<#6BCD\>"))
+      \0(document (frac "\<#5206\>\<#5B50\>" "\<#5206\>\<#6BCD\>"))
     <|unfolded-io>
       <frac|\<#5206\>\<#5B50\>|\<#5206\>\<#6BCD\>>
     </unfolded-io>
@@ -80,7 +85,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      `(math (frac "1" "2"))
+      \0(math (frac "1" "2"))
     <|unfolded-io>
       <math|<frac|1|2>>
     </unfolded-io>
@@ -88,7 +93,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      `(with "color" "red" "Hello")
+      \0(with "color" "red" "Hello")
     <|unfolded-io>
       <with|color|red|Hello>
     </unfolded-io>
@@ -300,7 +305,7 @@
     <|unfolded-io>
       (runtime)
     <|unfolded-io>
-      <goldfish-result|1723801146625>
+      <goldfish-result|1735109175544>
     </unfolded-io>
 
     <\input>
@@ -407,15 +412,15 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (*goldfish* 'bignum-precision)
+      (*s7* 'bignum-precision)
     <|unfolded-io>
-      <goldfish-result|128>
+      <goldfish-result|256>
     </unfolded-io>
 
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (set! (*goldfish* 'bignum-precision) 256)
+      (set! (*s7* 'bignum-precision) 256)
     <|unfolded-io>
       <goldfish-result|256>
     </unfolded-io>
@@ -475,7 +480,7 @@
     <|unfolded-io>
       (floor 1.4)
     <|unfolded-io>
-      <goldfish-result|1>
+      <goldfish-result|1.0>
     </unfolded-io>
 
     <\unfolded-io>
@@ -563,7 +568,7 @@
     <|unfolded-io>
       (random 1.0)
     <|unfolded-io>
-      <goldfish-result|0.4550541097362356>
+      <goldfish-result|0.5305625789950791>
     </unfolded-io>
 
     <\unfolded-io>
@@ -571,7 +576,7 @@
     <|unfolded-io>
       (random 3/4)
     <|unfolded-io>
-      <goldfish-result|380585/1487509>
+      <goldfish-result|83234/394675>
     </unfolded-io>
 
     <\input>
@@ -643,7 +648,7 @@
     <|unfolded-io>
       (define test-tb (hash-table 'a 1 'b 2))
     <|unfolded-io>
-      <goldfish-result|(hash-table 'b 2 'a 1)>
+      <goldfish-result|(hash-table 'a 1 'b 2)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -696,7 +701,7 @@
       <\errput>
         wrong-number-of-args
 
-        goldfish-print: too many arguments: 2
+        ("~S: too many arguments: ~A" goldfish-print 2)
       </errput>
     </unfolded-io>
 
@@ -789,7 +794,15 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (directory? "/tmp")
+      (import (liii path))
+    <|unfolded-io>
+      <goldfish-result|(rootlet)>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (path-dir? "/tmp")
     <|unfolded-io>
       <goldfish-result|#t>
     </unfolded-io>
@@ -800,6 +813,14 @@
       (file-exists? "/tmp")
     <|unfolded-io>
       <goldfish-result|#t>
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (import (liii os))
+    <|unfolded-io>
+      <goldfish-result|(rootlet)>
     </unfolded-io>
 
     <\unfolded-io>
@@ -832,7 +853,7 @@
       <\errput>
         wrong-number-of-args
 
-        abs: too many arguments: (abs 1 2)
+        ("~A: too many arguments: (~A~{~^ ~S~})" abs abs (1 2))
       </errput>
     </unfolded-io>
 
@@ -883,7 +904,7 @@
       <\errput>
         io-error
 
-        load: No such file or directory "test.scm"
+        ("~A: ~A ~S" "load" "No such file or directory" "test.scm")
       </errput>
     </unfolded-io>
 
@@ -913,7 +934,7 @@
       <\errput>
         immutable-error
 
-        can't vector-set! #(1 2 3) (it is immutable)
+        ("can't ~S ~S (it is immutable)" vector-set! #(1 2 3))
       </errput>
     </unfolded-io>
 
@@ -941,7 +962,7 @@
       <\errput>
         immutable-error
 
-        can't set! var (it is immutable)
+        ("can't ~S ~S (it is immutable)" set! var)
       </errput>
     </unfolded-io>
 
@@ -953,7 +974,7 @@
       <\errput>
         wrong-type-arg
 
-        let: can't bind an immutable object: ((var 1))
+        ("~A: can't bind an immutable object: ~S" let ((var 1)))
       </errput>
     </unfolded-io>
 
