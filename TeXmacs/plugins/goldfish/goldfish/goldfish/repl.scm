@@ -31,7 +31,7 @@
 
   (flush-verbatim
     (string-append
-      "Goldfish Scheme " (version) " Community Edition by LiiiLabs\n"
+      "Liii Scheme " (version) " Enterprise Edition by LiiiLabs\n"
       "implemented on S7 Scheme (" (substring (*s7* 'version) 3) ")")))
 
 (define (escape-string str)
