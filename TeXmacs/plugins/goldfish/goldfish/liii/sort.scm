@@ -14,15 +14,9 @@
 ; under the License.
 ;
 
-(define-library (liii sys)
-(export argv executable)
-(import (scheme process-context))
-(begin
-
-(define (argv) (command-line))
-
-(define (executable) (g_executable))
-
-) ; end of begin
-) ; end of define-library
+(define-library (liii sort)
+(export list-sorted? vector-sorted?
+        list-merge  list-sort  list-stable-sort  vector-merge  vector-sort  vector-stable-sort
+        list-merge! list-sort! list-stable-sort! vector-merge! vector-sort! vector-stable-sort!)
+(import (srfi srfi-132)))
 

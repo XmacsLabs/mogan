@@ -14,15 +14,7 @@
 ; under the License.
 ;
 
-(define-library (liii sys)
-(export argv executable)
-(import (scheme process-context))
-(begin
-
-(define (argv) (command-line))
-
-(define (executable) (g_executable))
-
-) ; end of begin
-) ; end of define-library
+(define-library (liii cut)
+  (import (srfi srfi-26))
+  (export cut cute))
 

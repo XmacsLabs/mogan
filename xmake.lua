@@ -138,6 +138,7 @@ add_requires("s7", {system=false})
 add_requires("tbox", {system=false})
 add_requires("lolly", {system=false})
 add_requires("moebius", {system=false})
+add_requires("cpr 1.10.5", {system=false})
 
 add_requires("libjpeg")
 add_requires("apt::libpng-dev", {alias="libpng"})
@@ -168,6 +169,7 @@ target ("goldfish") do
     add_files ("$(projectdir)/TeXmacs/plugins/goldfish/src/goldfish.cpp")
     add_packages("s7")
     add_packages("tbox")
+    add_packages("cpr")
     on_install(function (target)
     end)
 end

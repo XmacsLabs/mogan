@@ -4,10 +4,15 @@
 
 (define-library (liii alist)
 (import (liii base)
+        (liii list)
         (liii error)
         (scheme case-lambda))
-(export alist-ref alist-ref/default)
+(export alist? alist-cons alist-ref alist-ref/default)
 (begin
+
+(define (alist? l)
+  (and (list? l)
+       (every pair? l)))
 
 (define alist-ref
   (case-lambda
