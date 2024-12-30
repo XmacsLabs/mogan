@@ -26,6 +26,8 @@
       ("Verbatim" (insert-new-chunk 'verbatim-chunk))
       ("Shell" (insert-new-chunk 'shell-chunk))
       ---
+      (when (style-has? "elvish-lang")
+        ("Elvish" (insert-new-chunk 'elvish-chunk)))
       (when (style-has? "goldfish-lang")
         ("Goldfish" (insert-new-chunk 'goldfish-chunk)))
       (when (style-has? "scala")

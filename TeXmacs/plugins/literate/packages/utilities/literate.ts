@@ -1,4 +1,4 @@
-<TeXmacs|2.1.2>
+<TeXmacs|2.1.4>
 
 <style|source>
 
@@ -102,6 +102,12 @@
       <\goldfish-lang>
         <arg|body>
       </goldfish-lang>
+    </generic-chunk>
+  </macro>>
+
+  <assign|elvish-chunk|<\macro|name|prev|next|body>
+    <\generic-chunk|<arg|name>|<arg|prev>|<arg|next>>
+      <elvish-lang|<arg|body>>
     </generic-chunk>
   </macro>>
 
