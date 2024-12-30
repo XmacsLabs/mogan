@@ -263,8 +263,7 @@ void
 texmacs_input_rep::utf8_flush (bool force) {
   if (force || ends (buf, "\n")) {
     if (!ignore_verb) {
-      string tms= utf8_to_cork (buf);
-      write (verbatim_to_tree (tms, false, "auto"));
+      write (verbatim_to_tree (buf, false, "utf-8"));
     }
     else if (DEBUG_IO) debug_io << "ignore verbatim (aborted input)" << LF;
     buf= "";
