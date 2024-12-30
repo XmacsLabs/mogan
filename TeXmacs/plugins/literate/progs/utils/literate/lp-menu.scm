@@ -20,34 +20,39 @@
 
 (menu-bind literate-menu
   (-> "First chunk"
-      ("Generic" (insert-new-chunk 'generic-chunk))
-      ---
       ("Scheme" (insert-new-chunk 'scm-chunk))
-      ("Scala" (insert-new-chunk 'scala-chunk))
       ("C++" (insert-new-chunk 'cpp-chunk))
-      ("Java" (insert-new-chunk 'java-chunk))
-      ("Mathemagix" (insert-new-chunk 'mmx-chunk))
-      ("Python" (insert-new-chunk 'python-chunk))
-      ("Scilab" (insert-new-chunk 'scilab-chunk))
+      ("Generic" (insert-new-chunk 'generic-chunk))
+      ("Verbatim" (insert-new-chunk 'verbatim-chunk))
       ("Shell" (insert-new-chunk 'shell-chunk))
-      ("Verbatim" (insert-new-chunk 'verbatim-chunk)))
-  (when (nnull? (search-chunk-types (buffer-tree)))
-    (if (null? (search-chunk-types (buffer-tree)))
-        ("Next chunk" (interactive insert-next-chunk)))
-    (if (nnull? (search-chunk-types (buffer-tree)))
-        (-> "Next chunk"
-            (for (name (search-chunk-types (buffer-tree)))
-              ((eval `(verbatim ,name)) (insert-next-chunk name)))
-            ---
-            ("Other" (interactive insert-next-chunk))))
-    (if (null? (search-chunk-types (buffer-tree)))
-        ("Reference" (make 'chunk-ref)))
-    (if (nnull? (search-chunk-types (buffer-tree)))
-        (-> "Reference"
-            (for (name (search-chunk-types (buffer-tree)))
-              ((eval `(verbatim ,name)) (insert `(chunk-ref ,name))))
-            ---
-            ("Other" (make 'chunk-ref)))))
+      ---
+      (when (style-has? "goldfish-lang")
+        ("Goldfish" (insert-new-chunk 'goldfish-chunk)))
+      (when (style-has? "scala")
+        ("Scala" (insert-new-chunk 'scala-chunk)))
+      (when (style-has? "java")
+        ("Java" (insert-new-chunk 'java-chunk)))
+      (when (style-has? "python")
+        ("Python" (insert-new-chunk 'python-chunk))))
+  (with all-chunks (get-all-chunks)
+    (when (nnull? (search-chunk-types all-chunks))
+       (if (null? (search-chunk-types all-chunks))
+           ("Next chunk" (interactive insert-next-chunk)))
+       (if (nnull? (search-chunk-types all-chunks))
+           (-> "Next chunk"
+               (for (name (search-chunk-types all-chunks))
+                 ((eval `(verbatim ,name)) (insert-next-chunk name)))
+               ---
+               ("Other" (interactive insert-next-chunk))))
+       (if (null? (search-chunk-types all-chunks))
+           ("Reference" (make 'chunk-ref)))
+       (if (nnull? (search-chunk-types all-chunks))
+           (-> "Reference"
+               (for (name (search-chunk-types all-chunks))
+                 ((eval `(verbatim ,name)) (insert `(chunk-ref ,name))))
+               ---
+               ("Other" (make 'chunk-ref))))))
+ 
   ---
   ("Invisible newline" (make 'folded-newline-before))
   ("Invisible opening" (make 'unfolded-opening))
@@ -57,7 +62,7 @@
   (when (nnull? (search-appended-folded (buffer-tree)))
     ("Unfold all" (unfold-appended)))
   ---
-  (when (nnull? (search-chunk-types (buffer-tree)))
+  (when (nnull? (search-chunk-types (get-all-chunks)))
     ("Build buffer" (lp-build-buffer))
     ("Build buffer in" (interactive lp-build-buffer-in)))
   ("Build directory" (lp-interactive-build-directory))
@@ -71,4 +76,4 @@
   (former)
   (if (style-has? "literate-dtd")
       (=> "Literate"
-	  (link literate-menu))))
+          (link literate-menu))))
