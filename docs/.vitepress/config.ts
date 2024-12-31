@@ -51,16 +51,6 @@ export default {
 
 function nav() {
     return [
-        // {
-        //     text: 'SICP Open Course🔥',
-        //     link: '/zh/guide/SICP',
-        //     activeMatch: '/sicp/'
-        // },
-        // {
-        //     text: 'Summer of Code🔥',
-        //     link: '/guide/SummerOfCode',
-        //     activeMatch: '/ospp/'
-        // },
         {
             text: 'Mogan for beginners🔥',
             link: '/zh/guide/Tutorial',
@@ -84,16 +74,6 @@ function nav() {
 
 function navZh() {
     return [
-        // {
-        //     text: 'SICP公开课🔥',
-        //     link: '/zh/guide/SICP',
-        //     activeMatch: '/sicp/'
-        // },
-        // {
-        //     text: '开源之夏🔥',
-        //     link: '/guide/SummerOfCode',
-        //     activeMatch: '/ospp/'
-        // },
         {
             text: '零基础墨干🔥',
             link: '/zh/guide/Tutorial',
