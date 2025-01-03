@@ -1,8 +1,8 @@
-# Mogan v.s. GNU TeXmacs
+# Mogan vs. GNU TeXmacs
 ## Product Positioning
 Mogan is a libre STEM suite, consists of Mogan Research, Mogan Code and Mogan Beamer. Mogan Research is one of the distribution of GNU TeXmacs, both of them are libre scientific editing platform.
 
-Mogan Research as a distribution of GNU TeXmacs will try to keep the user experience as the same. Mogan Research and GNU TeXmacs could be regarded as the same kind product released by different teams. Mogan Code and Mogan Beamer will be brand-new products based on the layout engine and structural editing in GNU TeXmacs.
+Mogan Research as a distribution of GNU TeXmacs will try to keep the user experience as the same. Mogan Research and GNU TeXmacs could be regarded as the same kind of product released by different teams. Mogan Code and Mogan Beamer will be brand-new products based on the layout engine and structural editing in GNU TeXmacs.
 
 In this article, we will discuss the differences of Mogan Research and GNU TeXmacs in details:
 
@@ -31,7 +31,7 @@ In this article, we will discuss the differences of Mogan Research and GNU TeXma
 Why:
 1. Provide experiences like new document in WPS or MS Word for new TeXmacs user
 2. `Insert->Note->Marginal note` works as expected with margins as on paper
-3. When `View->Zoom` is 100%, the default page is almost the same with the exported PDF or the printed A4 paper (actually, because there are reserved and hidden 10px on each side on screen, the screen paper is slightly smaller than the actual A4 paper)
+3. When `View->Zoom` is 100%, the default page is almost the same as the exported PDF or the printed A4 paper (because there are reserved and hidden 10px on each side on screen, the screen paper is slightly smaller than the actual A4 paper)
 
 ### Enable `Focus->Layout->No page numbers` by default
 Do not show page numbers to make it clean and tidy.
@@ -54,7 +54,7 @@ On Linux and Windows, `C-tab` and `C-S-tab` are reserved. On macOS, because we s
 > Why: `C-tab`, `C-S-tab` and `A-S-tab` do not work on macOS, see [QTBUG-12232](https://bugreports.qt.io/browse/QTBUG-12232).
 
 ### ESC key
-The ESC is used for producing equivalents for the modifier keys in GNU TeXmacs. But in Mogan, it is a normal key. And later, the ESC may be used in the Vim plugin for Mogan. If the shortcuts in Mogan is conflicated with the OS system shortucts, we should regard it as a bug and fix it by changing the shortcut but not using the ESC key.
+The ESC is used for producing equivalents for the modifier keys in GNU TeXmacs. But in Mogan, it is a normal key. And later, the ESC may be used in the Vim plugin for Mogan. If the shortcuts in Mogan are in conflict with the OS system shortucts, we should regard it as a bug and fix it by changing the shortcut but not using the ESC key.
 
 ## Graphics
 | Action | Mogan Research | GNU TeXmacs |
