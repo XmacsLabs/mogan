@@ -11,7 +11,7 @@
 </tr>
 <tr>
 <td>GitCode</td>
-<td><a href="https:/gitcode.com/XmacsLabs/mogan">https://gitcode.org/XmacsLabs/mogan</a></td>
+<td><a href="https://gitcode.com/XmacsLabs/mogan">https://gitcode.com/XmacsLabs/mogan</a></td>
 <td><img src="../../images/gitcode.png" width="20px;" height="20px;" alt="" /></td>
 </tr>
 <tr>
