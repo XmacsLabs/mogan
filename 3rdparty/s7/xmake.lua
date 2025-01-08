@@ -27,14 +27,19 @@ if has_config("gmp") then
 end
 
 target("libs7") do
-    set_kind("static")
+    set_kind("$(kind)")
+    add_defines("WITH_SYSTEM_EXTRAS=0")
+    add_defines("HAVE_OVERFLOW_CHECKS=0")
+    add_defines("WITH_WARNINGS")
     set_basename("s7")
     add_files("s7.c")
     add_headerfiles("s7.h")
     add_includedirs(".", {public = true})
     add_options("gmp")
     if is_plat("windows") then
+        set_optimize("faster")
         set_languages("c11")
+        add_cxxflags("/fp:precise")
     end
     add_packages("gmp")
     if is_mode("debug") then
