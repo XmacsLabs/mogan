@@ -1,3 +1,5 @@
+import mathjax3 from 'markdown-it-mathjax3'
+
 export default {
     title: 'Mogan STEM Suite',
     outDir: "../website",
@@ -46,7 +48,12 @@ export default {
     ignoreDeadLinks: false,
     head: [
         ['link', {rel: 'icon', href: '/favicon.png'}],
-    ]
+    ],
+    markdown: {
+        config(md) {
+            md.use(mathjax3);
+        },
+    }
 }
 
 function nav() {
