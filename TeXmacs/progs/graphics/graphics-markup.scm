@@ -88,15 +88,15 @@
          (q  (if (tm-point? Q) (tree->stree Q) p))
          (r  (points-distance c p))
          (r1 (points-distance c q))
-         (x  (if (equal? r 0.0)
+         (x  (if (zero? r)
                 c
-                (if (equal? r1 0.0)
+                (if (zero? r1)
                   p
                   (points-add (point-times (point-get-unit (points-sub q c)) r) c))))
          (mid-p-x (points-mid p x))
          (vec-c-p (points-sub p c))
          (vec-c-q (points-sub q c))
-         (m  (if (or (equal? r 0.0) (equal? r1 0.0))
+         (m  (if (or (zero? r) (zero? r1))
                 x
                 (if (clockwise (points-cross-product-k vec-c-p vec-c-q) 0)
                   (points-add (point-times (point-get-unit (points-sub mid-p-x c)) (- r)) c)
