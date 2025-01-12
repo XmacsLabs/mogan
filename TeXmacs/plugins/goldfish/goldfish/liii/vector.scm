@@ -16,6 +16,7 @@
 
 (define-library (liii vector)
 (import (srfi srfi-133)
+        (srfi srfi-13)
         (liii base))
 (export
   ; S7 Scheme built-in
@@ -25,12 +26,32 @@
   vector-map vector-for-each
   ; from (srfi srfi-133)
   vector-empty?
+  vector-fold vector-fold-right
   vector-count
   vector-any vector-every vector-copy vector-copy!
-  vector-index vector-index-right vector-partition
+  vector-index vector-index-right vector-skip vector-skip-right vector-partition
   vector-swap! vector-cumulate reverse-list->vector
-  vector=)
+  vector=
+  ; Liii Extras
+  vector-filter
+)
 (begin
+
+(define (vector-filter pred vec)
+  (let* ((result-list (vector-fold (lambda (elem acc)
+                                     (if (pred elem)
+                                         (cons elem acc)
+                                         acc))
+                                   '()
+                                   vec))
+         (result-length (length result-list))
+         (result-vec (make-vector result-length)))
+    (let loop ((i (- result-length 1)) (lst result-list))
+      (if (null? lst)
+          result-vec
+          (begin
+            (vector-set! result-vec i (car lst))
+            (loop (- i 1) (cdr lst)))))))
 
 ) ; end of begin
 ) ; end of define-library

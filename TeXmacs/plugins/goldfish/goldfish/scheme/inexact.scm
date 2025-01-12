@@ -14,14 +14,11 @@
 ; under the License.
 ;
 
-(define-library (liii sys)
-(export argv executable)
-(import (scheme process-context))
+; The (scheme inexact) library exports procedures which are typically only
+; useful with inexact values
+(define-library (scheme inexact)
+(export acos asin atan cos exp finite? infinite? log nan? sin sqrt tan)
 (begin
-
-(define (argv) (command-line))
-
-(define (executable) (g_executable))
 
 ) ; end of begin
 ) ; end of define-library

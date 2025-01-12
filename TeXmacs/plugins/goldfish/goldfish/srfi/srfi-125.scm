@@ -69,9 +69,9 @@
 (define (hash-table=? ht1 ht2)
   (equal? ht1 ht2))
 
-(define-macro (hash-table-ref/default ht key default)
-  `(or (hash-table-ref ,ht ,key)
-        ,default))
+(define (hash-table-ref/default ht key default)
+  (or (hash-table-ref ht key)
+      (if (procedure? default) (default) default)))
 
 (define (hash-table-set! ht . rest)
   (assert-hash-table-type ht hash-table-set!)
@@ -119,6 +119,18 @@
           (vs (hash-table-values ht)))
       (values ks vs))))
 
+(define (hash-table-find proc ht failure)
+  (let ((keys (hash-table-keys ht)))
+    (let loop ((keys keys))
+      (if (null? keys)
+          (if (procedure? failure)
+              (failure)
+              failure)
+          (let* ((key (car keys))
+                 (value (hash-table-ref ht key)))
+            (if (proc key value)
+                value
+                (loop (cdr keys))))))))
 
 (define hash-table-count
   (typed-lambda ((pred? procedure?) (ht hash-table?))

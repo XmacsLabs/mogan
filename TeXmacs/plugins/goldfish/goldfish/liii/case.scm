@@ -15,6 +15,7 @@
 ;
 
 (define-library (liii case)
+(import (liii base))
 (export case*)
 (begin
 

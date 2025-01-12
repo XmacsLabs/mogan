@@ -20,7 +20,7 @@
   ; R7RS 5: Program Structure
   define-values define-record-type
   ; R7RS 6.2: Numbers
-  square exact inexact floor s7-floor ceiling s7-ceiling truncate s7-truncate
+  square exact inexact max min floor s7-floor ceiling s7-ceiling truncate s7-truncate
   round s7-round floor-quotient gcd lcm s7-lcm boolean=?
   ; R7RS 6.4: list
   pair? cons car cdr set-car! set-cdr! caar cadr cdar cddr
@@ -120,6 +120,38 @@
 (define exact inexact->exact)
 
 (define inexact exact->inexact)
+
+(define s7-max max)
+
+(define (max2 x y)
+  (when (or (not (real? x)) (not (real? y)))
+    (error 'type-error "max: parameter must be real number"))
+  (if (or (inexact? x) (inexact? y))
+      (inexact (s7-max x y))
+      (s7-max x y)))
+
+(define (max x . xs)
+  (let loop ((current-max x) (remaining xs))
+    (if (null? remaining)
+        current-max
+        (loop (max2 current-max (car remaining))
+              (cdr remaining)))))
+
+(define s7-min min)
+
+(define (min2 x y)
+  (when (or (not (real? x)) (not (real? y)))
+    (error 'type-error "min: parameter must be real number"))
+  (if (or (inexact? x) (inexact? y))
+      (inexact (s7-min x y))
+      (s7-min x y)))
+
+(define (min x . xs)
+  (let loop ((current-min x) (remaining xs))
+    (if (null? remaining)
+        current-min
+        (loop (min2 current-min (car remaining))
+              (cdr remaining)))))
 
 (define s7-floor floor)
 
