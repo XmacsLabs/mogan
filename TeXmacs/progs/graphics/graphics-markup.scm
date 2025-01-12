@@ -87,22 +87,28 @@
          (p  (if (tm-point? P) (tree->stree P) c))
          (q  (if (tm-point? Q) (tree->stree Q) p))
          (r  (points-distance c p))
-         (x  (if (equal? r 0.0)
+         (r1 (points-distance c q))
+         (x  (if (zero? r)
                 c
-                (points-add (point-times (point-get-unit (points-sub q c)) r) c)))
+                (if (zero? r1)
+                  p
+                  (points-add (point-times (point-get-unit (points-sub q c)) r) c))))
          (mid-p-x (points-mid p x))
          (vec-c-p (points-sub p c))
          (vec-c-q (points-sub q c))
-         (m  (if (equal? r 0.0)
-                c
+         (m  (if (or (zero? r) (zero? r1))
+                x
                 (if (clockwise (points-cross-product-k vec-c-p vec-c-q) 0)
                   (points-add (point-times (point-get-unit (points-sub mid-p-x c)) (- r)) c)
                   (if (= (points-cross-product-k vec-c-p vec-c-q) 0)
                     ;; If cross product == 0, then the angle between vec-c-p and vec-c-q is 0 or 180.
                     ;; We should find out whether it's 0 or 180.
+                    ;; And we should determine whether it's clockwise or counterclockwise.
                     (if (equal? (point-get-unit vec-c-p) (point-get-unit vec-c-q))
                       x
-                      (point-rotate-90 (point-rotate-90 (point-rotate-90 vec-c-p))))
+                      (if (eq? clockwise >)
+                        (points-add (point-rotate-90 (point-rotate-90 (point-rotate-90 vec-c-p))) c)
+                        (points-add (point-rotate-90 vec-c-p) c)))
                     (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
     `(arc ,p ,m ,x)))
 
