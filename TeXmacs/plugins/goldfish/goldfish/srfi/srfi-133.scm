@@ -18,9 +18,10 @@
 (import (liii base))
 (export
   vector-empty?
+  vector-fold vector-fold-right
   vector-count
   vector-any vector-every vector-copy vector-copy!
-  vector-index vector-index-right vector-partition
+  vector-index vector-index-right vector-skip vector-skip-right vector-partition
   vector-swap! vector-cumulate reverse-list->vector
   vector=)
 (begin
@@ -49,6 +50,18 @@
                (if (null? vrest) #t
                    (loop vec2 (car vrest) (cdr vrest)))
                #f)))))
+(define (vector-fold f initial vec)
+  (let loop ((i 0) (acc initial))
+    (if (< i (vector-length vec))
+        (loop (+ i 1) (f (vector-ref vec i) acc))
+        acc)))
+
+(define (vector-fold-right f initial vec)
+  (let loop ((i (- (vector-length vec) 1)) (acc initial))
+    (if (>= i 0)
+        (loop (- i 1) (f (vector-ref vec i) acc))
+        acc)))
+
 ; TODO optional parameters
 (define (vector-count pred v)
   (let loop ((i 0) (count 0))
@@ -88,20 +101,26 @@
              ((not (pred (vector-ref v i))) #f)
              (else (loop (+ i 1))))))
 
-; TODO optional parameters
-(define (vector-index pred v)
-  (let loop ((i 0))
+(define vector-index
+  (typed-lambda ((pred procedure?) (v vector?))
+    (let loop ((i 0))
        (cond ((= i (vector-length v)) #f)
              ((pred (vector-ref v i)) i)
-             (else (loop (+ i 1))))))
+             (else (loop (+ i 1)))))))
 
-; TODO optional parameters
-(define (vector-index-right pred v)
-  (let ((len (vector-length v)))
-    (let loop ((i (- len 1)))
-         (cond ((< i 0) #f)
+(define vector-index-right
+  (typed-lambda ((pred procedure?) (v vector?))
+    (let ((len (vector-length v)))
+      (let loop ((i (- len 1)))
+        (cond ((< i 0) #f)
                ((pred (vector-ref v i)) i)
-               (else (loop (- i 1)))))))
+               (else (loop (- i 1))))))))
+
+(define (vector-skip pred v)
+  (vector-index (lambda (x) (not (pred x))) v))
+
+(define (vector-skip-right pred v)
+  (vector-index-right (lambda (x) (not (pred x))) v))
 
 (define (vector-partition pred v)
   (let* ((len (vector-length v))

@@ -48,8 +48,8 @@
 (define (value-error . args)
   (apply error (cons 'value-error args)))
 
-(define (???)
-  (error 'not-implemented-error "???"))
+(define (??? . args)
+  (apply error (cons '??? args)))
 
 ) ; begin
 ) ; define-library

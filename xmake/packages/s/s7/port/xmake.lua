@@ -29,6 +29,8 @@ end
 target("libs7") do
     set_kind("$(kind)")
     add_defines("WITH_SYSTEM_EXTRAS=0")
+    add_defines("HAVE_OVERFLOW_CHECKS=0")
+    add_defines("WITH_WARNINGS")
     set_basename("s7")
     add_files("s7.c")
     add_headerfiles("s7.h")

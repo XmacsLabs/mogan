@@ -24,7 +24,7 @@
   ; R7RS 5: Program Structure
   define-values define-record-type
   ; R7RS 6.2: Numbers
-  square exact inexact floor s7-floor ceiling s7-ceiling truncate s7-truncate
+  square exact inexact max min floor s7-floor ceiling s7-ceiling truncate s7-truncate
   round s7-round floor-quotient gcd lcm s7-lcm
   ; R7RS 6.3: Booleans
   boolean=?
@@ -55,21 +55,26 @@
   and-let*
   ; SRFI-8
   receive
-  ; Extra routines for (liii base)
-  == != display* in? let1 compose identity typed-lambda
+  ; Extra routines
+  loose-car loose-cdr in? compose identity any?
+  ; Extra structure
+  let1  typed-lambda typed-define define-case-class case-class?
+  == != display* object->string
 )
 (begin
 
 (define* (u8-substring str (start 0) (end #t))
   (utf8->string (string->utf8 str start end)))
 
-(define == equal?)
+(define (loose-car pair-or-empty)
+  (if (eq? '() pair-or-empty)
+      '()
+      (car pair-or-empty)))
 
-(define (!= left right)
-  (not (equal? left right)))
-
-(define (display* . params)
-  (for-each display params))
+(define (loose-cdr pair-or-empty)
+  (if (eq? '() pair-or-empty)
+      '()
+      (cdr pair-or-empty)))
 
 (define (in? elem l)
   (cond ((list? l) (not (not (member elem l))))
@@ -84,10 +89,6 @@
          (in? elem (string->list l)))
         (else (error 'type-error "type mismatch"))))
 
-(define-macro (let1 name1 value1 . body)
-  `(let ((,name1 ,value1))
-     ,@body))
-
 (define identity (lambda (x) x))
 
 (define (compose . fs)
@@ -96,6 +97,12 @@
       (lambda (x)
         ((car fs) ((apply compose (cdr fs)) x)))))
   
+(define (any? x) #t)
+
+(define-macro (let1 name1 value1 . body)
+  `(let ((,name1 ,value1))
+     ,@body))
+
 ; 0 clause BSD, from S7 repo stuff.scm
 (define-macro (typed-lambda args . body)
   ; (typed-lambda ((var [type])...) ...)
@@ -115,6 +122,131 @@
                         (values)))
                   args)
            ,@body))))
+
+(define-macro (typed-define name-and-params x . xs)
+  (let* ((name (car name-and-params))
+         (params (cdr name-and-params)))
+    `(define* (,name ,@(map (lambda (param)
+                              (let ((param-name (car param))
+                                    (type-pred (cadr param))
+                                    (default-value (cddr param)))
+                                (if (null? default-value)
+                                    param-name
+                                    `(,param-name ,(car default-value)))))
+                            params))
+
+       ,@(map (lambda (param)
+                (let ((param-name (car param))
+                      (type-pred (cadr param)))
+                  `(unless (,type-pred ,param-name)
+                     (error 'type-error (string-append "Invalid type for " (symbol->string ',param-name))))))
+              params)
+       ,x
+       ,@xs)))
+
+(define-macro (define-case-class class-name fields . extra-operations)
+  (let ((constructor (string->symbol (string-append (symbol->string class-name))))
+        (key-fields (map (lambda (field)
+                           (string->symbol (string-append ":" (symbol->string (car field)))))
+                         fields)))
+    `(begin
+       (typed-define ,(cons class-name fields)
+         (define (%is-instance-of x)
+           (eq? x ',class-name))
+         
+         (typed-define (%equals (that case-class?))
+           (and (that :is-instance-of ',class-name)
+                ,@(map (lambda (field)
+                         `(equal? ,(car field) (that ',(car field))))
+                       fields)))
+         
+         (define (%apply . args)
+           (when (null? args)
+             (??? ,class-name "apply on zero args is not implemented"))
+           (cond ((equal? ((symbol->string (car args)) 0) #\:)
+                  (??? ,class-name
+                    "No such method: " (car args)
+                    "Please implement the method"))
+                 (else
+                  (??? ,class-name "No such field: " (car args)
+                       "Please use the correct field name"
+                       "Or you may implement %apply to process " args))))
+         
+         (define (%to-string)
+           (let ((field-strings
+                  (list ,@(map (lambda (field key-field)
+                                 `(string-append
+                                   ,(symbol->string key-field) " "
+                                   (object->string ,(car field))))
+                               fields key-fields))))
+             (let loop ((strings field-strings)
+                        (acc ""))
+               (if (null? strings)
+                   (string-append "(" ,(symbol->string class-name) " " acc ")")
+                   (loop (cdr strings)
+                         (if (zero? (string-length acc))
+                             (car strings)
+                             (string-append acc " " (car strings))))))))
+
+         ,@extra-operations
+
+         (lambda (msg . args)
+           (cond
+             ((eq? msg :is-instance-of) (apply %is-instance-of args))
+             ((eq? msg :equals) (apply %equals args))
+             ((eq? msg :to-string) (%to-string))
+             
+             ,@(map (lambda (field)
+                      `((eq? msg ',(car field)) ,(car field)))
+                    fields)
+             ,@(map (lambda (field key-field)
+                      `((eq? msg ,key-field)
+                        (,constructor ,@(map (lambda (f)
+                                               (if (eq? (car f) (car field))
+                                                   '(car args)
+                                                   (car f)))
+                                             fields))))
+                    fields key-fields)
+
+             ,@(map (lambda (op)
+                      `((eq? msg ,(string->symbol (string-append ":" (substring (symbol->string (caadr op)) 1))))
+                        (apply ,(caadr op) args)))
+                    extra-operations)
+
+             (else (apply %apply (cons msg args)))))))))
+
+(define (case-class? x)
+  (and-let* ((is-proc? (procedure? x))
+             (source (procedure-source x))
+             (body (source 2))
+             (is-cond? (eq? (car body) 'cond))
+             (at-least-2? (>= (length body) 3))
+             (pred1 ((body 1) 0))
+             (pred2 ((body 2) 0)))
+    (and (equal? pred1 '(eq? msg :is-instance-of))
+         (equal? pred2 '(eq? msg :equals)))))
+
+(define (== left right)
+  (if (and (case-class? left) (case-class? right))
+      (left :equals right)
+      (equal? left right)))
+
+(define (!= left right)
+  (not (== left right)))
+
+(define (display* . params)
+  (define (%display x)
+    (if (case-class? x)
+        (display (x :to-string))
+        (display x)))
+  (for-each %display params))
+
+(define s7-object->string object->string)
+
+(define (object->string x)
+  (if (case-class? x)
+      (x :to-string)
+      (s7-object->string x)))
 
 ) ; end of begin
 ) ; end of define-library

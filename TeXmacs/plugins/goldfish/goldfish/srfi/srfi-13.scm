@@ -28,6 +28,7 @@
     string-index string-index-right
     string-contains string-count
     string-upcase string-downcase
+    string-fold string-fold-right string-for-each-index
     string-reverse
     string-tokenize)
 (begin
@@ -277,6 +278,8 @@
               (loop (+ i 1)))))))
 
 (define (string-count str char/pred? . start+end)
+  (when (not (string? str))
+    (type-error "string-count: first parameter must be string"))
   (let ((str-sub (%string-from-range str start+end))
         (criterion (%make-criterion char/pred?)))
     (count criterion (string->list str-sub))))
@@ -311,6 +314,45 @@
                           (reverse (substring str start end))
                           (substring str end))))
         (else (error 'wrong-number-of-args "string-reverse"))))
+
+(define (string-fold kons knil s . rest)
+  (when (not (procedure? kons))
+        (type-error "string-fold: first argument must be a procedure"))
+  (when (not (string? s))
+        (type-error "string-fold: second argument must be a string"))
+
+  (let ((substr (%string-from-range s rest)))
+    (let loop ((i 0)
+               (result knil))
+      (if (= i (string-length substr))
+          result
+          (loop (+ i 1)
+                (kons (string-ref substr i) result))))))
+
+(define (string-fold-right kons knil s . rest)
+  (when (not (procedure? kons))
+        (type-error "string-fold-right: first argument must be a procedure"))
+  (when (not (string? s))
+        (type-error "string-fold-right: second argument must be a string"))
+
+  (let ((substr (%string-from-range s rest)))
+    (let loop ((i (- (string-length substr) 1))
+               (result knil))
+      (if (< i 0)
+          result
+          (loop (- i 1)
+                (kons (string-ref substr i) result))))))
+
+(define (string-for-each-index proc str . start+end)
+  (when (not (procedure? proc))
+    (error 'type-error "string-for-each-index: first argument must be a procedure"))
+  (when (not (string? str))
+    (error 'type-error "string-for-each-index: expected a string"))
+  (let ((substr (%string-from-range str start+end)))
+    (let loop ((i 0) (len (string-length substr)) (acc '()))
+      (if (< i len)
+          (loop (+ i 1) len (proc i (string-ref substr i) acc))
+          (reverse acc)))))
 
 (define (string-tokenize str . char+start+end)
   

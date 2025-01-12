@@ -14,14 +14,12 @@
 ; under the License.
 ;
 
-(define-library (liii sys)
-(export argv executable)
-(import (scheme process-context))
+(define-library (liii chez)
+(export atom?)
 (begin
 
-(define (argv) (command-line))
-
-(define (executable) (g_executable))
+(define (atom? x)
+  (not (pair? x)))
 
 ) ; end of begin
 ) ; end of define-library
