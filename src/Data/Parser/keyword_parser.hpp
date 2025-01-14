@@ -35,6 +35,7 @@ public:
   }
 
   void use_keywords_of_lang (string lang_code);
+  void insert_start_char (char start_char);
   void insert_extra_char (char extra_char);
 
 private:
@@ -42,6 +43,7 @@ private:
   hashmap<string, string> keyword_group;
   string                  current_keyword;
   array<char>             extra_chars;
+  array<char>             start_chars;
 };
 
 #endif

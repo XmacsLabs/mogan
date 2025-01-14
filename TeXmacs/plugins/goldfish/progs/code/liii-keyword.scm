@@ -15,7 +15,7 @@
 
 (define (liii-base)
   (map symbol->string
-    '(== != display* in? compose identity)))
+    '(== != display* in? compose identity case-class? any?)))
 
 (define (liii-check)
   (map symbol->string
@@ -24,7 +24,7 @@
 
 (define (liii-list)
   (map symbol->string
-    '(list-view flatmap flatten list-null? list-not-null? not-null-list?)))
+    '(list-view flat-map flatten list-null? list-not-null? not-null-list?)))
 
 (define (liii-string)
   (map symbol->string
@@ -62,15 +62,34 @@
   lognot logand logior logxor
   ash)))
 
+(define (liii-lang)
+  (map symbol->string
+    '(box case-integer case-string case-vector case-hash-table)))
+
+(tm-define (liii-methods)
+  (map symbol->string
+    '(:equals :to-string :is-instance-of
+      :apply :get :get-or-else :or-else :collect 
+      :exists :forall :contains :empty? :defined?
+      :map :filter :flat-map :for-each :fold :fold-right :reduce :reduce-right
+      :take :take-right :drop :drop-right :take-while :drop-while
+      :sum :produce :min :max :min-by :max-by
+      :sorted :sort-by :sortWith
+      :union :intersect :diff :distinct
+      :find :count :length :size
+      :group-by :partition :zip :zip-with-index :unzip
+      :par
+      :make-string :to-list :to-vector :to-map :to-set)))
+
 (tm-define (liii-keywords)
-  `(,@(liii-base) ,@(liii-check) ,@(liii-list)
-    ,@(liii-string) ,@(liii-os) ,@(liii-queue)
-    ,@(liii-stack) ,@(liii-sys) ,@(liii-uuid) ,@(liii-base64) ,@(liii-bitwise)))
+  `(,@(liii-base) ,@(liii-check) ,@(liii-list) ,@(liii-string) ,@(liii-os) ,@(liii-queue)
+    ,@(liii-stack) ,@(liii-sys) ,@(liii-uuid) ,@(liii-base64) ,@(liii-bitwise) ,@(liii-lang)))
 
 (tm-define (liii-keywords-define)
   (map symbol->string
-    '(let1 typed-lambda defined? define-macro define-constant
-      autoload require provide define* lambda* eval-string case*)))
+    '(let1 and-let* typed-lambda defined? define-macro define-constant
+      autoload require provide define* lambda* eval-string case*
+      typed-define define-case-class)))
 
 (tm-define (liii-keywords-error)
   (map symbol->string

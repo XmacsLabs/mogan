@@ -27,7 +27,7 @@
 (define (extract-lines t)
   (cond ((tm-atomic? t) (list t))
         ((tm-func? t 'document)
-         (flatmap extract-lines (tm-children t)))
+         (flat-map extract-lines (tm-children t)))
         ((or (tm-func? t 'folded-newline-before 1)
              (tm-func? t 'unfolded-newline-before 1))
          (cons "" (extract-lines (tm-ref t 0))))
@@ -35,7 +35,7 @@
          (with l (filter (cut tm-func? <> 'document) (tm-children t))
            (if (null? l)
                (list t)
-               (flatmap extract-lines l))))))
+               (flat-map extract-lines l))))))
 
 (define (build-table t)
   (let* ((l (get-all-chunks))

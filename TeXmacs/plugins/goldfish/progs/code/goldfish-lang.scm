@@ -26,6 +26,7 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "goldfish") (== key "keyword")))
   `(,(string->symbol key)
+    (start_chars ":")
     (extra_chars "?" "+" "-" "." "!" "*" ">" "=" "<" "#" "/")
     (constant
       ,@(r7rs-keywords-constant)
@@ -36,6 +37,8 @@
     (declare_type
       ,@(r7rs-keywords-define)
       ,@(liii-keywords-define))
+    (operator_special
+      ,@(liii-methods))
     (keyword
       ,@(r7rs-keywords-others) ,@(srfi-1-keywords) ,@(srfi-8-keywords) ,@(srfi-13-keywords) ,@(srfi-60-keywords)
       ,@(srfi-78-keywords) ,@(srfi-125-keywords) ,@(srfi-133-keywords)

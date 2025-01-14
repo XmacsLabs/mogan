@@ -21,6 +21,12 @@ keyword_parser_rep::keyword_parser_rep () {
   current_keyword= "";
   keyword_group  = hashmap<string, string> ();
   extra_chars    = array<char> ();
+  start_chars    = array<char> ();
+}
+
+void
+keyword_parser_rep::insert_start_char (char start_char) {
+  start_chars << start_char;
 }
 
 void
@@ -29,14 +35,14 @@ keyword_parser_rep::insert_extra_char (char extra_char) {
 }
 
 bool
-read_keyword (string s, int& i, string& result, array<char> extras) {
+read_keyword (string s, int& i, string& result, array<char> extras, array<char> starts) {
   int opos= i;
   int s_N = N (s);
   // a keyword must start with alpha or start with extra chars
-  if (i < s_N && (is_alpha (s[i] || contains (s[i], extras)))) i++;
+  if (i < s_N && (is_alpha (s[i] || contains (s[i], extras)) || contains (s[i], starts))) i++;
   // a keyword is consist of alpha/number/extra chars
   while (i < s_N &&
-         (is_alpha (s[i]) || is_digit (s[i]) || contains (s[i], extras))) {
+         (is_alpha (s[i]) || is_digit (s[i]) || contains (s[i], extras) || contains (s[i], starts))) {
     i++;
   }
   result= s (opos, i);
@@ -46,7 +52,7 @@ read_keyword (string s, int& i, string& result, array<char> extras) {
 bool
 keyword_parser_rep::can_parse (string s, int pos) {
   string word;
-  bool   hit= read_keyword (s, pos, word, extra_chars) &&
+  bool   hit= read_keyword (s, pos, word, extra_chars, start_chars) &&
             keyword_group->contains (word);
   if (hit) current_keyword= word;
   return hit;

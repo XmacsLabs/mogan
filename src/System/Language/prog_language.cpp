@@ -73,6 +73,14 @@ prog_language_rep::customize_keyword (keyword_parser_rep p_keyword_parser,
         }
       }
     }
+    else if (group == "start_chars") {
+      for (int j= 0; j < group_of_keywords_N; j++) {
+        string start_char= get_label (group_of_keywords[j]);
+        if (N (start_char) == 1) {
+          p_keyword_parser.insert_start_char (start_char[0]);
+        }
+      }
+    }
     else {
       for (int j= 0; j < group_of_keywords_N; j++) {
         string word= get_label (group_of_keywords[j]);
