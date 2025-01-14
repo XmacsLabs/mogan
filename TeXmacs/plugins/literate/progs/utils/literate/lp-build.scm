@@ -16,7 +16,8 @@
 
 (import (liii hash-table)
         (liii base)
-        (liii list))
+        (liii list)
+        (liii lang))
 
 (define code-table (make-hash-table))
 
@@ -192,8 +193,8 @@
     r))
 
 (define (write-table ht dir)
-  ((list-view (map values ht))
-    for-each
+  ((box (map values ht))
+   :for-each
     (lambda (pair)
       (let* ((key (car pair))
              (val (cdr pair)))
