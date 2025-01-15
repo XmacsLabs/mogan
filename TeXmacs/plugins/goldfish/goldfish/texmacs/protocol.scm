@@ -18,6 +18,7 @@
 (export
   data-begin data-end data-escape
   flush-verbatim flush-prompt flush-scheme flush-scheme-u8 flush-file
+  flush-markdown
   read-paragraph-by-visible-eof
 )
 (begin
@@ -51,6 +52,9 @@
 
 (define (flush-file path)
   (flush-any (string-append "file:" path)))
+
+(define (flush-markdown msg)
+  (flush-any (string-append "markdown:" msg)))
 
 (define (read-paragraph-by-visible-eof)
   (define (read-code code)

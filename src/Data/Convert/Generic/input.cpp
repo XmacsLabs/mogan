@@ -47,6 +47,7 @@ using moebius::data::scheme_to_tree;
 #define MODE_XFORMAT 9
 #define MODE_FILE 10
 #define MODE_SCHEME_UTF8 11
+#define MODE_MARKDOWN 12
 
 /******************************************************************************
  * Universal data input
@@ -220,6 +221,8 @@ texmacs_input_rep::flush (bool force) {
   case MODE_LATEX:
     latex_flush (force);
     break;
+  case MODE_MARKDOWN:
+    markdown_flush (force);
   case MODE_HTML:
     html_flush (force);
     break;
@@ -290,6 +293,14 @@ void
 texmacs_input_rep::latex_flush (bool force) {
   if (force || ends (buf, "\n\n") || ends (buf, "\r\n\r\n")) {
     write (generic_to_tree (buf, "latex-snippet"));
+    buf= "";
+  }
+}
+
+void
+texmacs_input_rep::markdown_flush (bool force) {
+  if (force) {
+    write (generic_to_tree (buf, "markdown-snippet"));
     buf= "";
   }
 }

@@ -42,6 +42,7 @@ struct texmacs_input_rep : concrete_struct {
   void scheme_flush (bool force= false);
   void scheme_u8_flush (bool force= false);
   void latex_flush (bool force= false);
+  void markdown_flush (bool force= false);
   void html_flush (bool force= false);
   void ps_flush (bool force= false);
   void math_flush (bool force= false);
