@@ -19,8 +19,8 @@
         (liii list) (liii hash-table) (liii bitwise))
 (export
   option none
-  case-integer case-char case-string
-  case-list case-vector case-hash-table
+  rich-integer rich-char rich-string
+  rich-list rich-vector rich-hash-table
   box
 )
 (begin
@@ -70,29 +70,29 @@
 
 (define (none) (option '()))
 
-(define-case-class case-integer ((data integer?))
+(define-case-class rich-integer ((data integer?))
 
 (define (%get) data)
 
 (typed-define (%to (n integer?))
   (if (< n data)
-      (case-list (list))
-      (case-list (iota (+ (- n data) 1) data))))
+      (rich-list (list))
+      (rich-list (iota (+ (- n data) 1) data))))
 
 (typed-define (%until (n integer?))
   (if (<= n data)
-      (case-list (list))
-      (case-list (iota (+ (- n data)) data))))
+      (rich-list (list))
+      (rich-list (iota (+ (- n data)) data))))
 
 (define (%to-char)
-  (case-char data))
+  (rich-char data))
 
 (define (%to-string)
   (number->string data))
 
 )
 
-(define-case-class case-char ((code-point integer?))
+(define-case-class rich-char ((code-point integer?))
 
 (define (%digit?)
   (or
@@ -147,7 +147,7 @@
 
 )
 
-(define make-case-char case-char)
+(define make-rich-char rich-char)
 
 (define (utf8-byte-sequence->code-point byte-seq)
   (let ((len (bytevector-length byte-seq)))
@@ -181,20 +181,20 @@
       (else
        (value-error "Invalid UTF-8 byte sequence length")))))
 
-(define (case-char x)
+(define (rich-char x)
   (cond ((integer? x)
          (if (and (>= x 0) (<= x #x10FFFF))
-             (make-case-char x)
-             (value-error "case-char: code point out of range" x)))
+             (make-rich-char x)
+             (value-error "rich-char: code point out of range" x)))
         ((string? x)
          (if (= 1 (u8-string-length x))
-             (case-char (string->utf8 x))
-             (value-error "case-char: must be u8 string which length equals 1")))
+             (rich-char (string->utf8 x))
+             (value-error "rich-char: must be u8 string which length equals 1")))
         ((bytevector? x)
-         (make-case-char (utf8-byte-sequence->code-point x)))
-        (else (type-error "case-char: must be integer, string, bytevector"))))
+         (make-rich-char (utf8-byte-sequence->code-point x)))
+        (else (type-error "rich-char: must be integer, string, bytevector"))))
 
-(define-case-class case-string ((data string?))
+(define-case-class rich-string ((data string?))
 
 (define (%get) data)
 
@@ -206,7 +206,7 @@
          (end (+ index 1))
          (byte-seq (string->utf8 data start end))
          (code-point (utf8-byte-sequence->code-point byte-seq)))
-    (case-char byte-seq)))
+    (rich-char byte-seq)))
 
 (typed-define (%apply (i integer?))
   (%char-at i))
@@ -235,7 +235,7 @@
 
 (define (%map x . xs)
   (%apply-one x xs
-    (case-string (string-map x data))))
+    (rich-string (string-map x data))))
 
 (define (%count pred?)
   (string-count data pred?))
@@ -245,7 +245,7 @@
 
 )
 
-(define-case-class case-list ((data list?))
+(define-case-class rich-list ((data list?))
 
 (define (%collect) data)
 
@@ -281,15 +281,15 @@
   (%exists (lambda (x) (equal? x elem))))
 
   (define (%map x . xs)
-    (let1 r (case-list (map x data))
+    (let1 r (rich-list (map x data))
       (if (null? xs) r (apply r xs))))
   
   (define (%flat-map x . xs)
-    (let1 r (case-list (flat-map x data))
+    (let1 r (rich-list (flat-map x data))
       (if (null? xs) r (apply r xs))))
   
   (define (%filter x . xs)
-    (let1 r (case-list (filter x data))
+    (let1 r (rich-list (filter x data))
       (if (null? xs) r (apply r xs))))
 
   (define (%for-each x)
@@ -301,7 +301,7 @@
             ((>= n (length data)) data)
             (else (take data n))))
 
-    (let1 r (case-list (scala-take data x))
+    (let1 r (rich-list (scala-take data x))
       (if (null? xs) r (apply r xs))))
 
   (define (%take-right x . xs)
@@ -310,13 +310,13 @@
             ((>= n (length data)) data)
             (else (take-right data n))))
 
-    (let1 r (case-list (scala-take-right data x))
+    (let1 r (rich-list (scala-take-right data x))
       (if (null? xs) r (apply r xs))))
 
   (define (%count . xs)
     (cond ((null? xs) (length data))
           ((length=? 1 xs) (count (car xs) data))
-          (else (error 'wrong-number-of-args "case-list%count" xs))))
+          (else (error 'wrong-number-of-args "rich-list%count" xs))))
 
   (define (%fold initial f)
     (fold f initial data))
@@ -335,24 +335,24 @@
          (let1 sep (car xs)
            (if (string? sep)
                (values "" sep "")
-               (type-error "case-list%make-string: separator must be a string" sep))))
+               (type-error "rich-list%make-string: separator must be a string" sep))))
         ((length=? 2 xs)
-         (error 'wrong-number-of-args "case-list%make-string: expected 0, 1, or 3 arguments, but got 2" xs))
+         (error 'wrong-number-of-args "rich-list%make-string: expected 0, 1, or 3 arguments, but got 2" xs))
         ((length=? 3 xs)
          (let ((start (car xs))
                (sep (cadr xs))
                (end (caddr xs)))
            (if (and (string? start) (string? sep) (string? end))
                (values start sep end)
-               (error 'type-error "case-list%make-string: prefix, separator, and suffix must be strings" xs))))
-        (else (error 'wrong-number-of-args "case-list%make-string: expected 0, 1, or 3 arguments" xs))))
+               (error 'type-error "rich-list%make-string: prefix, separator, and suffix must be strings" xs))))
+        (else (error 'wrong-number-of-args "rich-list%make-string: expected 0, 1, or 3 arguments" xs))))
 
     (receive (start sep end) (parse-args xs)
       (string-append start (string-join (map object->string data) sep) end)))
 
 )
 
-(define-case-class case-vector ((data vector?))
+(define-case-class rich-vector ((data vector?))
 
 (define (%collect) data)
 
@@ -372,11 +372,11 @@
     (vector-every p data))
 
   (define (%map x . xs)
-    (let1 r (case-vector (vector-map x data))
+    (let1 r (rich-vector (vector-map x data))
       (if (null? xs) r (apply r xs))))
   
   (define (%filter x . xs)
-    (let1 r (case-vector (vector-filter x data))
+    (let1 r (rich-vector (vector-filter x data))
       (if (null? xs) r (apply r xs))))
 
   (define (%for-each x)
@@ -385,7 +385,7 @@
   (define (%count . xs)
     (cond ((null? xs) (vector-length data))
           ((length=? 1 xs) (vector-count (car xs) data))
-          (else (error 'wrong-number-of-args "case-vector%count" xs))))
+          (else (error 'wrong-number-of-args "rich-vector%count" xs))))
 
   (define (%take x . xs)
     (typed-define (scala-take (data vector?) (n integer?))
@@ -398,7 +398,7 @@
                 ((>= i n) new-vec)
               (vector-set! new-vec i (vector-ref data i)))))))
 
-    (let1 r (case-vector (scala-take data x))
+    (let1 r (rich-vector (scala-take data x))
       (if (null? xs) r (apply r xs))))
 
   (define (%take-right x . xs)
@@ -414,7 +414,7 @@
                   ((>= j n) new-vec)
                 (vector-set! new-vec j (vector-ref data i))))))))
 
-    (let1 r (case-vector (scala-take-right data x))
+    (let1 r (rich-vector (scala-take-right data x))
       (if (null? xs) r (apply r xs))))
 
   (define (%fold initial f)
@@ -434,24 +434,24 @@
          (let1 sep (car xs)
            (if (string? sep)
                (values "" sep "")
-               (type-error "case-vector%make-string: separator must be a string" sep))))
+               (type-error "rich-vector%make-string: separator must be a string" sep))))
         ((length=? 2 xs)
-         (error 'wrong-number-of-args "case-vector%make-string: expected 0, 1, or 3 arguments, but got 2" xs))
+         (error 'wrong-number-of-args "rich-vector%make-string: expected 0, 1, or 3 arguments, but got 2" xs))
         ((length=? 3 xs)
          (let ((start (car xs))
                (sep (cadr xs))
                (end (caddr xs)))
            (if (and (string? start) (string? sep) (string? end))
                (values start sep end)
-               (type-error "case-vector%make-string: prefix, separator, and suffix must be strings" xs))))
-        (else (error 'wrong-number-of-args "case-vector%make-string: expected 0, 1, or 3 arguments" xs))))
+               (type-error "rich-vector%make-string: prefix, separator, and suffix must be strings" xs))))
+        (else (error 'wrong-number-of-args "rich-vector%make-string: expected 0, 1, or 3 arguments" xs))))
 
     (receive (start sep end) (parse-args xs)
       (string-append start (string-join (map object->string (vector->list data)) sep) end)))
 
 )
 
-(define-case-class case-hash-table ((data hash-table?))
+(define-case-class rich-hash-table ((data hash-table?))
   (define (%collect) data)
 
 (define (%map f . xs)
@@ -462,7 +462,7 @@
            (receive (k1 v1) (f k v)
              (hash-table-set! r k1 v1)))
          data)
-      (case-hash-table r))))
+      (rich-hash-table r))))
 
 (define (%get k)
   (option (hash-table-ref/default data k '())))
@@ -473,12 +473,12 @@
 )
 
 (define (box x)
-  (cond ((integer? x) (case-integer x))
-        ((char? x) (case-char (char->integer x)))
-        ((string? x) (case-string x))
-        ((list? x) (case-list x))
-        ((vector? x) (case-vector x))
-        ((hash-table? x) (case-hash-table x))
+  (cond ((integer? x) (rich-integer x))
+        ((char? x) (rich-char (char->integer x)))
+        ((string? x) (rich-string x))
+        ((list? x) (rich-list x))
+        ((vector? x) (rich-vector x))
+        ((hash-table? x) (rich-hash-table x))
         (else (type-error "box: x must be integer?, char?, string?, list?, vector?, hash-table?"))))
 
 ) ; end of begin

@@ -64,7 +64,7 @@
 
 (define (liii-lang)
   (map symbol->string
-    '(box case-integer case-string case-vector case-hash-table)))
+    '(box rich-integer rich-string rich-char rich-vector rich-hash-table)))
 
 (tm-define (liii-methods)
   (map symbol->string
