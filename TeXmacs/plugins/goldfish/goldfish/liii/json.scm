@@ -4,7 +4,7 @@
 ;;
 
 (define-library (liii json)
-(import (guenchi json))
+(import (liii base) (guenchi json))
 (export
   json json-null json-true json-false json-string json-parse
   json-string-escape json-string-unescape string->json json->string

@@ -21,7 +21,7 @@
   path-dir? path-file? path-exists?
   path-getsize path-read-text path-write-text
 )
-(import (liii error) (liii vector) (liii string) (liii list))
+(import (liii base) (liii error) (liii vector) (liii string) (liii list))
 (begin
 
 (define-record-type :path
