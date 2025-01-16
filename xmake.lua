@@ -221,6 +221,9 @@ target("libmogan") do
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)
     add_rules("qt.static")
+    on_install(function (target)
+        print("No need to install libmogan")
+    end)
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
 
     build_glue_on_config()
@@ -502,6 +505,16 @@ target("liii") do
         add_installfiles("$(projectdir)/TeXmacs(/fonts/**)")
     end
 
+    -- package metadata
+    if is_plat("macosx") then
+        add_installfiles({
+            "$(projectdir)/packages/macos/new-mogan.icns",
+            "$(projectdir)/packages/macos/TeXmacs-document.icns",
+            "$(projectdir)/src/Plugins/Cocoa/(en.lproj/**)",
+            "$(projectdir)/src/Plugins/Cocoa/(zh-Hans.lproj/**)"
+        })
+    end
+
     add_rules("qt.widgetapp")
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     add_packages("s7")
@@ -521,6 +534,60 @@ target("liii") do
         end
     end)
 end 
+
+target("liii_packager") do
+    set_enabled(is_plat("macosx") and is_mode("release"))
+    set_kind("phony")
+
+    add_deps("liii")
+
+    set_configvar("XMACS_VERSION", XMACS_VERSION)
+    set_configvar("APPCAST", "")
+    set_configvar("OSXVERMIN", "")
+    add_configfiles("$(projectdir)/packages/macos/Info.plist.in", {
+        filename = "Info.plist",
+        pattern = "@(.-)@",
+    })
+
+    set_installdir(path.join("$(buildir)", "macosx/$(arch)/$(mode)/LiiiSTEM.app/Contents/Resources/"))
+
+    local dmg_name= "LiiiSTEM-v" .. XMACS_VERSION .. ".dmg"
+    if is_arch("arm64") then
+        dmg_name= "LiiiSTEM-v" .. XMACS_VERSION .. "-arm.dmg"
+    end
+
+    after_install(function (target, opt)
+        local app_dir = target:installdir() .. "/../../"
+        os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
+        os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
+
+        local hdiutil_command= "/usr/bin/sudo /usr/bin/hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir
+        io.write("Execute: ")
+        print(hdiutil_command)
+        print("Remove /usr/bin/sudo if you want to package it by your own")
+
+        local maxRetries= 5
+        local retries = 0
+        while retries <= maxRetries do
+            try {
+                function ()
+                    os.execv(hdiutil_command)
+                    os.exit(0)
+                end,
+                catch {
+                    function (errors)
+                        retries = retries + 1
+                        io.write("Retrying, attempt ")
+                        print(retries)
+                        if retries > maxRetries then
+                            os.raise("Command failed after " .. maxRetries .. " retries")
+                        end
+                    end
+                }
+            }
+        end
+    end)
+end
 
 function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
     local testname = path.basename(filepath)
