@@ -15,12 +15,17 @@ set_project("Liii STEM Suite")
 -- msvc, this project will not support windows env.
 -- because some package is not ported to cygwin env, this project will not
 -- support cygwin env.
-set_allowedplats("linux")
+set_allowedplats("linux", "macosx")
 
 if is_plat("linux") then
     set_configvar("OS_GNU_LINUX", true)
 else
     set_configvar("OS_GNU_LINUX", false)
+end
+if is_plat("macosx") then
+    set_configvar("OS_MACOS", true)
+else
+    set_configvar("OS_MACOS", false)
 end
 
 -- add releasedbg, debug and release modes for different platforms.
@@ -141,14 +146,19 @@ add_requires("moebius", {system=false})
 add_requires("cpr 1.10.5", {system=false})
 
 add_requires("libjpeg")
-add_requires("apt::libpng-dev", {alias="libpng"})
-add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+if is_plat("linux") then
+    add_requires("apt::libpng-dev", {alias="libpng"})
+    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+end
+
 add_requires("liii-pdfhummus", {system=false,configs={libpng=true,libjpeg=true}})
 if using_legacy_apt() then
     add_requires("freetype "..FREETYPE_VERSION, {system=false})
     add_requireconfs("liii-pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
 else
-    add_requires("apt::libfreetype-dev", {alias="freetype"})
+    if is_plat("linux") then
+        add_requires("apt::libfreetype-dev", {alias="freetype"})
+    end
 end
 
 -- package: libgit2
@@ -317,7 +327,6 @@ target("libmogan") do
     add_includedirs({
             "src/Data/Convert",
             "src/Data/Document",
-            "src/Data/Drd",
             "src/Data/History",
             "src/Data/Observers",
             "src/Data/Parser",
@@ -421,6 +430,17 @@ target("libmogan") do
         "src/Plugins/Qt/**.cpp",
         "src/Plugins/Qt/**.hpp"})
 
+    if is_plat("macosx") then
+        plugin_macos_srcs = {
+            "$(projectdir)/src/Plugins/MacOS/HIDRemote.m",
+            "$(projectdir)/src/Plugins/MacOS/mac_spellservice.mm",
+            "$(projectdir)/src/Plugins/MacOS/mac_utilities.mm",
+            "$(projectdir)/src/Plugins/MacOS/mac_app.mm"
+        }
+        add_includedirs("src/Plugins/MacOS", {public = true})
+        add_files(plugin_macos_srcs)
+    end
+
     add_mxflags("-fno-objc-arc")
     add_cxxflags("-include src/System/tm_configure.hpp")
     add_cxxflags("-include src/System/config.h")
@@ -443,7 +463,11 @@ local stem_files = {
 }
 
 target("liii") do 
-    set_filename("liiistem")
+    if is_plat("linux") then
+        set_filename("liiistem")
+    else
+        set_filename("LiiiSTEM")
+    end
 
     local install_dir = "$(buildir)"
     if is_plat("windows") then
