@@ -35,14 +35,17 @@ keyword_parser_rep::insert_extra_char (char extra_char) {
 }
 
 bool
-read_keyword (string s, int& i, string& result, array<char> extras, array<char> starts) {
+read_keyword (string s, int& i, string& result, array<char> extras,
+              array<char> starts) {
   int opos= i;
   int s_N = N (s);
   // a keyword must start with alpha or start with extra chars
-  if (i < s_N && (is_alpha (s[i] || contains (s[i], extras)) || contains (s[i], starts))) i++;
+  if (i < s_N &&
+      (is_alpha (s[i] || contains (s[i], extras)) || contains (s[i], starts)))
+    i++;
   // a keyword is consist of alpha/number/extra chars
-  while (i < s_N &&
-         (is_alpha (s[i]) || is_digit (s[i]) || contains (s[i], extras) || contains (s[i], starts))) {
+  while (i < s_N && (is_alpha (s[i]) || is_digit (s[i]) ||
+                     contains (s[i], extras) || contains (s[i], starts))) {
     i++;
   }
   result= s (opos, i);
