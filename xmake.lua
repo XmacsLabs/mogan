@@ -645,6 +645,47 @@ target("liii") do
     end)
 end 
 
+function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
+    local testname = path.basename(filepath)
+    target(testname) do
+        set_enabled(not is_plat("wasm"))
+        set_kind("phony")
+        set_group("integration_tests")
+        add_deps("liii")
+        on_run(function (target)
+            name = target:name()
+            test_name = "(test_"..name..")"
+            print("------------------------------------------------------")
+            print("Executing: " .. test_name)
+            params = {
+                "-headless",
+                "-b", path.join("TeXmacs","tests",name..".scm"),
+                "-x", test_name,
+                "-q"
+            }
+            if is_plat("macosx", "linux") then
+                binary = target:deps()["liii"]:targetfile()
+            elseif is_plat("mingw", "windows") then
+                binary = path.join(INSTALL_DIR,"bin","MoganResearch.exe")
+            else
+                print("Unsupported plat $(plat)")
+            end
+            cmd = binary
+            if is_plat("macosx", "linux") then
+                os.execv(cmd, params, {envs=RUN_ENVS})
+            else
+                os.execv(cmd, params)
+            end
+        end)
+    end
+end
+
+-- Integration tests
+RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
+for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
+    add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
+end
+
 target("liii_packager") do
     set_enabled(is_plat("macosx") and is_mode("release"))
     set_kind("phony")
@@ -699,43 +740,45 @@ target("liii_packager") do
     end)
 end
 
-function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
-    local testname = path.basename(filepath)
-    target(testname) do
-        set_enabled(not is_plat("wasm"))
-        set_kind("phony")
-        set_group("integration_tests")
-        add_deps("liii")
-        on_run(function (target)
-            name = target:name()
-            test_name = "(test_"..name..")"
-            print("------------------------------------------------------")
-            print("Executing: " .. test_name)
-            params = {
-                "-headless",
-                "-b", path.join("TeXmacs","tests",name..".scm"),
-                "-x", test_name,
-                "-q"
-            }
-            if is_plat("macosx", "linux") then
-                binary = target:deps()["liii"]:targetfile()
-            elseif is_plat("mingw", "windows") then
-                binary = path.join(INSTALL_DIR,"bin","MoganResearch.exe")
+if is_mode("release") then
+includes("@builtin/xpack")
+xpack("liii") do
+    set_formats("nsis")
+    set_author("Darcy Shen <da@liii.pro>")
+    set_license("GPLv3")
+    set_licensefile(path.join(os.projectdir(), "LICENSE"))
+    set_title("Liii STEM")
+    set_description("A one-stop solution that meets all your STEM writing needs")
+    set_homepage("https://liiistem.cn")
+
+    _, pos = string.find(XMACS_VERSION, "-")
+    local XMACS_VERSION_XYZ= XMACS_VERSION
+    if not (pos == nil) then
+        XMACS_VERSION_XYZ= string.sub(XMACS_VERSION, 1, pos-1)
+    end
+    set_version(XMACS_VERSION_XYZ..".0")
+
+    if is_plat ("windows") then
+        set_specfile(path.join(os.projectdir(), "packages/windows/research.nsis"))
+        set_specvar("PACKAGE_INSTALL_DIR", "LiiiLabs\\LiiiSTEM-"..XMACS_VERSION)
+        set_specvar("PACKAGE_NAME", "LiiiSTEM")
+        set_specvar("PACKAGE_SHORTCUT_NAME", "Liii STEM")
+        set_iconfile(path.join(os.projectdir(), "packages/windows/Xmacs.ico"))
+        set_bindir("bin")
+        add_installfiles(path.join(os.projectdir(), "build/packages/liii/data/bin/(**)|LiiiSTEM.exe"), {prefixdir = "bin"})
+    end
+
+    add_targets("liii")
+
+    if is_plat("windows") then
+        on_load(function (package)
+            local format = package:format()
+            if format == "nsis" then
+                package:set("basename", "LiiiSTEM-v" .. package:version() .. "-64bit-installer")
             else
-                print("Unsupported plat $(plat)")
-            end
-            cmd = binary
-            if is_plat("macosx", "linux") then
-                os.execv(cmd, params, {envs=RUN_ENVS})
-            else
-                os.execv(cmd, params)
+                package:set("basename", "LiiiSTEM-v" .. package:version() .. "-64bit-portable")
             end
         end)
     end
 end
-
--- Integration tests
-RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
-for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
-    add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
 end
