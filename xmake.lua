@@ -123,8 +123,6 @@ package("liii-pdfhummus")
     end)
 package_end()
 
-
-
 includes("@builtin/check")
 configvar_check_cxxtypes("HAVE_INTPTR_T", "intptr_t", {includes = {"memory"}})
 configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
@@ -147,7 +145,6 @@ local LIBGIT2_VERSION = "1.7.1"
 add_requires("s7", {system=false})
 add_requires("tbox", {system=false})
 add_requires("lolly", {system=false})
-add_requires("moebius", {system=false})
 add_requires("cpr", {system=false})
 
 add_requires("libjpeg")
@@ -220,6 +217,59 @@ function build_glue_on_config()
     end)
 end
 
+local moe_files = {
+    "3rdparty/moebius/Data/History/**.cpp",
+    "3rdparty/moebius/Data/String/**.cpp",
+    "3rdparty/moebius/Data/Tree/**.cpp",
+    "3rdparty/moebius/Kernel/Types/**.cpp",
+    "3rdparty/moebius/Kernel/Abstractions/**.cpp",
+    "3rdparty/moebius/Scheme/**.cpp",
+    "3rdparty/moebius/moebius/**.cpp",
+}
+local moe_includedirs = {
+    "3rdparty/moebius/Data/History",
+    "3rdparty/moebius/Data/String",
+    "3rdparty/moebius/Data/Tree",
+    "3rdparty/moebius/Kernel/Types",
+    "3rdparty/moebius/Kernel/Abstractions",
+    "3rdparty/moebius/Scheme",
+    "3rdparty/moebius/Scheme/L1",
+    "3rdparty/moebius/Scheme/L2",
+    "3rdparty/moebius/Scheme/L3",
+    "3rdparty/moebius/Scheme/S7",
+    "3rdparty/moebius/Scheme/Scheme",
+    "3rdparty/moebius/",
+}
+
+target("libmoebius") do
+    set_kind ("static")
+    set_languages("c++17")
+    set_encodings("utf-8")
+    set_basename("moebius")
+
+    add_includedirs(moe_includedirs)
+    add_files(moe_files)
+
+    add_packages("lolly")
+    add_packages("s7")
+
+    add_headerfiles("3rdparty/moebius/Data/History/(*.hpp)")
+    add_headerfiles("3rdparty/moebius/Data/String/(*.hpp)")
+    add_headerfiles("3rdparty/moebius/Data/Tree/(*.hpp)")
+    add_headerfiles("3rdparty/moebius/Kernel/Types/(*.hpp)")
+    add_headerfiles("3rdparty/moebius/Kernel/Abstractions/(*.hpp)")
+    add_headerfiles("3rdparty/moebius/Scheme/(*.hpp)")
+    add_headerfiles("3rdparty/moebius/Scheme/L1/(*.hpp)")
+    add_headerfiles("3rdparty/moebius/Scheme/L2/(*.hpp)")
+    add_headerfiles("3rdparty/moebius/Scheme/L3/(*.hpp)")
+    add_headerfiles("3rdparty/moebius/Scheme/S7/(*.hpp)")
+    add_headerfiles("3rdparty/moebius/Scheme/Scheme/(*.hpp)")
+    add_headerfiles("3rdparty/moebius/moebius/(data/*.hpp)", {prefixdir="moebius"})
+    add_headerfiles("3rdparty/moebius/moebius/(drd/*.hpp)", {prefixdir="moebius"})
+    add_headerfiles("3rdparty/moebius/moebius/(*.hpp)", {prefixdir="moebius"})
+end
+
+
 target("libmogan") do
     set_basename("mogan")
     local TEXMACS_VERSION = "2.1.4"
@@ -228,8 +278,10 @@ target("libmogan") do
     local STABLE_VERSION = TEXMACS_VERSION
     local STABLE_RELEASE = 1
     set_version(TEXMACS_VERSION)
-    
     set_languages("c++17")
+
+    add_deps("libmoebius")
+    
     set_policy("check.auto_ignore_flags", false)
     add_rules("qt.static")
     on_install(function (target)
@@ -252,7 +304,6 @@ target("libmogan") do
     set_configvar("LINKED_IMLIB2", false)
 
     add_packages("lolly")
-    add_packages("moebius")
     add_packages("liii-pdfhummus")
     add_packages("freetype")
     add_packages("s7")
@@ -338,6 +389,7 @@ target("libmogan") do
     ---------------------------------------------------------------------------
     -- add source and header files
     ---------------------------------------------------------------------------
+    add_includedirs(moe_includedirs)
     add_includedirs({
             "src/Data/Convert",
             "src/Data/Document",
@@ -456,8 +508,10 @@ target("libmogan") do
     end
 
     add_mxflags("-fno-objc-arc")
-    add_cxxflags("-include src/System/tm_configure.hpp")
-    add_cxxflags("-include src/System/config.h")
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("src/System/config.h"))
+        target:add("forceincludes", path.absolute("src/System/tm_configure.hpp"))
+    end)
 end 
 
 local stem_files = {
@@ -530,9 +584,10 @@ target("liii") do
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     add_packages("s7")
     add_packages("lolly")
-    add_packages("moebius")
     add_deps("libmogan")
     add_syslinks("pthread", "dl", "m")
+
+    add_includedirs(moe_includedirs)
     add_files("src/Mogan/Research/research.cpp")
 
     on_run(function (target)
