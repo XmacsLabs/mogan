@@ -164,6 +164,15 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   the_gui->process_keypress (tm_widget (), r, texmacs_time ());
 }
 
+void
+QTMWidget::keyReleaseEvent (QKeyEvent* event) {
+  string r= from_key_release_event (event);
+  if (is_empty (r)) return;
+  if (DEBUG_KEYBOARD) debug_qt << "key released: " << r << LF;
+
+  the_gui->process_keypress (tm_widget (), r, texmacs_time ());
+}
+
 static unsigned int
 mouse_state (QMouseEvent* event, bool flag) {
   unsigned int          i     = 0;
