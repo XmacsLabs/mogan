@@ -143,7 +143,7 @@ add_requires("s7", {system=false})
 add_requires("tbox", {system=false})
 add_requires("lolly", {system=false})
 add_requires("moebius", {system=false})
-add_requires("cpr 1.10.5", {system=false})
+add_requires("cpr", {system=false})
 
 add_requires("libjpeg")
 if is_plat("linux") then
