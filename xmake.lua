@@ -534,8 +534,10 @@ target("liii") do
     add_deps("goldfish")
     if is_plat("linux") then
         set_filename("liiistem")
-    else
+    elseif is_plat("macosx") then
         set_filename("LiiiSTEM")
+    else
+        set_filename("LiiiSTEM.exe")
     end
 
     local install_dir = "$(buildir)"
@@ -604,9 +606,32 @@ target("liii") do
     add_includedirs(moe_includedirs)
     add_files("src/Mogan/Research/research.cpp")
 
+    -- install tm files for testing purpose
+    if is_mode("releasedbg") then
+        if is_plat("mingw", "windows") then
+            add_installfiles({
+                "$(projectdir)/TeXmacs(/tests/tm/*.tm)",
+                "$(projectdir)/TeXmacs(/tests/tex/*.tex)",
+                "$(projectdir)/TeXmacs(/tests/bib/*.bib)",
+            })
+        else
+            add_installfiles({
+                "$(projectdir)/TeXmacs(/tests/*.tm)",
+                "$(projectdir)/TeXmacs(/tests/*.bib)",
+            }, {prefixdir="share/liiilabs"})
+        end
+    end
+
+    -- deploy necessary dll
+    if is_plat("windows") then
+        set_values("qt.deploy.flags", {"-printsupport", "--no-opengl-sw", "--no-translations", "--release"})
+    end
+
     on_run(function (target)
         name = target:name()
-        if is_plat("linux", "macosx") then
+        if is_plat("windows") then
+            os.execv(target:installdir().."/bin/LiiiSTEM.exe")
+        elseif is_plat("linux", "macosx") then
             print("Launching " .. target:targetfile())
             os.execv(target:targetfile(), {"-d"}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
         else
