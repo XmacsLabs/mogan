@@ -7,7 +7,7 @@ package("lolly")
         add_deps("libcurl", "tbox", "cpr")
     end
 
-    on_install("linux", "macosx", "mingw", "wasm", function (package)
+    on_install("linux", "macosx", "windows", "wasm", function (package)
         local configs = {}
         if package:config("shared") then
             configs.kind = "shared"

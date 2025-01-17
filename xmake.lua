@@ -15,7 +15,7 @@ set_project("Liii STEM Suite")
 -- msvc, this project will not support windows env.
 -- because some package is not ported to cygwin env, this project will not
 -- support cygwin env.
-set_allowedplats("linux", "macosx")
+set_allowedplats("linux", "macosx", "windows")
 
 if is_plat("linux") then
     set_configvar("OS_GNU_LINUX", true)
@@ -26,6 +26,11 @@ if is_plat("macosx") then
     set_configvar("OS_MACOS", true)
 else
     set_configvar("OS_MACOS", false)
+end
+if is_plat("windows") then
+    set_configvar("OS_WIN", true)
+else
+    set_configvar("OS_WIN", false)
 end
 
 -- add releasedbg, debug and release modes for different platforms.
@@ -166,6 +171,12 @@ if is_plat ("linux") and using_apt() then
     add_requires("apt::libgit2-dev", {alias="libgit2"})
 elseif not is_plat("wasm") then
     add_requires("libgit2 "..LIBGIT2_VERSION, {system=false})
+end
+
+-- package: qt6widgets
+QT6_VERSION="6.5.3"
+if is_plat("windows") then
+    add_requires("qt6widgets "..QT6_VERSION)
 end
 
 
