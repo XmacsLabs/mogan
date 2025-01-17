@@ -253,20 +253,8 @@ target("libmoebius") do
     add_packages("lolly")
     add_packages("s7")
 
-    add_headerfiles("3rdparty/moebius/Data/History/(*.hpp)")
-    add_headerfiles("3rdparty/moebius/Data/String/(*.hpp)")
-    add_headerfiles("3rdparty/moebius/Data/Tree/(*.hpp)")
-    add_headerfiles("3rdparty/moebius/Kernel/Types/(*.hpp)")
-    add_headerfiles("3rdparty/moebius/Kernel/Abstractions/(*.hpp)")
-    add_headerfiles("3rdparty/moebius/Scheme/(*.hpp)")
-    add_headerfiles("3rdparty/moebius/Scheme/L1/(*.hpp)")
-    add_headerfiles("3rdparty/moebius/Scheme/L2/(*.hpp)")
-    add_headerfiles("3rdparty/moebius/Scheme/L3/(*.hpp)")
-    add_headerfiles("3rdparty/moebius/Scheme/S7/(*.hpp)")
-    add_headerfiles("3rdparty/moebius/Scheme/Scheme/(*.hpp)")
-    add_headerfiles("3rdparty/moebius/moebius/(data/*.hpp)", {prefixdir="moebius"})
-    add_headerfiles("3rdparty/moebius/moebius/(drd/*.hpp)", {prefixdir="moebius"})
-    add_headerfiles("3rdparty/moebius/moebius/(*.hpp)", {prefixdir="moebius"})
+    on_install(function (target)
+    end)
 end
 
 
@@ -543,6 +531,7 @@ local stem_files = {
 }
 
 target("liii") do 
+    add_deps("goldfish")
     if is_plat("linux") then
         set_filename("liiistem")
     else
