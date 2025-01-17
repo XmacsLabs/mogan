@@ -21,6 +21,7 @@
           "/usr/local/Cellar/ghostscript/1*/bin/gs"))
         ((os-win32?)
          (list
+          "$TEXMACS_HOME_PATH\\bin\\gs.exe"
           "C:\\Program Files*\\gs\\gs*\\bin\\gswin64c.exe"
           "C:\\Program Files*\\gs\\gs*\\bin\\gswin32c.exe"))
         (else
