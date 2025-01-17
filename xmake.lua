@@ -530,8 +530,25 @@ local stem_files = {
     "$(projectdir)/TeXmacs(/plugins/**)" -- plugin files
 }
 
+if is_plat("windows") then
+    target("liii_windows_icon") do
+        set_version(XMACS_VERSION)
+        set_kind("object")
+        add_configfiles("$(projectdir)/packages/windows/resource.rc.in", {
+            filename = "resource.rc"
+        })
+        add_configfiles("$(projectdir)/packages/windows/Xmacs.ico", {
+            onlycopy = true
+        })
+        add_files("$(buildir)/resource.rc")
+    end
+end
+
 target("liii") do 
     add_deps("goldfish")
+    if is_plat("windows") and is_mode("release") then
+        add_deps("liii_windows_icon")
+    end
     if is_plat("linux") then
         set_filename("liiistem")
     elseif is_plat("macosx") then
