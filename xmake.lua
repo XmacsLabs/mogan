@@ -278,7 +278,13 @@ target("libmogan") do
     local STABLE_VERSION = TEXMACS_VERSION
     local STABLE_RELEASE = 1
     set_version(TEXMACS_VERSION)
+
+    if is_plat("windows") then
+        set_runtimes("MT")
+    end
     set_languages("c++17")
+    set_policy("check.auto_ignore_flags", false)
+    set_encodings("utf-8")
 
     add_deps("libmoebius")
     
@@ -308,6 +314,12 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("s7")
     add_packages("libgit2")
+
+    if is_plat("windows") then
+        add_syslinks("secur32", "shell32", "winhttp", "rpcrt4", {public = true})
+    elseif is_plat("macosx") then
+        add_syslinks("iconv")
+    end
 
     ---------------------------------------------------------------------------
     -- generate config files. see also:
@@ -580,12 +592,25 @@ target("liii") do
         })
     end
 
-    add_rules("qt.widgetapp")
+    if is_plat("windows") then
+        set_optimize("smallest")
+        set_runtimes("MT")
+        add_ldflags("/STACK:16777216")
+    end
+
+    if is_mode("debug", "releasedbg") and is_plat("windows") then
+        add_rules("qt.console")
+    else
+        add_rules("qt.widgetapp")
+    end
+
     add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
     add_packages("s7")
     add_packages("lolly")
     add_deps("libmogan")
-    add_syslinks("pthread", "dl", "m")
+    if not is_plat("windows") then
+        add_syslinks("pthread", "dl", "m")
+    end
 
     add_includedirs(moe_includedirs)
     add_files("src/Mogan/Research/research.cpp")
@@ -598,6 +623,11 @@ target("liii") do
         else
             print("Unsupported plat $(plat)")
         end
+    end)
+
+    before_build(function (target)
+        target:add("forceincludes", path.absolute("src/System/config.h"))
+        target:add("forceincludes", path.absolute("src/System/tm_configure.hpp"))
     end)
 end 
 
