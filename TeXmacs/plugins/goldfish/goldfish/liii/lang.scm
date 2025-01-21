@@ -41,12 +41,34 @@
       (if (procedure? default) (default) default)
       value))
 
+(typed-define (%or-else (default case-class?))
+  (when (not (default :is-instance-of 'option))
+    (type-error "The first parameter of option%or-else must be a option case class"))
+
+  (if (null? value)
+      default
+      (option value)))
+
 (define (%equals that)
   (== value (that 'value)))
 
 (define (%defined?) (not (null? value)))
   
 (define (%empty?) (null? value))
+
+(define (%forall f)
+  (if (null? value)
+      #f
+      (f value)))
+
+(define (%exists f)
+  (if (null? value)
+      #f
+      (f value)))
+
+(define (%for-each f)
+  (when (not (null? value))
+        (f value)))
 
 (define (%map f . xs)
   (%apply-one f xs

@@ -18,7 +18,7 @@
 (export
   os-arch os-type os-windows? os-linux? os-macos? os-temp-dir
   os-sep pathsep
-  os-call
+  os-call ; system
   mkdir chdir rmdir getenv unsetenv getcwd listdir access getlogin getpid)
 (import (scheme process-context)
         (liii base)

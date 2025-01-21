@@ -28,8 +28,17 @@
 (define (%apply x . xs)
   (json (apply json-ref* (cons data (cons x xs)))))
 
+(define (%null?)
+  (eq? data 'null))
+
 (define (%object?)
   (and (list? data) (not (null? data))))
+
+(define (%contains-key? key)
+  (if (not (%object?))
+      #f
+      ((box data)
+       :exists (lambda (x) (== (car x) key)))))
 
 (define (%array?)
   (vector? data))
