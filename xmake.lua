@@ -576,17 +576,10 @@ target("liii") do
         add_installfiles(stem_files, {prefixdir="share/liiilabs"})
     end
 
-    if is_plat("linux") then
-        add_installfiles("$(projectdir)/TeXmacs(/fonts/enc/**)", {prefixdir="share/liiilabs"})
-        add_installfiles("$(projectdir)/TeXmacs(/fonts/tfm/**)", {prefixdir="share/liiilabs"})
-        add_installfiles("$(projectdir)/TeXmacs(/fonts/type1/**)", {prefixdir="share/liiilabs"})
-        add_installfiles("$(projectdir)/TeXmacs(/fonts/virtual/**)", {prefixdir="share/liiilabs"})
-        add_installfiles("$(projectdir)/TeXmacs(/fonts/*scm)", {prefixdir="share/liiilabs"})
-        add_installfiles("$(projectdir)/TeXmacs(/fonts/*LICENSE)", {prefixdir="share/liiilabs"})
-    elseif is_plat("macosx") then
-        add_installfiles("$(projectdir)/TeXmacs(/fonts/**)", {prefixdir="share/liiilabs"})
-    else
+    if is_plat("windows") then
         add_installfiles("$(projectdir)/TeXmacs(/fonts/**)")
+    else
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/**)", {prefixdir="share/liiilabs"})
     end
 
     -- package metadata
