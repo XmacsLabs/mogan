@@ -25,7 +25,7 @@
 (define-group chunk-tag
   generic-chunk verbatim-chunk scm-chunk cpp-chunk mmx-chunk
   python-chunk scilab-chunk shell-chunk scala-chunk java-chunk
-  goldfish-chunk)
+  goldfish-chunk elvish-chunk)
 
 (define-group variant-tag
   (chunk-tag))
