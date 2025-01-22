@@ -15,9 +15,11 @@ var flush_utf8 = { |content|
 
 var ns = (ns [&tm_elvish="0.0.1"])
 
-var elvish_plugin_version = "0.0.1"
+var elvish_plugin_version = "v2025012216"
 
 $flush_utf8 (str:join "" ["Elvish plugin " $elvish_plugin_version " by LiiiLabs"])
+
+cd $E:HOME
 
 while true {
   var line = (read-line)

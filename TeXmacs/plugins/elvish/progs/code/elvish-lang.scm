@@ -1,12 +1,7 @@
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : elvish-lang.scm
-;; DESCRIPTION : Elvish language syntax
-;; COPYRIGHT   : (C) 2024  Liii Network Inc
+;; COPYRIGHT: (C) 2025  Liii Network Inc
 ;; All rights reverved.
 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (code elvish-lang)
   (:use (prog default-lang)))

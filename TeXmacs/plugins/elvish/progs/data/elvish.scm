@@ -1,12 +1,7 @@
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : data/elvish.scm
-;; DESCRIPTION : Elvish data format
-;; COPYRIGHT   : (C) 2024  Liii Network Inc
+;; COPYRIGHT: (C) 2025  Liii Network Inc
 ;; All rights reverved.
 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (data elvish))
 
