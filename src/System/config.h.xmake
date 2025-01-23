@@ -23,19 +23,8 @@ ${define USE_PLUGIN_GS}
 /* Define to 1 if you have the <inttypes.h> header file. */
 ${define HAVE_INTTYPES_H}
 
-/* Link axel library with TeXmacs */
-${define LINKED_AXEL}
-
-/* Link cairo library with TeXmacs */
-${define LINKED_CAIRO}
-
 /* Link freetype library with TeXmacs */
 #define LINKED_FREETYPE 1
-
-/* Link imlib2 library with TeXmacs */
-${define LINKED_IMLIB2}
-
-${define LINKED_SQLITE3}
 
 ${define MACOSX_EXTENSIONS}
 
@@ -83,9 +72,6 @@ ${define SANITY_CHECKS}
 
 #define SIZEOF_VOID_P ${SIZEOF_VOID_P} 
 
-/* Define to 1 if you have the ANSI C header files. */
-${define STDC_HEADERS}
-
 #define TEXMACS_REVISION "${VERSION}"
 
 ${define TM_DYNAMIC_LINKING}
@@ -97,9 +83,6 @@ ${define USE_FONTCONFIG}
 
 /* Use iconv library */
 ${define USE_ICONV}
-
-/* Use imlib2 library */
-${define USE_IMLIB2}
 
 ${define USE_PLUGIN_SPARKLE}
 

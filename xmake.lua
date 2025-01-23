@@ -292,10 +292,6 @@ target("libmogan") do
     set_configvar("USE_CURL", 1)
     set_configvar("USE_SQLITE3", 1)
 
-    set_configvar("LINKED_AXEL", false)
-    set_configvar("LINKED_CAIRO", false)
-    set_configvar("LINKED_IMLIB2", false)
-
     add_packages("lolly")
     add_packages("liii-pdfhummus")
     add_packages("freetype")
