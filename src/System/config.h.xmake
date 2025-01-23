@@ -1,5 +1,6 @@
 /* L1 Kernel */
 ${define QTTEXMACS}
+
 ${define SANITY_CHECKS}
 ${define OS_MINGW}
 ${define OS_GNU_LINUX}
@@ -21,37 +22,6 @@ ${define USE_PLUGIN_GS}
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 ${define HAVE_INTTYPES_H}
-
-/* Define to 1 if you have the <memory.h> header file. */
-${define HAVE_MEMORY_H}
-
-/* Define to 1 if you have the <pty.h> header file. */
-${define HAVE_PTY_H}
-
-/* Define to 1 if you have the <stdlib.h> header file. */
-${define HAVE_STDLIB_H}
-
-/* Define to 1 if you have the <strings.h> header file. */
-${define HAVE_STRINGS_H}
-
-/* Define to 1 if you have the <string.h> header file. */
-${define HAVE_STRING_H}
-
-/* Define to 1 if you have the <sys/stat.h> header file. */
-${define HAVE_SYS_STAT_H}
-
-/* Define to 1 if you have the <sys/types.h> header file. */
-${define HAVE_SYS_TYPES_H}
-
-/* Define to 1 if you have the <unistd.h> header file. */
-${define HAVE_UNISTD_H}
-
-/* Define to 1 if you have the <util.h> header file. */
-${define HAVE_UTIL_H}
-
-${define HAVE_X11_XLIB_H}
-
-${define HAVE_X11_XUTIL_H}
 
 /* Link axel library with TeXmacs */
 ${define LINKED_AXEL}

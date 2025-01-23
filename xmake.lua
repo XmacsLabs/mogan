@@ -316,18 +316,7 @@ target("libmogan") do
     set_configdir("src/System")
     -- check for dl library
     -- configvar_check_cxxfuncs("TM_DYNAMIC_LINKING","dlopen")
-    configvar_check_cxxincludes("HAVE_STDLIB_H", "stdlib.h")
-    configvar_check_cxxincludes("HAVE_STRINGS_H", "strings.h")
-    configvar_check_cxxincludes("HAVE_STRING_H", "string.h")
-    configvar_check_cxxincludes("HAVE_UNISTD_H", "unistd.h")
     configvar_check_cxxincludes("HAVE_INTTYPES_H", "inttypes.h")
-    configvar_check_cxxincludes("HAVE_MEMORY_H", "memory.h")
-    configvar_check_cxxincludes("HAVE_PTY_H", "pty.h")
-    configvar_check_cxxincludes("HAVE_SYS_STAT_H", "sys/stat.h")
-    configvar_check_cxxincludes("HAVE_SYS_TYPES_H", "sys/types.h")
-    configvar_check_cxxtypes("HAVE_TIME_T", "time_t", {includes = {"memory"}})
-    configvar_check_cxxincludes("HAVE_UTIL_H", "util.h")
-    configvar_check_cxxfuncs("HAVE_GETTIMEOFDAY", "gettimeofday", {includes={"sys/time.h"}})
 
     set_configvar("STDC_HEADERS", true)
 
