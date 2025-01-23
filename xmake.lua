@@ -342,6 +342,7 @@ target("libmogan") do
                 USE_PLUGIN_PDF = true,
                 USE_PLUGIN_SPARKLE = false,
                 USE_PLUGIN_HTML = true,
+                USE_PLUGIN_GIT = not is_plat("wasm")
                 }})
 
     if is_plat("linux") then 
