@@ -316,8 +316,6 @@ target("libmogan") do
 
     set_configvar("GS_EXE", "/usr/bin/gs")
 
-    set_configvar("USE_STACK_TRACE", true)
-
     set_configvar("PDFHUMMUS_NO_TIFF", true)
     add_configfiles(
         "src/System/config.h.xmake", {

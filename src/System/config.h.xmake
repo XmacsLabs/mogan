@@ -82,5 +82,3 @@ ${define USE_FREETYPE}
 ${define USE_FONTCONFIG}
 
 ${define USE_PLUGIN_SPARKLE}
-
-${define USE_STACK_TRACE}
