@@ -289,8 +289,6 @@ target("libmogan") do
     add_defines("QTPIPES")
     set_configvar("USE_QT_PRINTER", 1)
     add_defines("USE_QT_PRINTER")
-    set_configvar("USE_CURL", 1)
-    set_configvar("USE_SQLITE3", 1)
 
     add_packages("lolly")
     add_packages("liii-pdfhummus")
@@ -330,6 +328,7 @@ target("libmogan") do
                 OS_MACOS = is_plat("macosx"),
                 MACOSX_EXTENSIONS = is_plat("macosx"),
                 SIZEOF_VOID_P = 8,
+                USE_ICONV = true,
                 USE_PLUGIN_GS = true,
                 USE_PLUGIN_BIBTEX = true,
                 USE_PLUGIN_LATEX_PREVIEW = true,
