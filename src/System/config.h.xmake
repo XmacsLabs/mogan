@@ -66,8 +66,6 @@ ${define QTPIPES}
 
 ${define USE_QT_PRINTER}
 
-${define USE_CURL}
-
 ${define SANITY_CHECKS}
 
 #define SIZEOF_VOID_P ${SIZEOF_VOID_P} 
@@ -80,5 +78,7 @@ ${define TM_DYNAMIC_LINKING}
 ${define USE_FREETYPE}
 
 ${define USE_FONTCONFIG}
+
+${define USE_ICONV}
 
 ${define USE_PLUGIN_SPARKLE}
