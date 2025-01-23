@@ -141,12 +141,16 @@ end
 
 local FREETYPE_VERSION = "2.12.1"
 local LIBGIT2_VERSION = "1.7.1"
+local LIBICONV_VERSION = "1.17"
 
 -- package: s7
 add_requires("s7", {system=false})
 add_requires("tbox", {system=false})
 add_requires("lolly", {system=false})
 add_requires("cpr", {system=false})
+if is_plat ("windows") then
+    add_requires("libiconv "..LIBICONV_VERSION, {system=false})
+end
 
 add_requires("libjpeg")
 if is_plat("linux") then
@@ -295,6 +299,9 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("s7")
     add_packages("libgit2")
+    if not is_plat("macosx") then
+        add_packages("libiconv")
+    end
 
     if is_plat("windows") then
         add_syslinks("secur32", "shell32", "winhttp", "rpcrt4", {public = true})
