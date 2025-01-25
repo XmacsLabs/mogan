@@ -34,7 +34,7 @@
   (:synopsis "Export TeXmacs document to DOCX format using Pandoc")
   (let* (
          (temp-name (string-append "/" (uuid4)))  
-         (temp-dir (string-append (url->string (url-temp-dir)) temp-name))
+         (temp-dir (string-append (os-temp-dir) temp-name))
          (html-temp-url (system->url (string-append temp-dir ".html")))
          (docx-temp-url (system->url (string-append temp-dir ".docx")))
          (html-dir (url-head (url->string html-temp-url))) ;; get dir of html-temp-url
@@ -50,7 +50,7 @@
                                   (url->string html-temp-url)
                                   " -o "
                                   (url->string docx-temp-url))))
-          (debug-message "debug-io" (string-append "debug: cmd for Pandoc: " cmd)) ;; For debugging
+          (debug-message "debug-io" (string-append "debug: cmd for Pandoc: " cmd "\n")) ;; For debugging
           (system cmd)
           (with result (string-load docx-temp-url)
             (system-remove html-temp-url)
