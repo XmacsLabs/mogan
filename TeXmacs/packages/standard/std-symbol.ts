@@ -1,4 +1,4 @@
-<TeXmacs|1.99.9>
+<TeXmacs|2.1.4>
 
 <style|<tuple|source|std>>
 
@@ -64,6 +64,10 @@
   <assign|varmasculine|<active*|<rsup|o>>>
 
   <assign|varordfeminine|<active*|<rsup|a>>>
+
+  <assign|textless|\<less\>>
+
+  <assign|textgreater|\<gtr\>>
 
   \;
 
