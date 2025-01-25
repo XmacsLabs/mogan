@@ -12,6 +12,7 @@
 #include "LaTeX_Preview/latex_preview.hpp"
 #include "Tex/convert_tex.hpp"
 #include "Tex/tex.hpp"
+#include "converter.hpp"
 #include "metadata.hpp"
 #include "scheme.hpp"
 #include "tm_url.hpp"
@@ -830,7 +831,12 @@ finalize_layout (tree t) {
             if ((t[i] == tree (FORMAT, "new line")) &&
                 (((i + 1) == n) || (t[i + 1] != tree (END, "verbatim"))))
               r << tree (FORMAT, "new line");
-            else r << t[i];
+            else if (is_atomic (t[i])) {
+              r << utf8_to_herk (t[i]->label);
+            }
+            else {
+              r << t[i];
+            }
             i++;
           }
           if (i < n) r << t[i];
