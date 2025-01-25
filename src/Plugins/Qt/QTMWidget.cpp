@@ -685,10 +685,9 @@ QTMWidget::wheelEvent (QWheelEvent* event) {
   if (is_nil (tmwid)) return;
   if (as_bool (call ("wheel-capture?"))) {
 #if (QT_VERSION >= 0x060000)
-    QPointF pos  = event->position ();
-    QPoint  point= QPointF (pos.x (), pos.y ()).toPoint () + origin ();
+    QPoint point= (event->position ()).toPoint () + origin ();
 #else
-    QPoint point= event->pos () + origin ();
+    QPoint point     = event->pos () + origin ();
 #endif
     QPoint        wheel = event->pixelDelta ();
     coord2        pt    = from_qpoint (point);
@@ -700,20 +699,15 @@ QTMWidget::wheelEvent (QWheelEvent* event) {
                             texmacs_time (), data);
   }
   else if (QApplication::keyboardModifiers () == Qt::ControlModifier) {
-#if QT_VERSION >= 0x060000
-    if (event->pixelDelta ().ry () > 0) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // see https://doc.qt.io/qt-5/qwheelevent-obsolete.html#delta
+    if (event->delta () > 0)
 #else
-    if (event->delta () > 0) {
+    QPoint numDegrees= event->angleDelta () / 8;
+    if (numDegrees.y () > 0)
 #endif
-      // double x= exp (((double) event->delta ()) / 500.0);
-      // call ("zoom-in", object (x));
-      call ("zoom-in", object (sqrt (sqrt (sqrt (sqrt (2.0))))));
-    }
-    else {
-      // double x= exp (-((double) event->delta ()) / 500.0);
-      // call ("zoom-out", object (x));
-      call ("zoom-out", object (sqrt (sqrt (sqrt (sqrt (2.0))))));
-    }
+      call ("zoom-in", object (sqrt (sqrt (2.0))));
+    else call ("zoom-out", object (sqrt (sqrt (2.0))));
   }
   else QAbstractScrollArea::wheelEvent (event);
 }
