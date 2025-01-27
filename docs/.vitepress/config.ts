@@ -87,6 +87,11 @@ function navZh() {
             activeMatch: '/ospp/'
         },
         {
+            text: '大模型集成🔥',
+            link: '/zh/guide/plugin_llm',
+            activeMatch: '/ospp/'
+        },
+        {
             text: '指南',
             link: '/zh/guide/what-is-mogan',
             activeMatch: '/guide/'
