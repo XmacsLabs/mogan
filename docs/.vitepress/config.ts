@@ -5,7 +5,7 @@ export default {
     outDir: "../website",
     themeConfig: {
         search: {
-          provider: 'local'
+            provider: 'local'
         }
     },
     locales: {
@@ -27,27 +27,27 @@ export default {
             }
         },
         zh: {
-          label: '简体中文',
-          lang: 'zh',
-          title: '墨干理工套件',
-          description: '用于探索科学与技术的自由的理工套件',
-          themeConfig: {
-              siteTitle: '墨干',
-              nav: navZh(),
-              sidebar: {
-                  '/zh/guide': sidebarGuideZh(),
-              },
-              footer: {
-                  message: '享受探索科学与技术的乐趣！',
-                  copyright: '版权所有 © 2022-2024 墨干贡献者'
-              },
-          }
+            label: '简体中文',
+            lang: 'zh',
+            title: '墨干理工套件',
+            description: '用于探索科学与技术的自由的理工套件',
+            themeConfig: {
+                siteTitle: '墨干',
+                nav: navZh(),
+                sidebar: {
+                    '/zh/guide': sidebarGuideZh(),
+                },
+                footer: {
+                    message: '享受探索科学与技术的乐趣！',
+                    copyright: '版权所有 © 2022-2024 墨干贡献者'
+                },
+            }
         },
     },
     lastUpdated: true,
     ignoreDeadLinks: false,
     head: [
-        ['link', {rel: 'icon', href: '/favicon.png'}],
+        ['link', { rel: 'icon', href: '/favicon.png' }],
     ],
     markdown: {
         config(md) {
@@ -87,6 +87,11 @@ function navZh() {
             activeMatch: '/ospp/'
         },
         {
+            text: '大模型集成🔥',
+            link: '/zh/guide/plugin_llm',
+            activeMatch: '/ospp/'
+        },
+        {
             text: '指南',
             link: '/zh/guide/what-is-mogan',
             activeMatch: '/guide/'
@@ -116,7 +121,7 @@ function sidebarGuide() {
                     text: 'FAQ',
                     link: '/guide/FAQ'
                 },
-                { text: 'Screenshots', link: '/guide/Screenshots'},
+                { text: 'Screenshots', link: '/guide/Screenshots' },
                 {
                     text: 'Mogan v.s. TeXmacs',
                     link: '/guide/Mogan_versus_TeXmacs'
@@ -208,7 +213,7 @@ function sidebarGuide() {
                 {
                     text: 'SVG Image plugin',
                     link: '/guide/plugin_image_svg.md'
-                },                
+                },
                 {
                     text: 'PDF Data plugin',
                     link: '/guide/plugin_data_pdf.md'
@@ -297,7 +302,7 @@ function sidebarGuide() {
                     text: 'v1.1.4 (2023/07/31)',
                     link: '/guide/changelog/v1.1.4.md'
                 },
-             ]
+            ]
         },
     ]
 }
@@ -316,7 +321,7 @@ function sidebarGuideZh() {
                     text: '常见问题',
                     link: '/zh/guide/FAQ'
                 },
-                { text: '截图', link: '/zh/guide/Screenshots'},
+                { text: '截图', link: '/zh/guide/Screenshots' },
                 {
                     text: '墨干 v.s. TeXmacs',
                     link: '/zh/guide/Mogan_versus_TeXmacs'
@@ -332,6 +337,10 @@ function sidebarGuideZh() {
                 {
                     text: 'Python插件',
                     link: '/zh/guide/plugin_python.md'
+                },
+                {
+                    text: 'AI大模型插件',
+                    link: '/zh/guide/plugin_llm.md'
                 },
                 {
                     text: '金鱼Scheme',
