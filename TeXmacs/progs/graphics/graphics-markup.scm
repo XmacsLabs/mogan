@@ -141,20 +141,20 @@
                          (points-add (point-times (point-get-unit (points-sub mid-p-x c)) r) c))))))
        (if (clockwise (points-cross-product-k vec-c-p vec-c-q) 0)
          (if (eq? clockwise >)
-            `(superpose
-              (std-arc ,c ,p ,m)
-              (std-arc ,c ,m ,x)
-              (with "color" "none"
-               (line ,p ,c ,x ,m ,p)))
-             `(superpose
-              (std-arc-counterclockwise ,c ,p ,m)
-              (std-arc-counterclockwise ,c ,m ,x)
-              (with "color" "none"
-               (line ,p ,c ,x ,m ,p))))
-        `(superpose    
-          (with "color" "none"
-           (line ,p ,c ,x))
-          (arc ,p ,m ,x)))))
+           `(superpose
+             (with "color" "none"
+               (line ,p ,c ,x ,m ,p))
+             (std-arc ,c ,p ,m)
+             (std-arc ,c ,m ,x))
+           `(superpose
+             (with "color" "none"
+               (line ,p ,c ,x ,m ,p))
+             (std-arc-counterclockwise ,c ,p ,m)
+             (std-arc-counterclockwise ,c ,m ,x)))
+         `(superpose
+           (with "color" "none"
+             (line ,p ,c ,x))
+           (arc ,p ,m ,x)))))
 
 (define-graphics (sector C P Q)
   (sector-helper C P Q >))
