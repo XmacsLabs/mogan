@@ -8,8 +8,8 @@ appicon ICON "Xmacs.ico"
 
 // Version information; this, too, is used by WinSparkle
 1 VERSIONINFO
- FILEVERSION     1,2,9,1
- PRODUCTVERSION  1,2,9,1
+ FILEVERSION     2025,0,4,0
+ PRODUCTVERSION  2025,0,4,0
  FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
  FILEFLAGS       0 // indicate whether this file contains debugger information, and whether this is different from executable with same version.
  FILEOS          VOS_NT_WINDOWS32
@@ -19,14 +19,14 @@ BEGIN
   BEGIN
     BLOCK "040904B0" // US English, Unicode
     BEGIN
-      VALUE "Comments", "Mogan Research, a scientific edition platform."
-      VALUE "CompanyName", "Xmacs Labs\0"
-      VALUE "FileDescription", "MoganResearch.exe\0"
+      VALUE "Comments", "Liii STEM, a scientific edition platform."
+      VALUE "CompanyName", "Liii Network\0"
+      VALUE "FileDescription", "LiiiSTEM.exe\0"
       VALUE "FileVersion", "${VERSION}\0"
       VALUE "InternalName", "Xmacs\0"
-      VALUE "OriginalFilename", "MoganResearch.exe\0"
-      VALUE "LegalCopyright", "Licensed under GPLv3\0"
-      VALUE "ProductName", "Mogan Research\0"
+      VALUE "OriginalFilename", "LiiiSTEM.exe\0"
+      VALUE "LegalCopyright", "Licensed under GPLv3 and Private\0"
+      VALUE "ProductName", "Liii STEM\0"
       VALUE "ProductVersion", "${VERSION}\0"
     END
   END
