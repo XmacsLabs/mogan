@@ -21,7 +21,7 @@
   define-values define-record-type
   ; R7RS 6.2: Numbers
   square exact inexact max min floor s7-floor ceiling s7-ceiling truncate s7-truncate
-  round s7-round floor-quotient gcd lcm s7-lcm boolean=?
+  round s7-round floor-quotient gcd lcm s7-lcm boolean=? exact-integer-sqrt
   ; R7RS 6.4: list
   pair? cons car cdr set-car! set-cdr! caar cadr cdar cddr
   null? list? make-list list length append reverse list-tail
@@ -36,7 +36,8 @@
   vector->string string->vector vector-copy vector-copy! vector-fill!
   ; R7RS 6.9: Bytevectors
   bytevector? make-bytevector bytevector bytevector-length bytevector-u8-ref
-  bytevector-u8-set! bytevector-append utf8->string string->utf8 u8-string-length
+  bytevector-u8-set! bytevector-copy bytevector-append
+  utf8->string string->utf8 u8-string-length bytevector-advance-u8
   ; Input and Output
   call-with-port port? binary-port? textual-port? input-port-open? output-port-open?
   open-binary-input-file open-binary-output-file close-port eof-object
@@ -205,6 +206,18 @@
 
 (define (square x) (* x x))
 
+(define (exact-integer-sqrt n)
+  (when (not (integer? n))
+    (type-error "n must be an integer" n))
+  (when (< n 0)
+    (value-error "n must be non-negative" n))
+  (let* ((a (sqrt n))
+         (b (inexact->exact (floor a)))
+         (square-b (square b)))
+    (if (= square-b n)
+        (values b 0)
+        (values b (- n square-b)))))
+
 (define (boolean=? obj1 obj2 . rest)
   (define (same-boolean obj rest)
     (if (null? rest)
@@ -238,6 +251,17 @@
 (define bytevector-u8-ref byte-vector-ref)
 
 (define bytevector-u8-set! byte-vector-set!)
+
+(define* (bytevector-copy v (start 0) (end (bytevector-length v)))
+  (if (or (< start 0) (> start end) (> end (bytevector-length v)))
+      (error 'out-of-range "bytevector-copy"))
+  (let ((new-v (make-bytevector (- end start))))
+    (let loop ((i start) (j 0))
+      (if (>= i end)
+          new-v
+          (begin
+            (bytevector-u8-set! new-v j (bytevector-u8-ref v i))
+            (loop (+ i 1) (+ j 1)))))))
 
 (define bytevector-append append)
 

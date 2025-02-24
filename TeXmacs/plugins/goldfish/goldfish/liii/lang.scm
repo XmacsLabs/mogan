@@ -15,19 +15,213 @@
 ;
 
 (define-library (liii lang)
-(import (liii base) (liii string) (liii vector)
+(import (liii base) (liii string) (liii vector) (liii sort)
         (liii list) (liii hash-table) (liii bitwise))
 (export
+  @
+  define-case-class case-class? == != chained-define display* object->string
   option none
   rich-integer rich-char rich-string
-  rich-list rich-vector rich-hash-table
-  box
+  rich-list range stack
+  rich-vector array rich-hash-table
+  box $
 )
 (begin
 
-(define (%apply-one x xs r)
-  (let1 result r
-    (if (null? xs) r (apply r xs))))
+(define-macro (@ . paras)
+  (letrec*
+    (
+      (slot? (lambda (x) (equal? '_ x)))
+      (exprs (filter (lambda (x) (not (slot? x))) paras))
+      (slots (filter slot? paras))
+
+      (exprs-sym-list (map (lambda (x) (gensym)) exprs))  
+      (slots-sym-list (map (lambda (x) (gensym)) slots))
+
+      (lets (map list exprs-sym-list exprs))
+
+      (parse
+        (lambda (exprs-sym-list slots-sym-list paras)
+          (cond
+            ((null? paras) paras)
+            ((not (list? paras)) paras)
+            ((slot? (car paras)) 
+              `(,(car slots-sym-list) 
+                ,@(parse exprs-sym-list (cdr slots-sym-list) (cdr paras))))
+            (else 
+              `(,(car exprs-sym-list) 
+                ,@(parse (cdr exprs-sym-list) slots-sym-list (cdr paras))))))))
+                
+  `(let ,lets 
+        (lambda ,slots-sym-list 
+                ,(parse exprs-sym-list slots-sym-list paras)))))
+
+
+(define-macro (define-case-class class-name fields . methods)
+  (let* ((key-fields
+         (map (lambda (field) (string->symbol (string-append ":" (symbol->string (car field)))))
+              fields))
+         (instance-methods
+          (filter (lambda (method) (string-starts? (symbol->string (caadr method)) "%"))
+                  methods))
+         (instance-method-symbols (map caadr instance-methods))
+         (instance-messages
+          (map (lambda (method)
+                 (let1 name (string-remove-prefix (symbol->string method) "%")
+                   (string->symbol (string-append ":" name))))
+               instance-method-symbols))
+         (static-methods
+          (filter (lambda (method) (string-starts? (symbol->string (caadr method)) "@"))
+                  methods))
+         (static-method-symbols (map caadr static-methods))
+         (static-messages
+          (map (lambda (method)
+                 (let1 name (string-remove-prefix (symbol->string method) "@")
+                   (string->symbol (string-append ":" name))))
+               static-method-symbols))
+         (internal-methods
+           (filter (lambda (method) (not (or (string-starts? (symbol->string (caadr method)) "%")
+                                             (string-starts? (symbol->string (caadr method)) "@"))))
+                   methods))
+         (this-symbol (gensym)))
+
+`(define (,class-name msg . args)
+
+,@static-methods
+
+(define (is-normal-function? msg)
+  (and  (symbol? msg) 
+        (char=? (string-ref (symbol->string msg) 0) #\:)))
+
+(define (static-dispatcher msg . args)
+    (cond
+     ,@(map (lambda (method expected) `((eq? msg ,expected) (apply ,method args)))
+            static-method-symbols static-messages)
+     (else (value-error "No such static method " msg))))
+
+(typed-define (create-instance ,@fields)
+  (define ,this-symbol #f)
+  (define (%this . xs)
+    (if (null? xs)
+      ,this-symbol
+      (apply ,this-symbol xs)))
+
+  (define (%is-instance-of x)
+    (eq? x ',class-name))
+         
+  (typed-define (%equals (that case-class?))
+    (and (that :is-instance-of ',class-name)
+         ,@(map (lambda (field) `(equal? ,(car field) (that ',(car field))))
+                fields)))
+         
+  (define (%apply . args)
+    (cond ((null? args)
+           (value-error ,class-name "Apply on zero args is not implemented"))
+          ((equal? ((symbol->string (car args)) 0) #\:)
+           (value-error ,class-name "No such method: " (car args)))
+          (else (value-error ,class-name "No such field: " (car args)))))
+         
+  (define (%to-string)
+    (let ((field-strings
+           (list ,@(map (lambda (field key-field)
+                          `(string-append
+                            ,(symbol->string key-field) " "
+                            (object->string ,(car field))))
+                        fields key-fields))))
+      (let loop ((strings field-strings)
+                 (acc ""))
+        (if (null? strings)
+            (string-append "(" ,(symbol->string class-name) " " acc ")")
+            (loop (cdr strings)
+                  (if (zero? (string-length acc))
+                      (car strings)
+                      (string-append acc " " (car strings))))))))
+
+  ,@internal-methods
+  ,@instance-methods
+ 
+  (define (instance-dispatcher)
+    (lambda (msg . args)
+      (cond
+        ((eq? msg :is-instance-of) (apply %is-instance-of args))
+        ((eq? msg :equals) (apply %equals args))
+        ((eq? msg :to-string) (%to-string))
+        ((eq? msg :this) (apply %this args))
+        ,@(map (lambda (field key-field)
+            `((eq? msg ,key-field)
+              (,class-name
+              ,@(map (lambda (f) (if (eq? (car f) (car field)) '(car args) (car f)))
+                      fields))))
+          fields key-fields)
+        ((is-normal-function? msg)
+          (cond
+              ,@(map (lambda (method expected) `((eq? msg ,expected) (apply ,method args)))
+               instance-method-symbols instance-messages)
+              (else (value-error ,class-name "No such method: " msg))))
+        
+        ,@(map (lambda (field) `((eq? msg ',(car field)) ,(car field))) fields)
+        (else (apply %apply (cons msg args))))))
+
+  (set! ,this-symbol (instance-dispatcher))
+  ,this-symbol
+) ; end of the internal typed define
+
+(if (in? msg (list ,@static-messages))
+    (apply static-dispatcher (cons msg args))
+    (apply create-instance (cons msg args)))
+
+) ; end of define
+) ; end of let
+) ; end of define-macro
+
+(define (case-class? x)
+  (and-let* ((is-proc? (procedure? x))
+             (source (procedure-source x))
+             (source-at-least-3? (and (list? source) (>= (length source) 3)))
+             (body (source 2))
+             (body-at-least-3? (and (list? body) (>= (length body) 3)))
+             (is-cond? (eq? (car body) 'cond))
+             (pred1 ((body 1) 0))
+             (pred2 ((body 2) 0)))
+    (and (equal? pred1 '(eq? msg :is-instance-of))
+         (equal? pred2 '(eq? msg :equals)))))
+
+(define (== left right)
+  (cond
+    ((and (case-class? left) (case-class? right))
+     (left :equals right))
+    ((case-class? left)
+     (left :equals ($ right)))
+    ((case-class? right)
+     ($ left :equals right))
+    (else
+     (equal? left right))))
+
+(define (!= left right)
+  (not (== left right)))
+
+(define-macro (chained-define head . body)
+  (let ((xs (gensym))
+        (result (gensym)))
+    `(define ,(append head xs)
+       (let ((,result (begin ,@body)))
+         (if (null? ,xs)
+           ,result
+           (apply ,result ,xs))))))
+
+(define (display* . params)
+  (define (%display x)
+    (if (case-class? x)
+        (display (x :to-string))
+        (display x)))
+  (for-each %display params))
+
+(define s7-object->string object->string)
+
+(define (object->string x)
+  (if (case-class? x)
+      (x :to-string)
+      (s7-object->string x)))
 
 (define-case-class option ((value any?))
 
@@ -37,9 +231,10 @@
       value))
 
 (define (%get-or-else default)
-  (if (null? value)
-      (if (procedure? default) (default) default)
-      value))
+  (cond ((not (null? value)) value)
+        ((and (procedure? default) (not (case-class? default)))
+         (default))
+        (else default)))
 
 (typed-define (%or-else (default case-class?))
   (when (not (default :is-instance-of 'option))
@@ -70,11 +265,10 @@
   (when (not (null? value))
         (f value)))
 
-(define (%map f . xs)
-  (%apply-one f xs
-    (if (null? value)
-        (option '())
-        (option (f value)))))
+(chained-define (%map f)
+  (if (null? value)
+      (option '())
+      (option (f value))))
 
 (define (%flat-map f . xs)
   (let1 r (if (null? value)
@@ -112,6 +306,17 @@
 (define (%to-string)
   (number->string data))
 
+(define (@max-value) 9223372036854775807)
+
+(define (@min-value) -9223372036854775808)
+
+;;return exact integer
+(define (%sqrt)
+  (if (< data 0)
+      (value-error
+        (format #f "sqrt of negative integer is undefined!         ** Got ~a **" data))
+      (inexact->exact (floor (sqrt data)))))
+
 )
 
 (define-case-class rich-char ((code-point integer?))
@@ -138,6 +343,20 @@
    (and (>= code-point #x17E0) (<= code-point #x17E9))
    (and (>= code-point #x1810) (<= code-point #x1819))))
   
+(define (%to-upper . xs)
+  (let1 r (rich-char
+    (if (and (>= code-point #x61) (<= code-point #x7A))
+      (bitwise-and code-point #b11011111)
+      code-point))
+    (if (null? xs) r (apply r xs))))
+
+(define (%to-lower . xs)
+  (let1 r (rich-char
+    (if (and (>= code-point #x41) (<= code-point #x5A))
+      (bitwise-ior code-point #b00100000)
+      code-point))
+    (if (null? xs) r (apply r xs))))
+
 (define (%to-bytevector)
   (cond
     ((<= code-point #x7F)
@@ -233,6 +452,14 @@
 (typed-define (%apply (i integer?))
   (%char-at i))
 
+(chained-define (%slice from until)
+  (let* ((len (u8-string-length data))
+         (start (max 0 from))
+         (end (min len until)))
+    (if (< start end)
+        (rich-string (u8-substring data start end))
+        (rich-string ""))))
+
 (define (%empty?)
   (string-null? data))
 
@@ -243,10 +470,10 @@
   (string-ends? data suffix))
 
 (define (%forall pred)
-  (string-every pred data))
+  ((%to-vector) :forall pred))
 
 (define (%exists pred)
-  (string-any pred data))
+  ((%to-vector) :exists pred))
 
 (define (%contains elem)
   (cond ((string? elem)
@@ -255,19 +482,140 @@
          (string-contains data (string elem)))
         (else (type-error "elem must be char or string"))))
 
-(define (%map x . xs)
-  (%apply-one x xs
-    (rich-string (string-map x data))))
+;; Find the index for the char or substring in rich-string (from start-index), else return -1
+(define (%index-of sub . start-index)
+  (let1 start (if (null? start-index) 0 (car start-index))
+  (cond
+    ((string? sub)
+     (let ((str-len (string-length data))
+           (sub-len (string-length sub)))
+       (let loop ((i start))
+         (cond
+           ((> (+ i sub-len) str-len) -1)
+           ((equal? (substring data i (+ i sub-len)) sub) i)
+           (else (loop (+ i 1)))))))
+    ((char? sub)
+     (let loop ((lst (string->list (substring data start))) (index start))
+       (cond
+       ((null? lst) -1)
+       ((char=? (car lst) sub) index)
+       (else (loop (cdr lst) (+ index 1)))))))))
+
+(chained-define (%map f)
+  (rich-string
+    (%to-vector :map f
+                :map (@ _ :to-string)
+                :make-string)))
 
 (define (%count pred?)
-  (string-count data pred?))
+  ((%to-vector) :count pred?))
 
 (define (%to-string)
   data)
 
+(chained-define (%to-vector)
+  (if (string-null? data)
+      (rich-vector :empty)
+      (let* ((bv (string->utf8 data))
+             (bv-size (length bv))
+             (len (u8-string-length data))
+             (result (make-vector len)))
+        (let loop ((i 0) (j 0))
+             (if (>= i len)
+                 (rich-vector result)
+                 (let* ((next-j (bytevector-advance-u8 bv j bv-size))
+                        (code (utf8-byte-sequence->code-point (bytevector-copy bv j next-j))))
+                   (vector-set! result i (rich-char code))
+                   (loop (+ i 1) next-j)))))))
+
+(define (%strip-prefix prefix . xs)
+  (let ((result (rich-string (string-remove-prefix data prefix))))
+    (if (null? xs)                                 
+        result
+        (apply result xs)))) 
+
+(define (%strip-suffix suffix . xs)
+  (let ((result (rich-string (string-remove-suffix data suffix))))
+    (if (null? xs)                                 
+        result
+        (apply result xs)))) 
+;; Replace the first occurrence of the substring old to new.
+(define (%replace-first old new . xs)
+  (define (replace-helper str old new start)
+    (let ((next-pos (%index-of old start)))
+      (if (= next-pos -1)
+          str
+          (string-append
+           (substring str 0 next-pos)
+           new
+           (substring str (+ next-pos (string-length old)))))))
+  (let ((result (rich-string (replace-helper data old new 0))))
+    (if (null? xs)
+        result
+        (apply result xs))))
+
+;; Replace the occurrences of the substring old to new.
+(define (%replace old new . xs)
+  (define (replace-helper str old new start)
+    (let ((next-pos ((rich-string str) :index-of old start)))
+      (if (= next-pos -1)
+          str
+          (replace-helper ((rich-string str) :replace-first old new :get) old new next-pos))))
+  (let ((result (rich-string (replace-helper data old new 0))))
+    (if (null? xs)
+        result
+        (apply result xs))))
+
+;; Split string with sep.
+(define (%split sep . xs)
+  (let ((str-len (string-length data))
+        (sep-len (string-length sep)))
+    ; tail recursive auxiliary function
+    (define (split-helper start acc)
+      (let ((next-pos (%index-of sep start)))
+        (if (= next-pos -1)
+            (cons (substring data start) acc)
+            (split-helper (+ next-pos sep-len) (cons (substring data start next-pos) acc)))))
+    ; do split
+    (let1 r (rich-vector
+      (if (zero? sep-len)
+          ((%to-vector) :map (lambda (c) (c :to-string)) :collect)
+          (list->vector (reverse (split-helper 0 '())))))
+          (if (null? xs) r (apply r xs)))))
+
 )
 
 (define-case-class rich-list ((data list?))
+
+(define (@range start end . step)
+  (let ((step-size (if (null? step) 1 (car step))))
+    (cond
+      ((and (positive? step-size) (>= start end))
+       (rich-list '()))
+      ((and (negative? step-size) (<= start end))
+       (rich-list '()))
+      ((zero? step-size)
+       (value-error "Step size cannot be zero"))
+      (else
+       (let1 cnt (ceiling (/ (- end start) step-size))
+         (rich-list (iota cnt start step-size)))))))
+
+(define (@empty . xs)
+  (let1 r (rich-list (list ))
+    (if (null? xs) r (apply r xs))))
+
+(define (@concat lst1 lst2 . xs)
+  (let1 r (rich-list (append (lst1 :collect) (lst2 :collect)))
+    (if (null? xs) r (apply r xs))))
+
+(define (@fill n elem)
+  (cond
+    ((< n 0)
+      (value-error "n cannot be negative"))
+    ((= n 0)
+      (rich-list '()))
+    (else
+      (rich-list (make-list n elem)))))
 
 (define (%collect) data)
 
@@ -280,6 +628,21 @@
       ((null? lst) (none))
       ((pred (car lst)) (option (car lst)))
       (else (loop (cdr lst))))))
+
+(define (%head)
+  (if (null? data)
+      (error 'out-of-range "rich-list%head: list is empty")
+      (car data)))
+
+
+(define (%head-option)
+  (if (null? data)
+      (none)
+      (option (car data))))
+
+
+(define (%empty?)
+  (null? data))
 
 (define (%equals that)
   (let* ((l1 data)
@@ -326,6 +689,15 @@
     (let1 r (rich-list (scala-take data x))
       (if (null? xs) r (apply r xs))))
 
+(define (%drop x . xs)
+    (typed-define (scala-drop (data list?) (n integer?))
+      (cond ((< n 0) data)
+            ((>= n (length data)) '())
+            (else (drop data n))))
+
+    (let1 r (rich-list (scala-drop data x))
+      (if (null? xs) r (apply r xs))))
+
   (define (%take-right x . xs)
     (typed-define (scala-take-right (data list?) (n integer?))
       (cond ((< n 0) '())
@@ -335,6 +707,15 @@
     (let1 r (rich-list (scala-take-right data x))
       (if (null? xs) r (apply r xs))))
 
+ (define (%drop-right x . xs)
+    (typed-define (scala-drop-right (data list?) (n integer?))
+      (cond ((< n 0) data)
+            ((>= n (length data)) '())
+            (else (drop-right data n))))
+
+    (let1 r (rich-list (scala-drop-right data x))
+      (if (null? xs) r (apply r xs))))
+ 
   (define (%count . xs)
     (cond ((null? xs) (length data))
           ((length=? 1 xs) (count (car xs) data))
@@ -346,52 +727,171 @@
   (define (%fold-right initial f)
     (fold-right f initial data))
 
+(define (%sort-with less-p . xs)
+  (let* 
+    ((sorted-data (list-stable-sort less-p data))
+    (sorted-rich-list (rich-list sorted-data)))
+    (if (null? xs) 
+        sorted-rich-list 
+        (apply sorted-rich-list xs))))
+
 (define (%to-string)
   (object->string data))
 
-  (define (%make-string . xs)
-    (define (parse-args xs)
-      (cond
-        ((null? xs) (values "" "" ""))
-        ((length=? 1 xs)
-         (let1 sep (car xs)
-           (if (string? sep)
-               (values "" sep "")
-               (type-error "rich-list%make-string: separator must be a string" sep))))
-        ((length=? 2 xs)
-         (error 'wrong-number-of-args "rich-list%make-string: expected 0, 1, or 3 arguments, but got 2" xs))
-        ((length=? 3 xs)
-         (let ((start (car xs))
-               (sep (cadr xs))
-               (end (caddr xs)))
-           (if (and (string? start) (string? sep) (string? end))
-               (values start sep end)
-               (error 'type-error "rich-list%make-string: prefix, separator, and suffix must be strings" xs))))
-        (else (error 'wrong-number-of-args "rich-list%make-string: expected 0, 1, or 3 arguments" xs))))
+(define (%make-string . xs)
+  (define (parse-args xs)
+    (cond
+      ((null? xs) (values "" "" ""))
+      ((length=? 1 xs)
+       (let1 sep (car xs)
+         (if (string? sep)
+             (values "" sep "")
+             (type-error "rich-list%make-string: separator must be a string" sep))))
+      ((length=? 2 xs)
+       (error 'wrong-number-of-args "rich-list%make-string: expected 0, 1, or 3 arguments, but got 2" xs))
+      ((length=? 3 xs)
+       (let ((start (car xs))
+             (sep (cadr xs))
+             (end (caddr xs)))
+         (if (and (string? start) (string? sep) (string? end))
+             (values start sep end)
+             (error 'type-error "rich-list%make-string: prefix, separator, and suffix must be strings" xs))))
+      (else (error 'wrong-number-of-args "rich-list%make-string: expected 0, 1, or 3 arguments" xs))))
 
-    (receive (start sep end) (parse-args xs)
-      (string-append start (string-join (map object->string data) sep) end)))
+  (receive (start sep end) (parse-args xs)
+    (let1 as-string (lambda (x) (if (string? x) x (object->string x)))
+          (string-append start (string-join (map as-string data) sep) end))))
+
+)
+
+(define-case-class range
+  ((start integer?) (end integer?) (step integer?) (inclusive? boolean?))
+
+(define* (@inclusive start end (step 1))
+  (range start end step #t))
+
+(define (%empty?)
+  (or (and (> start end) (> step 0))
+      (and (< start end) (< step 0))
+      (and (= start end) (not inclusive?))))
+
+)
+
+(define-case-class stack ((data list?))
+
+(define (%length) (length data))
+
+(define (%size) (length data))
+
+(define (%top)
+  (if (null? data)
+      (error 'out-of-range)
+      (car data)))
+
+(define (%to-list) (rich-list data))
+
+(define (@empty) (stack (list )))
+
+(define (%pop . xs)
+  (let1 r
+      (if (null? data)
+          (error 'out-of-range)
+          (stack (cdr data)))
+    (if (null? xs)
+        r
+        (apply r xs))))
+
+(define (%push element . es) 
+  (let1 r (stack (cons element data))
+    (if (null? es)
+        r
+        (apply r es))))
 
 )
 
 (define-case-class rich-vector ((data vector?))
+
+(define (@range start end . step)
+  (let ((step-size (if (null? step) 1 (car step))))
+    (cond
+      ((and (positive? step-size) (>= start end))
+       (rich-vector #()))
+      ((and (negative? step-size) (<= start end))
+       (rich-vector #()))
+      ((zero? step-size)
+       (value-error "Step size cannot be zero"))
+      (else
+       (let1 cnt (ceiling (/ (- end start) step-size))
+         (rich-vector (list->vector (iota cnt start step-size))))))))
+
+(define (@empty . xs)
+  (let1 r (rich-vector #())
+    (if (null? xs) r (apply r xs))))
+
+(define (@fill n elem . xs)
+  (unless (integer? n)
+    (type-error "n must be integer" n))
+  (when (< n 0)
+    (value-error "n must be non-negative" n))
+
+  (let1 r (rich-vector (make-vector n elem))
+        (if (null? xs) r (apply r xs))))
 
 (define (%collect) data)
 
 (define (%apply n)
   (vector-ref data n))
 
-  (define (%find p)
-    (let loop ((i 0))
-      (cond
-        ((>= i (vector-length data)) (none))
-        ((p (vector-ref data i)) (option (vector-ref data i)))
-        (else (loop (+ i 1))))))
-(define (%equals that)
-  (vector= == data (that 'data)))
+(define (%find p)
+  (let loop ((i 0))
+    (cond
+     ((>= i (vector-length data)) (none))
+     ((p (vector-ref data i)) (option (vector-ref data i)))
+     (else (loop (+ i 1))))))
 
-  (define (%forall p)
-    (vector-every p data))
+(define (%head)
+  (if (> (vector-length data) 0)
+      (vector-ref data 0)
+      (error 'out-of-range "out-of-range")))
+
+(define (%head-option)
+  (if (> (vector-length data) 0)
+      (option (vector-ref data 0))
+      (none)))
+
+(define (%last)
+  (let ((len (vector-length data)))
+    (if (> len 0)
+      (vector-ref data (- len 1))
+      (error 'out-of-range "out-of-range"))))
+
+(define (%last-option)
+  (let ((len (vector-length data)))
+    (if (> len 0)
+      (option (vector-ref data (- len 1)))
+      (none))))
+
+(define (%slice from until . xs)
+  (let* ((len (vector-length data))
+         (start (max 0 from))
+         (end (min len until)))
+    (let ((res (if (< start end)
+                 (rich-vector (vector-copy data start end))
+                 (rich-vector :empty))))
+      (if (null? xs) res (apply res xs)))))
+
+(define (%empty?)
+  (= (length data) 0))
+
+(define (%equals that)
+  (and (that :is-instance-of 'rich-vector)
+       (vector= == data (that 'data))))
+
+(define (%forall p)
+  (vector-every p data))
+
+(define (%exists p)
+  (vector-any p data))
 
   (define (%map x . xs)
     (let1 r (rich-vector (vector-map x data))
@@ -439,58 +939,124 @@
     (let1 r (rich-vector (scala-take-right data x))
       (if (null? xs) r (apply r xs))))
 
+(define (%drop x . xs)
+    (typed-define (scala-drop (data vector?) (n integer?))
+      (cond
+        ((< n 0) data)
+        ((>= n (vector-length data)) (vector))
+        (else (vector-copy data n))))
+        
+    (let1 r (rich-vector (scala-drop data x))
+      (if (null? xs) r (apply r xs))))
+
+(define (%drop-right x . xs)
+  (typed-define (scala-drop-right (data vector?) (n integer?))
+    (cond
+      ((< n 0) data) 
+      ((>= n (vector-length data)) (vector)) 
+      (else (vector-copy data 0 (- (vector-length data) n))))) 
+
+  (let1 r (rich-vector (scala-drop-right data x))  
+    (if (null? xs) r (apply r xs))))
+
   (define (%fold initial f)
     (vector-fold f initial data))
 
   (define (%fold-right initial f)
     (vector-fold-right f initial data))
 
+  (define (%count . xs)
+    (cond ((null? xs) (vector-length data))
+          ((length=? 1 xs) (count (car xs) (vector->list data)))
+          (else (error 'wrong-number-of-args "rich-vector%count" xs))))
+
+(define (%sort-with less-p . xs)
+  (let ((res (rich-vector (vector-stable-sort less-p data))))
+    (if (null? xs)
+      res
+      (apply res xs))))
+
 (define (%to-string)
   (object->string data))
 
-  (define (%make-string . xs)
-    (define (parse-args xs)
-      (cond
-        ((null? xs) (values "" "" ""))
-        ((length=? 1 xs)
-         (let1 sep (car xs)
-           (if (string? sep)
-               (values "" sep "")
-               (type-error "rich-vector%make-string: separator must be a string" sep))))
-        ((length=? 2 xs)
-         (error 'wrong-number-of-args "rich-vector%make-string: expected 0, 1, or 3 arguments, but got 2" xs))
-        ((length=? 3 xs)
-         (let ((start (car xs))
-               (sep (cadr xs))
-               (end (caddr xs)))
-           (if (and (string? start) (string? sep) (string? end))
-               (values start sep end)
-               (type-error "rich-vector%make-string: prefix, separator, and suffix must be strings" xs))))
-        (else (error 'wrong-number-of-args "rich-vector%make-string: expected 0, 1, or 3 arguments" xs))))
+(define (%make-string . xs)
+  (define (parse-args xs)
+    (cond
+      ((null? xs) (values "" "" ""))
+      ((length=? 1 xs)
+       (let1 sep (car xs)
+         (if (string? sep)
+             (values "" sep "")
+             (type-error "rich-vector%make-string: separator must be a string" sep))))
+      ((length=? 2 xs)
+       (error 'wrong-number-of-args "rich-vector%make-string: expected 0, 1, or 3 arguments, but got 2" xs))
+      ((length=? 3 xs)
+       (let ((start (car xs))
+             (sep (cadr xs))
+             (end (caddr xs)))
+         (if (and (string? start) (string? sep) (string? end))
+             (values start sep end)
+             (type-error "rich-vector%make-string: prefix, separator, and suffix must be strings" xs))))
+      (else (error 'wrong-number-of-args "rich-vector%make-string: expected 0, 1, or 3 arguments" xs))))
 
-    (receive (start sep end) (parse-args xs)
-      (string-append start (string-join (map object->string (vector->list data)) sep) end)))
+  (receive (start sep end) (parse-args xs)
+    (let* ((as-string (lambda (x) (if (string? x) x (object->string x))))
+           (middle (string-join (map as-string (vector->list data)) sep)))
+      (string-append start middle end))))
+
+(define (%set! i x)
+  (when (or (< i 0) (>= i (length data)))
+    (error 'out-of-range "rich-vector%set! out of range at index" i))
+  (vector-set! data i x))
 
 )
+
+(define array rich-vector)
 
 (define-case-class rich-hash-table ((data hash-table?))
   (define (%collect) data)
 
-(define (%map f . xs)
-  (%apply-one f xs
-    (let1 r (make-hash-table)
-      (hash-table-for-each
-         (lambda (k v)
-           (receive (k1 v1) (f k v)
-             (hash-table-set! r k1 v1)))
-         data)
-      (rich-hash-table r))))
+(chained-define (%map f)
+  (let1 r (make-hash-table)
+    (hash-table-for-each
+       (lambda (k v)
+         (receive (k1 v1) (f k v)
+           (hash-table-set! r k1 v1)))
+       data)
+    (rich-hash-table r)))
+
+(define (%find pred?)
+  (let ((all-kv (map identity data)))
+    (let loop ((kvs all-kv))
+      (if (null? kvs)
+          (none)
+          (let1 kv (car kvs)
+                (if (pred? (car kv) (cdr kv))
+                    (option kv)
+                    (loop (cdr kvs))))))))
+
+(define (%count pred)
+  (hash-table-count pred data))
 
 (define (%get k)
   (option (hash-table-ref/default data k '())))
 
 (define (%contains k)
   (hash-table-contains? data k))
+
+(define (%forall pred?)
+  (let ((all-kv (map identity data)))
+    (let loop ((kvs all-kv))  
+      (if (null? kvs)
+          #t  
+          (let1 kv (car kvs)
+            (if (pred? (car kv) (cdr kv))
+                (loop (cdr kvs))  
+                #f))))))  
+
+(define (@empty . xs)
+  (let1 r (rich-hash-table (make-hash-table))
+    (if (null? xs) r (apply r xs))))
 
 )
 
@@ -502,6 +1068,9 @@
         ((vector? x) (rich-vector x))
         ((hash-table? x) (rich-hash-table x))
         (else (type-error "box: x must be integer?, char?, string?, list?, vector?, hash-table?"))))
+
+(define ($ x . xs)
+  (if (null? xs) (box x) (apply (box x) xs)))
 
 ) ; end of begin
 ) ; end of library

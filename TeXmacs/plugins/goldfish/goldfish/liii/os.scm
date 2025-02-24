@@ -76,8 +76,11 @@
         ((eq? mode 'R_OK) (g_access path 1))
         (else (error 'value-error "Allowed mode 'F_OK, 'X_OK,'W_OK, 'R_OK"))))
 
-(define (getenv key)
-  (get-environment-variable key))
+(define* (getenv key (default #f))
+  (let ((val (get-environment-variable key)))
+    (if val
+        val
+        default)))
 
 (define (unsetenv key)
   (g_unsetenv key))
