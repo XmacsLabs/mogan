@@ -19,7 +19,8 @@
         (liii list)
         (liii string)
         (liii sys)
-        (liii base))
+        (liii base)
+        (liii lang))
 (export goldfish-welcome goldfish-repl is-sicp-mode?)
 (begin
 
