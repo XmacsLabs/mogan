@@ -109,6 +109,7 @@ struct smart_font_rep : font_rep {
   font get_math_font (string fam, string var, string ser, string sh);
   font get_cyrillic_font (string fam, string var, string ser, string sh);
   font get_greek_font (string fam, string var, string ser, string sh);
+  font get_latin_font (string fam, string var, string ser, string sh);
 
   void advance (string s, int& pos, string& r, int& nr);
   int  resolve (string c, string fam, int attempt);

@@ -686,6 +686,12 @@ smart_font_rep::get_greek_font (string fam, string var, string ser, string sh) {
   return find_font ("greek", var, ser, sh, sz, dpi);
 }
 
+font
+smart_font_rep::get_latin_font (string fam, string var, string ser, string sh) {
+  find_closest (fam, var, ser, sh);
+  return find_font ("CMU", var, ser, sh, sz, dpi);
+}
+
 static string
 rewrite_math (string s) {
   string r;
@@ -878,8 +884,10 @@ is_wanted (string c, string family, array<string> rules, array<string> given) {
 
 int
 smart_font_rep::resolve (string c, string fam, int attempt) {
+  string range= get_unicode_range (c);
   if (DEBUG_VERBOSE) {
     debug_fonts << "Resolve " << c << " in math_kind " << math_kind
+                << " in unicode range " << range
                 << " in fam " << fam << " mfam " << mfam << ", attempt "
                 << attempt << LF;
   }
@@ -898,7 +906,7 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
     // fam= stix_fix (fam, series, shape);
 
     if (math_kind != 0 && shape == "mathitalic" &&
-        (get_unicode_range (c) == "greek" ||
+        (range == "greek" ||
          (starts (c, "<b-") && ends (c, ">")) || c == "<imath>" ||
          c == "<jmath>" || c == "<ell>")) {
       font cfn= smart_font_bis (fam, variant, series, shape, sz, hdpi, dpi);
@@ -937,8 +945,14 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
       }
     }
 
-    if (fam == "roman" && get_unicode_range (c) == "greek") {
+    if (fam == "roman" && range == "greek") {
       tree key= tuple ("greek", fam, variant, series, rshape);
+      int  nr = sm->add_font (key, REWRITE_NONE);
+      initialize_font (nr);
+      return sm->add_char (key, c);
+    }
+    if (fam == "roman" && range == "latin") {
+      tree key= tuple ("latin", fam, variant, series, rshape);
       int  nr = sm->add_font (key, REWRITE_NONE);
       initialize_font (nr);
       return sm->add_char (key, c);
@@ -1001,7 +1015,6 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
   }
 
   if (attempt > 1) {
-    string range= get_unicode_range (c);
     if (in_unicode_range (c, "cjk")) {
       range= "cjk";
     }
@@ -1231,6 +1244,8 @@ smart_font_rep::initialize_font (int nr) {
     fn[nr]= adjust_subfont (get_cyrillic_font (a[1], a[2], a[3], a[4]));
   else if (a[0] == "greek")
     fn[nr]= adjust_subfont (get_greek_font (a[1], a[2], a[3], a[4]));
+  else if (a[0] == "latin")
+    fn[nr]= adjust_subfont (get_latin_font (a[1], a[2], a[3], a[4]));
   else if (a[0] == "subfont")
     fn[nr]= smart_font_bis (a[1], variant, series, shape, sz, hdpi, dpi);
   else if (a[0] == "special")
