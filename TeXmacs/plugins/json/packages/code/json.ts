@@ -1,4 +1,4 @@
-<TeXmacs|2.1.2>
+<TeXmacs|2.1.4>
 
 <style|<tuple|source|std>>
 
@@ -28,6 +28,14 @@
     <\pseudo-code>
       <json|<arg|body>>
     </pseudo-code>
+  </macro>>
+
+  <assign|json-chunk|<\macro|name|prev|next|body>
+    <\generic-chunk|<arg|name>|<arg|prev>|<arg|next>>
+      <\json>
+        <arg|body>
+      </json>
+    </generic-chunk>
   </macro>>
 </body>
 
