@@ -360,6 +360,10 @@ function sidebarGuideZh() {
                     link: '/zh/guide/SICP'
                 },
                 {
+                    text: 'AI时代的Latex零基础入门',
+                    link: '/zh/guide/AI_Latex_introduction.md'
+                },
+                {
                     text: '联系我们',
                     link: '/zh/guide/Contact'
                 },
