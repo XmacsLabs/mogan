@@ -92,6 +92,10 @@ function navZh() {
             activeMatch: '/ospp/'
         },
         {
+            text: 'AI时代的Latex零基础入门',
+            link: '/zh/guide/AI_Latex_introduction',
+        },
+        {
             text: '指南',
             link: '/zh/guide/what-is-mogan',
             activeMatch: '/guide/'

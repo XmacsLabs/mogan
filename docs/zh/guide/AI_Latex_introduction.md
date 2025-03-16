@@ -1,5 +1,8 @@
 # AI时代的Latex零基础入门
 
+## 授课师资
+讲师为伊利诺伊大学芝加哥电子与计算机工程全奖博士，助教为南科大数学系博士在读以及中科院严济慈英才班学生
+
 ## 课程目标
 通过6节实操课程（共4小时），掌握：
 1. 线上环境与基础语法
@@ -141,8 +144,24 @@ E = mc^2 \quad \text{和} \quad \nabla\cdot\mathbf{D} = \rho
 
 ---
 
+## 课程价格
+原价150元，早期优惠价100元。
+
 ## 推荐资源
 1. loongtex官方文档：[loongtex.com/docs/app/help](https://www.loongtex.com/docs/app/help)
 2. NeurIPS2025投稿指南：[nips.cc](https://nips.cc/)
 3. LaTeX数学符号手册：[latexmath.com](http://latexmath.com)
 4. BibTeX样式库：[CTAN](https://ctan.org/pkg/bibtex)
+
+## 联系方式
+<img src="../../images/wechatQR_jack.jpg" alt="微信二维码" class="qr-code" />
+<p class="contact-note">如果您想购买或咨询，请添加以上微信.</p>
+
+<style>
+.qr-code {
+  width: 300px;
+}
+.contact-note {
+  color: #808080;
+}
+</style>
