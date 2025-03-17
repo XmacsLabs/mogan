@@ -23,6 +23,11 @@ function main()
                 }
             },
             {
+                scm_name = "goldfish-version",
+                cpp_name = "goldfish_version",
+                ret_type = "string",
+            },
+            {
                 scm_name = "version-before?",
                 cpp_name = "version_inf",
                 ret_type = "bool",

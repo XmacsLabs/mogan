@@ -14,6 +14,7 @@ target ("goldfish") do
     add_files ("$(projectdir)/TeXmacs/plugins/goldfish/src/goldfish.cpp")
     add_packages("s7")
     add_packages("tbox")
+    set_version(GOLDFISH_VERSION, {build = "%Y-%m-%d"})
     on_install(function (target)
     end)
 end

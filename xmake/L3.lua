@@ -98,6 +98,7 @@ function add_target_L3()
             LOLLY_VERSION = LOLLY_VERSION,
             XMACS_VERSION = XMACS_VERSION,
             TEXMACS_VERSION = TEXMACS_VERSION,
+            GOLDFISH_VERSION = GOLDFISH_VERSION,
         }
     })
 

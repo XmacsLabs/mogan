@@ -11,6 +11,7 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 TEXMACS_VERSION = "2.1.2"
+GOLDFISH_VERSION = "17.11.2"
 XMACS_VERSION="1.2.9.8"
 CONFIG_USER = "XmacsLabs"
 DEVEL_VERSION = TEXMACS_VERSION
@@ -43,6 +44,7 @@ LIBGIT2_VERSION = "1.7.1"
 TM_CONFIGURE_VARS = {
     CONFIG_USER = CONFIG_USER,
     TEXMACS_VERSION = TEXMACS_VERSION,
+    GOLDFISH_VERSION = GOLDFISH_VERSION,
     XMACS_VERSION = XMACS_VERSION,
     tm_devel = "Texmacs-" .. DEVEL_VERSION,
     tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,

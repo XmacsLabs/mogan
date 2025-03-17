@@ -56,6 +56,14 @@
       <value|da>
     </cell>|<\cell>
       glue for <scm|xmacs-version>
+    </cell>>|<row|<\cell>
+      Chore
+    </cell>|<\cell>
+      51_7
+    </cell>|<\cell>
+      xuhaolin
+    </cell>|<\cell>
+      glue for <scm|goldfish-version>
     </cell>>>>
   </wide-tabular>
 

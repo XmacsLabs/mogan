@@ -71,6 +71,11 @@ texmacs_version (string which) {
   return TEXMACS_VERSION;
 }
 
+string
+goldfish_version () {
+  return string (GOLDFISH_VERSION);
+}
+
 void
 set_fast_environments (bool b) {
   enable_fastenv= b;
