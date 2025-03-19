@@ -46,6 +46,7 @@ public:
   void   typeset_update_all ();
   bool   is_yes (string s);
   void   quit ();
+  void   restart ();
   void   shell (string s);
 };
 

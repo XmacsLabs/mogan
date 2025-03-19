@@ -80,7 +80,7 @@
             (get-pretty-preference "look and feel")
             "18em"))
     (item (text "User interface language:")
-      (enum (set-preference "language" (language-name-to-language answer))
+      (enum (set-language-and-notify (language-name-to-language answer))
             (map language-to-language-name supported-languages)
             (language-to-language-name (get-preference "language"))
             "18em"))

@@ -51,6 +51,24 @@
           "150" "200" "300" "400" "600" "800" "1200"
           *)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Language settings and restart notifications
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (set-language-and-notify lan)
+  (let ((old (get-preference "language")))
+    (if (== lan old)
+        (set-preference "language" lan) 
+        (let ((msg "Requires restarting the Mogan Editor to take full effect. Restart now?"))
+          (user-confirm msg #f
+            (lambda (answ)
+              (if answ
+                  (begin
+                    (set-preference "language" lan)
+                    (save-all-buffers)
+                    (restart-TeXmacs))
+                  (set-preference "language" old))))))))
+
 (tm-define preferences-tree
   `((enum ("Look and feel" "look and feel")
           ("Default" "default")
@@ -77,7 +95,7 @@
           ("Documents in separate windows" "separate")
           ("Multiple documents share window" "shared"))
     ---
-    (enum ("Language" "language")
+    (enum ("Language" "language" set-language-and-notify)
           ,@(map (lambda (lan) (list (language-to-language-name lan) lan))
                  supported-languages))
     (-> "Keyboard"

@@ -376,6 +376,12 @@
   (autosave-all)
   (autosave-delayed))
 
+(tm-define (save-all-buffers)
+  (for-each (lambda (buf)
+              (when (buffer-modified? buf)
+                (buffer-save buf)))
+            (buffer-list)))
+
 (tm-define (autosave-delayed)
   (let* ((pref (get-preference "autosave"))
          (len (if (and (string? pref) (integer? (string->number pref)))

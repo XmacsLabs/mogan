@@ -346,6 +346,11 @@ function main()
                 cpp_name = "quit",
                 ret_type = "void"
             },
+            {
+                scm_name = "restart-TeXmacs",
+                cpp_name = "restart",
+                ret_type = "void"
+            },
         }
     }
 end

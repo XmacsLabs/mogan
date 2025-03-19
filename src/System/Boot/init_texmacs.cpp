@@ -794,6 +794,7 @@ TeXmacs_main (int argc, char** argv) {
   { // opening scope for server sv
     server sv;
     string where= "";
+    bool first_file = true;
     for (i= 1; i < argc; i++) {
       if (argv[i] == NULL) break;
       string s= argv[i];
@@ -803,8 +804,15 @@ TeXmacs_main (int argc, char** argv) {
         url u= url_system (s);
         if (!is_rooted (u)) u= resolve (url_pwd (), "") * u;
         string b  = scm_quote (as_string (u));
-        string cmd= "(load-buffer " * b * " " * where * ")";
-        where     = " :new-window";
+        string cmd;
+        //only open window once 
+        if (first_file) {
+          cmd = "(load-buffer " * b * " " * where * ")";
+          first_file = false; 
+        } 
+        else {
+          cmd = "(switch-to-buffer " * b * ")";
+        }
         exec_delayed (scheme_cmd (cmd));
       }
       if ((s == "-c") || (s == "-convert")) i+= 2;
