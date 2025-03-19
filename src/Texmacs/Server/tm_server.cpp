@@ -33,6 +33,12 @@
 #include <moebius/drd/drd_std.hpp>
 #include <s7_tm.hpp>
 
+#ifdef QTTEXMACS
+#include <QApplication>
+#include <QProcess>
+#include <QStringList>
+#endif
+
 server* the_server     = NULL;
 bool    texmacs_started= false;
 bool    headless_mode  = false;
@@ -309,6 +315,30 @@ tm_server_rep::quit () {
   del_obj_qt_renderer ();
 #endif
   exit (0);
+}
+
+void
+tm_server_rep::restart () {
+  close_all_pipes ();
+  call ("quit-TeXmacs-scheme");
+  clear_pending_commands ();
+  
+#ifdef QTTEXMACS
+  del_obj_qt_renderer ();
+  array<url> buffers = get_all_buffers();
+  QStringList args = QApplication::arguments();
+  
+  if (!args.isEmpty()) args.removeFirst();
+
+  for (int i=0; i<N(buffers); i++) {
+    string file_path = as_string(buffers[i]);
+    args << to_qstring(file_path);
+  }
+  
+  QProcess::startDetached(QApplication::applicationFilePath(), args);
+#endif
+  
+  _exit (0);
 }
 
 /******************************************************************************
