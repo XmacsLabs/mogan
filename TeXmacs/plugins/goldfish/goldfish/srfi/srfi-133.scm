@@ -22,7 +22,7 @@
   vector-count
   vector-any vector-every vector-copy vector-copy!
   vector-index vector-index-right vector-skip vector-skip-right vector-partition
-  vector-swap! vector-cumulate reverse-list->vector
+  vector-swap! vector-reverse! vector-cumulate reverse-list->vector
   vector=)
 (begin
 
@@ -144,6 +144,29 @@
     (vector-set! vec i elem-j)
     (vector-set! vec j elem-i)
     ))
+
+(define (vector-reverse! vec . args)
+  (let* ((args-length (length args))
+        (start (if (null? args) 0 (car args)))  
+        (end  (if (<= args-length 1) 
+                  (vector-length vec)          
+                  (cadr args))))
+
+      (unless (and (< args-length 3) (>= args-length 0))
+        (error 'wrong-number-of-args "#<vector-reverse!>: too many args" args-length))
+      (unless (and (integer? start) (integer? end))
+        (error 'type-error "#<vector-reverse!>: *start* and *end* must be an integer" start end))
+      (when (< start 0)
+        (error 'out-of-range "#<vector-reverse!>: *start* cannot be negative" start))
+      (when (> end (vector-length vec))
+        (error 'out-of-range "#<vector-reverse!>: *end* exceeds vector length" end))
+      (when (> start end)
+        (error 'out-of-range "#<vector-reverse!>: *start* must be less than or equal to *end*" start end))
+    
+    (let loop ((i start) (j (- end 1)))
+      (when (< i j)
+        (vector-swap! vec i j)
+        (loop (+ i 1) (- j 1))))))
 
 ; Input a proper-list, return a vector with inversed order elements.
 (define reverse-list->vector

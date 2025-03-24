@@ -15,60 +15,44 @@
 ;
 
 (define-library (liii stack)
-(import (srfi srfi-9)
-        (liii base)
-        (liii error))
-(export
- stack
- stack? stack-empty?
- stack-size stack-top
- stack-push! stack-pop!
- stack->list
-)
+(import (liii lang))
+(export stack)
 (begin
 
-(define-record-type :stack
-  (make-stack data)
-  stack?
-  (data get-data set-data!))
+(define-case-class stack ((data list?))
+                   
+(define (%length) (length data))
 
-(define (%stack-check-parameter st)
-  (when (not (stack? st))
-    (error 'type-error "Parameter st is not a stack")))
+(define (%size) (length data))
 
-(define (stack . l)
-  (if (null? l)
-      (make-stack '())
-      (make-stack l)))
+(define (%top)
+  (if (null? data)
+      (error 'out-of-range)
+      (car data)))
 
-(define (stack-empty? st)
-  (%stack-check-parameter st)
-  (null? (get-data st)))
+(define (%to-list) (rich-list data))
 
-(define (stack-size st)
-  (%stack-check-parameter st)
-  (length (get-data st)))
+(define (@empty) (stack (list )))
 
-(define (stack-top st)
-  (%stack-check-parameter st)
-  (car (get-data st)))
+(chained-define (%pop)
+  (if (null? data)
+      (error 'out-of-range "Cannot pop from an empty stack")
+      (stack (cdr data))))
 
-(define (stack-push! st elem)
-  (%stack-check-parameter st)
-  (set-data! st (cons elem (get-data st))))
+(chained-define (%pop!)
+  (if (null? data)
+      (error 'out-of-range)
+      (stack (set! data (cdr data))))
+  (%this))
 
-(define (stack-pop! st)
-  (%stack-check-parameter st)
-  (when (stack-empty? st)
-    (error 'value-error "Failed to stack-pop! on empty stack"))
-  (let1 data (get-data st)
-    (set-data! st (cdr data))
-    (car data)))
+(chained-define (%push element)
+  (stack (cons element data)))
 
-(define (stack->list st)
-  (%stack-check-parameter st)
-  (get-data st))
+(chained-define (%push! element) 
+                (stack (set! data (cons element data))) 
+                (%this))
 
+) ; end of define-case-class
 ) ; end of begin
-) ; end of library
+) ; end of define-library
 
