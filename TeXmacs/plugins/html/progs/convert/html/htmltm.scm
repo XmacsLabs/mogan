@@ -397,6 +397,40 @@
       (htmltm-tex-image (shtml-attr-non-null a 'alt))
       (htmltm-image env a c)))
 
+(define (split-formula-by-newlines formula)
+  (let* ((formula-list (if (and (list? formula) (eq? (car formula) 'concat))
+                         formula
+                         `(concat ,formula)))
+         (parts (cdr formula-list)))
+    
+    (define (process-parts parts current segments)
+      (if (null? parts)
+          ;; last segment
+          (if (> (length current) 1)
+              (append segments (list (list 'equation* (list 'document current))))
+              segments)
+          ;; current segment
+          (let ((part (car parts))
+                (rest (cdr parts)))
+            (if (equal? part '(next-line))
+                (if (> (length current) 1)
+                    (process-parts rest '(concat)
+                                  (append segments 
+                                          (list (list 'equation* (list 'document current)))))
+                    (process-parts rest '(concat) segments))
+                (process-parts rest 
+                              (append current (list part)) 
+                              segments)))))
+    
+    ;; package the result
+    (let ((result (process-parts parts '(concat) '())))
+      (cond
+        ((> (length result) 1)   
+         (cons 'document result))
+        ((= (length result) 1)   
+         (car result))
+        (else '(document ""))))))
+
 (define (htmltm-span env a c)
   (with class-value (shtml-attr-non-null a 'class)
     (cond ((== class-value "mwe-math-element")
@@ -404,7 +438,8 @@
                (htmltm env (car c))
                (htmltm-pass env a c)))
           ((== class-value "texhtml")
-           (list `(math ,(htmltm-args-serial env c))))
+            (list `(math ,(htmltm-args-serial env c))))
+
           ; Kimi AI
           ((and (== class-value "katex")
                 (pair? c)
@@ -412,18 +447,24 @@
                 (sxml-has-attr-list? (car c))
                 (== (shtml-attr-non-null (sxml-attr-list (car c)) 'class)
                     "katex-mathml"))
-           (htmltm env (first c)))
+            (begin
+              (htmltm env (first c))))
+
           ; Zhihu
-          ((and (== class-value "MathJax_SVG")
-                (pair? c)
-                (func? (car c) 'h:svg)
-                (>= (length (car c)) 3)
-                (func? (third (car c)) 'h:g)
-                (>= (length (third (car c))) 3)
-                (func? (third (third (car c))) 'h:use))
+          ((and (== class-value "ztext-math"))
            (begin
-             ; (display* "\n" (shtml-attr-non-null a 'data-mathml) "\n")
-             (htmltm env (htmltm-parse (shtml-attr-non-null a 'data-mathml)))))
+              (let ((parsed-formula (tm->stree (latex->texmacs 
+                             (parse-latex (shtml-attr-non-null a 'data-tex))))))
+                  (list (split-formula-by-newlines parsed-formula)))))
+
+          ; Doubao
+          ((and (string? class-value)
+                (string-starts? class-value "container-")
+                (string-ends? class-value "math-inline"))
+            (begin
+              (let ((parsed-formula (tm->stree (latex->texmacs 
+                             (parse-latex (shtml-attr-non-null a 'data-custom-copy-text))))))
+                  (list (split-formula-by-newlines parsed-formula)))))
           (else
            (begin
             (htmltm-pass env a c))))))
