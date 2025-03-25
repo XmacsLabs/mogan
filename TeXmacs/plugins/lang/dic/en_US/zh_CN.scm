@@ -1871,6 +1871,7 @@
 ("small skip" "小间距")
 ("small table" "小表格")
 ("small" "小")
+("smart paste" "智能粘贴")
 ("smooth" "平滑")
 ("smooth" "平滑曲线")
 ("snap distance" "吸附距离")
