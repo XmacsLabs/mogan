@@ -572,6 +572,14 @@ target("liii") do
         add_installfiles("$(projectdir)/TeXmacs(/fonts/**)", {prefixdir="share/liiilabs"})
     end
 
+    if is_plat("linux") then
+        -- add_installfiles("$(projectdir)/TeXmacs/misc/images/text-x-mogan.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
+        add_installfiles("$(projectdir)/TeXmacs/misc/mime/LiiiSTEM.desktop", {prefixdir="share/applications"})
+        add_installfiles("$(projectdir)/TeXmacs/misc/images/liiistem.png", {prefixdir="share/icons/hicolor/512x512/apps"})
+        -- add_installfiles("$(projectdir)/TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
+    end
+
+
     -- package metadata
     if is_plat("macosx") then
         add_installfiles({
