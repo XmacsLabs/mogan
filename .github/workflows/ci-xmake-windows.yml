@@ -53,13 +53,13 @@ jobs:
         with:
           fetch-depth: 1
       - name: cache packages from xrepo
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
           key: ${{ runner.os }}-${{ runner.arch }}-xrepo-${{ hashFiles('xmake-requires.lock') }}
       - name: cache xmake
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ${{ github.workspace }}/build/.build_cache
