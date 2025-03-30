@@ -36,11 +36,11 @@ jobs:
     timeout-minutes: 45
     if: always()
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
       - name: cache xmake
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ${{github.workspace}}/build/.build_cache
