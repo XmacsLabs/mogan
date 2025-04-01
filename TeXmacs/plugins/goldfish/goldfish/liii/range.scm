@@ -14,22 +14,23 @@
 ; under the License.
 ;
 
-(define-library (liii bitwise)
-(import (srfi srfi-151)
-        (liii error))
-(export
-  ; from (srfi srfi-151)
-  bitwise-not bitwise-and bitwise-ior bitwise-xor bitwise-eqv  bitwise-or bitwise-nor bitwise-nand
-  bit-count bitwise-orc1 bitwise-orc2 bitwise-andc1 bitwise-andc2
-  arithmetic-shift integer-length
-  ; S7 built-in
-  lognot logand logior logxor
-  ash
-)
+(define-library (liii range)
+(import (liii lang))
+(export range)
 (begin
 
-(define bitwise-or bitwise-ior)
+(define-case-class range
+  ((start integer?) (end integer?) (step integer?) (inclusive? boolean?))
 
-) ; end of begin
-) ; end of library
+(define* (@inclusive start end (step 1))
+  (range start end step #t))
+
+(define (%empty?)
+  (or (and (> start end) (> step 0))
+      (and (< start end) (< step 0))
+      (and (= start end) (not inclusive?))))
+
+) ; define-case-cass
+) ; begin
+) ; define-library
 

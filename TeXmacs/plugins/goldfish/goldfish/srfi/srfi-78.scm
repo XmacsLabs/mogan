@@ -38,6 +38,7 @@
 ; Follow the same License as the original one
 
 (define-library (srfi srfi-78)
+(import (liii lang))
 (export check check-set-mode! check-report check-reset!
         check-passed? check-failed?
         check:proc)

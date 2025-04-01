@@ -99,6 +99,9 @@
 (define (hash-table-update! ht key value)
   (hash-table-set! ht key value))
 
+(define (hash-table-update!/default ht key updater default)
+  (hash-table-set! ht key (updater (hash-table-ref/default ht key default))))
+
 (define (hash-table-clear! ht)
   (for-each
     (lambda (key)

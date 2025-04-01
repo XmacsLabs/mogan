@@ -30,7 +30,7 @@
   vector-count
   vector-any vector-every vector-copy vector-copy!
   vector-index vector-index-right vector-skip vector-skip-right vector-partition
-  vector-swap! vector-cumulate reverse-list->vector
+  vector-swap! vector-reverse! vector-cumulate reverse-list->vector
   vector=
   ; Liii Extras
   vector-filter

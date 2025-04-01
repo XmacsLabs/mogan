@@ -146,22 +146,23 @@
 (define (zip . lists)
   (apply map list lists))
 
-(define (fold f initial l)
-  (when (not (procedure? f))
-    (error 'type-error "The first param must be a procedure"))
-  (if (null? l)
+(define (fold f initial . lists)
+  (unless (procedure? f)
+    (error 'type-error "expected procedure, got ~S" f))
+  (if (or (null? lists) (any null? lists))
       initial
-      (fold f
-            (f (car l) initial)
-            (cdr l))))
+      (apply fold f
+            (apply f (append (map car lists) (list initial)))
+            (map cdr lists))))
 
-(define (fold-right f initial l)
-  (if (null? l)
-    initial
-    (f (car l)
-        (fold-right f
-                    initial
-                    (cdr l)))))
+(define (fold-right f initial . lists)
+  (unless (procedure? f)
+    (error 'type-error "expected procedure, got ~S" f))
+  (if (or (null? lists) (any null? lists))
+      initial
+      (apply f 
+            (append (map car lists)
+                    (list (apply fold-right f initial (map cdr lists)))))))
 
 (define (reduce f initial l)
   (if (null-list? l) initial
@@ -174,14 +175,15 @@
             (f head (recur (car l) (cdr l)))
             head))))
 
-(define append-map
-  (typed-lambda ((proc procedure?) (lst list?))
-    (let loop ((rest lst)
-               (result '()))
-      (if (null? rest)
-          result
-          (loop (cdr rest)
-                (append result (proc (car rest))))))))
+(define (append-map proc . lists)
+  (unless (procedure? proc)
+    (error 'type-error "expected procedure, got ~S" proc))
+  (for-each 
+    (lambda (lst)
+      (unless (list? lst)
+        (error 'type-error "expected list, got ~S" lst)))
+    lists)
+  (apply append (apply map proc lists)))
 
 (define (filter pred l)
   (let recur ((l l))

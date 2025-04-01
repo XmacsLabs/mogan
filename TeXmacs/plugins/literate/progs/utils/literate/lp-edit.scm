@@ -25,7 +25,7 @@
 (define-group chunk-tag
   generic-chunk verbatim-chunk scm-chunk cpp-chunk mmx-chunk
   python-chunk scilab-chunk shell-chunk scala-chunk java-chunk
-  goldfish-chunk)
+  goldfish-chunk elvish-chunk json-chunk)
 
 (define-group variant-tag
   (chunk-tag))
@@ -52,12 +52,12 @@
 (define (search-chunks t)
   (cond ((tm-atomic? t) (list))
         ((tm-func? t 'document)
-         (flatmap search-chunks (tm-children t)))
+         (flat-map search-chunks (tm-children t)))
         ((tm-chunk? t)
          (if (and (tm-atomic? (tm-ref t 0))) (list t) (list)))
         (else
           (with l (list-filter (tm-children t) (cut tm-func? <> 'document))
-            (flatmap search-chunks l)))))
+            (flat-map search-chunks l)))))
 
 (tm-define (get-all-chunks)
   (search-chunks (buffer-tree)))
@@ -224,11 +224,11 @@
 
 (tm-define (search-appended t)
   (cond ((tm-atomic? t) (list))
-        ((tm-func? t 'document) (flatmap search-appended (tm-children t)))
+        ((tm-func? t 'document) (flat-map search-appended (tm-children t)))
         ((tm-appended? t) (list t))
         (else
           (with l (list-filter (tm-children t) (cut tm-func? <> 'document))
-            (flatmap search-appended l)))))
+            (flat-map search-appended l)))))
 
 (tm-define (search-appended-folded t)
   (list-filter (search-appended t) alternate-standard-first?))
