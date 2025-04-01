@@ -25,11 +25,11 @@
   (:suffix "mgs")
   (:must-recognize mgs-recognizes?))
 
-(define (format-mgs-string str)
-  ;; Parsing the string to an S-expression
-  (define (parse-string s)
-    (call-with-input-string s (lambda (port) (read port))))
-  
+;; Parsing the string to an S-expression
+(define (parse-string s)
+  (call-with-input-string s (lambda (port) (read port))))
+
+(define (format-mgs-string str)  
   (define indent-cache (make-vector 50 #f))
   
   (define (get-indent n)
@@ -122,10 +122,24 @@
         stm-str)))
 
 (define (mgs->texmacs text)
-  (utf8-tree->herk-tree (stm->texmacs text)))
+  (catch #t
+    (lambda ()
+      (let ((expr (parse-string text)))
+        (let-temporarily (((*s7* 'print-length) 9223372036854775807))
+          (utf8-tree->herk-tree (stm-snippet->texmacs 
+                                (object->string expr #t (*s7* 'most-positive-fixnum)))))))
+    (lambda args
+      (utf8-tree->herk-tree (stm->texmacs text)))))
 
 (define (mgs-snippet->texmacs text)
-  (utf8-tree->herk-tree (stm-snippet->texmacs text)))
+  (catch #t
+    (lambda ()
+      (let ((expr (parse-string text)))
+        (let-temporarily (((*s7* 'print-length) 9223372036854775807))
+          (utf8-tree->herk-tree (stm-snippet->texmacs 
+                                (object->string expr #t (*s7* 'most-positive-fixnum)))))))
+    (lambda args
+      (utf8-tree->herk-tree (stm-snippet->texmacs text)))))
 
 (converter texmacs-tree mgs-document
   (:function-with-options texmacs->mgs)
