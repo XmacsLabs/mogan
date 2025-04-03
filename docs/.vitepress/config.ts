@@ -132,7 +132,7 @@ function sidebarGuide() {
                 },
                 {
                     text: 'DOCX Data Plugin',
-                    link: '/guide/plugin_data/docx.md'
+                    link: '/guide/plugin_data_docx.md'
                 },
                 {
                     text: 'Maxima Plugin',
@@ -322,6 +322,10 @@ function sidebarGuideZh() {
                     link: '/zh/guide/Install'
                 },
                 {
+                    text: '快捷键',
+                    link: '/zh/guide/keyboard_shortcuts'
+                },
+                {
                     text: '常见问题',
                     link: '/zh/guide/FAQ'
                 },
@@ -332,7 +336,7 @@ function sidebarGuideZh() {
                 },
                 {
                     text: 'DOCX数据插件',
-                    link: '/zh/guide/plugin_data/docx.md'
+                    link: '/zh/guide/plugin_data_docx.md'
                 },
                 {
                     text: 'Maxima插件',
