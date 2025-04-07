@@ -766,8 +766,8 @@ TeXmacs_main (int argc, char** argv) {
   if (DEBUG_STD) debug_boot << "Starting server...\n";
   { // opening scope for server sv
     server sv (app_type::RESEARCH);
-    string where= "";
-    bool first_file = true;
+    string where     = "";
+    bool   first_file= true;
     for (i= 1; i < argc; i++) {
       if (argv[i] == NULL) break;
       string s= argv[i];
@@ -776,15 +776,15 @@ TeXmacs_main (int argc, char** argv) {
         if (DEBUG_STD) debug_boot << "Loading " << s << "...\n";
         url u= url_system (s);
         if (!is_rooted (u)) u= resolve (url_pwd (), "") * u;
-        string b  = scm_quote (as_string (u));
+        string b= scm_quote (as_string (u));
         string cmd;
-        //only open window once 
+        // only open window once
         if (first_file) {
-          cmd = "(load-buffer " * b * " " * where * ")";
-          first_file = false; 
-        } 
+          cmd       = "(load-buffer " * b * " " * where * ")";
+          first_file= false;
+        }
         else {
-          cmd = "(switch-to-buffer " * b * ")";
+          cmd= "(switch-to-buffer " * b * ")";
         }
         exec_delayed (scheme_cmd (cmd));
       }

@@ -322,22 +322,22 @@ tm_server_rep::restart () {
   close_all_pipes ();
   call ("quit-TeXmacs-scheme");
   clear_pending_commands ();
-  
+
 #ifdef QTTEXMACS
   del_obj_qt_renderer ();
-  array<url> buffers = get_all_buffers();
-  QStringList args = QApplication::arguments();
-  
-  if (!args.isEmpty()) args.removeFirst();
+  array<url>  buffers= get_all_buffers ();
+  QStringList args   = QApplication::arguments ();
 
-  for (int i=0; i<N(buffers); i++) {
-    string file_path = as_string(buffers[i]);
-    args << to_qstring(file_path);
+  if (!args.isEmpty ()) args.removeFirst ();
+
+  for (int i= 0; i < N (buffers); i++) {
+    string file_path= as_string (buffers[i]);
+    args << to_qstring (file_path);
   }
-  
-  QProcess::startDetached(QApplication::applicationFilePath(), args);
+
+  QProcess::startDetached (QApplication::applicationFilePath (), args);
 #endif
-  
+
   _exit (0);
 }
 

@@ -887,9 +887,8 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
   string range= get_unicode_range (c);
   if (DEBUG_VERBOSE) {
     debug_fonts << "Resolve " << c << " in math_kind " << math_kind
-                << " in unicode range " << range
-                << " in fam " << fam << " mfam " << mfam << ", attempt "
-                << attempt << LF;
+                << " in unicode range " << range << " in fam " << fam
+                << " mfam " << mfam << ", attempt " << attempt << LF;
   }
   array<string> a= trimmed_tokenize (fam, "=");
   if (N (a) >= 2) {
@@ -906,9 +905,8 @@ smart_font_rep::resolve (string c, string fam, int attempt) {
     // fam= stix_fix (fam, series, shape);
 
     if (math_kind != 0 && shape == "mathitalic" &&
-        (range == "greek" ||
-         (starts (c, "<b-") && ends (c, ">")) || c == "<imath>" ||
-         c == "<jmath>" || c == "<ell>")) {
+        (range == "greek" || (starts (c, "<b-") && ends (c, ">")) ||
+         c == "<imath>" || c == "<jmath>" || c == "<ell>")) {
       font cfn= smart_font_bis (fam, variant, series, shape, sz, hdpi, dpi);
       if (cfn->supports (c)) {
         tree key= tuple ("subfont", fam);

@@ -1,0 +1,41 @@
+version: '1.0'
+name: ci-check-code-format
+displayName: ci-check-code-format
+triggers:
+  trigger: auto
+  pr:
+    branches:
+      precise:
+        - main
+  push:
+    branches:
+      precise:
+        - main
+
+stages:
+  - name: check_code_format
+    displayName: check_code_format
+    strategy: fast
+    trigger: auto
+    executor: []
+    steps:
+      - step: execute@docker
+        name: execute_by_docker
+        displayName: use clang-format-16 to check code format
+        certificate: ''
+        image: docker.1ms.run/amd64/debian:bookworm
+        command:
+          - bash .workflow/ustc_debian822_setup.sh
+          - apt-get update
+          - apt-get install -y clang-format-16
+          - clang-format-16 --version
+          - shopt -s nullglob globstar
+          - clang-format-16 --dry-run --Werror tests/**/*.cpp
+          - clang-format-16 --dry-run --Werror tests/**/*.hpp
+          - clang-format-16 --dry-run --Werror src/**/*.cpp
+          - clang-format-16 --dry-run --Werror src/**/*.hpp
+        notify: []
+        strategy:
+          retry: '0'
+          stepTimeout: 15
+
