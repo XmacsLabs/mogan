@@ -152,7 +152,13 @@ complete (url base, url sub, url u, string filter, bool flag) {
 
 url
 complete (url base, url u, string filter, bool flag) {
-  // cout << "complete " << base << " |||| " << u << LF;
+  // cout << "{ \n";
+  // cout << "  complete : " << base << " |||| " << u << LF;
+  // cout << "  complete file : " << base * u << LF;
+  // cout << "  flag : " << flag <<LF;
+  // cout << "  u type : " << u.label() << LF;
+  // cout << "  is_wildcard : " << is_wildcard (u) << LF;
+  // cout << "}\n";
   if (!is_rooted (u)) {
     if (is_none (base)) return base;
     if (is_none (u)) return u;

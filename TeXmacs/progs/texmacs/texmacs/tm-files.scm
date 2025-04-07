@@ -16,6 +16,15 @@
         (texmacs texmacs tm-print)
         (utils library cursor)))
 
+(import (only (liii string) string-contains))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Check whether the file name is valid (exclude *)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (url-contains-wildcard? u)
+  (string-contains (url->system u) "*"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Supplementary routines on urls, taking into account the TeXmacs file system
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -508,6 +517,7 @@
 ;;           -> load-buffer-load
 ;;              -> load-buffer-open
 ;;       -> load-buffer-open
+
 (tm-define (load-buffer name . opts)
   (:argument name smart-file "File name")
   (:default  name (propose-name-buffer))
