@@ -7,6 +7,7 @@ if (eq $platform:os windows) {
     ~/scoop/apps/llvm/16.0.6/bin
   ]
 } elif (eq $platform:os linux) {
+  fn clang-format {|@a| e:clang-format-16 $@a }
   set paths = [
     /usr/lib/llvm-16/bin
     # archlinux clang-format is at /usr/bin

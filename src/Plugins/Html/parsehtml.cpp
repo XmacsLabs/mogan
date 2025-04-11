@@ -113,6 +113,50 @@ retrieve_mathjax (int id) {
 }
 
 /******************************************************************************
+ * Script handling
+ ******************************************************************************/
+
+bool
+contains_script (string s) {
+  return search_forwards ("<script", 0, s) >= 0 &&
+         search_forwards ("</script>", 0, s) >= 0;
+}
+
+string
+process_script (string s) {
+  int    i= 0, start;
+  string r= "";
+
+  int s_N= N (s);
+  while (i < s_N) {
+    start= search_forwards ("<script", i, s);
+    if (start < 0) {
+      r << s (i, s_N);
+      break;
+    }
+
+    // before <script
+    r << s (i, start);
+
+    // inside <script ... >
+    int tag_end= search_forwards (">", start, s);
+    r << s (start, tag_end + 1);
+
+    // between <script> and </script>
+    int    close_tag     = search_forwards ("</script>", tag_end + 1, s);
+    string script_content= s (tag_end + 1, close_tag);
+    script_content       = replace (script_content, "<", "&lt;");
+    script_content       = replace (script_content, ">", "&gt;");
+    r << script_content;
+    r << "</script>";
+
+    // "</script>" length is 9
+    i= close_tag + 9;
+  }
+  return r;
+}
+
+/******************************************************************************
  * Interface
  ******************************************************************************/
 tree
@@ -126,5 +170,6 @@ parse_plain_html (string s) {
 tree
 parse_html (string s) {
   if (contains_mathjax (s)) s= process_mathjax (s);
+  if (contains_script (s)) s= process_script (s);
   return parse_plain_html (s);
 }
