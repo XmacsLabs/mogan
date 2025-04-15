@@ -607,6 +607,53 @@ glue_path_read_text(s7_scheme* sc) {
   s7_define_function(sc, name, f_path_read_text, 1, 0, false, desc);
 }
 
+
+static s7_pointer f_path_read_bytes(s7_scheme* sc, s7_pointer args) {
+  const char* path = s7_string(s7_car(args));
+  if (!path) {
+    return s7_make_boolean(sc, false);
+  }
+
+  tb_file_ref_t file = tb_file_init(path, TB_FILE_MODE_RO);
+  if (file == tb_null) {
+    return s7_make_boolean(sc, false);
+  }
+
+  tb_file_sync(file);
+  tb_size_t size = tb_file_size(file);
+  
+  if (size == 0) {
+    tb_file_exit(file);
+    // Create an empty bytevector with correct parameters
+    return s7_make_byte_vector(sc, 0, 1, NULL);  // 1 dimension, no dimension info
+  }
+
+  // Allocate buffer similar to f_path_read_text
+  tb_byte_t* buffer = new tb_byte_t[size];
+  tb_size_t real_size = tb_file_read(file, buffer, size);
+  tb_file_exit(file);
+
+  if (real_size != size) {
+    delete[] buffer;
+    return s7_make_boolean(sc, false);  // Read failed
+  }
+
+  // Create a Scheme bytevector and copy data
+  s7_pointer bytevector = s7_make_byte_vector(sc, real_size, 1, NULL);  // 1 dimension, no dimension info
+  tb_byte_t* bytevector_data = s7_byte_vector_elements(bytevector);
+  memcpy(bytevector_data, buffer, real_size);
+  
+  delete[] buffer;
+  return bytevector;  // Return the bytevector
+}
+
+inline void
+glue_path_read_bytes(s7_scheme* sc) {
+  const char* name = "g_path-read-bytes";
+  const char* desc = "(g_path-read-bytes path) => bytevector, read the binary content of the file at the given path";
+  s7_define_function(sc, name, f_path_read_bytes, 1, 0, false, desc);
+}
+
 static s7_pointer
 f_path_write_text (s7_scheme* sc, s7_pointer args) {
   const char* path = s7_string (s7_car (args));
@@ -658,6 +705,7 @@ glue_liii_path (s7_scheme* sc) {
   glue_isdir (sc);
   glue_path_getsize (sc);
   glue_path_read_text (sc);
+  glue_path_read_bytes (sc);
   glue_path_write_text (sc);
 }
 
