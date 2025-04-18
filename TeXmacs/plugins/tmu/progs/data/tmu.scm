@@ -17,10 +17,10 @@
   (:name "TMU")
   (:suffix "tmu"))
 
-(define (texmacs->tmu t)
+(tm-define (texmacs->tmu t)
   (serialize-tmu (herk-tree->utf8-tree t)))
 
-(define (tmu->texmacs t)
+(tm-define (tmu->texmacs t)
   (utf8-tree->herk-tree (parse-tmu t)))
 
 (define (tmu-snippet->texmacs t)

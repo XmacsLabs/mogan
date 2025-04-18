@@ -1,4 +1,3 @@
-
 /******************************************************************************
  * MODULE     : scheme_ser.cpp
  * DESCRIPTION: serialize tree as scheme formatted text
@@ -10,6 +9,7 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
+#include "lolly/data/base64.hpp"
 #include "moebius/data/scheme.hpp"
 #include "tree_helper.hpp"
 
@@ -129,6 +129,20 @@ tree_to_scheme_tree (tree t) {
     u[0]= copy (t[0]);
     for (i= 1; i < n; i++)
       u[i]= tree_to_scheme_tree (t[i]);
+    return u;
+  }
+  else if (is_func (t, RAW_DATA)) {
+    // cout << "DEBUG: RAW_DATA tree content:" << "\n";
+    // print_tree(t, 0);
+
+    tree   u (TUPLE, 2);
+    string s= as_string (L (t));
+    u[0]    = copy (s);
+    u[1]    = lolly::data::encode_base64 (t[0]->label);
+
+    u[1]= tree_to_scheme_tree (u[1]);
+    // cout << "DEBUG: u: " << "\n";
+    // print_tree(u, 0);
     return u;
   }
   else {

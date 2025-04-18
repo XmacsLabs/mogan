@@ -1,4 +1,3 @@
-
 /******************************************************************************
  * MODULE     : scheme_der.cpp
  * DESCRIPTION: parse scheme formatted text into Texmacs trees
@@ -10,6 +9,7 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
+#include "lolly/data/base64.hpp"
 #include "moebius/data/scheme.hpp"
 #include "moebius/drd/drd_std.hpp"
 #include "path.hpp"
@@ -201,6 +201,14 @@ scheme_tree_to_tree (scheme_tree t, hashmap<string, int> codes, bool flag) {
       u[0]= copy (t[0]);
       for (i= 1; i < n; i++)
         u[i]= scheme_tree_to_tree (t[i], codes, flag);
+      return u;
+    }
+    else if (code == RAW_DATA) {
+
+      tree   u (RAW_DATA, 1);
+      string base64_data= scm_unquote (t[1]->label);
+      string binary_data= lolly::data::decode_base64 (base64_data);
+      u[0]->label       = binary_data;
       return u;
     }
     else {

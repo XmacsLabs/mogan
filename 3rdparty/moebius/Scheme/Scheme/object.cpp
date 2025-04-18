@@ -107,8 +107,8 @@ list_object (object obj1, object obj2, object obj3) {
 }
 object
 as_list_object (array<object> objs) {
-  object r= null_object ();
-  int objs_N= N (objs);
+  object r     = null_object ();
+  int    objs_N= N (objs);
   for (int i= objs_N - 1; i >= 0; i--)
     r= cons (objs[i], r);
   return r;
