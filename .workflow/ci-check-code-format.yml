@@ -36,6 +36,8 @@ stages:
           - clang-format-16 --dry-run --Werror src/**/*.hpp
           - clang-format-16 --dry-run --Werror 3rdparty/moebius/**/*.hpp
           - clang-format-16 --dry-run --Werror 3rdparty/moebius/**/*.cpp
+          - clang-format-16 --dry-run --Werror 3rdparty/lolly/**/*.hpp
+          - clang-format-16 --dry-run --Werror 3rdparty/lolly/**/*.cpp
         notify: []
         strategy:
           retry: '0'
