@@ -99,7 +99,7 @@ filter_theorem (tree doc) {
   tm_std_theorems ("Axiom")         = "axiom";
   tm_std_theorems ("Conjecture")    = "conjecture";
   tm_std_theorems ("Corollary")     = "corollary";
-  tm_std_theorems ("Definition")    = "definition";
+  tm_std_remarks ("Definition")     = "definition";
   tm_std_theorems ("Lemma")         = "lemma";
   tm_std_theorems ("Notation")      = "notation";
   tm_std_theorems ("Proposition")   = "proposition";

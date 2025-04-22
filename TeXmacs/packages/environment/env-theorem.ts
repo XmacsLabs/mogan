@@ -1,4 +1,4 @@
-<TeXmacs|1.99.9>
+<TeXmacs|2.1.4>
 
 <style|source>
 
@@ -38,13 +38,13 @@
 
   <new-theorem|axiom|Axiom>
 
-  <new-theorem|definition|Definition>
-
   <new-theorem|notation|Notation>
 
   <new-theorem|conjecture|Conjecture>
 
   \;
+
+  <new-remark|definition|Definition>
 
   <new-remark|remark|Remark>
 

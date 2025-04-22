@@ -826,7 +826,7 @@
 (latex-texmacs-theorem "lemma" "Lemma")
 (latex-texmacs-theorem "corollary" "Corollary")
 (latex-texmacs-theorem "axiom" "Axiom")
-(latex-texmacs-theorem "definition" "Definition")
+(latex-texmacs-remark "definition" "Definition")
 (latex-texmacs-theorem "notation" "Notation")
 (latex-texmacs-theorem "conjecture" "Conjecture")
 (latex-texmacs-remark "remark" "Remark")

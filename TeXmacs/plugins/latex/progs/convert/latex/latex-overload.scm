@@ -80,7 +80,7 @@
 (ams-texmacs-theorem "lemma" "Lemma")
 (ams-texmacs-theorem "corollary" "Corollary")
 (ams-texmacs-theorem "axiom" "Axiom")
-(ams-texmacs-theorem "definition" "Definition")
+(ams-texmacs-remark "definition" "Definition")
 (ams-texmacs-theorem "notation" "Notation")
 (ams-texmacs-theorem "conjecture" "Conjecture")
 (ams-texmacs-remark "remark" "Remark")
