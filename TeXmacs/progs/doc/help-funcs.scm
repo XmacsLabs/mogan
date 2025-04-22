@@ -46,7 +46,7 @@
                        (list (url-exists? (url-unix help-file-path s))))))))
 
 (define (url-resolve-help s)
-  (if (and (in? (url-suffix s) '("tex" "tm")) (url-exists? s))
+  (if (and (in? (url-suffix s) '("tex" "tm" "tmu")) (url-exists? s))
       s
       (let* ((lan (string-take (language-to-locale (get-output-language)) 2)) 
              (suf (string-append "." lan ".tm"))
@@ -102,6 +102,14 @@
          (lan_doc (string-append "http://git.tmml.wiki/texmacs/doc/raw/master/" path "." lan ".tm"))
          (en_doc (string-append "http://git.tmml.wiki/texmacs/doc/raw/master/" path ".en.tm")))
    (if (== (http-status-code lan_doc) 200)
+       (load-buffer lan_doc)
+       (load-buffer en_doc))))
+
+(tm-define (load-local-doc path)
+  (let* ((lan (string-take (language-to-locale (get-output-language)) 2))
+         (lan_doc (string-append (url->system (get-texmacs-path)) "/doc/" path "." lan ".tmu"))
+         (en_doc (string-append (url->system (get-texmacs-path)) "/doc/" path ".en.tmu")))
+   (if (url-exists? lan_doc)
        (load-buffer lan_doc)
        (load-buffer en_doc))))
 

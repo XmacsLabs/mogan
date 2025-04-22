@@ -29,5 +29,6 @@
        (load-local-plugin-doc name)))))
 
 (menu-bind help-menu
+  ("Template" (load-local-doc "main/template"))
   (-> "Plugins"
     (link help-plugins-menu)))

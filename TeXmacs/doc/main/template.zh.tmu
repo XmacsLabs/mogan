@@ -1,0 +1,53 @@
+<TMU|<tuple|1.1.0|2025.0.7>>
+
+<style|<tuple|tmdoc|reduced-margins|chinese>>
+
+<\body>
+  <tmdoc-title|模板中心>
+
+  模板中心是社区分享他们的墨干模板的的地方。
+
+  \;
+
+  <section*|访问模板中心>
+
+  点击下方链接，直接在墨干中访问模板中心。（建议中国大陆用户访问官方提供的链接。）
+
+  <\description>
+    <item*|官方><slink|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/templates/index.zh.tmu>
+
+    <item*|镜像>
+
+    <\itemize>
+      <item><slink|https://github.com/XmacsLabs/planet/raw/refs/heads/main/templates/index.zh.tmu>
+    </itemize>
+  </description>
+
+  <section*|共享你的模板>
+
+  我们在Github和Gitee接收墨干用户的Git合并请求：
+
+  <\itemize>
+    <item><slink|https://gitee.com/XmacsLabs/planet/tree/main/templates>
+
+    <item><slink|https://github.com/XmacsLabs/planet/tree/main/templates>
+  </itemize>
+
+  所有的模板都在墨客星球的Git仓库的<shell|templates>子目录中。
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-screen-margin|true>
+  </collection>
+</initial>

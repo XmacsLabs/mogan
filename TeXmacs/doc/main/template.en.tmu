@@ -1,0 +1,53 @@
+<TMU|<tuple|1.1.0|2025.0.7>>
+
+<style|<tuple|tmdoc|reduced-margins>>
+
+<\body>
+  <tmdoc-title|Template Center>
+
+  Template center is a place for the community to share their Mogan templates.
+
+  \;
+
+  <section*|Visit Template Center>
+
+  Click the following links and visit the template center directly in Mogan.
+
+  <\description>
+    <item*|Official><slink|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/templates/index.en.tmu>
+
+    <item*|Mirrors>
+
+    <\itemize>
+      <item><slink|https://github.com/XmacsLabs/planet/raw/refs/heads/main/templates/index.en.tmu>
+    </itemize>
+  </description>
+
+  <section*|Share Your Templates>
+
+  We are receiving pull requests from Mogan users at Github and Gitee:
+
+  <\itemize>
+    <item><slink|https://gitee.com/XmacsLabs/planet/tree/main/templates>
+
+    <item><slink|https://github.com/XmacsLabs/planet/tree/main/templates>
+  </itemize>
+
+  Templates are kept in the subfolder of the planet git repository.
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-screen-margin|true>
+  </collection>
+</initial>
