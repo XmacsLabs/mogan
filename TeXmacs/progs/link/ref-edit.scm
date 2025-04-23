@@ -231,6 +231,7 @@
         ((in? s '("l" "le" "lm" "lem")) "lemma")
         ((in? s '("co" "cor" "corr")) "corollary")
         ((in? s '("def" "dfn" "defn")) "definition")
+        ((in? s '("ass")) "assumption")
         ((in? s '("not")) "notation")
         ((in? s '("ax")) "axiom")
         ((in? s '("conv")) "convention")

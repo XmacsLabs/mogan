@@ -1186,6 +1186,7 @@ latex_symbol_to_tree (string s) {
       if (s == "begin-preuve") return tree (BEGIN, "proof");
       if (s == "begin-IEEEproof") return tree (BEGIN, "proof");
       if (s == "begin-ax") return tree (BEGIN, "axiom");
+      if (s == "begin-ass") return tree (BEGIN, "assumption");
       if (s == "begin-def") return tree (BEGIN, "definition");
       if (s == "begin-dfn") return tree (BEGIN, "definition");
       if (s == "begin-defn") return tree (BEGIN, "definition");
@@ -1216,6 +1217,7 @@ latex_symbol_to_tree (string s) {
       if (s == "end-preuve") return tree (END, "proof");
       if (s == "end-IEEEproof") return tree (END, "proof");
       if (s == "end-ax") return tree (END, "axiom");
+      if (s == "end-ass") return tree (END, "assumption");
       if (s == "end-def") return tree (END, "definition");
       if (s == "end-dfn") return tree (END, "definition");
       if (s == "end-defn") return tree (END, "definition");

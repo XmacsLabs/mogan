@@ -46,6 +46,8 @@
 
   <new-remark|definition|Definition>
 
+  <new-remark|assumption|Assumption>
+
   <new-remark|remark|Remark>
 
   <new-remark|example|Example>

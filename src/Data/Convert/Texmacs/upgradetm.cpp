@@ -980,13 +980,13 @@ expand_needs_surrounding (string s) {
   return (s == "maketitle") || (s == "abstract") || (s == "theorem") ||
          (s == "proposition") || (s == "lemma") || (s == "corollary") ||
          (s == "proof") || (s == "axiom") || (s == "definition") ||
-         (s == "notation") || (s == "conjecture") || (s == "remark") ||
-         (s == "note") || (s == "example") || (s == "exercise") ||
-         (s == "warning") || (s == "convention") || (s == "acknowledgments") ||
-         (s == "code") || (s == "quote") || (s == "quotation") ||
-         (s == "verse") || (s == "center") || (s == "indent") ||
-         (s == "body") || (s == "description") || starts (s, "itemize") ||
-         starts (s, "enumerate");
+         (s == "assumption") || (s == "notation") || (s == "conjecture") ||
+         (s == "remark") || (s == "note") || (s == "example") ||
+         (s == "exercise") || (s == "warning") || (s == "convention") ||
+         (s == "acknowledgments") || (s == "code") || (s == "quote") ||
+         (s == "quotation") || (s == "verse") || (s == "center") ||
+         (s == "indent") || (s == "body") || (s == "description") ||
+         starts (s, "itemize") || starts (s, "enumerate");
 }
 
 static bool
@@ -4169,6 +4169,7 @@ is_std_textual_env (string s) {
       << "proof"
       << "axiom"
       << "definition"
+      << "assumption"
       << "notation"
       << "conjecture"
       << "remark"

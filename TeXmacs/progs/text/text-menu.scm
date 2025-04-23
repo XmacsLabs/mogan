@@ -136,6 +136,7 @@
       ("Proof" (make 'proof))
       ---
       ("Axiom" (make 'axiom))
+      ("Assumption" (make 'assumption))
       ("Definition" (make 'definition))
       ("Notation" (make 'notation))
       ("Convention" (make 'convention))

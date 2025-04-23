@@ -132,6 +132,7 @@
 ("as visual grid" "作为可视网格")
 ("aspect" "外观")
 ("assign" "指定")
+("assumption" "假设")
 ("at fraction bar height" "在分式线高度")
 ("at the baseline" "在基线")
 ("at the bottom" "在底部")

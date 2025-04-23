@@ -273,7 +273,7 @@
 
 (logic-group latex-texmacs-theorem-environment%
   "theorem" "proposition" "lemma" "corollary"
-  "axiom" "definition" "notation" "conjecture"
+  "axiom" "definition" "assumption" "notation" "conjecture"
   "remark" "note" "example" "convention"
   "warning" "acknowledgments" "answer" "question"
   "exercise" "problem" "solution"
