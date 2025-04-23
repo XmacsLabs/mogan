@@ -210,12 +210,7 @@
   (when (null? (cdr opts))
     (with u (buffer-get-master (current-buffer))
       (set! opts (list (car opts) u))))
-  (cpp-choose-file 
-    (lambda (u)
-      (if (and (not (url-none? u)) (url-contains-wildcard? u))
-          (choose-file fun "File name and path cannot contain ' * ' " type (car opts) (cadr opts))
-          (fun u)))
-    title type (car opts) (cadr opts)))
+  (cpp-choose-file fun title type (car opts) (cadr opts)))
 
 (define-public (alt-windows-delete l)
   (for-each alt-window-delete l))
