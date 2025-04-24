@@ -42,16 +42,16 @@ encode_base64 (string s) {
   string r;
   int    i, n= N (s);
   for (i= 0; i + 2 < n; i+= 3) {
-    if (i > 0 && i % 60 == 0) r << "\n";
+    // if (i > 0 && i % 60 == 0) r << "\n";
     r << encode_base64 (s[i], s[i + 1], s[i + 2]);
   }
 
   if (i == n - 1) {
-    if (i > 0 && i % 60 == 0) r << "\n";
+    // if (i > 0 && i % 60 == 0) r << "\n";
     r << encode_base64 (s[i], '\0', '\0') (0, 2) << "==";
   }
   else if (i == n - 2) {
-    if (i > 0 && i % 60 == 0) r << "\n";
+    // if (i > 0 && i % 60 == 0) r << "\n";
     r << encode_base64 (s[i], s[i + 1], '\0') (0, 3) << "=";
   }
   return r;

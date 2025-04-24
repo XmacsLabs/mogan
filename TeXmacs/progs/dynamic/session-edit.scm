@@ -181,7 +181,7 @@
 
 (define (session-encode in out next opts)
   (list (list session-do session-notify session-next session-cancel)
-        (if (tm? in) (tm->stree in) in)
+        in
 	(tree->tree-pointer out)
 	(tree->tree-pointer next)
 	opts))

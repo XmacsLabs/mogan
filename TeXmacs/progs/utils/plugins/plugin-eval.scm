@@ -101,7 +101,7 @@
           (connection-write-string lan ses (cadr t))
           (begin
             (plugin-set-author lan ses)
-            (connection-write lan ses t)))
+            (connection-write lan ses (stree->tree t))))
       (delayed
         (connection-notify-status lan ses 3)
         (with r (scheme-eval t mode)
