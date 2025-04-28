@@ -19,9 +19,11 @@
         (liii error))
 (export
   ; from (srfi srfi-151)
-  bitwise-not bitwise-and bitwise-ior bitwise-xor bitwise-or bitwise-nor bitwise-nand
+  bitwise-not bitwise-and bitwise-ior bitwise-xor bitwise-eqv  bitwise-or bitwise-nor bitwise-nand
   bit-count bitwise-orc1 bitwise-orc2 bitwise-andc1 bitwise-andc2
-  arithmetic-shift
+  arithmetic-shift integer-length bitwise-if
+  bit-set? copy-bit bit-swap any-bit-set? every-bit-set? first-set-bit
+  bit-field
   ; S7 built-in
   lognot logand logior logxor
   ash

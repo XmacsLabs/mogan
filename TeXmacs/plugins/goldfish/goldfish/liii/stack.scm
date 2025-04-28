@@ -30,7 +30,9 @@
       (error 'out-of-range)
       (car data)))
 
-(define (%to-list) (rich-list data))
+(define (%to-list) data)
+
+(define (%to-rich-list) (rich-list data))
 
 (define (@empty) (stack (list )))
 

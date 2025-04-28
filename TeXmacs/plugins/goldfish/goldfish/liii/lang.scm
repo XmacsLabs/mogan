@@ -101,6 +101,39 @@
   (let* ((key-fields
          (map (lambda (field) (string->symbol (string-append ":" (symbol->string (car field)))))
               fields))
+        
+         (field-names (map car fields))
+         
+         (method-names
+           (map (lambda (method)
+                  (let* ((method-sym (caadr method))
+                         (method-name (symbol->string method-sym)))
+                    (cond
+                      ((string-starts? method-name "@")
+                       (string-remove-prefix method-name "@"))
+                      ((string-starts? method-name "%")
+                       (string-remove-prefix method-name "%"))
+                      (else method-name))))
+                methods))
+         
+         (conflicts-names
+          (filter (lambda (method-name)
+                    (let ((name (string->symbol method-name)))
+                      (member name field-names)))
+                  method-names))
+         
+         (check-conflicts-names (unless (null? conflicts-names)
+              (let ((conflict-str (apply string-append 
+                                        (map (lambda (c) (string-append " <" c ">"))
+                                             conflicts-names))))
+                (error 'syntax-error (string-append "In class ["
+                                          (symbol->string class-name)
+                                          "]: Method name" 
+                                          (if (= (length conflicts-names) 1) "" "s")
+                                          conflict-str
+                                          " conflicts with field name"
+                                          (if (= (length conflicts-names) 1) "" "s"))))))
+         
          (instance-methods
           (filter (lambda (method) (string-starts? (symbol->string (caadr method)) "%"))
                   methods))
@@ -424,7 +457,7 @@
       (string-append "#\\" (utf8->string (%to-bytevector)))))
 
 (define (%make-string)
-  (rich-string (utf8->string (%to-bytevector))))
+  (utf8->string (%to-bytevector)))
 
 )
 
@@ -483,7 +516,7 @@
         ((symbol? v) (rich-string (symbol->string v)))
         ((string? v) (rich-string v))
         ((and (case-class? v) (v :is-instance-of 'rich-char))
-         (v :make-string))
+         (box (v :make-string)))
         (else (type-error "Expected types are char, rich-char, number, symbol or string"))))
 
 (define (%get) data)
@@ -519,10 +552,10 @@
   (string-ends? data suffix))
 
 (define (%forall pred)
-  ((%to-vector) :forall pred))
+  ((%to-rich-vector) :forall pred))
 
 (define (%exists pred)
-  ((%to-vector) :exists pred))
+  ((%to-rich-vector) :exists pred))
 
 (define (%contains elem)
   (cond ((string? elem)
@@ -551,31 +584,34 @@
        (else (loop (cdr lst) (+ index 1)))))))))
 
 (chained-define (%map f)
-  ((%to-vector)
-   :map f
-   :map (@ _ :make-string)
-   :make-string))
+  (box ((%to-rich-vector)
+        :map f
+        :map (@ _ :make-string)
+        :make-string)))
 
 (define (%count pred?)
-  ((%to-vector) :count pred?))
+  ((%to-rich-vector) :count pred?))
 
 (define (%to-string)
   data)
 
 (define (%to-vector)
   (if (string-null? data)
-      (rich-vector :empty)
+      (vector)
       (let* ((bv (string->utf8 data))
              (bv-size (length bv))
              (len (u8-string-length data))
              (result (make-vector len)))
         (let loop ((i 0) (j 0))
-             (if (>= i len)
-                 (rich-vector result)
-                 (let* ((next-j (bytevector-advance-u8 bv j bv-size))
-                        (code (utf8-byte-sequence->code-point (bytevector-copy bv j next-j))))
-                   (vector-set! result i (rich-char code))
-                   (loop (+ i 1) next-j)))))))
+          (if (>= i len)
+              result
+              (let* ((next-j (bytevector-advance-u8 bv j bv-size))
+                     (code (utf8-byte-sequence->code-point (bytevector-copy bv j next-j))))
+                (vector-set! result i (rich-char code))
+                (loop (+ i 1) next-j)))))))
+
+(define (%to-rich-vector)
+  (rich-vector (%to-vector)))
 
 (chained-define (%+ s)
   (cond
@@ -646,7 +682,7 @@
             (split-helper (+ next-pos sep-len) (cons (substring data start next-pos) acc)))))
     
     (if (zero? sep-len)
-        ((%to-vector) :map (lambda (c) (rich-string :value-of c :get)) :collect)
+        ((%to-rich-vector) :map (lambda (c) (rich-string :value-of c :get)) :collect)
         (rich-vector (reverse-list->vector (split-helper 0 '()))))))
 
 )
@@ -929,6 +965,12 @@
     (let1 as-string (lambda (x) (if (string? x) x (object->string x)))
           (rich-string (string-append start (string-join (map as-string data) sep) end)))))
 
+(define (%to-vector)
+  (list->vector data))
+
+(define (%to-rich-vector)
+  (rich-vector (list->vector data)))
+
 )
 
 (define-case-class rich-vector ((data vector?))
@@ -1161,7 +1203,13 @@
   (receive (start sep end) (parse-args xs)
     (let* ((as-string (lambda (x) (if (string? x) x (object->string x))))
            (middle (string-join (map as-string (vector->list data)) sep)))
-      (rich-string (string-append start middle end)))))
+      (string-append start middle end))))
+
+(define (%to-list)
+  (vector->list data))
+
+(define (%to-rich-list)
+  (rich-list (vector->list data)))
 
 (define (%set! i x)
   (when (or (< i 0) (>= i (length data)))
@@ -1222,7 +1270,7 @@
 (define (%count pred)
   (hash-table-count pred data))
 
-(define (%foreach proc)
+(define (%for-each proc)
   (hash-table-for-each proc data))
 
 )

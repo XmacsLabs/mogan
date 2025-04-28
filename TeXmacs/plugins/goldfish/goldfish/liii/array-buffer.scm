@@ -108,7 +108,11 @@
 
 (define (%to-vector) (rich-vector (copy data (make-vector size))))
 
-(define (%to-list) (rich-list (vector->list (copy data (make-vector size)))))
+(define (%to-list)
+  (vector->list data 0 size))
+
+(define (%to-rich-list)
+  (box (%to-list)))
 
 ) ; end of array-buffer
 
