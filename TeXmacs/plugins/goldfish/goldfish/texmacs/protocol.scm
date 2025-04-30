@@ -17,21 +17,27 @@
 (define-library (texmacs protocol)
 (export
   data-begin data-end data-escape
+  DATA_BEGIN DATA_END DATA_COMMAND DATA_ESCAPE
   flush-verbatim flush-prompt flush-scheme flush-scheme-u8 flush-file
-  flush-markdown
+  flush-markdown flush-latex flush-command
   read-paragraph-by-visible-eof
 )
 (begin
 
+(define DATA_BEGIN (integer->char 2))
+(define DATA_END (integer->char 5))
+(define DATA_COMMAND (integer->char 16))
+(define DATA_ESCAPE (integer->char 27))
+
 (define (data-begin)
-  (display (integer->char 2)))
+  (display DATA_BEGIN))
 
 (define (data-end)
-  (display (integer->char 5))
+  (display DATA_END)
   (flush-output-port))
 
 (define (data-escape)
-  (write (integer->char 27)))
+  (write DATA_ESCAPE))
 
 (define (flush-any msg)
   (data-begin)
@@ -42,10 +48,14 @@
   (flush-any (string-append "verbatim:" msg)))
 
 (define (flush-scheme msg)
-  (flush-any (string-append "scheme:" msg)))
+  (if (string? msg)
+    (flush-any (string-append "scheme:" msg))
+    (flush-any (string-append "scheme:" (object->string msg)))))
 
 (define (flush-scheme-u8 msg)
-  (flush-any (string-append "scheme_u8:" msg)))
+  (if (string? msg)
+    (flush-any (string-append "scheme_u8:" msg))
+    (flush-any (string-append "scheme_u8:" (object->string msg)))))
 
 (define (flush-prompt msg)
   (flush-any (string-append "prompt#" msg)))
@@ -55,6 +65,14 @@
 
 (define (flush-markdown msg)
   (flush-any (string-append "markdown:" msg)))
+
+(define (flush-command msg)
+  (if (string? msg)
+    (flush-any (string-append "command:" msg))
+    (flush-any (string-append "command:" (object->string msg)))))
+
+(define (flush-latex msg)
+  (flush-any (string-append "latex:" msg)))
 
 (define (read-paragraph-by-visible-eof)
   (define (read-code code)
