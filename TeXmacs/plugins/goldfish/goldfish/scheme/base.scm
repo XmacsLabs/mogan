@@ -311,14 +311,16 @@
 (define (u8-string-length str)
   (let ((bv (string->byte-vector str))
         (N (string-length str)))
-    (let loop ((pos 0) (cnt 0))
-      (let ((next-pos (bytevector-advance-u8 bv pos N)))
-        (cond
-         ((= next-pos N)
-          (+ cnt 1))
-         ((= next-pos pos)
-          (error 'value-error "Invalid UTF-8 sequence at index: " pos))
-         (else (loop next-pos (+ cnt 1))))))))
+    (if (zero? N)
+        0
+        (let loop ((pos 0) (cnt 0))
+          (let ((next-pos (bytevector-advance-u8 bv pos N)))
+            (cond
+             ((= next-pos N)
+              (+ cnt 1))
+             ((= next-pos pos)
+              (error 'value-error "Invalid UTF-8 sequence at index: " pos))
+             (else (loop next-pos (+ cnt 1)))))))))
 
 (define* (utf8->string bv (start 0) (end (bytevector-length bv)))
   (if (or (< start 0) (> end (bytevector-length bv)) (> start end))
@@ -355,7 +357,7 @@
   (when (not (string? str))
     (error 'type-error "str must be string"))
   (let ((N (u8-string-length str)))
-    (when (or (< start 0) (>= start N))
+    (when (and (> N 0) (or (< start 0) (>= start N)))
         (error 'out-of-range
                (string-append "start must >= 0 and < " (number->string N))))
     (when (and (integer? end) (or (< end 0) (>= end (+ N 1))))

@@ -15,11 +15,14 @@
 ;
 
 (define-library (liii array-buffer)
-(import (liii lang))
+(import (liii lang) (liii error))
 (export array-buffer)
 (begin
 
-(define-case-class array-buffer ((data vector?) (size integer?) (capacity integer?))
+(define-case-class array-buffer
+  ((data vector?)
+   (size integer?)
+   (capacity integer?))
 
 (chained-define (@from-vector vec)
   (let ((len (vector-length vec)))
@@ -29,11 +32,13 @@
   (let ((len (length lst)))
     (array-buffer (copy lst (make-vector len)) len len)))
 
-(define (check-bound n)
-  (when (or (not (integer? n)) (< n 0) (>= n size))
-    (key-error "array-buffer out of bound")))
+(typed-define (check-bound (n integer?))
+  (when (or (< n 0) (>= n size))
+    (index-error
+      ($ "access No." :+ n :+ " of array-buffer [0:" :+ size :+ ")" :get))))
 
-(define (%collect) (copy data (make-vector size)))
+(define (%collect)
+  (copy data (make-vector size)))
 
 (define (%length) size)
 
@@ -106,7 +111,8 @@
   (and (that :is-instance-of 'array-buffer)
        ((%to-vector) :equals (that :to-vector))))
 
-(define (%to-vector) (rich-vector (copy data (make-vector size))))
+(define (%to-vector)
+  (rich-vector (copy data (make-vector size))))
 
 (define (%to-list)
   (vector->list data 0 size))

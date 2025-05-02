@@ -18,7 +18,7 @@
 (define-library (liii error)
 (export ???
   os-error file-not-found-error not-a-directory-error file-exists-error
-  timeout-error type-error type-error? key-error value-error)
+  timeout-error type-error type-error? key-error value-error index-error)
 (begin
 
 (define (os-error . args)
@@ -47,6 +47,9 @@
 
 (define (value-error . args)
   (apply error (cons 'value-error args)))
+
+(define (index-error . args)
+  (apply error (cons 'index-error args)))
 
 (define (??? . args)
   (apply error (cons '??? args)))

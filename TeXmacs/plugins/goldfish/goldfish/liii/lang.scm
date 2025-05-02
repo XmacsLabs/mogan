@@ -97,12 +97,24 @@
        ,body
        ,@rest)))
 
-(define-macro (define-case-class class-name fields . methods)
+(define-macro (define-case-class class-name fields . private-fields-and-methods)
   (let* ((key-fields
          (map (lambda (field) (string->symbol (string-append ":" (symbol->string (car field)))))
               fields))
         
          (field-names (map car fields))
+
+         (private-fields (filter (lambda (x)
+                                   (and (list? x)
+                                        (>= (length x) 2)
+                                        (symbol? (x 1))))
+                                 private-fields-and-methods))
+
+         (methods (filter (lambda (x)
+                            (and (list? x)
+                                 (>= (length x) 2)
+                                 (pair? (x 1))))
+                          private-fields-and-methods))
          
          (method-names
            (map (lambda (method)
@@ -216,6 +228,7 @@
                       (car strings)
                       (string-append acc " " (car strings))))))))
 
+  ,@private-fields
   ,@internal-methods
   ,@instance-methods
  
@@ -306,7 +319,7 @@
   (cond ((integer? x) (rich-integer x))
         ((rational? x) (rich-rational x))
         ((float? x) (rich-float x))
-        ((char? x) (rich-char (char->integer x)))
+        ((char? x) (rich-char x))
         ((string? x) (rich-string x))
         ((list? x) (rich-list x))
         ((vector? x) (rich-vector x))
@@ -330,7 +343,7 @@
       (rich-list (list))
       (rich-list (iota (+ (- n data)) data))))
 
-(define (%to-char)
+(define (%to-rich-char)
   (rich-char data))
 
 (define (%to-string)
@@ -380,7 +393,24 @@
 
 )
 
-(define-case-class rich-char ((code-point integer?))
+(define-case-class rich-char ((data any?))
+                   
+(define code-point
+  (cond ((char? data)
+         (char->integer data))
+        ((integer? data)
+         (if (and (>= data 0) (<= data #x10FFFF))
+             data
+             (value-error "rich-char: code point out of range" data)))
+        (else
+         (type-error "rich-char: only accept char and integer"))))
+
+(define (%equals that)
+  (cond ((char? that)
+         (= code-point (char->integer that)))
+        ((rich-char :is-type-of that)
+         (= code-point (that :to-integer)))
+        (else #f)))
 
 (define (%ascii?)
   (and (>= code-point 0) (<= code-point 127)))
@@ -451,96 +481,116 @@
     (else
      (value-error "Invalid code point"))))
 
+(define (@from-bytevector x)
+  (define (utf8-byte-sequence->code-point byte-seq)
+    (let ((len (bytevector-length byte-seq)))
+      (cond
+        ((= len 1)
+         (bytevector-u8-ref byte-seq 0))
+        ((= len 2)
+         (let ((b1 (bytevector-u8-ref byte-seq 0))
+               (b2 (bytevector-u8-ref byte-seq 1)))
+           (bitwise-ior
+            (arithmetic-shift (bitwise-and b1 #x1F) 6)
+            (bitwise-and b2 #x3F))))
+        ((= len 3)
+         (let ((b1 (bytevector-u8-ref byte-seq 0))
+               (b2 (bytevector-u8-ref byte-seq 1))
+               (b3 (bytevector-u8-ref byte-seq 2)))
+           (bitwise-ior
+            (arithmetic-shift (bitwise-and b1 #x0F) 12)
+            (arithmetic-shift (bitwise-and b2 #x3F) 6)
+            (bitwise-and b3 #x3F))))
+        ((= len 4)
+         (let ((b1 (bytevector-u8-ref byte-seq 0))
+               (b2 (bytevector-u8-ref byte-seq 1))
+               (b3 (bytevector-u8-ref byte-seq 2))
+               (b4 (bytevector-u8-ref byte-seq 3)))
+           (bitwise-ior
+           (arithmetic-shift (bitwise-and b1 #x07) 18)
+           (arithmetic-shift (bitwise-and b2 #x3F) 12)
+           (arithmetic-shift (bitwise-and b3 #x3F) 6)
+           (bitwise-and b4 #x3F))))
+        (else
+         (value-error "Invalid UTF-8 byte sequence length")))))
+
+  (rich-char (utf8-byte-sequence->code-point x)))
+
 (define (%to-string)
   (if (%ascii?)
       (object->string (integer->char code-point))
       (string-append "#\\" (utf8->string (%to-bytevector)))))
 
+(define (@from-string x)
+  (when (not (string-starts? x "#\\"))
+    (value-error "char@from-string: the input must start with #\\"))
+  (if (= 1 ($ x :drop 2 :length))
+      (rich-char :from-bytevector (string->utf8 ($ x :drop 2 :get)))
+      (value-error "rich-char: must be u8 string which length equals 1")))
+
 (define (%make-string)
   (utf8->string (%to-bytevector)))
 
+(chained-define (@from-integer x)
+  (rich-char x))
+
+(define (%to-integer)
+  code-point)
+
 )
 
-(define make-rich-char rich-char)
+(define-case-class rich-string
+  ((data string?))
+  
+(define N (u8-string-length data))
 
-(define (utf8-byte-sequence->code-point byte-seq)
-  (let ((len (bytevector-length byte-seq)))
-    (cond
-      ((= len 1)
-       (bytevector-u8-ref byte-seq 0))
-      ((= len 2)
-       (let ((b1 (bytevector-u8-ref byte-seq 0))
-             (b2 (bytevector-u8-ref byte-seq 1)))
-         (bitwise-ior
-          (arithmetic-shift (bitwise-and b1 #x1F) 6)
-          (bitwise-and b2 #x3F))))
-      ((= len 3)
-       (let ((b1 (bytevector-u8-ref byte-seq 0))
-             (b2 (bytevector-u8-ref byte-seq 1))
-             (b3 (bytevector-u8-ref byte-seq 2)))
-         (bitwise-ior
-          (arithmetic-shift (bitwise-and b1 #x0F) 12)
-          (arithmetic-shift (bitwise-and b2 #x3F) 6)
-          (bitwise-and b3 #x3F))))
-      ((= len 4)
-       (let ((b1 (bytevector-u8-ref byte-seq 0))
-             (b2 (bytevector-u8-ref byte-seq 1))
-             (b3 (bytevector-u8-ref byte-seq 2))
-             (b4 (bytevector-u8-ref byte-seq 3)))
-         (bitwise-ior
-          (arithmetic-shift (bitwise-and b1 #x07) 18)
-          (arithmetic-shift (bitwise-and b2 #x3F) 12)
-          (arithmetic-shift (bitwise-and b3 #x3F) 6)
-          (bitwise-and b4 #x3F))))
-      (else
-       (value-error "Invalid UTF-8 byte sequence length")))))
-
-(define (rich-char x)
-  (cond ((integer? x)
-         (if (and (>= x 0) (<= x #x10FFFF))
-             (make-rich-char x)
-             (value-error "rich-char: code point out of range" x)))
-        ((string? x)
-         (if (= 1 (u8-string-length x))
-             (rich-char (string->utf8 x))
-             (value-error "rich-char: must be u8 string which length equals 1")))
-        ((bytevector? x)
-         (make-rich-char (utf8-byte-sequence->code-point x)))
-        (else (type-error "rich-char: must be integer, string, bytevector"))))
-
-(define-case-class rich-string ((data string?))
+(chained-define (@empty)
+  (rich-string ""))
 
 (chained-define (@value-of v) 
   (cond ((char? v) (rich-string (string v)))
         ((number? v) (rich-string (number->string v)))
         ((symbol? v) (rich-string (symbol->string v)))
         ((string? v) (rich-string v))
-        ((and (case-class? v) (v :is-instance-of 'rich-char))
-         (box (v :make-string)))
+        ((rich-char :is-type-of v)
+         (rich-string (v :make-string)))
         (else (type-error "Expected types are char, rich-char, number, symbol or string"))))
 
 (define (%get) data)
 
 (define (%length)
-  (u8-string-length data))
+  N)
 
 (define (%char-at index)
   (let* ((start index)
          (end (+ index 1))
-         (byte-seq (string->utf8 data start end))
-         (code-point (utf8-byte-sequence->code-point byte-seq)))
-    (rich-char byte-seq)))
+         (byte-seq (string->utf8 data start end)))
+    (rich-char :from-bytevector byte-seq)))
 
 (typed-define (%apply (i integer?))
   (%char-at i))
 
 (chained-define (%slice from until)
-  (let* ((len (u8-string-length data))
-         (start (max 0 from))
-         (end (min len until)))
-    (if (< start end)
-        (rich-string (u8-substring data start end))
-        (rich-string ""))))
+  (let* ((start (max 0 from))
+         (end (min N until)))
+    (cond ((and (zero? start) (= end N))
+           (%this))
+          ((>= start end)
+           (rich-string :empty))
+          (else
+           (rich-string (u8-substring data start end))))))
+
+(chained-define (%take n)
+  (%slice 0 n))
+
+(chained-define (%take-right n)
+  (%slice (- N n) N))
+
+(chained-define (%drop n)
+  (%slice n N))
+
+(chained-define (%drop-right n)
+  (%slice 0 (- N n)))
 
 (define (%empty?)
   (string-null? data))
@@ -564,24 +614,55 @@
          (string-contains data (string elem)))
         (else (type-error "elem must be char or string"))))
 
-;; Find the index for the char or substring in rich-string (from start-index), else return -1
-(define (%index-of sub . start-index)
-  (let1 start (if (null? start-index) 0 (car start-index))
-  (cond
-    ((string? sub)
-     (let ((str-len (string-length data))
-           (sub-len (string-length sub)))
-       (let loop ((i start))
-         (cond
-           ((> (+ i sub-len) str-len) -1)
-           ((equal? (substring data i (+ i sub-len)) sub) i)
-           (else (loop (+ i 1)))))))
-    ((char? sub)
-     (let loop ((lst (string->list (substring data start))) (index start))
-       (cond
-       ((null? lst) -1)
-       ((char=? (car lst) sub) index)
-       (else (loop (cdr lst) (+ index 1)))))))))
+(define* (%index-of str/char (start-index 0))
+  (define (bytes-match? data-bv data-pos str-bv str-size data-size)
+    (let loop ((i 0))
+      (if (>= i str-size)
+          #t
+          (and (< (+ data-pos i) data-size)
+               (= (bytevector-u8-ref data-bv (+ data-pos i))
+                  (bytevector-u8-ref str-bv i))
+               (loop (+ i 1))))))
+
+  (define (char-index->byte-pos bv size char-index)
+    (let loop ((i 0) (pos 0))
+      (if (>= i char-index)
+          pos
+          (loop (+ i 1) (bytevector-advance-u8 bv pos size)))))
+  
+  (define* (inner-index-of str start-index)
+    (if (or (string-null? data) (string-null? str))
+        -1
+        (let* ((data-bv (string->utf8 data))
+               (str-bv (string->utf8 str))
+               (data-size (bytevector-length data-bv))
+               (str-size (bytevector-length str-bv)))
+          (if (or (negative? start-index)
+                  (>= start-index N))
+              -1
+              (let ((start-byte-pos (char-index->byte-pos data-bv data-size start-index)))
+                (let search ((byte-pos start-byte-pos) (current-char-index start-index))
+                  (cond
+                    ((> (+ byte-pos str-size) data-size) -1)
+                    ((bytes-match? data-bv byte-pos str-bv str-size data-size)
+                     current-char-index)
+                    (else
+                     (search (bytevector-advance-u8 data-bv byte-pos data-size)
+                             (+ current-char-index 1))))))))))
+
+  (unless (integer? start-index)
+    (type-error "rich-string%index-of: the second parameter must be integer"))
+  
+  (let1 positive-start-index (max 0 start-index)
+    (cond ((string? str/char)
+           (inner-index-of str/char positive-start-index))
+          ((rich-string :is-type-of str/char)
+           (inner-index-of (str/char :get) positive-start-index))
+          ((char? str/char)
+           (inner-index-of (string str/char) positive-start-index))
+          ((rich-char :is-type-of str/char)
+           (inner-index-of (str/char :make-string) positive-start-index))
+          (else (type-error "rich-string%index-of: first parameter must be string/rich-string/char/rich-char")))))
 
 (chained-define (%map f)
   (box ((%to-rich-vector)
@@ -600,14 +681,13 @@
       (vector)
       (let* ((bv (string->utf8 data))
              (bv-size (length bv))
-             (len (u8-string-length data))
-             (result (make-vector len)))
+             (result (make-vector N)))
         (let loop ((i 0) (j 0))
-          (if (>= i len)
+          (if (>= i N)
               result
               (let* ((next-j (bytevector-advance-u8 bv j bv-size))
-                     (code (utf8-byte-sequence->code-point (bytevector-copy bv j next-j))))
-                (vector-set! result i (rich-char code))
+                     (ch (rich-char :from-bytevector (bytevector-copy bv j next-j))))
+                (vector-set! result i ch)
                 (loop (+ i 1) next-j)))))))
 
 (define (%to-rich-vector)
@@ -619,8 +699,10 @@
      (rich-string (string-append data s)))
     ((rich-string :is-type-of s)
      (rich-string (string-append data (s :get))))
+    ((number? s)
+     (rich-string (string-append data (number->string s))))
     (else
-      (type-error (string-append (object->string s) "is not string or rich-string")))))
+      (type-error (string-append (object->string s) "is not string or rich-string or number")))))
 
 (chained-define (%strip-left)
   (rich-string (string-trim data)))
@@ -637,19 +719,14 @@
 (chained-define (%strip-suffix suffix)
   (rich-string (string-remove-suffix data suffix)))
 
-;; Replace the first occurrence of the substring old to new.
 (chained-define (%replace-first old new)
-  (define (replace-helper str old new start)
-    (let  ((next-pos (%index-of old start)))
-      (if (= next-pos -1)
-          str
-          (string-append
-            (substring str 0 next-pos)
-            new
-            (substring str (+ next-pos (string-length old)))))))
-  (rich-string (replace-helper data old new 0)))
+  (let ((next-pos (%index-of old)))
+    (if (= next-pos -1)
+        (%this)
+        ((%slice 0 next-pos)
+         :+ new
+         :+ (%drop (+ next-pos ($ old :length)))))))
 
-;; Replace the occurrences of the substring old to new.
 (chained-define (%replace old new)
   (define (replace-helper str old new start)
     (let ((next-pos ((rich-string str) :index-of old start)))
@@ -672,17 +749,17 @@
         (apply result args))))
 
 (define (%split sep)
-  (let ((str-len (string-length data))
-        (sep-len (string-length sep)))
-
+  (let ((str-len ($ data :length))
+        (sep-len ($ sep :length)))
+    
     (define (split-helper start acc)
       (let ((next-pos (%index-of sep start)))
         (if (= next-pos -1)
-            (cons (substring data start) acc)
-            (split-helper (+ next-pos sep-len) (cons (substring data start next-pos) acc)))))
+            (cons (%drop start :get) acc)
+            (split-helper (+ next-pos sep-len) (cons (%slice start next-pos :get) acc)))))
     
     (if (zero? sep-len)
-        ((%to-rich-vector) :map (lambda (c) (rich-string :value-of c :get)) :collect)
+        ((%to-rich-vector) :map (lambda (c) (c :make-string)))
         (rich-vector (reverse-list->vector (split-helper 0 '()))))))
 
 )
@@ -724,6 +801,11 @@
   (if (null? value)
       #f
       (f value)))
+
+(define (%contains pred?)
+  (if (null? value)
+      #f
+      (pred? value)))
 
 (define (%for-each f)
   (when (not (null? value))
@@ -774,6 +856,13 @@
       value
       default))
 
+(typed-define (%filter-or-else (pred procedure?) (zero any?))
+  (if (%right?)
+      (if (pred value)
+          (%this)
+          (left zero))
+      (%this)))
+
 (define (%contains x)
   (and (%right?)
        (== x value)))
@@ -782,10 +871,30 @@
   (when (%right?)
     (f value)))
 
+(define (%to-option)
+  (if (%right?)
+      (option value)
+      (none)))
+
 (chained-define (%map f)
   (if (%right?)
       (right (f value))
       (%this)))
+
+(chained-define (%flat-map f)
+  (if (%right?)
+      (f value)
+      (%this)))
+
+(typed-define (%forall (pred procedure?))
+  (if (%right?)
+      (pred value)
+      #t))
+
+(typed-define (%exists (pred procedure?))
+  (if (%right?)
+      (pred value)
+      #f))
 
 )
 
@@ -848,6 +957,14 @@
       (none)
       (option (car data))))
 
+
+(chained-define (%slice from until)
+  (let* ((len (length data))
+         (start (max 0 (min from len)))
+         (end (max 0 (min until len))))
+    (if (< start end)
+        (rich-list (take (drop data start) (- end start)))
+        (rich-list '()))))
 
 (define (%empty?)
   (null? data))
@@ -1010,7 +1127,7 @@
 
   (receive (start sep end) (parse-args xs)
     (let1 as-string (lambda (x) (if (string? x) x (object->string x)))
-          (rich-string (string-append start (string-join (map as-string data) sep) end)))))
+          (string-append start (string-join (map as-string data) sep) end))))
 
 (define (%to-vector)
   (list->vector data))
@@ -1106,19 +1223,19 @@
 (define (%exists p)
   (vector-any p data))
 
-  (chained-define (%map x)
-    (rich-vector (vector-map x data)))
+(chained-define (%map x)
+  (rich-vector (vector-map x data)))
 
-  (chained-define (%filter x)
-    (rich-vector (vector-filter x data)))
+(chained-define (%filter x)
+  (rich-vector (vector-filter x data)))
 
-  (define (%for-each x)
-    (vector-for-each x data))
+(define (%for-each x)
+  (vector-for-each x data))
 
-  (define (%count . xs)
-    (cond ((null? xs) (vector-length data))
-          ((length=? 1 xs) (vector-count (car xs) data))
-          (else (error 'wrong-number-of-args "rich-vector%count" xs))))
+(define (%count . xs)
+  (cond ((null? xs) (vector-length data))
+        ((length=? 1 xs) (vector-count (car xs) data))
+        (else (error 'wrong-number-of-args "rich-vector%count" xs))))
 
 (chained-define (%take n)
   (typed-define (scala-take (data vector?) (n integer?))
