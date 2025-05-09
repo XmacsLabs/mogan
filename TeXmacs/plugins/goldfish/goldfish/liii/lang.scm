@@ -18,8 +18,8 @@
 (import (liii base) (liii string) (liii vector) (liii sort)
         (liii list) (liii hash-table) (liii bitwise))
 (export
-  @ typed-define
-  define-case-class case-class? == != chained-define display* object->string
+  @ typed-define define-case-class define-object define-class
+  case-class? == != chained-define display* object->string
   option none either left right
   rich-integer rich-float rich-char rich-string
   rich-list rich-vector array rich-hash-table
@@ -103,6 +103,7 @@
               fields))
         
          (field-names (map car fields))
+         (field-count (length field-names))
 
          (private-fields (filter (lambda (x)
                                    (and (list? x)
@@ -164,6 +165,7 @@
                  (let1 name (string-remove-prefix (symbol->string method) "@")
                    (string->symbol (string-append ":" name))))
                static-method-symbols))
+         ;(default-static-messages '(:is-type-of))
          (internal-methods
            (filter (lambda (method) (not (or (string-starts? (symbol->string (caadr method)) "%")
                                              (string-starts? (symbol->string (caadr method)) "@"))))
@@ -171,7 +173,7 @@
          (this-symbol (gensym))
          (f-make-case-class (string->symbol (string-append "make-case-class-" (symbol->string class-name)))))
 
-`(define (,class-name msg . args)
+`(define (,class-name . args)
 
 (define (@is-type-of obj)
   (and (case-class? obj)
@@ -258,13 +260,65 @@
   ,this-symbol
 ) ; end of the internal typed define
 
-(if (in? msg (list ,@static-messages :is-type-of))
-    (apply static-dispatcher (cons msg args))
-    (apply ,f-make-case-class (cons msg args)))
+(if (null? args)
+    (,f-make-case-class)
+    (let ((msg (car args)))
+      (cond ((in? msg (list ,@static-messages :is-type-of))
+             (apply static-dispatcher args))
+            ((and (zero? ,field-count) (in? :apply (list ,@static-messages)))
+             (apply static-dispatcher (cons :apply args)))
+            (else
+             (apply ,f-make-case-class args)))))
 
 ) ; end of define
 ) ; end of let
 ) ; end of define-macro
+
+(define-macro (define-object object-name . methods)
+  `(define-case-class ,object-name () ,@methods))
+
+(define-macro (define-class class-name private-fields . private-fields-and-methods)
+  (let* ((field-defs '())
+         (getter-defs '())
+         (setter-defs '())
+         
+         ;; generate define, getter, setter
+         (process-fields
+          (map (lambda (field-spec)
+                 (let* ((field-name (car field-spec))
+                        (type-pred (cadr field-spec))
+                        (default-value (if (>= (length field-spec) 3)
+                                          (caddr field-spec)
+                                          ''()))
+                        (getter-name (string->symbol 
+                                      (string-append "%get-" (symbol->string field-name))))
+                        (setter-name (string->symbol 
+                                      (string-append "%set-" (symbol->string field-name) "!"))))
+                   
+                   (set! field-defs 
+                         (cons `(define ,field-name ,default-value) field-defs))
+                   
+                   (set! getter-defs 
+                         (cons `(define (,getter-name) ,field-name) getter-defs))
+                   
+                   (set! setter-defs 
+                         (cons `(typed-define (,setter-name (x ,type-pred))
+                                  (set! ,field-name x))
+                               setter-defs))))
+               private-fields)))
+    
+    `(define-case-class ,class-name ()
+       ;; define
+       ,@(reverse field-defs)
+       
+       ;; Getter
+       ,@(reverse getter-defs)
+       
+       ;; Setter
+       ,@(reverse setter-defs)
+       
+       ;; else
+       ,@private-fields-and-methods)))
 
 (define (case-class? x)
   (and-let* ((is-proc? (procedure? x))
@@ -570,6 +624,28 @@
 (typed-define (%apply (i integer?))
   (%char-at i))
 
+(define (%find pred) ((%to-rich-vector) :find pred))
+
+(define (%head)
+  (if (string-null? data)
+      (index-error "rich-string%head: string is empty")
+      ($ data 0)))
+
+(define (%head-option)
+  (if (string-null? data)
+      (none)
+      (option ($ data 0))))
+
+(define (%last)
+  (if (string-null? data)
+      (index-error "rich-string%last: string is empty")
+      ($ data (- N 1))))
+
+(define (%last-option)
+  (if (string-null? data)
+      (none)
+      (option ($ data (- N 1)))))
+
 (chained-define (%slice from until)
   (let* ((start (max 0 from))
          (end (min N until)))
@@ -608,10 +684,18 @@
   ((%to-rich-vector) :exists pred))
 
 (define (%contains elem)
-  (cond ((string? elem)
+  (cond ((rich-string :is-type-of elem)
+         (string-contains data (elem :get)))
+    
+        ((string? elem)
          (string-contains data elem))
+        
+        ((rich-char :is-type-of elem)
+         (string-contains data (elem :make-string)))
+        
         ((char? elem)
          (string-contains data (string elem)))
+        
         (else (type-error "elem must be char or string"))))
 
 (define* (%index-of str/char (start-index 0))
@@ -665,13 +749,54 @@
           (else (type-error "rich-string%index-of: first parameter must be string/rich-string/char/rich-char")))))
 
 (chained-define (%map f)
-  (box ((%to-rich-vector)
-        :map f
-        :map (@ _ :make-string)
-        :make-string)))
+  (rich-string ((%to-rich-vector)
+                :map f
+                :map (@ _ :make-string)
+                :make-string)))
+
+(chained-define (%filter pred)
+  (rich-string ((%to-rich-vector)
+                :filter pred
+                :map (@ _ :make-string)
+                :make-string)))
+
+(chained-define (%reverse)
+  (rich-string ((%to-rich-vector)
+                :reverse
+                :map (@ _ :make-string)
+                :make-string)))
+
+(define (%for-each f)
+  ((%to-rich-vector) :for-each f))
 
 (define (%count pred?)
   ((%to-rich-vector) :count pred?))
+
+(define (%index-where pred)
+  (let ((bytes (string->utf8 data))
+        (len (bytevector-length (string->utf8 data))))
+    (let loop ((byte-pos 0) (char-index 0))
+      (cond
+        ((>= byte-pos len) -1)
+        (else
+         (let* ((next-pos (bytevector-advance-u8 bytes byte-pos len))
+                (char-bytes (bytevector-copy bytes byte-pos next-pos))
+                (char (rich-char :from-bytevector char-bytes)))
+           (if (pred char)
+               char-index
+               (loop next-pos (+ char-index 1)))))))))
+
+(chained-define (%take-while pred)
+  (let ((stop-index (%index-where (lambda (c) (not (pred c))))))
+    (if (= stop-index -1)
+        (%this)
+        (%slice 0 stop-index))))
+
+(chained-define (%drop-while pred)
+  (let1 index (%index-where (lambda (c) (not (pred c))))
+    (if (= index -1)
+        (rich-string "")
+        (%slice index N))))
 
 (define (%to-string)
   data)
@@ -852,9 +977,10 @@
       default))
 
 (define (%get-or-else default)
-  (if (%right?)
-      value
-      default))
+  (cond ((%right?) value)
+        ((and (procedure? default) (not (case-class? default)))
+         (default))
+        (else default)))
 
 (typed-define (%filter-or-else (pred procedure?) (zero any?))
   (if (%right?)
@@ -1051,6 +1177,10 @@
   (let ((sorted-data (list-stable-sort less-p data)))
         (rich-list sorted-data)))
 
+(chained-define (%sort-by f)
+  (let ((sorted-data (list-stable-sort (lambda (x y) (< (f x) (f y))) data)))
+    (rich-list sorted-data)))
+
 (define (%group-by func)
   (let ((group (make-hash-table)))
     (for-each
@@ -1066,6 +1196,40 @@
       (lambda (k v) (hash-table-set! group k (reverse v))) 
       group)
   (rich-hash-table group)))
+
+(define (%sliding size . step-arg)
+  (unless (integer? size) (type-error "rich-list%sliding: size must be an integer " size))
+  (unless (> size 0) (value-error "rich-list%sliding: size must be a positive integer " size))
+
+  (let ((N (length data)))
+    (if (null? data)
+        #()
+        (let* ((is-single-arg-case (null? step-arg))
+               (step (if is-single-arg-case 1 (car step-arg))))
+
+          (when (and (not is-single-arg-case)
+                     (or (not (integer? step)) (<= step 0)))
+            (if (not (integer? step))
+                (type-error "rich-list%sliding: step must be an integer " step)
+                (value-error "rich-list%sliding: step must be a positive integer " step)))
+          
+          (if (and is-single-arg-case (< N size))
+              (vector data)
+              (let collect-windows ((current-list-segment data) (result-windows '()))
+                (cond
+                  ((null? current-list-segment) (list->vector (reverse result-windows)))
+                  ((and is-single-arg-case (< (length current-list-segment) size))
+                   (list->vector (reverse result-windows)))
+                  (else
+                   (let* ((elements-to-take (if is-single-arg-case
+                                                size
+                                                (min size (length current-list-segment))))
+                          (current-window (take current-list-segment elements-to-take))
+                          (next-list-segment (if (>= step (length current-list-segment))
+                                                 '()
+                                                 (drop current-list-segment step))))
+                     (collect-windows next-list-segment
+                                      (cons current-window result-windows)))))))))))
 
 (chained-define (%zip l) (box (apply map cons (list data l))))
 
@@ -1101,6 +1265,74 @@
   (if (null? data)
       (none)
       (option (reduce f '() data))))
+
+(chained-define (%take-while pred)
+  (let ((result (take-while pred data)))
+    (rich-list result)))
+
+(chained-define (%drop-while pred)
+  (let ((result (drop-while pred data)))
+    (rich-list result)))
+
+(define (%index-where pred)
+  (list-index pred data))
+
+(typed-define (%max-by (f procedure?))
+  (if (null? data)
+      (value-error "rich-list%max-by: empty list is not allowed")
+      (let loop ((rest (cdr data))
+                 (max-elem (car data))
+                 (max-val (let ((val (f (car data))))
+                           (unless (real? val)
+                             (type-error "rich-list%max-by: procedure must return real number but got"
+                                        (object->string val)))
+                           val)))
+        (if (null? rest)
+            max-elem
+            (let* ((current (car rest))
+                   (current-val (let ((val (f current)))
+                                 (unless (real? val)
+                                   (type-error "rich-list%max-by: procedure must return real number but got"
+                                              (object->string val)))
+                                 val)))
+              (if (> current-val max-val)
+                  (loop (cdr rest) current current-val)
+                  (loop (cdr rest) max-elem max-val)))))))
+
+(typed-define (%min-by (f procedure?))
+  (if (null? data)
+      (value-error "rich-list%min-by: empty list is not allowed")
+      (let loop ((rest (cdr data))
+                 (min-elem (car data))
+                 (min-val (let ((val (f (car data))))
+                            (unless (real? val)
+                              (type-error "rich-list%min-by: procedure must return real number but got"
+                                         (object->string val)))
+                            val)))
+        (if (null? rest)
+            min-elem
+            (let* ((current (car rest))
+                   (current-val (let ((val (f current)))
+                                  (unless (real? val)
+                                    (type-error "rich-list%min-by: procedure must return real number but got"
+                                               (object->string val)))
+                                  val)))
+              (if (< current-val min-val)
+                  (loop (cdr rest) current current-val)
+                  (loop (cdr rest) min-elem min-val)))))))
+
+(define (%append l)
+  (rich-list (append data l)))
+
+(define (%max-by-option f)
+  (if (null? data)
+      (none)
+      (option (%max-by f))))
+
+(define (%min-by-option f)
+  (if (null? data)
+      (none)
+      (option (%min-by f))))
 
 (define (%to-string)
   (object->string data))
@@ -1170,8 +1402,18 @@
 (define (%size)
   (vector-length data))
 
-(define (%apply n)
-  (vector-ref data n))
+(define (%apply i)
+  (when (or (< i 0) (>= i (vector-length data)))
+    (index-error "rich-vector%apply: out of range with index" i))
+  (vector-ref data i))
+
+(define (%index-of x)
+  (or (vector-index (@ == x _) data)
+      -1))
+
+(define (%last-index-of x)
+  (or (vector-index-right (@ == x _) data)
+      -1))
 
 (define (%find p)
   (let loop ((i 0))
@@ -1194,7 +1436,7 @@
   (let ((len (vector-length data)))
     (if (> len 0)
       (vector-ref data (- len 1))
-      (error 'out-of-range "out-of-range"))))
+      (index-error "rich-vector%last: empty vector"))))
 
 (define (%last-option)
   (let ((len (vector-length data)))
@@ -1223,14 +1465,23 @@
 (define (%exists p)
   (vector-any p data))
 
+(define (%contains elem)
+  (%exists (lambda (x) (equal? x elem))))
+
 (chained-define (%map x)
   (rich-vector (vector-map x data)))
+
+(chained-define (%flat-map f)
+  (rich-vector ((%this) :map f :reduce vector-append)))
 
 (chained-define (%filter x)
   (rich-vector (vector-filter x data)))
 
 (define (%for-each x)
   (vector-for-each x data))
+
+(chained-define (%reverse)
+  (rich-vector (reverse data)))
 
 (define (%count . xs)
   (cond ((null? xs) (vector-length data))
@@ -1283,6 +1534,14 @@
   
   (rich-vector (scala-drop-right data n)))
 
+(chained-define (%drop-while pred)
+  (let1 len (vector-length data)
+    (let loop ((i 0))
+      (cond
+        ((>= i len) (rich-vector :empty))  ; 所有元素都被丢弃
+        ((pred (vector-ref data i)) (loop (+ i 1)))  ; 继续丢弃
+        (else (rich-vector (vector-copy data i)))))))  ; 返回剩余部分
+
   (define (%fold initial f)
     (vector-fold f initial data))
 
@@ -1296,6 +1555,10 @@
 
 (chained-define (%sort-with less-p)
   (rich-vector (vector-stable-sort less-p data)))
+
+(chained-define (%sort-by f)
+  (let ((sorted-data (vector-stable-sort (lambda (x y) (< (f x) (f y))) data)))
+    (rich-vector sorted-data)))
 
 (define (%group-by func)
   (let ((group (make-hash-table)))
@@ -1312,6 +1575,40 @@
       (lambda (k v) (hash-table-set! group k (reverse-list->vector v))) 
       group)
     (rich-hash-table group)))
+
+(define (%sliding size . step-arg)
+  (unless (integer? size) (type-error "rich-vector%sliding: size must be an integer " size))
+  (unless (> size 0) (value-error "rich-vector%sliding: size must be a positive integer " size))
+
+  (let ((N (vector-length data)))
+    (if (zero? N)
+        #()
+        (let* ((is-single-arg-case (null? step-arg))
+               (step (if is-single-arg-case 1 (car step-arg))))
+
+          ;; Validate step if provided
+          (when (and (not is-single-arg-case)
+                     (or (not (integer? step)) (<= step 0)))
+            (if (not (integer? step))
+                (type-error "rich-vector%sliding: step must be an integer " step)
+                (value-error "rich-vector%sliding: step must be a positive integer " step)))
+          
+          ;; single-argument version when N < size
+          (if (and is-single-arg-case (< N size))
+              (vector data)
+              (let collect-windows ((current-idx 0) (result-windows '()))
+                (cond
+                  ;; Stop if current_idx is out of bounds
+                  ((>= current-idx N) (list->vector (reverse result-windows)))
+                  ;; For single-arg case
+                  ((and is-single-arg-case (> (+ current-idx size) N))
+                   (list->vector (reverse result-windows)))
+                  (else
+                   (let* ((window-end (if is-single-arg-case
+                                          (+ current-idx size)      ;; Single-arg: always takes full 'size'
+                                          (min (+ current-idx size) N))) ;; Two-arg: can be partial
+                          (current-window (vector-copy data current-idx window-end)))
+                     (collect-windows (+ current-idx step) (cons current-window result-windows)))))))))))
 
 (chained-define (%zip-with-index)
   (let* ((n (vector-length data))
@@ -1339,6 +1636,76 @@
                   (hash-table-set! ht elem #t)
                   (loop (cons elem result) (+ index 1)))
                 (loop result (+ index 1))))))))
+
+(define (%reduce f)
+  (let ((len (vector-length data)))
+    (if (zero? len)
+        (value-error "rich-vector%reduce: empty vector is not allowed to reduce")
+        (let loop ((acc (vector-ref data 0))
+                   (i 1))
+          (if (>= i len)
+              acc
+              (loop (f acc (vector-ref data i)) (+ i 1)))))))
+
+(define (%index-where pred)
+  (or (vector-index pred data)
+      -1))
+
+(define (%last-index-where pred)
+  (or (vector-index-right pred data)
+      -1))
+
+(chained-define (%take-while pred)
+  (let* ((vec data)
+         (len (vector-length vec))
+         (idx (vector-index (lambda (x) (not (pred x))) vec)))
+    (rich-vector (vector-copy vec 0 (or idx len)))))
+
+(typed-define (%max-by (f procedure?))        
+  (let ((vec data)
+        (len (length data)))
+    (if (zero? len)
+        (value-error "rich-vector%max-by: empty list is not allowed")
+        (let loop ((i 1)
+                   (max-elem (vector-ref vec 0))
+                   (max-val (f (vector-ref vec 0))))
+          (if (>= i len)
+              max-elem
+              (let* ((current-elem (vector-ref vec i))
+                     (current-val (f current-elem)))
+                (unless (number? current-val)
+                  (type-error "f must return a number"))
+                (if (< current-val max-val)
+                    (loop (+ i 1) max-elem max-val)
+                    (loop (+ i 1) current-elem current-val))))))))
+
+(typed-define (%min-by (f procedure?))        
+  (let ((vec data)
+        (len (length data)))
+    (if (zero? len)
+        (value-error "rich-vector%min-by: empty list is not allowed")
+        (let loop ((i 1)
+                   (min-elem (vector-ref vec 0))
+                   (min-val (f (vector-ref vec 0))))
+          (if (>= i len)
+              min-elem
+              (let* ((current-elem (vector-ref vec i))
+                     (current-val (f current-elem)))
+                (unless (number? current-val)
+                  (type-error "f must return a number"))
+                (if (> current-val min-val)
+                    (loop (+ i 1) min-elem min-val)
+                    (loop (+ i 1) current-elem current-val))))))))
+
+(typed-define (%max-by-option (f procedure?))
+  (if (zero? (vector-length data))
+      (none)
+      (option (%max-by f))))
+
+(typed-define (%min-by-option (f procedure?))
+  (if (zero? (vector-length data))
+      (none)
+      (option (%min-by f))))
 
 (define (%to-string)
   ((%map object->string)
@@ -1377,8 +1744,16 @@
 
 (define (%set! i x)
   (when (or (< i 0) (>= i (length data)))
-    (error 'out-of-range "rich-vector%set! out of range at index" i))
+    (index-error "rich-vector%set! out of range at index" i))
   (vector-set! data i x))
+
+(define (%append v)
+  (when (not (or (vector? v) (rich-vector :is-type-of v)))
+    (type-error "rich-vector%append: input is not vector or rich-vector"))
+  
+  (if (vector? v)
+      (rich-vector (vector-append data v))
+      (rich-vector (vector-append data (v :collect)))))
 
 )
 
@@ -1436,6 +1811,14 @@
 
 (define (%for-each proc)
   (hash-table-for-each proc data))
+
+(chained-define (%filter f)
+  (let1 r (make-hash-table)
+    (hash-table-for-each
+       (lambda (k v)
+         (when (f k v) (hash-table-set! r k v)))
+       data)
+    (rich-hash-table r)))
 
 )
 
