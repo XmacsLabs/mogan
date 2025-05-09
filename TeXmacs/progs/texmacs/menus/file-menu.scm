@@ -260,6 +260,23 @@
           (notify-now "Can not extract attachments from PDF")
           (texmacs-error "pdf" "Can not extract attachments from PDF")))))
 
+(define (wrapped-import-pdf-embeded-with-tmu tem-pdf)
+  (let* ((tem-dir (url-temp-dir))
+         (tem-tmu (url-append tem-dir "tem.tmu"))
+         (tem-tmu2 (url-append tem-dir "extracted.tmu")))
+    (if (extract-attachments tem-pdf)
+        (begin
+          (string-save
+            (serialize-tmu
+              (pdf-replace-linked-path
+                (tree-import (url-relative tem-tmu (pdf-get-attached-main-tm tem-pdf)) "tmu")
+                tem-pdf))
+            tem-tmu2)
+          (load-buffer tem-tmu2))
+        (begin
+          (notify-now "Can not extract attachments from PDF")
+          (texmacs-error "pdf" "Can not extract attachments from PDF")))))
+
 (menu-bind file-menu
   ("New" (new-document))
   ("Load" (open-document))
@@ -278,13 +295,13 @@
   (-> "Import"
       (link import-import-menu)
       ---
-      ("Pdf with embedded document" (choose-file wrapped-import-pdf-embeded-with-tm "Import pdf file" "pdf")))
+      ("Pdf with embedded document" (choose-file wrapped-import-pdf-embeded-with-tmu "Import pdf file" "pdf")))
   (-> "Export"
       (link export-export-menu)
       ---
       ("TM document" (choose-file save-buffer-as "Save TeXmacs file" "texmacs"))
       ("Pdf" (choose-file wrapped-print-to-file "Save pdf file" "pdf"))
-      ("Pdf with embedded document" (choose-file wrapped-print-to-pdf-embeded-with-tm "Save pdf file" "pdf"))
+      ("Pdf with embedded document" (choose-file wrapped-print-to-pdf-embeded-with-tmu "Save pdf file" "pdf"))
       ("Postscript"
        (choose-file wrapped-print-to-file "Save postscript file" "postscript"))
       (when (selection-active-any?)

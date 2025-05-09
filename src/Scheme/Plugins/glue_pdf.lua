@@ -77,6 +77,15 @@ function main()
                     "url"
                 }
             },
+            {
+                scm_name = "array-url-append",
+                cpp_name = "append",
+                ret_type = "array_url",
+                arg_list = {
+                    "url",
+                    "array_url"
+                }
+            },
         }
     }
 end

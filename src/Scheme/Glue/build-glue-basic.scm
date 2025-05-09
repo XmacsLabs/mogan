@@ -840,5 +840,5 @@
   (pdf-get-attached-main-tm get_main_tm (url url))
   
   ;; utilities
-  (array-url-append append (array_url url array_url))
+  (array-url-append append (array_url array_url))
   )

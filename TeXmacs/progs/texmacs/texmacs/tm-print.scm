@@ -111,9 +111,30 @@
       (unless (attach-doc-to-exported-pdf fname)
           (notify-now "Fail to attach tm to pdf")))))
 
+(tm-define (wrapped-print-to-pdf-embeded-with-tmu fname)
+    (unless (string=? (url-suffix fname) "pdf")
+      (texmacs-error "Wrapped-print-to-pdf-embeded-with-tmu" "fname is not a pdf"))
+    (if (screens-buffer?)
+      (let* ((cur (current-buffer))
+             (buf (buffer-new)))
+        (buffer-copy cur buf)
+        (buffer-set-master buf cur)
+        (switch-to-buffer buf)
+        (set-drd cur)
+        (dynamic-make-slides)
+        (print-to-file fname)
+        (unless (attach-doc-to-exported-pdf fname)
+          (notify-now "Fail to attach tmu to pdf"))
+        (switch-to-buffer cur)
+        (buffer-close buf))
+      (begin
+      (print-to-file fname)
+      (unless (attach-doc-to-exported-pdf fname)
+          (notify-now "Fail to attach tmu to pdf")))))
+
 (tm-define (attach-doc-to-exported-pdf fname)
   (let* ((tem-url (buffer-new))
-         (new-url (url-relative tem-url (string-append (url-basename fname) ".tm")))
+         (new-url (url-relative tem-url (string-append (url-basename fname) ".tmu")))
          (cur-url (current-buffer-url))
          (cur-tree (buffer-get cur-url))
          (linked-file (pdf-get-linked-file-paths cur-tree cur-url))
@@ -131,7 +152,8 @@
           (for-each set-attachment attl atts)
           (for-each set-auxiliary auxl auxs))))
     (buffer-save new-url)
-    (pdf-make-attachments fname linked-file-with-main fname)))
+    (pdf-make-attachments fname linked-file-with-main fname)
+    (buffer-close new-url)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Printing commands

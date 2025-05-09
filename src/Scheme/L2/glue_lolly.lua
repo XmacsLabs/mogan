@@ -687,6 +687,11 @@ function main()
                 ret_type = "url"
             },
             {
+                scm_name = "url-temp-dir",
+                cpp_name = "url_temp_dir",
+                ret_type = "url"
+            },
+            {
                 scm_name = "system-move",
                 cpp_name = "move",
                 ret_type = "void",
