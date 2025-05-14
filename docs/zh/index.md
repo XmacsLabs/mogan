@@ -15,9 +15,41 @@ hero:
     - theme: alt
       text: 马上下载
       link: /zh/guide/Install
-
-
 ---
+
+<style setup>
+  .name {
+    margin-bottom: 0.5rem !important;
+    margin-top: -0.5rem !important;
+  }
+  .text {
+    margin-bottom: 1rem !important;
+  }
+  .tagline {
+    margin-bottom: 3.8rem !important;
+  }
+  .main {
+    margin-left: 10.5rem;
+    margin-right: -10.5rem;
+  }
+
+  @media only screen and (max-width: 1200px) {
+  .main {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .name {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+  }
+  .text {
+    margin-bottom: 0 !important;
+  }
+  .tagline {
+    margin-bottom: 0 !important;
+  }
+}
+</style>
 
 <div class="feature">
 

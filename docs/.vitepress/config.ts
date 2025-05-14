@@ -16,13 +16,17 @@ export default {
             description: 'libre STEM suite for exploring science and technology',
             themeConfig: {
                 siteTitle: 'Mogan',
+                logo: {
+                src: '/assets/image/video-placeholder.png',
+                alt: '墨干Logo'
+                },
                 nav: nav(),
                 sidebar: {
                     '/guide': sidebarGuide(),
                 },
                 footer: {
                     message: 'Enjoy exploring science and technology!',
-                    copyright: 'Copyright © 2022-2024 Mogan Contributors'
+                    copyright: 'Copyright © 2022-2025 Mogan Contributors'
                 },
             }
         },
@@ -33,13 +37,17 @@ export default {
             description: '用于探索科学与技术的自由的理工套件',
             themeConfig: {
                 siteTitle: '墨干',
+                logo: {
+                src: '/assets/image/video-placeholder-en.png',
+                alt: 'Mogan Logo'
+                },
                 nav: navZh(),
                 sidebar: {
                     '/zh/guide': sidebarGuideZh(),
                 },
                 footer: {
                     message: '享受探索科学与技术的乐趣！',
-                    copyright: '版权所有 © 2022-2024 墨干贡献者'
+                    copyright: '版权所有 © 2022-2025 墨干贡献者'
                 },
             }
         },
@@ -58,6 +66,11 @@ export default {
 
 function nav() {
     return [
+        {
+            text: '',
+            link: '/',
+            activeMatch: '/',
+        },
         {
             text: 'Tutorial on Mogan🔥',
             link: '/zh/guide/Tutorial',
@@ -81,6 +94,11 @@ function nav() {
 
 function navZh() {
     return [
+        {
+            text: '',
+            link: '/zh/',
+            activeMatch: '/zh/',
+        },
         {
             text: '零基础墨干🔥',
             link: '/zh/guide/Tutorial',
