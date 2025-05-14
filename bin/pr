@@ -1,0 +1,7 @@
+#!/usr/bin/env elvish
+
+var num = $args[0]
+
+git fetch git@gitee.com:XmacsLabs/mogan.git pull/$num/head:pr_$num
+git checkout pr_$num
+
