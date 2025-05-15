@@ -134,7 +134,7 @@
 
 (tm-define (attach-doc-to-exported-pdf fname)
   (let* ((tem-url (buffer-new))
-         (new-url (url-relative tem-url (string-append (url-basename fname) ".tmu")))
+         (new-url (url-relative tem-url (url-basename fname)))
          (cur-url (current-buffer-url))
          (cur-tree (buffer-get cur-url))
          (linked-file (pdf-get-linked-file-paths cur-tree cur-url))

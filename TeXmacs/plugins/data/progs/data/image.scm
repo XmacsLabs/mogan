@@ -25,6 +25,10 @@
   (:name "Pdf")
   (:suffix "pdf"))
 
+(define-format tmu.pdf
+  (:name "TMU.PDF")
+  (:suffix "tmu.pdf"))
+
 (define-format svg
    (:name "Svg")
    (:suffix "svg"))
