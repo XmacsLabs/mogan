@@ -17,7 +17,7 @@ export default {
             themeConfig: {
                 siteTitle: 'Mogan',
                 logo: {
-                src: '/assets/image/video-placeholder.png',
+                src: '/mogan-logo.png',
                 alt: '墨干Logo'
                 },
                 nav: nav(),
@@ -38,7 +38,7 @@ export default {
             themeConfig: {
                 siteTitle: '墨干',
                 logo: {
-                src: '/assets/image/video-placeholder-en.png',
+                src: '/mogan-logo.png',
                 alt: 'Mogan Logo'
                 },
                 nav: navZh(),
