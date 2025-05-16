@@ -143,6 +143,51 @@
 (chained-define (@from-env name)
   (path (getenv name)))
 
+(define (%name)
+  (if (string=? "." ($ parts :last))
+      ""
+      ($ parts :last)))
+
+(define (%stem)
+  (define last-part-str 
+    (if (> (vector-length parts) 0)
+        (vector-ref parts (- (vector-length parts) 1))
+        ""))
+  
+  (define (drop-suffix str)
+    (let* ((rich-str ($ str))
+           (rich-splits (rich-str :split "."))  ; 按点分割
+           (count (rich-splits :count)))  ; 获取分割数量
+      (cond ((<= count 1) str)  ; 无后缀或单一部分
+            ((string=? str ".") "")  ; 当前目录特殊处理
+            ((string=? str "..") "..") ; 上级目录特殊处理
+            ((and (string=? (rich-splits 0) "")  ; 以点开头
+                  (= count 2))  ; 且只有一个点（纯隐藏文件）
+             str)  ; 保留完整文件名
+            (else  ; 正常多后缀情况
+             (rich-splits :take (- count 1) :make-string ".")))))
+  
+  (drop-suffix (%name)))
+
+(define (%suffix)
+  (let* ((name (%name))
+         (rich-str ($ name))
+         (rich-splits (rich-str :split "."))
+         (count (rich-splits :count)))
+    (cond ((<= count 1) "")  ; 无后缀
+          ((string=? name ".") "")  ; 当前目录
+          ((string=? name "..") "") ; 上级目录
+          ((and (string=? (rich-splits 0) "")  ; 以点开头
+                (= count 2))  ; 且只有一个点（纯隐藏文件）
+           "")
+          (else 
+           (string-append "." (rich-splits :last))))))  ; 返回最后一部分
+
+(define (%equals that)
+  (if (path :is-type-of that)
+      (string=? (%to-string) (that :to-string))
+      #f))
+
 (define (%file?)
   (path-file? (%to-string)))
 
@@ -240,6 +285,21 @@
                (parts-drop-right parts 1)))))
     
     (else (??? "Unsupported platform"))))
+
+(define (%rmdir)
+  (rmdir (%to-string)))
+
+(define* (%unlink (missing-ok #f))  ; 使用define*定义可选参数
+  (let ((path-str (%to-string)))
+    (cond
+      ((file-exists? path-str)  ; 文件存在时总是删除
+       (remove path-str))
+      (missing-ok  ; 文件不存在时根据missing-ok决定
+       #t)         ; missing-ok为#t时静默返回#t
+      (else        ; missing-ok为#f时抛出错误
+       (error 'file-not-found-error 
+              (string-append "File not found: " path-str))))))
+
 
 (chained-define (@./ x)
   (let1 p (path x)

@@ -15,10 +15,55 @@
 ;
 
 (define-library (liii set)
-(import (srfi srfi-113))
-(export set?)
+(import (liii lang)(liii hash-table)(srfi srfi-128))
+(export hash-set)
 (begin
 
+
+(define-case-class hash-set ((data hash-table?))
+
+;; Factory methods
+(chained-define (@empty) 
+  (hash-set (make-hash-table)))
+                   
+;; Basic operations
+(define (%size) (hash-table-size data))
+
+(define (%empty?) (hash-table-empty? data))
+
+(define (%contains element)
+  (hash-table-contains? data element))
+
+;; Modification operations
+(chained-define (%add-one! element)
+  (hash-table-set! data element #t)
+  (%this))
+
+(chained-define (%remove! element)
+  (hash-table-delete! data element)
+  (%this))
+
+(chained-define (%add-one element)
+  (let ((ht (make-hash-table)))
+    (hash-table-for-each
+      (lambda (k v) (hash-table-set! ht k v))
+      data)
+    (hash-table-set! ht element #t)
+    (hash-set ht)))
+
+(chained-define (%remove element)
+  (let ((ht (make-hash-table)))
+    (hash-table-for-each
+      (lambda (k v) (hash-table-set! ht k v))
+      data)
+    (hash-table-delete! ht element)
+    (hash-set ht)))
+
+(chained-define (%clear!)
+  (hash-table-clear! data)
+  (%this))
+
+) ; end of define-case-class
 ) ; end of begin
 ) ; end of define-library
 

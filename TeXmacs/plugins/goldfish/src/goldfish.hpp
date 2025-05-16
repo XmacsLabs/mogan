@@ -43,7 +43,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.11.12"
+#define GOLDFISH_VERSION "17.11.13"
 
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
@@ -332,6 +332,21 @@ inline void glue_access(s7_scheme* sc) {
   glue_define(sc, name, desc, f_access, 2, 0);
 }
 
+// 实现 putenv 功能
+static s7_pointer
+f_set_environment_variable(s7_scheme* sc, s7_pointer args) {
+    const char* key = s7_string(s7_car(args));
+    const char* value = s7_string(s7_cadr(args));
+    return s7_make_boolean(sc, tb_environment_set(key, value));
+}
+
+inline void
+glue_setenv(s7_scheme* sc) {
+    const char* name = "g_setenv";
+    const char* desc = "(g_setenv key value) => boolean, set an environment variable";
+    glue_define(sc, name, desc, f_set_environment_variable, 2, 0);
+}
+
 inline void
 glue_unsetenv (s7_scheme* sc) {
   const char* name= "g_unsetenv";
@@ -363,6 +378,20 @@ inline void glue_mkdir(s7_scheme* sc) {
   const char* name = "g_mkdir";
   const char* desc = "(g_mkdir string) => boolean, create a directory";
   glue_define(sc, name, desc, f_mkdir, 1, 0);
+}
+
+static s7_pointer
+f_remove_file(s7_scheme* sc, s7_pointer args) {
+    const char* path = s7_string(s7_car(args));
+    bool success = tb_file_remove(path); // 直接调用 TBOX 删除文件
+    return s7_make_boolean(sc, success);
+}
+
+inline void
+glue_remove_file(s7_scheme* sc) {
+    const char* name = "g_remove-file";
+    const char* desc = "(g_remove-file path) => boolean, delete a file";
+    glue_define(sc, name, desc, f_remove_file, 1, 0);
 }
 
 static s7_pointer
@@ -477,10 +506,12 @@ glue_liii_os (s7_scheme* sc) {
   glue_os_call (sc);
   glue_system (sc);
   glue_access (sc);
+  glue_setenv (sc);
   glue_unsetenv (sc);
   glue_getcwd (sc);
   glue_os_temp_dir (sc);
   glue_mkdir (sc);
+  glue_remove_file(sc); 
   glue_chdir (sc);
   glue_listdir (sc);
   glue_getlogin (sc);
