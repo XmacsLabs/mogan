@@ -17,7 +17,7 @@
 (define-library (liii path)
 (export
   path-dir? path-file? path-exists?
-  path-getsize path-read-text path-read-bytes path-write-text
+  path-getsize path-read-text path-read-bytes path-write-text path-append-text path-touch
   path
 )
 (import (liii base) (liii error) (liii vector) (liii string) (liii list)
@@ -57,6 +57,13 @@
 (define path-write-text
   (typed-lambda ((path string?) (content string?))
     (g_path-write-text path content)))
+
+(define path-append-text
+  (typed-lambda ((path string?) (content string?))
+    (g_path-append-text path content)))
+
+(define (path-touch path)
+  (g_path-touch path))
 
 (define-case-class path ()
   (define parts #("."))
@@ -230,12 +237,18 @@
 (typed-define (%write-text (content string?))
   (path-write-text (%to-string) content))
 
+(typed-define (%append-text (content string?))
+  (path-append-text (%to-string) content))
+
 (define (%list)
   (box (listdir (%to-string))))
 
 (define (%list-path)
   ((box (listdir (%to-string)))
    :map (lambda (x) ((%this) :/ x))))
+
+(define (%touch)
+  (path-touch (%to-string)))
 
 (chained-define (%/ x)
   (cond ((string? x)
@@ -317,6 +330,9 @@
          (path :of-drive ((getenv "HOMEDRIVE") 0)
                :/ (path (getenv "HOMEPATH"))))
         (else (value-error "path@home: unknown type"))))
+
+(chained-define (@temp-dir)
+  (path (os-temp-dir)))
 
 )
 

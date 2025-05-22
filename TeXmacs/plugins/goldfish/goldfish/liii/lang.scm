@@ -15,8 +15,15 @@
 ;
 
 (define-library (liii lang)
-(import (liii base) (liii oop) (liii string) (liii vector) (liii sort)
-        (liii list) (liii hash-table) (liii bitwise))
+                
+(import (only (liii oop) define-case-class display* == @ typed-define case-class? chained-define define-object define-class != chain-apply object->string)
+        (only (liii string) string-join string-null? string-starts? string-contains string-trim string-trim-right string-trim-both string-remove-prefix string-remove-suffix string-pad string-pad-right)
+        (only (liii vector) vector= vector-every vector-any vector-filter reverse-list->vector vector-index vector-index-right vector-fold vector-fold-right)
+        (only (liii sort) list-stable-sort vector-stable-sort)
+        (only (liii list) length=? iota take filter count drop every any take-right drop-right fold fold-right reduce take-while drop-while list-index)
+        (only (liii hash-table) hash-table-update!/default hash-table-for-each hash-table-ref/default hash-table-contains? hash-table-delete! hash-table-count)
+        (only (liii bitwise) bitwise-and bitwise-ior arithmetic-shift))
+
 (export
   @ typed-define define-case-class define-object define-class
   case-class? == != chained-define display* object->string
@@ -754,18 +761,28 @@
 
 (define-case-class rich-list ((data list?))
 
-(define (@range start end . step)
-  (let ((step-size (if (null? step) 1 (car step))))
-    (cond
-      ((and (positive? step-size) (>= start end))
-       (rich-list '()))
-      ((and (negative? step-size) (<= start end))
-       (rich-list '()))
-      ((zero? step-size)
-       (value-error "Step size cannot be zero"))
-      (else
-       (let ((cnt (ceiling (/ (- end start) step-size))))
-         (rich-list (iota cnt start step-size)))))))
+(define (@range start end . step-and-args)
+  (chain-apply (if (null? step-and-args) 
+                   step-and-args 
+                   (if (number? (car step-and-args))
+                       (cdr step-and-args)
+                       step-and-args))
+    (let ((step-size 
+            (if (null? step-and-args) 
+                1
+                (if (number? (car step-and-args))
+                    (car step-and-args)
+                    1))))
+      (cond
+        ((and (positive? step-size) (>= start end))
+         (rich-list '()))
+        ((and (negative? step-size) (<= start end))
+         (rich-list '()))
+        ((zero? step-size)
+         (value-error "Step size cannot be zero"))
+        (else
+         (let ((cnt (ceiling (/ (- end start) step-size))))
+           (rich-list (iota cnt start step-size))))))))
 
 (define (@empty . args)
   (chain-apply args

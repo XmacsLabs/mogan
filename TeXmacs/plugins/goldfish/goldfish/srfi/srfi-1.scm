@@ -16,7 +16,7 @@
         (liii base))
 (export
   ; SRFI 1: Constructors
-  circular-list iota list-copy 
+  circular-list iota list-copy xcons cons*
   ; SRFI 1: Predicates
   circular-list? null-list? proper-list? dotted-list?
   ; SRFI 1: Selectors
@@ -32,6 +32,14 @@
   take-while drop-while list-index any every
   last-pair last)
 (begin
+
+(define (xcons a b)
+         (cons b a))
+
+(define (cons* a . b)
+  (if (null? b)
+      a
+      (cons a (apply cons* b))))
 
 ; 0 clause BSD, from S7 repo stuff.scm
 (define* (iota n (start 0) (incr 1))

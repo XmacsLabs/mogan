@@ -15,6 +15,8 @@
 //
 
 #include <algorithm>
+#include <chrono>
+#include <cstdint>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
@@ -43,7 +45,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.11.13"
+#define GOLDFISH_VERSION "17.11.14"
 
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
@@ -730,6 +732,74 @@ write content to the file at the given path and return the number of bytes writt
   s7_define_function(sc, name, f_path_write_text, 2, 0, false, desc);
 }
 
+static s7_pointer
+f_path_append_text (s7_scheme* sc, s7_pointer args) {
+  const char* path = s7_string (s7_car (args));
+  if (!path) {
+    return s7_make_integer(sc, -1);
+  }
+
+  const char* content = s7_string (s7_cadr (args));
+  if (!content) {
+    return s7_make_integer(sc, -1);
+  }
+
+  // 以追加模式打开文件
+  tb_file_ref_t file = tb_file_init(path, TB_FILE_MODE_WO | TB_FILE_MODE_CREAT | TB_FILE_MODE_APPEND);
+  if (file == tb_null) {
+    return s7_make_integer(sc, -1);
+  }
+
+  tb_filelock_ref_t lock = tb_filelock_init(file);
+  if (tb_filelock_enter(lock, TB_FILELOCK_MODE_EX) == tb_false) {
+    tb_filelock_exit(lock);
+    tb_file_exit(file);
+    return s7_make_integer(sc, -1);
+  }
+
+  tb_size_t content_size = strlen(content);
+  tb_size_t written_size = tb_file_writ(file, reinterpret_cast<const tb_byte_t*>(content), content_size);
+
+  bool release_success = tb_filelock_leave(lock);
+  tb_filelock_exit(lock);
+  bool exit_success = tb_file_exit(file);
+
+  if (written_size == content_size && release_success && exit_success) {
+    return s7_make_integer(sc, written_size);
+  } else {
+    return s7_make_integer(sc, -1);
+  }
+}
+
+inline void glue_path_append_text(s7_scheme* sc) {
+  const char* name = "g_path-append-text";
+  const char* desc = "(g_path-append-text path content) => integer,\
+append content to the file at the given path and return the number of bytes written, or -1 on failure";
+  s7_define_function(sc, name, f_path_append_text, 2, 0, false, desc);
+}
+
+static s7_pointer f_path_touch(s7_scheme* sc, s7_pointer args) {
+  const char* path = s7_string(s7_car(args));
+  if (!path) {
+    return s7_make_boolean(sc, false);
+  }
+    
+  tb_bool_t success = tb_file_touch(path, 0, 0);
+
+  if (success == tb_true) {
+    return s7_make_boolean(sc, true);
+  } else {
+    return s7_make_boolean(sc, false);
+  }
+}
+
+inline void
+glue_path_touch(s7_scheme* sc) {
+  const char* name = "g_path-touch";
+  const char* desc = "(g_path-touch path) => boolean, create empty file or update modification time";
+  s7_define_function(sc, name, f_path_touch, 1, 0, false, desc);
+}
+
 inline void
 glue_liii_path (s7_scheme* sc) {
   glue_isfile (sc);
@@ -738,6 +808,90 @@ glue_liii_path (s7_scheme* sc) {
   glue_path_read_text (sc);
   glue_path_read_bytes (sc);
   glue_path_write_text (sc);
+  glue_path_append_text (sc);
+  glue_path_touch (sc);
+}
+
+static s7_pointer f_datetime_now(s7_scheme* sc, s7_pointer args) {
+  // Get current time using tbox for year, month, day, etc.
+  tb_time_t now = tb_time();
+  
+  // Get local time
+  tb_tm_t lt = {0};
+  if (!tb_localtime(now, &lt)) {
+    return s7_f(sc);
+  }
+  
+  // Use C++ chrono to get microseconds
+  std::uint64_t micros = 0;
+#ifdef TB_CONFIG_OS_WINDOWS
+  // On Windows, ensure we properly handle chrono
+  FILETIME ft;
+  ULARGE_INTEGER uli;
+  GetSystemTimeAsFileTime(&ft);
+  uli.LowPart = ft.dwLowDateTime;
+  uli.HighPart = ft.dwHighDateTime;
+  // Convert to microseconds and get modulo
+  micros = (uli.QuadPart / 10) % 1000000; // Convert from 100-nanosecond intervals to microseconds
+#else
+  // Standard approach for other platforms
+  auto now_chrono = std::chrono::system_clock::now();
+  auto duration = now_chrono.time_since_epoch();
+  micros = std::chrono::duration_cast<std::chrono::microseconds>(duration).count() % 1000000;
+#endif
+  
+  // Create a vector with the time components - vector is easier to index than list in Scheme
+  s7_pointer time_vec = s7_make_vector(sc, 7);
+  
+  // Fill the vector with values
+  s7_vector_set(sc, time_vec, 0, s7_make_integer(sc, lt.year));       // year
+  s7_vector_set(sc, time_vec, 1, s7_make_integer(sc, lt.month));      // month
+  s7_vector_set(sc, time_vec, 2, s7_make_integer(sc, lt.mday));       // day
+  s7_vector_set(sc, time_vec, 3, s7_make_integer(sc, lt.hour));       // hour
+  s7_vector_set(sc, time_vec, 4, s7_make_integer(sc, lt.minute));     // minute
+  s7_vector_set(sc, time_vec, 5, s7_make_integer(sc, lt.second));     // second
+  s7_vector_set(sc, time_vec, 6, s7_make_integer(sc, micros));        // micro-second
+  
+  return time_vec;
+}
+
+inline void glue_datetime_now(s7_scheme* sc) {
+    const char* name = "g_datetime-now";
+    const char* desc = "(g_datetime-now) => datetime, create a datetime object with current time";
+    s7_define_function(sc, name, f_datetime_now, 0, 0, false, desc);
+}
+
+static s7_pointer f_date_now(s7_scheme* sc, s7_pointer args) {
+  // Get current time using tbox for year, month, day, etc.
+  tb_time_t now = tb_time();
+  
+  // Get local time
+  tb_tm_t lt = {0};
+  if (!tb_localtime(now, &lt)) {
+    return s7_f(sc);
+  }
+  
+  // Create a vector with the time components - vector is easier to index than list in Scheme
+  s7_pointer time_vec = s7_make_vector(sc, 3);
+  
+  // Fill the vector with values
+  s7_vector_set(sc, time_vec, 0, s7_make_integer(sc, lt.year));       // year
+  s7_vector_set(sc, time_vec, 1, s7_make_integer(sc, lt.month));      // month
+  s7_vector_set(sc, time_vec, 2, s7_make_integer(sc, lt.mday));       // day
+  
+  return time_vec;
+}
+
+inline void glue_date_now(s7_scheme* sc) {
+    const char* name = "g_date-now";
+    const char* desc = "(g_date-now) => date, create a date object with current date";
+    s7_define_function(sc, name, f_date_now, 0, 0, false, desc);
+}
+
+inline void
+glue_liii_datetime (s7_scheme* sc) {
+  glue_datetime_now (sc);
+  glue_date_now (sc);
 }
 
 void
@@ -748,6 +902,7 @@ glue_for_community_edition (s7_scheme* sc) {
   glue_liii_sys (sc);
   glue_liii_os (sc);
   glue_liii_path (sc);
+  glue_liii_datetime (sc);
   glue_liii_uuid (sc);
 }
 

@@ -21,7 +21,7 @@
   bit-count bitwise-orc1 bitwise-orc2 bitwise-andc1 bitwise-andc2
   arithmetic-shift integer-length bitwise-if
   bit-set? copy-bit bit-swap any-bit-set? every-bit-set? first-set-bit
-  bit-field bit-field-any?
+  bit-field bit-field-any? bit-field-every? bit-field-clear bit-field-set
 )
 (begin
 
@@ -80,6 +80,7 @@
   (bitwise-ior
    (bitwise-and mask a)
    (bitwise-and (bitwise-not mask) b)))
+
 (define (bit-set? index n)
   (cond
     ((negative? index)
@@ -90,6 +91,7 @@
      (negative? n))
     (else
      (not (zero? (bitwise-and n (arithmetic-shift 1 index)))))))
+
 (define (copy-bit index n boolean)
   (cond
     ((negative? index)
@@ -104,6 +106,7 @@
      (if boolean
          (bitwise-ior n (arithmetic-shift 1 index))
          (bitwise-and n (bitwise-not (arithmetic-shift 1 index)))))))
+
 (define (bit-swap index1 index2 n)
  (cond
   ((or (negative? index1) (negative? index2))
@@ -114,15 +117,19 @@
    (copy-bit index2
         (copy-bit index1 n (bit-set? index2 n))
         (bit-set? index1 n)))))
+
 (define (any-bit-set? test-bits n)
   (not (zero? (bitwise-and test-bits n))))
+
 (define (every-bit-set? test-bits n)
   (= (bitwise-and test-bits n) test-bits))
+
 (define (first-set-bit n)
   (if (zero? n)
       -1
       (let ((lsb (bitwise-and n (- n))))
         (- (integer-length lsb) 1))))
+
 (define (bit-field i start end)
   (let* ((bits (integer-length i)))
     (if (>= start bits)
@@ -133,11 +140,29 @@
               0
               (let ((mask (arithmetic-shift (- (expt 2 width) 1) start)))
                 (arithmetic-shift (bitwise-and i mask) (- start))))))))
+
 (define (bit-field-any? i start end)
   (not (zero?
          (bitwise-and
            (arithmetic-shift i (- start))
            (- (arithmetic-shift 1 (- end start)) 1)))))
+
+(define (bit-field-every? i start end)
+  (= (bitwise-and (arithmetic-shift i (- start)) 
+                  (- (arithmetic-shift 1 (- end start)) 1)) 
+     (- (arithmetic-shift 1 (- end start)) 1)))
+
+(define (bit-field-clear i start end)
+  (bitwise-and i
+    (bitwise-not
+      (arithmetic-shift
+        (- (arithmetic-shift 1 (- end start)) 1) start))))
+
+(define (bit-field-set i start end)
+  (bitwise-ior i
+    (arithmetic-shift
+       (- (arithmetic-shift 1 (- end start)) 1) start)))
+
 ) ; end of begin
 ) ; end of define-library
 
