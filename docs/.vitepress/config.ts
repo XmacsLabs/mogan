@@ -105,7 +105,7 @@ function navZh() {
             activeMatch: '/ospp/'
         },
         {
-            text: '大模型集成🔥',
+            text: '大模型集成',
             link: '/zh/guide/plugin_llm',
             activeMatch: '/ospp/'
         },
@@ -117,6 +117,11 @@ function navZh() {
             text: '指南',
             link: '/zh/guide/what-is-mogan',
             activeMatch: '/guide/'
+        },
+        {
+            text: '下载',
+            link: '/zh/guide/Install',
+            activeMatch: '/guide/Install'
         },
         {
             text: '论坛',

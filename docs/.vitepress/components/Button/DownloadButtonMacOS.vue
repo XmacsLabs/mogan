@@ -2,7 +2,7 @@
   <div>
     <button :class="$style.button" @click="showModal = true" @mouseover="hover = true" @mouseleave="hover = false">
       <div v-if="hover" :class="$style.hoverContent">
-        <img src="/images/download_lightblue.png" :alt="hoverAltText" :class="$style.icon">
+        <img src="/images/download_black.png" :alt="hoverAltText" :class="$style.icon">
         <p>{{ hoverText }}</p>
       </div>
       
@@ -144,7 +144,7 @@ function downloadFileArm() {
   padding: 5px 10px;
   font-size: 14px;
   color: white;
-  background-color: #A5C9F8;
+  background-color: #333;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -152,11 +152,11 @@ function downloadFileArm() {
 }
 
 .smallButton:hover {
-  background-color: #0056b3;
+  background-color: #777;
 }
 
 .smallButton:active {
-  background-color: #003f7f;
+  background-color: #8b8c8d;
 }
 
 .closeButton {
@@ -164,7 +164,7 @@ function downloadFileArm() {
   padding: 5px 10px;
   font-size: 14px;
   color: white;
-  background-color: #A5C9F8;
+  background-color: #333;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -172,11 +172,11 @@ function downloadFileArm() {
 }
 
 .closeButton:hover {
-  background-color: #0056b3;
+  background-color: #777;
 }
 
 .closeButton:active {
-  background-color: #003f7f;
+  background-color: #8b8c8d;
 }
 
 @media (max-width: 600px) {

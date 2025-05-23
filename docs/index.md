@@ -35,7 +35,7 @@ Intuitive and Interactive!
 
 <div class="feature-image">
 
-![](/assets/image/feature-math-en.png)
+![](/assets/image/math-en.png)
 
 </div>
 
@@ -103,7 +103,7 @@ Mogan STEM Suite supports versatile plugins such as Maxima, making it convenient
 
 <div class="feature-image">
 
-![](/assets/image/feature-maxima-en.png)
+![](/assets/image/maxima-en.png)
 
 </div>
 
