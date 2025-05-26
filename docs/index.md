@@ -16,8 +16,38 @@ hero:
       text: Download Now
       link: /guide/Install
 
-
 ---
+
+<style setup>
+  .VPHero {
+    .name {
+      margin-top: -0.7rem !important;
+    }
+    .main {
+      margin-left: 9rem;
+      margin-right: -9rem;
+    }
+  }
+
+  @media only screen and (max-width: 1200px) {
+    .VPHero {
+      .main {
+        margin-left: 0;
+        margin-right: 0;
+      }
+      .name {
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+      }
+      .text {
+        margin-bottom: 0 !important;
+      }
+      .tagline {
+        margin-bottom: 0 !important;
+      }
+    }
+  }
+</style>
 
 <div class="feature">
 
