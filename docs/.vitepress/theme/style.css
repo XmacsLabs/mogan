@@ -3,6 +3,11 @@
  * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
  */
 
+/* 滚动条 */
+html {
+  overflow-y: scroll;
+}
+
 /**
  * Colors
  * -------------------------------------------------------------------------- */

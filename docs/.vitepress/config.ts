@@ -129,6 +129,23 @@ function nav() {
                     link: '/guide/SourceCode'
                 }
             ]
+        },
+        {
+            text: 'Related Projects',
+            items: [
+                {
+                    text: 'TeXmacs',
+                    link: 'https://www.texmacs.org/tmweb/home/welcome.en.html'
+                },
+                {
+                    text: 'Liii STEM',
+                    link: 'https://liiistem.com/'
+                },
+                {
+                    text: 'Goldfish Scheme',
+                    link: 'https://gitee.com/XmacsLabs/goldfish'
+                }
+            ]
         }
     ]
 }
@@ -202,6 +219,23 @@ function navZh() {
                     link: '/zh/guide/SourceCode'
                 }
             ]
+        },
+        {
+            text: '相关项目',
+            items: [
+                {
+                    text: 'TeXmacs',
+                    link: 'https://www.texmacs.org/tmweb/home/welcome.en.html'
+                },
+                {
+                    text: 'Liii STEM',
+                    link: 'https://liiistem.cn/'
+                },
+                {
+                    text: 'Goldfish Scheme',
+                    link: 'https://gitee.com/XmacsLabs/goldfish'
+                }
+            ]
         }
     ]
 }
@@ -246,13 +280,6 @@ function sidebarGuide() {
             text: 'Plugin System',
             items: [
                 { text: 'Introduction to Plugins', link: '/guide/plugins.md' },
-                { text: 'Binary Plugin', link: '/guide/plugin_binary.md' },
-            ]
-        },
-        {
-            text: 'Builtin Plugins',
-            collapsed: true,
-            items: [
                 { text: 'Aspell Binary plugin', link: '/guide/plugin_binary_aspell.md' },
                 { text: 'Conda Binary plugin', link: '/guide/plugin_binary_conda.md' },
                 { text: 'Ghostscript Binary plugin', link: '/guide/plugin_binary_gs.md' },
@@ -345,13 +372,6 @@ function sidebarGuideZh() {
             text: '插件体系',
             items: [
                 { text: '插件概述', link: '/zh/guide/plugins.md' },
-                { text: '二进制插件', link: '/zh/guide/plugin_binary.md' },
-            ]
-        },
-        {
-            text: '内置插件',
-            collapsed: true,
-            items: [
                 { text: 'Aspell二进制插件', link: '/zh/guide/plugin_binary_aspell.md' },
                 { text: 'Conda二进制插件', link: '/zh/guide/plugin_binary_conda.md' },
                 { text: 'Ghostscript二进制插件', link: '/zh/guide/plugin_binary_gs.md' },
