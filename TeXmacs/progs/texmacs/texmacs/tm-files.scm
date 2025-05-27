@@ -91,6 +91,7 @@
   (when (!= (get-preference "scripting language") "none")
     (lazy-plugin-force)
     (init-env "prog-scripts" (get-preference "scripting language")))
+  (add-style-package "number-europe")
   (buffer-pretend-saved (current-buffer)))
 
 (tm-define (propose-name-buffer)
