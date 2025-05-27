@@ -1,6 +1,6 @@
 # AI Large Model Integration Feature Usage Guide
 
-Mogan does not support large model integration. However, our semi-open source [Liii STEM](https://liiistem.cn/) has built-in large model plugins.
+Mogan does not support large model integration. However, our semi-open source [Liii STEM](https://liiistem.com/) has built-in large model plugins.
 
 ## Text, Math, Tables, etc. as Input
 

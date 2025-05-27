@@ -18,4 +18,4 @@ Python is preinstalled on these systems, so no installation is required.
 ## How to Customize the Python Interpreter
 You can use a custom Python interpreter by customizing the Python 3 binary plugin.
 
-For detailed instructions on how to customize the Python3 binary plugin, please refer to the documentation: [Binary Plugins](plugin_binary.md). Detailed steps are available in the built-in documentation of Mogan under `Help -> Plugins -> Binary`.
+For detailed instructions on how to customize the Python3 binary plugin, please refer to the documentation Binary Plugins. Detailed steps are available in the built-in documentation of Mogan under `Help -> Plugins -> Binary`.

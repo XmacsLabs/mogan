@@ -14,4 +14,4 @@
 + macOS: `$HOME/miniconda3/bin/conda`
 + Windows: `$USERPROFILE/miniconda3/Scripts/conda.exe`
 
-如果不是默认路径，则需要安装[二进制插件](plugin_binary.md)的文档做相关配置。
+如果不是默认路径，则需要安装二进制插件的文档做相关配置。

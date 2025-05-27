@@ -3,51 +3,9 @@
 layout: home
 title: Mogan
 titleTemplate: explore science and technology
-
-hero:
-  name: "Mogan STEM Suite"
-  text: A one-stop solution that meets all your STEM writing needs
-  tagline: Libre and structured STEM suite for exploring science and technology
-  actions:
-    - theme: brand
-      text: What is Mogan
-      link: /guide/what-is-mogan
-    - theme: alt
-      text: Download Now
-      link: /guide/Install
-
 ---
 
-<style setup>
-  .VPHero {
-    .name {
-      margin-top: -0.7rem !important;
-    }
-    .main {
-      margin-left: 9rem;
-      margin-right: -9rem;
-    }
-  }
-
-  @media only screen and (max-width: 1200px) {
-    .VPHero {
-      .main {
-        margin-left: 0;
-        margin-right: 0;
-      }
-      .name {
-        margin-bottom: 0 !important;
-        margin-top: 0 !important;
-      }
-      .text {
-        margin-bottom: 0 !important;
-      }
-      .tagline {
-        margin-bottom: 0 !important;
-      }
-    }
-  }
-</style>
+<EnCustomHero />
 
 <div class="feature">
 

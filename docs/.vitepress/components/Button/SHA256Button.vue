@@ -38,8 +38,8 @@ f4bcb8d4a9bec63b158c93fc0efbc083da95de84ddf7fb84ecf56675120458e5  mogan-research
 
 <style module>
 .button {
-  color: white;
-  background-color: #007bff;
+  color: var(--vp-c-white);
+  background-color: var(--vp-c-brand);
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -49,11 +49,11 @@ f4bcb8d4a9bec63b158c93fc0efbc083da95de84ddf7fb84ecf56675120458e5  mogan-research
 }
 
 .button:hover {
-  background-color: #0056b3;
+  background-color: var(--vp-c-brand-light);
 }
 
 .button:active {
-  background-color: #003f7f;
+  background-color: var(--vp-c-brand-dark);
   transform: scale(0.95);
 }
 
@@ -71,8 +71,8 @@ f4bcb8d4a9bec63b158c93fc0efbc083da95de84ddf7fb84ecf56675120458e5  mogan-research
 }
 
 .modalContent {
-  background: white;
-  color: black;
+  background: var(--vp-c-white);
+  color: var(--vp-c-text-1);
   padding: 20px;
   border-radius: 10px;
   text-align: left;
@@ -83,8 +83,8 @@ f4bcb8d4a9bec63b158c93fc0efbc083da95de84ddf7fb84ecf56675120458e5  mogan-research
   margin-top: 20px;
   padding: 5px 10px;
   font-size: 14px;
-  color: white;
-  background-color: #ff4d4d;
+  color: var(--vp-c-white);
+  background-color: var(--vp-c-brand);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -92,25 +92,23 @@ f4bcb8d4a9bec63b158c93fc0efbc083da95de84ddf7fb84ecf56675120458e5  mogan-research
 }
 
 .closeButton:hover {
-  background-color: #cc0000;
+  background-color: var(--vp-c-brand-light);
 }
 
 .closeButton:active {
-  background-color: #990000;
+  background-color: var(--vp-c-brand-dark);
 }
 
-@media (prefers-color-scheme: dark) {
-  .button {
-    background-color: #333;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
+.dark .button {
+  background-color: var(--vp-c-brand-dark);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
 
-  .modalContent {
-    background-color: #444;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
-  }
+.dark .modalContent {
+  background-color: var(--vp-c-bg-1); /* 假设存在背景颜色变量，可按需调整 */
+  color: var(--vp-c-text-1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+}
 
   .hoverContent {
     color: black;
@@ -119,5 +117,5 @@ f4bcb8d4a9bec63b158c93fc0efbc083da95de84ddf7fb84ecf56675120458e5  mogan-research
   .smallButton, .closeButton {
     color: white;
   }
-}
+  
 </style>

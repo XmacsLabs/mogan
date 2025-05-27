@@ -37,7 +37,7 @@ Since v1.2.6, Mogan will be released bi-monthly.
 | v1.2.7 | | around 2024/06/27 | |
 | v1.2.6 | | 2024/05/21 | Code plugins |
 | | | | Style plugins |
-| v1.2.5 LTS | Darcy |2024/02/27 | [Binary plugins](plugin_binary.md) |
+| v1.2.5 LTS | Darcy |2024/02/27 | Binary plugins |
 | |  |  | Image plugins |
 | v1.2.4 | Darcy | 2024/02/01 | Hot fix on v1.2.3 |
 | v1.2.3 | Darcy | 2024/01/30 | Support Noto CJK fonts |

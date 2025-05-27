@@ -19,11 +19,11 @@
 
 <script setup>
 import DefaultTheme from 'vitepress/theme'
-import {useData} from "vitepress";
+import { useData } from "vitepress";
 
-const {Layout} = DefaultTheme
+const { Layout } = DefaultTheme
 
-const {lang} = useData()
+const { lang } = useData()
 
 
 // console.log(">>>data",data)
@@ -33,20 +33,5 @@ const {lang} = useData()
 
 <template>
   <Layout>
-
-
-
-
-    <template #home-hero-image>
-      <div style="z-index: 9999">
-        <img v-if="lang === 'en'" src="/assets/image/video-placeholder-en.png">
-        <img v-else src="/assets/image/video-placeholder.png">
-      </div>
-    </template>
-
-
-
-
-
   </Layout>
 </template>

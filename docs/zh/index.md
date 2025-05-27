@@ -3,57 +3,9 @@
 layout: home
 title: 墨干
 titleTemplate: 探索科学与技术
-
-hero:
-  name: "墨干理工套件"
-  text: 一站式解决您的理工科写作需求
-  tagline: 一款自由、结构化的STEM套件，助力探索科学和技术
-  actions:
-    - theme: brand
-      text: 什么是墨干
-      link: /zh/guide/what-is-mogan
-    - theme: alt
-      text: 马上下载
-      link: /zh/guide/Install
 ---
 
-<style setup>
-  .VPHero {
-    .name {
-      margin-bottom: 0.5rem !important;
-      margin-top: -0.5rem !important;
-    }
-    .text {
-      margin-bottom: 1rem !important;
-    }
-    .tagline {
-      margin-bottom: 3.8rem !important;
-    }
-    .main {
-      margin-left: 10.5rem;
-      margin-right: -10.5rem;
-    }
-  }
-
-  @media only screen and (max-width: 1200px) {
-    .VPHero {
-      .main {
-        margin-left: 0;
-        margin-right: 0;
-      }
-      .name {
-        margin-bottom: 0 !important;
-        margin-top: 0 !important;
-      }
-      .text {
-        margin-bottom: 0 !important;
-      }
-      .tagline {
-        margin-bottom: 0 !important;
-      }
-    }
-  }
-</style>
+<CustomHero />
 
 <div class="feature">
 
@@ -63,7 +15,6 @@ hero:
 一个强大的科学文本编辑器！
 
 </div>
-
 
 <div style="display: flex;justify-content: center">
 <div class="feature-list">
@@ -78,7 +29,6 @@ hero:
 </div>
 </div>
 </div>
-
 
 <div style="display: flex;justify-content: center">
 <div class="feature-list">
@@ -97,7 +47,6 @@ hero:
 </div>
 </div>
 
-
 <div style="display: flex;justify-content: center">
 <div class="feature-list">
 <div class="feature-image">
@@ -111,7 +60,6 @@ hero:
 </div>
 </div>
 </div>
-
 
 <div style="display: flex;justify-content: center">
 <div class="feature-list">
