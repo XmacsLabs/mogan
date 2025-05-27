@@ -45,7 +45,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.11.14"
+#define GOLDFISH_VERSION "17.11.15"
 
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
@@ -383,6 +383,18 @@ inline void glue_mkdir(s7_scheme* sc) {
 }
 
 static s7_pointer
+f_rmdir (s7_scheme* sc, s7_pointer args) {
+  const char* dir_c= s7_string (s7_car (args));
+  return s7_make_boolean (sc, tb_directory_remove (dir_c));
+}
+
+inline void glue_rmdir(s7_scheme* sc) {
+  const char* name = "g_rmdir";
+  const char* desc = "(g_rmdir string) => boolean, remove a directory";
+  glue_define(sc, name, desc, f_rmdir, 1, 0);
+}
+
+static s7_pointer
 f_remove_file(s7_scheme* sc, s7_pointer args) {
     const char* path = s7_string(s7_car(args));
     bool success = tb_file_remove(path); // 直接调用 TBOX 删除文件
@@ -513,6 +525,7 @@ glue_liii_os (s7_scheme* sc) {
   glue_getcwd (sc);
   glue_os_temp_dir (sc);
   glue_mkdir (sc);
+  glue_rmdir (sc);
   glue_remove_file(sc); 
   glue_chdir (sc);
   glue_listdir (sc);

@@ -143,6 +143,15 @@
 (define (%ascii?)
   (and (>= code-point 0) (<= code-point 127)))
 
+;;  依赖于 R7RS 标准函数 integer->char 和 char-numeric?
+
+(define (%numeric?)
+  (if (and (>= code-point 0) (<= code-point 255))
+      (let ((ch (integer->char code-point)))
+        (char-numeric? ch))
+      ;; 超出code-point范围返回false
+      #f))
+
 (define (%upper?)
   (and (>= code-point #x41) (<= code-point #x5A)))
 

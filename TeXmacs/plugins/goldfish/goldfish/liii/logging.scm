@@ -30,9 +30,19 @@
 (define loggers-registry (make-hash-table))
 (define-class logging
   ((name string? "default")
-   (path string? "")
+   (log-path string? "")
    (level integer? WARNING))
   
+
+(define (%set-path! p)
+  (cond ((string? p)
+         (set! log-path p))
+        
+        ((path :is-type-of p)
+         (set! log-path (p :to-string)))
+        
+        (else
+         (type-error "path should be a string or path object"))))
 
 (define (%set-level! l)
   (define (check-valid-level val)
@@ -77,9 +87,9 @@
                                     (arg :get)))
                               args))))
     (let ((line (string-append prefix message "\n")))
-      (if (string=? path "")
+      (if (string=? log-path "")
           (display line)
-          (path-append-text path line)))))
+          (path-append-text log-path line)))))
 
 (define (%get-level)
   (cond

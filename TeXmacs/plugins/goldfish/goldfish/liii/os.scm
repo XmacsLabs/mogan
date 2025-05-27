@@ -100,7 +100,7 @@
     (g_mkdir path)))
 
 (define (rmdir path)
-  (%check-dir-andthen path delete-file))
+  (%check-dir-andthen path g_rmdir))
 
 (define (remove path)
   (cond
