@@ -15,15 +15,17 @@
 ;
 
 (define-library (liii lang)
+
+(import (scheme base) (liii oop) (liii string) (liii vector) (liii sort) (liii list) (liii hash-table) (liii bitwise) (liii base))
                 
-(import (only (scheme base) u8-string-length)
-        (only (liii oop) define-case-class display* == @ typed-define case-class? chained-define define-object define-class != chain-apply object->string)
-        (only (liii string) string-join string-null? string-starts? string-contains string-trim string-trim-right string-trim-both string-remove-prefix string-remove-suffix string-pad string-pad-right)
-        (only (liii vector) vector= vector-every vector-any vector-filter reverse-list->vector vector-index vector-index-right vector-fold vector-fold-right)
-        (only (liii sort) list-stable-sort vector-stable-sort)
-        (only (liii list) length=? iota take filter count drop every any take-right drop-right fold fold-right reduce take-while drop-while list-index)
-        (only (liii hash-table) hash-table-update!/default hash-table-for-each hash-table-ref/default hash-table-contains? hash-table-delete! hash-table-count)
-        (only (liii bitwise) bitwise-and bitwise-ior arithmetic-shift))
+; (import (only (scheme base) u8-string-length)
+;         (only (liii oop) define-case-class display* == @ typed-define case-class? chained-define define-object define-class != chain-apply object->string)
+;         (only (liii string) string-join string-null? string-starts? string-contains string-trim string-trim-right string-trim-both string-remove-prefix string-remove-suffix string-pad string-pad-right)
+;         (only (liii vector) vector= vector-every vector-any vector-filter reverse-list->vector vector-index vector-index-right vector-fold vector-fold-right)
+;         (only (liii sort) list-stable-sort vector-stable-sort)
+;         (only (liii list) length=? iota take filter count drop every any take-right drop-right fold fold-right reduce take-while drop-while list-index)
+;         (only (liii hash-table) hash-table-update!/default hash-table-for-each hash-table-ref/default hash-table-contains? hash-table-delete! hash-table-count)
+;         (only (liii bitwise) bitwise-and bitwise-ior arithmetic-shift))
 
 (export
   @ typed-define define-case-class define-object define-class
