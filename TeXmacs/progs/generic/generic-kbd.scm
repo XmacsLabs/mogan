@@ -45,7 +45,6 @@
   ("\\" (if (or (inside? 'hybrid) (in-prog?)) (insert "\\") (make-hybrid)))
   ("\\ var" "\\")
   ("\\ var var" "<setminus>")
-  ("\\ \\" (insert-return))
   ("$" (make 'math))
   ("$ var" "$")
 
