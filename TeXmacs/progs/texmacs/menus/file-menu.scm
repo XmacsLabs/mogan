@@ -295,7 +295,7 @@
   (-> "Import"
       (link import-import-menu)
       ---
-      ("Pdf with embedded document" (choose-file wrapped-import-pdf-embeded-with-tmu "Import pdf file" "pdf")))
+      ("Pdf with embedded document" (choose-file wrapped-import-pdf-embeded-with-tmu "Import pdf file" "tmu.pdf")))
   (-> "Export"
       (link export-export-menu)
       ---
