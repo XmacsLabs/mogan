@@ -38,7 +38,7 @@
 ; Follow the same License as the original one
 
 (define-library (srfi srfi-78)
-(import (liii lang))
+(import (liii oop))
 (export check check-set-mode! check-report check-reset!
         check-passed? check-failed?
         check:proc)
@@ -106,7 +106,7 @@
 (define (check-failed?)
   (>= (length check:failed) 1))
 
-(define (check:proc expression thunk equal expected-result)
+(define* (check:proc expression thunk expected-result (equal ==))
   (case check:mode
     ((0) #f)
     ((1)
@@ -137,7 +137,7 @@
     (else (error "unrecognized check:mode" check:mode))))
 
 (define-macro (check expr => expected)
-  `(check:proc ',expr (lambda () ,expr) == ,expected))
+  `(check:proc ',expr (lambda () ,expr) ,expected))
 
 (define (check-report)
   (if (>= check:mode 1)

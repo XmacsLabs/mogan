@@ -15,6 +15,7 @@
 ;
 
 (define-library (liii datetime)
+(import (liii oop))
 (export datetime date years)
 (begin
 

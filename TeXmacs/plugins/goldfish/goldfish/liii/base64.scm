@@ -89,8 +89,8 @@
            (b3 (BASE64_TO_BYTE_V c3))
            (b4 (BASE64_TO_BYTE_V c4)))
       (if (or (negative? b1) (negative? b2)
-              (and (negative? b3) (!= c3 BASE64_PAD_BYTE))
-              (and (negative? b4) (!= c4 BASE64_PAD_BYTE)))
+              (and (negative? b3) (not (equal? c3 BASE64_PAD_BYTE)))
+              (and (negative? b4) (not (equal? c4 BASE64_PAD_BYTE))))
           (value-error "Invalid base64 input")
           (values
             (bitwise-ior (ash b1 2) (ash b2 -4))

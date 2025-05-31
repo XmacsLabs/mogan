@@ -20,7 +20,7 @@
   path-getsize path-read-text path-read-bytes path-write-text path-append-text path-touch
   path
 )
-(import (liii base) (liii error) (liii vector) (liii string) (liii list)
+(import (liii base) (liii lang) (liii error) (liii vector) (liii string) (liii list)
         (liii os))
 (begin
 

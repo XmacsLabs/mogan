@@ -15,17 +15,29 @@
 ;
 
 (define-library (liii lang)
-
-(import (scheme base) (liii oop) (liii string) (liii vector) (liii sort) (liii list) (liii hash-table) (liii bitwise) (liii base))
                 
-; (import (only (scheme base) u8-string-length)
-;         (only (liii oop) define-case-class display* == @ typed-define case-class? chained-define define-object define-class != chain-apply object->string)
-;         (only (liii string) string-join string-null? string-starts? string-contains string-trim string-trim-right string-trim-both string-remove-prefix string-remove-suffix string-pad string-pad-right)
-;         (only (liii vector) vector= vector-every vector-any vector-filter reverse-list->vector vector-index vector-index-right vector-fold vector-fold-right)
-;         (only (liii sort) list-stable-sort vector-stable-sort)
-;         (only (liii list) length=? iota take filter count drop every any take-right drop-right fold fold-right reduce take-while drop-while list-index)
-;         (only (liii hash-table) hash-table-update!/default hash-table-for-each hash-table-ref/default hash-table-contains? hash-table-delete! hash-table-count)
-;         (only (liii bitwise) bitwise-and bitwise-ior arithmetic-shift))
+(import (only (liii base)
+              u8-string-length any? receive u8-substring)
+        (only (liii oop)
+              define-case-class display* == @ typed-define case-class? chained-define
+              define-object define-class != chain-apply object->string)
+        (only (liii string)
+              string-join string-null? string-starts? string-contains string-trim
+              string-trim-right string-trim-both string-remove-prefix string-remove-suffix string-pad
+              string-pad-right)
+        (only (liii vector)
+              vector= vector-every vector-any vector-filter reverse-list->vector
+              vector-index vector-index-right vector-fold vector-fold-right)
+        (only (liii sort) list-stable-sort vector-stable-sort)
+        (only (liii list)
+              length=? iota take filter count
+              drop every any take-right drop-right
+              fold fold-right reduce take-while drop-while list-index)
+        (only (liii hash-table)
+              hash-table-update!/default hash-table-for-each hash-table-ref/default hash-table-contains? hash-table-delete!
+              hash-table-count)
+        (only (liii bitwise) bitwise-and bitwise-ior arithmetic-shift)
+        (liii error))
 
 (export
   @ typed-define define-case-class define-object define-class
@@ -1181,7 +1193,7 @@
     (cond
       ((null? xs) (values "" "" ""))
       ((length=? 1 xs)
-       (let1 sep (car xs)
+       (let ((sep (car xs)))
          (if (string? sep)
              (values "" sep "")
              (type-error "rich-list%make-string: separator must be a string" sep))))
@@ -1197,8 +1209,8 @@
       (else (error 'wrong-number-of-args "rich-list%make-string: expected 0, 1, or 3 arguments" xs))))
 
   (receive (start sep end) (parse-args xs)
-    (let1 as-string (lambda (x) (if (string? x) x (object->string x)))
-          (string-append start (string-join (map as-string data) sep) end))))
+    (let ((as-string (lambda (x) (if (string? x) x (object->string x)))))
+      (string-append start (string-join (map as-string data) sep) end))))
 
 (define (%to-vector)
   (list->vector data))
@@ -1590,7 +1602,7 @@
     (cond
       ((null? xs) (values "" "" ""))
       ((length=? 1 xs)
-       (let1 sep (car xs)
+       (let ((sep (car xs)))
          (if (string? sep)
              (values "" sep "")
              (type-error "rich-vector%make-string: separator must be a string" sep))))

@@ -15,8 +15,10 @@
 ;
 
 (define-library (liii logging)
-(import (liii path)
-        (liii datetime))
+(import (liii lang)
+        (liii path)
+        (liii datetime)
+        (liii error))
 (export logging)
 (begin
 

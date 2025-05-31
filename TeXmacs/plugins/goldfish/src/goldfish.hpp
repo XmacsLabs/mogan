@@ -45,7 +45,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.11.15"
+#define GOLDFISH_VERSION "17.11.16"
 
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
@@ -75,6 +75,9 @@ glue_define (s7_scheme *sc, const char* name, const char* desc, s7_function f, s
   s7_define (sc, cur_env, s7_make_symbol (sc, name), func);
 }
 
+#ifdef GOLDFISH_ENABLE_REPL
+int interactive_repl (s7_scheme* sc, const string& mode);
+#endif
 static s7_pointer
 f_version (s7_scheme* sc, s7_pointer args) {
   return s7_make_string (sc, GOLDFISH_VERSION);
@@ -926,6 +929,10 @@ display_help () {
        << "Display version" << endl;
   cout << "-m default\t"
        << "Allowed mode: default, liii, sicp, r7rs, s7" << endl;
+  #ifdef GOLDFISH_ENABLE_REPL
+    cout << "-i       \t"
+         << "Start interactive REPL" << endl;
+  #endif
   cout << "-e       \t"
        << "Load the scheme code on the command line" << endl
        << "\t\teg. -e '(begin (display `Hello) (+ 1 2))'" << endl;
@@ -1103,6 +1110,23 @@ repl_for_community_edition (s7_scheme* sc, int argc, char** argv) {
     if (args[0] == "--version") {
       display_version ();
     }
+    #ifdef GOLDFISH_ENABLE_REPL
+      else if (args[0] == "-i") {
+        // Start interactive REPL
+        errmsg= s7_get_output_string (sc, s7_current_error_port (sc));
+        if ((errmsg) && (*errmsg)) cout << errmsg;
+        s7_close_output_port (sc, s7_current_error_port (sc));
+        s7_set_current_error_port (sc, old_port);
+        if (gc_loc != -1) s7_gc_unprotect_at (sc, gc_loc);
+
+        return interactive_repl (sc, mode);
+      }
+    #else
+      else if (args[0] == "-i") {
+        cerr << "Interactive REPL is not available in this build. Use goldfish_repl instead." << endl;
+        exit (-1);
+      }
+    #endif
     else {
       display_for_invalid_options ();
     }
