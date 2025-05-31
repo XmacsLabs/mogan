@@ -19,8 +19,8 @@
 (import (only (liii base)
               u8-string-length any? receive u8-substring)
         (only (liii oop)
-              define-case-class display* == @ typed-define case-class? chained-define
-              define-object define-class != chain-apply object->string)
+              define-case-class display* @ typed-define case-class? chained-define
+              define-object define-class chain-apply object->string)
         (only (liii string)
               string-join string-null? string-starts? string-contains string-trim
               string-trim-right string-trim-both string-remove-prefix string-remove-suffix string-pad
@@ -41,13 +41,24 @@
 
 (export
   @ typed-define define-case-class define-object define-class
-  case-class? == != chained-define display* object->string
+  case-class? class=? chained-define display* object->string
   option none either left right
   rich-integer rich-float rich-char rich-string
   rich-list rich-vector array rich-hash-table
   box $
 )
 (begin
+
+(define (class=? left right)
+  (cond
+    ((and (case-class? left) (case-class? right))
+     (left :equals right))
+    ((case-class? left)
+     (left :equals ($ right)))
+    ((case-class? right)
+     ($ left :equals right))
+    (else
+     (equal? left right))))
 
 (define (box x)
   (cond ((integer? x) (rich-integer x))
@@ -636,7 +647,7 @@
         (option value))))
 
 (define (%equals that)
-  (== value (that 'value)))
+  (class=? value (that 'value)))
 
 (define (%defined?) (not (null? value)))
   
@@ -734,7 +745,7 @@
 
 (define (%contains x)
   (and (%right?)
-       (== x value)))
+       (class=? x value)))
 
 (define (%for-each f)
   (when (%right?)
@@ -887,7 +898,7 @@
         #f
         (let loop ((left l1) (right l2))
           (cond ((null? left) #t)
-                ((!= (car left) (car right)) #f)
+                ((not (class=? (car left) (car right))) #f)
                 (else (loop (cdr left) (cdr right))))))))
 
 (define (%forall pred)
@@ -1261,11 +1272,11 @@
   (vector-ref data i))
 
 (define (%index-of x)
-  (or (vector-index (lambda (y) (== x y)) data)
+  (or (vector-index (lambda (y) (class=? x y)) data)
       -1))
 
 (define (%last-index-of x)
-  (or (vector-index-right (lambda (y) (== x y)) data)
+  (or (vector-index-right (lambda (y) (class=? x y)) data)
       -1))
 
 (define (%find p)
@@ -1318,7 +1329,7 @@
 
 (define (%equals that)
   (and (that :is-instance-of 'rich-vector)
-       (vector= == data (that 'data))))
+       (vector= class=? data (that 'data))))
 
 (define (%forall p)
   (vector-every p data))

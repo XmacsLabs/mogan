@@ -82,7 +82,7 @@
          (let loop ((i (- (vector-length l) 1)))
            (if (< i 0)
                #f
-               (if (== elem (vector-ref l i))
+               (if (equal? elem (vector-ref l i))
                    #t
                    (loop (- i 1))))))
         ((and (char? elem) (string? l))

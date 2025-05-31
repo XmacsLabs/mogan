@@ -38,7 +38,7 @@
 ; Follow the same License as the original one
 
 (define-library (srfi srfi-78)
-(import (liii oop))
+(import (liii lang))
 (export check check-set-mode! check-report check-reset!
         check-passed? check-failed?
         check:proc)
@@ -106,7 +106,7 @@
 (define (check-failed?)
   (>= (length check:failed) 1))
 
-(define* (check:proc expression thunk expected-result (equal ==))
+(define* (check:proc expression thunk expected-result (equal class=?))
   (case check:mode
     ((0) #f)
     ((1)
