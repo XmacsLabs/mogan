@@ -176,3 +176,4 @@
         *load-path*))
 
 (load "scheme/boot.scm")
+(import (scheme base))
