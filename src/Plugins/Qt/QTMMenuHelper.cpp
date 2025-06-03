@@ -534,7 +534,7 @@ QTMLineEdit::keyPressEvent (QKeyEvent* ev) {
     else if ((last_key == 'C' || last_key == 'V' ||
               last_key == 'X' || last_key == 'A') &&
              (ev->modifiers () == Qt::ControlModifier)) {
-      // M-x/M-c/M-v on macOS or C-x/C-c/C-v on Linux and Windows
+      // M-x/M-c/M-v/M-a on macOS or C-x/C-c/C-v/C-a on Linux and Windows
       QLineEdit::keyPressEvent (ev);
     }
 
