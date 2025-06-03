@@ -12,6 +12,7 @@
 #include "analyze.hpp"
 #include "cork.hpp"
 #include "impl_language.hpp"
+#include "language.hpp"
 #include "scheme.hpp"
 
 scheme_language_rep::scheme_language_rep (string name)
@@ -48,11 +49,11 @@ array<int>
 scheme_language_rep::get_hyphens (string s) {
   int        i;
   array<int> penalty (N (s) + 1);
-  penalty[0]= HYPH_INVALID;
+  penalty[0]= HYPH_PANIC;
   for (i= 1; i < N (s); i++)
     if (s[i - 1] == '-' && is_alpha (s[i])) penalty[i]= HYPH_STD;
-    else penalty[i]= HYPH_INVALID;
-  penalty[i]= HYPH_INVALID;
+    else penalty[i]= HYPH_PANIC;
+  penalty[i]= HYPH_PANIC;
   return penalty;
 }
 
