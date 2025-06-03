@@ -101,3 +101,41 @@
   (if (and (in-presentation?) (not (visible-icon-bar? 0)))
     /
     (link dynamic-icons)))
+
+(menu-bind code-menu
+  ("Algorithm" (make 'algorithm))
+  ("Pseudo code" (make 'render-code))
+  ---
+  ("Indent" (make 'indent))
+  (when (not (selection-active?))
+    ("Tabbed" (make 'wide-tabbed)))
+  ---
+  (-> "Inline code"
+      ("Verbatim" (make 'verbatim))
+      ("C++" (make 'cpp))
+      ("Scheme" (make 'scm))
+      ("Shell" (make 'shell)))
+  (-> "Block of code"
+      ("Verbatim" (make 'verbatim-code))
+      ("C++" (make 'cpp-code))
+      ("Scheme" (make 'scm-code))
+      ("Shell" (make 'shell-code)))
+  ---
+  (-> "Goldfish"
+      (when (style-has? "goldfish-lang")
+        ("Inline code" (make 'goldfish-lang))
+        ("Block of code" (make 'goldfish-code)))
+      (when (not (style-has? "goldfish-lang"))
+        ("Activate" (add-style-package "goldfish"))))
+  (-> "Scala"
+      (when (style-has? "scala")
+        ("Inline code" (make 'scala))
+        ("Block of code" (make 'scala-code)))
+      (when (not (style-has? "scala"))
+        ("Activate" (add-style-package "scala"))))
+  (-> "Python"
+      (when (style-has? "python")
+        ("Inline code" (make 'python))
+        ("Block of code" (make 'python-code)))
+      (when (not (style-has? "python"))
+        ("Activate" (add-style-package "python")))))
