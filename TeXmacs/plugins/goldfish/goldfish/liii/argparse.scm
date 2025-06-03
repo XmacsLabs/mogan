@@ -46,7 +46,7 @@
 (define (arg-type? type)
   (unless (symbol? type)
     (type-error "type of the argument must be symbol"))
-  (in? type '(string number)))
+  (member type '(string number)))
 
 (define (%add-argument args-ht args)
   (let* ((options (car args))

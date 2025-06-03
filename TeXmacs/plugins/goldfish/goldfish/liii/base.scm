@@ -57,7 +57,7 @@
   ; SRFI-8
   receive
   ; Extra routines
-  loose-car loose-cdr in? compose identity any?
+  loose-car loose-cdr compose identity any?
   ; Extra structure
   let1  typed-lambda
 )
@@ -75,19 +75,6 @@
   (if (eq? '() pair-or-empty)
       '()
       (cdr pair-or-empty)))
-
-(define (in? elem l)
-  (cond ((list? l) (not (not (member elem l))))
-        ((vector? l)
-         (let loop ((i (- (vector-length l) 1)))
-           (if (< i 0)
-               #f
-               (if (equal? elem (vector-ref l i))
-                   #t
-                   (loop (- i 1))))))
-        ((and (char? elem) (string? l))
-         (in? elem (string->list l)))
-        (else (error 'type-error "type mismatch"))))
 
 (define identity (lambda (x) x))
 

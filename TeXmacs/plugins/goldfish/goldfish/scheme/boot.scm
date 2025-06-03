@@ -46,9 +46,11 @@
                                 (begin
                                   (set! name (string-append name "/"))
                                   (loop (cdr lib) name))))))
-        (unless (member lib-filename (*s7* 'file-names))
-          (load lib-filename)))
+        (when (not (defined? (symbol (object->string (car libs)))))
+          ;(display "Loading ") (display lib-filename) (newline)
+          (load lib-filename))
       (r7rs-import-library-filename (cdr libs)))))
+)
 
 (define-macro (import . libs)
   `(begin
