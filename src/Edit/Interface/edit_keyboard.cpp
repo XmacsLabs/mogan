@@ -152,7 +152,7 @@ edit_interface_rep::try_shortcut (string comb) {
             verbatim (rhs), shorth == "" ? 1 : 3000);
     }
     if ((status & 1) == 1) cmd ();
-    else if (N (shorth) > 0) call ("kbd-insert", shorth);
+    else if (N (shorth) > 0 && comb != "S-F5") call ("kbd-insert", shorth);
     // cout << "Mark= " << sh_mark << "\n";
     return true;
   }
