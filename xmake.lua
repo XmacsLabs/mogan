@@ -10,7 +10,7 @@
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
 set_project("Liii STEM Suite")
-local XMACS_VERSION="2025.0.9"
+local XMACS_VERSION="2025.0.10"
 
 -- because this cpp project use variant length arrays which is not supported by
 -- msvc, this project will not support windows env.
