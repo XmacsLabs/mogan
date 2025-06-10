@@ -461,7 +461,7 @@
            "jpeg" "png" "tif" "jbig" "ras" "pnm" "jp2" "jpc" "pgx"
            "cut" "iff" "lbm" "jng" "koa" "mng" "pbm" "pcd" "pcx"
            "pgm" "ppm" "psd" "tga" "tiff" "xbm" "xpm"))
-        ((== fm "image") (format-image-suffixes))
+        ((== fm "image") '("png""gif" "jpg" "jpeg" "ps" "eps" "svg" "tif" "tiff"))
         ((== fm "sound")
          '("au" "cdr" "cvs" "dat" "gsm" "ogg" "snd" "voc" "wav"))
         ((== fm "animation") '("gif"))
