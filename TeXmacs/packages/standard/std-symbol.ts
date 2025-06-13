@@ -69,6 +69,8 @@
 
   <assign|textgreater|\<gtr\>>
 
+  <assign|iint|<macro|<big|iint>>>
+
   \;
 
   <assign|nbsp|<macro| <no-break><specific|screen|<resize|<move|<with|color|#A0A0FF|->|-0.3em|>|0em||0em|>>>>
