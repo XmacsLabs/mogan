@@ -615,4 +615,5 @@ qt_simple_widget_rep::repaint_all () {
 }
 
 void
-qt_simple_widget_rep::show_completion_listbox () {}
+qt_simple_widget_rep::show_completion_listbox (
+    const std::vector<string>& completions, const string& prefix) {}

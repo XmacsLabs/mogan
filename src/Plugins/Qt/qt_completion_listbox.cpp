@@ -11,6 +11,7 @@
 #include "qt_completion_listbox.hpp"
 #include <QApplication>
 #include <QKeyEvent>
+#include <iostream>
 
 QtCompletionListBox::QtCompletionListBox (QWidget* parent)
     : QListWidget (parent) {
@@ -49,15 +50,23 @@ QtCompletionListBox::keyPressEvent (QKeyEvent* event) {
       emit completionSelected (currentItem ()->text ());
     }
     hide ();
-    event->accept ();
+    if (parentWidget ()) QCoreApplication::sendEvent (parentWidget (), event);
+    // event->accept ();
     break;
   case Qt::Key_Escape:
-    hide ();
-    event->accept ();
+    // hide ();
+    if (parentWidget ()) QCoreApplication::sendEvent (parentWidget (), event);
+    // event->accept ();
     break;
   case Qt::Key_Up:
   case Qt::Key_Down:
-    QListWidget::keyPressEvent (event);
+    // QListWidget::keyPressEvent (event);
+    break;
+  case Qt::Key_Tab:
+    if (parentWidget ()) QCoreApplication::sendEvent (parentWidget (), event);
+    break;
+  case Qt::Key_Backtab:
+    if (parentWidget ()) QCoreApplication::sendEvent (parentWidget (), event);
     break;
   default:
     hide ();
@@ -86,4 +95,28 @@ QtCompletionListBox::wheelEvent (QWheelEvent* event) {
     QCoreApplication::sendEvent (parentWidget (), event);
   }
   else event->ignore ();
+}
+
+void
+QtCompletionListBox::selectNextItem () {
+  int row= currentRow ();
+  if (row < count () - 1) setCurrentRow (row + 1);
+  else setCurrentRow (0);
+}
+
+void
+QtCompletionListBox::selectPreviousItem () {
+  int row= currentRow ();
+  if (0 < row) setCurrentRow (row - 1);
+  else setCurrentRow (count () - 1);
+}
+
+void
+QtCompletionListBox::selectItemIndex (int index) {
+  if (index >= 0 && index < count ()) {
+    setCurrentRow (index);
+  }
+  else {
+    // std::cerr << "Index out of bounds: " << index << std::endl;
+  }
 }

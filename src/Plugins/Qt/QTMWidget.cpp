@@ -144,9 +144,6 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
 
   string r= from_key_press_event (event);
 
-  // These two lines are for testing purposes only.
-  if (tm_widget () && r == "C-n") tm_widget ()->show_completion_listbox ();
-
   if (is_empty (r)) return;
   if (DEBUG_KEYBOARD) debug_qt << "key pressed: " << r << LF;
 

@@ -59,8 +59,6 @@ protected:
   SI         zpixel;        // pixel multiplied by zoom factor
   rectangles copy_always;   // for wiping out cursor
   int        input_mode;    // INPUT_NORMAL, INPUT_SEARCH, INPUT_REPLACE
-  path       start_path;
-  path       end_path;
 
 protected:
   SI         last_x, last_y;
@@ -106,7 +104,8 @@ public:
   void get_size (SI& wx, SI& wy);
 
   QtCompletionListBox* completionListBox;
-  void                 show_completion_listbox () override;
+  void show_completion_listbox (const std::vector<string>& completions,
+                                const string&              prefix) override;
 
   /* routines for dealing with shrinked coordinates */
   int  get_pixel_size ();

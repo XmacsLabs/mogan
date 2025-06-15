@@ -21,6 +21,9 @@ public:
   explicit QtCompletionListBox (QWidget* parent= nullptr);
 
   void showCompletions (const QStringList& completions, const QPoint& pos);
+  void selectNextItem ();
+  void selectPreviousItem ();
+  void selectItemIndex (int index);
 
 signals:
   void completionSelected (const QString& text);

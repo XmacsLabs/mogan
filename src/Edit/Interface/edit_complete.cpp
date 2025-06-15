@@ -9,6 +9,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "../../Plugins/Qt/qt_completion_listbox.hpp"
 #include "analyze.hpp"
 #include "connect.hpp"
 #include "dictionary.hpp"
@@ -132,6 +133,13 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
     completion_prefix= prefix;
     completions      = close_completions (compls);
     completion_pos   = 0;
+    if (!completionListBox->isVisible ()) {
+      std::vector<string> items;
+      for (int i= 0; i < N (completions); ++i)
+        items.push_back (completion_prefix * completions[i]);
+
+      show_completion_listbox (items, completion_prefix);
+    }
     insert_tree (completions[0]);
     complete_message ();
     beep ();
@@ -142,9 +150,11 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
 bool
 edit_interface_rep::complete_keypress (string key) {
   set_message ("", "");
+  // cout<<key;
   if (key == "space") key= " ";
-  if ((key != "tab") && (key != "S-tab")) {
+  if ((key != "tab") && (key != "S-tab") || (key == "escape")) {
     set_input_normal ();
+    completionListBox->hide ();
     return false;
   }
   tree st= subtree (et, path_up (tp));
@@ -161,8 +171,14 @@ edit_interface_rep::complete_keypress (string key) {
     return false;
   }
 
-  if (key == "tab") completion_pos++;
-  else completion_pos--;
+  if (key == "tab") {
+    completion_pos++;
+    completionListBox->selectNextItem ();
+  }
+  else if (key == "S-tab") {
+    completion_pos--;
+    completionListBox->selectPreviousItem ();
+  }
   if (completion_pos < 0) completion_pos= N (completions) - 1;
   if (completion_pos >= N (completions)) completion_pos= 0;
   string new_s= completions[completion_pos];
@@ -300,4 +316,23 @@ strip_completions (array<string> a, string prefix) {
   for (i= 0; i < n; i++)
     if (starts (a[i], prefix)) b << a[i](N (prefix), N (a[i]));
   return b;
+}
+
+/******************************************************************************
+ * Showing the completion listbox
+ ******************************************************************************/
+
+void
+edit_interface_rep::show_completion_listbox (
+    const std::vector<string>& completions, const string& prefix) {
+  QStringList qlist;
+  for (size_t i= 0; i < completions.size (); ++i)
+    qlist << QString::fromUtf8 (as_charp (completions[i]));
+
+  cursor cu = get_cursor ();
+  QPoint pos= to_qpoint (coord2 (
+      (cu->ox - get_scroll_x ()) * magf + get_canvas_x () + get_window_x (),
+      (cu->oy - get_scroll_y ()) * magf + get_canvas_y () + get_window_y ()));
+
+  completionListBox->showCompletions (qlist, pos);
 }
