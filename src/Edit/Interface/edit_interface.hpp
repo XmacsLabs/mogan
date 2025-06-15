@@ -11,6 +11,7 @@
 
 #ifndef EDIT_INTERFACE_H
 #define EDIT_INTERFACE_H
+#include "../../Plugins/Qt/qt_completion_listbox.hpp"
 #include "editor.hpp"
 #include "tm_timer.hpp"
 #include "widget.hpp"
@@ -58,6 +59,8 @@ protected:
   SI         zpixel;        // pixel multiplied by zoom factor
   rectangles copy_always;   // for wiping out cursor
   int        input_mode;    // INPUT_NORMAL, INPUT_SEARCH, INPUT_REPLACE
+  path       start_path;
+  path       end_path;
 
 protected:
   SI         last_x, last_y;
@@ -101,6 +104,9 @@ public:
   void resume ();
   void keyboard_focus_on (string field);
   void get_size (SI& wx, SI& wy);
+
+  QtCompletionListBox* completionListBox;
+  void                 show_completion_listbox () override;
 
   /* routines for dealing with shrinked coordinates */
   int  get_pixel_size ();

@@ -10,7 +10,9 @@
  ******************************************************************************/
 
 #include "Interface/edit_interface.hpp"
+#include "../../Plugins/Qt/qt_completion_listbox.hpp"
 #include "Metafont/tex_files.hpp"
+#include "completion_helper.hpp"
 #include "convert.hpp"
 #include "data_cache.hpp"
 #include "file.hpp"
@@ -71,6 +73,15 @@ edit_interface_rep::edit_interface_rep ()
       cur_sb (2), cur_wb (2) {
   input_mode= INPUT_NORMAL;
   gui_root_extents (cur_wx, cur_wy);
+  completionListBox= new QtCompletionListBox (as_qwidget ());
+  completionListBox->hide ();
+  QObject::connect (completionListBox, &QtCompletionListBox::completionSelected,
+                    [this] (const QString& text) {
+                      tree t= string_to_tree (
+                          string (text.toUtf8 ().constData ()), "1");
+                      cut (start_path, end_path);
+                      insert_tree (t);
+                    });
 }
 
 edit_interface_rep::~edit_interface_rep () {
@@ -78,6 +89,39 @@ edit_interface_rep::~edit_interface_rep () {
   if (stored != NULL) tm_delete (stored);
   shadow= NULL;
   stored= NULL;
+  if (completionListBox != nullptr) {
+    delete completionListBox;
+    completionListBox= nullptr;
+  }
+}
+
+void
+edit_interface_rep::show_completion_listbox () {
+  string prefix_string= get_string_at_path (et, tp);
+
+  // What a mess ...
+  std::string line (as_charp (prefix_string));
+  int         pos_in_line= get_pos_in_line (tp);
+  std::string prefix     = get_prefix_from_line (line, pos_in_line);
+  int         start_pos  = get_start_pos (line, pos_in_line);
+  int         end_pos    = pos_in_line;
+  start_path             = path_up (tp) * start_pos;
+  end_path               = path_up (tp) * end_pos;
+
+  std::vector<std::string> all_completions= {"alpha",  "beta",  "gamma",
+                                             "alpha1", "beta2", "gamma3"};
+
+  QStringList completions;
+  for (const auto& s : all_completions) {
+    if (s.find (prefix) == 0) completions << QString::fromStdString (s);
+  }
+
+  cursor cu = get_cursor ();
+  QPoint pos= to_qpoint (coord2 (
+      (cu->ox - get_scroll_x ()) * magf + get_canvas_x () + get_window_x (),
+      (cu->oy - get_scroll_y ()) * magf + get_canvas_y () + get_window_y ()));
+
+  completionListBox->showCompletions (completions, pos);
 }
 
 edit_interface_rep::operator tree () {

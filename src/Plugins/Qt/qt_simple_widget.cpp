@@ -613,3 +613,6 @@ qt_simple_widget_rep::repaint_all () {
       w->repaint_invalid_regions ();
   }
 }
+
+void
+qt_simple_widget_rep::show_completion_listbox () {}
