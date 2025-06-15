@@ -32,8 +32,9 @@ protected:
   coord2 size;      //!< Set this property sending SLOT_SIZE to this widget
   string file;      //!< Set this property sending SLOT_FILE to this widget
 
-  QString nameFilter;    //!< For use in QFileDialog::setNameFilter()
-  QString defaultSuffix; //!< For use in QFileDialog::setDefaultSuffix()
+  // QString nameFilter;    //!< For use in QFileDialog::setNameFilter()
+  QStringList nameFilters;   //!< For use in QFileDialog::setNameFilters()
+  QString     defaultSuffix; //!< For use in QFileDialog::setDefaultSuffix()
 
 public:
   qt_chooser_widget_rep (command, string, string);

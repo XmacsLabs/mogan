@@ -1,4 +1,3 @@
-
 /******************************************************************************
  * MODULE     : qt_chooser_widget.cpp
  * DESCRIPTION: File chooser widget, native and otherwise
@@ -23,6 +22,7 @@
 #include "widget.hpp"
 
 #include <QByteArray>
+#include <QDebug>
 #include <QFileDialog>
 #include <QString>
 #include <QStringList>
@@ -158,22 +158,23 @@ qt_chooser_widget_rep::plain_window_widget (string s, command q, int b) {
 
 bool
 qt_chooser_widget_rep::set_type (const string& _type) {
+  QString mainNameFilter;
   if (_type == "directory") {
     type= _type;
     return true;
   }
   else if (_type == "generic") {
-    nameFilter= "";
-    type      = _type;
+    mainNameFilter= "";
+    type          = _type;
     return true;
   }
 
   if (format_exists (_type)) {
-    nameFilter= to_qstring (
+    mainNameFilter= to_qstring (
         translate (as_string (call ("format-get-name", _type)) * " file"));
   }
   else if (_type == "image") {
-    nameFilter= to_qstring (translate ("Image file"));
+    mainNameFilter= to_qstring (translate ("Image file"));
   }
   else {
     if (DEBUG_STD)
@@ -182,13 +183,18 @@ qt_chooser_widget_rep::set_type (const string& _type) {
     return false;
   }
 
-  nameFilter+= " (";
+  mainNameFilter+= " (";
   object        ret     = call ("format-get-suffixes*", _type);
   array<object> suffixes= as_array_object (ret);
   if (N (suffixes) > 1) defaultSuffix= to_qstring (as_string (suffixes[1]));
   for (int i= 1; i < N (suffixes); ++i)
-    nameFilter+= " *." + to_qstring (as_string (suffixes[i]));
-  nameFilter+= " )";
+    mainNameFilter+= " *." + to_qstring (as_string (suffixes[i]));
+  mainNameFilter+= " )";
+
+  nameFilters << mainNameFilter;
+  for (int i= 1; i < N (suffixes); ++i)
+    nameFilters << to_qstring (as_string (suffixes[i])) + "(*." +
+                       to_qstring (as_string (suffixes[i])) + ")";
 
   type= _type;
   return true;
@@ -228,10 +234,11 @@ qt_chooser_widget_rep::perform_dialog () {
 
 #if (QT_VERSION >= 0x040400)
   if (type != "directory") {
-    QStringList filters;
-    if (nameFilter != "") filters << nameFilter;
-    filters << to_qstring (translate ("All files (*)"));
-    dialog->setNameFilters (filters);
+    // QStringList filters;
+    // if (nameFilter != "") filters << nameFilter;
+    // filters << to_qstring (translate ("All files (*)"));
+    nameFilters << to_qstring (translate ("All files (*)"));
+    dialog->setNameFilters (nameFilters);
   }
 #endif
 
