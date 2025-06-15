@@ -143,7 +143,6 @@ QTMWidget::keyPressEvent (QKeyEvent* event) {
   if (is_nil (tmwid)) return;
 
   string r= from_key_press_event (event);
-
   if (is_empty (r)) return;
   if (DEBUG_KEYBOARD) debug_qt << "key pressed: " << r << LF;
 
