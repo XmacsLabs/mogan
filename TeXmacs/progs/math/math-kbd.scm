@@ -2538,6 +2538,7 @@
   ("space i f f" (make 'infix-iff))
   ("space i f f space" (make 'infix-iff))
   ;;("i f f var" "iff")
+  ("f o r space" "for ")
   ("f o r space a l l" (make 'prefix-for-all))
   ("f o r space a l l space" (make 'prefix-for-all)))
 
