@@ -1,63 +1,104 @@
 <template>
   <div>
-    <button :class="$style.button" @click="showModal = true" @mouseover="hover = true" @mouseleave="hover = false">
+    <button
+      :class="$style.button"
+      @click="showModal = true"
+      @mouseover="hover = true"
+      @mouseleave="hover = false"
+    >
       <div v-if="hover" :class="$style.hoverContent">
-        <img src="/images/download_orange.png" :alt="hoverAltText" :class="$style.icon">
+        <img
+          src="/images/download_orange.png"
+          :alt="hoverAltText"
+          :class="$style.icon"
+        />
         <p>{{ hoverText }}</p>
       </div>
-      
+
       <div v-else :class="$style.defaultContent">
-        <img src="/images/Ubuntu_icon.png" :alt="defaultAltText" :class="$style.icon">
+        <img
+          src="/images/Ubuntu_icon.png"
+          :alt="defaultAltText"
+          :class="$style.icon"
+        />
         <p>{{ defaultText }}</p>
       </div>
     </button>
 
-    <div v-if="showModal" :class="$style.modalBackdrop" @click.self="showModal = false">
+    <div
+      v-if="showModal"
+      :class="$style.modalBackdrop"
+      @click.self="showModal = false"
+    >
       <div :class="$style.modalContent">
         <h3>{{ modalTitle }}</h3>
-        <button :class="$style.smallButton" @click="downloadFile2204">{{ buttonText2204 }}</button>
-        <button :class="$style.smallButton" @click="downloadFile2404">{{ buttonText2404 }}</button>
-        <button :class="$style.closeButton" @click="showModal = false">{{ closeButtonText }}</button>
+        <button :class="$style.smallButton" @click="downloadFile2204">
+          {{ buttonText2204 }}
+        </button>
+        <button :class="$style.smallButton" @click="downloadFile2404">
+          {{ buttonText2404 }}
+        </button>
+        <button :class="$style.closeButton" @click="showModal = false">
+          {{ closeButtonText }}
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useRoute } from 'vitepress';
+import { ref, computed } from "vue";
+import { useRoute } from "vitepress";
 
 // 获取当前语言
 const route = useRoute();
-const language = computed(() => route.path.startsWith('/zh/') ? 'zh' : 'en');
+const language = computed(() => (route.path.startsWith("/zh/") ? "zh" : "en"));
 
 const showModal = ref(false);
 const hover = ref(false);
 
-const hoverText = computed(() => language.value === 'zh' ? '点击下载' : 'Click to Download');
-const defaultText = computed(() => language.value === 'zh' ? 'Ubuntu' : 'Ubuntu');
-const hoverAltText = computed(() => language.value === 'zh' ? '下载' : 'Download');
-const defaultAltText = computed(() => language.value === 'zh' ? 'Ubuntu' : 'Ubuntu');
-const modalTitle = computed(() => language.value === 'zh' ? '选择下载版本' : 'Select Download Version');
-const buttonText2204 = computed(() => language.value === 'zh' ? '下载 Ubuntu 22.04' : 'Download Ubuntu 22.04');
-const buttonText2404 = computed(() => language.value === 'zh' ? '下载 Ubuntu 24.04' : 'Download Ubuntu 24.04');
-const closeButtonText = computed(() => language.value === 'zh' ? '关闭' : 'Close');
+const hoverText = computed(() =>
+  language.value === "zh" ? "点击下载" : "Click to Download"
+);
+const defaultText = computed(() =>
+  language.value === "zh" ? "Ubuntu" : "Ubuntu"
+);
+const hoverAltText = computed(() =>
+  language.value === "zh" ? "下载" : "Download"
+);
+const defaultAltText = computed(() =>
+  language.value === "zh" ? "Ubuntu" : "Ubuntu"
+);
+const modalTitle = computed(() =>
+  language.value === "zh" ? "选择下载版本" : "Select Download Version"
+);
+const buttonText2204 = computed(() =>
+  language.value === "zh" ? "下载 Ubuntu 22.04" : "Download Ubuntu 22.04"
+);
+const buttonText2404 = computed(() =>
+  language.value === "zh" ? "下载 Ubuntu 24.04" : "Download Ubuntu 24.04"
+);
+const closeButtonText = computed(() =>
+  language.value === "zh" ? "关闭" : "Close"
+);
 
-const version = 'v1.2.9.7';
+const version = "v1.2.9.7";
 
 function downloadFile2204() {
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = `https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/${version}/mogan-research-${version}-ubuntu22.04.deb`;
-  link.download = language.value === 'zh' ? `墨干${version}` : `Mogan ${version}`;
+  link.download =
+    language.value === "zh" ? `墨干${version}` : `Mogan ${version}`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
 }
 
 function downloadFile2404() {
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = `https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/${version}/mogan-research-${version}-ubuntu24.04.deb`;
-  link.download = language.value === 'zh' ? `墨干${version}` : `Mogan ${version}`;
+  link.download =
+    language.value === "zh" ? `墨干${version}` : `Mogan ${version}`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -200,28 +241,6 @@ function downloadFile2404() {
 
   .hoverContent {
     font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .button {
-    background-color: #333;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
-
-  .modalContent {
-    background-color: #444;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
-  }
-
-  .hoverContent {
-    color: black;
-  }
-  
-  .smallButton, .closeButton {
-    color: white;
   }
 }
 </style>

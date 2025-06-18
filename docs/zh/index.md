@@ -55,8 +55,8 @@ titleTemplate: 探索科学与技术
 
 </div>
 <div class="feature-content">
-<h1>多格式导入导出</h1>
-<p>以结构化TMU格式为原生编辑环境，完整兼容LaTeX/BibTeX等技术格式双向互转（保留代码/公式/引用链），同时支持一键精准导出Word文档（严格匹配期刊/企业模板），兼顾深度创作与格式合规双重需求！</p>
+  <h1>多格式导入导出</h1>
+  <p>以结构化TMU格式为原生编辑环境，完整兼容LaTeX/BibTeX等技术格式双向互转（保留代码/公式/引用链），同时支持一键精准导出Word文档（严格匹配期刊/企业模板），兼顾深度创作与格式合规双重需求！</p>
 </div>
 </div>
 </div>
@@ -64,8 +64,8 @@ titleTemplate: 探索科学与技术
 <div style="display: flex;justify-content: center">
 <div class="feature-list">
 <div class="feature-content">
-<h1>插件融合工坊</h1>
-<p>构建开放式插件生态（Maxima/Python/Gnuplot等），实现符号计算、数据可视化等专业模块的动态无缝集成，通过「插件沙盒」机制保障核心稳定性，打造「轻量启动+重型扩展」的跨领域科研工作台！</p>
+  <h1>插件融合工坊</h1>
+  <p>构建开放式插件生态（Maxima/Python/Gnuplot等），实现符号计算、数据可视化等专业模块的动态无缝集成，通过「插件沙盒」机制保障核心稳定性，打造「轻量启动+重型扩展」的跨领域科研工作台！</p>
 </div>
 <div class="feature-image">
 

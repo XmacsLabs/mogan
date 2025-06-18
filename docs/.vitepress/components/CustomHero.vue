@@ -8,33 +8,44 @@
           <span class="gradient-text">公式 · 代码 · 排版</span>
         </h1>
         <p class="subtitle animate-slide-up">百倍速公式编辑！</p>
-        <p class="description animate-slide-up-delay">所见即所得，轻松达到 <span v-html="katex.renderToString('\\LaTeX')"></span>
-          级排版效果！</p>
+        <p class="description animate-slide-up-delay">
+          所见即所得，轻松达到
+          <span v-html="katex.renderToString('\\LaTeX')"></span> 级排版效果！
+        </p>
         <div class="feature-highlights">
           <div class="tag">
-            <strong>商业版 Mogan</strong> | <span class="tag-desc">使用<a href="https://liiistem.cn" target="_blank" rel="noopener noreferrer" class="no-underline">Liii STEM</a>，拥抱AI写作</span>
+            <strong>商业版 Mogan</strong> |
+            <span class="tag-desc"
+              >使用<a
+                href="https://liiistem.cn"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="no-underline"
+                >Liii STEM</a
+              >，拥抱AI写作</span
+            >
           </div>
           <div class="tag">
-            <strong>智能识别格式</strong> | <span class="tag-desc">自动识别并转换多种文档格式</span>
+            <strong>智能识别格式</strong> |
+            <span class="tag-desc">自动识别并转换多种文档格式</span>
           </div>
           <div class="tag">
-            <strong>使用魔法粘贴</strong> | <span class="tag-desc">一键粘贴公式表格代码</span>
+            <strong>使用魔法粘贴</strong> |
+            <span class="tag-desc">一键粘贴公式表格代码</span>
           </div>
         </div>
       </div>
       <div class="hero-right-section">
         <div class="hero-content image-section">
           <div class="image-content">
-            <img src="/mogan-logo.png" alt="Liii STEM Logo" class="hero-logo">
+            <img src="/mogan-logo.png" alt="Liii STEM Logo" class="hero-logo" />
           </div>
         </div>
         <div class="actions animate-fade-in">
           <a href="/zh/guide/what-is-mogan" class="cta-button primary">
             关于 Mogan
           </a>
-          <a href="/zh/guide/Install" class="cta-button secondary">
-            下载
-          </a>
+          <a href="/zh/guide/Install" class="cta-button secondary"> 下载 </a>
         </div>
       </div>
     </div>
@@ -42,7 +53,7 @@
     <div class="hero-container mobile" v-else>
       <div class="hero-content image-section">
         <div class="image-content">
-          <img src="/mogan-logo.png" alt="Liii STEM Logo" class="hero-logo">
+          <img src="/mogan-logo.png" alt="Liii STEM Logo" class="hero-logo" />
         </div>
       </div>
       <div class="hero-content text-content">
@@ -50,66 +61,68 @@
           <span class="gradient-text">公式 · 代码 · 排版</span>
         </h1>
         <p class="subtitle animate-slide-up">百倍速公式编辑！</p>
-        <p class="description animate-slide-up-delay">所见即所得，轻松达到 <span v-html="katex.renderToString('\\LaTeX')"></span>
-          级排版效果！</p>
+        <p class="description animate-slide-up-delay">
+          所见即所得，轻松达到
+          <span v-html="katex.renderToString('\\LaTeX')"></span> 级排版效果！
+        </p>
       </div>
       <div class="actions animate-fade-in">
         <a href="/zh/guide/what-is-mogan" class="cta-button primary">
           关于 Mogan
         </a>
-        <a href="/zh/guide/Install" class="cta-button secondary">
-          下载
-        </a>
+        <a href="/zh/guide/Install" class="cta-button secondary"> 下载 </a>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vitepress'
-import katex from 'katex'
-import 'katex/dist/katex.min.css'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from "vitepress";
+import katex from "katex";
+import "katex/dist/katex.min.css";
+import { ref, onMounted, onUnmounted } from "vue";
 
-const router = useRouter()
-const isMobile = ref(false)
+const router = useRouter();
+const isMobile = ref(false);
 
 const checkMobile = () => {
-  isMobile.value = window.innerWidth <= 1000
-}
+  isMobile.value = window.innerWidth <= 1000;
+};
 
 onMounted(() => {
-  checkMobile()
-  window.addEventListener('resize', checkMobile)
-})
+  checkMobile();
+  window.addEventListener("resize", checkMobile);
+});
 
 onUnmounted(() => {
-  window.removeEventListener('resize', checkMobile)
-})
+  window.removeEventListener("resize", checkMobile);
+});
 
 const scrollToElement = (id) => {
   setTimeout(() => {
-    const element = document.getElementById(id)
+    const element = document.getElementById(id);
     if (element) {
-      const elementRect = element.getBoundingClientRect()
-      const absoluteElementTop = element.getBoundingClientRect().top + window.scrollY
-      const middle = absoluteElementTop - (window.innerHeight / 2) + (elementRect.height / 2)
+      const elementRect = element.getBoundingClientRect();
+      const absoluteElementTop =
+        element.getBoundingClientRect().top + window.scrollY;
+      const middle =
+        absoluteElementTop - window.innerHeight / 2 + elementRect.height / 2;
 
       window.scrollTo({
         top: middle,
-        behavior: 'smooth'
-      })
+        behavior: "smooth",
+      });
     }
-  }, 0)
-}
+  }, 0);
+};
 
 const navigate = (path) => {
-  if (path.startsWith('#')) {
-    scrollToElement(path.slice(1))
+  if (path.startsWith("#")) {
+    scrollToElement(path.slice(1));
   } else {
-    router.go(path)
+    router.go(path);
   }
-}
+};
 </script>
 
 <style scoped>
@@ -284,10 +297,12 @@ const navigate = (path) => {
 }
 
 .gradient-text {
-  background: linear-gradient(120deg,
-      var(--vp-c-brand) 0%,
-      var(--vp-c-brand-light) 50%,
-      var(--vp-c-brand) 100%);
+  background: linear-gradient(
+    120deg,
+    var(--vp-c-brand) 0%,
+    var(--vp-c-brand-light) 50%,
+    var(--vp-c-brand) 100%
+  );
   background-size: 200% auto;
   animation: shine 8s linear infinite;
   -webkit-background-clip: text;
@@ -309,9 +324,11 @@ const navigate = (path) => {
 
 /* 修改按钮样式 */
 .cta-button.primary {
-  background: linear-gradient(120deg,
-      var(--vp-c-brand) 0%,
-      var(--vp-c-brand-light) 100%);
+  background: linear-gradient(
+    120deg,
+    var(--vp-c-brand) 0%,
+    var(--vp-c-brand-light) 100%
+  );
   color: white;
 }
 
@@ -407,7 +424,11 @@ const navigate = (path) => {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  background-image: radial-gradient(circle, var(--vp-c-brand) 1px, transparent 1px);
+  background-image: radial-gradient(
+    circle,
+    var(--vp-c-brand) 1px,
+    transparent 1px
+  );
   background-size: 50px 50px;
   opacity: 0.1;
   animation: particleFloat 20s linear infinite;
@@ -558,128 +579,6 @@ const navigate = (path) => {
   .floating-particles {
     opacity: 0.07;
     background-size: 40px 40px;
-  }
-}
-
-/* ============================================
-   大屏幕响应式布局 (>1800px)
-============================================ */
-@media (min-width: 1801px) {
-  .custom-hero {
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero-container {
-    max-width: 1800px;
-    gap: 4rem;
-    padding: 2rem;
-    min-height: 90vh;
-    align-items: center;
-  }
-
-  .text-content {
-    padding: 3rem;
-  }
-
-  .title {
-    font-size: 5.5rem !important;
-    margin-bottom: 2rem;
-  }
-
-  .subtitle {
-    font-size: 3.2rem !important;
-  }
-
-  .description {
-    font-size: 2rem !important;
-    margin: 4.85rem 0 13rem;
-  }
-
-  .hero-right-section {
-    max-width: 600px;
-  }
-
-  .hero-logo {
-    width: 360px;
-  }
-
-  .cta-button {
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    border-radius: 30px;
-  }
-}
-
-/* ============================================
-   2560*1600分辨率适配 (2560px)
-============================================ */
-@media (min-width: 2560px) {
-  .custom-hero {
-    padding: 0;
-    min-height: 100vh;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero-container {
-    max-width: 2400px;
-    gap: 8rem;
-    padding: 2rem;
-    height: 90vh;
-    align-items: center;
-  }
-
-  .text-content {
-    padding: 0 4rem;
-    max-width: 1600px;
-  }
-
-  .title {
-    font-size: 7rem !important;
-    margin-bottom: 3rem;
-  }
-
-  .subtitle {
-    font-size: 4.2rem !important;
-    margin-bottom: 1.5rem;
-  }
-
-  .description {
-    font-size: 2.8rem !important;
-    margin: 3rem 0 5rem;
-    line-height: 1.4;
-    max-width: 90%;
-  }
-
-  .hero-right-section {
-    max-width: 1000px;
-    height: 100%;
-    justify-content: center;
-  }
-
-  .hero-logo {
-    width: 560px;
-  }
-
-  .cta-button {
-    padding: 1.5rem 3rem;
-    font-size: 1.8rem;
-    border-radius: 42px;
-  }
-
-  .actions {
-    gap: 2rem;
-    margin-top: 4rem;
-  }
-
-  .floating-particles {
-    background-size: 80px 80px;
   }
 }
 </style>

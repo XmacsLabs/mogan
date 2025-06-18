@@ -1,61 +1,104 @@
 <template>
   <div>
-    <button :class="$style.button" @click="showModal = true" @mouseover="hover = true" @mouseleave="hover = false">
+    <button
+      :class="$style.button"
+      @click="showModal = true"
+      @mouseover="hover = true"
+      @mouseleave="hover = false"
+    >
       <div v-if="hover" :class="$style.hoverContent">
-        <img src="/images/download_blue.png" :alt="hoverAltText" :class="$style.icon">
+        <img
+          src="/images/download_blue.png"
+          :alt="hoverAltText"
+          :class="$style.icon"
+        />
         <p>{{ hoverText }}</p>
       </div>
-      
+
       <div v-else :class="$style.defaultContent">
-        <img src="/images/windows_icon.png" :alt="defaultAltText" :class="$style.icon">
+        <img
+          src="/images/windows_icon.png"
+          :alt="defaultAltText"
+          :class="$style.icon"
+        />
         <p>{{ defaultText }}</p>
       </div>
     </button>
 
-    <div v-if="showModal" :class="$style.modalBackdrop" @click.self="showModal = false">
+    <div
+      v-if="showModal"
+      :class="$style.modalBackdrop"
+      @click.self="showModal = false"
+    >
       <div :class="$style.modalContent">
         <h3>{{ modalTitle }}</h3>
-        <button :class="$style.smallButton" @click="downloadFile">{{ buttonText }}</button>
-        <button :class="$style.smallButton" @click="downloadFileGreen">{{ buttonGreenText }}</button>
-        <button :class="$style.closeButton" @click="showModal = false">{{ closeButtonText }}</button>
+        <button :class="$style.smallButton" @click="downloadFile">
+          {{ buttonText }}
+        </button>
+        <button :class="$style.smallButton" @click="downloadFileGreen">
+          {{ buttonGreenText }}
+        </button>
+        <button :class="$style.closeButton" @click="showModal = false">
+          {{ closeButtonText }}
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useRoute } from 'vitepress';
+import { ref, computed } from "vue";
+import { useRoute } from "vitepress";
 
 const showModal = ref(false);
 const hover = ref(false);
 const route = useRoute();
-const language = computed(() => route.path.startsWith('/zh/') ? 'zh' : 'en');
+const language = computed(() => (route.path.startsWith("/zh/") ? "zh" : "en"));
 
-const hoverText = computed(() => language.value === 'zh' ? '点击下载' : 'Click to Download');
-const defaultText = computed(() => language.value === 'zh' ? 'Windows' : 'Windows');
-const hoverAltText = computed(() => language.value === 'zh' ? '下载' : 'Download');
-const defaultAltText = computed(() => language.value === 'zh' ? 'Windows' : 'Windows');
-const modalTitle = computed(() => language.value === 'zh' ? '选择下载版本' : 'Select Download Version');
-const buttonText = computed(() => language.value === 'zh' ? '下载 Windows' : 'Download Windows');
-const buttonGreenText = computed(() => language.value === 'zh' ? '下载 Windows(绿色版)' : 'Download Windows (Portable)');
-const closeButtonText = computed(() => language.value === 'zh' ? '关闭' : 'Close');
+const hoverText = computed(() =>
+  language.value === "zh" ? "点击下载" : "Click to Download"
+);
+const defaultText = computed(() =>
+  language.value === "zh" ? "Windows" : "Windows"
+);
+const hoverAltText = computed(() =>
+  language.value === "zh" ? "下载" : "Download"
+);
+const defaultAltText = computed(() =>
+  language.value === "zh" ? "Windows" : "Windows"
+);
+const modalTitle = computed(() =>
+  language.value === "zh" ? "选择下载版本" : "Select Download Version"
+);
+const buttonText = computed(() =>
+  language.value === "zh" ? "下载 Windows" : "Download Windows"
+);
+const buttonGreenText = computed(() =>
+  language.value === "zh"
+    ? "下载 Windows(绿色版)"
+    : "Download Windows (Portable)"
+);
+const closeButtonText = computed(() =>
+  language.value === "zh" ? "关闭" : "Close"
+);
 
-const version = 'v1.2.9.7';
+const version = "v1.2.9.7";
 
 function downloadFile() {
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = `https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/${version}/MoganResearch-${version}-64bit-installer.exe`;
-  link.download = language.value === 'zh' ? `墨干${version}` : `Mogan ${version}`;
+  link.download =
+    language.value === "zh" ? `墨干${version}` : `Mogan ${version}`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
 }
 
 function downloadFileGreen() {
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = `https://mirrors.ustc.edu.cn/github-release/XmacsLabs/mogan/${version}/MoganResearch-${version}-64bit-portable.zip`;
-  link.download = language.value === 'zh' ? `墨干${version}` : `Mogan ${version}`;
+  link.download =
+    language.value === "zh" ? `墨干${version}` : `Mogan ${version}`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -115,7 +158,6 @@ function downloadFileGreen() {
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  
 }
 
 .modalBackdrop {
@@ -199,28 +241,6 @@ function downloadFileGreen() {
 
   .hoverContent {
     font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .button {
-    background-color: #333;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
-
-  .modalContent {
-    background-color: #444;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
-  }
-
-  .hoverContent {
-    color: black;
-  }
-  
-  .smallButton, .closeButton {
-    color: white;
   }
 }
 </style>
