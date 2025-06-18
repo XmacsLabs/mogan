@@ -362,6 +362,20 @@ function sidebarGuideZh() {
             ]
         },
         {
+            text: '使用指南',
+            items: [
+                  { text: "如何使用魔法粘贴", link: "/zh/guide/guide-magic-paste" },
+                  { text: "如何使用结构化搜索和替换", link: "/zh/guide/guide-structured-search-and-replace" },
+                  { text: "如何插入环境", link: "/zh/guide/guide-enunciation" },
+                  { text: "如何编辑公式", link: "/zh/guide/guide-eqbj" },
+                  { text: "如何插入参考文献", link: "/zh/guide/guide-cite" },
+                  { text: "如何自动编号公式", link: "/zh/guide/guide-eq" },
+                  { text: "如何自动编号图片", link: "/zh/guide/guide-figure" },
+                  { text: "如何自动编号表格", link: "/zh/guide/guide-table" },
+                  { text: "如何自动编号节", link: "/zh/guide/guide-section" },
+            ]
+        },
+        {
             text: '数据交换',
             items: [
                 { text: 'DOCX数据插件', link: '/zh/guide/plugin_data_docx.md' },

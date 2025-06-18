@@ -2,6 +2,9 @@
 
 Mogan does not support large model integration. However, our semi-open source [Liii STEM](https://liiistem.com/) has built-in large model plugins.
 
+For specific usage, please refer to the documentation of [Liii STEM's AI Integration Features](https://liiistem.com/docs/guide-tuto-llm-plug.html).
+
+
 ## Text, Math, Tables, etc. as Input
 
 ### Inserting a Large Model Block

@@ -2,7 +2,7 @@
 
 Welcome to the keyboard shortcuts guide for Mogan. Here we list the available shortcut combinations to help you use the software more efficiently.
 
-The documentation comes from the [Liii STEM official website](https://liiistem.cn/guide/docs/tutorials/keyboard_shortcuts.html). The shortcut list on the official website is continuously updated, and Mogan usually synchronizes the content in a timely manner, but there may be some delay. Please refer to the official documentation for the most up-to-date information. You can also get the latest PDF version of the shortcut manual on the official website.
+The documentation comes from the [Liii STEM official website](https://liiistem.com/docs/guide-keyboard-shortcuts.html). The shortcut list on the official website is continuously updated, and Mogan usually synchronizes the content in a timely manner, but there may be some delay. Please refer to the official documentation for the most up-to-date information. You can also get the latest PDF version of the shortcut manual on the official website.
 
 ## Environment Shortcuts
 

@@ -2,7 +2,7 @@
 
 欢迎查看墨干的键盘快捷键指南。这里列出了可用快捷键组合，帮助您更高效地使用软件。
 
-文档来自 [Liii STEM 官网](https://liiistem.cn/guide/docs/tutorials/keyboard_shortcuts.html)。该官网的快捷键列表会持续更新，墨干通常会及时同步更新内容，但可能存在一定延迟，请以官方文档为准。您也可在官网获取 PDF 版本的最新快捷键手册。
+文档来自 [Liii STEM 官网](https://liiistem.cn/docs/guide-keyboard-shortcuts.html)。该官网的快捷键列表会持续更新，墨干通常会及时同步更新内容，但可能存在一定延迟，请以官方文档为准。您也可在官网获取 PDF 版本的最新快捷键手册。
 
 ## 环境快捷键
 

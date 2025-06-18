@@ -145,7 +145,7 @@ E = mc^2 \quad \text{和} \quad \nabla\cdot\mathbf{D} = \rho
 ---
 
 ## 课程价格
-原价150元，早期优惠价100元。
+原价150元，录播课优惠价50元。
 
 ## 推荐资源
 1. loongtex官方文档：[loongtex.com/docs/app/help](https://www.loongtex.com/docs/app/help)

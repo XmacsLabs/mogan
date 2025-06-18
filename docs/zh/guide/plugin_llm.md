@@ -2,7 +2,7 @@
 
 Mogan 并不支持大模型集成。然而我们开发的半开源的[Liii STEM](https://liiistem.cn/)内置了大模型插件。
 
-具体使用可以参考[Liii STEM 的 AI 集成功能](https://liiistem.cn/guide/tutorials/llm_plugin.html)的文档。
+具体使用可以参考[Liii STEM 的 AI 集成功能](https://liiistem.cn/docs/guide-tuto-llm-plug.html)的文档。
 
 ## 使用指南
 
