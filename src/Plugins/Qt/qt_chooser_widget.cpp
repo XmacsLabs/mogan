@@ -182,19 +182,28 @@ qt_chooser_widget_rep::set_type (const string& _type) {
                     << LF;
     return false;
   }
-
-  mainNameFilter+= " (";
-  object        ret     = call ("format-get-suffixes*", _type);
-  array<object> suffixes= as_array_object (ret);
-  if (N (suffixes) > 1) defaultSuffix= to_qstring (as_string (suffixes[1]));
-  for (int i= 1; i < N (suffixes); ++i)
-    mainNameFilter+= " *." + to_qstring (as_string (suffixes[i]));
-  mainNameFilter+= " )";
-
-  nameFilters << mainNameFilter;
-  for (int i= 1; i < N (suffixes); ++i)
-    nameFilters << to_qstring (as_string (suffixes[i])) + "(*." +
-                       to_qstring (as_string (suffixes[i])) + ")";
+  if (_type == "image") {
+    mainNameFilter+= " (*.jpg *.jpeg *.jpe *.png *.bmp *.tif *.tiff *.svg)";
+    nameFilters << mainNameFilter;
+    nameFilters << "JPEG File InterChange Format (*jpg *jpeg *jpe)";
+    nameFilters << "Portable Network Graphics (*.png)";
+    nameFilters << "Windows Bitmap (*.bmp)";
+    nameFilters << "Tag Image File Format (*.tif *tiff)";
+    nameFilters << "Scalable Vector Graphics (*.svg)";
+  }
+  else {
+    mainNameFilter+= " (";
+    object        ret     = call ("format-get-suffixes*", _type);
+    array<object> suffixes= as_array_object (ret);
+    if (N (suffixes) > 1) defaultSuffix= to_qstring (as_string (suffixes[1]));
+    for (int i= 1; i < N (suffixes); ++i)
+      mainNameFilter+= " *." + to_qstring (as_string (suffixes[i]));
+    mainNameFilter+= " )";
+    nameFilters << mainNameFilter;
+    for (int i= 1; i < N (suffixes); ++i)
+      nameFilters << to_qstring (as_string (suffixes[i])) + "(*." +
+                         to_qstring (as_string (suffixes[i])) + ")";
+  }
 
   type= _type;
   return true;
@@ -237,7 +246,7 @@ qt_chooser_widget_rep::perform_dialog () {
     // QStringList filters;
     // if (nameFilter != "") filters << nameFilter;
     // filters << to_qstring (translate ("All files (*)"));
-    nameFilters << to_qstring (translate ("All files (*)"));
+    // nameFilters << to_qstring (translate ("All files (*)"));
     dialog->setNameFilters (nameFilters);
   }
 #endif
