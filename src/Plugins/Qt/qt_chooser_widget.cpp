@@ -185,11 +185,17 @@ qt_chooser_widget_rep::set_type (const string& _type) {
   if (_type == "image") {
     mainNameFilter+= " (*.jpg *.jpeg *.jpe *.png *.bmp *.tif *.tiff *.svg)";
     nameFilters << mainNameFilter;
-    nameFilters << "JPEG File InterChange Format (*jpg *jpeg *jpe)";
-    nameFilters << "Portable Network Graphics (*.png)";
-    nameFilters << "Windows Bitmap (*.bmp)";
-    nameFilters << "Tag Image File Format (*.tif *tiff)";
-    nameFilters << "Scalable Vector Graphics (*.svg)";
+    nameFilters << to_qstring (translate ("JPEG File InterChange Format") *
+                               " (*jpg *jpeg *jpe)");
+    nameFilters << to_qstring (translate ("Portable Network Graphics") *
+                               " (*.png)");
+    nameFilters << to_qstring (translate ("Windows Bitmap") * " (*.bmp)");
+    nameFilters << to_qstring (translate ("Tag Image File Format") *
+                               " (*.tif *tiff)");
+    nameFilters << to_qstring (translate ("Scalable Vector Graphics") *
+                               " (*.svg)");
+    nameFilters << to_qstring (translate ("Portable Document Format") *
+                               " (*.pdf)");
   }
   else {
     mainNameFilter+= " (";
