@@ -110,14 +110,15 @@ tree_extents (tree doc) {
  ******************************************************************************/
 
 class box_widget_rep : public simple_widget_rep {
-  box    b;
-  color  bg;
-  bool   transparent;
-  double zoomf;
-  double magf;
-  SI     dw, dh;
-  SI     last_x, last_y;
-  bool   lpressed;
+  box                     b;
+  color                   bg;
+  bool                    transparent;
+  double                  zoomf;
+  double                  magf;
+  SI                      dw, dh;
+  SI                      last_x, last_y;
+  bool                    lpressed;
+  static constexpr double display_scale= 0.4;
 
 public:
   box_widget_rep (box b, color bg, bool trans, double zoom, SI dw, SI dh);
@@ -147,8 +148,8 @@ void
 box_widget_rep::handle_get_size_hint (SI& w, SI& h) {
   SI X1= b->x1, Y1= b->y1;
   SI X2= b->x2, Y2= b->y2;
-  w= ((SI) ceil ((X2 - X1) * magf)) + 2 * dw;
-  h= ((SI) ceil ((Y2 - Y1) * magf)) + 2 * dh;
+  w= ((SI) ceil ((X2 - X1) * magf * display_scale)) + 2 * dw;
+  h= ((SI) ceil ((Y2 - Y1) * magf * display_scale)) + 2 * dh;
   abs_round (w, h);
 }
 
@@ -161,10 +162,11 @@ box_widget_rep::handle_repaint (renderer ren, SI x1, SI y1, SI x2, SI y2) {
     ren->set_pencil (bg);
     ren->fill (x1, y1, x2, y2);
   }
-  ren->set_zoom_factor (zoomf);
+  ren->set_zoom_factor (zoomf * display_scale);
   rectangles l (rectangle (0, 0, w, h));
-  SI         x= ((((SI) (w / magf)) - b->w ()) >> 1) - b->x1;
-  SI y= ((((SI) (h / magf)) - b->h ()) >> 1) - b->y1 - ((SI) (h / magf));
+  SI         x= ((((SI) (w / magf / display_scale)) - b->w ()) >> 1) - b->x1;
+  SI         y= ((((SI) (h / magf / display_scale)) - b->h ()) >> 1) - b->y1 -
+        ((SI) (h / magf / display_scale));
   b->redraw (ren, path (), l, x, y);
   ren->reset_zoom_factor ();
 }
@@ -225,11 +227,7 @@ box_widget_rep::handle_mouse (string kind, SI x, SI y, int m, time_t t,
 widget
 box_widget (box b, bool tr) {
   color  col = light_grey;
-  double zoom= 5.0 / 6.0;
-  if (retina_zoom == 1) {
-  }
-  else if (tm_style_sheet == "") zoom*= 2;
-  else zoom*= retina_scale;
+  double zoom= 4.0;
   return widget (
       tm_new<box_widget_rep> (b, col, tr, zoom, 3 * PIXEL, 3 * PIXEL));
 }
