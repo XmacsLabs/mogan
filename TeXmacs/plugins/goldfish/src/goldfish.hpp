@@ -45,7 +45,7 @@
 #include <wordexp.h>
 #endif
 
-#define GOLDFISH_VERSION "17.11.16"
+#define GOLDFISH_VERSION "17.11.17"
 
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
@@ -991,7 +991,7 @@ customize_goldfish_by_mode (s7_scheme* sc, string mode,
   }
 
   if (mode == "default" || mode == "liii") {
-    s7_eval_c_string (sc, "(import (liii base) (liii error) (liii lang))");
+    s7_eval_c_string (sc, "(import (liii base) (liii error) (liii oop))");
   }
   else if (mode == "scheme") {
     s7_eval_c_string (sc, "(import (liii base) (liii error))");

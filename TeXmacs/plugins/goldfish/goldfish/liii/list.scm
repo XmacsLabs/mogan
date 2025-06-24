@@ -46,7 +46,8 @@
 (import (srfi srfi-1)
         (srfi srfi-13)
         (liii error)
-        (liii case))
+        (liii case)
+        (only (liii oop) define-case-class chain-apply))
 (begin
 
 (define (length=? x scheme-list)

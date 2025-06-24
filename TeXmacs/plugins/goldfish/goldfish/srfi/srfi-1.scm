@@ -42,16 +42,15 @@
       (cons a (apply cons* b))))
 
 ; 0 clause BSD, from S7 repo stuff.scm
-(define* (iota n (start 0) (incr 1))
-  (when (not (integer? n))
-    (type-error "iota: n must be a integer"))
-  (when (< n 0)
-    (value-error "iota: n must be postive but received ~d" n))
-  (let ((lst (make-list n)))
-    (do ((p lst (cdr p))
-         (i start (+ i incr)))
-      ((null? p) lst)
-      (set! (car p) i))))
+(define* (iota count (start 0) (step 1))
+  (when (not (integer? count))
+    (type-error "iota: count must be an integer"))
+  (when (< count 0)
+    (value-error "iota: count must be non-negative but received ~d" count))
+  (do ((i count (- i 1))
+       (val (+ start (* (- count 1) step)) (- val step))
+       (result '() (cons val result)))
+      ((zero? i) result)))
 
 (define (proper-list? x)
   (let loop ((x x) (lag x))
@@ -99,8 +98,7 @@
 
 (define (ninth x) (list-ref x 8))
 
-(define (tenth x) 
-  (cadr (cddddr (cddddr x))))
+(define (tenth x) (list-ref x 9))
 
 (define (take l k)
   (let loop ((l l) (k k))
@@ -157,20 +155,42 @@
 (define (fold f initial . lists)
   (unless (procedure? f)
     (error 'type-error "expected procedure, got ~S" f))
-  (if (or (null? lists) (any null? lists))
-      initial
-      (apply fold f
-            (apply f (append (map car lists) (list initial)))
-            (map cdr lists))))
+  
+  (cond
+    ((null? lists) initial)
+    
+    ((and (pair? lists) (null? (cdr lists)) (list? (car lists)))
+     (let loop ((acc initial) (lst (car lists)))
+       (if (null? lst)
+           acc
+           (loop (f (car lst) acc) (cdr lst)))))
+    
+    (else
+     (let loop ((acc initial) (lsts lists))
+       (if (any null? lsts)
+           acc
+           (let* ((cars (map car lsts))
+                  (cdrs (map cdr lsts)))
+             (loop (apply f (append cars (list acc))) cdrs)))))))
 
 (define (fold-right f initial . lists)
   (unless (procedure? f)
     (error 'type-error "expected procedure, got ~S" f))
-  (if (or (null? lists) (any null? lists))
-      initial
-      (apply f 
-            (append (map car lists)
-                    (list (apply fold-right f initial (map cdr lists)))))))
+  
+  (cond
+    ((null? lists) initial)
+    ((and (pair? lists) (null? (cdr lists)) (list? (car lists)))
+     (let loop ((lst (car lists)))
+       (if (null? lst)
+           initial
+           (f (car lst) (loop (cdr lst))))))
+    (else
+     (let loop ((lsts lists))
+       (if (any null? lsts)
+           initial
+           (let* ((cars (map car lsts))
+                  (cdrs (map cdr lsts)))
+             (apply f (append cars (list (loop cdrs))))))))))
 
 (define (reduce f initial l)
   (if (null-list? l) initial
@@ -255,35 +275,63 @@
 
 (define (%extract-maybe-equal maybe-equal)
   (let ((my-equal (if (null-list? maybe-equal)
-                      =
+                      equal?
                       (car maybe-equal))))
     (if (procedure? my-equal)
         my-equal
         (error 'wrong-type-arg "maybe-equal must be procedure"))))
+
 (define (delete x l . maybe-equal)
   (let ((my-equal (%extract-maybe-equal maybe-equal)))
     (filter (lambda (y) (not (my-equal x y))) l)))
+
+;; Check if equality function is supported by s7 hash-table
+(define (%can-use-hash-table? eq-func)
+  (memq eq-func '(eq? eqv? equal? equivalent? = string=? string-ci=? char=? char-ci=?)))
+
+;; Fast hash-table based deduplication using s7's native hash-table
+(define (%delete-duplicates-hash lis eq-func)
+  (let ((seen (make-hash-table 8 eq-func))
+        (result '()))
+    (for-each 
+      (lambda (x)
+        (unless (hash-table-ref seen x)
+          (hash-table-set! seen x #t)
+          (set! result (cons x result))))
+      lis)
+    (reverse result)))
+
+;; origin
+(define (%delete-duplicates-scan lis my-equal)
+  (let loop ((remaining lis) (seen '()) (result '()))
+    (cond
+      ((null? remaining)
+       (reverse result))
+      ((member (car remaining) seen my-equal)
+       (loop (cdr remaining) seen result))
+      (else
+       (loop (cdr remaining)
+             (cons (car remaining) seen)
+             (cons (car remaining) result))))))
 
 ;;; right-duplicate deletion
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; delete-duplicates delete-duplicates!
 ;;;
-;;; Beware -- these are N^2 algorithms. To efficiently remove duplicates
-;;; in long lists, sort the list to bring duplicates together, then use a
-;;; linear-time algorithm to kill the dups. Or use an algorithm based on
-;;; element-marking. The former gives you O(n lg n), the latter is linear.
+;;; Hybrid strategy: Use hash table O(n) for supported functions and 
+;;; optimized scan O(n²) for other functions
+;;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 (define (delete-duplicates lis . maybe-equal)
   (let ((my-equal (%extract-maybe-equal maybe-equal)))
-    (let recur ((lis lis))
-      (if (null-list? lis)
-          lis
-          (let* ((x (car lis))
-                 (tail (cdr lis))
-                 (new-tail (recur (delete x tail my-equal))))
-            (if (eq? tail new-tail)
-                lis
-                (cons x new-tail)))))))
+    (cond
+      ((null? lis) lis)
+      ((%can-use-hash-table? my-equal)
+       (%delete-duplicates-hash lis my-equal))
+      (else
+       (%delete-duplicates-scan lis my-equal)))))
 
 (define (alist-cons key value alist)
   (cons (cons key value) alist))

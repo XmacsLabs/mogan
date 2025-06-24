@@ -16,7 +16,7 @@
 
 (define-library (liii range)
 (import (liii oop) 
-        (only (liii lang) rich-list) 
+        (liii rich-list)
         (liii error)) 
 (export range)
 (begin

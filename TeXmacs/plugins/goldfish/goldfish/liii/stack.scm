@@ -15,7 +15,7 @@
 ;
 
 (define-library (liii stack)
-(import (liii lang))
+(import (liii rich-list) (liii oop))
 (export stack)
 (begin
 
