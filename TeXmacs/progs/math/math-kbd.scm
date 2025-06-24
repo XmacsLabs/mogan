@@ -2539,6 +2539,7 @@
   ("space i f f" (make 'infix-iff))
   ("space i f f space" (make 'infix-iff))
   ;;("i f f var" "iff")
+  ("f o r space" "for ")
   ("f o r space a l l" (make 'prefix-for-all))
   ("f o r space a l l space" (make 'prefix-for-all)))
 
@@ -2573,6 +2574,7 @@
   ("space d e s d a" (make 'infix-iff))
   ("space d e s d a space" (make 'infix-iff))
   ;;("d e s d a var" "desda")
+  ("v o o r space" "voor ")
   ("v o o r space a l l e" (make 'prefix-for-all))
   ("v o o r space a l l e space" (make 'prefix-for-all)))
 
@@ -2604,6 +2606,7 @@
   ("space s s i" (make 'infix-iff))
   ("space s s i space" (make 'infix-iff))
   ;;("s s i var" "ssi")
+  ("p o u r space" "pour ")
   ("p o u r space t o u t" (make 'prefix-for-all))
   ("p o u r space t o u t space" (make 'prefix-for-all)))
 
@@ -2635,8 +2638,10 @@
   ("space g d w" (make 'infix-iff))
   ("space g d w space" (make 'infix-iff))
   ;;("g d w var" "gdw")
+  ("f u r space" "fur ")
   ("f u r space a l l e" (make 'prefix-for-all))
   ("f u r space a l l e space" (make 'prefix-for-all))
+  ("f u e r space" "fuer ")
   ("f u e r space a l l e" (make 'prefix-for-all))
   ("f u e r space a l l e space" (make 'prefix-for-all)))
 
