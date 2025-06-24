@@ -149,6 +149,7 @@ public:
   /* miscellaneous */
   void      compute_env_rects (path p, rectangles& rs, bool recurse);
   void      cursor_visible ();
+  void      make_cursor_visible ();
   void      selection_visible ();
   void      full_screen_mode (bool flag);
   void      before_menu_action ();

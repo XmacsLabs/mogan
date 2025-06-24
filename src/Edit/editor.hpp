@@ -155,6 +155,7 @@ public:
   virtual SI        get_canvas_y ()                                        = 0;
   virtual SI        get_scroll_x ()                                        = 0;
   virtual SI        get_scroll_y ()                                        = 0;
+  virtual void      make_cursor_visible ()                                 = 0;
   virtual void      invalidate (SI x1, SI y1, SI x2, SI y2)                = 0;
   virtual void      invalidate (rectangles rs)                             = 0;
   virtual void      invalidate_all ()                                      = 0;

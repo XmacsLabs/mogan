@@ -322,6 +322,18 @@ absval (SI x) {
 }
 
 void
+edit_interface_rep::make_cursor_visible () {
+  cursor cu= get_cursor ();
+  update_visible ();
+  bool must_update=
+      (cu->ox < vx1) || (cu->ox >= vx2) || (cu->oy < vy1) || (cu->oy >= vy2);
+
+  if (must_update) {
+    scroll_to (cu->ox, cu->oy);
+  }
+}
+
+void
 edit_interface_rep::cursor_visible () {
   path   sp= find_innermost_scroll (eb, tp);
   cursor cu= get_cursor ();
