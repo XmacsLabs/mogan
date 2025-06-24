@@ -100,9 +100,7 @@
 
 (define (gnuplot-plot code-path)
   (let ((cmd (fourth (argv))))
-    (if (os-macos?)
-      (system (string-append (goldfish-quote cmd) " " "-c" " " code-path))
-      (os-call (string-append (goldfish-quote cmd) " " "-c" " " code-path)))))
+    (os-call (string-append (goldfish-quote cmd) " " "-c" " " code-path))))
 
 (define (parse-magic-line magic-line)
   (let ((parser (make-argument-parser)))
