@@ -116,11 +116,9 @@ edit_interface_rep::resume () {
     string ldyn= "(dynamic (texmacs-left-tools " * win * "))";
     string rdyn= "(dynamic (texmacs-side-tools " * win * "))";
     string bdyn= "(dynamic (texmacs-bottom-tools " * win * "))";
-    string xdyn= "(dynamic (texmacs-extra-tools " * win * "))";
     SERVER (side_tools (1, "(vertical " * ldyn * ")"));
     SERVER (side_tools (0, "(vertical " * rdyn * ")"));
     SERVER (bottom_tools (0, "(vertical " * bdyn * ")"));
-    SERVER (bottom_tools (1, "(vertical " * xdyn * ")"));
   }
   cur_sb    = 2;
   env_change= env_change & (~THE_FREEZE);
@@ -633,11 +631,9 @@ edit_interface_rep::update_menus () {
     string ldyn= "(dynamic (texmacs-left-tools " * win * "))";
     string rdyn= "(dynamic (texmacs-side-tools " * win * "))";
     string bdyn= "(dynamic (texmacs-bottom-tools " * win * "))";
-    string xdyn= "(dynamic (texmacs-extra-tools " * win * "))";
     SERVER (side_tools (1, "(vertical " * ldyn * ")"));
     SERVER (side_tools (0, "(vertical " * rdyn * ")"));
     SERVER (bottom_tools (0, "(vertical " * bdyn * ")"));
-    SERVER (bottom_tools (1, "(vertical " * xdyn * ")"));
   }
   set_footer ();
   if (has_current_window ()) {
