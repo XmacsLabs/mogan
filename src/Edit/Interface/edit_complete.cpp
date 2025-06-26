@@ -1,4 +1,3 @@
-
 /******************************************************************************
  * MODULE     : edit_complete.cpp
  * DESCRIPTION: Tab completion
@@ -16,6 +15,7 @@
 #include "hashset.hpp"
 #include "iterator.hpp"
 #include "merge_sort.hpp"
+#include "message.hpp"
 #include "observers.hpp"
 #include "tree_observer.hpp"
 
@@ -132,6 +132,34 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
     completion_prefix= prefix;
     completions      = close_completions (compls);
     completion_pos   = 0;
+    bool visible;
+    SERVER (get_completion_listbox_visible (visible))
+    if (!visible) {
+      // TODO: refactor this part to edit_interface_rep::show_completion_listbox
+      array<string> full_completions;
+      for (int i= 0; i < N (completions); ++i) {
+        string c= completions[i];
+        if (c == completion_prefix) continue; // skip the prefix itself
+        full_completions << (completion_prefix * c);
+      }
+
+      path tp1= tp;
+      for (int i= 0; i < N (prefix); ++i) {
+        tp1= previous_valid (et, tp1);
+      }
+
+      cursor cu= eb->find_check_cursor (tp1);
+      // cout << "Prefix Cursor: " << cu->ox << ", " << cu->oy << LF;
+      SI pos_x=
+          ((cu->ox - get_scroll_x () - 500) * magf + get_canvas_x ()) / 256;
+      SI pos_y= -((cu->oy - 5000 - get_scroll_y ()) * magf) / 256;
+      // TODO: 5000 is a magic number to add space between completion list box
+      // and the text.
+      //       We need to find a better way to get the position
+
+      SERVER (show_completion_listbox (full_completions, pos_x, pos_y));
+    }
+
     insert_tree (completions[0]);
     complete_message ();
     beep ();
@@ -142,9 +170,17 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
 bool
 edit_interface_rep::complete_keypress (string key) {
   set_message ("", "");
+  cout << "complete_keypress: " << key << LF;
   if (key == "space") key= " ";
-  if ((key != "tab") && (key != "S-tab")) {
+
+  if (key == "enter" || key == "return") {
     set_input_normal ();
+    SERVER (set_completion_listbox_visible (false));
+    return true;
+  }
+  if ((key != "tab") && (key != "S-tab") && (key != "up") && (key != "down")) {
+    set_input_normal ();
+    SERVER (set_completion_listbox_visible (false));
     return false;
   }
   tree st= subtree (et, path_up (tp));
@@ -161,10 +197,17 @@ edit_interface_rep::complete_keypress (string key) {
     return false;
   }
 
-  if (key == "tab") completion_pos++;
-  else completion_pos--;
+  if (key == "tab" || key == "down") {
+    completion_pos++;
+    SERVER (set_completion_listbox_next (true));
+  }
+  else if (key == "S-tab" || key == "up") {
+    completion_pos--;
+    SERVER (set_completion_listbox_next (false));
+  }
   if (completion_pos < 0) completion_pos= N (completions) - 1;
   if (completion_pos >= N (completions)) completion_pos= 0;
+  SERVER (set_completion_listbox_visible (true))
   string new_s= completions[completion_pos];
   remove (path_up (tp) * (end - N (old_s)), N (old_s));
   insert (path_up (tp) * (end - N (old_s)), new_s);

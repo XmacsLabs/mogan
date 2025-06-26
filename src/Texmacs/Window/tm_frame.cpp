@@ -299,3 +299,23 @@ bool
 tm_frame_rep::in_full_screen_edit_mode () {
   return full_screen && full_screen_edit;
 }
+
+void
+tm_frame_rep::show_completion_listbox (array<string>& completions, SI x, SI y) {
+  concrete_window ()->show_compl_listbox (completions, x, y);
+}
+
+void
+tm_frame_rep::get_completion_listbox_visible (bool& visible) {
+  concrete_window ()->get_compl_listbox_visible (visible);
+}
+
+void
+tm_frame_rep::set_completion_listbox_visible (bool visible) {
+  concrete_window ()->set_compl_listbox_visible (visible);
+}
+
+void
+tm_frame_rep::set_completion_listbox_next (bool next) {
+  concrete_window ()->set_compl_listbox_next (next);
+}

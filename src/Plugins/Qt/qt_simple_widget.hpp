@@ -19,6 +19,9 @@
 #include "QTMWidget.hpp"
 #include "qt_widget.hpp"
 
+// Forward declaration
+class QtCompletionListBox;
+
 /*! A widget containing a TeXmacs canvas.
 
  This canvas can be used both for input or output of typesetted documents.
@@ -85,6 +88,12 @@ public:
   QTMWidget*     canvas () { return qobject_cast<QTMWidget*> (qwid); }
   QTMScrollView* scrollarea () { return qobject_cast<QTMScrollView*> (qwid); }
 
+  ////////////////////// Completion listbox support
+
+  void show_completion_listbox (array<string>& completions, SI x, SI y);
+  void hide_completion_listbox ();
+  bool completion_listbox_visible ();
+
   ////////////////////// backing store management
 
   static void repaint_all (); // called by qt_gui_rep::update()
@@ -94,12 +103,14 @@ protected:
   rectangles              invalid_regions;
   QPixmap*                backingPixmap;
   QPoint                  backing_pos;
+  QtCompletionListBox*    completionListBox;
 
   void           invalidate_rect (int x1, int y1, int x2, int y2);
   void           invalidate_all ();
   bool           is_invalid ();
   void           repaint_invalid_regions ();
   basic_renderer get_renderer ();
+  void           ensure_completion_listbox ();
 
   friend class QTMWidget;
 };
