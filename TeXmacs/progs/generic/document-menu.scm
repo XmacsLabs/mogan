@@ -1093,8 +1093,9 @@
     (assuming (tree-is-buffer? t)
       ((balloon (icon "tm_focus_help.xpm") "Describe tag")
        (focus-help)))
-    (=> (balloon (icon "tm_like.xpm") "Cite TeXmacs")
-        (link cite-texmacs-menu))))
+    (assuming (!= (get-preference "gui theme") "liii")
+      (=> (balloon (icon "tm_like.xpm") "Cite TeXmacs")
+          (link cite-texmacs-menu)))))
 
 (define (is-background-picture? bg*)
   (with bg (tm->stree bg*)

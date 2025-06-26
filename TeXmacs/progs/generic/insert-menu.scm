@@ -161,8 +161,9 @@
 
 (menu-bind texmacs-insert-icons
   /
-  (=> (balloon (icon "tm_macro.xpm") "Insert a personal macro")
-      (link insert-macro-menu))
+  (if (not (== (get-preference "gui theme") "liii"))
+      (=> (balloon (icon "tm_macro.xpm") "Insert a personal macro")
+          (link insert-macro-menu)))
   (if (not (in-text?))
       ((balloon (icon "tm_textual.xpm") "Insert plain text")
        (make 'text)))
@@ -179,8 +180,9 @@
       (if (style-has? "std-fold-dtd")
 	  (=> (balloon (icon "tm_switch.xpm") "Switching and folding")
 	      (link insert-fold-menu)))
-      (=> (balloon (icon "tm_animate.xpm") "Animation")
-	  (link insert-animation-menu)))
+      (if (not (== (get-preference "gui theme") "liii"))
+          (=> (balloon (icon "tm_animate.xpm") "Animation")
+	      (link insert-animation-menu))))
   (if (and (style-has? "session-dtd") (detailed-menus?) (in-text?))
       (=> (balloon (icon "tm_shell.xpm")
 		   "Start an interactive session")

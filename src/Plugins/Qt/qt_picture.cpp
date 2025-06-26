@@ -17,6 +17,7 @@
 #include "image_files.hpp"
 #include "iterator.hpp"
 #include "language.hpp"
+#include "preferences.hpp"
 #include "qt_utilities.hpp"
 #include "scheme.hpp"
 #include "tm_file.hpp"
@@ -114,24 +115,45 @@ qt_load_icon (url file_name) {
   }
   url svg= resolve ("$TEXMACS_PIXMAP_PATH" * url_system (base_name * ".svg"));
   url png= resolve ("$TEXMACS_PIXMAP_PATH" * url_system (base_name * ".png"));
-  if (exists (png)) {
-    return QIcon (as_pixmap (*xpm_image (file_name)));
-  }
-  else if (exists (svg)) {
+
+  bool is_modern_demo= (get_user_preference ("gui theme", "default") == "liii");
+
+  if (is_modern_demo) {
+    if (exists (svg)) {
 #ifdef OS_MINGW
-    return QIcon (qt_load_svg_icon (svg));
-#else
-    if (occurs ("dark", tm_style_sheet)) {
       return QIcon (qt_load_svg_icon (svg));
-    }
-    else {
-      return QIcon (to_qstring (as_string (svg)));
-    }
+#else
+      if (occurs ("dark", tm_style_sheet)) {
+        return QIcon (qt_load_svg_icon (svg));
+      }
+      else {
+        return QIcon (to_qstring (as_string (svg)));
+      }
 #endif
+    }
+    else if (exists (png)) {
+      return QIcon (as_pixmap (*xpm_image (png)));
+    }
   }
   else {
-    return QIcon (as_pixmap (*xpm_image (file_name)));
+    if (exists (png)) {
+      return QIcon (as_pixmap (*xpm_image (png)));
+    }
+    else if (exists (svg)) {
+#ifdef OS_MINGW
+      return QIcon (qt_load_svg_icon (svg));
+#else
+      if (occurs ("dark", tm_style_sheet)) {
+        return QIcon (qt_load_svg_icon (svg));
+      }
+      else {
+        return QIcon (to_qstring (as_string (svg)));
+      }
+#endif
+    }
   }
+
+  return QIcon (as_pixmap (*xpm_image (file_name)));
 }
 
 picture

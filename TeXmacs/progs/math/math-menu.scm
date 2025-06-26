@@ -1154,20 +1154,31 @@
   /
   (=> (balloon (icon "tm_color.xpm") "Select a foreground color")
       (link color-menu))
-  (=> (balloon (icon "tm_math_style.xpm")
-               "Change the style of mathematical formulas")
-      (group "Style")
-      ("Small inline" (make-with "math-display" "false"))
-      ("Large displayed" (make-with "math-display" "true"))
-      ---
-      (group "Size")
-      ("Normal" (make-with "math-level" "0"))
-      ("Script size" (make-with "math-level" "1"))
-      ("Script script size" (make-with "math-level" "2"))
-      ---
-      (group "Spacing")
-      ("Normal" (make-with "math-condensed" "false"))
-      ("Condensed" (make-with "math-condensed" "true"))))
+  (assuming (!= (get-preference "gui theme") "liii")
+    (=> (balloon (icon "tm_math_style.xpm")
+                 "Change the style of mathematical formulas")
+        (group "Style")
+        ("Small inline" (make-with "math-display" "false"))
+        ("Large displayed" (make-with "math-display" "true"))
+        ---
+        (group "Size")
+        ("Normal" (make-with "math-level" "0"))
+        ("Script size" (make-with "math-level" "1"))
+        ("Script script size" (make-with "math-level" "2"))
+        ---
+        (group "Spacing")
+        ("Normal" (make-with "math-condensed" "false"))
+        ("Condensed" (make-with "math-condensed" "true")))
+    (=> (balloon (icon "tm_math_preferences.xpm")
+                 "Preferences for editing mathematical formulas")
+        ("Enforce brackets to match" (toggle-matching-brackets))
+        ("Use extensible brackets" (toggle-preference "use large brackets"))
+        ---
+        (group "Context aids")
+        (link context-preferences-menu)
+        ---
+        (group "Semantics")
+        (link semantic-math-preferences-menu))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Icons for inserting mathematical markup
@@ -1261,17 +1272,6 @@
   (=> (balloon (icon "tm_op.xpm") "Insert a textual operator")
       (link textual-operator-menu))
   (link math-format-icons)
-  (=> (balloon (icon "tm_math_preferences.xpm")
-               "Preferences for editing mathematical formulas")
-      (group "Keyboard")
-      ("Enforce brackets to match" (toggle-matching-brackets))
-      ("Use extensible brackets" (toggle-preference "use large brackets"))
-      ---
-      (group "Context aids")
-      (link context-preferences-menu)
-      ---
-      (group "Semantics")
-      (link semantic-math-preferences-menu))
   (if (== (get-preference "semantic editing") "on")
       (=> (balloon (icon "tm_math_syntax.xpm")
                    "Specify semantics of a symbol or formula")

@@ -121,16 +121,16 @@ QTMTabPage::setupStyle () {
 
 #ifdef Q_OS_WINDOWS
   bg_color        = "#C7C8C9";
-  bg_color_hover  = "#F5F5F5";
+  bg_color_hover  = "#EFF0F1";
   border_color    = "#A6A6A6";
-  border_color_top= "#3DAEE9";
+  border_color_top= "#2c2c2c";
 #endif
 
 #if defined(Q_OS_LINUX) || defined(Q_OS_MAC)
   bg_color        = "#C7C8C9";
   bg_color_hover  = "#EFF0F1";
   border_color    = "#A6A6A6";
-  border_color_top= "#3DAEE9";
+  border_color_top= "#2c2c2c";
 #endif
 
   qss+= QString ("QTMTabPage{ padding: 0 26px; border-radius: 0px; "

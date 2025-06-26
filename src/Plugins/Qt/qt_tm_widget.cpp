@@ -258,13 +258,23 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   int toolbarHeight= 30 * retina_icons;
   mainToolBar->setFixedHeight (toolbarHeight + 8 * retina_icons);
   modeToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
-  focusToolBar->setFixedHeight (toolbarHeight);
+  if (tm_style_sheet == "liii") {
+    focusToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
+  }
+  else {
+    focusToolBar->setFixedHeight (toolbarHeight);
+  }
   tabToolBar->setRowHeight (toolbarHeight + 4 * retina_icons);
 #else
   int toolbarHeight= 30;
   mainToolBar->setFixedHeight (toolbarHeight + 8);
   modeToolBar->setFixedHeight (toolbarHeight + 4);
-  focusToolBar->setFixedHeight (toolbarHeight);
+  if (tm_style_sheet == "liii") {
+    focusToolBar->setFixedHeight (toolbarHeight + 4);
+  }
+  else {
+    focusToolBar->setFixedHeight (toolbarHeight);
+  }
   tabToolBar->setRowHeight (toolbarHeight + 4);
 #endif
 #else
@@ -273,13 +283,23 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     int toolbarHeight= 30;
     if (!use_unified_toolbar) mainToolBar->setFixedHeight (toolbarHeight + 8);
     modeToolBar->setFixedHeight (toolbarHeight + 4);
-    focusToolBar->setFixedHeight (toolbarHeight);
+    if (tm_style_sheet == "liii") {
+      focusToolBar->setFixedHeight (toolbarHeight + 4);
+    }
+    else {
+      focusToolBar->setFixedHeight (toolbarHeight);
+    }
   }
 #else
   int toolbarHeight= 30 * retina_icons;
   mainToolBar->setFixedHeight (toolbarHeight + 8);
   modeToolBar->setFixedHeight (toolbarHeight + 4);
-  focusToolBar->setFixedHeight (toolbarHeight);
+  if (tm_style_sheet == "liii") {
+    focusToolBar->setFixedHeight (toolbarHeight + 4);
+  }
+  else {
+    focusToolBar->setFixedHeight (toolbarHeight);
+  }
 #endif
 #endif
   if (tm_style_sheet != "") {
@@ -297,10 +317,32 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
       h3= 32;
     }
 #endif
-    mainToolBar->setFixedHeight (h1);
-    modeToolBar->setFixedHeight (h2);
-    focusToolBar->setFixedHeight (h3);
-    tabToolBar->setRowHeight (h2);
+    if (tm_style_sheet == "liii") {
+      // 在liii主题下，所有工具栏使用相同的高度
+      int h= (int) floor (36 * scale + 0.5);
+      mainToolBar->setFixedHeight (h);
+      modeToolBar->setFixedHeight (h);
+      focusToolBar->setFixedHeight (h);
+      tabToolBar->setRowHeight (h);
+
+      // 设置工具栏的尺寸策略
+      mainToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+      modeToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+      focusToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+      tabToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+
+      // 确保工具栏在拖动时保持固定高度
+      mainToolBar->setMovable (true);
+      modeToolBar->setMovable (true);
+      focusToolBar->setMovable (true);
+      tabToolBar->setMovable (true);
+    }
+    else {
+      mainToolBar->setFixedHeight (h1);
+      modeToolBar->setFixedHeight (h2);
+      focusToolBar->setFixedHeight (h3);
+      tabToolBar->setRowHeight (h2);
+    }
   }
 
   QWidget* cw= new QWidget ();

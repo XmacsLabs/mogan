@@ -403,10 +403,20 @@ init_env_vars () {
   (void) get_env_path (
       "TEXMACS_PIXMAP_PATH",
       "$TEXMACS_HOME_PATH/misc/pixmaps" |
-          url ("$TEXMACS_PATH/misc/pixmaps/modern/32x32/settings") |
-          url ("$TEXMACS_PATH/misc/pixmaps/modern/24x24/main") |
-          url ("$TEXMACS_PATH/misc/pixmaps/modern/20x20/mode") |
-          url ("$TEXMACS_PATH/misc/pixmaps/modern/16x16/focus") |
+          (get_user_preference ("gui theme", "default") == "liii"
+               ? url ("$TEXMACS_PATH/misc/pixmaps/liii/32x32/settings") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/liii/24x24/main") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/liii/20x20/mode") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/liii/16x16/"
+                          "focus") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/modern/32x32/settings") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/modern/24x24/main") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/modern/20x20/mode") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/modern/16x16/focus")
+               : url ("$TEXMACS_PATH/misc/pixmaps/modern/32x32/settings") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/modern/24x24/main") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/modern/20x20/mode") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/modern/16x16/focus")) |
           plugin_path ("misc/pixmaps"));
   (void) get_env_path ("TEXMACS_DIC_PATH",
                        "$TEXMACS_HOME_PATH/langs/natural/dic" |

@@ -193,6 +193,8 @@ main (int argc, char** argv) {
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-light.css";
   else if (theme == "dark")
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-dark.css";
+  else if (theme == "liii")
+    tm_style_sheet= "$TEXMACS_PATH/misc/themes/liii.css";
   else if (theme != "") tm_style_sheet= theme;
 #if !defined(OS_MINGW) && !defined(OS_WIN)
   set_env ("LC_NUMERIC", "POSIX");
