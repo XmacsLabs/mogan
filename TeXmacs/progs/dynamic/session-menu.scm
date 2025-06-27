@@ -125,6 +125,7 @@
 (menu-bind session-input-menu
   (when (in-plugin-with-converters?)
     ("Mathematical input" (toggle-session-math-input)))
+  ("Text input" (toggle-session-text-input))
   ("Multiline input" (toggle-session-multiline-input)))
 
 (menu-bind session-output-menu

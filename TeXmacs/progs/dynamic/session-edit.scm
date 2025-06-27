@@ -72,6 +72,26 @@
   (with-innermost t field-context?
     (field-update-math t)))
 
+
+(define session-text-input (make-ahash-table))
+
+(tm-define (session-text-input? . opts)
+  (with key (if (< (length opts) 2) (session-key)
+                (cons (car opts) (cadr opts)))
+    (ahash-ref session-text-input key)))
+
+(tm-define (session-enable-text-input lan ses)
+  (ahash-set! session-text-input (cons lan ses) #t))
+
+(tm-define (toggle-session-text-input)
+  (:synopsis "Toggle text input in sessions")
+  (:check-mark "v" session-text-input?)
+  (ahash-set! session-text-input (session-key)
+              (not (session-text-input?)))
+  (with-innermost t field-context?
+      (field-update-text t)))
+
+
 (define session-multiline-input (make-ahash-table))
 
 (tm-define (session-multiline-input?)
@@ -302,7 +322,9 @@
 	   (== (tree-index t) 1))))
 
 (tm-define field-tags
-  '(input unfolded-io folded-io input-math unfolded-io-math folded-io-math))
+  '(input unfolded-io folded-io
+    input-math unfolded-io-math folded-io-math
+    input-text unfolded-io-text folded-io-text))
 
 (tm-define (field-context? t)
   (and (tm? t)
@@ -328,6 +350,10 @@
 
 (tm-define (field-math-context? t)
   (and (tree-in? t '(input-math folded-io-math unfolded-io-math))
+       (tm-func? (tree-ref t :up) 'document)))
+
+(tm-define (field-text-context? t)
+  (and (tree-in? t '(input-text folded-io-text unfolded-io-text))
        (tm-func? (tree-ref t :up) 'document)))
 
 (tm-define (field-input-context? t)
@@ -423,23 +449,29 @@
 
 (define (field-insert-output t)
   (cond ((tm-func? t 'input)
-	 (tree-insert! t 2 (list '(document)))
-	 (tree-assign-node! t 'unfolded-io))
-	((tm-func? t 'input-math)
-	 (tree-insert! t 2 (list '(document)))
-	 (tree-assign-node! t 'unfolded-io-math))))
+         (tree-insert! t 2 (list '(document)))
+         (tree-assign-node! t 'unfolded-io))
+        ((tm-func? t 'input-math)
+         (tree-insert! t 2 (list '(document)))
+         (tree-assign-node! t 'unfolded-io-math))
+        ((tm-func? t 'input-text)
+         (tree-insert! t 2 (list '(document)))
+         (tree-assign-node! t 'unfolded-io-text))))
 
 (define (field-remove-output t)
   (cond ((or (tm-func? t 'folded-io) (tm-func? t 'unfolded-io))
-	 (tree-assign-node! t 'input)
-	 (tree-remove! t 2 1))
-	((or (tm-func? t 'folded-io-math) (tm-func? t 'unfolded-io-math))
-	 (tree-assign-node! t 'input-math)
-	 (tree-remove! t 2 1))
-	((tm-func? t 'output)
-	 (with p (tree-ref t :up)
-	   (when (tree-is? p 'document)
-	     (tree-remove! p (tree-index t) 1))))))
+         (tree-assign-node! t 'input)
+         (tree-remove! t 2 1))
+        ((or (tm-func? t 'folded-io-math) (tm-func? t 'unfolded-io-math))
+         (tree-assign-node! t 'input-math)
+         (tree-remove! t 2 1))
+        ((or (tm-func? t 'folded-io-text) (tm-func? t 'unfolded-io-text))
+         (tree-assign-node! t 'input-text)
+         (tree-remove! t 2 1))
+        ((tm-func? t 'output)
+         (with p (tree-ref t :up)
+               (when (tree-is? p 'document)
+                     (tree-remove! p (tree-index t) 1))))))
 
 (define (field-update-math t)
   (if (session-math-input?)
@@ -456,11 +488,28 @@
 	      (tree-assign-node! t 'folded-io)
 	      (tree-assign (tree-ref t 1) '(document "")))))))
 
+(define (field-update-text t)
+  (if (session-text-input?)
+      (when (field-prog-context? t)
+	(if (tm-func? t 'input)
+	    (tree-assign-node! t 'input-text)
+	    (begin
+	      (tree-assign-node! t 'folded-io-text)
+	      (tree-assign (tree-ref t 1) '(document "")))))
+      (when (field-math-context? t)
+	(if (tm-func? t 'input-text)
+	    (tree-assign-node! t 'input)
+	    (begin
+	      (tree-assign-node! t 'folded-io)
+	      (tree-assign (tree-ref t 1) '(document "")))))))
+
 (define (field-create t p forward?)
   (let* ((d (tree-ref t :up))
-	 (i (+ (tree-index t) (if forward? 1 0)))
-	 (l (if (session-math-input?) 'input-math 'input))
-	 (b `(,l ,p (document ""))))
+         (i (+ (tree-index t) (if forward? 1 0)))
+         (l (cond ((session-math-input?) 'input-math)
+                  ((session-text-input?) 'input-text)
+                  (else 'input)))
+         (b `(,l ,p (document ""))))
     (tree-insert d i (list b))
     (tree-ref d i)))
 
@@ -485,17 +534,18 @@
   (:argument lan "Language")
   (:argument ses "Session identifier")
   (let* ((ban `(output (document "")))
-	 (l (if (session-math-input? lan ses) 'input-math 'input))
-	 (p (plugin-prompt lan ses))
-	 (in `(,l (document ,p) (document "")))
-	 (s `(session ,lan ,ses (document ,ban ,in))))
+         (l (cond ((session-math-input? lan ses) 'input-math)
+                  ((session-text-input? lan ses) 'input-text)
+                  (else 'input)))
+         (p (plugin-prompt lan ses))
+         (in `(,l (document ,p) (document "")))
+         (s `(session ,lan ,ses (document ,ban ,in))))
     (insert-go-to s '(2 1 1 0 0))
     (with-innermost t field-input-context?
       (with u (tree-ref t :previous 0)
-	(if (url-exists? (url-unix "$TEXMACS_STYLE_PATH"
-				   (string-append lan ".ts")))
-	    (add-style-package lan))
-	(session-feed lan ses :start u t '())))))
+        (if (url-exists? (url-unix "$TEXMACS_STYLE_PATH" (string-append lan ".ts")))
+            (add-style-package lan))
+  (session-feed lan ses :start u t '())))))
 
 (define (input-options t)
   (with opts '()

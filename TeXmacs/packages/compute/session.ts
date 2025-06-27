@@ -181,7 +181,17 @@
 
   <assign|html-text|<macro|body|<with|mode|text|par-mode|justify|font-family|ss|par-indent|0em|par-par-sep|0.33em|<arg|body>>>>
 
-  \;
+  <assign|input-text|<\macro|prompt|in>
+    <input|<arg|prompt>|<text|<arg|in>>>
+  </macro>>
+
+  <assign|unfolded-io-text|<\macro|prompt|in|out>
+    <unfolded-io|<arg|prompt>|<text|<arg|in>>|<arg|out>>
+  </macro>>
+
+  <assign|folded-io-text|<\macro|prompt|in|out>
+    <folded-io|<arg|prompt>|<text|<arg|in>>|<arg|out>>
+  </macro>>
 </body>
 
 <\initial>

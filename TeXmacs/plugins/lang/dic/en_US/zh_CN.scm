@@ -2014,6 +2014,7 @@
 ("text corners" "文本角")
 ("text font" "文本字体")
 ("text height correction" "文本高度修正")
+("text input" "文本输入")
 ("text width" "")
 ("text" "文本")
 ("texts" "")
