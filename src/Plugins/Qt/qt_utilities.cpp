@@ -585,7 +585,7 @@ qt_pretty_image_size (int ww, int hh, string& w, string& h) {
   SI pt = get_current_editor ()->as_length ("1pt");
   SI par= get_current_editor ()->as_length ("1par");
   if (ww <= 0 || hh <= 0 || ww * pt > par) {
-    w= "1par";
+    w= "0.8par";
     h= "";
   }
   else {
