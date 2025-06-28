@@ -14,6 +14,7 @@
 
 #include "basic_renderer.hpp"
 #include "hashset.hpp"
+#include "typesetter.hpp"
 
 #include "QTMScrollView.hpp"
 #include "QTMWidget.hpp"
@@ -69,6 +70,7 @@ public:
   virtual void handle_set_zoom_factor (double zoom);
   virtual void handle_clear (renderer win, SI x1, SI y1, SI x2, SI y2);
   virtual void handle_repaint (renderer win, SI x1, SI y1, SI x2, SI y2);
+  virtual void handle_set_input_normal ();
 
   ////////////////////// Handling of TeXmacs' messages
 
@@ -89,10 +91,15 @@ public:
   QTMScrollView* scrollarea () { return qobject_cast<QTMScrollView*> (qwid); }
 
   ////////////////////// Completion listbox support
-
+  // TODO: determine when to use slot and to use this routine
   void show_completion_listbox (array<string>& completions, SI x, SI y);
+  void show_completion_listbox (path tp, array<string>& completions, struct cursor cu, double magf, SI scroll_x, SI scroll_y, SI canvas_x);
   void hide_completion_listbox ();
   bool completion_listbox_visible ();
+  void scroll_completion_listbox_by(SI x, SI y);
+  void scroll_completion_listbox();
+  void update_completion_listbox_position(tree& et, box eb, path tp, double magf, SI scroll_x, SI scroll_y, SI canvas_x, SI index);
+  void completion_listbox_next (bool next);
 
   ////////////////////// backing store management
 

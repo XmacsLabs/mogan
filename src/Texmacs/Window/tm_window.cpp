@@ -591,6 +591,11 @@ tm_window_rep::set_compl_listbox_next (bool next) {
   set_completion_listbox_next (wid, next);
 }
 
+void
+tm_window_rep::set_inp_mode_normal () {
+  set_input_mode_normal (wid);
+}
+
 /******************************************************************************
  * The footer as a status bar
  ******************************************************************************/

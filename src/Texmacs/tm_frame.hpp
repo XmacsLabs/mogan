@@ -63,6 +63,7 @@ public:
   bool   in_full_screen_mode ();
   bool   in_full_screen_edit_mode ();
 
+  /* completion listbox */
   void show_completion_listbox (array<string>& completions, SI x, SI y);
   void get_completion_listbox_visible (bool& visible);
   void set_completion_listbox_visible (bool visible);

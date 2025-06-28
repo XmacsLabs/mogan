@@ -53,6 +53,7 @@ enum slot_id {
   SLOT_COMPLETION_LISTBOX_SHOW,
   SLOT_COMPLETION_LISTBOX_VISIBLE,
   SLOT_COMPLETION_LISTBOX_NEXT,
+  SLOT_INPUT_MODE_NORMAL,
   SLOT_CANVAS,
   SLOT_SCROLLABLE,
   SLOT_CURSOR,
@@ -527,6 +528,11 @@ set_completion_listbox_visible (widget w, bool visible) {
 inline void
 set_completion_listbox_next (widget w, bool next) {
   send<bool> (w, SLOT_COMPLETION_LISTBOX_NEXT, next);
+}
+
+inline void
+set_input_mode_normal (widget w) {
+  send (w, SLOT_INPUT_MODE_NORMAL);
 }
 
 inline void

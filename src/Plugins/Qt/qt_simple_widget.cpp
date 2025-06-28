@@ -1,3 +1,4 @@
+
 /******************************************************************************
  * MODULE     : qt_simple_widget.hpp
  * DESCRIPTION: A widget containing a TeXmacs canvas.
@@ -127,6 +128,10 @@ qt_simple_widget_rep::handle_repaint (renderer win, SI x1, SI y1, SI x2,
   (void) y2;
 }
 
+void
+qt_simple_widget_rep::handle_set_input_normal () {
+}
+
 /******************************************************************************
  * Handling of TeXmacs messages
  ******************************************************************************/
@@ -223,7 +228,11 @@ qt_simple_widget_rep::send (slot s, blackbox val) {
     QSize  sz= canvas ()->surface ()->size ();
     qp-= QPoint (sz.width () / 2, sz.height () / 2);
     // NOTE: adjust because child is centered
+    cout << "qt_simple_widget_rep: setting scroll origin to "
+         << qp.x () << ", " << qp.y () << LF;
     scrollarea ()->setOrigin (qp);
+    // completionListBox->setScrollOrigin (canvas ()->origin ());
+    // completionListBox->updatePosition ();
   } break;
 
   case SLOT_ZOOM_FACTOR: {
@@ -333,6 +342,10 @@ qt_simple_widget_rep::send (slot s, blackbox val) {
       // This is a no-op.
     }
     return;
+  }
+
+  case SLOT_INPUT_MODE_NORMAL: {
+    handle_set_input_normal ();
   }
 
   default:
@@ -684,8 +697,10 @@ qt_simple_widget_rep::repaint_all () {
 
 void
 qt_simple_widget_rep::ensure_completion_listbox () {
+  // TODO: do we really need this ensuring every time?
+  //       or should we just create it at the beginning?
   if (!completionListBox && canvas ()) {
-    completionListBox= new QtCompletionListBox (canvas ());
+    completionListBox= new QtCompletionListBox (canvas (), this);
     if (tm_style_sheet == "") {
       completionListBox->setStyle (qtmstyle ());
     }
@@ -702,6 +717,16 @@ qt_simple_widget_rep::show_completion_listbox (array<string>& completions, SI x,
 }
 
 void
+qt_simple_widget_rep::show_completion_listbox (path tp, array<string>& completions, struct cursor cu,
+                                               double magf, SI scroll_x, SI scroll_y, SI canvas_x) {
+  ensure_completion_listbox ();
+  if (completionListBox) {
+    completionListBox->showCompletions (tp, completions, cu, magf, scroll_x, scroll_y, canvas_x);
+  }
+}
+
+
+void
 qt_simple_widget_rep::hide_completion_listbox () {
   if (completionListBox) {
     completionListBox->hide ();
@@ -711,4 +736,42 @@ qt_simple_widget_rep::hide_completion_listbox () {
 bool
 qt_simple_widget_rep::completion_listbox_visible () {
   return completionListBox && completionListBox->isVisible ();
+}
+
+void
+qt_simple_widget_rep::scroll_completion_listbox_by (SI x, SI y) {
+  QPoint qp (x, y);
+  coord2 p= from_qpoint (qp);
+  if (completionListBox) {
+    completionListBox->scrollBy (p.x1, p.x2);
+    completionListBox->updatePosition ();
+  }
+}
+
+void
+qt_simple_widget_rep::scroll_completion_listbox() {
+  if (completionListBox) {
+    completionListBox->setScrollOrigin(canvas()->origin());
+    completionListBox->updatePosition ();
+  }
+}
+
+void
+qt_simple_widget_rep::update_completion_listbox_position(tree& et, box eb, path tp, double magf, SI scroll_x, SI scroll_y, SI canvas_x, SI index) {
+  if (completionListBox) {
+    completionListBox->updateCache(et, eb, tp, magf, scroll_x, scroll_y, canvas_x, index);
+    completionListBox->updatePosition ();
+  }
+}
+
+void
+qt_simple_widget_rep::completion_listbox_next(bool next) {
+  if (completionListBox) {
+    if (next) {
+      completionListBox->selectNextItem ();
+    }
+    else {
+      completionListBox->selectPreviousItem ();
+    }
+  }
 }

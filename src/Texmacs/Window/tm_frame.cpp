@@ -307,6 +307,7 @@ tm_frame_rep::show_completion_listbox (array<string>& completions, SI x, SI y) {
 
 void
 tm_frame_rep::get_completion_listbox_visible (bool& visible) {
+  // Deprecated
   concrete_window ()->get_compl_listbox_visible (visible);
 }
 

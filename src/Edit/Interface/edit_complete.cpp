@@ -1,3 +1,4 @@
+
 /******************************************************************************
  * MODULE     : edit_complete.cpp
  * DESCRIPTION: Tab completion
@@ -57,6 +58,7 @@ find_completions (drd_info drd, tree t, hashset<string>& h, string prefix= "") {
 static array<string>
 find_completions (drd_info drd, tree t, string prefix= "") {
   hashset<string> h;
+  h->insert (string(""));
   find_completions (drd, t, h, prefix);
   return as_completions (h);
 }
@@ -132,34 +134,36 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
     completion_prefix= prefix;
     completions      = close_completions (compls);
     completion_pos   = 0;
-    bool visible;
-    SERVER (get_completion_listbox_visible (visible))
-    if (!visible) {
-      // TODO: refactor this part to edit_interface_rep::show_completion_listbox
+    {
+      // TODO: ?refactor this part to edit_interface_rep::show_completion_listbox
+      cout << "complete_start: "
+           << "completions=" << completions
+           << ", prefix=" << completion_prefix
+           << ", tp=" << tp
+           << ", et=" << et
+           << ", eb=" << eb
+           << LF;
       array<string> full_completions;
       for (int i= 0; i < N (completions); ++i) {
+        cout << "complete_start: completions[" << i << "]=" << completions[i] << LF;
         string c= completions[i];
-        if (c == completion_prefix) continue; // skip the prefix itself
         full_completions << (completion_prefix * c);
       }
-
       path tp1= tp;
       for (int i= 0; i < N (prefix); ++i) {
         tp1= previous_valid (et, tp1);
       }
-
       cursor cu= eb->find_check_cursor (tp1);
-      // cout << "Prefix Cursor: " << cu->ox << ", " << cu->oy << LF;
-      SI pos_x=
-          ((cu->ox - get_scroll_x () - 500) * magf + get_canvas_x ()) / 256;
-      SI pos_y= -((cu->oy - 5000 - get_scroll_y ()) * magf) / 256;
-      // TODO: 5000 is a magic number to add space between completion list box
-      // and the text.
-      //       We need to find a better way to get the position
-
-      SERVER (show_completion_listbox (full_completions, pos_x, pos_y));
+      cout << "show_completion_listbox: "
+           << "completions=" << full_completions
+           << ", cu->ox=" << cu->ox
+           << ", cu->oy=" << cu->oy
+           << ", magf=" << magf
+           << ", scroll_x=" << get_scroll_x ()
+           << ", scroll_y=" << get_scroll_y ()
+           << ", canvas_x=" << get_canvas_x () << LF;
+      show_completion_listbox (tp, full_completions, cu, magf, get_scroll_x(), get_scroll_y(), get_canvas_x());
     }
-
     insert_tree (completions[0]);
     complete_message ();
     beep ();
@@ -199,19 +203,20 @@ edit_interface_rep::complete_keypress (string key) {
 
   if (key == "tab" || key == "down") {
     completion_pos++;
-    SERVER (set_completion_listbox_next (true));
+    completion_listbox_next (true);
   }
   else if (key == "S-tab" || key == "up") {
     completion_pos--;
-    SERVER (set_completion_listbox_next (false));
+    completion_listbox_next (false);
   }
   if (completion_pos < 0) completion_pos= N (completions) - 1;
   if (completion_pos >= N (completions)) completion_pos= 0;
-  SERVER (set_completion_listbox_visible (true))
   string new_s= completions[completion_pos];
   remove (path_up (tp) * (end - N (old_s)), N (old_s));
   insert (path_up (tp) * (end - N (old_s)), new_s);
   complete_message ();
+  apply_changes(); // sync eb, for calculating the new cursor position
+  update_completion_listbox_position (et, eb, tp, magf, get_scroll_x(), get_scroll_y(), get_canvas_x(), completion_pos);
   return true;
 }
 
@@ -268,6 +273,7 @@ edit_interface_rep::custom_complete (tree r) {
   int           i, n= N (r);
   string        prefix;
   array<string> compls;
+  compls << string ("");
   for (i= 0; i < n; i++)
     if (is_atomic (r[i])) {
       string l= r[i]->label;

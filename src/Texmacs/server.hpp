@@ -78,6 +78,7 @@ public:
   virtual void   full_screen_mode (bool on, bool edit)         = 0;
   virtual bool   in_full_screen_mode ()                        = 0;
   virtual bool   in_full_screen_edit_mode ()                   = 0;
+  
   virtual void   show_completion_listbox (array<string>& completions, SI x,
                                           SI y)                = 0;
   virtual void   get_completion_listbox_visible (bool& visible)= 0;

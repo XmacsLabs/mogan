@@ -50,6 +50,7 @@ slot_name (const slot s) {
                              "SLOT_COMPLETION_LISTBOX_SHOW",
                              "SLOT_COMPLETION_LISTBOX_VISIBLE",
                              "SLOT_COMPLETION_LISTBOX_NEXT",
+                             "SLOT_INPUT_MODE_NORMAL",
                              "SLOT_CANVAS",
                              "SLOT_SCROLLABLE",
                              "SLOT_CURSOR",
