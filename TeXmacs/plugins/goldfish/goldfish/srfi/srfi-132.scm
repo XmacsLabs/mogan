@@ -52,7 +52,8 @@
         ((less-p (car lis2) (car lis1)) (loop (cons (car lis2) res) lis1 (cdr lis2)))
         (else (loop (cons (car lis1) res) (cdr lis1) lis2)))))
 
-  ; this list-merge! violates SRFI 132, since it does not satisfy the constant running space constraint specified in SRFI 132, and does not work "in place"
+  ; this list-merge! violates SRFI 132, since it does not satisfy the constant running space
+  ; constraint specified in SRFI 132, and does not work "in place"
   (define list-merge! list-merge)
 
   (define (list-stable-sort less-p lis)

@@ -22,9 +22,11 @@
   ; SRFI 1: Selectors
   first second third fourth fifth
   sixth seventh eighth ninth tenth
-  take drop take-right drop-right count fold fold-right split-at
+  take drop take-right drop-right fold fold-right split-at
   reduce reduce-right append-map filter partition remove find
   delete delete-duplicates
+  ; SRFI 1: Miscellaneous: length, append, concatenate, reverse, zip & count
+  zip count
   ; SRFI 1: Association List
   assoc assq assv alist-cons
   take-while drop-while list-index any every
@@ -140,6 +142,9 @@
   (let lp ((lis list1) (i 0))
     (if (null-list? lis) i
         (lp (cdr lis) (if (pred (car lis)) (+ i 1) i)))))
+
+(define (zip . lists)
+  (apply map list lists))
 
 (define (fold f initial l)
   (when (not (procedure? f))

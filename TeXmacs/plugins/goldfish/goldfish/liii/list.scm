@@ -26,8 +26,10 @@
   first second third fourth fifth sixth seventh eighth ninth tenth
   take drop take-right drop-right split-at
   last-pair last
+  ; SRFI 1: Miscellaneous: length, append, concatenate, reverse, zip & count
+  zip count
   ; SRFI 1: fold, unfold & map
-  count fold fold-right reduce reduce-right
+  fold fold-right reduce reduce-right
   filter partition remove append-map
   ; SRFI 1: Searching
   find any every list-index
@@ -37,15 +39,19 @@
   ; SRFI 1: Association List
   assoc assq assv alist-cons
   ; Liii List extensions
-  list-view flatmap
+  flat-map
   list-null? list-not-null? not-null-list?
   length=? length>? length>=? flatten
 )
 (import (srfi srfi-1)
-        (liii error))
+        (srfi srfi-13)
+        (liii error)
+        (liii case))
 (begin
 
 (define (length=? x scheme-list)
+  (when (not (integer? x))
+    (type-error "length=?: first parameter x must be an integer"))
   (when (< x 0)
     (value-error "length=?: expected non-negative integer x but received ~d" x))
   (cond ((and (= x 0) (null? scheme-list)) #t)
@@ -66,28 +72,7 @@
           ((pair? lst) (loop (cdr lst) (+ cnt 1)))
           (else (<= len cnt)))))
 
-(define (list-view scheme-list)
-  (define (f-inner-reducer scheme-list filter filter-func rest-funcs)
-    (cond ((null? rest-funcs) (list-view (filter filter-func scheme-list)))
-          (else
-           (f-inner-reducer (filter filter-func scheme-list)
-                            (car rest-funcs)
-                            (cadr rest-funcs)
-                            (cddr rest-funcs)))))
-  (define (f-inner . funcs)
-    (cond ((null? funcs) scheme-list)
-          ((length=? 2 funcs)
-           (list-view ((car funcs) (cadr funcs) scheme-list)))
-          ((even? (length funcs))
-           (f-inner-reducer scheme-list
-                            (car funcs)
-                            (cadr funcs)
-                            (cddr funcs)))
-          (else (error 'wrong-number-of-args
-                       "list-view only accepts even number of args"))))
-  f-inner)
-
-(define flatmap append-map)
+(define flat-map append-map)
 
 (define (not-null-list? l)
   (cond ((pair? l)

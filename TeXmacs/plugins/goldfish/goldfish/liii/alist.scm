@@ -7,7 +7,7 @@
         (liii list)
         (liii error)
         (scheme case-lambda))
-(export alist? alist-cons alist-ref alist-ref/default)
+(export alist? alist-cons alist-ref alist-ref/default vector->alist)
 (begin
 
 (define (alist? l)
@@ -36,6 +36,17 @@
     ((alist key default =)
      (alist-ref alist key (lambda () default) =))))
 
+; MIT License
+; Copyright guenchi (c) 2018 - 2019
+(define vector->alist
+  (typed-lambda ((x vector?))
+    (if (zero? (length x)) '()
+        (let loop ((x (vector->list x)) (n 0))
+             (cons (cons n (car x)) 
+                   (if (null? (cdr x))
+                       '()
+                       (loop (cdr x) (+ n 1))))))))
+    
 ) ; end of begin
 ) ; end of library
 

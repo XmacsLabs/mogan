@@ -2,7 +2,7 @@
   (if (string? path)
     (if (not (g_access path 0)) ; F_OK
       #f
-      (if (g_access path 4) ; R_OK
+      (if (g_access path 1) ; R_OK
           #t
           (error 'permission-error (string-append "No permission: " path))))
     (error 'type-error "(file-exists? path): path should be string")))
