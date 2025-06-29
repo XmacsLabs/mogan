@@ -1632,6 +1632,14 @@ function main()
                 }
             },
             {
+                scm_name = "make-cursor-visible",
+                cpp_name = "make_cursor_visible",
+                ret_type = "void",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
                 scm_name = "set-drd",
                 cpp_name = "set_current_drd",
                 ret_type = "void",
