@@ -7,10 +7,26 @@ triggers:
     branches:
       precise:
         - main
+    paths:
+      precise:
+        - .workflow/ci-ubuntu.yml
+        - src/
+        - tests/
+        - TeXmacs/progs/
+        - xmake/
+        - xmake.lua
   push:
     branches:
       precise:
         - main
+    paths:
+      precise:
+        - .workflow/ci-ubuntu.yml
+        - src/
+        - tests/
+        - TeXmacs/progs/
+        - xmake/
+        - xmake.lua
 
 variables:
   XMAKE_MAIN_REPO: 'https://gitee.com/tboox/xmake-repo.git'
