@@ -1,3 +1,4 @@
+
 /******************************************************************************
  * MODULE     : qt_completion_listbox.cpp
  * DESCRIPTION: Implementation of Completion ListBox widget for auto-completion
