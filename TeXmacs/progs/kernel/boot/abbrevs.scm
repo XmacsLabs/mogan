@@ -209,9 +209,17 @@
       (set! opts (list (car opts) u))))
   (cpp-choose-file 
     (lambda (u)
-      (if (and (not (url-none? u)) (url-contains-wildcard? u))
-          (choose-file fun "File name and path cannot contain ' * ' " type (car opts) (cadr opts))
-          (fun u)))
+    ;; u is return from tm_frame_rep::choose_file in tm_dialogue.cpp
+    ;; make sure u is a url, or car of u is a url
+    ;; and that it does not contain a wildcard
+      (if (or (url? u) (and (pair? u) (url? (car u))))
+        (let ((u-url (if (url? u) u (car u))))
+          (if (and (not (url-none? u-url)) (url-contains-wildcard? u-url))
+              (dialogue-window (message-widget "File name and path cannot contain ' * '") 
+                    (lambda () (choose-file fun title type (car opts) (cadr opts)))
+                    "Invalid file name")
+              (fun u)))
+        (fun u)))
     title type (car opts) (cadr opts)))
 
 (define-public (alt-windows-delete l)
