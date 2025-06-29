@@ -152,6 +152,13 @@
          (switch-to-window (car (buffer->windows buf))))
         (else (switch-to-buffer buf))))
 
+(tm-define (switch-to-buffer-index index)
+  (let* ((lst (buffer-menu-unsorted-list 99))
+         (len (length lst)))
+    (when (and (integer? index) (>= index 0) (< index len))
+      (let ((buf (list-ref lst index)))
+        (switch-to-buffer* buf)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Saving buffers
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

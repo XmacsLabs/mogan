@@ -787,6 +787,7 @@
   ("std c" (kbd-copy))
   ("std f" (interactive-search))
   ("std i" (toggle-italic))
+  ("std t" (new-document))
   ("std n" (new-document))
   ("std N" (new-document*))
   ("std o" (open-document))
@@ -808,6 +809,12 @@
   ("std =" (zoom-in (sqrt (sqrt 2.0))))
   ("std -" (zoom-out (sqrt (sqrt 2.0))))
   ("std 0" (change-zoom-factor 1.0))
+  ("std 1" (switch-to-buffer-index 0))
+  ("std 2" (switch-to-buffer-index 1))
+  ("std 3" (switch-to-buffer-index 2)) 
+  ("std 4" (switch-to-buffer-index 3))
+  ("std 5" (switch-to-buffer-index 4))
+  ("std 6" (switch-to-buffer-index 5)) 
 
   ;; not yet implemented
   ;;("std t" (add-tab))
