@@ -1,0 +1,45 @@
+version: '1.0'
+name: ci-lolly
+displayName: ci-lolly
+triggers:
+  trigger: auto
+  pr:
+    branches:
+      precise:
+        - main
+    paths:
+      precise:
+        - .workflow/ci-lolly.yml
+        - 3rdparty/lolly
+  push:
+    branches:
+      precise:
+        - main
+    paths:
+      precise:
+        - .workflow/ci-ubuntu.yml
+        - 3rdparty/lolly
+
+variables:
+  XMAKE_MAIN_REPO: 'https://gitee.com/tboox/xmake-repo.git'
+  XMAKE_BINARY_REPO: 'https://gitee.com/xmake-mirror/build-artifacts.git'
+  XMAKE_ROOT: y
+  QT_QPA_PLATFORM: offscreen
+          
+
+stages:
+  - name: build_and_test 
+    displayName: build_and_test
+    strategy: fast
+    trigger: auto
+    executor: []
+    steps:
+      - step: build@ruby
+        name: build_ruby
+        displayName: build liii
+        rubyVersion: 3.0.2
+        commands:
+          - wget https://gitee.com/XmacsLabs/mogan/attach_files/1813514/download -O /tmp/xmake.deb
+          - sha1sum /tmp/xmake.deb | grep ac3629bd0fa66f179aef35dc00b7a1c89735651a
+          - apt install /tmp/xmake.deb
+          - pwd
