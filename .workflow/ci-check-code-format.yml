@@ -7,10 +7,22 @@ triggers:
     branches:
       precise:
         - main
+    paths:
+      precise:
+        - .workflow/ci-check-code-format.yml
+        - .clang-format
+        - src/
+        - tests/
   push:
     branches:
       precise:
         - main
+    paths:
+      precise:
+        - .workflow/ci-check-code-format.yml
+        - .clang-format
+        - src/
+        - tests/
 
 stages:
   - name: check_code_format
