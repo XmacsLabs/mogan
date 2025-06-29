@@ -724,6 +724,7 @@
 "view-delete"
 "window-set-view"
 "switch-to-buffer"
+"make-cursor-visible"
 "set-drd"
 "window-list"
 "windows-number"

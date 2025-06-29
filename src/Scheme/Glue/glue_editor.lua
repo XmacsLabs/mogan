@@ -1291,6 +1291,14 @@ function main()
                 cpp_name = "show_cursor_if_hidden",
                 ret_type = "void"
             },
+            {
+                scm_name = "make-cursor-visible",
+                cpp_name = "make_cursor_visible",
+                ret_type = "void",
+                arg_list = {
+                    "url"
+                }
+            },
             
             -- selections
             {

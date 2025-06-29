@@ -19,6 +19,7 @@
 #include "tm_url.hpp"
 #include "web_files.hpp"
 
+#include <moebius/data/scheme.hpp>
 #include <moebius/drd/drd_std.hpp>
 
 #if defined(OS_MINGW) || defined(OS_WIN)
@@ -26,6 +27,7 @@
 #endif
 
 using namespace moebius;
+using moebius::data::scm_quote;
 using moebius::drd::the_drd;
 
 /******************************************************************************
@@ -411,6 +413,8 @@ switch_to_buffer (url name) {
   if (nwin != NULL)
     nwin->set_window_zoom_factor (nwin->get_window_zoom_factor ());
   // cout << "Switched to buffer " << vw->buf->buf->name << "\n";
+  exec_delayed (
+      scheme_cmd ("(make-cursor-visible '" * scm_quote (as_string (u)) * ")"));
 }
 
 void
@@ -480,4 +484,16 @@ var_focus_on_buffer (url name) {
   new_vw->ed->resume ();
   send_keyboard_focus (new_vw->ed);
   return true;
+}
+
+void
+make_cursor_visible (url u) {
+  // Make the cursor visible in the view
+  tm_view vw= concrete_view (u);
+  if (vw == NULL) return;
+  tm_window win= vw->win;
+  if (win == NULL) return;
+  editor ed= vw->ed;
+  if (ed == NULL) return;
+  ed->make_cursor_visible ();
 }

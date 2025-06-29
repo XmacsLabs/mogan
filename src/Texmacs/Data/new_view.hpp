@@ -38,6 +38,7 @@ void       switch_to_buffer (url name);
 void       focus_on_editor (editor ed);
 bool       focus_on_buffer (url name);
 bool       var_focus_on_buffer (url name);
+void       make_cursor_visible (url u);
 
 // Low level types and routines
 class tm_view_rep;
