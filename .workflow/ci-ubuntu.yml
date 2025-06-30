@@ -44,7 +44,7 @@ stages:
     steps:
       - step: build@ruby
         name: build_ruby
-        displayName: build liii
+        displayName: build and test liii
         rubyVersion: 3.0.2
         commands:
           - wget https://gitee.com/XmacsLabs/mogan/attach_files/1813514/download -O /tmp/xmake.deb
@@ -55,6 +55,10 @@ stages:
           - xmake repo -u
           - xmake config -vD --yes
           - xmake build -vD liii
+          - xmake build -vD --group=tests
+          - bash bin/test_all 
+          - bash bin/test_all_integrated
+          - bash bin/test_all_scheme
         caches: [
           build/.build_cache,
           build/.packages,
