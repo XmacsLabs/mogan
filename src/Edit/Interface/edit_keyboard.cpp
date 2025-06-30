@@ -152,7 +152,11 @@ edit_interface_rep::try_shortcut (string comb) {
             verbatim (rhs), shorth == "" ? 1 : 3000);
     }
     if ((status & 1) == 1) cmd ();
-    else if (N (shorth) > 0) call ("kbd-insert", shorth);
+    else if (N (shorth) > 0 && comb != "S-F5") {
+      call ("kbd-insert", shorth);
+      if (get_input_mode() == INPUT_COMPLETE)
+        exec_delayed (scheme_cmd("(kbd-variant (focus-tree) #t)"));
+    }
     // cout << "Mark= " << sh_mark << "\n";
     return true;
   }
@@ -223,6 +227,7 @@ is_combo_shortcuts (string key) {
 
 void
 edit_interface_rep::key_press (string gkey) {
+  cout << "Key press: " << gkey << "\n";
   string zero= "a";
   zero[0]    = '\0';
   string key = replace (gkey, "<#0>", zero);
@@ -303,12 +308,19 @@ edit_interface_rep::key_press (string gkey) {
       if (!inside_active_graphics ()) {
         archive_state ();
         call ("kbd-insert", rew);
+        cout << "Inserted single character1: " << rew << "\n";
+        if (get_input_mode() == INPUT_COMPLETE){
+          cout << "Exec delayed complete-try\n";
+          //exec_delayed (scheme_cmd("(if (complete-try?) (noop))"));
+          exec_delayed (scheme_cmd("(kbd-variant (focus-tree) #t)"));
+      }
       }
     interrupt_shortcut ();
   }
   else if (contains_unicode_char (rew)) {
     archive_state ();
     call ("kbd-insert", key);
+        cout << "Inserted single character2: " << rew << "\n";
     interrupt_shortcut ();
   }
 #ifdef Q_OS_MAC
@@ -323,11 +335,13 @@ edit_interface_rep::key_press (string gkey) {
            !inside_active_graphics ()) {
     archive_state ();
     call ("kbd-insert", "<" * key * ">");
+        cout << "Inserted single character3: " << rew << "\n";
     interrupt_shortcut ();
   }
   else if (N (key) > 1 && !is_combo_shortcuts (key) && key != "escape") {
     archive_state ();
     call ("insert", key);
+        cout << "Inserted single character4: " << rew << "\n";
     interrupt_shortcut ();
   }
   else {

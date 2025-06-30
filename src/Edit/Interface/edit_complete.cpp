@@ -87,15 +87,22 @@ edit_interface_rep::complete_try () {
   }
   else {
     if ((end == 0) || (!is_iso_alpha (s[end - 1])) ||
-        ((end != N (s)) && is_iso_alpha (s[end])))
+        ((end != N (s)) && is_iso_alpha (s[end]))) {
+      set_input_normal ();
+      SERVER (set_completion_listbox_visible (false));
       return false;
+    }
     int start= end - 1;
     while ((start > 0) && is_iso_alpha (s[start - 1]))
       start--;
     ss= s (start, end);
     a = find_completions (drd, et, ss);
   }
-  if (N (a) == 0) return false;
+  if (N (a) <= 1) {
+    set_input_normal ();
+    SERVER (set_completion_listbox_visible (false));
+    return false;
+  }
   complete_start (ss, a);
   return true;
 }
@@ -123,25 +130,18 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
   if ((end < N (prefix)) || (s (end - N (prefix), end) != prefix)) return;
 
   // perform first completion and switch to completion mode if necessary
-  if (N (compls) == 1) {
-    string s= compls[0];
-    if (ends (s, "()")) // temporary fix for Pari
-      insert_tree (s, path (N (s) - 1));
-    else insert_tree (s);
-    completions= array<string> ();
-  }
-  else {
+  {
     completion_prefix= prefix;
     completions      = close_completions (compls);
     completion_pos   = 0;
     {
       // TODO: ?refactor this part to edit_interface_rep::show_completion_listbox
       cout << "complete_start: "
-           << "completions=" << completions
-           << ", prefix=" << completion_prefix
-           << ", tp=" << tp
-           << ", et=" << et
-           << ", eb=" << eb
+      //     << "completions=" << completions
+          << ", prefix=" << completion_prefix
+      //     << ", tp=" << tp
+      //     << ", et=" << et
+      //     << ", eb=" << eb
            << LF;
       array<string> full_completions;
       for (int i= 0; i < N (completions); ++i) {
@@ -166,7 +166,7 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
     }
     insert_tree (completions[0]);
     complete_message ();
-    beep ();
+    // beep ();
     set_input_mode (INPUT_COMPLETE);
   }
 }
@@ -182,9 +182,14 @@ edit_interface_rep::complete_keypress (string key) {
     SERVER (set_completion_listbox_visible (false));
     return true;
   }
-  if ((key != "tab") && (key != "S-tab") && (key != "up") && (key != "down")) {
+  else if (key == "escape" || key == " ") {
     set_input_normal ();
     SERVER (set_completion_listbox_visible (false));
+    return false;
+  }
+  else if ((key != "tab") && (key != "S-tab") && (key != "up") && (key != "down")) {
+    //set_input_normal ();
+    //SERVER (set_completion_listbox_visible (false));
     return false;
   }
   tree st= subtree (et, path_up (tp));
@@ -272,7 +277,7 @@ edit_interface_rep::custom_complete (tree r) {
   if (!is_tuple (r)) return;
   int           i, n= N (r);
   string        prefix;
-  array<string> compls;
+  hashset<string> compls;
   compls << string ("");
   for (i= 0; i < n; i++)
     if (is_atomic (r[i])) {
@@ -283,8 +288,12 @@ edit_interface_rep::custom_complete (tree r) {
     }
   // cout << prefix << ", " << compls << LF;
 
-  if ((prefix == "") || (N (compls) == 0)) return;
-  complete_start (prefix, compls);
+  if ((prefix == "") || (N (compls) <= 1)) {
+    set_input_normal ();
+    SERVER (set_completion_listbox_visible (false));
+    return;
+  }
+  complete_start (prefix, as_completions (compls));
 }
 
 /******************************************************************************
