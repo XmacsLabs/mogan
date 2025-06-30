@@ -21,8 +21,8 @@
 
   ; Step 2: Export the buffer to the docx file url
   ; (display* "export buffer to: " docx-file-url "\n")
-  (export-to-docx tm-file-url docx-file-url)
-
+  (export-buffer-main (current-buffer) docx-file-url "docx" ())
+  
   ; Check if the docx file exists
   (if (url-exists? docx-file-url)
       (display* "Export successful: " docx-file-url "\n")

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xmake run --yes -vD --group=scheme_tests

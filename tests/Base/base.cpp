@@ -14,7 +14,7 @@
 #include <QtTest/QtTest>
 
 #ifndef KERNEL_L1
-bool headless_mode= false;
+extern bool headless_mode;
 #endif
 
 void

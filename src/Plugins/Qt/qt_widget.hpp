@@ -221,11 +221,24 @@ public:
   virtual void send (slot s, blackbox val);
 
   virtual blackbox query (slot s, int type_id) {
-    (void) type_id;
-    if (DEBUG_QT)
-      debug_qt << "qt_widget_rep::query(), unhandled " << slot_name (s)
-               << " for widget of type: " << type_as_string () << LF;
-    return blackbox ();
+    static int id= 1;
+    switch (s) {
+    case SLOT_IDENTIFIER: {
+      check_type_id<int> (type_id, s);
+      return close_box<int> (id++);
+    }
+    case SLOT_MAIN_ICONS_VISIBILITY: {
+      return close_box<bool> (false);
+    }
+    case SLOT_POSITION: {
+      return close_box<coord2> (coord2 (0, 0));
+    }
+    case SLOT_SIZE: {
+      return close_box<coord2> (coord2 (800, 600));
+    }
+    default:
+      return qt_widget_rep::query (s, type_id);
+    }
   }
 
   virtual widget read (slot s, blackbox index) {
@@ -336,6 +349,20 @@ public:
     }
     case SLOT_SIZE: {
       return close_box<coord2> (coord2 (800, 600));
+    }
+    case SLOT_SCROLL_POSITION:
+    case SLOT_EXTENTS:
+    case SLOT_VISIBLE_PART:
+    case SLOT_ZOOM_FACTOR: {
+      // Return default values for scroll-related queries in headless mode
+      if (s == SLOT_VISIBLE_PART) {
+        check_type_id<coord4> (type_id, s);
+        return close_box<coord4> (coord4 (0, 0, 0, 0));
+      }
+      else {
+        check_type_id<coord2> (type_id, s);
+        return close_box<coord2> (coord2 (0, 0));
+      }
     }
     default:
       return qt_widget_rep::query (s, type_id);

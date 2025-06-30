@@ -22,6 +22,7 @@
 #include <QSize>
 #include <QString>
 #include <QUrl>
+#include <iostream>
 
 #if QT_VERSION >= 0x060000
 #include <QStringList>
@@ -117,7 +118,8 @@ QPixmap as_pixmap (const QImage& im);
 inline void
 check_type_void (blackbox bb, slot s) {
   if (!is_nil (bb)) {
-    failed_error << "slot type= " << as_string (s) << LF;
+    std::cerr << "[DEBUG] check_type_void failed, slot="
+              << as_charp (as_string (s)) << std::endl;
     TM_FAILED ("type mismatch");
   }
 }
@@ -126,7 +128,9 @@ template <class T>
 inline void
 check_type_id (int type_id, slot s) {
   if (type_id != type_helper<T>::id) {
-    failed_error << "slot type= " << as_string (s) << LF;
+    std::cerr << "[DEBUG] check_type_id failed, slot="
+              << as_charp (as_string (s)) << " type_id=" << type_id
+              << " expect=" << type_helper<T>::id << std::endl;
     TM_FAILED ("type mismatch");
   }
 }
@@ -135,7 +139,9 @@ template <class T>
 void
 check_type (blackbox bb, slot s) {
   if (type_box (bb) != type_helper<T>::id) {
-    failed_error << "slot type= " << as_string (s) << LF;
+    std::cerr << "[DEBUG] check_type failed, slot=" << as_charp (as_string (s))
+              << " type_box=" << type_box (bb)
+              << " expect=" << type_helper<T>::id << std::endl;
     TM_FAILED ("type mismatch");
   }
 }

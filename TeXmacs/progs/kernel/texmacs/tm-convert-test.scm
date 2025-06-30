@@ -1,11 +1,11 @@
 (use-modules
-  (data cpp)
+  (data code)
   (data java)
   (data julia)
   (data scala)
   (data python))
 
-(define (regtest-cpp)
+(define (regtest-code)
   (regression-test-group
    "cpp file suffix" "cpp format"
    format-from-suffix :none
@@ -74,7 +74,7 @@
    (test "no such format" "no-such-format" "generic")))
 
 (tm-define (test_70_7)
-  (let ((n (+ (regtest-cpp)
+  (let ((n (+ (regtest-code)
               (regtest-java)
               (regtest-python)
               (regtest-scala)
@@ -84,3 +84,6 @@
               (regtest-format-from-suffix))))
     (display* "Total: " (object->string n) " tests.\n")
     (display "Test suite of 70_7: ok\n")))
+
+(tm-define (regtest-tm-convert)
+  (test_70_7))

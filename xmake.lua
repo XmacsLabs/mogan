@@ -12,6 +12,40 @@
 set_project("Liii STEM Suite")
 local XMACS_VERSION="2025.0.11"
 
+-- Generate build/config.h from template
+add_configfiles("src/System/config.h.xmake", {
+    filename = "config.h",
+    variables = {
+        SIZEOF_VOID_P = 8,
+        VERSION = XMACS_VERSION,
+        USE_FREETYPE = 1,
+        USE_ICONV = true,
+        USE_PLUGIN_GS = true,
+        USE_PLUGIN_BIBTEX = true,
+        USE_PLUGIN_LATEX_PREVIEW = true,
+        USE_PLUGIN_TEX = true,
+        USE_PLUGIN_ISPELL = true,
+        USE_PLUGIN_PDF = true,
+        USE_PLUGIN_SPARKLE = false,
+        USE_PLUGIN_HTML = true,
+        USE_PLUGIN_GIT = not is_plat("wasm"),
+        OS_MACOS = is_plat("macosx"),
+        MACOSX_EXTENSIONS = is_plat("macosx"),
+        QTTEXMACS = true,
+        SANITY_CHECKS = true,
+        OS_MINGW = is_plat("mingw"),
+        OS_GNU_LINUX = is_plat("linux"),
+        OS_WIN = is_plat("windows"),
+        OS_WASM = is_plat("wasm"),
+        NOMINMAX = true,
+        QTPIPES = true,
+        USE_QT_PRINTER = true,
+        TM_DYNAMIC_LINKING = true,
+        USE_FONTCONFIG = true,
+        PDFHUMMUS_NO_TIFF = true
+    }
+})
+
 -- because this cpp project use variant length arrays which is not supported by
 -- msvc, this project will not support windows env.
 -- because some package is not ported to cygwin env, this project will not
@@ -217,6 +251,7 @@ function build_glue_on_config()
                 always_changed = false
             })
         end
+        os.mkdir(path.join("$(buildir)/glue"))
     end)
 end
 
@@ -788,4 +823,37 @@ xpack("liii") do
         end)
     end
 end
+end
+
+includes("xmake/vars.lua")
+
+includes("xmake/tests.lua")
+-- Tests in C++
+all_cpp_tests = os.files("tests/**_test.cpp")
+cpp_benches = os.files("bench/**_bench.cpp")
+
+for _, filepath in ipairs(cpp_benches) do
+    add_target_cpp_bench(filepath, "libmogan")
+end
+
+if not (is_plat("linux") and (linuxos.name () == "ubuntu" and linuxos.version():major() == 20)) then
+    for _, filepath in ipairs(all_cpp_tests) do
+        if not string.find(filepath, "tests/L3/") then
+            add_target_cpp_test(filepath, "libmogan")
+        end
+    end
+end
+
+-- Tests in Scheme
+for _, filepath in ipairs(os.files("TeXmacs/progs/**/*-test.scm")) do
+    add_target_scheme_test(filepath, INSTALL_DIR, RUN_ENVS)
+end
+
+for _, filepath in ipairs(os.files("TeXmacs/progs/kernel/**/*-test.scm")) do
+    add_target_scheme_test(filepath, INSTALL_DIR, RUN_ENVS)
+end
+
+-- Integration tests
+for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
+    add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
 end

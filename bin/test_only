@@ -1,0 +1,9 @@
+#!/bin/bash
+# Support both PowerShell and bash
+if [ -n "$1" ]; then
+    # bash mode
+    xmake build $1 ; xmake run $1
+else
+    # PowerShell mode
+    xmake build $args[0] ; xmake run $args[0]
+fi
