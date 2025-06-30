@@ -1829,6 +1829,8 @@
 ("setup printer" "")
 ("several equations" "多行公式")
 ("shape" "字形")
+("shape::ornament" "形状")
+("Shape::ornament:" "形状:")
 ("shift-down" "")
 ("shift-right" "")
 ("short" "简短")
