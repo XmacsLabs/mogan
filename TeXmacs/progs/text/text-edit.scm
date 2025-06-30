@@ -827,7 +827,7 @@
         (list "padding-below" "Below")
         (list "ornament-vpadding" "Inner")
         (list "ornament-hpadding" "Indentation")
-        (list "ornament-shape" "Shape")
+        (list "ornament-shape" "Shape::ornament")
         (list "ornament-color" "Color")
         (list "ornament-border" "Border")))
 
@@ -837,7 +837,7 @@
         (list "padding-below" "Below")
         (list "ornament-vpadding" "Inner")
         (list "ornament-hpadding" "Indentation")
-        (list "ornament-shape" "Shape")
+        (list "ornament-shape" "Shape::ornament")
         (list "ornament-color" "Color")
         (list "ornament-border" "Border")
         (list "ornament-title-style" "Title style")
@@ -845,7 +845,7 @@
 
 (tm-define (customizable-parameters t)
   (:require (tree-is? t 'ornament))
-  (append (list (list "ornament-shape" "Shape")
+  (append (list (list "ornament-shape" "Shape::ornament")
                 (list "ornament-color" "Color"))
           (if (== (tree-arity t) 1) (list)
               (list (list "ornament-title-style" "Title style")
@@ -856,7 +856,7 @@
 
 (tm-define (customizable-parameters t)
   (:require (tree-in? t (ornament-tag-list)))
-  (list (list "ornament-shape" "Shape")
+  (list (list "ornament-shape" "Shape:ornament")
         (list "ornament-border" "Border width")
         (list "ornament-hpadding" "Horizontal padding")
         (list "ornament-vpadding" "Vertical padding")))
