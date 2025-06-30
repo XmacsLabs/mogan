@@ -1,4 +1,3 @@
-
 -------------------------------------------------------------------------------
 --
 -- MODULE      : vars.lua
@@ -12,20 +11,20 @@
 
 TEXMACS_VERSION = "2.1.2"
 GOLDFISH_VERSION = "17.11.2"
-XMACS_VERSION="1.2.9.8"
-CONFIG_USER = "XmacsLabs"
+XMACS_VERSION="2025.0.10"
+CONFIG_USER = "LiiiLabs"
 DEVEL_VERSION = TEXMACS_VERSION
 DEVEL_RELEASE = 1
 STABLE_VERSION = TEXMACS_VERSION
 STABLE_RELEASE = 1
 
--- XmacsLabs dependencies
-TBOX_VERSION = "1.7.6"
-LOLLY_VERSION = "1.4.28"
+-- LiiiLabs dependencies
+TBOX_VERSION = "1.7.5"
+LOLLY_VERSION = "1.4.26"
 
 -- Third-party dependencies
 CPPTRACE_VERSION = "v0.7.1"
-S7_VERSION = "20241230"
+S7_VERSION = "20240816"
 TREESITTER_VERSION = "0.22.6"
 TREESITTER_CPP_VERSION = "0.22.2"
 TREESITTER_SCHEME_VERSION = "0.6.2"
@@ -56,7 +55,7 @@ TM_CONFIGURE_VARS = {
 RUN_ENVS = {TEXMACS_PATH=path.join(os.projectdir(), "TeXmacs")}
 
 -- Source Code
-libmogan_headers = {
+libstem_headers = {
     "$(projectdir)/src/Data/Convert",
     "$(projectdir)/src/Data/Document",
     "$(projectdir)/src/Data/History",
@@ -82,6 +81,7 @@ libmogan_headers = {
     "$(projectdir)/src/Graphics/Types",
     "$(projectdir)/src/Kernel/Abstractions",
     "$(projectdir)/src/Kernel/Types",
+    "$(projectdir)/src/Mogan",
     "$(projectdir)/src/Plugins",
     "$(projectdir)/src/Scheme",
     "$(projectdir)/src/Scheme/S7",
@@ -101,20 +101,29 @@ libmogan_headers = {
     "$(projectdir)/src/System/Misc",
     "$(projectdir)/src/Texmacs",
     "$(projectdir)/src/Texmacs/Data",
+    "$(projectdir)/src/Texmacs/Server",
+    "$(projectdir)/src/Texmacs/Window",
     "$(projectdir)/src/Typeset",
+    "$(projectdir)/src/Typeset/Boxes",
     "$(projectdir)/src/Typeset/Bridge",
     "$(projectdir)/src/Typeset/Concat",
+    "$(projectdir)/src/Typeset/Env",
+    "$(projectdir)/src/Typeset/Format",
+    "$(projectdir)/src/Typeset/Line",
     "$(projectdir)/src/Typeset/Page",
+    "$(projectdir)/src/Typeset/Stack",
+    "$(projectdir)/src/Typeset/Table",
     "$(buildir)/glue",
     "$(projectdir)/TeXmacs/include",
     "$(projectdir)/TeXmacs/plugins/goldfish/src",
 }
 
-libmogan_srcs = {
+libstem_srcs = {
     "$(projectdir)/src/Data/**.cpp",
     "$(projectdir)/src/Edit/**.cpp",
     "$(projectdir)/src/Graphics/**.cpp",
     "$(projectdir)/src/Kernel/**.cpp",
+    "$(projectdir)/src/Mogan/**.cpp",
     "$(projectdir)/src/Scheme/Scheme/**.cpp",
     "$(projectdir)/src/Scheme/S7/**.cpp",
     "$(projectdir)/src/Scheme/L2/**.cpp",
@@ -127,37 +136,4 @@ libmogan_srcs = {
     "$(projectdir)/src/Texmacs/Server/**.cpp",
     "$(projectdir)/src/Texmacs/Window/**.cpp",
     "$(projectdir)/src/Typeset/**.cpp",
-}
-
-plugin_qt_srcs_on_wasm = {
-    "$(projectdir)/src/Plugins/Qt/*.cpp|QTMPipeLink.cpp|QTMPrintDialog.cpp|QTMPrinterSettings.cpp|qt_printer_widget.cpp",
-    "$(projectdir)/src/Plugins/Qt/*.hpp|QTMPipeLink.hpp|QTMPrintDialog.hpp|QTMPrinterSettings.hpp",
-}
-plugin_qt_srcs = {
-    "$(projectdir)/src/Plugins/Qt/**.cpp",
-    "$(projectdir)/src/Plugins/Qt/**.hpp"
-}
-plugin_macos_srcs = {
-    "$(projectdir)/src/Plugins/MacOS/HIDRemote.m",
-    "$(projectdir)/src/Plugins/MacOS/mac_spellservice.mm",
-    "$(projectdir)/src/Plugins/MacOS/mac_utilities.mm",
-    "$(projectdir)/src/Plugins/MacOS/mac_app.mm"
-}
-plugin_treesitter_srcs = {
-    "$(projectdir)/src/Plugins/Treesitter/**.cpp",
-    "$(projectdir)/src/Plugins/Treesitter/**.hpp",
-}
-plugin_pdf_srcs = { "$(projectdir)/src/Plugins/Pdf/**.cpp" }
-plugin_xml_srcs = { "$(projectdir)/src/Plugins/Xml/**.cpp" }
-plugin_html_srcs = { "$(projectdir)/src/Plugins/Html/**.cpp" }
-plugin_database_srcs = { "$(projectdir)/src/Plugins/Database/**.cpp" }
-plugin_freetype_srcs = { "$(projectdir)/src/Plugins/Freetype/**.cpp" }
-plugin_metafont_srcs = { "$(projectdir)/src/Plugins/Metafont/**.cpp" }
-plugin_ghostscript_srcs = { "$(projectdir)/src/Plugins/Ghostscript/**.cpp" }
-plugin_ispell_srcs = { "$(projectdir)/src/Plugins/Ispell/**.cpp" }
-plugin_tex_srcs = { "$(projectdir)/src/Plugins/Tex/**.cpp" }
-plugin_latex_preview_srcs = { "$(projectdir)/src/Plugins/LaTeX_Preview/**.cpp" }
-plugin_bibtex_srcs = { "$(projectdir)/src/Plugins/Bibtex/**.cpp" }
-plugin_openssl_srcs = { "$(projectdir)/src/Plugins/Openssl/**.cpp" }
-plugin_updater_srcs = { "$(projectdir)/src/Plugins/Updater/**.cpp" }
-plugin_git_srcs = { "$(projectdir)/src/Plugins/Git/**.cpp" }
+} 

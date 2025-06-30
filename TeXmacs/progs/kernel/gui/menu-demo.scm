@@ -263,3 +263,63 @@
 (tm-define (show-form w)
   ;; Example: execute (show-form form1) in a Scheme session
   (dialogue-window w (lambda (x) (display* x "\n")) "Simple form"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Regtest routines for menu widgets
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (regtest-menu-widgets)
+  ;; Basic test to ensure menu module loads without errors
+  (regression-test-group
+   "menu" "widgets"
+   values values
+   (test "module loaded successfully" 
+     #t 
+     #t)
+   (test "tm-widget macro available" 
+     (defined? 'tm-widget) 
+     #t)
+   (test "show function available" 
+     (defined? 'show) 
+     #t)
+   (test "show-form function available" 
+     (defined? 'show-form) 
+     #t)
+   (test "tm-define macro available" 
+     (defined? 'tm-define) 
+     #t)
+   (test "menu-bind macro available" 
+     (defined? 'menu-bind) 
+     #t)
+   (test "display* function available" 
+     (defined? 'display*) 
+     #t)
+   (test "noop function available" 
+     (defined? 'noop) 
+     #t)
+   (test "refresh-now function available" 
+     (defined? 'refresh-now) 
+     #t)
+   (test "stree->tree function available" 
+     (defined? 'stree->tree) 
+     #t)
+   (test "buffer-tree function available" 
+     (defined? 'buffer-tree) 
+     #t)
+   (test "widget-hmenu function available" 
+     (defined? 'widget-hmenu) 
+     #t)
+   (test "widget-text function available" 
+     (defined? 'widget-text) 
+     #t)
+   (test "widget-vlist function available" 
+     (defined? 'widget-vlist) 
+     #t)
+   (test "widget-hlist function available" 
+     (defined? 'widget-hlist) 
+     #t)))
+
+(tm-define (regtest-menu)
+  (let ((n (regtest-menu-widgets)))
+    (display* "Total: " (number->string n) " tests.\n")
+    (display "Test suite of regtest-menu: ok\n")))

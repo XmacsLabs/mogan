@@ -1,1 +1,3 @@
+#!/bin/bash
+
 xmake run --yes -vD --group=tests

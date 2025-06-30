@@ -13,6 +13,10 @@
 #include "file.hpp"
 #include <QtTest/QtTest>
 
+#ifndef KERNEL_L1
+extern bool headless_mode;
+#endif
+
 void
 qcompare (string actual, string expected) {
   QCOMPARE (as_charp (actual), as_charp (expected));
