@@ -93,12 +93,16 @@ public:
   ////////////////////// Completion listbox support
   // TODO: determine when to use slot and to use this routine
   void show_completion_listbox (array<string>& completions, SI x, SI y);
-  void show_completion_listbox (path tp, array<string>& completions, struct cursor cu, double magf, SI scroll_x, SI scroll_y, SI canvas_x);
+  void show_completion_listbox (path tp, array<string>& completions,
+                                struct cursor cu, double magf, SI scroll_x,
+                                SI scroll_y, SI canvas_x);
   void hide_completion_listbox ();
   bool completion_listbox_visible ();
-  void scroll_completion_listbox_by(SI x, SI y);
-  void scroll_completion_listbox();
-  void update_completion_listbox_position(tree& et, box eb, path tp, double magf, SI scroll_x, SI scroll_y, SI canvas_x, SI index);
+  void scroll_completion_listbox_by (SI x, SI y);
+  void scroll_completion_listbox ();
+  void update_completion_listbox_position (tree& et, box eb, path tp,
+                                           double magf, SI scroll_x,
+                                           SI scroll_y, SI canvas_x, SI index);
   void completion_listbox_next (bool next);
 
   ////////////////////// backing store management

@@ -58,7 +58,7 @@ find_completions (drd_info drd, tree t, hashset<string>& h, string prefix= "") {
 static array<string>
 find_completions (drd_info drd, tree t, string prefix= "") {
   hashset<string> h;
-  h->insert (string(""));
+  h->insert (string (""));
   find_completions (drd, t, h, prefix);
   return as_completions (h);
 }
@@ -135,17 +135,20 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
     completions      = close_completions (compls);
     completion_pos   = 0;
     {
-      // TODO: ?refactor this part to edit_interface_rep::show_completion_listbox
+      // TODO: ?refactor this part to
+      // edit_interface_rep::show_completion_listbox
       cout << "complete_start: "
-      //     << "completions=" << completions
-          << ", prefix=" << completion_prefix
-      //     << ", tp=" << tp
-      //     << ", et=" << et
-      //     << ", eb=" << eb
+           //     << "completions=" << completions
+           << ", prefix="
+           << completion_prefix
+           //     << ", tp=" << tp
+           //     << ", et=" << et
+           //     << ", eb=" << eb
            << LF;
       array<string> full_completions;
       for (int i= 0; i < N (completions); ++i) {
-        cout << "complete_start: completions[" << i << "]=" << completions[i] << LF;
+        cout << "complete_start: completions[" << i << "]=" << completions[i]
+             << LF;
         string c= completions[i];
         full_completions << (completion_prefix * c);
       }
@@ -155,14 +158,13 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
       }
       cursor cu= eb->find_check_cursor (tp1);
       cout << "show_completion_listbox: "
-           << "completions=" << full_completions
-           << ", cu->ox=" << cu->ox
-           << ", cu->oy=" << cu->oy
-           << ", magf=" << magf
+           << "completions=" << full_completions << ", cu->ox=" << cu->ox
+           << ", cu->oy=" << cu->oy << ", magf=" << magf
            << ", scroll_x=" << get_scroll_x ()
            << ", scroll_y=" << get_scroll_y ()
            << ", canvas_x=" << get_canvas_x () << LF;
-      show_completion_listbox (tp, full_completions, cu, magf, get_scroll_x(), get_scroll_y(), get_canvas_x());
+      show_completion_listbox (tp, full_completions, cu, magf, get_scroll_x (),
+                               get_scroll_y (), get_canvas_x ());
     }
     insert_tree (completions[0]);
     complete_message ();
@@ -187,9 +189,10 @@ edit_interface_rep::complete_keypress (string key) {
     SERVER (set_completion_listbox_visible (false));
     return false;
   }
-  else if ((key != "tab") && (key != "S-tab") && (key != "up") && (key != "down")) {
-    //set_input_normal ();
-    //SERVER (set_completion_listbox_visible (false));
+  else if ((key != "tab") && (key != "S-tab") && (key != "up") &&
+           (key != "down")) {
+    // set_input_normal ();
+    // SERVER (set_completion_listbox_visible (false));
     return false;
   }
   tree st= subtree (et, path_up (tp));
@@ -220,8 +223,10 @@ edit_interface_rep::complete_keypress (string key) {
   remove (path_up (tp) * (end - N (old_s)), N (old_s));
   insert (path_up (tp) * (end - N (old_s)), new_s);
   complete_message ();
-  apply_changes(); // sync eb, for calculating the new cursor position
-  update_completion_listbox_position (et, eb, tp, magf, get_scroll_x(), get_scroll_y(), get_canvas_x(), completion_pos);
+  apply_changes (); // sync eb, for calculating the new cursor position
+  update_completion_listbox_position (et, eb, tp, magf, get_scroll_x (),
+                                      get_scroll_y (), get_canvas_x (),
+                                      completion_pos);
   return true;
 }
 
@@ -275,8 +280,8 @@ edit_interface_rep::session_complete_command (tree tt) {
 void
 edit_interface_rep::custom_complete (tree r) {
   if (!is_tuple (r)) return;
-  int           i, n= N (r);
-  string        prefix;
+  int             i, n= N (r);
+  string          prefix;
   hashset<string> compls;
   compls << string ("");
   for (i= 0; i < n; i++)

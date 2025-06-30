@@ -129,8 +129,7 @@ qt_simple_widget_rep::handle_repaint (renderer win, SI x1, SI y1, SI x2,
 }
 
 void
-qt_simple_widget_rep::handle_set_input_normal () {
-}
+qt_simple_widget_rep::handle_set_input_normal () {}
 
 /******************************************************************************
  * Handling of TeXmacs messages
@@ -228,8 +227,8 @@ qt_simple_widget_rep::send (slot s, blackbox val) {
     QSize  sz= canvas ()->surface ()->size ();
     qp-= QPoint (sz.width () / 2, sz.height () / 2);
     // NOTE: adjust because child is centered
-    cout << "qt_simple_widget_rep: setting scroll origin to "
-         << qp.x () << ", " << qp.y () << LF;
+    cout << "qt_simple_widget_rep: setting scroll origin to " << qp.x () << ", "
+         << qp.y () << LF;
     scrollarea ()->setOrigin (qp);
     // completionListBox->setScrollOrigin (canvas ()->origin ());
     // completionListBox->updatePosition ();
@@ -717,14 +716,17 @@ qt_simple_widget_rep::show_completion_listbox (array<string>& completions, SI x,
 }
 
 void
-qt_simple_widget_rep::show_completion_listbox (path tp, array<string>& completions, struct cursor cu,
-                                               double magf, SI scroll_x, SI scroll_y, SI canvas_x) {
+qt_simple_widget_rep::show_completion_listbox (path           tp,
+                                               array<string>& completions,
+                                               struct cursor cu, double magf,
+                                               SI scroll_x, SI scroll_y,
+                                               SI canvas_x) {
   ensure_completion_listbox ();
   if (completionListBox) {
-    completionListBox->showCompletions (tp, completions, cu, magf, scroll_x, scroll_y, canvas_x);
+    completionListBox->showCompletions (tp, completions, cu, magf, scroll_x,
+                                        scroll_y, canvas_x);
   }
 }
-
 
 void
 qt_simple_widget_rep::hide_completion_listbox () {
@@ -749,23 +751,26 @@ qt_simple_widget_rep::scroll_completion_listbox_by (SI x, SI y) {
 }
 
 void
-qt_simple_widget_rep::scroll_completion_listbox() {
+qt_simple_widget_rep::scroll_completion_listbox () {
   if (completionListBox) {
-    completionListBox->setScrollOrigin(canvas()->origin());
+    completionListBox->setScrollOrigin (canvas ()->origin ());
     completionListBox->updatePosition ();
   }
 }
 
 void
-qt_simple_widget_rep::update_completion_listbox_position(tree& et, box eb, path tp, double magf, SI scroll_x, SI scroll_y, SI canvas_x, SI index) {
+qt_simple_widget_rep::update_completion_listbox_position (
+    tree& et, box eb, path tp, double magf, SI scroll_x, SI scroll_y,
+    SI canvas_x, SI index) {
   if (completionListBox) {
-    completionListBox->updateCache(et, eb, tp, magf, scroll_x, scroll_y, canvas_x, index);
+    completionListBox->updateCache (et, eb, tp, magf, scroll_x, scroll_y,
+                                    canvas_x, index);
     completionListBox->updatePosition ();
   }
 }
 
 void
-qt_simple_widget_rep::completion_listbox_next(bool next) {
+qt_simple_widget_rep::completion_listbox_next (bool next) {
   if (completionListBox) {
     if (next) {
       completionListBox->selectNextItem ();

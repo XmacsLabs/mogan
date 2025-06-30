@@ -67,23 +67,23 @@ public:
   virtual void side_tools (int which, string menu)     = 0;
   virtual void bottom_tools (int which, string menu)   = 0;
 
-  virtual void   set_window_zoom_factor (double zoom)          = 0;
-  virtual double get_window_zoom_factor ()                     = 0;
-  virtual void   set_scrollbars (int sb)                       = 0;
-  virtual void   get_visible (SI& x1, SI& y1, SI& x2, SI& y2)  = 0;
-  virtual void   scroll_where (SI& x, SI& y)                   = 0;
-  virtual void   scroll_to (SI x, SI y)                        = 0;
-  virtual void   set_extents (SI x1, SI y1, SI x2, SI y2)      = 0;
-  virtual void   get_extents (SI& x1, SI& y1, SI& x2, SI& y2)  = 0;
-  virtual void   full_screen_mode (bool on, bool edit)         = 0;
-  virtual bool   in_full_screen_mode ()                        = 0;
-  virtual bool   in_full_screen_edit_mode ()                   = 0;
-  
-  virtual void   show_completion_listbox (array<string>& completions, SI x,
-                                          SI y)                = 0;
-  virtual void   get_completion_listbox_visible (bool& visible)= 0;
-  virtual void   set_completion_listbox_visible (bool visible) = 0;
-  virtual void   set_completion_listbox_next (bool next)       = 0;
+  virtual void   set_window_zoom_factor (double zoom)        = 0;
+  virtual double get_window_zoom_factor ()                   = 0;
+  virtual void   set_scrollbars (int sb)                     = 0;
+  virtual void   get_visible (SI& x1, SI& y1, SI& x2, SI& y2)= 0;
+  virtual void   scroll_where (SI& x, SI& y)                 = 0;
+  virtual void   scroll_to (SI x, SI y)                      = 0;
+  virtual void   set_extents (SI x1, SI y1, SI x2, SI y2)    = 0;
+  virtual void   get_extents (SI& x1, SI& y1, SI& x2, SI& y2)= 0;
+  virtual void   full_screen_mode (bool on, bool edit)       = 0;
+  virtual bool   in_full_screen_mode ()                      = 0;
+  virtual bool   in_full_screen_edit_mode ()                 = 0;
+
+  virtual void show_completion_listbox (array<string>& completions, SI x,
+                                        SI y)                = 0;
+  virtual void get_completion_listbox_visible (bool& visible)= 0;
+  virtual void set_completion_listbox_visible (bool visible) = 0;
+  virtual void set_completion_listbox_next (bool next)       = 0;
 
   virtual void show_footer (bool flag)                              = 0;
   virtual bool visible_footer ()                                    = 0;

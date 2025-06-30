@@ -74,7 +74,7 @@ public:
   void   get_compl_listbox_visible (bool& visible);
   void   set_compl_listbox_visible (bool visible);
   void   set_compl_listbox_next (bool next);
-  void  set_inp_mode_normal ();
+  void   set_inp_mode_normal ();
 
   bool get_footer_flag ();
   void set_footer_flag (bool on);
