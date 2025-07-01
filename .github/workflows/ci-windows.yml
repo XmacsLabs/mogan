@@ -33,8 +33,8 @@ on:
 
 jobs:
   windowsbuild:
-    # mingw-w64 8.1.0 is installed on windows-2019
-    runs-on: windows-2019
+    # mingw-w64 8.1.0 is installed on windows-2022
+    runs-on: windows-2022
     timeout-minutes: 45
     if: always()
     env:
