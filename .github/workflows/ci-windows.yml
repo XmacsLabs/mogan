@@ -1,0 +1,82 @@
+name: Build and Test on windows
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "!src/Plugins/Macos/**"
+      - "!src/Plugins/Unix/**"
+      - "tests/**"
+      - "TeXmacs/plugins/goldfish/src/*"
+      - "xmake.lua"
+      - "xmake/packages.lua"
+      - "xmake/research.lua"
+      - "xmake/packages/**"
+      - "xmake-requires.lock"
+      - ".github/workflows/ci-windows.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "!src/Plugins/Macos/**"
+      - "!src/Plugins/Unix/**"
+      - "tests/**"
+      - "TeXmacs/plugins/goldfish/src/*"
+      - "xmake.lua"
+      - "xmake/packages.lua"
+      - "xmake/research.lua"
+      - "xmake/packages/**"
+      - "xmake-requires.lock"
+      - ".github/workflows/ci-windows.yml"
+  workflow_dispatch:
+
+jobs:
+  windowsbuild:
+    # mingw-w64 8.1.0 is installed on windows-2019
+    runs-on: windows-2019
+    timeout-minutes: 45
+    if: always()
+    env:
+      # Force xmake to a specific folder (for cache)
+      XMAKE_GLOBALDIR: "${{ github.workspace }}\\.xmake-global"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.9.6
+      - name: update repo
+        run: |
+          xrepo update-repo
+      - name: Install pandoc
+        run: choco install pandoc -y
+      - name: cache packages from xrepo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+          key: ${{ runner.os }}-${{ runner.arch }}-xrepo-${{ hashFiles('xmake-requires.lock') }}
+      - name: cache xmake
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/build/.build_cache
+          key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('xmake-requires.lock') }}
+      - name: config
+        run: xmake config --policies=build.ccache --yes -vD -m releasedbg --plat=windows
+      - name: build
+        run: xmake build --yes -vD research && xmake build --yes -vD --group=tests
+      - name: test
+        run: |
+          xmake run --yes --verbose --diagnosis --group=tests
+      - name: install
+        run: |
+          xmake install research
+      - name: Scheme tests
+        run: xmake run --yes -vD --group=scheme_tests
+      - name: integration test in scheme
+        run: xmake run --yes -vD --group=integration_tests
+        env:
+          QT_QPA_PLATFORM: offscreen 
