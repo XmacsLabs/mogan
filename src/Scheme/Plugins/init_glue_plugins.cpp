@@ -113,11 +113,6 @@ supports_ghostscript () {
 #include "glue_ghostscript.cpp"
 #endif
 
-#ifdef USE_PLUGIN_GIT
-#include "Git/git.hpp"
-#include "glue_git.cpp"
-#endif
-
 #include "glue_plugin.cpp"
 
 void
@@ -148,9 +143,5 @@ initialize_glue_plugins () {
 
 #ifdef USE_PLUGIN_PDF
   initialize_glue_pdf ();
-#endif
-
-#ifdef USE_PLUGIN_GIT
-  initialize_glue_git ();
 #endif
 }

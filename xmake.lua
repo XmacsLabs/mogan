@@ -28,7 +28,6 @@ add_configfiles("src/System/config.h.xmake", {
         USE_PLUGIN_PDF = true,
         USE_PLUGIN_SPARKLE = false,
         USE_PLUGIN_HTML = true,
-        USE_PLUGIN_GIT = not is_plat("wasm"),
         OS_MACOS = is_plat("macosx"),
         MACOSX_EXTENSIONS = is_plat("macosx"),
         QTTEXMACS = true,
@@ -174,7 +173,6 @@ function using_legacy_apt ()
 end
 
 local FREETYPE_VERSION = "2.12.1"
-local LIBGIT2_VERSION = "1.7.1"
 local LIBICONV_VERSION = "1.17"
 
 -- package: s7
@@ -202,14 +200,7 @@ else
     end
 end
 
--- package: libgit2
-if is_plat ("linux") and using_apt() then
-    add_requires("apt::libgit2-dev", {alias="libgit2"})
-elseif not is_plat("wasm") then
-    add_requires("libgit2 "..LIBGIT2_VERSION, {system=false})
-end
-
--- package: qt6widgets
+--- package: qt6widgets
 QT6_VERSION="6.5.3"
 if is_plat("windows") then
     add_requires("qt6widgets "..QT6_VERSION)
@@ -332,7 +323,6 @@ target("libmogan") do
     add_packages("liii-pdfhummus")
     add_packages("freetype")
     add_packages("s7")
-    add_packages("libgit2")
     if not is_plat("macosx") then
         add_packages("libiconv")
     end
@@ -376,7 +366,6 @@ target("libmogan") do
                 USE_PLUGIN_PDF = true,
                 USE_PLUGIN_SPARKLE = false,
                 USE_PLUGIN_HTML = true,
-                USE_PLUGIN_GIT = not is_plat("wasm")
                 }})
 
     if is_plat("linux") then 
@@ -448,7 +437,6 @@ target("libmogan") do
             "src/Plugins/Qt",
             "src/Plugins/UniversalStacktrace",
             "src/Plugins/Html",
-            "src/Plugins/Git",
             "src/Scheme",
             "src/Scheme/L1",
             "src/Scheme/L2",
@@ -511,7 +499,6 @@ target("libmogan") do
             "src/Plugins/Tex/**.cpp",
             "src/Plugins/Xml/**.cpp",
             "src/Plugins/Html/**.cpp",
-            "src/Plugins/Git/**.cpp",
             "src/Plugins/Updater/**.cpp",
             "$(projectdir)/TeXmacs/plugins/goldfish/src/**.cpp"})
 
