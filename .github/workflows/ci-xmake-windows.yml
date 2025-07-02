@@ -1,0 +1,69 @@
+name: Build and Test on windows
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Unix/**'
+      - 'tests/**'
+      - 'TeXmacs/plugins/goldfish/src/*'
+      - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/research.lua'
+      - 'xmake/packages/**'
+      - 'xmake-requires.lock'
+      - '.github/workflows/ci-xmake-windows.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '!src/Plugins/Macos/**'
+      - '!src/Plugins/Unix/**'
+      - 'tests/**'
+      - 'TeXmacs/plugins/goldfish/src/*'
+      - 'xmake.lua'
+      - 'xmake/packages.lua'
+      - 'xmake/research.lua'
+      - 'xmake/packages/**'
+      - 'xmake-requires.lock'
+      - '.github/workflows/ci-xmake-windows.yml'
+  workflow_dispatch:
+
+jobs:
+  windowsbuild:
+    runs-on: windows-2025
+    timeout-minutes: 45
+    if: always()
+    env:
+      # Force xmake to a specific folder (for cache)
+      XMAKE_GLOBALDIR: "${{ github.workspace }}\\.xmake-global"
+    steps:
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.9.9
+      - name: update repo
+        run: |
+          xrepo update-repo
+      # - name: Install pandoc
+      #   run: choco install pandoc -y
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: cache packages from xrepo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+          key: ${{ runner.os }}-${{ runner.arch }}-xrepo-${{ hashFiles('xmake-requires.lock') }}
+      - name: cache xmake
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/build/.build_cache
+          key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('xmake-requires.lock') }}
+      - name: config
+        run: xmake config --policies=build.ccache --yes -vD -m releasedbg --plat=windows
+      - name: build
+        run: xmake build --yes -vD liii
