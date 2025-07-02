@@ -77,7 +77,7 @@ jobs:
       - name: config
         run: xmake config -vD --policies=build.ccache -o tmp/build -m releasedbg --yes
       - name: build
-        run: xmake build --yes -vD liii && xmake build --yes -vD --group=tests
+        run: xmake build --yes -vD stem && xmake build --yes -vD --group=tests
       - name: test
         run: xmake run --yes -vD --group=tests
       - name: Scheme tests

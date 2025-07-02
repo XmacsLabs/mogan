@@ -554,7 +554,7 @@ if is_plat("windows") then
     end
 end
 
-target("liii") do 
+target("stem") do 
     add_deps("goldfish")
     if is_plat("windows") and is_mode("release") then
         add_deps("liii_windows_icon")

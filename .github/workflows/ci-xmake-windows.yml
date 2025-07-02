@@ -66,4 +66,4 @@ jobs:
       - name: config
         run: xmake config --policies=build.ccache --yes -vD -m releasedbg --plat=windows
       - name: build
-        run: xmake build --yes -vD liii
+        run: xmake build --yes -vD stem
