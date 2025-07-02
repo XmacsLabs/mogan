@@ -405,7 +405,11 @@
 
 (define (texout-apply what args)
   (output-tex
-    (if (string? what) what (string-append "\\" (symbol->string what))))
+    (cond ((string? what) what)
+          ((symbol? what) (string-append "\\" (symbol->string what)))
+          ;; Skip !option constructs, this should not be in output
+          ((and (list? what) (== (car what) '!option)) "")
+          (else (display* "texout-apply: unexpected content: " what "\n") "")))
   (texout-args args))
 
 (define (texout-protect? env)
@@ -454,6 +458,7 @@
 
 (tm-define (texout x)
   (cond ((string? x) (output-tex x))
+        ((and (list? x) (nnull? x) (== (car x) '!option)) (noop))  ; toplevel !option
         ((nlist>0? x) (display* "TeXmacs] badly formatted stree:\n" x "\n"))
         ((== (car x) '!widechar) (output-tex (symbol->string (cadr x))))
         ((== (car x) '!file) (texout-file (cdr x)))
