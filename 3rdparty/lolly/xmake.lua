@@ -401,7 +401,7 @@ add_configfiles(
         variables = {
             PACKAGE = "Lolly",
             LOLLY_VERSION = LOLLY_VERSION,
-            DOXYGEN_DIR = get_config("buildir"),
+            DOXYGEN_DIR = path.absolute("$buildir"),
             DEVEL_VERSION = DEVEL_VERSION,
             HTML_EXTRA_STYLESHEET = "doxygen-awesome-css/doxygen-awesome.css",
         }

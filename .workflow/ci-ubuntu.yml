@@ -16,6 +16,7 @@ triggers:
         - TeXmacs/tests/
         - xmake/
         - xmake.lua
+        - 3rdparty/
   push:
     branches:
       precise:
@@ -29,6 +30,7 @@ triggers:
         - TeXmacs/tests/
         - xmake/
         - xmake.lua
+        - 3rdparty/
 
 variables:
   XMAKE_MAIN_REPO: 'https://gitee.com/tboox/xmake-repo.git'
