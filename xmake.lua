@@ -569,12 +569,12 @@ target("stem") do
 
     local install_dir = "$(buildir)"
     if is_plat("windows") then
-        install_dir = path.join("$(buildir)", "packages/liii/data/")
+        install_dir = path.join("$(buildir)", "packages/stem/data/")
     elseif is_plat("macosx") then
         install_dir = path.join("$(buildir)", "macosx/$(arch)/$(mode)/LiiiSTEM.app/Contents/Resources/")
     else
         if os.getenv("INSTALL_DIR") == nil then
-            install_dir = path.join("$(buildir)", "packages/liii/")
+            install_dir = path.join("$(buildir)", "packages/stem/")
         else
             install_dir = os.getenv("INSTALL_DIR")
         end
@@ -679,7 +679,7 @@ function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
         set_enabled(not is_plat("wasm"))
         set_kind("phony")
         set_group("integration_tests")
-        add_deps("liii")
+        add_deps("stem")
         on_run(function (target)
             name = target:name()
             test_name = "(test_"..name..")"
@@ -692,7 +692,7 @@ function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
                 "-q"
             }
             if is_plat("macosx", "linux") then
-                binary = target:deps()["liii"]:targetfile()
+                binary = target:deps()["stem"]:targetfile()
             elseif is_plat("mingw", "windows") then
                 binary = path.join(INSTALL_DIR,"bin","MoganResearch.exe")
             else
@@ -718,7 +718,7 @@ target("liii_packager") do
     set_enabled(is_plat("macosx") and is_mode("release"))
     set_kind("phony")
 
-    add_deps("liii")
+    add_deps("stem")
 
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_configvar("APPCAST", "")
@@ -770,7 +770,7 @@ end
 
 if is_mode("release") then
 includes("@builtin/xpack")
-xpack("liii") do
+xpack("stem") do
     set_formats("nsis")
     set_author("Darcy Shen <da@liii.pro>")
     set_license("GPLv3")
@@ -793,10 +793,10 @@ xpack("liii") do
         set_specvar("PACKAGE_SHORTCUT_NAME", "Liii STEM")
         set_iconfile(path.join(os.projectdir(), "packages/windows/Xmacs.ico"))
         set_bindir("bin")
-        add_installfiles(path.join(os.projectdir(), "build/packages/liii/data/bin/(**)|LiiiSTEM.exe"), {prefixdir = "bin"})
+        add_installfiles(path.join(os.projectdir(), "build/packages/stem/data/bin/(**)|LiiiSTEM.exe"), {prefixdir = "bin"})
     end
 
-    add_targets("liii")
+    add_targets("stem")
 
     if is_plat("windows") then
         on_load(function (package)

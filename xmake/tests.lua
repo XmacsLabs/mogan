@@ -123,7 +123,7 @@ function add_target_scheme_test(filepath, INSTALL_DIR, RUN_ENVS)
         set_enabled(not is_plat("wasm"))
         set_kind("phony")
         set_group("scheme_tests")
-        add_deps("liii")
+        add_deps("stem")
         add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
         INSTALL_DIR = INSTALL_DIR or os.projectdir()
         on_run(function (target)
@@ -138,9 +138,9 @@ function add_target_scheme_test(filepath, INSTALL_DIR, RUN_ENVS)
                 "-q"
             }
             if is_plat("macosx", "linux") then
-                binary = target:deps()["liii"]:targetfile()
+                binary = target:deps()["stem"]:targetfile()
             elseif is_plat("mingw", "windows") then
-                binary = path.join(INSTALL_DIR, "build", "packages", "liii", "data", "bin", "LiiiSTEM.exe")
+                binary = path.join(INSTALL_DIR, "build", "packages", "stem", "data", "bin", "LiiiSTEM.exe")
             else
                 print("Unsupported plat $(plat)")
             end
@@ -160,7 +160,7 @@ function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
         set_enabled(not is_plat("wasm"))
         set_kind("phony")
         set_group("integration_tests")
-        add_deps("liii")
+        add_deps("stem")
         add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
         INSTALL_DIR = INSTALL_DIR or os.projectdir()
         on_run(function (target)
@@ -175,9 +175,9 @@ function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
                 "-q"
             }
             if is_plat("macosx", "linux") then
-                binary = target:deps()["liii"]:targetfile()
+                binary = target:deps()["stem"]:targetfile()
             elseif is_plat("mingw", "windows") then
-                binary = path.join(INSTALL_DIR, "build", "packages", "liii", "data", "bin", "LiiiSTEM.exe")
+                binary = path.join(INSTALL_DIR, "build", "packages", "stem", "data", "bin", "LiiiSTEM.exe")
             else
                 print("Unsupported plat $(plat)")
             end
