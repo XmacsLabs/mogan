@@ -224,7 +224,6 @@ target ("goldfish") do
     add_files ("$(projectdir)/TeXmacs/plugins/goldfish/src/goldfish.cpp")
     add_packages("s7")
     add_packages("tbox")
-    add_packages("cpr")
     on_install(function (target)
     end)
 end
