@@ -31,17 +31,17 @@
     ("Retime" (retime-selection "normal")))
   ---
   (-> "Appear"
-      ("Translate" (make-anim 'translate-in))
+      ("Translate::animation" (make-anim 'translate-in))
       ("Progressive" (make-anim 'progressive-in))
       ("Fade" (make-anim 'fade-in))
       ("Zoom" (make-anim 'zoom-in)))
   (-> "Vanish"
-      ("Translate" (make-anim 'translate-out))
+      ("Translate::animation" (make-anim 'translate-out))
       ("Progressive" (make-anim 'progressive-out))
       ("Fade" (make-anim 'fade-out))
       ("Zoom" (make-anim 'zoom-out)))
   (-> "Alter"
-      ("Translate" (make-anim 'translate-smooth))
+      ("Translate::animation" (make-anim 'translate-smooth))
       ("Progressive" (make-anim 'progressive-smooth))
       ("Fade" (make-anim 'fade-smooth))
       ("Zoom" (make-anim 'zoom-smooth)))
