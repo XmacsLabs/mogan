@@ -191,9 +191,6 @@ void
 QTMScrollView::scrollContentsBy (int dx, int dy) {
   if (dx) p_origin.setX (p_origin.x () - dx);
   if (dy) p_origin.setY (p_origin.y () - dy);
-  qDebug () << "QTMScrollView::scrollContentsBy: "
-            << "dx=" << dx << ", dy=" << dy << ", new origin: " << p_origin.x ()
-            << ", " << p_origin.y ();
 }
 
 bool

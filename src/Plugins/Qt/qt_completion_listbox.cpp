@@ -79,10 +79,6 @@ QtCompletionListBox::showCompletions (path tp, array<string>& completions,
 void
 QtCompletionListBox::cachePosition (struct cursor cu, double magf, SI scroll_x,
                                     SI scroll_y, SI canvas_x) {
-  qDebug () << "QtCompletionListBox::cachePosition: "
-            << "cu->ox=" << cu->ox << ", cu->oy=" << cu->oy << ", magf=" << magf
-            << ", scroll_x=" << scroll_x << ", scroll_y=" << scroll_y
-            << ", canvas_x=" << canvas_x;
   cached_cursor_x= cu->ox;
   cached_cursor_y= cu->oy;
   cached_scroll_x= scroll_x;
@@ -105,12 +101,6 @@ QtCompletionListBox::updateCache (tree& et, box eb, path tp, double magf,
   }
   struct cursor cu= eb->find_check_cursor (tp1);
 
-  qDebug () << "QtCompletionListBox::cachePosition: "
-            << "cu->ox=" << cu->ox << ", cu->oy=" << cu->oy << ", magf=" << magf
-            << ", scroll_x=" << scroll_x << ", scroll_y=" << scroll_y
-            << ", canvas_x=" << canvas_x << ", index=" << index;
-  cout << ", text of index" << index << "=" << getText (index)
-       << ", text of index+1" << index << "=" << getText (index + 1) << LF;
   cached_cursor_x= cu->ox;
   cached_cursor_y= cu->oy;
   cached_scroll_x= scroll_x;
@@ -121,19 +111,10 @@ QtCompletionListBox::updateCache (tree& et, box eb, path tp, double magf,
 
 void
 QtCompletionListBox::getCachedPosition (SI& x, SI& y) {
-  qDebug () << "QtCompletionListBox::getCachedPosition: "
-            << "cached_cursor_x=" << cached_cursor_x
-            << ", cached_cursor_y=" << cached_cursor_y
-            << ", cached_scroll_x=" << cached_scroll_x
-            << ", cached_scroll_y=" << cached_scroll_y
-            << ", cached_canvas_x=" << cached_canvas_x
-            << ", cached_magf=" << cached_magf;
   x= ((cached_cursor_x - cached_scroll_x - 500) * cached_magf +
       cached_canvas_x) /
      256;
   y= -((cached_cursor_y - 5000 - cached_scroll_y) * cached_magf) / 256;
-  qDebug () << "QtCompletionListBox::getCachedPosition: "
-            << "x=" << x << ", y=" << y;
   // TODO: 5000 is a magic number to add space between completion list box and
   // the text. We need to find a better way to get the position
 }
@@ -209,24 +190,13 @@ QtCompletionListBox::selectItemIndex (int index) {
 void
 QtCompletionListBox::setScrollOrigin (QPoint origin) {
   coord2 origin2= from_qpoint (origin);
-  qDebug () << "QtCompletionListBox::setScrollOrigin: "
-            << "origin.x()=" << origin.x () << ", origin.y()=" << origin.y ()
-            << ", cached_magf=" << cached_magf;
   cached_scroll_x= (SI) (origin2.x1 / cached_magf);
-  ;
   cached_scroll_y= (SI) (origin2.x2 / cached_magf);
   // updatePosition ();
 }
 
 void
 QtCompletionListBox::updatePosition () {
-  qDebug () << "QtCompletionListBox::updatePosition: "
-            << "cached_cursor_x=" << cached_cursor_x
-            << ", cached_cursor_y=" << cached_cursor_y
-            << ", cached_scroll_x=" << cached_scroll_x
-            << ", cached_scroll_y=" << cached_scroll_y
-            << ", cached_canvas_x=" << cached_canvas_x
-            << ", cached_magf=" << cached_magf;
   // Update the position of the completion list box based on cached values
   SI pos_x, pos_y;
   getCachedPosition (pos_x, pos_y);
@@ -236,8 +206,6 @@ QtCompletionListBox::updatePosition () {
 void
 QtCompletionListBox::scrollBy (SI x, SI y) {
   // TODO: need convertion to coord2
-  qDebug () << "QtCompletionListBox::scrollBy: "
-            << "x=" << x << ", y=" << y;
   cached_scroll_x-= (SI) (x / cached_magf);
   cached_scroll_y-= (SI) (y / cached_magf);
 }

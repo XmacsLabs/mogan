@@ -158,7 +158,7 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
       }
       cursor cu= eb->find_check_cursor (tp1);
       cout << "show_completion_listbox: "
-           << "completions=" << full_completions << ", cu->ox=" << cu->ox
+           // << "completions=" << full_completions << ", cu->ox=" << cu->ox
            << ", cu->oy=" << cu->oy << ", magf=" << magf
            << ", scroll_x=" << get_scroll_x ()
            << ", scroll_y=" << get_scroll_y ()
