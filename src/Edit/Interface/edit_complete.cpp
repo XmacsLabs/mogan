@@ -164,13 +164,13 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
            << ", scroll_y=" << get_scroll_y ()
            << ", canvas_x=" << get_canvas_x () << LF;
       show_completion_popup (tp, full_completions, cu, magf, get_scroll_x (),
-                               get_scroll_y (), get_canvas_x ());
+                             get_scroll_y (), get_canvas_x ());
     }
-    
-    set_arch_versioning (true);  
+
+    set_arch_versioning (true);
     insert_tree (completions[0]);
-    set_arch_versioning (false); 
-    
+    set_arch_versioning (false);
+
     complete_message ();
     // beep ();
     set_input_mode (INPUT_COMPLETE);
@@ -181,7 +181,7 @@ bool
 edit_interface_rep::complete_keypress (string key) {
   int    end  = last_item (tp);
   string old_s= completions[completion_pos];
-  string new_s="";
+  string new_s= "";
   string test = completion_prefix * old_s;
   set_message ("", "");
   cout << "complete_keypress: " << key << LF;
@@ -189,35 +189,35 @@ edit_interface_rep::complete_keypress (string key) {
 
   if (key == "enter" || key == "return") {
     cout << "complete_keypress: enter/return pressed" << LF;
-    old_s = new_s = completions[completion_pos];
+    old_s= new_s= completions[completion_pos];
     set_input_normal ();
     SERVER (set_completion_popup_visible (false));
-    set_arch_versioning (true);  
+    set_arch_versioning (true);
     remove (path_up (tp) * (end - N (old_s)), N (old_s));
-    set_arch_versioning (false);  
+    set_arch_versioning (false);
     insert (path_up (tp) * (end - N (old_s)), new_s);
     return true;
   }
   else if (key == "escape" || key == " ") {
-    old_s = new_s = completions[completion_pos];
+    old_s= new_s= completions[completion_pos];
     set_input_normal ();
     SERVER (set_completion_popup_visible (false));
-    set_arch_versioning (true);  
+    set_arch_versioning (true);
     remove (path_up (tp) * (end - N (old_s)), N (old_s));
-    set_arch_versioning (false);  
+    set_arch_versioning (false);
     insert (path_up (tp) * (end - N (old_s)), new_s);
     return false;
   }
   else if ((key != "tab") && (key != "S-tab") && (key != "up") &&
            (key != "down")) {
-    if ((key != "backspace" && try_shortcut(key))) {
+    if ((key != "backspace" && try_shortcut (key))) {
       set_input_normal ();
       SERVER (set_completion_popup_visible (false));
     }
     return false;
   }
-  tree st= subtree (et, path_up (tp));
-  string s    = st->label;
+  tree   st= subtree (et, path_up (tp));
+  string s = st->label;
   if (is_compound (st)) {
     set_input_normal ();
     return false;
@@ -238,17 +238,17 @@ edit_interface_rep::complete_keypress (string key) {
   if (completion_pos < 0) completion_pos= N (completions) - 1;
   if (completion_pos >= N (completions)) completion_pos= 0;
   new_s= completions[completion_pos];
- 
-  set_arch_versioning (true);  
+
+  set_arch_versioning (true);
   remove (path_up (tp) * (end - N (old_s)), N (old_s));
   insert (path_up (tp) * (end - N (old_s)), new_s);
-  set_arch_versioning (false); 
-  
+  set_arch_versioning (false);
+
   complete_message ();
   apply_changes (); // sync eb, for calculating the new cursor position
   update_completion_popup_position (et, eb, tp, magf, get_scroll_x (),
-                                      get_scroll_y (), get_canvas_x (),
-                                      completion_pos);
+                                    get_scroll_y (), get_canvas_x (),
+                                    completion_pos);
   return true;
 }
 

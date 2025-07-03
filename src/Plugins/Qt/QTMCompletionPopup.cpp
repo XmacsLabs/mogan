@@ -29,7 +29,7 @@
 #include <QScrollBar>
 
 QTMCompletionPopup::QTMCompletionPopup (QWidget*              parent,
-                                          qt_simple_widget_rep* owner_widget)
+                                        qt_simple_widget_rep* owner_widget)
     : QListWidget (parent), owner_widget (owner_widget), cached_cursor_x (0),
       cached_cursor_y (0), cached_scroll_x (0), cached_scroll_y (0),
       cached_canvas_x (0), cached_magf (0.0) {
@@ -66,8 +66,8 @@ QTMCompletionPopup::showCompletions (array<string>& completions, SI x, SI y) {
 
 void
 QTMCompletionPopup::showCompletions (path tp, array<string>& completions,
-                                      struct cursor cu, double magf,
-                                      SI scroll_x, SI scroll_y, SI canvas_x) {
+                                     struct cursor cu, double magf, SI scroll_x,
+                                     SI scroll_y, SI canvas_x) {
   // TODO: do not cache tp
   cached_tp= tp;
   cachePosition (cu, magf, scroll_x, scroll_y, canvas_x);
@@ -78,7 +78,7 @@ QTMCompletionPopup::showCompletions (path tp, array<string>& completions,
 
 void
 QTMCompletionPopup::cachePosition (struct cursor cu, double magf, SI scroll_x,
-                                    SI scroll_y, SI canvas_x) {
+                                   SI scroll_y, SI canvas_x) {
   cached_cursor_x= cu->ox;
   cached_cursor_y= cu->oy;
   cached_scroll_x= scroll_x;
@@ -89,8 +89,8 @@ QTMCompletionPopup::cachePosition (struct cursor cu, double magf, SI scroll_x,
 
 void
 QTMCompletionPopup::updateCache (tree& et, box eb, path tp, double magf,
-                                  SI scroll_x, SI scroll_y, SI canvas_x,
-                                  SI index) {
+                                 SI scroll_x, SI scroll_y, SI canvas_x,
+                                 SI index) {
   // MUST called when cache is already set
   // now that the cursor position has been updated to a completed position
   // we need to get the new cursor based on that position
@@ -189,7 +189,7 @@ QTMCompletionPopup::selectItemIndex (int index) {
 
 void
 QTMCompletionPopup::setScrollOrigin (QPoint origin) {
-  coord2 origin2= from_qpoint (origin);
+  coord2 origin2 = from_qpoint (origin);
   cached_scroll_x= (SI) (origin2.x1 / cached_magf);
   cached_scroll_y= (SI) (origin2.x2 / cached_magf);
   // updatePosition ();
@@ -235,7 +235,7 @@ QTMCompletionPopup::getText (SI idx) {
 
 void
 QTMCompletionPopup::onCurrentItemChanged (QListWidgetItem* current,
-                                           QListWidgetItem* previous) {
+                                          QListWidgetItem* previous) {
   if (previous) {
     lastSelectedText= from_qstring (previous->text ());
   }

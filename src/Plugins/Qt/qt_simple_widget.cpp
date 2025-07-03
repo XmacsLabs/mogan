@@ -16,10 +16,10 @@
 #include "qt_utilities.hpp"
 #include "qt_window_widget.hpp"
 
+#include "QTMCompletionPopup.hpp"
 #include "QTMMenuHelper.hpp"
 #include "QTMStyle.hpp"
 #include "QTMWidget.hpp"
-#include "QTMCompletionPopup.hpp"
 #include <QLayout>
 #include <QPixmap>
 #if QT_VERSION >= 0x060000
@@ -675,7 +675,7 @@ qt_simple_widget_rep::ensure_completion_popup () {
 
 void
 qt_simple_widget_rep::show_completion_popup (array<string>& completions, SI x,
-                                               SI y) {
+                                             SI y) {
   ensure_completion_popup ();
   if (completionListBox) {
     completionListBox->showCompletions (completions, x, y);
@@ -684,10 +684,10 @@ qt_simple_widget_rep::show_completion_popup (array<string>& completions, SI x,
 
 void
 qt_simple_widget_rep::show_completion_popup (path           tp,
-                                               array<string>& completions,
-                                               struct cursor cu, double magf,
-                                               SI scroll_x, SI scroll_y,
-                                               SI canvas_x) {
+                                             array<string>& completions,
+                                             struct cursor cu, double magf,
+                                             SI scroll_x, SI scroll_y,
+                                             SI canvas_x) {
   ensure_completion_popup ();
   if (completionListBox) {
     completionListBox->showCompletions (tp, completions, cu, magf, scroll_x,
@@ -726,9 +726,11 @@ qt_simple_widget_rep::scroll_completion_popup () {
 }
 
 void
-qt_simple_widget_rep::update_completion_popup_position (
-    tree& et, box eb, path tp, double magf, SI scroll_x, SI scroll_y,
-    SI canvas_x, SI index) {
+qt_simple_widget_rep::update_completion_popup_position (tree& et, box eb,
+                                                        path tp, double magf,
+                                                        SI scroll_x,
+                                                        SI scroll_y,
+                                                        SI canvas_x, SI index) {
   if (completionListBox) {
     completionListBox->updateCache (et, eb, tp, magf, scroll_x, scroll_y,
                                     canvas_x, index);

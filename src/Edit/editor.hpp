@@ -368,7 +368,7 @@ public:
   virtual void     notify_save (bool real_save= true)        = 0;
   virtual bool     need_save (bool real_save= true)          = 0;
   virtual void     show_history ()                           = 0;
-  virtual void     set_arch_versioning (bool v)                  = 0;
+  virtual void     set_arch_versioning (bool v)              = 0;
   virtual observer position_new (path p)                     = 0;
   virtual void     position_delete (observer o)              = 0;
   virtual void     position_set (observer o, path p)         = 0;

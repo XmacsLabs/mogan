@@ -457,5 +457,5 @@ edit_modify_rep::position_get (observer o) {
 
 void
 edit_modify_rep::set_arch_versioning (bool v) {
-  arch->set_versioning(v);
+  arch->set_versioning (v);
 }
