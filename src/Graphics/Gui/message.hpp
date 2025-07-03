@@ -510,23 +510,23 @@ set_scroll_position (widget w, SI x, SI y) {
 }
 
 inline void
-show_completion_listbox (widget w, array<string>& completions, SI x, SI y) {
+show_completion_popup (widget w, array<string>& completions, SI x, SI y) {
   send<array<string>, SI, SI> (w, SLOT_COMPLETION_LISTBOX_SHOW, completions, x,
                                y);
 }
 
 inline void
-get_completion_listbox_visible (widget w, bool& visible) {
+get_completion_popup_visible (widget w, bool& visible) {
   query<bool> (w, SLOT_COMPLETION_LISTBOX_VISIBLE);
 }
 
 inline void
-set_completion_listbox_visible (widget w, bool visible) {
+set_completion_popup_visible (widget w, bool visible) {
   send<bool> (w, SLOT_COMPLETION_LISTBOX_VISIBLE, visible);
 }
 
 inline void
-set_completion_listbox_next (widget w, bool next) {
+set_completion_popup_next (widget w, bool next) {
   send<bool> (w, SLOT_COMPLETION_LISTBOX_NEXT, next);
 }
 

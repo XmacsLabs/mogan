@@ -19,7 +19,7 @@
 #include "QTMMenuHelper.hpp"
 #include "QTMStyle.hpp"
 #include "QTMWidget.hpp"
-#include "qt_completion_listbox.hpp"
+#include "QTMCompletionPopup.hpp"
 #include <QLayout>
 #include <QPixmap>
 #if QT_VERSION >= 0x060000
@@ -270,7 +270,7 @@ qt_simple_widget_rep::send (slot s, blackbox val) {
     check_type<triple<array<string>, SI, SI>> (val, s);
     triple<array<string>, SI, SI> data=
         open_box<triple<array<string>, SI, SI>> (val);
-    show_completion_listbox (data.x1, data.x2, data.x3);
+    show_completion_popup (data.x1, data.x2, data.x3);
     return;
   }
 
@@ -383,7 +383,7 @@ qt_simple_widget_rep::query (slot s, int type_id) {
 
   case SLOT_COMPLETION_LISTBOX_VISIBLE: {
     check_type_id<bool> (type_id, s);
-    return close_box<bool> (completion_listbox_visible ());
+    return close_box<bool> (completion_popup_visible ());
   }
 
   default:
@@ -662,11 +662,11 @@ qt_simple_widget_rep::repaint_all () {
  ******************************************************************************/
 
 void
-qt_simple_widget_rep::ensure_completion_listbox () {
+qt_simple_widget_rep::ensure_completion_popup () {
   // TODO: do we really need this ensuring every time?
   //       or should we just create it at the beginning?
   if (!completionListBox && canvas ()) {
-    completionListBox= new QtCompletionListBox (canvas (), this);
+    completionListBox= new QTMCompletionPopup (canvas (), this);
     if (tm_style_sheet == "") {
       completionListBox->setStyle (qtmstyle ());
     }
@@ -674,21 +674,21 @@ qt_simple_widget_rep::ensure_completion_listbox () {
 }
 
 void
-qt_simple_widget_rep::show_completion_listbox (array<string>& completions, SI x,
+qt_simple_widget_rep::show_completion_popup (array<string>& completions, SI x,
                                                SI y) {
-  ensure_completion_listbox ();
+  ensure_completion_popup ();
   if (completionListBox) {
     completionListBox->showCompletions (completions, x, y);
   }
 }
 
 void
-qt_simple_widget_rep::show_completion_listbox (path           tp,
+qt_simple_widget_rep::show_completion_popup (path           tp,
                                                array<string>& completions,
                                                struct cursor cu, double magf,
                                                SI scroll_x, SI scroll_y,
                                                SI canvas_x) {
-  ensure_completion_listbox ();
+  ensure_completion_popup ();
   if (completionListBox) {
     completionListBox->showCompletions (tp, completions, cu, magf, scroll_x,
                                         scroll_y, canvas_x);
@@ -696,19 +696,19 @@ qt_simple_widget_rep::show_completion_listbox (path           tp,
 }
 
 void
-qt_simple_widget_rep::hide_completion_listbox () {
+qt_simple_widget_rep::hide_completion_popup () {
   if (completionListBox) {
     completionListBox->hide ();
   }
 }
 
 bool
-qt_simple_widget_rep::completion_listbox_visible () {
+qt_simple_widget_rep::completion_popup_visible () {
   return completionListBox && completionListBox->isVisible ();
 }
 
 void
-qt_simple_widget_rep::scroll_completion_listbox_by (SI x, SI y) {
+qt_simple_widget_rep::scroll_completion_popup_by (SI x, SI y) {
   QPoint qp (x, y);
   coord2 p= from_qpoint (qp);
   if (completionListBox) {
@@ -718,7 +718,7 @@ qt_simple_widget_rep::scroll_completion_listbox_by (SI x, SI y) {
 }
 
 void
-qt_simple_widget_rep::scroll_completion_listbox () {
+qt_simple_widget_rep::scroll_completion_popup () {
   if (completionListBox) {
     completionListBox->setScrollOrigin (canvas ()->origin ());
     completionListBox->updatePosition ();
@@ -726,7 +726,7 @@ qt_simple_widget_rep::scroll_completion_listbox () {
 }
 
 void
-qt_simple_widget_rep::update_completion_listbox_position (
+qt_simple_widget_rep::update_completion_popup_position (
     tree& et, box eb, path tp, double magf, SI scroll_x, SI scroll_y,
     SI canvas_x, SI index) {
   if (completionListBox) {
@@ -737,7 +737,7 @@ qt_simple_widget_rep::update_completion_listbox_position (
 }
 
 void
-qt_simple_widget_rep::completion_listbox_next (bool next) {
+qt_simple_widget_rep::completion_popup_next (bool next) {
   if (completionListBox) {
     if (next) {
       completionListBox->selectNextItem ();

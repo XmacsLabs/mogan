@@ -21,7 +21,7 @@
 #include "qt_widget.hpp"
 
 // Forward declaration
-class QtCompletionListBox;
+class QTMCompletionPopup;
 
 /*! A widget containing a TeXmacs canvas.
 
@@ -92,18 +92,18 @@ public:
 
   ////////////////////// Completion listbox support
   // TODO: determine when to use slot and to use this routine
-  void show_completion_listbox (array<string>& completions, SI x, SI y);
-  void show_completion_listbox (path tp, array<string>& completions,
+  void show_completion_popup (array<string>& completions, SI x, SI y);
+  void show_completion_popup (path tp, array<string>& completions,
                                 struct cursor cu, double magf, SI scroll_x,
                                 SI scroll_y, SI canvas_x);
-  void hide_completion_listbox ();
-  bool completion_listbox_visible ();
-  void scroll_completion_listbox_by (SI x, SI y);
-  void scroll_completion_listbox ();
-  void update_completion_listbox_position (tree& et, box eb, path tp,
+  void hide_completion_popup ();
+  bool completion_popup_visible ();
+  void scroll_completion_popup_by (SI x, SI y);
+  void scroll_completion_popup ();
+  void update_completion_popup_position (tree& et, box eb, path tp,
                                            double magf, SI scroll_x,
                                            SI scroll_y, SI canvas_x, SI index);
-  void completion_listbox_next (bool next);
+  void completion_popup_next (bool next);
 
   ////////////////////// backing store management
 
@@ -114,14 +114,14 @@ protected:
   rectangles              invalid_regions;
   QPixmap*                backingPixmap;
   QPoint                  backing_pos;
-  QtCompletionListBox*    completionListBox;
+  QTMCompletionPopup*    completionListBox;
 
   void           invalidate_rect (int x1, int y1, int x2, int y2);
   void           invalidate_all ();
   bool           is_invalid ();
   void           repaint_invalid_regions ();
   basic_renderer get_renderer ();
-  void           ensure_completion_listbox ();
+  void           ensure_completion_popup ();
 
   friend class QTMWidget;
 };

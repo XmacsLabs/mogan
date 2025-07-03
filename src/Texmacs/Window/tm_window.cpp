@@ -572,23 +572,23 @@ tm_window_rep::set_scroll_pos (SI x, SI y) {
 }
 
 void
-tm_window_rep::show_compl_listbox (array<string>& completions, SI x, SI y) {
-  show_completion_listbox (wid, completions, x, y);
+tm_window_rep::show_compl_popup (array<string>& completions, SI x, SI y) {
+  show_completion_popup (wid, completions, x, y);
 }
 
 void
-tm_window_rep::get_compl_listbox_visible (bool& visible) {
-  get_completion_listbox_visible (wid, visible);
+tm_window_rep::get_compl_popup_visible (bool& visible) {
+  get_completion_popup_visible (wid, visible);
 }
 
 void
-tm_window_rep::set_compl_listbox_visible (bool visible) {
-  set_completion_listbox_visible (wid, visible);
+tm_window_rep::set_compl_popup_visible (bool visible) {
+  set_completion_popup_visible (wid, visible);
 }
 
 void
-tm_window_rep::set_compl_listbox_next (bool next) {
-  set_completion_listbox_next (wid, next);
+tm_window_rep::set_compl_popup_next (bool next) {
+  set_completion_popup_next (wid, next);
 }
 
 void

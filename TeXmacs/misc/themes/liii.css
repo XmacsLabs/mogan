@@ -415,8 +415,8 @@ QToolTip {
 /****************************************************************************
 * 补全列表框样式
 ****************************************************************************/
-QListWidget[objectName="completion_listbox"],
-QListWidget.completion_listbox {
+QListWidget[objectName="completion_popup"],
+QListWidget.completion_popup {
   border: 1px solid #2c2c2c;
   background-color: #ffffff;
   alternate-background-color: #f5f5f5;
@@ -425,22 +425,22 @@ QListWidget.completion_listbox {
   font-family: "Arial", sans-serif;
 }
 
-QListWidget[objectName="completion_listbox"]::item,
-QListWidget.completion_listbox::item {
+QListWidget[objectName="completion_popup"]::item,
+QListWidget.completion_popup::item {
   padding: 2px 4px;
   color: #2c2c2c;
   border: none;
 }
 
-QListWidget[objectName="completion_listbox"]::item:selected,
-QListWidget.completion_listbox::item:selected {
+QListWidget[objectName="completion_popup"]::item:selected,
+QListWidget.completion_popup::item:selected {
   background-color: #2c2c2c;
   color: #ffffff;
   border-radius: 2px;
 }
 
-QListWidget[objectName="completion_listbox"]::item:hover,
-QListWidget.completion_listbox::item:hover {
+QListWidget[objectName="completion_popup"]::item:hover,
+QListWidget.completion_popup::item:hover {
   background-color: #818181;
   color: #ffffff;
   border-radius: 2px;

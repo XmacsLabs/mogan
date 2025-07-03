@@ -89,7 +89,7 @@ edit_interface_rep::complete_try () {
     if ((end == 0) || (!is_iso_alpha (s[end - 1])) ||
         ((end != N (s)) && is_iso_alpha (s[end]))) {
       set_input_normal ();
-      SERVER (set_completion_listbox_visible (false));
+      SERVER (set_completion_popup_visible (false));
       return false;
     }
     int start= end - 1;
@@ -100,7 +100,7 @@ edit_interface_rep::complete_try () {
   }
   if (N (a) <= 1) {
     set_input_normal ();
-    SERVER (set_completion_listbox_visible (false));
+    SERVER (set_completion_popup_visible (false));
     return false;
   }
   complete_start (ss, a);
@@ -136,7 +136,7 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
     completion_pos   = 0;
     {
       // TODO: ?refactor this part to
-      // edit_interface_rep::show_completion_listbox
+      // edit_interface_rep::show_completion_popup
       cout << "complete_start: "
            //     << "completions=" << completions
            << ", prefix="
@@ -157,13 +157,13 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
         tp1= previous_valid (et, tp1);
       }
       cursor cu= eb->find_check_cursor (tp1);
-      cout << "show_completion_listbox: "
+      cout << "show_completion_popup: "
            // << "completions=" << full_completions << ", cu->ox=" << cu->ox
            << ", cu->oy=" << cu->oy << ", magf=" << magf
            << ", scroll_x=" << get_scroll_x ()
            << ", scroll_y=" << get_scroll_y ()
            << ", canvas_x=" << get_canvas_x () << LF;
-      show_completion_listbox (tp, full_completions, cu, magf, get_scroll_x (),
+      show_completion_popup (tp, full_completions, cu, magf, get_scroll_x (),
                                get_scroll_y (), get_canvas_x ());
     }
     insert_tree (completions[0]);
@@ -181,19 +181,19 @@ edit_interface_rep::complete_keypress (string key) {
 
   if (key == "enter" || key == "return") {
     set_input_normal ();
-    SERVER (set_completion_listbox_visible (false));
+    SERVER (set_completion_popup_visible (false));
     return true;
   }
   else if (key == "escape" || key == " ") {
     set_input_normal ();
-    SERVER (set_completion_listbox_visible (false));
+    SERVER (set_completion_popup_visible (false));
     return false;
   }
   else if ((key != "tab") && (key != "S-tab") && (key != "up") &&
            (key != "down")) {
     if ((key != "backspace" && try_shortcut(key))) {
       set_input_normal ();
-      SERVER (set_completion_listbox_visible (false));
+      SERVER (set_completion_popup_visible (false));
     }
     return false;
   }
@@ -213,11 +213,11 @@ edit_interface_rep::complete_keypress (string key) {
 
   if (key == "tab" || key == "down") {
     completion_pos++;
-    completion_listbox_next (true);
+    completion_popup_next (true);
   }
   else if (key == "S-tab" || key == "up") {
     completion_pos--;
-    completion_listbox_next (false);
+    completion_popup_next (false);
   }
   if (completion_pos < 0) completion_pos= N (completions) - 1;
   if (completion_pos >= N (completions)) completion_pos= 0;
@@ -226,7 +226,7 @@ edit_interface_rep::complete_keypress (string key) {
   insert (path_up (tp) * (end - N (old_s)), new_s);
   complete_message ();
   apply_changes (); // sync eb, for calculating the new cursor position
-  update_completion_listbox_position (et, eb, tp, magf, get_scroll_x (),
+  update_completion_popup_position (et, eb, tp, magf, get_scroll_x (),
                                       get_scroll_y (), get_canvas_x (),
                                       completion_pos);
   return true;
@@ -297,7 +297,7 @@ edit_interface_rep::custom_complete (tree r) {
 
   if ((prefix == "") || (N (compls) <= 1)) {
     set_input_normal ();
-    SERVER (set_completion_listbox_visible (false));
+    SERVER (set_completion_popup_visible (false));
     return;
   }
   complete_start (prefix, as_completions (compls));

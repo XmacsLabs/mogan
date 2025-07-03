@@ -1,6 +1,6 @@
 
 /******************************************************************************
- * MODULE     : qt_completion_listbox.cpp
+ * MODULE     : QTMCompletionPopup.cpp
  * DESCRIPTION: Implementation of Completion ListBox widget for auto-completion
  * COPYRIGHT  : (C) 2025 JimZhouZZY
  *******************************************************************************
@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 // TODO: delete some headers
-#include "qt_completion_listbox.hpp"
+#include "QTMCompletionPopup.hpp"
 #include "QTMScrollView.hpp"
 #include "gui.hpp"
 #include "message.hpp"
@@ -28,12 +28,12 @@
 #include <QKeyEvent>
 #include <QScrollBar>
 
-QtCompletionListBox::QtCompletionListBox (QWidget*              parent,
+QTMCompletionPopup::QTMCompletionPopup (QWidget*              parent,
                                           qt_simple_widget_rep* owner_widget)
     : QListWidget (parent), owner_widget (owner_widget), cached_cursor_x (0),
       cached_cursor_y (0), cached_scroll_x (0), cached_scroll_y (0),
       cached_canvas_x (0), cached_magf (0.0) {
-  setObjectName ("completion_listbox");
+  setObjectName ("completion_popup");
   setWindowFlags (Qt::FramelessWindowHint |
                   Qt::WindowStaysOnTopHint); // Qt::Window, Qt::Popup
   setFocusPolicy (Qt::NoFocus);              // Qt::ClickFocus, Qt::StrongFocus
@@ -41,13 +41,13 @@ QtCompletionListBox::QtCompletionListBox (QWidget*              parent,
   setMouseTracking (true);
 
   connect (this, &QListWidget::itemClicked, this,
-           &QtCompletionListBox::onItemClicked);
+           &QTMCompletionPopup::onItemClicked);
   connect (this, &QListWidget::currentItemChanged, this,
-           &QtCompletionListBox::onCurrentItemChanged);
+           &QTMCompletionPopup::onCurrentItemChanged);
 }
 
 void
-QtCompletionListBox::showCompletions (array<string>& completions, SI x, SI y) {
+QTMCompletionPopup::showCompletions (array<string>& completions, SI x, SI y) {
   clear ();
   for (int i= 0; i < N (completions); ++i) {
     addItem (QString::fromUtf8 (as_charp (completions[i])));
@@ -56,7 +56,7 @@ QtCompletionListBox::showCompletions (array<string>& completions, SI x, SI y) {
 
   QSize  size (200, qMin (100, 20 + N (completions) * 22));
   QPoint topLeft (x, y);
-  // qDebug () << "QtCompletionListBox::showCompletions: "
+  // qDebug () << "QTMCompletionPopup::showCompletions: "
   //           << "x=" << x << ", y=" << y << ", size=" << size.width () << "x"
   //           << size.height () << Qt::endl;
   move (topLeft);
@@ -65,7 +65,7 @@ QtCompletionListBox::showCompletions (array<string>& completions, SI x, SI y) {
 }
 
 void
-QtCompletionListBox::showCompletions (path tp, array<string>& completions,
+QTMCompletionPopup::showCompletions (path tp, array<string>& completions,
                                       struct cursor cu, double magf,
                                       SI scroll_x, SI scroll_y, SI canvas_x) {
   // TODO: do not cache tp
@@ -77,7 +77,7 @@ QtCompletionListBox::showCompletions (path tp, array<string>& completions,
 }
 
 void
-QtCompletionListBox::cachePosition (struct cursor cu, double magf, SI scroll_x,
+QTMCompletionPopup::cachePosition (struct cursor cu, double magf, SI scroll_x,
                                     SI scroll_y, SI canvas_x) {
   cached_cursor_x= cu->ox;
   cached_cursor_y= cu->oy;
@@ -88,7 +88,7 @@ QtCompletionListBox::cachePosition (struct cursor cu, double magf, SI scroll_x,
 }
 
 void
-QtCompletionListBox::updateCache (tree& et, box eb, path tp, double magf,
+QTMCompletionPopup::updateCache (tree& et, box eb, path tp, double magf,
                                   SI scroll_x, SI scroll_y, SI canvas_x,
                                   SI index) {
   // MUST called when cache is already set
@@ -110,7 +110,7 @@ QtCompletionListBox::updateCache (tree& et, box eb, path tp, double magf,
 }
 
 void
-QtCompletionListBox::getCachedPosition (SI& x, SI& y) {
+QTMCompletionPopup::getCachedPosition (SI& x, SI& y) {
   x= ((cached_cursor_x - cached_scroll_x - 500) * cached_magf +
       cached_canvas_x) /
      256;
@@ -120,7 +120,7 @@ QtCompletionListBox::getCachedPosition (SI& x, SI& y) {
 }
 
 void
-QtCompletionListBox::showComponent () {
+QTMCompletionPopup::showComponent () {
   // Ensure the listbox is visible
   show ();
   raise ();
@@ -129,23 +129,23 @@ QtCompletionListBox::showComponent () {
 }
 
 void
-QtCompletionListBox::keyPressEvent (QKeyEvent* event) {
+QTMCompletionPopup::keyPressEvent (QKeyEvent* event) {
   return;
 }
 
 void
-QtCompletionListBox::focusOutEvent (QFocusEvent* event) {
+QTMCompletionPopup::focusOutEvent (QFocusEvent* event) {
   hide ();
   QListWidget::focusOutEvent (event);
 }
 
 void
-QtCompletionListBox::onItemClicked (QListWidgetItem* item) {
+QTMCompletionPopup::onItemClicked (QListWidgetItem* item) {
   if (item) {
     emit   completionSelected (item->text ());
     SI     end  = last_item (cached_tp);
     string new_s= getSelectedText ();
-    cout << "QtCompletionListBox::onItemClicked: "
+    cout << "QTMCompletionPopup::onItemClicked: "
          << "selected text: " << new_s << ", cached_tp: " << cached_tp
          << ", end: " << end << ", lastSelectedText: " << lastSelectedText
          << LF;
@@ -159,26 +159,26 @@ QtCompletionListBox::onItemClicked (QListWidgetItem* item) {
 }
 
 void
-QtCompletionListBox::wheelEvent (QWheelEvent* event) {
+QTMCompletionPopup::wheelEvent (QWheelEvent* event) {
   QListWidget::wheelEvent (event);
 }
 
 void
-QtCompletionListBox::selectNextItem () {
+QTMCompletionPopup::selectNextItem () {
   int row= currentRow ();
   if (row < count () - 1) setCurrentRow (row + 1);
   else setCurrentRow (0);
 }
 
 void
-QtCompletionListBox::selectPreviousItem () {
+QTMCompletionPopup::selectPreviousItem () {
   int row= currentRow ();
   if (0 < row) setCurrentRow (row - 1);
   else setCurrentRow (count () - 1);
 }
 
 void
-QtCompletionListBox::selectItemIndex (int index) {
+QTMCompletionPopup::selectItemIndex (int index) {
   if (index >= 0 && index < count ()) {
     setCurrentRow (index);
   }
@@ -188,7 +188,7 @@ QtCompletionListBox::selectItemIndex (int index) {
 }
 
 void
-QtCompletionListBox::setScrollOrigin (QPoint origin) {
+QTMCompletionPopup::setScrollOrigin (QPoint origin) {
   coord2 origin2= from_qpoint (origin);
   cached_scroll_x= (SI) (origin2.x1 / cached_magf);
   cached_scroll_y= (SI) (origin2.x2 / cached_magf);
@@ -196,7 +196,7 @@ QtCompletionListBox::setScrollOrigin (QPoint origin) {
 }
 
 void
-QtCompletionListBox::updatePosition () {
+QTMCompletionPopup::updatePosition () {
   // Update the position of the completion list box based on cached values
   SI pos_x, pos_y;
   getCachedPosition (pos_x, pos_y);
@@ -204,14 +204,14 @@ QtCompletionListBox::updatePosition () {
 }
 
 void
-QtCompletionListBox::scrollBy (SI x, SI y) {
+QTMCompletionPopup::scrollBy (SI x, SI y) {
   // TODO: need convertion to coord2
   cached_scroll_x-= (SI) (x / cached_magf);
   cached_scroll_y-= (SI) (y / cached_magf);
 }
 
 string
-QtCompletionListBox::getSelectedText () {
+QTMCompletionPopup::getSelectedText () {
   QListWidgetItem* item= currentItem ();
   if (item) {
     QString qtext= item->text ();
@@ -221,7 +221,7 @@ QtCompletionListBox::getSelectedText () {
 }
 
 string
-QtCompletionListBox::getText (SI idx) {
+QTMCompletionPopup::getText (SI idx) {
   if (idx < 0 || idx >= count ()) {
     return string ("");
   }
@@ -234,7 +234,7 @@ QtCompletionListBox::getText (SI idx) {
 }
 
 void
-QtCompletionListBox::onCurrentItemChanged (QListWidgetItem* current,
+QTMCompletionPopup::onCurrentItemChanged (QListWidgetItem* current,
                                            QListWidgetItem* previous) {
   if (previous) {
     lastSelectedText= from_qstring (previous->text ());

@@ -568,7 +568,7 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
   if (type == "leave") set_pointer ("XC_top_left_arrow");
   if ((!move_like) && (type != "enter") && (type != "leave")) {
     set_input_normal ();
-    SERVER (set_completion_listbox_visible (false));
+    SERVER (set_completion_popup_visible (false));
   }
   if (!is_nil (popup_win) && (type != "leave")) {
     set_visibility (popup_win, false);

@@ -301,22 +301,22 @@ tm_frame_rep::in_full_screen_edit_mode () {
 }
 
 void
-tm_frame_rep::show_completion_listbox (array<string>& completions, SI x, SI y) {
-  concrete_window ()->show_compl_listbox (completions, x, y);
+tm_frame_rep::show_completion_popup (array<string>& completions, SI x, SI y) {
+  concrete_window ()->show_compl_popup (completions, x, y);
 }
 
 void
-tm_frame_rep::get_completion_listbox_visible (bool& visible) {
+tm_frame_rep::get_completion_popup_visible (bool& visible) {
   // Deprecated
-  concrete_window ()->get_compl_listbox_visible (visible);
+  concrete_window ()->get_compl_popup_visible (visible);
 }
 
 void
-tm_frame_rep::set_completion_listbox_visible (bool visible) {
-  concrete_window ()->set_compl_listbox_visible (visible);
+tm_frame_rep::set_completion_popup_visible (bool visible) {
+  concrete_window ()->set_compl_popup_visible (visible);
 }
 
 void
-tm_frame_rep::set_completion_listbox_next (bool next) {
-  concrete_window ()->set_compl_listbox_next (next);
+tm_frame_rep::set_completion_popup_next (bool next) {
+  concrete_window ()->set_compl_popup_next (next);
 }

@@ -1,6 +1,6 @@
 
 /******************************************************************************
- * MODULE     : qt_completion_listbox.hpp
+ * MODULE     : QTMCompletionPopup.hpp
  * DESCRIPTION: Completion ListBox widget for auto-completion
  * COPYRIGHT  : (C) 2025 JimZhouZZY
  *******************************************************************************
@@ -23,7 +23,7 @@
 #include <QPoint>
 #include <QStringList>
 
-class QtCompletionListBox : public QListWidget {
+class QTMCompletionPopup : public QListWidget {
   Q_OBJECT
 private:
   qt_simple_widget_rep* owner_widget; // for emiting messages
@@ -39,7 +39,7 @@ protected:
   double cached_magf;
 
 public:
-  QtCompletionListBox (QWidget* parent, qt_simple_widget_rep* owner_widget);
+  QTMCompletionPopup (QWidget* parent, qt_simple_widget_rep* owner_widget);
 
   // Getter methods for cached variables
   inline SI     getCachedCursorX () const { return cached_cursor_x; }
