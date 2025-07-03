@@ -191,8 +191,10 @@ edit_interface_rep::complete_keypress (string key) {
   }
   else if ((key != "tab") && (key != "S-tab") && (key != "up") &&
            (key != "down")) {
-    // set_input_normal ();
-    // SERVER (set_completion_listbox_visible (false));
+    if ((key != "backspace" && try_shortcut(key))) {
+      set_input_normal ();
+      SERVER (set_completion_listbox_visible (false));
+    }
     return false;
   }
   tree st= subtree (et, path_up (tp));
