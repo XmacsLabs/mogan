@@ -266,39 +266,6 @@ qt_simple_widget_rep::send (slot s, blackbox val) {
     canvas ()->setCursorPos (to_qpoint (p));
   } break;
 
-  case SLOT_CURSOR_STYLE: {
-    check_type<cursor_style> (val, s);
-    cursor_style style= open_box<cursor_style> (val);
-    if (style == cursor_style::OPENHAND)
-      canvas ()->setCursor (Qt::OpenHandCursor);
-    else if (style == cursor_style::NORMAL)
-      canvas ()->setCursor (Qt::ArrowCursor);
-    else if (style == cursor_style::CLOSEHAND)
-      canvas ()->setCursor (Qt::ClosedHandCursor);
-    else if (style == cursor_style::CROSS)
-      canvas ()->setCursor (Qt::CrossCursor);
-    else if (style == cursor_style::UP_ARROW)
-      canvas ()->setCursor (Qt::UpArrowCursor);
-    else if (style == cursor_style::IBEAM)
-      canvas ()->setCursor (Qt::IBeamCursor);
-    else if (style == cursor_style::WAIT) canvas ()->setCursor (Qt::WaitCursor);
-    else if (style == cursor_style::FORBIDDEN)
-      canvas ()->setCursor (Qt::ForbiddenCursor);
-    else if (style == cursor_style::POINTING_HAND)
-      canvas ()->setCursor (Qt::PointingHandCursor);
-    else if (style == cursor_style::SIZE_VER)
-      canvas ()->setCursor (Qt::SizeVerCursor);
-    else if (style == cursor_style::SIZE_HOR)
-      canvas ()->setCursor (Qt::SizeHorCursor);
-    else if (style == cursor_style::SIZE_BDIAG)
-      canvas ()->setCursor (Qt::SizeBDiagCursor);
-    else if (style == cursor_style::SIZE_FDIAG)
-      canvas ()->setCursor (Qt::SizeFDiagCursor);
-    else if (style == cursor_style::SIZE_ALL)
-      canvas ()->setCursor (Qt::SizeAllCursor);
-    else TM_FAILED ("invalid cursor style");
-  } break;
-
   case SLOT_COMPLETION_LISTBOX_SHOW: {
     check_type<triple<array<string>, SI, SI>> (val, s);
     triple<array<string>, SI, SI> data=
