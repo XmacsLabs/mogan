@@ -10,7 +10,7 @@ on:
       - "xmake.lua"
       - "xmake/packages.lua"
       - "xmake/packages/**"
-      - ".github/workflows/main.yml"
+      - ".github/workflows/ci-debian12.yml"
   pull_request:
     branches: [main]
     paths:
@@ -21,7 +21,7 @@ on:
       - "xmake.lua"
       - "xmake/packages.lua"
       - "xmake/packages/**"
-      - ".github/workflows/main.yml"
+      - ".github/workflows/ci-debian12.yml"
 
 env:
   XMAKE_ROOT: y
