@@ -2284,3 +2284,4 @@
 ("Scalable Vector Graphics" "可缩放矢量图形")
 ("Portable Document Format" "便携式文档格式")
 ("Image file" "图片文件")
+("fn" "字符")

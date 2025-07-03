@@ -84,7 +84,7 @@
               (ahash-ref new "par-right") "10em")))
     (item (text "First indentation:")
       (enum (change "par-first" answer old new fun u)
-            (cons-new (ahash-ref new "par-first") '("0tab" "1tab" "-1tab" ""))
+            (cons-new (ahash-ref new "par-first") '("0fn" "2fn" ""))
             (ahash-ref new "par-first") "10em"))
     (item ====== ======)
     (item (text "Interline space:")
