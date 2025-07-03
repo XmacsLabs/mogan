@@ -33,24 +33,12 @@ QtCompletionListBox::QtCompletionListBox (QWidget*              parent,
     : QListWidget (parent), owner_widget (owner_widget), cached_cursor_x (0),
       cached_cursor_y (0), cached_scroll_x (0), cached_scroll_y (0),
       cached_canvas_x (0), cached_magf (0.0) {
+  setObjectName ("completion_listbox");
   setWindowFlags (Qt::FramelessWindowHint |
                   Qt::WindowStaysOnTopHint); // Qt::Window, Qt::Popup
   setFocusPolicy (Qt::NoFocus);              // Qt::ClickFocus, Qt::StrongFocus
   setSelectionMode (QAbstractItemView::SingleSelection);
   setMouseTracking (true);
-
-  setStyleSheet ("QListWidget::item:selected {"
-                 "  background-color: #3daee9;"
-                 "  color: white;"
-                 "}"
-                 "QListWidget::item:hover {"
-                 "  background-color: #93cee9;"
-                 "}"
-                 "QListWidget {"
-                 "  border: 1px solid #bfbfbf;"
-                 "  background-color: white;"
-                 "  alternate-background-color: #f0f0f0;"
-                 "}");
 
   connect (this, &QListWidget::itemClicked, this,
            &QtCompletionListBox::onItemClicked);
