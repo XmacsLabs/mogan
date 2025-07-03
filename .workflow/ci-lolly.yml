@@ -17,7 +17,7 @@ triggers:
         - main
     paths:
       precise:
-        - .workflow/ci-ubuntu.yml
+        - .workflow/ci-lolly.yml
         - 3rdparty/lolly
 
 variables:
@@ -34,12 +34,28 @@ stages:
     trigger: auto
     executor: []
     steps:
-      - step: build@ruby
-        name: build_ruby
-        displayName: build liii
-        rubyVersion: 3.0.2
+      - step: build@gcc
+        name: build
+        displayName: Build and Test
+        gccVersion: '9.4'
         commands:
+          - rm -rf ./xmake.lua
           - wget https://gitee.com/XmacsLabs/mogan/attach_files/1813514/download -O /tmp/xmake.deb
           - sha1sum /tmp/xmake.deb | grep ac3629bd0fa66f179aef35dc00b7a1c89735651a
           - apt install /tmp/xmake.deb
-          - pwd
+          - apt-get update
+          - apt-get install -y software-properties-common
+          - apt-get install -y xmake libcurl4-openssl-dev pkg-config
+          - cd 3rdparty/lolly
+          - xmake repo -u
+          - xmake config -vD --yes --enable_tests=true
+          - xmake build -vD liblolly
+          - xmake --yes -vD --group=tests -j 1 build
+          - xmake run -vD
+        caches: [
+          3rdparty/lolly/build/.build_cache,
+        ]
+        notify: []
+        strategy:
+          retry: '0'
+          stepTimeout: 30
