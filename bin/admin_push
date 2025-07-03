@@ -1,0 +1,19 @@
+#!/usr/bin/env elvish
+
+if (not ?(git grep gitee)) {
+  echo "未找到 gitee 相关内容，请执行："
+  echo "git remote add gitee git@gitee.com:XmacsLabs/mogan.git"
+  exit 1
+}
+
+if (not ?(git grep github)) {
+  echo "未找到 gitee 相关内容，请执行："
+  echo "git remote add github git@github.com:XmacsLabs/mogan.git"
+  exit 1
+}
+
+echo "git pull gitee main"
+git pull gitee main
+
+echo "git push github main"
+git push github main
