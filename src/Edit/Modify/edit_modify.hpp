@@ -59,6 +59,7 @@ public:
   void notify_save (bool real_save= true);
   bool need_save (bool real_save= true);
   void show_history ();
+  void set_arch_versioning (bool v);
 
   observer position_new (path p);
   void     position_delete (observer o);

@@ -71,6 +71,8 @@ public:
   void notify_autosave ();
   bool conform_save ();
   bool conform_autosave ();
+  
+  inline void set_versioning (bool v) { versioning= v; }
 
   friend void archive_announce (archiver_rep* arch, modification mod);
   friend void global_clear_history ();
