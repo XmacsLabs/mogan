@@ -20,9 +20,12 @@
     </src-license>
   </src-title>>
 
-  <assign|par-first|<value|indent-par-first>>
-
-  <assign|par-par-sep|0.5fns>
+  <if|<equal|<value|language>|chinese>|
+    <assign|par-first|2fn>
+  |
+    <assign|par-first|<value|indent-par-first>>
+    <assign|par-par-sep|0.5fns>
+  >
 </body>
 
 <\initial>
