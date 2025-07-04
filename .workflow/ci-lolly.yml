@@ -44,8 +44,7 @@ stages:
           - sha1sum /tmp/xmake.deb | grep ac3629bd0fa66f179aef35dc00b7a1c89735651a
           - apt install /tmp/xmake.deb
           - apt-get update
-          - apt-get install -y software-properties-common
-          - apt-get install -y xmake libcurl4-openssl-dev pkg-config
+          - apt-get install -y libcurl4-openssl-dev pkg-config
           - cd 3rdparty/lolly
           - xmake repo -u
           - xmake config -vD --yes --enable_tests=true
