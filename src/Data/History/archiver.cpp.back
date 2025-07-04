@@ -323,6 +323,7 @@ archiver_rep::confirm () {
     if (nr_children (remove_set_cursor (current)) == 0)
       current= make_compound (0);
     if (active ()) {
+      // cout << "Confirm " << current << "\n";
       archive  = patch (current, archive);
       current  = make_compound (0);
       the_owner= 0;
@@ -419,11 +420,7 @@ archiver_rep::redo_possibilities () {
 
 path
 archiver_rep::undo_one (int i) {
-  if (active ()) {
-    cout << "  Cannot undo while modifications are active\n";
-    return path ();
-  }
-  cout << "  undo_possibilities(): " << undo_possibilities() << "\n";
+  if (active ()) return path ();
   if (undo_possibilities () != 0) {
     ASSERT (i == 0, "index out of range");
     patch p= car (get_undo (archive));
@@ -438,8 +435,7 @@ archiver_rep::undo_one (int i) {
     archive  = make_history (un, re);
     depth--;
     // show_all ();
-    path cursor_pos = cursor_hint (q, the_et);
-    return cursor_pos;
+    return cursor_hint (q, the_et);
   }
   return path ();
 }
@@ -678,33 +674,112 @@ archiver_rep::conform_autosave () {
  ******************************************************************************/
 
 void
-archiver_rep::reconstruct_from_state (tree old_state, tree new_state, path p, string completion) {
-  // TODO: refactor
+archiver_rep::reconstruct_from_state (tree old_state, tree new_state) {
+  cout << "reconstruct_from_state: Starting reconstruction\n";
+  
+  // Cancel any pending modifications first
   cancel ();
   
+  // Compare trees using string representation for consistency
   string old_str = as_string(old_state);
   string new_str = as_string(new_state);
   bool trees_equal = (old_state == new_state);
   
+  cout << "old_state tree" << old_state << "\n";
+  cout << "new_state tree" << new_state << "\n";
+  cout << "  old_state: \"" << old_str << "\"\n";
+  cout << "  new_state: \"" << new_str << "\"\n";
+  cout << "  trees_equal: " << trees_equal << "\n";
+  
   if (!trees_equal) {
-    modification mod = compute_tree_diff(old_state, new_state, p, completion);
+    cout << "Trees are different, computing diff...\n";
+    // Generate the single atomic modification by comparing the trees
+    modification mod = compute_tree_diff (old_state, new_state, path ());
+    
+    cout << "Generated modification: " << mod << "\n";
+    
+    // Add the modification to current modifications
     add (mod);
   } else {
+    cout << "Trees are identical, no modification needed\n";
   }
+  
+  // Confirm the modifications to add them to the archive
   confirm ();
+  
+  // Simplify the history if possible
   simplify ();
+  
+  cout << "reconstruct_from_state: Completed\n";
 }
 
 modification
-archiver_rep::compute_tree_diff (tree old_tree, tree new_tree, path p, string completion) {
-  // TODO: refactor
-  cout << "compute_tree_diff: path=" << p << "\n";
-  string old_s =as_string(subtree(old_tree, path_up(p, 1)));
-  string new_s = as_string(subtree(new_tree, path_up(p, 1)));
-  int insert_pos = last_item(p);
-  string insert_content = completion;
-  //cout << "compute_tree_diff: old_s=\"" << old_s << "\", new_s=\"" << new_s
-  //     << "\", insert_pos=" << insert_pos
-  //     << ", insert_content=\"" << insert_content << "\"\n";
-  return mod_insert (path_up(p, 1), insert_pos, insert_content);
+archiver_rep::compute_tree_diff (tree old_tree, tree new_tree, path p) {
+  cout << "compute_tree_diff: path=" << as_string(p) << "\n";
+  
+  // Use lolly namespace explicitly to avoid ambiguity
+  bool old_atomic = lolly::data::is_atomic(old_tree);
+  bool new_atomic = lolly::data::is_atomic(new_tree);
+  
+  cout << "  old_atomic=" << old_atomic << ", new_atomic=" << new_atomic << "\n";
+  
+  // If one or both are atomic, replace the whole subtree
+  if (old_atomic || new_atomic) {
+    string old_content = old_atomic ? as_string(old_tree) : "<compound>";
+    string new_content = new_atomic ? as_string(new_tree) : "<compound>";
+    cout << "  Atomic tree(s) detected: \"" << old_content << "\" -> \"" << new_content << "\", returning mod_assign\n";
+    return mod_assign (p, new_tree);
+  }
+  
+  // Check if compound trees have same structure
+  tree_label old_label = L(old_tree);
+  tree_label new_label = L(new_tree);
+  
+  cout << "  old_label=" << old_label << ", new_label=" << new_label << "\n";
+  
+  if (old_label != new_label) {
+    cout << "  Different labels, returning mod_assign\n";
+    return mod_assign (p, new_tree);
+  }
+  
+  int old_arity = lolly::data::N(old_tree);
+  int new_arity = lolly::data::N(new_tree);
+  
+  cout << "  old_arity=" << old_arity << ", new_arity=" << new_arity << "\n";
+  
+  if (old_arity != new_arity) {
+    cout << "  Different arity, returning mod_assign\n";
+    return mod_assign (p, new_tree);
+  }
+  
+  // Both are compound with same label and arity
+  cout << "  Checking children (arity=" << old_arity << ")...\n";
+  for (int i = 0; i < old_arity; i++) {
+    tree old_child = old_tree[i];
+    tree new_child = new_tree[i];
+    
+    // Multiple comparison methods
+    string old_str = as_string(old_child);
+    string new_str = as_string(new_child);
+    bool str_equal = (old_str == new_str);
+    bool tree_equal = (old_child == new_child);
+    
+    cout << "    child " << i << ": str=\"" << old_str << "\" vs \"" << new_str << "\", str_equal=" << str_equal << ", tree_equal=" << tree_equal << "\n";
+    
+    // Use tree equality instead of string equality for more accuracy
+    if (!tree_equal) {
+      cout << "    Found difference in child " << i << ", recursing...\n";
+      return compute_tree_diff (old_child, new_child, p * i);
+    } else {
+      cout << "    child " << i << ": equal\n";
+    }
+  }
+  
+  // If we reach here, the trees are actually equal
+  // This shouldn't happen in our use case where we guarantee a difference exists
+  cout << "  ERROR: Trees appear equal but caller said they're different!\n";
+  cout << "  old_tree: " << as_string(old_tree) << "\n";
+  cout << "  new_tree: " << as_string(new_tree) << "\n";
+  cout << "  This suggests a logic error - returning mod_assign anyway\n";
+  return mod_assign (p, new_tree);
 }

@@ -35,6 +35,9 @@ string MODE_LANGUAGE (string mode);
 
 class edit_interface_rep : virtual public editor_rep {
 protected:
+  tree complete_et;
+  path complete_tp;
+  string complete_str; // string to complete
   int        env_change;    // which things have been changed ?
   time_t     last_change;   // time of last processed change
   time_t     last_update;   // time of last update of menu, icons and footer

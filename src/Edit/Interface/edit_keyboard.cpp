@@ -69,6 +69,10 @@ edit_interface_rep::set_input_mode (int mode) {
 
 void
 edit_interface_rep::set_input_normal () {
+  cout << "set_input_normal\n";
+  if (input_mode == INPUT_COMPLETE)
+    arch_reconstruct (complete_et, et, complete_tp, complete_str);
+  set_arch_versioning (false);
   set_input_mode (INPUT_NORMAL);
 }
 
