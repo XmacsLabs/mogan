@@ -16,7 +16,9 @@
 #include "qt_utilities.hpp"
 #include "qt_window_widget.hpp"
 
+#include "QTMCompletionPopup.hpp"
 #include "QTMMenuHelper.hpp"
+#include "QTMStyle.hpp"
 #include "QTMWidget.hpp"
 #include <QLayout>
 #include <QPixmap>
@@ -25,13 +27,15 @@
 #endif
 
 qt_simple_widget_rep::qt_simple_widget_rep ()
-    : qt_widget_rep (simple_widget), sequencer (0) {
+    : qt_widget_rep (simple_widget), sequencer (0),
+      completionListBox (nullptr) {
   backingPixmap= headless_mode ? NULL : new QPixmap ();
 }
 
 qt_simple_widget_rep::~qt_simple_widget_rep () {
   all_widgets->remove ((pointer) this);
   if (backingPixmap != NULL) delete backingPixmap;
+  if (completionListBox != NULL) delete completionListBox;
 }
 
 QWidget*
@@ -123,6 +127,9 @@ qt_simple_widget_rep::handle_repaint (renderer win, SI x1, SI y1, SI x2,
   (void) x2;
   (void) y2;
 }
+
+void
+qt_simple_widget_rep::handle_set_input_normal () {}
 
 /******************************************************************************
  * Handling of TeXmacs messages
@@ -220,7 +227,11 @@ qt_simple_widget_rep::send (slot s, blackbox val) {
     QSize  sz= canvas ()->surface ()->size ();
     qp-= QPoint (sz.width () / 2, sz.height () / 2);
     // NOTE: adjust because child is centered
+    cout << "qt_simple_widget_rep: setting scroll origin to " << qp.x () << ", "
+         << qp.y () << LF;
     scrollarea ()->setOrigin (qp);
+    // completionListBox->setScrollOrigin (canvas ()->origin ());
+    // completionListBox->updatePosition ();
   } break;
 
   case SLOT_ZOOM_FACTOR: {
@@ -254,6 +265,54 @@ qt_simple_widget_rep::send (slot s, blackbox val) {
     coord2 p= open_box<coord2> (val);
     canvas ()->setCursorPos (to_qpoint (p));
   } break;
+
+  case SLOT_COMPLETION_LISTBOX_SHOW: {
+    check_type<triple<array<string>, SI, SI>> (val, s);
+    triple<array<string>, SI, SI> data=
+        open_box<triple<array<string>, SI, SI>> (val);
+    show_completion_popup (data.x1, data.x2, data.x3);
+    return;
+  }
+
+  case SLOT_COMPLETION_LISTBOX_VISIBLE: {
+    check_type<bool> (val, s);
+    bool visible= open_box<bool> (val);
+    if (completionListBox) {
+      if (visible) {
+        completionListBox->showComponent ();
+      }
+      else {
+        completionListBox->hide ();
+      }
+    }
+    else {
+      // If we do not have a completion listbox, we cannot show it.
+      // This is a no-op.
+    }
+    return;
+  }
+
+  case SLOT_COMPLETION_LISTBOX_NEXT: {
+    check_type<bool> (val, s);
+    bool next= open_box<bool> (val);
+    if (completionListBox) {
+      if (next) {
+        completionListBox->selectNextItem ();
+      }
+      else {
+        completionListBox->selectPreviousItem ();
+      }
+    }
+    else {
+      // If we do not have a completion listbox, we cannot show it.
+      // This is a no-op.
+    }
+    return;
+  }
+
+  case SLOT_INPUT_MODE_NORMAL: {
+    handle_set_input_normal ();
+  }
 
   default:
     qt_widget_rep::send (s, val);
@@ -320,6 +379,11 @@ qt_simple_widget_rep::query (slot s, int type_id) {
     else {
       return close_box<coord4> (coord4 (0, 0, 0, 0));
     }
+  }
+
+  case SLOT_COMPLETION_LISTBOX_VISIBLE: {
+    check_type_id<bool> (type_id, s);
+    return close_box<bool> (completion_popup_visible ());
   }
 
   default:
@@ -590,5 +654,98 @@ qt_simple_widget_rep::repaint_all () {
     qt_simple_widget_rep* w= static_cast<qt_simple_widget_rep*> (i->next ());
     if (w->canvas () && w->canvas ()->isVisible ())
       w->repaint_invalid_regions ();
+  }
+}
+
+/******************************************************************************
+ * Completion listbox support
+ ******************************************************************************/
+
+void
+qt_simple_widget_rep::ensure_completion_popup () {
+  // TODO: do we really need this ensuring every time?
+  //       or should we just create it at the beginning?
+  if (!completionListBox && canvas ()) {
+    completionListBox= new QTMCompletionPopup (canvas (), this);
+    if (tm_style_sheet == "") {
+      completionListBox->setStyle (qtmstyle ());
+    }
+  }
+}
+
+void
+qt_simple_widget_rep::show_completion_popup (array<string>& completions, SI x,
+                                             SI y) {
+  ensure_completion_popup ();
+  if (completionListBox) {
+    completionListBox->showCompletions (completions, x, y);
+  }
+}
+
+void
+qt_simple_widget_rep::show_completion_popup (path           tp,
+                                             array<string>& completions,
+                                             struct cursor cu, double magf,
+                                             SI scroll_x, SI scroll_y,
+                                             SI canvas_x) {
+  ensure_completion_popup ();
+  if (completionListBox) {
+    completionListBox->showCompletions (tp, completions, cu, magf, scroll_x,
+                                        scroll_y, canvas_x);
+  }
+}
+
+void
+qt_simple_widget_rep::hide_completion_popup () {
+  if (completionListBox) {
+    completionListBox->hide ();
+  }
+}
+
+bool
+qt_simple_widget_rep::completion_popup_visible () {
+  return completionListBox && completionListBox->isVisible ();
+}
+
+void
+qt_simple_widget_rep::scroll_completion_popup_by (SI x, SI y) {
+  QPoint qp (x, y);
+  coord2 p= from_qpoint (qp);
+  if (completionListBox) {
+    completionListBox->scrollBy (p.x1, p.x2);
+    completionListBox->updatePosition ();
+  }
+}
+
+void
+qt_simple_widget_rep::scroll_completion_popup () {
+  if (completionListBox) {
+    completionListBox->setScrollOrigin (canvas ()->origin ());
+    completionListBox->updatePosition ();
+  }
+}
+
+void
+qt_simple_widget_rep::update_completion_popup_position (tree& et, box eb,
+                                                        path tp, double magf,
+                                                        SI scroll_x,
+                                                        SI scroll_y,
+                                                        SI canvas_x, SI index) {
+  if (completionListBox) {
+    completionListBox->updateCache (et, eb, tp, magf, scroll_x, scroll_y,
+                                    canvas_x, index);
+    completionListBox->updatePosition ();
+  }
+}
+
+void
+qt_simple_widget_rep::completion_popup_next (bool next) {
+  if (completionListBox) {
+    if (next) {
+      completionListBox->selectNextItem ();
+    }
+    else {
+      completionListBox->selectPreviousItem ();
+    }
   }
 }

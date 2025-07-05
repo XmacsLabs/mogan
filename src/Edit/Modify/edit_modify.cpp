@@ -1,4 +1,3 @@
-
 /******************************************************************************
  * MODULE     : edit_modify.cpp
  * DESCRIPTION: base routines for modifying the edit tree + notification
@@ -454,4 +453,15 @@ path
 edit_modify_rep::position_get (observer o) {
   // return super_correct (et, obtain_position (o));
   return correct_cursor (et, obtain_position (o));
+}
+
+void
+edit_modify_rep::set_arch_versioning (bool v) {
+  arch->set_versioning (v);
+}
+
+void
+edit_modify_rep::arch_reconstruct (tree old_state, tree new_state, path p, string completion) {
+  cout << tp << " reconstructing from state\n";
+  arch->reconstruct_from_state (old_state, new_state, p, completion);
 }

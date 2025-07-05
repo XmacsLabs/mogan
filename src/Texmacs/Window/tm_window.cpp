@@ -571,6 +571,31 @@ tm_window_rep::set_scroll_pos (SI x, SI y) {
   set_scroll_position (wid, x, y);
 }
 
+void
+tm_window_rep::show_compl_popup (array<string>& completions, SI x, SI y) {
+  show_completion_popup (wid, completions, x, y);
+}
+
+void
+tm_window_rep::get_compl_popup_visible (bool& visible) {
+  get_completion_popup_visible (wid, visible);
+}
+
+void
+tm_window_rep::set_compl_popup_visible (bool visible) {
+  set_completion_popup_visible (wid, visible);
+}
+
+void
+tm_window_rep::set_compl_popup_next (bool next) {
+  set_completion_popup_next (wid, next);
+}
+
+void
+tm_window_rep::set_inp_mode_normal () {
+  set_input_mode_normal (wid);
+}
+
 /******************************************************************************
  * The footer as a status bar
  ******************************************************************************/

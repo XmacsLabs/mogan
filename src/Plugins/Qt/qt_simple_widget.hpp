@@ -14,10 +14,14 @@
 
 #include "basic_renderer.hpp"
 #include "hashset.hpp"
+#include "typesetter.hpp"
 
 #include "QTMScrollView.hpp"
 #include "QTMWidget.hpp"
 #include "qt_widget.hpp"
+
+// Forward declaration
+class QTMCompletionPopup;
 
 /*! A widget containing a TeXmacs canvas.
 
@@ -66,6 +70,7 @@ public:
   virtual void handle_set_zoom_factor (double zoom);
   virtual void handle_clear (renderer win, SI x1, SI y1, SI x2, SI y2);
   virtual void handle_repaint (renderer win, SI x1, SI y1, SI x2, SI y2);
+  virtual void handle_set_input_normal ();
 
   ////////////////////// Handling of TeXmacs' messages
 
@@ -85,6 +90,21 @@ public:
   QTMWidget*     canvas () { return qobject_cast<QTMWidget*> (qwid); }
   QTMScrollView* scrollarea () { return qobject_cast<QTMScrollView*> (qwid); }
 
+  ////////////////////// Completion listbox support
+  // TODO: determine when to use slot and to use this routine
+  void show_completion_popup (array<string>& completions, SI x, SI y);
+  void show_completion_popup (path tp, array<string>& completions,
+                              struct cursor cu, double magf, SI scroll_x,
+                              SI scroll_y, SI canvas_x);
+  void hide_completion_popup ();
+  bool completion_popup_visible ();
+  void scroll_completion_popup_by (SI x, SI y);
+  void scroll_completion_popup ();
+  void update_completion_popup_position (tree& et, box eb, path tp, double magf,
+                                         SI scroll_x, SI scroll_y, SI canvas_x,
+                                         SI index);
+  void completion_popup_next (bool next);
+
   ////////////////////// backing store management
 
   static void repaint_all (); // called by qt_gui_rep::update()
@@ -94,12 +114,14 @@ protected:
   rectangles              invalid_regions;
   QPixmap*                backingPixmap;
   QPoint                  backing_pos;
+  QTMCompletionPopup*     completionListBox;
 
   void           invalidate_rect (int x1, int y1, int x2, int y2);
   void           invalidate_all ();
   bool           is_invalid ();
   void           repaint_invalid_regions ();
   basic_renderer get_renderer ();
+  void           ensure_completion_popup ();
 
   friend class QTMWidget;
 };

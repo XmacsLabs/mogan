@@ -59,6 +59,8 @@ public:
   void notify_save (bool real_save= true);
   bool need_save (bool real_save= true);
   void show_history ();
+  void set_arch_versioning (bool v);
+  void arch_reconstruct (tree old_state, tree new_state, path p, string completion);
 
   observer position_new (path p);
   void     position_delete (observer o);

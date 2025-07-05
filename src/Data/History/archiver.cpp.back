@@ -323,6 +323,7 @@ archiver_rep::confirm () {
     if (nr_children (remove_set_cursor (current)) == 0)
       current= make_compound (0);
     if (active ()) {
+      // cout << "Confirm " << current << "\n";
       archive  = patch (current, archive);
       current  = make_compound (0);
       the_owner= 0;
@@ -330,7 +331,7 @@ archiver_rep::confirm () {
       if (depth <= last_save) last_save= -1;
       if (depth <= last_autosave) last_autosave= -1;
       normalize ();
-      show_all ();
+      // show_all ();
     }
   }
 }
@@ -419,11 +420,7 @@ archiver_rep::redo_possibilities () {
 
 path
 archiver_rep::undo_one (int i) {
-  if (active ()) {
-    cout << "  Cannot undo while modifications are active\n";
-    return path ();
-  }
-  cout << "  undo_possibilities(): " << undo_possibilities() << "\n";
+  if (active ()) return path ();
   if (undo_possibilities () != 0) {
     ASSERT (i == 0, "index out of range");
     patch p= car (get_undo (archive));
@@ -438,8 +435,7 @@ archiver_rep::undo_one (int i) {
     archive  = make_history (un, re);
     depth--;
     // show_all ();
-    path cursor_pos = cursor_hint (q, the_et);
-    return cursor_pos;
+    return cursor_hint (q, the_et);
   }
   return path ();
 }
@@ -678,135 +674,112 @@ archiver_rep::conform_autosave () {
  ******************************************************************************/
 
 void
-archiver_rep::reconstruct_from_state (tree old_state, tree new_state, path p, string completion) {
-  // TODO: refactor
+archiver_rep::reconstruct_from_state (tree old_state, tree new_state) {
+  cout << "reconstruct_from_state: Starting reconstruction\n";
+  
+  // Cancel any pending modifications first
   cancel ();
   
+  // Compare trees using string representation for consistency
   string old_str = as_string(old_state);
   string new_str = as_string(new_state);
   bool trees_equal = (old_state == new_state);
   
+  cout << "old_state tree" << old_state << "\n";
+  cout << "new_state tree" << new_state << "\n";
+  cout << "  old_state: \"" << old_str << "\"\n";
+  cout << "  new_state: \"" << new_str << "\"\n";
+  cout << "  trees_equal: " << trees_equal << "\n";
+  
   if (!trees_equal) {
-    modification mod = compute_tree_diff(old_state, new_state, p, completion);
-    cout << "modification: " << mod << LF;
+    cout << "Trees are different, computing diff...\n";
+    // Generate the single atomic modification by comparing the trees
+    modification mod = compute_tree_diff (old_state, new_state, path ());
+    
+    cout << "Generated modification: " << mod << "\n";
+    
+    // Add the modification to current modifications
     add (mod);
-    
-    modification cursor_mod = compute_cursor_update(old_state, new_state, p, mod);
-    if (cursor_mod != mod_insert(path(), 0, "")) { // Check if cursor update is needed
-      cout << "cursor modification: " << cursor_mod << LF;
-      add (cursor_mod);
-    }
+  } else {
+    cout << "Trees are identical, no modification needed\n";
   }
+  
+  // Confirm the modifications to add them to the archive
   confirm ();
+  
+  // Simplify the history if possible
   simplify ();
+  
+  cout << "reconstruct_from_state: Completed\n";
 }
 
 modification
-archiver_rep::compute_tree_diff (tree old_tree, tree new_tree, path p, string completion) {
-  cout << "compute_tree_diff: path=" << p << "\n";
+archiver_rep::compute_tree_diff (tree old_tree, tree new_tree, path p) {
+  cout << "compute_tree_diff: path=" << as_string(p) << "\n";
   
-  string old_s = as_string(subtree(old_tree, path_up(p, 1)));
-  string new_s = as_string(subtree(new_tree, path_up(p, 1)));
+  // Use lolly namespace explicitly to avoid ambiguity
+  bool old_atomic = lolly::data::is_atomic(old_tree);
+  bool new_atomic = lolly::data::is_atomic(new_tree);
   
-  SI i = 0;
-  SI j = 0;
+  cout << "  old_atomic=" << old_atomic << ", new_atomic=" << new_atomic << "\n";
   
-  // Find common prefix
-  while (i < N(old_s) && i < N(new_s) && old_s[i] == new_s[i]) {
-    i++;
+  // If one or both are atomic, replace the whole subtree
+  if (old_atomic || new_atomic) {
+    string old_content = old_atomic ? as_string(old_tree) : "<compound>";
+    string new_content = new_atomic ? as_string(new_tree) : "<compound>";
+    cout << "  Atomic tree(s) detected: \"" << old_content << "\" -> \"" << new_content << "\", returning mod_assign\n";
+    return mod_assign (p, new_tree);
   }
   
-  // Find common suffix (but don't overlap with prefix)
-  while (j < (N(old_s) - i) && j < (N(new_s) - i) && 
-         old_s[N(old_s) - 1 - j] == new_s[N(new_s) - 1 - j]) {
-    j++;
-  }
-
-  // Calculate the different parts
-  SI old_start = i;
-  SI old_end = N(old_s) - j;
-  SI new_start = i;
-  SI new_end = N(new_s) - j;
+  // Check if compound trees have same structure
+  tree_label old_label = L(old_tree);
+  tree_label new_label = L(new_tree);
   
-  string old_diff = (old_end > old_start) ? old_s(old_start, old_end) : "";
-  string new_diff = (new_end > new_start) ? new_s(new_start, new_end) : "";
+  cout << "  old_label=" << old_label << ", new_label=" << new_label << "\n";
   
-  cout << "old_s=\"" << old_s << "\", new_s=\"" << new_s << "\"\n";
-  cout << "old_diff=\"" << old_diff << "\", new_diff=\"" << new_diff << "\"\n";
-  cout << "prefix_len=" << i << ", suffix_len=" << j << "\n";
+  if (old_label != new_label) {
+    cout << "  Different labels, returning mod_assign\n";
+    return mod_assign (p, new_tree);
+  }
   
-  int insert_pos = last_item(p);
+  int old_arity = lolly::data::N(old_tree);
+  int new_arity = lolly::data::N(new_tree);
   
-  // Determine the operation based on the differences
-  if (old_diff == "" && new_diff != "") {
-    // Pure insertion
-    cout << "Pure insertion detected\n";
-    return mod_insert(path_up(p, 1), i, new_diff);
+  cout << "  old_arity=" << old_arity << ", new_arity=" << new_arity << "\n";
+  
+  if (old_arity != new_arity) {
+    cout << "  Different arity, returning mod_assign\n";
+    return mod_assign (p, new_tree);
   }
-  else if (old_diff != "" && new_diff == "") {
-    // Pure deletion  
-    cout << "Pure deletion detected\n";
-    // For deletion, the position should be relative to the new string
-    // Since we deleted from old_start to old_end, the deletion position
-    // in the context of the new string is at position i (common prefix length)
-    return mod_remove(path_up(p, 1), i, N(old_diff));
-  }
-  else if (old_diff != "" && new_diff != "") {
-    // Replacement (remove old, then insert new)
-    // For simplicity, we'll use insert with the new content at position i
-    cout << "Replacement detected, using insert\n";
-    return mod_insert(path_up(p, 1), i, new_diff);
-  }
-  else {
-    // No diff
-    cout << "No difference detected\n";
-    return mod_insert(path_up(p, 1), insert_pos, "");
-  }
-}
-
-modification
-archiver_rep::compute_cursor_update (tree old_tree, tree new_tree, path p, modification content_mod) {
-  cout << "compute_cursor_update: path=" << p << ", content_mod=" << content_mod << "\n";
-  int current_pos = last_item(p);
-  int new_cursor_pos = current_pos;
-  switch (content_mod->k) {
-    case MOD_INSERT: {
-      string inserted_text = as_string(content_mod->t);
-      int insert_pos = last_item(content_mod->p);
-      
-      if (current_pos >= insert_pos) {
-        // Cursor was at or after the insertion point, move it forward
-        new_cursor_pos = current_pos + N(inserted_text);
-      }
-      break;
-    }
+  
+  // Both are compound with same label and arity
+  cout << "  Checking children (arity=" << old_arity << ")...\n";
+  for (int i = 0; i < old_arity; i++) {
+    tree old_child = old_tree[i];
+    tree new_child = new_tree[i];
     
-    case MOD_REMOVE: {
-      int remove_pos = last_item(content_mod->p);
-      int remove_count = index(content_mod);
-      
-      if (current_pos > remove_pos + remove_count) {
-        // Cursor was after the removed content, move it back
-        new_cursor_pos = current_pos - remove_count;
-      }
-      else if (current_pos > remove_pos) {
-        // Cursor was within the removed content, place it at the removal point
-        new_cursor_pos = remove_pos;
-      }
-      break;
-    }
+    // Multiple comparison methods
+    string old_str = as_string(old_child);
+    string new_str = as_string(new_child);
+    bool str_equal = (old_str == new_str);
+    bool tree_equal = (old_child == new_child);
     
-    default:
-      break;
+    cout << "    child " << i << ": str=\"" << old_str << "\" vs \"" << new_str << "\", str_equal=" << str_equal << ", tree_equal=" << tree_equal << "\n";
+    
+    // Use tree equality instead of string equality for more accuracy
+    if (!tree_equal) {
+      cout << "    Found difference in child " << i << ", recursing...\n";
+      return compute_tree_diff (old_child, new_child, p * i);
+    } else {
+      cout << "    child " << i << ": equal\n";
+    }
   }
   
-  cout << "cursor position: " << current_pos << " -> " << new_cursor_pos << "\n";
-  
-  if (new_cursor_pos != current_pos) {
-    path cursor_path = path_up(p, 1);
-    return mod_set_cursor(cursor_path, new_cursor_pos, compound("cursor", "archiver"));
-  }
-  
-  // empty modification
-  return mod_insert(path(), 0, "");
+  // If we reach here, the trees are actually equal
+  // This shouldn't happen in our use case where we guarantee a difference exists
+  cout << "  ERROR: Trees appear equal but caller said they're different!\n";
+  cout << "  old_tree: " << as_string(old_tree) << "\n";
+  cout << "  new_tree: " << as_string(new_tree) << "\n";
+  cout << "  This suggests a logic error - returning mod_assign anyway\n";
+  return mod_assign (p, new_tree);
 }
