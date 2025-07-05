@@ -71,7 +71,7 @@ void
 edit_interface_rep::set_input_normal () {
   cout << "set_input_normal\n";
   if (input_mode == INPUT_COMPLETE)
-    arch_reconstruct (complete_et, et, complete_tp, complete_str);
+    arch_reconstruct (complete_tp, complete_et, subtree (et, path_up (tp, 1)));
   set_arch_versioning (false);
   set_input_mode (INPUT_NORMAL);
 }
@@ -223,8 +223,8 @@ handle_speech (string s) {
   last_uttering= texmacs_time ();
 }
 
-static bool
-is_combo_shortcuts (string key) {
+bool
+edit_interface_rep::is_combo_shortcuts (string key) {
   return starts (key, "A-") || starts (key, "S-") || starts (key, "C-") ||
          starts (key, "M-");
 }

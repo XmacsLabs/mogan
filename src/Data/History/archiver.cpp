@@ -14,9 +14,9 @@
 #include "observers.hpp"
 #include "tm_debug.hpp"
 #include "tree.hpp"
+#include "tree_helper.hpp"
 #include "tree_observer.hpp"
 #include "tree_patch.hpp"
-#include "tree_helper.hpp"
 
 extern tree             the_et;
 array<patch>            singleton (patch p);
@@ -330,7 +330,7 @@ archiver_rep::confirm () {
       if (depth <= last_save) last_save= -1;
       if (depth <= last_autosave) last_autosave= -1;
       normalize ();
-      // show_all ();
+      show_all ();
     }
   }
 }
@@ -423,7 +423,7 @@ archiver_rep::undo_one (int i) {
     cout << "  Cannot undo while modifications are active\n";
     return path ();
   }
-  cout << "  undo_possibilities(): " << undo_possibilities() << "\n";
+  cout << "  undo_possibilities(): " << undo_possibilities () << "\n";
   if (undo_possibilities () != 0) {
     ASSERT (i == 0, "index out of range");
     patch p= car (get_undo (archive));
@@ -438,7 +438,7 @@ archiver_rep::undo_one (int i) {
     archive  = make_history (un, re);
     depth--;
     // show_all ();
-    path cursor_pos = cursor_hint (q, the_et);
+    path cursor_pos= cursor_hint (q, the_et);
     return cursor_pos;
   }
   return path ();
@@ -674,37 +674,59 @@ archiver_rep::conform_autosave () {
 }
 
 /******************************************************************************
- * Reconstruct undo/redo history from before/after states
+ * Reconstruct undo/redo history after completion
  ******************************************************************************/
 
 void
-archiver_rep::reconstruct_from_state (tree old_state, tree new_state, path p, string completion) {
-  // TODO: refactor
+archiver_rep::reconstruct_from_state (path p_old, tree t_old, tree t_new) {
   cancel ();
-  
-  string old_str = as_string(old_state);
-  string new_str = as_string(new_state);
-  bool trees_equal = (old_state == new_state);
-  
-  if (!trees_equal) {
-    modification mod = compute_tree_diff(old_state, new_state, p, completion);
+  if (!(t_old == t_new)) {
+    modification mod= compute_tree_mod (p_old, t_old, t_new);
+    // cout << "modification: " << mod << LF;
+    tree& t_sub= subtree (the_et, path_up (p_old, 1));
+    t_sub      = t_old;
     add (mod);
-  } else {
+    t_sub= t_new;
   }
   confirm ();
   simplify ();
 }
 
 modification
-archiver_rep::compute_tree_diff (tree old_tree, tree new_tree, path p, string completion) {
-  // TODO: refactor
-  cout << "compute_tree_diff: path=" << p << "\n";
-  string old_s =as_string(subtree(old_tree, path_up(p, 1)));
-  string new_s = as_string(subtree(new_tree, path_up(p, 1)));
-  int insert_pos = last_item(p);
-  string insert_content = completion;
-  //cout << "compute_tree_diff: old_s=\"" << old_s << "\", new_s=\"" << new_s
-  //     << "\", insert_pos=" << insert_pos
-  //     << ", insert_content=\"" << insert_content << "\"\n";
-  return mod_insert (path_up(p, 1), insert_pos, insert_content);
+archiver_rep::compute_tree_mod (path p_old, tree t_old, tree t_new) {
+  string old_s= as_string (t_old);
+  string new_s= as_string (t_new);
+  SI     i= 0, j= 0;
+
+  // Find common prefix
+  while (i < N (old_s) && i < N (new_s) && old_s[i] == new_s[i])
+    i++;
+
+  // Find common suffix, but don't overlap with prefix
+  while (j < (N (old_s) - i) && j < (N (new_s) - i) &&
+         old_s[N (old_s) - 1 - j] == new_s[N (new_s) - 1 - j])
+    j++;
+
+  // Calculate the different parts
+  SI     old_start= i, new_start= i;
+  SI     old_end= N (old_s) - j, new_end= N (new_s) - j;
+  string old_diff= (old_end > old_start) ? old_s (old_start, old_end) : "";
+  string new_diff= (new_end > new_start) ? new_s (new_start, new_end) : "";
+
+  // Returning routine
+  if (old_diff == "" && new_diff != "") {
+    // Insertion
+    return mod_insert (path_up (p_old, 1), i, new_diff);
+  }
+  else if (old_diff != "" && new_diff == "") {
+    // Deletion
+    // For deletion, the position should be relative to the new string
+    // Since we deleted from old_start to old_end, the deletion position
+    // in the context of the new string is at position i (common prefix length).
+    return mod_remove (path_up (p_old, 1), i, N (old_diff));
+  }
+  else {
+    // No diff or replacement
+    return mod_insert (path_up (p_old, 1), last_item (p_old), "");
+  }
 }

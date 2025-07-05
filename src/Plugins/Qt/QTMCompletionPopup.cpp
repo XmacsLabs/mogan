@@ -56,9 +56,6 @@ QTMCompletionPopup::showCompletions (array<string>& completions, SI x, SI y) {
 
   QSize  size (200, qMin (100, 20 + N (completions) * 22));
   QPoint topLeft (x, y);
-  // qDebug () << "QTMCompletionPopup::showCompletions: "
-  //           << "x=" << x << ", y=" << y << ", size=" << size.width () << "x"
-  //           << size.height () << Qt::endl;
   move (topLeft);
   resize (size);
   showComponent ();
@@ -121,11 +118,12 @@ QTMCompletionPopup::getCachedPosition (SI& x, SI& y) {
 
 void
 QTMCompletionPopup::showComponent () {
+  activateWindow ();
   // Ensure the listbox is visible
-  show ();
+  // Force the widget to be on top
+  setWindowFlags (windowFlags () | Qt::WindowStaysOnTopHint);
   raise ();
-  // activateWindow ();
-  // setFocus (Qt::ActiveWindowFocusReason);
+  show ();
 }
 
 void

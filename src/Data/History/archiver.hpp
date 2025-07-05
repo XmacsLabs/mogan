@@ -70,10 +70,10 @@ public:
   void notify_autosave ();
   bool conform_save ();
   bool conform_autosave ();
-  
-  void reconstruct_from_state (tree old_state, tree new_state, path p, string completion);
-  modification compute_tree_diff (tree old_tree, tree new_tree, path p, string completion);
-  bool is_content_modification (patch p);
+
+  void         reconstruct_from_state (path p_old, tree t_old, tree t_new);
+  modification compute_tree_mod (path p_old, tree t_old, tree t_new);
+  bool         is_content_modification (patch p);
 
   inline void set_versioning (bool v) { versioning= v; }
 

@@ -461,7 +461,7 @@ edit_modify_rep::set_arch_versioning (bool v) {
 }
 
 void
-edit_modify_rep::arch_reconstruct (tree old_state, tree new_state, path p, string completion) {
+edit_modify_rep::arch_reconstruct (path p_old, tree t_old, tree t_new) {
   cout << tp << " reconstructing from state\n";
-  arch->reconstruct_from_state (old_state, new_state, p, completion);
+  arch->reconstruct_from_state (p_old, t_old, t_new);
 }
