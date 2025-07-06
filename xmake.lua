@@ -12,6 +12,11 @@
 set_project("Liii STEM Suite")
 local XMACS_VERSION="2025.0.11"
 
+option("mupdf")
+    set_default(false)
+    set_description("Enable MuPDF library")
+option_end()
+
 -- Generate build/config.h from template
 add_configfiles("src/System/config.h.xmake", {
     filename = "config.h",
@@ -41,7 +46,8 @@ add_configfiles("src/System/config.h.xmake", {
         USE_QT_PRINTER = true,
         TM_DYNAMIC_LINKING = true,
         USE_FONTCONFIG = true,
-        PDFHUMMUS_NO_TIFF = true
+        PDFHUMMUS_NO_TIFF = true,
+        USE_MUPDF_RENDERER = has_config("mupdf"),
     }
 })
 
@@ -206,6 +212,9 @@ if is_plat("windows") then
     add_requires("qt6widgets "..QT6_VERSION)
 end
 
+if has_config("mupdf") then
+    add_requires("mupdf", {system=false})
+end
 
 set_configvar("USE_FREETYPE", 1)
 
@@ -366,6 +375,7 @@ target("libmogan") do
                 USE_PLUGIN_PDF = true,
                 USE_PLUGIN_SPARKLE = false,
                 USE_PLUGIN_HTML = true,
+                USE_MUPDF_RENDERER = has_config("mupdf"),
                 }})
 
     if is_plat("linux") then 
@@ -515,6 +525,16 @@ target("libmogan") do
         }
         add_includedirs("src/Plugins/MacOS", {public = true})
         add_files(plugin_macos_srcs)
+    end
+
+    if has_config("mupdf") then
+        add_includedirs({
+            "src/Plugins/MuPDF"
+        }, {public = true})
+        add_files({
+            "src/Plugins/MuPDF/**.cpp"
+        })
+        add_packages("mupdf")
     end
 
     add_mxflags("-fno-objc-arc")

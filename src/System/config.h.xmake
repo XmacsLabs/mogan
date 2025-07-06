@@ -82,3 +82,6 @@ ${define USE_FONTCONFIG}
 ${define USE_ICONV}
 
 ${define USE_PLUGIN_SPARKLE}
+
+/* Use MuPDF library */
+${define USE_MUPDF_RENDERER}
