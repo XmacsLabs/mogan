@@ -9,12 +9,10 @@ In this article, we will discuss the differences of Mogan Research and GNU TeXma
 ## In one table
 | | GNU TeXmacs | Mogan Research |
 |--|------------|----------------|
-| Release Cycle | not fixed | monthly |
-| Performance | slow | fast |
+| Release Cycle | almost yearly | monthly |
 | UI Style | retro style | modern style | 
 | Shortcuts | some of them do not work | 99% of them work fine |
-| Qt Framework | mainly in Qt 4 (some in Qt 5) | mainly in Qt 6 (some in Qt 5) |
-| Scheme Engine | GNU Guile 1.8.x | S7 Scheme |
+| Scheme Engine | Guile TeXmacs | S7 Scheme |
 | Code Repository | SVN (Savannah) | Git (Codeberg/Gitee/Github) |
 | Build Tool | GNU Autotools | xmake | 
 | Lead by | Joris van der Hoeven (Mathematician) | Darcy Shen (Software Engineer) |
@@ -51,7 +49,7 @@ Add `A-S-up` and `A-S-down` for structured variants circling.
 
 On Linux and Windows, `C-tab` and `C-S-tab` are reserved. On macOS, because we switched `structured:cmd` from `Option` to `Ctrl` and `C-tab` does not work, the shortcuts `C-tab` and `C-S-tab` do not work.
 
-> Why: `C-tab`, `C-S-tab` and `A-S-tab` do not work on macOS, see [QTBUG-12232](https://bugreports.qt.io/browse/QTBUG-12232).
+> Why: `C-tab`, `C-S-tab` and `A-S-tab` do not work on macOS, see [QTBUG-12232](https://bugreports.qt.io/browse/QTBUG-12232). (__Note__: This argument is __invalid__, as there is no such issue after TeXmacs has upgraded to Qt6 in the latest testing versions.)
 
 ### ESC key
 The ESC is used for producing equivalents for the modifier keys in GNU TeXmacs. But in Mogan, it is a normal key. And later, the ESC may be used in the Vim plugin for Mogan. If the shortcuts in Mogan are in conflict with the OS system shortucts, we should regard it as a bug and fix it by changing the shortcut but not using the ESC key.
