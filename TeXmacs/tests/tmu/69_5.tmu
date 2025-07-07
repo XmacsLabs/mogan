@@ -1,0 +1,28 @@
+<TMU|<tuple|1.1.0|2025.0.11>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <include|69_5_测试.tmu>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|part:69_5_测试.tmu|<tuple|?|1>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|parts>
+      <tuple|69_5_测试.tmu|chapter-nr|0|section-nr|0|subsection-nr|0>
+    </associate>
+  </collection>
+</auxiliary>
