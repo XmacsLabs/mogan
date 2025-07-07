@@ -18,8 +18,6 @@
 #include "observer.hpp"
 #include "tree.hpp"
 
-#define DETACHED (-5)
-
 class QTMTreeModel;
 
 /*! An observer to keep a tree in sync with a QTMTreeModel (QAbstractItemModel).

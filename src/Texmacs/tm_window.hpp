@@ -70,11 +70,9 @@ public:
   void   set_scrollbars (int i);
   void   get_scroll_pos (SI& x, SI& y);
   void   set_scroll_pos (SI x, SI y);
-  void   show_compl_popup (array<string>& completions, SI x, SI y);
-  void   get_compl_popup_visible (bool& visible);
-  void   set_compl_popup_visible (bool visible);
-  void   set_compl_popup_next (bool next);
-  void   set_inp_mode_normal ();
+
+  void set_compl_popup_visible (bool visible);
+  void set_compl_popup_next (bool next);
 
   bool get_footer_flag ();
   void set_footer_flag (bool on);

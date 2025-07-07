@@ -742,7 +742,6 @@ qt_tm_widget_rep::read (slot s, blackbox index) {
 void
 qt_tm_widget_rep::send (slot s, blackbox val) {
   switch (s) {
-  case SLOT_COMPLETION_LISTBOX_SHOW:
   case SLOT_COMPLETION_LISTBOX_VISIBLE:
   case SLOT_COMPLETION_LISTBOX_NEXT:
   case SLOT_INPUT_MODE_NORMAL:
@@ -974,9 +973,6 @@ qt_tm_widget_rep::query (slot s, int type_id) {
   case SLOT_INTERACTIVE_MODE:
     check_type_id<bool> (type_id, s);
     return close_box<bool> (prompt && prompt->isActive ());
-
-  case SLOT_COMPLETION_LISTBOX_VISIBLE:
-    return main_widget->query (s, type_id);
 
   default:
     return qt_window_widget_rep::query (s, type_id);

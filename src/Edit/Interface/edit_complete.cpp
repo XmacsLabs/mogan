@@ -88,9 +88,7 @@ edit_interface_rep::complete_try () {
   else {
     if ((end == 0) || (!is_iso_alpha (s[end - 1])) ||
         ((end != N (s)) && is_iso_alpha (s[end]))) {
-      complete_str= string ("");
       set_input_normal ();
-      SERVER (set_completion_popup_visible (false));
       return false;
     }
     int start= end - 1;
@@ -100,9 +98,7 @@ edit_interface_rep::complete_try () {
     a = find_completions (drd, et, ss);
   }
   if (N (a) <= 1) {
-    complete_str= string ("");
     set_input_normal ();
-    SERVER (set_completion_popup_visible (false));
     return false;
   }
   complete_start (ss, a);
@@ -136,46 +132,26 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
     completion_prefix= prefix;
     completions      = close_completions (compls);
     completion_pos   = 0;
-    {
-      // TODO: ?refactor this part to
-      // edit_interface_rep::show_completion_popup
-      cout << "complete_start: "
-           //     << "completions=" << completions
-           << ", prefix="
-           << completion_prefix
-           //     << ", tp=" << tp
-           //     << ", et=" << et
-           //     << ", eb=" << eb
-           << LF;
-      array<string> full_completions;
-      for (int i= 0; i < N (completions); ++i) {
-        // cout << "complete_start: completions[" << i << "]=" << completions[i]
-        //      << LF;
-        string c= completions[i];
-        full_completions << (completion_prefix * c);
-      }
-      path tp1= tp;
-      for (int i= 0; i < N (prefix); ++i) {
-        tp1= previous_valid (et, tp1);
-      }
-      cursor cu= eb->find_check_cursor (tp1);
-      cout << "show_completion_popup: "
-           // << "completions=" << full_completions << ", cu->ox=" << cu->ox
-           << ", cu->oy=" << cu->oy << ", magf=" << magf
-           << ", scroll_x=" << get_scroll_x ()
-           << ", scroll_y=" << get_scroll_y ()
-           << ", canvas_x=" << get_canvas_x () << LF;
-      show_completion_popup (tp, full_completions, cu, magf, get_scroll_x (),
-                             get_scroll_y (), get_canvas_x ());
+
+    array<string> full_completions;
+    for (int i= 0; i < N (completions); ++i) {
+      string c= completions[i];
+      full_completions << (completion_prefix * c);
     }
+    path tp1= tp;
+    for (int i= 0; i < N (prefix); ++i) {
+      tp1= previous_valid (et, tp1);
+    }
+    cursor cu= eb->find_check_cursor (tp1);
+    show_completion_popup (tp, full_completions, cu, magf, get_scroll_x (),
+                           get_scroll_y (), get_canvas_x ());
 
     set_arch_versioning (true);
     insert_tree (completions[0]);
 
     if (get_input_mode () != INPUT_COMPLETE) {
-      complete_et = copy (subtree (et, path_up (tp, 1)));
-      complete_tp = copy (tp);
-      complete_str= completions[0];
+      complete_et= copy (subtree (et, path_up (tp, 1)));
+      complete_tp= copy (tp);
     }
     complete_message ();
     // beep ();
@@ -190,38 +166,26 @@ edit_interface_rep::complete_keypress (string key) {
   string new_s = "";
   string full_s= completion_prefix * old_s;
   set_message ("", "");
-  cout << "complete_keypress: " << key << LF;
   if (key == "space") key= " ";
 
   if (key == "enter" || key == "return") {
-    cout << "complete_keypress: enter/return pressed" << LF;
     old_s= new_s= completions[completion_pos];
     set_input_normal ();
-    SERVER (set_completion_popup_visible (false));
     return true;
   }
   else if (key == "escape" || key == " ") {
     old_s= new_s= completions[completion_pos];
     set_input_normal ();
-    SERVER (set_completion_popup_visible (false));
     return false;
   }
-  // else if (key == "backspace" && N(full_s) == 1) {
-  //   complete_str = string("");
-  //   set_input_normal ();
-  //   SERVER (set_completion_popup_visible (false));
-  //   return true;
-  // }
   else if ((key != "tab") && (key != "S-tab") && (key != "up") &&
            (key != "down")) {
-    cout << key << LF;
     if ((key != "backspace" && is_combo_shortcuts (key))) {
-      cout << "shortcut: " << key << LF;
       set_input_normal ();
-      SERVER (set_completion_popup_visible (false));
     }
     return false;
   }
+
   tree   st= subtree (et, path_up (tp));
   string s = st->label;
   if (is_compound (st)) {
@@ -243,8 +207,7 @@ edit_interface_rep::complete_keypress (string key) {
   }
   if (completion_pos < 0) completion_pos= N (completions) - 1;
   if (completion_pos >= N (completions)) completion_pos= 0;
-  complete_str= completions[completion_pos];
-  new_s       = completions[completion_pos];
+  new_s= completions[completion_pos];
 
   remove (path_up (tp) * (end - N (old_s)), N (old_s));
   insert (path_up (tp) * (end - N (old_s)), new_s);
@@ -321,9 +284,7 @@ edit_interface_rep::custom_complete (tree r) {
   // cout << prefix << ", " << compls << LF;
 
   if ((prefix == "") || (N (compls) <= 1)) {
-    complete_str= string ("");
     set_input_normal ();
-    SERVER (set_completion_popup_visible (false));
     return;
   }
   complete_start (prefix, as_completions (compls));

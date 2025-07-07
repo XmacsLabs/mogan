@@ -12,13 +12,9 @@
 #ifndef QT_COMPLETION_LISTBOX_HPP
 #define QT_COMPLETION_LISTBOX_HPP
 
-#include "QTMScrollView.hpp"
-#include "array.hpp"
-#include "observer.hpp"
 #include "qt_simple_widget.hpp"
-#include "tree_observer.hpp"
-#include "typesetter.hpp"
 
+#include "QTMScrollView.hpp"
 #include <QListWidget>
 #include <QPoint>
 #include <QStringList>
@@ -28,6 +24,7 @@ class QTMCompletionPopup : public QListWidget {
 private:
   qt_simple_widget_rep* owner_widget; // for emiting messages
   string                lastSelectedText;
+  string                currentSelectedText;
   path                  cached_tp;
 
 protected:
@@ -67,12 +64,9 @@ public:
   void   setScrollOrigin (QPoint origin);
   void   updatePosition ();
   void   scrollBy (SI x, SI y);
-  void   updateCache (tree& et, box eb, path tp, double magf, SI scroll_x,
+  void   updateCache (tree& et, box& eb, path tp, double magf, SI scroll_x,
                       SI scroll_y, SI canvas_x, SI index);
   string getSelectedText ();
-
-signals:
-  void completionSelected (const QString& text);
 
 protected:
   void keyPressEvent (QKeyEvent* event) override;

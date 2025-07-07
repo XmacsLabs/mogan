@@ -16,10 +16,10 @@
 #include "qt_utilities.hpp"
 #include "qt_window_widget.hpp"
 
-#include "QTMCompletionPopup.hpp"
 #include "QTMMenuHelper.hpp"
-#include "QTMStyle.hpp"
 #include "QTMWidget.hpp"
+#include "QTMCompletionPopup.hpp"
+#include "QTMStyle.hpp"
 #include <QLayout>
 #include <QPixmap>
 #if QT_VERSION >= 0x060000
@@ -265,14 +265,6 @@ qt_simple_widget_rep::send (slot s, blackbox val) {
     coord2 p= open_box<coord2> (val);
     canvas ()->setCursorPos (to_qpoint (p));
   } break;
-
-  case SLOT_COMPLETION_LISTBOX_SHOW: {
-    check_type<triple<array<string>, SI, SI>> (val, s);
-    triple<array<string>, SI, SI> data=
-        open_box<triple<array<string>, SI, SI>> (val);
-    show_completion_popup (data.x1, data.x2, data.x3);
-    return;
-  }
 
   case SLOT_COMPLETION_LISTBOX_VISIBLE: {
     check_type<bool> (val, s);
@@ -726,7 +718,7 @@ qt_simple_widget_rep::scroll_completion_popup () {
 }
 
 void
-qt_simple_widget_rep::update_completion_popup_position (tree& et, box eb,
+qt_simple_widget_rep::update_completion_popup_position (tree& et, box& eb,
                                                         path tp, double magf,
                                                         SI scroll_x,
                                                         SI scroll_y,

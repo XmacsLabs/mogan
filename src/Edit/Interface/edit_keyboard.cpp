@@ -69,9 +69,10 @@ edit_interface_rep::set_input_mode (int mode) {
 
 void
 edit_interface_rep::set_input_normal () {
-  cout << "set_input_normal\n";
-  if (input_mode == INPUT_COMPLETE)
+  if (input_mode == INPUT_COMPLETE) {
+    hide_completion_popup ();
     arch_reconstruct (complete_tp, complete_et, subtree (et, path_up (tp, 1)));
+  }
   set_arch_versioning (false);
   set_input_mode (INPUT_NORMAL);
 }
@@ -231,7 +232,6 @@ edit_interface_rep::is_combo_shortcuts (string key) {
 
 void
 edit_interface_rep::key_press (string gkey) {
-  cout << "Key press: " << gkey << "\n";
   string zero= "a";
   zero[0]    = '\0';
   string key = replace (gkey, "<#0>", zero);
@@ -312,7 +312,6 @@ edit_interface_rep::key_press (string gkey) {
       if (!inside_active_graphics ()) {
         archive_state ();
         call ("kbd-insert", rew);
-        cout << "Inserted single character1: " << rew << "\n";
         if (get_input_mode () == INPUT_COMPLETE) {
           cout << "Exec delayed complete-try\n";
           // exec_delayed (scheme_cmd("(if (complete-try?) (noop))"));
@@ -324,7 +323,6 @@ edit_interface_rep::key_press (string gkey) {
   else if (contains_unicode_char (rew)) {
     archive_state ();
     call ("kbd-insert", key);
-    cout << "Inserted single character2: " << rew << "\n";
     interrupt_shortcut ();
   }
 #ifdef Q_OS_MAC
@@ -339,13 +337,11 @@ edit_interface_rep::key_press (string gkey) {
            !inside_active_graphics ()) {
     archive_state ();
     call ("kbd-insert", "<" * key * ">");
-    cout << "Inserted single character3: " << rew << "\n";
     interrupt_shortcut ();
   }
   else if (N (key) > 1 && !is_combo_shortcuts (key) && key != "escape") {
     archive_state ();
     call ("insert", key);
-    cout << "Inserted single character4: " << rew << "\n";
     interrupt_shortcut ();
   }
   else {

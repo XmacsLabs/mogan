@@ -9,21 +9,10 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-// TODO: delete some headers
-#include "QTMCompletionPopup.hpp"
-#include "QTMScrollView.hpp"
-#include "gui.hpp"
-#include "message.hpp"
-#include "observer.hpp"
-#include "qt_gui.hpp"
-#include "qt_simple_widget.hpp"
-#include "qt_utilities.hpp"
-#include "tm_window.hpp"
 #include "tree_observer.hpp"
 #include "tree_traverse.hpp"
-#include "typesetter.hpp"
-#include "widget.hpp"
 
+#include "QTMCompletionPopup.hpp"
 #include <QApplication>
 #include <QKeyEvent>
 #include <QScrollBar>
@@ -85,7 +74,7 @@ QTMCompletionPopup::cachePosition (struct cursor cu, double magf, SI scroll_x,
 }
 
 void
-QTMCompletionPopup::updateCache (tree& et, box eb, path tp, double magf,
+QTMCompletionPopup::updateCache (tree& et, box& eb, path tp, double magf,
                                  SI scroll_x, SI scroll_y, SI canvas_x,
                                  SI index) {
   // MUST called when cache is already set
@@ -118,10 +107,7 @@ QTMCompletionPopup::getCachedPosition (SI& x, SI& y) {
 
 void
 QTMCompletionPopup::showComponent () {
-  activateWindow ();
   // Ensure the listbox is visible
-  // Force the widget to be on top
-  setWindowFlags (windowFlags () | Qt::WindowStaysOnTopHint);
   raise ();
   show ();
 }
@@ -140,16 +126,17 @@ QTMCompletionPopup::focusOutEvent (QFocusEvent* event) {
 void
 QTMCompletionPopup::onItemClicked (QListWidgetItem* item) {
   if (item) {
-    emit   completionSelected (item->text ());
     SI     end  = last_item (cached_tp);
     string new_s= getSelectedText ();
     cout << "QTMCompletionPopup::onItemClicked: "
          << "selected text: " << new_s << ", cached_tp: " << cached_tp
          << ", end: " << end << ", lastSelectedText: " << lastSelectedText
          << LF;
+    // if (new_s != currentSelectedText) {
     remove (path_up (cached_tp) * (end - N (lastSelectedText)),
             N (lastSelectedText));
     insert (path_up (cached_tp) * (end - N (lastSelectedText)), new_s);
+    //}
     widget w= widget (owner_widget);
     set_input_mode_normal (w);
     hide ();
@@ -234,7 +221,6 @@ QTMCompletionPopup::getText (SI idx) {
 void
 QTMCompletionPopup::onCurrentItemChanged (QListWidgetItem* current,
                                           QListWidgetItem* previous) {
-  if (previous) {
-    lastSelectedText= from_qstring (previous->text ());
-  }
+  if (previous) lastSelectedText= from_qstring (previous->text ());
+  if (current) currentSelectedText= from_qstring (current->text ());
 }

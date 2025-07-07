@@ -37,7 +37,6 @@ class edit_interface_rep : virtual public editor_rep {
 protected:
   tree       complete_et;
   path       complete_tp;
-  string     complete_str;  // string to complete
   int        env_change;    // which things have been changed ?
   time_t     last_change;   // time of last processed change
   time_t     last_update;   // time of last update of menu, icons and footer
@@ -163,27 +162,26 @@ public:
   rectangle get_window_extents ();
 
   /* keyboard handling */
-  int         get_input_mode ();
-  void        set_input_mode (int mode);
-  void        set_input_normal ();
-  bool        in_normal_mode ();
-  bool        in_search_mode ();
-  bool        in_replace_mode ();
-  bool        in_spell_mode ();
-  bool        kbd_get_command (string which, string& help, command& cmd);
-  void        interrupt_shortcut ();
-  bool        try_shortcut (string comb);
-  tree        kbd (string s);
-  tree        kbd_shortcut (string s);
-  void        key_press (string key);
-  void        emulate_keyboard (string keys, string action= "");
-  bool        complete_try ();
-  void        complete_message ();
-  void        complete_start (string prefix, array<string> compls);
-  bool        complete_keypress (string key);
-  string      session_complete_command (tree t);
-  void        custom_complete (tree t);
-  static bool is_combo_shortcuts (string key);
+  int    get_input_mode ();
+  void   set_input_mode (int mode);
+  void   set_input_normal ();
+  bool   in_normal_mode ();
+  bool   in_search_mode ();
+  bool   in_replace_mode ();
+  bool   in_spell_mode ();
+  bool   kbd_get_command (string which, string& help, command& cmd);
+  void   interrupt_shortcut ();
+  bool   try_shortcut (string comb);
+  tree   kbd (string s);
+  tree   kbd_shortcut (string s);
+  void   key_press (string key);
+  void   emulate_keyboard (string keys, string action= "");
+  bool   complete_try ();
+  void   complete_message ();
+  void   complete_start (string prefix, array<string> compls);
+  bool   complete_keypress (string key);
+  string session_complete_command (tree t);
+  void   custom_complete (tree t);
 
   /* mouse handling */
   void      mouse_any (string s, SI x, SI y, int m, time_t t, array<double> d);
@@ -232,6 +230,9 @@ public:
   void handle_clear (renderer win, SI x1, SI y1, SI x2, SI y2);
   void handle_repaint (renderer win, SI x1, SI y1, SI x2, SI y2);
   void handle_set_input_normal ();
+
+  /* exported static methods */
+  static bool is_combo_shortcuts (string key);
 
   friend class interactive_command_rep;
   friend class tm_window_rep;

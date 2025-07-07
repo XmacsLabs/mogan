@@ -90,7 +90,7 @@ public:
   QTMWidget*     canvas () { return qobject_cast<QTMWidget*> (qwid); }
   QTMScrollView* scrollarea () { return qobject_cast<QTMScrollView*> (qwid); }
 
-  ////////////////////// Completion listbox support
+  ////////////////////// Completion popup support
   // TODO: determine when to use slot and to use this routine
   void show_completion_popup (array<string>& completions, SI x, SI y);
   void show_completion_popup (path tp, array<string>& completions,
@@ -100,7 +100,7 @@ public:
   bool completion_popup_visible ();
   void scroll_completion_popup_by (SI x, SI y);
   void scroll_completion_popup ();
-  void update_completion_popup_position (tree& et, box eb, path tp, double magf,
+  void update_completion_popup_position (tree& et, box& eb, path tp, double magf,
                                          SI scroll_x, SI scroll_y, SI canvas_x,
                                          SI index);
   void completion_popup_next (bool next);

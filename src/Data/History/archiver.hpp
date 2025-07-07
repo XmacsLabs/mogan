@@ -1,3 +1,4 @@
+
 /******************************************************************************
  * MODULE     : archiver.hpp
  * DESCRIPTION: manage undo/redo history
@@ -73,7 +74,6 @@ public:
 
   void         reconstruct_from_state (path p_old, tree t_old, tree t_new);
   modification compute_tree_mod (path p_old, tree t_old, tree t_new);
-  bool         is_content_modification (patch p);
 
   inline void set_versioning (bool v) { versioning= v; }
 

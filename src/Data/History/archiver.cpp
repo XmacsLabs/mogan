@@ -1,3 +1,4 @@
+
 /******************************************************************************
  * MODULE     : archiver.cpp
  * DESCRIPTION: manage undo/redo history
@@ -14,7 +15,6 @@
 #include "observers.hpp"
 #include "tm_debug.hpp"
 #include "tree.hpp"
-#include "tree_helper.hpp"
 #include "tree_observer.hpp"
 #include "tree_patch.hpp"
 
@@ -323,6 +323,7 @@ archiver_rep::confirm () {
     if (nr_children (remove_set_cursor (current)) == 0)
       current= make_compound (0);
     if (active ()) {
+      // cout << "Confirm " << current << "\n";
       archive  = patch (current, archive);
       current  = make_compound (0);
       the_owner= 0;
@@ -330,7 +331,7 @@ archiver_rep::confirm () {
       if (depth <= last_save) last_save= -1;
       if (depth <= last_autosave) last_autosave= -1;
       normalize ();
-      show_all ();
+      // show_all ();
     }
   }
 }
@@ -419,11 +420,7 @@ archiver_rep::redo_possibilities () {
 
 path
 archiver_rep::undo_one (int i) {
-  if (active ()) {
-    cout << "  Cannot undo while modifications are active\n";
-    return path ();
-  }
-  cout << "  undo_possibilities(): " << undo_possibilities () << "\n";
+  if (active ()) return path ();
   if (undo_possibilities () != 0) {
     ASSERT (i == 0, "index out of range");
     patch p= car (get_undo (archive));
@@ -438,8 +435,7 @@ archiver_rep::undo_one (int i) {
     archive  = make_history (un, re);
     depth--;
     // show_all ();
-    path cursor_pos= cursor_hint (q, the_et);
-    return cursor_pos;
+    return cursor_hint (q, the_et);
   }
   return path ();
 }

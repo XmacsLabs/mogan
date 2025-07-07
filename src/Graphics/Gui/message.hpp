@@ -50,7 +50,6 @@ enum slot_id {
   SLOT_VISIBLE_PART,
   SLOT_SCROLLBARS_VISIBILITY,
   SLOT_SCROLL_POSITION,
-  SLOT_COMPLETION_LISTBOX_SHOW,
   SLOT_COMPLETION_LISTBOX_VISIBLE,
   SLOT_COMPLETION_LISTBOX_NEXT,
   SLOT_INPUT_MODE_NORMAL,
@@ -509,16 +508,9 @@ set_scroll_position (widget w, SI x, SI y) {
   send<SI, SI> (w, SLOT_SCROLL_POSITION, x, y);
 }
 
-inline void
-show_completion_popup (widget w, array<string>& completions, SI x, SI y) {
-  send<array<string>, SI, SI> (w, SLOT_COMPLETION_LISTBOX_SHOW, completions, x,
-                               y);
-}
-
-inline void
-get_completion_popup_visible (widget w, bool& visible) {
-  query<bool> (w, SLOT_COMPLETION_LISTBOX_VISIBLE);
-}
+/******************************************************************************
+ * The completion popup
+ ******************************************************************************/
 
 inline void
 set_completion_popup_visible (widget w, bool visible) {

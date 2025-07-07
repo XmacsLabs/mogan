@@ -79,11 +79,8 @@ public:
   virtual bool   in_full_screen_mode ()                      = 0;
   virtual bool   in_full_screen_edit_mode ()                 = 0;
 
-  virtual void show_completion_popup (array<string>& completions, SI x,
-                                      SI y)                = 0;
-  virtual void get_completion_popup_visible (bool& visible)= 0;
-  virtual void set_completion_popup_visible (bool visible) = 0;
-  virtual void set_completion_popup_next (bool next)       = 0;
+  virtual void set_completion_popup_visible (bool visible)= 0;
+  virtual void set_completion_popup_next (bool next)      = 0;
 
   virtual void show_footer (bool flag)                              = 0;
   virtual bool visible_footer ()                                    = 0;
