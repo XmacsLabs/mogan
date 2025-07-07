@@ -1,0 +1,22 @@
+<TMU|<tuple|1.1.0|2025.0.11>>
+
+<style|<tuple|generic|number-europe|british>>
+
+<\body>
+  <\cite*>
+    qwerqwerqwer
+
+    你好你好你好
+  </cite*>
+
+  \;
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
