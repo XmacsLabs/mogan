@@ -71,7 +71,11 @@
 
   <assign|iint|<macro|<big|iint>>>
 
-  \;
+  <assign|iiint|<macro|<big|iiint>>>
+
+  <assign|oint|<macro|<big|oint>>>
+
+  <assign|oiint|<macro|<big|oiint>>>
 
   <assign|nbsp|<macro| <no-break><specific|screen|<resize|<move|<with|color|#A0A0FF|->|-0.3em|>|0em||0em|>>>>
 
