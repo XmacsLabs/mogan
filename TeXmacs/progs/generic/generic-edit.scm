@@ -142,6 +142,12 @@
   (clipboard-cut "nowhere")
   (clipboard-clear "nowhere"))
 
+(tm-define (kbd-remove t forwards?)
+  (:mode complete-mode?)
+  (remove-text forwards?)
+  (exec-delayed (lambda ()
+    (kbd-variant (focus-tree) #t))))
+
 (tm-define (kbd-variant t forwards?)
   (:require (tree-is-buffer? t))
   (if (and (not (complete-try?)) forwards?)

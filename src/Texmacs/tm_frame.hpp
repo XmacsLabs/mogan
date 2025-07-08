@@ -63,6 +63,9 @@ public:
   bool   in_full_screen_mode ();
   bool   in_full_screen_edit_mode ();
 
+  void set_completion_popup_visible (bool visible);
+  void set_completion_popup_next (bool next);
+
   /* footer */
   void show_footer (bool flag);
   bool visible_footer ();

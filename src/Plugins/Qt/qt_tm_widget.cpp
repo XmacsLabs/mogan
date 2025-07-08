@@ -742,6 +742,9 @@ qt_tm_widget_rep::read (slot s, blackbox index) {
 void
 qt_tm_widget_rep::send (slot s, blackbox val) {
   switch (s) {
+  case SLOT_COMPLETION_LISTBOX_VISIBLE:
+  case SLOT_COMPLETION_LISTBOX_NEXT:
+  case SLOT_INPUT_MODE_NORMAL:
   case SLOT_INVALIDATE:
   case SLOT_INVALIDATE_ALL:
   case SLOT_EXTENTS:
@@ -1370,6 +1373,9 @@ qt_tm_embedded_widget_rep::query (slot s, int type_id) {
   case SLOT_SIZE:
     if (!is_nil (main_widget)) return main_widget->query (s, type_id);
     else return qt_widget_rep::query (s, type_id);
+  case SLOT_COMPLETION_LISTBOX_VISIBLE:
+    if (!is_nil (main_widget)) return main_widget->query (s, type_id);
+    else return close_box<bool> (false);
     /// FIXME: decide what to do with these for embedded widgets
   case SLOT_HEADER_VISIBILITY:
   case SLOT_MAIN_ICONS_VISIBILITY:
@@ -1382,8 +1388,6 @@ qt_tm_embedded_widget_rep::query (slot s, int type_id) {
   case SLOT_BOTTOM_TOOLS_VISIBILITY:
   case SLOT_EXTRA_TOOLS_VISIBILITY:
   case SLOT_TAB_PAGES_VISIBILITY:
-    check_type_id<bool> (type_id, s);
-    return close_box<bool> (false);
 
   default:
     return qt_widget_rep::query (s, type_id);

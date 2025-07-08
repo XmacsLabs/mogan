@@ -69,6 +69,11 @@ edit_interface_rep::set_input_mode (int mode) {
 
 void
 edit_interface_rep::set_input_normal () {
+  if (input_mode == INPUT_COMPLETE) {
+    hide_completion_popup ();
+    arch_reconstruct (complete_tp, complete_et, subtree (et, path_up (tp, 1)));
+  }
+  set_arch_versioning (false);
   set_input_mode (INPUT_NORMAL);
 }
 
@@ -152,7 +157,11 @@ edit_interface_rep::try_shortcut (string comb) {
             verbatim (rhs), shorth == "" ? 1 : 3000);
     }
     if ((status & 1) == 1) cmd ();
-    else if (N (shorth) > 0) call ("kbd-insert", shorth);
+    else if (N (shorth) > 0 && comb != "S-F5") {
+      call ("kbd-insert", shorth);
+      if (get_input_mode () == INPUT_COMPLETE)
+        exec_delayed (scheme_cmd ("(kbd-variant (focus-tree) #t)"));
+    }
     // cout << "Mark= " << sh_mark << "\n";
     return true;
   }
@@ -215,8 +224,8 @@ handle_speech (string s) {
   last_uttering= texmacs_time ();
 }
 
-static bool
-is_combo_shortcuts (string key) {
+bool
+edit_interface_rep::is_combo_shortcuts (string key) {
   return starts (key, "A-") || starts (key, "S-") || starts (key, "C-") ||
          starts (key, "M-");
 }
@@ -303,6 +312,11 @@ edit_interface_rep::key_press (string gkey) {
       if (!inside_active_graphics ()) {
         archive_state ();
         call ("kbd-insert", rew);
+        if (get_input_mode () == INPUT_COMPLETE) {
+          cout << "Exec delayed complete-try\n";
+          // exec_delayed (scheme_cmd("(if (complete-try?) (noop))"));
+          exec_delayed (scheme_cmd ("(kbd-variant (focus-tree) #t)"));
+        }
       }
     interrupt_shortcut ();
   }

@@ -1131,3 +1131,8 @@ void
 edit_interface_rep::handle_set_zoom_factor (double zoom) {
   set_zoom_factor (zoom);
 }
+
+void
+edit_interface_rep::handle_set_input_normal () {
+  set_input_normal ();
+}

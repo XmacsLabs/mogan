@@ -206,6 +206,10 @@ public:
   virtual void      set_message (tree l, tree r= "", bool temp= false)     = 0;
   virtual void      recall_message ()                                      = 0;
 
+  /* public routines from edit_complete */
+  virtual void set_arch_versioning (bool v)                         = 0;
+  virtual void arch_reconstruct (path p_old, tree t_old, tree t_new)= 0;
+
   /* public routines from edit_cursor */
   virtual path make_cursor_accessible (path p, bool forwards)= 0;
   virtual bool cursor_is_accessible ()                       = 0;

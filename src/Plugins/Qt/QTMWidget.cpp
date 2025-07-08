@@ -99,6 +99,7 @@ QTMWidget::scrollContentsBy (int dx, int dy) {
   QTMScrollView::scrollContentsBy (dx, dy);
 
   the_gui->force_update ();
+  tm_widget ()->scroll_completion_popup_by (dx, dy);
   // we force an update of the internal state to be in sync with the moving
   // scrollbars
 }

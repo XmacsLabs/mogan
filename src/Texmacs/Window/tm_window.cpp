@@ -572,6 +572,20 @@ tm_window_rep::set_scroll_pos (SI x, SI y) {
 }
 
 /******************************************************************************
+ * The completion popup
+ ******************************************************************************/
+
+void
+tm_window_rep::set_compl_popup_visible (bool visible) {
+  set_completion_popup_visible (wid, visible);
+}
+
+void
+tm_window_rep::set_compl_popup_next (bool next) {
+  set_completion_popup_next (wid, next);
+}
+
+/******************************************************************************
  * The footer as a status bar
  ******************************************************************************/
 

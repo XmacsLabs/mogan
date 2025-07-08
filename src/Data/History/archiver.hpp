@@ -72,6 +72,11 @@ public:
   bool conform_save ();
   bool conform_autosave ();
 
+  void         reconstruct_from_state (path p_old, tree t_old, tree t_new);
+  modification compute_tree_mod (path p_old, tree t_old, tree t_new);
+
+  inline void set_versioning (bool v) { versioning= v; }
+
   friend void archive_announce (archiver_rep* arch, modification mod);
   friend void global_clear_history ();
   friend void global_confirm ();

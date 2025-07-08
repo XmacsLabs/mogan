@@ -71,6 +71,9 @@ public:
   void   get_scroll_pos (SI& x, SI& y);
   void   set_scroll_pos (SI x, SI y);
 
+  void set_compl_popup_visible (bool visible);
+  void set_compl_popup_next (bool next);
+
   bool get_footer_flag ();
   void set_footer_flag (bool on);
   void set_left_footer (string s);

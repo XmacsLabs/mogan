@@ -299,3 +299,13 @@ bool
 tm_frame_rep::in_full_screen_edit_mode () {
   return full_screen && full_screen_edit;
 }
+
+void
+tm_frame_rep::set_completion_popup_visible (bool visible) {
+  concrete_window ()->set_compl_popup_visible (visible);
+}
+
+void
+tm_frame_rep::set_completion_popup_next (bool next) {
+  concrete_window ()->set_compl_popup_next (next);
+}

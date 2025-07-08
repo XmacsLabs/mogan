@@ -668,3 +668,61 @@ bool
 archiver_rep::conform_autosave () {
   return last_autosave == depth;
 }
+
+/******************************************************************************
+ * Reconstruct undo/redo history after completion
+ ******************************************************************************/
+
+void
+archiver_rep::reconstruct_from_state (path p_old, tree t_old, tree t_new) {
+  cancel ();
+  if (!(t_old == t_new)) {
+    modification mod= compute_tree_mod (p_old, t_old, t_new);
+    // cout << "modification: " << mod << LF;
+    tree& t_sub= subtree (the_et, path_up (p_old, 1));
+    t_sub      = t_old;
+    add (mod);
+    t_sub= t_new;
+  }
+  confirm ();
+  simplify ();
+}
+
+modification
+archiver_rep::compute_tree_mod (path p_old, tree t_old, tree t_new) {
+  string old_s= as_string (t_old);
+  string new_s= as_string (t_new);
+  SI     i= 0, j= 0;
+
+  // Find common prefix
+  while (i < N (old_s) && i < N (new_s) && old_s[i] == new_s[i])
+    i++;
+
+  // Find common suffix, but don't overlap with prefix
+  while (j < (N (old_s) - i) && j < (N (new_s) - i) &&
+         old_s[N (old_s) - 1 - j] == new_s[N (new_s) - 1 - j])
+    j++;
+
+  // Calculate the different parts
+  SI     old_start= i, new_start= i;
+  SI     old_end= N (old_s) - j, new_end= N (new_s) - j;
+  string old_diff= (old_end > old_start) ? old_s (old_start, old_end) : "";
+  string new_diff= (new_end > new_start) ? new_s (new_start, new_end) : "";
+
+  // Returning routine
+  if (old_diff == "" && new_diff != "") {
+    // Insertion
+    return mod_insert (path_up (p_old, 1), i, new_diff);
+  }
+  else if (old_diff != "" && new_diff == "") {
+    // Deletion
+    // For deletion, the position should be relative to the new string
+    // Since we deleted from old_start to old_end, the deletion position
+    // in the context of the new string is at position i (common prefix length).
+    return mod_remove (path_up (p_old, 1), i, N (old_diff));
+  }
+  else {
+    // No diff or replacement
+    return mod_insert (path_up (p_old, 1), last_item (p_old), "");
+  }
+}

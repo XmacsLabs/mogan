@@ -100,7 +100,6 @@ class QTMTreeModel : public QAbstractItemModel {
   static const char* bad_tree_data_exception;
   static const char* no_observer_exception;
 
-  static const int DETACHED= -5;
   // NOTE: for some reason using hashmap was resulting in overwritten values.
   // The very same code with QHash works ok. ?!?!
   // typedef hashmap<tree_label, hashmap <int, int> > roles_t;
