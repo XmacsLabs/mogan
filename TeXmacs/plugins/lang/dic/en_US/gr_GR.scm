@@ -160,7 +160,6 @@
 ("at the right" "δεξιά")
 ("at the top" "πάνω")
 ("attach" "επισύναψη")
-("attach buffer to which project" "επισύναψη προσωρινής αποθήκευσης σε ποιο έργο")
 ("attach master" "επισύναψη πρωτοτύπου")
 ("august" "αύγουστος")
 ("author" "συγγραφέας")

@@ -88,7 +88,6 @@
 ("at the right" "")
 ("at the top" "")
 ("attach" "")
-("attach buffer to which project" "")
 ("august" "8월")
 ("author" "저자")
 ("authorize" "")

@@ -164,7 +164,6 @@
 ("at the right" "a destra")
 ("at the top" "in alto")
 ("attach" "collega")
-("attach buffer to which project" "collega il buffer a quale progetto")
 ("attach master" "collega master")
 ("attached" "allegato")
 ("august" "agosto")

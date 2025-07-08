@@ -175,7 +175,6 @@
 ("at the right" "nadesno")
 ("at the top" "na vrhu")
 ("attach" "priloži")
-("attach buffer to which project" "kojem projektu priložiti spremnik")
 ("attach master" "prikači master")
 ("attach master file for project" "prikači master datoteku za projekt")
 ("attached" "prikačeno")

@@ -85,7 +85,6 @@
 ("at the right" "a la derecha")
 ("at the top" "arriba")
 ("attach" "vincular")
-("attach buffer to which project" "a qué proyecto vincular el búfer")
 ("august" "agosto")
 ("author" "autor")
 ("authorize" "autorizar")

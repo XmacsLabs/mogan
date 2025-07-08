@@ -85,7 +85,6 @@
 ("at the right" "справа")
 ("at the top" "сверху")
 ("attach" "присоединить")
-("attach buffer to which project" "присоединить буфер к которому проекту")
 ("august" "август")
 ("author" "автор")
 ("authorize" "авторизовать")

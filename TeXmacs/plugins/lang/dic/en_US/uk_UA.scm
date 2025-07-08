@@ -189,7 +189,6 @@
 ("a tab bar" "Панель вкладок")
 ("at fraction bar height" "на висоті риски дробу")
 ("attach" "долучити")
-("attach buffer to which project" "долучити буфер до якого проекту")
 ("attach master" "прикріпити майстра")
 ("at the baseline" "на рівні основної лінії")
 ("at the bottom" "знизу")

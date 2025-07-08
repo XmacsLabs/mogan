@@ -78,7 +78,6 @@
 ("at the right" "la dreapta")
 ("at the top" "sus")
 ("attach" "ataşare")
-("attach buffer to which project" "ataşare buffer - la care proiect")
 ("august" "august")
 ("author" "autor")
 ("authorize" "autorizare")

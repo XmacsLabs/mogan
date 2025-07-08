@@ -78,7 +78,6 @@
 ("at the right" "do prawej")
 ("at the top" "do góry")
 ("attach" "dołącz")
-("attach buffer to which project" "dołącz bufor do projektu")
 ("august" "sierpień")
 ("author" "autor")
 ("authorize" "autoryzuj")

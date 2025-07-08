@@ -173,7 +173,6 @@
 ("at the right" "doprava")
 ("at the top" "na vrch")
 ("attach" "pripojiť")
-("attach buffer to which project" "pripojiť buffer ku ktorému projektu")
 ("attached" "pripojené")
 ("august" "august")
 ("author" "autor")

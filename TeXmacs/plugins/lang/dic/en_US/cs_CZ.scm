@@ -79,7 +79,6 @@
 ("at the right" "doprava")
 ("at the top" "nahoru")
 ("attach" "připojit")
-("attach buffer to which project" "připojit snímek k projektu")
 ("august" "srpen")
 ("author" "autor")
 ("authorize" "autorizovat")

@@ -24,7 +24,6 @@
 ("as on paper" "som på pappret")
 ("assign" "tilldela")
 ("attach" "bifoga")
-("attach buffer to which project" "bifoga buffert till projekt")
 ("august" "augusti")
 ("author" "författare")
 ("automatic" "automatiskt")

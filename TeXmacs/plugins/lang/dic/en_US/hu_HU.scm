@@ -96,7 +96,6 @@
 ("at the right" "jobb oldalon")
 ("at the top" "felül")
 ("attach" "csatolás")
-("attach buffer to which project" "melyik projekthez csatoljuk a puffert")
 ("august" "augusztus")
 ("author" "szerző")
 ("authorize" "engedélyezés")

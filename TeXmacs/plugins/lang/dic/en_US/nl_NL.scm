@@ -178,7 +178,6 @@
 ("at the right" "rechts")
 ("at the top" "boven")
 ("attach" "koppel")
-("attach buffer to which project" "koppel buffer aan welk projekt")
 ("attach master" "koppel aan meester")
 ("attach master file for project" "hoofdbestand om aan vast te koppelen")
 ("attached" "bijgevoegd")

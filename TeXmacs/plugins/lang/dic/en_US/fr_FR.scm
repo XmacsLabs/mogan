@@ -179,7 +179,6 @@
 ("at the right" "à droite")
 ("at the top" "en haut")
 ("attach" "attacher")
-("attach buffer to which project" "attacher le tampon à un projet")
 ("attach master" "attacher un document maître")
 ("attach master file for project" "joindre le fichier maître pour le projet")
 ("attached" "attaché")

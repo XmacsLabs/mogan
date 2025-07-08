@@ -80,7 +80,6 @@
 ("at the right" "til højre side")
 ("at the top" "til toppen")
 ("attach" "tilføj")
-("attach buffer to which project" "tilføj buffer til hvilket projekt")
 ("august" "august")
 ("author" "forfatter")
 ("authorize" "tillad")

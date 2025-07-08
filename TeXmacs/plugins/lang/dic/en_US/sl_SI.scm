@@ -73,7 +73,6 @@
 ("as on paper" "kot na papirju")
 ("assign" "priredi")
 ("at fraction bar height" "na ulomkovo črto")
-("attach buffer to which project" "pripni spis na projekt")
 ("attach" "pripni")
 ("at the baseline" "na osnovnico")
 ("at the bottom" "spodaj")

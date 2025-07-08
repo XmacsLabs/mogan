@@ -90,7 +90,6 @@
 ("at the right" "auf der rechten Seite")
 ("at the top" "an der Oberseite")
 ("attach" "beifügen")
-("attach buffer to which project" "Puffer an welches Project anbinden")
 ("august" "August")
 ("author" "Autor")
 ("authorize" "erlauben")

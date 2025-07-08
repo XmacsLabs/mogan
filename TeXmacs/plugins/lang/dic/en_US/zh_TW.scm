@@ -102,7 +102,6 @@
 ("at the right" "右邊")
 ("at the top" "上方")
 ("attach" "連結")
-("attach buffer to which project" "")
 ("attach master" "連結主文件")
 ("august" "八月")
 ("author" "作者")

@@ -78,7 +78,6 @@
 ("at the right" "oikealle")
 ("at the top" "yläreunaan")
 ("attach" "liitä")
-("attach buffer to which project" "mihin projektiin puskuri liitetään")
 ("august" "elokuu")
 ("author" "tekijä")
 ("authorize" "salli")
