@@ -45,7 +45,8 @@ new_view_number (url u) {
 }
 
 tm_view_rep::tm_view_rep (tm_buffer buf2, editor ed2)
-    : buf (buf2), ed (ed2), win (NULL), nr (new_view_number (buf->buf->name)) {}
+    : buf (buf2), ed (ed2), win (NULL), win_tabpage (NULL),
+      nr (new_view_number (buf->buf->name)) {}
 
 static string
 encode_url (url u) {
@@ -176,6 +177,13 @@ view_to_window (url u) {
   return abstract_window (vw->win);
 }
 
+url
+view_to_window_of_tabpage (url u) {
+  tm_view vw= concrete_view (u);
+  if (vw == NULL) return url_none ();
+  return abstract_window (vw->win_tabpage);
+}
+
 editor
 view_to_editor (url u) {
   tm_view vw= concrete_view (u);
@@ -192,18 +200,28 @@ view_to_editor (url u) {
  ******************************************************************************/
 
 array<url> view_history;
+array<int> view_history_number;
+int        current_view_history_number= 0;
 
 void
 notify_set_view (url u) {
   int i;
   for (i= 0; i < N (view_history); i++)
     if (view_history[i] == u) break;
-  if (i >= N (view_history)) view_history= append (u, view_history);
+  if (i >= N (view_history)) {
+    current_view_history_number++;
+    view_history= append (u, view_history);
+    view_history_number=
+        append (current_view_history_number, view_history_number);
+  }
   else {
-    int j;
-    for (j= i; j > 0; j--)
-      view_history[j]= view_history[j - 1];
-    view_history[j]= u;
+    int tmp= view_history_number[i];
+    for (int j= i; j > 0; j--) {
+      view_history[j]       = view_history[j - 1];
+      view_history_number[j]= view_history_number[j - 1];
+    }
+    view_history_number[0]= tmp;
+    view_history[0]       = u;
   }
 }
 
@@ -241,6 +259,31 @@ get_recent_view (url name, bool same, bool other, bool active, bool passive) {
 array<url>
 get_all_views () {
   return view_history;
+}
+
+array<url>
+get_all_views_unsorted (bool current_window_only) {
+  array<std::pair<int, url>> numbered;
+  int                        view_history_N= N (view_history);
+  for (int i= 0; i < view_history_N; i++) {
+    if (current_window_only &&
+        view_to_window_of_tabpage (view_history[i]) != get_current_window ()) {
+      continue; // skip views not in current window
+    }
+    numbered << std::make_pair (view_history_number[i], view_history[i]);
+  }
+  // Sort by view number
+  std::sort (numbered.begin (), numbered.end (),
+             [] (const std::pair<int, url>& a, const std::pair<int, url>& b) {
+               return a.first < b.first;
+             });
+  // Extract sorted urls
+  array<url> result;
+  int        numbered_N= N (numbered);
+  for (int i= 0; i < numbered_N; i++) {
+    result << numbered[i].second;
+  }
+  return result;
 }
 
 /******************************************************************************
@@ -353,7 +396,10 @@ attach_view (url win_u, url u) {
   tm_view   vw = concrete_view (u);
   if (win == NULL || vw == NULL) return;
   // cout << "Attach view " << vw->buf->buf->name << "\n";
-  vw->win   = win;
+  vw->win= win;
+  if (vw->win_tabpage == NULL) {
+    vw->win_tabpage= win;
+  }
   widget wid= win->wid;
   set_scrollable (wid, vw->ed);
   vw->ed->cvw= wid.rep;

@@ -87,6 +87,7 @@ public:
   tm_buffer buf;
   editor    ed;
   tm_window win;
+  tm_window win_tabpage; // window for tabpage to appear in
   int       nr;
   tm_view_rep (tm_buffer buf2, editor ed2);
 };

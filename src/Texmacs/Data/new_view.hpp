@@ -16,6 +16,7 @@
 class editor;
 
 array<url> get_all_views ();
+array<url> get_all_views_unsorted (bool current_window_only);
 array<url> buffer_to_views (url name);
 editor     get_current_editor ();
 editor     view_to_editor (url u);
@@ -27,6 +28,7 @@ void       set_current_drd (url u);
 url        window_to_view (url win);
 url        view_to_buffer (url u);
 url        view_to_window (url u);
+url        view_to_window_of_tabpage (url u);
 url        get_new_view (url name);
 url        get_recent_view (url name);
 url        get_passive_view (url name);

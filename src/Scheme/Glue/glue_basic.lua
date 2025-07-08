@@ -1545,6 +1545,14 @@ function main()
                 ret_type = "array_url"
             },
             {
+                scm_name = "tabpage-list",
+                cpp_name = "get_all_views_unsorted",
+                ret_type = "array_url",
+                arg_list = {
+                    "bool"
+                }
+            },
+            {
                 scm_name = "buffer->views",
                 cpp_name = "buffer_to_views",
                 ret_type = "array_url",
@@ -1576,6 +1584,14 @@ function main()
             {
                 scm_name = "view->window-url",
                 cpp_name = "view_to_window",
+                ret_type = "url",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
+                scm_name = "view->window-of-tabpage-url",
+                cpp_name = "view_to_window_of_tabpage",
                 ret_type = "url",
                 arg_list = {
                     "url"
