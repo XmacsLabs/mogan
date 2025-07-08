@@ -1868,7 +1868,7 @@
 ("sloppy" "粗略")
 ("slovene" "斯洛文尼亚语")
 ("slow decrease" "慢速减小")
-("slow decrease" "慢速增大")
+("slow increase" "慢速增大")
 ("small caps" "小体大写")
 ("small figure" "小图片及题注")
 ("small skip" "小间距")
