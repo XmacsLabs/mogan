@@ -446,6 +446,8 @@ window_set_view (url win_u, url new_u, bool focus) {
   if (!is_none (old_u)) detach_view (old_u);
   attach_view (win_u, new_u);
   if (focus || get_current_view () == old_u) set_current_view (new_u);
+  exec_delayed (scheme_cmd ("(make-cursor-visible '" *
+                            scm_quote (as_string (new_u)) * ")"));
 }
 
 void
@@ -459,8 +461,6 @@ switch_to_buffer (url name) {
   if (nwin != NULL)
     nwin->set_window_zoom_factor (nwin->get_window_zoom_factor ());
   // cout << "Switched to buffer " << vw->buf->buf->name << "\n";
-  exec_delayed (
-      scheme_cmd ("(make-cursor-visible '" * scm_quote (as_string (u)) * ")"));
 }
 
 void
