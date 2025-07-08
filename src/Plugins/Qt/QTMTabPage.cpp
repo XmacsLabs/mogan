@@ -178,7 +178,9 @@ QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
 void
 QTMTabPageContainer::removeAllTabPages () {
   for (int i= 0; i < m_tabPageList.size (); ++i) {
-    delete m_tabPageList[i];
+    // remove from parent first to avoid being freed again
+    m_tabPageList[i]->setParent (nullptr);
+    m_tabPageList[i]->deleteLater ();
   }
   m_tabPageList.clear ();
 }
@@ -200,7 +202,9 @@ QTMTabPageContainer::extractTabPages (QList<QAction*>* p_src) {
       delete carrier->m_widget; // we don't use it so we should delete it
     }
 
-    delete carrier; // we don't need it anymore
+    // We don't need to manually delete carrier, because it(p_src) is a QAction,
+    // which will be deleted by the parent widget (QTMTabPageBar) when it
+    // is destroyed (by shedule_destruction).
   }
 }
 
