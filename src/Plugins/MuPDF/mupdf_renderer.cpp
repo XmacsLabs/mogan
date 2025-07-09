@@ -46,19 +46,6 @@ mupdf_document () {
   return doc;
 }
 
-void
-snapshot_pixmap (fz_pixmap* pix) {
-  static int i  = 0;
-  string     str= "/Users/mgubi/snapshot-";
-  str << as_string (i) << ".png";
-  i= (i + 1) % 1000;
-  c_string   cstr (str);
-  fz_output* out= fz_new_output_with_path (mupdf_context (), cstr, 0);
-  fz_write_pixmap_as_png (mupdf_context (), out, pix);
-  fz_close_output (mupdf_context (), out);
-  fz_drop_output (mupdf_context (), out);
-}
-
 /******************************************************************************
  * Fitz pixmaps
  ******************************************************************************/

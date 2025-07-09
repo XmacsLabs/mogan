@@ -26,12 +26,16 @@
 
 qt_simple_widget_rep::qt_simple_widget_rep ()
     : qt_widget_rep (simple_widget), sequencer (0) {
+#ifndef USE_MUPDF_RENDERER
   backingPixmap= headless_mode ? NULL : new QPixmap ();
+#endif
 }
 
 qt_simple_widget_rep::~qt_simple_widget_rep () {
   all_widgets->remove ((pointer) this);
+#ifndef USE_MUPDF_RENDERER
   if (backingPixmap != NULL) delete backingPixmap;
+#endif
 }
 
 QWidget*
@@ -47,6 +51,17 @@ qt_simple_widget_rep::as_qwidget () {
 
   all_widgets->insert ((pointer) this);
   backing_pos= canvas ()->origin ();
+
+#ifdef USE_MUPDF_RENDERER
+  all_widgets->insert ((pointer) this);
+  backing_pos  = canvas ()->origin ();
+  bs_w         = sz.width () * retina_factor;
+  bs_h         = sz.height () * retina_factor;
+  bs_ox        = backing_pos.x () * PIXEL;
+  bs_oy        = backing_pos.y () * PIXEL;
+  bs_zoomf     = 1;
+  backing_store= native_picture (bs_w, bs_h, bs_ox, bs_oy);
+#endif
 
   return qwid;
 }
@@ -419,6 +434,7 @@ qt_simple_widget_rep::is_invalid () {
   return !is_nil (invalid_regions);
 }
 
+#ifndef USE_MUPDF_RENDERER
 basic_renderer
 qt_simple_widget_rep::get_renderer () {
   ASSERT (backingPixmap != NULL,
@@ -427,6 +443,7 @@ qt_simple_widget_rep::get_renderer () {
   ren->begin ((void*) backingPixmap);
   return ren;
 }
+#endif
 
 /*
  This function is called by the qt_gui::update method (via repaint_all) to keep
@@ -439,6 +456,7 @@ qt_simple_widget_rep::get_renderer () {
  to mark the region invalid again.
  */
 
+#ifndef USE_MUPDF_RENDERER
 void
 qt_simple_widget_rep::repaint_invalid_regions () {
 
@@ -580,6 +598,7 @@ qt_simple_widget_rep::repaint_invalid_regions () {
   // propagate immediately the changes to the screen
   canvas ()->surface ()->repaint (qrgn);
 }
+#endif
 
 hashset<pointer> qt_simple_widget_rep::all_widgets;
 

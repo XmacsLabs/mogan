@@ -92,14 +92,25 @@ public:
 protected:
   static hashset<pointer> all_widgets;
   rectangles              invalid_regions;
-  QPixmap*                backingPixmap;
-  QPoint                  backing_pos;
+#ifdef USE_MUPDF_RENDERER
+  double  bs_zoomf;
+  picture backing_store;
+  int     bs_w, bs_h;
+  SI      bs_ox, bs_oy;
+#else
+  QPixmap*       backingPixmap;
+#endif
+  QPoint backing_pos;
 
-  void           invalidate_rect (int x1, int y1, int x2, int y2);
-  void           invalidate_all ();
-  bool           is_invalid ();
-  void           repaint_invalid_regions ();
+  void invalidate_rect (int x1, int y1, int x2, int y2);
+  void invalidate_all ();
+  bool is_invalid ();
+  void repaint_invalid_regions ();
+#ifdef USE_MUPDF_RENDERER
+  QImage get_backing_store ();
+#else
   basic_renderer get_renderer ();
+#endif
 
   friend class QTMWidget;
 };

@@ -135,9 +135,20 @@ QTMWidget::resizeEventBis (QResizeEvent* event) {
  CHECK: Maybe just putting onscreen all the region bounding rectangles might
  be less expensive.
 */
+#ifdef USE_MUPDF_RENDERER
 void
 QTMWidget::paintEvent (QPaintEvent* event) {
+  QImage   bs= tm_widget ()->get_backing_store ();
   QPainter p (surface ());
+  // this code override the invalid region computations
+  p.drawImage (QRect (QPoint (), size ()), bs,
+               QRect (QPoint (), size () * retina_factor));
+  return;
+}
+#else
+void
+QTMWidget::paintEvent (QPaintEvent* event) {
+  QPainter       p (surface ());
 #if QT_VERSION >= 0x060000
   QVector<QRect> rects (1, event->region ().boundingRect ());
 #else
@@ -152,6 +163,7 @@ QTMWidget::paintEvent (QPaintEvent* event) {
                          retina_factor * qr.height ()));
   }
 }
+#endif
 
 void
 QTMWidget::keyPressEvent (QKeyEvent* event) {

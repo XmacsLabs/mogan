@@ -92,7 +92,7 @@ as_mupdf_picture (picture pic) {
   return ret;
 }
 
-#ifdef MUPDF_RENDERER
+#ifdef USE_MUPDF_RENDERER
 picture
 as_native_picture (picture pict) {
   return as_mupdf_picture (pict);
@@ -156,7 +156,7 @@ mupdf_image_renderer_rep::get_data_handle () {
   return (void*) this;
 }
 
-#ifdef MUPDF_RENDERER
+#ifdef USE_MUPDF_RENDERER
 renderer
 picture_renderer (picture p, double zoomf) {
   return (renderer) tm_new<mupdf_image_renderer_rep> (p, zoomf);
@@ -257,7 +257,7 @@ mupdf_load_pixmap (url u, int w, int h, tree eff, SI pixel) {
   return pix;
 }
 
-#ifdef MUPDF_RENDERER
+#ifdef USE_MUPDF_RENDERER
 picture
 load_picture (url u, int w, int h, tree eff, int pixel) {
   fz_pixmap* pix= mupdf_load_pixmap (u, w, h, eff, pixel);
