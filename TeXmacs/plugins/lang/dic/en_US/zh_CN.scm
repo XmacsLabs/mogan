@@ -1848,6 +1848,7 @@
 ("show on screen" "")
 ("show one part" "显示一部分")
 ("show panorama" "显示全景")
+("show all slides" "显示所有幻灯片")
 ("show preamble" "显示序言")
 ("show several parts" "显示几部分")
 ("show subunits" "显示子单元")
