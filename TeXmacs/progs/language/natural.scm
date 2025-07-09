@@ -154,20 +154,5 @@
    '()
    (tr-current)))
 
-(tm-define (tr-reload-translations)
-  (force-load-translations "english" (get-output-language))
-  (set-message "Translations loaded" (get-output-language)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Menu entries
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(menu-bind translations-menu
-  (when (!= "english" (get-output-language))
-    ("Edit translations file" (load-document (tr-file (get-output-language))))
-    ;;(if (buffer-exists? (tr-file (get-output-language)))
-    ;;    (group "Close translations to rebuild"))
-    ;;(if (not (buffer-exists? (tr-file (get-output-language))))
-    ;;    ("Rebuild translations file" (tr-rebuild (get-output-language))))
-    ("Force reloading of translations" (tr-reload-translations))))
 

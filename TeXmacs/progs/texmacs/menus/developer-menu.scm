@@ -90,9 +90,6 @@
   (group "Scheme")
   (link scheme-menu)
   ---
-  (group "Translations")
-  (link translations-menu)
-  ---
   (group "Documentation")
   (link apidoc-menu)
   ---
