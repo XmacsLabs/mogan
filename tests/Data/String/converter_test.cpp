@@ -20,6 +20,7 @@ class TestConverter : public QObject {
 private slots:
   void init () { init_lolly (); };
   void test_utf8_to_cork ();
+  void test_cork_to_utf8 ();
 };
 
 void
@@ -27,6 +28,13 @@ TestConverter::test_utf8_to_cork () {
   qcompare (utf8_to_cork ("中"), "<#4E2D>");
   qcompare (utf8_to_cork ("“"), "\x10");
   qcompare (utf8_to_cork ("”"), "\x11");
+}
+
+void
+TestConverter::test_cork_to_utf8 () {
+  qcompare (cork_to_utf8 ("<#4E2D>"), "中");
+  qcompare (cork_to_utf8 ("\x10"), "“");
+  qcompare (cork_to_utf8 ("\x11"), "”");
 }
 
 QTEST_MAIN (TestConverter)
