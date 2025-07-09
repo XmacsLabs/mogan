@@ -27,13 +27,15 @@
       (move-buffer-index from to)))
 
 (tm-menu (texmacs-tab-pages)
-  (for (buf (buffer-menu-unsorted-list 99)) ; buf is the url
-    (let* ((title  (buffer-get-title buf))
-        (title*    (if (== title "") (url->system (url-tail buf)) title))
-        (mod?      (buffer-modified? buf))
-        (tab-title (string-append title* (if mod? " *" "")))
-        (doc-path  (url->system buf))
-        (active?   (== (current-buffer) buf)))
+  (for (view (tabpage-list #f))
+    (let* ((buf (view->buffer view))
+           (view-win (view->window-of-tabpage view))
+           (title  (buffer-get-title buf))
+           (title* (if (== title "") (url->system (url-tail buf)) title))
+           (mod?   (buffer-modified? buf))
+           (tab-title (string-append title* (if mod? " *" "")))
+           (doc-path  (url->system buf))
+           (active?   (== (current-buffer) buf)))
       (tab-page
         (eval buf)
         ((balloon (eval `(verbatim ,tab-title)) (eval `(verbatim ,doc-path))) (switch-to-buffer* buf))
