@@ -10,7 +10,7 @@ triggers:
     paths:
       precise:
         - .workflow/ci-lolly.yml
-        - 3rdparty/lolly
+        - 3rdparty/lolly/
   push:
     branches:
       precise:
@@ -18,7 +18,7 @@ triggers:
     paths:
       precise:
         - .workflow/ci-lolly.yml
-        - 3rdparty/lolly
+        - 3rdparty/lolly/
 
 variables:
   XMAKE_MAIN_REPO: 'https://gitee.com/tboox/xmake-repo.git'
