@@ -29,6 +29,7 @@ url        window_to_view (url win);
 url        view_to_buffer (url u);
 url        view_to_window (url u);
 url        view_to_window_of_tabpage (url u);
+void       move_tabpage (int old_pos, int new_pos);
 url        get_new_view (url name);
 url        get_recent_view (url name);
 url        get_passive_view (url name);

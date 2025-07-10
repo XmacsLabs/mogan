@@ -17,6 +17,7 @@
 #include "tm_data.hpp"
 #include "tm_link.hpp"
 #include "tm_url.hpp"
+#include "view_history.hpp"
 #include "web_files.hpp"
 
 #include <moebius/data/scheme.hpp>
@@ -199,40 +200,16 @@ view_to_editor (url u) {
  * Viewing history
  ******************************************************************************/
 
-array<url> view_history;
-array<int> view_history_number;
-int        current_view_history_number= 0;
+static view_history view_history_instance;
 
 void
 notify_set_view (url u) {
-  int i;
-  for (i= 0; i < N (view_history); i++)
-    if (view_history[i] == u) break;
-  if (i >= N (view_history)) {
-    current_view_history_number++;
-    view_history= append (u, view_history);
-    view_history_number=
-        append (current_view_history_number, view_history_number);
-  }
-  else {
-    int tmp= view_history_number[i];
-    for (int j= i; j > 0; j--) {
-      view_history[j]       = view_history[j - 1];
-      view_history_number[j]= view_history_number[j - 1];
-    }
-    view_history_number[0]= tmp;
-    view_history[0]       = u;
-  }
+  view_history_instance.add_view (u);
 }
 
 void
 notify_delete_view (url u) {
-  for (int i= 0; i < N (view_history); i++)
-    if (view_history[i] == u) {
-      view_history= append (range (view_history, 0, i),
-                            range (view_history, i + 1, N (view_history)));
-      return;
-    }
+  view_history_instance.remove_view (u);
 }
 
 url
@@ -243,14 +220,14 @@ get_recent_view (url name, bool same, bool other, bool active, bool passive) {
   //   If active, then the buffer must be active
   //   If passive, then the buffer must be passive
   int i;
-  for (i= 0; i < N (view_history); i++) {
-    tm_view vw= concrete_view (view_history[i]);
+  for (i= 0; i < view_history_instance.size (); i++) {
+    tm_view vw= concrete_view (view_history_instance.get_view_at_index (i));
     if (vw != NULL) {
       if (same && vw->buf->buf->name != name) continue;
       if (other && vw->buf->buf->name == name) continue;
       if (active && vw->win == NULL) continue;
       if (passive && vw->win != NULL) continue;
-      return view_history[i];
+      return view_history_instance.get_view_at_index (i);
     }
   }
   return url_none ();
@@ -258,32 +235,62 @@ get_recent_view (url name, bool same, bool other, bool active, bool passive) {
 
 array<url>
 get_all_views () {
-  return view_history;
+  return view_history_instance.get_all_views ();
 }
 
 array<url>
 get_all_views_unsorted (bool current_window_only) {
-  array<std::pair<int, url>> numbered;
-  int                        view_history_N= N (view_history);
-  for (int i= 0; i < view_history_N; i++) {
-    if (current_window_only &&
-        view_to_window_of_tabpage (view_history[i]) != get_current_window ()) {
-      continue; // skip views not in current window
+  url window= current_window_only ? get_current_window () : url_none ();
+  view_history::FilteredView filtered=
+      view_history_instance.get_views_for_window (window, true);
+  return filtered.views;
+}
+
+void
+move_tabpage (int old_pos, int new_pos) {
+  url cur_win= get_current_window ();
+
+  // 获取当前窗口的过滤和排序的view
+  view_history::FilteredView filtered=
+      view_history_instance.get_views_for_window (cur_win, true);
+  int filtered_views_N= N (filtered.views);
+
+  // 先验证操作的位置是否合法
+  if (old_pos < 0 || old_pos >= filtered_views_N || new_pos < 0 ||
+      new_pos >= filtered_views_N) {
+    if (DEBUG_AUTO) {
+      debug_automatic << "Invalid indices for swapping tabpages: " << old_pos
+                      << ", " << new_pos << LF;
     }
-    numbered << std::make_pair (view_history_number[i], view_history[i]);
+    return;
   }
-  // Sort by view number
-  std::sort (numbered.begin (), numbered.end (),
-             [] (const std::pair<int, url>& a, const std::pair<int, url>& b) {
-               return a.first < b.first;
-             });
-  // Extract sorted urls
-  array<url> result;
-  int        numbered_N= N (numbered);
-  for (int i= 0; i < numbered_N; i++) {
-    result << numbered[i].second;
+
+  // 进行移动操作
+  // 先记录新老位置的原始排序依据索引，因为其会在过程中被覆盖
+  int target_number= filtered.numbers[new_pos];
+  int old_number   = filtered.numbers[old_pos];
+  if (new_pos > old_pos) {
+    for (int i= 0; i < filtered_views_N; i++) {
+      if (filtered.numbers[i] <= target_number &&
+          filtered.numbers[i] > old_number) {
+        int original_idx= filtered.original_indices[i];
+        view_history_instance.dec_number_at_index (original_idx);
+      }
+    }
   }
-  return result;
+  else if (new_pos < old_pos) {
+    for (int i= 0; i < filtered_views_N; i++) {
+      if (filtered.numbers[i] >= target_number &&
+          filtered.numbers[i] < old_number) {
+        int original_idx= filtered.original_indices[i];
+        view_history_instance.inc_number_at_index (original_idx);
+      }
+    }
+  }
+
+  // 最后，为移动的视图设置新的排序依据编号
+  view_history_instance.set_number_at_index (filtered.original_indices[old_pos],
+                                             target_number);
 }
 
 /******************************************************************************

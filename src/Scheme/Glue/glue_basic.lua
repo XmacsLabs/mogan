@@ -1598,6 +1598,15 @@ function main()
                 }
             },
             {
+                scm_name = "move-tabpage",
+                cpp_name = "move_tabpage",
+                ret_type = "void",
+                arg_list = {
+                    "int",
+                    "int"
+                }
+            },
+            {
                 scm_name = "view-new",
                 cpp_name = "get_new_view",
                 ret_type = "url",
