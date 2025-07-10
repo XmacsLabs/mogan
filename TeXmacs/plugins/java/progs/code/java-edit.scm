@@ -30,7 +30,7 @@
   (:mode in-prog-java?)
   ("p s v m var"
    (begin
-    (insert "public static int main() {}")
+    (insert "public static void main(String[] args) {}")
     (go-to-previous)
     (insert-return)
     (insert-raw-return)

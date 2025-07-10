@@ -1,4 +1,4 @@
-<TeXmacs|2.1.2>
+<TeXmacs|2.1.4>
 
 <style|<tuple|tmdoc|british|java>>
 
@@ -53,7 +53,7 @@
     <item*|<key|p s v m var>>
 
     <\java-code>
-      public static int main() {
+      public static void main(String[] args) {
 
       \ \ \ \ 
 
