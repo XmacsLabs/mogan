@@ -762,3 +762,164 @@ parse_mathtable (url u) {
   if (!load_string (u, tt, false)) return parse_mathtable (tt);
   else return {};
 }
+
+/******************************************************************************
+ * OpenType SVG table
+ * Based on OpenType specification from Microsoft:
+ * https://learn.microsoft.com/en-us/typography/opentype/spec/svg
+ ******************************************************************************/
+
+ot_svgtable
+parse_svgtable (const string& buf) {
+  if ((N (buf) == 0) || (!tt_correct_version (buf, 0))) return {};
+  string tt= tt_table (buf, 0, "SVG ");
+  if (N (tt) == 0) return {};
+  ot_svgtable table (tm_new<ot_svgtable_rep> ());
+  table->version              = get_U16 (tt, 0);
+  table->svgDocumentListOffset= get_U32 (tt, 2);
+  table->reserved             = get_U32 (tt, 6);
+  unsigned int numEntries     = get_U16 (tt, table->svgDocumentListOffset);
+  for (unsigned int i= 0; i < numEntries; i++) {
+    unsigned int offset      = table->svgDocumentListOffset + 2 + 12 * i;
+    unsigned int startGlyphID= get_U16 (tt, offset);
+    unsigned int endGlyphID  = get_U16 (tt, offset + 2);
+    int          svgOffset   = get_U32 (tt, offset + 4);
+    int          svgLength   = get_U32 (tt, offset + 8);
+    string       svgContent  = get_sub (tt, svgOffset, svgOffset + svgLength);
+    table->records << SVGDocumentRecord{startGlyphID, endGlyphID, svgContent};
+  }
+  return table;
+}
+
+ot_svgtable
+parse_svgtable (url u) {
+  string tt;
+  if (!load_string (u, tt, false)) return parse_svgtable (tt);
+  else return {};
+}
+
+string
+ot_svgtable_rep::get_svg_from_glyphid (unsigned int glyphID) {
+  // try to find glyph in cache
+  if (emoji_cache->contains (glyphID)) {
+    return emoji_cache (glyphID);
+  }
+  int N_records= N (records);
+  for (int i= 0; i < N_records; ++i) {
+    SVGDocumentRecord& record= records[i];
+    if (record.startGlyphID <= glyphID && record.endGlyphID >= glyphID) {
+      string svg_doc= record.svgDocument;
+
+      // handle SVG documents with single glyph
+      if (record.startGlyphID == record.endGlyphID) {
+        emoji_cache (glyphID)= svg_doc;
+        return svg_doc;
+      }
+      else {
+        // try to extract specific glyph definition from SVG document
+        string glyph_id_str= "glyph" * as_string (glyphID);
+
+        // found specific glyph definition, create standard SVG document
+        string glyph_svg= extract_glyph_svg_with_defs (svg_doc, glyph_id_str);
+        emoji_cache (glyphID)= glyph_svg;
+        return glyph_svg;
+      }
+    }
+  }
+  return {};
+}
+
+// a helper function to extract specific glyph SVG with defs and use elements
+string
+ot_svgtable_rep::extract_glyph_svg_with_defs (const string& full_svg,
+                                              const string& glyph_id) {
+  // extract SVG root element start tag with all attributes and namespaces
+  string svg_header;
+  int    svg_start= search_forwards ("<svg", full_svg);
+  if (svg_start >= 0) {
+    int header_end= search_forwards (">", svg_start, full_svg);
+    if (header_end >= 0) {
+      svg_header= get_sub (full_svg, svg_start, header_end + 1);
+
+      // ensure xlink namespace is included (for use elements)
+      if (search_forwards ("xmlns:xlink", svg_header) < 0) {
+        // add xlink namespace to svg tag
+        int insert_pos= search_forwards ("xmlns", svg_header);
+        if (insert_pos >= 0) {
+          svg_header= get_sub (svg_header, 0, insert_pos) *
+                      "xmlns:xlink=\"http://www.w3.org/1999/xlink\" " *
+                      get_sub (svg_header, insert_pos, N (svg_header));
+        }
+        else {
+          // if no xmlns found, add before closing >
+          int close_pos= search_forwards (">", svg_header);
+          if (close_pos >= 0) {
+            svg_header= get_sub (svg_header, 0, close_pos) *
+                        " xmlns:xlink=\"http://www.w3.org/1999/xlink\"" *
+                        get_sub (svg_header, close_pos, N (svg_header));
+          }
+        }
+      }
+    }
+  }
+
+  // if no complete SVG header found, create one with all necessary namespaces
+  if (N (svg_header) == 0) {
+    svg_header= "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" "
+                "xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
+  }
+
+  // extract defs section
+  string defs_content;
+  int    defs_start= search_forwards ("<defs", full_svg);
+  if (defs_start >= 0) {
+    int defs_end= search_forwards ("</defs>", defs_start, full_svg);
+    if (defs_end >= 0) {
+      defs_end+= 7; // include "</defs>"
+      defs_content= get_sub (full_svg, defs_start, defs_end);
+    }
+  }
+
+  // extract target glyph definition
+  string glyph_def;
+  string start_tag  = "<g id=\"" * glyph_id * "\"";
+  int    glyph_start= search_forwards (start_tag, full_svg);
+  if (glyph_start >= 0) {
+    int glyph_end= search_forwards ("</g>", glyph_start, full_svg);
+    if (glyph_end >= 0) {
+      glyph_end+= 4; // include "</g>"
+      glyph_def= get_sub (full_svg, glyph_start, glyph_end);
+    }
+  }
+
+  // build complete SVG document
+  string result= svg_header * "\n";
+
+  if (N (defs_content) > 0 || N (glyph_def) > 0) {
+    result= result * "  <defs>\n";
+
+    // add original defs content (if exists)
+    if (N (defs_content) > 0) {
+      // remove outer <defs> tags, keep only content
+      int inner_start= search_forwards (">", defs_content);
+      int inner_end  = search_backwards ("</defs>", defs_content);
+      if (inner_start >= 0 && inner_end >= 0 && inner_start < inner_end) {
+        string inner_defs= get_sub (defs_content, inner_start + 1, inner_end);
+        result           = result * "    " * inner_defs * "\n";
+      }
+    }
+
+    // add glyph definition
+    if (N (glyph_def) > 0) {
+      result= result * "    " * glyph_def * "\n";
+    }
+
+    result= result * "  </defs>\n";
+  }
+
+  // add use element to reference the glyph
+  result= result * "  <use xlink:href=\"#" * glyph_id * "\" />\n";
+  result= result * "</svg>";
+
+  return result;
+}

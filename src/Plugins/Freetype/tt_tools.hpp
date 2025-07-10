@@ -270,4 +270,36 @@ CONCRETE_NULL_CODE (ot_mathtable);
 ot_mathtable parse_mathtable (const string& buf);
 ot_mathtable parse_mathtable (url u);
 
+/******************************************************************************
+ * OpenType SVG table
+ * see https://docs.microsoft.com/en-us/typography/opentype/spec/svg
+ ******************************************************************************/
+
+struct SVGDocumentRecord {
+  unsigned int startGlyphID;
+  unsigned int endGlyphID;
+  string       svgDocument;
+};
+
+struct ot_svgtable_rep : concrete_struct {
+  unsigned int                  version;
+  int                           svgDocumentListOffset;
+  int                           reserved;
+  array<SVGDocumentRecord>      records;
+  hashmap<unsigned int, string> emoji_cache;
+
+  string get_svg_from_glyphid (unsigned int glyphID);
+  string extract_glyph_svg_with_defs (const string& full_svg,
+                                      const string& glyph_id);
+};
+
+struct ot_svgtable {
+  CONCRETE_NULL (ot_svgtable);
+  ot_svgtable (ot_svgtable_rep* rep2) : rep (rep2) {}
+};
+
+CONCRETE_NULL_CODE (ot_svgtable);
+ot_svgtable parse_svgtable (const string& buf);
+ot_svgtable parse_svgtable (url u);
+
 #endif // TT_TOOLS_H
