@@ -176,6 +176,9 @@ qt_chooser_widget_rep::set_type (const string& _type) {
   else if (_type == "image") {
     mainNameFilter= to_qstring (translate ("Image file"));
   }
+  else if (_type == "select") {
+    mainNameFilter= to_qstring (translate ("TMU files"));
+  }
   else {
     if (DEBUG_STD)
       debug_widgets << "qt_chooser_widget: IGNORING unknown format " << _type
@@ -196,6 +199,30 @@ qt_chooser_widget_rep::set_type (const string& _type) {
                                " (*.svg)");
     nameFilters << to_qstring (translate ("Portable Document Format") *
                                " (*.pdf)");
+  }
+  else if (_type == "select") {
+    mainNameFilter+= " (*.tmu *.tm)";
+    //" (*.scala *.sc *.sbt *.pants *.ltx *.sty *.cls *.tex *.bib *.rawbib *.jl
+    //*.js *.java *.sld *.ss *.tmu *.txt *.py *.json *.html *.hh *.cpp *cc *hpp
+    //*.scm *.elv *.md *.sh *.csv)"
+    nameFilters << mainNameFilter;
+    nameFilters << to_qstring (translate ("Data files") * " (*.json *.csv)");
+    nameFilters << to_qstring (translate ("Text files") * " (*.md *.txt)");
+    nameFilters << to_qstring (translate ("C++ files") *
+                               " (*.hh *.cc *.cpp *hpp)");
+    nameFilters << to_qstring (translate ("Python files") * " (*.py *.pants)");
+    nameFilters << to_qstring (translate ("Script files") *
+                               " (*.sh *.elv *.py *.js)");
+    nameFilters << to_qstring (translate ("Scala files") *
+                               " (*.sbt *.sc *.scala)");
+    nameFilters << to_qstring (translate ("Julia files") * " (*.jl)");
+    nameFilters << to_qstring (translate ("Java files") * " (*.java)");
+    nameFilters << to_qstring (translate ("Scheme files") *
+                               " (*.ss *.sld *.scm)");
+    nameFilters << to_qstring (translate ("Latex files") *
+                               " (*.ltx *.sty *.tex *.bib *.rawbib *.cls)");
+    nameFilters << to_qstring (translate ("Web files") *
+                               " (*.html *.xhtml *.htm)");
   }
   else {
     mainNameFilter+= " (";

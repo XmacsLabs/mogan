@@ -571,7 +571,7 @@
 
 (tm-define (open-buffer)
   (:synopsis "Open a new file")
-  (choose-file load-buffer "Load file" ""))
+  (choose-file load-buffer "Load file" "select"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Reverting buffers
@@ -641,7 +641,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (open-in-window)
-  (choose-file load-buffer-in-new-window "Load file" ""))
+  (choose-file load-buffer-in-new-window "Load file" "select"))
 
 (tm-define (open-document)
   (if (window-per-buffer?) (open-in-window) (open-buffer)))
