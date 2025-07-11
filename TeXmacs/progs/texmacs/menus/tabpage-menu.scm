@@ -27,7 +27,7 @@
       (move-buffer-index from to)))
 
 (tm-menu (texmacs-tab-pages)
-  (for (view (tabpage-list #f))
+  (for (view (tabpage-list #t))
     (let* ((buf (view->buffer view))
            (view-win (view->window-of-tabpage view))
            (title  (buffer-get-title buf))
@@ -38,7 +38,9 @@
            (active?   (== (current-buffer) buf)))
       (tab-page
         (eval buf)
-        ((balloon (eval `(verbatim ,tab-title)) (eval `(verbatim ,doc-path))) (switch-to-buffer* buf))
-        ((balloon "✕" "Close") (safely-kill-buffer-by-url buf))
+        ((balloon (eval `(verbatim ,tab-title))
+                  (eval `(verbatim ,doc-path)))
+         (window-set-view view-win view #t)) ;; #t stansd for focus 
+        ((balloon "✕" "Close") (safely-kill-tabpage-by-url view-win view buf))
         (eval active?)
       ))))

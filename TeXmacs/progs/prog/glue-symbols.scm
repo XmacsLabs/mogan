@@ -721,6 +721,7 @@
 "view->window-url"
 "view->window-of-tabpage-url"
 "view-new"
+"kill-tabpage"
 "view-passive"
 "view-recent"
 "view-delete"

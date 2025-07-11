@@ -180,17 +180,38 @@
              (when answ (buffer-close (current-buffer))))))
         (else (buffer-close (current-buffer)))))
 
-(tm-define (safely-kill-buffer-by-url tgt-buffer)
-  ; tgt-buffer is url of the target buffer to be killed
-  (cond ((buffer-embedded? tgt-buffer)
-         (alt-windows-delete (alt-window-search tgt-buffer)))
-        ((buffer-modified? tgt-buffer)
-         ; if the buffer is modified and has not been saved,
-         ; pop up a dialog prompting the user to confirm closing
-         (user-confirm "The document has not been saved. Really close it?" #f  
-           (lambda (answ)
-             (when answ (buffer-close tgt-buffer)))))
-        (else (buffer-close tgt-buffer))))
+(tm-define (safely-kill-tabpage)
+  (let* (
+    (tgt-view (current-view))
+    (tgt-win (current-window))
+    (tgt-buffer (view->buffer tgt-view)) ;or current-buffer?
+  )
+    (cond
+      ((buffer-embedded? tgt-buffer)
+       (alt-windows-delete (alt-window-search tgt-buffer)))
+      ((buffer-modified? tgt-buffer)
+       ; if the buffer is modified and has not been saved,
+       ; pop up a dialog prompting the user to confirm closing
+       (user-confirm "The document has not been saved. Really close it?" #f
+         (lambda (answ)
+           (when answ
+             (kill-tabpage tgt-win tgt-view)))))
+      (else
+       (kill-tabpage tgt-win tgt-view)))))
+
+(tm-define (safely-kill-tabpage-by-url tgt-win tgt-view tgt-buffer)
+  (cond
+    ((buffer-embedded? tgt-buffer)
+     (alt-windows-delete (alt-window-search tgt-buffer)))
+    ((buffer-modified? tgt-buffer)
+     ; if the buffer is modified and has not been saved,
+     ; pop up a dialog prompting the user to confirm closing
+     (user-confirm "The document has not been saved. Really close it?" #f
+       (lambda (answ)
+         (when answ
+           (kill-tabpage tgt-win tgt-view)))))
+    (else
+     (kill-tabpage tgt-win tgt-view))))
 
 (define (do-kill-window)
   (with buf (current-buffer)
@@ -247,7 +268,7 @@
   (if (window-per-buffer?) (new-buffer) (open-window)))
 
 (tm-define (close-document)
-  (if (window-per-buffer?) (safely-kill-window) (safely-kill-buffer)))
+  (if (window-per-buffer?) (safely-kill-window) (safely-kill-tabpage)))
 
 (tm-define (close-document*)
-  (if (window-per-buffer?) (safely-kill-buffer) (safely-kill-window)))
+  (if (window-per-buffer?) (safely-kill-tabpage) (safely-kill-window)))

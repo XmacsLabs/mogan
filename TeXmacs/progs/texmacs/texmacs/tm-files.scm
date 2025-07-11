@@ -159,6 +159,14 @@
       (let ((buf (list-ref lst index)))
         (switch-to-buffer* buf)))))
 
+(tm-define (switch-to-view-index index)
+  (let* ((lst (tabpage-list #t)) ;; #t stands for current window
+         (len (length lst)))
+    (when (and (integer? index) (>= index 0) (< index len))
+      (let* ((view (list-ref lst index))
+             (view-win (view->window-of-tabpage view)))
+        (window-set-view view-win view #t)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Saving buffers
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

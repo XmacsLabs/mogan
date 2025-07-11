@@ -342,6 +342,21 @@ get_passive_view (url name) {
 }
 
 url
+get_passive_view_of_tabpage (url name) {
+  // Get a view on a buffer, but not one which is related to a tabpage
+  // Create a new view if no such view exists
+  tm_buffer buf= concrete_buffer_insist (name);
+  if (is_nil (buf)) return url_none ();
+  array<url> vs  = buffer_to_views (name);
+  int        vs_N= N (vs);
+  for (int i= 0; i < vs_N; i++) {
+    url win= view_to_window_of_tabpage (vs[i]);
+    if (is_none (win)) return vs[i];
+  }
+  return get_new_view (buf->buf->name);
+}
+
+url
 get_recent_view (url name) {
   // Get (most) recent view on a buffer, with a preference for
   // the current buffer or another view attached to a window
@@ -377,6 +392,91 @@ delete_view (url u) {
   notify_delete_view (u);
   vw->ed->buf= NULL;
   tm_delete (vw);
+}
+
+void
+kill_tabpage (url win_u, url u) {
+  // 此方法用于更精确地关闭一个标签页。
+  // 虽然已有关闭视图的相关方法，但这些方法未考虑到当前引入的 tabpage 概念。
+  // 随着 tabpage 的出现，用户关闭文档的操作实际上演变为关闭整个标签页。
+  // 因此，本方法以 tabpage 为单位执行关闭操作，实现了标签页关闭的完整逻辑
+  // 在关闭文档，或标签页时都将调用此方法。
+  tm_view vw= concrete_view (u);
+  if (vw == NULL) return;
+  tm_window win        = vw->win;
+  tm_window win_tabpage= vw->win_tabpage;
+  if (win_tabpage == NULL) return;
+  if (win == NULL) win= win_tabpage;
+  bool is_current= (get_current_view () == u);
+
+  // 第一步: 设定 win_tabpage
+  // 将 win_tabpage 设为空指针，因为要关闭tabpage了
+  vw->win_tabpage= NULL;
+
+  // 第二步: Detach routine
+  // 如果是当前视图，则需要将其从窗口中分离
+  // 参照 detach_view 方法
+  if (is_current) {
+    vw->win   = NULL;
+    widget wid= win_tabpage->wid;
+    vw->ed->suspend ();
+    set_scrollable (wid, glue_widget ());
+    // 不需要设置窗口名称和 URL，因为将要 attach 或者关闭窗口
+  }
+
+  // 第三步: Attach routine
+  // 如果是当前视图（也就是分离了当前视图），则需要附着一个新的视图
+  // 新的视图是 get_all_views 循环找到的中第一个处于本标签栏的视图，
+  // 也就是 view_history 中的上一个视图
+  // 如果没找到可用的视图，则 found 保持为 false, 后续将关闭窗口
+  // 将在下一个事件循环刷新显示
+  bool       found= false;
+  array<url> vws  = get_all_views ();
+  if (is_current) {
+    for (int i= 0; i < N (vws); i++) {
+      tm_view vw2= concrete_view (vws[i]);
+      if (vw2 != NULL && vw2 != vw && vw2->win_tabpage == win_tabpage) {
+        window_set_view (win_u, vws[i], true);
+        found= true;
+        break;
+      }
+    }
+  }
+
+  // 第四步: Window killing
+  // 如果关闭的视图是当前视图，并且没有找到其他视图附着到窗口上，
+  // 则当前窗口没有可用视图，需要关闭窗口
+  if (!found && is_current) {
+    // if cannot find a view, close the window
+    kill_window (win_u);
+  }
+
+  // 第五步: Buffer & View deleting
+  // 在最后释放视图和缓冲区的资源
+  tm_buffer  buf    = vw->buf;
+  array<url> buf_vws= buffer_to_views (buf->buf->name);
+  if (N (buf_vws) == 1) {
+    // 如果缓冲区只有一个视图，则释放缓冲区和视图
+    int nr, bufs_N= N (bufs);
+    for (nr= 0; nr < bufs_N; nr++) {
+      if (bufs[nr] == buf) {
+        delete_view (u);
+        // 如果将要释放的是最后一个缓冲区，则退出整个程序
+        if (bufs_N == 1 && number_of_servers () == 0) get_server ()->quit ();
+        // 维护缓冲区数组，释放缓冲区
+        for (int i= nr; i < bufs_N - 1; i++) {
+          bufs[i]= bufs[i + 1];
+        }
+        bufs->resize (bufs_N - 1);
+        tm_delete (buf);
+        break;
+      }
+    }
+  }
+  else {
+    // 如果缓冲区有多个视图，则只释放当前视图，不释放缓冲区
+    delete_view (u);
+  }
 }
 
 void
@@ -460,7 +560,7 @@ window_set_view (url win_u, url new_u, bool focus) {
 void
 switch_to_buffer (url name) {
   // cout << "Switching to buffer " << name << "\n";
-  url     u = get_passive_view (name);
+  url     u = get_passive_view_of_tabpage (name);
   tm_view vw= concrete_view (u);
   if (vw == NULL) return;
   window_set_view (get_current_window (), u, true);

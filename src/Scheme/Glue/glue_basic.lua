@@ -1615,6 +1615,15 @@ function main()
                 }
             },
             {
+                scm_name = "kill-tabpage",
+                cpp_name = "kill_tabpage",
+                ret_type = "void",
+                arg_list = {
+                    "url",
+                    "url"
+                }
+            },
+            {
                 scm_name = "view-passive",
                 cpp_name = "get_passive_view",
                 ret_type = "url",
