@@ -13,9 +13,9 @@
 #include "analyze.hpp"
 #include "sys_utils.hpp"
 #include "tbox/tbox.h"
-#include <vector>
 #include <cstring>
 #include <ctype.h>
+#include <vector>
 
 #if defined(OS_MINGW) || defined(OS_WIN)
 #define WINPATHS
@@ -23,40 +23,38 @@
 
 class string_builder {
 private:
-    std::vector<char> buffer;
-    
+  std::vector<char> buffer;
+
 public:
-    string_builder() { buffer.reserve(256); }
-    
-    void append(const string& s) {
-        if (N(s) > 0) {
-            // Create a non-const copy to access begin()
-            string temp = s;
-            const char* data = temp.begin();
-            int len = N(s);
-            buffer.insert(buffer.end(), data, data + len);
-        }
+  string_builder () { buffer.reserve (256); }
+
+  void append (const string& s) {
+    if (N (s) > 0) {
+      // Create a non-const copy to access begin()
+      string      temp= s;
+      const char* data= temp.begin ();
+      int         len = N (s);
+      buffer.insert (buffer.end (), data, data + len);
     }
-    
-    void append(const char* s) {
-        if (s && *s) {
-            int len = strlen(s);
-            buffer.insert(buffer.end(), s, s + len);
-        }
+  }
+
+  void append (const char* s) {
+    if (s && *s) {
+      int len= strlen (s);
+      buffer.insert (buffer.end (), s, s + len);
     }
-    
-    void append(char c) {
-        buffer.push_back(c);
+  }
+
+  void append (char c) { buffer.push_back (c); }
+
+  string to_string () {
+    if (buffer.empty ()) return string ("");
+    string result ((int) buffer.size ());
+    if (buffer.size () > 0) {
+      std::memcpy (result.begin (), buffer.data (), buffer.size ());
     }
-    
-    string to_string() {
-        if (buffer.empty()) return string("");
-        string result((int)buffer.size());
-        if (buffer.size() > 0) {
-            std::memcpy(result.begin(), buffer.data(), buffer.size());
-        }
-        return result;
-    }
+    return result;
+  }
 };
 
 static url_tree
@@ -765,173 +763,184 @@ is_ramdisc (url u) {
   return is_concat (u) && is_root (u[1], "ramdisc");
 }
 
-static void 
-as_string_impl(url u, int type, string_builder& sb) {
-    if (is_none(u)) {
-        sb.append("{}");
-        return;
+static void
+as_string_impl (url u, int type, string_builder& sb) {
+  if (is_none (u)) {
+    sb.append ("{}");
+    return;
+  }
+
+  if (is_atomic (u)) {
+    sb.append (u->t->label);
+    return;
+  }
+
+  if (is_concat (u)) {
+    int stype= type;
+    if (is_root (u[1]) &&
+        !(is_root (u[1], "default") || is_root (u[1], "file"))) {
+      stype= URL_STANDARD;
     }
 
-    if (is_atomic(u)) {
-        sb.append(u->t->label);
-        return;
+    string sep= (stype == URL_SYSTEM ? string (URL_CONCATER) : string ("/"));
+
+    if (!is_root (u[1], "default")) {
+      if ((!is_name (u[1])) && (!is_root (u[1]))) {
+        sb.append ("{");
+        as_string_impl (u[1], type, sb);
+        sb.append ("}");
+      }
+      else {
+        as_string_impl (u[1], type, sb);
+      }
     }
-    
-    if (is_concat(u)) {
-        int stype = type;
-        if (is_root(u[1]) &&
-            !(is_root(u[1], "default") || is_root(u[1], "file"))) {
-            stype = URL_STANDARD;
+
+    if (os_win () && ((is_root (u[1], "default") && type == URL_SYSTEM) ||
+                      is_root (u[1], "file"))) {
+
+      string_builder root_sb, remain_sb;
+      if (is_concat (u[2])) {
+        as_string_impl (u[2][1], type, root_sb);
+        as_string_impl (u[2][2], type, remain_sb);
+      }
+      else {
+        as_string_impl (u[2], type, root_sb);
+      }
+
+      string root  = root_sb.to_string ();
+      string remain= remain_sb.to_string ();
+
+      if (is_root (u[1], "default")) {
+        if (N (root) == 1) {
+          sb.append (root);
+          sb.append (":");
+          sb.append (sep);
+          sb.append (remain);
         }
-        
-        string sep = (stype == URL_SYSTEM ? string(URL_CONCATER) : string("/"));
-        
-        if (!is_root(u[1], "default")) {
-            if ((!is_name(u[1])) && (!is_root(u[1]))) {
-                sb.append("{");
-                as_string_impl(u[1], type, sb);
-                sb.append("}");
-            } else {
-                as_string_impl(u[1], type, sb);
-            }
+        else {
+          sb.append ("\\\\");
+          sb.append (root);
+          sb.append ("\\");
+          sb.append (remain);
         }
-        
-        if (os_win() && 
-            ((is_root(u[1], "default") && type == URL_SYSTEM) ||
-             is_root(u[1], "file"))) {
-            
-            string_builder root_sb, remain_sb;
-            if (is_concat(u[2])) {
-                as_string_impl(u[2][1], type, root_sb);
-                as_string_impl(u[2][2], type, remain_sb);
-            } else {
-                as_string_impl(u[2], type, root_sb);
-            }
-            
-            string root = root_sb.to_string();
-            string remain = remain_sb.to_string();
-            
-            if (is_root(u[1], "default")) {
-                if (N(root) == 1) {
-                    sb.append(root);
-                    sb.append(":");
-                    sb.append(sep);
-                    sb.append(remain);
-                } else {
-                    sb.append("\\\\");
-                    sb.append(root);
-                    sb.append("\\");
-                    sb.append(remain);
-                }
-            } else {
-                if (N(root) == 1) {
-                    sb.append("/");
-                    sb.append(root);
-                    sb.append(":");
-                    sb.append(sep);
-                    sb.append(remain);
-                } else {
-                    sb.append(root);
-                    sb.append("/");
-                    sb.append(remain);
-                }
-            }
-            return;
+      }
+      else {
+        if (N (root) == 1) {
+          sb.append ("/");
+          sb.append (root);
+          sb.append (":");
+          sb.append (sep);
+          sb.append (remain);
         }
-        
-        sb.append(sep);
-        
-        // Handle right side (u[2])
-        if ((!is_concat(u[2])) && (!is_atomic(u[2])) && (!is_wildcard(u[2], 1))) {
-            sb.append("{");
-            as_string_impl(u[2], stype, sb);
-            sb.append("}");
-        } else {
-            as_string_impl(u[2], stype, sb);
+        else {
+          sb.append (root);
+          sb.append ("/");
+          sb.append (remain);
         }
-        return;
+      }
+      return;
     }
-    
-    if (is_or(u)) {
-        // Handle left side
-        if (!is_name_in_path(u[1])) {
-            sb.append("{");
-            as_string_impl(u[1], type, sb);
-            sb.append("}");
-        } else {
-            as_string_impl(u[1], type, sb);
-        }
-        
-        if (os_win()) {
-            if (type == URL_STANDARD) {
-                sb.append(":");
-            } else {
-                sb.append(string(URL_SEPARATOR));
-            }
-        } else {
-            sb.append(string(URL_SEPARATOR));
-        }
-        
-        // Handle right side
-        if ((!is_or(u[2])) && (!is_name_in_path(u[2]))) {
-            sb.append("{");
-            as_string_impl(u[2], type, sb);
-            sb.append("}");
-        } else {
-            as_string_impl(u[2], type, sb);
-        }
-        return;
+
+    sb.append (sep);
+
+    // Handle right side (u[2])
+    if ((!is_concat (u[2])) && (!is_atomic (u[2])) &&
+        (!is_wildcard (u[2], 1))) {
+      sb.append ("{");
+      as_string_impl (u[2], stype, sb);
+      sb.append ("}");
     }
-    
-    // Handle special cases
-    if (os_win()) {
-        if (is_root(u, "default")) {
-            int stype = type;
-            if (is_root(u[1]) && (!is_root(u[1], "default"))) {
-                stype = URL_STANDARD;
-            }
-            if (stype != URL_SYSTEM) {
-                sb.append("/");
-            }
-            return;
-        }
-    } else {
-        if (is_root(u, "default")) {
-            sb.append("/");
-            return;
-        }
+    else {
+      as_string_impl (u[2], stype, sb);
     }
-    if (is_root(u, "blank")) {
-        sb.append("/");
-        return;
+    return;
+  }
+
+  if (is_or (u)) {
+    // Handle left side
+    if (!is_name_in_path (u[1])) {
+      sb.append ("{");
+      as_string_impl (u[1], type, sb);
+      sb.append ("}");
     }
-    if (is_root(u, "file")) {
-        sb.append(u[1]->t->label);
-        sb.append("://");
-        return;
+    else {
+      as_string_impl (u[1], type, sb);
     }
-    if (is_root(u)) {
-        sb.append(u[1]->t->label);
-        sb.append(":/");
-        return;
+
+    if (os_win ()) {
+      if (type == URL_STANDARD) {
+        sb.append (":");
+      }
+      else {
+        sb.append (string (URL_SEPARATOR));
+      }
     }
-    if (is_wildcard(u, 0)) {
-        sb.append("**");
-        return;
+    else {
+      sb.append (string (URL_SEPARATOR));
     }
-    if (is_wildcard(u, 1)) {
-        sb.append(u->t[1]->label);
-        return;
+
+    // Handle right side
+    if ((!is_or (u[2])) && (!is_name_in_path (u[2]))) {
+      sb.append ("{");
+      as_string_impl (u[2], type, sb);
+      sb.append ("}");
     }
-    TM_FAILED("bad url");
+    else {
+      as_string_impl (u[2], type, sb);
+    }
+    return;
+  }
+
+  // Handle special cases
+  if (os_win ()) {
+    if (is_root (u, "default")) {
+      int stype= type;
+      if (is_root (u[1]) && (!is_root (u[1], "default"))) {
+        stype= URL_STANDARD;
+      }
+      if (stype != URL_SYSTEM) {
+        sb.append ("/");
+      }
+      return;
+    }
+  }
+  else {
+    if (is_root (u, "default")) {
+      sb.append ("/");
+      return;
+    }
+  }
+  if (is_root (u, "blank")) {
+    sb.append ("/");
+    return;
+  }
+  if (is_root (u, "file")) {
+    sb.append (u[1]->t->label);
+    sb.append ("://");
+    return;
+  }
+  if (is_root (u)) {
+    sb.append (u[1]->t->label);
+    sb.append (":/");
+    return;
+  }
+  if (is_wildcard (u, 0)) {
+    sb.append ("**");
+    return;
+  }
+  if (is_wildcard (u, 1)) {
+    sb.append (u->t[1]->label);
+    return;
+  }
+  TM_FAILED ("bad url");
 }
 
-string 
-as_string(url u, int type) {
-    string_builder sb;
-    as_string_impl(u, type, sb);
-    return sb.to_string();
-} 
+string
+as_string (url u, int type) {
+  string_builder sb;
+  as_string_impl (u, type, sb);
+  return sb.to_string ();
+}
 
 tm_ostream&
 operator<< (tm_ostream& out, url u) {
