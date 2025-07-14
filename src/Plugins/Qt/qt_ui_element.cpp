@@ -1126,11 +1126,11 @@ qt_ui_element_rep::as_qwidget () {
     int           i;
     for (i= 0; i < N (tabs); i++) {
       if (is_nil (tabs[i])) break;
-      QImage*  img     = xpm_image (icons[i]);
+      QIcon    icon    = qt_load_icon (icons[i]);
       QWidget* prelabel= concrete (tabs[i])->as_qwidget ();
       QLabel*  label   = qobject_cast<QLabel*> (prelabel);
       QWidget* body    = concrete (bodies[i])->as_qwidget ();
-      tw->addTab (body, QIcon (as_pixmap (*img)), label ? label->text () : "");
+      tw->addTab (body, icon, label ? label->text () : "");
       delete prelabel;
     }
 
