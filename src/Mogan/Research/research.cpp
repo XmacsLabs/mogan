@@ -187,7 +187,7 @@ main (int argc, char** argv) {
 #if defined(OS_MACOS) && !defined(__arm64__)
   if (theme == "default") theme= "";
 #else
-  if (theme == "default") theme= "light";
+  if (theme == "default") theme= "liii";
 #endif
   if (theme == "light")
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-light.css";
@@ -195,6 +195,8 @@ main (int argc, char** argv) {
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-dark.css";
   else if (theme == "liii")
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/liii.css";
+  else if (theme == "native-light")
+    tm_style_sheet= "$TEXMACS_PATH/misc/themes/native-light.css";
   else if (theme != "") tm_style_sheet= theme;
 #if !defined(OS_MINGW) && !defined(OS_WIN)
   set_env ("LC_NUMERIC", "POSIX");

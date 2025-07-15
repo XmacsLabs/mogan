@@ -67,9 +67,9 @@
 
 (define-preference-names "gui theme"
   ("default" "Default")
+  ("liii" "Liii")
   ("light" "Bright")
   ("dark" "Dark")
-  ("liii" "Liii")
   ("native-light" "Native")
   ("" "Legacy"))
 
@@ -108,7 +108,7 @@
             "18em"))
     (item (text "User interface theme:")
       (enum (set-pretty-preference* "gui theme" answer)
-            '("Default" "Bright" "Dark" "Liii" "Native" "Legacy" "")
+            '("Default" "Liii" "Bright" "Dark" "Native" "Legacy" "")
             (get-pretty-preference "gui theme")
             "18em"))))
 

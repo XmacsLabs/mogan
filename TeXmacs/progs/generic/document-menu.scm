@@ -1093,7 +1093,8 @@
     (assuming (tree-is-buffer? t)
       ((balloon (icon "tm_focus_help.xpm") "Describe tag")
        (focus-help)))
-    (assuming (!= (get-preference "gui theme") "liii")
+    (assuming (and (!= (get-preference "gui theme") "liii")
+                   (!= (get-preference "gui theme") "default"))
       (=> (balloon (icon "tm_like.xpm") "Cite TeXmacs")
           (link cite-texmacs-menu)))))
 

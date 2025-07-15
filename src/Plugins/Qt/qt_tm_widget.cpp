@@ -258,7 +258,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   int toolbarHeight= 30 * retina_icons;
   mainToolBar->setFixedHeight (toolbarHeight + 8 * retina_icons);
   modeToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
-  if (tm_style_sheet == "liii") {
+  if (tm_style_sheet == "liii" || tm_style_sheet == "default") {
     focusToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
   }
   else {
@@ -269,7 +269,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   int toolbarHeight= 30;
   mainToolBar->setFixedHeight (toolbarHeight + 8);
   modeToolBar->setFixedHeight (toolbarHeight + 4);
-  if (tm_style_sheet == "liii") {
+  if (tm_style_sheet == "liii" || tm_style_sheet == "default") {
     focusToolBar->setFixedHeight (toolbarHeight + 4);
   }
   else {
@@ -283,7 +283,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     int toolbarHeight= 30;
     if (!use_unified_toolbar) mainToolBar->setFixedHeight (toolbarHeight + 8);
     modeToolBar->setFixedHeight (toolbarHeight + 4);
-    if (tm_style_sheet == "liii") {
+    if (tm_style_sheet == "liii" || tm_style_sheet == "default") {
       focusToolBar->setFixedHeight (toolbarHeight + 4);
     }
     else {
@@ -294,7 +294,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   int toolbarHeight= 30 * retina_icons;
   mainToolBar->setFixedHeight (toolbarHeight + 8);
   modeToolBar->setFixedHeight (toolbarHeight + 4);
-  if (tm_style_sheet == "liii") {
+  if (tm_style_sheet == "liii" || tm_style_sheet == "default") {
     focusToolBar->setFixedHeight (toolbarHeight + 4);
   }
   else {
@@ -317,7 +317,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
       h3= 32;
     }
 #endif
-    if (tm_style_sheet == "liii") {
+    if (tm_style_sheet == "liii" || tm_style_sheet == "default") {
       // 在liii主题下，所有工具栏使用相同的高度
       int h= (int) floor (36 * scale + 0.5);
       mainToolBar->setFixedHeight (h);

@@ -403,7 +403,8 @@ init_env_vars () {
   (void) get_env_path (
       "TEXMACS_PIXMAP_PATH",
       "$TEXMACS_HOME_PATH/misc/pixmaps" |
-          (get_user_preference ("gui theme", "default") == "liii"
+          ((get_user_preference ("gui theme", "default") == "liii" ||
+            get_user_preference ("gui theme", "default") == "default")
                ? url ("$TEXMACS_PATH/misc/pixmaps/liii/32x32/settings") |
                      url ("$TEXMACS_PATH/misc/pixmaps/liii/24x24/main") |
                      url ("$TEXMACS_PATH/misc/pixmaps/liii/20x20/mode") |
