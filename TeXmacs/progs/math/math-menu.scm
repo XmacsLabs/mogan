@@ -1269,8 +1269,6 @@
   (=> (balloon (icon "tm_bbb.xpm")
                "Insert a blackboard bold character")
       (tile 13 (link bbb-menu)))
-  (=> (balloon (icon "tm_op.xpm") "Insert a textual operator")
-      (link textual-operator-menu))
   (link math-format-icons)
   (if (== (get-preference "semantic editing") "on")
       (=> (balloon (icon "tm_math_syntax.xpm")
