@@ -179,6 +179,9 @@ qt_chooser_widget_rep::set_type (const string& _type) {
   else if (_type == "select") {
     mainNameFilter= to_qstring (translate ("TMU files"));
   }
+  else if (_type == "tmu/tm") {
+    mainNameFilter= to_qstring (translate ("TMU files"));
+  }
   else {
     if (DEBUG_STD)
       debug_widgets << "qt_chooser_widget: IGNORING unknown format " << _type
@@ -224,6 +227,11 @@ qt_chooser_widget_rep::set_type (const string& _type) {
     nameFilters << to_qstring (translate ("Web files") *
                                " (*.html *.xhtml *.htm)");
   }
+  else if (_type == "tmu/tm") {
+    mainNameFilter+= " (*.tmu)";
+    nameFilters << mainNameFilter;
+    nameFilters << to_qstring (translate ("TM files") * " (*.tm)");
+  }
   else {
     mainNameFilter+= " (";
     object        ret     = call ("format-get-suffixes*", _type);
@@ -266,7 +274,6 @@ qt_chooser_widget_rep::perform_dialog () {
     string text= prompt;
     if (ends (text, ":")) text= text (0, N (text) - 1);
     if (ends (text, " as")) text= text (0, N (text) - 3);
-    dialog->setDefaultSuffix (defaultSuffix);
     dialog->setAcceptMode (QFileDialog::AcceptSave);
     dialog->setLabelText (QFileDialog::Accept, to_qstring (translate (text)));
   }
@@ -311,6 +318,13 @@ qt_chooser_widget_rep::perform_dialog () {
   QStringList fileNames;
   file= "#f";
   if (dialog->exec ()) {
+    QString selectedFilter= dialog->selectedNameFilter ();
+    if (selectedFilter.contains ("TMU files")) {
+      defaultSuffix= "tmu";
+    }
+    else if (selectedFilter.contains ("TM files")) {
+      defaultSuffix= "tm";
+    }
     fileNames= dialog->selectedFiles ();
     if (fileNames.count () > 0) {
       QString imqstring= fileNames.first ();
@@ -321,6 +335,15 @@ qt_chooser_widget_rep::perform_dialog () {
           imqstring.indexOf (QLatin1Char ('.'),
                              imqstring.lastIndexOf (QLatin1Char ('/'))) == -1) {
         imqstring= imqstring + QLatin1Char ('.') + defaultSuffix;
+      }
+      if (!defaultSuffix.isEmpty () &&
+          (defaultSuffix == "tm" or defaultSuffix == "tmu") &&
+          imqstring.contains (QLatin1Char ('/')) &&
+          !imqstring.endsWith (QLatin1Char ('/')) &&
+          imqstring.indexOf (QLatin1Char ('.'),
+                             imqstring.lastIndexOf (QLatin1Char ('/'))) != -1) {
+        int lastDot= imqstring.lastIndexOf (QLatin1Char ('.'));
+        imqstring= imqstring.left (lastDot) + QLatin1Char ('.') + defaultSuffix;
       }
       string imname= from_qstring_utf8 (imqstring);
       file         = "(system->url " * scm_quote (imname) * ")";
