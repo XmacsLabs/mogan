@@ -171,20 +171,31 @@ fz_image*
 mupdf_load_image (url u) {
   fz_image* im = NULL;
   string    suf= suffix (u);
+  c_string  path (concretize (u));
+  // Set the zoom to 200% in MuPDF render(144 DPI) when convert vector graphics
+  // into pixmap. Test ok in MacOS, with 2x HiDPI enabled(4K screen)
+  fz_matrix ctm= fz_scale (2.0, 2.0);
   if (suf == "svg") {
-    // FIXME: implement!
-#if 0
-      QSvgRenderer renderer (utf8_to_qstring (concretize (u)));
-      pm= new QImage (w, h, QImage::Format_ARGB32);
-      pm->fill (Qt::transparent);
-      QPainter painter (pm);
-      renderer.render (&painter);
-#endif
-  }
-  else if ((suf == "jpg") || (suf == "png")) {
-    // FIXME: add more supported formats
-    c_string path (concretize (u));
-    im= fz_new_image_from_file (mupdf_context (), path);
+    fz_buffer*  buffer = fz_read_file (mupdf_context (), path);
+    fz_xml_doc* xml_doc= NULL;
+    fz_xml*     xml    = NULL;
+    fz_image*   tmp_im = NULL;
+    fz_pixmap*  tmp_pix= NULL;
+    fz_try (mupdf_context ()) {
+      xml_doc= fz_parse_xml (mupdf_context (), buffer, 0);
+      xml    = fz_xml_find (xml_doc, "svg");
+      tmp_im = fz_new_image_from_svg_xml (mupdf_context (), xml_doc, xml, NULL,
+                                          NULL);
+      tmp_pix= fz_get_pixmap_from_image (mupdf_context (), tmp_im, NULL, &ctm,
+                                         NULL, NULL);
+      im     = fz_new_image_from_pixmap (mupdf_context (), tmp_pix, NULL);
+    }
+    fz_catch (mupdf_context ()) { fz_report_error (mupdf_context ()); }
+    fz_drop_xml (mupdf_context (), xml);
+    fz_drop_xml (mupdf_context (), xml_doc);
+    fz_drop_buffer (mupdf_context (), buffer);
+    fz_drop_image (mupdf_context (), tmp_im);
+    fz_drop_pixmap (mupdf_context (), tmp_pix);
   }
   else if (suf == "xpm") {
     // try to load higher definition png equivalent if available
@@ -204,6 +215,32 @@ mupdf_load_image (url u) {
     picture    xp = as_mupdf_picture (load_xpm (u));
     fz_pixmap* pix= ((mupdf_picture_rep*) xp->get_handle ())->pix;
     im            = fz_new_image_from_pixmap (mupdf_context (), pix, NULL);
+  }
+  else if (suf == "pdf") {
+    pdf_document* doc = NULL;
+    pdf_page*     page= NULL;
+    fz_pixmap*    pix = NULL;
+    fz_try (mupdf_context ()) {
+      doc           = pdf_open_document (mupdf_context (), path);
+      int page_count= pdf_count_pages (mupdf_context (), doc);
+      if (page_count > 0) {
+        page= pdf_load_page (mupdf_context (), doc, 0);
+        pix = pdf_new_pixmap_from_page_with_usage (
+            mupdf_context (), page, ctm, fz_device_rgb (mupdf_context ()), 0,
+            "View", FZ_TRIM_BOX);
+        im= fz_new_image_from_pixmap (mupdf_context (), pix, NULL);
+      }
+    }
+    fz_catch (mupdf_context ()) { fz_report_error (mupdf_context ()); }
+    fz_drop_pixmap (mupdf_context (), pix);
+    pdf_drop_document (mupdf_context (), doc);
+  }
+  else {
+    // Othre format.
+    fz_try (mupdf_context ()) {
+      im= fz_new_image_from_file (mupdf_context (), path);
+    }
+    fz_catch (mupdf_context ()) { fz_report_error (mupdf_context ()); }
   }
   return im;
 }

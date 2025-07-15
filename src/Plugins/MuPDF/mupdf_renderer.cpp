@@ -15,7 +15,6 @@
 #include "font.hpp"
 #include "frame.hpp"
 #include "image_files.hpp"
-#include "scheme.hpp"
 
 #include "Freetype/free_type.hpp"
 #include "Freetype/tt_file.hpp"
@@ -32,6 +31,9 @@ mupdf_context () {
   static fz_context* ctx= NULL;
   if (!ctx) {
     ctx= fz_new_context (NULL, NULL, FZ_STORE_UNLIMITED);
+    if (DEBUG_STD) {
+      debug_std << "Use MuPDF render\n";
+    }
   }
   return ctx;
 }
@@ -855,9 +857,16 @@ mupdf_renderer_rep::draw_scalable (scalable im, SI x, SI y, int alpha) {
     mupdf_image im2;
     if (image_pool->contains (lookup)) im2= image_pool[lookup];
     else {
-      // FIXME: handle the possibility that the image is not found
       fz_image* fzim= mupdf_load_image (u);
-      im2           = mupdf_image (fzim);
+      if (fzim == NULL) {
+        // attempt to convert to png
+        url temp= url_temp (".png");
+        image_to_png (u, temp, w, h);
+        c_string path (as_string (temp));
+        fzim= fz_new_image_from_file (mupdf_context (), path);
+        remove (temp);
+      }
+      im2= mupdf_image (fzim);
       fz_drop_image (mupdf_context (), fzim);
       image_pool (lookup)= im2;
     }
@@ -956,7 +965,8 @@ load_pdf_font (string fontname) {
     {
       // debug_convert << "fz_new_font_from_file "  << u  << LF;
       c_string path (concretize (u));
-      fz_font* font= fz_new_font_from_file (mupdf_context (), NULL, path, 0, 0);
+      fz_font* font=
+          fz_new_font_from_file (mupdf_context (), NULL, path, face_index, 0);
       if (font) {
         fontdesc      = pdf_new_font_desc (mupdf_context ());
         fontdesc->font= font;
