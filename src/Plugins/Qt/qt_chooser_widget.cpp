@@ -177,7 +177,7 @@ qt_chooser_widget_rep::set_type (const string& _type) {
     mainNameFilter= to_qstring (translate ("Image file"));
   }
   else if (_type == "select") {
-    mainNameFilter= to_qstring (translate ("TMU files"));
+    mainNameFilter= to_qstring (translate ("Mogan files"));
   }
   else if (_type == "tmu/tm") {
     mainNameFilter= to_qstring (translate ("TMU files"));
