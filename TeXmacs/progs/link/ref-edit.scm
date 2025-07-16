@@ -442,7 +442,7 @@
     (with (x1 y1 x2 y2) (tree-bounding-rectangle ref)
       (and-let* ((id (and (tree-atomic? body*) (tree->string body*)))
                  (tip (and id (ref-preview id))))
-        (show-tooltip id ref tip "auto" "auto" "default" 0.6)))))
+        (show-tooltip id ref tip "auto" "auto" "default" 1.4)))))
 
 (tm-define (keyboard-press key time)
   (with before? (in-inactive-reference?)

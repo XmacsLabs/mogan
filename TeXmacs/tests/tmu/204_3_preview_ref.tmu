@@ -1,0 +1,25 @@
+<TMU|<tuple|1.1.0|2025.0.11>>
+
+<style|<tuple|generic|number-europe|preview-ref>>
+
+<\body>
+  <\theorem>
+    <label|thm:real-num-uncountable>The set of real number <math|\<bbb-R\>> is uncountable.
+  </theorem>
+
+  By Theorem<nbsp><reference|thm:real-num-uncountable>.
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|lem|<tuple|1|1>>
+    <associate|thm:real-num-uncountable|<tuple|1|?>>
+  </collection>
+</references>
