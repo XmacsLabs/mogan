@@ -337,13 +337,15 @@ qt_chooser_widget_rep::perform_dialog () {
         imqstring= imqstring + QLatin1Char ('.') + defaultSuffix;
       }
       if (!defaultSuffix.isEmpty () &&
-          (defaultSuffix == "tm" or defaultSuffix == "tmu") &&
+          (defaultSuffix == "tm" || defaultSuffix == "tmu") &&
           imqstring.contains (QLatin1Char ('/')) &&
           !imqstring.endsWith (QLatin1Char ('/')) &&
           imqstring.indexOf (QLatin1Char ('.'),
                              imqstring.lastIndexOf (QLatin1Char ('/'))) != -1) {
-        int lastDot= imqstring.lastIndexOf (QLatin1Char ('.'));
-        imqstring= imqstring.left (lastDot) + QLatin1Char ('.') + defaultSuffix;
+        QString rightSuffix= QLatin1Char ('.') + defaultSuffix;
+        if (!imqstring.endsWith (rightSuffix)) {
+          imqstring= imqstring + rightSuffix;
+        }
       }
       string imname= from_qstring_utf8 (imqstring);
       file         = "(system->url " * scm_quote (imname) * ")";
