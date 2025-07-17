@@ -660,11 +660,28 @@ TeXmacs_main (int argc, char** argv) {
       else if ((s == "-c") || (s == "-convert")) {
         i+= 2;
         if (i < argc) {
-          url in ("$PWD", argv[i - 1]);
-          url out ("$PWD", argv[i]);
-          my_init_cmds= my_init_cmds * " " * "(load-buffer " *
-                        scm_quote (as_string (in)) * " :strict) " *
-                        "(export-buffer " * scm_quote (as_string (out)) * ")";
+          url    in ("$PWD", argv[i - 1]);
+          url    out ("$PWD", argv[i]);
+          string in_suffix = suffix (in);
+          string out_suffix= suffix (out);
+
+          // Special handling for .tex to .tmu conversion
+          if (in_suffix == "tex" && out_suffix == "tmu") {
+            my_init_cmds= my_init_cmds * " " *
+                          "(let* ((latex-content (string-load " *
+                          scm_quote (as_string (in)) * "))" *
+                          "       (texmacs-tree (cpp-latex-document->texmacs "
+                          "latex-content #f))" *
+                          "       (tmu-content (serialize-tmu texmacs-tree)))" *
+                          "  (string-save tmu-content " *
+                          scm_quote (as_string (out)) * "))";
+          }
+          else {
+            // Default conversion method for other formats
+            my_init_cmds= my_init_cmds * " " * "(load-buffer " *
+                          scm_quote (as_string (in)) * " :strict) " *
+                          "(export-buffer " * scm_quote (as_string (out)) * ")";
+          }
         }
       }
       else if ((s == "-x") || (s == "-execute")) {
