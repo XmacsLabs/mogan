@@ -76,6 +76,7 @@ protected:
   void cachePosition (struct cursor cu, double magf, int scroll_x, int scroll_y,
                       int canvas_x);
   void getCachedPosition (int& x, int& y);
+  void resizeHeight ();
   string getTextFromItem (int idx);
   string getTextFromSelectedItem ();
 

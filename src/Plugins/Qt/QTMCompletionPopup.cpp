@@ -34,18 +34,25 @@ QTMCompletionPopup::QTMCompletionPopup (QWidget*              parent,
 }
 
 void
+QTMCompletionPopup::resizeHeight () {
+  int height       = 0;
+  int completions_N= count ();
+  for (int i= 0; i < completions_N; i++) {
+    height+= sizeHintForRow (i);
+  }
+  QSize size (200, qMin (100, height));
+  resize (size);
+}
+
+void
 QTMCompletionPopup::showCompletions (array<string>& completions, int x, int y) {
   clear ();
   int completions_N= N (completions);
-  for (int i= 0; i < completions_N; ++i) {
-    addItem (QString::fromUtf8 (as_charp (completions[i])));
-  }
-  if (N (completions) > 0) setCurrentRow (0);
-
-  QSize  size (200, qMin (100, 20 + N (completions) * 22));
+  addItems (to_qstringlist (completions));
+  if (completions_N > 0) setCurrentRow (0);
   QPoint topLeft (x, y);
   move (topLeft);
-  resize (size);
+  resizeHeight ();
   raise ();
   show ();
 }
@@ -150,6 +157,7 @@ QTMCompletionPopup::updatePosition () {
   int pos_x, pos_y;
   getCachedPosition (pos_x, pos_y);
   move (pos_x, pos_y);
+  resizeHeight ();
 }
 
 void
