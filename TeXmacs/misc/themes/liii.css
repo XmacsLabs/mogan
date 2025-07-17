@@ -456,3 +456,13 @@ QToolTip {
   padding: 4px;
   border-radius: 2px;
 }
+
+/****************************************************************************
+* 补全列表框样式
+****************************************************************************/
+QListWidget[objectName="completion_popup"]::item:hover,
+QListWidget.completion_popup::item:hover {
+  background-color: #818181;
+  color: #ffffff;
+  border-radius: 2px;
+}
