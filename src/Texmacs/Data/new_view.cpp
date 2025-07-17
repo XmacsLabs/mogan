@@ -350,8 +350,12 @@ get_passive_view_of_tabpage (url name) {
   array<url> vs  = buffer_to_views (name);
   int        vs_N= N (vs);
   for (int i= 0; i < vs_N; i++) {
-    url win= view_to_window_of_tabpage (vs[i]);
-    if (is_none (win)) return vs[i];
+    url win        = view_to_window (vs[i]);
+    url win_tabpage= view_to_window_of_tabpage (vs[i]);
+    if (is_none (win_tabpage)) return vs[i];
+    else if (is_none (win) && win_tabpage == get_current_window ()) {
+      return vs[i];
+    }
   }
   return get_new_view (buf->buf->name);
 }
