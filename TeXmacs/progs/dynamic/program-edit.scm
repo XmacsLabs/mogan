@@ -654,6 +654,11 @@
   (clipboard-cut "nowhere")
   (clipboard-clear "nowhere"))
 
+(tm-define (kbd-remove t forwards?)
+  (:mode complete-mode?)
+  (remove-text forwards?)
+  (kbd-variant (focus-tree) #t))
+
 (tm-define (kbd-variant t forwards?)
   (:require (and (prog-field-context? t) (program-supports-completions?)))
   (let* ((lan (get-env "prog-language"))

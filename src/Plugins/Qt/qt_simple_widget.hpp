@@ -14,10 +14,14 @@
 
 #include "basic_renderer.hpp"
 #include "hashset.hpp"
+#include "typesetter.hpp"
 
 #include "QTMScrollView.hpp"
 #include "QTMWidget.hpp"
 #include "qt_widget.hpp"
+
+// Forward declaration
+class QTMCompletionPopup;
 
 /*! A widget containing a TeXmacs canvas.
 
@@ -85,6 +89,20 @@ public:
   QTMWidget*     canvas () { return qobject_cast<QTMWidget*> (qwid); }
   QTMScrollView* scrollarea () { return qobject_cast<QTMScrollView*> (qwid); }
 
+  ////////////////////// Completion popup support
+  void show_completion_popup (array<string>& completions, SI x, SI y);
+  void show_completion_popup (path tp, array<string>& completions,
+                              struct cursor cu, double magf, SI scroll_x,
+                              SI scroll_y, SI canvas_x);
+  void hide_completion_popup ();
+  bool completion_popup_visible ();
+  void scroll_completion_popup_by (SI x, SI y);
+  void update_completion_popup_position (tree& et, box& eb, path tp,
+                                         double magf, SI scroll_x, SI scroll_y,
+                                         SI canvas_x, SI index);
+  void completion_popup_next (bool next);
+  void ensure_completion_popup ();
+
   ////////////////////// backing store management
 
   static void repaint_all (); // called by qt_gui_rep::update()
@@ -92,6 +110,7 @@ public:
 protected:
   static hashset<pointer> all_widgets;
   rectangles              invalid_regions;
+  QTMCompletionPopup*     completionPopUp;
 #ifdef USE_MUPDF_RENDERER
   double  bs_zoomf;
   picture backing_store;

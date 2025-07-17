@@ -69,7 +69,12 @@ edit_interface_rep::set_input_mode (int mode) {
 
 void
 edit_interface_rep::set_input_normal () {
+  int prev_input_mode= input_mode;
   set_input_mode (INPUT_NORMAL);
+
+  if (prev_input_mode == INPUT_COMPLETE) {
+    hide_completion_popup ();
+  }
 }
 
 bool
@@ -215,8 +220,8 @@ handle_speech (string s) {
   last_uttering= texmacs_time ();
 }
 
-static bool
-is_combo_shortcuts (string key) {
+bool
+edit_interface_rep::is_combo_shortcuts (string key) {
   return starts (key, "A-") || starts (key, "S-") || starts (key, "C-") ||
          starts (key, "M-");
 }
@@ -441,6 +446,10 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
       call ("insert", "<#2014><#2014>");
     }
     else if (starts (gkey, "pre-edit:")) {
+      if (get_input_mode () == INPUT_COMPLETE) {
+        // pre-edit之前确保不在补全模式下，以防意外触发补全
+        set_input_normal ();
+      }
       call ("delayed-keyboard-press", object (gkey), object ((double) t));
     }
     else {

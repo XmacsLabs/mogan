@@ -80,6 +80,7 @@ protected:
   array<string>     completions;
   string            completion_prefix;
   int               completion_pos;
+  string            completion_style;
   renderer          shadow;
   SI                vx1, vy1, vx2, vy2;
   rectangles        stored_rects;
@@ -178,6 +179,9 @@ public:
   void   complete_message ();
   void   complete_start (string prefix, array<string> compls);
   bool   complete_keypress (string key);
+  void   complete_variant (string old_completion, string new_completion);
+  bool   complete_inline (string key);
+  bool   complete_popup (string key);
   string session_complete_command (tree t);
   void   custom_complete (tree t);
 
@@ -227,6 +231,9 @@ public:
   void handle_set_zoom_factor (double zoomf);
   void handle_clear (renderer win, SI x1, SI y1, SI x2, SI y2);
   void handle_repaint (renderer win, SI x1, SI y1, SI x2, SI y2);
+
+  /* exported static methods */
+  static bool is_combo_shortcuts (string key);
 
   friend class interactive_command_rep;
   friend class tm_window_rep;

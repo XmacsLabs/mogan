@@ -110,6 +110,11 @@
       (enum (set-pretty-preference* "gui theme" answer)
             '("Default" "Liii" "Bright" "Dark" "Native" "Legacy" "")
             (get-pretty-preference "gui theme")
+            "18em"))
+    (item (text "Completion style:")
+      (enum (set-pretty-preference "completion style" answer)
+            '("Inline" "Popup")
+            (get-pretty-preference "completion style")
             "18em"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

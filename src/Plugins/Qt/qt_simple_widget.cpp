@@ -16,7 +16,9 @@
 #include "qt_utilities.hpp"
 #include "qt_window_widget.hpp"
 
+#include "QTMCompletionPopup.hpp"
 #include "QTMMenuHelper.hpp"
+#include "QTMStyle.hpp"
 #include "QTMWidget.hpp"
 #include <QLayout>
 #include <QPixmap>
@@ -25,7 +27,7 @@
 #endif
 
 qt_simple_widget_rep::qt_simple_widget_rep ()
-    : qt_widget_rep (simple_widget), sequencer (0) {
+    : qt_widget_rep (simple_widget), sequencer (0), completionPopUp (nullptr) {
 #ifndef USE_MUPDF_RENDERER
   backingPixmap= headless_mode ? NULL : new QPixmap ();
 #endif
@@ -36,6 +38,7 @@ qt_simple_widget_rep::~qt_simple_widget_rep () {
 #ifndef USE_MUPDF_RENDERER
   if (backingPixmap != NULL) delete backingPixmap;
 #endif
+  if (completionPopUp != nullptr) delete completionPopUp;
 }
 
 QWidget*
@@ -609,5 +612,84 @@ qt_simple_widget_rep::repaint_all () {
     qt_simple_widget_rep* w= static_cast<qt_simple_widget_rep*> (i->next ());
     if (w->canvas () && w->canvas ()->isVisible ())
       w->repaint_invalid_regions ();
+  }
+}
+
+/******************************************************************************
+ * Completion popup support
+ ******************************************************************************/
+
+void
+qt_simple_widget_rep::ensure_completion_popup () {
+  // TODO: do we really need this ensuring every time?
+  //       or should we just create it at the beginning?
+  if (!completionPopUp && canvas ()) {
+    completionPopUp= new QTMCompletionPopup (canvas (), this);
+    if (tm_style_sheet == "") {
+      completionPopUp->setStyle (qtmstyle ());
+    }
+  }
+}
+
+void
+qt_simple_widget_rep::show_completion_popup (path           tp,
+                                             array<string>& completions,
+                                             struct cursor cu, double magf,
+                                             SI scroll_x, SI scroll_y,
+                                             SI canvas_x) {
+  ensure_completion_popup ();
+  if (completionPopUp) {
+    completionPopUp->showCompletions (tp, completions, cu, magf, scroll_x,
+                                      scroll_y, canvas_x);
+  }
+}
+
+void
+qt_simple_widget_rep::hide_completion_popup () {
+  if (completionPopUp) {
+    completionPopUp->hide ();
+    // 直接回收
+    delete completionPopUp;
+    completionPopUp= nullptr;
+  }
+}
+
+bool
+qt_simple_widget_rep::completion_popup_visible () {
+  return completionPopUp && completionPopUp->isVisible ();
+}
+
+void
+qt_simple_widget_rep::scroll_completion_popup_by (SI x, SI y) {
+  if (completionPopUp) {
+    QPoint qp (x, y);
+    coord2 p= from_qpoint (qp);
+    completionPopUp->scrollBy (p.x1, p.x2);
+    completionPopUp->updatePosition ();
+  }
+}
+
+void
+qt_simple_widget_rep::update_completion_popup_position (tree& et, box& eb,
+                                                        path tp, double magf,
+                                                        SI scroll_x,
+                                                        SI scroll_y,
+                                                        SI canvas_x, SI index) {
+  if (completionPopUp) {
+    completionPopUp->updateCache (et, eb, tp, magf, scroll_x, scroll_y,
+                                  canvas_x, index);
+    completionPopUp->updatePosition ();
+  }
+}
+
+void
+qt_simple_widget_rep::completion_popup_next (bool next) {
+  if (completionPopUp) {
+    if (next) {
+      completionPopUp->selectNextItem ();
+    }
+    else {
+      completionPopUp->selectPreviousItem ();
+    }
   }
 }

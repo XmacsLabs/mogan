@@ -35,6 +35,13 @@
       (cpp-insert t)
       (cpp-insert-go-to t (path-in t opt-l))))
 
+(tm-define (insert t . opt-l)
+  (:mode complete-mode?)
+  (if (null? opt-l)
+      (cpp-insert t)
+      (cpp-insert-go-to t (path-in t opt-l)))
+  (kbd-variant (focus-tree) #t))
+
 (tm-define (u8-insert t)
   (insert (utf8->herk t)))
 

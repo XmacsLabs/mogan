@@ -17,6 +17,7 @@
 #include "iterator.hpp"
 #include "merge_sort.hpp"
 #include "observers.hpp"
+#include "preferences.hpp"
 #include "tree_observer.hpp"
 
 #include <moebius/data/scheme.hpp>
@@ -55,8 +56,12 @@ find_completions (drd_info drd, tree t, hashset<string>& h, string prefix= "") {
 }
 
 static array<string>
-find_completions (drd_info drd, tree t, string prefix= "") {
+find_completions (drd_info drd, tree t, string prefix= "",
+                  string completion_style= "Inline") {
   hashset<string> h;
+  if (completion_style == string ("Popup")) {
+    h->insert (string ("")); // 在补全结果中插入一个空值以保留前缀自身
+  }
   find_completions (drd, t, h, prefix);
   return as_completions (h);
 }
@@ -67,33 +72,45 @@ find_completions (drd_info drd, tree t, string prefix= "") {
 
 bool
 edit_interface_rep::complete_try () {
-  tree st= subtree (et, path_up (tp));
+  completion_style= get_preference ("completion style");
+  tree st         = subtree (et, path_up (tp));
   if (is_compound (st)) return false;
-  string        s  = st->label, ss;
-  int           end= last_item (tp);
+  string s           = st->label, ss;
+  int    s_N         = N (s);
+  int    end         = last_item (tp);
+  int    min_compls_N= 1;
+  if (completion_style == string ("Popup")) {
+    min_compls_N= 2; // 至少需要2个补全结果(前缀自身和一个补全结果)
+  }
   array<string> a;
   if (inside (LABEL) || inside (REFERENCE) || inside (PAGEREF) ||
       inside (as_tree_label ("eqref")) ||
       inside (as_tree_label ("smart-ref"))) {
-    if (end != N (s)) return false;
+    if (end != s_N) return false;
     ss    = copy (s);
     tree t= get_labels ();
     int  i, n= N (t);
     for (i= 0; i < n; i++)
       if (is_atomic (t[i]) && starts (t[i]->label, s))
-        a << string (t[i]->label (N (s), N (t[i]->label)));
+        a << string (t[i]->label (s_N, N (t[i]->label)));
   }
   else {
     if ((end == 0) || (!is_iso_alpha (s[end - 1])) ||
-        ((end != N (s)) && is_iso_alpha (s[end])))
+        ((end != s_N) && is_iso_alpha (s[end]))) {
+      set_input_normal ();
       return false;
+    }
     int start= end - 1;
     while ((start > 0) && is_iso_alpha (s[start - 1]))
       start--;
     ss= s (start, end);
-    a = find_completions (drd, et, ss);
+    a = find_completions (drd, et, ss, completion_style);
   }
-  if (N (a) == 0) return false;
+  int a_N= N (a);
+  if (a_N < min_compls_N) {
+    set_input_normal ();
+    return false;
+  }
   complete_start (ss, a);
   return true;
 }
@@ -121,26 +138,100 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
   if ((end < N (prefix)) || (s (end - N (prefix), end) != prefix)) return;
 
   // perform first completion and switch to completion mode if necessary
-  if (N (compls) == 1) {
-    string s= compls[0];
-    if (ends (s, "()")) // temporary fix for Pari
-      insert_tree (s, path (N (s) - 1));
-    else insert_tree (s);
-    completions= array<string> ();
-  }
   else {
     completion_prefix= prefix;
     completions      = close_completions (compls);
     completion_pos   = 0;
+
+    int           completions_N= N (completions);
+    array<string> full_completions;
+    for (int i= 0; i < completions_N; ++i) {
+      string c= completions[i];
+      full_completions << (completion_prefix * c);
+    }
+    path tp1     = tp;
+    int  prefix_N= N (completion_prefix);
+    for (int i= 0; i < prefix_N; ++i) {
+      tp1= previous_valid (et, tp1); // 向前移动到前缀的起始位置
+    }
+    cursor cu= eb->find_check_cursor (tp1);
+    if (completion_style == string ("Popup")) {
+      show_completion_popup (tp, full_completions, cu, magf, get_scroll_x (),
+                             get_scroll_y (), get_canvas_x ());
+    }
+
     insert_tree (completions[0]);
+
     complete_message ();
-    beep ();
     set_input_mode (INPUT_COMPLETE);
   }
 }
 
 bool
 edit_interface_rep::complete_keypress (string key) {
+  completion_style= get_preference ("completion style");
+  if (completion_style == string ("Popup")) {
+    return complete_popup (key);
+  }
+  else {
+    return complete_inline (key);
+  }
+}
+
+bool
+edit_interface_rep::complete_popup (string key) {
+  // Popup 补全的键盘响应流程
+  int    completions_N    = N (completions);
+  string old_completion   = completions[completion_pos];
+  string full_completion  = completion_prefix * old_completion;
+  int    full_completion_N= N (full_completion);
+  set_message ("", "");
+  if (key == "space") key= " ";
+
+  if (key == "enter" || key == "return") {
+    set_input_normal ();
+    return true;
+  }
+  else if (key == "escape" || key == " ") {
+    set_input_normal ();
+    return false;
+  }
+  else if ((key != "tab") && (key != "S-tab") && (key != "up") &&
+           (key != "down")) {
+    int     status;
+    command _;  // unused
+    string  __; // unused
+    sv->get_keycomb (key, status, _, __, __);
+    if (key != "backspace" && (status & 1) == 1) {
+      set_input_normal ();
+    }
+    return false;
+  }
+  tree   st= subtree (et, path_up (tp));
+  string s = st->label;
+  if (is_compound (st)) {
+    set_input_normal ();
+    return false;
+  }
+  int end= last_item (tp);
+
+  if (key == "tab" || key == "down") {
+    completion_pos++;
+    completion_popup_next (true);
+  }
+  else if (key == "S-tab" || key == "up") {
+    completion_pos--;
+    completion_popup_next (false);
+  }
+  if (completion_pos < 0) completion_pos= completions_N - 1;
+  if (completion_pos >= completions_N) completion_pos= 0;
+  complete_message ();
+  return true;
+}
+
+bool
+edit_interface_rep::complete_inline (string key) {
+  // Inline 补全的键盘响应流程
   set_message ("", "");
   if (key == "space") key= " ";
   if ((key != "tab") && (key != "S-tab")) {
@@ -152,24 +243,44 @@ edit_interface_rep::complete_keypress (string key) {
     set_input_normal ();
     return false;
   }
-  string s    = st->label;
-  int    end  = last_item (tp);
-  string old_s= completions[completion_pos];
-  string test = completion_prefix * old_s;
-  if ((end < N (test)) || (s (end - N (test), end) != test)) {
+  string s            = st->label;
+  int    end          = last_item (tp);
+  string old_s        = completions[completion_pos];
+  string test         = completion_prefix * old_s;
+  int    test_N       = N (test);
+  int    completions_N= N (completions);
+  if ((end < test_N) || (s (end - test_N, end) != test)) {
     set_input_normal ();
     return false;
   }
 
   if (key == "tab") completion_pos++;
   else completion_pos--;
-  if (completion_pos < 0) completion_pos= N (completions) - 1;
-  if (completion_pos >= N (completions)) completion_pos= 0;
-  string new_s= completions[completion_pos];
-  remove (path_up (tp) * (end - N (old_s)), N (old_s));
-  insert (path_up (tp) * (end - N (old_s)), new_s);
+  if (completion_pos < 0) completion_pos= completions_N - 1;
+  if (completion_pos >= completions_N) completion_pos= 0;
+  string new_s  = completions[completion_pos];
+  int    old_s_N= N (old_s);
+  remove (path_up (tp) * (end - old_s_N), old_s_N);
+  insert (path_up (tp) * (end - old_s_N), new_s);
   complete_message ();
   return true;
+}
+
+void
+edit_interface_rep::complete_variant (string old_completion,
+                                      string new_completion) {
+  // QTMCompletionPopup::onCurrentItemChanged 会调用此函数当补全项改变时进行编辑
+  int completion_prefix_N= N (completion_prefix);
+  old_completion= old_completion (completion_prefix_N, N (old_completion));
+  new_completion= new_completion (completion_prefix_N, N (new_completion));
+  int end       = last_item (tp);
+  int old_completion_N= N (old_completion);
+  remove (path_up (tp) * (end - old_completion_N), old_completion_N);
+  insert (path_up (tp) * (end - old_completion_N), new_completion);
+
+  update_completion_popup_position (et, eb, tp, magf, get_scroll_x (),
+                                    get_scroll_y (), get_canvas_x (),
+                                    completion_pos);
 }
 
 /******************************************************************************
@@ -221,11 +332,17 @@ edit_interface_rep::session_complete_command (tree tt) {
 
 void
 edit_interface_rep::custom_complete (tree r) {
+  completion_style= get_preference ("completion style");
   if (!is_tuple (r)) return;
-  int           i, n= N (r);
-  string        prefix;
-  array<string> compls;
-  for (i= 0; i < n; i++)
+  int             i, r_N= N (r);
+  int             min_compls_N= 1;
+  string          prefix;
+  hashset<string> compls;
+  if (completion_style == string ("Popup")) {
+    min_compls_N= 2; // 至少需要2个补全结果(前缀自身和一个补全结果)
+    compls << string (""); // 在补全结果中插入一个空值以保留前缀自身
+  }
+  for (i= 0; i < r_N; i++)
     if (is_atomic (r[i])) {
       string l= r[i]->label;
       if (is_quoted (l)) l= scm_unquote (l);
@@ -233,9 +350,11 @@ edit_interface_rep::custom_complete (tree r) {
       else compls << l;
     }
   // cout << prefix << ", " << compls << LF;
-
-  if ((prefix == "") || (N (compls) == 0)) return;
-  complete_start (prefix, compls);
+  if ((prefix == "") || (N (compls) < min_compls_N)) {
+    set_input_normal ();
+    return;
+  }
+  complete_start (prefix, as_completions (compls));
 }
 
 /******************************************************************************

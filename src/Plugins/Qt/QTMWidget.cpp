@@ -101,6 +101,9 @@ QTMWidget::scrollContentsBy (int dx, int dy) {
   the_gui->force_update ();
   // we force an update of the internal state to be in sync with the moving
   // scrollbars
+
+  // 确保补全框也滚动到正确的位置
+  tm_widget ()->scroll_completion_popup_by (dx, dy);
 }
 
 void
