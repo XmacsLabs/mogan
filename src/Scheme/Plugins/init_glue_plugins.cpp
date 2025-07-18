@@ -17,9 +17,6 @@
 
 #include "LaTeX_Preview/latex_preview.hpp"
 
-#include "Database/database.hpp"
-#include "glue_tmdb.cpp"
-
 #include "Xml/xml.hpp"
 #include "glue_xml.cpp"
 
@@ -118,7 +115,6 @@ supports_ghostscript () {
 void
 initialize_glue_plugins () {
   initialize_glue_plugin ();
-  initialize_glue_tmdb ();
   initialize_glue_xml ();
 
 #ifdef USE_PLUGIN_HTML

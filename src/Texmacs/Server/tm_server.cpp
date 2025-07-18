@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "tm_server.hpp"
-#include "Database/database.hpp"
 #include "analyze.hpp"
 #include "boot.hpp"
 #include "config.h"
@@ -230,7 +229,6 @@ tm_server_rep::interpose_handler () {
     }
     windows_refresh ();
   }
-  sync_databases ();
 }
 
 void
