@@ -29,7 +29,7 @@ xmake build stem
 ```
 
 ## 第四步：测试
-见[如何测试](Test.md)。
+见[如何测试](Test_ZH.md)。
 
 ## 第五步：启动墨干
 ``` bash
