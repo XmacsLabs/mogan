@@ -409,8 +409,8 @@ QDialog QPushButton {
   border: 1.5px solid #bdbdbd;
   border-radius: 6px;
   padding: 7px 18px;
-  min-width: 70px;
-  min-height: 28px;
+  min-width: 2.5em;
+  min-height: 1.0em;
   text-decoration: none;
   margin-left: 8px;
   margin-right: 8px;
