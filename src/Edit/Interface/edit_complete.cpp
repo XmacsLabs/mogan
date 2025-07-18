@@ -125,7 +125,9 @@ edit_interface_rep::complete_message () {
     if (i != 1) s << sep;
     s << completion_prefix << completions[j];
   }
-  set_message (concat ("Other completions: ", verbatim (s)), "tab");
+  if (completion_style == string ("Inline")) {
+    set_message (concat ("Other completions: ", verbatim (s)), "tab");
+  }
 }
 
 void
@@ -185,7 +187,6 @@ edit_interface_rep::complete_popup (string key) {
   string old_completion   = completions[completion_pos];
   string full_completion  = completion_prefix * old_completion;
   int    full_completion_N= N (full_completion);
-  set_message ("", "");
   if (key == "space") key= " ";
 
   if (key == "enter" || key == "return") {
