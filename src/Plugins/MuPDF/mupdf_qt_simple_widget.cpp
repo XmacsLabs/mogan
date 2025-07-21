@@ -142,24 +142,8 @@ qt_simple_widget_rep::repaint_invalid_regions () {
   canvas ()->surface ()->repaint (qrgn);
 }
 
-static void
-mupdf_pixmap_cleanup_handler (void* info) {
-  fz_pixmap* pix= (fz_pixmap*) info;
-  if (pix) {
-    fz_drop_pixmap (mupdf_context (), pix);
-  }
-}
-
 QImage
 qt_simple_widget_rep::get_backing_store () {
-  fz_pixmap* pix    = ((mupdf_picture_rep*) backing_store->get_handle ())->pix;
-  uchar*     samples= fz_pixmap_samples (mupdf_context (), pix);
-  int        w      = fz_pixmap_width (mupdf_context (), pix);
-  int        h      = fz_pixmap_height (mupdf_context (), pix);
-  fz_keep_pixmap (mupdf_context (), pix);
-  // we keep the samples since QImage will drop it later
-  QImage im=
-      QImage (samples, w, h, 4 * w, QImage::Format_RGBA8888_Premultiplied,
-              mupdf_pixmap_cleanup_handler, pix);
-  return im;
+  fz_pixmap* pix= ((mupdf_picture_rep*) backing_store->get_handle ())->pix;
+  return get_QImage_from_pixmap (pix);
 }

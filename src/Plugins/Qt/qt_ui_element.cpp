@@ -85,6 +85,7 @@ public:
  * glue widget
  ******************************************************************************/
 
+#ifndef USE_MUPDF_RENDERER
 QTMPixmapOrImage
 qt_glue_widget_rep::render () {
   QSize            s= to_qsize (w, h);
@@ -126,6 +127,7 @@ qt_glue_widget_rep::render () {
 
   return pxm;
 }
+#endif
 
 QAction*
 qt_glue_widget_rep::as_qaction () {

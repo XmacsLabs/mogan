@@ -1316,3 +1316,35 @@ mupdf_renderer_rep::apply_shadow (SI x1, SI y1, SI x2, SI y2) {
   static_cast<mupdf_renderer_rep*> (master)->encode (x2, y2);
   master->put_shadow (this, x1, y1, x2, y2);
 }
+
+static void
+mupdf_pixmap_cleanup_handler (void* info) {
+  fz_pixmap* pix= (fz_pixmap*) info;
+  if (pix) {
+    fz_drop_pixmap (mupdf_context (), pix);
+  }
+}
+
+QImage
+get_QImage_from_pixmap (fz_pixmap* pix) {
+  uchar* samples= fz_pixmap_samples (mupdf_context (), pix);
+  int    w      = fz_pixmap_width (mupdf_context (), pix);
+  int    h      = fz_pixmap_height (mupdf_context (), pix);
+  fz_keep_pixmap (mupdf_context (), pix);
+  // we keep the samples since QImage will drop it later
+  QImage im=
+      QImage (samples, w, h, 4 * w, QImage::Format_RGBA8888_Premultiplied,
+              mupdf_pixmap_cleanup_handler, pix);
+  return im;
+}
+
+QTMPixmapOrImage
+get_QTMPixmapOrImage_from_pixmap (fz_pixmap* pix) {
+  QImage qim= get_QImage_from_pixmap (pix);
+  if (headless_mode) {
+    return QTMPixmapOrImage (qim);
+  }
+  else {
+    return QTMPixmapOrImage (QPixmap::fromImage (qim));
+  }
+}

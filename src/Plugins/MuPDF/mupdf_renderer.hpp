@@ -12,6 +12,7 @@
 #ifndef MUPDF_RENDERER_HPP
 #define MUPDF_RENDERER_HPP
 
+#include "QTMPixmapOrImage.hpp"
 #include "basic_renderer.hpp"
 
 #include <mupdf/fitz.h>
@@ -122,5 +123,9 @@ public:
 };
 
 mupdf_renderer_rep* the_mupdf_renderer ();
+
+// Convert fz_pixmap to QImage, QTMPixmapOrImage
+QImage           get_QImage_from_pixmap (fz_pixmap* pix);
+QTMPixmapOrImage get_QTMPixmapOrImage_from_pixmap (fz_pixmap* pix);
 
 #endif // defined MUPDF_RENDERER_HPP
