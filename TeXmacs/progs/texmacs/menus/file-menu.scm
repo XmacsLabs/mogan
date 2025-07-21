@@ -52,10 +52,8 @@
     (sublist l1 0 (min (length l1) nr))))
 
 (tm-define (buffer-go-menu)
-  (let* ((l1 (list-difference (buffer-menu-list 15) (linked-file-list)))
-         (l2 (map window->buffer (window-list)))
-         (l3 (list-difference l2 (list (current-buffer)))))
-    (buffer-list-menu (list-difference l1 l3))))
+  (let* ((l1 (list-difference (buffer-menu-list 15) (linked-file-list))))
+    (buffer-list-menu l1)))
 
 (tm-define (buffer-windows-menu)
   (let* ((l1 (map window->buffer (window-list))))

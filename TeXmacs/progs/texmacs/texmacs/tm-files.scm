@@ -17,6 +17,8 @@
         (utils library cursor)))
 
 (import (only (liii string) string-contains))
+(import (only (srfi srfi-1) find))
+(import (only (srfi srfi-1) remove))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Check whether the file name is valid (exclude *)
@@ -146,11 +148,24 @@
         (for-each set-reference refl refs))
       u)))
 
+(tm-define (buffer->windows-of-tabpage buf)
+  (remove (lambda (vw) (url-none? vw)) (map view->window-of-tabpage (buffer->views buf))))
+
 (tm-define (switch-to-buffer* buf)
-  (cond ((== buf (current-buffer)) (noop))
-        ((nnull? (buffer->windows buf))
-         (switch-to-window (car (buffer->windows buf))))
-        (else (switch-to-buffer buf))))
+  (let* ((wins (buffer->windows-of-tabpage buf))
+         (win (if (member (current-window) wins)
+                  (current-window)
+                  (car wins)))
+         (view (if (member (current-window) wins)
+                   (find (lambda (vw)
+                           (== (view->window-of-tabpage vw) win))
+                         (buffer->views buf))
+                   (car (buffer->views buf)))))
+    (cond ((eq? buf (current-buffer)) (noop))
+          ((nnull? (buffer->windows-of-tabpage buf))
+           (switch-to-window win)
+           (window-set-view win view #t))
+          (else (switch-to-buffer buf)))))
 
 (tm-define (switch-to-buffer-index index)
   (let* ((lst (buffer-menu-unsorted-list 99))
