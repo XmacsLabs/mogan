@@ -139,6 +139,12 @@ tm_frame_rep::side_tools (int which, string tools) {
 }
 
 void
+tm_frame_rep::auxiliary_widget (widget w) {
+  if (!has_current_view ()) return;
+  concrete_window ()->auxiliary_widget (w);
+}
+
+void
 tm_frame_rep::bottom_tools (int which, string tools) {
   if ((which < 0) || (which > 1) || (!has_current_view ())) return;
   concrete_window ()->bottom_tools (which, tools);
@@ -160,6 +166,12 @@ void
 tm_frame_rep::show_side_tools (int which, bool flag) {
   if ((which < 0) || (which > 1) || (!has_current_view ())) return;
   concrete_window ()->set_side_tools_flag (which, flag);
+}
+
+void
+tm_frame_rep::show_auxiliary_widget (bool flag) {
+  if (!has_current_view ()) return;
+  concrete_window ()->set_auxiliary_widget_flag (flag);
 }
 
 void

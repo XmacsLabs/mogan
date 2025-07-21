@@ -57,6 +57,8 @@ slot_name (const slot s) {
                              "SLOT_MAIN_ICONS",
                              "SLOT_TAB_PAGES_VISIBILITY",
                              "SLOT_TAB_PAGES",
+                             "SLOT_AUXILIARY_WIDGET_VISIBILITY",
+                             "SLOT_AUXILIARY_WIDGET",
                              "SLOT_MODE_ICONS_VISIBILITY",
                              "SLOT_MODE_ICONS",
                              "SLOT_FOCUS_ICONS_VISIBILITY",

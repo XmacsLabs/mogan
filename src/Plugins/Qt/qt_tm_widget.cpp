@@ -128,6 +128,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   visibility[8] = (mask & 256) == 256;   // bottom tools
   visibility[9] = (mask & 512) == 512;   // extra bottom tools
   visibility[10]= (mask & 1024) == 1024; // tab page bar
+  visibility[11]= (mask & 2048) == 2048; // auxiliary widget
 
 #ifdef OS_WASM
   visibility[1]= false; // main
@@ -207,11 +208,12 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   focusToolBar= new QToolBar ("focus toolbar", mw);
   userToolBar = new QToolBar ("user toolbar", mw);
 
-  bottomTools= new QDockWidget ("bottom tools", mw);
-  extraTools = new QDockWidget ("extra tools", mw);
-  sideTools  = new QDockWidget ("side tools", 0);
-  leftTools  = new QDockWidget ("left tools", 0);
-  tabToolBar = new QTMTabPageBar ("tab toolbar", mw);
+  bottomTools    = new QDockWidget ("bottom tools", mw);
+  extraTools     = new QDockWidget ("extra tools", mw);
+  sideTools      = new QDockWidget ("side tools", 0);
+  leftTools      = new QDockWidget ("left tools", 0);
+  tabToolBar     = new QTMTabPageBar ("tab toolbar", mw);
+  auxiliaryWidget= new QTMAuxiliaryWidget ("auxiliary widget", 0);
   // HACK: Wrap the dock in a "fake" window widget (last parameter = true) to
   // have clicks report the right position.
   static int cnt      = 0;
@@ -229,6 +231,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     bottomTools->setStyle (qtmstyle ());
     extraTools->setStyle (qtmstyle ());
     tabToolBar->setStyle (qtmstyle ());
+    auxiliaryWidget->setStyle (qtmstyle ());
   }
 
   {
@@ -371,6 +374,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   sideTools->setObjectName ("sideTools");
   leftTools->setObjectName ("leftTools");
   tabToolBar->setObjectName ("tabToolBar");
+  auxiliaryWidget->setObjectName ("auxiliaryWidget");
 
 #ifdef UNIFIED_TOOLBAR
 
@@ -475,6 +479,13 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   extraTools->setContentsMargins (3, 6, 3, -2); // Hacks hacks hacks... :(
   mw->addDockWidget (Qt::BottomDockWidgetArea, extraTools);
 
+  auxiliaryWidget->setAllowedAreas (Qt::RightDockWidgetArea);
+  // auxiliaryWidget->setFeatures (QDockWidget::DockWidgetMovable |
+  //                        QDockWidget::DockWidgetFloatable);
+  auxiliaryWidget->setFloating (false);
+  // auxiliaryWidget->setTitleBarWidget (new QWidget ()); // Disables title bar
+  mw->addDockWidget (Qt::RightDockWidgetArea, auxiliaryWidget);
+
   // FIXME? add DockWidgetClosable and connect the close signal
   // to the scheme code
   //  QObject::connect(sideDock, SIGNAL(closeEvent()),
@@ -494,6 +505,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   bottomTools->setVisible (false);
   extraTools->setVisible (false);
   tabToolBar->setVisible (false);
+  auxiliaryWidget->setVisible (false);
   mainwindow ()->statusBar ()->setVisible (true);
 #ifndef Q_OS_MAC
   mainwindow ()->menuBar ()->setVisible (false);
@@ -606,6 +618,7 @@ qt_tm_widget_rep::update_visibility () {
   bool old_bottomVisibility= bottomTools->isVisible ();
   bool old_extraVisibility = extraTools->isVisible ();
   bool old_tabVisibility   = tabToolBar->isVisible ();
+  bool old_auxVisibility   = auxiliaryWidget->isVisible ();
   bool old_statusVisibility= mainwindow ()->statusBar ()->isVisible ();
 
   bool new_mainVisibility  = visibility[1] && visibility[0];
@@ -618,6 +631,7 @@ qt_tm_widget_rep::update_visibility () {
   bool new_bottomVisibility= visibility[8];
   bool new_extraVisibility = visibility[9];
   bool new_tabVisibility   = visibility[10] && visibility[0];
+  bool new_auxVisibility   = visibility[11];
 
   if (XOR (old_mainVisibility, new_mainVisibility))
     mainToolBar->setVisible (new_mainVisibility);
@@ -637,6 +651,8 @@ qt_tm_widget_rep::update_visibility () {
     extraTools->setVisible (new_extraVisibility);
   if (XOR (old_tabVisibility, new_tabVisibility))
     tabToolBar->setVisible (new_tabVisibility);
+  if (XOR (old_auxVisibility, new_auxVisibility))
+    auxiliaryWidget->setVisible (new_auxVisibility);
   if (XOR (old_statusVisibility, new_statusVisibility))
     mainwindow ()->statusBar ()->setVisible (new_statusVisibility);
 
@@ -812,6 +828,11 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
     visibility[10]= open_box<bool> (val);
     update_visibility ();
   } break;
+  case SLOT_AUXILIARY_WIDGET_VISIBILITY: {
+    check_type<bool> (val, s);
+    visibility[11]= open_box<bool> (val);
+    update_visibility ();
+  } break;
 
   case SLOT_LEFT_FOOTER: {
     check_type<string> (val, s);
@@ -949,6 +970,10 @@ qt_tm_widget_rep::query (slot s, int type_id) {
     check_type_id<bool> (type_id, s);
     return close_box<bool> (visibility[10]);
 
+  case SLOT_AUXILIARY_WIDGET_VISIBILITY:
+    check_type_id<bool> (type_id, s);
+    return close_box<bool> (visibility[11]);
+
   case SLOT_INTERACTIVE_INPUT: {
     check_type_id<string> (type_id, s);
     qt_input_text_widget_rep* w=
@@ -1085,6 +1110,18 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
         tabToolBar->replaceTabPages (list);
         update_visibility ();
       }
+    }
+    break;
+
+  case SLOT_AUXILIARY_WIDGET:
+    check_type_void (index, s);
+    {
+      auxiliary_widget    = concrete (w);
+      QWidget* new_qwidget= auxiliary_widget->as_qwidget ();
+      QWidget* old_qwidget= auxiliaryWidget->widget ();
+      if (old_qwidget) old_qwidget->deleteLater ();
+      auxiliaryWidget->setWidget (new_qwidget);
+      update_visibility ();
     }
     break;
 
@@ -1326,6 +1363,7 @@ qt_tm_embedded_widget_rep::send (slot s, blackbox val) {
   case SLOT_BOTTOM_TOOLS_VISIBILITY:
   case SLOT_EXTRA_TOOLS_VISIBILITY:
   case SLOT_TAB_PAGES_VISIBILITY:
+  case SLOT_AUXILIARY_WIDGET_VISIBILITY:
   case SLOT_LEFT_FOOTER:
   case SLOT_RIGHT_FOOTER:
   case SLOT_SCROLLBARS_VISIBILITY:
@@ -1382,6 +1420,7 @@ qt_tm_embedded_widget_rep::query (slot s, int type_id) {
   case SLOT_BOTTOM_TOOLS_VISIBILITY:
   case SLOT_EXTRA_TOOLS_VISIBILITY:
   case SLOT_TAB_PAGES_VISIBILITY:
+  case SLOT_AUXILIARY_WIDGET_VISIBILITY:
     check_type_id<bool> (type_id, s);
     return close_box<bool> (false);
 
@@ -1434,6 +1473,7 @@ qt_tm_embedded_widget_rep::write (slot s, blackbox index, widget w) {
   case SLOT_BOTTOM_TOOLS:
   case SLOT_EXTRA_TOOLS:
   case SLOT_TAB_PAGES:
+  case SLOT_AUXILIARY_WIDGET:
   case SLOT_INTERACTIVE_INPUT:
   case SLOT_INTERACTIVE_PROMPT:
   default:

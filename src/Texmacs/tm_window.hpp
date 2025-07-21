@@ -52,10 +52,12 @@ public:
   void menu_main (string menu);
   void menu_icons (int which, string menu);
   void side_tools (int which, string tools);
+  void auxiliary_widget (widget w);
   void bottom_tools (int which, string tools);
   void set_header_flag (bool flag);
   void set_icon_bar_flag (int which, bool flag);
   void set_side_tools_flag (int which, bool flag);
+  void set_auxiliary_widget_flag (bool flag);
   void set_bottom_tools_flag (int which, bool flag);
   bool get_header_flag ();
   bool get_icon_bar_flag (int which);

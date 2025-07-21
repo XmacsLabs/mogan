@@ -118,6 +118,22 @@ function main()
                 }
             },
             {
+                scm_name = "show-auxiliary-widget",
+                cpp_name = "show_auxiliary_widget",
+                ret_type = "void",
+                arg_list = {
+                    "bool",
+                }
+            },
+            {
+                scm_name = "set-auxiliary-widget",
+                cpp_name = "auxiliary_widget",
+                ret_type = "void",
+                arg_list = {
+                    "widget",
+                }
+            },
+            {
                 scm_name = "show-bottom-tools",
                 cpp_name = "show_bottom_tools",
                 ret_type = "void",

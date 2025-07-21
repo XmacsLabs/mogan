@@ -39,6 +39,7 @@ public:
   void show_header (bool flag);
   void show_icon_bar (int which, bool flag);
   void show_side_tools (int which, bool flag);
+  void show_auxiliary_widget (bool flag);
   void show_bottom_tools (int which, bool flag);
   bool visible_header ();
   bool visible_icon_bar (int which);
@@ -48,6 +49,7 @@ public:
   void menu_main (string menu);
   void menu_icons (int which, string menu);
   void side_tools (int which, string menu);
+  void auxiliary_widget (widget w);
   void bottom_tools (int which, string menu);
 
   /* canvas */

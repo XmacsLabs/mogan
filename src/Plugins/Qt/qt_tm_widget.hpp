@@ -18,6 +18,7 @@
 #include "qt_widget.hpp"
 #include "qt_window_widget.hpp"
 
+#include "QTMAuxiliaryWidget.hpp"
 #include "QTMInteractiveInputHelper.hpp"
 #include "QTMScrollView.hpp"
 #include "QTMTabPage.hpp"
@@ -54,17 +55,18 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
    tab_tools_visibility     = 1024
    } visibility_t;
    */
-  QLabel*        rightLabel;
-  QLabel*        leftLabel;
-  QToolBar*      mainToolBar;
-  QToolBar*      modeToolBar;
-  QToolBar*      focusToolBar;
-  QToolBar*      userToolBar;
-  QDockWidget*   sideTools;
-  QDockWidget*   leftTools;
-  QDockWidget*   bottomTools;
-  QDockWidget*   extraTools;
-  QTMTabPageBar* tabToolBar;
+  QLabel*             rightLabel;
+  QLabel*             leftLabel;
+  QToolBar*           mainToolBar;
+  QToolBar*           modeToolBar;
+  QToolBar*           focusToolBar;
+  QToolBar*           userToolBar;
+  QDockWidget*        sideTools;
+  QDockWidget*        leftTools;
+  QDockWidget*        bottomTools;
+  QDockWidget*        extraTools;
+  QTMTabPageBar*      tabToolBar;
+  QTMAuxiliaryWidget* auxiliaryWidget;
 
 #ifdef Q_OS_MAC
   QToolBar* dumbToolBar;
@@ -78,7 +80,7 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
   qt_widget                 int_prompt;
   qt_widget                 int_input;
 
-  bool visibility[11];
+  bool visibility[12];
   bool full_screen;
 
   qt_widget main_widget;
@@ -93,6 +95,7 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
   qt_widget bottom_tools_widget;
   qt_widget extra_tools_widget;
   qt_widget tab_bar_widget;
+  qt_widget auxiliary_widget;
   qt_widget dock_window_widget; // trick to return correct widget position
 
 public:

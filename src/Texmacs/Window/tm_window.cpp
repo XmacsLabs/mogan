@@ -462,6 +462,14 @@ tm_window_rep::side_tools (int which, string tools) {
 }
 
 void
+tm_window_rep::auxiliary_widget (widget w) {
+  // set_auxiliary_widget(wid, text_widget("HELLO", 0, rgb_color(128, 128,
+  // 128)));
+  set_auxiliary_widget (wid, w);
+  // set_auxiliary_widget_visibility(wid, true);
+}
+
+void
 tm_window_rep::bottom_tools (int which, string tools) {
   eval ("(lazy-initialize-force)");
   widget w;
@@ -489,6 +497,11 @@ void
 tm_window_rep::set_side_tools_flag (int which, bool flag) {
   if (which == 0) set_side_tools_visibility (wid, flag);
   else if (which == 1) set_left_tools_visibility (wid, flag);
+}
+
+void
+tm_window_rep::set_auxiliary_widget_flag (bool flag) {
+  set_auxiliary_widget_visibility (wid, flag);
 }
 
 void

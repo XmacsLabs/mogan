@@ -60,6 +60,8 @@ enum slot_id {
   SLOT_MAIN_ICONS,
   SLOT_TAB_PAGES_VISIBILITY,
   SLOT_TAB_PAGES,
+  SLOT_AUXILIARY_WIDGET_VISIBILITY,
+  SLOT_AUXILIARY_WIDGET,
   SLOT_MODE_ICONS_VISIBILITY,
   SLOT_MODE_ICONS,
   SLOT_FOCUS_ICONS_VISIBILITY,
@@ -585,6 +587,21 @@ inline void
 set_tab_pages (widget w, widget bar) {
   // set tab bar
   write (w, SLOT_TAB_PAGES, bar);
+}
+
+inline void
+set_auxiliary_widget_visibility (widget w, bool visible) {
+  send<bool> (w, SLOT_AUXILIARY_WIDGET_VISIBILITY, visible);
+}
+
+inline bool
+get_auxiliary_widget_visibility (widget w) {
+  return query<bool> (w, SLOT_AUXILIARY_WIDGET_VISIBILITY);
+}
+
+inline void
+set_auxiliary_widget (widget w, widget aux) {
+  write (w, SLOT_AUXILIARY_WIDGET, aux);
 }
 
 inline void
