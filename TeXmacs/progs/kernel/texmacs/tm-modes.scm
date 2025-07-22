@@ -261,7 +261,7 @@
   (detailed-menus% (== (get-preference "detailed menus") "detailed"))
   (window-per-buffer% (== (get-preference "buffer management") "separate"))
   (buffers-share-window% (== (get-preference "buffer management") "share"))
-  (with-database-tool% (== (get-preference "database tool") "on"))
+  (with-database-tool% #f)
   (with-debugging-tool% (== (get-preference "debugging tool") "on"))
   (with-developer-tool% (== (get-preference "developer tool") "on"))
   (with-linking-tool% (== (get-preference "linking tool") "on"))

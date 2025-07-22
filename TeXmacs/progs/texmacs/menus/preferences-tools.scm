@@ -94,8 +94,6 @@
           (centered (dynamic (pdf-preferences-widget))))
         (section-tab "Image" ===
           (centered (dynamic (image-preferences-widget))))))
-    (section-tab "Security" ===
-      (dynamic (security-preferences-widget)))
     (section-tab "Other" ===
       (centered
         ======

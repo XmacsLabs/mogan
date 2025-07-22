@@ -379,20 +379,6 @@
 ;;(display* "time: " (- (texmacs-time) boot-start) "\n")
 ;;(display* "memory: " (texmacs-memory) " bytes\n")
 
-;;(display "Booting security tools\n")
-(lazy-define (security wallet wallet-menu) expand-with-wallet)
-(tm-define-macro (with-wallet . body) (expand-with-wallet body))
-(lazy-define (security wallet wallet-base)
-	     supports-wallet? wallet-initialized?
-	     wallet-on? wallet-off? wallet-get)
-(lazy-menu (security wallet wallet-menu) wallet-preferences-widget)
-(lazy-define (security gpg gpg-edit) tree-export-encrypted
-	     tm-gpg-dialogue-passphrase-decrypt-buffer)
-(lazy-define (security gpg gpg-widgets) open-gpg-key-manager)
-(lazy-define (security gpg gpg-base) supports-gpg?)
-(lazy-menu (security gpg gpg-menu) gpg-menu document-encryption-menu)
-(lazy-menu (security gpg gpg-widgets) gpg-preferences-widget)
-
 ;;(display* "time: " (- (texmacs-time) boot-start) "\n")
 ;;(display* "memory: " (texmacs-memory) " bytes\n")
 
