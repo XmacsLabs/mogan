@@ -41,3 +41,29 @@ package("mupdf")
             "prefix=" .. package:installdir()
         })
     end)
+
+    on_install("windows", function (package)
+        local configs = {"platform/win32/mupdf.sln", "-t:libmupdf", "-maxcpucount"}
+        local build_type = (package:debug() and "Debug" or "Release")
+        local arch = (package:is_arch("x64") and "x64" or "Win32")
+        table.insert(configs, "/p:Configuration=" .. build_type)
+        table.insert(configs, "/p:Platform=" .. arch)
+        local patch_file = "source/fitz/noto.c"
+        local file_data = io.readfile(patch_file)
+        io.writefile(patch_file, "#define TOFU\n#define TOFU_CJK\n" .. file_data)
+        if package:has_runtime("MT", "MTd") then
+            -- Allow MT, MTd
+            for i, target in ipairs({"libmupdf.vcxproj", "libextract.vcxproj", "libharfbuzz.vcxproj", "libleptonica.vcxproj", "libpkcs7.vcxproj", "libtesseract.vcxproj", "libthirdparty.vcxproj"}) do 
+                io.replace("platform/win32/" .. target, "<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>", "<RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>", {plain = true})
+                io.replace("platform/win32/" .. target, "<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>", "<RuntimeLibrary>MultiThreaded</RuntimeLibrary>", {plain = true})
+            end
+        end
+        import("package.tools.msbuild").build(package, configs)
+        os.cp("include/**.h", package:installdir("include"), {rootdir = "include"})
+        if arch == "Win32" then
+            arch = ""
+        end
+        local output = format("platform/win32/%s/%s/", arch, build_type)
+        os.cp(output .. "libmupdf.lib", package:installdir("lib"))
+        os.cp(output .. "libthirdparty.lib", package:installdir("lib"))
+    end)

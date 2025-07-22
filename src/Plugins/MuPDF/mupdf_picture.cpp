@@ -264,18 +264,15 @@ mupdf_load_pixmap (url u, int w, int h, tree eff, SI pixel) {
     return NULL;
   }
 
-  // Scaling
-  if (im->w != w || im->h != h) {
-    // FIXME: implement?
-    // we opt to draw natively scalables, so here we do not support rescaling
-    // (*pm)= pm->scaled (w, h, Qt::IgnoreAspectRatio,
-    // Qt::SmoothTransformation);
-    cout << "TeXmacs] warning: image rescaling not supported " << concretize (u)
-         << "\n";
-  }
-
   fz_pixmap* pix=
       fz_get_pixmap_from_image (mupdf_context (), im, NULL, NULL, NULL, NULL);
+  // Scaling
+  if (im->w != w || im->h != h) {
+    fz_pixmap* scaled=
+        fz_scale_pixmap (mupdf_context (), pix, 0, 0, w, h, NULL);
+    fz_drop_pixmap (mupdf_context (), pix);
+    pix= scaled;
+  }
   fz_drop_image (mupdf_context (), im); // we do not need it anymore
 
   // Build effect

@@ -306,6 +306,7 @@ target("libmogan") do
 
     if is_plat("windows") then
         set_runtimes("MT")
+        add_defines("_USE_MATH_DEFINES")
     end
     set_languages("c++17")
     set_policy("check.auto_ignore_flags", false)

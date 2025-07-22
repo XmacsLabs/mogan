@@ -1,0 +1,25 @@
+<TMU|<tuple|1.1.0|2025.0.11>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <doc-data|<doc-title|205_5: 测试文件>>
+
+  <with|color|<pattern|misc/patterns/vintage/pine.png||>|纹理1 █>
+
+  <with|color|<pattern|misc/patterns/vintage/wood-light.png||>|纹理2 █>
+
+  <with|color|<pattern|misc/patterns/vintage/wood-medium.png||>|纹理3 █>
+
+  <with|color|<pattern|misc/patterns/vintage/metal-brushed-dark.png||>|纹理4 █>
+
+  正常0 █
+</body>
+
+<\initial>
+  <\collection>
+    <associate|font-base-size|30>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

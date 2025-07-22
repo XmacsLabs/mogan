@@ -447,8 +447,10 @@ mupdf_renderer_rep::register_pattern (brush br, SI pixel) {
   fz_context*   ctx   = mupdf_context ();
   pdf_document* doc   = mupdf_document ();
   pdf_obj*      subres= pdf_new_dict (ctx, doc, 2);
+  pdf_obj*      xres  = pdf_new_dict (ctx, doc, 2);
   pdf_obj*      ref   = pdf_add_image (ctx, doc, image_pdf->img);
-  pdf_dict_puts (ctx, subres, "pattern-image", ref);
+  pdf_dict_puts (ctx, xres, "pattern-image", ref);
+  pdf_dict_puts (ctx, subres, "XObject", xres);
   pdf_drop_obj (ctx, ref);
 
   fz_buffer* buf= fz_new_buffer (ctx, 0);
