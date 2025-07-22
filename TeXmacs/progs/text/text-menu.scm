@@ -458,7 +458,7 @@
     (if (with-database-tool?)
         ("Bibliography" (make-database-bib)))
     (if (not (with-database-tool?))
-        ("Bibliography" (choose-file make-bib "Bibliography file" "BibTeX"))))
+        ("Bibliography" (choose-file make-bib "Bibliography file" "tmbib"))))
   ("Index" (make-aux "the-index" "index-prefix" "idx"))
   ("Glossary" (make-aux "the-glossary" "glossary-prefix" "gly"))
   ;;("List of figures" (make-aux* "the-glossary*" "figure-list-prefix" "figure" "List of figures"))

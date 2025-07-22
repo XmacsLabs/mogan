@@ -176,11 +176,11 @@ qt_chooser_widget_rep::set_type (const string& _type) {
   else if (_type == "image") {
     mainNameFilter= to_qstring (translate ("Image file"));
   }
-  else if (_type == "select") {
-    mainNameFilter= to_qstring (translate ("Mogan files"));
+  else if (_type == "action_open") {
+    mainNameFilter= to_qstring (translate ("STEM files"));
   }
-  else if (_type == "tmu/tm") {
-    mainNameFilter= to_qstring (translate ("TMU files"));
+  else if (_type == "action_save_as") {
+    mainNameFilter= to_qstring (translate ("STEM files"));
   }
   else {
     if (DEBUG_STD)
@@ -203,7 +203,7 @@ qt_chooser_widget_rep::set_type (const string& _type) {
     nameFilters << to_qstring (translate ("Portable Document Format") *
                                " (*.pdf)");
   }
-  else if (_type == "select") {
+  else if (_type == "action_open") {
     mainNameFilter+= " (*.tmu *.tm)";
     //" (*.scala *.sc *.sbt *.pants *.ltx *.sty *.cls *.tex *.bib *.rawbib *.jl
     //*.js *.java *.sld *.ss *.tmu *.txt *.py *.json *.html *.hh *.cpp *cc *hpp
@@ -227,7 +227,7 @@ qt_chooser_widget_rep::set_type (const string& _type) {
     nameFilters << to_qstring (translate ("Web files") *
                                " (*.html *.xhtml *.htm)");
   }
-  else if (_type == "tmu/tm") {
+  else if (_type == "action_save_as") {
     mainNameFilter+= " (*.tmu)";
     nameFilters << mainNameFilter;
     nameFilters << to_qstring (translate ("TM files") * " (*.tm)");
