@@ -466,3 +466,19 @@ QListWidget.completion_popup::item:hover {
   color: #ffffff;
   border-radius: 2px;
 }
+
+/****************************************************************************
+* 辅助组件样式
+****************************************************************************/
+QTMAuxiliaryWidget,
+QTMAuxiliaryWidget > QWidget {
+  background: #f3f3f3;
+  border: 1px solid #e0e0e0;
+}
+
+QTMAuxiliaryWidget::title {
+  background: #f3f3f3;
+  text-align: center;
+  padding: 4px;
+  color: #2c2c2c;
+}

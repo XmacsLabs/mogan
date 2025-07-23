@@ -19,7 +19,9 @@
 
 QTMAuxiliaryWidget::QTMAuxiliaryWidget (const QString& p_title,
                                         QWidget*       p_parent)
-    : QDockWidget (p_title, p_parent) {}
+    : QDockWidget (p_title, p_parent) {
+  setObjectName ("auxiliary_widget");
+}
 
 QTMAuxiliaryWidget::~QTMAuxiliaryWidget () {}
 
