@@ -11,6 +11,7 @@
 
 #include "tm_frame.hpp"
 #include "message.hpp"
+#include "new_view.hpp"
 #include "object_l5.hpp"
 #include "tm_window.hpp"
 
@@ -139,9 +140,9 @@ tm_frame_rep::side_tools (int which, string tools) {
 }
 
 void
-tm_frame_rep::auxiliary_widget (widget w) {
+tm_frame_rep::auxiliary_widget (widget w, string name) {
   if (!has_current_view ()) return;
-  concrete_window ()->auxiliary_widget (w);
+  concrete_window ()->auxiliary_widget (w, name);
 }
 
 void
@@ -171,6 +172,12 @@ tm_frame_rep::show_side_tools (int which, bool flag) {
 void
 tm_frame_rep::show_auxiliary_widget (bool flag) {
   if (!has_current_view ()) return;
+  url current_view= get_current_view ();
+  if (is_tmfs_view_type (as_string (current_view), "aux")) {
+    url vw= get_most_recent_view ();
+    concrete_view (vw)->win->set_auxiliary_widget_flag (flag);
+    return;
+  }
   concrete_window ()->set_auxiliary_widget_flag (flag);
 }
 

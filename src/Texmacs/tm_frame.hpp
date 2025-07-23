@@ -49,7 +49,7 @@ public:
   void menu_main (string menu);
   void menu_icons (int which, string menu);
   void side_tools (int which, string menu);
-  void auxiliary_widget (widget w);
+  void auxiliary_widget (widget w, string name);
   void bottom_tools (int which, string menu);
 
   /* canvas */

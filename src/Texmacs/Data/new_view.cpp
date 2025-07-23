@@ -654,3 +654,49 @@ make_cursor_visible (url u) {
   if (ed == NULL) return;
   ed->make_cursor_visible ();
 }
+
+url
+get_most_recent_view () {
+  if (view_history_instance.size () < 1) {
+    return url_none ();
+  }
+  return view_history_instance.get_view_at_index (0);
+}
+
+void
+invalidate_most_recent_view () {
+  url vw= get_most_recent_view ();
+  if (is_none (vw)) return;
+  concrete_view (vw)->ed->typeset_invalidate_all ();
+}
+
+bool
+is_tmfs_view_type (string s, string type) {
+  // 检查前缀
+  string prefix  = "tmfs://view/";
+  int    s_N     = N (s);
+  int    prefix_N= N (prefix);
+  if (s_N <= prefix_N) return false;
+  if (!(s (0, prefix_N) == prefix)) return false;
+
+  // 查找 “/数字”
+  int i= prefix_N;
+  while (i < s_N && s[i] >= '0' && s[i] <= '9')
+    i++;
+  if (i == prefix_N) return false; // 没有数字
+
+  // 中间匹配 “/aux”
+  string mid;
+  if (type != "default") {
+    mid= "/tmfs/" * type * "/";
+  }
+  else {
+    mid= "/default/";
+  }
+  int mid_N= N (mid);
+  if (s_N < i + mid_N) return false;
+  if (!(s (i, i + mid_N) == mid)) return false;
+
+  // 后面可以是任意字符串
+  return true;
+}

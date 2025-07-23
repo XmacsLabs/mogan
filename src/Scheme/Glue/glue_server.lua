@@ -118,19 +118,22 @@ function main()
                 }
             },
             {
+                -- 设置辅助组件可见性
                 scm_name = "show-auxiliary-widget",
                 cpp_name = "show_auxiliary_widget",
                 ret_type = "void",
                 arg_list = {
-                    "bool",
+                    "bool", -- 是否可见
                 }
             },
             {
+                -- 设定辅助组件内容
                 scm_name = "set-auxiliary-widget",
                 cpp_name = "auxiliary_widget",
                 ret_type = "void",
                 arg_list = {
-                    "widget",
+                    "widget", -- 组件
+                    "string", -- 标题
                 }
             },
             {

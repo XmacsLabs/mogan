@@ -137,7 +137,8 @@
 
 (define (macro-apply u)
   (and-with t (macro-retrieve u)
-    (macro-editor-set (tree->string (tm-ref t 0)) (macro-value t) u)))
+    (macro-editor-set (tree->string (tm-ref t 0)) (macro-value t) u)
+    (invalidate-most-recent-view)))
 
 (define (build-macro-document* l def)
   (when (and (tm-func? def 'assign 2)
@@ -171,7 +172,7 @@
 (tm-widget ((macro-editor u packs doc mode) quit)
   (padded
     ===
-    (resize "600px" "300px"
+    (resize "400px" "300px"
       (texmacs-input doc `(style (tuple ,@packs)) u))
     ======
     (hlist
@@ -233,9 +234,9 @@
       (buffer-set-master u b)
       (if (side-tools?)
           (tool-focus :right tool u)
-          (dialogue-window (macro-editor u styps doc macro-mode)
-                           (lambda x (terminate-macro-editor))
-                           "Macro editor" u)))))
+          (auxiliary-widget (macro-editor u styps doc macro-mode)
+                            (lambda x (terminate-macro-editor))
+                            "Macro editor" u)))))
 
 (tm-define (edit-focus-macro)
   (:interactive #t)

@@ -31,7 +31,7 @@
   (show-icon-bar show_icon_bar (void int bool))
   (show-side-tools show_side_tools (void int bool))
   (show-auxiliary-widget show_auxiliary_widget (void bool))
-  (set-auxiliary-widget auxiliary_widget (widget))
+  (set-auxiliary-widget auxiliary_widget (widget, name))
   (show-bottom-tools show_bottom_tools (void int bool))
   (show-footer show_footer (void bool))
   (visible-header? visible_header (bool))

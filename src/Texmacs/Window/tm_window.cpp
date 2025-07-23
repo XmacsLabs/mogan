@@ -462,11 +462,8 @@ tm_window_rep::side_tools (int which, string tools) {
 }
 
 void
-tm_window_rep::auxiliary_widget (widget w) {
-  // set_auxiliary_widget(wid, text_widget("HELLO", 0, rgb_color(128, 128,
-  // 128)));
-  set_auxiliary_widget (wid, w);
-  // set_auxiliary_widget_visibility(wid, true);
+tm_window_rep::auxiliary_widget (widget w, string name) {
+  set_auxiliary_widget (wid, w, name);
 }
 
 void

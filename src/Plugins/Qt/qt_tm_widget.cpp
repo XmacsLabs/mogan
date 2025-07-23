@@ -833,6 +833,10 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
     visibility[11]= open_box<bool> (val);
     update_visibility ();
   } break;
+  case SLOT_AUXILIARY_WIDGET: {
+    check_type<string> (val, s);
+    auxiliaryWidget->setWindowTitle (to_qstring (open_box<string> (val)));
+  } break;
 
   case SLOT_LEFT_FOOTER: {
     check_type<string> (val, s);
@@ -1364,6 +1368,7 @@ qt_tm_embedded_widget_rep::send (slot s, blackbox val) {
   case SLOT_EXTRA_TOOLS_VISIBILITY:
   case SLOT_TAB_PAGES_VISIBILITY:
   case SLOT_AUXILIARY_WIDGET_VISIBILITY:
+  case SLOT_AUXILIARY_WIDGET:
   case SLOT_LEFT_FOOTER:
   case SLOT_RIGHT_FOOTER:
   case SLOT_SCROLLBARS_VISIBILITY:

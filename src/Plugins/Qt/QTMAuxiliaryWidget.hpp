@@ -18,9 +18,13 @@
 #include <QDockWidget>
 
 class QTMAuxiliaryWidget : public QDockWidget {
+  Q_OBJECT
 public:
   QTMAuxiliaryWidget (const QString& p_title, QWidget* p_parent);
   ~QTMAuxiliaryWidget ();
+
+protected:
+  void closeEvent (QCloseEvent* event) override;
 };
 
 #endif // QTM_AUXILIARY_WIDGET_HPP

@@ -600,8 +600,9 @@ get_auxiliary_widget_visibility (widget w) {
 }
 
 inline void
-set_auxiliary_widget (widget w, widget aux) {
+set_auxiliary_widget (widget w, widget aux, string name) {
   write (w, SLOT_AUXILIARY_WIDGET, aux);
+  send (w, SLOT_AUXILIARY_WIDGET, name);
 }
 
 inline void

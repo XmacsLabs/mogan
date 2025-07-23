@@ -1674,6 +1674,14 @@ function main()
                 }
             },
             {
+                -- 更新最近的编辑区视图
+                scm_name = "invalidate-most-recent-view",
+                cpp_name = "invalidate_most_recent_view",
+                ret_type = "void",
+                arg_list = {
+                }
+            },
+            {
                 scm_name = "set-drd",
                 cpp_name = "set_current_drd",
                 ret_type = "void",

@@ -1560,3 +1560,19 @@
 
 (tm-define-macro (tm-tool tool . body)
   `(tm-tool* ,tool :side-centered :bottom-indent ,@body))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Auxiliary Widget
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (auxiliary-widget menu-promise cmd name . opts)
+  (:interactive #t)
+  (with (bufs qqq) (decode-options opts)
+    (let* ((del (lambda () (show-auxiliary-widget #f)))
+           (qui (object->command (lambda () (qqq) (del))))
+           (lbd (lambda x (apply cmd x) (del)))
+           (men (menu-promise lbd))
+           (scm (list 'vertical men))
+           (wid (make-menu-widget* scm 0)))
+      (set-auxiliary-widget wid name)
+      (show-auxiliary-widget #t))))

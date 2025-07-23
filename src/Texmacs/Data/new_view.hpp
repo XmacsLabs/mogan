@@ -44,6 +44,9 @@ void       focus_on_editor (editor ed);
 bool       focus_on_buffer (url name);
 bool       var_focus_on_buffer (url name);
 void       make_cursor_visible (url u);
+url        get_most_recent_view ();
+void       invalidate_most_recent_view ();
+bool       is_tmfs_view_type (string s, string type);
 
 // Low level types and routines
 class tm_view_rep;
