@@ -495,7 +495,7 @@
 
 (tm-widget ((search-widget u style init aux) quit)
   (padded
-    (resize "600px" "100px"
+    (resize "300px" "200px"
       (texmacs-input `(with ,@init ,(search-document))
                      `(style (tuple ,@style)) aux))
     ===
@@ -566,9 +566,9 @@
       (set! search-filter-out? #f)
       (if (side-tools?)
           (tool-focus :bottom-right tool aux)
-          (dialogue-window (search-widget u st init aux)
-                           (search-cancel u)
-                           "Search" aux)))))
+          (auxiliary-widget (search-widget u st init aux)
+                            (search-cancel u)
+                            "Search" aux)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search and replace widget
