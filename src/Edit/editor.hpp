@@ -487,6 +487,7 @@ public:
   virtual void select (path p)                 = 0;
   virtual void select (path start, path end)   = 0;
   virtual void select_all ()                   = 0;
+  virtual void select_all_correct (int n)      = 0;
   virtual void select_line ()                  = 0;
   virtual void select_from_cursor ()           = 0;
   virtual void select_from_cursor_if_active () = 0;

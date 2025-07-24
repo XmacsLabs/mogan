@@ -215,6 +215,7 @@
 
   ;; selections
   (select-all select_all (void))
+  (select-all-correct select_all_correct (void int))
   (select-line select_line (void))
   (select-from-cursor select_from_cursor (void))
   (select-from-cursor-if-active select_from_cursor_if_active (void))

@@ -157,6 +157,20 @@ edit_select_rep::select_all () {
 }
 
 void
+edit_select_rep::select_all_correct (int n) {
+  // 全选，但是跳过前 n 个节点
+  // FIXME: 这里采用了低效的方式获取 end_path：先 go_end()，用 tp 记录末尾
+  // path，再恢复 tp。 原因是 correct_cursor(rp * 1)
+  // 在某些情况下无法准确获得文档的末尾
+  path start_path= rp * path (n, 0);
+  path current_tp= tp;
+  go_end ();
+  path end_path= tp;
+  go_to (current_tp);
+  select (start_path, end_path);
+}
+
+void
 edit_select_rep::select_line () {
   select (search_parent_upwards (DOCUMENT));
 }

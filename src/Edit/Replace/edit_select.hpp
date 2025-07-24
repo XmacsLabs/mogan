@@ -45,6 +45,7 @@ public:
   void select (path p);
   void select (path start, path end);
   void select_all ();
+  void select_all_correct (int n);
   void select_line ();
   void select_from_cursor ();
   void select_from_cursor_if_active ();

@@ -777,7 +777,14 @@
   (clipboard-copy "primary"))
 
 (tm-define (select-all)
-  (tree-select (buffer-tree)))
+  (let ((t (tree-ref (buffer-tree) 0)))
+    ;; fix-me: 目前只针对一层 'hide-preamble 作了特殊处理
+    ;;         最好改进为更加 general 的处理方式
+    (if (and (tree-is? t 'hide-preamble)
+             (= (tree-arity t) 1)
+             (tree-is? (tree-ref t 0) 'document))
+        (select-all-correct 1)
+        (tree-select (buffer-tree)))))
 
 (tm-define (go-to-line n . opt-from)
   (if (nnull? opt-from) (cursor-history-add (car opt-from)))

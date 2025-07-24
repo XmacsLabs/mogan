@@ -1299,6 +1299,14 @@ function main()
                 ret_type = "void"
             },
             {
+                scm_name = "select-all-correct",
+                cpp_name = "select_all_correct",
+                ret_type = "void",
+                arg_list = {
+                    "int"
+                }
+            },
+            {
                 scm_name = "select-line",
                 cpp_name = "select_line",
                 ret_type = "void"
