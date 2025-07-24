@@ -1,0 +1,37 @@
+version: '1.0'
+name: ci_pr_comment
+displayName: ci_pr_comment
+triggers:
+  trigger: auto
+  pr:
+    branches:
+      precise:
+        - main
+
+variables:
+  global:
+    - Comment_TOKEN
+
+stages:
+  - name: pr-comment
+    displayName: pr-comment
+    strategy: fast
+    trigger: auto
+    executor: []
+    steps:
+      - step: execute@docker
+        name: pr-comment
+        displayName: 自动评论PR
+        certificate: ''
+        image: docker.1ms.run/amd64/debian:bookworm
+        command:
+          - bash .workflow/aliyun_debian822_setup.sh  
+          - apt-get update
+          - apt-get install -y python3 python3-requests
+          - echo "开始执行 Python 自动评论脚本..."
+          - python3 .workflow/comment_pr.py
+        notify: []
+        strategy:
+          retry: '0'
+          stepTimeout: 15
+
