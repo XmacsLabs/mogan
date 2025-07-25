@@ -212,8 +212,9 @@ QTMTabPageContainer::extractTabPages (QList<QAction*>* p_src) {
 void
 QTMTabPageContainer::arrangeTabPages () {
   const int windowWidth= this->width ();
+  int       padding    = 8;
   int       rowCount   = 0;
-  int       accumWidth = 0;
+  int       accumWidth = padding;
   int       accumTab   = 0;
 
   for (int i= 0; i < m_tabPageList.size (); ++i) {
@@ -228,7 +229,7 @@ QTMTabPageContainer::arrangeTabPages () {
     int   tabWidth= max (MIN_TAB_PAGE_WIDTH, tabSize.width ());
     if (accumWidth + tabWidth >= windowWidth) {
       rowCount+= 1;
-      accumWidth= 0;
+      accumWidth= padding;
       accumTab  = 0;
     }
     tab->setGeometry (accumWidth, rowCount * m_rowHeight, tabWidth,
