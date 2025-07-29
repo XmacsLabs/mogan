@@ -495,7 +495,7 @@
 
 (tm-widget ((search-widget u style init aux) quit)
   (padded
-    (resize "300px" "200px"
+    (resize "350px" "200px"
       (texmacs-input `(with ,@init ,(search-document))
                      `(style (tuple ,@style)) aux))
     ===
@@ -593,11 +593,11 @@
 
 (tm-widget ((replace-widget u style init saux raux) quit)
   (padded
-    (resize "600px" "100px"
+    (resize "350px" "100px"
       (texmacs-input `(with ,@init ,(search-document))
                      `(style (tuple ,@style)) saux))
     === ===
-    (resize "600px" "100px"
+    (resize "350px" "100px"
       (texmacs-input `(with ,@init ,(replace-document))
                      `(style (tuple ,@style)) raux))
     === ===
@@ -686,9 +686,9 @@
       (set! search-filter-out? #f)
       (if (side-tools?)
           (tool-focus :bottom-right tool saux)
-          (dialogue-window (replace-widget u st init saux raux)
-                           (search-cancel u)
-                           "Search and replace" saux raux)))))
+          (auxiliary-widget (replace-widget u st init saux raux)
+                            (search-cancel u)
+                            "Search and replace" saux raux)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search toolbar
