@@ -49,7 +49,7 @@ if not commit_sha:
 
 # 构建评论内容
 file_name = f"{pr_number}.md"
-file_url = f"https://gitee.com/XmacsLabs/moagn/blob/main/devel/{file_name}"
+file_url = f"https://gitee.com/XmacsLabs/mogan/blob/{source_branch}/devel/{file_name}"
 if doc_files:
     message_lines = [
         "[CI 自动评论]",
@@ -67,7 +67,7 @@ if doc_files:
     elif flag != True :
         message_lines.append("⚠️ 分支名和被修改的文档不匹配")
     if len(doc_files) >1:
-        message_lines.apeend("⚠️ 注意此处修改了多个文档")
+        message_lines.append("⚠️ 注意此处修改了多个文档")
     message = "\n".join(message_lines)
 else:
     message_lines = [
@@ -85,7 +85,7 @@ else:
 
     message = "\n".join(message_lines)
 
-
+print(message)
 
 # 获取所有评论
 existing_comments_url = f"{api_base}/comments?access_token={access_token}"
