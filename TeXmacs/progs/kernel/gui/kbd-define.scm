@@ -169,6 +169,15 @@
   (or (ctx-find (kbd-get-map key) conds)
       (ctx-find (kbd-get-map key) '())))
 
+(tm-define (kbd-find-prefix prefix)
+  (filter 
+    (lambda (pair)
+      (let ((key (car pair))
+            (val (cdr pair)))
+        (and (string-starts? key prefix)
+             (ctx-resolve (kbd-get-map key) #f))))
+    (ahash-table->list kbd-map-table)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yet more subroutines for the definition of keyboard shortcuts
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
