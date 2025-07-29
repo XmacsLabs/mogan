@@ -17,6 +17,7 @@
 
 using namespace moebius;
 using lolly::data::as_hexadecimal;
+using lolly::data::binary_to_hexadecimal;
 using moebius::drd::std_contains;
 
 /******************************************************************************
@@ -279,8 +280,7 @@ tm_writer::write (tree t) {
   case RAW_DATA: {
     write ("<#", false);
     string s= as_string (t[0]);
-    for (i= 0; i < N (s); i++)
-      write (as_hexadecimal ((unsigned char) s[i], 2), false);
+    write (binary_to_hexadecimal (s), false);
     write (">", false);
     break;
   }
