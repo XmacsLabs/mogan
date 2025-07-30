@@ -472,7 +472,7 @@
 
   \;
 
-  <assign|marked-color|yellow>
+  <assign|marked-color|#ffe47f>
 
   <assign|marked-padding|0.2fn>
 

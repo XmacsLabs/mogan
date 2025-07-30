@@ -1209,6 +1209,7 @@
 ("margins on screen" "屏幕边白")
 ("margins" "边白")
 ("marked" "高亮")
+("marked text" "高亮文本")
 ("master file" "")
 ("master" "")
 ("math font family" "")
