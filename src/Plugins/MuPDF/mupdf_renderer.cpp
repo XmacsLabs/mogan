@@ -48,6 +48,9 @@ mupdf_document () {
   return doc;
 }
 
+bool           mupdf_renderer_rep::clip_active= false;
+pdf_processor* mupdf_renderer_rep::clip_proc;
+
 /******************************************************************************
  * Fitz pixmaps
  ******************************************************************************/
@@ -219,7 +222,6 @@ mupdf_renderer_rep::begin (void* handle) {
     current_width= -1.0;
     cfn          = "";
     in_text      = false;
-    clip_level   = 0;
 
     // outmost save of the graphics state
     proc->op_q (mupdf_context (), proc);
@@ -243,8 +245,11 @@ mupdf_renderer_rep::end () {
 
   if (proc) {
     // reset set_clipping calls in order to have well formed PDF.
-    while (clip_level--)
-      proc->op_Q (mupdf_context (), proc);
+    if (clip_active) {
+      clip_proc->op_Q (mupdf_context (), clip_proc);
+      clip_active= false;
+      clip_proc  = NULL;
+    }
     // outmost restore for the graphics state (see begin_page)
     proc->op_Q (mupdf_context (), proc);
 
@@ -328,25 +333,28 @@ mupdf_renderer_rep::set_clipping (SI x1, SI y1, SI x2, SI y2, bool restore) {
 
   outer_round (x1, y1, x2, y2);
   if (restore) {
-    // debug_convert << "restore clipping\n";
-    if (clip_level > 0) {
-      proc->op_Q (mupdf_context (), proc);
-      clip_level--;
-    }
     cfn= "";
   }
-  else {
-    // debug_convert << "set clipping\n";
-    proc->op_q (mupdf_context (), proc);
-    clip_level++;
-    float xx1= to_x (min (x1, x2));
-    float yy1= to_y (min (y1, y2));
-    float xx2= to_x (max (x1, x2));
-    float yy2= to_y (max (y1, y2));
-    proc->op_re (mupdf_context (), proc, xx1, yy1, xx2 - xx1, yy2 - yy1);
-    proc->op_W (mupdf_context (), proc);
-    proc->op_n (mupdf_context (), proc);
+  if (clip_proc != proc) {
+    if (clip_proc != NULL) clip_proc->op_Q (mupdf_context (), clip_proc);
+    clip_proc  = proc;
+    clip_active= false;
   }
+  if (clip_active) {
+    proc->op_Q (mupdf_context (), proc);
+  }
+  else {
+    clip_active= true;
+  }
+
+  proc->op_q (mupdf_context (), proc);
+  float xx1= to_x (min (x1, x2));
+  float yy1= to_y (min (y1, y2));
+  float xx2= to_x (max (x1, x2));
+  float yy2= to_y (max (y1, y2));
+  proc->op_re (mupdf_context (), proc, xx1, yy1, xx2 - xx1, yy2 - yy1);
+  proc->op_W (mupdf_context (), proc);
+  proc->op_n (mupdf_context (), proc);
 }
 
 /******************************************************************************

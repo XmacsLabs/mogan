@@ -35,7 +35,6 @@ protected:
   color  fg, bg;
   SI     lw;
   double current_width;
-  int    clip_level;
 
   //  pencil    pen;
   //  brush     bgb, fgb;
@@ -44,6 +43,9 @@ protected:
   bool   in_text;
   string cfn;
   float  fsize;
+
+  static bool           clip_active;
+  static pdf_processor* clip_proc;
 
   // geometry
 
