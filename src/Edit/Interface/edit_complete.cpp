@@ -338,18 +338,26 @@ edit_interface_rep::custom_complete (tree r) {
   int             i, r_N= N (r);
   int             min_compls_N= 1;
   string          prefix;
+  bool            prefix_initialized= false;
   hashset<string> compls;
   if (completion_style == string ("Popup")) {
     min_compls_N= 2; // 至少需要2个补全结果(前缀自身和一个补全结果)
     compls << string (""); // 在补全结果中插入一个空值以保留前缀自身
   }
-  for (i= 0; i < r_N; i++)
+  for (i= 0; i < r_N; i++) {
     if (is_atomic (r[i])) {
       string l= r[i]->label;
       if (is_quoted (l)) l= scm_unquote (l);
-      if (prefix == "") prefix= l;
-      else compls << l;
+      if (!prefix_initialized) {
+        // 这里使用补全的第一个结果（自身）定义了 prefix
+        // 第一个结果可能为空，所以不能使用 prefix = "" 来判断
+        // 需要一个另外的辅助变量
+        prefix            = l;
+        prefix_initialized= true;
+      }
+      compls << l;
     }
+  }
   // cout << prefix << ", " << compls << LF;
   if ((prefix == "") || (N (compls) < min_compls_N)) {
     set_input_normal ();
