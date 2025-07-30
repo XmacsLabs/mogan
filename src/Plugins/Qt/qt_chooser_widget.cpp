@@ -204,7 +204,7 @@ qt_chooser_widget_rep::set_type (const string& _type) {
                                " (*.pdf)");
   }
   else if (_type == "action_open") {
-    mainNameFilter+= " (*.tmu *.tm)";
+    mainNameFilter+= " (*.tmu *.tm *.ts *.tp)";
     //" (*.scala *.sc *.sbt *.pants *.ltx *.sty *.cls *.tex *.bib *.rawbib *.jl
     //*.js *.java *.sld *.ss *.tmu *.txt *.py *.json *.html *.hh *.cpp *cc *hpp
     //*.scm *.elv *.md *.sh *.csv)"
