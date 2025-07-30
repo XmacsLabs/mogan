@@ -14,6 +14,7 @@
 
 #include "QTMPixmapOrImage.hpp"
 #include "basic_renderer.hpp"
+#include "qimage.h"
 #include <QImage>
 #include <QPainter>
 #include <QPixmap>
@@ -45,6 +46,7 @@ public:
   void draw_bis (int char_code, font_glyphs fn, SI x, SI y);
   void draw (int char_code, font_glyphs fn, SI x, SI y);
   void draw (const QFont& qfn, const QString& s, SI x, SI y, double zoom);
+  void draw_emoji (int char_code, font_glyphs fn, SI x, SI y);
   void set_pencil (pencil p);
   void set_brush (brush b);
   void line (SI x1, SI y1, SI x2, SI y2);
@@ -71,6 +73,7 @@ public:
 
 qt_renderer_rep* the_qt_renderer ();
 QImage*          get_image (url u, int w, int h, tree eff, SI pixel);
+picture          svg_string_to_picture (string svg_data, int w, int h);
 
 class qt_shadow_renderer_rep : public qt_renderer_rep {
 public:

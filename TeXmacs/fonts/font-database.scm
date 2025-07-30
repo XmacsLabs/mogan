@@ -1816,6 +1816,7 @@
 ((Norasi Regular) ((Norasi.ttf 0 104448) (Norasi.otf 0 62392)))
 ((Noteworthy Bold) ((Noteworthy.ttc 1 551924) (Noteworthy.ttc 1 427736) (Noteworthy.ttc 1 560844)))
 ((Noteworthy Light) ((Noteworthy.ttc 0 551924) (Noteworthy.ttc 0 427736) (Noteworthy.ttc 0 560844)))
+((Noto\ Color\ Emoji Regular) ((NotoColorEmoji-Regular.ttf 0 24270832)))
 ((Noto\ Sans Bold) ((NotoSans-Bold.ttf 0 455164)))
 ((Noto\ Sans Bold\ Italic) ((NotoSans-BoldItalic.ttf 0 471004)))
 ((Noto\ Sans Italic) ((NotoSans-Italic.ttf 0 470472)))

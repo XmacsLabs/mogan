@@ -25,3 +25,23 @@ get_unicode_range (string c) {
   if (pos == N (uc)) return range;
   return "";
 }
+
+bool
+is_emoji_character (unsigned int uc) {
+  return (uc >= 0x1F600 && uc <= 0x1F64F) || // Emoticons
+         (uc >= 0x1F300 && uc <= 0x1F5FF) || // Misc Symbols and Pictographs
+         (uc >= 0x1F680 && uc <= 0x1F6FF) || // Transport and Map Symbols
+         (uc >= 0x1F700 && uc <= 0x1F77F) || // Alchemical Symbols
+         (uc >= 0x1F780 && uc <= 0x1F7FF) || // Geometric Shapes Extended
+         (uc >= 0x1F800 && uc <= 0x1F8FF) || // Supplemental Arrows-C
+         (uc >= 0x1F900 &&
+          uc <= 0x1F9FF) || // Supplemental Symbols and Pictographs
+         (uc >= 0x1FA00 && uc <= 0x1FA6F) || // Chess Symbols
+         (uc >= 0x1FA70 &&
+          uc <= 0x1FAFF) ||                // Symbols and Pictographs Extended-A
+         (uc >= 0x2600 && uc <= 0x26FF) || // Miscellaneous Symbols
+         (uc >= 0x2700 && uc <= 0x27BF) || // Dingbats
+         (uc >= 0xFE00 && uc <= 0xFE0F) || // Variation Selectors
+         (uc >= 0x1F1E6 && uc <= 0x1F1FF) || // Regional Indicator Symbols
+         uc == 0x200D;                       // Zero Width Joiner
+}

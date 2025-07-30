@@ -10,17 +10,24 @@
  ******************************************************************************/
 
 #include "qt_renderer.hpp"
+#include "Freetype/tt_face.hpp"
+#include "Freetype/unicode_font.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
 #include "frame.hpp"
 #include "image_files.hpp"
+#include "picture.hpp"
+#include "qimage.h"
+#include "qt_picture.hpp"
 #include "qt_utilities.hpp"
 #include "scheme.hpp"
+#include "unicode.hpp"
 
 #include <QObject>
 #include <QPaintDevice>
 #include <QPainterPath>
 #include <QPixmap>
+#include <QSvgRenderer>
 #include <QWidget>
 
 /******************************************************************************
@@ -549,6 +556,10 @@ qt_renderer_rep::draw_bis (int c, font_glyphs fng, SI x, SI y) {
 
 void
 qt_renderer_rep::draw (int c, font_glyphs fng, SI x, SI y) {
+  if (is_emoji_character (c)) {
+    draw_emoji (c, fng, x, y);
+    return;
+  }
   if (pen->get_type () == pencil_brush) {
     draw_bis (c, fng, x, y);
     return;
@@ -639,6 +650,74 @@ qt_renderer_rep::draw (const QFont& qfn, const QString& qs, SI x, SI y,
   painter->scale (zoom, zoom);
   painter->drawText (0, 0, qs);
   painter->resetTransform ();
+}
+
+picture
+svg_string_to_picture (string svg_data, int w, int h) {
+  if (N (svg_data) == 0) {
+    // Return null if no SVG data
+    return picture ();
+  }
+
+  // Create QByteArray from SVG string data
+  QByteArray svg_bytes (as_charp (svg_data), N (svg_data));
+
+  // Create SVG renderer from the data
+  QSvgRenderer renderer (svg_bytes);
+
+  if (!renderer.isValid ()) {
+    // Return null if SVG is invalid
+    return picture ();
+  }
+
+  // Create QImage to render SVG into
+  QImage image (w, h, QImage::Format_ARGB32);
+  image.fill (Qt::transparent);
+
+  // Render SVG to the image
+  QPainter painter (&image);
+  renderer.render (&painter);
+  painter.end ();
+
+  // Return the picture created from QImage
+  return qt_picture (image, 0, 0);
+}
+
+void
+qt_renderer_rep::draw_emoji (int char_code, font_glyphs fn, SI x, SI y) {
+
+  // Cast to TrueType font glyphs representation
+  auto tt_font= static_cast<tt_font_glyphs_rep*> (fn.rep);
+  if (is_nil (tt_font->face) || is_nil (tt_font->face->svg_table)) {
+    return;
+  }
+
+  // Get glyph ID for the emoji character
+  int glyph_id= ft_get_char_index (tt_font->face->ft_face, char_code);
+  if (glyph_id <= 0) {
+    return;
+  }
+
+  // Retrieve SVG data for the glyph
+  string svg_data= tt_font->face->svg_table->get_svg_from_glyphid (glyph_id);
+  if (N (svg_data) == 0) {
+    return;
+  }
+
+  // Calculate emoji size
+  SI    xo, yo;
+  glyph pre_gl= fn->get (char_code);
+  glyph gl    = shrink (pre_gl, std_shrinkf, std_shrinkf, xo, yo);
+  int   w= gl->width, h= gl->height;
+
+  // Create picture from SVG data
+  picture emoji_picture= svg_string_to_picture (svg_data, w, h);
+  if (is_nil (emoji_picture)) {
+    return;
+  }
+
+  // Draw the emoji picture at the specified position
+  draw_picture (emoji_picture, x, y, 255);
 }
 
 /******************************************************************************

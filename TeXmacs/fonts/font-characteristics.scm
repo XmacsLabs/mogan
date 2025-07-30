@@ -1800,6 +1800,7 @@
 ((Norasi Regular) (Ascii Latin mono=no sans=no slant=0 italic=no case=mixed regular=yes ex=75 em=197 lvw=20 lhw=5 uvw=25 uhw=6 fillp=33 vcnt=34 lasprat=101 pasprat=94 loasc=152 lodes=148 dides=104))
 ((Noteworthy Bold) (Ascii Latin Greek Cyrillic mono=no sans=yes slant=0 italic=no case=mixed regular=no ex=89 em=164 lvw=21 lhw=17 uvw=21 uhw=17 fillp=46 vcnt=53 lasprat=88 pasprat=78 loasc=167 lodes=166 dides=108))
 ((Noteworthy Light) (Ascii Latin Greek Cyrillic mono=no sans=yes slant=0 italic=no case=mixed regular=no ex=89 em=151 lvw=12 lhw=8 uvw=11 uhw=11 fillp=31 vcnt=36 lasprat=78 pasprat=69 loasc=161 lodes=166 dides=108))
+((Noto\ Color\ Emoji Regular) ())
 ((Noto\ Sans Bold) (Ascii Latin mono=no sans=yes slant=0 italic=no case=mixed regular=yes ex=91 em=172 lvw=27 lhw=21 uvw=28 uhw=24 fillp=57 vcnt=55 lasprat=104 pasprat=88 loasc=140 lodes=143 dides=102))
 ((Noto\ Sans Bold\ Italic) (Ascii Latin mono=no sans=yes slant=22 italic=yes case=mixed regular=yes ex=91 em=161 lvw=27 lhw=23 uvw=27 uhw=24 fillp=48 vcnt=56 lasprat=97 pasprat=97 loasc=140 lodes=143 dides=102))
 ((Noto\ Sans Italic) (Ascii Latin mono=no sans=yes slant=21 italic=yes case=mixed regular=yes ex=90 em=155 lvw=15 lhw=13 uvw=16 uhw=15 fillp=34 vcnt=37 lasprat=92 pasprat=87 loasc=142 lodes=144 dides=102))

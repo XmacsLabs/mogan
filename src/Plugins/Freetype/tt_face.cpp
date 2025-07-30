@@ -13,10 +13,12 @@
 #include "analyze.hpp"
 #include "file.hpp"
 #include "font.hpp"
+#include "renderer.hpp"
 #include "tm_debug.hpp"
 #include "tm_timer.hpp"
 #include "tm_url.hpp"
 #include "tt_file.hpp"
+#include "unicode.hpp"
 
 /******************************************************************************
  * Utilities
@@ -124,14 +126,26 @@ tt_font_metric_rep::get (int i) {
     fnm (i)         = (pointer) M;
     int w           = slot->bitmap.width;
     int h           = slot->bitmap.rows;
-    SI  ww          = w * PIXEL;
-    SI  hh          = h * PIXEL;
     SI  xw          = tt_si (slot->metrics.width);
     SI  xh          = tt_si (slot->metrics.height);
     SI  dx          = tt_si (slot->metrics.horiBearingX);
     SI  dy          = tt_si (slot->metrics.horiBearingY);
     SI  ll          = tt_si (slot->metrics.horiAdvance);
     (void) xw;
+
+    bool is_emoji= is_emoji_character (i);
+    if (is_emoji) {
+      w= (ll + PIXEL / 2) / PIXEL; // Convert the horizontal advance to pixel
+                                   // units and round to the nearest integer
+      h = w;                       // treating Emojis as Squares
+      xw= w * PIXEL;               // Logical width in pixels
+      xh= h * PIXEL;               // Logical height in pixels
+      dx= 0;
+      dy= h * PIXEL;
+    }
+
+    SI ww= w * PIXEL;
+    SI hh= h * PIXEL;
     M->x1= 0;
     M->y1= dy - xh;
     M->x2= ll;
@@ -219,6 +233,21 @@ tt_font_glyphs_rep::get (int i) {
       }
       buf+= pitch;
     }
+
+    // Handle emoji characters
+    bool is_emoji= is_emoji_character (i);
+    if (is_emoji) {
+      SI  ll      = tt_si (slot->metrics.horiAdvance);
+      int emoji_w = (ll + PIXEL / 2) / PIXEL;
+      int emoji_h = emoji_w; // treating Emojis as Squares
+      int emoji_ox= 0;
+      int emoji_oy= emoji_h;
+
+      // Recreate glyph with emoji dimensions
+      G        = glyph (emoji_w, emoji_h, -emoji_ox, emoji_oy);
+      G->lwidth= emoji_w; // For emoji, logical width equals the adjusted width
+    }
+
     // cout << "Glyph " << i << " of " << res_name << "\n";
     // cout << G << "\n";
     if (G->width * G->height == 0) G= error_glyph;
