@@ -756,3 +756,79 @@
 	  (set-message "Only implemented for complete subtrees"
 		       "correct formula"))
       (math-manually-correct-tree (buffer-tree))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Tab cycling completion
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (tabcycle-symbols comb)
+  ;; 根据按键序列获取数学符号Tab循环展示的列表
+  ;; 输入:
+  ;;     comb: 按键序列，类型为string，如"b tab"
+  ;; 处理过程:
+  ;;     1. 裁剪comb获得最基本的按键序列，例如“space b tab” -> "b"
+  ;;     2. 查找该按键序列对应的符号绑定
+  ;;     3. 如果绑定不存在，返回空列表
+  ;;     4. 如果绑定存在，继续查找所有以该按键序列为前缀的符号绑定
+  ;;     5. 返回所有找到的符号绑定列表，例如((symbol "<alpha>"))
+  ;; 输出:
+  ;;     符号列表，格式为((symbol "符号") ...)
+  (if (not (kbd-find-key-binding comb)) '()
+    (let* ((pre (string-replace (string-replace comb " tab" "") "space " ""))
+          (kbd-res (kbd-find-key-binding pre))
+          (kbd-sym (and (pair? kbd-res) (car kbd-res))))
+      (append
+        (if kbd-sym `((symbol ,kbd-sym)) '())
+        (reverse
+          (map (lambda (x) `(symbol ,(and (pair? x) (pair? (cdr x)) (cadadr x))))
+            (list-sort
+              (filter
+                (lambda (x)
+                  (and (pair? x)
+                      (string? (car x))
+                      (string-ends? (car x) "tab")
+                      (string=? (string-replace (car x) " tab" "") pre)))
+                (kbd-find-prefix pre))
+              (lambda (x y)
+                (and (pair? x) (pair? y)
+                    (string>? (car x) (car y)))))))))))
+
+(define (highlight-tabcycle-symbols lst comb)
+  ;; 高亮显示Tab循环符号列表中符合按键序列的符号
+  ;; 输入:
+  ;;     lst: 符号列表，格式为((symbol "符号") ...)
+  ;;     comb: 按键序列，类型为string，如"b tab"
+  ;; 输出:
+  ;;     符号列表，格式为((symbol "符号") (symbol* "符号") ...)，
+  ;;     其中 symbol* 表示高亮显示的符号，参见 make-menu-symbol 中的定义
+  (let ((bind (let ((res (kbd-find-key-binding comb)))
+                (and res (car res)))))
+    (if (string? bind)
+      (map (lambda (x) (if (and bind
+                                (pair? x)
+                                (eq? (car x) 'symbol)
+                                (string=? (cadr x) bind))
+                          (list 'symbol* bind) x))
+           lst)
+      lst)))
+
+(tm-define (math-tabcycle-symbols comb)
+  ;; 根据按键序列获取数学符号Tab循环展示的列表
+  ;; 输入:
+  ;;     comb: 按键序列，类型为string，如"b tab"
+  ;; 输出:
+  ;;     符号列表，格式为((symbol "符号") (symbol* "符号") ...)
+  (if (in-math?)
+    (highlight-tabcycle-symbols (tabcycle-symbols comb) comb)
+    '()))
+
+(tm-define (math-variant comb)
+  ;; 触发数学符号Tab循环的展示
+  ;; 输入:
+  ;;     comb: 按键序列，类型为string，如"b tab"
+  (if (in-math?)
+    (set-auxiliary-widget
+      (make-menu-widget
+        `((tile 99 (link (lambda () (math-tabcycle-symbols ,comb))))) 0)
+      "Math"))
+    (noop))
