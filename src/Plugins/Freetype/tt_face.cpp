@@ -141,7 +141,7 @@ tt_font_metric_rep::get (int i) {
       xw= w * PIXEL;               // Logical width in pixels
       xh= h * PIXEL;               // Logical height in pixels
       dx= 0;
-      dy= h * PIXEL;
+      dy= (h * PIXEL * 8) / 10;
     }
 
     SI ww= w * PIXEL;

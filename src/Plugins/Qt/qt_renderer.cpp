@@ -734,8 +734,12 @@ qt_renderer_rep::draw_emoji (int char_code, font_glyphs fn, SI x, SI y) {
     return;
   }
 
+  // Calculate vertical offset for better alignment
+  SI emoji_y_offset=
+      (h * std_shrinkf * 2 * PIXEL) / 10; // Move down by 20% of emoji height
+
   // Draw the emoji picture at the specified position
-  draw_picture (emoji_picture, x, y, 255);
+  draw_picture (emoji_picture, x, y - emoji_y_offset, 255);
 }
 
 /******************************************************************************
