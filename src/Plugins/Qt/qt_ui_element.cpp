@@ -873,15 +873,20 @@ qt_ui_element_rep::as_qwidget () {
       a->setParent (b);
       qwid= b;
     }
-    else { // text_widget
+    else if (qtw->type == text_widget) {
       QPushButton* b     = new QPushButton ();
       QTMCommand*  qtmcmd= new QTMCommand (b, cmd);
       QObject::connect (b, SIGNAL (clicked ()), qtmcmd, SLOT (apply ()));
-      if (qtw->type == text_widget) {
-        typedef quartet<string, int, color, bool> T1;
-        b->setText (to_qstring (open_box<T1> (get_payload (qtw)).x1));
-      }
+      typedef quartet<string, int, color, bool> T1;
+      b->setText (to_qstring (open_box<T1> (get_payload (qtw)).x1));
       b->setFlat (!(style & WIDGET_STYLE_BUTTON));
+      qwid= b;
+    }
+    else {
+      QToolButton* b     = new QToolButton ();
+      QTMCommand*  qtmcmd= new QTMCommand (b, cmd);
+      QObject::connect (b, SIGNAL (clicked ()), qtmcmd, SLOT (apply ()));
+      b->setDefaultAction (qtw->as_qaction ());
       qwid= b;
     }
     qwid->setStyle (qtmstyle ());
