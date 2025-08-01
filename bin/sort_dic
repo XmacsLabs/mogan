@@ -1,0 +1,15 @@
+#!/usr/bin/env elvish
+
+if (== (count $args) 0) {
+  echo "Usage: sort_dic <file1> [file2] ..."
+  exit 1
+}
+
+for path $args {
+  put "Sorting: "(basename $path)
+
+  var content = [(cat $path | order)]
+  all $content | each { |line|
+    echo $line
+  } > $path
+}
