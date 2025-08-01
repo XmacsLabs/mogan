@@ -30,6 +30,7 @@
 (define completions (make-ptree))
 (define completions-cache (make-ahash-table))
 (define-public scheme-completions-built? #f)
+(define scheme-completions-initialized? #f) 
 
 (define (clear-completions-cache)
   (set! completions-cache (make-ahash-table)))
@@ -92,8 +93,9 @@
 
 (tm-define (scheme-completions root)
   (:synopsis "Provide the completions for @root with caching")
-  (when (not core-symbols-loaded?)
-    (load-core-symbols))
+  (unless scheme-completions-initialized?
+    (set! scheme-completions-initialized? #t)
+    (scheme-completions-rebuild))
   
   (let ((root-str (tmstring->string root)))
     (let ((cached (ahash-ref completions-cache root-str)))
@@ -132,7 +134,3 @@
   (scheme-completions-add (symbol->string sym)))
 
 (if developer-mode? (set! %new-read-hook %read-symbol-hook ))
-
-(delayed 
-  (:idle 100)
-  (scheme-completions-rebuild))
