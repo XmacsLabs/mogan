@@ -30,13 +30,12 @@ private slots:
 
 /*
 Verification data for SVG table parsing.
-This test uses NotoColorEmoji-Regular.ttf as the test font.
+This test uses NotoColorEmoji.ttf as the test font.
 */
 void
 TestSVGTableParse::init () {
   lolly::init_tbox ();
-  url u= concretize_url (
-      "$TEXMACS_PATH/fonts/truetype/NotoColorEmoji-Regular.ttf");
+  url u= concretize_url ("$TEXMACS_PATH/fonts/truetype/NotoColorEmoji.ttf");
   table= parse_svgtable (u);
 }
 

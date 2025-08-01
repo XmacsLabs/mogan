@@ -785,7 +785,9 @@ parse_svgtable (const string& buf) {
     unsigned int endGlyphID  = get_U16 (tt, offset + 2);
     int          svgOffset   = get_U32 (tt, offset + 4);
     int          svgLength   = get_U32 (tt, offset + 8);
-    string       svgContent  = get_sub (tt, svgOffset, svgOffset + svgLength);
+    string       svgContent=
+        get_sub (tt, table->svgDocumentListOffset + svgOffset,
+                 table->svgDocumentListOffset + svgOffset + svgLength);
     table->records << SVGDocumentRecord{startGlyphID, endGlyphID, svgContent};
   }
   return table;
