@@ -184,4 +184,6 @@
   (if (and (style-has? "session-dtd") (detailed-menus?) (in-text?))
       (=> (balloon (icon "tm_shell.xpm")
 		   "Start an interactive session")
-	  (link insert-session-menu))))
+	  (link insert-session-menu))
+      ((balloon (icon "tm_ai.xpm") "AI")
+       (open-url "https://www.liiistem.cn"))))

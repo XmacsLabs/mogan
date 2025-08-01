@@ -1924,6 +1924,7 @@
 ("star" "五角星")
 ("start a new chapter" "新起一章")
 ("start a new section" "新起一节")
+("Start an AI interactive session" "AI功能")
 ("start an interactive session" "插入交互会话")
 ("start" "开始")
 ("statistics" "统计")
