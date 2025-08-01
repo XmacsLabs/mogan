@@ -875,7 +875,7 @@
   (insert `(include ,(utf8->cork (url->delta-unix u)))))
 
 (tm-define (make-inline-image l)
-  (apply make-image (cons* (url->delta-unix (car l)) #f (cdr l))))
+  (apply make-image (cons* (url->system (car l)) #f (cdr l))))
 
 (tm-define (make-link-image l)
   (apply make-image (cons* (url->delta-unix (car l)) #t (cdr l))))

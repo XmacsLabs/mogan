@@ -365,7 +365,7 @@ edit_text_rep::make_htab (string spc) {
 void
 edit_text_rep::make_image (string file_name, bool link, string w, string h,
                            string x, string y) {
-  url    image= url_unix (file_name);
+  url    image= url_system (file_name);
   string type = "";
   tree   t (IMAGE);
   if (link) {
