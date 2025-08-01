@@ -28,68 +28,101 @@
   (:use (utils library ptrees) (prog glue-symbols)))
 
 (define completions (make-ptree))
+(define completions-cache (make-ahash-table))
+(define-public scheme-completions-built? #f)
 
-; Subroutine for all-used-symbols
-(define (obarray-fold-sub module prev)
-  (with mi (module-public-interface module)
-    (append
-      (map 
-        (lambda (x) (symbol->string (car x)))
-        (list-filter
-          (ahash-table->list (module-obarray module))
-          (lambda (x) 
-            (or (not mi) (!= #f (module-local-variable mi (car x)))))))
-      prev)))
+(define (clear-completions-cache)
+  (set! completions-cache (make-ahash-table)))
+
+
+
+(define core-symbols-loaded? #f)
+(define full-load-scheduled? #f)
+
+(define (load-core-symbols)
+  (when (not core-symbols-loaded?)
+    (display "Texmacs] Loading core symbols... ")
+    (let ((start (texmacs-time))
+          (core-symbols (all-glued-symbols)))
+      (scheme-completions-add-list core-symbols)
+      (display* (length core-symbols) " symbols in " 
+                (- (texmacs-time) start) " msec\n")
+      (set! core-symbols-loaded? #t))))
+
+(define (load-full-symbols)
+  (when (and core-symbols-loaded? (not scheme-completions-built?))
+    (display "Texmacs] Background loading all symbols... ")
+    (let ((start (texmacs-time)))
+      (catch #t
+        (lambda ()
+          (let* ((tm-symbols (map (lambda (entry) (symbol->string (car entry)))
+                                 tm-defined-table))
+                 (all-symbols (append tm-symbols (all-used-symbols))))
+            (scheme-completions-add-list all-symbols)
+            (display* (length all-symbols) " total symbols in " 
+                     (- (texmacs-time) start) " msec\n")
+            (set! scheme-completions-built? #t)))
+        (lambda (err) 
+          (display* "Error loading symbols: " err "\n"))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Interface
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define-public scheme-completions-built? #f)
-
-; redefine
-(tm-define (all-used-modules) *modules*)
-; anyway the previous definition was wrong.
-; (tm-define (all-used-modules)
-;  (cons (current-module) (module-uses (current-module))))
-
-;;FIXME: this function is implementation dependent, move it in the compat layer
-;;also move some other parts of this module
-(tm-define (all-used-symbols)
-  (map symbol->string (append
-     ;; add tm-defined symbols
-     (map car tm-defined-table)
-    ;; add all other exported symbols
-     (apply append (map (lambda (m)
-       (let ((e ((cdr m) '*exports*)))
-         (if (undefined? e) (values) e))) *modules*)))))
-
-;(tm-define (all-used-symbols)
-;  (list-fold obarray-fold-sub '() (all-used-modules)))
-
 (tm-define (scheme-completions-add str)
-  (set! completions (pt-add completions str)))
+  (set! completions (pt-add completions str))
+  (clear-completions-cache))
 
 (tm-define (scheme-completions-add-list lst)
-  (set! completions (pt-add-list completions lst)))
+  (let ((valid-strings (filter (lambda (s) 
+                                (and (string? s) (> (string-length s) 0)))
+                              lst)))
+    (for-each (lambda (str) 
+                (set! completions (pt-add completions str)))
+              valid-strings))
+  (clear-completions-cache))
 
 (tm-define (scheme-completions-rebuild)
-  (display "Texmacs] Populating autocompletions tree... ")
-  (let ((start (texmacs-time))
-        (symbols (append (all-used-symbols) (all-glued-symbols))))
-    (scheme-completions-add-list symbols)
-    (display* (length symbols) " symbols in "
-              (- (texmacs-time) start) " msec\n")
-    (set! scheme-completions-built? #t)))
+  (load-core-symbols)
+  (when (not full-load-scheduled?)
+    (set! full-load-scheduled? #t)
+    (delayed 
+      (:idle 500)
+      (load-full-symbols))))
+
+(tm-define (scheme-completions root)
+  (:synopsis "Provide the completions for @root with caching")
+  (when (not core-symbols-loaded?)
+    (load-core-symbols))
+  
+  (let ((root-str (tmstring->string root)))
+    (let ((cached (ahash-ref completions-cache root-str)))
+      (if cached
+          `(tuple ,root ,@(map string->tmstring cached))
+          (let ((results (pt-words-below (pt-find completions root-str))))
+            (when (<= (string-length root-str) 2)
+              (ahash-set! completions-cache root-str results))
+            `(tuple ,root ,@(map string->tmstring results)))))))
 
 (tm-define (scheme-completions-dump)
   (pt-words-below (pt-find completions "")))
 
-(tm-define (scheme-completions root)
-  (:synopsis "Provide the completions for @root as needed by custom-complete")
-  `(tuple ,root 
-     ,@(map string->tmstring 
-            (pt-words-below (pt-find completions (tmstring->string root))))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 兼容原始接口
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (all-used-symbols)
+  (catch #t
+    (lambda ()
+      (map symbol->string 
+           (append
+            (map car tm-defined-table)
+            (apply append 
+                   (map (lambda (m)
+                          (let ((e ((cdr m) '*exports*)))
+                            (if (undefined? e) '() e))) 
+                        *modules*)))))
+    (lambda (err) '())))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hook for new-read. See init-texmacs.scm
@@ -99,3 +132,7 @@
   (scheme-completions-add (symbol->string sym)))
 
 (if developer-mode? (set! %new-read-hook %read-symbol-hook ))
+
+(delayed 
+  (:idle 100)
+  (scheme-completions-rebuild))
