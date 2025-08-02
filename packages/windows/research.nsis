@@ -67,13 +67,13 @@ ManifestDPIAware true
     ${EndIf}
     ;fall-through and die
   ${Case} 1223
-    MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "This ${thing} requires admin privileges, aborting!"
+    MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "This ${thing} requires administrator privileges.$\r$\nPlease run the installer as administrator or contact your system administrator."
     Quit
   ${Case} 1062
-    MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Logon service not running, aborting!"
+    MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Logon service is not running.$\r$\nPlease restart your computer and try again."
     Quit
   ${Default}
-    MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Unable to elevate, error $0"
+    MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Unable to elevate privileges (error code: $0).$\r$\nPlease try running the installer as administrator."
     Quit
   ${EndSwitch}
 
@@ -240,39 +240,126 @@ Function un.RMEmptyParentDirs
 FunctionEnd
 
 
-; setup installer
-Var NoAdmin
+; Set installer variables
+Var NoAdmin                    ; Whether to use admin privileges
+Var OldVersionInstalled        ; Whether old version is detected
+Var OldInstallLocation         ; Old version installation path
+
 Function .onInit
+  ; Check privilege settings in command line parameters
   ${GetOptions} $CMDLINE "/NOADMIN" $NoAdmin
-  ${If} ${Errors}
+  IfErrors 0 +3
     !insertmacro Init "installer"
     StrCpy $NoAdmin "false"
+    Goto +2
+  StrCpy $NoAdmin "true"
+
+  ; Check for old version installation
+  StrCpy $OldVersionInstalled "false"
+  ${If} $NoAdmin == "false"
+    ; Admin privileges: Read installation path from HKLM
+    ReadRegStr $R0 ${HKLM} ${RegUninstall} "InstallLocation"
   ${Else}
-    StrCpy $NoAdmin "true"
+    ; Regular user privileges: Read installation path from HKCU
+    ReadRegStr $R0 ${HKCU} ${RegUninstall} "InstallLocation"
+  ${EndIf}
+  ${If} $R0 != ""
+    ; Found old version installation path
+    StrCpy $OldVersionInstalled "true"
+    Push $R0
+    Call TrimQuote
+    Pop $R0
+    StrCpy $OldInstallLocation $R0
   ${EndIf}
 
-  ; get installation root directory
+  ; Set installation root directory
   ${If} $InstDir == ""
-    ${If} $NoAdmin == "false"
-      ReadRegStr $R0 ${HKLM} ${RegUninstall} "InstallLocation"
+    ${If} $OldVersionInstalled == "true"
+      ; Old version detected: Install to old version location
+      StrCpy $InstDir $OldInstallLocation
     ${Else}
-      ReadRegStr $R0 ${HKCU} ${RegUninstall} "InstallLocation"
-    ${EndIf}
-    ${If} $R0 != ""
-      Push $R0
-      Call TrimQuote
-      Pop  $R0
-      StrCpy $InstDir $R0
+      ; No old version: Install to default location
+      StrCpy $InstDir "${PROGRAMFILES}\${PACKAGE_NAME}"
     ${EndIf}
   ${EndIf}
-  ${If} $InstDir == ""
-    StrCpy $InstDir "${PROGRAMFILES}\${PACKAGE_NAME}"
+FunctionEnd
+
+
+; Uninstall old version function
+Function UninstallOldVersion
+  ${If} $OldVersionInstalled == "true"
+    ; Verify installation path security
+    ${If} $OldInstallLocation == ""
+      DetailPrint "Old installation location is empty, skipping uninstall"
+      Goto SkipUninstall
+    ${EndIf}
+    
+    ; Check if it's a system critical directory
+    ${If} $OldInstallLocation == "$WINDIR"
+    ${OrIf} $OldInstallLocation == "$SYSDIR"
+    ${OrIf} $OldInstallLocation == "$PROGRAMFILES"
+    ${OrIf} $OldInstallLocation == "$PROGRAMFILES64"
+      DetailPrint "Old installation location is a system directory, skipping uninstall"
+      Goto SkipUninstall
+    ${EndIf}
+    
+    ; Check if installation directory actually exists
+    IfFileExists "$OldInstallLocation" 0 +3
+      ; Check if uninstaller exists
+      IfFileExists "$OldInstallLocation\uninstall.exe" 0 +3
+        ; Verify uninstaller path security
+        ${If} "$OldInstallLocation\uninstall.exe" == ""
+          DetailPrint "Uninstaller path is empty, skipping uninstall"
+          Goto SkipUninstall
+        ${EndIf}
+        
+        ; Execute silent uninstall
+        ExecWait '"$OldInstallLocation\uninstall.exe" /S' $0
+        ${If} $0 != 0
+          MessageBox mb_YesNo|mb_IconExclamation|mb_TopMost|mb_SetForeground "Failed to uninstall old version (error code: $0).$\r$\n$\r$\nDo you want to continue with the installation anyway?$\r$\nNote: You may need to manually uninstall the old version later."
+          ${If} $0 == IDYES
+            DetailPrint "User chose to continue despite uninstall failure"
+            Call CleanupOldVersionRegistry
+          ${Else}
+            Abort "Installation cancelled by user"
+          ${EndIf}
+        ${EndIf}
+        Goto SkipUninstall
+      ; Installation directory exists but uninstaller is missing - clean up registry only
+      DetailPrint "Old version installation found but uninstaller missing. Cleaning up registry only..."
+      Call CleanupOldVersionRegistry
+      Goto SkipUninstall
+    ; Installation directory doesn't exist - only clean up registry
+    DetailPrint "Old version installation directory not found. Cleaning up registry only..."
+    Call CleanupOldVersionRegistry
+    
+    SkipUninstall:
+    StrCpy $OldVersionInstalled "false"
   ${EndIf}
+FunctionEnd
+
+; Clean up old version registry entries function
+Function CleanupOldVersionRegistry
+  DetailPrint "Cleaning up old version registry entries..."
+  
+  ; Clean up registry keys
+  ${If} $NoAdmin == "false"
+    DeleteRegKey ${HKLM} ${RegUninstall}
+  ${Else}
+    DeleteRegKey ${HKCU} ${RegUninstall}
+  ${EndIf}
+  
+  ; Clean up file associations
+  DeleteRegKey HKCR "Applications\MGResearch.exe"
+  DeleteRegKey HKCR "Applications\${PACKAGE_NAME}.exe"
 FunctionEnd
 
 Section "${PACKAGE_NAME} (required)" InstallExecutable
 
   SectionIn RO
+
+  ; Uninstall old version before installing new version
+  Call UninstallOldVersion
 
   ; set output path to the installation directory.
   SetOutPath $InstDir
@@ -352,6 +439,13 @@ Section "Uninstall"
 
   ; add uninstall commands
   ${PACKAGE_UNINSTALLCMDS}
+
+  ; Clean up registry keys
+  ${If} $NoAdmin == "false"
+    DeleteRegKey ${HKLM} ${RegUninstall}
+  ${Else}
+    DeleteRegKey ${HKCU} ${RegUninstall}
+  ${EndIf}
 
   ; remove uninstall.exe
   ${unRMFileIfExists} "$InstDir\uninstall.exe"
