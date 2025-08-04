@@ -12,6 +12,7 @@
 #include "analyze.hpp"
 #include "cork.hpp"
 #include "font.hpp"
+#include "unicode.hpp"
 #include "universal.hpp"
 
 /******************************************************************************
@@ -271,6 +272,11 @@ int
 poor_bold_font_rep::index_glyph (string s, font_metric& fnm, font_glyphs& fng) {
   int c= base->index_glyph (s, fnm, fng);
   if (c < 0) return c;
+
+  // Check if this is an emoji character, if so, don't apply bolden transform
+  if (is_emoji_character (c)) {
+    return c;
+  }
   SI dpen, dtot;
   fatten (s, dpen, dtot);
   fnm= bolden (fnm, dtot, vertical (dpen));

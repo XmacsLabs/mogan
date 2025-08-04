@@ -1,0 +1,16 @@
+<TMU|<tuple|1.1.0|2025.1.0>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <with|font-series|bold|加粗文😀😁本测试>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|font|Noto Color Emoji>
+    <associate|font-family|rm>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
