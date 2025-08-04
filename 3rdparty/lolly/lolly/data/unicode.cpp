@@ -110,6 +110,24 @@ unicode_get_range (int code) {
   else if (code >= 0x2000 && code <= 0x23ff) return "mathsymbols";
   else if (code >= 0x2900 && code <= 0x2e7f) return "mathextra";
   else if (code >= 0x1d400 && code <= 0x1d7ff) return "mathletters";
+  else if ((code >= 0x1F600 && code <= 0x1F64F) || // Emoticons
+           (code >= 0x1F300 &&
+            code <= 0x1F5FF) || // Misc Symbols and Pictographs
+           (code >= 0x1F680 && code <= 0x1F6FF) || // Transport and Map Symbols
+           (code >= 0x1F700 && code <= 0x1F77F) || // Alchemical Symbols
+           (code >= 0x1F780 && code <= 0x1F7FF) || // Geometric Shapes Extended
+           (code >= 0x1F800 && code <= 0x1F8FF) || // Supplemental Arrows-C
+           (code >= 0x1F900 &&
+            code <= 0x1F9FF) || // Supplemental Symbols and Pictographs
+           (code >= 0x1FA00 && code <= 0x1FA6F) || // Chess Symbols
+           (code >= 0x1FA70 &&
+            code <= 0x1FAFF) || // Symbols and Pictographs Extended-A
+           (code >= 0x2600 && code <= 0x26FF) ||   // Miscellaneous Symbols
+           (code >= 0x2700 && code <= 0x27BF) ||   // Dingbats
+           (code >= 0xFE00 && code <= 0xFE0F) ||   // Variation Selectors
+           (code >= 0x1F1E6 && code <= 0x1F1FF) || // Regional Indicator Symbols
+           code == 0x200D)                         // Zero Width Joiner
+    return "emoji";
   else return "";
 }
 

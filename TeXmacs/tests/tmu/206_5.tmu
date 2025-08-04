@@ -1,0 +1,18 @@
+<TMU|<tuple|1.1.0|2025.1.0>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <\hide-preamble>
+    <assign|font|cjk=Noto CJK SC,emoji=Noto Color Emoji,CMU>
+  </hide-preamble>
+
+  👋😀😄
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
