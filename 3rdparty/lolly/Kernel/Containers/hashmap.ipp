@@ -64,11 +64,9 @@ hashmap_rep<T, U>::resize (int n2) {
 
 TMPL bool
 hashmap_rep<T, U>::contains (T x) {
-  int                   hv= hash (x);
-  list<hashentry<T, U>> l (a[hv & (n - 1)]);
-  while (!is_nil (l)) {
+  int hv= hash (x);
+  for (auto l= a[hv & (n - 1)]; !is_nil (l); l= l->next) {
     if (l->item.code == hv && l->item.key == x) return true;
-    l= l->next;
   }
   return false;
 }
@@ -80,11 +78,9 @@ hashmap_rep<T, U>::empty () {
 
 TMPL U&
 hashmap_rep<T, U>::bracket_rw (T x) {
-  int                   hv= hash (x);
-  list<hashentry<T, U>> l (a[hv & (n - 1)]);
-  while (!is_nil (l)) {
-    if (l->item.code == hv && l->item.key == x) return l->item.im;
-    l= l->next;
+  int hv= hash (x);
+  for (auto p= a[hv & (n - 1)]; !is_nil (p); p= p->next) {
+    if (p->item.code == hv && p->item.key == x) return p->item.im;
   }
   if (size >= n * max) resize (n << 1);
   list<hashentry<T, U>>& rl= a[hv & (n - 1)];
@@ -123,10 +119,8 @@ TMPL void
 hashmap_rep<T, U>::generate (void (*routine) (T)) {
   int i;
   for (i= 0; i < n; i++) {
-    list<hashentry<T, U>> l (a[i]);
-    while (!is_nil (l)) {
-      routine (l->item.key);
-      l= l->next;
+    for (auto p= a[i]; !is_nil (p); p= p->next) {
+      routine (p->item.key);
     }
   }
 }
@@ -136,9 +130,8 @@ operator<< (tm_ostream& out, hashmap<T, U> h) {
   int i= 0, j= 0, n= h->n, size= h->size;
   out << "{ ";
   for (; i < n; i++) {
-    list<hashentry<T, U>> l= h->a[i];
-    for (; !is_nil (l); l= l->next, j++) {
-      out << l->item;
+    for (auto p= h->a[i]; !is_nil (p); p= p->next, j++) {
+      out << p->item;
       if (j != size - 1) out << ", ";
     }
   }
@@ -150,9 +143,8 @@ TMPL void
 hashmap_rep<T, U>::join (hashmap<T, U> h) {
   int i= 0, n= h->n;
   for (; i < n; i++) {
-    list<hashentry<T, U>> l= h->a[i];
-    for (; !is_nil (l); l= l->next)
-      bracket_rw (l->item.key)= copy (l->item.im);
+    for (auto p= h->a[i]; !is_nil (p); p= p->next)
+      bracket_rw (p->item.key)= copy (p->item.im);
   }
 }
 
@@ -161,9 +153,8 @@ operator== (hashmap<T, U> h1, hashmap<T, U> h2) {
   if (h1->size != h2->size) return false;
   int i= 0, n= h1->n;
   for (; i < n; i++) {
-    list<hashentry<T, U>> l= h1->a[i];
-    for (; !is_nil (l); l= l->next)
-      if (h2[l->item.key] != l->item.im) return false;
+    for (auto p= h1->a[i]; !is_nil (p); p= p->next)
+      if (h2[p->item.key] != p->item.im) return false;
   }
   return true;
 }

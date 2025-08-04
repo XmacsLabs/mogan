@@ -71,10 +71,17 @@ hashmap_rep<T, U>::post_patch (hashmap<T, U> patch, hashmap<T, U> base) {
 TMPL list<hashentry<T, U>>
      copy_list (list<hashentry<T, U>> l) {
   if (is_nil (l)) return l;
-  else
-    return list<hashentry<T, U>> (
-        hashentry<T, U> (l->item.code, l->item.key, l->item.im),
-        copy_list (l->next));
+
+  hashentry<T, U>       e0 (l->item.code, l->item.key, l->item.im);
+  list<hashentry<T, U>> head (e0);
+  auto                  tail= head;
+
+  for (auto cur= l->next; !is_nil (cur); cur= cur->next) {
+    hashentry<T, U> en (cur->item.code, cur->item.key, cur->item.im);
+    tail->next= list<hashentry<T, U>> (en);
+    tail      = tail->next;
+  }
+  return head;
 }
 
 TMPL hashmap<T, U>
