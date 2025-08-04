@@ -487,7 +487,11 @@
         ((in? :new-window opts)
          (open-buffer-in-window name (buffer-get name) ""))
         (else
-          (switch-to-buffer name)))
+          (with wins (buffer->windows-of-tabpage name)
+            (if (and (!= wins '())
+                     (in? (current-window) wins))
+              (switch-to-buffer* name)
+              (switch-to-buffer name)))))
   (buffer-notify-recent name)
   (when (nnull? (select (buffer-get name)
                         '(:* gpg-passphrase-encrypted-buffer)))
