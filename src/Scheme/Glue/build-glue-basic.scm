@@ -580,6 +580,7 @@
   (url-delta delta (url url url))
   (url-secure? is_secure (bool url))
   (url-descends? descends (bool url url))
+  (url-drive-letter drive_letter (string url))
 
   (url-complete complete (url url string))
   (url-resolve resolve (url url string))

@@ -878,7 +878,12 @@
   (apply make-image (cons* (url->system (car l)) #f (cdr l))))
 
 (tm-define (make-link-image l)
-  (apply make-image (cons* (url->delta-unix (car l)) #t (cdr l))))
+  (let ((delta-unix (url->delta-unix (car l))))
+    (if delta-unix
+      (apply make-image (cons* delta-unix #t (cdr l)))
+      (set-message `(concat ,(translate "Unable to link images from another drive: ")
+                            (verbatim ,(url->string (car l))) "")
+                   (translate "link image")))))
 
 (tm-define (make-graphics-over-selection)
   (when (selection-active-any?)

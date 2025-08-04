@@ -320,9 +320,13 @@
 
 (define-public (url->delta-unix u)
   (with base (buffer-get-master (current-buffer))
-    (when (and (url-rooted? u) (not (url-none? base)))
-      (set! u (url-delta base u))))
-  (url->unix u))
+    ;; Handle Windows drive letter issues - if different drives, return #f
+    (cond ((and (or (os-mingw?) (os-win32?))
+                (!= (url-drive-letter u) (url-drive-letter base)))
+           #f)
+          ((and (url-rooted? u) (not (url-none? base)))
+           (url->unix (url-delta base u)))
+          (else (url->unix u)))))
 
 (define-public (first-in-path . l)
   (cond ((null? l) #f)

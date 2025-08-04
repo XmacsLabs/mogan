@@ -32,6 +32,7 @@
 ("Taiwan" "中国台湾")
 ("TeXmacs macro" "TeXmacs宏")
 ("TeXmacs online docs" "TeXmacs在线文档")
+("Unable to link images from another drive: " "无法链接另一个盘的图片：")
 ("United Kingdom" "英国")
 ("United States" "美国")
 ("Windows Bitmap" "Windows位图")

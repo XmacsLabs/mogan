@@ -624,6 +624,14 @@ function main()
                 }
             },
             {
+                scm_name = "url-drive-letter",
+                cpp_name = "drive_letter",
+                ret_type = "string",
+                arg_list = {
+                    "url"
+                }
+            },
+            {
                 scm_name = "url-descendants",
                 cpp_name = "subdirectories",
                 ret_type = "url",

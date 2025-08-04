@@ -630,6 +630,37 @@ descends (url u, url base) {
   return false;
 }
 
+string
+drive_letter (url u) {
+#ifdef WINPATHS
+  string url_str= as_string (u, URL_SYSTEM);
+
+  // Handle drive letters (e.g., "C")
+  if (N (url_str) >= 2 && isalpha (url_str[0]) && url_str[1] == ':') {
+    return string (1, toupper (url_str[0]));
+  }
+
+  // Handle UNC paths (e.g., "\\host\share")
+  if (starts (url_str, "\\\\")) {
+    int host_end= search_forwards ("\\", 2, url_str);
+    if (host_end != -1) {
+      int share_end= search_forwards ("\\", host_end + 1, url_str);
+      if (share_end != -1) {
+        return url_str (0, share_end);
+      }
+      else {
+        return url_str; // Just the UNC host\share, no path
+      }
+    }
+  }
+
+  return "";
+#else
+  (void) u;
+  return ""; // Non-Windows platforms don't have drive letters
+#endif
+}
+
 url
 operator* (url u1, url u2) {
   if (is_root (u2) || (is_concat (u2) && is_root (u2[1]))) {
