@@ -22,6 +22,7 @@
 
 // Forward declaration
 class QTMCompletionPopup;
+class QTMMathCompletionPopup;
 
 /*! A widget containing a TeXmacs canvas.
 
@@ -103,6 +104,14 @@ public:
   void completion_popup_next (bool next);
   void ensure_completion_popup ();
 
+  ////////////////////// Math completion popup support
+  void ensure_math_completion_popup ();
+  void show_math_completion_popup (struct cursor cu, double magf, int scroll_x,
+                                   int scroll_y, int canvas_x);
+  void set_math_completion_popup (widget w);
+  void hide_math_completion_popup ();
+  void scroll_math_completion_popup_by (SI x, SI y);
+
   ////////////////////// backing store management
 
   static void repaint_all (); // called by qt_gui_rep::update()
@@ -111,6 +120,7 @@ protected:
   static hashset<pointer> all_widgets;
   rectangles              invalid_regions;
   QTMCompletionPopup*     completionPopUp;
+  QTMMathCompletionPopup* mathCompletionPopUp;
 #ifdef USE_MUPDF_RENDERER
   double  bs_zoomf;
   picture backing_store;

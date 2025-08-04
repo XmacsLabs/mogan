@@ -81,6 +81,8 @@ protected:
   string            completion_prefix;
   int               completion_pos;
   string            completion_style;
+  string            last_comb;
+  cursor            last_cursor;
   renderer          shadow;
   SI                vx1, vy1, vx2, vy2;
   rectangles        stored_rects;
@@ -176,6 +178,7 @@ public:
   void   key_press (string key);
   void   emulate_keyboard (string keys, string action= "");
   bool   complete_try ();
+  void   math_complete_try (string comb);
   void   complete_message ();
   void   complete_start (string prefix, array<string> compls);
   bool   complete_keypress (string key);

@@ -14,6 +14,8 @@
 #include "converter.hpp"
 #include "cork.hpp"
 #include "edit_interface.hpp"
+#include "object_l5.hpp"
+#include "preferences.hpp"
 #include "tm_buffer.hpp"
 
 #include <lolly/data/numeral.hpp>
@@ -75,6 +77,7 @@ edit_interface_rep::set_input_normal () {
   if (prev_input_mode == INPUT_COMPLETE) {
     hide_completion_popup ();
   }
+  hide_math_completion_popup ();
 }
 
 bool
@@ -159,10 +162,44 @@ edit_interface_rep::try_shortcut (string comb) {
     if ((status & 1) == 1) cmd ();
     else if (N (shorth) > 0) call ("kbd-insert", shorth);
     // cout << "Mark= " << sh_mark << "\n";
+    string mode= as_string (call ("get-env", "mode"));
+    if (mode == "math" && get_preference ("completion style") == "Popup") {
+      math_complete_try (comb);
+      return true;
+    }
+    hide_math_completion_popup ();
     return true;
   }
-
+  hide_math_completion_popup ();
   return false;
+}
+
+void
+edit_interface_rep::math_complete_try (string comb) {
+  string suffix= "tab";
+  comb         = replace (comb, "\\", "\\\\");
+  // cout << "comb: " << comb << "\n";
+  // cout << "last comb: " << last_comb << "\n";
+  if ((comb != suffix) &&
+      ((starts (last_comb, comb) && ends (last_comb, suffix)) ||
+       (ends (comb, suffix)))) {
+    string wid_expr= (string) "(make-menu-widget " *
+                     "`((tile 99 (link (lambda () " *
+                     "(math-tabcycle-symbols ,\"" * comb * "\"))))) 0)";
+    widget wid= as_widget (eval (wid_expr));
+    cursor cu;
+    if ((last_cursor != NULL) && (starts (last_comb, comb))) {
+      cu= last_cursor;
+    }
+    else {
+      cu         = eb->find_check_cursor (previous_valid (et, tp));
+      last_cursor= cu;
+    }
+    set_math_completion_popup (wid);
+    show_math_completion_popup (cu, magf, get_scroll_x (), get_scroll_y (),
+                                get_canvas_x ());
+    last_comb= comb;
+  }
 }
 
 static string

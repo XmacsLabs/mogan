@@ -17,6 +17,7 @@
 #include "qt_window_widget.hpp"
 
 #include "QTMCompletionPopup.hpp"
+#include "QTMMathCompletionPopup.hpp"
 #include "QTMMenuHelper.hpp"
 #include "QTMStyle.hpp"
 #include "QTMWidget.hpp"
@@ -27,7 +28,8 @@
 #endif
 
 qt_simple_widget_rep::qt_simple_widget_rep ()
-    : qt_widget_rep (simple_widget), sequencer (0), completionPopUp (nullptr) {
+    : qt_widget_rep (simple_widget), sequencer (0), completionPopUp (nullptr),
+      mathCompletionPopUp (nullptr) {
 #ifndef USE_MUPDF_RENDERER
   backingPixmap= headless_mode ? NULL : new QPixmap ();
 #endif
@@ -691,5 +693,62 @@ qt_simple_widget_rep::completion_popup_next (bool next) {
     else {
       completionPopUp->selectPreviousItem ();
     }
+  }
+}
+
+/******************************************************************************
+ * Math completion popup support
+ ******************************************************************************/
+
+void
+qt_simple_widget_rep::ensure_math_completion_popup () {
+  if (!mathCompletionPopUp && canvas ()) {
+    mathCompletionPopUp= new QTMMathCompletionPopup (canvas (), this);
+    if (is_empty (tm_style_sheet)) {
+      mathCompletionPopUp->setStyle (qtmstyle ());
+    }
+  }
+}
+
+void
+qt_simple_widget_rep::show_math_completion_popup (struct cursor cu, double magf,
+                                                  int scroll_x, int scroll_y,
+                                                  int canvas_x) {
+  ensure_math_completion_popup ();
+  mathCompletionPopUp->showMathCompletions (cu, magf, scroll_x, scroll_y,
+                                            canvas_x);
+}
+
+void
+qt_simple_widget_rep::hide_math_completion_popup () {
+  // 此方法的调用无需进行数学环境前置条件的判断，
+  // 当不满足数学环境的条件时，mathCompletionPopUp 是 nullptr，
+  // 调用的结果就是没有操作，直接返回。
+  if (mathCompletionPopUp) {
+    mathCompletionPopUp->hide ();
+    // 直接回收
+    delete mathCompletionPopUp;
+    mathCompletionPopUp= nullptr;
+  }
+}
+
+void
+qt_simple_widget_rep::set_math_completion_popup (widget w) {
+  ensure_math_completion_popup ();
+  qt_widget qwid   = concrete (w);
+  QWidget*  qwidget= qwid->as_qwidget ();
+  if (!qwidget) {
+    return; // TODO: THROW HERE
+  }
+  mathCompletionPopUp->setWidget (qwidget);
+}
+
+void
+qt_simple_widget_rep::scroll_math_completion_popup_by (SI x, SI y) {
+  if (mathCompletionPopUp) {
+    QPoint qp (x, y);
+    coord2 p= from_qpoint (qp);
+    mathCompletionPopUp->scrollBy (p.x1, p.x2);
+    mathCompletionPopUp->updatePosition ();
   }
 }
