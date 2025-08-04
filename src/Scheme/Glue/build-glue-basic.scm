@@ -773,6 +773,8 @@
   (view-recent get_recent_view (url url))
   (view-delete delete_view (void url))
   (window-set-view window_set_view (void url url bool))
+  (view-set-window view_set_window (bool url url bool))
+  (view-set-new-window view_set_new_window (void url))
   (switch-to-buffer switch_to_buffer (void url))
   (set-drd set_current_drd (void url))
 

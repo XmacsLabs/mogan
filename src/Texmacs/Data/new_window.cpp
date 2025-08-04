@@ -83,7 +83,7 @@ public:
 };
 
 url
-new_window (bool map_flag= true, tree geom= "") {
+new_window (bool map_flag, tree geom) {
   int mask= 0;
   if (get_preference ("header") == "on") mask+= 1;
   if (get_preference ("main icon bar") == "on") mask+= 2;

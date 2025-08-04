@@ -32,7 +32,7 @@ class QTMTabPage : public QToolButton {
   QPoint       m_dragStartPos;
 
 public:
-  const url m_bufferUrl;
+  const url m_viewUrl;
 
 public:
   explicit QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
@@ -69,6 +69,7 @@ In order to:
 2. Support drag-and-drop to sort tab page
  */
 class QTMTabPageContainer : public QWidget {
+  Q_OBJECT
   QList<QTMTabPage*> m_tabPageList;
   int                m_rowHeight       = 0;
   int                m_draggingTabIndex= -1;
@@ -80,11 +81,11 @@ public:
 
   inline void setRowHeight (int p_height) { m_rowHeight= p_height; }
   void        replaceTabPages (QList<QAction*>* p_src);
+  void        arrangeTabPages ();
 
 private:
   void removeAllTabPages ();
   void extractTabPages (QList<QAction*>* p_src);
-  void arrangeTabPages ();
   void adjustHeight (int p_rowCount);
 
   // drag and drop events

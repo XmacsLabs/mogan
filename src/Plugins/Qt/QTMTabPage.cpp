@@ -11,6 +11,7 @@
 
 #include "QTMTabPage.hpp"
 #include "new_view.hpp"
+#include "tm_window.hpp"
 
 // The minimum width of a single tab page (in pixels).
 #define MIN_TAB_PAGE_WIDTH 150
@@ -29,9 +30,11 @@
  * does not disappear immediately. Therefore, we need it to remember which tab
  * was most recently closed and avoid displaying it during the first update.
  */
-url g_mostRecentlyClosedTab;
+url g_mostRecentlyClosedTab= url_none ();
 
-url g_mostRecentlyDraggedTab;
+url                  g_mostRecentlyDraggedTab= url_none ();
+QTMTabPageContainer* g_mostRecentlyDraggedBar= nullptr;
+QTMTabPageContainer* g_mostRecentlyEnteredBar= nullptr;
 
 /******************************************************************************
  * QTMTabPage
@@ -39,7 +42,7 @@ url g_mostRecentlyDraggedTab;
 
 QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
                         bool p_isActive)
-    : m_bufferUrl (p_url) {
+    : m_viewUrl (p_url) {
   p_title->setCheckable (p_isActive);
   p_title->setChecked (p_isActive);
   setDefaultAction (p_title);
@@ -52,7 +55,7 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
   m_closeBtn->setFocusPolicy (
       Qt::NoFocus); // don't steal focus from the editor (2) (both are needed)
   connect (m_closeBtn, &QToolButton::clicked, this,
-           [=] () { g_mostRecentlyClosedTab= m_bufferUrl; });
+           [=] () { g_mostRecentlyClosedTab= m_viewUrl; });
 
   setupStyle ();
 }
@@ -88,7 +91,11 @@ QTMTabPage::resizeEvent (QResizeEvent* e) {
 void
 QTMTabPage::mousePressEvent (QMouseEvent* e) {
   if (e->button () == Qt::LeftButton) {
-    m_dragStartPos= e->pos ();
+    g_mostRecentlyDraggedTab= this->m_viewUrl;
+    g_mostRecentlyDraggedBar=
+        qobject_cast<QTMTabPageContainer*> (this->parentWidget ());
+    g_mostRecentlyEnteredBar= g_mostRecentlyDraggedBar;
+    m_dragStartPos          = e->pos ();
   }
   QToolButton::mousePressEvent (e);
 }
@@ -106,7 +113,9 @@ QTMTabPage::mouseMoveEvent (QMouseEvent* e) {
   render (&pixmap);
   setDown (false); // to avoid keeping the pressed state
 
-  g_mostRecentlyDraggedTab= m_bufferUrl;
+  g_mostRecentlyDraggedTab= this->m_viewUrl;
+  g_mostRecentlyDraggedBar=
+      qobject_cast<QTMTabPageContainer*> (this->parentWidget ());
 
   QDrag* drag=
       new QDrag (parent ()); // don't point to `this`, it will cause crash
@@ -114,6 +123,10 @@ QTMTabPage::mouseMoveEvent (QMouseEvent* e) {
   drag->setMimeData (new QMimeData ()); // Qt requires
   drag->setPixmap (pixmap);
   drag->exec (Qt::MoveAction);
+  // 没有拖拽到其他窗口，则建立新窗口
+  if (!g_mostRecentlyEnteredBar && (g_mostRecentlyDraggedTab != url_none ())) {
+    view_set_new_window (g_mostRecentlyDraggedTab);
+  }
 }
 
 void
@@ -219,7 +232,7 @@ QTMTabPageContainer::arrangeTabPages () {
 
   for (int i= 0; i < m_tabPageList.size (); ++i) {
     QTMTabPage* tab= m_tabPageList[i];
-    if (g_mostRecentlyClosedTab == tab->m_bufferUrl) {
+    if (g_mostRecentlyClosedTab == tab->m_viewUrl) {
       // this tab has just been closed, don't display it
       tab->hide ();
       continue;
@@ -272,22 +285,21 @@ QTMTabPageContainer::mapToPointing (QDropEvent* e, QPoint& p_indicatorPos) {
 
 void
 QTMTabPageContainer::dragEnterEvent (QDragEnterEvent* e) {
-  int index= -1;
+  g_mostRecentlyEnteredBar= this;
+  int index               = -1;
   for (int i= 0; i < m_tabPageList.size (); ++i) {
-    if (m_tabPageList[i]->m_bufferUrl == g_mostRecentlyDraggedTab) {
+    if (m_tabPageList[i]->m_viewUrl == g_mostRecentlyDraggedTab) {
       index= i;
       break;
     }
   }
-  if (index != -1) {
-    m_draggingTabIndex= index;
-    e->acceptProposedAction ();
-  }
+  m_draggingTabIndex= index;
+  e->acceptProposedAction ();
 }
 
 void
 QTMTabPageContainer::dragMoveEvent (QDragMoveEvent* e) {
-  if (m_draggingTabIndex != -1) {
+  if (g_mostRecentlyDraggedTab != url_none ()) {
     e->acceptProposedAction ();
     QPoint pos;
     mapToPointing (e, pos);
@@ -300,9 +312,8 @@ QTMTabPageContainer::dragMoveEvent (QDragMoveEvent* e) {
 
 void
 QTMTabPageContainer::dropEvent (QDropEvent* e) {
+  e->acceptProposedAction ();
   if (m_draggingTabIndex != -1) {
-    e->acceptProposedAction ();
-
     QPoint      _; // dummy argument
     int         pointingIndex= mapToPointing (e, _);
     QTMTabPage* draggingTab  = m_tabPageList[m_draggingTabIndex];
@@ -318,12 +329,35 @@ QTMTabPageContainer::dropEvent (QDropEvent* e) {
 
     // move the tab pages in the view history
     move_tabpage (oldIndex, newIndex);
+    m_draggingTabIndex= -1;
   }
+  else if (g_mostRecentlyDraggedTab != url_none () &&
+           g_mostRecentlyDraggedBar) {
+    // Attach当前标签页到其他窗口
+    QObject* src= e->source ();
+    if (src && src != this) {
+      url       dragged_view  = g_mostRecentlyDraggedTab;
+      tm_window dragged_window= concrete_view (dragged_view)->win_tabpage;
+      url target_view= m_tabPageList[0]->m_viewUrl; // 通过view来获取window
+      tm_window target_window= concrete_view (target_view)->win_tabpage;
+      bool      attached     = (concrete_view (dragged_view)->win != NULL);
+      // 注意：dragged_window 有可能被 view_set_window 释放
+      if (!view_set_window (dragged_view, abstract_window (target_window),
+                            attached)) {
+        arrangeTabPages ();
+        g_mostRecentlyDraggedBar->arrangeTabPages ();
+      }
+    }
+    g_mostRecentlyDraggedTab= url_none ();
+    g_mostRecentlyDraggedBar= nullptr;
+  }
+  m_draggingTabIndex= -1;
   m_indicator->hide ();
 }
 
 void
 QTMTabPageContainer::dragLeaveEvent (QDragLeaveEvent* e) {
+  g_mostRecentlyEnteredBar= nullptr;
   e->accept ();
   m_indicator->hide ();
 }

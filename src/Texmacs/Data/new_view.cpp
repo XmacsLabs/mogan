@@ -14,6 +14,7 @@
 #include "file.hpp"
 #include "message.hpp"
 #include "new_document.hpp"
+#include "new_window.hpp"
 #include "tm_data.hpp"
 #include "tm_link.hpp"
 #include "tm_url.hpp"
@@ -194,6 +195,21 @@ view_to_editor (url u) {
     TM_FAILED ("View admits no editor");
   }
   return vw->ed;
+}
+
+int
+count_tabpages_in_window (url win_u) {
+  int        count= 0;
+  tm_window  win  = concrete_window (win_u);
+  array<url> vws  = get_all_views ();
+  int        vws_N= N (vws);
+  for (int i= 0; i < vws_N; i++) {
+    tm_view vwi= concrete_view (vws[i]);
+    if (vwi != NULL && vwi->win_tabpage == win) {
+      count++;
+    }
+  }
+  return count;
 }
 
 /******************************************************************************
@@ -559,6 +575,91 @@ window_set_view (url win_u, url new_u, bool focus) {
   if (focus || get_current_view () == old_u) set_current_view (new_u);
   exec_delayed (scheme_cmd ("(make-cursor-visible '" *
                             scm_quote (as_string (new_u)) * ")"));
+}
+
+void
+view_set_new_window (url view_u) {
+  if (view_u == url_none ()) return;
+  tm_view view              = concrete_view (view_u);
+  url     view_win_tabpage_u= abstract_window (view->win_tabpage);
+  if (count_tabpages_in_window (view_win_tabpage_u) <= 1) {
+    // 窗口中只有这一个标签页，无需操作
+    return;
+  }
+  url       win_u   = new_window ();
+  tm_window win     = concrete_window (win_u);
+  bool      attached= (view->win != NULL);
+  if (attached) {
+    switch_to_other_tabpage (view_u);
+  }
+  detach_view (view_u);
+  attach_view (win_u, view_u);
+  view->win_tabpage= win;
+  hack_refresh_window_editors (view_win_tabpage_u, win_u, false);
+}
+
+bool
+view_set_window (url view_u, url win_u, bool focus) {
+  url     current_view_u    = get_current_view ();
+  tm_view view              = concrete_view (view_u);
+  url     view_win_tabpage_u= abstract_window (view->win_tabpage);
+  if (win_u == url_none () || view == NULL || view_win_tabpage_u == win_u) {
+    return false;
+  }
+  tm_window win     = concrete_window (win_u);
+  bool      found   = false;
+  bool      attached= (view->win != NULL);
+  if (attached) {
+    found= switch_to_other_tabpage (view_u);
+  }
+  detach_view (view_u);
+  if (focus) {
+    window_set_view (win_u, view_u, false);
+    set_visibility (win->wid, true);
+  }
+  else {
+    set_visibility (view->win_tabpage->wid, true);
+  }
+  view->win_tabpage= win;
+  if (attached && !found) {
+    // view 所在的 TabBar 没有其他标签页了
+    kill_window (view_win_tabpage_u);
+    return true;
+  }
+  else {
+    hack_refresh_window_editors (view_win_tabpage_u, win_u, (!focus));
+  }
+  return false;
+}
+
+void
+hack_refresh_window_editors (url win1, url win2, bool revert) {
+  // HACK: rusume 各自的 editor，触发标签栏 UI 的刷新
+  editor ed1= concrete_view (window_to_view (win1))->ed;
+  editor ed2= concrete_view (window_to_view (win2))->ed;
+  if (revert) {
+    editor tmp= ed1;
+    ed1       = ed2;
+    ed2       = tmp;
+  }
+  ed1->resume ();
+  ed1->suspend ();
+  ed2->resume ();
+}
+
+bool
+switch_to_other_tabpage (url view_u) {
+  tm_view    view = concrete_view (view_u);
+  array<url> vws  = get_all_views ();
+  int        vws_N= N (vws);
+  for (int i= 0; i < vws_N; i++) {
+    tm_view vwi= concrete_view (vws[i]);
+    if (vwi != NULL && vwi != view && vwi->win_tabpage == view->win_tabpage) {
+      window_set_view (abstract_window (view->win), vws[i], true);
+      return true;
+    }
+  }
+  return false;
 }
 
 void

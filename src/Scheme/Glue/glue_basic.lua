@@ -1658,6 +1658,30 @@ function main()
                 }
             },
             {
+                -- 设定标签页（view）所在的窗口
+                scm_name = "view-set-window",
+                cpp_name = "view_set_window",
+                ret_type = "bool", -- 是否释放了目标 view 所在的 window
+                arg_list = {
+                    "url", -- 目标 view 的 url
+                    "url", -- 目标 window 的 url。传入 url-none 时打开新窗口。
+                    "bool" -- 是否设置为焦点
+                           --    输入 true 时，将目标窗口所附着的的 view 切换为目标 view，
+                           --    且将目标窗口提升到顶部。
+                           --    输入 false 时，不改变目标窗口所附着的 view。且不将目标窗
+                           --    口提升到顶部。
+                }
+            },
+            {
+                -- 将标签页（view）挪动到新窗口
+                scm_name = "view-set-new-window",
+                cpp_name = "view_set_new_window",
+                ret_type = "void",
+                arg_list = {
+                    "url", -- 目标 view 的 url
+                }
+            },
+            {
                 scm_name = "switch-to-buffer",
                 cpp_name = "switch_to_buffer",
                 ret_type = "void",

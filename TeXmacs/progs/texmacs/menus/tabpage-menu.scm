@@ -37,7 +37,7 @@
            (doc-path  (url->system buf))
            (active?   (== (current-buffer) buf)))
       (tab-page
-        (eval buf)
+        (eval view)
         ((balloon (eval `(verbatim ,tab-title))
                   (eval `(verbatim ,doc-path)))
          (window-set-view view-win view #t)) ;; #t stansd for focus 
