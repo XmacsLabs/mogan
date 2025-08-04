@@ -32,6 +32,10 @@ qt_simple_widget_rep::qt_simple_widget_rep ()
       mathCompletionPopUp (nullptr) {
 #ifndef USE_MUPDF_RENDERER
   backingPixmap= headless_mode ? NULL : new QPixmap ();
+#else
+  bs_w         = 0;
+  bs_h         = 0;
+  backing_store= native_picture (0, 0, 0, 0);
 #endif
 }
 
@@ -56,17 +60,6 @@ qt_simple_widget_rep::as_qwidget () {
 
   all_widgets->insert ((pointer) this);
   backing_pos= canvas ()->origin ();
-
-#ifdef USE_MUPDF_RENDERER
-  all_widgets->insert ((pointer) this);
-  backing_pos  = canvas ()->origin ();
-  bs_w         = sz.width () * retina_factor;
-  bs_h         = sz.height () * retina_factor;
-  bs_ox        = backing_pos.x () * PIXEL;
-  bs_oy        = backing_pos.y () * PIXEL;
-  bs_zoomf     = 1;
-  backing_store= native_picture (bs_w, bs_h, bs_ox, bs_oy);
-#endif
 
   return qwid;
 }
