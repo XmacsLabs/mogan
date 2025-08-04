@@ -591,6 +591,15 @@ math_fix (string family, string series, string shape) {
   return family;
 }
 
+string
+emoji_fix (string family, string series, string shape) {
+  if (contains (family, "emoji=")) {
+    return family;
+  }
+  string name= default_emoji_font_name ();
+  return family * ",emoji=" * name;
+}
+
 /******************************************************************************
  * The smart font class
  ******************************************************************************/
@@ -1690,6 +1699,7 @@ smart_font_bis (string family, string variant, string series, string shape,
   family= kepler_fix (family, series, shape);
   // family= stix_fix (family, series, shape);
   family   = math_fix (family, series, shape);
+  family   = emoji_fix (family, series, shape);
   string sh= shape;
   if (shape == "mathitalic" || shape == "mathshape") sh= "right";
   string mfam   = main_family (family);

@@ -650,6 +650,18 @@ default_korean_font_name () {
   return "roman";
 }
 
+string
+default_emoji_font_name () {
+  if (has_user_preference ("default emoji font name")) {
+    return get_user_preference ("default emoji font name");
+  }
+
+  // Noto Color Emoji is the default emoji font on all system if exists
+  if (tt_font_exists ("NotoColorEmoji")) return "Noto Color Emoji";
+
+  return "roman";
+}
+
 bool
 use_macos_fonts () {
 #ifdef OS_MACOS

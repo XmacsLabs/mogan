@@ -1,0 +1,24 @@
+<TMU|<tuple|1.1.0|2025.1.0>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <doc-data|<doc-title|😀Emoji支持>>
+
+  <section|Mogan已经支持Emoji渲染🎉>
+
+  Enjoy it!🎉🎉🎉🎉🎉🎉🎉
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|?>>
+  </collection>
+</references>
