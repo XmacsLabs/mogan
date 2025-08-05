@@ -355,6 +355,7 @@
 ("compile buffer" "编译暂存")
 ("compile project" "编译工程")
 ("completion" "完成")
+("completion style" "补全风格")
 ("complex actions" "复杂操作")
 ("complex" "复杂")
 ("compose" "组合")
