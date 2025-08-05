@@ -35,7 +35,7 @@
            (mod?   (buffer-modified? buf))
            (tab-title (string-append title* (if mod? " *" "")))
            (doc-path  (url->system buf))
-           (active?   (== (current-buffer) buf)))
+           (active?   (== (current-view) view)))
       (tab-page
         (eval view)
         ((balloon (eval `(verbatim ,tab-title))
