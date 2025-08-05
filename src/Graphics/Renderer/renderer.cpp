@@ -509,6 +509,22 @@ renderer_rep::draw_selection (rectangles rs) {
 }
 
 /******************************************************************************
+ * Drawing curves
+ ******************************************************************************/
+void
+renderer_rep::draw_curve (curve c, bool filled) {
+  (void) c;
+  (void) filled;
+  TM_FAILED ("drawing curves is not supported");
+}
+
+bool
+renderer_rep::support_native_curve (curve c) {
+  (void) c;
+  return false;
+}
+
+/******************************************************************************
  * Images
  ******************************************************************************/
 

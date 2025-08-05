@@ -488,28 +488,39 @@ curve_box_rep::graphical_select (SI x1, SI y1, SI x2, SI y2) {
 
 void
 curve_box_rep::display (renderer ren) {
-  int i, n;
+  int  i, n;
+  bool use_native_drawing= ren->support_native_curve (c);
   if (fill_br->get_type () != brush_none) {
     ren->set_brush (fill_br);
-    n= N (a);
-    array<SI> x (n), y (n);
-    for (i= 0; i < n; i++) {
-      x[i]= (SI) a[i][0];
-      y[i]= (SI) a[i][1];
+    if (use_native_drawing) {
+      ren->draw_curve (c, true);
     }
-    ren->polygon (x, y, false);
-  }
-  if (pen->get_type () != pencil_none) {
-    ren->set_pencil (pen->set_cap (cap_flat));
-    // TODO: Add options for handling round/nonround joins & line ends
-    if (N (style) == 0) {
+    else {
       n= N (a);
       array<SI> x (n), y (n);
       for (i= 0; i < n; i++) {
         x[i]= (SI) a[i][0];
         y[i]= (SI) a[i][1];
       }
-      ren->lines (x, y);
+      ren->polygon (x, y, false);
+    }
+  }
+  if (pen->get_type () != pencil_none) {
+    ren->set_pencil (pen->set_cap (cap_flat));
+    // TODO: Add options for handling round/nonround joins & line ends
+    if (N (style) == 0) {
+      if (use_native_drawing) {
+        ren->draw_curve (c);
+      }
+      else {
+        n= N (a);
+        array<SI> x (n), y (n);
+        for (i= 0; i < n; i++) {
+          x[i]= (SI) a[i][0];
+          y[i]= (SI) a[i][1];
+        }
+        ren->lines (x, y);
+      }
     }
     else {
       SI li= 0, o= 0;

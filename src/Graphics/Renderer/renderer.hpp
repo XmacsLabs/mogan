@@ -13,6 +13,7 @@
 #define RENDERER_H
 #include "bitmap_font.hpp"
 #include "brush.hpp"
+#include "curve.hpp"
 #include "pencil.hpp"
 #include "picture.hpp"
 #include "scalable.hpp"
@@ -113,6 +114,8 @@ public:
   virtual void draw_spacial (spacial obj);
   virtual void draw_rectangles (rectangles rs);
   virtual void draw_selection (rectangles rs);
+  virtual void draw_curve (curve c, bool filled= false);
+  virtual bool support_native_curve (curve c);
 
   /* shadowing and copying rectangular regions across renderers */
   virtual void fetch (SI x1, SI y1, SI x2, SI y2, renderer ren, SI x, SI y)= 0;
