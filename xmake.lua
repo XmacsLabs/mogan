@@ -205,6 +205,7 @@ else
         add_requires("apt::libfreetype-dev", {alias="freetype"})
     end
 end
+add_requires("argh v1.3.2")
 
 --- package: qt6widgets
 QT6_VERSION="6.5.3"
@@ -224,6 +225,7 @@ target ("goldfish") do
     add_files ("$(projectdir)/TeXmacs/plugins/goldfish/src/goldfish.cpp")
     add_packages("s7")
     add_packages("tbox")
+    add_packages("argh")
     on_install(function (target)
     end)
 end
@@ -333,6 +335,7 @@ target("libmogan") do
     add_packages("liii-pdfhummus")
     add_packages("freetype")
     add_packages("s7")
+    add_packages("argh")
     if not is_plat("macosx") then
         add_packages("libiconv")
     end
