@@ -15,6 +15,6 @@
 ;
 
 (define-library (srfi sicp)
-(export true false nil runtime)
-(import (srfi srfi-216)))
+  (export true false nil runtime)
+  (import (srfi srfi-216)))
 

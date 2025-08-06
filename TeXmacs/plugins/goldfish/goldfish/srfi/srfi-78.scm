@@ -38,128 +38,128 @@
 ; Follow the same License as the original one
 
 (define-library (srfi srfi-78)
-(import (liii lang))
-(export check check-set-mode! check-report check-reset!
-        check-passed? check-failed?
-        check:proc)
-(begin
+  (import (liii lang))
+  (export check check-set-mode! check-report check-reset!
+          check-passed? check-failed?
+          check:proc)
+  (begin
 
-(define check:write display*)
+    (define check:write display*)
 
-(define check:mode #f)
+    (define check:mode #f)
 
-(define (check-set-mode! mode)
-  (set! check:mode
-        (case mode
-          ((off)           0)
-          ((summary)       1)
-          ((report-failed) 10)
-          ((report)        100)
-          (else (error "unrecognized mode" mode)))))
+    (define (check-set-mode! mode)
+      (set! check:mode
+            (case mode
+              ((off)           0)
+              ((summary)       1)
+              ((report-failed) 10)
+              ((report)        100)
+              (else (error "unrecognized mode" mode)))))
 
 
-(check-set-mode! 'report)
+    (check-set-mode! 'report)
 
-(define check:correct 0)
-(define check:failed '())
+    (define check:correct 0)
+    (define check:failed '())
 
-(define (check-reset!)
-  (set! check:correct 0)
-  (set! check:failed '()))
+    (define (check-reset!)
+      (set! check:correct 0)
+      (set! check:failed '()))
 
-(define (check:add-correct!)
-  (set! check:correct (+ check:correct 1)))
+    (define (check:add-correct!)
+      (set! check:correct (+ check:correct 1)))
 
-(define (check:add-failed! expression actual-result expected-result)
-  (set! check:failed
-        (cons (list expression actual-result expected-result)
-              check:failed)))
+    (define (check:add-failed! expression actual-result expected-result)
+      (set! check:failed
+            (cons (list expression actual-result expected-result)
+                  check:failed)))
 
-(define (check:report-expression expression)
-  (newline)
-  (check:write expression)
-  (display " => "))
+    (define (check:report-expression expression)
+      (newline)
+      (check:write expression)
+      (display " => "))
 
-(define (check:report-actual-result actual-result)
-  (check:write actual-result)
-  (display " ; "))
+    (define (check:report-actual-result actual-result)
+      (check:write actual-result)
+      (display " ; "))
 
-(define (check:report-correct cases)
-  (display "correct")
-  (if (not (= cases 1))
-      (begin (display " (")
-             (display cases)
-             (display " cases checked)")))
-  (newline))
+    (define (check:report-correct cases)
+      (display "correct")
+      (if (not (= cases 1))
+          (begin (display " (")
+                 (display cases)
+                 (display " cases checked)")))
+      (newline))
 
-(define (check:report-failed expected-result)
-  (display "*** failed ***")
-  (newline)
-  (display "; expected result: ")
-  (check:write expected-result)
-  (newline))
+    (define (check:report-failed expected-result)
+      (display "*** failed ***")
+      (newline)
+      (display "; expected result: ")
+      (check:write expected-result)
+      (newline))
 
-(define (check-passed? expected-total-count)
-  (and (= (length check:failed) 0)
-       (= check:correct expected-total-count)))
+    (define (check-passed? expected-total-count)
+      (and (= (length check:failed) 0)
+           (= check:correct expected-total-count)))
 
-(define (check-failed?)
-  (>= (length check:failed) 1))
+    (define (check-failed?)
+      (>= (length check:failed) 1))
 
-(define* (check:proc expression thunk expected-result (equal class=?))
-  (case check:mode
-    ((0) #f)
-    ((1)
-     (let ((actual-result (thunk)))
-       (if (equal actual-result expected-result)
-           (check:add-correct!)
-           (check:add-failed! expression actual-result expected-result))))
-    ((10)
-     (let ((actual-result (thunk)))
-       (if (equal actual-result expected-result)
-           (check:add-correct!)
-           (begin
-             (check:report-expression expression)
-             (check:report-actual-result actual-result)
-             (check:report-failed expected-result)
-             (check:add-failed! expression actual-result expected-result)))))
-    ((100)
-     (check:report-expression expression)
-     (let ((actual-result (thunk)))
-       (check:report-actual-result actual-result)
-       (if (equal actual-result expected-result)
-           (begin (check:report-correct 1)
-                  (check:add-correct!))
-           (begin (check:report-failed expected-result)
-                  (check:add-failed! expression 
-                                     actual-result 
-                                     expected-result)))))
-    (else (error "unrecognized check:mode" check:mode))))
+    (define* (check:proc expression thunk expected-result (equal class=?))
+      (case check:mode
+        ((0) #f)
+        ((1)
+         (let ((actual-result (thunk)))
+           (if (equal actual-result expected-result)
+               (check:add-correct!)
+               (check:add-failed! expression actual-result expected-result))))
+        ((10)
+         (let ((actual-result (thunk)))
+           (if (equal actual-result expected-result)
+               (check:add-correct!)
+               (begin
+                 (check:report-expression expression)
+                 (check:report-actual-result actual-result)
+                 (check:report-failed expected-result)
+                 (check:add-failed! expression actual-result expected-result)))))
+        ((100)
+         (check:report-expression expression)
+         (let ((actual-result (thunk)))
+           (check:report-actual-result actual-result)
+           (if (equal actual-result expected-result)
+               (begin (check:report-correct 1)
+                      (check:add-correct!))
+               (begin (check:report-failed expected-result)
+                      (check:add-failed! expression 
+                                         actual-result 
+                                         expected-result)))))
+        (else (error "unrecognized check:mode" check:mode))))
 
-(define-macro (check expr => expected)
-  `(check:proc ',expr (lambda () ,expr) ,expected))
+    (define-macro (check expr => expected)
+      `(check:proc ',expr (lambda () ,expr) ,expected))
 
-(define (check-report)
-  (if (>= check:mode 1)
-      (begin
-        (newline)
-        (display "; *** checks *** : ")
-        (display check:correct)
-        (display " correct, ")
-        (display (length check:failed))
-        (display " failed.")
-        (if (or (null? check:failed) (<= check:mode 1))
+    (define (check-report)
+      (if (>= check:mode 1)
+          (begin
             (newline)
-            (let* ((w (car (reverse check:failed)))
-                   (expression (car w))
-                   (actual-result (cadr w))
-                   (expected-result (caddr w)))
-              (display " First failed example:")
-              (newline)
-              (check:report-expression expression)
-              (check:report-actual-result actual-result)
-              (check:report-failed expected-result))))))
+            (display "; *** checks *** : ")
+            (display check:correct)
+            (display " correct, ")
+            (display (length check:failed))
+            (display " failed.")
+            (if (or (null? check:failed) (<= check:mode 1))
+                (newline)
+                (let* ((w (car (reverse check:failed)))
+                       (expression (car w))
+                       (actual-result (cadr w))
+                       (expected-result (caddr w)))
+                  (display " First failed example:")
+                  (newline)
+                  (check:report-expression expression)
+                  (check:report-actual-result actual-result)
+                  (check:report-failed expected-result))))))
 
-) ; end of begin
-) ; end of define-library
+    ) ; end of begin
+  ) ; end of define-library
 

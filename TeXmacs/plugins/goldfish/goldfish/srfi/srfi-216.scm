@@ -15,19 +15,19 @@
 ;
 
 (define-library (srfi srfi-216)
-(export true false nil runtime)
-(import (scheme time))
-(begin
+  (export true false nil runtime)
+  (import (scheme time))
+  (begin
 
-(define true #t)
+    (define true #t)
 
-(define false #f)
+    (define false #f)
 
-(define nil '())
+    (define nil '())
 
-(define (runtime)
-  (round (* 1000 (current-second))))
+    (define (runtime)
+      (round (* 1000 (current-second))))
 
-) ; end of begin
-) ; end of define-library
+    ) ; end of begin
+  ) ; end of define-library
 

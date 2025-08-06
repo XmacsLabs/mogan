@@ -20,10 +20,10 @@
 ;
 
 (define-library (srfi srfi-113)
-(import (scheme base))
-(export set?)
-(begin
+  (import (scheme base))
+  (export set?)
+  (begin
 
-) ; end of begin
-) ; end of define-library
+    ) ; end of begin
+  ) ; end of define-library
 

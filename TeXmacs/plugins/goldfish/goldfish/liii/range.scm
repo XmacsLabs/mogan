@@ -15,76 +15,76 @@
 ;
 
 (define-library (liii range)
-(import (liii oop) 
-        (liii rich-list)
-        (liii error)) 
-(export range)
-(begin
+  (import (liii oop) 
+          (liii rich-list)
+          (liii error)) 
+  (export range)
+  (begin
 
-(define-case-class range
-  ((start integer?) (end integer?) (step integer? 1) (inclusive? boolean? #f))
+    (define-case-class range
+      ((start integer?) (end integer?) (step integer? 1) (inclusive? boolean? #f))
 
-(define* (@inclusive start end (step 1))
-  (range start end step #t))
+      (define* (@inclusive start end (step 1))
+        (range start end step #t))
 
-(define (check-step)
-  (when (zero? step)
-      (value-error "step can't be zero")))
+      (define (check-step)
+        (when (zero? step)
+          (value-error "step can't be zero")))
 
-(define (in-range? x)
-  (or (and (> step 0) (if inclusive? (and (<= x end) (>= x start)) (and (< x end) (>= x start))))
-      (and (< step 0) (if inclusive? (and (>= x end) (<= x start)) (and (> x end) (<= x start))))))
+      (define (in-range? x)
+        (or (and (> step 0) (if inclusive? (and (<= x end) (>= x start)) (and (< x end) (>= x start))))
+            (and (< step 0) (if inclusive? (and (>= x end) (<= x start)) (and (> x end) (<= x start))))))
 
-(define (not-in-range? x)
-  (or (and (> step 0) (or (> x end) (< x start)))
-      (and (< step 0) (or (< x end) (> x start)))
-      (and (= x end) (not inclusive?))))
+      (define (not-in-range? x)
+        (or (and (> step 0) (or (> x end) (< x start)))
+            (and (< step 0) (or (< x end) (> x start)))
+            (and (= x end) (not inclusive?))))
 
-(define (%empty?)
-  (check-step)
-  (or (and (> start end) (> step 0))
-      (and (< start end) (< step 0))
-      (and (= start end) (not inclusive?))))
+      (define (%empty?)
+        (check-step)
+        (or (and (> start end) (> step 0))
+            (and (< start end) (< step 0))
+            (and (= start end) (not inclusive?))))
 
-(define (%map map-func)
-  (if (%empty?)
-      (rich-list :empty)
-      (let loop ((current start) (result '()))
-        (if (not-in-range? current)
-            (rich-list (reverse result))
-            (loop (+ current step)
-                  (cons (map-func current) result))))))
+      (define (%map map-func)
+        (if (%empty?)
+            (rich-list :empty)
+            (let loop ((current start) (result '()))
+              (if (not-in-range? current)
+                  (rich-list (reverse result))
+                  (loop (+ current step)
+                        (cons (map-func current) result))))))
 
-(define (%for-each proc)
-  (when (not (%empty?))
-    (let loop ((current start))
-         (when (in-range? current)
-               (proc current)
-               (loop (+ current step))))))
+      (define (%for-each proc)
+        (when (not (%empty?))
+          (let loop ((current start))
+               (when (in-range? current)
+                     (proc current)
+                     (loop (+ current step))))))
 
-(define (%filter f)
-  (if (%empty?)
-      (rich-list :empty)
-      (let loop ((i start) (return '()))
-        (if (not-in-range? i)
-            (rich-list (reverse return))
-            (loop (+ i step)
-                  (if (f i)
-                      (cons i return)
-                       return))))))
+      (define (%filter f)
+        (if (%empty?)
+            (rich-list :empty)
+            (let loop ((i start) (return '()))
+              (if (not-in-range? i)
+                  (rich-list (reverse return))
+                  (loop (+ i step)
+                        (if (f i)
+                            (cons i return)
+                            return))))))
 
-(define (%contains elem)
-  (check-step)
-  (if (%empty?)
-      #f
-      (if (in-range? elem) ;判断是否在范围内
-          (zero? (modulo (- elem start) (abs step)))
-          #f)))
+      (define (%contains elem)
+        (check-step)
+        (if (%empty?)
+            #f
+            (if (in-range? elem) ;判断是否在范围内
+                (zero? (modulo (- elem start) (abs step)))
+                #f)))
 
            
            
 
-) ; define-case-cass
-) ; begin
-) ; define-library
+      ) ; define-case-cass
+    ) ; begin
+  ) ; define-library
 

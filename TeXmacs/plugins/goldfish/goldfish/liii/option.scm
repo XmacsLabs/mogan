@@ -15,80 +15,80 @@
 ;
 
 (define-library (liii option)
-(import (liii oop) (liii base))
-(export option none)
-(begin
+  (import (liii oop) (liii base))
+  (export option none)
+  (begin
 
-(define-case-class option ((value any?))
+    (define-case-class option ((value any?))
 
-(define (%get)
-  (if (null? value)
-      (value-error "option is empty, cannot get value")
-      value))
+      (define (%get)
+        (if (null? value)
+            (value-error "option is empty, cannot get value")
+            value))
 
-(define (%get-or-else default)
-  (cond ((not (null? value)) value)
-        ((and (procedure? default) (not (case-class? default)))
-         (default))
-        (else default)))
+      (define (%get-or-else default)
+        (cond ((not (null? value)) value)
+              ((and (procedure? default) (not (case-class? default)))
+               (default))
+              (else default)))
 
-(define (%or-else default . args)
-  (when (not (option :is-type-of default))
-    (type-error "The first parameter of option%or-else must be a option case class"))
+      (define (%or-else default . args)
+        (when (not (option :is-type-of default))
+          (type-error "The first parameter of option%or-else must be a option case class"))
   
-  (chain-apply args
-    (if (null? value)
-        default
-        (option value))))
+        (chain-apply args
+          (if (null? value)
+              default
+              (option value))))
 
-(define (%equals that)
-  (class=? value (that 'value)))
+      (define (%equals that)
+        (class=? value (that 'value)))
 
-(define (%defined?) (not (null? value)))
+      (define (%defined?) (not (null? value)))
   
-(define (%empty?)
-  (null? value))
+      (define (%empty?)
+        (null? value))
 
-(define (%forall f)
-  (if (null? value)
-      #f
-      (f value)))
+      (define (%forall f)
+        (if (null? value)
+            #f
+            (f value)))
 
-(define (%exists f)
-  (if (null? value)
-      #f
-      (f value)))
+      (define (%exists f)
+        (if (null? value)
+            #f
+            (f value)))
 
-(define (%contains elem)
-  (if (null? value)
-      #f
-      (equal? value elem)))
+      (define (%contains elem)
+        (if (null? value)
+            #f
+            (equal? value elem)))
 
-(define (%for-each f)
-  (when (not (null? value))
-        (f value)))
+      (define (%for-each f)
+        (when (not (null? value))
+              (f value)))
 
-(define (%map f . args)
-  (chain-apply args
-    (if (null? value)
-        (option '())
-        (option (f value)))))
+      (define (%map f . args)
+        (chain-apply args
+          (if (null? value)
+              (option '())
+              (option (f value)))))
 
-(define (%flat-map f . args)
-  (chain-apply args
-    (if (null? value)
-        (option '())
-        (f value))))
+      (define (%flat-map f . args)
+        (chain-apply args
+          (if (null? value)
+              (option '())
+              (f value))))
 
-(define (%filter pred . args)
-  (chain-apply args
-    (if (or (null? value) (not (pred value)))
-        (option '())
-        (option value))))
+      (define (%filter pred . args)
+        (chain-apply args
+          (if (or (null? value) (not (pred value)))
+              (option '())
+              (option value))))
 
-)
+      )
 
-(define (none) (option '()))
+    (define (none) (option '()))
 
-) ; end of begin
-) ; end of define-library
+    ) ; end of begin
+  ) ; end of define-library

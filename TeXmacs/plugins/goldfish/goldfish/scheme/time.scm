@@ -15,15 +15,15 @@
 ;
 
 (define-library (scheme time)
-(export current-second current-jiffy jiffies-per-second)
-(begin
+  (export current-second current-jiffy jiffies-per-second)
+  (begin
 
-(define (jiffies-per-second) 1000000)
+    (define (jiffies-per-second) 1000000)
 
-(define (current-second) (g_current-second))
+    (define (current-second) (g_current-second))
 
-(define (current-jiffy)
-  (round (* (current-second) (jiffies-per-second))))
+    (define (current-jiffy)
+      (round (* (current-second) (jiffies-per-second))))
 
-) ; end of begin
-) ; end of define-library
+    ) ; end of begin
+  ) ; end of define-library

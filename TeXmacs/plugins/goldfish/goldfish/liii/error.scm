@@ -16,44 +16,44 @@
 
 ; see https://docs.python.org/3/library/exceptions.html#exception-hierarchy
 (define-library (liii error)
-(export ???
-  os-error file-not-found-error not-a-directory-error file-exists-error
-  timeout-error type-error type-error? key-error value-error index-error)
-(begin
+  (export ???
+    os-error file-not-found-error not-a-directory-error file-exists-error
+    timeout-error type-error type-error? key-error value-error index-error)
+  (begin
 
-(define (os-error . args)
-  (apply error (cons 'os-error args)))
+    (define (os-error . args)
+      (apply error (cons 'os-error args)))
 
-(define (file-not-found-error . args)
-  (apply error (cons 'file-not-found-error args)))
+    (define (file-not-found-error . args)
+      (apply error (cons 'file-not-found-error args)))
 
-(define (not-a-directory-error . args)
-  (apply error (cons 'not-a-directory-error args)))
+    (define (not-a-directory-error . args)
+      (apply error (cons 'not-a-directory-error args)))
 
-(define (file-exists-error . args)
-  (apply error (cons 'file-exists-error args)))
+    (define (file-exists-error . args)
+      (apply error (cons 'file-exists-error args)))
 
-(define (timeout-error . args)
-  (apply error (cons 'timeout-error args)))
+    (define (timeout-error . args)
+      (apply error (cons 'timeout-error args)))
 
-(define (type-error . args)
-  (apply error (cons 'type-error args)))
+    (define (type-error . args)
+      (apply error (cons 'type-error args)))
 
-(define (type-error? err)
-  (not (null? (member err `(type-error wrong-type-arg)))))
+    (define (type-error? err)
+      (not (null? (member err `(type-error wrong-type-arg)))))
 
-(define (key-error . args)
-  (apply error (cons 'key-error args)))
+    (define (key-error . args)
+      (apply error (cons 'key-error args)))
 
-(define (value-error . args)
-  (apply error (cons 'value-error args)))
+    (define (value-error . args)
+      (apply error (cons 'value-error args)))
 
-(define (index-error . args)
-  (apply error (cons 'index-error args)))
+    (define (index-error . args)
+      (apply error (cons 'index-error args)))
 
-(define (??? . args)
-  (apply error (cons '??? args)))
+    (define (??? . args)
+      (apply error (cons '??? args)))
 
-) ; begin
-) ; define-library
+    ) ; begin
+  ) ; define-library
 

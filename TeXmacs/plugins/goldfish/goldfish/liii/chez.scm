@@ -15,12 +15,12 @@
 ;
 
 (define-library (liii chez)
-(export atom?)
-(begin
+  (export atom?)
+  (begin
 
-(define (atom? x)
-  (not (pair? x)))
+    (define (atom? x)
+      (not (pair? x)))
 
-) ; end of begin
-) ; end of define-library
+    ) ; end of begin
+  ) ; end of define-library
 

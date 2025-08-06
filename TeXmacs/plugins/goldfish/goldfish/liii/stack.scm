@@ -15,46 +15,46 @@
 ;
 
 (define-library (liii stack)
-(import (liii rich-list) (liii oop))
-(export stack)
-(begin
+  (import (liii rich-list) (liii oop))
+  (export stack)
+  (begin
 
-(define-case-class stack ((data list?))
+    (define-case-class stack ((data list?))
                    
-(define (%length) (length data))
+      (define (%length) (length data))
 
-(define (%size) (length data))
+      (define (%size) (length data))
 
-(define (%top)
-  (if (null? data)
-      (error 'out-of-range)
-      (car data)))
+      (define (%top)
+        (if (null? data)
+            (error 'out-of-range)
+            (car data)))
 
-(define (%to-list) data)
+      (define (%to-list) data)
 
-(define (%to-rich-list) (rich-list data))
+      (define (%to-rich-list) (rich-list data))
 
-(define (@empty) (stack (list )))
+      (define (@empty) (stack (list )))
 
-(chained-define (%pop)
-  (if (null? data)
-      (error 'out-of-range "Cannot pop from an empty stack")
-      (stack (cdr data))))
+      (chained-define (%pop)
+        (if (null? data)
+            (error 'out-of-range "Cannot pop from an empty stack")
+            (stack (cdr data))))
 
-(chained-define (%pop!)
-  (if (null? data)
-      (error 'out-of-range)
-      (stack (set! data (cdr data))))
-  (%this))
+      (chained-define (%pop!)
+        (if (null? data)
+            (error 'out-of-range)
+            (stack (set! data (cdr data))))
+        (%this))
 
-(chained-define (%push element)
-  (stack (cons element data)))
+      (chained-define (%push element)
+        (stack (cons element data)))
 
-(chained-define (%push! element) 
-                (stack (set! data (cons element data))) 
-                (%this))
+      (chained-define (%push! element) 
+                      (stack (set! data (cons element data))) 
+                      (%this))
 
-) ; end of define-case-class
-) ; end of begin
-) ; end of define-library
+      ) ; end of define-case-class
+    ) ; end of begin
+  ) ; end of define-library
 

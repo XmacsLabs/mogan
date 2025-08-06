@@ -15,11 +15,11 @@
 ;
 
 (define-library (liii uuid)
-(export uuid4)
-(begin
+  (export uuid4)
+  (begin
 
-(define (uuid4) (g_uuid4))
+    (define (uuid4) (g_uuid4))
 
-) ; end of begin
-) ; end of define-library
+    ) ; end of begin
+  ) ; end of define-library
 

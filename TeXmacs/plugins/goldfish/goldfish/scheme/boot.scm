@@ -19,10 +19,10 @@
 (define-macro (define-library libname . body) ; |(lib name)| -> environment
   `(define ,(symbol (object->string libname))
      (with-let (sublet (unlet)
-                         (cons 'import import)
-                         (cons '*export* ())
-                         (cons 'export (define-macro (,(gensym) . names)
-                                         `(set! *export* (append ',names *export*)))))
+                 (cons 'import import)
+                 (cons '*export* ())
+                 (cons 'export (define-macro (,(gensym) . names)
+                                 `(set! *export* (append ',names *export*)))))
        ,@body
        (apply inlet
               (map (lambda (entry)
@@ -49,8 +49,8 @@
         (when (not (defined? (symbol (object->string (car libs)))))
           ;(display "Loading ") (display lib-filename) (newline)
           (load lib-filename))
-      (r7rs-import-library-filename (cdr libs)))))
-)
+        (r7rs-import-library-filename (cdr libs)))))
+  )
 
 (define-macro (import . libs)
   `(begin

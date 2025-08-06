@@ -22,8 +22,8 @@ main (int argc, char** argv) {
 #ifdef TB_CONFIG_OS_WINDOWS
   SetConsoleOutputCP (65001);
 #endif
-  std::string      gf_lib_dir  = goldfish::find_goldfish_library ();
-  const char* gf_lib      = gf_lib_dir.c_str ();
-  s7_scheme* sc= goldfish::init_goldfish_scheme (gf_lib);
+  std::string gf_lib_dir= goldfish::find_goldfish_library ();
+  const char* gf_lib    = gf_lib_dir.c_str ();
+  s7_scheme*  sc        = goldfish::init_goldfish_scheme (gf_lib);
   return goldfish::repl_for_community_edition (sc, argc, argv);
 }
