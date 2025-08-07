@@ -18,11 +18,10 @@ sed -e "s/@DEVEL_VERSION@/$VERSION/" -e "s/@DEVEL_RELEASE@/1/" \
 
 cd $APP_HOME
 rm -rf $APP_HOME/TeXmacs/docs/tests
-export INSTALL_DIR=$APP_HOME/debian/liii-stem/usr
+export INSTALL_DIR=$APP_HOME/debian/mogan-stem/usr
 dpkg-buildpackage -us -uc -b
 
 $APP_HOME/debian/rules clean
 rm $APP_HOME/debian/changelog
 rm $APP_HOME/debian/control
 unlink $APP_HOME/debian
-

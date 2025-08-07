@@ -9,8 +9,10 @@
 -- It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
 -- in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 
-set_project("Liii STEM")
-local XMACS_VERSION="2025.1.0"
+includes("xmake/vars.lua")
+includes("xmake/stem.lua")
+
+set_project(stem_project_name)
 
 option("mupdf")
     set_default(false)
@@ -408,6 +410,7 @@ target("libmogan") do
                 tm_devel_release = "Texmacs-" .. DEVEL_VERSION .. "-" .. DEVEL_RELEASE,
                 tm_stable = "Texmacs-" .. STABLE_VERSION,
                 tm_stable_release = "Texmacs-" .. STABLE_VERSION .. "-" .. STABLE_RELEASE,
+                tm_prefix_dir = stem_lab_name,
                 PDFHUMMUS_VERSION = PDFHUMMUS_VERSION,
                 LOLLY_VERSION = LOLLY_VERSION,
                 }})
@@ -583,18 +586,18 @@ target("stem") do
         add_deps("liii_windows_icon")
     end
     if is_plat("linux") then
-        set_filename("liiistem")
+        set_filename(stem_binary_linux)
     elseif is_plat("macosx") then
-        set_filename("LiiiSTEM")
+        set_filename(stem_binary_macos)
     else
-        set_filename("LiiiSTEM.exe")
+        set_filename(stem_binary_windows)
     end
 
     local install_dir = "$(buildir)"
     if is_plat("windows") then
         install_dir = path.join("$(buildir)", "packages/stem/data/")
     elseif is_plat("macosx") then
-        install_dir = path.join("$(buildir)", "macosx/$(arch)/$(mode)/LiiiSTEM.app/Contents/Resources/")
+        install_dir = path.join("$(buildir)", "macosx/$(arch)/$(mode)/" .. stem_binary_name .. ".app/Contents/Resources/")
     else
         if os.getenv("INSTALL_DIR") == nil then
             install_dir = path.join("$(buildir)", "packages/stem/")
@@ -607,19 +610,19 @@ target("stem") do
     if is_plat("windows") then
         add_installfiles(stem_files)
     else
-        add_installfiles(stem_files, {prefixdir="share/liiilabs"})
+        add_installfiles(stem_files, {prefixdir=stem_prefix_dir})
     end
 
     if is_plat("windows") then
         add_installfiles("$(projectdir)/TeXmacs(/fonts/**)")
     else
-        add_installfiles("$(projectdir)/TeXmacs(/fonts/**)", {prefixdir="share/liiilabs"})
+        add_installfiles("$(projectdir)/TeXmacs(/fonts/**)", {prefixdir=stem_prefix_dir})
     end
 
     if is_plat("linux") then
         -- add_installfiles("$(projectdir)/TeXmacs/misc/images/text-x-mogan.svg", {prefixdir="share/icons/hicolor/scalable/mimetypes"})
-        add_installfiles("$(projectdir)/TeXmacs/misc/mime/LiiiSTEM.desktop", {prefixdir="share/applications"})
-        add_installfiles("$(projectdir)/TeXmacs/misc/images/liiistem.png", {prefixdir="share/icons/hicolor/512x512/apps"})
+        add_installfiles("$(projectdir)/TeXmacs/misc/mime/" .. stem_binary_name .. ".desktop", {prefixdir="share/applications"})
+        add_installfiles("$(projectdir)/TeXmacs/misc/images/" .. stem_binary_name .. ".png", {prefixdir="share/icons/hicolor/512x512/apps"})
         -- add_installfiles("$(projectdir)/TeXmacs/misc/mime/mogan.xml", {prefixdir="share/mime/packages"})
     end
 
@@ -669,7 +672,7 @@ target("stem") do
             add_installfiles({
                 "$(projectdir)/TeXmacs(/tests/*.tm)",
                 "$(projectdir)/TeXmacs(/tests/*.bib)",
-            }, {prefixdir="share/liiilabs"})
+            }, {prefixdir=stem_prefix_dir})
         end
     end
 
@@ -681,7 +684,7 @@ target("stem") do
     on_run(function (target)
         name = target:name()
         if is_plat("windows") then
-            os.execv(target:installdir().."/bin/LiiiSTEM.exe")
+            os.execv(target:installdir().."/bin/" .. stem_binary_windows)
         elseif is_plat("linux", "macosx") then
             print("Launching " .. target:targetfile())
             os.execv(target:targetfile(), {"-d"}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
@@ -717,7 +720,7 @@ function add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
             if is_plat("macosx", "linux") then
                 binary = target:deps()["stem"]:targetfile()
             elseif is_plat("mingw", "windows") then
-                binary = path.join(INSTALL_DIR,"bin","MoganResearch.exe")
+                binary = path.join(INSTALL_DIR,"bin", stem_binary_windows)
             else
                 print("Unsupported plat $(plat)")
             end
@@ -751,11 +754,11 @@ target("liii_packager") do
         pattern = "@(.-)@",
     })
 
-    set_installdir(path.join("$(buildir)", "macosx/$(arch)/$(mode)/LiiiSTEM.app/Contents/Resources/"))
+    set_installdir(path.join("$(buildir)", "macosx/$(arch)/$(mode)/" .. stem_binary_name .. ".app/Contents/Resources/"))
 
-    local dmg_name= "LiiiSTEM-v" .. XMACS_VERSION .. ".dmg"
+    local dmg_name= stem_binary_name .. "-v" .. XMACS_VERSION .. ".dmg"
     if is_arch("arm64") then
-        dmg_name= "LiiiSTEM-v" .. XMACS_VERSION .. "-arm.dmg"
+        dmg_name= stem_binary_name .. "-v" .. XMACS_VERSION .. "-arm.dmg"
     end
 
     after_install(function (target, opt)
@@ -798,9 +801,9 @@ xpack("stem") do
     set_author("Darcy Shen <da@liii.pro>")
     set_license("GPLv3")
     set_licensefile(path.join(os.projectdir(), "LICENSE"))
-    set_title("Liii STEM")
+    set_title(stem_project_name)
     set_description("A one-stop solution that meets all your STEM writing needs")
-    set_homepage("https://liiistem.cn")
+    set_homepage(stem_homepage)
 
     _, pos = string.find(XMACS_VERSION, "-")
     local XMACS_VERSION_XYZ= XMACS_VERSION
@@ -811,12 +814,12 @@ xpack("stem") do
 
     if is_plat ("windows") then
         set_specfile(path.join(os.projectdir(), "packages/windows/research.nsis"))
-        set_specvar("PACKAGE_INSTALL_DIR", "LiiiLabs\\LiiiSTEM-"..XMACS_VERSION)
-        set_specvar("PACKAGE_NAME", "LiiiSTEM")
-        set_specvar("PACKAGE_SHORTCUT_NAME", "Liii STEM")
+        set_specvar("PACKAGE_INSTALL_DIR", stem_lab_big_name .. "\\" .. stem_binary_name .. "-" .. XMACS_VERSION)
+        set_specvar("PACKAGE_NAME", stem_binary_name)
+        set_specvar("PACKAGE_SHORTCUT_NAME", stem_project_name)
         set_iconfile(path.join(os.projectdir(), "packages/windows/Xmacs.ico"))
         set_bindir("bin")
-        add_installfiles(path.join(os.projectdir(), "build/packages/stem/data/bin/(**)|LiiiSTEM.exe"), {prefixdir = "bin"})
+        add_installfiles(path.join(os.projectdir(), "build/packages/stem/data/bin/(**)|" .. stem_binary_windows), {prefixdir = "bin"})
     end
 
     add_targets("stem")
@@ -825,16 +828,14 @@ xpack("stem") do
         on_load(function (package)
             local format = package:format()
             if format == "nsis" then
-                package:set("basename", "LiiiSTEM-v" .. package:version() .. "-64bit-installer")
+                package:set("basename", stem_binary_name .. "-v" .. package:version() .. "-64bit-installer")
             else
-                package:set("basename", "LiiiSTEM-v" .. package:version() .. "-64bit-portable")
+                package:set("basename", stem_binary_name .. "-v" .. package:version() .. "-64bit-portable")
             end
         end)
     end
 end
 end
-
-includes("xmake/vars.lua")
 
 includes("xmake/tests.lua")
 -- Tests in C++

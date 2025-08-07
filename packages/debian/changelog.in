@@ -1,4 +1,4 @@
-liii-stem (@DEVEL_VERSION@-@DEVEL_RELEASE@) unstable; urgency=low
+mogan-stem (@DEVEL_VERSION@-@DEVEL_RELEASE@) unstable; urgency=low
 
-  * Liii STEM Debian Package
+  * Mogan STEM Debian Package
  -- Darcy Shen <da@liii.pro>  Mon, 28 Oct 2024 14:50:00 +0800

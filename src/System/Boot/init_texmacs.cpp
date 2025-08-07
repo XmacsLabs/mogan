@@ -94,8 +94,8 @@ init_texmacs_path (int& argc, char** argv) {
 
 #ifdef OS_GNU_LINUX
   if (is_empty (current_texmacs_path) &&
-      exists (exedir * "../share/liiilabs")) {
-    set_env ("TEXMACS_PATH", as_string (exedir * "../share/liiilabs"));
+      exists (exedir * "../share/" * PREFIX_DIR)) {
+    set_env ("TEXMACS_PATH", as_string (exedir * "../share/" * PREFIX_DIR));
   }
 #endif
 
@@ -135,7 +135,7 @@ init_texmacs_path (int& argc, char** argv) {
   // is in a .app bundle on MacOSX
   if (is_empty (current_texmacs_path)) {
     set_env ("TEXMACS_PATH",
-             as_string (exedir * "../Resources/share/liiilabs"));
+             as_string (exedir * "../Resources/share/" * PREFIX_DIR));
   }
 #endif
 
@@ -231,7 +231,7 @@ static void
 init_main_paths () {
 #if defined(OS_MINGW) || defined(OS_WIN)
   if (is_none (get_env_path ("TEXMACS_HOME_PATH",
-                             get_env ("APPDATA") * "/liiilabs"))) {
+                             get_env ("APPDATA") * "/" * PREFIX_DIR))) {
 #else
   if (is_none (get_env_path ("TEXMACS_HOME_PATH", "~/.TeXmacs"))) {
 #endif

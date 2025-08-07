@@ -16,10 +16,10 @@ override_dh_auto_configure:
 	xmake config -m release --yes -vD --root
 
 override_dh_auto_build:
-	xmake build --yes -vD --root liii
+	xmake build --yes -vD --root stem
 
 override_dh_auto_install:
-	xmake install --root liii
+	xmake install --root stem
 
 override_dh_dwz:
 	echo "Skip dh_dwz"
