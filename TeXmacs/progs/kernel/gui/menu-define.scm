@@ -631,11 +631,12 @@
 (define-public (tm-pattern name . args)
   (cond ((url-exists? (url-append "$TEXMACS_PATTERN_PATH" (url-tail name)))
          `(pattern ,(url->unix (url-tail name)) ,@args))
-        ((string-starts? (url->unix (url->delta-unix name)) "../")
+        ((and-let* ((delta-unix (url->delta-unix name)))
+           (string-starts? (url->unix delta-unix) "../"))
          (when (url? name) (set! name (url->system name)))
          `(pattern ,name ,@args))
         (else
-         `(pattern ,(url->unix (url->delta-unix name)) ,@args))))
+         `(pattern ,(url->system name) ,@args))))
 
 (tm-menu (my-pattern-menu cmd)
   (tile 8
