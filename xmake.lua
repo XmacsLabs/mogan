@@ -740,7 +740,7 @@ for _, filepath in ipairs(os.files("TeXmacs/tests/*.scm")) do
     add_target_integration_test(filepath, INSTALL_DIR, RUN_ENVS)
 end
 
-target("liii_packager") do
+target("stem_packager") do
     set_enabled(is_plat("macosx") and is_mode("release"))
     set_kind("phony")
 
@@ -749,6 +749,7 @@ target("liii_packager") do
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_configvar("APPCAST", "")
     set_configvar("OSXVERMIN", "")
+    set_configvar("STEM_NAME", stem_binary_name)
     add_configfiles("$(projectdir)/packages/macos/Info.plist.in", {
         filename = "Info.plist",
         pattern = "@(.-)@",

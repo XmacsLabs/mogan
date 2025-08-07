@@ -26,11 +26,11 @@
       </dict>
     </array>
     <key>CFBundleDisplayName</key>
-    <string>LiiiSTEM</string>
+    <string>@STEM_NAME@</string>
     <key>CFBundleExecutable</key>
-    <string>LiiiSTEM</string>
+    <string>@STEM_NAME@</string>
     <key>CFBundleName</key>
-    <string>LiiiSTEM</string>
+    <string>@STEM_NAME@</string>
     <key>CFBundleIconFile</key>
     <string>new-mogan</string>
     <key>CFBundleIdentifier</key>
