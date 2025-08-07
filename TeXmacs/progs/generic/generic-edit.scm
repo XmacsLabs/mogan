@@ -872,7 +872,12 @@
       (insert-go-to `(inactive (specific ,s "")) '(0 1 0))))
 
 (tm-define (make-include u)
-  (insert `(include ,(utf8->cork (url->delta-unix u)))))
+  (let ((delta-unix (url->delta-unix u)))
+    (if delta-unix
+      (insert `(include ,(utf8->cork delta-unix)))
+      (set-message `(concat ,(translate "Unable to include file from another drive: ")
+                            (verbatim ,(url->string u)) "")
+                   (translate "include file")))))
 
 (tm-define (make-inline-image l)
   (apply make-image (cons* (url->system (car l)) #f (cdr l))))
@@ -975,13 +980,19 @@
 
 (define (make-thumbnails-sub l nr)
   (let* ((w (string-append (number->string (- (/ 1.0 nr) 0.02)) "par"))
-         (mapper (lambda (x) `(image ,(url->delta-unix x) ,w "" "" "")))       
+         (mapper (lambda (x)
+                   (and-let* ((delta-unix (url->delta-unix x)))
+                    `(image ,delta-unix ,w "" "" ""))))
          (l1 (map mapper l))
          (l2 (make-rows l1 nr))
          (l3 (map (lambda (r) `(row ,@(map (lambda (c) `(cell ,c)) r))) l2)))
-    (insert `(tabular* (tformat (twith "table-width" "1par")
-                                (twith "table-hyphen" "yes")
-                                (table ,@l3))))))
+    (if l1
+      (insert `(tabular* (tformat (twith "table-width" "1par")
+                                  (twith "table-hyphen" "yes")
+                                  (table ,@l3))))
+      (set-message `(concat ,(translate "Unable to make thumbnail from another drive: ")
+                            (verbatim ,(url->string (car l))) "")
+                   (translate "make thumbnail")))))
 
 (tm-define (make-thumbnails nr)
   (:argument nr "Number of pictures per row")
@@ -1112,15 +1123,29 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (make-sound u)
-  (if (not (url-none? u))
-      (insert `(sound ,(url->delta-unix u)))))
+  (let ((delta-unix (url->delta-unix u)))
+    (cond
+      ((url-none? u)
+       (set-message `(concat ,(translate "Unable to make sound which url is none: ")
+                            (verbatim ,(url->string u)) "")
+                   (translate "make sound")))
+      ((not delta-unix)
+       (set-message `(concat ,(translate "Unable to make sound from another drive: ")
+                            (verbatim ,(url->string u)) "")
+                   (translate "make sound")))
+      (else (insert `(sound ,delta-unix))))))
 
 (tm-define (make-animation u)
-  (interactive
-      (lambda (w h len rep)
-        (if (== rep "no") (set! rep "false"))
-        (insert `(video ,(url->delta-unix u) ,w ,h ,len ,rep)))
-    "Width" "Height" "Length" "Repeat?"))
+  (let ((delta-unix (url->delta-unix u)))
+    (if delta-unix
+      (interactive
+          (lambda (w h len rep)
+            (if (== rep "no") (set! rep "false"))
+            (insert `(video ,delta-unix ,w ,h ,len ,rep)))
+        "Width" "Height" "Length" "Repeat?")
+      (set-message `(concat ,(translate "Unable to make animation from another drive: ")
+                            (verbatim ,(url->string u)) "")
+                   (translate "make animation")))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Labels attached to markup
