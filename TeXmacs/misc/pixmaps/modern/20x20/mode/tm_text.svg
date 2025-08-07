@@ -14,30 +14,19 @@
    id="svg3039"
    version="1.1"
    inkscape:version="0.48.0 r9654"
-   sodipodi:docname="tm_alternate_first.svg"
-   inkscape:export-filename="/Users/vdhoeven/magix/texmacs/icons/16x16/focus/tm_add.png"
+   sodipodi:docname="tm_textual.svg"
+   inkscape:export-filename="/Users/vdhoeven/magix/texmacs/icons/20x20/mode/tm_textual.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
      id="defs3041">
-    <linearGradient
-       id="linearGradient6140">
-      <stop
-         style="stop-color:#808080;stop-opacity:1;"
-         offset="0"
-         id="stop6142" />
-      <stop
-         style="stop-color:#606060;stop-opacity:1;"
-         offset="1"
-         id="stop6144" />
-    </linearGradient>
     <filter
        inkscape:collect="always"
-       id="filter5018">
+       id="filter13858">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="0.2"
-         id="feGaussianBlur5020" />
+         stdDeviation="0.2033775"
+         id="feGaussianBlur13860" />
     </filter>
   </defs>
   <sodipodi:namedview
@@ -47,18 +36,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="31.392433"
-     inkscape:cx="6.7869176"
-     inkscape:cy="7.9295487"
+     inkscape:zoom="22.197802"
+     inkscape:cx="0.42828425"
+     inkscape:cy="7.4653757"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
-     inkscape:snap-grids="true"
-     inkscape:window-width="1466"
-     inkscape:window-height="1118"
-     inkscape:window-x="27"
-     inkscape:window-y="14"
+     inkscape:snap-grids="false"
+     inkscape:window-width="1279"
+     inkscape:window-height="1059"
+     inkscape:window-x="169"
+     inkscape:window-y="41"
      inkscape:window-maximized="0"
      showguides="true"
      inkscape:snap-global="true">
@@ -86,7 +75,9 @@
   </metadata>
   <g
      id="layer1"
-     transform="translate(2,2)">
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(0,4)">
     <text
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:25%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Latin Modern Math;-inkscape-font-specification:Latin Modern Math"
@@ -175,17 +166,16 @@
          id="tspan3078"
          x="6.0259871"
          y="13.020233" /></text>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1;fill-opacity:1"
-       d="m 0.5,8.5 11,0 c 0,0 1.5,-1 3,-3 1.5,-2 1,-4 1,-4 l -10,0 c 0,0 -0.5,2 -2,4 -1.5,2 -3,3 -3,3 z"
-       id="path5041"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cczcczc" />
-    <path
-       sodipodi:nodetypes="cczcczc"
-       inkscape:connector-curvature="0"
-       id="path5045"
-       d="m 0.5,8.5 11,0 c 0,0 1.5,1 3,3 1.5,2 1,4 1,4 l -10,0 c 0,0 -0.5,-2 -2,-4 -1.5,-2 -3,-3 -3,-3 z"
-       style="fill:#000000;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1;fill-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-size:23.78612328px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:25%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#404040;fill-opacity:1;stroke:#404040;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;filter:url(#filter13858);font-family:CMU Serif;-inkscape-font-specification:Sans"
+       x="8.9820547"
+       y="14.042147"
+       id="text3315"
+       sodipodi:linespacing="25%"><tspan
+         sodipodi:role="line"
+         id="tspan3317"
+         x="8.9820547"
+         y="14.042147">T</tspan></text>
   </g>
 </svg>

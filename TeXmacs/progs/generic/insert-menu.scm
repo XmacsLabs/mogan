@@ -166,7 +166,7 @@
       (=> (balloon (icon "tm_macro.xpm") "Insert a personal macro")
           (link insert-macro-menu)))
   (if (not (in-text?))
-      ((balloon (icon "tm_textual.xpm") "Insert plain text")
+      ((balloon (icon "tm_text.xpm") "Insert plain text")
        (make 'text)))
   (if (not (in-math?))
       (=> (balloon (icon "tm_math.xpm") "Insert mathematics")
