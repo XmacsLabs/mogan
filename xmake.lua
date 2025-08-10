@@ -829,9 +829,9 @@ xpack("stem") do
         on_load(function (package)
             local format = package:format()
             if format == "nsis" then
-                package:set("basename", stem_binary_name .. "-v" .. package:version() .. "-64bit-installer")
+                package:set("basename", "MoganSTEM-v" .. package:version() .. "-64bit-installer")
             else
-                package:set("basename", stem_binary_name .. "-v" .. package:version() .. "-64bit-portable")
+                package:set("basename", "MoganSTEM-v" .. package:version() .. "-64bit-portable")
             end
         end)
     end

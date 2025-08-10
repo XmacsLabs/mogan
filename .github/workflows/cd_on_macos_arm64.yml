@@ -1,0 +1,66 @@
+name: CD for Mogan STEM on macOS arm64
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  macosbuild:
+    strategy:
+      matrix:
+        os: [macos-13]
+        arch: [arm64]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: pandoc
+        run: brew install pandoc
+      - name: where is pandoc
+        run: whereis pandoc
+      - name: Noto fonts
+        run: |
+          mkdir -p $GITHUB_WORKSPACE/TeXmacs/fonts/opentype/noto
+          cd $GITHUB_WORKSPACE/TeXmacs/fonts/opentype/noto
+          wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/NotoSansCJK-Bold.ttc
+          wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/NotoSansCJK-Regular.ttc
+          wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/NotoSerifCJK-Bold.ttc
+          wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/NotoSerifCJK-Regular.ttc
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.5.3
+          target: 'desktop'
+          cache: 'true'
+      - uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: v2.9.3
+          actions-cache-folder: '.xmake-cache'
+      - name: xmake repo --update
+        run: xmake repo --update
+      - name: config
+        run: xmake config -m release -a ${{ matrix.arch }} -vD --yes
+      - name: build
+        run: xmake build -vD --diagnosis stem
+      - name: install
+        run: xmake install -vD stem
+      - name: Generate Installer
+        run: |
+          xmake install -vD stem_packager
+      - name: Upload 
+        uses: actions/upload-artifact@v4
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        with:
+          path: build/*.dmg
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          prerelease: true
+          files: build/*.dmg
