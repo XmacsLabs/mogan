@@ -630,7 +630,7 @@ target("stem") do
     -- package metadata
     if is_plat("macosx") then
         add_installfiles({
-            "$(projectdir)/packages/macos/new-mogan.icns",
+            "$(projectdir)/packages/macos/stem.icns",
             "$(projectdir)/packages/macos/TeXmacs-document.icns",
             "$(projectdir)/src/Plugins/Cocoa/(en.lproj/**)",
             "$(projectdir)/src/Plugins/Cocoa/(zh-Hans.lproj/**)"

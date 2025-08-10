@@ -32,9 +32,9 @@
     <key>CFBundleName</key>
     <string>@STEM_NAME@</string>
     <key>CFBundleIconFile</key>
-    <string>new-mogan</string>
+    <string>stem</string>
     <key>CFBundleIdentifier</key>
-    <string>cn.liiistem</string>
+    <string>app.mogan</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundlePackageType</key>
@@ -56,6 +56,6 @@
     <key>NSRequiresAquaSystemAppearance</key>
     <string>true</string>
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright © 2025 Liii Network</string>
+    <string>Copyright © 2025 Mogan Lab</string>
   </dict>
 </plist>
