@@ -49,10 +49,7 @@
     (-> "Emphasize"
         ("Shadowed" (make-anim 'shadowed-smooth))
         ("Emboss" (make-anim 'emboss-smooth))
-        ("Outlined emboss" (make-anim 'outlined-emboss-smooth))))
-  ---
-  ("Animation" (choose-file make-animation "Load file" "animation"))
-  ("Sound" (choose-file make-sound "Load file" "sound")))
+        ("Outlined emboss" (make-anim 'outlined-emboss-smooth)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customization
