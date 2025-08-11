@@ -12,6 +12,7 @@
 #include "analyze.hpp"
 #include "font.hpp"
 #include "frame.hpp"
+#include "unicode.hpp"
 
 /******************************************************************************
  * True Type fonts
@@ -153,7 +154,7 @@ int
 poor_distorted_font_rep::index_glyph (string s, font_metric& fnm,
                                       font_glyphs& fng) {
   int c= base->index_glyph (s, fnm, fng);
-  if (c < 0) return c;
+  if (c < 0 || is_emoji_character (c)) return c;
   // fnm= distorted (fnm, kind);
   fng= distorted (fng, kind, wfn);
   return c;

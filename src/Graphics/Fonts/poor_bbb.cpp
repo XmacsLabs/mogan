@@ -12,6 +12,7 @@
 #include "analyze.hpp"
 #include "cork.hpp"
 #include "font.hpp"
+#include "unicode.hpp"
 #include "universal.hpp"
 
 /******************************************************************************
@@ -188,7 +189,7 @@ poor_bbb_font_rep::get_glyph (string s) {
 int
 poor_bbb_font_rep::index_glyph (string s, font_metric& fnm, font_glyphs& fng) {
   int c= base->index_glyph (s, fnm, fng);
-  if (c < 0) return c;
+  if (c < 0 || is_emoji_character (c)) return c;
   fnm= bolden (fnm, fat, 0);
   fng= make_bbb (fng, wpen, hpen, fat);
   return c;

@@ -13,6 +13,7 @@
 #include "cork.hpp"
 #include "font.hpp"
 #include "frame.hpp"
+#include "unicode.hpp"
 
 /******************************************************************************
  * True Type fonts
@@ -196,7 +197,7 @@ poor_mono_font_rep::get_glyph (string s) {
 int
 poor_mono_font_rep::index_glyph (string s, font_metric& fnm, font_glyphs& fng) {
   int c= base->index_glyph (s, fnm, fng);
-  if (c < 0) return c;
+  if (c < 0 || is_emoji_character (c)) return c;
   fnm= mono (fnm, wquad, mquad);
   fng= mono (fng, wquad, mquad);
   return c;

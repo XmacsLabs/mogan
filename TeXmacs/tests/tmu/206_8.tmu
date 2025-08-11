@@ -1,0 +1,28 @@
+<TMU|<tuple|1.1.0|2025.1.0>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <with|font-series|bold|加粗👋>
+
+  <with|font-shape|italic|斜体👋>
+
+  <condensed|压缩👋>
+
+  <embold|Embold👋>
+
+  <embbb|embbb👋>
+
+  <hmagnified|hmagnified👋>
+
+  \;
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
