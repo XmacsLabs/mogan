@@ -1,0 +1,51 @@
+<TMU|<tuple|1.1.0|2025.0.10>>
+
+<style|<tuple|generic|number-europe|chinese>>
+
+<\body>
+  <with|font-series|bold|测试：<strong|[201_4] 修复 ref 补全部分情况无法删除字符>>
+
+  <label|auto-1>
+
+  <label|auto-2>
+
+  本文档中有两个标签，auto-1和auto-2。
+
+  <\enumerate-numeric>
+    <item>确保 Edit -\<gtr\> Preferences.. -\<gtr\> Complete style 选项为 Popup
+
+    <item>插入一个<inactive|<hybrid|reference|>>块（键盘输入\\reference tab tab）
+
+    <item>按下 tab 触发补全，此时应当看到三项补全项，一项为空，另外两项为auto-1和auto-2
+
+    <item>按下 tab 触发补全循环，
+
+    <with|font-series|bold|检查：此时应当补全出 auto-1>
+
+    <item>按下一次 backsapce 删除字符，
+
+    <with|font-series|bold|检查：此时剩余字符应当为 auto->
+
+    <item>按下一次 backsapce 删除字符，
+
+    <with|font-series|bold|检查：此时剩余字符应当为 auto （此处先前无法正常删除）>
+
+    <item>按下四次 backsapce 删除字符，当最后的 a 被删除时，
+
+    <with|font-series|bold|检查：剩余字符为空，且补全框被自动关闭>
+  </enumerate-numeric>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|?|1>>
+    <associate|auto-2|<tuple|?|1>>
+  </collection>
+</references>

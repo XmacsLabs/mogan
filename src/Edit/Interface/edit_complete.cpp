@@ -74,7 +74,10 @@ bool
 edit_interface_rep::complete_try () {
   completion_style= get_preference ("completion style");
   tree st         = subtree (et, path_up (tp));
-  if (is_compound (st)) return false;
+  if (is_compound (st)) {
+    set_input_normal ();
+    return false;
+  }
   string s           = st->label, ss;
   int    s_N         = N (s);
   int    end         = last_item (tp);
@@ -86,13 +89,28 @@ edit_interface_rep::complete_try () {
   if (inside (LABEL) || inside (REFERENCE) || inside (PAGEREF) ||
       inside (as_tree_label ("eqref")) ||
       inside (as_tree_label ("smart-ref"))) {
-    if (end != s_N) return false;
+    if (end != s_N) {
+      set_input_normal ();
+      return false;
+    }
     ss    = copy (s);
     tree t= get_labels ();
     int  i, n= N (t);
     for (i= 0; i < n; i++)
       if (is_atomic (t[i]) && starts (t[i]->label, s))
         a << string (t[i]->label (s_N, N (t[i]->label)));
+    if (!contains (string (""), a)) {
+      // 在补全结果中插入一个空值以保留前缀自身
+      // 例如在 ref 中输入 "auto" 时，补全结果会包含以 "auto"
+      // 自身和为以之前缀的补全 而不仅仅是以 "auto-" 开头的补全
+      a= append (string (""), a);
+    }
+    if (input_mode == INPUT_COMPLETE && is_empty (ss)) {
+      // 当处于补全模式且前缀为空时，退出补全模式
+      // 此情况发生在补全模式中使用 backspace 删除到空时
+      set_input_normal ();
+      return false;
+    }
   }
   else {
     if ((end == 0) || (!is_iso_alpha (s[end - 1])) ||
