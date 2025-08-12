@@ -93,6 +93,7 @@
   ("interactive questions" (get-default-interactive-questions) noop)
   ("language" (get-locale-language) notify-language)
   ("gui theme" "default" notify-gui-theme)
+  ("completion style" "popup" noop)
   ("page medium" "paper" (lambda args (noop)))
   ("page screen margin" "false" (lambda args (noop)))
   ("fast environments" "on" notify-fast-environments)

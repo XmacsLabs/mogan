@@ -163,7 +163,7 @@ edit_interface_rep::try_shortcut (string comb) {
     else if (N (shorth) > 0) call ("kbd-insert", shorth);
     // cout << "Mark= " << sh_mark << "\n";
     string mode= as_string (call ("get-env", "mode"));
-    if (mode == "math" && get_preference ("completion style") == "Popup") {
+    if (mode == "math" && get_preference ("completion style") == "popup") {
       math_complete_try (comb);
       return true;
     }

@@ -57,9 +57,9 @@ find_completions (drd_info drd, tree t, hashset<string>& h, string prefix= "") {
 
 static array<string>
 find_completions (drd_info drd, tree t, string prefix= "",
-                  string completion_style= "Inline") {
+                  string completion_style= "inline") {
   hashset<string> h;
-  if (completion_style == string ("Popup")) {
+  if (completion_style == string ("popup")) {
     h->insert (string ("")); // 在补全结果中插入一个空值以保留前缀自身
   }
   find_completions (drd, t, h, prefix);
@@ -82,7 +82,7 @@ edit_interface_rep::complete_try () {
   int    s_N         = N (s);
   int    end         = last_item (tp);
   int    min_compls_N= 1;
-  if (completion_style == string ("Popup")) {
+  if (completion_style == string ("popup")) {
     min_compls_N= 2; // 至少需要2个补全结果(前缀自身和一个补全结果)
   }
   array<string> a;
@@ -143,7 +143,7 @@ edit_interface_rep::complete_message () {
     if (i != 1) s << sep;
     s << completion_prefix << completions[j];
   }
-  if (completion_style == string ("Inline")) {
+  if (completion_style == string ("inline")) {
     set_message (concat ("Other completions: ", verbatim (s)), "tab");
   }
 }
@@ -175,7 +175,7 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
       tp1= previous_valid (et, tp1); // 向前移动到前缀的起始位置
     }
     cursor cu= eb->find_check_cursor (tp1);
-    if (completion_style == string ("Popup")) {
+    if (completion_style == string ("popup")) {
       show_completion_popup (tp, full_completions, cu, magf, get_scroll_x (),
                              get_scroll_y (), get_canvas_x ());
     }
@@ -190,7 +190,7 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
 bool
 edit_interface_rep::complete_keypress (string key) {
   completion_style= get_preference ("completion style");
-  if (completion_style == string ("Popup")) {
+  if (completion_style == string ("popup")) {
     return complete_popup (key);
   }
   else {
@@ -358,7 +358,7 @@ edit_interface_rep::custom_complete (tree r) {
   string          prefix;
   bool            prefix_initialized= false;
   hashset<string> compls;
-  if (completion_style == string ("Popup")) {
+  if (completion_style == string ("popup")) {
     min_compls_N= 2; // 至少需要2个补全结果(前缀自身和一个补全结果)
     compls << string (""); // 在补全结果中插入一个空值以保留前缀自身
   }

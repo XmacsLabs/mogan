@@ -57,6 +57,10 @@
   ("footer" "On the footer")
   ("popup" "In popup windows"))
 
+(define-preference-names "completion style"
+  ("inline" "Inline")
+  ("popup" "Popup"))
+
 (define-preference-names "detailed menus"
   ("simple ""Simplified menus")
   ("detailed" "Detailed menus"))
@@ -113,7 +117,7 @@
             "18em"))
     (item (text "Completion style:")
       (enum (set-pretty-preference "completion style" answer)
-            '("Inline" "Popup")
+            '("Popup" "Inline")
             (get-pretty-preference "completion style")
             "18em"))))
 

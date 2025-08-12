@@ -94,6 +94,9 @@
     (enum ("Buffer management" "buffer management")
           ("Documents in separate windows" "separate")
           ("Multiple documents share window" "shared"))
+    (enum ("Completion style" "completion style")
+          ("Popup" "popup")
+          ("Inline" "inline"))
     ---
     (enum ("Language" "language" set-language-and-notify)
           ,@(map (lambda (lan) (list (language-to-language-name lan) lan))
