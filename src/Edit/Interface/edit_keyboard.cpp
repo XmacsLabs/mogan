@@ -421,8 +421,7 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
   if (is_nil (buf)) return;
 
   string key= utf8_to_cork (key_u8);
-  if (tm_string_length (key) == 1 && starts (key, "<") && ends (key, ">") &&
-      !starts (key, "<#")) {
+  if (starts (key, "<") && ends (key, ">") && !starts (key, "<#")) {
     key= key (1, N (key) - 1);
   }
 
