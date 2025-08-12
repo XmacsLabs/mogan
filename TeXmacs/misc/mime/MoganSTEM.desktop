@@ -1,12 +1,12 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=Liii STEM
-GenericName=Liii STEM
+Name=Mogan STEM
+GenericName=Mogan STEM
 Comment=A structured wysiwyg scientific text editor
 MimeType=text/x-texmacs.doc;text/x-texmacs.sty;text/plain;text/x-tex;
-Exec=liiistem %U
-Icon=liiistem
+Exec=moganstem %U
+Icon=MoganSTEM
 Terminal=false
 Categories=Education;Science;Math;
 X-KDE-Priority=TopLevel
