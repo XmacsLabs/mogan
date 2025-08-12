@@ -685,7 +685,7 @@ target("stem") do
     on_run(function (target)
         name = target:name()
         if is_plat("windows") then
-            os.execv(target:installdir().."/bin/" .. stem_binary_windows)
+            os.execv(target:installdir().."/bin/" .. target:filename())
         elseif is_plat("linux", "macosx") then
             print("Launching " .. target:targetfile())
             os.execv(target:targetfile(), {"-d"}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
@@ -824,15 +824,17 @@ xpack("stem") do
         add_installfiles(path.join(os.projectdir(), "build/packages/stem/data/bin/(**)|" .. stem_binary_windows), {prefixdir = "bin"})
     end
 
+    set_basename(stem_binary_name)
     add_targets("stem")
 
     if is_plat("windows") then
         on_load(function (package)
             local format = package:format()
+            local base_name = package:basename()
             if format == "nsis" then
-                package:set("basename", "MoganSTEM-v" .. package:version() .. "-64bit-installer")
+                package:set("basename", base_name .. "-v" .. package:version() .. "-64bit-installer")
             else
-                package:set("basename", "MoganSTEM-v" .. package:version() .. "-64bit-portable")
+                package:set("basename", base_name .. "-v" .. package:version() .. "-64bit-portable")
             end
         end)
     end
