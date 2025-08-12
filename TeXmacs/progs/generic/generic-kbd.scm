@@ -183,8 +183,8 @@
   ("extra e" (edit-focus-macro))
   ("extra r" (edit-previous-macro))
   ("extra m" (edit-focus-macro-source))
-  ("extra p" (toggle-preamble-mode))
-  ("extra s" (toggle-source-mode))
+  ;; ("extra p" (toggle-preamble-mode))
+  ;; ("extra s" (toggle-source-mode))
 
   ("accent:hat" "^")
   ("accent:deadhat" "^")
@@ -638,7 +638,10 @@
   ("C-k" (kill-paragraph))
   ("C-l" (refresh-window))
   ("C-y" (yank-paragraph))
-  ("A-q" (make 'symbol)))
+  ("A-q" (make 'symbol))
+
+  ("C-O" (toggle-source-mode))
+  ("C-P" (toggle-preamble-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Windows keymap

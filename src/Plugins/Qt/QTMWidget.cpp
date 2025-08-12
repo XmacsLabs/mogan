@@ -184,9 +184,6 @@ void
 QTMWidget::keyReleaseEvent (QKeyEvent* event) {
   string r= from_key_release_event (event);
   if (is_empty (r)) return;
-#ifdef OS_MACOS
-  if (starts (r, "M-A-")) return;
-#endif
   if (DEBUG_KEYBOARD) debug_qt << "key released: " << r << LF;
 
   the_gui->process_keypress (tm_widget (), r, texmacs_time ());
