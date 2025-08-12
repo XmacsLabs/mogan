@@ -40,6 +40,7 @@
 
 #define BUILD_USER "@CONFIG_USER@"
 #define BUILD_DATE "@CONFIG_DATE@"
+#define CACHE_NAME "@CACHE_NAME@"
 
 #define TM_DEVEL "@tm_devel@"
 #define TM_DEVEL_RELEASE "@tm_devel_release@"

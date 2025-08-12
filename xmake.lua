@@ -403,6 +403,7 @@ target("libmogan") do
             variables = {
                 TEXMACS_VERSION = TEXMACS_VERSION,
                 XMACS_VERSION = XMACS_VERSION,
+                CACHE_NAME = CACHE_NAME,
                 CONFIG_USER = os.getenv("USER") or "unknown",
                 CONFIG_DATE = os.time(),
                 CONFIG_STD_SETENV = "#define STD_SETENV",

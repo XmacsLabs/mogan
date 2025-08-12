@@ -138,17 +138,19 @@ init_texmacs_home_path () {
 url
 get_tm_cache_path () {
 #if defined(OS_WIN) || defined(OS_MINGW)
-  return url (string ("$LOCALAPPDATA/LiiiLabs/system/cache/") * XMACS_VERSION);
+  return url (string ("$LOCALAPPDATA/") * CACHE_NAME * "/system/cache/" *
+              XMACS_VERSION);
 #endif
 #if defined(OS_MACOS)
-  return url (string ("$HOME/Library/Caches/LiiiLabs/") * XMACS_VERSION);
+  return url (string ("$HOME/Library/Caches/") * CACHE_NAME * "/" *
+              XMACS_VERSION);
 #endif
 #if defined(OS_GNU_LINUX)
   if (is_empty (get_env ("XDG_CACHE_HOME"))) {
-    return url (string ("$HOME/.cache/LiiiLabs/") * XMACS_VERSION);
+    return url (string ("$HOME/.cache/") * CACHE_NAME * "/" * XMACS_VERSION);
   }
   else {
-    return url (string ("$XDG_CACHE_HOME/LiiiLabs/") * XMACS_VERSION);
+    return url (string ("$XDG_CACHE_HOME/") * CACHE_NAME * "/" * XMACS_VERSION);
   }
 #endif
   return url (string ("$TEXMACS_HOME_PATH/system/cache/") * XMACS_VERSION);
