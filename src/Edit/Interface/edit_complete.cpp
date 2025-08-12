@@ -372,6 +372,7 @@ edit_interface_rep::custom_complete (tree r) {
         // 需要一个另外的辅助变量
         prefix            = l;
         prefix_initialized= true;
+        continue;
       }
       compls << l;
     }
