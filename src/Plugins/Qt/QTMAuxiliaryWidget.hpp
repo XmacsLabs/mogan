@@ -16,6 +16,7 @@
 
 #include <QCloseEvent>
 #include <QDockWidget>
+#include <QKeyEvent>
 
 class QTMAuxiliaryWidget : public QDockWidget {
   Q_OBJECT
@@ -25,6 +26,7 @@ public:
 
 protected:
   void closeEvent (QCloseEvent* event) override;
+  void keyPressEvent (QKeyEvent* event) override;
 };
 
 #endif // QTM_AUXILIARY_WIDGET_HPP
