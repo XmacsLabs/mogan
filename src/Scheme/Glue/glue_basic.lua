@@ -1713,6 +1713,19 @@ function main()
                     "url"
                 }
             },
+            {
+                -- 检查一个 view 是否是一个特定类型的视图
+                -- 返回值：
+                --    如果 url 满足类型要求，则返回 true，否则返回 false
+                --    （本质上是在做字符串的格式匹配）
+                scm_name = "is-view-type?",
+                cpp_name = "is_tmfs_view_type",
+                ret_type = "bool",
+                arg_list = {
+                    "url",    -- view 的 url
+                    "string"  -- 代表类型的字符串
+                }
+            },
             
             {
                 scm_name = "window-list",

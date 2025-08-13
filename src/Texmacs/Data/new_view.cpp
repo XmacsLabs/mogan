@@ -786,7 +786,7 @@ is_tmfs_view_type (string s, string type) {
     i++;
   if (i == prefix_N) return false; // 没有数字
 
-  // 中间匹配 “/aux”
+  // 中间匹配 type
   string mid;
   if (type != "default") {
     mid= "/tmfs/" * type * "/";
@@ -800,4 +800,9 @@ is_tmfs_view_type (string s, string type) {
 
   // 后面可以是任意字符串
   return true;
+}
+
+bool
+is_tmfs_view_type (url u, string type) {
+  return is_tmfs_view_type (as_string (u), type);
 }

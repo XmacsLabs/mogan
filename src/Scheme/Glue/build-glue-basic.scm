@@ -778,6 +778,7 @@
   (view-set-new-window view_set_new_window (void url))
   (switch-to-buffer switch_to_buffer (void url))
   (set-drd set_current_drd (void url))
+  (is-view-type? is_tmfs_view_type (bool url string))
 
   (window-list windows_list (array_url))
   (windows-number get_nr_windows (int))
