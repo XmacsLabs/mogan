@@ -766,7 +766,10 @@
   ("M-A-C-home" (traverse-first))
   ("M-A-C-end" (traverse-last))
   ("M-A-C-S-home" (kbd-select traverse-first))
-  ("M-A-C-S-end" (kbd-select traverse-last)))
+  ("M-A-C-S-end" (kbd-select traverse-last))
+  
+  ("C-O" (toggle-source-mode))
+  ("C-P" (toggle-preamble-mode)))
 
 (kbd-map
   (:profile windows)
