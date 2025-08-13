@@ -190,9 +190,10 @@
   (open-url u))
 
 (tm-define (preview-buffer)
-  (with file (url-glue (url-temp) (if (supports-native-pdf?) ".pdf" ".ps"))
-    (print-to-file file)
-    (preview-file file)))
+  (with-default-view
+    (with file (url-glue (url-temp) (if (supports-native-pdf?) ".pdf" ".ps"))
+      (print-to-file file)
+      (preview-file file))))
 
 (tm-define (choose-file-and-print-page-selection start end)
   (:argument  start "First page")

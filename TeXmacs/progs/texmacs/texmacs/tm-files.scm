@@ -182,6 +182,18 @@
              (view-win (view->window-of-tabpage view)))
         (window-set-view view-win view #t)))))
 
+(tm-define (ensure-default-view)
+  (:synopsis "Switch to parent window if not in default view")
+  (if (not (is-view-type? (current-view) "default"))
+    (switch-to-parent-window)))
+
+(tm-define-macro (with-default-view . body)
+  (:synopsis "Ensure we are in a default view, then execute @body")
+  `(begin
+     (ensure-default-view)
+     (exec-delayed
+       (lambda () ,@body))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Saving buffers
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -272,7 +284,7 @@
       (save-buffer-check-permissions (car args) (cdr args))))
 
 (tm-define (save-buffer . l)
-  (apply save-buffer-main l))
+  (with-default-view (apply save-buffer-main l)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Saving buffers under a new name
@@ -324,11 +336,12 @@
 (tm-define (save-buffer-as new-name . args)
   (:argument new-name texmacs-file "Save as")
   (:default  new-name (propose-name-buffer))
-  (when (string? new-name)
-    (set! new-name (string-replace new-name ":" "-"))
-    (set! new-name (string-replace new-name ";" "-")))
-  (with opts (if (x-gui?) args (cons :overwrite args))
-    (apply save-buffer-as-main (cons new-name opts))))
+  (with-default-view
+    (when (string? new-name)
+      (set! new-name (string-replace new-name ":" "-"))
+      (set! new-name (string-replace new-name ";" "-")))
+    (with opts (if (x-gui?) args (cons :overwrite args))
+      (apply save-buffer-as-main (cons new-name opts)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Exporting buffers
@@ -598,7 +611,7 @@
 
 (tm-define (open-buffer)
   (:synopsis "Open a new file")
-  (choose-file load-buffer "Load file" "action_open"))
+  (with-default-view (choose-file load-buffer "Load file" "action_open")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Reverting buffers

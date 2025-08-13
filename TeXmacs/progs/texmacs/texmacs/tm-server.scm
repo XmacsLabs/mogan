@@ -263,13 +263,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (new-document)
-  (if (window-per-buffer?) (open-window) (new-buffer)))
+  (with-default-view
+    (if (window-per-buffer?) (open-window) (new-buffer))))
 
 (tm-define (new-document*)
-  (if (window-per-buffer?) (new-buffer) (open-window)))
+  (with-default-view
+    (if (window-per-buffer?) (new-buffer) (open-window))))
 
 (tm-define (close-document)
-  (if (window-per-buffer?) (safely-kill-window) (safely-kill-tabpage)))
+  (with-default-view
+    (if (window-per-buffer?) (safely-kill-window) (safely-kill-tabpage))))
 
 (tm-define (close-document*)
-  (if (window-per-buffer?) (safely-kill-tabpage) (safely-kill-window)))
+  (with-default-view
+    (if (window-per-buffer?) (safely-kill-tabpage) (safely-kill-window))))
