@@ -442,7 +442,7 @@
     (with (x1 y1 x2 y2) (tree-bounding-rectangle ref)
       (and-let* ((id (and (tree-atomic? body*) (tree->string body*)))
                  (tip (and id (ref-preview id))))
-        (show-tooltip id ref tip "Top" "Top" "default" 1.4)))))
+        (show-tooltip id ref tip "Top" "Top" "default" 2.2)))))
 
 (tm-define (keyboard-press key time)
   (with before? (in-inactive-reference?)
@@ -462,7 +462,7 @@
             (if tip
                 (begin
                   (show-tooltip id (cursor-tree) tip
-                                "Top" "Top" "keyboard" 0.6)
+                                "Top" "Top" "keyboard" 1.8)
                   (when (not tip1)
                     (set-message `(concat (verbatim ,id1) " <rightarrow> "
                                           (verbatim ,id2)) "")))
