@@ -140,8 +140,9 @@ static int tm_window_serial= 0;
 
 tm_window_rep::tm_window_rep (widget wid2, tree geom)
     : win (texmacs_window_widget (wid2, geom)), wid (wid2),
-      id (create_window_id ()), serial (tm_window_serial++),
-      menu_current (object ()), menu_cache (widget ()), text_ptr (NULL) {
+      parent (url_none ()), id (create_window_id ()),
+      serial (tm_window_serial++), menu_current (object ()),
+      menu_cache (widget ()), text_ptr (NULL) {
   zoomf= retina_zoom * get_server ()->get_default_zoom_factor ();
 }
 
@@ -156,10 +157,10 @@ get_doc_zoom_factor (tree doc) {
   return -1.0;
 }
 
-tm_window_rep::tm_window_rep (tree doc, command quit)
+tm_window_rep::tm_window_rep (tree doc, command quit, url parent_window)
     : win (texmacs_widget (0, quit)), wid (win), id (url_none ()),
-      serial (tm_window_serial++), menu_current (object ()),
-      menu_cache (widget ()), text_ptr (NULL) {
+      parent (parent_window), serial (tm_window_serial++),
+      menu_current (object ()), menu_cache (widget ()), text_ptr (NULL) {
   zoomf= retina_zoom * get_doc_zoom_factor (doc);
   if (zoomf < 0.0)
     zoomf= retina_zoom * get_server ()->get_default_zoom_factor ();
@@ -338,7 +339,7 @@ texmacs_input_widget (tree doc, tree style, url wname) {
   if (contains (name, get_all_buffers ())) set_buffer_tree (name, doc);
   else create_buffer (name, doc);
   tm_view   vw = concrete_view (get_passive_view (name));
-  tm_window win= tm_new<tm_window_rep> (doc, command ());
+  tm_window win= tm_new<tm_window_rep> (doc, command (), get_current_window ());
   set_master_buffer (name, base);
   vw->win= win;
   set_scrollable (win->wid, vw->ed);

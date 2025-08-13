@@ -1783,6 +1783,12 @@ function main()
                     "url"
                 }
             },
+            {
+                -- 切换编辑焦点到当前 view 所在的窗口的父窗口
+                scm_name = "switch-to-parent-window",
+                cpp_name = "switch_to_parent_window",
+                ret_type = "void",
+            },
             
             {
                 scm_name = "new-buffer",

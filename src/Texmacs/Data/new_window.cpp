@@ -234,6 +234,16 @@ switch_to_window (url new_w) {
   }
 }
 
+void
+switch_to_parent_window () {
+  tm_window win= concrete_window ();
+  if (win == NULL) return;
+  url parent= win->parent;
+  if (parent == url_none ()) return;
+  if (parent == get_current_window ()) return;
+  switch_to_window (parent);
+}
+
 /******************************************************************************
  * Other subroutines
  ******************************************************************************/

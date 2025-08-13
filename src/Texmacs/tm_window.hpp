@@ -20,6 +20,7 @@ public:
   widget win;
   widget wid;
   url    id;
+  url    parent; // 父窗口的URL
 
 public:
   hashmap<tree, tree> props;
@@ -35,7 +36,7 @@ protected:
 
 public:
   tm_window_rep (widget wid2, tree geom);
-  tm_window_rep (tree doc, command quit);
+  tm_window_rep (tree doc, command quit, url parent_window);
   ~tm_window_rep ();
   void        set_window_name (string s);
   void        set_modified (bool flag);

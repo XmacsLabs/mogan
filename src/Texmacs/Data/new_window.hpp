@@ -23,6 +23,7 @@ url        window_to_buffer (url win);
 void       window_set_buffer (url win, url name);
 void       window_focus (url win);
 void       switch_to_window (url win);
+void       switch_to_parent_window ();
 
 url  create_buffer ();
 url  new_window (bool map_flag= true, tree geom= "");
