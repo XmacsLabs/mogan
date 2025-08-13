@@ -108,7 +108,7 @@ QTMWindow::saveSettings () {
     settings.sync ();
   }
   else {
-    QSettings settings ("LiiiNetwork", "LiiiSTEM");
+    QSettings settings ("LiiiNetwork", STEM_NAME);
     settings.setValue ("mainWindowState", saveState ());
     settings.setValue ("mainWindowGeometry", saveGeometry ());
     settings.sync ();

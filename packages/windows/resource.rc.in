@@ -21,12 +21,12 @@ BEGIN
     BEGIN
       VALUE "Comments", "Liii STEM, a scientific edition platform."
       VALUE "CompanyName", "Liii Network\0"
-      VALUE "FileDescription", "LiiiSTEM.exe\0"
+      VALUE "FileDescription", "MoganSTEM.exe\0"
       VALUE "FileVersion", "${VERSION}\0"
       VALUE "InternalName", "Xmacs\0"
-      VALUE "OriginalFilename", "LiiiSTEM.exe\0"
+      VALUE "OriginalFilename", "MoganSTEM.exe\0"
       VALUE "LegalCopyright", "Licensed under GPLv3 and Private\0"
-      VALUE "ProductName", "Liii STEM\0"
+      VALUE "ProductName", "MoganSTEM\0"
       VALUE "ProductVersion", "${VERSION}\0"
     END
   END

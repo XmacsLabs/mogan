@@ -548,7 +548,7 @@ qt_tm_widget_rep::restoreSettings () {
     if (!state.isEmpty ()) mainwindow ()->restoreState (state);
   }
   else {
-    QSettings  settings ("LiiiNetwork", "LiiiSTEM");
+    QSettings  settings ("LiiiNetwork", STEM_NAME);
     QByteArray geometry= settings.value ("mainWindowGeometry").toByteArray ();
     if (!geometry.isEmpty ()) mainwindow ()->restoreGeometry (geometry);
     QByteArray state= settings.value ("mainWindowState").toByteArray ();
