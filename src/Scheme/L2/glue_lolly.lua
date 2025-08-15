@@ -268,6 +268,15 @@ function main()
                     "string"
                 }
             },
+            {
+                scm_name = "fuzzy-string-match",
+                cpp_name = "fuzzy_match_score",
+                ret_type = "int",
+                arg_list = {
+                    "string",
+                    "string"
+                }
+            },
             -- Kernel/Types/string.hpp
             {
                 scm_name = "cpp-string-number?",

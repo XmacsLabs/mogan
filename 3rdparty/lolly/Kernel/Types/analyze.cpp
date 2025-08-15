@@ -1119,3 +1119,170 @@ parse_length (string s, double& len, string& unit) {
     unit= "error";
   }
 }
+
+/******************************************************************************
+ * Fuzzy matching score (VSCode-style algorithm)
+ ******************************************************************************/
+
+// VSCode-style scoring constants
+static const int NO_MATCH                   = 0;
+static const int NO_SCORE                   = -1;
+static const int BASE_MATCH_SCORE           = 1;
+static const int CONSECUTIVE_BONUS_BASE     = 6;
+static const int CONSECUTIVE_BONUS_REMAINDER= 3;
+static const int SAME_CASE_BONUS            = 1;
+static const int START_OF_WORD_BONUS        = 8;
+static const int AFTER_SEPARATOR_BONUS_HIGH = 5; // path separators
+static const int AFTER_SEPARATOR_BONUS_LOW  = 4; // other separators
+static const int CAMEL_CASE_BONUS           = 2;
+
+static bool
+consider_as_equal (char a, char b) {
+  if (a == b) return true;
+  // Special case path separators
+  if ((a == '/' || a == '\\') && (b == '/' || b == '\\')) return true;
+  return false;
+}
+
+static int
+score_separator_at_pos (char prev_char) {
+  switch (prev_char) {
+  case '/':
+  case '\\':
+    return AFTER_SEPARATOR_BONUS_HIGH; // prefer path separators
+  case '_':
+  case '-':
+  case '.':
+  case ' ':
+  case '\'':
+  case '"':
+  case ':':
+    return AFTER_SEPARATOR_BONUS_LOW; // other separators
+  default:
+    return 0;
+  }
+}
+
+static int
+compute_char_score (char query_char, char query_lower_char, string target,
+                    string target_lower, int target_index,
+                    int matches_sequence_length) {
+  int score= 0;
+
+  if (!consider_as_equal (query_lower_char, target_lower[target_index])) {
+    return score; // no match of characters
+  }
+
+  // Character match bonus
+  score+= BASE_MATCH_SCORE;
+
+  // Consecutive match bonus
+  if (matches_sequence_length > 0) {
+    score+=
+        (min (matches_sequence_length, 3) * CONSECUTIVE_BONUS_BASE) +
+        (max (0, matches_sequence_length - 3) * CONSECUTIVE_BONUS_REMAINDER);
+  }
+
+  // Same case bonus
+  if (query_char == target[target_index]) {
+    score+= SAME_CASE_BONUS;
+  }
+
+  // Start of word bonus
+  if (target_index == 0) {
+    score+= START_OF_WORD_BONUS;
+  }
+  else {
+    // After separator bonus
+    int separator_bonus= score_separator_at_pos (target[target_index - 1]);
+    if (separator_bonus) {
+      score+= separator_bonus;
+    }
+    // Camel case bonus
+    else if (is_upcase (target[target_index]) && matches_sequence_length == 0) {
+      score+= CAMEL_CASE_BONUS;
+    }
+  }
+
+  return score;
+}
+
+int
+fuzzy_match_score (string pattern, string target) {
+  int pattern_len= N (pattern);
+  int target_len = N (target);
+
+  // Early exit conditions
+  if (pattern_len == 0) return 0;
+  if (target_len == 0 || pattern_len > target_len) return NO_SCORE;
+
+  // Convert to lowercase
+  string pattern_lower= locase_all (pattern);
+  string target_lower = locase_all (target);
+
+  // Build scorer matrix using dynamic programming
+  array<int> scores (pattern_len * target_len);
+  array<int> matches (pattern_len * target_len);
+
+  // Initialize matrices
+  for (int i= 0; i < pattern_len * target_len; i++) {
+    scores[i] = 0;
+    matches[i]= NO_MATCH;
+  }
+
+  // Fill matrix
+  for (int query_idx= 0; query_idx < pattern_len; query_idx++) {
+    int query_idx_offset= query_idx * target_len;
+    int prev_offset     = query_idx_offset - target_len;
+
+    char query_char      = pattern[query_idx];
+    char query_lower_char= pattern_lower[query_idx];
+    bool first_char      = (query_idx == 0);
+
+    for (int target_idx= 0; target_idx < target_len; target_idx++) {
+      int current= query_idx_offset + target_idx;
+
+      // Left (previous target char)
+      int left_score= (target_idx > 0) ? scores[current - 1] : 0;
+
+      // Diagonal (previous char in both)
+      int diag_score= 0;
+      int seq_length= 0;
+      if (query_idx > 0 && target_idx > 0) {
+        diag_score= scores[prev_offset + target_idx - 1];
+        seq_length= matches[prev_offset + target_idx - 1];
+      }
+
+      // Compute current char score
+      int char_score= 0;
+      if (diag_score > 0 || first_char) {
+        char_score= compute_char_score (query_char, query_lower_char, target,
+                                        target_lower, target_idx, seq_length);
+      }
+
+      // Check if we can use this match
+      bool use_match=
+          (char_score > 0) && (diag_score + char_score >= left_score);
+      if (use_match) {
+        scores[current] = diag_score + char_score;
+        matches[current]= seq_length + 1;
+      }
+      else {
+        scores[current] = left_score;
+        matches[current]= NO_MATCH;
+      }
+    }
+  }
+
+  // Find best score in last row
+  int best_score= 0;
+  int last_row  = (pattern_len - 1) * target_len;
+  for (int j= 0; j < target_len; j++) {
+    if (scores[last_row + j] > best_score) {
+      best_score= scores[last_row + j];
+    }
+  }
+
+  // return best_score > 0 ? best_score : NO_SCORE;
+  return best_score;
+}

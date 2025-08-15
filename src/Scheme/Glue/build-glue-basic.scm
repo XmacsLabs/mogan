@@ -448,6 +448,7 @@
   (cpp-string-recompose recompose (string array_string string))
   (string-differences differences (array_int string string))
   (string-distance distance (int string string))
+  (fuzzy-string-match fuzzy_match_score (int string string))
   
   ; Program bracket matching
   (find-left-bracket find_left_bracket (path path string string))

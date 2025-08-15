@@ -494,6 +494,25 @@ string replace (string s, string what, string by);
 bool match_wildcard (string s, string w);
 
 /**
+ * @brief Calculates a fuzzy matching score between a pattern and target string.
+ *
+ * This implements a fuzzy matching algorithm similar to those used in
+ * Sublime Text, fzf, and VS Code. It scans from left to right to match
+ * input characters and scores based on match positions (consecutive matches,
+ * word boundaries, uppercase letters get higher scores).
+ *
+ * @param pattern The pattern string to match (e.g., "npd").
+ * @param target The target string to match against (e.g., "NumPyData").
+ * @return A score where higher values indicate better matches, -1 for no match.
+ *
+ * Example: "npd" matching "NumPyData":
+ * - 'n' matches 'N' at start (high score for first letter)
+ * - 'p' matches 'P' at camelCase boundary (high score)
+ * - 'd' matches 'D' at camelCase boundary (high score)
+ */
+int fuzzy_match_score (string pattern, string target);
+
+/**
  * Finds the position of the first non-alphabetic character in a string.
  *
  * @param s The string to search.

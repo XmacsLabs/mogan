@@ -424,6 +424,7 @@
 "cpp-string-recompose"
 "string-differences"
 "string-distance"
+"fuzzy-string-match"
 "find-left-bracket"
 "find-right-bracket"
 "string->tmstring"
