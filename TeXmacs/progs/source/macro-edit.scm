@@ -158,6 +158,16 @@
   (:synopsis "返回所有以 pre 为前缀的宏定义")
   (filter (lambda (x) (string-starts? x pre)) (all-defined-macros)))
 
+(tm-define (fuzzy-match-macro-prefix pre)
+  (:synopsis "返回所有以 pre 为模糊前缀的宏定义")
+  (let ((matches
+         (map (lambda (x) (cons x (fuzzy-string-match pre x)))
+              (all-defined-macros))))
+    (map car
+         (sort (filter (lambda (p) (> (cdr p) 2))
+                       matches)
+               (lambda (a b) (> (cdr a) (cdr b)))))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Direct editing of the source of a macro
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

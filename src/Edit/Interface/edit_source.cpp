@@ -35,11 +35,11 @@ edit_interface_rep::source_complete_try () {
     tree st          = subtree (et, path_up (tp));
     completion_prefix= st->label;
     if (completion_prefix != "") {
-      completion_pos   = 0;
-      completions      = array<string> ();
-      array<object> tmp= as_array_object (
-          eval ("(match-macro-prefix " * scm_quote (completion_prefix) * ")"));
-      int tmp_N= N (tmp);
+      completion_pos     = 0;
+      completions        = array<string> ();
+      array<object> tmp  = as_array_object (eval (
+          "(fuzzy-match-macro-prefix " * scm_quote (completion_prefix) * ")"));
+      int           tmp_N= N (tmp);
 
       for (int i= 0; i < tmp_N; i++) {
         completions << scm_unquote (object_to_string (tmp[i]));
