@@ -138,6 +138,13 @@
   (remove-text forwards?))
 
 (tm-define (kbd-remove t forwards?)
+  (:require (and (in-source?)
+                 (not (in-source-mode?))  ;; 不在源码编辑或者导言区编辑模式
+                 (not (with-any-selection?))))
+  (remove-text forwards?)
+  (source-complete-try))
+
+(tm-define (kbd-remove t forwards?)
   (:require (and (tree-is-buffer? t) (with-any-selection?)))
   (clipboard-cut "nowhere")
   (clipboard-clear "nowhere"))
@@ -1268,6 +1275,13 @@
   (with cmd (key-press-command (string-append "complete " key))
     (cond (cmd (cmd))
           ((key-press-complete key) (noop))
+          (else (key-press key)))))
+
+(tm-define (keyboard-press key time)
+  (:require (and (in-source?) (not (in-source-mode?))))
+  (with cmd (key-press-command (string-append "complete " key))
+    (cond (cmd (cmd))
+          ((key-press-source-complete key) (noop))
           (else (key-press key)))))
 
 (tm-define (keyboard-press key time)

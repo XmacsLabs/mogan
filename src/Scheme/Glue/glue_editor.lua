@@ -1082,6 +1082,11 @@ function main()
                 ret_type = "bool"
             },
             {
+                scm_name = "source-complete-try",
+                cpp_name = "source_complete_try",
+                ret_type = "void"
+            },
+            {
                 scm_name = "get-input-mode",
                 cpp_name = "get_input_mode",
                 ret_type = "int"
@@ -1113,6 +1118,14 @@ function main()
             {
                 scm_name = "key-press-complete",
                 cpp_name = "complete_keypress",
+                ret_type = "bool",
+                arg_list = {
+                    "string"
+                }
+            },
+            {
+                scm_name = "key-press-source-complete",
+                cpp_name = "source_complete_keypress",
                 ret_type = "bool",
                 arg_list = {
                     "string"

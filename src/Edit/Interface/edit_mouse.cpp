@@ -579,7 +579,10 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
   if (type == "pinch-end") eval ("(pinch-end)");
   if (type == "scale") eval ("(pinch-scale " * as_string (data[0]) * ")");
   if (type == "rotate") eval ("(pinch-rotate " * as_string (-data[0]) * ")");
-  if (starts (type, "press-")) hide_math_completion_popup ();
+  if (starts (type, "press-")) {
+    hide_math_completion_popup ();
+    hide_completion_popup ();
+  }
 
   // if (inside_graphics (false)) {
   // if (inside_graphics ()) {

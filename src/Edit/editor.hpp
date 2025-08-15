@@ -182,8 +182,10 @@ public:
   virtual void   key_press (string key)                                    = 0;
   virtual void   emulate_keyboard (string keys, string action= "")         = 0;
   virtual bool   complete_try ()                                           = 0;
+  virtual void   source_complete_try ()                                    = 0;
   virtual void   complete_start (string prefix, array<string> compls)      = 0;
   virtual bool   complete_keypress (string key)                            = 0;
+  virtual bool   source_complete_keypress (string key)                     = 0;
   virtual string session_complete_command (tree t)                         = 0;
   virtual void   custom_complete (tree t)                                  = 0;
   virtual void   mouse_any (string s, SI x, SI y, int m, time_t t,

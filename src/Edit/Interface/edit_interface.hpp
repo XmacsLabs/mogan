@@ -183,7 +183,9 @@ public:
   void   complete_message ();
   void   complete_start (string prefix, array<string> compls);
   bool   complete_keypress (string key);
+  bool   source_complete_keypress (string key);
   void   complete_variant (string old_completion, string new_completion);
+  void   source_complete_variant (string new_completion);
   bool   complete_inline (string key);
   bool   complete_popup (string key);
   string session_complete_command (tree t);

@@ -29,7 +29,7 @@
 ;; Preamble mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (in-source-mode?)
+(tm-define (in-source-mode?)
   (== (get-env "preamble") "true"))
 
 (tm-define (toggle-source-mode)

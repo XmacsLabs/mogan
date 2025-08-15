@@ -976,6 +976,7 @@
 "key-press-replace"
 "key-press-spell"
 "key-press-complete"
+"key-press-source-complete"
 "mouse-any"
 "get-mouse-position"
 "set-mouse-pointer"

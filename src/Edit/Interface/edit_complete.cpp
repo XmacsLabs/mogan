@@ -289,6 +289,12 @@ void
 edit_interface_rep::complete_variant (string old_completion,
                                       string new_completion) {
   // QTMCompletionPopup::onCurrentItemChanged 会调用此函数当补全项改变时进行编辑
+  bool is_source     = (get_env_string ("mode") == "src");
+  bool is_source_mode= (get_env_string ("preamble") == "true");
+  if (is_source && (!is_source_mode)) {
+    source_complete_variant (new_completion);
+    return;
+  }
   if (completion_style != string ("popup")) {
     return; // 仅在 popup 补全模式下有效，注意此处使用了缓存的 completion_style
   }
@@ -302,6 +308,7 @@ edit_interface_rep::complete_variant (string old_completion,
   int old_completion_N= N (old_completion);
   remove (path_up (tp) * (end - old_completion_N), old_completion_N);
   insert (path_up (tp) * (end - old_completion_N), new_completion);
+  apply_changes ();
 
   update_completion_popup_position (et, eb, tp, magf, get_scroll_x (),
                                     get_scroll_y (), get_canvas_x (),
