@@ -179,6 +179,7 @@ public:
   void   emulate_keyboard (string keys, string action= "");
   bool   complete_try ();
   void   math_complete_try (string comb);
+  void   source_complete_try ();
   void   complete_message ();
   void   complete_start (string prefix, array<string> compls);
   bool   complete_keypress (string key);

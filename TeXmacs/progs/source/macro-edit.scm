@@ -154,6 +154,10 @@
   (with packs (get-style-list)
     (search-style-definition-in-list '() l packs)))
 
+(tm-define (match-macro-prefix pre)
+  (:synopsis "返回所有以 pre 为前缀的宏定义")
+  (filter (lambda (x) (string-starts? x pre)) (all-defined-macros)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Direct editing of the source of a macro
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

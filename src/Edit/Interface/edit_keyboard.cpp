@@ -516,6 +516,15 @@ edit_interface_rep::handle_keypress (string key_u8, time_t t) {
     }
   }
   handle_exceptions ();
+
+  bool is_source     = (get_env_string ("mode") == "src");
+  bool is_source_mode= (get_env_string ("preamble") == "true");
+  if (is_source && (!is_source_mode)) {
+    source_complete_try ();
+  }
+  else if (!(get_input_mode () == INPUT_COMPLETE)) {
+    hide_completion_popup ();
+  }
 }
 
 void drag_left_reset ();
