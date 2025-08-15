@@ -96,11 +96,13 @@ edit_interface_rep::source_complete_keypress (string key) {
   // 按键处理逻辑
   if (key == "enter" || key == "return") {
     tree st= subtree (et, path_up (tp));
-    if (st->label == completion_prefix) {
+    if (completions_N > completion_pos &&
+        (st->label != completions[completion_pos])) {
       // 当前词未被补全时，按回车键补全
       source_complete_variant (completions[completion_pos]);
     }
     else {
+      hide_completion_popup ();
       return false; // 当前词已被补全，按回车键正常处理
     }
     hide_completion_popup ();
