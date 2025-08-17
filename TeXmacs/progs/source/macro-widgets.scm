@@ -18,6 +18,8 @@
         (generic document-part)
         (utils library cursor)))
 
+(import (only (liii hash-table) hash-table-keys))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Major operation mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -480,6 +482,18 @@
                                  "cell-decoration" "cell-format"
                                  "wide-framed-colored"
                                  "wide-std-framed-colored"))
+          string<=?)))
+
+(tm-define (all-defined-macros*)
+  (with env (tm-children (get-full-env))
+    (sort (append (list-difference (map get-key env)
+                                   (list "atom-decorations" "line-decorations"
+                                         "page-decorations" "xoff-decorations"
+                                         "yoff-decorations"
+                                         "cell-decoration" "cell-format"
+                                         "wide-framed-colored"
+                                         "wide-std-framed-colored"))
+                  (hash-table-keys kbd-command-table))
           string<=?)))
 
 (tm-define (open-macros-editor mode)

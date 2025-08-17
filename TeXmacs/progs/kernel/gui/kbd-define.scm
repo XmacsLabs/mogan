@@ -273,7 +273,7 @@
 ;; Definition of keyboard (backslashed) commands
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define kbd-command-table (make-ahash-table))
+(tm-define kbd-command-table (make-ahash-table))
 
 (define (kbd-set-command! key im)
   (ahash-set! kbd-command-table key im))
