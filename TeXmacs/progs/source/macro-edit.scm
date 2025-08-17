@@ -161,8 +161,8 @@
 (tm-define (fuzzy-match-macro-prefix pre)
   (:synopsis "返回所有以 pre 为模糊前缀的宏定义")
   (let ((matches
-         (map (lambda (x) (cons x (fuzzy-string-match pre x)))
-              (all-defined-macros))))
+         (reverse (map (lambda (x) (cons x (fuzzy-string-match pre x)))
+              (all-defined-macros)))))
     (map car
          (sort (filter (lambda (p) (> (cdr p) 2))
                        matches)
