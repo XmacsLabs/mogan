@@ -16,6 +16,11 @@
 #include <QKeyEvent>
 #include <QScrollBar>
 
+static const float COMPLETION_POPUP_MAGF      = 1.0f;
+static const float COMPLETION_POPUP_FONT_SIZE = 12.0f * COMPLETION_POPUP_MAGF;
+static const int   COMPLETION_POPUP_MAX_HEIGHT= 100.0f * COMPLETION_POPUP_MAGF;
+static const int   COMPLETION_POPUP_MIN_WIDTH = 200.0f * COMPLETION_POPUP_MAGF;
+
 QTMCompletionPopup::QTMCompletionPopup (QWidget*              parent,
                                         qt_simple_widget_rep* owner)
     : QListWidget (parent), owner (owner), cached_cursor_x (0),
@@ -31,16 +36,22 @@ QTMCompletionPopup::QTMCompletionPopup (QWidget*              parent,
            &QTMCompletionPopup::onItemPressed);
   connect (this, &QListWidget::currentItemChanged, this,
            &QTMCompletionPopup::onCurrentItemChanged);
+
+  QFont font= this->font ();
+  font.setPointSize (COMPLETION_POPUP_FONT_SIZE);
+  this->setFont (font);
 }
 
 void
 QTMCompletionPopup::resizeHeight () {
-  int height       = 0;
   int completions_N= count ();
+  int width        = qMax (sizeHintForColumn (0), COMPLETION_POPUP_MIN_WIDTH);
+  int height       = 0;
   for (int i= 0; i < completions_N; i++) {
     height+= sizeHintForRow (i);
   }
-  QSize size (200, qMin (100, height));
+  height= qMin (height, COMPLETION_POPUP_MAX_HEIGHT);
+  QSize size (width, height);
   resize (size);
 }
 
