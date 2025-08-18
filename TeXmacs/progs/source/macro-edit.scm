@@ -204,10 +204,33 @@
         (and-with def (get-definition** l (buffer-tree))
           (edit-assign-macro def))))))
 
+;; define a cache for macro sources
+(define common-style-packages
+  '(("strong" . "std-markup")
+    ("item" . "std-list")
+    ("list" . "std-list")))
+
+(define macro-source-cache (make-ahash-table))
+
 (tm-define (has-macro-source? l)
   (if (symbol? l) (set! l (symbol->string l)))
-  (or (get-definition* l (buffer-tree))
-      (search-style-package l)))
+  (cond
+    ((ahash-ref macro-source-cache l) => identity)
+    (else
+      (let ((local-def (get-definition* l (buffer-tree))))
+        (if local-def
+            (begin
+              (ahash-set! macro-source-cache l local-def)
+              local-def)
+            (let ((common-pkg (assoc-ref common-style-packages l)))
+              (if common-pkg
+                  (begin
+                    (ahash-set! macro-source-cache l common-pkg)
+                    common-pkg)
+                  (let ((search-result (search-style-package l)))
+                    (when search-result
+                      (ahash-set! macro-source-cache l search-result))
+                    search-result))))))))
 
 (tm-define (edit-macro-source l)
   (if (symbol? l) (set! l (symbol->string l)))
