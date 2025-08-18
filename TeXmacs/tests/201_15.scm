@@ -44,8 +44,15 @@
   (check (match-macro-prefix "tab\t") => '())
   (check (match-macro-prefix "newline\n") => '()))
 
+(define (test-fuzzy-match-macro-prefix)
+  (check (car (fuzzy-match-macro-prefix "stong")) => "strong")
+  (check (car (fuzzy-match-macro-prefix "refrence")) => "reference")
+  (check (car (fuzzy-match-macro-prefix "latex")) => "LaTeX")
+  (check (car (fuzzy-match-macro-prefix "susth")) => "sustech"))
+
 (tm-define (test_201_15)
   (init-test)
   (test-match-macro-prefix)
   (test-match-macro-prefix-robust)
+  (test-fuzzy-match-macro-prefix)
   (check-report))
