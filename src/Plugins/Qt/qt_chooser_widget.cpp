@@ -267,7 +267,12 @@ qt_chooser_widget_rep::perform_dialog () {
   else if (type == "image" && prompt == "")
     // check non saving mode just in case we support it
     dialog->setFileMode (QFileDialog::ExistingFile);
-  else dialog->setFileMode (QFileDialog::AnyFile);
+  else if (prompt != "")
+    // Save dialogs
+    dialog->setFileMode (QFileDialog::AnyFile);
+  else
+    // Open dialogs, 仅允许选择已存在的文件（不允许选择文件夹）
+    dialog->setFileMode (QFileDialog::ExistingFile);
 
   // set label text for accept: Save or Open
   if (prompt != "") {
