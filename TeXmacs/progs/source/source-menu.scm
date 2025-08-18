@@ -186,14 +186,12 @@
   (=> (balloon (icon "tm_tuple.xpm") "Insert an operation on tuples")
       (link source-tuple-menu))
   /
-  (if (and (not (== (get-preference "gui theme") "liii"))
-           (not (== (get-preference "gui theme") "liii-night"))
-           (not (== (get-preference "gui theme") "default")))
-      ((balloon (icon "tm_activate.xpm") "Activate")
-       (make-mod-active 'active*)))
+  
+  ((balloon (icon "tm_activate.xpm") "Activate")
+    (make-mod-active 'active*))
   ((balloon (icon "tm_stretch.xpm") "Stretch")
-   (make-style-with "src-compact" "none"))
+    (make-style-with "src-compact" "none"))
   ((balloon (icon "tm_compact.xpm") "Compactify")
-   (make-style-with "src-compact" "all"))
+    (make-style-with "src-compact" "all"))
   /
   (link text-format-icons))

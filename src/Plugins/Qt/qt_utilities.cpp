@@ -748,7 +748,7 @@ parse_tm_style (int style) {
   if (style & WIDGET_STYLE_BOLD) sheet+= "font-weight: bold;";
   if (DEBUG_QT_WIDGETS) sheet+= "border:1px solid rgb(255, 0, 0);";
 
-  if (occurs ("dark", tm_style_sheet)) {
+  if (occurs ("dark", tm_style_sheet) || occurs ("liii-night", tm_style_sheet)) {
     if (style & WIDGET_STYLE_GREY) sheet+= "color: #a0a0a0;";
     if (style & WIDGET_STYLE_INERT) sheet+= "color: #a0a0a0;";
   }
@@ -767,7 +767,7 @@ qt_apply_tm_style (QWidget* qwid, int style, color c) {
   int r, g, b, a;
   get_rgb_color (c, r, g, b, a);
   a= a * 100 / 255;
-  if (occurs ("dark", tm_style_sheet)) {
+  if (occurs ("dark", tm_style_sheet) || occurs ("liii-night", tm_style_sheet)) {
     r= g= b= 224;
     a      = 100;
   }
@@ -1022,7 +1022,7 @@ static string current_style_sheet;
 
 void
 init_palette (QApplication* app) {
-  if (occurs ("dark", tm_style_sheet)) {
+  if (occurs ("dark", tm_style_sheet) || occurs ("liii-night", tm_style_sheet)) {
     QPalette pal= app->style ()->standardPalette ();
     pal.setColor (QPalette::Window, QColor (64, 64, 64));
     pal.setColor (QPalette::WindowText, QColor (224, 224, 224));
@@ -1053,7 +1053,7 @@ init_palette (QApplication* app) {
     app->setPalette (pal);
   }
 
-  if (occurs ("dark", tm_style_sheet)) tm_background= rgb_color (32, 32, 32);
+  if (occurs ("dark", tm_style_sheet) || occurs ("liii-night", tm_style_sheet)) tm_background= rgb_color (32, 32, 32);
   else if (occurs ("native", tm_style_sheet)) {
     QPalette pal = app->palette ();
     QColor   col = pal.color (QPalette::Mid);

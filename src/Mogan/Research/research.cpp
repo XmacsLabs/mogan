@@ -195,6 +195,8 @@ main (int argc, char** argv) {
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/standard-dark.css";
   else if (theme == "liii")
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/liii.css";
+  else if (theme == "liii-night")
+    tm_style_sheet= "$TEXMACS_PATH/misc/themes/liii-night.css";
   else if (theme == "native-light")
     tm_style_sheet= "$TEXMACS_PATH/misc/themes/native-light.css";
   else if (theme != "") tm_style_sheet= theme;

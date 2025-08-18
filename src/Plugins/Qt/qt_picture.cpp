@@ -120,6 +120,7 @@ qt_load_icon (url file_name) {
 
   bool is_modern_demo=
       (get_user_preference ("gui theme", "default") == "liii" ||
+       get_user_preference ("gui theme", "default") == "liii-night" ||
        get_user_preference ("gui theme", "default") == "default");
 
   if (is_modern_demo) {

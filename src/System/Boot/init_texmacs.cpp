@@ -414,6 +414,16 @@ init_env_vars () {
                      url ("$TEXMACS_PATH/misc/pixmaps/modern/24x24/main") |
                      url ("$TEXMACS_PATH/misc/pixmaps/modern/20x20/mode") |
                      url ("$TEXMACS_PATH/misc/pixmaps/modern/16x16/focus")
+               : (get_user_preference ("gui theme", "default") == "liii-night")
+               ? url ("$TEXMACS_PATH/misc/pixmaps/liii-night/32x32/settings") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/liii-night/24x24/main") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/liii-night/20x20/mode") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/liii-night/16x16/"
+                          "focus") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/modern/32x32/settings") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/modern/24x24/main") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/modern/20x20/mode") |
+                     url ("$TEXMACS_PATH/misc/pixmaps/modern/16x16/focus")
                : url ("$TEXMACS_PATH/misc/pixmaps/modern/32x32/settings") |
                      url ("$TEXMACS_PATH/misc/pixmaps/modern/24x24/main") |
                      url ("$TEXMACS_PATH/misc/pixmaps/modern/20x20/mode") |

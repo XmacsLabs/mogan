@@ -1155,6 +1155,7 @@
   (=> (balloon (icon "tm_color.xpm") "Select a foreground color")
       (link color-menu))
   (assuming (and (!= (get-preference "gui theme") "liii")
+                 (!= (get-preference "gui theme") "liii-night")
                  (!= (get-preference "gui theme") "default"))
     (=> (balloon (icon "tm_math_style.xpm")
                  "Change the style of mathematical formulas")

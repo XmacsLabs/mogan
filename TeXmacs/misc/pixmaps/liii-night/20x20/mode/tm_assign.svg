@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 400 400">
+  <!-- 第一行：圆形和矩形 -->
+  <circle cx="56" cy="147" r="28" fill="none" stroke="white" stroke-width="20"/>
+  <rect x="120" y="119" width="252" height="56" rx="28" fill="none" stroke="white" stroke-width="20"/>
+  
+  <!-- 第二行：圆形和矩形 -->
+  <circle cx="56" cy="253" r="28" fill="none" stroke="white" stroke-width="20"/>
+  <rect x="120" y="225" width="252" height="56" rx="28" fill="none" stroke="white" stroke-width="20"/>
+</svg>

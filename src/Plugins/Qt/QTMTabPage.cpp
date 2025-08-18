@@ -12,6 +12,7 @@
 #include "QTMTabPage.hpp"
 #include "new_view.hpp"
 #include "tm_window.hpp"
+#include "string.hpp"
 
 // The minimum width of a single tab page (in pixels).
 #define MIN_TAB_PAGE_WIDTH 150
@@ -133,19 +134,26 @@ void
 QTMTabPage::setupStyle () {
   QString qss, bg_color, bg_color_hover, border_color, border_color_top;
 
-#ifdef Q_OS_WINDOWS
-  bg_color        = "#C7C8C9";
-  bg_color_hover  = "#EFF0F1";
-  border_color    = "#A6A6A6";
-  border_color_top= "#2c2c2c";
-#endif
-
-#if defined(Q_OS_LINUX) || defined(Q_OS_MAC)
-  bg_color        = "#C7C8C9";
-  bg_color_hover  = "#EFF0F1";
-  border_color    = "#A6A6A6";
-  border_color_top= "#2c2c2c";
-#endif
+  // 检测是否使用liii-night主题
+  bool use_liii_night_theme = false;
+  extern string tm_style_sheet;  // 声明外部变量
+  if (tm_style_sheet != "") {
+    use_liii_night_theme = occurs("liii-night", tm_style_sheet);
+  }
+  
+  if (use_liii_night_theme) {
+    // liii-night主题的深色配色
+    bg_color        = "#535353";
+    bg_color_hover  = "#8d8d8d";
+    border_color    = "#4c4c4c";
+    border_color_top= "#000000";
+  } else {
+    // 默认浅色配色
+    bg_color        = "#C7C8C9";
+    bg_color_hover  = "#EFF0F1";
+    border_color    = "#A6A6A6";
+    border_color_top= "#2c2c2c";
+  }
 
   qss+= QString ("QTMTabPage{ padding: 0 26px; border-radius: 0px; "
                  "background-color: %1; }")
