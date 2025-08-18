@@ -278,7 +278,9 @@ edit_interface_rep::key_press (string gkey) {
       pre_edit_mark= new_marker ();
       mark_start (pre_edit_mark);
       archive_state ();
+      bench_start ("pre_edit");
       insert_tree (compound ("pre-edit", s), path (0, pos));
+      bench_end ("pre_edit");
       return;
     }
   }

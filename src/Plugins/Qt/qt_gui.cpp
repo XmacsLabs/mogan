@@ -886,8 +886,14 @@ qt_gui_rep::force_update () {
 
 void
 qt_gui_rep::need_update () {
-  if (updating) needing_update= true;
-  else updatetimer->start (0);
+  if (updating) {
+    needing_update= true;
+    cout << "need updating" << LF;
+  }
+  else {
+    cout << "need update: start now" << LF;
+    updatetimer->start (0);
+  }
   // 0 ms - call immediately when all other events have been processed
 }
 
