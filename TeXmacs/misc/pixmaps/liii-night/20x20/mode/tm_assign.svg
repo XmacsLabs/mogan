@@ -1,9 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 400 400">
-  <!-- 第一行：圆形和矩形 -->
-  <circle cx="56" cy="147" r="28" fill="none" stroke="white" stroke-width="20"/>
-  <rect x="120" y="119" width="252" height="56" rx="28" fill="none" stroke="white" stroke-width="20"/>
-  
-  <!-- 第二行：圆形和矩形 -->
-  <circle cx="56" cy="253" r="28" fill="none" stroke="white" stroke-width="20"/>
-  <rect x="120" y="225" width="252" height="56" rx="28" fill="none" stroke="white" stroke-width="20"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 48 48"
+   width="144px"
+   height="144px"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="16.svg"
+   inkscape:version="1.4.2 (ebf0e940, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="3.3972576"
+     inkscape:cx="82.713774"
+     inkscape:cy="80.653289"
+     inkscape:window-width="1440"
+     inkscape:window-height="771"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1" />
+  <g
+     id="g10"
+     transform="translate(-1.687953e-8,-3.5)">
+    <path
+       d="m 42.489318,34.333333 a 1.50015,1.50015 0 1 1 0,3 h -29 a 1.50015,1.50015 0 1 1 0,-3 z"
+       id="path8"
+       style="fill:#ffffff" />
+    <path
+       d="m 6.4893183,33.333333 a 2.5,2.5 0 0 1 0,5 2.5,2.5 0 0 1 0,-5 z"
+       id="path7"
+       style="fill:#ffffff" />
+    <path
+       d="m 42.489318,17.666667 a 1.50015,1.50015 0 1 1 0,3 h -29 a 1.50015,1.50015 0 1 1 0,-3 z"
+       id="path6"
+       style="fill:#ffffff" />
+    <path
+       d="m 6.4893183,16.666667 a 2.5,2.5 0 0 1 0,5 2.5,2.5 0 0 1 0,-5 z"
+       id="path1"
+       style="fill:#ffffff" />
+  </g>
 </svg>
