@@ -532,9 +532,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (menu-bind text-block-icons
-  (if (style-has? "header-letter-dtd")
-      (=> (balloon (icon "tm_title.xpm") "Make a letter environment")
-          (link letter-header-menu)))
   (if (style-has? "header-exam-dtd")
       (=> (balloon (icon "tm_title.xpm") "Enter title information")
           (link exam-header-menu)))
@@ -557,7 +554,7 @@
       (=> (balloon (icon "tm_prominent.xpm") "Insert a prominent piece of text")
           (link prominent-menu)))
   (if (and (style-has? "std-markup-dtd") (in-poster?))
-      (=> (balloon (icon "tm_var_prominent.xpm")
+      (=> (balloon (icon "tm_prominent.xpm")
                    "Insert a prominent piece of text")
           (link prominent-menu)))
   (if (style-has? "std-markup-dtd")
@@ -987,9 +984,7 @@
     ((check "Numbered" "v" (algorithm-numbered? (focus-tree)))
      (algorithm-toggle-number (focus-tree))))
   ((check "Named" "v" (algorithm-named? (focus-tree)))
-   (algorithm-toggle-name t))
-  ((check "Specified" "v" (algorithm-specified? (focus-tree)))
-   (algorithm-toggle-specification t)))
+   (algorithm-toggle-name t)))
 
 (tm-menu (focus-toggle-icons t)
   (:require (algorithm-context? t))
