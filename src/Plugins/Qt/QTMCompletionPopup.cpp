@@ -21,9 +21,9 @@ static const float COMPLETION_POPUP_FONT_SIZE = 12.0f * COMPLETION_POPUP_MAGF;
 static const int   COMPLETION_POPUP_MAX_HEIGHT= 100.0f * COMPLETION_POPUP_MAGF;
 static const int   COMPLETION_POPUP_MIN_WIDTH = 200.0f * COMPLETION_POPUP_MAGF;
 
-QTMCompletionPopup::QTMCompletionPopup (QWidget*              parent,
+QTMCompletionPopup::QTMCompletionPopup (QTMWidget*            parent,
                                         qt_simple_widget_rep* owner)
-    : QListWidget (parent), owner (owner), cached_cursor_x (0),
+    : QListWidget (parent), parent (parent), owner (owner), cached_cursor_x (0),
       cached_cursor_y (0), cached_scroll_x (0), cached_scroll_y (0),
       cached_canvas_x (0), cached_magf (0.0) {
   setObjectName ("completion_popup");
@@ -110,10 +110,11 @@ QTMCompletionPopup::updateCache (tree& et, box& eb, path tp, double magf,
 
 void
 QTMCompletionPopup::getCachedPosition (int& x, int& y) {
-  x= ((cached_cursor_x - cached_scroll_x - 500) * cached_magf +
-      cached_canvas_x) /
-     256;
+  int parent_x= parent->mapTo (parent->window (), QPoint (0, 0)).x ();
+  int canvas_x= cached_canvas_x - 256 * parent_x;
+  x= ((cached_cursor_x - cached_scroll_x - 500) * cached_magf + canvas_x) / 256;
   y= -((cached_cursor_y - 5000 - cached_scroll_y) * cached_magf) / 256;
+  // qDebug() << "Completion Popup Position: " << x << y;
   // TODO: 5000 is a magic number to add space between completion list box and
   // the text. We need to find a better way to get the position
 }

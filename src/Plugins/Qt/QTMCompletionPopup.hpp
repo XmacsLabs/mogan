@@ -37,9 +37,10 @@ protected:
   double                cached_magf;
   path                  cached_tp;
   qt_simple_widget_rep* owner;
+  QTMWidget*            parent;
 
 public:
-  QTMCompletionPopup (QWidget* parent, qt_simple_widget_rep* owner);
+  QTMCompletionPopup (QTMWidget* parent, qt_simple_widget_rep* owner);
 
   void scrollBy (int x, int y);
   void selectNextItem ();
