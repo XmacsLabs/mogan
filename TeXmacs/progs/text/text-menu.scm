@@ -655,7 +655,6 @@
   (if (style-has? "std-markup-dtd")
       /)
   (link text-inline-icons)
-  (if (in-manual?) (link tmdoc-icons))
   (link texmacs-insert-icons)
   (if (and (in-presentation?) (not (visible-icon-bar? 0)))
       /
