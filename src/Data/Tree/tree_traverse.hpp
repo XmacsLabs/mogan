@@ -12,6 +12,7 @@
 #ifndef TREE_TRAVERSE_H
 #define TREE_TRAVERSE_H
 
+#include "array.hpp"
 #include "tree.hpp"
 #include "tree_cursor.hpp"
 
@@ -19,25 +20,26 @@
 
 using moebius::tree_label;
 
-bool        is_macro (tree_label l);
-bool        is_parameter (tree_label l);
-string      get_tag_type (tree_label l);
-int         minimal_arity (tree_label l);
-int         maximal_arity (tree_label l);
-bool        correct_arity (tree_label l, int n);
-int         minimal_arity (tree t);
-int         maximal_arity (tree t);
-bool        correct_arity (tree t, int n);
-int         insert_point (tree t, int i);
-bool        is_dynamic (tree t);
-bool        is_accessible_child (tree t, int i);
-array<tree> accessible_children (tree t);
-bool        all_accessible (tree t);
-bool        none_accessible (tree t);
-bool        exists_accessible_inside (tree t);
-tree        get_env_child (tree t, int i, tree env);
-tree        get_env_descendant (tree t, path p, tree env);
-tree        get_env_descendant (tree t, path p, string var, tree val);
+bool          is_macro (tree_label l);
+bool          is_parameter (tree_label l);
+string        get_tag_type (tree_label l);
+array<string> get_all_primitives ();
+int           minimal_arity (tree_label l);
+int           maximal_arity (tree_label l);
+bool          correct_arity (tree_label l, int n);
+int           minimal_arity (tree t);
+int           maximal_arity (tree t);
+bool          correct_arity (tree t, int n);
+int           insert_point (tree t, int i);
+bool          is_dynamic (tree t);
+bool          is_accessible_child (tree t, int i);
+array<tree>   accessible_children (tree t);
+bool          all_accessible (tree t);
+bool          none_accessible (tree t);
+bool          exists_accessible_inside (tree t);
+tree          get_env_child (tree t, int i, tree env);
+tree          get_env_descendant (tree t, path p, tree env);
+tree          get_env_descendant (tree t, path p, string var, tree val);
 
 string get_name (tree t);
 string get_long_name (tree t);

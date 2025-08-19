@@ -45,6 +45,11 @@ get_tag_type (tree_label l) {
   return drd_decode_type (the_drd->get_type (l));
 }
 
+array<string>
+get_all_primitives () {
+  return moebius::get_all_primitives ();
+}
+
 int
 minimal_arity (tree_label l) {
   return the_drd->get_minimal_arity (l);

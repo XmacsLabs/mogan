@@ -9,6 +9,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "array.hpp"
 #include "string.hpp"
 
 #pragma once
@@ -442,10 +443,11 @@ SUP (bool right) {
  * Conversions from tree_labels to strings and vice versa
  ******************************************************************************/
 
-void       make_tree_label (tree_label l, string s);
-tree_label make_tree_label (string s); // for extensions
-string     to_string (tree_label l);
-tree_label as_tree_label (string s);
-bool       existing_tree_label (string s);
+void          make_tree_label (tree_label l, string s);
+tree_label    make_tree_label (string s); // for extensions
+string        to_string (tree_label l);
+tree_label    as_tree_label (string s);
+bool          existing_tree_label (string s);
+array<string> get_all_primitives ();
 
 } // namespace moebius

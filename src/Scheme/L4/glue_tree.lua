@@ -203,6 +203,13 @@ function main()
                 }
             },
             {
+                scm_name = "tree-primitives",
+                cpp_name = "get_all_primitives",
+                ret_type = "array_string",
+                arg_list = {
+                }
+            },
+            {
                 scm_name = "tree-multi-paragraph?",
                 cpp_name = "is_multi_paragraph",
                 ret_type = "bool",

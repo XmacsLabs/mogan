@@ -215,6 +215,7 @@
   (tree-label-macro? is_macro (bool tree_label))
   (tree-label-parameter? is_parameter (bool tree_label))
   (tree-label-type get_tag_type (string tree_label))
+  (tree-primitives get_all_primitives (array_string))
   (tree-multi-paragraph? is_multi_paragraph (bool tree))
   (tree-simplify simplify_correct (tree tree))
   (tree-minimal-arity minimal_arity (int tree))

@@ -28,9 +28,9 @@
   (check (match-macro-prefix "strong1") => '())
   (check (match-macro-prefix "str") => '("stressed" "stressed-color"
                                          "stressed-distance" "strike-through"
-                                         "string-color" "striped-table"
+                                         "string" "string-color" "striped-table"
                                          "strong" "strong-color"))
-  (check (match-macro-prefix "ref") => '("reference"))
+  (check (match-macro-prefix "refe") => '("reference"))
   (check (match-macro-prefix "suste") => '("sustech")))
 
 (define (test-match-macro-prefix-robust)
@@ -47,12 +47,24 @@
 (define (test-fuzzy-match-macro-prefix)
   (check (car (fuzzy-match-macro-prefix "stong")) => "strong")
   (check (car (fuzzy-match-macro-prefix "refrence")) => "reference")
-  (check (car (fuzzy-match-macro-prefix "latex")) => "LaTeX")
+  (check (car (fuzzy-match-macro-prefix "latex")) => "latex")
+  (check (cadr (fuzzy-match-macro-prefix "latex")) => "LaTeX")
   (check (car (fuzzy-match-macro-prefix "susth")) => "sustech"))
+
+(define (test-primitives)
+  (check (car (fuzzy-match-macro-prefix "assign")) => "assign")
+  (check (car (fuzzy-match-macro-prefix "space")) => "space")
+  (check (car (fuzzy-match-macro-prefix "vspace")) => "vspace")
+  (check (car (fuzzy-match-macro-prefix "hspace")) => "hspace")
+  (check (car (fuzzy-match-macro-prefix "string")) => "string"))
+
+(define (test-duplicates)
+  (check (match-macro-prefix "ref") => '("reference")))
 
 (tm-define (test_201_15)
   (init-test)
   (test-match-macro-prefix)
   (test-match-macro-prefix-robust)
   (test-fuzzy-match-macro-prefix)
+  (test-duplicates)
   (check-report))

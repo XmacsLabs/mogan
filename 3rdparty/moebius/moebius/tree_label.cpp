@@ -56,4 +56,15 @@ existing_tree_label (string s) {
   return CONSTRUCTOR_CODE->contains (s);
 }
 
+array<string>
+get_all_primitives () {
+  array<string> primitives;
+  for (int i= 0; i < (int) START_EXTENSIONS; i++) {
+    if (CONSTRUCTOR_NAME->contains (i)) {
+      primitives << CONSTRUCTOR_NAME[i];
+    }
+  }
+  return primitives;
+}
+
 } // namespace moebius
