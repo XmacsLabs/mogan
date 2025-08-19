@@ -643,8 +643,8 @@ void
 qt_simple_widget_rep::hide_completion_popup () {
   if (completionPopUp) {
     completionPopUp->hide ();
-    // 直接回收
-    delete completionPopUp;
+    completionPopUp->setParent (nullptr);
+    completionPopUp->deleteLater ();
     completionPopUp= nullptr;
   }
 }
@@ -719,8 +719,8 @@ qt_simple_widget_rep::hide_math_completion_popup () {
   // 调用的结果就是没有操作，直接返回。
   if (mathCompletionPopUp) {
     mathCompletionPopUp->hide ();
-    // 直接回收
-    delete mathCompletionPopUp;
+    mathCompletionPopUp->setParent (nullptr);
+    mathCompletionPopUp->deleteLater ();
     mathCompletionPopUp= nullptr;
   }
 }

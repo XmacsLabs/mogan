@@ -117,10 +117,10 @@ public:
   static void repaint_all (); // called by qt_gui_rep::update()
 
 protected:
-  static hashset<pointer> all_widgets;
-  rectangles              invalid_regions;
-  QTMCompletionPopup*     completionPopUp;
-  QTMMathCompletionPopup* mathCompletionPopUp;
+  static hashset<pointer>          all_widgets;
+  rectangles                       invalid_regions;
+  QPointer<QTMCompletionPopup>     completionPopUp;
+  QPointer<QTMMathCompletionPopup> mathCompletionPopUp;
 #ifdef USE_MUPDF_RENDERER
   double  bs_zoomf;
   picture backing_store;
