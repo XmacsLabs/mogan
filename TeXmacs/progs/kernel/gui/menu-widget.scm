@@ -519,17 +519,17 @@
 ;; Symbol fields
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (make-menu-symbol-button style sym opt-cmd clr)
+(define (make-menu-symbol-button style font sym opt-cmd clr)
   (with col (if (greyed? style) (color "dark grey") clr)
     (if opt-cmd
-        (widget-menu-button (widget-box '() sym col #t #f)
+        (widget-menu-button (widget-box font sym col #t #t)
                             (make-menu-command (apply opt-cmd '()))
                             "" "" style)
-        (widget-menu-button (widget-box '() sym col #t #f)
+        (widget-menu-button (widget-box font sym col #t #t)
                             (make-menu-command (insert sym))
                             "" "" style))))
 
-(define (make-menu-symbol p style col)
+(define (make-menu-symbol p style font col)
   "Make @(symbol :string? :*) menu item."
   ;; Possibilities for p:
   ;;   <menu-symbol> :: (symbol <symbol-string> [<cmd>])
@@ -540,9 +540,9 @@
           (let* ((source (and opt-cmd (promise-source opt-cmd)))
                  (sh (kbd-find-shortcut (if source source symstring) #f)))
             (if (== sh "")
-                (make-menu-symbol-button style symstring opt-cmd col)
+                (make-menu-symbol-button style font symstring opt-cmd col)
                 (widget-balloon
-                 (make-menu-symbol-button style symstring opt-cmd col)
+                 (make-menu-symbol-button style font symstring opt-cmd col)
                  (make-menu-label (string-append "Keyboard equivalent: " sh)
                                   style))))))))
 
@@ -837,13 +837,17 @@
   (invisible (:%1)
              ,(lambda (p style bar?) (list)))
   (symbol (:string? :*)
-          ,(lambda (p style bar?) 
+          ,(lambda (p style bar?)
              (let ((symbol-color (if (== (get-preference "gui theme") "liii-night") "white" "black")))
-               (list (make-menu-symbol p style (color symbol-color))))))
-  (symbol* (:string? :*)
-          ,(lambda (p style bar?) 
+               (list (make-menu-symbol p style '() (color symbol-color))))))
+  (symbol-completion (:string? :*)
+          ,(lambda (p style bar?)
+             (let ((symbol-color (if (== (get-preference "gui theme") "liii-night") "white" "black")))
+               (list (make-menu-symbol p style '(roman mr medium normal 10 600 0) (color symbol-color))))))
+  (symbol-completion* (:string? :*)
+          ,(lambda (p style bar?)
              (let ((symbol-color (if (== (get-preference "gui theme") "liii-night") "#ff6666" "red")))
-               (list (make-menu-symbol p style (color symbol-color))))))
+               (list (make-menu-symbol p style '(roman mr medium normal 10 600 -2) (color symbol-color))))))
   (texmacs-output (:%2)
     ,(lambda (p style bar?) (list (make-texmacs-output p style))))
   (texmacs-input (:%3)

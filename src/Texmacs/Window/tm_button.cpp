@@ -225,11 +225,11 @@ box_widget_rep::handle_mouse (string kind, SI x, SI y, int m, time_t t,
  ******************************************************************************/
 
 widget
-box_widget (box b, bool tr) {
+box_widget (box b, bool tr, int dw) {
   color  col = light_grey;
   double zoom= 4.0;
   return widget (
-      tm_new<box_widget_rep> (b, col, tr, zoom, 3 * PIXEL, 3 * PIXEL));
+      tm_new<box_widget_rep> (b, col, tr, zoom, dw * PIXEL, dw * PIXEL));
 }
 
 widget
@@ -243,16 +243,18 @@ box_widget (scheme_tree p, string s, color col, bool trans, bool ink) {
   int    sz      = 10;
   int    dpi     = 600;
   int    n       = arity (p);
+  int    dw      = 3;
   if ((n >= 1) && is_atomic (p[0])) family= as_string (p[0]);
   if ((n >= 2) && is_atomic (p[1])) fn_class= as_string (p[1]);
   if ((n >= 3) && is_atomic (p[2])) series= as_string (p[2]);
   if ((n >= 4) && is_atomic (p[3])) shape= as_string (p[3]);
   if ((n >= 5) && is_atomic (p[4])) sz= as_int (p[4]);
   if ((n >= 6) && is_atomic (p[5])) dpi= as_int (p[5]);
+  if ((n >= 7) && is_atomic (p[6])) dw= as_int (p[6]);
   font fn= find_font (family, fn_class, series, shape, sz, dpi);
   box  b = text_box (decorate (), 0, s, fn, col);
   if (ink) b= resize_box (decorate (), b, b->x3, b->y3, b->x4, b->y4, true);
-  return box_widget (b, trans);
+  return box_widget (b, trans, dw);
 }
 
 tree enrich_embedded_document (tree body, tree style);

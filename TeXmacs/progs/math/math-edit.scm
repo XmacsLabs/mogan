@@ -771,17 +771,17 @@
   ;;     3. 如果绑定不存在，返回空列表
   ;;     4. 如果绑定存在，继续查找所有以该按键序列为前缀的符号绑定
   ;;     5. 返回找到的所有直接的符号绑定列表，按照键盘组合序列长度排序，
-  ;;        例如((symbol "<alpha>"))
+  ;;        例如((symbol-completion "<alpha>"))
   ;; 输出:
-  ;;     符号列表，格式为((symbol "符号") ...)
+  ;;     符号列表，格式为((symbol-completion "符号") ...)
   (if (not (kbd-find-key-binding comb)) '()
     (let* ((pre (string-replace (string-replace comb " tab" "") "space " ""))
           (kbd-res (kbd-find-key-binding pre))
           (kbd-sym (and (pair? kbd-res) (car kbd-res))))
       (if (and kbd-sym (string? kbd-sym)) 
-        (append `((symbol ,kbd-sym))
+        (append `((symbol-completion ,kbd-sym))
           (reverse
-            (map (lambda (x) `(symbol ,(and (pair? x) (pair? (cdr x)) (cadadr x))))
+            (map (lambda (x) `(symbol-completion ,(and (pair? x) (pair? (cdr x)) (cadadr x))))
               (list-sort
                 (filter
                   (lambda (x)
@@ -799,12 +799,12 @@
 (define (highlight-tabcycle-symbols lst comb)
   ;; 高亮显示Tab循环符号列表中符合按键序列的符号
   ;; 输入:
-  ;;     lst: 符号列表，格式为((symbol "符号") ...)
+  ;;     lst: 符号列表，格式为((symbol-completion "符号") ...)
   ;;     comb: 按键序列，类型为string，如"b tab"
   ;; 输出:
   ;;     如果 comb 合法(为string)，返回符号列表，
-  ;;        格式为((symbol "符号") (symbol* "符号") ...)，
-  ;;        其中 symbol* 表示高亮显示的符号，参见 make-menu-symbol 中的定义
+  ;;        格式为((symbol-completion "符号") (symbol-completion* "符号") ...)，
+  ;;        其中 symbol-completion* 表示高亮显示的符号，参见 make-menu-symbol 中的定义
   ;;     如果 comb 不合法(为string)，返回空列表
   (let ((bind (let* ((comb1 (string-replace comb "space " ""))
                      (res (kbd-find-key-binding comb1)))
@@ -812,9 +812,9 @@
     (if (string? bind)
       (map (lambda (x) (if (and bind
                                 (pair? x)
-                                (eq? (car x) 'symbol)
+                                (eq? (car x) 'symbol-completion)
                                 (string=? (cadr x) bind))
-                          (list 'symbol* bind) x))
+                          (list 'symbol-completion* bind) x))
            lst)
       '())))
 
@@ -823,7 +823,7 @@
   ;; 输入:
   ;;     comb: 按键序列，类型为string，如"b tab"
   ;; 输出:
-  ;;     符号列表，格式为((symbol "符号") (symbol* "符号") ...)
+  ;;     符号列表，格式为((symbol-completion "符号") (symbol-completion* "符号") ...)
   (if (in-math?)
     (highlight-tabcycle-symbols (tabcycle-symbols comb) comb)
     '()))

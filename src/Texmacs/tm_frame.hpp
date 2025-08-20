@@ -80,7 +80,7 @@ public:
   void interactive (object fun, scheme_tree p);
 };
 
-widget box_widget (box b, bool trans);
+widget box_widget (box b, bool trans, int dw);
 widget box_widget (scheme_tree p, string s, color col, bool trans= true,
                    bool ink= false);
 
