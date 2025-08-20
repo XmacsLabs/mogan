@@ -187,4 +187,4 @@
 		   "Start an interactive session")
 	  (link insert-session-menu))
       ((balloon (icon "tm_ai.xpm") "AI")
-       (open-url "https://www.liiistem.cn"))))
+       (open-url "https://liiistem.cn?from=ai_button"))))

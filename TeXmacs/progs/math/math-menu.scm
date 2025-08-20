@@ -1152,6 +1152,11 @@
 
 (menu-bind math-format-icons
   /
+  (if (or (== (get-preference "gui theme") "liii")
+              (== (get-preference "gui theme") "liii-night")
+              (== (get-preference "gui theme") "default"))
+          ((balloon (icon "tm_marked.svg") "Marked text")
+           (make 'marked)))
   (=> (balloon (icon "tm_color.xpm") "Select a foreground color")
       (link color-menu))
   (assuming (and (!= (get-preference "gui theme") "liii")
