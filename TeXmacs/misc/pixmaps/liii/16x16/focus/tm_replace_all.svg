@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="20"
-   height="20"
+   width="16"
+   height="16"
    id="svg3039"
    version="1.1"
    inkscape:version="0.48.0 r9654"
-   sodipodi:docname="tm_alternate_first.svg"
-   inkscape:export-filename="/Users/vdhoeven/magix/texmacs/icons/16x16/focus/tm_add.png"
+   sodipodi:docname="tm_replace_all.svg"
+   inkscape:export-filename="/Users/vdhoeven/magix/texmacs/icons/16x16/focus/tm_similar_first.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -31,14 +31,6 @@
          offset="1"
          id="stop6144" />
     </linearGradient>
-    <filter
-       inkscape:collect="always"
-       id="filter5018">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.2"
-         id="feGaussianBlur5020" />
-    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -48,7 +40,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="31.392433"
-     inkscape:cx="6.7869176"
+     inkscape:cx="2.4134428"
      inkscape:cy="7.9295487"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -57,8 +49,8 @@
      inkscape:snap-grids="true"
      inkscape:window-width="1466"
      inkscape:window-height="1118"
-     inkscape:window-x="27"
-     inkscape:window-y="14"
+     inkscape:window-x="80"
+     inkscape:window-y="9"
      inkscape:window-maximized="0"
      showguides="true"
      inkscape:snap-global="true">
@@ -86,7 +78,8 @@
   </metadata>
   <g
      id="layer1"
-     transform="translate(2,1.5)">
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
     <text
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:25%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Latin Modern Math;-inkscape-font-specification:Latin Modern Math"
@@ -176,16 +169,20 @@
          x="6.0259871"
          y="13.020233" /></text>
     <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1;fill-opacity:1"
-       d="m 0.5,8.5 11,0 c 0,0 1.5,-1 3,-3 1.5,-2 1,-4 1,-4 l -10,0 c 0,0 -0.5,2 -2,4 -1.5,2 -3,3 -3,3 z"
-       id="path5041"
+       style="fill:#cc0000;fill-opacity:1;stroke:#cc0000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 4.9921035,8.9940662 2.4999952,0.00494 -0.013827,6.9999868 0.999998,0.002 0.013827,-6.9999624 2.4999953,0.00494 -2.9940681,-3.0059203 z"
+       id="path6257"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cczcczc" />
+       sodipodi:nodetypes="cccccccc"
+       transform="matrix(0.0019754,-0.99999805,-0.99999805,-0.0019754,16.984238,16.009861)"
+       inkscape:transform-center-x="1.9750342" />
     <path
-       sodipodi:nodetypes="cczcczc"
+       inkscape:transform-center-x="1.9750342"
+       transform="matrix(0.0019754,-0.99999805,-0.99999805,-0.0019754,20.984287,21.50986)"
+       sodipodi:nodetypes="ccccc"
        inkscape:connector-curvature="0"
-       id="path5045"
-       d="m 0.5,8.5 11,0 c 0,0 1.5,1 3,3 1.5,2 1,4 1,4 l -10,0 c 0,0 -0.5,-2 -2,-4 -1.5,-2 -3,-3 -3,-3 z"
-       style="fill:#000000;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1;fill-opacity:1" />
+       id="path4919"
+       d="m 9.9950571,7.5039969 6.9999859,0.013828 0.002,-0.9999981 -6.9999865,-0.013828 z"
+       style="fill:#cc0000;fill-opacity:1;stroke:#cc0000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
   </g>
 </svg>
