@@ -90,7 +90,12 @@
   (load-buffer (get-remote-planet-url)))
 
 (tm-define (mogan-welcome)
-  (load-help-article "about/mogan/research"))
+  (let* ((lan (string-take (language-to-locale (get-output-language)) 2))
+         (path (string-append "$TEXMACS_PATH/doc/about/mogan/stem." lan ".tmu"))
+         (en_doc (string-append "$TEXMACS_PATH/doc/about/mogan/stem.en.tmu")))
+    (if (url-exists? path)
+        (load-buffer (system->url path))
+        (load-buffer (system->url en_doc)))))
 
 (tm-define (xmacs-planet)
   (if (url-exists? (get-remote-planet-url))

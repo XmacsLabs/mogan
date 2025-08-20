@@ -29,6 +29,7 @@
        (load-local-plugin-doc name)))))
 
 (menu-bind help-menu
+  ("Welcome" (mogan-welcome))
   ("Template" (load-local-doc "main/template"))
   (-> "Plugins"
     (link help-plugins-menu)))
