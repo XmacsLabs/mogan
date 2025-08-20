@@ -1,6 +1,6 @@
-<TMU|<tuple|1.1.0|2025.1.1-rc1>>
+<TMU|<tuple|1.1.0|2025.0.14>>
 
-<style|<tuple|tmdoc|chinese>>
+<style|<tuple|tmdoc|chinese|doc>>
 
 <\body>
   <\wide-tabular>
@@ -13,7 +13,7 @@
 
   \;
 
-  <strong|墨干理工套件>：
+  <strong|墨干理工套件>（Mogan STEM）：
 
   <\enumerate-numeric>
     <item>一款强大的结构化文本编辑器，所见即所得，一站式解决您的STEM写作需求。
@@ -27,122 +27,62 @@
     <item>多平台支持<\footnote>
       对于老版本系统（如macOS 11）或更小众的系统（如麒麟）可使用旧版墨干。
     </footnote>：Linux（Ubuntu、Debian、Fedora）、Windows、macOS。
+
+    <item>Mogan STEM是<hlink|Liii STEM|https://liiistem.cn/docs/about-what-is-liiistem.html?from=app>的社区版，永久免费且开源，如果您想支持我们，欢迎购买Liii STEM。
   </enumerate-numeric>
 
   <with|framed-color|pastel magenta|ornament-border|0ln|ornament-color|pastel yellow|<\ornamented>
-    您正在使用<strong|v<Xmacs-version>>，当前最新稳定版是<strong|v<include|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/latest_version.tm>>，可访问官网<slink|https://mogan.app/zh>下载最新稳定版。
+    您正在使用<strong|v<Xmacs-version>>，当前最新稳定版是<strong|v<include|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/latest_version.tm>>，可访问官网<hlink|https://mogan.app/zh|https://mogan.app/zh?from=app>下载最新稳定版。
   </ornamented>>
-
-  \;
 
   <section*|示例文档：我能用墨干能做什么？>
 
   你可以使用墨干强大的<strong|数学模式>、<strong|绘图插件>、<strong|编程会话>（支持Scheme、Python等语言）功能，一站式撰写丰富、直观的可交互STEM（理工科）文档：试卷、讲义、论文、幻灯片课件、习题集\<ldots\>\<ldots\>写你所想！
 
   <\description>
-    <item*|数学>
+    <item*|论文>
 
     <\itemize>
-      <item><hlink|趣味数学讲义示例（中文）|MathFun_ExploringTheSquareRoot_zh.tmu>
-
-      <item><hlink|高等数学（微积分）答疑示例（中文）|Calculus_ImproperIntegralTestForConvergence_zh.tmu>
-
-      <item><hlink|Baby Rudin习题详解示例（英文）|BabyRudin_Solutions_Ch_1_en.tmu>
+      <item><hlink|Attention Is All You Need, 大模型基础tranformer原始论文|https://liiistem.cn/library/thesis-lecturenotes-books/attention-is-all-you-need.html?from=app>
     </itemize>
 
-    <item*|计算机>
+    <item*|幻灯片>
 
     <\itemize>
-      <item>MIT经典计算机教材——SICP《计算机程序的构造和解释》配套文档
-
-      <\itemize>
-        <item><hlink|SICP交互式教材示例（英文）|SICP_Book_Ch_1_en.tmu>
-
-        <item><hlink|SICP幻灯片课件示例（中文）|SICP_Beamer_3.tmu>
-
-        <item><hlink|SICP习题详解示例（中文）|SICP_Solutions_1_11_zh.tmu>
-      </itemize>
+      <item><hlink|南方科技大学PPT模板: Beamer风格|https://liiistem.cn/library/beamer/beamer-sust.html?from=app>
     </itemize>
 
-    <item*|墨客星球>更多文档、学习资源请查看我们的“墨客星球”
+    <item*|笔记和课件>
 
-    点选菜单：<menu|Help|Planet>
+    <\itemize>
+      <item><hlink|威斯康星麦迪逊STAT850课程课件|https://liiistem.cn/library/notes/STAT850.html?from=app>
+    </itemize>
+
+    <item*|程序与绘图>
+
+    <\itemize>
+      <item><hlink|Gnuplot绘图|https://liiistem.cn/library/programming-plotting/gnuplot-cartesion.html?from=app>
+    </itemize>
+
+    <item*|Liii/Mogan STEM官方文库>更多文档、学习资源请查看我们的 <hlink|官方文库|https://liiistem.cn/library.html?from=app>
   </description>
 
-  \;
-
-  <section*|快速入门：我想快速上手体验墨干！（更多详细文档即将上线）>
+  <section*|快速入门：我想快速上手体验墨干！>
 
   <\itemize>
-    <item><hlink|如何输入数学公式？|Mogan_MathematicalFormulas_zh.tmu>
+    <item><hlink|快速入门文档：基本概念和快速论文排版|https://liiistem.cn/docs/guide-quick-start.html?from=app>
 
-    <\itemize>
-      <item>数学模式
+    <item><hlink|快捷键CheatSheet|https://liiistem.cn/docs/guide-keyboard-shortcuts.html?from=app>
 
-      <item><LaTeX>模拟
+    <item><hlink|数学内容编辑|https://liiistem.cn/docs/guide-equation.html?from=app>
 
-      <item>借助AI
-    </itemize>
-
-    <item>如何绘制科学插图？
-
-    <\itemize>
-      <item>绘图模式
-
-      <item>插件（以Maxima为例）
-    </itemize>
-
-    <item>如何运行代码？（以Scheme、Python为例）
-
-    <\itemize>
-      <item>会话
-
-      <item>文学编程
-
-      <item>借助AI
-    </itemize>
+    <item><hlink|插入定义定理等|https://liiistem.cn/docs/guide-enunciation.html?from=app>
   </itemize>
-
-  \;
 
   <section*|深入学习：我要完整、本质了解墨干的功能！（更多详细文档即将上线）>
 
   <\itemize>
-    <item>认识软件界面！
-
-    <\itemize>
-      <item>菜单栏
-
-      <item>主要工具栏
-
-      <item>模式工具栏
-
-      <item>焦点工具栏
-    </itemize>
-
-    <item>精通结构化排版！
-
-    <\itemize>
-      <item>普通文本
-
-      <item>数学文本
-    </itemize>
-
-    <item><hlink|玩转源码！|Mogan_SourceCode_zh.tmu>
-
-    <\itemize>
-      <item>如何查看源码？
-
-      <item>如何自定义样式和模板？
-
-      <item>如何自定义快捷键？
-    </itemize>
-
-    <item>墨干用户手册
-
-    <\itemize>
-      <item>请点选菜单：<menu|Help|Manual> 来查看，善用搜索！
-    </itemize>
+    <item><hlink|Liii STEM官方文档|https://liiistem.cn/docs/welcome.html?from=app>
 
     <item><TeXmacs>原生教程（与墨干诸多操作大同小异，可作参考）
 
@@ -154,18 +94,8 @@
       <item>书籍<hlink|《The Jolly Writer》|https://www.scypress.com/book_info.html>，系统学习GNU <TeXmacs>的捷径！
     </itemize>
 
-    <item>墨干独有功能
-
-    <\itemize>
-      <item>魔法粘贴
-
-      <item>汉语拼音
-
-      <item>字数统计
-    </itemize>
+    <item>加入墨干社区讨论！QQ群：934456971
   </itemize>
-
-  \;
 
   <section*|参与社区：墨干太棒了，支持开源精神，我要为墨客实验室出一份力！>
 
@@ -183,15 +113,15 @@
     <item>根据我的技能，我能具体做什么？
 
     <\itemize>
-      <item>我会C++
+      <item>我会<verbatim|C++>
 
       <\itemize>
         <item>修复错误，改进功能，提升性能
 
-        <item>参与开源之夏：<slink|https://mogan.app/guide/OSPP_2024.html>
+        <item>参与开源之夏：<hlink|<verbatim|https://mogan.app/guide/OSPP_2024.html>|https://mogan.app/guide/OSPP_2024.html?from=app>
       </itemize>
 
-      <item>我会Scheme
+      <item>我会<verbatim|Scheme>
 
       <\itemize>
         <item>自制模板
@@ -199,10 +129,12 @@
         <item>自制宏包
       </itemize>
 
-      <item>我会撰写.tmu文档
+      <item>我会撰写<verbatim|.tmu>或者<verbatim|markdown>文档
 
       <\itemize>
         <item>贡献百科词条（墨干、数学、计算机等领域）
+
+        <item>参与Liii/Mogan STEM官方文档的编写: <hlink|https://h02wf0jq8yp.feishu.cn/wiki/ThUOwHgfziP7OaktRQQcHRKJnoe|https://h02wf0jq8yp.feishu.cn/wiki/ThUOwHgfziP7OaktRQQcHRKJnoe>
       </itemize>
     </itemize>
   </itemize>
@@ -227,7 +159,9 @@
     <item>讨论交流：
 
     <\itemize>
-      <item>墨客社区QQ群：934456971
+      <item>墨干社区QQ群：934456971
+
+      <item>社区负责人李岩松个人微信：Haggittli
 
       <item><TeXmacs> 豆瓣小组：<slink|https://www.douban.com/group/texmacs/>
     </itemize>
