@@ -126,7 +126,7 @@
   theorem proposition lemma corollary conjecture)
 
 (define-group definition-tag
-  definition axiom notation)
+  definition axiom notation assumption)
 
 (define-group remark-tag
   remark note example convention warning acknowledgments)

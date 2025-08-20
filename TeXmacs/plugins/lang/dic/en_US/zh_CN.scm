@@ -371,6 +371,7 @@
 ("condensed" "压缩")
 ("condition" "条件")
 ("configuration" "配置")
+("conjecture" "猜想")
 ("consoles" "控制台")
 ("contact" "联系")
 ("content tag" "语义标记")
