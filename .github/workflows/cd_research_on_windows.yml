@@ -29,8 +29,8 @@ jobs:
       - name: Noto fonts
         shell: pwsh
         run: |
-          mkdir C:\a\mogan\mogan\TeXmacs\fonts\opentype\noto
-          cd C:\a\mogan\mogan\TeXmacs\fonts\opentype\noto
+          mkdir D:\a\mogan\mogan\TeXmacs\fonts\opentype\noto
+          cd D:\a\mogan\mogan\TeXmacs\fonts\opentype\noto
           wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/NotoSansCJK-Bold.ttc
           wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/NotoSansCJK-Regular.ttc
           wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/NotoSerifCJK-Bold.ttc
@@ -43,7 +43,7 @@ jobs:
         run: xmake install -vD stem
       - name: gs and pandoc
         run: |
-          cp ~\scoop\apps\pandoc\current\pandoc.exe C:\a\mogan\mogan\build\packages\stem\data\bin
+          cp ~\scoop\apps\pandoc\current\pandoc.exe D:\a\mogan\mogan\build\packages\stem\data\bin
           wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/gs.exe
       - name: Generate Installer
         run: xmake pack --yes -vD stem
