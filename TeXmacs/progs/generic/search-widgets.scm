@@ -568,7 +568,7 @@
           (tool-focus :bottom-right tool aux)
           (auxiliary-widget (search-widget u st init aux)
                             (search-cancel u)
-                            "Search" aux)))))
+                            (translate "Search") aux)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search and replace widget
@@ -688,7 +688,7 @@
           (tool-focus :bottom-right tool saux)
           (auxiliary-widget (replace-widget u st init saux raux)
                             (search-cancel u)
-                            "Search and replace" saux raux)))))
+                            (translate "Search and replace") saux raux)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search toolbar

@@ -238,7 +238,7 @@
           (tool-focus :right tool u)
           (auxiliary-widget (macro-editor u styps doc macro-mode)
                             (lambda x (terminate-macro-editor))
-                            "Macro editor" u)))))
+                            (translate "Macro editor") u)))))
 
 (tm-define (edit-focus-macro)
   (:interactive #t)
