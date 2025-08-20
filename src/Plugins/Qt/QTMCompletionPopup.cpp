@@ -16,7 +16,7 @@
 #include <QKeyEvent>
 #include <QScrollBar>
 
-static const float COMPLETION_POPUP_MAGF      = 1.0f;
+static const float COMPLETION_POPUP_MAGF      = 1.3f;
 static const float COMPLETION_POPUP_FONT_SIZE = 12.0f * COMPLETION_POPUP_MAGF;
 static const int   COMPLETION_POPUP_MAX_HEIGHT= 100.0f * COMPLETION_POPUP_MAGF;
 static const int   COMPLETION_POPUP_MIN_WIDTH = 200.0f * COMPLETION_POPUP_MAGF;
