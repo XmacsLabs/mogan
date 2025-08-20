@@ -100,7 +100,7 @@ init_upgrade () {
   string install_version= get_setting ("VERSION");
 
   debug_boot << HRULE;
-  debug_boot << "Your disk contains a configuration file for TeXmacs-";
+  debug_boot << "Your disk contains a configuration file for Mogan STEM ";
   debug_boot << install_version << ".\n";
   debug_boot << "I will now perform the upgrade to version ";
   debug_boot << TEXMACS_VERSION << "\n";
@@ -113,11 +113,5 @@ init_upgrade () {
   init_upgrade_scheme ();
   init_upgrade_doc (install_version);
 
-  remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
-  remove (get_tm_cache_path () * url_wildcard ("__*"));
-  remove (url ("$TEXMACS_HOME_PATH/fonts/font-database.scm"));
-  remove (url ("$TEXMACS_HOME_PATH/fonts/font-features.scm"));
-  remove (url ("$TEXMACS_HOME_PATH/fonts/font-characteristics.scm"));
-  remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
   cache_refresh ();
 }

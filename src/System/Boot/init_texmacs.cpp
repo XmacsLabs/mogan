@@ -325,7 +325,6 @@ acquire_boot_lock () {
   url lock_file= "$TEXMACS_HOME_PATH/system/boot_lock";
   if (exists (lock_file)) {
     remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
-    remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
     remove (get_tm_cache_path () * url_wildcard ("*"));
     remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
   }
@@ -464,7 +463,7 @@ init_misc () {
 void
 setup_texmacs () {
   url settings_file= "$TEXMACS_HOME_PATH/system/settings.scm";
-  debug_boot << "Welcome to TeXmacs " TEXMACS_VERSION "\n";
+  debug_boot << "Welcome to Mogan STEM " << XMACS_VERSION << "\n";
   debug_boot << HRULE;
 
   set_setting ("VERSION", XMACS_VERSION);
@@ -515,6 +514,13 @@ init_texmacs () {
   init_misc ();
 }
 
+void
+load_welcome_doc () {
+  if (DEBUG_STD) debug_boot << "Loading welcome message...\n";
+  string cmd= "(mogan-welcome)";
+  exec_delayed (scheme_cmd (cmd));
+}
+
 /******************************************************************************
  * Initialization of built-in plug-ins
  ******************************************************************************/
@@ -531,6 +537,11 @@ init_plugins () {
   else {
     setup_texmacs ();
     install_status= 1;
+  }
+
+  if (get_setting ("VERSION") != XMACS_VERSION) {
+    init_upgrade ();
+    install_status= 2;
   }
 
   setup_tex ();
@@ -837,7 +848,7 @@ TeXmacs_main (int argc, char** argv) {
       }
     }
     if (install_status == 1 || install_status == 2) {
-      // load_welcome_doc ();
+      load_welcome_doc ();
     }
     if (number_buffers () == 0) {
       if (DEBUG_STD) debug_boot << "Creating 'no name' buffer...\n";

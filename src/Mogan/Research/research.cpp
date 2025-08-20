@@ -113,7 +113,6 @@ immediate_options (int argc, char** argv) {
     if ((N (s) >= 2) && (s (0, 2) == "--")) s= s (1, N (s));
     if ((s == "-S") || (s == "-setup")) {
       remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
-      remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
       remove (get_tm_cache_path () * url_wildcard ("*"));
       remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
     }
@@ -214,7 +213,6 @@ main (int argc, char** argv) {
   if (mac_alternate_startup ()) {
     cout << "TeXmacs] Performing setup (Alt on startup)" << LF;
     remove (url ("$TEXMACS_HOME_PATH/system/settings.scm"));
-    remove (url ("$TEXMACS_HOME_PATH/system/setup.scm"));
     remove (get_tm_cache_path () * url_wildcard ("*"));
     remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
   }
