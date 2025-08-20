@@ -101,7 +101,7 @@ QTMCompletionPopup::updateCache (tree& et, box& eb, path tp, double magf,
   cached_tp  = tp;
   path tp1   = tp;
   int  length= N (getTextFromItem (index));
-  for (int i= 0; i < length; ++i) {
+  for (int i= 0; (i < length && last_item (tp1) > 0); ++i) {
     tp1= previous_valid (et, tp1); // 向前移动 length 个字符
   }
   cachePosition (eb->find_check_cursor (tp1), magf, scroll_x, scroll_y,

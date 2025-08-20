@@ -46,7 +46,7 @@ edit_interface_rep::source_complete_try () {
       }
       path tp1     = tp;
       int  prefix_N= N (completion_prefix);
-      for (int i= 0; i < prefix_N; ++i) {
+      for (int i= 0; (i < prefix_N && last_item (tp1) > 0); ++i) {
         tp1= previous_valid (et, tp1); // 向前移动到前缀的起始位置
       }
       cursor cu= eb->find_check_cursor (tp1);
