@@ -1128,7 +1128,17 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       QWidget* new_qwidget= auxiliary_widget->as_qwidget ();
       QWidget* old_qwidget= auxiliaryWidget->widget ();
       if (old_qwidget) old_qwidget->deleteLater ();
-      auxiliaryWidget->setWidget (new_qwidget);
+      new_qwidget->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+      // 使用一层容器包装 new_qwidget，以使布局更美观（同时留出"广告位"）
+      QWidget*     container     = new QWidget ();
+      QVBoxLayout* verticalLayout= new QVBoxLayout (container);
+      verticalLayout->setSpacing (0);                  // 间距
+      verticalLayout->setContentsMargins (0, 0, 0, 0); // 边距
+      verticalLayout->setAlignment (Qt::AlignCenter);  // 居中对齐
+      verticalLayout->addWidget (new_qwidget);
+
+      auxiliaryWidget->setWidget (container);
       update_visibility ();
     }
     break;
