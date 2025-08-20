@@ -11,6 +11,8 @@
 
 #include "QTMCompletionPopup.hpp"
 #include "edit_interface.hpp"
+#include "edit_typeset.hpp"
+#include "editor.hpp"
 
 #include <QApplication>
 #include <QKeyEvent>
@@ -69,10 +71,12 @@ QTMCompletionPopup::showCompletions (array<string>& completions, int x, int y) {
 }
 
 void
-QTMCompletionPopup::showCompletions (path tp, array<string>& completions,
+QTMCompletionPopup::showCompletions (string md, path tp,
+                                     array<string>& completions,
                                      struct cursor cu, double magf,
                                      int scroll_x, int scroll_y, int canvas_x) {
   // TODO: try to not cache tp
+  mode     = md;
   cached_tp= tp;
   cachePosition (cu, magf, scroll_x, scroll_y, canvas_x);
   int pos_x, pos_y;
@@ -206,6 +210,13 @@ QTMCompletionPopup::getTextFromItem (int idx) {
 void
 QTMCompletionPopup::onItemPressed (QListWidgetItem* item) {
   hide ();
+  if (mode == "source") {
+    if (!owner) return;
+    edit_interface_rep* editInterface=
+        dynamic_cast<edit_interface_rep*> (owner);
+    if (!editInterface) return;
+    editInterface->source_complete_variant (from_qstring (item->text ()));
+  }
 }
 
 void
@@ -217,7 +228,13 @@ QTMCompletionPopup::onCurrentItemChanged (QListWidgetItem* currentItem,
   edit_interface_rep* editInterface= dynamic_cast<edit_interface_rep*> (owner);
   if (!editInterface) return;
   if (previousItem && currentItem) {
-    editInterface->complete_variant (from_qstring (previousItem->text ()),
-                                     from_qstring (currentItem->text ()));
+    if (mode == "text") {
+      editInterface->complete_variant (from_qstring (previousItem->text ()),
+                                       from_qstring (currentItem->text ()));
+    }
+    else if (mode == "source") {
+      editInterface->source_complete_variant (
+          from_qstring (currentItem->text ()));
+    }
   }
 }

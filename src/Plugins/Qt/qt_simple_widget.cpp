@@ -627,14 +627,14 @@ qt_simple_widget_rep::ensure_completion_popup () {
 }
 
 void
-qt_simple_widget_rep::show_completion_popup (path           tp,
+qt_simple_widget_rep::show_completion_popup (string mode, path tp,
                                              array<string>& completions,
                                              struct cursor cu, double magf,
                                              SI scroll_x, SI scroll_y,
                                              SI canvas_x) {
   ensure_completion_popup ();
   if (completionPopUp) {
-    completionPopUp->showCompletions (tp, completions, cu, magf, scroll_x,
+    completionPopUp->showCompletions (mode, tp, completions, cu, magf, scroll_x,
                                       scroll_y, canvas_x);
   }
 }

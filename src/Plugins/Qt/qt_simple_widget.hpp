@@ -92,7 +92,7 @@ public:
 
   ////////////////////// Completion popup support
   void show_completion_popup (array<string>& completions, SI x, SI y);
-  void show_completion_popup (path tp, array<string>& completions,
+  void show_completion_popup (string mode, path tp, array<string>& completions,
                               struct cursor cu, double magf, SI scroll_x,
                               SI scroll_y, SI canvas_x);
   void hide_completion_popup ();

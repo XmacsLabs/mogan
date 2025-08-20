@@ -51,8 +51,9 @@ edit_interface_rep::source_complete_try () {
       }
       cursor cu= eb->find_check_cursor (tp1);
       if (completion_style == string ("popup")) {
-        show_completion_popup (tp, completions, cu, magf, get_scroll_x (),
-                               get_scroll_y (), get_canvas_x ());
+        show_completion_popup ("source", tp, completions, cu, magf,
+                               get_scroll_x (), get_scroll_y (),
+                               get_canvas_x ());
       }
     }
     else {

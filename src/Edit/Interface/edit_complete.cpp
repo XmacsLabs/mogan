@@ -176,8 +176,8 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
     }
     cursor cu= eb->find_check_cursor (tp1);
     if (completion_style == string ("popup")) {
-      show_completion_popup (tp, full_completions, cu, magf, get_scroll_x (),
-                             get_scroll_y (), get_canvas_x ());
+      show_completion_popup ("text", tp, full_completions, cu, magf,
+                             get_scroll_x (), get_scroll_y (), get_canvas_x ());
     }
 
     insert_tree (completions[0]);
@@ -289,12 +289,6 @@ void
 edit_interface_rep::complete_variant (string old_completion,
                                       string new_completion) {
   // QTMCompletionPopup::onCurrentItemChanged 会调用此函数当补全项改变时进行编辑
-  bool is_source     = (get_env_string ("mode") == "src");
-  bool is_source_mode= (get_env_string ("preamble") == "true");
-  if (is_source && (!is_source_mode)) {
-    source_complete_variant (new_completion);
-    return;
-  }
   if (completion_style != string ("popup")) {
     return; // 仅在 popup 补全模式下有效，注意此处使用了缓存的 completion_style
   }
