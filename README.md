@@ -1,70 +1,66 @@
 # Mogan STEM
 
-Mogan STEM is a professional scientific writing platform designed for mathematics, physics, statistics, and computer science, built to handle complex formula-based documents. It is deeply optimized from [GNU TeXmacs](https://www.texmacs.org/), focusing on performance and user experience. With Mogan STEM, you can create scientific documents up to 100x faster than with $\LaTeX$!.
+Mogan STEM is a professional scientific writing platform targeted at mathematics, physics, statistics, and computer science, specially designed to handle complex formula-based documents. It is deeply optimized from [GNU TeXmacs](https://www.texmacs.org/), with emphasis on performance and user experience. With Mogan STEM you can create scientific documents up to 100x faster than with $\LaTeX$.
 
 **Visit the official websites:**
 - **Mogan STEM (Community Version)**: [https://mogan.app](https://mogan.app)
 - **Liii STEM (Commercial Version, with built-in AI)**: [https://liiistem.com](https://liiistem.com)
 
-
 ## Key Features
 
 ### 📋 Magic Paste
-- Support for ChatGPT, Claude, Gemini and other mainstream AI models
-- Automatic recognition of mathematical formulas, code blocks, tables and other complex formats
-- One-click conversion to standard TeXmacs format without manual adjustment
-- Maintains original formatting and style integrity
+- Supports mainstream AI models such as ChatGPT, Claude, and Gemini
+- Automatically recognizes mathematical formulas, code blocks, tables, and other complex formats
+- One-click conversion to the standard TeXmacs format with no manual adjustment required
+- Preserves original formatting and style integrity
 
 ![Magic Paste PRE](./public/images/magic-paste.gif)
 
-### 🛠 Export PDF & LaTex
-- Support for batch export in multiple formats to meet different usage scenarios
-- PDF export: Maintains original document layout effects, supports high-resolution printing
-- LaTeX export: Ensures compilation success rate, compatible with mainstream journal submission requirements
+### 🛠 Export PDF & LaTeX
+- Batch export in multiple formats to suit different scenarios
+- PDF export: preserves original document layout and supports high-resolution printing
+- LaTeX export: improves compilation success rate and is compatible with mainstream journal submission requirements
 
 ![Export PRE](./public/images/pdf.gif)
 ![Export PRE](./public/images/LaTex.gif)
 
 ### ⚡ Fast Math Editing
-- Independent math mode: Quick switching, focused formula editing
-- Smart shortcuts: Lego-style memory rules, Tab key quick cycling, reduces mouse operations
-- Rich symbol library: Covers complete mathematical and physical symbols, paired with countless key combinations
+- Independent math mode: quick switching and focused formula editing
+- Smart shortcuts: Lego-like memory rules and Tab-key cycling to reduce mouse operations
+- Rich symbol library: covers a complete set of mathematical and physical symbols with numerous key combinations
 
 ![Math Editing PRE](./public/images/eq.gif)
 
-### 🎓 Baby-level Learning Curve, Thesis-level Edits.
-- Three major modes seamlessly switch, easy operation for quick start, more efficient
-- Different content types have clear structure, article hierarchy is well-organized
-- Click to insert environments, complex typesetting becomes simple
+### 🎓 Easy to learn, capable of thesis-level editing
+- Three primary modes switch seamlessly; easy to operate and quick to get started
+- Clear structure for different content types and well-organized document hierarchy
+- Click to insert environments; complex typesetting becomes simple
 
 ![hesis-level Edits PRE](./public/images/Thesis-level-Edits.png)
 
+### Scientific Document Creation
+- High-quality typesetting: professional document formatting with TeX quality output
+- Mathematical notation: advanced formula editing with LaTeX compatibility
+- Bibliography management: built-in reference and citation tools
 
+### Performance & Usability
+- Faster startup: optimized performance compared to TeXmacs
+- Responsive interface: modern Qt6-based user interface
+- Cross-platform: available for Windows, macOS, and Linux
 
-###  **Scientific Document Creation**
-- **High-quality typesetting**: Professional document formatting with TeX-quality output
-- **Mathematical notation**: Advanced formula editing with LaTeX compatibility
-- **Bibliography management**: Integrated reference and citation tools
-
-###  **Performance & Usability**
-- **Faster startup**: Optimized boot times compared to traditional TeXmacs
-- **Responsive interface**: Modern Qt6-based user interface
-- **Cross-platform**: Available on Windows, macOS, and Linux
-
-###  **Technical Capabilities**
-- **Plugin system**: Extensible with various programming languages and tools
-- **Document formats**: Support for TeXmacs, LaTeX, PDF, HTML, and more
-- **Interactive plotting**: Integration with data analysis tools
-
+### Integration with other scientific tools
+- Plugin system: extensible via multiple programming languages (Python, C++, Scheme) and tools
+- Document formats: supports TeXmacs, LaTeX, PDF, HTML, and more
+- Interactive plotting: integration with data analysis tools for interactive plots
 
 ## Quick Start
 
 ### Installation
 
 #### Mogan STEM (Community Version)
-**From Release**: Download the latest release for your platform from [GitHub releases](https://github.com/XmacsLabs/mogan/releases).
+From Release: Download the latest release for your platform from [GitHub releases](https://github.com/XmacsLabs/mogan/releases).
 
-**Build from Source**:
+Build from Source:
 ```bash
 # Clone the repository
 git clone https://github.com/XmacsLabs/mogan.git
@@ -75,75 +71,35 @@ xmake build stem
 ```
 
 #### Liii STEM (Commercial Version)
-For the commercial version with AI capabilities, visit [Liii STEM official website](https://liiistem.cn) for installation options.
-
-### Getting Started with Mogan STEM
-1. **Launch**: Double-click the application icon
-2. **Create**: File → New → Article
-3. **Edit**: Use the WYSIWYG editor
-4. **Format**: Add mathematics via the formula editor
-5. **Export**: Save as PDF, LaTeX, or other formats
+For the commercial version with built-in AI features, please visit the [Liii STEM official website](https://liiistem.cn) for installation options.
 
 ## Documentation & Learning
 
 ### Community Version Resources
-- **Mogan Website**: [https://mogan.app](https://mogan.app)
-- **GitHub Repository**: [github.com/XmacsLabs/mogan](https://github.com/XmacsLabs/mogan)
-- **User Manual**: Comprehensive guide for all features
-- **Video Tutorials**: Step-by-step learning materials
+- Mogan website: [https://mogan.app](https://mogan.app)
+- GitHub repository: [github.com/XmacsLabs/mogan](https://github.com/XmacsLabs/mogan)
+- User manual: comprehensive guide covering all features ([Liii/Mogan STEM docs](https://liiistem.cn/docs/welcome.html))
+- Video tutorials: step-by-step learning materials
 
 ### Commercial Version Resources
-- **Liii STEM Website**: [https://liiistem.cn](https://liiistem.cn)
-- **Professional Documentation**: Commercial-grade guides and tutorials
-- **AI Features**: Documentation specific to AI-powered capabilities
+- Liii STEM website: [https://liiistem.cn](https://liiistem.cn)
+- Private services: commercial guides and custom services ([pricing & services](https://liiistem.cn/pricing-fruit.html))
+- AI features: documentation for built-in AI-assisted formatting and proofs ([AI guide](https://liiistem.cn/docs/guide-tuto-llm-plug.html))
 
-### 🌍 **Language Support**
-- **Chinese**: 墨干理工套件 - complete Chinese interface and documentation
-- **English**: Full documentation for international users
-- **Multilingual**: Community translations available
+### 🌍 Language Support
+- Chinese: full Chinese interface and documentation
+- English: complete English documentation for international users
+- Multilingual: community translations available
 
 ## Community & Development
 
-### Mogan STEM Community
-- **Contributing**: Free, open-source contributions welcome
-- **Development**: Core development, plugins, translations
-- **Testing**: Community-driven quality assurance
-- **Documentation**: Community-maintained guides
+### Mogan Community
+- Contributing documentation: contributions welcome (see Liii/Mogan STEM docs)
+- Core development, plugins, translations, and community-driven testing and documentation
 
-### Liii STEM Professional Support
-- **Development Team**: Dedicated professional developers
-- **Support**: Commercial technical support available
-- **Roadmap**: AI-enhanced feature development
-- **Consultation**: Professional documentation services
-
-### 🔗 **Connect with Us**
-- **Mogan STEM**: [github.com/XmacsLabs/mogan](https://github.com/XmacsLabs/mogan)
-- **Email**: yansong@liii.pro
-- **Liii STEM**: Contact via [official website](https://liiistem.cn)
+### 🔗 Contact
+- Mogan Discord Channel: https://discord.com/invite/M5Gg8yAsTx
+- Community lead email: yansong@liii.pro
+- Liii STEM: contact via the [official website](https://liiistem.cn)
 
 
-
-## License & Commercial Options
-
-### Mogan STEM (Community)
-- **License**: GNU General Public License v3.0+
-- **Cost**: Free and open-source forever
-- **Support**: Community-driven support
-- **Privacy**: No data collection or AI processing
-
-
-## Acknowledgments
-
-Mogan STEM builds upon the foundation of [GNU TeXmacs](https://www.texmacs.org/) and incorporates improvements from the open-source community. Liii STEM extends this heritage with proprietary AI capabilities for professional users.
-
----
-
-## Choose Your Version
-
-**For community users**: Start with **Mogan STEM** - free, powerful, and privacy-focused
-
-**For professionals**: Upgrade to **Liii STEM** - AI-enhanced productivity for serious document creation
-
-**Ready to get started?**
-- [**Mogan STEM Community**](https://mogan.app) - Download the free, open-source version
-- [**Liii STEM Professional**](https://liiistem.cn) - Explore the commercial version with AI
