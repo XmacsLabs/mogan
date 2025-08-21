@@ -532,9 +532,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (menu-bind text-block-icons
-  (if (style-has? "header-exam-dtd")
-      (=> (balloon (icon "tm_title.xpm") "Enter title information")
-          (link exam-header-menu)))
   (if (style-has? "book-style")
       (=> (balloon (icon "tm_chapter.xpm") "Start a new chapter")
           (link chapter-menu)))
@@ -984,7 +981,9 @@
     ((check "Numbered" "v" (algorithm-numbered? (focus-tree)))
      (algorithm-toggle-number (focus-tree))))
   ((check "Named" "v" (algorithm-named? (focus-tree)))
-   (algorithm-toggle-name t)))
+   (algorithm-toggle-name t))
+  ((check "Specified" "v" (algorithm-specified? (focus-tree)))
+   (algorithm-toggle-specification t)))
 
 (tm-menu (focus-toggle-icons t)
   (:require (algorithm-context? t))
@@ -994,10 +993,7 @@
      (algorithm-toggle-number (focus-tree))))
   ((check (balloon (icon "tm_small_textual.xpm") "Toggle name") "v"
           (algorithm-named? (focus-tree)))
-   (algorithm-toggle-name t))
-  ((check (balloon (icon "tm_specified.xpm") "Toggle specification") "v"
-          (algorithm-specified? (focus-tree)))
-   (algorithm-toggle-specification t)))
+   (algorithm-toggle-name t)))
 
 (tm-define (standard-options l)
   (:require (in? l (algorithm-tag-list)))
