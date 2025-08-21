@@ -13,7 +13,7 @@
 ("Expand TeXmacs macros with no LaTeX equivalents" "展开没有 LaTeX 等价项的 TeXmacs 宏")
 ("Experimental features (to be used with care)" "实验性功能（请谨慎使用）")
 ("Export mathematical formulas as MathJax" "将数学公式导出为 MathJax")
-("Export mathematical formulas as mathml" "将数学公式导出为MathML")
+("Export mathematical formulas as MathML" "将数学公式导出为MathML")
 ("GNU FDL" "GNU自由文档许可证")
 ("GNU TeXmacs comes without any form of legal warranty" "GNU TeXmacs 无任何形式的法律保证")
 ("GNU TeXmacs falls under the GNU general public license" "GNU TeXmacs 使用 GNU 通用公共许可授权")
