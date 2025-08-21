@@ -1,0 +1,19 @@
+<TMU|<tuple|1.1.0|2025.1.1-rc2>>
+
+<style|<tuple|generic|number-europe>>
+
+<\body>
+  <\hide-preamble>
+    <assign|sustech-long-looooooong-loooooooooooooong|SUSTech>
+    <assign|polytech-longlong-looooooong-loooooooooooooong-looooooooooooooooooong|Polytech>
+  </hide-preamble>
+
+  Test 201_32
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

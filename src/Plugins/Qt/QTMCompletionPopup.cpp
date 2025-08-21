@@ -18,10 +18,11 @@
 #include <QKeyEvent>
 #include <QScrollBar>
 
-static const float COMPLETION_POPUP_MAGF      = 1.3f;
-static const float COMPLETION_POPUP_FONT_SIZE = 12.0f * COMPLETION_POPUP_MAGF;
-static const int   COMPLETION_POPUP_MAX_HEIGHT= 100.0f * COMPLETION_POPUP_MAGF;
-static const int   COMPLETION_POPUP_MIN_WIDTH = 200.0f * COMPLETION_POPUP_MAGF;
+static const float COMPLETION_POPUP_MAGF     = 1.3f;
+static const float COMPLETION_POPUP_FONT_SIZE= 12.0f * COMPLETION_POPUP_MAGF;
+static const int   COMPLETION_POPUP_MIN_WIDTH= 150.0f * COMPLETION_POPUP_MAGF;
+static const int   COMPLETION_POPUP_MAX_WIDTH= 2 * COMPLETION_POPUP_MIN_WIDTH;
+static const int   COMPLETION_POPUP_MAX_ITEMS= 5;
 
 QTMCompletionPopup::QTMCompletionPopup (QTMWidget*            parent,
                                         qt_simple_widget_rep* owner)
@@ -47,12 +48,20 @@ QTMCompletionPopup::QTMCompletionPopup (QTMWidget*            parent,
 void
 QTMCompletionPopup::resizeHeight () {
   int completions_N= count ();
-  int width        = qMax (sizeHintForColumn (0), COMPLETION_POPUP_MIN_WIDTH);
   int height       = 0;
+  int width        = 0;
   for (int i= 0; i < completions_N; i++) {
-    height+= sizeHintForRow (i);
+    if (i < COMPLETION_POPUP_MAX_ITEMS) { // 保留五个补全项
+      height+= sizeHintForRow (i);
+    }
+    width= qMax (width, sizeHintForColumn (i));
   }
-  height= qMin (height, COMPLETION_POPUP_MAX_HEIGHT);
+  width= qMax (width, COMPLETION_POPUP_MIN_WIDTH);
+  width= 20 + width; // 边距留白，也可作为滚动条的边距
+  if (width > COMPLETION_POPUP_MAX_WIDTH) {
+    width= COMPLETION_POPUP_MAX_WIDTH; // 限制最大宽度
+    height+= 20;                       // 滚动条的边距
+  }
   QSize size (width, height);
   resize (size);
 }
