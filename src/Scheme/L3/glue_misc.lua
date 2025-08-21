@@ -136,11 +136,6 @@ function main()
                     "url"
                 }
             },
-            {
-                scm_name = "xmacs-version",
-                cpp_name = "xmacs_version",
-                ret_type = "string"
-            }
         }
     }
 end
