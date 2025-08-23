@@ -302,4 +302,90 @@ CONCRETE_NULL_CODE (ot_svgtable);
 ot_svgtable parse_svgtable (const string& buf);
 ot_svgtable parse_svgtable (url u);
 
+/******************************************************************************
+ * OpenType CBDT/CBLC tables for bitmap glyphs (PNG emojis)
+ * see https://docs.microsoft.com/en-us/typography/opentype/spec/cbdt
+ * see https://docs.microsoft.com/en-us/typography/opentype/spec/cblc
+ ******************************************************************************/
+
+struct SbitLineMetrics {
+  signed char   ascender;
+  signed char   descender;
+  unsigned char widthMax;
+  signed char   caretSlopeNumerator;
+  signed char   caretSlopeDenominator;
+  signed char   caretOffset;
+  signed char   minOriginSB;
+  signed char   minAdvanceSB;
+  signed char   maxBeforeBL;
+  signed char   minAfterBL;
+  signed char   pad1;
+  signed char   pad2;
+};
+
+struct BitmapSizeRecord {
+  unsigned int    indexSubTableArrayOffset;
+  unsigned int    indexTablesSize;
+  unsigned int    numberOfIndexSubTables;
+  unsigned int    colorRef;
+  SbitLineMetrics hori;
+  SbitLineMetrics vert;
+  unsigned short  startGlyphIndex;
+  unsigned short  endGlyphIndex;
+  unsigned char   ppemX;
+  unsigned char   ppemY;
+  unsigned char   bitDepth;
+  signed char     flags;
+};
+
+struct IndexSubTableHeader {
+  unsigned short indexFormat;
+  unsigned short imageFormat;
+  unsigned int   imageDataOffset;
+};
+
+struct IndexSubTable1 {
+  IndexSubTableHeader header;
+  array<unsigned int> offsetArray;
+};
+
+struct IndexSubTable2 {
+  IndexSubTableHeader   header;
+  unsigned int          imageSize;
+  array<unsigned short> glyphArray;
+};
+
+struct IndexSubTable3 {
+  IndexSubTableHeader   header;
+  array<unsigned short> offsetArray;
+};
+
+struct BitmapGlyphData {
+  unsigned int  offset;
+  unsigned int  length;
+  string        data;
+  unsigned char format;
+};
+
+struct ot_cbdttable_rep : concrete_struct {
+  unsigned short          majorVersion;
+  unsigned short          minorVersion;
+  array<BitmapSizeRecord> bitmapSizes;
+  hashmap<unsigned int, array<BitmapGlyphData>>
+      glyph_bitmaps; // ppem -> bitmap data
+  hashmap<unsigned int, string>
+      bitmap_cache; // glyphID -> PNG data for current size
+
+  string get_png_from_glyphid (unsigned int glyphID, int ppem);
+};
+
+struct ot_cbdttable {
+  CONCRETE_NULL (ot_cbdttable);
+  ot_cbdttable (ot_cbdttable_rep* rep2) : rep (rep2) {}
+};
+
+CONCRETE_NULL_CODE (ot_cbdttable);
+ot_cbdttable parse_cbdttable (const string& cblc_buf, const string& cbdt_buf);
+ot_cbdttable parse_cbdttable (url u);
+
 #endif // TT_TOOLS_H

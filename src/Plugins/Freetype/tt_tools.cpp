@@ -16,6 +16,7 @@
 #include "tm_file.hpp"
 #include "tree_helper.hpp"
 #include "tt_file.hpp"
+#include <climits>
 
 #ifdef HAVE_STDINT_H
 #include <stdint.h>
@@ -924,4 +925,245 @@ ot_svgtable_rep::extract_glyph_svg_with_defs (const string& full_svg,
   result= result * "</svg>";
 
   return result;
+}
+
+/******************************************************************************
+ * OpenType CBDT/CBLC tables for bitmap glyphs
+ * Based on OpenType specification from Microsoft:
+ * https://docs.microsoft.com/en-us/typography/opentype/spec/cbdt
+ * https://docs.microsoft.com/en-us/typography/opentype/spec/cblc
+ ******************************************************************************/
+
+ot_cbdttable
+parse_cbdttable (const string& cblc_buf, const string& cbdt_buf) {
+  if (N (cblc_buf) == 0 || N (cbdt_buf) == 0) return {};
+
+  string cblc_table= tt_table (cblc_buf, 0, "CBLC");
+  string cbdt_table= tt_table (cbdt_buf, 0, "CBDT");
+
+  if (N (cblc_table) == 0 || N (cbdt_table) == 0) return {};
+
+  ot_cbdttable table (tm_new<ot_cbdttable_rep> ());
+
+  // Parse CBLC header
+  table->majorVersion  = get_U16 (cblc_table, 0);
+  table->minorVersion  = get_U16 (cblc_table, 2);
+  unsigned int numSizes= get_U32 (cblc_table, 4);
+
+  // Parse bitmap size records
+  table->bitmapSizes= array<BitmapSizeRecord> (numSizes);
+  for (unsigned int i= 0; i < numSizes; i++) {
+    unsigned int offset= 8 + i * 48; // Each BitmapSizeRecord is 48 bytes
+
+    // Check bounds
+    if (offset + 48 > N (cblc_table)) {
+      return {};
+    }
+
+    BitmapSizeRecord& record= table->bitmapSizes[i];
+
+    record.indexSubTableArrayOffset= get_U32 (cblc_table, offset);
+    record.indexTablesSize         = get_U32 (cblc_table, offset + 4);
+    record.numberOfIndexSubTables  = get_U32 (cblc_table, offset + 8);
+    record.colorRef                = get_U32 (cblc_table, offset + 12);
+
+    // Read SbitLineMetrics structures (12 bytes each, 2 of them = 24 bytes
+    // total)
+    {
+      int  lm_off           = offset + 16;
+      auto read_line_metrics= [&] (int base, SbitLineMetrics& out) {
+        out.ascender             = (signed char) get_U8 (cblc_table, base + 0);
+        out.descender            = (signed char) get_U8 (cblc_table, base + 1);
+        out.widthMax             = get_U8 (cblc_table, base + 2);
+        out.caretSlopeNumerator  = (signed char) get_U8 (cblc_table, base + 3);
+        out.caretSlopeDenominator= (signed char) get_U8 (cblc_table, base + 4);
+        out.caretOffset          = (signed char) get_U8 (cblc_table, base + 5);
+        out.minOriginSB          = (signed char) get_U8 (cblc_table, base + 6);
+        out.minAdvanceSB         = (signed char) get_U8 (cblc_table, base + 7);
+        out.maxBeforeBL          = (signed char) get_U8 (cblc_table, base + 8);
+        out.minAfterBL           = (signed char) get_U8 (cblc_table, base + 9);
+        out.pad1                 = (signed char) get_U8 (cblc_table, base + 10);
+        out.pad2                 = (signed char) get_U8 (cblc_table, base + 11);
+      };
+      read_line_metrics (lm_off + 0, record.hori);
+      read_line_metrics (lm_off + 12, record.vert);
+    }
+    record.startGlyphIndex= get_U16 (cblc_table, offset + 40);
+    record.endGlyphIndex  = get_U16 (cblc_table, offset + 42);
+    record.ppemX          = get_U8 (cblc_table, offset + 44);
+    record.ppemY          = get_U8 (cblc_table, offset + 45);
+    record.bitDepth       = get_U8 (cblc_table, offset + 46);
+    record.flags          = get_U8 (cblc_table, offset + 47);
+
+    // Parse index sub-tables for this size
+    for (unsigned int j= 0; j < record.numberOfIndexSubTables; j++) {
+      unsigned int   subTableOffset = record.indexSubTableArrayOffset + j * 8;
+      unsigned short firstGlyphIndex= get_U16 (cblc_table, subTableOffset);
+      unsigned short lastGlyphIndex = get_U16 (cblc_table, subTableOffset + 2);
+      unsigned int   additionalOffsetToIndexSubTable=
+          get_U32 (cblc_table, subTableOffset + 4);
+
+      unsigned int indexSubTableOffset=
+          record.indexSubTableArrayOffset + additionalOffsetToIndexSubTable;
+      unsigned short indexFormat= get_U16 (cblc_table, indexSubTableOffset);
+      unsigned short imageFormat= get_U16 (cblc_table, indexSubTableOffset + 2);
+      unsigned int   imageDataOffset=
+          get_U32 (cblc_table, indexSubTableOffset + 4);
+
+      // Handle different index formats
+      if (indexFormat == 1) {
+        // Format 1: array of image data offsets
+        for (unsigned short glyphIndex= firstGlyphIndex;
+             glyphIndex <= lastGlyphIndex; glyphIndex++) {
+          unsigned int offsetArrayIndex= glyphIndex - firstGlyphIndex;
+          unsigned int glyphDataOffset = get_U32 (
+              cblc_table, indexSubTableOffset + 8 + offsetArrayIndex * 4);
+          unsigned int nextGlyphDataOffset= get_U32 (
+              cblc_table, indexSubTableOffset + 8 + (offsetArrayIndex + 1) * 4);
+
+          if (glyphDataOffset != nextGlyphDataOffset) {
+            unsigned int dataLength    = nextGlyphDataOffset - glyphDataOffset;
+            unsigned int absoluteOffset= imageDataOffset + glyphDataOffset;
+
+            if (absoluteOffset + dataLength <= N (cbdt_table)) {
+              BitmapGlyphData glyphData;
+              glyphData.offset= absoluteOffset;
+              glyphData.length= dataLength;
+              glyphData.format= imageFormat;
+              glyphData.data  = get_sub (cbdt_table, absoluteOffset,
+                                         absoluteOffset + dataLength);
+
+              unsigned int key= (record.ppemX << 16) | glyphIndex;
+              if (!table->glyph_bitmaps->contains (key)) {
+                table->glyph_bitmaps (key)= array<BitmapGlyphData> ();
+              }
+              array<BitmapGlyphData> temp_array= table->glyph_bitmaps[key];
+              array<BitmapGlyphData> new_array (N (temp_array) + 1);
+              for (int idx= 0; idx < N (temp_array); idx++) {
+                new_array[idx]= temp_array[idx];
+              }
+              new_array[N (temp_array)] = glyphData;
+              table->glyph_bitmaps (key)= new_array;
+            }
+          }
+        }
+      }
+      else if (indexFormat == 2) {
+        // Format 2: constant image size
+        unsigned int imageSize= get_U32 (cblc_table, indexSubTableOffset + 8);
+        for (unsigned short glyphIndex= firstGlyphIndex;
+             glyphIndex <= lastGlyphIndex; glyphIndex++) {
+          unsigned int offsetInArray= glyphIndex - firstGlyphIndex;
+          unsigned int absoluteOffset=
+              imageDataOffset + offsetInArray * imageSize;
+
+          if (absoluteOffset + imageSize <= N (cbdt_table)) {
+            BitmapGlyphData glyphData;
+            glyphData.offset= absoluteOffset;
+            glyphData.length= imageSize;
+            glyphData.format= imageFormat;
+            glyphData.data  = get_sub (cbdt_table, absoluteOffset,
+                                       absoluteOffset + imageSize);
+
+            unsigned int key= (record.ppemX << 16) | glyphIndex;
+            if (!table->glyph_bitmaps->contains (key)) {
+              table->glyph_bitmaps (key)= array<BitmapGlyphData> ();
+            }
+            array<BitmapGlyphData> temp_array= table->glyph_bitmaps[key];
+            array<BitmapGlyphData> new_array (N (temp_array) + 1);
+            for (int idx= 0; idx < N (temp_array); idx++) {
+              new_array[idx]= temp_array[idx];
+            }
+            new_array[N (temp_array)] = glyphData;
+            table->glyph_bitmaps (key)= new_array;
+          }
+        }
+      }
+    }
+  }
+
+  return table;
+}
+
+ot_cbdttable
+parse_cbdttable (url u) {
+  string tt;
+  if (!load_string (u, tt, false)) return parse_cbdttable (tt, tt);
+  else return {};
+}
+
+string
+ot_cbdttable_rep::get_png_from_glyphid (unsigned int glyphID, int ppem) {
+
+  // Create cache key
+  unsigned int cache_key= (ppem << 16) | glyphID;
+
+  // Check cache first
+  if (bitmap_cache->contains (cache_key)) {
+    return bitmap_cache[cache_key];
+  }
+
+  // If exact ppem match not found, try to find the best available ppem size
+  unsigned int best_ppem    = 0;
+  int          best_distance= INT_MAX;
+
+  // First try exact match
+  unsigned int exact_key= (ppem << 16) | glyphID;
+  if (glyph_bitmaps->contains (exact_key) && N (glyph_bitmaps[exact_key]) > 0) {
+    best_ppem= ppem;
+  }
+  else {
+    // Find closest ppem size that has this glyph
+    for (int i= 0; i < N (bitmapSizes); i++) {
+      unsigned char available_ppem= bitmapSizes[i].ppemX;
+
+      // Check if this glyph is in range for this ppem size
+      if (glyphID >= bitmapSizes[i].startGlyphIndex &&
+          glyphID <= bitmapSizes[i].endGlyphIndex) {
+
+        unsigned int test_key= (available_ppem << 16) | glyphID;
+        if (glyph_bitmaps->contains (test_key) &&
+            N (glyph_bitmaps[test_key]) > 0) {
+          int distance= abs ((int) available_ppem - ppem);
+          if (distance < best_distance) {
+            best_distance= distance;
+            best_ppem    = available_ppem;
+          }
+        }
+      }
+    }
+  }
+
+  if (best_ppem == 0) return "";
+
+  // Use the best ppem size found
+  unsigned int           key    = (best_ppem << 16) | glyphID;
+  array<BitmapGlyphData> bitmaps= glyph_bitmaps[key];
+
+  if (N (bitmaps) == 0) return "";
+
+  // Return the first bitmap data (usually PNG format for CBDT)
+  BitmapGlyphData bitmap= bitmaps[0];
+
+  // For PNG format (image format 17), search for PNG signature and return from
+  // that point
+  if (bitmap.format == 17) {
+    // Look for PNG signature in the data (may have CBDT header before PNG data)
+    for (int i= 0; i <= N (bitmap.data) - 8; i++) {
+      if (bitmap.data[i] == '\x89' && bitmap.data[i + 1] == 'P' &&
+          bitmap.data[i + 2] == 'N' && bitmap.data[i + 3] == 'G' &&
+          bitmap.data[i + 4] == '\r' && bitmap.data[i + 5] == '\n' &&
+          bitmap.data[i + 6] == '\x1A' && bitmap.data[i + 7] == '\n') {
+        // Found PNG signature, return from this point
+        string png_data         = get_sub (bitmap.data, i, N (bitmap.data));
+        bitmap_cache (cache_key)= png_data;
+        return png_data;
+      }
+    }
+
+    // If no PNG signature found, return raw data (fallback)
+    bitmap_cache (cache_key)= bitmap.data;
+    return bitmap.data;
+  }
+  return "";
 }
