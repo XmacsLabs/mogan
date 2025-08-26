@@ -177,7 +177,8 @@ edit_interface_rep::complete_start (string prefix, array<string> compls) {
     cursor cu= eb->find_check_cursor (tp1);
     if (completion_style == string ("popup")) {
       show_completion_popup ("text", tp, full_completions, cu, magf,
-                             get_scroll_x (), get_scroll_y (), get_canvas_x ());
+                             get_scroll_x (), get_scroll_y (), get_canvas_x (),
+                             get_canvas_y ());
     }
 
     insert_tree (completions[0]);
@@ -306,7 +307,7 @@ edit_interface_rep::complete_variant (string old_completion,
 
   update_completion_popup_position (et, eb, tp, magf, get_scroll_x (),
                                     get_scroll_y (), get_canvas_x (),
-                                    completion_pos);
+                                    get_canvas_y (), completion_pos);
 }
 
 /******************************************************************************

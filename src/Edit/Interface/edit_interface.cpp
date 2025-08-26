@@ -274,6 +274,7 @@ edit_interface_rep::get_canvas_y () {
   SI     ox, oy;
   widget me= ::get_canvas (widget (cvw));
   ::get_position (me, ox, oy);
+
   return oy;
 }
 

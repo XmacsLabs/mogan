@@ -35,6 +35,7 @@ protected:
   int                   cached_scroll_x;
   int                   cached_scroll_y;
   int                   cached_canvas_x;
+  int                   cached_canvas_y;
   double                cached_magf;
   path                  cached_tp;
   qt_simple_widget_rep* owner;
@@ -50,10 +51,10 @@ public:
   void setScrollOrigin (QPoint origin);
   void updatePosition ();
   void updateCache (tree& et, box& eb, path tp, double magf, int scroll_x,
-                    int scroll_y, int canvas_x, int index);
+                    int scroll_y, int canvas_x, int canvas_y, int index);
   void showCompletions (string md, path tp, array<string>& completions,
                         struct cursor cu, double magf, int scroll_x,
-                        int scroll_y, int canvas_x);
+                        int scroll_y, int canvas_x, int canvas_y);
 
   // Getter methods for cached variables
   inline int    getCachedCursorX () const { return cached_cursor_x; }
@@ -77,7 +78,7 @@ protected:
   void wheelEvent (QWheelEvent* event) override;
   void showCompletions (array<string>& completions, int x, int y);
   void cachePosition (struct cursor cu, double magf, int scroll_x, int scroll_y,
-                      int canvas_x);
+                      int canvas_x, int canvas_y);
   void getCachedPosition (int& x, int& y);
   void resizeHeight ();
   string getTextFromItem (int idx);

@@ -53,7 +53,7 @@ edit_interface_rep::source_complete_try () {
       if (completion_style == string ("popup")) {
         show_completion_popup ("source", tp, completions, cu, magf,
                                get_scroll_x (), get_scroll_y (),
-                               get_canvas_x ());
+                               get_canvas_x (), get_canvas_y ());
       }
     }
     else {
@@ -149,5 +149,5 @@ edit_interface_rep::source_complete_variant (string new_completion) {
 
   update_completion_popup_position (et, eb, tp, magf, get_scroll_x (),
                                     get_scroll_y (), get_canvas_x (),
-                                    completion_pos);
+                                    get_canvas_y (), completion_pos);
 }

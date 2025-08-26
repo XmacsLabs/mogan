@@ -83,11 +83,13 @@ void
 QTMCompletionPopup::showCompletions (string md, path tp,
                                      array<string>& completions,
                                      struct cursor cu, double magf,
-                                     int scroll_x, int scroll_y, int canvas_x) {
+                                     int scroll_x, int scroll_y, int canvas_x,
+                                     int canvas_y) {
   // TODO: try to not cache tp
+  // TODO: scroll 和 canvas 的位置不用传入，直接从 parent->tm_widget() 获取即可
   mode     = md;
   cached_tp= tp;
-  cachePosition (cu, magf, scroll_x, scroll_y, canvas_x);
+  cachePosition (cu, magf, scroll_x, scroll_y, canvas_x, canvas_y);
   int pos_x, pos_y;
   getCachedPosition (pos_x, pos_y);
   showCompletions (completions, pos_x, pos_y);
@@ -95,19 +97,20 @@ QTMCompletionPopup::showCompletions (string md, path tp,
 
 void
 QTMCompletionPopup::cachePosition (struct cursor cu, double magf, int scroll_x,
-                                   int scroll_y, int canvas_x) {
+                                   int scroll_y, int canvas_x, int canvas_y) {
   cached_cursor_x= cu->ox;
   cached_cursor_y= cu->oy;
   cached_scroll_x= scroll_x;
   cached_scroll_y= scroll_y;
   cached_canvas_x= canvas_x;
+  cached_canvas_y= canvas_y;
   cached_magf    = magf;
 }
 
 void
 QTMCompletionPopup::updateCache (tree& et, box& eb, path tp, double magf,
                                  int scroll_x, int scroll_y, int canvas_x,
-                                 int index) {
+                                 int canvas_y, int index) {
   // 逻辑上要求外部先调用 showCompletions 之后才能调用此方法
   // now that the cursor position has been updated to a completed position
   // we need to get the new cursor based on that position
@@ -118,16 +121,22 @@ QTMCompletionPopup::updateCache (tree& et, box& eb, path tp, double magf,
     tp1= previous_valid (et, tp1); // 向前移动 length 个字符
   }
   cachePosition (eb->find_check_cursor (tp1), magf, scroll_x, scroll_y,
-                 canvas_x);
+                 canvas_x, canvas_y);
 }
 
 void
 QTMCompletionPopup::getCachedPosition (int& x, int& y) {
-  int parent_x= parent->mapTo (parent->window (), QPoint (0, 0)).x ();
-  int canvas_x= cached_canvas_x - 256 * parent_x;
-  x= ((cached_cursor_x - cached_scroll_x - 500) * cached_magf + canvas_x) / 256;
-  y= -((cached_cursor_y - 5000 - cached_scroll_y) * cached_magf) / 256;
-  // qDebug() << "Completion Popup Position: " << x << y;
+  // HACK: mapTo() does not work as we expect on the Mac, so we manually
+  // calculate the global screen cordinates and substract
+  // This hack is from `qt_simple_widget.cpp`
+  QPoint parentPosition= parent->mapToGlobal (QPoint (0, 0));
+  QRect  wg= parent->tm_widget ()->scrollarea ()->window ()->frameGeometry ();
+  int    canvas_x= cached_canvas_x - PIXEL * (parentPosition.x () - wg.x ());
+  int    canvas_y= cached_canvas_y + PIXEL * (parentPosition.y () - wg.y ());
+  x= ((cached_cursor_x - cached_scroll_x - 500) * cached_magf + canvas_x) /
+     PIXEL;
+  y= -((cached_cursor_y - cached_scroll_y - 5000) * cached_magf + canvas_y) /
+     PIXEL;
   // TODO: 5000 is a magic number to add space between completion list box and
   // the text. We need to find a better way to get the position
 }

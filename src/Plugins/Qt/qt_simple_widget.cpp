@@ -631,11 +631,11 @@ qt_simple_widget_rep::show_completion_popup (string mode, path tp,
                                              array<string>& completions,
                                              struct cursor cu, double magf,
                                              SI scroll_x, SI scroll_y,
-                                             SI canvas_x) {
+                                             SI canvas_x, SI canvas_y) {
   ensure_completion_popup ();
   if (completionPopUp) {
     completionPopUp->showCompletions (mode, tp, completions, cu, magf, scroll_x,
-                                      scroll_y, canvas_x);
+                                      scroll_y, canvas_x, canvas_y);
   }
 }
 
@@ -665,14 +665,12 @@ qt_simple_widget_rep::scroll_completion_popup_by (SI x, SI y) {
 }
 
 void
-qt_simple_widget_rep::update_completion_popup_position (tree& et, box& eb,
-                                                        path tp, double magf,
-                                                        SI scroll_x,
-                                                        SI scroll_y,
-                                                        SI canvas_x, SI index) {
+qt_simple_widget_rep::update_completion_popup_position (
+    tree& et, box& eb, path tp, double magf, SI scroll_x, SI scroll_y,
+    SI canvas_x, SI canvas_y, SI index) {
   if (completionPopUp) {
     completionPopUp->updateCache (et, eb, tp, magf, scroll_x, scroll_y,
-                                  canvas_x, index);
+                                  canvas_x, canvas_y, index);
     completionPopUp->updatePosition ();
   }
 }

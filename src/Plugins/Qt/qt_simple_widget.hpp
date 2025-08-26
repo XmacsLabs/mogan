@@ -94,13 +94,13 @@ public:
   void show_completion_popup (array<string>& completions, SI x, SI y);
   void show_completion_popup (string mode, path tp, array<string>& completions,
                               struct cursor cu, double magf, SI scroll_x,
-                              SI scroll_y, SI canvas_x);
+                              SI scroll_y, SI canvas_x, SI canvas_y);
   void hide_completion_popup ();
   bool completion_popup_visible ();
   void scroll_completion_popup_by (SI x, SI y);
   void update_completion_popup_position (tree& et, box& eb, path tp,
                                          double magf, SI scroll_x, SI scroll_y,
-                                         SI canvas_x, SI index);
+                                         SI canvas_x, SI canvas_y, SI index);
   void completion_popup_next (bool next);
   void ensure_completion_popup ();
 
