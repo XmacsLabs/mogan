@@ -80,6 +80,7 @@ texmacs_input_rep::get_mode (string s) {
   if (s == "command") return MODE_COMMAND;
   if (s == "file") return MODE_FILE;
   if (s == "scheme_u8") return MODE_SCHEME_UTF8;
+  if (s == "markdown") return MODE_MARKDOWN;
   if (format_exists (s)) return MODE_XFORMAT;
   return MODE_VERBATIM;
 }
@@ -299,7 +300,8 @@ texmacs_input_rep::latex_flush (bool force) {
 
 void
 texmacs_input_rep::markdown_flush (bool force) {
-  if (force) {
+  // ignore: empty buf in markdown is meaningless
+  if (force && !is_empty (buf)) {
     write (generic_to_tree (buf, "markdown-snippet"));
     buf= "";
   }
