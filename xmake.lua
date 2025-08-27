@@ -15,9 +15,12 @@ includes("xmake/stem.lua")
 set_project(stem_project_name)
 
 option("mupdf")
-    set_default(false)
+    set_default(true)
     set_description("Enable MuPDF library")
 option_end()
+
+-- Temporary statement to move into MuPDF
+set_config("mupdf", true)
 
 -- Generate build/config.h from template
 add_configfiles("src/System/config.h.xmake", {

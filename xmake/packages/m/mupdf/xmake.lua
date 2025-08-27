@@ -17,7 +17,9 @@
 package("mupdf")
     set_homepage("https://mupdf.com")
     set_description("MuPDF is an open source software framework for viewing, converting, and manipulating PDF, XPS, and E-book documents.")
-    set_urls("https://mupdf.com/downloads/archive/mupdf-$(version)-source.tar.gz")
+    -- MuPDF 1.24.10 Mirror
+    add_urls("https://gitee.com/XmacsLabs/mogan/attach_files/2317332/download#mupdf-$(version)-source.tar.gz")
+    add_urls("https://mupdf.com/downloads/archive/mupdf-$(version)-source.tar.gz")
     set_license("AGPL-3.0")
 
     add_versions("1.24.10", "939285b5f97caf770fd46cbe7e6cc3a695ab19bb5bfaf5712904549cef390b7b")
