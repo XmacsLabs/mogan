@@ -655,6 +655,9 @@ target("stem") do
     add_packages("s7")
     add_packages("lolly")
     add_deps("libmogan")
+    if has_config("mupdf") then
+        add_linkorders("mupdf", "mupdf-third")
+    end
     if not is_plat("windows") then
         add_syslinks("pthread", "dl", "m")
     end

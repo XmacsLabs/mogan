@@ -24,6 +24,9 @@
 #include "preferences.hpp"
 #include "scheme.hpp"
 
+#ifdef USE_MUPDF_RENDERER
+#include "MuPDF/mupdf_print_renderer.hpp"
+#endif
 #ifdef USE_PLUGIN_PDF
 #include "Pdf/pdf_hummus_renderer.hpp"
 #endif
@@ -1106,10 +1109,16 @@ printer_rep::generate_metadata () {
 renderer
 printer (url ps_file_name, int dpi, int nr_pages, string page_type,
          bool landscape, double paper_w, double paper_h) {
+#ifdef USE_MUPDF_RENDERER
+  if (suffix (ps_file_name) == "pdf")
+    return mupdf_print_renderer (ps_file_name, dpi, nr_pages, page_type,
+                                 landscape, paper_w, paper_h);
+#else
 #ifdef USE_PLUGIN_PDF
   if (suffix (ps_file_name) == "pdf")
     return pdf_hummus_renderer (ps_file_name, dpi, nr_pages, page_type,
                                 landscape, paper_w, paper_h);
+#endif
 #endif
   // cout << "Postscript print to " << ps_file_name << " at " << dpi << "
   // dpi\n";

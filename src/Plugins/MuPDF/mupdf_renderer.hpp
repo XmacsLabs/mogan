@@ -30,6 +30,7 @@ protected:
   fz_pixmap*     pixmap;
   fz_device*     dev;
   pdf_processor* proc;
+  pdf_document*  doc;
 
   // some state
   color  fg, bg;
@@ -74,8 +75,10 @@ protected:
   void select_fill_pattern (brush br);
   void register_pattern (brush br, SI pixel);
 
+  virtual pdf_font_desc* get_font_desc (string fontname);
+
 public:
-  mupdf_renderer_rep (int w= 0, int h= 0);
+  mupdf_renderer_rep (bool screen_flag= true, int w= 0, int h= 0);
   ~mupdf_renderer_rep ();
   void* get_handle ();
 
@@ -124,7 +127,28 @@ public:
   friend class mupdf_proxy_renderer_rep;
 };
 
+/******************************************************************************
+ * pdf fonts
+ ******************************************************************************/
+
+struct mupdf_font_rep : concrete_struct {
+  pdf_font_desc* fn;
+  mupdf_font_rep (pdf_font_desc* _fn) : fn (_fn) {
+    pdf_keep_font (mupdf_context (), fn);
+  }
+  ~mupdf_font_rep () { pdf_drop_font (mupdf_context (), fn); }
+  friend class mupdf_font;
+};
+
+class mupdf_font {
+  CONCRETE_NULL (mupdf_font);
+  mupdf_font (pdf_font_desc* _fn) : rep (tm_new<mupdf_font_rep> (_fn)) {}
+};
+
+CONCRETE_NULL_CODE (mupdf_font);
+
 mupdf_renderer_rep* the_mupdf_renderer ();
+float               mupdf_font_size (string name);
 
 // Convert fz_pixmap to QImage, QTMPixmapOrImage
 QImage           get_QImage_from_pixmap (fz_pixmap* pix);

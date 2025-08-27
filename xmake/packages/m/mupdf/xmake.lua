@@ -22,7 +22,9 @@ package("mupdf")
 
     add_versions("1.24.10", "939285b5f97caf770fd46cbe7e6cc3a695ab19bb5bfaf5712904549cef390b7b")
 
-    add_deps("pkg-config", "make", "libjpeg", "freetype", "libcurl", "zlib")
+    if is_plat("linux", "macosx") then
+        add_deps("pkg-config", "make", "libjpeg", "freetype", "libcurl", "zlib")
+    end
 
     on_install("linux", "macosx", function (package)
         if is_plat("macosx") then
@@ -48,9 +50,7 @@ package("mupdf")
         local arch = (package:is_arch("x64") and "x64" or "Win32")
         table.insert(configs, "/p:Configuration=" .. build_type)
         table.insert(configs, "/p:Platform=" .. arch)
-        local patch_file = "source/fitz/noto.c"
-        local file_data = io.readfile(patch_file)
-        io.writefile(patch_file, "#define TOFU\n#define TOFU_CJK\n" .. file_data)
+        io.replace("platform/win32/libmupdf.vcxproj", "%(PreprocessorDefinitions)</PreprocessorDefinitions>", "TOFU;TOFU_CJK;SHARE_JPEG;%(PreprocessorDefinitions)</PreprocessorDefinitions>",{plain = true})
         if package:has_runtime("MT", "MTd") then
             -- Allow MT, MTd
             for i, target in ipairs({"libmupdf.vcxproj", "libextract.vcxproj", "libharfbuzz.vcxproj", "libleptonica.vcxproj", "libpkcs7.vcxproj", "libtesseract.vcxproj", "libthirdparty.vcxproj"}) do 
