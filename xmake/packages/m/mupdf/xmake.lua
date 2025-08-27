@@ -36,7 +36,13 @@ package("mupdf")
     end)
 
     on_install("linux", "macosx", function (package)
-        local config = {
+        if is_plat("macosx") then
+            io.writefile("user.make", "CFLAGS = -arch " .. package:targetarch())
+            -- Use pkg-config to detect system library
+            io.replace("Makerules", "else ifeq ($(LINUX_OR_OPENBSD),yes)", "", {plain = true})
+        end
+        -- Use system library from xmake to compat with other program
+        import("package.tools.make").build(package, {
             "install-libs",
             "USE_SYSTEM_LIBJPEG=yes",
             "USE_SYSTEM_FREETYPE=yes",
@@ -45,14 +51,7 @@ package("mupdf")
             "tofu=yes",
             "tofu_cjk=yes",
             "prefix=" .. package:installdir()
-        };
-        if is_plat("macosx") then
-            table.insert(config, "ARCHFLAGS=-arch " .. package:targetarch())
-            -- Use pkg-config to detect system library
-            io.replace("Makerules", "else ifeq ($(LINUX_OR_OPENBSD),yes)", "", {plain = true})
-        end
-        -- Use system library from xmake to compat with other program
-        import("package.tools.make").build(package, config)
+        })
     end)
 
     on_install("windows", function (package)
