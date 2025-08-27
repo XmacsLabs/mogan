@@ -17,16 +17,21 @@
 package("mupdf")
     set_homepage("https://mupdf.com")
     set_description("MuPDF is an open source software framework for viewing, converting, and manipulating PDF, XPS, and E-book documents.")
-    -- MuPDF 1.24.10 Mirror
-    add_urls("https://gitee.com/XmacsLabs/mogan/attach_files/2317332/download#mupdf-$(version)-source.tar.gz")
+    -- MuPDF 1.25.1 Mirror
+    add_urls("https://gitee.com/XmacsLabs/mogan/attach_files/2323404/download#mupdf-$(version)-source.tar.gz")
     add_urls("https://mupdf.com/downloads/archive/mupdf-$(version)-source.tar.gz")
     set_license("AGPL-3.0")
 
     add_versions("1.24.10", "939285b5f97caf770fd46cbe7e6cc3a695ab19bb5bfaf5712904549cef390b7b")
+    add_versions("1.25.1", "81aa1361252418cc45347b4ac075532096957a7ab772e20e046f3bb418d7263c")
 
     if is_plat("linux", "macosx") then
         add_deps("pkg-config", "make", "libjpeg", "freetype", "libcurl", "zlib")
     end
+
+    on_load(function (package)
+        package:add("links", "mupdf", "mupdf-third")
+    end)
 
     on_install("linux", "macosx", function (package)
         if is_plat("macosx") then

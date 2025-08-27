@@ -32,7 +32,7 @@ mupdf_context () {
   if (!ctx) {
     ctx= fz_new_context (NULL, NULL, FZ_STORE_UNLIMITED);
     if (DEBUG_STD) {
-      debug_std << "Use MuPDF render\n";
+      debug_std << "Use MuPDF render(" << FZ_VERSION << ")\n";
     }
   }
   return ctx;
@@ -788,7 +788,7 @@ set_default_gstate (fz_context* ctx, pdf_processor* proc) {
   //  buf << "/BM /Normal\r\n";
   proc->op_gs_BM (ctx, proc, "Normal");
   //  buf << "/SMask /None\r\n";
-  proc->op_gs_SMask (ctx, proc, NULL, NULL, 0, NULL);
+  proc->op_gs_SMask (ctx, proc, NULL, NULL, NULL, 0, NULL);
   //  buf << "/CA 1.0\r\n";
   proc->op_gs_CA (ctx, proc, 1.0);
   //  buf << "/ca 1.0\r\n";
