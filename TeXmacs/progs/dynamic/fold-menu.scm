@@ -346,13 +346,13 @@
 
 (tm-define (get-slide-name t i)
   (with s (search-slide-name t)
-    (string-append "Slide " (number->string (+ i 1))
+    (string-append (translate "Slide") " " (number->string (+ i 1))
                    (if (== s "") "" (string-append ": " s)))))
 
 (tm-menu (focus-slides-menu t*)
   (with t (slide-get-switch t*)
     (for (i (.. 0 (tree-arity t)))
-      ((eval (get-slide-name (tree-ref t i) i))
+      ((eval `(verbatim ,(get-slide-name (tree-ref t i) i)))
        (screens-switch-to i)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -486,7 +486,7 @@
   (with u (slide-get-switch t)
     (with i (tree-index (tree-down u))
       (mini #t
-        (=> (eval (get-slide-name (tree-ref u i) i))
+        (=> (eval `(verbatim ,(get-slide-name (tree-ref u i) i)))
             (dynamic (focus-slides-menu t))))))
   (assuming (slide-propose-title? t)
     //
