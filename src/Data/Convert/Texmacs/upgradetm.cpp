@@ -1292,6 +1292,25 @@ upgrade_table (tree t) {
  * Upgrade splits
  ******************************************************************************/
 
+/**
+ * @brief 将 TeXmacs 文档中的 SPLIT 格式升级排版为 TABLE 格式，以达到排版效果
+ *
+ * 它处理各种情况，包括：
+ * - 带有 SPLIT 元素的 SURROUND、CONCAT
+ * - 数学方程环境（eqnarray、align、multline、gather、eqsplit、alignat）
+ *
+ * @param t 需要升级的树结构
+ *
+ * @param eq 布尔值标志，输入的树是否为数学公式。
+ *           当为真时，指示输入为数学公式，会针对数学公式的对齐进行特殊处理：
+ *             - 为没有分隔符的数学公式创建2列表格，居中右对齐
+ *             - 对有分隔符的数学公式以分隔符为参考居中对齐
+ *
+ * @return 升级后的树结构
+ * @note 该函数不仅是升级旧文档的中间过程，而且是处理 latex 导入的中间过程。
+ *       处理 latex 导入时的调用关系为 latex_to_tree => upgrade_tex =>
+ * upgrade_split
+ */
 static tree
 upgrade_split (tree t, bool eq= false) {
   int i, n= N (t);
@@ -1334,7 +1353,39 @@ upgrade_split (tree t, bool eq= false) {
         r << u;
       }
     nr_cols= max (sep, nr_cols);
-    if (split == "" && nr_cols == 1 && !eq) return r;
+    if (split == "" && nr_cols == 1) {
+      if (!eq) {
+        return r;
+      }
+      else if (eq) {
+        // 对于没有 & 分隔符且仅对应一列的方程（组）
+        // 创建一个2列的表格，一列是数学公式内容，一列是空列
+        // 以实现类似 LaTeX 的先右对齐再居中
+        int  row= 0;
+        tree T (TABLE, nr_rows);
+        for (row= 0; row < nr_rows; row++) {
+          tree R (ROW, 2);
+          R[0]  = tree (CELL, "");
+          R[1]  = tree (CELL, "");
+          T[row]= R;
+        }
+        row= 0;
+        tree u (CONCAT);
+        int  r_N= N (r);
+        for (i= 0, row= 0; i < r_N; i++) {
+          if ((r[i] == tree (FORMAT, "next line"))) {
+            if (N (u) == 0) u= "";
+            else if (N (u) == 1) u= u[0];
+            T[row][0][0]= u;
+            u           = tree (CONCAT);
+            row++;
+          }
+          else u << r[i];
+        }
+        T[row][0][0]= u;
+        r           = T;
+      }
+    }
     else {
       int  col= 0, row= 0;
       tree T (TABLE, nr_rows);
