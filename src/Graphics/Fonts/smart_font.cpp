@@ -1130,6 +1130,25 @@ smart_font_rep::resolve (string c) {
   }
   array<string> a= trimmed_tokenize (family, ",");
 
+  // Special handling for emoji characters - bypass font-family restrictions
+  string range= get_unicode_range (c);
+  if (range == "emoji") {
+    for (int i= 0; i < N (a); i++) {
+      array<string> parts= trimmed_tokenize (a[i], "=");
+      if (N (parts) >= 2 && parts[0] == "emoji") {
+
+        // Use direct font creation to avoid recursion
+        font cfn= closest_font (parts[1], "rm", "medium", "right", sz, dpi, 1);
+        if (!is_nil (cfn) && cfn->supports (c)) {
+          tree key= tuple ("emoji-font", parts[1]);
+          int  nr = sm->add_font (key, REWRITE_NONE);
+          initialize_font (nr);
+          return sm->add_char (key, c);
+        }
+      }
+    }
+  }
+
   if (math_kind != 0) {
     string upc= substitute_upright (c);
     if (upc != "" && fn[SUBFONT_MAIN]->supports (upc)) {
@@ -1255,6 +1274,9 @@ smart_font_rep::initialize_font (int nr) {
     fn[nr]= adjust_subfont (get_latin_font (a[1], a[2], a[3], a[4]));
   else if (a[0] == "subfont")
     fn[nr]= smart_font_bis (a[1], variant, series, shape, sz, hdpi, dpi);
+  else if (a[0] == "emoji-font")
+    fn[nr]= adjust_subfont (
+        closest_font (a[1], "rm", "medium", "right", sz, dpi, 1));
   else if (a[0] == "special")
     fn[nr]= smart_font_bis (family, variant, series, "right", sz, hdpi, dpi);
   else if (a[0] == "emu-bracket")
