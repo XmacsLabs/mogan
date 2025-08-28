@@ -83,6 +83,8 @@
 
   <assign|nbhyph|<macro|-<no-break>>>
 
+  <assign|boxed|<macro|x|<ornament|<arg|x>>>>
+
   \;
 </body>
 
