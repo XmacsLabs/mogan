@@ -60,7 +60,7 @@ struct abstract_language_rep : language_rep {
   string_parser_rep         string_parser;
   preprocessor_parser_rep   preprocessor_parser;
 
-  abstract_language_rep (string s) : language_rep (s){};
+  abstract_language_rep (string s) : language_rep (s) {};
   virtual bool belongs_to_identifier (char c);
   void parse_identifier (hashmap<string, string>& t, string s, int& pos);
   void parse_type (hashmap<string, string>& t, string s, int& pos);

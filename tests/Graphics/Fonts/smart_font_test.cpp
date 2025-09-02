@@ -76,7 +76,7 @@ TestSmartFont::test_resolve_chinese_puncts () {
   smart_font_rep* fn_rep= (smart_font_rep*) fn.rep;
   auto puncts= array<string> ("<#2018>", "<#2019>", // Chinese: 单引号
                               "<#201C>", "<#201D>", // Chinese: 双引号
-                              "<#2014>" // Chinese: 破折号的一半
+                              "<#2014>"             // Chinese: 破折号的一半
   );
   for (int i= 0; i < N (puncts); i++) {
     int fn_index= fn_rep->resolve (puncts[1], "cjk=Noto CJK SC", 1);

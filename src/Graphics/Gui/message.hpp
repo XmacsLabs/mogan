@@ -102,7 +102,7 @@ public:
     sid= s.sid;
     return *this;
   }
-  inline operator slot_id () { return sid; }
+  inline                    operator slot_id () { return sid; }
   inline bool               operator== (slot_id sid2) { return sid == sid2; }
   inline bool               operator!= (slot_id sid2) { return sid != sid2; }
   inline bool               operator== (slot s) { return sid == s.sid; }

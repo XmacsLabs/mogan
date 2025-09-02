@@ -367,7 +367,7 @@ edit_interface_rep::custom_complete (tree r) {
   bool            prefix_initialized= false;
   hashset<string> compls;
   if (completion_style == string ("popup")) {
-    min_compls_N= 2; // 至少需要2个补全结果(前缀自身和一个补全结果)
+    min_compls_N= 2;       // 至少需要2个补全结果(前缀自身和一个补全结果)
     compls << string (""); // 在补全结果中插入一个空值以保留前缀自身
   }
   for (i= 0; i < r_N; i++) {

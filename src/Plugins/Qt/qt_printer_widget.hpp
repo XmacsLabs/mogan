@@ -35,7 +35,7 @@ class QTMPrinterSettings;
 class qt_printer_widget_rep : public qt_widget_rep {
 public:
   qt_printer_widget_rep (command, url);
-  ~qt_printer_widget_rep (){};
+  ~qt_printer_widget_rep () {};
 
   virtual void   send (slot s, blackbox val);
   virtual widget plain_window_widget (string s, command q, int b);

@@ -72,7 +72,9 @@ struct abstract_struct {
  * @param R The structure object to increment the reference count for.
  */
 #define INC_COUNT(R)                                                           \
-  { (R)->ref_count++; }
+  {                                                                            \
+    (R)->ref_count++;                                                          \
+  }
 
 /**
  * @brief Macro used to decrement the reference count for a structure object and

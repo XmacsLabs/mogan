@@ -59,7 +59,7 @@ public:
     sid= s.sid;
     return *this;
   }
-  inline operator id_t () const { return sid; }
+  inline                    operator id_t () const { return sid; }
   inline bool               operator== (id_t sid2) { return sid == sid2; }
   inline bool               operator!= (id_t sid2) { return sid != sid2; }
   inline bool               operator== (qp_type s) { return sid == s.sid; }

@@ -42,7 +42,7 @@ public:
 class pdf_image {
   CONCRETE_NULL (pdf_image);
   pdf_image (url _u, ObjectIDType _id)
-      : rep (tm_new<pdf_image_rep> (_u, _id)){};
+      : rep (tm_new<pdf_image_rep> (_u, _id)) {};
 };
 
 CONCRETE_NULL_CODE (pdf_image);
@@ -63,7 +63,7 @@ public:
 class pdf_raw_image {
   CONCRETE_NULL (pdf_raw_image);
   pdf_raw_image (string _data, int _w, int _h, ObjectIDType _id)
-      : rep (tm_new<pdf_raw_image_rep> (_data, _w, _h, _id)){};
+      : rep (tm_new<pdf_raw_image_rep> (_data, _w, _h, _id)) {};
 };
 
 CONCRETE_NULL_CODE (pdf_raw_image);

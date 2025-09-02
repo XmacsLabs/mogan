@@ -25,7 +25,7 @@ main () {
 #ifdef OS_WASM
   constexpr int NUM= 100;
 #else
-  constexpr int NUM      = 10000;
+  constexpr int NUM= 10000;
 #endif
 
   char*   ch[NUM];
@@ -111,7 +111,7 @@ main () {
 #ifdef OS_WASM
   const size_t size_prim= 200, size_complex= 100;
 #else
-  const size_t  size_prim= 20000000, size_complex= 5000000;
+  const size_t size_prim= 20000000, size_complex= 5000000;
 #endif
   bench.batch (size_prim).run ("large array of basic type", [&] {
     p_complex= tm_new_array<uint8_t> (size_prim);

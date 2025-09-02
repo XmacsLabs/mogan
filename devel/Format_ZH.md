@@ -5,14 +5,16 @@
 ### Linux
 首先，通过apt安装
 ```
-sudo apt install clang-format-16
+sudo apt install clang-format-19
 ```
-重启终端后检查版本是否为16
+重启终端后检查版本是否为19
 ```
 clang-format --version
 ```
 
 ### macOS
+> 注意：这个应该需要对应改为LLVM 19
+
 首先，通过homebrew安装
 ```
 brew install llvm@16
@@ -28,6 +30,8 @@ clang-format --version
 ```
 
 ### Windows
+> 注意：这里需要对应改为 LLVM 19
+
 首先通过scoop安装
 ```
 scoop install llvm@16.0.6

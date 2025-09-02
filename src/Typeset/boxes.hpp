@@ -133,9 +133,9 @@ public:
 
   inline box_rep (path ip);
   virtual ~box_rep ();
-  void        relocate (path p, bool force= false);
-  virtual box transform (frame fr);
-  virtual operator tree ()= 0;
+  void         relocate (path p, bool force= false);
+  virtual box  transform (frame fr);
+  virtual      operator tree ()= 0;
   virtual void pre_display (renderer& ren);
   virtual void post_display (renderer& ren);
   virtual void display (renderer ren)= 0;

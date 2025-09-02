@@ -55,14 +55,14 @@ tex_font_metric_rep::~tex_font_metric_rep () {
 #define byte0(i) (((i) >> 24) & 255)
 #define byte1(i) (((i) >> 16) & 255)
 #define byte2(i) (((i) >> 8) & 255)
-#define byte3(i) ((i) &255)
+#define byte3(i) ((i) & 255)
 #define word0(i) (((i) >> 16) & 65535)
-#define word1(i) ((i) &65535)
+#define word1(i) ((i) & 65535)
 
 #define byte1a(i) (((i) >> 20) & 15)
 #define byte1b(i) (((i) >> 16) & 15)
 #define byte2x(i) (((i) >> 10) & 63)
-#define word1x(i) ((i) &32767)
+#define word1x(i) ((i) & 32767)
 
 int
 tex_font_metric_rep::w (QN c) {

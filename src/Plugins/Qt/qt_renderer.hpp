@@ -94,7 +94,7 @@ public:
 public:
   qt_proxy_renderer_rep (qt_renderer_rep* _base)
       : qt_renderer_rep (_base->painter), base (_base) {}
-  ~qt_proxy_renderer_rep (){};
+  ~qt_proxy_renderer_rep () {};
 
   void new_shadow (renderer& ren);
   void get_shadow (renderer ren, SI x1, SI y1, SI x2, SI y2);

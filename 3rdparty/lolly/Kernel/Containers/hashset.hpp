@@ -58,8 +58,8 @@ public:
 
   friend class hashset<T>;
   friend int N LESSGTR (hashset<T> h);
-  friend tm_ostream& operator<< LESSGTR (tm_ostream& out, hashset<T> h);
-  friend bool operator<= LESSGTR (hashset<T> h1, hashset<T> h2);
+  friend tm_ostream& operator<< LESSGTR (tm_ostream & out, hashset<T> h);
+  friend bool            operator<= LESSGTR (hashset<T> h1, hashset<T> h2);
   friend hashset<T> copy LESSGTR (hashset<T> h);
   friend class hashset_iterator_rep<T>;
 };

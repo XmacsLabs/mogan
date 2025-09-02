@@ -4,13 +4,13 @@
 NEW_SOURCES=$(cat <<EOF
 Types: deb
 URIs: http://mirrors.ustc.edu.cn/debian
-Suites: bookworm bookworm-updates bookworm-backports
+Suites: trixie trixie-updates trixie-backports
 Components: main contrib non-free non-free-firmware
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
 
 Types: deb
 URIs: http://mirrors.ustc.edu.cn/debian-security
-Suites: bookworm-security
+Suites: trixie-security
 Components: main contrib non-free non-free-firmware
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
 EOF

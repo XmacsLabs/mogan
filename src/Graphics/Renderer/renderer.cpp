@@ -310,7 +310,7 @@ renderer_rep::decode (SI x, SI y, double& rx, double& ry) {
 
 #define RND(x)                                                                 \
   (((x) >= 0) ? (((x) / retina_pixel) * retina_pixel)                          \
-              : ((((x) -retina_pixel + 1) / retina_pixel) * retina_pixel))
+              : ((((x) - retina_pixel + 1) / retina_pixel) * retina_pixel))
 
 void
 renderer_rep::round (SI& x, SI& y) {
@@ -337,7 +337,7 @@ renderer_rep::outer_round (SI& x1, SI& y1, SI& x2, SI& y2) {
 #undef RND
 
 #define RND(x)                                                                 \
-  (((x) >= 0) ? (((x) / PIXEL) * PIXEL) : ((((x) -PIXEL + 1) / PIXEL) * PIXEL))
+  (((x) >= 0) ? (((x) / PIXEL) * PIXEL) : ((((x) - PIXEL + 1) / PIXEL) * PIXEL))
 
 void
 abs_round (SI& l) {

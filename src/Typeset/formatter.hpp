@@ -58,13 +58,13 @@ struct format_rep : public abstract_struct {
   inline format_rep (format_type t) : type (t) { TM_DEBUG (format_count++); }
   inline virtual ~format_rep () { TM_DEBUG (format_count--); }
 
-  virtual operator tree ()      = 0;
+  virtual      operator tree () = 0;
   virtual bool equal (format fm)= 0;
 };
 
 struct format {
   ABSTRACT_NULL (format);
-  inline operator tree () { return (tree) (*rep); }
+  inline      operator tree () { return (tree) (*rep); }
   inline bool operator== (format fm) { return rep->equal (fm); }
   inline bool operator!= (format fm) { return !rep->equal (fm); }
 };
@@ -89,7 +89,7 @@ struct lazy_rep : public abstract_struct {
   }
   inline virtual ~lazy_rep () { TM_DEBUG (lazy_count--); }
 
-  virtual operator tree ()= 0;
+  virtual      operator tree ()= 0;
   virtual void append (lazy lz);
   virtual lazy produce (lazy_type request, format fm);
   // further format the lazy structure using 'fm',
@@ -104,7 +104,7 @@ struct lazy_rep : public abstract_struct {
 struct lazy {
   ABSTRACT_NULL (lazy);
   operator box ();
-  inline operator tree () { return (tree) (*rep); }
+  inline                    operator tree () { return (tree) (*rep); }
   inline void               operator<< (lazy lz) { rep->append (lz); }
   inline bool               operator== (lazy lz) { return rep == lz.rep; }
   inline bool               operator!= (lazy lz) { return rep != lz.rep; }

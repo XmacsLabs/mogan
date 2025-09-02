@@ -143,9 +143,9 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   QMainWindow* mw= mainwindow ();
   if (tm_style_sheet == "") mw->setStyle (qtmstyle ());
 
-    // there is a bug in the early implementation of toolbars in Qt 4.6
-    // which has been fixed in 4.6.2 (at least)
-    // this is why we change dimension of icons
+  // there is a bug in the early implementation of toolbars in Qt 4.6
+  // which has been fixed in 4.6.2 (at least)
+  // this is why we change dimension of icons
 
 #if (defined(Q_OS_MAC) && (QT_VERSION >= QT_VERSION_CHECK(4, 6, 0)) &&         \
      (QT_VERSION < QT_VERSION_CHECK(4, 6, 2)))

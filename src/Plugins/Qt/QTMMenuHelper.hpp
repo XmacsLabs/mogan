@@ -148,7 +148,7 @@ public:
   QTMWidgetAction (widget _wid, QObject* parent= NULL);
 
 public slots:
-  void doRefresh (){};
+  void doRefresh () {};
 
 protected:
   virtual QWidget* createWidget (QWidget* parent);
@@ -449,7 +449,7 @@ class QTMScrollArea : public QScrollArea {
   typedef QList<QTMListView*>::iterator ListViewsIterator;
 
 public:
-  QTMScrollArea (QWidget* p= NULL) : QScrollArea (p){};
+  QTMScrollArea (QWidget* p= NULL) : QScrollArea (p) {};
   void setWidgetAndConnect (QWidget* w);
 
 protected:

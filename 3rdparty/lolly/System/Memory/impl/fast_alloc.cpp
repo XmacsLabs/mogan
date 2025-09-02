@@ -143,7 +143,7 @@ fast_new (size_t s) {
 #ifdef DEBUG_ON
   s= (s + (4 * WORD_LENGTH) + WORD_LENGTH_INC) & WORD_MASK;
 #else
-  s               = (s + WORD_LENGTH + WORD_LENGTH_INC) & WORD_MASK;
+  s= (s + WORD_LENGTH + WORD_LENGTH_INC) & WORD_MASK;
 #endif
   if (s < MAX_FAST) {
     ptr= alloc_ptr (s);

@@ -25,7 +25,7 @@ protected:
   tm_updater () : interval (0) {}
   tm_updater (const tm_updater&);
   void operator= (const tm_updater&);
-  virtual ~tm_updater (){};
+  virtual ~tm_updater () {};
 
 public:
   static tm_updater* instance ();

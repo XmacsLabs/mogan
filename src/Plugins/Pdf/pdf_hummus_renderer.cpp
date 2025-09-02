@@ -631,7 +631,7 @@ class pdf_pattern {
   pdf_pattern (pdf_image _im, SI _w, SI _h, SI _sx, SI _sy, double _scale_x,
                double _scale_y, ObjectIDType _id)
       : rep (tm_new<pdf_pattern_rep> (_im, _w, _h, _sx, _sy, _scale_x, _scale_y,
-                                      _id)){};
+                                      _id)) {};
 };
 
 CONCRETE_NULL_CODE (pdf_pattern);
@@ -965,7 +965,7 @@ public:
 class t3font {
   CONCRETE_NULL (t3font);
   t3font (font_glyphs _fn, int _font_chunk, ObjectsContext& _objectsContext)
-      : rep (tm_new<t3font_rep> (_fn, _font_chunk, _objectsContext)){};
+      : rep (tm_new<t3font_rep> (_fn, _font_chunk, _objectsContext)) {};
 };
 
 CONCRETE_NULL_CODE (t3font);

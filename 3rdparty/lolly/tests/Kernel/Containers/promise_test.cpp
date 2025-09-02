@@ -14,7 +14,7 @@ class promise_rep_int_add : public promise_rep<int> {
   int y;
 
 public:
-  promise_rep_int_add (int a, int b) : x (a), y (b){};
+  promise_rep_int_add (int a, int b) : x (a), y (b) {};
   virtual int eval () override { return x + y; }
 };
 

@@ -124,7 +124,7 @@ socket_server_rep::start () {
             sizeof (local_address)) == -1)
     return "Error: call to 'bind' failed";
 
-    // listen
+  // listen
 #if defined(OS_MINGW) || defined(OS_WIN)
   if (wsoc::listen (server, 10) == -1)
 #else

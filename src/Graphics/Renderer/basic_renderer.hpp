@@ -26,7 +26,7 @@ struct basic_character_rep : concrete_struct {
   color       fg;
   color       bg;
   basic_character_rep (int c2, font_glyphs fng2, int sf2, color fg2, color bg2)
-      : c (c2), fng (fng2), sf (sf2), fg (fg2), bg (bg2){};
+      : c (c2), fng (fng2), sf (sf2), fg (fg2), bg (bg2) {};
 
   friend class basic_character;
 };
@@ -35,7 +35,7 @@ class basic_character {
   CONCRETE (basic_character);
   basic_character (int c= 0, font_glyphs fng= font_glyphs (), int sf= 1,
                    color fg= 0, color bg= 1)
-      : rep (tm_new<basic_character_rep> (c, fng, sf, fg, bg)){};
+      : rep (tm_new<basic_character_rep> (c, fng, sf, fg, bg)) {};
   operator tree ();
 };
 CONCRETE_CODE (basic_character);

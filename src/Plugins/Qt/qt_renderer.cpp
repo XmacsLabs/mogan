@@ -39,7 +39,7 @@ struct qt_image_rep : concrete_struct {
   SI        xo, yo;
   int       w, h;
   qt_image_rep (QTMImage* img2, SI xo2, SI yo2, int w2, int h2)
-      : img (img2), xo (xo2), yo (yo2), w (w2), h (h2){};
+      : img (img2), xo (xo2), yo (yo2), w (w2), h (h2) {};
   ~qt_image_rep () { delete img; };
   friend class qt_image;
 };
@@ -47,7 +47,7 @@ struct qt_image_rep : concrete_struct {
 class qt_image {
   CONCRETE_NULL (qt_image);
   qt_image (QTMImage* img2, SI xo2, SI yo2, int w2, int h2)
-      : rep (tm_new<qt_image_rep> (img2, xo2, yo2, w2, h2)){};
+      : rep (tm_new<qt_image_rep> (img2, xo2, yo2, w2, h2)) {};
   // qt_image ();
 };
 
@@ -62,15 +62,15 @@ struct qt_pixmap_rep : concrete_struct {
   SI               xo, yo;
   int              w, h;
   qt_pixmap_rep (QTMPixmapOrImage img2, SI xo2, SI yo2, int w2, int h2)
-      : img (img2), xo (xo2), yo (yo2), w (w2), h (h2){};
-  ~qt_pixmap_rep (){};
+      : img (img2), xo (xo2), yo (yo2), w (w2), h (h2) {};
+  ~qt_pixmap_rep () {};
   friend class qt_pixmap;
 };
 
 class qt_pixmap {
   CONCRETE_NULL (qt_pixmap);
   qt_pixmap (QTMPixmapOrImage img2, SI xo2, SI yo2, int w2, int h2)
-      : rep (tm_new<qt_pixmap_rep> (img2, xo2, yo2, w2, h2)){};
+      : rep (tm_new<qt_pixmap_rep> (img2, xo2, yo2, w2, h2)) {};
   // qt_pixmap ();
 };
 

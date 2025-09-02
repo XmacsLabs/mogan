@@ -173,7 +173,7 @@ struct MathConstantsTable {
   array<MathValueRecord> records;
   int                    radicalDegreeBottomRaisePercent;
   MathConstantsTable ()
-      : records (MathConstantRecordEnum::otmathConstantsRecordsEnd){};
+      : records (MathConstantRecordEnum::otmathConstantsRecordsEnd) {};
 
   int operator[] (int i) {
     if (i >= 0 && i < MathConstantRecordEnum::otmathConstantsRecordsEnd)

@@ -16,7 +16,7 @@
 
 class blanks_parser_rep : public parser_rep {
 public:
-  blanks_parser_rep (){};
+  blanks_parser_rep () {};
   string get_parser_name () { return "blanks_parser"; }
 
   bool can_parse (string s, int pos) {

@@ -29,7 +29,7 @@ struct xkerning_rep : concrete_struct {
 
 class xkerning {
   CONCRETE_NULL (xkerning);
-  xkerning (SI p, SI l, SI r) : rep (tm_new<xkerning_rep> (p, l, r)){};
+  xkerning (SI p, SI l, SI r) : rep (tm_new<xkerning_rep> (p, l, r)) {};
 };
 
 CONCRETE_NULL_CODE (xkerning);

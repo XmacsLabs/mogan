@@ -166,7 +166,7 @@ QTMMathCompletionPopup::eventFilter (QObject* obj, QEvent* event) {
       // QToolButton，即是一个图标按钮，就提前进行一次删除，以达到替换的效果
       call ("kbd-backspace");
     }
-    hide (); // 当 Popup 窗口中任意组件被点击时，隐藏 Popup 窗口
+    hide ();      // 当 Popup 窗口中任意组件被点击时，隐藏 Popup 窗口
     return false; // false 表示继续传播；true 表示拦截
   }
   return QWidget::eventFilter (obj, event);

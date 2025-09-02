@@ -46,7 +46,7 @@ QTMPipeLink::~QTMPipeLink () { killProcess (1000); }
 bool
 QTMPipeLink::launchCmd () {
   if (state () != QProcess::NotRunning) killProcess (1000);
-    // FIXME: is UTF8 the right encoding here?
+  // FIXME: is UTF8 the right encoding here?
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   QProcess::start (utf8_to_qstring (cmd));
 #else

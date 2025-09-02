@@ -30,7 +30,7 @@ template <class T> struct rep {
 
 template <class R> class resource_ptr {
 protected:
-  ~resource_ptr (){};
+  ~resource_ptr () {};
 
 public:
   R*                                     rep;

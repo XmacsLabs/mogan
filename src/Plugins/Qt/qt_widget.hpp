@@ -306,7 +306,7 @@ inline widget headless_widget ();
 
 class qt_headless_widget_rep : public qt_widget_rep {
 public:
-  qt_headless_widget_rep (){};
+  qt_headless_widget_rep () {};
   virtual ~qt_headless_widget_rep () {
     if (DEBUG_QT_WIDGETS) debug_widgets << "~qt_headless_widget_rep" << LF;
   }

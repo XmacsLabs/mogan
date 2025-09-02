@@ -43,7 +43,7 @@ public:
 
   virtual void set_aspect (tree aspect);
 
-  virtual operator tree ()                            = 0;
+  virtual                   operator tree ()          = 0;
   virtual array<grid_curve> get_curves (point lim1, point lim2,
                                         bool b= false)= 0;
   virtual array<grid_curve> get_curves_around (point p, double delta, frame f);

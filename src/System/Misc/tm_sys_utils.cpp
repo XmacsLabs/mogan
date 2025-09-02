@@ -180,7 +180,7 @@ private:
   bool   blank;
 
 public:
-  PrintCap () : blank (true){};
+  PrintCap () : blank (true) {};
   friend string get_printing_cmd ();
   friend void   set_printing_cmd (string);
 } print_cap;

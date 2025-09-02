@@ -48,7 +48,7 @@ class qt_simple_widget_rep : public qt_widget_rep {
     blackbox val;
     t_slot_entry () : seq (-1), id (slot_id__LAST), val (blackbox ()) {}
     t_slot_entry (const t_slot_entry& other)
-        : seq (other.seq), id (other.id), val (other.val){};
+        : seq (other.seq), id (other.id), val (other.val) {};
     bool operator< (const t_slot_entry& b) const { return this->seq < b.seq; }
   } t_slot_entry;
 
@@ -127,7 +127,7 @@ protected:
   int     bs_w, bs_h;
   SI      bs_ox, bs_oy;
 #else
-  QPixmap*       backingPixmap;
+  QPixmap* backingPixmap;
 #endif
   QPoint backing_pos;
 

@@ -29,7 +29,7 @@ public:
    * construct from arbitary const pointer with length. NUL can occurs in given
    * array
    */
-  string_view (const T* a_, int N_) : N (N_), a (a_){};
+  string_view (const T* a_, int N_) : N (N_), a (a_) {};
   /**
    * construct from string literal
    */
@@ -40,7 +40,7 @@ public:
   string_view (string_view<T>&&)= default;
 
   constexpr string_view (const std::basic_string<T>& str)
-      : N (str.size ()), a (str.data ()){};
+      : N (str.size ()), a (str.data ()) {};
   operator std::basic_string<T> () { return std::basic_string<T> (a, N); };
 
   string_view<T> operator() (int start, int end) const;

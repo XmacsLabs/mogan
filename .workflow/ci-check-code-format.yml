@@ -35,21 +35,21 @@ stages:
         name: execute_by_docker
         displayName: use clang-format-16 to check code format
         certificate: ''
-        image: docker.1ms.run/amd64/debian:bookworm
+        image: docker.1ms.run/amd64/debian:trixie
         command:
           - bash .workflow/ustc_debian822_setup.sh
           - apt-get update
-          - apt-get install -y clang-format-16
-          - clang-format-16 --version
+          - apt-get install -y clang-format-19
+          - clang-format-19 --version
           - shopt -s nullglob globstar
-          - clang-format-16 --dry-run --Werror tests/**/*.cpp
-          - clang-format-16 --dry-run --Werror tests/**/*.hpp
-          - clang-format-16 --dry-run --Werror src/**/*.cpp
-          - clang-format-16 --dry-run --Werror src/**/*.hpp
-          - clang-format-16 --dry-run --Werror 3rdparty/moebius/**/*.hpp
-          - clang-format-16 --dry-run --Werror 3rdparty/moebius/**/*.cpp
-          - clang-format-16 --dry-run --Werror 3rdparty/lolly/**/*.hpp
-          - clang-format-16 --dry-run --Werror 3rdparty/lolly/**/*.cpp
+          - clang-format-19 --dry-run --Werror tests/**/*.cpp
+          - clang-format-19 --dry-run --Werror tests/**/*.hpp
+          - clang-format-19 --dry-run --Werror src/**/*.cpp
+          - clang-format-19 --dry-run --Werror src/**/*.hpp
+          - clang-format-19 --dry-run --Werror 3rdparty/moebius/**/*.hpp
+          - clang-format-19 --dry-run --Werror 3rdparty/moebius/**/*.cpp
+          - clang-format-19 --dry-run --Werror 3rdparty/lolly/**/*.hpp
+          - clang-format-19 --dry-run --Werror 3rdparty/lolly/**/*.cpp
         notify: []
         strategy:
           retry: '0'

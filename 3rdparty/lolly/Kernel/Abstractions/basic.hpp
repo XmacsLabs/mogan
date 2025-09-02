@@ -91,7 +91,9 @@ void handle_exceptions ();
  * @brief Macro used to throw an exception with a specified error message.
  */
 #define TM_FAILED(msg)                                                         \
-  { tm_throw (msg); }
+  {                                                                            \
+    tm_throw (msg);                                                            \
+  }
 #else
 #ifdef DEBUG_ASSERT
 #include <assert.h>
@@ -133,7 +135,9 @@ void handle_exceptions ();
  * @brief Macro used to print an error message and exit the program.
  */
 #define TM_FAILED(msg)                                                         \
-  { tm_failure (msg); }
+  {                                                                            \
+    tm_failure (msg);                                                          \
+  }
 #endif
 #endif
 

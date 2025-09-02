@@ -839,7 +839,7 @@ qt_get_date (string lan, string fm) {
 #if (QT_VERSION >= 0x040400)
   QString date= loc.toString (localtime, to_qstring (fm));
 #else
-  QString   date= localtime.toString (to_qstring (fm));
+  QString date= localtime.toString (to_qstring (fm));
 #endif
   return from_qstring (date);
 }
@@ -849,7 +849,7 @@ qt_pretty_time (int t) {
 #if QT_VERSION >= 0x060000
   QDateTime dt= QDateTime::fromSecsSinceEpoch (t);
 #else
-  QDateTime dt  = QDateTime::fromTime_t (t);
+  QDateTime dt= QDateTime::fromTime_t (t);
 #endif
   QString s= dt.toString ();
   return from_qstring (s);

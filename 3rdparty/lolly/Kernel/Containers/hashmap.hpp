@@ -118,7 +118,7 @@ public:
   friend class rel_hashmap_rep<T, U>;
   friend class hashmap_iterator_rep<T, U>;
   friend int N LESSGTR (hashmap<T, U> h);
-  friend tm_ostream& operator<< LESSGTR (tm_ostream& out, hashmap<T, U> h);
+  friend tm_ostream& operator<< LESSGTR (tm_ostream & out, hashmap<T, U> h);
 
   // only for hashmap<string,tree>
   /**

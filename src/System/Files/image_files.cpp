@@ -442,7 +442,7 @@ image_to_pdf (url image, url pdf, int w_pt, int h_pt, int dpi) {
   string s= suffix (image);
   // First try to preserve "vectorialness"
   if ((s == "svg" || s == "eps") && call_scm_converter (image, pdf)) return;
-    // converters below will yield only raster images.
+  // converters below will yield only raster images.
 #ifdef QTTEXMACS
   if (qt_supports (image)) {
     if (DEBUG_CONVERT) debug_convert << " using qt " << LF;

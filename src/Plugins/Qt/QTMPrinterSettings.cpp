@@ -380,7 +380,7 @@ CupsQTMPrinterSettings::systemCommandFinished (
     // Store for further parsing later, see QTMPrinterSettings::getChoices()
     printerOptions[rx.cap (1)]= rx.cap (3);
   }
-  emit    doneReading ();
+  emit doneReading ();
 #endif
 }
 

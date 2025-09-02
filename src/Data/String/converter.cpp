@@ -263,7 +263,7 @@ check_encoding (string input, string encoding) {
   else return check_using_iconv (input, encoding);
 #else
   (void) input;
-  return true;  // Assume everything is fine.
+  return true; // Assume everything is fine.
 #endif
 }
 

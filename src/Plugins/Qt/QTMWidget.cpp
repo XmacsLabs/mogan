@@ -152,7 +152,7 @@ QTMWidget::paintEvent (QPaintEvent* event) {
 #else
 void
 QTMWidget::paintEvent (QPaintEvent* event) {
-  QPainter       p (surface ());
+  QPainter p (surface ());
 #if QT_VERSION >= 0x060000
   QVector<QRect> rects (1, event->region ().boundingRect ());
 #else
@@ -703,7 +703,7 @@ QTMWidget::wheelEvent (QWheelEvent* event) {
 #if (QT_VERSION >= 0x060000)
     QPoint point= (event->position ()).toPoint () + origin ();
 #else
-    QPoint point     = event->pos () + origin ();
+    QPoint point= event->pos () + origin ();
 #endif
     QPoint        wheel = event->pixelDelta ();
     coord2        pt    = from_qpoint (point);

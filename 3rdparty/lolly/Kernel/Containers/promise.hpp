@@ -32,7 +32,7 @@ template <class T> class promise {
 public:
   ABSTRACT_NULL_TEMPLATE (promise, T);
   inline T operator() ();
-  friend tm_ostream& operator<< LESSGTR (tm_ostream& out, promise<T> cmd);
+  friend tm_ostream& operator<< LESSGTR (tm_ostream & out, promise<T> cmd);
 };
 ABSTRACT_NULL_TEMPLATE_CODE (promise, class, T);
 
