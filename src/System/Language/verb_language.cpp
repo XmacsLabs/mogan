@@ -57,7 +57,7 @@ verb_language_rep::get_hyphens (string s) {
   int        i;
   array<int> penalty (N (s) + 1);
   for (i= 0; i < N (penalty); i++)
-    penalty[i]= HYPH_INVALID;
+    penalty[i]= HYPH_PANIC;
   return penalty;
 }
 
