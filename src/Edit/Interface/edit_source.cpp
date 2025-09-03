@@ -31,7 +31,10 @@ edit_interface_rep::source_complete_try () {
   bool is_source     = (get_env_string ("mode") == "src");
   bool is_source_mode= (get_env_string ("preamble") == "true");
   if (is_source && (!is_source_mode)) {
-    completion_style = get_preference ("completion style");
+    completion_style= get_preference ("completion style");
+    if (completion_style != "popup") {
+      return;
+    }
     tree st          = subtree (et, path_up (tp));
     completion_prefix= st->label;
     if (completion_prefix != "") {
