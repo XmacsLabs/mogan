@@ -22,7 +22,7 @@ struct tt_face_rep : rep<tt_face> {
   bool         bad_face;
   FT_Face      ft_face;
   ot_mathtable math_table;
-  ot_svgtable  svg_table;
+  ot_cbdttable cbdt_table;
   tt_face_rep (string name);
 };
 

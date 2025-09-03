@@ -13,6 +13,7 @@
 #include "Freetype/tt_face.hpp"
 #include "Freetype/unicode_font.hpp"
 #include "analyze.hpp"
+#include "basic.hpp"
 #include "file.hpp"
 #include "frame.hpp"
 #include "image_files.hpp"
@@ -656,33 +657,24 @@ qt_renderer_rep::draw (const QFont& qfn, const QString& qs, SI x, SI y,
 }
 
 picture
-svg_string_to_picture (string svg_data, int w, int h) {
-  if (N (svg_data) == 0) {
-    // Return null if no SVG data
+png_data_to_picture (string png_data, int w, int h) {
+  if (N (png_data) == 0) {
+    // Return null if no PNG data
     return picture ();
   }
 
-  // Create QByteArray from SVG string data
-  QByteArray svg_bytes (as_charp (svg_data), N (svg_data));
+  // Create QByteArray from PNG binary data
+  QByteArray png_bytes (as_charp (png_data), N (png_data));
 
-  // Create SVG renderer from the data
-  QSvgRenderer renderer (svg_bytes);
-
-  if (!renderer.isValid ()) {
-    // Return null if SVG is invalid
+  // Load PNG image from data
+  QImage image;
+  if (!image.loadFromData (png_bytes, "PNG")) {
+    // Return null if PNG is invalid
     return picture ();
   }
+  image= image.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-  // Create QImage to render SVG into
-  QImage image (w, h, QImage::Format_ARGB32);
-  image.fill (Qt::transparent);
-
-  // Render SVG to the image
-  QPainter painter (&image);
-  renderer.render (&painter);
-  painter.end ();
-
-  // Return the picture created from QImage
+  // Convert to QPixmap and then to picture
   return qt_picture (image, 0, 0);
 }
 
@@ -691,7 +683,7 @@ qt_renderer_rep::draw_emoji (int char_code, font_glyphs fn, SI x, SI y) {
 
   // Cast to TrueType font glyphs representation
   auto tt_font= static_cast<tt_font_glyphs_rep*> (fn.rep);
-  if (is_nil (tt_font->face) || is_nil (tt_font->face->svg_table)) {
+  if (is_nil (tt_font->face) || is_nil (tt_font->face->cbdt_table)) {
     return;
   }
 
@@ -716,13 +708,21 @@ qt_renderer_rep::draw_emoji (int char_code, font_glyphs fn, SI x, SI y) {
     }
   }
 
-  // cache miss: get SVG data and create picture
+  // cache miss: try PNG data
   if (is_nil (emoji_picture)) {
-    string svg_data= tt_font->face->svg_table->get_svg_from_glyphid (glyph_id);
-    if (N (svg_data) == 0) {
-      return;
+
+    // First try to get PNG data from CBDT table
+    string png_data;
+    if (!is_nil (tt_font->face->cbdt_table)) {
+      int ppem= gl->lwidth; // request closest strike to desired size
+      png_data=
+          tt_font->face->cbdt_table->get_png_from_glyphid (glyph_id, ppem);
     }
-    emoji_picture= svg_string_to_picture (svg_data, w, h);
+    if (N (png_data) > 0) {
+      // Use PNG data if available
+      emoji_picture= png_data_to_picture (png_data, w, h);
+    }
+
     if (!is_nil (emoji_picture)) {
       if (!emoji_cache->contains (glyph_id)) {
         emoji_cache (glyph_id)= hashmap<int, picture> ();

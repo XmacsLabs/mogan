@@ -37,7 +37,8 @@ void
 TestCBDTTableParse::init () {
   lolly::init_tbox ();
   // Try to find a font with CBDT tables
-  url u= concretize_url ("$TEXMACS_PATH/fonts/truetype/NotoColorEmoji-png.ttf");
+  url u=
+      concretize_url ("$TEXMACS_PATH/fonts/truetype/Mogan-NotoColorEmoji.ttf");
 
   cout << "Looking for font at: " << as_string (u) << "\n";
   cout << "Font exists: " << exists (u) << "\n";

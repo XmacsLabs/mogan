@@ -26,6 +26,7 @@ FT_Error (*ft_select_charmap) (FT_Face face, FT_Encoding encoding);
 FT_Error (*ft_set_char_size) (FT_Face face, FT_F26Dot6 char_width,
                               FT_F26Dot6 char_height, FT_UInt horz_resolution,
                               FT_UInt vert_resolution);
+FT_Error (*ft_select_size) (FT_Face face, FT_Int strike_index);
 FT_UInt (*ft_get_char_index) (FT_Face face, FT_ULong charcode);
 FT_Error (*ft_load_glyph) (FT_Face face, FT_UInt glyph_index,
                            FT_Int load_flags);
@@ -45,6 +46,7 @@ ft_initialize () {
   ft_new_face      = FT_New_Face;
   ft_select_charmap= FT_Select_Charmap;
   ft_set_char_size = FT_Set_Char_Size;
+  ft_select_size   = FT_Select_Size;
   ft_get_char_index= FT_Get_Char_Index;
   ft_load_glyph    = FT_Load_Glyph;
   ft_render_glyph  = (glyph_renderer) ((void*) FT_Render_Glyph);
@@ -65,6 +67,9 @@ ft_initialize () {
   (void) symbol_install ("/usr/lib/libfreetype.so", "FT_Set_Char_Size",
                          (pointer&) ft_set_char_size);
   if (ft_set_char_size == NULL) return true;
+  (void) symbol_install ("/usr/lib/libfreetype.so", "FT_Select_Size",
+                         (pointer&) ft_select_size);
+  if (ft_select_size == NULL) return true;
   (void) symbol_install ("/usr/lib/libfreetype.so", "FT_Get_Char_Index",
                          (pointer&) ft_get_char_index);
   if (ft_get_char_index == NULL) return true;

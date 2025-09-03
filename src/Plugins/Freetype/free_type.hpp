@@ -26,6 +26,7 @@ extern FT_Error (*ft_set_char_size) (FT_Face face, FT_F26Dot6 char_width,
                                      FT_F26Dot6 char_height,
                                      FT_UInt    horz_resolution,
                                      FT_UInt    vert_resolution);
+extern FT_Error (*ft_select_size) (FT_Face face, FT_Int strike_index);
 extern FT_UInt (*ft_get_char_index) (FT_Face face, FT_ULong charcode);
 extern FT_Error (*ft_load_glyph) (FT_Face face, FT_UInt glyph_index,
                                   FT_Int load_flags);

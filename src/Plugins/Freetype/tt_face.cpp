@@ -65,13 +65,13 @@ tt_face_rep::tt_face_rep (string name) : rep<tt_face> (name) {
     string buf;
     if (!load_string (u, buf, false)) {
       math_table= parse_mathtable (buf);
-      svg_table = parse_svgtable (buf);
+      cbdt_table= parse_cbdttable (buf, buf);
     }
     if (!is_nil (math_table) && DEBUG_STD) {
       debug_fonts << "Math table loaded for " << name << "\n";
     }
-    if (!is_nil (svg_table) && DEBUG_STD) {
-      debug_fonts << "SVG table loaded for " << name << "\n";
+    if (!is_nil (cbdt_table)) {
+      if (DEBUG_STD) debug_fonts << "CBDT table loaded for " << name << "\n";
     }
   }
 }
@@ -94,9 +94,33 @@ tt_font_metric_rep::tt_font_metric_rep (string name, string family, int size2,
                                         int hdpi2, int vdpi2)
     : font_metric_rep (name), size (size2), hdpi (hdpi2), vdpi (vdpi2),
       fnm (NULL) {
-  face           = load_tt_face (family);
-  bad_font_metric= face->bad_face ||
-                   ft_set_char_size (face->ft_face, 0, size << 6, hdpi, vdpi);
+  face                = load_tt_face (family);
+  bool size_set_failed= false;
+  if (!face->bad_face) {
+    if (!is_nil (face->cbdt_table)) {
+      // Try to select the closest fixed size for bitmap fonts
+      int best_size_index  = 0;
+      int target_pixel_size= size * hdpi / 72; // Convert point size to pixels
+      int best_diff=
+          abs (face->ft_face->available_sizes[0].height - target_pixel_size);
+      for (int i= 1; i < face->ft_face->num_fixed_sizes; i++) {
+        int diff=
+            abs (face->ft_face->available_sizes[i].height - target_pixel_size);
+        if (diff < best_diff) {
+          best_diff      = diff;
+          best_size_index= i;
+        }
+      }
+      size_set_failed= ft_select_size (face->ft_face, best_size_index) != 0;
+    }
+    else {
+      // For scalable fonts, use ft_set_char_size
+      size_set_failed=
+          ft_set_char_size (face->ft_face, 0, size << 6, hdpi, vdpi) != 0;
+    }
+  }
+  bad_font_metric=
+      face->bad_face || (size_set_failed && is_nil (face->cbdt_table));
   if (bad_font_metric) return;
 
   error_metric->x1= error_metric->y1= 0;
@@ -116,7 +140,11 @@ tt_font_metric_rep::exists (int i) {
 metric&
 tt_font_metric_rep::get (int i) {
   if (!face->bad_face && !fnm->contains (i)) {
-    ft_set_char_size (face->ft_face, 0, size << 6, hdpi, vdpi);
+
+    // For fonts with CBDT table, skip ft_set_char_size
+    if (is_nil (face->cbdt_table)) {
+      ft_set_char_size (face->ft_face, 0, size << 6, hdpi, vdpi);
+    }
     FT_UInt glyph_index= decode_index (face->ft_face, i);
     if (ft_load_glyph (face->ft_face, glyph_index, FT_LOAD_DEFAULT))
       return error_metric;
@@ -135,13 +163,28 @@ tt_font_metric_rep::get (int i) {
 
     bool is_emoji= is_emoji_character (i);
     if (is_emoji) {
-      w= (ll + PIXEL / 2) / PIXEL; // Convert the horizontal advance to pixel
-                                   // units and round to the nearest integer
-      h = w;                       // treating Emojis as Squares
-      xw= w * PIXEL;               // Logical width in pixels
-      xh= h * PIXEL;               // Logical height in pixels
+
+      // For PNG fonts (CBDT), apply scaling factor to make them scalable
+      double scale_factor= 1.0;
+      if (!is_nil (face->cbdt_table)) {
+        int target_pixel_size= size * hdpi / 72;
+        int actual_pixel_size= face->ft_face->size->metrics.y_ppem;
+        scale_factor         = (double) target_pixel_size / actual_pixel_size;
+      }
+
+      int base_w= (ll + PIXEL / 2) / PIXEL;
+      int base_h= base_w; // treating Emojis as Squares
+
+      // Apply scaling factor
+      w = (int) (base_w * scale_factor + 0.5);
+      h = (int) (base_h * scale_factor + 0.5);
+      xw= w * PIXEL; // Logical width in pixels
+      xh= h * PIXEL; // Logical height in pixels
       dx= 0;
       dy= (h * PIXEL * 8) / 10;
+
+      // Scale the horizontal advance as well
+      ll= (SI) (ll * scale_factor + 0.5);
     }
 
     SI ww= w * PIXEL;
@@ -166,6 +209,10 @@ tt_font_metric_rep::get (int i) {
 SI
 tt_font_metric_rep::kerning (int left, int right) {
   if (face->bad_face || !FT_HAS_KERNING (face->ft_face)) return 0;
+
+  // For bitmap fonts with CBDT table (like emoji fonts), kerning is usually not
+  // supported
+  if (!is_nil (face->cbdt_table)) return 0;
   FT_Vector k;
   FT_UInt   l= decode_index (face->ft_face, left);
   FT_UInt   r= decode_index (face->ft_face, right);
@@ -192,16 +239,45 @@ tt_font_glyphs_rep::tt_font_glyphs_rep (string name, string family, int size2,
                                         int hdpi2, int vdpi2)
     : font_glyphs_rep (name), size (size2), hdpi (hdpi2), vdpi (vdpi2),
       fng (glyph ()) {
-  face           = load_tt_face (family);
-  bad_font_glyphs= face->bad_face ||
-                   ft_set_char_size (face->ft_face, 0, size << 6, hdpi, vdpi);
+  face                = load_tt_face (family);
+  bool size_set_failed= false;
+  if (!face->bad_face) {
+    // For bitmap fonts with CBDT table, try to select an appropriate fixed size
+    // first
+    if (!is_nil (face->cbdt_table)) {
+      // Try to select the closest fixed size for bitmap fonts
+      int best_size_index  = 0;
+      int target_pixel_size= size * hdpi / 72; // Convert point size to pixels
+      int best_diff=
+          abs (face->ft_face->available_sizes[0].height - target_pixel_size);
+
+      for (int i= 1; i < face->ft_face->num_fixed_sizes; i++) {
+        int diff=
+            abs (face->ft_face->available_sizes[i].height - target_pixel_size);
+        if (diff < best_diff) {
+          best_diff      = diff;
+          best_size_index= i;
+        }
+      }
+      size_set_failed= ft_select_size (face->ft_face, best_size_index) != 0;
+    }
+    else {
+      // For scalable fonts, use ft_set_char_size
+      size_set_failed=
+          ft_set_char_size (face->ft_face, 0, size << 6, hdpi, vdpi) != 0;
+    }
+  }
+  bad_font_glyphs=
+      face->bad_face || (size_set_failed && is_nil (face->cbdt_table));
   if (bad_font_glyphs) return;
 }
 
 glyph&
 tt_font_glyphs_rep::get (int i) {
   if (!face->bad_face && !fng->contains (i)) {
-    ft_set_char_size (face->ft_face, 0, size << 6, hdpi, vdpi);
+    if (is_nil (face->cbdt_table)) {
+      ft_set_char_size (face->ft_face, 0, size << 6, hdpi, vdpi);
+    }
     FT_UInt glyph_index= decode_index (face->ft_face, i);
     if (ft_load_glyph (face->ft_face, glyph_index, FT_LOAD_DEFAULT))
       return error_glyph;
@@ -237,13 +313,26 @@ tt_font_glyphs_rep::get (int i) {
     // Handle emoji characters
     bool is_emoji= is_emoji_character (i);
     if (is_emoji) {
-      SI  ll      = tt_si (slot->metrics.horiAdvance);
-      int emoji_w = (ll + PIXEL / 2) / PIXEL;
-      int emoji_h = emoji_w; // treating Emojis as Squares
+      SI ll= tt_si (slot->metrics.horiAdvance);
+
+      // For PNG fonts (CBDT), apply scaling factor to make them scalable
+      double scale_factor= 1.0;
+      if (!is_nil (face->cbdt_table)) {
+        int target_pixel_size= size * hdpi / 72;
+        int actual_pixel_size= face->ft_face->size->metrics.y_ppem;
+        scale_factor         = (double) target_pixel_size / actual_pixel_size;
+      }
+
+      int base_emoji_w= (ll + PIXEL / 2) / PIXEL;
+      int base_emoji_h= base_emoji_w; // treating Emojis as Squares
+
+      // Apply scaling factor
+      int emoji_w = (int) (base_emoji_w * scale_factor + 0.5);
+      int emoji_h = (int) (base_emoji_h * scale_factor + 0.5);
       int emoji_ox= 0;
       int emoji_oy= emoji_h;
 
-      // Recreate glyph with emoji dimensions
+      // Recreate glyph with scaled emoji dimensions
       G        = glyph (emoji_w, emoji_h, -emoji_ox, emoji_oy);
       G->lwidth= emoji_w; // For emoji, logical width equals the adjusted width
     }

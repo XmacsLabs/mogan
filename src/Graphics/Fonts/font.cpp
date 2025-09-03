@@ -657,7 +657,7 @@ default_emoji_font_name () {
   }
 
   // Noto Color Emoji is the default emoji font on all system if exists
-  if (tt_font_exists ("NotoColorEmoji")) return "Noto Color Emoji";
+  if (tt_font_exists ("Mogan-NotoColorEmoji")) return "Noto Color Emoji";
 
   return "roman";
 }
