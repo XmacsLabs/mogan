@@ -56,11 +56,15 @@ mupdf_print_renderer_rep::~mupdf_print_renderer_rep () {
   end_page ();
   flush_metadata ();
 
-  c_string path (concretize (pdf_file_name));
-  pdf_subset_fonts (mupdf_context (), doc, 0, NULL);
-  pdf_save_document (mupdf_context (), doc, path, &write_opts);
+  c_string    path (concretize (pdf_file_name));
+  fz_context* ctx= mupdf_context ();
+  fz_try (ctx) {
+    pdf_subset_fonts (ctx, doc, 0, NULL);
+    pdf_save_document (ctx, doc, path, &write_opts);
+    debug_std << "Finished print pdf\n";
+  }
+  fz_catch (ctx) { fz_report_error (ctx); }
   pdf_drop_document (mupdf_context (), doc);
-  debug_std << "Finished print pdf\n";
 }
 
 bool
@@ -171,16 +175,30 @@ load_pdf_font (string fontname, pdf_document* pdoc, fz_device* pdev) {
       fz_font* font=
           fz_new_font_from_file (mupdf_context (), NULL, path, face_index, 0);
       if (font) {
+        bool is_otf= false;
         if (font->buffer && font->buffer->len > 4 &&
             !memcmp (font->buffer->data, "ttcf", 4)) {
           // TTC Font file
           fz_buffer* ttf_buf= fz_extract_ttf_from_ttc (ctx, font);
           fz_drop_font (ctx, font);
           font= fz_new_font_from_buffer (ctx, NULL, ttf_buf, 0, 0);
+
+          unsigned char* data;
+          size_t         size= fz_buffer_storage (ctx, ttf_buf, &data);
+          if (size > 12 && !memcmp ("OTTO", data, 4)) {
+            is_otf= true;
+          }
+          fz_drop_buffer (ctx, ttf_buf);
         }
         pdf_obj* fres= pdf_add_cid_font (ctx, pdoc, font);
+        fontdesc     = pdf_load_font (ctx, pdoc, NULL, fres);
+        pdf_drop_obj (ctx, fres);
+        if (is_otf) {
+          fz_drop_font (ctx, fontdesc->font);
+          fontdesc->font= font;
+          fz_keep_font (ctx, font);
+        }
         fz_drop_font (ctx, font);
-        fontdesc= pdf_load_font (ctx, pdoc, NULL, fres);
       }
     }
     if (fontdesc != NULL) {
@@ -251,7 +269,7 @@ mupdf_print_renderer_rep::flush_metadata () {
     fz_set_metadata (ctx, fdoc, FZ_META_INFO_KEYWORDS,
                      as_charp (metadata["keyword"]));
 
-  string creator = "TeXmacs " * string (TEXMACS_VERSION);
+  string creator = string (STEM_NAME " " XMACS_VERSION);
   string producer= creator * " + MuPDF " * string (FZ_VERSION);
   fz_set_metadata (ctx, fdoc, FZ_META_INFO_CREATOR, as_charp (creator));
   fz_set_metadata (ctx, fdoc, FZ_META_INFO_PRODUCER, as_charp (producer));
