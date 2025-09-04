@@ -122,6 +122,26 @@ class mupdf_pattern {
 CONCRETE_NULL_CODE (mupdf_pattern);
 
 /******************************************************************************
+ * pdf fonts
+ ******************************************************************************/
+
+struct mupdf_font_rep : concrete_struct {
+  pdf_font_desc* fn;
+  mupdf_font_rep (pdf_font_desc* _fn) : fn (_fn) {
+    pdf_keep_font (mupdf_context (), fn);
+  }
+  ~mupdf_font_rep () { pdf_drop_font (mupdf_context (), fn); }
+  friend class mupdf_font;
+};
+
+class mupdf_font {
+  CONCRETE_NULL (mupdf_font);
+  mupdf_font (pdf_font_desc* _fn) : rep (tm_new<mupdf_font_rep> (_fn)) {}
+};
+
+CONCRETE_NULL_CODE (mupdf_font);
+
+/******************************************************************************
  * Global support variables for all mupdf_renderers
  ******************************************************************************/
 
@@ -150,10 +170,9 @@ del_obj_mupdf_renderer (void) {
  * mupdf_renderer
  ******************************************************************************/
 
-mupdf_renderer_rep::mupdf_renderer_rep (bool screen_flag, int w2, int h2)
-    : basic_renderer_rep (screen_flag, w2, h2), pixmap (NULL), dev (NULL),
-      proc (NULL), fg (-1), bg (-1), lw (-1), in_text (false), cfn ("") {
-  doc= mupdf_document ();
+mupdf_renderer_rep::mupdf_renderer_rep (int w2, int h2)
+    : basic_renderer_rep (true, w2, h2), pixmap (NULL), dev (NULL), proc (NULL),
+      fg (-1), bg (-1), lw (-1), in_text (false), cfn ("") {
   reset_zoom_factor ();
 }
 
@@ -194,8 +213,8 @@ mupdf_renderer_rep::begin (void* handle) {
     h            = fz_pixmap_height (ctx, pixmap);
     dev          = fz_new_draw_device (ctx, fz_identity, pixmap);
     fz_matrix ctm= fz_make_matrix (1, 0, 0, -1, 0, 0);
-    proc= pdf_new_run_processor (ctx, doc, dev, ctm, -1, "View", NULL, NULL,
-                                 NULL);
+    proc= pdf_new_run_processor (ctx, mupdf_document (), dev, ctm, -1, "View",
+                                 NULL, NULL, NULL);
 
     fg           = -1;
     bg           = -1;
@@ -433,10 +452,11 @@ mupdf_renderer_rep::register_pattern (brush br, SI pixel) {
     pattern_image_pool (key)= image_pdf;
   }
 
-  fz_context* ctx   = mupdf_context ();
-  pdf_obj*    subres= pdf_new_dict (ctx, doc, 2);
-  pdf_obj*    xres  = pdf_new_dict (ctx, doc, 2);
-  pdf_obj*    ref   = pdf_add_image (ctx, doc, image_pdf->img);
+  fz_context*   ctx   = mupdf_context ();
+  pdf_document* doc   = mupdf_document ();
+  pdf_obj*      subres= pdf_new_dict (ctx, doc, 2);
+  pdf_obj*      xres  = pdf_new_dict (ctx, doc, 2);
+  pdf_obj*      ref   = pdf_add_image (ctx, doc, image_pdf->img);
   pdf_dict_puts (ctx, xres, "pattern-image", ref);
   pdf_dict_puts (ctx, subres, "XObject", xres);
   pdf_drop_obj (ctx, ref);
@@ -981,8 +1001,8 @@ load_pdf_font (string fontname) {
   return NULL;
 }
 
-float
-mupdf_font_size (string name) {
+static float
+font_size (string name) {
   int pos  = search_backwards (".", name);
   int szpos= pos - 1;
   while ((szpos > 0) && is_numeric (name[szpos - 1]))
@@ -1004,9 +1024,13 @@ decode_index (FT_Face face, int i) {
   return i - 0xc000000;
 }
 
-pdf_font_desc*
-mupdf_renderer_rep::get_font_desc (string fontname) {
+void
+mupdf_renderer_rep::draw (int c, font_glyphs fng, SI x, SI y) {
+  string         fontname= fng->res_name;
   pdf_font_desc* fontdesc= NULL;
+
+  begin_text ();
+
   if (cfn != fontname) {
     // change font
     cfn= fontname;
@@ -1027,7 +1051,7 @@ mupdf_renderer_rep::get_font_desc (string fontname) {
     }
     if (fontdesc) {
       // we have a native font
-      fsize= mupdf_font_size (fontname);
+      fsize= font_size (fontname);
       proc->op_Tf (mupdf_context (), proc, "draw", fontdesc,
                    fsize / std_shrinkf);
     }
@@ -1035,16 +1059,6 @@ mupdf_renderer_rep::get_font_desc (string fontname) {
   else {
     fontdesc= native_fonts (fontname)->fn;
   }
-  return fontdesc;
-}
-
-void
-mupdf_renderer_rep::draw (int c, font_glyphs fng, SI x, SI y) {
-  string         fontname= fng->res_name;
-  pdf_font_desc* fontdesc= get_font_desc (fontname);
-
-  begin_text ();
-
   // draw glyph
   if (fontdesc) {
     proc->op_Td (mupdf_context (), proc, to_x (x) - prev_text_x,

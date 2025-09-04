@@ -1258,8 +1258,8 @@
 "eurm6.tfm" "$TEXMACS_PATH/fonts/tfm/ams/euler/eurm6.tfm"
 "eurb9.tfm" "$TEXMACS_PATH/fonts/tfm/ams/euler/eurb9.tfm"
 "eusb10.tfm" "$TEXMACS_PATH/fonts/tfm/ams/euler/eusb10.tfm"
-"Mogan-NotoSerifCJK-Regular.ttc" "$TEXMACS_PATH/fonts/truetype/Mogan-NotoSerifCJK-Regular.ttc"
-"Mogan-NotoSerifCJK-Bold.ttc" "$TEXMACS_PATH/fonts/truetype/Mogan-NotoSerifCJK-Bold.ttc"
-"Mogan-NotoSansCJK-Regular.ttc" "$TEXMACS_PATH/fonts/truetype/Mogan-NotoSansCJK-Regular.ttc"
-"Mogan-NotoSansCJK-Bold.ttc" "$TEXMACS_PATH/fonts/truetype/Mogan-NotoSansCJK-Bold.ttc"
+"NotoSerifCJK-Regular.ttc" "$TEXMACS_PATH/fonts/opentype/noto/NotoSerifCJK-Regular.ttc"
+"NotoSerifCJK-Black.ttc" "$TEXMACS_PATH/fonts/opentype/noto/NotoSerifCJK-Black.ttc"
+"NotoSansCJK-Regular.ttc" "$TEXMACS_PATH/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+"NotoSansCJK-Bold.ttc" "$TEXMACS_PATH/fonts/opentype/noto/NotoSansCJK-Bold.ttc"
 )
