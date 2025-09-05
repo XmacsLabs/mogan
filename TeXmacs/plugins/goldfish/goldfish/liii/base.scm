@@ -24,9 +24,9 @@
     ; R7RS 5: Program Structure
     define-values define-record-type
     ; R7RS 6.2: Numbers
-    square exact inexact max min floor s7-floor ceiling s7-ceiling truncate s7-truncate
-    round s7-round floor-quotient gcd lcm s7-lcm modulo exact-integer-sqrt
-    numerator denominator
+    square exact inexact max min floor floor/ s7-floor ceiling s7-ceiling truncate truncate/ s7-truncate
+    round s7-round floor-quotient floor-remainder gcd lcm s7-lcm modulo exact-integer-sqrt
+    numerator denominator exact-integer?
     ; R7RS 6.3: Booleans
     boolean=?
     ; R7RS 6.4: list

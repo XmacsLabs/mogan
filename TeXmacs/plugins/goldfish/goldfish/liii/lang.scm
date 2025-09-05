@@ -68,6 +68,51 @@
             ((hash-table? x) (rich-hash-table x))
             (else (type-error "box: x must be integer?, rational?, float?, char?, string?, list?, vector?, hash-table?"))))
 
+    #|
+$
+通用装箱及方法调用器，为原始数据类型提供对象式操作接口。
+
+语法
+----
+($ obj)
+($ obj method arg1 arg2 ...)
+
+参数
+----
+obj : any
+待装箱的原始数据对象。支持整数、浮点数、字符、字符串、列表、向量、哈希表等类型。
+
+method : symbol
+方法名称。当obj为case-class实例时，可直接调用其方法；否则通过box函数创建rich对象后再调用。
+
+arg1, arg2, ... : any
+方法调用的参数列表，个数取决于具体调用的方法。
+
+返回值
+-----
+当仅传入obj时，返回对应类型的rich对象；当调用方法时，返回方法执行结果。
+
+功能
+----
+该函数是连接原始数据与丰富对象接口的桥梁。它通过box根据数据类型自动选择合适的rich-wrapper，
+并支持链式调用语法。若没有额外参数，则返回rich对象本身；若有参数则使用apply执行方法调用。
+
+边界条件
+--------
+- 当传入未支持的类型时，抛出type-error异常
+- 空XS参数返回装箱后的rich对象实例
+- 非空XS参数执行方法调用
+
+错误处理
+--------
+对未支持的类型抛出type-error异常："box: x must be integer?, rational?, float?, char?, string?, list?, vector?, hash-table?"
+
+兼容性
+------
+- 与(liii lang)库中的所有rich类型完全兼容
+- 支持case-class实例的直接方法调用
+- 与chain-apply模式无缝协作
+|#
     (define ($ x . xs)
       (if (null? xs) (box x) (apply (box x) xs)))
 

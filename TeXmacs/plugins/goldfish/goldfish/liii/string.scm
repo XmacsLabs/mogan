@@ -42,10 +42,14 @@
   (begin
 
     (define (string-starts? str prefix)
-      (string-prefix? prefix str))
+      (if (and (string? str) (string? prefix))
+          (string-prefix? prefix str)
+          (type-error "string-starts? parameter is not a string")))
 
     (define (string-ends? str suffix)
-      (string-suffix? suffix str))
+      (if (and (string? str) (string? suffix))
+          (string-suffix? suffix str)
+          (type-error "string-ends? parameter is not a string")))
 
     (define string-remove-prefix
       (typed-lambda ((str string?) (prefix string?))

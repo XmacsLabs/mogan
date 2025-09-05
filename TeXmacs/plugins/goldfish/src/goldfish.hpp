@@ -55,7 +55,7 @@
 #include <isocline.h>
 #endif
 
-#define GOLDFISH_VERSION "17.11.19"
+#define GOLDFISH_VERSION "17.11.20"
 
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
@@ -197,8 +197,8 @@ goldfish_exe () {
   GetModuleFileName (NULL, buffer, GOLDFISH_PATH_MAXN);
   return string (buffer);
 #elif TB_CONFIG_OS_MACOSX
-  char     buffer[PATH_MAX];
-  uint32_t size= sizeof (buffer);
+  char        buffer[PATH_MAX];
+  uint32_t    size= sizeof (buffer);
   if (_NSGetExecutablePath (buffer, &size) == 0) {
     char real_path[GOLDFISH_PATH_MAXN];
     if (realpath (buffer, real_path) != NULL) {
@@ -1626,13 +1626,13 @@ repl_for_community_edition (s7_scheme* sc, int argc, char** argv) {
   }
   if (load_arg) {
     std::string file= load_arg.str ();
-    cout << " * " << file << " evaluated" << endl;
     goldfish_eval_file (sc, file, true);
   }
 
-  // eval all files passed as positional args
+  // eval only the first file passed as positional argument
   auto& files= cmdl.pos_args ();
-  for (auto it= files.begin () + 1; it != files.end (); ++it) {
+  if (files.size () > 1) {
+    auto it= files.begin () + 1;
     goldfish_eval_file (sc, *it, true);
     // 如果有指定文件且没有显示传入 --repl, -i 参数，不进入 repl
     if (repl_flag && !cmdl[{"--repl", "-i"}]) repl_flag= false;

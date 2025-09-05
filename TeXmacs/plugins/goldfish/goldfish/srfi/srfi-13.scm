@@ -126,7 +126,11 @@
         (substring str (- N k) N)))
 
     (define string-drop
-      (typed-lambda ((str string?) (k integer?))
+      (lambda (str k)
+        (unless (string? str)
+          (error 'wrong-type-arg "str is not string?" str))
+        (unless (integer? k)
+          (error 'wrong-type-arg "k is not integer?" k))
         (when (< k 0)
           (error 'out-of-range "k must be non-negative" k))
         (let ((N (string-length str)))
@@ -135,7 +139,11 @@
             (substring str k N)))))
 
     (define string-drop-right
-      (typed-lambda ((str string?) (k integer?))
+      (lambda (str k)
+        (unless (string? str)
+          (error 'wrong-type-arg "str is not string?" str))
+        (unless (integer? k)
+          (error 'wrong-type-arg "k is not integer?" k))
         (when (< k 0)
           (error 'out-of-range "k must be non-negative" k))
         (let ((N (string-length str)))
