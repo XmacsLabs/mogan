@@ -209,7 +209,6 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
   // Set environment variables for printing
 
   typeset_prepare ();
-  env->write (DPI, printing_dpi);
   env->write (PAGE_SHOW_HF, "true");
   env->write (PAGE_SCREEN_MARGIN, "false");
   env->write (PAGE_BORDER, "none");
@@ -231,7 +230,7 @@ edit_main_rep::print_doc (url name, bool conform, int first, int last) {
   double h        = env->page_real_height;
   double cm       = env->as_real_length (string ("1cm"));
   bool   landsc   = env->page_landscape;
-  int    dpi      = as_int (printing_dpi);
+  int    dpi      = env->get_int (DPI);
   int    start    = max (0, first - 1);
   int    end      = min (N (the_box[0]), last);
   int    pages    = end - start;

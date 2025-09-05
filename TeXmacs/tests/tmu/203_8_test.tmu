@@ -1,0 +1,19 @@
+<TMU|<tuple|1.1.0|2025.1.2>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测
+
+  <tabular|<tformat|<cwith|1|-1|1|-1|cell-halign|c>|<cwith|1|-1|1|-1|cell-rsep|1spc>|<cwith|1|-1|1|-1|cell-tsep|0spc>|<cwith|1|-1|1|-1|cell-bsep|0sep>|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|2|1|1|cell-tsep|0spc>|<twith|table-tsep|-10px>|<twith|table-bsep|0fn>|<twith|table-lsep|-230px>|<table|<row|<cell|<with|font-series|bold|BIOGRAPHICAL SKETCH>>>|<row|<cell|<with|font-base-size|8|Provide the following information for the Senior/key personnel and other significant contributors.>>>|<row|<cell|<with|font-base-size|8|Follow this format for each person. <with|font-series|bold|DO NOT EXCEED FIVE PAGES.>>>>>>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+    <associate|page-width-margin|true>
+    <associate|par-width|600px>
+    <associate|preamble|false>
+  </collection>
+</initial>
