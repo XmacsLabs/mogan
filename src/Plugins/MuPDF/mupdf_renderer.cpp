@@ -858,6 +858,7 @@ mupdf_renderer_rep::draw_scalable (scalable im, SI x, SI y, int alpha) {
   // debug_convert << "pdf renderer, draw_scalable "
   //   << im->get_name () << " at " << x << ", " << y
   //   << " (" << alpha << ")" << LF;
+  fz_context* ctx= mupdf_context ();
   if (im->get_type () != scalable_image ||
       (im->get_type () == scalable_image && im->get_effect () != tree ("")))
     renderer_rep::draw_scalable (im, x, y, alpha);
@@ -868,24 +869,21 @@ mupdf_renderer_rep::draw_scalable (scalable im, SI x, SI y, int alpha) {
     if (image_pool->contains (lookup)) im2= image_pool[lookup];
     else {
       fz_image* fzim= mupdf_load_image (u);
-      if (fzim == NULL) {
-        // attempt to convert to png
-        url temp= url_temp (".png");
-        image_to_png (u, temp, w, h);
-        c_string path (as_string (temp));
-        fzim= fz_new_image_from_file (mupdf_context (), path);
-        remove (temp);
+      if (fzim != NULL) {
+        im2= mupdf_image (fzim);
+        fz_drop_image (ctx, fzim);
       }
-      im2= mupdf_image (fzim);
-      fz_drop_image (mupdf_context (), fzim);
       image_pool (lookup)= im2;
     }
-    if (is_nil (im2)) return;
+    if (is_nil (im2)) {
+      im->draw (this, x, y);
+      return;
+    };
     rectangle r= im->get_logical_extents ();
     SI        w= r->x2 - r->x1, h= r->y2 - r->y1;
     int       ox= r->x1, oy= r->y1;
     end_text ();
-    image (mupdf_context (), proc, im2, alpha, ((double) w) / pixel, 0, 0,
+    image (ctx, proc, im2, alpha, ((double) w) / pixel, 0, 0,
            ((double) h) / pixel, to_x (x - ox), to_y (y - oy));
   }
 }

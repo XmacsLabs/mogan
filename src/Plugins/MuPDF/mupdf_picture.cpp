@@ -169,33 +169,32 @@ picture_renderer (picture p, double zoomf) {
 
 fz_image*
 mupdf_load_image (url u) {
-  fz_image* im = NULL;
-  string    suf= suffix (u);
-  c_string  path (concretize (u));
+  fz_context* ctx= mupdf_context ();
+  fz_image*   im = NULL;
+  string      suf= suffix (u);
+  c_string    path (concretize (u));
   // Set the zoom to 200% in MuPDF render(144 DPI) when convert vector graphics
   // into pixmap. Test ok in MacOS, with 2x HiDPI enabled(4K screen)
   fz_matrix ctm= fz_scale (2.0, 2.0);
   if (suf == "svg") {
-    fz_buffer*  buffer = fz_read_file (mupdf_context (), path);
+    fz_buffer*  buffer = fz_read_file (ctx, path);
     fz_xml_doc* xml_doc= NULL;
     fz_xml*     xml    = NULL;
     fz_image*   tmp_im = NULL;
     fz_pixmap*  tmp_pix= NULL;
-    fz_try (mupdf_context ()) {
-      xml_doc= fz_parse_xml (mupdf_context (), buffer, 0);
+    fz_try (ctx) {
+      xml_doc= fz_parse_xml (ctx, buffer, 0);
       xml    = fz_xml_find (xml_doc, "svg");
-      tmp_im = fz_new_image_from_svg_xml (mupdf_context (), xml_doc, xml, NULL,
-                                          NULL);
-      tmp_pix= fz_get_pixmap_from_image (mupdf_context (), tmp_im, NULL, &ctm,
-                                         NULL, NULL);
-      im     = fz_new_image_from_pixmap (mupdf_context (), tmp_pix, NULL);
+      tmp_im = fz_new_image_from_svg_xml (ctx, xml_doc, xml, NULL, NULL);
+      tmp_pix= fz_get_pixmap_from_image (ctx, tmp_im, NULL, &ctm, NULL, NULL);
+      im     = fz_new_image_from_pixmap (ctx, tmp_pix, NULL);
     }
-    fz_catch (mupdf_context ()) { fz_report_error (mupdf_context ()); }
-    fz_drop_xml (mupdf_context (), xml);
-    fz_drop_xml (mupdf_context (), xml_doc);
-    fz_drop_buffer (mupdf_context (), buffer);
-    fz_drop_image (mupdf_context (), tmp_im);
-    fz_drop_pixmap (mupdf_context (), tmp_pix);
+    fz_catch (ctx) { fz_report_error (ctx); }
+    fz_drop_xml (ctx, xml);
+    fz_drop_xml (ctx, xml_doc);
+    fz_drop_buffer (ctx, buffer);
+    fz_drop_image (ctx, tmp_im);
+    fz_drop_pixmap (ctx, tmp_pix);
   }
   else if (suf == "xpm") {
     // try to load higher definition png equivalent if available
@@ -214,66 +213,63 @@ mupdf_load_image (url u) {
     // ok, try to load the xpm finally
     picture    xp = as_mupdf_picture (load_xpm (u));
     fz_pixmap* pix= ((mupdf_picture_rep*) xp->get_handle ())->pix;
-    im            = fz_new_image_from_pixmap (mupdf_context (), pix, NULL);
+    im            = fz_new_image_from_pixmap (ctx, pix, NULL);
   }
   else if (suf == "pdf") {
     pdf_document* doc = NULL;
     pdf_page*     page= NULL;
     fz_pixmap*    pix = NULL;
-    fz_try (mupdf_context ()) {
-      doc           = pdf_open_document (mupdf_context (), path);
-      int page_count= pdf_count_pages (mupdf_context (), doc);
+    fz_try (ctx) {
+      doc           = pdf_open_document (ctx, path);
+      int page_count= pdf_count_pages (ctx, doc);
       if (page_count > 0) {
-        page= pdf_load_page (mupdf_context (), doc, 0);
+        page= pdf_load_page (ctx, doc, 0);
         pix = pdf_new_pixmap_from_page_with_usage (
-            mupdf_context (), page, ctm, fz_device_rgb (mupdf_context ()), 0,
-            "View", FZ_TRIM_BOX);
-        im= fz_new_image_from_pixmap (mupdf_context (), pix, NULL);
+            ctx, page, ctm, fz_device_rgb (ctx), 0, "View", FZ_TRIM_BOX);
+        im= fz_new_image_from_pixmap (ctx, pix, NULL);
       }
     }
-    fz_catch (mupdf_context ()) { fz_report_error (mupdf_context ()); }
-    fz_drop_pixmap (mupdf_context (), pix);
-    pdf_drop_document (mupdf_context (), doc);
+    fz_catch (ctx) { fz_report_error (ctx); }
+    fz_drop_pixmap (ctx, pix);
+    pdf_drop_document (ctx, doc);
   }
   else {
     // Othre format.
-    fz_try (mupdf_context ()) {
-      im= fz_new_image_from_file (mupdf_context (), path);
+    fz_try (ctx) { im= fz_new_image_from_file (ctx, path); }
+    fz_catch (ctx) { fz_report_error (ctx); }
+  }
+  if (im == NULL) {
+    // attempt to convert to png
+    url temp= url_temp (".png");
+    image_to_png (u, temp, 0, 0);
+    if (exists (temp)) {
+      c_string path (as_string (temp));
+      fz_try (ctx) { im= fz_new_image_from_file (ctx, path); }
+      fz_catch (ctx) { fz_report_error (ctx); }
+      remove (temp);
     }
-    fz_catch (mupdf_context ()) { fz_report_error (mupdf_context ()); }
   }
   return im;
 }
 
 fz_pixmap*
 mupdf_load_pixmap (url u, int w, int h, tree eff, SI pixel) {
-  fz_image* im= mupdf_load_image (u);
-
-  if (im == NULL) {
-    // attempt to convert to png
-    url temp= url_temp (".png");
-    image_to_png (u, temp, w, h);
-    c_string path (as_string (temp));
-    im= fz_new_image_from_file (mupdf_context (), path);
-    remove (temp);
-  }
+  fz_context* ctx= mupdf_context ();
+  fz_image*   im = mupdf_load_image (u);
 
   // Error Handling
   if (im == NULL) {
-    cout << "TeXmacs] warning: cannot render " << concretize (u) << "\n";
     return NULL;
   }
 
-  fz_pixmap* pix=
-      fz_get_pixmap_from_image (mupdf_context (), im, NULL, NULL, NULL, NULL);
+  fz_pixmap* pix= fz_get_pixmap_from_image (ctx, im, NULL, NULL, NULL, NULL);
   // Scaling
   if (im->w != w || im->h != h) {
-    fz_pixmap* scaled=
-        fz_scale_pixmap (mupdf_context (), pix, 0, 0, w, h, NULL);
-    fz_drop_pixmap (mupdf_context (), pix);
+    fz_pixmap* scaled= fz_scale_pixmap (ctx, pix, 0, 0, w, h, NULL);
+    fz_drop_pixmap (ctx, pix);
     pix= scaled;
   }
-  fz_drop_image (mupdf_context (), im); // we do not need it anymore
+  fz_drop_image (ctx, im); // we do not need it anymore
 
   // Build effect
   if (eff != "") {
@@ -285,7 +281,7 @@ mupdf_load_pixmap (url u, int w, int h, tree eff, SI pixel) {
     picture            dest= as_mupdf_picture (pic);
     mupdf_picture_rep* rep = (mupdf_picture_rep*) dest->get_handle ();
     fz_pixmap*         tpix= rep->pix;
-    fz_drop_pixmap (mupdf_context (), pix);
+    fz_drop_pixmap (ctx, pix);
     pix= tpix;
   }
   return pix;
