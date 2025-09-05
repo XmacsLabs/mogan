@@ -10,7 +10,6 @@
  ******************************************************************************/
 
 #include "qt_renderer.hpp"
-#include "Freetype/tt_face.hpp"
 #include "Freetype/unicode_font.hpp"
 #include "analyze.hpp"
 #include "basic.hpp"
@@ -85,8 +84,6 @@ CONCRETE_NULL_CODE (qt_pixmap);
 static hashmap<basic_character, qt_image> character_image;
 // image cache
 static hashmap<string, qt_pixmap> images;
-// emoji cache: glyphID -> (size -> picture)
-static hashmap<int, hashmap<int, picture>> emoji_cache;
 
 /*
 ** hash contents must be removed because
@@ -97,7 +94,6 @@ void
 del_obj_qt_renderer (void) {
   character_image= hashmap<basic_character, qt_image> ();
   images         = hashmap<string, qt_pixmap> ();
-  emoji_cache    = hashmap<int, hashmap<int, picture>> ();
 }
 
 /******************************************************************************
@@ -657,7 +653,7 @@ qt_renderer_rep::draw (const QFont& qfn, const QString& qs, SI x, SI y,
 }
 
 picture
-png_data_to_picture (string png_data, int w, int h) {
+qt_renderer_rep::png_data_to_picture (string png_data, int w, int h) {
   if (N (png_data) == 0) {
     // Return null if no PNG data
     return picture ();
@@ -676,70 +672,6 @@ png_data_to_picture (string png_data, int w, int h) {
 
   // Convert to QPixmap and then to picture
   return qt_picture (image, 0, 0);
-}
-
-void
-qt_renderer_rep::draw_emoji (int char_code, font_glyphs fn, SI x, SI y) {
-
-  // Cast to TrueType font glyphs representation
-  auto tt_font= static_cast<tt_font_glyphs_rep*> (fn.rep);
-  if (is_nil (tt_font->face) || is_nil (tt_font->face->cbdt_table)) {
-    return;
-  }
-
-  // Get glyph ID for the emoji character
-  int glyph_id= ft_get_char_index (tt_font->face->ft_face, char_code);
-  if (glyph_id <= 0) {
-    return;
-  }
-
-  // Calculate emoji size
-  SI    xo, yo;
-  glyph pre_gl= fn->get (char_code);
-  glyph gl    = shrink (pre_gl, std_shrinkf, std_shrinkf, xo, yo);
-  int   w= gl->width, h= gl->height;
-
-  // check cache first
-  picture emoji_picture;
-  if (emoji_cache->contains (glyph_id)) {
-    hashmap<int, picture> size_cache= emoji_cache[glyph_id];
-    if (size_cache->contains (w)) {
-      emoji_picture= size_cache[w];
-    }
-  }
-
-  // cache miss: try PNG data
-  if (is_nil (emoji_picture)) {
-
-    // First try to get PNG data from CBDT table
-    string png_data;
-    if (!is_nil (tt_font->face->cbdt_table)) {
-      int ppem= gl->lwidth; // request closest strike to desired size
-      png_data=
-          tt_font->face->cbdt_table->get_png_from_glyphid (glyph_id, ppem);
-    }
-    if (N (png_data) > 0) {
-      // Use PNG data if available
-      emoji_picture= png_data_to_picture (png_data, w, h);
-    }
-
-    if (!is_nil (emoji_picture)) {
-      if (!emoji_cache->contains (glyph_id)) {
-        emoji_cache (glyph_id)= hashmap<int, picture> ();
-      }
-      emoji_cache[glyph_id](w)= emoji_picture;
-    }
-  }
-  if (is_nil (emoji_picture)) {
-    return;
-  }
-
-  // Calculate vertical offset for better alignment
-  SI emoji_y_offset=
-      (h * std_shrinkf * 2 * PIXEL) / 10; // Move down by 20% of emoji height
-
-  // Draw the emoji picture at the specified position
-  draw_picture (emoji_picture, x, y - emoji_y_offset, 255);
 }
 
 /******************************************************************************

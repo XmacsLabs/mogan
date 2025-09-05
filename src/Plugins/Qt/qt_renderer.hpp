@@ -46,7 +46,6 @@ public:
   void draw_bis (int char_code, font_glyphs fn, SI x, SI y);
   void draw (int char_code, font_glyphs fn, SI x, SI y);
   void draw (const QFont& qfn, const QString& s, SI x, SI y, double zoom);
-  void draw_emoji (int char_code, font_glyphs fn, SI x, SI y);
   void set_pencil (pencil p);
   void set_brush (brush b);
   void line (SI x1, SI y1, SI x2, SI y2);
@@ -69,11 +68,12 @@ public:
   void apply_shadow (SI x1, SI y1, SI x2, SI y2);
 
   void draw_picture (picture pict, SI x, SI y, int alpha);
+
+  picture png_data_to_picture (string png_data, int w, int h);
 };
 
 qt_renderer_rep* the_qt_renderer ();
 QImage*          get_image (url u, int w, int h, tree eff, SI pixel);
-picture          png_data_to_picture (string png_data, int w, int h);
 
 class qt_shadow_renderer_rep : public qt_renderer_rep {
 public:

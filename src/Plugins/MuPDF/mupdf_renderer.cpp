@@ -24,6 +24,7 @@
 #include "mupdf_picture.hpp"
 #include "tm_debug.hpp"
 #include "tm_url.hpp"
+#include "unicode.hpp"
 
 // manage a single global context for fitz
 fz_context*
@@ -1024,6 +1025,10 @@ decode_index (FT_Face face, int i) {
 
 void
 mupdf_renderer_rep::draw (int c, font_glyphs fng, SI x, SI y) {
+  if (is_emoji_character (c)) {
+    if (draw_emoji (c, fng, x, y)) return;
+  }
+
   string         fontname= fng->res_name;
   pdf_font_desc* fontdesc= NULL;
 
@@ -1322,6 +1327,33 @@ mupdf_renderer_rep::apply_shadow (SI x1, SI y1, SI x2, SI y2) {
   static_cast<mupdf_renderer_rep*> (master)->encode (x1, y1);
   static_cast<mupdf_renderer_rep*> (master)->encode (x2, y2);
   master->put_shadow (this, x1, y1, x2, y2);
+}
+
+picture
+mupdf_renderer_rep::png_data_to_picture (string png_data, int w, int h) {
+  fz_context* ctx= mupdf_context ();
+  fz_image*   img= NULL;
+  fz_pixmap*  pix= NULL;
+  fz_buffer*  buf= NULL;
+
+  fz_try (ctx) {
+    buf= fz_new_buffer_from_shared_data (
+        ctx, reinterpret_cast<unsigned char*> (png_data.begin ()),
+        N (png_data));
+    img= fz_new_image_from_buffer (ctx, buf);
+    pix= fz_get_pixmap_from_image (ctx, img, NULL, NULL, NULL, NULL);
+  }
+  fz_catch (ctx) { fz_report_error (ctx); }
+  fz_drop_buffer (ctx, buf);
+  picture            pic= mupdf_picture (pix, 0, 0);
+  mupdf_picture_rep* mpic=
+      reinterpret_cast<mupdf_picture_rep*> (pic->get_handle ());
+  mpic->im    = img;
+  double scale= min ((double) w / img->w, (double) h / img->h);
+  mpic->w     = img->w * scale;
+  mpic->h     = img->h * scale;
+  fz_drop_pixmap (ctx, pix);
+  return pic;
 }
 
 static void

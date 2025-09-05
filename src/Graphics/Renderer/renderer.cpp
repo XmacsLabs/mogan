@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "renderer.hpp"
+#include "Freetype/tt_face.hpp"
 #include "colors.hpp"
 #include "frame.hpp"
 #include "image_files.hpp"
@@ -479,6 +480,81 @@ renderer_rep::clear_pattern (SI x1, SI y1, SI x2, SI y2) {
 void
 renderer_rep::draw_scalable (scalable im, SI x, SI y, int alpha) {
   im->draw (this, x, y, alpha);
+}
+
+bool
+renderer_rep::draw_emoji (int char_code, font_glyphs fn, SI x, SI y) {
+  // emoji cache: glyphID -> (size -> picture)
+  static hashmap<int, hashmap<int, picture>> emoji_cache;
+
+  // Cast to TrueType font glyphs representation
+  auto tt_font= static_cast<tt_font_glyphs_rep*> (fn.rep);
+  if (is_nil (tt_font->face) || is_nil (tt_font->face->cbdt_table)) {
+    return false;
+  }
+
+  // Get glyph ID for the emoji character
+  int glyph_id= ft_get_char_index (tt_font->face->ft_face, char_code);
+  if (glyph_id <= 0) {
+    return false;
+  }
+
+  // Calculate emoji size
+  SI    xo, yo;
+  glyph pre_gl= fn->get (char_code);
+  glyph gl    = shrink (pre_gl, std_shrinkf, std_shrinkf, xo, yo);
+  int   w= gl->width, h= gl->height;
+
+  // check cache first
+  picture emoji_picture;
+  if (emoji_cache->contains (glyph_id)) {
+    hashmap<int, picture> size_cache= emoji_cache[glyph_id];
+    if (size_cache->contains (w)) {
+      emoji_picture= size_cache[w];
+    }
+  }
+
+  // cache miss: try PNG data
+  if (is_nil (emoji_picture)) {
+
+    // First try to get PNG data from CBDT table
+    string png_data;
+    if (!is_nil (tt_font->face->cbdt_table)) {
+      int ppem= gl->lwidth; // request closest strike to desired size
+      png_data=
+          tt_font->face->cbdt_table->get_png_from_glyphid (glyph_id, ppem);
+    }
+    if (N (png_data) > 0) {
+      // Use PNG data if available
+      emoji_picture= png_data_to_picture (png_data, w, h);
+    }
+
+    if (!is_nil (emoji_picture)) {
+      if (!emoji_cache->contains (glyph_id)) {
+        emoji_cache (glyph_id)= hashmap<int, picture> ();
+      }
+      emoji_cache[glyph_id](w)= emoji_picture;
+    }
+  }
+  if (is_nil (emoji_picture)) {
+    return false;
+  }
+
+  // Calculate vertical offset for better alignment
+  SI emoji_y_offset=
+      (h * std_shrinkf * 2 * PIXEL) / 10; // Move down by 20% of emoji height
+
+  // Draw the emoji picture at the specified position
+  draw_picture (emoji_picture, x, y - emoji_y_offset, 255);
+  return true;
+}
+
+picture
+renderer_rep::png_data_to_picture (string png_data, int w, int h) {
+  (void) png_data;
+  (void) w;
+  (void) h;
+  TM_FAILED ("png_data_to_picture is not supported");
 }
 
 /******************************************************************************
