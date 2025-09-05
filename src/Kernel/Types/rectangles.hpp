@@ -53,6 +53,7 @@ typedef list<rectangle> rectangles;
 rectangles operator- (rectangles l1, rectangles l2);
 rectangles operator& (rectangles l1, rectangles l2);
 rectangles operator| (rectangles l1, rectangles l2);
+rectangles disjoint_union (rectangles l, rectangle r);
 rectangles operator* (rectangles l, int d);
 rectangles operator/ (rectangles l, int d);
 rectangles translate (rectangles l, SI x, SI y);

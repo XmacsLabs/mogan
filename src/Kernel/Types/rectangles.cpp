@@ -185,13 +185,46 @@ adjacent (rectangle r1, rectangle r2) {
           ((r1->x1 == r2->x1) && (r1->x2 == r2->x2)));
 }
 
+static inline rectangles
+reverse_append (rectangles rev_prefix, rectangles tail) {
+  rectangles acc= tail;
+  for (rectangles p= rev_prefix; !is_nil (p); p= p->next)
+    acc= rectangles (p->item, acc);
+  return acc;
+}
+
+void
+disjoint_union_inplace (rectangles& out, rectangles l, rectangle r,
+                        rectangles& scratch_rev) {
+  scratch_rev= rectangles ();
+
+  rectangles cur= l;
+  while (!is_nil (cur) && !adjacent (cur->item, r)) {
+    scratch_rev= rectangles (cur->item, scratch_rev);
+    cur        = cur->next;
+  }
+
+  if (is_nil (cur)) {
+    scratch_rev= rectangles (r, scratch_rev);
+    out        = reverse_append (scratch_rev, rectangles ());
+    return;
+  }
+
+  rectangle merged= least_upper_bound (cur->item, r);
+  cur             = cur->next;
+  while (!is_nil (cur) && adjacent (cur->item, merged)) {
+    merged= least_upper_bound (cur->item, merged);
+    cur   = cur->next;
+  }
+  scratch_rev= rectangles (merged, scratch_rev);
+  out        = reverse_append (scratch_rev, cur);
+}
+
 rectangles
 disjoint_union (rectangles l, rectangle r) {
-  if (is_nil (l)) return r;
-  if (adjacent (l->item, r))
-    return disjoint_union (l->next,
-                           least_upper_bound (rectangles (l->item, r)));
-  return rectangles (l->item, disjoint_union (l->next, r));
+  rectangles out, scratch_rev;
+  disjoint_union_inplace (out, l, r, scratch_rev);
+  return out;
 }
 
 rectangles
