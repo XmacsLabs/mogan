@@ -555,6 +555,7 @@ renderer_rep::png_data_to_picture (string png_data, int w, int h) {
   (void) w;
   (void) h;
   TM_FAILED ("png_data_to_picture is not supported");
+  return picture ();
 }
 
 /******************************************************************************
