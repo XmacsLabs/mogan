@@ -548,8 +548,8 @@
                (debug-message "debug-io" (string-append msg "\n" path))
                (notify-now `(concat ,msg "<br>" ,vname)))))
           ((and (url-test? name "f") (not (url-test? name "r")))
-           (with msg `(concat "You do not have read access to " ,vname)
-             (set-message msg "Load file")))
+           (with msg `(concat ,(translate "You do not have read access to") " " ,vname)
+             (show-message msg "Load file")))
           (else (load-buffer-load name opts)))))
 
 (define (load-buffer-check-autosave name opts)
@@ -660,8 +660,8 @@
            (with msg `(concat "The file " ,vname " does not exist")
              (set-message msg "Import file")))
           ((not (url-test? name "r"))
-           (with msg `(concat "You do not have read access to " ,vname)
-             (set-message msg "Import file")))
+           (with msg `(concat ,(translate "You do not have read access to") " " ,vname)
+             (show-message msg "Import file")))
           (else (import-buffer-import name fm opts)))))
 
 (tm-define (import-buffer-main name fm opts)

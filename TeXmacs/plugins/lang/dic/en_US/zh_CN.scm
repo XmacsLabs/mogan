@@ -71,6 +71,7 @@
 ("Use line wrapping for lines which are longer than 80 characters" "自动换行超过 80 个字符的行")
 ("Use the Formatted Mogan Scheme" "使用格式化后的 Mogan Scheme")
 ("Windows Bitmap" "Windows位图")
+("You do not have read access to" "你没有权限读取")
 ("a series" "A系列")
 ("abbreviation" "缩写")
 ("about menu" "关于菜单")
