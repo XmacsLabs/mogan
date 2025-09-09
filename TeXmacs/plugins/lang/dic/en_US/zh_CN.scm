@@ -57,6 +57,7 @@
 ("Taiwan" "中国台湾")
 ("TeXmacs macro" "TeXmacs宏")
 ("TeXmacs online docs" "TeXmacs在线文档")
+("The target file is not writable. Save as a different file?" "目标文件不可写，是否另存为？")
 ("Unable to include file from another drive: " "无法包含另一个盘的文件：")
 ("Unable to link images from another drive: " "无法链接另一个盘的图片：")
 ("Unable to make animation from another drive: " "无法创建另一个盘的动画：")

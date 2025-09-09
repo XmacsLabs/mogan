@@ -244,9 +244,12 @@
              (notify-now `(concat ,msg "<br>" ,vname)))
            #t)
           ((and (url-test? name "f") (not (url-test? name "w")))
-           (with msg "You do not have write access for:"
-             (notify-now `(concat ,msg "<br>" ,vname)))
-           #t)
+           (user-confirm "The target file is not writable. Save as a different file?" #f
+             (lambda (act)
+               (if act
+                 (begin (choose-file save-buffer-as "Save TeXmacs file" "action_save_as")
+                          #f)
+                 #t))))
           (else #f))))
 
 (define (save-buffer-check-permissions name opts)
