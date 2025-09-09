@@ -53,8 +53,8 @@
 
 (define (append-options l1 l2)
   (cond ((not l1) l2)
-	((and (pair? l1) (== (car l1) :recurse)) (append (cdr l1) l2))
-	(else l1)))
+        ((and (pair? l1) (== (car l1) :recurse)) (list-union (cdr l1) l2))
+        (else l1)))
 
 (define (collect-options l t)
   (when (not (ahash-ref t l))
