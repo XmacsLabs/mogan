@@ -193,25 +193,7 @@
       ("Carved wood" (make* 'carved-wood-frame "std-frame"))
       ("Decorated wood" (make* 'decorated-wood-frame "std-frame"))
       ("Black floral I" (make* 'black-floral1-frame "std-frame"))
-      ("Black floral II" (make* 'black-floral2-frame "std-frame")))
-  (-> "Shadow"
-      (group "Contour")
-      ("Drop" (make* 'drop-contour "std-shadow"))
-      ("Bend in" (make* 'bend-in-contour "std-shadow"))
-      ("Bend out" (make* 'bend-out-contour "std-shadow"))
-      ("Bend diagonal" (make* 'diagonal-bend-in-contour "std-shadow"))
-      ---
-      (group "South east")
-      ("Drop" (make* 'drop-shadow "std-shadow"))
-      ("Bend in" (make* 'bend-in-shadow "std-shadow"))
-      ("Bend out" (make* 'bend-out-shadow "std-shadow"))
-      ("Bend bottom" (make* 'half-bend-in-shadow "std-shadow"))
-      ("Bend corner" (make* 'quarter-bend-in-shadow "std-shadow"))
-      ---
-      (group "South")
-      ("Drop" (make* 'drop-down "std-shadow"))
-      ("Bend bottom" (make* 'half-bend-in-down "std-shadow"))))
-
+      ("Black floral II" (make* 'black-floral2-frame "std-frame"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Notes and floating objects
