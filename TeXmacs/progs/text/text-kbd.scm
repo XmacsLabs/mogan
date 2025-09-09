@@ -490,6 +490,7 @@
   ("text 3" (make-section 'subsubsection))
   ("text 4" (make-section 'paragraph))
   ("text 5" (make-section 'subparagraph))
+  ("text 6" (make-section 'appendix))
 
   ("F5" (make 'em))
   ("F6" (make 'strong))

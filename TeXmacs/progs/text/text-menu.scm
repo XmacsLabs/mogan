@@ -122,7 +122,9 @@
   ("Subsubsection" (make-section 'subsubsection))
   ---
   ("Paragraph::section" (make-section 'paragraph))
-  ("Subparagraph" (make-section 'subparagraph)))
+  ("Subparagraph" (make-section 'subparagraph))
+  ---
+  ("Appendix" (make-section 'appendix)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Enunciations, quotations and programs
