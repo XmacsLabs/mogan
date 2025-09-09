@@ -69,6 +69,10 @@
 
   <assign|textgreater|\<gtr\>>
 
+  <assign|textbar|\|>
+
+  <assign|textasciitilde|~>
+
   <assign|iint|<macro|<big|iint>>>
 
   <assign|iiint|<macro|<big|iiint>>>
@@ -84,6 +88,8 @@
   <assign|nbhyph|<macro|-<no-break>>>
 
   <assign|boxed|<macro|x|<ornament|<arg|x>>>>
+
+  <assign|textquotesingle|'>
 
   \;
 </body>
