@@ -429,9 +429,17 @@ void
 edit_interface_rep::handle_keypress (string key_u8, time_t t) {
   if (is_nil (buf)) return;
 
-  string key= utf8_to_cork (key_u8);
-  if (tm_string_length (key) == 1 && starts (key, "<") && ends (key, ">") &&
-      !starts (key, "<#")) {
+  string key        = utf8_to_cork (key_u8);
+  bool   need_unwrap= true;
+  int    key_N      = tm_string_length (key);
+  for (int i= 0; i < key_N; i++) {
+    string key_i= tm_forward_access (key, i);
+    if (!(starts (key_i, "<") && ends (key_i, ">") && !starts (key_i, "<#"))) {
+      need_unwrap= false;
+      break;
+    }
+  }
+  if (need_unwrap) {
     key= key (1, N (key) - 1);
   }
 
