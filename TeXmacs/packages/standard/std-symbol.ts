@@ -91,6 +91,8 @@
 
   <assign|textquotesingle|'>
 
+  <assign|mathscr|<macro|body|<with|font|cal*|<arg|body>>>>
+
   \;
 </body>
 
