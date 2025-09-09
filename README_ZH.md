@@ -108,7 +108,10 @@ xmake build stem
 - **社区负责人邮箱**: yansong@liii.pro
 - **Liii STEM**: 通过 [官方网站](https://liiistem.cn) 联系
 
-
+### 📚 开发文档
+- [Windows 开发指南](./devel/Develop_on_Windows_ZH.md)
+- [macOS 开发指南](./devel/Develop_on_macOS_ZH.md)
+- [Linux 开发指南](./devel/Develop_on_Linux_ZH.md)
 
 
 
