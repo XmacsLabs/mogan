@@ -58,8 +58,8 @@
 (tm-define (set-language-and-notify lan)
   (let ((old (get-preference "language")))
     (if (== lan old)
-        (set-preference "language" lan) 
-        (let ((msg "Requires restarting the Mogan Editor to take full effect. Restart now?"))
+        (set-preference "language" lan)
+        (let ((msg (translate "Requires restarting Mogan STEM to take full effect. Restart now?")))
           (user-confirm msg #f
             (lambda (answ)
               (if answ
