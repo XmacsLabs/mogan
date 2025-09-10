@@ -394,10 +394,10 @@ qt_gui_rep::set_selection (string key, tree t, string s, string sv, string sh,
     if (enc == "auto") enc= get_locale_charset ();
 
     if (enc == "utf-8" || enc == "UTF-8")
-      md->setText (QString::fromUtf8 (selection, N (s)));
+      md->setText (QString::fromUtf8 (selection, -1));
     else if (enc == "iso-8859-1" || enc == "ISO-8859-1")
-      md->setText (QString::fromLatin1 (selection, N (s)));
-    else md->setText (QString::fromLatin1 (selection, N (s)));
+      md->setText (QString::fromLatin1 (selection, -1));
+    else md->setText (QString::fromLatin1 (selection, -1));
   }
   else if (format == "latex") {
     string enc= get_preference ("texmacs->latex:encoding");
