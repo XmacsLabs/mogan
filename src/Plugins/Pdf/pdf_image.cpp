@@ -197,14 +197,38 @@ pdf_image_rep::flush_png (PDFWriter& pdfw, url image) {
 }
 #endif
 
+static string
+judge_picture_format (url image) {
+  string data;
+  if (is_ramdisc (image)) {
+    data= as_string (image[1][2]);
+  }
+  else {
+    load_string (concretize_url (image), data, false);
+  }
+  if (N (data) > 8) {
+    if (data[0] == '\xff' && data[1] == '\xd8') {
+      return "jpeg";
+    }
+    if (!strncmp (data.begin (), "\x89PNG\x0d\x0a\x1a\x0a", 8)) {
+      return "png";
+    }
+    if (!strncmp (data.begin (), "%PDF-", 5)) {
+      return "pdf";
+    }
+    return "unknown";
+  }
+  return "invalid";
+}
+
 void
 pdf_image_rep::flush (PDFWriter& pdfw) {
   url name= resolve (u);
   if (is_none (name)) name= "$TEXMACS_PATH/misc/pixmaps/unknown.png";
 
   url    temp;
-  string s= suffix (name);
-  // debug_convert << "flushing :" << name << LF;
+  string s= judge_picture_format (u);
+  // debug_convert << "flushing :" << name << " type: " << s << LF;
   if (s == "pdf") {
     temp= name;
     name= url_none ();
@@ -215,7 +239,7 @@ pdf_image_rep::flush (PDFWriter& pdfw) {
     // note that we have to return since flush_raster and flush_jpg
     // already build the appopriate Form XObject into the PDF
 
-    if ((s == "jpg") || (s == "jpeg"))
+    if (s == "jpeg")
       if (flush_jpg (pdfw, name)) return;
 #ifndef PDFHUMMUS_NO_PNG
     if (s == "png")
