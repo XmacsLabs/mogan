@@ -358,14 +358,14 @@
     ======
     (bold (text "This page header"))
     ===
-    (resize (if flag? "600px" "330px") "60px"
-      (texmacs-input `(document ,(get-tag-arg u 'set-this-page-header))
+      (resize (if flag? "350px" "100px") "60px"
+        (texmacs-input `(document ,(get-tag-arg u 'set-this-page-header))
                      `(style (tuple ,@style "gui-base")) (header-buffer)))
     === ===
     (bold (text "This page footer"))
     ===
-    (resize (if flag? "600px" "330px") "60px"
-      (texmacs-input `(document ,(get-tag-arg u 'set-this-page-footer))
+      (resize (if flag? "350px" "100px") "60px"
+        (texmacs-input `(document ,(get-tag-arg u 'set-this-page-footer))
                      `(style (tuple ,@style "gui-base")) (footer-buffer)))
     ======
     (explicit-buttons
@@ -386,9 +386,9 @@
     (and-with doc (tree-innermost 'document)
       (and-with par (tree-down doc)
         (collect-settings par t)))
-    (dialogue-window (page-formatter u st t #t)
-                     noop "Page format"
-                     (header-buffer) (footer-buffer))))
+    (auxiliary-widget (page-formatter u st t #t)
+                      noop "Page format"
+                      (header-buffer) (footer-buffer))))
 
 (tm-define (open-page-format)
   (:interactive #t)

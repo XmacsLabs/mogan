@@ -839,6 +839,7 @@
 ("has completed its task" "")
 ("hat" "")
 ("header and footer" "页眉页脚")
+("headers and footers" "页眉页脚")
 ("header bars" "顶部各栏")
 ("header" "页眉")
 ("headers" "页眉页脚")

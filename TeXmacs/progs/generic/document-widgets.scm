@@ -480,25 +480,29 @@
       (for (var header-parameters)
         (bold (text (eval (parameter-name var))))
         ===
-        (resize "600px" "60px"
-          (texmacs-input `(document ,(initial-get-tree u var))
-                         `(style (tuple ,@style "gui-base"))
+        (resize "350px" "100px"
+            (texmacs-input `(document ,(initial-get-tree u var))
+                           `(style (tuple ,@style "gui-base"))
                          (header-buffer var)))
         ===)))
   === ===
   (explicit-buttons
    (hlist
+     // // // // //
      (text "Insert:")
      // //
      ("Tab" (when (editing-headers?) (make-htab "5mm")))
      // //
      ("Page number" (when (editing-headers?) (make 'page-the-page)))
+     // //
      >>>
+     // //
      ;;("Reset"
      ;; (initial-default u header-parameters)
      ;; (refresh-now "page-header-settings"))
      ;;// //
-     ("Ok" (apply-headers-settings u) (quit)))))
+     ("Ok" (apply-headers-settings u) (quit))
+     // // // // //)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Document -> Page
@@ -515,10 +519,7 @@
           (dynamic (page-formatter-margins u quit))))
       (tab (text "Breaking")
         (padded
-          (dynamic (page-formatter-breaking u quit))))
-      (tab (text "Headers")
-        (padded
-          (dynamic (page-formatter-headers u style quit)))))))
+          (dynamic (page-formatter-breaking u quit)))))))
 
 (tm-define (open-document-page-format-window)
   (:interactive #t)
@@ -534,6 +535,19 @@
   (if (side-tools?)
       (tool-select :right 'document-page-tool)
       (open-document-page-format-window)))
+
+(tm-define (open-page-headers-footers-window)
+  (:interactive #t)
+  (let* ((u  (current-buffer))
+         (st (embedded-style-list "macro-editor")))
+    (apply auxiliary-widget
+           (cons* (lambda (quit) (page-formatter-headers u st quit))
+                  noop "Headers and footers"
+                  (header-buffers)))))
+
+(tm-define (open-page-headers-footers)
+  (:interactive #t)
+  (open-page-headers-footers-window))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Document -> Metadata

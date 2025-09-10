@@ -722,6 +722,13 @@
           ("Other" (init-interactive-env "page-flexibility")))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; The Document -> Headers and footers menu
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(menu-bind document-headers-footers-menu
+  ("Edit headers and footers" (open-page-headers-footers)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; The Document -> Metadata menu
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -867,6 +874,7 @@
   (-> "Font" (link document-full-font-menu))
   (-> "Paragraph" (link document-paragraph-menu))
   (-> "Page" (link document-page-menu))
+  (-> "Headers and footers" (link document-headers-footers-menu))
   (-> "Metadata" (link document-metadata-menu))
   (-> "Bibliography"
       (when (buffer-has-biblio? (current-buffer))
@@ -898,6 +906,7 @@
   ("Font" (interactive open-document-font-selector))
   ("Paragraph" (open-document-paragraph-format))
   ("Page" (open-document-page-format))
+  ("Headers and footers" (open-page-headers-footers))
   ("Metadata" (open-document-metadata))
   (when (buffer-has-biblio? (current-buffer))
     ("Bibliography" (open-biblio)))

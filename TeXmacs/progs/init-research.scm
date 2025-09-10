@@ -168,7 +168,8 @@
              open-gradient-selector open-background-picture-selector)
 (lazy-define (generic document-widgets) open-source-tree-preferences
              open-document-paragraph-format open-document-page-format
-             open-document-metadata open-document-colors)
+             open-document-metadata open-document-colors
+             open-page-headers-footers)
 (tm-property (open-search) (:interactive #t))
 (tm-property (open-replace) (:interactive #t))
 (tm-property (open-paragraph-format) (:interactive #t))
@@ -179,6 +180,7 @@
 (tm-property (open-document-page-format) (:interactive #t))
 (tm-property (open-document-metadata) (:interactive #t))
 (tm-property (open-document-colors) (:interactive #t))
+(tm-property (open-page-headers-footers) (:interactive #t))
 (tm-property (open-pattern-selector cmd w) (:interactive #t))
 (tm-property (open-gradient-selector cmd) (:interactive #t))
 (tm-property (open-background-picture-selector cmd) (:interactive #t))
