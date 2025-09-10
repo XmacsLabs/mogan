@@ -106,7 +106,8 @@
          (box_h (- (fourth box) (second box)))
          (width (if (and opt_w (!= opt_w 0)) opt_w box_w))
          (height (if (and opt_h (!= opt_h 0)) opt_h box_w))
-         (page_size_in_px (string-append " -g" (number->string width) "x" (number->string height)))
+         (page_size_in_px (string-append " -g" (number->string (exact (floor width))) "x"
+                                               (number->string (exact (floor height)))))
          (resolution_in_px (string-append " -r" (number->string (round (/ (* width 72.0) box_w))) "x"
                                                 (number->string (round (/ (* height 72.0) box_h))) " "))
          (offset-x (number->string (- (first box))))
