@@ -272,13 +272,20 @@
       (apply plugin-feed `(,lan ,ses ,@(car x) ,(cdr x))))))
 
 (tm-define (silent-feed* lan ses in return opts)
-  (with ret (lambda (x)
-              (return (cond ((== x :dead) '(script-dead))
-                            ((== x :interrupted) '(script-interrupted))
-                            ((!= (tm-arity (cdr x)) 0)
-                             `(with "color" "red" ,(cdr x)))
-                            (else (car x)))))
-    (silent-feed lan ses in ret opts)))
+  (define (result-wrap x)
+    (cond ((== x :dead) '(script-dead))
+          ((== x :interrupted) '(script-interrupted))
+          ((!= (tm-arity (cdr x)) 0)
+           `(with "color" "red" ,(cdr x)))
+          (else (car x))))
+ 
+  (define (result-callback x)
+    (let ((r1 (result-wrap x)))
+      (if (tree? r1)
+          (return r1)
+          (return (stree->tree r1)))))
+
+  (silent-feed lan ses in result-callback opts))
 
 (define (plugin-command-answer x)
   (if (tm-func? x 'document 1) (plugin-command-answer (cadr x))
