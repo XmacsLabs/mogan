@@ -117,8 +117,6 @@
         ---))
   ("Link image" (choose-file make-link-image "Load image" "image"))
   ("Insert image" (choose-file make-inline-image "Load image" "image"))
-  (if (detailed-menus?)
-      ("Thumbnails" (interactive make-thumbnails)))
   (if (or (lazy-plugin-force)
 	  (and (style-has? "scripts-dtd") (scripts-defined? "gnuplot")))
       (-> "Plot" (link scripts-plot-menu)))
