@@ -233,11 +233,6 @@
   ("math:under >" (make-wide-under "<wide-varrightarrow>"))
   ("math:under < >" (make-wide-under "<wide-varleftrightarrow>"))
 
-  ("table N c" (make 'choice))
-  ("table N m" (make 'matrix))
-  ("table N M" (make 'bmatrix))
-  ("table N d" (make 'det))
-  ("table N s" (make 'stack))
   ("{ math t" (make 'choice))
   ("( math t" (make 'matrix))
   ("[ math t" (make 'bmatrix))
@@ -2580,21 +2575,6 @@
   ;;("p p" "<mathpi>")
   ("R E" "<Re>")
   ("I M" "<Im>"))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Hacks to work around the problem that MacOS reserves Alt-based shortcuts
-;; for its own personal use
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(when (os-macos?)
-  (kbd-map
-    (:mode in-math?)
-    ("table N T" (make 'tabular*))
-    ("table N c" (make 'choice))
-    ("table N m" (make 'matrix))
-    ("table N M" (make 'bmatrix))
-    ("table N d" (make 'det))
-    ("table N s" (make 'stack))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Textual operators
