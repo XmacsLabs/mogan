@@ -219,12 +219,12 @@
   ("search find" (search-next-match #t))
   ("search again" (search-next-match #t))
 
-  ("table N t" (make 'tabular))
-  ("table N T" (make 'tabular*))
-  ("table N w" (make 'wide-tabular))
-  ("table N b" (make 'block))
-  ("table N B" (make 'block*))
-  ("table N W" (make 'wide-block)))
+  ("cmd t" (make 'tabular))
+  ("cmd t var" (make 'tabular*))
+  ("cmd t var var" (make 'wide-tabular))
+  ("cmd t var var var" (make 'block))
+  ("cmd t var var var var" (make 'block*))
+  ("cmd t var var var var var" (make 'wide-block)))
 
 (kbd-map
   (:mode in-hybrid?)
