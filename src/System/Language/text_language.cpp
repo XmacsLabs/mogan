@@ -453,8 +453,10 @@ oriental_language_rep::hyphenate (string s, int after, string& left,
  ******************************************************************************/
 
 struct chinese_language_rep : language_rep {
-  hashset<string> do_not_start;
-  hashset<string> do_not_end;
+  hashset<string>         do_not_start;
+  hashset<string>         do_not_end;
+  hashmap<string, string> en_patterns;
+  hashmap<string, string> en_hyphenations;
   chinese_language_rep (string lan_name);
   text_property advance (tree t, int& pos);
   array<int>    get_hyphens (string s);
@@ -462,7 +464,11 @@ struct chinese_language_rep : language_rep {
 };
 
 chinese_language_rep::chinese_language_rep (string lan_name)
-    : language_rep (lan_name), do_not_start (), do_not_end () {
+    : language_rep (lan_name), do_not_start (), do_not_end (),
+      en_patterns ("?"), en_hyphenations ("?") {
+  // 在构造函数中加载英文断字表，与英文语言实现方式一致
+  load_hyphen_tables ("us", en_patterns, en_hyphenations, true);
+
   // half width
   do_not_start << string (".") << string (",") << string (":") << string (";")
                << string ("!") << string ("?") << string ("/") << string ("-");
@@ -544,18 +550,74 @@ chinese_language_rep::advance (tree t, int& pos) {
 
 array<int>
 chinese_language_rep::get_hyphens (string s) {
-  int        i;
-  array<int> penalty (N (s) + 1);
+  int i, pos, start, j;
+  int s_N= N (s);
+
+  array<int> penalty (s_N + 1);
+  // 默认所有位置都不允许断字
   for (i= 0; i < N (penalty); i++)
     penalty[i]= HYPH_INVALID;
+
+  // 处理英文字母序列的断字
+  for (pos= 0; pos < s_N;) {
+    // 跳过非字母字符
+    while (pos < s_N && !is_iso_alpha (s[pos]) && s[pos] != '<')
+      pos++;
+    if (pos >= s_N) break;
+
+    // 找到英文单词的结束位置
+    start= pos;
+    while (pos < s_N && (is_iso_alpha (s[pos]) || s[pos] == '<')) {
+      if (s[pos] == '<') {
+        // 跳过重音符号 <#E9> 等
+        while (pos < s_N && s[pos] != '>')
+          pos++;
+        if (pos < s_N) pos++;
+      }
+      else pos++;
+    }
+
+    // 对英文单词应用断字规则，与英文语言实现方式一致
+    string word= s (start, pos);
+    if (N (word) > 0) {
+      array<int> word_penalty=
+          ::get_hyphens (word, en_patterns, en_hyphenations);
+      for (j= 0; j < N (word_penalty) && start + j < N (penalty); j++) {
+        if (word_penalty[j] < HYPH_INVALID) penalty[start + j]= word_penalty[j];
+      }
+
+      // 对于过长的字母串，如果标准断字规则没有找到合适的断点，则强制断字
+      const int MAX_WORD_LENGTH= 8;
+      if (N (word) > MAX_WORD_LENGTH) {
+        bool has_valid_break= false;
+        // 检查是否已有有效的断字点
+        for (j= 1; j < N (word_penalty) - 1; j++) {
+          if (word_penalty[j] < HYPH_INVALID) {
+            has_valid_break= true;
+            break;
+          }
+        }
+
+        // 如果没有有效断字点，则强制在合适位置添加断字点
+        if (!has_valid_break) {
+          for (j= 2; j < N (word) - 1; j+= 1) { // 每个字符位置都允许断字点
+            if (start + j < N (penalty)) {
+              penalty[start + j]= HYPH_STD; // 标准断字优先级
+            }
+          }
+        }
+      }
+    }
+  }
+
   return penalty;
 }
 
 void
 chinese_language_rep::hyphenate (string s, int after, string& left,
                                  string& right) {
-  left = s (0, after + 1);
-  right= s (after + 1, N (s));
+  array<int> penalty= get_hyphens (s);
+  std_hyphenate (s, after, left, right, penalty[after]);
 }
 
 /******************************************************************************

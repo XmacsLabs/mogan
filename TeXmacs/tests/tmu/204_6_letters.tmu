@@ -1,0 +1,71 @@
+<TMU|<tuple|1.1.0|2025.2.0-alpha>>
+
+<style|<tuple|generic|number-europe|chinese>>
+
+<\body>
+  短单词：cat dog test file hello world
+
+  \;
+
+  cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat cat
+
+  dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog dog
+
+  test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test
+
+  file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file file\ 
+
+  hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello
+
+  world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world
+
+  \;
+
+  中等单词：function program method
+
+  \;
+
+  qwe function function function function function function function function function function function function function function function function function function function function function function\ 
+
+  program program program program program program program program program program program program program program program program program program program program program program
+
+  method method method method method method method method method method method method method method method method method method method method method method method method
+
+  \;
+
+  长单词：programming implementation internationalization
+
+  \;
+
+  qweqwe programming programming programming programming programming programming programming programming programming programming programming programming programming
+
+  qweqwe implementation implementation implementation implementation implementation implementation implementation implementation implementation implementation implementation
+
+  internationalization internationalization internationalization internationalization internationalization internationalization internationalization internationalization internationalization
+
+  \;
+
+  这是一个programming语言的implementation示例。我们需要考虑internationalization和localization的问题。在development过程中，compatibility是一个非常重要的consideration。
+
+  \;
+
+  这是一段纯中文文本，用来验证中文字符的正常断行功能不会受到修改的影响。中文应该保持原有的断行规则，标点符号如句号、逗号、冒号等也应该正常处理。
+
+  qweqweqweqwe università università università università università università università università università università università università università università università università università università
+
+  \;
+
+  qweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqwe
+
+  \;
+
+  qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|papyrus>
+    <associate|page-orientation|portrait>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
