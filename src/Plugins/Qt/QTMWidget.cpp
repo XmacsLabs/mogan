@@ -584,7 +584,7 @@ QTMWidget::dropEvent (QDropEvent* event) {
   const QMimeData* md= event->mimeData ();
   QByteArray       buf;
 
-  if (md->hasUrls ()) {
+  if (md->hasUrls () && !md->hasImage ()) {
     QList<QUrl> l= md->urls ();
     for (int i= 0; i < l.size (); i++) {
       string name;
@@ -605,10 +605,20 @@ QTMWidget::dropEvent (QDropEvent* event) {
 #endif
           (extension == "pdf") || (extension == "png") ||
           (extension == "jpg") || (extension == "jpeg")) {
+        QBuffer qbuf (&buf);
+        QImage  image;
+        qbuf.open (QIODevice::WriteOnly);
+        image.load (l[i].toLocalFile ());
+        image.save (&qbuf, "PNG");
+        QSize  size= image.size ();
+        int    ww= size.width (), hh= size.height ();
         string w, h;
-        qt_pretty_image_size (url_system (orig_name), w, h);
-        tree im (IMAGE, name, w, h, "", "");
-        doc << im;
+        qt_pretty_image_size (ww, hh, w, h);
+        tree t (IMAGE,
+                tuple (tree (RAW_DATA, string (buf.constData (), buf.size ())),
+                       name),
+                w, h, "", "");
+        doc << t;
       }
       else {
         doc << name;
