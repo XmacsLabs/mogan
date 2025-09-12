@@ -124,7 +124,8 @@ package("liii-pdfhummus")
 
     set_sourcedir(path.join(os.scriptdir(), "3rdparty/pdfhummus"))
 
-    add_deps("zlib", "freetype", "liii-libaesgm")
+    add_deps("zlib", "liii-libaesgm")
+    add_deps("freetype", {configs={png=true}})
 
     add_configs("libtiff", {description = "Supporting tiff image", default = false, type = "boolean"})
     add_configs("libjpeg", {description = "Support DCT encoding", default = false, type = "boolean"})
@@ -183,7 +184,6 @@ function using_legacy_apt ()
     return (linuxos.name() == "uos") or (linuxos.name () == "ubuntu" and linuxos.version():major() == 20)
 end
 
-local FREETYPE_VERSION = "2.12.1"
 local LIBICONV_VERSION = "1.17"
 
 -- package: s7
@@ -208,7 +208,10 @@ if using_legacy_apt() then
 else
     if is_plat("linux") then
         add_requires("apt::libfreetype-dev", {alias="freetype"})
+    else
+        add_requires("freetype "..FREETYPE_VERSION, {system=false, configs={png=true}})
     end
+    
 end
 add_requires("argh v1.3.2")
 
