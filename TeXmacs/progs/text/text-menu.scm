@@ -48,7 +48,7 @@
     ("Cell" (open-cell-properties))
     ("Table" (open-table-properties)))
   ---
-  (-> "Whitespace" (link space-menu))
+ ;; (-> "Whitespace" (link space-menu))
   (-> "Indentation" (link indentation-menu))
   (-> "Break" (link break-menu))
   (when (and (selection-active-small?) (tm-atomic? (selection-tree)))
