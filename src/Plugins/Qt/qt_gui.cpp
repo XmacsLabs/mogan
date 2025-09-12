@@ -260,6 +260,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   const QMimeData* md          = cb->mimeData (mode);
   QByteArray       buf;
   string           input_format;
+  QSize            image_size;
 
   s= "";
   t= "none";
@@ -291,8 +292,20 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       if (md->hasUrls ()) {
         QList<QUrl> l= md->urls ();
         if (l.size () == 1) {
-          s           = from_qstring (l[0].toString ());
-          input_format= "linked-picture";
+          QImage  image;
+          QString filePath= l[0].toLocalFile ();
+
+          if (!image.load (filePath)) {
+            image= qvariant_cast<QImage> (md->imageData ());
+          }
+
+          if (!image.isNull ()) {
+            QBuffer qbuf (&buf);
+            qbuf.open (QIODevice::WriteOnly);
+            image.save (&qbuf, "PNG");
+            input_format= "picture";
+            image_size  = image.size ();
+          }
         }
       }
       else {
@@ -301,6 +314,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
         qbuf.open (QIODevice::WriteOnly);
         image.save (&qbuf, "PNG");
         input_format= "picture";
+        image_size  = image.size ();
       }
     }
     else if (md->hasHtml ()) {
@@ -329,8 +343,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
     s= correct_buggy_html_paste (s);
   if (input_format != "picture" && seems_buggy_paste (s))
     s= correct_buggy_paste (s);
-  if (input_format != "" && input_format != "picture" &&
-      input_format != "linked-picture")
+  if (input_format != "" && input_format != "picture")
     s= as_string (call ("convert", s, input_format, "texmacs-snippet"));
   if (input_format == "html-snippet") {
     tree t= as_tree (call ("convert", s, "texmacs-snippet", "texmacs-tree"));
@@ -339,17 +352,12 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   }
   if (input_format == "picture") {
     tree   t (IMAGE);
-    QSize  size= qvariant_cast<QImage> (md->imageData ()).size ();
-    int    ww= size.width (), hh= size.height ();
+    int    ww= image_size.width (), hh= image_size.height ();
     string w, h;
     qt_pretty_image_size (ww, hh, w, h);
     t << tuple (tree (RAW_DATA, s), "png") << w << h << ""
       << "";
     s= as_string (call ("convert", t, "texmacs-tree", "texmacs-snippet"));
-  }
-  if (input_format == "linked-picture") {
-    tree im (IMAGE, s, "", "", "", "");
-    s= as_string (call ("convert", im, "texmacs-tree", "texmacs-snippet"));
   }
   t= tuple ("extern", s);
   return true;
