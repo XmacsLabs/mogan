@@ -53,7 +53,7 @@
     ("Cell" (open-cell-properties))
     ("Table" (open-table-properties)))
   ---
-  (-> "Whitespace" (link space-menu))
+;;  (-> "Whitespace" (link space-menu))
   (-> "Indentation" (link indentation-menu))
   (-> "Break" (link break-menu))
   ---
