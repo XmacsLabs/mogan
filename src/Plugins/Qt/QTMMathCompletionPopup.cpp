@@ -68,6 +68,10 @@ QTMMathCompletionPopup::cleanLayout () {
     }
     delete item;
   }
+  // 如果布局为空，隐藏窗口
+  if (layout->count () == 0) {
+    this->hide ();
+  }
 }
 
 void
