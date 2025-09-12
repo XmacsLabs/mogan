@@ -172,10 +172,20 @@ edit_interface_rep::invalidate (SI x1, SI y1, SI x2, SI y2) {
 
 void
 edit_interface_rep::invalidate (rectangles rs) {
-  while (!is_nil (rs)) {
-    invalidate (rs->item->x1 - pixel, rs->item->y1 - pixel,
-                rs->item->x2 + pixel, rs->item->y2 + pixel);
-    rs= rs->next;
+  if (!is_nil (rs)) {
+    rectangle  first_rect= rs->item;
+    SI         min_x1= first_rect->x1 - pixel, min_y1= first_rect->y1 - pixel;
+    SI         max_x2= first_rect->x2 + pixel, max_y2= first_rect->y2 + pixel;
+    rectangles current= rs->next;
+    while (!is_nil (current)) {
+      rectangle& r= current->item;
+      min_x1      = min (min_x1, r->x1 - pixel);
+      min_y1      = min (min_y1, r->y1 - pixel);
+      max_x2      = max (max_x2, r->x2 + pixel);
+      max_y2      = max (max_y2, r->y2 + pixel);
+      current     = current->next;
+    }
+    invalidate (min_x1, min_y1, max_x2, max_y2);
   }
 }
 
