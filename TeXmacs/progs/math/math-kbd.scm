@@ -1220,6 +1220,8 @@
   ("< - - < - - _" (make-long-arrow* "<leftleftarrows>"))
 
   ("@" "<circ>")
+  ("@ I" (math-big-operator "oint"))
+  ("@ I I" (math-big-operator "oiint"))
   ("@ /" "<varnothing>")
   ("@ +" "<oplus>")
   ("@ + . ." "<oplus><cdots><oplus>")
@@ -1748,8 +1750,6 @@
   ("I var ."(math-big-operator "idotsint"))
   ("I I I var" (math-big-operator "iiint"))
   ("I I I I var" (math-big-operator "iiiint"))
-  ("@ I" (math-big-operator "oint"))
-  ("@ I I" (math-big-operator "oiint"))
   ("I var var " "<Iota>")
   ("I var var var" "<Im>")
   ("J var" "<Theta>")
