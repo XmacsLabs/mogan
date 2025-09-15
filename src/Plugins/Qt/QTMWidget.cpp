@@ -584,7 +584,7 @@ QTMWidget::dropEvent (QDropEvent* event) {
   const QMimeData* md= event->mimeData ();
   QByteArray       buf;
 
-  if (md->hasUrls () && !md->hasImage ()) {
+  if (md->hasUrls ()) {
     QList<QUrl> l= md->urls ();
     for (int i= 0; i < l.size (); i++) {
       string name;
