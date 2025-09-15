@@ -495,7 +495,12 @@
   (assuming (slide-propose-graphics? t)
     //
     (minibar
-     ((balloon "Draw" "Draw graphics") (slide-insert-graphics t)))))
+     ((balloon "Draw" "Draw graphics") (slide-insert-graphics t))))
+  (assuming (slideshow-context? t)
+    //
+    (minibar
+      ((balloon (icon "tm_slide_move_up.xpm") "move slide up") (move-slide-up))
+      ((balloon (icon "tm_slide_move_down.xpm") "move slide down") (move-slide-down)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Menu customizations for overlays

@@ -4,6 +4,7 @@
 ;; MODULE      : fold-edit.scm
 ;; DESCRIPTION : routines for switching, folding and layers
 ;; COPYRIGHT   : (C) 2002  Joris van der Hoeven
+;;                   2022  Jeroen Wouters
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
 ;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -1322,3 +1323,36 @@
       (set! t (tree-up t)))
     (when (not (overlays-context? t))
       (tree-set! t `(gr-overlays ,(if forwards? "2" "1") "2" ,t)))))
+
+(tm-define (move-slide-up)
+  (noop))
+
+(tm-define (move-slide-up)
+  (:require (inside? 'slideshow))
+  (with-innermost s 'slide
+    (if (tree-ref s :previous)
+      (let* ((p (tree->path s)) ;; path to the current slide
+             (i (last p)) ;; index of the slide
+             (t (tree-ref s :up))) ;; parent node of the slide
+        ;; insert a copy of slide i before its predecessor
+        (tree-insert t (- i 1) (list (tree->stree s)))
+        ;; remove original slide, now at i+1
+        (tree-remove t (+ i 1) 1)
+        (tree-go-to t (- i 1) 0)))))
+
+(tm-define (move-slide-down)
+  (noop))
+
+(tm-define (move-slide-down)
+  (:require (inside? 'slideshow))
+  (with-innermost s 'slide
+    (if (tree-ref s :next)
+      (let* ((p (tree->path s)) ;; path to the current slide
+             (i (last p)) ;; index of the slide
+             (t (tree-ref s :up))) ;; parent node of the slide
+        ;; insert a copy of slide i after its successor
+        (tree-insert t (+ i 2) (list (tree->stree s)))
+        ;; remove original slide
+        (tree-remove t i 1)
+        (tree-go-to t (+ i 1) 0)))))
+  
