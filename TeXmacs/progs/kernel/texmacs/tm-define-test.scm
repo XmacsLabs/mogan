@@ -14,16 +14,29 @@
 (texmacs-module (prog prog-format-test)
   (:use (kernel texmacs tm-define)))
 
-(define (regtest-procedure-name)
-  (regression-test-group
-   "procedure" "procedure"
-   procedure-name :none
-   (test "procedures defined via define-public" string->float string->float)
-   (test "procedures defined via glue symbols" utf8->cork utf8->cork)
-   (test "procedures defined via tm-define" regtest-tm-define regtest-tm-define)
-   (test "invalid input" 1 #f)))
+(import (liii check))
+
+(check-set-mode! 'report-failed)
+
+(define (test-define-procedure)
+  (display "This is a test procedure defined with define\n"))
+
+(tm-define (test-tm-define-procedure)
+  #:synopsis "Test procedure defined via tm-define"
+  (display "This is a test procedure defined with tm-define\n"))
+
+(tm-define alias-car car)
+
+(define (test-procedure-name)
+  ;; (tm-define s2f string->float)
+  (check (procedure-name string->float) => 's2f)
+  (check (procedure-name car) => 'alias-car)
+  (check (procedure-name utf8->cork) => 'utf8->cork)
+  (check (procedure-name system) => 'system)
+  (check (procedure-name test-define-procedure) => 'test-define-procedure)
+  (check (procedure-name test-tm-define-procedure) => 'test-tm-define-procedure)
+  (check (procedure-name 1) => #f))
 
 (tm-define (regtest-tm-define)
-  (let ((n (+ (regtest-procedure-name))))
-    (display* "Total: " (object->string n) " tests.\n")
-    (display "Test suite of tm-define: ok\n")))
+  (test-procedure-name)
+  (check-report))
