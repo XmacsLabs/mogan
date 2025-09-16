@@ -88,8 +88,11 @@
 (define (begin* conds)
   (if (list-1? conds) (car conds) `(begin ,@conds)))
 
-(define-public (procedure-name fun) 
-  (if (procedure? fun) fun #f))
+(define-public (procedure-name fun)
+  (if (procedure? fun)
+    (or (ahash-ref tm-defined-name fun)
+        (string->symbol (format #f "~A" fun)))
+    #f))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Overloading
