@@ -1387,3 +1387,23 @@ get_QTMPixmapOrImage_from_pixmap (fz_pixmap* pix) {
     return QTMPixmapOrImage (QPixmap::fromImage (qim));
   }
 }
+
+fz_buffer*
+mupdf_read_from_url (url u) {
+  fz_context* ctx= mupdf_context ();
+  fz_buffer*  buf= NULL;
+  fz_try (ctx) {
+    if (is_ramdisc (u)) {
+      string image_data= as_string (u[1][2]);
+      buf              = fz_new_buffer_from_copied_data (
+          ctx, reinterpret_cast<const unsigned char*> (image_data.begin ()),
+          N (image_data));
+    }
+    else {
+      c_string path (concretize (u));
+      buf= fz_read_file (ctx, path);
+    }
+  }
+  fz_catch (ctx) fz_report_error (ctx);
+  return buf;
+}

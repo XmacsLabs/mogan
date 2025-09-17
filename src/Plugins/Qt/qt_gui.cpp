@@ -61,6 +61,10 @@
 #include "MacOS/mac_utilities.h"
 #endif
 
+#ifdef USE_MUPDF_RENDERER
+#include "mupdf_picture.hpp"
+#endif
+
 #if (QT_VERSION >= 0x050000)
 #include <QtPlugin>
 
@@ -292,8 +296,18 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       if (md->hasUrls ()) {
         QList<QUrl> l= md->urls ();
         if (l.size () == 1) {
-          QImage  image;
           QString filePath= l[0].toLocalFile ();
+#ifdef USE_MUPDF_RENDERER
+          int    ww, hh;
+          string image_data= mupdf_load_and_parse_image (
+              filePath.toStdString ().c_str (), ww, hh, "png");
+          if (N (image_data) > 0) {
+            input_format= "picture";
+            image_size  = QSize (ww, hh);
+            buf         = QByteArray (image_data.begin (), N (image_data));
+          }
+#else
+          QImage image;
 
           if (!image.load (filePath)) {
             image= qvariant_cast<QImage> (md->imageData ());
@@ -306,6 +320,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
             input_format= "picture";
             image_size  = image.size ();
           }
+#endif
         }
       }
       else {

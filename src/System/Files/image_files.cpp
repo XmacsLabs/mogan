@@ -50,6 +50,10 @@
 #include "Pdf/pdf_hummus_renderer.hpp"
 #endif
 
+#ifdef USE_MUPDF_RENDERER
+#include "mupdf_picture.hpp"
+#endif
+
 typedef struct {
   int w;
   int h;
@@ -347,6 +351,13 @@ image_size_sub (url p_image, int& w,
       return;
     }
   }
+#ifdef USE_MUPDF_RENDERER
+  if (mupdf_supports (suf)) {
+    if (mupdf_normal_image_size (image, w, h)) {
+      return;
+    }
+  }
+#endif
 #ifdef QTTEXMACS
   if (qt_supports (image)) { // native support by Qt : most bitmaps & svg
     qt_image_size (image, w, h);
@@ -378,6 +389,10 @@ pdf_image_size (url image, int& w, int& h) {
 // we have two ways of finding pdf sizes
 // centralize here to ensure consistent determination;
 // prefer internal method (avoid calling gs)
+#ifdef USE_MUPDF_RENDERER
+  mupdf_pdf_image_size (image, w, h);
+  return;
+#endif
 #ifdef USE_PLUGIN_PDF
   hummus_pdf_image_size (image, w, h);
   return;

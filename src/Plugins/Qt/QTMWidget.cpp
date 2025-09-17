@@ -21,6 +21,9 @@
 #include "qt_utilities.hpp"
 #include "scheme.hpp"
 #include "sys_utils.hpp"
+#ifdef USE_MUPDF_RENDERER
+#include "mupdf_picture.hpp"
+#endif
 
 #include <QApplication>
 #include <QDebug>
@@ -593,12 +596,19 @@ QTMWidget::dropEvent (QDropEvent* event) {
 #else
       name= from_qstring (l[i].toLocalFile ());
 #endif
-      string orig_name= name;
 #if defined(OS_MINGW) || defined(OS_WIN)
       if (N (name) >= 2 && is_alpha (name[0]) && name[1] == ':')
         name= "/" * locase_all (name (0, 1)) * name (2, N (name));
 #endif
       string extension= suffix (name);
+      string w, h;
+      int    ww, hh;
+#ifdef USE_MUPDF_RENDERER
+      if (mupdf_supports (extension) || extension == "eps" ||
+          extension == "ps") {
+        string imagedata= mupdf_load_and_parse_image (
+            l[i].toLocalFile ().toStdString ().c_str (), ww, hh, extension);
+#else
       if ((extension == "eps") || (extension == "ps") ||
 #if (QT_VERSION >= 0x050000)
           (extension == "svg") ||
@@ -610,14 +620,13 @@ QTMWidget::dropEvent (QDropEvent* event) {
         qbuf.open (QIODevice::WriteOnly);
         image.load (l[i].toLocalFile ());
         image.save (&qbuf, "PNG");
-        QSize  size= image.size ();
-        int    ww= size.width (), hh= size.height ();
-        string w, h;
+        QSize size= image.size ();
+        ww        = size.width ();
+        hh        = size.height ();
+        string imagedata (buf.constData (), buf.size ());
+#endif
         qt_pretty_image_size (ww, hh, w, h);
-        tree t (IMAGE,
-                tuple (tree (RAW_DATA, string (buf.constData (), buf.size ())),
-                       name),
-                w, h, "", "");
+        tree t (IMAGE, tuple (tree (RAW_DATA, imagedata), name), w, h, "", "");
         doc << t;
       }
       else {
