@@ -35,16 +35,63 @@
 #include <QPainter>
 #include <QResizeEvent>
 
+#include "lolly/io/http.hpp"
+#include "tm_url.hpp"
 #include <QBuffer>
 #include <QByteArray>
 #include <QFileInfo>
 #include <QImage>
+#include <QImageReader>
 #include <QMimeData>
 #include <QUrl>
 
 using namespace moebius;
 
 static int64_t QTMWcounter= 0; // debugging hack
+
+static QByteArray
+qt_download_image_data (const QString& url_str) {
+  string url_s= from_qstring (url_str);
+  debug_qt << "Downloading image from URL: " << url_s << LF;
+  url                     image_url= url_system (url_s);
+  lolly::io::http_headers headers;
+  headers ("User-Agent")=
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, "
+      "like Gecko) Chrome/91.0.4472.124 Safari/537.36";
+
+  // Download image using temporary file
+  url                  temp_file= url_temp ("img");
+  lolly::io::http_tree response=
+      lolly::io::download (image_url, temp_file, headers);
+
+  long status_code= open_box<long> (
+      lolly::io::http_response_ref (response, lolly::io::STATUS_CODE)->data);
+
+  QByteArray data;
+  if (status_code == 200 && exists (temp_file)) {
+    // Use Qt file reading for binary data
+    QFile file (to_qstring (as_string (temp_file)));
+    if (file.open (QIODevice::ReadOnly)) {
+      data= file.readAll ();
+      file.close ();
+      if (data.isEmpty ()) {
+        debug_qt << "Downloaded empty data from " << url_s << LF;
+      }
+    }
+    else {
+      debug_qt << "Failed to open temp file: " << as_string (temp_file) << LF;
+    }
+
+    // Clean up temporary file
+    remove (temp_file);
+  }
+  else {
+    debug_qt << "Failed to download image from " << url_s
+             << ", status code: " << status_code << LF;
+  }
+
+  return data;
+}
 
 /*! Constructor.
 
@@ -563,7 +610,6 @@ void
 QTMWidget::dragEnterEvent (QDragEnterEvent* event) {
   if (is_nil (tmwid)) return;
   const QMimeData* md= event->mimeData ();
-
   if (md->hasText () || md->hasUrls () || md->hasImage () ||
       md->hasFormat ("application/pdf") ||
       md->hasFormat ("application/postscript"))
@@ -603,18 +649,50 @@ QTMWidget::dropEvent (QDropEvent* event) {
       string extension= suffix (name);
       string w, h;
       int    ww, hh;
+      // 检查是否为远程URL (http/https)
+      if (l[i].scheme ().startsWith ("http")) {
+        QByteArray imageData= qt_download_image_data (l[i].toString ());
+        if (!imageData.isEmpty ()) {
+          QBuffer qbuf (&buf);
+          QImage  image;
+          qbuf.open (QIODevice::WriteOnly);
+
+          // 尝试加载下载的图片数据
+          if (image.loadFromData (imageData)) {
+            image.save (&qbuf, "PNG");
+
+            QSize size= image.size ();
+            ww        = size.width ();
+            hh        = size.height ();
+            qt_pretty_image_size (ww, hh, w, h);
+            string imagedata (buf.constData (), buf.size ());
+
+            tree t (IMAGE, tuple (tree (RAW_DATA, imagedata), "png"), w, h, "",
+                    "");
+            doc << t;
+          }
+          else {
+            // 如果图片加载失败，回退到文本链接
+            doc << from_qstring (l[i].toString ());
+          }
+        }
+        else {
+          // 如果下载失败，回退到文本链接
+          doc << from_qstring (l[i].toString ());
+        }
+      }
 #ifdef USE_MUPDF_RENDERER
-      if (mupdf_supports (extension) || extension == "eps" ||
-          extension == "ps") {
+      else if (mupdf_supports (extension) || extension == "eps" ||
+               extension == "ps") {
         string imagedata= mupdf_load_and_parse_image (
             l[i].toLocalFile ().toStdString ().c_str (), ww, hh, extension);
 #else
-      if ((extension == "eps") || (extension == "ps") ||
+      else if ((extension == "eps") || (extension == "ps") ||
 #if (QT_VERSION >= 0x050000)
-          (extension == "svg") ||
+               (extension == "svg") ||
 #endif
-          (extension == "pdf") || (extension == "png") ||
-          (extension == "jpg") || (extension == "jpeg")) {
+               (extension == "pdf") || (extension == "png") ||
+               (extension == "jpg") || (extension == "jpeg")) {
         QBuffer qbuf (&buf);
         QImage  image;
         qbuf.open (QIODevice::WriteOnly);
