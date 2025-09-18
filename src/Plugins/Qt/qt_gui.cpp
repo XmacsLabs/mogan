@@ -293,43 +293,41 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       input_format= "texmacs-snippet";
     }
     else if (md->hasImage ()) {
-      if (md->hasUrls ()) {
-        QList<QUrl> l= md->urls ();
-        if (l.size () == 1) {
-          QString filePath= l[0].toLocalFile ();
+      QBuffer qbuf (&buf);
+      QImage  image= qvariant_cast<QImage> (md->imageData ());
+      qbuf.open (QIODevice::WriteOnly);
+      image.save (&qbuf, "PNG");
+      input_format= "picture";
+      image_size  = image.size ();
+    }
+    else if (md->hasUrls ()) {
+      QList<QUrl> l= md->urls ();
+      if (l.size () == 1) {
+        QString filePath= l[0].toLocalFile ();
 #ifdef USE_MUPDF_RENDERER
-          int    ww, hh;
-          string image_data= mupdf_load_and_parse_image (
-              filePath.toStdString ().c_str (), ww, hh, "png");
-          if (N (image_data) > 0) {
-            input_format= "picture";
-            image_size  = QSize (ww, hh);
-            buf         = QByteArray (image_data.begin (), N (image_data));
-          }
-#else
-          QImage image;
-
-          if (!image.load (filePath)) {
-            image= qvariant_cast<QImage> (md->imageData ());
-          }
-
-          if (!image.isNull ()) {
-            QBuffer qbuf (&buf);
-            qbuf.open (QIODevice::WriteOnly);
-            image.save (&qbuf, "PNG");
-            input_format= "picture";
-            image_size  = image.size ();
-          }
-#endif
+        int    ww, hh;
+        string image_data= mupdf_load_and_parse_image (
+            filePath.toStdString ().c_str (), ww, hh, "png");
+        if (N (image_data) > 0) {
+          input_format= "picture";
+          image_size  = QSize (ww, hh);
+          buf         = QByteArray (image_data.begin (), N (image_data));
         }
-      }
-      else {
-        QBuffer qbuf (&buf);
-        QImage  image= qvariant_cast<QImage> (md->imageData ());
-        qbuf.open (QIODevice::WriteOnly);
-        image.save (&qbuf, "PNG");
-        input_format= "picture";
-        image_size  = image.size ();
+#else
+        QImage image;
+
+        if (!image.load (filePath)) {
+          image= qvariant_cast<QImage> (md->imageData ());
+        }
+
+        if (!image.isNull ()) {
+          QBuffer qbuf (&buf);
+          qbuf.open (QIODevice::WriteOnly);
+          image.save (&qbuf, "PNG");
+          input_format= "picture";
+          image_size  = image.size ();
+        }
+#endif
       }
     }
     else if (md->hasHtml ()) {
