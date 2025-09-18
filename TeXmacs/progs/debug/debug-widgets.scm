@@ -79,12 +79,33 @@
            `(with "color" "dark blue" ,s))
           (else s))))
 
+(define (get-message-text m)
+  (let* ((k (tm->stree (tm-ref m 0)))
+         (s (utf8->cork (tm->stree (tm-ref m 1))))
+         (t (tm->stree (tm-ref m 2))))
+    (cond ((and (!= t "") (== (get-preference "console details") "detailed"))
+           (string-append (get-message-text `(tuple ,(tm-ref m 0) ,(tm-ref m 1) "")) "\n" t))
+          ((string-ends? k "-error")
+           (string-append "Error: " s))
+          ((string-ends? k "-warning")
+           (string-append "Warning: " s))
+          ((string-ends? k "-bench")
+           s)
+          (else s))))
+
+(define (messages->text kind selected)
+  (let* ((n (or (string->number (get-preference "console size")) 100))
+         (all-ms (tree-children (get-debug-messages kind n)))
+         (sel-ms (list-filter all-ms (cut message-among? <> selected))))
+    (string-join (map get-message-text sel-ms) "\n")))
+
 (define (messages->document kind selected)
   (let* ((n (or (string->number (get-preference "console size")) 100))
          (all-ms (tree-children (get-debug-messages kind n)))
          (sel-ms (list-filter all-ms (cut message-among? <> selected))))
     `(document
-       (with "language" "verbatim" "font-family" "tt" "par-par-sep" "0fn"
+        (with "language" "verbatim" "font-family" "tt" "font-size" "2.0" "par-par-sep" "0fn"
+       ;(with "language" "verbatim" "font-family" "tt" "par-par-sep" "0fn"
              (document
                ,@(map build-message sel-ms))))))
 
@@ -135,6 +156,8 @@
              (toggle-preference "open console on errors"))
             ("Automatically open this console on warnings"
              (toggle-preference "open console on warnings")))
+        // //
+        ("Copy" (clipboard-set "primary" (messages->text kind (ahash-ref console-selected kind))))
         // //
         ("Clear" (clear-debug-messages) (refresh-console))))))
 
