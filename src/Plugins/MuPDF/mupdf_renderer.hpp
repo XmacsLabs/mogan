@@ -32,9 +32,8 @@ protected:
   pdf_processor* proc;
 
   // some state
-  color  fg, bg;
-  SI     lw;
-  double current_width;
+  color fg, bg;
+  SI    lw;
 
   //  pencil    pen;
   //  brush     bgb, fgb;

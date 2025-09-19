@@ -94,12 +94,11 @@ class pdf_hummus_renderer_rep : public renderer_rep {
 
   ObjectIDType initial_GState_id; // GSstate with default values
 
-  int    page_num;
-  bool   inText;
-  color  fg, bg;
-  SI     lw;
-  double current_width;
-  int    clip_level;
+  int   page_num;
+  bool  inText;
+  color fg, bg;
+  SI    lw;
+  int   clip_level;
 
   pencil pen;
   brush  bgb, fgb;
@@ -450,14 +449,13 @@ pdf_hummus_renderer_rep::begin_page () {
     convert_error << "Failed to create content context for page\n";
   }
   else {
-    fg           = -1;
-    bg           = -1;
-    lw           = -1;
-    current_width= -1.0;
-    cfn          = "";
-    cfid         = NULL;
-    inText       = false;
-    clip_level   = 0;
+    fg        = -1;
+    bg        = -1;
+    lw        = -1;
+    cfn       = "";
+    cfid      = NULL;
+    inText    = false;
+    clip_level= 0;
 
     // outmost save of the graphics state
     contentContext->q ();
@@ -786,12 +784,8 @@ pdf_hummus_renderer_rep::select_fill_pattern (brush br) {
 
 void
 pdf_hummus_renderer_rep::select_line_width (SI w) {
-  double pw= w / pixel;
-  // if (pw < 1) pw= 1;
-  if (pw != current_width) {
-    contentContext->w (pw);
-    current_width= pw;
-  }
+  double pw= (double) w / pixel;
+  contentContext->w (pw);
 }
 
 pencil

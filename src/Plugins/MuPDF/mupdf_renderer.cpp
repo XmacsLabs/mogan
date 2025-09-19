@@ -218,12 +218,11 @@ mupdf_renderer_rep::begin (void* handle) {
     proc= pdf_new_run_processor (ctx, mupdf_document (), dev, ctm, -1, "View",
                                  NULL, NULL, NULL);
 
-    fg           = -1;
-    bg           = -1;
-    lw           = -1;
-    current_width= -1.0;
-    cfn          = "";
-    in_text      = false;
+    fg     = -1;
+    bg     = -1;
+    lw     = -1;
+    cfn    = "";
+    in_text= false;
 
     // outmost save of the graphics state
     proc->op_q (mupdf_context (), proc);
@@ -553,12 +552,8 @@ mupdf_renderer_rep::select_fill_pattern (brush br) {
 
 void
 mupdf_renderer_rep::select_line_width (SI w) {
-  float pw= w / pixel;
-  // if (pw < 1) pw= 1;
-  if (pw != current_width) {
-    proc->op_w (mupdf_context (), proc, pw);
-    current_width= pw;
-  }
+  float pw= (float) w / pixel;
+  proc->op_w (mupdf_context (), proc, pw);
 }
 
 void
