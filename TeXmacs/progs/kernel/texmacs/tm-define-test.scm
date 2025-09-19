@@ -35,7 +35,15 @@
   (check (procedure-name system) => 'system)
   (check (procedure-name test-define-procedure) => 'test-define-procedure)
   (check (procedure-name test-tm-define-procedure) => 'test-tm-define-procedure)
-  (check (procedure-name 1) => #f))
+  (check (procedure-name 1) => #f)
+  ;; Test lambda serialization - anonymous lambdas should return #f
+  (let ((lambda-func (lambda (x) (+ x 1))))
+    (check (procedure-name lambda-func) => #f))
+  ;; Test that different anonymous lambdas all return #f
+  (let ((lambda1 (lambda () 1))
+        (lambda2 (lambda () 2)))
+    (check (procedure-name lambda1) => #f)
+    (check (procedure-name lambda2) => #f)))
 
 (tm-define (regtest-tm-define)
   (test-procedure-name)
