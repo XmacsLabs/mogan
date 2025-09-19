@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "mupdf_renderer.hpp"
+#include "Freetype/tt_face.hpp"
 #include "analyze.hpp"
 #include "file.hpp"
 #include "font.hpp"
@@ -1026,7 +1027,21 @@ decode_index (FT_Face face, int i) {
 void
 mupdf_renderer_rep::draw (int c, font_glyphs fng, SI x, SI y) {
   if (is_emoji_character (c)) {
-    if (draw_emoji (c, fng, x, y)) return;
+    // Use the new draw_emoji interface that returns a picture
+    picture emoji_picture= draw_emoji (c, fng, emoji_cache);
+    if (!is_nil (emoji_picture)) {
+      // Calculate vertical offset for better alignment
+      SI    xo, yo;
+      glyph pre_gl        = fng->get (c);
+      glyph gl            = shrink (pre_gl, std_shrinkf, std_shrinkf, xo, yo);
+      int   h             = gl->height;
+      SI    emoji_y_offset= (h * std_shrinkf * 2 * PIXEL) /
+                         10; // Move down by 20% of emoji height
+
+      // Draw the emoji picture at the specified position
+      draw_picture (emoji_picture, x, y - emoji_y_offset, 255);
+      return;
+    }
   }
 
   string         fontname= fng->res_name;

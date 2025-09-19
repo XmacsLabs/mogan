@@ -47,6 +47,9 @@ protected:
   static bool           clip_active;
   static pdf_processor* clip_proc;
 
+  // emoji cache for this renderer instance
+  hashmap<int, hashmap<int, picture>> emoji_cache;
+
   // geometry
 
   double to_x (SI x) {

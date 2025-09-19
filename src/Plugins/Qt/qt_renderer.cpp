@@ -557,8 +557,21 @@ qt_renderer_rep::draw_bis (int c, font_glyphs fng, SI x, SI y) {
 void
 qt_renderer_rep::draw (int c, font_glyphs fng, SI x, SI y) {
   if (is_emoji_character (c)) {
-    draw_emoji (c, fng, x, y);
-    return;
+    // Use the new draw_emoji interface that returns a picture
+    picture emoji_picture= draw_emoji (c, fng, emoji_cache);
+    if (!is_nil (emoji_picture)) {
+      // Calculate vertical offset for better alignment
+      SI    xo, yo;
+      glyph pre_gl        = fng->get (c);
+      glyph gl            = shrink (pre_gl, std_shrinkf, std_shrinkf, xo, yo);
+      int   h             = gl->height;
+      SI    emoji_y_offset= (h * std_shrinkf * 2 * PIXEL) /
+                         10; // Move down by 20% of emoji height
+
+      // Draw the emoji picture at the specified position
+      draw_picture (emoji_picture, x, y - emoji_y_offset, 255);
+      return;
+    }
   }
   if (pen->get_type () == pencil_brush) {
     draw_bis (c, fng, x, y);
@@ -660,7 +673,7 @@ qt_renderer_rep::png_data_to_picture (string png_data, int w, int h) {
   }
 
   // Create QByteArray from PNG binary data
-  QByteArray png_bytes (as_charp (png_data), N (png_data));
+  QByteArray png_bytes (png_data.begin (), N (png_data));
 
   // Load PNG image from data
   QImage image;

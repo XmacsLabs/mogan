@@ -25,6 +25,9 @@ class qt_renderer_rep : public basic_renderer_rep {
 public:
   QPainter* painter; // FIXME: painter needs begin/end
 
+  // emoji cache for this renderer instance
+  hashmap<int, hashmap<int, picture>> emoji_cache;
+
 public:
   qt_renderer_rep (QPainter* _painter, int w= 0, int h= 0);
   ~qt_renderer_rep ();

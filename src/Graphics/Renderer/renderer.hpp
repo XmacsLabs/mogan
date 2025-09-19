@@ -116,7 +116,8 @@ public:
   virtual void draw_selection (rectangles rs);
   virtual void draw_curve (curve c, bool filled= false);
   virtual bool support_native_curve (curve c);
-  bool         draw_emoji (int char_code, font_glyphs fn, SI x, SI y);
+  picture      draw_emoji (int char_code, font_glyphs fn,
+                           hashmap<int, hashmap<int, picture>>& emoji_cache);
 
   /* shadowing and copying rectangular regions across renderers */
   virtual void fetch (SI x1, SI y1, SI x2, SI y2, renderer ren, SI x, SI y)= 0;
