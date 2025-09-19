@@ -91,7 +91,10 @@
 (define-public (procedure-name fun)
   (if (procedure? fun)
     (or (ahash-ref tm-defined-name fun)
-        (string->symbol (format #f "~A" fun)))
+        (let ((str (format #f "~A" fun)))
+          (if (string-starts? str "#<lambda")
+              #f ; lambda 无法可靠序列化，返回#f
+              (string->symbol str))))
     #f))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -255,10 +258,10 @@
            (ahash-set! tm-defined-table ',var
                        (cons ',nval (ahash-ref tm-defined-table ',var)))
            (ahash-set! tm-defined-name ,var ',var)
-	   (ahash-set! tm-defined-module ',var
-		       (cons *module-name*
-			     (ahash-ref tm-defined-module ',var)))
-           ,@(map property-rewrite cur-props))
+          (ahash-set! tm-defined-module ',var
+             (cons *module-name*
+              (ahash-ref tm-defined-module ',var)))
+          ,@(map property-rewrite cur-props))
         `(begin
            (when (nnull? cur-conds)
              (display* "warning: conditional master routine " ',var "\n")
@@ -270,9 +273,9 @@
                      ,(list 'let '((former (lambda args (noop)))) nval)))
            (ahash-set! tm-defined-table ',var (list ',nval))
            (ahash-set! tm-defined-name ,var ',var)
-	   (ahash-set! tm-defined-module ',var
-                       (list *module-name*))
-           ,@(map property-rewrite cur-props)))))
+          (ahash-set! tm-defined-module ',var
+                         (list *module-name*))
+          ,@(map property-rewrite cur-props)))))
 
 (define-public (tm-define-sub head body)
   (if (and (pair? (car body)) (keyword? (caar body)))
