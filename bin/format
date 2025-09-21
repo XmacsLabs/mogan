@@ -4,17 +4,18 @@ use platform
 
 if (eq $platform:os windows) {
   set paths = [
-    ~/scoop/apps/llvm/16.0.6/bin
+    ~/scoop/apps/llvm/19.1.0/bin
   ]
 } elif (eq $platform:os linux) {
-  fn clang-format {|@a| e:clang-format-16 $@a }
+  fn clang-format {|@a| e:clang-format-19 $@a }
   set paths = [
-    /usr/lib/llvm-16/bin
+    /usr/lib/llvm-19/bin
     # archlinux clang-format is at /usr/bin
     /usr/bin
     $E:HOME/bin
   ]
 } else {
+  # macOS has already set PATH in .zshrc
 }
 
 clang-format --version
