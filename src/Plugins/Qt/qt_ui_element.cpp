@@ -452,6 +452,29 @@ qt_ui_element_rep::as_qaction () {
       if (!qks.isEmpty ()) {
         act->setShortcut (qks);
         act->setShortcutVisibleInContextMenu (true);
+#ifdef Q_OS_WIN
+        // On Windows, override the displayed shortcut hint to show "Win+"
+        // instead of "Meta+" without changing the actual shortcut handling.
+        QString base  = act->text ();
+        int     tabPos= base.indexOf ('\t');
+        if (tabPos >= 0) base= base.left (tabPos); // avoid duplicate suffix
+        QString disp= qks.toString (QKeySequence::NativeText);
+        // Qt uses "Meta+" textual name on Windows; show "Win+" as requested
+        disp.replace (QStringLiteral ("Meta+"), QStringLiteral ("Win+"));
+        act->setText (base + QLatin1Char ('\t') + disp);
+#elif Q_OS_MAC
+        // Do nothing: Mac users expect to see "Meta+" (the Command key)
+#else
+        // On Linux, override the displayed shortcut hint to show "Super+"
+        // instead of "Meta+" without changing the actual shortcut handling.
+        QString base  = act->text ();
+        int     tabPos= base.indexOf ('\t');
+        if (tabPos >= 0) base= base.left (tabPos); // avoid duplicate suffix
+        QString disp= qks.toString (QKeySequence::NativeText);
+        // Qt uses "Meta+" textual name on Linux; show "Super+" as requested
+        disp.replace (QStringLiteral ("Meta+"), QStringLiteral ("Super+"));
+        act->setText (base + QLatin1Char ('\t') + disp);
+#endif
       }
 
       // NOTE: this used to be a Qt::QueuedConnection, but the slot would not
