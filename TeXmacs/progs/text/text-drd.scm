@@ -200,7 +200,7 @@
 ;; Figures and tables
 
 (define-group equation-tag
-  equation eqnarray)
+  equation eqnarray align)
 
 ;; Algorithms
 

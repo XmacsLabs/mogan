@@ -783,8 +783,8 @@
     (tree-search-subtree st (stree->tree '(eq-number)))))
 
 (tm-define (numbered-numbered? t)
-  (:require (tree-in? t '(eqnarray eqnarray*)))
-  (and (== t (tree-innermost '(eqnarray eqnarray*)))
+  (:require (tree-in? t '(eqnarray eqnarray* align align*)))
+  (and (== t (tree-innermost '(eqnarray eqnarray* align align*)))
        (if (table-search-number-equation) #t #f)))
 
 (tm-define (table-number-equation)
@@ -810,8 +810,8 @@
 	 (table-inside-sub? t1 (tree-up t2)))))
 
 (tm-define (numbered-toggle t)
-  (:require (tree-in? t '(eqnarray eqnarray*)))
-  (when (== t (tree-innermost '(eqnarray eqnarray*)))
+  (:require (tree-in? t '(eqnarray eqnarray* align align*)))
+  (when (== t (tree-innermost '(eqnarray eqnarray* align align*)))
     (if (table-search-number-equation)
         (table-nonumber-equation)
         (table-number-equation))))
