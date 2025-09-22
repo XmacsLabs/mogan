@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\System",
+    "\\src\\System\\Boot"
+  ],
+  "SelectedNode": "\\src\\System\\Boot\\init_upgrade.cpp",
+  "PreviewInSolutionExplorer": false
+}
