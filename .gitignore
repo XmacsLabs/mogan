@@ -9,7 +9,6 @@ build
 *.kdev4
 *.py[cod]
 *$py.class
-*goldfish.pdb
 __pycache__/
 
 # editor files
