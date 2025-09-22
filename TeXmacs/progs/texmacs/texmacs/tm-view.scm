@@ -173,6 +173,20 @@
     (when (and old (not new))
       (restore-zoom (get-init-page-rendering)))))
 
+(define (exit-fullscreen)
+  (if (full-screen-edit?)
+      (toggle-full-screen-edit-mode)
+      (toggle-full-screen-mode)))
+
+(delayed
+  (:idle 0)
+  (lazy-keyboard-force #t)
+  (kbd-map
+    (:require (or (full-screen?) (full-screen-edit?)))
+    ("escape" (exit-fullscreen) "Exit full screen")
+    ("M-"     (exit-fullscreen) "Exit full screen")
+    ("A-"     (exit-fullscreen) "Exit full screen")))
+
 (define panorama-revert (make-ahash-table))
 (define (panorama-mode?) (== (get-init-page-rendering) "panorama"))
 (tm-define (toggle-panorama-mode)
