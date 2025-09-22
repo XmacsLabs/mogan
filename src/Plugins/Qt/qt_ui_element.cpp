@@ -462,7 +462,7 @@ qt_ui_element_rep::as_qaction () {
         // Qt uses "Meta+" textual name on Windows; show "Win+" as requested
         disp.replace (QStringLiteral ("Meta+"), QStringLiteral ("Win+"));
         act->setText (base + QLatin1Char ('\t') + disp);
-#elif Q_OS_MAC
+#elif defined(Q_OS_MAC)
         // Do nothing: Mac users expect to see "Meta+" (the Command key)
 #else
         // On Linux, override the displayed shortcut hint to show "Super+"
