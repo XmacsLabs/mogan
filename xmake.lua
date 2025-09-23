@@ -216,7 +216,7 @@ end
 add_requires("argh v1.3.2")
 
 --- package: qt6widgets
-QT6_VERSION="6.5.3"
+QT6_VERSION="6.8.3"
 if is_plat("windows") then
     add_requires("qt6widgets "..QT6_VERSION)
 end
