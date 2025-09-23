@@ -397,7 +397,7 @@ QDialog QLabel#titleLabel {
 }
 
 QDialog QDialogButtonBox {
-  qproperty-centerButtons: true;
+  qproperty-centerButtons: false;
   padding-top: 18px;
   padding-bottom: 2px;
   spacing: 18px;
