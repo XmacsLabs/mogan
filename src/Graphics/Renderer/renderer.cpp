@@ -482,19 +482,19 @@ renderer_rep::draw_scalable (scalable im, SI x, SI y, int alpha) {
   im->draw (this, x, y, alpha);
 }
 
-picture
-renderer_rep::draw_emoji (int char_code, font_glyphs fn,
-                          hashmap<int, hashmap<int, picture>>& emoji_cache) {
+bool
+renderer_rep::draw_emoji (int char_code, font_glyphs fn, SI x, SI y) {
+  static hashmap<index_type, scalable> emoji_cache;
   // Cast to TrueType font glyphs representation
   auto tt_font= static_cast<tt_font_glyphs_rep*> (fn.rep);
   if (is_nil (tt_font->face) || is_nil (tt_font->face->cbdt_table)) {
-    return picture ();
+    return false;
   }
 
   // Get glyph ID for the emoji character
   int glyph_id= ft_get_char_index (tt_font->face->ft_face, char_code);
   if (glyph_id <= 0) {
-    return picture ();
+    return false;
   }
 
   // Calculate emoji size
@@ -502,14 +502,15 @@ renderer_rep::draw_emoji (int char_code, font_glyphs fn,
   glyph pre_gl= fn->get (char_code);
   glyph gl    = shrink (pre_gl, std_shrinkf, std_shrinkf, xo, yo);
   int   w= gl->width, h= gl->height;
+  if (is_printer ()) {
+    w= pre_gl->width, h= pre_gl->height;
+  }
 
   // check cache first
-  picture emoji_picture;
-  if (emoji_cache->contains (glyph_id)) {
-    hashmap<int, picture> size_cache= emoji_cache[glyph_id];
-    if (size_cache->contains (w)) {
-      emoji_picture= size_cache[w];
-    }
+  scalable   emoji_picture;
+  index_type key (glyph_id, w);
+  if (emoji_cache->contains (key)) {
+    emoji_picture= emoji_cache[key];
   }
 
   // cache miss: try PNG data
@@ -522,29 +523,17 @@ renderer_rep::draw_emoji (int char_code, font_glyphs fn,
       png_data=
           tt_font->face->cbdt_table->get_png_from_glyphid (glyph_id, ppem);
     }
-    if (N (png_data) > 0) {
-      // Use PNG data if available
-      emoji_picture= png_data_to_picture (png_data, w, h);
+    if (N (png_data) <= 0) {
+      return false;
     }
-
-    if (!is_nil (emoji_picture)) {
-      if (!emoji_cache->contains (glyph_id)) {
-        emoji_cache (glyph_id)= hashmap<int, picture> ();
-      }
-      emoji_cache[glyph_id](w)= emoji_picture;
-    }
+    url emoji_png= url_ramdisc (png_data) * "a.png";
+    emoji_picture=
+        load_scalable_image (emoji_png, w * pixel, h * pixel, tree (), pixel);
+    emoji_cache (key)= emoji_picture;
   }
+  draw_scalable (emoji_picture, x - xo, y - yo, 255);
 
-  return emoji_picture;
-}
-
-picture
-renderer_rep::png_data_to_picture (string png_data, int w, int h) {
-  (void) png_data;
-  (void) w;
-  (void) h;
-  TM_FAILED ("png_data_to_picture is not supported");
-  return picture ();
+  return true;
 }
 
 /******************************************************************************

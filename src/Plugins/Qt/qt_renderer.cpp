@@ -556,20 +556,10 @@ qt_renderer_rep::draw_bis (int c, font_glyphs fng, SI x, SI y) {
 
 void
 qt_renderer_rep::draw (int c, font_glyphs fng, SI x, SI y) {
+  // emoji cache for this renderer instance
+  static hashmap<index_type, picture> emoji_cache;
   if (is_emoji_character (c)) {
-    // Use the new draw_emoji interface that returns a picture
-    picture emoji_picture= draw_emoji (c, fng, emoji_cache);
-    if (!is_nil (emoji_picture)) {
-      // Calculate vertical offset for better alignment
-      SI    xo, yo;
-      glyph pre_gl        = fng->get (c);
-      glyph gl            = shrink (pre_gl, std_shrinkf, std_shrinkf, xo, yo);
-      int   h             = gl->height;
-      SI    emoji_y_offset= (h * std_shrinkf * 2 * PIXEL) /
-                         10; // Move down by 20% of emoji height
-
-      // Draw the emoji picture at the specified position
-      draw_picture (emoji_picture, x, y - emoji_y_offset, 255);
+    if (draw_emoji (c, fng, x, y)) {
       return;
     }
   }
@@ -663,28 +653,6 @@ qt_renderer_rep::draw (const QFont& qfn, const QString& qs, SI x, SI y,
   painter->scale (zoom, zoom);
   painter->drawText (0, 0, qs);
   painter->resetTransform ();
-}
-
-picture
-qt_renderer_rep::png_data_to_picture (string png_data, int w, int h) {
-  if (N (png_data) == 0) {
-    // Return null if no PNG data
-    return picture ();
-  }
-
-  // Create QByteArray from PNG binary data
-  QByteArray png_bytes (png_data.begin (), N (png_data));
-
-  // Load PNG image from data
-  QImage image;
-  if (!image.loadFromData (png_bytes, "PNG")) {
-    // Return null if PNG is invalid
-    return picture ();
-  }
-  image= image.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-  // Convert to QPixmap and then to picture
-  return qt_picture (image, 0, 0);
 }
 
 /******************************************************************************

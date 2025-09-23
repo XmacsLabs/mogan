@@ -46,9 +46,6 @@ protected:
   static bool           clip_active;
   static pdf_processor* clip_proc;
 
-  // emoji cache for this renderer instance
-  hashmap<int, hashmap<int, picture>> emoji_cache;
-
   // geometry
 
   double to_x (SI x) {
@@ -121,8 +118,7 @@ public:
   void apply_shadow (SI x1, SI y1, SI x2, SI y2);
   void fetch (SI x1, SI y1, SI x2, SI y2, renderer ren, SI x, SI y);
 
-  void    draw_picture (picture pict, SI x, SI y, int alpha);
-  picture png_data_to_picture (string png_data, int w, int h);
+  void draw_picture (picture pict, SI x, SI y, int alpha);
 
   friend class mupdf_proxy_renderer_rep;
 };

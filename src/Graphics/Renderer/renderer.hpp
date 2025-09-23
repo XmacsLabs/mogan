@@ -36,6 +36,7 @@ class qt_renderer_rep;
 class rectangle;
 class frame;
 typedef list<rectangle> rectangles;
+typedef pair<int, int>  index_type;
 extern int              std_shrinkf;
 
 class renderer_rep {
@@ -116,8 +117,7 @@ public:
   virtual void draw_selection (rectangles rs);
   virtual void draw_curve (curve c, bool filled= false);
   virtual bool support_native_curve (curve c);
-  picture      draw_emoji (int char_code, font_glyphs fn,
-                           hashmap<int, hashmap<int, picture>>& emoji_cache);
+  bool         draw_emoji (int char_code, font_glyphs fn, SI x, SI y);
 
   /* shadowing and copying rectangular regions across renderers */
   virtual void fetch (SI x1, SI y1, SI x2, SI y2, renderer ren, SI x, SI y)= 0;
@@ -132,7 +132,6 @@ public:
   virtual renderer shadow (scalable& im, SI x1, SI y1, SI x2, SI y2);
   virtual void     draw_picture (picture pic, SI x, SI y, int alpha= 255);
   virtual void     draw_scalable (scalable im, SI x, SI y, int alpha= 255);
-  virtual picture  png_data_to_picture (string png_data, int w, int h);
 
   /* special routines for printers */
   virtual bool is_printer ();

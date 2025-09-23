@@ -1,0 +1,44 @@
+<TMU|<tuple|1.1.0|2025.2.0-alpha>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <doc-data|<doc-title|我是标题😁😂>>
+
+  测试标准：无论是显示还是导出的PDF，Emoji字符均与附近中文字符位于同一基线上，且大小合适。
+
+  <section|我是1号标题😁😂>
+
+  <subsection|我是2号标题😁😂>
+
+  我是正文😁😂
+
+  <\padded-center>
+    <with|font-base-size|50|汉字😊😉English>
+  </padded-center>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|font-base-size|12>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-2|<tuple|1.1|1>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>我是1号标题😁😂> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|1.1<space|2spc>我是2号标题😁😂 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2>>
+    </associate>
+  </collection>
+</auxiliary>

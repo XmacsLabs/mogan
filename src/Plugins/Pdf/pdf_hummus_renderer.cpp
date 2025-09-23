@@ -120,9 +120,6 @@ class pdf_hummus_renderer_rep : public renderer_rep {
   hashmap<unsigned long long int, url> picture_cache;
   array<url>                           temp_images;
 
-  // emoji cache for this renderer instance
-  hashmap<int, hashmap<int, picture>> emoji_cache;
-
   hashmap<int, ObjectIDType> alpha_id;
   hashmap<int, ObjectIDType> page_id;
   int                        t3font_registry_id;
@@ -259,7 +256,6 @@ public:
 
   void     draw_picture (picture p, SI x, SI y, int alpha);
   void     draw_scalable (scalable im, SI x, SI y, int alpha);
-  picture  png_data_to_picture (string png_data, int w, int h);
   renderer shadow (picture& pic, SI x1, SI y1, SI x2, SI y2);
   void     fetch (SI x1, SI y1, SI x2, SI y2, renderer ren, SI x, SI y);
   void     new_shadow (renderer& ren);
@@ -1329,21 +1325,10 @@ void
 pdf_hummus_renderer_rep::draw (int ch, font_glyphs fn, SI x, SI y) {
   // debug_convert << "draw \"" << (char)ch << "\" " << ch << " "
   //		<< fn->res_name << "\n";
+  // emoji cache for this renderer instance
+  static hashmap<index_type, picture> emoji_cache;
   if (is_emoji_character (ch)) {
-    // Use the new draw_emoji interface that returns a picture
-    picture emoji_picture= draw_emoji (ch, fn, emoji_cache);
-    if (!is_nil (emoji_picture)) {
-      // Calculate vertical offset for better alignment
-      SI    xo, yo;
-      glyph pre_gl      = fn->get (ch);
-      glyph gl          = shrink (pre_gl, std_shrinkf, std_shrinkf, xo, yo);
-      int   h           = gl->height;
-      SI    emoji_offset= (h * std_shrinkf * 2 * PIXEL) /
-                       10; // Move down by 20% of emoji height
-
-      // Draw the emoji picture at the specified position
-      draw_picture (emoji_picture, x + emoji_offset / 2, y - emoji_offset / 2,
-                    255);
+    if (draw_emoji (ch, fn, x, y)) {
       return;
     }
   }
@@ -2100,34 +2085,6 @@ pdf_hummus_renderer_rep::shadow (picture& pic, SI x1, SI y1, SI x2, SI y2) {
   renderer ren= renderer_rep::shadow (pic, x1, y1, x2, y2);
   set_zoom_factor (old_zoomf);
   return ren;
-}
-
-picture
-pdf_hummus_renderer_rep::png_data_to_picture (string png_data, int w, int h) {
-  if (N (png_data) == 0) {
-    // Return null if no PNG data
-    return picture ();
-  }
-
-  // Create QByteArray from PNG binary data
-  QByteArray png_bytes (as_charp (png_data), N (png_data));
-
-  // Load PNG image from data
-  QImage image;
-  if (!image.loadFromData (png_bytes, "PNG")) {
-    // Return null if PNG is invalid
-    return picture ();
-  }
-
-  // Convert TeXmacs internal units to pixels
-  // w and h are in TeXmacs internal units, need to convert to pixels
-  int pixel_w= ((w * PIXEL / 72));
-  int pixel_h= ((h * PIXEL / 72));
-  image      = image.scaled (pixel_w, pixel_h, Qt::KeepAspectRatio,
-                             Qt::SmoothTransformation);
-
-  // Convert to QPixmap and then to picture
-  return qt_picture (image, 0, 0);
 }
 
 /******************************************************************************
