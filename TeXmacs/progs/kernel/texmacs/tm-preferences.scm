@@ -151,6 +151,7 @@
    ((== (xdg-dekstop-session) "kde") "kde")
    ((== (xdg-dekstop-session) "deepin") "kde")
    ((== (xdg-dekstop-session) "gnome") "gnome")
+   ((== (xdg-dekstop-session) "ubuntu") "gnome")
    (else "emacs")))
 
 (define-public (look-and-feel)
