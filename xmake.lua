@@ -698,7 +698,7 @@ target("stem") do
     on_run(function (target)
         name = target:name()
         if is_plat("windows") then
-            os.execv(target:installdir().."/bin/" .. target:filename())
+            os.execv(target:installdir().."/bin/" .. target:filename(), {"-d"})
         elseif is_plat("linux", "macosx") then
             print("Launching " .. target:targetfile())
             os.execv(target:targetfile(), {"-d"}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
