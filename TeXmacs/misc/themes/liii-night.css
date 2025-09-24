@@ -474,19 +474,39 @@ QListWidget.completion_popup::item:hover {
 /****************************************************************************
 * 辅助组件样式
 ****************************************************************************/
-QTMAuxiliaryWidget,
-QTMAuxiliaryWidget > QWidget {
+QDockWidget#auxiliary_widget {
   background: #2c2c2c;
   border: 1px solid #4c4c4c;
+  border-radius: 8px;
 }
 
-QTMAuxiliaryWidget::title {
-  background: #2c2c2c;
+QDockWidget#auxiliary_widget::title {
+  background: #333333;
   text-align: center;
-  padding: 4px;
+  padding: 8px;
   color: #ffffff;
+  font-weight: bold;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
+QWidget#auxiliary_container {
+  background: #202020;
+  color: #ffffff;
+  border-radius: 8px;
+}
+
+#auxiliary_container QPushButton {
+    background-color: #3a3a3a;
+    color: #ffffff;
+    border: 1px solid #4c4c4c;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+#auxiliary_container QPushButton:hover {
+    background-color: #4c4c4c;
+}
 /****************************************************************************
 * 文档编辑区域样式
 ****************************************************************************/

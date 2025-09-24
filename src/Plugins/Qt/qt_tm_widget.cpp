@@ -1131,7 +1131,8 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       new_qwidget->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
 
       // 使用一层容器包装 new_qwidget，以使布局更美观（同时留出"广告位"）
-      QWidget*     container     = new QWidget ();
+      QWidget* container= new QWidget ();
+      container->setObjectName ("auxiliary_container");
       QVBoxLayout* verticalLayout= new QVBoxLayout (container);
       verticalLayout->setSpacing (0);                  // 间距
       verticalLayout->setContentsMargins (0, 0, 0, 0); // 边距
