@@ -349,10 +349,10 @@ mupdf_renderer_rep::set_clipping (SI x1, SI y1, SI x2, SI y2, bool restore) {
   }
 
   proc->op_q (mupdf_context (), proc);
-  float xx1= to_x (min (x1, x2));
-  float yy1= to_y (min (y1, y2));
-  float xx2= to_x (max (x1, x2));
-  float yy2= to_y (max (y1, y2));
+  SI xx1= to_x (min (x1, x2));
+  SI yy1= to_y (min (y1, y2));
+  SI xx2= to_x (max (x1, x2));
+  SI yy2= to_y (max (y1, y2));
   proc->op_re (mupdf_context (), proc, xx1, yy1, xx2 - xx1, yy2 - yy1);
   proc->op_W (mupdf_context (), proc);
   proc->op_n (mupdf_context (), proc);
@@ -622,8 +622,8 @@ void
 mupdf_renderer_rep::line (SI x1, SI y1, SI x2, SI y2) {
   // debug_convert << "line\n";
   end_text ();
-  proc->op_m (mupdf_context (), proc, to_x (x1), to_y (y1));
-  proc->op_l (mupdf_context (), proc, to_x (x2), to_y (y2));
+  proc->op_m (mupdf_context (), proc, to_x_double (x1), to_y_double (y1));
+  proc->op_l (mupdf_context (), proc, to_x_double (x2), to_y_double (y2));
   proc->op_S (mupdf_context (), proc);
 }
 
@@ -640,9 +640,9 @@ mupdf_renderer_rep::lines (array<SI> x, array<SI> y) {
     proc->op_J (mupdf_context (), proc, 1);    // round cap
   else proc->op_J (mupdf_context (), proc, 2); // square cap
   proc->op_j (mupdf_context (), proc, 1);      // round join
-  proc->op_m (mupdf_context (), proc, to_x (x[0]), to_y (y[0]));
+  proc->op_m (mupdf_context (), proc, to_x_double (x[0]), to_y_double (y[0]));
   for (i= 1; i < n; i++) {
-    proc->op_l (mupdf_context (), proc, to_x (x[i]), to_y (y[i]));
+    proc->op_l (mupdf_context (), proc, to_x_double (x[i]), to_y_double (y[i]));
   }
   proc->op_S (mupdf_context (), proc);
   proc->op_Q (mupdf_context (), proc);
@@ -651,10 +651,10 @@ mupdf_renderer_rep::lines (array<SI> x, array<SI> y) {
 void
 mupdf_renderer_rep::clear (SI x1, SI y1, SI x2, SI y2) {
   end_text ();
-  float xx1= to_x (min (x1, x2));
-  float yy1= to_y (min (y1, y2));
-  float xx2= to_x (max (x1, x2));
-  float yy2= to_y (max (y1, y2));
+  SI xx1= to_x (min (x1, x2));
+  SI yy1= to_y (min (y1, y2));
+  SI xx2= to_x (max (x1, x2));
+  SI yy2= to_y (max (y1, y2));
   // debug_convert << "clear" << xx1 << " " << yy1 << " " << xx2 << " " << yy2
   // << LF;
   proc->op_q (mupdf_context (), proc);
@@ -672,10 +672,10 @@ void
 mupdf_renderer_rep::fill (SI x1, SI y1, SI x2, SI y2) {
   if ((x1 < x2) && (y1 < y2)) {
     end_text ();
-    float xx1= to_x (min (x1, x2));
-    float yy1= to_y (min (y1, y2));
-    float xx2= to_x (max (x1, x2));
-    float yy2= to_y (max (y1, y2));
+    SI xx1= to_x (min (x1, x2));
+    SI yy1= to_y (min (y1, y2));
+    SI xx2= to_x (max (x1, x2));
+    SI yy2= to_y (max (y1, y2));
     proc->op_re (mupdf_context (), proc, xx1, yy1, xx2 - xx1, yy2 - yy1);
     proc->op_h (mupdf_context (), proc);
     proc->op_f (mupdf_context (), proc); // FIXME Winding
@@ -691,7 +691,8 @@ mupdf_renderer_rep::bezier_arc (SI x1, SI y1, SI x2, SI y2, int alpha,
   end_text ();
   proc->op_q (mupdf_context (), proc); // save graphics state
 
-  float xx1= to_x (x1), yy1= to_y (y1), xx2= to_x (x2), yy2= to_y (y2);
+  float xx1= to_x_double (x1), yy1= to_y_double (y1), xx2= to_x_double (x2),
+        yy2= to_y_double (y2);
   float cx= (xx1 + xx2) / 2, cy= (yy1 + yy2) / 2;
   float rx= (xx2 - xx1) / 2, ry= (yy2 - yy1) / 2;
   proc->op_cm (mupdf_context (), proc, 1, 0, 0, 1, cx, cy); // centering
@@ -768,9 +769,9 @@ mupdf_renderer_rep::polygon (array<SI> x, array<SI> y, bool convex) {
   if ((N (y) != n) || (n < 1)) return;
   end_text ();
 
-  proc->op_m (mupdf_context (), proc, to_x (x[0]), to_y (y[0]));
+  proc->op_m (mupdf_context (), proc, to_x_double (x[0]), to_y_double (y[0]));
   for (i= 1; i < n; i++)
-    proc->op_l (mupdf_context (), proc, to_x (x[i]), to_y (y[i]));
+    proc->op_l (mupdf_context (), proc, to_x_double (x[i]), to_y_double (y[i]));
   proc->op_h (mupdf_context (), proc);
   if (convex) proc->op_f (mupdf_context (), proc); // odd-even
   else proc->op_fstar (mupdf_context (), proc);    // nonzero winding

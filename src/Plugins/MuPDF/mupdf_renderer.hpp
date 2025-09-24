@@ -48,18 +48,28 @@ protected:
 
   // geometry
 
-  double to_x (SI x) {
+  SI to_x (SI x) {
     x+= ox;
     if (x >= 0) x= x / pixel;
     else x= (x - pixel + 1) / pixel;
     return x;
   };
 
-  double to_y (SI y) {
+  SI to_y (SI y) {
     y+= oy;
     if (y >= 0) y= y / pixel;
     else y= (y - pixel + 1) / pixel;
     return y;
+  };
+
+  double to_x_double (SI x) {
+    double rx= ((double) (x + ox)) / pixel - 0.5;
+    return rx;
+  };
+
+  double to_y_double (SI y) {
+    double ry= ((double) (y + oy)) / pixel - 0.5;
+    return ry;
   };
 
   void begin_text ();

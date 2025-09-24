@@ -143,18 +143,28 @@ class pdf_hummus_renderer_rep : public renderer_rep {
 
   // geometry
 
-  double to_x (SI x) {
+  SI to_x (SI x) {
     x+= ox;
     if (x >= 0) x= x / pixel;
     else x= (x - pixel + 1) / pixel;
     return x;
   };
 
-  double to_y (SI y) {
+  SI to_y (SI y) {
     y+= oy;
     if (y >= 0) y= y / pixel;
     else y= (y - pixel + 1) / pixel;
     return y;
+  };
+
+  double to_x_double (SI x) {
+    double rx= ((double) (x + ox)) / pixel - 0.5;
+    return rx;
+  };
+
+  double to_y_double (SI y) {
+    double ry= ((double) (y + oy)) / pixel - 0.5;
+    return ry;
   };
 
   // various internal routines
@@ -575,10 +585,10 @@ pdf_hummus_renderer_rep::set_clipping (SI x1, SI y1, SI x2, SI y2,
     // debug_convert << "set clipping\n";
     contentContext->q ();
     clip_level++;
-    double xx1= to_x (min (x1, x2));
-    double yy1= to_y (min (y1, y2));
-    double xx2= to_x (max (x1, x2));
-    double yy2= to_y (max (y1, y2));
+    SI xx1= to_x (min (x1, x2));
+    SI yy1= to_y (min (y1, y2));
+    SI xx2= to_x (max (x1, x2));
+    SI yy2= to_y (max (y1, y2));
     contentContext->re (xx1, yy1, xx2 - xx1, yy2 - yy1);
     contentContext->W ();
     contentContext->n ();
@@ -1439,8 +1449,8 @@ void
 pdf_hummus_renderer_rep::line (SI x1, SI y1, SI x2, SI y2) {
   // debug_convert << "line\n";
   end_text ();
-  contentContext->m (to_x (x1), to_y (y1));
-  contentContext->l (to_x (x2), to_y (y2));
+  contentContext->m (to_x_double (x1), to_y_double (y1));
+  contentContext->l (to_x_double (x2), to_y_double (y2));
   contentContext->S ();
 }
 
@@ -1457,9 +1467,9 @@ pdf_hummus_renderer_rep::lines (array<SI> x, array<SI> y) {
     contentContext->J (1);    // round cap
   else contentContext->J (2); // square cap
   contentContext->j (1);      // round join
-  contentContext->m (to_x (x[0]), to_y (y[0]));
+  contentContext->m (to_x_double (x[0]), to_y_double (y[0]));
   for (i= 1; i < n; i++) {
-    contentContext->l (to_x (x[i]), to_y (y[i]));
+    contentContext->l (to_x_double (x[i]), to_y_double (y[i]));
   }
   contentContext->S ();
   contentContext->Q ();
@@ -1468,10 +1478,10 @@ pdf_hummus_renderer_rep::lines (array<SI> x, array<SI> y) {
 void
 pdf_hummus_renderer_rep::clear (SI x1, SI y1, SI x2, SI y2) {
   end_text ();
-  double xx1= to_x (min (x1, x2));
-  double yy1= to_y (min (y1, y2));
-  double xx2= to_x (max (x1, x2));
-  double yy2= to_y (max (y1, y2));
+  SI xx1= to_x (min (x1, x2));
+  SI yy1= to_y (min (y1, y2));
+  SI xx2= to_x (max (x1, x2));
+  SI yy2= to_y (max (y1, y2));
   // debug_convert << "clear" << xx1 << " " << yy1 << " " << xx2 << " " << yy2
   // << LF;
   contentContext->q ();
@@ -1489,10 +1499,10 @@ void
 pdf_hummus_renderer_rep::fill (SI x1, SI y1, SI x2, SI y2) {
   if ((x1 < x2) && (y1 < y2)) {
     end_text ();
-    double xx1= to_x (min (x1, x2));
-    double yy1= to_y (min (y1, y2));
-    double xx2= to_x (max (x1, x2));
-    double yy2= to_y (max (y1, y2));
+    SI xx1= to_x (min (x1, x2));
+    SI yy1= to_y (min (y1, y2));
+    SI xx2= to_x (max (x1, x2));
+    SI yy2= to_y (max (y1, y2));
     contentContext->re (xx1, yy1, xx2 - xx1, yy2 - yy1);
     contentContext->h ();
     contentContext->f (); // FIXME Winding
@@ -1508,7 +1518,8 @@ pdf_hummus_renderer_rep::bezier_arc (SI x1, SI y1, SI x2, SI y2, int alpha,
   end_text ();
   contentContext->q (); // save graphics state
 
-  double xx1= to_x (x1), yy1= to_y (y1), xx2= to_x (x2), yy2= to_y (y2);
+  double xx1= to_x_double (x1), yy1= to_y_double (y1), xx2= to_x_double (x2),
+         yy2= to_y_double (y2);
   double cx= (xx1 + xx2) / 2, cy= (yy1 + yy2) / 2;
   double rx= (xx2 - xx1) / 2, ry= (yy2 - yy1) / 2;
   contentContext->cm (1, 0, 0, 1, cx, cy); // centering
@@ -1580,9 +1591,9 @@ pdf_hummus_renderer_rep::polygon (array<SI> x, array<SI> y, bool convex) {
   int i, n= N (x);
   if ((N (y) != n) || (n < 1)) return;
   end_text ();
-  contentContext->m (to_x (x[0]), to_y (y[0]));
+  contentContext->m (to_x_double (x[0]), to_y_double (y[0]));
   for (i= 1; i < n; i++)
-    contentContext->l (to_x (x[i]), to_y (y[i]));
+    contentContext->l (to_x_double (x[i]), to_y_double (y[i]));
   contentContext->h ();
   if (convex) contentContext->f (); // odd-even
   else contentContext->fStar ();    // nonzero winding
