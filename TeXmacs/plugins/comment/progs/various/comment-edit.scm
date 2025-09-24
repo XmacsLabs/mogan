@@ -16,9 +16,7 @@
         (utils library cursor)
         (generic document-edit)
         (link ref-edit)
-        (various comment-drd)
-        (part part-shared)
-        (database db-users)))
+        (various comment-drd)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Caching highly volatile computations
@@ -63,7 +61,7 @@
 
 (define (default-comment-color type by)
   (cond ((== type "reminder") "#844")
-        ((== by (utf8->cork (get-user-info "name"))) "#277")
+        ((== by (utf8->cork (get-user-name))) "#277")
         (else "#727")))
 
 (tm-define (get-comment-color type by)
@@ -205,7 +203,7 @@
 (tm-define (make-comment lab type pos)
   (let* ((id (create-unique-id))
          (mirror-id (create-unique-id))
-         (by (utf8->cork (get-user-info "name")))
+         (by (utf8->cork (get-user-name)))
          (date (number->string (current-time))))
     (insert-go-to `(,lab ,id ,mirror-id ,type ,by ,date "" "") pos)
     (notify-comments-editor)))
