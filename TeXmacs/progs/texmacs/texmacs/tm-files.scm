@@ -237,6 +237,17 @@
           (when answ
             (save-buffer-save name opts))))))
 
+(tm-widget (readonly-file-dialog-widget cmd)
+  (resize "500px" "200px"
+    (centered
+      (text "The current document or its directory has read-only attributes. You can save the document using Save as."))
+    (bottom-buttons
+      >>
+      ("Save as" (cmd "save_as"))
+      ///
+      ("Cancel" (cmd "cancel"))
+      /// )))
+
 (define (cannot-write? name action)
   (with vname `(verbatim ,(utf8->cork (url->system name)))
     (cond ((and (not (url-test? name "f")) (url-exists? name))
@@ -244,12 +255,12 @@
              (notify-now `(concat ,msg "<br>" ,vname)))
            #t)
           ((and (url-test? name "f") (not (url-test? name "w")))
-           (user-confirm "The target file is not writable. Save as a different file?" #f
-             (lambda (act)
-               (if act
-                 (begin (choose-file save-buffer-as "Save TeXmacs file" "action_save_as")
-                          #f)
-                 #t))))
+           (dialogue-window
+             readonly-file-dialog-widget
+             (lambda (answer)
+               (when (== answer "save_as")
+                 (choose-file save-buffer-as "Save TeXmacs file" "action_save_as")))
+             "Failed to save"))
           (else #f))))
 
 (define (save-buffer-check-permissions name opts)

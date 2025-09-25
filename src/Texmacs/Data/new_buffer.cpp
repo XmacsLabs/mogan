@@ -464,6 +464,16 @@ buffer_import (url name, url src, string fm) {
   tree t= import_tree (src, fm);
   if (t == "error") return true;
   set_buffer_tree (name, t);
+
+  // Check if the file is read-only and update the buffer's read_only flag
+  tm_buffer buf= concrete_buffer (name);
+  if (is_nil (buf)) return true;
+  // Check if the file has write permissions
+  if (!has_permission (src, "w")) {
+    string title= buf->buf->title;
+    title       = '[' * translate ("read-only") * "] " * title;
+    set_title_buffer (name, title);
+  }
   return false;
 }
 
