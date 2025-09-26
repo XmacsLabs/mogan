@@ -1,0 +1,146 @@
+<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+
+<style|<tuple|tmdoc|number-europe|british>>
+
+<\body>
+  <tmdoc-title|Laptop presentations><label|sec-man-beamer>
+
+  <TeXmacs> features a “presentation mode”, for making presentations from a laptop. The presentation mode is activated/deactivated using <menu|View|Presentation mode> or <shortcut|(toggle-full-screen-mode)>. In this chapter, we describe several dedicated style packages and markup elements which can be used for making slick presentations.
+
+  Several types of remote controllers are supported for laptop presentations. Some of them (such as Apple infrared controllers) should work out of the box (at least for the Qt version). Others map the buttons on the remote controller to certain keys on your keyboard, and you will need to toggle <menu|View|Remote control> in order to remap these keys to the right actions during presentations. If necessary, the appropriate mappings may be specified in <menu|Edit|Preferences|Keyboard|Remote control>. By activating the debugging tool <menu|Tools|Debugging tool> and <menu|Debug|keyboard>, you may find out the particular mappings used by your remote control.
+
+  <section|Beamer styles><label|sec-man-beamer-style>
+
+  In order to start writing a laptop presentation, you should first select the <tmstyle|beamer> style using <menu|Document|Style|beamer>. There are several main “themes” for presentations, such as <subsubmenu|Document|Beamer theme|Bluish>, <subsubmenu|Document|Beamer theme|Ice>, <subsubmenu|Document|Beamer theme|Metal>, <subsubmenu|Document|Beamer theme|Reddish>, <subsubmenu|Document|Beamer theme|Ridged paper>, which can be selected from the <menu|Document|Beamer theme> menu.
+
+  The presentation style includes the <tmstyle|alt-colors> style package, which features the use of colors for mathematical formulas, enunciations, etc. Additional customizations of the presentation style are available in the <menu|Focus|Preferences> menus for the various tags to which they apply. For instance, the rendering of slide titles and theorems can be further customized.
+
+  <section|Traversal of a presentation><label|sec-man-beamer-traversal>
+
+  One major family of markup tags for presentations concerns the traversal of the document during a presentation. The keys <key|F10> and <key|F11> are used respectively for going back and forth in the presentation. The keys <key|F9> and <key|F12> are used to go to the start <abbr|resp.> end of the presentation. When using the <tmstyle|beamer> style or when enabling the “presentation tool” in the <menu|Tools> menu, a <menu|Dynamic> menu and additional icons will appear, which can also be used for the traversal of your presentation.
+
+  The most basic traversal tag is called a “switch”, and allows the user to show different pieces of text in successive and mutually exclusive manner. The entire presentation itself usually consists of a <markup|screens> switch, where the pieces are the successive “slides” of the presentation. After selection of the <tmstyle|beamer> style, this switch can be inserted using <menu|Focus|Screens> or <menu|Insert|Fold|Switch|Screens>. You may jump from one screen to another one using <key|pageup> and <key|pagedown>.
+
+  Inside a switch, new “branches” can be inserted after or before the currently visible branch using <menu|Focus|Insert argument after> or <menu|Focus|Insert argument before>. Besides the <markup|screens> switch, you may use <menu|Insert|Fold|Switch|Standard> to insert paragraph-wide switches, and <menu|Insert|Fold|Switch|Tiny> to insert inline switches (similarly to displayed and inline formulas).
+
+  Another popular way to traverse is presentation is to progressively unroll content. This can be done by inserting an <markup|unroll> tag using <menu|Insert|Fold|Unroll>. Using a “hack” this tag can be combined with the <markup|itemize> and <markup|enumerate> tags: first create the list environment, but remove the first (automatically inserted) <markup|item> tag. Next insert the unroll tag. When pressing <key|enter> inside the unroll tag, new items are created; you still have to use <menu|Focus|Insert argument after> for inserting new branches to the unroll structure (in particular, several items could be unrolled at once).
+
+  A variant of unrolling is unfolding. This is basically an unroll tag with exactly two branches, but different variants are available in <menu|Insert|Fold|Folded> depending on the desired rendering. In particular, some of the renderings display a button which may be pushed in order to fold or unfold some content. The input-output fields inside computer algebra sessions are also foldable. Similarly, the tags in <menu|Insert|Fold|Summarize> are switches with two branches, again with different kinds of rendering.
+
+  When using <TeXmacs> in combination with an external plug-in, such as a computer algebra system, you will notice that all input-output fields in <hlink|sessions|../interface/man-session-basic.en.tm> are foldable. In addition, you can create so called “<hlink|executable switches|../interface/man-scripting-language.en.tm>” using the items in the <menu|Insert|Fold|Executable> submenu. This allows you to switch back and forth between a given input to the system and the corresponding output.
+
+  All markup for the traversal of presentations may be nested in a natural way. In the <menu|Insert|Fold|Traversal> menu, you may specify whether unrolled and folded structures should be folded back after traversal.
+
+  <section|Overlays><label|sec-man-beamer-overlays>
+
+  The standard “fold”, “unroll” and “switch” tags implement the most frequent kinds of traversal of a slideshow. However, there are cases in which more complex successions are needed.
+
+  <\big-figure|<block|<tformat|<cwith|1|1|1|1|cell-hyphen|t>|<twith|table-width|0.333par>|<twith|table-hmode|exact>|<table|<row|<\cell>
+    <\compact>
+      Elimination of <math|x> from
+
+      <\equation*>
+        x*sin y-3*x*y=\<alpha\>
+      </equation*>
+
+      yields
+
+      <\equation*>
+        x=<frac|\<alpha\>|sin y-3*y>.
+      </equation*>
+    </compact>
+  </cell>>>>><space|2em><block|<tformat|<cwith|1|1|1|1|cell-hyphen|t>|<twith|table-width|0.333par>|<twith|table-hmode|exact>|<table|<row|<\cell>
+    <\compact>
+      Elimination of <math|<with|color|red|x>> from
+
+      <\equation*>
+        <with|color|red|x>*sin y-3*<with|color|red|x>*y=\<alpha\>
+      </equation*>
+
+      yields
+
+      <\equation*>
+        <with|color|red|x>=<frac|\<alpha\>|sin y-3*y>.
+      </equation*>
+    </compact>
+  </cell>>>>>>
+    <label|red-x-fig>Example of highlighting a variable <math|x> when switching from one slide to a next one.
+  </big-figure>
+
+  For instance, imagine that we are given a slide, and that we wish to highlight all occurrences of some variable <math|x> in red on the next slide (see figure<nbsp><reference|red-x-fig>). This could be achieved by using a switch tag: we just copy the whole slide both in the first and in the second branch of the switch, and next color all instances of <math|x> red in the second branch. However, this solution has the disadvantage that any <em|a posteriori> modification on the slide has to be made both in the first and in the second branch.
+
+  <TeXmacs> provides a so called “overlay” mechanism for this kind of more complex successions of slides. You may insert a pile of overlays using <menu|Insert|Fold|Overlays|Standard>. At the start, the pile contains a unique overlay, but new overlays can then be added using the standard keyboard shortcuts <shortcut|(structured-insert-right)> and <shortcut|(structured-insert-left)> for <hlink|structured insertion|../editing/man-structured-editing.en.tm>. When applied to overlays, the standard keys <key|F10> and <key|F11> for traversing the presentation have the effect of going up and down in the pile of overlays.
+
+  By default, all text which is typed by the user will be visible on all overlays. But, using the filters in the menu <menu|Insert|Fold|Overlay>, it is also possible to create text which is only visible on specified overlays of the pile. There are four basic types of filters:
+
+  <\description>
+    <item*|<subsubsubmenu|Insert|Fold|Overlay|Visible from here on>>Text that will be visible on this and all subsequent overlays.
+
+    <item*|<subsubsubmenu|Insert|Fold|Overlay|Visible until here>>Text that will be visible on this and all previous overlays.
+
+    <item*|<subsubsubmenu|Insert|Fold|Overlay|Visible only here>>Text that will be visible only on this overlay.
+
+    <item*|<subsubsubmenu|Insert|Fold|Overlay|Visible except here>>Text that will be visible on all but the current overlays.
+  </description>
+
+  In a similar way, <TeXmacs> provides tags for alternate views: depending on whether a certain predicate is met, we show the “main content” on certain overlays and the “alternate content” on the remaining overlays. We use the same four types of predicates:
+
+  <\description>
+    <item*|<subsubsubmenu|Insert|Fold|Overlay|Alternate from here on>>The alternate text will be used on this and all subsequent overlays.
+
+    <item*|<subsubsubmenu|Insert|Fold|Overlay|Alternate until here>>The alternate text will be used on this and all previous overlays.
+
+    <item*|<subsubsubmenu|Insert|Fold|Overlay|Alternate only here>>The alternate text will only be used on this overlay.
+
+    <item*|<subsubsubmenu|Insert|Fold|Overlay|Alternate except here>>The alternate text will be used on all but the current overlays.
+  </description>
+
+  <TeXmacs> finally provides a means of customizing the way that “hidden” and “shown” content should be rendered: user determined coloring schemes can be used using the <markup|alter-colors> tag which can be inserted from <menu|Insert|Fold|Overlay|Specify color alternation>. For instance, in order to achieve the effect mentioned in the example from Figure<nbsp><reference|red-x-fig>, you may specify a “black to red” color alternation, and then use a <subsubsubmenu|Insert|Fold|Overlay|Visible from here on> type of overlay.
+
+  <section|Decorations><label|sec-man-decorations>
+
+  In order to decorate your laptop presentations, <TeXmacs> provides a few extra markup elements: <markup|granite>, <markup|manila-paper>, <markup|metal>, <markup|pine>, <markup|ridged-paper> and <markup|rough-paper>. These tags will put your content on a nice, natural background, as illustrated in the figure below. You may also use the <markup|tit> tag for giving individual slides a title.
+
+  <\big-figure>
+    <use-package|ornaments><tabular*|<tformat|<table|<row|<cell|<granite|<tabular*|<tformat|<twith|table-lsep|0.5em>|<twith|table-rsep|0.5em>|<twith|table-bsep|0.5em>|<twith|table-tsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<table|<row|<cell|<large|<strong|Granite>>>>|<row|<cell|<math|a<rsup|2>+b<rsup|2>=c<rsup|2>>>>>>>><space|1em><metal|<tabular*|<tformat|<twith|table-lsep|0.5em>|<twith|table-rsep|0.5em>|<twith|table-bsep|0.5em>|<twith|table-tsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<table|<row|<cell|<large|<strong|Metal>>>>|<row|<cell|<math|a<rsup|2>+b<rsup|2>=c<rsup|2>>>>>>>><space|1em><pine|<tabular*|<tformat|<twith|table-lsep|0.5em>|<twith|table-rsep|0.5em>|<twith|table-bsep|0.5em>|<twith|table-tsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<table|<row|<cell|<large|<strong|Pine>>>>|<row|<cell|<math|a<rsup|2>+b<rsup|2>=c<rsup|2>>>>>>>>>>|<row|<cell|>>|<row|<cell|<manila-paper|<tabular*|<tformat|<twith|table-lsep|0.5em>|<twith|table-rsep|0.5em>|<twith|table-bsep|0.5em>|<twith|table-tsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<table|<row|<cell|<large|<strong|Manila paper>>>>|<row|<cell|<math|a<rsup|2>+b<rsup|2>=c<rsup|2>>>>>>>><space|1em><ridged-paper|<tabular*|<tformat|<twith|table-lsep|0.5em>|<twith|table-rsep|0.5em>|<twith|table-bsep|0.5em>|<twith|table-tsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<table|<row|<cell|<large|<strong|Ridged paper>>>>|<row|<cell|<math|a<rsup|2>+b<rsup|2>=c<rsup|2>>>>>>>><space|1em><rough-paper|<tabular*|<tformat|<twith|table-lsep|0.5em>|<twith|table-rsep|0.5em>|<twith|table-bsep|0.5em>|<twith|table-tsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<table|<row|<cell|<large|<strong|Rough paper>>>>|<row|<cell|<math|a<rsup|2>+b<rsup|2>=c<rsup|2>>>>>>>>>>>>>
+
+    \;
+  <|big-figure>
+    <label|ornament-fig>Some standard ornaments for decorating your presentations.
+  </big-figure>
+
+  <section|Animations><label|sec-man-animations>
+
+  <TeXmacs> provides some rudimentary support for animations inside laptop presentations. This support is likely to be further improved in future <TeXmacs> distributions.
+
+  The simplest animations are available from the menus <menu|Insert|Animation|Translate> and <menu|Insert|Animation|Progressive>. Using the first menu, it is possible to create moving content: you first specify a duration for the full animation and then enter the content which has to be moved. The different kinds of moving content are illustrated in figure<nbsp><reference|translate-fig>. Similarly, using the second menu, it is possible to create content which only progressively appears on the screen. The various kinds of progressive content are illustrated in figure<nbsp><reference|progressive-fig>. The duration of the animations can be <hlink|modified <em|a<nbsp>posteriori>|../editing/man-structured-geometry.en.tm> by putting your cursor inside them and using the shortcuts <shortcut|(geometry-left)> and<nbsp><shortcut|(geometry-right)>.
+
+  <big-figure|<tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-translate|<large|Hello world>|2sec|<tuple|-1.0|0.0>|>>>|<row|<cell|<menu|Rightwards>>>>>><space|1em><tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-translate|<large|Hello world>|2sec|<tuple|1.0|0.0>|>>>|<row|<cell|<menu|Leftwards>>>>>><space|1em><tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-translate|<large|Hello world>|2sec|<tuple|0.0|-1.0>|>>>|<row|<cell|<menu|Upwards>>>>>><space|1em><tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-translate|<large|Hello world>|2sec|<tuple|0.0|1.0>|>>>|<row|<cell|<menu|Downwards>>>>>>|<label|translate-fig>Moving content, as inserted from <menu|Insert|Animation|Translate>.>
+
+  <big-figure|<tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-progressive|<large|Hello<anim-progressive||2sec|<tuple|0.0|0.0|0.0|1.0>|>>|2sec|<tuple|0.0|0.0|0.0|1.0>|>>>|<row|<cell|<menu|Rightwards>>>>>><space|1em><tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-progressive|<large|Hello>|2sec|<tuple|1.0|0.0|1.0|1.0>|>>>|<row|<cell|<menu|Leftwards>>>>>><space|1em><tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-progressive|<large|Hello world>|2sec|<tuple|0.5|0.5|0.5|0.5>|>>>|<row|<cell|<menu|From center>>>>>><space|1em><tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-progressive|<large|Hello>|2sec|<tuple|0.0|0.0|1.0|0.0>|>>>|<row|<cell|<menu|Upwards>>>>>><space|1em><tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-progressive|<large|Hello>|2sec|<tuple|0.0|1.0|1.0|1.0>|>>>|<row|<cell|<menu|Downwards>>>>>>|<label|progressive-fig>Progressive content, as inserted from <menu|Insert|Animation|Progressive>.>
+
+  Other basic animations are “animated gif pictures”, which can be inserted from <menu|Insert|Animation|Animation>, and sounds, which can be inserted from <menu|Insert|Animation|Sound>. Support for movies should be added later.
+
+  It is also possible to combine animation, so as to form larger animations. For instance, using <menu|Insert|Animation|Compose> you can play several animations one after another. Often the individual elements of a composed animations are fixed animation of a given duration, which can be inserted using <menu|Insert|Animation|Fixed>. Of course, you may also use moving or progressive content or even composed animations as building blocks. An animation can be repeated indefinitely using <menu|Insert|Animation|Repeat>. This may for instance be used to create a blinking effect. Some examples of the various possibilities can be found in figure<nbsp><reference|compose-fig>. <rsub|<math|>>
+
+  <big-figure|<tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-compose|<anim-constant|<large|Hello>|2sec>|<anim-constant|<large|World>|2sec>>>>|<row|<cell|Compose>>>>><space|1em><tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-repeat|<anim-compose|<anim-constant|<large|<space|0.6spc>Hello>|1sec>|<anim-constant|<large|World>|1sec>>>>>|<row|<cell|Blinking>>>>><space|1em><tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<large|<anim-repeat|<anim-compose|<anim-constant|<with|color|brown|T<space|-0.2spc><rsub|<with|math-level|0|font-shape|small-caps|e>>X<space|-0.2spc>><with|color|dark green|<rsub|<with|math-level|0|font-shape|small-caps|m<space|-0.2spc>a<space|-0.4spc>c<space|-0.2spc>s>>>|1sec>|<anim-constant|<with|color|dark green|T<space|-0.2spc><rsub|<with|color|brown|<with|math-level|0|font-shape|small-caps|e>>>X<space|-0.2spc>><with|color|brown|<rsub|<with|math-level|0|font-shape|small-caps|m<space|-0.2spc>a<space|-0.4spc>c<space|-0.2spc>s>>>|1sec>>>>>>|<row|<cell|<TeXmacs> logo>>>>><space|1em><tabular*|<tformat|<cwith|1|1|1|1|cell-lsep|0.5em>|<cwith|1|1|1|1|cell-rsep|0.5em>|<cwith|1|1|1|1|cell-bsep|0.5em>|<cwith|1|1|1|1|cell-tsep|0.5em>|<cwith|1|1|1|1|cell-background|pastel yellow>|<cwith|2|2|1|1|cell-tsep|0.5em>|<table|<row|<cell|<anim-repeat|<large|<name|<anim-compose|<anim-progressive|<with|color|dark green|Mathe<rsub|<math|>>>|2sec|<tuple|0.0|0.0|0.0|1.0>|><phantom|magiX>|<anim-constant|<with|color|dark green|Mathe<rsub|<math|>>><with|color|dark magenta|magiX>|1sec>>>>>>>|<row|<cell|<name|Magix> animation>>>>>|<label|compose-fig>Different kinds of composed animations.>
+
+  <section|Exporting beamer presentations><label|sec-man-beamer-export>
+
+  Once you have created a file with the <tmstyle|beamer> style you may want to export it to <abbr|PDF> in order to be able to give your presentation without using <TeXmacs>. There are two ways in which this can be done: <em|expanded> and <em|unexpanded>.
+
+  <\enumerate>
+    <item><em|Expanded> means that <markup|fold>s of all kinds are “flattened” out before they are exported. This is useful if you intend the resulting <abbr|PDF> file to be distributed and printed, since it will have exactly as many pages as slides your presentation.
+
+    <item><em|Unexpanded> means that the <abbr|PDF> file will have as many pages as <em|steps> your presentation, which depending on your use of <markup|fold>, <markup|switch>, <markup|overlay>, etc. will typically result in many more pages.
+  </enumerate>
+
+  You can select which of these methods will be used with <menu|Preferences|Converters|TeXmacs-\<gtr\>Pdf/Postscript|Expand beamer slides>.
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

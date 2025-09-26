@@ -1,0 +1,1014 @@
+<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+
+<style|<tuple|tmdoc|chinese|number-europe>>
+
+<\body>
+  <tmdoc-title|Writing <TeXmacs> style files><label|sec-style>
+
+  One of the fundamental strengths of <TeXmacs> is the possibility to write your own style files and packages. The purpose of style files is multiple:
+
+  <\itemize>
+    <item>They allow the abstraction of repetitive elements in texts, like sections, theorems, enumerations, etc.
+
+    <item>They form a mechanism which allow you to structure your text. For instance, you may indicate that a given portion of your text is an abbreviation, a quotation or “important”.
+
+    <item>Standard document styles enable you to write professionally looking documents, because the corresponding style files have been written with a lot of care by people who know a lot about typography and aesthetics.
+  </itemize>
+
+  The user may select a major style from the <menu|Document|Style> menu. The major style usually reflects the kind of document you want to produce (like a letter, an article or a book) or a particular layout policy (like publishing an article in a given journal).
+
+  Style packages, which are selected from the <menu|Document|Style> menu, are used for further customization of the major style. For instance, the <tmpackage|number-europe> package enables European-style theorem numbering and the <tmpackage|maxima> package contains macros for customizing the layout of sessions of the <name|Maxima> computer algebra system. Several packages may be used together.
+
+  When you want to add your own markup to <TeXmacs> or personalize the layout, then you have to choose between writing a principal style file or a style package. In most cases, you will probably prefer to write a style package, since this will allow you to combine it arbitrary other styles. However, in some cases you may prefer to create a new principal style, usually by personalizing an existing style. This is usually the case if you want to mimic the layout policy of some journal. In this chapter, we will both explain how to write your own style packages and how to customize the standard styles.
+
+  <section|Writing a simple style package><label|sec-style-example>
+
+  Let us explain on an example how to write a simple style package. First of all, you have to create a new buffer using <menu|File|New> and select the <tmstyle|source> document style using <menu|Document|Style|source>. Now save your empty style package in your personal style package directory
+
+  <verbatim| \ \ \ $HOME/.TeXmacs/packages>
+
+  Notice that the button <menu|Texts> in the file browser corresponds to the directory
+
+  <verbatim| \ \ \ $HOME/.TeXmacs/texts>
+
+  Consequently, you can go to the style package directory from there, by double clicking on <verbatim|..> and next on <verbatim|packages>. Similarly, the directory
+
+  <verbatim| \ \ \ $HOME/.TeXmacs/styles>
+
+  contains your personal style files. After saving your empty style package, it should automatically appear in the <menu|Document|Package> menu. Notice that style files must be saved using the <verbatim|.ts> file extension. If you save the style file in a subdirectory of <verbatim|$HOME/.TeXmacs/packages>, then it will automatically appear in the corresponding submenu of <menu|Document|Package>.
+
+  Let us now create a simple macro <markup|hi> which displays “Hello world”. First type <shortcut|(make 'assign)>, so as to create an assignment. You should see something like
+
+  <\tm-fragment>
+    <inactive*|<assign||>>
+  </tm-fragment>
+
+  Now enter “hi” as the first argument and type <shortcut|(make 'macro)> inside the second argument in order to create a macro. You should now see something like
+
+  <\tm-fragment>
+    <inactive*|<assign|hi|<macro|>>>
+  </tm-fragment>
+
+  Finally, type the text “Hello world” in the body of the macro. Your document should now consist of the following line:
+
+  <\tm-fragment>
+    <inactive*|<assign|hi|<macro|Hello world>>>
+  </tm-fragment>
+
+  After saving your style package, opening a new document and selecting your package in the <menu|Document|Use package> menu, you may now use the macro <markup|hi> in your document by typing <key|\\ h i> and hitting <shortcut|(kbd-return)>.
+
+  In a similar way, you may create macros with arguments. For instance, assume that we started entering a macro <markup|hello> in a similar way as above. Instead of typing “Hello world”, we first type <shortcut|(structured-insert-left)> inside the macro body so as to create an additional argument on the left hand side of the cursor. We next enter the name of the argument, say “name”. You should now see something like below:
+
+  <\tm-fragment>
+    <inactive*|<assign|hello|<macro|name|>>>
+  </tm-fragment>
+
+  In the second argument of the body, we now type “Hello ”, <shortcut|(make 'arg)>, “name”, <key|right> and “, how are you today?”. After this you should see
+
+  <\tm-fragment>
+    <inactive*|<assign|hello|<macro|name|Hello <arg|name>, how are you today?>>>
+  </tm-fragment>
+
+  The <shortcut|(make 'arg)> shortcut is used to retrieve the macro argument <src-arg|name>. Instead of typing <shortcut|(make 'arg)>, “name” and <key|right>, you may also use the hybrid <key|\\>-key and type <key|\\ n a m e> followed by <shortcut|(kbd-return)>. After saving your style package, you may again use the macro in any document which uses your package by typing <key|\\ h e l l o> and hitting <key|return>.
+
+  From the internal point of view, all macro definitions are stored in the environment of the <TeXmacs> typesetter. Besides macros, the environment also contains normal environment variables, such as section counters or the font size. The environment variables can either be globally changed using the <markup|assign> primitive, or locally, using the <markup|with> primitive. For instance, when including the line
+
+  <\tm-fragment>
+    <inactive*|<assign|section-nr|-1>>
+  </tm-fragment>
+
+  in your package, and using <tmstyle|article> as your major style, then the first section will be numbered <no-break><math|0>. Similarly, the variant
+
+  <\tm-fragment>
+    <inactive*|<assign|hello|<macro|name|Hello <with|font-shape|small-caps|<arg|name>>!>>>
+  </tm-fragment>
+
+  of the <markup|hello> macro displays the name of the person in <with|font-shape|small-caps|Small Capitals>. Notice that the <markup|with> primitive can also be used to locally redefine a macro. This is for instance used in the definitions of the standard list environments, where the macro which renders list icons is changed inside the body of the list. Yet another variant of the <markup|hello> macro relies on the standard <markup|person> macro:
+
+  <\tm-fragment>
+    <inactive*|<assign|hello|<macro|name|Hello <person|<arg|name>>!>>>
+  </tm-fragment>
+
+  In order to produce the macro application <inactive*|<person|<arg|name>>>, you first have to start a compound tag using <shortcut|(make 'compound)>, type the name “person”, insert an argument <shortcut|(structured-insert-right)>, and enter the argument <src-arg|name> as before. When you are done, you may press <shortcut|(kbd-return)> in order to change the <markup|compound> tag into a <markup|person> tag. Alternatively, you may type <key|\\>, “person”, <shortcut|(structured-insert-right)> and “name”.
+
+  By combining the above constructs, an ordinary user should already be able to produce style packages for all frequently used notations. An interesting technique for writing macros which involve complex formulas with some subformulas which may change goes as follows:
+
+  <\enumerate>
+    <item>Type the formula, say <math|(a<rsub|1>,\<ldots\>,a<rsub|n>)>, in an ordinary document.
+
+    <item>Create the skeleton of your macro in your style package:
+
+    <\tm-fragment>
+      <inactive*|<assign|n-tuple|<macro|a|>>>
+    </tm-fragment>
+
+    <item>Copy the formula and paste it into the body of your macro:
+
+    <\tm-fragment>
+      <inactive*|<assign|n-tuple|<macro|a|(a<rsub|1>,\<ldots\>,a<rsub|n>)>>>
+    </tm-fragment>
+
+    <item>Replace the subformulas you want to parameterize by macro arguments:
+
+    <\tm-fragment>
+      <inactive*|<assign|n-tuple|<macro|a|(<arg|a><rsub|1>,\<ldots\>,<arg|a><rsub|n>)>>>
+    </tm-fragment>
+
+    <item>You may now use the macro in documents which use your package:
+
+    <\equation*>
+      <with|n-tuple|<macro|a|(<arg|a><rsub|1>,\<ldots\>,<arg|a><rsub|n>)>|<n-tuple|a>=<n-tuple|b>.>
+    </equation*>
+  </enumerate>
+
+  <section|Rendering of style files and packages><label|sec-src-present>
+
+  <subsection|ASCII-based or tree-based editing: an intricate choice><label|sec-src-present-intro>
+
+  Most users are used to edit source code using a conventional editor like <name|Emacs>, while presenting the source code in ASCII format. Since all <TeXmacs> documents are stored as <hlink|trees|../format/basics/basics.en.tm>, an interesting but complicated question is which format is most suitable for editing such documents. One option is to represent the tree using an ASCII-based format, such as XML, Scheme, or the native format for storing files on a disk. The other option is to edit the trees as such, making no fundamental distinction between source code and normal documents.
+
+  In <TeXmacs> we have chosen to implement the second option. More precisely, any document can be edited in “source mode”, which is merely a mode for rendering the document in a way which makes its tree structure particularly apparent. It may be instructive to take an arbitrary document of yours and to take a look at it in “source mode” by enabling <menu|Document|Source|Edit source tree>.
+
+  The choice between ASCII-based editing and tree-based editing is non-trivial, because <TeXmacs> style files and packages have a double nature: they may be seen as programs which specify how to render macros, but these programs naturally contain ordinary content. There are several reasons why users often prefer to edit source code in an ASCII-based format:
+
+  <\enumerate>
+    <item>It is easy to manually format the code so as to make it more readable.
+
+    <item>In particular, it is easy to add comments.
+
+    <item>Standard editors like <name|Emacs> provide tools for automatic highlighting, indentation, <abbr|etc.>
+
+    <item><label|structure-constraints>One is not constraint by any “structure” during the editing phase.
+  </enumerate>
+
+  Our approach is to reproduce as much of the above advantages in a structured document environment. Although point <reference|structure-constraints> will obviously be hard to meet when following this approach, we believe that the first three advantages might actually become greater in a structured environment. However, this requires a more profound understanding of how users format and edit source code.
+
+  For instance, consider a piece of manually formatted code like
+
+  <\cpp-code>
+    if (cond) hop \ \ = 2;
+
+    else \ \ \ \ \ holala= 3;
+  </cpp-code>
+
+  Clearly, the user had a particular formatting policy when writing this code. However, this policy does not appear in the document: manual intervention will be necessary if the variable <verbatim|cond> is renamed <verbatim|c>, or if the variable <verbatim|holala> is renamed <verbatim|hola>.
+
+  At the moment, <TeXmacs> provides no tools for dealing with the above example in an automatic way, but a few tools are already provided. For instance, the user is given a great amount of control on how to indent source code and reasonable defaults are provided as a function of the structure. We also provide high level environments for comments and structured highlighting. Further tools will be developed later and we are open for any suggestions from our users.
+
+  <subsection|Global presentation><label|sec-src-present-global>
+
+  In the <menu|Source tags> group of the <menu|Document|Source> menu, you find several ways to customize the rendering of source trees in your document. We recommend you to play around with the different possibilities in a document of your own (after enabling <menu|Document|Source|Source tree>) or a standard style package in <verbatim|$TEXMACS_PATH/packages>.
+
+  First of all, you may choose between the different major styles “angular”, “scheme”, “functional” and “<LaTeX>” \ for rendering source trees, as illustrated in the figure below:
+
+  <\big-figure>
+    <\quote-env>
+      <small|<tabular*|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|2|1|1|cell-hyphen|t>|<cwith|2|2|3|3|cell-hyphen|t>|<cwith|5|5|1|1|cell-hyphen|t>|<cwith|5|5|3|3|cell-hyphen|t>|<table|<row|<cell|<with|font-size|0.71|Angular>>|<cell|>|<cell|<with|font-size|0.71|Scheme>>>|<row|<\cell>
+        <\with|src-style|angular>
+          <\framed-fragment>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </framed-fragment>
+        </with>
+      </cell>|<cell|>|<\cell>
+        <\with|src-style|scheme>
+          <\framed-fragment>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </framed-fragment>
+        </with>
+      </cell>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|<with|font-size|0.71|Functional>>|<cell|>|<cell|<with|font-size|0.71|<LaTeX>>>>|<row|<\cell>
+        <\with|src-style|functional>
+          <\framed-fragment>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </framed-fragment>
+        </with>
+      </cell>|<cell|>|<\cell>
+        <\with|src-style|latex>
+          <\framed-fragment>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </framed-fragment>
+        </with>
+      </cell>>>>>>
+    </quote-env>
+  <|big-figure>
+    Different styles for rendering the same source tree.
+  </big-figure>
+
+  Secondly, you may wish to reserve a special treatment to certain tags like <markup|concat> and <markup|document>. In the menu <menu|Document|Source|Special> you may specify to which extent you want to treat such tags in a special way:
+
+  <\description>
+    <item*|None>No tags receive a special treatment.
+
+    <item*|Formatting>Only the formatting tags <markup|concat> and <markup|document> are represented as usual.
+
+    <item*|Normal>In addition to the formatting tags, a few other tags like <markup|compound>, <markup|value> and <markup|arg> are represented in a special way.
+
+    <item*|Maximal>At the moment, this option is not yet implemented. The intention is to allow the user to write his own customizations and to allow for special rendering of basic operations like <markup|plus>.
+  </description>
+
+  These different options are illustrated below:
+
+  <\big-figure>
+    <\quote-env>
+      <small|<tabular*|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|2|1|1|cell-hyphen|t>|<cwith|2|2|3|3|cell-hyphen|t>|<cwith|5|5|1|1|cell-hyphen|t>|<cwith|5|5|3|3|cell-hyphen|t>|<table|<row|<cell|<with|font-size|0.71|None>>|<cell|>|<cell|<with|font-size|0.71|Formatting>>>|<row|<\cell>
+        <\framed-fragment>
+          <\with|src-special|raw>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>|<cell|>|<\cell>
+        <\framed-fragment>
+          <\with|src-special|format>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|<with|font-size|0.71|Normal>>|<cell|>|<cell|<with|font-size|0.71|Maximal>>>|<row|<\cell>
+        <\framed-fragment>
+          <\with|src-special|normal>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>|<cell|>|<\cell>
+        <\framed-fragment>
+          <\with|src-special|maximal>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>>>>>>
+    </quote-env>
+
+    \;
+  <|big-figure>
+    Different ways to render special tags.
+  </big-figure>
+
+  Another thing which may be controlled by the user is whether the presentation of tags should be compact or stretched out across several lines. Several levels of compactification may be specified in the <menu|Document|Source|Compactification> menu:
+
+  <\description>
+    <item*|Minimal>The tags are all stretched out across several lines.
+
+    <item*|Only inline tags>All non-inline tags are stretched out across several lines.
+
+    <item*|Normal>All inline arguments at the start of the tag are represented in a compact way. As soon as we encounter a block argument, the remainder of the arguments are stretched out across several lines.
+
+    <item*|Inline arguments>All inline arguments are represented in a compact way and only block tags are stretched out across several lines.
+
+    <item*|Maximal>All source code is represented in a compact way.
+  </description>
+
+  The “normal” and “inline arguments” options rarely differ. The visual effect of the different options is illustrated below:
+
+  <\big-figure>
+    <\quote-env>
+      <small|<tabular*|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|2|1|1|cell-hyphen|t>|<cwith|2|2|3|3|cell-hyphen|t>|<cwith|5|5|1|1|cell-hyphen|t>|<cwith|5|5|3|3|cell-hyphen|t>|<table|<row|<cell|<with|font-size|0.71|Minimal>>|<cell|>|<cell|<with|font-size|0.71|Only inline tags>>>|<row|<\cell>
+        <\framed-fragment>
+          <\with|src-compact|none>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>|<cell|>|<\cell>
+        <\framed-fragment>
+          <\with|src-compact|inline>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|<with|font-size|0.71|Normal>>|<cell|>|<cell|<with|font-size|0.71|Maximal>>>|<row|<\cell>
+        <\framed-fragment>
+          <\with|src-compact|normal>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>|<cell|>|<\cell>
+        <\framed-fragment>
+          <\with|src-compact|all>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>>>>>>
+    </quote-env>
+  <|big-figure>
+    Different levels of compactification.
+  </big-figure>
+
+  Finally, the user may specify the way closing tags should be rendered when the tag is stretched out across several lines. The rendering may either be minimalistic, compact, long, or recall the matching opening tag. The different options are illustrated below:
+
+  <\big-figure>
+    <\quote-env>
+      <small|<tabular*|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|2|2|1|1|cell-hyphen|t>|<cwith|2|2|3|3|cell-hyphen|t>|<cwith|5|5|1|1|cell-hyphen|t>|<cwith|5|5|3|3|cell-hyphen|t>|<table|<row|<cell|<with|font-size|0.71|Minimal>>|<cell|>|<cell|<with|font-size|0.71|Compact>>>|<row|<\cell>
+        <\framed-fragment>
+          <\with|src-close|minimal>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>|<cell|>|<\cell>
+        <\framed-fragment>
+          <\with|src-close|compact>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|<with|font-size|0.71|Stretched>>|<cell|>|<cell|<with|font-size|0.71|Repeat>>>|<row|<\cell>
+        <\framed-fragment>
+          <\with|src-close|long>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>|<cell|>|<\cell>
+        <\framed-fragment>
+          <\with|src-close|repeat>
+            <inactive*|<assign|quick-theorem|<\macro|body>
+              <surround|<no-indent>Theorem. ||<arg|body>>
+            </macro>>>
+          </with>
+        </framed-fragment>
+      </cell>>>>>>
+    </quote-env>
+  <|big-figure>
+    Different ways to render closing tags.
+  </big-figure>
+
+  <subsection|Local customization><label|sec-src-present-local>
+
+  Even though <TeXmacs> tries hard to render source code in a nice way following the global rendering options that you specified, the readability of the source code often needs to be further enhanced locally. In source mode, this can be done using the menus <menu|Source|Activation> and <menu|Source|Presentation>. Any local hints on how to render source code are automatically removed from the document when it is being used as a style file or package.
+
+  First of all, for certain pieces of content the user may prefer to see them in their “activated” form instead as dead source code. This may for instance be the case for embedded images, or for mathematical symbols, like in
+
+  <\tm-fragment>
+    <math|<inactive*|<assign|R|<macro|<active*|\<bbb-R\>>>>>>
+  </tm-fragment>
+
+  Such an active presentation may also be preferred for certain more complex macros:
+
+  <\tm-fragment>
+    <math|<inactive*|<assign|diag|<macro|var|dim|<active*|<matrix|<tformat|<table|<row|<cell|<inactive*|<arg|var>><rsub|1>>|<cell|>|<cell|\<b-0\>>>|<row|<cell|>|<cell|\<ddots\>>|<cell|>>|<row|<cell|\<b-0\>>|<cell|>|<cell|<inactive*|<arg|var>><rsub|<inactive*|<arg|dim>>>>>>>>>>>>>
+  </tm-fragment>
+
+  A piece of code can be activated by selecting it and using <menu|Source|Activation|Activate> or <shortcut|(make-mod-active 'active*)>. Similarly, a piece of content may be deactivated using <key|<rigid|M->-> (we used this in the second example above for the rendering of the arguments <src-arg|var> and <src-arg|dim>). Activation and deactivation either apply to the whole tree, or to the root only (<abbr|e.g.> <menu|Source|Activation|Activate once>).
+
+  Another way to customize the rendering is to override some of the global rendering options. This is mainly interesting for controlling more precisely which tags have to be stretched across several lines and which tags have to be represented in a compact fashion. For instance, the <markup|concat> tag can be used in order to concatenate content, as well as for specifying a block of sequential statements, or a combination of both. For instance, in the piece of code
+
+  <\tm-fragment>
+    <inactive*|<assign|my-section|<macro|title|<style-with|src-compact|none|<header-hook|<arg|title>><toc-hook|<arg|title>><my-section-title|<arg|title>>>>>>
+  </tm-fragment>
+
+  we have stretched the <markup|concat> tag along several lines using <menu|Source|Presentation|Stretched> (notice that this implies the <markup|concat> tag to appear explicitly, so as to avoid confusion with the <markup|document> tag). Similarly, if a part of the concatenation were to be displayed as usual, then one may use <menu|Source|Presentation|Compact>:
+
+  <\tm-fragment>
+    <inactive*|<assign|my-section|<macro|title|<style-with|src-compact|none|<header-hook|<arg|title>><toc-hook|<arg|title>><style-with|src-compact|all|<with|font-series|bold|Section:> <arg|title>>>>>>
+  </tm-fragment>
+
+  At present, we did not implement a way to mark arguments as inline or block, but we might do this later.
+
+  A final way to customize the rendering of source code is to apply an arbitrary macro using <menu|Source|Presentation|Apply macro> or <menu|Source|Presentation|Apply macro once>. This macro will be automatically removed when you use your document as a style file or package.
+
+  <section|The style-sheet language><label|sec-style-language>
+
+  In the section about <hlink|writing a simple style package|design/style-example.en.tm> we already gave you a first impression about the style-sheet language of <TeXmacs>. In this section, we will give a more complete survey of the available features. For more detailed descriptions, we refer to the chapter about the <hlink|<TeXmacs> primitives|../format/stylesheet/stylesheet.en.tm>.
+
+  The style-sheet primitives can be obtained from the <menu|Source> menu when you are in source mode. In all other modes, the <menu|Source> menu becomes visible after enabling the <menu|Source macros tool> in the <menu|Tools> menu. Alternatively, you may use the <prefix|A-> and <prefix|executable> keyboard prefixes in source mode and the<nbsp><prefix|inactive> and<nbsp><prefix|executable> prefixes otherwise. Furthermore, we recall that the hybrid <key|\\>-key may be used for creating macro-applications or arguments, depending on the context. Finally, the <shortcut|(structured-insert-right)> and <shortcut|(structured-insert-left)> keys are used for inserting arguments.
+
+  <subsection|Assignments><label|sec-style-assign>
+
+  All user defined <TeXmacs> macros and style variables are stored in the “current typesetting environment”. This environment associates a tree value to each string variable. Variables whose values are macros correspond to new primitives. The others are ordinary environment variables. The primitives for operating on the environment are available from <menu|Source|Define>.
+
+  You may permanently change the value of an environment variable using the <markup|assign> primitive, as in the example
+
+  <\tm-fragment>
+    <inactive*|<assign|hi|<macro|Hi there!>>>
+  </tm-fragment>
+
+  You may also locally change the values of one or several environment variables using the <markup|with> primitive:
+
+  <\tm-fragment>
+    <inactive*|<with|font-series|bold|color|red|Bold red text>>
+  </tm-fragment>
+
+  The value of an environment variable may be retrieved using the <markup|value> primitive. This may for instance be used in order to increase a counter:
+
+  <\tm-fragment>
+    <inactive*|<assign|my-counter|<plus|<value|my-counter>|1>>>
+  </tm-fragment>
+
+  Finally, you may associate logical properties to environment variables using the <markup|drd-props> primitive. This is explained in more detail in the section about <hlink|macro primitives|../format/stylesheet/prim-macro.en.tm>.
+
+  <subsection|Macro expansion><label|sec-style-macro>
+
+  The main interest of the <TeXmacs>' style-sheet language is the possibility to define macros. These come in three flavours: ordinary macros, macros which take an arbitrary number of arguments and external macros, whose expansion is computed by <name|Scheme> or a plug-in. The macro-related primitives are available from the <menu|Source|Macro> menu. Below, we will only describe the ordinary macros. For more details, we refer to the section about <hlink|macro primitives|../format/stylesheet/prim-macro.en.tm>.
+
+  Ordinary macros are usually defined using
+
+  <\tm-fragment>
+    <inactive*|<assign|my-macro|<macro|<active*|x<rsub|1>>|<active*|<math|\<cdots\>>>|<active*|x<rsub|n>>|body>>>
+  </tm-fragment>
+
+  After such an assignment, <markup|my-macro> becomes a new primitive with <math|n> arguments, which may be called using
+
+  <\tm-fragment>
+    <inactive|<my-macro|<active*|y<rsub|1>>|<active*|<math|\<cdots\>>>|<active*|y<rsub|n>>>>
+  </tm-fragment>
+
+  Inside the body of the macro, the <markup|arg> primitive may be used to retrieve the values of the arguments to the macro.
+
+  <\tm-fragment>
+    <inactive*|<assign|hello|<macro|name|Hello <arg|name>, you look nice today!>>>
+  </tm-fragment>
+
+  It is possible to call a macro with less or more arguments than the expected number. Superfluous arguments are simply ignored. Missing arguments take the nullary <markup|uninit> primitive as value:
+
+  <\tm-fragment>
+    <inactive*|<assign|hey|<macro|first|second|<style-with|src-compact|none|<if|<equal|<arg|second>|<uninit>>|Hey <arg|first>, you look lonely today...|Hey <arg|first> and <arg|second>, you form a nice couple!>>>>>
+  </tm-fragment>
+
+  We finally notice that you are allowed to compute with macros, in a similar way as in functional programming, except that our macros are not closures (yet). For instance:
+
+  <\tm-fragment>
+    <inactive|<assign|my-macro-copy|<inactive|<value|my-macro>>>>
+  </tm-fragment>
+
+  The <markup|compound> tag may be used to apply macros which are the result of a computation:
+
+  <\tm-fragment>
+    <inactive*|<assign|overloaded-hi|<macro|name|<style-with|src-compact|none|<compound|<if|<nice-weather>|<value|happy-hi>|<value|sad-hi>>|<arg|name>>>>>>
+  </tm-fragment>
+
+  <subsection|Formatting primitives><label|sec-style-format>
+
+  This section contains some important notes on formatting primitives which are not really part of the style-sheet language, but nevertheless very related.
+
+  First of all, most <TeXmacs> presentation tags can be divided in two main categories: inline tags and block tags. For instance, <markup|frac> is a typical inline tag, whereas <markup|theorem> is a typical block tag. Some tags, like <markup|strong> are inline if their argument is and block in the contrary case. When writing macros, it is important to be aware of the inline or block nature of tags, because block tags inside a horizontal concatenation are not rendered in an adequate way. If you need to surround a block tag with some inline text, then you need the surround primitive:
+
+  <\tm-fragment>
+    <inactive*|<assign|my-theorem|<macro|body|<surround|<no-indent><with|font-series|bold|Theorem. >|<right-flush>|<arg|body>>>>>
+  </tm-fragment>
+
+  In this example, we surrounded the body of the theorem with the bold text “Theorem.” at the left hand side and a “right-flush” at the right-hand side. Flushing to the right is important in order to make the blue visual border hints look nice when you are inside the environment.
+
+  In most cases, <TeXmacs> does a good job in determining which tags are inline and which ones are not. However, you sometimes may wish to force a tag to be a block environment. For instance, the tag <markup|very-important> defined by
+
+  <\tm-fragment>
+    <inactive*|<assign|very-important|<macro|body|<with|font-series|bold|color|red|<arg|body>>>>>
+  </tm-fragment>
+
+  may both be used as an inline tag and a block environment. When placing your cursor just before the <markup|with>-tag and hitting <shortcut|(kbd-return)> followed by <key|backspace>, you obtain
+
+  <\tm-fragment>
+    <inactive*|<assign|very-important|<\macro|body>
+      <with|font-series|bold|color|red|<arg|body>>
+    </macro>>>
+  </tm-fragment>
+
+  Since the body of the macro is now a block, your tag <markup|very-important> will automatically become a block environment too. In the future, the <markup|drd-props> primitive will give you even more control over which tags and arguments are inline and which ones are block.
+
+  Another important property of tags is whether they contain normal textual content or tabular content. For instance, consider the definition of the standard <markup|eqnarray*> tag (with a bit of presentation markup suppressed):
+
+  <\tm-fragment>
+    <inactive*|<assign|eqnarray*|<macro|body|<with|par-mode|center|mode|math|math-display|true|par-sep|0.45fn|<surround|<no-page-break*><vspace*|0.5fn>|<vspace|0.5fn><no-indent*>|<tformat|<twith|table-hyphen|y>|<twith|table-width|1par>|<twith|table-min-cols|3>|<twith|table-max-cols|3>|<cwith|1|-1|1|1|cell-hpart|1>|<cwith|1|-1|-1|-1|cell-hpart|1>|<arg|body>>>>>>>
+  </tm-fragment>
+
+  The use of <markup|surround> indicates that <markup|eqnarray*> is a block environment and the use of <markup|tformat> specifies that it is also a tabular environment. Moreover, the <markup|twith> and <markup|cwith> are used to specify further formatting information: since we are a block environment, we enable hyphenation and let the table span over the whole paragraph (unused space being equally distributed over the first and last columns). Furthermore, we have specified that the table contains exactly three columns.
+
+  Finally, it is important to bear in mind that style-sheets do not merely specify the final presentation of a document, but that they may also contain information for the authoring phase. Above, we have already mentioned the use of the <markup|right-flush> tag in order to improve the rendering of \ visual border hints. Similarly, visual hints on invisible arguments may be given in the form of flags:
+
+  <\tm-fragment>
+    <inactive*|<assign|labeled-theorem|<macro|id|body|<style-with|src-compact|none|<surround|<style-with|src-compact|none|<no-indent><flag|Id: <arg|id>|blue|id><with|font-series|bold|Theorem. >>|<right-flush>|<arg|body>>>>>>
+  </tm-fragment>
+
+  More generally, the <markup|specific> tag with first argument “screen” may be used to display visual hints, which are removed when printing the document.
+
+  <subsection|Evaluation control><label|sec-style-eval>
+
+  The <menu|Source|Evaluation> menu contains several primitives to control the way expressions in the style-sheet language are evaluated. The most frequent use of these primitives is when you want to write a “meta-macro” like <markup|new-theorem> which is used for defining or computing on other macros. For instance:
+
+  <\tm-fragment>
+    <inactive*|<assign|new-theorem|<macro|name|text|<quasi|<assign|<unquote|name>|<macro|body|<surround|<no-indent><strong|<unquote|<arg|text>>. >|<right-flush>|<arg|body>>>>>>>>
+  </tm-fragment>
+
+  When calling <inactive*|<new-theorem|theorem|Theorem>> in this example, we first evaluate all <markup|unquote> instructions inside the <markup|quasi> primitive, which yields the expression
+
+  <\tm-fragment>
+    <inactive*|<assign|theorem|<macro|body|<surround|<no-indent><strong|Theorem. >|<right-flush>|<arg|body>>>>>
+  </tm-fragment>
+
+  Next, this expression is evaluated, thereby defining a macro <markup|theorem>.
+
+  It should be noticed that the <TeXmacs> conventions for evaluation are slightly different then those from conventional functional languages like <name|Scheme>. The subtle differences are motivated by our objective to make it as easy as possible for the user to write macros for typesetting purposes.
+
+  For instance, when <TeXmacs> calls a macro <inactive*|<macro|<active*|x<rsub|1>>|<active*|<math|\<cdots\>>>|<active*|x<rsub|n>>|body>> with arguments <verbatim|y<rsub|1>> until <verbatim|y<rsub|n>>, the argument variables <src-arg|x<rsub|1>> until <src-arg|x<rsub|n>> are bound to the unevaluated expressions <verbatim|y<rsub|1>> until <verbatim|y<rsub|n>>, and the body is evaluated with these bindings. The evaluation of <verbatim|y<rsub|i>> takes place each time we request for the argument <no-break><src-arg|x<rsub|i>>. In particular, when applying the macro <inactive*|<macro|x|<arg|x> and again <arg|x>>> to an expression <verbatim|y>, the expression <no-break><verbatim|y> is evaluated twice.
+
+  In <name|Scheme>, the bodies of <name|Scheme> macros are evaluated twice, whereas the arguments of functions are evaluated. On the other hand, when retrieving a variable (whether it is an argument or an environment variable), the value is not evaluated. Consequently, a <TeXmacs> macro
+
+  <\tm-fragment>
+    <inactive*|<assign|foo|<macro|x|<blah|<arg|x>|<arg|x>>>>>
+  </tm-fragment>
+
+  would correspond to a <name|Scheme> macro
+
+  <\scm-code>
+    (define-macro (foo x)
+
+    \ \ ‘(let ((x (lambda () ,x)))
+
+    \ \ \ \ \ (blah (x) (x)))
+  </scm-code>
+
+  Conversely, the <name|Scheme> macro and function
+
+  <\scm-code>
+    (define-macro (foo x) (blah x x))
+
+    (define (fun x) (blah x x))
+  </scm-code>
+
+  admit the following analogues in <TeXmacs>:
+
+  <\tm-fragment>
+    <\inactive*>
+      <assign|foo|<macro|x|<eval|<blah|<quote-arg|x>|<quote-arg|x>>>>>
+    </inactive*>
+
+    <\inactive*>
+      <assign|fun|<macro|x|<with|x*|<arg|x>|<blah|<quote-value|x*>|<quote-value|x*>>>>>
+    </inactive*>
+  </tm-fragment>
+
+  Here the primitives <markup|quote-arg> and <markup|quote-value> are used to retrieve the value of an argument <abbr|resp.> an environment variable. The <TeXmacs> primitives <markup|eval>, <markup|quote>, <markup|quasiquote> and <markup|unquote> behave in the same way as their <name|Scheme> analogues. The <markup|quasi> primitive is a shortcut for quasi-quotation followed by evaluation.
+
+  <subsection|Control flow><label|sec-style-flow>
+
+  Besides sequences of instructions, which can be achieved using the <markup|concat> primitive, and the mechanism of macro expansion, the <TeXmacs> style-sheet language provides a few other primitive for affecting the control flow: <markup|if>, <markup|case>, <markup|while> and <markup|for-each>. These primitives are available from the <menu|Source|Control flow> menu. However, we have to warn the user that the conditional constructs are quite fragile: they only apply to inline content and the accessibility of macro arguments should not to much depend on the conditions.
+
+  The most important primitive <markup|if>, which can be entered using <shortcut|(make 'if)>, allows for basic conditional typesetting:
+
+  <\tm-fragment>
+    <inactive*|<assign|appendix|<\macro|title|body>
+      <style-with|src-compact|none|<compound|<if|<long-document>|<value|chapter-appendix>|<value|section-appendix>>|<arg|title>|<arg|body>>>
+    </macro>>>
+  </tm-fragment>
+
+  In this example, <markup|appendix> is a block environment consisting of a title and a body, and which is rendered as a chapter for long documents and as a section for short ones. Notice that the following implementation would have been incorrect, since the <markup|if> primitive currently only works for inline content:
+
+  <\tm-fragment>
+    <inactive*|<assign|appendix|<\macro|title|body>
+      <style-with|src-compact|none|<if|<long-document>|<chapter-appendix|<arg|title>|<arg|body>>|<section-appendix|<arg|title>|<arg|body>>>>
+    </macro>>>
+  </tm-fragment>
+
+  The <markup|if> primitive may also be used in order to implement optional arguments:
+
+  <\tm-fragment>
+    <inactive*|<assign|hey|<macro|first|second|<style-with|src-compact|none|<if|<equal|<arg|second>|<uninit>>|Hey <arg|first>, you look lonely today...|Hey <arg|first> and <arg|second>, you form a nice couple!>>>>>
+  </tm-fragment>
+
+  However, <TeXmacs> is not clever enough to detect which arguments are optional and which arguments are accessible (<abbr|i.e.> which arguments can be edited by the user). Therefore, you will have to manually give this information using the <markup|drd-props> primitive. The <markup|case>, <markup|while> and <markup|for-each> primitives are explained in more detail in the <hlink|corresponding section|../format/stylesheet/prim-control.en.tm> on the <hlink|<TeXmacs> primitives|../format/stylesheet/stylesheet.en.tm>.
+
+  <subsection|Computational markup><label|sec-style-compute>
+
+  In the menus <menu|Source|Arithmetic>, <menu|Source|Text>, <menu|Source|Tuple> and <menu|Source|Condition> you will find different primitives for computing with integers, strings, tuples and boolean values. For instance, in the following code, the <markup|new-important> tag defines a new “important tag” as well as a variant in red:
+
+  <\tm-fragment>
+    <inactive*|<assign|new-important|<macro|name|<quasi|<style-with|src-compact|none|<style-with|src-compact|none|<assign|<unquote|<arg|name>>|<macro|x|<with|font-series|bold|<arg|x>>>>><style-with|src-compact|none|<assign|<unquote|<merge|<arg|name>|-red>>|<macro|x|<with|font-series|bold|color|red|<arg|x>>>>>>>>>>
+  </tm-fragment>
+
+  Here we use the <markup|merge> primitive in order to concatenate two strings. The different computational primitives are described in more detail in the <hlink|corresponding section|../format/stylesheet/prim-functional.en.tm> on the <hlink|<TeXmacs> primitives|../format/stylesheet/stylesheet.en.tm>.
+
+  <section|Customizing the standard <TeXmacs> styles><label|sec-customize>
+
+  Whenever the standard <TeXmacs> style files are inadequate for a given purpose, it is possible to write your own style files. However, designing your own style files from scratch may be a complex task, so it is usually preferable to customize the existing styles. This requires some understanding of the global architecture of the standard style files and a more precise understanding of the parts you wish to customize. In this section, we will explain the general principles. For more details, we refer to the chapter on the <hlink|principal <TeXmacs> tags|design/style-language.en.tm>.
+
+  <subsection|Organization of style files and packages><label|sec-customize-disk>
+
+  Each standard <TeXmacs> style file or package is based on a potentially finite number of subpackages. From an abstract point of view, this organization may be represented by a labeled tree. For instance, the tree which corresponds to the <tmstyle|article> style is represented below:
+
+  <\big-figure|<tree|<tmstyle|article>|<tree|<tmpackage|std>|<stack|<tformat|<table|<row|<cell|<tmpackage|std-markup>>>|<row|<cell|<tmpackage|std-symbol>>>|<row|<cell|<tmpackage|std-math>>>|<row|<cell|<tmpackage|std-list>>>|<row|<cell|<tmpackage|std-utils>>>|<row|<cell|<tmpackage|std-counter>>>|<row|<cell|<tmpackage|std-automatic>>>|<row|<cell|<tmpackage|list>>>|<row|<cell|<tmpackage|session>>>>>>>|<tree|<tmpackage|env>|<stack|<tformat|<table|<row|<cell|<tmpackage|env-base>>>|<row|<cell|<tmpackage|env-math>>>|<row|<cell|<tmpackage|env-theorem>>>|<row|<cell|<tmpackage|env-float>>>>>>>|<tree|<tmpackage|title-base>|<tmpackage|title-generic>>|<tmpackage|header-article>|<tree|<tmpackage|section-article>|<tmpackage|section-base>>>>
+    The tree with the packages from which the <tmstyle|article> style has been built up. In order to save space, we have regrouped the numerous children of <tmpackage|std> and <tmpackage|env> in vertical lists.
+  </big-figure>
+
+  Most of the style packages correspond to a <abbr|d.t.d.> (data type definition) which contains the “abstract interface” of the package, <abbr|i.e.> the exported tags. For instance, the package <tmpackage|std-markup> corresponds to the <abbr|d.t.d.> <tmdtd|std-markup>. Sometimes however, several style packages match the same <abbr|d.t.d.>. For instance, both <tmpackage|header-article> and <tmpackage|header-book> match the <abbr|d.t.d.> <tmdtd|header>, since they merely implement different ways to render the same tags.
+
+  When building your own style files or packages, you may use the <markup|use-package> primitive in order to include other packages. For instance, the <tmstyle|article> style essentially consists of the line
+
+  <\tm-fragment>
+    <inactive*|<use-package|std|env|title-generic|header-article|section-article>>
+  </tm-fragment>
+
+  More precisely, the <markup|use-package> package sequentially includes the style packages corresponding to its arguments. The packages should be in <verbatim|$TEXMACS_PACKAGE_PATH>, which contains <verbatim|.>, <verbatim|~/.TeXmacs/packages> and <verbatim|$TEXMACS_PATH/packages> by default. Furthermore rendering information for the source code like <markup|style-with> tags are discarded before evaluation of the files.
+
+  <\remark>
+    We strongly recommend the user to take a look at some of the standard style files and packages which can be found in
+
+    <\verbatim>
+      \ \ \ \ $TEXMACS_PATH/styles
+
+      \ \ \ \ $TEXMACS_PATH/packages
+    </verbatim>
+
+    When loading using <shortcut|(interactive load-buffer)>, these paths are in the standard load path. For instance, if you want to take a look at the <tmpackage|std-markup> package, then it suffices to type <shortcut|(interactive load-buffer)>, followed by the file name <verbatim|std-markup.ts> and <shortcut|(kbd-return)>.
+  </remark>
+
+  <\remark>
+    It is also possible to customize the presentation of the source code of the style files and packages themselves, by using other packages in addition to <tmstyle|source> or by using another major style file based on <tmstyle|source>. In that case, the extra markup provided by such packages may be used for presentation purposes of the source code, but it is not exported when using your package in another file.
+  </remark>
+
+  <subsection|General principles for customization><label|sec-customize-general>
+
+  Style files and packages basically enrich the current typesetting environment with a combination of
+
+  <\itemize>
+    <item>Environment variables.
+
+    <item>Tags for the end-user.
+
+    <item>Customizable macros.
+  </itemize>
+
+  Furthermore, they may define some tags for intern implementation purposes, which will not be documented in this manual. They may also specify some logical properties of tags using the <markup|drd-props> primitive.
+
+  Environment variables are almost always attributes for controlling the rendering of content, or counters for sections, equations, <abbr|etc.>. Although several simple tags for the end-user like <markup|strong> may be redefined in your own style files, this practice is not recommended for more complex tags like <markup|section>. Indeed, the <markup|section> tag involves many things like resetting subcounters, entering the title into the table of contents and so on. Therefore, special additional macros are provided the customization of such tags, like <markup|section-title>, <markup|section-clean> and <markup|section-toc>.
+
+  <subsection|Customizing the general layout><label|sec-customize-layout>
+
+  The general layout of a document is mainly modified by setting the appropriate environment variables for <hlink|page layout|../format/environment/env-page.en.tm> and <hlink|paragraph layout|../format/environment/env-par.en.tm>. For instance, by including the following lines in your style file, you can set the page size to <verbatim|letter> and the left and right margins to <verbatim|2in>:
+
+  <\tm-fragment>
+    <\inactive*>
+      <assign|page-type|letter>
+
+      <assign|page-odd|2in>
+
+      <assign|page-even|2in>
+
+      <assign|page-right|2in>
+    </inactive*>
+  </tm-fragment>
+
+  It should be noticed that the environment variables for page layout are quite different in <TeXmacs> and <TeX>/<LaTeX>. In order to make it easier to adapt <LaTeX> style files to <TeXmacs>, we have therefore provided the <tmpackage|std-latex> package, which emulates the environment variables from <TeX>/<LaTeX>. Typically, this allows you determine the global layout by lines like
+
+  <\tm-fragment>
+    <\inactive*>
+      <assign|tex-odd-side-margin|<macro|20pt>>
+
+      <assign|tex-even-side-margin|<macro|20pt>>
+
+      <assign|tex-text-width|<macro|33pc>>
+    </inactive*>
+  </tm-fragment>
+
+  We notice that macros which return lengths are considered as <hlink|lengths|../format/basics/lengths.en.tm> themselves. In the case of the <TeX>/<LaTeX> emulation package, we actually <em|require> all lengths to be macros.
+
+  The page headers and footers are usually not determined by global environment variables or macros, since they may change when a new chapter or section is started. Instead, <TeXmacs> provides the call-back macros <markup|header-title>, <markup|header-author>, <markup|header-primary> and <markup|header-secondary>. These macros are called when the document title or author are specified or when a new primary or secondary section is started (primary sections are typically chapters in books, or sections in articles). For instance, the following redefinition makes the principal section name appear on even pages, together with the current page number and a wide underline.
+
+  <\tm-fragment>
+    <inactive*|<assign|header-primary|<macro|title|nr|type|<assign|page-even-header|<quasiquote|<style-with|src-compact|none|<wide-std-underlined|<style-with|src-compact|none|<page-the-page><htab|5mm><unquote|<arg|title>>>>>>>>>>
+  </tm-fragment>
+
+  <subsection|Customizing list environments><label|sec-customize-lists>
+
+  Lists are made up of two principal ingredients: the outer list environment and the inner items. List environments may either be customized by customizing or redefining the rendering macros for these environments, or defining additional list environments which match the same abstract interface.
+
+  The rendering of the outer list environment is controlled by the <markup|render-list> macro which takes the body of the list as its argument. For instance, consider the following redefinition of <markup|render-list>:
+
+  <\tm-fragment>
+    <inactive*|<assign|render-list|<macro|body|<style-with|src-compact|none|<surround|<no-page-break*><vspace*|0.5fn>|<right-flush><vspace|0.5fn><no-indent*>|<with|par-left|<plus|<value|par-left>|3fn>|par-right|<plus|<value|par-right>|3fn>|<arg|body>>>>>>>
+  </tm-fragment>
+
+  This redefinition affects the rendering of all list environments (itemize, enumerate, <abbr|etc.>) by reducing the right margin with a length of <verbatim|3fn>:
+
+  <\with|render-list|<macro|body|<surround|<no-page-break*><vspace*|0.5fn>|<right-flush><vspace|0.5fn><no-indent*>|<with|par-left|<plus|<value|par-left>|3fn>|par-right|<plus|<value|par-right>|3fn>|<arg|body>>>>>
+    <\itemize>
+      <item>This text, which has been made so long that it does not fit on a single line, is indented on the right hand side by <verbatim|3fn>.
+
+      <\enumerate>
+        <item>This text is indented by an additional <verbatim|3fn> on the right hand side, since it occurs inside a second list environment.
+      </enumerate>
+
+      <item>Once again: this text, which has been made so long that it does not fit on a single line, is indented on the right hand side by <verbatim|3fn>.
+    </itemize>
+  </with>
+
+  In a similar way, you may customize the rendering of list items by redefining the macros <markup|aligned-item> and <markup|compact-item>. These macros both take one argument with the text of the item and render it either in a right-aligned way (such that subsequent text is left aligned) or in a left-aligned way (such that subsequent text may not be aligned). For instance, consider the following redefinition of <markup|aligned-item>:
+
+  <\tm-fragment>
+    <inactive*|<assign|aligned-item|<macro|x|<style-with|src-compact|none|<vspace*|0.5fn><with|par-first|-3fn|<yes-indent>><resize|<with|color|red|<arg|x>>|<minus|1r|2.5fn>||<plus|1r|0.5fn>|>>>>>
+  </tm-fragment>
+
+  Then items inside all list environments with compact items will appear in red:
+
+  <\with|aligned-item|<macro|x|<vspace*|0.5fn><with|par-first|-3fn|<yes-indent>><resize|<with|color|red|<arg|x>>|<minus|1r|2.5fn>||<plus|1r|0.5fn>|>>>
+    <\itemize>
+      <item>This list and aligned descriptions have red items.
+
+      <\description-aligned>
+        <item*|C1>First condition.
+
+        <item*|C2>Second condition.
+      </description-aligned>
+
+      <item>The items of compact description lists are rendered using <markup|compact-item>.
+
+      <\description-compact>
+        <item*|Gnus and gnats>Nice beasts.
+
+        <item*|Micros and softies>Evil beings.
+      </description-compact>
+    </itemize>
+  </with>
+
+  <\remark>
+    The macros <markup|aligned-item> and <markup|compact-item> are required to produce inline content, so that they may be used in order to surround blocks. In particular, several other internal macros (<markup|aligned-space-item>, <markup|long-compact-strong-dot-item>, <abbr|etc.>) are based on <markup|aligned-item> and <markup|compact-item>, and used for the rendering of the different types of lists (<markup|itemize-arrow>, <markup|description-long>, <abbr|etc.>). In the future, we also plan to extend <markup|item> and <markup|item*> with a compulsory <src-arg|body> argument. When customizing the list environments, it is important to keep that in mind, so as to make your style-sheets upward compatible.
+  </remark>
+
+  The <tmdtd|std-list> <abbr|d.t.d.> also provides a macro <markup|new-list> to define new lists. Its syntax is <explain-macro|new-list|name|item-render|item-transform>, where <src-arg|name> is the name of the new list environment, <src-arg|item-render> an (inline) macro for rendering the item and <src-arg|item-transform> an additional transformation which is applied on the item text. For instance, the <markup|enumerate-roman> environment is defined by
+
+  <\tm-fragment>
+    <\inactive*>
+      <new-list|enumerate-roman|<value|aligned-dot-item>|<macro|x|<number|<arg|x>|roman>>>
+    </inactive*>
+  </tm-fragment>
+
+  <subsection|Customizing numbered textual environments><label|sec-customize-theorems>
+
+  <TeXmacs> provides three standard types of numbered textual environments: theorem-like environments, remark-like environments and exercise-like environments. The following aspects of these environments can be easily customized:
+
+  <\itemize>
+    <item>Adding new environments.
+
+    <item>Modifying the rendering of the environments.
+
+    <item>Numbering the theorems in a different way.
+  </itemize>
+
+  <paragraph*|Defining new environments>
+
+  First of all, new environments can be added using the meta-macros <markup|new-theorem>, <markup|new-remark> and <markup|new-exercise>. These environments take two arguments: the name of the environment and the name which is used for its rendering. For instance, you may wish to define the environment <markup|experiment> by
+
+  <\tm-fragment>
+    <inactive*|<new-theorem|experiment|Experiment>>
+  </tm-fragment>
+
+  When available in the <TeXmacs> dictionaries, the text “Experiment” will be automatically translated when your document is written in a foreign language. In the section about <hlink|how to define new environments|../../main/styles/env/env-base-dtd.en.tm>, it is also explained how to define other numbered textual environments (besides theorems, remarks and exercises).
+
+  <paragraph*|Customization of the rendering>
+
+  The principal rendering of the environments can be customized by redefining the <markup|render-theorem>, <markup|render-remark> and <markup|render-exercise> macros. These macros take the <src-arg|name> of the environment (like “Theorem <no-break>1.2”) and its <src-arg|body> as arguments. For instance, if you want theorems to appear in a slightly indented way, with a slanted body, then you may redefine <markup|render-theorem> as follows:
+
+  <\tm-fragment>
+    <inactive*|<assign|render-theorem|<\macro|which|body>
+      <padded-normal|1fn|1fn|<surround|<theorem-name|<arg|which><theorem-sep>>||<with|font-shape|slanted|par-left|<plus|<value|par-left>|1.5fn>|<arg|body>>>>
+    </macro>>>
+  </tm-fragment>
+
+  This redefinition produces the following effect:
+
+  <\with|render-theorem|<\macro|which|body>
+    <padded-normal|1fn|1fn|<surround|<theorem-name|<arg|which><theorem-sep>>||<with|font-shape|slanted|par-left|<plus|<value|par-left>|1.5fn>|<arg|body>>>>
+  </macro>>
+    <\theorem>
+      This is a theorem which has been typeset in a slanted font.
+    </theorem>
+  </with>
+
+  By default, the theorems are rendered as remarks with the only difference that their bodies are typeset in an italic font. Hence, redefining the <markup|render-remark> macro will also affect the rendering of theorems. The default <markup|render-proof> macro is also based on <markup|render-remark>.
+
+  Instead of redefining the entire rendering, the user might just wish to customize the way names of theorems are rendered or redefine the separator between the name and the body. As the user may have noticed by examining the above redefinition of <markup|render-theorem>, these aspects are controlled by the macros <markup|theorem-name> and <markup|theorem-sep>. For instance, consider the following redefinitions:
+
+  <\tm-fragment>
+    <inactive*|<assign|theorem-name|<macro|name|<with|color|dark red|font-series|bold|<arg|name>>>>>
+
+    <inactive*|<assign|theorem-sep|<macro|: >>>
+  </tm-fragment>
+
+  Then theorem-like environments will be rendered as follows:
+
+  <\with|theorem-name|<macro|name|<with|color|dark red|font-series|bold|<arg|name>>>|theorem-sep|<macro|: >>
+    <\proposition>
+      This proposition is rendered in is a fancy way.
+    </proposition>
+  </with>
+
+  <paragraph*|Customization of the numbering>
+
+  In the sections about <hlink|counters and counter groups|../../main/styles/std/std-counter-dtd.en.tm>, it is explained how to customize the counters of numbered environments for particular purposes. For instance, by redefining <markup|inc-theorem>, you may force theorems to reset the counter of corollaries:
+
+  <\tm-fragment>
+    <inactive*|<style-with|src-compact|none|<quasi|<style-with|src-compact|none|<assign|inc-theorem|<macro|<compound|<unquote|<value|inc-theorem>>><reset-corollary>>>>>>>
+  </tm-fragment>
+
+  Notice the trick with <markup|quasi> and <markup|unquote> in order to take into account additional action which might have been undertaken by the previous value of the macro <markup|inc-theorem>.
+
+  The following code from <verbatim|number-long-article.ts> is used in order to prefix all standard environments with the number of the current section:
+
+  <\tm-fragment>
+    <inactive*|<assign|section-clean|<macro|<reset-subsection><reset-std-env>>>>
+
+    <inactive*|<assign|display-std-env|<macro|nr|<section-prefix><arg|nr>>>>
+  </tm-fragment>
+
+  <subsection|Customizing sectional tags><label|sec-customize-sections>
+
+  By default, <TeXmacs> provides the standard sectional tags from <LaTeX> <markup|part>, <markup|chapter>, <markup|section>, <markup|subsection>, <markup|subsubsection>, <markup|paragraph>, <markup|subparagraph>, as well as the special tag <markup|appendix>. <TeXmacs> also implements the unnumbered variants <markup|part*>, <markup|chapter*>, <abbr|etc.> and special section-like tags <markup|bibliography>, <markup|table-of-contents>, <markup|the-index>, <markup|the-glossary>, <markup|list-of-figures>, <markup|list-of-tables>.
+
+  <\remark>
+    <label|section-extra-argument-rem>Currently, the sectional tags take one argument, the section title, but a second argument with the body of the section is planned to be inserted in the future (see the experimental <tmpackage|structured-section> package). For this reason (among others), style files should never redefine the main sectional tags, but rather customize special macros which have been provided to this effect.
+  </remark>
+
+  From a global point of view, an important predicate macro is <markup|sectional-short-style>. When it evaluates to <verbatim|true>, then appendices, tables of contents, <abbr|etc.> are considered to be at the same level as sections. In the contrary case, they are at the same level as chapters. Typically, articles use the short sectional style whereas book use the long style.
+
+  The rendering of a sectional tag <markup|<em|x>> is controlled through the macros <markup|<em|x>-sep>, <markup|<em|x>-title> and <markup|<em|x>-numbered-title>. The <markup|<em|x>-sep> macro prints the separator between the section number and the section title. It defaults to the macro <markup|sectional-sep>, which defaults in its turn to a wide space. For instance, after redefining
+
+  <\tm-fragment>
+    <inactive*|<assign|sectional-sep|<macro| -- >>>
+  </tm-fragment>
+
+  sectional titles would typically look like
+
+  <\tm-fragment>
+    <with|section-nr|1|sectional-sep|<macro| -- >|<section-numbered-title|Hairy GNUs>>
+  </tm-fragment>
+
+  The <markup|<em|x>-title> and <markup|<em|x>-numbered-title> macros respectively specify how to render unnumbered and numbered section titles. Usually, the user only needs to modify <markup|<em|x>-title>, since <markup|<em|x>-numbered-title> is based on <markup|<em|x>-title>. However, if the numbers have to be rendered in a particular way, then it may be necessary to redefine <markup|<em|x>-numbered-title>. For instance, consider the redefinition
+
+  <\tm-fragment>
+    <inactive*|<assign|subsection-numbered-title|<macro|name|<style-with|src-compact|none|<sectional-normal|<with|font-series|bold|<the-subsection>. ><arg|name>>>>>>
+  </tm-fragment>
+
+  This has the following effect on the rendering of subsection titles:
+
+  <\tm-fragment>
+    <with|section-nr|2|subsection-nr|3|the-subsection|<macro|<value|section-nr>.<value|subsection-nr>>|subsection-numbered-title|<macro|name|<sectional-normal|<with|font-series|bold|<the-subsection>. ><arg|name>>>|<subsection-numbered-title|Very hairy GNUs>>
+  </tm-fragment>
+
+  Notice that the <tmpackage|section-base> package provides several <hlink|useful helper macros|../../main/styles/section/section-base-helper.en.tm> like <markup|sectional-normal>.
+
+  <\remark>
+    Sectional titles can either be rendered in a “short” or in the “long” fashion. By default, paragraphs and subparagraphs use the short rendering, for which the body starts immediately at the right of the title:
+
+    <\tm-fragment>
+      <paragraph-title|My paragraph>Blah, blah, and more blahs...
+    </tm-fragment>
+
+    All other sectional tags use the long rendering, in which case the section title takes a separate line on its own:
+
+    <\tm-fragment>
+      <section-title|My section>
+
+      Blah, blah, and more blahs...
+    </tm-fragment>
+
+    We do not recommend to modify the standard settings (<abbr|i.e.> to render paragraphs in a long way or sections in a short way). If you really want to do so, then we recommend to redefine the corresponding environment variables <inactive|<value|enrich-x-long>>. This will ensure upward compatibility when sectional tags will take an additional argument (see remark <reference|section-extra-argument-rem>).
+  </remark>
+
+  Besides their rendering, several other aspects of sectional tags can be customized:
+
+  <\itemize>
+    <item>The call-back macro <markup|<em|x>-clean> can be used for cleaning some counters when a new section is started. For instance, in order to prefix all standard environments by the section counter, you may use the following lines:
+
+    <\tm-fragment>
+      <\inactive*>
+        <assign|section-clean|<macro|<reset-subsection><reset-std-env>>>
+
+        <assign|display-std-env|<macro|nr|<section-prefix><arg|nr>>>
+      </inactive*>
+    </tm-fragment>
+
+    <item>The call-back macro <markup|<em|x>-header> should be used in order to modify page headers and footers when a new section is started. Typically, this macro should call <markup|header-primary>, or <markup|header-secondary>, or do nothing.
+
+    <item>The call-back macro <markup|<em|x>-toc> should be used in order to customize the way new sections appear in the table of contents.
+  </itemize>
+
+  <subsection|Customizing the treatment of title information><label|sec-customize-title>
+
+  <TeXmacs> uses the <markup|doc-data> tag in order to specify global data for the document. These data are treated in two stages by the <markup|doc-data> macro. <hlink|First|../../main/styles/header/header-title-global.en.tm>, the document data are separated into several categories, according to whether the data should be rendered as a part of the main title or in footnotes or the abstract. <hlink|Secondly|../../main/styles/header/header-title-customize.en.tm>, the data in each category are rendered using suitable macros.
+
+  Each child of the <markup|doc-data> is a tag with some specific information about the document. Currently implemented tags are <markup|doc-title>, <markup|doc-subtitle>, <markup|doc-author>, <markup|doc-date>, <markup|doc-running-title>, <markup|doc-running-author>, <markup|doc-keywords>, <markup|doc-msc> and <markup|doc-note>. The <markup|doc-author> tag may occur several times. The <markup|author-data> tag is used in order to specify structured data for each of the authors of the document. Each child of the <markup|author-data> tag is a tag with information about the corresponding author. Currently implemented tags with author information are <markup|author-name>, <markup|author-affiliation>, <markup|author-email>, <markup|author-homepage> and <markup|author-note>.
+
+  Most of the tags listed above also correspond to macros for rendering the corresponding information as part of the main title. For instance, if the date should appear in bold italic at a distance of at least <verbatim|1fn> from the other title fields, then you may redefine <markup|doc-date> as
+
+  <\tm-fragment>
+    <\inactive*>
+      <assign|doc-date|<macro|body|<style-with|src-compact|none|<vspace*|1fn><doc-title-block|<with|font-shape|italic|font-series|bold|<arg|body>>><vspace|1fn>>>>
+    </inactive*>
+  </tm-fragment>
+
+  The <markup|title-block> macro is used in order to make the text span appropriately over the width of the title. The <markup|doc-title> and <markup|author-name> are special in the sense that they also render possible references to footnotes. For this reason, you should rather customize the <markup|doc-render-title> and <markup|author-render-name> macros in order to customize the rendering of the title and the name themselves.
+
+  Notice also that the <markup|doc-running-title> and <markup|author-running-author> macros do not render anything, but rather call the <markup|header-title> and <markup|header-author> call-backs for setting the appropriate global page headers and footers. By default, the running title and author are extracted from the usual title and author names.
+
+  In addition to the rendering macros which are present in the document, the main title (including author information, the date, <abbr|etc.>) is rendered using the <markup|doc-make-title> macro. The author information, as part of the main title, is rendered using <markup|render-doc-author> or <markup|render-doc-authors>, depending on whether the document has one or more authors. Footnotes to the title or to one of the authors are rendered using <markup|doc-title-note> <abbr|resp.> <markup|doc-author-note>. These footnote macros always expect a <markup|document> tag on input, because they may compress it into a horizontal concatenation.
+
+  The first stage of processing the document data is more complex and the reader is invited to take a look at the <hlink|short descriptions|../../main/styles/header/header-title-global.en.tm> of the macros which are involved in this process. It is also good to study the definitions of these macros in the <hlink|package itself|../../../packages/header/title-base.ts>. In order to indicate the way things work, we finish with an example on how the email address and homepage of an author can be rendered in a footnote instead of the main title:
+
+  <\tm-fragment>
+    <\inactive*>
+      <assign|doc-author-main|<\macro|data>
+        <\quasi>
+          <unquote*|<select|<quote-arg|data>|author-name>>
+
+          <unquote*|<select|<quote-arg|data>|author-affiliation>>
+        </quasi>
+      </macro>>
+
+      <assign|doc-author-data-note|<xmacro|data|<\quasi>
+        <unquote*|<select|<quote-arg|data>|author-email>>
+
+        <unquote*|<select|<quote-arg|data>|author-homepage>>
+
+        <unquote*|<select|<quote-arg|data>|author-note|document|<pat-any>>>
+      </quasi>>>
+    </inactive*>
+  </tm-fragment>
+
+  <section|Further notes and tips><label|sec-style-notes>
+
+  <subsection|Customizing arbitrary tags><label|sec-note-customize>
+
+  Imagine that you want to change the rendering of a given tag, like <markup|lemma>. As a general rule, <TeXmacs> provides a set of well-chosen macros which can be customized by the user so as to obtain the desired effect. For instance, as we have seen <hlink|above|customize/customize-theorems.en.tm>, you should use modify one of the macros <markup|render-theorem>, <markup|theorem-name> or <markup|theorem-sep> in order to customize the rendering of <markup|lemma> and all other theorem-like environments.
+
+  However, in some cases, it may not be clear which “well-chosen” macro to customize. If we just wanted to change the presentation of lemmas and not of any other theorem-like environments, then we clearly cannot modify <markup|render-theorem>, <markup|theorem-name> or <markup|theorem-sep>. In other cases, the user may not want to invest his time in completely understanding the macro hierarchy of <TeXmacs>, and find out about the existence of <markup|render-theorem>, <markup|theorem-name> and <markup|theorem-sep>.
+
+  So imagine that you want all lemmas to appear in red. One thing \ you can always do is copy the original definition of lemmas in a safe place and redefine the lemma macro on top of the original definition:
+
+  <\tm-fragment>
+    <\inactive*>
+      <assign|orig-lemma|<value|lemma>>
+
+      <assign|lemma|<macro|body|<with|color|red|<orig-lemma|<arg|body>>>>>
+    </inactive*>
+  </tm-fragment>
+
+  Alternatively, if only the text inside the lemma should be rendered in red, then you may do:
+
+  <\tm-fragment>
+    <\inactive*>
+      <assign|orig-lemma|<value|lemma>>
+
+      <assign|lemma|<macro|body|<orig-lemma|<with|color|red|<arg|body>>>>>
+    </inactive*>
+  </tm-fragment>
+
+  Of course, you have to be careful that the name <markup|orig-lemma> is not already in use.
+
+  Another frequent situation is that you only want to modify the rendering of a tag when it is used inside another one. On the web, the <em|Cascading Style Sheet> language (<acronym|CSS>) provides a mechanism for doing this. In <TeXmacs>, you may simulate this behaviour by redefining macros inside a <markup|with>. For instance, imagine that we want the inter-paragraph space inside lists inside theorem-like environments to vanish. Then we may use:
+
+  <\tm-fragment>
+    <\inactive*>
+      <assign|orig-render-theorem|<value|render-theorem>>
+
+      <assign|render-theorem|<macro|name|body|<with|orig-render-list|<value|render-list>|<with|render-list|<macro|x|<orig-render-list|<arg|x>>>|<style-with|src-compact|none|<orig-render-theorem|<arg|name>|<arg|body>>>>>>>
+    </inactive*>
+  </tm-fragment>
+
+  On the one hand side, this mechanism is a bit more complex than <acronym|CSS>, where it suffices to respecify the <src-var|par-par-sep> attribute of lists inside theorems. On the other hand, it is also more powerful, since the <markup|render-theorem> macro applies to all theorem-like environments at once. Furthermore, if the above mechanism is to be used frequently, then real hackers may simplify the notations using further macro magic.
+
+  <subsection|Standard utilities><label|sec-note-utilities>
+
+  In the <hlink|package <tmpackage|std-utils>|../../main/styles/std/std-utils-dtd.en.tm>, the user may find several useful additional macros for writing style files. It mainly contains macros for
+
+  <\itemize>
+    <item>Writing block environments which span over the entire paragraph width. Notice that the <tmpackage|title-base> package provides some <hlink|additional macros|../../main/styles/section/section-base-helper.en.tm> for wide section titles.
+
+    <item>Writing wide block environments which are underlined, overlined or in a frame box.
+
+    <item>Recursive indentation.
+
+    <item>Setting page headers and footers.
+
+    <item>Localization of text.
+  </itemize>
+
+  It is good practice to use these standard macros whenever possible when writing style files. Indeed, the low-level <TeXmacs> internals may be subject to minor changes. When building upon standard macros with a clear intention, you increase the upward compatibility of your style-sheets.
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
