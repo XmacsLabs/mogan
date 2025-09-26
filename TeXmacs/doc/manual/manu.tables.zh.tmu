@@ -1,0 +1,136 @@
+<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+
+<style|<tuple|tmdoc|chinese|number-europe>>
+
+<\body>
+  <tmdoc-title|表格处理><label|sec-man-table>
+
+  表格实际上为我们提供了一种复杂而通用的对齐标记的方法。它既可以用来呈现数据，也可以用于计算机程序和网页的排版。<with|font|roman|<TeXmacs>>提供了丰富的参数以精确控制表格及单元格的样式。
+
+  <section|创建表格><label|sec-man-create-table>
+
+  你可以使用<menu|插入|表格>或者以下快捷键来创建表格：
+
+  <\description>
+    <item*|<key|table N t>>创建普通无框表格。
+
+    <item*|<key|table N T>>创建居中无框表格。
+
+    <item*|<key|table N b>>创建普通有框表格。
+
+    <item*|<key|table N B>>创建居中有框表格。
+  </description>
+
+  在数学模式下，提供如下类表格结构：
+
+  <\description>
+    <item*|<key|table N m>>创建一个矩阵<glossary-explain|矩阵|matrix>。
+
+    <item*|<key|table N d>>创建一个行列式。
+
+    <item*|<key|table N c>>创建一个选择<glossary-explain|选择|choice list>。
+  </description>
+
+  下面演示的是普通表格，居中有框表格和矩阵。下面的带标题的小表格是通过<menu|插入|表格|小表格标题>得到的。小表格允许你将多个表格并列排在一行上，而大表格一行只能有一个。通过<menu|插入|表格|大表格标题>可插入大表格。<vspace|0.5fn>
+
+  <small-table|<tabular|<tformat|<table|<row|<cell|boom>|<cell|tree>>|<row|<cell|hallo>|<cell|hello>>|<row|<cell|wiskunde>|<cell|mathematics>>>>>|普通无框表格><small-table|<block*|<tformat|<table|<row|<cell|boom>|<cell|tree>>|<row|<cell|hallo>|<cell|hello>>|<row|<cell|wiskunde>|<cell|mathematics>>>>>|居中有框表格><small-table|<math|<matrix|<tformat|<table|<row|<cell|a>|<cell|b>>|<row|<cell|c>|<cell|d>>>>>>|矩阵>
+
+  <vspace|0.5fn>还有其他类似的类表格环境，除此之外新的环境也可以由用户自己创建。比如，通过<menu|插入|数学|多行公式>或者<key|math &>，你可以进入<markup|eqnarray<math|<rsup|\<ast\>>>>环境。在此环境下，关注数学排版的用户可以轻易地对齐一组等式。例如：
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|sin <around*|(|f<around*|(|x|)>g<around*|(|x|)>|)><rprime|'>>|<cell|=>|<cell|<around*|(|f<around*|(|x|)>g<around*|(|x|)>|)><rprime|'>cos <around*|(|f<around*|(|x|)>g<around*|(|x|)>|)>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|f<rprime|'><around*|(|x|)>g<around*|(|x|)>+f<around*|(|x|)>g<rprime|'><around*|(|x|)>|)>cos<around*|(|f<around*|(|x|)>g<around*|(|x|)>|)>>>>>
+  </eqnarray*>
+
+  新创建一个表格时，默认大小为最小（一般是1<math|\<times\>>1），且所有单元格都是空的。通过快捷键 <shortcut|(structured-insert-left)>，<shortcut|(structured-insert-right)>，<shortcut|(structured-insert-up)>和<shortcut|(structured-insert-down)>可以插入新列和新行。比如说，<shortcut|(structured-insert-right)>在当前光标所在位置的右边插入新列，详情参见下图。你也可以用<key|return>在当前光标所在位置的下面插入新行。
+
+  <\big-figure>
+    <\equation*>
+      <matrix|<tformat|<table|<row|<cell|a<cursor>>|<cell|b>>|<row|<cell|c>|<cell|d>>>>><space|2em>\<longrightarrow\><space|2em><matrix|<tformat|<table|<row|<cell|a>|<cell|<cursor>>|<cell|b>>|<row|<cell|c>|<cell|>|<cell|d>>>>>
+    </equation*>
+  <|big-figure>
+    一个在矩阵中插入新列的例子。如果光标在左边的矩阵所示位置处，此时按下<shortcut|(structured-insert-right)>所得到的即右边的矩阵。
+  </big-figure>
+
+  <section|格式化模式><label|sec-man-table-mode>
+
+  在<TeXmacs>中，可以为任意单元格设定格式。比如，你可以为某个单元格设定背景颜色，也可以使整列水平居中。默认地，格式化命令在当前所在单元格上生效，你可以在<menu|Cell|Operation mode>中更改操作模式。下列模式可供选择：
+
+  <\description>
+    <item*|<key|table m c>>只对所在单元格生效
+
+    <item*|<key|table m h>>只对所在行生效
+
+    <item*|<key|table m v>>只对所在列生效
+
+    <item*|<key|table m t>>对整个表格生效
+  </description>
+
+  也可以使用鼠标选中一个矩形区域，再在这个区域上执行操作。
+
+  <section|指定单元格和表格对齐><label|sec-man-alignment>
+
+  在水平或垂直方向上对齐单元格是最常用的格式化操作。可以使用<shortcut|(geometry-left)>， <shortcut|(geometry-right)>， <shortcut|(geometry-up)> 和 <shortcut|(geometry-down)>这些快捷键迅速对单元格执行左，右，上，下对齐。
+
+  您也可以在菜单条目<menu|cell|水平对齐>和<menu|cell|竖直对齐>中完成上述操作。相应的快捷键是 <key|table h><render-key|<math|x>> 和 <key|table v ><render-key|<math|x>>。
+
+  类似地，您或许还需要调整表格及其周遭文字相对位置。此时请选择菜单项<menu|table|水平对齐>和<menu|表格|竖直对齐>。相应的快捷键是<key|table H><render-key|<math|x>> 和 <key|table V><render-key|<math|x>>。
+
+  请您注意表格和单元格作用对象的区别，以及上面快捷键中的<render-key|<math|x>>的含义。<render-key|<math|x>>本身并不是一个键，分别用<key|l> <key|r> <key|t> <key|b> <key|c>替换时，各自表示左、右、上、下和居中对齐。
+
+  <section|指定单元格和表格的大小><label|sec-man-size>
+
+  使用<menu|Table|Cell width|Set width>和<menu|Table|Cell height|Set height>指定单元格的宽度和高度。实际上，宽度（或者高度）由以下三种模式指定：
+
+  <\description>
+    <item*|最小模式>实际的宽度<math|=>指定宽度和单元格中内容宽度的较小值
+
+    <item*|固定模式>直接指定实际宽度
+
+    <item*|最大模式>实际宽度=指定宽度和单元格中内容宽度的较大值
+  </description>
+
+  边界和补白决定了单元格和其中内容的相对位置。
+
+  使用<menu|Table|Special table properties>指定整个表格的宽度和高度。特别地，你还可以使表格正好延伸至与段落等宽。当你对整个表格指定宽度或者高度时，还可以使用<menu|Table|Special cell properties|Distribute unused space>。默认地，未使用空隙将被平均分配。
+
+  <section|边界、补白和背景色><label|sec-man-table-decorations>
+
+  您可以自由指定单元格上下左右四个方向上的边界宽度和补白大小（参见<menu|cell|border>）。相应的快捷键分别是<key|table b><render-key|<math|x>>和<key|table p ><render-key|<math|x>>。
+
+  单元格默认的边界宽度是1ln，即当前字体的标准宽度（比如分式中间那一行的宽度）。水平方向上默认的单元格补白大小为1spc，即当前字体下空格的宽度。垂直方向上默认的单元格补白大小为1sep，即当前两个闭合区域之间标准的最小距离。
+
+  单元格的背景色可在菜单项<menu|cell|background color>中指定。
+
+  整个表格的边界和补白可在<menu|table|border>和<menu|table|padding>中指定。其快捷键和相应的单元格的快捷键相同。特别注意的是，在这种情况下，补白是是在边界之外。
+
+  <section|表格的高级特性><label|sec-man-advanced-features>
+
+  在菜单中，您还会发现许多表格的特性。下面是这些特性的简介：
+
+  <\itemize>
+    <item>改变单元格的延伸属性，以使其边界侵占其右或者其下单元格，输入n+1则侵占其右或其下n个单元格
+
+    <item>在单元格中创建子表格
+
+    <item>文本高度修正，以使基准对齐
+
+    <item>单元格内容的水平字符连接以及整个表格的垂直字符连接
+
+    <item>将多行多列单元格合并，这样合并后大单元格的边界就会是剩下单元格的边界了
+
+    <item>反激活表格，以显示其“源码”
+
+    <item>指定表格的模板单元格。这样，此后新建的单元格格式属性与模板的相同
+
+    <item>指定表格的最小和最大尺寸，这对接下来的编辑非常有帮助。（在撰写表格宏时也非常实用）
+  </itemize>
+
+  目前，所有的表格其实大多是在<markup|tabular>， <markup|block>， <markup|matrix>等环境下。在撰写您自己的表格宏时，可以使用<menu|table|special|Extract format>从选中的表格导出格式。
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

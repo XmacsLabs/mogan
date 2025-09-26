@@ -1,0 +1,144 @@
+<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+
+<style|<tuple|tmdoc|chinese|number-europe>>
+
+<\body>
+  <tmdoc-title|定制<TeXmacs>><label|sec-man-scheme>
+
+  高度可定制性是<TeXmacs>的主要特点之一。一般需求可在<em|><menu|编辑|首选项>中简单<hlink|配置|../config/man-configuration.zh.tm>，深入定制则需使用<name|Guile>/<name|Scheme>扩展。我们用简单的例子简要概述其工作原理。
+
+  <section|<name|Guile>扩展语言入门><label|sec-man-guile-intro>
+
+  与Emacs类似，<TeXmacs>使用类Lisp语言作为扩展——来自GNU计划的<with|font-shape|small-caps|Guile Scheme>。关于<name|Guile Scheme>，请参考：
+
+  <\verbatim>
+    \ \ \ \ \ \ \ \ http://www.gnu.org/software/guile/guile.html
+  </verbatim>
+
+  <scheme>的优势在于可通过外部的C或C++程序扩展。在<TeXmacs>中，你可以使用<scheme>来创建你自己的菜单和快捷键，甚至是你自己的<TeXmacs>扩展。
+
+  如果你已经下载了<TeXmacs>的源代码，不妨看一下这些文件：
+
+  <\verbatim>
+    \ \ \ \ \ \ \ \ Guile/Glue/build-glue-basic.scm<next-line> \ \ \ \ \ \ \ Guile/Glue/build-glue-editor.scm<next-line> \ \ \ \ \ \ \ Guile/Glue/build-glue-server.scm
+  </verbatim>
+
+  这三个胶水代码文件包含了在<name|Scheme>中可见的C++的库函数(routine)。在下面的小节中，我们将讨论其中最重要的部分。我们计划撰写更加完整的参考文档。目前你可以参考<verbatim| $TEXMACS_PATH/progs>目录中的<name|Scheme>源文件（以scm为后缀名）。
+
+  <section|撰写初始化配置文件><label|sec-man-initialization>
+
+  启动程序时，<with|font|roman|<TeXmacs>>将读取并执行这个文件：
+
+  <with|font|roman|<verbatim| \ \ \ $TEXMACS_PATH/progs/init-texmacs.scm>>
+
+  以及用户自己的配置文件（如果存在的话）：<em|>
+
+  <with|font|roman|<verbatim| \ \ \ $TEXMACS_HOME_PATH/progs/my-init-texmacs.scm>>
+
+  <verbatim|$TEXMACS_HOME_PATH>的默认值在<name|Windows>上是<verbatim|%appdata%\\TeXmacs>，在<name|GNU>/<name|Linux>和<name|macOS>上则是<verbatim|$HOME/.TeXmacs>。类似地，每次你新建一个buffer，程序将执行:
+
+  <with|font|roman|<verbatim| \ \ \ $TEXMACS_PATH/progs/init-buffer.scm>>
+
+  以及（如果存在的话）
+
+  <with|font|roman|<verbatim| \ \ \ $TEXMACS_HOME_PATH/progs/my-init-buffer.scm>>
+
+  <section|定制动态菜单><label|sec-man-menus>
+
+  定义一个名称为<scm-arg|name>的菜单，可用
+
+  <\scm-code>
+    (menu-bind <scm-arg|name> . <scm-arg|def>)
+  </scm-code>
+
+  或者
+
+  <\scm-code>
+    (tm-menu (<scm-arg|name>) . <scm-arg|def>)
+  </scm-code>
+
+  其中 <scm-arg|def> 是一个呈现所有菜单条目的程序。下面这个目录下的文件可供参考：
+
+  <\verbatim>
+    \ \ \ \ $TEXMACS_PATH/progs/menu
+  </verbatim>
+
+  其中包含了标准<TeXmacs>菜单的定义方式。对于<scm|tm-menu>，你还可以指定额外的参数，使之根据参数动 态构建更加复杂的菜单。
+
+  更精确地说，在<scm|menu-bind>或者<scm|tm-menu>中的<verbatim|<em|def>>程序实际上是如下所示形式的程序代码：
+
+  <\scm-code>
+    (=\<gtr\> "pulldown menu name" <scm-arg|menu-definition>)
+
+    (-\<gtr\> "pullright menu name" <scm-arg|menu-definition>)
+
+    ("entry" <scm-arg|action>)
+
+    ---
+
+    (if <scm-arg|condition> <scm-arg|menu-definition>)
+
+    (link <scm-arg|variable>)
+  </scm-code>
+
+  函数<scm|=\<gtr\>>和<scm|-\<gtr\>>用来创建下拉或者右拉菜单，<scm-arg|menu-definition>中要包含创建子菜单的程序。使用函数<scm|("entry" <scm-arg|action>)>可创建一个菜单条目，点击<scm|entry>就会执行<scm-arg|action>。菜单项之间使用<scm|--->分割。函数 <scm|if> 用于在满足特定的 <scm|condition> 时插入菜单项。（比如说在数学模式中）
+
+  如果你声明了一个菜单 <scm|name> ，那么你可以使用函数 <scm|link> 间接引用该菜单。这种间接声明子菜单的方式有两个优势：
+
+  <\itemize>
+    <item>“间接”子菜单可以链接到我们所需的菜单，无论多少
+
+    <item>使用<scm|menu-append>可以后续添加新条目到”间接”子菜单中
+  </itemize>
+
+  主要的<TeXmacs>菜单是<scm|texmacs-menu>，<scm|texmacs-popup-menu>，<scm|texmacs-main-icons>， <scm|texmacs-mode-icons>， <scm|texmacs-focus-icons>和<scm|texmacs-extra-icons>。其他一些标准的间接菜单是<scm|file-menu>， <scm|edit-menu>， <scm|insert-menu>， <scm|text-menu>， <scm|paragraph-menu>， <scm|document-menu>， <scm|options-menu>和<scm|help-menu>。
+
+  <section|定制快捷键><label|sec-man-custom-keyboard>
+
+  下面这行代码用来指定键盘布局
+
+  <\scm-code>
+    (kbd-map . <scm-arg|keymaps>)
+  </scm-code>
+
+  使用<scm|:mode>选项，你可以指定使键盘布局生效的条件。比如，这行代码：
+
+  <\scm-code>
+    (kbd-map (:mode in-math?) . <scm-arg|keymaps>)
+  </scm-code>
+
+  指定了只在数学模式下生效的键盘布局。<scm-arg|keymaps> 这个列表中的元素有下面三种形式：
+
+  <\scm-code>
+    (<em|key-combination> <scm-arg|action_1> ... <scm-arg|action_n>)
+
+    (<em|key-combination> <scm-arg|result>)
+
+    (<em|key-combination> <scm-arg|result> <scm-arg|help-message>)
+  </scm-code>
+
+  第一行中，<scm-arg|action_i>是和<scm-arg|key-combination>相关的Scheme代码。第二行和第三行中的 <scm-arg|result>是<scm-arg|key-combination>结束之后插入的字符串。第三行中，<scm-arg|key-combination> 结束之后，将会显示<scm-arg|help-message>。
+
+  <section|其它值得一看的文件><label|sec-man-files>
+
+  其他一些值得一看的文件：
+
+  <\itemize>
+    <item><verbatim|$TEXMACS_PATH/fonts/enc>包含了不同<TeX>字体的编码
+
+    <item><verbatim|$TEXMACS_PATH/fonts/virtual>包含了虚拟字符的定义
+
+    <item><verbatim|$TEXMACS_PATH/langs/natural/dic>包含了<with|font|roman|<TeXmacs>>当前所使用的字典（用于本地化菜单）
+
+    <item><verbatim|$TEXMACS_PATH/langs/natural/hyphen>包含了不同语言的字符连接模式
+
+    <item><verbatim|$TEXMACS_PATH/progs/fonts>包含了设置字体的<name|<with|font|roman|Scheme>>程序
+  </itemize>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

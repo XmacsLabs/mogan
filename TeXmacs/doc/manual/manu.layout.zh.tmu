@@ -1,0 +1,34 @@
+<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+
+<style|<tuple|tmdoc|chinese|number-europe>>
+
+<\body>
+  <tmdoc-title|进阶布局特性><label|sec-man-layout>
+
+  <section|文档流><label|sec-man-flow>
+
+  复杂的文档通常包含脚注及浮动对象（指区别于正文文本的对象)。实际上，那些复杂文档是分流处理的，其一为正文文本，其二为脚注，其三为浮动对象，其四是两栏文本。不同的文档流，其分页特征各不相同。
+
+  使用<menu|Format|Page insertion|Footnote>插入脚注。 使用<menu|Paragraph|Number of columns>更改文本的栏数。
+
+  <section|浮动对象><label|sec-man-float>
+
+  浮动对象可以在页面上相对正文独立移动。图片或者表格太大，而无法完美插入正文，此时便可使用浮动对象解决问题。使用<menu|Format|Page insertion|Floating object>可插入浮动对象。
+
+  您也可以分别使用<menu|Format|Page insertion|Floating figure>或者<menu|Format|Page insertion|Floating table>直接插入图片或者表格。有时候，需要将多个小图片或者多个小表格合并成一个浮动对象，此时分别<menu|Insert|Image|Small figure>或者<menu|Insert|Table|Small table>。
+
+  创建浮动对象后，您可用<menu|Insert|Position float>来移动对象。您可以指定它是在页面顶部、底部、文本中还是在下一页。默认地，浮动对象可在任何位置出现。然而，浮动对象不可能在离顶部或者底部小于三行文本距离处中出现。
+
+  <section|分页><label|sec-man-page-break>
+
+  用户可在<menu|Document|Page|Breaking>中精确控制分页。在其子菜单<menu|Algorithm>中,您可以指定分页使用的算法。专业选项适用于打印，但是在分页模式下会使编辑器变慢。粗略选项速度最快，适中选项对普通文档的分页还算专业。多栏文档应使用专业选项，并且不可避免地显得缓慢。
+
+  您还可以在子菜单<menu|Limits>中使得分页算法可以在特定情况下增大或者减小页面长度。段落间隔的可伸展性可在<menu|Flexibility>子菜单中指定。默认系数是1；偏小的系数会使段落间隔控制更加严格，而使分页质量降低。
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

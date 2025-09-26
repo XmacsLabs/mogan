@@ -1,0 +1,146 @@
+<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+
+<style|<tuple|tmdoc|chinese|number-europe>>
+
+<\body>
+  <tmdoc-title|内置作图工具><label|sec-man-graphics>
+
+  除了可以插入其他程序生成的图片之外，<TeXmacs>还内置了基本的作图工具以供使用。尽管这套工具较大多数专业的作图工具而言，功能稀少，然而其优点在于，它是与<TeXmacs>完美整合在一起的。比如，很容易就能在图片中插入文本、数学内容和超链接。又如，内置工具所作之图往往更美观，因为它们和周围的文本使用的是一样的字体和线宽。
+
+  <section|开始作图><label|sec-man-graphics-new>
+
+  点击<menu|Insert|Image|Draw image>开始作图。在某些情况下，你也许想在已有的图片（或者其他内容）上绘图。此时，你可以先选中该区域，再点击<menu|Insert|Image|Draw over selection>。
+
+  插入图片的默认宽度是整个段落宽度。使用快捷键<shortcut|(graphics-decrease-hsize)>， <shortcut|(graphics-increase-hsize)>， <shortcut|(graphics-decrease-vsize)>， <shortcut|(graphics-increase-vsize)>可以调整图片的尺寸。使用<shortcut|(graphics-decrease-hsize-fast)>， <shortcut|(graphics-increase-hsize-fast)>， <shortcut|(graphics-decrease-vsize-fast)>， <shortcut|(graphics-increase-vsize-fast)>调整得更快。你也可以通过<menu|Insert|Geometry|Size>精确指定图片的长和宽。绘图完毕，你可以使用<menu|Insert|Geometry|Crop>自动剪裁掉绘图内容上下左右的空白（当然，会留下一部分作为补白）。
+
+  对于技术类的图，用坐标纸来绘制是再好不过的了。点击<menu|Insert|Grid|Type|Cartesian>即可。在菜单<menu|Insert|Grid>中，还可以调整坐标和网格线的颜色以及网格的单位长度。打印时，网格默认会被打印出来。如果不希望打印网格，那么打印前需要先移除网格。
+
+  <TeXmacs>默认将网格的原点置于屏幕的中央并且使用1cm作为单位长度。使用<shortcut|(graphics-move-origin-left)>， <shortcut|(graphics-move-origin-right)>， <shortcut|(graphics-move-origin-up)>， <shortcut|(graphics-move-origin-down)>可以控制图片在网格上的移动，使用<shortcut|(graphics-move-origin-left-fast)>， <shortcut|(graphics-move-origin-right-fast)>， <shortcut|(graphics-move-origin-up-fast)>， <shortcut|(graphics-move-origin-down-fast)>则可以加大移动的步伐。通过<menu|Insert|Geometry|Unit>可以改变网格的单位长度。使用<shortcut|(graphics-zoom-in)>和<shortcut|(graphics-zoom-out)>可以放缩图片，对应的菜单项是<menu|Insert|Geometry|Zoom>。
+
+  <section|插入图形对象><label|sec-man-graphics-insert>
+
+  插入新图片或点击进入已有图片后，依赖于模式的第二行工具栏会显示一系列图形模式的图标。特别地，其中的第二组图标<icon|tm_point_mode.xpm>， <icon|tm_line_mode.xpm>， <icon|tm_cline_mode.xpm>， <icon|tm_spline_mode.xpm>， <icon|tm_cspline_mode.xpm>， <icon|tm_arc_mode.xpm>， <icon|tm_carc_mode.xpm>， <icon|tm_textat_mode.xpm>， <icon|tm_math.xpm>是一系列可以点击并插入图片的图形对象。<TeXmacs>当前支持下列这些原生的图形对象：
+
+  <\description>
+    <item*|点>点击<icon|tm_point_mode.xpm>或者<menu|Insert|Point>，你就能在图片上通过鼠标左键插入点。
+
+    <item*|线和多边形>点击<icon|tm_line_mode.xpm>或者<menu|Insert|Line>后，每一次左击都将插入一个虚拟的点，直线将顺次连接这些点，双击可以插入最后一个点，并结束本次绘制。点击<icon|tm_cline_mode.xpm>或者<menu|Insert|Polygon>后，行为与插入直线类似，只是最后一个点插入后，将有一条额外的直线使之与第一个点相连。
+
+    <item*|样条曲线和闭合样条曲线><icon|tm_spline_mode.xpm>即<menu|Insert|Spline>，<icon|tm_cspline_mode.xpm>即<menu|Insert|Closed spline>。插入曲线的操作方式与插入直线的方式一模一样，不同之处在于，连接这些点的是样条曲线。
+
+    <item*|圆弧和圆圈><icon|tm_arc_mode.xpm>即<menu|Insert|Arc>，<icon|tm_carc_mode.xpm>即<menu|Insert|Circle>。平面上不在同一直线上的三点可以确定一个圆。所以指定该对象后，只需要左击插入三个点即可。
+
+    <item*|文本和数学><icon|tm_textat_mode.xpm>即<menu|Insert|Text>，<icon|tm_math.xpm>即<menu|Insert|Mathematics>。指定该对象后，在图片上左击选中插入的位置，再编辑即可。值得注意的是，这里的文本其实不限定于纯粹的文本，其本质是一个容器，大部分<TeXmacs>内容都可以栖身其中。
+  </description>
+
+  这些基本对象的典型例子如下图所示：
+
+  <\center>
+    <tabular*|<tformat|<table|<row|<cell|<small-figure|<with|gr-mode|point|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|3cm|3cm|center>|<graphics||<point|0.499041|-0.00699497>|<point|-0.919136|-0.23983>|<point|0.329706|-1.19234>>>|点>>|<cell|<small-figure|<with|gr-mode|<tuple|edit|line>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|3cm|3cm|center>|<graphics||<line|<point|-0.926313|0.839678>|<point|0.809366318296071|0.564509194337875>|<point|-0.862812541341447|-0.13399589892843>|<point|1.04220134938484|-0.260996824976849>|<point|-0.121973806059003|-1.17117012832385>>>>|线>>|<cell|<small-figure|<with|gr-mode|<tuple|edit|cline>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|3cm|3cm|center>|<graphics||<cline|<point|-0.742988|0.839678>|<point|0.844523085064162|0.691510120386294>|<point|0.886856727080302|-0.769000529170525>|<point|-0.425486175420029|-1.2770042333642>|<point|-1.25099219473475|-0.13399589892843>>>>|线段>>>>>>
+
+    \;
+
+    <tabular*|<tformat|<table|<row|<cell|<small-figure|<with|gr-mode|<tuple|edit|spline>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|3cm|3cm|center>|<graphics||<spline|<point|-1.1308|1.0844>|<point|0.880043656568329|0.661066278608281>|<point|-0.855635666093399|-0.0374388146580235>|<point|0.901210477576399|-0.48194205582749>|<point|-0.516966529964281|-1.1804471490938>>>>|样条曲线>>|<cell|<small-figure|<with|gr-mode|<tuple|edit|cspline>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|3cm|3cm|center>|<graphics||<cspline|<point|-0.651144|0.788067>|<point|0.89403360232835|0.322397142479164>|<point|0.640031750231512|-0.905278475988887>|<point|-0.566477047228469|-1.20161397010187>|<point|-1.15914803545443|-0.206773382722582>>>>|闭合样条曲线>>|<cell|<small-figure|<with|gr-mode|<tuple|edit|arc>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|3cm|3cm|center>|<graphics||<arc|<point|-0.827656|-1.15928>|<point|0.865689906072232|-0.5454425188517>|<point|-0.806488953565286|0.87273448868898>>>>|圆弧>>>>>>
+
+    \;
+
+    <tabular*|<tformat|<table|<row|<cell|<small-figure|<with|gr-mode|<tuple|edit|carc>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|3cm|3cm|center>|<graphics||<carc|<point|-0.262964677867443|0.990458393967456>|<point|1.02821140362482|-0.0467158354279667>|<point|-0.0724632887948141|-1.1473905278476>>>>|圆圈>>|<cell|<small-figure|<with|gr-mode|<tuple|edit|text-at>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|3cm|3cm|center>|<graphics||<text-at|Hello|<point|-0.164307|0.545955>>>>|文本>>|<cell|<small-figure|<with|gr-mode|<tuple|edit|math-at>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|3cm|3cm|center>|<graphics||<math-at|\<mathe\><rsup|\<mathpi\>*\<mathi\>>=-1|<point|-1.08166|-0.533553>>>>|数学>>>>>>
+  </center>
+
+  <htab|5mm>
+
+  <section|编辑图形对象><label|sec-man-graphics-edit>
+
+  所有支持插入新对象（点，线，多边形等）的模式也同样支持直接编辑已存在的对象。一旦鼠标移动到一个对象上方，该对象的控制点就会被自动高亮，并一些编辑操作，如下所示：
+
+  <\description>
+    <item*|移动控制点>当鼠标足够接近一个控制点时，你可以用鼠标左键拖拽控制点到某处。
+
+    <item*|插入新的控制点>对于那些拥有一个以上控制点的对象，比如线、多边形、样条曲线和闭合样条曲线，可以在边上插入新的控制点。首先将鼠标移动到目标边上，此时目标边两端的控制点将高亮显示。然后按下鼠标左键不放并拖拽，在合适的地方松开。
+
+    <item*|移除控制点>使用鼠标中键可以移除当前控制点。也可以用<key|Del>或者<key|Backspace>。
+
+    <item*|移除整个对象>使用鼠标中键并同时按下<key|S->将移除当前高亮的整个对象。
+  </description>
+
+  在编辑过程中，你可能注意到了，<TeXmacs>会试着自动将鼠标<em|附着>到控制点、对象的边缘、曲线的交点和网格上的点。这就使得我们能够快速绘制复杂的精确图形，不仅仅精确到一两个像素（指那种发大或者打印后很丑的精度）。在文本或者数学公式四周有八个隐藏的控制点，<TeXmacs>会尽可能地把鼠标附着到这些点上。这使得图<reference|diagram-fig>的绘制变得容易得多。
+
+  图形对象在图片上的绘制依照一种栈的顺序，这种顺序会影响到重叠对象的覆盖和被覆盖。使用<shortcut|(graphics-zmove 'closer)> 和<shortcut|(graphics-zmove 'farther)>，你可以使当前高亮的对象上浮或者下沉。同样地，控制点也可能由于被其它控制点覆盖而无法访问。在这种情况下，你可以使用<key|tab>遍历在当前光标所在位置下的所有控制点。
+
+  <\big-figure|<with|gr-mode|<tuple|group-edit|group-ungroup>|gr-frame|<tuple|scale|1cm|<tuple|0.729978gw|0.140033gh>>|gr-geometry|<tuple|geometry|1par|0.6par>|gr-grid|<tuple|empty>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|empty>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-text-at-halign|center|gr-arrow-end|\<gtr\>|gr-auto-crop|true|<graphics||<with|text-at-halign|center|<math-at|A|<point|-5|3>>>|<with|text-at-halign|center|<math-at|B|<point|-3.5|3>>>|<with|text-at-halign|center|<math-at|C|<point|-5|2>>>|<with|text-at-halign|center|<math-at|D|<point|-3.5|2>>>|<with|text-at-halign|center|<math-at|X|<point|-2|3>>>|<with|text-at-halign|center|<math-at|Y|<point|-2|2>>>|<with|arrow-end|\<gtr\>|<line|<point|-4.75015|3.12052>|<point|-3.75133946289192|3.1205185871147>>>|<with|arrow-end|\<gtr\>|<line|<point|-5|2.88244>|<point|-5.0|2.35861225029766>>>|<with|arrow-end|\<gtr\>|<line|<point|-4.75637|2.12052>|<point|-3.76357653128721|2.1205185871147>>>|<with|arrow-end|\<gtr\>|<line|<point|-3.5|2.88244>|<point|-3.5|2.35861225029766>>>|<with|arrow-end|\<gtr\>|<line|<point|-3.24864|3.12052>|<point|-2.26367575076068|3.1205185871147>>>|<with|arrow-end|\<gtr\>|<line|<point|-3.23641|2.12052>|<point|-2.21995303611589|2.1205185871147>>>|<with|arrow-end|\<gtr\>|<line|<point|-2|2.88244>|<point|-2.0|2.35861225029766>>>|<with|arrow-end|\<gtr\>|<spline|<point|-4.75015|3.35861>|<point|-2.87767892578383|3.71332186797195>|<point|-1.31133417118666|3.26881862680249>|<point|-1.7800304273052|2.35861225029766>>>>>>
+    <label|diagram-fig>使用数学公式方框四周八个控制点的附着特性作图的一个例子。注意该图已经被剪裁过了。
+  </big-figure>
+
+  <section|样式属性详述><label|sec-man-graphics-style>
+
+  每一种基础图形对象都有对应的一些影响渲染的样式属性。这些属性如下所示：
+
+  <paragraph|颜色>该属性用于指定颜色，应用于任何图形对象。
+
+  <paragraph|填充色>该属性用于指定对象的填充色，应用于所有图形对象，文本和数学除外。
+
+  <\big-figure|<with|gr-mode|<tuple|edit|cspline>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|1par|0.6par>|gr-fill-color|pastel red|gr-color|dark magenta|gr-auto-crop|true|<graphics||<cspline|<point|-4.82503|-0.183391>|<point|-4.54985778542135|2.12379282973938>|<point|-3.34334898796137|1.57345548352957>|<point|-2.623677073687|0.070611191956608>|<point|-3.89368633417119|0.790283106230983>>|<with|fill-color|pastel yellow|<cspline|<point|-1.75584|2.22963>|<point|-2.24267429554174|1.23478634740045>|<point|-1.62883648630771|0.324613044053446>|<point|-1.88283833840455|1.21361952639238>>>|<with|color|dark blue|fill-color|pastel orange|<cspline|<point|-0.0201581|1.78512>|<point|-0.845664109009128|1.36178727344887>|<point|-0.464661330863871|0.493947612118005>|<point|0.424345151475063|0.917284032279402>>>|<with|color|dark magenta|fill-color|pastel red|<cspline|<point|2.11769|1.99679>|<point|2.81619592538696|0.811449927239053>|<point|1.56735348591083|0.769116285222913>>>>>>
+    一些不同颜色和填充色的闭合样条曲线示例。
+  </big-figure>
+
+  <paragraph|不透明度>该属性用于指定对象从0%到100%的不透明度，也是应用于所有图形对象。默认的不透明度为100%，不透明度越低，对象就越透明。
+
+  <big-figure|<with|gr-mode|<tuple|edit|carc>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|1par|0.6par>|gr-grid|<tuple|empty>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|empty>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-fill-color|pastel green|gr-color|dark green|gr-opacity|20%|gr-auto-crop|true|<graphics||<with|color|dark brown|fill-color|brown|<cline|<point|-5|1>|<point|-5.0|-1.0>|<point|5.0|-1.0>|<point|5.0|1.0>>>|<with|color|dark green|fill-color|pastel green|<carc|<point|4|-1.5>|<point|4.5|-1.0>|<point|4.0|-0.5>>>|<with|color|dark green|opacity|80%|fill-color|pastel green|<carc|<point|2|-1.5>|<point|2.5|-1.0>|<point|2.0|-0.5>>>|<with|color|dark green|opacity|60%|fill-color|pastel green|<carc|<point|0|-1.5>|<point|0.5|-1.0>|<point|0.0|-0.5>>>|<with|color|dark green|opacity|40%|fill-color|pastel green|<carc|<point|-2|-1.5>|<point|-1.5|-1.0>|<point|-2.0|-0.5>>>|<with|color|dark green|opacity|20%|fill-color|pastel green|<carc|<point|-4|-1.5>|<point|-3.5|-1.0>|<point|-4.0|-0.5>>>>>|覆盖在另一个对象上的同一个对象不透明度逐渐增加的一个过程的示例。>
+
+  <paragraph|点形状>支持这些不同的形状： 圆盘、圆圈和方框。
+
+  <big-figure|<with|gr-mode|<tuple|edit|text-at>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|1par|0.6par>|gr-fill-color|red|gr-grid|<tuple|empty>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|empty>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-point-style|square|gr-text-at-halign|center|gr-auto-crop|true|<graphics||<with|fill-color|red|<point|-2|0>>|<with|fill-color|red|point-style|round|<point|0|0>>|<with|fill-color|red|point-style|square|<point|2|0>>|<with|text-at-halign|center|<text-at|方框|<point|2|0.5>>>|<with|text-at-halign|center|<text-at|圆圈|<point|0|0.5>>>|<with|text-at-halign|center|<text-at|圆盘|<point|-2|0.5>>>>>|黑色和红色填充色的不同的点形状。>
+
+  <paragraph|线宽度>线宽度属性应用于所有曲线（包括线段，多边形，样条曲线，闭合样条曲线，圆弧和圆）。其默认大小为<verbatim|1ln>，即数学公式分式中线段的宽度。你可以指定其为任何<TeXmacs>长度。
+
+  <\big-figure|<with|gr-mode|<tuple|edit|text-at>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|1par|0.6par>|gr-grid|<tuple|empty>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|empty>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-line-width|5ln|gr-auto-crop|true|<graphics||<spline|<point|-3|0>|<point|-2.0|0.3>|<point|0.0|-0.3>|<point|2.0|0.3>|<point|3.0|0.0>>|<with|line-width|0.5ln|<spline|<point|-3|1>|<point|-2.0|1.3>|<point|0.0|0.7>|<point|2.0|1.3>|<point|3.0|1.0>>>|<with|line-width|2ln|<spline|<point|-3|-1>|<point|-2.0|-0.7>|<point|0.0|-1.3>|<point|2.0|-0.7>|<point|3.0|-1.0>>>|<with|line-width|5ln|<spline|<point|-3|-2>|<point|-2.0|-1.7>|<point|0.0|-2.3>|<point|2.0|-1.7>|<point|3.0|-2.0>>>|<text-at|0。5ln|<point|3.5|1>>|<text-at|1ln|<point|3.5|0>>|<text-at|2ln|<point|3.5|-1>>|<text-at|5ln|<point|3.5|-2>>>>>
+    使用不同线宽度的同一条曲线。
+  </big-figure>
+
+  <paragraph|线组成>可以在<menu|Focus|Line dashes>中指定曲线的组成样式。
+
+  <\big-figure|<with|gr-mode|<tuple|edit|line>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|1par|0.6par>|gr-grid|<tuple|empty>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|empty>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-line-width|2ln|gr-dash-style|11100|gr-dash-style-unit|20ln|gr-auto-crop|true|<graphics||<with|line-width|2ln|<line|<point|-3|1>|<point|-2.0|1.5>|<point|0.0|0.5>|<point|2.0|1.5>|<point|3.0|1.0>>>|<with|dash-style|10|line-width|2ln|<line|<point|-3|0.5>|<point|-2.0|1.0>|<point|0.0|0.0>|<point|2.0|1.0>|<point|3.0|0.5>>>|<with|dash-style|11100|line-width|2ln|<line|<point|-3|0>|<point|-2.0|0.5>|<point|0.0|-0.5>|<point|2.0|0.5>|<point|3.0|0.0>>>|<with|dash-style|1111010|line-width|2ln|<line|<point|-3|-0.5>|<point|-2.0|0.0>|<point|0.0|-1.0>|<point|2.0|0.0>|<point|3.0|-0.5>>>|<with|dash-style|1111010|line-width|2ln|dash-style-unit|10ln|<line|<point|-3|-1>|<point|-2.0|-0.5>|<point|0.0|-1.5>|<point|2.0|-0.5>|<point|3.0|-1.0>>>|<with|dash-style|11100|line-width|2ln|dash-style-unit|20ln|<line|<point|-3|-1.5>|<point|-2.0|-1.0>|<point|0.0|-2.0>|<point|2.0|-1.0>|<point|3.0|-1.5>>>>>>
+    使用不同组成样式的同一条曲线。
+  </big-figure>
+
+  <paragraph|线箭头>可以使用<menu|Focus|Line arrows>指定曲线两端的箭头样式。
+
+  <\big-figure|<with|gr-mode|<tuple|edit|line>|gr-frame|<tuple|scale|1cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|1par|0.6par>|gr-grid|<tuple|empty>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|empty>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-line-width|2ln|gr-arrow-begin|\||gr-arrow-end|\||gr-auto-crop|true|<graphics||<with|line-width|2ln|<line|<point|-4|2>|<point|-1.0|2.0>>>|<with|arrow-end|\<gtr\>|line-width|2ln|<line|<point|-4|1.5>|<point|-1.0|1.5>>>|<with|arrow-end|\|\<gtr\>|line-width|2ln|<line|<point|-4|1>|<point|-1.0|1.0>>>|<with|arrow-end|\<gtr\>\<gtr\>|line-width|2ln|<line|<point|-4|0.5>|<point|-1.0|0.5>>>|<with|arrow-end|\<less\>|line-width|2ln|<line|<point|-4|0>|<point|-1.0|0.0>>>|<with|arrow-end|\<less\>\||line-width|2ln|<line|<point|-4|-0.5>|<point|-1.0|-0.5>>>|<with|arrow-end|\<less\>\<less\>|line-width|2ln|<line|<point|-4|-1>|<point|-1.0|-1.0>>>|<with|arrow-end|\||line-width|2ln|<line|<point|-4|-1.5>|<point|-1.0|-1.5>>>|<with|arrow-end|o|line-width|2ln|<line|<point|-4|-2>|<point|-1.0|-2.0>>>|<with|arrow-end|\|\<gtr\>|line-width|2ln|arrow-begin|\<less\>\||<line|<point|0|2>|<point|3.0|2.0>>>|<with|arrow-end|\|\<gtr\>|line-width|2ln|arrow-begin|\<gtr\>|<line|<point|0|1.5>|<point|3.0|1.5>>>|<with|arrow-end|o|line-width|2ln|arrow-begin|o|<line|<point|0|1>|<point|3.0|1.0>>>|<with|arrow-end|\<less\>\||line-width|2ln|arrow-begin|\|\<gtr\>|<line|<point|0|0.5>|<point|3.0|0.5>>>|<with|arrow-end|\<less\>|line-width|2ln|arrow-begin|\<gtr\>|<line|<point|0|0>|<point|3.0|0.0>>>|<with|line-width|2ln|arrow-begin|\<gtr\>|<line|<point|0|-0.5>|<point|3.0|-0.5>>>|<with|arrow-end|\<gtr\>\<gtr\>|line-width|2ln|arrow-begin|\<gtr\>|<line|<point|0|-1>|<point|3.0|-1.0>>>|<with|arrow-end|\<gtr\>\<gtr\>|line-width|2ln|arrow-begin|\<gtr\>\<gtr\>|<line|<point|0|-1.5>|<point|3.0|-1.5>>>|<with|arrow-end|\||line-width|2ln|arrow-begin|\||<line|<point|0|-2>|<point|3.0|-2.0>>>>>>
+    两端使用不同类型箭头的同一条线段。
+  </big-figure>
+
+  <paragraph|文本对齐>对于文本和数学方格，可以指定其水平和竖直对齐的属性，如下所示：
+
+  <\big-figure|<with|gr-mode|<tuple|edit|text-at>|gr-frame|<tuple|scale|1cm|<tuple|0.420008gw|0.5gh>>|gr-geometry|<tuple|geometry|1par|0.6par>|gr-grid|<tuple|empty>|gr-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|empty>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-line-width|2ln|gr-text-at-halign|center|gr-text-at-valign|top|gr-auto-crop|true|<graphics||<with|color|light grey|line-width|2ln|<line|<point|-3|2>|<point|-3.0|-2.0>>>|<with|text-at-valign|center|<text-at|左边|<point|-3|1>>>|<with|text-at-valign|center|text-at-halign|center|<text-at|居中|<point|-3|0>>>|<with|text-at-valign|center|text-at-halign|right|<text-at|右边|<point|-3|-1>>>|<with|color|light grey|line-width|2ln|<line|<point|-1|0>|<point|7.0|0.0>>>|<with|text-at-valign|bottom|text-at-halign|center|<text-at|底部 <math|y>|<point|0|0>>>|<with|text-at-halign|center|<text-at|基线 <math|y>|<point|1.5|0>>>|<with|text-at-valign|axis|text-at-halign|center|<text-at|轴线 <math|y>|<point|3|0>>>|<with|text-at-valign|center|text-at-halign|center|<text-at|居中 <math|y>|<point|4.5|0>>>|<with|text-at-valign|top|text-at-halign|center|<text-at|顶部 <math|y>|<point|6|0>>>>>>
+    文本方格的水平和垂直方向上对齐的图解。
+  </big-figure>
+
+  \;
+
+  <section|编辑对象的组合><label|sec-man-graphics-group>
+
+  第二栏工具栏最右端的图标可用于编辑图形对象的组合。在组合编辑模式中，你可以右击选中或者取消选中对象。你也可以拖拽鼠标右键通过矩形选框选中其中的所有对象。此时左击，则当前的操作将作用在所有选中的对象上。
+
+  所支持的对组合的操作如下所示：
+
+  <\description>
+    <item*|改变属性><icon|tm_edit_props.xpm>即<menu|Insert|Set properties>。左击对象后，焦点栏中的当前属性就应用到了选中对象上。
+
+    <item*|移动对象><icon|tm_group_move.xpm>即<menu|Insert|Move objects>。选中对象会跟着鼠标移动直到你左击。
+
+    <item*|缩放对象><icon|tm_group_zoom.xpm>即<menu|Insert|Resize objects>。选中对象会跟着鼠标缩放直到你左击。
+
+    <item*|旋转对象><icon|tm_group_rotate.xpm>即<menu|Insert|Rotate objects>。选中对象会跟着鼠标旋转直到你左击。
+
+    <item*|组合或者打散><icon|tm_group_group.xpm>即<menu|Insert|Group/ungroup>。左击之后，选中对象将被组合在一起。若是组合对象，则左击之后将被打散。
+  </description>
+
+  在组合编辑模式中，复制和粘贴操作仍然适用。
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

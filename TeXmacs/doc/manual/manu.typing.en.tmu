@@ -1,0 +1,248 @@
+<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+
+<style|<tuple|tmdoc|chinese|number-europe>>
+
+<\body>
+  <tmdoc-title|撰写简单的文档><label|sec-man-text>
+
+  <section|概况><label|sec-man-generalities>
+
+  一般的字符和标点符号直接键盘输入即可。大多数现代系统也会为重音字符和其他特殊符号提供快捷键。在<TeXmacs>上，<prefix|accent>键前缀可用于输入重音字符。比如，由快捷键<key|accent:acute e>可得「é」，快捷键<key|accent:grave a>则是「à」。
+
+  较长的单词在行边界处会自动使用连字符连接。对于中文，您需要在菜单<menu|Document|Language>中指定语言，以正确换行。
+
+  在底部状态栏的左边，您可看到文档的样式、当前光标处的文本属性。比如，底部状态栏显示「<with|language|english|<with|font|roman|generic text roman 10><with|font|cyrillic|>>」意味着您是在文本模式工作，所用的<with|font|roman|roman>字体大小为<with|font|roman|10>，所用文档的样式为<with|font|roman|generic>。您可在<menu|格式>菜单中改变当前光标处的文本属性(字体、字体大小、颜色、语言)。也可以选中一块文本后再对该文本操作。默认的全局文本属性在<menu|Document>菜单中更改。
+
+  底部状态栏的右边显示的是光标前字符或者对象的属性。我们会显示当前光标所在位置的环境。所有这些信息都有助于您明确文档中光标的位置。
+
+  <section|输入结构化文本><label|sec-man-structure>
+
+  长文档往往具有良好的结构：即章、节和子节。其中往往包含不同类型的文本，比如纯文本，引用，脚注，定理等。选择好<menu|Document|Style>后，<TeXmacs>会依照样式为文本排版，比如节、页、定理的编号，又如引用和脚注的排版等等。
+
+  目前可用的标准文档样式有：<tmstyle|generic>， <tmstyle|article>， <tmstyle|book>， <tmstyle|letter>， <tmstyle|exam>， <tmstyle|beamer>， <tmstyle|seminar>， <tmstyle|source>。比如，article样式可用于写文章。另外的样式可用于期刊论文或其它特殊用途，比如<TeXmacs>官方文档的样式。
+
+  选择好文档的样式后，您可以用节来组织文本，还可以使用特定的环境。环境的例子有定理，命题，注意等(见<menu|Insert|Enunciation>)。有序列表和无序列表也可用来组织文本。常用的属性标记有<markup|strong>，<markup|name>等等，可用于改变特定文本的属性。
+
+  用熟<TeXmacs>后，您可在自己的样式文件中添加环境。假设您经常做引用，且您希望引用文本是斜体的，且左右边距皆为1cm。最好的方法是制作一个引用环境，而不是一次次手动的改变文本和段落的属性。这不仅仅能够加快引用的输入，还可以直接改变引用环境的定义，同步改变文档中所出现的所有引用环境。比如您需要把引用的字体全部改小，此时，直接改定义明显比一次次手动修改方便。
+
+  了解一些通用的编辑规则可以极大的方便编辑<TeXmacs>的结构化文本。一个重要的概念是焦点，请看下面这个例子。假设我们正在输入如下经典定理：
+
+  <\quote-env>
+    下面这个定理是<name|欧拉>的：
+
+    <\big-envbox>
+      <\theorem>
+        <small-focus|<math|\<mathe\><rsup|\<mathpi\>*\<mathi\>>=\<um\>1<math-cursor>>>。
+      </theorem>
+    </big-envbox>
+  </quote-env>
+
+  在光标处，灰色和蓝绿色的盒子显示的是激活的标记：在本例中，光标是在定理和公式中。最内部的激活被蓝绿色框包围的标记称为当前焦点。
+
+  <menu|Focus>菜单和焦点工具栏（最后一行工具栏）是高度上下文相关的，它们都依赖于当前焦点。在本例中，焦点工具栏中有一个弹出菜单公式，当您选择<menu|Equation>后，文本会变为：
+
+  <\quote-env>
+    下面这个定理是<name|欧拉>的：
+
+    <\big-envbox>
+      <\theorem>
+        \;
+
+        <\big-focus>
+          <\equation*>
+            \<mathe\><rsup|\<mathpi\>*\<mathi\>>=\<um\>1<math-cursor>.
+          </equation*>
+        </big-focus>
+      </theorem>
+    </big-envbox>
+  </quote-env>
+
+  类似地，焦点工具栏左部的箭头按钮可允许您跳转到相似标记。在本例中，它们会让你迅速在文档中所有的公式或者方程间浏览。关于<hlink|结构化编辑|../editing/man-structured-editing.zh.tm>和<hlink|结构化编辑工具|../editing/man-editing-tools.zh.tm>，还请移步细看。
+
+  第二个重要的概念是编辑模式。有五种主要的模式：文本模式，数学模式，程序模式，图形模式和源代码模式。模式切换比焦点的切换要少得多，其工具栏就在焦点工具栏的上方。<menu|Insert>和<menu|Format>菜单都是模式相关的。
+
+  <section|属性标记><label|sec-man-content-tags>
+
+  属性标记是文本中最简单的结构之一。<menu|Insert|Content tag>下拉菜单列出了所有的属性标记。属性标记表明一段文字具有特殊性质或者为特殊目的服务。比如，重要的文本应当用<markup|strong>来标记。该标记默认将字体渲染成<strong|粗体>。需要注意的是，文档样式不同，加强文本后渲染效果也会有所不同。比如在幻灯片中，加强文本的渲染效果可能是带点透明效果的不同的颜色。下面是最常用的一些属性标记及其目的：
+
+  <big-table|<descriptive-table|<tformat|<table|<row|<cell|标记>|<cell|例子>|<cell|目的>>|<row|<cell|<markup|strong>>|<cell|<with|font|roman|this is <strong|important>>>|<cell|加粗文本以显示其重要性>>|<row|<cell|<markup|em>>|<cell|<with|font|roman|the <em|real> thing>>|<cell|强调一段文本>>|<row|<cell|<markup|dfn>>|<cell|<with|font|roman|A <dfn|gnu> is a horny beast>>|<cell|一些概念的定义>>|<row|<cell|<markup|samp>>|<cell|<with|font|roman|the <samp|ae> ligature æ>>|<cell|字母序列>>|<row|<cell|<markup|name>>|<cell|<with|font|roman|the <name|Linux> system>>|<cell|某物的名称>>|<row|<cell|<markup|person>>|<cell|<with|font|roman|I am <name|Joris>>>|<cell|某人的名字>>|<row|<cell|<markup|cite*>>|<cell|<with|font|roman|Melville's <cite*|Moby Dick>>>|<cell|参考书目>>|<row|<cell|<markup|abbr>>|<cell|<with|font|roman|I work at the <abbr|C.N.R.S.>>>|<cell|缩写>>|<row|<cell|<markup|acronym>>|<cell|<with|font|roman|the <acronym|HTML> format>>|<cell|首字母缩写>>|<row|<cell|<markup|verbatim>>|<cell|<with|font|roman|the program said <verbatim|hello>>>|<cell|纯文本，比如计算机程序的输出>>|<row|<cell|<markup|kbd>>|<cell|<with|font|roman|Please type <kbd|return>>>|<cell|应当用键盘输入的文本>>|<row|<cell|<markup|code*>>|<cell|<with|font|concrete|<code*|cout \<less\>\<less\> 1+1;> yields <verbatim|2>>>|<cell|代码>>|<row|<cell|<markup|var>>|<cell|<with|font|roman|<verbatim|cp <var|src-file> <var|dest-file>>>>|<cell|程序中的变量>>>>>|常用属性标记一览。>
+
+  <section|列表><label|sec-man-lists>
+
+  <menu|Insert|Itemize>即插入无序列表。可选择 <math|\<bullet\>> (圆点)， <math|<op|->> (短线) 或者 <math|<op|\<rightarrow\>>> (箭头) 之一作为条目的标记。如下所示，列表中还可嵌入子列表：
+
+  <\itemize>
+    <item>第一项。
+
+    <item>下面是子列表：
+
+    <\itemize>
+      <item>一个子项。
+
+      <item>另一个子项。
+    </itemize>
+
+    <item>最后一项。
+  </itemize>
+
+  默认的标记根据其层次自动以不同样式显示。在最外面一层，我们使用<math|\<bullet\>>，第二层则用<math|<op|\<circ\>>>。光标在列表中时，按下<key|return>键将自动新建一个新项目。如果您的项目内容由多个段落构成，则可以用<shortcut|(kbd-shift-return)>新起一段。
+
+  有序列表可用菜单项<menu|Insert|Enumerate>得到，与无序列表类似，只是各个项目是顺序显示的。下面是一个按罗马数字顺序显示的例子(<menu|Insert|Enumerate|Roman>)：
+
+  <\enumerate-Roman>
+    <item>第一项
+
+    <item>第二项
+
+    <item>最后一项
+  </enumerate-Roman>
+
+  最后一种列表是描述列表。相应的菜单项是 <menu|Insert|Description> ，功能是演示一串概念：
+
+  <\description>
+    <\with|font|roman>
+      <item*|Gnu>A hairy but gentle beast.
+
+      <item*|Gnat>Only lives in a zoo.
+    </with>
+  </description>
+
+  <section|环境><label|sec-man-environments>
+
+  与属性标记类似，环境的作用是赋予一段文字以特殊含义。<hlink|属性标记|man-content-tags.zh.tm>通常作用于一小段文字，而环境的作用范围往往横跨多行。数学中常用的环境是<markup|theorem>和<markup|proof>，如下所示:
+
+  <\theorem>
+    不存在这样的正整数<math|a,b,c>和<math|n<around*|(|n\<geqslant\>3|)>>使得<math|a<rsup|n>+b<rsup|n>=c<rsup|n>>。
+  </theorem>
+
+  <\proof>
+    空白太小，容不下我的证明。(费马)
+  </proof>
+
+  <menu|Insert|Environment>即插入环境。与定理类似的环境有<markup|proposition>，<compound|markup|lemma>，<markup|corollary>，<markup|axiom>，<markup|definition>。使用<markup|dueto>宏(按下<key|\\ d u e t o return>输入该宏)可以指定与定理相关的学者，像这样:
+
+  <\theorem>
+    <dueto|毕达哥拉斯>Under nice circumstances, we have <math|a<rsup|2>+b<rsup|2>=c<rsup|2>>.
+  </theorem>
+
+  其它常用的环境还有<markup|remark>，<markup|note>，<markup|example>，<markup|warning>，<compound|markup|exercise>和<markup|problem>，其渲染效果与定理类似，只是没有强调显示其中内容。其余环境如<markup|verbatim>，<markup|code>，<markup|quote>，<markup|quotation>和<markup|verse>可用于输入多行文本，代码，引用或者诗歌。
+
+  <section|布局问题><label|sec-man-layout-issues>
+
+  一般情况下，<TeXmacs>会自己处理文档的布局。所以，尽管我们不想禁止，但是我们也不鼓励你手动排版文档。比如，你不应该插入空格或者空行作为水平方向上字与字之间的空白或者竖直方向上行与行之间的空白。额外的空白应该用<menu|Insert|Space>明确指定。这可以让你的文档更加鲁棒，在对文档做一些影响到断行、分页的细小改动或者做一些诸如改变文档样式的重大改动时，你就不需要重新考虑布局了。
+
+  <TeXmacs>实现了多种精确插入空白的命令。首先，你可以精确地插入指定高度和宽度的空白。水平方向上的空白无需高度这一属性，而且可以是可伸缩的。可伸缩的空白的长度由段落的断行方式决定。更进一步，你还可以插入制表符类型的空白。竖直方向上的空白可以在段落中任意位置插入，根据类型的不同会插入到段落的上面或者下面，我们建议将插入点放在段落起始处或结束处。两个段落间额外的竖直空白高度是其间的竖直空白高度的最大值（和<TeX>相反，这可以防止两个连续定理之间多余的空白）。
+
+  至于段落的布局，用户可以指定段落的对齐方式（自调整、左对齐、中央对齐、右对齐）、边白和段落首行（末行）的向左（右）缩进。用户还可以控制行间以及段落间的间距。
+
+  页面布局的菜单在<menu|Document|Page>可以找到。首先，你可以指定页面在屏幕上的展示方式：在<menu|Document|Page>的格式选项卡下页面渲染选项中选中「paper」作为页面类型，你就可以看到明确的分页。默认页面类型「papyrus」在你撰写文档时不会分页。页面类型「automatic」假定你的页面大小正好是你的窗口大小。页面的边白和文本宽度在<menu|Document|Page|Margins>中指定。
+
+  <section|字体选择系统><label|sec-man-fonts>
+
+  在<TeXmacs>中，字体有以下五种主要属性：
+
+  <\itemize>
+    <item>名称 (roman, pandora, concrete等等)
+
+    <item>字族 (roman, typewriter或者sans serif)
+
+    <item>大小 (基准大小和相对大小 )
+
+    <item>字型 (粗黑，适中 或者 细黑)
+
+    <item>字形 (倾斜，斜体，小体大写等等)
+  </itemize>
+
+  注意，在<LaTeX> <math|2\<varepsilon\>>的字体选择系统中，没有细分字体名称和字族。注意，基准字体大小是整个文档的属性，在<menu|Document|Font|Size>中指定。
+
+  <section|精通键盘><label|sec-man-keyboard>
+
+  本节主讲快捷键，相关内容除本节外还可以参考<hlink|配置键盘|../config/man-config-keyboard.zh.tm>。
+
+  <subsection|基本前缀规则><label|sec-man-general-rules>
+
+  由于快捷键多而杂，将它们分类将便于记忆。这里按照键前缀来分类。当前激活的键前缀依赖于<menu|Edit|Preferences>中的快捷键风格。主要的键前缀如以下所示:
+
+  <\description>
+    <item*|<prefix|std>>标准快捷键。比如，在Emacs快捷键风格下，<shortcut|(kbd-paste)>可以用来粘贴文本。
+
+    <item*|<prefix|cmd>><TeXmacs>快捷键，往往依赖于当前的编辑模式。比如， <key|text s> 在文本模式下产生strong文本，在数学模式下则是<math|<sqrt|>>（平方根）。
+
+    <item*|<prefix|altcmd>>组合式<TeXmacs>快捷键。 通常，这些快捷键是用于先指示命令将要应用的标记的类别再指定具体的命令。比如<key|executable>键前缀用于插入可执行的标记以用于<hlink|撰写样式文件|../../devel/style/style.en.tm>。一个例子是快捷键<key|executable +>用于插入加法。
+
+    <item*|<prefix|structured:geometry>>此键前缀用于和方向键及其它特殊键组合，用于<hlink|移动和缩放对象|../editing/man-structured-geometry.zh.tm>。
+
+    <item*|<prefix|structured:move>>此键前缀用于和方向键及其它特殊键组合，用于<hlink|结构化光标移动|../editing/man-structured-move.zh.tm>。
+
+    <item*|<prefix|special>>此键前缀偶用于和字母和标点符号组合以创建一些额外的简单易记的快捷键。
+
+    <item*|<prefix|symbol>>此键前缀可和常用字符组合使用以插入特殊符号。比如，使用<key|text:symbol s>得到<with|font|roman|ß>以及<key|math:symbol a>得到<math|<op|\<amalg\>>>。<prefix|symbol>键前缀还用于插入字面意义上的字符。比如，<key|symbol \\>总是产生\\，而 <key|\\>用于进入<hlink|混合命令|keyboard/man-hybrid.zh.tm>。
+  </description>
+
+  不巧的是， 基于<prefix|altcmd>快捷键在一些系统上面被系统的快捷键所覆盖。比如，在Mac OS上重音字符和常见的特殊字符是使用该快捷键输入的。此时，你可以使用<key*|escape>作为替代。更多信息，参见<hlink|配置键盘|../config/man-config-keyboard.en.tm>。
+
+  <subsection|文本模式下的快捷键><label|sec-man-text-kbd>
+
+  使用键盘输入欧洲语言的特殊键时，您可以使用下面的快捷键输入重音字符。注意，这并不依赖于当前的语言设置。
+
+  <big-table|<with|font|roman|<descriptive-table|<tformat|<cwith|2|2|2|2|cell-valign|b>|<cwith|1|-1|4|4|cell-rborder|1ln>|<cwith|1|1|3|3|cell-row-span|1>|<cwith|1|1|3|3|cell-col-span|2>|<cwith|1|1|3|3|cell-rborder|1ln>|<cwith|1|1|1|1|cell-row-span|1>|<cwith|1|1|1|1|cell-col-span|2>|<cwith|1|-1|1|-1|cell-halign|c>|<cwith|2|2|6|6|cell-valign|b>|<cwith|1|1|7|7|cell-row-span|1>|<cwith|1|1|7|7|cell-col-span|2>|<cwith|1|1|7|7|cell-rborder|1ln>|<cwith|1|1|5|5|cell-row-span|1>|<cwith|1|1|5|5|cell-col-span|2>|<cwith|1|5|5|7|cell-halign|c>|<cwith|4|4|4|4|cell-rborder|1ln>|<cwith|4|4|3|4|cell-halign|c>|<cwith|1|-1|2|2|cell-halign|l>|<cwith|1|-1|6|6|cell-halign|l>|<cwith|4|4|6|8|cell-halign|c>|<cwith|4|4|6|7|cell-halign|c>|<cwith|4|4|6|6|cell-halign|l>|<cwith|5|5|4|4|cell-rborder|1ln>|<cwith|5|5|1|4|cell-halign|c>|<cwith|5|5|4|4|cell-rborder|1ln>|<cwith|5|5|3|4|cell-halign|c>|<cwith|5|5|2|2|cell-halign|l>|<cwith|5|5|7|8|cell-halign|c>|<cwith|5|5|7|7|cell-halign|c>|<cwith|5|5|7|8|cell-halign|c>|<cwith|5|5|7|7|cell-halign|c>|<cwith|6|6|1|8|cell-halign|c>|<cwith|7|7|4|4|cell-rborder|1ln>|<cwith|7|7|1|4|cell-halign|c>|<cwith|7|7|2|2|cell-halign|l>|<cwith|7|7|4|4|cell-rborder|1ln>|<cwith|7|7|1|4|cell-halign|c>|<cwith|7|7|2|2|cell-halign|l>|<cwith|7|7|4|4|cell-rborder|1ln>|<cwith|7|7|1|4|cell-halign|c>|<cwith|7|7|4|4|cell-rborder|1ln>|<cwith|7|7|3|4|cell-halign|c>|<cwith|7|7|2|2|cell-halign|l>|<cwith|6|6|1|4|cell-halign|c>|<cwith|6|6|2|2|cell-halign|l>|<cwith|6|6|1|4|cell-halign|c>|<cwith|6|6|1|3|cell-halign|c>|<cwith|6|6|2|2|cell-halign|l>|<cwith|6|6|3|4|cell-halign|c>|<cwith|6|6|3|3|cell-halign|c>|<cwith|6|6|3|4|cell-halign|c>|<cwith|6|6|3|3|cell-halign|c>|<cwith|6|6|8|8|cell-rborder|1ln>|<cwith|6|6|5|8|cell-halign|c>|<cwith|6|6|6|6|cell-halign|l>|<cwith|6|6|5|8|cell-halign|c>|<cwith|6|6|5|8|cell-halign|c>|<cwith|6|6|6|6|cell-halign|l>|<cwith|6|6|5|8|cell-halign|c>|<cwith|6|6|5|7|cell-halign|c>|<cwith|6|6|6|6|cell-halign|l>|<cwith|6|6|7|8|cell-halign|c>|<cwith|6|6|7|7|cell-halign|c>|<cwith|6|6|7|8|cell-halign|c>|<cwith|6|6|7|7|cell-halign|c>|<table|<row|<cell|Shortcut>|<cell|>|<cell|Example>|<cell|>|<cell|Shortcut>|<cell|>|<cell|Example>|<cell|>>|<row|<cell|<key|accent:acute>>|<cell|Acute ´>|<cell|<key|accent:acute e>>|<cell|é>|<cell|<key|accent:grave>>|<cell|Grave ‘>|<cell|<key|accent:grave e>>|<cell|è>>|<row|<cell|<key|accent:hat>>|<cell|Hat ˆ>|<cell|<key|accent:hat e>>|<cell|ê>|<cell|<key|accent:umlaut>>|<cell|Umlaut ¨>|<cell|<key|accent:umlaut e>>|<cell|ë>>|<row|<cell|<key|accent:tilde>>|<cell|Tilde ˜>|<cell|<key|accent:tilde a>>|<cell|ã>|<cell|<key|accent:cedilla>>|<cell|Cedilla ¸>|<cell|<key|accent:cedilla c>>|<cell|ç>>|<row|<cell|<key|accent:breve>>|<cell|Breve ˘>|<cell|<key|accent:breve g>>|<cell|ğ>|<cell|<key|accent:check>>|<cell|Check ˇ>|<cell|<key|accent:check s>>|<cell|š>>|<row|<cell|<key|accent:abovering>>|<cell|Above ring ˚>|<cell|<key|accent:abovering a>>|<cell|å>|<cell|<key|accent:abovedot>>|<cell|Above dot ˙>|<cell|<key|accent:abovedot z>>|<cell|ż>>|<row|<cell|<key|accent:doubleacute>>|<cell|Hungarian ˝>|<cell|<key|accent:doubleacute o>>|<cell|ő>|<cell|>|<cell|>|<cell|>|<cell|>>>>>>|输入重音字符>
+
+  特殊字符也可以在任意语言环境下输入：
+
+  <\big-table>
+    <with|font|roman|<descriptive-table|<tformat|<cwith|1|1|1|-1|cell-row-span|1>|<cwith|1|1|1|-1|cell-col-span|2>|<cwith|1|1|1|-1|cell-halign|c>|<cwith|1|-1|3|3|cell-lborder|1ln>|<cwith|1|-1|5|5|cell-lborder|1ln>|<cwith|1|-1|7|7|cell-lborder|1ln>|<cwith|1|1|1|1|cell-row-span|1>|<cwith|1|1|1|1|cell-col-span|8>|<cwith|1|-1|2|2|cell-halign|c>|<cwith|1|-1|4|4|cell-halign|c>|<cwith|1|-1|6|6|cell-halign|c>|<cwith|1|-1|8|8|cell-halign|c>|<table|<row|<cell|Shortcuts>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|<key|symbol a>>|<cell|æ>|<cell|<key|symbol A>>|<cell|Æ>|<cell|<key|symbol a e>>|<cell|æ>|<cell|<key|symbol A E>>|<cell|Æ>>|<row|<cell|<key|symbol o>>|<cell|ø>|<cell|<key|symbol O>>|<cell|Ø>|<cell|<key|symbol o e>>|<cell|œ>|<cell|<key|symbol O E>>|<cell|Œ>>|<row|<cell|<key|symbol s>>|<cell|ß>|<cell|<key|symbol S>>|<cell|ẞ>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|<key|symbol !>>|<cell|¡>|<cell|<key|symbol ?>>|<cell|¿>|<cell|<key|symbol p>>|<cell|§>|<cell|<key|symbol P>>|<cell|£>>>>>>
+  </big-table|输入特殊字符>
+
+  当你按下<key|">键时，恰当的引号将被插入。这里的引号由当前的语言和周围的文本决定。如果默认的引号不正确，你可以在 <menu|Edit|Preferences|Keyboard|Automatic quotes> 改变设置。你也可以用快捷键这样输入引号：
+
+  <big-table|<with|language|british|<with|font|roman|<descriptive-table|<tformat|<cwith|1|-1|3|3|cell-lborder|1ln>|<cwith|1|1|1|-1|cell-row-span|1>|<cwith|1|1|1|-1|cell-col-span|2>|<cwith|1|1|1|-1|cell-halign|c>|<cwith|1|1|1|1|cell-row-span|1>|<cwith|1|1|1|1|cell-col-span|4>|<cwith|1|-1|2|2|cell-halign|c>|<cwith|1|-1|4|4|cell-halign|c>|<table|<row|<cell|快捷键>|<cell|>|<cell|>|<cell|>>|<row|<cell|<key|symbol ">>|<cell|">|<cell|<key|, ,>>|<cell|„>>|<row|<cell|<key|\<less\> var>>|<cell|‹>|<cell|<key|\<gtr\> var>>|<cell|›>>|<row|<cell|<key|\<less\> \<less\>>>|<cell|«>|<cell|<key|\<gtr\> \<gtr\>>>|<cell|»>>>>>>>|输入引号和书名号>
+
+  「英文」的引号是相继两个重音符或者单引号的连接。它们可以使用<key|‘ ‘>创建<key|' '> ，但是实际上这是两个字符的特殊展示，而不是单个特殊的字符。
+
+  一些快捷键在特定语言环境下生效。你可以使用 <menu|Document|Language> 设置文档的语言，或者 <menu|Format|Language> 设置选中区域的语言(见<hlink|输入文本概况|man-generalities.zh.tm>)。
+
+  <big-table|<with|font|roman|<with|language|british|<descriptive-table|<tformat|<cwith|1|1|1|-1|cell-row-span|1>|<cwith|1|1|1|-1|cell-col-span|2>|<cwith|1|1|1|-1|cell-halign|c>|<cwith|1|-1|3|3|cell-lborder|1ln>|<cwith|1|-1|5|5|cell-lborder|1ln>|<cwith|1|-1|7|7|cell-lborder|1ln>|<cwith|6|11|1|4|cell-bborder|0>|<cwith|6|11|1|4|cell-rborder|0>|<cwith|6|11|3|3|cell-lborder|0>|<cwith|1|1|5|5|cell-row-span|1>|<cwith|1|1|5|5|cell-col-span|4>|<twith|table-lborder|0>|<cwith|1|-1|1|1|cell-lborder|0>|<twith|table-bborder|0>|<cwith|1|1|1|1|cell-lborder|1ln>|<cwith|2|5|1|1|cell-lborder|1ln>|<cwith|5|5|1|4|cell-bborder|1ln>|<cwith|11|11|5|8|cell-bborder|1ln>|<cwith|1|-1|2|2|cell-halign|c>|<cwith|1|-1|4|4|cell-halign|c>|<cwith|1|-1|6|6|cell-halign|c>|<cwith|1|-1|8|8|cell-halign|c>|<table|<row|<cell|匈牙利语>|<cell|>|<cell|西班牙语>|<cell|>|<cell|波兰语>|<cell|>|<cell|>|<cell|>>|<row|<cell|<key|symbol o>>|<cell|<with|language|hungarian|ő>>|<cell|<key|! var>>|<cell|<with|language|spanish|¡>>|<cell|<key|symbol a>>|<cell|<with|language|polish|ą>>|<cell|<key|symbol o>>|<cell|<with|language|polish|ó>>>|<row|<cell|<key|symbol O>>|<cell|<with|language|hungarian|Ő>>|<cell|<key|? var>>|<cell|<with|language|spanish|¿>>|<cell|<key|symbol A>>|<cell|<with|language|polish|Ą>>|<cell|<key|symbol O>>|<cell|<with|language|polish|Ó>>>|<row|<cell|<key|symbol u>>|<cell|<with|language|hungarian|ű>>|<cell|<key|! ‘>>|<cell|<with|language|spanish|¡>>|<cell|<key|symbol c>>|<cell|<with|language|polish|ć>>|<cell|<key|symbol s>>|<cell|<with|language|polish|ś>>>|<row|<cell|<key|symbol U>>|<cell|<with|language|hungarian|Ű>>|<cell|<key|? ‘>>|<cell|<with|language|spanish|¿>>|<cell|<key|symbol C>>|<cell|<with|language|polish|Ć>>|<cell|<key|symbol S>>|<cell|<with|language|polish|Ś>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol e>>|<cell|<with|language|polish|ę>>|<cell|<key|symbol x>>|<cell|<with|language|polish|ź>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol E>>|<cell|<with|language|polish|Ę>>|<cell|<key|symbol X>>|<cell|<with|language|polish|Ź>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol l>>|<cell|<with|language|polish|ł>>|<cell|<key|symbol z>>|<cell|<with|language|polish|ż>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol L>>|<cell|<with|language|polish|Ł>>|<cell|<key|symbol Z>>|<cell|<with|language|polish|Ż>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol n>>|<cell|<with|language|polish|ń>>|<cell|<key|symbol z var>>|<cell|<with|language|polish|ź>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol N>>|<cell|<with|language|polish|Ń>>|<cell|<key|symbol Z var>>|<cell|<with|language|polish|Ź>>>>>>>>|语言相关的文本快捷键>
+
+  语言相关的快捷键会覆盖更加一般的快捷键：比如，在匈牙利语环境下，你无法轻易地输入字符 「<with|font|roman|ø>」。
+
+  <subsection|混合命令和<LaTeX>模拟><label|sec-man-hybrid>
+
+  <TeXmacs>允许你直接从键盘输入<LaTeX>命令。具体步骤如下：你先按下<key|\\>以进入<LaTeX>/<TeXmacs>混合命令模式，再输入你需要执行的命令。当你输完命令时，底部的状态栏左边会显示如下信息：
+
+  <\verbatim>
+    \ \ \ \ \<less\>return\<gtr\>: action to be undertaken
+  </verbatim>
+
+  此时当你按下回车键，你的命令就会被执行。比如在数学模式中，你可以通过输入<key|\\ f r a c return>创建分数。
+
+  如果你输入的命令不是一个（可识别的）<LaTeX>命令，我们首先看该命令是否是一个存在的<TeXmacs>宏，函数或者环境（由样式文件提供）。如果是这样，相应的宏展开，函数或者环境将被应用。否则，我们认为你的命令对应于一个环境变量且我们提取其值。<key|\\>键总是等价于这些命令<key|inactive l>，<key|inactive e>，<key|inactive a>，<key|inactive #>或者<key|inactive v>之一。
+
+  使用<key|symbol \\>可以输入字面意义上的\\(backslash)。
+
+  <subsection|动态对象><label|sec-man-dynamic>
+
+  某些更加复杂的对象在编辑的过程中可以有不同状态。这种动态对象的一个例子便是标签和引用，因为引用的标号必须动态确定。另外一些动态标记的例子可以在<hlink|撰写样式文件|../../devel/style/keyboard/style-kbd.zh.tm>这章中找到。
+
+  编辑进入动态对象时，比如使用<shortcut|(make-label)>插入标签，默认的状态是不激活的。在这种不激活的状态中，你可以输入和这个动态对象相关的信息，比如在标签这个例子中就是标签的名字。有一些动态对象的参数数量不是固定的，可以用<key|var>插入新的参数。
+
+  <\big-figure>
+    <with|color|blue|<math|\<langle\>>label<math|\|>>pythagoras<with|color|blue|<math|\<rangle\>>>
+  </big-figure|不激活的标签>
+
+  当你将动态对象的相关信息输入完毕后，你可以输入<shortcut|(kbd-return)>激活这个对象。在光标移动到对象后面并敲击<key|backspace>就可以反激活已经激活的动态对象。
+
+  <subsection|一些有用的键盘快捷键><label|sec-man-standard>
+
+  一些常用的组合快捷键如下表<nbsp><reference|various-useful-shortcuts>所示。特别注意的是由<shortcut|(make-space "1em")>，<shortcut|(make-space "0.2spc")>和 <shortcut|(make-space "-0.2spc")>插入的空白可用<shortcut|(geometry-left)>和<shortcut|(geometry-right)><hlink|改变大小|../editing/man-structured-geometry.en.tm>。这种缩放的方式实际上适用于更一般的从菜单<menu|Format|Space>插入的或水平或竖直的空白，也可以是一些其它的对象如图片。
+
+  <\big-table|<descriptive-table|<tformat|<table|<row|<cell|快捷键>|<cell|动作>>|<row|<cell|<shortcut|(remove-structure-upwards)>>|<cell|除去所包含的对象或环境。>>|<row|<cell|<shortcut|(make 'nbsp)>>|<cell|插入一个不间断的空白。>>|<row|<cell|<shortcut|(make-space "1em")>>|<cell|插入一个quad空白。>>|<row|<cell|<shortcut|(make-space "0.2spc")>>|<cell|插入一个小空白。>>|<row|<cell|<shortcut|(make-space "-0.2spc")>>|<cell|插入一个负空白。>>|<row|<cell|<shortcut|(make-htab "5mm")>>|<cell|插入一个<with|font|roman|“tab”>。>>|<row|<cell|<shortcut|(go-start)>>|<cell|移动到文档头部。>>|<row|<cell|<shortcut|(go-end)>>|<cell|移动到文档尾部。>>|<row|<cell|<shortcut|(make 'line-break)>>|<cell|插入一个换行符。>>|<row|<cell|<shortcut|(make-rigid)>>|<cell|插入一段不能断行（rigid）的文字。>>>>>>
+    <label|various-useful-shortcuts>一些有用的键盘快捷键
+  </big-table>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

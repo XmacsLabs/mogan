@@ -1,0 +1,450 @@
+<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+
+<style|<tuple|tmdoc|chinese|number-europe>>
+
+<\body>
+  <tmdoc-title|The <TeXmacs> plug-in system><label|sec-plugins>
+
+  There are many ways in which <TeXmacs> can be customized or extended: users may define their own style files, customize the user interface, or write links with extern programs. The plug-in system provides a universal mechanism to combine one or several such extensions in a single package. Plug-ins are both easy to install by other users and easy to write and maintain.
+
+  <section|Installing and using a plug-in><label|sec-plugin-install>
+
+  From the user's point of view, a plug-in <verbatim|<em|myplugin>> will usually be distributed on some web-site as a binary tarball with the name
+
+  <\verbatim>
+    \ \ \ \ <em|myplugin>-<em|version>-<em|architecture>.tar.gz
+  </verbatim>
+
+  If you installed <TeXmacs> yourself in the directory <verbatim|$TEXMACS_PATH>, then you should unpack this tarball in the directory <verbatim|$TEXMACS_PATH/plugins>, using
+
+  <\verbatim>
+    \ \ \ \ tar -zxvf <em|myplugin>-<em|version>-<em|architecture>.tar.gz
+  </verbatim>
+
+  This will create a <verbatim|<em|myplugin>> subdirectory in <verbatim|$TEXMACS_PATH/plugins>. As soon as you restart <TeXmacs>, the plug-in should be automatically recognized. If not, then click on <menu|Tools|Update|Plugins> and relaunch <TeXmacs>. Please read the documentation which comes with your plug-in in order to learn using it.
+
+  <\remark>
+    If you did not install <TeXmacs> yourself, or if you do not have write access to <verbatim|$TEXMACS_PATH>, then you may also unpack the tarball in <verbatim|$TEXMACS_HOME_PATH/plugins>. Here we recall that <verbatim|$TEXMACS_HOME_PATH> defaults to <verbatim|$HOME/.TeXmacs>. When starting <TeXmacs>, your plug-in should again be automatically recognized.
+  </remark>
+
+  <\remark>
+    If the plug-in is distributed as a source tarball like <verbatim|<em|myplugin>-<em|version>-src.tar.gz>, then you should first compile the source code before relaunching <TeXmacs>. Depending on the plug-in (read the instructions), this is usually done using
+
+    <\verbatim>
+      \ \ \ \ cd <em|myplugin>; make
+    </verbatim>
+
+    or
+
+    <\verbatim>
+      \ \ \ \ cd <em|myplugin>; ./configure; make
+    </verbatim>
+  </remark>
+
+  <\remark>
+    In order to upgrade a plug-in, just remove the old version in <verbatim|$TEXMACS_PATH/plugins> or <verbatim|$TEXMACS_HOME_PATH/plugins> using
+
+    <\verbatim>
+      \ \ \ \ rm -rf <em|myplugin>
+    </verbatim>
+
+    and reinstall as explained above.
+  </remark>
+
+  <section|Writing your own plug-ins><label|sec-plugin-write>
+
+  In order to write a plug-in <verbatim|<em|myplugin>>, you should start by creating a directory
+
+  <\verbatim>
+    \ \ \ \ $TEXMACS_HOME_PATH/plugins/<em|myplugin>
+  </verbatim>
+
+  where to put all your files (recall that <verbatim|$TEXMACS_HOME_PATH> defaults to <verbatim|$HOME/.TeXmacs>). In addition, you may create the following subdirectories (when needed):
+
+  <\description-dash>
+    <item*|<verbatim|bin>>For binary files.
+
+    <item*|<verbatim|doc>>For documentation.
+
+    <item*|<verbatim|langs>>For language related files, such as dictionaries (not yet supported).
+
+    <item*|<verbatim|lib>>For libraries.
+
+    <item*|<verbatim|packages>>For style packages.
+
+    <item*|<verbatim|progs>>For <scheme> programs.
+
+    <item*|<verbatim|src>>For source files.
+
+    <item*|<verbatim|styles>>For style files.
+  </description-dash>
+
+  As a general rule, files which are present in these subdirectories will be automatically recognized by <TeXmacs> at startup. For instance, if you provide a <verbatim|bin> subdirectory, then
+
+  <\verbatim>
+    \ \ \ \ $TEXMACS_HOME_PATH/plugins/<em|myplugin>/bin
+  </verbatim>
+
+  will be automatically added to the <verbatim|PATH> environment variable at startup. Notice that the subdirectory structure of a plug-in is very similar to the subdirectory structure of <verbatim|$TEXMACS_PATH>.
+
+  Similarly, plugin documentation is intended to be automatically added to the <menu|Help|Plug-ins> submenu. For this to automation to work, the <verbatim|myplugin/doc/> directory should contain at least two files
+
+  <\verbatim>
+    \ \ \ \ myplugin.en.tm
+
+    \ \ \ \ myplugin-abstract.en.tm
+  </verbatim>
+
+  The first file is the main entry point to the plugin's documentation and should follow <hlink|the general conventions for structuring <TeXmacs> documentation|../../about/contribute/documentation/traversal.en.tm>. The <verbatim|-abstract> file provides a short description of the plugin's functionality.
+
+  <\example>
+    The easiest type of plug-in only consists of data files, such as a collection of style files and packages. In order to create such a plug-in, it suffices to create directories
+
+    <\verbatim>
+      \ \ \ \ $TEXMACS_HOME_PATH/plugins/<em|myplugin>
+
+      \ \ \ \ $TEXMACS_HOME_PATH/plugins/<em|myplugin>/styles
+
+      \ \ \ \ $TEXMACS_HOME_PATH/plugins/<em|myplugin>/packages
+    </verbatim>
+
+    and to put your style files and packages in the last two directories. After restarting <TeXmacs>, your style files and packages will automatically appear in the <menu|Document|Style> and <menu|Document|Use package> menus.
+  </example>
+
+  For more complex plug-ins, such as plug-ins with additional <scheme> or <c++> code, one usually has to provide a <scheme> configuration file
+
+  <\verbatim>
+    \ \ \ \ $TEXMACS_HOME_PATH/plugins/<em|myplugin>/progs/init-<em|myplugin>.scm
+  </verbatim>
+
+  This configuration file should contain an instruction of the following form
+
+  <\scm-code>
+    (plugin-configure <em|myplugin>
+
+    \ \ <em|configuration-options>)
+  </scm-code>
+
+  Here the <verbatim|<em|configuration-options>> describe the principal actions which have to be undertaken at startup, including sanity checks for the plug-in. In the next sections, we will describe some simple examples of plug-ins and their configuration. Many other examples can be found in the directories
+
+  <\verbatim>
+    \ \ \ \ $TEXMACS_PATH/examples/plugins
+
+    \ \ \ \ $TEXMACS_PATH/plugins
+  </verbatim>
+
+  Some of these are <hlink|described|../interface/interface.en.tm> in more detail in the chapter about writing new interfaces.
+
+  <section|Example of a plug-in with <scheme> code><label|sec-plugin-simple>
+
+  <paragraph*|The <verbatim|world> plug-in>
+
+  Consider the <verbatim|world> plug-in in the directory
+
+  <\verbatim>
+    \ \ \ \ $TEXMACS_PATH/examples/plugins
+  </verbatim>
+
+  This plug-in shows how to extend <TeXmacs> with some additional <scheme> code in the file
+
+  <\verbatim>
+    \ \ \ \ <example-plugin-link|world/progs/init-world.scm>
+  </verbatim>
+
+  In order to test the <verbatim|world> plug-in, you should recursively copy the directory
+
+  <\verbatim>
+    \ \ \ \ $TEXMACS_PATH/examples/plugins/world
+  </verbatim>
+
+  to <verbatim|$TEXMACS_PATH/plugins> or <verbatim|$TEXMACS_HOME_PATH/plugins>. When relaunching <TeXmacs>, the plug-in should now be automatically recognized (a <menu|World> menu should appear in the menu bar).
+
+  <paragraph*|How it works>
+
+  The file <verbatim|init-world.scm> essentially contains the following code:
+
+  <\scm-code>
+    (plugin-configure world
+
+    \ \ (:require #t))
+
+    \;
+
+    (when (supports-world?)
+
+    \ \ (display* "Using world plug-in!\\n"))
+  </scm-code>
+
+  The configuration option <scm|:require> specifies a condition which needs to be satisfied for the plug-in to be detected by <TeXmacs> (later on, this will for instance allow us to check whether certain programs exist on the system). The configuration is aborted if the requirement is not fulfilled.
+
+  Assuming that the configuration succeeds, the <verbatim|supports-world?> predicate will evaluate to <verbatim|#t>. In our example, the body of the <scm|when> statement corresponds to some further initialization code, which just sends a message to the standard output that we are using our plug-in. In general, this kind of initialization code should be very short and rather load a module which takes care of the real initialization. Indeed, keeping the <verbatim|init-<em|myplugin>.scm> files simple will reduce the startup time of<nbsp><TeXmacs>.
+
+  <section|Example of a plug-in with <name|C++> code><label|sec-plugin-binary>
+
+  <paragraph*|The <verbatim|minimal> plug-in>
+
+  Consider the example of the <verbatim|minimal> plug-in in the directory
+
+  <\verbatim>
+    \ \ \ \ $TEXMACS_PATH/examples/plugins
+  </verbatim>
+
+  It consists of the following files:
+
+  <\verbatim>
+    \ \ \ \ <example-plugin-link|minimal/Makefile>
+
+    \ \ \ \ <example-plugin-link|minimal/progs/init-minimal.scm>
+
+    \ \ \ \ <example-plugin-link|minimal/src/minimal.cpp>
+  </verbatim>
+
+  In order to try the plug-in, you first have to recursively copy the directory
+
+  <\verbatim>
+    \ \ \ \ $TEXMACS_PATH/examples/plugins/minimal
+  </verbatim>
+
+  to <verbatim|$TEXMACS_PATH/progs> or <verbatim|$TEXMACS_HOME_PATH/progs>. Next, running the <verbatim|Makefile> using
+
+  <\verbatim>
+    \ \ \ \ make
+  </verbatim>
+
+  will compile the program <verbatim|minimal.cpp> and create a binary
+
+  <\verbatim>
+    \ \ \ \ minimal/bin/minimal.bin
+  </verbatim>
+
+  When relaunching <TeXmacs>, the plug-in should now be automatically recognized.
+
+  <paragraph*|How it works>
+
+  The <verbatim|minimal> plug-in demonstrates a minimal interface between <TeXmacs> and an extern program; the program <verbatim|minimal.cpp> is <hlink|explained|../interface/interface-pipes.en.tm> in more detail in the chapter about writing interfaces. The initialization file <verbatim|init-minimal.scm> essentially contains the following code:
+
+  <\scm-code>
+    (plugin-configure minimal
+
+    \ \ (:require (url-exists-in-path? "minimal.bin"))
+
+    \ \ (:launch "minimal.bin")
+
+    \ \ (:session "Minimal"))
+  </scm-code>
+
+  The <scm|:require> option checks whether <verbatim|minimal.bin> indeed exists in the path (so this will fail if you forgot to run the <verbatim|Makefile>). The <scm|:launch> option specifies how to launch the extern program. The <verbatim|:session> option indicates that it will be possible to create sessions for the <verbatim|minimal> plug-in using <menu|Insert|Session|Minimal>.
+
+  <section|Example of a plug-in with Python code><label|sec-plugin-python>
+
+  <paragraph*|The <verbatim|pyminimal> plug-in>
+
+  Consider the example of the <verbatim|pyminimal> plug-in in the directory
+
+  <\verbatim>
+    \ \ \ \ $TEXMACS_PATH/examples/plugins
+  </verbatim>
+
+  It consists of the following files:
+
+  <\verbatim>
+    \ \ \ \ <example-plugin-link|pyminimal/progs/init-pyminimal.scm>
+
+    \ \ \ \ <example-plugin-link|pyminimal/src/minimal.py>
+  </verbatim>
+
+  In order to try the plug-in, you first have to recursively copy the directory
+
+  <\verbatim>
+    \ \ \ \ $TEXMACS_PATH/examples/plugins/pyminimal
+  </verbatim>
+
+  to <verbatim|$TEXMACS_PATH/progs> or <verbatim|$TEXMACS_HOME_PATH/progs>.
+
+  When relaunching <TeXmacs>, the plug-in should now be automatically recognized.
+
+  <paragraph*|How it works: The Scheme Part>
+
+  The <verbatim|pyminimal> plug-in demonstrates a minimal interface between <TeXmacs> and an extern program in python. The initialization file <verbatim|init-pyminimal.scm> essentially contains the following code:
+
+  <\scm-code>
+    (define (python-launcher)
+
+    \ \ (if (url-exists? "$TEXMACS_HOME_PATH/plugins/pyminimal")
+
+    \ \ \ \ \ \ (string-append "python \\""
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (getenv "TEXMACS_HOME_PATH")
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ "/plugins/pyminimal/src/minimal.py\\"")
+
+    \ \ \ \ \ \ (string-append "python \\""
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (getenv "TEXMACS_PATH")
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ "/plugins/pyminimal/src/minimal.py\\"")))
+
+    \;
+
+    (plugin-configure pyminimal
+
+    \ \ (:require (url-exists-in-path? "python"))
+
+    \ \ (:launch ,(python-launcher))
+
+    \ \ (:session "PyMinimal"))
+  </scm-code>
+
+  The <scm|:require> option checks whether <shell|python> indeed exists in the path (so this will fail if you did not have python installed). The <scm|:launch> option specifies how to launch the extern program. The <verbatim|:session> option indicates that it will be possible to create sessions for the <verbatim|pyminimal> plug-in using <menu|Insert|Session|PyMinimal>.
+
+  The <scm|python-launcher> function will be evaluated and return the proper command to launcher the extern program. If <shell|$TEXMACS_HOME_PATH/plugins/pyminimal> exists, it would be
+
+  <\shell-code>
+    python "$TEXMACS_HOME_PATH/plugins/pyminimal/src/minimal.py"
+  </shell-code>
+
+  otherwise,
+
+  <\shell-code>
+    python "$TEXMACS_PATH/plugins/pyminimal/src/minimal.py"
+  </shell-code>
+
+  The environment variables will be replaced in runtime. Sometimes, <shell|$TEXMACS_HOME_PATH> and <shell|$TEXMACS_PATH> may contain spaces, as a result, we quote the path using the double quotes.
+
+  <paragraph|How it works: The Python Part>
+
+  Using the Python interpreter, we do not need to compile the code. And most of the time, python code can be interpreted without any modification under multiple platforms. The built-in python libraries are really helpful and handy.
+
+  Many <TeXmacs> built-in plugins are written in Python, and we have carefully organized the code and reused the common part named <name|tmpy>.
+
+  <\shell-code>
+    import os
+
+    import sys
+
+    from os.path import exists
+
+    tmpy_home_path = os.environ.get("TEXMACS_HOME_PATH") + "/plugins/tmpy"
+
+    if (exists (tmpy_home_path)):
+
+    \ \ \ \ sys.path.append(os.environ.get("TEXMACS_HOME_PATH") + "/plugins/")
+
+    else:
+
+    \ \ \ \ sys.path.append(os.environ.get("TEXMACS_PATH") + "/plugins/")
+  </shell-code>
+
+  import sys
+
+  from os.path import exists
+
+  tmpy_home_path = os.environ.get("TEXMACS_HOME_PATH") + "/plugins/tmpy"
+
+  if (exists (tmpy_home_path)):
+
+  \ \ \ \ sys.path.append(os.environ.get("TEXMACS_HOME_PATH") + "/plugins/")
+
+  else:
+
+  \ \ \ \ sys.path.append(os.environ.get("TEXMACS_PATH") + "/plugins/")
+
+  The first part of the code just add <shell|$TEXMACS_HOME_PATH/plugins> or <shell|$TEXMACS_PATH/plugins> to the python path for importing the <name|tmpy> package.
+
+  <\shell-code>
+    from tmpy.protocol \ \ \ \ \ \ \ import *
+
+    from tmpy.compat \ \ \ \ \ \ \ \ \ import *
+
+    \;
+
+    flush_verbatim ("Hi there!")
+
+    \;
+
+    while True:
+
+    \ \ \ \ line = tm_input()
+
+    \ \ \ \ if not line:
+
+    \ \ \ \ \ \ \ \ pass
+
+    \ \ \ \ else:
+
+    \ \ \ \ \ \ \ \ flush_verbatim ("You typed " + line)
+  </shell-code>
+
+  <python|flush_verbatim> is provided by <python|tmpy.protocol> which is a subpackage for interaction with <TeXmacs> server in Python.
+
+  <python|tm_input> is provided by <python|tmpy.compat> which is a subpackage for compatibility within Python 2 and 3. For built-in plugins written in Python, it would be better to support more Python version. For example, in some desktop environments, the <shell|python> command may redirect to <shell|python2.6>.
+
+  <paragraph|Comparison with <c++>>
+
+  This demo plugin is a Python implementation of the well-documented <hlink|minimal plugin|plugin-binary.en.tm> written in <c++>. Here is the summary of the differences:
+
+  <\itemize>
+    <item><verbatim|pyminimal> requires the <name|Python> interpreter, <verbatim|minimal> needs to be compiled and linked
+
+    <item><verbatim|pyminimal> is easier to install than <verbatim|minimal>
+
+    <item><verbatim|pyminimal> reuses the common part related to <TeXmacs>
+
+    <item><verbatim|pyminimal> has better compatibility for <name|Linux>, <name|Windows> and <name|macOS>
+  </itemize>
+
+  <section|Summary of the configuration options for plug-ins><label|sec-plugin-config>
+
+  As explained before, the <scheme> configuration file <verbatim|<em|myplugin>/progs/init-<em|myplugin>.scm> of a plug-in with name <verbatim|<em|plugin>> should contain an instruction of the type
+
+  <\scm-code>
+    (plugin-configure <em|myplugin>
+
+    \ \ <em|configuration-options>)
+  </scm-code>
+
+  Here follows a list of the available <verbatim|<em|configuration-options>>:
+
+  <\description-dash>
+    <item*|<verbatim|<with|font-series|medium|(:winpath <em|package-path> <em|inner-bin-path>)>>>Specify where to search for the plug-in under windows. The <verbatim|<em|package-path>> is the usual place where the plug-in is installed. The <verbatim|<em|inner-bin-path>> is the place where to look for the binary executable corresponding to the plug-in, relative to the <verbatim|<em|package-path>>.
+
+    <item*|<verbatim|<with|font-series|medium|(:winpath <em|package-path> <em|inner-bin-path>)>>>Analogous to <verbatim|:winpath>, but under <name|MacOS>.
+
+    <item*|<verbatim|<with|font-series|medium|(:require <em|condition>)>>>This option specifies a sanity <verbatim|<em|condition>> which needs to be satisfied by the plug-in. Usually, it is checked that certain binaries or libraries are present on your system. If the condition fails, then <TeXmacs> will continue as whether your plug-in did not exist. In that case, further configuration is aborted. The <verbatim|:require> option usually occurs first in the list of configuration options.
+
+    <item*|<verbatim|<with|font-series|medium|(:versions <em|version-cmd>)>>>This option specifies a <scheme> expression <verbatim|<em|version-cmd>> which evaluates to a list of available versions of the plug-in.
+
+    <item*|<verbatim|<with|font-series|medium|(:setup <em|cmd>)>>>This command is only executed when the version of the plug-in changed from one execution of <TeXmacs> to another one. This occurs mainly when installing new versions of <TeXmacs> or helper applications.
+
+    <item*|<verbatim|<with|font-series|medium|(:launch <em|shell-cmd>)>>>This option specifies that the plug-in is able to evaluate expressions over a pipe, using a helper application which is launched using the shell-command <verbatim|<em|shell-cmd>>.
+
+    <item*|<verbatim|<with|font-series|medium|(:link <em|lib-name> <em|export-struct> <em|options>)>>>This option is similar to <verbatim|:launch>, except that the extern application is now linked dynamically. For more information, see the section about <hlink|dynamic linking|../interface/interface-dynlibs.en.tm>.
+
+    <item*|<verbatim|<with|font-series|medium|(:session <em|menu-name>)>>>This option indicates that the plug-in supports an evaluator for interactive shell sessions. An item <verbatim|<em|menu-item>> will be inserted to the <menu|Insert|Session> menu in order to launch such sessions.
+
+    <item*|<verbatim|<with|font-series|medium|(:serializer ,<em|fun-name>)>>>If the plug-in can be used as an evaluator, then this option specifies the <scheme> function <verbatim|<em|fun-name>> which is used in order to transform <TeXmacs> trees to strings.
+
+    <item*|<verbatim|<with|font-series|medium|(:commander ,<em|fun-name>)>>>This command is similar to the <verbatim|:serializer> option except that it is used to transform special commands to strings.
+
+    <item*|<verbatim|<with|font-series|medium|(:tab-completion #t)>>>This command indicates that the plug-in supports tab-completion.
+
+    <item*|<verbatim|<with|font-series|medium|(:test-input-done #t)>>>This command indicates that the plug-in provides a routine for testing whether the input is complete.
+  </description-dash>
+
+  It should be noticed that the configuration of the plug-in <verbatim|<em|myplugin>> automatically creates a few predicates:
+
+  <\description>
+    <item*|<with|font-series|medium|<verbatim|supports-<em|myplugin>?>>>Test whether the plug-in is fully operational (all requirements are met).
+
+    <item*|<with|font-series|medium|<verbatim|in-<em|myplugin>?>>>Test whether <verbatim|<em|myplugin>> is the current programming language.
+
+    <item*|<with|font-series|medium|<verbatim|<em|myplugin>-scripts?>>>Test whether <verbatim|<em|myplugin>> is the current scripting language.
+  </description>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

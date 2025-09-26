@@ -1,0 +1,74 @@
+<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+
+<style|<tuple|tmdoc|chinese|number-europe>>
+
+<\body>
+  <tmdoc-title|开始使用><label|sec-man-getting-started>
+
+  <section|本文档惯例><label|sec-man-conventions>
+
+  <paragraph*|菜单项>
+
+  在<TeXmacs>文档中，菜单项以加粗的字体和箭头表示：<menu|Document>，<menu|File|Load>或者<menu|Format|Font shape|Italic>。
+
+  <paragraph*|组合键>
+
+  <TeXmacs>使用下列组合键：
+
+  <\description>
+    <item*|<prefix|S->>Shift 组合键
+
+    <item*|<prefix|C->>Control 组合键
+
+    <item*|<prefix|A->>Alt 组合键
+
+    <item*|<prefix|M->>Meta 组合键
+  </description>
+
+  例如，<key*|M-S-x> 表示同时按下三个键 <prefix|M->， <prefix|S-> 和 <key|x> 。
+
+  <paragraph*|快捷键>
+
+  更加复杂一些的快捷键是通过连续按多个键或者组合键得到的。比如，快捷键<key|-><key|\<gtr\>>是先按下<key|->，再按下<key|\<gtr\>>得到的。在数学模式中，这个快捷键会插入<math|\<rightarrow\>>。类似地，先按下<key|Ctrl+>和<key|x>的组合，再按下 <key|Ctrl+>和<key|f>的组合，你就能得到快捷键<key|Ctrl+X><key|Ctrl+F>。如果你使用的是Emacs快捷键风格，那么这个快捷键是用来打开文件的。
+
+  为了避免<TeXmacs>的快捷键和操作系统的快捷键产生冲突，我们使用通用的键前缀，详细内容见<hlink|通用键盘规则|../text/keyboard/man-general-rules.zh.tm>一节。简单的说，使用<key|Escape>键可以得到<hlink|组合键的等价键|../config/man-config-keyboard.zh.tm#kbd-escape-table>。例如，<key|Escape>等价于<key|Win+>， <key*|escape escape>等价于<key|escape escape>。
+
+  值得注意的是，<TeXmacs>的菜单和键盘的行为是上下文相关的，具体来说，是依赖于当前的模式（文本模式或者数学模式等等），当前文档的语言和当前光标的位置。比如说，在数学模式中，会有很多方便你输入数学公式的快捷键，但是在文本模式中，这些快<em|>捷键就会失效。
+
+  <paragraph*|特殊键>
+
+  在某些平台上，一些特殊键诸如换行是用特殊字符来描述的。下面这个表格列出了所有这些特殊键及其含义。
+
+  <\big-table|<descriptive-table|<tformat|<cwith|1|-1|3|3|cell-lborder|1ln>|<cwith|1|-1|1|-1|cell-halign|l>|<cwith|1|-1|1|-1|cell-row-span|1>|<cwith|1|-1|1|-1|cell-col-span|1>|<cwith|7|11|1|1|cell-lborder|1ln>|<cwith|7|11|1|2|cell-halign|l>|<cwith|7|11|1|2|cell-row-span|1>|<cwith|7|11|1|2|cell-col-span|1>|<table|<row|<cell|键>|<cell|含义>|<cell|键>|<cell|含义>>|<row|<cell|<key*|S->>|<cell|Shift 组合键>|<cell|<key*|left>>|<cell|光标左移>>|<row|<cell|<key*|capslock>>|<cell|大写锁定>|<cell|<key*|right>>|<cell|光标右移>>|<row|<cell|<key*|C->>|<cell|Ctrl 组合键>|<cell|<key*|up>>|<cell|光标上移>>|<row|<cell|<key*|A->>|<cell|Alt 组合键>|<cell|<key*|down>>|<cell|光标下移>>|<row|<cell|<key*|M->>|<cell|Meta 组合键>|<cell|<key*|home>>|<cell|Home>>|<row|<cell|<key*|return>>|<cell|换行>|<cell|<key*|end>>|<cell|End>>|<row|<cell|<key*|delete>>|<cell|删除>|<cell|<key*|pageup>>|<cell|Page up>>|<row|<cell|<key*|backspace>>|<cell|退格>|<cell|<key*|pagedown>>|<cell|Page down>>|<row|<cell|<key*|escape>>|<cell|Escape>|<cell|<key*|space>>|<cell|空格>>|<row|<cell|<key*|tab>>|<cell|Tab>|<cell|>|<cell|>>>>>>
+    特殊键。
+  </big-table>
+
+  <section|配置<TeXmacs>><label|sec-man-setup>
+
+  第一次启动<TeXmacs>时，程序将自动启用默认配置，一般来说，默认配置就已经够用了。<TeXmacs> 会根据你的系统设置决定文档的语言和页面的类型。当然，有些时候，默认配置并不能满足你的需求，或者你想要做一些配置。最简单的方式是，直接在<menu|Edit|Preferences>中指定你的偏好。
+
+  特别地，我们建议你配置好自己喜欢的快捷键风格和菜单布局。默认地，我们使用和系统一致的快捷键风格和菜单布局。当然，我们也提供类Emacs的快捷键风格和菜单布局。
+
+  <section|新建、打开和保存文档><label|sec-man-file-ops>
+
+  不加任何命令行参数就启动<TeXmacs>，编辑器会自动为你新建一个空白文档。你也可以用<menu|File|New>自己新建一个文档。新建文档默认未命名。点击<menu|File|Save as>可以给文档命名。我们建议你新建文档后立即使用<menu|File|Save as...>，这样可以有效避免丢失该文档。
+
+  必要时，建议你设定文档的全局设置，这些设置一般都在<menu|Document>菜单中。首先，你可能需要在<menu|Document|Style>中指定文档的样式比如article，book，seminar。如果你使用多种语言编辑文档，你可以在<menu|Document|Language>中指定该文档的默认语言。类似地，在<menu|Document|Page|Size>中可指定页面的类型。
+
+  对于新建的文档，样式和页面大小也可以通过<menu|Focus>菜单或者焦点工具栏上的按钮改变。一般来说，焦点工具栏就是菜单下面的第三行工具栏。焦点菜单和焦点工具栏在编辑<hlink|结构化文档|../text/man-structure.en.tm>时尤为方便，其菜单项会跟随光标所在的上下文改变。
+
+  修改文档之后，点击<menu|File|Save>保存文档。文档可以通过<menu|File|Load>打开。注意，在<TeXmacs>中你可以在同一个窗口下编辑多个文档<strong|>，我们把每一个打开的文档叫做缓冲区，使用菜单<menu|Go>可以在不同的<em|缓冲区>间切换。
+
+  <section|打印文档><label|sec-man-print>
+
+  点击<menu|File|Print|Print buffer...>打印当前文档。默认地，<TeXmacs>假定你的打印机是600dpi，用的是A4纸。当然，在<menu|File|Page setup...>中，你可以按需定制。你也可以用<menu|File|Print|Print buffer to file...>或者<menu|File|Export|Postscript>将文档导出成Postscript文档。两者的区别在于，前者使用前面提到的默认打印设置导出文档，后者则是直接忽略了打印设置。
+
+  当你配置好<TeXmacs>之后，编辑器一定是所见即所得的——打印出来之后的结果和你在屏幕上看到的完全一样。特别地，为了完整的所见即所得支持，你应该在<menu|Document|Page|Format|Page rendering>选择paper并勾选<menu|Document|Page|Margins|Same screen margins as on paper>。你还应该确认屏幕上的字符显示和你的打印机的每英寸所打印的点数是否相同。这种字符渲染精度可以在<menu|File|Page setup...|Printer dpi>中调整。当前，改变dpi时排版上细微的改变也许会影响到文档中的行与页的分割。在未来的版本中，这个缺陷将不复存在。
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
