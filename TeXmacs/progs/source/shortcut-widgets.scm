@@ -39,14 +39,15 @@
     (horizontal
       (resize "125px" "200px"
         (refreshable "shortcuts-list"
-          (choice (and-let* ((sh (decode-shortcut answer))
-                             (cmd (get-user-shortcut sh)))
-                    (global-set u :sh sh)
-                    (global-set u :cmd cmd)
-                    (set-shortcut u sh)
-                    (refresh-now "current-shortcut"))
-                  (map encode-shortcut (user-shortcuts-list))
-                  (encode-shortcut (global-ref u :sh)))))
+          (scrollable
+            (choice (and-let* ((sh (decode-shortcut answer))
+                               (cmd (get-user-shortcut sh)))
+                      (global-set u :sh sh)
+                      (global-set u :cmd cmd)
+                      (set-shortcut u sh)
+                      (refresh-now "current-shortcut"))
+                    (map encode-shortcut (user-shortcuts-list))
+                    (encode-shortcut (global-ref u :sh))))))
       // //
       (vertical
         (aligned
