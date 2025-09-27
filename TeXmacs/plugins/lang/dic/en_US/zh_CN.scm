@@ -787,6 +787,7 @@
 ("further customization" "")
 ("future changes" "")
 ("garbage collection" "垃圾收集")
+("gaussian" "高斯曲线")
 ("general architecture of TeXmacs" "TeXmacs 的整体架构")
 ("general negation" "通用的否定符号")
 ("general note" "一般注记")
