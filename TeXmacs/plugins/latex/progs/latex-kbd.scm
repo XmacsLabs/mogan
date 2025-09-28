@@ -183,6 +183,8 @@
   ("S" "Insert §" (insert "<#00A7>"))
   ("SS" "Insert ẞ" (insert "<#1E9E>"))
   ("TH" "Insert Þ" (insert "<#00DE>"))
+  ("hookleftarrow" "insert ↩" (insert "<#21A9>"))
+  ("hookrightarrow" "insert ↪" (insert "<#21AA>"))
 
   ("arccos" "Insert arccos" (insert "arccos"))
   ("arcsin" "Insert arcsin" (insert "arcsin"))
