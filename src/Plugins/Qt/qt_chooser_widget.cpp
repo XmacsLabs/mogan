@@ -20,6 +20,9 @@
 #include "qt_utilities.hpp"
 #include "scheme.hpp"
 #include "widget.hpp"
+#ifdef USE_MUPDF_RENDERER
+#include "mupdf_picture.hpp"
+#endif
 
 #include <QByteArray>
 #include <QDebug>
@@ -384,7 +387,11 @@ qt_chooser_widget_rep::perform_dialog () {
         */
         url    u= url_system (imname);
         string w, h;
+#ifdef USE_MUPDF_RENDERER
+        mupdf_pretty_image_size (u, w, h);
+#else
         qt_pretty_image_size (u, w, h);
+#endif
         string params;
         params << "\"" << w << "\" "
                << "\"" << h << "\" "

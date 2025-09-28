@@ -308,6 +308,35 @@ mupdf_load_pixmap (url u, int w, int h, tree eff, SI pixel) {
  * Image size
  ******************************************************************************/
 
+// Return size in cm
+inline double
+get_real_size_from_dpi (int px, int dpi) {
+  double res= (double) px / dpi;            // to inch
+  res       = res * 2.54;                   // to cm
+  res= ((int) (res * 100.0 + 0.5)) / 100.0; // round to two decimal places
+  return res;
+}
+
+static void
+format_picsize_string (index_type px, index_type dpi, int& w, int& h,
+                       string* out_wcm_pointer, string* out_hcm_pointer) {
+  SI     cm  = get_current_editor ()->as_length ("1cm");
+  SI     pt  = get_current_editor ()->as_length ("1pt");
+  SI     par = get_current_editor ()->as_length ("1par");
+  double dwcm= get_real_size_from_dpi (px.x1, dpi.x1);
+  double dhcm= get_real_size_from_dpi (px.x2, dpi.x2);
+  w          = dwcm * cm / pt;
+  h          = dhcm * cm / pt;
+
+  bool is_exceed_page= w * pt > par;
+  if (out_wcm_pointer != NULL) {
+    *out_wcm_pointer= is_exceed_page ? "0.8par" : as_string (dwcm) * "cm";
+  }
+  if (out_hcm_pointer != NULL) {
+    *out_hcm_pointer= is_exceed_page ? "" : as_string (dhcm) * "cm";
+  }
+}
+
 bool
 mupdf_supports (string extension) {
   if (fz_lookup_image_type (c_string (extension)) != FZ_IMAGE_UNKNOWN) {
@@ -321,7 +350,8 @@ mupdf_supports (string extension) {
 }
 
 bool
-mupdf_normal_image_size (url image, int& w, int& h) { // w, h in points
+mupdf_normal_image_size (url image, int& w, int& h, string* out_wcm_pointer,
+                         string* out_hcm_pointer) {
   if (DEBUG_CONVERT) debug_convert << "mupdf_normal_image_size :" << LF;
   fz_context* ctx= mupdf_context ();
   fz_image*   im = NULL;
@@ -339,10 +369,9 @@ mupdf_normal_image_size (url image, int& w, int& h) { // w, h in points
     return false;
   }
   else {
-    SI pt= get_current_editor ()->as_length ("1pt");
-    SI px= get_current_editor ()->as_length ("1px");
-    w    = (int) im->w * px * 1.0 / pt;
-    h    = (int) im->h * px * 1.0 / pt;
+    index_type px (im->w, im->h);
+    index_type dpi (im->xres, im->yres);
+    format_picsize_string (px, dpi, w, h, out_wcm_pointer, out_hcm_pointer);
     fz_drop_image (ctx, im);
     if (DEBUG_CONVERT)
       debug_convert << "mupdf_normal_image_size (pt): " << w << " x " << h
@@ -352,7 +381,8 @@ mupdf_normal_image_size (url image, int& w, int& h) { // w, h in points
 }
 
 bool
-mupdf_pdf_image_size (url image, int& w, int& h) {
+mupdf_pdf_image_size (url image, int& w, int& h, string* out_wcm_pointer,
+                      string* out_hcm_pointer) {
   if (DEBUG_CONVERT) debug_convert << "mupdf_pdf_image_size :" << LF;
   fz_context* ctx= mupdf_context ();
   fz_buffer*  buf= mupdf_read_from_url (image);
@@ -369,10 +399,9 @@ mupdf_pdf_image_size (url image, int& w, int& h) {
     return false;
   }
   else {
-    SI pt= get_current_editor ()->as_length ("1pt");
-    SI px= get_current_editor ()->as_length ("1px");
-    w    = (int) im->w * px * 1.0 / pt;
-    h    = (int) im->h * px * 1.0 / pt;
+    index_type px (im->w, im->h);
+    index_type dpi (72, 72);
+    format_picsize_string (px, dpi, w, h, out_wcm_pointer, out_hcm_pointer);
     fz_drop_pixmap (ctx, im);
     if (DEBUG_CONVERT)
       debug_convert << "mupdf_pdf_image_size (pt): " << w << " x " << h << LF;
@@ -381,8 +410,8 @@ mupdf_pdf_image_size (url image, int& w, int& h) {
 }
 
 string
-mupdf_load_and_parse_image (const char* path, int& w, int& h,
-                            string extension) {
+mupdf_load_and_parse_image (const char* path, int& w, int& h, string extension,
+                            string* out_wcm_pointer, string* out_hcm_pointer) {
   fz_context*    ctx= mupdf_context ();
   fz_buffer*     buf= NULL;
   unsigned char* data;
@@ -403,10 +432,22 @@ mupdf_load_and_parse_image (const char* path, int& w, int& h,
     h= 0;
   }
   else {
-    mupdf_normal_image_size (image, w, h);
+    mupdf_normal_image_size (image, w, h, out_wcm_pointer, out_hcm_pointer);
   }
 
   return res;
+}
+
+void
+mupdf_pretty_image_size (url image, string& w, string& h) {
+  int    ww, hh;
+  string suf= suffix (image);
+  if (suf == "pdf") {
+    mupdf_pdf_image_size (image, ww, hh, &w, &h);
+  }
+  else if (suf != "svg") {
+    mupdf_normal_image_size (image, ww, hh, &w, &h);
+  }
 }
 
 #ifdef USE_MUPDF_RENDERER
