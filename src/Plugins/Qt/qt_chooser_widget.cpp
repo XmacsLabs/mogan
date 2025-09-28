@@ -166,11 +166,6 @@ qt_chooser_widget_rep::set_type (const string& _type) {
     type= _type;
     return true;
   }
-  else if (_type == "generic") {
-    mainNameFilter= "";
-    type          = _type;
-    return true;
-  }
 
   if (format_exists (_type)) {
     mainNameFilter= to_qstring (
@@ -185,6 +180,10 @@ qt_chooser_widget_rep::set_type (const string& _type) {
   else if (_type == "action_save_as") {
     mainNameFilter= to_qstring (translate ("STEM files"));
   }
+  else if (_type == "generic") {
+    mainNameFilter= to_qstring (translate ("Plain text files"));
+  }
+
   else {
     if (DEBUG_STD)
       debug_widgets << "qt_chooser_widget: IGNORING unknown format " << _type
@@ -195,7 +194,7 @@ qt_chooser_widget_rep::set_type (const string& _type) {
     mainNameFilter+= " (*.jpg *.jpeg *.jpe *.png *.bmp *.tif *.tiff *.svg)";
     nameFilters << mainNameFilter;
     nameFilters << to_qstring (translate ("JPEG File InterChange Format") *
-                               " (*jpg *jpeg *jpe)");
+                               " (*.jpg *.jpeg *.jpe)");
     nameFilters << to_qstring (translate ("Portable Network Graphics") *
                                " (*.png)");
     nameFilters << to_qstring (translate ("Windows Bitmap") * " (*.bmp)");
@@ -205,6 +204,11 @@ qt_chooser_widget_rep::set_type (const string& _type) {
                                " (*.svg)");
     nameFilters << to_qstring (translate ("Portable Document Format") *
                                " (*.pdf)");
+  }
+  else if (_type == "generic") {
+    mainNameFilter+= " (*.txt)";
+    nameFilters << mainNameFilter;
+    nameFilters << to_qstring (translate ("All Format") * " (*)");
   }
   else if (_type == "action_open") {
     mainNameFilter+= " (*.tmu *.tm *.ts *.tp)";
