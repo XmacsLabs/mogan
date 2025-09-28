@@ -123,6 +123,16 @@
          (plugin_path (system->url "$TEXMACS_PATH"))
          (lan (string-take (language-to-locale (get-output-language)) 2))
          (path (string-append "plugins/" name "/doc/" name))
+         ; 优先尝试 .tmu 格式文件
+         (lan_tmu_doc
+          (url-append plugin_path (string->url (string-append path "." lan ".tmu"))))
+         (local_lan_tmu_doc
+          (url-append local_plugin_path (string->url (string-append path "." lan ".tmu"))))
+         (en_tmu_doc
+          (url-append plugin_path (string->url (string-append path ".en.tmu"))))
+         (local_en_tmu_doc
+          (url-append local_plugin_path (string->url (string-append path ".en.tmu"))))
+         ; 回退到 .tm 格式文件
          (lan_doc
           (url-append plugin_path (string->url (string-append path "." lan ".tm"))))
          (local_lan_doc
@@ -132,6 +142,12 @@
          (local_en_doc
           (url-append local_plugin_path (string->url (string-append path ".en.tm")))))
    (cond
+    ; 优先加载 .tmu 格式文件
+    ((url-exists? local_lan_tmu_doc) (load-buffer local_lan_tmu_doc))
+    ((url-exists? lan_tmu_doc) (load-buffer lan_tmu_doc))
+    ((url-exists? local_en_tmu_doc) (load-buffer local_en_tmu_doc))
+    ((url-exists? en_tmu_doc) (load-buffer en_tmu_doc))
+    ; 回退到 .tm 格式文件
     ((url-exists? local_lan_doc) (load-buffer local_lan_doc))
     ((url-exists? lan_doc) (load-buffer lan_doc))
     ((url-exists? local_en_doc) (load-buffer local_en_doc))
