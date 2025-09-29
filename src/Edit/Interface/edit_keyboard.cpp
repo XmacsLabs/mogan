@@ -78,6 +78,7 @@ edit_interface_rep::set_input_normal () {
   if (prev_input_mode == INPUT_COMPLETE) {
     hide_completion_popup ();
   }
+  prev_math_comb= "";
   hide_math_completion_popup ();
 }
 
@@ -168,9 +169,11 @@ edit_interface_rep::try_shortcut (string comb) {
       math_complete_try (comb);
       return true;
     }
+    prev_math_comb= "";
     hide_math_completion_popup ();
     return true;
   }
+  prev_math_comb= "";
   hide_math_completion_popup ();
   return false;
 }
@@ -180,16 +183,16 @@ edit_interface_rep::math_complete_try (string comb) {
   string suffix= "tab";
   comb         = replace (comb, "\\", "\\\\");
   // cout << "comb: " << comb << "\n";
-  // cout << "last comb: " << last_comb << "\n";
+  // cout << "last comb: " << prev_math_comb << "\n";
   if ((comb != suffix) &&
-      ((starts (last_comb, comb) && ends (last_comb, suffix)) ||
+      ((starts (prev_math_comb, comb) && ends (prev_math_comb, suffix)) ||
        (ends (comb, suffix)))) {
     string wid_expr= (string) "(make-menu-widget " *
                      "`((tile 99 (link (lambda () " *
                      "(math-tabcycle-symbols ,\"" * comb * "\"))))) 0)";
     widget wid= as_widget (eval (wid_expr));
     cursor cu;
-    if ((last_cursor != NULL) && (starts (last_comb, comb))) {
+    if ((last_cursor != NULL) && (starts (prev_math_comb, comb))) {
       cu= last_cursor;
     }
     else {
@@ -199,7 +202,7 @@ edit_interface_rep::math_complete_try (string comb) {
     set_math_completion_popup (wid);
     show_math_completion_popup (cu, magf, get_scroll_x (), get_scroll_y (),
                                 get_canvas_x ());
-    last_comb= comb;
+    prev_math_comb= comb;
   }
 }
 
