@@ -73,10 +73,10 @@ QTMMathCompletionPopup::cleanLayout () {
 void
 QTMMathCompletionPopup::setWidget (QWidget* w) {
   if (w) {
+    cleanLayout ();
     // 暂停绘制，防止闪烁
     this->setUpdatesEnabled (false);
 
-    cleanLayout ();
     w->setParent (this);
     layout->addWidget (w);
     installEventFilterRecursively (w, this);
