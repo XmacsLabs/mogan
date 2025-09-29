@@ -104,22 +104,23 @@ QToolButton::menu-indicator {
 * 按钮样式
 ****************************************************************************/
 QPushButton {
-  background: #ffffff;
-  color: #2c2c2c;
-  border: none;
-  border-radius: 2px;
-  padding: 4px 8px;
-  min-height: 20px;
+  background-color: #f2f2f2;
+  color: black;
+  border: 1px solid #bdbdbd;
+  padding: 8px 16px;
+  border-radius: 6px;
 }
 
 QPushButton:hover {
-  background: #f5f5f5;
-  color: #2c2c2c;
+  background-color: #dedede;
+  border-color: #000;
+  outline: none;
 }
 
 QPushButton:pressed {
   background: #e0e0e0;
   color: #2c2c2c;
+  border-color: #000;
 }
 
 QPushButton:disabled {
@@ -404,29 +405,25 @@ QDialog QDialogButtonBox {
 }
 
 QDialog QPushButton {
-  background: #f5f5f5;
-  color: #2c2c2c;
-  border: 1.5px solid #bdbdbd;
-  border-radius: 6px;
-  padding: 7px 18px;
+  background-color: #f2f2f2;
+  color: black;
+  border: 1px solid #bdbdbd;
   min-width: 2.5em;
   min-height: 1.0em;
-  text-decoration: none;
-  margin-left: 8px;
-  margin-right: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
 }
 
-QDialog QPushButton:hover,
-QDialog QPushButton:focus {
-  border: 2px solid #222;
-  color: #222;
+QDialog QPushButton:hover {
+  background-color: #dedede;
+  border-color: #000;
   outline: none;
 }
 
 QDialog QPushButton:disabled {
   background: #f5f5f5;
   color: #a0a0a0;
-  border: 1.5px solid #e0e0e0;
+  border: 1px solid #e0e0e0;
 }
 
 /****************************************************************************

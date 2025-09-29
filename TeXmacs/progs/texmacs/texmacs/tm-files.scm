@@ -238,15 +238,18 @@
             (save-buffer-save name opts))))))
 
 (tm-widget (readonly-file-dialog-widget cmd)
-  (resize "500px" "200px"
+  (resize "500guipx" "200guipx"
     (centered
-      (text "The current document or its directory has read-only attributes. You can save the document using Save as."))
+      (bold (text (translate "Read-only")))
+      (glue #t #f 12 6)
+      (text "The current document or its directory has read-only attributes.")
+      (text "You can save the document using Save as."))
     (bottom-buttons
       >>
       ("Save as" (cmd "save_as"))
       ///
       ("Cancel" (cmd "cancel"))
-      /// )))
+      ///)))
 
 (define (cannot-write? name action)
   (with vname `(verbatim ,(utf8->cork (url->system name)))
