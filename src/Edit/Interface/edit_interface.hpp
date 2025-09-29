@@ -81,7 +81,7 @@ protected:
   string            completion_prefix;
   int               completion_pos;
   string            completion_style;
-  string            last_comb;
+  string            prev_math_comb;
   cursor            last_cursor;
   renderer          shadow;
   SI                vx1, vy1, vx2, vy2;
