@@ -21,6 +21,13 @@
 (define (plugin-documented? name)
   (url-exists-in-help? (string-append name ".en.tm")))
 
+(tm-menu (help-plugins-menu)
+  (for (name (list-filter (map symbol->string (plugin-list))
+                          plugin-documented?))
+    (with menu-name `(verbatim ,(session-name name))
+      ((eval menu-name)
+       (load-local-plugin-doc name)))))
+
 (tm-menu (help-configuration-menu)
   ("User preferences"
    (load-local-doc "configuration/conf.userpref"))
