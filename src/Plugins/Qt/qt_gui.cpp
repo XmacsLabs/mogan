@@ -209,7 +209,6 @@ qt_gui_rep::qt_gui_rep (int& argc, char** argv)
   if (has_user_preference ("retina-scale"))
     retina_scale= as_double (get_user_preference ("retina-scale"));
 
-  qApp->setAttribute (Qt::AA_UseHighDpiPixmaps);
   if (!use_native_menubar) {
     qApp->setAttribute (Qt::AA_DontUseNativeMenuBar);
   }

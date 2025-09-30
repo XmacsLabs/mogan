@@ -46,6 +46,8 @@ void mac_fix_paths ();
 
 #ifdef QTTEXMACS
 #include "Qt/QTMApplication.hpp"
+#include <QCoreApplication>
+#include <QGuiApplication>
 #endif
 
 #ifdef MACOSX_EXTENSIONS
@@ -218,6 +220,19 @@ main (int argc, char** argv) {
   }
 #endif
 #ifdef QTTEXMACS
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+  QCoreApplication::setAttribute (Qt::AA_EnableHighDpiScaling);
+#endif
+  QCoreApplication::setAttribute (Qt::AA_UseHighDpiPixmaps);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+#if defined(Q_OS_WIN)
+  QGuiApplication::setHighDpiScaleFactorRoundingPolicy (
+      Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
+#else
+  QGuiApplication::setHighDpiScaleFactorRoundingPolicy (
+      Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+#endif
+#endif
   // initialize the Qt application infrastructure
   if (headless_mode) qtmcoreapp= new QTMCoreApplication (argc, argv);
   else qtmapp= new QTMApplication (argc, argv);
