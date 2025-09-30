@@ -63,10 +63,7 @@
           ("Pop server settings" (interactive email-settings))))
   (-> "Project"
       (link project-manage-menu))
-  (-> "Statistics"
-      ("Count characters" (show-character-count))
-      ("Count words" (show-word-count))
-      ("Count lines" (show-line-count)))
+  ("Statistics" (show-counts))
   ---
   ("Create web site" (open-website-builder))
   ;;(-> "Web"

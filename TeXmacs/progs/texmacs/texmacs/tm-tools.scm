@@ -46,17 +46,20 @@
       (selection-tree)
       (buffer-tree)))
 
-(tm-define (show-character-count)
-  (with nr (count-characters (selection-or-document))
-    (set-message (string-append "Character count: " (number->string nr)) "")))
+(tm-widget ((show-counts-widget m1 m2 m3) cmd)
+  (resize "250px" "120px"
+    (centered
+      (text m1)
+      (text m2)
+      (text m3))))
 
-(tm-define (show-word-count)
-  (with nr (count-words (selection-or-document))
-    (set-message (string-append "Word count: " (number->string nr)) "")))
-
-(tm-define (show-line-count)
-  (with nr (count-lines (selection-or-document))
-    (set-message (string-append "Line count: " (number->string nr)) "")))
+(tm-define (show-counts)
+  (:interactive #t)
+  (let* ((doc (selection-or-document))
+         (chars (string-append "Character count: " (number->string (count-characters doc))))
+         (words (string-append "Word count: " (number->string (count-words      doc))))
+         (lines (string-append "Line count: " (number->string (count-lines      doc)))))
+    (dialogue-window (show-counts-widget chars words lines) noop "Document statistics")))
 
 (define (save-aux-enabled?) (== (get-env "save-aux") "true"))
 (tm-define (toggle-save-aux)
