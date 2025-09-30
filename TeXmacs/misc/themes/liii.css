@@ -484,18 +484,20 @@ QDockWidget#auxiliary_widget::title {
 }
 
 QWidget#auxiliary_container {
-  background: #fafafa;
+  background: #f4f4f4;
   border-radius: 8px;
 }
 
 #auxiliary_container QPushButton {
-    background-color: #f0f0f0;
-    color: black;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
+  background-color: #e8e8e8;
+  color: black;
+  border: 1px solid #bdbdbd;
+  padding: 8px 16px;
+  border-radius: 6px;
 }
 
 #auxiliary_container QPushButton:hover {
-    background-color: #e0e0e0;
+  background-color: #d8d8d8;
+  border-color: #9a9a9a;
+  outline: none;
 }
