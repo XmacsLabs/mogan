@@ -167,21 +167,26 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-widget (confirm-close-widget cmd buffer-name)
-  (resize "400px" "150px"
+  (resize "500guipx" "200guipx"
     (centered
-      (text (string-append "Save change to " buffer-name "?")))
+      (glue #t #f 150 6)
+      (text (replace "Save change to 「 %1 」?" buffer-name))
+      (glue #t #f 150 6))
     (bottom-buttons
       >>
       ("Save" (cmd "Save"))
-      ///
+      //
       ("Don't save" (cmd "Don't save"))
-      ///
+      //
       ("Cancel" (cmd "Cancel"))
       /// )))
 
 (define (confirm-close-dialog prompt on-save on-dont-save . opt-buffer)
   (let ((buffer (if (null? opt-buffer) (current-buffer) (car opt-buffer))))
-    (dialogue-window (lambda (cmd) (confirm-close-widget cmd ""))
+    (dialogue-window (lambda (cmd)
+                       (confirm-close-widget cmd
+                         (let ((title (buffer-get-title buffer)))
+                           (if (== title "") (url->system (url-tail buffer)) title))))
       (lambda (answer)
         (cond
           ((== answer "Save")

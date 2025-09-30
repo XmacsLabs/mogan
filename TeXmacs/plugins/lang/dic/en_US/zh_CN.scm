@@ -42,7 +42,7 @@
 ("Requires restarting Mogan STEM to take full effect. Restart now?" "需要重新启动 Mogan STEM 才能完全生效。现在重启吗？")
 ("Restart TeXmacs in order to let changes take effect" "重启TeXmacs以使您的更改生效")
 ("Return::keyboard" "Return")
-("Save change to" "是否保存对该文档的更改")
+("Save change to 「 %1 」?" "是否保存对文档「 %1 」的更改？")
 ("Save position" "保存位置")
 ("Scalable Vector Graphics" "可缩放矢量图形")
 ("Scan disk for fonts" "扫描磁盘查找字体")
