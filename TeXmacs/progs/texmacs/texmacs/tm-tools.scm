@@ -47,11 +47,18 @@
       (buffer-tree)))
 
 (tm-widget ((show-counts-widget m1 m2 m3) cmd)
-  (resize "250px" "120px"
+  (resize "500guipx" "200guipx"
     (centered
+      (bold (text "Statistics"))
+      (glue #t #f 120 6)
       (text m1)
+      (glue #t #f 120 3)
       (text m2)
-      (text m3))))
+      (glue #t #f 120 3)
+      (text m3)
+      (glue #t #f 120 6)
+    (bottom-buttons
+      ("Close" (cmd "cancel"))))))
 
 (tm-define (show-counts)
   (:interactive #t)
