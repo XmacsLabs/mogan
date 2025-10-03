@@ -1,4 +1,3 @@
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; MODULE      : python-edit.scm
@@ -19,6 +18,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (string-strip-right s)
+  ;; 移除字符串末尾的空白字符
   (with char-set:not-whitespace (char-set-complement char-set:whitespace)
     (with n (string-length s)
       (with r (or (string-rindex s char-set:not-whitespace) n)
@@ -32,6 +32,8 @@
 
 (tm-define (program-compute-indentation doc row col)
   (:mode in-prog-python?)
+  ;; 根据前一行计算当前行的缩进量
+  ;; 如果前一行以冒号(:)结尾，则增加一个制表位的缩进
   (if (<= row 0) 0
       (let* ((r (program-row (- row 1)))
              (s (string-strip-right (strip-comment-buggy (if r r ""))))
@@ -44,9 +46,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (python-bracket-open lbr rbr)
+  ;; 插入一对括号或引号，并将光标定位在中间
   (bracket-open lbr rbr "\\"))
 
 (tm-define (python-bracket-close lbr rbr)
+  ;; 处理闭合括号或引号，并正确放置光标位置
   (bracket-close lbr rbr "\\"))
 
 ; TODO: select strings first
@@ -58,6 +62,7 @@
 (tm-define (notify-cursor-moved status)
   (:require prog-highlight-brackets?)
   (:mode in-prog-python?)
+  ;; 当光标移动时高亮匹配的括号
   (select-brackets-after-movement "([{" ")]}" "\\"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -66,17 +71,19 @@
 
 (tm-define (kbd-paste)
   (:mode in-prog-python?)
+  ;; 使用Python特定格式粘贴剪贴板内容
   (clipboard-paste-import "python" "primary"))
 
 (kbd-map
   (:mode in-prog-python?)
-  ("A-tab" (insert-tabstop))
-  ("cmd S-tab" (remove-tabstop)) ; TEMP (see above)
-  ("{" (python-bracket-open "{" "}" ))
-  ("}" (python-bracket-close "{" "}" ))
-  ("(" (python-bracket-open "(" ")" ))
-  (")" (python-bracket-close "(" ")" ))
-  ("[" (python-bracket-open "[" "]" ))
-  ("]" (python-bracket-close "[" "]" ))
-  ("\"" (python-bracket-open "\"" "\"" ))
-  ("'" (python-bracket-open "'" "'" )))
+  ;; Python编程模式下的键盘快捷键
+  ("A-tab" (insert-tabstop))                 ;; Alt+Tab：插入制表符
+  ("cmd S-tab" (remove-tabstop))             ;; Cmd+Shift+Tab：移除制表符
+  ("{" (python-bracket-open "{" "}" ))       ;; 自动插入匹配的大括号
+  ("}" (python-bracket-close "{" "}" ))      ;; 处理闭合大括号
+  ("(" (python-bracket-open "(" ")" ))       ;; 自动插入匹配的小括号
+  (")" (python-bracket-close "(" ")" ))      ;; 处理闭合小括号
+  ("[" (python-bracket-open "[" "]" ))       ;; 自动插入匹配的方括号
+  ("]" (python-bracket-close "[" "]" ))      ;; 处理闭合方括号
+  ("\"" (python-bracket-open "\"" "\"" ))    ;; 自动插入匹配的双引号
+  ("'" (python-bracket-open "'" "'" )))      ;; 自动插入匹配的单引号
