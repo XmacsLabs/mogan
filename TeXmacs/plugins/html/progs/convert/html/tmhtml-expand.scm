@@ -35,6 +35,7 @@
              itemize itemize-minus itemize-dot itemize-arrow
              enumerate enumerate-numeric enumerate-roman
              enumerate-Roman enumerate-alpha enumerate-Alpha
+             enumerate-hanzi
              description description-compact description-dash
              description-aligned description-long description-paragraphs item*
          strong em dfn code* samp kbd var abbr acronym

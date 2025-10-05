@@ -1,4 +1,4 @@
-<TeXmacs|1.99.16>
+<TeXmacs|2.1.4>
 
 <style|<tuple|source|std|english>>
 
@@ -49,6 +49,8 @@
   <assign|aligned-space-item|<macro|name|<aligned-item|<arg|name> \ >>>
 
   <assign|aligned-dot-item|<macro|name|<aligned-item|<arg|name>.<item-spc>>>>
+
+  <assign|aligned-comma-item|<macro|name|<aligned-item|<arg|name>\<#3001\><item-spc>>>>
 
   <assign|aligned-bracket-item|<macro|name|<aligned-item|<arg|name><with|font-shape|right|)><item-spc>>>>
 
@@ -267,6 +269,8 @@
   <new-list|enumerate-alpha|<value|aligned-bracket-item>|<macro|name|<number|<arg|name>|alpha>>>
 
   <new-list|enumerate-Alpha|<value|aligned-bracket-item>|<macro|name|<number|<arg|name>|Alpha>>>
+
+  <new-list|enumerate-hanzi|<value|aligned-comma-item>|<macro|name|<number|<arg|name>|hanzi>>>
 
   <new-list|description-compact|<value|compact-strong-dot-item>|<macro|name|<active*|<with|mode|math|<with|font-series|bold|math-font-series|bold|<rigid|\<ast\>>>>>>>
 

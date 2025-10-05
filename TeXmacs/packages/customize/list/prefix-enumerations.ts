@@ -40,6 +40,8 @@
   <assign|prefix-enumerate-alpha|true>
 
   <assign|prefix-enumerate-Alpha|true>
+
+  <assign|prefix-enumerate-hanzi|true>
 </body>
 
 <\initial>

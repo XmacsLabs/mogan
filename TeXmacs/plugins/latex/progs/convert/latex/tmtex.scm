@@ -3137,7 +3137,7 @@
         description-dash description-long description-paragraphs
         itemize itemize-minus itemize-dot itemize-arrow
         enumerate enumerate-numeric enumerate-roman enumerate-Roman
-        enumerate-alpha enumerate-Alpha)
+        enumerate-alpha enumerate-Alpha enumerate-hanzi)
    (,tmtex-list-env 1))
   ((:or folded unfolded folded-plain unfolded-plain folded-std unfolded-std
         folded-explain unfolded-explain folded-env unfolded-env

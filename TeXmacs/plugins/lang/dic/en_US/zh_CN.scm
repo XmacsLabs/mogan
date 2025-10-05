@@ -625,6 +625,7 @@
 ("enumerate Alpha" "有序列表(大写字母)")
 ("enumerate Roman" "有序列表(大写罗马数字)")
 ("enumerate alpha" "有序列表(小写字母)")
+("enumerate hanzi" "有序列表(汉字数字)")
 ("enumerate numeric" "有序列表(阿拉伯数字)")
 ("enumerate roman" "有序列表(小写罗马数字)")
 ("enumerate" "有序列表")

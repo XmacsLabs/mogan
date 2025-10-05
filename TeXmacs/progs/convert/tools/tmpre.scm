@@ -20,7 +20,7 @@
 (logic-group tmpre-inline-env%
   verbatim code center indent description itemize itemize-minus
   itemize-dot itemize-arrow enumerate enumerate-numeric
-  enumerate-roman enumerate-Roman enumerate-alpha enumerate-Alpha
+  enumerate-roman enumerate-Roman enumerate-alpha enumerate-Alpha enumerate-hanzi
   equation equation* eqnarray eqnarray* leqnarray leqnarray*
   elsequation elsequation*)
 
