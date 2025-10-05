@@ -191,6 +191,9 @@ add_requires("s7", {system=false})
 add_requires("tbox", {system=false})
 add_requires("lolly", {system=false})
 add_requires("cpr", {system=false})
+if is_plat ("macosx") then
+    add_requires("qwindowkitty", {system=false})
+end
 if is_plat ("windows") then
     add_requires("libiconv "..LIBICONV_VERSION, {system=false})
 end
@@ -350,6 +353,9 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("s7")
     add_packages("argh")
+    if is_plat("macosx") then
+        add_packages("qwindowkitty")
+    end
     if not is_plat("macosx") then
         add_packages("libiconv")
     end
@@ -545,6 +551,9 @@ target("libmogan") do
         }
         add_includedirs("src/Plugins/MacOS", {public = true})
         add_files(plugin_macos_srcs)
+        add_includedirs("src/Plugins/QWindowKit", {public = true})
+        add_files("src/Plugins/QWindowKit/**.cpp")
+        add_files("src/Plugins/QWindowKit/**.hpp")
     end
 
     if has_config("mupdf") then
