@@ -55,8 +55,11 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
    tab_tools_visibility     = 1024
    } visibility_t;
    */
-  QLabel*              rightLabel;
-  QLabel*              leftLabel;
+  QLabel* rightLabel;
+  QLabel* leftLabel;
+#ifdef Q_OS_MAC
+  QToolBar* menuToolBar;
+#endif
   QToolBar*            mainToolBar;
   QToolBar*            modeToolBar;
   QToolBar*            focusToolBar;

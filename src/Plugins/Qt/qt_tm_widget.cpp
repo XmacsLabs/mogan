@@ -203,6 +203,9 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
   // toolbars
 
+#ifdef Q_OS_MAC
+  menuToolBar= new QToolBar ("menu toolbar", mw);
+#endif
   mainToolBar = new QToolBar ("main toolbar", mw);
   modeToolBar = new QToolBar ("mode toolbar", mw);
   focusToolBar= new QToolBar ("focus toolbar", mw);
@@ -223,6 +226,9 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
       tm_new<qt_window_widget_rep> (sideTools, dock_name, command (), true);
 
   if (tm_style_sheet == "") {
+#ifdef Q_OS_MAC
+    menuToolBar->setStyle (qtmstyle ());
+#endif
     mainToolBar->setStyle (qtmstyle ());
     modeToolBar->setStyle (qtmstyle ());
     focusToolBar->setStyle (qtmstyle ());
@@ -418,18 +424,31 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     r2->setVisible (true);
     r2->setAutoFillBackground (true);
 
+#ifdef Q_OS_MAC
+    bl->insertWidget (0, menuToolBar);
+    bl->insertWidget (1, tabToolBar);
+    bl->insertWidget (2, modeToolBar);
+    bl->insertWidget (3, rulerWidget);
+    bl->insertWidget (4, focusToolBar);
+    bl->insertWidget (5, userToolBar);
+#else
     bl->insertWidget (0, tabToolBar);
     bl->insertWidget (1, modeToolBar);
     bl->insertWidget (2, rulerWidget);
     bl->insertWidget (3, focusToolBar);
     bl->insertWidget (4, userToolBar);
+#endif
     bl->insertWidget (6, r2);
 
     // mw->setContentsMargins (-2, -2, -2, -2);  // Why this?
     bar->setContentsMargins (0, 1, 0, 1);
   }
   else {
+#ifdef Q_OS_MAC
+    mw->addToolBar (menuToolBar);
+#else
     mw->addToolBar (mainToolBar);
+#endif
     mw->addToolBarBreak ();
     mw->addToolBar (tabToolBar);
     mw->addToolBarBreak ();
@@ -442,7 +461,11 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   }
 
 #else
+#ifdef Q_OS_MAC
+  mw->addToolBar (menuToolBar);
+#else
   mw->addToolBar (mainToolBar);
+#endif
   mw->addToolBarBreak ();
   mw->addToolBar (tabToolBar);
   mw->addToolBarBreak ();
@@ -1016,7 +1039,11 @@ qt_tm_widget_rep::install_main_menu () {
   main_menu_widget    = waiting_main_menu_widget;
   QList<QAction*>* src= main_menu_widget->get_qactionlist ();
   if (!src) return;
+#ifdef Q_OS_MAC
+  QMenuBar* dest= new QMenuBar ();
+#else
   QMenuBar* dest= mainwindow ()->menuBar ();
+#endif
 
   if (tm_style_sheet == "") dest->setStyle (qtmstyle ());
 
@@ -1052,6 +1079,17 @@ qt_tm_widget_rep::install_main_menu () {
                         the_gui->gui_helper, SLOT (aboutToHideMainMenu ()));
     }
   }
+
+#ifdef Q_OS_MAC
+  // 移除旧 menuBar
+  QList<QWidget*> widgets= menuToolBar->findChildren<QWidget*> ();
+  for (QWidget* w : widgets) {
+    w->setParent (nullptr);
+  }
+
+  // 添加新的 menuBar 到 menuToolBar
+  menuToolBar->addWidget (dest);
+#endif
 }
 
 void
