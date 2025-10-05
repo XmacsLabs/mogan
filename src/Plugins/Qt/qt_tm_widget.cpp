@@ -208,12 +208,13 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   focusToolBar= new QToolBar ("focus toolbar", mw);
   userToolBar = new QToolBar ("user toolbar", mw);
 
-  bottomTools    = new QDockWidget ("bottom tools", mw);
-  extraTools     = new QDockWidget ("extra tools", mw);
-  sideTools      = new QDockWidget ("side tools", 0);
-  leftTools      = new QDockWidget ("left tools", 0);
-  tabToolBar     = new QTMTabPageBar ("tab toolbar", mw);
-  auxiliaryWidget= new QTMAuxiliaryWidget ("auxiliary widget", 0);
+  bottomTools     = new QDockWidget ("bottom tools", mw);
+  extraTools      = new QDockWidget ("extra tools", mw);
+  sideTools       = new QDockWidget ("side tools", 0);
+  leftTools       = new QDockWidget ("left tools", 0);
+  tabPageContainer= new QTMTabPageContainer (mw);
+  tabToolBar      = new QTMTabPageBar ("tab toolbar", mw, tabPageContainer);
+  auxiliaryWidget = new QTMAuxiliaryWidget ("auxiliary widget", 0);
   // HACK: Wrap the dock in a "fake" window widget (last parameter = true) to
   // have clicks report the right position.
   static int cnt      = 0;
@@ -336,7 +337,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
       mainToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
       modeToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
       focusToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-      tabToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+      tabToolBar->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Fixed);
 
       // 确保工具栏在拖动时保持固定高度
       mainToolBar->setMovable (true);
