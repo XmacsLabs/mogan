@@ -67,6 +67,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define part-mode :one)
+(define body-restore-path #f)
+(define preamble-restore-path #f)
 
 (define (buffer-body-paragraphs)
   (with t (buffer-tree)
@@ -137,27 +139,45 @@
   (:synopsis "Set the mode for document part selections")
   (:check-mark "v" buffer-test-part-mode?)
   (with old-mode (buffer-get-part-mode)
+    (when (and (== mode :preamble) (!= old-mode :preamble))
+      (set! body-restore-path (cursor-path)))
+    (when (and (!= mode :preamble) (== old-mode :preamble))
+      (set! preamble-restore-path (cursor-path)))
     (cond ((== mode old-mode) (noop))
           ((and (== mode :preamble) (not (buffer-has-preamble?)))
            (buffer-make-preamble))
-	  ((== mode :preamble)
-	   (when (tree-is? (tree-ref (buffer-tree) 0) 'hide-preamble)
-	     (buffer-show-preamble)
-	     (tree-go-to (buffer-tree) 0 0 :start)))
-	  ((== mode :all)
-	   (buffer-hide-preamble)
-	   (buffer-flatten-parts)
-	   (tree-go-to (car (buffer-body-paragraphs)) :start)
-	   (update-current-buffer))
-	  (else
-	   (buffer-hide-preamble)
-	   (buffer-make-parts)
-	   (set! part-mode mode)
-	   (with first (car (buffer-parts-list #f))
-	     (if (== mode :one)
-		 (buffer-show-part first)
-		 (buffer-go-to-part first)))
-	   (update-current-buffer)))))
+          ((== mode :preamble)
+           (when (tree-is? (tree-ref (buffer-tree) 0) 'hide-preamble)
+             (buffer-show-preamble))
+           (with p preamble-restore-path
+             (set! preamble-restore-path #f)
+             (if p
+                 (delayed (:idle 1)
+                   (catch #t
+                     (lambda () (go-to-path p))
+                     (lambda err (tree-go-to (buffer-tree) 0 0 :start))))
+                 (tree-go-to (buffer-tree) 0 0 :start))))
+          ((== mode :all)
+           (buffer-hide-preamble)
+           (buffer-flatten-parts)
+           (with p body-restore-path
+             (set! body-restore-path #f)
+             (if p
+                 (delayed (:idle 1)
+                   (catch #t
+                     (lambda () (go-to-path p))
+                     (lambda err (tree-go-to (car (buffer-body-paragraphs)) :start))))
+                 (tree-go-to (car (buffer-body-paragraphs)) :start)))
+           (update-current-buffer))
+          (else
+           (buffer-hide-preamble)
+           (buffer-make-parts)
+           (set! part-mode mode)
+           (with first (car (buffer-parts-list #f))
+             (if (== mode :one)
+                 (buffer-show-part first)
+                 (buffer-go-to-part first)))
+                  (update-current-buffer)))))
 
 (tm-define (in-preamble-mode?)
   (tree-is? (tree-ref (buffer-tree) 0) 'show-preamble))
