@@ -194,7 +194,9 @@ target("QWKWidgets")
     -- Source files
     add_files("src/widgets/widgetwindowagent.cpp")
     add_files("src/widgets/widgetitemdelegate.cpp")
-    add_files("src/widgets/widgetwindowagent_mac.cpp")
+    if is_plat("macosx") then
+        add_files("src/widgets/widgetwindowagent_mac.cpp")
+    end
 
     -- Add header files that need MOC processing (use add_files for Q_OBJECT headers)
     add_files("src/widgets/widgetwindowagent.h")
