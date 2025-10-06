@@ -42,9 +42,6 @@ target("QWKCore")
         add_frameworks("QtCorePrivate", "QtGuiPrivate")
     end
 
-    -- Enable MOC generation for Qt
-    add_rules("qt.moc")
-    
     -- Generate config header before build
     before_build(function (target)
         -- Create build directories
@@ -133,6 +130,9 @@ target("QWKCore")
         add_defines("QWINDOWKIT_ENABLE_WINDOWS_SYSTEM_BORDERS=-1")
     end
 
+    -- Enable MOC generation for Qt
+    add_rules("qt.moc")
+
     -- Core source files
     add_files("src/core/qwkglobal.cpp")
     add_files("src/core/windowagentbase.cpp")
@@ -141,7 +141,9 @@ target("QWKCore")
     add_files("src/core/kernel/sharedeventfilter.cpp")
     add_files("src/core/kernel/winidchangeeventfilter.cpp")
     add_files("src/core/contexts/abstractwindowcontext.cpp")
-    add_files("src/core/contexts/cocoawindowcontext.mm")
+    if is_plat("macosx") then
+        add_files("src/core/contexts/cocoawindowcontext.mm")
+    end
     if has_config("style_agent") then
         add_files("src/core/style/styleagent.cpp")
         add_files("src/core/style/styleagent_mac.mm")
