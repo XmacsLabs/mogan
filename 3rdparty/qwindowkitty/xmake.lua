@@ -21,7 +21,9 @@ option("build_static")
     set_description("Build static libraries")
 option_end()
 
-add_requires("qt6core", "qt6gui", "qt6widgets")
+if not is_plat("linux") then
+    add_requires("qt6core", "qt6gui", "qt6widgets")
+end
 
 target("QWKCore")
     -- Set target type
@@ -31,16 +33,15 @@ target("QWKCore")
         set_kind("shared")
     end
 
-    add_mxflags("-fno-objc-arc")
     add_cxxflags("-fPIC", "-fvisibility=hidden", "-fvisibility-inlines-hidden")
     add_packages("qt6core", "qt6gui", "qt6widgets")
-    add_frameworks("Foundation", "Cocoa", "AppKit")
-    add_frameworks("QtCore", "QtGui", "QtWidgets")
-    add_frameworks("QtCorePrivate", "QtGuiPrivate")
-    
-    -- Enable MOC generation for Qt
-    add_rules("qt.moc")
-    
+    if is_plat("macosx") then
+        add_mxflags("-fno-objc-arc")
+        add_frameworks("Foundation", "Cocoa", "AppKit")
+        add_frameworks("QtCore", "QtGui", "QtWidgets")
+        add_frameworks("QtCorePrivate", "QtGuiPrivate")
+    end
+
     -- Generate config header before build
     before_build(function (target)
         -- Create build directories
@@ -81,17 +82,30 @@ target("QWKCore")
 
         -- Get Qt private include paths
         local modules = {"QtCore", "QtGui"}
-        local headers_path = os.iorun("qmake -query QT_INSTALL_HEADERS"):gsub("%s+", "")
-        local qt_version = os.iorun("qmake -query QT_VERSION"):gsub("%s+", "")
+        local headers_path= ""
+        local qt_version= ""
+        if is_plat("macosx") then
+            headers_path = os.iorun("qmake -query QT_INSTALL_HEADERS"):gsub("%s+", "")
+            qt_version = os.iorun("qmake -query QT_VERSION"):gsub("%s+", "")
+        else
+            headers_path = os.iorun("qmake6 -query QT_INSTALL_HEADERS"):gsub("%s+", "")
+            qt_version = os.iorun("qmake6 -query QT_VERSION"):gsub("%s+", "")
+        end
 
         local private_paths = {}
-        for _, module in ipairs(modules) do
-            table.insert(private_paths, string.format("%s/%s/%s/%s/private",
-                headers_path, module, qt_version, module))
-            table.insert(private_paths, string.format("%s/%s/%s/%s",
-                headers_path, module, qt_version, module))
-            table.insert(private_paths, string.format("%s/%s/%s",
-                headers_path, module, qt_version))
+        if is_plat("linux") then
+            table.insert(private_paths, string.format("%s", headers_path))
+        end
+
+        if is_plat("macosx") then
+            for _, module in ipairs(modules) do
+                table.insert(private_paths, string.format("%s/%s/%s/%s/private",
+                    headers_path, module, qt_version, module))
+                table.insert(private_paths, string.format("%s/%s/%s/%s",
+                    headers_path, module, qt_version, module))
+                table.insert(private_paths, string.format("%s/%s/%s",
+                    headers_path, module, qt_version))
+            end
         end
 
         target:add("includedirs", private_paths)
@@ -116,6 +130,9 @@ target("QWKCore")
         add_defines("QWINDOWKIT_ENABLE_WINDOWS_SYSTEM_BORDERS=-1")
     end
 
+    -- Enable MOC generation for Qt
+    add_rules("qt.moc")
+
     -- Core source files
     add_files("src/core/qwkglobal.cpp")
     add_files("src/core/windowagentbase.cpp")
@@ -124,7 +141,9 @@ target("QWKCore")
     add_files("src/core/kernel/sharedeventfilter.cpp")
     add_files("src/core/kernel/winidchangeeventfilter.cpp")
     add_files("src/core/contexts/abstractwindowcontext.cpp")
-    add_files("src/core/contexts/cocoawindowcontext.mm")
+    if is_plat("macosx") then
+        add_files("src/core/contexts/cocoawindowcontext.mm")
+    end
     if has_config("style_agent") then
         add_files("src/core/style/styleagent.cpp")
         add_files("src/core/style/styleagent_mac.mm")
@@ -151,13 +170,15 @@ target("QWKWidgets")
         set_kind("shared")
     end
 
-    add_mxflags("-fno-objc-arc")
     add_cxxflags("-fPIC", "-fvisibility=hidden", "-fvisibility-inlines-hidden")
     add_deps("QWKCore")
     add_packages("qt6core", "qt6gui", "qt6widgets")
-    add_frameworks("Foundation", "Cocoa", "AppKit")
-    add_frameworks("QtCore", "QtGui", "QtWidgets")
-    add_frameworks("QtCorePrivate", "QtGuiPrivate")
+    if is_plat("macosx") then
+        add_mxflags("-fno-objc-arc")
+        add_frameworks("Foundation", "Cocoa", "AppKit")
+        add_frameworks("QtCore", "QtGui", "QtWidgets")
+        add_frameworks("QtCorePrivate", "QtGuiPrivate")
+    end
 
     -- Enable MOC generation for Qt
     add_rules("qt.moc")
@@ -175,7 +196,9 @@ target("QWKWidgets")
     -- Source files
     add_files("src/widgets/widgetwindowagent.cpp")
     add_files("src/widgets/widgetitemdelegate.cpp")
-    add_files("src/widgets/widgetwindowagent_mac.cpp")
+    if is_plat("macosx") then
+        add_files("src/widgets/widgetwindowagent_mac.cpp")
+    end
 
     -- Add header files that need MOC processing (use add_files for Q_OBJECT headers)
     add_files("src/widgets/widgetwindowagent.h")
