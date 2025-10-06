@@ -85,22 +85,30 @@ target("QWKCore")
 
         -- Get Qt private include paths
         local modules = {"QtCore", "QtGui"}
+        local headers_path= ""
+        local qt_version= ""
         if is_plat("macosx") then
-            local headers_path = os.iorun("qmake -query QT_INSTALL_HEADERS"):gsub("%s+", "")
-            local qt_version = os.iorun("qmake -query QT_VERSION"):gsub("%s+", "")
+            headers_path = os.iorun("qmake -query QT_INSTALL_HEADERS"):gsub("%s+", "")
+            qt_version = os.iorun("qmake -query QT_VERSION"):gsub("%s+", "")
         else
-            local headers_path = os.iorun("qmake6 -query QT_INSTALL_HEADERS"):gsub("%s+", "")
-            local qt_version = os.iorun("qmake6 -query QT_VERSION"):gsub("%s+", "")
+            headers_path = os.iorun("qmake6 -query QT_INSTALL_HEADERS"):gsub("%s+", "")
+            qt_version = os.iorun("qmake6 -query QT_VERSION"):gsub("%s+", "")
         end
 
         local private_paths = {}
-        for _, module in ipairs(modules) do
-            table.insert(private_paths, string.format("%s/%s/%s/%s/private",
-                headers_path, module, qt_version, module))
-            table.insert(private_paths, string.format("%s/%s/%s/%s",
-                headers_path, module, qt_version, module))
-            table.insert(private_paths, string.format("%s/%s/%s",
-                headers_path, module, qt_version))
+        if is_plat("linux") then
+            table.insert(private_paths, string.format("%s", headers_path))
+        end
+
+        if is_plat("macosx") then
+            for _, module in ipairs(modules) do
+                table.insert(private_paths, string.format("%s/%s/%s/%s/private",
+                    headers_path, module, qt_version, module))
+                table.insert(private_paths, string.format("%s/%s/%s/%s",
+                    headers_path, module, qt_version, module))
+                table.insert(private_paths, string.format("%s/%s/%s",
+                    headers_path, module, qt_version))
+            end
         end
 
         target:add("includedirs", private_paths)
