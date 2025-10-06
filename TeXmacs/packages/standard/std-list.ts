@@ -28,7 +28,7 @@
 
   <assign|item-hsep|<macro|3fn>>
 
-  <assign|item-vsep|<macro|0.5fn>>
+  <assign|item-vsep|<macro|0fn>>
 
   <assign|aligned-item|<macro|name|<style-with|src-compact|none|<vspace*|<item-vsep>><with|par-first|<minus|<item-hsep>>|<yes-indent>><resize|<arg|name>|<minus|1r|<minus|<item-hsep>|0.5fn>>||<plus|1r|0.5fn>|>>>>
 
