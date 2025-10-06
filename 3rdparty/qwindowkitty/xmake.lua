@@ -87,10 +87,11 @@ target("QWKCore")
         local modules = {"QtCore", "QtGui"}
         if is_plat("macosx") then
             local headers_path = os.iorun("qmake -query QT_INSTALL_HEADERS"):gsub("%s+", "")
+            local qt_version = os.iorun("qmake -query QT_VERSION"):gsub("%s+", "")
         else
             local headers_path = os.iorun("qmake6 -query QT_INSTALL_HEADERS"):gsub("%s+", "")
+            local qt_version = os.iorun("qmake6 -query QT_VERSION"):gsub("%s+", "")
         end
-        local qt_version = os.iorun("qmake -query QT_VERSION"):gsub("%s+", "")
 
         local private_paths = {}
         for _, module in ipairs(modules) do
