@@ -274,27 +274,27 @@ function build_glue_on_config()
 end
 
 local moe_files = {
-    "3rdparty/moebius/Data/History/**.cpp",
-    "3rdparty/moebius/Data/String/**.cpp",
-    "3rdparty/moebius/Data/Tree/**.cpp",
-    "3rdparty/moebius/Kernel/Types/**.cpp",
-    "3rdparty/moebius/Kernel/Abstractions/**.cpp",
-    "3rdparty/moebius/Scheme/**.cpp",
-    "3rdparty/moebius/moebius/**.cpp",
+    "moebius/Data/History/**.cpp",
+    "moebius/Data/String/**.cpp",
+    "moebius/Data/Tree/**.cpp",
+    "moebius/Kernel/Types/**.cpp",
+    "moebius/Kernel/Abstractions/**.cpp",
+    "moebius/Scheme/**.cpp",
+    "moebius/moebius/**.cpp",
 }
 local moe_includedirs = {
-    "3rdparty/moebius/Data/History",
-    "3rdparty/moebius/Data/String",
-    "3rdparty/moebius/Data/Tree",
-    "3rdparty/moebius/Kernel/Types",
-    "3rdparty/moebius/Kernel/Abstractions",
-    "3rdparty/moebius/Scheme",
-    "3rdparty/moebius/Scheme/L1",
-    "3rdparty/moebius/Scheme/L2",
-    "3rdparty/moebius/Scheme/L3",
-    "3rdparty/moebius/Scheme/S7",
-    "3rdparty/moebius/Scheme/Scheme",
-    "3rdparty/moebius/",
+    "moebius/Data/History",
+    "moebius/Data/String",
+    "moebius/Data/Tree",
+    "moebius/Kernel/Types",
+    "moebius/Kernel/Abstractions",
+    "moebius/Scheme",
+    "moebius/Scheme/L1",
+    "moebius/Scheme/L2",
+    "moebius/Scheme/L3",
+    "moebius/Scheme/S7",
+    "moebius/Scheme/Scheme",
+    "moebius/",
 }
 
 target("libmoebius") do
