@@ -191,7 +191,7 @@ add_requires("s7", {system=false})
 add_requires("tbox", {system=false})
 add_requires("lolly", {system=false})
 add_requires("cpr", {system=false})
-if is_plat ("macosx") then
+if is_plat ("macosx", "linux") then
     add_requires("qwindowkitty", {system=false})
 end
 if is_plat ("windows") then
@@ -353,7 +353,7 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("s7")
     add_packages("argh")
-    if is_plat("macosx") then
+    if is_plat("macosx", "linux") then
         add_packages("qwindowkitty")
     end
     if not is_plat("macosx") then

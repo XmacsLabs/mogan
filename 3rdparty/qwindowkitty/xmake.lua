@@ -21,7 +21,9 @@ option("build_static")
     set_description("Build static libraries")
 option_end()
 
-add_requires("qt6core", "qt6gui", "qt6widgets")
+if not is_plat("linux") then
+    add_requires("qt6core", "qt6gui", "qt6widgets")
+end
 
 target("QWKCore")
     -- Set target type
@@ -31,13 +33,15 @@ target("QWKCore")
         set_kind("shared")
     end
 
-    add_mxflags("-fno-objc-arc")
     add_cxxflags("-fPIC", "-fvisibility=hidden", "-fvisibility-inlines-hidden")
     add_packages("qt6core", "qt6gui", "qt6widgets")
-    add_frameworks("Foundation", "Cocoa", "AppKit")
-    add_frameworks("QtCore", "QtGui", "QtWidgets")
-    add_frameworks("QtCorePrivate", "QtGuiPrivate")
-    
+    if is_plat("macosx") then
+        add_mxflags("-fno-objc-arc")
+        add_frameworks("Foundation", "Cocoa", "AppKit")
+        add_frameworks("QtCore", "QtGui", "QtWidgets")
+        add_frameworks("QtCorePrivate", "QtGuiPrivate")
+    end
+
     -- Enable MOC generation for Qt
     add_rules("qt.moc")
     
@@ -81,7 +85,11 @@ target("QWKCore")
 
         -- Get Qt private include paths
         local modules = {"QtCore", "QtGui"}
-        local headers_path = os.iorun("qmake -query QT_INSTALL_HEADERS"):gsub("%s+", "")
+        if is_plat("macosx") then
+            local headers_path = os.iorun("qmake -query QT_INSTALL_HEADERS"):gsub("%s+", "")
+        else
+            local headers_path = os.iorun("qmake6 -query QT_INSTALL_HEADERS"):gsub("%s+", "")
+        end
         local qt_version = os.iorun("qmake -query QT_VERSION"):gsub("%s+", "")
 
         local private_paths = {}
@@ -151,13 +159,15 @@ target("QWKWidgets")
         set_kind("shared")
     end
 
-    add_mxflags("-fno-objc-arc")
     add_cxxflags("-fPIC", "-fvisibility=hidden", "-fvisibility-inlines-hidden")
     add_deps("QWKCore")
     add_packages("qt6core", "qt6gui", "qt6widgets")
-    add_frameworks("Foundation", "Cocoa", "AppKit")
-    add_frameworks("QtCore", "QtGui", "QtWidgets")
-    add_frameworks("QtCorePrivate", "QtGuiPrivate")
+    if is_plat("macosx") then
+        add_mxflags("-fno-objc-arc")
+        add_frameworks("Foundation", "Cocoa", "AppKit")
+        add_frameworks("QtCore", "QtGui", "QtWidgets")
+        add_frameworks("QtCorePrivate", "QtGuiPrivate")
+    end
 
     -- Enable MOC generation for Qt
     add_rules("qt.moc")
