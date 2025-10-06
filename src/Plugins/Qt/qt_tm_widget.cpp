@@ -142,6 +142,25 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
   QMainWindow* mw= mainwindow ();
   if (tm_style_sheet == "") mw->setStyle (qtmstyle ());
+#ifdef Q_OS_MAC
+  // 无边框布局
+  auto windowBar  = new QWK::WindowBar ();
+  auto windowAgent= new QWK::WidgetWindowAgent (mw);
+  tabPageContainer= new QTMTabPageContainer (windowBar);
+  mw->setAttribute (Qt::WA_DontCreateNativeAncestors);
+  mw->setAttribute (Qt::WA_ContentsMarginsRespectsSafeArea, false);
+  windowAgent->setup (mw);
+  windowBar->setHostWidget (mw);
+  windowBar->setMinimumHeight (20);
+  windowBar->setTitleWidget (tabPageContainer);
+  windowBar->adjustSize ();
+  windowBar->layout ()->setAlignment (tabPageContainer,
+                                      Qt::AlignLeft | Qt::AlignVCenter);
+  windowBar->setObjectName ("windowbar");
+  windowAgent->setTitleBar (windowBar);
+  windowAgent->setHitTestVisible (tabPageContainer, true);
+  mw->setMenuWidget (windowBar);
+#endif
 
   // there is a bug in the early implementation of toolbars in Qt 4.6
   // which has been fixed in 4.6.2 (at least)
@@ -211,13 +230,14 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   focusToolBar= new QToolBar ("focus toolbar", mw);
   userToolBar = new QToolBar ("user toolbar", mw);
 
-  bottomTools     = new QDockWidget ("bottom tools", mw);
-  extraTools      = new QDockWidget ("extra tools", mw);
-  sideTools       = new QDockWidget ("side tools", 0);
-  leftTools       = new QDockWidget ("left tools", 0);
-  tabPageContainer= new QTMTabPageContainer (mw);
-  tabToolBar      = new QTMTabPageBar ("tab toolbar", mw, tabPageContainer);
-  auxiliaryWidget = new QTMAuxiliaryWidget ("auxiliary widget", 0);
+  bottomTools= new QDockWidget ("bottom tools", mw);
+  extraTools = new QDockWidget ("extra tools", mw);
+  sideTools  = new QDockWidget ("side tools", 0);
+  leftTools  = new QDockWidget ("left tools", 0);
+#ifndef Q_OS_MAC
+  tabToolBar= new QTMTabPageBar ("tab toolbar", mw, tabPageContainer);
+#endif // macOS 的情况在 mw 创建部分的代码有处理
+  auxiliaryWidget= new QTMAuxiliaryWidget ("auxiliary widget", 0);
   // HACK: Wrap the dock in a "fake" window widget (last parameter = true) to
   // have clicks report the right position.
   static int cnt      = 0;
@@ -237,7 +257,9 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     leftTools->setStyle (qtmstyle ());
     bottomTools->setStyle (qtmstyle ());
     extraTools->setStyle (qtmstyle ());
+#ifndef Q_OS_MAC
     tabToolBar->setStyle (qtmstyle ());
+#endif
     auxiliaryWidget->setStyle (qtmstyle ());
   }
 
@@ -275,7 +297,9 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   else {
     focusToolBar->setFixedHeight (toolbarHeight);
   }
+#ifndef Q_OS_MAC
   tabToolBar->setRowHeight (toolbarHeight + 4 * retina_icons);
+#endif
 #else
   int toolbarHeight= 30;
   mainToolBar->setFixedHeight (toolbarHeight + 8);
@@ -287,7 +311,9 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   else {
     focusToolBar->setFixedHeight (toolbarHeight);
   }
+#ifndef Q_OS_MAC
   tabToolBar->setRowHeight (toolbarHeight + 4);
+#endif
 #endif
 #else
 #ifdef Q_OS_MAC
@@ -337,25 +363,37 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
       mainToolBar->setFixedHeight (h);
       modeToolBar->setFixedHeight (h);
       focusToolBar->setFixedHeight (h);
+#ifndef Q_OS_MAC
       tabToolBar->setRowHeight (h);
+#else // in macOS
+      tabPageContainer->setRowHeight (h);
+#endif
 
       // 设置工具栏的尺寸策略
       mainToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
       modeToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
       focusToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+#ifndef Q_OS_MAC
       tabToolBar->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Fixed);
+#endif
 
       // 确保工具栏在拖动时保持固定高度
       mainToolBar->setMovable (true);
       modeToolBar->setMovable (true);
       focusToolBar->setMovable (true);
+#ifndef Q_OS_MAC
       tabToolBar->setMovable (true);
+#endif
     }
     else {
       mainToolBar->setFixedHeight (h1);
       modeToolBar->setFixedHeight (h2);
       focusToolBar->setFixedHeight (h3);
+#ifndef Q_OS_MAC
       tabToolBar->setRowHeight (h2);
+#else // in macOS
+      tabPageContainer->setRowHeight (h2);
+#endif
     }
   }
 
@@ -384,7 +422,9 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   extraTools->setObjectName ("extraTools");
   sideTools->setObjectName ("sideTools");
   leftTools->setObjectName ("leftTools");
+#ifndef Q_OS_MAC
   tabToolBar->setObjectName ("tabToolBar");
+#endif
   auxiliaryWidget->setObjectName ("auxiliaryWidget");
 
 #ifdef UNIFIED_TOOLBAR
@@ -426,12 +466,12 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
 #ifdef Q_OS_MAC
     bl->insertWidget (0, menuToolBar);
-    bl->insertWidget (1, tabToolBar);
+    bl->insertWidget (1, tabPageContainer);
     bl->insertWidget (2, modeToolBar);
     bl->insertWidget (3, rulerWidget);
     bl->insertWidget (4, focusToolBar);
     bl->insertWidget (5, userToolBar);
-#else
+#else // not macOS
     bl->insertWidget (0, tabToolBar);
     bl->insertWidget (1, modeToolBar);
     bl->insertWidget (2, rulerWidget);
@@ -446,12 +486,13 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   else {
 #ifdef Q_OS_MAC
     mw->addToolBar (menuToolBar);
+    mw->addToolBarBreak ();
 #else
     mw->addToolBar (mainToolBar);
-#endif
     mw->addToolBarBreak ();
     mw->addToolBar (tabToolBar);
     mw->addToolBarBreak ();
+#endif
     mw->addToolBar (modeToolBar);
     mw->addToolBarBreak ();
     mw->addToolBar (focusToolBar);
@@ -467,8 +508,10 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   mw->addToolBar (mainToolBar);
 #endif
   mw->addToolBarBreak ();
+#ifndef Q_OS_MAC
   mw->addToolBar (tabToolBar);
   mw->addToolBarBreak ();
+#endif
   mw->addToolBar (modeToolBar);
   mw->addToolBarBreak ();
   mw->addToolBar (focusToolBar);
@@ -532,7 +575,9 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   leftTools->setVisible (false);
   bottomTools->setVisible (false);
   extraTools->setVisible (false);
+#ifndef Q_OS_MAC
   tabToolBar->setVisible (false);
+#endif
   auxiliaryWidget->setVisible (false);
   mainwindow ()->statusBar ()->setVisible (true);
 #ifndef Q_OS_MAC
@@ -645,7 +690,9 @@ qt_tm_widget_rep::update_visibility () {
   bool old_leftVisibility  = leftTools->isVisible ();
   bool old_bottomVisibility= bottomTools->isVisible ();
   bool old_extraVisibility = extraTools->isVisible ();
-  bool old_tabVisibility   = tabToolBar->isVisible ();
+#ifndef Q_OS_MAC
+  bool old_tabVisibility= tabToolBar->isVisible ();
+#endif
   bool old_auxVisibility   = auxiliaryWidget->isVisible ();
   bool old_statusVisibility= mainwindow ()->statusBar ()->isVisible ();
 
@@ -677,8 +724,10 @@ qt_tm_widget_rep::update_visibility () {
     bottomTools->setVisible (new_bottomVisibility);
   if (XOR (old_extraVisibility, new_extraVisibility))
     extraTools->setVisible (new_extraVisibility);
+#ifndef Q_OS_MAC
   if (XOR (old_tabVisibility, new_tabVisibility))
     tabToolBar->setVisible (new_tabVisibility);
+#endif
   if (XOR (old_auxVisibility, new_auxVisibility))
     auxiliaryWidget->setVisible (new_auxVisibility);
   if (XOR (old_statusVisibility, new_statusVisibility))
@@ -745,11 +794,13 @@ qt_tm_widget_rep::update_visibility () {
     }
   }
   else {
+#ifndef Q_OS_MAC
     bool old_menuVisibility= mainwindow ()->menuBar ()->isVisible ();
     bool new_menuVisibility= visibility[0];
 
     if (XOR (old_menuVisibility, new_menuVisibility))
       mainwindow ()->menuBar ()->setVisible (new_menuVisibility);
+#endif
   }
 #endif // UNIFIED_TOOLBAR
 #undef XOR
@@ -1154,7 +1205,11 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       tab_bar_widget       = concrete (w);
       QList<QAction*>* list= tab_bar_widget->get_qactionlist ();
       if (list) {
+#ifndef Q_OS_MAC
         tabToolBar->replaceTabPages (list);
+#else
+        tabPageContainer->replaceTabPages (list);
+#endif
         update_visibility ();
       }
     }

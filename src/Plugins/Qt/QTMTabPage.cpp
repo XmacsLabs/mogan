@@ -18,7 +18,11 @@
 const int MIN_TAB_PAGE_WIDTH= 150;
 
 // The horizontal padding for tab container (in pixels).
+#ifdef Q_OS_MAC
+const int TAB_CONTAINER_PADDING= 75;
+#else
 const int TAB_CONTAINER_PADDING= 15;
+#endif
 
 /**
  * What is g_mostRecentlyClosedTab used for? When we close an ACTIVE(!) tab

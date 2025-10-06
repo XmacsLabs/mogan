@@ -28,6 +28,12 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 
+#ifdef Q_OS_MAC
+#include "../QWindowKit/windowbar.hpp"
+#include "../QWindowKit/windowbutton.hpp"
+#include <QWKWidgets/widgetwindowagent.h>
+#endif
+
 class QLabel;
 class QToolBar;
 class QTMInteractivePrompt;
