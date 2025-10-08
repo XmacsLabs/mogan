@@ -28,7 +28,7 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 
-#ifdef Q_OS_MAC
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
 #include "../QWindowKit/windowbar.hpp"
 #include "../QWindowKit/windowbutton.hpp"
 #include <QWKWidgets/widgetwindowagent.h>

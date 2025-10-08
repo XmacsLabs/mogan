@@ -191,9 +191,7 @@ add_requires("s7", {system=false})
 add_requires("tbox", {system=false})
 add_requires("lolly", {system=false})
 add_requires("cpr", {system=false})
-if is_plat ("macosx") then
-    add_requires("qwindowkitty", {system=false})
-end
+-- QWK is built locally from 3rdparty/qwindowkitty, no external package needed
 if is_plat ("windows") then
     add_requires("libiconv "..LIBICONV_VERSION, {system=false})
 end
@@ -220,9 +218,7 @@ add_requires("argh v1.3.2")
 
 --- package: qt6widgets
 QT6_VERSION="6.8.3"
-if is_plat("windows") then
-    add_requires("qt6widgets "..QT6_VERSION)
-end
+add_requires("qt6widgets "..QT6_VERSION)
 
 if has_config("mupdf") then
     if (linuxos.name() == "debian" and linuxos.version():major() >= CURRENT_DEBIAN_VERSION) or
@@ -313,6 +309,213 @@ target("libmoebius") do
     end)
 end
 
+-- Add options for different features
+option("style_agent")
+    set_default(false)
+    set_description("Enable Style Agent")
+option_end()
+
+option("windows_system_borders")
+    set_default(false)
+    set_description("Enable Windows System Borders")
+option_end()
+
+option("build_static")
+    set_default(true)
+    set_description("Build static libraries")
+option_end()
+
+add_requires("qt6core 6.8.3", "qt6gui 6.8.3", "qt6widgets 6.8.3")
+
+target("QWKCore")
+    -- Set target type
+    if has_config("build_static") then
+        set_kind("static")
+    else
+        set_kind("shared")
+    end
+
+    add_cxxflags("-fPIC", "-fvisibility=hidden", "-fvisibility-inlines-hidden")
+    add_packages("qt6core", "qt6gui", "qt6widgets")
+    if is_plat("macosx") then
+        add_mxflags("-fno-objc-arc")
+        add_frameworks("Foundation", "Cocoa", "AppKit")
+        add_frameworks("QtCore", "QtGui", "QtWidgets")
+        add_frameworks("QtCorePrivate", "QtGuiPrivate")
+    end
+
+    -- Generate config header before build
+    before_build(function (target)
+        -- Create build directories
+        os.mkdir("$(buildir)/include/QWKCore")
+        os.mkdir("$(buildir)/include/QWKCore/private")
+        
+        -- Generate qwkconfig.h
+        local config_content = [[
+#ifndef QWKCONFIG_H
+#define QWKCONFIG_H
+
+#define QWINDOWKIT_ENABLE_QT_WINDOW_CONTEXT ]] .. 
+        "-1" .. [[
+
+#define QWINDOWKIT_ENABLE_STYLE_AGENT ]] ..
+        (has_config("style_agent") and "1" or "-1") .. [[
+
+#define QWINDOWKIT_ENABLE_WINDOWS_SYSTEM_BORDERS ]] ..
+        (has_config("windows_system_borders") and "1" or "-1") .. [[
+
+
+#endif // QWKCONFIG_H
+]]
+        io.writefile("$(buildir)/include/QWKCore/qwkconfig.h", config_content)
+        
+        -- Copy header files
+        os.cp("3rdparty/qwindowkitty/src/core/*.h", "$(buildir)/include/QWKCore/")
+        os.trycp("3rdparty/qwindowkitty/src/core/*_p.h", "$(buildir)/include/QWKCore/private/")
+        os.trycp("3rdparty/qwindowkitty/src/core/contexts/*_p.h", "$(buildir)/include/QWKCore/private/")
+        os.trycp("3rdparty/qwindowkitty/src/core/contexts/*.h", "$(buildir)/include/QWKCore/private/")
+        os.trycp("3rdparty/qwindowkitty/src/core/kernel/*_p.h", "$(buildir)/include/QWKCore/private/")
+        os.trycp("3rdparty/qwindowkitty/src/core/shared/*_p.h", "$(buildir)/include/QWKCore/private/")
+        
+        if has_config("style_agent") then
+            os.trycp("3rdparty/qwindowkitty/src/core/style/*_p.h", "$(buildir)/include/QWKCore/private/")
+            os.cp("3rdparty/qwindowkitty/src/core/style/styleagent.h", "$(buildir)/include/QWKCore/styleagent.h")
+        end
+
+        -- Get Qt private include paths
+        local modules = {"QtCore", "QtGui"}
+        local headers_path = os.iorun("qmake -query QT_INSTALL_HEADERS"):gsub("%s+", "")
+        local qt_version = os.iorun("qmake -query QT_VERSION"):gsub("%s+", "")
+
+        local private_paths = {}
+        for _, module in ipairs(modules) do
+            table.insert(private_paths, string.format("%s/%s/%s/%s/private",
+                headers_path, module, qt_version, module))
+            table.insert(private_paths, string.format("%s/%s/%s/%s",
+                headers_path, module, qt_version, module))
+            table.insert(private_paths, string.format("%s/%s/%s",
+                headers_path, module, qt_version))
+        end
+
+        target:add("includedirs", private_paths, {public = true})
+    end)
+
+    -- Include directories
+    add_includedirs("$(buildir)/include", {public = true})
+    add_includedirs("3rdparty/qwindowkitty/src/core", "3rdparty/qwindowkitty/src/core/kernel", "3rdparty/qwindowkitty/src/core/shared", "3rdparty/qwindowkitty/src/core/contexts", "3rdparty/qwindowkitty/src")
+
+    -- Defines
+    add_defines("QWINDOWKIT_ENABLE_QT_WINDOW_CONTEXT=-1")
+    
+    if has_config("style_agent") then
+        add_defines("QWINDOWKIT_ENABLE_STYLE_AGENT=1")
+    else
+        add_defines("QWINDOWKIT_ENABLE_STYLE_AGENT=-1")
+    end
+    
+    if has_config("windows_system_borders") then
+        add_defines("QWINDOWKIT_ENABLE_WINDOWS_SYSTEM_BORDERS=1")
+    else
+        add_defines("QWINDOWKIT_ENABLE_WINDOWS_SYSTEM_BORDERS=-1")
+    end
+
+    -- Enable MOC generation for Qt
+    add_rules("qt.moc")
+
+    -- Core source files
+    add_files("3rdparty/qwindowkitty/src/core/qwkglobal.cpp")
+    add_files("3rdparty/qwindowkitty/src/core/windowagentbase.cpp")
+    add_files("3rdparty/qwindowkitty/src/core/windowitemdelegate.cpp")
+    add_files("3rdparty/qwindowkitty/src/core/kernel/nativeeventfilter.cpp")
+    add_files("3rdparty/qwindowkitty/src/core/kernel/sharedeventfilter.cpp")
+    add_files("3rdparty/qwindowkitty/src/core/kernel/winidchangeeventfilter.cpp")
+    add_files("3rdparty/qwindowkitty/src/core/contexts/abstractwindowcontext.cpp")
+    if is_plat("macosx") then
+        add_files("3rdparty/qwindowkitty/src/core/contexts/cocoawindowcontext.mm")
+    else
+        add_files("3rdparty/qwindowkitty/src/core/contexts/qtwindowcontext.cpp")
+    end
+    if has_config("style_agent") then
+        add_files("3rdparty/qwindowkitty/src/core/style/styleagent.cpp")
+        if is_plat("macosx") then
+            add_files("3rdparty/qwindowkitty/src/core/style/styleagent_mac.mm")
+        elseif is_plat("windows") then
+            add_files("3rdparty/qwindowkitty/src/core/style/styleagent_win.cpp")
+        else
+            add_files("3rdparty/qwindowkitty/src/core/style/styleagent_linux.cpp")
+        end
+    end
+    
+    -- Platform-specific Windows files
+    if is_plat("windows") then
+        add_files("3rdparty/qwindowkitty/src/core/qwindowkit_windows.cpp")
+        add_files("3rdparty/qwindowkitty/src/core/contexts/win32windowcontext.cpp")
+    end
+
+    -- Add header files that need MOC processing (use add_files for Q_OBJECT headers)
+    add_files("3rdparty/qwindowkitty/src/core/windowagentbase.h")
+    add_files("3rdparty/qwindowkitty/src/core/contexts/abstractwindowcontext_p.h")
+    if is_plat("macosx") then
+        add_files("3rdparty/qwindowkitty/src/core/contexts/cocoawindowcontext_p.h")
+    end
+    if not is_plat("macosx") then
+        add_files("3rdparty/qwindowkitty/src/core/contexts/qtwindowcontext_p.h")
+    end
+    if has_config("style_agent") then
+        add_files("3rdparty/qwindowkitty/src/core/style/styleagent.h")
+    end
+
+    -- Set install headers
+    add_headerfiles("$(buildir)/include/QWKCore/**.h", {prefixdir = "QWKCore"})
+    add_headerfiles("$(buildir)/include/QWKCore/private/**.h", {prefixdir = "QWKCore/private"})
+target_end()
+
+target("QWKWidgets")
+    -- Set target type
+    if has_config("build_static") then
+        set_kind("static")
+    else
+        set_kind("shared")
+    end
+
+    add_cxxflags("-fPIC", "-fvisibility=hidden", "-fvisibility-inlines-hidden")
+    add_deps("QWKCore")
+    add_packages("qt6core", "qt6gui", "qt6widgets")
+    if is_plat("macosx") then
+        add_mxflags("-fno-objc-arc")
+        add_frameworks("Foundation", "Cocoa", "AppKit")
+        add_frameworks("QtCore", "QtGui", "QtWidgets")
+        add_frameworks("QtCorePrivate", "QtGuiPrivate")
+    end
+
+    -- Enable MOC generation for Qt
+    add_rules("qt.moc")
+
+    -- Copy widgets headers before build
+    before_build(function (target)
+        os.mkdir("$(buildir)/include/QWKWidgets")
+        os.cp("3rdparty/qwindowkitty/src/widgets/*.h", "$(buildir)/include/QWKWidgets/")
+    end)
+
+    -- Include directories
+    add_includedirs("$(buildir)/include", {public = true})
+    add_includedirs("3rdparty/qwindowkitty/src/widgets", "3rdparty/qwindowkitty/src")
+
+    -- Source files
+    add_files("3rdparty/qwindowkitty/src/widgets/widgetwindowagent.cpp")
+    add_files("3rdparty/qwindowkitty/src/widgets/widgetitemdelegate.cpp")
+    if is_plat("macosx") then
+        add_files("3rdparty/qwindowkitty/src/widgets/widgetwindowagent_mac.cpp")
+    elseif is_plat("windows") then
+        add_files("3rdparty/qwindowkitty/src/widgets/widgetwindowagent_win.cpp")
+    end
+
+    -- Add header files that need MOC processing (use add_files for Q_OBJECT headers)
+    add_files("3rdparty/qwindowkitty/src/widgets/widgetwindowagent.h")
+
+    -- Set install headers
+    add_headerfiles("$(buildir)/include/QWKWidgets/**.h", {prefixdir = "QWKWidgets"})
+target_end()
 
 target("libmogan") do
     set_basename("mogan")
@@ -332,6 +535,7 @@ target("libmogan") do
     set_encodings("utf-8")
 
     add_deps("libmoebius")
+    add_deps("QWKCore", "QWKWidgets")
     
     set_policy("check.auto_ignore_flags", false)
     add_rules("qt.static")
@@ -353,9 +557,6 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("s7")
     add_packages("argh")
-    if is_plat("macosx") then
-        add_packages("qwindowkitty")
-    end
     if not is_plat("macosx") then
         add_packages("libiconv")
     end
@@ -551,6 +752,8 @@ target("libmogan") do
         }
         add_includedirs("src/Plugins/MacOS", {public = true})
         add_files(plugin_macos_srcs)
+    end
+    if is_plat("macosx", "linux", "windows") then
         add_includedirs("src/Plugins/QWindowKit", {public = true})
         add_files("src/Plugins/QWindowKit/**.cpp")
         add_files("src/Plugins/QWindowKit/**.hpp")

@@ -142,7 +142,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
   QMainWindow* mw= mainwindow ();
   if (tm_style_sheet == "") mw->setStyle (qtmstyle ());
-#ifdef Q_OS_MAC
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
   // 无边框布局
   auto windowBar  = new QWK::WindowBar ();
   auto windowAgent= new QWK::WidgetWindowAgent (mw);
