@@ -63,7 +63,7 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
    */
   QLabel* rightLabel;
   QLabel* leftLabel;
-#ifdef Q_OS_MAC
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
   QToolBar* menuToolBar;
 #endif
   QToolBar*            mainToolBar;
