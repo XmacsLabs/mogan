@@ -24,7 +24,7 @@ clang-format -i tests/**/*.cpp
 clang-format -i tests/**/*.hpp
 clang-format -i src/**/*.cpp
 clang-format -i src/**/*.hpp
-clang-format -i 3rdparty/moebius/**/*.cpp
-clang-format -i 3rdparty/moebius/**/*.hpp
+clang-format -i moebius/**/*.cpp
+clang-format -i moebius/**/*.hpp
 clang-format -i 3rdparty/lolly/**/*.cpp
 clang-format -i 3rdparty/lolly/**/*.hpp
