@@ -160,6 +160,8 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   windowAgent->setTitleBar (windowBar);
   windowAgent->setHitTestVisible (tabPageContainer, true);
   mw->setMenuWidget (windowBar);
+#else
+  tabPageContainer= new QTMTabPageContainer (mw);
 #endif
 
   // there is a bug in the early implementation of toolbars in Qt 4.6
