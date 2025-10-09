@@ -540,7 +540,8 @@
 
 (tm-menu (focus-tag-extra-icons t)
   (:require (table-markup-context? t))
-  (if (document-like? (tree-up t))
+  (if (and (document-like? (tree-up t))
+           (not (tree-in? t '(wide-tabular wide-block))))
       ((check (balloon (icon "tm_table_parwidth.xpm")
                        "Extend table to full paragraph width")
               "v" (table-test-parwidth?))
