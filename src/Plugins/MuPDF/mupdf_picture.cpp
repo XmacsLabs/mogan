@@ -425,7 +425,7 @@ mupdf_load_and_parse_image (const char* path, int& w, int& h, string extension,
   fz_drop_buffer (ctx, buf);
   url image= url_ramdisc (res) * extension;
   if (extension == "pdf") {
-    mupdf_pdf_image_size (image, w, h);
+    mupdf_pdf_image_size (image, w, h, out_wcm_pointer, out_hcm_pointer);
   }
   else if (extension == "eps" || extension == "ps" || extension == "svg") {
     w= 0;

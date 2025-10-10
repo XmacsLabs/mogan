@@ -683,7 +683,7 @@ QTMWidget::dropEvent (QDropEvent* event) {
       }
 #ifdef USE_MUPDF_RENDERER
       else if (mupdf_supports (extension) || extension == "eps" ||
-               extension == "ps") {
+               extension == "ps" || extension == "pdf") {
         string imagedata= mupdf_load_and_parse_image (
             l[i].toLocalFile ().toStdString ().c_str (), ww, hh, extension, &w,
             &h);
