@@ -33,6 +33,8 @@
 
   <assign|prefix-enumerate-numeric|true>
 
+  <assign|prefix-enumerate-numeric-paren|true>
+
   <assign|prefix-enumerate-roman|true>
 
   <assign|prefix-enumerate-Roman|true>
@@ -40,6 +42,8 @@
   <assign|prefix-enumerate-alpha|true>
 
   <assign|prefix-enumerate-Alpha|true>
+
+  <assign|prefix-enumerate-circle|true>
 
   <assign|prefix-enumerate-hanzi|true>
 </body>

@@ -2052,7 +2052,7 @@
   ((:or itemize itemize-minus itemize-dot itemize-arrow)
    ,tmhtml-itemize)
   ((:or enumerate enumerate-numeric enumerate-roman enumerate-Roman
-        enumerate-alpha enumerate-Alpha enumerate-hanzi)
+        enumerate-alpha enumerate-Alpha)
    ,tmhtml-enumerate)
   ((:or description description-compact description-dash
         description-aligned description-long description-paragraphs)

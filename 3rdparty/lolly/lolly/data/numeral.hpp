@@ -42,6 +42,15 @@ string to_Roman (int32_t nr);
 string to_hanzi (int32_t nr);
 
 /**
+ * @brief Generates a circled numeral for a given integer.
+ *
+ * @param nr The integer to be converted to a circled numeral.
+ * @return A string representing the circled numeral when available, or a
+ * fallback string when the number has no dedicated circled glyph.
+ */
+string to_circle (int32_t nr);
+
+/**
  * @brief Converts an 8-bit unsigned integer to a fixed-length (2) hex string.
  *
  * @param i The integer to be converted to a fixed-length hex string.

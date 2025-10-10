@@ -90,7 +90,7 @@
 (define-group enumerate-tag
   enumerate enumerate-numeric enumerate-roman
   enumerate-Roman enumerate-alpha enumerate-Alpha
-  enumerate-hanzi)
+  enumerate-circle enumerate-hanzi enumerate-numeric-paren)
 
 (define-group description-tag
   description description-compact description-aligned

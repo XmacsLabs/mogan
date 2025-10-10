@@ -54,6 +54,8 @@
 
   <assign|aligned-bracket-item|<macro|name|<aligned-item|<arg|name><with|font-shape|right|)><item-spc>>>>
 
+  <assign|aligned-paren-item|<macro|name|<aligned-item|(<arg|name>)<item-spc>>>>
+
   <assign|aligned-strong-dot-item|<macro|name|<aligned-item|<item-strong|<arg|name>.<item-spc>>>>>
 
   <assign|compact-space-item|<macro|name|<compact-item|<arg|name> \ >>>
@@ -262,13 +264,17 @@
 
   <new-list|enumerate-numeric|<value|aligned-dot-item>|<value|identity>>
 
+  <new-list|enumerate-numeric-paren|<value|aligned-paren-item>|<value|identity>>
+
   <new-list|enumerate-roman|<value|aligned-dot-item>|<macro|name|<number|<arg|name>|roman>>>
 
   <new-list|enumerate-Roman|<value|aligned-dot-item>|<macro|name|<number|<arg|name>|Roman>>>
 
-  <new-list|enumerate-alpha|<value|aligned-bracket-item>|<macro|name|<number|<arg|name>|alpha>>>
+  <new-list|enumerate-alpha|<value|aligned-dot-item>|<macro|name|<number|<arg|name>|alpha>>>
 
-  <new-list|enumerate-Alpha|<value|aligned-bracket-item>|<macro|name|<number|<arg|name>|Alpha>>>
+  <new-list|enumerate-Alpha|<value|aligned-dot-item>|<macro|name|<number|<arg|name>|Alpha>>>
+
+  <new-list|enumerate-circle|<value|aligned-space-item>|<macro|name|<number|<arg|name>|circle>>>
 
   <new-list|enumerate-hanzi|<value|aligned-comma-item>|<macro|name|<number|<arg|name>|hanzi>>>
 
