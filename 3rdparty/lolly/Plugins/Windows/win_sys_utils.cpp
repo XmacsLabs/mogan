@@ -116,37 +116,3 @@ win_system (array<::string> arg, array<int> fd_in, array<::string> str_in,
   return (wret);
 }
 #endif
-
-namespace lolly {
-
-#ifndef SECURITY_WIN32
-#define SECURITY_WIN32
-#endif
-
-#ifdef OS_WIN
-#include <windows.h>
-#endif
-#include <windef.h>
-
-#include <basetsd.h>
-#include <ntsecapi.h>
-#ifdef OS_WIN
-#include <security.h>
-#else
-#include <secext.h>
-#endif
-#include <wtypesbase.h>
-
-string
-win_get_username () {
-  const int MAX_LEN= 100;
-  wchar_t   buffer[MAX_LEN]; // it is in UTF-16
-  ULONG     len;
-  GetUserNameExW (NameDisplay, buffer, &len);
-  if (len == 0) return string ("");
-  else {
-    return wchar_to_utf8 (buffer);
-  }
-}
-
-} // namespace lolly
