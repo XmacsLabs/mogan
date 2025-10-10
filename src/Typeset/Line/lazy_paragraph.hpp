@@ -67,6 +67,7 @@ protected:
   SI        bot;         // next line will not ascend higher than this
   SI        top;         // previous line will not descend lower than this
   SI        tab_sep;     // separation between columns in tabular
+  bool      tbl_par;     // whether current paragraph is a table var paragraph
   int       nr_cols;     // number of columns
   array<SI> swell;       // swell properties for lines with large height
   tree      init_decs;   // initial decorations
