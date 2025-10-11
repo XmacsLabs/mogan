@@ -170,11 +170,17 @@
   (resize "500guipx" "200guipx"
     (centered
       (glue #t #f 150 6)
-      (text (replace "Save change to 「 %1 」?" buffer-name))
+      (text
+        (if buffer-name
+          `(verbatim ,(string-append (cork->utf8 (translate "Save change to")) "「 " buffer-name " 」?"))
+          `(verbatim ,(string-append (cork->utf8 (translate "Save scratch buffer")) "?"))))
       (glue #t #f 150 6))
     (bottom-buttons
       >>
-      ("Save" (cmd "Save"))
+      (assuming buffer-name
+        ("Save" (cmd "Save")))
+      (assuming (not buffer-name)
+        ("Save as" (cmd "Save")))
       //
       ("Don't save" (cmd "Don't save"))
       //
@@ -185,12 +191,13 @@
   (let ((buffer (if (null? opt-buffer) (current-buffer) (car opt-buffer))))
     (dialogue-window (lambda (cmd)
                        (confirm-close-widget cmd
-                         (let ((title (buffer-get-title buffer)))
-                           (if (== title "") (url->system (url-tail buffer)) title))))
+                         (if (or (url-scratch? buffer) (url-rooted-tmfs? buffer))
+                             #f
+                             (buffer-get-title buffer))))
       (lambda (answer)
         (cond
           ((== answer "Save")
-            (if (url-scratch? buffer)
+            (if (or (url-scratch? buffer) (url-rooted-tmfs? buffer))
                  (choose-file
                    (lambda (x) 
                      (save-buffer-as-simple x buffer (list :overwrite))
