@@ -13,6 +13,8 @@
 
 using namespace moebius;
 
+#define PAGE_TOUCH_WINDOW 32
+
 bridge bridge_docrange (typesetter ttt, tree st, path ip, array<bridge>& brs,
                         int begin, int end, bool divide);
 
@@ -53,7 +55,9 @@ bridge_document_rep::initialize () {
 
 void
 bridge_document_rep::initialize_acc () {
-  if (true || ttt->paper) acc= bridge ();
+  // Enable document-range acceleration in interactive (screen) mode
+  // to minimize unnecessary full-document retypesetting.
+  if (ttt->paper) acc= bridge ();
   else acc= bridge_docrange (ttt, st, ip, brs, 0, N (st), true);
 }
 
@@ -133,18 +137,25 @@ bridge_document_rep::notify_remove (path p, int nr) {
       brs2[i]= brs[i + nr];
       brs2[i]->ip->item-= nr;
     }
-    bool change_flag= false;
-    for (i= pos; i < pos + nr; i++)
-      change_flag|= !brs[i]->changes->empty ();
     brs= brs2;
     n-= nr;
     st= st (0, pos) * st (pos + nr, N (st));
-    if (pos > 0)
-      brs[pos - 1]->notify_change ();        // touch in case of surroundings
-    if (pos < n) brs[pos]->notify_change (); // touch in case of surroundings
-    if (change_flag) // touch brs[pos..n] for correct ``changes handling''
-      for (i= pos; i < n; i++)
+    // Policy per requirements:
+    // - If nr == 1, only touch neighbors at pos-1 and pos.
+    // - If nr > 1, touch a "page-sized" window starting at pos to avoid broad
+    // cascading.
+    if (pos > 0) brs[pos - 1]->notify_change (); // touch left neighbor
+    if (pos < n)
+      brs[pos]->notify_change (); // touch right neighbor (current at pos)
+
+    if (nr > 1) {
+      int start= pos;
+      int end  = min (n, pos + PAGE_TOUCH_WINDOW);
+      // PAGE_TOUCH_WINDOW is close to the ACC_THRESHOLD from accelerator
+      // usually covers a page or few pages of flow
+      for (i= start; i < end; i++)
         brs[i]->notify_change ();
+    }
     if (!is_nil (acc)) acc->notify_remove (p, nr);
     // initialize_acc ();
   }

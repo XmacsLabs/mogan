@@ -28,6 +28,12 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
+#include "../QWindowKit/windowbar.hpp"
+#include "../QWindowKit/windowbutton.hpp"
+#include <QWKWidgets/widgetwindowagent.h>
+#endif
+
 class QLabel;
 class QToolBar;
 class QTMInteractivePrompt;
@@ -55,18 +61,22 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
    tab_tools_visibility     = 1024
    } visibility_t;
    */
-  QLabel*             rightLabel;
-  QLabel*             leftLabel;
-  QToolBar*           mainToolBar;
-  QToolBar*           modeToolBar;
-  QToolBar*           focusToolBar;
-  QToolBar*           userToolBar;
-  QDockWidget*        sideTools;
-  QDockWidget*        leftTools;
-  QDockWidget*        bottomTools;
-  QDockWidget*        extraTools;
-  QTMTabPageBar*      tabToolBar;
-  QTMAuxiliaryWidget* auxiliaryWidget;
+  QLabel* rightLabel;
+  QLabel* leftLabel;
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
+  QToolBar* menuToolBar;
+#endif
+  QToolBar*            mainToolBar;
+  QToolBar*            modeToolBar;
+  QToolBar*            focusToolBar;
+  QToolBar*            userToolBar;
+  QDockWidget*         sideTools;
+  QDockWidget*         leftTools;
+  QDockWidget*         bottomTools;
+  QDockWidget*         extraTools;
+  QTMTabPageContainer* tabPageContainer;
+  QTMTabPageBar*       tabToolBar;
+  QTMAuxiliaryWidget*  auxiliaryWidget;
 
 #ifdef Q_OS_MAC
   QToolBar* dumbToolBar;

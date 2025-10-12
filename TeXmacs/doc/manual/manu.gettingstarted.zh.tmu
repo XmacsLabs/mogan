@@ -16,16 +16,16 @@
   <TeXmacs>使用下列组合键：
 
   <\description>
-    <item*|<prefix|S->>Shift 组合键
+    <item*|<key|Shift+>>Shift 组合键
 
-    <item*|<prefix|C->>Control 组合键
+    <item*|<key|Ctrl+>>Control 组合键
 
-    <item*|<prefix|A->>Alt 组合键
+    <item*|<key|Alt+>>Alt 组合键
 
-    <item*|<prefix|M->>Meta 组合键
+    <item*|<key|Cmd+>>Command 组合键
   </description>
 
-  例如，<key*|M-S-x> 表示同时按下三个键 <prefix|M->， <prefix|S-> 和 <key|x> 。
+  例如，<key*|Cmd+Shift+X> 表示同时按下三个键 <key|Cmd+>， <key|Shift+> 和 <key|x> 。
 
   <paragraph*|快捷键>
 

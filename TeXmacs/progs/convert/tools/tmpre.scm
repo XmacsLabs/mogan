@@ -21,6 +21,7 @@
   verbatim code center indent description itemize itemize-minus
   itemize-dot itemize-arrow enumerate enumerate-numeric
   enumerate-roman enumerate-Roman enumerate-alpha enumerate-Alpha
+  enumerate-circle enumerate-hanzi enumerate-numeric-paren
   equation equation* eqnarray eqnarray* leqnarray leqnarray*
   elsequation elsequation*)
 

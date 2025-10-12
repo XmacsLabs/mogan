@@ -388,10 +388,13 @@
   ("Default" (make-tmlist 'enumerate))
   ---
   ("1, 2, 3, ..." (make-tmlist 'enumerate-numeric))
+  ("(1), (2), (3), ..." (make-tmlist 'enumerate-numeric-paren))
   ("i, ii, iii, ..." (make-tmlist 'enumerate-roman))
   ("I, II, III, ..." (make-tmlist 'enumerate-Roman))
   ("a, b, c, ..." (make-tmlist 'enumerate-alpha))
-  ("A, B, C, ..." (make-tmlist 'enumerate-Alpha)))
+  ("A, B, C, ..." (make-tmlist 'enumerate-Alpha))
+  ("①, ②, ③, ..." (make-tmlist 'enumerate-circle))
+  ("一, 二, 三, ..." (make-tmlist 'enumerate-hanzi)))
 
 (menu-bind description-menu
   ("Default" (make-tmlist 'description))
@@ -412,10 +415,13 @@
   ("Enumerate" (make-tmlist 'enumerate))
   ---
   ("1, 2, 3, ..." (make-tmlist 'enumerate-numeric))
+  ("(1), (2), (3), ..." (make-tmlist 'enumerate-numeric-paren))
   ("i, ii, iii, ..." (make-tmlist 'enumerate-roman))
   ("I, II, III, ..." (make-tmlist 'enumerate-Roman))
   ("a, b, c, ..." (make-tmlist 'enumerate-alpha))
   ("A, B, C, ..." (make-tmlist 'enumerate-Alpha))
+  ("①, ②, ③, ..." (make-tmlist 'enumerate-circle))
+  ("一, 二, 三, ..." (make-tmlist 'enumerate-hanzi))
   ---
   ("Description" (make-tmlist 'description))
   ---

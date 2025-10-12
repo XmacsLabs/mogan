@@ -153,7 +153,7 @@
 
 (define (get-interactive-function-list)
   (let* ((funs (get-function-list))
-         (pred? (lambda (fun) (not (not (property fun :arguments))))))
+         (pred? (lambda (fun) (property fun :arguments))))
     (list-filter funs pred?)))
 
 (tm-define (exec-interactive-command cmd)
@@ -166,6 +166,44 @@
 ;; Killing buffers, windows and TeXmacs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(tm-widget (confirm-close-widget cmd buffer-name)
+  (resize "500guipx" "200guipx"
+    (centered
+      (glue #t #f 150 6)
+      (text (replace "Save change to 「 %1 」?" buffer-name))
+      (glue #t #f 150 6))
+    (bottom-buttons
+      >>
+      ("Save" (cmd "Save"))
+      //
+      ("Don't save" (cmd "Don't save"))
+      //
+      ("Cancel" (cmd "Cancel"))
+      /// )))
+
+(define (confirm-close-dialog prompt on-save on-dont-save . opt-buffer)
+  (let ((buffer (if (null? opt-buffer) (current-buffer) (car opt-buffer))))
+    (dialogue-window (lambda (cmd)
+                       (confirm-close-widget cmd
+                         (let ((title (buffer-get-title buffer)))
+                           (if (== title "") (url->system (url-tail buffer)) title))))
+      (lambda (answer)
+        (cond
+          ((== answer "Save")
+            (if (url-scratch? buffer)
+                 (choose-file
+                   (lambda (x) 
+                     (save-buffer-as-simple x buffer (list :overwrite))
+                     (on-save))
+                   "Save TeXmacs file" "tmu")
+                 (begin
+                   (if (not (buffer-save buffer))
+                       (on-save)))))
+          ((== answer "Don't save")
+            (on-dont-save))
+          (else #f)))
+    "Save buffer?")))
+
 (tm-define (buffer-close name)
   (cpp-buffer-close name))
 
@@ -176,9 +214,9 @@
   (cond ((buffer-embedded? (current-buffer))
          (alt-windows-delete (alt-window-search (current-buffer))))
         ((buffer-modified? (current-buffer))
-         (user-confirm "The document has not been saved. Really close it?" #f  
-           (lambda (answ)
-             (when answ (buffer-close (current-buffer))))))
+         (confirm-close-dialog "The document has not been saved. Really close it?"
+           (lambda () (buffer-close (current-buffer)))
+           (lambda () (buffer-close (current-buffer)))))
         (else (buffer-close (current-buffer)))))
 
 (tm-define (safely-kill-tabpage)
@@ -193,10 +231,12 @@
       ((buffer-modified? tgt-buffer)
        ; if the buffer is modified and has not been saved,
        ; pop up a dialog prompting the user to confirm closing
-       (user-confirm "The document has not been saved. Really close it?" #f
-         (lambda (answ)
-           (when answ
-             (kill-tabpage tgt-win tgt-view)))))
+       (confirm-close-dialog "The document has not been saved. Really close it?"
+         (lambda () 
+           (kill-tabpage tgt-win tgt-view))
+         (lambda () 
+           (kill-tabpage tgt-win tgt-view))
+         tgt-buffer))
       (else
        (kill-tabpage tgt-win tgt-view)))))
 
@@ -207,10 +247,10 @@
     ((buffer-modified? tgt-buffer)
      ; if the buffer is modified and has not been saved,
      ; pop up a dialog prompting the user to confirm closing
-     (user-confirm "The document has not been saved. Really close it?" #f
-       (lambda (answ)
-         (when answ
-           (kill-tabpage tgt-win tgt-view)))))
+     (confirm-close-dialog "The document has not been saved. Really close it?"
+       (lambda () (kill-tabpage tgt-win tgt-view))
+       (lambda () (kill-tabpage tgt-win tgt-view))
+       tgt-buffer))
     (else
      (kill-tabpage tgt-win tgt-view))))
 
@@ -219,14 +259,14 @@
     (kill-window (current-window))
     (delayed
       (:idle 100)
-      (buffer-close buf))))
+      (lambda () (buffer-close buf)))))
 
 (define (do-kill-window* u)
  (with buf (window->buffer u)
    (kill-window u)
    (delayed
      (:idle 100)
-     (buffer-close buf))))
+     (lambda () (buffer-close buf)))))
 
 (tm-define (safely-kill-window . opt-name)
   (cond ((and (buffer-embedded? (current-buffer)) (null? opt-name))
@@ -235,15 +275,15 @@
          (safely-quit-TeXmacs))
         ((nnull? opt-name)
          (if (buffer-modified? (window->buffer (car opt-name)))
-             (user-confirm
-                 "The document has not been saved. Really close it?" #f
-               (lambda (answ)
-                 (when answ (do-kill-window* (car opt-name)))))
+             (confirm-close-dialog "The document has not been saved. Really close it?"
+               (lambda () (do-kill-window* (car opt-name)))
+               (lambda () (do-kill-window* (car opt-name)))
+               (window->buffer (car opt-name)))
              (do-kill-window* (car opt-name))))
         ((buffer-modified? (current-buffer))
-         (user-confirm "The document has not been saved. Really close it?" #f
-           (lambda (answ)
-             (when answ (do-kill-window)))))
+               (confirm-close-dialog "The document has not been saved. Really close it?"
+           (lambda () (do-kill-window))
+           (lambda () (do-kill-window))))
         (else (do-kill-window))))
 
 (tm-define (safely-quit-TeXmacs)
@@ -255,8 +295,9 @@
           (when (nin? (current-buffer) l)
             ;; FIXME: focus on window with buffer, if any
             (switch-to-buffer (car l)))
-          (user-confirm "There are unsaved documents. Really quit?" #f  
-            (lambda (answ) (when answ (quit-TeXmacs))))))))
+          (confirm-close-dialog "There are unsaved documents. Really quit?"
+            (lambda () (save-all-buffers) (quit-TeXmacs))
+            (lambda () (quit-TeXmacs)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; System dependent conventions for buffer management
@@ -277,3 +318,66 @@
 (tm-define (close-document*)
   (with-default-view
     (if (window-per-buffer?) (safely-kill-tabpage) (safely-kill-window))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 保存相关的辅助函数和接口
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; 检查文件写入权限
+(define (cannot-write? name action)
+  (with vname `(verbatim ,(utf8->cork (url->system name)))
+    (cond ((and (not (url-test? name "f")) (url-exists? name))
+           (with msg "The file cannot be created:"
+             (notify-now `(concat ,msg "<br>" ,vname)))
+           #t)
+          ((and (url-test? name "f") (not (url-test? name "w")))
+           (with msg "You do not have write access for:"
+             (notify-now `(concat ,msg "<br>" ,vname)))
+           #t)
+          (else #f))))
+
+;; 执行实际保存操作
+(define (save-buffer-save name opts . opt-callback)
+  (let ((callback (if (null? opt-callback) (lambda (success) (noop)) (car opt-callback))))
+    (with vname `(verbatim ,(utf8->cork (url->system name)))
+      (if (buffer-save name)
+          (begin
+            (buffer-pretend-modified name)
+            (set-message `(concat "Could not save " ,vname) "Save file")
+            (callback #f))
+          (begin
+            (if (== (url-suffix name) "ts") (style-clear-cache))
+            (set-message `(concat "Saved " ,vname) "Save file")
+            (save-buffer-post name opts)
+            (callback #t))))))
+
+;; 保存后的处理
+(define (save-buffer-post name opts)
+  (cond ((in? :update opts)
+         (update-buffer name))
+        ((in? :commit opts)
+         (commit-buffer name))))
+
+;; 保存接口
+(define (save-buffer-as-simple new-name name opts)
+  (cond
+    ((cannot-write? new-name "Save file") #f)
+    ((and (url-test? new-name "f") (nin? :overwrite opts))
+     (user-confirm "File already exists. Really overwrite?" #f
+       (lambda (answ) (when answ (save-buffer-as-simple-continue new-name name opts)))))
+    (else (save-buffer-as-simple-continue new-name name opts))))
+
+(define (save-buffer-as-simple-continue new-name name opts)
+  (cond
+    ((buffer-exists? new-name)
+     (with s (string-append "The file " (url->system new-name)
+                            " is being edited. Discard edits?")
+       (user-confirm s #f
+         (lambda (answ) (when answ (save-buffer-as-simple-save new-name name opts))))))
+    (else (save-buffer-as-simple-save new-name name opts))))
+
+(define (save-buffer-as-simple-save new-name name opts)
+  (if (and (url-scratch? name) (url-exists? name)) (system-remove name))
+  (buffer-rename name new-name)
+  (buffer-pretend-modified new-name)
+  (save-buffer-save new-name opts (lambda (success) (noop))))

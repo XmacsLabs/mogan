@@ -1,4 +1,4 @@
-<TeXmacs|2.1.2>
+<TMU|<tuple|1.1.0|2025.2.0-alpha>>
 
 <style|<tuple|tmdoc|british|json>>
 
@@ -13,13 +13,9 @@
 
   <paragraph|<value|code-Name> style package>
 
-  Click <menu|Document|Style|Add package|Code|<value|code-name>> or click
-  <menu|<icon|tm_add.svg>|Code|<value|code-name>> on the focus toolbar to add
-  the <value|code-Name> style package.
+  Click <menu|Document|Style|Add package|Code|<value|code-name>> or click <menu|<icon|tm_add.svg>|Code|<value|code-name>> on the focus toolbar to add the <value|code-Name> style package.
 
-  In the <code-Name> style package, <markup|<value|code-name>> is provided
-  for inline snippets and <markup|<value|code-name>-code> is provided for
-  <code-Name> code blocks.
+  In the <code-Name> style package, <markup|<value|code-name>> is provided for inline snippets and <markup|<value|code-name>-code> is provided for <code-Name> code blocks.
 
   <paragraph|<value|code-Name> syntax>
 
@@ -32,7 +28,7 @@
   <\json-code>
     {
 
-    \ \ "name": "\<#5F20\>\<#4E09\>",
+    \ \ "name": "张三",
 
     \ \ "age": 30,
 
@@ -42,9 +38,9 @@
 
     \ \ "address": {
 
-    \ \ \ \ "street": "\<#5E78\>\<#798F\>\<#8DEF\>123\<#53F7\>",
+    \ \ \ \ "street": "幸福路123号",
 
-    \ \ \ \ "city": "\<#5317\>\<#4EAC\>",
+    \ \ \ \ "city": "北京",
 
     \ \ \ \ "postalCode": "100000"
 
@@ -70,8 +66,7 @@
 
     \ \ ],
 
-    \ \ "hobbies": ["\<#9605\>\<#8BFB\>", "\<#65C5\>\<#6E38\>",
-    "\<#6444\>\<#5F71\>", "\<#97F3\>\<#4E50\>"]
+    \ \ "hobbies": ["阅读", "旅游", "摄影", "音乐"]
 
     }
   </json-code>
@@ -84,12 +79,7 @@
 
   <tmdoc-copyright|2024|Darcy Shen>
 
-  <tmdoc-license|Permission is granted to copy, distribute and/or modify this
-  document under the terms of the GNU Free Documentation License, Version 1.1
-  or any later version published by the Free Software Foundation; with no
-  Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
-  Texts. A copy of the license is included in the section entitled "GNU Free
-  Documentation License".>
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
 </body>
 
 <\initial>

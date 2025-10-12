@@ -59,6 +59,7 @@ lazy_paragraph_rep::lazy_paragraph_rep (edit_env env2, path ip)
   tab_sep    = hor_sep;
   line_sep   = env->get_vspace (PAR_LINE_SEP);
   par_sep    = env->get_vspace (PAR_PAR_SEP);
+  tbl_par    = false;
   nr_cols    = env->get_int (PAR_COLUMNS);
   swell      = array<SI> ();
 
@@ -842,7 +843,7 @@ lazy_paragraph_rep::format_paragraph_unit (int the_start, int the_end) {
       line_start ();
       line_units (start, end, start == the_start, end == the_end, mode, hyphen,
                   left, width, first, 0);
-      if (end < the_end) line_end (line_sep, 1);
+      if (end < the_end) line_end (tbl_par ? space (0) : line_sep, 1);
       else return;
     }
   // cout << "Unit done\n";
@@ -852,7 +853,8 @@ void
 lazy_paragraph_rep::format_paragraph () {
   width-= right;
 
-  int start= 0, i, j, k;
+  int  start     = 0, i, j, k;
+  bool is_tbl_par= false;
   // cout << "Typeset " << a << "\n";
   for (i= 0; i <= N (a); i++) {
     // determine the next unit
@@ -867,6 +869,7 @@ lazy_paragraph_rep::format_paragraph () {
     bool no_first       = (style[PAR_NO_FIRST] == "true");
     style (PAR_NO_FIRST)= "false";
     if (no_first) style (PAR_FIRST)= "0cm";
+    is_tbl_par= false;
     for (j= start; j < i; j++)
       if (a[j]->type == CONTROL_ITEM)
         if (is_tuple (a[j]->t, "env_par")) {
@@ -877,13 +880,16 @@ lazy_paragraph_rep::format_paragraph () {
           }
           style (a[j]->t[1]->label)= a[j]->t[2];
         }
+        else if (is_tuple (a[j]->t, "tbl_par")) is_tbl_par= true;
     no_first= (style[PAR_NO_FIRST] == "true");
     if (no_first) env->monitored_write_update (PAR_NO_FIRST, "true");
     if (mode == "center") first= 0;
     else first= env->as_length (style[PAR_FIRST]);
-    sss->set_env_vars (height, sep, hor_sep, ver_sep, bot, top, swell);
+    if (is_tbl_par) sss->set_env_vars (0, 0, hor_sep, 0, 0, 0, array<SI> ());
+    else sss->set_env_vars (height, sep, hor_sep, ver_sep, bot, top, swell);
 
     // typeset paragraph unit
+    tbl_par= is_tbl_par;
     format_paragraph_unit (start, i);
     line_end (line_sep /*+ par_sep*/, 0);
     sss->new_paragraph (par_sep);
@@ -913,6 +919,10 @@ convert (edit_env env, array<box> bs, path ip) {
     if (i == 0) {
       box  b = empty_box (decorate (ip), 0, 0, 0, env->fn->yx);
       tree ct= tuple ("env_par", PAR_FIRST, "0cm");
+      if (n > 1) {
+        box b2= empty_box (decorate (ip), 0, 0, 0, env->fn->yx);
+        a << line_item (CONTROL_ITEM, OP_SKIP, b2, 0, tuple ("tbl_par"));
+      }
       a << line_item (CONTROL_ITEM, OP_SKIP, b, 0, ct);
     }
     a << line_item (STD_ITEM, env->mode_op, bs[i], 0);

@@ -209,7 +209,6 @@ qt_gui_rep::qt_gui_rep (int& argc, char** argv)
   if (has_user_preference ("retina-scale"))
     retina_scale= as_double (get_user_preference ("retina-scale"));
 
-  qApp->setAttribute (Qt::AA_UseHighDpiPixmaps);
   if (!use_native_menubar) {
     qApp->setAttribute (Qt::AA_DontUseNativeMenuBar);
   }
@@ -264,7 +263,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   const QMimeData* md          = cb->mimeData (mode);
   QByteArray       buf;
   string           input_format;
-  QSize            image_size;
+  string           image_w_string, image_h_string;
 
   s= "";
   t= "none";
@@ -297,8 +296,10 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       QImage  image= qvariant_cast<QImage> (md->imageData ());
       qbuf.open (QIODevice::WriteOnly);
       image.save (&qbuf, "PNG");
-      input_format= "picture";
-      image_size  = image.size ();
+      input_format    = "picture";
+      QSize image_size= image.size ();
+      qt_pretty_image_size (image_size.width (), image.height (),
+                            image_w_string, image_h_string);
     }
     else if (md->hasUrls ()) {
       QList<QUrl> l= md->urls ();
@@ -307,10 +308,10 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
 #ifdef USE_MUPDF_RENDERER
         int    ww, hh;
         string image_data= mupdf_load_and_parse_image (
-            filePath.toStdString ().c_str (), ww, hh, "png");
+            filePath.toStdString ().c_str (), ww, hh, "png", &image_w_string,
+            &image_h_string);
         if (N (image_data) > 0) {
           input_format= "picture";
-          image_size  = QSize (ww, hh);
           buf         = QByteArray (image_data.begin (), N (image_data));
         }
 #else
@@ -324,8 +325,10 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
           QBuffer qbuf (&buf);
           qbuf.open (QIODevice::WriteOnly);
           image.save (&qbuf, "PNG");
-          input_format= "picture";
-          image_size  = image.size ();
+          input_format    = "picture";
+          QSize image_size= image.size ();
+          qt_pretty_image_size (image_size.width (), image.height (),
+                                image_w_string, image_h_string);
         }
 #endif
       }
@@ -364,12 +367,9 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
     s     = as_string (call ("convert", t, "texmacs-tree", "texmacs-snippet"));
   }
   if (input_format == "picture") {
-    tree   t (IMAGE);
-    int    ww= image_size.width (), hh= image_size.height ();
-    string w, h;
-    qt_pretty_image_size (ww, hh, w, h);
-    t << tuple (tree (RAW_DATA, s), "png") << w << h << ""
-      << "";
+    tree t (IMAGE);
+    t << tuple (tree (RAW_DATA, s), "png") << image_w_string << image_h_string
+      << "" << "";
     s= as_string (call ("convert", t, "texmacs-tree", "texmacs-snippet"));
   }
   t= tuple ("extern", s);

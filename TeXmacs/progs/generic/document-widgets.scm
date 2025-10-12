@@ -542,7 +542,7 @@
          (st (embedded-style-list "macro-editor")))
     (apply auxiliary-widget
            (cons* (lambda (quit) (page-formatter-headers u st quit))
-                  noop "Headers and footers"
+                  noop (translate "Headers and footers")
                   (header-buffers)))))
 
 (tm-define (open-page-headers-footers)

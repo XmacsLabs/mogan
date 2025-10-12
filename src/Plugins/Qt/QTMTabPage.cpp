@@ -15,7 +15,14 @@
 #include "tm_window.hpp"
 
 // The minimum width of a single tab page (in pixels).
-#define MIN_TAB_PAGE_WIDTH 150
+const int MIN_TAB_PAGE_WIDTH= 150;
+
+// The horizontal padding for tab container (in pixels).
+#ifdef Q_OS_MAC
+const int TAB_CONTAINER_PADDING= 75;
+#else
+const int TAB_CONTAINER_PADDING= 15;
+#endif
 
 /**
  * What is g_mostRecentlyClosedTab used for? When we close an ACTIVE(!) tab
@@ -31,8 +38,10 @@
  * does not disappear immediately. Therefore, we need it to remember which tab
  * was most recently closed and avoid displaying it during the first update.
  */
-url g_mostRecentlyClosedTab= url_none ();
-
+int                  g_tabWidth              = -1;
+int                  g_pointingIndex         = -1;
+int                  g_hiddentTabIndex       = -1;
+url                  g_mostRecentlyClosedTab = url_none ();
 url                  g_mostRecentlyDraggedTab= url_none ();
 QTMTabPageContainer* g_mostRecentlyDraggedBar= nullptr;
 QTMTabPageContainer* g_mostRecentlyEnteredBar= nullptr;
@@ -44,21 +53,28 @@ QTMTabPageContainer* g_mostRecentlyEnteredBar= nullptr;
 QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
                         bool p_isActive)
     : m_viewUrl (p_url) {
-  p_title->setCheckable (p_isActive);
+  p_title->setCheckable (true);
   p_title->setChecked (p_isActive);
   setDefaultAction (p_title);
-  setFocusPolicy (Qt::NoFocus); // don't steal focus from the editor (1)
+  setFocusPolicy (Qt::NoFocus);
 
   m_closeBtn= new QToolButton (this);
-  m_closeBtn->setObjectName ("closeBtn");
+  m_closeBtn->setObjectName ("tabpage-close-button");
   m_closeBtn->setDefaultAction (p_closeBtn);
-  m_closeBtn->setFixedSize (20, 20); // position will be updated in resizeEvent
-  m_closeBtn->setFocusPolicy (
-      Qt::NoFocus); // don't steal focus from the editor (2) (both are needed)
+  m_closeBtn->setFixedSize (14, 14);
+  m_closeBtn->setFocusPolicy (Qt::NoFocus);
+  updateCloseButtonVisibility ();
   connect (m_closeBtn, &QToolButton::clicked, this,
            [=] () { g_mostRecentlyClosedTab= m_viewUrl; });
+}
 
-  setupStyle ();
+QTMTabPage::QTMTabPage () : m_viewUrl (url_none ()) {
+  setFocusPolicy (Qt::NoFocus);
+  m_closeBtn= new QToolButton (this);
+  m_closeBtn->setObjectName ("tabpage-close-button");
+  m_closeBtn->setFixedSize (14, 14);
+  m_closeBtn->setFocusPolicy (Qt::NoFocus);
+  updateCloseButtonVisibility ();
 }
 
 /* We can't align the text to the left of the button by QSS or other methods,
@@ -73,10 +89,27 @@ QTMTabPage::paintEvent (QPaintEvent*) {
 
   // draw the text now
   QFontMetrics fm (opt.fontMetrics);
-  QRect        rect= fm.boundingRect (opt.rect, Qt::AlignVCenter, text ());
-  rect.moveLeft (10);
-  p.drawItemText (rect, Qt::AlignLeft, palette (), isEnabled (), text (),
-                  QPalette::ButtonText);
+
+  // 计算可用的文字绘制区域，需要排除关闭按钮的空间
+  int leftPadding   = 10;
+  int rightPadding  = m_closeBtn->isVisible ()
+                          ? m_closeBtn->width () + 8
+                          : 8; // 如果关闭按钮可见，留出更多空间
+  int availableWidth= width () - leftPadding - rightPadding;
+
+  // 如果可用宽度太小，至少保证最小宽度
+  if (availableWidth < 20) {
+    availableWidth= 20;
+    rightPadding  = width () - leftPadding - availableWidth;
+  }
+
+  QRect textRect (leftPadding, 0, availableWidth, height ());
+
+  // 使用省略号来处理过长的文字
+  QString elidedText= fm.elidedText (text (), Qt::ElideRight, availableWidth);
+
+  p.drawItemText (textRect, Qt::AlignLeft | Qt::AlignVCenter, palette (),
+                  isEnabled (), elidedText, QPalette::ButtonText);
 }
 
 void
@@ -104,7 +137,7 @@ QTMTabPage::mousePressEvent (QMouseEvent* e) {
 void
 QTMTabPage::mouseMoveEvent (QMouseEvent* e) {
   if (!(e->buttons () & Qt::LeftButton)) return QToolButton::mouseMoveEvent (e);
-  if ((e->pos () - m_dragStartPos).manhattanLength () < 15) {
+  if ((e->pos () - m_dragStartPos).manhattanLength () < 3) {
     // avoid treating small movement(more like a click) as dragging
     return QToolButton::mouseMoveEvent (e);
   }
@@ -117,10 +150,14 @@ QTMTabPage::mouseMoveEvent (QMouseEvent* e) {
   g_mostRecentlyDraggedTab= this->m_viewUrl;
   g_mostRecentlyDraggedBar=
       qobject_cast<QTMTabPageContainer*> (this->parentWidget ());
+  g_mostRecentlyClosedTab= this->m_viewUrl; // hide the tab during dragging
+  g_pointingIndex        = -1;
+  g_mostRecentlyDraggedBar->arrangeTabPages ();
 
   QDrag* drag=
       new QDrag (parent ()); // don't point to `this`, it will cause crash
-  drag->setHotSpot (QPoint (0, 0)); // align pixmap to the topLeft of the cursor
+  // 设置热点为鼠标在标签页内的相对位置，这样pixmap会从标签页位置开始显示
+  drag->setHotSpot (m_dragStartPos);
   drag->setMimeData (new QMimeData ()); // Qt requires
   drag->setPixmap (pixmap);
   drag->exec (Qt::MoveAction);
@@ -131,47 +168,34 @@ QTMTabPage::mouseMoveEvent (QMouseEvent* e) {
 }
 
 void
-QTMTabPage::setupStyle () {
-  QString qss, bg_color, bg_color_hover, border_color, border_color_top;
+QTMTabPage::enterEvent (QEnterEvent* e) {
+  updateCloseButtonVisibility ();
+  QToolButton::enterEvent (e);
+}
 
-  // 检测是否使用liii-night主题
-  bool          use_liii_night_theme= false;
-  extern string tm_style_sheet; // 声明外部变量
-  if (tm_style_sheet != "") {
-    use_liii_night_theme= occurs ("liii-night", tm_style_sheet);
+void
+QTMTabPage::leaveEvent (QEvent* e) {
+  updateCloseButtonVisibility ();
+  QToolButton::leaveEvent (e);
+}
+
+void
+QTMTabPage::updateCloseButtonVisibility () {
+  // 当鼠标位于标签页上，或者标签页处于被选中状态时才显示关闭按钮
+  bool shouldShow= underMouse () || isChecked ();
+  bool wasVisible= m_closeBtn->isVisible ();
+  m_closeBtn->setVisible (shouldShow);
+
+  // 如果关闭按钮的可见性发生了变化，需要重新绘制文字区域
+  if (wasVisible != shouldShow) {
+    update ();
   }
+}
 
-  if (use_liii_night_theme) {
-    // liii-night主题的深色配色
-    bg_color        = "#535353";
-    bg_color_hover  = "#8d8d8d";
-    border_color    = "#4c4c4c";
-    border_color_top= "#000000";
-  }
-  else {
-    // 默认浅色配色
-    bg_color        = "#C7C8C9";
-    bg_color_hover  = "#EFF0F1";
-    border_color    = "#A6A6A6";
-    border_color_top= "#2c2c2c";
-  }
-
-  qss+= QString ("QTMTabPage{ padding: 0 26px; border-radius: 0px; "
-                 "background-color: %1; }")
-            .arg (bg_color);
-  qss+= QString ("QTMTabPage:hover{ background-color: %1; }")
-            .arg (bg_color_hover);
-  qss+= QString (
-            "QTMTabPage:checked{ background-color: %1; border-top: 3px solid "
-            "%2; border-left: 1px solid %3; border-right: 1px solid %4; }")
-            .arg (bg_color_hover, border_color_top, border_color, border_color);
-
-  qss+= "#closeBtn{ background-color: transparent; border-radius: 0px; "
-        "padding: 0px; }";
-  qss+= "#closeBtn:hover{ border-radius: 10px; color: #ffffff; "
-        "background-color: #E49AA2; }";
-
-  setStyleSheet (qss);
+void
+QTMTabPage::setChecked (bool checked) {
+  QToolButton::setChecked (checked);
+  updateCloseButtonVisibility ();
 }
 
 /******************************************************************************
@@ -184,6 +208,13 @@ QTMTabPageContainer::QTMTabPageContainer (QWidget* p_parent)
   m_indicator->setFrameShape (QFrame::VLine);
   m_indicator->setLineWidth (2);
   m_indicator->hide ();
+  dummyTabPage= new QTMTabPage ();
+  dummyTabPage->setParent (this);
+  dummyTabPage->hide ();
+
+  if (parent ()) {
+    parent ()->installEventFilter (this);
+  }
 
   setAcceptDrops (true);
   setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -195,6 +226,7 @@ void
 QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
   removeAllTabPages ();    // remove  old tabs
   extractTabPages (p_src); // extract new tabs
+
   arrangeTabPages ();
 }
 
@@ -233,59 +265,95 @@ QTMTabPageContainer::extractTabPages (QList<QAction*>* p_src) {
 
 void
 QTMTabPageContainer::arrangeTabPages () {
-  const int windowWidth= this->width ();
-  int       padding    = 8;
-  int       rowCount   = 0;
-  int       accumWidth = padding;
-  int       accumTab   = 0;
+  if (!parentWidget ()) return;
+  const int windowWidth=
+      parentWidget () ? parentWidget ()->width () : this->width ();
 
+  int visibleTabCount= 0;
+  // cout << "most recently closed tab:" << g_mostRecentlyClosedTab << LF;
   for (int i= 0; i < m_tabPageList.size (); ++i) {
     QTMTabPage* tab= m_tabPageList[i];
+    if (g_mostRecentlyClosedTab != tab->m_viewUrl) {
+      visibleTabCount++;
+    }
+  }
+
+  if (visibleTabCount == 0) {
+    g_mostRecentlyClosedTab= url ();
+    adjustHeight (0);
+    return;
+  }
+
+  if (g_pointingIndex != -1) {
+    visibleTabCount++; // leave space for the dragged tab
+  }
+  // cout << "Visible tab count:" << visibleTabCount << LF;
+
+  // Calculate tab dimensions
+  int availableWidth= windowWidth - 2 * TAB_CONTAINER_PADDING;
+  int tabWidth      = availableWidth / visibleTabCount;
+  tabWidth          = std::max (25, std::min (150, tabWidth));
+  g_tabWidth        = tabWidth; // for external use
+
+  int accumWidth= TAB_CONTAINER_PADDING;
+
+  // Set new positions for all tabs
+  for (int i= 0; i < m_tabPageList.size (); ++i) {
+    QTMTabPage* tab= m_tabPageList[i];
+
+    if (g_pointingIndex == i) {
+      // construct a dummy rectangle widget for indication of the inser place of
+      // the dragged tab
+      dummyTabPage->setGeometry (accumWidth, 0, tabWidth, m_rowHeight);
+      dummyTabPage->show ();
+      accumWidth+= tabWidth;
+    }
     if (g_mostRecentlyClosedTab == tab->m_viewUrl) {
-      // this tab has just been closed, don't display it
       tab->hide ();
       continue;
     }
 
-    QSize tabSize = tab->minimumSizeHint ();
-    int   tabWidth= max (MIN_TAB_PAGE_WIDTH, tabSize.width ());
-    if (accumWidth + tabWidth >= windowWidth) {
-      rowCount+= 1;
-      accumWidth= padding;
-      accumTab  = 0;
-    }
-    tab->setGeometry (accumWidth, rowCount * m_rowHeight, tabWidth,
-                      m_rowHeight);
+    tab->setGeometry (accumWidth, 0, tabWidth, m_rowHeight);
     accumWidth+= tabWidth;
-    accumTab+= 1;
+    tab->show ();
+  }
+  if (g_pointingIndex >= m_tabPageList.size ()) {
+    dummyTabPage->setGeometry (accumWidth, 0, tabWidth, m_rowHeight);
+    dummyTabPage->show ();
+    accumWidth+= tabWidth;
   }
 
-  g_mostRecentlyClosedTab= url (); // clear memory
-  adjustHeight (rowCount);
+  adjustHeight (0);
+
+  // if not draggin, clear the memory of most recently closed tab
+  if (g_mostRecentlyDraggedTab == url_none ()) g_mostRecentlyClosedTab= url ();
 }
 
 void
 QTMTabPageContainer::adjustHeight (int p_rowCount) {
   int h= m_rowHeight * (p_rowCount + 1);
-  // parentWidget's resizeEvent() will resize me
-  parentWidget ()->setFixedHeight (h + 2);
+  setFixedHeight (h - 2);
 }
 
 int
 QTMTabPageContainer::mapToPointing (QDropEvent* e, QPoint& p_indicatorPos) {
   QPoint pos= e->pos ();
-  for (int i= 0; i < m_tabPageList.size (); ++i) {
-    QRect rect= m_tabPageList[i]->geometry ();
-    if (rect.contains (pos)) {
-      int x_mid= rect.x () + rect.width () / 2;
-      if (pos.x () >= x_mid) {
-        p_indicatorPos= rect.topRight ();
-        if (e->source () == m_tabPageList[i]) return i;
-        else return min (i + 1, int (m_tabPageList.size ()));
-      }
-      p_indicatorPos= rect.topLeft ();
-      return i;
+  // Now we use g_tabWidth to calculate the pointing index, instead of geometry
+  if (g_tabWidth <= 0) {
+    p_indicatorPos= QPoint (0, 0);
+    return 0;
+  }
+  int index= pos.x () / g_tabWidth;
+  index    = qMax (0, qMin (index, m_tabPageList.size ()));
+  if (index < m_tabPageList.size ()) {
+    QRect rect = m_tabPageList[index]->geometry ();
+    int   x_mid= rect.x () + rect.width () / 2;
+    if (pos.x () >= x_mid) {
+      p_indicatorPos= rect.topRight ();
+      return std::min (index + 1, int (m_tabPageList.size ()));
     }
+    p_indicatorPos= rect.topLeft ();
+    return index;
   }
   // no valid pointing tab, p_indicatorPos should be at the end
   p_indicatorPos= m_tabPageList.last ()->geometry ().topRight ();
@@ -311,11 +379,13 @@ QTMTabPageContainer::dragMoveEvent (QDragMoveEvent* e) {
   if (g_mostRecentlyDraggedTab != url_none ()) {
     e->acceptProposedAction ();
     QPoint pos;
-    mapToPointing (e, pos);
+    int    pointingIndex= mapToPointing (e, pos);
+    if (g_pointingIndex != pointingIndex) {
+      g_pointingIndex= pointingIndex;
+      arrangeTabPages ();
+    }
     // display a vertical line to tell user where the tab will be inserted
     m_indicator->setGeometry (pos.x (), pos.y (), 2, m_rowHeight);
-    m_indicator->raise ();
-    m_indicator->show ();
   }
 }
 
@@ -328,6 +398,8 @@ QTMTabPageContainer::dropEvent (QDropEvent* e) {
     QTMTabPage* draggingTab  = m_tabPageList[m_draggingTabIndex];
     int         oldIndex     = m_draggingTabIndex;
     int newIndex= pointingIndex > oldIndex ? pointingIndex - 1 : pointingIndex;
+    g_mostRecentlyClosedTab= url_none ();
+    g_pointingIndex        = -1;
 
     // update tab page positions immediately
     if (pointingIndex != oldIndex) {
@@ -353,31 +425,81 @@ QTMTabPageContainer::dropEvent (QDropEvent* e) {
       // 注意：dragged_window 有可能被 view_set_window 释放
       if (!view_set_window (dragged_view, abstract_window (target_window),
                             attached)) {
-        arrangeTabPages ();
+        g_pointingIndex= -1;
         g_mostRecentlyDraggedBar->arrangeTabPages ();
+        g_mostRecentlyDraggedBar->dummyTabPage->hide (); // 确保隐藏
+        arrangeTabPages ();
+        dummyTabPage->hide ();
       }
     }
     g_mostRecentlyDraggedTab= url_none ();
     g_mostRecentlyDraggedBar= nullptr;
   }
   m_draggingTabIndex= -1;
+  g_pointingIndex   = -1;
   m_indicator->hide ();
+  dummyTabPage->hide ();
 }
 
 void
 QTMTabPageContainer::dragLeaveEvent (QDragLeaveEvent* e) {
   g_mostRecentlyEnteredBar= nullptr;
+  if (g_pointingIndex != -1) {
+    g_pointingIndex= -1;
+    arrangeTabPages ();
+  }
   e->accept ();
   m_indicator->hide ();
+  dummyTabPage->hide ();
+}
+
+void
+QTMTabPageContainer::mousePressEvent (QMouseEvent* event) {
+  if (event->button () == Qt::LeftButton) {
+    dragging    = true;
+    dragPosition= event->globalPos () - window ()->frameGeometry ().topLeft ();
+    event->accept ();
+  }
+}
+
+void
+QTMTabPageContainer::mouseMoveEvent (QMouseEvent* event) {
+  if (dragging && (event->buttons () & Qt::LeftButton)) {
+    window ()->move (event->globalPos () - dragPosition);
+    event->accept ();
+  }
+}
+
+void
+QTMTabPageContainer::mouseReleaseEvent (QMouseEvent* event) {
+  if (event->button () == Qt::LeftButton) {
+    dragging= false;
+    event->accept ();
+  }
+}
+
+bool
+QTMTabPageContainer::eventFilter (QObject* obj, QEvent* event) {
+  if (obj == parent () && event->type () == QEvent::Resize) {
+    setFixedWidth (parentWidget () ? parentWidget ()->width () : 1000);
+    arrangeTabPages ();
+  }
+  return QWidget::eventFilter (obj, event);
 }
 
 /******************************************************************************
  * QTMTabPageBar
  ******************************************************************************/
 
-QTMTabPageBar::QTMTabPageBar (const QString& p_title, QWidget* p_parent)
-    : QToolBar (p_title, p_parent) {
-  m_container= new QTMTabPageContainer (this);
+QTMTabPageBar::QTMTabPageBar (const QString& p_title, QWidget* p_parent,
+                              QTMTabPageContainer* m_container)
+    : QToolBar (p_title, p_parent), m_container (m_container) {
+  // m_container= new QTMTabPageContainer (this);
+  if (m_container) {
+    addWidget (m_container);
+    // 设置大小策略以允许工具栏扩展
+    setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Fixed);
+  }
 }
 
 void
@@ -395,6 +517,9 @@ QTMTabPageBar::replaceTabPages (QList<QAction*>* p_src) {
 void
 QTMTabPageBar::resizeEvent (QResizeEvent* e) {
   QSize size= e->size ();
-  // Reserve 7px space on the left for the handle of QToolbar
-  m_container->setGeometry (7, 0, size.width (), size.height () - 2);
+  // 确保容器使用全部可用宽度减去左边的留出的拖拽句柄空间
+  int availableWidth= size.width () - 7;
+  if (availableWidth > 0 && m_container) {
+    m_container->setGeometry (7, 0, availableWidth, size.height () - 2);
+  }
 }

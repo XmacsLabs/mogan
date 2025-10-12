@@ -21,6 +21,27 @@
 
 (define comment-quit-command ignore)
 
+(define (comment-editor-done)
+  (and-let* ((popup  (current-buffer))
+             (master (buffer-get-master popup))
+             (pc     (tree-innermost any-comment-context? #t))
+             (mid    (and pc (tm->string (tm-ref pc 1))))
+             (body   (and pc (tm-ref pc :last))))
+    (with-buffer master
+      (let* ((mb (buffer-get-body master))
+             (l  (tree-search
+                   mb
+                   (lambda (t)
+                     (and (any-comment-context? t)
+                          (== (tm->string (tm-ref t 1)) mid))))))
+        (when (nnull? l)
+          (tree-set! (car l) :last (tree-copy body))))))
+  (when (defined? 'mirror-treat-pending)
+    (mirror-treat-pending))
+  (when (defined? 'mirror-synchronize)
+    (mirror-synchronize))
+  (comment-quit-command))
+
 (tm-widget ((comment-editor u packs doc) quit)
   (with dummy (set! comment-quit-command quit)
     (padded
@@ -30,7 +51,7 @@
       (hlist
         >>
         (explicit-buttons
-          ("Done" (quit)))))))
+          ("Done" (comment-editor-done)))))))
 
 (define (allow-init? init)
   (and (string? (car init))
@@ -60,7 +81,7 @@
 
 (tm-define (kbd-control-return)
   (:require (inside? 'carbon-comment))
-  (comment-quit-command))
+  (comment-editor-done))
 
 (tm-define (make-folded-comment type)
   (:applicable (not (inside-comment?)))
@@ -79,12 +100,16 @@
     (string-append (url->system (url-tail u)) " - Comments")))
 
 (define (mirror-comment t . opt-lab)
-  (let* ((id (if (tm-atomic? (tm-ref t 0))
-                 (string-append (tm-ref t 0) "-edit")
-                 (create-unique-id)))
-         (l (tm-children t))
-         (lab (if (null? opt-lab) 'mirror-comment (car opt-lab))))
-    `(,lab ,id ,@(cDr (cDr (cdr l))) "" ,(cAr l))))
+  (let* ((uid' (if (tm-atomic? (tm-ref t 0))
+                   (string-append (tm->string (tm-ref t 0)) "-edit")
+                   (create-unique-id)))
+         (mid  (tm->string (tm-ref t 1)))
+         (typ  (tm->string (tm-ref t 2)))
+         (by   (tm->string (tm-ref t 3)))
+         (tim  (tm->string (tm-ref t 4)))
+         (bod  (tm-ref t :last))
+         (lab  (if (null? opt-lab) 'mirror-comment (car opt-lab))))
+    `(,lab ,uid' ,mid ,typ ,by ,tim "" ,bod)))
 
 (tmfs-load-handler (comments name)
   (let* ((u (tmfs-string->url name))

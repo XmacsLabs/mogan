@@ -47,6 +47,13 @@ QMenuBar::item:pressed {
 }
 
 /****************************************************************************
+* 标题栏样式
+****************************************************************************/
+QWK--WindowBar {
+    background-color: #f3f3f3;
+}
+
+/****************************************************************************
 * 工具栏样式
 ****************************************************************************/
 QToolBar {
@@ -104,22 +111,23 @@ QToolButton::menu-indicator {
 * 按钮样式
 ****************************************************************************/
 QPushButton {
-  background: #ffffff;
-  color: #2c2c2c;
-  border: none;
-  border-radius: 2px;
-  padding: 4px 8px;
-  min-height: 20px;
+  background-color: #f2f2f2;
+  color: black;
+  border: 1px solid #bdbdbd;
+  padding: 8px 16px;
+  border-radius: 6px;
 }
 
 QPushButton:hover {
-  background: #f5f5f5;
-  color: #2c2c2c;
+  background-color: #dedede;
+  border-color: #000;
+  outline: none;
 }
 
 QPushButton:pressed {
   background: #e0e0e0;
   color: #2c2c2c;
+  border-color: #000;
 }
 
 QPushButton:disabled {
@@ -252,29 +260,42 @@ QDockWidget::title {
 /****************************************************************************
 * 标签页样式
 ****************************************************************************/
-QTabWidget::pane {
-  border: 1px solid #e0e0e0;
-  background: #ffffff;
+/* Tab Page 基础样式 */
+QTMTabPage {
+    padding: 0 26px;
+    border-radius: 6px;                  /* 圆角矩形 */
+    background-color: #e8e8e8;
 }
 
-QTabBar::tab {
-  background: #ffffff;
-  color: #2c2c2c;
-  padding: 4px 8px;
-  border: 1px solid #e0e0e0;
-  border-bottom: none;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
+/* 悬停效果 */
+QTMTabPage:hover {
+    background-color: #ffffff;
 }
 
-QTabBar::tab:selected {
-  background: #f5f5f5;
-  color: #2c2c2c;
+/* 被选中（激活）状态 */
+QTMTabPage:checked {
+    background-color: #ffffff;
+    border-top: 2px solid #646464;
+    border-left: 1px solid #A6A6A6;
+    border-right: 1px solid #A6A6A6;
 }
 
-QTabBar::tab:hover {
-  background: #f5f5f5;
-  color: #2c2c2c;
+/* 关闭按钮基础样式 */
+QToolButton#tabpage-close-button {
+    background-color: #ffffff;
+    border-radius: 7px;                /* 默认圆形（半径 >= 宽高一半） */
+    padding: 0px;
+    min-width: 14px;                    /* 保证是正方形 */
+    min-height: 14px;
+    max-width: 14px;
+    max-height: 14px;
+}
+
+/* 关闭按钮悬停时样式 */
+QToolButton#tabpage-close-button:hover {
+    border-radius: 7px;                /* 保持圆形 */
+    color: #ffffff;
+    background-color: #E49AA2;          /* 粉红色背景 */
 }
 
 /****************************************************************************
@@ -404,29 +425,25 @@ QDialog QDialogButtonBox {
 }
 
 QDialog QPushButton {
-  background: #f5f5f5;
-  color: #2c2c2c;
-  border: 1.5px solid #bdbdbd;
-  border-radius: 6px;
-  padding: 7px 18px;
+  background-color: #f2f2f2;
+  color: black;
+  border: 1px solid #bdbdbd;
   min-width: 2.5em;
   min-height: 1.0em;
-  text-decoration: none;
-  margin-left: 8px;
-  margin-right: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
 }
 
-QDialog QPushButton:hover,
-QDialog QPushButton:focus {
-  border: 2px solid #222;
-  color: #222;
+QDialog QPushButton:hover {
+  background-color: #dedede;
+  border-color: #000;
   outline: none;
 }
 
 QDialog QPushButton:disabled {
   background: #f5f5f5;
   color: #a0a0a0;
-  border: 1.5px solid #e0e0e0;
+  border: 1px solid #e0e0e0;
 }
 
 /****************************************************************************
@@ -487,18 +504,20 @@ QDockWidget#auxiliary_widget::title {
 }
 
 QWidget#auxiliary_container {
-  background: #fafafa;
+  background: #f4f4f4;
   border-radius: 8px;
 }
 
 #auxiliary_container QPushButton {
-    background-color: #f0f0f0;
-    color: black;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
+  background-color: #e8e8e8;
+  color: black;
+  border: 1px solid #bdbdbd;
+  padding: 8px 16px;
+  border-radius: 6px;
 }
 
 #auxiliary_container QPushButton:hover {
-    background-color: #e0e0e0;
+  background-color: #d8d8d8;
+  border-color: #9a9a9a;
+  outline: none;
 }

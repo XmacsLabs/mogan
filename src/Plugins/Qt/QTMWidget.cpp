@@ -683,9 +683,10 @@ QTMWidget::dropEvent (QDropEvent* event) {
       }
 #ifdef USE_MUPDF_RENDERER
       else if (mupdf_supports (extension) || extension == "eps" ||
-               extension == "ps") {
+               extension == "ps" || extension == "pdf") {
         string imagedata= mupdf_load_and_parse_image (
-            l[i].toLocalFile ().toStdString ().c_str (), ww, hh, extension);
+            l[i].toLocalFile ().toStdString ().c_str (), ww, hh, extension, &w,
+            &h);
 #else
       else if ((extension == "eps") || (extension == "ps") ||
 #if (QT_VERSION >= 0x050000)
@@ -702,8 +703,8 @@ QTMWidget::dropEvent (QDropEvent* event) {
         ww        = size.width ();
         hh        = size.height ();
         string imagedata (buf.constData (), buf.size ());
-#endif
         qt_pretty_image_size (ww, hh, w, h);
+#endif
         tree t (IMAGE, tuple (tree (RAW_DATA, imagedata), name), w, h, "", "");
         doc << t;
       }

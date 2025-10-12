@@ -2,7 +2,7 @@ version: '1.0'
 name: ci-ubuntu
 displayName: ci-ubuntu
 triggers:
-  trigger: auto
+  trigger: manual
   pr:
     branches:
       precise:

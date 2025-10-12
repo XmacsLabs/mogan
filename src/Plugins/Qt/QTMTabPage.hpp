@@ -37,15 +37,22 @@ public:
 public:
   explicit QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
                        bool p_isActive);
+  explicit QTMTabPage ();
   virtual void paintEvent (QPaintEvent*) override;
+
+public slots:
+  void setChecked (bool checked);
 
 protected:
   virtual void resizeEvent (QResizeEvent* e) override;
   virtual void mousePressEvent (QMouseEvent* e) override;
   virtual void mouseMoveEvent (QMouseEvent* e) override;
+  virtual void
+  enterEvent (QEnterEvent* e); // 为了防止和QEvent冲突，不要override
+  virtual void leaveEvent (QEvent* e) override;
 
 private:
-  void setupStyle ();
+  void updateCloseButtonVisibility ();
 };
 
 /*! QTMTabPageAction is used as a carrier of QTMTabPage widget.
@@ -74,8 +81,12 @@ class QTMTabPageContainer : public QWidget {
   int                m_rowHeight       = 0;
   int                m_draggingTabIndex= -1;
   QFrame*            m_indicator;
+  int                m_width= 0;
+  bool               dragging;
+  QPoint             dragPosition;
 
 public:
+  QTMTabPage* dummyTabPage;
   explicit QTMTabPageContainer (QWidget* p_parent);
   ~QTMTabPageContainer ();
 
@@ -94,6 +105,12 @@ private:
   virtual void dragMoveEvent (QDragMoveEvent* e) override;
   virtual void dropEvent (QDropEvent* e) override;
   virtual void dragLeaveEvent (QDragLeaveEvent* e) override;
+
+protected:
+  void mousePressEvent (QMouseEvent* event) override;
+  void mouseMoveEvent (QMouseEvent* event) override;
+  void mouseReleaseEvent (QMouseEvent* event) override;
+  bool eventFilter (QObject* obj, QEvent* event) override;
 };
 
 /*! QTMTabPageBar is used to wrap the QTMTabPageContainer.
@@ -105,7 +122,8 @@ class QTMTabPageBar : public QToolBar {
   QTMTabPageContainer* m_container;
 
 public:
-  explicit QTMTabPageBar (const QString& p_title, QWidget* p_parent);
+  explicit QTMTabPageBar (const QString& p_title, QWidget* p_parent,
+                          QTMTabPageContainer* m_container);
 
   inline void setRowHeight (int p_height) {
     m_container->setRowHeight (p_height);

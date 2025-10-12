@@ -1,6 +1,13 @@
 function add_target_cpp_test(filepath, dep)
     local testname = path.basename(filepath)
     target(testname) do
+        -- QWindowKit on macOS
+        if is_plat("macosx") then
+            add_includedirs("deps/qwindowkit/include/QWindowKit")
+            add_linkdirs("deps/qwindowkit/lib")
+            add_links("QWKCore", "QWKWidgets")
+            add_rpathdirs("$(projectdir)/deps/qwindowkit/lib")
+        end
         set_enabled(not is_plat("wasm"))
         add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
         if dep == "libkernel_l3" then

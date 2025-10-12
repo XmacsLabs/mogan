@@ -46,3 +46,7 @@ docs/**/plugin_binary.md
 TeXmacs/plugins/goldfish/bin/goldfish
 goldfish.dSYM/
 *.sym
+*goldfish.pdb
+
+# font
+TeXmacs/fonts/opentype/noto

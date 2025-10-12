@@ -21,7 +21,6 @@
 #include <QIcon>
 #include <QStyle>
 
-#include <QApplication>
 #include <QScreen>
 
 #if (QT_VERSION < 0x060000)
@@ -123,11 +122,6 @@ public:
   QTMApplication (int& argc, char** argv) : QApplication (argc, argv) {
     init_palette (this);
     init_style_sheet (this);
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
-    QGuiApplication::setHighDpiScaleFactorRoundingPolicy (
-        Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
-#endif
 
 #if (QT_VERSION < 0x060000)
     if (!retina_manual) {

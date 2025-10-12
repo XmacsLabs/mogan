@@ -1,0 +1,90 @@
+<TMU|<tuple|1.1.0|2025.2.0-alpha>>
+
+<style|<tuple|tmdoc|chinese|json>>
+
+<\body>
+  <\hide-preamble>
+    <assign|code-name|json>
+
+    <assign|code-Name|JSON>
+  </hide-preamble>
+
+  <tmdoc-title|<value|code-Name> 代码插件>
+
+  <paragraph|<value|code-Name> 样式包>
+
+  点击 <menu|文档|样式|增加宏包|代码|<value|code-name>> 或在焦点工具栏上点击 <menu|<icon|tm_add.svg>|代码|<value|code-name>> 来添加 <value|code-Name> 样式包。
+
+  在 <code-Name> 样式包中，<markup|<value|code-name>> 用于内联代码片段，<markup|<value|code-name>-code> 用于 <code-Name> 代码块。
+
+  <paragraph|<value|code-Name> 语法>
+
+  <value|code-Name> 语言的语法定义在：
+
+  <slink|$TEXMACS_PATH/plugins/dot/progs/code/<value|code-name>-lang.scm>
+
+  以下是一个带有语法高亮的 <value|code-Name> 代码块示例：
+
+  <\json-code>
+    {
+
+    \ \ "name": "张三",
+
+    \ \ "age": 30,
+
+    \ \ "isStudent": false,
+
+    \ \ "email": "zhangsan@example.com",
+
+    \ \ "address": {
+
+    \ \ \ \ "street": "幸福路123号",
+
+    \ \ \ \ "city": "北京",
+
+    \ \ \ \ "postalCode": "100000"
+
+    \ \ },
+
+    \ \ "phoneNumbers": [
+
+    \ \ \ \ {
+
+    \ \ \ \ \ \ "type": "home",
+
+    \ \ \ \ \ \ "number": "123-456-7890"
+
+    \ \ \ \ },
+
+    \ \ \ \ {
+
+    \ \ \ \ \ \ "type": "office",
+
+    \ \ \ \ \ \ "number": "098-765-4321"
+
+    \ \ \ \ }
+
+    \ \ ],
+
+    \ \ "hobbies": ["阅读", "旅游", "摄影", "音乐"]
+
+    }
+  </json-code>
+
+  <paragraph|<value|code-Name> 编辑>
+
+  <value|code-Name> 代码的编辑功能定义在：
+
+  <slink|$TEXMACS_PATH/plugins/<value|code-name>/progs/code/<value|code-name>-edit.scm>
+
+  <tmdoc-copyright|2024|Darcy Shen>
+
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|papyrus>
+    <associate|page-screen-margin|true>
+  </collection>
+</initial>

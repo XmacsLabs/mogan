@@ -304,7 +304,7 @@
            (tip (comment-preview (cursor-tree))))
       (if tip
           (show-tooltip id (cursor-tree) tip
-                        "auto" "auto" "keyboard" 0.7)
+                        "auto" "auto" "keyboard" 2.0)
           (close-tooltip)))))
 
 (tm-define (mouse-event key x y mods time data)

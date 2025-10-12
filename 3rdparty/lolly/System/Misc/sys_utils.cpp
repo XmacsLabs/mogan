@@ -78,7 +78,7 @@ get_user_login () {
 string
 get_user_name () {
 #if defined(OS_MINGW) || defined(OS_WIN)
-  return lolly::win_get_username ();
+  return get_env ("USERNAME");
 #endif
 
 #if defined(OS_LINUX) || defined(OS_MACOS)

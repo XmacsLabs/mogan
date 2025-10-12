@@ -119,6 +119,20 @@ TEST_CASE ("to_hanzi") {
   string_eq (to_hanzi (0x80000000), "负二十一亿四千七百四十八万三千六百四十八");
 }
 
+TEST_CASE ("to_circle") {
+  string_eq (to_circle (0), "⓪");
+  string_eq (to_circle (1), "①");
+  string_eq (to_circle (10), "⑩");
+  string_eq (to_circle (20), "⑳");
+  string_eq (to_circle (21), "㉑");
+  string_eq (to_circle (35), "㉟");
+  string_eq (to_circle (36), "㊱");
+  string_eq (to_circle (50), "㊿");
+  string_eq (to_circle (51), "51");
+  string_eq (to_circle (-3), "-③");
+  string_eq (to_circle (INT32_MIN), "-2147483648");
+}
+
 TEST_CASE ("to_padded_hex") {
   SUBCASE ("0~255") {
     string_eq (to_padded_hex ((uint8_t) 0), "00");

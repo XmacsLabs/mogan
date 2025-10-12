@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "convert.hpp"
+#include "converter.hpp"
 #include "dictionary.hpp"
 #include "file.hpp"
 #include "merge_sort.hpp"
@@ -470,8 +471,9 @@ buffer_import (url name, url src, string fm) {
   if (is_nil (buf)) return true;
   // Check if the file has write permissions
   if (!has_permission (src, "w")) {
-    string title= buf->buf->title;
-    title       = '[' * translate ("read-only") * "] " * title;
+    string title         = buf->buf->title;
+    string read_only_text= translate ("read-only");
+    title                = '[' * cork_to_utf8 (read_only_text) * "] " * title;
     set_title_buffer (name, title);
   }
   return false;

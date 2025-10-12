@@ -218,11 +218,12 @@ mupdf_renderer_rep::begin (void* handle) {
     proc= pdf_new_run_processor (ctx, mupdf_document (), dev, ctm, -1, "View",
                                  NULL, NULL, NULL);
 
-    fg     = -1;
-    bg     = -1;
-    lw     = -1;
-    cfn    = "";
-    in_text= false;
+    fg              = -1;
+    bg              = -1;
+    lw              = -1;
+    cfn             = "";
+    in_text         = false;
+    transform_active= false;
 
     // outmost save of the graphics state
     proc->op_q (mupdf_context (), proc);
@@ -272,11 +273,20 @@ mupdf_renderer_rep::end () {
 void
 mupdf_renderer_rep::begin_text () {
   if (!in_text) {
-    in_text    = true;
+    in_text= true;
+    proc->op_BT (mupdf_context (), proc);
     prev_text_x= to_x (0);
     prev_text_y= to_y (0);
-    proc->op_BT (mupdf_context (), proc);
-    proc->op_Tm (mupdf_context (), proc, 1, 0, 0, 1, prev_text_x, prev_text_y);
+    if (transform_active) {
+      fz_point after_trans=
+          fz_transform_point_xy (prev_text_x, prev_text_y, transform_matrix);
+      proc->op_Tm (mupdf_context (), proc, 1, 0, 0, 1, after_trans.x,
+                   after_trans.y);
+    }
+    else {
+      proc->op_Tm (mupdf_context (), proc, 1, 0, 0, 1, prev_text_x,
+                   prev_text_y);
+    }
   }
 }
 
@@ -310,16 +320,20 @@ mupdf_renderer_rep::set_transformation (frame fr) {
   // cout << "Set transformation " << o << ", " << ux << ", " << uy << "\n";
 
   proc->op_q (mupdf_context (), proc);
-  proc->op_cm (mupdf_context (), proc, ux[0], ux[1], uy[0], uy[1], o[0], o[1]);
-
-  rectangle nclip= fr[oclip];
-  clip (nclip->x1, nclip->y1, nclip->x2, nclip->y2);
+  transform_matrix= fz_make_matrix (ux[0], ux[1], uy[0], uy[1], o[0], o[1]);
+  proc->op_cm (mupdf_context (), proc, transform_matrix.a, transform_matrix.b,
+               transform_matrix.c, transform_matrix.d, transform_matrix.e,
+               transform_matrix.f);
+  transform_matrix= fz_invert_matrix (transform_matrix);
+  transform_active= true;
 }
 
 void
 mupdf_renderer_rep::reset_transformation () {
-  unclip ();
+  end_text ();
+  cfn= "";
   proc->op_Q (mupdf_context (), proc);
+  transform_active= false;
 }
 
 /******************************************************************************

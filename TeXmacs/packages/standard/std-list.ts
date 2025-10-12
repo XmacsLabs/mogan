@@ -1,4 +1,4 @@
-<TeXmacs|1.99.16>
+<TeXmacs|2.1.4>
 
 <style|<tuple|source|std|english>>
 
@@ -28,7 +28,7 @@
 
   <assign|item-hsep|<macro|3fn>>
 
-  <assign|item-vsep|<macro|0.5fn>>
+  <assign|item-vsep|<macro|0fn>>
 
   <assign|aligned-item|<macro|name|<style-with|src-compact|none|<vspace*|<item-vsep>><with|par-first|<minus|<item-hsep>>|<yes-indent>><resize|<arg|name>|<minus|1r|<minus|<item-hsep>|0.5fn>>||<plus|1r|0.5fn>|>>>>
 
@@ -50,7 +50,11 @@
 
   <assign|aligned-dot-item|<macro|name|<aligned-item|<arg|name>.<item-spc>>>>
 
+  <assign|aligned-comma-item|<macro|name|<aligned-item|<arg|name>\<#3001\><item-spc>>>>
+
   <assign|aligned-bracket-item|<macro|name|<aligned-item|<arg|name><with|font-shape|right|)><item-spc>>>>
+
+  <assign|aligned-paren-item|<macro|name|<aligned-item|(<arg|name>)<item-spc>>>>
 
   <assign|aligned-strong-dot-item|<macro|name|<aligned-item|<item-strong|<arg|name>.<item-spc>>>>>
 
@@ -260,13 +264,19 @@
 
   <new-list|enumerate-numeric|<value|aligned-dot-item>|<value|identity>>
 
+  <new-list|enumerate-numeric-paren|<value|aligned-paren-item>|<value|identity>>
+
   <new-list|enumerate-roman|<value|aligned-dot-item>|<macro|name|<number|<arg|name>|roman>>>
 
   <new-list|enumerate-Roman|<value|aligned-dot-item>|<macro|name|<number|<arg|name>|Roman>>>
 
-  <new-list|enumerate-alpha|<value|aligned-bracket-item>|<macro|name|<number|<arg|name>|alpha>>>
+  <new-list|enumerate-alpha|<value|aligned-dot-item>|<macro|name|<number|<arg|name>|alpha>>>
 
-  <new-list|enumerate-Alpha|<value|aligned-bracket-item>|<macro|name|<number|<arg|name>|Alpha>>>
+  <new-list|enumerate-Alpha|<value|aligned-dot-item>|<macro|name|<number|<arg|name>|Alpha>>>
+
+  <new-list|enumerate-circle|<value|aligned-space-item>|<macro|name|<number|<arg|name>|circle>>>
+
+  <new-list|enumerate-hanzi|<value|aligned-comma-item>|<macro|name|<number|<arg|name>|hanzi>>>
 
   <new-list|description-compact|<value|compact-strong-dot-item>|<macro|name|<active*|<with|mode|math|<with|font-series|bold|math-font-series|bold|<rigid|\<ast\>>>>>>>
 

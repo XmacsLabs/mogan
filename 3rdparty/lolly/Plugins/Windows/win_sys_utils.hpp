@@ -22,8 +22,4 @@ int win_system (array<::string> arg, array<int> fd_in, array<::string> str_in,
                 array<int> fd_out, array<::string*> str_out);
 #endif
 
-namespace lolly {
-string win_get_username ();
-}
-
 #endif // defined MINGW_SYS_UTILS_H

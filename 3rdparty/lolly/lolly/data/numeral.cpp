@@ -12,6 +12,7 @@
 
 #include "numeral.hpp"
 #include "analyze.hpp"
+#include "unicode.hpp"
 
 namespace lolly {
 namespace data {
@@ -42,6 +43,24 @@ to_roman (int32_t nr) {
 string
 to_Roman (int32_t nr) {
   return upcase_all (to_roman (nr));
+}
+
+static string
+to_circle_positive (uint64_t nr) {
+  if (nr == 0) return encode_as_utf8 (0x24EA);              // ⓪
+  if (nr <= 20) return encode_as_utf8 (0x2460 + (nr - 1));  // ①-⑳
+  if (nr <= 35) return encode_as_utf8 (0x3251 + (nr - 21)); // ㉑-㉟
+  if (nr <= 50) return encode_as_utf8 (0x32B1 + (nr - 36)); // ㊱-㊿
+  return as_string ((int64_t) nr);
+}
+
+string
+to_circle (int32_t nr) {
+  if (nr < 0) {
+    uint64_t positive= (uint64_t) (-((int64_t) nr));
+    return "-" * to_circle_positive (positive);
+  }
+  return to_circle_positive ((uint64_t) nr);
 }
 
 string

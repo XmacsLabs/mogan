@@ -741,10 +741,16 @@ edit_interface_rep::apply_changes () {
 
   // cout << "Handling automatic resizing\n";
   int sb= 1;
+  // Detect zoom-only update to optionally skip re-typeset.
+  bool zoom_changed            = false;
+  bool skip_typeset_due_to_zoom= false;
+  // Snapshot env_change before writing back zoom.
+  int env_before_zoom_update= env_change;
   if (is_attached (this) && has_current_window ()) {
     tree new_zoom= as_string (zoomf);
     tree old_zoom= get_init_value (ZOOM_FACTOR);
     if (new_zoom != old_zoom) {
+      zoom_changed= true;
       init_env (ZOOM_FACTOR, new_zoom);
       notify_change (THE_ENVIRONMENT);
     }
@@ -763,6 +769,15 @@ edit_interface_rep::apply_changes () {
         init_env (PAGE_SCREEN_HEIGHT, as_string ((SI) (wy / magf)) * "tmpt");
         notify_change (THE_ENVIRONMENT);
       }
+    }
+  }
+  // If zoom-only and medium != automatic, skip re-typeset.
+  if (zoom_changed) {
+    string medium= get_init_string (PAGE_MEDIUM);
+    if (medium != "automatic") {
+      // Require valid layout and no pre-existing env change.
+      bool pre_env_pending= (env_before_zoom_update & THE_ENVIRONMENT) != 0;
+      if (!is_nil (eb) && !pre_env_pending) skip_typeset_due_to_zoom= true;
     }
   }
   if (get_init_string (PAGE_MEDIUM) == "beamer" && full_screen) sb= 0;
@@ -808,10 +823,14 @@ edit_interface_rep::apply_changes () {
   }
 
   // cout << "Handling environment\n";
-  if (env_change & THE_ENVIRONMENT) typeset_invalidate_all ();
+  if (env_change & THE_ENVIRONMENT) {
+    if (!skip_typeset_due_to_zoom) typeset_invalidate_all ();
+    else typeset_invalidate_env ();
+  }
 
   // cout << "Handling tree\n";
-  if (env_change & (THE_TREE + THE_ENVIRONMENT)) {
+  if ((env_change & THE_TREE) ||
+      ((env_change & THE_ENVIRONMENT) && !skip_typeset_due_to_zoom)) {
     typeset_invalidate_env ();
     SI x1, y1, x2, y2;
     bench_start ("typeset " * (as_string (buf->buf->name)));
