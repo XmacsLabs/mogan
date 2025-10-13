@@ -422,7 +422,7 @@
 ("insert annotation" "插入注释")
 ("insert copyright and license information" "插入版权和许可信息")
 ("insert explanatory item" "插入说明性项目")
-("insert large delimiters" "插入大定界符")
+("insert large delimiters" "插入大型定界符")
 ("insert last name" "插入姓氏")
 ("insert missing invisible operators" "插入缺少的不可见运算符")
 ("insert more names" "插入更多名称")
