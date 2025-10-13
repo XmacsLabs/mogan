@@ -366,19 +366,26 @@ target("QWKCore")
 
 #endif // QWKCONFIG_H
 ]]
-        io.writefile("$(buildir)/include/QWKCore/qwkconfig.h", config_content)
+        local config_path = "$(buildir)/include/QWKCore/qwkconfig.h"
+        local existing_content = nil
+        if os.isfile(config_path) then
+            existing_content = io.readfile(config_path)
+        end
+        if existing_content ~= config_content then
+            io.writefile(config_path, config_content)
+        end
         
-        -- Copy header files
-        os.cp("3rdparty/qwindowkitty/src/core/*.h", "$(buildir)/include/QWKCore/")
-        os.trycp("3rdparty/qwindowkitty/src/core/*_p.h", "$(buildir)/include/QWKCore/private/")
-        os.trycp("3rdparty/qwindowkitty/src/core/contexts/*_p.h", "$(buildir)/include/QWKCore/private/")
-        os.trycp("3rdparty/qwindowkitty/src/core/contexts/*.h", "$(buildir)/include/QWKCore/private/")
-        os.trycp("3rdparty/qwindowkitty/src/core/kernel/*_p.h", "$(buildir)/include/QWKCore/private/")
-        os.trycp("3rdparty/qwindowkitty/src/core/shared/*_p.h", "$(buildir)/include/QWKCore/private/")
+        -- Copy header files without bumping timestamps when unchanged
+        os.vcp("3rdparty/qwindowkitty/src/core/*.h", "$(buildir)/include/QWKCore/")
+        os.vcp("3rdparty/qwindowkitty/src/core/*_p.h", "$(buildir)/include/QWKCore/private/")
+        os.vcp("3rdparty/qwindowkitty/src/core/contexts/*_p.h", "$(buildir)/include/QWKCore/private/")
+        os.vcp("3rdparty/qwindowkitty/src/core/contexts/*.h", "$(buildir)/include/QWKCore/private/")
+        os.vcp("3rdparty/qwindowkitty/src/core/kernel/*_p.h", "$(buildir)/include/QWKCore/private/")
+        os.vcp("3rdparty/qwindowkitty/src/core/shared/*_p.h", "$(buildir)/include/QWKCore/private/")
         
         if has_config("style_agent") then
-            os.trycp("3rdparty/qwindowkitty/src/core/style/*_p.h", "$(buildir)/include/QWKCore/private/")
-            os.cp("3rdparty/qwindowkitty/src/core/style/styleagent.h", "$(buildir)/include/QWKCore/styleagent.h")
+            os.vcp("3rdparty/qwindowkitty/src/core/style/*_p.h", "$(buildir)/include/QWKCore/private/")
+            os.vcp("3rdparty/qwindowkitty/src/core/style/styleagent.h", "$(buildir)/include/QWKCore/styleagent.h")
         end
 
         local private_paths = {}
@@ -508,7 +515,7 @@ target("QWKWidgets")
     -- Generate config header and copy headers before build
     before_build(function (target)
         os.mkdir("$(buildir)/include/QWKWidgets")
-        os.cp("3rdparty/qwindowkitty/src/widgets/*.h", "$(buildir)/include/QWKWidgets/")
+        os.vcp("3rdparty/qwindowkitty/src/widgets/*.h", "$(buildir)/include/QWKWidgets/")
 
         local private_paths = {}
         local qt_package = get_config("qt")
