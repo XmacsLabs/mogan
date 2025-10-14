@@ -7,7 +7,7 @@
 
   <section|概况><label|sec-man-generalities>
 
-  一般的字符和标点符号直接键盘输入即可。大多数现代系统也会为重音字符和其他特殊符号提供快捷键。在<TeXmacs>上，<prefix|accent>键前缀可用于输入重音字符。比如，由快捷键<key|accent:acute e>可得「é」，快捷键<key|accent:grave a>则是「à」。
+  一般的字符和标点符号直接键盘输入即可。大多数现代系统也会为重音字符和其他特殊符号提供快捷键。在<TeXmacs>上，<key|Tab>键后缀可用于输入重音字符，即通过Tab循环输入重音字符。比如，由快捷键<key|e+-+Tab+Tab>可得「é」，快捷键<key|a+-+Tab+Tab+Tab+Tab>则是「à」。
 
   较长的单词在行边界处会自动使用连字符连接。对于中文，您需要在菜单<menu|Document|Language>中指定语言，以正确换行。
 
