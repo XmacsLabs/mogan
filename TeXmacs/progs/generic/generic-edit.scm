@@ -263,11 +263,13 @@
 (tm-define pinch-modified? #f)
 (tm-define pinch-current-scale 1.0)
 (tm-define pinch-current-angle 0.0)
+(tm-define pinch-initial-zoom 1.0)
 
 (tm-define (pinch-clear)
   (set! pinch-modified? #f)
   (set! pinch-current-scale 1.0)
-  (set! pinch-current-angle 0.0))
+  (set! pinch-current-angle 0.0)
+  (set! pinch-initial-zoom 1.0))
 
 (tm-define (structured-maximize t)
   (and-with p (tree-outer t)
@@ -278,7 +280,8 @@
     (structured-minimize p)))
 
 (tm-define (pinch-start)
-  (pinch-clear))
+  (pinch-clear)
+  (set! pinch-initial-zoom (get-window-zoom-factor)))
 
 (tm-define (pinch-end)
   (cond ((> pinch-current-scale 1.05)
@@ -288,7 +291,12 @@
   (pinch-clear))
 
 (tm-define (pinch-scale scale)
-  (geometry-scale (focus-tree) scale))
+  (set! pinch-current-scale scale)
+  (let* ((lg (/ (log scale) (log 2.0)))
+         (lg* (/ (round (* 24.0 lg)) 24.0))
+         (normalized-scale (exp (* (log 2.0) lg*)))
+         (new-zoom (* normalized-scale pinch-initial-zoom)))
+    (change-zoom-factor new-zoom)))
 
 (tm-define (pinch-rotate angle)
   (geometry-rotate (focus-tree) angle))
