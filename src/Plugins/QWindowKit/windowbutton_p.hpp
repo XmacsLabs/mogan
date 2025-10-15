@@ -22,6 +22,7 @@ public:
   QIcon iconNormal;
   QIcon iconChecked;
   QIcon iconDisabled;
+  QIcon iconHovered;
 
   void reloadIcon ();
 };

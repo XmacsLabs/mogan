@@ -31,6 +31,12 @@ WindowButtonPrivate::reloadIcon () {
     return;
   }
 
+  // hover 优先级低于 checked，高于 normal
+  if (q->underMouse () && !iconHovered.isNull ()) {
+    q->setIcon (iconHovered);
+    return;
+  }
+
   if (!iconNormal.isNull ()) {
     q->setIcon (iconNormal);
   }
@@ -80,10 +86,34 @@ WindowButton::setIconDisabled (const QIcon& icon) {
   d->reloadIcon ();
 }
 
+QIcon
+WindowButton::iconHovered () const {
+  Q_D (const WindowButton);
+  return d->iconHovered;
+}
+
+void
+WindowButton::setIconHovered (const QIcon& icon) {
+  Q_D (WindowButton);
+  d->iconHovered= icon;
+  d->reloadIcon ();
+}
+
 void
 WindowButton::checkStateSet () {
   Q_D (WindowButton);
   d->reloadIcon ();
+}
+
+bool
+WindowButton::event (QEvent* event) {
+  const auto type= event->type ();
+  if (type == QEvent::Enter || type == QEvent::Leave ||
+      type == QEvent::EnabledChange) {
+    Q_D (WindowButton);
+    d->reloadIcon ();
+  }
+  return QPushButton::event (event);
 }
 
 void

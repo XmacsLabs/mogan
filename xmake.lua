@@ -435,6 +435,7 @@ target("QWKCore")
     -- Enable MOC generation for Qt
     add_rules("qt.moc")
 
+
     -- Core source files
     add_files("3rdparty/qwindowkitty/src/core/qwkglobal_p.h")
     add_files("3rdparty/qwindowkitty/src/core/qwkglobal.cpp")
@@ -512,10 +513,15 @@ target("QWKWidgets")
     -- Enable MOC generation for Qt
     add_rules("qt.moc")
 
+    -- Enable RCC generation for Qt resources used by this target
+    add_rules("qt.qrc")
+
     -- Generate config header and copy headers before build
     before_build(function (target)
         os.mkdir("$(buildir)/include/QWKWidgets")
+        os.mkdir("$(buildir)/include/QWKWidgets/ui/widgetframe")
         os.vcp("3rdparty/qwindowkitty/src/widgets/*.h", "$(buildir)/include/QWKWidgets/")
+        os.vcp("3rdparty/qwindowkitty/src/ui/widgetframe/*.h", "$(buildir)/include/QWKWidgets/ui/widgetframe/")
 
         local private_paths = {}
         local qt_package = get_config("qt")
@@ -551,12 +557,18 @@ target("QWKWidgets")
     add_files("3rdparty/qwindowkitty/src/widgets/widgetwindowagent_p.h")
     add_files("3rdparty/qwindowkitty/src/widgets/widgetwindowagent.h")
     add_files("3rdparty/qwindowkitty/src/widgets/widgetwindowagent.cpp")
+    add_files("3rdparty/qwindowkitty/src/ui/widgetframe/windowbar.cpp")
+    add_files("3rdparty/qwindowkitty/src/ui/widgetframe/windowbar.h")
+    add_files("3rdparty/qwindowkitty/src/ui/widgetframe/windowbar_p.h")
+    add_files("3rdparty/qwindowkitty/src/ui/widgetframe/windowbutton.cpp")
+    add_files("3rdparty/qwindowkitty/src/ui/widgetframe/windowbutton.h")
     if is_plat("macosx") then
         add_files("3rdparty/qwindowkitty/src/widgets/widgetwindowagent_mac.cpp")
     end
     if is_plat("windows") then
         add_files("3rdparty/qwindowkitty/src/widgets/widgetwindowagent_win.cpp")
     end
+    add_files("3rdparty/qwindowkitty/src/styles/styles.qrc")
 
     -- Set install headers
     add_headerfiles("$(buildir)/include/QWKWidgets/**.h", {prefixdir = "QWKWidgets"})

@@ -17,6 +17,7 @@ class WindowButton : public QPushButton {
   Q_PROPERTY (QIcon iconNormal READ iconNormal WRITE setIconNormal FINAL)
   Q_PROPERTY (QIcon iconChecked READ iconChecked WRITE setIconChecked FINAL)
   Q_PROPERTY (QIcon iconDisabled READ iconDisabled WRITE setIconDisabled FINAL)
+  Q_PROPERTY (QIcon iconHovered READ iconHovered WRITE setIconHovered FINAL)
 public:
   explicit WindowButton (QWidget* parent= nullptr);
   ~WindowButton ();
@@ -31,11 +32,15 @@ public:
   QIcon iconDisabled () const;
   void  setIconDisabled (const QIcon& icon);
 
+  QIcon iconHovered () const;
+  void  setIconHovered (const QIcon& icon);
+
 Q_SIGNALS:
   void doubleClicked ();
 
 protected:
   void checkStateSet () override;
+  bool event (QEvent* event) override;
 
   void mouseDoubleClickEvent (QMouseEvent* event) override;
 

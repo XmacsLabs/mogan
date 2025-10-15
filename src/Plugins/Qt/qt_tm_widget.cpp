@@ -13,9 +13,11 @@
 #include <QComboBox>
 #include <QDialog>
 #include <QDockWidget>
+#include <QIcon>
 #include <QLayoutItem>
 #include <QMainWindow>
 #include <QMenuBar>
+#include <QResource>
 #include <QScreen>
 #include <QSettings>
 #include <QStatusBar>
@@ -141,26 +143,146 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   // general setup for main window
   QMainWindow* mw= mainwindow ();
   if (tm_style_sheet == "") mw->setStyle (qtmstyle ());
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
-  // 无边框布局
-  auto windowBar  = new QWK::WindowBar ();
-  auto windowAgent= new QWK::WidgetWindowAgent (mw);
-  tabPageContainer= new QTMTabPageContainer (windowBar);
-  mw->setAttribute (Qt::WA_DontCreateNativeAncestors);
-  mw->setAttribute (Qt::WA_ContentsMarginsRespectsSafeArea, false);
-  windowAgent->setup (mw);
-  windowBar->setHostWidget (mw);
-  windowBar->setMinimumHeight (20);
-  windowBar->setTitleWidget (tabPageContainer);
-  windowBar->adjustSize ();
-  windowBar->layout ()->setAlignment (tabPageContainer,
-                                      Qt::AlignLeft | Qt::AlignVCenter);
-  windowBar->setObjectName ("windowbar");
-  windowAgent->setTitleBar (windowBar);
-  windowAgent->setHitTestVisible (tabPageContainer, true);
-  mw->setMenuWidget (windowBar);
-#else
-  tabPageContainer= new QTMTabPageContainer (mw);
+  // 复用的无边框窗口栏初始化逻辑
+  auto setupWindowBar= [this, mw] (QWK::WindowBar*&         outBar,
+                                   QWK::WidgetWindowAgent*& outAgent,
+                                   int minHeight, bool setSafeArea) {
+    outBar          = new QWK::WindowBar ();
+    outAgent        = new QWK::WidgetWindowAgent (mw);
+    tabPageContainer= new QTMTabPageContainer (outBar);
+    mw->setAttribute (Qt::WA_DontCreateNativeAncestors);
+    if (setSafeArea)
+      mw->setAttribute (Qt::WA_ContentsMarginsRespectsSafeArea, false);
+    outAgent->setup (mw);
+    outBar->setHostWidget (mw);
+    outBar->setMinimumHeight (minHeight);
+    outBar->setTitleWidget (tabPageContainer);
+    outBar->adjustSize ();
+    outBar->layout ()->setAlignment (tabPageContainer,
+                                     Qt::AlignLeft | Qt::AlignVCenter);
+    // 让标题栏子项（系统按钮等）垂直贴合高度：去掉间距与边距
+    if (outBar->layout ()) {
+      outBar->layout ()->setContentsMargins (0, 0, 0, 0);
+      outBar->layout ()->setSpacing (0);
+    }
+    outBar->setObjectName ("windowbar");
+    outAgent->setTitleBar (outBar);
+    outAgent->setHitTestVisible (tabPageContainer, true);
+    mw->setMenuWidget (outBar);
+  };
+
+#if defined(Q_OS_MAC)
+  // 无边框布局（macOS）
+  QWK::WindowBar*         windowBar  = nullptr;
+  QWK::WidgetWindowAgent* windowAgent= nullptr;
+  setupWindowBar (windowBar, windowAgent, /*minHeight*/ 20,
+                  /*setSafeArea*/ true);
+#elif defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+  // 无边框布局（Windows / Linux），并使用 /styles 资源中的图标
+  // 若样式资源被打包进静态库，需显式初始化资源
+  Q_INIT_RESOURCE (styles);
+  QWK::WindowBar*         windowBar  = nullptr;
+  QWK::WidgetWindowAgent* windowAgent= nullptr;
+  QScreen*                screen     = QGuiApplication::primaryScreen ();
+  double                  dpi  = screen ? screen->logicalDotsPerInch () : 96.0;
+  double                  scale= dpi / 96.0;
+  int                     titleBarHeight= int (32 * scale);
+  int                     buttonWidth   = int (46 * scale);
+  int                     buttonHeight  = int (32 * scale);
+  int                     iconBaseSize  = int (12 * scale);
+  setupWindowBar (windowBar, windowAgent, /*minHeight*/ titleBarHeight,
+                  /*setSafeArea*/ false);
+  windowBar->setMinimumHeight (titleBarHeight);
+  windowBar->setFixedHeight (titleBarHeight);
+
+  // 系统按钮（图标来自 3rdparty/qwindowkitty/src/styles/styles.qrc）
+  auto iconBtn= new QWK::WindowButton (windowBar);
+  iconBtn->setFlat (true);
+  iconBtn->setFocusPolicy (Qt::NoFocus);
+  iconBtn->setIcon (QIcon (":/app/stem.png"));
+  iconBtn->setObjectName ("icon-button");
+  iconBtn->setIconSize (QSize (int (30 * scale), int (30 * scale)));
+  windowBar->setIconButton (iconBtn);
+  iconBtn->setAttribute (Qt::WA_TransparentForMouseEvents, true);
+  iconBtn->setCursor (Qt::ArrowCursor);
+  iconBtn->setContextMenuPolicy (Qt::NoContextMenu);
+
+  auto pinBtn= new QWK::WindowButton (windowBar);
+  pinBtn->setCheckable (true);
+  pinBtn->setFlat (true);
+  pinBtn->setFocusPolicy (Qt::NoFocus);
+  pinBtn->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+  pinBtn->setFixedSize (buttonWidth, buttonHeight);
+  pinBtn->setIconSize (QSize (iconBaseSize, iconBaseSize));
+  pinBtn->setIconNormal (QIcon (":/window-bar/pin.svg"));
+  pinBtn->setIconChecked (QIcon (":/window-bar/pin-fill.svg"));
+  pinBtn->setObjectName ("pin-button");
+  pinBtn->setProperty ("system-button", true);
+  windowBar->setPinButton (pinBtn);
+
+  auto minBtn= new QWK::WindowButton (windowBar);
+  minBtn->setFlat (true);
+  minBtn->setFocusPolicy (Qt::NoFocus);
+  minBtn->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+  minBtn->setFixedSize (buttonWidth, buttonHeight);
+  minBtn->setIconSize (QSize (iconBaseSize, iconBaseSize));
+  minBtn->setIcon (QIcon (":/window-bar/minimize.svg"));
+  minBtn->setObjectName ("min-button");
+  minBtn->setProperty ("system-button", true);
+  windowBar->setMinButton (minBtn);
+  windowAgent->setSystemButton (QWK::WindowAgentBase::Minimize, minBtn);
+
+  auto maxBtn= new QWK::WindowButton (windowBar);
+  maxBtn->setCheckable (true);
+  maxBtn->setFlat (true);
+  maxBtn->setFocusPolicy (Qt::NoFocus);
+  maxBtn->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+  maxBtn->setFixedSize (buttonWidth, buttonHeight);
+  maxBtn->setIconSize (QSize (iconBaseSize, iconBaseSize));
+  maxBtn->setIconNormal (QIcon (":/window-bar/maximize.svg"));
+  maxBtn->setIconChecked (QIcon (":/window-bar/restore.svg"));
+  maxBtn->setObjectName ("max-button");
+  maxBtn->setProperty ("system-button", true);
+  windowBar->setMaxButton (maxBtn);
+  windowAgent->setSystemButton (QWK::WindowAgentBase::Maximize, maxBtn);
+
+  auto closeBtn= new QWK::WindowButton (windowBar);
+  closeBtn->setFlat (true);
+  closeBtn->setFocusPolicy (Qt::NoFocus);
+  closeBtn->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+  closeBtn->setFixedSize (buttonWidth, buttonHeight);
+  closeBtn->setIconSize (QSize (iconBaseSize, iconBaseSize));
+  closeBtn->setIcon (QIcon (":/window-bar/close.svg"));
+  closeBtn->setIconHovered (QIcon (":/window-bar/close-white.svg"));
+  closeBtn->setObjectName ("close-button");
+  closeBtn->setProperty ("system-button", true);
+  windowBar->setCloseButton (closeBtn);
+  windowAgent->setSystemButton (QWK::WindowAgentBase::Close, closeBtn);
+
+  // 按钮信号连接到窗口行为
+  QObject::connect (windowBar, &QWK::WindowBar::minimizeRequested, mw,
+                    [mw] () { mw->showMinimized (); });
+  QObject::connect (windowBar, &QWK::WindowBar::maximizeRequested, mw,
+                    [mw] (bool max) {
+                      if (max) {
+                        if (mw->isFullScreen ()) {
+                          mw->showNormal ();
+                        }
+                        mw->showMaximized ();
+                      }
+                      else {
+                        mw->showNormal ();
+                      }
+                    });
+  QObject::connect (windowBar, &QWK::WindowBar::closeRequested, mw,
+                    &QWidget::close);
+  QObject::connect (windowBar, &QWK::WindowBar::pinRequested, mw,
+                    [mw, pinBtn] (bool on) {
+                      mw->setWindowFlag (Qt::WindowStaysOnTopHint, on);
+                      mw->show ();
+                      pinBtn->setChecked (on);
+                    });
+
 #endif
 
   // there is a bug in the early implementation of toolbars in Qt 4.6
@@ -222,22 +344,15 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   mw->setStatusBar (bar);
 
   // toolbars
-
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
-  menuToolBar= new QToolBar ("menu toolbar", mw);
-#endif
-  mainToolBar = new QToolBar ("main toolbar", mw);
-  modeToolBar = new QToolBar ("mode toolbar", mw);
-  focusToolBar= new QToolBar ("focus toolbar", mw);
-  userToolBar = new QToolBar ("user toolbar", mw);
-
-  bottomTools= new QDockWidget ("bottom tools", mw);
-  extraTools = new QDockWidget ("extra tools", mw);
-  sideTools  = new QDockWidget ("side tools", 0);
-  leftTools  = new QDockWidget ("left tools", 0);
-#ifdef Q_OS_WIN
-  tabToolBar= new QTMTabPageBar ("tab toolbar", mw, tabPageContainer);
-#endif // macOS 的情况在 mw 创建部分的代码有处理
+  menuToolBar    = new QToolBar ("menu toolbar", mw);
+  mainToolBar    = new QToolBar ("main toolbar", mw);
+  modeToolBar    = new QToolBar ("mode toolbar", mw);
+  focusToolBar   = new QToolBar ("focus toolbar", mw);
+  userToolBar    = new QToolBar ("user toolbar", mw);
+  bottomTools    = new QDockWidget ("bottom tools", mw);
+  extraTools     = new QDockWidget ("extra tools", mw);
+  sideTools      = new QDockWidget ("side tools", 0);
+  leftTools      = new QDockWidget ("left tools", 0);
   auxiliaryWidget= new QTMAuxiliaryWidget ("auxiliary widget", 0);
   // HACK: Wrap the dock in a "fake" window widget (last parameter = true) to
   // have clicks report the right position.
@@ -247,9 +362,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
       tm_new<qt_window_widget_rep> (sideTools, dock_name, command (), true);
 
   if (tm_style_sheet == "") {
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
     menuToolBar->setStyle (qtmstyle ());
-#endif
     mainToolBar->setStyle (qtmstyle ());
     modeToolBar->setStyle (qtmstyle ());
     focusToolBar->setStyle (qtmstyle ());
@@ -258,9 +371,6 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     leftTools->setStyle (qtmstyle ());
     bottomTools->setStyle (qtmstyle ());
     extraTools->setStyle (qtmstyle ());
-#ifdef Q_OS_WIN
-    tabToolBar->setStyle (qtmstyle ());
-#endif
     auxiliaryWidget->setStyle (qtmstyle ());
   }
 
@@ -286,116 +396,25 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   //
   // NOTICE: setFixedHeight must be after setIconSize
   // TODO: the size of the toolbar should be calculated dynamically
-#if (QT_VERSION >= 0x050000)
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
-  int toolbarHeight= 30 * retina_icons;
-  mainToolBar->setFixedHeight (toolbarHeight + 8 * retina_icons);
-  modeToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
-  if (tm_style_sheet == "liii" || tm_style_sheet == "liii-night" ||
-      tm_style_sheet == "default") {
-    focusToolBar->setFixedHeight (toolbarHeight + 4 * retina_icons);
-  }
-  else {
-    focusToolBar->setFixedHeight (toolbarHeight);
-  }
-#ifdef Q_OS_WIN
-  tabToolBar->setRowHeight (toolbarHeight + 4 * retina_icons);
-#endif
-#else
-  int toolbarHeight= 30;
-  mainToolBar->setFixedHeight (toolbarHeight + 8);
-  modeToolBar->setFixedHeight (toolbarHeight + 4);
-  if (tm_style_sheet == "liii" || tm_style_sheet == "liii-night" ||
-      tm_style_sheet == "default") {
-    focusToolBar->setFixedHeight (toolbarHeight + 4);
-  }
-  else {
-    focusToolBar->setFixedHeight (toolbarHeight);
-  }
-#ifdef Q_OS_WIN
-  tabToolBar->setRowHeight (toolbarHeight + 4);
-#endif
-#endif
-#else
-#ifdef Q_OS_MAC
-  if (retina_icons > 1) {
-    int toolbarHeight= 30;
-    if (!use_unified_toolbar) mainToolBar->setFixedHeight (toolbarHeight + 8);
-    modeToolBar->setFixedHeight (toolbarHeight + 4);
-    if (tm_style_sheet == "liii" || tm_style_sheet == "default") {
-      focusToolBar->setFixedHeight (toolbarHeight + 4);
-    }
-    else {
-      focusToolBar->setFixedHeight (toolbarHeight);
-    }
-  }
-#else
-  int toolbarHeight= 30 * retina_icons;
-  mainToolBar->setFixedHeight (toolbarHeight + 8);
-  modeToolBar->setFixedHeight (toolbarHeight + 4);
-  if (tm_style_sheet == "liii" || tm_style_sheet == "liii-night" ||
-      tm_style_sheet == "default") {
-    focusToolBar->setFixedHeight (toolbarHeight + 4);
-  }
-  else {
-    focusToolBar->setFixedHeight (toolbarHeight);
-  }
-#endif
-#endif
-  if (tm_style_sheet != "") {
+  {
     double scale= retina_scale;
-#if ((QT_VERSION < 0x050000) && defined(Q_OS_MAC))
-    scale= max (scale, 0.6 * ((double) retina_icons));
-#endif
-    int h1= (int) floor (38 * scale + 0.5);
-    int h2= (int) floor (34 * scale + 0.5);
-    int h3= (int) floor (30 * scale + 0.5);
-#if ((QT_VERSION < 0x050000) && defined(Q_OS_MAC))
-    if (use_unified_toolbar && retina_icons == 2 && scale == 1.2) {
-      h1= 34;
-      h2= 36;
-      h3= 32;
-    }
-#endif
-    if (tm_style_sheet == "liii" || tm_style_sheet == "liii-night" ||
-        tm_style_sheet == "default") {
-      // 在liii主题下，所有工具栏使用相同的高度
-      int h= (int) floor (36 * scale + 0.5);
-      mainToolBar->setFixedHeight (h);
-      modeToolBar->setFixedHeight (h);
-      focusToolBar->setFixedHeight (h);
-#ifdef Q_OS_WIN
-      tabToolBar->setRowHeight (h);
-#else // in macOS and Linux
-      tabPageContainer->setRowHeight (h);
-#endif
+    int    h    = (int) floor (36 * scale + 0.5);
 
-      // 设置工具栏的尺寸策略
-      mainToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-      modeToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-      focusToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-#ifdef Q_OS_WIN
-      tabToolBar->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Fixed);
-#endif
+    // 工具栏高度相等
+    mainToolBar->setFixedHeight (h);
+    modeToolBar->setFixedHeight (h);
+    focusToolBar->setFixedHeight (h);
+    tabPageContainer->setRowHeight (h);
 
-      // 确保工具栏在拖动时保持固定高度
-      mainToolBar->setMovable (true);
-      modeToolBar->setMovable (true);
-      focusToolBar->setMovable (true);
-#ifdef Q_OS_WIN
-      tabToolBar->setMovable (true);
-#endif
-    }
-    else {
-      mainToolBar->setFixedHeight (h1);
-      modeToolBar->setFixedHeight (h2);
-      focusToolBar->setFixedHeight (h3);
-#ifdef Q_OS_WIN
-      tabToolBar->setRowHeight (h2);
-#else // in macOS and Linux
-      tabPageContainer->setRowHeight (h2);
-#endif
-    }
+    // 尺寸策略（固定高度条）
+    mainToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+    modeToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+    focusToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+
+    // 保持可移动行为一致
+    mainToolBar->setMovable (true);
+    modeToolBar->setMovable (true);
+    focusToolBar->setMovable (true);
   }
 
   QWidget* cw= new QWidget ();
@@ -423,9 +442,6 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   extraTools->setObjectName ("extraTools");
   sideTools->setObjectName ("sideTools");
   leftTools->setObjectName ("leftTools");
-#ifdef Q_OS_WIN
-  tabToolBar->setObjectName ("tabToolBar");
-#endif
   auxiliaryWidget->setObjectName ("auxiliaryWidget");
 
 #ifdef UNIFIED_TOOLBAR
@@ -465,35 +481,20 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     r2->setVisible (true);
     r2->setAutoFillBackground (true);
 
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
     bl->insertWidget (0, menuToolBar);
     bl->insertWidget (1, tabPageContainer);
     bl->insertWidget (2, modeToolBar);
     bl->insertWidget (3, rulerWidget);
     bl->insertWidget (4, focusToolBar);
     bl->insertWidget (5, userToolBar);
-#else // not macOS or Linux
-    bl->insertWidget (0, tabToolBar);
-    bl->insertWidget (1, modeToolBar);
-    bl->insertWidget (2, rulerWidget);
-    bl->insertWidget (3, focusToolBar);
-    bl->insertWidget (4, userToolBar);
-#endif
     bl->insertWidget (6, r2);
 
     // mw->setContentsMargins (-2, -2, -2, -2);  // Why this?
     bar->setContentsMargins (0, 1, 0, 1);
   }
   else {
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
     mw->addToolBar (menuToolBar);
     mw->addToolBarBreak ();
-#else
-    mw->addToolBar (mainToolBar);
-    mw->addToolBarBreak ();
-    mw->addToolBar (tabToolBar);
-    mw->addToolBarBreak ();
-#endif
     mw->addToolBar (modeToolBar);
     mw->addToolBarBreak ();
     mw->addToolBar (focusToolBar);
@@ -503,16 +504,8 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   }
 
 #else
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
   mw->addToolBar (menuToolBar);
-#else
-  mw->addToolBar (mainToolBar);
-#endif
   mw->addToolBarBreak ();
-#ifdef Q_OS_WIN
-  mw->addToolBar (tabToolBar);
-  mw->addToolBarBreak ();
-#endif
   mw->addToolBar (modeToolBar);
   mw->addToolBarBreak ();
   mw->addToolBar (focusToolBar);
@@ -576,14 +569,8 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   leftTools->setVisible (false);
   bottomTools->setVisible (false);
   extraTools->setVisible (false);
-#ifdef Q_OS_WIN
-  tabToolBar->setVisible (false);
-#endif
   auxiliaryWidget->setVisible (false);
   mainwindow ()->statusBar ()->setVisible (true);
-#ifdef Q_OS_WIN
-  mainwindow ()->menuBar ()->setVisible (false);
-#endif
   QPalette pal;
   QColor   bgcol= to_qcolor (tm_background);
   pal.setColor (QPalette::Mid, bgcol);
@@ -691,9 +678,6 @@ qt_tm_widget_rep::update_visibility () {
   bool old_leftVisibility  = leftTools->isVisible ();
   bool old_bottomVisibility= bottomTools->isVisible ();
   bool old_extraVisibility = extraTools->isVisible ();
-#ifdef Q_OS_WIN
-  bool old_tabVisibility= tabToolBar->isVisible ();
-#endif
   bool old_auxVisibility   = auxiliaryWidget->isVisible ();
   bool old_statusVisibility= mainwindow ()->statusBar ()->isVisible ();
 
@@ -725,22 +709,10 @@ qt_tm_widget_rep::update_visibility () {
     bottomTools->setVisible (new_bottomVisibility);
   if (XOR (old_extraVisibility, new_extraVisibility))
     extraTools->setVisible (new_extraVisibility);
-#ifdef Q_OS_WIN
-  if (XOR (old_tabVisibility, new_tabVisibility))
-    tabToolBar->setVisible (new_tabVisibility);
-#endif
   if (XOR (old_auxVisibility, new_auxVisibility))
     auxiliaryWidget->setVisible (new_auxVisibility);
   if (XOR (old_statusVisibility, new_statusVisibility))
     mainwindow ()->statusBar ()->setVisible (new_statusVisibility);
-
-#ifdef Q_OS_WIN
-  bool old_menuVisibility= mainwindow ()->menuBar ()->isVisible ();
-  bool new_menuVisibility= visibility[0];
-
-  if (XOR (old_menuVisibility, new_menuVisibility))
-    mainwindow ()->menuBar ()->setVisible (new_menuVisibility);
-#endif
 
 // #if 0
 #ifdef UNIFIED_TOOLBAR
@@ -793,15 +765,6 @@ qt_tm_widget_rep::update_visibility () {
         dumbToolBar->removeAction (modeToolBarAction);
       }
     }
-  }
-  else {
-#ifdef Q_OS_WIN
-    bool old_menuVisibility= mainwindow ()->menuBar ()->isVisible ();
-    bool new_menuVisibility= visibility[0];
-
-    if (XOR (old_menuVisibility, new_menuVisibility))
-      mainwindow ()->menuBar ()->setVisible (new_menuVisibility);
-#endif
   }
 #endif // UNIFIED_TOOLBAR
 #undef XOR
@@ -1091,15 +1054,8 @@ qt_tm_widget_rep::install_main_menu () {
   main_menu_widget    = waiting_main_menu_widget;
   QList<QAction*>* src= main_menu_widget->get_qactionlist ();
   if (!src) return;
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
   QMenuBar* dest= new QMenuBar ();
-#else
-  QMenuBar* dest= mainwindow ()->menuBar ();
-#endif
-
   if (tm_style_sheet == "") dest->setStyle (qtmstyle ());
-
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
   if (!use_native_menubar) {
     dest->setNativeMenuBar (false);
     if (tm_style_sheet != "") {
@@ -1107,12 +1063,6 @@ qt_tm_widget_rep::install_main_menu () {
       dest->setMinimumHeight (min_h);
     }
   }
-#else // not macOS or Linux
-  if (tm_style_sheet != "") {
-    int min_h= (int) floor (28 * retina_scale);
-    dest->setMinimumHeight (min_h);
-  }
-#endif
 
   dest->clear ();
   for (int i= 0; i < src->count (); i++) {
@@ -1131,17 +1081,13 @@ qt_tm_widget_rep::install_main_menu () {
                         the_gui->gui_helper, SLOT (aboutToHideMainMenu ()));
     }
   }
-
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
   // 移除旧 menuBar
   QList<QWidget*> widgets= menuToolBar->findChildren<QWidget*> ();
   for (QWidget* w : widgets) {
     w->setParent (nullptr);
   }
-
   // 添加新的 menuBar 到 menuToolBar
   menuToolBar->addWidget (dest);
-#endif
 }
 
 void
@@ -1206,11 +1152,7 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       tab_bar_widget       = concrete (w);
       QList<QAction*>* list= tab_bar_widget->get_qactionlist ();
       if (list) {
-#ifdef Q_OS_WIN
-        tabToolBar->replaceTabPages (list);
-#else
         tabPageContainer->replaceTabPages (list);
-#endif
         update_visibility ();
       }
     }

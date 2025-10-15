@@ -53,6 +53,60 @@ QWK--WindowBar {
     background-color: #f3f3f3;
 }
 
+QWK--WindowBar QAbstractButton#icon-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 0;
+  min-width: 50px;
+  min-height: 50px;
+}
+
+/* 系统按钮通用样式（最小/最大/关闭/置顶） */
+QWK--WindowBar QAbstractButton[system-button=true] {
+  border: none;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+QWK--WindowBar QAbstractButton[system-button=true]:hover {
+  background-color: rgba(0, 0, 0, 0.12);
+  border-radius: 0;
+}
+QWK--WindowBar QAbstractButton[system-button=true]:pressed {
+  background-color: rgba(0, 0, 0, 0.18);
+  border-radius: 0;
+}
+
+/* 置顶按钮（Pin） */
+QWK--WindowBar QAbstractButton#pin-button {
+  qproperty-iconNormal: url(":/window-bar/pin.svg");
+  qproperty-iconChecked: url(":/window-bar/pin-fill.svg");
+}
+
+/* 最小化/最大化/关闭按钮 */
+QWK--WindowBar>QAbstractButton#min-button {
+    qproperty-iconNormal: url(":/window-bar/minimize.svg");
+}
+QWK--WindowBar>QAbstractButton#max-button {
+    qproperty-iconNormal: url(":/window-bar/maximize.svg");
+    qproperty-iconChecked: url(":/window-bar/restore.svg");
+}
+QWK--WindowBar>QAbstractButton#close-button {
+    qproperty-iconNormal: url(":/window-bar/close.svg");
+    qproperty-iconHovered: url(":/window-bar/close-white.svg");
+}
+QWK--WindowBar>QAbstractButton#close-button:hover {
+  background-color: #E81123;
+  border-radius: 0;
+}
+QWK--WindowBar>QAbstractButton#close-button:pressed {
+  background-color: #C50F1F;
+  border-radius: 0;
+}
+
 /****************************************************************************
 * 工具栏样式
 ****************************************************************************/
@@ -262,40 +316,44 @@ QDockWidget::title {
 ****************************************************************************/
 /* Tab Page 基础样式 */
 QTMTabPage {
-    padding: 0 26px;
-    border-radius: 6px;                  /* 圆角矩形 */
-    background-color: #e8e8e8;
+  padding: 8px 12px;
+  min-width: 140px;  
+  color: #000000;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
-/* 悬停效果 */
 QTMTabPage:hover {
-    background-color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.04);
+  border-color: #DADADA;
 }
 
-/* 被选中（激活）状态 */
 QTMTabPage:checked {
-    background-color: #ffffff;
-    border-top: 2px solid #646464;
-    border-left: 1px solid #A6A6A6;
-    border-right: 1px solid #A6A6A6;
+  background-color: #FFFFFF;
+  border: 1px solid #CFCFCF;
+  border-bottom: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
-/* 关闭按钮基础样式 */
-QToolButton#tabpage-close-button {
-    background-color: #ffffff;
-    border-radius: 7px;                /* 默认圆形（半径 >= 宽高一半） */
-    padding: 0px;
-    min-width: 14px;                    /* 保证是正方形 */
-    min-height: 14px;
-    max-width: 14px;
-    max-height: 14px;
+QTMTabPage QToolButton#tabpage-close-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 9px;
+  padding: 0;
+  margin-left: 6px;
 }
 
-/* 关闭按钮悬停时样式 */
-QToolButton#tabpage-close-button:hover {
-    border-radius: 7px;                /* 保持圆形 */
-    color: #ffffff;
-    background-color: #E49AA2;          /* 粉红色背景 */
+QTMTabPage QToolButton#tabpage-close-button:hover {
+  background-color: #E81123;
+  color: #FFFFFF;
+  border-radius: 4px;
+}
+QTMTabPage QToolButton#tabpage-close-button:pressed {
+  background-color: #C50F1F;
+  border-radius: 4px;
 }
 
 /****************************************************************************

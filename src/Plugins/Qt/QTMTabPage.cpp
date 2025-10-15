@@ -16,12 +16,14 @@
 
 // The minimum width of a single tab page (in pixels).
 const int MIN_TAB_PAGE_WIDTH= 150;
+// The maximum width of a single tab page (in pixels).
+const int MAX_TAB_PAGE_WIDTH= 200;
 
 // The horizontal padding for tab container (in pixels).
 #ifdef Q_OS_MAC
 const int TAB_CONTAINER_PADDING= 75;
 #else
-const int TAB_CONTAINER_PADDING= 15;
+const int TAB_CONTAINER_PADDING= 0;
 #endif
 
 /**
@@ -61,7 +63,7 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
   m_closeBtn= new QToolButton (this);
   m_closeBtn->setObjectName ("tabpage-close-button");
   m_closeBtn->setDefaultAction (p_closeBtn);
-  m_closeBtn->setFixedSize (14, 14);
+  m_closeBtn->setFixedSize (30, 30);
   m_closeBtn->setFocusPolicy (Qt::NoFocus);
   updateCloseButtonVisibility ();
   connect (m_closeBtn, &QToolButton::clicked, this,
@@ -72,7 +74,7 @@ QTMTabPage::QTMTabPage () : m_viewUrl (url_none ()) {
   setFocusPolicy (Qt::NoFocus);
   m_closeBtn= new QToolButton (this);
   m_closeBtn->setObjectName ("tabpage-close-button");
-  m_closeBtn->setFixedSize (14, 14);
+  m_closeBtn->setFixedSize (30, 30);
   m_closeBtn->setFocusPolicy (Qt::NoFocus);
   updateCloseButtonVisibility ();
 }
@@ -93,8 +95,8 @@ QTMTabPage::paintEvent (QPaintEvent*) {
   // 计算可用的文字绘制区域，需要排除关闭按钮的空间
   int leftPadding   = 10;
   int rightPadding  = m_closeBtn->isVisible ()
-                          ? m_closeBtn->width () + 8
-                          : 8; // 如果关闭按钮可见，留出更多空间
+                          ? m_closeBtn->width () + 12
+                          : 12; // 如果关闭按钮可见，留出更多空间
   int availableWidth= width () - leftPadding - rightPadding;
 
   // 如果可用宽度太小，至少保证最小宽度
@@ -103,7 +105,17 @@ QTMTabPage::paintEvent (QPaintEvent*) {
     rightPadding  = width () - leftPadding - availableWidth;
   }
 
-  QRect textRect (leftPadding, 0, availableWidth, height ());
+  int fontBoxH   = fm.height ();
+  int centeredTop= (height () - fontBoxH) / 2;
+#ifdef Q_OS_WIN
+  // Windows 上字体度量与控件背景的边距叠加，通常需要轻微上移 1px 以达到光学居中
+  const int opticalAdjust= -1;
+#else
+  const int opticalAdjust= 0;
+#endif
+  centeredTop+= opticalAdjust;
+
+  QRect textRect (leftPadding, qMax (0, centeredTop), availableWidth, fontBoxH);
 
   // 使用省略号来处理过长的文字
   QString elidedText= fm.elidedText (text (), Qt::ElideRight, availableWidth);
@@ -116,7 +128,7 @@ void
 QTMTabPage::resizeEvent (QResizeEvent* e) {
   int w= m_closeBtn->width ();
   int h= m_closeBtn->height ();
-  int x= e->size ().width () - w - 8;
+  int x= e->size ().width () - w - 12; // 向左移动一点
   int y= e->size ().height () / 2 - h / 2;
 
   m_closeBtn->setGeometry (x, y, w, h);
@@ -181,8 +193,8 @@ QTMTabPage::leaveEvent (QEvent* e) {
 
 void
 QTMTabPage::updateCloseButtonVisibility () {
-  // 当鼠标位于标签页上，或者标签页处于被选中状态时才显示关闭按钮
-  bool shouldShow= underMouse () || isChecked ();
+  // 始终显示关闭按钮（无论是否选中或悬停）
+  bool shouldShow= true;
   bool wasVisible= m_closeBtn->isVisible ();
   m_closeBtn->setVisible (shouldShow);
 
@@ -292,8 +304,9 @@ QTMTabPageContainer::arrangeTabPages () {
   // Calculate tab dimensions
   int availableWidth= windowWidth - 2 * TAB_CONTAINER_PADDING;
   int tabWidth      = availableWidth / visibleTabCount;
-  tabWidth          = std::max (25, std::min (150, tabWidth));
-  g_tabWidth        = tabWidth; // for external use
+  // Clamp width into a reasonable range: allow longer tabs when count is small
+  tabWidth  = std::max (25, std::min (MAX_TAB_PAGE_WIDTH, tabWidth));
+  g_tabWidth= tabWidth; // for external use
 
   int accumWidth= TAB_CONTAINER_PADDING;
 

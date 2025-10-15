@@ -28,7 +28,7 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 #include "../QWindowKit/windowbar.hpp"
 #include "../QWindowKit/windowbutton.hpp"
 #include <QWKWidgets/widgetwindowagent.h>
@@ -61,11 +61,9 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
    tab_tools_visibility     = 1024
    } visibility_t;
    */
-  QLabel* rightLabel;
-  QLabel* leftLabel;
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
-  QToolBar* menuToolBar;
-#endif
+  QLabel*              rightLabel;
+  QLabel*              leftLabel;
+  QToolBar*            menuToolBar;
   QToolBar*            mainToolBar;
   QToolBar*            modeToolBar;
   QToolBar*            focusToolBar;
@@ -75,7 +73,6 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
   QDockWidget*         bottomTools;
   QDockWidget*         extraTools;
   QTMTabPageContainer* tabPageContainer;
-  QTMTabPageBar*       tabToolBar;
   QTMAuxiliaryWidget*  auxiliaryWidget;
 
 #ifdef Q_OS_MAC
