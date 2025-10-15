@@ -150,7 +150,8 @@ edit_interface_rep::mouse_drag (SI x, SI y) {
 void
 edit_interface_rep::mouse_select (SI x, SI y, int mods, bool drag) {
   if (mouse_message ("select", x, y)) return;
-  if (!is_nil (mouse_ids) && (mods & (ShiftMask + Mod2Mask)) == 0 && !drag) {
+  if (!is_nil (mouse_ids) && (mods & Mod2Mask) == 0 &&
+      (mods & ControlMask) != 0 && !drag) {
     call ("link-follow-ids", object (mouse_ids), object ("click"));
     disable_double_clicks ();
     return;
