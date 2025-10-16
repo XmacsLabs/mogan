@@ -2173,6 +2173,7 @@
 ("top table border" "")
 ("top table padding" "")
 ("top" "顶部")
+("total pages" "总页数")
 ("transform cell into subtable" "将单元格转换为子表格")
 ("transform" "变换")
 ("translate" "翻译")

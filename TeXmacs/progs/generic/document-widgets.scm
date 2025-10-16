@@ -495,6 +495,8 @@
      // //
      ("Page number" (when (editing-headers?) (make 'page-the-page)))
      // //
+     ("Total pages" (when (editing-headers?) (make 'page-the-total)))
+     // //
      >>>
      // //
      ;;("Reset"

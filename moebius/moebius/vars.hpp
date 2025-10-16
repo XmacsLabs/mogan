@@ -155,6 +155,7 @@ extern string PAGE_FLEXIBILITY;
 extern string PAGE_FIRST;
 extern string PAGE_NR;
 extern string PAGE_THE_PAGE;
+extern string PAGE_THE_TOTAL;
 extern string PAGE_WIDTH;
 extern string PAGE_HEIGHT;
 extern string PAGE_ODD;

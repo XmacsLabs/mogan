@@ -69,6 +69,9 @@
   <assign|page-the-page|<macro|<with|color|dark
   grey|font-shape|italic|page-number>>>
 
+  <assign|page-the-total|<macro|<with|color|dark
+  grey|font-shape|italic|total-pages>>>
+
   <\active*>
     <\src-comment>
       Special tags for search and replace patterns.

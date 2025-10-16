@@ -587,6 +587,7 @@
     (hlist
       ("Tab" (when (editing-headers? win) (make-htab "5mm")))
       ("Page number" (when (editing-headers? win) (make 'page-the-page)))
+      ("Total pages" (when (editing-headers? win) (make 'page-the-total)))
       >>>
       ("Restore" (apply window-reset-init (cons win header-parameters)))
       ("Apply"

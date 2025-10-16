@@ -23,6 +23,7 @@ initialize_default_env () {
   tree identity_m (MACRO, "x", tree (ARG, "x"));
   tree tabular_m (MACRO, "x", tree (TFORMAT, tree (ARG, "x")));
   tree the_page (MACRO, compound ("page-nr"));
+  tree the_total ("1");
 
   tree gr_geometry (TUPLE, "geometry", "1par", "0.6par", "center");
   tree gr_frame (TUPLE, "scale", "1cm", tree (TUPLE, "0.5gw", "0.5gh"));
@@ -176,6 +177,7 @@ initialize_default_env () {
   env (PAGE_FIRST)        = "1";            // number of first page
   env (PAGE_NR)           = "0";            // the page number
   env (PAGE_THE_PAGE)     = the_page;       // the page number as text
+  env (PAGE_THE_TOTAL)    = the_total;      // the total page number as text
   env (PAGE_WIDTH)        = "auto";         // physical width of pages
   env (PAGE_HEIGHT)       = "auto";         // physical height of pages
   env (PAGE_ODD)          = "auto";         // left margin on odd pages

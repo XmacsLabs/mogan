@@ -168,6 +168,7 @@ string PAGE_FLEXIBILITY ("page-flexibility");
 string PAGE_FIRST ("page-first");
 string PAGE_NR ("page-nr");
 string PAGE_THE_PAGE ("page-the-page");
+string PAGE_THE_TOTAL ("page-the-total");
 string PAGE_WIDTH ("page-width");
 string PAGE_HEIGHT ("page-height");
 string PAGE_ODD ("page-odd");

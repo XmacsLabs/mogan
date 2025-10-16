@@ -104,6 +104,7 @@ initialize_default_var_type () {
   var_type (PAGE_SCREEN_MARGIN)= Env_Page;
   var_type (PAGE_NR)           = Env_Page;
   var_type (PAGE_THE_PAGE)     = Env_Page;
+  var_type (PAGE_THE_TOTAL)    = Env_Page;
   var_type (PAGE_ODD)          = Env_Page;
   var_type (PAGE_EVEN)         = Env_Page;
   var_type (PAGE_RIGHT)        = Env_Page;

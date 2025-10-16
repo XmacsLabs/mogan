@@ -21,6 +21,7 @@ using namespace moebius;
 pager_rep::pager_rep (path ip2, edit_env env2, array<page_item> l2)
     : ip (ip2), env (env2), style (UNINIT), l (l2) {
   style (PAGE_THE_PAGE)     = tree (MACRO, compound ("page-nr"));
+  style (PAGE_THE_TOTAL)    = tree ("1");
   style (PAGE_ODD_HEADER)   = env->read (PAGE_ODD_HEADER);
   style (PAGE_ODD_FOOTER)   = env->read (PAGE_ODD_FOOTER);
   style (PAGE_EVEN_HEADER)  = env->read (PAGE_EVEN_HEADER);
