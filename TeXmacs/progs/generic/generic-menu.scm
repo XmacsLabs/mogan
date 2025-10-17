@@ -688,9 +688,9 @@
   (mini #t
     (with l (focus-variants-of t)
       (assuming (<= (length l) 1)
-        (inert ((eval (focus-tag-name (tree-label t))) (noop))))
+        (inert ((eval `(verbatim ,(focus-tag-name (tree-label t)))) (noop))))
       (assuming (> (length l) 1)
-        (=> (balloon (eval (focus-tag-name (tree-label t)))
+        (=> (balloon (eval `(verbatim ,(focus-tag-name (tree-label t))))
                      (eval
                       (string-append "Structured variant ("
                        (string-append (translate (kbd-system-rewrite "A-S-up"))
