@@ -58,8 +58,9 @@ QWK--WindowBar QAbstractButton#icon-button {
   border: none;
   border-radius: 6px;
   padding: 0;
-  min-width: 50px;
-  min-height: 50px;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
 }
 
 /* 系统按钮通用样式（最小/最大/关闭/置顶） */
@@ -317,12 +318,13 @@ QDockWidget::title {
 /* Tab Page 基础样式 */
 QTMTabPage {
   padding: 8px 12px;
-  min-width: 140px;  
   color: #000000;
   background-color: transparent;
   border: 1px solid transparent;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 QTMTabPage:hover {
@@ -334,26 +336,29 @@ QTMTabPage:checked {
   background-color: #FFFFFF;
   border: 1px solid #CFCFCF;
   border-bottom: none;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 QTMTabPage QToolButton#tabpage-close-button {
   background-color: transparent;
   border: none;
-  border-radius: 9px;
   padding: 0;
   margin-left: 6px;
+  border-radius: 4px;
+  min-width: 20px;
+  min-height: 20px;
+  max-width: 20px;
+  max-height: 20px;
 }
 
 QTMTabPage QToolButton#tabpage-close-button:hover {
   background-color: #E81123;
   color: #FFFFFF;
-  border-radius: 4px;
 }
+
 QTMTabPage QToolButton#tabpage-close-button:pressed {
   background-color: #C50F1F;
-  border-radius: 4px;
 }
 
 /****************************************************************************

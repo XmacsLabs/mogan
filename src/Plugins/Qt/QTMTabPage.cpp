@@ -63,7 +63,6 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
   m_closeBtn= new QToolButton (this);
   m_closeBtn->setObjectName ("tabpage-close-button");
   m_closeBtn->setDefaultAction (p_closeBtn);
-  m_closeBtn->setFixedSize (30, 30);
   m_closeBtn->setFocusPolicy (Qt::NoFocus);
   updateCloseButtonVisibility ();
   connect (m_closeBtn, &QToolButton::clicked, this,
@@ -74,7 +73,6 @@ QTMTabPage::QTMTabPage () : m_viewUrl (url_none ()) {
   setFocusPolicy (Qt::NoFocus);
   m_closeBtn= new QToolButton (this);
   m_closeBtn->setObjectName ("tabpage-close-button");
-  m_closeBtn->setFixedSize (30, 30);
   m_closeBtn->setFocusPolicy (Qt::NoFocus);
   updateCloseButtonVisibility ();
 }
