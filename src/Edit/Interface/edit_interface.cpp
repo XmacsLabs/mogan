@@ -1049,6 +1049,13 @@ edit_interface_rep::apply_changes () {
   // cout << "Handling menus\n";
   if (env_change & THE_MENUS) update_menus ();
 
+  // cout << "Handling tooltip\n";
+  if ((env_change & (THE_ENVIRONMENT + THE_EXTENTS + THE_FOCUS)) ||
+      new_visible != last_visible) {
+    call ("modify-comment-tooltip");
+    call ("modify-ref-tooltip");
+  }
+
   // cout << "Applied changes\n";
   // time_t t2= texmacs_time ();
   // if (t2 - t1 >= 10) cout << "apply_changes took " << t2-t1 << "ms\n";

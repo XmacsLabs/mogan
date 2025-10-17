@@ -444,6 +444,19 @@
                  (tip (and id (ref-preview id))))
         (show-tooltip id ref tip "Top" "Top" "default" 2.2)))))
 
+(tm-define (update-preview-tooltip)
+  (:secure #t)
+  (let* ((id (and (tree-atomic? (cursor-tree)) (tm->string (cursor-tree))))
+         (tip (and id (ref-preview id))))
+    (if (and id tip)
+        (begin
+          (close-tooltip)
+          (delayed
+            (:idle 10)
+            (show-tooltip id (cursor-tree) tip
+                          "Top" "Top" "keyboard" 2.2)))
+        (close-tooltip))))
+
 (tm-define (keyboard-press key time)
   (with before? (in-inactive-reference?)
     (former key time)

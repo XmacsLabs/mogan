@@ -297,15 +297,17 @@
 ;; Previewing
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (update-comment-tooltip)
-  (delayed
-    (:idle 100)
-    (let* ((id (comment-id (cursor-tree)))
-           (tip (comment-preview (cursor-tree))))
-      (if tip
-          (show-tooltip id (cursor-tree) tip
-                        "auto" "auto" "keyboard" 2.0)
-          (close-tooltip)))))
+(tm-define (update-comment-tooltip)
+  (let* ((id (comment-id (cursor-tree)))
+         (tip (comment-preview (cursor-tree))))
+    (if (and id tip)
+        (begin
+          (close-tooltip)
+          (delayed
+            (:idle 10)
+            (show-tooltip id (cursor-tree) tip
+                          "auto" "auto" "keyboard" 2.0)))
+        (close-tooltip))))
 
 (tm-define (mouse-event key x y mods time data)
   (with before? (behind-folded-comment?)

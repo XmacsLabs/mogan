@@ -59,6 +59,16 @@
     (when (and tooltip-unmap? (== tooltip-unmap? tooltip-win))
       (tooltip-unmap))))
 
+(tm-define (modify-comment-tooltip)
+  (when (and (defined? 'update-comment-tooltip)
+             (procedure? update-comment-tooltip))
+    (update-comment-tooltip)))
+
+(tm-define (modify-ref-tooltip)
+  (when (and (defined? 'update-preview-tooltip)
+             (procedure? update-preview-tooltip))
+    (update-preview-tooltip)))
+
 (tm-define (keyboard-press key time)
   (:require (and tooltip-win (not tooltip-unmap?)))
   (when (== (cAr tooltip-settings) "keyboard")
