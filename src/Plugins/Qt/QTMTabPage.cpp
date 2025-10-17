@@ -228,6 +228,8 @@ QTMTabPageContainer::QTMTabPageContainer (QWidget* p_parent)
 
   setAcceptDrops (true);
   setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
+  m_wasMaximizedOnPress= false;
+  m_restoredOnDrag     = false;
 }
 
 QTMTabPageContainer::~QTMTabPageContainer () { removeAllTabPages (); }
@@ -469,6 +471,8 @@ QTMTabPageContainer::mousePressEvent (QMouseEvent* event) {
   if (event->button () == Qt::LeftButton) {
     dragging    = true;
     dragPosition= event->globalPos () - window ()->frameGeometry ().topLeft ();
+    m_wasMaximizedOnPress= window ()->isMaximized ();
+    m_restoredOnDrag     = false;
     event->accept ();
   }
 }
@@ -476,6 +480,21 @@ QTMTabPageContainer::mousePressEvent (QMouseEvent* event) {
 void
 QTMTabPageContainer::mouseMoveEvent (QMouseEvent* event) {
   if (dragging && (event->buttons () & Qt::LeftButton)) {
+    // If started from a maximized window, restore first when actual dragging
+    // begins
+    if (m_wasMaximizedOnPress && !m_restoredOnDrag) {
+      // Only trigger restore when there's a real move to avoid flicker
+      if ((event->globalPos () -
+           (window ()->frameGeometry ().topLeft () + dragPosition))
+              .manhattanLength () >= 3) {
+        window ()->showNormal ();
+        // Recompute drag anchor against restored geometry so cursor keeps
+        // grabbing point
+        dragPosition=
+            event->globalPos () - window ()->frameGeometry ().topLeft ();
+        m_restoredOnDrag= true;
+      }
+    }
     window ()->move (event->globalPos () - dragPosition);
     event->accept ();
   }
@@ -484,9 +503,29 @@ QTMTabPageContainer::mouseMoveEvent (QMouseEvent* event) {
 void
 QTMTabPageContainer::mouseReleaseEvent (QMouseEvent* event) {
   if (event->button () == Qt::LeftButton) {
-    dragging= false;
+    dragging             = false;
+    m_wasMaximizedOnPress= false;
+    m_restoredOnDrag     = false;
     event->accept ();
   }
+}
+
+void
+QTMTabPageContainer::mouseDoubleClickEvent (QMouseEvent* event) {
+  if (event->button () == Qt::LeftButton) {
+    // Only react when double-clicking blank area (not on a tab widget)
+    QWidget* child= childAt (event->pos ());
+    if (child == nullptr) {
+      QWidget* w= window ();
+      if (w && !w->isFullScreen ()) {
+        if (w->isMaximized ()) w->showNormal ();
+        else w->showMaximized ();
+        event->accept ();
+        return;
+      }
+    }
+  }
+  QWidget::mouseDoubleClickEvent (event);
 }
 
 bool

@@ -84,6 +84,9 @@ class QTMTabPageContainer : public QWidget {
   int                m_width= 0;
   bool               dragging;
   QPoint             dragPosition;
+  // For title-bar-like behaviors on blank area
+  bool m_wasMaximizedOnPress= false;
+  bool m_restoredOnDrag     = false;
 
 public:
   QTMTabPage* dummyTabPage;
@@ -110,6 +113,7 @@ protected:
   void mousePressEvent (QMouseEvent* event) override;
   void mouseMoveEvent (QMouseEvent* event) override;
   void mouseReleaseEvent (QMouseEvent* event) override;
+  void mouseDoubleClickEvent (QMouseEvent* event) override;
   bool eventFilter (QObject* obj, QEvent* event) override;
 };
 
