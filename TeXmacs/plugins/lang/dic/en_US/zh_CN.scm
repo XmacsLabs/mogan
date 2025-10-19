@@ -702,6 +702,8 @@
 ("extend or normal" "")
 ("extents" "范围")
 ("extern " "")
+("extensible left arrow" "可扩展的左箭头")
+("extensible right arrow" "可扩展的右箭头")
 ("extra" "")
 ("extract format" "")
 ("extract style file" "导出样式文件")

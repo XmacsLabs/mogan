@@ -333,6 +333,8 @@
 ("export" "експортирай")
 ("extend or normal" "разтегнат или нормален")
 ("extern " "вънешен")
+("extensible left arrow" "разширяема лява стрелка")
+("extensible right arrow" "разширяема дясна стрелка")
 ("extra" "допълнителен")
 ("extract format" "екстрахирай формата")
 ("family" "семейство")

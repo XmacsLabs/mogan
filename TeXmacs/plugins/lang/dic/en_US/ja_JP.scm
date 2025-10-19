@@ -367,6 +367,8 @@
 ("export" "他形式出力(エクスポート)")
 ("extend or normal" "")
 ("extern " "")
+("extensible left arrow" "拡張可能な左矢印")
+("extensible right arrow" "拡張可能な右矢印")
 ("extra" "")
 ("extract format" "")
 ("family" "")

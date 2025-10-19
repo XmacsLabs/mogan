@@ -332,6 +332,8 @@
 ("export" "export")
 ("extend or normal" "rozšířené nebo normální")
 ("extern " "externí")
+("extensible left arrow" "rozšiřitelná levá šipka")
+("extensible right arrow" "rozšiřitelná pravá šipka")
 ("extra" "extra")
 ("extract format" "získej formát")
 ("family" "rodina")

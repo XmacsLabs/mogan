@@ -10,6 +10,8 @@
 ("centered" "centred")
 ("color" "colour")
 ("emphasize text" "emphasise text")
+("extensible left arrow" "extensible left arrow")
+("extensible right arrow" "extensible right arrow")
 ("horizontally centre the cell" "")
 ("itemize" "itemise")
 ("select a foreground color" "select a foreground colour")

@@ -511,6 +511,8 @@
 ("extend or normal" "")
 ("extents" "範圍")
 ("extern " "外部")
+("extensible left arrow" "可延伸的左箭頭")
+("extensible right arrow" "可延伸的右箭頭")
 ("extra" "特別")
 ("extract format" "")
 ("family" "類別")

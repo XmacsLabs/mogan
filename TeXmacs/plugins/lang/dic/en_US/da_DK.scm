@@ -370,6 +370,8 @@
 ("export" "eksportér")
 ("extend or normal" "udvid eller normal")
 ("extern " "ekstern")
+("extensible left arrow" "udvidelig venstre pil")
+("extensible right arrow" "udvidelig højre pil")
 ("extra" "ekstra")
 ("extract format" "træk format ud")
 ("family" "familie")

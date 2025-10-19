@@ -328,6 +328,8 @@
 ("export" "exportar")
 ("extend or normal" "extendido ou normal")
 ("extern " "externo")
+("extensible left arrow" "seta esquerda extensível")
+("extensible right arrow" "seta direita extensível")
 ("extra" "extra")
 ("extract format" "extrair formato")
 ("family" "família")

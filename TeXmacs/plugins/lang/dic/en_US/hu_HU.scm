@@ -435,6 +435,8 @@
 ("extend or normal" "kiterjesztett vagy normális")
 ("extents" "kiterjedés")
 ("extern " "külső")
+("extensible left arrow" "kiterjeszthető bal nyíl")
+("extensible right arrow" "kiterjeszthető jobb nyíl")
 ("external" "külső")
 ("extra" "extra")
 ("extract format" "formátum kivonatolása")

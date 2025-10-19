@@ -347,6 +347,8 @@
 ("export" "exportar")
 ("extend or normal" "extendido o normal")
 ("extern " "externo")
+("extensible left arrow" "flecha izquierda extensible")
+("extensible right arrow" "flecha derecha extensible")
 ("extra" "extra")
 ("extract format" "extraer formato")
 ("extras" "extra")

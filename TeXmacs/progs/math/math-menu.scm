@@ -503,8 +503,8 @@
   (symbol "<longmapsto>"))
 
 (menu-bind extensible-arrow-menu
-  ("Extensible left arrow" (make-long-arrow "<leftarrow>"))
-  ("Extensible right arrow" (make-long-arrow "<rightarrow>")))
+  ("extensible left arrow" (make-long-arrow "<leftarrow>"))
+  ("extensible right arrow" (make-long-arrow "<rightarrow>")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Negations

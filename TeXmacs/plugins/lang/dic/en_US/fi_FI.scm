@@ -322,6 +322,8 @@
 ("export" "tallenna muodossa")
 ("extend or normal" "laajennettu tai normaali")
 ("extern " "ulkoinen")
+("extensible left arrow" "laajennettava vasen nuoli")
+("extensible right arrow" "laajennettava oikea nuoli")
 ("extra" "ylimääräinen")
 ("extract format" "talleta formaatti")
 ("family" "perhe")

@@ -334,6 +334,8 @@
 ("export" "eksportuj")
 ("extend or normal" "rozszerz lub normalizuj")
 ("extern " "zewnętrzne")
+("extensible left arrow" "rozszerzalna strzałka w lewo")
+("extensible right arrow" "rozszerzalna strzałka w prawo")
 ("extra" "dodatki")
 ("extract format" "otrzymany format")
 ("family" "rodzina")

@@ -369,6 +369,8 @@
 ("export" "내보내기")
 ("extend or normal" "")
 ("extern " "")
+("extensible left arrow" "확장 가능한 왼쪽 화살표")
+("extensible right arrow" "확장 가능한 오른쪽 화살표")
 ("extra" "")
 ("extract format" "")
 ("family" "")

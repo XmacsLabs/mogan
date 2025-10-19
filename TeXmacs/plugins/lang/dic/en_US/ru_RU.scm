@@ -368,6 +368,8 @@
 ("export" "экспортировать")
 ("extend or normal" "растянутый или нормальный")
 ("extern " "внешний")
+("extensible left arrow" "расширяемая левая стрелка")
+("extensible right arrow" "расширяемая правая стрелка")
 ("extra" "дополнительный")
 ("extract format" "точный формат")
 ("family" "семейство")
