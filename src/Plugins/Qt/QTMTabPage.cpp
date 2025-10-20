@@ -280,6 +280,14 @@ QTMTabPageContainer::arrangeTabPages () {
   if (!parentWidget ()) return;
   const int windowWidth=
       parentWidget () ? parentWidget ()->width () : this->width ();
+  // 动态计算右侧预留空间，防止标签页覆盖系统按钮
+  QScreen* screen       = QGuiApplication::primaryScreen ();
+  double   dpi          = screen ? screen->logicalDotsPerInch () : 96.0;
+  double   scale        = dpi / 96.0;
+  int      buttonWidth  = int (46 * scale); // 按钮宽度
+  int      buttonCount  = 4;                // pin, min, max, close
+  int      extraGap     = int (96 * scale); // 标签页和按钮之间的额外间隔
+  int      reservedRight= buttonCount * buttonWidth + extraGap;
 
   int visibleTabCount= 0;
   // cout << "most recently closed tab:" << g_mostRecentlyClosedTab << LF;
@@ -302,7 +310,7 @@ QTMTabPageContainer::arrangeTabPages () {
   // cout << "Visible tab count:" << visibleTabCount << LF;
 
   // Calculate tab dimensions
-  int availableWidth= windowWidth - 2 * TAB_CONTAINER_PADDING;
+  int availableWidth= windowWidth - 2 * TAB_CONTAINER_PADDING - reservedRight;
   int tabWidth      = availableWidth / visibleTabCount;
   // Clamp width into a reasonable range: allow longer tabs when count is small
   tabWidth  = std::max (25, std::min (MAX_TAB_PAGE_WIDTH, tabWidth));
@@ -480,20 +488,13 @@ QTMTabPageContainer::mousePressEvent (QMouseEvent* event) {
 void
 QTMTabPageContainer::mouseMoveEvent (QMouseEvent* event) {
   if (dragging && (event->buttons () & Qt::LeftButton)) {
-    // If started from a maximized window, restore first when actual dragging
-    // begins
+    // 只要检测到移动就立即还原最大化窗口
     if (m_wasMaximizedOnPress && !m_restoredOnDrag) {
-      // Only trigger restore when there's a real move to avoid flicker
-      if ((event->globalPos () -
-           (window ()->frameGeometry ().topLeft () + dragPosition))
-              .manhattanLength () >= 3) {
-        window ()->showNormal ();
-        // Recompute drag anchor against restored geometry so cursor keeps
-        // grabbing point
-        dragPosition=
-            event->globalPos () - window ()->frameGeometry ().topLeft ();
-        m_restoredOnDrag= true;
-      }
+      window ()->showNormal ();
+      // 重新计算拖动锚点，保证拖动平滑
+      dragPosition=
+          event->globalPos () - window ()->frameGeometry ().topLeft ();
+      m_restoredOnDrag= true;
     }
     window ()->move (event->globalPos () - dragPosition);
     event->accept ();
