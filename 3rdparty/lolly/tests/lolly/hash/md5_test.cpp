@@ -18,15 +18,17 @@ using lolly::hash::md5_hexdigest;
 
 TEST_CASE ("md5_hexdigest") {
   SUBCASE ("normal file") {
-    url license_file = url_pwd () * "LICENSE";
-    string expected_md5;  
+    url    license_file= url_pwd () * "LICENSE";
+    string expected_md5;
     // 根据平台使用对应的MD5值
-    if (os_win()) {
-      expected_md5 = "3c34afdc3adf82d2448f12715a255122"; // Windows (CRLF) 版本的实际MD5值
-    } else {
-      expected_md5 = "d32239bcb673463ab874e80d47fae504"; // Linux (LF) 版本
+    if (os_win ()) {
+      expected_md5=
+          "3c34afdc3adf82d2448f12715a255122"; // Windows (CRLF) 版本的实际MD5值
     }
-    
+    else {
+      expected_md5= "d32239bcb673463ab874e80d47fae504"; // Linux (LF) 版本
+    }
+
     string_eq (md5_hexdigest (license_file), expected_md5);
   }
   SUBCASE ("empty file") {

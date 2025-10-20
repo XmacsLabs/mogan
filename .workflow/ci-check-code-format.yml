@@ -13,6 +13,8 @@ triggers:
         - .clang-format
         - src/
         - tests/
+        - 3rdparty/moebius/
+        - 3rdparty/lolly/
   push:
     branches:
       precise:
@@ -23,6 +25,8 @@ triggers:
         - .clang-format
         - src/
         - tests/
+        - 3rdparty/moebius/
+        - 3rdparty/lolly/
 
 stages:
   - name: check_code_format

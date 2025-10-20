@@ -25,10 +25,12 @@ TEST_CASE ("check_output") {
     lolly::system::check_stdout ("xmake --version", stdout_result);
     CHECK (N (stdout_result) > 0);
     // 为不同平台提供不同的命令
-    if (os_win()) {
+    if (os_win ()) {
       // 使用cmd.exe执行dir命令，确保错误输出能被正确捕获到stderr
-      lolly::system::check_stderr ("cmd.exe /c dir C:\\no_such_dir", stderr_result);
-    } else {
+      lolly::system::check_stderr ("cmd.exe /c dir C:\\no_such_dir",
+                                   stderr_result);
+    }
+    else {
       lolly::system::check_stderr ("ls /no_such_dir", stderr_result);
     }
     CHECK (N (stderr_result) > 0);

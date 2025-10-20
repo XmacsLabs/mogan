@@ -20,10 +20,14 @@ using lolly::hash::sha256_hexdigest;
 TEST_CASE ("sha224_hexdigest") {
   SUBCASE ("normal file") {
     string expected_sha224;
-    if (os_win()) {
-      expected_sha224 = "d62ef1c7dea18146aba76ae54edc492502102a4a1c525d38ecf36129"; // Windows (CRLF) 版本的实际SHA224值
-    } else {
-      expected_sha224 = "2f051189f6ddb2d2fd11faeb8cf3e3b38b4216f2798ce1d92421e129"; // Linux (LF) 版本的SHA224值，需要在Linux环境下实际计算
+    if (os_win ()) {
+      expected_sha224= "d62ef1c7dea18146aba76ae54edc492502102a4a1c525d38ecf3612"
+                       "9"; // Windows (CRLF) 版本的实际SHA224值
+    }
+    else {
+      expected_sha224= "2f051189f6ddb2d2fd11faeb8cf3e3b38b4216f2798ce1d92421e12"
+                       "9"; // Linux (LF)
+                            // 版本的SHA224值，需要在Linux环境下实际计算
     }
     string_eq (sha224_hexdigest (url_pwd () * "LICENSE"), expected_sha224);
   }
@@ -43,13 +47,16 @@ TEST_CASE ("sha224_hexdigest") {
 TEST_CASE ("sha256_hexdigest") {
   SUBCASE ("normal file") {
     string expected_sha256;
-    if (os_win()) {
-      expected_sha256 = "0b383d5a63da644f628d99c33976ea6487ed89aaa59f0b3257992deac1171e6b"; // Windows (CRLF) 版本的实际SHA256值
-    } else {
-      expected_sha256 = "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"; // Linux (LF) 版本的SHA256值，需要在Linux环境下实际计算
+    if (os_win ()) {
+      expected_sha256= "0b383d5a63da644f628d99c33976ea6487ed89aaa59f0b3257992de"
+                       "ac1171e6b"; // Windows (CRLF) 版本的实际SHA256值
     }
-    string_eq (
-        sha256_hexdigest (url_pwd () * "LICENSE"), expected_sha256);
+    else {
+      expected_sha256= "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c54"
+                       "5eb65b903"; // Linux (LF)
+                                    // 版本的SHA256值，需要在Linux环境下实际计算
+    }
+    string_eq (sha256_hexdigest (url_pwd () * "LICENSE"), expected_sha256);
   }
   SUBCASE ("empty file") {
     url temp= url_temp ();
