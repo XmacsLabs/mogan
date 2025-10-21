@@ -1,0 +1,109 @@
+<TMU|<tuple|1.1.0|2025.2.0-alpha>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <\big-table|<tabular|<tformat|<table|<row|<cell|👍>|<cell|👎>|<cell|💯>|<cell|🔢>|<cell|🎱>|<cell|🔤>|<cell|🔡>|<cell|🚡>|<cell|✈>|<cell|👽>>|<row|<cell|🚑>|<cell|⚓>|<cell|👼>|<cell|💢>|<cell|😠>|<cell|😧>|<cell|🐜>|<cell|🍎>|<cell|♒>|<cell|♈>>|<row|<cell|◀>|<cell|⬇>|<cell|🔽>|<cell|▶>|<cell|⤵>|<cell|⤴>|<cell|⬅>|<cell|↙>|<cell|↘>|<cell|➡>>|<row|<cell|↪>|<cell|⬆>|<cell|↕>|<cell|🔼>|<cell|↖>|<cell|↗>|<cell|🔃>|<cell|🔄>|<cell|🎨>|<cell|🚛>>|<row|<cell|😲>|<cell|🏧>|<cell|👶>|<cell|🍼>|<cell|🐤>|<cell|🚼>|<cell|🛄>|<cell|🎈>|<cell|☑>|<cell|🎍>>|<row|<cell|🍌>|<cell|‼>|<cell|🏦>|<cell|📊>|<cell|💈>|<cell|⚾>|<cell|🏀>|<cell|🛀>|<cell|🛁>|<cell|🔋>>|<row|<cell|🐻>|<cell|🍺>|<cell|🍻>|<cell|🪲>|<cell|🔰>|<cell|🔔>|<cell|🍱>|<cell|🚴>|<cell|🚲>|<cell|👙>>|<row|<cell|🐦>|<cell|🎂>|<cell|⚫>|<cell|✒>|<cell|🔲>|<cell|🌼>|<cell|🐡>|<cell|📘>|<cell|🚙>|<cell|💙>>|<row|<cell|😊>|<cell|🐗>|<cell|⛵>|<cell|💣>|<cell|📖>|<cell|🔖>|<cell|📑>|<cell|📚>|<cell|💥>|<cell|👢>>|<row|<cell|💐>|<cell|🙇>|<cell|🎳>|<cell|👦>|<cell|🍞>|<cell|👰>|<cell|🌉>|<cell|💼>|<cell|💔>|<cell|🐛>>>>|>>>
+    \;
+  </big-table>
+
+  
+  <\big-table|<tabular|<tformat|<table|<row|<cell|💡>|<cell|🚅>|<cell|🚄>|<cell|🚌>|<cell|🚏>|<cell|👤>|<cell|👥>|<cell|🌵>|<cell|🍰>|<cell|📆>>|<row|<cell|📲>|<cell|🐫>|<cell|📷>|<cell|♋>|<cell|🍬>|<cell|🔠>|<cell|♑>|<cell|🚗>|<cell|📇>|<cell|🎠>>|<row|<cell|🐱>|<cell|🐈>|<cell|💿>|<cell|💹>|<cell|📉>|<cell|📈>|<cell|🏁>|<cell|🍒>|<cell|🌸>|<cell|🌰>>|<row|<cell|🐔>|<cell|🚸>|<cell|🍫>|<cell|🎄>|<cell|⛪>|<cell|🎦>|<cell|🎪>|<cell|🌇>|<cell|🌆>|<cell|👏>>|<row|<cell|🎬>|<cell|📋>|<cell|🕐>|<cell|🕙>|<cell|🕥>|<cell|🕚>|<cell|🕦>|<cell|🕛>|<cell|🕧>|<cell|🕜>>|<row|<cell|🕑>|<cell|🕝>|<cell|🕒>|<cell|🕞>|<cell|🕓>|<cell|🕟>|<cell|🕔>|<cell|🕠>|<cell|🕕>|<cell|🕡>>|<row|<cell|🕖>|<cell|🕢>|<cell|🕗>|<cell|🕣>|<cell|🕘>|<cell|🕤>|<cell|📕>|<cell|🔐>|<cell|🌂>|<cell|☁>>|<row|<cell|♣>|<cell|🇨>|<cell|🍸>|<cell|☕>|<cell|😰>|<cell|💥>|<cell|💻>|<cell|🎊>|<cell|😖>|<cell|😕>>|<row|<cell|🚧>|<cell|👷>|<cell|🏪>|<cell|🍪>|<cell|👮>|<cell|©>|<cell|🌽>|<cell|👫>|<cell|💑>|<cell|💏>>|<row|<cell|🐮>|<cell|🐄>|<cell|💳>|<cell|🐊>|<cell|🎌>|<cell|👑>|<cell|😢>|<cell|😿>|<cell|🔮>|<cell|💘>>>>|>>>
+    \;
+  </big-table>
+
+  
+  <\big-table|<tabular|<tformat|<table|<row|<cell|➰>|<cell|💱>|<cell|🍛>|<cell|🍮>|<cell|🛃>|<cell|🌀>|<cell|💃>|<cell|👯>|<cell|🍡>|<cell|🎯>>|<row|<cell|💨>|<cell|📅>|<cell|🇩>|<cell|🌳>|<cell|🏬>|<cell|💠>|<cell|♦>|<cell|😞>|<cell|😥>|<cell|💫>>|<row|<cell|😵>|<cell|🚯>|<cell|🐶>|<cell|🐕>|<cell|💵>|<cell|🎎>|<cell|🐬>|<cell|🚪>|<cell|🍩>|<cell|🐉>>|<row|<cell|🐲>|<cell|👗>|<cell|🐪>|<cell|💧>|<cell|📀>|<cell|📧>|<cell|👂>|<cell|🌾>|<cell|🌍>|<cell|🌎>>|<row|<cell|🌏>|<cell|🥚>|<cell|🍆>|<cell|✴>|<cell|✳>|<cell|🔌>|<cell|🐘>|<cell|📧>|<cell|🔚>|<cell|✉>>|<row|<cell|🇪>|<cell|💶>|<cell|🏰>|<cell|🏤>|<cell|🌲>|<cell|❗>|<cell|😑>|<cell|👓>|<cell|👀>|<cell|👊>>|<row|<cell|🏭>|<cell|🍂>|<cell|👪>|<cell|📠>|<cell|😨>|<cell|🐾>|<cell|🎡>|<cell|📁>|<cell|🔥>|<cell|🚒>>|<row|<cell|🎆>|<cell|🌓>|<cell|🌛>|<cell|🐟>|<cell|🍥>|<cell|🎣>|<cell|✊>|<cell|🎏>|<cell|🔦>|<cell|💾>>|<row|<cell|🎴>|<cell|😳>|<cell|🌁>|<cell|🏈>|<cell|🍴>|<cell|⛲>|<cell|🍀>|<cell|🇫>|<cell|🍤>|<cell|🍟>>|<row|<cell|🐸>|<cell|😦>|<cell|🖕>|<cell|⛽>|<cell|🌕>|<cell|🌝>|<cell|🎲>|<cell|🇬>|<cell|💎>|<cell|♊>>>>|>>>
+    \;
+  </big-table>
+
+  
+  <\big-table|<tabular|<tformat|<table|<row|<cell|👻>|<cell|🎁>|<cell|💝>|<cell|👧>|<cell|🌐>|<cell|🐐>|<cell|⛳>|<cell|🍇>|<cell|🍏>|<cell|📗>>|<row|<cell|💚>|<cell|❕>|<cell|❔>|<cell|😬>|<cell|😁>|<cell|😀>|<cell|💂>|<cell|🎸>|<cell|🔫>|<cell|💇>>|<row|<cell|🍔>|<cell|🔨>|<cell|🐹>|<cell|✋>|<cell|👜>|<cell|💩>|<cell|#>|<cell|🐥>|<cell|🐣>|<cell|🎧>>|<row|<cell|🙉>|<cell|❤>|<cell|💟>|<cell|😍>|<cell|😻>|<cell|💓>|<cell|💗>|<cell|♥>|<cell|✔>|<cell|➗>>|<row|<cell|💲>|<cell|❗>|<cell|➖>|<cell|✖>|<cell|➕>|<cell|🚁>|<cell|🌿>|<cell|🌺>|<cell|🔆>|<cell|👠>>|<row|<cell|🔪>|<cell|🍯>|<cell|🐝>|<cell|🐴>|<cell|🏇>|<cell|🏥>|<cell|🏨>|<cell|♨>|<cell|⌛>|<cell|🏠>>|<row|<cell|🏡>|<cell|😯>|<cell|🍨>|<cell|🍦>|<cell|👿>|<cell|📥>|<cell|📨>|<cell|💁>|<cell|ℹ>|<cell|😇>>|<row|<cell|⁉>|<cell|📱>|<cell|🇮>|<cell|🏮>|<cell|🎃>|<cell|🗾>|<cell|🏯>|<cell|👺>|<cell|👹>|<cell|👖>>|<row|<cell|😂>|<cell|😹>|<cell|🇯>|<cell|🔑>|<cell|🔟>|<cell|👘>|<cell|💋>|<cell|😗>|<cell|😽>|<cell|😚>>|<row|<cell|😘>|<cell|😙>|<cell|🐨>|<cell|🇰>|<cell|🔵>|<cell|🔷>|<cell|🔶>|<cell|🌗>|<cell|🌜>|<cell|😆>>>>|>>>
+    \;
+  </big-table>
+
+  
+  <\big-table|<tabular|<tformat|<table|<row|<cell|🍃>|<cell|📒>|<cell|🛅>|<cell|↔>|<cell|↩>|<cell|🍋>|<cell|♌>|<cell|🐆>|<cell|♎>|<cell|🚈>>|<row|<cell|🔗>|<cell|👄>|<cell|💄>|<cell|🔒>|<cell|🔏>|<cell|🍭>|<cell|➿>|<cell|📢>|<cell|🏩>|<cell|💌>>|<row|<cell|🔅>|<cell|Ⓜ>|<cell|🔍>|<cell|🔎>|<cell|📫>|<cell|📪>|<cell|📬>|<cell|📭>|<cell|👨>|<cell|👲>>|<row|<cell|👳>|<cell|👞>|<cell|🍁>|<cell|😷>|<cell|💆>|<cell|🍖>|<cell|📣>|<cell|🍈>|<cell|📝>|<cell|🚹>>|<row|<cell|🤘>|<cell|🚇>|<cell|🎤>|<cell|🔬>|<cell|🌌>|<cell|🚐>|<cell|💽>|<cell|📴>|<cell|💸>|<cell|💰>>|<row|<cell|🐒>|<cell|🐵>|<cell|🚝>|<cell|🌔>|<cell|🎓>|<cell|🗻>|<cell|🚵>|<cell|🚠>|<cell|🚞>|<cell|🐭>>|<row|<cell|🐁>|<cell|🎥>|<cell|🗿>|<cell|💪>|<cell|🍄>|<cell|🎹>|<cell|🎵>|<cell|🎼>|<cell|🔇>|<cell|💅>>|<row|<cell|📛>|<cell|👔>|<cell|❎>|<cell|😐>|<cell|🌑>|<cell|🌚>|<cell|📰>|<cell|🔕>|<cell|🚳>|<cell|⛔>>|<row|<cell|🚫>|<cell|🙅>|<cell|📵>|<cell|😶>|<cell|🚷>|<cell|🚭>|<cell|🚱>|<cell|👃>|<cell|📓>|<cell|📔>>|<row|<cell|🎶>|<cell|🔩>|<cell|🌊>|<cell|🐙>|<cell|🍢>|<cell|🏢>|<cell|👌>|<cell|🙆>|<cell|👴>|<cell|👵>>>>|>>>
+    \;
+  </big-table>
+
+  
+  <\big-table|<tabular|<tformat|<table|<row|<cell|🔛>|<cell|🚘>|<cell|🚍>|<cell|🚔>|<cell|🚖>|<cell|📂>|<cell|👐>|<cell|😮>|<cell|⛎>|<cell|📙>>|<row|<cell|📤>|<cell|🐂>|<cell|📄>|<cell|📃>|<cell|📟>|<cell|🌴>|<cell|🐼>|<cell|📎>|<cell|〽>|<cell|⛅>>|<row|<cell|🛂>|<cell|🐾>|<cell|🍑>|<cell|🍐>|<cell|📝>|<cell|✏>|<cell|🐧>|<cell|😔>|<cell|🎭>|<cell|😣>>|<row|<cell|☎>|<cell|🐷>|<cell|🐖>|<cell|🐽>|<cell|💊>|<cell|🍍>|<cell|♓>|<cell|🍕>|<cell|👇>|<cell|👈>>|<row|<cell|👉>|<cell|☝>|<cell|👆>|<cell|🚓>|<cell|🐩>|<cell|💩>|<cell|🏣>|<cell|📯>|<cell|📮>|<cell|🚰>>|<row|<cell|👝>|<cell|🍗>|<cell|💷>|<cell|😾>|<cell|🙏>|<cell|👸>|<cell|👊>|<cell|💜>|<cell|👛>|<cell|📌>>|<row|<cell|🚮>|<cell|❓>|<cell|🐰>|<cell|🐇>|<cell|🐎>|<cell|📻>|<cell|🔘>|<cell|😡>|<cell|🚃>|<cell|🌈>>|<row|<cell|✋>|<cell|🙌>|<cell|🙋>|<cell|🐏>|<cell|🍜>|<cell|🐀>|<cell|♻>|<cell|🚗>|<cell|🔴>|<cell|®>>|<row|<cell|☺>|<cell|😌>|<cell|🔁>|<cell|🔂>|<cell|🚻>|<cell|💞>|<cell|🎀>|<cell|🍚>|<cell|🍙>|<cell|🍘>>|<row|<cell|🎑>|<cell|💍>|<cell|🚀>|<cell|🎢>|<cell|🐓>|<cell|🌹>|<cell|🚨>|<cell|📍>|<cell|🚣>|<cell|🇷>>>>|>>>
+    \;
+  </big-table>
+
+  
+  <\big-table|<tabular|<tformat|<table|<row|<cell|🏉>|<cell|🏃>|<cell|🏃>|<cell|🎽>|<cell|♐>|<cell|⛵>|<cell|🍶>|<cell|👡>|<cell|🎅>|<cell|📡>>|<row|<cell|😆>|<cell|🎷>|<cell|🏫>|<cell|🎒>|<cell|✂>|<cell|♏>|<cell|😱>|<cell|🙀>|<cell|📜>|<cell|💺>>|<row|<cell|🙈>|<cell|🌱>|<cell|🍧>|<cell|🐑>|<cell|🐚>|<cell|🚢>|<cell|👕>|<cell|💩>|<cell|👞>|<cell|🚿>>|<row|<cell|📶>|<cell|🔯>|<cell|🎿>|<cell|💀>|<cell|😴>|<cell|😪>|<cell|🎰>|<cell|🔹>|<cell|🔸>|<cell|🔺>>|<row|<cell|🔻>|<cell|😄>|<cell|😸>|<cell|😃>|<cell|😺>|<cell|😈>|<cell|😏>|<cell|😼>|<cell|🚬>|<cell|🐌>>|<row|<cell|🐍>|<cell|🏂>|<cell|❄>|<cell|⛄>|<cell|😭>|<cell|⚽>|<cell|🔜>|<cell|🔉>|<cell|👾>|<cell|♠>>|<row|<cell|🍝>|<cell|🎇>|<cell|✨>|<cell|💖>|<cell|🙊>|<cell|🔈>|<cell|💬>|<cell|🚤>|<cell|⭐>|<cell|🌟>>|<row|<cell|🌠>|<cell|🚉>|<cell|🗽>|<cell|🚂>|<cell|🍲>|<cell|📏>|<cell|🍓>|<cell|😛>|<cell|😝>|<cell|😜>>|<row|<cell|🌞>|<cell|🌻>|<cell|😎>|<cell|☀>|<cell|🌅>|<cell|🌄>|<cell|🏄>|<cell|🍣>|<cell|🚟>|<cell|😓>>|<row|<cell|💦>|<cell|😅>|<cell|🍠>|<cell|🏊>|<cell|🔣>|<cell|💉>|<cell|🎉>|<cell|🎋>|<cell|🍊>|<cell|♉>>>>|>>>
+    \;
+  </big-table>
+
+  
+  <\big-table|<tabular|<tformat|<table|<row|<cell|🚕>|<cell|🍵>|<cell|☎>|<cell|📞>|<cell|🔭>|<cell|🎾>|<cell|⛺>|<cell|💭>|<cell|👎>|<cell|👍>>|<row|<cell|🎫>|<cell|🐯>|<cell|🐅>|<cell|😫>|<cell|™>|<cell|🚽>|<cell|🗼>|<cell|🍅>|<cell|👅>|<cell|🔝>>|<row|<cell|🎩>|<cell|🚜>|<cell|🚥>|<cell|🚋>|<cell|🚆>|<cell|🚊>|<cell|🚩>|<cell|📐>|<cell|🔱>|<cell|😤>>|<row|<cell|🚎>|<cell|🏆>|<cell|🍹>|<cell|🐠>|<cell|🚚>|<cell|🎺>|<cell|👕>|<cell|🌷>|<cell|🐢>|<cell|📺>>|<row|<cell|🔀>|<cell|💕>|<cell|👬>|<cell|👭>|<cell|🇬>|<cell|☔>|<cell|😒>|<cell|🔞>|<cell|🔓>|<cell|🇺>>|<row|<cell|✌>|<cell|🚦>|<cell|📼>|<cell|📳>|<cell|📹>|<cell|🎮>|<cell|🎻>|<cell|♍>|<cell|🌋>|<cell|🚶>>|<row|<cell|🌘>|<cell|🌖>|<cell|⚠>|<cell|⌚>|<cell|🐃>|<cell|🍉>|<cell|👋>|<cell|〰>|<cell|🌒>|<cell|🌔>>|<row|<cell|🚾>|<cell|😩>|<cell|💒>|<cell|🐳>|<cell|🐋>|<cell|♿>|<cell|✅>|<cell|⚪>|<cell|💮>|<cell|🔳>>|<row|<cell|🎐>|<cell|🍷>|<cell|😉>|<cell|🐺>|<cell|👩>|<cell|👚>|<cell|👒>|<cell|🚺>|<cell|😟>|<cell|🔧>>|<row|<cell|❌>|<cell|💛>|<cell|💴>|<cell|😋>|<cell|⚡>|<cell|💤>|<cell|>|<cell|>|<cell|>|<cell|>>>>|>>>
+    \;
+  </big-table>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-2|<tuple|2|1>>
+    <associate|auto-3|<tuple|3|1>>
+    <associate|auto-4|<tuple|4|1>>
+    <associate|auto-5|<tuple|5|1>>
+    <associate|auto-6|<tuple|6|1>>
+    <associate|auto-7|<tuple|7|1>>
+    <associate|auto-8|<tuple|8|1>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|table>
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1>|>
+        \;
+      </surround>|<pageref|auto-1>>
+    </associate>
+    <\associate|table>
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1>|>
+        \;
+      </surround>|<pageref|auto-2>>
+    </associate>
+    <\associate|table>
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1>|>
+        \;
+      </surround>|<pageref|auto-3>>
+    </associate>
+    <\associate|table>
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1>|>
+        \;
+      </surround>|<pageref|auto-4>>
+    </associate>
+    <\associate|table>
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1>|>
+        \;
+      </surround>|<pageref|auto-5>>
+    </associate>
+    <\associate|table>
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1>|>
+        \;
+      </surround>|<pageref|auto-6>>
+    </associate>
+    <\associate|table>
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1>|>
+        \;
+      </surround>|<pageref|auto-7>>
+    </associate>
+    <\associate|table>
+      <tuple|normal|<\surround|<hidden-binding|<tuple>|1>|>
+        \;
+      </surround>|<pageref|auto-8>>
+    </associate>
+  </collection>
+</auxiliary>
