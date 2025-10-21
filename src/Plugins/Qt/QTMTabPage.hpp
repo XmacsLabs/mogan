@@ -21,6 +21,7 @@
 #include <QStylePainter>
 #include <QToolBar>
 #include <QToolButton>
+#include <QWKWidgets/widgetwindowagent.h>
 #include <basic.hpp>
 #include <scheme.hpp>
 
@@ -84,9 +85,6 @@ class QTMTabPageContainer : public QWidget {
   int                m_width= 0;
   bool               dragging;
   QPoint             dragPosition;
-  // For title-bar-like behaviors on blank area
-  bool m_wasMaximizedOnPress= false;
-  bool m_restoredOnDrag     = false;
 
 public:
   QTMTabPage* dummyTabPage;
@@ -96,6 +94,7 @@ public:
   inline void setRowHeight (int p_height) { m_rowHeight= p_height; }
   void        replaceTabPages (QList<QAction*>* p_src);
   void        arrangeTabPages ();
+  void        setHitTestVisibleForTabPages (QWK::WidgetWindowAgent* agent);
 
 private:
   void removeAllTabPages ();
@@ -110,10 +109,6 @@ private:
   virtual void dragLeaveEvent (QDragLeaveEvent* e) override;
 
 protected:
-  void mousePressEvent (QMouseEvent* event) override;
-  void mouseMoveEvent (QMouseEvent* event) override;
-  void mouseReleaseEvent (QMouseEvent* event) override;
-  void mouseDoubleClickEvent (QMouseEvent* event) override;
   bool eventFilter (QObject* obj, QEvent* event) override;
 };
 

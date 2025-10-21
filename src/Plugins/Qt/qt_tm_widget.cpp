@@ -167,29 +167,28 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     }
     outBar->setObjectName ("windowbar");
     outAgent->setTitleBar (outBar);
-    outAgent->setHitTestVisible (tabPageContainer, true);
     mw->setMenuWidget (outBar);
   };
 
 #if defined(Q_OS_MAC)
   // 无边框布局（macOS）
-  QWK::WindowBar*         windowBar  = nullptr;
-  QWK::WidgetWindowAgent* windowAgent= nullptr;
+  QWK::WindowBar* windowBar= nullptr;
+  windowAgent              = nullptr;
   setupWindowBar (windowBar, windowAgent, /*minHeight*/ 20,
                   /*setSafeArea*/ true);
 #elif defined(Q_OS_WIN) || defined(Q_OS_LINUX)
   // 无边框布局（Windows / Linux），并使用 /styles 资源中的图标
   // 若样式资源被打包进静态库，需显式初始化资源
   Q_INIT_RESOURCE (styles);
-  QWK::WindowBar*         windowBar  = nullptr;
-  QWK::WidgetWindowAgent* windowAgent= nullptr;
-  QScreen*                screen     = QGuiApplication::primaryScreen ();
-  double                  dpi  = screen ? screen->logicalDotsPerInch () : 96.0;
-  double                  scale= dpi / 96.0;
-  int                     titleBarHeight= int (32 * scale);
-  int                     buttonWidth   = int (46 * scale);
-  int                     buttonHeight  = int (32 * scale);
-  int                     iconBaseSize  = int (12 * scale);
+  QWK::WindowBar* windowBar= nullptr;
+  windowAgent              = nullptr;
+  QScreen* screen          = QGuiApplication::primaryScreen ();
+  double   dpi             = screen ? screen->logicalDotsPerInch () : 96.0;
+  double   scale           = dpi / 96.0;
+  int      titleBarHeight  = int (32 * scale);
+  int      buttonWidth     = int (46 * scale);
+  int      buttonHeight    = int (32 * scale);
+  int      iconBaseSize    = int (12 * scale);
   setupWindowBar (windowBar, windowAgent, /*minHeight*/ titleBarHeight,
                   /*setSafeArea*/ false);
   windowBar->setMinimumHeight (titleBarHeight);
@@ -219,6 +218,9 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   pinBtn->setObjectName ("pin-button");
   pinBtn->setProperty ("system-button", true);
   windowBar->setPinButton (pinBtn);
+  if (windowAgent) {
+    windowAgent->setHitTestVisible (pinBtn, true);
+  }
 
   auto minBtn= new QWK::WindowButton (windowBar);
   minBtn->setFlat (true);
@@ -1154,6 +1156,10 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       if (list) {
         tabPageContainer->replaceTabPages (list);
         update_visibility ();
+        // 为标签页设置hit test可见性
+        if (windowAgent) {
+          tabPageContainer->setHitTestVisibleForTabPages (windowAgent);
+        }
       }
     }
     break;

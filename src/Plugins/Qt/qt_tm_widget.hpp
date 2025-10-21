@@ -61,19 +61,20 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
    tab_tools_visibility     = 1024
    } visibility_t;
    */
-  QLabel*              rightLabel;
-  QLabel*              leftLabel;
-  QToolBar*            menuToolBar;
-  QToolBar*            mainToolBar;
-  QToolBar*            modeToolBar;
-  QToolBar*            focusToolBar;
-  QToolBar*            userToolBar;
-  QDockWidget*         sideTools;
-  QDockWidget*         leftTools;
-  QDockWidget*         bottomTools;
-  QDockWidget*         extraTools;
-  QTMTabPageContainer* tabPageContainer;
-  QTMAuxiliaryWidget*  auxiliaryWidget;
+  QLabel*                 rightLabel;
+  QLabel*                 leftLabel;
+  QToolBar*               menuToolBar;
+  QToolBar*               mainToolBar;
+  QToolBar*               modeToolBar;
+  QToolBar*               focusToolBar;
+  QToolBar*               userToolBar;
+  QDockWidget*            sideTools;
+  QDockWidget*            leftTools;
+  QDockWidget*            bottomTools;
+  QDockWidget*            extraTools;
+  QTMTabPageContainer*    tabPageContainer;
+  QTMAuxiliaryWidget*     auxiliaryWidget;
+  QWK::WidgetWindowAgent* windowAgent;
 
 #ifdef Q_OS_MAC
   QToolBar* dumbToolBar;
