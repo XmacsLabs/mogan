@@ -55,9 +55,7 @@ bridge_document_rep::initialize () {
 
 void
 bridge_document_rep::initialize_acc () {
-  // Enable document-range acceleration in interactive (screen) mode
-  // to minimize unnecessary full-document retypesetting.
-  if (ttt->paper) acc= bridge ();
+  if (true || ttt->paper) acc= bridge ();
   else acc= bridge_docrange (ttt, st, ip, brs, 0, N (st), true);
 }
 
