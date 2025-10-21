@@ -128,7 +128,7 @@
   (gggeq "\\geq\\!\\!\\!\\geq\\!\\!\\!\\geq")
 
   ;; extra literal symbols
-  (mathcatalan "C")
+  (mathcatalan "\\mathrm{C}")
   (mathd "\\mathrm{d}")
   (mathD "\\mathrm{D}")
   (mathe "\\mathrm{e}")
