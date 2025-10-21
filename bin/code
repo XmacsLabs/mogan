@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+"""
+bin/code - Python 3 implementation of the original Elvish script
+
+This script performs the following tasks:
+1. Checks if on main branch (when arguments are provided)
+2. Pulls latest code from origin if on main branch
+3. Syncs pre-commit hook
+4. Launches Claude Code
+"""
+
+import os
+import sys
+import subprocess
+import shutil
+from pathlib import Path
+
+
+def run_command(cmd, check=True, capture_output=False):
+    """Run a shell command and return the result."""
+    try:
+        result = subprocess.run(
+            cmd,
+            shell=True,
+            check=check,
+            capture_output=capture_output,
+            text=True
+        )
+        if capture_output:
+            return result.stdout.strip()
+        return True
+    except subprocess.CalledProcessError as e:
+        if check:
+            raise
+        return False
+
+
+def get_current_branch():
+    """Get the current git branch name."""
+    return run_command("git rev-parse --abbrev-ref HEAD", capture_output=True)
+
+
+def check_main_branch():
+    """Check if current branch is main."""
+    current_branch = get_current_branch()
+    return current_branch == "main"
+
+
+def has_origin_remote():
+    """Check if origin remote exists."""
+    return run_command("git remote get-url origin", check=False, capture_output=False)
+
+
+def sync_pre_commit_hook():
+    """Sync the pre-commit hook if needed."""
+    source_hook = Path("hooks/pre-commit")
+    target_hook = Path(".git/hooks/pre-commit")
+
+    # Check if source hook exists
+    if not source_hook.is_file():
+        print(f"Source hook {source_hook} does not exist, skipping...")
+        return
+
+    # Check if sync is needed
+    sync_needed = False
+    if not target_hook.is_file():
+        sync_needed = True
+    else:
+        # Compare file contents
+        with open(source_hook, 'r') as f1, open(target_hook, 'r') as f2:
+            if f1.read() != f2.read():
+                sync_needed = True
+
+    if sync_needed:
+        print("Syncing pre-commit hook...")
+        shutil.copy2(source_hook, target_hook)
+        target_hook.chmod(0o755)  # Make executable
+        print("Pre-commit hook synchronized successfully.")
+
+
+def main():
+    # Sync pre-commit hook
+    sync_pre_commit_hook()
+
+    # Check if we should verify main branch (only when arguments are provided)
+    if len(sys.argv) > 1:
+        if not check_main_branch():
+            current_branch = get_current_branch()
+            print(f"\033[31mError: You are not on the main branch. Current branch: {current_branch}\033[0m")
+            print(f"\033[33mPlease switch to main branch first: git checkout main\033[0m")
+            sys.exit(1)
+        print("Already on main branch.")
+    else:
+        print("No branch argument provided, skipping main branch check...")
+
+    # Pull from origin if on main branch
+    if check_main_branch():
+        if not has_origin_remote():
+            print("Adding origin git@gitee.com:XmacsLabs/goldfish.git...")
+            run_command("git remote add origin git@gitee.com:XmacsLabs/goldfish.git")
+            print("Pulling latest code from main branch...")
+            run_command("git pull origin main")
+            print("Removing temporary origin...\n")
+            run_command("git remote remove origin")
+        else:
+            print("Pulling latest code from main branch...")
+            run_command("git pull origin main")
+    else:
+        print("Not on main branch, skipping git pull from origin/main...")
+
+    # Launch Claude Code
+    print("claude ...")
+    os.execvp("claude", ["claude"])
+
+
+if __name__ == "__main__":
+    main()
