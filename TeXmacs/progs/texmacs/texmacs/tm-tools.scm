@@ -35,38 +35,110 @@
 
 (tm-define (count-words doc)
   (with s (convert doc "texmacs-tree" "verbatim-snippet")
-    (length (string-tokenize-by-char (compress-spaces s) #\space))))
+    (let* ((tokens (string-tokenize-by-char (compress-spaces s) #\space))
+           (non-chinese-tokens
+             (filter (lambda (token)
+                       (is-pure-ascii? token))
+                     tokens)))
+      (length non-chinese-tokens))))
+
+;; 只保留纯ASCII字符的token
+(define (is-pure-ascii? str)
+  (let loop ((i 0))
+    (if (>= i (string-length str))
+        #t
+        (let ((cp (char->integer (string-ref str i))))
+          (if (<= cp 127)
+              (loop (+ i 1))
+              #f)))))
 
 (tm-define (count-lines doc)
   (with s (convert doc "texmacs-tree" "verbatim-snippet")
     (length (string-tokenize-by-char s #\newline))))
+
+(tm-define (count-chars-no-space doc)
+  (with s (convert doc "texmacs-tree" "verbatim-snippet")
+    (u8-string-length (string-replace s " " ""))))
+
+(tm-define (count-chinese-and-words doc)
+  (with s (convert doc "texmacs-tree" "verbatim-snippet")
+    (let ((bv (string->byte-vector s))
+          (byte-len (string-length s))
+          (cnt-c 0)
+          (cnt-w 0))
+
+      (let loop ((pos 0))
+        (if (>= pos byte-len)
+            (cons cnt-c cnt-w)
+            (let ((next-pos (bytevector-advance-u8 bv pos byte-len)))
+              (when (> next-pos pos)
+                (let ((cp (decode-utf8-from-bv bv pos next-pos)))
+                  (cond
+                   ((<= #x4E00 cp #x9FFF) (set! cnt-c (+ cnt-c 1)))     ; 汉字
+                   ((or (<= #x41 cp #x5A) (<= #x61 cp #x7A))           ; 英文
+                    (set! cnt-w (+ cnt-w 1))))))
+              (loop next-pos)))))))
+
+(define (decode-utf8-from-bv bv start end)
+  (let ((b0 (bytevector-u8-ref bv start))
+        (len (- end start)))
+    (case len
+      ((1) b0)
+      ((2) (logior (ash (logand b0 #x1F) 6)
+                        (logand (bytevector-u8-ref bv (+ start 1)) #x3F)))
+      ((3) (logior (ash (logand b0 #x0F) 12)
+                        (ash (logand (bytevector-u8-ref bv (+ start 1)) #x3F) 6)
+                        (logand (bytevector-u8-ref bv (+ start 2)) #x3F)))
+      ((4) (logior (ash (logand b0 #x07) 18)
+                        (ash (logand (bytevector-u8-ref bv (+ start 1)) #x3F) 12)
+                        (ash (logand (bytevector-u8-ref bv (+ start 2)) #x3F) 6)
+                        (logand (bytevector-u8-ref bv (+ start 3)) #x3F)))
+      (else #xFFFD))))
 
 (define (selection-or-document)
   (if (selection-active-any?)
       (selection-tree)
       (buffer-tree)))
 
-(tm-widget ((show-counts-widget m1 m2 m3) cmd)
-  (resize "500guipx" "200guipx"
-    (centered
-      (bold (text "Statistics"))
-      (glue #t #f 120 6)
-      (text m1)
-      (glue #t #f 120 3)
-      (text m2)
-      (glue #t #f 120 3)
-      (text m3)
-      (glue #t #f 120 6)
-    (bottom-buttons
-      ("Close" (cmd "cancel"))))))
+(tm-widget ((show-counts-widget lines) done)
+  (resize "600guipx" "300guipx"
+    (vlist
+      (hlist
+        (glue #f #f 10 0)
+        (vlist
+          (bold (text "Stats information"))
+          (for (l lines)
+            ===
+            (text l)))
+        (glue #t #f 10 0))
+      (glue #f #t 0 10)
+      (hlist
+        (glue #t #f 0 0)
+        (bottom-buttons
+          >>
+          ("Close" (done))
+          >>)
+        (glue #f #f 10 0)))))
 
 (tm-define (show-counts)
   (:interactive #t)
-  (let* ((doc (selection-or-document))
-         (chars (string-append "Character count: " (number->string (count-characters doc))))
-         (words (string-append "Word count: " (number->string (count-words      doc))))
-         (lines (string-append "Line count: " (number->string (count-lines      doc)))))
-    (dialogue-window (show-counts-widget chars words lines) noop "Document statistics")))
+  (let* ((doc      (selection-or-document))
+         (chars    (count-characters doc))
+         (chars-ns (count-chars-no-space doc))
+         (lines    (count-lines doc))
+         (p        (count-chinese-and-words doc))
+         (chinese  (car p))
+         (words    (count-words doc))
+         (pages    (get-page-count))
+         (lst (list
+               (string-append "Page count: "                    (number->string pages))
+               (string-append "Word count: "              (number->string (+ words chinese)))
+               (string-append "Character count (with spaces): "   (number->string chars))
+               (string-append "Character count (without spaces): " (number->string chars-ns))
+               (string-append "Paragraph count: "               (number->string lines))
+               (string-append "Non-Chinese word: "         (number->string words))
+               (string-append "Chinese character: "           (number->string chinese)))))
+    (dialogue-window (show-counts-widget lst) noop "Document statistics")))
 
 (define (save-aux-enabled?) (== (get-env "save-aux") "true"))
 (tm-define (toggle-save-aux)
