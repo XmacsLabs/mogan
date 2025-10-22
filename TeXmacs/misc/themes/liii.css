@@ -361,6 +361,24 @@ QTMTabPage QToolButton#tabpage-close-button:pressed {
   background-color: #C50F1F;
 }
 
+QTMTabPageContainer QToolButton#add-tab-button {
+  background-color: transparent;
+  border: none;
+  color: #2c2c2c;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 0;
+  font-size: 12pt;
+}
+
+QTMTabPageContainer QToolButton#add-tab-button:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+QTMTabPageContainer QToolButton#add-tab-button:pressed {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
 /****************************************************************************
 * 菜单样式
 ****************************************************************************/

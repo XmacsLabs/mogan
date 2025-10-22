@@ -38,7 +38,9 @@
 #include "QTMInteractiveInputHelper.hpp"
 #include "QTMInteractivePrompt.hpp"
 #include "QTMStyle.hpp" // qtstyle()
+#include "QTMTabPage.hpp"
 #include "QTMWindow.hpp"
+#include "new_view.hpp"
 #include "preferences.hpp"
 #include "qt_dialogues.hpp"
 #include "qt_menu.hpp"
@@ -150,6 +152,9 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     outBar          = new QWK::WindowBar ();
     outAgent        = new QWK::WidgetWindowAgent (mw);
     tabPageContainer= new QTMTabPageContainer (outBar);
+    // 连接新增标签页按钮信号
+    QObject::connect (tabPageContainer, &QTMTabPageContainer::addTabRequested,
+                      [this] () { this->onAddTabRequested (); });
     mw->setAttribute (Qt::WA_DontCreateNativeAncestors);
     if (setSafeArea)
       mw->setAttribute (Qt::WA_ContentsMarginsRespectsSafeArea, false);
@@ -1557,4 +1562,10 @@ qt_tm_embedded_widget_rep::as_qwidget () {
 QLayoutItem*
 qt_tm_embedded_widget_rep::as_qlayoutitem () {
   return new QWidgetItem (as_qwidget ());
+}
+
+void
+qt_tm_widget_rep::onAddTabRequested () {
+  // 使用Scheme命令来创建新标签页
+  exec_delayed (scheme_cmd ("(new-buffer)"));
 }

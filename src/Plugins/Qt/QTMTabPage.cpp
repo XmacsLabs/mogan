@@ -13,6 +13,8 @@
 #include "new_view.hpp"
 #include "string.hpp"
 #include "tm_window.hpp"
+#include <QGuiApplication>
+#include <QScreen>
 
 // The minimum width of a single tab page (in pixels).
 const int MIN_TAB_PAGE_WIDTH= 150;
@@ -25,6 +27,24 @@ const int TAB_CONTAINER_PADDING= 75;
 #else
 const int TAB_CONTAINER_PADDING= 0;
 #endif
+
+// DPI scaling utility functions
+static double
+getDPIScaleFactor () {
+  QScreen* screen= QGuiApplication::primaryScreen ();
+  double   dpi   = screen ? screen->logicalDotsPerInch () : 96.0;
+  return dpi / 96.0;
+}
+
+static int
+getScaledSystemBarHeight () {
+  return int (36 * getDPIScaleFactor ()); // 基准高度36px，根据DPI缩放
+}
+
+static int
+getScaledSystemButtonHeight () {
+  return int (24 * getDPIScaleFactor ()); // 基准高度24px，根据DPI缩放
+}
 
 /**
  * What is g_mostRecentlyClosedTab used for? When we close an ACTIVE(!) tab
@@ -104,7 +124,7 @@ QTMTabPage::paintEvent (QPaintEvent*) {
   }
 
   int fontBoxH   = fm.height ();
-  int centeredTop= (height () - fontBoxH) / 2;
+  int centeredTop= (getScaledSystemBarHeight () - fontBoxH) / 2;
 #ifdef Q_OS_WIN
   // Windows 上字体度量与控件背景的边距叠加，通常需要轻微上移 1px 以达到光学居中
   const int opticalAdjust= -1;
@@ -126,8 +146,8 @@ void
 QTMTabPage::resizeEvent (QResizeEvent* e) {
   int w= m_closeBtn->width ();
   int h= m_closeBtn->height ();
-  int x= e->size ().width () - w - 12; // 向左移动一点
-  int y= e->size ().height () / 2 - h / 2;
+  int x= e->size ().width () - w - 12;
+  int y= (getScaledSystemBarHeight () - h) / 2;
 
   m_closeBtn->setGeometry (x, y, w, h);
 }
@@ -222,6 +242,17 @@ QTMTabPageContainer::QTMTabPageContainer (QWidget* p_parent)
   dummyTabPage->setParent (this);
   dummyTabPage->hide ();
 
+  // 创建新增标签页按钮
+  m_addTabButton= new QToolButton (this);
+  m_addTabButton->setObjectName ("add-tab-button");
+  m_addTabButton->setText ("+");
+  m_addTabButton->setMinimumSize (getScaledSystemButtonHeight (),
+                                  getScaledSystemButtonHeight ());
+  m_addTabButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+  connect (m_addTabButton, &QToolButton::clicked, this,
+           &QTMTabPageContainer::onAddTabClicked);
+  m_addTabButton->hide ();
+
   if (parent ()) {
     parent ()->installEventFilter (this);
   }
@@ -230,7 +261,13 @@ QTMTabPageContainer::QTMTabPageContainer (QWidget* p_parent)
   setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
 }
 
-QTMTabPageContainer::~QTMTabPageContainer () { removeAllTabPages (); }
+QTMTabPageContainer::~QTMTabPageContainer () {
+  removeAllTabPages ();
+  if (m_addTabButton) {
+    delete m_addTabButton;
+    m_addTabButton= nullptr;
+  }
+}
 
 void
 QTMTabPageContainer::replaceTabPages (QList<QAction*>* p_src) {
@@ -279,13 +316,11 @@ QTMTabPageContainer::arrangeTabPages () {
   const int windowWidth=
       parentWidget () ? parentWidget ()->width () : this->width ();
   // 动态计算右侧预留空间，防止标签页覆盖系统按钮
-  QScreen* screen       = QGuiApplication::primaryScreen ();
-  double   dpi          = screen ? screen->logicalDotsPerInch () : 96.0;
-  double   scale        = dpi / 96.0;
-  int      buttonWidth  = int (46 * scale); // 按钮宽度
-  int      buttonCount  = 4;                // pin, min, max, close
-  int      extraGap     = int (96 * scale); // 标签页和按钮之间的额外间隔
-  int      reservedRight= buttonCount * buttonWidth + extraGap;
+  double scale        = getDPIScaleFactor ();
+  int    buttonWidth  = int (46 * scale); // 按钮宽度
+  int    buttonCount  = 4;                // pin, min, max, close
+  int    extraGap     = int (96 * scale); // 标签页和按钮之间的额外间隔
+  int    reservedRight= buttonCount * buttonWidth + extraGap;
 
   int visibleTabCount= 0;
   // cout << "most recently closed tab:" << g_mostRecentlyClosedTab << LF;
@@ -344,6 +379,19 @@ QTMTabPageContainer::arrangeTabPages () {
 
   adjustHeight (0);
 
+  // 设置新增标签页按钮的位置
+  if (m_addTabButton) {
+    // 将按钮放在最后一个标签页的后面
+    int addButtonWidth = m_addTabButton->height ();
+    int addButtonHeight= m_addTabButton->height ();
+    int buttonX        = accumWidth;
+    // 调整按钮垂直位置，与系统按钮对齐
+    int buttonY= (getScaledSystemBarHeight () - addButtonHeight) / 2;
+    m_addTabButton->setGeometry (buttonX, buttonY, addButtonWidth,
+                                 addButtonHeight);
+    m_addTabButton->show ();
+  }
+
   // if not draggin, clear the memory of most recently closed tab
   if (g_mostRecentlyDraggedTab == url_none ()) g_mostRecentlyClosedTab= url ();
 }
@@ -362,6 +410,11 @@ QTMTabPageContainer::setHitTestVisibleForTabPages (
   // 为每个标签页设置hit test可见性
   for (QTMTabPage* tabPage : m_tabPageList) {
     agent->setHitTestVisible (tabPage, true);
+  }
+
+  // 为新增标签页按钮设置hit test可见性
+  if (m_addTabButton) {
+    agent->setHitTestVisible (m_addTabButton, true);
   }
 }
 
@@ -527,4 +580,9 @@ QTMTabPageBar::resizeEvent (QResizeEvent* e) {
   if (availableWidth > 0 && m_container) {
     m_container->setGeometry (7, 0, availableWidth, size.height () - 2);
   }
+}
+
+void
+QTMTabPageContainer::onAddTabClicked () {
+  emit addTabRequested ();
 }

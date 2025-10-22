@@ -91,6 +91,9 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
   bool visibility[12];
   bool full_screen;
 
+private:
+  void onAddTabRequested ();
+
   qt_widget main_widget;
   qt_widget main_menu_widget;
   qt_widget waiting_main_menu_widget;

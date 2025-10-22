@@ -85,6 +85,7 @@ class QTMTabPageContainer : public QWidget {
   int                m_width= 0;
   bool               dragging;
   QPoint             dragPosition;
+  QToolButton*       m_addTabButton;
 
 public:
   QTMTabPage* dummyTabPage;
@@ -96,10 +97,14 @@ public:
   void        arrangeTabPages ();
   void        setHitTestVisibleForTabPages (QWK::WidgetWindowAgent* agent);
 
+signals:
+  void addTabRequested ();
+
 private:
   void removeAllTabPages ();
   void extractTabPages (QList<QAction*>* p_src);
   void adjustHeight (int p_rowCount);
+  void onAddTabClicked ();
 
   // drag and drop events
   int          mapToPointing (QDropEvent* e, QPoint& m_indicator);
@@ -133,5 +138,14 @@ public:
 protected:
   virtual void resizeEvent (QResizeEvent* e) override;
 };
+
+// Global variables for tab page management
+extern int                  g_tabWidth;
+extern int                  g_pointingIndex;
+extern int                  g_hiddentTabIndex;
+extern url                  g_mostRecentlyClosedTab;
+extern url                  g_mostRecentlyDraggedTab;
+extern QTMTabPageContainer* g_mostRecentlyDraggedBar;
+extern QTMTabPageContainer* g_mostRecentlyEnteredBar;
 
 #endif // QTMTABPAGE_HPP
