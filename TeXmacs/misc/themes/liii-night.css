@@ -47,6 +47,68 @@ QMenuBar::item:pressed {
 }
 
 /****************************************************************************
+* 标题栏样式
+****************************************************************************/
+QWK--WindowBar {
+    background-color: #2c2c2c;
+}
+
+QWK--WindowBar QAbstractButton#icon-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* 系统按钮通用样式（最小/最大/关闭/置顶） */
+QWK--WindowBar QAbstractButton[system-button=true] {
+  border: none;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+QWK--WindowBar QAbstractButton[system-button=true]:hover {
+  background-color: rgba(0, 0, 0, 0.12);
+  border-radius: 0;
+}
+QWK--WindowBar QAbstractButton[system-button=true]:pressed {
+  background-color: rgba(0, 0, 0, 0.18);
+  border-radius: 0;
+}
+
+/* 置顶按钮（Pin） */
+QWK--WindowBar QAbstractButton#pin-button {
+  qproperty-iconNormal: url(":/window-bar/pin-white.svg");
+  qproperty-iconChecked: url(":/window-bar/pin-fill-white.svg");
+}
+
+/* 最小化/最大化/关闭按钮 */
+QWK--WindowBar>QAbstractButton#min-button {
+    qproperty-iconNormal: url(":/window-bar/minimize-white.svg");
+}
+QWK--WindowBar>QAbstractButton#max-button {
+    qproperty-iconNormal: url(":/window-bar/maximize-white.svg");
+    qproperty-iconChecked: url(":/window-bar/restore-white.svg");
+}
+QWK--WindowBar>QAbstractButton#close-button {
+    qproperty-iconNormal: url(":/window-bar/close-white.svg");
+    qproperty-iconHovered: url(":/window-bar/close-white.svg");
+}
+QWK--WindowBar>QAbstractButton#close-button:hover {
+  background-color: #E81123;
+  border-radius: 0;
+}
+QWK--WindowBar>QAbstractButton#close-button:pressed {
+  background-color: #C50F1F;
+  border-radius: 0;
+}
+
+/****************************************************************************
 * 工具栏样式
 ****************************************************************************/
 QToolBar {
@@ -253,29 +315,70 @@ QDockWidget::title {
 /****************************************************************************
 * 标签页样式
 ****************************************************************************/
-QTabWidget::pane {
-  border: 1px solid #e0e0e0;
-  background: #2c2c2c;
+/* Tab Page 基础样式 */
+QTMTabPage {
+  padding: 8px 12px;
+  color: #FFFFFF;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
-QTabBar::tab {
-  background: #2c2c2c;
-  color: #ffffff;
-  padding: 4px 8px;
-  border: 1px solid #e0e0e0;
+QTMTabPage:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+QTMTabPage:checked {
+  background-color: #333333;
+  border: 1px solid #4c4c4c;
   border-bottom: none;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: #FFFFFF;
 }
 
-QTabBar::tab:selected {
-  background: #4c4c4c;
+QTMTabPage QToolButton#tabpage-close-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin-left: 6px;
+  border-radius: 4px;
+  min-width: 20px;
+  min-height: 20px;
+  max-width: 20px;
+  max-height: 20px;
   color: #ffffff;
 }
 
-QTabBar::tab:hover {
-  background: #4c4c4c;
-  color: #ffffff;
+QTMTabPage QToolButton#tabpage-close-button:hover {
+  background-color: #E81123;
+  color: #FFFFFF;
+}
+
+QTMTabPage QToolButton#tabpage-close-button:pressed {
+  background-color: #C50F1F;
+}
+
+QTMTabPageContainer QToolButton#add-tab-button {
+  background-color: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 0;
+  font-size: 12pt;
+}
+
+QTMTabPageContainer QToolButton#add-tab-button:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+QTMTabPageContainer QToolButton#add-tab-button:pressed {
+  background-color: rgba(255, 255, 255, 0.10);
 }
 
 /****************************************************************************
