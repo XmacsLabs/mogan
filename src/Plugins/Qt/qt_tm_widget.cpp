@@ -413,15 +413,12 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     focusToolBar->setFixedHeight (h);
     tabPageContainer->setRowHeight (h);
 
-    // 尺寸策略（固定高度条）
-    mainToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-    modeToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-    focusToolBar->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-
     // 保持可移动行为一致
     mainToolBar->setMovable (true);
     modeToolBar->setMovable (true);
     focusToolBar->setMovable (true);
+    // menu栏不允许移动
+    menuToolBar->setMovable (false);
   }
 
   QWidget* cw= new QWidget ();
