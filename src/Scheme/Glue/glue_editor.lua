@@ -1841,6 +1841,14 @@ function main()
                 }
             },
             {
+                scm_name = "set-user-active",
+                cpp_name = "set_user_active",
+                ret_type = "void",
+                arg_list = {
+                    "bool"
+                }
+            },
+            {
                 scm_name = "view-set-property",
                 cpp_name = "set_property",
                 ret_type = "void",
