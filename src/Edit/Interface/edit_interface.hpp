@@ -104,6 +104,10 @@ public:
   void keyboard_focus_on (string field);
   void get_size (SI& wx, SI& wy);
 
+  /* setter and getter for user_active */
+  void set_user_active (bool b) { user_active= b; }
+  bool get_user_active () { return user_active; }
+
   /* routines for dealing with shrinked coordinates */
   int  get_pixel_size ();
   SI   get_visible_width ();

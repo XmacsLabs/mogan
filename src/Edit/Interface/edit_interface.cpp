@@ -69,7 +69,8 @@ edit_interface_rep::edit_interface_rep ()
       tremble_right (false), table_selection (false), mouse_adjusting (false),
       oc (0, 0), temp_invalid_cursor (false), shadow (NULL), stored (NULL),
       cur_sb (2), cur_wb (2) {
-  input_mode= INPUT_NORMAL;
+  user_active= false;
+  input_mode = INPUT_NORMAL;
   gui_root_extents (cur_wx, cur_wy);
 }
 
@@ -875,8 +876,11 @@ edit_interface_rep::apply_changes () {
     if ((env_change & (THE_TREE + THE_ENVIRONMENT + THE_CURSOR + THE_SELECTION +
                        THE_FOCUS)) != 0)
       if (!inside_active_graphics ())
-        if ((env_change & THE_FREEZE) == 0 || (env_change & THE_SELECTION) != 0)
+        if (get_user_active () && ((env_change & THE_FREEZE) == 0 ||
+                                   (env_change & THE_SELECTION) != 0)) {
           cursor_visible ();
+          set_user_active (false);
+        }
 
     SI dw= 0;
     if (tremble_count > 3) dw= (1 + min (tremble_count - 3, 25)) * 2 * pixel;

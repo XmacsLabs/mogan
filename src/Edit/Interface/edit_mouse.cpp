@@ -727,6 +727,7 @@ void
 edit_interface_rep::handle_mouse (string kind, SI x, SI y, int m, time_t t,
                                   array<double> data) {
   if (is_nil (buf)) return;
+  if (kind != "move" || selection_active_any ()) set_user_active (true);
   bool started= false;
   try {
     if (is_nil (eb) || (env_change & (THE_TREE + THE_ENVIRONMENT)) != 0) {

@@ -57,12 +57,13 @@ public:
   tm_view_rep* mvw; // master view
 
 protected:
-  tm_buffer buf; // the underlying buffer
-  drd_info  drd; // the drd for the buffer
-  tree&     et;  // all TeXmacs trees
-  box       eb;  // box translation of tree
-  path      rp;  // path to the root of the document in et
-  path      tp;  // path of cursor in tree
+  tm_buffer buf;         // the underlying buffer
+  drd_info  drd;         // the drd for the buffer
+  tree&     et;          // all TeXmacs trees
+  box       eb;          // box translation of tree
+  path      rp;          // path to the root of the document in et
+  path      tp;          // path of cursor in tree
+  bool      user_active; // is the user active ?
 
   /* exchanging information with the interface */
   virtual void    get_selection (path& start, path& end)= 0;
@@ -207,6 +208,8 @@ public:
   virtual void      set_cursor_style (string style_name)                   = 0;
   virtual void      set_message (tree l, tree r= "", bool temp= false)     = 0;
   virtual void      recall_message ()                                      = 0;
+  virtual void      set_user_active (bool b)                               = 0;
+  virtual bool      get_user_active ()                                     = 0;
 
   /* public routines from edit_cursor */
   virtual path make_cursor_accessible (path p, bool forwards)= 0;

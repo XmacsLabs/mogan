@@ -269,6 +269,7 @@ edit_interface_rep::is_combo_shortcuts (string key) {
 
 void
 edit_interface_rep::key_press (string gkey) {
+  set_user_active (true);
   string zero= "a";
   zero[0]    = '\0';
   string key = replace (gkey, "<#0>", zero);

@@ -1,0 +1,134 @@
+<TMU|<tuple|1.1.0|2025.2.0-alpha>>
+
+<style|<tuple|generic|chinese|number-europe|goldfish>>
+
+<\body>
+  Page 1
+
+  <new-page>
+
+  Page 2
+
+  <new-page>
+
+  Page 3
+
+  <new-page>
+
+  Page 4
+
+  <new-page>
+
+  Page 5
+
+  <\session|goldfish|default>
+    <\output>
+      Liii Scheme 17.11.20 Enterprise Edition by LiiiLabs
+
+      implemented on S7 Scheme (11.2, 30-Dec-2024)
+    </output>
+
+    <\unfolded-io>
+      \<gtr\>\ 
+    <|unfolded-io>
+      (begin
+
+      \ \ (import (texmacs protocol)
+
+      \ \ \ \ \ \ \ \ \ \ (liii lang)
+
+      \ \ \ \ \ \ \ \ \ \ (liii os))
+
+      \ \ 
+
+      \ \ (define (print-formula n)
+
+      \ \ \ \ (data-begin)
+
+      \ \ \ \ (display "latex:")
+
+      \ \ \ \ ((rich-list :range 1 (+ n 1))
+
+      \ \ \ \ \ :for-each
+
+      \ \ \ \ \ (lambda (i)
+
+      \ \ \ \ \ \ \ (flush-latex (string-append "$x_{" (number-\<gtr\>string i) "}$"))
+
+      \ \ \ \ \ \ \ (flush-verbatim "\\n")
+
+      \ \ \ \ \ \ \ (flush-output-port)
+
+      \ \ \ \ \ \ \ (os-call "sleep 1")))
+
+      \ \ \ \ (data-end))
+
+      \ \ 
+
+      \ \ (print-formula 100))
+    <|unfolded-io>
+      <math|x<rsub|1>>
+
+      <math|x<rsub|2>>
+
+      <math|x<rsub|3>>
+
+      <math|x<rsub|4>>
+
+      <math|x<rsub|5>>
+
+      <math|x<rsub|6>>
+
+      <math|x<rsub|7>>
+
+      <math|x<rsub|8>>
+
+      <math|x<rsub|9>>
+
+      <math|x<rsub|10>>
+
+      <math|x<rsub|11>>
+
+      <math|x<rsub|12>>
+
+      <math|x<rsub|13>>
+
+      <math|x<rsub|14>>
+
+      <math|x<rsub|15>>
+
+      <math|x<rsub|16>>
+
+      <math|x<rsub|17>>
+
+      <math|x<rsub|18>>
+
+      <math|x<rsub|19>>
+
+      <math|x<rsub|20>>
+
+      <math|x<rsub|21>>
+
+      <math|x<rsub|22>>
+
+      <math|x<rsub|23>>
+
+      <math|x<rsub|24>>
+
+      <math|x<rsub|25>>
+
+      <script-dead>
+    </unfolded-io>
+
+    <\input|Goldfish] >
+      \;
+    </input>
+  </session>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
