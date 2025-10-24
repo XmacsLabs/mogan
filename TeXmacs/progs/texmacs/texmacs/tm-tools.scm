@@ -103,22 +103,21 @@
 (tm-widget ((show-counts-widget lines) done)
   (resize "600guipx" "300guipx"
     (vlist
-      (hlist
-        (glue #f #f 10 0)
-        (vlist
-          (bold (text "Stats information"))
-          (for (l lines)
-            ===
-            (text l)))
-        (glue #t #f 10 0))
-      (glue #f #t 0 10)
-      (hlist
-        (glue #t #f 0 0)
-        (bottom-buttons
-          >>
-          ("Close" (done))
-          >>)
-        (glue #f #f 10 0)))))
+        (hlist
+          (glue #t #f 0 0)
+          (vlist
+            (glue #f #t 120 6)
+            (bold (text "Stats information"))
+            (glue #f #t 120 6)
+            (for (l lines)
+              ===
+              (text l)))
+          (glue #t #f 0 0))
+        (glue #f #t 120 6)
+        (hlist
+          (glue #t #f 120 3)
+          (bottom-buttons
+            ("Close" (done)))))))
 
 (tm-define (show-counts)
   (:interactive #t)
