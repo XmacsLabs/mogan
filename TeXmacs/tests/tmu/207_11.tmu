@@ -1,0 +1,94 @@
+<TMU|<tuple|1.1.0|2025.2.0-alpha>>
+
+<style|<tuple|beamer|chinese|number-europe>>
+
+<\body>
+  <screens|<\shown>
+    1
+  </shown>|<\hidden>
+    2
+  </hidden>|<\hidden>
+    3
+  </hidden>|<\hidden>
+    4
+  </hidden>|<\hidden>
+    5
+  </hidden>|<\hidden>
+    6
+  </hidden>|<\hidden>
+    7
+  </hidden>|<\hidden>
+    8
+  </hidden>|<\hidden>
+    9
+  </hidden>|<\hidden>
+    10
+  </hidden>|<\hidden>
+    11
+  </hidden>|<\hidden>
+    12
+  </hidden>|<\hidden>
+    13
+  </hidden>|<\hidden>
+    14
+  </hidden>|<\hidden>
+    15
+  </hidden>|<\hidden>
+    16
+  </hidden>|<\hidden>
+    17
+  </hidden>|<\hidden>
+    18
+  </hidden>|<\hidden>
+    19
+  </hidden>|<\hidden>
+    20
+  </hidden>|<\hidden>
+    21
+  </hidden>|<\hidden>
+    22
+  </hidden>|<\hidden>
+    23
+  </hidden>|<\hidden>
+    24
+  </hidden>|<\hidden>
+    25
+  </hidden>|<\hidden>
+    26
+  </hidden>|<\hidden>
+    27
+  </hidden>|<\hidden>
+    28
+  </hidden>|<\hidden>
+    29
+  </hidden>|<\hidden>
+    30
+  </hidden>|<\hidden>
+    31
+  </hidden>|<\hidden>
+    32
+  </hidden>|<\hidden>
+    32
+  </hidden>|<\hidden>
+    34
+  </hidden>|<\hidden>
+    35
+  </hidden>|<\hidden>
+    36
+  </hidden>|<\hidden>
+    37
+  </hidden>|<\hidden>
+    38
+  </hidden>|<\hidden>
+    39
+  </hidden>|<\hidden>
+    40
+  </hidden>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|beamer>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
