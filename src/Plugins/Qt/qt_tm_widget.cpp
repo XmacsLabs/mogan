@@ -499,6 +499,8 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   else {
     mw->addToolBar (menuToolBar);
     mw->addToolBarBreak ();
+    mw->addToolBar (mainToolBar);
+    mw->addToolBarBreak ();
     mw->addToolBar (modeToolBar);
     mw->addToolBarBreak ();
     mw->addToolBar (focusToolBar);
@@ -509,6 +511,8 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
 #else
   mw->addToolBar (menuToolBar);
+  mw->addToolBarBreak ();
+  mw->addToolBar (mainToolBar);
   mw->addToolBarBreak ();
   mw->addToolBar (modeToolBar);
   mw->addToolBarBreak ();
