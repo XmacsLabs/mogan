@@ -1563,6 +1563,14 @@ qt_tm_embedded_widget_rep::as_qlayoutitem () {
 
 void
 qt_tm_widget_rep::onAddTabRequested () {
-  // 使用Scheme命令来创建新标签页
-  exec_delayed (scheme_cmd ("(new-buffer)"));
+  static QTime     lastCallTime;
+  static const int MIN_INTERVAL_MS= 500;
+
+  if (lastCallTime.isValid () &&
+      lastCallTime.msecsTo (QTime::currentTime ()) < MIN_INTERVAL_MS) {
+    return;
+  }
+  lastCallTime= QTime::currentTime ();
+
+  exec_delayed (scheme_cmd ("(new-document)"));
 }

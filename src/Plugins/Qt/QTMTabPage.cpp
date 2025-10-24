@@ -319,7 +319,7 @@ QTMTabPageContainer::arrangeTabPages () {
   double scale        = getDPIScaleFactor ();
   int    buttonWidth  = int (46 * scale); // 按钮宽度
   int    buttonCount  = 4;                // pin, min, max, close
-  int    extraGap     = int (96 * scale); // 标签页和按钮之间的额外间隔
+  int    extraGap     = int (66 * scale); // 标签页和按钮之间的额外间隔
   int    reservedRight= buttonCount * buttonWidth + extraGap;
 
   int visibleTabCount= 0;
