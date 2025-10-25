@@ -274,7 +274,7 @@
 
   <new-list|enumerate-Alpha|<value|aligned-dot-item>|<macro|name|<number|<arg|name>|Alpha>>>
 
-  <new-list|enumerate-circle|<value|aligned-space-item>|<macro|name|<number|<arg|name>|circle>>>
+  <new-list|enumerate-circle|<value|aligned-item>|<macro|name|<number|<arg|name>|circle>>>
 
   <new-list|enumerate-hanzi|<value|aligned-comma-item>|<macro|name|<number|<arg|name>|hanzi>>>
 
