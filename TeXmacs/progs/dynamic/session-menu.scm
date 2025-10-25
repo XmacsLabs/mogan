@@ -99,9 +99,9 @@
            (l (local-connection-variants name)))
       (assuming (nnull? l)
         (assuming (== l (list "default"))
-          ((eval menu-name) (make-session name "default")))
+          ((eval `(verbatim ,menu-name)) (make-session name "default")))
         (assuming (!= l (list "default"))
-          (-> (eval menu-name)
+          (-> (eval `(verbatim ,menu-name))
               (for (variant l)
                 ((eval `(verbatim ,variant)) (make-session name variant)))))))))
 
